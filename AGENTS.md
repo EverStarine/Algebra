@@ -1,0 +1,10 @@
+# 代数学项目工作入口
+
+- 本项目是依照《计划纲要.md》建立的五卷本教材。先读根目录 README 和与当前任务有关的规范；优先检查和编辑 TeX 源文件。
+- 目录、标题、选读星号、先修与证明归属以《计划纲要.md》为准。骨架占位不表示正文、习题或证明已完成。
+- 写作遵守《写作规范.md》《术语规范.md》，排版遵守《格式规范.md》，引用遵守《书目维护注意事项.md》；工作记录使用《审核进度.md》《跨卷引用表.md》。用户当前指令优先。
+- 五卷分别从 `BookN/BookN.tex` 编译，共享 `Shared/`。只改一卷构建该卷，改共享样式构建五卷；仅改说明文档无需重编。
+- 从根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File ./build.ps1`；单卷加 `-Book N`。目录检查执行 `powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Check-Outline.ps1`。
+- 复用现有 TeX Live。构建失败先查 `tmp/build/BookN/` 日志，不用旧 PDF 冒充新成品。目录与版式变更后抽查相关 PDF 页面。
+- 不把分析学项目的正文、历史审核结果、特有术语、图表或书目作为本项目已经完成的工作。不要用初始化生成器覆盖已经撰写的章节。
+- 本仓库未授予开放许可证，权利说明见《版权声明.md》。推送到 GitHub 遵循用户在当前会话中的授权。
