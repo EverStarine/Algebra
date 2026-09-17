@@ -167,6 +167,15 @@ foreach ($node in $nodes) {
             $failures.Add("Outline detail missing from source comments: $($node.Path): $note")
         }
     }
+    if ($node.Kind -in @('Section', 'AppendixSection')) {
+        if ($text -notmatch '(?m)^\\(?:subsection|OptionalSubsection)\{[^\r\n]+') {
+            $failures.Add("Missing subsection headings under $($node.Path).")
+        }
+    }
+    if ($node.Kind -eq 'Appendix' -and
+        $text -notmatch '(?m)^\\input\{Appendices/Appendix[A-Z]/Section[A-Z][0-9]{2}\}') {
+        $failures.Add("Missing appendix section files under $($node.Path).")
+    }
     if ($node.Parent) {
         $parentFile = Join-Path $ProjectRoot $node.Parent
         if ([IO.File]::Exists($parentFile)) {
@@ -180,11 +189,15 @@ foreach ($node in $nodes) {
 }
 
 $allLabels = [Collections.Generic.List[string]]::new()
+$actualCounts = @{}
 foreach ($b in 1..5) {
     $bookRoot = Join-Path $ProjectRoot "Book$b"
     $allTex = @(Get-ChildItem -LiteralPath $bookRoot -Filter '*.tex' -Recurse -File)
     $reachable = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
     $queue = [Collections.Generic.Queue[string]]::new()
+    $inputUseCount = @{}
+    $subsectionCount = 0
+    $appendixSectionCount = 0
     $queue.Enqueue((Join-Path $bookRoot "Book$b.tex"))
     while ($queue.Count) {
         $file = $queue.Dequeue()
@@ -197,18 +210,44 @@ foreach ($b in 1..5) {
             if ($input -notmatch '\.tex$') { $input += '.tex' }
             $target = [IO.Path]::GetFullPath((Join-Path $bookRoot $input))
             if (-not [IO.File]::Exists($target)) { $failures.Add("Missing input target: $file -> $input") }
-            elseif ($target.StartsWith($bookRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { $queue.Enqueue($target) }
+            elseif ($target.StartsWith($bookRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+                $queue.Enqueue($target)
+                if (-not $inputUseCount.ContainsKey($target)) { $inputUseCount[$target] = 0 }
+                $inputUseCount[$target]++
+            }
         }
     }
     foreach ($file in $allTex) {
         if (-not $reachable.Contains($file.FullName)) { $failures.Add("Unreachable TeX file: $($file.FullName)") }
+        if ($file.FullName -ne (Join-Path $bookRoot "Book$b.tex") -and $inputUseCount[$file.FullName] -ne 1) {
+            $failures.Add("Expected exactly one input for $($file.FullName).")
+        }
         $text = [IO.File]::ReadAllText($file.FullName, [Text.Encoding]::UTF8)
+        $subsectionCount += [regex]::Matches($text, '(?m)^\\(?:subsection|OptionalSubsection)\{').Count
+        if ($file.Name -match '^Section[A-Z][0-9]{2}\.tex$') {
+            $appendixSectionCount++
+            $sectionId = $file.BaseName.Substring(7)
+            if ($text -notmatch '(?m)^\\section\{[^\r\n]+' -or
+                -not $text.Contains("\label{b${b}:sec:$sectionId}")) {
+                $failures.Add("Missing appendix section heading or label in $($file.FullName).")
+            }
+        }
         if ($text -match '(?m)^% !TeX root = (.+)$') {
             $magicRoot = [IO.Path]::GetFullPath((Join-Path $file.DirectoryName $Matches[1].Trim()))
             if ($magicRoot -ne (Join-Path $bookRoot "Book$b.tex")) { $failures.Add("Wrong editor root: $($file.FullName)") }
         }
         foreach ($match in [regex]::Matches($text, '\\label\{([^}]+)\}')) { $allLabels.Add($match.Groups[1].Value) }
     }
+    foreach ($appendixDir in (Get-ChildItem -LiteralPath (Join-Path $bookRoot 'Appendices') -Directory -Filter 'Appendix*')) {
+        $sectionFiles = @(Get-ChildItem -LiteralPath $appendixDir.FullName -File -Filter 'Section*.tex' | Sort-Object Name)
+        for ($i = 0; $i -lt $sectionFiles.Count; $i++) {
+            $expectedName = 'Section{0}{1:00}.tex' -f $appendixDir.Name.Substring(8), ($i + 1)
+            if ($sectionFiles[$i].Name -ne $expectedName) {
+                $failures.Add("Appendix section filenames are not contiguous under $($appendixDir.FullName).")
+            }
+        }
+    }
+    $actualCounts[$b] = @{ Subsections = $subsectionCount; AppendixSections = $appendixSectionCount }
 }
 foreach ($duplicate in @($allLabels | Group-Object | Where-Object Count -gt 1)) {
     $failures.Add("Duplicate explicit label: $($duplicate.Name)")
@@ -223,7 +262,9 @@ foreach ($b in 1..5) {
         Chapters=@($set | Where-Object Kind -eq 'Chapter').Count
         Sections=@($set | Where-Object Kind -eq 'Section').Count
         Appendices=@($set | Where-Object Kind -eq 'Appendix').Count
-        AppendixSections=@($set | Where-Object Kind -eq 'AppendixSection').Count
+        OutlineAppendixSections=@($set | Where-Object Kind -eq 'AppendixSection').Count
+        AppendixSections=$actualCounts[$b].AppendixSections
+        Subsections=$actualCounts[$b].Subsections
         OptionalChapters=@($set | Where-Object { $_.Kind -eq 'Chapter' -and $_.Optional }).Count
         OptionalSections=@($set | Where-Object { $_.Kind -eq 'Section' -and $_.Optional }).Count
     }
