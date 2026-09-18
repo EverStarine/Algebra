@@ -12,10 +12,13 @@
 % * 有限循环群的自同构群
 %
 
+循环群中的每个元素都是一个固定元素的整数次幂，因此群内的等式可以转化为指数之间的整除关系。从整数加法群的子群出发，第一同构定理同时给出有限循环群和无限循环群的模型。
+
+\ProseParagraphBreak
+分类完成以后，还要能实际计算：哪些幂生成同一个子群，商群有多大，生成元可以映到哪里。下面始终区分“选择一个生成元”和“这个生成元是否由群本身唯一确定”。
+
 \subsection{循环群的分类}
 \label{b1:subsec:0301:01}
-
-循环群的每个元素都是一个生成元的幂，因此所有结构问题最终都归结为整数指数之间的关系。先处理整数加法群的子群，再用第一同构定理，便能一次得到有限和无限循环群的分类。
 
 \begin{lemma}\label{b1:lem:integer-subgroups}
 \(\mathbb Z\) 的每个加法子群都唯一写成 \(n\mathbb Z\)，其中 \(n\geq0\)。约定 \(0\mathbb Z=\{0\}\)。
@@ -29,7 +32,7 @@
 每个无限循环群都同构于 \((\mathbb Z,+)\)；每个 \(n\) 阶有限循环群都同构于 \((\mathbb Z/n\mathbb Z,+)\)。因此两个循环群同构当且仅当它们的阶相同，包括无限阶情形。
 \end{theorem}
 \begin{proof}
-设 \(G=\langle g\rangle\)。映射 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)，是满同态。其核为某个 \(n\mathbb Z\)。第一同构定理给出 \(G\cong\mathbb Z/n\mathbb Z\)。若 \(n=0\)，商就是 \(\mathbb Z\)；若 \(n>0\)，\(0,\ldots,n-1\) 为商的全部不同代表，所以群阶为 \(n\)。同构保持元素个数，因而也得到最后的判别。
+设 \(G=\langle g\rangle\)。映射 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)，是满同态。核是 \(\mathbb Z\) 的子群，故\cref{b1:lem:integer-subgroups}给出唯一 \(n\geq0\)，使 \(\ker\pi=n\mathbb Z\)。对这个像为全体 \(G\) 的同态应用\cref{b1:thm:first-isomorphism}，得到同构 \(\mathbb Z/n\mathbb Z\rightarrow G\)，\([k]\mapsto g^k\)。若 \(n=0\)，商就是 \(\mathbb Z\)；若 \(n>0\)，\(0,\ldots,n-1\) 为商的全部不同代表，所以群阶为 \(n\)。同构保持元素个数，因而也得到最后的判别。
 \end{proof}
 
 记 \(n\) 阶循环群的一个标准模型为 \(C_n\coloneqq\mathbb Z/n\mathbb Z\)，其中 \(n\geq1\)，\(C_1\) 是平凡群。需要强调乘法表示时，也写 \(C_n=\langle g\rangle\)、\(g^n=1\)，同时声明 \(g\) 的阶恰为 \(n\)。仅写 \(g^n=1\) 还不够，因为阶可能是 \(n\) 的真因子。
@@ -49,7 +52,7 @@
 若 \(g\) 为无限阶且 \(a\ne0\)，则 \(g^a\) 也为无限阶。
 \end{proposition}
 \begin{proof}
-有限情形中，\((g^a)^k=1\) 当且仅当 \(n\) 整除 \(ak\)。写
+有限情形中，\((g^a)^k=g^{ak}\)，由\eqref{b1:eq:element-order-divisibility}，它等于 \(1\) 当且仅当 \(n\mid ak\)。写
 \(n=dn'\)、\(a=da'\)，其中 \(d=\gcd(n,a)\)、\(\gcd(n',a')=1\)。整除条件等价于 \(n'\mid a'k\)，再由互素性等价于 \(n'\mid k\)，所以最小正指数为 \(n'\)。无限情形中若正整数 \(k\) 满足 \(g^{ak}=1\)，则 \(ak\ne0\)，与无限阶矛盾。
 \end{proof}
 
@@ -60,16 +63,26 @@
 循环群的子群和商群均为循环群。若 \(G=\langle g\rangle\) 的阶为 \(n\)，则对每个正因子 \(d\mid n\)，恰有一个 \(d\) 阶子群，即 \(\langle g^{n/d}\rangle\)，其商群阶为 \(n/d\)。
 \end{theorem}
 \begin{proof}
-对于子群 \(H\leq G\)，取满同态 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)。原像 \(\pi^{-1}(H)=m\mathbb Z\)，故 \(H=\langle g^m\rangle\)，所以循环。有限情形中原像包含 \(n\mathbb Z\)，于是 \(m\mid n\)，而 \(\langle g^m\rangle\) 的阶为 \(n/m\)，由阶唯一确定 \(m\)。群 \(G\) 交换，所以每个子群正规；商群的每个元素都是 \(gH\) 的幂，故商群循环，其阶由 Lagrange 定理给出。
+对于子群 \(H\leq G\)，取满同态 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)。原像 \(\pi^{-1}(H)\) 对整数之差封闭且含零，因而是加法子群。\cref{b1:lem:integer-subgroups}给出 \(\pi^{-1}(H)=m\mathbb Z\)；由 \(\pi\) 满射，\(\pi\bigl(\pi^{-1}(H)\bigr)=H\)，故 \(H=\langle g^m\rangle\)，所以循环。有限情形中原像包含 \(n\mathbb Z\)，于是 \(m\mid n\)，由\cref{b1:prop:power-order}，\(\langle g^m\rangle\) 的阶为 \(n/\gcd(n,m)=n/m\)，由阶唯一确定 \(m\)。群 \(G\) 交换，所以每个子群正规；商群的每个元素都是 \(gH\) 的幂，故商群循环。在有限情形中，其阶由\cref{b1:thm:lagrange}给出，即 \(\lvert G/H\rvert=\lvert G\rvert/\lvert H\rvert\)。
 \end{proof}
 
 例如 \(C_{18}=\langle g\rangle\) 中 \(g^6\) 的阶为 \(3\)，\(g^4\) 的阶为 \(9\)，且
 \(\langle g^4\rangle=\langle g^2\rangle\)。商去 \(\langle g^6\rangle\) 得到六阶循环群。此时“子群唯一”是指给定阶的子群唯一，并非生成元唯一：同一个三阶子群由 \(g^6\) 或 \(g^{12}\) 生成。
 
 \ProseParagraphBreak
-同态同样可以显式计算。设 \(C_m=\langle x\rangle\)、\(C_n=\langle y\rangle\)。任一同态由 \(x\) 的像 \(y^a\) 唯一决定，它存在当且仅当 \(n\mid ma\)。必要性来自 \(x^m=1\)；充分性来自
-\(x^k\mapsto y^{ak}\) 在相差 \(m\) 的指数上同值。令 \(d=\gcd(m,n)\)，可取且仅可取
-\(a=0,n/d,2n/d,\ldots,(d-1)n/d\)，所以共有 \(d\) 个同态。比如 \(C_6\rightarrow C_9\) 只有三种，由生成元分别送到 \(1,y^3,y^6\) 给出；其中两种非平凡同态的像都为同一个三阶子群。
+同态同样可以显式计算。
+\begin{proposition}[循环群之间的同态]\label{b1:prop:cyclic-homomorphisms}
+设 \(C_m=\langle x\rangle\)、\(C_n=\langle y\rangle\)，其中 \(m,n\geq1\)。任一同态由 \(x\) 的像 \(y^a\) 唯一决定；指定这个像能够给出同态，当且仅当 \(n\mid ma\)。若 \(d=\gcd(m,n)\)，则模 \(n\) 的全部可取指数为
+\[
+a=0,n/d,2n/d,\ldots,(d-1)n/d,
+\]
+所以同态共有 \(d\) 个。
+\end{proposition}
+\begin{proof}
+同态必须把 \(x^k\) 送到 \(y^{ak}\)，故至多有一个。因为 \(x^m=1\)，其存在要求 \(y^{am}=1\)，由\eqref{b1:eq:element-order-divisibility}等价于 \(n\mid ma\)。反过来，若此整除条件成立，则 \(x^k=x^\ell\) 给出 \(m\mid k-\ell\)，进而 \(n\mid a(k-\ell)\)，所以 \(y^{ak}=y^{a\ell}\)。公式 \(x^k\mapsto y^{ak}\) 因而良定义；指数相加立即给出同态性。写 \(m=dm'\)、\(n=dn'\)，则 \(n\mid ma\) 等价于 \(n'\mid m'a\)。因 \(m',n'\) 互素，Bézout 等式使它等价于 \(n'\mid a\)，给出所列的 \(d\) 个模 \(n\) 指数。
+\end{proof}
+
+比如 \(C_6\rightarrow C_9\) 只有三种，由生成元分别送到 \(1,y^3,y^6\) 给出；其中两种非平凡同态的像都为同一个三阶子群。
 
 \subsection{有限循环群的自同构群}
 \label{b1:subsec:0301:03}
@@ -91,9 +104,9 @@
 \end{theorem}
 \symidx{\((\mathbb Z/n\mathbb Z)^\times\)：可逆剩余类群}
 \begin{proof}
-前一小节说明所有自同态都有该形式。它满射当且仅当 \(g^a\) 仍生成
-\(C_n\)，由阶公式当且仅当 \(\gcd(a,n)=1\)；有限集合上满射即双射。若互素，Bézout 等式给出 \(ab\equiv1\pmod n\)，所以 \(\alpha_b\) 是逆映射。反之，剩余类有乘法逆时 \(ab-1\) 被 \(n\) 整除，任何公因子都整除 \(1\)，故互素。逐点计算
-\(\alpha_a(\alpha_b(g^k))=g^{abk}\)，得到复合公式及所述群同构。
+在\cref{b1:prop:cyclic-homomorphisms}中取定义域与目标的阶都为 \(n\)，得到全部自同态 \(g^k\mapsto g^{ak}\)，其中任意模 \(n\) 指数 \(a\) 都满足存在条件 \(n\mid na\)。它满射当且仅当 \(g^a\) 仍生成
+\(C_n\)，由\cref{b1:prop:power-order}，\(\operatorname{ord}(g^a)=n/\gcd(n,a)\)，故这当且仅当 \(\gcd(a,n)=1\)；有限集合上满射即双射。若互素，Bézout 等式给出 \(ab\equiv1\pmod n\)，所以 \(\alpha_b\) 是逆映射。反之，剩余类有乘法逆时 \(ab-1\) 被 \(n\) 整除，任何公因子都整除 \(1\)，故互素。逐点计算
+\(\alpha_a\bigl(\alpha_b(g^k)\bigr)=g^{abk}\)，得到复合公式及所述群同构。
 \end{proof}
 
 可逆剩余类的个数记为 \(\varphi(n)\)，称为\term[euler-hanshu]{Euler 函数}[Euler totient function]。例如 \(n=8\) 时可取 \(1,3,5,7\)，它们的平方模 \(8\) 都为 \(1\)。于是 \(\operatorname{Aut}(C_8)\) 有四个元素，但不是循环群，因为没有四阶元素。一个循环群的自同构群不一定循环。

@@ -12,6 +12,11 @@
 % * 同阶非同构群的比较
 %
 
+二面体群来自正多边形的旋转与反射，四元数群则可以用二阶复矩阵直接构造。它们在八阶时给出两个不同的非交换群，说明仅仅知道元素总数还不足以确定乘法结构。
+
+\ProseParagraphBreak
+我们会把这两个群写成能够逐项计算的形式，再比较元素的阶、子群及中心。二面体群的下标在不同教材中常有不同约定，本书的 \(D_{2n}\) 始终表示阶为 \(2n\) 的群。
+
 \subsection{二面体群的表示、子群与中心}
 \label{b1:subsec:0303:01}
 
@@ -19,7 +24,7 @@
 \(r(k)=k+1\)、\(s(k)=-k\)，它们分别表示转过 \(2\pi/n\) 与固定顶点 \(0\) 的一条轴反射。
 
 \begin{definition}\label{b1:def:dihedral-group}
-当 \(n\geq3\) 时，由 \(r,s\) 生成的置换群称为\term[ermiantiqun]{二面体群}[dihedral group]，记为 \(D_{2n}\)。本书下标表示群阶，因此正方形的对称群记为 \(D_8\)。
+设 \(n\geq3\)。在顶点编号集合 \(\mathbb Z/n\mathbb Z\) 上取置换 \(r(k)=k+1\)、\(s(k)=-k\)，以置换复合作为乘法。由这两个置换及其逆的所有有限乘积组成的群称为\term[ermiantiqun]{二面体群}[dihedral group]，记为 \(D_{2n}\)。它就是由一次基本旋转与一次反射生成的群；本书下标表示群阶，因此正方形的对称群记为 \(D_8\)。
 \end{definition}
 \symidx{\(D_{2n}\)：阶为 \(2n\) 的二面体群}
 
@@ -29,10 +34,10 @@
 r^n=s^2=1,\qquad srs=r^{-1}.
 \]
 上述关系足以化简任意乘积，其一般公式为
-\[
+\begin{equation}\label{b1:eq:dihedral-multiplication}
 (r^as^\varepsilon)(r^bs^\delta)
 =r^{a+(-1)^\varepsilon b}s^{\varepsilon+\delta},
-\]
+\end{equation}
 其中 \(r\) 的指数按模 \(n\)、\(s\) 的指数按模 \(2\) 计算。
 \end{proposition}
 \begin{proof}
@@ -49,7 +54,7 @@ r^n=s^2=1,\qquad srs=r^{-1}.
 \(\langle r^d,r^as\rangle\)，其中 \(d\mid n\)。后一种情形的阶为 \(2n/d\)，参数 \(a\) 可唯一按模 \(d\) 选取。
 \end{proposition}
 \begin{proof}
-设 \(H\leq D_{2n}\)。由循环群的子群分类，\(H\cap\langle r\rangle=\langle r^d\rangle\)。若 \(H\) 不含反射便得到第一种情形；否则取 \(r^as\in H\)。对任一另一个反射 \(r^bs\in H\)，其与 \(r^as\) 的逆之积为 \(r^{b-a}\)，属于 \(\langle r^d\rangle\)，故 \(b\equiv a\pmod d\)。反过来，\(\langle r^d\rangle(r^as)\) 中的反射都在 \(H\)。因此 \(H\) 恰由这两个不交部分组成，每部分有 \(n/d\) 个元素。改变 \(a\) 为同余值不改变反射集合，不同模 \(d\) 的值则给出不同集合。
+设 \(H\leq D_{2n}\)。由\cref{b1:prop:dihedral-normal-form}，\(\langle r\rangle\) 为 \(n\) 阶循环群。把\cref{b1:thm:cyclic-subgroups}用于它的子群 \(H\cap\langle r\rangle\)，得到 \(H\cap\langle r\rangle=\langle r^d\rangle\)，其中 \(d\mid n\)，该子群有 \(n/d\) 个元素。若 \(H\) 不含反射便得到第一种情形；否则取 \(r^as\in H\)。对任一另一个反射 \(r^bs\in H\)，由\eqref{b1:eq:dihedral-multiplication}，其与 \(r^as\) 的逆之积为 \(r^{b-a}\)，属于 \(\langle r^d\rangle\)，故 \(b\equiv a\pmod d\)。反过来，\(\langle r^d\rangle(r^as)\) 中的反射都在 \(H\)。因此 \(H\) 恰由这两个不交部分组成，每部分有 \(n/d\) 个元素。改变 \(a\) 为同余值不改变反射集合，不同模 \(d\) 的值则给出不同集合。
 \end{proof}
 
 \begin{definition}\label{b1:def:center}
@@ -70,23 +75,23 @@ Z(D_{2n})=
 \subsection{四元数群与非交换小群}
 \label{b1:subsec:0303:02}
 
-八阶非交换群不只有正方形对称群。下面用具体矩阵给出另一个群，这种做法让结合律直接继承矩阵乘法，避免仅靠一张乘法表宣称已经构造了群。令 \(\mathrm i\) 为复数虚数单位，取
+八阶非交换群不只有正方形对称群。下面用具体矩阵给出另一个群，这种做法让结合律直接继承矩阵乘法，而闭合性和逆元仍须逐项检验。
+
+\begin{definition}\label{b1:def:quaternion-group}
+令 \(\mathrm i\) 为复数虚数单位，\(I\) 为二阶单位矩阵，取
 \[
 U=\begin{pmatrix}\mathrm i&0\\0&-\mathrm i\end{pmatrix},\qquad
 V=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad W=UV.
 \]
-直接相乘得到 \(U^2=V^2=W^2=-I\)，\(VU=-UV\)。这里 \(I\) 是二阶单位矩阵。
-
-\begin{definition}\label{b1:def:quaternion-group}
-八个矩阵 \(\{I,-I,U,-U,V,-V,W,-W\}\) 组成的群称为\term[siyuanshu-qun]{四元数群}[quaternion group]，记为 \(Q_8\)。通常用 \(1,-1,i,-i,j,-j,k,-k\) 简记这些矩阵。
+集合 \(\{I,-I,U,-U,V,-V,W,-W\}\) 配备通常的矩阵乘法，称为\term[siyuanshu-qun]{四元数群}[quaternion group]，记为 \(Q_8\)。通常用 \(1,-1,i,-i,j,-j,k,-k\) 简记这些矩阵。
 \end{definition}
 \symidx{\(Q_8\)：四元数群}
 
-这八个矩阵两两不同。利用 \(VU=-UV\) 把 \(U\) 移到 \(V\) 前面，再用 \(U^2=V^2=-I\) 约化，任何乘积都能化为
+直接相乘得到 \(U^2=V^2=W^2=-I\)、\(VU=-UV\)，而八个矩阵两两不同。利用 \(VU=-UV\) 把 \(U\) 移到 \(V\) 前面，再用 \(U^2=V^2=-I\) 约化，任何乘积都能化为
 \(\pm U^aV^b\)，其中 \(a,b\in\{0,1\}\)，所以乘法封闭。单位元为 \(I\)，每个元素的逆仍在集合中，例如 \(U^{-1}=-U\)、\((-U)^{-1}=U\)。结合律来自矩阵乘法，故定义确实给出群。简记下的基本规则为
-\[
-i^2=j^2=k^2=-1,\qquad ij=k,\quad jk=i,\quad ki=j,
-\]
+\begin{equation}\label{b1:eq:quaternion-relations}
+i^2=j^2=k^2=-1,\qquad ij=k,\quad jk=i,\quad ki=j.
+\end{equation}
 反向交换两个不同的 \(i,j,k\) 时添一个负号；\(-1\) 与每个元素交换。
 
 \ProseParagraphBreak
@@ -97,7 +102,7 @@ i^2=j^2=k^2=-1,\qquad ij=k,\quad jk=i,\quad ki=j,
 \(Z(Q_8)=\{1,-1\}\)，且 \(Q_8\) 的每个子群都是正规子群。
 \end{proposition}
 \begin{proof}
-\(\pm1\) 在中心中，而每个 \(\pm i,\pm j,\pm k\) 都与另一种字母不交换，所以中心恰为所述集合。由 Lagrange 定理，真子群只能有 \(1,2,4\) 个元素。二阶子群只能为 \(\{1,-1\}\)，它正规。四阶子群中必有一个不属于 \(\{1,-1\}\) 的元素，该元素阶为 \(4\)，故该子群是 \(\langle i\rangle\)、\(\langle j\rangle\) 或 \(\langle k\rangle\) 之一；它们指数为 \(2\)，所以正规。单位子群与全群亦正规。
+\(\pm1\) 在中心中，而每个 \(\pm i,\pm j,\pm k\) 都与另一种字母不交换，所以中心恰为所述集合。由\cref{b1:thm:lagrange}，真子群的阶必须是 \(8\) 的真因子，所以只能有 \(1,2,4\) 个元素。二阶子群只能为 \(\{1,-1\}\)，它正规。四阶子群中必有一个不属于 \(\{1,-1\}\) 的元素，该元素阶为 \(4\)，故该子群是 \(\langle i\rangle\)、\(\langle j\rangle\) 或 \(\langle k\rangle\) 之一；它们指数均为 \(8/4=2\)，由\cref{b1:prop:normal-basic-examples}正规。单位子群与全群亦正规。
 \end{proof}
 
 因此“每个子群都正规”并不推出群交换。四元数群与后面出现的四元数代数也应区分：这里研究的是八个指定元素在乘法下组成的有限群，并未把所有实线性组合都收入对象。
@@ -114,7 +119,7 @@ i^2=j^2=k^2=-1,\qquad ij=k,\quad jk=i,\quad ki=j,
 阶小于 \(6\) 的群都交换，阶为 \(6\) 的非交换群已经存在。
 \end{proposition}
 \begin{proof}
-阶为 \(1\) 的情形平凡，阶为 \(2,3,5\) 的群由素数阶结论循环。若群阶为 \(4\)，有四阶元素时它循环；没有四阶元素时，非单位元的阶只能为 \(2\)，于是每个元素等于自身的逆，
+阶为 \(1\) 的情形平凡，阶为 \(2,3,5\) 的群由\cref{b1:cor:finite-order-divides}中的素数阶结论循环，因而交换。若群阶为 \(4\)，有四阶元素时它循环；没有四阶元素时，由\cref{b1:cor:finite-order-divides}，非单位元的阶大于 \(1\)、整除 \(4\) 且不等于 \(4\)，只能为 \(2\)，于是每个元素等于自身的逆，
 \(ab=(ab)^{-1}=b^{-1}a^{-1}=ba\)，所以交换。另一方面，\(D_6\) 中
 \(sr=r^{-1}s\ne rs\)，因为 \(r\) 的阶为 \(3\)，所以它是六阶非交换群。
 \end{proof}

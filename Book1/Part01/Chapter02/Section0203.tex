@@ -12,6 +12,11 @@
 % * 单群概念与简单例子
 %
 
+陪集给出了集合的划分，但“把每一块当作一个新元素”以后，原来的乘法未必仍有意义。问题和第一章的商运算相同：换一个代表元，计算结果是否还在同一块中？在群中，这个相容条件恰好由正规性描述。
+
+\ProseParagraphBreak
+本节先建立商群，再说明哪些同态能够通过商映射。单群的定义放在最后，它所排除的是非平凡的正规子群，而不是所有真子群。
+
 \subsection{正规性及商群构造}
 \label{b1:subsec:0203:01}
 
@@ -31,8 +36,15 @@
 \(g^{-1}Ng\subseteq N\)，两侧再共轭便得 \(N\subseteq gNg^{-1}\)，故等号成立。等式 \(gNg^{-1}=N\) 两边右乘 \(g\)，恰为 \(gN=Ng\)，反向亦然。
 \end{proof}
 
-群同态的核总是正规子群，因为若 \(f(n)=1\)，则
-\(f(gng^{-1})=f(g)f(n)f(g)^{-1}=1\)。阿贝尔群中的每个子群都正规，因为 \(gng^{-1}=n\)。另一个不要求交换性的例子是指数为 \(2\) 的子群：若 \(g\in H\)，则两陪集都是 \(H\)；若 \(g\notin H\)，左右陪集都等于补集 \(G\setminus H\)，故仍相同。
+\begin{proposition}[正规子群的基本例子]\label{b1:prop:normal-basic-examples}
+群同态的核是正规子群；阿贝尔群的每个子群都是正规子群；任意群中指数为 \(2\) 的子群都是正规子群。
+\end{proposition}
+\begin{proof}
+设 \(f:G\rightarrow K\) 为同态。由\cref{b1:prop:kernel-fibers}，\(\ker f\) 已是子群。若 \(n\in\ker f\)，则
+\(f(gng^{-1})=f(g)f(n)f(g)^{-1}=1\)，故 \(g(\ker f)g^{-1}\subseteq\ker f\)；\cref{b1:prop:normal-criteria}给出正规性。若 \(G\) 交换，则对任意子群 \(H\)、\(h\in H\) 和 \(g\in G\)，有 \(ghg^{-1}=h\)，所以 \(H\) 正规。
+
+最后设 \([G:H]=2\)。由\cref{b1:prop:coset-equivalence}，左、右陪集各有两个。若 \(g\in H\)，则 \(gH=Hg=H\)；若 \(g\notin H\)，则两者都是各自划分中除 \(H\) 外的唯一一块，因而都等于 \(G\setminus H\)。所以对所有 \(g\) 有 \(gH=Hg\)，再用\cref{b1:prop:normal-criteria}即得正规性。
+\end{proof}
 
 \begin{theorem}[商群构造]\label{b1:thm:quotient-group}
 设 \(N\leq G\)。公式 \((aN)(bN)=(ab)N\) 在左陪集集合上良定义，当且仅当 \(N\trianglelefteq G\)。满足此条件时，该运算使 \(G/N\) 成为群，称为\term[shangqun]{商群}[quotient group]；单位元为 \(N\)，逆元公式为 \((aN)^{-1}=a^{-1}N\)。商映射 \(q(g)=gN\) 是满同态，核恰为 \(N\)。
@@ -46,8 +58,8 @@ a'b'=anbm=ab(b^{-1}nb)m.
 \(1a=a1=a\)、\(aa^{-1}=a^{-1}a=1\) 下降。商映射保持乘法且满射；\(q(g)=N\) 当且仅当 \(g\in N\)。
 
 反过来，假设该公式良定义。对任意 \(n\in N,g\in G\)，由 \(nN=N\) 得
-\((ng)N=(nN)(gN)=N(gN)=gN\)。陪集判据给出
-\(g^{-1}ng\in N\)。因 \(g\) 任意，正规性判据适用。
+\((ng)N=(nN)(gN)=N(gN)=gN\)。\cref{b1:prop:coset-equivalence}的陪集相等判据给出
+\(g^{-1}ng\in N\)。因 \(g^{-1}\) 也遍历 \(G\)，\cref{b1:prop:normal-criteria}的共轭包含条件适用，故 \(N\) 正规。
 \end{proof}
 
 商群中的单位元是整个子群 \(N\)，并非单个元素 \(1\)。例如
@@ -63,8 +75,8 @@ a'b'=anbm=ab(b^{-1}nb)m.
 \end{theorem}
 \begin{proof}
 如果已有分解，\(n\in N\) 时 \(q(n)=N\) 为商群单位元，故 \(f(n)=1\)。反过来，若 \(N\subseteq\ker f\)，则
-\(gN=hN\) 蕴含 \(h^{-1}g\in N\)，于是 \(f(h)^{-1}f(g)=1\)，即 \(f(g)=f(h)\)，证明所给公式良定义。由
-\(\overline f((gN)(hN))=f(gh)=f(g)f(h)\)，它为同态。每个商群元素都是某个 \(q(g)\)，所以分解等式强制决定其全部取值，给出唯一性。
+由\cref{b1:prop:coset-equivalence}，\(gN=hN\) 蕴含 \(h^{-1}g\in N\)，于是 \(f(h)^{-1}f(g)=1\)，即 \(f(g)=f(h)\)，证明所给公式良定义。由
+\(\overline f\bigl((gN)(hN)\bigr)=f(gh)=f(g)f(h)\)，它为同态。每个商群元素都是某个 \(q(g)\)，所以分解等式强制决定其全部取值，给出唯一性。
 \end{proof}
 
 例如映射 \(\mathbb Z\rightarrow\mathbb Z/3\mathbb Z\)，\(a\mapsto[a]\)，能够经由 \(\mathbb Z/6\mathbb Z\) 分解，因为 \(6\mathbb Z\subseteq3\mathbb Z\)。诱导映射是把模 \(6\) 的类再取模 \(3\)。同一个公式却不能定义从 \(\mathbb Z/4\mathbb Z\) 到 \(\mathbb Z/3\mathbb Z\) 的映射：\(0,4\) 在前者代表同一类，在后者代表不同类。泛性质把这种代表元检验概括为核的包含条件。
@@ -80,13 +92,13 @@ a'b'=anbm=ab(b^{-1}nb)m.
 非平凡群 \(G\) 若仅有 \(\{1\}\) 和 \(G\) 两个正规子群，就称为\term[danqun]{单群}[simple group]。
 \end{definition}
 
-单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由核的正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群则单射。因此单群没有大小严格介于平凡群与自身之间的同态像。
+单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由\cref{b1:prop:normal-basic-examples}的核正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群，则\cref{b1:prop:kernel-fibers}保证单射。因此单群没有大小严格介于平凡群与自身之间的同态像。
 
 \begin{proposition}\label{b1:prop:abelian-simple}
 阿贝尔群是单群，当且仅当它的阶为素数。
 \end{proposition}
 \begin{proof}
-素数阶群没有非平凡真子群，这是 Lagrange 定理的直接结果。反过来，设 \(G\) 是阿贝尔单群，取 \(g\ne1\)。阿贝尔群的所有子群均正规，故非平凡子群 \(\langle g\rangle\) 必为 \(G\)。如果 \(g\) 为无限阶，则 \(\langle g^2\rangle\) 非平凡且不含 \(g\)：否则 \(g=g^{2k}\) 给出非零整数次幂等于 \(1\)。这与单性矛盾。故 \(g\) 有有限阶 \(n>1\)。若 \(n=ab\)，其中 \(a,b>1\)，则 \(g^a\ne1\)，而 \(\langle g^a\rangle\) 至多有 \(b<n\) 个元素，再次得到非平凡真子群。因此 \(n\) 为素数。
+若 \(\lvert G\rvert=p\) 为素数，则\cref{b1:thm:lagrange}使每个子群的阶只能为 \(1\) 或 \(p\)，所以没有非平凡真子群，尤其没有非平凡真正规子群。反过来，设 \(G\) 是阿贝尔单群，取 \(g\ne1\)。阿贝尔群的所有子群均正规，故非平凡子群 \(\langle g\rangle\) 必为 \(G\)。如果 \(g\) 为无限阶，则 \(\langle g^2\rangle\) 非平凡且不含 \(g\)：否则 \(g=g^{2k}\) 给出非零整数次幂等于 \(1\)。这与单性矛盾。故 \(g\) 有有限阶 \(n>1\)。若 \(n=ab\)，其中 \(a,b>1\)，则 \(g^a\ne1\)，而 \(\langle g^a\rangle\) 至多有 \(b<n\) 个元素，再次得到非平凡真子群。因此 \(n\) 为素数。
 \end{proof}
 
 非交换单群的构造需要比本章更多的工具；本节不预先假定它们的分类。单群概念的价值在于提出一个结构问题：给定群能否通过正规子群与商群分成较小的部分？这种分解与任意子群的划分不同，因为只有正规子群允许保留商上的群运算。

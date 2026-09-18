@@ -5,6 +5,8 @@
 \section{半直积}
 \label{b1:sec:0602}
 
+直积中来自不同因子的元素总是交换，但二面体群的旋转与反射并不满足这一条件：反射会把旋转共轭为它的逆。半直积保留了两因子给出的坐标，同时用一个自同构作用记录它们怎样交换位置。这里既要从群和作用构造新群，也要判断一个已有的群何时能作这种分解；二者的乘法公式应当相互对应。
+
 % 本节正文按下列原纲要要点撰写。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
@@ -17,13 +19,12 @@
 \subsection{自同构作用与外半直积}
 \label{b1:subsec:0602:01}
 
-在直积中，一个因子的元素与另一个因子的元素交换。若允许 \(H\) 的元素在移过 \(N\) 的元素时，按指定自同构改变后者，就得到半直积。这一构造需要的原始数据是一对群 \(N,H\) 和同态
-\(\alpha:H\rightarrow\operatorname{Aut}(N)\)，记 \(\alpha(h)=\alpha_h\)。
+设想把元素写成“\(N\) 中的部分在左、\(H\) 中的部分在右”。相乘时，要把第二个元素的 \(N\) 部分移过第一个元素的 \(H\) 部分；由 \(H\) 所给出的自同构便出现在这个位置。
 
 \begin{definition}\label{b1:def:semidirect-product}
-相对于 \(\alpha\) 的\term[wai-banzhiji]{外半直积}[external semidirect product]是集合 \(N\times H\)，配备乘法
+设 \(N,H\) 为群，给定群同态 \(\alpha:H\rightarrow\operatorname{Aut}(N)\)，并记 \(\alpha_h=\alpha(h)\)。也就是说，每个 \(\alpha_h:N\rightarrow N\) 是自同构，且 \(\alpha_1=\operatorname{id}_N\)、\(\alpha_{hh'}=\alpha_h\circ\alpha_{h'}\)。相对于 \(\alpha\) 的\term[wai-banzhiji]{外半直积}[external semidirect product]是集合 \(N\times H\)，配备乘法
 \[
-(n,h)(n',h')=(n\alpha_h(n'),hh').
+(n,h)(n',h')=\bigl(n\alpha_h(n'),hh'\bigr).
 \]
 这个群记为 \(N\rtimes_\alpha H\)，作用明确时简记 \(N\rtimes H\)。
 \symidx{\(N\rtimes_\alpha H\)：外半直积}
@@ -34,41 +35,42 @@ n\alpha_h(n')\alpha_{hh'}(n''),
 \]
 右结合的第一坐标为
 \[
-n\alpha_h(n'\alpha_{h'}(n''))
+n\alpha_h\bigl(n'\alpha_{h'}(n'')\bigr)
 =n\alpha_h(n')(\alpha_h\alpha_{h'})(n''),
 \]
 两者相等，使用了 \(\alpha_h\) 保持乘法和 \(\alpha_{hh'}=\alpha_h\alpha_{h'}\)；第二坐标的结合律来自 \(H\)。单位是 \((1,1)\)，逆元公式为
 \[
-(n,h)^{-1}=(\alpha_{h^{-1}}(n^{-1}),h^{-1}),
+(n,h)^{-1}=\bigl(\alpha_{h^{-1}}(n^{-1}),h^{-1}\bigr),
 \]
 代入左右乘积均得到 \((1,1)\)。
 
 \ProseParagraphBreak
 嵌入 \(n\mapsto(n,1)\)、\(h\mapsto(1,h)\) 把 \(N,H\) 识别为子群；投影 \((n,h)\mapsto h\) 是满同态，核为 \(N\times\{1\}\)，故这个副本的 \(N\) 正规。两种嵌入满足
-\[
-(1,h)(n,1)(1,h)^{-1}=(\alpha_h(n),1).
-\]
+\begin{equation}\label{b1:eq:semidirect-conjugation}
+(1,h)(n,1)(1,h)^{-1}=\bigl(\alpha_h(n),1\bigr).
+\end{equation}
 此外，每个元素唯一写为 \((n,1)(1,h)\)。这些关系也给出半直积的泛性质。
 
 \begin{proposition}\label{b1:prop:semidirect-universal}
 给定同态 \(u:N\rightarrow K\)、\(v:H\rightarrow K\)，存在同态
 \(F:N\rtimes_\alpha H\rightarrow K\) 限制为 \(u,v\)，当且仅当
 \[
-v(h)u(n)v(h)^{-1}=u(\alpha_h(n))
+v(h)u(n)v(h)^{-1}=u\bigl(\alpha_h(n)\bigr)
 \quad(n\in N,\ h\in H).
 \]
 存在时唯一，并且 \(F(n,h)=u(n)v(h)\)。
 \end{proposition}
 \begin{proof}
-必要性来自上面的共轭等式。满足相容条件时，
+若 \(F\) 是所求同态，对\eqref{b1:eq:semidirect-conjugation}两边应用 \(F\)，并代入 \(F(n,1)=u(n)\)、\(F(1,h)=v(h)\)，就得到
+\(v(h)u(n)v(h)^{-1}=u\bigl(\alpha_h(n)\bigr)\)，这证明必要性。反过来，满足此条件时定义 \(F(n,h)=u(n)v(h)\)。计算
 \[
 \begin{aligned}
 u(n)v(h)u(n')v(h')
-&=u(n)u(\alpha_h(n'))v(h)v(h')\\
-&=u(n\alpha_h(n'))v(hh'),
+&=u(n)u\bigl(\alpha_h(n')\bigr)v(h)v(h')\\
+&=u\bigl(n\alpha_h(n')\bigr)v(hh'),
 \end{aligned}
 \]
-故指定公式保持乘法，给出存在性。唯一分解为两个坐标因子给出唯一性。
+故 \(F(n,h)F(n',h')=F\Bigl(n\alpha_h(n'),hh'\Bigr)\)，正是保持半直积乘法的条件。又因 \(u(1)=v(1)=1\)，此映射在两个坐标子群上的限制确为 \(u,v\)。最后，任何满足限制条件的同态都必须把 \((n,h)=(n,1)(1,h)\) 送到 \(u(n)v(h)\)，所以唯一。
 \end{proof}
 
 \subsection{内半直积判别}
@@ -90,7 +92,7 @@ u(n)v(h)u(n')v(h')
 所以映射为同态。\(NH=G\) 给出满射；若 \(nh=n'h'\)，则
 \(n'^{-1}n=h'h^{-1}\in N\cap H\)，故 \(n=n'\)、\(h=h'\)，映射单射。
 \end{proof}
-满足该定理条件时，称 \(G\) 是 \(N,H\) 的\term[nei-banzhiji]{内半直积}[internal semidirect product]，称 \(H\) 为 \(N\) 的一个\term[buqun]{补群}[complement]。直积是作用平凡的半直积：当 \(\alpha_h(n)=n\) 时，乘法恢复为逐坐标乘法。反过来，若此内分解中的 \(H\) 也正规，则两正规因子的交平凡迫使它们交换，作用便平凡。
+满足该定理条件时，称 \(G\) 是 \(N,H\) 的\term[nei-banzhiji]{内半直积}[internal semidirect product]，称 \(H\) 为 \(N\) 的一个\term[buqun]{补群}[complement]。直积是作用平凡的半直积：当 \(\alpha_h(n)=n\) 时，乘法恢复为逐坐标乘法。反过来，若此内分解中的 \(H\) 也正规，则满足\cref{b1:prop:internal-direct-product}的全部条件；该命题证明中的计算给出 \(hnh^{-1}n^{-1}\in N\cap H=\{1\}\)，故 \(\alpha_h(n)=n\)，作用便平凡。
 
 \ProseParagraphBreak
 外半直积从群和作用制造新群，内半直积则在一个既有群中验证能否如此分解。符号 \(N\rtimes H\) 仅省略了已经说明的作用，不表示同一对抽象群只有一种半直积；例如 \(C_3\) 与 \(C_2\) 的平凡作用给出 \(C_6\)，取逆作用给出 \(S_3\)。
@@ -98,10 +100,10 @@ u(n)v(h)u(n')v(h')
 \subsection{二面体群、仿射群与具体计算}
 \label{b1:subsec:0602:03}
 
-在 \(D_{2n}\) 中，取旋转子群 \(N=\langle r\rangle\cong C_n\) 和反射子群 \(H=\langle s\rangle\cong C_2\)，其中 \(n\geq3\)。每个对称唯一写为 \(r^is^j\)，且 \(srs^{-1}=r^{-1}\)，故
+在 \(D_{2n}\) 中，取旋转子群 \(N=\langle r\rangle\cong C_n\) 和反射子群 \(H=\langle s\rangle\cong C_2\)，其中 \(n\geq3\)。\cref{b1:prop:dihedral-normal-form}给出每个对称的唯一表达 \(r^is^j\) 及关系 \(srs^{-1}=r^{-1}\)。因 \(\langle r\rangle\) 被生成元 \(r,s\) 的共轭保持，\(N\trianglelefteq D_{2n}\)；唯一表达又给出 \(N\cap H=\{1\}\) 和 \(NH=D_{2n}\)。因此可应用\cref{b1:thm:internal-semidirect}，其中 \(s\) 的共轭作用为取逆，得到
 \[
 D_{2n}\cong C_n\rtimes C_2,\qquad
-(i,j)(k,\ell)=(i+(-1)^jk,j+\ell),
+(i,j)(k,\ell)=\bigl(i+(-1)^jk,j+\ell\bigr),
 \]
 第一坐标模 \(n\)，第二坐标模 \(2\)。例如 \((i,1)^2=(0,0)\)，所以每个反射阶为 \(2\)；而 \((1,1)(1,0)=(0,1)\)、\((1,0)(1,1)=(2,1)\)，在 \(n\geq3\) 时不同，明确显示非交换性。
 
@@ -117,8 +119,8 @@ x\longmapsto aa'x+(b+ab').
 从而\term[fangshe-qun]{仿射群}[affine group]为
 \((\mathbb R,+)\rtimes(\mathbb R^\times,\cdot)\)，作用为数乘。它也可写成矩阵群
 \[
-\left\{\begin{pmatrix}a&b\\0&1\end{pmatrix}
-\ \middle|\ a\neq0,\ b\in\mathbb R\right\}.
+\Biggl\{\begin{pmatrix}a&b\\0&1\end{pmatrix}
+\ \Bigg|\ a\neq0,\ b\in\mathbb R\Biggr\}.
 \]
 平移是正规子群，固定原点的伸缩给出一个补群。换一个原点会换一个补群，但整个仿射群并不因此改变。
 

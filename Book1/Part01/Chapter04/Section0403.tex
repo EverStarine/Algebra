@@ -5,6 +5,8 @@
 \section{轨道计数}
 \label{b1:sec:0403}
 
+当若干对象在对称变换下视为相同，所求数量就是轨道数。不能一概用对象总数除以群阶，因为对称性较强的对象有较小的轨道。直接列出每个轨道往往困难，固定一个变换后计算它保持不动的对象却容易得多。对这些不动点数取平均，将给出正确的计数公式。
+
 % 本节正文按下列原纲要要点撰写。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
@@ -17,7 +19,7 @@
 \subsection{Burnside 轨道计数引理}
 \label{b1:subsec:0403:01}
 
-当对象在某些对称变换下视为相同，所求数量就是轨道数。直接列出轨道常很困难，固定一个变换后数它保持不动的对象却容易得多。下面的\term[burnside-guidao-jishu-yinli]{Burnside 轨道计数引理}[Burnside orbit-counting lemma]把这两种计数联系起来。
+下面的\term[burnside-guidao-jishu-yinli]{Burnside 轨道计数引理}[Burnside orbit-counting lemma]把轨道数与各个群元素的不动点数联系起来。
 
 \begin{theorem}[Burnside 轨道计数]\label{b1:thm:burnside-count}
 设有限群 \(G\) 作用在有限集合 \(X\) 上。记轨道集合为 \(X/G\)，并记
@@ -32,10 +34,10 @@ X^g\coloneqq\{\,x\in X\mid gx=x\,\}.
 \symidx{\(X/G\)：作用的轨道集合}
 \end{theorem}
 \begin{proof}
-考察集合 \(E=\{\,(g,x)\in G\times X\mid gx=x\,\}\)。先固定 \(g\)，得到
+考察集合 \(E=\bigl\{\,(g,x)\in G\times X\mid gx=x\,\bigr\}\)。先固定 \(g\)，得到
 \(|E|=\sum_g|X^g|\)；先固定 \(x\)，得到
 \(|E|=\sum_x|G_x|\)。
-在同一轨道 \(O\) 内，稳定子的阶都为 \(|G|/|O|\)，所以该轨道对后一和式的贡献为
+对同一轨道 \(O\) 中的每个 \(x\)，\cref{b1:thm:orbit-stabilizer}给出 \(|G_x|=|G|/|Gx|=|G|/|O|\)，所以该轨道对后一和式的贡献为
 \[
 \sum_{x\in O}|G_x|=|O|\frac{|G|}{|O|}=|G|.
 \]
@@ -51,17 +53,17 @@ X^g\coloneqq\{\,x\in X\mid gx=x\,\}.
 (g\cdot f)(v)=f(g^{-1}v).
 \]
 逆元使复合方向相容：\(g\cdot(h\cdot f)\) 在 \(v\) 的值为
-\(f(h^{-1}g^{-1}v)=f((gh)^{-1}v)\)。染色 \(f\) 被 \(g\) 固定，当且仅当它在 \(g\) 的每个顶点轮换上取常值。因此，若 \(g\) 在 \(V\) 上有 \(c(g)\) 个轮换（包括不动顶点），则 \(|X^g|=k^{c(g)}\)。
+\(f(h^{-1}g^{-1}v)=f\bigl((gh)^{-1}v\bigr)\)。染色 \(f\) 被 \(g\) 固定，当且仅当它在 \(g\) 的每个顶点轮换上取常值。因此，若 \(g\) 在 \(V\) 上有 \(c(g)\) 个轮换（包括不动顶点），则 \(|X^g|=k^{c(g)}\)。
 
 \ProseParagraphBreak
-若只允许旋转，群为 \(C_4\)。单位有四个轮换，两个四分之一周旋转各有一个轮换，半周旋转有两个轮换，故染色轨道数为
+若只允许旋转，群为 \(C_4\)。单位有四个轮换，两个四分之一周旋转各有一个轮换，半周旋转有两个轮换。把相应的不动点数 \(k^4,k,k,k^2\) 代入\cref{b1:thm:burnside-count}并除以群阶 \(4\)，得到染色轨道数
 \[
 \frac{k^4+k^2+2k}{4}.
 \]
 例如 \(k=2\) 时得到 \(6\) 类。颜色名称不随对称变换交换，所以全红与全蓝是两个不同的轨道。
 
 \ProseParagraphBreak
-若允许全部正方形对称，群为 \(D_8\)。两条对角线反射各有两个固定顶点和一个二轮换，因此有三个轮换；两条对边中点连线反射各有两个二轮换。于是计数变为
+若允许全部正方形对称，群为 \(D_8\)。两条对角线反射各有两个固定顶点和一个二轮换，因此有三个轮换；两条对边中点连线反射各有两个二轮换。在四个旋转的不动点总数之外再加上 \(2k^3+2k^2\)，\cref{b1:thm:burnside-count}要求这次除以 \(|D_8|=8\)，所以计数变为
 \[
 \frac{k^4+2k^3+3k^2+2k}{8}.
 \]
@@ -74,18 +76,21 @@ X^g\coloneqq\{\,x\in X\mid gx=x\,\}.
 \label{b1:subsec:0403:03}
 
 \begin{definition}\label{b1:def:faithful-action}
-作用对应的同态 \(\rho:G\rightarrow\operatorname{Sym}(X)\) 的核称为作用的核，即
+设群 \(G\) 作用在集合 \(X\) 上。使 \(X\) 中每一点都不动的群元素组成作用的核，记为
 \[
-K=\ker\rho=\bigcap_{x\in X}G_x.
+K\coloneqq\{\,g\in G\mid gx=x\text{ 对所有 }x\in X\,\}.
 \]
-若 \(K=\{1\}\)，称此作用为\term[zhongshi-zuoyong]{忠实作用}[faithful action]。若每个稳定子均为平凡群，称此作用为\term[ziyou-zuoyong]{自由作用}[free action]。
+若只有单位元素固定全部的点，即 \(K=\{1\}\)，称此作用为\term[zhongshi-zuoyong]{忠实作用}[faithful action]。若对任意 \(x\in X\) 和 \(g\in G\)，等式 \(gx=x\) 都蕴含 \(g=1\)，称此作用为\term[ziyou-zuoyong]{自由作用}[free action]。
 \end{definition}
+由定义，\(K\) 等于对应同态 \(\rho:G\rightarrow\operatorname{Sym}(X)\) 的核，也等于所有稳定子的交 \(\bigcap_{x\in X}G_x\)。\cref{b1:prop:kernel-fibers}说明同态单射当且仅当核平凡，因此忠实等价于 \(\rho\) 单射；自由则按定义等价于每个稳定子都平凡。
+
+\ProseParagraphBreak
 自由作用一定忠实（这里假设 \(X\neq\varnothing\)），反过来不成立：\(S_3\) 在三个点上的自然作用忠实，但换位仍固定一个点。忠实性要求一个元素只要固定所有点就必须为单位；自由性要求一个元素只要固定任一点就必须为单位，二者的量词不同。
 
 \begin{proposition}\label{b1:prop:quotient-action}
 若 \(K\) 是作用的核，则公式 \((gK)x=gx\) 定义 \(G/K\) 在 \(X\) 上的忠实作用，且与原作用具有相同的轨道。
 \end{proposition}
 \begin{proof}
-若 \(gK=hK\)，写 \(g=hk\)，则 \(gx=h(kx)=hx\)，所以定义与代表元无关。两条作用公理从原作用继承。若 \(gK\) 固定每个点，则 \(g\in K\)，所以这个陪集是单位。最后，任一 \(g\) 与其陪集对 \(X\) 的变换相同，故轨道不变。
+首先，\(K=\ker\rho\) 是同态的核，故由\cref{b1:prop:normal-basic-examples}正规，\cref{b1:thm:quotient-group}保证 \(G/K\) 确为群。若 \(gK=hK\)，写 \(g=hk\)、\(k\in K\)，则 \(gx=h(kx)=hx\)，所以定义与代表元无关。两条作用公理从原作用继承。若 \(gK\) 固定每个点，则 \(g\in K\)，所以这个陪集是单位。最后，任一 \(g\) 与其陪集对 \(X\) 的变换相同，故轨道不变。
 \end{proof}
 例如 \(D_8\) 对两条对角线的作用有核 \(\{1,r^2,s,r^2s\}\)，这里 \(s\) 取沿一条对角线的反射。商群 \(C_2\) 忠实地交换两条对角线。这个两点作用不能区分八个对称，却足以发现一个指数为 \(2\) 的正规子群。Burnside 公式不要求忠实性；若按商群求和，每个商元素的不动点数在原群中恰重复 \(|K|\) 次，平均值保持不变。

@@ -5,6 +5,8 @@
 \section{共轭性与计数}
 \label{b1:sec:0502}
 
+存在性定理给出了阶数尽可能大的 \(p\)-子群，但尚未说明这样的子群有多少、彼此有何关系。关键是利用它的指数与 \(p\) 互素，让其他 \(p\)-子群作用在陪集集合上。不动点先给出包含与共轭关系，再把这些子群自身作为作用集合，便能约束它们的个数，并判断何时正规。
+
 % 本节正文按下列原纲要要点撰写。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
@@ -17,14 +19,14 @@
 \subsection{Sylow 子群的共轭性}
 \label{b1:subsec:0502:01}
 
-有了一个 Sylow 子群 \(P\)，就可以利用指数 \([G:P]\) 与 \(p\) 互素这一条件，让任意 \(p\)-子群作用在陪集空间上。前一章的不动点同余将把轨道计数转化为子群包含。
+先固定一个 Sylow \(p\)-子群 \(P\)。证明中的不动点是一整个陪集，因而它所给出的信息是子群的包含关系，而不是某个群元素被共轭固定。
 
 \begin{theorem}[Sylow 第二定理]\label{b1:thm:sylow-conjugacy}
 设 \(P\) 是有限群 \(G\) 的 Sylow \(p\)-子群，\(Q\leq G\) 是任意 \(p\)-子群。则存在 \(g\in G\) 使 \(g^{-1}Qg\leq P\)。特别地，每个 \(p\)-子群都包含在某个 Sylow \(p\)-子群中，且任意两个 Sylow \(p\)-子群共轭。
 \end{theorem}
 \begin{proof}
 令 \(Q\) 通过左乘作用在有限集合 \(G/P\) 上。因为
-\(|G/P|=[G:P]\) 不被 \(p\) 整除，\cref{b1:lem:p-action-fixed}保证至少有一个陪集 \(gP\) 被全部 \(Q\) 固定。因此对每个 \(q\in Q\) 都有 \(qgP=gP\)，也就是 \(g^{-1}qg\in P\)。故 \(g^{-1}Qg\leq P\)，等价地 \(Q\leq gPg^{-1}\)。如果 \(Q\) 本身也是 Sylow 子群，则两边阶相等，包含关系成为等号。
+\(|G/P|=[G:P]\) 不被 \(p\) 整除，对有限 \(p\)-群 \(Q\) 应用\cref{b1:lem:p-action-fixed}，得到 \(\bigl|(G/P)^Q\bigr|\equiv[G:P]\not\equiv0\pmod p\)。因此共同不动点集合非空，至少有一个陪集 \(gP\) 被全部 \(Q\) 固定。因此对每个 \(q\in Q\) 都有 \(qgP=gP\)，也就是 \(g^{-1}qg\in P\)。故 \(g^{-1}Qg\leq P\)，等价地 \(Q\leq gPg^{-1}\)。如果 \(Q\) 本身也是 Sylow 子群，则两边阶相等，包含关系成为等号。
 \end{proof}
 由此，按包含极大的 \(p\)-子群恰好是 Sylow \(p\)-子群：极大者包含在某个 Sylow 子群中，因极大性必与之相等。这个推论补上了上一节刻意保留的定义差别。共轭性还说明全部 Sylow \(p\)-子群不仅等阶，而且同构；但它们在 \(G\) 中可能是不同子集。
 
@@ -34,22 +36,23 @@
 \begin{theorem}[Sylow 第三定理]\label{b1:thm:sylow-count}
 若 \(|G|=p^am\)、\(p\nmid m\)，且 \(P\in\operatorname{Syl}_p(G)\)，则
 \[
-n_p=[G:N_G(P)],\qquad n_p\mid m,\qquad n_p\equiv1\pmod p.
+n_p=\bigl[G:N_G(P)\bigr],\qquad n_p\mid m,\qquad n_p\equiv1\pmod p.
 \]
 特别地，\(P\trianglelefteq G\) 当且仅当 \(n_p=1\)。
 \end{theorem}
 \begin{proof}
-共轭作用在 \(\operatorname{Syl}_p(G)\) 上传递，点 \(P\) 的稳定子为 \(N_G(P)\)，故轨道—稳定子定理给出第一式。由于 \(P\leq N_G(P)\)，
+\cref{b1:thm:sylow-conjugacy}说明任意两个 Sylow \(p\)-子群共轭，故 \(G\) 的共轭作用在 \(\operatorname{Syl}_p(G)\) 上传递。点 \(P\) 的稳定子为 \(N_G(P)\)，由\cref{b1:thm:orbit-stabilizer}，此轨道的大小为 \(\bigl[G:N_G(P)\bigr]\)，正是 \(n_p\)。由于 \(P\leq N_G(P)\)，
 \[
-[G:P]=[G:N_G(P)]\,[N_G(P):P]
+[G:P]=\bigl[G:N_G(P)\bigr]\,\bigl[N_G(P):P\bigr]
 \]
 给出 \(n_p\mid m\)。
 
-为证明同余，把共轭作用限制到 \(P\)。若 \(Q\in\operatorname{Syl}_p(G)\) 被全部 \(P\) 固定，则 \(P\leq N_G(Q)\)。因此 \(Q\) 在生成 \(P,Q\) 的子群中正规，集合 \(QP\) 是子群：将乘积中的 \(pq\) 改写为 \((pqp^{-1})p\) 即验证封闭，逆元也可同样整理。映射 \(Q\times P\rightarrow QP\) 的每个纤维有 \(|Q\cap P|\) 个元素，故
+为证明同余，把共轭作用限制到 \(P\)。若 \(Q\in\operatorname{Syl}_p(G)\) 被全部 \(P\) 固定，则 \(P\leq N_G(Q)\)。因为 \(Q\trianglelefteq N_G(Q)\) 且 \(P\leq N_G(Q)\)，可在群 \(N_G(Q)\) 内对 \(P,Q\) 应用\cref{b1:thm:second-isomorphism}。它说明 \(PQ\) 是子群，且
 \[
-|QP|=\frac{|Q|\,|P|}{|Q\cap P|}
+PQ/Q\cong P/(P\cap Q),\qquad
+|PQ|=\frac{|P|\,|Q|}{|P\cap Q|}.
 \]
-是 \(p\) 的幂。它包含阶已最大的 \(Q\)，所以 \(QP=Q\)，从而 \(P\leq Q\)，再由等阶得 \(P=Q\)。故 \(P\) 对 Sylow 集合的共轭作用只有一个共同不动点，即 \(P\) 自己。由不动点同余，\(n_p\equiv1\pmod p\)。
+这里同构由 \(x\mapsto xQ\) 诱导，\(x\in P\)，其核为 \(P\cap Q\)。\cref{b1:thm:lagrange}保证交的阶是 \(p\) 的幂，故 \(|PQ|\) 也是 \(p\) 的幂。又因 \(PQ\leq G\)，其阶整除 \(p^am\)，至多为 \(p^a=|Q|\)。它已包含 \(Q\)，所以 \(PQ=Q\)，从而 \(P\leq Q\)，再由等阶得 \(P=Q\)。故 \(P\) 对 Sylow 集合的共轭作用只有一个共同不动点，即 \(P\) 自己。对这一有限 \(p\)-群作用应用\cref{b1:lem:p-action-fixed}，Sylow 子群集合的大小模 \(p\) 等于共同不动点数 \(1\)，故 \(n_p\equiv1\pmod p\)。
 
 若 \(n_p=1\)，唯一 Sylow 子群被任意共轭保持，因此正规。若 \(P\) 正规，所有共轭都是 \(P\)，由共轭性可知没有别的 Sylow 子群。
 \end{proof}
@@ -67,7 +70,7 @@ n_p=[G:N_G(P)],\qquad n_p\mid m,\qquad n_p\equiv1\pmod p.
 设 \(P\) 为有限 \(p\)-群，\(H<P\)。则 \(H<N_P(H)\)。
 \end{proposition}
 \begin{proof}
-让 \(H\) 左乘作用在 \(P/H\) 上。陪集 \(gH\) 被全部 \(H\) 固定，当且仅当 \(g^{-1}Hg\leq H\)；因两边有限且等阶，这等价于 \(g^{-1}Hg=H\)，也就是 \(g\in N_P(H)\)。共同不动点数为 \([N_P(H):H]\)。而 \(|P/H|\) 被 \(p\) 整除，故不动点同余表明 \([N_P(H):H]\) 也被 \(p\) 整除。陪集 \(H\) 本身固定，所以此数为正，至少为 \(p\)，从而包含严格。
+由\cref{b1:thm:lagrange}，子群 \(H\) 也是有限 \(p\)-群。让 \(H\) 左乘作用在有限集合 \(P/H\) 上。陪集 \(gH\) 被全部 \(H\) 固定，当且仅当 \(g^{-1}Hg\leq H\)；因两边有限且等阶，这等价于 \(g^{-1}Hg=H\)，也就是 \(g\in N_P(H)\)。共同不动点数为 \(\bigl[N_P(H):H\bigr]\)。因 \(H<P\)，指数 \(|P/H|=[P:H]\) 是大于 \(1\) 的 \(p\) 幂。\cref{b1:lem:p-action-fixed}因而给出 \(\bigl[N_P(H):H\bigr]\equiv[P:H]\equiv0\pmod p\)。陪集 \(H\) 本身固定，所以此数为正，至少为 \(p\)，从而包含严格。
 \end{proof}
 这并不说明 \(H\) 必正规于整个 \(P\)。例如 \(D_8\) 中的反射子群 \(H=\langle s\rangle\) 不正规，但
 \[
@@ -77,4 +80,4 @@ N_{D_8}(H)=\{1,r^2,s,r^2s\}
 \(r^asr^{-a}=r^{2a}s\) 逐项检查。
 
 \ProseParagraphBreak
-另一个实用结论是：若 \(P\) 是 \(G\) 的 Sylow \(p\)-子群，则 \(P\) 也是 \(N_G(P)\) 的 Sylow \(p\)-子群，而且在其中正规、唯一。反过来，在任意子群内发现唯一 Sylow 子群，只能说明它正规于那个子群，不能直接推出它正规于 \(G\)。应用时应在 \(N_G(P)\)、\(P\) 与 \(G\) 之间保留明确的下标。
+另一个实用结论是：若 \(P\) 是 \(G\) 的 Sylow \(p\)-子群，则 \(P\) 也是 \(N_G(P)\) 的 Sylow \(p\)-子群，因为 \(P\trianglelefteq N_G(P)\)，\cref{b1:thm:sylow-count}进一步说明它是其中唯一的 Sylow \(p\)-子群。反过来，在任意子群内发现唯一 Sylow 子群，只能说明它正规于那个子群，不能直接推出它正规于 \(G\)。应用时应在 \(N_G(P)\)、\(P\) 与 \(G\) 之间保留明确的下标。

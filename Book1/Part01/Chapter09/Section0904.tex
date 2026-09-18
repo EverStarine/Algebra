@@ -5,6 +5,8 @@
 \section{结构定理的计算与模论解释}
 \label{b1:sec:0904}
 
+结构定理给出了分类形式，实际计算还须把生成元、关系和坐标变换一一对应。下面先固定关系矩阵的行列约定，再用一个完整例子说明怎样从化简结果读出循环因子并追踪具体元素。随后讨论商格的指数与子式判据。节末的模论解释只是对第二卷的预告，本节全部计算仍只依赖整数矩阵、子群与商群。
+
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 由整数关系矩阵确定阿贝尔群
@@ -47,13 +49,12 @@ M=\begin{pmatrix}4&6\\2&8\end{pmatrix}.
 \[
 U=\begin{pmatrix}0&1\\-1&2\end{pmatrix},
 \]
-所以同构具体为
+先在整数坐标上定义同态
 \[
-(u,v)+M\mathbb Z^2
-\longmapsto
-\bigl(\bar v,\overline{-u+2v}\bigr)\in C_2\oplus C_{10}.
+\psi:\mathbb Z^2\longrightarrow C_2\oplus C_{10},\qquad
+\psi(u,v)=\bigl(\bar v,\overline{-u+2v}\bigr).
 \]
-两个关系向量分别映为 \((\bar0,\bar0)\)，而 \(U\) 在整数上可逆，故此映射确为同构。原坐标中的 \((2,1)\) 对应 \(C_2\) 的标准生成元，\((-1,0)\) 对应 \(C_{10}\) 的标准生成元；它们在商群中的阶分别为二与十。
+前述列操作的矩阵为 \(V=\begin{pmatrix}1&-4\\0&1\end{pmatrix}\)，实际相乘得到 \(UMV=\operatorname{diag}(2,10)\)。因为 \(V\mathbb Z^2=\mathbb Z^2\)，有 \(U(M\mathbb Z^2)=2\mathbb Z\oplus10\mathbb Z\)。因此 \(\ker\psi=U^{-1}(2\mathbb Z\oplus10\mathbb Z)=M\mathbb Z^2\)；\(U\) 在整数上可逆，随后分别取模的映射满射，所以 \(\psi\) 满射。由\cref{b1:thm:first-isomorphism}，它诱导同构 \(\mathbb Z^2/M\mathbb Z^2\to C_2\oplus C_{10}\)，把陪集 \((u,v)+M\mathbb Z^2\) 送到 \(\psi(u,v)\)。原坐标中的 \((2,1)\) 对应 \(C_2\) 的标准生成元，\((-1,0)\) 对应 \(C_{10}\) 的标准生成元；它们在商群中的阶分别为二与十。
 
 \ProseParagraphBreak
 若生成元为 \(x,y,z\)，关系只有 \(2x=0\)、\(x+3y=0\)，则先用第二条消去 \(x=-3y\)，第一条成为 \(6y=0\)，而 \(z\) 没有关系。因此群为 \(C_6\oplus\mathbb Z\)。没有非零对角关系约束的位置贡献自由生成元，而不是有限阶循环因子。
@@ -70,7 +71,9 @@ U=\begin{pmatrix}0&1\\-1&2\end{pmatrix},
 特别地，\(L\) 的指数有限当且仅当 \(t=m\)，此时指数为 \(\prod_i d_i\)。若 \(M\) 为非奇异的 \(m\times m\) 矩阵，则指数为 \(|\det M|\)。
 \end{proposition}
 \begin{proof}
-商群公式正是 Smith 化简对坐标与关系的解释。自由部分非零时，商群无限；自由部分为零时，有限循环因子阶相乘给出指数。方阵情形中，各允许行列操作的行列式都为 \(1\) 或 \(-1\)，所以 \(|\det M|=\prod_i d_i\)。
+由\cref{b1:lem:smith-integer}，存在整数可逆矩阵 \(U,V\) 使 \(UMV=D\)，其中 \(D\) 是所述对角阵。由于 \(V\mathbb Z^n=\mathbb Z^n\)，有 \(U(L)=D\mathbb Z^n=\langle d_1e_1,\ldots,d_te_t\rangle\)。因此 \(x+L\mapsto Ux+U(L)\) 给出商群同构。再把前 \(t\) 个坐标分别模 \(d_i\)，其余坐标保留，所得满同态的核恰为 \(U(L)\)；\cref{b1:thm:first-isomorphism}遂给出所述商群公式。
+
+指数就是商群的元素数。当 \(m-t>0\) 时有无限循环直和因子，故指数无限；当 \(m=t\) 时指数为有限循环因子阶的乘积。若 \(M\) 是非奇异方阵，则 \(t=m\)，而 \(\det U,\det V\in\{1,-1\}\)，所以从 \(UMV=D\) 得 \(|\det M|=\det D=\prod_i d_i\)。
 \end{proof}
 例如上一小节的二维格指数为二十，等于 \(|4\cdot8-6\cdot2|\)。但行列式只给出总阶，并不决定商群：对角矩阵 \(\operatorname{diag}(1,20)\) 与 \(\operatorname{diag}(2,10)\) 的行列式同为二十，商群分别为 \(C_{20}\) 与 \(C_2\oplus C_{10}\)，两者中元素的最大阶不同。
 
