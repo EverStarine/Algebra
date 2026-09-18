@@ -5,8 +5,6 @@
 \section{群与子群}
 \label{b1:sec:0201}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 群的基本恒等式
@@ -17,14 +15,79 @@
 \subsection{群的基本恒等式}
 \label{b1:subsec:0201:01}
 
-待撰写。
+可逆操作之所以适合描述对称，是因为一次操作完成后，仍能通过另一次同类操作回到原状。把所有操作合在一起时，还需要复合封闭、复合结合以及恒等操作。这四项要求给出群的定义。
+
+\begin{definition}\label{b1:def:group}
+每个元素都有双边逆元的幺半群称为\term[qun]{群}[group]。若其乘法还满足交换律，则称为\term[abel-qun]{阿贝尔群}[abelian group]或交换群。群 \(G\) 的元素个数称为\term[qun-de-jie]{群的阶}[order of a group]，记为 \(\lvert G\rvert\)；元素个数有限时称有限群。
+\end{definition}
+\symidx{\(\lvert G\rvert\)：群的阶}
+
+单位元一般写为 \(1\)，逆元写为 \(g^{-1}\)。交换群使用加法记号时，二者分别写为 \(0\)、\(-g\)。加法记号并不改变定义，只提醒读者此时元素彼此交换。\((\mathbb Z,+)\) 是无限阿贝尔群，非零实数在乘法下是阿贝尔群，\(\operatorname{Sym}(X)\) 在复合下是群。
+
+\begin{proposition}\label{b1:prop:group-identities}
+在群中，逆元唯一，且
+\[
+(ab)^{-1}=b^{-1}a^{-1},\qquad (a^{-1})^{-1}=a.
+\]
+方程 \(ax=b\) 与 \(ya=b\) 分别有唯一解 \(x=a^{-1}b\)、\(y=ba^{-1}\)。特别地，左右消去律都成立。
+\end{proposition}
+\begin{proof}
+唯一性已由\cref{b1:prop:identity-inverse-unique}证明。计算
+\((ab)(b^{-1}a^{-1})=a(bb^{-1})a^{-1}=1\)，反向乘积也为 \(1\)，所以乘积逆元必须是所给式子。\(a\) 本身是 \(a^{-1}\) 的双边逆，故第二式成立。若 \(ax=b\)，左乘 \(a^{-1}\) 强制得到 \(x=a^{-1}b\)，而代入确实给出解；另一方程相同地由右乘求解。
+\end{proof}
+
+乘积取逆时次序必须反转。把 \((ab)^{-1}\) 写成 \(a^{-1}b^{-1}\)，一般相当于偷偷使用 \(ab=ba\)。同样，解 \(ax=b\) 时把 \(a^{-1}\) 写在 \(b\) 的右边也会改变结果。
+
+\ProseParagraphBreak
+对整数 \(n\) 定义 \(g^n\)：非负指数沿用幺半群中的定义，负指数取
+\(g^{-n}=(g^{-1})^n\ (n>0)\)。先消去相邻的 \(gg^{-1}\)，再应用非负指数的归纳公式，得到对任意整数 \(r,s\) 都有
+\(g^{r+s}=g^rg^s\)、\((g^r)^s=g^{rs}\)。这里所有因子都是同一元素或其逆，因此彼此交换；这并不能推出一般的 \((ab)^n=a^nb^n\)。
 
 \subsection{子群判别、生成子群与循环子群}
 \label{b1:subsec:0201:02}
 
-待撰写。
+\begin{definition}\label{b1:def:subgroup}
+群 \(G\) 的子集 \(H\) 若包含单位元，且对乘法与取逆封闭，就称为 \(G\) 的\term[ziqun]{子群}[subgroup]，记为 \(H\leq G\)。子群使用 \(G\) 的原运算。
+\end{definition}
+\symidx{\(H\leq G\)：子群关系}
+
+\begin{proposition}[子群判别]\label{b1:prop:subgroup-test}
+非空子集 \(H\subseteq G\) 是子群，当且仅当任取 \(a,b\in H\) 都有 \(ab^{-1}\in H\)。
+\end{proposition}
+\begin{proof}
+子群显然满足该条件。反过来，先取 \(a=b\) 得 \(1\in H\)，再取 \(a=1\) 得 \(b^{-1}\in H\)。既然 \(b^{-1}\) 也属于 \(H\)，把条件用于 \(a,b^{-1}\)，便得 \(ab\in H\)。结合律从 \(G\) 限制到 \(H\)，其他群公理也随之成立。
+\end{proof}
+
+非空条件不能删掉：空集使“任取两个元素”的条件空真，却不是群。在整数加法群中，\(m\mathbb Z\coloneqq\{mk\mid k\in\mathbb Z\}\) 是子群，因为两个倍数之差仍为倍数。正整数集合虽然对加法封闭，却不含零元，也不对取负封闭。
+
+\begin{definition}\label{b1:def:generated-subgroup}
+包含 \(S\subseteq G\) 的所有子群的交称为 \(S\) 生成的子群，记为 \(\langle S\rangle\)。单个元素 \(g\) 生成的子群称为\term[xunhuan-ziqun]{循环子群}[cyclic subgroup]，记为 \(\langle g\rangle\)。由一个元素生成的群称为\term[xunhuanqun]{循环群}[cyclic group]。
+\end{definition}
+\symidx{\(\langle S\rangle\)：生成子群}
+
+\begin{proposition}\label{b1:prop:generated-subgroup-words}
+\(\langle S\rangle\) 恰由有限乘积 \(s_1^{\varepsilon_1}\cdots s_r^{\varepsilon_r}\) 组成，其中 \(s_i\in S\)、\(\varepsilon_i\in\{1,-1\}\)，并允许空乘积。特别地，\(\langle g\rangle=\{g^n\mid n\in\mathbb Z\}\)。
+\end{proposition}
+\begin{proof}
+任一含 \(S\) 的子群都必须包含这些乘积。反之，这些乘积的集合含单位元，对拼接封闭；取逆时把因子次序反转并把每个指数变号，仍是这样的乘积，所以它是子群。因此它恰是所求的交。
+\end{proof}
+
+群生成与幺半群生成的区别在于允许取逆。例如 \(1\) 在 \((\mathbb Z,+)\) 中生成整个群，却只生成幺半群 \(\mathbb N\)。使用尖括号时，本章起默认表示群生成，幺半群生成仍显式带下标 \(\mathrm{mon}\)。
 
 \subsection{子群格与交、并的不同性质}
 \label{b1:subsec:0201:03}
 
-待撰写。
+子群的包含关系形成 \(G\) 的\term[ziqunge]{子群格}[subgroup lattice]。这里的“格”表达任意两个子群都有最大的公共子群和最小的共同上界：前者是交 \(H\cap K\)，后者是 \(\langle H\cup K\rangle\)。后者通常不是集合的并。
+
+\begin{proposition}\label{b1:prop:subgroup-union}
+任意族子群的交仍是子群，空族的交约定为 \(G\)。两个子群 \(H,K\) 的并是子群，当且仅当 \(H\subseteq K\) 或 \(K\subseteq H\)。若非空子群族按包含关系全序排列，则它们的并也是子群。
+\end{proposition}
+\begin{proof}
+交包含单位元，任意两个交中元素的 \(ab^{-1}\) 属于每一个子群，故属于交。对于并，若有包含关系，结论显然。若二者互不包含，取
+\(h\in H\setminus K\)、\(k\in K\setminus H\)。倘若 \(hk\in H\)，则 \(k=h^{-1}(hk)\in H\)，矛盾；倘若 \(hk\in K\)，则 \(h=(hk)k^{-1}\in K\)，亦矛盾，故并不封闭。最后，该子群族非空，其并包含单位元；在按包含关系全序排列的子群族中，任取并中的 \(a,b\)，各自所属的两个子群中总有一个包含另一个，于是二者同属一个子群，\(ab^{-1}\) 也在并中。
+\end{proof}
+
+在 \(\mathbb Z\) 中，\(2\mathbb Z\cup3\mathbb Z\) 包含 \(2,3\)，却不包含 \(2+3=5\)；而它们生成的子群含 \(3-2=1\)，所以是整个 \(\mathbb Z\)。交则是 \(6\mathbb Z\)。这一例子同时展示了交、并和由并生成的子群三者的不同。
+
+\ProseParagraphBreak
+当两个子群相互交换或有正规性条件时，可以用较简单的集合乘积描述它们生成的子群。但在当前阶段，\(\langle H\cup K\rangle\) 的一般元素仍须允许任意多次交替使用 \(H\) 与 \(K\) 的元素；不能未经检验就把它缩成一个 \(hk\)。

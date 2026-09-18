@@ -5,8 +5,6 @@
 \section{陪集与指数}
 \label{b1:sec:0202}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 左陪集、右陪集与等价关系
@@ -17,14 +15,93 @@
 \subsection{左陪集、右陪集与等价关系}
 \label{b1:subsec:0202:01}
 
-待撰写。
+子群 \(H\) 的元素可以理解为一组已经允许的操作。固定 \(g\) 后，先做 \(H\) 中的某个操作，再做 \(g\)，所得元素组成 \(gH\)。这个集合不一定含单位元，因而通常不是子群；它却与 \(H\) 一样大，是计数中合适的基本块。
+
+\begin{definition}\label{b1:def:coset-index}
+设 \(H\leq G\)。集合 \(gH=\{gh\mid h\in H\}\) 称为 \(H\) 的\term[zuo-peiji]{左陪集}[left coset]，\(Hg=\{hg\mid h\in H\}\) 称为\term[you-peiji]{右陪集}[right coset]。左陪集的集合记为 \(G/H\)，其元素个数称为 \(H\) 在 \(G\) 中的\term[zhishu]{指数}[index]，记为 \([G:H]\)。此处 \(G/H\) 只是集合，尚未赋予群运算。
+\end{definition}
+\symidx{\(G/H\)：左陪集集合，正规时为商群}
+\symidx{\([G:H]\)：子群的指数}
+
+\begin{proposition}\label{b1:prop:coset-equivalence}
+左陪集构成 \(G\) 的划分，且
+\[
+aH=bH\quad\Longleftrightarrow\quad b^{-1}a\in H.
+\]
+每个左陪集与 \(H\) 等势；左右陪集的总数相同。
+\end{proposition}
+\begin{proof}
+关系 \(a\sim b\Longleftrightarrow b^{-1}a\in H\) 自反；取逆证明对称性；若 \(b^{-1}a,c^{-1}b\in H\)，则
+\(c^{-1}a=(c^{-1}b)(b^{-1}a)\in H\)，故传递。\(b\) 的等价类正是 \(bH\)，从而得到划分及等式判据。映射 \(h\mapsto gh\) 为 \(H\rightarrow gH\) 的双射，其逆为左乘 \(g^{-1}\)。最后，取逆把整个集合 \(gH\) 送到 \(Hg^{-1}\)，并且再取逆恢复原陪集，因此建立左右陪集之间的双射。
+\end{proof}
+
+左右陪集的数量相同不意味着每个 \(gH\) 都等于 \(Hg\)。例如在三点置换群中，令 \(a\) 交换 \(1,2\)，令 \(b\) 交换 \(2,3\)，取 \(H=\{1,a\}\)。则 \(bH=\{b,ba\}\)、\(Hb=\{b,ab\}\)，而 \(ba\ne ab\)。二者都含 \(b\)，却不相同；“有交则相等”的结论只能用于同一方向的陪集族。
 
 \subsection{Lagrange 定理及其局限}
 \label{b1:subsec:0202:02}
 
-待撰写。
+\term[lagrange-dingli]{Lagrange 定理}[Lagrange theorem]把陪集划分转化为有限群中的整除关系。
+
+\begin{theorem}[Lagrange]\label{b1:thm:lagrange}
+若 \(G\) 为有限群且 \(H\leq G\)，则
+\[
+\lvert G\rvert=[G:H]\,\lvert H\rvert.
+\]
+特别地，子群的阶整除群的阶。
+\end{theorem}
+\begin{proof}
+左陪集是不交的块，覆盖 \(G\)，每一块的元素数都是 \(\lvert H\rvert\)。块数为 \([G:H]\)，对这些块求和即得公式。
+\end{proof}
+
+\begin{definition}\label{b1:def:element-order}
+对 \(g\in G\)，定义\term[yuansu-de-jie]{元素的阶}[order of an element]为循环子群 \(\langle g\rangle\) 的阶，记为 \(\operatorname{ord}(g)\)。若不存在正整数 \(n\) 使 \(g^n=1\)，则称 \(g\) 为无限阶元素。
+\end{definition}
+\symidx{\(\operatorname{ord}(g)\)：元素的阶}
+
+若有正幂为 \(1\)，取最小的这样的指数 \(n\)。除法算法把任意整数 \(r\) 写成 \(qn+s\)，\(0\leq s<n\)，故 \(g^r=g^s\)；而
+\(1,g,\ldots,g^{n-1}\) 两两不同，否则出现更小的正幂为 \(1\)。因此这个最小指数正好等于 \(\operatorname{ord}(g)\)。若没有正幂为 \(1\)，不同整数幂必不相等，生成子群就是无限集。
+
+\begin{corollary}\label{b1:cor:finite-order-divides}
+有限群中每个元素的阶整除群阶，且 \(g^{\lvert G\rvert}=1\)。素数阶群由任意非单位元生成。
+\end{corollary}
+\begin{proof}
+把 Lagrange 定理用于 \(\langle g\rangle\)。若群阶为素数 \(p\)，非单位元的阶大于 \(1\) 且整除 \(p\)，只能为 \(p\)，故其循环子群就是整个群。
+\end{proof}
+
+例如一个阶为 \(15\) 的群不可能含阶为 \(4\) 的元素。但这个定理不能反向使用：\(d\) 整除群阶，并不自动给出阶为 \(d\) 的元素，甚至不自动给出阶为 \(d\) 的子群。两个二元素群的逐坐标乘法群有四个元素，而每个非单位元的平方都是单位元，所以没有阶为 \(4\) 的元素。关于子群阶的反例需要更多结构；下一章将通过四点置换群给出一个阶为 \(12\) 而没有阶为 \(6\) 的子群的群。
+
+\ProseParagraphBreak
+指数也可逐层计数。若 \(K\leq H\leq G\) 且相关指数有限，先取 \(G\) 关于 \(H\) 的左陪集代表 \(g_i\)，再取 \(H\) 关于 \(K\) 的代表 \(h_j\)，则 \(g_ih_jK\) 恰好遍历且不重复所有 \(K\) 的左陪集。覆盖性来自先后分解，若两陪集相等则先得 \(g_iH=g_{i'}H\)、再得 \(h_jK=h_{j'}K\)。故
+\([G:K]=[G:H][H:K]\)，不要求三个群本身有限。
 
 \subsection{群同态的核与像}
 \label{b1:subsec:0202:03}
 
-待撰写。
+\begin{definition}\label{b1:def:group-homomorphism}
+群之间满足 \(f(ab)=f(a)f(b)\) 的映射称为群同态。其\term[he-tongtai]{核}[kernel]与\term[xiang-tongtai]{像}[image]分别为
+\[
+\ker f\coloneqq\{\,g\in G\mid f(g)=1\,\},\qquad
+\operatorname{im}f\coloneqq\{\,f(g)\mid g\in G\,\}.
+\]
+\end{definition}
+\symidx{\(\ker f\)：同态的核}
+\symidx{\(\operatorname{im}f\)：同态的像}
+
+群同态不必另外规定保持单位：\(f(1)=f(1)^2\)，在目标群消去 \(f(1)\) 即得 \(f(1)=1\)。随后
+\(f(g)f(g^{-1})=1\) 给出 \(f(g^{-1})=f(g)^{-1}\)。所以它也是上一章意义下的幺半群同态。
+
+\begin{proposition}\label{b1:prop:kernel-fibers}
+核与像分别是定义域和目标群的子群。若 \(f(g)=y\)，则
+\[
+f^{-1}(\{y\})=g\ker f=(\ker f)g.
+\]
+因此 \(f\) 单射当且仅当 \(\ker f=\{1\}\)。若 \(G\) 有限，则
+\(\lvert G\rvert=\lvert\ker f\rvert\,\lvert\operatorname{im}f\rvert\)。
+\end{proposition}
+\begin{proof}
+核非空，且 \(f(ab^{-1})=f(a)f(b)^{-1}=1\)；像非空且
+\(f(a)f(b)^{-1}=f(ab^{-1})\)，所以子群判别适用。等式
+\(f(x)=f(g)\) 等价于 \(f(g^{-1}x)=1\)，也等价于 \(f(xg^{-1})=1\)，分别给出两个陪集描述。核平凡时，相同像的两个元素之商为单位元，所以映射单射；反向显然。有限情形中，实际像的每个点恰对应一个核陪集，用 Lagrange 定理即得乘积公式。
+\end{proof}
+
+取 \(f:\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\)，\(a\mapsto[a]\)，核是 \(n\mathbb Z\)，每个纤维是算术数列 \(a+n\mathbb Z\)。另一例是可逆实方阵群上的行列式：由 \(\det(AB)=\det(A)\det(B)\)，其核为行列式等于 \(1\) 的矩阵群，像为非零实数。后一个例子只借用读者在线性代数中已知的行列式乘法公式，不作为以下抽象证明的前提。

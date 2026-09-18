@@ -5,8 +5,6 @@
 \section{可解群}
 \label{b1:sec:0702}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 导出列与交换子
@@ -17,14 +15,100 @@
 \subsection{导出列与交换子}
 \label{b1:subsec:0702:01}
 
-待撰写。
+如果每次分解得到的因子都是阿贝尔群，那么群的非交换性可以分层消去。为了不依赖某一条事先选定的列，先把“不交换的部分”直接从群运算中提取出来。
+
+\begin{definition}\label{b1:def:derived-series}
+约定元素的\term[jiaohuanzi]{交换子}[commutator]为
+\([x,y]=xyx^{-1}y^{-1}\)。子群 \(H,K\le G\) 的交换子子群
+\([H,K]\) 是所有 \([h,k]\) 生成的子群。记
+\[
+G'= [G,G],\qquad G^{(0)}=G,\qquad
+G^{(i+1)}=[G^{(i)},G^{(i)}].
+\]
+\(G'\) 称为\term[daochu-ziqun]{导出子群}[derived subgroup]，所得下降列称为\term[daochu-lie]{导出列}[derived series]。若某个 \(d\ge0\) 满足 \(G^{(d)}=1\)，则 \(G\) 是\term[kejie-qun]{可解群}[solvable group]；最小这样的 \(d\) 是其导出长度。
+\end{definition}
+\symidx{\(G'\)：导出子群}
+\symidx{\(G^{(i)}\)：导出列}
+\begin{definition}\label{b1:def:characteristic-subgroup}
+若子群 \(H\le G\) 满足 \(\alpha(H)=H\)，其中 \(\alpha\) 遍历 \(G\) 的所有自同构，
+则称 \(H\) 是 \(G\) 的\term[tezheng-ziqun]{特征子群}[characteristic subgroup]。
+\end{definition}
+每个特征子群都正规，因为内自同构也是自同构。反过来不成立：
+\(V_4\) 的任一二阶子群都正规，但由 \((123)\) 共轭得到的自同构会置换这三个二阶子群，
+所以它们都不是 \(V_4\) 的特征子群。
+
+交换子集合一般不是子群，因此定义中必须取“生成的子群”。对任意同态 \(f\)，有 \(f([x,y])=[f(x),f(y)]\)，从而
+\[
+f([H,K])=[f(H),f(K)].
+\]
+特别地，每个自同态都将 \(G'\) 映入自身，而每个自同构都将它映为自身，故 \(G'\) 是特征子群；导出列每一项也都是 \(G\) 的特征子群。
+
+\begin{proposition}\label{b1:prop:derived-quotient}
+对 \(N\trianglelefteq G\)，商群 \(G/N\) 阿贝尔当且仅当 \(G'\le N\)。群 \(G\) 可解当且仅当它有一条全部因子阿贝尔的次正规列。
+\end{proposition}
+\begin{proof}
+两个陪集 \(xN,yN\) 交换，恰好等价于 \([x,y]\in N\)，所以第一个断言成立。若 \(G\) 可解，导出列本身就是所需的列。反之，设
+\(G=G_0\trianglerighteq\cdots\trianglerighteq G_r=1\)
+的因子均阿贝尔。由第一断言，\(G_i'\le G_{i+1}\)。归纳得 \(G^{(i)}\le G_i\)：若包含在第 \(i\) 步成立，取双方导出子群即得下一步。因此 \(G^{(r)}=1\)。
+\end{proof}
+可解性的名称来自方程理论，但当前定义是纯群论的。阿贝尔群导出长度至多为一；非交换可解群则允许非交换性存在，只要求它在有限次取导出子群之后消失。
 
 \subsection{可解性的稳定性}
 \label{b1:subsec:0702:02}
 
-待撰写。
+\begin{theorem}\label{b1:thm:solvable-closure}
+可解群的子群和商群均可解。若 \(N\trianglelefteq G\)，则 \(G\) 可解当且仅当 \(N\) 和 \(G/N\) 都可解。更具体地，若后两者的导出长度分别至多为 \(a,b\)，则 \(G\) 的导出长度至多为 \(a+b\)。
+\end{theorem}
+\begin{proof}
+对 \(H\le G\)，归纳得到 \(H^{(i)}\le G^{(i)}\)，故子群结论成立。对满同态 \(f:G\to Q\)，交换子与同态相容给出 \(f(G^{(i)})=Q^{(i)}\)，故商群结论成立。
+
+现在设 \(N^{(a)}=1\)、\((G/N)^{(b)}=1\)。取商映射可得 \(G^{(b)}\le N\)。继续取 \(a\) 次导出子群，得到
+\[
+G^{(a+b)}=(G^{(b)})^{(a)}\le N^{(a)}=1.
+\]
+反方向由前两项已经证明的结论得到。
+\end{proof}
+因此有限个可解群的直积可解，\chapref{b1:ch:06}中的半直积 \(N\rtimes H\) 在 \(N,H\) 可解时也可解；作用可以非平凡。例如 \(S_3\cong C_3\rtimes C_2\) 非交换，却有阿贝尔正规子群及阿贝尔商群。
+
+\ProseParagraphBreak
+有限可解群的合成因子都是素数阶循环群。事实上，可解性传给次正规列各项及其商；非平凡可解单群的导出子群不能等于自身，只能为单位群，于是它阿贝尔，而阿贝尔单群必为素数阶循环群。反之，若合成因子均为素数阶循环群，该合成列的因子全阿贝尔，群就可解。有限性在这里保证合成列存在；阿贝尔单群的分类已经在\secref{b1:sec:0203}证明。
 
 \subsection{对称群与三角矩阵群}
 \label{b1:subsec:0702:03}
 
-待撰写。
+对 \(n\ge3\)，有 \(S_n'=A_n\)。符号同态先给出 \(S_n'\le A_n\)。另一方面，两个有公共字母的换位的交换子是三轮换或其逆；任意三轮换都可这样写，而\secref{b1:sec:0302}已证明偶置换由三轮换生成，故有反向包含。
+
+\ProseParagraphBreak
+在低阶情形，\(S_3'=A_3\cong C_3\)，所以 \(S_3''=1\)。对于 \(A_4\)，商群 \(A_4/V_4\) 阿贝尔，故 \(A_4'\le V_4\)。直接计算给出一个非平凡双换位，例如
+\[
+[(123),(124)]=(12)(34).
+\]
+其在 \(A_4\) 中的共轭包含 \(V_4\) 的三个非单位元，故 \(A_4'=V_4\)。于是 \(S_4\) 的导出列为
+\[
+S_4\trianglerighteq A_4\trianglerighteq V_4\trianglerighteq1.
+\]
+当 \(n\ge5\) 时情况突变；\secref{b1:sec:0704}将证明 \(A_n\) 是非阿贝尔单群，从而 \(A_n'=A_n\)，\(S_n\) 不可解。
+
+\ProseParagraphBreak
+三角矩阵展示另一种层层消去非交换性的过程。以下只用线性代数中的实矩阵。令 \(B_m\) 为所有可逆实上三角 \(m\times m\) 矩阵组成的群，\(U_m\) 为其中对角线全为 \(1\) 的子群。取对角元给出满同态
+\[
+B_m\longrightarrow(\mathbb R^\times)^m,
+\]
+其核为 \(U_m\)。因而只须研究 \(U_m\)。
+
+\begin{proposition}\label{b1:prop:unitriangular-filtration}
+令 \(J_k\) 是满足 \(a_{ij}=0\)（\(j-i<k\)）的实矩阵集合，令 \(V_k=1+J_k\)，其中 \(k\ge1\)。则 \(V_1=U_m\)、\(V_m=\{1\}\)，并且
+\[
+[1+J_a,1+J_b]\subseteq1+J_{a+b}.
+\]
+因此单位上三角群以及可逆上三角群都可解。
+\end{proposition}
+\begin{proof}
+矩阵乘法的求和指标说明 \(J_aJ_b\subseteq J_{a+b}\)，且 \(J_m=0\)。对 \(X\in J_1\)，逆矩阵是有限和
+\((1+X)^{-1}=1-X+X^2-\cdots+(-X)^{m-1}\)，所以各 \(1+J_k\) 都是子群。若 \(X\in J_a,Y\in J_b\)，则
+\[
+(1+X)(1+Y)-(1+Y)(1+X)=XY-YX\in J_{a+b}.
+\]
+右乘两个逆矩阵仍使差落在 \(J_{a+b}\)，从而交换子属于 \(1+J_{a+b}\)。导出列的第 \(r\) 项于是包含在 \(1+J_{2^r}\) 中；当 \(2^r\ge m\) 时该项平凡。最后用商群 \((\mathbb R^\times)^m\) 的交换性及扩张稳定性。
+\end{proof}
+上三角条件使乘法把非零位置不断推向远离对角线的方向，这正是上述证明中终止性的来源。任意实可逆矩阵没有这样的形状限制，不能套用这个论证。

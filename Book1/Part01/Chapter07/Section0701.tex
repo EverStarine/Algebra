@@ -5,8 +5,6 @@
 \section{正规列与合成列}
 \label{b1:sec:0701}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 次正规列、合成列及细化
@@ -17,14 +15,91 @@
 \subsection{次正规列、合成列及细化}
 \label{b1:subsec:0701:01}
 
-待撰写。
+前两章用一个正规子群把群分成子群与商群。反复进行这种分解，便得到一列较简单的因子。不过，某个群可以有许多不同的正规子群；要使分解成为结构工具，必须说明不同选择之间有什么共同之处。
+
+\begin{definition}\label{b1:def:subnormal-series}
+群 \(G\) 的一个\term[cizhenggui-lie]{次正规列}[subnormal series]是有限链
+\[
+G=G_0\trianglerighteq G_1\trianglerighteq\cdots
+\trianglerighteq G_r=1,
+\]
+其中只要求 \(G_{i+1}\) 在 \(G_i\) 中正规。若各 \(G_i\) 都在 \(G\) 中正规，称为\term[zhenggui-lie]{正规列}[normal series]。商群 \(G_i/G_{i+1}\) 称为列的因子；插入若干子群得到的新次正规列称为原列的\term[xihua]{细化}[refinement]。
+\end{definition}
+有些文献把本书的次正规列也称为正规列。这里区分二者，是因为“在前一项中正规”不推出“在整个群中正规”。例如
+\[
+S_4\trianglerighteq V_4\trianglerighteq
+\langle(12)(34)\rangle\trianglerighteq1
+\]
+是次正规列，但中间的二阶子群不在 \(S_4\) 中正规。
+
+\begin{definition}\label{b1:def:composition-series}
+回顾单群是只有自身和单位子群两个正规子群的非平凡群。所有因子都是单群的严格次正规列称为\term[hecheng-lie]{合成列}[composition series]，其因子称为\term[hecheng-yinzi]{合成因子}[composition factor]。
+\end{definition}
+对应定理说明，合成列恰是不能再插入不同子群的严格次正规列。每个非平凡有限群都存在合成列：选一个极大真正规子群，再对它重复；子群的阶严格下降，过程必停。无限群未必如此，\(\mathbb Z\) 的任何非零子群都同构于 \(\mathbb Z\)，都还含有非零真子群，因而不可能在有限步后到达一个单的末项。
+
+\ProseParagraphBreak
+若删去平凡因子后，可以把两列的因子一一配对，使每对同构，就称它们为\term[dengjia-lie]{等价列}[equivalent series]；配对不要求保留原有次序。例如 \(C_6\) 可以先取二阶子群，也可以先取三阶子群，两次所得因子分别是 \(C_3,C_2\) 与 \(C_2,C_3\)。
 
 \subsection{Schreier 细化定理}
 \label{b1:subsec:0701:02}
 
-待撰写。
+比较两条列时，应把一条列中的子群逐个与另一条列相交，再乘回原来较低的一项。使这些商群成对同构的工具是\term[hudie-yinli]{蝴蝶引理}[butterfly lemma]，也称 Zassenhaus 引理。
+
+\begin{lemma}[Zassenhaus]\label{b1:lem:butterfly}
+设 \(A'\trianglelefteq A\)、\(B'\trianglelefteq B\) 是同一群中的子群。则
+\[
+\frac{A'(A\cap B)}{A'(A\cap B')}
+\cong
+\frac{B'(B\cap A)}{B'(B\cap A')}.
+\]
+式中分母分别正规于分子。
+\end{lemma}
+\begin{proof}
+令 \(C=A\cap B\)，以及
+\[
+D=(A'\cap B)(A\cap B').
+\]
+两个乘积因子都正规于 \(C\)，所以 \(D\trianglelefteq C\)。记
+\(K=A'(A\cap B)\)、\(L=A'(A\cap B')\)。映射 \(K\to A/A'\) 的像由 \(C\) 给出；\(L\) 的像是 \(A\cap B'\) 的像。由于 \(A\cap B'\) 正规于 \(C\)，这个像正规于 \(K/A'\)，从而 \(L\trianglelefteq K\)。
+
+包含映射 \(C\to K\) 后接商映射给出满同态 \(C\to K/L\)。其核为 \(C\cap L=D\)：若 \(c=a'b'\in C\)，其中 \(a'\in A'\)、\(b'\in A\cap B'\)，则 \(a'=c(b')^{-1}\in A'\cap B\)；反向包含直接成立。于是 \(K/L\cong C/D\)。交换 \((A,A')\) 与 \((B,B')\)，另一个商群也同构于 \(C/D\)。
+\end{proof}
+
+\begin{theorem}[Schreier]\label{b1:thm:schreier-refinement}
+同一群的任意两条次正规列都有等价的细化。
+\end{theorem}
+\begin{proof}
+把两条列记为 \((G_i)_{i=0}^r\) 与 \((H_j)_{j=0}^s\)。在 \(G_i\) 和 \(G_{i+1}\) 之间插入
+\[
+G_{ij}=G_{i+1}(G_i\cap H_j),\qquad 0\le j\le s.
+\]
+它的首末项分别为 \(G_i\)、\(G_{i+1}\)。蝴蝶引理保证相邻项的正规性，因此把这些小段接起来得到第一条列的细化。同样在 \(H_j\) 与 \(H_{j+1}\) 之间插入
+\[
+H_{ji}=H_{j+1}(H_j\cap G_i),\qquad 0\le i\le r.
+\]
+对每对 \((i,j)\)，蝴蝶引理给出
+\[
+G_{ij}/G_{i,j+1}\cong H_{ji}/H_{j,i+1}.
+\]
+两个矩形数组按行和按列读取的次序不同，但格子的对应提供了所需配对。重复项只产生平凡因子，删掉即可。
+\end{proof}
+这就是\term[schreier-xihua-dingli]{Schreier 细化定理}[Schreier refinement theorem]。它比较的是商群，而不是断言两条细化中的子群相同。事实上，\(C_2\times C_2\) 中任取一个二阶子群都给出合成列，三种选择的中间子群互不相同。
 
 \subsection{Jordan–Hölder 定理}
 \label{b1:subsec:0701:03}
 
-待撰写。
+\begin{theorem}[Jordan--Hölder]\label{b1:thm:jordan-holder}
+若群 \(G\) 有合成列，则它的任意两条合成列长度相同，并且合成因子在同构及排列的意义下相同。
+\end{theorem}
+\begin{proof}
+对两条合成列应用 Schreier 细化定理。合成列中的相邻因子是单群；由对应定理，在相邻两项之间不能插入不同的新子群。因此细化只会重复原有项。删去这些重复项之后，细化的非平凡因子就是原列的全部因子。两条细化等价，结论随即成立。
+\end{proof}
+\term[jordan-holder-dingli]{Jordan--Hölder 定理}[Jordan--Hölder theorem]使合成因子的无序集合（计入重数）成为群的不变量。不过这些因子不足以重建原群：\(C_4\) 和 \(C_2\times C_2\) 都有两个 \(C_2\) 因子，却不相互同构。合成因子记录了分解后的简单部分，部分之间怎样结合仍是扩张问题。
+
+\ProseParagraphBreak
+以 \(S_4\) 为例，链
+\[
+S_4\trianglerighteq A_4\trianglerighteq V_4
+\trianglerighteq\langle(12)(34)\rangle\trianglerighteq1
+\]
+给出因子 \(C_2,C_3,C_2,C_2\)，故是合成列。因子阶的乘积为 \(24\)，与 \(S_4\) 的阶相符。以后遇到一个有限群的候选合成列时，可以先用阶数乘积排查计算错误，再逐项检查正规性和单性；阶数一致本身并不能代替后两项检查。

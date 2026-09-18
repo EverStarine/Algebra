@@ -6,11 +6,106 @@
 \label{b1:ch:02}
 \BookChapterNumber{b1:ch:02}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+群把可逆运算组织成一个整体，子群记录其中自成体系的操作，陪集则把整个群分成等大的部分。正规性正是陪集乘法良定义的条件。同态的核与像说明映射如何丢失信息，三个同构定理及子群对应定理把这些观察变成统一的计算方法。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 熟练求解群中的乘法方程，使用子群判别与生成子群描述，并辨认非交换运算中的次序。
+\item 通过陪集划分证明 Lagrange 定理，理解整除条件的必要性及其局限。
+\item 逐项构造商群，能从具体同态的核与像推导同构，并用对应定理寻找商群子群。
+\end{itemize}
+\end{learninggoals}
+
+先修为上一章的幺半群、等价关系、商集和泛性质。本章的关键转折在正规性：一般子群足以给出陪集划分，却只有正规子群允许把这个划分变成新的群。阅读同构定理时，请始终先写出元素如何映射，再检查核与像。
 
 \input{Part01/Chapter02/Section0201}
 \input{Part01/Chapter02/Section0202}
 \input{Part01/Chapter02/Section0203}
 \input{Part01/Chapter02/Section0204}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+群中的可逆性给出消去律、方程唯一解和子群判别。陪集同时承担划分与计数两项职责：有限群的子群阶整除群阶，但逆向存在性需要新的论证。
+
+正规子群恰好可以成为群同态的核，也恰好使陪集乘法良定义。第一同构定理刻画像，第二同构定理处理限制映射，第三同构定理处理两次取商；对应定理则整理商群与原群之间的子群关系。下一章将用循环群、置换群和几何对称把这些抽象规则落实为显式计算。
+\end{chaptersummary}
+
+本章主题可与 Dummit、Foote 的《Abstract Algebra》\cite{DummitFoote2003}和 Lang 的《Algebra》\cite{Lang2002}伴读。下面的练习均从本章已证工具出发，包含新的构造与反例。
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:02-squaring}
+证明若群中每个元素都满足 \(x^2=1\)，则群为阿贝尔群。进一步证明，映射 \(x\mapsto x^2\) 是群到自身的同态，当且仅当群为阿贝尔群。
+\end{exercise}
+\begin{solution}
+第一种情形中 \(x^{-1}=x\)，故
+\(xy=(xy)^{-1}=y^{-1}x^{-1}=yx\)。一般情形中，若平方映射为同态，则
+\(xyxy=x^2y^2\)，先左乘 \(x^{-1}\)，再右乘 \(y^{-1}\)，得到 \(yx=xy\)。反过来，群交换时直接整理
+\((xy)^2=x^2y^2\)，平方映射便为同态。这个等价性也说明对非交换群不能把取幂默认当作同态。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-finite-closed}
+设 \(H\) 是群 \(G\) 的非空有限子集，且对乘法封闭。证明 \(H\) 是子群。说明有限性不能删除，即使 \(G\) 交换也不行。
+\end{exercise}
+\begin{solution}
+取 \(h\in H\)，所有正幂仍在 \(H\)。有限性给出 \(h^r=h^s\)，其中
+\(1\leq r<s\)，在 \(G\) 中消去得 \(h^{s-r}=1\)，所以单位元在 \(H\)。若 \(s-r=1\)，则 \(h=1\) 的逆已在 \(H\)；否则 \(h^{s-r-1}\in H\) 是 \(h\) 的逆。对每个 \(h\) 同样处理，即得对逆封闭。正整数集合是整数加法群中非空且加法封闭的无限子集，却不是子群。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-product-subgroups}
+对任意子群 \(H,K\leq G\)，证明集合 \(HK\) 是子群当且仅当 \(HK=KH\)。若 \(H,K\) 有限，证明即使 \(HK\) 不是子群，也有
+\(\lvert HK\rvert=\lvert H\rvert\lvert K\rvert/\lvert H\cap K\rvert\)。
+\end{exercise}
+\begin{solution}
+若 \(HK\) 是子群，取整个集合的逆得到
+\(HK=(HK)^{-1}=KH\)。若 \(HK=KH\)，则
+\((h_1k_1)(h_2k_2)\) 中的 \(k_1h_2\) 可写成 \(hk\)，因而乘积仍在 \(HK\)；逆元属于 \(KH=HK\)，单位元也在其中，故是子群。考虑满映射
+\(H\times K\rightarrow HK\)，\((h,k)\mapsto hk\)。固定一个分解 \(hk\)，所有相同乘积的分解恰为
+\((ht,t^{-1}k)\)，其中 \(t\in H\cap K\)：若 \(h'k'=hk\)，则
+\(h^{-1}h'=kk'^{-1}\in H\cap K\)，唯一确定 \(t\)。每个纤维大小相同，计数得到公式。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-lattice-kernel}
+在逐坐标相加的群 \(\mathbb Z^2\) 上定义
+\(f(a,b)=[a+2b]\in\mathbb Z/6\mathbb Z\)。求核的一组生成元，并显式描述 \(\mathbb Z^2/\ker f\) 的六个元素。
+\end{exercise}
+\begin{solution}
+该映射保持加法，且 \(f(1,0)=[1]\)，故满射。核条件为 \(a+2b=6t\)，等价于
+\((a,b)=t(6,0)+b(-2,1)\)。所以核由 \((6,0),(-2,1)\) 生成。每个陪集有一个形如 \((r,0)+\ker f\) 的代表，其中 \(0\leq r<6\)，因为可令 \(r\) 为 \(a+2b\) 的余数。两个这样的代表同陪集时 \(r-s\) 被 \(6\) 整除，因此必须相等。第一同构定理给出的同构把该陪集送到 \([r]\)，商上的相加就是余数相加。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-two-quotients}
+设 \(N,K\trianglelefteq G\)。在 \((G/N)\times(G/K)\) 上逐坐标相乘。证明
+\(g\mapsto(gN,gK)\) 诱导单同态
+\(G/(N\cap K)\rightarrow(G/N)\times(G/K)\)，并证明它满射当且仅当 \(NK=G\)。
+\end{exercise}
+\begin{solution}
+逐坐标相乘显然给出群。所给映射的核恰为 \(N\cap K\)，第一同构定理给出到目标群中的单同态。如果原映射满射，对任意 \(g\) 可取 \(x\) 使 \(xN=gN\)、\(xK=K\)，于是 \(x\in K\)，\(g\in KN=NK\)，故 \(G=NK\)。反过来，给定 \((aN,bK)\)，把 \(b^{-1}a\) 写成 \(kn\)，其中 \(k\in K,n\in N\)，这是因为 \(KN=NK=G\)。取 \(x=bk=an^{-1}\)，便有 \(xN=aN\)、\(xK=bK\)，所以满射。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-normal-not-transitive}
+令 \(G\) 为实直线上的全部映射 \(x\mapsto ax+b\)，其中 \(a\ne0\)，运算为复合。令 \(H\) 为全部平移，\(N\) 为平移量是整数的平移。证明 \(N\trianglelefteq H\trianglelefteq G\)，但 \(N\) 不正规于 \(G\)。
+\end{exercise}
+\begin{solution}
+以 \((a,b)\) 记该映射，复合为
+\((a,b)(c,d)=(ac,ad+b)\)，逆为 \((a^{-1},-a^{-1}b)\)，所以是群。平移组成阿贝尔子群 \(H\)，\(N\) 是其子群，故 \(N\trianglelefteq H\)。若 \(t_u(x)=x+u\)、\(g(x)=ax+b\)，直接计算得
+\(gt_ug^{-1}=t_{au}\)，所以 \(H\trianglelefteq G\)。但取 \(a=1/2\)、\(u=1\)，共轭得到非整数平移 \(t_{1/2}\notin N\)，故 \(N\) 不正规于 \(G\)。正规性沿子群链不具传递性。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-simple-abelian-target}
+设 \(G\) 是非交换单群，\(A\) 是阿贝尔群。证明每个同态 \(G\rightarrow A\) 都是平凡同态。进一步，若 \(f:G\rightarrow K\) 是任意非平凡同态，证明 \(f(G)\) 也是单群。
+\end{exercise}
+\begin{solution}
+若同态非平凡，其核不能为 \(G\)，由单性只能为 \(\{1\}\)，故单射。若目标交换，则
+\(f(xy)=f(x)f(y)=f(y)f(x)=f(yx)\)，单射推出 \(xy=yx\)，矛盾。因此到 \(A\) 的同态必平凡。第二问中 \(f\) 给出 \(G\cong f(G)\)。\(f(G)\) 的任一正规子群在此同构下的原像正规于 \(G\)，只能为单位子群或全群，故像也单。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-two-index-two}
+设 \(H,K\) 是 \(G\) 中不同的指数 \(2\) 子群。证明 \([G:H\cap K]=4\)，并确定商群 \(G/(H\cap K)\) 的运算结构。
+\end{exercise}
+\begin{solution}
+指数 \(2\) 使两子群均正规。不同的同指数子群不能有严格包含：若 \(H\subset K\)，指数乘法给出 \([K:H]=1\)。故可取
+\(h\in H\setminus K\)、\(k\in K\setminus H\)。到两个二元素商群乘积的映射
+\(g\mapsto(gH,gK)\) 在 \(1,h,k,hk\) 上分别得到四种不同坐标组合，所以满射，核为 \(H\cap K\)。第一同构定理说明商群同构于两个二元素群的逐坐标乘法群，故有四个元素，三个非单位元的平方都为单位元。
+\end{solution}

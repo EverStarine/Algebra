@@ -5,8 +5,6 @@
 \section{循环群}
 \label{b1:sec:0301}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 有限及无限循环群的分类
@@ -17,14 +15,90 @@
 \subsection{循环群的分类}
 \label{b1:subsec:0301:01}
 
-待撰写。
+循环群的每个元素都是一个生成元的幂，因此所有结构问题最终都归结为整数指数之间的关系。先处理整数加法群的子群，再用第一同构定理，便能一次得到有限和无限循环群的分类。
+
+\begin{lemma}\label{b1:lem:integer-subgroups}
+\(\mathbb Z\) 的每个加法子群都唯一写成 \(n\mathbb Z\)，其中 \(n\geq0\)。约定 \(0\mathbb Z=\{0\}\)。
+\end{lemma}
+\begin{proof}
+零子群对应 \(n=0\)。非零子群含一个正整数，取其中最小者 \(n\)。任给子群中的 \(a\)，除法算法给出 \(a=qn+r\)，\(0\leq r<n\)。因
+\(r=a-qn\) 仍在子群，最小性迫使 \(r=0\)。故子群包含于 \(n\mathbb Z\)，反向包含由 \(n\) 属于子群得出。正生成元是该子群最小的正元素，因而唯一。
+\end{proof}
+
+\begin{theorem}[循环群分类]\label{b1:thm:cyclic-classification}
+每个无限循环群都同构于 \((\mathbb Z,+)\)；每个 \(n\) 阶有限循环群都同构于 \((\mathbb Z/n\mathbb Z,+)\)。因此两个循环群同构当且仅当它们的阶相同，包括无限阶情形。
+\end{theorem}
+\begin{proof}
+设 \(G=\langle g\rangle\)。映射 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)，是满同态。其核为某个 \(n\mathbb Z\)。第一同构定理给出 \(G\cong\mathbb Z/n\mathbb Z\)。若 \(n=0\)，商就是 \(\mathbb Z\)；若 \(n>0\)，\(0,\ldots,n-1\) 为商的全部不同代表，所以群阶为 \(n\)。同构保持元素个数，因而也得到最后的判别。
+\end{proof}
+
+记 \(n\) 阶循环群的一个标准模型为 \(C_n\coloneqq\mathbb Z/n\mathbb Z\)，其中 \(n\geq1\)，\(C_1\) 是平凡群。需要强调乘法表示时，也写 \(C_n=\langle g\rangle\)、\(g^n=1\)，同时声明 \(g\) 的阶恰为 \(n\)。仅写 \(g^n=1\) 还不够，因为阶可能是 \(n\) 的真因子。
+\symidx{\(C_n\)：\(n\) 阶循环群}
+
+\ProseParagraphBreak
+上述证明给出的同构依赖生成元 \(g\) 的选择。若把生成元换成 \(g^a\)，由整数指数得到的同构一般也改变。这与上一章典范同构的讨论一致：有时群的同构类型唯一，但某个具体同构并不由群本身唯一确定。
 
 \subsection{子群、商群与同态的计算}
 \label{b1:subsec:0301:02}
 
-待撰写。
+\begin{proposition}\label{b1:prop:power-order}
+若 \(g\) 的有限阶为 \(n\)，则
+\[
+\operatorname{ord}(g^a)=\frac{n}{\gcd(n,a)}.
+\]
+若 \(g\) 为无限阶且 \(a\ne0\)，则 \(g^a\) 也为无限阶。
+\end{proposition}
+\begin{proof}
+有限情形中，\((g^a)^k=1\) 当且仅当 \(n\) 整除 \(ak\)。写
+\(n=dn'\)、\(a=da'\)，其中 \(d=\gcd(n,a)\)、\(\gcd(n',a')=1\)。整除条件等价于 \(n'\mid a'k\)，再由互素性等价于 \(n'\mid k\)，所以最小正指数为 \(n'\)。无限情形中若正整数 \(k\) 满足 \(g^{ak}=1\)，则 \(ak\ne0\)，与无限阶矛盾。
+\end{proof}
+
+互素时的整除步骤可直接用 Bézout 等式验证：若 \(un'+va'=1\)，则
+\(k=un'k+va'k\)，右边两项都被 \(n'\) 整除。这样的整数等式可由 Euclid 除法反复回代获得，本节只使用这一初等算术事实。
+
+\begin{theorem}\label{b1:thm:cyclic-subgroups}
+循环群的子群和商群均为循环群。若 \(G=\langle g\rangle\) 的阶为 \(n\)，则对每个正因子 \(d\mid n\)，恰有一个 \(d\) 阶子群，即 \(\langle g^{n/d}\rangle\)，其商群阶为 \(n/d\)。
+\end{theorem}
+\begin{proof}
+对于子群 \(H\leq G\)，取满同态 \(\pi:\mathbb Z\rightarrow G\)，\(k\mapsto g^k\)。原像 \(\pi^{-1}(H)=m\mathbb Z\)，故 \(H=\langle g^m\rangle\)，所以循环。有限情形中原像包含 \(n\mathbb Z\)，于是 \(m\mid n\)，而 \(\langle g^m\rangle\) 的阶为 \(n/m\)，由阶唯一确定 \(m\)。群 \(G\) 交换，所以每个子群正规；商群的每个元素都是 \(gH\) 的幂，故商群循环，其阶由 Lagrange 定理给出。
+\end{proof}
+
+例如 \(C_{18}=\langle g\rangle\) 中 \(g^6\) 的阶为 \(3\)，\(g^4\) 的阶为 \(9\)，且
+\(\langle g^4\rangle=\langle g^2\rangle\)。商去 \(\langle g^6\rangle\) 得到六阶循环群。此时“子群唯一”是指给定阶的子群唯一，并非生成元唯一：同一个三阶子群由 \(g^6\) 或 \(g^{12}\) 生成。
+
+\ProseParagraphBreak
+同态同样可以显式计算。设 \(C_m=\langle x\rangle\)、\(C_n=\langle y\rangle\)。任一同态由 \(x\) 的像 \(y^a\) 唯一决定，它存在当且仅当 \(n\mid ma\)。必要性来自 \(x^m=1\)；充分性来自
+\(x^k\mapsto y^{ak}\) 在相差 \(m\) 的指数上同值。令 \(d=\gcd(m,n)\)，可取且仅可取
+\(a=0,n/d,2n/d,\ldots,(d-1)n/d\)，所以共有 \(d\) 个同态。比如 \(C_6\rightarrow C_9\) 只有三种，由生成元分别送到 \(1,y^3,y^6\) 给出；其中两种非平凡同态的像都为同一个三阶子群。
 
 \subsection{有限循环群的自同构群}
 \label{b1:subsec:0301:03}
 
-待撰写。
+\begin{definition}\label{b1:def:automorphism}
+群到自身的同态称为\term[zitongtai]{自同态}[endomorphism]，群到自身的同构称为\term[zitonggou]{自同构}[automorphism]。所有自同构在复合下构成\term[zitonggou-qun]{自同构群}[automorphism group]，记为 \(\operatorname{Aut}(G)\)。
+\end{definition}
+\symidx{\(\operatorname{Aut}(G)\)：自同构群}
+
+复合封闭来自同态复合与双射复合；单位元是恒等映射；逆映射仍为同构。这说明自同构本身也有可研究的代数结构，它描述了群内部允许的重新命名方式。
+
+\begin{theorem}[循环群的自同构]\label{b1:thm:cyclic-automorphisms}
+设 \(n\geq2\)。\(C_n=\langle g\rangle\) 的全部自同构为
+\[
+\alpha_a(g^k)=g^{ak},\qquad \gcd(a,n)=1,
+\]
+其中 \(a\) 按模 \(n\) 取值。复合公式为 \(\alpha_a\alpha_b=\alpha_{ab}\)，所以
+\(\operatorname{Aut}(C_n)\) 同构于模 \(n\) 的可逆剩余类在乘法下组成的群，记为 \((\mathbb Z/n\mathbb Z)^\times\)。
+\end{theorem}
+\symidx{\((\mathbb Z/n\mathbb Z)^\times\)：可逆剩余类群}
+\begin{proof}
+前一小节说明所有自同态都有该形式。它满射当且仅当 \(g^a\) 仍生成
+\(C_n\)，由阶公式当且仅当 \(\gcd(a,n)=1\)；有限集合上满射即双射。若互素，Bézout 等式给出 \(ab\equiv1\pmod n\)，所以 \(\alpha_b\) 是逆映射。反之，剩余类有乘法逆时 \(ab-1\) 被 \(n\) 整除，任何公因子都整除 \(1\)，故互素。逐点计算
+\(\alpha_a(\alpha_b(g^k))=g^{abk}\)，得到复合公式及所述群同构。
+\end{proof}
+
+可逆剩余类的个数记为 \(\varphi(n)\)，称为\term[euler-hanshu]{Euler 函数}[Euler totient function]。例如 \(n=8\) 时可取 \(1,3,5,7\)，它们的平方模 \(8\) 都为 \(1\)。于是 \(\operatorname{Aut}(C_8)\) 有四个元素，但不是循环群，因为没有四阶元素。一个循环群的自同构群不一定循环。
+
+\ProseParagraphBreak
+无限循环群只有两个自同构：在 \(\mathbb Z\) 的加法模型中，同态必为
+\(k\mapsto ak\)，满射当且仅当 \(a=1\) 或 \(a=-1\)。因此
+\(\operatorname{Aut}(\mathbb Z)\) 是二阶群。有限与无限情形的共同原则是“生成元必须送到生成元”，差别只在于整数指数何时仍能生成全部元素。

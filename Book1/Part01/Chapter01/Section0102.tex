@@ -5,8 +5,6 @@
 \section{半群与幺半群}
 \label{b1:sec:0102}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 半群、幺半群及同态
@@ -17,14 +15,98 @@
 \subsection{半群、幺半群及同态}
 \label{b1:subsec:0102:01}
 
-待撰写。
+把结合律作为共同条件，便能同时讨论字的拼接、映射复合和矩阵乘法。由于这些运算通常不交换，本节使用乘法记号 \(ab\)，但不把因子顺序视为可以任意更换。
+
+\begin{definition}\label{b1:def:monoid}
+带有结合的二元运算的非空集合称为\term[banqun]{半群}[semigroup]。具有单位元的半群称为\term[yaobanqun]{幺半群}[monoid]，其单位元一般记为 \(1\)。幺半群 \(M,N\) 之间的\term[tongtai]{同态}[homomorphism]是满足
+\[
+f(ab)=f(a)f(b),\qquad f(1_M)=1_N
+\]
+的映射 \(f:M\rightarrow N\)。半群同态只要求乘法等式。
+\end{definition}
+
+单位保持条件不能从乘法保持条件自动得到。例如从单元素幺半群到整数乘法幺半群、把唯一元素送到 \(0\) 的映射保持乘法，却不保持单位。今后“幺半群同态”总包含保持单位的要求；这使空乘积与非空乘积具有相同的映射规则。
+
+\ProseParagraphBreak
+\((\mathbb N,+)\) 是以 \(0\) 为单位元的交换幺半群；正整数加法构成半群，却没有单位元。若 \(M\) 是幺半群，递归定义 \(a^0=1\)、\(a^{n+1}=a^na\)。结合律给出 \(a^{m+n}=a^ma^n\)：固定 \(m\) 对 \(n\) 归纳即可。于是任取 \(a\in M\)，映射 \(n\mapsto a^n\) 都是从 \((\mathbb N,+)\) 到 \(M\) 的同态。
+
+\begin{proposition}\label{b1:prop:monoid-maps}
+幺半群同态的复合仍是同态；恒等映射是同态。若同态 \(f:M\rightarrow N\) 是双射，则逆映射 \(f^{-1}\) 也保持乘法和单位。
+\end{proposition}
+\begin{proof}
+对于同态 \(f:M\rightarrow N\)、\(g:N\rightarrow P\)，有
+\((gf)(ab)=g(f(a)f(b))=(gf)(a)(gf)(b)\)，并且
+\((gf)(1_M)=1_P\)。恒等映射的结论直接由定义得出。若 \(f\) 双射，写 \(x=f(a),y=f(b)\)，则
+\(f^{-1}(xy)=f^{-1}(f(ab))=ab=f^{-1}(x)f^{-1}(y)\)，且
+\(f^{-1}(1_N)=1_M\)。
+\end{proof}
+
+这样的双射同态称为\term[tonggou]{同构}[isomorphism]。它说明两个幺半群的乘法结构相同，只是元素的名称不同。若只比较底集合的大小，就会丢掉乘法信息；后面将反复用元素阶、交换性等性质区别同样大小的结构。
 
 \subsection{自由幺半群与字的拼接}
 \label{b1:subsec:0102:02}
 
-待撰写。
+给定集合 \(X\)，把它的元素看成字母。长度为 \(n\) 的\term[zi]{字}[word]是有序序列 \((x_1,\ldots,x_n)\)，通常写成 \(x_1\cdots x_n\)。长度零的字只有一个，称为空字，记为 \(\varepsilon\)。不同长度的字始终视为不同对象，即使 \(X\) 自身含有数或序列。
+
+\begin{definition}\label{b1:def:free-monoid}
+集合 \(X\) 上的\term[ziyou-yaobanqun]{自由幺半群}[free monoid]是所有有限字的集合
+\[
+X^*\coloneqq\coprod_{n\geq0}X^n,
+\]
+运算为前后拼接，单位元为 \(\varepsilon\)。记 \(\iota:X\rightarrow X^*\) 为把字母送到长度一的字的映射。
+\end{definition}
+\symidx{\(X^*\)：自由幺半群}
+
+符号 \(\coprod\) 表示不交并，即保留每个字的长度标记。拼接后各位置的字母就是先列出第一个字，再列出第二个字。因此两次拼接的结果不依赖括号；空字不增加任何位置，确为单位元。例如 \(X=\{a,b\}\) 时，\((ab)(baa)=abbaa\)，而 \((baa)(ab)=baaab\)。所以当至少有两个字母时，自由幺半群并不交换。单字母的情形只有 \(\varepsilon,a,a^2,\ldots\)，按长度同构于 \((\mathbb N,+)\)。
+
+\begin{theorem}[字母映射的延拓]\label{b1:thm:free-monoid}
+任给幺半群 \(M\) 和集合映射 \(u:X\rightarrow M\)，存在唯一幺半群同态
+\(\widehat u:X^*\rightarrow M\) 满足 \(\widehat u\iota=u\)。它由
+\[
+\widehat u(\varepsilon)=1_M,\qquad
+\widehat u(x_1\cdots x_n)=u(x_1)\cdots u(x_n)
+\]
+给出。
+\end{theorem}
+\begin{proof}
+一个非空字有唯一的字母序列，右端乘积由结合律不依赖括号，所以公式定义了映射。两个字拼接时，右端乘积恰是两个原乘积的乘积，故它保持乘法；空字的指定值保证保持单位。每个非空字都是长度一的字的乘积，任何满足要求的同态都只能取上述值；在空字上也只能取单位元，所以延拓唯一。
+\end{proof}
+
+例如给 \(a,b\) 指定两个同阶方阵 \(A,B\)，每个字便成为按既定次序进行的矩阵乘积。可能有不同字取同一矩阵，但在 \(X^*\) 中它们仍是不同的字。“自由”所排除的是额外规定的字之间的等式，并不要求每次代入后的取值都不同。
 
 \subsection{变换幺半群、消去律与群化的动机}
 \label{b1:subsec:0102:03}
 
-待撰写。
+集合 \(X\) 的所有自映射在复合下构成\term[bianhuan-yaobanqun]{变换幺半群}[transformation monoid]，记为 \(\operatorname{End}_{\mathrm{Set}}(X)\)，单位元为恒等映射。前节的移位映射说明，其中可有左逆而无右逆。由自映射到置换的限制，正是从一般操作转向可逆操作。
+
+\begin{definition}\label{b1:def:cancellation}
+幺半群满足\term[xiaoqulv]{消去律}[cancellation law]，是指
+\(ax=ay\Rightarrow x=y\) 与 \(xa=ya\Rightarrow x=y\) 都成立。
+\end{definition}
+
+自由幺半群满足消去律，因为等字有相同的逐位字母，去掉相同前缀或后缀仍得等字。然而非空字没有逆元：拼接后的长度是两字长度之和，不可能成为零。因此消去律本身不等于可逆性。
+
+\ProseParagraphBreak
+对交换幺半群，可以像从自然数构造整数那样加入形式差。以下给出消去律充分发挥作用的一种情形。为了使公式清晰，暂以加法写 \(M\)，单位元记为 \(0\)。
+
+\begin{proposition}[交换消去幺半群的群化]\label{b1:prop:commutative-completion}
+设 \(M\) 是满足消去律的交换幺半群。在 \(M\times M\) 上规定
+\[
+(a,b)\sim(c,d)\quad\Longleftrightarrow\quad a+d=c+b.
+\]
+其等价类集合 \(K(M)\) 在
+\([(a,b)]+[(c,d)]=[(a+c,b+d)]\) 下是交换幺半群，每个元素都有逆元 \([(b,a)]\)。映射
+\(j(a)=[(a,0)]\) 是单射同态。
+\end{proposition}
+\begin{proof}
+自反性和对称性直接成立。若 \(a+d=c+b\) 且 \(c+f=e+d\)，相加后消去 \(c+d\)，得到 \(a+f=e+b\)，故有传递性。若两对代表元分别等价，则把相应两条等式相加可知它们的逐项和等价，所以加法良定义。结合律与交换律来自 \(M\)，零元为 \([(0,0)]\)，而
+\([(a+b,b+a)]=[(0,0)]\)，给出所述逆元。最后，\(j(a)=j(c)\) 当且仅当 \(a=c\)，并且 \(j\) 保持加法与零元。
+\end{proof}
+
+这里“等价类”的一般性质将在下一节系统说明；上述证明已经逐项给出了本构造需要的检验。对 \(M=\mathbb N\)，映射 \([(a,b)]\mapsto a-b\) 是到 \(\mathbb Z\) 的双射并保持加法。一般情形也有同样的映射原则：若 \(u:M\rightarrow A\) 是到一个每个元素都可逆的交换幺半群的同态，则
+\([(a,b)]\mapsto u(a)-u(b)\) 是唯一延拓 \(u\) 的同态。良定义来自
+\(a+d=c+b\) 蕴含 \(u(a)+u(d)=u(c)+u(b)\)；唯一性来自
+\([(a,b)]=j(a)-j(b)\)。这说明新加的形式差除了使元素可逆，没有强加不必要的关系。
+
+\ProseParagraphBreak
+交换性在这里允许整理求和，消去律则用于等价关系的传递性和嵌入判断。非交换情形不能直接把同一公式中的加号换成乘号；一般半群嵌入群的问题有额外障碍，本节不作这种推广。

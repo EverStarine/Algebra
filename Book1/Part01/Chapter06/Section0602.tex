@@ -5,7 +5,7 @@
 \section{半直积}
 \label{b1:sec:0602}
 
-% TODO: 按以下纲要要点撰写本节。
+% 本节正文按下列原纲要要点撰写。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,111 @@
 \subsection{自同构作用与外半直积}
 \label{b1:subsec:0602:01}
 
-待撰写。
+在直积中，一个因子的元素与另一个因子的元素交换。若允许 \(H\) 的元素在移过 \(N\) 的元素时，按指定自同构改变后者，就得到半直积。这一构造需要的原始数据是一对群 \(N,H\) 和同态
+\(\alpha:H\rightarrow\operatorname{Aut}(N)\)，记 \(\alpha(h)=\alpha_h\)。
+
+\begin{definition}\label{b1:def:semidirect-product}
+相对于 \(\alpha\) 的\term[wai-banzhiji]{外半直积}[external semidirect product]是集合 \(N\times H\)，配备乘法
+\[
+(n,h)(n',h')=(n\alpha_h(n'),hh').
+\]
+这个群记为 \(N\rtimes_\alpha H\)，作用明确时简记 \(N\rtimes H\)。
+\symidx{\(N\rtimes_\alpha H\)：外半直积}
+\end{definition}
+这里先验证它确为群。三个元素相乘时，左结合的第一坐标为
+\[
+n\alpha_h(n')\alpha_{hh'}(n''),
+\]
+右结合的第一坐标为
+\[
+n\alpha_h(n'\alpha_{h'}(n''))
+=n\alpha_h(n')(\alpha_h\alpha_{h'})(n''),
+\]
+两者相等，使用了 \(\alpha_h\) 保持乘法和 \(\alpha_{hh'}=\alpha_h\alpha_{h'}\)；第二坐标的结合律来自 \(H\)。单位是 \((1,1)\)，逆元公式为
+\[
+(n,h)^{-1}=(\alpha_{h^{-1}}(n^{-1}),h^{-1}),
+\]
+代入左右乘积均得到 \((1,1)\)。
+
+\ProseParagraphBreak
+嵌入 \(n\mapsto(n,1)\)、\(h\mapsto(1,h)\) 把 \(N,H\) 识别为子群；投影 \((n,h)\mapsto h\) 是满同态，核为 \(N\times\{1\}\)，故这个副本的 \(N\) 正规。两种嵌入满足
+\[
+(1,h)(n,1)(1,h)^{-1}=(\alpha_h(n),1).
+\]
+此外，每个元素唯一写为 \((n,1)(1,h)\)。这些关系也给出半直积的泛性质。
+
+\begin{proposition}\label{b1:prop:semidirect-universal}
+给定同态 \(u:N\rightarrow K\)、\(v:H\rightarrow K\)，存在同态
+\(F:N\rtimes_\alpha H\rightarrow K\) 限制为 \(u,v\)，当且仅当
+\[
+v(h)u(n)v(h)^{-1}=u(\alpha_h(n))
+\quad(n\in N,\ h\in H).
+\]
+存在时唯一，并且 \(F(n,h)=u(n)v(h)\)。
+\end{proposition}
+\begin{proof}
+必要性来自上面的共轭等式。满足相容条件时，
+\[
+\begin{aligned}
+u(n)v(h)u(n')v(h')
+&=u(n)u(\alpha_h(n'))v(h)v(h')\\
+&=u(n\alpha_h(n'))v(hh'),
+\end{aligned}
+\]
+故指定公式保持乘法，给出存在性。唯一分解为两个坐标因子给出唯一性。
+\end{proof}
 
 \subsection{内半直积判别}
 \label{b1:subsec:0602:02}
 
-待撰写。
+\begin{theorem}[内半直积判别]\label{b1:thm:internal-semidirect}
+设 \(N\trianglelefteq G\)、\(H\leq G\)，并且 \(N\cap H=\{1\}\)、\(NH=G\)。共轭给出同态
+\[
+\alpha:H\longrightarrow\operatorname{Aut}(N),\qquad
+\alpha_h(n)=hnh^{-1}.
+\]
+映射 \(N\rtimes_\alpha H\rightarrow G\)、\((n,h)\mapsto nh\) 是同构。
+\end{theorem}
+\begin{proof}
+正规性保证 \(\alpha_h\) 取值于 \(N\)，其逆为 \(\alpha_{h^{-1}}\)，且共轭保持乘法；\(\alpha_{hh'}=\alpha_h\alpha_{h'}\) 由直接计算成立。现在
+\[
+(nh)(n'h')=n(hn'h^{-1})hh'=n\alpha_h(n')hh',
+\]
+所以映射为同态。\(NH=G\) 给出满射；若 \(nh=n'h'\)，则
+\(n'^{-1}n=h'h^{-1}\in N\cap H\)，故 \(n=n'\)、\(h=h'\)，映射单射。
+\end{proof}
+满足该定理条件时，称 \(G\) 是 \(N,H\) 的\term[nei-banzhiji]{内半直积}[internal semidirect product]，称 \(H\) 为 \(N\) 的一个\term[buqun]{补群}[complement]。直积是作用平凡的半直积：当 \(\alpha_h(n)=n\) 时，乘法恢复为逐坐标乘法。反过来，若此内分解中的 \(H\) 也正规，则两正规因子的交平凡迫使它们交换，作用便平凡。
+
+\ProseParagraphBreak
+外半直积从群和作用制造新群，内半直积则在一个既有群中验证能否如此分解。符号 \(N\rtimes H\) 仅省略了已经说明的作用，不表示同一对抽象群只有一种半直积；例如 \(C_3\) 与 \(C_2\) 的平凡作用给出 \(C_6\)，取逆作用给出 \(S_3\)。
 
 \subsection{二面体群、仿射群与具体计算}
 \label{b1:subsec:0602:03}
 
-待撰写。
+在 \(D_{2n}\) 中，取旋转子群 \(N=\langle r\rangle\cong C_n\) 和反射子群 \(H=\langle s\rangle\cong C_2\)，其中 \(n\geq3\)。每个对称唯一写为 \(r^is^j\)，且 \(srs^{-1}=r^{-1}\)，故
+\[
+D_{2n}\cong C_n\rtimes C_2,\qquad
+(i,j)(k,\ell)=(i+(-1)^jk,j+\ell),
+\]
+第一坐标模 \(n\)，第二坐标模 \(2\)。例如 \((i,1)^2=(0,0)\)，所以每个反射阶为 \(2\)；而 \((1,1)(1,0)=(0,1)\)、\((1,0)(1,1)=(2,1)\)，在 \(n\geq3\) 时不同，明确显示非交换性。
+
+\ProseParagraphBreak
+另一个例子来自实直线上的仿射变换 \(x\mapsto ax+b\)，其中 \(a\in\mathbb R^\times\)、\(b\in\mathbb R\)。先执行 \(x\mapsto a'x+b'\)，再执行 \(x\mapsto ax+b\)，得到
+\[
+x\longmapsto aa'x+(b+ab').
+\]
+所以用 \((b,a)\) 记录变换时，乘法为
+\[
+(b,a)(b',a')=(b+ab',aa'),
+\]
+从而\term[fangshe-qun]{仿射群}[affine group]为
+\((\mathbb R,+)\rtimes(\mathbb R^\times,\cdot)\)，作用为数乘。它也可写成矩阵群
+\[
+\left\{\begin{pmatrix}a&b\\0&1\end{pmatrix}
+\ \middle|\ a\neq0,\ b\in\mathbb R\right\}.
+\]
+平移是正规子群，固定原点的伸缩给出一个补群。换一个原点会换一个补群，但整个仿射群并不因此改变。
+
+\ProseParagraphBreak
+\cref{b1:thm:groups-order-pq}中的乘法现在可写成
+\(C_q\rtimes C_p\)，其中 \(C_p\) 的生成元对 \(C_q\) 的加法剩余类作用为乘以 \(t\)。该定理已经逐项构造了群并证明非平凡作用何时存在；本节只是把它归入统一的构造，而不是以半直积名称代替先前所需的存在性证明。

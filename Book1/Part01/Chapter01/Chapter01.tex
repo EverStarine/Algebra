@@ -6,11 +6,92 @@
 \label{b1:ch:01}
 \BookChapterNumber{b1:ch:01}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章从熟悉的加法、复合与乘法出发，说明运算公理如何决定可以进行的推理。自由字、商集和生成子幺半群分别回答三个问题：如何记录运算表达式，如何把应当相同的表达式合并，以及如何用少量元素描述一个结构。映射的存在性与唯一性把这些构造联系起来，为下一章的群和商群准备共同语言。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分结合律、交换律、单位元、逆元和消去律的作用，能用具体反例说明它们并不相互替代。
+\item 构造自由幺半群和商幺半群，逐项核验运算的良定义及同态的延拓。
+\item 分清生成元决定映射的唯一性与生成关系限制映射的存在性，并用泛性质证明指定同构的唯一性。
+\end{itemize}
+\end{learninggoals}
+
+本章只要求集合、映射、整数和基本矩阵运算。读到新结构时，先找出它的元素、运算和相等标准，再问哪些映射保持这些资料。特别应亲自核对字的拼接与商集的计算；这些看似朴素的步骤将在商群、商环和模的构造中反复出现。
 
 \input{Part01/Chapter01/Section0101}
 \input{Part01/Chapter01/Section0102}
 \input{Part01/Chapter01/Section0103}
 \input{Part01/Chapter01/Section0104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+结合律使有限乘积可以省略括号，单位元处理空乘积，逆元则允许撤销运算。半群与幺半群把这些性质从具体算术中抽离出来，同时保留足够多的例子说明它们的差别。
+
+生成提供表达式，自由对象允许任意指定生成元的像，同余关系规定哪些表达式必须取同一值。处理一个新商构造时，应先检查等价关系，再检查运算下降，最后检查所需映射的良定义、存在性与唯一性。下一章把每个元素均可逆这一条件加入幺半群，得到群。
+\end{chaptersummary}
+
+伴读时可参看 Dummit 与 Foote 的《Abstract Algebra》\cite{DummitFoote2003}及 Lang 的《Algebra》\cite{Lang2002}中关于代数结构与映射的讨论；本章所需构造均已在正文给出。以下题目为围绕本章内容独立设计的训练题。
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:01-affine}
+固定实数 \(\alpha,\beta\)，在 \(\mathbb R\) 上定义 \(x*y=\alpha x+\beta y\)。求使运算满足结合律的全部 \((\alpha,\beta)\)，并在这些情形中判断何时有单位元、何时满足交换律。
+\end{exercise}
+\begin{solution}
+展开得
+\((x*y)*z=\alpha^2x+\alpha\beta y+\beta z\)，
+\(x*(y*z)=\alpha x+\alpha\beta y+\beta^2z\)。对任意实数成立，当且仅当
+\(\alpha^2=\alpha\)、\(\beta^2=\beta\)，故二者各为 \(0\) 或 \(1\)。若有双边单位元 \(e\)，从 \(e*y=y\) 比较 \(y\) 的系数得 \(\beta=1\)，从 \(x*e=x\) 得 \(\alpha=1\)，继而 \(e=0\)。交换律要求 \(\alpha=\beta\)，所以结合情形中只有 \((0,0)\) 与 \((1,1)\) 满足。前者处处取零而没有单位元，说明交换与结合仍不足以保证存在单位。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-odd}
+证明奇整数在乘法下构成幺半群，求其中所有有逆的元素。证明其消去律成立，但不能仅靠这些逆元生成整个幺半群。
+\end{exercise}
+\begin{solution}
+奇数的乘积为奇数，\(1\) 是奇数，结合律来自整数乘法。若奇整数 \(a,b\) 满足 \(ab=1\)，则 \(a=b=1\) 或 \(a=b=-1\)，故有逆元素只有 \(\pm1\)。每个奇数非零，所以 \(ax=ay\) 在整数中推出 \(x=y\)，右消去同样成立。但 \(\pm1\) 的任意有限乘积仍为 \(\pm1\)，不能得到 \(3\)。因此一个消去幺半群既可能含有非平凡的可逆元素，也可能包含许多不能由这些可逆元素生成的元素。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-length-mod}
+设非空字母集 \(X\) 与整数 \(m\geq2\) 给定，规定两字等价当且仅当长度模 \(m\) 相同。描述所得商幺半群，并求任一类的逆元。
+\end{exercise}
+\begin{solution}
+长度在拼接时相加，故关系为同余。所有余数 \(0,\ldots,m-1\) 都能由同一个固定字母重复相应次数取得，因此商恰有 \(m\) 个元素，运算为余数相加再取模 \(m\)。长度余数为 \(r\) 的类的逆元是余数为 \(m-r\) 的类，若 \(r=0\) 则为自身。商映射可能把长度正的字送到单位类；这不表示自由幺半群中的原字已有逆元，而是施加关系后产生了新的可逆性。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-transform-cancel}
+设 \(X\) 至少含两个元素，\(f:X\rightarrow X\)。证明：对所有自映射 \(u,v\)，\(fu=fv\Rightarrow u=v\) 当且仅当 \(f\) 单射；\(uf=vf\Rightarrow u=v\) 当且仅当 \(f\) 满射。
+\end{exercise}
+\begin{solution}
+若 \(f\) 单射，\(f(u(x))=f(v(x))\) 逐点推出 \(u(x)=v(x)\)。若不单射，取不同的 \(a,b\) 而 \(f(a)=f(b)\)，以 \(a,b\) 为值的两个常映射给出反例。若 \(f\) 满射，则任意 \(y\in X\) 可写成 \(f(x)\)，从 \(uf=vf\) 得 \(u(y)=v(y)\)。若不满射，取 \(z\notin f(X)\) 及不同的 \(a,b\in X\)，令 \(u\) 恒取 \(a\)，而 \(v\) 只在 \(z\) 处取 \(b\)、其余处取 \(a\)。于是 \(uf=vf\) 却 \(u\ne v\)。左右次序不同，所需的单射、满射条件也不同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-free-commutative}
+设 \(X\) 为任意集合。令 \(C(X)\) 为所有仅在有限多个点非零的函数 \(a:X\rightarrow\mathbb N\)，运算为逐点相加。证明它具有交换幺半群中的自由映射延拓性质，并解释它与 \(X^*\) 的关系。
+\end{exercise}
+\begin{solution}
+两个有限非零集合的并仍有限，所以加法封闭，零函数为单位，结合律和交换律逐点成立。记 \(\delta_x\) 为在 \(x\) 处取 \(1\)、其余取零的函数。对交换幺半群 \(M\) 和映射 \(u:X\rightarrow M\)，定义
+\(\widehat u(a)=\prod_{a(x)\ne0}u(x)^{a(x)}\)。有限性使乘积存在，交换性使取点次序无关；指数相加公式证明它是同态。每个 \(a\) 唯一写成有限和 \(\sum_x a(x)\delta_x\)，故延拓唯一。把字送到各字母出现次数的函数得到满同态 \(X^*\rightarrow C(X)\)；其相等关系就是忽略字母次序、保留字母个数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-truncated-addition}
+固定 \(n\geq1\)，在 \(T_n=\{0,1,\ldots,n\}\) 上定义 \(a\star b=\min(n,a+b)\)。证明这是幺半群，说明它是 \((\mathbb N,+)\) 的商，并证明任何到所有元素都有逆元的幺半群的同态都取常值单位元。
+\end{exercise}
+\begin{solution}
+等式 \(\min(n,\min(n,a+b)+c)=\min(n,a+b+c)\) 证明结合律，零为单位。映射 \(q(k)=\min(n,k)\) 满且保持加法对应的运算，故由其同值关系得到这个商。设 \(f:T_n\rightarrow G\) 保持单位与乘法，且 \(G\) 中元素都有逆。因为 \(n\star a=n\)，有 \(f(n)f(a)=f(n)\)，左乘 \(f(n)^{-1}\) 得 \(f(a)=1\)。尤其 \(T_n\) 不能单射嵌入这样的 \(G\)。失败源于截断运算丢失了消去律。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-finite-cancellation}
+证明满足左消去律的有限幺半群中，每个元素都有双边逆。给出无限情形的反例。
+\end{exercise}
+\begin{solution}
+固定 \(a\)。左乘映射 \(x\mapsto ax\) 由左消去律为单射，有限性使其满射，故存在 \(b\) 使 \(ab=1\)。又有 \(a(ba)=(ab)a=a=a1\)，再用左消去得 \(ba=1\)。这为每个 \(a\) 提供双边逆。无限幺半群 \((\mathbb N,+)\) 满足左右消去律，但 \(1\) 没有加法逆元；其平移映射 \(x\mapsto1+x\) 单射而不满射。有限性的作用恰是把单射升级为满射。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:01-infinitely-generated-submonoid}
+在 \((\mathbb N^2,+)\) 中考虑
+\(M=\{(0,0)\}\cup\{\,(a,b)\mid a\geq1,\ b\geq0\,\}\)。证明 \(M\) 是子幺半群但不能由有限多个元素生成，尽管 \(\mathbb N^2\) 可以。
+\end{exercise}
+\begin{solution}
+零元属于 \(M\)；两个非零元素的和第一坐标至少为 \(2\)，仍在 \(M\)，所以它是子幺半群。每个 \((1,b)\) 若写成若干非零元素的和，由第一坐标相加可知只能有一个加数，且这个加数就是 \((1,b)\)。因而任意生成元集合都必须包含无限多个不同的 \((1,b)\)。另一方面，\(\mathbb N^2\) 由 \((1,0),(0,1)\) 生成。可见有限生成性不必传给子幺半群。
+\end{solution}

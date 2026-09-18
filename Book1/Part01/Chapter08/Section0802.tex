@@ -5,8 +5,6 @@
 \section{群的呈示}
 \label{b1:sec:0802}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 生成元、关系与正规闭包
@@ -17,14 +15,76 @@
 \subsection{生成元、关系与正规闭包}
 \label{b1:subsec:0802:01}
 
-待撰写。
+自由群允许任意指定生成元的像。若希望生成元满足额外等式，便须在自由群中把相应的字压成单位。由于同态的核正规，不能只取这些字生成的普通子群，而必须取它们的正规闭包。
+
+\begin{definition}\label{b1:def:group-presentation}
+设 \(R\subseteq F(S)\)。包含 \(R\) 的最小正规子群记为 \(\langle\!\langle R\rangle\!\rangle\)，称为 \(R\) 的\term[zhenggui-bibao]{正规闭包}[normal closure]。商群
+\[
+\langle S\mid R\rangle\coloneqq F(S)/\langle\!\langle R\rangle\!\rangle
+\]
+称为由生成元 \(S\) 与关系字 \(R\) 给出的\term[qun-chengshi]{群的呈示}[group presentation]。\(S,R\) 都有限时，称为有限呈示。
+\end{definition}
+\symidx{\(\langle\langle R\rangle\rangle\)：关系集的正规闭包}
+正规闭包既可写为包含 \(R\) 的全部正规子群之交，也可写为所有有限乘积
+\[
+\prod_{i=1}^k u_i r_i^{\varepsilon_i}u_i^{-1},
+\qquad u_i\in F(S),\ r_i\in R,\ \varepsilon_i\in\{1,-1\}.
+\]
+后一集合是子群，在共轭下保持，并包含 \(R\)；任何包含 \(R\) 的正规子群又必须包含这些乘积，所以两种描述一致。等式关系 \(v=w\) 是关系字 \(vw^{-1}\) 的简写。
+
+\ProseParagraphBreak
+任何群都有呈示。给定生成集 \(S\)，自由群的泛性质给出满同态 \(F(S)\to G\)；取其核的所有元素为关系字，就有 \(G\cong\langle S\mid R\rangle\)。这并不保证关系集有限，也没有自动提供判别两个字是否相等的算法。
 
 \subsection{呈示与同态构造}
 \label{b1:subsec:0802:02}
 
-待撰写。
+\begin{proposition}\label{b1:prop:presentation-homomorphism}
+从 \(\langle S\mid R\rangle\) 到群 \(H\) 的同态，与满足所有关系 \(r\in R\) 的集合映射 \(f:S\to H\) 一一对应。
+\end{proposition}
+\begin{proof}
+先将 \(f\) 唯一延拓为 \(F(S)\to H\) 的同态。满足关系恰好表示 \(R\) 包含于其核；核正规，等价于 \(\langle\!\langle R\rangle\!\rangle\) 包含于核。因此同态唯一地通过该商群。反过来，商群上的同态在生成元上的限制自然满足每个关系。两个步骤互为逆过程。
+\end{proof}
+验证一个群的呈示通常需要两方面工作。首先，在具体群 \(G\) 中找出满足关系的生成元，由此得到呈示群 \(P\) 到 \(G\) 的满同态；其次，证明 \(P\) 没有多余元素，或直接构造逆同态。只检验关系成立，只能证明 \(G\) 是 \(P\) 的商群。
+
+\ProseParagraphBreak
+例如 \(P=\langle a,b\mid ab=ba\rangle\) 中，每个字可整理为 \(a^mb^n\)。映射 \(a\mapsto(1,0),b\mapsto(0,1)\) 给出 \(P\to\mathbb Z^2\)；反向映射 \((m,n)\mapsto a^mb^n\) 因交换关系而保持加法。两者复合都是恒等，故 \(P\cong\mathbb Z^2\)，且所列标准形唯一。若再加入 \(a^2=b^3=1\)，则得到 \(C_2\times C_3\)，而不是一个含有任意多交错字的非交换群。
 
 \subsection{循环群、二面体群与多面体群的呈示}
 \label{b1:subsec:0802:03}
 
-待撰写。
+循环群最简单的呈示为
+\[
+C_n\cong\langle a\mid a^n=1\rangle\qquad(n\ge1).
+\]
+关系使每个字成为 \(1,a,\ldots,a^{n-1}\) 之一；映到已知的 \(n\) 阶循环群，说明这 \(n\) 个元素彼此不同。无限循环群的呈示则是一个生成元而没有关系。
+
+\begin{proposition}\label{b1:prop:dihedral-presentation}
+对 \(n\ge3\)，有
+\[
+D_{2n}\cong\langle r,s\mid r^n=1,\ s^2=1,\ srs^{-1}=r^{-1}\rangle.
+\]
+\end{proposition}
+\begin{proof}
+正 \(n\) 边形的旋转与反射满足所列关系，且生成全部对称，所以存在呈示群到 \(D_{2n}\) 的满同态。呈示中的关系给出 \(sr^k=r^{-k}s\)，可把每个 \(s\) 推到字的最右端，再约去 \(s^2\) 及 \(r^n\)。于是每个元素都具有形式 \(r^i s^\varepsilon\)，其中 \(0\le i<n\)、\(\varepsilon\in\{0,1\}\)，呈示群至多有 \(2n\) 个元素。满像已有 \(2n\) 个元素，故同态必为同构，标准形也唯一。
+\end{proof}
+多面体的旋转群可以采用类似办法，只是适合的生成元未必只有两个。以正四面体的旋转群 \(A_4\) 为例，取
+\[
+x=(12)(34),\qquad y=(14)(23),\qquad t=(123).
+\]
+其呈示为
+\[
+\left\langle x,y,t\ \middle|\
+\begin{gathered}
+x^2=y^2=t^3=1,\quad xy=yx,\\
+txt^{-1}=y,\quad tyt^{-1}=xy
+\end{gathered}\right\rangle.
+\]
+先核对置换满足关系；\(x,y\) 生成 Klein 四元群，\(t\) 循环置换其三个非单位元，所以它们在 \(A_4\) 中生成十二个元素。反过来，在抽象呈示中用两个共轭关系把 \(t\) 全推到右边，再用阶与交换关系把每个字化为
+\[
+x^\varepsilon y^\delta t^j,
+\qquad \varepsilon,\delta\in\{0,1\},\quad 0\le j<3.
+\]
+这样至多有十二个元素，满同态到 \(A_4\) 因而为同构。几何上，绕顶点与对面中心的三分之一周转动给出三轮换，绕一对对边中点连线的半周转动给出双换位，故这些确实是四面体的旋转。
+
+\ProseParagraphBreak
+同一个群可以有不同的呈示。上例保留 \(V_4\) 的两个生成元，使半直积结构清楚可见；为了追求最少的生成元，可以用 \(y=txt^{-1}\) 消去 \(y\)，但关系会变长。呈示的简短程度、标准形的易算程度及结构的可见程度，往往需要分别考虑。

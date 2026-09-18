@@ -5,8 +5,6 @@
 \section{正规子群与商群}
 \label{b1:sec:0203}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 正规性及商群构造
@@ -17,14 +15,78 @@
 \subsection{正规性及商群构造}
 \label{b1:subsec:0203:01}
 
-待撰写。
+陪集把群分成等大的块，但块之间未必能够相乘。若希望用
+\((aH)(bH)=(ab)H\) 定义商集上的乘法，就必须保证把 \(a,b\) 换成同一陪集中的其他元素后，输出不变。群的可逆性使这一要求有一个简洁的描述。
+
+\begin{definition}\label{b1:def:normal-subgroup}
+子群 \(N\leq G\) 若对每个 \(g\in G\) 满足 \(gNg^{-1}=N\)，就称为\term[zhenggui-ziqun]{正规子群}[normal subgroup]，记为 \(N\trianglelefteq G\)。这里 \(gNg^{-1}\) 表示所有 \(gng^{-1}\ (n\in N)\) 的集合；映射 \(n\mapsto gng^{-1}\) 称为由 \(g\) 给出的\term[gonge]{共轭}[conjugation]。
+\end{definition}
+\symidx{\(N\trianglelefteq G\)：正规子群关系}
+
+\begin{proposition}\label{b1:prop:normal-criteria}
+对于子群 \(N\leq G\)，以下条件等价：它是正规子群；对每个 \(g\) 有 \(gNg^{-1}\subseteq N\)；对每个 \(g\) 有 \(gN=Ng\)。
+\end{proposition}
+\begin{proof}
+等号自然给出包含。若所有共轭都满足包含，把 \(g\) 换成 \(g^{-1}\) 得
+\(g^{-1}Ng\subseteq N\)，两侧再共轭便得 \(N\subseteq gNg^{-1}\)，故等号成立。等式 \(gNg^{-1}=N\) 两边右乘 \(g\)，恰为 \(gN=Ng\)，反向亦然。
+\end{proof}
+
+群同态的核总是正规子群，因为若 \(f(n)=1\)，则
+\(f(gng^{-1})=f(g)f(n)f(g)^{-1}=1\)。阿贝尔群中的每个子群都正规，因为 \(gng^{-1}=n\)。另一个不要求交换性的例子是指数为 \(2\) 的子群：若 \(g\in H\)，则两陪集都是 \(H\)；若 \(g\notin H\)，左右陪集都等于补集 \(G\setminus H\)，故仍相同。
+
+\begin{theorem}[商群构造]\label{b1:thm:quotient-group}
+设 \(N\leq G\)。公式 \((aN)(bN)=(ab)N\) 在左陪集集合上良定义，当且仅当 \(N\trianglelefteq G\)。满足此条件时，该运算使 \(G/N\) 成为群，称为\term[shangqun]{商群}[quotient group]；单位元为 \(N\)，逆元公式为 \((aN)^{-1}=a^{-1}N\)。商映射 \(q(g)=gN\) 是满同态，核恰为 \(N\)。
+\end{theorem}
+\begin{proof}
+若 \(N\) 正规，写 \(a'=an\)、\(b'=bm\)，其中 \(n,m\in N\)，则
+\[
+a'b'=anbm=ab(b^{-1}nb)m.
+\]
+正规性保证最后两个因子之积属于 \(N\)，故 \(a'b'N=abN\)，证明良定义。结合律由 \((ab)c=a(bc)\) 下降，单位和逆元由
+\(1a=a1=a\)、\(aa^{-1}=a^{-1}a=1\) 下降。商映射保持乘法且满射；\(q(g)=N\) 当且仅当 \(g\in N\)。
+
+反过来，假设该公式良定义。对任意 \(n\in N,g\in G\)，由 \(nN=N\) 得
+\((ng)N=(nN)(gN)=N(gN)=gN\)。陪集判据给出
+\(g^{-1}ng\in N\)。因 \(g\) 任意，正规性判据适用。
+\end{proof}
+
+商群中的单位元是整个子群 \(N\)，并非单个元素 \(1\)。例如
+\(\mathbb Z/4\mathbb Z\) 的 \([2]+[2]=[0]\) 表示两个陪集相加得到单位陪集，而不是说整数 \(2+2=0\)。保持原群等式与商群等式的区别，是使用商结构时最基本的习惯。
 
 \subsection{商群的泛性质}
 \label{b1:subsec:0203:02}
 
-待撰写。
+商群把 \(N\) 的每个元素变为单位元。它的泛性质说明：除此之外，商群没有阻止任何本来就会把 \(N\) 送到单位元的群同态。
+
+\begin{theorem}[商群的泛性质]\label{b1:thm:quotient-universal}
+设 \(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 为商映射。对于同态 \(f:G\rightarrow K\)，存在同态 \(\overline f:G/N\rightarrow K\) 满足 \(\overline f q=f\)，当且仅当 \(N\subseteq\ker f\)。存在时，\(\overline f\) 唯一，且由 \(\overline f(gN)=f(g)\) 给出。
+\end{theorem}
+\begin{proof}
+如果已有分解，\(n\in N\) 时 \(q(n)=N\) 为商群单位元，故 \(f(n)=1\)。反过来，若 \(N\subseteq\ker f\)，则
+\(gN=hN\) 蕴含 \(h^{-1}g\in N\)，于是 \(f(h)^{-1}f(g)=1\)，即 \(f(g)=f(h)\)，证明所给公式良定义。由
+\(\overline f((gN)(hN))=f(gh)=f(g)f(h)\)，它为同态。每个商群元素都是某个 \(q(g)\)，所以分解等式强制决定其全部取值，给出唯一性。
+\end{proof}
+
+例如映射 \(\mathbb Z\rightarrow\mathbb Z/3\mathbb Z\)，\(a\mapsto[a]\)，能够经由 \(\mathbb Z/6\mathbb Z\) 分解，因为 \(6\mathbb Z\subseteq3\mathbb Z\)。诱导映射是把模 \(6\) 的类再取模 \(3\)。同一个公式却不能定义从 \(\mathbb Z/4\mathbb Z\) 到 \(\mathbb Z/3\mathbb Z\) 的映射：\(0,4\) 在前者代表同一类，在后者代表不同类。泛性质把这种代表元检验概括为核的包含条件。
+
+\ProseParagraphBreak
+若还要求 \(f\) 满射，\(\overline f\) 也满射，但未必单射；它的核为
+\(\{gN\mid g\in\ker f\}\)。因此应区分“商掉一个被核包含的正规子群”与“恰好商掉整个核”。下一节的第一同构定理使用后者，正是为了使诱导映射没有剩余的非平凡核。
 
 \subsection{单群概念与简单例子}
 \label{b1:subsec:0203:03}
 
-待撰写。
+\begin{definition}\label{b1:def:simple-group}
+非平凡群 \(G\) 若仅有 \(\{1\}\) 和 \(G\) 两个正规子群，就称为\term[danqun]{单群}[simple group]。
+\end{definition}
+
+单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由核的正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群则单射。因此单群没有大小严格介于平凡群与自身之间的同态像。
+
+\begin{proposition}\label{b1:prop:abelian-simple}
+阿贝尔群是单群，当且仅当它的阶为素数。
+\end{proposition}
+\begin{proof}
+素数阶群没有非平凡真子群，这是 Lagrange 定理的直接结果。反过来，设 \(G\) 是阿贝尔单群，取 \(g\ne1\)。阿贝尔群的所有子群均正规，故非平凡子群 \(\langle g\rangle\) 必为 \(G\)。如果 \(g\) 为无限阶，则 \(\langle g^2\rangle\) 非平凡且不含 \(g\)：否则 \(g=g^{2k}\) 给出非零整数次幂等于 \(1\)。这与单性矛盾。故 \(g\) 有有限阶 \(n>1\)。若 \(n=ab\)，其中 \(a,b>1\)，则 \(g^a\ne1\)，而 \(\langle g^a\rangle\) 至多有 \(b<n\) 个元素，再次得到非平凡真子群。因此 \(n\) 为素数。
+\end{proof}
+
+非交换单群的构造需要比本章更多的工具；本节不预先假定它们的分类。单群概念的价值在于提出一个结构问题：给定群能否通过正规子群与商群分成较小的部分？这种分解与任意子群的划分不同，因为只有正规子群允许保留商上的群运算。

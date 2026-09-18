@@ -7,4 +7,5 @@
 - 从根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File ./build.ps1`；单卷加 `-Book N`。目录检查执行 `powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Check-Outline.ps1`。
 - 复用现有 TeX Live。构建失败先查 `tmp/build/BookN/` 日志，不用旧 PDF 冒充新成品。目录与版式变更后抽查相关 PDF 页面。
 - 不把分析学项目的正文、历史审核结果、特有术语、图表或书目作为本项目已经完成的工作。不要用初始化生成器覆盖已经撰写的章节。
-- 本仓库未授予开放许可证，权利说明见《版权声明.md》。推送到 GitHub 遵循用户在当前会话中的授权。
+- 日常修改默认只在本地编辑、编译与核验，不在每轮结束时自动提交或上传 GitHub；按用户另行安排的提交、上传任务执行。
+- 本仓库未授予开放许可证，权利说明见《版权声明.md》。

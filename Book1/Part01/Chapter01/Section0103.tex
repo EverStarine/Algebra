@@ -5,8 +5,6 @@
 \section{等价关系与商集}
 \label{b1:sec:0103}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 等价关系、划分与商映射
@@ -17,14 +15,88 @@
 \subsection{等价关系、划分与商映射}
 \label{b1:subsec:0103:01}
 
-待撰写。
+从字母表达式转向实际对象时，不同表达式可能具有同一个值。例如 \(2+5\) 与 \(3+4\) 表示同一整数；形式差 \((5,2)\) 与 \((4,1)\) 也应表示同一个结果。商集把这种“按指定标准视为相同”变成集合构造，但必须先弄清相同的标准是否彼此一致。
+
+\begin{definition}\label{b1:def:equivalence}
+集合 \(X\) 上的关系 \(\sim\) 若满足自反性 \(x\sim x\)、对称性 \(x\sim y\Rightarrow y\sim x\) 和传递性 \(x\sim y,\ y\sim z\Rightarrow x\sim z\)，就称为\term[dengjia-guanxi]{等价关系}[equivalence relation]。元素 \(x\) 的\term[dengjialei]{等价类}[equivalence class]为
+\[
+[x]\coloneqq\{\,y\in X\mid y\sim x\,\}.
+\]
+全体等价类构成的集合称为\term[shangji]{商集}[quotient set]，记为 \(X/{\sim}\)；满射 \(q:X\rightarrow X/{\sim}\)，\(x\mapsto[x]\)，称为\term[shang-yingshe]{商映射}[quotient map]。
+\end{definition}
+\symidx{\(X/{\sim}\)：等价关系的商集}
+
+\begin{proposition}\label{b1:prop:partition-equivalence}
+等价关系的各等价类构成 \(X\) 的划分：它们是非空子集，覆盖 \(X\)，且两两相同或不交。反过来，任一由非空不交子集组成、并为 \(X\) 的划分，都唯一确定一个等价关系。
+\end{proposition}
+\begin{proof}
+由自反性，\(x\in[x]\)，故等价类非空且覆盖 \(X\)。若
+\(z\in[x]\cap[y]\)，由对称性与传递性得 \(x\sim y\)。对任意
+\(t\sim x\)，传递性给出 \(t\sim y\)，所以 \([x]\subseteq[y]\)；反向相同，故两类相等。反过来，规定两个元素等价当且仅当它们落在同一块中。每个元素恰落在一块中，因而三条等价关系公理都成立，其等价类恰是原来的各块。
+\end{proof}
+
+例如给定映射 \(f:X\rightarrow Y\)，关系 \(x\sim y\) 当且仅当 \(f(x)=f(y)\) 总是等价关系。其各块是 \(f\) 在实际取到的值上的原像。商集与 \(f(X)\) 之间的映射 \([x]\mapsto f(x)\) 良定义、单射且满射。这是后面同构定理的集合论原型。
+
+\ProseParagraphBreak
+商集的元素是整块等价类，不是任意挑选出来的代表元。不过计算时常用一个代表元写出结果。真正的问题在于：更换代表元后，所写的结果是否仍然是同一个等价类？
 
 \subsection{商集上的诱导运算}
 \label{b1:subsec:0103:02}
 
-待撰写。
+\begin{proposition}[运算下降的判据]\label{b1:prop:operation-descends}
+设 \(*\) 是 \(X\) 上的二元运算，\(\sim\) 是等价关系。公式
+\[
+[a]\mathbin{\overline *}[b]\coloneqq[a*b]
+\]
+定义商集上的二元运算，当且仅当
+\[
+a\sim a',\ b\sim b'\quad\Longrightarrow\quad a*b\sim a'*b'.
+\]
+满足此条件时，原运算的结合律、交换律以及单位元等式都能传到商集。
+\end{proposition}
+\begin{proof}
+若公式确实定义了运算，那么 \([a]=[a']\)、\([b]=[b']\) 时，两种计算必有同样的输出，即 \([a*b]=[a'*b']\)。反之，该条件恰好说明公式与两个输入的代表元选择无关。若原运算结合，则
+\[
+([a]\mathbin{\overline *}[b])\mathbin{\overline *}[c]
+=[(a*b)*c]=[a*(b*c)]
+=[a]\mathbin{\overline *}([b]\mathbin{\overline *}[c]).
+\]
+交换律同样由代表元上的等式得到；若 \(e\) 是单位元，则
+\([e]\mathbin{\overline *}[a]=[a]=[a]\mathbin{\overline *}[e]\)。
+\end{proof}
+
+固定整数 \(n\geq1\)，在 \(\mathbb Z\) 上定义 \(a\sim b\) 当且仅当
+\(n\) 整除 \(a-b\)，通常记为 \(a\equiv b\pmod n\)。这是等价关系：差为零、取相反数、以及相加都保持被 \(n\) 整除。若 \(a-a'=nr\)、\(b-b'=ns\)，则
+\[
+(a+b)-(a'+b')=n(r+s),\qquad
+ab-a'b'=n(rb+a's).
+\]
+所以加法与乘法均可下降。余数代表 \(0,1,\ldots,n-1\) 使计算方便，却不是良定义的理由；理由是上面两条整除等式。
+
+\ProseParagraphBreak
+任意划分并不具有这种相容性。例如把整数按绝对值相等分类，有 \(1\sim-1\) 且 \(1\sim1\)，但 \(1+1=2\) 与 \((-1)+1=0\) 不等价。故不能在这些等价类上直接使用 \([a]+[b]=[a+b]\)。一旦缺少良定义，后面再检验结合律也无从谈起。
 
 \subsection{同余关系与良定义性}
 \label{b1:subsec:0103:03}
 
-待撰写。
+\begin{definition}\label{b1:def:congruence}
+幺半群 \(M\) 上与乘法相容的等价关系称为\term[tongyu-guanxi]{同余关系}[congruence relation]。此时商幺半群 \(M/{\sim}\) 的乘法为 \([a][b]=[ab]\)，单位元为 \([1]\)。
+\end{definition}
+
+检验相容性也可逐个变量进行：只要证明 \(a\sim a'\) 时，对任意 \(c\) 都有 \(ca\sim ca'\) 和 \(ac\sim a'c\)，即可由
+\(ab\sim a'b\sim a'b'\) 得出两个变量同时改变的条件。对于由字之间的等式生成的关系，这种写法尤其便于处理在等式两侧添加上下文的操作。
+
+\begin{theorem}[商幺半群的映射性质]\label{b1:thm:monoid-quotient}
+设 \(q:M\rightarrow M/{\sim}\) 是商幺半群的商映射。幺半群同态
+\(f:M\rightarrow N\) 可以唯一写成 \(f=\overline f q\)，其中
+\(\overline f:M/{\sim}\rightarrow N\) 为同态，当且仅当
+\(a\sim b\Rightarrow f(a)=f(b)\)。
+\end{theorem}
+\begin{proof}
+若 \(f=\overline f q\)，则 \(q(a)=q(b)\) 必推出 \(f(a)=f(b)\)。反过来，所给条件保证
+\(\overline f([a])=f(a)\) 良定义。由
+\(\overline f([a][b])=f(ab)=f(a)f(b)\)，它保持乘法；又因
+\(f(1_M)=1_N\)，它保持单位。任何满足分解等式的映射在 \([a]=q(a)\) 上都只能取 \(f(a)\)，故唯一。
+\end{proof}
+
+例如在 \(\{a,b\}^*\) 中令两个字等价，当且仅当它们各自含有相同个数的 \(a\) 和 \(b\)。字母数在拼接时相加，因而这是同余关系，商幺半群同构于 \(\mathbb N^2\) 的逐坐标加法幺半群。映射 \(a\mapsto A,b\mapsto B\) 的字求值同态能下降到这个商，当且仅当 \(AB=BA\)：必要性来自 \(ab\sim ba\)；充分性则来自可把乘积中的 \(A\) 全部移到 \(B\) 前面。这个例子把“施加交换关系”与“只允许交换的代入”联系起来。

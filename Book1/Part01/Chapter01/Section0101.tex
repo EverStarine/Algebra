@@ -5,8 +5,6 @@
 \section{运算与结构}
 \label{b1:sec:0101}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 集合上的一元、二元运算及其公理
@@ -17,14 +15,87 @@
 \subsection{一元、二元运算及其公理}
 \label{b1:subsec:0101:01}
 
-待撰写。
+在整数中可以相加，在平面上可以先作一次旋转再作一次反射，在矩阵中可以相乘。这些计算所处理的对象不同，却都把给定的对象组合成同类对象。代数学首先把这种组合方式与对象本身一同看待：同一个集合配上不同的运算，往往得到完全不同的问题。
+
+\begin{definition}\label{b1:def:operation}
+集合 \(A\) 上的\term[yiyuan-yunsuan]{一元运算}[unary operation]是映射 \(A\rightarrow A\)；\term[eryuan-yunsuan]{二元运算}[binary operation]是映射 \(A\times A\rightarrow A\)。二元运算的值可写成 \(a*b\)。若对所有 \(a,b,c\in A\) 有
+\[
+(a*b)*c=a*(b*c),
+\]
+则称运算满足\term[jiehelv]{结合律}[associative law]；若对所有 \(a,b\in A\) 有 \(a*b=b*a\)，则称其满足\term[jiaohuanlv]{交换律}[commutative law]。
+\end{definition}
+
+“映射”这一要求同时包含两件事：每一对输入都有输出，且输出由输入唯一决定。因此整数上的除法不是二元运算：除数可能为零，即使除数非零，结果也未必是整数。相反，整数减法确实是二元运算，只是不满足结合律。例如 \((3-2)-1=0\)，而 \(3-(2-1)=2\)。不满足某条公理与根本没有定义成运算，应当分开判断。
+
+\ProseParagraphBreak
+运算的公理是对任意输入都成立的等式或条件；计算几个例子只能发现反例，不能验证无限集合上的全称命题。对于有限集合，可以把二元运算列成表格，但结合律仍需比较三元输入，不能只从表格对称性判断。表格关于主对角线对称表达的是交换律。
+
+\begin{proposition}[有限乘积的括号]\label{b1:prop:parentheses}
+若 \(*\) 满足结合律，则按原次序排列的 \(n\geq 1\) 个元素，不论如何加括号，运算结果相同。
+\end{proposition}
+\begin{proof}
+定义 \(P(a_1)=a_1\)，并递归定义
+\(P(a_1,\ldots,a_n)=P(a_1,\ldots,a_{n-1})*a_n\)。先对第二块的长度归纳，由结合律得到
+\[
+P(a_1,\ldots,a_r)*P(a_{r+1},\ldots,a_{r+s})
+=P(a_1,\ldots,a_{r+s}).
+\]
+当 \(s=1\) 时这就是定义；归纳步把第二块的最后一个元素移到最外层右边，再应用归纳假设。任意一种括号的最后一步都把原序列分成两个非空连续块。对总长度归纳，两块内部各等于相应的 \(P\)，上式再把它们合并。因此所有括号方式均给出 \(P\)。
+\end{proof}
+
+这里元素的次序始终没有改变。今后省略有限乘积中的括号，依据的是结合律；任意交换两个因子的次序，还需要交换律或该两元素彼此交换的专门理由。
 
 \subsection{整数、置换与矩阵上的运算}
 \label{b1:subsec:0101:02}
 
-待撰写。
+整数集合 \(\mathbb Z\) 上，加法和乘法都满足结合律与交换律。加法的一元运算 \(a\mapsto -a\) 对每个整数都有意义；乘法的倒数则只有在扩大对象范围后才可能普遍存在，而且零仍然不能求倒数。这说明“逆运算”的可用范围也是结构的一部分。
+
+\begin{definition}\label{b1:def:permutation}
+集合 \(X\) 到自身的双射称为 \(X\) 的\term[zhihuan]{置换}[permutation]。记所有这样的双射构成的集合为 \(\operatorname{Sym}(X)\)。映射复合一律从右向左计算：\((fg)(x)=f(g(x))\)。
+\end{definition}
+\symidx{\(\operatorname{Sym}(X)\)：集合的置换群}
+
+双射的复合仍是双射。对任意 \(f,g,h\) 和 \(x\in X\)，都有
+\[
+((fg)h)(x)=f(g(h(x)))=(f(gh))(x),
+\]
+故复合满足结合律。令 \(X=\{1,2,3\}\)，令 \(f\) 交换 \(1,2\) 而固定 \(3\)，令 \(g\) 交换 \(2,3\) 而固定 \(1\)。那么 \((fg)(1)=2\)，而 \((gf)(1)=3\)，所以复合一般不交换。这里比较一个输入上的不同输出，就足以证明两个映射不同。
+
+\ProseParagraphBreak
+固定大小的实方阵提供另一个例子。所有 \(n\) 阶实方阵对乘法封闭，并有
+\[
+((AB)C)_{ij}=\sum_{k=1}^{n}\sum_{\ell=1}^{n}
+a_{i\ell}b_{\ell k}c_{kj}
+=(A(BC))_{ij}.
+\]
+这个证明来自有限求和的分配律与实数乘法的结合律，不能把待证的矩阵结合律当成中间步骤。取
+\[
+A=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\]
+则 \(AB=\begin{pmatrix}2&1\\1&1\end{pmatrix}\)，而
+\(BA=\begin{pmatrix}1&1\\1&2\end{pmatrix}\)。即使两个矩阵都有逆，交换律也不会随之成立。
 
 \subsection{结合律、交换律、单位元与逆元}
 \label{b1:subsec:0101:03}
 
-待撰写。
+\begin{definition}\label{b1:def:identity-inverse}
+对于集合 \(A\) 上的二元运算，若 \(e*a=a*e=a\) 对每个 \(a\in A\) 成立，则称 \(e\) 为\term[danweiyuan]{单位元}[identity element]。存在单位元时，若 \(a*b=b*a=e\)，则称 \(b\) 是 \(a\) 的\term[niyuan]{逆元}[inverse element]。只要求左边或右边的一条等式时，分别称左逆元或右逆元。
+\end{definition}
+
+\begin{proposition}\label{b1:prop:identity-inverse-unique}
+单位元至多有一个。在满足结合律且有单位元的结构中，一个元素若同时有左逆元与右逆元，则二者相等；因而双边逆元唯一。
+\end{proposition}
+\begin{proof}
+若 \(e,f\) 都是单位元，则 \(e=e*f=f\)。若 \(b*a=e\) 且 \(a*c=e\)，则
+\[
+b=b*e=b*(a*c)=(b*a)*c=e*c=c.
+\]
+任意两个双边逆元分别充当左逆与右逆，即得唯一性。
+\end{proof}
+
+单位元使空乘积有了自然的值，也使“撤销一次操作”可以写成等式。结合律则保证撤销操作能够穿过括号：当 \(a\) 有逆元时，\(a*x=a*y\) 两边左乘 \(a^{-1}\)，便得到 \(x=y\)。若只知道交换律，这个消去步骤没有根据；整数乘法中的 \(0\cdot 2=0\cdot 3\) 就不能消去零。
+
+\ProseParagraphBreak
+左右逆也确实可能不同步出现。令 \(\mathbb N=\{0,1,2,\ldots\}\)，取映射
+\(s(n)=n+1\)、\(p(0)=0\)、\(p(n)=n-1\ (n\geq1)\)。有 \(ps=\operatorname{id}_{\mathbb N}\)，却有 \((sp)(0)=1\)。因而在所有自映射的复合运算中，\(p\) 是 \(s\) 的左逆，但不是右逆。后面引入群时要求每个元素都有双边逆，正是为了排除这种不对称。

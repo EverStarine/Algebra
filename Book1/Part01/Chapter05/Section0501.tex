@@ -5,7 +5,7 @@
 \section{Cauchy 定理与存在性}
 \label{b1:sec:0501}
 
-% TODO: 按以下纲要要点撰写本节。
+% 本节正文按下列原纲要要点撰写。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,68 @@
 \subsection{素数阶元素的存在}
 \label{b1:subsec:0501:01}
 
-待撰写。
+Lagrange 定理说明子群的阶必须整除群阶，但一般不能把整除关系反过来使用。例如“\(d\mid|G|\)”本身不构成存在 \(d\) 阶子群的证明。当 \(d\) 是素数时，反向结论成立；下面的\term[cauchy-dingli]{Cauchy 定理}[Cauchy theorem]是这一方向的第一步。
+
+\begin{theorem}[Cauchy]\label{b1:thm:cauchy}
+设 \(G\) 为有限群，素数 \(p\) 整除 \(|G|\)。则 \(G\) 中存在阶为 \(p\) 的元素。
+\end{theorem}
+\begin{proof}
+考虑有限集合
+\[
+X=\{\,(x_1,\ldots,x_p)\in G^p\mid x_1x_2\cdots x_p=1\,\}.
+\]
+前 \(p-1\) 个分量任意后，最后一个分量被唯一确定，故 \(|X|=|G|^{p-1}\)，被 \(p\) 整除。轮换
+\[
+(x_1,\ldots,x_p)\longmapsto(x_2,\ldots,x_p,x_1)
+\]
+保持 \(X\)，因为 \(x_2\cdots x_px_1=x_1^{-1}(x_1\cdots x_p)x_1=1\)。这定义循环群 \(C_p\) 对 \(X\) 的作用。共同不动点恰为 \((x,\ldots,x)\)，其中 \(x^p=1\)。由\cref{b1:lem:p-action-fixed}，这些点的个数被 \(p\) 整除。它们至少包含 \((1,\ldots,1)\)，因此至少有 \(p\) 个；可取 \(x\neq1\) 满足 \(x^p=1\)。其阶整除素数 \(p\) 而不为 \(1\)，故恰为 \(p\)。
+\end{proof}
+证明中没有交换群假设。把条件 \(x_1\cdots x_p=1\) 循环移动后仍成立，靠的是共轭等式；任意交换两个分量却未必保持这个条件。这也是选择循环作用而不选择整个 \(S_p\) 作用的原因。
 
 \subsection{Sylow \texorpdfstring{\(p\)}{p} 子群}
 \label{b1:subsec:0501:02}
 
-待撰写。
+现在把 \(|G|\) 写成 \(p^am\)，其中 \(a\geq0\)、\(p\nmid m\)。Lagrange 定理允许的 \(p\)-幂子群阶最大为 \(p^a\)，我们将证明这一最大值总能达到。
+
+\begin{definition}\label{b1:def:sylow-subgroup}
+有限群 \(G\) 中阶为 \(p\) 的幂的子群称为 \(p\)-子群。若 \(|G|=p^am\) 且 \(p\nmid m\)，阶为 \(p^a\) 的子群称为 \(G\) 的\term[sylow-p-ziqun]{Sylow \(p\)-子群}[Sylow p-subgroup]。全部这样的子群组成的集合记为 \(\operatorname{Syl}_p(G)\)，其个数记为 \(n_p(G)\)，上下文明确时简记 \(n_p\)。
+\symidx{\(\operatorname{Syl}_p(G)\)：Sylow 子群集合}
+\symidx{\(n_p(G)\)：Sylow 子群个数}
+\end{definition}
+定义本身不保证 \(\operatorname{Syl}_p(G)\) 非空。也不能仅把“按包含极大的 \(p\)-子群”改名为 Sylow 子群，除非已证明极大者必有阶 \(p^a\)；这一点要用稍后的包含定理。若 \(p\nmid|G|\)，唯一 \(p\)-子群是平凡子群，它也是 Sylow \(p\)-子群。
+
+\ProseParagraphBreak
+在 \(S_3\) 中，\(\langle(123)\rangle\) 是一个 Sylow \(3\)-子群，三个换位各生成一个 Sylow \(2\)-子群。在 \(S_4\) 中，Sylow \(2\)-子群必须有阶 \(8\)；选定正方形的四个顶点并把其八个对称看成四点置换，得到一个 \(D_8\) 子群。不同顶点排列可给出不同的八阶子群，下一节将统一控制它们的关系和个数。
 
 \subsection{Sylow 第一定理}
 \label{b1:subsec:0501:03}
 
-待撰写。
+以下存在性结果及下一节的共轭性、计数结果合称\term[sylow-dingli]{Sylow 定理}[Sylow theorem]。存在性证明把类方程和 Cauchy 定理结合起来，关键是使群阶逐步减小。
+
+\begin{theorem}[Sylow 第一定理]\label{b1:thm:sylow-existence}
+每个有限群 \(G\) 都有 Sylow \(p\)-子群。
+\end{theorem}
+\begin{proof}
+对 \(|G|\) 归纳。若 \(p\nmid|G|\)，取平凡子群即可。设 \(|G|=p^am\)，\(a\geq1\)，并假设结论对阶小于 \(|G|\) 的群成立。
+
+若存在真子群 \(H<G\) 使 \(p\nmid[G:H]\)，则 \(|H|\) 中的 \(p\)-幂因子仍为 \(p^a\)。由归纳假设，\(H\) 有阶为 \(p^a\) 的子群，它也是 \(G\) 的 Sylow \(p\)-子群。
+
+剩下的情形是每个真子群的指数都被 \(p\) 整除。类方程中每个非中心元素 \(x_i\) 的中心化子是真子群，故
+\[
+|G|=|Z(G)|+\sum_i[G:C_G(x_i)]
+\]
+推出 \(p\mid|Z(G)|\)。对群 \(Z(G)\) 使用 Cauchy 定理，取中心中阶为 \(p\) 的元素 \(z\)。子群 \(A=\langle z\rangle\) 正规，商群 \(\overline G=G/A\) 阶为 \(p^{a-1}m<|G|\)。由归纳假设，\(\overline G\) 有阶为 \(p^{a-1}\) 的子群 \(\overline P\)。令 \(P\) 为它在商映射下的逆像，则 \(P\leq G\)，且限制映射 \(P\rightarrow\overline P\) 的核是 \(A\)。由同构定理，
+\[
+|P|=|A|\,|\overline P|=p\cdot p^{a-1}=p^a.
+\]
+于是 \(P\) 是所需子群。
+\end{proof}
+这两个分支分别处理“在真子群中已经保留全部 \(p\)-幂”与“只能先除去一个中心 \(p\) 阶子群”。第二分支中的商群不要求交换，所需的只是 \(A\) 正规和阶数下降；归纳始终作用于更小的群，所以不存在用待证结论证明自身的循环。
+
+\begin{corollary}\label{b1:cor:all-p-power-subgroups}
+若 \(p^a\mid|G|\)，则对每个 \(0\leq b\leq a\)，\(G\) 含有阶为 \(p^b\) 的子群。
+\end{corollary}
+\begin{proof}
+先取 Sylow \(p\)-子群，问题化为阶为 \(p^r\) 的群 \(P\) 内构造较小的 \(p\)-幂阶子群，对 \(r\) 归纳。\(b=0\) 时取平凡子群。若 \(b\geq1\)，由中心非平凡及 Cauchy 定理，取中心中一个 \(p\) 阶子群 \(A\)。商群 \(P/A\) 的阶为 \(p^{r-1}\)，由归纳假设取其中 \(p^{b-1}\) 阶子群；其在 \(P\) 中的逆像阶为 \(p^b\)，即得结论。
+\end{proof}
+这个推论仍只保证素数幂阶子群的存在，并未把全部整除数都变成子群阶。逆像构造还说明，商群中的子群比商群中的任意元素代表更稳定：只要取整个子群的逆像，封闭性和所需阶数便可分别由同态和核计算保证。
