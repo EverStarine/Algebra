@@ -5,7 +5,7 @@
 \section{中国剩余定理}
 \label{b1:sec:1004}
 
-% TODO: 按以下纲要要点撰写本节。
+整数的两个互素模数可以独立指定余数。对一般交换环，替代“模数互素”的条件是两个理想的和等于整个环。中国剩余定理不仅给出同余方程的解，还把一个商环拆成若干分量；逆向看，这些分量由特殊的幂等元识别。本节除最后的辨析外均在交换含幺环中讨论。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,15 +18,86 @@
 
 \subsection{两两互素理想与有限直积分解}
 \label{b1:subsec:1004:01}
+\begin{definition}\label{b1:def:comaximal-ideals}
+交换环 \(R\) 的两个理想 \(I,J\) 若满足 \(I+J=R\)，称为\term[husu-lixiang]{互素理想}[comaximal ideals]。这等价于存在 \(a\in I,b\in J\) 使 \(a+b=1\)。
+\end{definition}
 
-待撰写。
+\begin{lemma}\label{b1:lem:comaximal-product}
+互素理想满足 \(I\cap J=IJ\)。若 \(I_1,\ldots,I_r\) 两两互素，则
+\(\bigcap_{i=1}^r I_i=\prod_{i=1}^r I_i\)。
+\end{lemma}
+\begin{proof}
+\cref{b1:prop:ideal-containments}已给出 \(IJ\subseteq I\cap J\)。若 \(x\in I\cap J\)，取 \(a+b=1\)、\(a\in I,b\in J\)，则 \(x=xa+xb\in IJ\)，这里交换性把 \(xa\) 写成 \(ax\)。
+
+对多个理想，取 \(a_j\in I_j,b_j\in I_r\) 使 \(a_j+b_j=1\)，其中 \(j<r\)。乘积 \(a_1\cdots a_{r-1}\) 属于 \(I_1\cdots I_{r-1}\)，且模 \(I_r\) 同余于 \(1\)。所以 \(I_r+I_1\cdots I_{r-1}=R\)。从 \(r=2\) 起归纳，将两理想结论用于这个乘积理想与 \(I_r\)，即可得到有限情形。
+\end{proof}
+\term[zhongguo-shengyu-dingli]{中国剩余定理}[Chinese remainder theorem]把这一等式与一个满同态结合起来。
+
+\begin{theorem}[中国剩余定理]\label{b1:thm:crt}
+设交换环 \(R\) 的理想 \(I_1,\ldots,I_r\) 两两互素，\(r\geq1\)。则映射
+\[
+\Phi:R\longrightarrow\prod_{i=1}^rR/I_i,\qquad
+a\longmapsto(a+I_i)_{i=1}^r
+\]
+是满环同态，核为 \(\bigcap_iI_i=\prod_iI_i\)，因而诱导环同构
+\[
+R/\Bigl(\prod_{i=1}^rI_i\Bigr)\cong\prod_{i=1}^rR/I_i.
+\]
+反过来，上述自然映射若满射，这些理想必两两互素。
+\end{theorem}
+\begin{proof}
+逐坐标考察可知 \(\Phi\) 保持运算与单位，其核恰为全部 \(I_i\) 的交。对每个 \(i\ne j\)，取 \(u_{ij}\in I_i,v_{ij}\in I_j\) 使 \(u_{ij}+v_{ij}=1\)，并令
+\[
+e_i=\prod_{j\ne i}v_{ij}.
+\]
+空乘积为 \(1\)。于是 \(e_i\equiv1\pmod{I_i}\)，且 \(e_i\in I_j\) 对 \(j\ne i\) 成立。给定任意余数组 \((a_i+I_i)_i\)，元素 \(a=\sum_i a_ie_i\) 的第 \(i\) 个余数恰为 \(a_i+I_i\)，所以 \(\Phi\) 满射。由\cref{b1:lem:comaximal-product}确定核，再对 \(\Phi\) 应用\cref{b1:thm:ring-first-iso}，得到所述同构。
+
+反过来，若 \(\Phi\) 满射，对 \(i\ne j\) 选择一个原像 \(a\)，使 \(a\equiv1\pmod{I_i}\)、\(a\equiv0\pmod{I_j}\)。则 \(1=(1-a)+a\in I_i+I_j\)，故两理想互素。
+\end{proof}
+有限性使构造中的求和和乘积都在环内有意义。不能直接把定理中的有限直积改成无限直积；例如 \(\mathbb Z\) 只有可数多个元素，而对全部素数 \(p\) 的直积 \(\prod_p\mathbb F_p\) 不可数，自然映射不可能满射。
 
 \subsection{整数同余方程}
 \label{b1:subsec:1004:02}
+正整数 \(m,n\) 满足 \(m\mathbb Z+n\mathbb Z=\mathbb Z\)，当且仅当 \(\gcd(m,n)=1\)。若 \(um+vn=1\)，方程
+\[
+x\equiv a\pmod m,\qquad x\equiv b\pmod n
+\]
+的解可取 \(x=avn+bum\)。模 \(m\) 第一项同余于 \(a\)、第二项为零；模 \(n\) 恰好相反。\cref{b1:thm:crt}说明全部解组成模 \(mn\) 的唯一剩余类。
 
-待撰写。
+\ProseParagraphBreak
+例如求 \(x\equiv2\pmod3\)、\(x\equiv3\pmod4\)。由于 \(4-3=1\)，可以取 \(x=2\cdot4+3\cdot(-3)=-1\)，所以答案是 \(x\equiv11\pmod{12}\)。直接核验 \(11\) 的两个余数，可同时检查系数的放置次序。
+
+\begin{proposition}\label{b1:prop:integer-crt-compatible}
+不要求 \(m,n\) 互素时，以上两同余式有解的充要条件是
+\(a\equiv b\pmod d\)，其中 \(d=\gcd(m,n)\)。有解时，全部解为模 \(\operatorname{lcm}(m,n)\) 的一个剩余类。
+\end{proposition}
+\begin{proof}
+若有解，\(d\) 同时整除 \(x-a,x-b\)，所以整除 \(a-b\)。反过来，写 \(x=a+mt\)，所求条件成为 \(mt\equiv b-a\pmod n\)。若 \(d\mid b-a\)，约去 \(d\) 后，\(m/d\) 与 \(n/d\) 互素，Bézout 等式使 \(m/d\) 在模 \(n/d\) 下可逆，因而存在 \(t\)。两个解之差必须同时被 \(m,n\) 整除，恰好被它们的最小公倍数整除，且加上这个公倍数保持两个同余式，故得到全部解。
+\end{proof}
+若 \(n=p_1^{a_1}\cdots p_r^{a_r}\) 为整数的素数幂分解，则
+\[
+\mathbb Z/n\mathbb Z\cong\prod_{i=1}^r\mathbb Z/p_i^{a_i}\mathbb Z.
+\]
+这使大模数的乘法、可逆性与幂等元计算分别归结到各个素数幂分量。这里用的是整数的唯一分解；下一章才将元素分解的问题推广到一般整环。
 
 \subsection{幂等元与环的分解}
 \label{b1:subsec:1004:03}
+\begin{definition}\label{b1:def:idempotent}
+环 \(R\) 中满足 \(e^2=e\) 的元素称为\term[midengyuan]{幂等元}[idempotent element]。一族幂等元若对不同指标满足 \(e_ie_j=e_je_i=0\)，称为两两正交。
+\end{definition}
 
-待撰写。
+\begin{proposition}\label{b1:prop:idempotent-product}
+若交换环 \(R\) 有两两正交的幂等元 \(e_1,\ldots,e_r\)，且 \(\sum_i e_i=1\)，则
+\[
+R\longrightarrow\prod_{i=1}^r e_iR,\qquad
+a\longmapsto(e_ia)_i
+\]
+为环同构。每个 \(e_iR\) 的单位是 \(e_i\)，不是一般意义下的 \(1_R\)。反之，有限环直积中的各坐标单位给出这样一族幂等元。
+\end{proposition}
+\begin{proof}
+\(e_iR\) 对加法及乘法封闭，\(e_i(e_ia)=e_ia\)，故以 \(e_i\) 为单位。映射保持乘法，因为 \((e_ia)(e_ib)=e_iab\)，并把 \(1\) 送到各分量的单位。若每个 \(e_ia=0\)，则 \(a=\sum_i e_ia=0\)，所以单射。给定 \(x_i\in e_iR\)，令 \(a=\sum_i x_i\)；由正交性，\(e_ia=x_i\)，故满射。逆映射就是各分量求和。有限直积中，第 \(i\) 坐标为单位而其余为零的元素显然满足幂等、正交及和为单位的条件。
+\end{proof}
+在中国剩余定理的证明中，\(e_i\) 未必在原环中幂等，但它们在商环 \(R/\bigcap I_i\) 中的像就是这些坐标幂等元。例如 \(\mathbb Z/12\mathbb Z\cong\mathbb Z/3\mathbb Z\times\mathbb Z/4\mathbb Z\) 中，\([4]\) 与 \([9]\) 分别对应 \((1,0)\)、\((0,1)\)：它们的平方各等于自身，乘积为零，和为 \([1]\)。
+
+\ProseParagraphBreak
+整环中 \(e^2=e\) 等价于 \(e(e-1)=0\)，所以只有 \(0,1\) 两个幂等元，不能分成两个非零环的直积。反方向不成立：\(\mathbb Z/4\mathbb Z\) 含零因子，却只有 \([0],[1]\) 两个幂等元。一般非交换环要作上述直积分解，还应要求幂等元与所有元素交换，即为中心幂等元。这样证明中的 \((e_ia)(e_ib)=e_iab\) 才成立；仅有一个矩阵幂等元 \(E_{11}\) 并不提供矩阵环的直积分解。

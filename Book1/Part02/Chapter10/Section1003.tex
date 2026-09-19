@@ -5,26 +5,174 @@
 \section{理想运算}
 \label{b1:sec:1003}
 
-% TODO: 按以下纲要要点撰写本节。
+一个理想记录一组允许被视为零的元素。把两组条件合并、同时要求两组条件成立，以及把两组元素相乘，分别产生理想的和、交与积。这三种运算通常不同。本节先写出它们的元素形式，再在交换环中讨论取幂、取根，以及反过来寻找哪些乘子能把一个理想送入另一个理想。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 和、积、交与生成理想
 % * 幂理想与根理想
 % * 不同理想运算之间的包含关系
+% * 理想商、零化子与基本运算性质
 %
 
 \subsection{理想的和、积、交与生成}
 \label{b1:subsec:1003:01}
+\begin{definition}\label{b1:def:ideal-operations}
+设 \(I,J\) 为环 \(R\) 的双边理想。它们的\term[lixiang-de-he]{和}[sum of ideals]与\term[lixiang-de-ji]{积}[product of ideals]分别为
+\[
+I+J=\{\,a+b\mid a\in I,\ b\in J\,\},\qquad
+IJ=\Bigl\{\,\sum_{\nu=1}^m a_\nu b_\nu\mid
+m\geq0,\ a_\nu\in I,\ b_\nu\in J\,\Bigr\}.
+\]
+空和表示零。理想的交采用通常的集合交。包含子集 \(S\subseteq R\) 的所有双边理想之交，称为 \(S\) 的\term[shengcheng-lixiang]{生成理想}[generated ideal]，记为 \((S)\)。
+\end{definition}
+\symidx{\(I+J,\ IJ,\ I\cap J\)：理想的和、积与交}
+\symidx{\((S)\)：由子集 \(S\) 生成的理想}
 
-待撰写。
+\begin{proposition}\label{b1:prop:ideal-operations}
+上述和、积与交都是双边理想；\(I+J\) 是包含 \(I,J\) 的最小理想。生成理想有具体表达式
+\[
+(S)=\Bigl\{\,\sum_{\nu=1}^m r_\nu s_\nu t_\nu
+\mid m\geq0,\ r_\nu,t_\nu\in R,\ s_\nu\in S\,\Bigr\}.
+\]
+若 \(R\) 交换，可把每个 \(r_\nu t_\nu\) 合成一个系数，得到 \(\sum r_\nu s_\nu\) 的形式。
+\end{proposition}
+\begin{proof}
+理想的交保持减法及左右乘法封闭。对 \(I+J\)，两个和相减仍可分别归入 \(I,J\)，且左右乘法分配到两项中，故是理想；任何同时包含 \(I,J\) 的理想都包含这些和。
+
+\(IJ\) 对加法封闭来自有限和的合并，取负可把负号吸收到 \(a_\nu\) 中。对任意 \(r\in R\)，左乘将 \(a_\nu\) 换成 \(ra_\nu\in I\)，右乘将 \(b_\nu\) 换成 \(b_\nu r\in J\)，所以也是理想。最后一个显示式右边同样对这些运算封闭，取 \(r_\nu=t_\nu=1\) 说明它包含 \(S\)；任何包含 \(S\) 的双边理想都包含这些有限和，故恰为 \((S)\)。
+\end{proof}
+即使 \(S\) 无限，每个生成理想中的元素也只用有限多个生成元。写 \((a_1,\ldots,a_m)\) 表示有限集合的生成理想；由一个元素生成的理想称为\term[zhulixiang]{主理想}[principal ideal]。交换环中 \((a)=Ra\)，非交换环中的双边主理想则一般须保留两侧系数。
+
+\ProseParagraphBreak
+理想积不能只定义成单个乘积的集合，因为单个乘积未必对加法封闭。有限和的定义还使
+\[
+I(J+K)=IJ+IK,\qquad (I+J)K=IK+JK,\qquad (IJ)K=I(JK).
+\]
+前两式把一个乘积的因子展开，再合并有限和；末式两边都是元素 \(abc\)、\(a\in I,b\in J,c\in K\) 的有限和。这些论证只用结合律和分配律，不要求交换性。
 
 \subsection{幂理想与根理想}
 \label{b1:subsec:1003:02}
+定义 \(I^0=R\)、\(I^1=I\)、\(I^{n+1}=I^nI\)。每个 \(I^n\) 是由 \(n\) 个 \(I\) 中元素的乘积形成的有限和，而不是只由某个元素的 \(n\) 次幂组成。交换环的主理想满足 \((a)^n=(a^n)\)，但多生成元时各个混合乘积也必须计算。
 
-待撰写。
+\begin{definition}\label{b1:def:radical-ideal}
+以下设 \(R\) 是交换环，\(I\) 是理想。集合
+\[
+\sqrt I\coloneqq\{\,a\in R\mid a^n\in I\text{ 对某个 }n\geq1\text{ 成立}\,\}
+\]
+称为 \(I\) 的\term[genlixiang]{根理想}[radical of an ideal]。若 \(I=\sqrt I\)，也称 \(I\) 为根理想。\(\sqrt{(0)}\) 称为环的\term[milinggen]{幂零根}[nilradical]。
+\end{definition}
+\symidx{\(\sqrt I\)：理想的根}
+
+\begin{proposition}\label{b1:prop:radical-properties}
+\(\sqrt I\) 是包含 \(I\) 的理想，且 \(\sqrt{\sqrt I}=\sqrt I\)。它是包含 \(I\) 的最小根理想。商环 \(R/I\) 中没有非零幂零元，当且仅当 \(I=\sqrt I\)。
+\end{proposition}
+\begin{proof}
+若 \(a^m,b^n\in I\)，则交换性允许对 \((a-b)^{m+n-1}\) 用二项式展开。每项或者含 \(a\) 的至少 \(m\) 次幂，或者含 \(b\) 的至少 \(n\) 次幂，因而都属于 \(I\)。又 \((ra)^m=r^ma^m\in I\)，所以 \(\sqrt I\) 对减法及乘法吸收封闭。\(I\subseteq\sqrt I\) 可取指数一。
+
+若 \(a^r\in\sqrt I\)，再取 \(s\) 使 \((a^r)^s\in I\)，得到 \(a\in\sqrt I\)，证明取两次根不变。若根理想 \(J\) 包含 \(I\)，则 \(a^n\in I\) 蕴含 \(a^n\in J\)，进而 \(a\in J\)，故 \(\sqrt I\subseteq J\)。最后，\((a+I)^n=0\) 等价于 \(a^n\in I\)，而 \(a+I=0\) 等价于 \(a\in I\)，给出商环的判别。
+\end{proof}
+没有非零幂零元的交换环称为\term[yuehua-huan]{约化环}[reduced ring]。整环必约化，反之不成立：域的直积 \(k\times k\) 有零因子 \((1,0),(0,1)\)，但若 \((a,b)^n=(0,0)\)，域中取幂不产生非零幂零元，故 \(a=b=0\)。
+
+\ProseParagraphBreak
+每个素理想都是根理想，因为 \(a^n\in\mathfrak p\) 可反复用素性推出 \(a\in\mathfrak p\)。\(\mathbb Z\) 中，\(\sqrt{12\mathbb Z}=6\mathbb Z\)：若 \(12\mid a^n\)，素数 \(2,3\) 均整除 \(a\)；反过来 \(6\mid a\) 时 \(12\mid a^2\)。这也说明根理想的作用是忘掉某些幂次信息，而不是忘掉全部整除信息。
+
+\ProseParagraphBreak
+若希望分解理想而保留幂次信息，就会遇到\term[zhunsu-lixiang]{准素理想}[primary ideal]：交换环的真理想 \(Q\) 称为准素理想，是指 \(ab\in Q\) 且 \(a\notin Q\) 时，必有某个正整数 \(m\) 使 \(b^m\in Q\)。例如整数环中的 \(p^r\mathbb Z\)（\(p\) 为素数，\(r\geq1\)）具有此性质。若 \(p^r\mid ab\) 而 \(p^r\nmid a\)，整数的素数分解说明 \(p\mid b\)，故 \(p^r\mid b^r\)。特别地，
+\[
+12\mathbb Z=4\mathbb Z\cap3\mathbb Z
+\]
+把一个理想写成两个准素理想的交，仍保留因子二所带的平方信息。这里仅用这个例子说明分解问题；一般的准素理想、Noether 环中的准素分解及其唯一性范围，安排在第三卷第4.2--4.4节，不作为本章后续论证的前提。
 
 \subsection{理想运算的包含关系}
 \label{b1:subsec:1003:03}
+\begin{proposition}\label{b1:prop:ideal-containments}
+任意双边理想 \(I,J\) 满足
+\[
+IJ\subseteq I\cap J\subseteq I+J,\qquad I^{n+1}\subseteq I^n.
+\]
+在交换环中，还有
+\[
+\sqrt{IJ}=\sqrt{I\cap J}=\sqrt I\cap\sqrt J,
+\qquad \sqrt{I^n}=\sqrt I\quad(n\geq1).
+\]
+\end{proposition}
+\begin{proof}
+每个 \(ab\)、\(a\in I,b\in J\) 既在 \(I\) 中也在 \(J\) 中，因此有限和也在交中；交中的元素可写为自身加零，故在和中。把 \(J\) 换成 \(I\) 的幂给出递降关系。
 
-待撰写。
+由包含关系及根的定义，\(\sqrt{IJ}\subseteq\sqrt{I\cap J}\subseteq\sqrt I\cap\sqrt J\)。若 \(a^r\in I\)、\(a^s\in J\)，则 \(a^{r+s}=a^ra^s\in IJ\)，故反向包含也成立。\(I^n\subseteq I\) 给出一个方向；若 \(a^r\in I\)，则 \(a^{rn}\in I^n\)，给出另一个方向。
+\end{proof}
+等号需要额外理由。在 \(\mathbb Z\) 中取 \(I=J=2\mathbb Z\)，则 \(IJ=4\mathbb Z\subsetneq I\cap J=2\mathbb Z\)；取 \(I=2\mathbb Z,J=3\mathbb Z\)，则交为 \(6\mathbb Z\)，和为 \(\mathbb Z\)，也不相等。另一方面 \(I\cup J\) 通常不是理想，例如上述并包含 \(2,3\)，却不包含 \(3-2=1\)。
+
+\ProseParagraphBreak
+理想可以被元素整除所控制，但包含方向会反转。整数环中 \((a)\subseteq(b)\) 恰好等价于 \(b\mid a\)。例如 \(6\mathbb Z\subseteq2\mathbb Z\)，不是因为 \(6\mid2\)，而是每个 \(6\) 的倍数都是 \(2\) 的倍数。下一章将把这个简单现象推广到整环。下面先从乘法吸收条件出发，再定义一种理想运算。
+
+\subsection{理想商与零化子}
+\label{b1:subsec:1003:04}
+
+已知理想 \(I,J\)，考虑哪些 \(r\in R\) 能使 \(J\) 中每个元素乘以 \(r\) 后都进入 \(I\)。这些乘子本身组成理想；这给出一种与乘法相关、但不能当作通常除法的运算。本小节始终设 \(R\) 为交换含幺环。
+
+\begin{definition}\label{b1:def:ideal-quotient}
+对 \(R\) 的理想 \(I,J\)，集合
+\[
+(I:J)\coloneqq\{\,r\in R\mid rJ\subseteq I\,\}
+\]
+称为\term[lixiang-shang]{理想商}[ideal quotient]，也称商理想。对单个元素 \(a\in R\)，简记
+\[
+I:a\coloneqq\Bigl(I:(a)\Bigr)
+=\{\,r\in R\mid ra\in I\,\}.
+\]
+取 \(I=(0)\)，所得理想称为 \(J\) 的\term[linghuazi]{零化子}[annihilator]，也称湮灭子，记为 \(\operatorname{Ann}_R(J)=(0:J)\)；元素的零化子相应记为 \(\operatorname{Ann}_R(a)=0:a\)。把乘以 \(r\) 后使 \(a\) 变为零称为 \(r\) 对 \(a\) 的\term[linghua]{零化}[annihilation]，条件就是 \(ra=0\)。
+\end{definition}
+\termidx[shang-lixiang]{商理想}
+\termidx[yanmiezi]{湮灭子}
+\symidx{\((I:J)\)：理想商}
+\symidx{\(\operatorname{Ann}_R(J)\)：理想的零化子}
+这里的 \((I:J)\) 是 \(R\) 的一个子集，不是商环 \(R/I\)，也不是对两个理想作加法群的商。它的定义不要求 \(I\subseteq J\) 或 \(J\subseteq I\)。单元素简记中的等号成立，是因为 \(ra\in I\) 蕴含对每个 \(s\in R\) 有 \(rsa\in I\)，而反向可取 \(s=1\)。
+
+\begin{proposition}\label{b1:prop:ideal-quotient-rules}
+\((I:J)\) 是包含 \(I\) 的理想。对任一理想 \(K\)，有
+\begin{equation}\label{b1:eq:ideal-quotient-adjunction}
+KJ\subseteq I\quad\Longleftrightarrow\quad K\subseteq(I:J).
+\end{equation}
+因此 \((I:J)\) 是满足左侧包含关系的最大理想，且
+\[
+(I:R)=I,\qquad (I:0)=R,\qquad
+(I:J)=R\ \Longleftrightarrow\ J\subseteq I.
+\]
+\end{proposition}
+\begin{proof}
+零在 \((I:J)\) 中。若 \(r,r'\) 在其中，对任意 \(j\in J\) 有 \((r-r')j=rj-r'j\in I\)；若 \(s\in R\)，则 \((sr)j=s(rj)\in I\)。所以它是理想。若 \(r\in I\)，理想的吸收性给出 \(rJ\subseteq I\)，故 \(I\subseteq(I:J)\)。
+
+条件 \(KJ\subseteq I\) 意味着每个 \(k\in K\) 都满足 \(kJ\subseteq I\)，故 \(k\in(I:J)\)。反过来，若所有这些乘积均在 \(I\) 中，其有限和也在 \(I\) 中，正好得到 \(KJ\subseteq I\)。取 \(K=I:J\) 及任一满足条件的 \(K\)，分别得到它满足该条件和它包含全部这样的理想。最后，\(rR\subseteq I\) 等价于 \(r\in I\)，因为可令乘数为一；乘以零没有限制；\(1\in(I:J)\) 则等价于 \(J\subseteq I\)。这证明全部公式。
+\end{proof}
+例如在 \(\mathbb Z\) 中，
+\[
+\bigl(12\mathbb Z:8\mathbb Z\bigr)=3\mathbb Z,
+\]
+因为 \(12\mid8r\) 当且仅当 \(3\mid r\)。但 \((3\mathbb Z)(8\mathbb Z)=24\mathbb Z\subsetneq12\mathbb Z\)，所以把理想商再乘回去，一般只能得到包含而非等号。在 \(\mathbb Z/12\mathbb Z\) 中，\(\operatorname{Ann}_R(\bar4)=(\bar3)\)：条件 \(4r\equiv0\pmod{12}\) 正好要求 \(3\mid r\)。对非零元素，零化子非零恰好说明它是零因子；零元素本身的零化子则是全环。
+
+\begin{proposition}\label{b1:prop:ideal-quotient-identities}
+交换环中，理想商满足
+\[
+\begin{aligned}
+(I\cap J):K&=(I:K)\cap(J:K),\\
+I:(J+K)&=(I:J)\cap(I:K),\\
+(I:J):K&=I:(JK).
+\end{aligned}
+\]
+它对第一项保持包含关系，对第二项反转包含关系。若 \(J=(a_1,\ldots,a_m)\)，则
+\[
+(I:J)=\bigcap_{i=1}^m(I:a_i).
+\]
+\end{proposition}
+\begin{proof}
+一个元素 \(r\) 属于第一式左边，当且仅当 \(rK\) 同时包含于 \(I,J\)，这正是右边的两个条件。第二式中，\(r(J+K)\subseteq I\) 蕴含 \(rJ,rK\subseteq I\)，因为 \(J,K\subseteq J+K\)；反向由加法封闭性得到。
+
+第三式左边的条件是对所有 \(k\in K\) 都有 \(rk\in(I:J)\)，即对所有 \(k\in K,j\in J\) 都有 \(rkj\in I\)。这些乘积的有限和仍在 \(I\) 中，故等价于 \(r(JK)\subseteq I\)。包含方向则由定义可见：扩大允许落入的理想放宽条件，扩大被乘的理想增加条件。最后，\(rJ\subseteq I\) 必须使每个 \(ra_i\in I\)；若每个生成元都满足此条件，则 \(r\sum_i s_i a_i=\sum_i s_i ra_i\in I\)，所以也足够。空生成集对应零理想，此时空交取为 \(R\)，公式仍成立。
+\end{proof}
+在商环 \(R/I\) 中，\(r+I\) 零化 \(a+I\) 恰好意味着 \(ra\in I\)。因而
+\[
+\operatorname{Ann}_{R/I}(a+I)=(I:a)/I.
+\]
+这把理想商与商环中的零因子联系起来。到\secref{b1:sec:1304}，允许乘以任意高次的分母，还会把这些理想商连接成饱和理想；下一节先继续讨论互素理想与环的直积分解。

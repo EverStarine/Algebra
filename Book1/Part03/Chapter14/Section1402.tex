@@ -5,7 +5,6 @@
 \section{代数扩张}
 \label{b1:sec:1402}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -14,17 +13,72 @@
 % * 代数扩张不必有限
 %
 
+两个分别满足多项式方程的元素相加、相乘后，是否仍满足多项式方程？直接消元往往使计算膨胀；有限维向量空间提供了更短的解释。本节先把有限生成的代数数据放进一个有限扩张，再由此处理一般代数扩张。
+
 \subsection{代数元构成的子域}
 \label{b1:subsec:1402:01}
 
-待撰写。
+\begin{lemma}\label{b1:lem:finite-algebraic-generators}
+若 \(\alpha_1,\ldots,\alpha_r\) 都在 \(K\) 上代数，则 \(K(\alpha_1,\ldots,\alpha_r)/K\) 有限。更具体地，若 \(d_i=\deg m_{\alpha_i,K}\)，其次数至多为 \(d_1\cdots d_r\)。
+\end{lemma}
+\begin{proof}
+令 \(K_i=K(\alpha_1,\ldots,\alpha_i)\)。零化 \(\alpha_i\) 的 \(K\) 系数多项式在 \(K_{i-1}[x]\) 中仍然零化它，所以\cref{b1:prop:minimal-polynomial-degree}给出 \([K_i:K_{i-1}]\leq d_i\)。由\cref{b1:thm:tower-law}沿这个有限塔相乘，得所述估计。\(r=0\) 时扩张就是 \(K/K\)，次数为一。
+\end{proof}
+
+\begin{lemma}\label{b1:lem:finite-dimensional-algebraic}
+若 \([E:K]=n<\infty\)，则每个 \(a\in E\) 都在 \(K\) 上代数，而且 \(\deg m_{a,K}\leq n\)。
+\end{lemma}
+\begin{proof}
+在 \(n\) 维 \(K\) 向量空间 \(E\) 中，\(n+1\) 个向量 \(1,a,\ldots,a^n\) 线性相关。一个不全为零的相关系数列给出次数至多 \(n\) 的非零多项式 \(f\)，且 \(f(a)=0\)。最小多项式整除 \(f\)，故次数不超过 \(n\)。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:algebraic-elements-subfield}
+扩张 \(L/K\) 中在 \(K\) 上代数的全部元素组成一个包含 \(K\) 的子域。
+\end{proposition}
+\begin{proof}
+每个 \(c\in K\) 被 \(x-c\) 零化。若 \(a,b\) 代数，\cref{b1:lem:finite-algebraic-generators}说明 \(E=K(a,b)\) 有限。\(a-b,ab\) 及 \(a\neq0\) 时的 \(a^{-1}\) 均在 \(E\) 内，由\cref{b1:lem:finite-dimensional-algebraic}也在 \(K\) 上代数。这正是包含 \(K\) 的子域所需的封闭性。
+\end{proof}
+例如所有实代数数构成 \(\mathbb R\) 的子域。这里并不需要先写出 \(\sqrt2+\sqrt3\) 的方程；有限扩张 \(\mathbb Q(\sqrt2,\sqrt3)\) 已保证方程存在。要计算该方程，再平方消元可得 \(x^4-10x^2+1\)。
 
 \subsection{有限扩张的代数性}
 \label{b1:subsec:1402:02}
 
-待撰写。
+\begin{definition}\label{b1:def:algebraic-extension}
+若扩张 \(L/K\) 的每个元素都在 \(K\) 上代数，称 \(L/K\) 为\term[daishu-kuozhang]{代数扩张}[algebraic extension]。否则称其为超越扩张。若存在有限集 \(S\subseteq L\) 使 \(L=K(S)\)，称它为\term[youxian-shengcheng-kuozhang]{有限生成扩张}[finitely generated extension]。
+\end{definition}
+由\cref{b1:lem:finite-dimensional-algebraic}，有限扩张必代数；任取一个有限基也生成整个域，所以它还有限生成。反过来，\cref{b1:lem:finite-algebraic-generators}表明有限生成的代数扩张必有限。注意 \(K(t)/K\) 只需一个超越元生成，却不是有限扩张，因为 \(1,t,t^2,\ldots\) 线性无关。
+
+\begin{theorem}\label{b1:thm:algebraic-tower}
+若 \(K\subseteq E\subseteq L\)，则 \(L/K\) 代数当且仅当 \(E/K\) 与 \(L/E\) 都代数。
+\end{theorem}
+\begin{proof}
+若 \(L/K\) 代数，限制到 \(E\) 即知 \(E/K\) 代数；把零化元素的 \(K\) 系数多项式视为 \(E\) 系数多项式，即知 \(L/E\) 代数。
+
+反过来，给定 \(a\in L\)，取一个零化它的非零 \(E\) 系数多项式，令 \(E_0\) 为其有限多个系数在 \(K\) 上生成的子域。因 \(E/K\) 代数，\cref{b1:lem:finite-algebraic-generators}说明 \(E_0/K\) 有限；而 \(a\) 在 \(E_0\) 上代数，故 \(E_0(a)/E_0\) 也有限。由\cref{b1:thm:tower-law}，\(E_0(a)/K\) 有限，再由\cref{b1:lem:finite-dimensional-algebraic}知 \(a\) 在 \(K\) 上代数。任意 \(a\) 均如此，故 \(L/K\) 代数。
+\end{proof}
+证明中的有限性来自一个多项式只有有限多个系数，不是来自 \(E/K\) 本身有限。这一差别使结论适用于无限代数扩张。
 
 \subsection{无限代数扩张}
 \label{b1:subsec:1402:03}
 
-待撰写。
+\begin{proposition}\label{b1:prop:infinite-algebraic-root-tower}
+在 \(\mathbb R\) 中取正实根 \(a_n=2^{1/2^n}\)，令
+\[
+K_n=\mathbb Q(a_n),\qquad L=\bigcup_{n\geq1}K_n.
+\]
+则 \(L/\mathbb Q\) 是无限代数扩张。
+\end{proposition}
+\begin{proof}
+因为 \(a_n=a_{n+1}^2\)，这些域递增。任意两个元素落在同一个 \(K_n\) 中，所以其差、积及非零元素的逆也落在该域中；因此 \(L\) 是域。每个元素属于一个有限扩张，故在 \(\mathbb Q\) 上代数。
+
+另一方面，\(x^{2^n}-2\) 对素数二满足\cref{b1:thm:eisenstein}的条件，故 \([K_n:\mathbb Q]=2^n\)。如果 \([L:\mathbb Q]\) 有限，\cref{b1:thm:tower-law}就会使它至少为每个 \(2^n\)，不可能。
+\end{proof}
+这个例子表明：每个元素分别落入有限扩张，不等于所有元素同时落入某个固定有限扩张。
+
+\begin{proposition}\label{b1:prop:algebraic-directed-union}
+代数扩张 \(L/K\) 是其有限中间扩张的并；任意有限多个这样的中间域都包含于另一个有限中间扩张。
+\end{proposition}
+\begin{proof}
+每个 \(a\in L\) 属于有限扩张 \(K(a)\)。若 \(E_1,\ldots,E_s\) 为有限中间域，分别选取有限基；这些基向量合在一起是有限多个代数元。它们生成的域由\cref{b1:lem:finite-algebraic-generators}可知仍有限，并包含每个 \(E_i\)。
+\end{proof}
+因此很多涉及有限多个元素的计算可以在有限层完成。处理整个扩张的自同构或子域结构时，则必须另外检查各有限层之间的相容性；有限层的结论不能不经说明便推到无限层。

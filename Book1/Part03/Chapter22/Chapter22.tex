@@ -6,7 +6,21 @@
 \label{b1:ch:22}
 \BookChapterNumber{b1:ch:22}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+无限代数扩张仍由有限子扩张组成，但各有限层上的自同构必须相容。Krull 拓扑把这种相容性组织为有限商上的信息，使 Galois 群成为投射有限群。本章就地建立所需拓扑与紧性，证明中间域和闭子群的对应，并以有限域的 Frobenius 自同构说明为什么取闭包不可省略。有限层检测还将给出连续表示及正规商群的具体判别。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 把无限Galois群写成有限商的逆极限，区分相容族与任意坐标选择。
+\item 理解Krull拓扑的基本开集，掌握紧性证明中的有限交性质与选择原理。
+\item 运用闭子群对应、开子群判别和正规商群结论，识别删除闭性后的反例。
+\item 计算有限域及实数域的绝对Galois群，利用有限层判断连续性和表示的相容性。
+\end{itemize}
+\end{learninggoals}
+
+本章主要使用有限Galois对应、一般代数扩张的嵌入延拓、正规性与可分性，以及有限域的Frobenius计算。拓扑术语会在使用前定义，不预设完整点集拓扑课程；任意指标下的紧性证明明确使用Zorn引理。实数域的例子另采用代数基本定理作为外部输入，连续群上同调只在末尾说明后续方向。
+
 
 \input{Part03/Chapter22/Section2201}
 \input{Part03/Chapter22/Section2202}
@@ -14,4 +28,204 @@
 \input{Part03/Chapter22/Section2204}
 \input{Part03/Chapter22/Section2205}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限层上的限制将一个Galois自同构变为相容坐标族，Krull拓扑则规定有限个坐标所能观察到的信息。逆极限是有限离散群直积中的闭子群，由此得到紧性、Hausdorff性和全不连通性。证明中的选择原理用于极大真滤子的存在；不能仅凭各有限层都有限，跳过整体相容性的论证。
+
+闭子群恰好能从其不动域恢复。任意子群与其闭包有相同不动域，有限域中Frobenius生成的稠密真子群给出这一现象的明确例子。有限子扩张对应开子群，正规子扩张对应闭正规子群；商群同构还须带上自然的商拓扑。
+
+这些结论使无限对象仍可通过有限层计算。连续到有限离散群的同态经过某个有限Galois商，相容的有限层表示则可以合成到逆极限系数中的连续表示。至此，有限与无限Galois理论中的域、自同构和拓扑条件已经各有明确的职责；进一步的算术与上同调应用在这套基础上展开。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:22-1}
+固定 \(\overline{\mathbb F}_q\)，令 \(E_r=\mathbb F_{q^{r!}}\)。证明 \(\overline{\mathbb F}_q=\bigcup_{r\geq1}E_r\)，并证明只给出各 \(E_r\) 上相容的自同构，就能唯一确定整个代数闭包的 \(\mathbb F_q\) 自同构。
+\end{exercise}
+\begin{solution}
+每个代数元属于某个 \(\mathbb F_{q^n}\)。若 \(r\geq n\)，则 \(n\mid r!\)，由\cref{b1:thm:finite-field-subfields}，\(\mathbb F_{q^n}\subseteq E_r\)，故这些域的并是整个闭包。反过来，给定 \(E_r\) 上的相容族，对任意有限层 \(\mathbb F_{q^n}\) 选取 \(r\) 使 \(n\mid r!\)，用该层自同构的限制定义其作用。换另一 \(s\) 时再取更大的阶乘层，相容性保证两次限制相同。这样得到全部有限层的相容族，由\cref{b1:prop:galois-compatible-family}唯一拼成整体自同构。因每个基本开集都能用一个更大的阶乘层细化，只保留这些层也给出相同的 Krull 拓扑。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-2}
+设 \(K=\mathbb F_p(t)\)，在固定代数闭包中令 \(L=\bigcup_{r\geq0}K(t^{1/p^r})\)。证明 \(L/K\) 无限，且 \(\operatorname{Aut}_K(L)=1\)。为什么不能在此使用无限 Galois 对应？
+\end{exercise}
+\begin{solution}
+在 \(\mathbb F_p[t][X]\) 中，多项式 \(X^{p^r}-t\) 对素元 \(t\) 满足\cref{b1:thm:eisenstein}：常数项被 \(t\) 整除但不被 \(t^2\) 整除，其他非首项系数为零。因此 \(K(t^{1/p^r})/K\) 的次数为 \(p^r\)，这些次数无界，故 \(L/K\) 无限。每个 \(t^{1/p^r}\) 是 \(X^{p^r}-t\) 在闭包中的唯一根，任何 \(K\) 自同构都必须固定它，所以固定整个并域。其自同构群的不动域为 \(L\)，并非 \(K\)。扩张是纯不可分的，不满足\cref{b1:thm:infinite-galois-correspondence}的可分性假设。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-3}
+在 \(\overline{\mathbb F}_q\) 中令 \(F(x)=x^q\)。能否同时在 \(\mathbb F_{q^4}\) 上指定 \(F\)，在 \(\mathbb F_{q^6}\) 上指定 \(F^2\)，再延拓为一个整体自同构？若把后一指定改成 \(F^3\)，答案如何？
+\end{exercise}
+\begin{solution}
+两域的交为 \(\mathbb F_{q^2}\)。第一种指定在交域上的限制分别为非恒等的 \(F\) 与恒等的 \(F^2\)，违反\eqref{b1:eq:galois-compatibility}，所以不可能同时延拓。第二种指定在交域上相同；更具体地，整数 \(9\) 满足 \(9\equiv1\pmod4\)、\(9\equiv3\pmod6\)，所以整体自同构 \(F^9\) 同时实现它们。分别可以延拓不等于所选延拓彼此相容，交域上的限制是必须检查的条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-4}
+对每个 \(r\geq1\) 令 \(A_r=\mathbb Z/2\mathbb Z\)，过渡映射 \(A_{r+1}\rightarrow A_r\) 全为零映射。求 \(\varprojlim_r A_r\)，并说明逆极限的坐标投影是否必为满射。
+\end{exercise}
+\begin{solution}
+相容族 \((a_r)_r\) 必须满足 \(a_r=0(a_{r+1})=0\)，故只有零族，逆极限为平凡群。每个坐标投影的像都只有零，而 \(A_r\) 有两个元素，所以不满射。\cref{b1:lem:galois-restriction-surjective}为 Galois 系统提供了额外的满射性，不能把它误认为任意逆极限定义的直接后果。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-5}
+设 \((A_i,r_{ji})\) 为有向指标上的有限群逆系统，且所有过渡映射均满射。证明逆极限到每个 \(A_i\) 的坐标投影满射，明确指出紧性在哪一步使用。
+\end{exercise}
+\begin{solution}
+固定 \(i\) 与 \(a\in A_i\)。在非空积空间 \(X=\prod_j A_j\) 中，要求第 \(i\) 坐标为 \(a\)，并要求所有相容等式成立。这些要求分别定义闭集。任取有限多个要求，选取同时大于固定指标 \(i\) 及这一有限组要求中全部指标的 \(k\)。由 \(r_{ki}\) 满射，取 \(b\in A_k\) 使其在第 \(i\) 层的像为 \(a\)；把所有涉及坐标指定为 \(b\) 的相应像，未涉及坐标取单位元，就满足这一有限组要求。因此闭集族有有限交性质。
+
+\cref{b1:lem:finite-discrete-product-compact}使总交非空，其中任一点都是第 \(i\) 坐标为 \(a\) 的相容族。此处从全部有限组可解推出同时可解，正是紧性步骤；正文给出的紧性证明在极大真滤子的构造处使用 Zorn 引理。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-6}
+令 \(\mathbb Z_2=\varprojlim_r\mathbb Z/2^r\mathbb Z\)。证明乘以 \(2\) 的映射 \(\mathbb Z_2\rightarrow\mathbb Z_2\) 单射，其像恰为模 \(2\) 投影的核，因而是开且闭的指数 \(2\) 子群。
+\end{exercise}
+\begin{solution}
+若 \(2a=0\)，则在模 \(2^{r+1}\) 的坐标上，\(2a_{r+1}=0\)，故 \(a_{r+1}\) 被 \(2^r\) 整除。约化到第 \(r\) 层便得 \(a_r=0\)。对所有 \(r\) 都成立，所以 \(a=0\)。像当然落在模 \(2\) 的核中。
+
+反过来，若 \(a_1=0\)，则每个 \(a_{r+1}\) 有偶数代表。将这个代表除以 \(2\) 再模 \(2^r\)，记为 \(b_r\)；换代表改变的是 \(2^r\) 的倍数，所以良定义。相容性保证 \((b_r)_r\in\mathbb Z_2\)，并有 \(2b=a\)。于是像就是模 \(2\) 的核。该投影满射到离散的二元群，其核开且闭，指数为 \(2\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-7}
+设 \(G=\operatorname{Gal}(L/K)\)。证明每个既开又闭的子集 \(C\subseteq G\) 都由某个有限层决定：存在有限 Galois 子扩张 \(N/K\) 及子集 \(D\subseteq G_N\)，使 \(C=\pi_N^{-1}(D)\)。这里不要求 \(C\) 是子群。
+\end{exercise}
+\begin{solution}
+\(C\) 闭，所以由\cref{b1:thm:krull-compact}及闭子空间的紧性，\(C\) 紧。\(C\) 开，故其每个点有一个包含在 \(C\) 中的基本开陪集。这些陪集覆盖 \(C\)，紧性给出有限子覆盖 \(\sigma_jU_{N_j}\)。取同时包含全部 \(N_j\) 的有限 Galois 层 \(N\)。每个 \(U_{N_j}\) 包含 \(U_N\)，所以每个所选陪集以及它们的并，都是若干个 \(U_N\) 陪集的并。令 \(D=\pi_N(C)\)，便得等式。空集可直接取 \(D=\varnothing\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-8}
+设 \(D\) 为任意离散群，不要求有限。证明每个连续同态 \(\rho:G\rightarrow D\) 的像有限，并且 \(\rho\) 经过某个有限 Galois 商。
+\end{exercise}
+\begin{solution}
+由\cref{b1:thm:krull-compact}，\(G\) 紧，连续像 \(\rho(G)\) 也紧。离散空间的全部单点构成开覆盖，若其为无限集就没有有限子覆盖，所以 \(\rho(G)\) 必有限。将值域缩到这个有限离散群，\cref{b1:prop:finite-continuous-hom}给出一个有限 Galois 层 \(N\)，使 \(\rho\) 经过 \(G_N\)。还可直接从 \(\ker\rho=\rho^{-1}(1)\) 开并包含某个 \(U_N\) 得到同一结论。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-9}
+设 \(H\leq G\) 为闭且指数有限的子群。证明 \(H\) 开，并说明为何这不证明“任意抽象有限指数子群都开”。
+\end{exercise}
+\begin{solution}
+左右平移为同胚，所以每个 \(H\) 陪集都闭。有限指数使 \(G\setminus H\) 只由有限多个这样的闭陪集组成，因此补集闭，\(H\) 开。证明的第一步使用了 \(H\) 闭；若没有它，不能断言其陪集闭，也就不能用有限并推导开性。对应于中间域的子群由\cref{b1:thm:infinite-galois-correspondence}保证闭，才可将本题用于域论。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-10}
+设 \(K\subseteq E\subseteq L\)，\(E/K\) 有限，令 \(H=\operatorname{Gal}(L/E)\)。证明 \(C=\bigcap_{g\in G}gHg^{-1}\) 是开正规子群，其不动域是 \(E/K\) 在 \(L\) 内的正规闭包。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:finite-open-correspondence}，\(H\) 开且指数有限。群在有限集合 \(G/H\) 上作左乘，其核正是 \(C\)。只需选有限个陪集代表即可求这个交：若 \(g'=gh\)、\(h\in H\)，则 \(g'Hg'^{-1}=gHg^{-1}\)。因此 \(C\) 是有限个开子群的交，开且正规。
+
+对任意 \(g\)，一个元素被 \(gHg^{-1}\) 固定当且仅当它属于 \(g(E)\)：把固定条件用 \(g^{-1}\) 共轭，应用\cref{b1:thm:infinite-galois-correspondence}即可。因此 \(C\) 恰为固定全部 \(g(E)\) 的自同构，\(L^C\) 就是这些域的合成域。它有限且在 \(K\) 上正规，因为 \(G\) 置换全部共轭域；任何包含 \(E\) 的正规中间扩张都包含这些共轭，所以这恰为最小的正规扩张，即正规闭包。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-11}
+在 \(G_{\mathbb F_q}\cong\widehat{\vphantom{Z}\mathbb Z}\) 中，取正整数 \(a,b\)。求 \(\langle F^a,F^b\rangle\) 的闭包，并证明
+\[
+a\widehat{\vphantom{Z}\mathbb Z}\cap b\widehat{\vphantom{Z}\mathbb Z}
+=\operatorname{lcm}(a,b)\widehat{\vphantom{Z}\mathbb Z}.
+\]
+写出对应不动域的交与合成域。
+\end{exercise}
+\begin{solution}
+在抽象循环子群 \(\langle F\rangle\) 中，Bézout 等式给出 \(\langle F^a,F^b\rangle=\langle F^d\rangle\)，其中 \(d=\gcd(a,b)\)。由\eqref{b1:eq:profinite-multiple-kernel}及其后的闭包计算，闭包为 \(d\widehat{\vphantom{Z}\mathbb Z}\)。
+
+令 \(m=\operatorname{lcm}(a,b)\)。同一公式把左侧描述为模 \(a\)、模 \(b\) 同时为零的相容族。看其模 \(m\) 的坐标，一个整数剩余类同时被 \(a,b\) 整除当且仅当被 \(m\) 整除，所以左侧为模 \(m\) 的核，等于右侧。固定域反向对应遂给出
+\[
+\mathbb F_{q^a}\cap\mathbb F_{q^b}=\mathbb F_{q^d},
+\qquad\mathbb F_{q^a}\mathbb F_{q^b}=\mathbb F_{q^m}.
+\]
+第一式对应生成子群的闭包，第二式对应闭子群的交。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-12}
+固定素数 \(\ell\)，令 \(E=\bigcup_{r\geq0}\mathbb F_{q^{\ell^r}}\)。证明 \(E/\mathbb F_q\) 是 Galois 扩张且 \(\operatorname{Gal}(E/\mathbb F_q)\cong\mathbb Z_\ell\)。求限制映射 \(\widehat{\vphantom{Z}\mathbb Z}\rightarrow\mathbb Z_\ell\) 的核，并判断该核是否开。
+\end{exercise}
+\begin{solution}
+任一元素位于有限 Galois 层，其全部共轭都在该层中，故并域正规且可分。\cref{b1:prop:galois-compatible-family}把其 Galois 群识别为 \(\varprojlim_r\mathbb Z/\ell^r\mathbb Z\)，且有限坐标的基本开集一致，故为拓扑同构。由\cref{b1:thm:infinite-galois-quotient}，整个代数闭包上的限制满射。核为
+\[
+H=\bigcap_{r\geq1}\ell^r\widehat{\vphantom{Z}\mathbb Z}.
+\]
+每一项闭，所以 \(H\) 闭。若 \(H\) 开，由\cref{b1:prop:finite-open-correspondence}，其固定域 \(E\) 应在 \(\mathbb F_q\) 上有限，与层次数 \(\ell^r\) 无界矛盾。因此该核不开。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-13}
+设 \(\ell\) 为素数。按基变换同构分类 \(G_{\mathbb R}\) 在 \(\mathbb F_\ell^2\) 上的全部连续表示。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:real-absolute-galois}，源群是离散的 \(C_2\)，所以每个表示都连续，由复共轭的像 \(A\) 决定，且 \(A^2=I\)。若 \(\ell\neq2\)，多项式 \(X^2-1\) 有不同根 \(1,-1\)，故空间分解为两个特征空间之和。按负特征空间的维数，恰有三个同构类，代表为 \(I\)、\(\operatorname{diag}(1,-1)\)、\(-I\)。
+
+若 \(\ell=2\)，写 \(A=I+N\)，则 \(N^2=0\)。\(N=0\) 给出平凡表示；若 \(N\neq0\)，取 \(v\) 使 \(Nv\neq0\)，则 \(Nv,v\) 线性无关，否则 \(v\) 是 \(Nv\) 的倍数将推出 \(Nv=0\)。在这组基下 \(N\) 将第二个基向量送到第一个，固定第一个为零，故 \(A\) 的代表为 \(\begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}\)。因此特征 \(2\) 时恰有两个同构类。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-14}
+设 \(D\) 为有限离散群。证明连续同态 \(\widehat{\vphantom{Z}\mathbb Z}\rightarrow D\) 与 \(D\) 中的元素一一对应，对应方式为取整数 \(1\) 的像。由此求到 \(\mathbb Z/m\mathbb Z\) 的连续同态数及满同态数。
+\end{exercise}
+\begin{solution}
+若 \(d\in D\) 的阶为 \(r\)，先模 \(r\) 投影，再映 \(a\mapsto d^a\)，就得到连续同态且把 \(1\) 送到 \(d\)。若两个连续同态在 \(1\) 上相同，则在整数的稠密像上相同；它们相等的点集是 \(D\times D\) 中对角线的原像，是闭集，因而为整个 \(\widehat{\vphantom{Z}\mathbb Z}\)。所以该对应既满又单。
+
+取 \(D=\mathbb Z/m\mathbb Z\)，共有 \(m\) 个像的选择，故有 \(m\) 个连续同态。其像为所选元素生成的循环子群，满射当且仅当该元素与 \(m\) 互素，故满同态数为 \(\varphi(m)\)。对 \(D=\operatorname{GL}_2(\mathbb F_\ell)\)，同一论证还说明任一个可逆矩阵都可以指定为 Frobenius 的像。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-15}
+对每个 \(r\geq1\)，定义
+\[
+\rho_r:\widehat{\vphantom{Z}\mathbb Z}\longrightarrow
+\operatorname{GL}_2(\mathbb Z/\ell^r\mathbb Z),\qquad
+a\longmapsto\begin{pmatrix}1&a_{\ell^r}\\0&1\end{pmatrix}.
+\]
+证明这些表示相容且连续，并求它们给出的 \(\mathbb Z_\ell\) 值矩阵表示的像与核。该表示是否经过单个有限商？
+\end{exercise}
+\begin{solution}
+两个所列矩阵相乘时，右上角相加，其余位置不变，故 \(\rho_r\) 为同态；它经过有限坐标投影，所以连续。约化矩阵正好约化右上角，因而各层相容。根据正文在\subsecref{b1:subsec:2205:03}给出的逆极限构造，得到连续表示 \(\rho\)，其像为
+\[
+\Biggl\{\,\begin{pmatrix}1&b\\0&1\end{pmatrix}\ \Bigg|\ b\in\mathbb Z_\ell\,\Biggr\}.
+\]
+确实，\(\widehat{\vphantom{Z}\mathbb Z}\rightarrow\mathbb Z_\ell\) 是 \(\overline{\mathbb F}_q\) 向 \(\bigcup_r\mathbb F_{q^{\ell^r}}\) 的 Galois 限制，故由\cref{b1:thm:infinite-galois-quotient}满射。核为 \(\bigcap_r\ell^r\widehat{\vphantom{Z}\mathbb Z}\)。像是无限群，例如所有整数给出不同矩阵，因此不能经过单个有限商。每个有限坐标都经过有限层，并不意味着整族共有一个有限决定层。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-16}
+给 \(\overline{\mathbb F}_q\) 赋予离散拓扑。证明其绝对 Galois 群的自然作用连续，每个元素的稳定子都开，但整个作用的核不开。
+\end{exercise}
+\begin{solution}
+若元素 \(a\) 在 \(\mathbb F_q\) 上次数为 \(d\)，则 \(\mathbb F_q(a)=\mathbb F_{q^d}\)，其稳定子是模 \(d\) 投影的核 \(d\widehat{\vphantom{Z}\mathbb Z}\)，由\eqref{b1:eq:profinite-multiple-kernel}为开子群。对任意 \((g,a)\)，集合 \(g\operatorname{Stab}(a)\times\{a\}\) 是一个开邻域，整个邻域上的作用值均为 \(g(a)\)，因而作用连续。
+
+整体核必须固定全部代数元，所以只有恒等自同构。若它开，则由\cref{b1:prop:finite-open-correspondence}，其固定域 \(\overline{\mathbb F}_q\) 应是有限扩张，矛盾。这里对每个元素分别找到开稳定子，不能换成“存在一个开子群同时固定所有元素”。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-17}
+闭子群能由全部有限商中的像检测。能否进一步对任意固定有限商直接写出 \(\pi(H\cap J)=\pi(H)\cap\pi(J)\)？用一个有限 Galois 扩张给出反例。
+\end{exercise}
+\begin{solution}
+取 \(L=\mathbb Q(\sqrt2,\sqrt3)\)。\cref{b1:prop:biquadratic-example}给出 \([L:\mathbb Q]=4\)；它又是可分多项式 \((X^2-2)(X^2-3)\) 的分裂域，所以\cref{b1:prop:galois-automorphism-count}给出 \(|G|=4\)。每个自同构由两个平方根的像决定，像分别只能为原平方根或其负数，故取符号给出单射 \(G\rightarrow C_2^2\)。两边同有四个元素，因而是同构。以这两个符号为坐标，令 \(H=\langle(1,1)\rangle\)、\(J=\langle(1,0)\rangle\)，并令 \(\pi\) 为限制到 \(\mathbb Q(\sqrt2)\)，即取第一坐标。
+
+这时 \(H\cap J=0\)，故 \(\pi(H\cap J)=0\)；但两个子群各自都满射到第一个 \(C_2\)，所以 \(\pi(H)\cap\pi(J)=C_2\)。所有子群在有限离散群中都闭，反例仍成立。\cref{b1:prop:closure-finite-quotients}使用的是全部有限层的相容信息，并未断言单个投影保持子群的交。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-18}
+令 \(Q=\widehat{\vphantom{Z}\mathbb Z}/\mathbb Z\) 带商拓扑。证明任何从 \(Q\) 到 Hausdorff 空间的连续映射都是常值映射，并解释为何这不说明抽象群 \(Q\) 平凡。
+\end{exercise}
+\begin{solution}
+先直接核对商拓扑。非空开集的原像 \(V\subseteq\widehat{\vphantom{Z}\mathbb Z}\) 是非空开集且满足 \(V+\mathbb Z=V\)。给任意 \(g\)，开集 \(g-V\) 与稠密的 \(\mathbb Z\) 相交，故 \(g\in V+\mathbb Z=V\)。所以商中只有空集与全空间两个开集。
+
+若连续映射取两个不同值，Hausdorff 性给出分别包含这两个值的不相交开邻域，其原像是两个非空不相交开集，与上述描述矛盾，故映射常值。正文在\subsecref{b1:subsec:2203:02}构造的相容族，在所有模 \(2^r\) 坐标为零、在模 \(3\) 坐标为一，不能来自整数。因此 \(\mathbb Z\) 是真子群，抽象商非平凡。失去的是用 Hausdorff 拓扑区分这些陪集的能力。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-19}
+设 \(H\) 为 \(G=\operatorname{Gal}(L/K)\) 的闭正规子群。证明有限群 \(G_N/\pi_N(H)\) 构成逆系统，并证明自然映射
+\[
+G/H\longrightarrow\varprojlim_N G_N/\pi_N(H)
+\]
+是拓扑群同构。
+\end{exercise}
+\begin{solution}
+\(\pi_N(H)\) 正规；限制映射将 \(\pi_M(H)\) 满射到 \(\pi_N(H)\)，所以诱导的商映射良定义且相容。自然映射的核由全部满足 \(\pi_N(g)\in\pi_N(H)\) 的元素组成；\cref{b1:prop:closure-finite-quotients}将其识别为 \(\overline H=H\)，故诱导映射单射。
+
+给定右侧的相容陪集族，对每个 \(N\) 令 \(C_N\subseteq G\) 为这一陪集在 \(G\) 中的原像。限制满射使 \(C_N\) 非空，它又开且闭。任取有限个 \(N\)，选共同上层 \(M\)；相容性保证 \(C_M\) 包含于它们的交。所以 \((C_N)_N\) 有有限交性质，由\cref{b1:thm:krull-compact}总交非空。这证明满射。
+
+各有限坐标连续，故映射连续。由\cref{b1:prop:galois-quotient-homeomorphism}，源与 \(\operatorname{Gal}(L^H/K)\) 同胚，因而是紧空间；目标是有限离散群直积的子空间，具有 Hausdorff 性。连续双射从紧空间到 Hausdorff 空间为同胚，得到所需拓扑同构。闭性在核由 \(\overline H\) 变为 \(H\) 的步骤不可省略。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:22-20}
+设 \(T\) 是有限零一字组成的集合，对取前缀封闭，且每个长度都有 \(T\) 中的字。证明存在无限零一序列，其每个有限前缀都属于 \(T\)。先用有限离散积的紧性证明，再给出按次序选 \(0\) 或 \(1\) 的直接构造，说明此特殊情形无需为每一步作无规则的选择。
+\end{exercise}
+\begin{solution}
+在 \(\{0,1\}^{\mathbb N}\) 中，令 \(C_r\) 为前 \(r\) 位组成的字属于 \(T\) 的序列。它是有限多个基本开闭集的并，故闭且非空；非空性可将任一长度为 \(r\) 的字后补零。前缀封闭使 \(C_{r+1}\subseteq C_r\)，所以具有有限交性质。\cref{b1:lem:finite-discrete-product-compact}给出非空总交。
+
+直接构造时，称一个字可无限延长，是指它在 \(T\) 中具有任意长的延长字。空字有此性质。若一个字有此性质，它的两个一步延长至少一个仍有此性质；否则两个分支的长度各有上界，取较大上界便产生矛盾。规定能选 \(0\) 分支时就选 \(0\)，否则选 \(1\)，递归产生所需无限序列。这个规则每步唯一确定选择，因而这里不需要调用正文处理任意指标积时所用的极大真滤子构造；两种证明的适用范围不同。
+\end{solution}

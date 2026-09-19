@@ -5,7 +5,6 @@
 \section{域扩张及其次数}
 \label{b1:sec:1401}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -14,17 +13,81 @@
 % * 单扩张及最小多项式
 %
 
+把多项式的一个根添入原来的域，并非只多出一个数：加、减、乘、除会随之产生更多元素。扩张次数用线性代数的语言衡量这种变化。这里的域均为交换域，子域与原域具有同一个单位；先修的向量空间、基与维数采用通常约定。
+
 \subsection{素域与特征}
 \label{b1:subsec:1401:01}
 
-待撰写。
+\begin{definition}\label{b1:def:field-extension}
+设 \(K,L\) 为域，\(K\subseteq L\)，且 \(K\) 的运算是 \(L\) 的运算的限制。称 \(L\) 为 \(K\) 的一个\term[yu-kuozhang]{域扩张}[field extension]，记为 \(L/K\)。满足 \(K\subseteq E\subseteq L\) 的子域 \(E\) 称为\term[zhongjian-yu]{中间域}[intermediate field]。域 \(L\) 中包含 \(K\cup S\) 的最小子域记为 \(K(S)\)，其中 \(S\subseteq L\)；它等于所有包含 \(K\cup S\) 的子域之交。
+\end{definition}
+\symidx{\(L/K\)：域扩张}
+\symidx{\(K(S)\)：由 \(K\) 与 \(S\) 生成的子域}
+记号 \(L/K\) 不表示商集。若原始数据是域同态 \(\iota:K\rightarrow L\)，则它必为单射：非零核会包含一个非零元素及其逆元的乘积 \(1\)，与 \(\iota(1)=1\neq0\) 矛盾。因而可把 \(K\) 与像 \(\iota(K)\) 认同，再使用包含的写法；认同时仍须记住具体嵌入。
+
+\begin{proposition}\label{b1:prop:prime-field}
+每个域 \(K\) 的特征为零或一个素数 \(p\)。它包含唯一的最小子域，称为\term[su-yu]{素域}[prime field]；特征零时同构于 \(\mathbb Q\)，特征 \(p\) 时同构于 \(\mathbb F_p=\mathbb Z/p\mathbb Z\)。
+\end{proposition}
+\begin{proof}
+映射 \(\mathbb Z\rightarrow K\)、\(n\mapsto n1\) 的核为 \(m\mathbb Z\)。若 \(m>0\) 可分解为 \(ab\)，其中 \(1<a,b<m\)，则 \((a1)(b1)=0\) 而两因子非零，与域无零因子矛盾。因此 \(m=0\) 或 \(m=p\) 为素数。在后一情形，像同构于域 \(\mathbb F_p\)，每个子域必须包含它。在前一情形，像是 \(\mathbb Z\) 的副本，取其非零元素的逆元便得到 \(\mathbb Q\) 的副本；映射 \(a/b\mapsto(a1)(b1)^{-1}\) 良定义且单射。任一子域必须包含这些元素，所以所得子域最小，唯一性也随之成立。
+\end{proof}
+\symidx{\(\mathbb F_p\)：\(p\) 个元素的素域}
+例如 \(\mathbb Q\subseteq\mathbb R\subseteq\mathbb C\) 是域扩张塔；\(\mathbb Z\subseteq\mathbb Q\) 则不是域扩张，因为 \(\mathbb Z\) 不是域。域的特征不会随扩张改变，因为单位及其整数倍均未改变。
 
 \subsection{有限扩张与塔式公式}
 \label{b1:subsec:1401:02}
 
-待撰写。
+域 \(L\) 的加法与 \(K\) 中元素的乘法使 \(L\) 成为 \(K\) 向量空间。它的维数称为\term[kuozhang-cishu]{扩张次数}[degree of an extension]，记为 \([L:K]\)。维数有限时称为\term[youxian-kuozhang]{有限扩张}[finite extension]；否则称为无限扩张。这里的有限指维数，不指底集合，例如 \(\mathbb Q(\sqrt2)/\mathbb Q\) 的次数为二，但两个域都是无限集。
+\symidx{\([L:K]\)：域扩张的次数}
+
+\begin{theorem}[塔式公式]\label{b1:thm:tower-law}
+设 \(K\subseteq E\subseteq L\)。若 \((u_i)_{i\in I}\) 为 \(E/K\) 的基，\((v_j)_{j\in J}\) 为 \(L/E\) 的基，则 \((u_iv_j)_{(i,j)\in I\times J}\) 为 \(L/K\) 的基。因此
+\[
+[L:K]=[L:E]\,[E:K],
+\]
+无限维时右边理解为基数乘法。特别地，\(L/K\) 有限当且仅当 \(L/E\) 与 \(E/K\) 都有限。
+\end{theorem}
+\begin{proof}
+任意 \(z\in L\) 是有限多个 \(v_j\) 的 \(E\) 线性组合；把这些系数分别写成有限多个 \(u_i\) 的 \(K\) 线性组合，即得 \(z\) 是有限多个 \(u_iv_j\) 的 \(K\) 线性组合。若有限和 \(\sum_{i,j}a_{ij}u_iv_j=0\)，其中 \(a_{ij}\in K\)，先按 \(j\) 收集。\(v_j\) 在 \(E\) 上线性无关，故每个 \(\sum_i a_{ij}u_i=0\)；再用 \(u_i\) 在 \(K\) 上线性无关，得所有 \(a_{ij}=0\)。这证明所列乘积是基。两个非零基数的乘积有限，恰好在二者均有限时发生。
+\end{proof}
+这一结果称为\term[tashi-gongshi]{塔式公式}[tower law]。有限扩张中，中间域的次数必整除总次数。因此，素数次数的扩张没有严格处于两端之间的中间域；这个判断不用知道扩张的具体生成元。
 
 \subsection{单扩张及最小多项式}
 \label{b1:subsec:1401:03}
 
-待撰写。
+\begin{definition}\label{b1:def:algebraic-element}
+设 \(\alpha\in L\)、\(L/K\) 为域扩张。若存在非零 \(f\in K[x]\) 使 \(f(\alpha)=0\)，称 \(\alpha\) 为 \(K\) 上的\term[daishu-yuan]{代数元}[algebraic element]，也说它在 \(K\) 上代数；否则称为 \(K\) 上的\term[chaoyue-yuan]{超越元}[transcendental element]，也说它在 \(K\) 上超越。由一个元素生成的扩张 \(K(\alpha)/K\) 称为\term[dan-kuozhang]{单扩张}[simple extension]。
+\end{definition}
+
+\begin{proposition}\label{b1:prop:minimal-polynomial-degree}
+若 \(\alpha\) 在 \(K\) 上代数，则存在唯一首一不可约多项式 \(m_{\alpha,K}\in K[x]\)，使
+\[
+f(\alpha)=0\quad\Longleftrightarrow\quad m_{\alpha,K}\mid f.
+\]
+它称为 \(\alpha\) 在 \(K\) 上的\term[zuixiao-duoxiangshi]{最小多项式}[minimal polynomial]。若其次数为 \(d\)，则
+\[
+K(\alpha)=K[\alpha]\cong K[x]/(m_{\alpha,K}),\qquad
+\Bigl[K(\alpha):K\Bigr]=d,
+\]
+且 \(1,\alpha,\ldots,\alpha^{d-1}\) 为一组基。若 \(\alpha\) 超越，则代入 \(x\mapsto\alpha\) 给出 \(K(\alpha)\cong K(x)\)，其中 \(K(x)\) 是多项式环 \(K[x]\) 的分式域。
+\end{proposition}
+\begin{proof}
+代数情形下，在零化 \(\alpha\) 的非零多项式中取次数最小者，并除以首项系数，得到首一 \(m\)。对任意 \(f\) 作\cref{b1:prop:field-poly-division}中的带余除法 \(f=qm+r\)、\(\deg r<\deg m\)。若 \(f(\alpha)=0\)，则 \(r(\alpha)=0\)，最小性迫使 \(r=0\)。若 \(m=gh\) 而两因子均为正次数，则域中 \(g(\alpha)h(\alpha)=0\) 迫使一个因子零化 \(\alpha\)，再次矛盾。故 \(m\) 不可约；另一个满足条件的首一多项式与它相互整除，必相等。
+
+代入同态 \(K[x]\rightarrow L\) 的像是 \(K[\alpha]\)，核为 \((m)\)，因此商环与 \(K[\alpha]\) 同构。若 \(g(\alpha)\neq0\)，则 \(m\nmid g\)，由不可约性知 \(\gcd(m,g)=1\)。多项式 Euclid 算法给出 \(um+vg=1\)，代入后得 \(v(\alpha)g(\alpha)=1\)。所以 \(K[\alpha]\) 已是域，等于 \(K(\alpha)\)。带余除法给出所列幂的张成性；次数小于 \(d\) 的多项式不能零化 \(\alpha\)，给出线性无关性。
+
+超越情形下代入同态的核为零，故 \(K[\alpha]\cong K[x]\)。取分式就把它延拓为 \(K(x)\rightarrow L\)，像恰是包含 \(K,\alpha\) 的最小子域，亦即 \(K(\alpha)\)。
+\end{proof}
+\symidx{\(m_{\alpha,K}\)：\(\alpha\) 在 \(K\) 上的最小多项式}
+例如 \(x^2-2\) 在 \(\mathbb Q[x]\) 中不可约，因此 \(\mathbb Q(\sqrt2)\) 的元素唯一写成 \(a+b\sqrt2\)。其中非零元素的逆为
+\[
+(a+b\sqrt2)^{-1}=\frac{a-b\sqrt2}{a^2-2b^2}.
+\]
+分母若为零，且 \(b\neq0\)，就会得到有理数 \(a/b\) 的平方为二；若 \(b=0\)，则 \(a=0\)。所以对非零元素，所写分母确实非零。最小多项式依赖基域：\(\sqrt2\) 在 \(\mathbb Q(\sqrt2)\) 上的最小多项式已变为 \(x-\sqrt2\)。
+
+\begin{proposition}\label{b1:prop:biquadratic-example}
+域 \(L=\mathbb Q(\sqrt2,\sqrt3)\) 在 \(\mathbb Q\) 上的次数为四，基为 \(1,\sqrt2,\sqrt3,\sqrt6\)。元素 \(\theta=\sqrt2+\sqrt3\) 生成 \(L\)，其最小多项式为 \(x^4-10x^2+1\)。
+\end{proposition}
+\begin{proof}
+若 \(\sqrt3=a+b\sqrt2\)、\(a,b\in\mathbb Q\)，平方后比较 \(1,\sqrt2\) 的系数得 \(ab=0\)、\(a^2+2b^2=3\)。\(b=0\) 会使 \(3\) 为有理平方，\(a=0\) 会使 \(3/2\) 为有理平方，均不可能，因为有理平方的素因子指数都为偶数。因此 \(x^2-3\) 在 \(\mathbb Q(\sqrt2)\) 上无根，二次塔的两层次数都是二。由\cref{b1:thm:tower-law}，总次数为四，所列四个乘积构成基。又 \(\theta^{-1}=\sqrt3-\sqrt2\)，所以两个平方根均为 \(\theta,\theta^{-1}\) 的有理线性组合，\(L=\mathbb Q(\theta)\)。由 \(\theta^2=5+2\sqrt6\) 得 \(\theta^4-10\theta^2+1=0\)，这是次数为四的首一关系，因而就是最小多项式。
+\end{proof}

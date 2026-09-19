@@ -5,7 +5,7 @@
 \section{Hilbert 第90定理}
 \label{b1:sec:2002}
 
-% TODO: 按以下纲要要点撰写本节。
+上一节的相消计算给出了范数为一、迹为零的充分条件。\term[Hilbert-di90-dingli]{Hilbert 第90定理}[Hilbert's Theorem 90]说明这些条件也是必要的。以下固定有限循环扩张 \(L/K\)，并记 \(\operatorname{Gal}(L/K)=\langle\sigma\rangle\)、\([L:K]=n\)。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,58 @@
 \subsection{Hilbert 第九十定理的乘法形式}
 \label{b1:subsec:2002:01}
 
-待撰写。
+\begin{theorem}[Hilbert 第90定理，乘法形式]\label{b1:thm:hilbert90-multiplicative}
+对 \(a\in L^\times\)，有 \(N_{L/K}(a)=1\) 当且仅当存在 \(b\in L^\times\) 使
+\[
+a=\frac{b}{\sigma(b)}.
+\]
+如果 \(b\) 是一个解，则全部解恰为 \(cb\)，其中 \(c\in K^\times\)。
+\end{theorem}
+\begin{proof}
+由\eqref{b1:eq:cyclic-trace-norm}的相消计算，右边蕴含左边。现在设 \(N_{L/K}(a)=1\)，令
+\[
+A_0=1,\qquad A_i=a\sigma(a)\cdots\sigma^{i-1}(a)\quad(1\leq i\leq n).
+\]
+于是 \(A_n=1\)，且 \(a\sigma(A_i)=A_{i+1}\)。考察 \(K\) 线性映射
+\[
+T:L\longrightarrow L,\qquad
+T(c)=\sum_{i=0}^{n-1}A_i\sigma^i(c).
+\]
+\cref{b1:cor:embedding-independence}说明不同嵌入 \(1,\sigma,\ldots,\sigma^{n-1}\) 作为 \(L\) 值函数线性无关。由于 \(A_0=1\)，这个映射不恒为零。选取 \(c\) 使 \(b=T(c)\neq0\)，便有
+\[
+a\sigma(b)=\sum_{i=0}^{n-1}A_{i+1}\sigma^{i+1}(c)
+=\sum_{i=1}^{n-1}A_i\sigma^i(c)+c=b.
+\]
+因此 \(a=b/\sigma(b)\)。若 \(b'\) 也是解，则 \(\sigma(b'/b)=b'/b\)。生成元固定的元素被整个 Galois 群固定，故由\cref{b1:thm:finite-galois-correspondence}属于 \(K\)，且不为零。反过来，乘以 \(K^\times\) 中的元素显然保持等式。
+\end{proof}
+
+对 \(\mathbb C/\mathbb R\)，若 \(a\bar a=1\) 且 \(a\neq-1\)，可直接取 \(b=1+a\)，因为 \(a\bar b=a+1=b\)。若 \(a=-1\)，这一选择成为零，应改取 \(b=i\)。证明中要求 \(T(c)\neq0\) 正是为了处理这种退化，不能随意把辅助元素固定为 \(1\)。
 
 \subsection{Hilbert 第九十定理的加法形式}
 \label{b1:subsec:2002:02}
 
-待撰写。
+\begin{theorem}[Hilbert 第90定理，加法形式]\label{b1:thm:hilbert90-additive}
+对 \(a\in L\)，有 \(\operatorname{Tr}_{L/K}(a)=0\) 当且仅当存在 \(b\in L\) 使 \(a=b-\sigma(b)\)。若 \(b\) 是一个解，则全部解组成陪集 \(b+K\)。
+\end{theorem}
+\begin{proof}
+令 \(D:L\rightarrow L\) 为 \(K\) 线性映射 \(D(b)=b-\sigma(b)\)。其核为固定域 \(K\)，所以像的 \(K\) 维数为 \(n-1\)。另一方面，迹映射是不同嵌入之和；由\cref{b1:cor:embedding-independence}，这不是零映射。它的目标空间 \(K\) 是一维的，因此满射，核的维数也为 \(n-1\)。上一节已算出 \(\operatorname{Tr}_{L/K}\circ D=0\)，故 \(\operatorname{im}D\subseteq\ker\operatorname{Tr}_{L/K}\)。维数相等使这个包含成为等号。两个原像之差属于 \(\ker D=K\)，也就给出最后的断言。
+\end{proof}
+
+即使 \(\operatorname{char}K=p\) 且 \(p\mid n\)，迹仍然满射。此时 \(\operatorname{Tr}_{L/K}(1)=n=0\) 只说明 \(1\) 落入迹的核，不能推出迹映射为零。这个区别在构造 Artin--Schreier 生成元时十分关键。
 
 \subsection{第一群上同调的解释}
 \label{b1:subsec:2002:03}
 
-待撰写。
+这两个定理将来可以用\term[yi-shangxunhuan]{一上循环}[1-cocycle]与\term[yi-shangbianjie]{一上边界}[1-coboundary]的语言统一。这里只说明对应的方程，不把上同调作为本章先修。
+
+\ProseParagraphBreak
+对 \(G=\operatorname{Gal}(L/K)\)，乘法一上循环是满足
+\[
+c_{gh}=c_g\,g(c_h)\qquad(g,h\in G)
+\]
+的一族 \(c_g\in L^\times\)。一上边界指形如 \(c_g=b/g(b)\) 的一族，其中 \(b\in L^\times\)。当 \(G=\langle\sigma\rangle\) 时，循环由 \(a=c_\sigma\) 决定：
+\[
+c_{\sigma^j}=a\sigma(a)\cdots\sigma^{j-1}(a),
+\qquad c_{\sigma^n}=1\Longleftrightarrow N_{L/K}(a)=1.
+\]
+\cref{b1:thm:hilbert90-multiplicative}因而说明每个循环都是边界。加法情形将上式改为 \(c_{gh}=c_g+g(c_h)\)，边界改为 \(b-g(b)\)；与 \(\sigma^n=1\) 相容的条件正是 \(\operatorname{Tr}_{L/K}(c_\sigma)=0\)。第四卷关于第一群上同调的章节将把“循环模去边界”组织成群，并重新解释这里的消失结论；本章的两个证明不使用那套理论。

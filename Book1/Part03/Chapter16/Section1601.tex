@@ -5,7 +5,6 @@
 \section{可分多项式}
 \label{b1:sec:1601}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -14,17 +13,54 @@
 % * 特征 p 的不可分现象
 %
 
+扩张次数计算一组线性基的大小，嵌入则按不同根计数。两者能否相等，取决于不可约多项式有没有重根。特征零时不可约性已经排除了重根；正特征中导数可能恒为零，这会产生新的现象。本节始终在代数闭包中比较根。
+
 \subsection{重根、形式导数与最大公因子}
 \label{b1:subsec:1601:01}
 
-待撰写。
+\begin{definition}\label{b1:def:separable-polynomial}
+非零多项式 \(f\in K[x]\) 若在代数闭包中没有重根，称为\term[kefen-duoxiangshi]{可分多项式}[separable polynomial]。常数多项式按此约定也可分。
+\end{definition}
+\cref{b1:prop:multiple-root}的重根判别给出 \(f\) 可分当且仅当 \(\gcd(f,f')=1\)。这里最大公因子可在 \(K[x]\) 中计算：若它为一，Bézout 关系在任意扩张中仍排除公共根；若非常数公因子存在，它在代数闭包中有根，因而给出 \(f,f'\) 的公共根。
+
+\begin{proposition}\label{b1:prop:irreducible-separable-derivative}
+不可约多项式 \(f\in K[x]\) 可分当且仅当 \(f'\neq0\)。因此特征零域上的所有不可约多项式均可分。
+\end{proposition}
+\begin{proof}
+不可约性使 \(\gcd(f,f')\) 只能为一或与 \(f\) 相伴。若 \(f'\neq0\)，则 \(\deg f'<\deg f\)，\(f\) 不可能整除 \(f'\)，故最大公因子为一。若 \(f'=0\)，最大公因子就是首一化的 \(f\)，非常数，故不可分。特征零时次数为 \(n\geq1\)、首项系数为 \(a_n\) 的多项式，其导数首项系数 \(na_n\neq0\)，所以不可约多项式总属于前一种情形。
+\end{proof}
+这不是说特征零的一切多项式都可分：\((x-1)^2\) 仍有重根。可分性的结论要求多项式不可约，或另行检查互素条件。
 
 \subsection{可分元与可分扩张}
 \label{b1:subsec:1601:02}
 
-待撰写。
+\begin{definition}\label{b1:def:separable-extension}
+扩张 \(L/K\) 中的代数元 \(a\) 若其最小多项式 \(m_{a,K}\) 可分，称 \(a\) 为 \(K\) 上的\term[kefen-yuan]{可分元}[separable element]，也说它在 \(K\) 上可分。若 \(L/K\) 代数且每个元素均在 \(K\) 上可分，称其为\term[kefen-kuozhang]{可分扩张}[separable extension]。
+\end{definition}
+若 \(a\) 被一个可分 \(K\) 系数多项式零化，其最小多项式整除该多项式，也没有重根，故 \(a\) 可分。若扩大基域为中间域 \(E\)，\(m_{a,E}\) 整除 \(m_{a,K}\)，所以 \(a\) 在 \(K\) 上可分就仍在 \(E\) 上可分。反方向一般不成立：在 \(K(a)\) 上，任何 \(a\) 的最小多项式都是一次的。
+
+\ProseParagraphBreak
+例如 \(\mathbb Q(\sqrt[3]2)/\mathbb Q\) 可分，虽然它不正规。可分性检查每个最小多项式的根是否相异；正规性检查这些根是否全部留在所讨论的域里。两种条件不能互相代替。
 
 \subsection{特征 \texorpdfstring{\(p\)}{p} 的不可分现象}
 \label{b1:subsec:1601:03}
 
-待撰写。
+设 \(\operatorname{char}K=p>0\)。由导数公式，\(f'=0\) 当且仅当 \(f\) 的所有非零幂指数均被 \(p\) 整除，即 \(f(x)=g(x^p)\)。这并不必然使 \(f\) 在 \(K[x]\) 中可约，因为系数未必有 \(p\) 次根。
+
+\begin{proposition}\label{b1:prop:inseparable-polynomial-shape}
+若 \(f\in K[x]\) 首一不可约，\(\operatorname{char}K=p>0\)，则存在 \(r\geq0\) 及首一不可约可分多项式 \(g\in K[x]\)，使
+\[
+f(x)=g(x^{p^r}).
+\]
+\(f\) 的每个不同根的重数均为 \(p^r\)，不同根数为 \(\deg g\)。若 \(a\) 是 \(f\) 的根，则 \(a^{p^r}\) 在 \(K\) 上可分。
+\end{proposition}
+\begin{proof}
+只要导数为零，就把所有正幂指数同时除以 \(p\)。次数严格下降，所以有限步后得到导数非零的 \(g\)。若 \(g\) 可约，把分解中的变量换成 \(x^{p^r}\) 就使 \(f\) 可约，矛盾。故 \(g\) 不可约，由\cref{b1:prop:irreducible-separable-derivative}可分。
+
+在代数闭包中，设 \(g\) 的互异根为 \(b_1,\ldots,b_s\)。每个 \(b_i\) 有唯一 \(p^r\) 次根 \(a_i\)：存在性来自代数闭性，唯一性来自 \(u^{p^r}-v^{p^r}=(u-v)^{p^r}\)。于是
+\[
+f(x)=\prod_{i=1}^s(x^{p^r}-b_i)=\prod_{i=1}^s(x-a_i)^{p^r}.
+\]
+不同 \(b_i\) 对应不同 \(a_i\)，故重数和根数如述；\(a^{p^r}\) 为可分多项式 \(g\) 的根，所以在 \(K\) 上可分。
+\end{proof}
+在 \(K=\mathbb F_p(t)\) 上，\(x^p-t\) 不可约：它在唯一分解整环 \(\mathbb F_p[t]\) 上对素元 \(t\) 满足 Eisenstein 判据，再由 Gauss 分解定理得到分式域上的不可约性。若 \(u^p=t\)，则扩张次数为 \(p\)，但 \(x^p-t=(x-u)^p\)，只有一个不同根。这是不可分性最基本的例子。

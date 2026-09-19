@@ -5,28 +5,187 @@
 \section{局部化的基本应用}
 \label{b1:sec:1304}
 
-% TODO: 按以下纲要要点撰写本节。
+局部化改变了单位，也就改变了真理想的范围：一个理想只要含有允许的分母，到了局部化后便包含单位，因而成为全环。本节精确说明哪些理想能够保留、哪些素理想会对应起来，并证明一个最初的局部—整体判据。所用对象始终是环、元素和理想，不需要预先学习模论。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 理想的扩张与收缩
+% * 以理想商描述饱和，单元素饱和及 Noether 情形的稳定性
 % * 素理想的对应
 % * 第三卷模局部化和局部—整体判据的接口
 %
 % ---
 %
 
-\subsection{理想的扩张与收缩}
+\subsection{理想的扩张、收缩与饱和}
 \label{b1:subsec:1304:01}
 
-待撰写。
+仍设 \(R\) 为交换含幺环，\(S\) 为乘法集，\(\iota:R\rightarrow S^{-1}R\) 为自然同态。对 \(R\) 的理想 \(I\)，把其像生成的理想记为 \(IS^{-1}R\)，也记为 \(S^{-1}I\)，称为 \(I\) 的\term[lixiang-kuozhang]{扩张}[extension of an ideal]。对 \(S^{-1}R\) 的理想 \(J\)，原像 \(\iota^{-1}(J)\) 称为 \(J\) 的\term[lixiang-shousuo]{收缩}[contraction of an ideal]。
+\symidx{\(S^{-1}I=IS^{-1}R\)：理想的扩张}
+不能把扩张误写为像集 \(\iota(I)\)；后者还未必能吸收局部化中的新分母。
+
+\begin{proposition}\label{b1:prop:localization-ideal-correspondence}
+在上述条件下，有以下结论。
+\begin{enumerate}
+\item \(S^{-1}I=\{\,a/s\mid a\in I,\ s\in S\,\}\)，而对任意 \(a\in R\)、\(s\in S\)，
+\begin{equation}\label{b1:eq:localized-ideal-membership}
+a/s\in S^{-1}I
+\quad\Longleftrightarrow\quad
+ta\in I\text{ 对某个 }t\in S.
+\end{equation}
+\item 先扩张再收缩得到
+\begin{equation}\label{b1:eq:localized-ideal-contraction}
+\iota^{-1}(S^{-1}I)
+=\{\,a\in R\mid ta\in I\text{ 对某个 }t\in S\,\}.
+\end{equation}
+\item 对 \(S^{-1}R\) 的每个理想 \(J\)，先收缩再扩张仍得到 \(J\)：
+\[
+S^{-1}\Bigl(\iota^{-1}(J)\Bigr)=J.
+\]
+\item \(S^{-1}I\) 为真理想当且仅当 \(I\cap S=\varnothing\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+分子属于 \(I\) 的分式集合在相加、取负及乘以任意分式下封闭，所以是理想。它包含每个 \(a/1\)、\(a\in I\)；另一方面，每个 \(a/s=(a/1)(1/s)\) 都在这些元素生成的理想中，所以该集合恰为 \(S^{-1}I\)。
+
+若 \(a/s=b/u\)，其中 \(b\in I\)、\(u\in S\)，则有 \(v\in S\) 使 \(v(au-bs)=0\)，于是 \((vu)a=vbs\in I\)，且 \(vu\in S\)。反过来，若 \(ta\in I\)、\(t\in S\)，则 \(a/s=(ta)/(ts)\)，右端分子在 \(I\) 中，所以属于 \(S^{-1}I\)。这证明了第一个结论；其中令 \(s=1\)，便得到第二个。
+
+为证第三个结论，注意 \(a/s\in J\) 当且仅当 \(a/1\in J\)：从前者乘以 \(s/1\) 得到后者，从后者乘以 \(1/s\) 得到前者。而 \(a/1\in J\) 正是 \(a\in\iota^{-1}(J)\)。因此按第一个结论，\(J\) 恰为收缩理想的扩张。
+
+最后，\(S^{-1}I\) 不是真理想当且仅当 \(1/1\in S^{-1}I\)。\eqref{b1:eq:localized-ideal-membership}将这个条件化为存在 \(t\in S\) 使 \(t\in I\)，即 \(I\cap S\neq\varnothing\)。
+\end{proof}
+
+\eqref{b1:eq:localized-ideal-contraction}中的理想称为 \(I\) 关于 \(S\) 的\term[chengfa-ji-baohe]{饱和}[saturation with respect to a multiplicative subset]。若它等于 \(I\)，便称 \(I\) 关于 \(S\) 饱和；等价地，\(ta\in I\)、\(t\in S\) 总能推出 \(a\in I\)。因此扩张与收缩在 \(S^{-1}R\) 的全部理想和 \(R\) 的全部 \(S\)-饱和理想之间给出保持包含关系的一一对应。满射性、互逆性来自\cref{b1:prop:localization-ideal-correspondence}的第二、三个结论；包含关系的保持则来自生成理想和取原像的定义。
+
+\ProseParagraphBreak
+“与 \(S\) 不相交”只保证扩张仍为真理想，不保证扩张后可以恢复原理想。例如 \(R=\mathbb Z\)、\(S=\{\,2^n\mid n\geq0\,\}\)、\(I=6\mathbb Z\) 时，\(I\cap S=\varnothing\)，但其饱和为 \(3\mathbb Z\)：若 \(2^na\) 被 \(6\) 整除，则 \(3\mid a\)；若 \(3\mid a\)，则 \(2a\in6\mathbb Z\)。所以在 \(\mathbb Z[1/2]\) 中，\((6)=(3)\)，原先含有的因子 \(2\) 已经成为单位。
+
+\ProseParagraphBreak
+用\cref{b1:def:ideal-quotient}的理想商记号，\(I:s=\{\,a\in R\mid sa\in I\,\}\)，因而\eqref{b1:eq:localized-ideal-contraction}也可写成
+\begin{equation}\label{b1:eq:saturation-colon-union}
+\iota^{-1}(S^{-1}I)=\bigcup_{s\in S}(I:s).
+\end{equation}
+这里的条件是存在一个合适的 \(s\)，并不要求对 \(S\) 中的每个元素都成立。这个并集仍是理想：若两个元素分别属于 \(I:s\) 与 \(I:t\)，则它们同时属于 \(I:st\)，因为 \(st\in S\)；相减与乘以任意环元素便可在这个理想中完成。单个元素的各次幂组成分母集时，上式有一个特别常用的写法。
+
+\begin{definition}\label{b1:def:element-saturation}
+设 \(I\) 为交换含幺环 \(R\) 的理想，\(f\in R\)。\(I\) 关于 \(f\) 的饱和理想记为
+\begin{equation}\label{b1:eq:element-saturation}
+I:f^\infty\coloneqq\bigcup_{n\geq0}(I:f^n)
+=\{\,a\in R\mid f^na\in I\text{ 对某个整数 }n\geq0\,\}.
+\end{equation}
+这里 \(f^0=1\)，所以 \(I:f^0=I\)。若 \(I:f^\infty=I\)，就称 \(I\) 关于 \(f\) 饱和，简称 \(f\)-饱和。
+\end{definition}
+\symidx{\(I:f^\infty\)：理想关于元素 \(f\) 的饱和}
+\termidx[baohe-lixiang]{饱和理想}
+
+上标 \(\infty\) 表示允许取某个足够大的有限次幂，不是在环中定义元素 \(f^\infty\)。\(I:f\) 只允许乘一次 \(f\)，一般还不是 \(I:f^\infty\)。
+
+\begin{proposition}\label{b1:prop:element-saturation}
+设 \(I\) 为交换含幺环 \(R\) 的理想，\(f\in R\)，\(\iota_f:R\rightarrow R_f\) 为自然同态。则 \(I:f^\infty\) 是理想，并满足
+\begin{equation}\label{b1:eq:element-saturation-contraction}
+I:f^\infty=\iota_f^{-1}(IR_f).
+\end{equation}
+它是包含 \(I\) 的最小 \(f\)-饱和理想。若 \(R\) 为 Noether 环，则存在整数 \(N\geq0\)，使
+\begin{equation}\label{b1:eq:element-saturation-stable}
+I:f^n=I:f^N=I:f^\infty\qquad(n\geq N).
+\end{equation}
+\end{proposition}
+\begin{proof}
+在\eqref{b1:eq:saturation-colon-union}中取 \(S=\{\,f^n\mid n\geq0\,\}\)，便得到\eqref{b1:eq:element-saturation-contraction}；理想的收缩仍为理想，故 \(I:f^\infty\) 是理想。记它为 \(K\)。若 \(f^ma\in K\)，则存在 \(n\geq0\) 使 \(f^{n+m}a\in I\)，所以 \(a\in K\)。因此 \(K:f^\infty=K\)，且取 \(n=0\) 可知 \(I\subseteq K\)。
+
+若 \(L\) 为任意包含 \(I\) 的 \(f\)-饱和理想，对 \(a\in K\) 取 \(n\geq0\) 使 \(f^na\in I\subseteq L\)，则 \(L\) 的饱和性给出 \(a\in L\)。所以 \(K\subseteq L\)，这就证明了最小性。
+
+由于 \(f^na\in I\) 蕴含 \(f^{n+1}a\in I\)，这些理想商构成升链
+\[
+I=I:f^0\subseteq I:f\subseteq I:f^2\subseteq\cdots.
+\]
+若 \(R\) 为 Noether 环，\cref{b1:prop:noetherian-acc}说明这条理想升链从某个 \(N\) 起稳定。它的并集因此等于 \(I:f^N\)，即得\eqref{b1:eq:element-saturation-stable}。
+\end{proof}
+
+\eqref{b1:eq:element-saturation-contraction}不要求 Noether 性；只有最后的有限步稳定性使用了这一假设。若在实际计算中已经得到 \(I:f^N=I:f^{N+1}\)，则由\cref{b1:prop:ideal-quotient-identities}的逐次理想商公式
+\[
+\bigl(I:f^n\bigr):f=I:f^{n+1}
+\]
+可知以后各项也都相等：对相邻两项的等式再取一次关于 \(f\) 的理想商，便得到下一对相邻项相等，然后归纳即可。
+
+\ProseParagraphBreak
+两个极端情形也与定义相容。若 \(f\) 已是单位，\(f^na\in I\) 就能乘以 \(f^{-n}\) 得到 \(a\in I\)，因此 \(I:f^\infty=I\)。若 \(f\) 幂零，某个 \(f^n=0\) 把每个元素都送入 \(I\)，所以 \(I:f^\infty=R\)；这也对应于 \(R_f\) 为零环的情形。
+
+\ProseParagraphBreak
+例如在 \(R=k[x,y]\) 中取 \(I=(x^2,xy)\)，其中 \(k\) 为域。若 \(xg\in I\)，就有 \(xg=x^2u+xyv\)；多项式环是整环，约去 \(x\) 得 \(g=xu+yv\)。反过来，后一表达式乘以 \(x\) 显然属于 \(I\)。因此
+\[
+I:x=(x,y),\qquad I:x^2=R,\qquad I:x^\infty=R.
+\]
+可见只取一次理想商与取饱和确实可能不同。另一方面，\(xy\in I\) 给出 \((x)\subseteq I:y^\infty\)。若 \(y^ng\in I\subseteq(x)\)，令 \(x=0\) 得 \(y^ng(0,y)=0\)；由于 \(k[y]\) 是整环，\(g(0,y)=0\)，即 \(g\) 的每个非零单项式都含 \(x\)，所以 \(g\in(x)\)。故
+\[
+I:y^\infty=(x).
+\]
+在 \(R_x\) 中，\(x^2\) 已可逆，\(IR_x=R_x\)；在 \(R_y\) 中，\(xy\) 与 \(x\) 生成同一主理想，且 \(x^2\) 已被 \(x\) 吸收，所以 \(IR_y=(x)R_y\)。这也从局部化说明了两种饱和为什么不同。关于由多个元素生成的理想的饱和，可进一步参看\cref{b1:ex:13-15}；它的条件与允许这些元素同时作为分母有所区别。
 
 \subsection{素理想的对应}
 \label{b1:subsec:1304:02}
 
-待撰写。
+素理想恰好使饱和条件变得简单。若 \(\mathfrak p\cap S=\varnothing\)，\(ta\in\mathfrak p\)、\(t\in S\)，则素性与 \(t\notin\mathfrak p\) 迫使 \(a\in\mathfrak p\)。
+
+\begin{theorem}\label{b1:thm:localization-prime-correspondence}
+\(R\) 中与 \(S\) 不相交的素理想，与 \(S^{-1}R\) 的全部素理想之间有保持包含关系的一一对应。两个方向分别由扩张、收缩给出：
+\[
+\begin{aligned}
+\mathfrak p&\longmapsto S^{-1}\mathfrak p,\\
+\mathfrak q&\longmapsto\iota^{-1}(\mathfrak q).
+\end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+先设 \(\mathfrak p\) 为与 \(S\) 不相交的素理想。上一段已说明它饱和，而\cref{b1:prop:localization-ideal-correspondence}说明 \(S^{-1}\mathfrak p\) 为真理想。若
+\((a/s)(b/t)=ab/(st)\in S^{-1}\mathfrak p\)，由\eqref{b1:eq:localized-ideal-membership}，有 \(u\in S\) 使 \(uab\in\mathfrak p\)。先用 \(u\notin\mathfrak p\) 推出 \(ab\in\mathfrak p\)，再用素性推出 \(a\in\mathfrak p\) 或 \(b\in\mathfrak p\)。于是 \(a/s\) 或 \(b/t\) 属于 \(S^{-1}\mathfrak p\)，证明它为素理想。
+
+反过来，若 \(\mathfrak q\) 为 \(S^{-1}R\) 的素理想，则其原像 \(\mathfrak p=\iota^{-1}(\mathfrak q)\) 是理想，不含 \(1\)。若 \(ab\in\mathfrak p\)，则 \((a/1)(b/1)\in\mathfrak q\)，从而 \(a/1\) 或 \(b/1\) 属于 \(\mathfrak q\)，即 \(a\) 或 \(b\) 属于 \(\mathfrak p\)，所以 \(\mathfrak p\) 素。每个 \(s/1\)、\(s\in S\) 都可逆，不能属于真理想 \(\mathfrak q\)，故 \(\mathfrak p\cap S=\varnothing\)。
+
+对前一方向，饱和性保证收缩恢复 \(\mathfrak p\)；对后一方向，\cref{b1:prop:localization-ideal-correspondence}保证收缩后的扩张恢复 \(\mathfrak q\)。因此两种操作互逆。它们都保持包含关系。
+\end{proof}
+
+例如 \(R_{\mathfrak p}\) 中的素理想对应于 \(R\) 中包含于 \(\mathfrak p\) 的素理想，因为
+\(\mathfrak q\cap(R\setminus\mathfrak p)=\varnothing\) 等价于 \(\mathfrak q\subseteq\mathfrak p\)。在 \(\mathbb Z_{(p)}\) 中，只剩零理想和 \(p\mathbb Z_{(p)}\) 两个素理想：整数环中的非零素理想是各 \((q)\)，其中只有 \((p)\) 包含于 \((p)\)。在 \(R_f\) 中，对应的则是满足 \(f\notin\mathfrak p\) 的素理想；因为素理想包含 \(f\) 的某个幂当且仅当包含 \(f\)。
+
+\ProseParagraphBreak
+这里的对应针对素理想。局部化中一个极大理想的收缩未必在原环中极大。例如整环 \(\mathbb Z\) 在全部非零元素处局部化为 \(\mathbb Q\)，后者的极大理想 \((0)\) 收缩为 \(\mathbb Z\) 的零理想，却不是 \(\mathbb Z\) 的极大理想。极大性在此应理解为与分母集不相交的素理想之中的极大性。
 
 \subsection{模局部化与局部—整体判据}
 \label{b1:subsec:1304:03}
 
-待撰写。
+局部化可能使一个非零元素消失，但所有极大理想处的局部化合在一起，能够检测原来的元素。这是局部—整体思想的一个初等形式。
+
+\begin{proposition}\label{b1:prop:local-detection}
+设 \(R\) 为非零交换含幺环，\(I\) 为理想，\(a\in R\)。则
+\[
+a\in I
+\quad\Longleftrightarrow\quad
+a/1\in IR_{\mathfrak m}
+\text{ 对每个极大理想 }\mathfrak m\text{ 成立}.
+\]
+因而一个元素为零、两个元素相等，以及两个理想相等，都可以在全部极大理想处的局部化中检测。
+\end{proposition}
+\begin{proof}
+若 \(a\in I\)，则对每个 \(\mathfrak m\)，其像当然在扩张理想中。反过来，设 \(a\notin I\)，考虑\cref{b1:def:ideal-quotient}中的理想商
+\[
+J=I:a=\{\,r\in R\mid ra\in I\,\}.
+\]
+\cref{b1:prop:ideal-quotient-rules}保证 \(J\) 是理想。因为 \(a\notin I\)，\(1\notin J\)，所以 \(J\) 为真理想。由\cref{b1:prop:maximal-ideal-exists}，存在极大理想 \(\mathfrak m\) 包含 \(J\)。\cref{b1:prop:prime-max-quotient}又说明 \(\mathfrak m\) 是素理想，因此可作局部化的中心。
+
+如果 \(a/1\in IR_{\mathfrak m}\)，\eqref{b1:eq:localized-ideal-membership}便给出 \(s\notin\mathfrak m\) 使 \(sa\in I\)。但这意味着 \(s\in J\subseteq\mathfrak m\)，矛盾。因此在这个极大理想处，\(a/1\) 不属于 \(IR_{\mathfrak m}\)。
+
+取 \(I=(0)\) 即得元素为零的判据；把 \(a\) 换成两个元素之差，得到相等的判据。若两个理想在所有 \(R_{\mathfrak m}\) 中的扩张相等，则对第一个理想的任意元素应用刚证明的成员判据，知它属于第二个理想；交换二者后得到反向包含，故两个理想相等。
+\end{proof}
+
+\begin{corollary}\label{b1:cor:local-unit-detection}
+非零交换含幺环 \(R\) 中的元素 \(a\) 为单位，当且仅当它在每个 \(R_{\mathfrak m}\) 中的像均为单位，其中 \(\mathfrak m\) 遍历 \(R\) 的极大理想。
+\end{corollary}
+\begin{proof}
+单位在环同态下仍是单位，故必要性成立。若每个 \(a/1\) 都是单位，则 \(1/1\) 属于由 \(a/1\) 生成的理想，即 \((a)R_{\mathfrak m}\)。对\cref{b1:prop:local-detection}取 \(I=(a)\)、待检测元素为 \(1\)，便得到 \(1\in(a)\)。于是 \(ab=1\) 对某个 \(b\in R\) 成立，故 \(a\) 是单位。
+\end{proof}
+
+这些判据并不声称任意局部数据都能拼成全局对象，也不允许只在一个任意选定的极大理想处检查。其证明的关键是：若全局条件失败，就用一个真理想记录失败的原因，再找包含它的极大理想，使失败在相应局部化中仍然可见。例如整数 \(6\) 在 \(\mathbb Z_{(5)}\) 中是单位，却在 \(\mathbb Z_{(2)}\) 中不是单位，所以一次局部检查不足以判断它在 \(\mathbb Z\) 中的可逆性。
+
+\ProseParagraphBreak
+第三卷第2章将把分母作用推广到模，并在建立模的局部化后研究更一般的局部—整体判据。本章已经给出的零判据和理想成员判据，是那一推广所要保留的基本机制。那里对模的定义和结果会有新的要求，本章的分式计算提供起点，不能代替后续论证。

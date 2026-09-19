@@ -5,7 +5,7 @@
 \section{根式可解性}
 \label{b1:sec:2102}
 
-% TODO: 按以下纲要要点撰写本节。
+一个根式公式允许有限次四则运算和开方，也允许在计算途中使用复数。域塔把这样的表达式记录为一串有限扩张；Galois 群则检验这一串扩张是否可能存在。本节的等价定理以特征零为主版本，且把“一个根能够表示”与“多项式的全部根能够表示”明确分开。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,19 +18,89 @@
 \subsection{根式塔与可解扩张}
 \label{b1:subsec:2102:01}
 
-待撰写。
+\begin{definition}\label{b1:def:radical-extension}
+域扩张塔
+\[
+K=K_0\subseteq K_1\subseteq\cdots\subseteq K_r,
+\qquad K_i=K_{i-1}(\alpha_i),\quad\alpha_i^{m_i}\in K_{i-1},
+\]
+其中 \(m_i\geq2\)，称为\term[genshi-ta]{根式塔}[radical tower]，末端 \(K_r/K\) 称为\term[genshi-kuozhang]{根式扩张}[radical extension]。多项式 \(f\in K[X]\) 称为\term[genshi-kejie]{根式可解}[solvable by radicals]，若存在这样的塔包含 \(f\) 的全部根。
+\end{definition}
+
+\(\alpha_i=0\) 或本已属于 \(K_{i-1}\) 的步骤可以删去。开方的指数可以是合数；把指数逐次按素因子分拆，会得到另一条只取素数次方根的塔。这里并不要求每一步正规，也不要求 \(K_r\) 恰好等于分裂域。例如 \(\mathbb Q(\sqrt[3]{2})\) 是根式扩张，但还没有包含 \(X^3-2\) 的全部根；再加入 \(\zeta_3\) 即可。
+
+\begin{definition}\label{b1:def:solvable-extension}
+设 \(K\) 的特征为零，\(E/K\) 为有限扩张。若 \(E/K\) 的正规闭包的 Galois 群是可解群，则称 \(E/K\) 为\term[kejie-kuozhang]{可解扩张}[solvable extension]。
+\end{definition}
+
+可解扩张未必本身是一条根式塔的末端；正确的结论是它能嵌在一条根式塔中。对已正规且可分的扩张，定义就是要求其自身的 Galois 群可解。
 
 \subsection{根式可解性与可解群}
 \label{b1:subsec:2102:02}
 
-待撰写。
+\begin{theorem}[根式可解性判据]\label{b1:thm:radical-solvability}
+设 \(K\) 的特征为零，\(f\in K[X]\) 非常数，\(L\) 为其分裂域。则 \(f\) 根式可解当且仅当 \(\operatorname{Gal}(L/K)\) 是可解群。
+\end{theorem}
+
+证明将在\subsecref{b1:subsec:2102:04}给出。两个方向需要不同的工作：从可解群出发，应先加入必要的单位根，再把素数阶循环商转为开方；从根式塔出发，则应把所有共轭同时补进来，才能研究一个真正的 Galois 群。只检查原塔中每一步的次数，不能替代后一项工作。
+
+\begin{lemma}\label{b1:lem:radical-normal-envelope}
+特征零域 \(K\) 上的任意有限根式塔，都包含在一个有限 Galois 扩张 \(M/K\) 中，使 \(\operatorname{Gal}(M/K)\) 可解。
+\end{lemma}
+\begin{proof}
+设塔为 \(K_i=K_{i-1}(\alpha_i)\)，\(\alpha_i^{m_i}=a_i\neq0\)，取全部 \(m_i\) 的公倍数 \(m\)。先令 \(M_0=K(\mu_m)\)。它是 \(X^m-1\) 的分裂域，Galois 群把一个原始单位根送到其互素次幂，因而嵌入交换群 \((\mathbb Z/m\mathbb Z)^\times\)，所以可解。
+
+归纳设 \(M_{i-1}/K\) 为有限 Galois 扩张，包含 \(K_{i-1}\)，且群可解。令 \(M_i\) 为 \(M_{i-1}\) 上全部多项式
+\[
+X^{m_i}-\tau(a_i),\qquad\tau\in\operatorname{Gal}(M_{i-1}/K),
+\]
+的共同分裂域，选择其中的根使 \(\alpha_i\in M_i\)。这给出有限扩张。每个 \(K\) 嵌入在 \(M_{i-1}\) 上限制为某个自同构，并置换所列多项式及其根，所以保持 \(M_i\)；由\cref{b1:thm:normal-embedding-criterion}，\(M_i/K\) 正规，特征零保证可分。
+
+对每个所列多项式选一个根 \(\beta_\tau\)。因为 \(M_{i-1}\) 含 \(\mu_{m_i}\)，各 \(\beta_\tau\) 已生成分裂域。于是
+\[
+\operatorname{Gal}(M_i/M_{i-1})\longrightarrow
+\prod_{\tau}\mu_{m_i},\qquad
+\rho\longmapsto\Bigl(\rho(\beta_\tau)/\beta_\tau\Bigr)_\tau
+\]
+是单同态，其同态性及单射性与\cref{b1:prop:single-radical-cyclic}中的计算相同：根的比值在被固定的单位根群中，而固定全部生成根就固定全域。因此核群是交换群。限制映射由\cref{b1:thm:galois-quotient}给出正合列
+\[
+1\longrightarrow\operatorname{Gal}(M_i/M_{i-1})
+\longrightarrow\operatorname{Gal}(M_i/K)
+\longrightarrow\operatorname{Gal}(M_{i-1}/K)\longrightarrow1.
+\]
+核可解、商可解，\cref{b1:thm:solvable-closure}保证中间群可解。归纳到末端即得所需 \(M\)。
+\end{proof}
 
 \subsection{特征条件与可分性}
 \label{b1:subsec:2102:03}
 
-待撰写。
+特征零保证每个不可约多项式可分，并允许所取根式指数作为非零域元素使用。\(f\) 本身可以含重因子；删去重数既不改变分裂域，也不改变根式可解性。因此定理并不另要求 \(f\) 的各因子互异。
+
+\ProseParagraphBreak
+在特征 \(p\) 中，若只允许指数与 \(p\) 互素的根式，前一引理仍可按同一方式构造可解的正规包络。但循环 \(p\) 次扩张由 \(X^p-X-a\) 产生，不能调用\cref{b1:thm:kummer-cyclic}把这一步变为 \(p\) 次开方。另一方面，\(X^p-a\) 的根给出纯不可分扩张，其自同构群可能为平凡群，却不能用有限 Galois 对应来分析。正特征下需要把 Kummer 步骤、Artin--Schreier 步骤和纯不可分步骤分别处理。
 
 \subsection{特征零的证明与正特征情形}
 \label{b1:subsec:2102:04}
 
-待撰写。
+\begin{proof}[\cref{b1:thm:radical-solvability}的证明]
+先设 \(f\) 的全部根包含在某条根式塔中。由\cref{b1:lem:radical-normal-envelope}，该塔包含于有限 Galois 扩张 \(M/K\)，其群可解。于是 \(L\subseteq M\)。由于 \(L/K\) 也是 Galois 扩张，限制同态满射到 \(\operatorname{Gal}(L/K)\)，核为 \(\operatorname{Gal}(M/L)\)。可解群的商仍可解，故所需必要性成立。
+
+反过来，设 \(G=\operatorname{Gal}(L/K)\) 可解。取 \(m=|G|\)，令 \(F=K(\mu_m)\)、\(E=LF\)。若 \(m=1\)，已有 \(L=K\)，无须开方；以下设 \(m>1\)。域 \(F\) 本身由 \(1\) 的一个 \(m\) 次方根生成，所以 \(F/K\) 是根式扩张。\(E/F\) 是 \(f\) 在 \(F\) 上的分裂域，有限且 Galois。限制到 \(L\) 给出
+\[
+\operatorname{Gal}(E/F)\hookrightarrow\operatorname{Gal}(L/K),
+\]
+因为固定 \(F\) 又固定 \(L\) 就固定合成域。因此 \(H=\operatorname{Gal}(E/F)\) 可解，且其阶整除 \(m\)。
+
+有限可解群有素数阶循环因子的次正规列。为说明所需版本，先由\cref{b1:prop:derived-quotient}取交换因子的导出列，再在每个有限交换因子中逐次取极大真子群。所得商既交换又单，由\cref{b1:prop:abelian-simple}必为素数阶循环群；在原群中取这些子群的原像就完成细化。故可写
+\[
+H=H_0\trianglerighteq H_1\trianglerighteq\cdots\trianglerighteq H_s=1,
+\qquad H_{i-1}/H_i\cong C_{\ell_i}.
+\]
+有限 Galois 对应给出反向域塔 \(F=E_0\subseteq E_1\subseteq\cdots\subseteq E_s=E\)，其中 \(E_i=E^{H_i}\)，每个 \(E_i/E_{i-1}\) 的 Galois 群为 \(C_{\ell_i}\)。由于 \(\ell_i\mid m\)，域 \(F\) 及所有 \(E_{i-1}\) 都含 \(\mu_{\ell_i}\)。\cref{b1:thm:kummer-cyclic}遂给出
+\[
+E_i=E_{i-1}(\gamma_i),\qquad \gamma_i^{\ell_i}\in E_{i-1}.
+\]
+把开头的 \(K\subseteq F\) 接上这些步骤，便得到包含 \(L\) 全部元素、从而包含 \(f\) 全部根的根式塔。
+\end{proof}
+
+这份证明也给出正特征下应如何修改构造的提示：若可解 Galois 群的某个素数阶因子等于特征，使用\cref{b1:thm:artin-schreier-classification}，而不是开方。得到的是由两类方程组成的塔；本书不把它与特征零定义下的纯根式塔混称。

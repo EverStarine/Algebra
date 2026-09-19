@@ -5,7 +5,6 @@
 \section{可分次数}
 \label{b1:sec:1602}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -14,17 +13,83 @@
 % * 纯不可分扩张
 %
 
+计数嵌入时，生成元的像必须是对应最小多项式的根，并且逐层选择要保持此前已经确定的映射。上一章已给出延拓的存在性与次数上界；现在把重根造成的差额单独记下来。
+
 \subsection{嵌入个数与可分次数}
 \label{b1:subsec:1602:01}
 
-待撰写。
+\begin{definition}\label{b1:def:separable-degree}
+设 \(L/K\) 有限，\(\Omega\) 为包含 \(L\) 的 \(K\) 的代数闭包。称
+\[
+[L:K]_{\mathrm s}\coloneqq\#\operatorname{Hom}_K(L,\Omega)
+\]
+为扩张的\term[kefen-cishu]{可分次数}[separable degree]。代数闭包之间的 \(K\) 同构通过复合给出嵌入集合的双射，所以该数不依赖所选代数闭包。
+\end{definition}
+\symidx{\([L:K]_{\mathrm s}\)：可分次数}
+
+\begin{theorem}\label{b1:thm:separable-embeddings}
+有限扩张 \(L/K\) 满足 \([L:K]_{\mathrm s}\leq[L:K]\)，等号成立当且仅当 \(L/K\) 可分。若 \(L\) 由有限多个在 \(K\) 上可分的元素生成，则 \(L/K\) 可分。
+\end{theorem}
+\begin{proof}
+上界已由\cref{b1:prop:embedding-degree-bound}证明。假设 \(L=K(a_1,\ldots,a_r)\)，每个 \(a_i\) 在 \(K\) 上可分。令 \(E_i=K(a_1,\ldots,a_i)\)，其在 \(E_{i-1}\) 上的最小多项式整除原来的可分多项式，故仍可分。对 \(E_{i-1}\) 的任意嵌入，变换系数后多项式仍有 \([E_i:E_{i-1}]\) 个不同根：系数同构保留 Bézout 关系及次数。由\cref{b1:lem:simple-embedding-extension}，每个嵌入有恰好这么多延拓。逐层相乘，得嵌入总数为 \([L:K]\)。特别地，若 \(L/K\) 可分，取任何有限生成集即得到等号。
+
+反过来，设嵌入总数已等于 \([L:K]\)。任取 \(a\in L\)，记其最小多项式的不同根数为 \(s\)。从 \(K(a)\) 到 \(\Omega\) 恰有 \(s\) 个嵌入，每个至多有 \(\Bigl[L:K(a)\Bigr]\) 个延拓。因此
+\[
+[L:K]\leq s\Bigl[L:K(a)\Bigr]\leq\Bigl[K(a):K\Bigr]\,\Bigl[L:K(a)\Bigr]=[L:K].
+\]
+所有不等号均为等号，所以 \(s=\Bigl[K(a):K\Bigr]\)，即 \(a\) 的最小多项式没有重根。任意 \(a\) 都可分，故扩张可分；也完成了最后一句的证明。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:separable-subfield}
+任意扩张 \(L/K\) 中在 \(K\) 上代数且可分的元素构成一个子域。
+\end{proposition}
+\begin{proof}
+若 \(a,b\) 都可分，\cref{b1:thm:separable-embeddings}说明有限扩张 \(K(a,b)/K\) 可分。其元素 \(a-b,ab\) 以及 \(a\neq0\) 时的 \(a^{-1}\) 因而均可分。底域元素的最小多项式为一次，所以也包含在这个集合中。
+\end{proof}
 
 \subsection{可分次数的塔式公式}
 \label{b1:subsec:1602:02}
 
-待撰写。
+\begin{theorem}\label{b1:thm:separable-degree-tower}
+若 \(K\subseteq E\subseteq L\) 且 \(L/K\) 有限，则
+\[
+[L:K]_{\mathrm s}=[L:E]_{\mathrm s}[E:K]_{\mathrm s}.
+\]
+此外，任意代数扩张塔中，\(L/K\) 可分当且仅当 \(E/K\) 与 \(L/E\) 都可分。
+\end{theorem}
+\begin{proof}
+固定 \(K\) 的代数闭包 \(\Omega\) 包含 \(L\)；它也是 \(E\) 的代数闭包。对每个 \(K\) 嵌入 \(\tau:E\rightarrow\Omega\)，把\cref{b1:cor:intermediate-embedding-extension}用于塔 \(K\subseteq E\subseteq\Omega\)。由于 \(\Omega/K\) 正规，得到 \(\Omega\) 的一个 \(K\) 自同构 \(\widehat\tau\) 延拓它。映射 \(\rho\mapsto\widehat\tau\circ\rho\) 将固定 \(E\) 的 \(L\) 的嵌入双射地对应到限制为 \(\tau\) 的那些嵌入，逆映射由 \(\widehat\tau^{-1}\) 复合给出。因此每个限制映射的纤维都有 \([L:E]_{\mathrm s}\) 个元素，一共有 \([E:K]_{\mathrm s}\) 个纤维，得到乘法公式。
+
+有限情形下，每层可分次数至多等于该层次数。将刚证明的公式与\cref{b1:thm:tower-law}比较，两个有限正数的乘积取满值当且仅当每个因子取满值，再由\cref{b1:thm:separable-embeddings}得到可分性的塔判据。
+
+一般情形，若 \(L/K\) 可分，限制到 \(E\) 以及扩大最小多项式的系数域，分别说明 \(E/K\)、\(L/E\) 可分。反过来，给定 \(a\in L\)，取其在 \(E\) 上的可分最小多项式 \(f\)，令 \(E_0\) 为其有限多个系数在 \(K\) 上生成的域。\cref{b1:thm:separable-embeddings}说明 \(E_0/K\) 有限可分；\(a\) 被可分多项式 \(f\in E_0[x]\) 零化，所以 \(E_0(a)/E_0\) 也有限可分。应用有限塔判据，\(E_0(a)/K\) 可分，于是 \(a\) 在 \(K\) 上可分。任意 \(a\) 均如此，结论成立。
+\end{proof}
+例如特征零的有限扩张中可分次数总等于次数；在 \(\mathbb F_p(t^{1/p})/\mathbb F_p(t)\) 中，可分次数为一而次数为 \(p\)。两者反映的是不同根的选择数与向量空间大小之间的差别。
 
 \subsection{纯不可分扩张}
 \label{b1:subsec:1602:03}
 
-待撰写。
+\begin{definition}\label{b1:def:purely-inseparable}
+特征 \(p>0\) 的代数扩张 \(L/K\) 称为\term[chun-bukefen-kuozhang]{纯不可分扩张}[purely inseparable extension]，若对每个 \(a\in L\)，存在整数 \(r\geq0\) 使 \(a^{p^r}\in K\)。特征零时只有平凡扩张称为纯不可分。
+\end{definition}
+
+\begin{proposition}\label{b1:prop:purely-inseparable-criteria}
+代数元 \(a\) 在 \(K\) 上纯不可分，当且仅当其最小多项式在代数闭包中只有一个不同根。特征 \(p>0\) 时，该最小多项式形如 \(x^{p^r}-c\)，其中 \(c\in K\)。因此代数扩张 \(L/K\) 纯不可分，当且仅当它到固定代数闭包的 \(K\) 嵌入只有一个。
+\end{proposition}
+\begin{proof}
+若 \(a^{p^r}=c\in K\)，则 \(x^{p^r}-c=(x-a)^{p^r}\)，其任何因子都只有根 \(a\)。反过来，由\cref{b1:prop:inseparable-polynomial-shape}，只有一个不同根的不可约多项式的可分部分必须为一次，故它就是 \(x^{p^r}-c\)。特征零时不可约多项式可分，只有一个根就只能为一次，等价于 \(a\in K\)。
+
+纯不可分时，每个元素的像被唯一根条件确定，故嵌入只能是给定包含。若扩张不是纯不可分，某个 \(a\) 的最小多项式有不同根 \(b\neq a\)，先将 \(a\) 送到 \(b\)，再由\cref{b1:thm:embedding-extension}延拓到 \(L\)，便得到不同于包含的嵌入。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:separable-inseparable-decomposition}
+设 \(L/K\) 有限，令 \(E\) 为其中在 \(K\) 上可分的元素组成的子域。则 \(E/K\) 可分、\(L/E\) 纯不可分，而且
+\[
+[L:K]_{\mathrm s}=[E:K].
+\]
+商 \([L:K]_{\mathrm i}\coloneqq[L:K]/[L:K]_{\mathrm s}=[L:E]\) 称为\term[bukefen-cishu]{不可分次数}[inseparable degree]；正特征时它为 \(p\) 的幂，特征零时为一。
+\end{proposition}
+\begin{proof}
+\cref{b1:prop:separable-subfield}保证 \(E\) 是域，它按定义对 \(K\) 可分。正特征时，\cref{b1:prop:inseparable-polynomial-shape}说明每个 \(a\in L\) 的某个 \(p\) 次幂迭代在 \(K\) 上可分，从而落在 \(E\)，故 \(L/E\) 纯不可分。特征零时 \(E=L\)。由\cref{b1:prop:purely-inseparable-criteria}，\([L:E]_{\mathrm s}=1\)；可分次数塔式公式遂给出所述等式。最后，在有限生成塔中逐个添入纯不可分元，每一步最小多项式的次数都是 \(p\) 的幂，次数相乘仍是 \(p\) 的幂。
+\end{proof}
+\symidx{\([L:K]_{\mathrm i}\)：不可分次数}

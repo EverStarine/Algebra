@@ -6,11 +6,138 @@
 \label{b1:ch:19}
 \BookChapterNumber{b1:ch:19}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+有限 Galois 理论把中间域结构转化为有限群的子群结构。本章先从正规性和可分性辨认自同构何时达到扩张次数，再独立证明 Artin 不动域定理。精确的次数等式使不动域与固定群互为逆运算，得到 Galois 对应及正规子群的商群解释。二次、三次和四次方程提供可以逐个写出自同构的例子；中间域枚举、合成域与交域的计算，则说明对应如何组织具体问题。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 证明 Artin 不动域定理，说明嵌入独立性和线性关系下降分别承担哪个次数估计。
+\item 使用 Galois 对应计算中间域次数，辨认正规子扩张并构造限制同态。
+\item 从分裂域、根的置换和判别式识别低次方程的 Galois 群。
+\item 正确计算合成域与交域，区别实际子域、共轭子域和抽象同构类型。
+\end{itemize}
+\end{learninggoals}
+
+本章的域论输入是\cref{b1:thm:embedding-extension}的嵌入延拓、\cref{b1:thm:normal-embedding-criterion}的正规性判据、\cref{b1:thm:separable-embeddings}的嵌入计数，以及\cref{b1:cor:embedding-independence}的独立性。群论使用子群、指数、正规子群、商群和置换作用。先完成不动域扩张次数等于群阶的证明，再建立对应，避免在两者之间循环论证。
 
 \input{Part03/Chapter19/Section1901}
 \input{Part03/Chapter19/Section1902}
 \input{Part03/Chapter19/Section1903}
 \input{Part03/Chapter19/Section1904}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限自同构群的不动域总给出一个次数恰为群阶的 Galois 扩张。由此，中间域与子群反向对应，扩张次数对应群指数，正规子扩张对应正规子群，限制映射给出相应商群。具体计算时，群的抽象类型还不够：须明确它作用于哪些根、哪些元素被固定。合成域与交域公式需要核对正规可分假设，非正规扩张中的交域为基域并不保证次数相乘。同构的中间域也可能在同一个分裂域中占据不同位置。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:19-characteristic-two}
+比较 \(\mathbb F_4/\mathbb F_2\) 与 \(\mathbb F_2(u)/\mathbb F_2(u^2)\)，其中 \(u\) 超越。它们同为二次扩张，分别是否为 Galois 扩张？求各自的基域自同构群。
+\end{exercise}
+\begin{solution}
+前者是 \(x^2+x+1\) 的分裂域，该多项式导数为一，故可分。Galois 群由恒等与平方映射组成，为 \(C_2\)。后者为纯不可分扩张；若嵌入固定 \(u^2\)，则 \(u\) 的像必须满足 \(x^2-u^2=(x-u)^2=0\)，只能仍为 \(u\)。所以自同构群平凡，扩张不可分，不是 Galois 扩张。二次扩张自动正规不等于自动可分。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-real-fourth-root}
+令 \(a=\sqrt[4]2>0\)、\(E=\mathbb Q(a)\)。求 \(\operatorname{Aut}_{\mathbb Q}(E)\) 及其不动域，解释为何这个不动域不是 \(\mathbb Q\)。
+\end{exercise}
+\begin{solution}
+\(a\) 的最小多项式为 \(x^4-2\)。\(E\subseteq\mathbb R\)，所以像只能是两个实根 \(a,-a\)，且变号确实保持定义关系并给出自同构。因此全群为二元群，其非平凡元 \(s\) 把 \(a\) 变号。\(\mathbb Q(a^2)=\mathbb Q(\sqrt2)\) 被固定，对它的扩张次数为二；\cref{b1:thm:artin-fixed-field}给出不动域也满足此次数，故二者相等。\(E/\mathbb Q\) 缺少非实共轭根，并非 Galois 扩张，自同构数二小于扩张次数四。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-rational-inversion}
+设 \(k\) 为任意域，\(t\) 超越，\(s\) 为 \(k(t)\) 的自同构 \(s(t)=t^{-1}\)。求 \(\langle s\rangle\) 的不动域。
+\end{exercise}
+\begin{solution}
+\(s\ne1\)，因为 \(t=t^{-1}\) 将使超越元满足 \(t^2=1\)。故群阶为二。令 \(v=t+t^{-1}\)，它被 \(s\) 固定，且 \(t\) 满足 \(x^2-vx+1=0\)，所以 \([k(t):k(v)]\leq2\)。若次数为一，\(s\) 固定 \(v\) 与 \(k\) 就固定 \(t\)，矛盾，故次数为二。与\cref{b1:thm:artin-fixed-field}的次数比较，得到不动域恰为 \(k(t+t^{-1})\)。论证在特征二也成立。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-faithful-action}
+让抽象循环群 \(C_4\) 的生成元通过复共轭作用在 \(\mathbb C\) 上。求不动域，并解释为何不能据此说 \([\mathbb C:\mathbb R]=4\)。
+\end{exercise}
+\begin{solution}
+共同不动元为 \(\mathbb R\)。但作用同态 \(C_4\rightarrow\operatorname{Aut}(\mathbb C)\) 的核含有生成元的平方，其像只有恒等和共轭两个元素。不动域定理要求输入是实际自同构组成的群，或等价地要求作用忠实。这里应使用像群 \(C_2\)，得到次数二。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-biquadratic-five}
+列出 \(L=\mathbb Q(\sqrt2,\sqrt5)\) 的全部中间域，并写明各自对应的子群。
+\end{exercise}
+\begin{solution}
+若 \(\sqrt5=a+b\sqrt2\)，平方比较给出 \(ab=0\) 及 \(a^2+2b^2=5\)，无有理解，因为五与 \(5/2\) 均非有理数平方。故总次数为四，群由分别变号的 \(s,t\) 生成，满足 \(s^2=t^2=1,st=ts\)。子群为平凡群、全群和 \(\langle s\rangle,\langle t\rangle,\langle st\rangle\)。若 \(s\) 改变 \(\sqrt2\) 的符号、\(t\) 改变 \(\sqrt5\) 的符号，则对应域依次为 \(L,\mathbb Q,\mathbb Q(\sqrt5),\mathbb Q(\sqrt2),\mathbb Q(\sqrt{10})\)。这些子群都是正规子群，所以各中间域对 \(\mathbb Q\) 均为 Galois 扩张。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-cyclic-twelve}
+设有限 Galois 扩张 \(L/K\) 的群为 \(C_{12}=\langle\sigma\rangle\)。求所有可能的中间域次数，判断每个次数的中间域是否唯一，并求四次中间域对 \(K\) 的 Galois 群。
+\end{exercise}
+\begin{solution}
+循环群对每个正因子有唯一相应阶的子群，所以中间域次数为 \(1,2,3,4,6,12\)，每个次数恰有一个。四次中间域对应指数四的子群 \(\langle\sigma^4\rangle\)，该群阶为三且正规。由\cref{b1:thm:galois-quotient}，四次域的 Galois 群为 \(C_{12}/\langle\sigma^4\rangle\cong C_4\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-cubic-intermediates}
+令 \(L\) 为 \(x^3-2\) 在 \(\mathbb Q\) 上的分裂域。证明 \(L\) 恰有一个二次中间域和三个三次中间域，并说明为什么没有四次中间域。
+\end{exercise}
+\begin{solution}
+正文已得群为 \(S_3\)。指数二的子群唯一，为 \(A_3\)，对应唯一二次域 \(\mathbb Q(\zeta)\)。指数三的子群有三个，分别由三个换位生成，对应三个根域 \(\mathbb Q(a),\mathbb Q(\zeta a),\mathbb Q(\zeta^2a)\)。指数四不能出现，因为四不整除群阶六；等价地，塔式公式不允许四整除扩张次数六。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-dihedral-quadratics}
+在 \(L=\mathbb Q(a,i)\)、\(a^4=2\) 中，设 \(r(a)=ia,r(i)=i\)，\(s\) 为复共轭。证明三个二次中间域为 \(\mathbb Q(i),\mathbb Q(\sqrt2),\mathbb Q(\sqrt{-2})\)，并写出对应子群。
+\end{exercise}
+\begin{solution}
+二次域对应 \(D_8\) 中的指数二子群，即四阶子群。它们恰为 \(\langle r\rangle\)、\(\langle r^2,s\rangle\)、\(\langle r^2,rs\rangle\)：若四阶子群含奇次幂的 \(r\)，就包含 \(\langle r\rangle\)；否则其旋转部分为 \(\{1,r^2\}\)，两个反射的指数奇偶相同，只给出后两种。三群分别固定 \(i,a^2,ia^2\)，这些元素生成的域均为二次域；次数相同使包含成为相等，因此得所列三个域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-cyclotomic-five}
+令 \(\zeta\) 为本原五次单位根。求 \(\mathbb Q(\zeta)\) 的唯一二次中间域，并写出其一个生成元满足的二次方程。
+\end{exercise}
+\begin{solution}
+正文已证明群为 \(C_4\)，故二次中间域唯一，对应由复共轭生成的二元子群。令 \(u=\zeta+\zeta^{-1}\)，则其为实数且被共轭固定。由 \(1+\zeta+\zeta^2+\zeta^3+\zeta^4=0\)，有 \(\zeta^2+\zeta^{-2}=-1-u\)，故 \(u^2=1-u\)。多项式 \(t^2+t-1\) 无有理根，因而 \(\mathbb Q(u)\) 为二次域，且 \((2u+1)^2=5\)。所求域为 \(\mathbb Q(\sqrt5)\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-reducible-permutation}
+求 \((x^2-2)(x^2-3)\) 对 \(\mathbb Q\) 的 Galois 群及其在四个根上的轨道。将它与不可约四次多项式 \(x^4-10x^2+1\) 的情形比较。
+\end{exercise}
+\begin{solution}
+二者分裂域都是 \(\mathbb Q(\sqrt2,\sqrt3)\)，抽象 Galois 群均为 \(C_2\times C_2\)。前一个多项式的根分成两个轨道 \(\{\sqrt2,-\sqrt2\}\)、\(\{\sqrt3,-\sqrt3\}\)，因为有理系数自同构不能把平方为二的元素送到平方为三的元素。后一个多项式的四根为 \(\pm\sqrt2\pm\sqrt3\)，独立变号使其成为一个轨道。这说明相同的抽象群可以在不同根集上给出不同的置换作用。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-cyclic-cubic}
+证明 \(f=x^3-3x-1\) 在 \(\mathbb Q\) 上的 Galois 群为 \(C_3\)。计算判别式时可用全部根 \(a_i\) 上的导数乘积。
+\end{exercise}
+\begin{solution}
+有理根只能为 \(\pm1\)，二者都不是根，故三次式不可约。设三个根为 \(a_1,a_2,a_3\)。由 \(f'(a_i)=\prod_{j\ne i}(a_i-a_j)\)，对三个指标相乘得到 \(\prod_i f'(a_i)=-\operatorname{disc}(f)\)。又 \(f'(x)=3(x-1)(x+1)\)，所以
+\[
+\prod_i f'(a_i)=27\Bigl(\prod_i(a_i-1)\Bigr)\Bigl(\prod_i(a_i+1)\Bigr)
+=27\Bigl(-f(1)\Bigr)\Bigl(-f(-1)\Bigr)=-81.
+\]
+故判别式为 \(81\)，是非零平方。\eqref{b1:eq:discriminant-alternating-group}说明群包含于 \(A_3\)，而不可约性使作用传递，群阶被三整除。因此它就是 \(A_3\cong C_3\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-product-groups}
+设 \(L/K,E/K\) 都是有限 Galois 扩张，且 \(L\cap E=K\)。证明 \(LE/K\) 的 Galois 群通过限制同构于 \(\operatorname{Gal}(L/K)\times\operatorname{Gal}(E/K)\)。
+\end{exercise}
+\begin{solution}
+两域都是可分多项式的分裂域，\(LE\) 是两个多项式的乘积的分裂域，故对 \(K\) 为 Galois 扩张。两个限制给出到直积的同态，固定两域的自同构固定其合成域，所以该同态单射。由\cref{b1:prop:galois-compositum}以及交域假设，\([LE:K]=[L:K][E:K]\)。这恰为目标直积群的阶，也等于来源群的阶，所以单射为满射。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-two-fourth-root-fields}
+设 \(a=\sqrt[4]2>0\)，比较 \(E_1=\mathbb Q(a)\) 与 \(E_2=\mathbb Q(ia)\)。证明二者在 \(\mathbb Q\) 上同构而不相等，并求它们的交域、合成域。
+\end{exercise}
+\begin{solution}
+\(a,ia\) 都以不可约多项式 \(x^4-2\) 为最小多项式，所以代入映射给出两个域与 \(\mathbb Q[x]/(x^4-2)\) 的同构。但前者为实域，后者含非实元，故不相等。两者均含 \(a^2=\sqrt2\)，因为 \((ia)^2=-a^2\)。交域对 \(\mathbb Q\) 的次数整除四且至少为二；若为四，则两域相等，矛盾。因此交域恰为 \(\mathbb Q(\sqrt2)\)。合成域含 \((ia)/a=i\)，故为 \(\mathbb Q(a,i)\)，次数为八。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-normalizer-automorphisms}
+设 \(L/K\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)、\(E=L^H\)。证明 \(\operatorname{Aut}_K(E)\cong N_G(H)/H\)，其中 \(N_G(H)\) 为正规化子。
+\end{exercise}
+\begin{solution}
+正文已证明 \(\sigma(E)=L^{\sigma H\sigma^{-1}}\)。由 Galois 对应的单射性，\(\sigma\) 保持 \(E\) 当且仅当 \(\sigma H\sigma^{-1}=H\)，即 \(\sigma\in N_G(H)\)。因此限制给出 \(N_G(H)\rightarrow\operatorname{Aut}_K(E)\)，核为固定 \(E\) 的 \(H\)。目标中的每个自同构由\cref{b1:thm:embedding-extension}延拓到 \(L\)，且扩张正规，延拓在 \(G\) 中；它保持 \(E\)，所以属于正规化子。这证明限制满射，商群同构随之成立。该公式不要求 \(E/K\) 正规。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:19-translation-fixed-field}
+设 \(k\) 的特征为 \(p\)，\(t\) 超越。让 \(\mathbb F_p\) 的加法群通过 \(\sigma_c(t)=t+c\) 作用在 \(k(t)\) 上。求不动域。
+\end{exercise}
+\begin{solution}
+这 \(p\) 个自同构互异，且 \(\sigma_c\sigma_d=\sigma_{c+d}\)。元素 \(v=t^p-t\) 被全部自同构固定，因为 \(c^p=c\)。又 \(t\) 满足 \(x^p-x-v=0\)，所以 \([k(t):k(v)]\leq p\)。由\cref{b1:thm:artin-fixed-field}，对真正不动域的扩张次数恰为 \(p\)；由于 \(k(v)\) 包含于该不动域，塔式公式迫使两者相等。故不动域为 \(k(t^p-t)\)。
+\end{solution}

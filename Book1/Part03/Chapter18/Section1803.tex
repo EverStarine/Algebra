@@ -5,8 +5,6 @@
 \section{传递性与判别式}
 \label{b1:sec:1803}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 迹、范数的塔式公式
@@ -14,17 +12,68 @@
 % * 基的判别式及换基公式
 %
 
+在一座域扩张塔中，先把乘法压缩到中间域，再压缩到基域，所得迹与范数应当与一步计算相同。迹还可以比较两个元素：对乘积取迹便得到一个双线性配对。这个配对是否退化，恰好检测扩张的可分性。
+
 \subsection{迹、范数的塔式公式}
 \label{b1:subsec:1803:01}
 
-待撰写。
+\begin{theorem}\label{b1:thm:trace-norm-tower}
+若 \(K\subseteq E\subseteq L\) 为有限扩张塔，则对 \(a\in L\) 有
+\begin{align*}
+\operatorname{Tr}_{L/K}(a)&=\operatorname{Tr}_{E/K}\Bigl(\operatorname{Tr}_{L/E}(a)\Bigr),\\
+\operatorname{N}_{L/K}(a)&=\operatorname{N}_{E/K}\Bigl(\operatorname{N}_{L/E}(a)\Bigr).
+\end{align*}
+\end{theorem}
+\begin{proof}
+取 \(E/K\) 的基 \(u_1,\ldots,u_m\) 与 \(L/E\) 的基 \(v_1,\ldots,v_r\)，由\cref{b1:thm:tower-law}的基构造，全部 \(u_i v_j\) 为 \(L/K\) 的基。设乘以 \(a\) 的 \(E\) 矩阵为 \(A=(a_{ij})\)。把每个系数 \(a_{ij}\) 换成它作用在 \(E\) 上的 \(K\) 乘法矩阵，便得到乘以 \(a\) 的 \(K\) 矩阵。因此总迹为
+\[
+\sum_j\operatorname{Tr}_{E/K}(a_{jj})
+=\operatorname{Tr}_{E/K}\Bigl(\sum_j a_{jj}\Bigr),
+\]
+即迹的塔式公式。
+
+对范数，需要说明这个分块矩阵的行列式为 \(\operatorname{N}_{E/K}(\det_E A)\)。若 \(A\) 奇异，非零的 \(E\) 核向量也是底层 \(K\) 线性映射的核向量，两边皆为零。若 \(A\) 可逆，可用三类初等行变换化为单位矩阵。加上另一行的 \(c\) 倍，在 \(K\) 分块矩阵中是单位对角的块初等变换，两种行列式因子均为一。把一行乘以 \(c\ne0\)，块行列式乘以 \(\operatorname{N}_{E/K}(c)\)，与 \(\det_E A\) 乘以 \(c\) 后再取范数相同。交换两行，在 \(K\) 上交换两个各有 \(m\) 个坐标的块，符号为 \((-1)^{m^2}=(-1)^m=\operatorname{N}_{E/K}(-1)\)。于是两种行列式在每步受到相同的因子改变，单位矩阵处又均为一，故所需等式成立。取 \(A=m_a\) 的 \(E\) 矩阵便得到范数公式。这个论证不要求可分性。
+\end{proof}
 
 \subsection{迹配对及可分性的判别}
 \label{b1:subsec:1803:02}
 
-待撰写。
+\begin{definition}\label{b1:def:trace-pairing}
+有限扩张 \(L/K\) 的\term[ji-peidui]{迹配对}[trace pairing]是双线性映射
+\[
+L\times L\longrightarrow K,\qquad (x,y)\longmapsto\operatorname{Tr}_{L/K}(xy).
+\]
+若对每个非零 \(x\) 都存在 \(y\) 使配对值非零，称此配对非退化。
+\end{definition}
+\begin{theorem}\label{b1:thm:trace-pairing-separable}
+有限扩张 \(L/K\) 可分，当且仅当其迹配对非退化。
+\end{theorem}
+\begin{proof}
+若扩张可分，由\cref{b1:thm:trace-norm-embeddings}，迹函数为全部不同 \(K\) 嵌入的和。\cref{b1:cor:embedding-independence}说明这个和不是零函数，因为其各系数均为非零的一。于是存在 \(z\in L\) 使 \(\operatorname{Tr}_{L/K}(z)\ne0\)。对任意 \(x\ne0\)，取 \(y=x^{-1}z\)，便有 \(\operatorname{Tr}_{L/K}(xy)\ne0\)。
+
+若扩张不可分，\cref{b1:prop:separable-inseparable-decomposition}说明其特征为某个素数 \(p\)，不可分次数 \(e\) 是大于一的 \(p\) 的幂。由\cref{b1:thm:trace-norm-embeddings}，迹函数是某个和的 \(e\) 倍，因而恒为零。所以整个迹配对为零，必退化。
+\end{proof}
+可分扩张的次数即使被特征整除，迹仍不是零映射；此时只是 \(\operatorname{Tr}_{L/K}(1)=[L:K]=0\)。把“单位元的迹为零”与“所有元素的迹都为零”区别开来十分必要。
 
 \subsection{基的判别式及换基公式}
 \label{b1:subsec:1803:03}
 
-待撰写。
+设 \(b=(b_1,\ldots,b_n)\) 是 \(L/K\) 的一组基。它的\term[ji-panbieshi]{基的判别式}[discriminant of a basis]定义为
+\[
+\operatorname{disc}_{L/K}(b)
+=\det\biggl(\Bigl(\operatorname{Tr}_{L/K}(b_i b_j)\Bigr)_{i,j}\biggr).
+\]
+\symidx{\(\operatorname{disc}_{L/K}(b)\)：基 \(b\) 的判别式}
+若另一组基满足 \(c_j=\sum_i b_i p_{ij}\)，记换基矩阵为 \(P\)。双线性给出迹矩阵关系 \(T_c=P^{\mathsf T}T_bP\)，所以
+\begin{equation}\label{b1:eq:discriminant-change-basis}
+\operatorname{disc}_{L/K}(c)=(\det P)^2\operatorname{disc}_{L/K}(b).
+\end{equation}
+由\cref{b1:thm:trace-pairing-separable}，扩张可分当且仅当任意一组基的判别式非零。
+
+\ProseParagraphBreak
+在可分情形，令 \(M=\Bigl(\sigma_i(b_j)\Bigr)_{i,j}\) 为嵌入求值矩阵。共轭公式给出 \(T_b=M^{\mathsf T}M\)，故判别式为 \((\det M)^2\)。若 \(L=K(a)\)，基取 \(1,a,\ldots,a^{n-1}\)，各共轭根为 \(a_1,\ldots,a_n\)，Vandermonde 行列式得到
+\begin{equation}\label{b1:eq:power-basis-discriminant}
+\operatorname{disc}_{L/K}(1,a,\ldots,a^{n-1})
+=\prod_{i<j}(a_j-a_i)^2.
+\end{equation}
+右式也称首一最小多项式的\term[duoxiangshi-panbieshi]{判别式}[discriminant of a polynomial]；对任意首一多项式，按全部根及重数作同样定义。它在根重合时为零。对 \(\mathbb Q(\sqrt d)\) 的基 \(1,\sqrt d\)，迹矩阵为 \(\operatorname{diag}(2,2d)\)，判别式为 \(4d\)。基的判别式依赖所选基，不能直接把任意一组有理基的判别式称为数域整数环的判别式。

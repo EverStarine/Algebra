@@ -5,8 +5,6 @@
 \section{整除与因子}
 \label{b1:sec:1101}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 相伴、不可约元与素元
@@ -14,17 +12,77 @@
 % * 元素分解与理想语言的区别
 %
 
+整数的素因数分解同时包含两个断言：每个非零非单位都能分解，所得不可约因子又在适当意义下唯一。在一般整环中，这两个断言必须分别考察。本节先澄清整除、不可约与素性之间的关系；本章的环均为交换整环，除非另有说明。
+
 \subsection{相伴、不可约元与素元}
 \label{b1:subsec:1101:01}
 
-待撰写。
+\begin{definition}\label{b1:def:divisibility-associates}
+设 \(R\) 是整环，\(a,b\in R\)。若存在 \(c\in R\) 使 \(b=ac\)，称 \(a\) \term[zhengchu]{整除}[divisibility] \(b\)，记为 \(a\mid b\)。若存在单位 \(u\in R^\times\) 使 \(a=ub\)，称 \(a,b\) \term[xiangban]{相伴}[associate]。
+\end{definition}
+\symidx{\(a\mid b\)：\(a\) 整除 \(b\)}
+
+每个元素都整除 \(0\)，而 \(0\) 只整除 \(0\)。单位整除所有元素。相伴是等价关系：单位 \(1\)、\(u^{-1}\) 和单位的乘积分别给出自反性、对称性和传递性。在 \(\mathbb Z\) 中，相伴就是相差一个符号；在域中，任意两个非零元素都相伴。
+
+\begin{proposition}\label{b1:prop:associate-ideals}
+整环 \(R\) 中，\(a\mid b\) 当且仅当 \((b)\subseteq(a)\)。此外，以下三条件等价：\(a,b\) 相伴；\(a\mid b\) 且 \(b\mid a\)；\((a)=(b)\)。
+\end{proposition}
+\begin{proof}
+若 \(b=ac\)，则 \(br=a(cr)\)，故 \((b)\subseteq(a)\)。反之，该包含使 \(b\in(a)\)，于是 \(b=ac\)。相伴当然给出相互整除。若 \(a=bc\)、\(b=ad\) 且 \(a\ne0\)，则 \(a=acd\)，整环中的消去律给出 \(cd=1\)，故 \(c\) 为单位。若 \(a=0\)，相互整除迫使 \(b=0\)，两者也相伴。主理想相等与相互整除的等价性来自第一句话。
+\end{proof}
+
+\begin{definition}\label{b1:def:irreducible-prime}
+设 \(p\) 是整环 \(R\) 中的非零非单位。
+\begin{enumerate}
+\item 若每当 \(p=ab\) 时，\(a,b\) 中至少一个为单位，则称 \(p\) 为\term[bukeyueyuan]{不可约元}[irreducible element]。
+\item 若对任意 \(a,b\in R\)，\(p\mid ab\) 都蕴含 \(p\mid a\) 或 \(p\mid b\)，则称 \(p\) 为\term[suyuan]{素元}[prime element]。
+\end{enumerate}
+\end{definition}
+
+不可约性限制 \(p\) 自身的分解，素性控制 \(p\) 对任意乘积的整除。两者并非同一个定义。单位被排除，是因为在分解中插入或删去单位不应改变因子的实质。
+
+\begin{proposition}\label{b1:prop:prime-implies-irreducible}
+整环中的素元都是不可约元。非零非单位 \(p\) 是素元，当且仅当主理想 \((p)\) 为素理想。
+\end{proposition}
+\begin{proof}
+设 \(p=ab\)。素性给出 \(p\mid a\) 或 \(p\mid b\)。若 \(a=pc\)，则 \(p=pcb\)，由 \(p\ne0\) 消去得到 \(cb=1\)，所以 \(b\) 为单位；另一种情形交换 \(a,b\) 即得。又因 \(p\) 非单位，\((p)\ne R\)；条件 \(ab\in(p)\) 蕴含 \(a\in(p)\) 或 \(b\in(p)\)，逐项翻译后正是素元的定义。
+\end{proof}
+
+后面将证明，在主理想整环和唯一分解整环中，不可约元也都是素元；同时会看到 \(\mathbb Z[\sqrt{-5}]\) 中的不可约元 \(2\) 并不是素元。此处不能把整数中的直觉当作一般整环的结论。
 
 \subsection{最大公因子与 Bézout 关系}
 \label{b1:subsec:1101:02}
 
-待撰写。
+\begin{definition}\label{b1:def:gcd}
+设 \(a,b\) 为整环 \(R\) 的两个元素。元素 \(d\in R\) 称为它们的\term[zuidagongyinzi]{最大公因子}[greatest common divisor]，若 \(d\mid a\)、\(d\mid b\)，并且每个同时整除 \(a,b\) 的元素 \(c\) 都整除 \(d\)。若 \(1\) 是它们的最大公因子，称 \(a,b\) \term[husu-yuansu]{互素}[relatively prime]。
+\end{definition}
+
+这里的“最大”依整除关系而言，与实数大小无关。最大公因子若存在，由\cref{b1:prop:associate-ideals}可知它在相伴意义下唯一；未经额外约定，\(\gcd(a,b)\) 表示任选的一个最大公因子。在整数中通常取非负者，在域上的多项式环中通常取首一者；约定 \(\gcd(0,0)=0\)。有限多个元素的最大公因子同样按“公共因子都整除它”定义。
+\symidx{\(\gcd(a,b)\)：最大公因子（相伴意义下）}
+
+\begin{proposition}\label{b1:prop:bezout-gcd}
+若 \(d\mid a\)、\(d\mid b\)，且存在 \(u,v\in R\) 使
+\begin{equation}\label{b1:eq:bezout-ring}
+d=ua+vb,
+\end{equation}
+则 \(d\) 为 \(a,b\) 的最大公因子。特别地，\((a,b)=R\) 蕴含 \(a,b\) 互素。
+\end{proposition}
+\begin{proof}
+任一公因子 \(c\) 整除 \(a,b\)，于是也整除线性组合 \(ua+vb=d\)。这与已给出的 \(d\mid a,b\) 正好构成最大公因子的两项要求。若 \((a,b)=R\)，则 \(1=ua+vb\)；又 \(1\) 整除一切元素，所以取 \(d=1\) 即得。
+\end{proof}
+
+形如\eqref{b1:eq:bezout-ring}、其中 \(d\) 是最大公因子的等式称为\term[bezout-guanxi]{Bézout 关系}[Bézout identity]。它比“\(d\) 是最大公因子”多提供了一个线性组合表达式。在 \(\mathbb Z\) 中，\(\gcd(30,18)=6\)，而 \(6=2\cdot18-30\) 给出相应关系。一般整环中，即使最大公因子存在，也未必能如此表示；下面的例子正说明这一点。
 
 \subsection{元素分解与理想}
 \label{b1:subsec:1101:03}
 
-待撰写。
+整除关系在主理想之间反向排列，因此“共同整除”与“共同生成”不可混淆。对两个非零元素 \(a,b\)，若 \((a,b)=(d)\)，则 \(d\) 整除 \(a,b\)，且 \(d\) 属于它们生成的理想，\cref{b1:prop:bezout-gcd}遂给出最大公因子和 Bézout 关系。反过来，知道最大公因子并不保证这个二生成理想是主理想。
+
+\begin{proposition}\label{b1:prop:integer-poly-nonprincipal}
+在 \(\mathbb Z[x]\) 中，\(2,x\) 的最大公因子为 \(1\)，但 \((2,x)\) 是非主理想，特别地不等于全环。
+\end{proposition}
+\begin{proof}
+若非零多项式 \(c\) 同时整除 \(2,x\)，由\cref{b1:prop:polynomial-degree}的次数相加公式，\(c\mid2\) 迫使 \(c\) 是常数，且为 \(\pm1\) 或 \(\pm2\)。后两者不整除 \(x\)，因为 \(x\) 的一次项系数为 \(1\)。故 \(\gcd(2,x)=1\)。然而若有 \(1=2f(x)+xg(x)\)，比较常数项就得到 \(1=2f(0)\)，不可能。因此 \((2,x)\ne\mathbb Z[x]\)。若 \((2,x)=(h)\)，则 \(h\) 是 \(2,x\) 的公因子，因而为单位；这又会使该理想等于全环，矛盾。
+\end{proof}
+
+互素并不蕴含生成单位理想；一个理想仅用两个元素生成，也可能无法缩减成一个生成元。接下来要研究的主理想整环，正是从整体上排除这种现象的整环。

@@ -5,7 +5,7 @@
 \section{理想与商环}
 \label{b1:sec:1002}
 
-% TODO: 按以下纲要要点撰写本节。
+在加法群上按一个子群取商，只能保证加法良定义。若还想让乘法通过商映射保留下来，这个子群必须能够吸收环元素的左右乘法，理想由此出现。商环中的零因子与可逆性又将分别引出素理想和极大理想。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -16,15 +16,87 @@
 
 \subsection{左理想、右理想与双边理想}
 \label{b1:subsec:1002:01}
+\begin{definition}\label{b1:def:ring-ideal}
+设 \(R\) 为环，\(I\subseteq R\) 是包含零元且对减法封闭的子集。若对每个 \(r\in R,a\in I\) 都有 \(ra\in I\)，称 \(I\) 为\term[zuo-lixiang]{左理想}[left ideal]；若总有 \(ar\in I\)，称为\term[you-lixiang]{右理想}[right ideal]；同时满足两者时称为\term[shuangbian-lixiang]{双边理想}[two-sided ideal]。未加限定的“理想”均指双边理想。若 \(I\ne R\)，称为真理想。
+\end{definition}
+理想不要求含环的单位；事实上理想一旦含有单位元或任一单位 \(u\)，就包含 \(u^{-1}u=1\)，继而包含每个 \(r=r1\)，所以等于 \(R\)。因此，一个非零环的真理想不是本书约定下的含同一单位的子环。
 
-待撰写。
+\ProseParagraphBreak
+在交换环中左右条件等价。\(n\mathbb Z\) 是 \(\mathbb Z\) 的理想；反过来，整数环的每个理想首先是加法子群，由\cref{b1:lem:integer-subgroups}都为这种形式。非交换情形确须区分左右：\(M_2(k)\) 中第二列为零的矩阵组成左理想，因左乘只对列作线性变换；它不是右理想，因为 \(E_{11}\) 在其中而 \(E_{11}E_{12}=E_{12}\) 不在其中。第二行为零的矩阵则给出右理想的例子。
+
+\ProseParagraphBreak
+若 \(f:R\rightarrow S\) 为环同态，其加法核 \(\ker f=\{a\in R:f(a)=0\}\) 为双边理想：对 \(a\in\ker f\)，有 \(f(ra)=f(r)f(a)=0=f(ar)\)。这里保持零元的条件由加法保证，吸收乘法的条件来自乘法保持性。
 
 \subsection{商环及同构定理}
 \label{b1:subsec:1002:02}
+\begin{proposition}\label{b1:prop:quotient-ring}
+若 \(I\) 为环 \(R\) 的双边理想，则加法陪集集合 \(R/I\) 在
+\[
+(a+I)+(b+I)=(a+b)+I,\qquad
+(a+I)(b+I)=ab+I
+\]
+下构成\term[shanghuan]{商环}[quotient ring]，单位为 \(1+I\)。自然映射 \(q:R\rightarrow R/I\) 是满环同态，核为 \(I\)。
+\end{proposition}
+\begin{proof}
+加法良定义来自加法群的商构造。若 \(a'=a+i,b'=b+j\)，其中 \(i,j\in I\)，则
+\(a'b'-ab=aj+ib+ij\in I\)，故乘法与代表元无关；这里左右吸收性分别用于 \(aj\) 与 \(ib\)。结合律和分配律由代表元上的对应等式下降得到，\(1+I\) 在两侧乘任一陪集都保持它。自然映射按定义保持两种运算与单位，陪集都有代表元，且 \(a+I=I\) 恰好等价于 \(a\in I\)。
+\end{proof}
+\symidx{\(R/I\)：环关于双边理想的商环}
 
-待撰写。
+\begin{theorem}[环的第一同构定理]\label{b1:thm:ring-first-iso}
+若 \(f:R\rightarrow S\) 是环同态，则
+\[
+\overline f:R/\ker f\longrightarrow\operatorname{im}f,
+\qquad a+\ker f\longmapsto f(a)
+\]
+为环同构。更一般地，当 \(I\subseteq\ker f\) 时，存在唯一环同态 \(g:R/I\rightarrow S\) 满足 \(gq=f\)。
+\end{theorem}
+\begin{proof}
+若 \(a-a'\in I\subseteq\ker f\)，则 \(f(a)=f(a')\)，所以 \(g(a+I)=f(a)\) 良定义；代入商上的两种运算便知它是保单位同态。由于 \(q\) 满射，该公式也是分解存在时唯一可能的公式。取 \(I=\ker f\)，实际像为 \(\operatorname{im}f\)，故诱导映射满射；其核只有零陪集，因此单射。
+\end{proof}
+这里的泛性质告诉我们：要从商环定义映射，先在原环定义，并检查需要抹去的理想确实映成零。商环不只是一个同构类型，还连同指定的商映射一起发挥作用。
+
+\begin{proposition}[理想对应与商的同构]\label{b1:prop:ring-ideal-correspondence}
+自然映射 \(q:R\rightarrow R/I\) 给出包含 \(I\) 的理想 \(J\subseteq R\) 与 \(R/I\) 的理想之间的保序双射，双向公式为 \(J\mapsto J/I\) 与 \(L\mapsto q^{-1}(L)\)。若 \(I\subseteq J\)，则
+\[
+(R/I)/(J/I)\cong R/J.
+\]
+若 \(A\subseteq R\) 是含同一单位的子环，\(I\) 是 \(R\) 的理想，则
+\[
+A/(A\cap I)\cong(A+I)/I.
+\]
+\end{proposition}
+\begin{proof}
+理想的原像对减法及左右乘法封闭，且 \(q^{-1}(L)\) 包含 \(I\)。含 \(I\) 的理想 \(J\) 的像对 \(R/I\) 中元素的左右乘法封闭，因为这些元素都可提升到 \(R\)。有 \(q^{-1}\Bigl(q(J)\Bigr)=J\)：若 \(q(a)=q(j)\)，则 \(a-j\in I\subseteq J\)。又 \(q\Bigl(q^{-1}(L)\Bigr)=L\)，因为 \(q\) 满射。两种操作均保持包含关系。
+
+映射 \(R/I\rightarrow R/J\)、\(a+I\mapsto a+J\) 良定义、满射，核为 \(J/I\)，故\cref{b1:thm:ring-first-iso}给出第一同构。对第二个式子，\(A+I\) 对减法和乘法封闭并含 \(1\)，\(I\) 是其理想。映射 \(A\rightarrow(A+I)/I\)、\(a\mapsto a+I\) 满射，核为 \(A\cap I\)，再用同一定理即可。
+\end{proof}
+环同态的像未必是目标环的理想，例如 \(\mathbb Z\hookrightarrow\mathbb Q\) 的像不是 \(\mathbb Q\) 的理想。上述理想对应使用商映射的满射性，不能省去这个条件。
 
 \subsection{素理想与极大理想}
 \label{b1:subsec:1002:03}
+本小节只讨论交换环。非交换环的素性与极大理想需要区分不同版本，不把下面的乘积判别直接当作其一般定义。
 
-待撰写。
+\begin{definition}\label{b1:def:prime-maximal-ideal}
+交换环 \(R\) 的真理想 \(\mathfrak p\) 若满足对任意 \(a,b\in R\)，\(ab\in\mathfrak p\) 蕴含 \(a\in\mathfrak p\) 或 \(b\in\mathfrak p\)，称为\term[su-lixiang]{素理想}[prime ideal]。真理想 \(\mathfrak m\) 若在 \(\mathfrak m\subseteq J\subseteq R\) 的理想中只有 \(J=\mathfrak m\) 或 \(J=R\)，称为\term[jida-lixiang]{极大理想}[maximal ideal]。
+\end{definition}
+“真”不能漏掉；否则整个环会满足乘积条件，却不能对应非零整环。\((0)\) 是整环中的素理想，但整数环中它不极大，因为 \((0)\subsetneq2\mathbb Z\subsetneq\mathbb Z\)。
+
+\begin{proposition}\label{b1:prop:prime-max-quotient}
+交换环 \(R\) 的理想 \(I\) 为素理想，当且仅当 \(R/I\) 是整环；为极大理想，当且仅当 \(R/I\) 是域。因此每个极大理想都是素理想。
+\end{proposition}
+\begin{proof}
+\(I\ne R\) 恰好保证商环非零；在商环中，\((a+I)(b+I)=0\) 恰好等价于 \(ab\in I\)，故第一项直接由定义得到。
+
+若 \(I\) 极大且 \(a\notin I\)，集合 \(I+Ra\) 是严格包含 \(I\) 的理想，因而等于 \(R\)。写 \(1=i+ra\)，便有 \((r+I)(a+I)=1+I\)，所以商中每个非零元素可逆。反过来，若 \(R/I\) 为域，而理想 \(J\) 严格包含 \(I\)，取 \(a\in J\setminus I\)；商中 \(a+I\) 的逆有代表 \(r\)，于是 \(1-ra\in I\subseteq J\)，给出 \(1\in J\)，故 \(J=R\)。最后，域无非零零因子，所以极大理想为素理想。
+\end{proof}
+整数环的理想为 \(n\mathbb Z\)。当 \(p\) 是素数，任一 \(a\notin p\mathbb Z\) 满足 \(\gcd(a,p)=1\)，整数 Bézout 等式给出 \(ua+vp=1\)，故模 \(p\) 的非零类均有逆。所得域记为 \(\mathbb F_p=\mathbb Z/p\mathbb Z\)。正合数 \(n=ab\)、\(1<a,b<n\) 则产生两个非零类之积为零。因此 \(\mathbb Z\) 的素理想恰为 \((0)\) 及 \(p\mathbb Z\)，极大理想恰为后者。
+\symidx{\(\mathbb F_p\)：含 \(p\) 个元素的素数域}
+
+\begin{proposition}\label{b1:prop:maximal-ideal-exists}
+非零交换环中的每个真理想都包含在某个极大理想中。
+\end{proposition}
+\begin{proof}
+固定真理想 \(I\)，考虑包含 \(I\) 的真理想按包含关系构成的偏序集。它非空。非空链的并对减法封闭，因为任意两个元素都落在链上某个共同的理想中；它也吸收乘法。这个并不含 \(1\)，否则链中的某个真理想已含 \(1\)，矛盾。因而链的并仍是此偏序集的上界；空链可用 \(I\) 作上界。应用 Zorn 引理，即“每条链有上界的非空偏序集有极大元”，得到 \(\mathfrak m\)。任何严格包含它的真理想仍包含 \(I\)，违背极大性，故 \(\mathfrak m\) 是极大理想。
+\end{proof}
+这里明确使用选择公理的 Zorn 形式，不给出寻找极大理想的算法。在具体环中仍应尽可能写出商映射，例如对交换环 \(R\)，常数项映射 \(R[x]\rightarrow R\) 满射，核为 \(xR[x]\)。\cref{b1:thm:ring-first-iso}给出 \(R[x]/xR[x]\cong R\)，所以当 \(R\) 为整环或域时，这个理想分别为素理想或极大理想。

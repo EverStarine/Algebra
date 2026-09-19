@@ -5,8 +5,6 @@
 \section{乘法群与 Frobenius}
 \label{b1:sec:1702}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 有限域乘法群的循环性
@@ -15,22 +13,67 @@
 % * 乘法群循环性的主要引理已在第16.4节建立；本节用它计算有限域的生成元并组织 Frobenius 及子域的应用。
 %
 
+有限域的加法来自特征为 \(p\) 的向量空间，乘法却有更强的结构：全部非零元素可以由一个元素的幂列出。与此相配合，Frobenius 的迭代既描述共轭，也能直接辨认子域。本节的子域论证只用根的个数和塔式公式，不预先调用 Galois 对应。
+
 \subsection{有限域乘法群的循环性}
 \label{b1:subsec:1702:01}
 
-待撰写。
+\begin{corollary}\label{b1:cor:finite-field-cyclic}
+有限域 \(\mathbb F_q\) 的乘法群是 \(q-1\) 阶循环群。
+\end{corollary}
+\begin{proof}
+\cref{b1:lem:finite-multiplicative-cyclic}已经证明：域的乘法群的任意有限子群都是循环群。取该子群为 \(\mathbb F_q^\times\)，便得结论。
+\end{proof}
+乘法群的生成元称为有限域的\term[benyuan-yuan-youxianyu]{本原元}[primitive element of a finite field]。这里的意思强于“生成域扩张的元素”：乘法本原元 \(g\) 的幂给出全部非零元素，所以当然有 \(\mathbb F_p(g)=\mathbb F_q\)；反过来，生成域扩张的元素未必生成乘法群。例如在 \(\mathbb F_9=\mathbb F_3(u)\)、\(u^2=-1\) 中，\(u\) 生成二次扩张，但其乘法阶为四，小于八。
+
+\ProseParagraphBreak
+循环群中，若 \(g\) 的阶为 \(q-1\)，则 \(g^a\) 生成整个群当且仅当 \(\gcd(a,q-1)=1\)。因此本原元的个数为 \(\varphi(q-1)\)，其中 \(\varphi(m)\) 表示模 \(m\) 与 \(m\) 互素的剩余类个数。
 
 \subsection{Frobenius 自同构}
 \label{b1:subsec:1702:02}
 
-待撰写。
+在特征 \(p\) 的域中，\(a\mapsto a^p\) 保持加法、乘法和单位，并且单射；有限域上的单射必为满射，所以它是自同构。对 \(\mathbb F_{q^n}/\mathbb F_q\)，其中 \(q=p^r\)，使用其第 \(r\) 次迭代
+\[
+\sigma:\mathbb F_{q^n}\longrightarrow\mathbb F_{q^n},\qquad a\longmapsto a^q.
+\]
+这称为相对于 \(\mathbb F_q\) 的 Frobenius 自同构。由于 \(a^{q^n}=a\)，有 \(\sigma^n=1\)。若 \(0<d<n\) 而 \(\sigma^d=1\)，则 \(q^n\) 个元素全是 \(x^{q^d}-x\) 的根，与其次数较小矛盾。因此 \(\sigma\) 的阶恰为 \(n\)。其不动元为 \(x^q-x\) 的全部根，恰组成 \(\mathbb F_q\)。
+
+\begin{theorem}\label{b1:thm:finite-field-automorphisms}
+\(\mathbb F_{q^n}\) 上保持 \(\mathbb F_q\) 的自同构恰为 \(1,\sigma,\ldots,\sigma^{n-1}\)，其中 \(\sigma(a)=a^q\)。
+\end{theorem}
+\begin{proof}
+这 \(n\) 个自同构互异。取乘法本原元 \(g\)，则 \(\mathbb F_{q^n}=\mathbb F_q(g)\)。\cref{b1:prop:minimal-polynomial-degree}给出 \(g\) 的最小多项式次数为 \(n\)，而任一 \(\mathbb F_q\) 自同构都由 \(g\) 的像决定，这个像必须是该多项式的根。因此至多有 \(n\) 个这样的自同构，已列出的就包含全部。
+\end{proof}
 
 \subsection{有限域的子域与扩张}
 \label{b1:subsec:1702:03}
 
-待撰写。
+\begin{theorem}\label{b1:thm:finite-field-subfields}
+固定代数闭包中的 \(\mathbb F_{q^n}\)。它包含 \(\mathbb F_q\) 的子域恰为 \(\mathbb F_{q^d}\)，其中 \(d\mid n\)，每个这样的子域唯一。此外
+\[
+\mathbb F_{q^m}\cap\mathbb F_{q^n}=\mathbb F_{q^{\gcd(m,n)}},\qquad
+\mathbb F_{q^m}\mathbb F_{q^n}=\mathbb F_{q^{\operatorname{lcm}(m,n)}}.
+\]
+\end{theorem}
+\begin{proof}
+若 \(E\) 是所述子域，记 \([E:\mathbb F_q]=d\)。\cref{b1:thm:tower-law}给出 \(d\mid n\)，而 \(|E|=q^d\)，故 \(E\) 必由 \(x^{q^d}-x\) 的全部根组成，唯一性由此成立。反过来，若 \(d\mid n\)，任意满足 \(a^{q^d}=a\) 的元素在迭代 \(n/d\) 次后满足 \(a^{q^n}=a\)，所以代数闭包中的 \(\mathbb F_{q^d}\) 包含于 \(\mathbb F_{q^n}\)。
+
+令 \(g=\gcd(m,n)\)。交域在 \(\mathbb F_q\) 上的次数同时整除 \(m,n\)，因而整除 \(g\)；另一方面 \(\mathbb F_{q^g}\) 包含于两个域中。这两个包含和大小比较给出交域公式。令 \(\ell=\operatorname{lcm}(m,n)\)。两个域都包含于 \(\mathbb F_{q^\ell}\)，所以其合成域也是该有限域的子域。合成域的次数整除 \(\ell\)，又同时被 \(m,n\) 整除，故等于 \(\ell\)，得到第二式。
+\end{proof}
+例如 \(\mathbb F_{64}\) 包含 \(\mathbb F_2,\mathbb F_4,\mathbb F_8,\mathbb F_{64}\)，但不包含 \(\mathbb F_{16}\)；\(\mathbb F_4\cap\mathbb F_8=\mathbb F_2\)。不能仅凭域的元素个数较小就断定存在包含关系。
 
 \subsection{乘法群生成元的计算}
 \label{b1:subsec:1702:04}
 
-待撰写。
+设 \(N=q-1\)，且已分解出 \(N\) 的不同素因子 \(\ell_1,\ldots,\ell_s\)。元素 \(g\in\mathbb F_q^\times\) 是本原元当且仅当
+\begin{equation}\label{b1:eq:primitive-finite-field-test}
+g^{N/\ell_j}\ne1\qquad(1\leq j\leq s).
+\end{equation}
+事实上，其阶 \(d\) 整除 \(N\)；若 \(d<N\)，取 \(N/d\) 的一个素因子 \(\ell_j\)，便有 \(d\mid N/\ell_j\)，违反检验。反向则由阶为 \(N\) 立即得到。
+
+\ProseParagraphBreak
+在 \(\mathbb F_9=\mathbb F_3(u)\)、\(u^2=2\) 中，取 \(g=1+u\)。直接计算
+\[
+g^2=2u,\qquad g^4=2,\qquad g^8=1.
+\]
+八的唯一素因子为二，而 \(g^4\ne1\)，所以 \(g\) 是本原元。这也给出一个实际搜索办法：逐个枚举非零元素，用重复平方计算上述幂，直到找到全部检验通过的元素。定理保证搜索终会成功；若不知道 \(q-1\) 的素因子，还须先处理整数分解，不能把这一步的代价忽略。

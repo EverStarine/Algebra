@@ -5,7 +5,7 @@
 \section{典型局部化}
 \label{b1:sec:1303}
 
-% TODO: 按以下纲要要点撰写本节。
+分母集的选择决定哪些差别会被保留。本节考察两种常用选择：避开一个素理想的全部元素，以及一个固定元素的各次幂。前者把注意力集中于一个素理想，后者只要求一个元素可逆。整数环和多项式环的具体计算会说明，这些构造虽然采用同一套分式运算，却有不同的用途。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,118 @@
 \subsection{素理想处的局部环}
 \label{b1:subsec:1303:01}
 
-待撰写。
+设 \(\mathfrak p\) 为交换环 \(R\) 的素理想。因为 \(\mathfrak p\neq R\)，\(1\notin\mathfrak p\)；又因为
+\(ab\in\mathfrak p\Longrightarrow a\in\mathfrak p\) 或 \(b\in\mathfrak p\)，其补集 \(R\setminus\mathfrak p\) 对乘法封闭。于是可以定义
+\[
+R_{\mathfrak p}\coloneqq(R\setminus\mathfrak p)^{-1}R.
+\]
+\symidx{\(R_{\mathfrak p}\)：环 \(R\) 在素理想 \(\mathfrak p\) 处的局部化}
+它称为 \(R\) 在 \(\mathfrak p\) 处的局部化。由于 \(0\in\mathfrak p\)，分母集不含零，所以\cref{b1:prop:localization-zero-unit}保证 \(R_{\mathfrak p}\) 不是零环。
+
+\begin{definition}\label{b1:def:local-ring}
+一个非零交换含幺环 \(A\) 称为\term[jubu-huan]{局部环}[local ring]，如果它恰有一个极大理想 \(\mathfrak m\)。常以 \((A,\mathfrak m)\) 同时注明环和它的唯一极大理想；商域 \(A/\mathfrak m\) 称为它的\term[shengyu-yu]{剩余域}[residue field]。
+\end{definition}
+这里商环确为域，是因为\cref{b1:prop:prime-max-quotient}已证明极大理想的商为域。域自身也是局部环，其唯一极大理想为零理想；“局部环”并不意味着一定存在非零非单位元。
+
+\begin{proposition}\label{b1:prop:localization-at-prime}
+设 \(\mathfrak p\) 为 \(R\) 的素理想，则 \(R_{\mathfrak p}\) 是局部环，唯一极大理想为
+\[
+\mathfrak pR_{\mathfrak p}
+=\Bigl\{\,a/s\mid a\in\mathfrak p,\ s\in R\setminus\mathfrak p\,\Bigr\}.
+\]
+分式 \(a/s\) 是单位当且仅当 \(a\notin\mathfrak p\)。
+\end{proposition}
+\begin{proof}
+若 \(a\notin\mathfrak p\)，则 \(a\) 也可作分母，\(s/a\) 就是 \(a/s\) 的逆。若 \(a\in\mathfrak p\) 而 \(a/s\) 为单位，\cref{b1:prop:localization-zero-unit}给出某个 \(b\in R\) 使 \(ab\notin\mathfrak p\)，与理想的吸收性矛盾。
+
+记陈述中的集合为 \(\mathfrak n\)。两个分子在 \(\mathfrak p\) 中的分式相加时，通分后的分子仍在 \(\mathfrak p\) 中；取负及乘以任意分式也保持这一性质，所以 \(\mathfrak n\) 是理想。刚才的单位判据表明它恰为全部非单位组成的集合，因此不含 \(1\)，是真理想。任何真理想都不能含有单位，从而必包含于 \(\mathfrak n\)；这同时说明 \(\mathfrak n\) 极大，而且是唯一极大理想。它也正是由所有 \(a/1\)、\(a\in\mathfrak p\) 生成的理想，故可记为 \(\mathfrak pR_{\mathfrak p}\)。
+\end{proof}
+
+进一步可以算出这个局部环的剩余域。记 \(\bar a\) 为 \(a\) 在 \(R/\mathfrak p\) 中的像。这个商是整环，故有分式域。映射
+\[
+R\longrightarrow\operatorname{Frac}(R/\mathfrak p),\qquad
+a\longmapsto\bar a/\bar1
+\]
+把每个 \(s\notin\mathfrak p\) 送到非零元素，从而送到单位。由\cref{b1:thm:localization-universal}，它唯一延拓为
+\[
+R_{\mathfrak p}\longrightarrow\operatorname{Frac}(R/\mathfrak p),
+\qquad a/s\longmapsto\bar a/\bar s.
+\]
+任何非零 \(\bar s\) 都有 \(s\notin\mathfrak p\) 的代表，故此映射满射；其核由 \(\bar a=0\) 的分式组成，正是 \(\mathfrak pR_{\mathfrak p}\)。\cref{b1:thm:ring-first-iso}将商环同构到这个实际像，得到
+\begin{equation}\label{b1:eq:local-residue-field}
+R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}
+\cong\operatorname{Frac}(R/\mathfrak p).
+\end{equation}
+这说明素理想处局部化的剩余域一般不只是 \(R/\mathfrak p\)；当 \(\mathfrak p\) 极大时，后一商本来就是域，才无须再增加分母。
 
 \subsection{单个元素处的局部化}
 \label{b1:subsec:1303:02}
 
-待撰写。
+对 \(f\in R\)，令 \(S=\{\,f^n\mid n\geq0\,\}\)，其中 \(f^0=1\)。相应局部化记为 \(R_f\) 或 \(R[1/f]\)，其每个元素都能写成 \(a/f^n\)。
+\symidx{\(R_f=R[1/f]\)：使元素 \(f\) 可逆的局部化}
+两种记号都很常用；写 \(R[1/f]\) 时，\(1/f\) 表示构造中的形式逆元，不预先假定它已经存在于某个包含 \(R\) 的域中。例如 \(f\) 是零因子时，\(R\rightarrow R_f\) 可能不单射。
+
+\begin{proposition}\label{b1:prop:single-element-localization}
+对任意交换含幺环 \(R\) 和 \(f\in R\)，有保持 \(R\) 中元素像的同构
+\[
+R_f\cong R[t]/(ft-1),
+\]
+其中 \(t\) 为一个多项式变量，\(1/f\) 对应于 \(t\) 的剩余类。此外，\(R_f\) 为零环当且仅当 \(f\) 幂零。
+\end{proposition}
+\begin{proof}
+记 \(B=R[t]/(ft-1)\)，并用上横线表示剩余类。在 \(B\) 中有 \(\bar f\bar t=1\)，故自然映射 \(R\rightarrow B\) 把每个 \(f^n\) 送到单位。\cref{b1:thm:localization-universal}给出唯一同态
+\[
+\alpha:R_f\longrightarrow B,\qquad a/f^n\longmapsto\bar a\bar t^{\,n}.
+\]
+另一方面，多项式求值
+\[
+R[t]\longrightarrow R_f,\qquad
+\sum_{j=0}^m a_jt^j\longmapsto\sum_{j=0}^m\frac{a_j}{f^j}
+\]
+保持加法、乘法与单位，并把 \(ft-1\) 送到零，因此诱导同态 \(\beta:B\rightarrow R_f\)。复合 \(\beta\alpha\) 固定每个 \(a/f^n\)，所以是恒等映射；复合 \(\alpha\beta\) 固定全部 \(\bar a\) 和 \(\bar t\)，故固定它们组成的每个多项式，即固定 \(B\) 的全部元素。两者互逆。
+
+由\cref{b1:prop:localization-zero-unit}，\(R_f=0\) 当且仅当其分母集中含零，即某个 \(f^n=0\)。这恰为 \(f\) 幂零；若 \(n=0\) 已使 \(1=0\)，则 \(R\) 本来就是零环，也仍满足这一结论。
+\end{proof}
+
+例如对 \(R=\mathbb Z/6\mathbb Z\)、\(f=\bar3\)，模 \(2\) 的映射将 \(\bar3\) 送到 \(1\)，所以延拓为 \(R_{\bar3}\rightarrow\mathbb F_2\)。其中 \(\bar2/1=0\)，每个分母 \(\bar3^n\) 的像又等于 \(1\)；因而局部化中每个元素都为 \(0\) 或 \(1\)。上述映射把两者分别送到 \(0\)、\(1\)，于是 \(R_{\bar3}\cong\mathbb F_2\)。
 
 \subsection{整数的局部化与 Laurent 多项式环}
 \label{b1:subsec:1303:03}
 
-待撰写。
+对一个素数 \(p\)，整数环在 \((p)\) 处的局部化为
+\[
+\mathbb Z_{(p)}
+=\{\,a/b\in\mathbb Q\mid a,b\in\mathbb Z,\ p\nmid b\,\}.
+\]
+它的单位是其中分子也不被 \(p\) 整除的分式，唯一极大理想是 \(p\mathbb Z_{(p)}\)，剩余域为 \(\mathbb F_p\)。这些断言分别来自\cref{b1:prop:localization-at-prime}和\eqref{b1:eq:local-residue-field}。例如 \(2/3\) 在 \(\mathbb Z_{(5)}\) 中是单位，\(5/3\) 则不是。分母可含任意不被 \(5\) 整除的整数，不限于某个固定整数的幂。
+
+\ProseParagraphBreak
+与此不同，\(\mathbb Z[1/p]\) 只允许 \(p\) 的幂作分母：
+\[
+\mathbb Z[1/p]=\{\,a/p^n\in\mathbb Q\mid a\in\mathbb Z,\ n\geq0\,\}.
+\]
+前一个环使 \(p\) 以外的素数可逆，后一个环使 \(p\) 可逆。因而 \(\mathbb Z_{(p)}\) 和 \(\mathbb Z[1/p]\) 表示相当不同的环。更一般地，\(\mathbb Z[1/n]\) 允许 \(n\) 的所有素因子取逆；例如 \(\mathbb Z[1/6]\) 的元素可以写成 \(a/(2^r3^s)\)，其中 \(r,s\geq0\)，因为这类分母都整除足够高次的 \(6\) 的幂。
+
+\ProseParagraphBreak
+设 \(k\) 为域。在 \(k[t]\) 中使 \(t\) 可逆，得到\term[Laurent-duoxiangshi-huan]{Laurent 多项式环}[Laurent polynomial ring]
+\[
+k[t,t^{-1}]\coloneqq k[t]_t.
+\]
+\symidx{\(k[t,t^{-1}]\)：Laurent 多项式环}
+其中每个元素有形式
+\[
+\sum_{j=m}^n a_jt^j,\qquad m,n\in\mathbb Z,\quad a_j\in k,
+\]
+仅有有限多个非零系数；不允许任意无限级数。因为分式 \(f(t)/t^r\) 可把 \(f\) 的每个指数减去 \(r\)，它们恰好给出这些有限和。若两个有限和相等，乘以足够大的 \(t\) 的幂后，就成为 \(k[t]\) 中的多项式等式。自然映射 \(k[t]\rightarrow k[t]_t\) 单射，所以同次幂的系数分别相等，有限和表达由此唯一。
+
+\begin{proposition}\label{b1:prop:laurent-units}
+域 \(k\) 上的一元 Laurent 多项式环的单位恰为 \(ct^r\)，其中 \(c\in k^\times\)、\(r\in\mathbb Z\)。
+\end{proposition}
+\begin{proof}
+这样的元素有逆 \(c^{-1}t^{-r}\)。反过来，设非零 Laurent 多项式 \(u\) 的最低、最高非零次数分别为 \(m,n\)，而 \(v\) 的为 \(r,s\)。因为 \(k\) 是域，乘积的最低和最高项系数都不为零，故 \(uv\) 的两个端点次数分别为 \(m+r,n+s\)。若 \(uv=1\)，则二者均为零，因而
+\[
+(n-m)+(s-r)=0.
+\]
+两个括号都是非负整数，只能各为零。所以 \(m=n\)，\(u\) 只有一个非零项，必为 \(ct^m\)。
+\end{proof}
+例如 \(t\) 与 \(t^{-1}\) 都是单位，而 \(t+1\) 不是。局部化只保证指定分母及其必要因子可逆，并不会自动成为分式域 \(k(t)\)。

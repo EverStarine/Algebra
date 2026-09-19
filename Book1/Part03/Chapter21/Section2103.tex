@@ -5,26 +5,147 @@
 \section{经典方程}
 \label{b1:sec:2103}
 
-% TODO: 按以下纲要要点撰写本节。
+二次、三次和四次方程的根式公式并非互不相关的技巧。它们背后的 Galois 群都嵌在可解的低阶对称群中；五次开始，对称群的可解性失效。不过，“一般方程没有通用根式公式”不表示每个具体五次方程都不能用根式求解。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 三次、四次方程的群论解释
 % * 一般五次方程不可根式求解
-% * 可解但非阿贝尔的 Galois 群
+% * 以 \(x^5-x-1\) 的模素数分解判定具体 Galois 群，并就地证明所用分解型结论
+% * 可解但非交换的 Galois 群
 %
 
 \subsection{三次、四次方程的群论解释}
 \label{b1:subsec:2103:01}
 
-待撰写。
+设基域特征为零。次数为 \(d\) 的多项式的 Galois 群忠实置换其不同的根，因而嵌入 \(S_d\)。式\eqref{b1:eq:small-symmetric-derived}已经给出
+\[
+S_3\trianglerighteq A_3\trianglerighteq1,
+\qquad S_4\trianglerighteq A_4\trianglerighteq V_4\trianglerighteq1
+\]
+都有交换因子。\cref{b1:thm:solvable-closure}把可解性传给子群，再由\cref{b1:thm:radical-solvability}得到三次、四次方程都根式可解。
+
+\ProseParagraphBreak
+三次公式可以直接看出开平方与开立方的来源。将一般三次方程除以首项系数，再平移变量消去二次项，得到 \(y^3+py+q=0\)。当 \(p=0\) 时直接开立方即可。当 \(p\neq0\) 时，设
+\[
+\Delta=\frac{q^2}{4}+\frac{p^3}{27},\qquad
+U=-\frac q2+\sqrt\Delta,\qquad V=-\frac q2-\sqrt\Delta.
+\]
+有 \(U+V=-q\)、\(UV=-p^3/27\neq0\)。任取 \(u^3=U\)，再按乘积条件定义 \(v=-p/(3u)\)，则 \(v^3=V\)。于是
+\[
+(u+v)^3+p(u+v)+q=u^3+v^3+(3uv+p)(u+v)+q=0.
+\]
+加入原始三次单位根 \(\zeta_3\) 后，三个根为 \(\zeta_3^j u+\zeta_3^{-j}v\)、\(j=0,1,2\)，重根情形按重数理解。不能独立选取两个立方根后直接相加；\(uv=-p/3\) 是公式成立的必要配对条件。
+
+\ProseParagraphBreak
+四次方程经平移化为 \(y^4+py^2+qy+r=0\)。若 \(q=0\)，先将 \(y^2\) 作为未知量解二次方程。若 \(q\neq0\)，先求一个三次方程
+\[
+4(2m-p)(m^2-r)=q^2
+\]
+的根 \(m\)。因为 \(q\neq0\)，有 \(2m-p\neq0\)，可选取非零 \(s\) 满足 \(s^2=2m-p\)。于是
+\begin{align*}
+y^4+py^2+qy+r
+&=(y^2+m)^2-\Bigl(sy-\frac q{2s}\Bigr)^2\\
+&=\Bigl(y^2-sy+m+\frac q{2s}\Bigr)
+  \Bigl(y^2+sy+m-\frac q{2s}\Bigr).
+\end{align*}
+后面只剩两个二次方程。这说明四次求解为何能够归结为三次求解及连续开平方。
+
+\ProseParagraphBreak
+群论中相应的三次对象来自把四个根分成两个无序二元组的三种方式。\(S_4\) 置换这三种划分，给出满同态 \(S_4\rightarrow S_3\)，其核为 \(V_4\)：恒等置换和三个双换位保持全部划分，核又因满射而恰有 \(24/6=4\) 个元素。先处理三次对象，再处理核中两次二阶因素，与上述计算的次序相符。
 
 \subsection{一般五次方程不可根式求解}
 \label{b1:subsec:2103:02}
 
-待撰写。
+下面的“一般”有一个精确含义：把系数当作代数独立的变量，而不是先给它们某组具体数值。
 
-\subsection{可解但非阿贝尔的 Galois 群}
+\begin{theorem}[一般方程]\label{b1:thm:generic-equation}
+设 \(u_1,\ldots,u_n\) 在 \(\mathbb Q\) 上代数独立。多项式
+\[
+X^n-u_1X^{n-1}+u_2X^{n-2}-\cdots+(-1)^nu_n
+\]
+在 \(\mathbb Q(u_1,\ldots,u_n)\) 上的 Galois 群是 \(S_n\)。因此当 \(n\geq5\) 时，一般 \(n\) 次方程不根式可解。
+\end{theorem}
+\begin{proof}
+先取代数独立的 \(t_1,\ldots,t_n\)，令 \(E=\mathbb Q(t_1,\ldots,t_n)\)，\(e_j\) 为这些变量的第 \(j\) 个初等对称多项式，并令 \(F=\mathbb Q(e_1,\ldots,e_n)\)。于是
+\[
+\prod_{i=1}^n(X-t_i)=X^n-e_1X^{n-1}+\cdots+(-1)^ne_n.
+\]
+\(E/F\) 是右端可分多项式的分裂域。\(S_n\) 对变量的每个置换给出一个不同的 \(F\) 自同构；\cref{b1:thm:separable-embeddings}说明嵌入数不超过扩张次数，所以 \([E:F]\geq n!\)。另一方面依次加入 \(t_1,t_2,\ldots,t_n\)，在已知一个根后除去对应线性因子，下一根的次数分别至多为 \(n,n-1,\ldots,1\)。由\cref{b1:thm:tower-law}，\([E:F]\leq n!\)。因此群恰好就是 \(S_n\)。
+
+还需核对 \(e_1,\ldots,e_n\) 确实可以充当独立系数。按 \(t_1>\cdots>t_n\) 的字典序，\(e_j\) 的最高单项式为 \(t_1\cdots t_j\)。故
+\[
+e_1^{a_1}\cdots e_n^{a_n}
+\quad\text{的最高单项式为}\quad
+t_1^{a_1+\cdots+a_n}t_2^{a_2+\cdots+a_n}\cdots t_n^{a_n}.
+\]
+不同的非负整数元组 \((a_1,\ldots,a_n)\) 给出不同最高单项式，因为指数的相邻差恢复各 \(a_i\)。任何有限非零线性组合中最大的最高单项式不能被其余项消去，所以不存在非零多项式关系。这证明 \(e_i\) 代数独立；以 \(u_i\mapsto e_i\) 替换便得到题述一般多项式。
+
+当 \(n\geq5\) 时，\cref{b1:cor:symmetric-nonsolvable}说明 \(S_n\) 不可解；\cref{b1:thm:radical-solvability}遂排除根式求解。
+\end{proof}
+
+这就是\term[Abel-Ruffini-dingli]{Abel--Ruffini 定理}[Abel--Ruffini theorem]的通用方程形式。它排除的是以独立系数为起点的通用根式表达，并不排除特殊方程。例如 \(X^5-1\) 的分裂域是分圆域，Galois 群 \((\mathbb Z/5\mathbb Z)^\times\cong C_4\) 可解，因而它的全部根都能用根式表示。
+
+
+\ProseParagraphBreak
+一般方程的结论不能直接判定某一个给定方程。为了回答序言提出的 \(X^5-X-1\)，先建立一个将有限域分解用于 Galois 群计算的具体工具。所需整性、理想和有限域理论均已在前面准备好。
+
+\begin{lemma}\label{b1:lem:reduction-cycle-type}
+设 \(f\in\mathbb Z[X]\) 首一，在 \(\mathbb Q\) 上无重根；素数 \(p\) 满足模 \(p\) 的约化 \(\bar f\) 也无重根。若 \(\bar f\) 的不同首一不可约因子的次数为 \(d_1,\ldots,d_r\)，则 \(f\) 在 \(\mathbb Q\) 上的 Galois 群，在全部根上的置换作用中包含循环长度为 \(d_1,\ldots,d_r\) 的元素。
+\end{lemma}
+\begin{proof}
+设分裂域为 \(L\)，根为 \(\alpha_1,\ldots,\alpha_n\)，\(G=\operatorname{Gal}(L/\mathbb Q)\)，并取环 \(A=\mathbb Z[\alpha_1,\ldots,\alpha_n]\)。所有根都满足首一整数方程，\cref{b1:lem:integral-closure-elementary}说明 \(A\) 由有限多个元素作为 \(\mathbb Z\) 模生成，且每个元素都在 \(\mathbb Z\) 上整。\(G\) 置换这些根，所以保持 \(A\)。由 \(L^G=\mathbb Q\)，\(A^G\) 中的元素为有理整元素，只能是整数：一个既约分数若满足首一整数方程，清除分母后就要求分母整除分子的某次幂，故分母为一。因此 \(A^G=\mathbb Z\)。
+
+理想 \(pA\) 为真理想，否则 \(1/p\in A\)，与刚才的有理整元素判别矛盾。由\cref{b1:prop:maximal-ideal-exists}取极大理想 \(\mathfrak m\supseteq pA\)。商域 \(k=A/\mathfrak m\) 有限，因为 \(A/pA\) 由有限多个元素作为 \(\mathbb F_p\) 向量空间生成，而 \(k\) 是它的商。令
+\[
+D=\{\,\sigma\in G\mid\sigma(\mathfrak m)=\mathfrak m\,\},
+\]
+这是 \(\mathfrak m\) 在 \(G\) 作用下的稳定子，故为子群；它在 \(k\) 上诱导自同构，记其像为 \(H\leq\operatorname{Gal}(k/\mathbb F_p)\)。我们证明这个像为全群。
+
+任取 \(x\in k^H\)。\(G\) 作用下 \(\mathfrak m\) 的轨道由有限个不同的极大理想组成，它们两两互素。\cref{b1:thm:crt}给出 \(a\in A\)，在 \(\mathfrak m\) 处的余数为 \(x\)，在其余轨道理想处的余数为零。多项式
+\[
+P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
+\]
+的系数属于 \(A^G=\mathbb Z\)。若 \(\sigma\in D\)，因 \(x\) 被 \(H\) 固定，\(\sigma(a)\) 模 \(\mathfrak m\) 为 \(x\)；若 \(\sigma\notin D\)，则 \(a\) 模 \(\sigma^{-1}(\mathfrak m)\) 为零，故 \(\sigma(a)\) 模 \(\mathfrak m\) 为零。写 \(|D|=p^e u\)、\(p\nmid u\)，约化后得到
+\[
+\bar P(T)=T^{|G|-|D|}(T-x)^{|D|}
+=T^{|G|-|D|}\Bigl(T^{p^e}-x^{p^e}\Bigr)^u.
+\]
+其中 \(T^{|G|-p^e}\) 的系数为 \(-u x^{p^e}\)，但 \(\bar P\) 的全部系数在 \(\mathbb F_p\) 中。由于 \(u\) 在该域中可逆，\(x^{p^e}=c\in\mathbb F_p\)，于是 \((x-c)^{p^e}=0\)，得到 \(x=c\)。所以 \(k^H=\mathbb F_p\)。有限域扩张 \(k/\mathbb F_p\) 为 Galois 扩张，\cref{b1:thm:finite-galois-correspondence}迫使 \(H=\operatorname{Gal}(k/\mathbb F_p)\)。
+
+因此 Frobenius \(b\mapsto b^p\) 在 \(D\) 中有一个提升 \(\sigma\)。等式 \(f(X)=\prod_i(X-\alpha_i)\) 约化后表明 \(\alpha_i\) 的像是 \(\bar f\) 的全部根。由于约化无重根，这些像互不相同。由\cref{b1:thm:finite-field-subfields}及\cref{b1:thm:finite-field-automorphisms}，一个次数为 \(d_j\) 的不可约因子的根恰组成长度 \(d_j\) 的轨道：根生成的域有 \(p^{d_j}\) 个元素，而固定该根的最小正 Frobenius 次幂正是 \(d_j\)。提升 \(\sigma\) 在原根集上的循环类型与约化后的 Frobenius 相同，遂得结论。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:quintic-x5-x-1}
+多项式 \(f=X^5-X-1\) 在 \(\mathbb Q\) 上的 Galois 群为 \(S_5\)，因而不根式可解。
+\end{proposition}
+\begin{proof}
+先证明不可约性。模三时，\(f\) 在 \(0,1,2\) 处的值都为二，没有一次因子。\(\mathbb F_3\) 上的首一不可约二次多项式只有
+\(X^2+1\)、\(X^2+X+2\)、\(X^2+2X+2\)：对常数项非零的六个首一二次式逐一检查是否在 \(0,1,2\) 处有根，即得此表。用它们分别除 \(\bar f\)，余式依次为
+\[
+2,\qquad X+2,\qquad X+2.
+\]
+所以也没有不可约二次因子。五次多项式若可约，在其不可约因子的次数之和为五的分拆中，必有一个因子的次数不超过二。因此 \(\bar f\) 不可约；\cref{b1:prop:reduction-irreducible}说明 \(f\) 在 \(\mathbb Q\) 上不可约。
+
+模二时，直接相乘可核验
+\[
+\bar f=(X^2+X+1)(X^3+X^2+1).
+\]
+两个因子在 \(\mathbb F_2\) 中均无根，次数分别为二和三，因而均不可约且互异。所以约化无重根。\cref{b1:lem:reduction-cycle-type}给出群中的一个 \((2)(3)\) 型置换，它的三次幂为换位。
+
+不可约性与\cref{b1:thm:embedding-extension}保证群在五个根上传递，再由\cref{b1:thm:orbit-stabilizer}，五整除群阶。\cref{b1:thm:cauchy}给出五阶元素，在五个点上它必为五轮换 \(c\)。将五个点按 \(c\) 标为 \(\mathbb Z/5\mathbb Z\)。设刚找到的换位交换 \(i,j\)，差 \(j-i\) 非零。其所有 \(c\) 共轭给出连接 \(k\) 与 \(k+j-i\) 的换位；由于五为素数，这些边连接全部五个点。沿路径利用
+\((a\,b)(b\,d)(a\,b)=(a\,d)\)，边换位可生成任意两点的换位，因而生成 \(S_5\)。故原Galois群等于 \(S_5\)。由\cref{b1:cor:symmetric-nonsolvable}及\cref{b1:thm:radical-solvability}，方程不根式可解。
+\end{proof}
+这个具体判定解释了序言中 \(X^5-1\) 与 \(X^5-X-1\) 的差别：前者有交换的分圆Galois群，后者的群为不可解的 \(S_5\)。次数同为五，并不意味着两者有相同的根式可解性。
+
+\subsection{可解但非交换的 Galois 群}
 \label{b1:subsec:2103:03}
 
-待撰写。
+根式可解也不要求 Galois 群交换。对 \(X^3-2\)，应用\cref{b1:thm:eisenstein}并取素元 \(2\)：非首项系数均被 \(2\) 整除，常数项不被 \(4\) 整除，故它在 \(\mathbb Q\) 上不可约，\(\Bigl[\mathbb Q(\sqrt[3]{2}):\mathbb Q\Bigr]=3\)。它的分裂域是
+\[
+L=\mathbb Q(\sqrt[3]{2},\zeta_3).
+\]
+前一个生成域属于 \(\mathbb R\)，而 \(\zeta_3\) 非实，且满足二次方程 \(X^2+X+1=0\)，所以 \([L:\mathbb Q]=6\)。群忠实作用于三个根，阶也是 \(6\)，因此为 \(S_3\)。复共轭固定实立方根并交换另两个根，三阶自同构则循环置换全部根；它们不交换，但 \(S_3\) 的导出列两步终止。
+
+\ProseParagraphBreak
+从根式表达看，\(\sqrt[3]{2}\) 与 \(\zeta_3=(-1+\sqrt{-3})/2\) 已写出一条根式塔。从群论看，\(S_3\) 的三阶正规子群及其二阶商解释了这两种开方。与分圆扩张相比，这个例子表明“群交换”只是根式可解的一种充分条件，真正的准确条件是“群可解”。

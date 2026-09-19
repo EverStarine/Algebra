@@ -5,7 +5,6 @@
 \section{分裂域}
 \label{b1:sec:1501}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -14,17 +13,65 @@
 % * 具体低次多项式的分裂域
 %
 
+添入一个根使某个不可约因子变为一次因子，却未必得到其他根。例如实数 \(\sqrt[3]2\) 不会使 \(x^3-2\) 在实数域中完全分裂。若要同时研究全部根之间的对称性，应选取由全部根生成的域；它避免了任意附加与原方程无关的元素。
+
 \subsection{多项式的分裂域构造}
 \label{b1:subsec:1501:01}
 
-待撰写。
+\begin{definition}\label{b1:def:splitting-field}
+设 \(f\in K[x]\) 非零。若扩张 \(L/K\) 中存在 \(a\in K^\times\) 及 \(\alpha_1,\ldots,\alpha_n\in L\)，使
+\[
+f=a\prod_{i=1}^n(x-\alpha_i),\qquad L=K(\alpha_1,\ldots,\alpha_n),
+\]
+称 \(L\) 为 \(f\) 在 \(K\) 上的\term[fenlie-yu]{分裂域}[splitting field]。常数多项式的分裂域约定为 \(K\)。
+\end{definition}
+
+\begin{proposition}\label{b1:prop:splitting-field-exists}
+每个非零多项式 \(f\in K[x]\) 都有分裂域，且分裂域为有限扩张。若 \(\deg f=n\geq1\)，其次数至多为 \(n!\)。
+\end{proposition}
+\begin{proof}
+若 \(f\) 非常数，取一个不可约因子 \(q\)。域 \(K_1=K[x]/(q)\) 包含元素 \(\alpha_1=x+(q)\)，它满足 \(q(\alpha_1)=0\)，从而也是 \(f\) 的根。这里商环为域可由多项式 Bézout 关系直接验证：非零剩余类的代表元与 \(q\) 互素，故有逆元。由因式定理，在 \(K_1[x]\) 中写 \(f=(x-\alpha_1)f_1\)。
+
+在 \(K_1\) 上重复此构造，为次数 \(n-1\) 的 \(f_1\) 添入一个根；如此至多 \(n\) 步，所得域由全部这些根生成，且 \(f\) 分裂。每步次数分别至多为 \(n,n-1,\ldots,1\)，由\cref{b1:thm:tower-law}知总次数至多为 \(n!\)。即使出现重根也不影响构造，某些步骤只是次数为一的扩张。
+\end{proof}
+这是一个存在性构造。实际计算不必机械地逐根相添；根之间已知的关系常能显著减少步骤，也能把 \(n!\) 这个粗上界缩小。
 
 \subsection{嵌入延拓与分裂域的唯一性}
 \label{b1:subsec:1501:02}
 
-待撰写。
+\begin{lemma}\label{b1:lem:simple-embedding-extension}
+设 \(\sigma:K\rightarrow K'\) 为域同构，\(\alpha\) 在 \(K\) 上代数，最小多项式为 \(m\)。对一个包含 \(K'\) 的域 \(\Omega\)，将 \(\sigma\) 延拓为嵌入 \(K(\alpha)\rightarrow\Omega\) 的方式，与 \(\sigma(m)\) 在 \(\Omega\) 中的不同根 \(\beta\) 一一对应；对应的嵌入把 \(\alpha\) 送到 \(\beta\)。这里 \(\sigma(m)\) 表示对系数施行 \(\sigma\)。
+\end{lemma}
+\begin{proof}
+若延拓存在，把 \(m(\alpha)=0\) 映过去即得 \(\sigma(m)(\beta)=0\)。反过来，给定这样的根 \(\beta\)，系数同构把不可约 \(m\) 变为不可约 \(\sigma(m)\)。映射
+\[
+\sum_i a_i\alpha^i\longmapsto\sum_i\sigma(a_i)\beta^i
+\]
+良定义，因为 \(\alpha\) 的多项式关系全是 \(m\) 的倍式，变换后均在 \(\beta\) 处为零。它保持加法、乘法和单位，并在域之间单射；其像为 \(K'(\beta)\)。每个元素都是 \(\alpha\) 的多项式，所以延拓由 \(\beta\) 唯一确定。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:splitting-field-unique}
+若 \(L/K\) 是 \(f\) 的分裂域，\(\sigma:K\rightarrow K'\) 是同构，而 \(L'/K'\) 是 \(\sigma(f)\) 的分裂域，则 \(\sigma\) 可以延拓为同构 \(L\rightarrow L'\)。特别地，同一多项式的两个分裂域在保持基域的同构意义下唯一。
+\end{proposition}
+\begin{proof}
+把 \(L\) 写成 \(K(\alpha_1,\ldots,\alpha_r)\)，其中所列元素是 \(f\) 的全部不同根。假设已在 \(E=K(\alpha_1,\ldots,\alpha_{i-1})\) 上构造嵌入 \(\tau:E\rightarrow L'\)。\(\alpha_i\) 在 \(E\) 上的最小多项式整除 \(f\)，所以 \(\tau(m_{\alpha_i,E})\) 整除 \(\sigma(f)\)，后者在 \(L'\) 中分裂。于是前者在 \(L'\) 中有根，由\cref{b1:lem:simple-embedding-extension}可把 \(\tau\) 延拓到 \(E(\alpha_i)\)。有限次延拓给出嵌入 \(L\rightarrow L'\)。
+
+在 \(L[x]\) 中，\(f\) 的一次分解经此嵌入变为 \(\sigma(f)\) 的一次分解。因此 \(\sigma(f)\) 的全部根都在像域中，像域又包含 \(K'\)。\(L'\) 由这些根生成，故像恰为 \(L'\)，嵌入为同构。
+\end{proof}
+唯一的是同构类型，不是同构本身。例如 \(\mathbb Q(\sqrt2)\) 到自身有保持 \(\mathbb Q\) 的两个同构，分别把 \(\sqrt2\) 送到 \(\sqrt2\) 与 \(-\sqrt2\)。
 
 \subsection{具体低次多项式的分裂域}
 \label{b1:subsec:1501:03}
 
-待撰写。
+在 \(\mathbb Q\) 上，\(x^2-2\) 的两个根是 \(\pm\sqrt2\)，分裂域为 \(\mathbb Q(\sqrt2)\)，次数二。对 \(x^4-2\)，令 \(a=\sqrt[4]2>0\)，其根为 \(a,-a,ia,-ia\)，故分裂域为 \(\mathbb Q(a,i)\)。Eisenstein 判据给出 \(\Bigl[\mathbb Q(a):\mathbb Q\Bigr]=4\)，而 \(\mathbb Q(a)\subseteq\mathbb R\) 不含 \(i\)，所以再添 \(i\) 的次数为二，总次数为八。
+
+\ProseParagraphBreak
+对 \(x^3-2\)，令 \(a=\sqrt[3]2>0\)，\(\zeta=(-1+\sqrt{-3})/2\)。其三个根为 \(a,a\zeta,a\zeta^2\)，故分裂域为 \(\mathbb Q(a,\zeta)\)。\(x^3-2\) 在 \(\mathbb Q\) 上不可约，而 \(\zeta\) 不实且满足 \(x^2+x+1=0\)，所以
+\begin{equation}\label{b1:eq:cubic-splitting-degree}
+\begin{aligned}
+\Bigl[\mathbb Q(a,\zeta):\mathbb Q\Bigr]
+&=\Bigl[\mathbb Q(a,\zeta):\mathbb Q(a)\Bigr]\,\Bigl[\mathbb Q(a):\mathbb Q\Bigr]\\
+&=2\cdot3=6.
+\end{aligned}
+\end{equation}
+根 \(a\) 生成的三次扩张并未包含另外两个根；分裂域把它们一起纳入，才为后续置换全部根提供合适的域。

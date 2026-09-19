@@ -5,7 +5,7 @@
 \section{环的约定与例子}
 \label{b1:sec:1001}
 
-% TODO: 按以下纲要要点撰写本节。
+群只规定一种运算。整数与矩阵却同时允许加法和乘法，而且乘法能够分配到加法中。环的定义把这两种运算放在一起；它也使零因子、方程的可解性和同余关系进入同一套语言。本节先固定单位元及同态的约定，再比较几类常见例子。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -16,15 +16,98 @@
 
 \subsection{含幺环、交换环与同态}
 \label{b1:subsec:1001:01}
+\begin{definition}\label{b1:def:ring}
+一个\term[huan]{环}[ring]是集合 \(R\)，配备加法、乘法两个从 \(R\times R\) 到 \(R\) 的运算，满足：
+\begin{enumerate}
+\item 加法结合且交换，存在零元 \(0\)，每个 \(a\) 有加法逆元 \(-a\)；
+\item 乘法结合，存在单位元 \(1\)，使 \(1a=a1=a\)；
+\item 对任意 \(a,b,c\in R\)，有 \(a(b+c)=ab+ac\)、\((a+b)c=ac+bc\)。
+\end{enumerate}
+若还对任意 \(a,b\in R\) 有 \(ab=ba\)，称为\term[jiaohuan-huan]{交换环}[commutative ring]。本书环总含幺，但允许 \(1=0\)；此时环只有一个元素，称为\term[linghuan]{零环}[zero ring]。
+\end{definition}
+加法公理正是说 \((R,+)\) 为交换群。由 \(a0=a(0+0)=a0+a0\)，在加法群中消去 \(a0\)，得到 \(a0=0\)；同样 \(0a=0\)。再由 \(a(b-b)=0\)，得 \(a(-b)=-(ab)\)，继而 \((-a)(-b)=ab\)。这些等式来自分配律，而不是额外公理。若 \(1=0\)，每个元素 \(a=a1=a0=0\)，说明零环的确只有一个元素。
 
-待撰写。
+\begin{definition}\label{b1:def:ring-homomorphism}
+环 \(R\) 到环 \(S\) 的\term[huan-tongtai]{环同态}[ring homomorphism]是映射 \(f:R\rightarrow S\)，使
+\[
+f(a+b)=f(a)+f(b),\qquad f(ab)=f(a)f(b),\qquad f(1_R)=1_S.
+\]
+双射的环同态称为\term[huan-tonggou]{环同构}[ring isomorphism]。子集 \(T\subseteq R\) 若含 \(1_R\)，对减法和乘法封闭，就称为本书约定下的\term[zihuan]{子环}[subring]。
+\end{definition}
+同态保持零元和负元，因为它首先是加法群同态。双射环同态的逆映射也保持两种运算与单位：将等式写在原像上再应用 \(f\)，便逐项得到这些性质。要求保持单位使 \(\mathbb Z\rightarrow R\)、\(n\mapsto n1_R\) 成为唯一的环同态；这里正整数倍由重复加法定义，负数倍取其加法逆元。
+
+\begin{definition}\label{b1:def:ring-characteristic}
+若存在正整数 \(n\) 使 \(n1_R=0\)，其中最小者称为 \(R\) 的\term[tezheng]{特征}[characteristic]；若不存在，规定特征为零，记为 \(\operatorname{char}R\)。
+\end{definition}
+\symidx{\(\operatorname{char}R\)：环的特征}
+同态 \(\mathbb Z\rightarrow R\) 的核是加法子群，\cref{b1:lem:integer-subgroups}说明它唯一等于 \(n\mathbb Z\)，其中 \(n\geq0\)；这与特征定义中的 \(n\) 相同。特征不是集合的元素个数：例如 \(\mathbb Z\) 和 \(\mathbb Q\) 都具有特征零。
+
+\begin{definition}\label{b1:def:domain-field}
+非零交换环 \(R\) 若满足 \(ab=0\) 必有 \(a=0\) 或 \(b=0\)，称为\term[zhenghuan]{整环}[integral domain]。非零环若每个非零元素都有双边乘法逆元，称为\term[chuhuan]{除环}[division ring]；乘法交换的除环称为\term[yu]{域}[field]。
+\end{definition}
+域是整环：若 \(a\ne0\) 且 \(ab=0\)，左乘 \(a^{-1}\) 得 \(b=0\)。\(\mathbb Z\) 是整环而不是域，\(\mathbb Q,\mathbb R,\mathbb C\) 是域。整环的特征只能为零或素数：若正特征 \(n=uv\)，\(1<u,v<n\)，则 \((u1_R)(v1_R)=0\)，而两个因子都非零，矛盾。
 
 \subsection{矩阵环、函数环、群环与多项式环}
 \label{b1:subsec:1001:02}
+对环 \(R\)，所有 \(n\times n\) 矩阵组成\term[juzhen-huan]{矩阵环}[matrix ring] \(M_n(R)\)，采用逐项加法与通常的矩阵乘法，单位为单位矩阵。乘法结合律可由有限和核验：两种结合方式的第 \((i,j)\) 项都是 \(\sum_{k,\ell}a_{ik}b_{k\ell}c_{\ell j}\)。设 \(R\ne0,n\geq2\)，则矩阵单位满足 \(E_{12}E_{21}=E_{11}\)、\(E_{21}E_{12}=E_{22}\)，故即使 \(R\) 交换，矩阵环也不交换。
+\symidx{\(M_n(R)\)：环上的 \(n\) 阶矩阵环}
 
-待撰写。
+\ProseParagraphBreak
+若 \(X\) 是集合，映射集合 \(R^X\) 在逐点加法和乘法下为\term[hanshu-huan]{函数环}[function ring]，其零元与单位分别为常值函数 \(0,1\)。每条环公理都可在每个 \(x\in X\) 处验证。若 \(R\) 为域而 \(X\) 有两个不同的点，取支集分别为这两个单点的函数，它们都非零，乘积却为零。因此，逐点取值在域中不使函数环自动成为域。
+
+\begin{definition}\label{b1:def:polynomial-ring}
+环 \(R\) 上的\term[duoxiangshi-huan]{多项式环}[polynomial ring] \(R[x]\) 由系数在 \(R\) 中且只有有限项非零的形式和
+\(f=\sum_{i\geq0}a_ix^i\) 组成。两个形式和相等，指对应系数逐项相等。运算规定为
+\[
+\sum_i a_ix^i+\sum_i b_ix^i=\sum_i(a_i+b_i)x^i,
+\qquad
+\Bigl(\sum_i a_ix^i\Bigr)\Bigl(\sum_j b_jx^j\Bigr)
+=\sum_k\Bigl(\sum_{i+j=k}a_ib_j\Bigr)x^k.
+\]
+变量 \(x\) 与系数交换；若 \(R\) 不交换，系数相乘仍须保持原有次序。
+\end{definition}
+\symidx{\(R[x]\)：一元多项式环}
+系数支集有限使上述各和有限。两次乘法的第 \(k\) 个系数无论如何加括号，都等于 \(\sum_{i+j+\ell=k}a_ib_jc_\ell\)，故乘法结合；分配律来自系数环，常数多项式 \(1\) 为单位。这验证了定义确实给出环。非零多项式的最大非零系数指标称为\term[duoxiangshi-cishu]{次数}[degree]，记为 \(\deg f\)；该项系数称为\term[shouxiang-xishu]{首项系数}[leading coefficient]，首项系数为 \(1\) 时称为\term[shouyi-duoxiangshi]{首一多项式}[monic polynomial]。零多项式的次数记为 \(-\infty\)。
+\symidx{\(\deg f\)：多项式的次数}
+
+\begin{proposition}\label{b1:prop:polynomial-degree}
+若 \(R\) 是整环，\(f,g\in R[x]\) 非零，则 \(fg\ne0\)，且
+\(\deg(fg)=\deg f+\deg g\)。特别地，\(R[x]\) 是整环。
+\end{proposition}
+\begin{proof}
+设 \(f,g\) 的次数为 \(m,n\)，首项系数为 \(a_m,b_n\)。乘积没有次数超过 \(m+n\) 的项，\(x^{m+n}\) 的系数是非零的 \(a_mb_n\)，所以最高次数恰为 \(m+n\)。
+\end{proof}
+形式多项式与多项式函数必须区别。例如在模 \(2\) 的剩余类中，\(x^2-x\) 对每个输入都取零值，却不是零多项式。若底环存在零因子，次数公式也可能失效：在模 \(4\) 的系数中，两个非零多项式 \(2x\) 的乘积为零。
+
+\ProseParagraphBreak
+设 \(R\) 是交换环，\(G\) 为群。有限形式和 \(\sum_{g\in G}a_gg\) 在逐项加法及
+\[
+\Bigl(\sum_g a_gg\Bigr)\Bigl(\sum_h b_hh\Bigr)
+=\sum_{g,h}a_gb_h(gh)
+\]
+下组成\term[qunhuan]{群环}[group ring] \(R[G]\)。写在括号中的 \(gh\) 是群乘积，相同群元素的系数须相加。有限支集保证乘积有限，结合律由系数乘法与群乘法的结合律给出；单位是群单位处系数为 \(1\)、其余系数为零的形式和。这一构造把群的乘法保留下来，又允许对群元素作线性组合。例如 \(G=\{1,g\}\)、\(g^2=1\) 时，\((1-g)(1+g)=0\)。
+\symidx{\(R[G]\)：群环}
 
 \subsection{零因子、单位与幂零元}
 \label{b1:subsec:1001:03}
+\begin{definition}\label{b1:def:units-zero-nil}
+环 \(R\) 中的元素 \(a\) 若有 \(b\in R\) 使 \(ab=ba=1\)，称为\term[danwei]{单位}[unit]，所有单位组成的集合记为 \(R^\times\)。非零元素 \(a\) 若有非零 \(b\) 使 \(ab=0\) 或 \(ba=0\)，称为\term[lingyinzi]{零因子}[zero divisor]；若某个正整数 \(m\) 满足 \(a^m=0\)，称 \(a\) 为\term[milingyuan]{幂零元}[nilpotent element]。
+\end{definition}
+\symidx{\(R^\times\)：环的单位群}
+单位在乘法下组成群：乘积 \(ab\) 的逆是 \(b^{-1}a^{-1}\)，其余群公理从环继承。单位不可能为零因子，因为可以乘逆元消去。非零幂零元则一定是零因子：取使 \(a^m=0\) 的最小正整数 \(m\)，此时 \(m\geq2\)，且 \(a^{m-1}\ne0\)。注意零本身是幂零元，却按本书定义不叫零因子。
 
-待撰写。
+\begin{proposition}\label{b1:prop:finite-domain-field}
+有限非零环中，不是零因子的非零元素一定是单位。特别地，每个有限整环都是域。
+\end{proposition}
+\begin{proof}
+设 \(a\ne0\) 且不是零因子。映射 \(r\mapsto ar\) 单射，因为 \(ar=as\) 给出 \(a(r-s)=0\)，从而 \(r=s\)。有限集上的单射为满射，故存在 \(b\) 使 \(ab=1\)。又 \(a(ba-1)=(ab)a-a=0\)，由同一消去性质得到 \(ba=1\)。整环乘法交换且每个非零元素都满足上述条件，故为域。
+\end{proof}
+有限性在这里不能删去：整数 \(2\) 既不是单位，也不是零因子。一般的非交换环中，仅有一侧逆元也不够。取域 \(k\) 上以 \(e_0,e_1,\ldots\) 为基的向量空间，令 \(T(e_i)=e_{i+1}\)，\(U(e_0)=0\)、\(U(e_{i+1})=e_i\)。在线性自映射组成的环中，\(UT=1\) 而 \(TU(e_0)=0\ne e_0\)，所以 \(TU\ne1\)。这说明定义中要求双边逆元确有必要。
+
+\ProseParagraphBreak
+幂零元还能产生单位。若 \(a^m=0\)，则
+\[
+(1-a)(1+a+\cdots+a^{m-1})
+=(1+a+\cdots+a^{m-1})(1-a)=1.
+\]
+这里只涉及同一元素的幂，不需要环交换。与之相比，两个幂零元的和在非交换环中未必幂零；交换性怎样保证幂零条件对加法稳定，将在根理想的讨论中出现。

@@ -5,7 +5,7 @@
 \section{无限代数扩张}
 \label{b1:sec:2201}
 
-% TODO: 按以下纲要要点撰写本节。
+无限代数扩张中的每一个元素，仍落在某个有限子扩张中。困难不在单个元素，而在于不同有限层上的选择必须彼此相容。本节先把自同构写成一族有限层上的自同构，再说明为什么任意选择各层自同构通常不能拼成一个整体。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -16,15 +16,60 @@
 
 \subsection{有限子扩张的有向系统}
 \label{b1:subsec:2201:01}
+本章固定代数扩张 \(L/K\)。Galois 扩张仍指正规且可分的代数扩张，只是不再要求次数有限。它的自同构群记为 \(G=\operatorname{Gal}(L/K)\)。以下有关次数与群阶的有限等式不会未经证明地推广成无限基数等式。
 
-待撰写。
+\begin{proposition}\label{b1:prop:finite-galois-layers}
+设 \(L/K\) 为代数 Galois 扩张。\(L\) 的每个有限子集都包含在某个有限 Galois 子扩张 \(N/K\) 中。所有这样的 \(N\) 按包含关系构成有向集合，且 \(L=\bigcup_N N\)。
+\end{proposition}
+\begin{proof}
+取有限集 \(a_1,\ldots,a_r\in L\)。每个 \(a_i\) 的最小多项式可分，且由正规性在 \(L\) 中分裂。将这些多项式的全部根加入 \(K\)，所得域 \(N\) 仍在 \(L\) 内，由有限多个代数元生成，故有限；它是可分多项式之积的分裂域，因此正规且可分，并含原有限集。空集可取 \(N=K\)。
+
+若 \(N_1,N_2\) 是两个有限 Galois 子扩张，各取有限生成元，将它们的并按上一段处理，就有同时包含两域的有限 Galois 子扩张。因此这些域有向。每个 \(a\in L\) 所成的单点集也被某层包含，故它们的并为 \(L\)。
+\end{proof}
+记这个有向集合为 \(\mathcal N\)，并记 \(G_N=\operatorname{Gal}(N/K)\)。对 \(N\subseteq M\)，正规性保证 \(M\) 的每个 \(K\)-自同构把 \(N\) 保持为自身，所以限制给出群同态
+\[
+\operatorname{res}_{M,N}:G_M\longrightarrow G_N.
+\]
+\begin{lemma}\label{b1:lem:galois-restriction-surjective}
+限制同态 \(G\rightarrow G_N\) 及 \(\operatorname{res}_{M,N}\) 都满射。
+\end{lemma}
+\begin{proof}
+取包含 \(L\) 的代数闭域 \(\Omega\)。给定 \(\tau\in G_N\)，把它看作 \(N\rightarrow\Omega\) 的嵌入。\cref{b1:thm:embedding-extension}应用于代数扩张 \(L/N\)，将它延拓为 \(\sigma:L\rightarrow\Omega\)。此嵌入固定 \(K\)，\cref{b1:thm:normal-embedding-criterion}及 \(L/K\) 正规性说明 \(\sigma(L)=L\)，故 \(\sigma\in G\)。这证明第一种限制满射；把 \(L\) 换成 \(M\)，证明第二种。对于三层域，连续限制显然等于直接限制。
+\end{proof}
+这里选取的有限层特意要求在 \(K\) 上正规。若只取任意有限子扩张，自同构可能把该域移到另一个共轭域中，限制就不一定是该域的自同构。
 
 \subsection{代数闭包的自同构群}
 \label{b1:subsec:2201:02}
+固定 \(K\) 的代数闭包 \(\overline K\)。其中所有在 \(K\) 上可分的元素组成子域，记为 \(K^{\mathrm{sep}}\)，称为 \(K\) 的\term[kefen-bibao]{可分闭包}[separable closure]。它是子域的依据为\cref{b1:prop:separable-subfield}；任一可分元的全部共轭根仍然可分，且已在 \(\overline K\) 中，所以 \(K^{\mathrm{sep}}/K\) 正规而可分。
+\symidx{\(K^{\mathrm{sep}}\)：所选代数闭包中的可分闭包}
 
-待撰写。
+\begin{definition}\label{b1:def:absolute-galois-group}
+域 \(K\) 的\term[juedui-galois-qun]{绝对 Galois 群}[absolute Galois group]是 \(G_K\coloneqq\operatorname{Gal}(K^{\mathrm{sep}}/K)\)。可分闭包在给定代数闭包内选定；换一份可分闭包会给出同构的群，但同构一般依赖于对闭包的选择。
+\end{definition}
+
+\symidx{\(G_K\)：域的绝对 Galois 群}
+
+\begin{proposition}\label{b1:prop:closure-automorphisms}
+限制映射 \(\operatorname{Aut}_K(\overline K)\rightarrow G_K\) 为群同构。若 \(K\) 完美，则 \(K^{\mathrm{sep}}=\overline K\)；一般情形中不能把 \(\overline K/K\) 直接视为 Galois 扩张。
+\end{proposition}
+\begin{proof}
+嵌入保持最小多项式及其可分性，故每个 \(K\)-自同构保持可分闭包。若特征为零，所有代数元可分，限制映射就是恒等识别。若特征为 \(p>0\)，\cref{b1:prop:inseparable-polynomial-shape}说明每个 \(a\in\overline K\) 都有某个 \(p^r\) 次幂落在 \(K^{\mathrm{sep}}\)。因而 \(\overline K/K^{\mathrm{sep}}\) 纯不可分。
+
+域中特征为 \(p\) 时，方程 \(x^{p^r}=b\) 至多有一个根，因为两个根之差的 \(p^r\) 次幂为零。因此一个自同构在 \(K^{\mathrm{sep}}\) 上的取值决定它在每个 \(a\) 上的取值，限制映射单射。反过来，给定可分闭包的 \(K\)-自同构，\cref{b1:thm:embedding-extension}把它延拓到 \(\overline K\)；代数闭包在 \(K\) 上正规，正规嵌入判据保证像为整个 \(\overline K\)，故得到满射性。完美域的所有代数元可分，最后的等式由定义得到。
+\end{proof}
+例如 \(K=\mathbb F_p(t)\) 时，\(t^{1/p}\) 不在 \(K\) 中，却被 \(\overline K\) 的每个 \(K\)-自同构固定，因为它是 \(X^p-t\) 的唯一根。若要让不动域对应恢复基域，必须先排除这种纯不可分部分。这是使用可分闭包来定义绝对 Galois 群的理由。
 
 \subsection{相容自同构}
 \label{b1:subsec:2201:03}
+\begin{proposition}\label{b1:prop:galois-compatible-family}
+对 \(L/K\) 的所有有限 Galois 子扩张 \(N\in\mathcal N\)，给定 \(\sigma_N\in G_N\)。存在唯一 \(\sigma\in G\) 在每个 \(N\) 上等于 \(\sigma_N\)，当且仅当
+\begin{equation}\label{b1:eq:galois-compatibility}
+\sigma_M|_N=\sigma_N\qquad(N\subseteq M).
+\end{equation}
+\end{proposition}
+\begin{proof}
+限制一个自同构当然满足相容条件。反过来，对 \(a\in L\)，选含 \(a\) 的有限 Galois 层 \(N\)，规定 \(\sigma(a)=\sigma_N(a)\)。若还选了 \(M\)，由\cref{b1:prop:finite-galois-layers}取同时包含两者的一层 \(P\)，相容性给出 \(\sigma_N(a)=\sigma_P(a)=\sigma_M(a)\)，所以定义无关选择。
 
-待撰写。
+对任意两个元素，取包含它们的同一有限层，就可在该层验证保持和、积与单位，以及固定 \(K\)。同样，相容族 \((\sigma_N^{-1})_N\) 也满足限制条件，因为各 \(\sigma_M\) 保持 \(N\)；它给出刚构造映射的双边逆。因此所得 \(\sigma\) 是自同构。\(L\) 是各层的并，所以其取值被全部限制唯一确定。
+\end{proof}
+在每层能够延拓，不意味着可以把所有层上任意选定的自同构拼在一起。例如在有限域的塔 \(\mathbb F_q\subset\mathbb F_{q^2}\subset\mathbb F_{q^4}\) 中，若在二次层选择恒等、在四次层选择 \(x\mapsto x^q\)，则后者限制到二次层仍非恒等，违反\eqref{b1:eq:galois-compatibility}。下一节把满足相容条件的族组成的群称为逆极限，并在其上建立适合这些有限信息的拓扑。

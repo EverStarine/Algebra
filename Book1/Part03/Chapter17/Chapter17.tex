@@ -6,11 +6,126 @@
 \label{b1:ch:17}
 \BookChapterNumber{b1:ch:17}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+有限域的大小、子域和自同构都有完整而具体的描述。本章从分裂域构造出每个素数幂阶的域，证明给定阶时的唯一性，再用乘法群的循环性和 Frobenius 组织子域与共轭。不可约多项式的计数把抽象存在性转化为可以检验的公式；商域中的运算、多项式分解以及一个小型求值码，展示这些结构怎样用于计算。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 说明有限域为何恰有素数幂个元素，区分同构意义下的唯一与环境域中的唯一子域。
+\item 计算乘法本原元、Frobenius 的阶、有限域的子域与自同构。
+\item 证明并使用不可约多项式计数公式，熟练进行具体商域中的运算。
+\item 从共轭轨道计算最小多项式，并理解有限域方法在分解和纠错中的作用。
+\end{itemize}
+\end{learninggoals}
+
+本章使用有限扩张的基与塔式公式、分裂域的存在唯一性，以及特征 \(p\) 下的幂映射。乘法群循环性的主要引理已在\cref{b1:lem:finite-multiplicative-cyclic}证明，本章直接复用它；子域分类与自同构计数都不以前置 Galois 对应为条件。迹和范数在末节只作具体计算上的预告，统一定义与一般性质由下一章承担。
 
 \input{Part03/Chapter17/Section1701}
 \input{Part03/Chapter17/Section1702}
 \input{Part03/Chapter17/Section1703}
 \input{Part03/Chapter17/Section1704}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限域可以同时从三种角度描述：它是 \(x^q-x\) 的根域，是一个有限维向量空间，也是不可约多项式的商域。Frobenius 把这些角度连接起来：其轨道给出最小多项式，其不动元辨认子域，其幂列出全部基域自同构。乘法本原元提供枚举非零元素的方法，但域生成元未必是乘法群生成元。不可约多项式的次数分组和 Möbius 计数，以及由根数界得到的求值码，均依赖这些可以明确检验的结构。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:17-cardinality}
+设 \(F\) 为十六元域。确定它的特征、作为素域上向量空间的维数以及全部可能的子域大小。说明 \(\mathbb Z/16\mathbb Z\) 为何不能作为 \(F\) 的另一种表示。
+\end{exercise}
+\begin{solution}
+由素数幂的唯一分解，\(16=2^4\)，故特征为二，维数为四。\cref{b1:thm:finite-field-subfields}说明子域对应四的正因子，大小为二、四、十六。\(\mathbb Z/16\mathbb Z\) 中 \(\bar2\ne0\)、\(\bar8\ne0\)，但 \(\bar2\bar8=0\)，存在零因子；其特征又为十六，均与域的条件不合。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-four-field}
+令 \(F=\mathbb F_2(u)\)、\(u^2+u+1=0\)。写出各非零元素的逆和全部 \(\mathbb F_2\) 自同构。
+\end{exercise}
+\begin{solution}
+元素为 \(0,1,u,u+1\)，且 \(u(u+1)=1\)，所以一自逆，\(u\) 与 \(u+1\) 互逆。保持素域的自同构由 \(u\) 的像决定，像必须是最小多项式的根 \(u,u+1\)。这两种选择分别给出恒等和 Frobenius，因为 \(u^2=u+1\)。两者都保持定义关系，故确实是自同构。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-embedding-count}
+判断 \(\mathbb F_{16}\) 能否嵌入 \(\mathbb F_{64}\)。再求保持 \(\mathbb F_2\) 的嵌入 \(\mathbb F_8\rightarrow\mathbb F_{64}\) 有多少个。
+\end{exercise}
+\begin{solution}
+前者不可能，因为像将是次数为四的子域，但四不整除六。后者的像必须是唯一八元子域；选定一个到该子域的同构后，任意其他同构与它之差由 \(\mathbb F_8/\mathbb F_2\) 的一个自同构给出。\cref{b1:thm:finite-field-automorphisms}说明自同构恰有三个，分别为零、一、二次迭代的平方映射，所以所求嵌入有三个。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-subfield-lattice}
+列出 \(\mathbb F_{q^{12}}\) 中包含 \(\mathbb F_q\) 的全部子域，并计算 \(\mathbb F_{q^4}\) 与 \(\mathbb F_{q^6}\) 的交域、合成域。
+\end{exercise}
+\begin{solution}
+十二的正因子为 \(1,2,3,4,6,12\)，相应子域为这些次数的 \(\mathbb F_q\) 扩张，且每个唯一。包含关系由整除控制。由\cref{b1:thm:finite-field-subfields}，交域次数为 \(\gcd(4,6)=2\)，合成域次数为 \(\operatorname{lcm}(4,6)=12\)，分别是 \(\mathbb F_{q^2}\) 和整个域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-frobenius-power-fixed}
+设 \(\sigma(a)=a^q\) 作用在 \(\mathbb F_{q^n}\) 上。对正整数 \(r\)，直接证明 \(\sigma^r\) 的不动元构成 \(\mathbb F_{q^{\gcd(n,r)}}\)，不使用 Galois 对应。
+\end{exercise}
+\begin{solution}
+令 \(d=\gcd(n,r)\)，取整数 \(u,v\) 使 \(d=un+vr\)。若 \(\sigma^r(a)=a\)，则 \(\sigma^n(a)=a\) 也成立；由于 \(\sigma\) 可逆，其整数幂都可使用，故 \(\sigma^d(a)=\sigma^{un+vr}(a)=a\)。反过来 \(d\mid r\)，被 \(\sigma^d\) 固定的元素必被 \(\sigma^r\) 固定。两者不动集相同，而前者正为 \(x^{q^d}-x\) 的根集，即所述子域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-generators}
+取 \(\mathbb F_{16}^\times\) 的生成元 \(g\)。求本原元的个数，并说明 \(g^3\) 是否为乘法本原元、是否生成扩张 \(\mathbb F_{16}/\mathbb F_2\)。
+\end{exercise}
+\begin{solution}
+乘法群阶为十五，本原元个数为 \(\varphi(15)=8\)。\(g^3\) 的阶为五，所以不是乘法本原元。但真子域只有 \(\mathbb F_2\) 和 \(\mathbb F_4\)，其乘法群阶分别为一和三，都不能含有五阶元。因此 \(g^3\) 不在任何真子域中，仍生成整个域扩张。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-irreducible-counts}
+求 \(\mathbb F_3\) 上首一二、三、四次不可约多项式的个数。再求 \(\mathbb F_{q^6}\) 中对 \(\mathbb F_q\) 恰为六次的元素个数。
+\end{exercise}
+\begin{solution}
+由\eqref{b1:eq:finite-field-irreducible-count}，依次为 \((9-3)/2=3\)、\((27-3)/3=8\)、\((81-9)/4=18\)。六次域中次数小于六的元素恰在 \(\mathbb F_{q^2}\cup\mathbb F_{q^3}\) 中，两域交为 \(\mathbb F_q\)。故六次元素有 \(q^6-q^2-q^3+q\) 个，亦等于 \(6N_q(6)\)。后一等式体现每个六次不可约多项式有六个互异根。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-explicit-sixteen}
+证明 \(f=t^4+t+1\) 在 \(\mathbb F_2\) 上不可约。在 \(F=\mathbb F_2[t]/(f)\) 中令 \(\alpha=\bar t\)，计算 \(\alpha^{-1}\) 和 \((\alpha^2+1)^2\)。
+\end{exercise}
+\begin{solution}
+零、一都不是根，所以若可约，只能是两个不可约二次因子的乘积。\(\mathbb F_2\) 上唯一首一不可约二次多项式为 \(t^2+t+1\)：一个无根的首一二次式常数项必须为一，再检查一次项系数即可。设其根为 \(u\)，有 \(u^4=u\)，从而 \(f(u)=1\ne0\)，排除了该因子。因此 \(f\) 不可约。在商域中 \(\alpha^4=\alpha+1\)，所以 \(\alpha(\alpha^3+1)=1\)，逆为 \(\alpha^3+1\)；又 \((\alpha^2+1)^2=\alpha^4+1=\alpha\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-minimal-shift}
+在 \(\mathbb F_8=\mathbb F_2(\alpha)\)、\(\alpha^3+\alpha+1=0\) 中，求 \(\beta=\alpha+1\) 的最小多项式。
+\end{exercise}
+\begin{solution}
+\(\alpha^3=\alpha+1=\beta\)，而 \(\alpha\ne1\) 的乘法阶为七。因此 \(\beta^2=\alpha^6=\alpha^2+1\)，\(\beta^3=\alpha^9=\alpha^2\)，得到 \(\beta^3+\beta^2+1=0\)。多项式 \(x^3+x^2+1\) 在零、一处均不为零，故不可约，正是最小多项式。它也由 \(\beta,\beta^2,\beta^4\) 的 Frobenius 轨道给出。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-irreducibility-test}
+设首一 \(f\in\mathbb F_q[x]\) 的次数为 \(n>1\)。证明它不可约当且仅当 \(f\mid x^{q^n}-x\)，并且对每个整除 \(n\) 的素数 \(\ell\)，有 \(\gcd(f,x^{q^{n/\ell}}-x)=1\)。
+\end{exercise}
+\begin{solution}
+若不可约，\cref{b1:prop:finite-field-factorization}立即给出整除关系，且次数 \(n\) 不整除较小的 \(n/\ell\)，所以各最大公因式为一。反之，首项整除关系使 \(f\) 无重因子，并使其每个不可约因子次数 \(d\) 整除 \(n\)。若 \(d<n\)，取 \(n/d\) 的一个素因子 \(\ell\)，则 \(d\mid n/\ell\)，该因子将整除相应最大公因式，矛盾。因此每个因子次数都等于 \(n\)，由 \(\deg f=n\) 知只有一个因子。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-inseparable-factor}
+分解 \(x^6+x^2+1\in\mathbb F_2[x]\)，并确定其在分裂域中各根的重数。
+\end{exercise}
+\begin{solution}
+形式导数为零，且特征二下 \(x^6+x^2+1=(x^3+x+1)^2\)。内层三次式在零、一处都不为零，故不可约。其导数为 \(x^2+1=(x+1)^2\)，而它在一处不为零，所以与导数互素，有三个不同的根。原多项式在分裂域中这三个根的重数各为二。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-orbit-sum-product}
+在 \(\mathbb F_9=\mathbb F_3(u)\)、\(u^2=2\) 中，求 \(1+u\) 的 Frobenius 轨道、轨道元素的和与积，以及它的最小多项式。
+\end{exercise}
+\begin{solution}
+三次幂映射把 \(u\) 送到 \(u^3=2u=-u\)，故轨道为 \(1+u,1-u\)。和为二，积为 \(1-u^2=2\)。最小多项式因而为 \(x^2-2x+2=x^2+x+2\)。\(u\notin\mathbb F_3\)，所以这两个根确实不同，次数为二。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-factor-nine}
+将 \(x^9-x\) 在 \(\mathbb F_3[x]\) 中分解为首一不可约因子的乘积。
+\end{exercise}
+\begin{solution}
+一次因子为 \(x,x-1,x+1\)。首一不可约二次式恰有三个，分别为 \(x^2+1,x^2+x+2,x^2+2x+2\)，在零、一、负一处逐一代入都非零，故都不可约。\cref{b1:prop:finite-field-factorization}说明 \(x^9-x\) 恰为所有次数整除二的首一不可约式各一次的乘积。因此所求分解为上述六个因子的乘积，其总次数为九。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:17-evaluation-distance}
+在 \(\mathbb F_q\) 中选 \(n\) 个互异点，\(1\leq k\leq n\leq q\)。以次数小于 \(k\) 的多项式在这些点的取值组成求值码。证明不同编码向量之间最少恰有 \(n-k+1\) 个坐标不同，并说明至多能唯一纠正多少处错误。
+\end{exercise}
+\begin{solution}
+两个不同多项式的差次数至多为 \(k-1\)，所以至多在 \(k-1\) 个所选点为零，给出距离至少 \(n-k+1\)。取其中 \(k-1\) 个点，令多项式为对应一次因子的乘积；当 \(k=1\) 时取常数一。它与零多项式的取值恰在 \(n-k+1\) 处不同，所以下界能达到。若错误数 \(e\) 满足 \(2e<n-k+1\)，两个候选编码向量不可能同时与收到的向量相差至多 \(e\) 处，否则两者距离至多 \(2e\)。因此可以唯一纠正至多 \(\lfloor(n-k)/2\rfloor\) 处错误；达到最小距离的一对编码向量也说明不能统一保证更大的错误数。
+\end{solution}

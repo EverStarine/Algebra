@@ -6,11 +6,129 @@
 \label{b1:ch:15}
 \BookChapterNumber{b1:ch:15}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+方程的全部根需要一个共同的域来容纳。分裂域为单个多项式提供这样的环境，代数闭包则同时容纳所有代数方程的根。本章从不可约多项式的商域构造出发，证明分裂域和代数闭包的存在与同构唯一性，并把“不可约多项式一旦有根就全部分裂”转化为正规扩张的嵌入判据。嵌入延拓还把共轭根的替换变成域上的相容映射，为下一章的嵌入计数及 Galois 理论作准备。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 构造并计算低次多项式的分裂域，区分同构类型唯一与同构映射唯一。
+\item 解释代数闭包的存在性构造，以及 Zorn 引理在极大理想和部分嵌入中的作用。
+\item 用分裂条件、嵌入条件和根的生成条件判断正规性。
+\item 构造正规闭包，把共轭根之间的同构延拓到更大的代数扩张。
+\end{itemize}
+\end{learninggoals}
+
+本章使用\cref{b1:prop:minimal-polynomial-degree}的单扩张结构及\cref{b1:thm:algebraic-tower}的代数性传递。分裂域只需有限次添根；代数闭包与一般嵌入延拓使用 Zorn 引理。实数和复数仅用于具体低次算例，一般存在性证明不依赖复数域代数闭，也不把正特征情形约化到复数。
 
 \input{Part03/Chapter15/Section1501}
 \input{Part03/Chapter15/Section1502}
 \input{Part03/Chapter15/Section1503}
 \input{Part03/Chapter15/Section1504}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+添入一个代数元时，嵌入的延拓由最小多项式的一个根决定。逐次使用这一事实，可构造分裂域并证明其在基域同构意义下唯一。把部分嵌入按延拓排序，则能将同样的想法推广到任意代数扩张；其中的极大性论证必须同时保证定义域的封闭性和映射的相容性。
+
+\ProseParagraphBreak
+正规扩张由一族多项式的全部根生成，因而每个基域嵌入都置换各个有限根集，并把整个扩张映满自身。这对无限扩张也成立。正规性可以沿塔向上层限制，也对交和合成保持，但既不自动向中间域下降，也不沿两层正规扩张传递。嵌入的数目至多为扩张次数，是否达到上界则取决于下一章的可分性。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:15-1}
+求 \(x^4+4\) 在 \(\mathbb Q\) 上的分裂域及其次数。
+\end{exercise}
+\begin{solution}
+分解为 \((x^2-2x+2)(x^2+2x+2)\)，四个根为 \(1\pm i,-1\pm i\)。所以 \(\mathbb Q(i)\) 使多项式分裂。任何分裂域都包含根 \(1+i\)，减去一后包含 \(i\)，故这个域正是分裂域。\(x^2+1\) 在 \(\mathbb Q\) 上无根，故次数为二。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-2}
+设 \(a=\sqrt[4]3>0\)。求 \(x^4-3\) 在 \(\mathbb Q\) 上的分裂域，并列出 \(\mathbb Q(a)\) 到 \(\mathbb C\) 的全部 \(\mathbb Q\) 嵌入。
+\end{exercise}
+\begin{solution}
+根为 \(a,-a,ia,-ia\)，分裂域为 \(\mathbb Q(a,i)\)。\(x^4-3\) 对素数三满足 Eisenstein 判据，故 \(\Bigl[\mathbb Q(a):\mathbb Q\Bigr]=4\)。该域实，添入 \(i\) 再给出二次扩张，所以分裂域次数为八。由\cref{b1:lem:simple-embedding-extension}，\(\mathbb Q(a)\) 的嵌入恰由把 \(a\) 送到上述四个根给出；其中只有像为 \(a,-a\) 的两个嵌入把 \(\mathbb Q(a)\) 映入自身。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-3}
+设 \(f\in K[x]\) 非零，\(r\geq1\)。证明 \(f\) 与 \(f^r\) 在同一代数闭包中的分裂域相同。再说明两个多项式的乘积的分裂域如何由各自分裂域得到。
+\end{exercise}
+\begin{solution}
+\(f\) 与 \(f^r\) 有相同的不同根，只是重数改变，故由根生成的域相同。若 \(f,g\) 的分裂域分别为 \(L_f,L_g\)，乘积 \(fg\) 的根集是两个根集的并，故其分裂域是包含 \(L_f,L_g\) 的最小子域，即合成域 \(L_fL_g\)。这也包括常数多项式的情形。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-4}
+在 \(\mathbb F_2[x]\) 中考虑 \(f=x^2+x+1\)。不用有限域分类，直接构造其分裂域，并写出保持 \(\mathbb F_2\) 的两个自同构。
+\end{exercise}
+\begin{solution}
+\(f(0)=f(1)=1\)，所以二次多项式不可约，\(L=\mathbb F_2[x]/(f)\) 是域。记 \(a=x+(f)\)，则 \(a^2+a+1=0\)，又 \(f(a+1)=f(a)=0\)，故它的两个根为 \(a,a+1\)，均在 \(L\) 中。由 \(L=\mathbb F_2(a)\) 知它就是分裂域。两个自同构分别为 \(a\mapsto a\) 与 \(a\mapsto a+1\)；后一映射重复两次恢复 \(a\)，也可直接验证为自同构。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-5}
+证明每个代数闭域都是无限域。若 \(K\) 可数，证明其任意代数闭包也可数。
+\end{exercise}
+\begin{solution}
+若域 \(F\) 有限，则 \(1+\prod_{a\in F}(x-a)\) 为非常数多项式，在每个 \(a\in F\) 处值为一，故没有根，\(F\) 不是代数闭域。若 \(K\) 可数，\(K[x]\) 中非零多项式只有可数多个，每个在代数闭包中只有有限多个不同根，而代数闭包的每个元素都属于某个这样的有限根集。因此代数闭包至多可数；由刚证的无限性，它恰为可数无限集。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-6}
+设 \(\Omega\) 是代数闭域，\(K\subseteq\Omega\)，不要求 \(\Omega/K\) 代数。证明 \(\Omega\) 中在 \(K\) 上代数的元素组成 \(K\) 的一个代数闭包。
+\end{exercise}
+\begin{solution}
+记该集合为 \(A\)。\cref{b1:prop:algebraic-elements-subfield}说明它是子域，且 \(A/K\) 按定义代数。给定非常数 \(f\in A[x]\)，在 \(\Omega\) 中取根 \(a\)。其有限多个系数在 \(K\) 上生成有限扩张 \(E\)，而 \(a\) 在 \(E\) 上代数。\cref{b1:thm:algebraic-tower}给出 \(a\) 在 \(K\) 上代数，故 \(a\in A\)。于是 \(A\) 代数闭，同时满足代数闭包的两个条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-7}
+设 \(L/K\) 代数，\(\Omega\) 为 \(K\) 的代数闭包。证明每个 \(K\) 嵌入 \(L\rightarrow\Omega\) 的像都是一个与 \(L\) 同构的中间域，但这些像未必相同。给出具体例子。
+\end{exercise}
+\begin{solution}
+域嵌入保持运算与逆元，故像是包含 \(K\) 的子域，映射本身给出到像的 \(K\) 同构。取 \(L=\mathbb Q(a)\)、\(a=\sqrt[3]2>0\)，并在一个包含三个根的代数闭包中取非实根 \(a\zeta\)。嵌入 \(a\mapsto a\zeta\) 的像为 \(\mathbb Q(a\zeta)\)，包含非实元素；原来的 \(L\) 全部实，故二者不相同。它们尽管嵌入在同一环境中位置不同，抽象的 \(\mathbb Q\) 域结构仍同构。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-8}
+设 \(L/K\) 正规，\(E/K\) 是同一代数闭包中的任意代数扩张。证明合成域 \(LE/E\) 正规。若 \(L/K\) 有限，证明 \([LE:E]\leq[L:K]\)。
+\end{exercise}
+\begin{solution}
+\(L\) 由某族 \(K\) 系数多项式的全部根生成，故 \(LE\) 由 \(E\) 与同一族根生成；把系数视为 \(E\) 中元素，\cref{b1:thm:normal-embedding-criterion}即说明 \(LE/E\) 正规。有限情形下，取 \(L/K\) 的基 \(u_1,\ldots,u_n\)。它们的 \(E\) 线性张成空间包含 \(E,L\)，且对乘法封闭，因为 \(u_iu_j\) 可用 \(K\) 系数写成该基的线性组合。非零元素在这个有限维空间上的乘法为单射，因而满射，所以它也有逆元。因此该空间是域，恰等于 \(LE\)，从而 \([LE:E]\leq n\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-9}
+证明每个二次扩张都正规，不论其特征如何。
+\end{exercise}
+\begin{solution}
+设 \([L:K]=2\)，取 \(a\in L\setminus K\)。塔式公式给出 \(L=K(a)\)，其最小多项式写成 \(x^2+bx+c\)。已知一个根 \(a\)，另一个根为 \(-b-a\)，也在 \(L\) 中，包括二者相等的情形。因此 \(L\) 是该多项式的分裂域，由\cref{b1:thm:normal-embedding-criterion}正规。证明没有除以二，所以也适用于特征二。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-10}
+设 \(\sigma:L\rightarrow L\) 为保持 \(K\) 的域嵌入，\(L/K\) 代数，但未必正规。证明 \(\sigma\) 必为自同构。给出删去代数性后的反例。
+\end{exercise}
+\begin{solution}
+给定 \(a\in L\)，令 \(R\) 为 \(m_{a,K}\) 在 \(L\) 中的不同根组成的有限非空集合。\(\sigma\) 固定系数，因此将 \(R\) 单射地映入自身，必为双射，故 \(a\) 有 \(R\) 中原像。对每个 \(a\) 都如此，所以 \(\sigma\) 满射。反例是 \(k(t)\rightarrow k(t)\)、\(t\mapsto t^2\)：超越性保证这是嵌入，但像为 \(k(t^2)\)，由\eqref{b1:eq:rational-power-degree}知它是次数二的真子域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-11}
+设 \(E/K\) 代数，\(\Omega/K\) 为代数闭包且 \(E\subseteq\Omega\)。证明 \(\Omega\) 也是 \(E\) 的代数闭包，并说明 \(E\) 的任意 \(K\) 嵌入到 \(\Omega\) 能否延拓为 \(\Omega\) 的自同构。
+\end{exercise}
+\begin{solution}
+\(\Omega\) 本来代数闭；其中元素在 \(K\) 上的代数方程也可视为 \(E\) 系数方程，所以 \(\Omega/E\) 代数。因此它是 \(E\) 的代数闭包。给定嵌入，用\cref{b1:thm:embedding-extension}延拓到 \(\Omega\rightarrow\Omega\)，所得映射仍固定 \(K\)。它是代数扩张 \(\Omega/K\) 到自身的嵌入，由上一题的有限根集论证必满射，故为自同构；也可直接用\cref{b1:cor:intermediate-embedding-extension}之后的结论。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-12}
+令 \(a=\sqrt[3]2>0\)，\(\zeta^2+\zeta+1=0\)、\(\zeta\neq1\)，\(L=\mathbb Q(a,\zeta)\)。证明复共轭在 \(L\) 上给出自同构，并求它的固定元素。
+\end{exercise}
+\begin{solution}
+共轭固定 \(a\)，并把 \(\zeta\) 送到 \(\zeta^2=-1-\zeta\)，故保持生成域 \(L\)，其平方为恒等。\eqref{b1:eq:cubic-splitting-degree}给出 \(\Bigl[L:\mathbb Q(a)\Bigr]=2\)，所以元素唯一写成 \(u+v\zeta\)、\(u,v\in\mathbb Q(a)\)。其共轭为 \(u-v-v\zeta\)，与原式相等便由系数比较得 \(v=-v\)，故 \(v=0\)。所以固定元素恰为 \(\mathbb Q(a)\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-13}
+设 \(L/K\) 为有限扩张，\(a_1,\ldots,a_r\) 是一组生成元。证明 \(L\) 的正规闭包恰为 \(\prod_i m_{a_i,K}\) 的分裂域，并说明改变有限生成集不会改变这个子域。
+\end{exercise}
+\begin{solution}
+在固定代数闭包内，令所述分裂域为 \(N\)。它正规并包含全部 \(a_i\)，因而包含 \(L\)。若 \(M/K\) 正规并包含 \(L\)，每个 \(m_{a_i,K}\) 在 \(M\) 中分裂，所以 \(M\) 包含 \(N\)。故 \(N\) 正是包含 \(L\) 的最小正规子域，与\cref{b1:prop:normal-closure}定义的正规闭包相同。最小性只涉及 \(L\)，不涉及生成集，所以更换生成元仍得到同一子域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:15-14}
+设 \(K\subseteq E\subseteq L\)，\(L/K\) 正规。证明：\(E/K\) 正规，当且仅当 \(L\) 的每个 \(K\) 自同构都将 \(E\) 映到自身。
+\end{exercise}
+\begin{solution}
+若 \(E/K\) 正规，任意自同构的限制都是 \(E\) 到共同代数闭包的 \(K\) 嵌入，由\cref{b1:thm:normal-embedding-criterion}其像为 \(E\)。反过来，给定 \(E\) 到代数闭包的任意 \(K\) 嵌入，\cref{b1:cor:intermediate-embedding-extension}将它延拓到 \(L\) 的 \(K\) 自同构；按假设它把 \(E\) 映到自身。因此所有这样的嵌入都保持 \(E\)，再次用正规性判据得 \(E/K\) 正规。这里无需假定扩张可分。
+\end{solution}

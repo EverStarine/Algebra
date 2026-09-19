@@ -5,8 +5,6 @@
 \section{多元多项式与有限性}
 \label{b1:sec:1204}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 单项式、多项式次数及消去的动机
@@ -16,17 +14,107 @@
 % ---
 %
 
+一元多项式的带余除法依靠次数，把一个除法过程不断缩短。多元多项式仍有次数，却不能仅凭全次数把任意多项式除以另一个多项式。于是问题从“能否用一个生成元表示理想”转为“是否至少能用有限个生成元表示”。Hilbert 基定理回答的正是后一个问题。
+
 \subsection{单项式、次数与消去}
 \label{b1:subsec:1204:01}
 
-待撰写。
+设 \(R\) 是交换环。用 \(n\) 元非负整数组 \(\alpha=(\alpha_1,\ldots,\alpha_n)\) 记
+\[
+x^\alpha=x_1^{\alpha_1}\cdots x_n^{\alpha_n},\qquad
+|\alpha|=\alpha_1+\cdots+\alpha_n.
+\]
+这样的乘积称为\term[danxiangshi]{单项式}[monomial]。多元多项式是有限和 \(f=\sum_\alpha a_\alpha x^\alpha\)，按系数相加，乘法由 \(x^\alpha x^\beta=x^{\alpha+\beta}\) 分配展开。每个系数族唯一确定一个多项式，所得环记为 \(R[x_1,\ldots,x_n]\)。也可以逐次添加不定元，把它看作 \(\Bigl(R[x_1,\ldots,x_{n-1}]\Bigr)[x_n]\)；两种描述都将同一组系数对应到同一个有限和。
+\symidx{\(x^\alpha\)：多重指数对应的单项式}
+
+\begin{definition}\label{b1:def:multivariate-degree}
+非零多项式 \(f=\sum_\alpha a_\alpha x^\alpha\) 的\term[quan-cishu]{全次数}[total degree]为
+\[
+\deg f=\max\Bigl\{\,|\alpha|\mid a_\alpha\ne0\,\Bigr\}.
+\]
+关于变量 \(x_i\) 的次数则是非零项中 \(\alpha_i\) 的最大值。如果所有非零项的全次数都等于 \(d\)，就称 \(f\) 为 \(d\) 次\term[qici-duoxiangshi]{齐次多项式}[homogeneous polynomial]。
+\end{definition}
+
+例如 \(x^2y+xy^3+1\) 的全次数是四，关于 \(x\) 的次数是二，关于 \(y\) 的次数是三。每个多项式可以唯一拆成不同全次数的齐次部分。若 \(R\) 是整环，反复使用\cref{b1:prop:polynomial-degree}可知多元多项式环也是整环；若 \(f_d,g_e\) 是 \(f,g\) 的最高次齐次部分，则 \(f_dg_e\ne0\)，而它正是 \(fg\) 的 \(d+e\) 次齐次部分。因此非零乘积满足 \(\deg(fg)=\deg f+\deg g\)。
+
+\ProseParagraphBreak
+多元多项式常同时描述多个方程。以 \(\mathbb Q[x,y]\) 中的
+\[
+y-x^2=0,\qquad y-1=0
+\]
+为例，两式相减便得到 \(x^2-1=0\)，其中已经不含 \(y\)。将方程左端所生成的理想记为 \(I\)，有
+\[
+I=(y-x^2,y-1)=(y-1,x^2-1),\qquad
+I\cap\mathbb Q[x]=(x^2-1).
+\]
+最后一个等式的反向包含需要说明：若 \(g(x)=A(x,y)(y-1)+B(x,y)(x^2-1)\)，代入 \(y=1\)，便得到 \(g(x)=B(x,1)(x^2-1)\)，所以 \(g\) 被 \(x^2-1\) 整除。交 \(I\cap\mathbb Q[x]\) 收集了理想中只含 \(x\) 的关系，这是\term[xiaoqu]{消去}[elimination]的一个初步例子。
+
+\ProseParagraphBreak
+一般消去并不保证每个消去后方程的解都能提升为原方程组的解。例如在 \(K[x,y]\) 中，\((xy-1)\cap K[x]=0\)：非零的 \((xy-1)h\) 关于 \(y\) 的次数至少为一，所以不能只含 \(x\)。消去理想因而不限制 \(x\)，可是 \(x=0\) 无论配上什么 \(y\)，都不能满足 \(xy=1\)。系统的计算方法和几何解释留到第三卷。
 
 \subsection{Noether 环与升链条件}
 \label{b1:subsec:1204:02}
 
-待撰写。
+\begin{definition}\label{b1:def:noetherian-ring}
+若交换环 \(R\) 的每个理想都能由有限个元素生成，即每个理想 \(I\) 都可写成
+\[
+I=(a_1,\ldots,a_m)=\{\,r_1a_1+\cdots+r_ma_m\mid r_i\in R\,\},
+\]
+则称 \(R\) 为\term[noether-huan]{Noether 环}[Noetherian ring]。这里生成元的数目可以依赖于 \(I\)，零理想允许由空集生成。
+\end{definition}
+
+这个定义不要求环的底集合有限。例如每个主理想整环都是 Noether 环，故 \(\mathbb Z\) 和 \(K[x]\) 都是；后者即使在有限域上也有无穷多个元素。
+
+\begin{proposition}\label{b1:prop:noetherian-acc}
+交换环 \(R\) 是 Noether 环，当且仅当每条理想升链
+\[
+I_1\subseteq I_2\subseteq I_3\subseteq\cdots
+\]
+都最终稳定，即存在 \(N\)，使所有 \(n\ge N\) 都有 \(I_n=I_N\)。
+\end{proposition}
+\begin{proof}
+设每个理想有限生成。给定升链，其并集 \(I=\bigcup_{n\ge1}I_n\) 是理想：任取其中两个元素，它们同时属于足够靠后的一个 \(I_n\)，因而它们的差以及任意环元素与它们的乘积都仍在并集中。取有限生成元 \(a_1,\ldots,a_m\)，再取 \(N\) 使它们都属于 \(I_N\)。于是 \(I\subseteq I_N\)，结合相反包含得 \(I=I_N\)，升链自此稳定。
+
+反过来，若某个理想 \(I\) 不有限生成，可以先取 \(a_1\in I\)，再依次取
+\(a_{n+1}\in I\setminus(a_1,\ldots,a_n)\)。每步都能进行，因为此前有限个元素不能生成 \(I\)。这给出严格升链
+\((a_1)\subsetneq(a_1,a_2)\subsetneq\cdots\)，与假设矛盾。
+\end{proof}
+
+命题中的性质称为\term[sheng-lian-tiaojian]{升链条件}[ascending chain condition]。它排除了理想中不断出现新的、无法由此前元素生成的关系。有限生成与升链稳定是同一性质的两种表述，下面的证明将交替使用它们。
+
+\begin{proposition}\label{b1:prop:noetherian-quotient}
+Noether 环的每个商环都是 Noether 环。
+\end{proposition}
+\begin{proof}
+设 \(R\) 为 Noether 环，\(J\) 为理想，\(\pi:R\rightarrow R/J\) 为商映射。对 \(R/J\) 的任一理想 \(L\)，原像 \(\pi^{-1}(L)\) 是 \(R\) 的理想，所以有限生成，设生成元为 \(a_1,\ldots,a_m\)。\(\pi\) 的满射性给出 \(L=\pi\Bigl(\pi^{-1}(L)\Bigr)\)，将每个线性组合映到商环，就得到 \(L=\Bigl(\pi(a_1),\ldots,\pi(a_m)\Bigr)\)。故每个 \(L\) 有限生成。
+\end{proof}
+
+无穷多个不定元时，\(K[x_1,x_2,\ldots]\) 不是 Noether 环。这里每个多项式仍只含有限项、有限多个变量，但理想升链 \((x_1)\subsetneq(x_1,x_2)\subsetneq\cdots\) 永不稳定：若 \(x_{n+1}\in(x_1,\ldots,x_n)\)，将前 \(n\) 个变量代为零，会在 \(K[x_{n+1},x_{n+2},\ldots]\) 中得到 \(x_{n+1}=0\)，矛盾。因而下一个定理中的“不定元个数有限”不是形式上的限制。
 
 \subsection{Hilbert 基定理与模论推广}
 \label{b1:subsec:1204:03}
 
-待撰写。
+\begin{theorem}[Hilbert 基定理]\label{b1:thm:hilbert-basis}
+若交换环 \(R\) 是 Noether 环，则 \(R[x]\) 也是 Noether 环。因此 \(R[x_1,\ldots,x_n]\) 及其任一商环都是 Noether 环。
+\end{theorem}
+\begin{proof}
+给定理想 \(I\subseteq R[x]\)。若 \(I=0\)，它已经有限生成，故设 \(I\ne0\)。对每个整数 \(n\ge0\)，令 \(J_n\subseteq R\) 为 \(I\) 中次数至多为 \(n\) 的多项式的 \(x^n\) 系数所组成的集合，并把零多项式也计入。
+
+集合 \(J_n\) 是理想。两个所取多项式的差仍在 \(I\) 中且次数至多为 \(n\)，其 \(x^n\) 系数是相应系数之差；乘以 \(R\) 中任一元素后也如此。若 \(a\in J_n\)，将给出这个系数的多项式乘以 \(x\)，便有 \(a\in J_{n+1}\)。故 \(J_0\subseteq J_1\subseteq\cdots\) 是升链。由\cref{b1:prop:noetherian-acc}，存在 \(N\) 使 \(J_n=J_N\) 对所有 \(n\ge N\) 成立。
+
+对每个 \(0\le n\le N\)，选取 \(J_n\) 的有限个非零生成元 \(a_{n1},\ldots,a_{nr_n}\)；若 \(J_n=0\)，令 \(r_n=0\)。按 \(J_n\) 的定义，选 \(f_{nj}\in I\)，次数至多为 \(n\)，其 \(x^n\) 系数为 \(a_{nj}\)。由于该系数非零，实际上 \(\deg f_{nj}=n\)。我们断言，所有这些有限个 \(f_{nj}\) 生成 \(I\)。
+
+对非零 \(f\in I\) 的次数 \(d\) 归纳。令 \(n=\min(d,N)\)。\(f\) 的首项系数 \(a\) 属于 \(J_d=J_n\)，所以
+\(a=\sum_{j=1}^{r_n}b_j a_{nj}\)，其中 \(b_j\in R\)。于是
+\[
+f-\sum_{j=1}^{r_n}b_jx^{d-n}f_{nj}
+\]
+仍在 \(I\) 中，而最高次项的系数已经消去，故所得多项式为零或次数严格小于 \(d\)。若 \(d=0\)，它必为零，给出归纳起点；若 \(d>0\)，归纳假设说明这个差属于所有 \(f_{nj}\) 生成的理想，因而 \(f\) 也属于该理想。断言得证，所以 \(R[x]\) 是 Noether 环。
+
+反复添加一个不定元，得到有限多个不定元的结论；再用\cref{b1:prop:noetherian-quotient}，其任意商环也为 Noether 环。
+\end{proof}
+
+这称为\term[hilbert-ji-dingli]{Hilbert 基定理}[Hilbert basis theorem]。证明没有假定 \(R\) 是整环：即使它有零因子，按固定次数收集系数仍然得到理想升链，最后的消项也只用加法和乘法。这一点使定理能用于很多商环。
+
+\ProseParagraphBreak
+特别地，域上的有限元多项式环中，每个理想都由有限个多项式生成。因此任意一族多项式方程所生成的理想，均可由有限个多项式控制；这些生成元各自又是原方程中有限项的组合，所以甚至可以从原方程族中选出有限多个，生成同一个理想。不过，这个存在性证明没有给出从任意输入有效寻找生成元的算法，也没有证明它们组成某种适于消去的标准形式。第三卷将在复用这里的 Hilbert 基定理后继续讨论这些问题，并把升链条件推广到模及其子模；本章的证明不依赖那些模论结论。

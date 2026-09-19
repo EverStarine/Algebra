@@ -5,8 +5,6 @@
 \section{Galois 扩张}
 \label{b1:sec:1901}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 正规且可分的有限扩张
@@ -16,27 +14,77 @@
 % * 乘法特征与域嵌入独立性的主要证明统一放在第18.1节；本节专门承担 Artin 不动域定理，说明线性独立性在扩张次数估计中的作用
 %
 
+多项式根的置换并不都能保持根之间的代数关系。域自同构挑出的正是那些合法的置换。有限 Galois 理论的第一步，是说明什么时候自同构足够多，以及一组有限自同构能够固定多大的子域。
+
 \subsection{有限正规可分扩张}
 \label{b1:subsec:1901:01}
 
-待撰写。
+\begin{definition}\label{b1:def:finite-galois-extension}
+有限域扩张 \(L/K\) 若同时可分且正规，即每个元素在 \(K\) 上的最小多项式没有重根，并且每个在 \(L\) 中有根的 \(K\) 上不可约多项式都在 \(L\) 中分裂，则称为\term[Galois-kuozhang]{Galois 扩张}[Galois extension]。
+\end{definition}
+有限可分多项式的分裂域提供这类扩张。反过来，有限扩张可由有限多个元素生成；若它正规且可分，取这些生成元的最小多项式的乘积，其互异不可约因子的乘积是可分多项式，并且其分裂域正是 \(L\)。所以有限 Galois 扩张也可以等价地描述为可分多项式的分裂域。
+
+\ProseParagraphBreak
+\(\mathbb Q(\sqrt2)/\mathbb Q\) 为 Galois 扩张，而 \(\mathbb Q(\sqrt[3]2)/\mathbb Q\) 可分但不正规，因为后者为实域，未包含 \(x^3-2\) 的两个非实根。正特征下，正规性也不能替代可分性：\(\mathbb F_p(u)/\mathbb F_p(u^p)\) 中每个最小多项式只有一个不同根，仍是正规扩张，但不是 Galois 扩张。
 
 \subsection{自同构群与不动域}
 \label{b1:subsec:1901:02}
 
-待撰写。
+保持 \(K\) 中每个元素不变的 \(L\) 自同构，在复合下组成群 \(\operatorname{Aut}_K(L)\)。当 \(L/K\) 为 Galois 扩张时，记为 \(\operatorname{Gal}(L/K)\)，称为扩张的\term[Galois-qun]{Galois 群}[Galois group]。
+\symidx{\(\operatorname{Aut}_K(L)\)：保持基域 \(K\) 的 \(L\) 自同构群}
+\symidx{\(\operatorname{Gal}(L/K)\)：Galois 扩张的自同构群}
+对任意自同构群的子群 \(H\)，定义其\term[budong-yu]{不动域}[fixed field]
+\[
+L^H=\Bigl\{\,a\in L\mid \sigma(a)=a\text{ 对每个 }\sigma\in H\,\Bigr\}.
+\]
+\symidx{\(L^H\)：子群 \(H\) 的不动域}
+自同构保持域的运算，因此共同不动元对加、减、乘以及非零元取逆都封闭，确实组成子域。若 \(H\subseteq\operatorname{Aut}_K(L)\)，则 \(K\subseteq L^H\)。
+
+\begin{proposition}\label{b1:prop:galois-automorphism-count}
+若 \(L/K\) 为有限 Galois 扩张，则 \(|\operatorname{Gal}(L/K)|=[L:K]\)。
+\end{proposition}
+\begin{proof}
+由\cref{b1:thm:separable-embeddings}，可分性保证 \(L\) 到代数闭包的 \(K\) 嵌入恰有 \([L:K]\) 个。由\cref{b1:thm:normal-embedding-criterion}，正规性保证每个这样的嵌入把 \(L\) 映到自身；有限维单射的像与 \(L\) 维数相同，所以它是自同构。这些嵌入因而恰为 Galois 群的全部元素。
+\end{proof}
 
 \subsection{Artin 不动域定理}
 \label{b1:subsec:1901:03}
 
-待撰写。
+以下是\term[Artin-budongyu-dingli]{Artin 不动域定理}[Artin fixed field theorem]。这里首先给定自同构群，并不预先假设对不动域的扩张有限。
+\begin{theorem}[Artin]\label{b1:thm:artin-fixed-field}
+设 \(G\) 是域 \(L\) 的一个有限自同构群，\(K=L^G\)。则 \(L/K\) 是有限 Galois 扩张，并且
+\[
+[L:K]=|G|,\qquad \operatorname{Gal}(L/K)=G.
+\]
+\end{theorem}
+\begin{proof}
+记 \(G=\{\sigma_1,\ldots,\sigma_n\}\)。先证明任意 \(n+1\) 个元素 \(x_1,\ldots,x_{n+1}\in L\) 在 \(K\) 上线性相关。在 \(L\) 上的 \(n\) 个齐次方程
+\[
+\sum_{j=1}^{n+1}\sigma_i(x_j)c_j=0\qquad(1\leq i\leq n)
+\]
+有非零解。从全部非零解中取非零坐标数最少者，重新编号并除以最后一个非零坐标，可设 \(c_r=1\)，且 \(c_j=0\) 对 \(j>r\) 成立。对任意 \(\tau\in G\)，将 \(\tau\) 作用到全部方程；由于 \(\tau\sigma_i\) 仍遍历 \(G\)，向量 \(\Bigl(\tau(c_j)\Bigr)_j\) 也是解。两解之差在第 \(r\) 个坐标及 \(r\) 后均为零。若差非零，其非零坐标比原解更少，矛盾。所以每个 \(c_j\) 被全部 \(\tau\) 固定，即 \(c_j\in K\)。取恒等自同构对应的方程，便得到所需的非平凡 \(K\) 线性关系。于是 \([L:K]\leq n\)，特别扩张有限。
+
+记 \(d=[L:K]\)。所有 \(K\) 线性映射 \(L\rightarrow L\) 构成一个 \(L\) 向量空间：选定 \(K\) 基以后，映射由 \(d\) 个基向量的像任意决定，所以该空间的 \(L\) 维数为 \(d\)。\cref{b1:cor:embedding-independence}说明 \(n\) 个不同的 \(\sigma_i\) 在这个空间中线性无关。因此 \(n\leq d\)，结合前一步得到 \(d=n\)。
+
+对任意 \(a\in L\)，把轨道中的互异元素记作 \(a_1,\ldots,a_s\)。多项式 \(\prod_j(t-a_j)\) 被 \(G\) 固定其每个系数，所以属于 \(K[t]\)，且在 \(L\) 中分裂、没有重根。\(a\) 的最小多项式整除它，也就可分并在 \(L\) 中分裂。因此 \(L/K\) 正规且可分。最后由\cref{b1:prop:galois-automorphism-count}，其全部自同构只有 \(n\) 个，已经包含的 \(G\) 就是全群。
+\end{proof}
 
 \subsection{不动域扩张次数的计算}
 \label{b1:subsec:1901:04}
 
-待撰写。
+对有限 Galois 扩张 \(L/K\)，令 \(G=\operatorname{Gal}(L/K)\)。\cref{b1:thm:artin-fixed-field}与\cref{b1:prop:galois-automorphism-count}分别给出
+\[
+[L:L^G]=|G|=[L:K].
+\]
+因 \(K\subseteq L^G\)，塔式公式迫使 \([L^G:K]=1\)，所以 \(L^G=K\)。这说明基域恰能从全部自同构中恢复。
+
+\ProseParagraphBreak
+不动域定理也适用于在较大基域看来并非代数的情形。例如特征不为二的域 \(k\) 上，\(k(t)\) 的自同构 \(s(t)=-t\) 组成二元群。其不动域包含 \(k(t^2)\)。元素 \(t\) 满足 \(x^2-t^2=0\)，而不属于 \(k(t^2)\)：若 \(t=f(t^2)/g(t^2)\)，则 \(tg(t^2)=f(t^2)\) 的左侧只含奇次幂，右侧只含偶次幂，非零多项式不可能如此相等。因此 \([k(t):k(t^2)]=2\)，与不动域定理给出的二次扩张比较，得到不动域恰为 \(k(t^2)\)。
 
 \subsection{嵌入独立性与次数估计}
 \label{b1:subsec:1901:05}
 
-待撰写。
+\cref{b1:thm:artin-fixed-field}的两个次数估计有不同来源。线性方程加最短支集论证，把 \(L\) 系数的关系下降为不动域系数的关系，给出上界；嵌入独立性则保证自同构不可能多于维数，给出下界。不能只从每个元素至多有 \(|G|\) 个共轭，便省去上界证明，因为有限次单扩张的次数有统一上界，尚须论证这能控制整个扩张。
+
+\ProseParagraphBreak
+顺便得到有限扩张的一个判据：若 \(|\operatorname{Aut}_K(L)|=[L:K]\)，则 \(L/K\) 为 Galois 扩张。事实上，对全自同构群 \(H\) 应用不动域定理，有 \([L:L^H]=[L:K]\)；再由 \(K\subseteq L^H\) 得到 \(L^H=K\)，而不动域定理已经保证对这个域的扩张正规且可分。一般有限扩张只能保证自同构数不超过次数，等号正是这里的关键。

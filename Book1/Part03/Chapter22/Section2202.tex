@@ -5,7 +5,7 @@
 \section{Krull 拓扑}
 \label{b1:sec:2202}
 
-% TODO: 按以下纲要要点撰写本节。
+一个自同构在有限层上的取值，只提供有限的信息。把“在某个有限层上相同”作为接近的标准，就得到 Krull 拓扑。它不是额外附加的距离，而是把有限 Galois 群之间的相容关系变成可用的开集。本节准备全部必要的拓扑概念，并证明所用的紧性，不要求先读附录。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,25 +18,93 @@
 
 \subsection{有限商与逆极限}
 \label{b1:subsec:2202:01}
+\begin{definition}\label{b1:def:inverse-limit}
+设指标集有向，群 \(G_i\) 之间给定同态 \(r_{ji}:G_j\rightarrow G_i\)（\(i\leq j\)），满足 \(r_{ii}=\operatorname{id}_{G_i}\) 与 \(r_{ki}=r_{ji}r_{kj}\)。它们的\term[nijixian]{逆极限}[inverse limit]是群
+\[
+\varprojlim_iG_i
+=\Bigl\{\,(g_i)_i\in\prod_iG_i\mid
+r_{ji}(g_j)=g_i\text{ 每当 }i\leq j\,\Bigr\},
+\]
+乘法逐坐标进行。
+\end{definition}
+\symidx{\(\varprojlim_iG_i\)：群的逆极限}
+同态保持乘法及逆元，故相容族的乘积与逆仍相容；各坐标单位组成单位族。因此这确实是直积的子群。投影到第 \(i\) 个坐标记为 \(\pi_i\)。若有群 \(H\) 及相容同态 \(f_i:H\rightarrow G_i\)，映射 \(h\mapsto\Bigl(f_i(h)\Bigr)_i\) 的像落在逆极限中，它是唯一具有这些坐标的同态。这给出了逆极限的泛性质。
 
-待撰写。
+\ProseParagraphBreak
+对上一节的有限 Galois 层应用\cref{b1:prop:galois-compatible-family}，得到群同构
+\begin{equation}\label{b1:eq:galois-inverse-limit}
+G\longrightarrow\varprojlim_{N\in\mathcal N}G_N,
+\qquad\sigma\longmapsto(\sigma|_N)_N.
+\end{equation}
+由\cref{b1:lem:galois-restriction-surjective}，每个坐标投影都满射。今后把两侧识别，不仅记录抽象群运算，还保留全部限制映射。
 
 \subsection{Galois 群的拓扑}
 \label{b1:subsec:2202:02}
+集合 \(X\) 上的一族子集，若包含 \(\varnothing,X\)，对任意并和有限交封闭，就称为一个\term[tuopu]{拓扑}[topology]；该族中的集合称开集，其补集称闭集。映射连续，是指每个开集的原像都开。两个拓扑空间之间的双射若本身及逆映射均连续，称为同胚。有限集合 \(G_N\) 采用\term[lisan-tuopu]{离散拓扑}[discrete topology]，即所有子集都开。
 
-待撰写。
+\ProseParagraphBreak
+直积 \(\prod_NG_N\) 的\term[ji-tuopu]{积拓扑}[product topology]由如下基本开集生成：只规定有限多个坐标的取值，其余坐标任意。所有基本开集的任意并就是开集。有限个基本条件的交仍是有限个条件，因此确实满足拓扑公理。子集采用子空间拓扑，即将原空间的开集与它相交。
+
+\begin{definition}\label{b1:def:krull-topology}
+通过\eqref{b1:eq:galois-inverse-limit}，在 \(G\) 上赋予有限离散群直积的子空间拓扑，称为\term[krull-tuopu]{Krull 拓扑}[Krull topology]。若
+\[
+U_N\coloneqq\operatorname{Gal}(L/N)=\ker\pi_N,
+\]
+则 \(\sigma\) 的基本开邻域为 \(\sigma U_N\)，其中 \(N\) 遍历有限 Galois 子扩张。
+\end{definition}
+\symidx{\(U_N=\operatorname{Gal}(L/N)\)：Krull 拓扑的基本开正规子群}
+一个基本开集原本可能限制若干个坐标，但取包含这些域的共同有限 Galois 层，就有一个只限制该层坐标的基本开集包含给定点而落在原集合内。因此所列陪集确实构成邻域基。它们也都是闭集：其补集是同一有限商中其余陪集的并。
+
+\begin{proposition}\label{b1:prop:krull-group-operations}
+乘法 \(G\times G\rightarrow G\) 与取逆 \(G\rightarrow G\) 在 Krull 拓扑下连续，所以 \(G\) 为拓扑群。
+\end{proposition}
+\begin{proof}
+若要控制 \(\sigma\tau\) 在 \(N\) 上的取值，只需分别控制 \(\sigma,\tau\) 在 \(N\) 上的取值，因为限制保持乘法。具体地，\(\sigma'\in\sigma U_N\)、\(\tau'\in\tau U_N\) 使 \(\pi_N(\sigma'\tau')=\pi_N(\sigma\tau)\)，故它们的乘积落在 \(\sigma\tau U_N\) 中。这在每个点给出乘法连续性。限制也保持逆元，因此控制 \(\sigma|_N\) 就控制 \(\sigma^{-1}|_N\)，得到取逆连续。
+\end{proof}
+于是左右平移均为同胚。可见“在有限多个元素上取值相同”与“在某个有限 Galois 层上取值相同”给出相同拓扑；前者更直观，后者便于使用有限群的结构。
 
 \subsection{紧性、全不连通性与开子群}
 \label{b1:subsec:2202:03}
+拓扑空间若每个开覆盖都有有限子覆盖，称为\term[nijin-kongjian]{拟紧空间}[quasi-compact space]。若任意两个不同的点有互不相交的开邻域，称为空间具有 Hausdorff 性；本书把同时满足这两种条件的空间称为\term[jin-kongjian]{紧空间}[compact space]。一个子空间若不能被拆成两个不相交、非空且相对开集的并，称为连通；所有非空连通子空间均为单点时，称原空间\term[quan-buliantong]{全不连通}[totally disconnected]。
 
-待撰写。
+\begin{theorem}\label{b1:thm:krull-compact}
+Galois 群 \(G\) 在 Krull 拓扑下为紧、Hausdorff、全不连通的拓扑群。子群 \(H\leq G\) 开，当且仅当它包含某个 \(U_N\)；此时 \(H\) 同时闭且指数有限。
+\end{theorem}
+紧性的证明需要一个有限离散空间乘积的结论，先在下一个小节建立，再在本节末完成此定理的证明。这里每个有限层本身当然紧；真正需要解释的是，无穷多个有限条件同时相容时为什么仍有整体解。
+
+\ProseParagraphBreak
+与有限离散群的某个逆极限拓扑同构的群称为\term[toushe-youxian-qun]{投射有限群}[profinite group]。这里拓扑同构指同时为群同构和同胚。\eqref{b1:eq:galois-inverse-limit}说明 \(G\) 就是这样的群。“投射有限”并不意味着 \(G\) 只有有限多个元素；有限的是构成它的各个商群。
 
 \subsection{有限离散空间积的紧性}
 \label{b1:subsec:2202:04}
+集合族具有\term[youxian-jiao-xingzhi]{有限交性质}[finite intersection property]，是指其中任意有限多个集合的交都非空，空族的交取为全空间。由取补集，有限子覆盖性质等价于：每个具有有限交性质的闭集族都有非空的总交；在Hausdorff空间中，这就等价于紧性。
 
-待撰写。
+\begin{lemma}\label{b1:lem:finite-discrete-product-compact}
+任意一族有限离散空间的直积，在积拓扑下是紧空间。
+\end{lemma}
+\begin{proof}
+记直积为 \(X=\prod_iX_i\)。两个不同点必有某个坐标不同，规定该坐标值的两个基本开集将它们分离，故 \(X\) 为Hausdorff空间。若 \(X\) 为空，紧性直接成立。以下给定具有有限交性质的闭集族 \((C_\alpha)_\alpha\)，证明总交非空。
+
+称 \(X\) 的一族子集为\term[zhen-lvzi]{真滤子}[proper filter]，如果它包含 \(X\)，不包含空集，对有限交封闭，并且包含其每个成员的所有超集。闭集族的有限交及其超集组成真滤子。对包含它的真滤子按包含关系用 Zorn 引理：链的并仍对有限交封闭，因为有限多个成员已经属于链上的某个共同滤子；且不会包含空集。因此存在极大的真滤子 \(\mathcal U\)。
+
+对任何 \(A\subseteq X\)，或者 \(A\in\mathcal U\)，或者 \(X\setminus A\in\mathcal U\)。否则，若每个 \(B\in\mathcal U\) 都与 \(A\) 相交，就可以由 \(\mathcal U\) 和 \(A\) 生成更大的真滤子，违背极大性；若有某个 \(B\) 与 \(A\) 不相交，则 \(B\subseteq X\setminus A\)，滤子的向上封闭性已给出后一集合属于 \(\mathcal U\)。二者不能同时属于，因为交为空。
+
+对每个坐标 \(i\)，有限个纤维 \(\{x:x_i=a\}\)、\(a\in X_i\)，恰好把 \(X\) 分成有限份。它们中恰有一份属于 \(\mathcal U\)：两份不可能同时属于；若没有一份属于，全部补集都属于，有限求交却为空。将这一唯一的坐标值记为 \(a_i\)，得到点 \(a=(a_i)_i\in X\)。每个包含 \(a\) 的基本开集，是有限多个所选纤维的交，因而属于 \(\mathcal U\)。
+
+若 \(a\notin C_\alpha\)，由于 \(C_\alpha\) 闭，可在其开补集中取包含 \(a\) 的基本开集 \(B\)。可是 \(B,C_\alpha\) 都属于 \(\mathcal U\)，它们的交却为空，矛盾。所以 \(a\) 属于全部 \(C_\alpha\)，证明总交非空。
+\end{proof}
+证明中的极大真滤子通常称为\term[chaolvzi]{超滤子}[ultrafilter]；这里仅借助它同时作出与有限交条件相容的坐标选择，不需要另外引入完整的滤子收敛理论。闭子空间的紧性也随即得到：闭子空间中的闭集仍是整个空间中的闭集，有限交性质可以原样用于整个紧空间，分离邻域与子空间相交又保证Hausdorff性。
 
 \subsection{紧性证明中的选择原理}
 \label{b1:subsec:2202:05}
+\begin{proof}[\cref{b1:thm:krull-compact}的证明]
+在有限群直积 \(X=\prod_NG_N\) 中，每个相容条件 \(\sigma_M|_N=\sigma_N\) 定义闭集：不满足条件的坐标对来自有限离散集合，其全部原像是开集。逆极限是这些闭集的交，因此为闭子空间。\cref{b1:lem:finite-discrete-product-compact}及闭子空间的紧性给出 \(G\) 紧。
 
-待撰写。
+若 \(\sigma\ne\tau\)，则某个元素上的取值不同，包含该元素的有限层 \(N\) 使 \(\pi_N(\sigma)\ne\pi_N(\tau)\)。两个陪集 \(\sigma U_N,\tau U_N\) 不相交，故 \(G\) 为 Hausdorff 空间。由于这些陪集也闭，它们能将包含 \(\sigma,\tau\) 的任一子空间分成两个非空相对开集；因此连通子空间不能含两个不同点，得到全不连通性。
+
+若 \(H\) 是开子群，它作为单位元的邻域包含某个 \(U_N\)。反过来，若包含 \(U_N\)，则 \(H\) 为若干个 \(U_N\) 陪集的并，所以开。此时 \(H\) 的指数不超过有限数 \([G:U_N]=|G_N|\)。其补集是其他 \(H\) 陪集的并，而平移保持开集，所以 \(H\) 同时闭。拓扑群运算已由\cref{b1:prop:krull-group-operations}验证。
+\end{proof}
+上述紧性证明中，选择原理明确用在把真滤子扩充为极大真滤子的 Zorn 步骤。每个坐标的值一旦由 \(\mathcal U\) 决定，就是唯一的，不再另作任意选择。一般域的代数闭包与嵌入延拓中也使用了选择原理，两处用途不同。
+
+\ProseParagraphBreak
+以后还会用到两个基本事实。连续像保留有限子覆盖性质：将像上的开覆盖拉回，取有限子覆盖再映回即可；目标为Hausdorff空间时，像因而紧。Hausdorff 空间中的紧子集闭：给紧子集外一点 \(x\)，对每个子集内点 \(y\) 取分离 \(x,y\) 的开邻域，覆盖紧子集的那些邻域可选有限个；对应的 \(x\) 邻域有限求交，就与整个紧子集不交。因而从紧空间到 Hausdorff 空间的连续双射为同胚：闭集的像紧而闭，使逆映射连续。这些事实将在比较 Galois 商群的拓扑时使用。

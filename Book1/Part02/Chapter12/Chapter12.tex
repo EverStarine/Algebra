@@ -6,11 +6,243 @@
 \label{b1:ch:12}
 \BookChapterNumber{b1:ch:12}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+多项式的分解把方程的根、整环的算术和理想的有限生成性联系起来。本章先用带余除法建立根与重数的理论，再以 Gauss 引理把分式域上的分解降回系数整环，证明唯一分解性在添加不定元后保持。Eisenstein 判据与模素数约化法提供具体的不可约性检验。最后从理想升链条件出发，完整证明 Hilbert 基定理，为后续的交换代数准备有限性工具。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 能区分多项式、它定义的函数及其在不同域中的根，并用形式导数判别重根。
+\item 掌握本原多项式与容度的作用，说明分式域上的分解为何能够下降。
+\item 会选择不可约性判据，说明判据的假设与检验失败时能够得出的结论。
+\item 理解 Noether 性与理想升链条件的等价性，掌握 Hilbert 基定理的消项证明。
+\end{itemize}
+\end{learninggoals}
+
+本章使用\cref{b1:prop:field-poly-division}的域上多项式带余除法、\cref{b1:prop:pid-bezout}的 Bézout 等式，以及\cref{b1:prop:ufd-prime}的唯一分解整环中不可约元的素性。分式域的基本构造在需要时就地给出，不以尚未建立的局部化理论为前提。第一节始终在域上讨论，第二、三节的系数整环须满足所列的唯一分解假设；最后一节证明 Hilbert 基定理时，只要求底环交换且为 Noether 环，不要求它是整环。
 
 \input{Part02/Chapter12/Section1201}
 \input{Part02/Chapter12/Section1202}
 \input{Part02/Chapter12/Section1203}
 \input{Part02/Chapter12/Section1204}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+因式定理把根转化为一次因子，形式导数把重根转化为最大公因式问题；插值则用次数界保证有限个取值条件的唯一性。Gauss 引理从素元约化出发，证明容度的乘法性质，使分式域上的非平凡分解下降到本原多项式的系数环，并进一步建立多项式环的唯一分解性。不可约性检验始终依赖工作域和次数，尤其不能把“没有有理根”当作高次多项式不可约的充分条件。Hilbert 基定理处理的是另一类有限性：有限多个不定元不会破坏 Noether 性，而其证明并未要求底环有唯一分解。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:12-polynomial-functions}
+设 \(p\) 为素数。证明 \(x^p-x\) 在 \(\mathbb F_p\) 的每个元素处取值为零，但不是零多项式。进而证明任意函数 \(\varphi:\mathbb F_p\rightarrow\mathbb F_p\) 都由唯一一个次数至多为 \(p-1\) 的多项式给出，并确定所有表示同一函数的多项式之间的关系。
+\end{exercise}
+\begin{solution}
+若 \(a=0\)，等式 \(a^p-a=0\) 直接成立；若 \(a\ne0\)，它属于 \(p-1\) 阶乘法群 \(\mathbb F_p^\times\)。\cref{b1:thm:lagrange}说明 \(a\) 的阶整除 \(p-1\)，所以 \(a^{p-1}=1\)，仍得 \(a^p=a\)。多项式 \(x^p-x\) 的首项系数为一，故不是零多项式。
+
+将 \(\mathbb F_p\) 中全部 \(p\) 个元素作为插值点，给定值取为 \(\varphi\) 的值，\cref{b1:thm:lagrange-interpolation}就给出次数至多为 \(p-1\) 的唯一代表。若 \(f,g\) 给出同一个函数，对 \(f-g\) 除以 \(x^p-x\)，得到 \(f-g=q(x^p-x)+r\)，其中 \(r=0\) 或 \(\deg r<p\)。前两项在每个点都为零，因此 \(r\) 在 \(p\) 个点都为零。\cref{b1:prop:factor-root}迫使 \(r=0\)，所以 \(x^p-x\mid f-g\)。反过来，该整除关系显然保证两者的全部取值相同。故它们恰好相差理想 \((x^p-x)\) 中的元素。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-repeated-roots}
+在 \(\mathbb Q[x]\) 中求
+\[
+f=x^4-2x^3+2x^2-2x+1
+\]
+与 \(f'\) 的首一最大公因式，并给出它在 \(\mathbb C\) 中各根的重数。再将系数模二约化，比较重根情况。
+\end{exercise}
+\begin{solution}
+直接展开可验
+\[
+f=(x-1)^2(x^2+1),\qquad
+f'=2(x-1)(2x^2-x+1).
+\]
+其中 \(2x^2-x+1\) 在一处的值为二，所以不能再提出 \(x-1\)。它与 \(x^2+1\) 的最大公因式也为一：两者相减适当倍数后得到 \(-x-1\)，而 \(x^2+1\) 在负一处的值为二，故不能含有这个一次因子。因此首一最大公因式为 \(x-1\)。在 \(\mathbb C[x]\) 中，\(f=(x-1)^2(x-i)(x+i)\)，三个根互异，所以一的重数为二，\(i,-i\) 的重数均为一。
+
+模二后 \(\bar f=x^4+1=(x+1)^4\)，形式导数为零。因此在任何包含 \(\mathbb F_2\) 的域中，它只有根一，重数为四。约化不仅可能使不同的因子合并，也可能使导数中的系数全部消失，不能照搬特征零下的重数计算。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-interpolation}
+求满足 \(f(0)=1,f(1)=0,f(2)=3\) 的唯一二次以下有理系数多项式。再确定所有满足这些取值条件的 \(\mathbb Q[x]\) 中的多项式。
+\end{exercise}
+\begin{solution}
+在\eqref{b1:eq:lagrange-interpolation}中代入这三个点和值，得到
+\[
+f_0(x)=\frac{(x-1)(x-2)}2+\frac{3x(x-1)}2
+=2x^2-3x+1.
+\]
+若 \(f\) 满足相同的条件，\(f-f_0\) 在零、一、二处均为零。由\cref{b1:prop:factor-root}，先提出 \(x\)，所得商在一、二处仍为零，因为在这两点 \(x\) 的值非零；再依次提出 \(x-1,x-2\)，得到
+\[
+f=f_0+x(x-1)(x-2)h,\qquad h\in\mathbb Q[x].
+\]
+反向代入即可验证每个这样的多项式都符合条件。若还要求次数至多为二，则只能 \(h=0\)，这也直接验证了唯一性。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-content-factorization}
+分别在 \(\mathbb Z[x]\) 与 \(\mathbb Q[x]\) 中分解 \(6x^2+9x+3\) 为不可约因子的乘积，并说明两个分解中单位与常数因子的不同地位。
+\end{exercise}
+\begin{solution}
+容度为三，本原部分为 \(2x^2+3x+1\)，而
+\[
+6x^2+9x+3=3(2x+1)(x+1).
+\]
+在 \(\mathbb Z[x]\) 中，三为素元：逐系数模三约化的核为 \((3)\)，像为整环 \(\mathbb F_3[x]\)，所以若三整除某个乘积，约化后必有一个因子为零，即三整除这个因子的全部系数。两个一次多项式均本原，在 \(\mathbb Q[x]\) 中因次数为一而不可约，再由\cref{b1:thm:gauss-descent}，在 \(\mathbb Z[x]\) 中也不可约。故所列三因子就是不可约分解，单位只能是 \(\pm1\)。
+
+在 \(\mathbb Q[x]\) 中，所有非零有理常数都是单位，可以写成
+\(6(x+\tfrac12)(x+1)\)。这里只有两个正次数不可约因子，常数六属于单位部分。唯一分解的比较必须在同一个环中进行；扩大系数环以后，原来的某些非单位会变为单位。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-shift-eisenstein}
+证明 \(x^4+1\) 在 \(\mathbb Q[x]\) 中不可约，并说明对原多项式直接使用 Eisenstein 判据为何行不通。
+\end{exercise}
+\begin{solution}
+对 \(f=x^4+1\)，常数项为一，不被任何素数整除，所以原式不符合 Eisenstein 判据。作可逆平移得
+\[
+f(x+1)=x^4+4x^3+6x^2+4x+2.
+\]
+首项系数为一，其余系数都被二整除，常数项二不被四整除。由\cref{b1:thm:eisenstein}，\(f(x+1)\) 在 \(\mathbb Q[x]\) 中不可约。若 \(f\) 有非平凡分解，逐因子代入 \(x+1\) 会保持各因子的正次数，给出 \(f(x+1)\) 的非平凡分解，矛盾。因此 \(f\) 不可约。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-quartic-mod-two}
+用模二约化证明 \(x^4+x+1\) 在 \(\mathbb Q[x]\) 中不可约。论证中除去一次因子的可能性后，还需要检查什么？
+\end{exercise}
+\begin{solution}
+约化多项式在 \(\bar0,\bar1\) 处均取 \(\bar1\)，所以没有一次因子。若它可约，按不可约因子的次数分拆四，只能是两个不可约二次因子的乘积。\(\mathbb F_2[x]\) 中的首一不可约二次多项式只有 \(x^2+x+1\)：常数项必须为一，以免零为根；对 \(x^2+ax+1\) 代入一得到 \(a\)，所以还必须 \(a=1\)。但是
+\[
+(x^2+x+1)^2=x^4+x^2+1\ne x^4+x+1
+\]
+于 \(\mathbb F_2[x]\)。因此二次乘二次的可能性也排除了，约化式不可约。原多项式本原且首项系数为一，\cref{b1:prop:reduction-irreducible}于是给出 \(\mathbb Q[x]\) 中的不可约性。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-noetherian-not-pid}
+证明 \(\mathbb Q[x,y]\) 是 Noether 唯一分解整环，却不是主理想整环。再证明 \(\mathbb Q[x,y]/(xy)\) 是 Noether 环，但不是整环。
+\end{exercise}
+\begin{solution}
+域 \(\mathbb Q\) 是 Noether 唯一分解整环，故\cref{b1:thm:polynomial-ufd}与\cref{b1:thm:hilbert-basis}分别给出 \(\mathbb Q[x,y]\) 的唯一分解性和 Noether 性。理想 \((x,y)\) 为真理想，因为其中每个多项式在 \((0,0)\) 处为零。如果 \((x,y)=(g)\)，则 \(g\mid x\) 且 \(g\mid y\)。用全次数的乘法公式，由 \(g\mid x\) 知 \(g\) 是非零常数或与 \(x\) 相伴；后者不可能整除 \(y\)，因为代入 \(x=0\) 会给出 \(y=0\)。因此 \(g\) 为非零有理常数，是单位，与理想为真矛盾。所以该环不是主理想整环。
+
+由\cref{b1:prop:noetherian-quotient}，商环 \(\mathbb Q[x,y]/(xy)\) 为 Noether 环。\(x,y\) 的剩余类都非零：若 \(x\in(xy)\)，代入 \(y=0\) 就得 \(x=0\)，矛盾；对 \(y\) 代入 \(x=0\) 同理。但两者的积为零，故该商环不是整环。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-elimination}
+在 \(\mathbb Q[x,y,z]\) 中令 \(I=(y-x^2,z-xy,z-1)\)。求 \(I\cap\mathbb Q[x]\)，并解释它如何限制原方程组的第一坐标。
+\end{exercise}
+\begin{solution}
+直接计算
+\[
+x^3-1=(z-1)-(z-xy)-x(y-x^2),
+\]
+说明 \(x^3-1\in I\)。反过来，
+\[
+z-xy=(z-1)-(x^3-1)-x(y-x^2),
+\]
+所以 \(I=(y-x^2,z-1,x^3-1)\)。若 \(g(x)\in I\)，将它表示成这三个生成元的多项式系数组合，再代入 \(y=x^2,z=1\)，得到 \(g(x)=C(x,x^2,1)(x^3-1)\)。故 \(g\) 是 \(x^3-1\) 的倍数。结合此前已经证明的包含，得到
+\[
+I\cap\mathbb Q[x]=(x^3-1).
+\]
+原方程组的任一解必满足 \(x^3=1\)。本题中反向提升也成立：在任意包含 \(\mathbb Q\) 的域中，若 \(a^3=1\)，则 \((a,a^2,1)\) 同时满足三个原方程，且后两个坐标由第一个坐标唯一确定。这一充分性来自本题明确的代入，不是消去理想在一般情况下自动保证的结论。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-monic-descent}
+设首一多项式 \(f\in\mathbb Z[x]\) 在 \(\mathbb Q[x]\) 中写成 \(f=gh\)，其中 \(g,h\) 也首一。证明 \(g,h\in\mathbb Z[x]\)。再判断以下两种变式能否保证因子仍有整数系数：只要求 \(f\) 本原，并允许写成 \(f=cgh\)，其中 \(c\in\mathbb Q^\times\)、\(g,h\) 首一；或者保持 \(f=gh\) 与 \(f\) 首一，却取消两个因子的首一要求。
+\end{exercise}
+\begin{solution}
+首一的 \(f\) 本原。由\cref{b1:lem:primitive-scaling}，可以写
+\[
+g=\alpha g_0,\qquad h=\beta h_0,
+\]
+其中 \(g_0,h_0\in\mathbb Z[x]\) 本原，\(\alpha,\beta\in\mathbb Q^\times\)。\cref{b1:lem:gauss-primitive}说明 \(g_0h_0\) 本原；而 \(f=\alpha\beta g_0h_0\) 也本原，所以\cref{b1:lem:primitive-scaling}给出 \(\alpha\beta=\pm1\)。设 \(g_0,h_0\) 的首项系数为非零整数 \(a,b\)。比较 \(f\) 的首项系数，得 \(\alpha\beta ab=1\)，因而 \(ab=\pm1\)，所以 \(a,b\) 都等于 \(\pm1\)。再分别比较首一的 \(g,h\) 的首项系数，得 \(\alpha=1/a\)、\(\beta=1/b\)，两者也是整数单位。因此 \(g,h\) 的全部系数都是整数。
+
+第一种变式不能保证结论。例如
+\[
+2x^2+3x+1=2\Bigl(x+\frac12\Bigr)(x+1).
+\]
+如果保持 \(f\) 首一，却取消两个因子的首一要求，结论同样失败：\(x^2=(2x)(x/2)\)。因子的非零常数倍可以互相转移，首一条件恰好排除了这种任意缩放。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-primitive-linear-polynomials}
+设 \(k\) 为任意域。分别判断 \(yx+y+1\) 和 \(yx+y\) 在 \(k[x,y]\) 中是否不可约。说明“关于 \(x\) 的次数为一”为什么不足以直接作出判断。
+\end{exercise}
+\begin{solution}
+把两个多项式看作 \(k[y][x]\) 中的元素。\(k[y]\) 是唯一分解整环，因为它是域上一元多项式环，适用\cref{b1:thm:polynomial-ufd}。第一个多项式的两个系数 \(y,y+1\) 互素：任何公因子都整除它们之差一。因此 \(yx+y+1\) 本原。进入 \(\operatorname{Frac}\Bigl(k[y]\Bigr)[x]\) 后，它是一次多项式，故不可约；再由\cref{b1:thm:gauss-descent}，它在 \(k[y][x]=k[x,y]\) 中也不可约。
+
+第二个多项式的容度可取 \(y\)，并且 \(yx+y=y(x+1)\)。这里两个因子都是非单位：若它们有多项式逆元，非零乘积的全次数相加将迫使它们的次数为零，矛盾。所以它可约。\(y\) 虽然关于 \(x\) 是常数，在系数环 \(k[y]\) 中却不是单位；这正是不能仅凭关于 \(x\) 的次数来套用域上结论的原因。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-rational-root-limits}
+用有理根检验分解 \(6x^3+5x^2-12x+4\) 为 \(\mathbb Q[x]\) 中的不可约因子。再证明 \(x^4+4\) 没有有理根，却在 \(\mathbb Q[x]\) 中可约，并写出其不可约分解。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:rational-root}，第一个多项式的非零有理根约成 \(r/s\)、\(s>0\) 后，必须满足 \(r\mid4\)、\(s\mid6\)。从这些候选中代入 \(1/2\)，得到零。除以 \(2x-1\)，有
+\[
+6x^3+5x^2-12x+4=(2x-1)(3x^2+4x-4).
+\]
+对剩下的二次多项式，检验 \(2/3\) 得到零，继续相除得
+\[
+6x^3+5x^2-12x+4=(2x-1)(3x-2)(x+2).
+\]
+三个因子在 \(\mathbb Q[x]\) 中都是一次多项式，所以均不可约；它们给出了全部三个根 \(1/2,2/3,-2\)。
+
+对任何有理数 \(a\)，都有 \(a^4+4>0\)，所以第二个多项式没有有理根。但将其写成平方差，可得
+\[
+x^4+4=(x^2+2)^2-(2x)^2
+=(x^2-2x+2)(x^2+2x+2).
+\]
+两个二次因子分别为 \((x-1)^2+1\)、\((x+1)^2+1\)，因此都没有有理根。二次多项式如果可约就必须有一次因子，而\cref{b1:prop:factor-root}会给出一个有理根；所以这两个二次因子均不可约。原式没有有理根，只排除了一次因子，并没有排除这里的二次因子。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-noetherian-surjection}
+证明 Noether 交换环 \(R\) 的每个满环自同态 \(\varphi:R\rightarrow R\) 都是同构。用无穷多个不定元的多项式环，说明 Noether 条件不能删去。
+\end{exercise}
+\begin{solution}
+记 \(\varphi^n\) 为 \(\varphi\) 的 \(n\) 次复合。各次复合的核组成理想升链
+\[
+\ker\varphi\subseteq\ker\varphi^2\subseteq\cdots.
+\]
+因为若 \(\varphi^n(a)=0\)，再作用一次 \(\varphi\) 仍为零，所以这些包含成立。\cref{b1:prop:noetherian-acc}给出某个 \(N\ge1\)，使 \(\ker\varphi^N=\ker\varphi^{N+1}\)。任取 \(a\in\ker\varphi\)，由于 \(\varphi\) 满射，\(\varphi^N\) 也满射，可以取 \(b\in R\) 使 \(\varphi^N(b)=a\)。于是
+\[
+\varphi^{N+1}(b)=\varphi(a)=0,
+\]
+故 \(b\in\ker\varphi^{N+1}=\ker\varphi^N\)，从而 \(a=0\)。这证明 \(\varphi\) 单射，结合满射性即为同构。
+
+去掉 Noether 条件，取 \(R=k[x_1,x_2,\ldots]\)，令 \(\varphi\) 固定 \(k\)，把 \(x_1\) 送到零，把 \(x_{i+1}\) 送到 \(x_i\)。每个多项式只含有限多个变量，这些代入确定保持加法、乘法和单位的映射。任意多项式的原像可以把其中每个 \(x_i\) 换成 \(x_{i+1}\) 得到，所以映射满射；非零元素 \(x_1\) 却在其核中，故不单射。相应核升链确实不稳定：\(x_{n+1}\) 在 \(\ker\varphi^{n+1}\) 中，却不在 \(\ker\varphi^n\) 中，因为 \(\varphi^n(x_{n+1})=x_1\ne0\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-nonnoetherian-subring}
+设 \(k\) 为域，在 \(k[x,y]\) 中取子环
+\[
+A=k[x,xy,xy^2,xy^3,\ldots].
+\]
+证明 \(A=k+xk[x,y]\)，并证明 \(A\) 不是 Noether 环，尽管 \(k[x,y]\) 是。这里的 \(k+xk[x,y]\) 表示所有 \(c+xh(x,y)\)、\(c\in k\)、\(h\in k[x,y]\) 组成的集合。
+\end{exercise}
+\begin{solution}
+所列每个生成元都属于 \(k+xk[x,y]\)，而后者在加法、取负和乘法下封闭，故 \(A\subseteq k+xk[x,y]\)。反过来，任意 \(x^iy^j\)、\(i\ge1,j\ge0\)，都可写成 \(x^{i-1}(xy^j)\)，属于 \(A\)。每个 \(xh(x,y)\) 是这种单项式的有限线性组合，所以另一个包含也成立。
+
+在 \(A\) 中令 \(I_n=(x,xy,\ldots,xy^n)\)。这些理想构成升链。如果 \(xy^{n+1}\in I_n\)，则存在 \(a_0,\ldots,a_n\in A\)，使
+\[
+xy^{n+1}=\sum_{j=0}^n a_jxy^j.
+\]
+根据刚证的环的描述，写 \(a_j=c_j+xh_j(x,y)\)，其中 \(c_j\in k\)。比较两边作为 \(k[y][x]\) 中多项式的 \(x\) 的一次项系数，便得到
+\[
+y^{n+1}=\sum_{j=0}^n c_jy^j,
+\]
+这与多项式系数的唯一性矛盾。所以每个 \(I_n\subsetneq I_{n+1}\)，由\cref{b1:prop:noetherian-acc}，\(A\) 不是 Noether 环。另一方面，域 \(k\) 是 Noether 环，\cref{b1:thm:hilbert-basis}保证 \(k[x,y]\) 是 Noether 环。因此 Noether 性并不任意传给子环。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:12-closed-field-evaluation}
+设 \(k\) 为代数闭域，\(f\in k[x]\) 首一且次数为 \(n\ge1\)，其不同的根为 \(a_1,\ldots,a_r\)。证明取值公式给出满环同态
+\[
+E:k[x]/(f)\longrightarrow k^r,\qquad
+g+(f)\longmapsto\Bigl(g(a_1),\ldots,g(a_r)\Bigr),
+\]
+并证明 \(\ker E\) 恰为商环中全部幂零元组成的集合。最后证明 \(E\) 是同构，当且仅当 \(f\) 没有重根。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:algebraically-closed-splitting}，存在正整数 \(m_1,\ldots,m_r\)，使
+\[
+f=\prod_{i=1}^r(x-a_i)^{m_i},\qquad
+\sum_{i=1}^r m_i=n.
+\]
+如果 \(g-g'\in(f)\)，那么在每个 \(a_i\) 处两者取值相同，所以 \(E\) 良定义。求值保持加法、乘法和单位，故 \(E\) 是环同态。\cref{b1:thm:lagrange-interpolation}说明任意指定的 \(r\) 个值都可由一个次数至多为 \(r-1\) 的多项式取得，因此 \(E\) 满射。
+
+若 \(z=g+(f)\) 幂零，存在 \(N\ge1\) 使 \(g^N\in(f)\)。代入每个 \(a_i\) 得 \(g(a_i)^N=0\)；域中没有非零幂零元，所以 \(g(a_i)=0\)，即 \(z\in\ker E\)。反过来，若这些取值全为零，\cref{b1:prop:factor-root}保证每个 \(x-a_i\) 都整除 \(g\)。这些一次因子两两不相伴，而\cref{b1:thm:polynomial-ufd}保证 \(k[x]\) 的唯一分解性，所以其乘积
+\(h=\prod_{i=1}^r(x-a_i)\) 因而整除 \(g\)。取 \(N=\max_i m_i\)，则 \(f\mid h^N\mid g^N\)，所以 \(z^N=0\)。这就刻画了核。
+
+如果 \(f\) 没有重根，所有 \(m_i=1\)，于是 \(f=h\)。刚才的论证说明 \(E\Bigl(g+(f)\Bigr)=0\) 就蕴含 \(f\mid g\)，故 \(E\) 单射，从而为同构。如果至少一个 \(m_i>1\)，则 \(r<n\)，多项式 \(h\) 的次数为 \(r\)，小于 \(f\) 的次数，所以 \(h\notin(f)\)；但 \(h\) 在各 \(a_i\) 处均为零。因此 \(h+(f)\) 是核中的非零元素，\(E\) 不是同构。
+\end{solution}

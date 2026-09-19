@@ -5,26 +5,118 @@
 \section{Gauss 引理}
 \label{b1:sec:1202}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 本原多项式与内容
+% * 本原多项式与容度
 % * 分式域上的分解及其下降
 % * 唯一分解整环上的多项式仍为唯一分解整环
 %
 
-\subsection{本原多项式与内容}
+整数系数多项式在有理数域中分解以后，因子的分母是否真的增加了分解的可能性？答案取决于能否先把系数的公共因子剥离出来。本节始终设 \(R\) 为唯一分解整环。前一章已经证明的“不可约元必为素元”，将使约化到 \(R/(p)\) 的办法适用。
+
+\subsection{本原多项式与容度}
 \label{b1:subsec:1202:01}
 
-待撰写。
+\begin{definition}\label{b1:def:polynomial-content}
+非零多项式 \(f=a_0+\cdots+a_nx^n\in R[x]\) 的各系数的一个最大公因子称为它的\term[rongdu]{容度}[content]，记为 \(c(f)\)。若 \(c(f)\) 是单位，就称 \(f\) 为\term[benyuan-duoxiangshi]{本原多项式}[primitive polynomial]。容度只在相伴意义下确定；当 \(R=\mathbb Z\) 时，统一选取正的最大公因子。
+\end{definition}
+\symidx{\(c(f)\)：非零多项式的容度}
+
+最大公因子存在，因为在各非零系数的素因子分解中取指数的最小值即可；零系数不增加限制。将每个系数除以 \(c(f)\)，得到 \(f=c(f)f_0\)，其中 \(f_0\) 本原。例如 \(6x^2+9x+3=3(2x^2+3x+1)\)。本原并不要求某个系数为单位：\(2x+3\) 在 \(\mathbb Z[x]\) 中本原，但两个非零系数都不是单位。
+
+\begin{lemma}[Gauss]\label{b1:lem:gauss-primitive}
+两个本原多项式的乘积仍为本原多项式。因此，对非零 \(f,g\in R[x]\)，容度 \(c(fg)\) 与 \(c(f)c(g)\) 相伴。
+\end{lemma}
+\begin{proof}
+设 \(f,g\) 本原，而 \(fg\) 不本原。则存在不可约元 \(p\)，整除 \(fg\) 的每个系数。由\cref{b1:prop:ufd-prime}，\(p\) 是素元，所以 \(R/(p)\) 是整环：两个剩余类的积为零意味着 \(p\mid ab\)，进而 \(p\mid a\) 或 \(p\mid b\)。逐系数约化得到
+\[
+\bar f\bar g=0\qquad\text{于 }\Bigl(R/(p)\Bigr)[x].
+\]
+因 \(f,g\) 本原，\(p\) 不可能分别整除它们的全部系数，故 \(\bar f,\bar g\) 都非零。\cref{b1:prop:polynomial-degree}说明整环上的非零多项式之积非零，产生矛盾。
+
+一般地，写 \(f=c(f)f_0\)、\(g=c(g)g_0\)。刚才证明了 \(f_0g_0\) 本原，所以从系数的素因子指数取最小值得到，\(fg=c(f)c(g)f_0g_0\) 的容度与 \(c(f)c(g)\) 相伴。
+\end{proof}
+
+这个结论称为\term[gauss-yinli]{Gauss 引理}[Gauss lemma]。证明的关键在于 \(R/(p)\) 没有零因子，而非对多项式系数逐项追踪可能发生的抵消。唯一分解性保证不可约元具有这里所需的素性。
 
 \subsection{分式域上分解的下降}
 \label{b1:subsec:1202:02}
 
-待撰写。
+为了在更大的域中分解多项式，先建立分数运算所需的基础。这也说明本节所用的域从何而来；分式的泛性质和一般局部化将在\secref{b1:sec:1301}中系统讨论。
+
+\begin{proposition}\label{b1:prop:fraction-field-basic}
+每个整环 \(R\) 都嵌入一个域 \(\operatorname{Frac}(R)\)，其中每个元素写成 \(a/b\)，\(a,b\in R\)、\(b\ne0\)。两个分数相等当且仅当交叉相乘相等，运算为
+\[
+\frac ab+\frac cd=\frac{ad+bc}{bd},\qquad
+\frac ab\frac cd=\frac{ac}{bd}.
+\]
+这个域称为 \(R\) 的\term[fenshi-yu]{分式域}[field of fractions]。
+\end{proposition}
+\symidx{\(\operatorname{Frac}(R)\)：整环 \(R\) 的分式域}
+\begin{proof}
+在所有有序对 \((a,b)\)、\(b\ne0\) 上定义
+\((a,b)\sim(c,d)\) 当且仅当 \(ad=bc\)。自反性与对称性直接成立。若另有 \(ce=df\)，则由 \(ad=bc\) 得
+\(ade=bce=bdf\)。因 \(d\ne0\)，整环的消去律给出 \(ae=bf\)，所以关系具有传递性。将等价类记为 \(a/b\)。
+
+要验证运算良定义，设 \(ab'=a'b\)、\(cd'=c'd\)。一方面
+\[
+(ad+bc)b'd'=a'd'bd+b'c'bd=(a'd'+b'c')bd;
+\]
+另一方面 \(acb'd'=a'c'bd\)。这恰好分别说明更换两个分数的代表后，所给和与积不变。分母的积非零仍由整环假设保证。
+
+加法交换律和乘法交换律继承自 \(R\)。任意三个分数 \(a/b,c/d,e/f\) 的两种加法结合方式都给出 \((adf+bcf+bde)/(bdf)\)，两种乘法结合方式都给出 \(ace/(bdf)\)。分配律两边分别算得
+\[
+\frac ab\biggl(\frac cd+\frac ef\biggr)
+=\frac{a(cf+de)}{bdf},\qquad
+\frac{ac}{bd}+\frac{ae}{bf}
+=\frac{ab(cf+de)}{b^2df};
+\]
+它们按交叉相乘相等。零元为 \(0/1\)，单位元为 \(1/1\)，\(a/b\) 的加法逆元为 \((-a)/b\)。分数 \(a/b\) 非零当且仅当 \(a\ne0\)，这时 \(b/a\) 为乘法逆元。因此所得结构是域。映射 \(a\mapsto a/1\) 保持和、积与单位，且 \(a/1=0/1\) 迫使 \(a=0\)，故为所需嵌入。
+\end{proof}
+
+以下记 \(F=\operatorname{Frac}(R)\)，并通过上述嵌入把 \(R[x]\) 看作 \(F[x]\) 的子环。由于 \(R\) 唯一分解，每个非零分数均可约去分子、分母的公共素因子，写成互素的 \(a/b\)。
+
+\begin{lemma}\label{b1:lem:primitive-scaling}
+每个非零 \(h\in F[x]\) 可写成 \(h=\lambda h_0\)，其中 \(\lambda\in F\) 非零，\(h_0\in R[x]\) 本原。若 \(h_0\) 本原且 \(\lambda h_0\in R[x]\)，则 \(\lambda\in R\)；若 \(\lambda h_0\) 也本原，则 \(\lambda\) 是 \(R\) 的单位。
+\end{lemma}
+\begin{proof}
+取 \(h\) 的有限个系数分母的乘积 \(b\ne0\)，则 \(bh\in R[x]\)。把 \(bh\) 的容度 \(a\) 提出，得到 \(h=(a/b)h_0\)，其中 \(h_0\) 本原。
+
+现在将 \(\lambda=a/b\) 约成互素形式。若 \(\lambda h_0\) 的系数都在 \(R\)，对 \(h_0\) 的每个系数 \(u\) 都有 \(au=bv\)，其中 \(v\in R\)。若 \(b\) 不是单位，选不可约因子 \(p\mid b\)。互素性给出 \(p\nmid a\)，而素性迫使 \(p\mid u\)。这对每个系数成立，与 \(h_0\) 本原矛盾。因此 \(b\) 为单位，即 \(\lambda\in R\)。若 \(\lambda h_0\) 也本原，任何非单位 \(\lambda\) 的素因子都会整除它的全部系数，仍产生矛盾，故 \(\lambda\) 为单位。
+\end{proof}
+
+\begin{theorem}[Gauss 分解定理]\label{b1:thm:gauss-descent}
+设 \(f\in R[x]\) 本原且次数为正。它在 \(R[x]\) 中不可约，当且仅当它在 \(F[x]\) 中不可约。此外，若 \(f\) 本原、\(h\in R[x]\)，且 \(f\mid h\) 在 \(F[x]\) 中成立，则该整除关系已经在 \(R[x]\) 中成立。
+\end{theorem}
+\begin{proof}
+先证最后的整除断言。\(h=0\) 时取商为零即可；否则写 \(h=fq\)，并由\cref{b1:lem:primitive-scaling}写 \(q=\lambda q_0\)，其中 \(q_0\in R[x]\) 本原。\cref{b1:lem:gauss-primitive}说明 \(fq_0\) 本原，而 \(h=\lambda fq_0\in R[x]\)，再由\cref{b1:lem:primitive-scaling}得 \(\lambda\in R\)。所以 \(q\in R[x]\)。
+
+若 \(f=gh\) 在 \(F[x]\) 中分解，且两因子次数均为正，将它们写成 \(g=\alpha g_0\)、\(h=\beta h_0\)，其中 \(g_0,h_0\) 是 \(R[x]\) 中的本原多项式。于是
+\(f=\alpha\beta g_0h_0\)。\cref{b1:lem:gauss-primitive}说明 \(g_0h_0\) 本原，且 \(f\) 也本原，所以\cref{b1:lem:primitive-scaling}给出 \(\alpha\beta\in R^\times\)。因此 \(f=(\alpha\beta g_0)h_0\) 是 \(R[x]\) 中的非平凡分解。
+
+反过来，若本原的 \(f\) 在 \(R[x]\) 中分解为两个非单位，由容度的乘法性质，两因子均本原。整环上多项式环的单位只能是底环的单位：若 \(uv=1\)，次数相加为零，故 \(u,v\) 都是常数。因此本原的非单位因子不能为常数，两因子均有正次数，同一分解在 \(F[x]\) 中仍非平凡。
+\end{proof}
+
+所以整数系数的本原多项式在 \(\mathbb Q[x]\) 中可约，当且仅当能拆成两个正次数的整数系数多项式。这里不能省略“本原”：常数 \(2\) 在 \(\mathbb Z[x]\) 中是非单位，在 \(\mathbb Q[x]\) 中却是单位；\(2x+2\) 的容度也必须先提出，再讨论真正涉及次数的分解。
 
 \subsection{多项式环的唯一分解性}
 \label{b1:subsec:1202:03}
 
-待撰写。
+\begin{theorem}\label{b1:thm:polynomial-ufd}
+若 \(R\) 是唯一分解整环，则 \(R[x]\) 也是唯一分解整环。因而，对任意有限个不定元，\(R[x_1,\ldots,x_n]\) 仍为唯一分解整环。
+\end{theorem}
+\begin{proof}
+仍令 \(F=\operatorname{Frac}(R)\)。由\cref{b1:prop:field-poly-division}、\cref{b1:thm:euclidean-pid}及\cref{b1:thm:pid-ufd}，\(F[x]\) 是唯一分解整环。对 \(R[x]\) 中非零的 \(f\)，先写 \(f=c(f)f_0\)，其中 \(f_0\) 本原。容度 \(c(f)\) 在 \(R\) 中有不可约分解。若 \(\deg f_0>0\)，再在 \(F[x]\) 中分解 \(f_0\)，把每个正次数不可约因子乘以适当非零常数，化为 \(R[x]\) 中的本原因子 \(q_1,\ldots,q_s\)。于是
+\[
+f_0=\lambda q_1\cdots q_s.
+\]
+右边的多项式乘积本原，故\cref{b1:lem:primitive-scaling}说明 \(\lambda\in R^\times\)。而\cref{b1:thm:gauss-descent}说明每个 \(q_i\) 在 \(R[x]\) 中不可约。若 \(f_0\) 为常数，则本原性已说明它为单位，不需这一步。
+
+还要证明这些分解唯一。\(R\) 的每个不可约元 \(p\)，在 \(R[x]\) 中都是素元：模 \(p\) 约化后的多项式环 \(\Bigl(R/(p)\Bigr)[x]\) 是整环，故 \(p\mid gh\) 蕴含 \(p\mid g\) 或 \(p\mid h\)。正次数的本原因子 \(q_i\) 在 \(F[x]\) 中不可约，\cref{b1:prop:ufd-prime}说明它在这个唯一分解整环中是素元。若 \(q_i\mid gh\) 于 \(R[x]\)，先在 \(F[x]\) 中得到 \(q_i\mid g\) 或 \(q_i\mid h\)，再由\cref{b1:thm:gauss-descent}的整除下降，得到相应的商已经属于 \(R[x]\)。因此 \(q_i\) 也为素元。
+
+现在任一非零非单位都已分解为素元的乘积。比较两个不可约分解，第一个分解中的任一素因子必须整除第二个分解中的某个不可约因子，两者因而相伴；消去它们并重复，就得到因子个数相同且逐一相伴。这就是唯一分解性。有限多个不定元的结论，再用
+\(R[x_1,\ldots,x_n]=\Bigl(R[x_1,\ldots,x_{n-1}]\Bigr)[x_n]\)
+对 \(n\) 归纳。
+\end{proof}
+
+这个定理说明 \(\mathbb Z[x]\) 和 \(K[x,y]\) 都具有唯一分解性，却没有说明它们是主理想整环。唯一分解控制元素的因子；主理想条件要求一个理想中的全部元素由单个元素生成，是更强的要求。多元多项式环中理想的有限生成性，将由本章最后一节的 Hilbert 基定理保证。

@@ -5,8 +5,6 @@
 \section{迹与范数的算术应用}
 \label{b1:sec:1804}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 有限域中的迹和范数
@@ -17,22 +15,77 @@
 % ---
 %
 
+迹和范数把扩张域中的计算带回基域，但它们的像并非在所有场合都一样。有限域中可以精确求出像与核；数域中则要同时考虑元素是否满足整数系数的首一方程。本节就地建立所需的整性事实，不预先使用第三卷的整扩张理论。
+
 \subsection{有限域中的迹和范数}
 \label{b1:subsec:1804:01}
 
-待撰写。
+\begin{proposition}\label{b1:prop:finite-field-trace-norm}
+对 \(L=\mathbb F_{q^n}\)、\(K=\mathbb F_q\)，有
+\[
+\operatorname{Tr}_{L/K}(a)=a+a^q+\cdots+a^{q^{n-1}},\qquad
+\operatorname{N}_{L/K}(a)=a^{1+q+\cdots+q^{n-1}}.
+\]
+迹作为加法群同态满射到 \(K\)，其核有 \(q^{n-1}\) 个元素；范数把 \(L^\times\) 满射到 \(K^\times\)，其核有 \((q^n-1)/(q-1)\) 个元素。
+\end{proposition}
+\begin{proof}
+\cref{b1:thm:finite-field-automorphisms}列出了全部嵌入 \(a\mapsto a^{q^i}\)，而有限域扩张可分，故\cref{b1:thm:trace-norm-embeddings}给出两公式。\cref{b1:thm:trace-pairing-separable}保证迹非零；从 \(n\) 维 \(K\) 空间到一维 \(K\) 空间的非零线性映射必满射，核维数为 \(n-1\)，从而有 \(q^{n-1}\) 个元素。取 \(L^\times\) 的生成元 \(g\)，令 \(h=(q^n-1)/(q-1)\)，则 \(g^h\) 的阶为 \(q-1\)，所以范数的像包含 \(K^\times\) 的一个生成元，必为全部。循环群中幂映射的核有 \(h\) 个元素，得到最后一项。
+\end{proof}
+例如在 \(\mathbb F_4=\mathbb F_2(u)\)、\(u^2+u+1=0\) 中，\(\operatorname{Tr}(1)=0\)，但 \(\operatorname{Tr}(u)=u+u^2=1\)；这正展示了迹非零并不要求单位元的迹非零。
 
 \subsection{整元素的迹与范数}
 \label{b1:subsec:1804:02}
 
-待撰写。
+\begin{definition}\label{b1:def:integral-element-field}
+设 \(A\) 是域 \(L\) 的子环。若 \(a\in L\) 满足某个系数在 \(A\) 中的首一方程
+\[
+a^d+c_{d-1}a^{d-1}+\cdots+c_0=0,
+\]
+则称 \(a\) 为 \(A\) 上的\term[zheng-yuansu]{整元素}[integral element]，也说它在 \(A\) 上整。在 \(\mathbb Z\) 上整的代数数称为\term[daishu-zhengshu]{代数整数}[algebraic integer]。
+\end{definition}
+有限扩张 \(K/\mathbb Q\) 称为\term[shuyu]{数域}[number field]。为将整性用于迹与范数，先给出求和、求积时所需的封闭性。
+\begin{lemma}\label{b1:lem:integral-closure-elementary}
+在同一个域中，有限多个在 \(A\) 上整的元素生成的子环 \(A[a_1,\ldots,a_s]\) 由有限多个元素的 \(A\) 系数线性组合组成，也称有限生成 \(A\) 模；其中每个元素都在 \(A\) 上整。特别地，整元素的和、差与积仍整。
+\end{lemma}
+\begin{proof}
+设 \(a_i\) 满足次数为 \(d_i\) 的首一方程。反复用这些方程约去高次幂，\(A[a_1,\ldots,a_s]\) 由有限多个单项式 \(a_1^{e_1}\cdots a_s^{e_s}\)、\(0\leq e_i<d_i\)，作为 \(A\) 模生成。记这些生成元为 \(v_1,\ldots,v_m\)，其中取 \(v_1=1\)。
+
+若 \(b\) 在这个代数中，将每个 \(bv_i\) 写成生成元的线性组合，得到 \(bv_i=\sum_j c_{ij}v_j\)，其中 \(c_{ij}\in A\)。令 \(C=(c_{ij})\)、\(v=(v_i)^{\mathsf T}\)，则 \((bI-C)v=0\)。由行列式的余子式展开，伴随矩阵满足 \(\operatorname{adj}(bI-C)(bI-C)=\det(bI-C)I\)；乘到上式得到 \(\det(bI-C)v_i=0\) 对每个 \(i\) 成立。取 \(v_1=1\)，便得 \(\det(bI-C)=0\)。多项式 \(\det(tI-C)\in A[t]\) 首一，故 \(b\) 在 \(A\) 上整。此处生成元不必线性无关，因而没有假设这个模是自由模。
+\end{proof}
+这段有限生成模论证只使用余子式恒等式；行列式技巧的一般模论形式将在第三卷系统讨论。
+
+\begin{proposition}\label{b1:prop:integral-trace-norm}
+设 \(L/K\) 为有限扩张，\(A\subseteq K\) 为子环。若 \(a\in L\) 在 \(A\) 上整，则 \(\operatorname{Tr}_{L/K}(a)\) 和 \(\operatorname{N}_{L/K}(a)\) 也是 \(K\) 中在 \(A\) 上整的元素。特别地，数域中的代数整数对 \(\mathbb Q\) 的迹和范数都是整数。
+\end{proposition}
+\begin{proof}
+取共同代数闭包。\(a\) 满足的首一 \(A\) 方程在每个保持 \(K\) 的嵌入下不变，所以每个共轭像也在 \(A\) 上整。由\cref{b1:thm:trace-norm-embeddings}，迹和范数是这些共轭像按不可分重数形成的有限和、积。\cref{b1:lem:integral-closure-elementary}保证它们整，而定义保证它们属于 \(K\)。
+
+若 \(K=\mathbb Q,A=\mathbb Z\)，还须说明有理数中整元素只有整数。写既约分数 \(a/b\)、\(b>0\)，把它满足的首一 \(d\) 次整数方程乘以 \(b^d\)，得到 \(b\mid a^d\)。由 \(\gcd(a,b)=1\)，只能 \(b=1\)。所以迹与范数为整数。
+\end{proof}
 
 \subsection{数域整数环与分歧理论}
 \label{b1:subsec:1804:03}
 
-待撰写。
+数域 \(K\) 中全部代数整数组成的集合记为 \(\mathcal O_K\)，称为其\term[zhengshu-huan]{整数环}[ring of integers]。
+\symidx{\(\mathcal O_K\)：数域 \(K\) 的整数环}
+\cref{b1:lem:integral-closure-elementary}说明它对加、减、乘封闭并含一，所以确实是环。例如 \(\sqrt d\) 是代数整数，因为满足 \(t^2-d=0\)。当平方自由整数 \(d\equiv1\pmod4\) 时，\(\omega=(1+\sqrt d)/2\) 也满足
+\[
+t^2-t+\frac{1-d}{4}=0,
+\]
+故为代数整数；这已说明 \(\mathbb Z[\sqrt d]\) 未必是整个整数环。
+
+\ProseParagraphBreak
+迹配对把数域的线性结构与整数环的算术联系起来。例如 \(d=5\) 时，基 \(1,\omega\) 的判别式为五，而基 \(1,\sqrt5\) 的判别式为二十；两者符合\eqref{b1:eq:discriminant-change-basis}。关于整数环的整基、素理想分解，以及判别式和分歧之间的关系，本节只指出研究方向，尚未建立相应的整数环结构定理。特别不能把某组基的判别式中的每个素因子都直接宣布为数域中的分歧素数。
 
 \subsection{整性的定义与封闭性}
 \label{b1:subsec:1804:04}
 
-待撰写。
+整性的定义不要求系数环为域。事实上，若系数环已经是域 \(K\)，首一方程与代数方程可以通过除以首项系数互相转换，“在 \(K\) 上整”就等于“在 \(K\) 上代数”。对于一般环 \(A\)，首项系数不能随意取逆，整性因此比代数性强。
+
+\begin{proposition}\label{b1:prop:integrality-transitive-elementary}
+设域内有子环 \(A\subseteq B\)，且 \(B\) 中每个元素都在 \(A\) 上整。如果 \(c\) 在 \(B\) 上整，则 \(c\) 在 \(A\) 上整。
+\end{proposition}
+\begin{proof}
+取 \(c\) 满足的一条首一方程，其有限多个系数为 \(b_1,\ldots,b_s\)。由\cref{b1:lem:integral-closure-elementary}，\(B_0=A[b_1,\ldots,b_s]\) 有有限个 \(A\) 模生成元。若该方程次数为 \(d\)，则 \(B_0[c]\) 由 \(1,c,\ldots,c^{d-1}\) 作为 \(B_0\) 模生成；把两组生成元相乘，得到有限个 \(A\) 模生成元，并可令其中一个为一。对乘以 \(c\) 再应用\cref{b1:lem:integral-closure-elementary}证明中的伴随矩阵论证，便得到 \(c\) 的首一 \(A\) 方程。
+\end{proof}
+整元素的逆未必整，例如二是代数整数而 \(1/2\) 不是；迹、范数均为整数也不能在任意次数下反推元素整，因为它们只控制特征多项式的两个系数。对于二次扩张，这两个系数已经是全部非首项系数，所以结论恰好可以反推；章末习题将比较这两种情形。

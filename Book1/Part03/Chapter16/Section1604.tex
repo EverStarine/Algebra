@@ -5,7 +5,6 @@
 \section{本原元素定理}
 \label{b1:sec:1604}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,22 +16,79 @@
 % ---
 %
 
+一个有限扩张总能由有限多个元素生成，能否进一步只用一个？可分性给出肯定答案，但无限基域与有限基域的证明机制不同：前者可避开有限多个坏参数，后者必须利用乘法群的有限性。先处理前一种情形，随后给出不可分反例，最后以独立的群论引理完成有限基域情形。
+
 \subsection{有限可分扩张的单生成性}
 \label{b1:subsec:1604:01}
 
-待撰写。
+\begin{proposition}\label{b1:prop:primitive-element-infinite}
+设 \(K\) 为无限域，\(L/K\) 有限可分。则存在 \(\theta\in L\) 使 \(L=K(\theta)\)。更具体地，若 \(L=K(a,b)\)，则除去有限多个 \(c\in K\) 以外，都有 \(L=K(a+cb)\)。
+\end{proposition}
+\begin{proof}
+固定包含 \(L\) 的代数闭包 \(\Omega\)，由\cref{b1:thm:separable-embeddings}，\(L\) 有恰好 \(n=[L:K]\) 个 \(K\) 嵌入 \(\sigma_1,\ldots,\sigma_n\)。先设 \(L=K(a,b)\)。对于 \(i\neq j\)，若 \(\sigma_i(b)=\sigma_j(b)\)，必有 \(\sigma_i(a)\neq\sigma_j(a)\)，否则它们在生成元上相同，因而为同一个映射。此时任意 \(c\) 都不会使二者在 \(a+cb\) 处取同值。若 \(\sigma_i(b)\neq\sigma_j(b)\)，等式
+\[
+\sigma_i(a)+c\sigma_i(b)=\sigma_j(a)+c\sigma_j(b)
+\]
+至多排除一个 \(c\in K\)。嵌入对只有有限多个，\(K\) 无限，所以可取 \(c\) 同时避开所有这些值。
+
+令 \(\theta=a+cb\)。此时 \(\sigma_i(\theta)\) 两两不同，故最小多项式 \(m_{\theta,K}\) 至少有 \(n\) 个不同根。由次数与根数的关系及塔式公式，
+\[
+n\leq\Bigl[K(\theta):K\Bigr]\leq[L:K]=n.
+\]
+所以 \(\Bigl[L:K(\theta)\Bigr]=1\)，即 \(L=K(\theta)\)。一般有限扩张有有限生成集，先合并前两个生成元，再与第三个合并；各中间扩张仍可分，重复有限次即可。
+\end{proof}
+例如 \(\theta=\sqrt2+\sqrt3\) 生成 \(\mathbb Q(\sqrt2,\sqrt3)\)。这不只由存在性定理得出，还可直接恢复两个根：\(\theta^{-1}=\sqrt3-\sqrt2\)，从而
+\[
+\sqrt2=\frac{\theta-\theta^{-1}}2,\qquad
+\sqrt3=\frac{\theta+\theta^{-1}}2.
+\]
 
 \subsection{有限性与可分性的作用}
 \label{b1:subsec:1604:02}
 
-待撰写。
+有限性在上面的证明中保证只有有限多个嵌入对，可分性则保证嵌入数达到扩张次数。若嵌入数小于次数，即使把这些嵌入在一个元素上的值全部分开，也只能得到较弱的次数下界，不能推出这个元素生成整个扩张。
+
+\ProseParagraphBreak
+无限可分扩张也不必单生成。\cref{b1:prop:infinite-algebraic-root-tower}中的 \(\bigcup_{n\geq1}\mathbb Q(2^{1/2^n})/\mathbb Q\) 是无限代数扩张，并因特征为零而可分。若由一个代数元生成，\cref{b1:prop:minimal-polynomial-degree}将使次数有限，矛盾。因此有限性不能省去。
+
+\ProseParagraphBreak
+另一方面，可分性是充分条件，并非单生成的必要条件。\(\mathbb F_p(t^{1/p})/\mathbb F_p(t)\) 本来就是单扩张，却纯不可分。需要排除的并不是每一个不可分扩张，而是下面这种同时需要多个独立纯不可分方向的情形。
 
 \subsection{非单生成有限扩张}
 \label{b1:subsec:1604:03}
 
-待撰写。
+\begin{proposition}\label{b1:prop:non-simple-finite-extension}
+设 \(u,v\) 在 \(\mathbb F_p\) 上代数独立，令
+\[
+L=\mathbb F_p(u,v),\qquad K=\mathbb F_p(u^p,v^p).
+\]
+则 \([L:K]=p^2\)，但对每个 \(a\in L\) 都有 \(\Bigl[K(a):K\Bigr]\leq p\)。特别地，这个有限扩张不是单扩张。
+\end{proposition}
+\begin{proof}
+\(u,v\) 分别满足 \(x^p-u^p\)、\(x^p-v^p\)，所以总次数至多 \(p^2\)。单项式 \(u^iv^j\)、\(0\leq i,j<p\) 在 \(K\) 上线性无关：若有关系，清除 \(u^p,v^p\) 的有理函数分母，就得到这些单项式以 \(\mathbb F_p[u^p,v^p]\) 为系数的关系。不同 \((i,j)\) 的幂指数对模 \(p\) 不同，因此各项没有相同单项式可以抵消；\(u,v\) 代数独立迫使所有系数为零。于是次数恰为 \(p^2\)。
+
+对任意 \(a=A(u,v)/B(u,v)\)，有 \(a^p=A(u^p,v^p)/B(u^p,v^p)\in K\)，所以 \(a\) 被次数为 \(p\) 的多项式 \(x^p-a^p\in K[x]\) 零化，给出 \(\Bigl[K(a):K\Bigr]\leq p<p^2\)。因而任何单个 \(a\) 都不能生成 \(L\)。
+\end{proof}
+这里次数的障碍十分明确：整个扩张含有两个独立的 \(p\) 次根方向，而每个元素单独只能贡献至多 \(p\) 的次数。
 
 \subsection{有限乘法子群的循环性}
 \label{b1:subsec:1604:04}
 
-待撰写。
+\begin{lemma}\label{b1:lem:finite-multiplicative-cyclic}
+任意域 \(F\) 的乘法群 \(F^\times\) 的有限子群都是循环群。
+\end{lemma}
+\begin{proof}
+设有限子群为 \(G\)，令 \(m\) 为所有元素阶的最小公倍数。对每个素数幂 \(\ell^e\) 恰好整除 \(m\)，可选 \(g_\ell\in G\)，其阶中 \(\ell\) 的指数为 \(e\)。设该阶为 \(\ell^e d\)，其中 \(\ell\nmid d\)，则 \(h_\ell=g_\ell^d\) 的阶为 \(\ell^e\)：\(h_\ell^r=1\) 当且仅当 \(\ell^e d\mid dr\)，即 \(\ell^e\mid r\)。
+
+\(G\) 交换，且各 \(h_\ell\) 的阶两两互素，所以其乘积 \(h\) 的阶为 \(m\)。为核对这一点，若两个交换元素的阶为互素的 \(a,b\)，且 \((xy)^r=1\)，则 \(x^r=y^{-r}\) 位于 \(\langle x\rangle\cap\langle y\rangle\)。交中元素的阶同时整除 \(a,b\)，故只有单位，从而 \(a\mid r,b\mid r\)，即 \(ab\mid r\)；反向 \((xy)^{ab}=1\) 直接成立。有限次应用此结论便得 \(h\) 的阶为 \(m\)。
+
+每个 \(g\in G\) 都满足 \(g^m=1\)，故 \(G\) 包含于非零多项式 \(x^m-1\) 的根集。由\cref{b1:prop:factor-root}，\(\lvert G\rvert\leq m\)。另一方面，\(h\) 的 \(m\) 个幂均在 \(G\) 中且互异，所以 \(m\leq\lvert G\rvert\)。于是 \(G=\langle h\rangle\)。平凡群可直接取生成元 \(1\)。
+\end{proof}
+
+\begin{theorem}[本原元素]\label{b1:thm:primitive-element}
+每个有限可分扩张 \(L/K\) 都是单扩张。满足 \(L=K(\theta)\) 的元素 \(\theta\) 称为该扩张的\term[benyuan-yuansu]{本原元素}[primitive element]。
+\end{theorem}
+\begin{proof}
+若 \(K\) 无限，结论就是\cref{b1:prop:primitive-element-infinite}。若 \(K\) 有限，设 \(\lvert K\rvert=q\)、\([L:K]=n\)。选一组 \(K\) 基，每个元素由 \(n\) 个 \(K\) 坐标唯一确定，所以 \(\lvert L\rvert=q^n\)，是有限域。\cref{b1:lem:finite-multiplicative-cyclic}说明 \(L^\times=\langle\theta\rangle\)。域 \(K(\theta)\) 包含 \(L\) 的每个非零元素，也包含零，故等于 \(L\)。这个有限基域论证本身不需要可分性；有限域的完美性已在\cref{b1:prop:perfect-frobenius}之后得到。
+\end{proof}
+这一结果称为\term[benyuan-yuansu-dingli]{本原元素定理}[primitive element theorem]。有限域乘法群的生成元一定是域扩张的本原元素，反之未必；前者必须用乘法的幂得到所有非零元素，后者允许加法、减法和除法。

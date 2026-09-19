@@ -5,7 +5,7 @@
 \section{Kummer 理论}
 \label{b1:sec:2003}
 
-% TODO: 按以下纲要要点撰写本节。
+方程 \(X^n-a=0\) 看起来只涉及开方，但它的全部根还相差单位根。只有先控制这些单位根，根式扩张与循环群之间的关系才足够直接。\term[Kummer-lilun]{Kummer 理论}[Kummer theory]研究这类根式与交换 Galois 群的联系。本节固定代数闭包 \(\overline K\)，所有扩张都取在其中；除另有说明外，\(n\geq1\)、\(\operatorname{char}K\nmid n\)，并假设 \(K\) 含有全部 \(n\) 次单位根。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,19 +18,115 @@
 \subsection{特征与单位根假设}
 \label{b1:subsec:2003:01}
 
-待撰写。
+\begin{definition}\label{b1:def:roots-of-unity}
+域 \(K\) 的代数闭包中满足 \(\zeta^n=1\) 的元素称为 \(n\) 次\term[danwei-gen]{单位根}[root of unity]，全体组成乘法群
+\[
+\mu_n\coloneqq\{\,\zeta\in\overline K^\times\mid\zeta^n=1\,\}.
+\]
+其中乘法阶恰为 \(n\) 的元素称为\term[yuanshi-danwei-gen]{原始单位根}[primitive root of unity]。
+\end{definition}
+\symidx{\(\mu_n\)：全体 \(n\) 次单位根组成的群}
+
+因为 \(X^n-1\) 与导数 \(nX^{n-1}\) 没有公共根，\(\mu_n\) 有 \(n\) 个元素。\cref{b1:lem:finite-multiplicative-cyclic}说明域的乘法群的有限子群是循环群，因此存在原始 \(n\) 次单位根 \(\zeta\)，且 \(\mu_n=\langle\zeta\rangle\)。假设 \(\mu_n\subseteq K\) 就等价于 \(K\) 含有这样一个 \(\zeta\)。这里没有用到下一章分圆多项式在 \(\mathbb Q\) 上的不可约性。
+
+\ProseParagraphBreak
+若去掉特征条件，在特征 \(p\) 中就有 \(X^p-1=(X-1)^p\)，并不存在阶为 \(p\) 的单位根。若去掉单位根条件，\(\mathbb Q(\sqrt[3]{2})/\mathbb Q\) 则说明开方未必给出正规扩张。这两个假设分别控制可分性与全部根是否同时出现。
 
 \subsection{根式扩张与 Kummer 配对}
 \label{b1:subsec:2003:02}
 
-待撰写。
+\begin{proposition}\label{b1:prop:single-radical-cyclic}
+设 \(a\in K^\times\)，取 \(\alpha\in\overline K\) 满足 \(\alpha^n=a\)。则 \(K(\alpha)/K\) 是循环 Galois 扩张，其次数整除 \(n\)。映射
+\[
+\operatorname{Gal}\Bigl(K(\alpha)/K\Bigr)\longrightarrow\mu_n,
+\qquad\sigma\longmapsto\frac{\sigma(\alpha)}{\alpha}
+\]
+是单同态。
+\end{proposition}
+\begin{proof}
+\(X^n-a\) 的根恰为 \(\zeta^j\alpha\)，全在 \(K(\alpha)\) 中；因 \(a\neq0\) 且 \(n\neq0\)，它没有重根。所以 \(K(\alpha)\) 是一个可分多项式的分裂域。比值属于 \(\mu_n\)，且每个自同构固定 \(\mu_n\)，故
+\[
+\frac{\sigma\tau(\alpha)}{\alpha}
+=\sigma\Bigl(\frac{\tau(\alpha)}{\alpha}\Bigr)\frac{\sigma(\alpha)}{\alpha}
+=\frac{\tau(\alpha)}{\alpha}\frac{\sigma(\alpha)}{\alpha}.
+\]
+比值为 \(1\) 时自同构固定生成元 \(\alpha\)，因而为恒等映射。这证明了单同态断言。\(\mu_n\) 的子群为循环群，阶整除 \(n\)，便得到其余结论。
+\end{proof}
+
+为同时处理若干根式，记 \(K^{\times n}=\{\,b^n\mid b\in K^\times\,\}\)。商群 \(K^\times/K^{\times n}\) 中每个元素的阶都整除 \(n\)。取其有限子群 \(B\)，选择生成元的代表 \(a_1,\ldots,a_r\)，并令
+\[
+L_B=K(\alpha_1,\ldots,\alpha_r),\qquad\alpha_i^n=a_i.
+\]
+换一个根只会乘以 \(\mu_n\) 中的元素；换一个代表只会再乘以 \(K^\times\) 中的元素。若 \([a]\in B\)，把其类写成各 \([a_i]\) 的乘积，就能在 \(L_B\) 中找到 \(a\) 的 \(n\) 次根。因此 \(L_B\) 不依赖这些选择。
+
+\begin{definition}\label{b1:def:kummer-pairing}
+对 \(G_B=\operatorname{Gal}(L_B/K)\)，令
+\[
+\langle\sigma,[a]\rangle\coloneqq\frac{\sigma(\alpha)}{\alpha},
+\qquad \alpha^n=a.
+\]
+这个映射 \(G_B\times B\rightarrow\mu_n\) 称为\term[Kummer-peidui]{Kummer 配对}[Kummer pairing]。
+\end{definition}
+
+域 \(L_B\) 是各 \(X^n-a_i\) 的共同分裂域，故为有限 Galois 扩张。配对的值与根和代表的选择无关：根之间相差被 \(G_B\) 固定的单位根，而代表乘以 \(b^n\) 时可以把根换成 \(b\alpha\)。根的乘积是乘积的根，故配对在第二个变量上乘法相容；在第一个变量上的相容性就是上一命题中的计算。
 
 \subsection{素数阶循环扩张与有限指数对应}
 \label{b1:subsec:2003:03}
 
-待撰写。
+有限交换群 \(A\) 的指数指使每个元素的该次幂等于 \(1\) 的最小正整数。若其指数整除 \(n\)，则
+\begin{equation}\label{b1:eq:finite-character-count}
+\Bigl|\operatorname{Hom}(A,\mu_n)\Bigr|=|A|.
+\end{equation}
+这里应用\cref{b1:thm:fga-structure}，把有限交换群 \(A\) 写成若干循环群的直积；因 \(A\) 的指数整除 \(n\)，每个循环因子的阶 \(d\) 也整除 \(n\)。从 \(C_d\) 到 \(\mu_n\) 的同态由生成元的像决定，恰有 \(d\) 个选择。各因子的选择独立，相乘便得到所需等式。
+
+\begin{theorem}[Kummer 对应]\label{b1:thm:kummer-correspondence}
+在本节假设下，以下两类对象一一对应：
+\begin{enumerate}
+\item \(K^\times/K^{\times n}\) 的有限子群 \(B\)；
+\item \(\overline K\) 中的有限 Galois 扩张 \(L/K\)，其 Galois 群为指数整除 \(n\) 的交换群。
+\end{enumerate}
+正向对应为 \(B\mapsto L_B\)，反向对应为
+\[
+B_L=\Bigl(K^\times\cap L^{\times n}\Bigr)/K^{\times n}.
+\]
+Kummer 配对给出同构
+\[
+\operatorname{Gal}(L_B/K)\cong\operatorname{Hom}(B,\mu_n),
+\qquad B\cong\operatorname{Hom}\Bigl(\operatorname{Gal}(L_B/K),\mu_n\Bigr),
+\]
+特别地，\([L_B:K]=|B|\)。子群包含对应于域包含。
+\end{theorem}
+\begin{proof}
+从有限 \(B\) 出发，配对给出 \(G_B\rightarrow\operatorname{Hom}(B,\mu_n)\)。其核固定全部 \(\alpha_i\)，故为平凡群。这也说明 \(G_B\) 交换且指数整除 \(n\)。反向映射 \(B\rightarrow\operatorname{Hom}(G_B,\mu_n)\) 同样为单射：若 \([a]\) 配对恒为 \(1\)，则其根 \(\alpha\) 被 \(G_B\) 固定，故 \(\alpha\in K\)，从而 \([a]=1\)。由\eqref{b1:eq:finite-character-count}，这两个单射给出 \(|G_B|\leq|B|\leq|G_B|\)，所以都是同构。
+
+现在从第二类扩张 \(L/K\) 出发，记群为 \(G\)。把各 \(\sigma\in G\) 视为 \(K\) 向量空间 \(L\) 上的线性算子。因 \(\sigma^n=1\)，而 \(X^n-1\) 在 \(K\) 上分裂且无重根，各算子均可对角化。所需分解可以直接写出：对每个 \(\zeta\in\mu_n\)，令
+\[
+P_\zeta(X)=\prod_{\substack{\eta\in\mu_n\\\eta\neq\zeta}}
+\frac{X-\eta}{\zeta-\eta}.
+\]
+有 \(\sum_\zeta P_\zeta(X)=1\)，且 \((X-\zeta)P_\zeta(X)\) 是 \(X^n-1\) 的常数倍。因此 \(v=\sum_\zeta P_\zeta(\sigma)v\)，每一项都属于 \(\sigma\) 的 \(\zeta\) 特征空间；不同特征空间的和为直和。又因这些算子两两交换，一个算子的特征空间被其余算子保持，在各特征空间内对余下的有限多个算子依次作同样分解即可。于是 \(L\) 有一组同时特征向量基 \(\beta_1,\ldots,\beta_m\)。
+
+每个 \(\sigma(\beta_i)/\beta_i\) 都属于 \(\mu_n\)，故 \(\beta_i^n\) 被 \(G\) 固定，属于 \(K^\times\)。这些 \(n\) 次幂的类生成有限子群 \(B_0\)：它由有限个阶整除 \(n\) 的元素生成，至多有 \(n^m\) 个元素。域 \(L_{B_0}\) 含有整组基，故等于 \(L\)。
+
+对 \(B_L\) 中任意元素，同一个配对仍定义到有限群 \(\operatorname{Hom}(G,\mu_n)\)，且因固定域为 \(K\) 而为单射。因此 \(B_L\) 有限。已证部分应用于 \(B_L\) 与 \(B_0\subseteq B_L\)，并使用二者生成的域都为 \(L\)，得到 \(|B_L|=[L:K]=|B_0|\)，故 \(B_L=B_0\)。同理，从任意 \(B\) 出发后所得 \(B_{L_B}\) 与 \(B\) 相等。包含关系由加入根的构造直接保持。
+\end{proof}
+
+“有限指数情形”在这里指 Galois 群的指数有界，并且扩张本身有限；不要求 \(B\) 在整个 \(K^\times/K^{\times n}\) 中具有有限指数。例如 \(\mathbb Q^\times/\mathbb Q^{\times2}\) 是无限群，但由 \([2],[3]\) 生成的子群有四个元素，给出次数为 \(4\) 的扩张 \(\mathbb Q(\sqrt2,\sqrt3)\)。独立性可由 \(2,3,6\) 都不是有理数的平方核验。
 
 \subsection{单位根与循环扩张的根式生成}
 \label{b1:subsec:2003:04}
 
-待撰写。
+\begin{theorem}\label{b1:thm:kummer-cyclic}
+若 \(L/K\) 是次数为 \(d\) 的循环扩张，\(\operatorname{char}K\nmid d\)，且 \(\mu_d\subseteq K\)，则存在 \(\alpha\in L^\times\) 使
+\[
+L=K(\alpha),\qquad\alpha^d\in K.
+\]
+若 \(\ell\) 是素数，则 \(\ell\) 次循环扩张由 \(K^\times/K^{\times\ell}\) 的一维 \(\mathbb F_\ell\) 子空间分类。
+\end{theorem}
+\begin{proof}
+选取 \(\operatorname{Gal}(L/K)\) 的生成元 \(\sigma\)，以及原始 \(d\) 次单位根 \(\zeta\in K\)。由于 \(N_{L/K}(\zeta^{-1})=\zeta^{-d}=1\)，\cref{b1:thm:hilbert90-multiplicative}给出非零 \(\alpha\) 满足 \(\alpha/\sigma(\alpha)=\zeta^{-1}\)，即 \(\sigma(\alpha)=\zeta\alpha\)。所以 \(\alpha^d\) 被 \(\sigma\) 固定，属于 \(K\)。元素 \(\alpha\) 的 \(d\) 个共轭 \(\alpha,\zeta\alpha,\ldots,\zeta^{d-1}\alpha\) 两两不同，其最小多项式次数至少为 \(d\)，而又不超过 \([L:K]=d\)。故 \(K(\alpha)=L\)。
+
+素数情形应用\cref{b1:thm:kummer-correspondence}：次数为 \(\ell\) 的域对应阶为 \(\ell\) 的子群。指数为 \(\ell\) 的交换群自然是 \(\mathbb F_\ell\) 向量空间，其中标量作用用乘方表示，阶为 \(\ell\) 的子群正是一维子空间。
+\end{proof}
+
+因此 \(a\) 与 \(a^r b^\ell\) 在 \(1\leq r<\ell\)、\(b\in K^\times\) 时给出同一个非平凡 \(\ell\) 次扩张。分类参数不是任选的非零剩余类，而是它所张成的一条直线。这个区别与下一节的加法分类完全对应。

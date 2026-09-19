@@ -6,11 +6,277 @@
 \label{b1:ch:13}
 \BookChapterNumber{b1:ch:13}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+把非零整数作为分母得到有理数，是局部化最熟悉的例子。一般交换环中，允许哪些元素作分母，会同时影响元素的相等、单位以及理想。本章从分式域出发，构造任意乘法集上的局部化，证明其泛性质，并通过整数环、素理想处的局部环和 Laurent 多项式环说明局部观点的含义。最后用理想商描述饱和，建立理想与素理想的对应，并证明理想成员和元素相等可由所有极大理想处的局部化检测。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分形式分式、分式域中的元素与允许在某点求值的表达式。
+\item 解释一般局部化等价关系中的额外乘子，并判断元素何时为零、何时可逆。
+\item 利用泛性质构造和比较同态，计算素理想处及单个元素处的局部化。
+\item 用理想商计算单元素饱和，说明 Noether 条件如何保证相应升链稳定。
+\item 运用扩张、收缩和饱和分析理想，理解局部判据为什么需要检查全部极大理想。
+\end{itemize}
+\end{learninggoals}
+
+本章使用\chapref{b1:ch:10}的交换环、理想与商环知识，并从\cref{b1:prop:fraction-field-basic}接过已经构造的分式域。局部化本身不要求原环具有唯一分解性，也不以 \(R\rightarrow S^{-1}R\) 为单射作为先决条件。\chapref{b1:ch:11}和\chapref{b1:ch:12}的整除与多项式计算，为本章提供具体例子；模的局部化留待第三卷第2章在模论基础上展开。
 
 \input{Part02/Chapter13/Section1301}
 \input{Part02/Chapter13/Section1302}
 \input{Part02/Chapter13/Section1303}
 \input{Part02/Chapter13/Section1304}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+分式域使整环中所有非零元素可逆；局部化则允许指定一个乘法集。一般环中的等式必须容许再乘一个分母集元素，才能适应零因子。零判据、单位判据和同态延拓的泛性质，分别控制哪些元素消失、哪些元素获得逆元，以及如何把局部化映入其他环。
+
+\ProseParagraphBreak
+局部化中的全部理想都来自原环，但扩张后再收缩得到的是原理想的饱和。在单个元素 \(f\) 处，这个饱和是 \(I:f^\infty=\bigcup_{n\geq0}(I:f^n)\)；Noether 条件保证相应升链最终稳定。与分母集不相交的素理想已经饱和，因此与局部化的素理想一一对应。在某一个局部环中成立的结论未必全局成立；对全部极大理想逐一检查，则能够检测元素相等、理想成员以及可逆性。向模和几何对象推广时，哪些性质可以这样检测，仍须分别证明。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:13-1}
+设 \(k\) 为域，\(R=k[t^2,t^3]\) 为 \(k[t]\) 中由 \(k,t^2,t^3\) 生成的子环。证明 \(t\notin R\)，但 \(\operatorname{Frac}(R)\cong k(t)\)，且可使这一同构保持 \(R\) 中每个元素。
+\end{exercise}
+\begin{solution}
+\(R\) 中每个元素是 \(t^2,t^3\) 的多项式，因此出现的指数都为 \(2a+3b\)，其中 \(a,b\geq0\)。这样的指数不可能等于 \(1\)，所以每个元素的 \(t\) 项系数为零，\(t\notin R\)。
+
+将 \(R\) 视为 \(k(t)\) 的子环。由\cref{b1:prop:fraction-in-ambient-field}，\(\operatorname{Frac}(R)\) 可同构到 \(k(t)\) 中由 \(R\) 生成的最小子域。这个子域包含 \(t=t^3/t^2\)，也包含 \(k\)，故包含 \(k[t]\) 的全部非零分式，也就是 \(k(t)\)。反向包含原本就成立，因而该子域恰为 \(k(t)\)。同构由 \(a/b\mapsto ab^{-1}\) 给出，保持 \(R\) 中元素。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-2}
+在 \(R=\mathbb Z/12\mathbb Z\) 中取 \(S=\{\,\bar3^n\mid n\geq0\,\}\)。证明 \(S^{-1}R\cong\mathbb Z/4\mathbb Z\)，并求 \(R\rightarrow S^{-1}R\) 的核。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:localization-zero-unit}，\(\bar a/1=0\) 当且仅当某个 \(3^na\) 被 \(12\) 整除。这个条件等价于 \(4\mid a\)：必要性来自 \(3^n\) 与 \(4\) 互素，充分性取 \(n=1\)。因此核为 \((\bar4)=\{\,\bar0,\bar4,\bar8\,\}\)。
+
+还需确认自然映射的像就是整个局部化。因为 \(\bar8/1=0\)，局部化中有 \((\bar3/1)^2=\bar9/1=1\)，所以 \(1/\bar3=\bar3/1\)，进而每个分式 \(\bar a/\bar3^n\) 都等于 \(\overline{a3^n}/1\)。自然映射因而满射。\cref{b1:thm:ring-first-iso}给出
+\[
+S^{-1}R\cong(\mathbb Z/12\mathbb Z)/(\bar4)
+\cong\mathbb Z/4\mathbb Z.
+\]
+最后一个同构由模 \(4\) 的映射诱导；它在模 \(12\) 环上的核也恰为 \((\bar4)\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-3}
+设 \(S\) 为交换环 \(R\) 的乘法集，令
+\[
+T=\{\,a\in R\mid ab\in S\text{ 对某个 }b\in R\,\}.
+\]
+证明 \(T\) 是包含 \(S\) 的乘法集，自然映射 \(S^{-1}R\rightarrow T^{-1}R\) 为同构，并且若 \(ab\in T\)，则 \(a,b\in T\)。
+\end{exercise}
+\begin{solution}
+取辅助因子为 \(1\)，可知 \(S\subseteq T\)，因而 \(1\in T\)。若 \(a,b\in T\)，取 \(c,d\in R\) 使 \(ac,bd\in S\)，则 \((ab)(cd)=(ac)(bd)\in S\)，故 \(ab\in T\)。若反过来已知 \(ab\in T\)，取 \(c\) 使 \(abc\in S\)，则 \(a(bc)\in S\)、\(b(ac)\in S\)，所以 \(a,b\in T\)。
+
+\cref{b1:prop:localization-zero-unit}说明 \(T\) 中每个元素的像已经在 \(S^{-1}R\) 中可逆。于是\cref{b1:prop:localization-comparison}适用于 \(S\subseteq T\)，给出自然比较映射是同构。可见扩大分母集未必扩大所得环，关键在于新分母是否早已具有逆元。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-4}
+设 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)，并仍以 \(\varepsilon\) 表示其剩余类。证明 \(R\) 是局部环，求其单位与剩余域，并比较 \(R_{(\varepsilon)}\) 和 \(R_{\varepsilon}\)。
+\end{exercise}
+\begin{solution}
+每个元素唯一写成 \(a+b\varepsilon\)，其中 \(a,b\in k\)。若 \(a\neq0\)，则
+\[
+(a+b\varepsilon)(a^{-1}-ba^{-2}\varepsilon)=1,
+\]
+因为 \(\varepsilon^2=0\)。若 \(a=0\)，则 \(b\varepsilon\) 平方为零，不可能在非零环 \(R\) 中可逆。全部非单位因而组成理想 \((\varepsilon)\)。任何真理想都只含非单位，所以都包含于 \((\varepsilon)\)；这说明它是唯一极大理想。映射 \(a+b\varepsilon\mapsto a\) 满射到 \(k\)，核为 \((\varepsilon)\)，故剩余域为 \(k\)。
+
+在 \((\varepsilon)\) 处局部化只把原环的单位作为分母，逆元已经存在。由\cref{b1:thm:localization-universal}，\(a/s\mapsto as^{-1}\) 与自然映射互逆，所以 \(R_{(\varepsilon)}\cong R\)。单个元素 \(\varepsilon\) 处的局部化则为零环，因为 \(\varepsilon\) 幂零，适用\cref{b1:prop:single-element-localization}。下标是否表示理想，在这个例子中决定了完全不同的结果。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-5}
+设 \(e\) 为交换含幺环 \(R\) 的幂等元，即 \(e^2=e\)。证明自然映射 \(R\rightarrow R_e\) 满射，核为 \((1-e)\)，从而 \(R_e\cong R/(1-e)\)。
+\end{exercise}
+\begin{solution}
+在 \(R_e\) 中，\(e/1\) 是可逆幂等元。把 \((e/1)^2=e/1\) 乘以其逆元，得 \(e/1=1\)。因此 \(a/e^n=a/1\)，自然映射满射。
+
+由\cref{b1:prop:localization-zero-unit}，\(a/1=0\) 等价于存在 \(n\geq0\) 使 \(e^na=0\)。若 \(n=0\)，则 \(a=0\)，当然有 \(ea=0\)；若 \(n\geq1\)，\(e^n=e\)，所以条件仍等价于 \(ea=0\)。而
+\[
+ea=0\quad\Longleftrightarrow\quad a=(1-e)a
+\quad\Longleftrightarrow\quad a\in(1-e).
+\]
+最后一个反向蕴含用到 \(e(1-e)=0\)。由\cref{b1:thm:ring-first-iso}即得所需同构。\(e=0\) 时两边均为零环，\(e=1\) 时两边均为 \(R\)，也包括在内。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-6}
+设 \(p\) 为素数。证明 \(\mathbb Z_{(p)}\) 的全部理想为零理想和 \(p^n\mathbb Z_{(p)}\)，其中 \(n=0,1,2,\ldots\)，并证明这些非零理想两两不同。
+\end{exercise}
+\begin{solution}
+设 \(J\neq(0)\) 为 \(\mathbb Z_{(p)}\) 的理想。取非零分式 \(a/b\in J\)，乘以 \(b/1\) 得非零整数 \(a/1\in J\)，所以收缩 \(I\subseteq\mathbb Z\) 非零。取 \(I\) 中最小正整数 \(d\)。任意 \(c\in I\) 作整数除法 \(c=qd+r\)、\(0\leq r<d\)，则 \(r\in I\)，最小性迫使 \(r=0\)，故 \(I=d\mathbb Z\)。
+
+\cref{b1:prop:localization-ideal-correspondence}说明 \(J=I\mathbb Z_{(p)}=d\mathbb Z_{(p)}\)。将 \(d\) 写成 \(p^nu\)，其中 \(p\nmid u\)，则 \(u\) 在 \(\mathbb Z_{(p)}\) 中为单位，因此 \(J=p^n\mathbb Z_{(p)}\)。反过来，这些集合当然都是理想。若 \(m>n\) 而 \(p^n\in p^m\mathbb Z_{(p)}\)，则存在 \(a,b\in\mathbb Z\)、\(p\nmid b\)，使 \(p^n=p^ma/b\)，从而 \(b=p^{m-n}a\)，与 \(p\nmid b\) 矛盾，故它们两两不同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-7}
+设 \(I\) 为交换环 \(R\) 的理想，\(S\) 为乘法集，\(\bar S\) 为 \(S\) 在 \(R/I\) 中的像。证明
+\[
+(S^{-1}R)/(S^{-1}I)\cong\bar S^{-1}(R/I),
+\]
+其中同构由 \(a/s\mapsto\bar a/\bar s\) 诱导。说明 \(I\cap S\neq\varnothing\) 时等式两边是什么环。
+\end{exercise}
+\begin{solution}
+复合 \(R\rightarrow R/I\rightarrow\bar S^{-1}(R/I)\) 把 \(S\) 中每个元素送到单位，故由\cref{b1:thm:localization-universal}延拓为所给同态
+\(\varphi:S^{-1}R\rightarrow\bar S^{-1}(R/I)\)。目标中的每个分式都能选取分子、分母的原像，所以 \(\varphi\) 满射。
+
+由\cref{b1:prop:localization-zero-unit}，\(\varphi(a/s)=0\) 当且仅当存在 \(t\in S\) 使 \(\bar t\bar a=0\)，也就是 \(ta\in I\)。\eqref{b1:eq:localized-ideal-membership}说明这又等价于 \(a/s\in S^{-1}I\)。故 \(\ker\varphi=S^{-1}I\)，由\cref{b1:thm:ring-first-iso}得到商环同构。若 \(I\cap S\neq\varnothing\)，则 \(S^{-1}I=S^{-1}R\)，左端是零环；此时 \(0\in\bar S\)，右端也由同一零判据成为零环。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-8}
+设 \(f,g\in R\) 满足 \((f,g)=R\)，\(I\) 为交换环 \(R\) 的理想。证明对每个 \(a\in R\)，
+\[
+a\in I\quad\Longleftrightarrow\quad
+a/1\in IR_f\text{ 且 }a/1\in IR_g.
+\]
+说明若去掉 \((f,g)=R\)，结论可能失败。
+\end{exercise}
+\begin{solution}
+必要性来自扩张的定义。若两个局部成员条件均成立，由\eqref{b1:eq:localized-ideal-membership}，存在 \(m,n\geq0\) 使 \(f^ma\in I\)、\(g^na\in I\)。若 \(m=0\) 或 \(n=0\)，已经得到 \(a\in I\)。否则取 \(u,v\in R\) 使 \(uf+vg=1\)，并把
+\[
+1=(uf+vg)^{m+n-1}
+\]
+按分配律展开。每个项都含有至少 \(m\) 个 \(f\) 或至少 \(n\) 个 \(g\)，因为若两者都不足，总因子数至多为 \(m+n-2\)。故存在 \(c,d\in R\) 使 \(1=cf^m+dg^n\)。两边乘以 \(a\)，得 \(a=c(f^ma)+d(g^na)\in I\)。
+
+若 \(R=\mathbb Z\)、\(f=g=2\)、\(I=2\mathbb Z\)、\(a=1\)，两个局部化都是 \(\mathbb Z[1/2]\)，其中 \(I\) 的扩张为全环，两个局部成员条件均成立；但 \(1\notin2\mathbb Z\)。因此分母所满足的生成条件不能省去。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-9}
+设 \(k\) 为域，\(t\) 为多项式变量。证明替换映射
+\[
+k[t]\longrightarrow k(t),\qquad f(t)\longmapsto f(t^2)
+\]
+唯一地延拓为域同态 \(\sigma:k(t)\rightarrow k(t)\)。求它在任意分式上的公式，并证明 \(\sigma\) 单射但不满射；结论对特征为 \(2\) 的域也成立。
+\end{exercise}
+\begin{solution}
+多项式替换保持加法、乘法及单位。若 \(f\neq0\)，其最高次非零项 \(a_dt^d\) 变为 \(a_dt^{2d}\)，不会与其他项合并，所以 \(f(t^2)\neq0\)。故给定同态把所有非零多项式送到域 \(k(t)\) 的单位。\cref{b1:thm:fraction-field-universal}给出唯一延拓，公式为
+\[
+\sigma\left(\frac{f(t)}{g(t)}\right)
+=\frac{f(t^2)}{g(t^2)},\qquad g\neq0.
+\]
+若像为零，则 \(f(t^2)=0\)，由刚才的最高项论证知 \(f=0\)。因此 \(\sigma\) 单射。
+
+若 \(t\) 在其像中，就存在 \(f,g\in k[t]\)、\(g\neq0\)，使 \(t=f(t^2)/g(t^2)\)。分式相等的判据\eqref{b1:eq:fraction-equivalence}给出多项式等式
+\[
+t\,g(t^2)=f(t^2).
+\]
+左边只含奇数次幂，且不为零；右边只含偶数次幂。同次幂系数分别相等便迫使 \(g\) 的全部系数为零，矛盾。所以 \(t\) 不在像中。这个论证区分的是形式多项式的指数奇偶，并未把整数 \(2\) 当作系数作除法，因而在特征 \(2\) 时仍然成立。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-10}
+设整数 \(n\geq2\)。求存在保持单位的环同态
+\[
+\mathbb Z[1/6]\longrightarrow\mathbb Z/n\mathbb Z
+\]
+的充要条件；存在时证明它唯一，并写出其作用于任意元素的公式。当 \(n=5\) 时，分别计算 \(1/2\)、\(1/3\) 的像。
+\end{exercise}
+\begin{solution}
+任何保持单位的同态在 \(\mathbb Z\) 上都必须是 \(a\mapsto[a]_n\)。由于 \(6\) 在定义域中可逆，其像 \([6]_n\) 必须在目标中可逆。这个条件等价于 \(\gcd(6,n)=1\)：若 \(6u\equiv1\pmod n\)，则 \(6u-nv=1\) 对某个 \(v\) 成立，所以公因子只能为 \(1\)；反过来，互素时整数 Bézout 等式给出这样的 \(u,v\)。
+
+当 \(\gcd(6,n)=1\) 时，商映射 \(\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\) 将乘法集 \(\{\,6^r\mid r\geq0\,\}\) 送到单位。\cref{b1:thm:localization-universal}给出唯一延拓
+\[
+\varphi(a/6^r)=[a]_n[6]_n^{-r}.
+\]
+该泛性质同时保证公式不依赖分式代表。\(n=5\) 时，\([2]_5[3]_5=[1]_5\)，故 \(\varphi(1/2)=[3]_5\)、\(\varphi(1/3)=[2]_5\)。这里 \(1/2=3/6\)、\(1/3=2/6\)，两者确实都在 \(\mathbb Z[1/6]\) 中。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-11}
+设 \(k\) 为域，\(A=k[t,t^{-1}]\)。求 \(A\) 的所有逐点固定 \(k\) 的环自同态，判断其中哪些单射、哪些为自同构。
+\end{exercise}
+\begin{solution}
+设 \(\varphi:A\rightarrow A\) 为这样的同态。因为 \(t\) 是单位，\(\varphi(t)\) 也是单位。\cref{b1:prop:laurent-units}说明必有
+\(\varphi(t)=ct^m\)，其中 \(c\in k^\times\)、\(m\in\mathbb Z\)。又因为 \(\varphi\) 固定系数，且必须将 \(t^{-1}\) 送到 \(c^{-1}t^{-m}\)，它在所有有限 Laurent 和上的值只能是
+\[
+\varphi_{c,m}\Bigl(\sum_{j=r}^{s}a_jt^j\Bigr)
+=\sum_{j=r}^{s}a_jc^jt^{mj}.
+\]
+反过来，对每一对 \(c,m\)，替换 \(t\mapsto ct^m\) 给出环同态 \(k[t]\rightarrow A\)，并将 \(t\) 的所有非负次幂送到单位。\cref{b1:thm:localization-universal}使它唯一延拓为 \(A=k[t]_t\) 的自同态，恰好具有上式。因此这些公式穷尽全部所求同态。
+
+若 \(m=0\)，非零元素 \(t-c\) 被送到零，同态不单射。若 \(m\neq0\)，不同整数 \(j\) 对应不同的指数 \(mj\)，而 \(c^j\neq0\)。若像为零，给等式两边乘以足够高次的 \(t\)，便得到普通多项式等式，其中不同 \(j\) 对应的项仍有不同次数。比较系数给出每个 \(a_jc^j=0\)，从而 \(a_j=0\)，所以此时同态单射。
+
+当 \(|m|>1\) 时，像中所有非零项的指数都被 \(m\) 整除，故 \(t\) 不在像中，不能满射。\(m=0\) 时像为 \(k\)，也不能满射。\(m=1\) 时，\(\varphi_{c^{-1},1}\) 是逆映射；\(m=-1\) 时，\(\varphi_{c,-1}\) 自己就是逆映射，因为它将 \(t\) 连续两次变换为 \(c(ct^{-1})^{-1}=t\)，并固定 \(k\)。所以自同构恰好对应 \(m=1\) 或 \(m=-1\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-12}
+设 \(k\) 为域，\(f=x(x-1)\)，\(A=k[x]_f\)。求 \(A\) 的全部素理想，并求每个非零素理想的商环。说明原来 \(k[x]\) 中的素理想 \((x)\)、\((x-1)\) 为什么没有留在这一对应中。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:field-poly-division}和\cref{b1:thm:euclidean-pid}，\(k[x]\) 是主理想整环；\cref{b1:prop:pid-irreducible-prime}说明其非零素理想恰由不可约多项式生成，且这些理想都极大。把生成元取为首一，可使表示唯一。因此 \(k[x]\) 的全部素理想为 \((0)\) 和各 \((q)\)，其中 \(q\) 为首一不可约多项式。
+
+乘法集 \(S=\{\,f^r\mid r\geq0\,\}\) 不含零，故 \((0)\) 与它不相交。对 \((q)\)，素性说明它与 \(S\) 相交当且仅当 \(q\mid f\)；这又当且仅当 \(q=x\) 或 \(q=x-1\)，因为不可约元在 \(k[x]\) 中为素元。由\cref{b1:thm:localization-prime-correspondence}，\(A\) 的素理想于是恰为
+\[
+(0),\qquad qA
+\quad\text{其中 }q\text{ 首一不可约，且 }q\neq x,\ x-1.
+\]
+它们互不相同，因为收缩分别恢复 \((0)\) 和 \((q)\)。
+
+固定一个这样的 \(q\)。在域 \(k[x]/(q)\) 中，\(f\) 的像不为零，因而可逆。由\cref{b1:thm:localization-universal}，商映射唯一延拓为
+\[
+A\longrightarrow k[x]/(q),\qquad
+g/f^r\longmapsto\bar g\bar f^{-r}.
+\]
+它满射，因为每个剩余类都有 \(g/1\) 的像作为代表；其核由 \(q\mid g\) 的分式组成，正是 \(qA\)。\cref{b1:thm:ring-first-iso}给出 \(A/qA\cong k[x]/(q)\)，特别地每个非零素理想都是极大理想。至于 \((x)\) 与 \((x-1)\)，它们都含有 \(f\in S\)，在局部化中的扩张均为全环，故不能对应真素理想。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-13}
+令 \(s=\sqrt{-5}\)，\(R=\mathbb Z[s]\)。证明在 \(\operatorname{Frac}(R)\) 中有
+\[
+\frac{2}{1+s}=\frac{1-s}{3}.
+\]
+证明两边各自的分子、分母都只有单位作为公因子，但不存在单位 \(u\in R^\times\) 能把一组分子、分母同时乘为另一组。这说明把分式化为“分子、分母无非单位公因子”的形式后，是否一定具有只差同乘单位的唯一性？
+\end{exercise}
+\begin{solution}
+两个分母非零，而且 \(2\cdot3=6=(1+s)(1-s)\)，所以\eqref{b1:eq:fraction-equivalence}直接给出两个分式相等。
+
+在 \(R\) 中取范数 \(N(a+bs)=a^2+5b^2\)。共轭相乘的表达式说明它对乘法相容；非零元素的范数为正整数，范数为 \(1\) 的元素恰为单位 \(\pm1\)。若 \(d\) 同时整除 \(2\) 和 \(1+s\)，则 \(N(d)\) 同时整除 \(4\) 和 \(6\)，所以只能为 \(1\) 或 \(2\)。但方程 \(a^2+5b^2=2\) 无整数解：\(b\neq0\) 时左边至少为 \(5\)，\(b=0\) 时又要求整数平方为 \(2\)。故 \(N(d)=1\)，\(d\) 为单位。
+
+同样，\(1-s\) 和 \(3\) 的公因子范数同时整除 \(6\) 和 \(9\)，只能为 \(1\) 或 \(3\)；而 \(a^2+5b^2=3\) 也无整数解，故公因子仍只能是单位。若能同乘单位 \(u\) 把第一组分子、分母变成第二组，必有 \(2u=1-s\)。两边取范数却得到 \(4=6\)，矛盾。因此在一般整环中，即使分子、分母已经没有非单位公因子，这样的分式表示仍不一定只差同乘单位。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-14}
+设 \(k\) 为域，\(R=k[x,y]\)，整数 \(m\geq1\)，\(I=(x^my)\)。计算所有 \(I:x^n\)、\(n\geq0\)，求 \(I:x^\infty\)，并确定升链 \(I\subseteq I:x\subseteq I:x^2\subseteq\cdots\) 开始稳定的最小下标。再求 \(I:y^\infty\) 和 \(I:(xy)^\infty\)，解释为什么不同的分母会产生不同的饱和。
+\end{exercise}
+\begin{solution}
+一个多项式属于 \((x^my)\)，当且仅当它的每个非零单项式都含有至少 \(m\) 个 \(x\) 因子和至少一个 \(y\) 因子：必要性由把 \(x^my\) 乘入多项式看出，充分性则对每一项同时提出这个因子。乘以 \(x^n\) 只把各项中 \(x\) 的指数统一增加 \(n\)，所以
+\[
+I:x^n=
+\begin{cases}
+(x^{m-n}y),&0\leq n<m,\\
+(y),&n\geq m.
+\end{cases}
+\]
+于是 \(I:x^\infty=(y)\)。当 \(0\leq n<m\) 时，元素 \(x^{m-n-1}y\) 属于 \(I:x^{n+1}\)，却因 \(x\) 的次数不够而不属于 \(I:x^n\)。故此前各次包含都严格，最小稳定下标恰为 \(m\)。这还说明，即使固定环 \(k[x,y]\) 和分母 \(x\)，也不能给所有理想的这类升链规定同一个稳定下标。
+
+乘以 \(y^n\) 不会增加 \(x\) 的指数；一旦 \(n\geq1\)，又已补足所需的 \(y\) 因子。因此 \(I:y^n=(x^m)\) 对所有 \(n\geq1\) 成立，给出 \(I:y^\infty=(x^m)\)。最后，\((xy)^m=x^my^m\in I\)，所以 \(1\in I:(xy)^\infty\)，即 \(I:(xy)^\infty=R\)。在 \(R_x\) 中只有因子 \(x\) 被保证可逆，原来的理想化为 \((y)R_x\)；在 \(R_y\) 中化为 \((x^m)R_y\)；在 \(R_{xy}\) 中，\(x\) 与 \(y\) 都可逆，\(IR_{xy}=R_{xy}\)。这些计算与\eqref{b1:eq:element-saturation-contraction}逐一相符。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:13-15}
+设 \(I,J\) 为交换含幺环 \(R\) 的理想，约定 \(J^0=R\)。把
+\[
+I:J^\infty\coloneqq\bigcup_{n\geq0}(I:J^n)
+=\{\,a\in R\mid aJ^n\subseteq I\text{ 对某个整数 }n\geq0\,\}
+\]
+称为 \(I\) \term[lixiang-baohe]{关于理想的饱和}[saturation with respect to an ideal]，这里指关于 \(J\) 的饱和。
+\symidx{\(I:J^\infty\)：理想 \(I\) 关于理想 \(J\) 的饱和}
+证明它是理想；若 \(J=(f_1,\ldots,f_r)\)、\(r\geq1\)，证明
+\[
+I:J^\infty=\bigcap_{i=1}^{r}(I:f_i^\infty).
+\]
+最后在 \(k[x,y]\) 中取 \(I=(xy)\)、\(J=(x,y)\)，计算 \(I:J^\infty\)，并与 \(I\) 关于乘法集 \(S=\{\,x^ay^b\mid a,b\geq0\,\}\) 的饱和比较。
+\end{exercise}
+\begin{solution}
+由 \(J^{n+1}\subseteq J^n\)，有 \(I:J^n\subseteq I:J^{n+1}\)。各项都是\cref{b1:prop:ideal-quotient-rules}所给的理想，因此并集也为理想：其中任意两个元素同时属于某个足够靠后的项，相减仍在该项；乘以任意环元素也留在原项。
+
+若 \(a\in I:J^\infty\)，取 \(n\geq0\) 使 \(aJ^n\subseteq I\)。因为 \(f_i^n\in J^n\)，所以 \(af_i^n\in I\)，即 \(a\in I:f_i^\infty\)，这对每个 \(i\) 都成立。
+
+反过来，设 \(a\) 属于右端的交。对每个 \(i\)，取整数 \(n_i\geq0\) 使 \(af_i^{n_i}\in I\)。若某个 \(n_i=0\)，则 \(a\in I\)，结论已经成立。否则全部 \(n_i\geq1\)，令
+\[
+N=1+\sum_{i=1}^{r}(n_i-1).
+\]
+理想 \(J^N\) 由所有 \(f_1^{e_1}\cdots f_r^{e_r}\)、\(e_1+\cdots+e_r=N\) 生成，这来自把 \(J\) 的生成元代入 \(N\) 个因子的乘积并按分配律展开。对每个这样的单项式，必有某个 \(e_i\geq n_i\)：否则各 \(e_i\leq n_i-1\)，相加只会得到总和至多 \(N-1\)。因此 \(a\) 乘以该单项式后含有因子 \(af_i^{n_i}\)，属于 \(I\)。再取这些生成元的任意线性组合，可知 \(aJ^N\subseteq I\)。故 \(a\in I:J^\infty\)，证明了所求等式。有限个生成元使这一步能够选取共同的指数 \(N\)。
+
+在给定例子中，\(I:x^\infty=(y)\)、\(I:y^\infty=(x)\)：例如 \(x^na\in(xy)\) 时令 \(y=0\)，得到 \(x^na(x,0)=0\)，整环 \(k[x]\) 中便有 \(a(x,0)=0\)，即 \(y\mid a\)；反向包含由 \(xy\in I\) 立即得到。交换变量给出另一式。于是
+\[
+I:J^\infty=(x)\cap(y)=(xy)=I.
+\]
+最后一个交的等式也可直接核对：若 \(a=xu\in(y)\)，令 \(y=0\) 得 \(x u(x,0)=0\)，所以 \(y\mid u\)，从而 \(xy\mid a\)；相反包含显然成立。然而 \(xy\in I\cap S\)，所以 \(I\) 关于 \(S\) 的饱和包含 \(1\)，等于全环。这两种饱和的条件不同：\(I:J^\infty\) 要求某次幂理想 \(J^n\) 的所有元素都把 \(a\) 送入 \(I\)，而关于 \(S\) 的饱和只要求 \(S\) 中存在一个元素做到这一点。
+\end{solution}

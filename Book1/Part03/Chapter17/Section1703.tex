@@ -5,8 +5,6 @@
 \section{不可约多项式}
 \label{b1:sec:1703}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 不可约多项式次数与有限域扩张
@@ -14,17 +12,64 @@
 % * 有限域的显式表示
 %
 
+有限域和不可约多项式可以互相构造：不可约多项式给出商域，有限域的元素则提供不可约多项式的根。计数公式的关键不是枚举所有系数组合，而是把 \(x^{q^n}-x\) 按其不可约因子的次数分组。
+
 \subsection{不可约多项式次数与有限域扩张}
 \label{b1:subsec:1703:01}
 
-待撰写。
+设 \(f\in\mathbb F_q[x]\) 首一不可约，次数为 \(d\)。商域 \(\mathbb F_q[x]/(f)\) 以 \(1,\bar x,\ldots,\bar x^{d-1}\) 为基，有 \(q^d\) 个元素；由\cref{b1:thm:finite-field-unique}，它同构于 \(\mathbb F_{q^d}\)。因而 \(f\) 的一个根可放在 \(\mathbb F_{q^d}\) 中。
+
+\begin{proposition}\label{b1:prop:finite-field-factorization}
+首一不可约多项式 \(f\in\mathbb F_q[x]\) 整除 \(x^{q^n}-x\)，当且仅当 \(\deg f\mid n\)。从而
+\begin{equation}\label{b1:eq:finite-field-polynomial-product}
+x^{q^n}-x=\prod_{d\mid n}\ \prod_{\substack{f\text{ 首一不可约}\\\deg f=d}}f(x),
+\end{equation}
+其中每个因子只出现一次。
+\end{proposition}
+\begin{proof}
+设 \(\alpha\) 为 \(f\) 的根，\(d=\deg f\)。若 \(f\mid x^{q^n}-x\)，则 \(\alpha\in\mathbb F_{q^n}\)，其生成的 \(q^d\) 元子域由\cref{b1:thm:finite-field-subfields}满足 \(d\mid n\)。若 \(d\mid n\)，则 \(\alpha\in\mathbb F_{q^d}\subseteq\mathbb F_{q^n}\)，所以 \(\alpha^{q^n}=\alpha\)，其最小多项式 \(f\) 必整除 \(x^{q^n}-x\)。最后这个多项式的导数为 \(-1\)，所以没有重复的不可约因子，首一性确定了乘积前的常数。
+\end{proof}
 
 \subsection{不可约多项式的计数公式}
 \label{b1:subsec:1703:02}
 
-待撰写。
+记 \(N_q(d)\) 为 \(\mathbb F_q\) 上首一 \(d\) 次不可约多项式的个数。比较\eqref{b1:eq:finite-field-polynomial-product}两端次数，得到
+\[
+q^n=\sum_{d\mid n}dN_q(d).
+\]
+\symidx{\(N_q(d)\)：有限域上首一 \(d\) 次不可约多项式的个数}
+为把这个式子倒过来，定义正整数上的\term[Mobius-hanshu]{Möbius 函数}[Möbius function]：\(\mu(1)=1\)；若正整数含有素数的平方因子，令 \(\mu(m)=0\)；若它为 \(r\) 个不同素数的乘积，令 \(\mu(m)=(-1)^r\)。
+\symidx{\(\mu(m)\)：Möbius 函数}
+选择不同素因子的子集给出
+\[
+\sum_{d\mid m}\mu(d)=
+\begin{cases}1,&m=1,\\0,&m>1.\end{cases}
+\]
+这里 \(m>1\) 时的和为 \((1-1)^r\)。于是
+\begin{equation}\label{b1:eq:finite-field-irreducible-count}
+N_q(n)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d}.
+\end{equation}
+证明只须代入先前的次数等式并交换有限求和：
+\[
+\sum_{d\mid n}\mu(d)q^{n/d}
+=\sum_{e\mid n}eN_q(e)\sum_{d\mid n/e}\mu(d)
+=nN_q(n).
+\]
+例如 \(N_2(2)=1\)、\(N_2(3)=2\)、\(N_2(4)=3\)。每个正次数实际上都有不可约多项式：取 \(\mathbb F_{q^n}^\times\) 的一个生成元 \(g\)，便有 \(\mathbb F_q(g)=\mathbb F_{q^n}\)，所以其最小多项式的次数恰为 \(n\)。这一存在性证明无需另行估计计数公式右端的正性。
 
 \subsection{有限域的显式表示}
 \label{b1:subsec:1703:03}
 
-待撰写。
+要在计算机或纸面上进行运算，须选择一个具体的不可约多项式 \(f\)，并把域写成 \(\mathbb F_q[t]/(f)\)。元素用次数小于 \(\deg f\) 的多项式表示；加法逐系数进行，乘法先相乘再除以 \(f\) 取余。对非零代表 \(a(t)\)，有 \(\gcd(a,f)=1\)，扩展 Euclid 算法给出 \(ua+vf=1\)，所以 \(u\) 的剩余类为其逆元。
+
+\ProseParagraphBreak
+例如 \(f=t^3+t+1\) 在 \(\mathbb F_2\) 上没有根，三次多项式若可约必有一次因子，故它不可约。令 \(\alpha=\bar t\)，则
+\[
+\mathbb F_8=\{\,a+b\alpha+c\alpha^2\mid a,b,c\in\mathbb F_2\,\},
+\qquad \alpha^3=\alpha+1.
+\]
+因为 \(\alpha(\alpha^2+1)=1\)，有 \(\alpha^{-1}=\alpha^2+1\)。又如
+\[
+(\alpha^2+\alpha)(\alpha+1)=\alpha^3+\alpha=1,
+\]
+故 \((\alpha^2+\alpha)^{-1}=\alpha+1\)。这些运算全在三维系数空间中完成，不需要先把域嵌入复数；事实上特征不同，\(\mathbb F_8\) 不可能作为子域嵌入 \(\mathbb C\)。

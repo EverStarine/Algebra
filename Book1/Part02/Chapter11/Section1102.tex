@@ -5,8 +5,6 @@
 \section{Euclid 整环}
 \label{b1:sec:1102}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 除法算法与 Euclid 算法
@@ -14,17 +12,113 @@
 % * Gauss 整数的例子
 %
 
+整数中求最大公因子的辗转相除法，依靠的是余数不断变小。推广这个方法时，真正需要的不是元素本身有大小，而是给非零余数配一个不能无限下降的非负整数。本节把这一要求写成公理，并在整数、多项式和复平面格点中实际执行除法。
+
 \subsection{除法算法与 Euclid 算法}
 \label{b1:subsec:1102:01}
 
-待撰写。
+\begin{definition}\label{b1:def:euclidean-domain}
+设 \(R\) 是交换整环。若存在函数
+\[
+\delta:R\setminus\{0\}\longrightarrow\mathbb N
+\]
+使任意 \(a,b\in R\)、\(b\ne0\) 都可写成 \(a=bq+r\)，其中 \(q,r\in R\)，并且 \(r=0\) 或 \(\delta(r)<\delta(b)\)，则称 \(R\) 为\term[euclid-zhenghuan]{Euclid 整环}[Euclidean domain]，\(\delta\) 称为 Euclid 函数。
+\end{definition}
+
+本书不额外要求 \(\delta(a)\leq\delta(ab)\)。有些文献把这个条件并入定义；此处的除法条件已经足以支持以下全部证明。商和余数通常不唯一，Euclid 函数也未必唯一；对带余除法的存在性证明，还须另行判断是否给出了可执行的求商步骤。
+
+\ProseParagraphBreak
+下面依次除以上一次非零余数的过程，称为\term[euclid-suanfa]{Euclid 算法}[Euclidean algorithm]，也称辗转相除法。
+\termidx[zhanzhuanxiangchufa]{辗转相除法}
+
+\begin{proposition}[Euclid 算法]\label{b1:prop:euclidean-algorithm}
+设 \(R\) 为 Euclid 整环，\(a,b\in R\) 不全为零。依次作带余除法，直到余数为零，则最后一个非零余数 \(d\) 是 \(a,b\) 的最大公因子，并可由回代求得 \(u,v\in R\)，使 \(d=ua+vb\)。
+\end{proposition}
+\begin{proof}
+若 \(b=0\)，取 \(d=a\)、\(u=1\)、\(v=0\)。否则置 \(r_0=a,r_1=b\)，并在 \(r_j\ne0\) 时选取
+\[
+r_{j-1}=q_jr_j+r_{j+1},
+\qquad r_{j+1}=0\ \text{或}\ \delta(r_{j+1})<\delta(r_j).
+\]
+非负整数 \(\delta(r_1),\delta(r_2),\ldots\) 不可能无限严格下降，所以某一步得到 \(r_{m+1}=0\)、\(r_m\ne0\)。等式表明，一个元素同时整除 \(r_{j-1},r_j\)，当且仅当它同时整除 \(r_j,r_{j+1}\)：两个方向分别使用减法和加法。因此每一对相邻余数的公因子集合相同，最终等于 \(r_m,0\) 的公因子集合，故 \(d=r_m\) 为所求最大公因子。
+
+为明确回代，令 \((u_0,v_0)=(1,0)\)、\((u_1,v_1)=(0,1)\)，并递推
+\[
+u_{j+1}=u_{j-1}-q_ju_j,\qquad
+v_{j+1}=v_{j-1}-q_jv_j.
+\]
+由 \(r_0=u_0a+v_0b\)、\(r_1=u_1a+v_1b\) 开始归纳，除法等式给出每个 \(r_j=u_ja+v_jb\)。取 \(j=m\) 即得所求关系。
+\end{proof}
+
+同时跟踪上述两列系数，称为\term[kuozhan-euclid-suanfa]{扩展 Euclid 算法}[extended Euclidean algorithm]。若已知一个求商余的具体程序，这就给出了以 \(a,b\) 为输入、以 \(d,u,v\) 为输出的有限计算。
 
 \subsection{整数环及一元多项式环}
 \label{b1:subsec:1102:02}
 
-待撰写。
+在 \(\mathbb Z\) 中，取 \(\delta(n)=\lvert n\rvert\)。对 \(b\ne0\)，普通整数除法可取 \(0\leq r<\lvert b\rvert\)，故它是 Euclid 函数。例如
+\[
+252=198+54,\qquad 198=3\cdot54+36,\qquad
+54=36+18,\qquad36=2\cdot18.
+\]
+最后非零余数为 \(18\)，回代得到
+\begin{equation}\label{b1:eq:integer-bezout-example}
+18=54-36=4\cdot54-198=4\cdot252-5\cdot198.
+\end{equation}
+这里不仅算出最大公因子，也获得了以后解线性同余式所需的整数系数。
+
+\begin{proposition}[多项式带余除法]\label{b1:prop:field-poly-division}
+设 \(F\) 为域，\(f,g\in F[x]\)，且 \(g\ne0\)。存在唯一的 \(q,r\in F[x]\)，使
+\[
+f=gq+r,\qquad r=0\ \text{或}\ \deg r<\deg g.
+\]
+因此 \(F[x]\) 关于非零多项式上的次数函数为 Euclid 整环。
+\end{proposition}
+\begin{proof}
+若 \(f=0\) 或 \(\deg f<\deg g\)，取 \(q=0,r=f\)。其余情形设 \(\deg f=n\)、\(\deg g=m\leq n\)，首项系数分别为 \(a,b\)。因为 \(F\) 是域且 \(b\ne0\)，可以减去 \(ab^{-1}x^{n-m}g\)，把 \(f\) 的最高次项消去。所得
+\[
+f_1=f-ab^{-1}x^{n-m}g
+\]
+为零或次数严格小于 \(n\)。对次数作归纳，写成 \(f_1=gq_1+r\)，其中 \(r\) 满足要求，则
+\(q=ab^{-1}x^{n-m}+q_1\) 给出所求分解。次数是非负整数，故消项步骤只能进行有限次。
+
+若又有 \(f=gq'+r'\) 且余数满足相同次数限制，则
+\(g(q-q')=r'-r\)。若 \(q-q'\ne0\)，由\cref{b1:prop:polynomial-degree}，非零多项式的次数相加，使左端次数至少为 \(\deg g\)，而右端为零或次数小于 \(\deg g\)，矛盾。因此 \(q=q'\)，再得 \(r=r'\)。
+\end{proof}
+
+域假设在首项系数 \(b\) 的求逆处使用。例如在 \(\mathbb Z[x]\) 中，\(x\) 无法除以常数 \(2\) 得到次数小于 \(0\) 的余数：这种余数只能为零，而 \(x\notin2\mathbb Z[x]\)。这不否认某些特殊除数可做除法，例如首一多项式的首项系数就是单位。
+
+\ProseParagraphBreak
+在 \(\mathbb Q[x]\) 中取 \(f=x^3-2x+1\)、\(g=x^2-1\)。逐项相减得到
+\[
+f=xg+(-x+1),\qquad g=(-x-1)(-x+1).
+\]
+所以首一最大公因子为 \(x-1\)，且 \(x-1=xg-f\)。从最后非零余数 \(-x+1\) 改为首一者，需要同时将 Bézout 系数乘以 \(-1\)。这种归一化不影响生成的主理想。
 
 \subsection{Gauss 整数的例子}
 \label{b1:subsec:1102:03}
 
-待撰写。
+考虑复数的子环
+\[
+\mathbb Z[i]=\{\,a+bi\mid a,b\in\mathbb Z\,\},\qquad i^2=-1,
+\]
+称为\term[gauss-zhengshu]{Gauss 整数环}[ring of Gaussian integers]。它是整环，因为它嵌入 \(\mathbb C\)。定义范数
+\[
+N(a+bi)\coloneqq a^2+b^2.
+\]
+由 \(N(z)=z\overline z\) 得 \(N(zw)=N(z)N(w)\)，非零元素的范数为正整数。一个元素是单位当且仅当范数为 \(1\)：必要性由逆元与范数的乘法性得到；充分性由 \(z\overline z=1\) 得到。因此单位恰为 \(\pm1,\pm i\)。
+\symidx{\(\mathbb Z[i]\)：Gauss 整数环}
+
+\begin{proposition}\label{b1:prop:gaussian-euclidean}
+Gauss 整数环关于范数 \(N\) 是 Euclid 整环。
+\end{proposition}
+\begin{proof}
+对 \(\alpha,\beta\in\mathbb Z[i]\)、\(\beta\ne0\)，在复数域中写 \(\alpha/\beta=s+ti\)。分别选最近的整数 \(m,n\)，使
+\(\lvert s-m\rvert\leq1/2\)、\(\lvert t-n\rvert\leq1/2\)。置 \(q=m+ni\)、\(r=\alpha-\beta q\)，则
+\[
+N(r)=N(\beta)\Bigl((s-m)^2+(t-n)^2\Bigr)
+\leq\tfrac12N(\beta)<N(\beta).
+\]
+因 \(q,r\in\mathbb Z[i]\)，这正是所需带余除法；若 \(r=0\)，也满足定义。
+\end{proof}
+
+例如 \(5=(2-i)(2+i)\)，所以 \(2+i\) 整除 \(5\)。又 \(N(2+i)=5\) 为整数素数，任何分解 \(2+i=\alpha\beta\) 都使两个非负整数范数的积为 \(5\)，其中一个必为 \(1\)；故 \(2+i\) 不可约。在 \(\mathbb Z\) 中不可约的 \(5\)，进入 \(\mathbb Z[i]\) 后已经分裂。这提示我们：讨论不可约性之前，工作环必须说清楚。

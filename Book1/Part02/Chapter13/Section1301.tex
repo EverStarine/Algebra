@@ -5,7 +5,7 @@
 \section{分式域}
 \label{b1:sec:1301}
 
-% TODO: 按以下纲要要点撰写本节。
+整数环中不能解出的方程 \(bx=a\)，在允许 \(b\neq0\) 作分母后便有了解。对一般整环，也可以把每个非零元素变成单位。\cref{b1:prop:fraction-field-basic}已为多项式分解建立这一构造；本节重新整理其中的对象与等式，进而回答一个更有用的问题：从整环出发的同态，何时能够唯一地作用于分式？
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,106 @@
 \subsection{整环的分式域构造}
 \label{b1:subsec:1301:01}
 
-待撰写。
+设 \(R\) 为交换整环，即 \(1\neq0\)，且两个非零元素的乘积仍非零。先取所有有序对
+\[
+\Bigl\{\,(a,b)\mid a\in R,\ b\in R\setminus\{0\}\,\Bigr\}.
+\]
+我们希望 \((a,b)\) 表示分式 \(a/b\)，于是以
+\begin{equation}\label{b1:eq:fraction-equivalence}
+(a,b)\sim(c,d)\quad\Longleftrightarrow\quad ad=bc
+\end{equation}
+识别不同写法。\cref{b1:prop:fraction-field-basic}证明了这是等价关系，并证明下列运算不依赖代表元：
+\begin{equation}\label{b1:eq:fraction-operations}
+\frac ab+\frac cd=\frac{ad+bc}{bd},
+\qquad
+\frac ab\cdot\frac cd=\frac{ac}{bd}.
+\end{equation}
+所得等价类集合记为 \(\operatorname{Frac}(R)\)。它的零元和单位元分别是 \(0/1\)、\(1/1\)，加法逆元为 \(-a/b\)；非零分式恰好满足 \(a\neq0\)，此时其乘法逆元是 \(b/a\)。因此它是域。
+
+\begin{definition}\label{b1:def:fraction-field}
+设 \(R\) 为交换整环。一个域 \(K\) 连同一个保持单位的单射环同态 \(i:R\rightarrow K\)，称为 \(R\) 的分式域，如果每个 \(x\in K\) 都能写成 \(i(a)i(b)^{-1}\)，其中 \(a,b\in R\)、\(b\neq0\)。
+\end{definition}
+上述构造中的 \(i(a)=a/1\) 符合这个定义。其单射性来自
+\(a/1=c/1\Longleftrightarrow a=c\)，而每个分式都等于 \((a/1)(b/1)^{-1}\)。通常通过 \(i\) 把 \(R\) 看成 \(\operatorname{Frac}(R)\) 的子环，因而将 \(i(a)\) 直接写成 \(a\)。这个识别有单射性的保证。
+
+\ProseParagraphBreak
+例如 \(\operatorname{Frac}(\mathbb Z)=\mathbb Q\)。若 \(k\) 为域，则 \(k[x]\) 的分式域记为 \(k(x)\)，称为 \(k\) 上的\term[youli-hanshu-yu]{有理函数域}[rational function field]；元素是多项式的分式 \(f(x)/g(x)\)，其中 \(g\neq0\)。
+\symidx{\(k(x)\)：域 \(k\) 上的一元有理函数域}
+这里说的是形式分式，而不是在 \(k\) 上处处有定义的函数。例如 \(1/x\) 是 \(k(x)\) 的元素，但不能在 \(x=0\) 处求值。若 \(R\) 本来就是域，则 \(a/b\mapsto ab^{-1}\) 给出 \(\operatorname{Frac}(R)\cong R\)，构造并没有加入新的元素。
 
 \subsection{分式的等价关系}
 \label{b1:subsec:1301:02}
 
-待撰写。
+分式计算的依据是\eqref{b1:eq:fraction-equivalence}，不必先选定所谓最简分式。一般整环中的最大公因子未必存在，因而不能把“约分到最简”作为分式域定义的一部分。整环条件在等价关系的传递性中已有实质作用：若 \(ad=bc\)、\(cf=de\)，则
+\[
+d(af-be)=f(ad-bc)+b(cf-de)=0.
+\]
+由于中间分母 \(d\neq0\) 且 \(R\) 无零因子，才可以推出 \(af=be\)。下一节允许环有零因子时，必须修改等价关系。
+
+\ProseParagraphBreak
+分式相等不表示分子、分母分别相等。例如在 \(k(x)\) 中，
+\[
+\frac{x^2-1}{x-1}=x+1,
+\]
+因为 \(x^2-1=(x-1)(x+1)\)，而多项式 \(x-1\) 非零。这是有理函数域内的等式；左端原表达式在 \(x=1\) 处不能直接代入，却不妨碍它表示与多项式 \(x+1\) 相同的有理函数。分式作为域中元素的相等，与某个书写表达式允许在哪些点代入，是两个问题。
+
+\begin{proposition}\label{b1:prop:fraction-in-ambient-field}
+设 \(R\) 是域 \(L\) 的子环。则
+\[
+K=\Bigl\{\,ab^{-1}\in L\mid a,b\in R,\ b\neq0\,\Bigr\}
+\]
+是 \(L\) 中包含 \(R\) 的最小子域，且 \(a/b\mapsto ab^{-1}\) 是从 \(\operatorname{Frac}(R)\) 到 \(K\) 的同构。
+\end{proposition}
+\begin{proof}
+对 \(a,b,c,d\in R\)、\(b,d\neq0\)，域 \(L\) 中有
+\[
+ab^{-1}+cd^{-1}=(ad+bc)(bd)^{-1},
+\qquad
+(ab^{-1})(cd^{-1})=(ac)(bd)^{-1}.
+\]
+这些元素仍在 \(K\) 中，且 \(K\) 含 \(0,1\)，在取负和对非零元素取逆下也封闭，所以是子域。包含 \(R\) 的子域必须包含每个 \(b^{-1}\) 及 \(ab^{-1}\)，故包含 \(K\)。最后，\(ab^{-1}=cd^{-1}\) 在 \(L\) 中等价于 \(ad=bc\)；这个等式也在子环 \(R\) 中成立。因此所给映射良定义且单射，分式运算说明它是环同态，\(K\) 的定义保证满射。
+\end{proof}
+这个命题允许在已有的域中直接寻找分式域。例如把 \(\mathbb Z[i]\) 放在 \(\mathbb C\) 中，其分式域就是 \(\mathbb Q(i)=\{\,a+bi\mid a,b\in\mathbb Q\,\}\)。后一集合在和、积及取负下封闭；非零元素的逆为
+\[
+(a+bi)^{-1}=\frac{a-bi}{a^2+b^2},
+\]
+仍具有有理数的实部与虚部，所以它是包含 \(\mathbb Z[i]\) 的域。每个这样的元素又可通分成一个 Gauss 整数除以非零整数，故确为 \(\mathbb Z[i]\) 的分式域。
 
 \subsection{分式域的泛性质}
 \label{b1:subsec:1301:03}
 
-待撰写。
+把分式代入映射时，分母必须仍可取逆。这给出分式域的泛性质。
+
+\begin{theorem}\label{b1:thm:fraction-field-universal}
+设 \(R\) 为交换整环，\(A\) 为交换含幺环，\(f:R\rightarrow A\) 为保持单位的环同态。存在保持单位的环同态
+\(\widetilde f:\operatorname{Frac}(R)\rightarrow A\) 满足 \(\widetilde f(a/1)=f(a)\)，当且仅当每个 \(b\in R\setminus\{0\}\) 的像 \(f(b)\) 都是 \(A\) 的单位。存在时，此同态唯一，且
+\[
+\widetilde f\left(\frac ab\right)=f(a)f(b)^{-1}.
+\]
+特别地，若 \(A=L\) 为域而 \(f\) 单射，则 \(\widetilde f\) 是域的单射同态。
+\end{theorem}
+\begin{proof}
+若延拓存在，\(b/1\) 的逆元为 \(1/b\)，故 \(f(b)\widetilde f(1/b)=1\)，说明 \(f(b)\) 必须可逆。反过来，假设每个这样的 \(f(b)\) 可逆。若 \(a/b=c/d\)，则 \(ad=bc\)，从而
+\(f(a)f(d)=f(b)f(c)\)。乘以 \(f(b)^{-1}f(d)^{-1}\)，得到
+\(f(a)f(b)^{-1}=f(c)f(d)^{-1}\)，所给公式因而良定义。由\eqref{b1:eq:fraction-operations}，
+\[
+\begin{aligned}
+\widetilde f\left(\frac ab+\frac cd\right)
+&=\Bigl(f(a)f(d)+f(b)f(c)\Bigr)f(b)^{-1}f(d)^{-1}\\
+&=f(a)f(b)^{-1}+f(c)f(d)^{-1},\\
+\widetilde f\left(\frac ab\cdot\frac cd\right)
+&=f(a)f(c)f(b)^{-1}f(d)^{-1}.
+\end{aligned}
+\]
+故它保持加法、乘法及单位。任何延拓都必须把 \(a/b=(a/1)(b/1)^{-1}\) 映为 \(f(a)f(b)^{-1}\)，所以唯一。若 \(A=L\) 是域且 \(f\) 单射，\(\widetilde f(a/b)=0\) 推出 \(f(a)=0\)，进而 \(a=0\)，故延拓也单射。
+\end{proof}
+
+例如单射 \(\mathbb Z\hookrightarrow\mathbb R\) 唯一地延拓为 \(\mathbb Q\hookrightarrow\mathbb R\)。模素数 \(p\) 的商映射 \(\mathbb Z\rightarrow\mathbb F_p\) 则不能延拓到 \(\mathbb Q\)：非零整数 \(p\) 被送到 \(0\)，而 \(p\) 在 \(\mathbb Q\) 中已有逆元。这个障碍不能靠另选分式代表来消除。
+
+\begin{corollary}\label{b1:cor:fraction-field-unique}
+若 \((K,i)\)、\((K',i')\) 都是 \(R\) 的分式域，则存在唯一的域同构 \(\varphi:K\rightarrow K'\) 满足 \(\varphi\circ i=i'\)。
+\end{corollary}
+\begin{proof}
+\cref{b1:prop:fraction-in-ambient-field}把 \(\operatorname{Frac}(R)\) 分别同构到 \(K\)、\(K'\)：其中最小子域就是整个 \(K\) 或 \(K'\)，因为它们的每个元素按定义都是 \(R\) 中元素的商。复合这两个同构便得到所需 \(\varphi\)。若另有这样的同态，则它在每个 \(i(a)i(b)^{-1}\) 上的值必为 \(i'(a)i'(b)^{-1}\)，所以与 \(\varphi\) 一致。
+\end{proof}
+因此，具体等价类只是构造模型；决定分式域的是它对 \(R\) 的包含关系和分母取逆的要求。强调“保持 \(R\) 的嵌入”也很必要：抽象域之间可能有多个同构，唯一性指满足指定条件的那一个。

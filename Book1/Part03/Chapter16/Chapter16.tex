@@ -6,11 +6,140 @@
 \label{b1:ch:16}
 \BookChapterNumber{b1:ch:16}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+域扩张的不同嵌入由不同的共轭根决定。当最小多项式有重根时，扩张次数与嵌入个数便会分离。本章从导数判据出发，建立可分次数的塔式公式，将有限扩张分成可分部分和纯不可分部分，并以 Frobenius 映射刻画正特征的完美域。最后证明本原元素定理：有限可分扩张可由一个元素生成；有限基域的情形借助独立证明的有限乘法子群循环性完成。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用形式导数与最大公因子判断重根，并解释正特征中不可约但不可分的现象。
+\item 计算可分次数和不可分次数，区分可分性、正规性与纯不可分性。
+\item 使用 Frobenius 判据判断完美域，构造不完美函数域及其纯不可分扩张。
+\item 寻找本原元素，说明有限性与可分性在单生成结论中的作用。
+\end{itemize}
+\end{learninggoals}
+
+本章承接\cref{b1:prop:multiple-root}的重根判别、\cref{b1:lem:simple-embedding-extension}的单扩张嵌入，以及\cref{b1:thm:embedding-extension}的一般延拓定理。有限扩张次数和嵌入个数将反复对照，读者应始终注明工作基域。有限域的存在与分类仍留在下一章；本章只从一个已经给定的有限域出发证明所需性质。
 
 \input{Part03/Chapter16/Section1601}
 \input{Part03/Chapter16/Section1602}
 \input{Part03/Chapter16/Section1603}
 \input{Part03/Chapter16/Section1604}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+不可约多项式有重根，当且仅当其导数为零。在特征 \(p\) 中剥去变量的 \(p\) 次幂，可得到可分的不可约部分；这个过程同时记录不同根数和各根重数。有限扩张的可分次数等于嵌入个数，沿塔相乘；它达到总次数，恰好等价于扩张可分。扩张内的可分元构成子域，其余部分纯不可分。
+
+\ProseParagraphBreak
+特征零域和有限域都完美。正特征的一般域是否完美，则由 Frobenius 是否满射决定。有限可分扩张中的多个生成元可以合并成一个：无限基域靠避开有限多个坏参数，有限基域靠乘法群的循环性。纯不可分扩张可能单生成，也可能必须使用多个生成元，不能用一个笼统的正特征结论代替具体检查。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:16-1}
+设 \(K\) 的特征为 \(p>0\)。证明 \(x^{p^r}-x-c\) 对每个 \(r\geq1,c\in K\) 都可分。说明这是否意味着它总不可约。
+\end{exercise}
+\begin{solution}
+其形式导数为 \(-1\)，故与原多项式最大公因子为一，由重根判据可分。但不可约性不由此保证，例如取 \(c=0\)，则 \(0\) 是根，次数 \(p^r>1\) 时已有一次因子 \(x\)。可分只要求不同不可约因子的根互不重复，不排除存在多个因子。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-2}
+在 \(K=\mathbb F_3(t)\) 上，证明 \(f=x^6+t\) 不可约，并求其不同根数和每个根的重数。
+\end{exercise}
+\begin{solution}
+把 \(f\) 视为 \(\mathbb F_3[t][x]\) 中多项式，它对素元 \(t\) 满足 Eisenstein 判据，所以在分式域 \(K\) 上不可约。写成 \(g(x^3)\)，其中 \(g(y)=y^2+t\)；它不可约，否则会使 \(f\) 可约，又有 \(g'=2y\neq0\)，所以可分。由\cref{b1:prop:inseparable-polynomial-shape}，\(f\) 有两个不同根，每个重数为三。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-3}
+设 \(L/K\) 有限，\(\operatorname{char}K=p>0\)，且 \(p\nmid[L:K]\)。证明 \(L/K\) 可分。说明逆命题是否成立。
+\end{exercise}
+\begin{solution}
+\cref{b1:prop:separable-inseparable-decomposition}说明不可分次数为 \(p\) 的幂，并整除总次数，所以只能为一。于是可分次数等于总次数，由\cref{b1:thm:separable-embeddings}可分。逆命题不成立：在 \(\mathbb F_2\) 上，\(x^2+x+1\) 无根故不可约，导数为一故可分。添入一个根所得扩张次数为二，恰被特征二整除。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-4}
+设 \(p\) 为奇素数，\(u\) 在 \(\mathbb F_p\) 上超越，令 \(K=\mathbb F_p(u^{2p})\)、\(L=\mathbb F_p(u)\)。求总次数、可分次数、不可分次数及 \(L/K\) 的最大可分中间域。
+\end{exercise}
+\begin{solution}
+令 \(t=u^{2p}\)，则 \(x^{2p}-t\) 对 \(\mathbb F_p[t]\) 的素元 \(t\) 满足 Eisenstein 判据，是 \(u\) 在 \(K\) 上的最小多项式。总次数为 \(2p\)。在代数闭包中它等于 \((x^2-u^2)^p\)，不同根为 \(u,-u\)，所以由单扩张嵌入对应，可分次数为二，不可分次数为 \(p\)。元素 \(v=u^p\) 满足 \(v^2=t\)，其二次最小多项式可分，故 \(K(v)/K\) 可分且次数二。最大可分中间域的次数等于可分次数，所以它恰为 \(K(v)=\mathbb F_p(u^p)\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-5}
+证明同时可分且纯不可分的代数扩张必为平凡扩张。推论：若 \(E/K\) 可分、\(F/K\) 纯不可分并位于同一扩张域中，则 \(E\cap F=K\)。
+\end{exercise}
+\begin{solution}
+其中任一元素的最小多项式既无重根，又由纯不可分性只有一个不同根，所以只能为一次，元素属于 \(K\)。交域中的元素从 \(E\) 继承可分性，从 \(F\) 继承纯不可分性，故全部属于 \(K\)，反向包含原本成立。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-6}
+设 \(K\subseteq E\subseteq L\)，两层扩张都纯不可分。证明 \(L/K\) 纯不可分。若 \(L/K\) 还是有限扩张，证明存在统一的 \(r\)，使全部 \(a\in L\) 满足 \(a^{p^r}\in K\)。
+\end{exercise}
+\begin{solution}
+正特征下，给定 \(a\in L\)，先取 \(a^{p^m}\in E\)，再取 \((a^{p^m})^{p^n}\in K\)，得 \(a^{p^{m+n}}\in K\)。有限情形取有限生成元 \(a_1,\ldots,a_s\)，分别选 \(r_i\) 使 \(a_i^{p^{r_i}}\in K\)，令 \(r=\max r_i\)。任意元素是这些生成元的有理式；取 \(p^r\) 次幂后，系数与全部生成元的幂都在 \(K\) 中，分母仍非零，故整个值在 \(K\) 中。特征零的纯不可分扩张本就平凡。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-7}
+若 \(a\) 在特征 \(p>0\) 的域 \(K\) 上代数且可分，证明对每个 \(r\geq1\)，有 \(K(a)=K(a^{p^r})\)。
+\end{exercise}
+\begin{solution}
+\(a\) 被 \(x^{p^r}-a^{p^r}\) 零化，所以 \(K(a)/K(a^{p^r})\) 纯不可分。另一方面，\(a\) 在 \(K\) 上的最小多项式可分，扩大系数域后其新的最小多项式整除原多项式，故该扩张也可分。其最小多项式因此既无重根又只有一个不同根，必须为一次，得到两域相等。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-8}
+设 \(K\) 完美，\(L/K\) 代数。证明 \(L\) 的任意中间域都完美，并举例说明 \(K\) 完美不保证任意扩张域完美。
+\end{exercise}
+\begin{solution}
+任意中间域 \(E/K\) 仍代数，\cref{b1:cor:algebraic-perfect-extension}适用，故 \(E\) 完美。反例为 \(K=\mathbb F_p\)、\(L=\mathbb F_p(t)\)：底域有限故完美，扩张域中的 \(t\) 不是 \(p\) 次幂，因为 \(t\) 的素因子指数为一，而有理函数的 \(p\) 次幂中所有指数均被 \(p\) 整除。由\cref{b1:prop:perfect-frobenius}，后者不完美。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-9}
+设 \(K\) 的特征为 \(p>0\)，固定代数闭包 \(\Omega\)。令 \(P\) 为所有满足某个 \(a^{p^r}\in K\) 的 \(a\in\Omega\) 组成的集合。证明 \(P\) 是包含 \(K\) 的最小完美子域。
+\end{exercise}
+\begin{solution}
+给定两个这样的元素，把指数统一提高到同一个 \(r\)，则差、积和非零元素的逆的 \(p^r\) 次幂也在 \(K\)，故 \(P\) 是域。任意 \(a\in P\) 在 \(\Omega\) 中有唯一 \(p\) 次根 \(b\)，且若 \(a^{p^r}\in K\)，则 \(b^{p^{r+1}}\in K\)，所以 \(b\in P\)。Frobenius 在 \(P\) 上满射，故它完美。若 \(M\subseteq\Omega\) 完美且包含 \(K\)，反复利用 Frobenius 满射，\(M\) 必须包含 \(K\) 中每个元素的唯一 \(p^r\) 次根，故包含 \(P\)。这证明最小性。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-10}
+在 \(\mathbb Q(\sqrt2,\sqrt3)\) 中取 \(\theta=\sqrt2+2\sqrt3\)。证明 \(\theta\) 为本原元素，并求其最小多项式。
+\end{exercise}
+\begin{solution}
+\((2\sqrt3+\sqrt2)(2\sqrt3-\sqrt2)=10\)，所以 \(10/\theta=2\sqrt3-\sqrt2\)。与原式相加、相减，得到 \(\sqrt2=(\theta-10/\theta)/2\)、\(\sqrt3=(\theta+10/\theta)/4\)，故 \(\theta\) 生成该域。由\cref{b1:prop:biquadratic-example}其次数为四。又 \(\theta^2=14+4\sqrt6\)，所以 \((\theta^2-14)^2=96\)，得到首一关系 \(\theta^4-28\theta^2+100=0\)。它次数为四，必为最小多项式。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-11}
+设 \(u,v\) 在 \(\mathbb F_p\) 上代数独立，\(K=\mathbb F_p(u^p,v^p)\)、\(L=\mathbb F_p(u,v)\)。证明对每个 \(c\in K\)，域 \(K(u+cv)\) 的次数为 \(p\)，且这些域两两不同。由此得到一个有限扩张有无限多个中间域的例子。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:non-simple-finite-extension}的单项式基，\(1,u,v\) 在 \(K\) 上线性无关，所以 \(u+cv\notin K\)。它的 \(p\) 次幂在 \(K\) 中，最小多项式的次数只能为一或 \(p\)，故恰为 \(p\)。若 \(c\neq d\) 且两个域相同，则该域同时包含 \(u+cv,u+dv\)，作差除以 \(c-d\) 得 \(v\)，进而包含 \(u\)。这使它等于 \(L\)，却分别应有次数 \(p\) 与 \(p^2\)，矛盾。\(K\) 无限，因而得到无限多个不同中间域。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-12}
+构造域 \(F=\mathbb F_3[a]\)，其中 \(a^2=-1\)。证明它有九个元素，\(a\) 是 \(F/\mathbb F_3\) 的本原元素却不生成乘法群；证明 \(1+a\) 生成乘法群。
+\end{exercise}
+\begin{solution}
+\(x^2+1\) 在 \(\mathbb F_3\) 中无根，所以商环 \(\mathbb F_3[x]/(x^2+1)\) 为二次扩张，元素唯一为 \(b+ca\)，共九个。\(a^2=-1\neq1\)、\(a^4=1\)，故 \(a\) 的乘法阶为四，不能生成八阶的 \(F^\times\)，但按构造它生成整个域。计算
+\[
+(1+a)^2=-a,\qquad (1+a)^4=-1,\qquad(1+a)^8=1.
+\]
+其阶整除八但不整除四，所以恰为八，生成 \(F^\times\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-13}
+设 \(E/K\)、\(F/K\) 为同一代数闭包中的可分代数扩张，不要求有限。证明合成域 \(EF/K\) 可分。
+\end{exercise}
+\begin{solution}
+合成域中每个元素只使用 \(E\cup F\) 中有限多个元素的域运算，因而落在由有限多个对 \(K\) 可分的元素生成的域中。\cref{b1:thm:separable-embeddings}说明该有限扩张可分，所以所取元素在 \(K\) 上可分。对全部元素均成立，故合成域可分。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-14}
+证明纯不可分代数扩张总是正规扩张，但其基域自同构群只有恒等元。以 \(\mathbb F_p(t^{1/p})/\mathbb F_p(t)\) 说明自同构数为何未必反映扩张次数。
+\end{exercise}
+\begin{solution}
+扩张中每个元素的最小多项式只有它自身这一个不同根，故已在扩张中完全分裂，满足正规性的定义。任何保持基域的自同构必须把元素送到其最小多项式的根，因此逐点固定全部元素，只能是恒等。所给例子的总次数为 \(p\)，但不同根数、可分次数和自同构数都为一；缺少可分性使后一个数无法恢复总次数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:16-15}
+设 \(L/K\) 有限可分，\(E\) 为中间域。证明给定的每个 \(K\) 嵌入 \(E\rightarrow\Omega\) 恰有 \([L:E]\) 个延拓至 \(L\)，其中 \(\Omega\) 为共同代数闭包。
+\end{exercise}
+\begin{solution}
+\(L/E\) 可分，由\cref{b1:thm:separable-embeddings}，固定 \(E\) 的 \(L\) 的嵌入恰有 \([L:E]\) 个。给定 \(\tau:E\rightarrow\Omega\)，将它延拓为 \(\Omega\) 的 \(K\) 自同构 \(\widehat\tau\)。复合 \(\rho\mapsto\widehat\tau\circ\rho\) 把前述嵌入双射地对应到限制为 \(\tau\) 的嵌入，逆由 \(\widehat\tau^{-1}\) 复合给出。所以每个 \(\tau\) 的延拓数都恰为 \([L:E]\)，不仅仅是至少存在一个。
+\end{solution}

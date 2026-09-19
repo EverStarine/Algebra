@@ -6,11 +6,140 @@
 \label{b1:ch:18}
 \BookChapterNumber{b1:ch:18}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章用嵌入和线性代数考察有限扩张。Artin 独立性从最短线性关系出发，证明不同乘法特征及域嵌入作为函数线性无关。乘法算子的迹和行列式随后给出域迹与域范数；共轭公式、塔式公式和迹配对把可分性转化为可计算的条件。最后讨论有限域中的像与核，并就地建立整元素的基本封闭性，为数域算术中的迹、范数和判别式作准备。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 掌握最短关系法，区别乘法特征的线性独立性与表示特征标的正交性。
+\item 从乘法矩阵与最小多项式计算迹、范数，正确处理不可分重数。
+\item 证明迹与范数的传递性，用迹配对和判别式检测有限扩张的可分性。
+\item 计算有限域上的迹与范数，说明整性如何保证数域中的相应值为整数。
+\end{itemize}
+\end{learninggoals}
+
+本章使用域扩张的次数、嵌入计数及可分次数的塔式公式，并假定读者熟悉有限维线性代数中的矩阵迹、行列式与换基。Artin 独立性不依赖 Galois 对应，反而将为下一章的不动域定理提供主要工具。整性所需的有限生成模论证在末节完整给出，不把第二、三卷尚未建立的结构定理当作前提。
 
 \input{Part03/Chapter18/Section1801}
 \input{Part03/Chapter18/Section1802}
 \input{Part03/Chapter18/Section1803}
 \input{Part03/Chapter18/Section1804}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+不同域嵌入之间不存在常系数的非平凡线性关系，这使可分扩张的迹成为非零映射。迹与范数首先是乘法算子的线性代数量；共轭和积只是它们在代数闭包中的表达，不可分时必须计入统一重数。塔式公式适用于所有有限扩张，迹配对非退化则恰等价于可分。判别式记录该配对在一组基下的行列式，并随换基乘以一个平方。整性封闭性进一步把这些运算限制到算术对象中，而整数环结构及分歧理论仍有独立的证明任务。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:18-characters-integers}
+设 \(a_1,\ldots,a_r\) 为域 \(\Omega\) 中不同的非零元素。对整数 \(n\)，令 \(\chi_i(n)=a_i^n\)。证明这些函数线性无关，并说明只检验 \(n=0,\ldots,r-1\) 为何已经足够。
+\end{exercise}
+\begin{solution}
+它们是加法群 \(\mathbb Z\) 到 \(\Omega^\times\) 的不同乘法特征，可直接用\cref{b1:thm:artin-independence}。若只取指定的 \(r\) 个整数，求值矩阵为 Vandermonde 矩阵，其行列式为 \(\prod_{i<j}(a_j-a_i)\ne0\)。因此在这些点成立的 \(r\) 个齐次方程已经迫使全部系数为零。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-evaluation-matrix}
+在 \(L=\mathbb Q(\sqrt2,\sqrt3)\) 中，以 \(1,\sqrt2,\sqrt3,\sqrt6\) 为基，将独立改变两个平方根符号的四个嵌入作为矩阵的行。求求值矩阵的行列式的平方，并据此求该基的判别式。
+\end{exercise}
+\begin{solution}
+\cref{b1:prop:biquadratic-example}给出扩张次数为四及题中所列的基。取行的符号依次为 \((+,+)\)、\((-,+)\)、\((+,-)\)、\((-,-)\)，矩阵可写成
+\[
+\begin{pmatrix}1&1&1&1\\1&-1&1&-1\\1&1&-1&-1\\1&-1&-1&1\end{pmatrix}
+\operatorname{diag}(1,\sqrt2,\sqrt3,\sqrt6).
+\]
+左矩阵与其转置的乘积为 \(4I_4\)，故行列式平方为 \(4^4=256\)；右矩阵的行列式为六。总行列式平方为 \(256\cdot36=9216\)。扩张可分，迹矩阵为求值矩阵转置乘自身，所以基的判别式也为 \(9216\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-cubic-trace-norm}
+令 \(a=\sqrt[3]2\)，\(L=\mathbb Q(a)\)。求 \(a\)、\(a^2\)、\(1+a\) 对 \(\mathbb Q\) 的迹与范数。
+\end{exercise}
+\begin{solution}
+\(a\) 的最小多项式为 \(t^3-2\)，由\eqref{b1:eq:trace-norm-minimal-polynomial}得到迹零、范数二。元素 \(a^2\) 仍生成 \(L\)，因为 \(a=(a^2)^2/2\)；其最小多项式为 \(t^3-4\)，故迹零、范数四。\(1+a\) 也生成 \(L\)，最小多项式为 \((t-1)^3-2=t^3-3t^2+3t-3\)，故迹三、范数三。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-ambient-extension}
+比较 \(\sqrt2\) 在 \(\mathbb Q(\sqrt2)/\mathbb Q\) 与 \(\mathbb Q(\sqrt2,\sqrt3)/\mathbb Q\) 中的迹、范数和乘法特征多项式。
+\end{exercise}
+\begin{solution}
+前一个扩张的最小多项式与特征多项式均为 \(t^2-2\)，迹为零，范数为负二。后一个扩张对 \(\mathbb Q(\sqrt2)\) 的次数为二，因此\eqref{b1:eq:trace-norm-minimal-polynomial}给出特征多项式 \((t^2-2)^2\)，迹仍为零，范数变为四。元素本身和最小多项式都未变，但所处的乘法空间维数不同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-not-ring-maps}
+举例说明域迹一般不保持乘法，域范数一般不保持加法。说明它们各自确实保持哪些运算。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb C/\mathbb R\) 中，\(\operatorname{Tr}(i)=0\)，而 \(\operatorname{Tr}(i^2)=\operatorname{Tr}(-1)=-2\)，故迹不保持乘法；\(\operatorname{N}(1+1)=4\)，但 \(\operatorname{N}(1)+\operatorname{N}(1)=2\)，故范数不保持加法。\cref{b1:prop:trace-norm-basic}给出的正确结论是：迹为基域线性映射，范数为乘法映射，并在非零元素的乘法群之间给出群同态。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-tower-calculation}
+在 \(L=\mathbb Q(\sqrt2,\sqrt3)\) 中，沿中间域 \(E=\mathbb Q(\sqrt2)\) 计算 \(a=1+\sqrt2+\sqrt3\) 对 \(\mathbb Q\) 的迹与范数。
+\end{exercise}
+\begin{solution}
+在 \(L/E\) 中共轭把 \(\sqrt3\) 变号，所以
+\[
+\operatorname{Tr}_{L/E}(a)=2+2\sqrt2,\qquad
+\operatorname{N}_{L/E}(a)=(1+\sqrt2)^2-3=2\sqrt2.
+\]
+再对 \(E/\mathbb Q\) 计算，前者迹为四，后者范数为 \((2\sqrt2)(-2\sqrt2)=-8\)。由\cref{b1:thm:trace-norm-tower}，这就是 \(a\) 在整个四次扩张中的迹与范数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-purely-inseparable}
+设 \(u\) 为超越元，\(L=\mathbb F_p(u)\)、\(K=\mathbb F_p(u^p)\)。证明对每个 \(a\in L\)，有 \(\operatorname{Tr}_{L/K}(a)=0\)、\(\operatorname{N}_{L/K}(a)=a^p\)。
+\end{exercise}
+\begin{solution}
+每个有理函数的 \(p\) 次幂属于 \(K\)，扩张为 \(p\) 次纯不可分扩张。到代数闭包的唯一 \(K\) 嵌入为包含映射，因为 \(u\) 的像必须满足 \(t^p-u^p=(t-u)^p=0\)。\cref{b1:thm:trace-norm-embeddings}中的 \(s=1,e=p\)，故迹为 \(pa=0\)，范数为 \(a^p\)。这也适用于 \(a=0\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-trace-eight}
+在 \(\mathbb F_8=\mathbb F_2(\alpha)\)、\(\alpha^3+\alpha+1=0\) 中，列出对 \(\mathbb F_2\) 的迹为零的全部元素，并求每个非零元素的范数。
+\end{exercise}
+\begin{solution}
+\(\operatorname{Tr}(1)=1\)，而 \(\operatorname{Tr}(\alpha)=\alpha+\alpha^2+\alpha^4=0\)，\(\operatorname{Tr}(\alpha^2)=\operatorname{Tr}(\alpha)^2=0\)。因此 \(a+b\alpha+c\alpha^2\) 的迹为 \(a\)，核正是 \(0,\alpha,\alpha^2,\alpha+\alpha^2\)。非零元的范数为其七次幂，均等于一。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-trace-dual-basis}
+设 \(L=\mathbb Q(\sqrt d)\)，\(d\) 为非平方整数。求基 \(1,\sqrt d\) 关于迹配对的对偶基，即求 \(c_1,c_2\) 使 \(\operatorname{Tr}(b_i c_j)=\delta_{ij}\)。
+\end{exercise}
+\begin{solution}
+迹矩阵为 \(\operatorname{diag}(2,2d)\)，所以对偶基为 \(1/2,\sqrt d/(2d)\)。直接相乘：第一、第一的迹为一，两个交叉项均为 \(\sqrt d\) 的有理倍数，迹为零；第二、第二的积为二分之一，迹为一。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-cubic-discriminant}
+对 \(a=\sqrt[3]2\)，直接用迹矩阵计算基 \(1,a,a^2\) 的判别式。
+\end{exercise}
+\begin{solution}
+由 \(a^3=2\) 以及 \(\operatorname{Tr}(a)=\operatorname{Tr}(a^2)=0\)，有 \(\operatorname{Tr}(1)=3\)、\(\operatorname{Tr}(a^3)=6\)、\(\operatorname{Tr}(a^4)=2\operatorname{Tr}(a)=0\)。所以迹矩阵为
+\[
+\begin{pmatrix}3&0&0\\0&0&6\\0&6&0\end{pmatrix},
+\]
+行列式为 \(-108\)。非零性符合特征零下的可分性，负号本身不表示配对退化。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-integral-unit}
+设 \(K\) 为数域，\(a\in K\) 为非零代数整数。证明 \(a^{-1}\) 也是代数整数，当且仅当 \(\operatorname{N}_{K/\mathbb Q}(a)=\pm1\)。
+\end{exercise}
+\begin{solution}
+若二者均为代数整数，由\cref{b1:prop:integral-trace-norm}，它们的范数是互为倒数的整数，只能各为正一或负一。反向先说明 \(a\) 的乘法特征多项式系数是整数：其根是 \(a\) 的全部嵌入像，各自在 \(\mathbb Z\) 上整；系数是这些根的初等对称和，依\cref{b1:lem:integral-closure-elementary}仍整，而本来属于 \(\mathbb Q\)，所以都是整数。若范数为 \(\pm1\)，这个首一多项式的常数项为 \(\pm1\)。把其在 \(a\) 处的等式除以 \(a^{[K:\mathbb Q]}\)，再乘以该常数项的符号，便得到 \(a^{-1}\) 满足的首一整数方程，故其整。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-quadratic-integrality}
+设 \(K/\mathbb Q\) 为二次扩张，\(a\in K\)。证明 \(a\) 为代数整数当且仅当它的迹、范数均为整数。以 \(a=(1+\sqrt{13})/2\) 为例求出二者和基 \(1,a\) 的判别式。
+\end{exercise}
+\begin{solution}
+必要性由\cref{b1:prop:integral-trace-norm}。反向，\(a\) 满足其乘法特征多项式 \(t^2-\operatorname{Tr}(a)t+\operatorname{N}(a)\)：由\eqref{b1:eq:trace-norm-minimal-polynomial}，这个多项式是其最小多项式的正整数次幂。若两系数为整数，便为首一整数方程。所给元素满足 \(t^2-t-3=0\)，迹为一，范数为负三。两个共轭之差为 \(\sqrt{13}\)，故基判别式为十三。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-integrality-counterexample}
+设 \(a\) 为 \(t^3-\tfrac12t-1\) 的一个根。证明 \(a\) 对 \(\mathbb Q\) 的迹、范数均为整数，但 \(a\) 不是代数整数。
+\end{exercise}
+\begin{solution}
+整数多项式 \(2t^3-t-2\) 的有理根若存在，只可能为 \(\pm1,\pm2,\pm1/2\)；逐一代入都非零，所以它在 \(\mathbb Q\) 上不可约。因此题给首一式就是最小多项式，迹为零，范数为一。若 \(a\) 整，它的全部共轭也整，其初等对称和由\cref{b1:lem:integral-closure-elementary}仍整；这些和为有理数，必须为整数。然而最小多项式的一次项系数为 \(-1/2\)，矛盾。迹与范数在三次情形未控制全部系数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:18-integrality-tower}
+设 \(b=\sqrt2\)，\(a^2=1+b\)。不用数域整数环的结构定理，证明 \(a\) 和 \(a^{-1}\) 都是代数整数，并写出各自的一条首一整数方程。
+\end{exercise}
+\begin{solution}
+\(b\) 整，而 \(a\) 满足 \(t^2-(1+b)=0\)，由\cref{b1:prop:integrality-transitive-elementary}知 \(a\) 整。具体消去 \(b\) 得 \((a^2-1)^2=2\)，即 \(a^4-2a^2-1=0\)。常数项为负一，\(a\ne0\)。除以 \(a^4\) 后可写为 \((a^{-1})^4+2(a^{-1})^2-1=0\)，所以逆元也整。这里没有用到任何整基或唯一分解结论。
+\end{solution}
