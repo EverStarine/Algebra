@@ -1,9 +1,48 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 D 第 3 项归纳；原要点保留于 AppendixD.tex。
+% 纲要标题：### D.3 微分 Galois 理论简介
+% 纲要位置：计划纲要.md，第 904 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% <!-- 短节：不设小节 -->
+% END APPENDIX OUTLINE SYNC
 
-\section{逆 Galois 问题与典型构造}
+\section{微分 Galois 理论简介}
 \label{b1:sec:D03}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+多项式的根产生代数关系，微分方程的解还带有求导关系。若研究后者的对称性，就不能允许任意的域自同构破坏求导。这里仅定义相应对象并计算一个例子；一般存在定理及 Galois 对应留给后续的线性微分理论。
 
-待撰写。
+\begin{definition}\label{b1:def:differential-field}
+特征零的\term[weifen-yu]{微分域}[differential field]是域 \(K\) 连同一个加法映射 \(\partial:K\rightarrow K\)，满足 Leibniz 法则
+\[
+\partial(ab)=a\partial b+b\partial a.
+\]
+\(\partial\) 称为\term[daozi]{导子}[derivation]，子域 \(C_K=\ker\partial\) 称为\term[changshu-yu]{常数域}[field of constants]。微分域扩张要求大域导子限制为小域导子。
+\end{definition}
+
+由 Leibniz 法则，\(\partial1=0\)，并且对 \(b\neq0\) 有 \(\partial(b^{-1})=-b^{-2}\partial b\)，所以常数确实组成子域。例如 \(C(t)\) 配上形式导子 \(d/dt\) 的常数恰为 \(C\)：将有理函数写成互素多项式之比，求导为零会使分子整除自己的导数，次数比较便迫使它为常数，分母亦然。
+
+\begin{definition}\label{b1:def:picard-vessiot}
+设 \(K\) 为微分域，常数域 \(C_K=C\) 代数闭，\(A\in M_n(K)\)。方程 \(\partial Y=AY\) 的一个\term[Picard-Vessiot-kuozhang]{Picard--Vessiot 扩张}[Picard--Vessiot extension]是微分域扩张 \(L/K\)，满足：存在可逆矩阵 \(Y\in\operatorname{GL}_n(L)\) 解此方程；\(L\) 由 \(Y\) 的矩阵元在 \(K\) 上生成；\(C_L=C\)。其\term[weifen-galois-qun]{微分 Galois 群}[differential Galois group]为
+\[
+\operatorname{Gal}_{\partial}(L/K)=
+\{\sigma\in\operatorname{Aut}_K(L)\mid\sigma\partial=\partial\sigma\}.
+\]
+\end{definition}
+
+这些条件是对一个给定扩张的检验，定义本身没有证明所有方程均有这样的扩张。称 \(Y\) 为基本解矩阵，是因为它的列给出 \(n\) 个线性独立的向量解。
+
+\begin{proposition}\label{b1:prop:differential-galois-matrices}
+在上述条件下，每个微分自同构唯一写成 \(\sigma(Y)=YM_\sigma\)，其中 \(M_\sigma\in\operatorname{GL}_n(C)\)，并且 \(\sigma\mapsto M_\sigma\) 是单同态。
+\end{proposition}
+\begin{proof}
+令 \(M_\sigma=Y^{-1}\sigma(Y)\)。由 \(\partial Y^{-1}=-Y^{-1}(\partial Y)Y^{-1}\)，并使用 \(\sigma(A)=A\) 与微分交换条件，得
+\[
+\partial M_\sigma=-Y^{-1}A\sigma(Y)+Y^{-1}A\sigma(Y)=0.
+\]
+因此矩阵元属于 \(C_L=C\)。自同构固定常数，所以 \(\sigma\tau(Y)=YM_\sigma M_\tau\)，这给出同态性。若 \(M_\sigma=I\)，它固定生成 \(L\) 的全部矩阵元，因此为恒等。
+\end{proof}
+
+取 \(K=C(t)\)、\(L=C(u)\)，其中 \(u^2=t\)，令 \(\partial u=1/(2u)=u/(2t)\)。这个导子在 \(C(u)\) 上就是 \((2u)^{-1}d/du\)，故常数恰为 \(C\)。非零元素 \(u\) 是一阶方程 \(y'=y/(2t)\) 的基本解，因而 \(L/K\) 满足上面的定义。其两个域自同构 \(u\mapsto u\) 与 \(u\mapsto-u\) 都与导子交换；微分群正是 \(\{1,-1\}\subseteq C^\times\)。这说明微分问题也可以产生有限群，却不说明一般微分扩张都是代数扩张。
+
+\ProseParagraphBreak
+经典有限 Galois 理论用群对有限根集的置换记录对称；这里的命题用常数域上的矩阵记录基本解之间的变化。一般理论还要证明这个像具有线性代数群结构，并用适当的闭子群建立对应；这些结论不由“是矩阵群的子群”自动得到。第三卷附录 E 引入微分代数对象，第五卷附录 E 讨论线性微分方程及其群，本节不提前调用那里尚需建立的结果。
+% ---

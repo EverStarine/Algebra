@@ -1,11 +1,29 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 附录 A　集合论与拓扑预备知识
-% 纲要位置：计划纲要.md，第 771 行。
+% 纲要位置：计划纲要.md，第 774 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% * Zorn 引理与选择公理的使用清单
+% * 商集、滤过系统与逆极限的集合构造
+% * 积拓扑、紧性及投射有限空间的最小背景
+% * 不把完整点集拓扑列为所有基础代数章节的先修
+% END APPENDIX OUTLINE SYNC
 
 \chapter{集合论与拓扑预备知识}
 \label{b1:app:A}
 
-% TODO: 按纲要撰写本附录，并明确先修与证明边界。
+\begin{chapterabstract}
+代数中的商对象、极大对象和无限相容族，都先是集合上的构造。本附录说明这些构造用到了哪些集合论原则，整理无限 Galois 理论所需的拓扑，并补充有限支集计数、集合的正向极限和有限逆系统的基本结论。选择公理及其等价形式在这里明确列为基础约定；主干中的极大理想、代数闭包和 Krull 紧性证明仍保留在正文各自的位置。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{enumerate}
+\item 区分极大元、最大元与上界，核对 Zorn 引理中的链条件。
+\item 用商集或相容族分别构造正向极限和逆极限，并验证相应的映射性质。
+\item 把有限交性质、闭子空间和有限坐标条件用于投射有限空间。
+\end{enumerate}
+\end{learninggoals}
+
+阅读本附录只需集合、映射和有限线性组合的基本语言。涉及理想、超越基和 Galois 群的段落是对正文的使用清单；尚未读到相应章节时可以跳过。所有指标均为集合，本附录不处理以全部集合或全部群为指标的真类构造。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,3 +37,77 @@
 \input{Appendices/AppendixA/SectionA02}
 \input{Appendices/AppendixA/SectionA03}
 \input{Appendices/AppendixA/SectionA04}
+
+\begin{chaptersummary}
+极大性论证的关键是选对偏序并检查链的上界；极大对象能够达到所需目标，还要另证它不能继续扩张。商集把应当相同的表达式合并，正向极限将不同层中的元素在共同后层比较，逆极限则保留所有层上相容的坐标。
+
+\ProseParagraphBreak
+有限离散空间的逆极限之所以紧，是因为相容条件在积空间中定义闭集。紧性把有限条件的可解性提升为全部条件的同时可解性，也使一个取有限离散值的连续函数只依赖某个有限层。这些结论既解释 Krull 拓扑，也提醒我们区分各层非空、各投影满射和整体具有多少个点。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:A-01}
+设 \(X\) 是无限集合。证明有限子集按包含关系组成的偏序集是有向的，却没有极大元。说明这为什么不与 Zorn 引理矛盾。
+\end{exercise}
+\begin{solution}
+两个有限子集的并仍有限，故给出共同上界。每个有限子集都能加入一个尚未出现的元素，所以没有极大元。在本书采用的选择公理下，选取互异的 \(x_0,x_1,\ldots\in X\)，令 \(F_n=\{x_0,\ldots,x_n\}\)。这些集合构成链，但任何包含它们的集合都含有无限多个元素，故在此偏序集中没有上界。\cref{b1:thm:A-zorn}要求每条链有上界，有向性只要求每一对元素有共同上界。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-02}
+设 \(V\) 是域 \(K\) 上的向量空间，\(A\subseteq V\) 线性无关，\(S\subseteq V\) 且 \(A\cup S\) 生成 \(V\)。证明存在 \(B\)，使 \(A\subseteq B\subseteq A\cup S\) 且 \(B\) 是 \(V\) 的基。
+\end{exercise}
+\begin{solution}
+考虑 \(A\cup S\) 中包含 \(A\) 的线性无关子集。它非空，链的并线性无关，因为每个线性关系只涉及有限多个向量，已落在链中的一个成员中；空链则用 \(A\) 作上界。由\cref{b1:thm:A-zorn}取极大者 \(B\)。若某个 \(s\in S\) 不在 \(B\) 的线性包中，则 \(B\cup\{s\}\) 仍线性无关：一个涉及 \(s\) 的非平凡关系若其系数非零便将 \(s\) 写入线性包，若系数为零便违反 \(B\) 的无关性。这与极大性矛盾。因此 \(B\) 生成 \(A\cup S\)，进而生成 \(V\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-03}
+证明从 \(\mathbb N\) 到 \(\mathbb Q\) 的有限支集函数只有可数多个；再用对角论证证明从 \(\mathbb N\) 到 \(\{0,1\}\) 的全部函数不构成可数集。
+\end{exercise}
+\begin{solution}
+有限支集函数由有限多个指标及相应有理数确定。\(\mathbb N\times\mathbb Q\) 可数，由\cref{b1:prop:finite-support-cardinality}，它的有限序列集合可数；上述编码给出所求上界，单点支集的函数又给出无限多个不同函数。
+
+若全部零一序列可以列成 \(a^{(0)},a^{(1)},\ldots\)，定义 \(b_n=1-a^{(n)}_n\)。序列 \(b\) 在第 \(n\) 个位置不同于第 \(n\) 个已列序列，故不在列表中，矛盾。有限支集的限制不能从前一结论中删除。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-04}
+设 \(q:X\rightarrow Y\) 为满射，规定 \(x\sim x'\) 当且仅当 \(q(x)=q(x')\)。证明 \(X/{\sim}\) 与 \(Y\) 自然双射，并说明构造这个双射是否需要为每条纤维选择一个代表元。
+\end{exercise}
+\begin{solution}
+由等号的性质得到等价关系。\cref{b1:prop:set-quotient-universal}给出映射 \([x]\mapsto q(x)\)，它因 \(q\) 满射而满射；两个像相同恰好意味着原代表元等价，所以它也单射。逆映射把 \(y\) 送到整个纤维 \(q^{-1}(y)\)，该纤维就是一个等价类，因而不需要从纤维内选出元素。选择公理只在要求进一步构造截面 \(s:Y\rightarrow X\) 时出现。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-05}
+对每个 \(n\geq0\) 取 \(X_n=\{0,1\}\)，令 \(u_{nn}\) 为恒等映射，而 \(u_{nm}\) 在 \(n<m\) 时恒取 \(0\)。求此正向系统的正向极限，并判断结构映射是否单射。
+\end{exercise}
+\begin{solution}
+这些映射满足复合条件。任意两个带层标记的元素 \((n,a),(m,b)\)，映到严格大于 \(n,m\) 的同一层后都为零，因而由\cref{b1:def:filtered-colimit-set}等价。极限只有一个元素，各 \(X_n\) 到极限的结构映射都不是单射。正向极限可表示为递增并，需要结构映射具有额外的单射性质。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-06}
+设 \((X_i,r_{ji})\) 是有向偏序集 \(I\) 上的逆系统。若子集 \(J\subseteq I\) 满足：每个 \(i\in I\) 都有 \(j\in J\) 使 \(i\leq j\)，证明限制坐标给出 \(\varprojlim_I X_i\cong\varprojlim_J X_j\)。这里 \(J\) 采用诱导次序。
+\end{exercise}
+\begin{solution}
+先验证 \(J\) 有向：给 \(j_1,j_2\in J\)，先在 \(I\) 中取共同上界，再取其上的 \(J\) 中元素。给定 \(J\) 上相容族 \((x_j)\)，对 \(i\in I\) 取 \(j\in J\)、\(j\geq i\)，规定 \(x_i=r_{ji}(x_j)\)。若换用 \(j'\)，在 \(J\) 中取二者共同上界 \(k\)，则两式都等于 \(r_{ki}(x_k)\)，故定义与选择无关。若 \(i\leq i'\)，在 \(i'\) 上方取 \(j\in J\)，复合律给出 \(r_{i'i}(x_{i'})=x_i\)。此延拓与限制互逆。若各层还带拓扑且过渡映射连续，延拓的每个坐标都是一个投影后复合过渡映射，故由\cref{b1:prop:product-continuity}所得双射也是同胚。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-07}
+对每个 \(n\geq0\) 取 \(X_n=\{0,1\}\)，逆系统的严格后层到前层的映射全部恒取零。证明逆极限是单点，且每个坐标投影都不满射。与 \(X_n=\{m\in\mathbb N\mid m\geq n\}\) 采用包含映射的情形比较。
+\end{exercise}
+\begin{solution}
+相容性迫使每个坐标都是后一层映来的零，故第一系统只有全零族，投影像为 \(\{0\}\)。第二系统的相容族必须所有坐标相同，而共同值须大于等于每个自然数，不可能存在。第一系统说明有限非空层保证逆极限非空，却不保证各投影满射；第二系统说明删去有限性后，非空层甚至不能保证非空逆极限。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-08}
+在 \(X=\{0,1\}^{\mathbb N}\) 的积拓扑中，令 \(D\) 为仅有有限多个坐标为一的序列集合。证明 \(D\) 稠密但不闭，\(X\) 没有孤立点，且 \(D\) 不是紧子空间。
+\end{exercise}
+\begin{solution}
+每个非空基本开集只规定有限个坐标，将其余坐标填零便得到 \(D\) 中的点，所以 \(D\) 稠密。全一序列不在 \(D\) 中，故 \(D\ne X\)，稠密性遂排除闭性。任意基本邻域都留有未规定的坐标，将其中一个坐标改动便得到邻域内另一点，因此没有孤立点。由\cref{b1:prop:compact-maps}，Hausdorff 空间中的紧子集必须闭，故 \(D\) 不紧。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:A-09}
+设 \(X\) 是有限离散空间的有向逆极限，\(C\subseteq X\) 既开又闭。证明存在某个指标 \(i\) 及 \(A\subseteq X_i\)，使 \(C=\pi_i^{-1}(A)\)。
+\end{exercise}
+\begin{solution}
+特征函数 \(1_C:X\rightarrow\{0,1\}\) 连续，因为两个单点的原像分别为开集 \(C\) 和 \(X\setminus C\)。\cref{b1:prop:finite-value-factorization}给出它经过 \(\pi_i(X)\) 的分解。取 \(A\) 为该像中函数值为一的元素，视为 \(X_i\) 的子集，即得结论。这里无须假定 \(\pi_i\) 满射，也不必为未出现的坐标值赋予特别意义。
+\end{solution}

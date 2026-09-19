@@ -1,9 +1,86 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 A 第 2 项归纳；原要点保留于 AppendixA.tex。
+% 纲要标题：### A.2 商集、滤过系统与逆极限
+% 纲要位置：计划纲要.md，第 789 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### A.2.1 商集与映射的下降
+%
+% #### A.2.2 滤过系统与正向极限
+%
+% #### A.2.3 逆系统与相容族
+% END APPENDIX OUTLINE SYNC
 
 \section{商集、滤过系统与逆极限}
 \label{b1:sec:A02}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+正向系统把对象送到更大的层，逆系统则把较精细的数据限制到较粗的层。这两种构造不能只凭箭头名称记忆：前者把不同层的元素按最终相等识别，后者要求一个元素同时携带全部层的相容坐标。
 
-待撰写。
+\subsection{商集与映射的下降}
+\label{b1:subsec:A02:01}
+
+集合 \(X\) 上的等价关系 \(\sim\) 满足自反、对称和传递三项条件，其等价类为 \([x]=\{y\in X\mid y\sim x\}\)，商集 \(X/{\sim}\) 由这些等价类组成。\cref{b1:prop:partition-equivalence}已证明它们确实构成 \(X\) 的划分。商映射 \(q:x\mapsto[x]\) 的构造不需要先为各类选取代表元。
+
+\begin{proposition}\label{b1:prop:set-quotient-universal}
+给定集合映射 \(f:X\rightarrow Y\)，存在唯一映射 \(\bar f:X/{\sim}\rightarrow Y\) 满足 \(\bar f q=f\)，当且仅当 \(x\sim x'\) 蕴含 \(f(x)=f(x')\)。若条件成立，则 \(\bar f\) 满射当且仅当 \(f\) 满射；\(\bar f\) 单射当且仅当 \(f(x)=f(x')\) 还蕴含 \(x\sim x'\)。
+\end{proposition}
+\begin{proof}
+若有分解，等价元素经 \(q\) 后相同，故经 \(f\) 后相同。反之，规定 \(\bar f([x])=f(x)\)；假设恰好保证它不依赖代表元。每个类都含有代表元，因而分解等式唯一确定 \(\bar f\)。两映射的像相同，给出满射判据；\(\bar f([x])=\bar f([x'])\) 等价于 \(f(x)=f(x')\)，给出单射判据。
+\end{proof}
+例如在整数对 \((a,b)\)、\(b\ne0\) 中按 \(ad=bc\) 识别 \((a,b)\) 与 \((c,d)\)，有理数映射 \((a,b)\mapsto a/b\) 在每类上恒定。它下降后的单射性正是“分式相等只有这一种来源”。在一般整环中，\cref{b1:prop:fraction-field-basic}核查此等价关系和运算；集合层面的映射判据并不免除这些代数核查。
+
+\subsection{滤过系统与正向极限}
+\label{b1:subsec:A02:02}
+
+\begin{definition}\label{b1:def:directed-system}
+非空偏序集 \(I\) 若任意 \(i,j\in I\) 都有共同上界，称为\term[youxiang-ji]{有向集}[directed set]。在 \(I\) 上给出集合 \(X_i\) 及映射 \(u_{ij}:X_i\rightarrow X_j\)（\(i\leq j\)），满足
+\[
+u_{ii}=\operatorname{id}_{X_i},\qquad
+u_{jk}u_{ij}=u_{ik}\quad(i\leq j\leq k),
+\]
+便得到一个由有向集指标的\term[lvguo-xitong]{滤过系统}[filtered system]。这里的有向性指任意有限多个指标可放入一个共同后层，不要求任意一条无限链都有上界。
+\end{definition}
+任意集合的有限子集按包含构成有向集。域扩张的有限生成中间域也有向，因为两组有限生成元的并仍有限；若扩张代数，这些中间域都是有限扩张。\cref{b1:prop:finite-galois-layers}所用的有限 Galois 子扩张是带有额外正规、可分条件的同类例子。
+
+\begin{definition}\label{b1:def:filtered-colimit-set}
+对上述系统，在不交并 \(\coprod_{i\in I}X_i\) 上规定
+\[
+(i,x)\sim(j,y)
+\quad\Longleftrightarrow\quad
+\text{存在 }k\geq i,j\text{ 使 }u_{ik}(x)=u_{jk}(y).
+\]
+相应商集称为该系统的\term[zhengxiang-jixian]{正向极限}[direct limit]，也称\term[lvguo-yujixian]{滤过余极限}[filtered colimit]，记为 \(\varinjlim_iX_i\)。结构映射为 \(\iota_i(x)=[(i,x)]\)。
+\end{definition}
+\symidx{\(\varinjlim_iX_i\)：集合滤过系统的正向极限}
+
+\begin{proposition}\label{b1:prop:filtered-colimit-universal}
+上述关系是等价关系，且 \(\iota_j u_{ij}=\iota_i\)。若映射 \(f_i:X_i\rightarrow Y\) 满足 \(f_j u_{ij}=f_i\)，则存在唯一 \(f:\varinjlim_iX_i\rightarrow Y\)，使 \(f\iota_i=f_i\)。若全部 \(u_{ij}\) 单射，则每个 \(\iota_i\) 也单射；当各层原本就是同一集合中的子集且过渡映射为包含时，极限与 \(\bigcup_iX_i\) 自然双射。
+\end{proposition}
+\begin{proof}
+自反性由 \(u_{ii}=\operatorname{id}\) 得到，对称性由等号得到。若 \((i,x)\sim(j,y)\) 的等式在层 \(k\) 成立，\((j,y)\sim(\ell,z)\) 的等式在层 \(k'\) 成立，取 \(m\geq k,k'\)。将两式映到 \(m\) 层，复合条件给出 \(u_{im}(x)=u_{jm}(y)=u_{\ell m}(z)\)，从而得到传递性。结构映射相容也直接来自定义。
+
+规定 \(f([(i,x)])=f_i(x)\)。若两个代表元等价，在某个共同后层相等；映到 \(Y\) 后，由 \(f_k u_{ik}=f_i\) 得它们取值相同，所以良定义。所有元素都由某个 \(\iota_i(x)\) 表示，故此公式也给出唯一性。若 \(\iota_i(x)=\iota_i(y)\)，则某个 \(k\geq i\) 有 \(u_{ik}(x)=u_{ik}(y)\)；\(u_{ik}\) 单射给出 \(x=y\)。最后，在包含映射的情形，不同层元素等价恰好表示它们在母集合中相同，故 \([(i,x)]\mapsto x\) 给出与并的双射。
+\end{proof}
+递增域的并因而是这项集合构造的特殊情形。对相容的域嵌入，有限多个加、减、乘、除运算均可放入共同后层计算；后层映射保持运算使结果与所选层无关。若过渡映射不单射，某层两个不同元素可能在以后被识别，不能把正向极限直接画成互相包含的集合。
+
+\subsection{逆系统与相容族}
+\label{b1:subsec:A02:03}
+
+\begin{definition}\label{b1:def:inverse-limit-set}
+设 \(I\) 为有向集。一个集合的\term[nixi-tong]{逆系统}[inverse system]由集合 \(X_i\) 和映射 \(r_{ji}:X_j\rightarrow X_i\)（\(i\leq j\)）组成，满足 \(r_{ii}=\operatorname{id}\) 与 \(r_{ki}=r_{ji}r_{kj}\)。其逆极限为
+\[
+X\coloneqq\varprojlim_iX_i
+=\Bigl\{\,(x_i)_i\in\prod_iX_i\mid
+ r_{ji}(x_j)=x_i\text{ 对所有 }i\leq j\,\Bigr\}.
+\]
+记 \(\pi_i:X\rightarrow X_i\) 为坐标投影。这里的元素是全部坐标构成的相容族，不是某一个足够大的层中的元素。
+\end{definition}
+
+\begin{proposition}\label{b1:prop:inverse-limit-set-universal}
+若集合 \(Y\) 及映射 \(f_i:Y\rightarrow X_i\) 满足 \(r_{ji}f_j=f_i\)，则存在唯一 \(f:Y\rightarrow X\) 满足 \(\pi_i f=f_i\)。
+\end{proposition}
+\begin{proof}
+令 \(f(y)=(f_i(y))_i\)，相容性保证此族属于 \(X\)。任何满足要求的映射在每个坐标上的值都被指定，因而等于 \(f\)。
+\end{proof}
+若各 \(X_i\) 为群且各 \(r_{ji}\) 为同态，逐坐标运算使 \(X\) 为群；同态保持乘积与逆元，保证运算仍留在相容族内。这正是\cref{b1:def:inverse-limit}中的构造。环的情形也可逐坐标处理，但对象类型决定应保留哪些运算。
+
+\ProseParagraphBreak
+各层非空本身不保证逆极限非空。令 \(X_n=\{m\in\mathbb N\mid m\geq n\}\)，过渡映射为包含，则相容族只能是同一个自然数出现在所有坐标上；没有自然数属于全部 \(X_n\)，所以极限为空。对有限非空集合，有向性和紧性将排除这种现象；其精确陈述及投影满射的附加条件见\cref{b1:prop:finite-inverse-limit}。

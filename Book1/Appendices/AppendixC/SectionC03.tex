@@ -1,9 +1,77 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 C 第 3 项归纳；原要点保留于 AppendixC.tex。
+% 纲要标题：### C.3 群展示、字问题与可判定性
+% 纲要位置：计划纲要.md，第 869 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### C.3.1 等式的有限证书
+%
+% #### C.3.2 标准形怎样给出判定算法
+%
+% #### C.3.3 不可判定性的含义
+% END APPENDIX OUTLINE SYNC
 
 \section{群展示、字问题与可判定性}
 \label{b1:sec:C03}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+群展示给出对象的定义，但读出一个字是否为单位，是另一个问题。一个定义可以很短，而由它判断等式的任务仍然困难。\subsecref{b1:subsec:0804:03}已经给出自由群和二面体群的算法；这里解释这些算法为何有效，以及有限展示本身为什么不保证类似算法存在。
 
-待撰写。
+\subsection{等式的有限证书}
+\label{b1:subsec:C03:01}
+
+固定有限展示 \(G=\langle S\mid R\rangle\)。输入是字母表 \(S\sqcup S^{-1}\) 上的有限字 \(w\)，要判断它在 \(G\) 中是否等于单位。判断两个字 \(u,v\) 是否相等，等价于对 \(uv^{-1}\) 作这项判断。\cref{b1:def:group-presentation}说明，\(w=1\) 当且仅当 \(w\) 在自由群 \(F(S)\) 中属于 \(R\) 的正规闭包。
+
+\begin{proposition}\label{b1:prop:C-word-certificate}
+对于有限展示 \(\langle S\mid R\rangle\)，一个字 \(w\) 表示单位，当且仅当存在有限个字 \(u_i\)、关系字 \(r_i\in R\) 及符号 \(\varepsilon_i\in\{1,-1\}\)，使
+\begin{equation}\label{b1:eq:C-word-certificate}
+w=\prod_{i=1}^m u_i r_i^{\varepsilon_i}u_i^{-1}
+\quad\text{在自由群 }F(S)\text{ 中成立}.
+\end{equation}
+给出这些数据后，可以用有限次自由消去检验等式。
+\end{proposition}
+\begin{proof}
+所有右端乘积（包括空乘积）构成包含 \(R\) 的正规子群：乘法串接因子，取逆颠倒因子顺序并改变符号，用字 \(v\) 共轭只需将各 \(u_i\) 换成 \(vu_i\)。而任意包含 \(R\) 的正规子群都包含这些乘积。因此这个集合恰为正规闭包，给出等价性。检验时把 \(w^{-1}\) 接到右端之前，用\cref{b1:lem:unique-reduced-word}的自由消去算法约化；结果为空字当且仅当自由群中的等式成立。
+\end{proof}
+
+这还给出一个只保证找到肯定答案的过程。对 \(N=0,1,2,\ldots\)，枚举 \(m\leq N\)、各 \(u_i\) 长度不超过 \(N\) 的全部证书候选，并逐一检验。每轮候选数有限，任何真实证书又会在足够大的一轮出现。所以若 \(w=1\)，过程终会停机并给出证书；若 \(w\ne1\)，它便一直搜索。这种\term[ban-panding]{半判定}[semidecision]与对每个输入都停机的判定算法不同。把搜索时限用尽，只能说明尚未找到证书，不能证明 \(w\ne1\)。
+
+\subsection{标准形怎样给出判定算法}
+\label{b1:subsec:C03:02}
+
+若一种标准形不仅存在唯一，而且能在有限步骤内由输入字算出，那么比较标准形就能解决字问题。自由群的逐字消去正具有这些条件；已给乘法表的有限群则可逐字相乘，以单位元作为判据。
+
+\begin{proposition}\label{b1:prop:C-free-product-word-problem}
+设有限生成群 \(A,B\) 对各自给定的有限生成集都有可解的字问题。则由两生成集的不相交并生成的 \(A*B\) 也有可解的字问题。
+\end{proposition}
+\begin{proof}
+把输入字分成来自同一因子的最大连续字块。用相应因子的算法判断每个字块是否等于单位；若是，删去它，再把因此相邻的同因子字块串接。每次删除或合并都减少字块数，所以过程终止。停止时，每个剩余字块都表示因子中的非单位元素，且相邻字块来自不同因子。\cref{b1:lem:free-product-normal-form}说明非空的这种交替积不等于单位；空字块列则表示单位。故上述过程对所有输入停机并给出正确答案。
+\end{proof}
+
+对于 \(A*_C B\)，\cref{b1:thm:amalgam-normal-form}还使用了陪集代表。如果代表仅由选择公理取得，而没有求分解 \(a=ct\) 的算法，标准形的存在性就不能直接当作字问题的解法。要执行该证明中的化简，至少须能有效完成所用的因子运算、陪集分解及两份 \(C\) 之间的转换，并判断最终 \(C\) 元素是否为单位。
+
+\ProseParagraphBreak
+\(G=\langle a,b\mid a^2=b^3\rangle\) 则没有这项困难。记 \(z=a^2=b^3\)，整数除法给出
+\[
+a^r=z^q a^\epsilon\quad(r=2q+\epsilon,\ 0\leq\epsilon<2),\qquad
+b^s=z^p b^\delta\quad(s=3p+\delta,\ 0\leq\delta<3).
+\]
+\(z\) 与两生成元交换，因此把 \(z\) 的幂移到左端，合并相邻的同因子字块并重复上述除法，即得到 \(z^m t_1\cdots t_n\)。每次合并都缩短剩余字块列；整数运算本身终止。标准形定理说明最终结果等于单位，当且仅当 \(m=0,n=0\)。例如
+\[
+b^4a^{-3}b^{-1}
+=(zb)(z^{-2}a)b^{-1}
+=z^{-2}bab^2,
+\]
+最后一式用了 \(b^{-1}=z^{-1}b^2\)。它是非空标准形，故不等于单位。这里既有存在唯一性，也有求出标准形的具体步骤。
+
+\subsection{不可判定性的含义}
+\label{b1:subsec:C03:03}
+
+称给定有限生成集下的字问题\term[kepanding]{可判定}[decidable]，是指存在一个算法，对每个有限输入字都在有限步后停止，并正确回答它是否表示单位。这个要求同时包括肯定与否定两类输入；它也没有规定算法必须很快。
+
+以下\term[Novikov-Boone-dingli]{Novikov--Boone 定理}[Novikov--Boone theorem]说明，这种终止保证不可能对所有有限展示的群成立。
+
+\begin{theorem}[Novikov--Boone，外部引用]\label{b1:thm:C-novikov-boone}
+存在一个有限展示的群，其字问题不可判定。
+\end{theorem}
+这一结果在本附录不作证明，证明需要把不可判定的计算过程编码进群关系。可参阅 Rotman 的原文陈述\cite[Chapter 12, Theorem 12.8, p. 431]{Rotman1995TheoryGroups}；该章随后完成所用 Boone 引理的证明。定理中的群和有限展示是固定的，变化的只有输入字；结论因此不只是说“找不到同时处理所有群展示的统一程序”。
+
+\ProseParagraphBreak
+有限展示仍保证表示单位的字具有\eqref{b1:eq:C-word-certificate}这样的有限证书。不可判定性否定的是一个对所有输入都能结束的判断过程；它不否定特定字可以被证明非平凡，也不否定自由群、有限群及前述具体合并积的可解算法。继续学习时，可以分别研究哪些群具有有效的标准形、哪些几何条件给出消去算法，以及如何证明一个判断问题本身不可判定。

@@ -1,9 +1,82 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 B 第 3 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.3 Reed–Solomon 码的代数构造
+% 纲要位置：计划纲要.md，第 832 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### B.3.1 求值构造与参数
+%
+% #### B.3.2 插值与单错误纠正
+% END APPENDIX OUTLINE SYNC
 
 \section{Reed–Solomon 码的代数构造}
 \label{b1:sec:B03}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+\subsecref{b1:subsec:1704:03}用一次多项式在五个点的取值说明了纠错的可能性。现在把次数界和取值点数作为参数：根数界决定距离，插值负责恢复信息，而错误位置未知时，可以把位置也编码成一个待求多项式。本节只证明一个错误的纠正算法，避免让附录承担完整的解码理论。
 
-待撰写。
+\subsection{求值构造与参数}
+\label{b1:subsec:B03:01}
+
+\begin{definition}\label{b1:def:B-reed-solomon}
+取 \(\mathbb F_q\) 中互异元素 \(a_1,\ldots,a_n\)，其中 \(1\leq k\leq n\leq q\)。所有次数小于 \(k\) 的多项式（包含零多项式）在这些点的取值构成的线性码
+\[
+C=\Bigl\{\,\bigl(f(a_1),\ldots,f(a_n)\bigr)\mid
+f\in\mathbb F_q[x],\ \deg f<k\,\Bigr\}
+\]
+称为此处采用的\term[Reed-Solomon-ma]{Reed–Solomon 码}[Reed–Solomon code]。条件 \(\deg0<k\) 在该式中按惯例成立。
+\end{definition}
+
+这一名称在文献中有关于取值点的不同约定；本附录允许任意互异有限域元素，不另加非零坐标乘子，也不加入无穷远点。使用其他版本的参数结论时，应先对照定义。
+
+\begin{theorem}\label{b1:thm:B-rs-parameters}
+\cref{b1:def:B-reed-solomon}中的码是 \([n,k,n-k+1]\) 码。它达到任意非零 \([n,k,d]\) 线性码都满足的 \(d\leq n-k+1\)。
+\end{theorem}
+\begin{proof}
+求值映射保持加法与标量乘法。若次数小于 \(k\) 的多项式在全部 \(n\) 个点为零，则\cref{b1:prop:factor-root}的根数界和 \(n\geq k\) 迫使它是零多项式，所以求值映射单射，像的维数为 \(k\)。非零 \(f\) 至多在 \(k-1\) 个取值点为零，因此\eqref{b1:eq:B-linear-distance}给出 \(d(C)\geq n-k+1\)。反过来，取
+\[
+f(x)=\prod_{i=1}^{k-1}(x-a_i).
+\]
+当 \(k=1\) 时乘积取一。这个多项式恰在前 \(k-1\) 个取值点为零，其码字重量为 \(n-k+1\)，从而取得等号。
+
+最后对任意最小距离为 \(d\) 的线性码，删去固定的 \(d-1\) 个坐标。所得映射在 \(C\) 上单射，否则两个不同码字只在被删去的位置不同，距离至多为 \(d-1\)。所以 \(q^k=|C|\leq q^{n-d+1}\)，即 \(d\leq n-k+1\)。
+\end{proof}
+
+最后的不等式称为\term[Singleton-jie]{Singleton 界}[Singleton bound]；达到等号的线性码称为\term[zuidajuli-kefen-ma]{最大距离可分码}[maximum distance separable code]，简称 MDS 码。这里的“最大”是在固定长度和维数的比较中而言，并不意味着其他编码需求也同时最优。
+
+\ProseParagraphBreak
+以系数行向量 \((u_0,\ldots,u_{k-1})\) 表示 \(f=\sum_j u_jx^j\)，一个生成矩阵为
+\[
+G=\begin{pmatrix}
+1&1&\cdots&1\\
+a_1&a_2&\cdots&a_n\\
+\vdots&\vdots&&\vdots\\
+a_1^{k-1}&a_2^{k-1}&\cdots&a_n^{k-1}
+\end{pmatrix}.
+\]
+从任何 \(k\) 个未损坏的坐标，都能由\cref{b1:thm:lagrange-interpolation}唯一恢复 \(f\)：取值点互异，插值次数至多为 \(k-1\)，恰与信息多项式的次数界一致。若损坏位置已经标明，则称这些缺失坐标为\term[cachu]{擦除}[erasure]；最多 \(n-k\) 次擦除可以恢复。未知位置的错误更困难，因为不能直接指定哪些数据可供插值。
+
+\subsection{插值与单错误纠正}
+\label{b1:subsec:B03:02}
+
+设 \(n\geq k+2\)，收到 \(y=(y_1,\ldots,y_n)\)，且已知至多一个坐标有误。若错误发生在点 \(a_j\)，多项式 \(E=x-a_j\) 在该点为零，在其余点则有 \(y_i=f(a_i)\)。因此 \(Q=Ef\) 满足
+\begin{equation}\label{b1:eq:B-single-error-system}
+Q(a_i)=y_iE(a_i)\quad(1\leq i\leq n),\qquad
+E=x+e_0,\quad \deg Q\leq k.
+\end{equation}
+\(E\) 在错误位置为零，称为这个单错误算法中的\term[cuowei-duoxiangshi]{错误定位多项式}[error locator polynomial]。把 \(Q=q_0+q_1x+\cdots+q_kx^k\) 代入后，\eqref{b1:eq:B-single-error-system}是关于 \(q_0,\ldots,q_k,e_0\) 的线性方程组；已知量 \(y_i\) 只是系数，并未产生未知量之间的乘积。
+
+\begin{proposition}\label{b1:prop:B-single-error-decoding}
+在上述条件下，\eqref{b1:eq:B-single-error-system}有解，而且每个解都满足 \(Q=Ef\)，其中 \(f\) 为原信息多项式。因此先解线性方程组，再作多项式除法 \(f=Q/E\)，即可纠正至多一个错误。
+\end{proposition}
+\begin{proof}
+恰有一次错误时，取其位置对应的 \(E=x-a_j\) 和 \(Q=Ef\)，就在错误处得到两边为零，在所有正确位置得到同一乘积，故存在解。没有错误时，可任取首一一次多项式 \(E\)，仍以 \(Q=Ef\) 得到解。
+
+对方程组的任意解 \((E,Q)\)，至少 \(n-1\) 个正确位置满足 \((Q-Ef)(a_i)=0\)。但 \(\deg(Q-Ef)\leq k\)，而 \(n-1\geq k+1\)。由\cref{b1:prop:factor-root}，它只能是零多项式。因此 \(Q=Ef\)，且 \(E\) 首一一次，非零，整环中的除法商唯一。这证明了从任意解都恢复同一个 \(f\)。
+\end{proof}
+
+这一步是多项式整除，不是在各个取值点除以 \(E(a_i)\)；后者恰会在错误位置遇到零分母。如果不能事先保证错误数，算法还须检查 \(E\mid Q\)、所得商的次数小于 \(k\)，以及重新编码后与 \(y\) 相差至多一个坐标。只求出一个线性方程组的解，不足以证明传输符合预设条件。
+
+\ProseParagraphBreak
+例如在 \(\mathbb F_7\) 上取 \(a_i=0,1,2,3,4\)、\(k=3\)。信息多项式 \(f=1+2x+3x^2\) 编成 \((1,6,3,6,1)\)。若收到 \(y=(1,6,4,6,1)\)，解方程组可得
+\[
+E=x+5,\qquad Q=3x^3+3x^2+4x+5.
+\]
+直接相乘有 \(Q=(x+5)(1+2x+3x^2)\)，所以恢复了 \(f\)。\(E\) 的根为 \(2\)，正是第三个取值点；具体代入检查放在下一节。这一例子中的 \([5,3,3]\) 参数也由\cref{b1:thm:B-rs-parameters}得到，最小距离三保证一次错误的唯一纠正。

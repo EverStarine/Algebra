@@ -74,6 +74,7 @@ try {
     } finally { Pop-Location }
 
     $builtIndexes = @()
+    $indexInputHashes = @{}
     foreach ($indexName in @('chinese', 'foreign', 'symbols')) {
         $idx = Join-Path $buildDir "$indexName.idx"
         if (-not (Test-Path -LiteralPath $idx) -or (Get-Item -LiteralPath $idx).Length -eq 0) {
@@ -86,6 +87,7 @@ try {
             Write-Host "[$bookName] $indexName index is empty."
             continue
         }
+        $indexInputHashes[$indexName] = (Get-FileHash -LiteralPath $idx).Hash
         Push-Location -LiteralPath $buildDir
         try {
             Invoke-BuildStep 'makeindex' @('-q', '-s', $indexStyle, "$indexName.idx") "index-$indexName"
@@ -106,6 +108,43 @@ try {
             Invoke-BuildStep 'xelatex' $texArguments "xelatex-$pass"
         }
     } finally { Pop-Location }
+
+    # A clean first pass has no resolved references or contents yet. Its index
+    # page numbers can therefore differ from the later typesetting passes.
+    # Rebuild only changed index inputs, then settle references before publishing.
+    $indexesStable = $false
+    foreach ($indexRound in 1..4) {
+        $changedIndexes = @($builtIndexes | Where-Object {
+            (Get-FileHash -LiteralPath (Join-Path $buildDir "$_.idx")).Hash -ne $indexInputHashes[$_]
+        })
+        if ($changedIndexes.Count -eq 0) {
+            $indexesStable = $true
+            break
+        }
+        if ($indexRound -eq 4) { break }
+        foreach ($indexName in $changedIndexes) {
+            $idx = Join-Path $buildDir "$indexName.idx"
+            $indexInputHashes[$indexName] = (Get-FileHash -LiteralPath $idx).Hash
+            Push-Location -LiteralPath $buildDir
+            try {
+                Invoke-BuildStep 'makeindex' @('-q', '-s', $indexStyle, "$indexName.idx") "index-$indexName-sync-$indexRound"
+            } finally { Pop-Location }
+            $indexOutput = Join-Path $buildDir "$indexName.ind"
+            $indexLog = Get-Content -Raw -LiteralPath (Join-Path $buildDir "$indexName.ilg")
+            if (-not (Test-Path -LiteralPath $indexOutput) -or
+                (Get-Item -LiteralPath $indexOutput).Length -eq 0 -or
+                $indexLog -notmatch '\b0 rejected\b' -or $indexLog -notmatch '\b0 warnings\b') {
+                throw "$indexName index failed validation; see $buildDir."
+            }
+        }
+        Push-Location -LiteralPath $bookDir
+        try {
+            foreach ($pass in 1..2) {
+                Invoke-BuildStep 'xelatex' $texArguments "xelatex-index-sync-$indexRound-$pass"
+            }
+        } finally { Pop-Location }
+    }
+    if (-not $indexesStable) { throw "Index page numbers did not stabilize; see $buildDir." }
 
     $buildLog = Get-Content -Raw -LiteralPath $logFile
     $fatalPatterns = @('(?m)^! ', 'There were undefined references',

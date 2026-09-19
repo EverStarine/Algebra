@@ -1,9 +1,83 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 B 第 1 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.1 有限域算术与多项式分解
+% 纲要位置：计划纲要.md，第 818 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### B.1.1 商域中的精确算术
+%
+% #### B.1.2 无重因子分解与导数
+%
+% #### B.1.3 Berlekamp 分解
+% END APPENDIX OUTLINE SYNC
 
 \section{有限域算术与多项式分解}
 \label{b1:sec:B01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+有限域的存在唯一性并未替我们选择计算中的元素名称。同一个九元域可以有不同的商域表示；只有固定基域、模多项式和坐标次序，纸面推导与程序输出才有共同的含义。本节从这些约定出发，再说明怎样把多项式分解转成线性方程与最大公因式计算。
 
-待撰写。
+\subsection{商域中的精确算术}
+\label{b1:subsec:B01:01}
+
+取首一不可约多项式 \(h\in\mathbb F_q[t]\)，令 \(m=\deg h\)、\(F=\mathbb F_q[t]/(h)\)，并记 \(\alpha=t+(h)\)。由\cref{b1:prop:field-poly-division}，每个元素唯一写成 \(a_0+a_1\alpha+\cdots+a_{m-1}\alpha^{m-1}\)。加法逐系数进行，乘法在 \(\mathbb F_q[t]\) 中相乘后除以 \(h\) 取余。这些都是有限次的精确域运算，不涉及实数近似。
+
+\ProseParagraphBreak
+若 \(a(t)\) 是非零的次数小于 \(m\) 的代表，则不可约性给出 \(\gcd(a,h)=1\)。\cref{b1:prop:euclidean-algorithm}的回代步骤产生 \(u,v\in\mathbb F_q[t]\)，使
+\begin{equation}\label{b1:eq:B-inverse-certificate}
+u(t)a(t)+v(t)h(t)=1.
+\end{equation}
+模 \(h\) 后，\(u(\alpha)\) 就是 \(a(\alpha)\) 的逆元。这个等式也给出了可独立检查的证书：无须重复求逆过程，只须展开左边并核对它等于一。
+
+\ProseParagraphBreak
+例如在 \(\mathbb F_3\) 上，\(h=t^2+1\) 在 \(0,1,2\) 处的值分别为 \(1,2,2\)，所以不可约。令 \(\alpha^2=-1=2\)，则
+\[
+(1+\alpha)^2=2\alpha,\qquad
+(1+\alpha)(2+\alpha)=1.
+\]
+第二式来自 \((1+t)(2+t)-(t^2+1)=1\)，等式在 \(\mathbb F_3[t]\) 中成立。此外
+\[
+(a+b\alpha)^3=a-b\alpha\qquad(a,b\in\mathbb F_3),
+\]
+因为特征为三时中间二项式系数消失，而 \(\alpha^3=-\alpha\)。这给出九元域上 Frobenius 的具体计算规则。
+
+\subsection{无重因子分解与导数}
+\label{b1:subsec:B01:02}
+
+非零多项式称为\term[wuchongyinzi-duoxiangshi]{无重因子多项式}[square-free polynomial]，若其每个不可约因子只出现一次。在有限域上，不可约多项式都是可分的，因此\cref{b1:prop:multiple-root}说明：对非常数 \(f\)，无重因子条件等价于 \(\gcd(f,f')=1\)。这里有限域的可分性也可以直接从\cref{b1:prop:finite-field-factorization}看出：每个 \(d\) 次不可约多项式整除导数为 \(-1\) 的 \(x^{q^d}-x\)。
+
+\ProseParagraphBreak
+处理任意非零 \(f\in\mathbb F_q[x]\) 时，先提取首项系数，使其余部分首一。以下递归把它拆成无重因子多项式，并保留重复次数。
+\begin{enumerate}
+\item 若 \(f=1\)，停止。若 \(f'\ne0\)，计算首一 \(d=\gcd(f,f')\)。当 \(d=1\) 时，\(f\) 已无重因子；当 \(d\ne1\) 时，分别处理 \(d\) 和 \(f/d\)。这两者次数都严格小于 \(\deg f\)，因为 \(\deg d\leq\deg f'<\deg f\)。
+\item 若 \(f'=0\)，设特征为 \(p\)。\(f\) 的所有指数都被 \(p\) 整除，而有限域上的 Frobenius 是自同构，所以每个系数都有唯一 \(p\) 次根。因此可写成 \(f=g^p\)。处理次数为 \((\deg f)/p\) 的 \(g\)，并把所得因子的重数乘以 \(p\)。
+\end{enumerate}
+每次递归都降低正次数，因此过程终止；每一步保存精确乘积等式，所以最终不会漏掉因子或重数。这是一种便于说明正确性的预处理，并未声称采用了最省运算量的实现。
+
+\ProseParagraphBreak
+例如在 \(\mathbb F_2[x]\) 中，\(f=x^4+x^2+1\) 的导数为零。逐项开平方得到 \(g=x^2+x+1\)，后者在零、一处均不为零，是不可约二次多项式。因此 \(f=(x^2+x+1)^2\)。如果直接把导数为零误判成没有重因子，就会在这个例子中丢失全部重数信息。
+
+\subsection{Berlekamp 分解}
+\label{b1:subsec:B01:03}
+
+现设 \(f\in\mathbb F_q[x]\) 首一、无重因子，次数为 \(n\geq1\)。在 \(A=\mathbb F_q[x]/(f)\) 上，映射 \(b\mapsto b^q\) 是 \(\mathbb F_q\) 线性的：加法相容来自特征 \(p\) 下的幂公式，标量相容来自 \(c^q=c\)。以下考察其不动子空间
+\[
+B=\{\,b\in A\mid b^q=b\,\}.
+\]
+它也对乘法封闭。这一不动代数是\term[Berlekamp-fenjie]{Berlekamp 分解}[Berlekamp factorization]的基础。
+
+\begin{proposition}\label{b1:prop:B-berlekamp}
+若 \(f=f_1\cdots f_r\) 为互异首一不可约多项式的乘积，则 \(\dim_{\mathbb F_q}B=r\)。若 \(b_1,\ldots,b_r\) 是 \(B\) 的任一组基，依次用全部 \(b_j-a\)（\(a\in\mathbb F_q\)）与当前因子求最大公因式，即可把 \(f\) 分成所有不可约因子。这里 \(b_j\) 用次数小于 \(n\) 的代表参加计算，常数因子一予以略去。
+\end{proposition}
+\begin{proof}
+各 \(f_i\) 两两互素，故对应主理想两两互素；\cref{b1:thm:crt}给出
+\[
+A\cong\prod_{i=1}^r\mathbb F_q[x]/(f_i).
+\]
+每个右侧分量都是包含 \(\mathbb F_q\) 的有限域。在其中，方程 \(z^q=z\) 恰有 \(\mathbb F_q\) 的 \(q\) 个元素作为解：这些元素都满足方程，而\cref{b1:prop:factor-root}给出的根数界不容许更多解。因此上述同构把 \(B\) 识别为 \(\mathbb F_q^r\)，维数为 \(r\)。
+
+若 \(b\in B\) 对应 \((a_1,\ldots,a_r)\)，则 \(f_i\mid b-a\) 当且仅当 \(a_i=a\)。无重因子条件于是给出
+\[
+\gcd(f,b-a)=\prod_{a_i=a}f_i.
+\]
+故一次遍历 \(a\in\mathbb F_q\) 把因子按 \(b\) 的坐标值分组。对两个不同指标 \(i,\ell\)，不可能每个基向量 \(b_j\) 都在这两个坐标取相同值，否则其所有线性组合也如此，与 \(B\cong\mathbb F_q^r\) 含有分别取零、一的向量矛盾。因此某个基向量将 \(f_i,f_\ell\) 分开。遍历全部基向量后，每组只含一个不可约因子，算法正确。
+\end{proof}
+
+计算 \(B\) 无须事先知道 \(f_i\)。以 \(1,\bar x,\ldots,\bar x^{n-1}\) 为基，将 \(x^{qj}\) 模 \(f\) 的余式作为矩阵 \(Q\) 的第 \(j+1\) 列。若 \(b\) 的系数列为 \(v\)，则 \(b^q=b\) 等价于 \((Q-I_n)v=0\)。求该线性方程组的一组解空间基，再实行命题中的最大公因式分割即可。\(q\) 很大时遍历所有域元素可能代价较高；这里提供的是无需试除所有候选多项式的确定步骤，不讨论复杂度上的最佳界。\secref{b1:sec:B04}将给出一套完整的矩阵和分解证书。

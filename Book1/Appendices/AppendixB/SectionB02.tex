@@ -1,9 +1,82 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 B 第 2 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.2 线性码、循环码与生成多项式
+% 纲要位置：计划纲要.md，第 826 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### B.2.1 线性码与最小距离
+%
+% #### B.2.2 循环码的理想表示
+% END APPENDIX OUTLINE SYNC
 
 \section{线性码、循环码与生成多项式}
 \label{b1:sec:B02}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+传输中的一个符号错误，只会改变有限域向量的一个坐标。因而纠错首先是一个距离问题：不同的合法向量应当相隔足够远。线性结构使我们只需研究非零向量的重量；再加入循环移位的对称性，编码对象就能用多项式理想描述。
 
-待撰写。
+\subsection{线性码与最小距离}
+\label{b1:subsec:B02:01}
+
+\begin{definition}\label{b1:def:B-linear-code}
+固定有限域 \(\mathbb F_q\) 和正整数 \(n\)。非空子集 \(C\subseteq\mathbb F_q^n\) 称为长度为 \(n\) 的\term[ma]{码}[code]，其元素称为\term[mazi]{码字}[codeword]。若 \(C\) 是维数为 \(k\) 的 \(\mathbb F_q\) 线性子空间，称其为 \([n,k]\) \term[xianxing-ma]{线性码}[linear code]。对 \(u,v\in\mathbb F_q^n\)，定义\term[Hamming-juli]{Hamming 距离}[Hamming distance]及\term[Hamming-zhongliang]{Hamming 重量}[Hamming weight]为
+\[
+d_H(u,v)=\#\{\,i\mid u_i\ne v_i\,\},\qquad
+\operatorname{wt}(u)=d_H(u,0).
+\]
+若 \(C\) 至少有两个码字，其\term[zuixiao-juli]{最小距离}[minimum distance]是不同码字间 Hamming 距离的最小值，记为 \(d(C)\)。最小距离为 \(d\) 的 \([n,k]\) 线性码也记为 \([n,k,d]\) 码。
+\end{definition}
+\symidx{\(d_H(u,v)\)：Hamming 距离}
+\symidx{\(\operatorname{wt}(u)\)：Hamming 重量}
+\symidx{\(d(C)\)：码的最小距离}
+
+Hamming 距离满足三角不等式：若 \(u_i\ne w_i\)，则 \(u_i\ne v_i\) 或 \(v_i\ne w_i\)，对这些坐标计数即得 \(d_H(u,w)\leq d_H(u,v)+d_H(v,w)\)。对非零线性码，有
+\begin{equation}\label{b1:eq:B-linear-distance}
+d(C)=\min_{0\ne c\in C}\operatorname{wt}(c),
+\end{equation}
+因为两个码字之差仍在 \(C\) 中，且 \(d_H(u,v)=\operatorname{wt}(u-v)\)；反向取 \(v=0\) 即可。
+
+\begin{proposition}\label{b1:prop:B-distance-correction}
+设码 \(C\) 的最小距离为 \(d\)。把收到的向量是否属于 \(C\) 作为检验，可以检测任意至多 \(d-1\) 个符号错误。若非负整数 \(t\) 满足 \(2t<d\)，则一个向量至多与一个码字相距不超过 \(t\)，所以任意至多 \(t\) 个错误可以唯一纠正。
+\end{proposition}
+\begin{proof}
+若非零错误把 \(c\in C\) 变成另一个码字 \(c'\)，则错误数为 \(d_H(c,c')\geq d\)，所以少于 \(d\) 个错误不会逃过检验。若 \(c,c'\) 都与收到的 \(y\) 相距不超过 \(t\)，三角不等式给出 \(d_H(c,c')\leq2t<d\)，故只能有 \(c=c'\)。当实际错误不超过 \(t\) 时，原码字满足这一距离条件，故存在且唯一。
+\end{proof}
+
+例如三元组重复码 \(C=\{\,(a,a,a)\mid a\in\mathbb F_q\,\}\) 是 \([3,1,3]\) 码。一次错误后，至少两个坐标仍相同，取重复出现的值即可恢复 \(a\)。唯一纠正是关于允许错误数的保证；若错误超过界限，收到的向量可能靠近另一个码字。
+
+\ProseParagraphBreak
+取线性码 \(C\) 的一组基作为 \(k\times n\) 矩阵 \(G\) 的行，称 \(G\) 为\term[shengcheng-juzhen]{生成矩阵}[generator matrix]。采用行向量约定，信息 \(u\in\mathbb F_q^k\) 编成 \(uG\)。行向量线性无关保证编码单射，故有 \(q^k\) 个码字。若一个 \((n-k)\times n\) 矩阵 \(H\) 满足 \(C=\ker H\)，这里把码字转置为列向量代入，则称 \(H\) 为\term[jiaoyan-juzhen]{校验矩阵}[parity-check matrix]。它可通过消元构造；具体核验时要同时检查 \(GH^{\mathsf T}=0\) 与 \(\operatorname{rank}H=n-k\)，仅有第一个等式只能保证包含关系。
+
+\subsection{循环码的理想表示}
+\label{b1:subsec:B02:02}
+
+\begin{definition}\label{b1:def:B-cyclic-code}
+线性码 \(C\subseteq\mathbb F_q^n\) 称为\term[xunhuan-ma]{循环码}[cyclic code]，若对每个 \((c_0,\ldots,c_{n-1})\in C\)，都有 \((c_{n-1},c_0,\ldots,c_{n-2})\in C\)。
+\end{definition}
+
+通过线性双射
+\[
+(c_0,\ldots,c_{n-1})\longmapsto c_0+c_1x+\cdots+c_{n-1}x^{n-1}+(x^n-1),
+\]
+把向量与 \(R=\mathbb F_q[x]/(x^n-1)\) 的元素对应。循环右移恰是乘 \(\bar x\)：最高次项用 \(x^n=1\) 化为常数项。一个线性子空间对乘 \(\bar x\) 封闭，当且仅当对其所有幂及线性组合的乘法封闭，因而循环码恰好对应 \(R\) 的理想。
+
+\begin{theorem}\label{b1:thm:B-cyclic-generator}
+每个长度为 \(n\) 的循环码，唯一对应一个整除 \(x^n-1\) 的首一多项式 \(g\)，在上述识别下等于 \((\bar g)\)。若 \(r=\deg g\)，则码的维数为 \(n-r\)，且当 \(r<n\) 时
+\[
+\bar g,\overline{xg},\ldots,\overline{x^{n-r-1}g}
+\]
+是一组基。\(g=x^n-1\) 对应零码，\(g=1\) 对应全部 \(\mathbb F_q^n\)。
+\end{theorem}
+\begin{proof}
+令 \(\pi\colon\mathbb F_q[x]\rightarrow R\) 为商映射。循环码对应的理想 \(C\) 的原像 \(\pi^{-1}(C)\) 是包含 \((x^n-1)\) 的非零理想。\cref{b1:prop:field-poly-division}与\cref{b1:thm:euclidean-pid}说明 \(\mathbb F_q[x]\) 为主理想整环，所以此原像唯一写成 \((g)\)，其中 \(g\) 首一；包含 \(x^n-1\) 就是 \(g\mid x^n-1\)。取像得到 \(C=(\bar g)\)，也证明了唯一性。
+
+写 \(x^n-1=gh\)，其中 \(\deg h=n-r\)。将任意乘数 \(a\) 除以 \(h\)，有 \(a=sh+b\)、\(\deg b<n-r\)，于是 \(\overline{ag}=\overline{bg}\)，所以所列向量生成 \(C\)。若 \(bg\equiv0\pmod{x^n-1}\) 且 \(\deg b<n-r\)，则非零的 \(bg\) 次数小于 \(n\)，不可能被 \(n\) 次多项式整除；因此 \(b=0\)，所列向量线性无关。\(r=n\) 时理想像为零，维数公式仍成立。
+\end{proof}
+
+这里的 \(g\) 称为该码的\term[shengcheng-duoxiangshi]{生成多项式}[generator polynomial]。当 \(\gcd(n,q)\ne1\) 时，\(x^n-1\) 可以有重因子，但定理的证明仍然成立；只有把商环进一步分成有限域直积时，才需要额外的无重因子条件。
+
+\ProseParagraphBreak
+例如在 \(\mathbb F_2\) 上，\(x+1\mid x^3-1\)。生成多项式 \(g=x+1\) 给出
+\[
+G=\begin{pmatrix}1&1&0\\0&1&1\end{pmatrix},\qquad
+C=\{\,(0,0,0),(1,1,0),(0,1,1),(1,0,1)\,\}.
+\]
+这是坐标和为零的 \([3,2,2]\) 码，校验矩阵为 \(H=(1\ 1\ 1)\)。它可检测一次错误，但不能保证纠正：收到 \((1,0,0)\) 时，它与三个不同码字的距离都为一。

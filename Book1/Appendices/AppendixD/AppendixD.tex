@@ -1,11 +1,21 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 附录 D　域论与方程专题简介
-% 纲要位置：计划纲要.md，第 792 行。
+% 纲要位置：计划纲要.md，第 883 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% * 实闭域入口移至本卷附录 E；实代数与半代数几何进一步转第三卷附录 G
+% * 赋值扩张与局部域入口
+% * 逆 Galois 问题的概念和典型构造
+% * 微分 Galois 理论与经典 Galois 理论的比较；对象介绍见第三卷附录 E、线性理论见第五卷附录 E，详细理论留给专题教材
+% END APPENDIX OUTLINE SYNC
 
 \chapter{域论与方程专题简介}
 \label{b1:app:D}
 
-% TODO: 按纲要撰写本附录，并明确先修与证明边界。
+\begin{chapterabstract}
+域论还可以加入距离、指定自同构群，或者要求自同构保持微分。三个方向分别引出局部域、逆 Galois 问题和微分 Galois 理论。本附录用赋值与 Hensel 提升、有限群的实现和一个一阶微分方程说明它们如何从本卷已有内容出发。
+\end{chapterabstract}
+
+本附录使用多项式除法、分裂域、有限 Galois 对应和分圆域。完备性在第一节按赋值定义；微分方程一节只用形式求导和矩阵乘法。一般赋值扩张定理、局部类域论及微分 Galois 基本定理均不在这里证明，也不作为本卷正文的隐含前提。有序域、实闭域及实根计数集中放在\appref{b1:app:E}，进一步的实代数与半代数几何转第三卷附录 G。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -20,4 +30,51 @@
 \input{Appendices/AppendixD/SectionD01}
 \input{Appendices/AppendixD/SectionD02}
 \input{Appendices/AppendixD/SectionD03}
-\input{Appendices/AppendixD/SectionD04}
+
+\begin{chaptersummary}
+赋值把同余精度转成距离，完备性使逐级提升得到实际的根。逆 Galois 问题要求事先指定基域，因此在某个不动域上实现有限群，只完成了较容易的变式。微分 Galois 群还要求与导子交换，其矩阵作用发生在常数域上；这一额外结构不能从普通域自同构群中略去。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:D-valuation-cancellation}
+设 \(v\) 为离散赋值。证明当 \(v(x)\neq v(y)\) 时，\(v(x+y)=\min\{v(x),v(y)\}\)。说明同值时为何未必取等号。
+\end{exercise}
+\begin{solution}
+设 \(v(x)<v(y)\)。若 \(v(x+y)>v(x)\)，则由 \(x=(x+y)-y\)，赋值不等式给出 \(v(x)\geq\min\{v(x+y),v(y)\}>v(x)\)，矛盾。另一方向由定义成立。取 \(x=1\)、\(y=-1+p\) 及 \(v=v_p\)，两项的赋值均为零而和的赋值为一，说明同值项可以消去。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:D-hensel-seven}
+在 \(\mathbb Q_7\) 中将 \(X^2-2\) 的根 \(3\bmod7\) 提升到模 \(49\) 和模 \(343\)，并判定 \(X^2-3\) 在 \(\mathbb Q_7\) 中有无根。
+\end{exercise}
+\begin{solution}
+令第一步为 \(3+7c\)。模 \(49\) 的方程化为 \(1+6c=0\bmod7\)，故可取 \(c=1\)，得到 \(10\)。下一步取 \(10+49d\)，条件为 \(2+20d=0\bmod7\)，可取 \(d=2\)，得到 \(108\)；确有 \(108^2-2=34\cdot343\)。导数在初始根处为 \(6\)，是单位，\cref{b1:thm:hensel-simple}保证这些相容近似决定唯一的该剩余类内的根。若 \(x^2=3\)，则 \(2v_7(x)=0\)，所以 \(x\) 为 \(7\) 进整数单位，其模 \(7\) 的平方应为 \(3\)。但模 \(7\) 的平方只有 \(0,1,2,4\)，故无根。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:D-laurent-extension}
+对嵌入 \(k((t))\rightarrow k((u))\)、\(t\mapsto u^e\)，证明 \(1,u,\ldots,u^{e-1}\) 是扩张的一组基，说明赋值的归一化如何改变。若 \(\operatorname{char}k\nmid e\) 且 \(k\) 含全部 \(e\) 次单位根，求其 Galois 群。
+\end{exercise}
+\begin{solution}
+将 Laurent 级数的幂指数按模 \(e\) 的剩余类分组，唯一写成 \(\sum_{r=0}^{e-1}u^rf_r(u^e)\)，其中 \(f_r\in k((t))\)。唯一性来自不同剩余类的幂不能相消，所以这些元素既生成又线性无关。归一化赋值满足 \(v_u(t)=e\)，因而延拓 \(v_t\) 的是 \(w=v_u/e\)。在附加假设下，\(X^e-t\) 可分，全部根为 \(\zeta u\)，都在此扩张内；映射 \(u\mapsto\zeta u\) 给出全部 \(e\) 个自同构，群为循环群 \(\mu_e\)。若特征整除 \(e\)，导数可能为零，不能沿用这一结论。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:D-cyclic-quartic}
+在 \(\mathbb Q\) 上实现 \(C_4\)，并写出所得扩张的唯一二次中间域。
+\end{exercise}
+\begin{solution}
+取 \(L=\mathbb Q(\zeta_5)\)。\cref{b1:thm:cyclotomic-galois-group}把群识别为由 \(2\bmod5\) 生成的四阶循环群。它唯一的二阶子群由复共轭生成，故\cref{b1:thm:finite-galois-correspondence}说明唯一二次域为 \(\mathbb Q(\zeta_5+\zeta_5^{-1})\)。记 \(s=\zeta_5+\zeta_5^{-1}\)，由 \(1+\zeta_5+\cdots+\zeta_5^4=0\) 得 \(s^2+s-1=0\)，所以此域就是 \(\mathbb Q(\sqrt5)\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:D-variable-base}
+令有限群 \(G\) 左乘置换 \(k(x_g\mid g\in G)\) 的独立变量。说明为什么所得构造不能直接解决 \(\mathbb Q\) 上的逆 Galois 问题；当 \(G=C_2\) 时，求交换两个变量 \(x,y\) 的不动域。
+\end{exercise}
+\begin{solution}
+\cref{b1:prop:finite-group-realization}的基域是依赖 \(G\) 的不动域，既未指定为 \(\mathbb Q\)，也未证明为某个有理函数域。对交换 \(x,y\) 的作用，令 \(s=x+y\)、\(p=xy\)。两者不动，而 \(x\) 满足 \(T^2-sT+p=0\)，且 \(y=s-x\)，故整个域在 \(k(s,p)\) 上次数至多二。交换作用非恒等，\cref{b1:thm:artin-fixed-field}给出对不动域的次数恰为二。由塔式公式，\(k(x,y)^{C_2}=k(s,p)\)。这个具体不动域的计算仍然不是把基域专化为 \(\mathbb Q\) 的定理。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:D-differential-power}
+设 \(C\) 为特征零的代数闭域，\(K=C(t)\)，在 \(L=C(u)\) 中令 \(u^n=t\)、\(n\geq2\)。以 \(\partial u=u/(nt)\) 延拓 \(\partial t=1\)。求常数域及微分自同构群。
+\end{exercise}
+\begin{solution}
+在有理函数域 \(C(u)\) 上，导子为 \((nu^{n-1})^{-1}d/du\)，乘子非零，所以常数与通常形式求导相同。若互素多项式 \(P,Q\) 满足 \((P/Q)'=0\)，则 \(P'Q=PQ'\)。由互素性 \(P\mid P'\)，特征零及次数比较迫使 \(P\) 为常数或零；非零情形同样迫使 \(Q\) 为常数。因此常数域恰为 \(C\)。\(X^n-t\) 对 \(C[t]\) 的素元 \(t\) 满足\cref{b1:thm:eisenstein}，且全部根 \(\zeta u\) 在 \(L\) 中。全部 \(K\) 自同构为 \(u\mapsto\zeta u\)，\(\zeta\in\mu_n\)；直接代入导子公式说明它们都与 \(\partial\) 交换。所以微分群为 \(\mu_n\cong C_n\)，并且 \(L\) 是方程 \(y'=y/(nt)\) 的 Picard--Vessiot 扩张。
+\end{solution}

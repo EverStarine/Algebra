@@ -1,9 +1,94 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 A 第 1 项归纳；原要点保留于 AppendixA.tex。
+% 纲要标题：### A.1 Zorn 引理与选择公理
+% 纲要位置：计划纲要.md，第 781 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### A.1.1 偏序与选择原理
+%
+% #### A.1.2 极大对象的构造
+%
+% #### A.1.3 良序归纳与有限支集计数
+% END APPENDIX OUTLINE SYNC
 
 \section{Zorn 引理与选择公理}
 \label{b1:sec:A01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+逐个解有限多个方程，与同时为任意多个问题选取一个解，并不是同一项集合论操作。代数中常用的基、极大理想和代数闭包存在性，涉及后一类选择。本节先说明所采用的基础原则，再把代数证明中需要另行核查的步骤分开。
 
-待撰写。
+\subsection{偏序与选择原理}
+\label{b1:subsec:A01:01}
+
+\begin{definition}\label{b1:def:poset-chain}
+集合 \(P\) 上的关系 \(\leq\) 若自反、反对称且传递，称为\term[pianxu]{偏序}[partial order]。子集 \(C\subseteq P\) 若任意两元素都可比较，称为\term[lian]{链}[chain]。若 \(c\leq u\) 对每个 \(c\in C\) 成立，称 \(u\in P\) 是 \(C\) 的上界。元素 \(m\) 称为\term[jidayuan]{极大元}[maximal element]，若 \(m\leq x\) 蕴含 \(x=m\)；它称为最大元，若每个 \(x\in P\) 都有 \(x\leq m\)。
+\end{definition}
+最大元必为极大元，反之不成立。集合 \(\{\{1\},\{2\}\}\) 按包含关系有两个极大元，却没有最大元。链的上界也不必在链中，例如 \(\mathbb N\) 的有限初始段在幂集中的上界可以是整个 \(\mathbb N\)。Zorn 引理要求上界属于所考察的偏序集，不能擅自扩大这个集合。
+
+\begin{definition}[选择公理]\label{b1:def:A-choice}
+\term[xuanze-gongli]{选择公理}[axiom of choice]是以下断言：对任意由非空集合组成的集合族 \((X_i)_{i\in I}\)，存在函数 \(c\)，使每个 \(i\in I\) 都有 \(c(i)\in X_i\)。换言之，\(\prod_{i\in I}X_i\ne\varnothing\)。
+\end{definition}
+本书在通常的集合论基础上接受这一公理，并使用它的以下两个等价形式。第一种是\term[Zorn-yinli]{Zorn 引理}[Zorn's lemma]。
+
+\begin{theorem}[Zorn，所采用的选择原理]\label{b1:thm:A-zorn}
+非空偏序集 \(P\) 若每条链在 \(P\) 中都有上界，则 \(P\) 有极大元。
+\end{theorem}
+
+\begin{claim}[良序原理，作为基础输入]\label{b1:claim:A-well-order}
+每个集合都可赋予一个全序，使其每个非空子集都有最小元；这样的全序称为\term[liangxu]{良序}[well-order]。
+\end{claim}
+以上明确列出采用的基础原则，不是在这里给出三者等价性的证明。尤其不把 Zorn 引理当作无须任何选择原则的有限归纳法。下文将完整证明所需应用；选择原理自身及其在公理集合论中的等价性不在本附录的证明范围内。若偏序集非空，空链总有上界，核查时仍应说明所用的初始对象。
+
+\ProseParagraphBreak
+选择公理可以用来给任意满射 \(q:X\rightarrow Y\) 取截面：在每条非空纤维 \(q^{-1}(y)\) 中选一点 \(s(y)\)，便有 \(qs=\operatorname{id}_Y\)。这不保证 \(s\) 保持任何代数结构。例如商同态 \(\mathbb Z\rightarrow\mathbb Z/2\mathbb Z\) 没有群同态截面，因为 \(\mathbb Z\) 中没有二阶元素。集合上的选择不能自动代替代数上的分裂。
+
+\subsection{极大对象的构造}
+\label{b1:subsec:A01:02}
+
+\begin{lemma}\label{b1:lem:finite-character-union}
+设 \(X\) 为集合，\(\mathcal P\subseteq\mathcal P(X)\) 是一族子集，其中 \(A\in\mathcal P\) 当且仅当 \(A\) 的每个有限子集属于 \(\mathcal P\)。若 \(\mathcal P\) 非空，则每个 \(A_0\in\mathcal P\) 都包含于 \(\mathcal P\) 中某个按包含关系极大的成员。
+\end{lemma}
+\begin{proof}
+考虑 \(\mathcal P\) 中包含 \(A_0\) 的成员所成的偏序集。它包含 \(A_0\)。对其中非空链 \(\mathcal C\) 令 \(U=\bigcup_{A\in\mathcal C}A\)。\(U\) 的每个有限子集 \(F\) 都已包含于某个链成员：为 \(F\) 中有限多个元素分别取一个含它的成员，再利用链上的可比性在这些成员中取最大者。该成员属于 \(\mathcal P\)，所以 \(F\in\mathcal P\)，由假设得到 \(U\in\mathcal P\)。它包含 \(A_0\)，因而是所需上界；空链用 \(A_0\) 作上界。\cref{b1:thm:A-zorn}给出极大成员。
+\end{proof}
+这里 \(\mathcal P(X)\) 表示 \(X\) 的幂集，即全部子集组成的集合。引理所描述的性质通常称为有限特征性质：线性无关或代数独立的失败都由一个有限关系检测。例如向量空间的无关集之链的并仍无关；极大无关集必生成整个空间，否则加入一个不在其线性包中的向量仍无关。因此每个无关集都能扩充为一组基。
+
+\ProseParagraphBreak
+理想和部分映射需要稍有不同的链检查。理想之链的并对加法与乘法吸收性封闭，但任意两个理想的并通常不是理想；部分映射之链的并成为函数，则要求链上较大对象确实延拓较小对象，而不只是定义域较大。正文的用法可以按下列位置核对。
+\begin{enumerate}
+\item \cref{b1:prop:maximal-ideal-exists}对含给定真理想的真理想使用 Zorn 引理。链的并仍真，是因为单位元若属于并，已属于其中某个真理想。
+\item \cref{b1:thm:transcendence-basis}对代数独立子集使用有限特征性质；极大性通过\cref{b1:lem:independence-adjoining}转成剩余元素代数。
+\item \cref{b1:thm:embedding-extension}对相容的部分域嵌入使用 Zorn 引理。链上映射的并是嵌入；若定义域尚未达到目标，就用一个代数元的最小多项式继续延拓。
+\item \cref{b1:lem:finite-discrete-product-compact}对真滤子使用 Zorn 引理，得到极大真滤子。滤子的闭合条件只涉及有限多个集合，所以链的并仍为真滤子。
+\end{enumerate}
+这些证明得到的是存在性。若还要求写出基向量、极大理想的生成元或所有域元素的有效编码，就必须另外给定计算条件。有限维基扩充和有限个多项式的逐次添根可以逐步完成，不必为这些有限过程引用一般极大性结论。
+
+\subsection{良序归纳与有限支集计数}
+\label{b1:subsec:A01:03}
+
+\begin{proposition}\label{b1:prop:well-order-induction}
+设 \(I\) 为良序集。若关于 \(i\in I\) 的性质满足：只要所有 \(j<i\) 都具有该性质，\(i\) 就具有该性质；则 \(I\) 的每个元素都具有该性质。良序集中也不存在无限严格递降序列。
+\end{proposition}
+\begin{proof}
+若有反例，反例集合有最小元 \(i\)；此前所有元素都符合性质，假设却推出 \(i\) 也符合，矛盾。若存在无限严格递降序列，其取值集合有最小元；这个最小元在序列中仍有更小的后一项，再次矛盾。
+\end{proof}
+这就是良序形式的超限归纳。通常以序数 \(\alpha\) 给良序集的各位置编号：\(0\) 是初始位置，\(\alpha+1\) 是后继位置，没有紧邻前驱的非零位置称为极限位置。在递增并构造中，后继步加入新数据，极限步取此前对象的并。\cref{b1:thm:free-abelian-subgroup}中每个元素只有有限支集，保证极限位置没有突然出现不属于任何较早层的元素。序数及超限递归的一般集合论构造在这里作为基础语言使用，不另行展开其公理化。
+
+以下\term[Cantor-Bernstein-dingli]{Cantor--Bernstein 定理}[Cantor--Bernstein theorem]把两边的单射合成为一个双射。
+\begin{proposition}[Cantor--Bernstein]\label{b1:prop:cantor-bernstein}
+若集合 \(A,B\) 之间分别存在单射 \(f:A\rightarrow B\)、\(g:B\rightarrow A\)，则 \(A,B\) 之间存在双射。
+\end{proposition}
+\begin{proof}
+令 \(A_0=A\setminus g(B)\)，\(A_{n+1}=g\bigl(f(A_n)\bigr)\)，并令 \(C=\bigcup_{n\geq0}A_n\)。定义 \(h:A\rightarrow B\)：在 \(C\) 上取 \(f\)，在 \(A\setminus C\) 上取 \(g^{-1}\)。后者有意义，因为 \(A\setminus C\subseteq g(B)\) 且 \(g\) 单射。\(g\) 将 \(f(C)\) 恰映到 \(C\setminus A_0\)，而 \(A_0\cap g(B)=\varnothing\)；故 \(g\) 将 \(B\setminus f(C)\) 恰映到 \(A\setminus C\)。因此 \(h\) 的两部分分别双射到互不相交的 \(f(C)\) 与 \(B\setminus f(C)\)，合起来就是双射。
+\end{proof}
+
+\begin{proposition}\label{b1:prop:finite-support-cardinality}
+采用选择公理。若 \(B\) 是无限集合，基数为 \(\kappa\)，则 \(B\times B\)、\(B\times\mathbb N\)、\(B\) 的全部有限序列及全部有限子集，都有基数 \(\kappa\)。由 \(\kappa\) 个有限集合组成的集合族，其并的基数至多为 \(\kappa\)。
+\end{proposition}
+\begin{proof}
+由良序原理，可用与 \(B\) 等势的最小序数 \(\kappa\) 表示其基数；于是每个 \(\alpha<\kappa\) 的基数都小于 \(\kappa\)。先证明任意无限基数都满足 \(\lvert\kappa\times\kappa\rvert=\kappa\)。若有反例，取最小的反例基数 \(\kappa\)。将 \(\kappa\times\kappa\) 先按 \(\max(\alpha,\beta)\) 的大小，再在同一最大值下按字典序排列，所得次序是良序。
+
+给定一对 \((\alpha,\beta)\)，令 \(\gamma=\max(\alpha,\beta)\)。它的全部前驱属于 \((\gamma+1)\times(\gamma+1)\)。\(\gamma+1\) 的基数小于 \(\kappa\)：它若有限，平方仍有限；它若无限，由反例的最小性，其平方仍具有同一基数。因此每个初始段的基数都小于 \(\kappa\)。所得良序的序型不能大于 \(\kappa\)，否则序号为 \(\kappa\) 的位置之前已有 \(\kappa\) 个元素，矛盾。这给出 \(\kappa\times\kappa\) 到 \(\kappa\) 的单射；反向单射 \(\alpha\mapsto(\alpha,0)\) 与\cref{b1:prop:cantor-bernstein}给出等势，排除反例。
+
+有限归纳得 \(\lvert B^n\rvert=\kappa\)（\(n\geq1\)）。因 \(\mathbb N\) 可嵌入任意无限良序基数，\(B\times\mathbb N\) 的基数夹在 \(\kappa\) 与 \(\kappa^2\) 之间，也等于 \(\kappa\)。为各 \(B^n\) 选定到 \(B\) 的单射后，全部有限序列嵌入 \(\mathbb N\times B\)；长度一的序列给出反向下界。有限子集可按 \(B\) 的良序唯一排成有限序列，单点子集又给出下界，所以同样等势。
+
+最后将指标集与 \(B\) 认同，为每个有限集选定一个有限编号。带指标的全部成员嵌入 \(B\times\mathbb N\)，不带指标的并是其像；在良序中为每个像取最小原像即得基数上界。这里同时安排良序或编号的步骤均在已采用的选择公理之内。
+\end{proof}
+在\cref{b1:prop:free-rank-invariant}和\cref{b1:prop:free-abelian-rank}中，另一组无限生成元的有限支集覆盖原来的基，所需的正是此计数。\cref{b1:thm:transcendence-cardinality}先把每个超越基元素分配给另一组基的一个有限子集，再用有限维估计控制每一条纤维；同一命题给出总的基数上界。这里没有把有限个基向量的交换证明不加说明地推广成无限计数。

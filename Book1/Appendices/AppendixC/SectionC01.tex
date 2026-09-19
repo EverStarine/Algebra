@@ -1,9 +1,78 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 C 第 1 项归纳；原要点保留于 AppendixC.tex。
+% 纲要标题：### C.1 自由积与带合并自由积
+% 纲要位置：计划纲要.md，第 853 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### C.1.1 自由积的约化字
+%
+% #### C.1.2 识别公共子群的构造
+%
+% #### C.1.3 标准形与因子的嵌入
+% END APPENDIX OUTLINE SYNC
 
 \section{自由积与带合并自由积}
 \label{b1:sec:C01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+把两个群放进同一个群中，可以要求它们的元素逐一交换，也可以只保留各自已有的关系。直积与自由积分别完成这两种任务。若两个群还包含一个需要认作相同的子群，就应在自由积中加入识别关系；关键是确认这种识别不会损坏原有的两个群。
 
-待撰写。
+\subsection{自由积的约化字}
+\label{b1:subsec:C01:01}
+
+\cref{b1:lem:free-product-normal-form}已经证明：自由积 \(A*B\) 的每个元素有唯一交替字 \(x_1\cdots x_n\)，各字母来自 \(A\setminus\{1\}\) 或 \(B\setminus\{1\}\)，相邻字母来自不同因子；空字表示单位。两因子的同态可以由\cref{b1:thm:free-product-universal}唯一拼成自由积上的同态，不要求它们的像交换。
+
+\ProseParagraphBreak
+例如 \(C_2*C_3=\langle a,b\mid a^2=b^3=1\rangle\)。字 \((ab)^m\) 对每个 \(m>0\) 都约化且非空，所以 \(ab\) 有无限阶。两个有限群的自由积可以无限；这与直积 \(C_2\times C_3\cong C_6\) 的情形不同。这个判断来自标准形，不能只从展示中“看不见 \((ab)^m=1\)”便推断其不成立。
+
+\subsection{识别公共子群的构造}
+\label{b1:subsec:C01:02}
+
+\begin{definition}\label{b1:def:amalgamated-free-product}
+设 \(C,A,B\) 为群，\(i:C\hookrightarrow A\)、\(j:C\hookrightarrow B\) 为单同态。把 \(A,B\) 视为自由积中的两个因子，并令
+\[
+N=\bigl\langle\!\bigl\langle i(c)j(c)^{-1}\mid c\in C\bigr\rangle\!\bigr\rangle
+\trianglelefteq A*B.
+\]
+商群 \((A*B)/N\) 称为沿 \(C\) 的\term[dai-hebing-ziyouji]{带合并自由积}[free product with amalgamation]，记为 \(A*_C B\)。记从两因子到该商群的自然同态为 \(u:A\rightarrow A*_C B\)、\(v:B\rightarrow A*_C B\)。
+\end{definition}
+\symidx{\(A*_C B\)：沿给定嵌入合并 \(C\) 的自由积}
+下标 \(C\) 还隐含了两条嵌入 \(i,j\)；只知道三个抽象群，并不足以指定这个构造。定义立即给出 \(ui=vj\)，但 \(u,v\) 的单射性还需要下一小节的证明。
+
+\begin{proposition}\label{b1:prop:amalgam-universal}
+对群 \(H\) 及同态 \(f:A\rightarrow H\)、\(g:B\rightarrow H\)，若 \(fi=gj\)，则存在唯一同态 \(h:A*_C B\rightarrow H\) 满足 \(hu=f\)、\(hv=g\)。
+\end{proposition}
+\begin{proof}
+自由积的泛性质给出唯一同态 \(\widetilde h:A*B\rightarrow H\)，在两因子上的限制分别是 \(f,g\)。对每个 \(c\in C\)，有
+\[
+\widetilde h\Bigl(i(c)j(c)^{-1}\Bigr)
+=f\bigl(i(c)\bigr)g\bigl(j(c)\bigr)^{-1}=1.
+\]
+核是正规子群，故包含定义中的 \(N\)。由\cref{b1:thm:quotient-universal}，\(\widetilde h\) 唯一地通过商群下降为 \(h\)。两因子的像生成商群，因此任何满足所述限制的同态都只能是这个 \(h\)。
+\end{proof}
+当 \(C=1\) 时，没有额外识别，得到普通自由积。若 \(C=A=B\) 且两嵌入均为恒等，两个因子的对应元素全被识别，泛性质给出 \(A*_A A\cong A\)。
+
+\subsection{标准形与因子的嵌入}
+\label{b1:subsec:C01:03}
+
+利用 \(i,j\) 可把 \(C\) 分别视为 \(A,B\) 的子群。为每个右陪集 \(Ca\)、\(Cb\) 选一个代表，得到代表集 \(T_A,T_B\)，均以 \(1\) 代表 \(C\) 本身。因此每个因子元素都有唯一分解 \(ct\)，其中 \(c\in C\)，\(t\) 属于该因子的代表集。这里对非空陪集族应用\cref{b1:def:A-choice}中的选择公理，再把单位陪集的代表改取为 \(1\)。
+
+\begin{theorem}[带合并自由积的标准形]\label{b1:thm:amalgam-normal-form}
+每个 \(A*_C B\) 中的元素唯一表示为
+\[
+c t_1\cdots t_n,
+\qquad c\in C,\quad t_k\in(T_A\setminus\{1\})\sqcup(T_B\setminus\{1\}),
+\]
+其中各 \(t_k\) 交替来自两代表集，允许 \(n=0\)。特别地，自然映射 \(A\rightarrow A*_C B\)、\(B\rightarrow A*_C B\) 均单射，其像的交恰为 \(C\) 的像。
+\end{theorem}
+\begin{proof}
+先不把这些表达式看成群元素，而令 \(\Omega\) 为上述形式的符号串集合。单位串记为 \((1)\)。对 \(a\in A\)，如下定义左作用 \(L_a\)：若首个代表 \(t_1\) 来自 \(T_A\)，在 \(A\) 中把 \(act_1\) 唯一分解为 \(c't'\)，用此前缀替换 \(ct_1\)；否则把 \(ac\) 分解为 \(c't'\)，放在原代表串之前。若 \(t'=1\)，就删掉这个代表。所得串仍交替。对 \(b\in B\) 同样定义 \(L_b\)。
+
+对同一因子中的 \(a,a'\)，有 \(L_aL_{a'}=L_{aa'}\)。确切地说，若原串以该因子的代表开头，两次操作都是对乘积 \(aa'ct_1\) 作唯一的 \(ct\) 分解；第一次若消去了 \(t_1\)，第二次仍只需分解此前缀，而余下串从另一因子开始。若原串不以该因子开头，两次操作则都是分解 \(aa'c\)。这覆盖了有无消去的情况。故 \(L_{a^{-1}}\) 是 \(L_a\) 的逆，给出 \(A\) 在 \(\Omega\) 上的群作用，\(B\) 亦然。对于 \(c_0\in C\)，两作用都只把首项 \(c\) 改成 \(c_0c\)，所以相容。\cref{b1:prop:amalgam-universal}遂给出 \(A*_C B\) 在 \(\Omega\) 上的作用。
+
+任意因子字从右向左依次作用于 \((1)\)，每一步的前缀分解都在商群中保持元素不变，所以输出串表示原元素。这证明存在性。另一方面，标准串 \(ct_1\cdots t_n\) 作用于 \((1)\) 时，代表从右向左逐个接入，没有同因子合并，最后恰得到该符号串。如果两个标准串表示同一群元素，它们的作用相同，在 \((1)\) 上的取值也相同，故串完全相同。
+
+因子中的元素 \(ct\) 只有在 \(c=t=1\) 时才等于单位，故两自然映射单射。若一个 \(A\) 中的元素等于一个 \(B\) 中的元素，标准串唯一性迫使两者的非单位代表都不出现，因而均属于 \(C\)。
+\end{proof}
+例如取 \(A=\langle a\rangle\cong\mathbb Z\)、\(B=\langle b\rangle\cong\mathbb Z\)，把 \(C\cong\mathbb Z\) 的生成元分别送到 \(a^2,b^3\)。则
+\[
+A*_C B\cong\langle a,b\mid a^2=b^3\rangle.
+\]
+可取 \(T_A=\{1,a\}\)、\(T_B=\{1,b,b^2\}\)。记公共元素 \(z=a^2=b^3\)，标准形是 \(z^m t_1\cdots t_n\)。这既说明两个无限循环因子没有被压缩，也给出检验元素是否相等的方法；其中 \(z\) 与 \(a,b\) 都交换，故属于整个群的中心。

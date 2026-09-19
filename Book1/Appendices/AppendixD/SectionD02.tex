@@ -1,9 +1,52 @@
 % !TeX root = ../../Book1.tex
-% 本节标题据《计划纲要.md》附录 D 第 2 项归纳；原要点保留于 AppendixD.tex。
+% 纲要标题：### D.2 逆 Galois 问题与典型构造
+% 纲要位置：计划纲要.md，第 898 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% #### D.2.1 固定基域与允许改变基域
+%
+% #### D.2.2 分圆域、二次根式与三次方程
+% END APPENDIX OUTLINE SYNC
 
-\section{赋值扩张与局部域}
+\section{逆 Galois 问题与典型构造}
 \label{b1:sec:D02}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+前面的计算从多项式出发寻找自同构群。反过来，若先给一个有限群，是否能找到恰以它为 Galois 群的方程？在提出问题时指定基域至关重要：有限域上的答案与有理数域上的答案截然不同。
 
-待撰写。
+\subsection{固定基域与允许改变基域}
+\label{b1:subsec:D02:01}
+
+\begin{definition}\label{b1:def:inverse-galois}
+给定域 \(K\) 和有限群 \(G\)，\term[ni-galois-wenti]{逆 Galois 问题}[inverse Galois problem]问是否存在有限 Galois 扩张 \(L/K\)，使 \(\operatorname{Gal}(L/K)\cong G\)。经典的问题固定 \(K=\mathbb Q\)，并允许 \(G\) 遍历有限群。
+\end{definition}
+
+若 \(K=\mathbb F_q\)，\cref{b1:thm:finite-field-automorphisms}说明所有有限扩张的群均为循环群，而 \(\mathbb F_{q^n}/\mathbb F_q\) 实现每个 \(C_n\)。因此非循环群不可能在这一基域上实现。若允许连基域一起选择，情况容易得多。
+
+\begin{proposition}\label{b1:prop:finite-group-realization}
+对任意域 \(k\) 和有限群 \(G\)，存在含 \(k\) 的域 \(K\) 及有限 Galois 扩张 \(L/K\)，其 Galois 群同构于 \(G\)。
+\end{proposition}
+\begin{proof}
+取独立变量 \(x_g\)、\(g\in G\)，令 \(L=k(x_g\mid g\in G)\)。对 \(h\in G\)，规定 \(\sigma_h(x_g)=x_{hg}\)，并固定 \(k\)。变量的置换给出有理函数域自同构，且 \(\sigma_h\sigma_j=\sigma_{hj}\)。若 \(h\neq1\)，则 \(\sigma_h(x_1)=x_h\neq x_1\)，故作用忠实。取 \(K=L^G\)，由\cref{b1:thm:artin-fixed-field}，\(L/K\) 为次数 \(|G|\) 的 Galois 扩张，其全自同构群就是这个 \(G\)。
+\end{proof}
+证明中的 \(K\) 是随 \(G\) 改变的不动域，不能把它改写成 \(\mathbb Q\)。经典逆问题的困难正包括如何在预定基域上保留所需的群；上述构造没有完成这种控制。
+
+\subsection{分圆域、二次根式与三次方程}
+\label{b1:subsec:D02:02}
+
+\begin{proposition}\label{b1:prop:inverse-galois-examples}
+群 \(C_3\)、\(C_2\times C_2\) 和 \(S_3\) 都可在 \(\mathbb Q\) 上实现，分别可取
+\[
+\mathbb Q(\zeta_7+\zeta_7^{-1}),\qquad
+\mathbb Q(\sqrt2,\sqrt3),\qquad
+\mathbb Q(\sqrt[3]2,\zeta_3).
+\]
+这里 \(\zeta_m\) 为原始 \(m\) 次单位根。
+\end{proposition}
+\begin{proof}
+\cref{b1:thm:cyclotomic-galois-group}给出 \(\mathbb Q(\zeta_7)/\mathbb Q\) 的群为 \((\mathbb Z/7\mathbb Z)^\times\)。剩余类 \(3\) 的幂依次为 \(3,2,6,4,5,1\)，所以该群为 \(C_6\)。复共轭生成二阶子群，其不动域恰为 \(\mathbb Q(\zeta_7+\zeta_7^{-1})\)：\(\zeta_7\) 在这个实域上满足二次方程而不属于它，故次数恰为二。二阶子群正规，\cref{b1:thm:galois-quotient}给出不动域在 \(\mathbb Q\) 上的群为 \(C_6/C_2\cong C_3\)。
+
+有理数的平方中每个素数的指数为偶数，故 \(2,3\) 的平方类独立。对 \(n=2\)，基域 \(\mathbb Q\) 含 \(\mu_2\)，\cref{b1:thm:kummer-correspondence}应用于这两个类生成的四元群，得到第二个扩张的群为 \(C_2^2\)；两个根号可以独立变号。
+
+最后，\(X^3-2\) 对素数 \(2\) 满足\cref{b1:thm:eisenstein}，故实根 \(a=\sqrt[3]2\) 的次数为三。非实的 \(\zeta_3\) 不在实域 \(\mathbb Q(a)\) 内，加入它使次数再乘二。所得域包含三个互异根 \(a,\zeta_3a,\zeta_3^2a\)，是可分分裂域。自同构在根上给出到 \(S_3\) 的单射，而群阶等于扩张次数六，因此像为整个 \(S_3\)。
+\end{proof}
+
+第一个模型由一个已知的较大群取正规商，第二个模型控制平方类的独立性，第三个模型通过次数锁定根的全部置换。这些是可独立核验的构造方法。更一般的实现问题还涉及带参数的方程、专化及分歧控制；本附录不把这些深层步骤当成从上述例子自然得到的推论。

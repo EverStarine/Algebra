@@ -168,8 +168,21 @@ foreach ($node in $nodes) {
         }
     }
     if ($node.Kind -in @('Section', 'AppendixSection')) {
-        if ($text -notmatch '(?m)^\\(?:subsection|OptionalSubsection)\{[^\r\n]+') {
+        $shortAppendixSection = $node.Kind -eq 'AppendixSection' -and
+            $node.Notes.Contains('<!-- 短节：不设小节 -->')
+        $subheadings = @([regex]::Matches($text, '(?m)^\\(?:subsection|OptionalSubsection)\{([^\r\n]+)\}') |
+            ForEach-Object { $_.Groups[1].Value })
+        if (-not $shortAppendixSection -and $subheadings.Count -eq 0) {
             $failures.Add("Missing subsection headings under $($node.Path).")
+        }
+        if ($shortAppendixSection -and $subheadings.Count -ne 0) {
+            $failures.Add("A short appendix section has unplanned subsections: $($node.Path).")
+        }
+        $plannedSubheadings = @($node.Notes | Where-Object { $_ -match '^#### [A-Z]\.\d+\.\d+\s+(.+)$' } |
+            ForEach-Object { [regex]::Match($_, '^#### [A-Z]\.\d+\.\d+\s+(.+)$').Groups[1].Value })
+        if ($plannedSubheadings.Count -gt 0 -and
+            ($plannedSubheadings -join "`n") -cne ($subheadings -join "`n")) {
+            $failures.Add("Appendix subsection titles differ from the outline: $($node.Path).")
         }
     }
     if ($node.Kind -eq 'Appendix' -and

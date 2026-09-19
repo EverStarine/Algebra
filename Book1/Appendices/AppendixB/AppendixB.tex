@@ -1,11 +1,29 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 附录 B　有限域、编码与计算实验
-% 纲要位置：计划纲要.md，第 778 行。
+% 纲要位置：计划纲要.md，第 811 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% * 有限域上的算术和多项式分解
+% * 线性码、循环码与生成多项式
+% * Reed–Solomon 码的代数构造
+% * 以可复核的精确计算检验抽象结论
+% END APPENDIX OUTLINE SYNC
 
 \chapter{有限域、编码与计算实验}
 \label{b1:app:B}
 
-% TODO: 按纲要撰写本附录，并明确先修与证明边界。
+\begin{chapterabstract}
+有限域把代数结构与可执行计算直接联系起来。本附录先在商域中进行算术，再用 Frobenius 的不动代数分解多项式；随后把理想与多项式求值用于线性码，证明循环码的生成多项式描述、Reed–Solomon 码的参数以及一个错误的纠正方法。最后两份完整的计算记录说明，输出结果应当怎样由精确等式独立复核。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 固定有限域的表示，执行求逆、重因子处理和 Berlekamp 分解，并检验相应证书。
+\item 从 Hamming 距离解释检测与纠正的区别，用商环理想构造循环码。
+\item 用根数界与插值证明 Reed–Solomon 码的参数，完成一次错误的线性方程解码。
+\end{itemize}
+\end{learninggoals}
+
+本附录以\chapref{b1:ch:17}的有限域理论为主要先修，同时使用多项式带余除法、中国剩余定理、根数界与 Lagrange 插值。线性方程组和有限维向量空间的基本运算按全书先修要求使用。这里只选择能由本卷工具完整解释的算法和小型编码例子；不以本附录代替有限域算法或编码理论的系统课程。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,3 +37,135 @@
 \input{Appendices/AppendixB/SectionB02}
 \input{Appendices/AppendixB/SectionB03}
 \input{Appendices/AppendixB/SectionB04}
+
+\begin{chaptersummary}
+在有限域中，表示的选择决定了实际运算的规则；精确的模关系、Bézout 等式和不可约性检查，使计算能够脱离具体软件而独立复核。Berlekamp 分解把商环中的 Frobenius 不动条件化为线性方程，其解空间再通过最大公因式把不同不可约因子分开。导数及开 \(p\) 次方的预处理则负责保存重数。
+
+\ProseParagraphBreak
+编码把代数结构变成距离性质。循环码由 \(x^n-1\) 的首一因子控制，Reed–Solomon 码的距离由非零多项式的根数界控制。检测、擦除恢复与未知位置错误的纠正需要不同的信息；一次错误可以借助错误定位多项式转化为线性方程，但最终仍须检查整除、次数与重新编码后的距离。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:B-field-inverses}
+在 \(F=\mathbb F_3(\alpha)\)、\(\alpha^2=-1\) 中，对非零元素 \(a+b\alpha\) 写出统一的求逆公式，并求 \((2+\alpha)^{-1}\)。
+\end{exercise}
+\begin{solution}
+有 \((a+b\alpha)(a-b\alpha)=a^2+b^2\)。\(\mathbb F_3\) 的非零平方都是一，所以当 \((a,b)\ne(0,0)\) 时，\(a^2+b^2\) 等于一或二，均非零。因此
+\[
+(a+b\alpha)^{-1}=\frac{a-b\alpha}{a^2+b^2}.
+\]
+取 \(a=2,b=1\)，分母为二，其逆为二，故结果为 \(2(2-\alpha)=1+\alpha\)。相乘得到一，与\eqref{b1:eq:B-inverse-certificate}的验证方式一致。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-repeated-factors}
+在 \(\mathbb F_2[x]\) 中完整分解 \(f=x^6+x^4+x^2+1\)，并说明导数为零时应怎样记录重数。
+\end{exercise}
+\begin{solution}
+\(f'=0\)，逐项取平方根得到 \(g=x^3+x^2+x+1\)，满足 \(f=g^2\)。又
+\[
+g=(x+1)(x^2+1)=(x+1)^3,
+\]
+所以 \(f=(x+1)^6\)。平方根步骤将最终每个因子的重数乘以二，故 \(g\) 中的三重因子变成 \(f\) 中的六重因子。把平方根本身误作原多项式的分解，会丢失这一倍数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-berlekamp-irreducible}
+对 \(f=x^4+x+1\in\mathbb F_2[x]\)，求商环中平方映射的不动子空间，并据此证明 \(f\) 不可约。
+\end{exercise}
+\begin{solution}
+由于 \(f'=1\)，可以使用\cref{b1:prop:B-berlekamp}。在商环中 \(x^4=x+1\)、\(x^6=x^3+x^2\)。若 \(b=a_0+a_1x+a_2x^2+a_3x^3\)，则
+\[
+b^2=(a_0+a_2)+a_2x+(a_1+a_3)x^2+a_3x^3.
+\]
+比较 \(b^2=b\) 的常数、一次、二次项，依次得到 \(a_2=0\)、\(a_1=0\)、\(a_3=0\)，而 \(a_0\) 任意。不动子空间维数一，所以 \(f\) 只有一个不同不可约因子；无重因子条件遂说明 \(f\) 本身不可约。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-parity-code}
+设 \(n\geq2\)，证明 \(C=\{\,(c_1,\ldots,c_n)\in\mathbb F_q^n\mid\sum_i c_i=0\,\}\) 是 \([n,n-1,2]\) 码。解释它为何能检测一次错误，却不能保证纠正一次错误。
+\end{exercise}
+\begin{solution}
+前 \(n-1\) 个坐标任取，最后一个由它们的和的相反数唯一确定，故维数为 \(n-1\)。非零且重量为一的向量不可能坐标和为零，而 \((1,-1,0,\ldots,0)\) 是重量为二的码字，所以\eqref{b1:eq:B-linear-distance}给出最小距离二。\cref{b1:prop:B-distance-correction}保证检测一次错误。收到 \((1,0,\ldots,0)\) 时，它与零码字及 \((1,-1,0,\ldots,0)\) 的距离都为一，因此一般不能判断哪一个是原码字；特征为二时 \(-1=1\)，反例仍成立。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-generator-check}
+在 \(\mathbb F_3\) 上，设
+\[
+G=\begin{pmatrix}1&0&1&1\\0&1&1&2\end{pmatrix},\qquad
+H=\begin{pmatrix}2&2&1&0\\2&1&0&1\end{pmatrix}.
+\]
+证明 \(H\) 是由 \(G\) 生成的码的校验矩阵，并确定该码的参数。
+\end{exercise}
+\begin{solution}
+直接相乘有 \(GH^{\mathsf T}=0\)。\(G\) 的前两列、\(H\) 的后两列分别为单位矩阵，所以二者的秩都是二。因而 \(G\) 的行空间包含于 \(\ker H\)，且两者维数都是二，遂相等。
+
+一般码字为 \((a,b,a+b,a+2b)\)。若 \((a,b)\ne(0,0)\)，这四个坐标恰有一个为零：当 \(b=0\) 时只有第二坐标为零；当 \(b\ne0\) 时，\(a/b\) 恰为 \(0,1,2\) 之一，于是第一、第四、第三坐标分别为零，而其余非零。因此所有非零码字的重量都是三，得到 \([4,2,3]\) 码。它也取得 Singleton 界的等号。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-cyclic-three}
+列出 \(\mathbb F_2\) 上全部长度为三的循环码的生成多项式、维数及非零码的最小距离。
+\end{exercise}
+\begin{solution}
+分解为 \(x^3-1=(x+1)(x^2+x+1)\)，二次因子不可约且两因子不同。\cref{b1:thm:B-cyclic-generator}说明首一因子恰对应全部循环码。生成多项式 \(1,x+1,x^2+x+1,x^3+1\) 的维数分别为 \(3,2,1,0\)。第一项是全空间，最小距离一；第二项是偶数重量码，最小距离二；第三项只有 \((0,0,0),(1,1,1)\)，最小距离三；第四项为零码，本附录不为它规定最小距离。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-repeated-cyclic}
+列出 \(\mathbb F_2\) 上全部长度为四的循环码的生成多项式，并确定各非零码的最小距离。这说明循环码生成多项式定理是否要求 \(x^n-1\) 无重因子？
+\end{exercise}
+\begin{solution}
+\(x^4-1=(x+1)^4\)，故生成多项式为 \((x+1)^j\)，\(0\leq j\leq4\)，对应维数 \(4-j\)。\(j=0\) 时是全空间，距离一。\(j=1\) 时，多项式在一处为零，码字坐标和为零；存在重量二的 \(x+1\)，故距离二。\(j=2\) 时生成多项式为 \(x^2+1\)，码字为 \((a,b,a,b)\)，非零最小重量二。\(j=3\) 时生成多项式为 \(x^3+x^2+x+1\)，非零码字只有 \((1,1,1,1)\)，距离四。\(j=4\) 时为零码。分类与维数公式仍全部成立，因此定理不要求无重因子条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-rs-erasures}
+在 \(\mathbb F_7\) 上取求值点 \(0,1,2,3,4\)，信息多项式次数小于二。已知传输后只有点零和点三处的符号被保留下来，其值分别为二和五。恢复信息多项式与全部码字，并说明恢复的唯一性。
+\end{exercise}
+\begin{solution}
+写 \(f=a+bx\)，第一条数据给出 \(a=2\)，第二条给出 \(2+3b=5\)，故 \(b=1\)。于是 \(f=2+x\)，码字为 \((2,3,4,5,6)\)。两个取值点互异，\cref{b1:thm:lagrange-interpolation}保证次数至多为一的插值多项式唯一；也可从差多项式次数至多一却有两个根推出唯一性。这里 \(n-k=3\) 个擦除恰好达到可恢复界。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-rs-distinct-points}
+若在 \(\mathbb F_3\) 上把次数小于二的多项式送到 \(\bigl(f(0),f(0),f(1)\bigr)\)，所得线性码是否仍有 \([3,2,2]\) 参数？指出求值点互异在证明中的作用。
+\end{exercise}
+\begin{solution}
+一般向量为 \((a,a,a+b)\)，映射仍单射，因此维数为二。但是 \(f=x\) 产生 \((0,0,1)\)，最小距离为一，所以参数是 \([3,2,1]\)。一个多项式在同一点为零，可以同时造成多个坐标为零；根数界只计算互异根，不能限制重复取值点贡献的零坐标个数。\cref{b1:thm:B-rs-parameters}中的距离证明因而不能用于这些点。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-decoder-uniqueness}
+在 \(n\geq k+2\) 的 Reed–Solomon 码中，若收到的向量恰有一次错误，证明\eqref{b1:eq:B-single-error-system}的解 \((E,Q)\) 唯一。若没有错误，说明有多少组这样的解，以及恢复的信息是否唯一。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:B-single-error-decoding}，每个解都满足 \(Q=Ef\)。在唯一错误位置 \(a_j\)，方程于是成为
+\[
+E(a_j)f(a_j)=E(a_j)y_j.
+\]
+因为 \(y_j\ne f(a_j)\)，域中的消去律给出 \(E(a_j)=0\)。\(E\) 首一一次，所以 \(E=x-a_j\) 唯一，继而 \(Q=Ef\) 唯一。
+
+没有错误时，每个 \(e_0\in\mathbb F_q\) 都给出 \(E=x+e_0\)、\(Q=Ef\) 的一组解；命题又说明所有解都以此方式得到，故恰有 \(q\) 组。它们的商均为同一个 \(f\)。辅助变量不唯一并不妨碍解码结果唯一。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-factor-certificate}
+对 \(f=x^4+x^2+x\in\mathbb F_2[x]\)，计算平方映射的不动子空间，并用其非恒定元素给出完整因式分解及核验证书。
+\end{exercise}
+\begin{solution}
+\(f'=1\)，且模 \(f\) 有 \(x^4=x^2+x\)、\(x^6=x^3+x^2+x\)。因此
+\[
+\Bigl(a_0+a_1x+a_2x^2+a_3x^3\Bigr)^2
+=a_0+(a_2+a_3)x+(a_1+a_2+a_3)x^2+a_3x^3.
+\]
+与原式比较，得 \(a_1=a_3\)、\(a_2=0\)，所以一组不动基为 \(1,x+x^3\)。取 \(b=x+x^3\)，则
+\[
+\gcd(f,b)=x,\qquad \gcd(f,b+1)=x^3+x+1.
+\]
+第一个等式可由 \(f=x(x^3+x+1)\)、\(b=x(x^2+1)\) 以及
+\(x^3+x+1=x(x^2+1)+1\) 核验；第二个等式直接来自 \(b+1=x^3+x+1\)。该三次式在零、一处均为一，所以不可约。故 \(f=x(x^3+x+1)\) 是完整分解，乘积及两次代入给出了独立证书。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:B-decoding-certificate}
+仍在 \(\mathbb F_7\) 上使用求值点 \(0,1,2,3,4\) 和信息次数小于三的码。若收到 \((1,6,3,0,1)\)，并已知至多一个错误，求 \(E,Q\) 及原信息多项式，给出不用重复消元也能检查的证书。
+\end{exercise}
+\begin{solution}
+把收到的五个值代入\eqref{b1:eq:B-single-error-system}，消元得到 \(E=x+4\)、\(Q=3x^3+2x+4\)。可用下列取值检查方程：\(E\) 在五个点的值依次为 \((4,5,6,0,1)\)，收到的坐标逐个乘这些值，得到 \((4,2,4,0,1)\)，恰好也是 \(Q\) 的取值向量。再由
+\[
+3x^3+2x+4=(x+4)(3x^2+2x+1)
+\]
+得到 \(f=1+2x+3x^2\)。重新编码为 \((1,6,3,6,1)\)，只有点三处与收到的向量不同。其次数小于三，距离为一，故\cref{b1:prop:B-distance-correction}和最小距离三保证唯一性；\(E\) 的唯一根也恰为三。
+\end{solution}
