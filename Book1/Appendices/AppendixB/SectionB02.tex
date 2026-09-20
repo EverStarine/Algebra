@@ -3,7 +3,6 @@
 % 纲要位置：计划纲要.md，第 826 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### B.2.1 线性码与最小距离
-%
 % #### B.2.2 循环码的理想表示
 % END APPENDIX OUTLINE SYNC
 
@@ -23,10 +22,14 @@ d_H(u,v)=\#\{\,i\mid u_i\ne v_i\,\},\qquad
 \]
 若 \(C\) 至少有两个码字，其\term[zuixiao-juli]{最小距离}[minimum distance]是不同码字间 Hamming 距离的最小值，记为 \(d(C)\)。最小距离为 \(d\) 的 \([n,k]\) 线性码也记为 \([n,k,d]\) 码。
 \end{definition}
+
 \symidx{\(d_H(u,v)\)：Hamming 距离}
 \symidx{\(\operatorname{wt}(u)\)：Hamming 重量}
 \symidx{\(d(C)\)：码的最小距离}
 
+线性码的 \(k\) 个信息符号可以任意选取，而传输使用 \(n\) 个坐标；所增加的坐标使合法向量只占 \(\mathbb F_q^n\) 的一部分。发送码字 \(c\) 而收到 \(y\) 时，错误向量为 \(e=y-c\)，错误数就是 \(\operatorname{wt}(e)\)。检测只要求判断是否出现错误，纠正则要求从收到的 \(y\) 找回原来的 \(c\)。后者需要排除多个码字同样接近 \(y\) 的可能。
+
+\ProseParagraphBreak
 Hamming 距离满足三角不等式：若 \(u_i\ne w_i\)，则 \(u_i\ne v_i\) 或 \(v_i\ne w_i\)，对这些坐标计数即得 \(d_H(u,w)\leq d_H(u,v)+d_H(v,w)\)。对非零线性码，有
 \begin{equation}\label{b1:eq:B-linear-distance}
 d(C)=\min_{0\ne c\in C}\operatorname{wt}(c),
@@ -36,6 +39,7 @@ d(C)=\min_{0\ne c\in C}\operatorname{wt}(c),
 \begin{proposition}\label{b1:prop:B-distance-correction}
 设码 \(C\) 的最小距离为 \(d\)。把收到的向量是否属于 \(C\) 作为检验，可以检测任意至多 \(d-1\) 个符号错误。若非负整数 \(t\) 满足 \(2t<d\)，则一个向量至多与一个码字相距不超过 \(t\)，所以任意至多 \(t\) 个错误可以唯一纠正。
 \end{proposition}
+
 \begin{proof}
 若非零错误把 \(c\in C\) 变成另一个码字 \(c'\)，则错误数为 \(d_H(c,c')\geq d\)，所以少于 \(d\) 个错误不会逃过检验。若 \(c,c'\) 都与收到的 \(y\) 相距不超过 \(t\)，三角不等式给出 \(d_H(c,c')\leq2t<d\)，故只能有 \(c=c'\)。当实际错误不超过 \(t\) 时，原码字满足这一距离条件，故存在且唯一。
 \end{proof}
@@ -43,7 +47,18 @@ d(C)=\min_{0\ne c\in C}\operatorname{wt}(c),
 例如三元组重复码 \(C=\{\,(a,a,a)\mid a\in\mathbb F_q\,\}\) 是 \([3,1,3]\) 码。一次错误后，至少两个坐标仍相同，取重复出现的值即可恢复 \(a\)。唯一纠正是关于允许错误数的保证；若错误超过界限，收到的向量可能靠近另一个码字。
 
 \ProseParagraphBreak
-取线性码 \(C\) 的一组基作为 \(k\times n\) 矩阵 \(G\) 的行，称 \(G\) 为\term[shengcheng-juzhen]{生成矩阵}[generator matrix]。采用行向量约定，信息 \(u\in\mathbb F_q^k\) 编成 \(uG\)。行向量线性无关保证编码单射，故有 \(q^k\) 个码字。若一个 \((n-k)\times n\) 矩阵 \(H\) 满足 \(C=\ker H\)，这里把码字转置为列向量代入，则称 \(H\) 为\term[jiaoyan-juzhen]{校验矩阵}[parity-check matrix]。它可通过消元构造；具体核验时要同时检查 \(GH^{\mathsf T}=0\) 与 \(\operatorname{rank}H=n-k\)，仅有第一个等式只能保证包含关系。
+取线性码 \(C\) 的一组基作为 \(k\times n\) 矩阵 \(G\) 的行，称 \(G\) 为\term[shengcheng-juzhen]{生成矩阵}[generator matrix]。采用行向量约定，信息 \(u\in\mathbb F_q^k\) 编成 \(uG\)。行向量线性无关保证编码单射，故有 \(q^k\) 个码字。若一个 \((n-k)\times n\) 矩阵 \(H\) 满足
+\[
+C=\{\,c\in\mathbb F_q^n\mid Hc^{\mathsf T}=0\,\},
+\]
+则称 \(H\) 为\term[jiaoyan-juzhen]{校验矩阵}[parity-check matrix]。因此 \(G\) 把信息变成码字，\(H\) 则把合法码字必须满足的线性方程写出。对收到的 \(y\)，计算 \(Hy^{\mathsf T}\ne0\) 就能确认有错；结果为零只说明 \(y\) 本身是某个合法码字，仍可能是较多错误把一个码字变成了另一个。
+
+\ProseParagraphBreak
+校验矩阵可以具体构造。对 \(G\) 作行变换，并将主元列移到前面后，可写成 \(G=(I_k\ P)\)。相应地取
+\[
+H=(-P^{\mathsf T}\ I_{n-k}).
+\]
+此时 \(G H^{\mathsf T}=-P+P=0\)，而 \(H\) 的后 \(n-k\) 列给出单位矩阵，所以其秩为 \(n-k\)。于是 \(G\) 的行空间包含于方程 \(Hc^{\mathsf T}=0\) 的解空间，两者维数又同为 \(k\)，故相等。若要恢复原来的坐标次序，对 \(H\) 的列施行相同的逆置换即可。这也说明核验任意候选校验矩阵时，为什么既要检查 \(GH^{\mathsf T}=0\)，又要检查它的秩。
 
 \subsection{循环码的理想表示}
 \label{b1:subsec:B02:02}
@@ -65,6 +80,7 @@ d(C)=\min_{0\ne c\in C}\operatorname{wt}(c),
 \]
 是一组基。\(g=x^n-1\) 对应零码，\(g=1\) 对应全部 \(\mathbb F_q^n\)。
 \end{theorem}
+
 \begin{proof}
 令 \(\pi\colon\mathbb F_q[x]\rightarrow R\) 为商映射。循环码对应的理想 \(C\) 的原像 \(\pi^{-1}(C)\) 是包含 \((x^n-1)\) 的非零理想。\cref{b1:prop:field-poly-division}与\cref{b1:thm:euclidean-pid}说明 \(\mathbb F_q[x]\) 为主理想整环，所以此原像唯一写成 \((g)\)，其中 \(g\) 首一；包含 \(x^n-1\) 就是 \(g\mid x^n-1\)。取像得到 \(C=(\bar g)\)，也证明了唯一性。
 

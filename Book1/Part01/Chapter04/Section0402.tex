@@ -19,16 +19,16 @@
 \subsection{共轭类、中心化子与正规化子}
 \label{b1:subsec:0402:01}
 
-令 \(g\cdot x=gxg^{-1}\)，则
+令 \(g\cdot x=gxg^{-1}\)，则 \(1\cdot x=x\)，并且
 \[
 g\cdot(h\cdot x)=ghx(gh)^{-1}=(gh)\cdot x,
 \]
 故这确为群作用。
 
 \begin{definition}\label{b1:def:centralizer-normalizer}
-元素 \(x\in G\) 的\term[gonge-lei]{共轭类}[conjugacy class]是
+元素 \(x\in G\) 在共轭作用下的轨道称为它的\term[gonge-lei]{共轭类}[conjugacy class]，记为
 \(\operatorname{Cl}_G(x)=\{\,gxg^{-1}\mid g\in G\,\}\)。
-它在共轭作用下的稳定子群称为\term[zhongxinhua-zi]{中心化子}[centralizer]，记为
+元素 \(x\) 在该作用下的稳定子群称为它的\term[zhongxinhua-zi]{中心化子}[centralizer]，记为
 \[
 C_G(x)\coloneqq\{\,g\in G\mid gx=xg\,\}.
 \]
@@ -42,22 +42,53 @@ C_G(A)\coloneqq\{\,g\in G\mid ga=ag\text{ 对每个 }a\in A\,\}
 \[
 N_G(H)\coloneqq\{\,g\in G\mid gHg^{-1}=H\,\}.
 \]
+\symidx{\(\operatorname{Cl}_G(x)\)：元素的共轭类}
+\symidx{\(C_G(x)\)：元素的中心化子}
 \symidx{\(C_G(A)\)：子集的中心化子}
 \symidx{\(N_G(H)\)：子群的正规化子}
 \end{definition}
-中心化子固定每个元素；正规化子只要求把子群整体保持不变。正规化子是共轭作用在子群集合上时的稳定子群，因此是子群，并且 \(H\trianglelefteq N_G(H)\)。此外，\(H\trianglelefteq G\) 当且仅当 \(N_G(H)=G\)。中心是正规子群：若 \(z\) 与所有元素交换，则 \(gzg^{-1}=z\)，故每个共轭都仍在中心中。
+
+这里 \(C_G(x)\) 固定的是元素 \(x\)。若考察整个共轭类作为集合是否保持不变，答案则不同：对任意 \(g\in G\)，都有
+\[
+g\operatorname{Cl}_G(x)g^{-1}
+=\Bigl\{\,(gh)x(gh)^{-1}\mid h\in G\,\Bigr\}
+=\operatorname{Cl}_G(x),
+\]
+因为 \(h\mapsto gh\) 是 \(G\) 上的双射。因此，保持这个共轭类整体不变的群元素是 \(G\) 的全部元素，而不只是 \(C_G(x)\) 中的元素。
 
 \ProseParagraphBreak
-以 \(S_3\) 为例，\(C_{S_3}\bigl((12)\bigr)=\bigl\{1,(12)\bigr\}\)，因为与 \((12)\) 交换的置换必须保持其唯一固定点 \(3\)，并只能在 \(1,2\) 之间置换。因此换位的共轭类有三个元素。另一方面，\(H=\bigl\langle(123)\bigr\rangle\) 的中心化子为 \(H\)，而正规化子是整个 \(S_3\)；换位把 \((123)\) 变成其逆，保持子群，却不逐点固定子群。
+正规化子对应于另一个作用，其作用集合是 \(G\) 的全部子群组成的集合 \(\mathcal S(G)\)。对 \(g\in G\) 和 \(H\in\mathcal S(G)\)，定义
+\[
+g\cdot H=gHg^{-1}.
+\]
+这首先确实给出一个子群：\(1\in gHg^{-1}\)，而对 \(u,v\in H\)，有
+\[
+(gug^{-1})(gvg^{-1})^{-1}=g(uv^{-1})g^{-1}\in gHg^{-1},
+\]
+故\cref{b1:prop:subgroup-test}适用。其次，\(1\cdot H=H\)，并且
+\[
+g\cdot(h\cdot H)=g(hHh^{-1})g^{-1}=(gh)H(gh)^{-1}=(gh)\cdot H.
+\]
+因此这定义了 \(G\) 在 \(\mathcal S(G)\) 上的作用。点 \(H\) 的稳定子群恰为 \(N_G(H)\)，所以正规化子是子群。由\cref{b1:thm:orbit-stabilizer}的陪集与轨道双射，还得到
+\[
+\bigl|\{\,gHg^{-1}\mid g\in G\,\}\bigr|=[G:N_G(H)].
+\]
+此处不要求 \(G\) 有限；等号表示共轭子群集合与相应左陪集集合具有相同基数。
+
+\ProseParagraphBreak
+中心化子 \(C_G(H)\) 要求共轭固定 \(H\) 的每个元素，正规化子 \(N_G(H)\) 则只要求共轭保持 \(H\) 整体不变。每个 \(h\in H\) 都满足 \(hHh^{-1}=H\)，故 \(H\leq N_G(H)\)；再按正规化子的定义，便有 \(H\trianglelefteq N_G(H)\)。此外，\(H\trianglelefteq G\) 当且仅当 \(N_G(H)=G\)。中心也是正规子群：\(Z(G)=\bigcap_{x\in G}C_G(x)\) 是子群，而且若 \(z\in Z(G)\)，则 \(gzg^{-1}=z\)，故每个共轭仍在中心中。
+
+\ProseParagraphBreak
+以 \(S_3\) 为例，\(C_{S_3}\Bigl((12)\Bigr)=\Bigl\{1,(12)\Bigr\}\)，因为与 \((12)\) 交换的置换必须保持其唯一固定点 \(3\)，并只能在 \(1,2\) 之间置换。因此换位的共轭类有三个元素。三个换位组成的集合被整个 \(S_3\) 保持，而其中单个换位的中心化子只有两个元素。另一方面，\(H=\Bigl\langle(123)\Bigr\rangle\) 的中心化子为 \(H\)，而正规化子是整个 \(S_3\)；换位把 \((123)\) 变成其逆，保持子群，却不逐点固定子群。
 
 \subsection{类方程}
 \label{b1:subsec:0402:02}
 
 对共轭作用使用\cref{b1:thm:orbit-stabilizer}，其中点 \(x\) 的稳定子群为 \(C_G(x)\)，得到
 \[
-\bigl|\operatorname{Cl}_G(x)\bigr|=\bigl[G:C_G(x)\bigr]
+\bigl|\operatorname{Cl}_G(x)\bigr|=\bigl[G:C_G(x)\bigr].
 \]
-对有限群成立。共轭类大小为 \(1\) 当且仅当 \(x\in Z(G)\)。把这些单元素轨道先分离出来，就得到\term[lei-fangcheng]{类方程}[class equation]。
+此式对任意群都成立，因为该定理给出了两个集合之间的双射。共轭类大小为 \(1\) 当且仅当 \(x\in Z(G)\)。以下设 \(G\) 有限，把这些单元素轨道先分离出来，再把其他共轭类的大小相加，就得到\term[lei-fangcheng]{类方程}[class equation]。
 
 \begin{proposition}[类方程]\label{b1:prop:class-equation}
 设 \(G\) 有限，从每个非中心共轭类中选一个代表 \(x_1,\ldots,x_r\)。则
@@ -68,10 +99,17 @@ N_G(H)\coloneqq\{\,g\in G\mid gHg^{-1}=H\,\}.
 \begin{proof}
 共轭类把 \(G\) 分割成不交并。中心元素各自构成一个单元素类。对每个非中心代表 \(x_i\)，\cref{b1:thm:orbit-stabilizer}给出其共轭类大小为 \(\bigl[G:C_G(x_i)\bigr]\)。对这些不交的类计数，就得到\eqref{b1:eq:class-equation}。
 \end{proof}
+
 例如 \(S_3\) 的类方程为 \(6=1+3+2\)：单位、三个换位、两个三轮换恰好给出三个共轭类。此式中的 \(1\) 表明 \(Z(S_3)=\{1\}\)。类方程中的求和按共轭类取代表，而不是对每个非中心元素求和；否则同一个轨道会重复计算。
 
 \ProseParagraphBreak
-对 \(D_8=\langle r,s\rangle\)，其中 \(r\) 是正方形四分之一周旋转，\(s\) 是反射，有 \(srs^{-1}=r^{-1}\)。旋转 \(r^a\) 与 \(s\) 交换当且仅当 \(r^a=r^{-a}\)，即 \(a\) 为偶数；反射 \(r^as\) 不与 \(r\) 交换。因此 \(Z(D_8)=\{1,r^2\}\)。共轭类具体为
+对 \(D_8=\langle r,s\rangle\)，其中 \(r\) 是正方形四分之一周旋转，\(s\) 是反射，有 \(srs^{-1}=r^{-1}\)。旋转 \(r^a\) 与 \(s\) 交换当且仅当 \(r^a=r^{-a}\)，即 \(a\) 为偶数；反射 \(r^as\) 不与 \(r\) 交换。因此 \(Z(D_8)=\{1,r^2\}\)。由同一关系可得
+\[
+sr^as^{-1}=r^{-a},\qquad
+r^b(r^as)r^{-b}=r^{a+2b}s,\qquad
+s(r^as)s^{-1}=r^{-a}s.
+\]
+旋转彼此交换，而用 \(s\) 共轭将旋转变成其逆，所以非中心旋转恰组成 \(\{r,r^3\}\)。对反射，用生成元 \(r,s\) 共轭都保持指数的奇偶性，故任意群元素的共轭也保持这一奇偶性；用 \(r\) 共轭又将指数加 \(2\)，从而遍历同一奇偶类。于是全部共轭类为
 \[
 \{1\},\quad \{r^2\},\quad \{r,r^3\},\quad
 \{s,r^2s\},\quad \{rs,r^3s\},
@@ -84,7 +122,17 @@ N_G(H)\coloneqq\{\,g\in G\mid gHg^{-1}=H\,\}.
 \begin{definition}\label{b1:def:p-group}
 设 \(p\) 为素数。阶为 \(p^a\) 的有限群称为有限 \(p\)-群，其中 \(a\geq0\)。当 \(a\geq1\) 时群非平凡。
 \end{definition}
+
 由\cref{b1:thm:orbit-stabilizer}，有限 \term[p-qun]{\(p\)-群}[p-group] \(P\) 的每个轨道大小为某个稳定子群的指数 \([P:P_x]\)，因而整除 \(|P|\)，是 \(p\) 的幂。这给出一个将在 Sylow 理论中反复使用的计数方法。
+
+\ProseParagraphBreak
+对于任意群 \(G\) 在集合 \(X\) 上的作用，把被所有群元素固定的点称为\term[gongtong-budongdian]{共同不动点}[common fixed point]，这些点组成的集合记为
+\[
+X^G\coloneqq\{\,x\in X\mid gx=x\text{ 对每个 }g\in G\,\}.
+\]
+\symidx{\(X^G\)：群作用的共同不动点集}
+共同不动点恰是单元素轨道中的点。作用群为 \(P\) 时，这个集合相应地记为 \(X^P\)。
+\symidx{\(X^P\)：\(p\)-群作用的共同不动点集}
 
 \begin{lemma}\label{b1:lem:p-action-fixed}
 若有限 \(p\)-群 \(P\) 作用在有限集合 \(X\) 上，记
@@ -106,8 +154,10 @@ N_G(H)\coloneqq\{\,g\in G\mid gHg^{-1}=H\,\}.
 \]
 末一个同余使用 \(P\neq\{1\}\)，即 \(|P|=p^a\)、\(a\geq1\)。中心包含单位，故其阶是正的 \(p\) 倍数，至少为 \(p\)，从而中心非平凡。
 \end{proof}
+
 这里“不动点存在”并非仅由作用非空得到，而是由同余和中心含单位共同得到。一般有限群的中心可以平凡，如 \(S_3\) 所示。
 
+\ProseParagraphBreak
 下面先记录一个不要求有限性的事实，供后续讨论中心商时使用。
 
 \begin{proposition}\label{b1:prop:cyclic-central-quotient}
@@ -127,4 +177,5 @@ N_G(H)\coloneqq\{\,g\in G\mid gHg^{-1}=H\,\}.
 \begin{proof}
 由\cref{b1:thm:p-group-center}，\(Z(G)\) 非平凡；又由\cref{b1:thm:lagrange}，其阶整除 \(p^2\)，所以只能为 \(p\) 或 \(p^2\)。若为 \(p^2\)，则 \(Z(G)=G\)，结论成立。若为 \(p\)，商群 \(G/Z(G)\) 的阶为 \(p\)，由\cref{b1:cor:finite-order-divides}中关于素数阶群的结论，它是循环群。再用\cref{b1:prop:cyclic-central-quotient}便知 \(G\) 交换；事实上这也排除了中心阶恰为 \(p\) 的可能。
 \end{proof}
+
 中心非平凡并不意味着整个 \(p\)-群交换；阶为 \(8\) 的 \(D_8\) 和 \(Q_8\) 已提供反例。上述推论利用的是商群阶恰为素数，不能把这一论证无条件移到 \(p^3\) 阶。

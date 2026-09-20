@@ -178,11 +178,13 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE]{\small\color{AlgebraGray}\thepage\quad\leftmark}
-\fancyhead[RO]{\small\color{AlgebraGray}\rightmark\quad\thepage}
+% 奇数页采用页前最后有效的节标记，避免页中开始新节时提前更换页眉。
+% 新节或习题的标记从后续页生效；章首页使用 plain，不显示上一章的标记。
+\fancyhead[RO]{\small\color{AlgebraGray}\TopMark{2e-right}\quad\thepage}
 \renewcommand{\headrulewidth}{0.35pt}
 % 保留数学标题的原始大小写，避免 book 类的 \MakeUppercase
 % 与 unicode-math 命令在页眉标记中发生冲突。
-% 偶数页页眉显示“章序＋章标题”（如“第一章 集合系、可测空间与可测映射”）；
+% 偶数页页眉显示“章序＋章标题”（如“第一章 代数对象、映射与基本构造”）；
 % 章序与章标题之间以 \quad 分隔，间距与奇数页节眉“节号＋节标题”之间一致；
 % 附录章的章序由 \CTEXthechapter 按本卷附录字母（如 A）给出。
 \renewcommand{\chaptermark}[1]{\markboth{\CTEXthechapter\quad #1}{}}
@@ -283,6 +285,9 @@
 \newaliascnt{definition}{theorem}
 \newtheorem{definition}[definition]{定义}
 \aliascntresetthe{definition}
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{例}
+\aliascntresetthe{example}
 % 习题按章单独编号，不占用定理类环境的流水号。
 \newtheorem{exercise}{习题}[chapter]
 
@@ -543,6 +548,9 @@
 \NewDocumentCommand{\keypoint}{m}{\CJKunderdot{#1}}
 \NewDocumentCommand{\foreignkeypoint}{m}{\underline{\textup{#1}}}
 
+% 正规闭包的双尖括号在正文与符号索引中采用同一间距。
+\NewDocumentCommand{\NormalClosure}{m}{\langle\!\langle #1\rangle\!\rangle}
+
 \crefname{chapter}{章}{章}
 \crefname{part}{编}{编}
 \crefname{section}{节}{节}
@@ -555,6 +563,7 @@
 \crefname{conjecture}{猜想}{猜想}
 \crefname{openproblem}{开放问题}{开放问题}
 \crefname{definition}{定义}{定义}
+\crefname{example}{例}{例}
 \crefname{remark}{注记}{注记}
 \crefname{exercise}{习题}{习题}
 \crefname{equation}{式}{式}
@@ -650,7 +659,7 @@
 \makeatletter
 \let\Algebra@orig@schapter\@schapter
 \def\@schapter#1{%
-  \markboth{#1}{}%
+  \markboth{#1}{#1}%
   \Algebra@orig@schapter{#1}%
 }
 % 目录按层级着色：编为黑色、小节为深灰；章与节保持默认链接蓝。

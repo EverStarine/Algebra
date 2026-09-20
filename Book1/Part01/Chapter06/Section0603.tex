@@ -25,11 +25,41 @@
 1\longrightarrow N\xrightarrow{\iota}G
 \xrightarrow{\pi}H\longrightarrow1
 \]
-称为\term[duan-zhenghe-qunlie]{短正合群列}[short exact sequence of groups]，如果 \(\iota\) 单射、\(\pi\) 满射，且 \(\operatorname{im}\iota=\ker\pi\)。它也称为 \(H\) 由 \(N\) 的一个\term[qun-kuozhang]{群扩张}[group extension]。若存在群同态 \(s:H\rightarrow G\) 满足 \(\pi s=\operatorname{id}_H\)，称扩张\term[fenlie-kuozhang]{分裂}[split extension]。
+称为\term[duan-zhenghe-qunlie]{短正合群列}[short exact sequence of groups]，如果 \(\iota\) 单射、\(\pi\) 满射，且 \(\operatorname{im}\iota=\ker\pi\)。它也称为 \(H\) 由 \(N\) 的一个\term[qun-kuozhang]{群扩张}[group extension]，即以 \(N\) 为核、以 \(H\) 为商的扩张。若存在群同态 \(s:H\rightarrow G\) 满足 \(\pi s=\operatorname{id}_H\)，称扩张\term[fenlie-kuozhang]{分裂}[split extension]。
 \end{definition}
+
 这里的 \(1\) 表示平凡群。“正合”在每个位置要求前一个映射的像等于后一个映射的核，因此两端的条件正好是单射与满射。通过 \(\iota\)，可将 \(N\) 识别为 \(\ker\pi\)，故它是 \(G\) 的正规子群。由于 \(\pi\) 满射，\cref{b1:thm:first-isomorphism}给出具体同构 \(G/N\rightarrow H\)、\(gN\mapsto\pi(g)\)。但扩张还记住了指定映射 \(\iota,\pi\)，比只写一个抽象同构 \(G/N\cong H\) 包含更多信息。
 
-\begin{theorem}\label{b1:thm:split-extension-semidirect}
+\begin{definition}[扩张的等价]\label{b1:def:extension-equivalence}
+固定群 \(N,H\)。对两条短正合群列
+\[
+\begin{aligned}
+1&\longrightarrow N\xrightarrow{\iota}G\xrightarrow{\pi}H\longrightarrow1,\\
+1&\longrightarrow N\xrightarrow{\iota'}G'\xrightarrow{\pi'}H\longrightarrow1,
+\end{aligned}
+\]
+若存在群同构 \(F:G\rightarrow G'\)，使
+\[
+F\circ\iota=\iota',\qquad \pi'\circ F=\pi,
+\]
+则称这两条扩张为\term[kuozhang-dengjia]{等价扩张}[equivalent extensions]。这要求同构在核与商上诱导指定的恒等映射。
+\end{definition}
+
+\cref{b1:fig:extension-equivalence}把这两个条件写成交换图。恒等同构、逆同构和复合同构分别说明上述关系具有自反性、对称性和传递性，因此可以谈论固定 \(N,H\) 后的扩张等价类。仅有中间群的抽象同构并不够：该同构还必须保持指定的核嵌入和商映射。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzcd}[row sep=large, column sep=large]
+1\arrow[r] & N\arrow[r,"\iota"]\arrow[d,"\operatorname{id}_N"']
+& G\arrow[r,"\pi"]\arrow[d,"F"]
+& H\arrow[r]\arrow[d,"\operatorname{id}_H"] & 1\\
+1\arrow[r] & N\arrow[r,"\iota'"'] & G'\arrow[r,"\pi'"'] & H\arrow[r] & 1
+\end{tikzcd}
+\caption[扩张的等价]{扩张的等价。中间的 \(F\) 是群同构，两个方块交换，核与商的识别保持不变。}
+\label{b1:fig:extension-equivalence}
+\end{figure}
+
+\begin{theorem}[分裂扩张与半直积]\label{b1:thm:split-extension-semidirect}
 短正合群列分裂，当且仅当 \(G\) 含有子群 \(L\)，使 \(\pi|_L:L\rightarrow H\) 为同构。存在这样的 \(L\) 时，\(G\) 是 \(N\) 与 \(L\) 的内半直积；若选择了同态截面 \(s\)，则
 \[
 G\cong N\rtimes_\alpha H,\qquad
@@ -38,7 +68,16 @@ G\cong N\rtimes_\alpha H,\qquad
 同构由 \((n,h)\mapsto ns(h)\) 给出。
 \end{theorem}
 \begin{proof}
-若有同态截面 \(s\)，则由 \(\pi s=\operatorname{id}\) 可知 \(s\) 单射，像 \(L=s(H)\) 是子群，且 \(\pi|_L\) 与 \(s\) 互逆。对任意 \(g\in G\)，令 \(h=\pi(g)\)，则 \(gs(h)^{-1}\in\ker\pi=N\)，所以 \(G=NL\)。若 \(s(h)\in N\)，应用 \(\pi\) 得 \(h=1\)，故 \(N\cap L=\{1\}\)。我们已验证 \(N\trianglelefteq G\)、\(L\leq G\)、\(NL=G\) 和 \(N\cap L=\{1\}\)，所以\cref{b1:thm:internal-semidirect}给出 \(N\rtimes L\rightarrow G\)、\((n,\ell)\mapsto n\ell\) 的同构。再经同构 \(s:H\rightarrow L\) 把第二因子写成 \(H\)，共轭作用就成为 \(\alpha_h(n)=s(h)ns(h)^{-1}\)，所得映射恰为 \((n,h)\mapsto ns(h)\)。
+若有同态截面 \(s\)，则由 \(\pi s=\operatorname{id}\) 可知 \(s\) 单射，像 \(L=s(H)\) 是子群，且 \(\pi|_L\) 与 \(s\) 互逆。
+
+对任意 \(g\in G\)，令 \(h=\pi(g)\)，则 \(gs(h)^{-1}\in\ker\pi=N\)，所以 \(G=NL\)。若 \(s(h)\in N\)，应用 \(\pi\) 得 \(h=1\)，故 \(N\cap L=\{1\}\)。我们已验证 \(N\trianglelefteq G\)、\(L\leq G\)、\(NL=G\) 和 \(N\cap L=\{1\}\)，所以\cref{b1:thm:internal-semidirect}给出 \(N\rtimes L\rightarrow G\)、\((n,\ell)\mapsto n\ell\) 的同构。再经同构 \(s:H\rightarrow L\) 把第二因子写成 \(H\)，共轭作用就成为 \(\alpha_h(n)=s(h)ns(h)^{-1}\)。
+
+记所得同构为 \(\Phi:N\rtimes_\alpha H\rightarrow G\)。把核嵌入显式写出，就是 \(\Phi(n,h)=\iota(n)s(h)\)，并且
+\[
+\Phi(n,1)=\iota(n),\qquad
+\pi\Bigl(\Phi(n,h)\Bigr)=h.
+\]
+因此它还将半直积的自然扩张与所给扩张等价地识别，而不只是给出中间群的抽象同构。
 
 反过来，若 \(\pi|_L\) 是同构，取 \(s:H\rightarrow G\) 为它的逆再接子群嵌入。此映射是同态，且 \(\pi s=\operatorname{id}_H\)，故扩张分裂。特别地，外半直积投影 \(N\rtimes H\rightarrow H\) 总有同态截面 \(h\mapsto(1,h)\)。
 \end{proof}
@@ -46,7 +85,10 @@ G\cong N\rtimes_\alpha H,\qquad
 \subsection{集合截面与同态截面}
 \label{b1:subsec:0603:02}
 
-满射 \(\pi:G\rightarrow H\) 的\term[jiemian]{截面}[section]是满足 \(\pi\circ s=\operatorname{id}_H\) 的映射 \(s:H\rightarrow G\)，也就是为每个 \(h\in H\) 选择一个原像 \(s(h)\)。有限群时可逐个选择，一般情形可借助选择公理。若另外满足 \(s(hk)=s(h)s(k)\)，则称它为同态截面。本节总把单位的代表选为单位，即 \(s(1)=1\)。集合截面存在不等于群扩张分裂，后者要求这个选择还能保持乘法。
+满射 \(\pi:G\rightarrow H\) 的\term[jiemian]{截面}[section]是满足 \(\pi\circ s=\operatorname{id}_H\) 的映射 \(s:H\rightarrow G\)，也就是为每个 \(h\in H\) 选择一个原像 \(s(h)\)。商群有限时可逐个选择；一般情形对非空原像集合族应用\cref{b1:def:A-choice}中的选择公理。若另外满足 \(s(hk)=s(h)s(k)\)，则称它为同态截面。本节总把单位的代表选为单位，即 \(s(1)=1\)。
+
+\ProseParagraphBreak
+要让所选代表构成 \(G\) 中一个与 \(H\) 同构的子群，就须把 \(H\) 中的乘法等式一并提升到 \(G\)：若 \(hk=\ell\)，必须有 \(s(h)s(k)=s(\ell)\)。特别地，\(h^m=1\) 要求选出的提升满足 \(s(h)^m=1\)。同态截面正好同时保证这些要求；单独为每个陪集挑选一个代表，还没有解决代表相乘是否符合商群乘法的问题。
 
 \ProseParagraphBreak
 考虑加法群的满射
@@ -67,6 +109,9 @@ s\bigl([1]_2\bigr)+s\bigl([1]_2\bigr)=[2]_4,
 \subsection{扩张数据与半直积}
 \label{b1:subsec:0603:03}
 
+\textbf{综合应用。}以下允许核不交换，用共轭记录代表与核中元素怎样相乘，再用因子集记录代表之间怎样相乘。两组公式共同反映原群的结合律；掌握分裂判别后，可以通过这些计算进一步理解一般扩张。
+
+\ProseParagraphBreak
 给定扩张 \(1\rightarrow N\xrightarrow{\iota}G\xrightarrow{\pi}H\rightarrow1\)，仍通过 \(\iota\) 把 \(N\) 识别为 \(\ker\pi\)。选择归一化集合截面 \(s:H\rightarrow G\)，定义映射 \(\alpha:H\rightarrow\operatorname{Aut}(N)\) 及 \(c:H\times H\rightarrow N\)：
 \[
 \alpha_h(n)=s(h)ns(h)^{-1},\qquad
@@ -103,6 +148,7 @@ c(h,k)c(hk,\ell)s(hk\ell),
 \]
 消去右端共同因子，就得到\eqref{b1:eq:extension-factor-identity}。归一化条件直接来自 \(s(1)=1\)。
 \end{proof}
+
 若把截面改为 \(s'(h)=b(h)s(h)\)，其中 \(b(h)\in N\)、\(b(1)=1\)，则直接代入定义给出
 \begin{equation}\label{b1:eq:factor-set-section-change}
 \begin{aligned}
@@ -111,4 +157,55 @@ c'(h,k)&=b(h)\alpha_h\bigl(b(k)\bigr)c(h,k)b(hk)^{-1}.
 \end{aligned}
 \end{equation}
 计算第二式时，唯一需要移过截面的因子是 \(b(k)\)，由
-\(s(h)b(k)=\alpha_h\bigl(b(k)\bigr)s(h)\) 处理。可见因子集依赖截面的选择，同一个扩张可以有不同的 \(c\)。扩张分裂当且仅当能选到使全部 \(c(h,k)=1\) 的截面；这时\eqref{b1:eq:extension-action-defect}说明 \(\alpha\) 成为真正的同态，乘法恢复为半直积。对于非交换的 \(N\)，不能删掉内自同构项并把任意 \(\alpha\) 都当作群作用。
+\(s(h)b(k)=\alpha_h\bigl(b(k)\bigr)s(h)\) 处理。任意另一个归一化截面都可这样写，因为 \(b(h)=s'(h)s(h)^{-1}\) 在核中，且 \(b(1)=1\)。
+
+\ProseParagraphBreak
+这个变换也是同一个群的坐标变换。等式
+\[
+ns(h)=n\,b(h)^{-1}s'(h)
+\]
+说明旧坐标到新坐标的映射为
+\begin{equation}\label{b1:eq:extension-coordinate-change}
+(n,h)\longmapsto\Bigl(n\,b(h)^{-1},h\Bigr).
+\end{equation}
+两套坐标分别通过 \((n,h)\mapsto ns(h)\) 和 \((n',h)\mapsto n's'(h)\) 识别为 \(G\)，所以这个变换保持各自的乘法。它在核上是恒等映射，也保持商坐标；由\cref{b1:def:extension-equivalence}，两套模型描述的是等价扩张。第一坐标中 \(b(h)^{-1}\) 必须乘在 \(n\) 的右侧，不能在非交换核中随意调换。
+
+\begin{corollary}[交换核上的诱导作用]\label{b1:cor:abelian-kernel-action}
+设 \(1\rightarrow N\xrightarrow{\iota}G\xrightarrow{\pi}H\rightarrow1\) 为群扩张，且 \(N\) 交换。则由任一归一化集合截面得到的映射
+\[
+\alpha:H\longrightarrow\operatorname{Aut}(N)
+\]
+是群同态，与截面的选择无关。固定两端的等价扩张诱导相同的作用。这个作用平凡，当且仅当 \(\iota(N)\leq Z(G)\)。
+\end{corollary}
+\begin{proof}
+仍把 \(N\) 识别为核。由于 \(c(h,k)\) 属于交换群 \(N\)，它在 \(N\) 上的共轭为恒等。因此\eqref{b1:eq:extension-action-defect}给出 \(\alpha_h\alpha_k=\alpha_{hk}\)，再结合 \(\alpha_1=\operatorname{id}_N\)，可知 \(\alpha\) 是同态。对另一截面，\eqref{b1:eq:factor-set-section-change}中的 \(b(h)\) 也在 \(N\) 中，故 \(\alpha'_h=\alpha_h\)。
+
+若 \(F:G\rightarrow G'\) 给出固定两端的扩张等价，则 \(F\circ s\) 是 \(G'\) 的截面。对 \(n\in N\)，由 \(F\circ\iota=\iota'\) 得
+\[
+F\Bigl(s(h)\iota(n)s(h)^{-1}\Bigr)
+=F\Bigl(s(h)\Bigr)\iota'(n)F\Bigl(s(h)\Bigr)^{-1}.
+\]
+两边分别等于 \(\iota'\Bigl(\alpha_h(n)\Bigr)\) 和 \(\iota'\Bigl(\alpha'_h(n)\Bigr)\)。由 \(\iota'\) 单射，两个作用相同。
+
+若核包含于中心，共轭作用显然平凡。反过来，若作用平凡，则 \(N\) 中每个元素与全部 \(s(h)\) 交换，也因 \(N\) 交换而与全部 \(N\) 中元素交换。每个群元素都形如 \(ms(h)\)，故 \(N\leq Z(G)\)。
+\end{proof}
+
+核交换只保证商群在核上的作用有意义，并不保证该作用平凡，也不保证扩张分裂。例如前面的 \(C_4\rightarrow C_2\) 具有交换核，却没有同态截面。扩张分裂当且仅当能选到使全部 \(c(h,k)=1\) 的截面；这时\eqref{b1:eq:extension-action-defect}说明 \(\alpha\) 成为真正的同态，乘法恢复为半直积。
+
+\ProseParagraphBreak
+反过来，分裂扩张也可能配上不保持乘法的集合截面。令 \(G=C_4\times C_2\)，其中 \(C_4=\langle z\rangle\)、\(C_2=\{1,q\}\)，取第二坐标投影。截面 \(s_0(h)=(1,h)\) 是同态，故扩张分裂。但归一化截面 \(s(1)=(1,1)\)、\(s(q)=(z,q)\) 满足
+\[
+c(q,q)=s(q)^2=(z^2,1)\neq1,
+\]
+并非同态。这个非平凡因子集只是所选截面的结果；要证明扩张不分裂，必须排除所有同态截面的可能。
+
+\ProseParagraphBreak
+上一章的 \(21\) 阶群还说明抽象群同构与扩张等价的区别。对 \(t=2,4\)，记 \(G_t\) 为\cref{b1:thm:groups-order-pq}中由乘法
+\[
+(i,j)(k,\ell)=(i+t^jk,j+\ell)
+\]
+构造的群，第一坐标模 \(7\)，第二坐标模 \(3\)。分别固定核嵌入 \(i\mapsto(i,0)\) 和商映射 \((i,j)\mapsto j\)，便得到两条核为 \(C_7\)、商为 \(C_3\) 的扩张。该定理中的同构是
+\[
+G_4\longrightarrow G_2,\qquad(i,j)\longmapsto(i,2j).
+\]
+它改变了商坐标，因而本身不是固定两端的扩张等价。事实上也不存在其他这样的扩张等价：商生成元 \([1]_3\) 在核上的作用分别是乘以 \(4\) 和乘以 \(2\)，由\cref{b1:cor:abelian-kernel-action}，这两个不同的作用不能通过固定两端的等价互相变换。因此它们是同构的抽象群，却是不等价的指定扩张。

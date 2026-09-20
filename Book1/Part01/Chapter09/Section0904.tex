@@ -11,7 +11,7 @@
 %
 % * 由整数关系矩阵确定交换群
 % * 商格与有限指数
-% * 第二卷以主理想整环模论重新解释本章结果
+% * 模论解释与后续推广预告
 %
 % ---
 %
@@ -26,6 +26,26 @@ A=\mathbb Z^m/M\mathbb Z^n.
 列操作改变关系生成集，行操作改变群的生成坐标；两者都必须是可逆的整数操作。
 
 \ProseParagraphBreak
+设 Smith 标准形有 \(t\) 个非零对角元 \(d_1\mid\cdots\mid d_t\)。\cref{b1:tab:smith-coordinate-types}区分新坐标中的三种情况：前 \(t\) 个坐标受到非零关系约束，其余 \(m-t\) 个坐标没有这样的约束。
+
+\begin{table}[htbp]
+\centering
+\caption{Smith 标准形中的坐标与商群因子}
+\label{b1:tab:smith-coordinate-types}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.44\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+新坐标中的情形 & 对商群的贡献 \\
+\midrule
+非单位主元 \(d_i>1\) & 非平凡有限循环因子 \(C_{d_i}\) \\
+单位主元 \(d_i=1\) & 该坐标在商群中为零，平凡因子 \(C_1\) 删去 \\
+没有非零主元约束的坐标 & 每个贡献一个无限循环因子，共有 \(m-t\) 个 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+矩阵的非零 Smith 对角元允许为 \(1\)；群结构定理所列的不变因子则删去这些 \(1\)，只保留大于 \(1\) 的项。标准形中的零列表示零关系，它们来自所给关系中的冗余，不产生额外的自由生成元。关系矩阵可以有任意多个相互依赖的列；自由部分的秩由目标格的坐标数决定，为 \(m-t\)，不是 \(n-t\)。
+
+\paragraph*{求同构类型：读取 Smith 对角元}
 例如群由 \(x,y\) 生成，关系为 \(4x+2y=0\)、\(6x+8y=0\)，矩阵为
 \[
 M=\begin{pmatrix}4&6\\2&8\end{pmatrix}.
@@ -44,17 +64,30 @@ M=\begin{pmatrix}4&6\\2&8\end{pmatrix}.
 \]
 四步分别为交换两行、第二行减第一行的两倍、第二列减第一列的四倍、第二行变号。因此 \(A\cong C_2\oplus C_{10}\)。
 
-\ProseParagraphBreak
+\paragraph*{追踪原元素：保存行变换矩阵}
 若还需要指出商群元素怎样对应，不能只记住对角数字。本例行操作的总矩阵为
 \[
-U=\begin{pmatrix}0&1\\-1&2\end{pmatrix},
+U=\begin{pmatrix}0&1\\-1&2\end{pmatrix},\qquad
+U^{-1}=\begin{pmatrix}2&-1\\1&0\end{pmatrix}.
 \]
-先在整数坐标上定义同态
+原坐标向新坐标转换使用 \(x\mapsto Ux\)；若要把新坐标轴对应的生成元写回原坐标，则使用 \(U^{-1}e_i\)。先在整数坐标上定义同态
 \[
 \psi:\mathbb Z^2\longrightarrow C_2\oplus C_{10},\qquad
-\psi(u,v)=\bigl(\bar v,\overline{-u+2v}\bigr).
+\psi(u,v)=\Bigl([v]_2,[-u+2v]_{10}\Bigr).
 \]
-前述列操作的矩阵为 \(V=\begin{pmatrix}1&-4\\0&1\end{pmatrix}\)，实际相乘得到 \(UMV=\operatorname{diag}(2,10)\)。因为 \(V\mathbb Z^2=\mathbb Z^2\)，有 \(U(M\mathbb Z^2)=2\mathbb Z\oplus10\mathbb Z\)。因此 \(\ker\psi=U^{-1}(2\mathbb Z\oplus10\mathbb Z)=M\mathbb Z^2\)；\(U\) 在整数上可逆，随后分别取模的映射满射，所以 \(\psi\) 满射。由\cref{b1:thm:first-isomorphism}，它诱导同构 \(\mathbb Z^2/M\mathbb Z^2\to C_2\oplus C_{10}\)，把陪集 \((u,v)+M\mathbb Z^2\) 送到 \(\psi(u,v)\)。原坐标中的 \((2,1)\) 对应 \(C_2\) 的标准生成元，\((-1,0)\) 对应 \(C_{10}\) 的标准生成元；它们在商群中的阶分别为二与十。
+前述列操作的矩阵及其整数逆矩阵为
+\[
+V=\begin{pmatrix}1&-4\\0&1\end{pmatrix},\qquad
+V^{-1}=\begin{pmatrix}1&4\\0&1\end{pmatrix}.
+\]
+实际相乘得到 \(UMV=\operatorname{diag}(2,10)\)。因为 \(V\mathbb Z^2=\mathbb Z^2\)，有 \(U(M\mathbb Z^2)=2\mathbb Z\oplus10\mathbb Z\)。因此
+\[
+\ker\psi=U^{-1}(2\mathbb Z\oplus10\mathbb Z)=M\mathbb Z^2.
+\]
+\(U\) 在整数上可逆，随后分别取模的映射满射，所以 \(\psi\) 满射。
+
+\ProseParagraphBreak
+由\cref{b1:thm:first-isomorphism}，\(\psi\) 诱导同构 \(\mathbb Z^2/M\mathbb Z^2\rightarrow C_2\oplus C_{10}\)，把陪集 \((u,v)+M\mathbb Z^2\) 送到 \(\psi(u,v)\)。原坐标中的 \(U^{-1}e_1=(2,1)\) 对应 \(C_2\) 的标准生成元，\(U^{-1}e_2=(-1,0)\) 对应 \(C_{10}\) 的标准生成元；它们在商群中的阶分别为二与十。
 
 \ProseParagraphBreak
 若生成元为 \(x,y,z\)，关系只有 \(2x=0\)、\(x+3y=0\)，则先用第二条消去 \(x=-3y\)，第一条成为 \(6y=0\)，而 \(z\) 没有关系。因此群为 \(C_6\oplus\mathbb Z\)。没有非零对角关系约束的位置贡献自由生成元，而不是有限阶循环因子。
@@ -62,37 +95,72 @@ U=\begin{pmatrix}0&1\\-1&2\end{pmatrix},
 \subsection{商格与有限指数}
 \label{b1:subsec:0904:02}
 
-\begin{proposition}\label{b1:prop:lattice-index}
-设 \(L\le\mathbb Z^m\) 是由整数矩阵 \(M\) 的列生成的子群。若 \(M\) 的 Smith 标准形有 \(t\) 个非零对角元 \(d_1,\ldots,d_t\)，则
+\begin{proposition}[商格指数]\label{b1:prop:lattice-index}
+设 \(m,n\) 为正整数，\(M\) 为 \(m\times n\) 整数矩阵，\(L=M\mathbb Z^n\le\mathbb Z^m\)。若 \(M\) 的 Smith 标准形有 \(t\) 个非零对角元 \(d_1,\ldots,d_t\)，则
 \[
 \mathbb Z^m/L\cong\mathbb Z^{m-t}\oplus
 \bigoplus_{i=1}^t C_{d_i}.
 \]
 特别地，\(L\) 的指数有限当且仅当 \(t=m\)，此时指数为 \(\prod_i d_i\)。若 \(M\) 为非奇异的 \(m\times m\) 矩阵，则指数为 \(|\det M|\)。
 \end{proposition}
+
 \begin{proof}
 由\cref{b1:lem:smith-integer}，存在整数可逆矩阵 \(U,V\) 使 \(UMV=D\)，其中 \(D\) 是所述对角阵。由于 \(V\mathbb Z^n=\mathbb Z^n\)，有 \(U(L)=D\mathbb Z^n=\langle d_1e_1,\ldots,d_te_t\rangle\)。因此 \(x+L\mapsto Ux+U(L)\) 给出商群同构。再把前 \(t\) 个坐标分别模 \(d_i\)，其余坐标保留，所得满同态的核恰为 \(U(L)\)；\cref{b1:thm:first-isomorphism}遂给出所述商群公式。
 
 指数就是商群的元素数。当 \(m-t>0\) 时有无限循环直和因子，故指数无限；当 \(m=t\) 时指数为有限循环因子阶的乘积。若 \(M\) 是非奇异方阵，则 \(t=m\)，而 \(\det U,\det V\in\{1,-1\}\)，所以从 \(UMV=D\) 得 \(|\det M|=\det D=\prod_i d_i\)。
 \end{proof}
+
 例如上一小节的二维格指数为二十，等于 \(|4\cdot8-6\cdot2|\)。但行列式只给出总阶，并不决定商群：对角矩阵 \(\operatorname{diag}(1,20)\) 与 \(\operatorname{diag}(2,10)\) 的行列式同为二十，商群分别为 \(C_{20}\) 与 \(C_2\oplus C_{10}\)，两者中元素的最大阶不同。
 
-\begin{proposition}\label{b1:prop:determinantal-divisors}
-令 \(\Delta_k(M)\) 为 \(M\) 的全部 \(k\) 阶子式的非负最大公因数，并令 \(\Delta_0(M)=1\)。若 \(M\) 有 \(t\) 个非零 Smith 对角元，则
+\begin{proposition}[行列式因子]\label{b1:prop:determinantal-divisors}
+设 \(m,n\) 为正整数，\(M\) 为 \(m\times n\) 整数矩阵。对 \(1\le k\le\min(m,n)\)，令 \(\Delta_k(M)\) 为 \(M\) 的全部 \(k\) 阶子式的非负最大公因数，称为第 \(k\) 个\term[xinglieshi-yinzi]{行列式因子}[determinantal divisor]；全部相应子式都为零时约定其最大公因数为零，并令 \(\Delta_0(M)=1\)。若 \(M\) 的秩为 \(t\)，即有 \(t\) 个非零 Smith 对角元，则
 \[
-\Delta_k(M)=d_1\cdots d_k\quad(1\le k\le t),
-\qquad
-d_k=\frac{\Delta_k(M)}{\Delta_{k-1}(M)}.
+\begin{aligned}
+\Delta_k(M)&=d_1\cdots d_k &&(1\le k\le t),\\
+\Delta_k(M)&=0 &&(t<k\le\min(m,n)).
+\end{aligned}
+\]
+因此比值公式为
+\[
+d_k=\frac{\Delta_k(M)}{\Delta_{k-1}(M)}\qquad(1\le k\le t).
 \]
 \end{proposition}
+
+\symidx{\(\Delta_k(M)\)：矩阵的行列式因子}
+
 \begin{proof}
 整数初等行列操作保持各阶子式的最大公因数。以某行加另一行的整数倍为例，每个受影响子式由行列式的线性性写成原子式与另一原子式的整数线性组合；如果所加行已包含在子式中，额外项有重复行而为零。逆操作给出反向整除，所以最大公因数不变。换行、变号及列操作同样成立。
 
-对 Smith 对角阵，非零 \(k\) 阶子式是所选 \(k\) 个对角元的乘积。若指标为 \(i_1<\cdots<i_k\)，则 \(i_j\ge j\)，整除链使 \(d_1\cdots d_k\) 整除该乘积；而前 \(k\) 个对角元的子式恰好等于此乘积。因此它就是全部子式的最大公因数。
-\end{proof}
-这个判据适合核验小矩阵的答案。本例所有元素的最大公因数为二，二阶子式为二十，因此 \(d_1=2,d_2=10\)。它不必总比完整消元省力：大矩阵的子式很多，实际计算可以先做整数行列化简，再用少量子式检查。
+对 Smith 对角阵，当 \(1\le k\le t\) 时，非零 \(k\) 阶子式是所选 \(k\) 个对角元的乘积。若指标为 \(i_1<\cdots<i_k\)，则 \(i_j\ge j\)，整除链使 \(d_1\cdots d_k\) 整除该乘积；而前 \(k\) 个对角元的子式恰好等于此乘积。因此它就是全部子式的最大公因数。各项为正，结合 \(\Delta_0(M)=1\)，便得到所写的比值公式。
 
-\subsection{主理想整环模论的解释}
+若 \(k>t\)，对角阵的任意 \(k\) 阶子式都为零，故 \(\Delta_k(M)=0\)。特别地，零矩阵的所有正阶行列式因子均为零，不适用上述比值公式。
+\end{proof}
+
+\begin{corollary}[满行秩矩形矩阵的商格指数]\label{b1:cor:full-row-rank-index}
+设 \(m,n\) 为正整数，\(M\) 为满行秩的 \(m\times n\) 整数矩阵。则 \(m\le n\)，并且
+\[
+[\mathbb Z^m:M\mathbb Z^n]=\Delta_m(M).
+\]
+即商格指数等于全部 \(m\) 阶子式绝对值的最大公因数。若 \(m=n\)，这就是 \(|\det M|\)。
+\end{corollary}
+
+\begin{proof}
+满行秩意味着非零 Smith 对角元的个数 \(t=m\)。由\cref{b1:prop:lattice-index}，指数为 \(d_1\cdots d_m\)；再由\cref{b1:prop:determinantal-divisors}，此乘积等于 \(\Delta_m(M)\)。方阵只有一个 \(m\) 阶子式，即其行列式。
+\end{proof}
+
+例如 \(M=\begin{pmatrix}2&3\end{pmatrix}\) 有满行秩，而
+\[
+M\mathbb Z^2=2\mathbb Z+3\mathbb Z=\mathbb Z,
+\]
+因为 \(3-2=1\)。其指数为 \(1=\gcd(2,3)\)，不能任选一个非零最大阶子式 \(2\) 或 \(3\) 作为指数。
+
+\ProseParagraphBreak
+行列式因子也适合核验小矩阵的 Smith 结果。本节的二维算例中，全部元素的最大公因数为二，唯一二阶子式为二十，因此 \(d_1=2,d_2=10\)。大矩阵的子式很多，可以先做整数行列化简，再抽查少量子式以发现计算失误。不过，若所抽取子式的最大公因数为 \(g\)，只能直接得到 \(\Delta_k(M)\mid g\)，不能据此断言相等。例如 \(\operatorname{diag}(2,3)\) 的全部一阶子式最大公因数为 \(1\)，只检查条目 \(2\) 就不能恢复它。
+
+\ProseParagraphBreak
+若要独立确认正的候选值 \(\delta=\Delta_k(M)\)，须证明全部 \(k\) 阶子式均被 \(\delta\) 整除，并找到最大公因数恰为 \(\delta\) 的一组子式。这两个方向合起来才给出等号。另一种充分验证是完整保存 \(U,V\)，核验 \(UMV=D\) 及 \(U,V\) 的整数逆矩阵，并检查 \(D\) 的非零对角元为正且形成整除链；这样便确认了 Smith 结果，无须枚举全部子式。
+
+\subsection{模论解释与后续推广预告}
 \label{b1:subsec:0904:03}
 
 本章始终只用整数倍、子群与商群。下一卷将把这种结构重新解释为模：整数 \(n\) 对交换群元素 \(x\) 的作用就是 \(nx\)。这个预告不作为当前证明的输入；模的定义与公理将在第二卷第二章“模、子模与商模”正式建立。

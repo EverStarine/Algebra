@@ -7,11 +7,15 @@
 
 交换群中的生成关系可以写成整数线性关系，自由交换群则对应没有非平凡关系的情形。本章统一用加法记群运算，以 \(0\) 表示单位元，以 \(mx\) 表示元素 \(x\) 的整数倍。本节从每个元素的唯一整数坐标出发讨论基，再证明子群仍自由。虽然这与向量空间很相似，整数不能任意相除，子群的基也未必能扩充为母群的基。
 
+\ProseParagraphBreak
+上一章选读部分的\cref{b1:thm:nielsen-schreier}说明自由群的子群仍自由，但子群的秩可以增大：\cref{b1:thm:schreier-rank}给出 \(F_2\) 的指数二子群有秩三。本节的整数坐标方法则将证明，\(\mathbb Z^n\) 的子群有一组至多 \(n\) 个元素的基。两种自由对象都有子群自由性，秩的限制却不同；本章的有限矩阵方法依靠的是后一种限制。
+
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 整数格与自由交换群
-% * 子群仍自由及有限秩情形
-% * 秩及其不变性
+% * 整数格的子群：以普通归纳证明有限秩情形
+% * 有限秩及其不变性，有限整数关系矩阵的依据
+% * 无限秩的子群与秩：另列良序与无限基数证明；只学习有限生成分类时可以暂缓
 %
 
 \subsection{整数格与自由交换群}
@@ -26,6 +30,16 @@ x=\sum_{b\in B}n_b b,
 \]
 则称 \(B\) 为 \(A\) 的一组基，具有这种基的交换群称为\term[ziyou-jiaohuan-qun]{自由交换群}[free abelian group]。唯一性指所有系数分别唯一，并不区分同一个有限和的书写次序。
 \end{definition}
+
+对子集 \(B\subseteq A\)，若任意有限子集 \(B_0\subseteq B\) 及任意整数族 \((n_b)_{b\in B_0}\) 都满足
+\[
+\sum_{b\in B_0}n_b b=0
+\quad\Longrightarrow\quad
+n_b=0\quad\text{对每个 }b\in B_0,
+\]
+就称 \(B\) \term[zhengshu-xianxing-wuguan]{整数线性无关}[linear independence over the integers]。因此，\(B\) 是一组基，当且仅当它生成 \(A\) 且整数线性无关：生成性给出有限整数和的存在性，两种表示相减后应用无关性，便得到所有坐标相同；反过来，零元素的唯一表示保证无关性。
+
+\ProseParagraphBreak
 对任意集合 \(I\)，令
 \[
 \mathbb Z^{(I)}
@@ -43,61 +57,123 @@ n_i\ne0\text{ 的指标只有有限个}\bigr\}.
 \ProseParagraphBreak
 有限的 \(I\) 给出熟悉的整数格 \(\mathbb Z^n\)。无限指标时必须限定有限支集；允许任意整数族所得的全直积是不同的构造，本章不把它当作自由交换群的定义。
 
-\begin{proposition}\label{b1:prop:free-abelian-universal}
+\begin{proposition}[自由交换群的泛性质]\label{b1:prop:free-abelian-universal}
 对任意交换群 \(A\) 和映射 \(f:I\to A\)，存在唯一同态
 \(\widetilde f:\mathbb Z^{(I)}\to A\)，使 \(\widetilde f(e_i)=f(i)\)。
 \end{proposition}
+
 \begin{proof}
 定义 \(\widetilde f(\sum n_i e_i)=\sum n_i f(i)\)。表示的唯一性保证良定义；和只有有限项，交换性保证加法相容。生成元的像已经指定，所以这样的同态唯一。
 \end{proof}
+
 这与自由群的泛性质相似，区别在于目标限为交换群。比如从 \(\mathbb Z^2\) 到群 \(G\) 指定两个基向量的像 \(x,y\)，必须要求 \(xy=yx\)；从 \(F_2\) 出发则没有这个要求。
 
 \ProseParagraphBreak
 在 \(\mathbb Z^2\) 中，\((1,0),(1,1)\) 构成一组基，因为
 \((u,v)=(u-v)(1,0)+v(1,1)\)，系数唯一。而 \((2,0),(0,1)\) 虽然整数线性无关，却只生成第一坐标为偶数的子群。整数格的“无关”与“生成”必须分别检查，不能把实向量空间中的一组基自动当作整数格的基。
 
-\subsection{自由交换群的子群}
+\subsection{整数格的子群}
 \label{b1:subsec:0901:02}
 
-\begin{theorem}\label{b1:thm:free-abelian-subgroup}
-自由交换群的每个子群仍是自由交换群。若 \(H\le\mathbb Z^n\)，则 \(H\) 有一组至多 \(n\) 个元素的基。
+有限生成交换群的分类只需下面的有限秩结论。证明每次取一个整数坐标，先确定该坐标为零的子群，再判断是否需要添加一个新基元素，因而只需对坐标数作普通归纳。
+
+\begin{theorem}[有限秩自由交换群的子群]\label{b1:thm:finite-rank-free-abelian-subgroup}
+若 \(H\le\mathbb Z^n\)，则 \(H\) 是自由交换群，且有一组至多 \(n\) 个元素的基。
 \end{theorem}
+
 \begin{proof}
-先证明有限秩情形，对 \(n\) 归纳。\(n=0\) 显然。对 \(n\ge1\)，把 \(H\) 投影到最后一个坐标。这个投影是同态，其像是 \(\mathbb Z\) 的子群；\cref{b1:lem:integer-subgroups}说明这样的子群必为 \(d\mathbb Z\)，其中 \(d\ge0\)。核
+对 \(n\) 归纳。\(n=0\) 时 \(H=0\)，空集是一组基。
+对 \(n\ge1\)，把 \(H\) 投影到最后一个坐标。这个投影是同态，其像是 \(\mathbb Z\) 的子群；\cref{b1:lem:integer-subgroups}说明这样的子群必为 \(d\mathbb Z\)，其中 \(d\ge0\)。核
 \[
 K=H\cap\bigl(\mathbb Z^{n-1}\times\{0\}\bigr)
 \]
-由归纳假设自由且秩至多 \(n-1\)。若 \(d=0\)，则 \(H=K\)。若 \(d>0\)，选 \(h\in H\) 的末坐标为 \(d\)。任意 \(x\in H\) 的末坐标为 \(md\)，于是 \(x-mh\in K\)；而 \(mh\in K\) 迫使 \(md=0\)，进而 \(m=0\)。所以 \(H=K\oplus\mathbb Zh\)，在 \(K\) 的基后加上 \(h\) 即可。
+与 \(\mathbb Z^{n-1}\) 的一个子群自然同构，所以由归纳假设有一组至多 \(n-1\) 个元素的基。若 \(d=0\)，则 \(H=K\)，已经得到结论。
 
-一般情形采用良序原理（\cref{b1:claim:A-well-order}），把母群的一组基良序为 \((e_\alpha)_{\alpha<\kappa}\)。令 \(F_\alpha\) 由所有 \(e_\beta\)（\(\beta<\alpha\)）生成，令 \(H_\alpha=H\cap F_\alpha\)。从 \(H_{\alpha+1}\) 取 \(e_\alpha\) 的坐标，该同态的核是 \(H_\alpha\)，像仍由\cref{b1:lem:integer-subgroups}写为 \(d_\alpha\mathbb Z\)。若 \(d_\alpha>0\)，选 \(h_\alpha\) 的此坐标为 \(d_\alpha\)。对任意 \(x\in H_{\alpha+1}\)，此坐标为某个 \(md_\alpha\)，故 \(x-mh_\alpha\in H_\alpha\)；而 \(mh_\alpha\in H_\alpha\) 又迫使 \(m=0\)。这就给出
+若 \(d>0\)，由投影像为 \(d\mathbb Z\)，可选 \(h\in H\) 的末坐标为 \(d\)。任意 \(x\in H\) 的末坐标为某个 \(md\)，于是 \(x-mh\in K\)，故 \(H=K+\mathbb Zh\)。
+而 \(mh\in K\) 迫使 \(md=0\)，进而 \(m=0\)，所以两子群的交为零，且 \(h\) 有无限阶。因此
 \[
-H_{\alpha+1}=H_\alpha\oplus\mathbb Zh_\alpha.
+H=K\oplus\mathbb Zh.
 \]
-若 \(d_\alpha=0\)，两项相等。对极限指标 \(\lambda\)，有限支集保证
-\(H_\lambda=\bigcup_{\alpha<\lambda}H_\alpha\)。
-
-应用良序归纳（\cref{b1:prop:well-order-induction}）可知，\(H_\alpha\) 由此前已选的 \(h_\beta\) 生成：初始 \(H_0=0\)；后继步骤由上式只需加入至多一个生成元；极限步骤中每个元素已属于某个较早的 \(H_\beta\)，故已有有限表达。因为每个 \(H\) 的元素在母群基下具有有限支集，所以它属于某个 \(H_\alpha\)，从而全部所选 \(h_\alpha\) 生成 \(H\)。它们也整数线性无关，因为任何有限关系中指标最大的 \(h_\alpha\) 在 \(e_\alpha\) 位置的系数为其整数系数乘 \(d_\alpha\)，更早的项在该位置全为零，所以该系数必须为零；依次向前得到所有系数为零。这便是一组自由基。
+在 \(K\) 的基后加上 \(h\)，每个元素都得到唯一的整数坐标，基元素总数至多为 \(n\)。
 \end{proof}
+
 证明并未断言子群的基总能扩充为母群的基。子群 \(2\mathbb Z\le\mathbb Z\) 的基为 \(2\)，却不能成为 \(\mathbb Z\) 的基的一部分；商群在这里出现了二阶挠元。作为可跟算的二维例子，
 \[
 H=\bigl\{(u,v)\in\mathbb Z^2\mid u+v\equiv0\pmod3\bigr\}
 \]
 在第二坐标的投影为 \(\mathbb Z\)，可选 \(h=(-1,1)\)；核为 \(3\mathbb Z\times\{0\}\)。所以 \((3,0),(-1,1)\) 是 \(H\) 的一组基。
 
-\subsection{秩及其不变性}
+\subsection{有限秩及其不变性}
 \label{b1:subsec:0901:03}
 
 基的个数必须与选择无关，才可用来比较群。
 
-\begin{proposition}\label{b1:prop:free-abelian-rank}
-自由交换群任意两组基的基数相同，称为\term[ziyou-jiaohuan-qun-de-zhi]{自由交换群的秩}[rank of a free abelian group]。
+\begin{proposition}[有限秩不变性]\label{b1:prop:finite-rank-free-abelian}
+若自由交换群 \(A\) 有一组有限基，则它的每组基都有限，且元素个数相同。这个共同的元素个数称为\term[ziyou-jiaohuan-qun-de-zhi]{自由交换群的秩}[rank of a free abelian group]。
 \end{proposition}
-\begin{proof}
-若一组基有有限个 \(n\) 元，则每个元素模 \(2A=\{2x\mid x\in A\}\) 后，可唯一把各坐标减为 \(0\) 或 \(1\)，所以 \(|A/2A|=2^n\)。另一组有限基因而具有相同大小。若 \(A\) 有有限生成集，则这些生成元相对于任意一组基只涉及有限多个基元素；其余基元素不可能由它们生成，所以每组基都有限。
 
-对两组无限基 \(B,C\)，把 \(C\) 中的每个元素写为 \(B\) 的有限线性组合。这些支集的并必须覆盖 \(B\)：否则缺失的基元素不会出现在任何 \(C\) 的有限线性组合中，与 \(C\) 生成 \(A\) 矛盾。由\cref{b1:prop:finite-support-cardinality}的有限支集计数，\(|B|\le |C|\cdot\aleph_0=|C|\)；交换角色得到 \(|C|\le|B|\)，由\cref{b1:prop:cantor-bernstein}得 \(|B|=|C|\)。这里使用的选择公理及无限基数比较，与\cref{b1:prop:free-rank-invariant}的无限基情形相同。
+\begin{proof}
+若一组基有 \(n\) 个元素，则每个元素模 \(2A=\{2x\mid x\in A\}\) 后，可唯一把各坐标减为 \(0\) 或 \(1\)，所以 \(|A/2A|=2^n\)。另一组有限基因而具有相同大小。
+
+还须排除无限基。因为 \(A\) 已有有限基，所以它有限生成；这些生成元相对于任意另一组基只涉及有限多个基元素。
+它们的所有整数线性组合仍只涉及这些基元素，其余基元素不可能由它们生成，所以每组基都有限。
 \end{proof}
-整数线性无关最多只能给出秩的下界。例如前面的指数三子群与 \(\mathbb Z^2\) 都有秩二，但并不相等。另一方面，秩为一的自由交换群必为无限循环群，因此加法群 \(\mathbb Q\) 若自由就不可能仅凭“嵌在一条实直线中”断言它秩为一；下一节会直接证明它根本不自由。
+
+在有限秩自由交换群中，一个整数线性无关集合生成的子群以它为基，因此\cref{b1:thm:finite-rank-free-abelian-subgroup}与上述秩不变性说明，其元素数不超过母群的秩。即使达到相同的秩，也不保证生成母群。例如前面的指数三子群与 \(\mathbb Z^2\) 都有秩二，但并不相等。
 
 \ProseParagraphBreak
-若交换群 \(A\) 由 \(a_1,\ldots,a_n\) 生成，\cref{b1:prop:free-abelian-universal}给出满同态 \(\pi:\mathbb Z^n\to A\)，其中 \(\pi(e_i)=a_i\)。由\cref{b1:thm:free-abelian-subgroup}，其核有至多 \(n\) 个元素的自由基；由\cref{b1:thm:first-isomorphism}，\(A\cong\mathbb Z^n/\ker\pi\)。因此关系确实可以选为有限多个整数向量。这是后面使用有限整数矩阵进行分类的依据；有限生成的关系并非一开始就应当默认为已知。
+这里的秩计算整数基的大小，不能由实向量空间的维数直接判断。加法群 \(\mathbb Q\) 虽嵌在 \(\mathbb R\) 中，却没有理由仅凭这一点就有一组大小为一的整数基；下一节会直接证明，它没有任何自由交换群的基。
+
+\ProseParagraphBreak
+若交换群 \(A\) 由 \(a_1,\ldots,a_n\) 生成，\cref{b1:prop:free-abelian-universal}给出满同态 \(\pi:\mathbb Z^n\to A\)，其中 \(\pi(e_i)=a_i\)。由\cref{b1:thm:finite-rank-free-abelian-subgroup}，其核有至多 \(n\) 个元素的自由基；由\cref{b1:thm:first-isomorphism}，\(A\cong\mathbb Z^n/\ker\pi\)。因此关系确实可以选为有限多个整数向量。这是后面使用有限整数矩阵进行分类的依据；有限生成的关系并非一开始就应当默认为已知。
+
+\subsection{无限秩的子群与秩}
+\label{b1:subsec:0901:04}
+
+本小节把前面的两个结果推广到任意秩，使用良序、超限归纳和无限基数比较。只学习有限生成交换群分类时，可跳至\secref{b1:sec:0902}；\cref{b1:thm:finite-rank-free-abelian-subgroup,b1:prop:finite-rank-free-abelian}已经给出\secref{b1:sec:0903}所需的子群定理与秩不变性。这里先沿良序逐次添加子群基元素，再比较任意两组无限基的基数；这两项推广均不参与本章有限生成情形的后续证明。
+
+\begin{theorem}[自由交换群的子群]\label{b1:thm:free-abelian-subgroup}
+自由交换群的每个子群仍是自由交换群。若 \(H\le\mathbb Z^n\)，则 \(H\) 有一组至多 \(n\) 个元素的基。
+\end{theorem}
+
+\begin{proof}
+有限秩情形已由\cref{b1:thm:finite-rank-free-abelian-subgroup}证明。一般情形采用良序原理（\cref{b1:claim:A-well-order}），把母群 \(F\) 的一组基良序为 \((e_\alpha)_{\alpha<\kappa}\)。
+对每个 \(\alpha\le\kappa\)，令 \(F_\alpha\) 由所有 \(e_\beta\)（\(\beta<\alpha\)）生成，令 \(H_\alpha=H\cap F_\alpha\)。于是 \(H_0=0\)、\(H_\kappa=H\)。
+
+在后继步骤，从 \(H_{\alpha+1}\) 取 \(e_\alpha\) 的坐标，该同态的核是 \(H_\alpha\)，像仍由\cref{b1:lem:integer-subgroups}写为 \(d_\alpha\mathbb Z\)。
+若 \(d_\alpha>0\)，选 \(h_\alpha\in H_{\alpha+1}\) 的此坐标为 \(d_\alpha\)。对任意 \(x\in H_{\alpha+1}\)，此坐标为某个 \(md_\alpha\)，故 \(x-mh_\alpha\in H_\alpha\)；而 \(mh_\alpha\in H_\alpha\) 又迫使 \(m=0\)。这就给出
+\[
+H_{\alpha+1}=H_\alpha\oplus\mathbb Zh_\alpha.
+\]
+若 \(d_\alpha=0\)，两项相等，不添加基元素。
+
+在非零极限指标 \(\lambda\) 处，每个元素的有限支集都落在某个 \(\alpha<\lambda\) 之前，所以
+\[
+H_\lambda=\bigcup_{\alpha<\lambda}H_\alpha.
+\]
+这一步不会引入无限和：每个 \(H_\lambda\) 中的元素已在某个较早的子群中出现。
+
+应用良序归纳（\cref{b1:prop:well-order-induction}）可知，\(H_\alpha\) 由此前已选的 \(h_\beta\) 生成。
+初始 \(H_0=0\)；后继步骤由直和式只需加入至多一个生成元；极限步骤中的元素已有较早步骤给出的有限表达。取 \(\alpha=\kappa\)，得到全部所选 \(h_\beta\) 生成 \(H\)。
+
+它们也整数线性无关。任取一个有限整数关系，其中指标最大的 \(h_\alpha\) 在 \(e_\alpha\) 位置的坐标为 \(d_\alpha>0\)，而更早的项在该位置全为零。
+所以该项的整数系数乘 \(d_\alpha\) 必为零，该系数只能为零；依次向前得到所有系数为零。结合生成性，这些 \(h_\alpha\) 便构成一组自由基。
+\end{proof}
+
+现在比较不同选择所得的基。子群定理负责构造一组基，下面的结论则说明基的基数不因选择而改变。
+
+\begin{proposition}[秩不变性]\label{b1:prop:free-abelian-rank}
+自由交换群任意两组基的基数相同。这一共同基数称为该群的秩；有限基时与\cref{b1:prop:finite-rank-free-abelian}中的定义一致。
+\end{proposition}
+
+\begin{proof}
+若其中一组基有限，\cref{b1:prop:finite-rank-free-abelian}已经说明另一组基也有限且大小相同。
+
+对两组无限基 \(B,C\)，把 \(C\) 中的每个元素写为 \(B\) 的有限线性组合。
+这些支集的并必须覆盖 \(B\)：否则缺失的基元素不会出现在任何 \(C\) 的有限线性组合中，与 \(C\) 生成 \(A\) 矛盾。
+由\cref{b1:prop:finite-support-cardinality}的有限支集计数，
+\[
+|B|\le |C|\cdot\aleph_0=|C|.
+\]
+交换角色得到 \(|C|\le|B|\)，由\cref{b1:prop:cantor-bernstein}得 \(|B|=|C|\)。这里使用的选择公理及无限基数比较，与\cref{b1:prop:free-rank-invariant}的无限基情形相同。
+\end{proof}

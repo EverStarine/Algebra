@@ -5,7 +5,7 @@
 \section{结构定理}
 \label{b1:sec:0903}
 
-前两节已经把有限生成交换群写成有限秩整数格的商，并分离出有限的挠子群。现在要进一步把关系整理成互不牵连的单个整数倍关系，使商群分解为循环群的直和。证明分为两个任务：先用整数矩阵化简得到分解，再从群本身恢复分解中的数字。后一任务不可省略，否则不同坐标得到的答案仍未必能够相互比较。
+前两节已经把有限生成交换群写成有限秩整数格的商，并识别出它的有限挠子群及相应的无挠商群。现在要进一步把关系整理成互不牵连的单个整数倍关系，证明原群能够分解为自由部分与有限循环群的直和。证明分为两步：先用整数矩阵化简得到分解，再从群本身恢复分解中的数字。后一部分不可省略，否则不同坐标得到的答案仍未必能够相互比较。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,15 @@
 
 有限循环因子有两种常用排列方式：把阶数排成整除链，或把每个阶数拆成素数幂。两种形式都保留自由部分，但必须各自规定排列规则，才谈得上分类数据的唯一性。
 
-\begin{theorem}\label{b1:thm:fga-structure}
+\begin{theorem}[有限生成交换群的结构定理]\label{b1:thm:fga-structure}
 每个有限生成交换群 \(A\) 都有分解
 \[
 A\cong\mathbb Z^r\oplus C_{d_1}\oplus\cdots\oplus C_{d_s},
 \qquad 1<d_1\mid d_2\mid\cdots\mid d_s,
 \]
-其中 \(r,s\ge0\)。整数 \(r\) 及序列 \(d_1,\ldots,d_s\) 由 \(A\) 唯一确定。也可以唯一地写为一个自由部分与若干素数幂阶循环群的直和，唯一性允许重新排列这些循环因子。
+其中 \(r,s\ge0\)。整数 \(r\) 及序列 \(d_1,\ldots,d_s\) 由 \(A\) 唯一确定。也可以唯一地写为一个自由部分与有限多个 \(C_{p^e}\) 的直和，其中每个 \(p\) 为素数、每个指数 \(e\) 为正整数；唯一性允许重新排列这些非平凡循环因子。
 \end{theorem}
+
 第一种称为\term[bubian-yinzi-fenjie]{不变因子分解}[invariant factor decomposition]，其中 \(d_i\) 为不变因子；第二种称为\term[chudeng-yinzi-fenjie]{初等因子分解}[elementary divisor decomposition]，各循环因子的素数幂阶称为初等因子。下文依次证明存在性与唯一性。
 
 \ProseParagraphBreak
@@ -41,6 +42,12 @@ C_4\oplus C_6\cong C_4\oplus C_2\oplus C_3
 \label{b1:subsec:0903:02}
 
 生成元与关系构成一个整数矩阵。要整理关系，只能用可逆的整数行、列操作，不能像实数线性代数那样任意除以主元；除法会改变整数格。
+
+\begin{definition}[整数可逆矩阵]\label{b1:def:integer-invertible-matrix}
+整数方阵 \(U\) 称为\term[zhengshu-keni-juzhen]{整数可逆矩阵}[unimodular matrix]，如果存在同阶整数方阵 \(V\) 使 \(UV=VU=I\)。换言之，\(U\) 可逆且 \(U^{-1}\) 的各项仍是整数。
+\end{definition}
+
+这等价于 \(\det U=\pm1\)：若逆矩阵也为整数矩阵，则 \(\det U\det U^{-1}=1\) 是两个整数的乘积；反之，若 \(\det U=\pm1\)，伴随矩阵公式给出的逆矩阵仍有整数项。这样的矩阵恰好给出整数格上的可逆坐标变换。
 
 \begin{lemma}[整数矩阵的 Smith 化简]\label{b1:lem:smith-integer}
 对任意 \(m\times n\) 整数矩阵 \(M\)，可以通过交换两行或两列、把一行或一列乘 \(-1\)、把某行或列的整数倍加到另一行或列，化为矩形对角阵
@@ -60,10 +67,32 @@ C_4\oplus C_6\cong C_4\oplus C_2\oplus C_3
 
 固定首行首列，对 \(B\) 递归进行相同步骤。行列数都减少，递归必停。由于 \(B\) 的所有元素一开始均为 \(a\) 的倍数，后续整数行列操作保持此性质，所以它所得的非零对角元也都是 \(a\) 的倍数。再用递归中的整除链，便得到全部 \(d_i\mid d_{i+1}\)。所用每一步操作都有整数逆操作，没有改变相应整数格的可逆坐标性质。
 \end{proof}
+
 上述结果称为整数矩阵的\term[smith-biaozhunxing]{Smith 标准形}[Smith normal form]。证明给出的步骤是一个终止算法，而不只是允许“选取适当基”的存在性叙述。
 
+\ProseParagraphBreak
+为了得到整除链，左上角主元还须整除余下的全部元素。若某个余下元素不被它整除，就把该元素引到首行，使整数除法能够把主元换成更小的非零余数；暂时产生非对角项正是为了改进主元。例如 \(\operatorname{diag}(2,3)\) 的两个对角元不满足整除条件。记 \(R_i\) 为第 \(i\) 行、\(C_i\) 为第 \(i\) 列，把第二行加到第一行，就把元素 \(3\) 引入第一行。随后各步均为整数可逆操作：
+\[
+\begin{aligned}
+\begin{pmatrix}2&0\\0&3\end{pmatrix}
+&\xrightarrow{R_1\leftarrow R_1+R_2}
+\begin{pmatrix}2&3\\0&3\end{pmatrix}
+\xrightarrow{C_2\leftarrow C_2-C_1}
+\begin{pmatrix}2&1\\0&3\end{pmatrix}\\[1ex]
+&\xrightarrow{C_1\leftrightarrow C_2}
+\begin{pmatrix}1&2\\3&0\end{pmatrix}
+\xrightarrow{R_2\leftarrow R_2-3R_1}
+\begin{pmatrix}1&2\\0&-6\end{pmatrix}\\[1ex]
+&\xrightarrow{C_2\leftarrow C_2-2C_1}
+\begin{pmatrix}1&0\\0&-6\end{pmatrix}
+\xrightarrow{R_2\leftarrow -R_2}
+\begin{pmatrix}1&0\\0&6\end{pmatrix}.
+\end{aligned}
+\]
+主元由 \(2\) 降到 \(1\) 后，才得到整除链 \(1\mid6\)。其群论含义是 \(C_2\oplus C_3\cong C_6\)，其中对角元 \(1\) 对应的平凡因子应删去。矩阵的非零 Smith 对角元允许等于 \(1\)，而结构定理中列出的群的不变因子要求大于 \(1\)，两处的归一化约定应加以区别。
+
 \begin{proof}[\cref{b1:thm:fga-structure}的存在性证明]
-取 \(A\) 的有限生成元 \(a_1,\ldots,a_m\)，由\cref{b1:prop:free-abelian-universal}把 \(e_i\mapsto a_i\) 延拓为满同态 \(\pi:\mathbb Z^m\to A\)。由\cref{b1:thm:first-isomorphism}，\(\pi\) 诱导同构 \(\mathbb Z^m/\ker\pi\to A\)，具体发送 \(x+\ker\pi\mapsto\pi(x)\)。由\cref{b1:thm:free-abelian-subgroup}，核 \(K=\ker\pi\) 有有限基 \(k_1,\ldots,k_t\)，其中 \(t\le m\)。把它们在标准基下的坐标作为列，组成 \(m\times t\) 整数矩阵 \(M\)。
+取 \(A\) 的有限生成元 \(a_1,\ldots,a_m\)，由\cref{b1:prop:free-abelian-universal}把 \(e_i\mapsto a_i\) 延拓为满同态 \(\pi:\mathbb Z^m\to A\)。由\cref{b1:thm:first-isomorphism}，\(\pi\) 诱导同构 \(\mathbb Z^m/\ker\pi\to A\)，具体发送 \(x+\ker\pi\mapsto\pi(x)\)。由\cref{b1:thm:finite-rank-free-abelian-subgroup}，核 \(K=\ker\pi\) 有有限基 \(k_1,\ldots,k_t\)，其中 \(t\le m\)。把它们在标准基下的坐标作为列，组成 \(m\times t\) 整数矩阵 \(M\)。
 
 对 \(M\) 应用\cref{b1:lem:smith-integer}，设行列操作的总矩阵分别为 \(U,V\)，于是 \(UMV=D\) 为 Smith 对角阵；\(U,V\) 及其逆的元素均为整数。列操作不改变关系子群，因为 \(V\mathbb Z^t=\mathbb Z^t\)，所以 \(MV\mathbb Z^t=M\mathbb Z^t=K\)。行操作给出具体同构
 \[
@@ -92,13 +121,22 @@ A\cong
 \(C_{uv}\to C_u\oplus C_v\)、\(\bar x\mapsto(\bar x,\bar x)\)
 保持加法。其核中整数代表 \(x\) 同时被 \(u,v\) 整除；由于 \(\gcd(u,v)=1\)，必有 \(uv\mid x\)，所以核平凡。两边又同有 \(uv\) 个元素，因而为同构。反复应用便把每个有限循环因子拆成素数幂阶循环群，得到初等因子形式。
 \end{proof}
+
 证明同时得到：有限生成无挠交换群自由；一般有限生成交换群的挠子群可以分离成一个直和因子。不过具体选出的自由补群依赖基的选择，结构定理没有宣称这个补群唯一。
+
+\ProseParagraphBreak
+在已经得到的分解中，挠元恰为自由坐标全为零的元素，所以 \(A/A_{\mathrm{tor}}\cong\mathbb Z^r\)。再由\cref{b1:prop:finite-rank-free-abelian}，这个商群的基数目不依赖基的选择。这就允许先定义自由秩，而无须预先使用下面的不变因子唯一性证明。
+
+\begin{definition}[有限生成交换群的自由秩]\label{b1:def:fga-free-rank}
+设 \(A\) 为有限生成交换群。商群 \(A/A_{\mathrm{tor}}\) 是有限秩自由交换群，其基的元素个数称为 \(A\) 的\term[ziyou-zhi]{自由秩}[free rank]，记为 \(\operatorname{rank}_{\mathbb Z}A\)。当 \(A\) 本身自由时，这与自由交换群的秩一致。
+\end{definition}
+\symidx{\(\operatorname{rank}_{\mathbb Z}A\)：有限生成交换群的自由秩}
 
 \subsection{分解的唯一性}
 \label{b1:subsec:0903:03}
 
 \begin{proof}[\cref{b1:thm:fga-structure}的唯一性证明]
-先恢复自由部分，再分别恢复每个素数的幂阶。同构保持元素的阶，故将挠子群 \(T=A_{\mathrm{tor}}\) 映到相应挠子群。在已得的分解中，挠元恰为自由坐标全零的元素：\(\mathbb Z^r\) 无挠，有限个有限循环因子的每个元素又都有有限阶。因此 \(A/T\cong\mathbb Z^r\)，由\cref{b1:prop:free-abelian-rank}，该商群的自由秩唯一确定 \(r\)。
+先恢复自由部分，再分别恢复每个素数的幂阶。同构保持元素的阶，故将挠子群 \(T=A_{\mathrm{tor}}\) 映到相应挠子群。在已得的分解中，挠元恰为自由坐标全零的元素：\(\mathbb Z^r\) 无挠，有限个有限循环因子的每个元素又都有有限阶。因此 \(A/T\cong\mathbb Z^r\)，由\cref{b1:prop:finite-rank-free-abelian}，该商群的自由秩唯一确定 \(r\)。
 
 由\cref{b1:prop:fg-abelian-subgroups}，\(T\) 有限；由\cref{b1:thm:abelian-primary}，它是各 \(p\) 主分量的直和。每个主分量由“被某个 \(p\) 幂消去”这一内在条件确定，同构也保持它。对 \(B=T_p\)，考虑全由整数倍定义的子群及商群
 \[
@@ -119,4 +157,19 @@ d_1\mid d_2\mid\cdots\mid d_s.
 反过来，任何满足整除链且 \(d_1>1\) 的不变因子分解，其每个素数的指数必非降，去掉左端的零以后恰为该素数的初等因子指数。至少有一个素数整除 \(d_1\)，所以某个列表的长度恰为 \(s\)，不会额外留下全为零的位置。由此不变因子也唯一。
 \end{proof}
 
-例如若一个二主群的各层商群阶依次为 \(2^3,2^2,2^2\)，再下一层为一，则指数至少为 \(1,2,3\) 的因子分别有 \(3,2,2\) 个。因此指数一出现一次，指数二不出现，指数三出现两次，该群为 \(C_2\oplus C_8\oplus C_8\)。只知道群的阶为 \(2^7\) 无法作出这一判断，逐层取整数倍才恢复了各个循环因子的长度。
+例如，设 \(B\) 是有限交换二群，且
+\[
+|B/2B|=2^3,\qquad |2B/4B|=2^2,\qquad
+|4B/8B|=2^2,\qquad |8B/16B|=1.
+\]
+由\eqref{b1:eq:primary-torsion-layers}，指数至少为 \(1,2,3,4\) 的因子分别有 \(3,2,2,0\) 个。因此指数一出现一次，指数二不出现，指数三出现两次，得到 \(B\cong C_2\oplus C_8\oplus C_8\)。只知道群的阶为 \(2^7\) 无法作出这一判断，逐层取整数倍才恢复了各个循环因子的长度。
+
+\ProseParagraphBreak
+这里必须保留有限性。\cref{b1:def:prufer-group}中的 Prüfer 群 \(P=C_{2^\infty}\) 的倍二映射是满射，所以 \(2P=P\)。因此无限群
+\[
+\widetilde B=(C_2\oplus C_8\oplus C_8)\oplus P
+\]
+具有完全相同的上述层商，因为 \(2^{j-1}P/2^jP=0\) 对每个 \(j\ge1\) 成立。这个额外的 Prüfer 因子在层商中不可见。特别地，\(8\widetilde B=16\widetilde B\cong P\ne0\)：商群 \(8\widetilde B/16\widetilde B\) 为零只表示两个倍数子群相等，并不表示 \(8\widetilde B=0\)。
+
+\ProseParagraphBreak
+分类数据的唯一性也不意味着每个直和因子都对应一个唯一的子群。挠子群及各 \(p\) 主分量由内在条件确定，自由秩、初等因子和不变因子则是同构不变量；具体自由补群，以及主分量内部选取的循环直和因子，一般依赖选择。例如 \(C_2\oplus C_2\) 有三个不同的二阶子群，任取两个不同者，其交为零、和为全群，都给出内部直和分解。唯一的是“两个 \(C_2\) 因子”的同构类型与重数，并不是指定了其中哪两个子群。

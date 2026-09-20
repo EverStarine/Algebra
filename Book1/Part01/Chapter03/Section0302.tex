@@ -24,31 +24,57 @@
 \symidx{\(S_n\)：\(n\) 点对称群}
 
 \begin{definition}\label{b1:def:cycle}
-对于不同的点 \(a_1,\ldots,a_r\)，把 \(a_i\) 送到 \(a_{i+1}\)、把 \(a_r\) 送到 \(a_1\)，并固定其他点的置换记为
+置换 \(\sigma\in S_n\) 真正移动的点组成它的\term[zhichi]{支集}[support]，记为
+\[
+\operatorname{supp}(\sigma)\coloneqq
+\bigl\{\,i\in\{1,\ldots,n\}\mid\sigma(i)\ne i\,\bigr\}.
+\]
+对于两两不同的点 \(a_1,\ldots,a_r\in\{1,\ldots,n\}\)，其中 \(r\geq1\)，把 \(a_i\) 送到 \(a_{i+1}\)、把 \(a_r\) 送到 \(a_1\)，并固定其他点的置换记为
 \((a_1\,a_2\,\cdots\,a_r)\)，称为长度 \(r\) 的\term[lunhuan]{轮换}[cycle]。长度为 \(2\) 的轮换称为\term[huanwei]{换位}[transposition]。
 \end{definition}
+\symidx{\(\operatorname{supp}(\sigma)\)：置换的支集}
+
+长度至少为 \(2\) 的轮换，其支集就是括号中列出的点集。长度为 \(1\) 的 \((a)\) 作为置换是恒等置换，支集为空；在轮换分解中，它只用来记录原置换的一个固定点。每个固定点至多这样写一次，移动的点则不另补长度为 \(1\) 的轮换。
 
 \begin{theorem}[不交轮换分解]\label{b1:thm:cycle-decomposition}
-每个置换可写成支集两两不交的轮换之积。除各轮换书写次序、轮换内部起点及固定点的省略之外，分解唯一。若轮换长度为 \(r_1,\ldots,r_t\)，则置换的阶为
-\(\operatorname{lcm}(r_1,\ldots,r_t)\)，其中省略全部固定点时，空的最小公倍数约定为 \(1\)。
+每个置换都可写成若干个长度至少为 \(2\)、所含点集两两不交的轮换之积，允许空乘积。除各轮换的书写次序和每个轮换内部的起点选择外，这个分解唯一。若要记录全部 \(n\) 个点，再将每个固定点各补写为一个长度为 \(1\) 的轮换。
+
+若非平凡轮换的长度为 \(r_1,\ldots,r_t\)，则置换的阶为
+\(\operatorname{lcm}(r_1,\ldots,r_t)\)，其中空的最小公倍数约定为 \(1\)。补写固定点不改变这个最小公倍数。
 \end{theorem}
 \begin{proof}
-从点 \(a\) 开始反复应用 \(\sigma\)。有限性使序列重复，单射性保证第一次重复只能回到 \(a\)：若 \(\sigma^i(a)=\sigma^j(a)\) 且 \(i<j\)，可应用 \(\sigma^{-i}\) 得 \(a=\sigma^{j-i}(a)\)。因此这些点形成一个轮换。再从尚未出现的点开始同样处理，所得集合互不相交并覆盖全部点。不同轮换因改变的点不交而交换，乘积对每个点的作用恰为 \(\sigma\)。一个点在反复应用 \(\sigma\) 时经历的序列由 \(\sigma\) 自身决定，所以分解只有所述书写自由。\(\sigma^k=1\) 当且仅当每一轮换的长度都整除 \(k\)，最小正 \(k\) 即最小公倍数。
+从一个被 \(\sigma\) 移动的点 \(a\) 开始反复应用 \(\sigma\)。有限性使序列重复，单射性保证第一次重复只能回到 \(a\)：若 \(\sigma^i(a)=\sigma^j(a)\) 且 \(i<j\)，可应用 \(\sigma^{-i}\) 得 \(a=\sigma^{j-i}(a)\)。因此这些点形成一个长度至少为 \(2\) 的轮换。
+
+再从尚未出现的移动点开始同样处理。新序列若与旧序列相交，沿 \(\sigma\) 及其逆反复移动就会得到同一个点集，与新起点尚未出现矛盾。所得点集因而互不相交，并最终覆盖 \(\operatorname{supp}(\sigma)\)。不同轮换因改变的点不交而交换，乘积在支集上与 \(\sigma\) 相同，在支集外都固定每个点，故乘积就是 \(\sigma\)。一个移动点反复应用 \(\sigma\) 时经历的序列由 \(\sigma\) 自身决定，这既确定了它所在的轮换，也确定了该轮换的循环次序，因而分解只有所述书写自由。
+
+\(\sigma^k=1\) 当且仅当每一非平凡轮换的长度都整除 \(k\)，最小正 \(k\) 即最小公倍数。若没有非平凡轮换，\(\sigma\) 就是恒等置换，其阶为 \(1\)。
 \end{proof}
 
 例如设 \(\sigma\) 把 \(1,2,3,4,5,6,7\) 依次送到
 \(3,5,1,7,6,2,4\)。从 \(1\) 开始得到 \((1\,3)\)，从 \(2\) 开始得到 \((2\,5\,6)\)，剩余为 \((4\,7)\)。故
 \(\sigma=(1\,3)(2\,5\,6)(4\,7)\)，阶为 \(6\)。求 \(\sigma^{100}\) 时只需分别把指数模 \(2,3,2\) 约化，结果为 \((2\,5\,6)\)。
 
+\ProseParagraphBreak
+支集相交的轮换相乘时，要按从右向左的次序逐点计算。例如令 \(\alpha=(1\,2\,3)\)、\(\beta=(2\,3\,4)\)。计算 \(\alpha\beta\) 时，四个点分别经历
+\[
+\begin{aligned}
+1&\xmapsto{\beta}1\xmapsto{\alpha}2,&
+2&\xmapsto{\beta}3\xmapsto{\alpha}1,\\
+3&\xmapsto{\beta}4\xmapsto{\alpha}4,&
+4&\xmapsto{\beta}2\xmapsto{\alpha}3.
+\end{aligned}
+\]
+所以 \((1\,2\,3)(2\,3\,4)=(1\,2)(3\,4)\)。两个三轮换的乘积在这里是两个支集不交的换位之积，不能把因子的轮换长度直接拼成乘积的轮换类型。
+
 \subsection{换位、符号同态与交错群}
 \label{b1:subsec:0302:02}
 
-每个轮换都有换位分解
+每个长度 \(r\geq2\) 的轮换都有换位分解
 \[
 (a_1\,a_2\,\cdots\,a_r)
 =(a_1\,a_r)(a_1\,a_{r-1})\cdots(a_1\,a_2).
 \]
-把各点依次代入即可核对：\(a_1\) 被最右换位送到 \(a_2\)，此后不再改变；\(a_i\) 先被送到 \(a_1\)，随后送到 \(a_{i+1}\)，末点最后回到 \(a_1\)。因此所有置换都能写成换位之积。不过换位个数并不唯一，例如可以插入两次相同换位。需要证明的是其奇偶性不变。
+把各点依次代入即可核对：\(a_1\) 被最右换位送到 \(a_2\)，此后不再改变；对于 \(2\leq i<r\)，\(a_i\) 先被送到 \(a_1\)，随后送到 \(a_{i+1}\)；末点 \(a_r\) 最后回到 \(a_1\)。长度为 \(1\) 的轮换是恒等置换，以空乘积表示。因此所有置换都能写成换位之积。不过换位个数并不唯一，例如可以插入两次相同换位。需要证明的是其奇偶性不变。
 
 \begin{theorem}[符号同态]\label{b1:thm:sign}
 存在唯一同态 \(\operatorname{sgn}:S_n\rightarrow\{1,-1\}\)，把每个换位送到 \(-1\)。若 \(\sigma\) 的不交轮换长度为 \(r_1,\ldots,r_t\)，包括长度为 \(1\) 的固定点，则
@@ -92,7 +118,12 @@
 \label{b1:subsec:0302:03}
 
 \begin{definition}\label{b1:def:conjugate-elements}
-群中元素 \(a,b\) 若存在 \(g\) 使 \(b=gag^{-1}\)，称为\term[gonge-yuansu]{共轭元素}[conjugate elements]。在 \(S_n\) 中，不交轮换的长度组成一个和为 \(n\) 的无序正整数列，称为置换的\term[lunhuan-leixing]{轮换类型}[cycle type]；这样的无序正整数列称为 \(n\) 的\term[fenchai]{分拆}[partition]。
+群 \(G\) 中元素 \(a,b\) 若存在 \(g\in G\) 使 \(b=gag^{-1}\)，称为\term[gonge-yuansu]{共轭元素}[conjugate elements]。正整数 \(n\) 的\term[fenchai]{分拆}[partition]是满足
+\[
+\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_t\geq1,
+\qquad \lambda_1+\cdots+\lambda_t=n
+\]
+的整数列。在 \(S_n\) 中，将每个固定点各计为一个长度为 \(1\) 的轮换，再把所有不交轮换的长度按非增次序排列，所得分拆称为置换的\term[lunhuan-leixing]{轮换类型}[cycle type]。相同长度须按其出现次数保留，例如两个支集不交的换位在 \(S_4\) 中的轮换类型为 \(2+2\)。
 \end{definition}
 
 \begin{proposition}\label{b1:prop:symmetric-conjugacy}

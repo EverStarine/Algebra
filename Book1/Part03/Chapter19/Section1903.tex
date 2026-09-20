@@ -10,9 +10,10 @@
 % * 二次、多二次及三次扩张
 % * 四次方程的典型 Galois 群
 % * 从置换作用和分解型识别子群
+% * 模素数分解与循环型：在此完整证明约化判据，第21.3节直接引用
 %
 
-识别 Galois 群通常需要两类信息：扩张次数控制群阶，群对根的作用控制它在对称群中的位置。以下每个例子都先明确分裂域，再计算自同构；不能只写出一个抽象群名而略去它怎样作用。
+识别 Galois 群通常需要两类信息：扩张次数确定群阶，群对根的作用将它表示为对称群的子群。以下每个例子都先明确分裂域，再计算自同构；不能只写出一个抽象群名而略去它怎样作用。
 
 \subsection{二次、多二次与三次扩张}
 \label{b1:subsec:1903:01}
@@ -69,4 +70,37 @@ G\subseteq A_n\quad\Longleftrightarrow\quad
 例如一个可分不可约三次多项式的 Galois 群是 \(S_3\) 的传递子群，其阶被三整除且整除六，所以只有 \(A_3\cong C_3\) 与 \(S_3\) 两种可能；判别式是否为平方将它们区分。
 
 \ProseParagraphBreak
-这里使用的是原基域上的分解型。模一个素数约化后的分解型能在适当条件下提供另一类置换信息，但这需要进一步说明约化、可分性和相应自同构的联系；不能未经证明就把任意模素数分解写成 Galois 群中必有的循环型。
+这里的轨道大小取自原基域上的不可约分解。若改在有限域中分解整数多项式，则可以借助 Frobenius 自同构得到原 Galois 群中单个元素的循环型。下面建立两者的联系。
+
+\subsection{模素数分解与循环型}
+\label{b1:subsec:1903:04}
+
+对一个整数多项式，模素数后的因子次数往往容易计算。要把这些数据用于特征零中的 Galois 群，须使有限域中置换根的 Frobenius 自同构来自原分裂域的自同构。以下证明用根生成的整数环及其有限商域实现这一点；用到的工具是\cref{b1:lem:integral-closure-elementary}的整性封闭性、\cref{b1:thm:crt}的中国剩余定理，以及已经建立的有限域和有限 Galois 理论。初读只关注 Galois 对应的读者，可以在需要计算具体多项式的群时再读本小节。
+
+\begin{lemma}\label{b1:lem:reduction-cycle-type}
+设 \(f\in\mathbb Z[X]\) 首一，在 \(\mathbb Q\) 上无重根；素数 \(p\) 满足模 \(p\) 的约化 \(\bar f\) 也无重根。若 \(\bar f\) 的不同首一不可约因子的次数为 \(d_1,\ldots,d_r\)，则 \(f\) 在 \(\mathbb Q\) 上的 Galois 群，在全部根上的置换作用中包含循环长度为 \(d_1,\ldots,d_r\) 的元素。
+\end{lemma}
+\begin{proof}
+设分裂域为 \(L\)，根为 \(\alpha_1,\ldots,\alpha_n\)，\(G=\operatorname{Gal}(L/\mathbb Q)\)，并取环 \(A=\mathbb Z[\alpha_1,\ldots,\alpha_n]\)。所有根都满足首一整数方程，\cref{b1:lem:integral-closure-elementary}说明 \(A\) 由有限多个元素作为 \(\mathbb Z\) 模生成，且每个元素都在 \(\mathbb Z\) 上整。\(G\) 置换这些根，所以保持 \(A\)。由 \(L^G=\mathbb Q\)，\(A^G\) 中的元素为有理整元素，只能是整数：一个既约分数若满足首一整数方程，清除分母后就要求分母整除分子的某次幂，故分母为一。因此 \(A^G=\mathbb Z\)。
+
+理想 \(pA\) 为真理想，否则 \(1/p\in A\)，与刚才的有理整元素判别矛盾。由\cref{b1:prop:maximal-ideal-exists}取极大理想 \(\mathfrak m\supseteq pA\)。商域 \(k=A/\mathfrak m\) 有限，因为 \(A/pA\) 由有限多个元素作为 \(\mathbb F_p\) 向量空间生成，而 \(k\) 是它的商。令
+\[
+D=\{\,\sigma\in G\mid\sigma(\mathfrak m)=\mathfrak m\,\},
+\]
+这是 \(\mathfrak m\) 在 \(G\) 作用下的稳定子群，故为子群；它在 \(k\) 上诱导自同构，记其像为 \(H\leq\operatorname{Gal}(k/\mathbb F_p)\)。我们证明这个像为全群。
+
+任取 \(x\in k^H\)。\(G\) 作用下 \(\mathfrak m\) 的轨道由有限个不同的极大理想组成，它们两两互素。\cref{b1:thm:crt}给出 \(a\in A\)，在 \(\mathfrak m\) 处的余数为 \(x\)，在其余轨道理想处的余数为零。多项式
+\[
+P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
+\]
+的系数属于 \(A^G=\mathbb Z\)。若 \(\sigma\in D\)，因 \(x\) 被 \(H\) 固定，\(\sigma(a)\) 模 \(\mathfrak m\) 为 \(x\)；若 \(\sigma\notin D\)，则 \(a\) 模 \(\sigma^{-1}(\mathfrak m)\) 为零，故 \(\sigma(a)\) 模 \(\mathfrak m\) 为零。写 \(|D|=p^e u\)、\(p\nmid u\)，约化后得到
+\[
+\bar P(T)=T^{|G|-|D|}(T-x)^{|D|}
+=T^{|G|-|D|}\Bigl(T^{p^e}-x^{p^e}\Bigr)^u.
+\]
+其中 \(T^{|G|-p^e}\) 的系数为 \(-u x^{p^e}\)，但 \(\bar P\) 的全部系数在 \(\mathbb F_p\) 中。由于 \(u\) 在该域中可逆，\(x^{p^e}=c\in\mathbb F_p\)，于是 \((x-c)^{p^e}=0\)，得到 \(x=c\)。所以 \(k^H=\mathbb F_p\)。有限域扩张 \(k/\mathbb F_p\) 为 Galois 扩张，\cref{b1:thm:finite-galois-correspondence}迫使 \(H=\operatorname{Gal}(k/\mathbb F_p)\)。
+
+因此 Frobenius \(b\mapsto b^p\) 在 \(D\) 中有一个提升 \(\sigma\)。等式 \(f(X)=\prod_i(X-\alpha_i)\) 约化后表明 \(\alpha_i\) 的像是 \(\bar f\) 的全部根。由于约化无重根，这些像互不相同。由\cref{b1:thm:finite-field-subfields}及\cref{b1:thm:finite-field-automorphisms}，一个次数为 \(d_j\) 的不可约因子的根恰组成长度 \(d_j\) 的轨道：根生成的域有 \(p^{d_j}\) 个元素，而固定该根的最小正 Frobenius 次幂正是 \(d_j\)。提升 \(\sigma\) 在原根集上的循环类型与约化后的 Frobenius 相同，遂得结论。
+\end{proof}
+
+因此，每次无重根的模素数分解都给出群中的一种循环型。将不同素数提供的信息与传递性、判别式判据结合，往往能确定整个群。\cref{b1:prop:quintic-x5-x-1}将用这一方法计算 \(X^5-X-1\) 的 Galois 群；这里的工具本身不依赖根式可解性理论。

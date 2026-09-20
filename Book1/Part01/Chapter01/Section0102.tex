@@ -38,6 +38,7 @@ f(ab)=f(a)f(b),\qquad f(1_M)=1_N
 \begin{proposition}\label{b1:prop:monoid-maps}
 幺半群同态的复合仍是同态；恒等映射是同态。若同态 \(f:M\rightarrow N\) 是双射，则逆映射 \(f^{-1}\) 也保持乘法和单位。
 \end{proposition}
+
 \begin{proof}
 对于同态 \(f:M\rightarrow N\)、\(g:N\rightarrow P\)，有
 \((gf)(ab)=g\bigl(f(a)f(b)\bigr)=(gf)(a)(gf)(b)\)，并且
@@ -58,21 +59,31 @@ f(ab)=f(a)f(b),\qquad f(1_M)=1_N
 \[
 X^*\coloneqq\coprod_{n\geq0}X^n,
 \]
-运算为前后拼接，单位元为 \(\varepsilon\)。记 \(\iota:X\rightarrow X^*\) 为把字母送到长度一的字的映射。
+其中 \(X^0=\{\varepsilon\}\)。运算为前后拼接，单位元为 \(\varepsilon\)。记 \(\iota:X\rightarrow X^*\) 为把字母送到长度一的字的映射。
 \end{definition}
+
 \symidx{\(X^*\)：自由幺半群}
 
-符号 \(\coprod\) 表示不交并，即保留每个字的长度标记。拼接后各位置的字母就是先列出第一个字，再列出第二个字。因此两次拼接的结果不依赖括号；空字不增加任何位置，确为单位元。例如 \(X=\{a,b\}\) 时，\((ab)(baa)=abbaa\)，而 \((baa)(ab)=baaab\)。所以当至少有两个字母时，自由幺半群并不交换。单字母的情形只有 \(\varepsilon,a,a^2,\ldots\)，按长度同构于 \((\mathbb N,+)\)。
+符号 \(\coprod\) 表示不交并，即保留每个字的长度标记。拼接后各位置的字母就是先列出第一个字，再列出第二个字。因此两次拼接的结果不依赖括号；空字不增加任何位置，确为单位元。例如 \(X=\{a,b\}\) 时，\((ab)(baa)=abbaa\)，而 \((baa)(ab)=baaab\)。所以当至少有两个字母时，自由幺半群并不交换。单字母的情形只有 \(\varepsilon,a,a^2,\ldots\)，按长度同构于 \((\mathbb N,+)\)。若字母集为空，则没有正长度的字，因而 \(\varnothing^*=\{\varepsilon\}\)。
 
 \begin{theorem}[字母映射的延拓]\label{b1:thm:free-monoid}
 任给幺半群 \(M\) 和集合映射 \(u:X\rightarrow M\)，存在唯一幺半群同态
-\(\widehat u:X^*\rightarrow M\) 满足 \(\widehat u\iota=u\)。它由
+\(\widehat u:X^*\rightarrow M\) 满足 \(\widehat u\circ\iota=u\)。它由
 \[
 \widehat u(\varepsilon)=1_M,\qquad
 \widehat u(x_1\cdots x_n)=u(x_1)\cdots u(x_n)
 \]
 给出。
+映射之间的关系可以画成
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+X \arrow[r, "\iota"] \arrow[dr, "u"'] & X^* \arrow[d, dashed, "\widehat u"] \\
+& M
+\end{tikzcd}
+\]
+虚线表示由 \(u\) 唯一确定的幺半群同态 \(\widehat u\)；图交换是指从 \(X\) 到 \(M\) 的两条途径给出同一映射，即 \(\widehat u\circ\iota=u\)。
 \end{theorem}
+
 \begin{proof}
 一个非空字有唯一的字母序列。目标 \(M\) 满足结合律，故由\cref{b1:prop:parentheses}，右端按此序列排列的有限乘积不依赖括号，公式因而定义了映射。若两字分别为 \(v=x_1\cdots x_r\)、\(w=y_1\cdots y_s\)，同一命题允许在两段之间加括号，得到 \(\widehat u(vw)=\widehat u(v)\widehat u(w)\)；一字为空时此式由单位元性质成立。空字的指定值还保证保持单位。每个非空字都是长度一的字的乘积，任何满足要求的同态都只能取上述值；在空字上也只能取单位元，所以延拓唯一。
 \end{proof}
@@ -86,8 +97,9 @@ X^*\coloneqq\coprod_{n\geq0}X^n,
 \symidx{\(Y^X\)：从 \(X\) 到 \(Y\) 的映射集合}
 
 \begin{definition}\label{b1:def:cancellation}
-幺半群满足\term[xiaoqulv]{消去律}[cancellation law]，是指
-\(ax=ay\Rightarrow x=y\) 与 \(xa=ya\Rightarrow x=y\) 都成立。
+设 \(M\) 是幺半群。若对任意 \(a,x,y\in M\) 都有
+\(ax=ay\Rightarrow x=y\)，则称 \(M\) 满足\term[zuo-xiaoqulv]{左消去律}[left cancellation law]；若对任意 \(a,x,y\in M\) 都有
+\(xa=ya\Rightarrow x=y\)，则称 \(M\) 满足\term[you-xiaoqulv]{右消去律}[right cancellation law]。同时满足左、右消去律时，称 \(M\) 满足\term[xiaoqulv]{消去律}[cancellation law]。
 \end{definition}
 
 自由幺半群满足消去律，因为等字有相同的逐位字母，去掉相同前缀或后缀仍得等字。然而非空字没有逆元：拼接后的长度是两字长度之和，不可能成为零。因此消去律本身不等于可逆性。
@@ -95,4 +107,5 @@ X^*\coloneqq\coprod_{n\geq0}X^n,
 \ProseParagraphBreak
 自然数在加法下没有负数，但可以嵌入整数，使每个元素都能相减。对于一般的交换消去幺半群，也可以提出相同的问题：能否把它嵌入一个所有元素都有逆元的交换幺半群？一个自然尝试是用有序对 \((a,b)\) 表示形式差，但不同的有序对可能表示同一结果，必须先说明应当怎样识别它们。
 
-下一节先建立关系、等价类及商集的概念，再在\cref{b1:prop:commutative-completion}中完成这个称为群化的构造。此处先记住两个不同的问题：消去律是原运算的性质，加入逆元则是构造新对象的任务；前者不会使原对象自动拥有逆元。
+\ProseParagraphBreak
+下一节先建立关系、等价类及商集的概念，再在\cref{b1:prop:commutative-completion}中完成这个称为群化的构造。此处先记住两个不同的问题：消去律是原运算的性质，加入逆元则需要构造新对象；前者不会使原对象自动拥有逆元。

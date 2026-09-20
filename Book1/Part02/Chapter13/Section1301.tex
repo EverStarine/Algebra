@@ -5,53 +5,47 @@
 \section{分式域}
 \label{b1:sec:1301}
 
-整数环中不能解出的方程 \(bx=a\)，在允许 \(b\neq0\) 作分母后便有了解。对一般整环，也可以把每个非零元素变成单位。\cref{b1:prop:fraction-field-basic}已为多项式分解建立这一构造；本节重新整理其中的对象与等式，进而回答一个更有用的问题：从整环出发的同态，何时能够唯一地作用于分式？
+\cref{b1:prop:fraction-field-basic}已经完整构造整环的分式域，并验证等价关系、运算和域公理。本节沿用这个对象，研究它与其他域的关系：在已有的域中如何识别分式域，从整环出发的同态又何时能够延拓到分式域？这些问题将引出泛性质，并为下一节只让指定元素取逆的一般局部化作准备。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 整环的分式域构造
-% * 分式的等价关系
-% * 分式域的泛性质
+% * 分式域的回顾与例子；完整构造已在第12.2节建立
+% * 分式相等与分式域的识别
+% * 分式域的泛性质，为一般局部化准备同态延拓的观点
 %
 
-\subsection{整环的分式域构造}
+\subsection{分式域的回顾与例子}
 \label{b1:subsec:1301:01}
 
-设 \(R\) 为交换整环，即 \(1\neq0\)，且两个非零元素的乘积仍非零。先取所有有序对
-\[
-\Bigl\{\,(a,b)\mid a\in R,\ b\in R\setminus\{0\}\,\Bigr\}.
-\]
-我们希望 \((a,b)\) 表示分式 \(a/b\)，于是以
+设 \(R\) 为交换整环。回顾\cref{b1:prop:fraction-field-basic}，域 \(\operatorname{Frac}(R)\) 的元素由 \(a/b\) 表示，其中 \(a,b\in R\)、\(b\neq0\)，相等的判据是
 \begin{equation}\label{b1:eq:fraction-equivalence}
-(a,b)\sim(c,d)\quad\Longleftrightarrow\quad ad=bc
+\frac ab=\frac cd\quad\Longleftrightarrow\quad ad=bc.
 \end{equation}
-识别不同写法。\cref{b1:prop:fraction-field-basic}证明了这是等价关系，并证明下列运算不依赖代表元：
+后面使用的运算公式为
 \begin{equation}\label{b1:eq:fraction-operations}
 \frac ab+\frac cd=\frac{ad+bc}{bd},
 \qquad
 \frac ab\cdot\frac cd=\frac{ac}{bd}.
 \end{equation}
-所得等价类集合记为 \(\operatorname{Frac}(R)\)。它的零元和单位元分别是 \(0/1\)、\(1/1\)，加法逆元为 \(-a/b\)；非零分式恰好满足 \(a\neq0\)，此时其乘法逆元是 \(b/a\)。因此它是域。
+分式域也可以不指定等价类模型，而用它包含原环的方式来刻画。
 
 \begin{definition}\label{b1:def:fraction-field}
 设 \(R\) 为交换整环。一个域 \(K\) 连同一个保持单位的单射环同态 \(i:R\rightarrow K\)，称为 \(R\) 的分式域，如果每个 \(x\in K\) 都能写成 \(i(a)i(b)^{-1}\)，其中 \(a,b\in R\)、\(b\neq0\)。
 \end{definition}
-上述构造中的 \(i(a)=a/1\) 符合这个定义。其单射性来自
-\(a/1=c/1\Longleftrightarrow a=c\)，而每个分式都等于 \((a/1)(b/1)^{-1}\)。通常通过 \(i\) 把 \(R\) 看成 \(\operatorname{Frac}(R)\) 的子环，因而将 \(i(a)\) 直接写成 \(a\)。这个识别有单射性的保证。
+已构造的 \(\operatorname{Frac}(R)\) 与嵌入 \(i(a)=a/1\) 满足这个定义。通常通过 \(i\) 把 \(R\) 看成分式域的子环，并将 \(i(a)\) 简记为 \(a\)。本节末将证明：不同模型之间有唯一保持这个嵌入的同构。
 
 \ProseParagraphBreak
 例如 \(\operatorname{Frac}(\mathbb Z)=\mathbb Q\)。若 \(k\) 为域，则 \(k[x]\) 的分式域记为 \(k(x)\)，称为 \(k\) 上的\term[youli-hanshu-yu]{有理函数域}[rational function field]；元素是多项式的分式 \(f(x)/g(x)\)，其中 \(g\neq0\)。
 \symidx{\(k(x)\)：域 \(k\) 上的一元有理函数域}
 这里说的是形式分式，而不是在 \(k\) 上处处有定义的函数。例如 \(1/x\) 是 \(k(x)\) 的元素，但不能在 \(x=0\) 处求值。若 \(R\) 本来就是域，则 \(a/b\mapsto ab^{-1}\) 给出 \(\operatorname{Frac}(R)\cong R\)，构造并没有加入新的元素。
 
-\subsection{分式的等价关系}
+\subsection{分式相等与分式域的识别}
 \label{b1:subsec:1301:02}
 
-分式计算的依据是\eqref{b1:eq:fraction-equivalence}，不必先选定所谓最简分式。一般整环中的最大公因子未必存在，因而不能把“约分到最简”作为分式域定义的一部分。整环条件在等价关系的传递性中已有实质作用：若 \(ad=bc\)、\(cf=de\)，则
-\[
-d(af-be)=f(ad-bc)+b(cf-de)=0.
-\]
-由于中间分母 \(d\neq0\) 且 \(R\) 无零因子，才可以推出 \(af=be\)。下一节允许环有零因子时，必须修改等价关系。
+分式计算的依据是\eqref{b1:eq:fraction-equivalence}，不必先选定所谓最简分式。一般整环中的最大公因子未必存在，因而不能把“约分到最简”作为分式域定义的一部分。
+
+\ProseParagraphBreak
+整环条件保证非零分母可以消去。若允许零因子，分母取逆还可能迫使原环中的非零元素变成零：若 \(sa=0\) 而要求 \(s\) 可逆，就必须有 \(a=s^{-1}(sa)=0\)。因此，一般局部化中的分式相等，不能只凭交叉乘积在原环中已经相等来定义；还须容许它们的差被某个允许的分母零化。\secref{b1:sec:1302}将据此给出新的等价关系及完整构造。
 
 \ProseParagraphBreak
 分式相等不表示分子、分母分别相等。例如在 \(k(x)\) 中，

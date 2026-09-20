@@ -22,7 +22,8 @@
 \begin{definition}\label{b1:def:free-product-word}
 设 \(G,H\) 为群。分别取 \(G\setminus\{1_G\}\) 与 \(H\setminus\{1_H\}\) 的不相交副本作为字母表。由这些字母组成的有限序列称为自由积字；若每对相邻字母都来自不同因子，则称为约化字。长度为零的空字也约化。
 \end{definition}
-从所有有限字出发，允许在同一因子内把相邻的 \(x,y\) 换为它们的乘积 \(xy\)，乘积为一时删去这两个字母；也允许这些操作的逆操作。由此生成的等价关系与串接相容。
+
+从所有有限字出发，允许在同一因子内把相邻的 \(x,y\) 换为它们的乘积 \(xy\)，乘积为单位元时删去这两个字母；也允许这些操作的逆操作。由此生成的等价关系与拼接相容。
 
 \begin{lemma}\label{b1:lem:free-product-normal-form}
 每个等价类中有唯一约化字。
@@ -30,12 +31,30 @@
 \begin{proof}
 从左到右读取字母，始终保存一个约化字。如果新字母与末尾来自不同因子，就接在末尾；若来自相同因子，就把末尾替换为两者乘积，乘积为一时删去末尾。这给出一个与原字等价的约化字。
 
-验证输出不随允许的操作改变。设 \(x,y\) 来自同一因子 \(G\)，比较连续读取 \(x,y\) 与一次读取 \(xy\)。若原字为空或末尾来自 \(H\)，两次读取先添 \(x\) 再合并成 \(xy\)，与直接读取相同。若原末尾为 \(z\in G\)，且 \(zx\ne1\)，两次读取把末尾变为 \((zx)y=z(xy)\)；若 \(xy=1\)，这就恢复 \(z\)。若 \(zx=1\)，第一次删去 \(z\)，前一字母如存在必来自 \(H\)，第二次便接上 \(y\)；直接读取的结果由 \(z(xy)=y\) 给出，也一样。单位乘积的删除包含在这些情形中。交换 \(G,H\) 得到另一因子的同样结论。
+验证输出不随允许的操作改变。设 \(x,y\) 来自同一因子 \(G\)，比较连续读取 \(x,y\) 与一次读取 \(xy\)；当 \(xy=1_G\) 时，后一操作指不作任何改变。若原字为空或末尾来自 \(H\)，两次读取先添 \(x\) 再合并成 \(xy\)，与直接读取相同。
+
+若原末尾为 \(z\in G\)，且 \(zx\ne1\)，两次读取把末尾变为 \((zx)y=z(xy)\)；若 \(xy=1\)，这就恢复 \(z\)。若 \(zx=1\)，第一次删去 \(z\)，前一字母如存在必来自 \(H\)，第二次便接上 \(y\)；直接读取的结果由 \(z(xy)=y\) 给出，也一样。单位乘积的删除包含在这些情形中。交换 \(G,H\) 得到另一因子的同样结论。
 
 因此一次合并或拆分同因子字母不改变算法输出。约化字的输出是自身，所以同一等价类不能包含两个不同约化字。
 \end{proof}
-等价类在串接下组成群：结合律从串接继承，空字为单位，逆由字母倒序取逆得到。称此群为 \(G,H\) 的\term[ziyou-ji-product]{自由积}[free product]，记为 \(G*H\)。长度为一的字分别给出 \(G,H\) 到 \(G*H\) 的单同态，因而可把原群看作其子群；两者的交只有单位元。
+
+等价类在拼接下组成群：结合律从拼接继承，空字为单位，逆由字母倒序取逆得到。称此群为 \(G,H\) 的\term[ziyou-ji-product]{自由积}[free product]，记为 \(G*H\)。
 \symidx{\(G*H\)：两个群的自由积}
+
+\ProseParagraphBreak
+记空字为 \(\varepsilon\)，字 \(w\) 的等价类为 \([w]\)。两个因子的嵌入必须把单位元送到空字类，而非单位元才对应长度为一的字。具体地，定义
+\[
+j_G:G\longrightarrow G*H,\qquad
+j_G(g)=
+\begin{cases}
+[\varepsilon],&g=1_G,\\
+[g],&g\ne1_G.
+\end{cases}
+\]
+同样定义 \(j_H:H\rightarrow G*H\)，其中 \(j_H(1_H)=[\varepsilon]\)，非单位元 \(h\) 的像为 \([h]\)。
+
+\ProseParagraphBreak
+若 \(x,y\in G\) 中有一个为单位元，拼接空字不改变字，故 \(j_G(xy)=j_G(x)j_G(y)\)。若两者都非单位元，同因子字母的合并规则给出同一等式；尤其 \(xy=1_G\) 时，字 \(xy\) 删除为空字，所以也满足同态条件。不同非单位元给出不同的长度为一的约化字，且都不同于空字；由\cref{b1:lem:free-product-normal-form}，\(j_G\) 单射。对 \(H\) 同样成立。因两种字母保留所属因子的标记，两个像的交只有单位元。这些论证也包括某个因子为平凡群的情形。
 
 \ProseParagraphBreak
 例如在 \(C_2*C_3\) 中，设 \(a^2=b^3=1\)，则
@@ -47,12 +66,13 @@
 \subsection{自由积的泛性质}
 \label{b1:subsec:0803:02}
 
-\begin{theorem}\label{b1:thm:free-product-universal}
-给定同态 \(f:G\to K\)、\(g:H\to K\)，存在唯一同态 \(u:G*H\to K\)，使它在两个因子上的限制分别为 \(f,g\)。
+\begin{theorem}[自由积的泛性质]\label{b1:thm:free-product-universal}
+给定同态 \(f:G\to K\)、\(g:H\to K\)，存在唯一同态 \(u:G*H\to K\)，使 \(uj_G=f\)、\(uj_H=g\)，即在两个因子上的限制分别为 \(f,g\)。
 \end{theorem}
 \begin{proof}
-把一个字映为各字母像的乘积。同因子字母的合并不改变这个乘积，因为 \(f,g\) 各自保持乘法，所以映射在等价类上良定义，并保持串接乘法。两个因子共同生成 \(G*H\)，故这样的同态唯一。
+把一个字映为各字母像的乘积，并把空字映为 \(1_K\)。同因子字母的合并不改变这个乘积，因为 \(f,g\) 各自保持乘法；当乘积为因子的单位元时，其像为 \(1_K\)，删去这两个字母也不改变取值。所以映射在等价类上良定义，并保持拼接乘法，且满足 \(uj_G=f\)、\(uj_H=g\)。两个因子共同生成 \(G*H\)，故这样的同态唯一。
 \end{proof}
+
 自由积的泛性质没有要求 \(f(G)\) 与 \(g(H)\) 交换。例如从 \(C_2*C_3\) 到 \(S_3\)，可以指定 \(a\mapsto(12)\)、\(b\mapsto(123)\)，得到满同态。若再令 \((ab)^2=1\)，商群就同构于 \(S_3\)：该关系给出 \(aba=b^{-1}\)，所以每个字化为 \(b^i a^\varepsilon\)，至多六个元素；相应置换像已经有六个元素。
 
 \ProseParagraphBreak
@@ -81,13 +101,20 @@ g\longmapsto(g,1),\quad h\longmapsto(1,h)
 的核是所有 \([g,h]\)（\(g\in G,h\in H\)）的正规闭包。
 \end{proposition}
 \begin{proof}
-由\cref{b1:thm:free-product-universal}，两个因子嵌入直积的同态延拓为 \(\pi\)；每个 \((g,h)=(g,1)(1,h)\) 在其像中，所以 \(\pi\) 满射。记所述正规闭包为 \(N\)，商映射为 \(q:G*H\to Q=(G*H)/N\)。每个 \([g,h]\) 都被 \(\pi\) 送到单位，而 \(\ker\pi\) 正规，所以 \(N\subseteq\ker\pi\)。由\cref{b1:thm:quotient-universal}，存在唯一同态 \(\bar\pi:Q\to G\times H\) 满足 \(\bar\pi q=\pi\)。在 \(Q\) 中两个因子的像逐元素交换，因此
+由\cref{b1:thm:free-product-universal}，两个因子嵌入直积的同态延拓为 \(\pi\)；每个 \((g,h)=(g,1)(1,h)\) 在其像中，所以 \(\pi\) 满射。
+
+记所述正规闭包为 \(N\)，商映射为 \(q:G*H\to Q=(G*H)/N\)。每个 \([g,h]\) 都被 \(\pi\) 送到单位，而 \(\ker\pi\) 正规，所以 \(N\subseteq\ker\pi\)。由\cref{b1:thm:quotient-universal}，存在唯一同态 \(\bar\pi:Q\to G\times H\) 满足 \(\bar\pi q=\pi\)。
+
+在 \(Q\) 中两个因子的像逐元素交换，因此
 \[
 G\times H\longrightarrow Q,\qquad
 (g,h)\longmapsto \overline g\,\overline h
 \]
-给出同态 \(\sigma\)：确实，\((\overline g\,\overline h)(\overline {g'}\,\overline {h'})=\overline {gg'}\,\overline {hh'}\)，因为中间的 \(\overline h,\overline {g'}\) 可交换。于是 \(\bar\pi\sigma(g,h)=(g,h)\)，而 \(\sigma\bar\pi\) 固定 \(Q\) 中两个因子的像；这些像生成 \(Q\)，故 \(\sigma\bar\pi=1_Q\)。所以 \(\bar\pi\) 是同构，\(\ker\pi=\ker(\bar\pi q)=\ker q=N\)。
+给出同态 \(\sigma\)：确实，\((\overline g\,\overline h)(\overline {g'}\,\overline {h'})=\overline {gg'}\,\overline {hh'}\)，因为中间的 \(\overline h,\overline {g'}\) 可交换。
+
+于是 \(\bar\pi\sigma(g,h)=(g,h)\)，而 \(\sigma\bar\pi\) 固定 \(Q\) 中两个因子的像；这些像生成 \(Q\)，故 \(\sigma\bar\pi=\operatorname{id}_Q\)。所以 \(\bar\pi\) 是同构，\(\ker\pi=\ker(\bar\pi q)=\ker q=N\)。
 \end{proof}
+
 当两个因子都非平凡时，选非单位元 \(g\in G,h\in H\)，字 \(ghg^{-1}h^{-1}\) 长四且约化，由\cref{b1:lem:free-product-normal-form}，它不是单位，却被 \(\pi\) 送到单位，故自然同态不单射。直积中的相应交换子却必为单位。
 
 \ProseParagraphBreak
@@ -96,3 +123,37 @@ G\times H\longrightarrow Q,\qquad
 srs^{-1}=r^{-1},
 \]
 而 \(r\) 具有无限阶。每个偶数长度的交错字为 \((ab)^k\) 或 \((ba)^k=r^{-k}\)（\(k\ge0\)）；奇数长度的字在右端再乘 \(a=s\) 后变为偶数长度，所以也能写成 \(r^ks\)。这些形式两两不同：\(r^k\) 的约化字长度为偶数，\(r^ks\) 的约化字长度为奇数；同一种形式的不同指数若相等，则给出 \(r\) 的非零幂为一，与\cref{b1:lem:free-product-normal-form}矛盾。因此每个元素唯一写成 \(r^k\) 或 \(r^ks\)，其中 \(k\in\mathbb Z\)。它可具体作用在整数直线上：令 \(a\) 作用为 \(m\mapsto-m\)，\(b\) 作用为 \(m\mapsto1-m\)，则 \(r\) 作用为平移 \(m\mapsto m-1\)。这同时展示了反射的几何来源与约化字的代数判别。对比 \(C_2\times C_2\)，后者只有四个元素，两次反射的乘积也只有二阶。
+
+\ProseParagraphBreak
+\cref{b1:tab:group-construction-maps}将四种构造放在一起比较。关键是从各对象出发定义同态时，可以指定哪些数据，以及这些数据应在目标群中满足什么条件。
+
+\begin{table}[htbp]
+\centering
+\caption[四种群构造的同态条件]{四种群构造的同态条件。目标 \(K\) 为任意群；满足对应条件时，给定数据唯一延拓为所列群到 \(K\) 的同态。}
+\label{b1:tab:group-construction-maps}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+构造及其映射性质 & 给定的数据 & 目标中的相容条件 \\
+\midrule
+自由群 \(F(S)\)\newline
+\cref{b1:thm:free-group-universal}
+& 集合映射 \(S\to K\)
+& 无额外关系 \\
+\addlinespace
+展示群 \(\langle S\mid R\rangle\)\newline
+\cref{b1:prop:presentation-homomorphism}
+& 集合映射 \(S\to K\)
+& 每个关系字在 \(K\) 中取值为单位元 \\
+\addlinespace
+自由积 \(G*H\)\newline
+\cref{b1:thm:free-product-universal}
+& 同态 \(G\to K\)、\(H\to K\)
+& 两个像之间无额外相容条件 \\
+\addlinespace
+直积 \(G\times H\)\newline
+\cref{b1:prop:finite-product-maps}
+& 同态 \(G\to K\)、\(H\to K\)
+& 两个像逐元素交换 \\
+\bottomrule
+\end{tabularx}
+\end{table}

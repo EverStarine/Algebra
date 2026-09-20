@@ -5,14 +5,15 @@
 \section{Kummer 理论}
 \label{b1:sec:2003}
 
-方程 \(X^n-a=0\) 看起来只涉及开方，但它的全部根还相差单位根。只有先控制这些单位根，根式扩张与循环群之间的关系才足够直接。\term[Kummer-lilun]{Kummer 理论}[Kummer theory]研究这类根式与交换 Galois 群的联系。本节固定代数闭包 \(\overline K\)，所有扩张都取在其中；除另有说明外，\(n\geq1\)、\(\operatorname{char}K\nmid n\)，并假设 \(K\) 含有全部 \(n\) 次单位根。
+方程 \(X^n-a=0\) 看起来只涉及开方，但它的全部根还相差单位根。只有先确定基域中是否包含这些单位根，根式扩张与循环群之间的关系才足够直接。\term[Kummer-lilun]{Kummer 理论}[Kummer theory]研究这类根式与交换 Galois 群的联系。本节固定代数闭包 \(\overline K\)，所有扩张都取在其中；除另有说明外，\(n\geq1\)、\(\operatorname{char}K\nmid n\)，并假设 \(K\) 含有全部 \(n\) 次单位根。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 特征不整除 n 且基域含所需单位根的假设
+% * 先以 Hilbert 第90定理证明循环扩张的根式生成，作为第21.2节的直接准备
 % * 根式扩张与 Kummer 配对
-% * 素数阶循环扩张及有限指数情形的对应
-% * 在本节定义 \(\mu_n\) 及原始单位根，先证明所需的素数阶循环扩张可由根式生成；此处只使用基域含所需单位根的假设，不调用后续分圆多项式不可约性。
+% * 有限 Kummer 对应及素数次循环扩张的分类
+% * 在本节定义 \(\mu_n\) 及原始单位根；循环扩张的根式生成不依赖一般 Kummer 对应，也不调用后续分圆多项式不可约性
 %
 
 \subsection{特征与单位根假设}
@@ -30,10 +31,10 @@
 因为 \(X^n-1\) 与导数 \(nX^{n-1}\) 没有公共根，\(\mu_n\) 有 \(n\) 个元素。\cref{b1:lem:finite-multiplicative-cyclic}说明域的乘法群的有限子群是循环群，因此存在原始 \(n\) 次单位根 \(\zeta\)，且 \(\mu_n=\langle\zeta\rangle\)。假设 \(\mu_n\subseteq K\) 就等价于 \(K\) 含有这样一个 \(\zeta\)。这里没有用到下一章分圆多项式在 \(\mathbb Q\) 上的不可约性。
 
 \ProseParagraphBreak
-若去掉特征条件，在特征 \(p\) 中就有 \(X^p-1=(X-1)^p\)，并不存在阶为 \(p\) 的单位根。若去掉单位根条件，\(\mathbb Q(\sqrt[3]{2})/\mathbb Q\) 则说明开方未必给出正规扩张。这两个假设分别控制可分性与全部根是否同时出现。
+若去掉特征条件，在特征 \(p\) 中就有 \(X^p-1=(X-1)^p\)，并不存在阶为 \(p\) 的单位根。若去掉单位根条件，\(\mathbb Q(\sqrt[3]{2})/\mathbb Q\) 则说明开方未必给出正规扩张。这两个假设分别保证多项式可分，以及添入一个根后其余根也在扩张域中。
 
-\subsection{根式扩张与 Kummer 配对}
-\label{b1:subsec:2003:02}
+\subsection{循环扩张与根式生成}
+\label{b1:subsec:2003:04}
 
 \begin{proposition}\label{b1:prop:single-radical-cyclic}
 设 \(a\in K^\times\)，取 \(\alpha\in\overline K\) 满足 \(\alpha^n=a\)。则 \(K(\alpha)/K\) 是循环 Galois 扩张，其次数整除 \(n\)。映射
@@ -53,6 +54,26 @@
 比值为 \(1\) 时自同构固定生成元 \(\alpha\)，因而为恒等映射。这证明了单同态断言。\(\mu_n\) 的子群为循环群，阶整除 \(n\)，便得到其余结论。
 \end{proof}
 
+反过来，循环扩张也可以用一个根式生成。证明只需乘法形式的 Hilbert 第90定理。
+
+\begin{theorem}\label{b1:thm:kummer-cyclic}
+若 \(L/K\) 是次数为 \(d\) 的循环扩张，\(\operatorname{char}K\nmid d\)，且 \(\mu_d\subseteq K\)，则存在 \(\alpha\in L^\times\) 使
+\[
+L=K(\alpha),\qquad\alpha^d\in K.
+\]
+\end{theorem}
+\begin{proof}
+选取 \(\operatorname{Gal}(L/K)\) 的生成元 \(\sigma\)，以及原始 \(d\) 次单位根 \(\zeta\in K\)。由于 \(N_{L/K}(\zeta^{-1})=\zeta^{-d}=1\)，\cref{b1:thm:hilbert90-multiplicative}给出非零 \(\alpha\) 满足 \(\alpha/\sigma(\alpha)=\zeta^{-1}\)，即 \(\sigma(\alpha)=\zeta\alpha\)。所以 \(\alpha^d\) 被 \(\sigma\) 固定，属于 \(K\)。元素 \(\alpha\) 的 \(d\) 个共轭 \(\alpha,\zeta\alpha,\ldots,\zeta^{d-1}\alpha\) 两两不同，其最小多项式次数至少为 \(d\)，而又不超过 \([L:K]=d\)。故 \(K(\alpha)=L\)。
+\end{proof}
+
+若以特征零的根式可解性为学习目标，读到这里即可转入\secref{b1:sec:2102}；本节余下内容进一步研究多个根式与有限交换 Galois 群的对应。
+
+\subsection{根式扩张与 Kummer 配对}
+\label{b1:subsec:2003:02}
+
+一个根式的自同构由比值 \(\sigma(\alpha)/\alpha\) 决定。加入多个根式时，我们希望同时记录这些比值，并判断哪些根式增加了扩张次数。乘以基域中的元素不会改变所生成的域，相应的被开方数只改变一个 \(n\) 次幂因子。因此应先把被开方数放入商群，再用同一自同构在各个根上的比值来比较它们。
+
+\ProseParagraphBreak
 为同时处理若干根式，记 \(K^{\times n}=\{\,b^n\mid b\in K^\times\,\}\)。商群 \(K^\times/K^{\times n}\) 中每个元素的阶都整除 \(n\)。取其有限子群 \(B\)，选择生成元的代表 \(a_1,\ldots,a_r\)，并令
 \[
 L_B=K(\alpha_1,\ldots,\alpha_r),\qquad\alpha_i^n=a_i.
@@ -68,9 +89,9 @@ L_B=K(\alpha_1,\ldots,\alpha_r),\qquad\alpha_i^n=a_i.
 这个映射 \(G_B\times B\rightarrow\mu_n\) 称为\term[Kummer-peidui]{Kummer 配对}[Kummer pairing]。
 \end{definition}
 
-域 \(L_B\) 是各 \(X^n-a_i\) 的共同分裂域，故为有限 Galois 扩张。配对的值与根和代表的选择无关：根之间相差被 \(G_B\) 固定的单位根，而代表乘以 \(b^n\) 时可以把根换成 \(b\alpha\)。根的乘积是乘积的根，故配对在第二个变量上乘法相容；在第一个变量上的相容性就是上一命题中的计算。
+域 \(L_B\) 是各 \(X^n-a_i\) 的共同分裂域，故为有限 Galois 扩张。配对的值与根和代表的选择无关：根之间相差被 \(G_B\) 固定的单位根，而代表乘以 \(b^n\) 时可以把根换成 \(b\alpha\)。根的乘积是乘积的根，故配对在第二个变量上乘法相容；在第一个变量上的相容性由\cref{b1:prop:single-radical-cyclic}证明中的比值计算得到。
 
-\subsection{素数阶循环扩张与有限指数对应}
+\subsection{有限 Kummer 对应}
 \label{b1:subsec:2003:03}
 
 有限交换群 \(A\) 的指数指使每个元素的该次幂等于 \(1\) 的最小正整数。若其指数整除 \(n\)，则
@@ -111,22 +132,14 @@ P_\zeta(X)=\prod_{\substack{\eta\in\mu_n\\\eta\neq\zeta}}
 对 \(B_L\) 中任意元素，同一个配对仍定义到有限群 \(\operatorname{Hom}(G,\mu_n)\)，且因固定域为 \(K\) 而为单射。因此 \(B_L\) 有限。已证部分应用于 \(B_L\) 与 \(B_0\subseteq B_L\)，并使用二者生成的域都为 \(L\)，得到 \(|B_L|=[L:K]=|B_0|\)，故 \(B_L=B_0\)。同理，从任意 \(B\) 出发后所得 \(B_{L_B}\) 与 \(B\) 相等。包含关系由加入根的构造直接保持。
 \end{proof}
 
-“有限指数情形”在这里指 Galois 群的指数有界，并且扩张本身有限；不要求 \(B\) 在整个 \(K^\times/K^{\times n}\) 中具有有限指数。例如 \(\mathbb Q^\times/\mathbb Q^{\times2}\) 是无限群，但由 \([2],[3]\) 生成的子群有四个元素，给出次数为 \(4\) 的扩张 \(\mathbb Q(\sqrt2,\sqrt3)\)。独立性可由 \(2,3,6\) 都不是有理数的平方核验。
+定理要求扩张有限，且 Galois 群的指数整除给定的 \(n\)。与之对应的 \(B\) 是有限子群，但不要求它在整个 \(K^\times/K^{\times n}\) 中具有有限指数。例如 \(\mathbb Q^\times/\mathbb Q^{\times2}\) 是无限群，但由 \([2],[3]\) 生成的子群有四个元素，给出次数为 \(4\) 的扩张 \(\mathbb Q(\sqrt2,\sqrt3)\)。独立性可由 \(2,3,6\) 都不是有理数的平方核验。
 
-\subsection{单位根与循环扩张的根式生成}
-\label{b1:subsec:2003:04}
 
-\begin{theorem}\label{b1:thm:kummer-cyclic}
-若 \(L/K\) 是次数为 \(d\) 的循环扩张，\(\operatorname{char}K\nmid d\)，且 \(\mu_d\subseteq K\)，则存在 \(\alpha\in L^\times\) 使
-\[
-L=K(\alpha),\qquad\alpha^d\in K.
-\]
-若 \(\ell\) 是素数，则 \(\ell\) 次循环扩张由 \(K^\times/K^{\times\ell}\) 的一维 \(\mathbb F_\ell\) 子空间分类。
-\end{theorem}
+\begin{corollary}\label{b1:cor:kummer-prime-classification}
+设 \(\ell\) 为不同于 \(K\) 的特征的素数，且 \(\mu_\ell\subseteq K\)。在固定代数闭包中，\(\ell\) 次循环扩张由 \(K^\times/K^{\times\ell}\) 的一维 \(\mathbb F_\ell\) 子空间分类。
+\end{corollary}
 \begin{proof}
-选取 \(\operatorname{Gal}(L/K)\) 的生成元 \(\sigma\)，以及原始 \(d\) 次单位根 \(\zeta\in K\)。由于 \(N_{L/K}(\zeta^{-1})=\zeta^{-d}=1\)，\cref{b1:thm:hilbert90-multiplicative}给出非零 \(\alpha\) 满足 \(\alpha/\sigma(\alpha)=\zeta^{-1}\)，即 \(\sigma(\alpha)=\zeta\alpha\)。所以 \(\alpha^d\) 被 \(\sigma\) 固定，属于 \(K\)。元素 \(\alpha\) 的 \(d\) 个共轭 \(\alpha,\zeta\alpha,\ldots,\zeta^{d-1}\alpha\) 两两不同，其最小多项式次数至少为 \(d\)，而又不超过 \([L:K]=d\)。故 \(K(\alpha)=L\)。
-
 素数情形应用\cref{b1:thm:kummer-correspondence}：次数为 \(\ell\) 的域对应阶为 \(\ell\) 的子群。指数为 \(\ell\) 的交换群自然是 \(\mathbb F_\ell\) 向量空间，其中标量作用用乘方表示，阶为 \(\ell\) 的子群正是一维子空间。
 \end{proof}
 
-因此 \(a\) 与 \(a^r b^\ell\) 在 \(1\leq r<\ell\)、\(b\in K^\times\) 时给出同一个非平凡 \(\ell\) 次扩张。分类参数不是任选的非零剩余类，而是它所张成的一条直线。这个区别与下一节的加法分类完全对应。
+因此，若 \(a\notin K^{\times\ell}\)，则 \(a\) 与 \(a^r b^\ell\) 在 \(1\leq r<\ell\)、\(b\in K^\times\) 时给出同一个非平凡 \(\ell\) 次扩张。分类参数不是任选的非零剩余类，而是它所张成的一条直线。这个区别与下一节的加法分类完全对应。

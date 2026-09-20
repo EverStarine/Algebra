@@ -5,7 +5,7 @@
 \section{直积与直和}
 \label{b1:sec:0601}
 
-前面几章主要从一个群中寻找子群和商群，现在反过来，用已知的群构造新群。最直接的办法是在各坐标独立运算，这就是直积。因子有无限多个时，是否允许无限多个非单位坐标便成为实质区别；交换群的直和只允许有限多个。本节同时考察这些构造上的同态，以说明它们各自解决什么问题。
+\textbf{基本工具。}本节的直积、直和，下一节的半直积，以及\cref{b1:thm:split-extension-semidirect}的分裂判别，是本章首先需要掌握的内容。前面几章主要从一个群中寻找子群和商群，现在反过来，用已知的群构造新群。最直接的办法是在各坐标独立运算，这就是直积。因子有无限多个时，是否允许无限多个非单位坐标便成为实质区别；交换群的直和只允许有限多个。本节同时考察这些构造上的同态，以说明它们各自解决什么问题。
 
 % 本节正文按下列原纲要要点撰写。
 
@@ -27,18 +27,54 @@
 =(g_1h_1,\ldots,g_rh_r).
 \]
 \end{definition}
+
 结合律逐坐标成立，单位为 \((1,\ldots,1)\)，逆元为 \((g_1^{-1},\ldots,g_r^{-1})\)，所以这确为群。投影 \(\pi_i:\prod_jG_j\rightarrow G_i\) 和把其他坐标设为单位的嵌入 \(\iota_i:G_i\rightarrow\prod_jG_j\) 都是同态。不同坐标嵌入的像逐元素交换，即使每个 \(G_i\) 自身并不交换。
 
-\begin{proposition}\label{b1:prop:product-universal}
+\begin{proposition}[直积的泛性质]\label{b1:prop:product-universal}
 给定群 \(H\) 以及同态 \(f_i:H\rightarrow G_i\)，存在唯一同态 \(f:H\rightarrow\prod_iG_i\) 满足 \(\pi_i f=f_i\)。
 \end{proposition}
 \begin{proof}
-必有 \(f(h)=\bigl(f_i(h)\bigr)_i\)，这保证唯一性，也给出候选映射。由于 \(f_i(hh')=f_i(h)f_i(h')\) 对每个坐标成立，候选映射保持乘法，因而确实存在。
+必有 \(f(h)=\Bigl(f_i(h)\Bigr)_i\)，这保证唯一性，也给出候选映射。由于 \(f_i(hh')=f_i(h)f_i(h')\) 对每个坐标成立，候选映射保持乘法，因而确实存在。
 \end{proof}
-这个泛性质刻画的是进入直积的同态。离开直积的同态有额外限制：若给定 \(u_i:G_i\rightarrow K\)，公式
-\(u(g_1,\ldots,g_r)=u_1(g_1)\cdots u_r(g_r)\) 是同态，当且仅当不同 \(u_i\) 的像逐元素交换。必要性来自原直积中不同坐标的交换性，充分性则允许把乘积中不同坐标的因子重新排列。
 
-\begin{proposition}\label{b1:prop:internal-direct-product}
+这个泛性质刻画的是进入直积的同态。若要把各因子上的同态合并成一个从直积出发的同态，就必须保存不同坐标之间的交换关系。
+
+\begin{proposition}[从有限直积出发的同态]\label{b1:prop:finite-product-maps}
+设 \(r\geq1\)，\(G_1,\ldots,G_r,K\) 为群，并给定群同态 \(u_i:G_i\rightarrow K\)。存在群同态
+\[
+u:G_1\times\cdots\times G_r\longrightarrow K
+\]
+满足 \(u\iota_i=u_i\)，当且仅当不同 \(u_i\) 的像逐元素交换，即
+\[
+u_i(g)u_j(h)=u_j(h)u_i(g)
+\quad(i\neq j,\ g\in G_i,\ h\in G_j).
+\]
+存在时，该同态唯一，且由
+\[
+u(g_1,\ldots,g_r)=u_1(g_1)\cdots u_r(g_r)
+\]
+给出。
+\end{proposition}
+\begin{proof}
+若这样的 \(u\) 存在，因不同坐标嵌入的像逐元素交换，对
+\(\iota_i(g)\iota_j(h)=\iota_j(h)\iota_i(g)\) 应用 \(u\)，即得到所述交换条件。
+
+反过来，设这些交换条件成立，按给定公式定义 \(u\)。任取 \(g=(g_1,\ldots,g_r)\)、\(h=(h_1,\ldots,h_r)\)，由各 \(u_i\) 的同态性，有
+\[
+\begin{aligned}
+u(gh)
+&=u_1(g_1)u_1(h_1)\cdots u_r(g_r)u_r(h_r)\\
+&=u_1(g_1)\cdots u_r(g_r)\,u_1(h_1)\cdots u_r(h_r)\\
+&=u(g)u(h).
+\end{aligned}
+\]
+中间一步只交换不同坐标的像，故 \(u\) 是同态。又因每个 \(u_j(1)=1\)，把 \(g_i\) 嵌入第 \(i\) 个坐标后，上式的定义给出 \(u\iota_i(g_i)=u_i(g_i)\)。
+
+最后，每个元素均可写成
+\((g_1,\ldots,g_r)=\iota_1(g_1)\cdots\iota_r(g_r)\)。任何满足限制条件的同态都必须将它送到 \(u_1(g_1)\cdots u_r(g_r)\)，所以所求同态唯一。
+\end{proof}
+
+\begin{proposition}[内直积判别]\label{b1:prop:internal-direct-product}
 设 \(N,H\trianglelefteq G\)，且 \(N\cap H=\{1\}\)、\(NH=G\)。则
 \[
 N\times H\longrightarrow G,\qquad(n,h)\longmapsto nh
@@ -52,12 +88,15 @@ nhn^{-1}h^{-1}=n(hn^{-1}h^{-1})\in N,
 \qquad
 nhn^{-1}h^{-1}=(nhn^{-1})h^{-1}\in H.
 \]
-因 \(N\cap H=\{1\}\)，\(n,h\) 交换。记所给映射为 \(F\)，则
+因 \(N\cap H=\{1\}\)，\(n,h\) 交换。
+
+记所给映射为 \(F\)，则
 \[
 F(n,h)F(n',h')=nhn'h'=nn'hh'=F(nn',hh'),
 \]
 所以它是同态；\(NH=G\) 给出满射。若 \(F(n,h)=nh=1\)，则 \(n=h^{-1}\in N\cap H\)，故 \(n=h=1\)，核平凡。\cref{b1:prop:kernel-fibers}说明 \(F\) 单射，于是 \(F\) 为同构。
 \end{proof}
+
 这称为内直积分解。它的假设要求两个因子都正规；只要求一个正规时，通常需要下一节的半直积。
 
 \subsection{任意直积与有限支集直积}
@@ -65,6 +104,9 @@ F(n,h)F(n',h')=nhn'h'=nn'hh'=F(nn',hh'),
 
 对任意指标集合 \(I\) 和群族 \((G_i)_{i\in I}\)，直积
 \(\prod_{i\in I}G_i\) 是全部族 \((g_i)_{i\in I}\) 的集合，仍逐坐标运算。结合律仍在每个坐标独立成立，单位族为 \((1)_{i\in I}\)，逆元为 \((g_i^{-1})_{i\in I}\)，所以这也是群。\cref{b1:prop:product-universal}的泛性质同样成立：给定全部同态 \(f_i:H\rightarrow G_i\)，定义 \(f(h)=\Bigl(f_i(h)\Bigr)_{i\in I}\)；每个坐标保持乘法就说明 \(f\) 保持乘法，而投影条件逐个确定全部坐标，故 \(f\) 唯一。这里没有对无限多个群元素作乘法。
+
+\ProseParagraphBreak
+若 \(I=\varnothing\)，只有一个空族，因而空指标集上的直积是平凡群。任意群到平凡群只有一个同态，所以同一泛性质也包含这个情形。
 
 \begin{definition}\label{b1:def:restricted-product}
 设 \((G_i)_{i\in I}\) 为一族群，\(g=(g_i)_{i\in I}\) 为直积中的元素，其中 \(g_i\in G_i\)。它的支集为
@@ -76,40 +118,54 @@ F(n,h)F(n',h')=nhn'h'=nn'hh'=F(nn',hh'),
 \]
 其运算仍为逐坐标相乘；条件只限制哪些元素允许出现，不改变各坐标的乘法。
 \end{definition}
+
 它是直积的子群，因为
 \(\operatorname{supp}(gh)\subseteq\operatorname{supp}(g)\cup\operatorname{supp}(h)\)，而 \(g^{-1}\) 的支集等于 \(g\) 的支集。有限指标集上它与直积相同，无限指标集上则通常不同。例如取每个 \(G_i=C_2=\{1,a_i\}\)，族 \((a_i)_i\) 属于直积；若 \(I\) 无限，它不属于有限支集直积。
 
 \ProseParagraphBreak
-有限支集直积由各坐标子群生成：任一元素只有有限个非单位坐标，故可写成这些坐标嵌入元素的有限乘积。无限直积却含有不能这样写出的元素，因此“由坐标嵌入生成”和“由坐标投影决定”是不同性质。不要用一个形式上的无限群元素乘积代替有限支集条件；一般群并没有定义无限乘积的收敛或取值。
+有限支集直积由各坐标子群生成：任一元素只有有限个非单位坐标，故可写成这些坐标嵌入元素的有限乘积。全部直积则未必如此：在前面无限多个 \(C_2\) 的例子中，元素 \((a_i)_i\) 的支集无限，不能写成有限多个坐标嵌入元素的乘积。因此，“由坐标嵌入生成”和“由坐标投影决定”是不同性质。一般群中只定义了有限多个元素的乘积，不能以形式上的无限乘积代替这里的有限表达。
+
+\ProseParagraphBreak
+另一方面，若只有有限多个因子非平凡，则每个元素的支集都包含在这些因子的指标集合内。即使 \(I\) 无限，有限支集直积仍等于全部直积；两者的区别取决于非平凡坐标，而不只取决于指标集是否无限。
 
 \subsection{交换群的直和}
 \label{b1:subsec:0601:03}
 
-设 \((A_i)_{i\in I}\) 是一族交换群，采用加法记号，单位写成 \(0\)。取所有仅有有限多个非零坐标的族，并逐坐标相加，得到它们的\term[zhihe]{直和}[direct sum]，记为
+\begin{definition}[交换群的直和]\label{b1:def:abelian-direct-sum}
+设 \((A_i)_{i\in I}\) 是一族交换群，采用加法记号，单位写成 \(0\)。它们的\term[zhihe]{直和}[direct sum]是所有仅有有限多个非零坐标的族所组成的群，记为
 \[
 \bigoplus_{i\in I}A_i
-=\bigl\{\,(a_i)_{i\in I}\mid a_i\in A_i,\ a_i=0\text{ 除有限多个 }i\text{ 外}\,\bigr\}.
-\symidx{\(\bigoplus_{i\in I}A_i\)：交换群的直和}
+=\Bigl\{\,(a_i)_{i\in I}\in\prod_{i\in I}A_i\mid
+\{\,i\in I\mid a_i\neq0\,\}\text{ 有限}\,\Bigr\}.
 \]
-所以直和正是采用加法记号的有限支集直积。交换性使有限和的次序无关，因而得到与直积方向相反的泛性质。
+\symidx{\(\bigoplus_{i\in I}A_i\)：交换群的直和}
+加法逐坐标定义，零元是零族，负元逐坐标取负。坐标嵌入 \(\iota_i:A_i\rightarrow\bigoplus_{j\in I}A_j\) 将 \(a\) 放在第 \(i\) 个坐标，其余坐标均置为 \(0\)。当 \(I=\varnothing\) 时，直和是仅含空族的零群。
+\end{definition}
 
-\begin{proposition}\label{b1:prop:abelian-sum-universal}
+直和正是采用加法记号的有限支集直积，因而确为交换群。交换性使有限和的次序无关，因而得到与直积方向相反的泛性质。
+
+\begin{proposition}[交换群直和的泛性质]\label{b1:prop:abelian-sum-universal}
 设 \(B\) 是交换群，给定同态 \(u_i:A_i\rightarrow B\)。则有唯一同态
 \[
 u:\bigoplus_iA_i\longrightarrow B,\qquad
-u\bigl((a_i)_i\bigr)=\sum_i u_i(a_i),
+u\Bigl((a_i)_i\Bigr)=\sum_i u_i(a_i),
 \]
 使 \(u\iota_i=u_i\) 对全部 \(i\) 成立。式中的和总是有限和。
 \end{proposition}
 \begin{proof}
-有限支集使公式有意义。对 \(a,a'\) 取其支集的有限并，在这个共同有限集合上使用各 \(u_i\) 的可加性和 \(B\) 的交换性，可得 \(u(a+a')=u(a)+u(a')\)。若 \(v\) 也满足 \(v\iota_i=u_i\)，任取有限支集元素 \(a\)，写成有限和 \(a=\sum_{i\in\operatorname{supp}(a)}\iota_i(a_i)\)。可加性便强制
+有限支集使公式有意义。对 \(a,a'\) 取其支集的有限并，在这个共同有限集合上使用各 \(u_i\) 的可加性和 \(B\) 的交换性，可得 \(u(a+a')=u(a)+u(a')\)。由于各 \(u_j(0)=0\)，该公式还给出 \(u\iota_i=u_i\)，这证明存在性。
+
+若 \(v\) 也满足 \(v\iota_i=u_i\)，任取有限支集元素 \(a\)，写成有限和 \(a=\sum_{i\in\operatorname{supp}(a)}\iota_i(a_i)\)。可加性便强制
 \[
 v(a)=\sum_{i\in\operatorname{supp}(a)}v\Bigl(\iota_i(a_i)\Bigr)
 =\sum_{i\in\operatorname{supp}(a)}u_i(a_i)=u(a),
 \]
 故所构造的同态唯一。
+
+上述论证也包括空指标集：空和按 \(0\) 解释，得到从零群到 \(B\) 的唯一同态。
 \end{proof}
-因此在交换群范围内，直和是余积：对每个接收群给出从各因子出发的同态，能唯一合并成一个同态。有限交换群族的直和与直积是同一个群，但体现两种不同方向的泛性质。无限情形中，\(\bigoplus_{n\geq1}\mathbb Z\) 的元素是有限支集整数序列，\(\prod_{n\geq1}\mathbb Z\) 则允许任意整数序列，二者不再能混用。
+
+因此在交换群范围内，直和是余积：对每个接收群给出从各因子出发的同态，能唯一合并成一个同态。有限个交换群的直和与直积是同一个群，但体现两种不同方向的泛性质。无限情形中，\(\bigoplus_{n\geq1}\mathbb Z\) 的元素是有限支集整数序列，\(\prod_{n\geq1}\mathbb Z\) 则允许任意整数序列，二者不再能混用。
 
 \subsection{有限支集直积与群的余积}
 \label{b1:subsec:0601:04}

@@ -3,7 +3,6 @@
 % 纲要位置：计划纲要.md，第 832 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### B.3.1 求值构造与参数
-%
 % #### B.3.2 插值与单错误纠正
 % END APPENDIX OUTLINE SYNC
 
@@ -29,6 +28,7 @@ f\in\mathbb F_q[x],\ \deg f<k\,\Bigr\}
 \begin{theorem}\label{b1:thm:B-rs-parameters}
 \cref{b1:def:B-reed-solomon}中的码是 \([n,k,n-k+1]\) 码。它达到任意非零 \([n,k,d]\) 线性码都满足的 \(d\leq n-k+1\)。
 \end{theorem}
+
 \begin{proof}
 求值映射保持加法与标量乘法。若次数小于 \(k\) 的多项式在全部 \(n\) 个点为零，则\cref{b1:prop:factor-root}的根数界和 \(n\geq k\) 迫使它是零多项式，所以求值映射单射，像的维数为 \(k\)。非零 \(f\) 至多在 \(k-1\) 个取值点为零，因此\eqref{b1:eq:B-linear-distance}给出 \(d(C)\geq n-k+1\)。反过来，取
 \[
@@ -53,6 +53,14 @@ a_1^{k-1}&a_2^{k-1}&\cdots&a_n^{k-1}
 \]
 从任何 \(k\) 个未损坏的坐标，都能由\cref{b1:thm:lagrange-interpolation}唯一恢复 \(f\)：取值点互异，插值次数至多为 \(k-1\)，恰与信息多项式的次数界一致。若损坏位置已经标明，则称这些缺失坐标为\term[cachu]{擦除}[erasure]；最多 \(n-k\) 次擦除可以恢复。未知位置的错误更困难，因为不能直接指定哪些数据可供插值。
 
+\ProseParagraphBreak
+具体地，若保留下来的 \(k\) 个位置组成指标集 \(I\)，其值为 \(y_i\)，则恢复式是
+\[
+f(x)=\sum_{i\in I}y_i\prod_{\substack{j\in I\\j\ne i}}
+\frac{x-a_j}{a_i-a_j}.
+\]
+分母非零正是取值点互异的用途。若错误位置没有标出，同一公式依然能拟合任选的 \(k\) 项数据，却未必给出原信息。例如一次错误恰落在所选位置中，插值就会把错误值也当作必须满足的条件。下面引入的多项式 \(E\)，就是为了让未知错误位置的条件自动失去约束，而保留其余位置的正确等式。
+
 \subsection{插值与单错误纠正}
 \label{b1:subsec:B03:02}
 
@@ -63,9 +71,17 @@ E=x+e_0,\quad \deg Q\leq k.
 \end{equation}
 \(E\) 在错误位置为零，称为这个单错误算法中的\term[cuowei-duoxiangshi]{错误定位多项式}[error locator polynomial]。把 \(Q=q_0+q_1x+\cdots+q_kx^k\) 代入后，\eqref{b1:eq:B-single-error-system}是关于 \(q_0,\ldots,q_k,e_0\) 的线性方程组；已知量 \(y_i\) 只是系数，并未产生未知量之间的乘积。
 
+\ProseParagraphBreak
+每一行的形式为
+\[
+q_0+a_iq_1+\cdots+a_i^kq_k-y_i e_0=y_i a_i.
+\]
+因此未知数共有 \(k+2\) 个，可以在 \(\mathbb F_q\) 中用线性方程组的消元法求解。把 \(E\) 规定为首一，是为了排除 \(E=Q=0\) 这种不携带任何信息的解。方程数至少等于未知数个数本身并不保证解存在或解码正确；下一命题将利用“至多一个错误”和多项式根数界证明这两点。
+
 \begin{proposition}\label{b1:prop:B-single-error-decoding}
 在上述条件下，\eqref{b1:eq:B-single-error-system}有解，而且每个解都满足 \(Q=Ef\)，其中 \(f\) 为原信息多项式。因此先解线性方程组，再作多项式除法 \(f=Q/E\)，即可纠正至多一个错误。
 \end{proposition}
+
 \begin{proof}
 恰有一次错误时，取其位置对应的 \(E=x-a_j\) 和 \(Q=Ef\)，就在错误处得到两边为零，在所有正确位置得到同一乘积，故存在解。没有错误时，可任取首一一次多项式 \(E\)，仍以 \(Q=Ef\) 得到解。
 

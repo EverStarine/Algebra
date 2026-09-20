@@ -9,10 +9,10 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 三次、四次方程的群论解释
+% * 三次、四次方程的群论解释；从四根的三种配对构造辅助三次方程并联系 Ferrari 配方
 % * 一般五次方程不可根式求解
-% * 以 \(x^5-x-1\) 的模素数分解判定具体 Galois 群，并就地证明所用分解型结论
-% * 可解但非交换的 Galois 群
+% * 一个具体不可解五次方程：以 \(x^5-x-1\) 的模素数分解判定 Galois 群，引用第19.3节已证的循环型判据
+% * 可解但非交换的 Galois 群：回引三次分裂域的群计算，解释正规子群链、单位根和根式塔
 %
 
 \subsection{三次、四次方程的群论解释}
@@ -52,7 +52,52 @@ y^4+py^2+qy+r
 后面只剩两个二次方程。这说明四次求解为何能够归结为三次求解及连续开平方。
 
 \ProseParagraphBreak
-群论中相应的三次对象来自把四个根分成两个无序二元组的三种方式。\(S_4\) 置换这三种划分，给出满同态 \(S_4\rightarrow S_3\)，其核为 \(V_4\)：恒等置换和三个双换位保持全部划分，核又因满射而恰有 \(24/6=4\) 个元素。先处理三次对象，再处理核中两次二阶因素，与上述计算的次序相符。
+这个三次方程也可以直接由四个根构造。设
+\[
+f(X)=X^4+bX^3+cX^2+dX+e
+=\prod_{i=1}^4(X-\alpha_i),
+\]
+并按四个根的三种二元配对定义
+\[
+\begin{aligned}
+\beta_1&=\alpha_1\alpha_2+\alpha_3\alpha_4,\\
+\beta_2&=\alpha_1\alpha_3+\alpha_2\alpha_4,\\
+\beta_3&=\alpha_1\alpha_4+\alpha_2\alpha_3.
+\end{aligned}
+\]
+若 \(e_i\) 表示四个根的第 \(i\) 个初等对称多项式，则 \(e_1=-b\)、\(e_2=c\)、\(e_3=-d\)、\(e_4=e\)。把上述三个量相乘、合并同类项，得到
+\begin{align*}
+\beta_1+\beta_2+\beta_3&=e_2=c,\\
+\beta_1\beta_2+\beta_1\beta_3+\beta_2\beta_3
+&=e_1e_3-4e_4=bd-4e,\\
+\beta_1\beta_2\beta_3&=e_1^2e_4+e_3^2-4e_2e_4
+=b^2e+d^2-4ce.
+\end{align*}
+因此它们满足同一个三次辅助方程，其多项式为
+\begin{equation}\label{b1:eq:quartic-cubic-resolvent}
+\begin{aligned}
+R(T)&\coloneqq\prod_{j=1}^3(T-\beta_j)\\
+&=T^3-cT^2+(bd-4e)T+4ce-b^2e-d^2.
+\end{aligned}
+\end{equation}
+置换四个根就置换这三个量，这正是\subsecref{b1:subsec:0404:03}中三种二元划分的作用。若四根互异，由
+\[
+\beta_1-\beta_2=(\alpha_1-\alpha_4)(\alpha_2-\alpha_3)
+\]
+及另两式可知三个 \(\beta_j\) 也互异。因而 \(S_4\rightarrow S_3\) 的作用核 \(V_4\) 在这里有了具体含义：它保持全部三种配对量。仍在四根互异的条件下，原四次方程的 Galois 群 \(G\leq S_4\) 在这些量上的作用核就是 \(G\cap V_4\)。
+
+\ProseParagraphBreak
+回到前面的 \(y^4+py^2+qy+r\)，此时 \(b=0\)、\(c=p\)、\(d=q\)、\(e=r\)，故
+\[
+R(2m)=4(2m-p)(m^2-r)-q^2.
+\]
+所以先前求出的 \(m\) 正是某个配对量的一半。取该配对为 \(\{\alpha_1,\alpha_2\}\mid\{\alpha_3,\alpha_4\}\)，令 \(s=\alpha_1+\alpha_2=-(\alpha_3+\alpha_4)\)。比较两组根的和与积便得
+\[
+s^2=2m-p,\qquad
+q=s(\alpha_1\alpha_2-\alpha_3\alpha_4),\qquad
+\alpha_1\alpha_2+\alpha_3\alpha_4=2m.
+\]
+当 \(q\neq0\) 时，\(s\neq0\)，两组根的积于是分别为 \(m+q/(2s)\) 与 \(m-q/(2s)\)，恰好得到上面两个二次因子。辅助三次方程负责选择配对量，随后开平方确定两组根的和，最后各解一个二次方程；群作用与求根计算在此描述的是同一过程。
 
 \subsection{一般五次方程不可根式求解}
 \label{b1:subsec:2103:02}
@@ -87,34 +132,11 @@ t_1^{a_1+\cdots+a_n}t_2^{a_2+\cdots+a_n}\cdots t_n^{a_n}.
 这就是\term[Abel-Ruffini-dingli]{Abel--Ruffini 定理}[Abel--Ruffini theorem]的通用方程形式。它排除的是以独立系数为起点的通用根式表达，并不排除特殊方程。例如 \(X^5-1\) 的分裂域是分圆域，Galois 群 \((\mathbb Z/5\mathbb Z)^\times\cong C_4\) 可解，因而它的全部根都能用根式表示。
 
 
-\ProseParagraphBreak
-一般方程的结论不能直接判定某一个给定方程。为了回答序言提出的 \(X^5-X-1\)，先建立一个将有限域分解用于 Galois 群计算的具体工具。所需整性、理想和有限域理论均已在前面准备好。
+\subsection{一个不可根式求解的五次方程}
+\label{b1:subsec:2103:04}
 
-\begin{lemma}\label{b1:lem:reduction-cycle-type}
-设 \(f\in\mathbb Z[X]\) 首一，在 \(\mathbb Q\) 上无重根；素数 \(p\) 满足模 \(p\) 的约化 \(\bar f\) 也无重根。若 \(\bar f\) 的不同首一不可约因子的次数为 \(d_1,\ldots,d_r\)，则 \(f\) 在 \(\mathbb Q\) 上的 Galois 群，在全部根上的置换作用中包含循环长度为 \(d_1,\ldots,d_r\) 的元素。
-\end{lemma}
-\begin{proof}
-设分裂域为 \(L\)，根为 \(\alpha_1,\ldots,\alpha_n\)，\(G=\operatorname{Gal}(L/\mathbb Q)\)，并取环 \(A=\mathbb Z[\alpha_1,\ldots,\alpha_n]\)。所有根都满足首一整数方程，\cref{b1:lem:integral-closure-elementary}说明 \(A\) 由有限多个元素作为 \(\mathbb Z\) 模生成，且每个元素都在 \(\mathbb Z\) 上整。\(G\) 置换这些根，所以保持 \(A\)。由 \(L^G=\mathbb Q\)，\(A^G\) 中的元素为有理整元素，只能是整数：一个既约分数若满足首一整数方程，清除分母后就要求分母整除分子的某次幂，故分母为一。因此 \(A^G=\mathbb Z\)。
+一般方程的结论不能直接判定某一个给定方程。现在考察序言中的 \(X^5-X-1\)，用\cref{b1:lem:reduction-cycle-type}把模素数分解得到的循环型与群的传递性结合起来，确定它的 Galois 群。
 
-理想 \(pA\) 为真理想，否则 \(1/p\in A\)，与刚才的有理整元素判别矛盾。由\cref{b1:prop:maximal-ideal-exists}取极大理想 \(\mathfrak m\supseteq pA\)。商域 \(k=A/\mathfrak m\) 有限，因为 \(A/pA\) 由有限多个元素作为 \(\mathbb F_p\) 向量空间生成，而 \(k\) 是它的商。令
-\[
-D=\{\,\sigma\in G\mid\sigma(\mathfrak m)=\mathfrak m\,\},
-\]
-这是 \(\mathfrak m\) 在 \(G\) 作用下的稳定子群，故为子群；它在 \(k\) 上诱导自同构，记其像为 \(H\leq\operatorname{Gal}(k/\mathbb F_p)\)。我们证明这个像为全群。
-
-任取 \(x\in k^H\)。\(G\) 作用下 \(\mathfrak m\) 的轨道由有限个不同的极大理想组成，它们两两互素。\cref{b1:thm:crt}给出 \(a\in A\)，在 \(\mathfrak m\) 处的余数为 \(x\)，在其余轨道理想处的余数为零。多项式
-\[
-P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
-\]
-的系数属于 \(A^G=\mathbb Z\)。若 \(\sigma\in D\)，因 \(x\) 被 \(H\) 固定，\(\sigma(a)\) 模 \(\mathfrak m\) 为 \(x\)；若 \(\sigma\notin D\)，则 \(a\) 模 \(\sigma^{-1}(\mathfrak m)\) 为零，故 \(\sigma(a)\) 模 \(\mathfrak m\) 为零。写 \(|D|=p^e u\)、\(p\nmid u\)，约化后得到
-\[
-\bar P(T)=T^{|G|-|D|}(T-x)^{|D|}
-=T^{|G|-|D|}\Bigl(T^{p^e}-x^{p^e}\Bigr)^u.
-\]
-其中 \(T^{|G|-p^e}\) 的系数为 \(-u x^{p^e}\)，但 \(\bar P\) 的全部系数在 \(\mathbb F_p\) 中。由于 \(u\) 在该域中可逆，\(x^{p^e}=c\in\mathbb F_p\)，于是 \((x-c)^{p^e}=0\)，得到 \(x=c\)。所以 \(k^H=\mathbb F_p\)。有限域扩张 \(k/\mathbb F_p\) 为 Galois 扩张，\cref{b1:thm:finite-galois-correspondence}迫使 \(H=\operatorname{Gal}(k/\mathbb F_p)\)。
-
-因此 Frobenius \(b\mapsto b^p\) 在 \(D\) 中有一个提升 \(\sigma\)。等式 \(f(X)=\prod_i(X-\alpha_i)\) 约化后表明 \(\alpha_i\) 的像是 \(\bar f\) 的全部根。由于约化无重根，这些像互不相同。由\cref{b1:thm:finite-field-subfields}及\cref{b1:thm:finite-field-automorphisms}，一个次数为 \(d_j\) 的不可约因子的根恰组成长度 \(d_j\) 的轨道：根生成的域有 \(p^{d_j}\) 个元素，而固定该根的最小正 Frobenius 次幂正是 \(d_j\)。提升 \(\sigma\) 在原根集上的循环类型与约化后的 Frobenius 相同，遂得结论。
-\end{proof}
 
 \begin{proposition}\label{b1:prop:quintic-x5-x-1}
 多项式 \(f=X^5-X-1\) 在 \(\mathbb Q\) 上的 Galois 群为 \(S_5\)，因而不根式可解。
@@ -141,11 +163,24 @@ P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
 \subsection{可解但非交换的 Galois 群}
 \label{b1:subsec:2103:03}
 
-根式可解也不要求 Galois 群交换。对 \(X^3-2\)，应用\cref{b1:thm:eisenstein}并取素元 \(2\)：非首项系数均被 \(2\) 整除，常数项不被 \(4\) 整除，故它在 \(\mathbb Q\) 上不可约，\(\Bigl[\mathbb Q(\sqrt[3]{2}):\mathbb Q\Bigr]=3\)。它的分裂域是
-\[
-L=\mathbb Q(\sqrt[3]{2},\zeta_3).
-\]
-前一个生成域属于 \(\mathbb R\)，而 \(\zeta_3\) 非实，且满足二次方程 \(X^2+X+1=0\)，所以 \([L:\mathbb Q]=6\)。群忠实作用于三个根，阶也是 \(6\)，因此为 \(S_3\)。复共轭固定实立方根并交换另两个根，三阶自同构则循环置换全部根；它们不交换，但 \(S_3\) 的导出列两步终止。
+回到 \(X^3-2\)。令 \(a=\sqrt[3]{2}\)、\(\zeta=\zeta_3\)、\(L=\mathbb Q(a,\zeta)\)。\cref{b1:prop:cubic-splitting-field-correspondence}已确定 \([L:\mathbb Q]=6\)、\(\operatorname{Gal}(L/\mathbb Q)\cong S_3\) 及其全部中间域。这里利用这些结论，解释根式求解怎样反映在子群与域塔上。
 
 \ProseParagraphBreak
-从根式表达看，\(\sqrt[3]{2}\) 与 \(\zeta_3=(-1+\sqrt{-3})/2\) 已写出一条根式塔。从群论看，\(S_3\) 的三阶正规子群及其二阶商解释了这两种开方。与分圆扩张相比，这个例子表明“群交换”只是根式可解的一种充分条件，真正的准确条件是“群可解”。
+由 Galois 对应，正规子群链和相应的域塔为
+\[
+S_3\trianglerighteq A_3\trianglerighteq1,
+\qquad
+\mathbb Q\subseteq\mathbb Q(\zeta)\subseteq L.
+\]
+两步扩张的 Galois 群分别是 \(S_3/A_3\cong C_2\) 与 \(A_3\cong C_3\)。第一步通过
+\[
+\zeta=\frac{-1+\sqrt{-3}}2,
+\qquad \mathbb Q(\zeta)=\mathbb Q(\sqrt{-3})
+\]
+开平方完成；第二步加入 \(a\)，其立方 \(a^3=2\) 已在基域中。于是这条对应于正规子群链的域塔本身就是一条根式塔。
+
+\ProseParagraphBreak
+先加入单位根，使第二步也能由 Galois 理论描述：在 \(\mathbb Q(\zeta)\) 上，加入 \(a\) 便同时包含 \(a,\zeta a,\zeta^2a\) 三个共轭根，循环自同构把 \(a\) 送到 \(\zeta a\)。若先走 \(\mathbb Q\subseteq\mathbb Q(a)\)，虽然已经通过开立方取得一个根，这一步却不正规，因为另外两个根不在实域 \(\mathbb Q(a)\) 中。
+
+\ProseParagraphBreak
+复共轭与三阶自同构不交换，故全群 \(S_3\) 非交换；但上述两层商群都是交换群，所以它仍然可解。这说明根式求解所需要的是逐层出现交换的商群，而不是要求所有自同构一开始就彼此交换。

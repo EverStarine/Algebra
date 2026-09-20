@@ -12,7 +12,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 群作用与到置换群的同态
-% * 轨道—稳定子群定理
+% * 轨道—稳定子群定理；作用的核、忠实性与自由性
 % * 传递作用与陪集空间
 %
 
@@ -26,6 +26,7 @@ G\times X\longrightarrow X,\qquad (g,x)\longmapsto gx,
 \]
 满足：对任意 \(g,h\in G\) 和 \(x\in X\)，都有 \(1x=x\) 及 \((gh)x=g(hx)\)。带有指定作用的集合称为 \(G\)-集合。
 \end{definition}
+
 记 \(\lambda_g(x)=gx\)。由作用公理，\(\lambda_{g^{-1}}\) 是 \(\lambda_g\) 的逆映射，故每个 \(\lambda_g\) 都是置换；又有
 \[
 \lambda_{gh}=\lambda_g\circ\lambda_h.
@@ -47,6 +48,7 @@ G_x\coloneqq\{\,g\in G\mid gx=x\,\}.
 \symidx{\(Gx\)：群作用的轨道}
 \symidx{\(G_x\)：点的稳定子群}
 \end{definition}
+
 稳定子群也称稳定化子。\termidx[wendinghuazi]{稳定化子}它的每个元素 \(g\in G_x\) 都固定 \(x\)，称为 \(x\) 的稳定子；这里将单个群元素与由这些元素组成的子群区分。\termidx[wendingzi]{稳定子}
 
 \ProseParagraphBreak
@@ -57,27 +59,63 @@ G_x\coloneqq\{\,g\in G\mid gx=x\,\}.
 \[
 G/G_x\longrightarrow Gx,\qquad gG_x\longmapsto gx
 \]
-是双射。特别地，若 \(G\) 有限，则
+是双射。因此对任意群都有基数等式
 \[
-|Gx|=[G:G_x],\qquad |G|=|Gx|\,|G_x|.
+|Gx|=[G:G_x].
+\]
+若 \(G\) 有限，还可写成有限整数的乘积公式
+\[
+|G|=|Gx|\,|G_x|.
 \]
 这里 \(G/G_x\) 只表示左陪集集合，不要求 \(G_x\) 正规。
 \end{theorem}
 \begin{proof}
-若 \(gG_x=hG_x\)，则 \(h^{-1}g\in G_x\)，故 \(gx=hx\)，映射良定义。反之，\(gx=hx\) 推出 \(h^{-1}gx=x\)，所以 \(gG_x=hG_x\)，映射单射。轨道的定义给出满射。有限情形中，\cref{b1:thm:lagrange}用于子群 \(G_x\leq G\)，给出 \(|G|=[G:G_x]|G_x|\)；结合刚证明的双射，就得到两个计数公式。
+若 \(gG_x=hG_x\)，则 \(h^{-1}g\in G_x\)，故 \(gx=hx\)，映射良定义。反之，\(gx=hx\) 推出 \(h^{-1}gx=x\)，所以 \(gG_x=hG_x\)，映射单射。轨道的定义给出满射，基数等式随即成立。
+
+有限情形中，\cref{b1:thm:lagrange}用于子群 \(G_x\leq G\)，给出 \(|G|=[G:G_x]|G_x|\)；再用基数等式代入，就得到乘积公式。
 \end{proof}
+
 这个结果称为\term[guidao-wendingziqun-dingli]{轨道—稳定子群定理}[orbit--stabilizer theorem]。它把“能把 \(x\) 移到多少位置”与“有多少变换保持 \(x\) 不动”联系起来。在 \(S_4\) 对二元子集的作用中，\(\{1,2\}\) 的稳定子群可以独立交换 \(1,2\) 和 \(3,4\)，恰有 \(4\) 个元素；轨道大小为 \(24/4=6\)，与六个二元子集相符。
 
 \ProseParagraphBreak
 若 \(y=gx\)，则 \(G_y=gG_xg^{-1}\)：元素 \(h\) 固定 \(gx\) 当且仅当 \(g^{-1}hg\) 固定 \(x\)。因此同一轨道内的稳定子群通常不相等，但总互相共轭，特别是具有相同阶。
 
+\ProseParagraphBreak
+稳定子群考察哪些群元素固定一个指定点。若要判断一个作用能否区分全部群元素，则要同时考察所有点：\(g,h\in G\) 给出相同置换，当且仅当 \(h^{-1}g\) 固定每一点。
+
+\begin{definition}\label{b1:def:faithful-action}
+设群 \(G\) 作用在集合 \(X\) 上，对应同态为 \(\rho:G\rightarrow S_X\)。使 \(X\) 中每一点都不动的群元素组成作用的核，记为
+\[
+K\coloneqq\ker\rho
+=\{\,g\in G\mid gx=x\text{ 对所有 }x\in X\,\}.
+\]
+若只有单位元素固定全部的点，即 \(K=\{1\}\)，称此作用为\term[zhongshi-zuoyong]{忠实作用}[faithful action]。若对任意 \(x\in X\) 和 \(g\in G\)，等式 \(gx=x\) 都蕴含 \(g=1\)，称此作用为\term[ziyou-zuoyong]{自由作用}[free action]。
+\end{definition}
+
+作用的核是同态的核，因而是 \(G\) 的正规子群。由\cref{b1:prop:kernel-fibers}，忠实等价于 \(\rho\) 单射；自由则等价于每个稳定子群都平凡。
+
+\ProseParagraphBreak
+若 \(X\ne\varnothing\)，自由作用一定忠实：固定全部点的元素也固定任取的一点，所以只能是单位。反过来不成立，\(S_3\) 在三个点上的自然作用忠实，但每个换位仍固定一个点。忠实性要求一个元素只要固定所有点就必须为单位；自由性要求一个元素只要固定任一点就必须为单位。若 \(X=\varnothing\)，自由性的全称条件自动满足，作用的核却是整个 \(G\)，所以这时只有平凡群的作用忠实。
+
 \subsection{传递作用与陪集空间}
 \label{b1:subsec:0401:03}
 
 \begin{definition}\label{b1:def:transitive-action}
-设群 \(G\) 作用在非空集合 \(X\) 上。如果对任意 \(x,y\in X\)，都存在 \(g\in G\) 使 \(gx=y\)，则称此作用为\term[chuandi-zuoyong]{传递作用}[transitive action]。设 \(G\) 还作用在集合 \(Y\) 上。映射 \(f:X\rightarrow Y\) 若对所有 \(g\in G\)、\(x\in X\) 满足 \(f(gx)=gf(x)\)，称为\term[dengbian-yingshe]{等变映射}[equivariant map]。
+设群 \(G\) 作用在非空集合 \(X\) 上。如果对任意 \(x,y\in X\)，都存在 \(g\in G\) 使 \(gx=y\)，则称此作用为\term[chuandi-zuoyong]{传递作用}[transitive action]。
+
+对任意两个 \(G\)-集合 \(X,Y\)，映射 \(f:X\rightarrow Y\) 若对所有 \(g\in G\)、\(x\in X\) 满足 \(f(gx)=gf(x)\)，称为\term[dengbian-yingshe]{等变映射}[equivariant map]。双射的等变映射称为 \(G\)-集合的\term[dengbian-tonggou]{等变同构}[equivariant isomorphism]。
 \end{definition}
+
 传递性等价于 \(X\) 只有一个轨道。等变性则说明先作用再映射与先映射再作用得到相同结果；定义中的两个作用可以不同，但使用的是同一个群 \(G\)。
+
+\ProseParagraphBreak
+等变双射 \(F:X\rightarrow Y\) 的逆映射也等变。事实上，若 \(y=F(x)\)，则
+\[
+F^{-1}(gy)=F^{-1}\Bigl(gF(x)\Bigr)
+=F^{-1}\Bigl(F(gx)\Bigr)
+=gx=gF^{-1}(y).
+\]
+这里比较的是集合及其指定作用；这些集合本身不必是群，等变同构也不是群同构的另一名称。
 
 \ProseParagraphBreak
 任取子群 \(H\leq G\)，公式 \(a(gH)=(ag)H\) 给出 \(G\) 在左陪集集合 \(G/H\) 上的传递作用。若 \(gH=g'H\)，则 \(agH=ag'H\)，所以公式与陪集代表元的选择无关。点 \(H\) 的稳定子群恰为 \(H\)。
@@ -86,6 +124,11 @@ G/G_x\longrightarrow Gx,\qquad gG_x\longmapsto gx
 每个传递 \(G\)-集合 \(X\) 都等变同构于 \(G/G_x\)，其中 \(x\) 是任取的一点。两个陪集作用 \(G/H\)、\(G/K\) 等变同构，当且仅当 \(H,K\) 在 \(G\) 中共轭。
 \end{proposition}
 \begin{proof}
-由\cref{b1:thm:orbit-stabilizer}，映射 \(f:gG_x\mapsto gx\) 是从 \(G/G_x\) 到轨道 \(Gx\) 的双射；传递性使 \(Gx=X\)。又有 \(f(agG_x)=agx=af(gG_x)\)，所以此双射等变。若 \(F:G/H\rightarrow G/K\) 是等变双射，写 \(F(H)=aK\)。对任意 \(u\in G\)，等变性给出 \(F(uH)=uF(H)\)，再由 \(F\) 单射，得到 \(uH=H\) 当且仅当 \(uaK=aK\)。两边分别等价于 \(u\in H\) 和 \(u\in aKa^{-1}\)，因此 \(H=aKa^{-1}\)。反过来，若 \(H=aKa^{-1}\)，则 \(gH\mapsto gaK\) 良定义：把 \(g\) 改为 \(gh\) 时，\(haK=aK\)。其逆为 \(gK\mapsto ga^{-1}H\)，且两者都等变。
+由\cref{b1:thm:orbit-stabilizer}，映射 \(f:gG_x\mapsto gx\) 是从 \(G/G_x\) 到轨道 \(Gx\) 的双射；传递性使 \(Gx=X\)。又有 \(f(agG_x)=agx=af(gG_x)\)，所以此双射等变。
+
+若 \(F:G/H\rightarrow G/K\) 是等变双射，写 \(F(H)=aK\)。对任意 \(u\in G\)，等变性给出 \(F(uH)=uF(H)\)，再由 \(F\) 单射，得到 \(uH=H\) 当且仅当 \(uaK=aK\)。两边分别等价于 \(u\in H\) 和 \(u\in aKa^{-1}\)，因此 \(H=aKa^{-1}\)。
+
+反过来，若 \(H=aKa^{-1}\)，则 \(gH\mapsto gaK\) 良定义：把 \(g\) 改为 \(gh\)、\(h\in H\) 时，由 \(a^{-1}ha\in K\) 得到 \(haK=aK\)。同理由 \(K=a^{-1}Ha\) 可知 \(gK\mapsto ga^{-1}H\) 良定义；两者互为逆映射，且都与左乘作用相容，所以给出等变同构。
 \end{proof}
+
 于是，一个传递作用在选定基点后由一个子群描述；忘掉基点，只能恢复该子群的共轭类。一般作用则分解为这样的传递部分。这里不应把“传递”理解为“每个非单位元素都移动每一点”：例如 \(S_3\) 的自然作用传递，但换位固定第三个点。

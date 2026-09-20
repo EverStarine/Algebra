@@ -2,13 +2,19 @@
 % 纲要标题：### D.3 微分 Galois 理论简介
 % 纲要位置：计划纲要.md，第 904 行。
 % BEGIN APPENDIX OUTLINE SYNC
-% <!-- 短节：不设小节 -->
+% #### D.3.1 导子与常数域
+% #### D.3.2 线性微分方程与基本解矩阵
+% #### D.3.3 Picard--Vessiot 扩张与微分自同构
+% ---
 % END APPENDIX OUTLINE SYNC
 
 \section{微分 Galois 理论简介}
 \label{b1:sec:D03}
 
 多项式的根产生代数关系，微分方程的解还带有求导关系。若研究后者的对称性，就不能允许任意的域自同构破坏求导。这里仅定义相应对象并计算一个例子；一般存在定理及 Galois 对应留给后续的线性微分理论。
+
+\subsection{导子与常数域}
+\label{b1:subsec:D03:01}
 
 \begin{definition}\label{b1:def:differential-field}
 特征零的\term[weifen-yu]{微分域}[differential field]是域 \(K\) 连同一个加法映射 \(\partial:K\rightarrow K\)，满足 Leibniz 法则
@@ -18,7 +24,25 @@
 \(\partial\) 称为\term[daozi]{导子}[derivation]，子域 \(C_K=\ker\partial\) 称为\term[changshu-yu]{常数域}[field of constants]。微分域扩张要求大域导子限制为小域导子。
 \end{definition}
 
-由 Leibniz 法则，\(\partial1=0\)，并且对 \(b\neq0\) 有 \(\partial(b^{-1})=-b^{-2}\partial b\)，所以常数确实组成子域。例如 \(C(t)\) 配上形式导子 \(d/dt\) 的常数恰为 \(C\)：将有理函数写成互素多项式之比，求导为零会使分子整除自己的导数，次数比较便迫使它为常数，分母亦然。
+这里的导子是域上的一种代数运算，不要求域的元素先是某个区间上的函数。由 \(\partial(1\cdot1)=2\partial1\) 得 \(\partial1=0\)。对 \(b\neq0\)，在 \(bb^{-1}=1\) 两边施加导子，得到 \(\partial(b^{-1})=-b^{-2}\partial b\)。因此若 \(a,b\) 的导数为零，它们的和、差、积以及 \(b\neq0\) 时的商也如此；这解释了为什么所有导数为零的元素确实组成一个子域。所谓常数由导子决定，不能只凭某个元素的记号来判断。
+
+\ProseParagraphBreak
+例如设 \(C\) 为特征零的域，在有理函数域 \(C(t)\) 上令 \(\partial t=1\)、\(\partial c=0\)（\(c\in C\)）。加法法则与 Leibniz 法则迫使多项式按通常公式求导，再由商法则确定所有有理函数的导数。它的常数域恰为 \(C\)。事实上，设非零有理函数 \(P/Q\) 已约成互素多项式之比，且导数为零，则 \(P'Q=PQ'\)。因 \(P,Q\) 互素，\(P\mid P'\)；若 \(P\) 非常数，特征零保证 \(P'\neq0\) 且次数较小，矛盾。所以 \(P\) 为非零常数，原等式进而给出 \(Q'=0\)，故 \(Q\) 也为常数。零函数当然也在 \(C\) 中。
+
+\subsection{线性微分方程与基本解矩阵}
+\label{b1:subsec:D03:02}
+
+现在考虑线性方程组 \(\partial z=Az\)，其中 \(A\in M_n(K)\)，未知量 \(z\) 是一个 \(n\) 维列向量，导子逐个作用于分量。若 \(z,w\) 是解而 \(c,d\) 属于常数域，则 \(cz+dw\) 仍是解。系数不能任取于 \(K\)，因为 \(\partial(cz)=(\partial c)z+c\partial z\) 会多出一项。于是解首先组成常数域上的向量空间。
+
+\ProseParagraphBreak
+若在某个微分扩张 \(L\) 中找到 \(n\) 个解向量，按列排成可逆矩阵 \(Y\)，就有 \(\partial Y=AY\)。称 \(Y\) 为\term[jiben-jie-juzhen]{基本解矩阵}[fundamental solution matrix]。可逆性不仅保证列向量独立，还给出所有 \(L\) 中解的表达式：对任一解 \(z\)，求导计算得
+\[
+\partial(Y^{-1}z)=-Y^{-1}A z+Y^{-1}\partial z=0.
+\]
+所以 \(z=Yc\)，其中 \(c\) 的分量属于 \(C_L\)。这就是基本解矩阵能够代替整组解的原因。
+
+\subsection{Picard--Vessiot 扩张与微分自同构}
+\label{b1:subsec:D03:03}
 
 \begin{definition}\label{b1:def:picard-vessiot}
 设 \(K\) 为微分域，常数域 \(C_K=C\) 代数闭，\(A\in M_n(K)\)。方程 \(\partial Y=AY\) 的一个\term[Picard-Vessiot-kuozhang]{Picard--Vessiot 扩张}[Picard--Vessiot extension]是微分域扩张 \(L/K\)，满足：存在可逆矩阵 \(Y\in\operatorname{GL}_n(L)\) 解此方程；\(L\) 由 \(Y\) 的矩阵元在 \(K\) 上生成；\(C_L=C\)。其\term[weifen-galois-qun]{微分 Galois 群}[differential Galois group]为
@@ -28,20 +52,37 @@
 \]
 \end{definition}
 
-这些条件是对一个给定扩张的检验，定义本身没有证明所有方程均有这样的扩张。称 \(Y\) 为基本解矩阵，是因为它的列给出 \(n\) 个线性独立的向量解。
+生成条件表示只加入一组基本解及其域运算所需的元素；既然 \(L\) 是域，\((\det Y)^{-1}\) 已经在其中。“不增加常数”则排除与求解方程无关的常数扩张，使解之间的系数始终取自原来的 \(C\)。例如方程 \(y'=0\) 在 \(K\) 中已有基本解 \(1\)，并不需要为它另添常数。这些条件是对给定扩张的检验；定义本身没有证明每个方程都存在这样的扩张。
+
+\ProseParagraphBreak
+若 \(\sigma\) 固定 \(K\) 并与导子交换，它便把 \(\partial Y=AY\) 变成 \(\partial\sigma(Y)=A\sigma(Y)\)。因此它将一组基本解变成另一组基本解。上一段对解向量的计算预示，这个变化应当由常数矩阵表达。
 
 \begin{proposition}\label{b1:prop:differential-galois-matrices}
 在上述条件下，每个微分自同构唯一写成 \(\sigma(Y)=YM_\sigma\)，其中 \(M_\sigma\in\operatorname{GL}_n(C)\)，并且 \(\sigma\mapsto M_\sigma\) 是单同态。
 \end{proposition}
+
 \begin{proof}
-令 \(M_\sigma=Y^{-1}\sigma(Y)\)。由 \(\partial Y^{-1}=-Y^{-1}(\partial Y)Y^{-1}\)，并使用 \(\sigma(A)=A\) 与微分交换条件，得
+因为 \(Y\) 和 \(\sigma(Y)\) 可逆，等式 \(\sigma(Y)=YM_\sigma\) 唯一决定可逆矩阵 \(M_\sigma=Y^{-1}\sigma(Y)\)。对 \(Y^{-1}Y=I\) 求导，得 \(\partial Y^{-1}=-Y^{-1}(\partial Y)Y^{-1}\)。再使用 \(\sigma(A)=A\) 与微分交换条件，得
 \[
 \partial M_\sigma=-Y^{-1}A\sigma(Y)+Y^{-1}A\sigma(Y)=0.
 \]
-因此矩阵元属于 \(C_L=C\)。自同构固定常数，所以 \(\sigma\tau(Y)=YM_\sigma M_\tau\)，这给出同态性。若 \(M_\sigma=I\)，它固定生成 \(L\) 的全部矩阵元，因此为恒等。
+因此矩阵元属于 \(C_L=C\)。这里 \(C\subseteq K\)，所以每个 \(K\) 自同构固定这些系数，进而
+\[
+\sigma\tau(Y)=\sigma(YM_\tau)=\sigma(Y)M_\tau
+=YM_\sigma M_\tau.
+\]
+由表示矩阵的唯一性，\(M_{\sigma\tau}=M_\sigma M_\tau\)，得到同态性。若 \(M_\sigma=I\)，则 \(\sigma\) 固定 \(Y\) 的全部矩阵元，也固定它们在 \(K\) 上的所有有理表达式。生成条件给出 \(\sigma=\operatorname{id}_L\)，故同态单射。
 \end{proof}
 
-取 \(K=C(t)\)、\(L=C(u)\)，其中 \(u^2=t\)，令 \(\partial u=1/(2u)=u/(2t)\)。这个导子在 \(C(u)\) 上就是 \((2u)^{-1}d/du\)，故常数恰为 \(C\)。非零元素 \(u\) 是一阶方程 \(y'=y/(2t)\) 的基本解，因而 \(L/K\) 满足上面的定义。其两个域自同构 \(u\mapsto u\) 与 \(u\mapsto-u\) 都与导子交换；微分群正是 \(\{1,-1\}\subseteq C^\times\)。这说明微分问题也可以产生有限群，却不说明一般微分扩张都是代数扩张。
+取特征零的代数闭域 \(C\)，令 \(K=C(t)\)、\(L=C(u)\)，把 \(K\) 通过 \(t=u^2\) 嵌入 \(L\)。对关系 \(u^2=t\) 求导，必须有 \(2u\partial u=1\)，所以规定 \(\partial u=1/(2u)=u/(2t)\)。在 \(C(u)\) 上取导子 \((2u)^{-1}d/du\)，确实满足这一条件，限制到 \(K\) 就是原来的导子。因乘子非零，它的核与 \(d/du\) 相同，故常数域仍为 \(C\)。
+
+\ProseParagraphBreak
+非零元素 \(u\) 满足一阶方程 \(y'=y/(2t)\)，可以看成一个 \(1\times1\) 的可逆解矩阵；\(L=K(u)\)，所以三个 Picard--Vessiot 条件逐一成立。\(t\) 不是 \(C(t)\) 中的平方：平方有理函数在 \(t=0\) 处的零或极点次数为偶数，而 \(t\) 的次数为一。因此 \([L:K]=2\)，两个域自同构是 \(u\mapsto u\) 与 \(u\mapsto-u\)。对非恒等者 \(\sigma\)，有
+\[
+\partial\sigma(u)=-\frac1{2u}
+=\sigma\bigl(\partial u\bigr).
+\]
+两个导子运算在生成元上相容，再由和、积、商法则便知在整个 \(L\) 上相容。故微分群恰为 \(\{1,-1\}\subseteq C^\times\)。这个例子中基本解恰好代数；Picard--Vessiot 的定义并未要求一般基本解在基域上代数。
 
 \ProseParagraphBreak
 经典有限 Galois 理论用群对有限根集的置换记录对称；这里的命题用常数域上的矩阵记录基本解之间的变化。一般理论还要证明这个像具有线性代数群结构，并用适当的闭子群建立对应；这些结论不由“是矩阵群的子群”自动得到。第三卷附录 E 引入微分代数对象，第五卷附录 E 讨论线性微分方程及其群，本节不提前调用那里尚需建立的结果。

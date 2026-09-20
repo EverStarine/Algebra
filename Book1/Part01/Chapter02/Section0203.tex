@@ -15,7 +15,7 @@
 陪集给出了集合的划分，但“把每一块当作一个新元素”以后，原来的乘法未必仍有意义。问题和第一章的商运算相同：换一个代表元，计算结果是否还在同一块中？在群中，这个相容条件恰好由正规性描述。
 
 \ProseParagraphBreak
-本节先建立商群，再说明哪些同态能够通过商映射。单群的定义放在最后，它所排除的是非平凡的正规子群，而不是所有真子群。
+本节先建立商群，再说明哪些同态能够通过商映射。单群的定义放在最后，它所排除的是非平凡真正规子群，而不是所有非平凡真子群。
 
 \subsection{正规性及商群构造}
 \label{b1:subsec:0203:01}
@@ -26,11 +26,13 @@
 \begin{definition}\label{b1:def:normal-subgroup}
 子群 \(N\leq G\) 若对每个 \(g\in G\) 满足 \(gNg^{-1}=N\)，就称为\term[zhenggui-ziqun]{正规子群}[normal subgroup]，记为 \(N\trianglelefteq G\)。这里 \(gNg^{-1}\) 表示所有 \(gng^{-1}\ (n\in N)\) 的集合；映射 \(n\mapsto gng^{-1}\) 称为由 \(g\) 给出的\term[gonge]{共轭}[conjugation]。
 \end{definition}
+
 \symidx{\(N\trianglelefteq G\)：正规子群关系}
 
 \begin{proposition}\label{b1:prop:normal-criteria}
 对于子群 \(N\leq G\)，以下条件等价：它是正规子群；对每个 \(g\) 有 \(gNg^{-1}\subseteq N\)；对每个 \(g\) 有 \(gN=Ng\)。
 \end{proposition}
+
 \begin{proof}
 等号自然给出包含。若所有共轭都满足包含，把 \(g\) 换成 \(g^{-1}\) 得
 \(g^{-1}Ng\subseteq N\)，两侧再共轭便得 \(N\subseteq gNg^{-1}\)，故等号成立。等式 \(gNg^{-1}=N\) 两边右乘 \(g\)，恰为 \(gN=Ng\)，反向亦然。
@@ -39,6 +41,7 @@
 \begin{proposition}[正规子群的基本例子]\label{b1:prop:normal-basic-examples}
 群同态的核是正规子群；交换群的每个子群都是正规子群；任意群中指数为 \(2\) 的子群都是正规子群。
 \end{proposition}
+
 \begin{proof}
 设 \(f:G\rightarrow K\) 为同态。由\cref{b1:prop:kernel-fibers}，\(\ker f\) 已是子群。若 \(n\in\ker f\)，则
 \(f(gng^{-1})=f(g)f(n)f(g)^{-1}=1\)，故 \(g(\ker f)g^{-1}\subseteq\ker f\)；\cref{b1:prop:normal-criteria}给出正规性。若 \(G\) 交换，则对任意子群 \(H\)、\(h\in H\) 和 \(g\in G\)，有 \(ghg^{-1}=h\)，所以 \(H\) 正规。
@@ -49,6 +52,7 @@
 \begin{theorem}[商群构造]\label{b1:thm:quotient-group}
 设 \(N\leq G\)。公式 \((aN)(bN)=(ab)N\) 在左陪集集合上良定义，当且仅当 \(N\trianglelefteq G\)。满足此条件时，该运算使 \(G/N\) 成为群，称为\term[shangqun]{商群}[quotient group]；单位元为 \(N\)，逆元公式为 \((aN)^{-1}=a^{-1}N\)。商映射 \(q(g)=gN\) 是满同态，核恰为 \(N\)。
 \end{theorem}
+
 \begin{proof}
 若 \(N\) 正规，写 \(a'=an\)、\(b'=bm\)，其中 \(n,m\in N\)，则
 \[
@@ -65,6 +69,30 @@ a'b'=anbm=ab(b^{-1}nb)m.
 商群中的单位元是整个子群 \(N\)，并非单个元素 \(1\)。例如
 \(\mathbb Z/4\mathbb Z\) 的 \([2]+[2]=[0]\) 表示两个陪集相加得到单位陪集，而不是说整数 \(2+2=0\)。保持原群等式与商群等式的区别，是使用商结构时最基本的习惯。
 
+\ProseParagraphBreak
+非正规子群会怎样破坏乘法，可以沿用三点置换群中的例子检验。在 \(S_3\) 中，令 \(a\) 交换 \(1,2\)，令 \(b\) 交换 \(2,3\)，取 \(H=\{1,a\}\)。由于 \(1H=aH\)，同一个陪集的代表可以取 \(1\)，也可以取 \(a\)。与 \(bH\) 相乘时，候选规则分别给出
+\[
+(1H)(bH)=(1b)H=bH,\qquad
+(aH)(bH)=(ab)H.
+\]
+然而 \(b^{-1}ab=bab\) 交换 \(1,3\) 而固定 \(2\)，不属于 \(H\)，故\cref{b1:prop:coset-equivalence}说明 \(abH\neq bH\)。输入陪集没有改变，输出却变了，因而这条规则不能定义陪集集合上的运算。商群定理中的正规性条件正是为了使这种更换代表元的计算结果保持一致。
+
+\begin{corollary}[群的同余关系与正规子群]\label{b1:cor:group-congruences}
+群 \(G\) 上与乘法相容的等价关系，恰好由正规子群给出。具体地，若 \(\sim\) 是\cref{b1:def:congruence}意义下的同余关系，令 \(N=[1]\)，则 \(N\trianglelefteq G\)，且
+\[
+a\sim b\quad\Longleftrightarrow\quad b^{-1}a\in N.
+\]
+反过来，每个正规子群 \(N\) 都按此公式确定一个同余关系，其单位元所在的类为 \(N\)。
+\end{corollary}
+
+\begin{proof}
+由自反性，\(1\in N\)。若 \(n,m\in N\)，则 \(n\sim1\)、\(m\sim1\)，乘法相容性给出 \(nm\sim1\)，所以 \(nm\in N\)。在 \(n\sim1\) 两侧左乘 \(n^{-1}\)，得 \(1\sim n^{-1}\)，再用对称性知 \(n^{-1}\in N\)。因此 \(N\) 是子群。对任意 \(g\in G\)，在 \(n\sim1\) 两侧分别左乘 \(g\)、右乘 \(g^{-1}\)，得 \(gng^{-1}\sim1\)；由\cref{b1:prop:normal-criteria}，\(N\) 正规。
+
+左乘 \(b^{-1}\) 把 \(a\sim b\) 变为 \(b^{-1}a\sim1\)，左乘 \(b\) 又能恢复原关系，故得到所述等价式。反过来，若 \(N\) 正规，\cref{b1:thm:quotient-group}给出商同态 \(q:G\rightarrow G/N\)。关系 \(q(a)=q(b)\) 是等价关系，并由同态性质与乘法相容；\cref{b1:prop:coset-equivalence}说明它正由所给公式描述。令 \(b=1\)，可知单位元所在的类恰为 \(N\)。
+\end{proof}
+
+因此，第一章的同余关系方法在群中可以用正规子群完整表达：单位元所在的一个类，已经决定其余所有类。
+
 \subsection{商群的泛性质}
 \label{b1:subsec:0203:02}
 
@@ -73,6 +101,7 @@ a'b'=anbm=ab(b^{-1}nb)m.
 \begin{theorem}[商群的泛性质]\label{b1:thm:quotient-universal}
 设 \(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 为商映射。对于同态 \(f:G\rightarrow K\)，存在同态 \(\overline f:G/N\rightarrow K\) 满足 \(\overline f q=f\)，当且仅当 \(N\subseteq\ker f\)。存在时，\(\overline f\) 唯一，且由 \(\overline f(gN)=f(g)\) 给出。
 \end{theorem}
+
 \begin{proof}
 如果已有分解，\(n\in N\) 时 \(q(n)=N\) 为商群单位元，故 \(f(n)=1\)。反过来，若 \(N\subseteq\ker f\)，则
 由\cref{b1:prop:coset-equivalence}，\(gN=hN\) 蕴含 \(h^{-1}g\in N\)，于是 \(f(h)^{-1}f(g)=1\)，即 \(f(g)=f(h)\)，证明所给公式良定义。由
@@ -92,13 +121,19 @@ a'b'=anbm=ab(b^{-1}nb)m.
 非平凡群 \(G\) 若仅有 \(\{1\}\) 和 \(G\) 两个正规子群，就称为\term[danqun]{单群}[simple group]。
 \end{definition}
 
-单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由\cref{b1:prop:normal-basic-examples}的核正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群，则\cref{b1:prop:kernel-fibers}保证单射。因此单群没有大小严格介于平凡群与自身之间的同态像。
+单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由\cref{b1:prop:normal-basic-examples}的核正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群，则\cref{b1:prop:kernel-fibers}保证单射。因此单群的每个同态像要么平凡，要么同构于原群；后一情形只需将同态的目标限制为实际像，便得到双射同态。
 
 \begin{proposition}\label{b1:prop:abelian-simple}
 交换群是单群，当且仅当它的阶为素数。
 \end{proposition}
+
 \begin{proof}
-若 \(\lvert G\rvert=p\) 为素数，则\cref{b1:thm:lagrange}使每个子群的阶只能为 \(1\) 或 \(p\)，所以没有非平凡真子群，尤其没有非平凡真正规子群。反过来，设 \(G\) 是交换单群，取 \(g\ne1\)。交换群的所有子群均正规，故非平凡子群 \(\langle g\rangle\) 必为 \(G\)。如果 \(g\) 为无限阶，则 \(\langle g^2\rangle\) 非平凡且不含 \(g\)：否则 \(g=g^{2k}\) 给出非零整数次幂等于 \(1\)。这与单性矛盾。故 \(g\) 有有限阶 \(n>1\)。若 \(n=ab\)，其中 \(a,b>1\)，则 \(g^a\ne1\)，而 \(\langle g^a\rangle\) 至多有 \(b<n\) 个元素，再次得到非平凡真子群。因此 \(n\) 为素数。
+若 \(\lvert G\rvert=p\) 为素数，则\cref{b1:thm:lagrange}使每个子群的阶只能为 \(1\) 或 \(p\)，所以没有非平凡真子群，尤其没有非平凡真正规子群。
+
+反过来，设 \(G\) 是交换单群，取 \(g\ne1\)。
+交换群的所有子群均正规，故非平凡子群 \(\langle g\rangle\) 必为 \(G\)。
+如果 \(g\) 为无限阶，则 \(\langle g^2\rangle\) 非平凡且不含 \(g\)：否则 \(g=g^{2k}\) 给出非零整数次幂等于 \(1\)。这与单性矛盾。
+故 \(g\) 有有限阶 \(n>1\)。若 \(n=ab\)，其中 \(a,b>1\)，则 \(g^a\ne1\)，而 \(\langle g^a\rangle\) 至多有 \(b<n\) 个元素，再次得到非平凡真子群。因此 \(n\) 为素数。
 \end{proof}
 
-非交换单群的构造需要比本章更多的工具；本节不预先假定它们的分类。单群概念的价值在于提出一个结构问题：给定群能否通过正规子群与商群分成较小的部分？这种分解与任意子群的划分不同，因为只有正规子群允许保留商上的群运算。
+非交换单群的构造需要比本章更多的工具；本节不预先假定它们的分类。单群概念的价值在于提出一个结构问题：给定群能否通过正规子群与商群分成较小的部分？这种分解使用的是由原群乘法诱导的商群运算，因而必须以正规子群为依据。

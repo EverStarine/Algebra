@@ -12,19 +12,23 @@
 \label{b1:app:C}
 
 \begin{chapterabstract}
-自由积的约化字既描述群元素，也给出一类可执行的计算方法。本附录先把这一构造推广到沿公共子群的合并，证明标准形和因子的嵌入；再用自由积的陪集树解释有限子群为什么来自因子。随后区分等式证书、判定算法和不可判定性，最后说明有限单群分类在群结构理论中的地位。
+自由积的约化字既描述群元素，也给出一类可执行的计算方法。本附录先把这一构造推广到沿公共子群的合并，证明标准形和因子的嵌入；再用自由积的陪集树解释有限子群为什么来自因子。随后讨论等式的有限推导、判定算法和不可判定性，最后说明有限单群分类在群结构理论中的地位。
 \end{chapterabstract}
 
 \begin{learninggoals}
 \begin{itemize}
 \item 用泛性质与标准形分别掌握带合并自由积的构造和元素辨认。
 \item 根据陪集树计算稳定子群，并用有限树的不动点说明有限子群的限制。
-\item 分清标准形的存在性与有效计算，理解字问题的肯定证书和停机要求。
+\item 分清标准形的存在性与有效计算，理解如何验证一个字表示单位，以及判定算法的停机要求。
 \item 说明有限单群分类回答了什么问题，以及合成因子为何不足以确定原群。
 \end{itemize}
+
 \end{learninggoals}
 
-本附录以\chapref{b1:ch:08}的自由群、群展示和自由积为主要先修；树作用部分还使用\chapref{b1:ch:04}的群作用语言，分类概览使用\chapref{b1:ch:07}的合成列。图论所需的路径和树在使用处说明，不预设代数拓扑。合并积标准形、陪集树与有限群不动点均在本附录证明；字问题不可判定性和有限单群分类只作明确的外部陈述，不作为本卷主干的证明输入。
+本附录以\chapref{b1:ch:08}的自由群、群展示和自由积为基础；树作用部分还使用\chapref{b1:ch:04}的群作用知识，分类概览使用\chapref{b1:ch:07}的合成列。图论所需的路径和树在使用处说明，不预设代数拓扑。合并积标准形、陪集树与有限群不动点均在本附录证明；字问题不可判定性和有限单群分类只作明确的外部陈述，本卷其他证明不依赖这两个结果。
+
+\ProseParagraphBreak
+自由群与字问题的专题阅读，可选 Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter I, 1--3; Chapter II, 1--2; Chapter IV, 4--5]{LyndonSchupp2001}；有限群及 Mathieu 群的实例可查 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapter 9]{Rotman1995TheoryGroups}。Aschbacher 的《Sporadic Groups》\cite[Preface, pp. ix--xi]{Aschbacher1994SporadicGroups}的序言概述有限单群分类及散在单群，可先用于了解这些群在分类中的位置。本附录引用分类名单时会另外说明外部结果的范围。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -43,7 +47,7 @@
 群的生成与关系同时带来构造问题和计算问题。带合并自由积用商群识别公共子群，标准形进一步保证两因子仍然嵌入；自由积的陪集树则把交替字的非平凡性转成无回路性质。有限群在无反转树作用下有公共不动顶点，因此自由积的有限子群必落在因子的某个共轭中。
 
 \ProseParagraphBreak
-展示中的等式有有限证书，但枚举证书只保证最终识别表示单位的输入。一个判定算法还必须在所有非单位输入上停止，标准形也只有在能够有效求出时才提供这种算法。有限单群分类解决了另一类结构问题：它确定有限群可能出现的简单因子，因子之间的组合仍需扩张理论。
+群展示中的等式若成立，就能由关系字经过有限步推导得到。枚举这些推导只保证最终识别出表示单位的字；判定算法还必须对不表示单位的字给出否定答案。标准形也只有在能够有效求出时才提供这种算法。有限单群分类解决了另一类结构问题：它确定有限群可能出现的简单因子，因子之间的组合仍需扩张理论。
 \end{chaptersummary}
 
 \BookExercises
@@ -51,6 +55,7 @@
 \begin{exercise}\label{b1:ex:C-free-product-quotient}
 设 \(G=C_2*C_3=\langle a,b\mid a^2=b^3=1\rangle\)。证明自然满同态 \(G\rightarrow C_2\times C_3\) 不是单射，并给出核中一个无限阶元素。
 \end{exercise}
+
 \begin{solution}
 两因子到直积的标准嵌入由\cref{b1:thm:free-product-universal}延拓为同态，其像含两个因子，故满射。元素 \(ab\) 的像阶为六，因此 \((ab)^6\) 在核中。对每个正整数 \(m\)，字 \((ab)^{6m}\) 都是非空约化字，由\cref{b1:lem:free-product-normal-form}不等于单位。所以 \((ab)^6\) 有无限阶，尤其核非平凡。
 \end{solution}
@@ -58,6 +63,7 @@
 \begin{exercise}\label{b1:ex:C-amalgam-central-quotient}
 设 \(G=\langle a,b\mid a^2=b^3\rangle\)、\(z=a^2=b^3\)。证明 \(\langle z\rangle\) 是无限循环中心子群，并证明 \(G/\langle z\rangle\cong C_2*C_3\)。
 \end{exercise}
+
 \begin{solution}
 \(z\) 作为 \(a\) 的幂与 \(a\) 交换，作为 \(b\) 的幂与 \(b\) 交换，故与全部生成字交换。\cref{b1:thm:amalgam-normal-form}保证因子 \(\langle a\rangle\cong\mathbb Z\) 嵌入，所以 \(z=a^2\) 有无限阶。
 
@@ -67,6 +73,7 @@
 \begin{exercise}\label{b1:ex:C-amalgam-injective-input}
 在合并积的商构造中，若不要求 \(i,j\) 为单同态，因子的自然映射是否仍必为单射？取 \(C=A=C_2\)、\(B=1\)、\(i=\operatorname{id}\)，\(j\) 为平凡同态进行检验。
 \end{exercise}
+
 \begin{solution}
 此时 \(A*B\cong A\)。若 \(c\) 是 \(C_2\) 的非单位元素，所加的关系为 \(i(c)j(c)^{-1}=c=1\)，所以所得商群平凡，\(A\) 的自然映射不单射。\cref{b1:thm:amalgam-normal-form}需要把 \(C\) 看成两因子的子群并作陪集分解；非单射映射不满足这一假设。
 \end{solution}
@@ -74,6 +81,7 @@
 \begin{exercise}\label{b1:ex:C-dihedral-tree}
 在整数直线上取顶点集 \(\mathbb Z\)，相邻整数之间连边。令 \(a(n)=-n\)、\(b(n)=2-n\)。证明这给出 \(C_2*C_2\) 的忠实作用，且两条生成反射没有公共不动顶点。
 \end{exercise}
+
 \begin{solution}
 \(a^2=b^2=1\)，且两者保持相邻关系，故自由积泛性质给出图上的群作用。按函数复合从右到左的约定，\(ab(n)=n-2\)，\(ba(n)=n+2\)。非空偶数字长的约化字是 \((ab)^m\) 或 \((ba)^m\)，其中 \(m>0\)，作用为非零平移。奇数字长的约化字是若干此类平移与一次反射的复合，形如 \(n\mapsto c-n\)，也不可能在所有整数上为恒等。由自由积标准形，核只有单位元，作用忠实。
 
@@ -83,6 +91,7 @@
 \begin{exercise}\label{b1:ex:C-tree-inversion}
 说明有限群树作用不动点定理的无反转假设不能删除；再解释为什么把每条边细分为两条后，该反例会获得不动顶点。
 \end{exercise}
+
 \begin{solution}
 取只有一条边、两个顶点的树，让 \(C_2\) 的非单位元素交换两端。没有顶点被全群固定，但树的边被保持并发生反转。加入中点后，该元素交换两半边而固定中点，因此获得公共不动顶点。一般地，细分后的边一端是旧顶点，另一端是新中点；诱导作用保持这两类顶点，所以不可能交换任何新边的两端。
 \end{solution}
@@ -90,6 +99,7 @@
 \begin{exercise}\label{b1:ex:C-torsion-free-product}
 称一个群无挠，若它的非单位元素均有无限阶。证明两个无挠群的自由积仍然无挠；并判断 \(C_2*C_3\) 能否有四阶元素。
 \end{exercise}
+
 \begin{solution}
 若 \(g\in A*B\) 有有限阶，则 \(\langle g\rangle\) 是有限子群。\cref{b1:cor:finite-subgroup-free-product}把它放入某个因子的共轭中。于是 \(g\) 的某个共轭属于 \(A\) 或 \(B\)，并仍有有限阶；无挠性迫使该共轭为单位，所以 \(g=1\)。在 \(C_2*C_3\) 中，同一推论说明有限阶元素共轭于因子元素，其阶只能为一、二或三，因此没有四阶元素。
 \end{solution}
@@ -101,6 +111,7 @@
 \]
 并求 \(\ell_T(mk)\)（\(k\in\mathbb Z\)）。
 \end{exercise}
+
 \begin{solution}
 长度为 \(r\) 的 \(T\)-字是 \(r\) 个 \(\pm1,\pm m\) 的和，其绝对值至多 \(mr\)，所以 \(r\geq|n|/m\)。另一方面，用 \(|n|\) 个同号的一表示 \(n\)，给出上界。取 \(n=mk\) 时，下界为 \(|k|\)，而 \(|k|\) 个同号的 \(m\) 达到这个界，故 \(\ell_T(mk)=|k|\)。当 \(k\ne0\) 时，这与 \(\ell_S(mk)=m|k|\) 不同，但两距离之间仍有固定倍数控制。
 \end{solution}
@@ -108,6 +119,7 @@
 \begin{exercise}\label{b1:ex:C-word-finite-certificate}
 在 \(G=\langle a,b\mid aba^{-1}b^{-1}=1\rangle\) 中，令 \(r=aba^{-1}b^{-1}\)。为等式 \(a^2ba^{-2}b^{-1}=1\) 写出\eqref{b1:eq:C-word-certificate}形式的证书；再证明 \(a^2b\ne1\)。
 \end{exercise}
+
 \begin{solution}
 自由群中的等式为
 \[
@@ -121,6 +133,7 @@ a^2ba^{-2}b^{-1}=(ara^{-1})r.
 \begin{exercise}\label{b1:ex:C-two-semidecisions}
 对某个固定有限展示，假设除了\cref{b1:prop:C-word-certificate}给出的肯定证书搜索，还能设计一个过程：当输入字不等于单位时必停机并正确确认，当它等于单位时不停机。证明该展示的字问题可判定，并说明这对\cref{b1:thm:C-novikov-boone}中的群意味着什么。
 \end{exercise}
+
 \begin{solution}
 交替执行两个过程，每轮让各自多运行一步，并保存各自的中间状态。若输入等于单位，第一个过程终会停止；若输入不等于单位，第二个过程终会停止。两种情况穷尽全部输入，且两个过程的确认都正确，所以只要其中一个停止就输出其答案，得到总会停机的判定算法。故对 Novikov--Boone 定理中的群，不可能存在题设所要求的第二个过程，否则便与不可判定性矛盾。
 \end{solution}
@@ -128,6 +141,7 @@ a^2ba^{-2}b^{-1}=(ara^{-1})r.
 \begin{exercise}\label{b1:ex:C-composition-not-classification}
 写出 \(C_6\) 与 \(S_3\) 的合成列，核对它们有相同的合成因子而不同构。这个例子说明，有限单群分类是否直接给出了所有有限群的同构分类？
 \end{exercise}
+
 \begin{solution}
 在 \(C_6=\langle c\rangle\) 中取
 \[

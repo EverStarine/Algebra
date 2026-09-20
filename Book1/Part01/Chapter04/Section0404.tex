@@ -34,7 +34,21 @@
 \]
 若 \(\lambda(g)\) 是恒等置换，则代入 \(x=1\) 得 \(g=1\)，所以 \(\ker\lambda=\{1\}\)。对同态 \(\lambda\) 应用\cref{b1:thm:first-isomorphism}，得到 \(G/\{1\}\cong\operatorname{im}\lambda=\lambda(G)\)，即 \(G\cong\lambda(G)\leq S_G\)。有限情形给 \(G\) 的 \(n\) 个元素编号，就把 \(S_G\) 识别为 \(S_n\)。
 \end{proof}
-此作用称为左\term[zhengze-zuoyong]{正则作用}[regular action]。一般地，群 \(G\) 在非空集合 \(X\) 上的作用称为正则作用，是指对任意 \(x,y\in X\)，恰有一个 \(g\in G\) 满足 \(gx=y\)。存在性正是传递性；在此基础上，唯一性等价于各稳定子群平凡，也就是自由性。因此正则作用恰好是自由而传递的作用。
+
+\begin{definition}\label{b1:def:regular-action}
+群 \(G\) 在非空集合 \(X\) 上的作用称为\term[zhengze-zuoyong]{正则作用}[regular action]，是指对任意 \(x,y\in X\)，恰有一个 \(g\in G\) 满足 \(gx=y\)。
+\end{definition}
+
+正则作用恰好是自由而传递的作用。存在性就是传递性；若使 \(x\) 不动的元素唯一，则它只能是单位元，因而作用自由。反过来，在自由作用中，\(gx=hx\) 给出 \(h^{-1}gx=x\)，从而 \(h^{-1}g=1\)，所以实现同一移动的元素唯一。
+
+\ProseParagraphBreak
+Cayley 定理证明中的作用称为左正则作用：方程 \(gx=y\) 的唯一解为 \(g=yx^{-1}\)。例如，令 \(C_3=\{1,a,a^2\}\)，并把这三个元素依次编号为 \(1,2,3\)。左乘给出
+\[
+\lambda(1)=1,\qquad
+\lambda(a)=(1\,2\,3),\qquad
+\lambda(a^2)=(1\,3\,2).
+\]
+这里 \(\lambda(a)^2=\lambda(a^2)\)、\(\lambda(a)^3=1\)，群乘法在这个具体的置换群中表现为置换复合。
 
 \ProseParagraphBreak
 任一正则作用选定一点 \(x\) 后，其稳定子群为 \(G_x=\{1\}\)。\cref{b1:prop:transitive-coset}给出它与 \(G/\{1\}\) 的等变同构，也就是与 \(G\) 的左乘作用的等变同构。正则作用所需点数可能偏大：\(S_3\) 的正则作用在六个点上，而它的自然忠实作用只用三个点。寻找较小的忠实作用，是在保留结构信息的同时减少置换计算量的一种方法。
@@ -43,11 +57,25 @@
 \label{b1:subsec:0404:02}
 
 子群 \(H\leq G\) 给出左陪集作用，从而给出同态
-\(\rho_H:G\rightarrow S_{G/H}\)。其核有明确的内部描述：
+\(\rho_H:G\rightarrow S_{G/H}\)，其中 \(\rho_H(a)(gH)=agH\)。一个元素固定全部陪集，意味着它同时满足每个陪集的稳定条件。
+
+\begin{proposition}[陪集作用的正规核]\label{b1:prop:coset-action-core}
+设 \(H\leq G\)，\(\rho_H\) 为上述左陪集作用同态。则
 \begin{equation}\label{b1:eq:coset-action-core}
-\ker\rho_H=\bigcap_{g\in G}gHg^{-1}.
+\ker\rho_H=\bigcap_{g\in G}gHg^{-1}
+=\operatorname{Core}_G(H).
 \end{equation}
-事实上，元素 \(a\) 固定陪集 \(gH\) 当且仅当 \(g^{-1}ag\in H\)。这个交称为 \(H\) 在 \(G\) 中的\term[zhenggui-he]{正规核}[core]，记为 \(\operatorname{Core}_G(H)\)；它是包含在 \(H\) 中的最大正规子群，因为任何正规子群 \(N\leq H\) 都包含在每个共轭 \(gHg^{-1}\) 中。
+这个子群称为 \(H\) 在 \(G\) 中的\term[zhenggui-he]{正规核}[core]。它是所有满足 \(N\trianglelefteq G\) 且 \(N\leq H\) 的子群 \(N\) 中最大的一个。陪集作用忠实，当且仅当 \(\operatorname{Core}_G(H)=\{1\}\)。
+\symidx{\(\operatorname{Core}_G(H)\)：子群在给定群中的正规核}
+\end{proposition}
+\begin{proof}
+元素 \(a\) 固定陪集 \(gH\)，当且仅当 \(agH=gH\)，即 \(g^{-1}ag\in H\)，也就是 \(a\in gHg^{-1}\)。对所有陪集同时要求这个条件，就得到\eqref{b1:eq:coset-action-core}。
+
+正规核作为同态的核正规于 \(G\)，并且在交中取 \(g=1\) 可见它包含于 \(H\)。若 \(N\trianglelefteq G\) 且 \(N\leq H\)，则对每个 \(g\in G\)，有
+\(N=gNg^{-1}\leq gHg^{-1}\)，故 \(N\leq\operatorname{Core}_G(H)\)。这就证明了最大性，其中的正规性始终相对于 \(G\)。最后，\cref{b1:def:faithful-action}说明作用忠实恰好等价于其核平凡。
+\end{proof}
+
+例如在 \(G=S_3\) 中取 \(H=\Bigl\langle(1\,2)\Bigr\rangle\)。用 \((2\,3)\) 共轭得到 \(\Bigl\langle(1\,3)\Bigr\rangle\)，这两个二阶子群的交为 \(\{1\}\)，所以 \(\operatorname{Core}_{S_3}(H)=\{1\}\)。这里 \(H\) 自身正规于 \(H\)，却不包含任何非平凡的 \(S_3\)-正规子群；两种正规性不能混用。
 
 \begin{theorem}\label{b1:thm:least-prime-index-normal}
 设 \(G\) 为有限群，\(p\) 是 \(|G|\) 的最小素因子。若 \(H\leq G\) 且 \([G:H]=p\)，则 \(H\trianglelefteq G\)。
@@ -60,6 +88,7 @@
 \]
 另一方面，\cref{b1:thm:first-isomorphism}给出 \(G/K\cong\operatorname{im}\rho_H\leq S_p\)，再由\cref{b1:thm:lagrange}，其阶整除 \(p!\)。\(|G/K|=|G|/|K|\) 也整除 \(|G|\)，因此它的每个素因子既不小于 \(p\)，又不大于 \(p\)，只能是 \(p\)。而 \(p!\) 中素因子 \(p\) 只出现一次，所以 \(|G/K|=p\)，推出 \([H:K]=1\)。故 \(H=K\) 正规。
 \end{proof}
+
 指数为 \(2\) 的子群总正规，这也可直接看出：若 \(g\notin H\)，则左陪集 \(gH\) 和右陪集 \(Hg\) 都是补集 \(G\setminus H\)；若 \(g\in H\)，两者都为 \(H\)。这个直接论证对无限群也适用。指数为其他素数则未必正规，\(S_3\) 的换位子群有指数 \(3\)，但不是正规子群；这里 \(3\) 不是群阶的最小素因子。
 
 \subsection{群作用与结构比较}
@@ -74,13 +103,46 @@
 \omega_2=13\mid24,\qquad
 \omega_3=14\mid23.
 \]
-置换四个点给出同态 \(\rho:S_4\rightarrow S_3\)。换位 \((12)\) 固定 \(\omega_1\)、交换 \(\omega_2,\omega_3\)；换位 \((13)\) 固定 \(\omega_2\)、交换另外两点。记这两个像为 \(u,v\)，则 \(1,u,v,uv,vu,uvu\) 是 \(S_3\) 的全部六个元素，所以 \(\operatorname{im}\rho=S_3\)。\cref{b1:thm:first-isomorphism}给出 \(S_4/\ker\rho\cong S_3\)，因此 \(|\ker\rho|=|S_4|/|S_3|=24/6=4\)。逐个代入可见
+令 \(\Omega=\{\omega_1,\omega_2,\omega_3\}\)。群 \(S_4\) 按逐个置换字母的方式作用在 \(\Omega\) 上，例如
+\[
+\sigma\cdot(12\mid34)
+=\sigma(1)\sigma(2)\mid\sigma(3)\sigma(4).
+\]
+竖线两侧各表示一个无序二元子集，这两个子集之间也不区分次序。置换保留这种划分，复合后各字母的像与逐次作用相同，所以得到同态 \(\rho:S_4\rightarrow S_\Omega\cong S_3\)。
+
+\ProseParagraphBreak
+换位 \((12)\) 固定 \(\omega_1\)、交换 \(\omega_2,\omega_3\)；换位 \((13)\) 固定 \(\omega_2\)、交换另外两点。记这两个像为 \(u,v\)，则 \(1,u,v,uv,vu,uvu\) 是 \(S_3\) 的全部六个元素，所以 \(\operatorname{im}\rho=S_3\)。这里所选的两个换位不生成 \(S_4\)，但它们的像已经生成整个目标群，这就足以证明 \(\rho\) 满射。
+
+\ProseParagraphBreak
+\cref{b1:thm:first-isomorphism}给出 \(S_4/\ker\rho\cong S_3\)，因此 \(|\ker\rho|=|S_4|/|S_3|=24/6=4\)。逐个代入可见
 \[
 V_4=\bigl\{1,(12)(34),(13)(24),(14)(23)\bigr\}
 \]
 中的四个元素固定全部三种划分，故 \(\ker\rho=V_4\)。这个群称为\term[klein-siyuan-qun]{Klein 四元群}[Klein four-group]。它的三个非单位元素都为二阶；取其中两个不同元素 \(a,b\)，四个元素即 \(1,a,b,ab\)，且 \(ab=ba\)，从而同构于 \(C_2\times C_2\)。
 \symidx{\(V_4\)：Klein 四元群}
-于是 \(V_4\trianglelefteq S_4\) 且 \(S_4/V_4\cong S_3\)。这给出一个由具体作用发现正规子群的完整过程：先选对象，再计算生成元如何作用，最后由核解释结构。
+
+\ProseParagraphBreak
+于是 \(V_4\trianglelefteq S_4\) 且 \(S_4/V_4\cong S_3\)。上述三种划分也就是正四面体的三对相对边；现在还可以从这个作用中确定稳定子群及其正规核。
+
+\ProseParagraphBreak
+取 \(H=(S_4)_{\omega_2}\)。由于像为整个 \(S_3\)，\(\Omega\) 是一个传递 \(S_4\)-集合。\cref{b1:thm:orbit-stabilizer}给出
+\[
+[S_4:H]=3,\qquad |H|=\frac{24}{3}=8.
+\]
+按正方形的顶点编号，\(r=(1\,2\,3\,4)\) 交换 \(\{1,3\}\) 与 \(\{2,4\}\)，\(s=(2\,4)\) 则分别保持这两个子集，所以 \(r,s\) 都固定 \(\omega_2\)。
+由\cref{b1:prop:dihedral-normal-form}及正方形编号的说明，\(\langle r,s\rangle\) 正是阶为 \(8\) 的二面体群。因此 \(\langle r,s\rangle\leq H\) 且两者同阶，得到
+\[
+H=\Bigl\langle(1\,2\,3\,4),(2\,4)\Bigr\rangle\cong D_8.
+\]
+\cref{b1:prop:transitive-coset}给出等变双射
+\[
+S_4/H\longrightarrow\Omega,\qquad gH\longmapsto g\omega_2.
+\]
+一个元素固定全部陪集，当且仅当它固定对应的全部划分，所以这个陪集作用的核仍为 \(V_4\)。由\cref{b1:prop:coset-action-core}，
+\[
+\operatorname{Core}_{S_4}(H)=V_4.
+\]
+八阶子群 \(H\) 保持一个指定划分，四阶正规核 \(V_4\) 则保持全部三个划分；\(S_4/H\) 在这里是三元素陪集集合，\(S_4/V_4\) 才是与 \(S_3\) 同构的商群。
 
 \ProseParagraphBreak
 有时单个作用不忠实，但几个作用合起来可以忠实。设 \(G\) 在 \(X_1,\ldots,X_m\) 上作用，在不交并上分别按原方式作用；合成作用的核为各核的交，因为固定不交并中每个点等价于在每一个 \(X_i\) 上都作用平凡。例如 \(C_2\times C_2\) 分别作用在两个坐标的二点集合上，每个作用都有二元核，两核交为单位，故四点的不交并作用忠实。这样的组合不需要先把整个群放到正则作用的模型中。
