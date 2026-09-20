@@ -5,7 +5,7 @@
 \section{范畴与函子}
 \label{b2:sec:0501}
 
-% TODO: 按以下纲要要点撰写本节。
+模的直和、商模和自由模虽然由不同公式构造，它们都通过同态说明自己的用途。范畴语言把“有哪些对象”与“对象之间允许哪些映射”一并记录下来。先要明确允许的映射：同一批集合配上不同的映射，可以得到不同的范畴，因而有不同的同构概念。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,92 @@
 \subsection{群、环、模和偏序的范畴}
 \label{b2:subsec:0501:01}
 
-待撰写。
+\begin{definition}\label{b2:def:category}
+一个\term[fanchou]{范畴}[category] \(\mathcal C\) 包含一族对象；对每对对象 \(X,Y\)，给定集合 \(\operatorname{Hom}_{\mathcal C}(X,Y)\)，其中的元素称为从 \(X\) 到 \(Y\) 的\term[taishe]{态射}[morphism]，写作 \(f:X\rightarrow Y\)，起点与终点也是态射数据的一部分。对态射 \(f:X\rightarrow Y\)、\(g:Y\rightarrow Z\) 给定复合 \(g\circ f:X\rightarrow Z\)，并要求：
+\begin{enumerate}
+\item 对可复合的三个态射，有 \(h\circ(g\circ f)=(h\circ g)\circ f\)。
+\item 每个对象 \(X\) 有恒等态射 \(\operatorname{id}_X\)，满足 \(f\circ\operatorname{id}_X=f\) 及 \(\operatorname{id}_Y\circ f=f\)。
+\end{enumerate}
+若态射 \(f:X\rightarrow Y\) 有态射 \(g:Y\rightarrow X\) 满足 \(gf=\operatorname{id}_X\)、\(fg=\operatorname{id}_Y\)，则称 \(f\) 为同构，写作 \(X\cong Y\)。
+\end{definition}
+
+\symidx{\(\operatorname{Hom}_{\mathcal C}(X,Y)\)：范畴中的态射集合}
+省略复合符号时，\(gf\) 总表示先做 \(f\)、后做 \(g\)。恒等态射唯一，因为两个候选 \(e,e'\) 满足 \(e=e e'=e'\)；逆态射也唯一，因为两个逆 \(g,h\) 满足 \(g=g\Bigl(fh\Bigr)=(gf)h=h\)。态射不必是集合之间的函数；定义只要求上述复合法则。
+
+\ProseParagraphBreak
+集合及全部函数构成 \(\mathbf{Set}\)，群及群同态构成 \(\mathbf{Grp}\)，交换群及群同态构成 \(\mathbf{Ab}\)。环及保单位元的环同态构成 \(\mathbf{Ring}\)；本书允许零环，因而从任意环到零环有唯一环同态。固定环 \(R\)，左 \(R\) 模及 \(R\) 线性映射构成 \(R\text{-}\mathbf{Mod}\)，右模范畴写作 \(\mathbf{Mod}\text{-}R\)。它们的复合来自函数复合，结合律和恒等律随之成立。在群、环和模的这些范畴中，同构正是已有的代数同构。
+
+\symidx{\(R\text{-}\mathbf{Mod}\)：左模范畴}
+\symidx{\(\mathbf{Mod}\text{-}R\)：右模范畴}
+\symidx{\(\mathbf{Set}\)：集合范畴}
+\symidx{\(\mathbf{Grp}\)：群范畴}
+\symidx{\(\mathbf{Ab}\)：交换群范畴}
+\symidx{\(\mathbf{Ring}\)：保单位元同态组成的环范畴}
+对偏序集 \((P,\le)\)，把元素当作对象，规定 \(x\le y\) 时恰有一个态射 \(x\rightarrow y\)，否则没有态射。自反性提供恒等态射，传递性提供复合；所有同起点、同终点的态射至多一个，所以结合律自动成立。偏序中的两个对象同构当且仅当相等，因为双向态射意味着 \(x\le y\) 且 \(y\le x\)。与此不同，一个群 \(G\) 可以看成只有一个对象的范畴，该对象的全部态射为 \(G\)，复合为群乘法，每个态射都可逆。
+
+\ProseParagraphBreak
+对象组成集合的范畴称为\term[xiaofanchou]{小范畴}[small category]；只要求每个态射族是集合时称为\term[jubuxiaofanchou]{局部小范畴}[locally small category]。上面定义默认局部小。所有集合或所有模不能再当作一个普通集合。本章的积、余积均由集合编号；需要同时作对象选择时，可在一个预先固定的足够大的集合论宇宙中进行，并在更大的宇宙中看待相应范畴。这样不会把“对每个对象选一个代表”误作普通集合内的无条件操作。
 
 \subsection{协变、反变与对偶范畴}
 \label{b2:subsec:0501:02}
 
-待撰写。
+\begin{definition}\label{b2:def:functor}
+从范畴 \(\mathcal C\) 到范畴 \(\mathcal D\) 的\term[hanzi]{函子}[functor] \(F\) 指以下相容的赋值：每个对象 \(X\) 对应对象 \(F(X)\)，每个态射 \(f:X\rightarrow Y\) 对应态射 \(F(f):F(X)\rightarrow F(Y)\)，而且
+\[
+F(\operatorname{id}_X)=\operatorname{id}_{F(X)},\qquad F(gf)=F(g)F(f).
+\]
+这样的函子也称\term[xiebian-hanzi]{协变函子}[covariant functor]。若态射改为 \(F(f):F(Y)\rightarrow F(X)\)，复合法则改为 \(F(gf)=F(f)F(g)\)，则称为\term[fanbian-hanzi]{反变函子}[contravariant functor]。
+\end{definition}
+
+\begin{definition}\label{b2:def:opposite-category}
+\(\mathcal C\) 的\term[duiou-fanchou]{对偶范畴}[opposite category] \(\mathcal C^{\mathrm{op}}\) 保留原对象，令
+\[
+\operatorname{Hom}_{\mathcal C^{\mathrm{op}}}(X,Y)=\operatorname{Hom}_{\mathcal C}(Y,X),
+\]
+复合由 \(\mathcal C\) 中反序的复合给出。即把 \(f:X\rightarrow Y\) 记成反向态射 \(f^{\mathrm{op}}:Y\rightarrow X\)，规定 \(f^{\mathrm{op}}g^{\mathrm{op}}=(gf)^{\mathrm{op}}\)。
+\end{definition}
+
+\symidx{\(\mathcal C^{\mathrm{op}}\)：对偶范畴}
+反转复合次序仍保留结合律与恒等律，所以这确实是范畴。从 \(\mathcal C\) 到 \(\mathcal D\) 的反变函子，就是从 \(\mathcal C^{\mathrm{op}}\) 到 \(\mathcal D\) 的协变函子。这里改变的是所有箭头方向；环的对合或某个向量空间的对偶是另外的具体构造，不能仅凭“对偶”二字混为一谈。
+
+\ProseParagraphBreak
+固定对象 \(A\)，赋值 \(X\mapsto\operatorname{Hom}_{\mathcal C}(A,X)\) 是到 \(\mathbf{Set}\) 的协变函子：\(f:X\rightarrow Y\) 将 \(u:A\rightarrow X\) 送到 \(fu\)。相反，\(X\mapsto\operatorname{Hom}_{\mathcal C}(X,A)\) 为反变函子，\(f\) 将 \(v:Y\rightarrow A\) 送到 \(vf\)。复合次序可逐项核对：\(g(fu)=(gf)u\)，而 \((vg)f=v(gf)\)。这两类函子分别记录从固定对象出发和到固定对象为止的全部映射。
+
+\ProseParagraphBreak
+在模范畴中，这些 Hom 集合还是交换群，相应映射保持加法，因此也可把目标取成 \(\mathbf{Ab}\)。一般非交换环上，不能把 \(\operatorname{Hom}_R(M,N)\) 无条件当作左 \(R\) 模；\cref{b2:prop:hom-central-action}只保证中心的标量作用。若 \(R=k\) 为域，\(V^*=\operatorname{Hom}_k(V,k)\) 与 \(f^*(\lambda)=\lambda f\) 给出向量空间的反变对偶函子，故 \((gf)^*=f^*g^*\)。
 
 \subsection{忘却函子及自由函子}
 \label{b2:subsec:0501:03}
 
-待撰写。
+把左模送到其底集合、把模同态送到同一个函数，得到\term[wangque-hanzi]{忘却函子}[forgetful functor]
+\[
+U:R\text{-}\mathbf{Mod}\longrightarrow\mathbf{Set}.
+\]
+忘却结构没有改变复合和恒等函数，故函子公理成立。当 \(R\ne0\) 时，\(U\) 的态射作用并不覆盖任意集合映射：正则模 \(R\) 的底集合上，平移 \(r\mapsto r+1_R\) 不保持零元，因而不是模同态。若 \(R=0\)，幺性模只有单元素的零模，上述反例便不适用。
+
+\ProseParagraphBreak
+对集合 \(X\)，取带指定基 \((e_x)_{x\in X}\) 的自由模 \(F(X)=R^{(X)}\)。对函数 \(a:X\rightarrow Y\)，\cref{b2:thm:free-module-universal}给出唯一模同态
+\[
+F(a):F(X)\longrightarrow F(Y),\qquad e_x\longmapsto e_{a(x)}.
+\]
+在每个基向量上，\(F(\operatorname{id}_X)\) 等于恒等映射，\(F(ba)\) 等于 \(F(b)F(a)\)；自由模泛性质的唯一性使这些等式在全模成立。因此 \(F:\mathbf{Set}\rightarrow R\text{-}\mathbf{Mod}\) 是\term[ziyou-hanzi]{自由函子}[free functor]。这里不为每个抽象模任意选基，而是从集合直接构造带有指定基的自由模。
+
+\begin{proposition}\label{b2:prop:free-forgetful-bijection}
+对集合 \(X\) 和左 \(R\) 模 \(M\)，限制到指定基给出双射
+\begin{equation}\label{b2:eq:free-forgetful-bijection}
+\begin{aligned}
+\Phi_{X,M}:\operatorname{Hom}_R\Bigl(F(X),M\Bigr)
+&\longrightarrow\operatorname{Hom}_{\mathbf{Set}}\Bigl(X,U(M)\Bigr),\\
+h&\longmapsto\Bigl(x\mapsto h(e_x)\Bigr).
+\end{aligned}
+\end{equation}
+若 \(a:X'\rightarrow X\) 为函数、\(b:M\rightarrow M'\) 为模同态，则
+\[
+\Phi_{X',M'}\Bigl(bhF(a)\Bigr)=U(b)\,\Phi_{X,M}(h)\,a.
+\]
+\end{proposition}
+\begin{proof}
+给定函数 \(v:X\rightarrow U(M)\)，\cref{b2:thm:free-module-universal}说明存在唯一同态将每个 \(e_x\) 送到 \(v(x)\)，这证明双射性。对 \(x'\in X'\)，上式左端的值为 \(b\biggl(h\Bigl(e_{a(x')}\Bigr)\biggr)\)，右端也是同一个元素，故相等。
+\end{proof}
+
+该相容式说明，这一双射在改变生成元集合和目标模时都保持一致。下一节把这种“一族映射同时与所有态射相容”的条件称为自然性；张量积与 Hom 的对应也将满足同类条件。

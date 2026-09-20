@@ -5,9 +5,9 @@
 \section{Loewy 层}
 \label{b2:sec:1502}
 
-% TODO: 按以下纲要要点撰写本节。
+现在把代数的根用于单个模。一个方向是不断取最大半单商，另一个方向是不断取出全部简单子模；它们给出从上到下和从下到上的两列。本节的 \(M\) 均为有限维左 \(A\) 模，\(J=J(A)\)。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 模的根与基座（socle；所有简单子模之和）
 % * Loewy 列及半单层
@@ -17,14 +17,105 @@
 \subsection{模的根与基座}
 \label{b2:subsec:1502:01}
 
-待撰写。
+\begin{definition}\label{b2:def:module-radical-socle}
+模 \(M\) 的\term[mo-de-gen]{根}[radical of a module]记为 \(\operatorname{rad}M\)，定义为全部极大真子模的交。它的\term[jizuo]{基座}[socle]记为 \(\operatorname{Soc}M\)，定义为全部简单子模之和；若没有简单子模，该和为零。对零模约定 \(\operatorname{rad}0=\operatorname{Soc}0=0\)。
+\end{definition}
+\symidx{\(\operatorname{rad}M\)、\(\operatorname{Soc}M\)：模的根与基座}
+
+非零有限维模总有极大真子模及简单子模：分别取维数最大的真子模和维数最小的非零子模即可。基座是半单模，因为它是简单子模之和，适用\cref{b2:thm:semisimple-module-characterizations}。
+
+\begin{theorem}\label{b2:thm:module-radical-jm}
+有限维代数上的有限维左模满足
+\[
+\operatorname{rad}M=JM.
+\]
+商 \(M/JM\) 半单，而且每个从 \(M\) 到半单模的同态都唯一通过这个商分解。
+\end{theorem}
+\begin{proof}
+对极大子模 \(L\)，商 \(M/L\) 简单，故被 \(J\) 零化。这说明 \(JM\subseteq L\)，对全部 \(L\) 取交得 \(JM\subseteq\operatorname{rad}M\)。
+
+另一方面，\(M/JM\) 是有限维 \(A/J\) 模，由\cref{b2:prop:finite-algebra-semisimple-quotient}半单。若 \(m\notin JM\)，把它的非零商类投影到某个非零的简单直和分量，得到一个不将 \(m\) 送到零的满同态 \(M\to S\)。其核为不含 \(m\) 的极大子模，所以 \(m\notin\operatorname{rad}M\)。这给出反向包含。
+
+最后，半单模是简单模的直和，所以 \(J\) 在其上作用为零。任意同态 \(f:M\to T\) 因而满足 \(f(JM)=Jf(M)=0\)。由商模泛性质，它唯一通过 \(M/JM\) 分解。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:module-socle-annihilator}
+有限维左模的基座为
+\[
+\operatorname{Soc}M=\{\,m\in M\mid Jm=0\,\}.
+\]
+\end{proposition}
+\begin{proof}
+每个简单子模均被 \(J\) 零化，所以基座包含于右侧。右侧是子模：若 \(Jm=0\)，则对 \(a\in A,j\in J\)，有 \(j(am)=(ja)m=0\)，因为 \(ja\in J\)。这个子模被 \(J\) 零化，由\cref{b2:prop:finite-algebra-semisimple-quotient}半单，故是若干简单子模之和，包含于基座。
+\end{proof}
+
+在 \(M=A=k[t]/(t^m)\)、\(m>1\) 中，\(\operatorname{rad}M=(\bar t)\)，而 \(\operatorname{Soc}M=k\bar t^{m-1}\)。前者收集不能通过简单商检测到的元素，后者收集已经构成简单子模的部分；它们通常不是同一个子空间。
 
 \subsection{Loewy 列与半单层}
 \label{b2:subsec:1502:02}
 
-待撰写。
+\begin{definition}\label{b2:def:loewy-filtrations}
+令 \(\operatorname{rad}^0M=M\)、\(\operatorname{rad}^{r+1}M=\operatorname{rad}(\operatorname{rad}^rM)\)。所得降列称为\term[gen-Loewy-lie]{根 Loewy 列}[radical Loewy series]。另令 \(\operatorname{Soc}^0M=0\)，并令 \(\operatorname{Soc}^{r+1}M\) 是 \(M/\operatorname{Soc}^rM\) 的基座在 \(M\) 中的原像，得到\term[jizuo-Loewy-lie]{基座 Loewy 列}[socle Loewy series]。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:loewy-series}
+对所有 \(r\ge0\)，有
+\[
+\operatorname{rad}^rM=J^rM,\qquad
+\operatorname{Soc}^rM=\{\,m\in M\mid J^rm=0\,\}.
+\]
+两列的相邻层均半单。若 \(J^N=0\)，根列至多在第 \(N\) 步到达零，基座列至多在第 \(N\) 步到达 \(M\)。
+\end{proposition}
+\begin{proof}
+第一式由\cref{b2:thm:module-radical-jm}逐次用于有限维子模得到。第二式对 \(r\) 归纳；\(r=0\) 时 \(J^0=A\)，被 \(A\) 零化的元素只有零，符合定义。假设第 \(r\) 步成立，由\cref{b2:prop:module-socle-annihilator}，\(m\) 属于下一步当且仅当 \(Jm\subseteq\operatorname{Soc}^rM\)，即 \(J^rJm=0\)，也就是 \(J^{r+1}m=0\)。
+
+根列的层 \(J^rM/J^{r+1}M\) 被 \(J\) 零化，故半单；基座列的层按定义是一个商模的基座，也半单。最后由\cref{b2:thm:finite-algebra-radical-nilpotent}取 \(J^N=0\)，代入两个公式便得到终止性。
+\end{proof}
+
+使 \(J^\ell M=0\) 的最小非负整数 \(\ell\) 称为模的\term[Loewy-changdu]{Loewy 长度}[Loewy length]。由命题，它也等于使 \(\operatorname{Soc}^\ell M=M\) 的最小整数。零模长度为零；非零半单模长度为一。
+
+\ProseParagraphBreak
+Loewy 层记录半单的商，不保证能在原模中为每一层同时选出子模代表。对双数代数 \(k[\varepsilon]/(\varepsilon^2)\) 的正则模，两层均为简单模 \(k\)，但层间扩张不分裂，因为若正则模为 \(k\oplus k\)，则 \(\varepsilon\) 应作用为零。这类层间关系正是稍后投射覆盖与箭图表示需要保存的信息。
 
 \subsection{三角矩阵代数的计算}
 \label{b2:subsec:1502:03}
 
-待撰写。
+令 \(A=T_3(k)\) 为上三角矩阵代数，矩阵单位记为 \(E_{ij}\)、\(1\le i\le j\le3\)。严格上三角矩阵组成理想 \(N\)，有 \(N^3=0\)，而 \(A/N\cong k^3\) 半单。由\cref{b2:prop:nilpotent-ideal-in-radical}与\cref{b2:prop:radical-quotient}，得到
+\[
+J=N=kE_{12}+kE_{13}+kE_{23},\qquad J^2=kE_{13},\qquad J^3=0.
+\]
+简单模 \(S_i\) 是一维空间，矩阵 \(a\) 通过对角元 \(a_{ii}\) 作用。它们给出全部简单模，因为简单模被 \(J\) 零化，因而来自 \(k^3\) 的一个坐标因子。
+
+\ProseParagraphBreak
+取 \(e_j=E_{jj}\)、\(P_j=Ae_j\)。它是第 \(j\) 列可能非零的矩阵组成的左理想，基为 \(E_{1j},\ldots,E_{jj}\)。矩阵单位乘法
+\[
+E_{ab}E_{ij}=\delta_{bi}E_{aj}
+\]
+给出
+\begin{equation}\label{b2:eq:triangular-projective-layers}
+J^rP_j=\operatorname{span}_k\{\,E_{ij}\mid1\le i\le j-r\,\},
+\qquad 0\le r\le j,
+\end{equation}
+空指标集表示零。每个非零层由 \(E_{j-r,j}\) 的陪集生成；左乘矩阵 \(a\) 后，较低行号的项属于下一层，只剩系数 \(a_{j-r,j-r}\)，所以这个层同构于 \(S_{j-r}\)。
+
+\ProseParagraphBreak
+因此，从顶层向下读，\(P_1,P_2,P_3\) 的简单层依次为
+\[
+P_1:\ S_1;\qquad P_2:\ S_2,\ S_1;\qquad
+P_3:\ S_3,\ S_2,\ S_1.
+\]
+它们的 Loewy 长度分别为一、二、三。另一方面，\(J\) 零化的向量恰为第一行号的部分，所以
+\[
+\operatorname{Soc}P_j=kE_{1j}\cong S_1,
+\qquad
+\operatorname{Soc}^rP_j=\operatorname{span}_k\{\,E_{ij}\mid i\le\min(r,j)\,\}.
+\]
+这些公式可直接从\cref{b2:prop:loewy-series}及矩阵乘法核验。
+
+\ProseParagraphBreak
+正则模分解为 \(A=P_1\oplus P_2\oplus P_3\)。于是
+\[
+A/JA\cong S_1\oplus S_2\oplus S_3,
+\qquad \operatorname{Soc}A\cong S_1^{\oplus3}.
+\]
+最大半单商与最大半单子模甚至可以含有完全不同的重数。自然列向量模 \(k^3\) 则与 \(P_3\) 同构，映射为 \(E_{i3}\mapsto e_i\)；其根列是熟悉的坐标旗标，只是排列方向与从零开始的升旗标相反。

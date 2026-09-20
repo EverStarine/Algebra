@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 8.1 多线性映射
-% 纲要位置：计划纲要.md，第 1040 行。
 
 \section{多线性映射}
 \label{b2:sec:0801}
 
-% TODO: 按以下纲要要点撰写本节。
+从双线性映射走向多线性映射，首先遇到的不是新运算，而是括号和标量的安排。一个三变量公式可以先合并前两个变量，也可以先合并后两个变量；只有证明两种构造通过指定同构相容，才可以省略括号。本节固定交换环 \(R\)，所有模均为幺性 \(R\) 模。这一交换性约定允许在不同因子间移动标量；第六章一般双模的作用侧别仍是它的基础。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 多重张量积
 % * 自然同构与结合约定
@@ -17,14 +16,109 @@
 \subsection{多重张量积}
 \label{b2:subsec:0801:01}
 
-待撰写。
+\begin{definition}\label{b2:def:multilinear-map}
+设 \(M_1,\ldots,M_d,N\) 为 \(R\) 模，\(d\ge1\)。映射
+\[
+b:M_1\times\cdots\times M_d\longrightarrow N
+\]
+称为 \(R\) 上的\term[duoxianxing-yingshe]{多线性映射}[multilinear map]，若固定其余所有变量后，它对每一个变量都是 \(R\) 线性的。即在第 \(j\) 个位置，任意 \(r,s\in R\) 与 \(x,y\in M_j\) 满足
+\[
+\begin{aligned}
+b(m_1,\ldots,rx+sy,\ldots,m_d)
+&=r b(m_1,\ldots,x,\ldots,m_d)\\
+&\quad+s b(m_1,\ldots,y,\ldots,m_d).
+\end{aligned}
+\]
+\end{definition}
+
+三线性不等于从直积出发的普通线性。例如 \(R=\mathbb R\)，乘积 \((x,y,z)\mapsto xyz\) 对每个变量分别线性，但把三个变量同时乘二会使值乘八，而非乘二。一般地，多线性映射满足 \(b(rm_1,\ldots,rm_d)=r^d b(m_1,\ldots,m_d)\)。
+
+\ProseParagraphBreak
+令 \(T_1=M_1\)，递归定义 \(T_d=T_{d-1}\otimes_RM_d\)。因 \(R\) 交换，第六章的剩余作用使每个 \(T_j\) 为 \(R\) 模，因而可以继续取张量积。把 \((m_1,\ldots,m_d)\) 映到
+\[
+\biggl(\cdots\Bigl((m_1\otimes m_2)\otimes m_3\Bigr)\cdots\biggr)\otimes m_d
+\]
+的映射记作 \(\tau\)。以后用 \(m_1\otimes\cdots\otimes m_d\) 表示这个元素，用 \(\bigotimes_{j=1}^d M_j\) 表示 \(T_d\)。这里先固定了一个括号约定，尚未把所有括号形式看成相等。
+
+\begin{theorem}[多重张量积的泛性质]\label{b2:thm:multiple-tensor-universal}
+\(\tau\) 是多线性映射。对任意 \(R\) 模 \(N\) 与多线性映射 \(b:M_1\times\cdots\times M_d\rightarrow N\)，存在唯一 \(R\) 线性映射
+\[
+\widetilde b:\bigotimes_{j=1}^dM_j\longrightarrow N,
+\qquad \widetilde b(m_1\otimes\cdots\otimes m_d)=b(m_1,\ldots,m_d).
+\]
+多重张量积由这些纯张量生成，并在保持指定多线性映射的唯一同构意义下唯一。
+\end{theorem}
+\begin{proof}
+对 \(d\) 归纳。\(d=1\) 时是恒等映射。设结论对 \(d-1\) 成立。固定 \(m_d\) 后，归纳假设把前 \(d-1\) 个变量唯一合成线性映射 \(b_{m_d}:T_{d-1}\rightarrow N\)。它在最后变量中也线性：对于任意 \(r,s\in R\)，映射 \(b_{rm_d+sn_d}\) 与 \(r b_{m_d}+s b_{n_d}\) 在每个前 \(d-1\) 重纯张量上相同，而这些纯张量生成 \(T_{d-1}\)，所以两者相等。因此 \((t,m_d)\mapsto b_{m_d}(t)\) 为双线性映射。
+
+应用\cref{b2:thm:tensor-universal}及\cref{b2:prop:tensor-bimodule}给出的交换环线性版本，得到所需 \(\widetilde b\)。任一 \(T_d\) 中的元素先写成有限和 \(\sum t_i\otimes m_i\)，再把各 \(t_i\) 展开成前 \(d-1\) 重纯张量，故 \(d\) 重纯张量生成全模。这证明映射唯一，也说明 \(\tau\) 的逐变量线性由每一步的双线性继承。
+
+若另一个对象带有相同泛性质，把两者的指定多线性映射分别代入对方的泛性质，得到正反两个线性映射。两复合在每个指定纯张量上为恒等，故在全模为恒等；保持指定映射的同构也由生成性唯一确定。
+\end{proof}
+
+相应地，规定零重张量积为 \(R\)。一个没有输入变量的“多线性映射”就是指定目标模中的一个元素，它唯一对应线性映射 \(R\rightarrow N\) 在 \(1\) 处的值。这个约定稍后将提供张量代数的单位元。
 
 \subsection{自然同构与结合约定}
 \label{b2:subsec:0801:02}
 
-待撰写。
+任意完整括号形式都可递归应用二重张量积构造。按照\cref{b2:thm:multiple-tensor-universal}的证明，把最外层两块中的纯张量逐一展开，可知每一种括号形式都满足同一个 \(d\) 变量泛性质。因此它们之间有唯一同构，将相同顺序的纯张量送成彼此。第六章的结合同构正是三因子时的这个映射。
+
+\ProseParagraphBreak
+当 \(d=4\) 时，从 \(\Bigl((M_1\otimes M_2)\otimes M_3\Bigr)\otimes M_4\) 到 \(M_1\otimes\Bigl(M_2\otimes(M_3\otimes M_4)\Bigr)\) 有多条逐步改变括号的路径。每条路径都将同一个四元组的纯张量送到同一个最终元素；纯张量生成性使这些复合映射相等。任意 \(d\) 的论证完全相同：起点、终点给定后，保持有序纯张量的映射只有一个。故省略括号不会让计算依赖于一条未说明的改括号路径。
+
+\begin{proposition}\label{b2:prop:multiple-tensor-functoriality}
+给定线性映射 \(f_j:M_j\rightarrow N_j\)，存在唯一线性映射
+\[
+\bigotimes_{j=1}^d f_j:\bigotimes_{j=1}^d M_j\longrightarrow\bigotimes_{j=1}^d N_j,
+\qquad \bigotimes_jm_j\longmapsto\bigotimes_j f_j(m_j).
+\]
+它保持恒等映射与逐因子复合，并与上述所有结合同构相容。若 \(\sigma\in S_d\)，还存在置换因子的同构
+\[
+P_\sigma:M_1\otimes\cdots\otimes M_d
+\longrightarrow M_{\sigma^{-1}(1)}\otimes\cdots\otimes M_{\sigma^{-1}(d)},
+\quad \bigotimes_jm_j\longmapsto
+m_{\sigma^{-1}(1)}\otimes\cdots\otimes m_{\sigma^{-1}(d)}.
+\]
+当所有因子相同时，有 \(P_\sigma P_\pi=P_{\sigma\pi}\)。
+\end{proposition}
+\begin{proof}
+所给公式在原变量中多线性，所以由多重张量积的泛性质诱导线性映射。对逐因子复合，两个可能映射都把 \(\bigotimes_jm_j\) 送到 \(\bigotimes_j g_j\Bigl(f_j(m_j)\Bigr)\)，故相等；恒等映射与结合的相容性由相同的纯张量检验得到。
+
+置换公式仍逐变量线性，因此也给出映射，反向用 \(\sigma^{-1}\) 即得逆。所有因子相同时，连续做 \(P_\pi\)、\(P_\sigma\)，第 \(j\) 个位置最终来自原来的 \(\pi^{-1}\sigma^{-1}(j)=(\sigma\pi)^{-1}(j)\) 位置，所以满足所述乘法公式。
+\end{proof}
+
+\symidx{\(P_\sigma\)：置换张量因子的算子}
+逆置换写在下标中，是为了得到这里约定的左作用，而非反序作用。置换因子也没有交换代数中两个元素的含义：\(M\otimes N\cong N\otimes M\) 是指定同构，通常不能在一个尚未给乘法的模中把 \(m,n\) 相乘。
 
 \subsection{有限自由情形的基与维数}
 \label{b2:subsec:0801:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:multiple-tensor-basis}
+设 \(M_j\) 为有限自由 \(R\) 模，具有指定基 \(e_{j,1},\ldots,e_{j,n_j}\)。则
+\[
+e_{1,i_1}\otimes\cdots\otimes e_{d,i_d},
+\qquad 1\le i_j\le n_j,
+\]
+构成多重张量积的一组基。若 \(R\ne0\)，其秩为 \(n_1\cdots n_d\)；在域上，这就是维数乘法公式。
+\end{proposition}
+\begin{proof}
+逐因子展开 \(m_j=\sum_{i_j}a_{j,i_j}e_{j,i_j}\)，多线性给出
+\[
+m_1\otimes\cdots\otimes m_d
+=\sum_{i_1,\ldots,i_d}
+a_{1,i_1}\cdots a_{d,i_d}\,
+e_{1,i_1}\otimes\cdots\otimes e_{d,i_d}.
+\]
+故所列元素生成。对每组下标 \(I=(i_1,\ldots,i_d)\)，将各因子的第 \(i_j\) 个坐标相乘，得到多线性映射 \((m_1,\ldots,m_d)\mapsto a_{1,i_1}\cdots a_{d,i_d}\)。它诱导的线性泛函在对应的纯基张量上取一，在其他纯基张量上取零。对任意线性关系应用全部这些泛函，逐项得到所有系数为零，故线性无关。秩的含义由\cref{b2:thm:free-rank-invariance}保证。
+\end{proof}
+
+例如 \(R^2\otimes_RR^3\otimes_RR^2\) 有十二个标准纯基张量。在 \(R=\mathbb Z\) 时，
+\[
+(e_1+2e_2)\otimes(f_1-f_3)\otimes e_2
+=e_1\otimes f_1\otimes e_2-e_1\otimes f_3\otimes e_2
++2e_2\otimes f_1\otimes e_2-2e_2\otimes f_3\otimes e_2.
+\]
+这些系数是唯一的，但将一个张量写成几个任意纯张量之和并不唯一。\subsecref{b2:subsec:0601:03}中已经证明，\(k^2\otimes_k k^2\) 中的 \(e_1\otimes e_1+e_2\otimes e_2\) 不能写成一个纯张量。因此，基张量坐标和一般纯张量分解是两种不同的数据。
+
+\ProseParagraphBreak
+有限自由假设不能只替换成“有限生成”。例如 \(M=\mathbb Z/2\mathbb Z\)、\(N=\mathbb Z/3\mathbb Z\) 均可由一个元素生成，\cref{b2:prop:tensor-quotient}却给出 \(M\otimes_{\mathbb Z}N=0\)。没有基时，张量关系可能消去整个模，不能用生成元数相乘代替秩或维数。

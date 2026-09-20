@@ -5,9 +5,9 @@
 \section{投射覆盖}
 \label{b2:sec:1503}
 
-% TODO: 按以下纲要要点撰写本节。
+自由满射总存在，但其来源可能带有可以删去的投射分量。投射覆盖要求满射在模论意义下已经不能缩小来源。为了构造它，先要把半单商中的列模提升回来；这一步依赖幂等元提升，不能用商中的分解代替原代数中的分裂。本节的 \(A\) 仍有限维，\(J=J(A)\)；幂等元提升的两个定理则只需所写的环与幂零理想假设。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 极小生成与本质满射
 % * 在构造投射覆盖前，就地证明幂零理想模的幂等元提升，并处理有限组正交幂等元的相容提升
@@ -20,29 +20,187 @@
 \subsection{极小生成与本质满射}
 \label{b2:subsec:1503:01}
 
-待撰写。
+\begin{definition}\label{b2:def:superfluous-submodule}
+子模 \(N\le P\) 称为 \(P\) 的\term[duoyu-zimo]{多余子模}[superfluous submodule]，如果对每个子模 \(L\le P\)，等式 \(L+N=P\) 都蕴含 \(L=P\)，记为 \(N\ll P\)。满同态 \(p:P\to M\) 称为\term[benzhi-manshe]{本质满射}[essential epimorphism]，如果 \(\ker p\ll P\)。
+\end{definition}
+\symidx{\(N\ll P\)：\(N\) 是 \(P\) 的多余子模}
+
+这一条件也可写成：对每个子模 \(L\le P\)，若 \(p(L)=M\)，则 \(L=P\)。事实上，\(p(L)=M\) 等价于每个 \(x\in P\) 可写成 \(\ell+n\)，其中 \(\ell\in L,n\in\ker p\)，也就是 \(L+\ker p=P\)。多余性总是相对于指定的母模而言。
+
+\begin{definition}\label{b2:def:projective-cover}
+模 \(M\) 的一个\term[toushe-fugai]{投射覆盖}[projective cover]是满同态 \(p:P\to M\)，其中 \(P\) 投射，且 \(\ker p\ll P\)。定义中保留这个满同态，而不仅记录 \(P\) 的同构类型。
+\end{definition}
+
+若 \(M\) 有限生成，它的任意投射覆盖的来源也有限生成：取 \(M\) 的有限生成元，逐个提升到 \(P\)，令 \(L\) 为这些提升所生成的子模，则 \(p(L)=M\)。本质满射的条件给出 \(L=P\)。因此在本章，覆盖的来源自动有限维。
+
+\ProseParagraphBreak
+\cref{b2:cor:nakayama-generators}说明，\(M/JM\) 的一组 \(A/J\) 模生成元可以提升为 \(M\) 的生成元。局部代数中，剩余模是在除环 \(A/J\) 上的向量空间，选基可得到最少的生成元。但一般情形下，由最少生成元给出的自由满射仍未必是投射覆盖。
+
+\ProseParagraphBreak
+例如 \(A=M_2(k)\)、\(S=k^2\)，\(S\) 由一个非零向量生成，取第一列的映射 \(A\to S\) 因而用了最少的一个模生成元。不过真左理想 \(AE_{11}\) 已经满射到 \(S\)，故这个自由满射不是本质满射。限制 \(AE_{11}\to S\) 则是同构；\(AE_{11}\) 是正则模的直和因子，因而投射，这才给出一个投射覆盖。
 
 \subsection{幂等元与正交幂等元组的提升}
 \label{b2:subsec:1503:02}
 
-待撰写。
+\begin{theorem}\label{b2:thm:idempotent-lifting}
+设 \(R\) 为含幺环，\(I\) 为幂零双边理想。每个幂等元 \(\bar e\in R/I\) 都能提升为幂等元 \(e\in R\)。若 \(e,f\) 是同一幂等元的两个提升，则存在 \(u\in1+I\)，使 \(f=ueu^{-1}\)。
+\end{theorem}
+\begin{proof}
+先处理 \(I^2=0\)。任取 \(a\) 提升 \(\bar e\)，令 \(d=a^2-a\in I\)。\(a\) 与 \(d\) 交换，故也与 \(c=(1-2a)d\) 交换，且 \(c^2=0\)。取 \(e=a+c\)，便有
+\[
+e^2-e=d+(2a-1)c
+=d-(2a-1)^2d.
+\]
+由于 \((2a-1)^2=1+4d\)，右侧等于 \(-4d^2=0\)。因此 \(e\) 幂等，且与 \(a\) 模 \(I\) 相同。这里没有除以二，对任意特征都成立。
+
+一般地，取 \(I^N=0\)。已在 \(R/I^r\) 中得到的幂等元，可以提升到 \(R/I^{r+1}\)：自然满射的核为 \(I^r/I^{r+1}\)，它的平方为零，因为 \(2r\ge r+1\)、\(r\ge1\)。将平方零情形用于这个商环，依次作 \(r=1,\ldots,N-1\) 的提升，最后得到 \(R/I^N=R\) 中的幂等元。
+
+为证共轭性，令
+\[
+u=fe+(1-f)(1-e).
+\]
+因 \(\bar f=\bar e\)，模 \(I\) 后有 \(\bar u=\bar e+(1-\bar e)=1\)，故 \(u\in1+I\)。幂零性使 \(u\) 可逆，可由有限几何和写出其逆。直接相乘得 \(ue=fe=fu\)，于是 \(f=ueu^{-1}\)。
+\end{proof}
+
+要提升一组分解，不能分别任意提升每个幂等元；它们还须保持彼此正交和总和为一。下一定理把这种相容性一并保证。
+
+\begin{theorem}\label{b2:thm:orthogonal-idempotent-lifting}
+在上述假设下，若 \(\bar e_1,\ldots,\bar e_m\in R/I\) 满足
+\[
+\bar e_i\bar e_j=\delta_{ij}\bar e_i,
+\qquad \sum_{i=1}^m\bar e_i=1,
+\]
+则存在提升 \(e_1,\ldots,e_m\in R\)，同样满足 \(e_ie_j=\delta_{ij}e_i\) 与 \(\sum_i e_i=1\)。
+\end{theorem}
+\begin{proof}
+对 \(m\) 归纳。\(m=1\) 时取 \(e_1=1\)。设 \(m>1\)，先用\cref{b2:thm:idempotent-lifting}提升 \(\bar e_1\)，并令 \(c=1-e_1\)。在角环 \(cRc\) 中，单位是 \(c\)。映射
+\[
+cRc\longrightarrow\bar c(R/I)\bar c
+\]
+满射：右侧元素可由任意代表元两边乘 \(c\) 得到。其核为 \(cIc\)，因为同时属于 \(I\) 与 \(cRc\) 的元素 \(x\) 满足 \(x=cxc\)。这个核幂零，\((cIc)^N\subseteq cI^Nc=0\)。
+
+余下的 \(\bar e_2,\ldots,\bar e_m\) 都在该商角环中，仍相互正交，总和为 \(\bar c\)。在 \(cRc\) 中应用归纳假设，得到正交提升 \(e_2,\ldots,e_m\)，总和为 \(c\)。它们均被 \(e_1\) 在左右两侧乘为零，所以连同 \(e_1\) 得到所求完整正交组。
+\end{proof}
+
+平方零修正与角环归纳可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[Proposition 9.1.1; Corollary 9.1.3, pp. 209--210]{EtingofEtAl2011RepresentationTheory}。本书已把单个提升和整组相容提升分别展开；后面的构造将同时使用这两个结论。
 
 \subsection{多余子模与简单模的投射覆盖}
 \label{b2:subsec:1503:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:finite-superfluous-radical}
+有限维左模 \(P\) 的子模 \(N\) 多余，当且仅当 \(N\subseteq JP\)。因此，对有限生成投射模的满射 \(p:P\to M\)，以下条件等价：它是投射覆盖；\(\ker p\subseteq JP\)；诱导映射 \(P/JP\to M/JM\) 是同构。
+\end{proposition}
+\begin{proof}
+若 \(N\ll P\)，而某个极大子模 \(L\) 不包含 \(N\)，则 \(L+N=P\)，与 \(L\ne P\) 矛盾。因此 \(N\) 包含于所有极大子模的交，由\cref{b2:thm:module-radical-jm}得到 \(N\subseteq JP\)。
+
+反过来，若 \(N\subseteq JP\) 且 \(L+N=P\)，则 \(L+JP=P\)。商 \(P/L\) 有限生成，并满足 \(J(P/L)=P/L\)，由\cref{b2:thm:noncommutative-nakayama}，\(P/L=0\)，即 \(L=P\)。
+
+对满射 \(p\)，有 \(p(JP)=JM\)。诱导的商映射满射，核为 \((\ker p+JP)/JP\)：若 \(p(x)\in JM\)，取 \(y\in JP\) 使 \(p(y)=p(x)\)，便有 \(x-y\in\ker p\)。所以该核为零恰等于 \(\ker p\subseteq JP\)，得到其余等价性。
+\end{proof}
+
+\begin{definition}\label{b2:def:primitive-idempotent}
+非零幂等元 \(e\in A\) 称为\term[benyuan-midengyuan]{本原幂等元}[primitive idempotent]，如果不能写成两个非零正交幂等元之和。这里的正交要求两个方向的乘积都为零。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:primitive-projective-indecomposable}
+对非零幂等元 \(e\)，左模 \(Ae\) 有限生成且投射；它不可分解，当且仅当 \(e\) 本原。
+\end{proposition}
+\begin{proof}
+正则左模具有分解 \(A=Ae\oplus A(1-e)\)，投影为右乘 \(e\)，所以 \(Ae\) 是有限自由模的直和因子。若 \(e=f+g\) 是非零正交幂等元之和，则 \(Ae=Af\oplus Ag\)，给出非平凡分解。
+
+反过来，若 \(Ae\) 有非平凡分解，对应投影是 \(\operatorname{End}_A(Ae)\) 中一个非零且非恒等的幂等元。由\cref{b2:prop:corner-endomorphism}，该自同态环同构于 \((eAe)^{\mathrm{op}}\)，所以角环中也有 \(f^2=f\)、\(f\ne0,e\)。于是 \(e=f+(e-f)\)，且 \(f(e-f)=(e-f)f=0\)，这与本原性矛盾。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:primitive-projective-cover}
+取 \(A/J\) 的一个本原幂等元 \(\bar e\)，并将它提升为 \(e\in A\)。则 \(e\) 本原，\(Ae/Je\) 简单，且自然满射
+\[
+Ae\longrightarrow Ae/Je
+\]
+是投射覆盖。每个简单左 \(A\) 模都能由这样的满射得到覆盖。
+\end{proposition}
+\begin{proof}
+先说明半单商中的情形。在\eqref{b2:eq:finite-algebra-semisimple-quotient}的每个矩阵因子里，幂等矩阵作为右 \(D_i\) 向量空间上的算子，其像与核给出直和；选择相应基后，它共轭于 \(\operatorname{diag}(I_r,0)\)。因此一个本原幂等元恰在一个矩阵因子中具有秩一，其余因子为零。相应左理想是一个列模，且简单：任取非零列，选一个非零坐标，用该坐标在除环中的逆元和矩阵单位，可以把它映为任意给定列。
+
+半单商的正则模是这些简单列模的有限直和；任意简单模都是正则模的商，因此必同构于其中一个列模。这也说明上述构造遍及全部简单模。
+
+若 \(e=f+g\) 是正交幂等元分解，模 \(J\) 后，\(\bar e\) 的本原性使 \(\bar f,\bar g\) 至少一个为零。该幂等元便属于幂零理想 \(J\)，只能为零，因为幂等元的每个正幂都等于自身。因此 \(e\) 本原。最后，\(Ae\to(A/J)\bar e\) 的核为 \(Je\)：核元素既在 \(J\) 中，又满足 \(x=xe\)，故在 \(Je\) 中。于是 \(Ae/Je\) 是刚才的简单列模，且核为 \(J(Ae)\)。由\cref{b2:prop:finite-superfluous-radical}，满射为投射覆盖。
+\end{proof}
 
 \subsection{有限维代数中的投射覆盖}
 \label{b2:subsec:1503:04}
 
-待撰写。
+从 \(A/J\) 的每个矩阵因子选出全部对角矩阵单位，利用\cref{b2:thm:orthogonal-idempotent-lifting}得到 \(A\) 中的完整正交提升。每个提升给出上述简单列模的覆盖；同一矩阵因子的列模同构，但暂不预设其提升模已经同构。
+
+\ProseParagraphBreak
+从每一种简单模的同构类型中取一个代表 \(S_1,\ldots,S_s\)，并固定由\cref{b2:prop:primitive-projective-cover}构造的覆盖 \(p_i:P_i\to S_i\)。于是 \(P_i/JP_i\cong S_i\)，且 \(P_i\) 不可分解。
+
+\begin{theorem}\label{b2:thm:projective-cover-existence}
+有限维代数上的每个有限维左模 \(M\) 都有投射覆盖。若
+\[
+M/JM\cong\bigoplus_{i=1}^s S_i^{\oplus m_i},
+\]
+可以取覆盖的来源为 \(P=\bigoplus_iP_i^{\oplus m_i}\)。
+\end{theorem}
+\begin{proof}
+由\cref{b2:thm:module-radical-jm}，所写的有限半单分解存在。合并 \(p_i\) 的相应份数并接上这个同构，得到满同态 \(h:P\to M/JM\)，其在商上诱导同构 \(P/JP\cong M/JM\)。\(P\) 是有限个投射模的直和，因而投射，可以沿商映射 \(\pi:M\to M/JM\) 提升 \(h\)，得到 \(p:P\to M\) 且 \(\pi p=h\)。
+
+因为 \(h\) 满射，有 \(p(P)+JM=M\)。对有限生成商模 \(M/p(P)\) 应用\cref{b2:cor:nakayama-generators}，得到 \(p(P)=M\)。又因为 \(p\) 在模 \(J\) 后是同构，\(\ker p\subseteq JP\)。由\cref{b2:prop:finite-superfluous-radical}，这个满射正是投射覆盖。
+\end{proof}
+
+这里并未把 \(M/JM\) 的简单直和分解直接提升成 \(M\) 的简单直和分解。被提升的是它们的投射覆盖，以及一个从投射模出发的映射；满射性由 Nakayama 引理重新保证。
+
+\ProseParagraphBreak
+例如在 \(A=k[t]/(t^3)\) 中，\(M=A/(\bar t^2)\) 的最大半单商为 \(k\)，对应投射覆盖是 \(A\to M\)。核 \((\bar t^2)\) 包含在 \(JA\) 中，所以多余；这个覆盖保留了 \(M\) 的两层结构，而来源 \(A\) 本身有三层。
 
 \subsection{不可分解投射模与简单模}
 \label{b2:subsec:1503:05}
 
-待撰写。
+\begin{theorem}\label{b2:thm:indecomposable-projective-simple}
+每个有限生成投射左 \(A\) 模都是 \(P_1,\ldots,P_s\) 的有限直和。不可分解投射模恰为这些 \(P_i\) 的同构类型，而
+\[
+P\longmapsto P/JP
+\]
+给出有限生成不可分解投射模与简单模的同构类型之间的一一对应。
+\end{theorem}
+\begin{proof}
+对有限生成投射模 \(Q\)，按\cref{b2:thm:projective-cover-existence}构造覆盖 \(p:P\to Q\)，其中 \(P\) 是若干 \(P_i\) 的直和。\(Q\) 投射，所以这个满射有截面，\cref{b2:thm:split-exact-sequence}给出 \(P=\ker p\oplus Q'\)，其中 \(Q'\cong Q\)。但 \(\ker p\ll P\)，而 \(Q'+\ker p=P\)，只能有 \(Q'=P\)，因此核为零，\(Q\cong P\)。
+
+各 \(P_i\) 已由\cref{b2:prop:primitive-projective-cover}证明不可分解；若 \(Q\) 不可分解，上述直和只能有一个非零分量。不同的 \(P_i\) 不同构，因为其商 \(P_i/JP_i\cong S_i\) 不同构。每个简单模都有其中一个覆盖，故得到双射。
+\end{proof}
+
+直和中的重数也可以直接从最大半单商读出。令 \(\Delta_i=\operatorname{End}_A(S_i)\)，它由\cref{b2:lem:schur}为除环。\(\operatorname{Hom}_A(Q,S_i)\) 通过像端的复合成为左 \(\Delta_i\) 向量空间。因为 \(J\) 零化 \(S_i\)，每个同态都通过 \(Q/JQ\) 分解，因而
+\begin{equation}\label{b2:eq:projective-simple-multiplicity}
+Q\cong\bigoplus_iP_i^{\oplus m_i}
+\quad\Longrightarrow\quad
+m_i=\dim_{\Delta_i}\operatorname{Hom}_A(Q,S_i).
+\end{equation}
+理由是不同简单模之间没有非零同态，\(\operatorname{Hom}_A(S_i,S_i)=\Delta_i\) 在自身上的维数为一。这也证明这些重数唯一，且没有假设 \(\Delta_i=k\)。
 
 \subsection{投射覆盖的存在性与唯一性}
 \label{b2:subsec:1503:06}
 
-待撰写。
+存在性已经由\cref{b2:thm:projective-cover-existence}得到。以下唯一性须比较连同映射的覆盖；只比较来源的维数，不足以说明它们在 \(M\) 上相容。
+
+\begin{theorem}\label{b2:thm:projective-cover-uniqueness}
+若 \(p:P\to M\) 与 \(q:Q\to M\) 是有限维左模 \(M\) 的两个投射覆盖，则存在同构 \(a:P\to Q\)，使 \(qa=p\)。这个同构本身未必唯一。
+\end{theorem}
+\begin{proof}
+由投射性分别取得 \(a:P\to Q\)、\(b:Q\to P\)，满足 \(qa=p\)、\(pb=q\)。于是 \(pba=p\)。对任意 \(x\in P\)，有 \(x-ba(x)\in\ker p\)，所以
+\[
+ba(P)+\ker p=P.
+\]
+核多余，故 \(ba(P)=P\)。\(P\) 有限维，满自同态 \(ba\) 因而可逆。同理 \(ab\) 可逆。于是 \((ba)^{-1}b\) 是 \(a\) 的左逆，而 \(b(ab)^{-1}\) 是其右逆；一个映射的左逆与右逆相同，故 \(a\) 是同构，并已有 \(qa=p\)。
+
+例如 \(A=k[t]/(t^2)\) 的覆盖 \(A\to k\) 上，恒等映射和乘以 \(1+\bar t\) 的映射都是同构，且模 \(\bar t\) 后都诱导恒等，二者不同。因此唯一的是覆盖在目标上同构的类型。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:projective-cover-minimality}
+对有限生成投射模的满射 \(p:P\to M\)，它是投射覆盖，当且仅当每个满足 \(pu=p\) 的自同态 \(u:P\to P\) 都可逆。若 \(p\) 是覆盖，且 \(q:Q\to M\) 是任意有限生成投射模的满射，则 \(P\) 是 \(Q\) 的直和因子。
+\end{proposition}
+\begin{proof}
+覆盖情形中，\(u(P)+\ker p=P\)，所以 \(u\) 满射，再由有限维性可逆。反过来，若 \(L+\ker p=P\)，则 \(p|_L:L\to M\) 满射。利用 \(P\) 的投射性，把 \(p\) 提升到 \(L\)，再复合包含映射得到 \(u:P\to P\)，其像在 \(L\) 中且 \(pu=p\)。若它必可逆，则 \(L=P\)，所以核多余。
+
+对第二个断言，投射性给出 \(a:P\to Q\)、\(b:Q\to P\)，满足 \(qa=p\)、\(pb=q\)。于是 \(pba=p\)，第一部分使 \(ba\) 可逆。映射 \(a(ba)^{-1}:P\to Q\) 是 \(b\) 的截面，因此 \(Q\cong P\oplus\ker b\)。
+\end{proof}
+
+这使“覆盖极小”有了可检验的含义：任何其他投射满射的来源都含有它作为直和因子。关于同构类的选择虽然唯一，关于具体提升映射的选择仍须在后续构造中保留。

@@ -5,9 +5,9 @@
 \section{基本代数的动机}
 \label{b2:sec:1504}
 
-% TODO: 按以下纲要要点撰写本节。
+正则模中同一种不可分解投射模可能出现多次；矩阵大小的一部分信息正来自这种重复。本节从每一种同构类型中只保留一个，构造一个较小的角代数，并说明它为什么适合记录简单模之间的关系。本节只证明这个角代数的基本性质，模范畴的等价留在下一章建立。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 本原幂等元
 % * 简单模的自同态除环
@@ -19,14 +19,98 @@
 \subsection{本原幂等元}
 \label{b2:subsec:1504:01}
 
-待撰写。
+\cref{b2:def:primitive-idempotent}与\cref{b2:prop:primitive-projective-indecomposable}已经把本原幂等元与不可分解投射左理想联系起来。本原性不要求幂等元位于中心：例如上三角矩阵代数的 \(E_{ii}\) 本原，却通常不是中心元。正交分解一的用途，是分解左正则模；只有各项还位于中心时，才能把它解释成代数的直积。
+
+\begin{proposition}\label{b2:prop:corner-radical}
+对有限维代数 \(A\) 的幂等元 \(e\)，角代数 \(B=eAe\) 满足
+\[
+J(B)=eJe,
+\qquad
+B/J(B)\cong\bar e(A/J)\bar e.
+\]
+若 \(e\ne0\)，则 \(e\) 本原当且仅当 \(\bar e\) 本原；此时右侧是除环，\(eAe\) 是局部环。
+\end{proposition}
+\begin{proof}
+向商代数映射并取角给出满射 \(eAe\to\bar e(A/J)\bar e\)，核为 \(eJe\)，这与\cref{b2:thm:orthogonal-idempotent-lifting}证明中的角环商计算相同。\(eJe\) 幂零，因为其 \(N\) 次乘积包含在 \(eJ^Ne\) 中，而 \(J^N=0\)。因此 \(eJe\subseteq J(B)\)。
+
+在\eqref{b2:eq:finite-algebra-semisimple-quotient}的每个矩阵块中，对幂等算子 \(\bar e\) 选择像与核的基，使它成为 \(\operatorname{diag}(I_{r_i},0)\)。相应角环为 \(M_{r_i}(D_i)\)，零秩的块省略。所以商角环是半单代数，根为零。由\cref{b2:prop:radical-quotient}，\(J(B)/eJe=0\)，故 \(J(B)=eJe\)。
+
+若 \(\bar e\) 本原，\cref{b2:prop:primitive-projective-cover}已证 \(e\) 本原。反过来，若 \(e\) 本原，则 \(Ae\) 不可分解，由\cref{b2:thm:indecomposable-projective-simple}，\(Ae/Je\cong(A/J)\bar e\) 简单。上述矩阵块描述迫使恰有一个 \(r_i=1\)，其余为零，故 \(\bar e\) 本原，商角环是除环。
+
+最后，在含幺环 \(B\) 中，模 \(J(B)\) 后可逆的元素本身可逆。确实，若 \(xy\) 与 \(yx\) 都模 \(J(B)\) 等于单位，则它们由\cref{b2:thm:jacobson-unit-criterion}可逆，从而 \(x\) 同时有右逆 \(y(xy)^{-1}\) 与左逆 \((yx)^{-1}y\)，两者相同。于是当 \(B/J(B)\) 是除环时，\(B\) 的非单位元恰为 \(J(B)\)，它是唯一极大左理想，故 \(B\) 局部。此处角环的单位是 \(e\)。
+\end{proof}
+
+例如 \(A=k[t]/(t^m)\) 的单位 \(1\) 是本原幂等元：该代数局部，模根后只有一个除环 \(k\)。当 \(m>1\) 时，角代数就是 \(A\) 自身，它虽局部却不是除环。局部性允许存在非零根，这与简单商是除环并不矛盾。
 
 \subsection{简单模的自同态除环}
 \label{b2:subsec:1504:02}
 
-待撰写。
+固定简单模 \(S_i\) 及其覆盖 \(P_i\)，仍记 \(\Delta_i=\operatorname{End}_A(S_i)\)。Schur 引理使 \(\Delta_i\) 成为除环，而不是预先成为基域。它控制\eqref{b2:eq:projective-simple-multiplicity}中的重数计数。
+
+\begin{proposition}\label{b2:prop:projective-endomorphism-residue}
+从 \(P_i\) 的自同态取商得到满同态
+\[
+\operatorname{End}_A(P_i)\longrightarrow\operatorname{End}_A(S_i)=\Delta_i.
+\]
+其核是把 \(P_i\) 映入 \(JP_i\) 的全部自同态，恰为 \(\operatorname{End}_A(P_i)\) 的 Jacobson 根。
+\end{proposition}
+\begin{proof}
+每个自同态保持 \(JP_i\)，所以诱导商上的自同态。若给定 \(\alpha:S_i\to S_i\)，利用 \(P_i\) 的投射性，把 \(\alpha p_i:P_i\to S_i\) 沿 \(p_i:P_i\to S_i\) 提升，就得到所需原像，证明满射。
+
+核的描述来自商映射的定义。记此核为 \(K\)。若 \(u\in K\)，则对每个 \(r\) 有 \(u(J^rP_i)\subseteq J^r u(P_i)\subseteq J^{r+1}P_i\)。因而 \(N\) 个核中自同态的复合把 \(P_i\) 映入 \(J^NP_i=0\)，所以 \(K\) 是幂零理想。它包含于该自同态环的根，而模掉它的商是除环 \(\Delta_i\)，根为零；再用\cref{b2:prop:radical-quotient}，得到核恰为根。
+\end{proof}
+
+若 \(P_i=Ae\)，由\cref{b2:prop:corner-endomorphism}，这个自同态环是 \((eAe)^{\mathrm{op}}\)。因此半单商矩阵块里的除环与简单模自同态除环相差一个反环：可以把\eqref{b2:eq:finite-algebra-semisimple-quotient}中的 \(D_i\) 选为 \(\Delta_i^{\mathrm{op}}\)。这是左模约定造成的，不能在非交换除环上忽略。
+
+\begin{proposition}\label{b2:prop:split-simple-endomorphisms}
+若 \(k\) 代数闭，则每个有限维简单左 \(A\) 模满足 \(\operatorname{End}_A(S)=k\)。
+\end{proposition}
+\begin{proof}
+这是\cref{b2:cor:schur-algebraically-closed}的应用：本章的简单模有限维，基域代数闭，故每个简单自同态都是标量。该推论不要求 \(A\) 本身半单，因此可以直接用于这里的有限维代数。
+\end{proof}
+
+在一般基域上，此结论不成立。例如把 \(\mathbb C\) 看成实代数，简单左模 \(S=\mathbb C\) 的自同态除环是 \(\mathbb C\)，并不等于 \(\mathbb R\)。相应的 Hom 空间在基域上的维数为二，在这个自同态除环上的维数才为一。
 
 \subsection{箭图表示的代数来源}
 \label{b2:subsec:1504:03}
 
-待撰写。
+\begin{definition}\label{b2:def:basic-algebra}
+有限维 \(k\) 代数 \(B\) 称为\term[jiben-daishu]{基本代数}[basic algebra]，如果 \(B/J(B)\) 是有限个除代数的直积，即其 Artin--Wedderburn 分解的每个矩阵块大小都为一。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:basic-corner}
+每个有限维代数 \(A\) 都能选出一个幂等元 \(e\)，使 \(eAe\) 为基本代数，并满足 \(AeA=A\)。具体地，可在半单商的每个矩阵因子中只保留一个对角本原幂等元，再把这些幂等元相容提升并求和。
+\end{proposition}
+\begin{proof}
+把\eqref{b2:eq:finite-algebra-semisimple-quotient}中全部对角矩阵单位组成完整正交组，由\cref{b2:thm:orthogonal-idempotent-lifting}提升为 \(e_{ij}\)，其中 \(i\) 标记矩阵因子，\(1\le j\le n_i\)。令 \(e=\sum_i e_{i1}\)，正交性保证它幂等。由\cref{b2:prop:corner-radical}，
+\[
+eAe/J(eAe)\cong\bar e(A/J)\bar e\cong\prod_iD_i,
+\]
+所以这个角代数基本。
+
+在每个矩阵块中，一个对角矩阵单位生成整个双边理想：\(E_{p1}E_{11}E_{1q}=E_{pq}\)。因此 \(\bar e\) 在 \(A/J\) 中生成全部商代数，得到 \(AeA+J=A\)。写 \(1=x+j\)，其中 \(x\in AeA,j\in J\)。由根的可逆性判据，\(x=1-j\) 可逆；包含单位元的双边理想只能是整个 \(A\)，故 \(AeA=A\)。
+\end{proof}
+
+满足 \(AeA=A\) 的幂等元称为\term[man-midengyuan]{满幂等元}[full idempotent]。例如 \(M_n(k)\) 中取 \(e=E_{11}\)，角代数就是 \(k\)；上三角矩阵代数和 \(k[t]/(t^m)\) 则已经是基本代数。基本性并不要求根为零。
+
+\ProseParagraphBreak
+下面额外假设 \(B\) 基本且 \(B/J(B)\cong k^s\)；代数闭域上的基本代数满足这一条件。选取完整正交本原幂等元 \(e_1,\ldots,e_s\)，并暂记 \(J=J(B)\)。分解
+\[
+J/J^2=\bigoplus_{i,j}e_j(J/J^2)e_i
+\]
+按左右两个顶点区分根的第一层。为每个空间 \(e_j(J/J^2)e_i\) 选一组 \(k\) 基，每个基向量记录为一条从 \(i\) 指向 \(j\) 的箭头。这得到一个允许重边与圈的有向图，称为\term[jiantu]{箭图}[quiver]。这里的箭头方向专门配合左模约定。
+
+\begin{proposition}\label{b2:prop:basic-algebra-arrow-generators}
+对各箭头的基向量选取提升 \(x\in e_jJe_i\)，则这些提升连同 \(e_1,\ldots,e_s\) 生成代数 \(B\)。对每个左 \(B\) 模 \(M\)，有向量空间分解 \(M=\bigoplus_i e_iM\)，且提升 \(x\in e_jJe_i\) 的作用给出 \(e_iM\to e_jM\) 的线性映射。
+\end{proposition}
+\begin{proof}
+令 \(L\) 为全部箭头提升的线性生成空间，\(C\) 为它们与全部 \(e_i\) 生成的子代数。由于提升的商类构成 \(J/J^2\) 的基，有 \(J=L+J^2\)。用 \(L^r\) 表示 \(r\) 个 \(L\) 中元素乘积的线性生成空间；展开 \(r\) 个这样的和的乘积，得
+\[
+J^r\subseteq L^r+J^{r+1}\subseteq C+J^{r+1}.
+\]
+又因 \(B/J=k^s\) 由 \(e_i\) 的商类生成，有 \(B=C+J\)。逐次把余项从 \(J\) 推到 \(J^2,J^3,\ldots\)，最终用 \(J^N=0\) 得 \(B=C\)。
+
+对模块，\(\sum_i e_i=1\) 给出 \(m=\sum_i e_im\)，正交性使这项表达唯一，所以是向量空间直和。若 \(m=e_im\)，则 \(xm=e_jxe_im\in e_jM\)，得到所述线性映射。一般的 \(e_iM\) 未必是 \(B\) 子模；保存所有箭头的作用才能恢复各坐标之间的联系。
+\end{proof}
+
+例如 \(T_3(k)\) 的 \(J/J^2\) 有基 \(\overline E_{12},\overline E_{23}\)，给出箭头 \(2\to1\)、\(3\to2\)。元素 \(E_{13}=E_{12}E_{23}\) 来自两条箭头的复合，不再需要第三条独立箭头。一般代数中，不同路径的乘积还可能满足关系，所以箭图本身并不总能确定代数。第五卷第9.1节将引入路径代数，第9.5节进一步讨论基本代数与关系；本卷\chapref{b2:ch:16}先说明满幂等元的角代数如何与原代数的模范畴联系。

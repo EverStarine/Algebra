@@ -5,9 +5,9 @@
 \section{Hom–张量伴随}
 \label{b2:sec:0603}
 
-% TODO: 按以下纲要要点撰写本节。
+一个双线性公式可以先固定第一个变量，也可以先固定第二个变量；这样得到的线性映射并非互不相关。Hom–张量伴随把这两种读法组织成一个自然同构。本节始终写出 Hom 所要求的线性侧别，因为在非交换环上，错误的作用次序会使貌似熟悉的公式失去意义。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 伴随同构及双模侧别
 % * 自然性与映射的显式公式
@@ -17,14 +17,175 @@
 \subsection{伴随同构及双模侧别}
 \label{b2:subsec:0603:01}
 
-待撰写。
+设 \({}_SP_R\) 是双模，\(N\) 是左 \(S\) 模。\(\operatorname{Hom}_S(P,N)\) 表示左 \(S\) 线性映射构成的交换群。它有左 \(R\) 作用
+\begin{equation}\label{b2:eq:hom-left-action}
+(rf)(p)\coloneqq f(pr).
+\end{equation}
+这里标量作用于输入端，不能改成 \(rf(p)\)，因为 \(N\) 未必有 \(R\) 作用。右端确实仍为 \(S\) 线性：
+\[
+(rf)(sp)=f\Bigl((sp)r\Bigr)=f\Bigl(s(pr)\Bigr)=s f(pr).
+\]
+又有 \(\Bigl(r_1(r_2f)\Bigr)(p)=f\Bigl((pr_1)r_2\Bigr)=\Bigl((r_1r_2)f\Bigr)(p)\)，其余分配律与单位条件由逐点加法给出。
+
+\begin{theorem}[Hom–张量伴随]\label{b2:thm:hom-tensor-adjunction}
+设 \({}_SP_R\) 为双模，\(M\) 为左 \(R\) 模，\(N\) 为左 \(S\) 模。采用\eqref{b2:eq:hom-left-action}的左 \(R\) 作用，则有交换群同构
+\begin{equation}\label{b2:eq:hom-tensor-adjunction}
+\Phi:\operatorname{Hom}_S(P\otimes_RM,N)
+\longrightarrow
+\operatorname{Hom}_R\Bigl(M,\operatorname{Hom}_S(P,N)\Bigr).
+\end{equation}
+它及其逆 \(\Psi\) 由下列公式唯一确定：
+\[
+\Phi(h)(m)(p)=h(p\otimes m),\qquad
+\Psi(g)(p\otimes m)=g(m)(p).
+\]
+此同构在 \(P,M,N\) 上均自然。
+\end{theorem}
+\begin{proof}
+先取左端的 \(h\)。固定 \(m\) 后，\(p\mapsto h(p\otimes m)\) 为左 \(S\) 线性，所以 \(\Phi(h)(m)\in\operatorname{Hom}_S(P,N)\)。关于 \(m\) 的可加性由张量分配律给出，而
+\[
+\Phi(h)(rm)(p)=h(p\otimes rm)=h(pr\otimes m)
+=\Bigl(r\Phi(h)(m)\Bigr)(p)
+\]
+证明 \(\Phi(h)\) 是左 \(R\) 线性映射。
+
+再取右端的 \(g\)。公式 \((p,m)\mapsto g(m)(p)\) 双可加，而且
+\[
+g(rm)(p)=\Bigl(rg(m)\Bigr)(p)=g(m)(pr),
+\]
+故平衡，诱导唯一群同态 \(\Psi(g)\)。由每个 \(g(m)\) 的左 \(S\) 线性，
+\[
+\Psi(g)(sp\otimes m)=g(m)(sp)=s g(m)(p),
+\]
+所以 \(\Psi(g)\) 还左 \(S\) 线性。
+
+把两个公式代入，\(\Psi\Phi(h)\) 与 \(h\) 在每个纯张量上相同；\(\Phi\Psi(g)(m)\) 与 \(g(m)\) 在每个 \(p\) 上相同，因此两映射互逆。逐点加法说明它们是群同态。自然性将在下一小节按三个变量逐一核对。
+\end{proof}
+
+不需要交换性，也不要求模自由或有限生成。这一结论只把“对 \(P\) 与 \(M\) 分别满足相应线性条件的公式”改写成两种同态。若固定 \(P\)，记
+\[
+F(M)=P\otimes_RM,\qquad G(N)=\operatorname{Hom}_S(P,N),
+\]
+则\eqref{b2:eq:hom-tensor-adjunction}形如
+\(\operatorname{Hom}_S\Bigl(F(M),N\Bigr)\cong\operatorname{Hom}_R\Bigl(M,G(N)\Bigr)\)。一般地，一对方向相反的函子若带有这种在两变量上自然的 Hom 集双射，就称构成\term[bansui]{伴随}[adjunction]；\(F\) 称为 \(G\) 的\term[zuobansui]{左伴随}[left adjoint]，\(G\) 称为 \(F\) 的\term[youbansui]{右伴随}[right adjoint]，记作 \(F\dashv G\)。
+\symidx{\(F\dashv G\)：函子 \(F\) 左伴随于 \(G\)}
+
+\ProseParagraphBreak
+在右模记法中，同一结论为
+\[
+\operatorname{Hom}_{S^{\mathrm{op}}}(M\otimes_RP,N)
+\cong\operatorname{Hom}_{R^{\mathrm{op}}}
+\Bigl(M,\operatorname{Hom}_{S^{\mathrm{op}}}(P,N)\Bigr),
+\]
+这里 \(M_R,{}_RP_S,N_S\)，内层 Hom 的右 \(R\) 作用是 \((fr)(p)=f(rp)\)。下标 \(S^{\mathrm{op}}\) 表示右 \(S\) 线性，避免把两种 Hom 混为一谈。这一版本也可将已证定理应用于反环并交换张量因子得到。
 
 \subsection{自然性与映射的显式公式}
 \label{b2:subsec:0603:02}
 
-待撰写。
+\secref{b2:sec:0502}中的自然性要求映射变动时同构仍然相容。下面的检查说明，本节的同构不依赖于基或展示。
+
+\ProseParagraphBreak
+若 \(a:M'\to M\) 左 \(R\) 线性，\(b:N\to N'\) 左 \(S\) 线性，则自然性公式是
+\begin{equation}\label{b2:eq:tensor-adjunction-naturality}
+\Phi\Bigl(b\circ h\circ(\operatorname{id}_P\otimes a)\Bigr)
+=\operatorname{Hom}_S(P,b)\circ\Phi(h)\circ a.
+\end{equation}
+左边在 \(m'\)、\(p\) 处的值为 \(b\biggl(h\Bigl(p\otimes a(m')\Bigr)\biggr)\)；右边按复合定义给出同一个值。因此该等式成立，既证明了 \(M\) 变量中的反变相容性，也证明了 \(N\) 变量中的协变相容性。
+
+\ProseParagraphBreak
+若 \(c:P'\to P\) 是 \((S,R)\) 双模同态，则
+\[
+\Phi\Bigl(h\circ(c\otimes\operatorname{id}_M)\Bigr)
+=\operatorname{Hom}_S(c,N)\circ\Phi(h),
+\]
+因为在 \(m,p'\) 处两边都是 \(h\Bigl(c(p')\otimes m\Bigr)\)。这里 \(\operatorname{Hom}_S(c,N)\) 为前复合，它左 \(R\) 线性恰由 \(c(p'r)=c(p')r\) 保证。这完成了\cref{b2:thm:hom-tensor-adjunction}中全部自然性断言的证明。
+
+\ProseParagraphBreak
+有两个映射特别值得记住。将 \(F(M)\) 的恒等映射代入 \(\Phi\)，得到
+\[
+\eta_M:M\longrightarrow\operatorname{Hom}_S(P,P\otimes_RM),
+\qquad \eta_M(m)(p)=p\otimes m.
+\]
+将 \(G(N)\) 的恒等映射代入 \(\Psi\)，得到求值映射
+\[
+\varepsilon_N:P\otimes_R\operatorname{Hom}_S(P,N)\longrightarrow N,
+\qquad p\otimes f\longmapsto f(p).
+\]
+它们分别称为这一伴随的\term[bansui-danwei]{单位}[unit]与\term[bansui-yudanwei]{余单位}[counit]。泛性质已经保证其良定义和线性。两个\term[sanjiao-hengdengshi]{三角恒等式}[triangle identities]在这里可以直接计算：
+\[
+\varepsilon_{F(M)}\circ(\operatorname{id}_P\otimes\eta_M)
+=\operatorname{id}_{F(M)},\qquad
+\operatorname{Hom}_S(P,\varepsilon_N)\circ\eta_{G(N)}
+=\operatorname{id}_{G(N)}.
+\]
+第一式将 \(p\otimes m\) 送到 \(\eta_M(m)(p)=p\otimes m\)；第二式将 \(f\) 送到映射 \(p\mapsto\varepsilon_N(p\otimes f)=f(p)\)。它们并不宣称 \(\eta_M\) 与 \(\varepsilon_N\) 各自都是同构；伴随通常弱于范畴等价。
 
 \subsection{限制标量、扩张标量及余诱导}
 \label{b2:subsec:0603:03}
 
-待撰写。
+设 \(\varphi:R\to S\) 为保持单位元的环同态，不假定单射。对左 \(S\) 模 \(N\)，令 \(r\cdot n=\varphi(r)n\)，就得到左 \(R\) 模；这个函子称为\term[xianzhi-biaoliang]{限制标量}[restriction of scalars]，记为 \(\operatorname{Res}_{\varphi}\)。它保留底交换群与映射，只改变允许使用的标量。
+
+\ProseParagraphBreak
+令 \(S\) 通过左乘及 \(s\cdot r=s\varphi(r)\) 成为 \((S,R)\) 双模。对左 \(R\) 模 \(M\)，左 \(S\) 模
+\[
+S\otimes_RM
+\]
+称为从 \(R\) 到 \(S\) 的\term[kuozhang-biaoliang]{扩张标量}[extension of scalars]。映射 \(m\mapsto1\otimes m\) 左 \(R\) 线性，因为 \(1\otimes rm=\varphi(r)\otimes m\)，但它不保证单射。
+
+\begin{proposition}[限制标量的左右伴随]\label{b2:prop:scalar-change-adjunctions}
+限制标量 \(\operatorname{Res}_{\varphi}\) 的左伴随为 \(S\otimes_R-\)，右伴随为
+\[
+\operatorname{Coind}_{\varphi}(M)
+\coloneqq\operatorname{Hom}_R({}_RS,M),
+\]
+其中 \({}_RS\) 的左作用为 \(r\cdot s=\varphi(r)s\)，而这个 Hom 的左 \(S\) 作用为
+\begin{equation}\label{b2:eq:coinduced-action}
+(s f)(t)=f(ts).
+\end{equation}
+右伴随称为\term[yuyoudao]{余诱导}[coinduction]。具体地，有自然的群同构
+\[
+\begin{aligned}
+\operatorname{Hom}_S(S\otimes_RM,N)
+&\cong\operatorname{Hom}_R(M,\operatorname{Res}_{\varphi}N),\\
+\operatorname{Hom}_S\Bigl(N,\operatorname{Coind}_{\varphi}(M)\Bigr)
+&\cong\operatorname{Hom}_R(\operatorname{Res}_{\varphi}N,M).
+\end{aligned}
+\]
+\end{proposition}
+\begin{proof}
+第一个同构把 \(h\) 送到 \(m\mapsto h(1\otimes m)\)，反向把 \(u:M\to\operatorname{Res}_{\varphi}N\) 送到
+\[
+s\otimes m\longmapsto s u(m).
+\]
+它平衡，因为 \(s\varphi(r)u(m)=s u(rm)\)，而且左 \(S\) 线性。两个公式互逆：一边使用 \(1u(m)=u(m)\)，另一边使用 \(h(s\otimes m)=s h(1\otimes m)\)。这也是\cref{b2:thm:hom-tensor-adjunction}取 \(P=S\) 的特例，其中 \(\operatorname{Hom}_S(S,N)\to N\) 的识别为在 \(1\) 处取值。
+
+先核对右伴随的作用：若 \(f\) 左 \(R\) 线性，则
+\[
+(sf)\Bigl(\varphi(r)t\Bigr)=f\Bigl(\varphi(r)ts\Bigr)=r f(ts),
+\]
+故 \(sf\) 仍左 \(R\) 线性。又有
+\(\Bigl(s_1(s_2f)\Bigr)(t)=f(ts_1s_2)=\Bigl((s_1s_2)f\Bigr)(t)\)，并有单位和分配律，所以确为左 \(S\) 模。
+
+给定 \(v:N\to\operatorname{Coind}_{\varphi}(M)\)，将它送到 \(n\mapsto v(n)(1)\)。该映射左 \(R\) 线性，因为
+\[
+v\Bigl(\varphi(r)n\Bigr)(1)
+=\Bigl(\varphi(r)v(n)\Bigr)(1)
+=v(n)\Bigl(\varphi(r)\Bigr)=r v(n)(1).
+\]
+反向从左 \(R\) 线性的 \(u:\operatorname{Res}_{\varphi}N\to M\) 构造
+\[
+\widehat u(n)(s)=u(sn).
+\]
+对 \(s\) 的左 \(R\) 线性来自 \(u\Bigl(\varphi(r)sn\Bigr)=r u(sn)\)；对 \(n\) 的左 \(S\) 线性来自
+\[
+\widehat u(tn)(s)=u(stn)=\Bigl(t\widehat u(n)\Bigr)(s).
+\]
+在 \(1\) 处取值恢复 \(u(n)\)。反方向得到的函数在 \(s\) 处的值是
+\(v(sn)(1)=\Bigl(sv(n)\Bigr)(1)=v(n)(s)\)，也恢复 \(v\)。各公式与 \(M\) 上的后复合、\(N\) 上的前复合相容，因为两条路径分别都为相同的取值与映射复合，故为自然同构。
+\end{proof}
+
+以商同态 \(R\to R/I\) 为例，限制标量的像正是被双边理想 \(I\) 零化的左模。扩张标量会把 \(IM\) 商掉，下一节将证明 \((R/I)\otimes_RM\cong M/IM\)。余诱导则保留子模
+\[
+\{\,m\in M\mid Im=0\,\}.
+\]
+确实，每个 \(f:R/I\to M\) 由 \(f(\bar1)=m\) 决定，关系 \(I\bar1=0\) 要求 \(Im=0\)；反过来这样的 \(m\) 唯一给出 \(f(\bar r)=rm\)。这是商模与子模两种不同的操作：对 \(M=\mathbb Z\)、\(R/I=\mathbb Z/n\mathbb Z\)、\(n>1\)，前者为 \(\mathbb Z/n\mathbb Z\)，后者为零。

@@ -5,9 +5,9 @@
 \section{具体代数}
 \label{b2:sec:1704}
 
-% TODO: 按以下纲要要点撰写本节。
+四元数代数是次数二的中心单代数模型。它的乘法只需两个参数就能写下，是否分裂却与一个范数方程的可解性有关。本节假设 \(\operatorname{char}k\ne2\)，并固定 \(a,b\in k^\times\)；这一假设用于基的验证、共轭及二次扩张的描述。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 四元数代数
 % * 矩阵代数及非分裂例子
@@ -19,14 +19,135 @@
 \subsection{四元数代数}
 \label{b2:subsec:1704:01}
 
-待撰写。
+\begin{definition}\label{b2:def:quaternion-algebra}
+由两个生成元 \(i,j\) 及关系
+\[
+i^2=a,\qquad j^2=b,\qquad ji=-ij
+\]
+定义的含幺 \(k\) 代数称为\term[siyuanshu-daishu]{四元数代数}[quaternion algebra]，记为 \((a,b)_k\)。具体地，它是自由结合代数 \(k\langle i,j\rangle\) 按这些关系生成的双边理想所取的商。
+\end{definition}
+\symidx{\((a,b)_k\)：参数为 \(a,b\) 的四元数代数}
+
+关系使每个字都能先把 \(i\) 移到 \(j\) 左边，再将两个指数降到零或一，所以 \(1,i,j,ij\) 生成这个代数。它们还线性无关，这一点不能仅由关系写法直接断言。
+
+\begin{proposition}\label{b2:prop:quaternion-basis-splitting}
+\(Q=(a,b)_k\) 以 \(1,i,j,ij\) 为 \(k\) 基，并且是次数二的中心单代数。若扩域 \(K/k\) 含有 \(\alpha\) 满足 \(\alpha^2=a\)，则有分裂同构
+\[
+Q_K\longrightarrow M_2(K),\qquad
+i\longmapsto I=\begin{pmatrix}\alpha&0\\0&-\alpha\end{pmatrix},
+\quad j\longmapsto J=\begin{pmatrix}0&b\\1&0\end{pmatrix}.
+\]
+\end{proposition}
+\begin{proof}
+这两个矩阵满足 \(I^2=aI_2\)、\(J^2=bI_2\)、\(JI=-IJ\)，所以给出由商代数到矩阵代数的同态。在对角位置，\(I_2,I\) 线性无关，因为 \(2\alpha\ne0\)；在非对角位置，\(J,IJ\) 线性无关，因为其两个坐标组成的行列式为 \(-2\alpha b\ne0\)。故四个矩阵为 \(M_2(K)\) 的基。原四个生成元若有 \(k\) 线性关系，映射后也有同一关系，因此系数全零。这证明 \(\dim_kQ=4\)，扩张后同态便是基之间的同构。
+
+现在验证 \(Q\) 本身中心单。若 \(U\) 为非零双边理想，则 \(K\otimes_kU\) 是 \(Q_K\cong M_2(K)\) 的非零理想，因矩阵环单而等于整个 \(Q_K\)。维数比较得 \(\dim_kU=4\)，所以 \(U=Q\)。若 \(z\in Z(Q)\)，其像在 \(M_2(K)\) 中为标量。以 \(I_2,I,J,IJ\) 为基比较系数，得到 \(z\) 只能是原 \(1\) 的 \(k\) 倍数，故中心为 \(k\)。维数为四使次数为二。
+\end{proof}
+
+对 \(q=x_0+x_1i+x_2j+x_3ij\)，定义它的\term[siyuanshu-gonge]{四元数共轭}[quaternion conjugation]为
+\[
+\bar q=x_0-x_1i-x_2j-x_3ij.
+\]
+生成元的像 \(i\mapsto-i,j\mapsto-j\) 在反代数中仍满足原关系，所以该映射反转乘法；它在上述基上作用两次为恒等，因此
+\begin{equation}\label{b2:eq:quaternion-conjugation}
+\overline{qr}=\bar r\bar q,\qquad\overline{\bar q}=q.
+\end{equation}
+直接按乘法关系展开，交叉项成对消去，得到
+\begin{equation}\label{b2:eq:quaternion-norm}
+q\bar q=\bar q q
+=x_0^2-a x_1^2-b x_2^2+ab x_3^2.
+\end{equation}
+
+\begin{proposition}\label{b2:prop:quaternion-norm}
+把式\eqref{b2:eq:quaternion-norm}的标量记为 \(N(q)\)，称为\term[siyuanshu-fanshu]{四元数范数}[quaternion norm]。则
+\[
+N(qr)=N(q)N(r),\qquad
+q\in Q^\times\Longleftrightarrow N(q)\ne0.
+\]
+可逆时 \(q^{-1}=N(q)^{-1}\bar q\)。在\cref{b2:prop:quaternion-basis-splitting}的分裂矩阵模型中，\(N(q)\) 就是矩阵行列式。
+\end{proposition}
+\begin{proof}
+因 \(N(r)\in k\) 在中心，
+\[
+N(qr)=qr\bar r\bar q=qN(r)\bar q=N(q)N(r).
+\]
+若范数非零，\eqref{b2:eq:quaternion-norm}给出所述双侧逆。若 \(q\) 可逆，则乘法性给出 \(N(q)N(q^{-1})=N(1)=1\)，所以范数非零。
+
+在分裂模型中，\(q\) 的矩阵为
+\[
+\begin{pmatrix}
+x_0+\alpha x_1&b(x_2+\alpha x_3)\\
+x_2-\alpha x_3&x_0-\alpha x_1
+\end{pmatrix}.
+\]
+其行列式为 \(x_0^2-a x_1^2-bx_2^2+abx_3^2\)，正好是 \(N(q)\)。
+\end{proof}
+\symidx{\(N(q)=q\bar q\)：四元数范数}
 
 \subsection{矩阵代数与非分裂例子}
 \label{b2:subsec:1704:02}
 
-待撰写。
+\begin{proposition}\label{b2:prop:quaternion-division-or-split}
+四元数代数 \(Q\) 或者是除代数，或者同构于 \(M_2(k)\)。它分裂，当且仅当其范数二次型有非平凡零点，即存在 \(q\ne0\) 使 \(N(q)=0\)。
+\end{proposition}
+\begin{proof}
+由\cref{b2:prop:csa-division-description}，\(Q\cong M_r(D)\)，其中 \(D\) 是除代数，且 \(4=r^2\dim_kD\)。若 \(r=1\)，\(Q\) 是除代数；否则只能 \(r=2,\dim_kD=1\)，即 \(D=k\)，所以 \(Q\cong M_2(k)\)。
+
+由\cref{b2:prop:quaternion-norm}，每个非零元素可逆当且仅当每个非零元素的范数都非零。因此有非平凡零点恰好等价于不是除代数，按前一分类又等价于分裂。
+\end{proof}
+
+若 \(a=\alpha^2\in k^{\times2}\)，\cref{b2:prop:quaternion-basis-splitting}的两个矩阵已经定义在 \(k\) 中，因此 \((a,b)_k\) 直接分裂。同样，交换生成元 \(i,j\) 给出 \((a,b)_k\cong(b,a)_k\)，所以 \(b\) 为平方时也分裂。
+
+\ProseParagraphBreak
+实四元数代数
+\[
+\mathbb H=(-1,-1)_{\mathbb R}
+\]
+则不分裂，因为其范数为 \(x_0^2+x_1^2+x_2^2+x_3^2\)，对任意非零实向量严格为正。因而每个非零四元数都可逆；矩阵代数 \(M_2(\mathbb R)\) 却有非零奇异矩阵，二者不可能同构。扩张到 \(\mathbb C\) 后，参数 \(-1\) 成为平方，所以 \(\mathbb H\otimes_{\mathbb R}\mathbb C\cong M_2(\mathbb C)\)。
+
+\ProseParagraphBreak
+更一般地，对非零实数 \(a,b\)，只要其中一个为正，就因该参数为平方而分裂；若二者都为负，分别把 \(i,j\) 除以 \(\sqrt{-a},\sqrt{-b}\)，得到平方均为 \(-1\) 的生成元，故代数同构于 \(\mathbb H\)。因此实四元数代数恰有分裂矩阵代数与 \(\mathbb H\) 两种类型。这里分类的是四维四元数代数，没有在此断言所有实中心单代数的进一步分类。
 
 \subsection{二次型与范数方程}
 \label{b2:subsec:1704:03}
 
-待撰写。
+\begin{theorem}[四元数的范数分裂判据]\label{b2:thm:quaternion-splitting}
+设 \(a\) 不是 \(k\) 中的平方，\(L=k(\alpha)\)、\(\alpha^2=a\)。则
+\[
+(a,b)_k\text{ 分裂}\quad\Longleftrightarrow\quad
+b\in N_{L/k}(L^\times)
+\quad\Longleftrightarrow\quad b=x^2-a y^2\text{ 对某些 }x,y\in k.
+\]
+若 \(a\) 为非零平方，代数总分裂，最后一个方程也总有解。
+\end{theorem}
+\begin{proof}
+\(a\) 非平方时，\(L=k[i]\subseteq Q\) 是二次域，且 \(Q=L\oplus Lj\)。记 \(L\) 的非平凡自同构为 \(u\mapsto\bar u\)，则 \(ju=\bar u j\)。由前述范数公式，对 \(u,v\in L\) 有
+\[
+N(u+vj)=N_{L/k}(u)-bN_{L/k}(v).
+\]
+这里 \(N_{L/k}(x+y\alpha)=(x+y\alpha)(x-y\alpha)=x^2-a y^2\)，可由二次扩张的乘法矩阵或两个共轭直接计算。
+
+若 \(Q\) 分裂，\cref{b2:prop:quaternion-division-or-split}给出非零 \(u+vj\) 的范数为零。不能有 \(v=0\)，否则域范数零使 \(u=0\)，矛盾。因此 \(v\ne0\)，得到
+\(b=N_{L/k}(u)/N_{L/k}(v)=N_{L/k}(u/v)\)。反过来，若 \(b=N_{L/k}(z)\)，则 \(z+j\ne0\) 且其范数为零，所以代数分裂。域范数的显式公式又给出最后一个等价。
+
+若 \(a=\alpha^2\) 且 \(\alpha\in k^\times\)，分裂性已证明，而
+\[
+x=\frac{b+1}{2},\qquad y=\frac{b-1}{2\alpha}
+\]
+满足 \(x^2-a y^2=b\)，故方程仍可解。
+\end{proof}
+
+已知范数方程的一个解，还可以直接构造分裂同构。若 \(a\) 非平方，取 \(z=x+y\alpha\in L\) 满足 \(N_{L/k}(z)=b\)。在二维 \(k\) 空间 \(L\) 上，让 \(i\) 作用为乘 \(\alpha\)，让 \(j\) 作用为 \(v\mapsto z\bar v\)。两者满足平方关系，且
+\(z\overline{\alpha v}=-\alpha z\bar v\)，所以反交换，给出 \(Q\to\operatorname{End}_k(L)\)。它保持单位元，由单性为单射，两端维数同为四，故同构。在基 \(1,\alpha\) 下，具体矩阵为
+\[
+i\longmapsto\begin{pmatrix}0&a\\1&0\end{pmatrix},\qquad
+j\longmapsto\begin{pmatrix}x&-ay\\y&-x\end{pmatrix}.
+\]
+后者的平方为 \((x^2-a y^2)I_2=bI_2\)，可作为公式的直接核验。
+
+\ProseParagraphBreak
+范数判据也等价于齐次方程
+\[
+X^2-aY^2-bZ^2=0
+\]
+有一个非零解。若 \(Z\ne0\)，除以 \(Z^2\) 就得到 \(b=(X/Z)^2-a(Y/Z)^2\)；若 \(Z=0\)，非零解必有 \(Y\ne0\)，于是 \(a=(X/Y)^2\)，同样推出分裂。反过来，范数方程解 \(b=x^2-a y^2\) 给出点 \((x,y,1)\)，平方参数时也可直接取 \((\alpha,1,0)\)。这样，四元数代数是否为矩阵代数，已经化为一个具体二次方程的可解性问题。

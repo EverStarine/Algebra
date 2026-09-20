@@ -6,11 +6,238 @@
 \label{b2:ch:15}
 \BookChapterNumber{b2:ch:15}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+有限维代数的 Jacobson 根是幂零理想，而模掉根的商是半单代数。两项结论使一个模可以按根的作用分层，但这些半单层之间仍可能有不分裂的扩张。本章用根与基座刻画 Loewy 列，计算三角矩阵代数的具体层次，再通过幂等元的相容提升构造投射覆盖。覆盖的存在性、唯一性和不可分解投射模的分类均在此证明。最后选取基本角代数，说明根的第一层怎样提供箭图的顶点与箭头。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分降链稳定与根幂零，准确说明 Nakayama 引理在证明中的作用。
+\item 计算模的根、基座和 Loewy 层，并辨认这些层之间是否分裂。
+\item 完成幂零理想模的单个及正交幂等元组提升，利用多余核构造投射覆盖。
+\item 说明不可分解投射模与简单模的对应，保留一般基域上自同态除环的作用。
+\item 构造基本满角代数，按左模约定理解根第一层的箭头方向。
+\end{itemize}
+\end{learninggoals}
+
+本章需要\cref{b2:thm:projective-characterizations}中的投射模刻画、\cref{b2:thm:artin-wedderburn}中的半单代数结构，以及\cref{b2:thm:noncommutative-nakayama}。角环及其与自同态环的关系使用\cref{b2:prop:corner-endomorphism}。除幂等元提升处明确讨论一般环外，\(A\) 始终是域 \(k\) 上的有限维结合含幺代数，模默认是幺性左模；对模的有限性要求在陈述中写明。
+
+\ProseParagraphBreak
+有限维代数及投射覆盖可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[\S 3.5; \S\S 9.1--9.2]{EtingofEtAl2011RepresentationTheory}。该书第9章明确假设基域代数闭。本章的主要构造保留一般基域，简单模的自同态可能是大于 \(k\) 的除环；在计数 Hom 空间维数时尤其要区别这两种假设。根幂零性的主要证明采用第十四章的 Nakayama 引理，与该书 Proposition 3.5.3 的合成列证明可以相互参照。
 
 \input{Part03/Chapter15/Section1501}
 \input{Part03/Chapter15/Section1502}
 \input{Part03/Chapter15/Section1503}
 \input{Part03/Chapter15/Section1504}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限维性使根的幂构成的降链稳定，Nakayama 引理再使稳定项为零；半单商则把各个根滤过层变成半单模。对有限维模，\(\operatorname{rad}M=JM\)，而基座由被 \(J\) 零化的元素组成。两列的终止步数相同，但各层的具体位置和重数可能不同。
+
+\ProseParagraphBreak
+投射覆盖需要投射来源及多余核。幂等元提升把半单商中的列模转化为不可分解投射模；从最大半单商提升映射，再用 Nakayama 引理恢复满射性，便得到任意有限维模的覆盖。两个覆盖在目标上同构，不过具体同构未必唯一。简单模决定不可分解投射模的类型，简单自同态除环决定相应的重数计数。
+
+\ProseParagraphBreak
+选取每种不可分解投射类型的一份，给出基本满角代数。它的半单商去除了重复的矩阵大小，而根及根的乘法仍然保留下来。分裂基本代数的 \(J/J^2\) 可以用箭头记录，较高次乘积则对应路径及关系；这些构造将分别在下一章的 Morita 理论和第五卷的箭图表示中继续展开。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:15-block-triangular-radical}
+令 \(A\) 为所有分块矩阵 \(\begin{psmallmatrix}B&X\\0&C\end{psmallmatrix}\) 组成的代数，其中 \(B\in M_r(k)\)、\(C\in M_s(k)\)、\(X\in M_{r\times s}(k)\)，且 \(r,s\ge1\)。求 \(J(A)\)、半单商和根的幂零指数，并说明根以外仍可有非零幂零元素。
+\end{exercise}
+\begin{solution}
+仅右上块可能非零的矩阵组成理想 \(I\)，任意两个这样的矩阵相乘为零，所以 \(I^2=0\)。商为 \(M_r(k)\times M_s(k)\)，是半单代数；由\cref{b2:prop:nilpotent-ideal-in-radical}及\cref{b2:prop:radical-quotient}，\(J(A)=I\)。因为 \(r,s\ge1\)，\(I\ne0\)，幂零指数为二。若 \(r\ge2\)，在左上块放 \(E_{12}\)、其余块为零，便得到不属于 \(J(A)\) 的非零平方零元素；\(s\ge2\) 时同样可用右下块。若 \(r=s=1\)，所有幂零元素恰在严格上三角理想内。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-loewy-length-bounds}
+设 \(M\ne0\) 为有限维左 \(A\) 模。证明其 Loewy 长度不超过 \(\dim_kM\)。再证明有限直和的 Loewy 长度等于各分量 Loewy 长度的最大值（全零时为零），而子模与商模的 Loewy 长度都不超过原模。
+\end{exercise}
+\begin{solution}
+若 \(J^rM=J^{r+1}M\)，将 Nakayama 引理用于有限生成模 \(J^rM\)，得到它为零。因此到达零以前，每个相邻根层都使维数至少下降一，步数至多 \(\dim_kM\)。
+
+对直和，\(J^r(\bigoplus_iM_i)=\bigoplus_iJ^rM_i\)，所以第 \(r\) 步为零恰好等于每个分量在该步为零，得到最大值公式。若 \(N\le M\)，则 \(J^rN\subseteq J^rM\)；商中有 \(J^r(M/N)=(J^rM+N)/N\)。原模的某次幂为零时，这两处也为零，证明所需界。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-associated-radical-algebra}
+在 \(\bigoplus_{r\ge0}J^r/J^{r+1}\) 上用
+\[
+(a+J^{r+1})(b+J^{s+1})=ab+J^{r+s+1}
+\]
+定义乘法。证明这给出分次代数。对 \(T_3(k)\)，说明它同构于给 \(E_{ij}\) 赋次数 \(j-i\) 的原上三角矩阵代数。
+\end{exercise}
+\begin{solution}
+若改变代表元，误差为 \(a'b+ab'+a'b'\)，其中 \(a'\in J^{r+1},b'\in J^{s+1}\)，三项均在 \(J^{r+s+1}\) 中，故乘法良定义。结合律由 \(A\) 的结合律继承，单位是 \(1+J\)，次数按和相加。
+
+对上三角矩阵，\(J^r\) 由满足 \(j-i\ge r\) 的 \(E_{ij}\) 生成；所以第 \(r\) 个分次片以 \(j-i=r\) 的矩阵单位的商类为基。把 \(E_{ij}\) 送到相应商类，是分次向量空间同构。非零乘积 \(E_{ij}E_{j\ell}=E_{i\ell}\) 的次数正好相加，其他矩阵单位乘积为零，故这也是代数同构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-radical-socle-subquotient}
+对有限维模 \(N\le M\)，证明
+\[
+\operatorname{rad}(M/N)=(\operatorname{rad}M+N)/N,
+\qquad\operatorname{Soc}N=N\cap\operatorname{Soc}M.
+\]
+是否总有 \(\operatorname{rad}N=N\cap\operatorname{rad}M\)？
+\end{exercise}
+\begin{solution}
+第一式由\cref{b2:thm:module-radical-jm}及 \(J(M/N)=(JM+N)/N\) 得到。第二式由\cref{b2:prop:module-socle-annihilator}得到：\(N\) 中被 \(J\) 零化的元素，恰好是 \(M\) 中满足同一条件而又属于 \(N\) 的元素。
+
+最后的等式不总成立。取 \(A=k[\varepsilon]/(\varepsilon^2)\)、\(M=A\)、\(N=k\varepsilon\)。此时 \(JN=0\)，所以 \(\operatorname{rad}N=0\)，而 \(N=\operatorname{rad}M\ne0\)，故右侧为 \(N\)。一般只有 \(\operatorname{rad}N=JN\subseteq N\cap JM\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-dual-numbers-loewy}
+令 \(A=k[\varepsilon]/(\varepsilon^2)\)，\(M=A^{\oplus r}\oplus k^{\oplus s}\)，其中 \(r,s\ge0\)，\(\varepsilon\) 在 \(k\) 上作用为零。计算模的根、基座、最大半单商及 Loewy 长度，并说明在 \(r>0\) 时根列不可能作为简单子模的直和分解实现。
+\end{exercise}
+\begin{solution}
+\(J=(\varepsilon)\)，故 \(JM=(k\varepsilon)^{\oplus r}\oplus0\)，维数为 \(r\)。被 \(J\) 零化的部分是 \((k\varepsilon)^{\oplus r}\oplus k^{\oplus s}\)，故基座维数为 \(r+s\)；商 \(M/JM\cong k^{\oplus(r+s)}\)。若 \(r>0\)，Loewy 长度为二；若 \(r=0,s>0\)，为一；全零时为零。\(r>0\) 时，\(\varepsilon\) 在 \(M\) 上非零，而在任何简单模直和上均为零，所以不能把各层拼成 \(M\) 的简单直和分解。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-triangular-column-submodules}
+求 \(T_3(k)\) 的自然列向量模 \(V=k^3\) 的全部子模，并判断它是否不可分解。
+\end{exercise}
+\begin{solution}
+若子模 \(W\) 含向量 \(v\)，对角矩阵单位 \(E_{ii}\) 使其每个坐标向量 \(v_ie_i\) 也属于 \(W\)，因此 \(W\) 是若干坐标轴的直和。若 \(e_j\in W\)，上三角矩阵单位 \(E_{ij}\)、\(i<j\) 又使 \(e_i\in W\)。所以只有
+\[
+0,\quad ke_1,\quad ke_1+ke_2,\quad V
+\]
+这四个子模。任意两个非零子模都包含 \(ke_1\)，不可能交为零，因此 \(V\) 不可分解。它的三层依次为 \(S_3,S_2,S_1\)，与\eqref{b2:eq:triangular-projective-layers}相符。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-triangular-projective-hom}
+仍令 \(A=T_3(k)\)、\(P_i=AE_{ii}\)。计算全部 \(\operatorname{Hom}_A(P_i,P_j)\)，给出非零同态的公式，并解释为什么 \(\operatorname{End}_A(P_3)=k\) 不表示 \(P_3\) 简单。
+\end{exercise}
+\begin{solution}
+同态由 \(E_{ii}\) 的像 \(x\) 决定，且必须满足 \(x=E_{ii}x\in E_{ii}AE_{jj}\)。反过来，这样的 \(x\) 给出 \(aE_{ii}\mapsto ax\)；因为 \(x=E_{ii}x\)，该公式与表达方式无关并且左线性。\(E_{ii}AE_{jj}\) 在 \(i\le j\) 时由 \(E_{ij}\) 生成，否则为零。因此 Hom 空间的维数表为
+\[
+\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix},
+\]
+第 \((i,j)\) 项的非零同态都是右乘 \(\lambda E_{ij}\) 的映射。特别地各 \(\operatorname{End}_A(P_i)=k\)。然而 \(P_3\) 有真子模 \(kE_{13}\)，所以不简单；Schur 引理的逆命题在这里不成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-idempotent-nonnilpotent-counterexample}
+证明 \(3+6\mathbb Z\) 是 \(\mathbb Z/6\mathbb Z\) 的幂等元，却不能提升为 \(\mathbb Z\) 的幂等元。指出这为什么不违背\cref{b2:thm:idempotent-lifting}。
+\end{exercise}
+\begin{solution}
+\(3^2-3=6\)，所以其商类幂等。整数幂等元满足 \(e(e-1)=0\)，只能是零或一，二者都不模六等于三。因此不能提升。理想 \(6\mathbb Z\) 的每个正幂都非零，缺少提升定理的幂零假设。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-square-zero-matrix-lift}
+令 \(R=M_2\Bigl(k[\varepsilon]/(\varepsilon^2)\Bigr)\)、\(I=\varepsilon M_2(k)\)。对
+\[
+a=E_{11}+\varepsilon\begin{pmatrix}u&v\\w&z\end{pmatrix},
+\]
+用平方零修正公式求出幂等提升 \(e\)。再将它写成 \((1+\varepsilon X)E_{11}(1+\varepsilon X)^{-1}\)。
+\end{exercise}
+\begin{solution}
+相乘得 \(d=a^2-a=\varepsilon\operatorname{diag}(u,-z)\)。修正 \(a+(1-2a)d\) 的 \(\varepsilon\) 项可以将第二因子的 \(a\) 换为 \(E_{11}\)，得到
+\[
+e=E_{11}+\varepsilon\begin{pmatrix}0&v\\w&0\end{pmatrix}.
+\]
+取 \(X=\begin{psmallmatrix}0&-v\\w&0\end{psmallmatrix}\)，则 \(XE_{11}-E_{11}X=\begin{psmallmatrix}0&v\\w&0\end{psmallmatrix}\)。又 \((1+\varepsilon X)^{-1}=1-\varepsilon X\)，展开共轭即得 \(e\)。所有计算对任意特征成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-compatible-idempotent-lifts}
+在上一题的环中，比较 \(e=E_{11}+\varepsilon E_{12}\) 与 \(f=E_{22}\)。证明它们分别提升两个正交幂等元，却不相互正交；为 \(f\) 换一个提升，使两者正交且和为一。
+\end{exercise}
+\begin{solution}
+\(e^2=e\)、\(f^2=f\)，而模 \(I\) 后分别为 \(E_{11},E_{22}\)。但是 \(ef=\varepsilon E_{12}\ne0\)，故原来的提升不正交。取 \(f'=1-e=E_{22}-\varepsilon E_{12}\)，便有 \((f')^2=f'\)、\(ef'=f'e=0\)、\(e+f'=1\)。这说明单个提升的存在性不能替代整组相容性的证明。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-superfluous-ambient}
+证明多余子模的任意子模仍在同一母模中多余。若 \(N\ll P\) 且 \(N\subseteq Q\subseteq P\)，是否必有 \(N\ll Q\)？给出有限维代数中的反例。
+\end{exercise}
+\begin{solution}
+若 \(N'\subseteq N\) 且 \(L+N'=P\)，则 \(L+N=P\)，由 \(N\ll P\) 得 \(L=P\)。所以 \(N'\ll P\)。
+
+缩小母模却未必保持多余性。取 \(A=k[\varepsilon]/(\varepsilon^2)\)、\(P=A\)、\(N=Q=k\varepsilon\)。\(N=JP\)，由\cref{b2:prop:finite-superfluous-radical}，\(N\ll P\)。但在 \(Q=N\ne0\) 中，\(0+N=Q\) 而 \(0\ne Q\)，故 \(N\not\ll Q\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-truncated-projective-cover}
+令 \(A=k[t]/(t^n)\)、\(1\le s\le n\)。构造 \(M=A/(\bar t^s)\) 的投射覆盖，并将其核识别为一个循环商模。分别求来源、目标和非零核的 Loewy 长度。
+\end{exercise}
+\begin{solution}
+自然满射 \(A\to M\) 的来源自由，核 \((\bar t^s)\subseteq JA\)，所以是覆盖。映射 \(A\to(\bar t^s)\)、\(a\mapsto a\bar t^s\) 的核为 \((\bar t^{n-s})\)，对截断多项式逐项比较系数即可看出；因此核模同构于 \(A/(\bar t^{n-s})\)。\(s=n\) 时此模为零。来源与目标的 Loewy 长度分别为 \(n,s\)，核非零时为 \(n-s\)。覆盖保留的是目标的最小投射来源，并不要求来源和目标的长度相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-matrix-algebra-covers}
+令 \(A=M_m(k)\)、\(S=k^m\)、\(M=S^{\oplus r}\)，其中 \(m\ge1,r\ge0\)。确定 \(M\) 的投射覆盖，并判断它何时是自由 \(A\) 模。
+\end{exercise}
+\begin{solution}
+\(A\) 半单，\(S\cong AE_{11}\) 投射，所以 \(M\) 本身投射。恒等映射 \(M\to M\) 的核为零，是投射覆盖。正则模按列分解为 \(A\cong S^{\oplus m}\)，因而 \(m\mid r\) 时 \(M\cong A^{r/m}\)。反过来，若 \(M\) 自由，其有限 \(k\) 维数使自由基有限，设有 \(d\) 个，则 \(mr=m^2d\)，故 \(m\mid r\)。这包含 \(r=0\) 的情形，并给出许多不能选为自由模的投射覆盖。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-cover-automorphisms}
+令 \(A=k[t]/(t^n)\)、\(n\ge1\)，\(p:A\to k\) 为自然覆盖。求全部满足 \(pu=p\) 的左模自同构 \(u:A\to A\)。若 \(k=\mathbb F_q\)，求这样的自同构个数。
+\end{exercise}
+\begin{solution}
+自同态由 \(u(1)=a\) 决定，公式为 \(u(x)=xa\)。条件 \(pu=p\) 等价于 \(a\) 的常数项为一，即 \(a\in1+(\bar t)\)。这些元素均可逆，所以它们都给出自同构，也没有别的可能。域有 \(q\) 个元素时，\(\bar t,\ldots,\bar t^{n-1}\) 的系数各有 \(q\) 种选择，个数为 \(q^{n-1}\)。因此覆盖的唯一同构类型不意味着覆盖上的自同构只能是恒等。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-lifting-between-covers}
+设 \(M,N\) 有限维，\(p:P\to M\)、\(q:Q\to N\) 为投射覆盖，\(h:M\to N\) 为同态。证明存在 \(H:P\to Q\) 使 \(qH=hp\)，描述所有这样的 \(H\)；若 \(h\) 是同构，证明每个这样的提升都为同构。
+\end{exercise}
+\begin{solution}
+存在性由 \(P\) 投射及 \(q\) 满射得到。若固定一个提升 \(H_0\)，任意另一个提升与它的差都唯一地通过 \(\ker q\) 分解；反过来，加上任意 \(P\to\ker q\) 的同态仍为提升。所以选定 \(H_0\) 后，全部提升由 \(\operatorname{Hom}_A(P,\ker q)\) 参数化。
+
+若 \(h\) 可逆，\(hp:P\to N\) 也是投射覆盖，由\cref{b2:thm:projective-cover-uniqueness}，\(P\) 与 \(Q\) 同构，特别地等维。对任一提升，\(qH\) 满射，故 \(H(P)+\ker q=Q\)。核多余使 \(H(P)=Q\)，再由等维得到 \(H\) 单射。因此所有提升都可逆，但可以互不相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-triangular-idempotents}
+求 \(T_2(k)\) 的全部幂等元，判断哪些本原，并证明所有非平凡者分别共轭于 \(E_{11}\) 或 \(E_{22}\)。
+\end{exercise}
+\begin{solution}
+写幂等元为 \(\begin{psmallmatrix}a&b\\0&c\end{psmallmatrix}\)，方程为 \(a^2=a,c^2=c,(a+c-1)b=0\)。域上的前两式使 \(a,c\in\{0,1\}\)。若两者同为零或同为一，必有 \(b=0\)；其余两种情形中 \(b\) 任意。因此全部幂等元为 \(0,1,E_{11}+bE_{12},E_{22}+bE_{12}\)。
+
+后两族模根后是 \(k^2\) 中的坐标幂等元，由\cref{b2:prop:primitive-projective-cover}本原；\(1=E_{11}+E_{22}\) 不本原，零不计本原。又
+\[
+(1+cE_{12})E_{11}(1-cE_{12})=E_{11}-cE_{12},
+\]
+对 \(E_{22}\) 的对应公式为 \(E_{22}+cE_{12}\)。分别取 \(c=-b\) 或 \(c=b\)，就得到所需共轭。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-corner-filtration}
+在 \(A=T_3(k)\) 中取 \(e=E_{11}+E_{33}\)。求角代数及其根，比较 \((eJe)^2\) 与 \(eJ^2e\)，并判断 \(e\) 是否为满幂等元。
+\end{exercise}
+\begin{solution}
+角代数以 \(E_{11},E_{13},E_{33}\) 为基，按这两条坐标识别后就是 \(T_2(k)\)，单位为 \(e\)。其根为 \(kE_{13}=eJe\)，所以 \((eJe)^2=0\)。但 \(J^2=kE_{13}\)，故 \(eJ^2e=kE_{13}\ne0\)。因此角环中的根幂不一定等于原根幂取角。
+
+任意 \(aeb\) 的第二对角元为零，所以 \(AeA\) 不含 \(E_{22}\)，不是全部 \(A\)，\(e\) 不满。求幂时插入 \(e\) 会删去经由第二顶点的乘积，这也解释了上面两个根幂的差别。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-basic-corner-example}
+令 \(A=M_2(k)\times k[t]/(t^2)\)。选择一个满幂等元 \(e\)，使 \(eAe\) 基本；求半单商，并给出正则左模中各类不可分解投射模的出现次数。
+\end{exercise}
+\begin{solution}
+取 \(e=(E_{11},1)\)，则 \(eAe\cong k\times k[t]/(t^2)\)，根为 \(0\times(\bar t)\)，半单商为 \(k\times k\)，所以基本。又
+\[
+e+(E_{21},0)e(E_{12},0)=(I_2,1),
+\]
+说明 \(AeA\) 包含单位，故 \(e\) 满。两类不可分解投射模分别是 \(P_1=k^2\times0\) 与 \(P_2=0\times k[t]/(t^2)\)，作用分别经两个因子。正则模分解为 \(P_1^{\oplus2}\oplus P_2\)。第二个分量的根非零，说明选取基本角代数没有抹去这些非半单结构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-real-simple-division-ring}
+把 \(A=M_2(\mathbb C)\) 看成实代数，并令 \(S=\mathbb C^2\) 为左模。求 \(\operatorname{End}_A(S)\) 及其在 \(\mathbb R\) 上的维数，给出 \(S\) 的投射覆盖和 \(A\) 的一个基本角代数。
+\end{exercise}
+\begin{solution}
+任何 \(A\) 线性映射都与标量矩阵 \(iI_2\) 交换，故首先是复线性的。与 \(E_{11},E_{22}\) 交换使它为对角矩阵，再与 \(E_{12}\) 交换使两个对角元相同。因此 \(\operatorname{End}_A(S)\cong\mathbb C\)，实维数为二，在自身除环上的维数为一。
+
+\(S\cong AE_{11}\)，且 \(A\) 半单，所以 \(S\) 投射，恒等映射是其覆盖。取 \(e=E_{11}\)，得到基本角代数 \(eAe\cong\mathbb C\)。它的半单商就是 \(\mathbb C\)，不能在实基域上改成 \(\mathbb R\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-quiver-with-zero-composition}
+令 \(B=T_3(k)/(kE_{13})\)，矩阵单位的商类仍用原符号表示。求 \(J(B)\)、三个简单模的投射覆盖及其 Loewy 层。记录 \(J/J^2\) 的箭头，并指出两条相接箭头的复合满足什么关系。
+\end{exercise}
+\begin{solution}
+\(J(B)=kE_{12}+kE_{23}\)，其平方为零；商为 \(k^3\)。投射覆盖为 \(P_i=BE_{ii}\to S_i\)。\(P_1\) 只有一层 \(S_1\)；\(P_2\) 有顶层 \(S_2\) 和根层 \(S_1\)；\(P_3\) 有顶层 \(S_3\) 和根层 \(S_2\)，因为原来的 \(E_{13}\) 已为零。这些覆盖的核分别为零、\(kE_{12}\)、\(kE_{23}\)，均包含于来源的根。
+
+箭头仍是 \(2\to1\) 与 \(3\to2\)，但 \(E_{12}E_{23}=0\)，所以从三到一的两步复合为零。原来的 \(T_3(k)\) 中同一复合非零；两者箭图相同而乘法关系不同，说明仅列箭头不足以恢复代数。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:15-projective-hom-composition-factors}
+假设 \(k\) 代数闭。设 \(P_i\to S_i\) 为简单模的投射覆盖，\(M\) 为有限维模。对 \(M\) 的任一合成列，证明其中同构于 \(S_i\) 的因子个数等于 \(\dim_k\operatorname{Hom}_A(P_i,M)\)。
+\end{exercise}
+\begin{solution}
+对简单模 \(S_j\)，所有 \(P_i\to S_j\) 的同态都通过 \(P_i/JP_i\cong S_i\) 分解。由 Schur 引理及\cref{b2:prop:split-simple-endomorphisms}，Hom 的 \(k\) 维数在 \(i=j\) 时为一，否则为零。
+
+取合成列 \(0=M_0\subset M_1\subset\cdots\subset M_\ell=M\)。将 \(\operatorname{Hom}_A(P_i,-)\) 用于每个 \(0\to M_{r-1}\to M_r\to M_r/M_{r-1}\to0\)。\(P_i\) 投射，由\cref{b2:cor:projective-hom-exact}得到短正合列，所以这些 Hom 空间的维数逐项相加。每个因子贡献一或零，恰得到题中计数。这也表明该个数不依赖所选合成列。该计数公式可对照 Etingof 等人\cite[Proposition 9.2.3, p. 211]{EtingofEtAl2011RepresentationTheory}。
+\end{solution}

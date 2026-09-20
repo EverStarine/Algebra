@@ -6,11 +6,173 @@
 \label{b2:ch:01}
 \BookChapterNumber{b2:ch:01}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+换一组基，矩阵的条目会变，核、像及算子的多项式关系却不随之改变。本章从这些不依赖坐标的对象重看线性代数：先讨论向量空间与商空间，再用对偶配对研究线性泛函，最后将一个算子解释为多项式环的作用。有限维结论与任意维结论分别说明；有理标准形和 Jordan 标准形在这里提出分类目标，完整证明归于第四章。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用基扩充、商空间及核与像构造线性映射，说明补空间的选择与商空间本身的区别。
+\item 写出对偶映射和双对偶评价映射，判断哪些结论需要有限维，并用无限坐标空间给出反例。
+\item 计算循环子空间和最小多项式，理解不变子空间与多项式作用之间的关系。
+\item 区分矩阵等价与相似，检验常见不变量，并辨认标准形中尚需证明的存在性和唯一性。
+\end{itemize}
+\end{learninggoals}
+
+本章要求读者学过线性方程组、基本矩阵运算和行列式，知道域与一元多项式的带余除法。这里会重新写出向量空间及其映射的定义，补齐后来模论实际使用的构造。任意维基的存在沿用第一卷附录 A 的选择公理；只读有限维部分时，基扩充用有限步骤即可完成。无限维对偶的例子用于说明有限维结论的局限，不要求先学习拓扑向量空间。
+
+\ProseParagraphBreak
+向量空间与线性映射可参阅 Roman 的《Advanced Linear Algebra》\cite[Chapters 1--2]{Roman2008AdvancedLinearAlgebra}；商空间与对偶理论见同书\cite[Chapter 3, pp. 87--105]{Roman2008AdvancedLinearAlgebra}。Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[\S\S 13.4--13.5, 14.2]{Shoup2008NumberTheoryAlgebra}适合结合有限域上的计算复习基、维数及矩阵表示。算子的模论解释还可对照 Roman 同书\cite[Chapter 7, The Module Associated with a Linear Operator, pp. 164--167]{Roman2008AdvancedLinearAlgebra}，其中所用的一般模概念将在下一章定义。
 
 \input{Part01/Chapter01/Section0101}
 \input{Part01/Chapter01/Section0102}
 \input{Part01/Chapter01/Section0103}
 \input{Part01/Chapter01/Section0104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+基提供坐标，商空间和映射的核、像则可以直接由对象定义。有限维的维数公式来自基的扩充；无限维仍有基和商空间，但不能沿用有限整数的减法，也不能把单射与满射等同。
+
+\ProseParagraphBreak
+对偶把向量的研究转成线性泛函的研究。对偶映射反转箭头，评价映射则不需选基；有限维空间与其双对偶自然同构，而任意选基给出的空间与对偶之间的同构带有额外选择。无限直和的对偶是直积，无限维评价映射也可能不满射。
+
+\ProseParagraphBreak
+线性算子使多项式环作用在空间上。循环子空间由一个向量及其关系多项式描述，友矩阵记录这组关系；相似变换保持这种作用的结构。一般算子能否分解为循环部分，以及如何恢复唯一的分类数据，将在第四章用模的结构定理解决。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:01-evaluation-quotient}
+在 \(V=k[t]_{\le3}\) 中，令 \(U=\{p\in V\mid p(0)=p(1)=0\}\)。求 \(U\) 的一组基及一个补空间，构造 \(V/U\cong k^2\) 的显式同构。这里 \(k\) 可以有任意特征。
+\end{exercise}
+\begin{solution}
+\(t\) 与 \(t-1\) 互素，所以两个取值为零当且仅当 \(t(t-1)\mid p\)。故 \(U\) 的基为 \(t(t-1),t^2(t-1)\)。令 \(W=\operatorname{span}_k(1,t)\)。对任意 \(p\in V\)，多项式
+\[
+r(t)=(1-t)p(0)+tp(1)
+\]
+在 \(0,1\) 处与 \(p\) 同值，因而 \(p-r\in U\)；\(W\) 中同时在这两点为零的多项式只能为零。因此 \(V=U\oplus W\)。映射 \(p\mapsto(p(0),p(1))\) 的核为 \(U\)，并由上述插值式知它满射。由\cref{b2:prop:linear-first-isomorphism}，所求同构为 \(p+U\mapsto(p(0),p(1))\)，其逆把 \((a,b)\) 送到 \((1-t)a+tb+U\)。域中 \(0\ne1\)，所以任意特征均适用。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-complement-graphs}
+设 \(V=U\oplus W\)。证明 \(U\) 的全部补空间恰为
+\[
+W_h=\{h(w)+w\mid w\in W\},\qquad h\in\operatorname{Hom}_k(W,U),
+\]
+并且不同 \(h\) 给出不同补空间。
+\end{exercise}
+\begin{solution}
+\(W_h\) 对线性组合封闭。若 \(h(w)+w\in U\)，沿已给直和取 \(W\) 分量即得 \(w=0\)，故交为零。又有 \(u+w=(u-h(w))+(h(w)+w)\)，所以 \(V=U\oplus W_h\)。
+
+反过来，设 \(W'\) 为补空间。原分解所给的投影 \(\pi_W:V\to W\) 在 \(W'\) 上单射，因为其核为 \(W'\cap U=0\)；它也满射，因为每个 \(w\in W\) 可以沿 \(U\oplus W'\) 分解。其逆线性，将 \(w\) 写成唯一的 \(h(w)+w\)，其中 \(h(w)\in U\)。取 \(U\) 分量可知 \(h\) 线性，且由 \(W'\) 唯一确定。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-shift-dual}
+令 \(V=k^{(\mathbb N)}\)，基为 \(e_1,e_2,\ldots\)。定义 \(S(e_i)=e_{i+1}\)，\(L(e_1)=0\)、\(L(e_{i+1})=e_i\)。计算 \(LS,SL\)，并分别判断 \(S,L\) 的单射性和满射性；再在 \(V^*\cong k^{\mathbb N}\) 上写出 \(S^*,L^*\) 的公式及其核与像。
+\end{exercise}
+\begin{solution}
+在基向量上计算得 \(LS=I_V\)，而 \(SL\) 将 \(e_1\) 送到零并固定其余基向量。\(S\) 单射，像为第一坐标为零的有限支集族；\(L\) 满射，核为 \(ke_1\)。按\cref{b2:prop:dual-direct-sum}，泛函由任意族 \(a_i=\varphi(e_i)\) 表示。于是
+\[
+S^*(a_1,a_2,\ldots)=(a_2,a_3,\ldots),\qquad
+L^*(a_1,a_2,\ldots)=(0,a_1,a_2,\ldots).
+\]
+\(S^*\) 满射，核为 \(k(1,0,\ldots)\)；\(L^*\) 单射，像是第一坐标为零的全部序列。对偶映射反转复合次序：\(S^*L^*=I_{V^*}\)，与 \((LS)^*=I_{V^*}\) 一致。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-trace-pairing}
+设 \(n\ge1\)，在 \(M_n(k)\) 上定义双线性配对 \(\beta(A,B)=\operatorname{tr}(AB)\)。证明它在任意特征下非退化。若 \(U\) 是上三角矩阵的子空间，求关于此配对的零化子 \(U^\perp\)。解释为什么 \(\operatorname{char}k\mid n\) 时 \(\operatorname{tr}(I_n)=0\) 不与非退化性矛盾。
+\end{exercise}
+\begin{solution}
+设 \(E_{ij}\) 为矩阵单位。展开迹得 \(\operatorname{tr}(AB)=\sum_{i,j}A_{ij}B_{ji}\)，所以 \(\beta(A,E_{ji})=A_{ij}\)。若 \(A\ne0\)，选一个非零条目即可找到使配对非零的 \(B\)；交换左右同理。上三角空间由 \(E_{ij}\ (i\le j)\) 生成，条件 \(\beta(E_{ij},B)=B_{ji}=0\) 排除 \(B\) 的对角线及以下条目，所以 \(U^\perp\) 是严格上三角空间。
+
+\(\operatorname{tr}(I_n)=\beta(I_n,I_n)=0\) 只说明 \(I_n\) 与自身的配对为零。非退化要求一个非零矩阵不与所有矩阵都配成零；例如 \(\beta(I_n,E_{11})=1\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-basis-pairing}
+在 \(V=\mathbb Q^2\) 的标准基 \(\mathcal B\) 下，用 \(\beta(v,w)=[v]_{\mathcal B}^{\mathsf T}[w]_{\mathcal B}\) 定义配对。若 \(\mathcal B'\) 的换基矩阵为 \(P\)，求该配对在新坐标下的矩阵。取 \(P=\begin{pmatrix}1&1\\0&1\end{pmatrix}\)，说明“把一组基送到其对偶基”给出的 \(V\to V^*\) 同构为何依赖所选基。
+\end{exercise}
+\begin{solution}
+由 \([v]_{\mathcal B}=P[v]_{\mathcal B'}\)，有
+\[
+\beta(v,w)=[v]_{\mathcal B'}^{\mathsf T}P^{\mathsf T}P[w]_{\mathcal B'}.
+\]
+所给 \(P\) 满足 \(P^{\mathsf T}P=\begin{pmatrix}1&1\\1&2\end{pmatrix}\ne I\)。原同构 \(v\mapsto\beta(v,-)\) 在 \(\mathcal B'\) 坐标下对应这个矩阵，而把 \(\mathcal B'\) 直接送到它的对偶基所定义的配对矩阵是 \(I\)。二者不同。双对偶中的评价映射 \(j_V(v)(\varphi)=\varphi(v)\) 则根本没有选基步骤，不能把这两种同构混为一谈。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-infinite-annihilator}
+仍取 \(V=k^{(\mathbb N)}\)，记坐标泛函为 \(\varepsilon_i\)，令 \(E\subseteq V^*\) 由 \(\varepsilon_i-\varepsilon_{i+1}\ (i\ge1)\) 生成。求 \(E\) 中泛函的有限坐标特征，证明 \(E\ne V^*\)，而被 \(E\) 的全部泛函同时零化的向量只有零。
+\end{exercise}
+\begin{solution}
+\(E\) 恰由有限支集且坐标和为零的泛函组成。每个生成元都如此；反过来，若 \(\sum_{i=1}^ma_i=0\)，取 \(b_j=a_1+\cdots+a_j\)，则
+\[
+\sum_{i=1}^ma_i\varepsilon_i
+=\sum_{j=1}^{m-1}b_j(\varepsilon_j-\varepsilon_{j+1}).
+\]
+因此 \(\varepsilon_1\notin E\)，所以 \(E\) 为真子空间。若 \(v=(v_i)\) 被所有生成元零化，就有 \(v_i=v_{i+1}\)，故坐标全相等；有限支集又迫使它们全为零。这说明在无限维中，由 \(V\) 中向量形成的评价泛函，未必足以把 \(V^*\) 的每个真子空间与一个外部元素分开。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-derivative-dual}
+令 \(V=k[t]_{\le3}\)，\(D\) 为形式求导算子。分别在 \(\operatorname{char}k=0\) 和 \(\operatorname{char}k=2\) 时求 \(\ker D\)、\(\operatorname{im}D\)、\(m_D\)，并判断是否有循环向量。若 \(\varepsilon_j\) 取多项式的 \(t^j\) 系数，写出 \(D^*\varepsilon_j\)。
+\end{exercise}
+\begin{solution}
+由 \(D(t^j)=jt^{j-1}\)，特征零时核为 \(k\)，像为 \(k[t]_{\le2}\)。\(D^4=0\)，而 \(D^3(t^3)=6\ne0\)，故 \(m_D=t^4\)；\(t^3,3t^2,6t,6\) 是基，所以 \(t^3\) 为循环向量。
+
+特征二时 \(D(1)=D(t^2)=0\)、\(D(t)=1\)、\(D(t^3)=t^2\)，故核与像都为 \(\operatorname{span}_k(1,t^2)\)。此时 \(D^2=0\) 且 \(D\ne0\)，所以 \(m_D=t^2\)，任一循环子空间维数至多二，不能等于四维的 \(V\)。两种特征下统一有
+\[
+D^*\varepsilon_j=(j+1)\varepsilon_{j+1}\quad(0\le j<3),\qquad
+D^*\varepsilon_3=0,
+\]
+其中整数系数取其在 \(k\) 中的像。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-cyclic-characteristic}
+在 \(k^3\) 上定义 \(Te_1=e_2,Te_2=e_3,Te_3=2e_1\)。分别取 \(k=\mathbb Q\) 与 \(k=\mathbb F_3\)，求 \(m_T\)，并判断 \(v=e_1+e_2\) 是否为循环向量。
+\end{exercise}
+\begin{solution}
+在两个域上，\(e_1,Te_1,T^2e_1\) 都是标准基，而 \(T^3=2I\)，所以\cref{b2:prop:cyclic-basis}给出 \(m_T=t^3-2\)。以 \(v,Tv,T^2v\) 为列所得矩阵是
+\[
+P=\begin{pmatrix}1&0&2\\1&1&0\\0&1&1\end{pmatrix},\qquad\det P=3.
+\]
+故在 \(\mathbb Q\) 上 \(v\) 循环。在 \(\mathbb F_3\) 上，\(m_T=(t+1)^3\)，且 \(v=(T+I)e_1\)，所以 \((T+I)^2v=0\)。又有 \((T+I)v=e_1+2e_2+e_3\ne0\)，故 \(m_{T,v}=(t+1)^2\)。其循环子空间只有二维，\(v\) 不循环。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-invariant-subspaces}
+设 \(T\) 在 \(k^3\) 上的矩阵为 \(\operatorname{diag}(\lambda,\lambda,\mu)\)，其中 \(\lambda\ne\mu\)。证明每个 \(T\) 不变子空间都形如 \(U_\lambda\oplus U_\mu\)，其中 \(U_\lambda\le\operatorname{span}_k(e_1,e_2)\)，而 \(U_\mu\) 为 \(0\) 或 \(ke_3\)。并求最小多项式，判断是否存在循环向量。
+\end{exercise}
+\begin{solution}
+算子 \(P_\lambda=(T-\mu I)/(\lambda-\mu)\) 和 \(P_\mu=(T-\lambda I)/(\mu-\lambda)\) 分别是到两个特征子空间的投影，且和为 \(I\)。若 \(U\) 被 \(T\) 保持，由\cref{b2:prop:polynomial-action-subspace}也被这两个多项式保持。因此每个 \(u\in U\) 的两个特征分量仍在 \(U\)，给出所述分解；反向封闭性直接成立。\(U_\mu\) 所在空间一维，所以只有两种选择。
+
+多项式 \(p\) 零化 \(T\) 当且仅当 \(p(\lambda)=p(\mu)=0\)，故 \(m_T=(t-\lambda)(t-\mu)\)。若存在循环向量，由\cref{b2:prop:cyclic-basis}其次数应为三，与实际次数二矛盾。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-insufficient-invariants}
+设 \(A=J_4(0)\oplus J_3(0)\oplus J_1(0)\)，\(B=J_4(0)\oplus J_2(0)\oplus J_2(0)\)。证明两者的秩、特征多项式与最小多项式都相同，但不相似。只使用这些已给定矩阵的计算，不调用 Jordan 标准形的存在性。
+\end{exercise}
+\begin{solution}
+每个 \(J_d(0)\) 的秩为 \(d-1\)，故两矩阵的秩都为五；它们均为八阶严格上三角矩阵，故特征多项式都是 \(t^8\)。两者的四次幂为零，而三次幂在四阶块上非零。设 \(p(t)=a_0+a_1t+a_2t^2+a_3t^3+t^4q(t)\)，将 \(p(J_4(0))\) 作用于 \(e_4\)，得到 \(a_0e_4+a_1e_3+a_2e_2+a_3e_1\)。若此式为零，四个系数必须全为零，所以零化四阶块的多项式必被 \(t^4\) 整除。因此两者的最小多项式都是 \(t^4\)。
+
+各块的平方核维数为 \(\min(2,d)\)，所以 \(\dim\ker A^2=2+2+1=5\)，而 \(\dim\ker B^2=2+2+2=6\)。由\cref{b2:prop:similarity-invariants}，两者不相似。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-cyclic-centralizer}
+若有限维空间上的算子 \(T\) 有循环向量，证明与 \(T\) 交换的全部线性算子恰为 \(k[T]=\{p(T)\mid p\in k[t]\}\)，并求这个空间的维数。
+\end{exercise}
+\begin{solution}
+取循环向量 \(v\)。若 \(FT=TF\)，可写 \(F(v)=p(T)v\)。对任意 \(q(T)v\)，有
+\[
+F(q(T)v)=q(T)F(v)=q(T)p(T)v=p(T)q(T)v.
+\]
+这些向量遍及 \(V\)，故 \(F=p(T)\)。反之，所有算子多项式都与 \(T\) 交换。令 \(n=\dim V=\deg m_T\)。带余除法说明 \(I,T,\ldots,T^{n-1}\) 生成 \(k[T]\)，最小多项式的定义说明它们线性无关，所以维数为 \(n\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:01-restriction-quotient-polynomials}
+设 \(U\) 为有限维空间 \(V\) 上算子 \(T\) 的不变子空间。记限制算子为 \(T_U\)，商空间上的算子为 \(\bar T\)。证明
+\[
+\operatorname{lcm}(m_{T_U},m_{\bar T})\mid m_T
+\quad\text{且}\quad m_T\mid m_{T_U}m_{\bar T}.
+\]
+在零空间上约定最小多项式为 \(1\)。举例说明右端的乘积有时不能换成最小公倍式。
+\end{exercise}
+\begin{solution}
+\(U\) 不变使 \(\bar T(v+U)=Tv+U\) 良定义。\(m_T(T)=0\) 限制到 \(U\) 或下降到 \(V/U\) 后仍为零，所以两个最小多项式都整除 \(m_T\)，首一最小公倍式也整除它。
+
+令 \(a=m_{T_U},b=m_{\bar T}\)。因为 \(b(\bar T)=0\)，每个 \(b(T)v\) 都在 \(U\) 中；再施加 \(a(T)\) 即得零。所以 \((ab)(T)=0\)，由\cref{b2:prop:minimal-polynomial-divisibility}，\(m_T\mid ab\)。取 \(T=J_2(0)\)、\(U=ke_1\)，限制与商算子都为零，最小多项式均为 \(t\)，而 \(m_T=t^2\)，给出所需例子。
+\end{solution}

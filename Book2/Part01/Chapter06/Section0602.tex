@@ -5,9 +5,9 @@
 \section{双模与结合}
 \label{b2:sec:0602}
 
-% TODO: 按以下纲要要点撰写本节。
+式子 \(mr\otimes n=m\otimes rn\) 使用了张量号两侧相邻的作用。如果 \(M\) 还有一个左作用，或 \(N\) 还有一个右作用，这些没有参与平衡关系的作用可能保留下来。双模使这一想法成为严格的构造，也说明张量积为什么可以连续进行。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 双模及张量积上的剩余作用
 % * 张量积结合律与单位同构
@@ -17,14 +17,128 @@
 \subsection{双模与张量积的剩余作用}
 \label{b2:subsec:0602:01}
 
-待撰写。
+\begin{definition}\label{b2:def:bimodule}
+设 \(S,R\) 为含单位元的环。一个 \((S,R)\) \term[shuangmo]{双模}[bimodule]是交换群 \(P\)，连同幺性左 \(S\) 模与幺性右 \(R\) 模结构，满足
+\[
+(sp)r=s(pr)\qquad(s\in S,\ p\in P,\ r\in R).
+\]
+记为 \({}_SP_R\)。左、右各自满足模的全部公理，而上式要求两种作用彼此相容。
+\end{definition}
+\symidx{\({}_SP_R\)：左 \(S\)、右 \(R\) 双模}
+
+环 \(R\) 以左右乘法成为 \({}_RR_R\)。矩形矩阵空间 \(M_{a\times b}(k)\) 是 \(\Bigl(M_a(k),M_b(k)\Bigr)\) 双模：左乘与右乘保留矩阵尺寸，矩阵乘法的结合律保证相容性。若 \(R\) 交换，每个左 \(R\) 模都通过 \(pr=rp\) 成为 \((R,R)\) 双模。
+
+\begin{proposition}[剩余作用]\label{b2:prop:tensor-bimodule}
+若 \({}_SM_R\)、\({}_RN_T\) 为双模，则 \(M\otimes_RN\) 有唯一的 \((S,T)\) 双模结构，满足
+\[
+s(m\otimes n)=(sm)\otimes n,\qquad
+(m\otimes n)t=m\otimes(nt).
+\]
+若只给定其中一种额外作用，则只得到相应一侧的模结构。
+\end{proposition}
+\begin{proof}
+固定 \(s\in S\)，映射 \((m,n)\mapsto(sm)\otimes n\) 双可加，且
+\[
+\Bigl(s(mr)\Bigr)\otimes n=\Bigl((sm)r\Bigr)\otimes n=(sm)\otimes(rn).
+\]
+其中第一步使用双模相容性。因此由\cref{b2:thm:tensor-universal}得到群自同态 \(L_s\)。在纯张量上核对，可得 \(L_{s+s'}=L_s+L_{s'}\)、\(L_{ss'}=L_sL_{s'}\) 及 \(L_1=\operatorname{id}\)；纯张量生成全群，所以这些等式处处成立，给出左模结构。
+
+固定 \(t\in T\)，用 \((rn)t=r(nt)\) 同样得到 \(D_t(m\otimes n)=m\otimes nt\)。右模公理在生成元上化为 \((nt)t'=n(tt')\) 等式。最后
+\[
+\Bigl(s(m\otimes n)\Bigr)t=(sm)\otimes nt
+=s\Bigl((m\otimes n)t\Bigr),
+\]
+从而左右相容。由于作用在纯张量上的值已经给定，唯一性成立。
+\end{proof}
+
+若 \(R\) 交换，以上构造给出
+\[
+r(m\otimes n)=(rm)\otimes n=m\otimes(rn).
+\]
+因此 \(M\otimes_RN\) 是 \(R\) 模，\(\tau\) 是通常意义的 \(R\) 双线性映射。此时，对任意 \(R\) 模 \(L\)，一个 \(R\) 双线性映射 \(M\times N\to L\) 对应唯一的 \(R\) 线性映射 \(M\otimes_RN\to L\)：由群版本泛性质先得到同态，再在纯张量上核对 \(\widetilde b(rt)=r\widetilde b(t)\)。反方向也是直接复合。这就是交换环上熟悉的张量积泛性质。
 
 \subsection{张量积结合律与单位同构}
 \label{b2:subsec:0602:02}
 
-待撰写。
+\begin{theorem}[结合与单位同构]\label{b2:thm:tensor-associativity-unit}
+设 \({}_AM_R\)、\({}_RN_S\)、\({}_SP_T\) 为双模，则存在自然的 \((A,T)\) 双模同构
+\[
+\alpha:(M\otimes_RN)\otimes_SP\longrightarrow
+M\otimes_R(N\otimes_SP),
+\quad (m\otimes n)\otimes p\longmapsto m\otimes(n\otimes p).
+\]
+另有自然同构
+\[
+\rho:M\otimes_RR\longrightarrow M,\quad m\otimes r\longmapsto mr,
+\qquad
+\lambda:R\otimes_RN\longrightarrow N,\quad r\otimes n\longmapsto rn.
+\]
+它们保留所有已给定的外侧作用。没有给定 \(A,T\) 时，结合公式仍为交换群同构。
+\end{theorem}
+\begin{proof}
+固定 \(p\in P\)。公式 \((m,n)\mapsto m\otimes(n\otimes p)\) 对 \(R\) 平衡，因为
+\[
+mr\otimes(n\otimes p)=m\otimes r(n\otimes p)
+=m\otimes(rn\otimes p).
+\]
+故得到群同态 \(h_p:M\otimes_RN\to M\otimes_R(N\otimes_SP)\)。于是 \((x,p)\mapsto h_p(x)\) 对第一变量可加；对第二变量的可加性可以在 \(x=m\otimes n\) 上检查，再由生成性推出。它对 \(S\) 平衡，因为在这些生成元上
+\[
+h_p\Bigl((m\otimes n)s\Bigr)
+=m\otimes(ns\otimes p)=m\otimes(n\otimes sp)=h_{sp}(m\otimes n).
+\]
+再应用一次泛性质，得到 \(\alpha\)。
+
+反向从 \((m,n,p)\mapsto(m\otimes n)\otimes p\) 出发。先固定 \(m\)，用 \((ns)\otimes p=n\otimes sp\) 的关系对 \(S\) 取张量，再用 \((mr)\otimes n=m\otimes rn\) 的关系对 \(R\) 取张量，得到 \(\beta\)。两复合在所有三重纯张量上为恒等，故互逆。公式还给出 \(\alpha(ax)=a\alpha(x)\)、\(\alpha(xt)=\alpha(x)t\)，所以保留外侧作用。
+
+右乘 \((m,r)\mapsto mr\) 双可加且平衡，故定义 \(\rho\)。其逆为 \(m\mapsto m\otimes1\)，因为
+\(mr\otimes1=m\otimes r\) 且 \(m1=m\)。左乘版本的逆是 \(n\mapsto1\otimes n\)，由 \(1\otimes rn=r\otimes n\) 与 \(1n=n\) 得到。若对 \(M,N,P\) 分别作相容同态，两条可能的复合路径在三重纯张量上的值都是各因子像的相同排列；单位公式也有同样的相容性。这证明所称的自然性。
+\end{proof}
+
+结合同构不把两个底集合宣称为相同，而是给出一个不依赖选基的指定同构。以后省略括号时，使用的正是这些映射。对于四个因子，两种逐步改变括号的过程都将同一个四重纯张量送到相同的括号形式；生成性保证它们给出同一个映射。
+
+\ProseParagraphBreak
+交换环上还可以交换两个因子：\(m\otimes n\mapsto n\otimes m\)。平衡关系的像为
+\(n\otimes rm=rn\otimes m\)，所以公式良定义，再交换一次就是恒等。一般非交换环上，\(N\otimes_RM\) 连所需的右、左作用都未必具备，因此不能先写下同一公式再默认它存在。
 
 \subsection{反环与作用侧别}
 \label{b2:subsec:0602:03}
 
-待撰写。
+\subsecref{b2:subsec:0201:01}定义了反环 \(R^{\mathrm{op}}\)：底加法群不变，乘法次序反转。将右 \(R\) 模视为左 \(R^{\mathrm{op}}\) 模，可以整理作用侧别，却不能抹去次序信息。
+
+\begin{proposition}\label{b2:prop:bimodule-opposite-action}
+给定左 \(S\) 模 \(P\)，在其上指定相容的幺性右 \(R\) 作用，等价于指定保持单位元的环同态
+\[
+R^{\mathrm{op}}\longrightarrow\operatorname{End}_S(P),
+\qquad r\longmapsto D_r,
+\]
+其中 \(D_r(p)=pr\)，自同态环的乘法是复合。
+\end{proposition}
+\begin{proof}
+双模相容性说明 \(D_r\) 是左 \(S\) 线性映射。右模结合律给出
+\[
+(D_r\circ D_t)(p)=(pt)r=p(tr)=D_{tr}(p).
+\]
+所以它反转 \(R\) 的乘法，恰好保持 \(R^{\mathrm{op}}\) 的乘法；分配律与幺性分别给出可加性和保持单位元。
+
+反过来，由所给环同态定义 \(pr=D_r(p)\)。环同态的可加性给出标量加法的分配律，各 \(D_r\) 的可加性给出向量加法的分配律；又有 \(D_tD_r=D_{rt}\)，故 \((pr)t=p(rt)\)。保持单位元给出 \(p1=p\)，而 \(S\) 线性给出 \((sp)r=s(pr)\)。这便是需要的双模。
+\end{proof}
+
+例如，左正则模 \({}_RR\) 的每个自同态都由 \(f(1)=a\) 决定，因为 \(f(r)=ra\)。将 \(a\) 对应于右乘映射，得到
+\[
+\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}.
+\]
+取 \(R=M_2(k)\)，对矩阵单位 \(E_{12},E_{21}\) 有
+\[
+(D_{E_{12}}\circ D_{E_{21}})(1)=E_{21}E_{12}=E_{22},
+\qquad D_{E_{12}E_{21}}(1)=E_{11}.
+\]
+二者不同，直接表明把反环漏写会得到错误的乘法公式。
+
+\ProseParagraphBreak
+仍有一个始终合法的交换因子公式：把 \(N\) 改看为右 \(R^{\mathrm{op}}\) 模，把 \(M\) 改看为左 \(R^{\mathrm{op}}\) 模，就得到
+\begin{equation}\label{b2:eq:tensor-opposite-swap}
+M\otimes_RN\cong N\otimes_{R^{\mathrm{op}}}M,
+\qquad m\otimes n\longmapsto n\otimes m.
+\end{equation}
+事实上，原关系 \(mr\otimes n=m\otimes rn\) 变为目标中的
+\(n\otimes mr=rn\otimes m\)，正是反环上的平衡关系。反向交换给出逆。这是作用方向随交换一起改变的同构，与无条件在原环上交换因子是两回事。

@@ -1,16 +1,236 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第2章　模、子模与商模
-% 纲要位置：计划纲要.md，第 857 行。
 
 \chapter{模、子模与商模}
 \label{b2:ch:02}
 \BookChapterNumber{b2:ch:02}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+把向量空间的标量域换成环，便得到模。整数模统一了交换群的运算，多项式环上的模则把线性算子包含在标量作用中。本章建立子模、商模、核、像与余核，证明模的同构定理，再用生成元、零化子和挠性辨认模的特点。最后构造任意族的直和与直积，说明它们在有限情形下一致，而在无限情形下承担不同的映射任务。非交换标量的左右次序与各项有限性条件均在使用处明确说明。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 能为交换群、矩阵作用和线性算子写出相应的模结构，并判断同态与子模。
+\item 会构造商模，求具体同态的核、像与余核，写出同构定理中的实际映射。
+\item 区分单个元素与整个模的零化子，理解忠实、有限生成、挠与无挠各自的含义。
+\item 掌握直和、直积的有限支集条件及泛性质，判断无限情形下的求和与坐标论证是否有效。
+\end{itemize}
+\end{learninggoals}
+
+本章需要交换群、环、左理想与双边理想的定义，以及第一章的向量空间和线性映射。商模与同构定理在本章重新给出完整证明，既适用于交换环，也适用于非交换环。只希望先学习交换环上的模的读者，可以暂缓非交换矩阵反例及反环的计算；但须记住，\(\operatorname{Hom}_R(M,N)\) 的 \(R\) 模结构需要相应条件。整环上的挠性另在\subsecref{b2:subsec:0203:03}集中讨论，不能未经说明推广到任意环。
+
+\ProseParagraphBreak
+模、同态和直和的基础理论可参阅 Lang 的《Algebra》\cite[CHAPTER III, \S\S 1--3]{Lang2002}。Roman 的《Advanced Linear Algebra》\cite[Chapter 4, pp. 109--124]{Roman2008AdvancedLinearAlgebra}从线性代数转入模论，适合对照本章的基本构造；该部分以交换环为范围，本章对非交换环的左右作用另作说明。
 
 \input{Part01/Chapter02/Section0201}
 \input{Part01/Chapter02/Section0202}
 \input{Part01/Chapter02/Section0203}
 \input{Part01/Chapter02/Section0204}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+模保留了向量相加和标量作用，却不再保证非零标量可逆。交换群的整数倍、正则模中的环乘法、线性算子的多项式作用都是同一组公理的实例。模同态保持这两种运算，子模与商模因而仍有核、像、余核和同构定理。判断一个具体商模时，找出适当的同态及其核，往往比直接整理陪集更方便。
+
+\ProseParagraphBreak
+生成元记录怎样得到全部元素，关系记录表达为何不唯一；元素的零化子与全模零化子分别记录局部的零作用和对整个模无效的标量。整环上的挠元形成子模，模掉它们得到无挠商，但挠模未必具有一个共同的非零零化标量。直和与直积则把有限性体现为支集条件：任意一族坐标映射可以合成映入直积的映射，任意一族来自各因子的映射可以合成映出直和的映射。下一章将以这些具体构造为基础，系统讨论自由模、生成与关系以及正合列。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:02-residue-scalars}
+对正整数 \(n\)，判断交换群 \(A=\mathbb Z/12\mathbb Z\) 能否具有幺性 \(\mathbb Z/n\mathbb Z\) 模结构；存在时说明其唯一性。它能否具有某个域上的向量空间结构？再判断 \((\mathbb Z/p\mathbb Z)^d\) 对素数 \(p\) 和正整数 \(d\) 的相应问题。
+\end{exercise}
+\begin{solution}
+若有 \(\mathbb Z/n\mathbb Z\) 作用，整数作用由幺性和可加性唯一确定，而 \(\bar n=0\) 迫使 \(nA=0\)。对 \(\bar1\in A\)，这等价于 \(12\mid n\)。反过来，若 \(12\mid n\)，整数作用中 \(n\mathbb Z\) 零化全部 \(A\)，由\cref{b2:prop:annihilator-ideals}可且只能下降为所需商环作用。
+
+若 \(A\) 是域 \(k\) 上的非零向量空间，域的特征若为零，每个非零整数标量都可逆，与 \(12A=0\) 冲突；特征若为素数 \(p\)，则 \(pA=0\)，迫使 \(12\mid p\)，也不可能。故没有这样的域结构。
+
+对 \(B=(\mathbb Z/p\mathbb Z)^d\)，其整数零化子是 \(p\mathbb Z\)，所以恰在 \(p\mid n\) 时有唯一的 \(\mathbb Z/n\mathbb Z\) 模结构。特别地，\(B\) 有通常的 \(\mathbb F_p\) 向量空间结构，维数为 \(d\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-rational-action}
+设 \(A\) 是交换群。证明：\(A\) 可以成为 \(\mathbb Q\) 模，当且仅当对每个正整数 \(n\) 和每个 \(a\in A\)，方程 \(nx=a\) 都有唯一解。存在时该 \(\mathbb Q\) 模结构唯一。
+\end{exercise}
+\begin{solution}
+若已有 \(\mathbb Q\) 作用，唯一解为 \(x=(1/n)a\)。反过来，记乘 \(n\) 的加法群自同态为 \(\mu_n\)；题设使它成为自同构，其逆也可加。对整数 \(c\) 与正整数 \(n\)，定义
+\[
+(c/n)a=c\mu_n^{-1}(a).
+\]
+若 \(c/n=d/m\)，把两种候选结果同时乘 \(mn\)，分别得到 \(mc a\) 与 \(nd a\)，由 \(mc=nd\) 相等；由于 \(\mu_{mn}\) 单射，原结果相等。因此定义不依赖分数表示。
+
+可加性来自 \(\mu_n^{-1}\) 可加。对两个有理数先取共同正分母，整数作用的分配律给出标量加法的分配律；对乘法，把等式两边同时乘两个正分母的乘积，再用该整数作用的单射性，就归结为整数倍的相容性。\(1\) 作用为恒等映射。最后，任何幺性 \(\mathbb Q\) 模结构都必须把 \(1/n\) 实现为 \(\mu_n^{-1}\)，再由整数倍决定 \(c/n\) 的作用，所以唯一。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-intertwiner}
+设 \(T:V\to V\)、\(S:W\to W\) 为 \(k\) 线性算子。证明映射 \(u:V_T\to W_S\) 为 \(k[t]\) 模同态，当且仅当它 \(k\) 线性且 \(uT=Su\)。当 \(V=W=k^2\)、\(T(a,b)=(b,0)\) 时，求 \(\operatorname{End}_{k[t]}(V_T)\) 的全部矩阵，并说明 \(V_T\) 与同一向量空间配上零算子所得的模不同构。
+\end{exercise}
+\begin{solution}
+模同态保持常数标量，故 \(k\) 线性；保持 \(t\) 的作用正是 \(uT=Su\)。反过来，该等式归纳给出 \(uT^j=S^ju\)，再对多项式有限求和便得 \(uf(T)=f(S)u\)，所以是模同态。
+
+在标准基下，\(T\) 的矩阵为 \(J=\begin{pmatrix}0&1\\0&0\end{pmatrix}\)。设 \(U=\begin{pmatrix}a&b\\c&d\end{pmatrix}\)，计算 \(UJ=JU\) 得 \(c=0\)、\(d=a\)。所以全部自同态恰为
+\[
+\begin{pmatrix}a&b\\0&a\end{pmatrix},\qquad a,b\in k.
+\]
+若 \(V_T\) 同构于零算子模，某个可逆 \(u\) 应满足 \(uT=0u=0\)，从而 \(T=0\)，与 \(T(0,1)=(1,0)\) 矛盾。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-hom-cyclic}
+设 \(m,n\) 为正整数，\(d=\gcd(m,n)\)。求交换群
+\(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/m\mathbb Z,\mathbb Z/n\mathbb Z)\)，给出它的一个生成元及每个同态的公式。
+\end{exercise}
+\begin{solution}
+同态由 \(\bar1\) 的像 \(\bar y\) 唯一决定，且必须有 \(m\bar y=0\)。反过来，这个条件保证公式 \(f(\bar a)=a\bar y\) 不依赖 \(a\) 的代表元，故给出同态。令 \(m=dm'\)、\(n=dn'\)，则 \(n\mid my\) 等价于 \(n'\mid m'y\)。由于 \(\gcd(m',n')=1\)，Bézout 等式说明这又等价于 \(n'\mid y\)。因此允许的像恰为
+\[
+\bar y=j\overline{n/d},\qquad j=0,1,\ldots,d-1.
+\]
+它们组成由 \(\overline{n/d}\) 生成的阶为 \(d\) 的循环子群。对应同态群同构于 \(\mathbb Z/d\mathbb Z\)，一个生成元是 \(\bar a\mapsto\overline{a n/d}\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-matrix-standard-module}
+令 \(R=M_n(k)\) 作用在 \(M=k^n\) 的列向量上，\(n\ge1\)。证明 \(M\) 只有子模 \(0,M\)，并求 \(\operatorname{End}_R(M)\)。这里比较所得自同态环与 \(\operatorname{End}_k(k^n)\)，分别说明 \(n=1\) 与 \(n>1\) 的情形。
+\end{exercise}
+\begin{solution}
+若子模 \(L\) 含有非零向量 \(v\)，选 \(v_j\ne0\)。对任意 \(w\in k^n\)，取第 \(j\) 列为 \(v_j^{-1}w\)、其余列为零的矩阵 \(A\)，便有 \(Av=w\)。所以 \(L=M\)。
+
+任意 \(R\) 模自同态 \(u\) 保持标量矩阵 \(aI_n\) 的作用，故 \(k\) 线性。又有 \(u(e_j)=u(E_{jj}e_j)=E_{jj}u(e_j)\)，所以 \(u(e_j)=a_je_j\)。从 \(E_{ij}e_j=e_i\) 得
+\[
+a_ie_i=u(e_i)=u(E_{ij}e_j)=E_{ij}u(e_j)=a_je_i,
+\]
+故全部 \(a_j\) 相等。反过来，每个标量倍恒等映射都与所有矩阵作用交换。因此 \(\operatorname{End}_R(M)\cong k\)。若 \(n>1\)，它只是 \(\operatorname{End}_k(k^n)=M_n(k)\) 的真子环；\(R\) 线性要求保持全部矩阵作用，比 \(k\) 线性更强。\(n=1\) 时两者相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-congruence-kernel}
+对 \(\mathbb Z\) 模同态
+\[
+f:\mathbb Z^2\longrightarrow\mathbb Z/6\mathbb Z,\qquad
+f(a,b)=\overline{2a+3b},
+\]
+求核、像、余核，并给出 \(\mathbb Z^2/\ker f\) 的一个生成元及其阶。
+\end{exercise}
+\begin{solution}
+同余 \(2a+3b\equiv0\pmod6\) 分别模三与模二考察，得到 \(3\mid a\)、\(2\mid b\)，反过来这两个条件也足够。故 \(\ker f=3\mathbb Z\times2\mathbb Z\)。由于 \(f(-1,1)=\bar1\)，像为全部 \(\mathbb Z/6\mathbb Z\)，余核为零。由\cref{b2:thm:module-first-isomorphism}，\(f\) 诱导同构 \(\mathbb Z^2/\ker f\cong\mathbb Z/6\mathbb Z\)，其中 \((-1,1)+\ker f\) 对应 \(\bar1\)，故它生成商模且阶为六。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-dual-numbers-submodules}
+把 \(M=k[t]/(t^2)\) 看成 \(k[t]\) 模，令 \(x=t+(t^2)\)。列出它的全部子模，求每个非零元素的零化子，并说明哪些元素生成 \(M\)。
+\end{exercise}
+\begin{solution}
+多项式除以 \(t^2\) 的余式使每个元素唯一写成 \(a+bx\)。若 \(a\ne0\)，则
+\[
+(a+bx)(a^{-1}-ba^{-2}x)=1,
+\]
+所以它在商环中为单位，并作为 \(k[t]\) 模生成整个 \(M\)。包含这种元素的子模只能是 \(M\)。否则子模包含在 \(kx\) 中；若含有某个 \(bx\ne0\)，常数标量 \(b^{-1}\) 使它包含 \(x\)，从而等于 \(kx\)。因此全部子模为 \(0,kx,M\)。
+
+若 \(a\ne0\)，由上述逆元可知 \(f(t)(a+bx)=0\) 等价于 \(f(t)\in(t^2)\)，其零化子为 \((t^2)\)。若 \(a=0\)、\(b\ne0\)，则 \(f(t)bx=0\) 等价于 \(f\) 的常数项为零，零化子为 \((t)\)。生成元恰为常数项非零的元素。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-left-ideal-annihilator}
+设 \(I\) 为环 \(R\) 的左理想。证明
+\[
+\operatorname{Ann}_R(R/I)=\{\,r\in R\mid rR\subseteq I\,\},
+\]
+且它是包含在 \(I\) 中的最大双边理想。取 \(R=M_2(k)\)，\(I\) 为第一列为零的矩阵组成的左理想，求这个零化子，并给出 \(R/I\cong k^2\) 的具体左模同构。
+\end{exercise}
+\begin{solution}
+标量 \(r\) 零化所有陪集 \(a+I\)，等价于对全部 \(a\in R\) 有 \(ra\in I\)，即 \(rR\subseteq I\)。取 \(a=1_R\) 还得到 \(r\in I\)。由\cref{b2:prop:annihilator-ideals}，全模零化子是双边理想。若 \(J\subseteq I\) 为双边理想，则 \(r\in J\) 时 \(rR\subseteq J\subseteq I\)，故 \(J\) 包含在所写零化子中，证明其最大性。
+
+矩阵映射 \(A\mapsto Ae_1\) 是满左模同态，核恰为 \(I\)，所以由\cref{b2:thm:module-first-isomorphism}给出 \(A+I\mapsto Ae_1\) 的同构。一个矩阵零化 \(k^2\) 的所有向量就只能为零，故 \(\operatorname{Ann}_R(R/I)=0\)，尽管 \(I\ne0\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-nonfinite-submodule}
+令 \(R=k[X_1,X_2,\ldots]\) 为可数无限个变量的多项式环，其中每个多项式只用有限多个变量。证明正则模 \(R\) 有限生成，但其子模 \(I=(X_1,X_2,\ldots)\) 不有限生成。
+\end{exercise}
+\begin{solution}
+正则模由 \(1\) 生成。假设 \(I\) 可由 \(f_1,\ldots,f_t\) 生成，每个 \(f_j\) 都有零常数项，而其中出现的变量总共只有有限多个，记其指标集为 \(F\)。选 \(q\notin F\)。把 \(X_q\) 保留，其余变量均代为零，得到环同态 \(\varepsilon:R\to k[X_q]\)。每个 \(f_j\) 的像为零，所以由它们生成的理想全部映为零；但 \(X_q\in I\) 且 \(\varepsilon(X_q)=X_q\ne0\)，矛盾。这说明有限生成模的子模未必有限生成，不能直接搬用有限维向量空间的结论。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-torsion-quotient-lattice}
+设 \(R\) 为整环，\(L\le M\)。证明 \(M/L\) 无挠当且仅当对所有 \(0\ne r\in R\)、\(m\in M\)，由 \(rm\in L\) 可以推出 \(m\in L\)。对 \(M=\mathbb Z^2\)、\(L=\mathbb Z(2,4)\)，求 \(M/L\) 的挠子模及其无挠商。
+\end{exercise}
+\begin{solution}
+等式 \(r(m+L)=0\) 等价于 \(rm\in L\)，而 \(m+L=0\) 等价于 \(m\in L\)，所以所述条件就是无挠的定义。
+
+对具体的 \(L\)，若 \(n(a,b)=t(2,4)\)，其中 \(n\ne0\)，则 \(b=2a\)。反过来，若 \((a,b)=a(1,2)\)，则 \(2(a,b)\in L\)。故挠子模为
+\[
+\mathbb Z(1,2)/\mathbb Z(2,4)\cong\mathbb Z/2\mathbb Z.
+\]
+模掉这项后，由\cref{b2:thm:module-correspondence}得到 \(\mathbb Z^2/\mathbb Z(1,2)\)。同态 \((a,b)\mapsto b-2a\) 满射到 \(\mathbb Z\)，核为 \(\mathbb Z(1,2)\)，所以该无挠商同构于 \(\mathbb Z\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-torsion-product}
+取一个素数 \(p\)，令 \(M_n=\mathbb Z/p^n\mathbb Z\)、\(n\ge1\)。证明 \(\bigoplus_{n\ge1}M_n\) 是挠 \(\mathbb Z\) 模，但 \(\prod_{n\ge1}M_n\) 不是挠模。再证明任意一族无挠整环模的直积仍无挠。
+\end{exercise}
+\begin{solution}
+直和元素只有有限个非零坐标。若这些坐标的下标均不超过 \(N\)，则 \(p^N\) 零化该元素，所以直和是挠模。直积中的 \(x=(\bar1)_{n\ge1}\) 若被非零整数 \(a\) 零化，就要求 \(p^n\mid a\) 对全部 \(n\) 成立，这与 \(a\ne0\) 矛盾。
+
+若各 \(N_i\) 都在整环 \(R\) 上无挠，且 \(0\ne r\in R\)、\(r(n_i)=0\)，则每个 \(rn_i=0\) 都迫使 \(n_i=0\)，故整个元组为零。因此直积无挠，其子模直和当然也无挠。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-annihilator-sum-product}
+设 \((M_i)_{i\in I}\) 为一族左 \(R\) 模，证明
+\[
+\operatorname{Ann}_R\!\left(\bigoplus_iM_i\right)
+=\operatorname{Ann}_R\!\left(\prod_iM_i\right)
+=\bigcap_i\operatorname{Ann}_R(M_i).
+\]
+据此判断 \(\bigoplus_{n\ge1}\mathbb Z/p^n\mathbb Z\) 是否忠实，并说明它与上一题的挠性结论是否冲突。
+\end{exercise}
+\begin{solution}
+若 \(r\) 零化每个 \(M_i\)，则逐坐标作用表明它零化直积，也零化直和。反过来，直和与直积都含有每个 \(M_i\) 的单坐标嵌入；\(r\) 零化整个模，就必定零化每个坐标模。空族时两边同为 \(R\)，等式仍成立。
+
+具体例子的零化子为 \(\bigcap_{n\ge1}p^n\mathbb Z=0\)，所以直和忠实。它同时是挠模，这没有冲突：忠实性排除的是一个非零标量零化所有元素；挠性要求的是每个元素分别有某个非零零化标量。两处量词的次序不同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-finite-hom-direct-sum}
+设 \(M\) 是有限生成左 \(R\) 模。证明任意同态 \(f:M\to\bigoplus_{i\in I}N_i\) 的像都包含在某个有限子直和中，进而得到交换群同构
+\[
+\bigoplus_{i\in I}\operatorname{Hom}_R(M,N_i)
+\cong\operatorname{Hom}_R\!\left(M,\bigoplus_{i\in I}N_i\right).
+\]
+举例说明有限生成条件不可省略。
+\end{exercise}
+\begin{solution}
+设 \(m_1,\ldots,m_t\) 生成 \(M\)。把有限多个 \(f(m_j)\) 的支集取并，得到有限集 \(F\)。任意 \(m=\sum_jr_jm_j\) 的像为 \(\sum_jr_jf(m_j)\)，其支集仍包含在 \(F\)，证明第一项断言。
+
+一个有限支集同态族 \((f_i)\) 定义 \(m\mapsto(f_i(m))\)，给出题中的映射；坐标投影证明它单射。对任意 \(f\)，第一项断言说明只有有限多个坐标同态 \(p_if\) 非零，它们映回 \(f\)，故满射。两方向都逐点保持加法。
+
+取非零环 \(R\)，令 \(M=R^{(\mathbb N)}\)、各 \(N_i=R\)。恒等映射 \(M\to\bigoplus_iR\) 的像不能包含在任何有限子直和中，因为每个标准坐标向量都在像内。它的全部坐标同态都非零，不能来自左侧的有限支集同态族。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-sum-quotients}
+设 \(L_i\le M_i\)。构造并证明同构
+\[
+\left(\bigoplus_iM_i\right)\Big/\left(\bigoplus_iL_i\right)
+\cong\bigoplus_i(M_i/L_i).
+\]
+明确说明满射性如何使用有限支集。
+\end{exercise}
+\begin{solution}
+逐坐标取商定义同态 \(q:\bigoplus_iM_i\to\bigoplus_i(M_i/L_i)\)。商坐标非零只可能发生在原坐标非零处，所以像确实在直和中。给定目标元组，只需对其有限个非零坐标选择代表元，其余坐标取零，便得到有限支集的原像。因此 \(q\) 满射。
+
+元组在核中当且仅当每个坐标都属于 \(L_i\)，加上原有的有限支集条件，恰好得到 \(\ker q=\bigoplus_iL_i\)。由\cref{b2:thm:module-first-isomorphism}得到题中同构，它把 \((m_i)+\bigoplus_iL_i\) 送到 \((m_i+L_i)\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-idempotent-decomposition}
+设 \(e\in\operatorname{End}_R(M)\) 满足 \(e^2=e\)。证明 \(M=\operatorname{im}e\oplus\ker e\)。反过来，每个内直和分解 \(M=U\oplus V\) 是否给出这样的自同态？若 \(a\in R\) 满足 \(a^2=a\)，把这个结果用于左正则模，写出所得分解。
+\end{exercise}
+\begin{solution}
+对任意 \(m\)，分解 \(m=e(m)+(m-e(m))\) 的首项在像中，而 \(e(m-e(m))=e(m)-e^2(m)=0\)，故第二项在核中。若 \(x=e(y)\) 又在核中，则 \(x=e(y)=e^2(y)=e(x)=0\)，所以交为零。由\cref{b2:prop:internal-direct-sum}得到所述分解。
+
+反过来，设每个 \(m\) 唯一写成 \(u+v\)，定义 \(e(u+v)=u\)。分解的唯一性与 \(U,V\) 的子模条件保证 \(e\) 可加且 \(R\) 线性，并有 \(e^2=e\)、\(\operatorname{im}e=U\)、\(\ker e=V\)。
+
+对左正则模采用右乘映射 \(e(r)=ra\)。它是左模自同态，且由 \(a^2=a\) 得 \(e^2=e\)。像为 \(Ra\)；若 \(ra=0\)，则 \(r=r(1-a)\)，反过来 \(r(1-a)a=0\)，所以核为 \(R(1-a)\)。因此 \({}_RR=Ra\oplus R(1-a)\)，不要求 \(a\) 位于中心。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:02-product-ring-module}
+设 \(R,S\) 为含幺环，\(M\) 为左 \(R\times S\) 模，令 \(e=(1_R,0)\)、\(f=(0,1_S)\)。证明 \(M=eM\oplus fM\)，其中 \(eM\) 具有自然的左 \(R\) 模结构，\(fM\) 具有自然的左 \(S\) 模结构。反过来，给一个左 \(R\) 模 \(U\) 和左 \(S\) 模 \(V\)，构造相应的 \(R\times S\) 模。
+\end{exercise}
+\begin{solution}
+\(e,f\) 是中心元素，所以它们的作用是 \(R\times S\) 模自同态，像因而为子模。由 \(e+f=1\)、\(ef=fe=0\)，每个 \(m\) 分解为 \(em+fm\)；若 \(x\in eM\cap fM\)，则一方面 \(ex=x\)，另一方面 \(ex=0\)，故 \(x=0\)。于是得到内直和。
+
+在 \(eM\) 上定义 \(r x=(r,0)x\)，\(1_R\) 的作用为 \(e\)，在 \(eM\) 上恰是恒等映射，故这是幺性左 \(R\) 作用。\(fM\) 上的 \(S\) 作用同样由 \(s y=(0,s)y\) 定义。反过来，在 \(U\oplus V\) 上规定
+\[
+(r,s)(u,v)=(ru,sv),
+\]
+逐坐标的模公理使它成为幺性左 \(R\times S\) 模。此时 \(e,f\) 正是两个坐标投影，其像恢复 \(U\) 与 \(V\)。
+\end{solution}

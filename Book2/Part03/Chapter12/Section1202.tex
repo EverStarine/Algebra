@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 12.2 有限长度
-% 纲要位置：计划纲要.md，第 1160 行。
 
 \section{有限长度}
 \label{b2:sec:1202}
 
-% TODO: 按以下纲要要点撰写本节。
+升链条件阻止不断增加新子模，降链条件阻止不断缩小旧子模；同时具有这两种条件时，模可以在有限步内逐层剥开，直到各层都没有非零真子模。本节首先证明这些层的同构类型和重数不依赖于剥开的方式，再据此定义长度。长度计算的是简单商层，并不声称原模已经是这些层的直和。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 合成列与 Jordan–Hölder 定理
 % * 长度的可加性
@@ -17,14 +16,111 @@
 \subsection{合成列与 Jordan–Hölder 定理}
 \label{b2:subsec:1202:01}
 
-待撰写。
+\begin{definition}\label{b2:def:composition-series}
+非零左 \(R\) 模 \(S\) 若只有 \(0,S\) 两个子模，称为\term[jiandan-mo]{简单模}[simple module]。模 \(M\) 的一条\term[hecheng-lie]{合成列}[composition series]是有限子模链
+\[
+0=M_0\subsetneq M_1\subsetneq\cdots\subsetneq M_n=M,
+\]
+其中每个商 \(M_i/M_{i-1}\) 都简单。这些商称为该列的\term[hecheng-yinzi]{合成因子}[composition factor]。存在合成列的模称为\term[youxian-changdu-mo]{有限长度模}[module of finite length]；零模采用没有非零商层的空合成列。
+\end{definition}
+
+例如 \(\mathbb Z/p\mathbb Z\) 为简单 \(\mathbb Z\) 模；而 \(\mathbb Z/p^2\mathbb Z\) 不简单，因为其中有非零真子模 \(p\mathbb Z/p^2\mathbb Z\)。不过
+\[
+0\subsetneq p\mathbb Z/p^2\mathbb Z\subsetneq\mathbb Z/p^2\mathbb Z
+\]
+是一条合成列，两层都同构于 \(\mathbb Z/p\mathbb Z\)。\((\mathbb Z/p\mathbb Z)^2\) 有同样的两种合成因子，却不与前者同构：前者有阶为 \(p^2\) 的元素，后者每个元素都被 \(p\) 零化。
+
+\begin{lemma}\label{b2:lem:composition-series-subquotient}
+有限长度模的每个子模和商模都有合成列。若 \(M\) 有一条包含 \(n\) 个简单商层的合成列，则所构造的子模与商模合成列各至多有 \(n\) 层。
+\end{lemma}
+\begin{proof}
+给定 \(N\subseteq M\)，先把合成列与 \(N\) 相交。包含映射诱导
+\[
+(N\cap M_i)/(N\cap M_{i-1})\longrightarrow M_i/M_{i-1}.
+\]
+它单射，因为映到零正好要求代表元落在 \(M_{i-1}\)。像为简单模的子模，所以或为零、或为全体。删去重复项，得到 \(N\) 的合成列。
+
+再把合成列映到 \(M/N\)，得到 \((M_i+N)/N\)。相邻商是 \(M_i/M_{i-1}\) 的商：映射把 \(m+M_{i-1}\) 送到 \(m+(M_{i-1}+N)\)，在相应商层上满射。因此它或为零、或与原简单模同构。再删去重复项，即得 \(M/N\) 的合成列。两种过程都不会增加原来的 \(n\) 个商层。
+\end{proof}
+
+\begin{theorem}[Jordan–Hölder]\label{b2:thm:module-jordan-holder}
+有限长度模 \(M\) 的任意两条合成列具有相同的层数，并且其合成因子在计入重数后，除排列次序外逐个同构。
+\end{theorem}
+\begin{proof}
+对第一条合成列的层数 \(n\) 作强归纳。\(n=0\) 时 \(M=0\)，只有空列。设 \(n>0\)，记两条合成列中紧邻 \(M\) 的真子模为 \(A,B\)，所以 \(M/A,M/B\) 简单。
+
+若 \(A=B\)，对 \(A\) 的两条合成列应用归纳假设，再在两侧加上相同的商 \(M/A\)，即得结论。现设 \(A\ne B\)。它们都是极大真子模，因此 \(A+B=M\)；否则 \(A+B\) 仍真且包含 \(A\)，会等于 \(A\)，从而 \(B\subseteq A\)，再由 \(B\) 极大得到 \(B=A\)，矛盾。
+
+令 \(C=A\cap B\)。映射 \(A\rightarrow M/B\)、\(a\mapsto a+B\) 的核为 \(C\)，像由 \(A+B=M\) 为全商，因此\cref{b2:thm:module-first-isomorphism}给出 \(A/C\cong M/B\)。同样有 \(B/C\cong M/A\)。这两个商都简单。
+
+由\cref{b2:lem:composition-series-subquotient}，\(C\subseteq A\) 有某条有限合成列，设有 \(r\) 层。将其后接 \(A/C\)，得到 \(A\) 的一条合成列。第一条原列在 \(A\) 中已有 \(n-1\) 层，故对 \(A\) 应用归纳假设，得到 \(r+1=n-1\)，且两种因子列表相同。于是 \(r=n-2\)。
+
+把同一条 \(C\) 的合成列后接 \(B/C\)，得到 \(B\) 的一条 \(n-1\) 层合成列。因此也可对 \(B\) 应用归纳假设，将它与第二条原列在 \(B\) 中的部分比较。第一条 \(M\) 合成列的因子，因而由 \(C\) 的这些因子再加 \(A/C\cong M/B\) 与 \(M/A\) 组成；第二条则由同一组 \(C\) 因子再加 \(B/C\cong M/A\) 与 \(M/B\) 组成。它们只是最后两种因子的次序互换，故层数和全部重数相同。
+\end{proof}
+
+这一\term[mo-Jordan-Holder-dingli]{模的 Jordan–Hölder 定理}[Jordan–Hölder theorem for modules]使以下记号有意义：
+\[
+\ell_R(M)=\text{\(M\) 的任意合成列的层数}.
+\]
+称它为模的\term[mo-changdu]{长度}[length of a module]；环已明确时简写 \(\ell(M)\)。它为零当且仅当 \(M=0\)。对于简单模 \(S\)，还可把它在合成列中出现的次数记为 \([M:S]\)，称为相应合成重数；只比较同构类型，不把具体嵌入方式计入这个数。
+\symidx{\(\ell_R(M)\)：左 \(R\) 模的长度}
+\symidx{\([M:S]\)：简单模 \(S\) 在 \(M\) 中的合成重数}
 
 \subsection{长度的可加性}
 \label{b2:subsec:1202:02}
 
-待撰写。
+\begin{theorem}\label{b2:thm:finite-length-chain-conditions}
+模 \(M\) 有限长度，当且仅当它同时为 Noether 模和 Artin 模。
+\end{theorem}
+\begin{proof}
+简单模没有可继续严格变化的子模链，故同时满足两种链条件。若 \(M\) 有合成列，逐层应用\cref{b2:thm:chain-conditions-exact}，便知全部层的扩张 \(M\) 同时满足两种链条件。
+
+反过来，设 \(M\) 同时满足两种条件。若 \(M\ne0\)，由\cref{b2:prop:chain-maximal-minimal}，全部真子模中有极大元 \(M^{(1)}\)，其商简单；若 \(M^{(1)}\ne0\)，再在它内部选取极大真子模。子模继承升链条件，因此每一步都可进行。若永不到零，就得到无限严格降链，违反 Artin 条件。所以经过有限步到达零，反向排列即为合成列。
+\end{proof}
+
+\begin{proposition}[长度的可加性]\label{b2:prop:length-additive}
+在短正合列 \(0\rightarrow A\rightarrow B\rightarrow C\rightarrow0\) 中，\(B\) 有限长度当且仅当 \(A,C\) 都有限长度。此时
+\[
+\ell(B)=\ell(A)+\ell(C),\qquad
+[B:S]=[A:S]+[C:S]
+\]
+对每个简单模 \(S\) 都成立。
+\end{proposition}
+\begin{proof}
+若 \(B\) 有限长度，子模 \(A\) 与商模 \(C\) 由\cref{b2:lem:composition-series-subquotient}也有合成列。反过来，给定 \(A,C\) 的合成列，把 \(C\) 中的各项通过商映射拉回到 \(B\)，得到从 \(A\) 到 \(B\) 的链，其相邻商与 \(C\) 的各商同构；再在前面接上 \(A\) 的合成列，就得到 \(B\) 的合成列。新列恰好把两端的全部因子合并，Jordan–Hölder 定理保证所计算的长度与重数不依赖这些选择，于是两个公式成立。
+\end{proof}
+
+因此有限长度模的真子模和真商模长度都严格变小。对严格链 \(0=L_0\subsetneq L_1\subsetneq\cdots\subsetneq L_r=M\)，各 \(L_i/L_{i-1}\) 非零，长度至少为一，反复使用可加性得到 \(r\le\ell(M)\)。合成列达到这个上界，所以长度也是严格子模链可达到的最大层数；这是单独升链条件未必提供的统一界。
+
+\begin{proposition}\label{b2:prop:finite-length-endomorphism}
+设 \(M\) 有限长度。自同态 \(f:M\rightarrow M\) 单射、满射、可逆这三个条件等价。更一般地，
+\[
+\ell(M)=\ell(\ker f)+\ell(\operatorname{im}f)
+\]
+对任何从 \(M\) 出发的同态 \(f\) 成立。
+\end{proposition}
+\begin{proof}
+短正合列 \(0\rightarrow\ker f\rightarrow M\rightarrow\operatorname{im}f\rightarrow0\) 与长度可加性给出公式。若 \(f\) 是自同态且满射，像长度等于 \(\ell(M)\)，故核长度为零，核为零；若它单射，像长度等于 \(\ell(M)\)，再对像的包含取商，商长度为零，故像为全模。模的双射同态有线性逆，因而可逆。可逆显然同时给出单射和满射。
+\end{proof}
+
+例如 \(\mathbb Z/p^n\mathbb Z\) 的链 \(0\subsetneq p^{n-1}M\subsetneq\cdots\subsetneq M\) 有 \(n\) 个简单商层，所以长度为 \(n\)。乘 \(p\) 的核长度为一、像长度为 \(n-1\)，可加性给出 \(n=1+(n-1)\)。在 \(n>1\) 时，这个算子既不单射，也不满射。
 
 \subsection{有限维代数的有限生成模}
 \label{b2:subsec:1202:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:finite-dimensional-algebra-modules}
+设 \(A\) 为域 \(k\) 上的有限维结合代数。对左 \(A\) 模 \(M\)，以下三个条件等价：\(M\) 有限生成；\(M\) 作为 \(k\) 向量空间有限维；\(M\) 作为 \(A\) 模有限长度。若 \(S_1,\ldots,S_r\) 为一条合成列的因子，则
+\[
+\dim_kM=\sum_{i=1}^r\dim_kS_i,\qquad \ell_A(M)\le\dim_kM.
+\]
+\end{proposition}
+\begin{proof}
+有限生成时存在满同态 \(A^n\rightarrow M\)，因 \(A\) 有限维，目标的 \(k\) 维数有限。有限维时，严格子模链也为严格子空间链，维数只能有限次增加或减少，所以 \(M\) 同时满足两种链条件，由\cref{b2:thm:finite-length-chain-conditions}得有限长度。有限长度又蕴含 Noether 条件，故由\cref{b2:prop:noetherian-submodules-fg}得 \(M\) 有限生成，完成等价。
+
+每个简单因子 \(S_i\) 由任一非零元素生成，故是 \(A\) 的商模，具有有限且正的 \(k\) 维数。合成列逐层使用向量空间短正合列的维数公式，给出所列和式；每项至少为一，所以得到长度的不等式。
+\end{proof}
+
+长度与维数一般不同。取 \(A=M_n(k)\)，其标准列模 \(k^n\) 简单：任取非零向量，利用某个非零坐标和矩阵单位可以得到每个标准基向量，故它生成全模。因此这个模的 \(A\) 长度为一，而 \(k\) 维数为 \(n\)。相反，对交换环 \(k[t]\) 上的模 \(k[t]/(p^m)\)，其中 \(p\) 首一不可约，逐次乘 \(p\) 给出 \(m\) 个同构于 \(k[t]/(p)\) 的简单层；其长度为 \(m\)，\(k\) 维数为 \(m\deg p\)。
+
+\ProseParagraphBreak
+代数有限维是上述等价的实质条件。\(k[t]\) 作为自身的模由一生成，却有不稳定降链 \((t)\supsetneq(t^2)\supsetneq\cdots\)，所以不有限长度；域 \(k(t)\) 作为自身的模长度为一，但作为 \(k\) 向量空间无限维。研究有限维表示时，基域维数可以保证有限长度；研究一般环上的模时，应直接核验所需的链条件。

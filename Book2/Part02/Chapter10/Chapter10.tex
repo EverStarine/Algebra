@@ -6,11 +6,217 @@
 \label{b2:ch:10}
 \BookChapterNumber{b2:ch:10}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+一个型不仅给向量赋值，还规定哪些方向相互正交。双线性型的换基产生合同，而线性算子的换基产生相似；本章先分清这两种分类问题，再建立交替型标准形、特征不为二的二次型对角化及实惯性定律。一般域上的二次型则通过双曲平面的分离、反射与 Witt 消去整理为双曲部分和各向异性部分。最后讨论保持各种型的经典群，并以 Clifford 代数的商构造说明二次型与结合代数的联系。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 辨认非退化配对、根空间与正交补，说明何时正交补给出直和分解。
+\item 对具体矩阵作合同化简，比较不同域及不同特征下的二次型。
+\item 掌握双曲平面的分离和反射，能够逐步说明 Witt 分解的存在性、唯一性与消去。
+\item 从保持型的条件写出正交群、辛群与酉群，区分双线性与 Hermitian 约定；选读 Clifford 代数的泛性质。
+\end{itemize}
+\end{learninggoals}
+
+本章主干需要\chapref{b2:ch:01}的有限维向量空间、对偶、矩阵换基及行列式的基本性质。\secref{b2:sec:1001}对任意域讨论双线性型；\secref{b2:sec:1002}明确区分特征二；\secref{b2:sec:1003}始终假设特征不为二，并在有限维非退化空间中证明 Witt 理论。\subsecref{b2:subsec:1004:03}为选读延伸，另外使用\cref{b2:thm:tensor-algebra-universal}的张量代数泛性质。
+
+\ProseParagraphBreak
+双线性型及其几何可参阅 Roman 的《Advanced Linear Algebra》\cite[Chapter 11]{Roman2008AdvancedLinearAlgebra}；实惯性与 Witt 消去分别见同书\cite[Theorems 11.25--11.26, 11.34]{Roman2008AdvancedLinearAlgebra}。比较文献时应先检查极化型是否除以二。本章在特征不为二时统一写 \(q(v)=b(v,v)\)，因而双曲平面的表达式为 \(2xy\)。
 
 \input{Part02/Chapter10/Section1001}
 \input{Part02/Chapter10/Section1002}
 \input{Part02/Chapter10/Section1003}
 \input{Part02/Chapter10/Section1004}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+配对使向量与泛函相联系；有限维非退化性把这种联系变成同构，继而给出正交补的维数公式。只有当子空间上的限制型非退化时，正交补才直接给出直和。型的矩阵按合同变化，算子的矩阵按相似变化，二者的分类不变量不同。
+
+\ProseParagraphBreak
+交替型由秩分类。特征不为二的二次型可以对角化，但进一步的分类取决于域：实数域保留正负惯性，复数域只保留秩。一般域上，非零各向同性向量使双曲平面得以分离；反射保证共同的非退化分量可以消去，从而确定唯一的各向异性部分。Witt 群进一步忽略双曲部分，保留二次型在稳定等距下的信息。
+
+\ProseParagraphBreak
+正交群、辛群与酉群分别保持指定的型。Hermitian 型的共轭作用不能从公式中省略，复数结构则把酉群与实正交群联系起来。选读的 Clifford 代数将二次取值转为乘法关系；它的泛性质来自张量代数及双边理想商，具体维数结论仍须具体证明。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:10-left-right-orthogonals}
+在 \(k^2\) 上取 \(b(x,y)=x_1y_1+x_1y_2+x_2y_2\)。证明型非退化，并对 \(W=ke_1\) 分别求 \(W^{\perp_r}\) 与 \({}^{\perp_l}W\)。说明为什么一般型不能只写一个没有侧别的正交补。
+\end{exercise}
+\begin{solution}
+矩阵为 \(\begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}\)，行列式为一，故非退化。\(b(e_1,y)=y_1+y_2\)，所以 \(W^{\perp_r}=k(1,-1)\)；而 \(b(x,e_1)=x_1\)，所以 \({}^{\perp_l}W=ke_2\)。两条直线不同，在特征二中也不同。非退化保证两边的维数正确，却不把不同变量中的正交条件变成同一个条件。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-degenerate-orthogonals}
+设 \(b\) 为有限维 \(V\) 上的对称型，允许退化，令 \(R=\operatorname{rad}b\)。证明对任意 \(W\le V\)，
+\[
+\dim W^\perp=\dim V-\dim W+\dim(W\cap R),
+\qquad (W^\perp)^\perp=W+R.
+\]
+\end{exercise}
+\begin{solution}
+型在商空间 \(\overline V=V/R\) 上良定义：改变任一代表元所添的项都来自根空间，配对不变。所得型非退化，因为与全部商类正交的代表元正属于 \(R\)。记 \(\overline W=(W+R)/R\)，则 \(W^\perp/R=\overline W^\perp\)。由\cref{b2:thm:orthogonal-complement}，后者的维数为 \(\dim\overline V-\dim\overline W\)。代入 \(\dim\overline W=\dim W-\dim(W\cap R)\)，得到第一式。再次取正交补，商空间中得到 \(\overline W\)，取原像便是 \(W+R\)，证明第二式。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-symplectic-basis}
+在任意域 \(k\) 上，四维交替型的矩阵为
+\[
+B=\begin{pmatrix}0&1&1&0\\-1&0&0&0\\-1&0&0&1\\0&0&-1&0\end{pmatrix}.
+\]
+找出两个互相正交的辛平面，并给出辛基。说明该计算在特征二中是否仍有效。
+\end{exercise}
+\begin{solution}
+第一对取 \(e_1,e_2\)。向量 \(e_3-e_2\) 与这两者的配对均为零，\(e_4\) 也与这两者正交，而 \(b(e_3-e_2,e_4)=1\)。所以 \(e_1,e_2,e_3-e_2,e_4\) 是按两维块排列的辛基；这四个向量线性无关，由原标准基到它们的变换可逆。只用了加减和单位系数，没有除以二，故在特征二中同样成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-one-dimensional-square-class}
+设 \(a,b\in k^\times\)，\(\operatorname{char}k\ne2\)。证明 \(\langle a\rangle\cong\langle b\rangle\) 当且仅当 \(a/b\) 是 \(k\) 中的平方。比较 \(\langle1\rangle,\langle2\rangle\) 在 \(\mathbb Q\) 和 \(\mathbb R\) 上的等距性。
+\end{exercise}
+\begin{solution}
+一维线性同构由基向量乘 \(c\ne0\) 给出，保持型的条件为 \(a=bc^2\)，所以得到判据。在实数域上 \(2\) 有平方根，二者等距。在有理数域上 \(2\) 不是平方：若 \(m^2=2n^2\) 且整数 \(m,n\) 互素，则 \(m\) 偶，代入又得 \(n\) 偶，矛盾。因此二者不等距。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-diagonalization-radical}
+在 \(\mathbb R^3\) 上，对
+\[
+q(x,y,z)=x^2+2xy+2y^2+2yz+z^2
+\]
+给出可逆坐标代换，使它对角化；求惯性、根空间，以及使限制型非退化的一个补空间。
+\end{exercise}
+\begin{solution}
+令 \(u=x+y,v=y+z,w=y\)，逆变换为 \(x=u-w,y=w,z=v-w\)。于是 \(q=u^2+v^2\)，惯性为 \((2,0,1)\)。根空间为 \(u=v=0\)，即 \(\mathbb R(-1,1,-1)\)。取 \(w=0\)，得到 \(y=0\) 的平面，其限制型为 \(x^2+z^2\)，非退化；它与上述根空间构成直和。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-inertia-parameter}
+对实参数 \(t\)，分类 \(q_t(x,y,z)=x^2+2xy+ty^2-z^2\) 的惯性，并求出它何时非退化、何时具有非零各向同性向量。
+\end{exercise}
+\begin{solution}
+写为 \((x+y)^2+(t-1)y^2-z^2\)。当 \(t>1,t=1,t<1\) 时，惯性依次为 \((2,1,0),(1,1,1),(1,2,0)\)。所以非退化恰在 \(t\ne1\) 时成立。无论 \(t\) 如何，\((1,0,1)\) 都是非零零点，故总有非零各向同性向量。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-char-two-same-polar}
+在 \(\mathbb F_2^2\) 上比较 \(q_0(x,y)=xy\) 与 \(q_1(x,y)=x^2+xy+y^2\)。证明它们的极化型相同且非退化，但两个二次型不等距。
+\end{exercise}
+\begin{solution}
+两平方项的极化为零，所以两者的极化均为 \(\beta\Bigl((x,y),(u,v)\Bigr)=xv+yu\)，矩阵为可逆的 \(\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\)。\(q_0\) 在两个非零向量 \((1,0),(0,1)\) 上为零，而 \(q_1\) 在全部三个非零向量上均为一。线性双射应当给出非零零点之间的双射，故两型不等距。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-binary-isotropy}
+设 \(\operatorname{char}k\ne2\)、\(d\in k^\times\)。证明 \(\langle1,-d\rangle\) 各向异性，当且仅当 \(d\) 不是平方；若 \(d\) 是平方，写出一组双曲基。
+\end{exercise}
+\begin{solution}
+非零零点满足 \(x^2=dy^2\)。若 \(y=0\)，则 \(x=0\)，故必须 \(y\ne0\)，得到 \(d=(x/y)^2\)。反过来，若 \(d=c^2\)、\(c\ne0\)，取
+\[
+e=(c,1),\qquad f=(1/(2c),-1/(2c^2)).
+\]
+直接得到 \(q(e)=q(f)=0\) 及 \(b(e,f)=1\)，故为双曲基。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-hyperbolic-split-explicit}
+设 \(\operatorname{char}k\ne2\)，在 \(k^3\) 上取 \(q(x,y,z)=2xy+z^2\)。以各向同性向量 \(e=(1,-1/2,1)\) 开始，实际完成一次双曲平面的分离，写出正交补的基和限制型。
+\end{exercise}
+\begin{solution}
+相应对称型为 \(b\Bigl((x,y,z),(u,v,w)\Bigr)=xv+yu+zw\)。取 \(f=(0,1,0)\)，则 \(q(f)=0\)、\(b(e,f)=1\)。向量 \((a,b,c)\) 与 \(f\) 正交要求 \(a=0\)，再与 \(e\) 正交要求 \(b+c=0\)。所以正交补由 \(g=(0,-1,1)\) 生成，且 \(q(g)=1\)。于是 \(e,f,g\) 给出 \(H\perp\langle1\rangle\) 的具体分解。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-two-reflections}
+在实三维型 \(q(x,y,z)=x^2+y^2-z^2\) 中，令 \(u=(1,0,0)\)、\(v=(1,1,1)\)。解释为何沿 \(u-v\) 的反射没有定义，并用两个有定义的反射把 \(u\) 送到 \(v\)。
+\end{exercise}
+\begin{solution}
+\(q(u)=q(v)=1\)，但 \(q(u-v)=q(0,-1,-1)=0\)，反射公式的分母为零。另一方面 \(u+v=(2,1,1)\) 的二次取值为四，且 \(b(u,u+v)=2\)，故 \(\tau_{u+v}(u)=u-(u+v)=-v\)。\(q(v)=1\) 保证 \(\tau_v\) 有定义，并有 \(\tau_v(-v)=v\)。所求映射为 \(\tau_v\tau_{u+v}\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-real-isotropic-dimension}
+设实二次型的惯性为 \((p_+,p_-,r)\)。证明其全各向同性子空间的最大维数为 \(\min(p_+,p_-)+r\)，并说明为什么根空间的贡献必须单列。
+\end{exercise}
+\begin{solution}
+先在非退化标准型中讨论。若 \(T\) 全各向同性，它到正坐标空间和负坐标空间的两个投影都单射：其中一个投影为零，则一个非零向量的型值只能严格为正或严格为负，与零值矛盾。因此 \(\dim T\le\min(p_+,p_-)\)。把一条正坐标轴与一条负坐标轴配对，取各对的和向量，就得到达到上界的全各向同性子空间。
+
+一般情形下，先除去根空间。\(T\) 的像全各向同性，故维数至多为 \(\min(p_+,p_-)\)，而核 \(T\cap\operatorname{rad}b\) 维数至多为 \(r\)。把前面构造的子空间与整个根空间直和即可达到总上界。根空间是零型，既不贡献正方向也不贡献负方向，所以它不是双曲分量，应另外加上其维数。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-witt-binary-relation}
+设 \(\operatorname{char}k\ne2\)，且 \(a,b,a+b\) 都非零。通过显式正交基证明
+\[
+\langle a,b\rangle\cong\Bigl\langle a+b,\frac{ab}{a+b}\Bigr\rangle.
+\]
+据此写出 \(W(k)\) 中的一条关系。
+\end{exercise}
+\begin{solution}
+在原正交基 \(e,f\) 中取 \(u=e+f\)、\(v=(be-af)/(a+b)\)。两者的配对为 \((ab-ab)/(a+b)=0\)，且 \(q(u)=a+b\)、\(q(v)=(ab^2+a^2b)/(a+b)^2=ab/(a+b)\)。换基矩阵的行列式为负一，所以是基。这给出等距，并在 Witt 群中得到
+\[
+\Bigl[\langle a\rangle\Bigr]+\Bigl[\langle b\rangle\Bigr]
+=\Bigl[\langle a+b\rangle\Bigr]+\biggl[\Bigl\langle\frac{ab}{a+b}\Bigr\rangle\biggr].
+\]
+最后两层定界符只用于区分一维型与它的 Witt 类。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-real-complex-witt-map}
+证明将实二次型的系数看成复数，诱导群同态 \(W(\mathbb R)\to W(\mathbb C)\)。在\cref{b2:prop:witt-real-complex}的识别下求出该同态及其核。
+\end{exercise}
+\begin{solution}
+实等距矩阵在复数域仍可逆并满足同一个合同等式，双曲平面扩域后仍是双曲平面，所以 Witt 等价及类的加法都被保持。实惯性为 \((p_+,p_-,0)\) 的型，复维数为 \(p_++p_-\)，其奇偶性等于 \(p_+-p_-\) 的奇偶性。因此该同态就是整数模二，核为 \(2\mathbb Z\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-orthogonal-one-dimension}
+设 \(\operatorname{char}k\ne2\)。求一维非退化型的正交群和特殊正交群。再设二维双曲平面的矩阵为 \(B_H\)，证明 \(\operatorname{diag}(t,t^{-1})\)、\(t\in k^\times\)，都在其特殊正交群中。
+\end{exercise}
+\begin{solution}
+一维线性自同构为乘 \(c\ne0\)，保持型要求 \(c^2=1\)，故正交群为 \(\{1,-1\}\)，特殊正交群为 \(\{1\}\)。双曲平面上，变换 \((x,y)\mapsto(tx,t^{-1}y)\) 保持 \(2xy\)，且行列式为一，故满足所述条件。这个一参数族表明不定型的保持群允许沿两条各向同性轴作相反的伸缩。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-first-order-isometries}
+设 \(R=k[\varepsilon]/(\varepsilon^2)\)，\(B\in M_n(k)\) 可逆，给定 \(X\in M_n(k)\)。证明 \(G=I_n+\varepsilon X\) 在 \(R\) 上保持 \(B\)，当且仅当 \(X^{\mathsf T}B+BX=0\)。特征不为二时，分别计算 \(B=I_n\) 与 \(B=J_m\) 的解空间维数。
+\end{exercise}
+\begin{solution}
+\(G\) 的逆为 \(I_n-\varepsilon X\)。展开 \(G^{\mathsf T}BG\) 并用 \(\varepsilon^2=0\)，得到 \(B+\varepsilon(X^{\mathsf T}B+BX)\)，所以条件恰为所述等式。\(B=I_n\) 时，\(X\) 反对称且对角元为零，独立参数为上三角部分的 \(n(n-1)/2\) 项。
+
+若 \(B=J_m\)，写 \(X=\begin{psmallmatrix}A&C\\D&E\end{psmallmatrix}\)。分块相乘给出 \(E=-A^{\mathsf T}\)、\(C=C^{\mathsf T}\)、\(D=D^{\mathsf T}\)。所以维数为 \(m^2+2\cdot m(m+1)/2=m(2m+1)\)。这里仅计算一个线性方程组，没有预设这些群的几何理论。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-indefinite-hermitian}
+在 \(\mathbb C^2\) 上取 Hermitian 矩阵 \(H=\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}\)。求其惯性并给出 \(P^*HP\) 的标准形。再证明
+\[
+A=\begin{pmatrix}5/3&4/3\\4/3&5/3\end{pmatrix}
+\]
+属于 \(\operatorname U(1,1)\)，却不属于 \(\operatorname U(2)\)。
+\end{exercise}
+\begin{solution}
+对角取值为 \(|z_1+z_2|^2-|z_2|^2\)。取 \(P=\begin{psmallmatrix}1&-1\\0&1\end{psmallmatrix}\)，即 \(z_1=u-v,z_2=v\)，得到 \(P^*HP=\operatorname{diag}(1,-1)\)，惯性为 \((1,1,0)\)。
+
+记 \(c=5/3,s=4/3\)，有 \(c^2-s^2=1\)。相乘得 \(A^{\mathsf T}\operatorname{diag}(1,-1)A=\operatorname{diag}(1,-1)\)，故 \(A\in\operatorname U(1,1)\)。但第一列的普通模平方为 \(c^2+s^2=41/9\ne1\)，所以 \(A^*A\ne I\)，不在标准酉群中。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:10-unitary-real-blocks}
+在 \(\mathbb R^{2n}\) 上令 \(J=\begin{psmallmatrix}0&-I_n\\I_n&0\end{psmallmatrix}\)。求所有与 \(J\) 交换的实矩阵的分块形式，并证明其中的正交矩阵恰对应复酉矩阵。
+\end{exercise}
+\begin{solution}
+将四个 \(n\) 阶块代入 \(TJ=JT\)，得到且仅得到
+\[
+T=\begin{pmatrix}A&-B\\B&A\end{pmatrix}.
+\]
+它表示复矩阵 \(A+iB\) 的实线性作用。\(T^{\mathsf T}T=I\) 等价于 \(A^{\mathsf T}A+B^{\mathsf T}B=I\) 与 \(A^{\mathsf T}B=B^{\mathsf T}A\)，而这两式恰是 \((A+iB)^*(A+iB)=I\) 的实部和虚部。因此得到所述对应。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:10-clifford-line}
+对实一维二次型 \(q(xe)=ax^2\)，证明 \(\operatorname{Cl}(V,q)\cong\mathbb R[t]/(t^2-a)\)。分别在 \(a>0,a<0,a=0\) 时辨认这个代数。
+\end{optionalexercise}
+\begin{solution}
+Clifford 代数由 \(e\) 的像生成，且它的平方等于 \(a\)，故从商代数 \(\mathbb R[t]/(t^2-a)\) 有一个将 \(\bar t\) 送到它的代数同态。反向把 \(xe\) 送到 \(x\bar t\)，由\cref{b2:thm:clifford-universal}得到同态。两复合固定生成元与单位，因而互为逆。
+
+\(a>0\) 时在 \(t=\pm\sqrt a\) 求值，得到 \(\mathbb R\times\mathbb R\)；两线性因子互素，任意两个值均可由一次多项式插值得到，核为 \((t^2-a)\)。\(a<0\) 时令 \(t\mapsto i\sqrt{-a}\)，得到 \(\mathbb C\)。\(a=0\) 时则为双数代数 \(\mathbb R[t]/(t^2)\)，其中 \(\bar t\ne0\) 而平方为零。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:10-clifford-char-two}
+在 \(\mathbb F_2^2\) 上取 \(q(x,y)=x^2+y^2\)。证明其 Clifford 代数同构于
+\[
+\mathbb F_2[u,v]/(u^2,v^2).
+\]
+直接给出该代数的一个向量空间基，不引用一般 Clifford 代数的维数结论。
+\end{optionalexercise}
+\begin{solution}
+令两个标准基的像为 \(e,f\)，则 \(e^2=f^2=1\)。极化型为零，由\eqref{b2:eq:clifford-polar-relation}，\(ef+fe=0\)，在特征二中即 \(ef=fe\)。置 \(u=e+1,v=f+1\)，得到 \(u^2=v^2=0\)，且它们交换，因此从题中商代数有一个满同态到 Clifford 代数。
+
+反过来，将 \((x,y)\) 送到 \(x(1+u)+y(1+v)\)。因交换性与特征二，这个元素的平方为 \(x^2+y^2\)，由泛性质得到反向同态。两复合固定各生成元，故为同构。多项式按次数分别对 \(u^2,v^2\) 取余，唯一得到 \(a+bu+cv+duv\)：理想 \((u^2,v^2)\) 中每个单项式至少有一个指数不小于二，不能消去这四个单项式。因此 \(1,u,v,uv\) 是基，维数为四。
+\end{solution}

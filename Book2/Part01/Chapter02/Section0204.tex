@@ -1,32 +1,129 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 2.4 直和与直积
-% 纲要位置：计划纲要.md，第 877 行。
 
 \section{直和与直积}
 \label{b2:sec:0204}
 
-% TODO: 按以下纲要要点撰写本节。
+把几个模放在一起，最直接的办法是组成有序元组，再逐坐标运算。有限多个因子时，这同时解决了两类问题：给出映入每个坐标的同态，便能得到映入整个元组模的同态；给出每个坐标模映到另一个模的同态，也能把像相加。当因子有无限多个时，第二种做法遇到无限求和的问题。直积与直和的区分就来自这两种映射要求的不同。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要要点（供目录核对）：
 % * 任意族的直和及直积
 % * 有限情形的一致与无限情形的差异
 % * 同态进入直积、离开直和的泛性质
-%
 % ---
-%
 
 \subsection{任意族的直和与直积}
 \label{b2:subsec:0204:01}
 
-待撰写。
+\begin{definition}\label{b2:def:module-product-sum}
+设 \(I\) 是集合，\((M_i)_{i\in I}\) 是一族左 \(R\) 模。它们的\term[mo-zhiji]{直积}[direct product of modules]为
+\[
+\prod_{i\in I}M_i=\{\,(m_i)_{i\in I}\mid m_i\in M_i\text{ 对每个 }i\in I\,\},
+\]
+加法与标量乘法均逐坐标定义。元素 \(m=(m_i)\) 的\term[zhiji]{支集}[support]为 \(\operatorname{supp}(m)=\{\,i\in I\mid m_i\ne0\,\}\)。有限支集元素组成的子模
+\[
+\bigoplus_{i\in I}M_i
+=\left\{\,m\in\prod_{i\in I}M_i\ \middle|\ \operatorname{supp}(m)\text{ 有限}\,\right\}
+\]
+称为这族模的\term[mo-zhihe]{直和}[direct sum of modules]。当所有因子均为 \(M\) 时，分别简记为 \(M^I\) 与 \(M^{(I)}\)。
+\end{definition}
+\symidx{\(\prod_{i\in I}M_i\)、\(M^I\)：模族的直积}
+\symidx{\(\bigoplus_{i\in I}M_i\)、\(M^{(I)}\)：模族的直和}
+
+直积中全部模公理可以逐坐标检查。例如，\(r(sm_i)=(rs)m_i\) 对每个 \(i\) 成立，就表示两个相应元组相等。对直和还要检查有限支集条件：\(x-y\) 的支集包含在 \(\operatorname{supp}(x)\cup\operatorname{supp}(y)\) 中，\(rx\) 的支集包含在 \(\operatorname{supp}(x)\) 中，二者均有限，所以它是子模。空指标集只有一个空元组，其直积与直和都为零模。
+
+\ProseParagraphBreak
+记坐标投影为 \(p_i:\prod_jM_j\to M_i\)。直和有坐标嵌入 \(\iota_i:M_i\to\bigoplus_jM_j\)，把元素放在第 \(i\) 坐标，其余坐标取零。二者都是模同态，而且
+\[
+p_i\iota_j=
+\begin{cases}
+\operatorname{id}_{M_i},&i=j,\\
+0,&i\ne j,
+\end{cases}
+\]
+其中投影在直和上取限制。每个直和元素都有唯一的有限展开
+\[
+m=\sum_{i\in\operatorname{supp}(m)}\iota_i(m_i).
+\]
+这项有限性将使离开直和的映射可以通过逐项求和定义。
 
 \subsection{有限与无限情形的比较}
 \label{b2:subsec:0204:02}
 
-待撰写。
+当 \(I\) 有限时，所有元组都有有限支集，因而上述直和与直积就是同一个模。特别地，两因子情形可写 \(M\oplus N=M\times N\)。当 \(I=\mathbb N\) 且各因子为非零环 \(R\) 的正则模时，直积中的元素 \((1,1,1,\ldots)\) 不在直和中。故自然包含
+\[
+R^{(\mathbb N)}\longrightarrow R^{\mathbb N}
+\]
+不是满射。这里说的是给定构造之间的自然映射；它是否排除某种另外的抽象同构，还需要别的理由。
+
+\ProseParagraphBreak
+对 \(R=\mathbb Z\)，确实连抽象群同构也不存在。有限支集整数序列只有可数多个：每个序列包含在某个 \(\mathbb Z^n\) 中，各 \(\mathbb Z^n\) 可数，它们的可数并仍可数。全部整数序列中却包含所有零一序列，而零一序列不可数：若列为 \(a^{(1)},a^{(2)},\ldots\)，令第 \(n\) 项为 \(1-a^{(n)}_n\)，便得到与每个列出的序列至少相差一项的新序列。这直接给出两种底集合的差别。
+
+\ProseParagraphBreak
+还须区别上述由外部元组构造的直和与一个模内部的分解。若已给 \(M\) 的子模 \(L_i\)，可以考虑它们的和是否包含重叠的表示。
+
+\begin{proposition}\label{b2:prop:internal-direct-sum}
+设 \((L_i)_{i\in I}\) 是 \(M\) 的一族子模。求和映射
+\[
+\sigma:\bigoplus_{i\in I}L_i\longrightarrow M,\qquad
+(\ell_i)\longmapsto\sum_i\ell_i
+\]
+是同态，像为 \(\sum_iL_i\)。它是同构，当且仅当 \(M=\sum_iL_i\)，且对每个 \(i\in I\) 都有
+\[
+L_i\cap\sum_{j\ne i}L_j=0.
+\]
+成立时，每个 \(m\in M\) 都有唯一的有限表达 \(m=\sum_i\ell_i\)、\(\ell_i\in L_i\)，称 \(M\) 为这些子模的\term[nei-zhihe]{内直和}[internal direct sum]，也记 \(M=\bigoplus_iL_i\)。
+\end{proposition}
+\begin{proof}
+直和中的有限支集使求和有意义，有限和的分配律给出 \(\sigma\) 的线性性，像由子模和的定义确定。假设交条件成立，且 \(\sum_i\ell_i=0\)。对于每个非零坐标 \(i\)，有 \(\ell_i=-\sum_{j\ne i}\ell_j\)，属于题设的交，因此为零。于是核为零；再有 \(M=\sum_iL_i\) 就得到满射和同构。
+
+反过来，若 \(\sigma\) 单射，而 \(x\in L_i\cap\sum_{j\ne i}L_j\)，写 \(x=\sum_{j\ne i}\ell_j\)，就得到一个有限支集元组，其第 \(i\) 项为 \(x\)，其余有关项为 \(-\ell_j\)，且像为零。单射性迫使 \(x=0\)。最后，同构使每个 \(m\) 对应唯一元组，这正是有限表达的唯一性。
+\end{proof}
+
+两因子时条件简化为 \(M=U+V\)、\(U\cap V=0\)。三个或更多因子时，仅要求两两交为零还不够：\(k^2\) 中三条直线 \(ke_1\)、\(ke_2\)、\(k(e_1+e_2)\) 两两交为零，却有来自三个子空间的非平凡关系 \(e_1+e_2-(e_1+e_2)=0\)。一般模也未必像向量空间那样总能找到补子模。例如 \(2\mathbb Z\le\mathbb Z\) 没有直和补模：若 \(\mathbb Z=2\mathbb Z\oplus L\)，则 \(L\cong\mathbb Z/2\mathbb Z\)，而 \(\mathbb Z\) 的非零元素都没有有限加法阶，不能含有这样的子模。
 
 \subsection{直积与直和的泛性质}
 \label{b2:subsec:0204:03}
 
-待撰写。
+\begin{theorem}\label{b2:thm:module-product-universal}
+设 \(N\) 为左 \(R\) 模，并对每个 \(i\in I\) 给定同态 \(f_i:N\to M_i\)。则存在唯一同态
+\[
+f:N\longrightarrow\prod_{i\in I}M_i
+\]
+满足 \(p_if=f_i\) 对每个 \(i\) 成立。它由 \(f(n)=(f_i(n))_{i\in I}\) 给出。
+\end{theorem}
+\begin{proof}
+坐标 \(f_i(n)\) 属于 \(M_i\)，所以公式定义了直积中的元素。每个坐标上的加法与标量等式都由 \(f_i\) 的线性性保证，故 \(f\) 线性。条件 \(p_if=f_i\) 已经逐个确定了 \(f(n)\) 的坐标，因此没有另一种选择。
+\end{proof}
+
+\begin{theorem}\label{b2:thm:module-sum-universal}
+设 \(N\) 为左 \(R\) 模，并对每个 \(i\in I\) 给定同态 \(g_i:M_i\to N\)。则存在唯一同态
+\[
+g:\bigoplus_{i\in I}M_i\longrightarrow N
+\]
+满足 \(g\iota_i=g_i\) 对每个 \(i\) 成立。它由有限和
+\[
+g((m_i))=\sum_{i\in\operatorname{supp}(m)}g_i(m_i)
+\]
+给出。
+\end{theorem}
+\begin{proof}
+每个元组的非零坐标只有有限个，故和有意义，添加零坐标不改变值。检验加法时，可以把两个支集同时扩充到它们的有限并集；对这个共同有限集逐项使用 \(g_i(m_i+n_i)=g_i(m_i)+g_i(n_i)\)，就得到可加性。对标量乘法也可保留原支集并加入可能出现的零项，由 \(g_i(rm_i)=rg_i(m_i)\) 得到线性性。公式直接满足 \(g\iota_i=g_i\)。由于直和中每个元素是 \(\iota_i(m_i)\) 的有限和，这些限制也唯一地决定 \(g\)。
+\end{proof}
+
+这两个定理分别是直积与直和的泛性质。它们把一个同态的指定转化为一族较小的同态，但方向相反：映入直积看各个投影，映出直和看各个坐标嵌入。用同态群表示，就是交换群同构
+\[
+\operatorname{Hom}_R\!\left(N,\prod_iM_i\right)
+\cong\prod_i\operatorname{Hom}_R(N,M_i),
+\]
+\[
+\operatorname{Hom}_R\!\left(\bigoplus_iM_i,N\right)
+\cong\prod_i\operatorname{Hom}_R(M_i,N).
+\]
+右侧都是直积，因为允许任意一族同态，并不要求其中仅有有限多个非零。
+
+\ProseParagraphBreak
+泛性质还说明带有这些映射的对象在唯一同构意义下确定。以直积为例，若 \(P\) 连同同态 \(q_i:P\to M_i\) 也满足\cref{b2:thm:module-product-universal}中的要求，就得到 \(u:P\to\prod_iM_i\) 与 \(v:\prod_iM_i\to P\)，分别满足 \(p_iu=q_i\)、\(q_iv=p_i\)。于是 \(q_ivu=q_i\) 对每个 \(i\) 成立，\(vu\) 与 \(\operatorname{id}_P\) 都实现了同一族坐标映射；唯一性使它们相等。同理 \(uv\) 为恒等映射。直和的证明把投影条件换成嵌入条件，逐个检查 \(vu\iota_i=\iota_i\)，便由\cref{b2:thm:module-sum-universal}的唯一性得到同样结论。
+
+\ProseParagraphBreak
+有限多个因子时，直和与直积相同，所以两个方向的泛性质都适用。无限情形中则不能交换方向而不加条件。例如，对 \(P=\mathbb Z^{\mathbb N}\)、\(S=\mathbb Z^{(\mathbb N)}\)，商映射 \(q:P\to P/S\) 在每个单坐标嵌入的像上都为零，却不是零映射，因为 \((1,1,1,\ldots)\notin S\)。因此，映出无限直积的同态未必由它在各个单坐标上的值决定。另一方面，一族 \(f_i:N\to M_i\) 所确定的直积映射能够落入直和，当且仅当对每个 \(n\in N\)，只有有限多个 \(f_i(n)\) 非零。需要有限的是每个元素的像的支集；没有这个条件，直和不能替代直积。

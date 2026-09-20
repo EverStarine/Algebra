@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 19.4 代数的增长与 Gelfand–Kirillov 维数
-% 纲要位置：计划纲要.md，第 1381 行。
 
 \section{代数的增长与 Gelfand–Kirillov 维数}
 \label{b2:sec:1904}
 
-% TODO: 按以下纲要要点撰写本节。
+有限生成代数也可能无限维，此时可以逐步数出短乘积产生多少个线性无关方向。生成元改变会改变每一步的具体数值，却只把“允许的乘积长度”扩大一个固定倍数。Gelfand–Kirillov 维数利用这种比较，得到不依赖有限生成组的增长指标。本节固定域 \(k\)，代数均为非零含单位元的有限生成 \(k\) 代数。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 有限生成代数的增长
 % * Gelfand–Kirillov 维数的基本例子
@@ -19,14 +18,96 @@
 \subsection{有限生成代数的增长}
 \label{b2:subsec:1904:01}
 
-待撰写。
+选取有限维子空间 \(V\subseteq A\)，要求 \(1\in V\)，且 \(V\) 作为代数生成 \(A\)。令
+\[
+V^0=k1,\qquad
+V^n=\operatorname{span}_k\{\,v_1\cdots v_n:v_i\in V\,\},
+\qquad
+\gamma_V(n)=\dim_kV^n.
+\]
+因为 \(1\in V\)，\(V^n\) 也包含所有长度小于 \(n\) 的乘积，且
+\[
+V^0\subseteq V^1\subseteq\cdots,\qquad
+A=\bigcup_{n\ge0}V^n,\qquad V^iV^j\subseteq V^{i+j}.
+\]
+每一步有限维；这组空间按乘积长度逐步覆盖整个代数。
+\symidx{\(\gamma_V(n)=\dim_kV^n\)：给定生成空间的增长函数}
+
+\begin{proposition}\label{b2:prop:growth-comparison}
+若 \(V,W\) 都为含一的有限维生成空间，则存在正整数 \(c,d\)，使对所有 \(n\ge1\)，
+\[
+\gamma_V(n)\le\gamma_W(cn),\qquad
+\gamma_W(n)\le\gamma_V(dn).
+\]
+\end{proposition}
+\begin{proof}
+取 \(V\) 的有限基，每个基向量都在某个 \(W^j\) 中。因为 \(W^j\) 递增，取这些有限指标的最大值 \(c\)，即可使 \(V\subseteq W^c\)。于是 \(V^n\subseteq W^{cn}\)，得到第一个维数不等式。交换两者得到第二个。
+\end{proof}
+
+例如 \(A=k[t]\)，取 \(V=\operatorname{span}_k\{1,t\}\) 时，\(\gamma_V(n)=n+1\)；取 \(W=\operatorname{span}_k\{1,t,t^2\}\) 时，\(\gamma_W(n)=2n+1\)。具体函数不同，但二者都随乘积长度呈一次多项式增长，后者只相当于在前者中允许两倍长度。
 
 \subsection{Gelfand–Kirillov 维数}
 \label{b2:subsec:1904:02}
 
-待撰写。
+\begin{definition}\label{b2:def:gk-dimension}
+定义 \(A\) 的\term[Gelfand-Kirillov-weishu]{Gelfand–Kirillov 维数}[Gelfand–Kirillov dimension]为
+\[
+\operatorname{GKdim}_kA
+=\limsup_{n\to\infty}\frac{\log\gamma_V(n)}{\log n},
+\]
+其中 \(V\) 为任意含一的有限维生成空间。取值允许为 \(+\infty\)，简称 GK 维数。
+\end{definition}
+\symidx{\(\operatorname{GKdim}_kA\)：代数的 Gelfand–Kirillov 维数}
+
+\begin{proposition}\label{b2:prop:gk-independent}
+上述数值与所选生成空间 \(V\) 无关。若 \(\gamma_V(n)\) 被某个常数倍的 \(n^d\) 从上控制，则 \(\operatorname{GKdim}_kA\le d\)。
+\end{proposition}
+\begin{proof}
+由\cref{b2:prop:growth-comparison}，对某个固定 \(c\ge1\)，
+\[
+\frac{\log\gamma_V(n)}{\log n}
+\le
+\frac{\log\gamma_W(cn)}{\log(cn)}
+\cdot\frac{\log(cn)}{\log n}.
+\]
+第二因子趋于一，第一因子的上极限不超过在全部整数指标上取得的上极限；各项非负，故得到用 \(V\) 定义的数不超过用 \(W\) 定义的数，允许右侧为无穷。交换 \(V,W\) 得到反向不等式。若 \(\gamma_V(n)\le Cn^d\)，取对数后除以 \(\log n\)，常数项 \(\log C/\log n\) 趋于零，便得最后结论。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:gk-basic-examples}
+非零有限维代数的 GK 维数为零；多项式代数 \(k[t_1,\ldots,t_d]\) 的 GK 维数为 \(d\)；至少两个生成元的自由结合代数的 GK 维数为无穷。
+\end{proposition}
+\begin{proof}
+有限维时 \(1\le\gamma_V(n)\le\dim_kA\)，因此定义中的比值趋于零。多项式环取 \(V=\operatorname{span}_k\{1,t_1,\ldots,t_d\}\)。\(V^n\) 的基是全次数不超过 \(n\) 的单项式；引入一个表示剩余次数的非负整数，计数得到
+\[
+\gamma_V(n)=\binom{n+d}{d}.
+\]
+\(d>0\) 时，这关于 \(n\) 是首项为 \(n^d/d!\) 的实数值多项式，所以对数比值趋于 \(d\)；\(d=0\) 时代数为 \(k\)，回到第一种情形。
+
+对 \(r\ge2\) 个生成元的自由代数，取由一与生成元线性生成的 \(V\)。不同字为基，故
+\[
+\gamma_V(n)=1+r+\cdots+r^n\ge r^n.
+\]
+于是 \(\log\gamma_V(n)/\log n\ge n\log r/\log n\rightarrow+\infty\)，得到无穷 GK 维数。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:gk-matrix-quotient}
+对 \(m\ge1\)，\(\operatorname{GKdim}_k M_m(A)=\operatorname{GKdim}_kA\)。有限生成子代数与非零商代数的 GK 维数均不超过原代数。
+\end{proposition}
+\begin{proof}
+取 \(W=M_m(V)\)，它有限维、含单位矩阵，并生成矩阵代数。对 \(n\ge1\)，有 \(W^n=M_m(V^n)\)：一方向由矩阵乘法展开；反方向把每个 \(n\) 项乘积 \(v_1\cdots v_n\) 放到任意矩阵单位位置，用中间指标一将它写成 \(n\) 个 \(M_m(V)\) 矩阵的乘积。故 \(\dim_kW^n=m^2\gamma_V(n)\)。取对数时只多出常数 \(\log m^2\)，不改变上极限。
+
+对商代数，\(V\) 的像生成它，且每次乘积空间的维数不增加，故结论成立。若子代数 \(B\) 由有限维含一空间 \(U\) 生成，取 \(c\) 使 \(U\subseteq V^c\)，则 \(\dim_kU^n\le\gamma_V(cn)\)。使用与\cref{b2:prop:gk-independent}相同的对数比较，得到子代数的不等式。
+\end{proof}
+
+这里仅计算并比较已给定的增长函数，不将 GK 维数视为向量空间维数：\(k[t]\) 的向量空间维数无穷，GK 维数却为一；矩阵代数改变向量空间维数的常数倍，也不改变这个增长指数。
 
 \subsection{非交换局部化的限制}
 \label{b2:subsec:1904:03}
 
-待撰写。
+对 \(k[t,t^{-1}]\)，取 \(V=\operatorname{span}_k\{1,t,t^{-1}\}\)，则 \(V^n\) 以 \(t^{-n},\ldots,t^n\) 为基，增长函数为 \(2n+1\)，故 GK 维数仍为一。这个具体中心局部化保留了有限生成性，并使增长函数容易直接计算。
+
+\ProseParagraphBreak
+但把所有非零多项式都变成单位，得到的 \(k(t)\) 不是有限生成 \(k\) 代数。若有限个有理函数生成它，将其分母相乘记为非零多项式 \(d\)，所得子代数包含在 \(k[t,1/d]\) 内。取 \(td+1\) 的一个不可约因子 \(p\)，则 \(p\nmid d\)。若 \(1/p\in k[t,1/d]\)，写成 \(a/d^n\) 后就有 \(d^n=pa\)，与 \(p\nmid d\) 矛盾。因此有限个分母不能产生整个分式域。本节针对有限生成代数的定义不能不加说明地直接用于这个例子；更一般代数的 GK 维数可以另作扩展定义，本章不需要它。
+
+\ProseParagraphBreak
+在非交换情形，还须先通过 Ore 条件才能得到本章的单分式环。自由代数的指数增长计算没有自动给出分式构造；半素右 Noether 环之所以能作经典右局部化，依据的是\cref{b2:thm:goldie-sufficiency}及其链条件论证。遇到新的代数时，生成关系、增长、PI 性及分母方程需要分别核对。下一章将给出 Weyl 代数和量子平面的具体基与增长计算，作为这些方法的进一步应用。

@@ -5,7 +5,24 @@
 \OptionalChapter{分次代数、滤过与非交换实例}{b2:ch:20}
 \BookChapterNumber{b2:ch:20}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+非交换关系可以在最高次部分变得简单，也可以通过一种固定次序逐步整理。本章沿这两个思路研究分次、滤过与正规式。先建立伴随分次、Rees 代数及有限性提升，再完整计算第一 Weyl 代数与量子平面的正规基、中心和特征差异。Ore 扩张把扭曲系数与导子统一为一个实际构造；Diamond 引理则说明何种重写规则给出唯一正规式。有限呈示不保证在指定字序下存在有限 Gröbner 基，章末给出可逐项核对的反例。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 构造伴随分次与 Rees 代数，说明穷尽性和滤过下界如何保证降次论证。
+\item 在任意特征下证明 Weyl 正规基，比较特征零的单性与正特征的中心。
+\item 使用扭曲乘法计算量子平面，辨认参数的阶如何影响中心。
+\item 从算子模型构造 Ore 扩张，按左模约定解释微分方程。
+\item 检查字序、包含及重叠歧义，证明正规式唯一，并区分约化终止与 Gröbner 基的有限性。
+\end{itemize}
+\end{learninggoals}
+
+本章为选读。需要第八章的自由结合代数及按关系取商，也用到第十二章的 Noether 模语言。\secref{b2:sec:2001}为滤过方法准备工具；Weyl 代数与量子平面的基分别用独立模型证明。\secref{b2:sec:2005}构造 Ore 扩张，\secref{b2:sec:2006}给出重写的另一种方法，二者都不以第十九章的 Ore 分母构造为前提。一般 Lie 代数的 PBW 定理只作明确预告，主要证明留在第五卷。
+
+\ProseParagraphBreak
+Weyl 代数及其表示可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[\S 2.7, pp. 17--18]{EtingofEtAl2011RepresentationTheory}；该处也提醒正特征中的自然多项式表示不忠实。本章的量子平面不把生成元取逆，与该书同节的量子 Laurent 型例子范围不同。阅读有关非交换计算的材料时，应先核对使用的是字序、交换单项式序，还是含分母的局部化。
 
 \input{Part04/Chapter20/Section2001}
 \input{Part04/Chapter20/Section2002}
@@ -14,4 +31,263 @@
 \input{Part04/Chapter20/Section2005}
 \input{Part04/Chapter20/Section2006}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+滤过保留“不超过给定次数”的信息，伴随分次只取每一层的新部分。穷尽性保证原元素都能被看到，下界保证从主符号回到原元素的降次过程停止。Rees 代数把伴随分次与原代数放在同一个平坦参数族中；由伴随分次提升 Noether 性时，子模必须使用诱导滤过。
+
+\ProseParagraphBreak
+Weyl 代数与量子平面都具有显式正规基，中心却有不同的变化机制：前者受域的特征影响，后者受参数是否为单位根影响。正规基的存在必须证明，不能只凭“可以重排”就断言独立。Ore 扩张的算子模型及 Diamond 引理的歧义检查提供了两种各有适用条件的方法。
+
+\ProseParagraphBreak
+微分方程通过左理想商 \(D/DL\) 与函数模之间的同态表达，作用方向和系数位置是公式的一部分。重写方面，下降字序保证单次约化过程终止，全部歧义可解才保证结果唯一；补充规则的过程则仍可能无限。一个很短的代数呈示也可能在选定字序下没有有限 Gröbner 基。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{optionalexercise}\label{b2:ex:20-coarse-filtration}
+在 \(A=k[x]\) 上取 \(F_nA\) 为次数不超过 \(2n\) 的多项式，\(n\ge0\)，负次数项为零。证明这是滤过，并证明
+\[
+\operatorname{gr}_F A\cong k[u,v]/(u^2),\qquad \deg u=\deg v=1.
+\]
+解释它为何不违背\cref{b2:prop:filtered-domain}。
+\end{optionalexercise}
+\begin{solution}
+次数在乘法下相加，故滤过相容且穷尽。令 \(u\) 为 \(x\) 的一次商类，\(v\) 为 \(x^2\) 的一次商类。\(x^2\) 已属于 \(F_1A\)，所以 \(u^2\) 在二次商片中为零。第 \(n\ge1\) 个商片恰有基 \(x^{2n-1}+F_{n-1}A,x^{2n}+F_{n-1}A\)，分别对应 \(uv^{n-1},v^n\)；零次部分为 \(k\)。因此所给同态逐次是同构。原环为整环，伴随分次却有非零平方零元；命题只断言伴随分次无零因子蕴含原环无零因子，没有给出逆命题。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-polynomial-rees}
+对 \(k[x]\) 的通常次数滤过，证明 Rees 代数是 \(k[z,xz]\cong k[z,u]\)，并直接计算模 \(z\) 与模 \(z-1\) 的两个商。
+\end{optionalexercise}
+\begin{solution}
+Rees 代数的单项式为 \(x^iz^n\)、\(0\le i\le n\)，都写成 \((xz)^iz^{n-i}\)。不同的 \(z^a(xz)^b=x^bz^{a+b}\) 线性无关，所以赋值 \(z\mapsto z,u\mapsto xz\) 给出从 \(k[z,u]\) 到 Rees 代数的同构。模 \(z\) 后留下自由变量 \(u\)，对应 \(x\) 的主符号；模 \(z-1\) 后则 \(u\) 变为 \(x\)，恢复原多项式环。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-filtered-isomorphism}
+设 \(M,N\) 具有非负、穷尽的滤过，线性映射 \(f:M\to N\) 满足 \(f(F_nM)\subseteq F_nN\)。若 \(\operatorname{gr}f\) 是同构，证明 \(f\) 是同构，且 \(f(F_nM)=F_nN\) 对每个 \(n\) 成立。
+\end{optionalexercise}
+\begin{solution}
+若 \(0\ne m\in\ker f\)，取其最低滤过次数，则它的非零主符号被 \(\operatorname{gr}f\) 送到零，矛盾。故 \(f\) 单射。对 \(y\in F_nN\)，商片上的满射性给出 \(x\in F_nM\)，使 \(y-f(x)\in F_{n-1}N\)。归纳提升这个差值，在 \(F_{-1}N=0\) 处结束，就得 \(y\in f(F_nM)\)。穷尽性再使 \(f\) 满射。整个论证同时证明每一滤过项上的满射性。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-weyl-normal-ordering}
+在任意特征的 Weyl 代数中证明
+\[
+d^mx^n=\sum_{r=0}^{\min(m,n)}\binom mr n(n-1)\cdots(n-r+1)x^{n-r}d^{m-r},
+\]
+其中 \(r=0\) 的下降乘积为一，整数系数取其在 \(k\) 中的像。
+\end{optionalexercise}
+\begin{solution}
+\(m=0\) 时成立。由 \(d f(x)=f(x)d+f'(x)\)，对第 \(m\) 步的每项再左乘 \(d\)，得到保持导数次数的一项及增加一次导数的一项。相同 \(r\) 的系数由 \(\binom mr+\binom m{r-1}=\binom{m+1}r\) 合并，下降乘积的新增因子为 \(n-r+1\)。这正给出第 \(m+1\) 步。证明只用整数恒等式及形式导数，没有把可能为零的阶乘作除数，故对任意特征成立。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-weyl-finite-representations}
+证明特征零的 Weyl 代数没有非零有限维幺性表示。特征 \(p>0\) 时，证明任意非零有限维表示的维数被 \(p\) 整除，并在 \(k[X]/(X^p)\) 上构造一个 \(p\) 维简单表示。
+\end{optionalexercise}
+\begin{solution}
+设 \(x,d\) 的作用矩阵为 \(X,D\)。关系给出 \(DX-XD=I\)，取迹得到 \(0=\dim V\) 在 \(k\) 中的像。这在特征零排除正维数，在特征 \(p\) 要求 \(p\mid\dim V\)。
+
+特征 \(p\) 时，乘 \(X\) 与形式求导都保留理想 \((X^p)\)，所以诱导所求表示。任意非零子模中取一个次数小于 \(p\) 的非零多项式，连续求导至其次数次后得到非零常数，因为该次数的阶乘在 \(k\) 中非零。再乘 \(X\) 生成全部商空间，故表示简单。有关有限维表示的问题可参阅 Etingof 等人\cite[Problem 2.7.4, p. 18]{EtingofEtAl2011RepresentationTheory}。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-weyl-characteristic-p-matrix}
+设 \(\operatorname{char}k=p>0\)。证明
+\[
+A_1(k)/(x^p,d^p)\cong M_p(k).
+\]
+\end{optionalexercise}
+\begin{solution}
+上一题的作用零化 \(x^p,d^p\)，故从该商得到到 \(\operatorname{End}_k\Bigl(k[X]/(X^p)\Bigr)\) 的同态。商由 \(x^id^j\)、\(0\le i,j<p\)，线性生成，所以维数至多为 \(p^2\)。
+
+记 \(H=XD\)，则 \(H(X^r)=rX^r\)。算子
+\[
+E_0=\prod_{r=1}^{p-1}\frac{H-r}{-r}
+\]
+投影到常数项；所有分母都是非零素域元素。于是 \(X^iE_0D^j/j!\) 将 \(X^j\) 送到 \(X^i\)，将其他标准基向量送到零。这给出全部矩阵单位，所以同态满射到 \(p^2\) 维矩阵代数。来源的维数上界使其同时单射，得到同构。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-weyl-center-module-rank}
+特征 \(p>0\) 时，证明 \(A_1(k)\) 是中心上的自由模，秩为 \(p^2\)。与特征零的情形比较。
+\end{optionalexercise}
+\begin{solution}
+由\cref{b2:thm:weyl-center-simplicity}，中心为 \(k[x^p,d^p]\)。将两个指数分别除以 \(p\)，便把每个单项式唯一写为中心单项式乘 \(x^id^j\)、\(0\le i,j<p\)。展开中心系数后，普通正规基的独立性说明这些剩余单项式也是中心上的基。特征零时中心为 \(k\)，而 Weyl 代数具有无限多个独立正规单项式，所以在中心上不有限生成。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-quantum-units-ideals}
+求量子平面 \(k_q[x,y]\) 的单位，并证明它对任意 \(q\ne0\) 都不是单环。特别解释中心等于 \(k\) 为什么不足以推出单性。
+\end{optionalexercise}
+\begin{solution}
+由\cref{b2:prop:quantum-plane-domain}，非零乘积的 \(y\) 次数相加。若两个元素互逆，它们都不含 \(y\)，于是属于 \(k[x]\)，只能是非零常数。因此单位群为 \(k^\times\)。关系使 \(Ax=xA\)，双边理想 \((x)\) 由 \(x\) 指数为正的正规单项式生成，非零且不含一；商为 \(k[y]\)。所以环不单。参数无限阶时中心虽为 \(k\)，这仍不改变该真双边理想的存在。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-quantum-binomial}
+在量子平面中把 \((x+y)^3\) 写成正规式。若 \(q\ne1\) 且 \(1+q+q^2=0\)，证明 \((x+y)^3\) 属于中心。
+\end{optionalexercise}
+\begin{solution}
+先有 \((x+y)^2=x^2+(1+q)xy+y^2\)。再乘 \(x+y\)，用 \(yx=qxy\)、\(y^2x=q^2xy^2\)，得到
+\[
+(x+y)^3=x^3+(1+q+q^2)x^2y+(1+q+q^2)xy^2+y^3.
+\]
+题设使 \(q^3=1\) 且 \(q\ne1\)，所以参数的阶为三，式子化为 \(x^3+y^3\)。由\cref{b2:prop:quantum-plane-center}，两项均居中。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-quantum-inverse-parameter}
+证明交换两个生成元给出 \(k_q[x,y]\cong k_{q^{-1}}[x,y]\)。说明它与中心阶数公式相容，但不要据此断言同阶的任意两个参数都给出同构代数。
+\end{optionalexercise}
+\begin{solution}
+在目标代数中记生成元为 \(X,Y\)，有 \(YX=q^{-1}XY\)。赋值 \(x\mapsto Y,y\mapsto X\) 将原关系送到 \(XY-qYX=0\)，所以诱导同态。反向仍交换两生成元，两复合固定生成元，因而互逆。\(q\) 与 \(q^{-1}\) 的阶相同，故中心中的幂指数一致；这个构造只比较互逆的参数，没有处理其他同阶参数。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-weyl-rees-fibres}
+在 Weyl 的 Rees 关系代数中，把中心参数 \(Z\) 取为 \(\lambda\in k\)。分别辨认 \(\lambda=0\) 和 \(\lambda\ne0\) 的商，并说明为什么各个商都有 \(X^iD^j\) 的基。
+\end{optionalexercise}
+\begin{solution}
+Rees 代数作为 \(k[Z]\) 模以 \(X^iD^j\) 为基，故取商后这些元素仍为 \(k\) 基。关系变为 \(DX-XD=\lambda^2\)。\(\lambda=0\) 时得到 \(k[X,D]\)；\(\lambda\ne0\) 时将 Weyl 生成元送到 \(X,\lambda^{-2}D\)，满足交换子等于一，反向将 \(D\) 送到 \(\lambda^2d\)，给出互逆同构。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-bad-pbw-quotient}
+辨认\cref{b2:exm:incompatible-pbw-relations}定义的商代数，证明它同构于 \(k[y][z;\delta]\)，其中 \(\delta(f)=y f'\)，并给出一组基。
+\end{optionalexercise}
+\begin{solution}
+该例已证 \(x=0\)，余下关系为 \(zy=yz+y\)。映射 \(x\mapsto0\) 及保留 \(y,z\) 把原关系代数映到这个二生成元商；反向将两个生成元送回原代数，两个复合均固定剩余生成元，并将已为零的 \(x\) 送回零，所以互逆。
+
+\(\delta(f)=yf'\) 是 \(k[y]\) 的导子。由\cref{b2:thm:ore-extension-construction}，对应 Ore 扩张具有同一关系及正规基 \(y^iz^j\)。对于任意多项式系数，从生成元关系归纳得到 \(zf=fz+\delta(f)\)，所以两边的关系泛性质一致，得到所述同构。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-inner-sigma-derivation}
+设 \(\sigma:R\to R\) 保持单位元，固定 \(c\in R\)，令 \(\delta(a)=ca-\sigma(a)c\)。证明 \(\delta\) 是 \(\sigma\) 导子，并通过变量代换证明 \(R[t;\sigma,\delta]\cong R[u;\sigma]\)。
+\end{optionalexercise}
+\begin{solution}
+直接展开得到
+\[
+\sigma(a)\delta(b)+\delta(a)b
+=\sigma(a)cb-\sigma(a)\sigma(b)c+cab-\sigma(a)cb
+=\delta(ab).
+\]
+在原扩张中置 \(u=t-c\)，则
+\[
+ua=\sigma(a)t+ca-\sigma(a)c-ca=\sigma(a)u.
+\]
+所以 Ore 泛性质给出从 \(R[u;\sigma]\) 到原扩张的同态。反向将 \(t\) 送到 \(u+c\)，同一个等式反向验证所需关系。两复合固定 \(R\) 和扩张变量，故互逆。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-ore-noninjective-sidedness}
+令 \(R=k\times k\)、\(\sigma(a,b)=(a,a)\)、\(\delta=0\)。在 \(R[t;\sigma]\) 中证明 \(t(0,1)=0\) 而 \((0,1)t\ne0\)。进一步证明后一个元素不能写成有限和 \(\sum_i t^ib_i\)、\(b_i\in R\)。
+\end{optionalexercise}
+\begin{solution}
+关系给出 \(t(0,1)=\sigma(0,1)t=0\)，左系数正规式则保证 \((0,1)t\ne0\)。若存在所述右系数表达，将它变回左正规式；对 \(i\ge1\) 有 \(t^ib_i=\sigma^i(b_i)t^i\)，其中 \(\sigma^i(b_i)\) 总是对角元素 \((a,a)\)。比较一次系数，要求某个对角元素等于 \((0,1)\)，不可能。因此一般的左自由正规式不自动给出右自由正规式。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-q-derivation}
+固定 \(q\in k^\times\)，在 \(k[x]\) 上令 \(\sigma\Bigl(f(x)\Bigr)=f(qx)\)，并按线性定义
+\[
+\delta(x^n)=(1+q+\cdots+q^{n-1})x^{n-1}\quad(n\ge1),
+\qquad\delta(1)=0.
+\]
+证明这是 \(\sigma\) 导子，并写出相应 Ore 扩张的 \(tx\)、\(tx^2\) 及正规基。
+\end{optionalexercise}
+\begin{solution}
+记 \([n]_q=1+q+\cdots+q^{n-1}\)，则 \([m+n]_q=[m]_q+q^m[n]_q\)。因此在两个单项式上，\(\delta(x^mx^n)=\sigma(x^m)\delta(x^n)+\delta(x^m)x^n\)。两边对多项式分别线性，故等式对任意乘积成立。由构造定理，
+\[
+tx=qxt+1,\qquad tx^2=q^2x^2t+(1+q)x,
+\]
+正规基为 \(x^it^j\)。当 \(q=1\) 时，\([n]_q=n\)，恢复通常求导及 Weyl 关系；所有定义都没有使用除以 \(q-1\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-differential-line}
+在微分域 \((K,\delta)\) 上取 \(L=\partial-a\)，写出 \(M_L\) 上的作用。若将基向量 \(e\) 改为 \(f=be\)、\(b\ne0\)，新作用系数是什么？最后在 \(K=k(x)\)、\(\delta=d/dx\)、\(a=1/x\) 时，用常数域 \(C=\ker\delta\) 表示全部 \(K\) 内的解。
+\end{optionalexercise}
+\begin{solution}
+模以 \(e=1+DL\) 为 \(K\) 基，满足 \(\partial e=ae\)。因此 \(\partial(ue)=\Bigl(\delta(u)+au\Bigr)e\)。换基后
+\[
+\partial f=\Bigl(\delta(b)+ab\Bigr)e
+=\Bigl(a+b^{-1}\delta(b)\Bigr)f.
+\]
+对于最后的方程，\(\delta(y)=y/x\) 等价于 \(\delta(y/x)=0\)，所以所有解为 \(y=cx\)、\(c\in C\)。这同时表明解空间自然只需对常数域封闭；在正特征中，\(C\) 可以大于给定的 \(k\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-differential-companion}
+在 \(K=k(x)\)、\(\delta=d/dx\) 上令 \(L=\partial^2-x\)。分别写出 \(\partial\) 在左模 \(M_L\) 的基 \(e_0=1+DL,e_1=\partial+DL\) 中的作用坐标式，以及标量解 \(y\) 的列向量 \((y,\delta y)^{\mathsf T}\) 所满足的系统。
+\end{optionalexercise}
+\begin{solution}
+有 \(\partial e_0=e_1\)、\(\partial e_1=xe_0\)，所以
+\[
+\partial(ae_0+be_1)=\Bigl(\delta(a)+xb\Bigr)e_0+\Bigl(a+\delta(b)\Bigr)e_1.
+\]
+其坐标式是 \(\delta\binom ab+\begin{psmallmatrix}0&x\\1&0\end{psmallmatrix}\binom ab\)。函数解满足 \(\delta^2y=xy\)，故
+\[
+\delta\begin{pmatrix}y\\\delta y\end{pmatrix}
+=\begin{pmatrix}0&1\\x&0\end{pmatrix}
+\begin{pmatrix}y\\\delta y\end{pmatrix}.
+\]
+两个矩阵互为转置，因为后一列记录的是模同态在 \(e_0,e_1\) 上的像，而不是一个模元素的坐标。额外的系数求导项也必须保留。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-diamond-idempotent-rules}
+用规则 \(x^2\to x\)、\(yx\to y\) 检查全部非平凡歧义，证明代数 \(k\langle x,y\rangle/(x^2-x,yx-y)\) 有基 \(y^n,xy^n\)、\(n\ge0\)。给出其中两个非零元素的乘积为零的例子。
+\end{optionalexercise}
+\begin{solution}
+两条规则都降低字长。只有 \(xxx\) 与 \(yxx\) 存在重叠：\(xxx\) 无论先改哪一对都化为 \(x\)，\(yxx\) 两种改法都化为 \(y\)。没有非平凡包含歧义，所以\cref{b2:thm:diamond-lemma}适用。不可约字中不能有连续的两个 \(x\)，也不能有 \(y\) 在 \(x\) 左边，故恰为所列形式。正规基保证 \(y\ne0\)、\(1-x\ne0\)，但关系给出 \(y(1-x)=0\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-diamond-two-failures}
+分别考察两组规则：\(x^2\to1,yx\to0\)；\(xyx\to x,yx\to0\)。各找一项歧义，写出它强迫的新关系，并在补充该关系后给出商代数的正规基。
+\end{optionalexercise}
+\begin{solution}
+第一组在 \(yxx\) 处重叠。先用 \(yx\to0\) 得零，先用 \(xx\to1\) 得 \(y\)，所以关系强迫 \(y=0\)。商因此为 \(k[x]/(x^2-1)\)，基为 \(1,x\)。反向将 \(y\) 送到零显然满足原关系，证明没有遗漏其他关系。
+
+第二组在 \(xyx\) 处是包含歧义：整体改写得到 \(x\)，先改其中的 \(yx\) 得零，所以 \(x=0\)。于是商为 \(k[y]\)，基为全部 \(y^n\)。同样的正反赋值证明该辨认。两例分别展示重叠与包含为何都必须检查。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-infinite-groebner-growth}
+对 \(B=k\langle x,y\rangle/(x^2-xy)\) 取字长分次。利用\cref{b2:exm:infinite-noncommutative-groebner}求 \(\dim_kB_n\) 及形式 Hilbert 级数 \(\sum_{n\ge0}\dim_k(B_n)t^n\)，并证明 \(B\) 虽与二元多项式环具有相同的分次维数，却有零因子。
+\end{optionalexercise}
+\begin{solution}
+次数 \(n\ge1\) 的正规字中，有一个 \(y^n\)，以及满足 \(a+b=n-1\) 的 \(n\) 个 \(y^axy^b\)，所以维数为 \(n+1\)；零次维数为一。因此级数为
+\[
+\sum_{n\ge0}(n+1)t^n=\frac1{(1-t)^2},
+\]
+这里是形式幂级数恒等式。正规基使 \(x\) 与 \(x-y\) 均非零，但 \(x(x-y)=0\)。所以分次维数不能决定乘法结构，也不能单凭这一数列判断无零因子性。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-groebner-order-dependence}
+对上一题同一个理想，改用 \(y>x\) 的长度字典序。证明单条规则 \(xy\to x^2\) 已经给出 Gröbner 基，正规字为 \(y^ax^b\)。将旧的正规字 \(y^axy^b\) 换成新的正规式。
+\end{optionalexercise}
+\begin{solution}
+两边同长，而第二个字母由较大的 \(y\) 改为 \(x\)，所以规则下降。左端的非空真前缀为 \(x\)，真后缀为 \(y\)，没有自身重叠，也没有包含歧义，Diamond 引理适用。不可约字不得含 \(xy\)，故所有 \(y\) 必在所有 \(x\) 之前，得到所列基。反复使用 \(xy=x^2\)，得 \(xy^b=x^{b+1}\)，所以旧字化为 \(y^ax^{b+1}\)。这与原字序下没有有限 Gröbner 基不矛盾，有限性断言依赖指定的字序。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-differential-associated-module}
+在 \(D=K[\partial;\delta]\) 中按 \(\partial\) 次数滤过，\(K\) 在零次。若 \(L\) 为 \(m\) 阶首一算子，证明 \(\operatorname{gr}D\cong K[T]\)，并对商的诱导滤过证明
+\[
+\operatorname{gr}(D/DL)\cong K[T]/(T^m)
+\]
+为分次左模。
+\end{optionalexercise}
+\begin{solution}
+关系 \(\partial a-a\partial=\delta(a)\) 降低一次 \(\partial\) 次数，故最高次符号与 \(K\) 交换；Ore 正规式使每个次数商片一维，得到 \(\operatorname{gr}D\cong K[T]\)。对于左理想 \(DL\)，非零 \(QL\) 的次数为 \(\deg Q+m\)，其主符号为 \(\sigma(Q)T^m\)，所以该理想的伴随分次恰为 \((T^m)\)。也可直接使用唯一左余式：商模在次数小于 \(m\) 时各新增一个基向量，随后不再新增，且乘 \(T\) 逐次移位，最后为零。于是得到所写的分次模同构。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-quantum-matrix-fibre}
+设 \(\operatorname{char}k\ne2\)，\(a=s^2\ne0\)、\(b\ne0\) 为 \(k\) 中元素。证明
+\[
+k_{-1}[x,y]/(x^2-a,y^2-b)\cong M_2(k).
+\]
+\end{optionalexercise}
+\begin{solution}
+由正规基及平方关系，商由 \(1,x,y,xy\) 线性生成。取
+\[
+X=\begin{pmatrix}s&0\\0&-s\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&b\\1&0\end{pmatrix}.
+\]
+它们满足 \(YX=-XY\)、\(X^2=aI\)、\(Y^2=bI\)，所以给出到矩阵代数的同态。\(I,X\) 线性独立并生成对角矩阵；\(Y,XY\) 的两个非对角位置组成的系数矩阵行列式为 \(-2sb\ne0\)，所以生成全部非对角矩阵。因此像为四维矩阵代数，来源又至多四维，所得满同态必为同构。
+\end{solution}
+
+\begin{optionalexercise}\label{b2:ex:20-ore-right-normal-form}
+若 \(\sigma\) 是自同构，证明 \(R[t;\sigma,\delta]\) 也以 \(1,t,t^2,\ldots\) 为右 \(R\) 模基。指出证明中两次使用可逆性的地方。
+\end{optionalexercise}
+\begin{solution}
+把基本关系用于 \(\sigma^{-1}(a)\)，得到
+\[
+at=t\sigma^{-1}(a)-\delta\Bigl(\sigma^{-1}(a)\Bigr).
+\]
+它将左侧系数移到右侧，较低次项使按 \(t\) 次数的归纳终止，从而得到右正规式的生成性；这首先使用 \(\sigma^{-1}\) 的存在。若 \(\sum_i t^ib_i=0\)，将它改写为左正规式，其最高项系数为 \(\sigma^n(b_n)\)。左正规式唯一性使它为零，\(\sigma\) 单射迫使 \(b_n=0\)，再下降归纳得全部系数为零。这是第二处使用可逆性的单射部分。
+\end{solution}

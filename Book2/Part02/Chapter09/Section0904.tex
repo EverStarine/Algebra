@@ -5,9 +5,9 @@
 \section{外代数的应用}
 \label{b2:sec:0904}
 
-% TODO: 按以下纲要要点撰写本节。
+外代数既解释行列式，也提供记录子空间与构造复形的方法。本节先从子式推出伴随矩阵公式，并在任意交换环上证明 Cayley–Hamilton 定理；然后在域上用一个四维例子说明 Plücker 关系；最后给出 Koszul 微分的构造。三个应用分别用到最高外幂、二次外幂和整个分次外代数。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 余子式、伴随矩阵与 Cayley–Hamilton
 % * Plücker 坐标的初步例子
@@ -19,14 +19,180 @@
 \subsection{余子式、伴随矩阵与 Cayley–Hamilton 定理}
 \label{b2:subsec:0904:01}
 
-待撰写。
+对 \(A=(a_{ij})\in M_n(R)\)、\(n\ge1\)，删去第 \(i\) 行、第 \(j\) 列所得子矩阵记为 \(A^{\widehat i,\widehat j}\)。数
+\[
+C_{ij}=(-1)^{i+j}\det A^{\widehat i,\widehat j}
+\]
+称为对应的\term[daishu-yuzishi]{代数余子式}[cofactor]。当 \(n=1\) 时，删去后是空矩阵，行列式取 \(1\)。定义
+\[
+\operatorname{adj}(A)=(C_{ji})_{i,j}
+\]
+为 \(A\) 的伴随矩阵\termidx[ban-sui-juzhen]{伴随矩阵}。这是代数余子式矩阵的转置，与第四章由首一多项式构造的友矩阵是不同概念。
+\symidx{\(\operatorname{adj}(A)\)：矩阵 \(A\) 的伴随矩阵}
+
+\begin{proposition}[余子式展开与伴随矩阵]\label{b2:prop:adjugate-identity}
+固定任意行 \(i\) 或列 \(j\)，有
+\[
+\det A=\sum_{k=1}^n a_{ik}C_{ik}
+=\sum_{k=1}^n a_{kj}C_{kj}.
+\]
+进而
+\begin{equation}\label{b2:eq:adjugate-identity}
+A\operatorname{adj}(A)=\operatorname{adj}(A)A=(\det A)I_n.
+\end{equation}
+所以 \(A\) 可逆当且仅当 \(\det A\) 是 \(R\) 的单位，此时
+\(A^{-1}=(\det A)^{-1}\operatorname{adj}(A)\)。
+\end{proposition}
+\begin{proof}
+在\eqref{b2:eq:determinant-leibniz}中，按某一固定行所使用的列位置分组。含 \(a_{ik}\) 的项，其余因子的排列恰好遍历删去该行、该列后的置换。把第 \(i\) 行和第 \(k\) 列分别移到首位，共产生 \(i-1+k-1\) 个换位，故这一组的符号因子为 \((-1)^{i+k}\)。组内求和于是等于 \(a_{ik}C_{ik}\)，得到行展开。对转置矩阵使用行展开，再用\eqref{b2:eq:determinant-transpose}，得到列展开。
+
+乘积 \(A\operatorname{adj}(A)\) 的 \((i,j)\) 项为 \(\sum_k a_{ik}C_{jk}\)。当 \(i=j\) 时是 \(\det A\)。当 \(i\ne j\) 时，把 \(A\) 的第 \(j\) 行替换为第 \(i\) 行；沿第 \(j\) 行展开，其代数余子式仍为 \(C_{jk}\)，所以行列式正是上述和，但矩阵有两行相同，故为零。这证明第一个乘积公式。第二个乘积公式通过替换第 \(i\) 列为第 \(j\) 列并作列展开得到。
+
+若行列式为单位，式\eqref{b2:eq:adjugate-identity}给出双侧逆。若 \(A\) 可逆，则\cref{b2:thm:determinant-multiplicativity}给出 \(\det A\det A^{-1}=1\)，所以行列式为单位。
+\end{proof}
+
+下面通过比较多项式的系数重新证明 Cayley–Hamilton 定理\termidx[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}。\cref{b2:prop:operator-characteristic-minimal}已在域上证明特征多项式是最小多项式的倍数，因而零化算子；这里给出另一证明，并把系数推广到任意交换环。
+
+\begin{theorem}[Cayley–Hamilton]\label{b2:thm:exterior-cayley-hamilton}
+若 \(R\) 为交换环、\(A\in M_n(R)\)、\(n\ge1\)，令
+\[
+\chi_A(t)=\det(tI_n-A)=t^n+c_{n-1}t^{n-1}+\cdots+c_0.
+\]
+则 \(\chi_A(A)=A^n+c_{n-1}A^{n-1}+\cdots+c_0I_n=0\)。
+\end{theorem}
+\begin{proof}
+在交换环 \(R[t]\) 上应用\cref{b2:prop:adjugate-identity}，得到
+\[
+(tI_n-A)\operatorname{adj}(tI_n-A)=\chi_A(t)I_n.
+\]
+伴随矩阵的每个条目是 \(n-1\) 阶子式，所以次数至多 \(n-1\)。写
+\[
+\operatorname{adj}(tI_n-A)=B_0+B_1t+\cdots+B_{n-1}t^{n-1},
+\qquad B_j\in M_n(R).
+\]
+比较 \(t\) 的各次系数，依次得到
+\[
+-AB_0=c_0I_n,\qquad
+B_{j-1}-AB_j=c_jI_n\ (1\le j<n),\qquad B_{n-1}=I_n.
+\]
+将中间第 \(j\) 个等式在左侧乘以 \(A^j\)，最后一式在左侧乘以 \(A^n\)，再连同首式求和，则右端为 \(\chi_A(A)\)，左端为
+\[
+-AB_0+\sum_{j=1}^{n-1}\Bigl(A^jB_{j-1}-A^{j+1}B_j\Bigr)
++A^nB_{n-1}=0.
+\]
+相邻项逐一抵消，故 \(\chi_A(A)=0\)。这一计算保持每个矩阵系数的位置，没有使用矩阵环中任意元素交换的假设。
+\end{proof}
+
+例如，对 \(A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\)，有
+\[
+\chi_A(t)=t^2-(a+d)t+(ad-bc),
+\qquad A^2-(a+d)A+(ad-bc)I_2=0.
+\]
+这些等式在 \(\mathbb Z\)、多项式环以及含幂零元的交换环上都成立。证明中用到的交换性属于标量环，而不是所有 \(2\times2\) 矩阵之间的交换性。
 
 \subsection{Plücker 坐标}
 \label{b2:subsec:0904:02}
 
-待撰写。
+本小节改设 \(k\) 为域、\(V=k^n\)。对 \(r\) 维子空间 \(W\subseteq V\)，选一组有序基 \(w_1,\ldots,w_r\)，写
+\[
+w_1\wedge\cdots\wedge w_r=\sum_{|I|=r}p_Ie_I.
+\]
+这些 \(p_I\) 是以 \(w_j\) 为列的矩阵的 \(r\) 阶子式。若换一组基，整个楔积乘以换基矩阵的非零行列式。因此，把所有 \(p_I\) 同时乘以同一个非零标量视为同一组坐标，就得到只依赖 \(W\) 的\term[Plucker-zuobiao]{Plücker 坐标}[Plücker coordinates]。
+
+\ProseParagraphBreak
+这些坐标确实能够辨认子空间。对非零纯楔积 \(\omega=w_1\wedge\cdots\wedge w_r\)，有
+\begin{equation}\label{b2:eq:plucker-recovers-plane}
+W=\{\,v\in V\mid v\wedge\omega=0\,\}.
+\end{equation}
+若 \(v\in W\)，按 \(w_j\) 展开即得楔积为零。若 \(v\notin W\)，则 \(v,w_1,\ldots,w_r\) 线性无关，把它们扩充为一组基，\cref{b2:thm:exterior-power-basis}说明对应楔积非零。因此两个非零纯楔积只相差标量时，恢复出的子空间相同。
+
+\begin{proposition}[四维空间中二重楔积的判据]\label{b2:prop:plucker-four-dimensional}
+设
+\[
+\omega=\sum_{1\le i<j\le4}p_{ij}e_i\wedge e_j\in\bigwedge^2k^4.
+\]
+它可以写为 \(u\wedge v\)，当且仅当
+\begin{equation}\label{b2:eq:plucker-quadric}
+p_{12}p_{34}-p_{13}p_{24}+p_{14}p_{23}=0.
+\end{equation}
+此结论对任意特征的域成立。\(\omega\ne0\) 时，\(u,v\) 自动线性无关。
+\end{proposition}
+\begin{proof}
+若 \(u=\sum u_ie_i\)、\(v=\sum v_ie_i\)，则 \(p_{ij}=u_iv_j-u_jv_i\)。代入\eqref{b2:eq:plucker-quadric}，得到
+\[
+\begin{aligned}
+&(u_1v_2-u_2v_1)(u_3v_4-u_4v_3)\\
+&\quad-(u_1v_3-u_3v_1)(u_2v_4-u_4v_2)\\
+&\quad+(u_1v_4-u_4v_1)(u_2v_3-u_3v_2)=0.
+\end{aligned}
+\]
+展开后的十二项按相同的 \(u_iu_jv_av_b\) 配对，符号相反，所以为零。
+
+反过来，\(\omega=0\) 时取 \(u=0\)。若 \(\omega\ne0\)，至少一个 \(p_{ij}\ne0\)。重排基可使它成为 \(p_{12}\)：对相邻交换 \((1\ 2),(2\ 3),(3\ 4)\)，直接将下标重排并用 \(p_{ji}=-p_{ij}\)，可见关系左边都变为其负元，所以关系在重排后仍成立。令 \(a=p_{12}\ne0\)，取
+\[
+u=e_1-\frac{p_{23}}a e_3-\frac{p_{24}}a e_4,
+\qquad v=a e_2+p_{13}e_3+p_{14}e_4.
+\]
+展开 \(u\wedge v\)，\(12,13,14,23,24\) 五个坐标分别就是给定的 \(p_{ij}\)，而 \(34\) 坐标为
+\[
+\frac{p_{13}p_{24}-p_{14}p_{23}}a=p_{34},
+\]
+最后一步恰用\eqref{b2:eq:plucker-quadric}。故 \(u\wedge v=\omega\)。若 \(u,v\) 相关，其楔积为零，所以非零情形下它们独立。
+\end{proof}
+
+外幂中能写成一个纯楔积的元素称为\term[kefenjie-zhangliang]{可分解张量}[decomposable tensor]。上面的关系表明，可分解二张量的坐标并不是任意六个标量。例如 \(e_1\wedge e_2+e_3\wedge e_4\) 的关系左端为 \(1\)，所以在任意域上都不可分解。
+
+\ProseParagraphBreak
+另一方面，直接计算得到
+\[
+\omega\wedge\omega
+=2(p_{12}p_{34}-p_{13}p_{24}+p_{14}p_{23})
+e_1\wedge e_2\wedge e_3\wedge e_4.
+\]
+特征不为二时，\(\omega\wedge\omega=0\) 与 Plücker 关系等价；特征二时，每个这样的平方都是零，包括刚才的不可分解张量。因而在特征二中仍应使用坐标关系本身来判定，不能把平方为零当作充分条件。
 
 \subsection{Koszul 复形的外代数背景}
 \label{b2:subsec:0904:03}
 
-待撰写。
+重新回到任意交换环 \(R\)。给定线性映射 \(\lambda:M\to R\)，希望在外代数上把一个因子送入 \(\lambda\)，并从其余楔积中删掉这个因子。为使删去不同位置的操作相容，需要随位置加入符号。本小节将所有负次外幂约定为零，使零次上的微分也有明确的目标。
+
+\begin{proposition}[收缩微分]\label{b2:prop:exterior-contraction}
+存在唯一次数为 \(-1\) 的线性算子
+\[
+\iota_\lambda:\bigwedge^pM\longrightarrow\bigwedge^{p-1}M,
+\]
+在 \(R=\bigwedge^0M\) 上取零，并满足
+\begin{equation}\label{b2:eq:contraction-formula}
+\iota_\lambda(m_1\wedge\cdots\wedge m_p)
+=\sum_{j=1}^p(-1)^{j-1}\lambda(m_j)
+m_1\wedge\cdots\wedge\widehat{m_j}\wedge\cdots\wedge m_p.
+\end{equation}
+帽号表示省去该因子。这个算子称为由 \(\lambda\) 确定的\term[shousuo]{收缩}[contraction]，且对 \(\xi\in\bigwedge^pM\)、\(\eta\in\bigwedge^qM\) 满足
+\[
+\iota_\lambda(\xi\wedge\eta)
+=\iota_\lambda(\xi)\wedge\eta+(-1)^p\xi\wedge\iota_\lambda(\eta),
+\qquad \iota_\lambda^2=0.
+\]
+\end{proposition}
+\begin{proof}
+式\eqref{b2:eq:contraction-formula}的右端对输入多线性。若 \(m_r=m_s\)、\(r<s\)，除删除第 \(r\) 或第 \(s\) 个因子的项以外，其余项仍有重复因子，均为零。删去第 \(r\) 个因子后，把原第 \(s\) 个因子移回第 \(r\) 个位置，共交换 \(s-r-1\) 次，所以该项的总符号是 \((-1)^{r-1+s-r-1}=(-1)^{s-2}\)，与删去第 \(s\) 个因子的项符号相反。二者系数中的 \(\lambda(m_r),\lambda(m_s)\) 相同，故抵消。这证明右端交替，外幂泛性质给出唯一线性算子。
+
+对两个纯楔积的乘积，删除位置或者在前 \(p\) 项，或者在后 \(q\) 项。前者给出第一项，后者相对从 \(\eta\) 开始计数多出 \(p\)，产生 \((-1)^p\)，得到所示乘法公式。由双线性推广到所有齐次元素。
+
+最后，两次收缩后，每个结果都删去一对不同位置。固定 \(i<j\)，先删 \(i\) 再删 \(j\) 的符号为 \((-1)^{i+j-3}\)，先删 \(j\) 再删 \(i\) 的符号为 \((-1)^{i+j-2}\)。两项的剩余因子次序相同，标量系数分别为 \(\lambda(m_i)\lambda(m_j)\) 及其反序，由交换性相等，故相互抵消。所有项成对消去，得到 \(\iota_\lambda^2=0\)。
+\end{proof}
+\symidx{\(\iota_\lambda\)：外代数上的收缩算子}
+
+令 \(M=R^n\)，选基 \(e_1,\ldots,e_n\)，并指定 \(\lambda(e_i)=a_i\in R\)。取 \(K_p=\bigwedge^pR^n\)、\(d_p=\iota_\lambda\)，得到
+\[
+0\longrightarrow K_n\xrightarrow{d_n}K_{n-1}\longrightarrow\cdots
+\longrightarrow K_1\xrightarrow{d_1}K_0\longrightarrow0.
+\]
+一列模与箭头满足每两个相邻箭头的复合为零时，称为一个\term[lianfuxing]{链复形}[chain complex]；此处的条件 \(d_{p-1}d_p=0\) 已由上一命题证明。这个复形称为序列 \(a_1,\ldots,a_n\) 的\term[Koszul-fuxing]{Koszul 复形}[Koszul complex]，记为 \(K_\bullet(a_1,\ldots,a_n;R)\)。\symidx{\(K_\bullet(a_1,\ldots,a_n;R)\)：Koszul 复形}它在低次上的公式是
+\[
+d_1(e_i)=a_i,\qquad d_2(e_i\wedge e_j)=a_ie_j-a_je_i.
+\]
+因而末端余核为 \(R/(a_1,\ldots,a_n)\)，而 \(d_2\) 记录了最直接的两两关系。
+
+\ProseParagraphBreak
+复合为零只保证像包含在核中，并不保证正合。最短的例子是 \(n=1\)，复形就是 \(0\to R\xrightarrow{\times a_1}R\to0\)。若 \(R=k[\varepsilon]/(\varepsilon^2)\)、\(a_1=\varepsilon\)，则左侧映射的核为非零理想 \((\varepsilon)\)，所以在这一项不正合。哪些序列使增广后的 Koszul 复形成为 \(R/(a_1,\ldots,a_n)\) 的自由消解，将在第三卷第15.2—15.3节结合正则序列系统讨论；本节已经给出的构造与平方为零恒等式不依赖那里的正合性定理。

@@ -5,12 +5,12 @@
 \section{限制条件与反例}
 \label{b2:sec:0704}
 
-% TODO: 按以下纲要要点撰写本节。
+自由、投射与平坦之间的蕴含已经建立，但逆命题要逐一检查环及模的条件。\(\mathbb Q\) 已经给出平坦而不投射的例子；本节先说明无挠为什么更弱，再说明有限展示如何补足从平坦到投射所缺少的条件。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 一般整环上无挠不等于平坦
-% * 有限呈示平坦模的投射性
+% * 有限展示平坦模的投射性
 % * 第四卷用 Ext、Tor 重新刻画三类模
 %
 % ---
@@ -19,14 +19,80 @@
 \subsection{无挠与平坦的区别}
 \label{b2:subsec:0704:01}
 
-待撰写。
+取 \(R=k[x,y]\)、\(I=(x,y)\)。由于 \(I\subseteq R\)，它无挠，且由两个元素生成。不过它不平坦。下面具体找出被张量积消去的一个非零元素，而不只以“不是主理想”作为理由。
 
-\subsection{有限呈示平坦模的投射性}
+\begin{example}\label{b2:exm:torsionfree-not-flat}
+多项式环 \(R=k[x,y]\) 的理想 \(I=(x,y)\) 是有限展示无挠模，却不是平坦模。
+\end{example}
+\begin{proof}
+满射 \(q:R^2\to I\)、\((a,b)\mapsto ax+by\) 的核由 \((-y,x)\) 生成。事实上，若 \(ax+by=0\)，在 \(R/(x)=k[y]\) 中得到 \(\bar b y=0\)，所以 \(b=xc\)；再由整环中可消去 \(x\)，得到 \(a=-yc\)。反向包含直接成立。因此
+\[
+R\xrightarrow{c\mapsto(-yc,xc)}R^2\xrightarrow{q}I\longrightarrow0
+\]
+是一个有限展示。
+
+与 \(I\) 张量，利用右正合性及有限直和、单位同构，得到
+\[
+I\otimes_R I\cong (I\oplus I)/\Bigl\{\,(-yc,xc):c\in I\,\Bigr\}.
+\]
+在此识别下，\(x\otimes y-y\otimes x\) 对应 \((y,-x)\) 的陪集。若它为零，就有 \(c\in I\) 使 \(y=-yc\)、\(-x=xc\)；消去非零的 \(x\) 得 \(c=-1\)，与 \(I\) 为真理想矛盾。因此这个张量非零。
+
+然而包含 \(I\hookrightarrow R\) 张量 \(I\) 后，把它送到 \(R\otimes_R I\cong I\) 中的 \(xy-yx=0\)。这给出未被保持的单射，故 \(I\) 不平坦。
+\end{proof}
+
+\(I\) 的非平坦性不是因为它有挠，也不是因为关系无限多。障碍来自两个生成元共同满足的关系；只检查单个非零标量的乘法映射，无法发现这一障碍。
+
+\subsection{有限展示平坦模的投射性}
 \label{b2:subsec:0704:02}
 
-待撰写。
+\begin{theorem}\label{b2:thm:fp-flat-projective}
+对任意含幺环 \(R\)，左模 \(M\) 有限展示且平坦，当且仅当它有限生成且投射。
+\end{theorem}
+\begin{proof}
+设 \(M\) 有限展示，取生成元 \(x_1,\ldots,x_n\)，以及生成全部关系的有限个关系
+\[
+\sum_{i=1}^n a_{\ell i}x_i=0\qquad(1\le\ell\le s).
+\]
+\(M\) 又平坦，故可用\cref{b2:thm:flat-finite-relations}证明中的有限关系组分解，找到 \(y_1,\ldots,y_t\) 与 \(b_{ij}\)，使
+\[
+x_i=\sum_jb_{ij}y_j,\qquad
+\sum_i a_{\ell i}b_{ij}=0\quad\text{对所有 }\ell,j.
+\]
+在左自由模 \(R^t\) 中记标准基为 \(e_j\)。赋值 \(x_i\mapsto\sum_j b_{ij}e_j\) 把每个给定关系送到零，也就把它们生成的全部关系送到零，因而诱导左模同态 \(h:M\to R^t\)。再令 \(g:R^t\to M\)、\(e_j\mapsto y_j\)。在每个生成元上有 \(gh(x_i)=x_i\)，所以 \(gh=\operatorname{id}_M\)。由\cref{b2:prop:finite-projective-summand}，\(M\) 有限生成且投射。
+
+反过来，有限生成投射模 \(M\) 是某个 \(R^n\) 的直和因子，写 \(R^n=M\oplus K\)。\(K\) 也是 \(R^n\) 的同态像，因此有限生成。选有限自由满射 \(R^s\to K\)，再复合包含 \(K\to R^n\)，得到有限展示 \(R^s\to R^n\to M\to0\)。投射模平坦则是\cref{b2:thm:projective-flat}。
+\end{proof}
+
+证明需要一次处理全部关系，所以用的是有限展示，而非仅有限生成。若 \(R\) 是左 Noether 环，即每个左理想都有限生成，每个有限生成模便都有有限展示：有限自由模的子模有限生成，取满射的核即可。这里用到的有限自由模子模性质也可由理想情形归纳得到：对子模 \(K\subseteq R^n\)，投影到最后一个坐标的像是有限生成左理想，核是 \(R^{n-1}\) 的子模；将像的有限生成元提升，再加上核的生成元，就生成 \(K\)。因此在左 Noether 环上，有限生成平坦模一定投射。
+
+\ProseParagraphBreak
+以下例子说明，一般环上不能删去“展示有限”这一要求。令 \(R=\prod_{n\ge1}k\)，令 \(I=\bigoplus_{n\ge1}k\) 为有限支集序列组成的理想。商模 \(M=R/I\) 是循环模，并且平坦，却不投射。
+
+\ProseParagraphBreak
+为证明平坦，给定有限关系 \(\sum_{i=1}^r a_i\bar b_i=0\)。选取 \(b_i\in R\) 作代表，令 \(c=\sum_i a_i b_i\in I\)。取有限坐标集 \(F\) 包含 \(c\) 的支集，并令 \(e_F\) 是这些坐标为一、其余为零的幂等元。因为 \(e_Fb_i\in I\)，有 \(\bar b_i=(1-e_F)b_i\bar1\)，而
+\[
+\sum_i a_i(1-e_F)b_i=(1-e_F)c=0.
+\]
+由\cref{b2:thm:flat-finite-relations}，\(M\) 平坦。
+
+\ProseParagraphBreak
+若 \(M\) 投射，自然满射 \(R\to M\) 分裂，因而 \(I\) 是正则模的直和因子。相应投影 \(p:R\to I\) 由 \(e=p(1)\in I\) 决定，其像为 \(Re\)，所以 \(I=Re\)。但 \(e\) 只有有限支集，\(Re\) 无法包含支集在其外的单坐标向量，矛盾。相同的支集论证说明 \(I\) 不是有限生成理想，由\cref{b2:prop:finite-presentation-kernel}，\(R/I\) 不有限展示。因而它正好展示了定理中不能省去的条件。
 
 \subsection{Ext、Tor 与三类模的刻画}
 \label{b2:subsec:0704:03}
 
-待撰写。
+本编始终通过提升、延拓和张量正合性来定义三类模。第四卷将构造导出函子 \(\operatorname{Ext}\) 与 \(\operatorname{Tor}\)，并证明下列刻画：
+\[
+\begin{aligned}
+P\text{ 投射}&\quad\Longleftrightarrow\quad
+\operatorname{Ext}_R^1(P,N)=0\ \text{对每个左模 }N,\\
+E\text{ 内射}&\quad\Longleftrightarrow\quad
+\operatorname{Ext}_R^1(N,E)=0\ \text{对每个左模 }N,\\
+M\text{ 平坦}&\quad\Longleftrightarrow\quad
+\operatorname{Tor}_1^R(N,M)=0\ \text{对每个右模 }N.
+\end{aligned}
+\]
+这里仅预告后续结论，不用尚未定义的符号替代本章证明；消解及 Ext、Tor 的构造见第四卷第7、8章，具体定义在第8.2—8.3节。尤其第三行须让右模 \(N\) 位于张量积的左侧，与本章平坦左模的约定一致。
+
+\ProseParagraphBreak
+可以先从已经学过的正合列理解这些条件。投射性使以 \(P\) 为商模的扩张分裂，内射性使以 \(E\) 为子模的扩张分裂；平坦性使张量以后不丢失左端的单射。这三种失败都能通过新构造的模来记录。如何构造它们、证明与所选消解无关，并建立长正合列，是后续同调代数的内容。

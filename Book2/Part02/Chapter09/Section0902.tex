@@ -5,9 +5,9 @@
 \section{外代数}
 \label{b2:sec:0902}
 
-% TODO: 按以下纲要要点撰写本节。
+不同次数的外幂不是彼此孤立的模。把输入首尾连接，可以在它们之间定义楔积，组成外代数。有基时，其计算归结为把指标排列成递增次序；没有基时，构造仍由交替映射的泛性质保证。本节把这两种描述联系起来，并核对它们在任意特征下都成立。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 基、维数与楔积
 % * 分次交换律
@@ -17,14 +17,139 @@
 \subsection{基、维数与楔积}
 \label{b2:subsec:0902:01}
 
-待撰写。
+设 \(\xi\in\bigwedge^pM\)、\(\eta\in\bigwedge^qM\)。希望用下式定义乘法：
+\[
+(m_1\wedge\cdots\wedge m_p)\wedge(n_1\wedge\cdots\wedge n_q)
+=m_1\wedge\cdots\wedge m_p\wedge n_1\wedge\cdots\wedge n_q.
+\]
+纯楔积并非自由符号，因而需要先证明这个公式与它们之间的关系相容。
+
+\begin{proposition}\label{b2:prop:wedge-product}
+上述公式唯一延伸为双线性映射
+\[
+\bigwedge^pM\times\bigwedge^qM\longrightarrow\bigwedge^{p+q}M,
+\qquad(\xi,\eta)\longmapsto\xi\wedge\eta.
+\]
+这些映射满足结合律，\(R=\bigwedge^0M\) 中的 \(1\) 为单位元。因此
+\[
+\bigwedge M\coloneqq\bigoplus_{p\ge0}\bigwedge^pM
+\]
+成为分次 \(R\) 代数，称为 \(M\) 的\term[waidaishu]{外代数}[exterior algebra]；其乘法称为\term[xieji]{楔积}[wedge product]。
+\end{proposition}
+\begin{proof}
+固定 \(n_1,\ldots,n_q\)，右端关于 \(m_1,\ldots,m_p\) 交替且多线性，所以由\cref{b2:prop:exterior-alternating-universal}对 \(\xi\) 唯一线性延伸。所得公式关于各 \(n_j\) 仍多线性且交替：在纯 \(\xi\) 上已有这些等式，再由线性延伸到所有 \(\xi\)。第二次应用泛性质，即得关于 \(\eta\) 的唯一线性延伸。
+
+结合律在三个纯楔积上只是同一串因子的首尾连接，三线性与生成性使其在任意三个元素上成立。零次外幂按标量乘法参与运算，因此 \(1\) 为单位。直和中的元素只有有限多个非零次数分量，乘法扩张后的求和仍有限，故给出整个直和上的代数结构。
+\end{proof}
+\symidx{\(\bigwedge M\)：模 \(M\) 的外代数}
+
+\begin{theorem}[有限自由模的外幂基]\label{b2:thm:exterior-power-basis}
+设 \(M\) 为有基 \(e_1,\ldots,e_n\) 的自由 \(R\) 模。对 \(0\le p\le n\)，全部递增指标楔积
+\[
+e_I\coloneqq e_{i_1}\wedge\cdots\wedge e_{i_p},
+\qquad I=\{i_1<\cdots<i_p\}\subseteq\{1,\ldots,n\},
+\]
+组成 \(\bigwedge^pM\) 的基；\(p=0\) 时只有 \(e_{\varnothing}=1\)。对 \(p>n\)，有 \(\bigwedge^pM=0\)。特别地，在域上
+\(\dim_k\bigwedge^p k^n=\binom np\)。
+\end{theorem}
+\begin{proof}
+将各因子按 \(e_i\) 展开，再用多线性，任意纯楔积成为基向量楔积的有限线性组合。含重复指标的项为零，其余项由\eqref{b2:eq:alternating-permutation}化为带符号的递增指标项，故所列元素生成。当 \(p>n\) 时所有项都重复，得到零模。
+
+为证明线性无关，固定一个递增指标组 \(I\)。若 \(v_j=\sum_{a=1}^n x_{aj}e_a\)，定义
+\[
+\Delta_I(v_1,\ldots,v_p)
+=\sum_{\sigma\in S_p}\operatorname{sgn}(\sigma)
+\prod_{j=1}^p x_{i_{\sigma(j)},j}.
+\]
+每个变量只出现一次，所以它多线性。若第 \(r,s\) 个输入相等，则把置换 \(\sigma\) 与 \(\sigma\circ(r\ s)\) 配对：二者不同，对应乘积相同而符号相反。每对的和为零，所以 \(\Delta_I\) 交替。这一成对消去在特征二中仍然有效。
+
+泛性质给出线性映射 \(\widetilde\Delta_I:\bigwedge^pM\to R\)。对递增指标 \(J\)，有 \(\widetilde\Delta_I(e_J)=1\) 当 \(I=J\)，否则为零。于是若 \(\sum_J a_Je_J=0\)，应用 \(\widetilde\Delta_I\) 便得 \(a_I=0\)。这证明线性无关，且没有除以任何整数。\(p=0\) 的结论由 \(\bigwedge^0M=R\) 直接得到。
+\end{proof}
+
+例如，在 \(R^3\) 中，二次外幂有基 \(e_1\wedge e_2,e_1\wedge e_3,e_2\wedge e_3\)。直接展开给出
+\[
+(e_1+2e_2)\wedge(e_2+e_3)
+=e_1\wedge e_2+e_1\wedge e_3+2e_2\wedge e_3.
+\]
+系数 \(2\) 是否为零由所处的环决定，基的构造本身没有因此改变。
 
 \subsection{分次交换律}
 \label{b2:subsec:0902:02}
 
-待撰写。
+\begin{proposition}[分次交换律]\label{b2:prop:exterior-graded-commutativity}
+若 \(\xi\in\bigwedge^pM\)、\(\eta\in\bigwedge^qM\)，则
+\begin{equation}\label{b2:eq:graded-wedge-sign}
+\xi\wedge\eta=(-1)^{pq}\eta\wedge\xi.
+\end{equation}
+此外，每个奇数次齐次元素 \(\xi\) 都满足 \(\xi\wedge\xi=0\)，无须假设 \(2\) 可逆。
+\end{proposition}
+\begin{proof}
+先取两个纯楔积。把前面的 \(p\) 个因子依次移过后面的 \(q\) 个因子，共交换 \(pq\) 次；每次由\cref{b2:prop:alternating-implies-skew}产生一个负号。这证明纯楔积情形，双线性再给出一般情形。
+
+若 \(p\) 为奇数，写 \(\xi=\sum_{i=1}^t a_iw_i\)，其中 \(w_i\) 为 \(p\) 次纯楔积。每个 \(w_i\wedge w_i\) 都含重复因子，所以为零；不同指标的两项合为
+\[
+a_ia_j\Bigl(w_i\wedge w_j+w_j\wedge w_i\Bigr)=0
+\]
+，因为 \((-1)^{p^2}=-1\)。因此整个平方为零。这里直接把交叉项成对消去，并未从 \(2\xi^2=0\) 消去 \(2\)。
+\end{proof}
+
+若 \(2=0\) 于 \(R\)，分次交换律中的符号全部成为 \(1\)，外代数作为普通代数也是交换的，但仍保留每个一次元素的平方为零。例如
+\[
+\bigwedge(\mathbb F_2^2)
+\cong\mathbb F_2[x,y]/(x^2,y^2),
+\qquad e_1\longleftrightarrow x,\quad e_2\longleftrightarrow y.
+\]
+双方均由 \(1,x,y,xy\) 或相应楔积组成基，乘法关系一致，因而公式确为同构。它不同于无平方关系的对称代数 \(\mathbb F_2[x,y]\)。
+
+\begin{proposition}[外代数的代数泛性质]\label{b2:prop:exterior-algebra-universal}
+设 \(A\) 为含单位元的 \(R\) 代数，\(u:M\to A\) 为 \(R\) 线性映射，并满足 \(u(m)^2=0\) 对所有 \(m\in M\) 成立。则存在唯一 \(R\) 代数同态 \(\bigwedge M\to A\) 延伸 \(u\)。等价地，外代数是张量代数的商：
+\[
+\bigwedge M\cong T_R(M)/\langle m\otimes m\mid m\in M\rangle,
+\]
+分母表示这些二次元素生成的双边理想。
+\end{proposition}
+\begin{proof}
+由 \(u(x+y)^2=u(x)^2=u(y)^2=0\)，得到 \(u(x)u(y)=-u(y)u(x)\)。因此乘积映射
+\((m_1,\ldots,m_p)\mapsto u(m_1)\cdots u(m_p)\) 多线性；若两个输入相同，把其间的因子逐个交换，便出现一个 \(u(m)^2=0\)，所以它交替。逐次应用\cref{b2:prop:exterior-alternating-universal}得到各次外幂上的线性映射。首尾连接的公式保证它们合起来保持乘法和单位，故为代数同态。\(M\) 生成整个外代数，所以延伸唯一。
+
+再由\cref{b2:thm:tensor-algebra-universal}，线性映射 \(M\to\bigwedge M\) 诱导满代数同态 \(T_R(M)\to\bigwedge M\)，并杀掉全部 \(m\otimes m\)，故经过上述商代数。反过来，商代数中的 \(M\) 的像都平方为零，由刚证明的泛性质得到反向代数同态。两复合在 \(M\) 与单位元上为恒等，因生成性而处处为恒等。
+\end{proof}
 
 \subsection{直和的外代数}
 \label{b2:subsec:0902:03}
 
-待撰写。
+\begin{proposition}[直和的外幂]\label{b2:prop:exterior-direct-sum}
+对任意 \(R\) 模 \(M,N\) 与 \(p\ge0\)，存在自然同构
+\[
+\bigoplus_{a+b=p}\Bigl(\bigwedge^aM\otimes_R\bigwedge^bN\Bigr)
+\longrightarrow\bigwedge^p(M\oplus N),
+\]
+其在纯楔积上的公式为
+\[
+(m_1\wedge\cdots\wedge m_a)\otimes(n_1\wedge\cdots\wedge n_b)
+\longmapsto
+(m_1,0)\wedge\cdots\wedge(m_a,0)\wedge(0,n_1)\wedge\cdots\wedge(0,n_b).
+\]
+\end{proposition}
+\begin{proof}
+在分次模 \(E=\bigwedge M\otimes_R\bigwedge N\) 上，规定齐次元素的乘法
+\[
+(\xi\otimes\eta)(\xi'\otimes\eta')
+=(-1)^{bc}(\xi\wedge\xi')\otimes(\eta\wedge\eta'),
+\qquad \deg\eta=b,\quad\deg\xi'=c.
+\]
+固定次数后此式分别线性且对两次张量关系平衡，故良定义。三因子结合律中，两种括号的符号指数分别为
+\(bc+(b+d)e\) 与 \(de+b(c+e)\)，其中 \(d=\deg\eta'\)、\(e=\deg\xi''\)，二者相同；各外代数的结合律保证剩余因子也相同。单位是 \(1\otimes1\)。
+
+映射 \(M\oplus N\to E\)、\((m,n)\mapsto m\otimes1+1\otimes n\) 的每个像都平方为零：两个同侧平方为零，两项交叉乘积分别为 \(m\otimes n\) 与 \(-m\otimes n\)。因此\cref{b2:prop:exterior-algebra-universal}给出分次代数同态 \(\alpha:\bigwedge(M\oplus N)\to E\)。
+
+反方向，把 \(\xi\otimes\eta\) 送到两侧包含所诱导的楔积，得到线性映射 \(\beta:E\to\bigwedge(M\oplus N)\)。将中间的 \(\eta\) 与 \(\xi'\) 交换时，由\eqref{b2:eq:graded-wedge-sign}恰好得到 \((-1)^{bc}\)，所以 \(\beta\) 也是代数同态。两复合在所有 \(m\in M,n\in N\) 及单位元上都为恒等；这些元素生成双方代数，故 \(\alpha,\beta\) 互逆。取全次数 \(p\) 的分量，就得到命题中的直和同构。对 \(M,N\) 的线性映射，公式逐因子作用，故同构自然。
+\end{proof}
+
+特别地，
+\[
+\bigwedge^2(M\oplus N)
+\cong\bigwedge^2M\oplus(M\otimes_RN)\oplus\bigwedge^2N.
+\]
+例如 \((m,0)\wedge(0,n)\) 属于中间项，而反向次序对应 \(-m\otimes n\)。这项负号已经由外代数的乘法决定，不是对直和分解额外指定的约定。若 \(M,N\) 分别具有 \(m,n\) 个基向量的有限自由模，比较基的数目便得到
+\(\binom{m+n}{p}=\sum_{a+b=p}\binom ma\binom nb\)，其代数来源正是把一个递增指标组按两组基拆开。

@@ -5,9 +5,9 @@
 \section{行列式的内在定义}
 \label{b2:sec:0903}
 
-% TODO: 按以下纲要要点撰写本节。
+一个 \(n\) 维空间中的 \(n\) 重楔积只剩下一条线，所以线性变换在这条线上只能表现为乘以一个标量。这个标量就是行列式。以最高外幂为起点，乘法性来自函子复合，子式公式来自较低次外幂的坐标。本节同时允许任意交换环上的有限自由模，不以域上的除法或特征值作为前提。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 最高外幂与行列式线
 % * 行列式的乘法性
@@ -17,14 +17,107 @@
 \subsection{最高外幂与行列式线}
 \label{b2:subsec:0903:01}
 
-待撰写。
+\begin{definition}\label{b2:def:determinant-line}
+若 \(M\) 为有 \(n\) 个基向量的有限自由 \(R\) 模，称具有一个基向量的自由模
+\[
+\det M\coloneqq\bigwedge^nM
+\]
+为 \(M\) 的\term[hanglieshi-xian]{行列式线}[determinant line]。\(M=0\) 且取空基时，约定 \(\det M=R\)。
+\end{definition}
+\symidx{\(\det M=\bigwedge^nM\)：有限自由模的行列式线}
+
+由\cref{b2:thm:exterior-power-basis}，任一有序基 \(e_1,\ldots,e_n\) 给出行列式线的基向量 \(\omega=e_1\wedge\cdots\wedge e_n\)。对于线性自同态 \(f:M\to M\)，存在唯一 \(a\in R\) 使
+\begin{equation}\label{b2:eq:intrinsic-determinant}
+\Bigl(\bigwedge^n f\Bigr)(\omega)=a\omega.
+\end{equation}
+这个 \(a\) 不依赖 \(\omega\) 的选择。事实上，同一自由模的另一个单元素基必为 \(\omega'=u\omega\)，其中 \(u\) 为单位：若 \(\omega=v\omega'\)，则由基坐标唯一性得 \(uv=1\)。现在
+\(\bigwedge^n f(\omega')=u a\omega=a\omega'\)，使用的正是 \(R\) 的交换性。
+
+\ProseParagraphBreak
+据此定义 \(f\) 的\term[hanglieshi]{行列式}[determinant]为 \(\det f=a\)。对 \(n\times n\) 矩阵 \(A=(a_{ij})\)，将其看成 \(R^n\) 上的线性映射并记其行列式为 \(\det A\)。把列向量 \(f(e_j)=\sum_i a_{ij}e_i\) 代入\eqref{b2:eq:intrinsic-determinant}，多线性展开后只有没有重复指标的项保留，故
+\begin{equation}\label{b2:eq:determinant-leibniz}
+\det A=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+\prod_{j=1}^n a_{\sigma(j),j}.
+\end{equation}
+这与熟悉的 Leibniz 公式相同；本节的定义没有改变原来的行列式，而是解释了它为何具有坐标无关的含义。空矩阵的行列式为 \(1\)，与空楔积的约定一致。
+\symidx{\(\det f,\det A\)：线性自同态及矩阵的行列式}
+
+\ProseParagraphBreak
+公式立即表明行列式对各列分别线性，若两列相同则为零，交换两列变号。对转置矩阵，用置换 \(\sigma^{-1}\) 重排求和，并利用标量乘法交换，得到
+\begin{equation}\label{b2:eq:determinant-transpose}
+\det(A^{\mathsf t})=\det A.
+\end{equation}
+因此相同性质也适用于行。上三角矩阵的行列式等于对角元之积：非恒等置换必有某个 \(\sigma(j)>j\)，相应乘积含下三角的零元，只有恒等置换可能贡献。
 
 \subsection{行列式的乘法性}
 \label{b2:subsec:0903:02}
 
-待撰写。
+\begin{theorem}[行列式的乘法性]\label{b2:thm:determinant-multiplicativity}
+对有限自由模的线性自同态 \(f,g\)，有
+\[
+\det(gf)=\det(g)\det(f),\qquad
+\det(\operatorname{id})=1.
+\]
+特别地，\(n\times n\) 矩阵满足 \(\det(BA)=\det B\det A\)。若 \(P\) 可逆，则
+\[
+\det(P^{-1}AP)=\det A.
+\]
+\end{theorem}
+\begin{proof}
+对行列式线的基 \(\omega\)，由\eqref{b2:eq:exterior-functoriality}，
+\[
+\begin{aligned}
+\Bigl(\bigwedge^n(gf)\Bigr)(\omega)
+&=\Bigl(\bigwedge^n g\Bigr)\Bigl(\bigwedge^n f\Bigr)(\omega)\\
+&=\det(f)\det(g)\omega.
+\end{aligned}
+\]
+基系数唯一，得到乘法公式；恒等映射保持 \(\omega\)，得到第二式。若 \(P\) 可逆，乘法性给出 \(\det(P^{-1})\det P=1\)，所以相似矩阵公式由三次乘法直接推出。
+\end{proof}
+
+在域上，\(\det f\ne0\) 等价于 \(f\) 可逆：若像中的 \(n\) 个向量线性相关，其楔积为零；若线性无关，它们构成一组基，从而 \(f\) 可逆。这里“相关则楔积为零”由把一个向量写成其他向量的线性组合得到；反方向把无关组扩充为基，再用\cref{b2:thm:exterior-power-basis}可知其楔积非零。
+
+\ProseParagraphBreak
+在一般交换环上，非零行列式不保证可逆。例如 \(\mathbb Z\) 上乘二的行列式为 \(2\ne0\)，但乘二不满射。正确条件是行列式为单位；必要性已经由乘法性得到，充分性将在\cref{b2:prop:adjugate-identity}中用伴随矩阵证明。单射、满射与可逆也不宜再用域上的秩直觉一概替代。
 
 \subsection{Cauchy–Binet 公式的外代数解释}
 \label{b2:subsec:0903:03}
 
-待撰写。
+设 \(A:R^n\to R^m\) 的矩阵仍记为 \(A\)。对递增指标集 \(I\subseteq\{1,\ldots,m\}\)、\(J\subseteq\{1,\ldots,n\}\)，且 \(|I|=|J|=p\)，记 \(A_{I,J}\) 为对应的 \(p\times p\) 子矩阵；它的行列式称为一个 \(p\) 阶\term[zishi]{子式}[minor]。基向量楔积的展开与\eqref{b2:eq:determinant-leibniz}给出
+\begin{equation}\label{b2:eq:exterior-minor-action}
+\Bigl(\bigwedge^p A\Bigr)(e_J)
+=\sum_{|I|=p}\det(A_{I,J})e_I.
+\end{equation}
+这里目标与来源分别使用各自的标准基；每个系数都是选定 \(p\) 列后，对相应 \(p\) 行坐标所作的交替求和。因此，较低次外幂把所有同阶子式同时组织成一个线性映射。
+
+\begin{theorem}[Cauchy–Binet]\label{b2:thm:cauchy-binet}
+设 \(A\in M_{m\times n}(R)\)、\(B\in M_{n\times r}(R)\)。对大小均为 \(p\) 的递增指标集 \(I\subseteq\{1,\ldots,m\}\)、\(J\subseteq\{1,\ldots,r\}\)，有
+\begin{equation}\label{b2:eq:cauchy-binet}
+\det\Bigl((AB)_{I,J}\Bigr)
+=\sum_{\substack{K\subseteq\{1,\ldots,n\}\\|K|=p}}
+\det(A_{I,K})\det(B_{K,J}).
+\end{equation}
+若 \(p>n\)，右端为空和，等于零。特别地，\(A\) 为 \(p\times n\)、\(B\) 为 \(n\times p\) 矩阵时，此式给出 \(\det(AB)\) 的全部最大子式展开。
+\end{theorem}
+\begin{proof}
+先对 \(\bigwedge^pB\) 使用\eqref{b2:eq:exterior-minor-action}，再对每个结果使用 \(\bigwedge^pA\)，得到
+\[
+\Bigl(\bigwedge^pA\Bigr)\Bigl(\bigwedge^pB\Bigr)(e_J)
+=\sum_I\biggl(\sum_K\det(A_{I,K})\det(B_{K,J})\biggr)e_I.
+\]
+另一方面，函子性说明左边等于 \(\bigwedge^p(AB)(e_J)\)，其 \(e_I\) 系数是 \(\det\Bigl((AB)_{I,J}\Bigr)\)。外幂基的坐标唯一性给出公式。若 \(p>n\)，中间模 \(\bigwedge^p R^n\) 为零，复合映射为零，故全部这些子式都为零。
+\end{proof}
+
+这一公式称为\term[Cauchy-Binet-gongshi]{Cauchy–Binet 公式}[Cauchy--Binet formula]。例如取
+\[
+A=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&2\\0&1\\1&0\end{pmatrix}.
+\]
+直接相乘得到 \(AB=\begin{pmatrix}2&2\\1&1\end{pmatrix}\)，行列式为零。按列指标 \(12,13,23\)，\(A\) 的三个二阶子式为 \(1,1,-1\)，\(B\) 对应行指标的子式为 \(1,-2,-1\)，故 Cauchy–Binet 求和为 \(1-2+1=0\)。这个算例同时核对了指标次序和符号。
+
+\ProseParagraphBreak
+当 \(M,N\) 分别具有 \(m,n\) 个基向量时，\cref{b2:prop:exterior-direct-sum}在次数 \(m+n\) 只剩一项，给出
+\[
+\det(M\oplus N)\cong\det M\otimes_R\det N.
+\]
+在这个同构下，\(f\oplus g\) 的最高外幂是两条行列式线上的作用之张量积，所以块对角矩阵的行列式为两个块的行列式之积。这也是直和外代数公式在最高次数的直接应用。

@@ -5,9 +5,9 @@
 \section{张量积的构造}
 \label{b2:sec:0601}
 
-% TODO: 按以下纲要要点撰写本节。
+两个向量相乘通常没有预先给定的含义，但我们可以要求一种新的乘法对加法分配，并允许标量从一个因子移到另一个因子。张量积正是满足这些要求的通用对象。这里允许标量环非交换：一个因子是右模，另一个因子是左模，所得对象首先只是交换群。分清这一点，才能知道哪些式子是定义允许的运算。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 平衡双线性映射
 % * 右模与左模的张量积
@@ -17,14 +17,131 @@
 \subsection{平衡双线性映射}
 \label{b2:subsec:0601:01}
 
-待撰写。
+\begin{definition}\label{b2:def:balanced-map}
+设 \(R\) 为含单位元的环，\(M\) 为右 \(R\) 模，\(N\) 为左 \(R\) 模，\(A\) 为交换群。映射 \(b:M\times N\to A\) 称为一个 \(R\) 上的\term[pingheng-yingshe]{平衡映射}[balanced map]，如果对任意 \(m,m'\in M\)、\(n,n'\in N\) 和 \(r\in R\)，有
+\[
+\begin{aligned}
+b(m+m',n)&=b(m,n)+b(m',n),\\
+b(m,n+n')&=b(m,n)+b(m,n'),\\
+b(mr,n)&=b(m,rn).
+\end{aligned}
+\]
+前两式称为双可加性，第三式称为平衡条件。
+\end{definition}
+
+本小节标题沿用“平衡双线性映射”的常用说法，但在一般环上，其确切含义是上述“双可加且平衡”。目标 \(A\) 没有给定 \(R\) 模结构，因而不能写 \(b(mr,n)=r b(m,n)\)。若 \(R\) 交换且目标也是 \(R\) 模，通常所谓 \(R\) 双线性还要求两个变量分别 \(R\) 线性；它与这里的定义须在相应的模结构建立后比较。
+
+\ProseParagraphBreak
+例如，取 \(M=R_R\)、\(N={}_RR\)，环乘法 \(b(x,y)=xy\) 是到加法群 \((R,+)\) 的平衡映射，因为 \((xr)y=x(ry)\)。它说明平衡条件来自乘法结合律，不要求 \(xy=yx\)。又如，在 \(\mathbb Z\) 上，任何双可加映射都平衡：对正整数重复使用加法，先得到 \(b(am,n)=a b(m,n)=b(m,an)\)，再由负元推广到所有整数。
 
 \subsection{右模与左模的张量积}
 \label{b2:subsec:0601:02}
 
-待撰写。
+把每个有序对 \((m,n)\) 暂时看成一个独立符号 \([m,n]\)，构造以这些符号为基的自由交换群
+\[
+F=\mathbb Z^{(M\times N)}.
+\]
+这是\cref{b2:thm:free-module-universal}在 \(R=\mathbb Z\) 时的自由模。令 \(H\) 为以下三类元素生成的子群：
+\[
+\begin{aligned}
+&[m+m',n]-[m,n]-[m',n],\\
+&[m,n+n']-[m,n]-[m,n'],\\
+&[mr,n]-[m,rn].
+\end{aligned}
+\]
+这些关系只规定双可加性与平衡性，没有预设额外的模结构。
+
+\begin{definition}\label{b2:def:tensor-product}
+交换群 \(F/H\) 连同映射
+\[
+\tau:M\times N\longrightarrow F/H,\qquad
+(m,n)\longmapsto[m,n]+H
+\]
+称为右 \(R\) 模 \(M\) 与左 \(R\) 模 \(N\) 在 \(R\) 上的\term[zhangliangji]{张量积}[tensor product]，记为 \(M\otimes_R N\)。将 \([m,n]+H\) 记为 \(m\otimes n\)，称为\term[chunzhangliang]{纯张量}[pure tensor]。
+\end{definition}
+\symidx{\(M\otimes_R N\)：右模与左模在 \(R\) 上的张量积}
+
+由商掉的关系，\(\tau\) 平衡。双可加性还给出
+\[
+0\otimes n=m\otimes0=0,\qquad
+(-m)\otimes n=-(m\otimes n)=m\otimes(-n).
+\]
+每个张量可以写成有限和 \(\sum_{i=1}^t m_i\otimes n_i\)：自由交换群中的整数系数可以移入第一个因子，负系数也由上式处理。\(t=0\) 时表示零元。
+
+\begin{theorem}[张量积的泛性质]\label{b2:thm:tensor-universal}
+对任意交换群 \(A\) 及平衡映射 \(b:M\times N\to A\)，存在唯一群同态
+\[
+\widetilde b:M\otimes_R N\longrightarrow A,
+\qquad \widetilde b(m\otimes n)=b(m,n).
+\]
+反过来，每个这样的群同态与 \(\tau\) 复合都给出平衡映射。因此，从张量积出发的群同态与平衡映射一一对应。具有这一性质的交换群及其指定平衡映射，在保持指定映射的唯一同构意义下唯一。
+\end{theorem}
+\begin{proof}
+先由自由交换群的泛性质，把 \([m,n]\mapsto b(m,n)\) 唯一延伸为同态 \(F\to A\)。双可加性与平衡条件恰好说明 \(H\) 的每个生成元都映到零，所以由\cref{b2:prop:quotient-module}的商模泛性质，该同态唯一通过 \(F/H\) 分解。唯一性也可直接看出：所有纯张量生成 \(F/H\)，它们的像已由公式给定。
+
+反过来，同态保持加法，而 \(\tau\) 满足三类关系，所以复合映射平衡。若另有 \((T,\tau')\) 满足同样的泛性质，分别将 \(\tau'\) 与 \(\tau\) 分解，得到 \(M\otimes_RN\to T\) 与 \(T\to M\otimes_RN\)。两复合在指定平衡映射上的效果均为恒等，由各自泛性质的唯一性，两复合就是恒等映射。这同时给出同构及其唯一性。
+\end{proof}
+
+利用泛性质定义映射时，不必先判断某个张量的两种有限和表达是否相同；应当先证明有序对上的公式平衡。这个步骤正是表达不唯一时的良定义依据。
+
+\begin{proposition}\label{b2:prop:tensor-maps}
+设 \(f:M\to M'\) 为右 \(R\) 模同态，\(g:N\to N'\) 为左 \(R\) 模同态，则存在唯一群同态
+\[
+f\otimes_R g:M\otimes_R N\longrightarrow M'\otimes_R N',
+\qquad m\otimes n\longmapsto f(m)\otimes g(n).
+\]
+这些同态保持恒等映射，并满足
+\[
+(f'\otimes g')\circ(f\otimes g)=(f'\circ f)\otimes(g'\circ g).
+\]
+固定一个变量后，此构造还保持另一个变量中同态的加法。
+\end{proposition}
+\begin{proof}
+双可加性来自 \(f,g\) 的可加性；平衡性由
+\[
+f(mr)\otimes g(n)=f(m)r\otimes g(n)
+=f(m)\otimes rg(n)=f(m)\otimes g(rn)
+\]
+保证。于是\cref{b2:thm:tensor-universal}给出所需同态。恒等式与复合公式在每个纯张量上成立，故在整个群上成立。固定 \(g\) 为恒等映射时，\((f_1+f_2)(m)\otimes n=f_1(m)\otimes n+f_2(m)\otimes n\)，这证明第一变量中的加法相容性；固定第一变量时同样由第二变量的分配律得到。
+\end{proof}
 
 \subsection{纯张量表达的非唯一性}
 \label{b2:subsec:0601:03}
 
-待撰写。
+在 \(\mathbb Z\otimes_{\mathbb Z}\mathbb Z\) 中，\(2\otimes3=1\otimes6=6\otimes1\)。因此，纯张量相等不意味着对应的因子相等。更强的现象是：在
+\((\mathbb Z/2\mathbb Z)\otimes_{\mathbb Z}(\mathbb Z/3\mathbb Z)\) 中，任意纯张量 \(t\) 都满足 \(2t=3t=0\)，故 \(t=3t-2t=0\)。两边的模都非零，张量积却为零。
+
+\ProseParagraphBreak
+另一方面，一般张量并不一定是一个纯张量。为严格辨认这一点，先给出有基时的计算方法。此处只把所得对象看成交换群；下一节将补上域上的标量作用。
+
+\begin{proposition}\label{b2:prop:tensor-free-coordinate}
+设 \(M=\bigoplus_{i\in I}e_iR\) 为右自由模。对任何左 \(R\) 模 \(N\)，有群同构
+\[
+M\otimes_RN\longrightarrow N^{(I)},\qquad
+\Bigl(\sum_i e_i r_i\Bigr)\otimes n\longmapsto(r_i n)_{i\in I}.
+\]
+其逆映射为 \((n_i)\mapsto\sum_i e_i\otimes n_i\)。若 \(R=k\) 是域，\(V,W\) 分别有基 \((e_i)\)、\((f_j)\)，则每个张量唯一写成有限和 \(\sum_{i,j}a_{ij}e_i\otimes f_j\)。
+\end{proposition}
+\begin{proof}
+由于每个 \(m\in M\) 只有有限多个非零坐标，所给有序对上的映射确实取值于直和。逐坐标加法保持双可加性，\((r_i r)n=r_i(rn)\) 给出平衡性，故得到张量积上的同态。反向有限求和定义同态。正向后反向把 \(m\otimes n\) 送到 \(\sum_i e_i\otimes r_i n=m\otimes n\)；反向后正向恢复每个坐标，故互逆。再将每个 \(n_i\) 按 \(W\) 的基展开，便得到最后的存在性与唯一性。
+\end{proof}
+
+取 \(V=W=k^2\)，令 \(e_1,e_2\) 为标准基。张量
+\[
+t=e_1\otimes e_1+e_2\otimes e_2
+\]
+不是纯张量。若 \(t=(a_1e_1+a_2e_2)\otimes(b_1e_1+b_2e_2)\)，由唯一坐标得
+\(a_1b_1=a_2b_2=1\)、\(a_1b_2=a_2b_1=0\)。前两式迫使四个因子均非零，与后两式矛盾。张量积的元素是满足关系的有限和；把它们全部想象成一个有序对，会遗漏这种最基本的例子。
+
+\begin{proposition}[张量积与直和]\label{b2:prop:tensor-direct-sums}
+设 \((M_i)_{i\in I}\) 为右 \(R\) 模族，\(N\) 为左 \(R\) 模。存在自然同构
+\[
+\Bigl(\bigoplus_{i\in I}M_i\Bigr)\otimes_RN
+\ \cong\ \bigoplus_{i\in I}(M_i\otimes_RN),
+\qquad (m_i)\otimes n\longmapsto(m_i\otimes n)_i.
+\]
+固定右模而在左模变量取任意直和，也有同样的结论。
+\end{proposition}
+\begin{proof}
+\((m_i)\) 有限支集，所以右端属于直和。有序对上的公式双可加且平衡，因而诱导同态。设 \(\iota_i:M_i\to\bigoplus_iM_i\) 为包含映射；各同态 \(\iota_i\otimes\operatorname{id}_N\) 经直和的泛性质合成反向同态。两复合分别在 \((m_i)\otimes n\) 和每个直和分量的纯张量上为恒等，故互逆。第二变量的公式为 \(m\otimes(n_i)\mapsto(m\otimes n_i)_i\)；相同的有限支集检查与包含映射构造给出其逆。各公式只使用给定映射与有限加法，所以与模同态相容。
+\end{proof}

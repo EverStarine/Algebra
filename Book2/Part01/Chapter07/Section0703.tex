@@ -5,9 +5,9 @@
 \section{平坦模}
 \label{b2:sec:0703}
 
-% TODO: 按以下纲要要点撰写本节。
+\cref{b2:thm:tensor-right-exact}说明张量积总保持余核，却未必保持单射。最简单的失败已经出现在整数模中：取 \(n>1\)，把 \(\mathbb Z\xrightarrow{\times n}\mathbb Z\) 与 \(\mathbb Z/n\mathbb Z\) 张量，所得映射为零。平坦性正是要求这种失败不发生。本节先讨论一般环；理想张量判据及其后续应用处再明确假设环交换。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 张量正合性与平坦性
 % * 自由、投射、平坦之间的蕴含
@@ -19,24 +19,137 @@
 \subsection{张量正合性与平坦性}
 \label{b2:subsec:0703:01}
 
-待撰写。
+\begin{definition}\label{b2:def:flat-module}
+左 \(R\) 模 \(M\) 称为\term[pingtanmo]{平坦模}[flat module]，如果对每个右 \(R\) 模的单同态 \(u:A\to B\)，诱导的交换群同态
+\[
+u\otimes\operatorname{id}_M:A\otimes_R M\longrightarrow B\otimes_R M
+\]
+仍为单射。右模平坦的定义相应使用它与左模的张量积，不能在非交换环上省略这一侧别。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:flat-exact}
+左模 \(M\) 平坦，当且仅当 \(-\otimes_R M\) 将每个右模短正合列变成交换群的短正合列。
+\end{proposition}
+\begin{proof}
+对 \(0\to A\to B\to C\to0\)，\cref{b2:thm:tensor-right-exact}已经给出 \(A\otimes_R M\to B\otimes_R M\to C\otimes_R M\to0\) 的正合性。平坦性补上左端单射。反过来，任意单射与其余核组成短正合列，所以保持这些短正合列便保证保持所有单射。
+\end{proof}
+
+张量所得通常只是交换群的正合列。若 \(R\) 交换，可以用剩余的标量作用把它们看成 \(R\) 模；若存在额外双模结构，也须先说明该作用是什么。
+
+\begin{proposition}\label{b2:prop:flat-torsionfree}
+整环上的平坦模必无挠。
+\end{proposition}
+\begin{proof}
+设 \(0\ne a\in R\)。整环上乘 \(a\) 给出单射 \(R\to R\)，与 \(M\) 张量后，经单位同构 \(R\otimes_R M\cong M\) 化为乘 \(a\) 的映射 \(M\to M\)。由平坦性它单射，因此 \(am=0\) 只能有 \(m=0\)。
+\end{proof}
+
+平坦性的定义比较的是任意右模的单射；整环上无挠只检验上述一类乘法单射。把这一个必要条件误作充分条件，正是一般整环上容易出现的错误。
 
 \subsection{自由模、投射模与平坦模}
 \label{b2:subsec:0703:02}
 
-待撰写。
+\cref{b2:prop:tensor-direct-sums}已经证明，固定右模 \(N\) 时有自然同构
+\[
+N\otimes_R\Bigl(\bigoplus_iM_i\Bigr)
+\cong\bigoplus_i(N\otimes_R M_i).
+\]
+它把 \(n\otimes(m_i)_i\) 送到 \((n\otimes m_i)_i\)，并与 \(N\) 的同态相容。因此单射在张量直和后的表现，可以逐分量判断。
+
+\begin{theorem}\label{b2:thm:projective-flat}
+自由模是平坦模；平坦模的任意直和及直和因子仍平坦。因此每个投射模都平坦。
+\end{theorem}
+\begin{proof}
+对 \(M=R\)，单位同构把 \(u\otimes\operatorname{id}_R\) 识别为原单射 \(u\)。对自由模 \(R^{(I)}\)，\cref{b2:prop:tensor-direct-sums}把它识别为 \(u\) 的若干份直和，仍为单射。同理，若每个 \(M_i\) 平坦，则相应诱导映射逐分量单射，它们的直和也单射。
+
+若 \(M\oplus M'\) 平坦，则 \(u\otimes\operatorname{id}_{M\oplus M'}\) 是两个分量映射的直和。一个直和映射单射时，每个分量均单射，所以 \(M\) 平坦。最后用\cref{b2:thm:projective-characterizations}：投射模是自由模的直和因子。
+\end{proof}
+
+在域上这三类模完全相同，因为每个向量空间自由。在一般环上，投射不必自由的例子已由 \((k\times k)(1,0)\) 给出；下面的 \(\mathbb Q\) 将说明平坦也不必投射。
 
 \subsection{主理想整环上的无挠与平坦}
 \label{b2:subsec:0703:03}
 
-待撰写。
+有限生成无挠的主理想整环模自由，已由\cref{b2:thm:pid-module-structure}得到。任意无挠模未必有限生成，但其中每次张量计算只涉及有限多个元素和有限条关系，这使有限生成的结论仍然能够使用。
+
+\begin{lemma}\label{b2:lem:tensor-directed-union}
+设左模 \(M\) 是一族子模 \((M_\lambda)\) 的并，且任意两项都包含在某个共同的较大项中。若每个 \(M_\lambda\) 平坦，则 \(M\) 平坦。
+\end{lemma}
+\begin{proof}
+先说明张量积中的有限性。任意 \(z\in N\otimes_R M\) 是有限个纯张量之和，故来自某个 \(N\otimes_R M_\lambda\)。若这样一个表达在 \(N\otimes_R M\) 中为零，根据张量积的构造，它在自由交换群中的代表元是有限个加法关系和平衡关系的整数线性组合。所有这些关系只涉及有限多个 \(M\) 中的元素；取包含这些元素及 \(M_\lambda\) 的较大项 \(M_\mu\)，相同的关系已经证明该表达在 \(N\otimes_R M_\mu\) 中为零。这里没有假定 \(N\otimes_R M_\lambda\to N\otimes_R M\) 事先单射。
+
+现在给定右模单射 \(u:A\to B\)。若 \(z\in A\otimes_R M\) 映到零，先在某个 \(A\otimes_R M_\lambda\) 表示它，再由上一段选取较大的 \(M_\mu\)，使其像已在 \(B\otimes_R M_\mu\) 中为零。\(M_\mu\) 平坦，所以它在 \(A\otimes_R M_\mu\) 中为零，进而在 \(A\otimes_R M\) 中为零。这就证明了单射性。
+\end{proof}
+
+\begin{theorem}\label{b2:thm:pid-flat-torsionfree}
+主理想整环上的模平坦，当且仅当它无挠；这里不要求有限生成。
+\end{theorem}
+\begin{proof}
+必要性是\cref{b2:prop:flat-torsionfree}。若 \(M\) 无挠，则每个有限生成子模 \(N\) 都无挠，由\cref{b2:thm:pid-module-structure}自由，因而平坦。全部有限生成子模之并为 \(M\)，两个这样的子模包含在它们的和中，后者仍有限生成。因此可应用\cref{b2:lem:tensor-directed-union}。
+\end{proof}
+
+例如 \(\mathbb Q\) 是平坦 \(\mathbb Z\) 模，却不是投射模。事实上，任一 \(h:\mathbb Q\to\mathbb Z\) 都为零：对 \(q\in\mathbb Q\) 和每个正整数 \(n\)，有 \(h(q)=n h(q/n)\)，故 \(h(q)\) 被所有正整数整除，只能为零。若 \(\mathbb Q\) 投射，它应能嵌入一个自由交换群 \(\mathbb Z^{(I)}\)。与每个坐标投影复合都为零，就迫使嵌入本身为零，与 \(\mathbb Q\ne0\) 矛盾。
 
 \subsection{有限关系与理想张量判据}
 \label{b2:subsec:0703:04}
 
-待撰写。
+要有效检验平坦性，不能逐一列举所有模之间的单射。下面的判据把它变为对有限线性关系的要求。先保留一般环，并始终把系数写在左模元素的左侧。
+
+\begin{theorem}[有限关系判据]\label{b2:thm:flat-finite-relations}
+左 \(R\) 模 \(M\) 平坦，当且仅当每个有限关系
+\[
+\sum_{i=1}^n a_i x_i=0\qquad(a_i\in R,\ x_i\in M)
+\]
+都可写成如下形式：存在有限个 \(y_1,\ldots,y_t\in M\) 与 \(b_{ij}\in R\)，使
+\begin{equation}\label{b2:eq:flat-relation-factorization}
+x_i=\sum_{j=1}^t b_{ij}y_j,\qquad
+\sum_{i=1}^n a_i b_{ij}=0\quad(1\le j\le t).
+\end{equation}
+允许 \(t=0\)，此时所有 \(x_i\) 均为零。
+\end{theorem}
+
+\term[youxian-guanxi-panju]{有限关系判据}[equational criterion for flatness]说明：模中的一个关系，可以由系数环中已经为零的有限关系产生。它没有要求 \(x_i\) 本身线性无关，也不要求找到统一适用于所有关系的一组 \(y_j\)。
+
+\begin{proof}
+设 \(M\) 平坦。取右自由模映射 \(\rho:R_R^n\to R_R\)，\(\rho(e_i)=a_i\)，令 \(K=\ker\rho\)、\(I=\operatorname{im}\rho\)。短正合列 \(0\to K\to R^n\to I\to0\) 张量后正合，而 \(I\otimes_R M\to R\otimes_R M\) 单射。因此 \((x_i)\in M^n\) 在 \(\rho\otimes\operatorname{id}_M\) 下为零时，来自 \(K\otimes_R M\) 中的某个有限和 \(\sum_j k_j\otimes y_j\)。写 \(k_j=\sum_i e_i b_{ij}\)，便得到 \eqref{b2:eq:flat-relation-factorization}，其中第二个等式正是 \(k_j\in K\)。
+
+反过来，设所述单个关系都能这样分解。先把它推广到任意有限个同时成立的关系：若矩阵 \(A=(a_{\ell i})\) 和列 \(x=(x_i)\) 满足 \(Ax=0\)，则有有限矩阵 \(B\) 与列 \(y\)，使 \(x=By\)、\(AB=0\)。对关系的行数归纳。零行时取 \(B\) 为单位矩阵。一行时为假设；多行时先用第一行得到 \(x=B_1y\)，且第一行乘 \(B_1\) 为零。将其余行代入，得到关于 \(y\) 的较少行关系，再用归纳假设写 \(y=B_2z\)。取 \(B=B_1B_2\)，所有行便同时为零。此处保留乘法顺序，没有使用交换性。
+
+接着设 \(K\subseteq F\)，其中 \(F\) 为任意右自由模。若 \(z=\sum_{i=1}^n k_i\otimes x_i\) 映到 \(F\otimes_R M\) 后为零，取包含有限个 \(k_i\) 支集的基向量 \(e_1,\ldots,e_s\)，写 \(k_i=\sum_\ell e_\ell a_{\ell i}\)。由\cref{b2:prop:tensor-free-coordinate}，在 \(F\otimes_R M\cong\bigoplus M\) 的坐标中，条件就是 \(\sum_i a_{\ell i}x_i=0\) 对所有 \(\ell\) 成立。由上一段取 \(x_i=\sum_jb_{ij}y_j\)，且 \(AB=0\)。于是
+\[
+z=\sum_j\Bigl(\sum_i k_i b_{ij}\Bigr)\otimes y_j=0,
+\]
+因为每个内和的所有自由坐标均为零。故 \(K\otimes_R M\to F\otimes_R M\) 单射。
+
+最后考虑任意右模包含 \(U\subseteq V\)。取自由满射 \(p:F\to V\)，令 \(K=p^{-1}(U)\)、\(L=\ker p\)。若 \(z\in U\otimes_R M\) 映到 \(V\otimes_R M\) 中为零，利用 \(K\to U\) 的满射性和张量右正合性，提升为 \(w\in K\otimes_R M\)。\(w\) 在 \(F\otimes_R M\) 中的像属于 \(L\otimes_R M\) 的像，因为 \(L\to F\to V\to0\) 张量后正合。选取相应 \(v\in L\otimes_R M\)，从 \(w\) 中减去 \(v\) 在 \(K\otimes_R M\) 中的像，所得元素在 \(F\otimes_R M\) 中为零。上一段已证 \(K\subseteq F\) 的张量单射性，所以这个差为零。\(L\) 在 \(U\) 中的像为零，因而 \(w\) 和该差在 \(U\otimes_R M\) 中都有像 \(z\)，遂有 \(z=0\)。这证明 \(M\) 平坦。
+\end{proof}
+
+证明中得到的“有限个关系同时分解”将再次用于有限展示模。它比逐条分别分解强，因为不同关系必须共用同一个因子分解 \(x=By\)。
+
+\begin{theorem}[有限生成理想张量判据]\label{b2:thm:flat-ideal-criterion}
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模。则 \(M\) 平坦，当且仅当对每个有限生成理想 \(I\subseteq R\)，映射
+\[
+\mu_I:I\otimes_R M\longrightarrow M,\qquad a\otimes m\longmapsto am
+\]
+均为单射。
+\end{theorem}
+\begin{proof}
+必要性来自 \(I\hookrightarrow R\) 与 \(R\otimes_R M\cong M\)。为证充分性，给定关系 \(\sum_i a_i x_i=0\)，令 \(I=(a_1,\ldots,a_n)\)。元素 \(\sum_i a_i\otimes x_i\) 经 \(\mu_I\) 映到零，故由假设在 \(I\otimes_R M\) 中已为零。
+
+取满射 \(q:R^n\to I\)、\(e_i\mapsto a_i\)，令 \(K=\ker q\)。张量右正合性说明 \((x_i)\in R^n\otimes_R M\) 来自 \(K\otimes_R M\)。写出一个原像 \(\sum_j k_j\otimes y_j\)，再展开 \(k_j\) 的坐标，便得到 \eqref{b2:eq:flat-relation-factorization}。因此有限关系判据适用，\(M\) 平坦。
+\end{proof}
+
+这个理想判据不要求 \(R\) 是 Noether 环。有限性发生在一条关系所涉及的系数表中，所以只检验有限生成理想已经足够；不要把它误读成“所有理想本来都有限生成”。
 
 \subsection{平坦性的局部检测与完备化}
 \label{b2:subsec:0703:05}
 
-待撰写。
+上述判据为局部化提供了直接的代数检验。设 \(R\) 为交换环，\(S\subseteq R\) 为乘法集，则 \(S^{-1}R\) 是平坦 \(R\) 模。为避免在此预用第三卷的局部理论，可以直接用刚证明的有限关系判据。
+
+\begin{proposition}\label{b2:prop:localization-flat}
+交换环 \(R\) 的任意局部化 \(S^{-1}R\)，作为 \(R\) 模均平坦。
+\end{proposition}
+\begin{proof}
+设 \(\sum_i a_i x_i=0\) 是局部化中的有限关系。将 \(x_i\) 通分为 \(r_i/s\)，其中 \(s\in S\)。分式为零的定义给出 \(u\in S\) 使 \(u\sum_i a_i r_i=0\)。令 \(b_i=ur_i\)、\(y=1/(us)\)，则 \(x_i=b_i y\)，而 \(\sum_i a_i b_i=0\)。这正是\cref{b2:thm:flat-finite-relations}所需的分解。若 \(0\in S\)，局部化为零模，仍满足同一论证或直接由定义得到平坦性。
+\end{proof}
+
+这也解释了\cref{b2:prop:localization-tensor}中模的局部化为何保持单射。第三卷第12.1节将进一步证明如何在素理想或极大理想处检测一般模的平坦性；本节的\cref{b2:thm:flat-ideal-criterion}是其中使用的一项已证工具。第三卷第13.4节再讨论 Noether 条件下的完备化。完备化涉及逆极限，不能仅因局部化平坦，就断言完备化也平坦；相关有限性与正合性论证留在其主要证明位置。

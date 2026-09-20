@@ -5,32 +5,129 @@
 \section{子式理想、不变因子与精确计算}
 \label{b2:sec:0402}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要要点（供目录核对）：
 % * 各阶子式生成的理想在幺模行列变换下保持不变；主理想整环中以子式的最大公因子定义行列式因子
 % * 由 \(\Delta_r=d_1\cdots d_r\) 恢复非零不变因子，并把秩与自由部分、挠部分联系起来
 % * 整数环和一元多项式环上的换基矩阵与对角形同时记录，以矩阵恒等式核验输出
 % * 一般主理想整环上的结构存在性不自动给出可实现算法；第二卷附录 A 另说明有效系数运算的条件
-%
+
+Smith 化简会使用许多中间选择，但最后的整除数据不依赖这些选择。本节用子式理想证明这一点，也说明怎样检查计算结果。这里始终在主理想整环 \(R\) 内作精确运算；把矩阵搬到分式域虽然可以计算秩，却会把全部非零不变因子都变成单位，从而丢失挠部分。
 
 \subsection{子式理想与行列式因子}
 \label{b2:subsec:0402:01}
 
-待撰写。
+\begin{definition}\label{b2:def:determinantal-ideal}
+对 \(A\in M_{m\times n}(R)\)，记 \(I_j(A)\) 为全部 \(j\) 阶子式生成的理想，称为第 \(j\) 个\term[zishi-lixiang]{子式理想}[determinantal ideal]。约定 \(I_0(A)=R\)，当 \(j>\min(m,n)\) 时 \(I_j(A)=0\)。在主理想整环中选取生成元 \(\Delta_j(A)\)，使 \(I_j(A)=(\Delta_j(A))\)，称为\term[hanglieshi-yinzi]{行列式因子}[determinantal divisor]；取 \(\Delta_0=1\)，零理想取生成元零。
+\end{definition}
+\symidx{\(I_j(A)\)、\(\Delta_j(A)\)：子式理想与行列式因子}
+
+非零 \(\Delta_j\) 是全部 \(j\) 阶子式的最大公因子，在乘单位的意义下确定。证明它不随换基改变，需要了解乘积矩阵的子式怎样由原矩阵的子式组成。
+
+\begin{lemma}[Cauchy--Binet]\label{b2:lem:cauchy-binet-minors}
+设 \(B\in M_{m\times q}(R)\)、\(C\in M_{q\times n}(R)\)。对行指标集 \(U\subseteq\{1,\ldots,m\}\)、列指标集 \(V\subseteq\{1,\ldots,n\}\)，若二者大小均为 \(j\)，则
+\[
+\det(BC)_{U,V}
+=\sum_{\substack{J\subseteq\{1,\ldots,q\}\\|J|=j}}
+\det B_{U,J}\det C_{J,V}.
+\]
+子矩阵中的指标均按递增顺序排列；若 \(j>q\)，右侧为空和零。
+\end{lemma}
+\begin{proof}
+记 \(V=\{v_1<\cdots<v_j\}\)。乘积子矩阵的第 \(h\) 列是 \(\sum_{a=1}^q C_{a,v_h}B_{U,a}\)。对这些列用行列式多线性展开，得到对全部有序指标 \((a_1,\ldots,a_j)\) 的和，每项为
+\[
+\left(\prod_{h=1}^jC_{a_h,v_h}\right)
+\det(B_{U,a_1},\ldots,B_{U,a_j}).
+\]
+若某两个 \(a_h\) 相同，列重复使该行列式为零。其余指标按集合 \(J=\{b_1<\cdots<b_j\}\) 分组，写 \(a_h=b_{\sigma(h)}\)。对应的列置换贡献 \(\operatorname{sgn}(\sigma)\det B_{U,J}\)。把同组所有排列相加，剩下的系数是
+\[
+\sum_{\sigma\in S_j}\operatorname{sgn}(\sigma)
+\prod_{h=1}^jC_{b_{\sigma(h)},v_h}=\det C_{J,V},
+\]
+即所需公式。若没有大小为 \(j\) 的指标集，所有展开项都有重复指标，因而为零。
+\end{proof}
+
+上述公式称为\term[Cauchy-Binet-gongshi]{Cauchy--Binet 公式}[Cauchy--Binet formula]。它适用于交换环，无须取逆元。
+
+\begin{proposition}\label{b2:prop:determinantal-ideal-invariance}
+若 \(B=PAQ\)，其中 \(P,Q\) 为相应尺寸的幺模矩阵，则对所有 \(j\ge0\)，有 \(I_j(B)=I_j(A)\)。
+\end{proposition}
+\begin{proof}
+由\cref{b2:lem:cauchy-binet-minors}，\(PA\) 的每个 \(j\) 阶子式都是 \(A\) 的 \(j\) 阶子式的 \(R\) 线性组合，故 \(I_j(PA)\subseteq I_j(A)\)。再对右乘 \(Q\) 使用同一公式，得 \(I_j(PAQ)\subseteq I_j(A)\)。反过来，\(A=P^{-1}BQ^{-1}\)，逆矩阵条目仍在 \(R\)，所以同一论证给出反向包含。约定的零阶与超尺寸情形也满足等式。
+\end{proof}
 
 \subsection{不变因子、秩与自由挠分解}
 \label{b2:subsec:0402:02}
 
-待撰写。
+\begin{theorem}[Smith 不变因子的唯一性]\label{b2:thm:smith-uniqueness}
+设 \(A\) 的 Smith 标准形具有非零对角元 \(d_1\mid\cdots\mid d_r\)。则
+\[
+I_j(A)=(d_1\cdots d_j)\quad(1\le j\le r),\qquad
+I_j(A)=0\quad(j>r).
+\]
+所以 \(r\) 及各 \(d_j\) 的相伴类由 \(A\) 唯一确定。选定相容的归一化后，
+\[
+d_j\sim\Delta_j(A)/\Delta_{j-1}(A),\qquad 1\le j\le r,
+\]
+其中 \(\sim\) 表示相伴；整数取正值、多项式取首一值时可据此确定唯一代表。
+\end{theorem}
+\begin{proof}
+由\cref{b2:prop:determinantal-ideal-invariance}，只需在对角形上计算。非零 \(j\) 阶子式都是某些 \(d_{i_1}\cdots d_{i_j}\)，其中 \(i_1<\cdots<i_j\le r\)。由于 \(i_h\ge h\)，整除链说明 \(d_h\mid d_{i_h}\)，故每个这样的子式都被 \(d_1\cdots d_j\) 整除。前 \(j\) 行列构成的子式又恰好等于该乘积，所以生成的理想正是所述主理想。\(j>r\) 时每个子式都为零。
+
+非零子式的最大阶数因此恢复 \(r\)。若另一组标准形因子为 \(d'_1,\ldots,d'_r\)，则前 \(j\) 项乘积与前 \(j\) 项原乘积相伴。对 \(j=1\) 得到 \(d'_1\sim d_1\)；逐次除去已知相伴的前项乘积，利用整环中的非零消去律，便得 \(d'_j\sim d_j\)。同一公式也给出行列式因子之比的表达。
+\end{proof}
+
+结合\cref{b2:prop:smith-cokernel}，对 \(m\times n\) 矩阵有
+\[
+\operatorname{coker}A\cong R^{m-r}\oplus\bigoplus_{j=1}^rR/(d_j).
+\]
+右侧后面的每个分量都是挠模，因为非零 \(d_j\) 零化它；\(R^{m-r}\) 无挠，因为 \(R\) 为整环。于是余核的挠子模恰好是循环商的直和，自由部分的个数是 \(m-r\)。单位 \(d_j\) 对应的零分量可以在模分解中省略。
+
+\ProseParagraphBreak
+这一唯一性目前比较的是固定尺寸的矩阵在幺模等价下的不变量。一个模可能采用不同个数的生成元和关系，出现不同尺寸的展示矩阵。要证明最后的模分类不依赖所选展示，还需从模本身恢复这些因子；\secref{b2:sec:0403}将用挠主分量及其连续层商完成这一步。
 
 \subsection{换基矩阵与结果检验}
 \label{b2:subsec:0402:03}
 
-待撰写。
+对整数矩阵
+\[
+A=\begin{pmatrix}6&4\\0&10\end{pmatrix},
+\]
+一阶子式的最大公因子为 \(2\)，二阶子式为 \(60\)，所以归一化的不变因子应为 \(2,30\)。但这还没有告诉我们两个循环因子在原坐标中怎样表示。可以记录如下换基矩阵：
+\[
+P=\begin{pmatrix}1&0\\5&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}1&-2\\-1&3\end{pmatrix}.
+\]
+直接相乘得
+\[
+AQ=\begin{pmatrix}2&0\\-10&30\end{pmatrix},\qquad
+PAQ=\begin{pmatrix}2&0\\0&30\end{pmatrix},
+\qquad\det P=\det Q=1.
+\]
+因此 \(P^{-1}e_1=(1,-5)^{\mathsf T}\) 与 \(P^{-1}e_2=(0,1)^{\mathsf T}\) 的陪集分别生成阶为二与三十的循环直和分量。原关系矩阵也给出核验：\(A(1,-1)^{\mathsf T}=2(1,-5)^{\mathsf T}\)，\(A(-2,3)^{\mathsf T}=30(0,1)^{\mathsf T}\)。
+
+\ProseParagraphBreak
+多项式上的同样计算不能只查看矩阵的对角项。对任意域 \(k\)，令
+\[
+B=\begin{pmatrix}t&1\\0&t\end{pmatrix},\qquad
+P=\begin{pmatrix}1&0\\t&-1\end{pmatrix},\qquad
+Q=\begin{pmatrix}0&1\\1&-t\end{pmatrix}.
+\]
+则 \(\det P=\det Q=-1\) 为单位，且
+\[
+PBQ=\begin{pmatrix}1&0\\0&t^2\end{pmatrix}.
+\]
+所以余核为 \(k[t]/(t^2)\)，并不是 \(k[t]/(t)\oplus k[t]/(t)\)。两者的区别也可由标量 \(t\) 的作用辨认：前者中 \(t\) 不为零作用，而后者中 \(t\) 零化全部元素。这里矩阵虽为上三角形，却还没有达到 Smith 标准形。
+
+\ProseParagraphBreak
+实际计算中，每作行变换 \(E\)，同时把当前 \(P\) 改为 \(EP\)；每作列变换 \(F\)，同时把当前 \(Q\) 改为 \(QF\)。初始 \(P,Q\) 取单位矩阵。这样在每一步都保持“当前矩阵等于 \(PAQ\)”的恒等式，最后可以用精确乘法同时核验矩阵、坐标与对角数据。
 
 \subsection{结构存在性与有效算法}
 \label{b2:subsec:0402:04}
 
-待撰写。
+存在性定理是在给定主理想整环中作出的代数结论。要把它变成可执行的算法，还必须能够表示环元素，判定相等与整除，计算商和 Bézout 系数，并对单位及相伴类作出处理。仅仅知道“每个理想为主理想”，并不会自动提供这些计算过程。
+
+\ProseParagraphBreak
+对整数环，可以用 Euclid 算法给出商、余数和 Bézout 系数；对有效给定的域上的 \(k[t]\)，可以使用多项式带余除法。按\cref{b2:thm:smith-normal-form}证明中的次序约化第一行、第一列，再检查剩余子块的整除性，就得到完整算法。每轮非整除约化由 Euclid 除法实现；清空行列后仍有不整除主元的子块元素时，将它移入同一行重新约化。这一检查不能省去，否则所得对角矩阵未必满足整除链。
+
+\ProseParagraphBreak
+检验一份输出时，至少需要检查 \(PAQ=D\)、\(P,Q\) 的行列式为单位，以及 \(D\) 的非零对角元构成整除链。三者成立后，\cref{b2:thm:smith-uniqueness}保证得到正确的不变因子。子式理想可以提供额外的独立核验，但把所有子式一一列出未必是高效算法。本节没有给出统一的复杂度界；更细的系数增长与有效表示问题留在本卷附录A中讨论。

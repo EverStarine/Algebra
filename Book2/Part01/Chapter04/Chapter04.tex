@@ -1,12 +1,27 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第4章　主理想整环上的模与标准形
-% 纲要位置：计划纲要.md，第 913 行。
 
 \chapter{主理想整环上的模与标准形}
 \label{b2:ch:04}
 \BookChapterNumber{b2:ch:04}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+主理想整环上的关系矩阵可以化成具有整除链的对角形。本章先证明一般主理想整环上的 Smith 标准形及子式理想的唯一性判据，再证明有限秩自由模的子模自由，进而建立有限生成模的不变因子与初等因子分解。分类数据由模本身的无挠商和主分量层商恢复，因而不依赖所选展示。把系数环取为 \(k[t]\)，便得到任意域上线性算子的有理标准形；在多项式分裂时进一步得到 Jordan 标准形，并分析扩大基域后哪些数据保持不变。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 理解 Bézout 幺模变换与主理想升链如何保证 Smith 化简存在，并区分存在性与有效算法。
+\item 用子式理想恢复不变因子，处理矩形、秩亏、零矩阵及单位因子，核验换基矩阵与原坐标。
+\item 证明有限生成主理想整环模的分类，能在不变因子与初等因子间转换，并说明不同展示为何给出相同模不变量。
+\item 用 \(tI-A\) 的关系矩阵计算算子的有理标准形、特征多项式与最小多项式，利用核幂维数恢复 Jordan 块。
+\end{itemize}
+\end{learninggoals}
+
+本章需要第二章的模同态、商模、挠子模与直和，以及第三章的自由模和展示。矩阵均采用列向量约定。\secref{b2:sec:0401}建立 Smith 形的存在性，\secref{b2:sec:0402}紧接着证明不变因子的唯一性并说明精确计算；\secref{b2:sec:0403}补足从有限生成到有限展示的依据，建立模本身的分类。只研究线性算子的读者也需掌握这几项证明，随后将 \(R\) 取为 \(k[t]\) 即可。正合列与蛇引理不参与本章分类定理的证明。
+
+\ProseParagraphBreak
+主理想整环模的分类可参阅 Roman 的《Advanced Linear Algebra》\cite[Chapter 6, Theorems 6.13, 6.16]{Roman2008AdvancedLinearAlgebra}；其有理标准形见\cite[Chapter 7, Theorem 7.16]{Roman2008AdvancedLinearAlgebra}，Jordan 形见\cite[Chapter 8, Theorem 8.6, pp. 190--192]{Roman2008AdvancedLinearAlgebra}。该书的 Jordan 块采用下次对角线为一的约定，本书采用上次对角线为一，两者通过逆排链基互相转换。
 
 \input{Part01/Chapter04/Section0401}
 \input{Part01/Chapter04/Section0402}
@@ -14,4 +29,390 @@
 \input{Part01/Chapter04/Section0404}
 \input{Part01/Chapter04/Section0405}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+Smith 化简把关系矩阵转成逐坐标的整除条件，子式理想使结果不依赖化简过程。矩形尺寸决定自由坐标与冗余关系的个数，单位因子则对应可以删去的零商模。主理想整环上的有限秩子模定理保证每个有限生成模都有有限关系矩阵，因而得到自由部分与循环挠部分的分解。不同展示的唯一性最终由模本身的主分量层商证明，不能只靠固定矩阵的子式数据替代。
+
+\ProseParagraphBreak
+对算子模，\(tI-A\) 记录全部线性算子关系。有理标准形在原基域上成立，其不变因子决定相似类型，乘积给出特征多项式，最后一项给出最小多项式。多项式分裂后，各素元幂循环商成为 Jordan 块，核幂维数恢复块大小。扩大基域保留不变因子，却可能分裂初等因子；不可分多项式的重根还会改变块大小。计算时保留矩阵恒等式和所用基域，才能把这些不同层次的数据对应起来。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:04-rectangular-smith}
+对整数矩阵
+\[
+A=\begin{pmatrix}2&3&0\\4&6&0\end{pmatrix},
+\]
+给出幺模矩阵 \(P,Q\) 使 \(PAQ\) 为 Smith 标准形，求 \(\ker A\)、\(\operatorname{coker}A\)，并解释单位因子和零列各自的作用。
+\end{exercise}
+\begin{solution}
+取
+\[
+P=\begin{pmatrix}1&0\\-2&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}-1&3&0\\1&-2&0\\0&0&1\end{pmatrix}.
+\]
+两矩阵的行列式分别为 \(1,-1\)，且直接计算得到
+\[
+PAQ=\begin{pmatrix}1&0&0\\0&0&0\end{pmatrix}.
+\]
+由\cref{b2:prop:smith-cokernel}，余核为 \(\mathbb Z\)，其原坐标生成元可取 \(P^{-1}e_2=(0,1)^{\mathsf T}\)。对角形的核由第二、第三个标准向量生成，所以原核由 \(Qe_2=(3,-2,0)^{\mathsf T}\)、\(Qe_3=(0,0,1)^{\mathsf T}\) 组成一组基。单位因子给出零商分量；两个零列描述核中的两个自由方向，余核只有由剩下一行给出的一个自由方向。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-diagonal-repair}
+说明 \(\operatorname{diag}(6,10)\) 为何还不是整数 Smith 标准形。给出它的标准形与幺模换基矩阵，并在 \(\mathbb Z/6\mathbb Z\oplus\mathbb Z/10\mathbb Z\) 中写出对应的不变因子生成元。
+\end{exercise}
+\begin{solution}
+\(6\nmid10\)，故不满足整除链。子式因子为 \(\Delta_1=2\)、\(\Delta_2=60\)，所以不变因子为 \(2,30\)。取
+\[
+P=\begin{pmatrix}2&-1\\-5&3\end{pmatrix},\qquad
+Q=\begin{pmatrix}1&5\\1&6\end{pmatrix},
+\]
+则两者行列式都为一，并有
+\[
+P\begin{pmatrix}6&0\\0&10\end{pmatrix}Q
+=\begin{pmatrix}2&0\\0&30\end{pmatrix}.
+\]
+\(P^{-1}=\begin{pmatrix}3&1\\5&2\end{pmatrix}\)，故原商中的 \((\bar3,\bar5)\) 与 \((\bar1,\bar2)\) 分别生成阶为二与三十的直和分量。\cref{b2:prop:smith-cokernel}给出的同构保证两者交为零且共同生成全模；不能只凭两者阶的乘积等于六十就略去独立性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-maximal-minors-index}
+设 \(A\in M_{m\times n}(\mathbb Z)\) 在 \(\mathbb Q\) 上的秩为 \(m\)。证明 \(A(\mathbb Z^n)\) 在 \(\mathbb Z^m\) 中的指数等于全部 \(m\) 阶子式的正最大公因子。对
+\[
+A=\begin{pmatrix}2&4&6\\0&6&3\end{pmatrix}
+\]
+计算商群及一个生成元。
+\end{exercise}
+\begin{solution}
+满行秩使 Smith 形恰有 \(m\) 个非零对角元，余核没有自由部分。由\cref{b2:prop:smith-cokernel}，商群阶为正整数 \(d_1\cdots d_m\)；\cref{b2:thm:smith-uniqueness}说明该乘积正是 \(\Delta_m\)，即所述最大公因子。
+
+具体矩阵的二阶子式为 \(12,6,-24\)，最大公因子为六；全部条目最大公因子为一，故商群同构于 \(\mathbb Z/6\mathbb Z\)。也可直接看像：第一列给出 \((2,0)\)，第三列减去第一列的三倍给出 \((0,3)\)，第二列则是这两个向量的整数线性组合。因此像为 \(2\mathbb Z\times3\mathbb Z\)，\((1,1)\) 的陪集同时具有模二与模三坐标，阶为六，因而生成商群。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-presentation-size}
+设 \(A,B\) 是同一主理想整环上的同尺寸 \(m\times n\) 矩阵。证明：\(\operatorname{coker}A\cong\operatorname{coker}B\) 当且仅当 \(A,B\) 幺模等价。解释为什么删去“同尺寸”后不能原样使用这个结论，并给出具有不同个数单位因子的两个展示。
+\end{exercise}
+\begin{solution}
+幺模等价诱导余核同构，由\cref{b2:prop:smith-cokernel}已知。反过来，模的分类唯一性\cref{b2:thm:pid-elementary-divisors}确定自由秩 \(f\) 与非单位不变因子列表。固定行数 \(m\) 后，矩阵的秩必须为 \(r=m-f\)；若非单位因子有 \(s\) 个，其余 \(r-s\) 个非零 Smith 因子均为单位。因此两矩阵的完整标准形在单位归一化后相同，均可逆地变到同一个矩形对角矩阵，所以幺模等价。
+
+不同尺寸时，左右可逆方阵的乘法本身不能改变行列数。例如 \(\operatorname{diag}(2,6)\) 与 \(\operatorname{diag}(1,2,6)\) 的整数余核同为 \(\mathbb Z/2\mathbb Z\oplus\mathbb Z/6\mathbb Z\)，但后者多一个单位因子，也多一行一列。分类模时可删去这一零商分量，比较矩阵等价时则必须保留尺寸。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-two-coordinate-kernel}
+设 \(R\) 为主理想整环，\(a,b\in R\) 不同时为零，\((a,b)=(d)\)。求同态 \(R^2\to R\)、\((x,y)\mapsto ax+by\) 的核的一组基，并求其像和余核。给出 \(R=k[t]\)、\(a=t^2\)、\(b=t(t+1)\) 时的答案。
+\end{exercise}
+\begin{solution}
+写 \(a=da'\)、\(b=db'\)，有 \((a',b')=R\)。若 \(ax+by=0\)，则 \(a'x=-b'y\)。由 Bézout 等式，\(a',b'\) 互素使 \(b'\mid x\)，写 \(x=b'z\)，再由整环消去得到 \(y=-a'z\)。当 \(b'=0\) 时，\(a'\) 为单位，等式直接给出 \(x=0\)，同一参数式仍成立。故核为 \(R(b',-a')\)，所列非零向量构成一组基。像是 \((a,b)=(d)\)，余核为 \(R/(d)\)。
+
+具体例子中 \(d=t\)、\(a'=t\)、\(b'=t+1\)，所以核以 \((t+1,-t)\) 为基，像为 \((t)\)，余核为 \(k[t]/(t)\cong k\)。这一同态不满射到 \(k[t]\)，即使除去公因子后的两项已经互素。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-primitive-submodule}
+设 \(L\le R^n\)，其中 \(R\) 为主理想整环。证明以下条件等价：\(R^n/L\) 无挠；\(L\) 是 \(R^n\) 的直和因子；\(L\) 的任意一组基都能扩充为 \(R^n\) 的基。再把它们写成 \(L\) 的基矩阵的 Smith 对角元条件。
+\end{exercise}
+\begin{solution}
+由\cref{b2:thm:pid-free-submodule}，\(L\) 有有限基。设其基矩阵的非零 Smith 因子为 \(d_1,\ldots,d_r\)。\cref{b2:prop:smith-cokernel}说明商模为 \(R^{n-r}\oplus\bigoplus_iR/(d_i)\)，因此它无挠当且仅当每个 \(d_i\) 都为单位：非单位时 \(1+(d_i)\ne0\) 是挠元。
+
+若这些因子为单位，对角坐标中的 \(L\) 由前 \(r\) 个坐标组成，后 \(n-r\) 个坐标给出补模；用逆行变换送回，得 \(R^n=L\oplus C\)。反过来，若有这样的分解，\(C\) 是自由模的子模，因而由子模定理自由；\(R^n/L\cong C\) 无挠。
+
+在直和分解中，取 \(C\) 的任意一组基，与 \(L\) 的给定基合并。直和表达的存在唯一性保证这是 \(R^n\) 的基，因此任意一组 \(L\) 的基均可扩充。若一组基已可扩充，新增基向量张成补模，回到前一条件。零子模情形使用空基，所有非零对角元为单位的条件此时为空条件。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-primary-to-invariant}
+在 \(R=\mathbb F_2[t]\) 上，把
+\[
+M=R/(t^2)\oplus R/(t^5)\oplus R/(t+1)
+\oplus R/((t+1)^3)\oplus R/(t^2+t+1)
+\]
+写成不变因子分解，求零化子与 \(\mathbb F_2\) 维数。说明这里为什么可以把不同不可约因子的部分合并为循环商。
+\end{exercise}
+\begin{solution}
+\(t^2+t+1\) 在 \(0,1\) 处都非零，故在 \(\mathbb F_2[t]\) 中不可约，且与 \(t,t+1\) 两两互素。三组指数分别为 \((2,5)\)、\((1,3)\)、\((1)\)。把最后一组左端补零，逐列相乘得到
+\[
+d_1=t^2(t+1),\qquad
+d_2=t^5(t+1)^3(t^2+t+1),
+\]
+且 \(d_1\mid d_2\)。由\cref{b2:thm:pid-elementary-divisors}，\(M\cong R/(d_1)\oplus R/(d_2)\)。合并使用互素理想的中国剩余同构；同一个不可约元的两个幂一般不能这样合成单个循环商。
+
+零化全部分量需要同时被各初等因子整除，等价于被 \(d_2\) 整除，故 \(\operatorname{Ann}_R(M)=(d_2)\)。各循环商的基由余式给出，所以维数为 \(2+5+1+3+2=13\)，也等于 \(\deg d_1+\deg d_2=3+10\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-primary-layers}
+设 \(p\) 为主理想整环中的不可约元，一个有限生成 \(p\) 主模 \(M\) 的层商维数
+\(\dim_{R/(p)}(p^{j-1}M/p^jM)\) 依次为
+\[
+4,4,2,1,1,0,0,\ldots.
+\]
+求其初等因子。若 \(R/(p)\) 有 \(q\) 个元素，计算 \(|M|\)，并另给一个具有相同元素数和相同零化子、却与 \(M\) 不同构的 \(p\) 主模。
+\end{exercise}
+\begin{solution}
+由\cref{b2:thm:pid-elementary-divisors}，指数恰等于 \(j\) 的分量数是相邻维数之差。因此指数二有两个、指数三有一个、指数五有一个，其余为零，即
+\[
+M\cong R/(p^2)\oplus R/(p^2)\oplus R/(p^3)\oplus R/(p^5).
+\]
+每个 \(R/(p^e)\) 有 \(e\) 个一维的连续层商，所以其元素数为 \(q^e\)，于是 \(|M|=q^{12}\)，零化子为 \((p^5)\)。
+
+模 \(N=R/(p)\oplus R/(p^3)\oplus R/(p^3)\oplus R/(p^5)\) 同样有 \(q^{12}\) 个元素，零化子也是 \((p^5)\)，但第二层商的维数为三，而 \(M\) 的为四。这个模不变量不同，故它们不同构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-minimal-generators}
+设 \(M\cong R^f\oplus R/(d_1)\oplus\cdots\oplus R/(d_s)\)，其中 \(R\) 为主理想整环，非零非单位 \(d_1\mid\cdots\mid d_s\)。证明 \(M\) 的生成元最少个数为 \(f+s\)。
+\end{exercise}
+\begin{solution}
+从每个自由或循环分量取一个标准生成元，给出 \(f+s\) 个生成元。若 \(s>0\)，取 \(d_1\) 的不可约因子 \(p\)，则 \(p\) 整除全部 \(d_i\)。每个 \(R/(d_i)\) 模去 \(p\) 倍后得到 \(R/(p)\)，因此
+\[
+M/pM\cong (R/(p))^{f+s}.
+\]
+任意 \(M\) 的生成集都映成这个向量空间的生成集，其大小至少为 \(f+s\)。
+
+若 \(s=0\)，则 \(M=R^f\)。取 \(R\) 的一个极大理想 \(\mathfrak m\)；\(R\) 为域时可取零理想，否则可取任一不可约元生成的理想。模去 \(\mathfrak m\) 后得到维数为 \(f\) 的 \(R/\mathfrak m\) 向量空间，同样说明至少需要 \(f\) 个生成元。\(M=0\) 时空集达到最少数零。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-hom-cyclic-pid}
+设 \(a,b\) 是主理想整环 \(R\) 中的非零元素，\((a,b)=(d)\)。证明
+\[
+\operatorname{Hom}_R(R/(a),R/(b))\cong R/(d)
+\]
+作为 \(R\) 模成立，并写出这个同构的具体公式。由此计算 \(\operatorname{End}_R(R/(a))\) 的环结构。
+\end{exercise}
+\begin{solution}
+同态由 \(1+(a)\) 的像 \(y+(b)\) 决定，且必须满足 \(ay\in(b)\)。写 \(a=da'\)、\(b=db'\)，则该条件等价于 \(b'\mid a'y\)。由于 \((a',b')=R\)，Bézout 等式使它等价于 \(b'\mid y\)。故允许的像组成 \(b'R/bR\)，而
+\[
+R/(d)\longrightarrow b'R/bR,\qquad z+(d)\longmapsto b'z+(b)
+\]
+是模同构：满射直接来自定义，核由 \(b'z\in db'R\) 及非零 \(b'\) 的消去律确定为 \((d)\)。合并两个对应，\(z+(d)\) 所确定的同态是 \(x+(a)\mapsto xb'z+(b)\)。
+
+当 \(a=b\) 时可取 \(d=a\)、\(b'=1\)，每个自同态都是乘某个陪集 \(z+(a)\)。逐点加法对应陪集相加，复合对应陪集相乘，单位自同态对应 \(1+(a)\)。所以 \(\operatorname{End}_R(R/(a))\cong R/(a)\) 作为环成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:04-modular-kernel-count}
+设整数方阵 \(A\in M_n(\mathbb Z)\) 的行列式非零，不变因子为正整数 \(d_1\mid\cdots\mid d_n\)。固定素数 \(p\)，记 \(v_p(d_i)\) 为 \(d_i\) 中 \(p\) 的指数。对正整数 \(r\)，证明 \(A\) 模 \(p^r\) 后在 \((\mathbb Z/p^r\mathbb Z)^n\) 上的核元素数为
+\[
+p^{\sum_{i=1}^n\min(r,v_p(d_i))}.
+\]
+解释怎样从所有这些核元素数恢复 \(d_i\) 中的 \(p\) 指数多重集。
+\end{exercise}
+\begin{solution}
+Smith 等价 \(PAQ=D\) 中 \(\det P,\det Q=\pm1\)，模 \(p^r\) 后仍为可逆矩阵，因此不改变核元素数。对单个对角元写 \(d_i=p^{e_i}u_i\)，其中 \(p\nmid u_i\)，\(u_i\) 模 \(p^r\) 可逆。若 \(e_i\ge r\)，全部 \(p^r\) 个元素都在核中；若 \(e_i<r\)，方程等价于 \(p^{r-e_i}\mid x\)，有 \(p^{e_i}\) 个解。逐坐标相乘得到公式。
+
+令 \(h(r)\) 为核元素数的以 \(p\) 为底的对数，并取 \(h(0)=0\)。则
+\[
+h(r)-h(r-1)=\#\{\,i\mid e_i\ge r\,\}.
+\]
+相邻差再次相减，恢复每个正指数的出现次数；剩余位置的指数为零。这给出从有限商环上的核计数恢复素元幂数据的方法，而不仅是计算 \(A\) 模 \(p\) 后的秩。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-finite-field-rational-order}
+在 \(k=\mathbb F_2\) 上，令
+\[
+p(t)=t^2+t+1,\qquad
+B=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+A=\begin{pmatrix}B&I_2\\0&B\end{pmatrix}.
+\]
+求 \(A\) 的特征多项式、最小多项式和有理标准形，给出一个循环向量及相应的循环基，并求 \(A\) 在 \(\operatorname{GL}_4(\mathbb F_2)\) 中的阶。
+\end{exercise}
+
+\begin{solution}
+由 \(p(0)=p(1)=1\)，二次多项式 \(p\) 在 \(\mathbb F_2[t]\) 中不可约。矩阵 \(A\) 是块上三角矩阵，故
+\[
+\chi_A(t)=\det(tI_2-B)^2=p(t)^2=t^4+t^2+1.
+\]
+又因为 \(B^2+B+I_2=0\)，且特征为 \(2\)，直接作块矩阵运算得到
+\[
+p(A)=A^2+A+I_4=\begin{pmatrix}0&I_2\\0&0\end{pmatrix}\ne0,
+\qquad p(A)^2=0.
+\]
+最小多项式整除 \(p^2\)，而 \(p\) 不可约；它既不是 \(1\)，也不是 \(p\)，因而 \(m_A=p^2\)。由\cref{b2:prop:operator-characteristic-minimal}，不变因子中最后一个已经有次数 \(4\)，所以只有这一个不变因子，有理标准形为 \(C(p^2)\)。
+
+把 \(k^4\) 中的列向量写成 \(\binom{x}{y}\)，其中 \(x,y\in k^2\)，并以 \(e_1,e_2\) 表示 \(k^2\) 的标准基。取 \(v=\binom{0}{e_1}\)，则
+\[
+v=\binom{0}{e_1},\qquad
+Av=\binom{e_1}{e_2},\qquad
+A^2v=\binom{0}{e_1+e_2},\qquad
+A^3v=\binom{e_1+e_2}{e_1}.
+\]
+若 \(a_0v+a_1Av+a_2A^2v+a_3A^3v=0\)，先看上面两个坐标，得到 \(a_3=a_1=0\)；再看下面两个坐标，得到 \(a_2=a_0=0\)。因此这四个向量构成循环基，\(A\) 在此基下的矩阵正是 \(C(t^4+t^2+1)\)。
+
+在 \(k[t]\) 中有 \(t^3-1=(t+1)p(t)\)，从而 \(p(t)^2\mid t^6-1\)，故 \(A^6=I_4\)。但 \(p^2\nmid t^3-1\)，所以 \(A^3\ne I_4\)。子空间 \(k^2\oplus0\) 上的限制为 \(B\)，而 \(B^3=I_2\)、\(B\ne I_2\)，故 \(B\) 的阶为 \(3\)，\(A\) 的阶必须是 \(3\) 的倍数。结合它整除 \(6\) 且不等于 \(3\)，可知 \(A\) 的阶为 \(6\)。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-same-polynomials-rank}
+设 \(k\) 为任意域，考虑
+\[
+A=J_3(0)\oplus J_3(0)\oplus J_1(0),\qquad
+B=J_3(0)\oplus J_2(0)\oplus J_2(0).
+\]
+证明 \(A,B\) 的特征多项式、最小多项式以及秩均相同，但它们不相似。写出两者的不变因子，并指出哪个核的维数能够把它们区分开。
+\end{exercise}
+
+\begin{solution}
+两矩阵均为 \(7\) 阶幂零矩阵，最大 Jordan 块的阶均为 \(3\)，故
+\[
+\chi_A(t)=\chi_B(t)=t^7,\qquad m_A(t)=m_B(t)=t^3.
+\]
+每个幂零 Jordan 块的核都是一维的。两矩阵都有三个块，因此
+\[
+\dim\ker A=\dim\ker B=3,\qquad
+\operatorname{rank}A=\operatorname{rank}B=4.
+\]
+可是由\cref{b2:prop:jordan-kernel-dimensions}，
+\[
+\dim\ker A^2=2+2+1=5,\qquad
+\dim\ker B^2=2+2+2=6.
+\]
+若 \(B=P^{-1}AP\)，则 \(\ker B^2=P^{-1}(\ker A^2)\)，两核的维数必相同，矛盾。因此 \(A,B\) 不相似。
+
+这里全部初等因子都是 \(t\) 的幂，按整除顺序排列就得到不变因子。\(A\) 的不变因子为 \(t,t^3,t^3\)，\(B\) 的不变因子为 \(t^2,t^2,t^3\)。这也说明，即使再给定矩阵的秩，特征多项式与最小多项式仍不足以确定相似类。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-reconstruct-two-eigenvalues}
+设 \(\operatorname{char}k\ne2\)，\(V\) 是 \(10\) 维 \(k\) 向量空间，\(T\in\operatorname{End}_k(V)\) 满足
+\[
+\begin{aligned}
+\bigl(\dim\ker(T-I)^r\bigr)_{r=1}^4&=(2,4,5,6),\\
+\bigl(\dim\ker(T+I)^r\bigr)_{r=1}^3&=(2,3,4).
+\end{aligned}
+\]
+先证明 \(T\) 的特征多项式在 \(k\) 上分裂，再求 Jordan 标准形、特征多项式、最小多项式及不变因子。最后求 \((T^2-I)^2\) 的秩。
+\end{exercise}
+
+\begin{solution}
+令 \(U=\ker(T-I)^4\)、\(W=\ker(T+I)^3\)。由于 \(\operatorname{char}k\ne2\)，多项式 \((t-1)^4\) 与 \((t+1)^3\) 互素，可取 \(a,b\in k[t]\) 使
+\[
+a(t)(t-1)^4+b(t)(t+1)^3=1.
+\]
+若 \(x\in U\cap W\)，将此式作用于 \(x\) 即得 \(x=0\)。又 \(\dim U+\dim W=6+4=10\)，所以 \(V=U\oplus W\)。这两个子空间均为 \(T\) 不变子空间，而且 \((T-I)^4(T+I)^3\) 在它们上面都为零。因此
+\[
+m_T(t)\mid(t-1)^4(t+1)^3.
+\]
+最小多项式分裂，由\cref{b2:prop:jordan-splitting-primary}，特征多项式也分裂。
+
+对特征值 \(1\)，核维数从 \(c_1(0)=0\) 开始依次为 \(0,2,4,5,6\)，随后保持为 \(6\)。相邻差为 \(2,2,1,1,0\)，分别给出阶数至少为 \(1,2,3,4,5\) 的块数，故相应块的阶为 \(4,2\)。对特征值 \(-1\)，核维数为 \(0,2,3,4\)，随后保持为 \(4\)；相邻差 \(2,1,1,0\) 给出块阶 \(3,1\)。因此 Jordan 标准形为
+\[
+J_4(1)\oplus J_2(1)\oplus J_3(-1)\oplus J_1(-1).
+\]
+从而
+\[
+\chi_T=(t-1)^6(t+1)^4,\qquad
+m_T=(t-1)^4(t+1)^3.
+\]
+把两种素因子的幂分别按整除顺序排列，再逐项相乘，得到两个不变因子
+\[
+f_1=(t-1)^2(t+1),\qquad
+f_2=(t-1)^4(t+1)^3.
+\]
+
+在 \(U\) 上，\(T+I\) 可逆；这可由 \(t+1\) 与 \((t-1)^4\) 的 B\'ezout 等式看出。在 \(W\) 上，同理 \(T-I\) 可逆。于是 \((T^2-I)^2=(T-I)^2(T+I)^2\) 在 \(U\) 上的核有维数 \(4\)，在 \(W\) 上的核有维数 \(3\)。其全核维数为 \(7\)，所求秩为 \(10-7=3\)。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-cyclic-centralizer}
+设 \(f\in k[t]\) 为首一 \(n\) 次多项式，\(n\ge1\)，\(A=C(f)\)。矩阵 \(A\) 的中央化子代数定义为
+\[
+Z(A)=\{X\in M_n(k):XA=AX\}.
+\]
+证明 \(Z(A)=k[A]\cong k[t]/(f)\)，因而 \(\dim_k Z(A)=n\)。再对 \(B=J_2(0)\oplus J_1(0)\) 直接求出 \(Z(B)\)，证明它严格包含 \(k[B]\)，并且不是交换代数。
+\end{exercise}
+
+\begin{solution}
+友矩阵 \(A\) 有循环基 \(e_1,Ae_1,\ldots,A^{n-1}e_1\)。若 \(X\in Z(A)\)，则存在唯一的次数小于 \(n\) 的多项式 \(g\)，使 \(Xe_1=g(A)e_1\)。由交换关系，对 \(0\le j<n\) 有
+\[
+X(A^je_1)=A^jXe_1=A^jg(A)e_1=g(A)(A^je_1).
+\]
+两个线性映射在一组基上相同，故 \(X=g(A)\)。反之，\(A\) 的每个多项式当然都与 \(A\) 交换，所以 \(Z(A)=k[A]\)。求值同态 \(k[t]\to k[A]\) 的核是最小多项式生成的理想 \((f)\)，故它诱导 \(k[t]/(f)\cong Z(A)\)。余数 \(1,t,\ldots,t^{n-1}\) 给出这个代数的 \(k\) 基，维数为 \(n\)。
+
+对于
+\[
+B=\begin{pmatrix}0&1&0\\0&0&0\\0&0&0\end{pmatrix},
+\]
+写 \(X=(x_{ij})\)，比较 \(XB\) 与 \(BX\) 的各项，得到
+\[
+Z(B)=\left\{
+\begin{pmatrix}a&b&c\\0&a&0\\0&d&e\end{pmatrix}
+:a,b,c,d,e\in k
+\right\}.
+\]
+它的维数为 \(5\)，而 \(B^2=0\)、\(B\ne0\)，故 \(k[B]=kI_3+kB\) 的维数为 \(2\)，包含关系是严格的。
+
+令 \(E_{ij}\) 表示仅第 \((i,j)\) 项为 \(1\) 的矩阵。上述表达式表明 \(E_{13},E_{32}\in Z(B)\)，但
+\[
+E_{13}E_{32}=E_{12},\qquad E_{32}E_{13}=0.
+\]
+因此 \(Z(B)\) 不交换。循环向量使交换算子由一个向量的像唯一决定；没有循环向量时，交换算子可以有更多选择。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-real-complex-classification}
+令 \(p(t)=t^2+1\)。按实相似关系分类所有满足
+\[
+\chi_A(t)=p(t)^4,\qquad m_A(t)=p(t)^2
+\]
+的 \(8\) 阶实矩阵，并给出各类在复数域上的 Jordan 标准形。用 \(\ker p(A)\) 的维数区分这些实相似类。最后证明：两个同阶实矩阵若在复数域上相似，则在实数域上也相似。
+\end{exercise}
+
+\begin{solution}
+多项式 \(p\) 在 \(\mathbb R[t]\) 中不可约。所有初等因子都是 \(p\) 的幂；由特征多项式，这些幂的指数之和为 \(4\)；由最小多项式，最大指数为 \(2\)。满足条件的指数列只有 \((2,2)\) 和 \((2,1,1)\)。由\cref{b2:thm:rational-canonical-form}，恰有以下两个实相似类：
+\[
+A_1=C(p^2)\oplus C(p^2),\qquad
+A_2=C(p)\oplus C(p)\oplus C(p^2).
+\]
+前者的不变因子为 \(p^2,p^2\)，后者的不变因子为 \(p,p,p^2\)。
+
+在复数域上，\(p=(t-i)(t+i)\)，且这两个因子互素。因而一个 \(C(p^e)\) 对应的循环模分成 \(\mathbb C[t]/((t-i)^e)\) 与 \(\mathbb C[t]/((t+i)^e)\)。由\cref{b2:prop:scalar-extension-elementary-divisors}，\(A_1,A_2\) 的复 Jordan 标准形分别为
+\[
+\begin{aligned}
+A_1:&\quad J_2(i)\oplus J_2(i)\oplus J_2(-i)\oplus J_2(-i),\\
+A_2:&\quad J_2(i)\oplus J_1(i)\oplus J_1(i)
+\oplus J_2(-i)\oplus J_1(-i)\oplus J_1(-i).
+\end{aligned}
+\]
+两者都含有二阶 Jordan 块，因此在复数域上仍不可对角化。
+
+在 \(\mathbb R[t]/(p^e)\) 中，乘 \(p\) 的核是 \((p^{e-1})/(p^e)\)，与 \(\mathbb R[t]/(p)\) 同构，实维数为 \(2\)。所以
+\[
+\dim_{\mathbb R}\ker p(A_1)=4,\qquad
+\dim_{\mathbb R}\ker p(A_2)=6.
+\]
+这个维数由算子本身决定，也就给出了区分两类的直接计算方法。
+
+一般地，设实矩阵 \(A,B\) 在复数域上相似，则它们作为 \(\mathbb C[t]\) 模算子具有相同的首一不变因子。由\cref{b2:prop:scalar-extension-invariant-factors}，从 \(\mathbb R\) 扩张到 \(\mathbb C\) 并不改变原来的不变因子。因此 \(A,B\) 在 \(\mathbb R[t]\) 中的不变因子也相同，再由有理标准形的唯一性，得到它们在实数域上相似。
+\end{solution}
+
+\begin{exercise}
+\label{b2:ex:04-inseparable-new-subspaces}
+设 \(s\) 是 \(\mathbb F_3\) 上的超越元，\(k=\mathbb F_3(s)\)，\(q(t)=t^3-s\)，并令 \(A=C(q^2)\in M_6(k)\)。取另一个超越元 \(u\)，令 \(L=\mathbb F_3(u)\)，通过 \(s\mapsto u^3\) 把 \(k\) 看成 \(L\) 的子域。
+
+证明 \(q\) 在 \(k[t]\) 中不可约，求 \(A\) 在 \(L\) 上的 Jordan 标准形。分别求 \(k^6\) 与 \(L^6\) 中所有 \(A\) 不变子空间可能具有的维数。若 \(U\subseteq k^6\) 是不变子空间，把其元素看成 \(L^6\) 的向量并取它们在 \(L\) 上的线性生成空间，称为由 \(U\) 扩张得到的子空间；说明 \(L^6\) 中哪些不变子空间能够以这种方式得到。
+\end{exercise}
+
+\begin{solution}
+三次多项式在域上可约当且仅当它有根。若 \(a(s)/b(s)\in k\) 是 \(q\) 的根，其中 \(a,b\in\mathbb F_3[s]\)、\(b\ne0\)，则 \(a\ne0\)，且
+\[
+a(s)^3=s\,b(s)^3.
+\]
+两端次数分别是 \(3\deg a\) 和 \(1+3\deg b\)，不可能相等。因此 \(q\) 无根，从而不可约。
+
+由于 \(A\) 是 \(q^2\) 的友矩阵，它在 \(k\) 上的特征多项式和最小多项式都等于 \(q^2\)。扩域后这两个多项式不变，但在 \(L[t]\) 中
+\[
+q(t)=t^3-u^3=(t-u)^3,\qquad q(t)^2=(t-u)^6.
+\]
+因此扩域后的循环模为 \(L[t]/((t-u)^6)\)，其 Jordan 标准形是单个块 \(J_6(u)\)。特别地，扩域使不可约因子变成了一个三重线性因子，不能把它误读为三个二阶 Jordan 块。
+
+在原域上，\(A\) 不变子空间就是循环模 \(k[t]/(q^2)\) 的子模。设 \(\pi:k[t]\to k[t]/(q^2)\) 为商映射；子模的原像是包含 \((q^2)\) 的理想。反之，每个这样的理想的像都是子模。因为 \(k[t]\) 是主理想整环而 \(q\) 不可约，这些理想只有 \((q^2),(q),k[t]\)。对应子空间为
+\[
+0,\qquad (q)/(q^2),\qquad k[t]/(q^2),
+\]
+维数分别为 \(0,3,6\)，而且每个维数只有一个不变子空间。
+
+在扩张域上，同样的理想对应给出全部子模
+\[
+\frac{((t-u)^j)}{((t-u)^6)},\qquad 0\le j\le6,
+\]
+它们的 \(L\) 维数为 \(6-j\)。因此 \(0,1,\ldots,6\) 都是不变子空间的维数，并且每个维数仍只有一个。若记 \(N=A-uI_6\)，这些子空间也可写成 \(\ker N^r\)，其中 \(0\le r\le6\)；在单个六阶 Jordan 块中，\(\dim_L\ker N^r=r\)。
+
+最后，设 \(U\) 的 \(k\) 基为 \(v_1,\ldots,v_d\)。以这些向量为列的矩阵有一个非零的 \(d\) 阶子式，这个子式进入 \(L\) 后仍非零，所以这些向量在 \(L\) 上仍线性无关。因此 \(L\) 线性生成空间的维数仍为 \(d\)。又因每个 \(Av_j\) 是这些基向量的 \(k\) 线性组合，该线性生成空间是 \(A\) 不变的。
+
+故由原域扩张得到的不变子空间恰有维数 \(0,3,6\) 的三个。中间一个由 \((q)/(q^2)\) 得到，在扩张域的循环模中为 \(((t-u)^3)/((t-u)^6)\)，也就是 \(\ker N^3=\operatorname{im}N^3\)。维数为 \(1,2,4,5\) 的不变子空间则是扩域后才出现的。
+\end{solution}

@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 12.3 不可分解模
-% 纲要位置：计划纲要.md，第 1166 行。
 
 \section{不可分解模}
 \label{b2:sec:1203}
 
-% TODO: 按以下纲要要点撰写本节。
+合成列逐层取商，直和分解则要求每个分量在原模中有一个补模。两者的差别可由投影看清：一个直和分量对应一个满足 \(e^2=e\) 的自同态。本节先用自同态环描述不可分解性，再证明有限长度条件如何使任意自同态分成可逆部分和幂零部分。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 局部自同态环的判别
 % * Fitting 引理
@@ -17,14 +16,96 @@
 \subsection{局部自同态环的判别}
 \label{b2:subsec:1203:01}
 
-待撰写。
+\begin{definition}\label{b2:def:indecomposable-module}
+非零模 \(M\) 称为\term[bukefenjie-mo]{不可分解模}[indecomposable module]，若不存在两个非零子模 \(A,B\) 使 \(M=A\oplus B\)。即每次内部直和分解中，至少一个分量必须为零。
+\end{definition}
+
+简单模一定不可分解，但逆命题不成立。例如 \(M=\mathbb Z/p^2\mathbb Z\) 的每个非零子群都包含唯一的阶 \(p\) 子群，所以两个非零子模不可能交于零。因此它不可分解，却不是简单模。这里并不否认其有两层合成列，而是说这两层不能在原模中分裂成直和。
+
+\begin{corollary}\label{b2:prop:idempotent-direct-sum}
+非零模 \(M\) 不可分解，当且仅当 \(\operatorname{End}_R(M)\) 中的幂等元只有 \(0,1\)。
+\end{corollary}
+\begin{proof}
+\cref{b2:prop:idempotent-module-decomposition}已说明，幂等元 \(e\) 给出 \(M=\operatorname{im}e\oplus\ker e\)。若 \(e\ne0\)，像非零；若核为零，则 \(e\Bigl(m-e(m)\Bigr)=0\) 迫使 \(m=e(m)\) 对所有 \(m\) 成立，即 \(e=1\)。因此 \(e\ne0,1\) 恰好给出两个非零分量。反过来，两个非零分量的坐标投影显然既不为零，也不为恒等。
+\end{proof}
+
+\begin{definition}\label{b2:def:local-ring}
+非零含单位元环 \(E\) 称为\term[jubu-huan]{局部环}[local ring]，若全部非单位组成一个双边理想。这里“单位”指具有两侧逆元的元素；不预设 \(E\) 交换。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:local-ring-criterion}
+非零环 \(E\) 为局部环，当且仅当对每个 \(a\in E\)，\(a\) 与 \(1-a\) 中至少有一个为单位。局部环的非单位理想是唯一极大左理想，也是唯一极大右理想；模掉它得到除环。局部环的幂等元只有 \(0,1\)，所以自同态环为局部环的非零模一定不可分解。
+\end{proposition}
+\begin{proof}
+若非单位构成理想 \(J\)，\(a\) 和 \(1-a\) 不能同时在 \(J\)，否则 \(1\in J\)，与一为单位矛盾。因此所述条件成立。
+
+反过来，假设这个条件。先证明幂等元 \(e\) 只能为零或一：若 \(e\) 可逆，由 \(e^2=e\) 得 \(e=1\)；若 \(1-e\) 可逆，由 \(e(1-e)=0\) 得 \(e=0\)。于是环中一侧逆也是两侧逆。确实，若 \(ab=1\)，则 \(ba\) 为幂等元，且不为零：否则 \(b=bab=0\)，与 \(ab=1\) 矛盾。因此 \(ba=1\)。
+
+令 \(J\) 为非单位集合。若 \(a\in J\)、\(r\in E\)，\(ra\) 若可逆，就使 \(a\) 有左逆；\(ar\) 若可逆，就使 \(a\) 有右逆。上段均会迫使 \(a\) 可逆，矛盾。所以 \(ra,ar\in J\)，并且 \(-a\in J\)。若 \(a,b\in J\) 而 \(u=a+b\) 可逆，则 \(u^{-1}a\) 与 \(1-u^{-1}a=u^{-1}b\) 都非单位，与假设矛盾。因此 \(a+b\in J\)，\(J\) 为不含一的双边理想。
+
+对局部环的这个 \(J\)，任意非零剩余类由 \(a\notin J\) 代表，\(a\) 可逆，故 \(E/J\) 为除环。因此 \(J\) 在左右两侧均极大。任何真左理想或真右理想不能包含单位，故必包含于 \(J\)，所以它们各自的极大理想都只能是 \(J\)。幂等元结论已证，再用\cref{b2:prop:idempotent-direct-sum}便得到最后的不可分解性。
+\end{proof}
+
+例如 \(k[t]/(t^n)\) 为局部环。常数项非零的元素可写为 \(a(1-u)\)，其中 \(a\in k^\times\)、\(u\in(t)\) 幂零，逆由有限几何和给出；常数项为零的元素都在真理想 \((t)\)，不可能可逆。故非单位恰为 \((t)\)。但 \(\mathbb Z\) 不是局部环：非单位 \(2,-3\) 的和为单位 \(-1\)。虽然后者作为自身的模不可分解，反向局部性还需要下面的有限长度条件。
 
 \subsection{Fitting 引理}
 \label{b2:subsec:1203:02}
 
-待撰写。
+\begin{lemma}[Fitting]\label{b2:lem:fitting}
+设 \(M\) 为有限长度模，\(f\in\operatorname{End}_R(M)\)。对所有充分大的正整数 \(n\)，有
+\[
+M=\ker f^n\oplus\operatorname{im}f^n.
+\]
+在第一分量上 \(f\) 幂零，在第二分量上 \(f\) 可逆；两个分量都在 \(f\) 下稳定。可取任意 \(n\ge\max\Bigl(1,\ell(M)\Bigr)\)。
+\end{lemma}
+\begin{proof}
+核链递增，像链递减，两者因有限长度都最终稳定。若某步 \(\ker f^r=\ker f^{r+1}\)，则对 \(f^{r+2}(x)=0\)，有 \(f(x)\in\ker f^{r+1}=\ker f^r\)，继而 \(x\in\ker f^{r+1}=\ker f^r\)。逐次归纳说明核链从此稳定。在稳定以前每次严格增加都消耗至少一层长度，所以从 \(r=\ell(M)\) 起必稳定。由\cref{b2:prop:finite-length-endomorphism}，
+\[
+\ell(\operatorname{im}f^r)=\ell(M)-\ell(\ker f^r),
+\]
+故像链从同一位置起长度不变。相邻像有包含关系，长度相等时商长度为零，所以像也相等。
+
+取满足上述界的 \(n\)，于是 \(\ker f^{2n}=\ker f^n\)、\(\operatorname{im}f^{2n}=\operatorname{im}f^n\)。若 \(y=f^n(x)\) 且 \(f^n(y)=0\)，则 \(x\in\ker f^{2n}=\ker f^n\)，从而 \(y=0\)。这证明核与像交于零。
+
+对任意 \(x\in M\)，由像的稳定性可取 \(z\in M\)，使 \(f^n(x)=f^{2n}(z)\)。于是 \(x-f^n(z)\in\ker f^n\)，而 \(f^n(z)\in\operatorname{im}f^n\)，得到所需分解。两分量的稳定性来自 \(f\) 与其幂交换。在核上 \(f^n=0\)；在像上，\(f\) 满射，因为 \(\operatorname{im}f^{n+1}=\operatorname{im}f^n\)，又因其核包含在上述零交中而单射，故可逆。
+\end{proof}
+
+这称为\term[Fitting-yinli]{Fitting 引理}[Fitting lemma]。对线性算子，它把零特征值对应的幂零部分与可逆部分分开，但证明没有要求底环是域，更没有要求多项式分裂。有限长度提供的是核和像的同时稳定。
+
+\begin{theorem}\label{b2:thm:indecomposable-local-end}
+非零有限长度模 \(M\) 不可分解，当且仅当 \(\operatorname{End}_R(M)\) 为局部环。在不可分解情形，每个自同态或者可逆，或者幂零；其全部非可逆自同态构成双边理想。
+\end{theorem}
+\begin{proof}
+先设 \(M\) 不可分解。对任意 \(f\)，Fitting 引理给出核与像的直和分解，所以二者至少一个为零。若 \(\ker f^n=0\)，则 \(f\) 单射，由\cref{b2:prop:finite-length-endomorphism}可逆；若 \(\operatorname{im}f^n=0\)，则 \(f^n=0\)，即幂零。
+
+当 \(f\) 幂零时，\(1-f\) 可逆，因为若 \(f^n=0\)，有
+\[
+(1-f)(1+f+\cdots+f^{n-1})
+=(1+f+\cdots+f^{n-1})(1-f)=1.
+\]
+因此每个 \(f\) 都使 \(f\) 或 \(1-f\) 可逆。\cref{b2:prop:local-ring-criterion}给出自同态环为局部环，同时保证非可逆元素对加法及左右乘法封闭。反过来，局部自同态环的幂等元只有零和一，由\cref{b2:prop:idempotent-direct-sum}，\(M\) 不可分解。
+\end{proof}
+
+有限长度并不意味着每个非可逆自同态都幂零；这里还用了不可分解性。例如 \(k^2\) 上的投影 \(\operatorname{diag}(1,0)\) 不可逆，也不幂零。相反，对单个循环 \(k[t]\) 模 \(k[t]/(p^n)\)，其中 \(p\) 不可约，任意两个非零子模均含有最小非零子模 \((p^{n-1})/(p^n)\)，所以它不可分解；其非可逆自同态因而都幂零。这与其自同态环 \(k[t]/(p^n)\) 中的非单位为 \((p)/(p^n)\) 相吻合。
 
 \subsection{有限长度模上的幂等元分解}
 \label{b2:subsec:1203:03}
 
-待撰写。
+\cref{b2:prop:idempotent-module-decomposition}也给出了有限版本：若自同态满足
+\[
+e_i^2=e_i,\qquad e_ie_j=0\ (i\ne j),\qquad
+\sum_{i=1}^re_i=1,
+\]
+则 \(M=\bigoplus_i e_iM\)，反过来有限内部直和的坐标投影满足这些等式。现在进一步判别一个投影的像是否还能分解。
+
+\begin{proposition}\label{b2:prop:orthogonal-idempotent-decomposition}
+对任意幂等元 \(e\in\operatorname{End}_R(M)\)，其非零像 \(eM\) 不可分解，当且仅当 \(e\) 不能写成两个非零幂等元 \(u,v\) 之和且 \(uv=vu=0\)。
+\end{proposition}
+\begin{proof}
+若 \(e=u+v\) 如题述，则 \(eu=ue=u\)、\(ev=ve=v\)，所以两像都在 \(eM\) 中，并有 \(eM=uM\oplus vM\)，两项非零。反过来，若 \(eM=A\oplus B\) 且两项非零，先用 \(e\) 把 \(M\) 投到 \(eM\)，再投到 \(A,B\)，得到 \(u,v\)。它们分别在自身像上为恒等，在另一像及 \(\ker e\) 上为零，因而幂等、正交、非零，且 \(u+v=e\)。
+\end{proof}
+
+“正交”在这里指乘积为零，不涉及内积。若 \(M\) 有限长度，每个非零直和分量的长度至少为一，所以一族两两正交且和为一的非零幂等元最多有 \(\ell(M)\) 个。寻找不可分解分量，等价于不断细分这些投影，直到任何一个都不能再作这样的正交分裂。
+
+\ProseParagraphBreak
+对内部直和 \(M=A\oplus B\)，自同态可写成由四个 Hom 群组成的分块矩阵；投影到 \(A\) 的幂等元是 \(\begin{pmatrix}1&0\\0&0\end{pmatrix}\)。在一般情形，它不在整个自同态环的中心，因为与含有非零交叉映射的分块矩阵不一定交换。模的直和分解需要的是幂等元，并不要求这些投影是中心幂等元；中心性对应更强的环论分解，后面另行讨论。

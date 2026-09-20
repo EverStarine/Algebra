@@ -1,30 +1,130 @@
 % !TeX root = ../../Book2.tex
-% 纲要标题：### 3.2 模的呈示
+% 纲要标题：### 3.2 模的展示
 % 纲要位置：计划纲要.md，第 893 行。
 
-\section{模的呈示}
+\section{模的展示}
 \label{b2:sec:0302}
 
-% TODO: 按以下纲要要点撰写本节。
+一个模未必有基，但总可以先给它选一族生成元。自由模允许任意指定这些生成元的像；把实际成立的关系取商，才得到原来的模。这样，模的研究分成两个可以明确记录的问题：用哪些符号生成对象，这些符号之间应当满足哪些关系。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 生成元与关系
-% * 有限生成、有限呈示及其区别
+% * 有限生成、有限展示及其区别
 % * 关系矩阵与余核
 %
 
 \subsection{生成元与关系}
 \label{b2:subsec:0302:01}
 
-待撰写。
+设 \((m_i)_{i\in I}\) 生成左 \(R\) 模 \(M\)。由\cref{b2:thm:free-module-universal}，存在满射
+\[
+\pi:R^{(I)}\longrightarrow M,\qquad e_i\longmapsto m_i.
+\]
+它的核 \(K\) 包含全部有限关系：向量 \(\sum_i a_i e_i\) 在 \(K\) 中，恰好意味着 \(\sum_i a_i m_i=0\)。称 \(K\) 为这组生成元的\term[guanximo]{关系模}[module of relations]。关系模依赖所选生成元；不能不注明选择就把它当作 \(M\) 的固有子模。
 
-\subsection{有限生成、有限呈示及其区别}
+\begin{definition}\label{b2:def:module-presentation}
+选取 \(K\) 的生成族 \((\rho_j)_{j\in J}\)，令 \(d:R^{(J)}\to R^{(I)}\) 将第 \(j\) 个标准基向量送到 \(\rho_j\)。满足
+\[
+\pi\text{ 满射},\qquad \operatorname{im}d=\ker\pi
+\]
+的两个映射 \(R^{(J)}\xrightarrow{d}R^{(I)}\xrightarrow{\pi}M\)，称为 \(M\) 的一个\term[mo-zhanshi]{展示}[presentation]，也称呈示。\termidx[chengshi]{呈示}称 \(e_i\) 为展示生成元，\(\rho_j=0\) 为展示关系。若
+\(\rho_j=\sum_i a_{ji}e_i\)，也将这个展示写成
+\[
+M=\langle e_i\ (i\in I)\mid \textstyle\sum_i a_{ji}e_i=0\ (j\in J)\rangle_R.
+\]
+这个记号表示相应的商模，并不要求 \(d\) 单射。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:module-presentation}
+每个左 \(R\) 模都有展示。上述展示确定同构
+\[
+R^{(I)}/\operatorname{im}d\ \cong\ M.
+\]
+给定左 \(R\) 模 \(N\)，指定元素 \(n_i\in N\) 可以诱导模同态 \(M\to N\)，当且仅当每个展示关系都满足 \(\sum_i a_{ji}n_i=0\)；满足时同态唯一。
+\end{proposition}
+\begin{proof}
+任意模都由它的全体元素生成，关系模也由它的全体元素生成，故总能作出 \(I,J,\pi,d\) 的选择。由\cref{b2:thm:module-first-isomorphism}，\(\pi\) 诱导 \(R^{(I)}/\ker\pi\cong M\)，而核等于 \(\operatorname{im}d\)。
+
+指定 \(n_i\) 后，自由模的泛性质给出唯一同态 \(f:R^{(I)}\to N\)。它能通过 \(\pi\) 分解，当且仅当 \(\ker\pi\subseteq\ker f\)，这是\cref{b2:prop:quotient-module}的商模泛性质。由于 \(\ker\pi\) 由所有 \(\rho_j\) 生成，该条件恰好等于所有 \(f(\rho_j)=0\)。而 \(\pi\) 满射，所以分解得到的同态唯一。
+\end{proof}
+
+例如，\(\mathbb Z/6\mathbb Z\) 有展示 \(\langle e\mid6e=0\rangle_{\mathbb Z}\)。换成两个生成元，可以写成 \(\langle u,v\mid2u-v=0,\ 3v=0\rangle_{\mathbb Z}\)：第一条关系消去 \(v\)，第二条变成 \(6u=0\)。严格地说，把 \(u,v\) 分别送到 \(\bar1,\bar2\) 得到一个方向的同态，把 \(\bar1\) 送到 \(u\) 得到反向同态，两复合在生成元上为恒等。因此这确实是同一模的两个不同展示。
+
+\subsection{有限生成、有限展示及其区别}
 \label{b2:subsec:0302:02}
 
-待撰写。
+\begin{definition}\label{b2:def:finitely-presented}
+模 \(M\) 称为\term[youxian-zhanshimo]{有限展示模}[finitely presented module]（也称有限呈示模）\termidx[youxian-chengshimo]{有限呈示模}，如果它有 \(I,J\) 均为有限集的展示。换言之，存在有限整数 \(m,n\ge0\) 及同态 \(d:R^m\to R^n\)，使 \(M\cong R^n/\operatorname{im}d\)。有限生成只要求生成元可以有限地选取；有限展示还要求对某一组有限生成元，全部关系可以由有限条生成。
+\end{definition}
+
+有限展示一定有限生成。反过来，有限生成模 \(M\) 总有满射 \(R^n\to M\)，但其核可能不是有限生成模。下面的结论保证：这个困难不能仅靠换一组有限生成元来消除。
+
+\begin{proposition}\label{b2:prop:finite-presentation-kernel}
+若 \(M\) 有限展示，则任意满射 \(p:R^n\to M\) 的核都有限生成。因此，对环 \(R\) 的左理想 \(I\)，商模 \(R/I\) 有限展示，当且仅当 \(I\) 作为左模有限生成。
+\end{proposition}
+\begin{proof}
+取一个给定的有限展示，写其末端满射为 \(q:R^s\to M\)，令 \(L=\ker q\)，并取 \(L\) 的有限生成元 \(\ell_1,\ldots,\ell_t\)。由于 \(R^n,R^s\) 自由，\cref{b2:prop:free-lifting}分别给出
+\[
+u:R^n\longrightarrow R^s,\qquad v:R^s\longrightarrow R^n,
+\quad qu=p,\quad pv=q.
+\]
+令 \(K=\ker p\)。\(v(L)\subseteq K\)，且
+\(p(\operatorname{id}-vu)=p-qu=0\)，所以
+\((\operatorname{id}-vu)(R^n)\subseteq K\)。对 \(x\in K\)，\(u(x)\in L\)，并且
+\[
+x=vu(x)+(\operatorname{id}-vu)(x).
+\]
+故 \(K=v(L)+(\operatorname{id}-vu)(R^n)\)。它由 \(v(\ell_1),\ldots,v(\ell_t)\) 与有限个 \(e_i-vu(e_i)\) 生成。
+
+将此结论用于自然满射 \(R\to R/I\)，即得必要性。若 \(I\) 由有限个 \(a_1,\ldots,a_m\) 生成，把 \(R^m\) 的标准基向量送到这些元素，其像就是 \(I\)，故给出 \(R/I\) 的有限展示。
+\end{proof}
+
+取无限变量多项式环 \(R=k[x_1,x_2,\ldots]\)，理想 \(I=(x_1,x_2,\ldots)\)。商模 \(R/I\cong k\) 由一个元素生成，却不有限展示。事实上，假设 \(I\) 由有限个多项式 \(f_1,\ldots,f_s\) 生成，所有 \(f_i\) 合共只涉及有限个变量。把这些变量置零，保留其余变量，得到一个环同态。每个 \(f_i\) 的常数项为零，所以它们的像全为零，整个所生成理想的像也为零；但一个未曾出现的变量 \(x_j\in I\) 的像仍是 \(x_j\ne0\)，矛盾。于是可用\cref{b2:prop:finite-presentation-kernel}得出结论。
+
+\ProseParagraphBreak
+若某个环满足“有限秩自由模的每个子模都有限生成”，则其上每个有限生成模都有限展示：对满射 \(R^n\to M\) 的核取有限生成元即可。第四章会在主理想整环上证明这一条件。一般情形下，生成元有限与关系有限必须分别核对。
 
 \subsection{关系矩阵与余核}
 \label{b2:subsec:0302:03}
 
-待撰写。
+有限展示可以用矩阵记录，但非交换环上的标量次序需要先固定。对于左自由模，暂将系数写成行向量。若 \(d:R^m\to R^n\) 满足
+\[
+d(e_j)=\sum_{i=1}^n a_{ji}f_i,
+\]
+则由左线性，\(d(\sum_j r_je_j)=\sum_{j,i}(r_ja_{ji})f_i\)。因此以 \(m\times n\) 矩阵 \(A=(a_{ji})\) 记录时，坐标公式为 \(\mathbf r\mapsto\mathbf r A\)。每行是一条关系的系数；矩阵乘在右侧，才与左标量作用相容。
+
+\ProseParagraphBreak
+本卷的 Smith 标准形用于交换环。届时采用熟悉的列向量约定：将关系向量排列成列，得到一个 \(n\times m\) 矩阵 \(A\)，其映射是 \(\mathbf x\mapsto A\mathbf x\)。交换性使 \(a_{ij}x_j=x_ja_{ij}\)，两种记法相容。以下关于列矩阵的公式均假设 \(R\) 交换，不把这个公式原样用到一般左模上。
+
+\begin{proposition}\label{b2:prop:presentation-matrix}
+设 \(R\) 交换，\(A\in M_{n\times m}(R)\)。以 \(A\) 的列为关系向量的模，是同态 \(A:R^m\to R^n\) 的余核：
+\[
+M=\operatorname{coker}A=R^n/AR^m.
+\]
+若 \(P\in\operatorname{GL}_n(R)\)、\(Q\in\operatorname{GL}_m(R)\)，则 \(A\) 和 \(PAQ\) 的余核同构，具体同构为
+\[
+\mathbf x+AR^m\longmapsto P\mathbf x+(PAQ)R^m.
+\]
+\end{proposition}
+\begin{proof}
+\(AR^m\) 正是各列的所有有限线性组合，所以等于关系子模。又因 \(QR^m=R^m\)，有 \((PAQ)R^m=P(AR^m)\)。因此所给公式不依赖代表元；\(P^{-1}\) 给出逆映射。
+\end{proof}
+
+若把目标自由模的基改为列矩阵 \(P\) 所记录的新基，把来源的基改为 \(Q\) 所记录的新基，则同一个映射的新矩阵是 \(P^{-1}AQ\)。左右变换有不同作用：左侧更改生成元的坐标，右侧更改关系列表。它们不是算子相似变换，通常不要求两侧互逆，矩阵也可以不是方阵。
+
+\ProseParagraphBreak
+前面的双生成元展示对应
+\[
+A=\begin{pmatrix}2&0\\-1&3\end{pmatrix},\qquad
+\mathbb Z^2\longrightarrow\mathbb Z/6\mathbb Z,
+\quad(a,b)\longmapsto\overline{a+2b}.
+\]
+该映射满射，并将两列送到零。若 \(a+2b=6c\)，则 \(a=2(3c-b)\)，且
+\[
+(a,b)=(3c-b)(2,-1)+c(0,3).
+\]
+因而核恰好是这两列生成的子模，直接得到了余核的同构，而无须提前使用 Smith 标准形。
+
+\ProseParagraphBreak
+同一模还可以有不同尺寸的关系矩阵。例如增添一个生成元 \(z\) 和关系 \(z=0\)，不会改变商模；给关系列表加上已有关系的线性组合，也不会改变关系子模。这些操作说明，固定矩阵的换基不变量与模本身的不变量仍须区别。下一章的结构定理既要整理一个矩阵，也要证明从中保留下来的非平凡循环因子不依赖展示。

@@ -5,9 +5,9 @@
 \section{投射模}
 \label{b2:sec:0701}
 
-% TODO: 按以下纲要要点撰写本节。
+若一个模有基，从它出发的同态便能沿满射提升：先为基向量的像选取原像，再线性延伸。没有基的模也可能具有这项性质。本节把它单独作为定义，并说明它恰好描述自由模的直和因子。除特别说明外，环均含幺元，模均为幺性左模。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 提升性质与自由模直和因子
 % * 投射模和分裂正合列
@@ -17,14 +17,102 @@
 \subsection{提升性质与自由模直和因子}
 \label{b2:subsec:0701:01}
 
-待撰写。
+\begin{definition}\label{b2:def:projective-module}
+设 \(P\) 是左 \(R\) 模。若对每个满同态 \(q:B\to C\) 和每个同态 \(f:P\to C\)，都存在同态 \(g:P\to B\) 满足 \(qg=f\)，则称 \(P\) 为\term[toushemo]{投射模}[projective module]。这里要求提升存在，不要求它唯一。
+\end{definition}
+
+\cref{b2:prop:free-lifting}已经证明自由模具有这项性质。零模也投射。作为一个相反的例子，\(\mathbb Z/n\mathbb Z\) 在 \(n>1\) 时不是投射 \(\mathbb Z\) 模：若恒等映射能沿 \(\mathbb Z\to\mathbb Z/n\mathbb Z\) 提升，则 \(\bar1\) 的像应是被 \(n\) 零化的整数，只能为零，却又必须映回 \(\bar1\)。
+
+\begin{theorem}\label{b2:thm:projective-characterizations}
+对左 \(R\) 模 \(P\)，下列条件等价：
+\begin{equivalences}
+\item\label{b2:item:projective-lifting} \(P\) 是投射模。
+\item\label{b2:item:projective-split-epimorphism} 每个以 \(P\) 为终点的满同态都有模同态截面。
+\item\label{b2:item:projective-summand} 存在左模 \(Q\)，使 \(P\oplus Q\) 是自由模。
+\end{equivalences}
+\end{theorem}
+\begin{proof}
+若 \(P\) 投射，对满同态 \(q:B\to P\) 提升 \(\operatorname{id}_P\)，便得到 \(qs=\operatorname{id}_P\)，即一个截面。
+
+任意模都有自由满射 \(\pi:F\to P\)，例如取以 \(P\) 的底集合为基的自由模，把对应于 \(p\) 的基向量送到 \(p\)。若这个满射有截面，则\cref{b2:thm:split-exact-sequence}给出 \(F\cong\ker\pi\oplus P\)，所以第二项蕴含第三项。
+
+最后设 \(F=P\oplus Q\) 自由，记包含与投影为 \(i:P\to F\)、\(p:F\to P\)，因而 \(pi=\operatorname{id}_P\)。给定定义中的 \(q\) 和 \(f\)，先用\cref{b2:prop:free-lifting}提升 \(fp:F\to C\)，得到 \(h:F\to B\) 且 \(qh=fp\)。令 \(g=hi\)，则 \(qg=fpi=f\)。
+\end{proof}
+
+这里“直和因子”包含嵌入与投影相容的意思。只有一个抽象单射 \(P\to F\)，并不足以证明 \(P\) 投射；\secref{b2:sec:0704}将给出嵌入自由模却不平坦、更不投射的理想。
+
+\begin{proposition}\label{b2:prop:projective-sums-summands}
+投射模的任意直和是投射模，投射模的直和因子仍是投射模。
+\end{proposition}
+\begin{proof}
+对 \(f:\bigoplus_iP_i\to C\) 和满射 \(q:B\to C\)，分别提升各限制 \(f_i:P_i\to C\)，得到 \(g_i:P_i\to B\)。\cref{b2:thm:module-sum-universal}将它们唯一合成 \(g:\bigoplus_iP_i\to B\)；\(qg=f\) 可在每个直和分量上验证。无限族的提升选择使用选择公理。
+
+若 \(P\) 是投射模 \(T\) 的直和因子，用 \(i:P\to T\)、\(p:T\to P\) 且 \(pi=\operatorname{id}_P\) 表示它。先提升 \(fp\)，再与 \(i\) 复合，即得到 \(f\) 的提升。
+\end{proof}
 
 \subsection{投射模和分裂正合列}
 \label{b2:subsec:0701:02}
 
-待撰写。
+投射性也可以用正合性表达。为此先说明 Hom 在不加任何特殊假设时已经保持哪一部分正合性。
+
+\begin{proposition}[Hom 的左正合性]\label{b2:prop:hom-left-exact}
+对短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\)，以及任意左模 \(P,E\)，下面两列交换群正合：
+\[
+0\longrightarrow\operatorname{Hom}_R(P,A)
+\xrightarrow{i\circ-}\operatorname{Hom}_R(P,B)
+\xrightarrow{q\circ-}\operatorname{Hom}_R(P,C),
+\]
+\[
+0\longrightarrow\operatorname{Hom}_R(C,E)
+\xrightarrow{-\circ q}\operatorname{Hom}_R(B,E)
+\xrightarrow{-\circ i}\operatorname{Hom}_R(A,E).
+\]
+\end{proposition}
+\begin{proof}
+第一列中，\(i\) 单射保证 \(i\circ-\) 单射。若 \(qf=0\)，则 \(f(P)\subseteq\ker q=i(A)\)，由\cref{b2:prop:short-exact-kernel-cokernel}，\(f\) 唯一写成 \(ih\)，其中 \(h:P\to A\) 是同态。这给出中间位置的正合性。
+
+第二列中，\(q\) 满射保证 \(-\circ q\) 单射。若 \(hi=0\)，则 \(h\) 在 \(i(A)\) 上为零，故公式 \(\bar h\Bigl(q(b)\Bigr)=h(b)\) 与代表元无关，并定义 \(\bar h:C\to E\)。它满足 \(h=\bar hq\)，且由 \(q\) 满射唯一确定。两列相邻映射的复合均为零，因此这些核与像的等式就是所需正合性。
+\end{proof}
+
+\begin{corollary}\label{b2:cor:projective-hom-exact}
+左模 \(P\) 投射，当且仅当函子 \(\operatorname{Hom}_R(P,-)\) 把每个短正合列变成短正合列；也等价于每个 \(0\to A\to B\to P\to0\) 都分裂。
+\end{corollary}
+\begin{proof}
+由\cref{b2:prop:hom-left-exact}，只需补上最后一个 Hom 映射的满射性，而它正是每个 \(P\to C\) 能沿 \(B\to C\) 提升的条件。任一满射与其核组成短正合列，所以这个条件覆盖定义中的所有满射。第二个等价性是\cref{b2:thm:projective-characterizations}与\cref{b2:thm:split-exact-sequence}的合用：满射有截面恰好使相应短正合列分裂。
+\end{proof}
+
+这个结论只要求右端的 \(P\) 投射。若 \(P\) 出现在左端，短正合列未必分裂。例如 \(0\to\mathbb Z\xrightarrow{\times n}\mathbb Z\to\mathbb Z/n\mathbb Z\to0\) 的左端自由，\(n>1\) 时仍不分裂。
 
 \subsection{有限生成投射模的例子}
 \label{b2:subsec:0701:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:finite-projective-summand}
+左模 \(P\) 是有限生成投射模，当且仅当它是某个有限秩自由模 \(R^n\) 的直和因子。
+\end{proposition}
+\begin{proof}
+若 \(P\) 有限生成，取满射 \(R^n\to P\)；若又投射，该满射有截面，因而分裂。反过来，有限自由模的直和因子投射，而且是 \(R^n\) 在投影下的像，由标准基的有限个像生成。
+\end{proof}
+
+设 \(e\in R\) 满足 \(e^2=e\)。作为左模，
+\[
+R=Re\oplus R(1-e).
+\]
+每个 \(r\) 都是 \(re+r(1-e)\)；若 \(x\) 同时属于两项，则右乘 \(e\) 分别得到 \(xe=x\) 与 \(xe=0\)，所以 \(x=0\)。因此 \(Re\) 是有限生成投射模。这一例子不要求 \(e\) 位于中心；右乘 \(e\) 才是这里的左模投影。
+
+\ProseParagraphBreak
+取 \(R=k\times k\)、\(e=(1,0)\)，则 \(Re=k\times0\) 非零，却被非零元素 \((0,1)\) 零化。非零自由模的基向量不被任何非零标量零化，所以这个投射模不自由。另一例是 \(R=M_n(k)\)、\(e=E_{11}\)：\(Re\) 由仅第一列可能非零的矩阵组成，可识别为通常的列向量模 \(k^n\)。当 \(n>1\) 时它也不自由，因为其 \(k\) 维数为 \(n\)，而非零自由 \(R\) 模若有有限基，其 \(k\) 维数为 \(n^2\) 的正整数倍；有无限基时维数更不可能有限。
+
+\begin{proposition}[有限对偶基判据]\label{b2:prop:finite-dual-basis}
+左模 \(P\) 有限生成且投射，当且仅当存在有限个 \(p_1,\ldots,p_n\in P\) 和左模同态 \(\varphi_i:P\to R\)，使对每个 \(p\in P\) 都有
+\[
+p=\sum_{i=1}^n\varphi_i(p)p_i.
+\]
+这样的元素与同态称为一组\term[youxian-duiouji]{有限对偶基}[finite dual basis]；它不要求 \(p_i\) 线性无关。
+\end{proposition}
+\begin{proof}
+若有分裂满射 \(q:R^n\to P\) 和截面 \(s\)，令 \(p_i=q(e_i)\)，令 \(\varphi_i\) 是 \(s\) 的第 \(i\) 个左坐标。将 \(qs(p)=p\) 按基展开便得到公式。
+
+反过来，用 \(q(e_i)=p_i\) 定义 \(q:R^n\to P\)，用 \(s(p)=\sum_i\varphi_i(p)e_i\) 定义 \(s:P\to R^n\)。由于 \(\varphi_i(rp)=r\varphi_i(p)\)，\(s\) 确为左模同态。给定等式说明 \(qs=\operatorname{id}_P\)，所以 \(P\) 是有限自由模的直和因子。
+\end{proof}
+
+在非交换环上，公式中的 \(\varphi_i(p)\) 必须位于 \(p_i\) 左侧。把这些系数移到右侧，会改变尚未给出的模结构；“对偶基”这一名称并不允许忽略标量的作用方向。

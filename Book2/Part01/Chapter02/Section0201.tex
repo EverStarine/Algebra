@@ -1,30 +1,125 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 2.1 环上的模
-% 纲要位置：计划纲要.md，第 859 行。
 
 \section{环上的模}
 \label{b2:sec:0201}
 
-% TODO: 按以下纲要要点撰写本节。
+向量空间中最常用的运算是向量相加与标量相乘。若把标量所在的域换成环，这两种运算仍然有意义，但非零标量不再一定可逆。例如，在交换群中可以取整数倍，却通常不能把一个元素除以二。模把这些情形放在同一组公理之下；哪些线性代数方法还能使用，要由标量环的性质决定。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要要点（供目录核对）：
 % * 左模、右模与标量约定
 % * 交换群、向量空间及线性算子模
 % * 正则模与表示
-%
 
 \subsection{左模、右模与标量约定}
 \label{b2:subsec:0201:01}
 
-待撰写。
+本章的环均含单位元，允许非交换环和零环，环同态保持单位元。除特别说明外，模指幺性左模。环的零元与模的零元通常都写成 \(0\)，必要时分别写 \(0_R\) 与 \(0_M\)。
+
+\begin{definition}\label{b2:def:left-module}
+设 \(R\) 是环。一个\term[zuomo]{左 \(R\) 模}[left R-module]是交换群 \((M,+)\)，连同映射
+\[
+R\times M\longrightarrow M,\qquad (r,m)\longmapsto rm,
+\]
+使任意 \(r,s\in R\) 和 \(m,n\in M\) 满足
+\[
+r(m+n)=rm+rn,\qquad (r+s)m=rm+sm,
+\]
+\[
+(rs)m=r(sm),\qquad 1_Rm=m.
+\]
+最后一条称为幺性条件。这里的加法交换群已经包括加法结合律、零元、负元与交换律。
+\end{definition}
+
+由分配律，\(0_Rm=(0_R+0_R)m=0_Rm+0_Rm\)，在交换群中消去一项便得 \(0_Rm=0_M\)。同样，\(r0_M=0_M\)，且
+\[
+(-r)m=-(rm)=r(-m).
+\]
+这些恒等式可以从公理推出，无须另列为模的定义。若 \(R\) 是零环，则 \(1_R=0_R\)，所以 \(m=1_Rm=0_Rm=0_M\)；零环只有零模。对任何环，只有一个元素的交换群都有唯一的模结构，称为\term[lingmo]{零模}[zero module]，也记为 \(0\)。
+
+\begin{definition}\label{b2:def:right-module}
+一个\term[youmo]{右 \(R\) 模}[right R-module]是交换群 \((M,+)\)，连同右侧标量乘法 \((m,r)\mapsto mr\)，满足
+\[
+(m+n)r=mr+nr,\qquad m(r+s)=mr+ms,
+\]
+\[
+(mr)s=m(rs),\qquad m1_R=m.
+\]
+\end{definition}
+
+标量位置记录了乘法次序。若 \(R\) 交换，一个左模可以通过 \(mr=rm\) 看成右模，因为 \((mr)s=s(rm)=(sr)m=(rs)m\)。非交换时，这一步中的 \(sr=rs\) 一般不成立。例如，\(M_n(k)\) 通过左乘作用在列向量 \(k^n\) 上，而通过右乘作用在行向量上；在同一个列向量空间中把 \(vA\) 定义为 \(Av\)，所得右作用需要 \(BA v=AB v\)，通常不满足。
+
+\ProseParagraphBreak
+也可以不换底集合而改变标量环。环 \(R\) 的\term[fanhuan]{反环}[opposite ring]记为 \(R^{\mathrm{op}}\)，加法与 \(R\) 相同，乘法定义为 \(r* s=sr\)。一个右 \(R\) 模成为左 \(R^{\mathrm{op}}\) 模的方法是 \(r\cdot m=mr\)：确有
+\[
+(r*s)\cdot m=m(sr)=(ms)r=r\cdot(s\cdot m).
+\]
+反过来也成立。因此右模理论可以用左模叙述，但每次转换都必须保留这个次序。
+\symidx{\(R^{\mathrm{op}}\)：环 \(R\) 的反环}
 
 \subsection{交换群、向量空间及线性算子模}
 \label{b2:subsec:0201:02}
 
-待撰写。
+任意交换群 \(A\) 都有唯一的 \(\mathbb Z\) 模结构。对正整数 \(n\)，令 \(na\) 为 \(n\) 个 \(a\) 的和；令 \(0a=0\) 与 \((-n)a=-(na)\)。整数乘法的分配律和结合律给出模公理。唯一性来自 \(1a=a\) 及对标量加法的分配律：它们已经决定了每个整数的作用。因而，交换群的整数倍运算就是最初的模运算。
+
+\ProseParagraphBreak
+域 \(k\) 上的模恰好是 \(k\) 向量空间。相比之下，\(\mathbb Z/6\mathbb Z\) 作为 \(\mathbb Z\) 模具有非零元素 \(\bar2\)，却有 \(3\bar2=0\)。在向量空间中，\(a\ne0\) 时可以乘 \(a^{-1}\)，由 \(av=0\) 推出 \(v=0\)；这里的整数 \(3\) 没有逆元，这个推理便不能使用。模的研究首先要求把这种差别与熟悉的线性运算区别开来。
+
+\ProseParagraphBreak
+\secref{b2:sec:0103}已经用多项式作用研究线性算子。下面把同一构造写成正式的模结构，并说明如何从模的作用恢复算子。
+
+\begin{proposition}\label{b2:prop:operator-module}
+设 \(V\) 为 \(k\) 向量空间，\(T:V\to V\) 为线性算子。对 \(f(t)=\sum_{j=0}^d a_jt^j\)，定义
+\[
+f(t)v=f(T)v=\sum_{j=0}^d a_jT^j(v),\qquad T^0=\operatorname{id}_V.
+\]
+这给出 \(V\) 上的左 \(k[t]\) 模结构，记所得模为 \(V_T\)。反过来，每个左 \(k[t]\) 模限制常数多项式的作用后成为 \(k\) 向量空间，其标量 \(t\) 的作用是一个线性算子，而且原来的多项式作用由上式恢复。
+\end{proposition}
+\begin{proof}
+每个 \(T^j\) 都线性，所以关于向量和与多项式和的两条分配律成立。若 \(g(t)=\sum_i b_it^i\)，则有限求和可以按指数重排，得到
+\[
+f(T)g(T)v=\sum_{j,i}a_jb_iT^{j+i}(v)=(fg)(T)v.
+\]
+常数多项式 \(1\) 作用为恒等映射，故模公理成立。
+
+反过来，常数子环 \(k\) 的作用满足向量空间公理。定义 \(T(v)=tv\)，分配律给出可加性；对 \(a\in k\)，由 \(ta=at\) 得 \(T(av)=aT(v)\)。再用乘法相容性归纳得到 \(t^jv=T^j(v)\)，由有限和的分配律得到所有多项式的作用公式。
+\end{proof}
+\symidx{\(V_T\)：线性算子 \(T\) 确定的 \(k[t]\) 模}
+
+例如，取 \(V=k^2\)，令 \(T(a,b)=(b,0)\)。由于 \(T^2=0\)，任意多项式 \(f(t)=a_0+a_1t+t^2g(t)\) 的作用简化为
+\[
+f(t)(a,b)=(a_0a+a_1b,a_0b).
+\]
+这个模中的 \(t\) 既不是零作用，也不是可逆作用。同一个向量空间若改用零算子，\(t\) 就零化所有向量。仅知道底层向量空间的维数，尚不能辨认这两种多项式环上的模；它们的差异正是算子的差异。
 
 \subsection{正则模与表示}
 \label{b2:subsec:0201:03}
 
-待撰写。
+环可以作用在自身上。以环的加法群为底群，以环乘法为左标量作用，得到\term[zuozhengze-mo]{左正则模}[left regular module] \({}_RR\)；右乘则给出\term[youzhengze-mo]{右正则模}[right regular module] \(R_R\)。两者的底集合相同，标量作用的方向不同。更一般地，环同态 \(\varphi:R\to S\) 可以把任意左 \(S\) 模 \(M\) 变成左 \(R\) 模，规定
+\[
+r\cdot m=\varphi(r)m.
+\]
+例如 \(\varphi(rs)=\varphi(r)\varphi(s)\) 保证乘法相容，\(\varphi(1_R)=1_S\) 保证幺性。这称为沿 \(\varphi\) 的\term[xianzhi-biaoliang]{限制标量}[restriction of scalars]。
+
+\ProseParagraphBreak
+从映射的角度看，一个模给每个标量指定了底群的一个自同态。为准确说明这句话，设 \(A\) 为交换群，记 \(\operatorname{End}_{\mathbb Z}(A)\) 为其所有加法群自同态组成的集合。它具有逐点加法与复合乘法，约定 \(uv=u\circ v\)，即先作用 \(v\)，再作用 \(u\)。两条分配律分别来自逐点加法的定义与 \(u\) 的可加性；加法负元逐点取负，乘法单位为恒等映射。因此它是一个环。
+\symidx{\(\operatorname{End}_{\mathbb Z}(A)\)：交换群 \(A\) 的自同态环}
+
+\begin{proposition}\label{b2:prop:module-representation}
+给交换群 \(A\) 一个幺性左 \(R\) 模结构，等价于给一个保幺环同态
+\[
+\rho:R\longrightarrow\operatorname{End}_{\mathbb Z}(A).
+\]
+对应关系为 \(\rho(r)(a)=ra\)。这个环同态称为环 \(R\) 在 \(A\) 上的一个\term[huan-biaoshi]{表示}[representation of a ring]。
+\end{proposition}
+\begin{proof}
+给定模结构，关于向量加法的分配律说明每个 \(\rho(r)\) 都是加法自同态。其余模公理依次给出
+\[
+\rho(r+s)=\rho(r)+\rho(s),\qquad
+\rho(rs)=\rho(r)\circ\rho(s),\qquad
+\rho(1_R)=\operatorname{id}_A.
+\]
+所以 \(\rho\) 是保幺环同态。反过来，用 \(ra=\rho(r)(a)\) 定义作用，自同态的可加性给出第一条分配律，同态的三项性质给出另外三条模公理。两种构造逐个标量、逐个元素地互相恢复。
+\end{proof}
+
+对 \(M_n(k)\) 在列向量 \(k^n\) 上的作用，\(\rho(A)\) 就是左乘矩阵 \(A\) 的线性变换。对 \(V_T\)，表示把多项式 \(f\) 送到 \(f(T)\)。对左正则模，\(\rho(r)\) 是左乘 \(r\) 的映射，而且从 \(\rho(r)(1_R)=r\) 可以恢复标量本身。模与表示在这里描述的是同一份数据：前者突出被作用的对象，后者突出标量所确定的映射。

@@ -1,16 +1,228 @@
 % !TeX root = ../../Book2.tex
-% 纲要标题：## 第3章　自由模、呈示与正合列
+% 纲要标题：## 第3章　自由模、展示与正合列
 % 纲要位置：计划纲要.md，第 885 行。
 
-\chapter{自由模、呈示与正合列}
+\chapter{自由模、展示与正合列}
 \label{b2:ch:03}
 \BookChapterNumber{b2:ch:03}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+自由模把“任意指定生成元的像”变成一种精确的构造方法；一般模则由自由模加上关系得到。本章先说明基、秩与展示，再用正合列记录核和像的衔接。分裂、五引理及蛇引理均通过具体映射证明，其中每次取原像、改变代表元和传递零元都有明确依据。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用自由模的泛性质构造同态，辨认秩不变性对环的要求，并给出非自由子模的例子。
+\item 从生成元与关系写出模的展示，区分有限生成与有限展示，说明关系矩阵的左右约定。
+\item 将核与余核组织成正合列，判断短正合列何时分裂，构造截面、缩回与直和分解。
+\item 使用五引理和蛇引理追踪元素，独立计算连接映射，并核对其良定义、自然性和符号。
+\end{itemize}
+\end{learninggoals}
+
+本章使用第二章的模同态、商模和直和。讨论自由模时允许非交换环，讨论交换环上的秩时明确排除零环；矩阵采用列向量的部分另假设环交换。任意指标集上的基与提升沿用第一卷附录 A 的选择公理。只为进入下一章的标准形理论，可先掌握自由模、有限展示、关系矩阵及分裂的含义；图追踪将用于随后更一般的模构造，在本章中完整证明。
+
+\ProseParagraphBreak
+自由模、秩及自由商的分裂可参阅 Roman\cite[Chapter 5, The Rank of a Free Module, pp. 127--131; Theorem 5.6, p. 132]{Roman2008AdvancedLinearAlgebra}。Lang 的《Algebra》\cite[CHAPTER III, \S 4; \S 9]{Lang2002}分别讨论自由模和蛇引理。阅读时要留意环是否假定交换，以及自由模是否默认具有有限基；本章在每个相关结论处列出实际需要的条件。
 
 \input{Part01/Chapter03/Section0301}
 \input{Part01/Chapter03/Section0302}
 \input{Part01/Chapter03/Section0303}
 \input{Part01/Chapter03/Section0304}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+自由模的基不仅给出坐标，也保证从基的任意指定像得到唯一同态。交换非零环上，取极大理想的商把基数比较转化为向量空间的维数比较；一般非交换环则可能出现一个模具有不同大小的有限基。子模是否自由、有无补模，也分别是两个问题。
+
+\ProseParagraphBreak
+模的展示把生成元放入自由模，把全部关系放入一个子模。有限生成不保证有限展示，关系矩阵也不是模的唯一表达。正合列进一步记录映射之间的关系：相邻复合为零只是必要条件，还须保证每个被送到零的元素确实来自前一项。分裂条件则允许把短正合列中的中项写成两端的直和。
+
+\ProseParagraphBreak
+图追踪把这些核与像的条件用于比较映射。五引理说明若干相邻项的同构如何决定中间项；蛇引理的连接映射来自先提升、再向下映射、最后取下排原像。不同选择造成的差恰好进入要取商的像中，自然性则说明这一构造与保持图交换的映射相容。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:03-free-hom}
+设 \(F=R^{(I)}\)，\(N\) 为左 \(R\) 模。证明加法群同构
+\(\operatorname{Hom}_R(F,N)\cong\prod_{i\in I}N\)。解释右侧为什么是直积而不是直和，并给出 \(I=\mathbb N\)、\(R=N=\mathbb Z\) 的具体见证。
+\end{exercise}
+\begin{solution}
+将同态 \(f\) 送到 \((f(e_i))_{i\in I}\)。由\cref{b2:thm:free-module-universal}，任意一族像都唯一对应同态
+\(\sum r_i e_i\mapsto\sum r_i f(e_i)\)，所以该映射为双射。逐个基向量取值保留加法，故为加法群同构。输入向量只有有限支集，保证右端每次求和有意义；各个 \(f(e_i)\) 本身却无须只有有限多个非零。例如令每个 \(e_i\) 都映到整数 \(1\)，得到将有限支集整数序列送到其坐标和的同态，它对应 \((1,1,\ldots)\)，属于直积而不属于直和。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-minimal-free-generators}
+设 \(R\ne0\) 交换，\(R^n\) 可以由 \(m\) 个元素生成，其中 \(m,n\) 有限。证明 \(m\ge n\)。说明这里既不能删除 \(R\ne0\)，也不能不加条件地删除交换性。
+\end{exercise}
+\begin{solution}
+取极大理想 \(\mathfrak m\)，令 \(k=R/\mathfrak m\)。所给生成元的剩余类生成
+\(R^n/\mathfrak mR^n\cong k^n\)，故向量空间中生成元数不少于维数，得到 \(m\ge n\)。所用商空间识别已在\cref{b2:thm:free-rank-invariance}中逐坐标证明。零环时 \(R^n=0\)，可用空集生成。非交换反例取\secref{b2:sec:0301}中可数维空间的自同态环，那里显式构造了 \(R\cong R^2\)；左正则模由 \(1\) 生成，所以 \(R^2\) 也可以由一个元素生成。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-dual-number-presentation}
+设 \(R=k[\varepsilon]/(\varepsilon^2)\)。为 \(R/(\varepsilon)\) 写出有限展示，证明其关系模 \((\varepsilon)\) 不自由，并证明
+\[
+\cdots\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R
+\xrightarrow{\varepsilon}R\longrightarrow R/(\varepsilon)\longrightarrow0
+\]
+在每一项都正合。这里标记 \(\varepsilon\) 的映射为乘以 \(\varepsilon\)。
+\end{exercise}
+\begin{solution}
+每个元素唯一写成 \(a+b\varepsilon\)，乘以 \(\varepsilon\) 得 \(a\varepsilon\)，所以该映射的核与像都为 \((\varepsilon)\)。自然商映射的核也为 \((\varepsilon)\)，并且满射，故各处正合。只取末端的 \(R\xrightarrow{\varepsilon}R\to R/(\varepsilon)\) 即为有限展示。关系模非零，却被非零标量 \(\varepsilon\) 全部零化，因此不能有基。这个例子也说明，有限展示中的第一个自由模到第二个自由模的映射不必单射，关系之间仍然可以有关系。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-two-variable-relations}
+在 \(R=k[x,y]\) 中令 \(I=(x,y)\)。证明
+\[
+0\longrightarrow R\xrightarrow{\iota}R^2\xrightarrow{q}I\longrightarrow0,
+\quad \iota(c)=(-cy,cx),\quad q(a,b)=ax+by
+\]
+正合，但不分裂。由此给出非自由而有限展示的模。
+\end{exercise}
+\begin{solution}
+\(q\) 满射，\(q\iota=0\)。若 \(ax+by=0\)，置 \(x=0\) 得 \(b(0,y)y=0\)，所以 \(b(0,y)=0\)，即 \(b=cx\)。代回并在整环中消去 \(x\)，得到 \(a=-cy\)。这证明 \(\ker q=\operatorname{im}\iota\)。\(cx=0\) 又迫使 \(c=0\)，故 \(\iota\) 单射。
+
+若序列分裂，由\cref{b2:thm:split-exact-sequence}存在缩回 \(r:R^2\to R\)，\(r\iota=\operatorname{id}_R\)。写 \(r(a,b)=ua+vb\)，则代入 \(\iota(1)=(-y,x)\) 得 \(-uy+vx=1\)，与左端在 \((x,y)\) 中矛盾。因此不分裂。\(I\) 非自由已在\secref{b2:sec:0301}由非主理想的事实直接证明；本题的两个生成元及一个关系则给出它的有限展示。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-matrix-cokernel}
+为矩阵 \(A=\begin{pmatrix}3&1\\0&2\end{pmatrix}\) 的整数余核构造与 \(\mathbb Z/6\mathbb Z\) 的显式同构，不使用 Smith 标准形。再给 \(A\) 添上一列 \((4,2)^{\mathsf t}\)，判断余核是否改变。
+\end{exercise}
+\begin{solution}
+原来的关系为 \(3u=0\)、\(u+2v=0\)。定义 \(\phi:\mathbb Z^2\to\mathbb Z/6\mathbb Z\)，\(\phi(a,b)=\overline{-2a+b}\)。它满射且零化两列。若 \(-2a+b=6c\)，则 \(b=2(a+3c)\)，并有
+\[
+(a,b)=-c(3,0)+(a+3c)(1,2).
+\]
+因此 \(\ker\phi=A\mathbb Z^2\)，由\cref{b2:thm:module-first-isomorphism}得到所求同构。逆映射将 \(\bar1\) 送到 \(v\) 的商类；关系保证 \(6v=0\)。新增列 \((4,2)^{\mathsf t}\) 是原两列之和，所以生成的关系子模不变，余核也不变。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-finite-presentation-quotient}
+设 \(M\) 有限展示，\(K\subseteq M\) 有限生成。证明 \(M/K\) 有限展示。反过来，若 \(M\) 仅有限生成，即使 \(K=0\)，结论是否成立？
+\end{exercise}
+\begin{solution}
+取有限展示给出的满射 \(p:R^n\to M\)，其核由 \(\ell_1,\ldots,\ell_s\) 生成。设 \(K\) 由 \(k_1,\ldots,k_t\) 生成，并取 \(x_j\in R^n\) 使 \(p(x_j)=k_j\)。复合 \(R^n\to M/K\) 的核为 \(p^{-1}(K)\)。若 \(x\) 在此核中，写 \(p(x)=\sum_j a_jk_j\)，则 \(x-\sum_j a_jx_j\in\ker p\)。因此该核由有限个 \(\ell_i,x_j\) 生成，给出 \(M/K\) 的有限展示。
+
+反向提议不成立。取 \(R=k[x_1,x_2,\ldots]\)，\(M=R/(x_1,x_2,\ldots)\)，\(K=0\)。\secref{b2:sec:0302}已证明 \(M\) 为单生成而非有限展示模，故其零子模的商仍不是有限展示模。
+\end{solution}
+
+\begin{exercise}[Schanuel 引理]\label{b2:ex:03-schanuel}
+设有两个短正合列
+\[
+0\longrightarrow K\longrightarrow F\xrightarrow{p}M\longrightarrow0,
+\qquad
+0\longrightarrow L\longrightarrow G\xrightarrow{q}M\longrightarrow0,
+\]
+其中 \(F,G\) 自由。证明 \(K\oplus G\cong L\oplus F\)。提示：在 \(F\oplus G\) 中考察 \(P=\{(x,y)\mid p(x)=q(y)\}\)。
+\end{exercise}
+\begin{solution}
+\(P\) 是子模。向第二坐标的投影 \(P\to G\) 满射，因为给定 \(y\in G\)，由 \(p\) 满射可取 \(x\) 使 \(p(x)=q(y)\)；其核为 \(\{(x,0):x\in K\}\cong K\)。因此得到短正合列 \(0\to K\to P\to G\to0\)。\(G\) 自由，由\cref{b2:cor:free-quotient-splits}此列分裂，故 \(P\cong K\oplus G\)。交换两个坐标，对投影 \(P\to F\) 得到 \(P\cong L\oplus F\)，两同构合成即可。得到的同构可以依赖所选提升；结论断言同构存在，不给出不依赖选择的同构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-cyclic-extension-splitting}
+设 \(m,n\) 为正整数。证明自然序列
+\[
+0\longrightarrow\mathbb Z/n\mathbb Z\xrightarrow{\iota}
+\mathbb Z/mn\mathbb Z\xrightarrow{q}\mathbb Z/m\mathbb Z\longrightarrow0,
+\quad\iota(\bar a)=\overline{ma},\quad q(\bar b)=\bar b
+\]
+短正合，并且分裂当且仅当 \(\gcd(m,n)=1\)。
+\end{exercise}
+\begin{solution}
+\(ma\equiv0\pmod{mn}\) 当且仅当 \(a\equiv0\pmod n\)，故 \(\iota\) 单射；\(q\) 满射，其核恰为 \(m\) 的倍数，等于 \(\operatorname{im}\iota\)。截面 \(s\) 由 \(s(\bar1)=\bar b\) 决定。它必须同时满足 \(b\equiv1\pmod m\) 和 \(mb\equiv0\pmod{mn}\)，后者等价于 \(n\mid b\)。所以截面存在当且仅当同余式 \(nc\equiv1\pmod m\) 有解，即 \(\gcd(m,n)=1\)。有解时 \(s(\bar a)=\overline{nca}\) 良定义，并满足 \(qs=\operatorname{id}\)，由\cref{b2:thm:split-exact-sequence}即得分裂。此推导也包含 \(m=1\) 或 \(n=1\) 的零端项情形。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-all-sections}
+定义 \(q:\mathbb Z^2\to\mathbb Z\)，\(q(x,y)=2x+3y\)，以及 \(\iota:\mathbb Z\to\mathbb Z^2\)，\(\iota(a)=(-3a,2a)\)。证明 \(0\to\mathbb Z\xrightarrow{\iota}\mathbb Z^2\xrightarrow{q}\mathbb Z\to0\) 短正合；求出所有截面 \(s\)，并为每个截面给出满足 \(r\iota=1\)、\(rs=0\) 的缩回 \(r\)。
+\end{exercise}
+\begin{solution}
+\(q(-1,1)=1\)，故 \(q\) 满射。若 \(2x+3y=0\)，则 \(y\) 为偶数，写 \(y=2a\) 后得 \(x=-3a\)，所以核为 \(\operatorname{im}\iota\)；\(\iota\) 显然单射。所有 \(2u+3v=1\) 的整数解为
+\[
+(u,v)=(-1-3h,1+2h),\qquad h\in\mathbb Z,
+\]
+因为任意解与 \((-1,1)\) 的差属于 \(\ker q\)。所以所有截面为 \(s_h(c)=c(-1-3h,1+2h)\)。令
+\[
+r_h(x,y)=-(1+2h)x-(1+3h)y.
+\]
+代入可得 \(r_h\iota(a)=a\)、\(r_hs_h(c)=0\)，并有
+\(\iota r_h+s_hq=\operatorname{id}_{\mathbb Z^2}\)。这也说明每个截面都给出补模 \(s_h(\mathbb Z)\)，补模并不唯一。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-hom-left-exact}
+设 \(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\) 短正合，\(N\) 为左 \(R\) 模。证明下列加法群序列正合：
+\[
+0\longrightarrow\operatorname{Hom}_R(N,A)\xrightarrow{i\circ-}
+\operatorname{Hom}_R(N,B)\xrightarrow{q\circ-}\operatorname{Hom}_R(N,C),
+\]
+\[
+0\longrightarrow\operatorname{Hom}_R(C,N)\xrightarrow{-\circ q}
+\operatorname{Hom}_R(B,N)\xrightarrow{-\circ i}\operatorname{Hom}_R(A,N).
+\]
+说明最后一个映射一般并非满射；当原短正合列分裂时，证明这两个末端映射都满射。
+\end{exercise}
+\begin{solution}
+第一列首个映射单射，因为 \(i\) 单射。若 \(f:N\to B\) 满足 \(qf=0\)，则像落在 \(\ker q=i(A)\)。对每个 \(n\) 唯一取 \(g(n)\in A\) 使 \(i(g(n))=f(n)\)；用 \(i\) 的线性和单射性检验 \(g\) 线性，便得 \(f=ig\)。这证明中间正合。
+
+第二列首个映射单射，因为 \(q\) 满射。若 \(f:B\to N\) 满足 \(fi=0\)，则 \(f\) 零化 \(\ker q\)。由\cref{b2:prop:quotient-module}的泛性质，它唯一分解为 \(gq\)，其中 \(g:C\to N\)，所以中间正合。
+
+对整数短正合列 \(0\to\mathbb Z\xrightarrow{2}\mathbb Z\to\mathbb Z/2\mathbb Z\to0\)，第一列取 \(N=\mathbb Z/2\mathbb Z\)，从 \(N\) 到 \(\mathbb Z\) 只有零同态，无法提升 \(N\) 上的恒等映射。第二列取 \(N=\mathbb Z\)，末端映射在 \(\operatorname{Hom}(\mathbb Z,\mathbb Z)\cong\mathbb Z\) 下为乘以 \(2\)，也不满射。若原列分裂，取截面 \(s:C\to B\) 与缩回 \(r:B\to A\)。任意 \(f:N\to C\) 可提升为 \(sf\)，任意 \(g:A\to N\) 可延拓为 \(gr\)，分别证明满射性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-exact-dimension-sum}
+设有限维向量空间构成有限正合列 \(0\to V_0\xrightarrow{d_0}V_1\to\cdots\to V_n\to0\)。证明 \(\sum_{j=0}^n(-1)^j\dim V_j=0\)。解释为什么只知道相邻复合为零不足以得到结论。
+\end{exercise}
+\begin{solution}
+置 \(r_j=\dim\operatorname{im}d_j\)，并约定 \(r_{-1}=r_n=0\)。由正合性，\(\ker d_j=\operatorname{im}d_{j-1}\)，故秩--零度公式给出 \(\dim V_j=r_{j-1}+r_j\)。交错求和时每个 \(r_j\) 的两个系数相反，全部相消。若只要求复合为零，可取 \(0\to k\xrightarrow{0}0\to0\)，复合全为零，但交错维数和为 \(1\)；首个映射没有单射性，故不正合。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-snake-arithmetic}
+上下两行分别为整数短正合列
+\[
+0\longrightarrow\mathbb Z\xrightarrow{4}\mathbb Z\longrightarrow\mathbb Z/4\mathbb Z\longrightarrow0,
+\qquad
+0\longrightarrow\mathbb Z\xrightarrow{6}\mathbb Z\longrightarrow\mathbb Z/6\mathbb Z\longrightarrow0.
+\]
+竖直映射依次为 \(\alpha=\times2\)、\(\beta=\times3\) 和 \(\gamma(\bar c)=\overline{3c}\)。核对两方块交换，求蛇引理的整条正合列，并按正文的正号约定计算连接映射。
+\end{exercise}
+\begin{solution}
+\(\gamma\) 良定义，因为 \(3\cdot4\) 被 \(6\) 整除；左方块交换来自 \(3\cdot4=6\cdot2\)，右方块直接由剩余类公式得到。\(\ker\alpha=\ker\beta=0\)，而 \(\ker\gamma=\{\bar0,\bar2\}\subseteq\mathbb Z/4\mathbb Z\)。余核分别为 \(\mathbb Z/2\mathbb Z\)、\(\mathbb Z/3\mathbb Z\) 和 \((\mathbb Z/6\mathbb Z)/\{\bar0,\bar3\}\cong\mathbb Z/3\mathbb Z\)。
+
+计算 \(\delta(\bar2)\)：先把 \(\bar2\) 提升为中项整数 \(2\)，经 \(\beta\) 得 \(6\)，再从下排乘以 \(6\) 的映射取原像 \(1\)。因此 \(\delta(\bar2)=\bar1\in\mathbb Z/2\mathbb Z\)，所以连接映射是同构。在上述识别下，\cref{b2:thm:snake-lemma}的正合列为
+\[
+0\longrightarrow0\longrightarrow0\longrightarrow\mathbb Z/2\mathbb Z
+\xrightarrow{\,1\,}\mathbb Z/2\mathbb Z
+\xrightarrow{\,0\,}\mathbb Z/3\mathbb Z
+\xrightarrow{\,1\,}\mathbb Z/3\mathbb Z\longrightarrow0.
+\]
+中间的零映射由下排乘以 \(6\) 诱导，它在模 \(3\) 后为零；最后的同构把整数的模 \(3\) 类送到它在上述二次商中的类。各项的像和核因此可以直接核对。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-five-lemma-hypotheses}
+在五引理的五项图中，若第二、第四个竖直映射为同构，第一个满射、第五个单射，则中间映射为同构。分别举例说明：删去第一个映射的满射条件，可能失去中间映射的单射性；删去第五个映射的单射条件，可能失去中间映射的满射性。
+\end{exercise}
+\begin{solution}
+第一个例子以上排 \(0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\to0\)、下排 \(\mathbb Z\xrightarrow{1}\mathbb Z\to0\to0\to0\) 为两条五项列。竖直映射为零映射、\(\operatorname{id}_{\mathbb Z}\)、零映射、\(\operatorname{id}_0\)、\(\operatorname{id}_0\)。两行在三个内项均正合，每个方块交换；第二、第四个映射同构，第五个单射，但第一个 \(0\to\mathbb Z\) 不满射，中间的 \(\mathbb Z\to0\) 不单射。
+
+第二个例子以上排 \(0\to0\to0\to\mathbb Z\xrightarrow{1}\mathbb Z\)、下排 \(0\to0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\) 为两行。竖直映射依次为 \(\operatorname{id}_0,\operatorname{id}_0,0,\operatorname{id}_{\mathbb Z},0\)。两行同样在内项正合且图交换，第一个满射，第二、第四个同构，但第五个 \(\mathbb Z\to0\) 不单射，中间的 \(0\to\mathbb Z\) 不满射。这些例子具体指出了五引理两次追踪分别需要的端部条件。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-snake-sign}
+在正文蛇引理的图中，保留所有对象及其他映射，只把下排的单射 \(i':A'\to B'\) 和左侧竖直映射 \(\alpha:A\to A'\) 同时换成 \(-i'\)、\(-\alpha\)。证明新图仍交换，核与余核可以用原对象识别，但连接映射在这个识别下变成 \(-\delta\)。这是否与自然性矛盾？
+\end{exercise}
+\begin{solution}
+原有 \(\beta i=i'\alpha\)，而 \((-i')(-\alpha)=i'\alpha\)，故新左方块仍交换。相反映射有相同的核和像，因此核与余核作为子模和商模没有改变。若旧的连接映射通过提升 \(c\) 得到 \(b\)，再写 \(\beta(b)=i'(a')\)，新图中同一个元素应写成 \(\beta(b)=(-i')(-a')\)，故新连接映射为 \(c\mapsto[-a']=-\delta(c)\)。
+
+这不与\cref{b2:prop:snake-naturality}矛盾。从原图到新图的交换映射在 \(A'\) 上应取 \(-\operatorname{id}_{A'}\)，在其余对象上取恒等；它在 \(\operatorname{coker}\alpha\) 上也诱导负恒等。自然性正好要求新的连接映射等于负恒等与旧连接映射的复合。若强行在所有位置都取恒等，左下方块便不是交换图。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:03-hom-from-presentation}
+设 \(R\) 交换，\(M=\operatorname{coker}(A:R^m\to R^n)\)，\(N\) 为 \(R\) 模。证明 \(\operatorname{Hom}_R(M,N)\) 与映射
+\[
+N^n\longrightarrow N^m,\qquad (z_i)\longmapsto
+\Bigl(\sum_{i=1}^n a_{ij}z_i\Bigr)_{j=1}^m
+\]
+的核同构。用它求 \(\operatorname{Hom}_{k[t]}(k[t]/(t^2),k[t]/(t^3))\)，并给出其 \(k\) 维数。
+\end{exercise}
+\begin{solution}
+一个从 \(R^n\) 到 \(N\) 的同态由标准基的像 \(z_1,\ldots,z_n\) 唯一决定。它能通过余核分解，当且仅当零化 \(A\) 的每一列，即对每个 \(j\) 满足 \(\sum_i a_{ij}z_i=0\)。由\cref{b2:prop:module-presentation}，这给出所述双射。它保留加法；因 \(R\) 交换，Hom 与核均有逐点 \(R\) 作用，双射也保留此作用。
+
+具体例子中，一个同态由 \(\bar1\) 的像 \(z\in k[t]/(t^3)\) 决定，条件为 \(t^2z=0\)。写 \(z=a+bt+ct^2\)，这个条件等价于 \(a=0\)。所以所求 Hom 模与子模 \((t)/(t^3)\) 同构，作为 \(k\) 向量空间以 \(t,t^2\) 为基，维数为 \(2\)；作为 \(k[t]\) 模又与 \(k[t]/(t^2)\) 同构，映射为 \(\bar f\mapsto\overline{tf}\)。
+\end{solution}

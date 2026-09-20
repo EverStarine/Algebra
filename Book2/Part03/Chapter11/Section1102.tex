@@ -5,9 +5,9 @@
 \section{反环与包络代数}
 \label{b2:sec:1102}
 
-% TODO: 按以下纲要要点撰写本节。
+左乘与右乘都可以表示为线性算子，但右乘算子的复合会颠倒乘法次序。反环记录这个次序，包络代数则把两个相容的作用合并成一个左作用。以下仍固定底域 \(k\)；所说的代数双模，其左右两侧的 \(k\) 标量作用须一致。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 反环与左右模转换
 % * 双模作为包络代数上的模
@@ -17,14 +17,70 @@
 \subsection{反环与左右模转换}
 \label{b2:subsec:1102:01}
 
-待撰写。
+代数 \(A^{\mathrm{op}}\) 与 \(A\) 有相同的向量空间和单位元，乘法定义为 \(a\cdot_{\mathrm{op}}b=ba\)。它就是\subsecref{b2:subsec:0201:01}所定义的反环，带上原有的 \(k\) 结构。将右 \(A\) 模 \(M\) 改写为左 \(A^{\mathrm{op}}\) 模时，规定 \(a^{\mathrm{op}}m=ma\)；原右作用的结合律保证这个左作用结合。
+
+\ProseParagraphBreak
+若 \(D_a(m)=ma\)，则
+\[
+D_aD_b(m)=(mb)a=m(ba)=D_{ba}(m).
+\]
+因此 \(a\mapsto D_a\) 是从 \(A^{\mathrm{op}}\) 出发的代数同态，而一般不是从 \(A\) 出发的同态。例如 \(A=M_2(k)\) 时，右乘 \(E_{12}\) 后再右乘 \(E_{21}\) 等于右乘 \(E_{11}\)，复合中的先后次序不能按书写位置猜测。
 
 \subsection{双模作为包络代数上的模}
 \label{b2:subsec:1102:02}
 
-待撰写。
+对两个 \(k\) 代数 \(A,B\)，\(A\otimes_kB\) 的乘法由
+\[
+(a\otimes b)(c\otimes d)=ac\otimes bd
+\]
+双线性延伸。四变量公式分别线性，故对两次张量关系良定义；在纯张量上，结合律由 \(A,B\) 的结合律得到，单位为 \(1_A\otimes1_B\)。这里两个代数本身都不必交换，只用到底域标量在各自中心。
+
+\begin{definition}\label{b2:def:enveloping-algebra}
+代数 \(A\) 的\term[baoluo-daishu]{包络代数}[enveloping algebra]为
+\[
+A^e=A\otimes_k A^{\mathrm{op}}.
+\]
+对同一底域的代数双模 \({}_AM_A\)，要求其为 \(k\) 向量空间，左右作用双线性、幺性并满足 \((am)b=a(mb)\)，且两侧的底域标量作用都等于原有的 \(k\) 作用。
+\end{definition}
+\symidx{\(A^e=A\otimes_k A^{\mathrm{op}}\)：代数的包络代数}
+
+\begin{theorem}\label{b2:thm:enveloping-bimodules}
+在向量空间 \(M\) 上指定上述 \(A\) 双模结构，等价于指定幺性左 \(A^e\) 模结构。相应作用为
+\begin{equation}\label{b2:eq:enveloping-action}
+(a\otimes b^{\mathrm{op}})m=amb.
+\end{equation}
+这两种结构的同态也完全相同。
+\end{theorem}
+\begin{proof}
+从双模出发，\((a,b)\mapsto(m\mapsto amb)\) 是到 \(\operatorname{End}_k(M)\) 的双线性映射，因此诱导 \(A^e\) 上的线性作用。连续作用两个纯张量给出
+\[
+(a\otimes b^{\mathrm{op}})\Bigl((c\otimes d^{\mathrm{op}})m\Bigr)
+=acmdb.
+\]
+而其乘积为 \(ac\otimes(db)^{\mathrm{op}}\)，作用也为同一个表达式。纯张量生成性保证乘法相容，\(1\otimes1\) 则作用为恒等。
+
+反过来，令 \(am=(a\otimes1)m\)、\(mb=(1\otimes b^{\mathrm{op}})m\)。第一项保持乘法，第二项因反环而给出右结合律；两种纯张量 \(a\otimes1\) 与 \(1\otimes b^{\mathrm{op}}\) 交换，所以两侧作用相容。张量平衡关系使 \((\lambda1_A)\otimes1=1\otimes(\lambda1_A)^{\mathrm{op}}\)，故两侧的标量一致。两次构造恢复原作用。同态同时与两侧作用相容，当且仅当与它们的复合及线性组合相容，亦即 \(A^e\) 线性。
+\end{proof}
+
+正则双模 \(A\) 本身由左右乘法给出。它的 \(A^e\) 子模恰是 \(A\) 的双边理想，因为对子模要求的稳定性恰好包括左乘和右乘。由此，研究双边理想也可以放进模论框架，但需要把系数代数从 \(A\) 改成 \(A^e\)。
+
+\ProseParagraphBreak
+例如 \(A=k[t]\)，则 \(A^e\cong k[x,y]\)：\(x\) 记录左乘 \(t\)，\(y\) 记录右乘 \(t\)。同构把 \(t^i\otimes t^j\) 送到 \(x^iy^j\)，两侧的单项式基和乘法一一对应。在正则双模上，这两个作用相同，因此 \(x-y\) 零化整个模。更一般的双模上，它们只须交换，不必相同。
 
 \subsection{自同态代数与复合作用}
 \label{b2:subsec:1102:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:regular-bimodule-endomorphism}
+对左正则模 \({}_AA\)，有 \(k\) 代数同构
+\[
+A^{\mathrm{op}}\longrightarrow\operatorname{End}_A({}_AA),\qquad
+b^{\mathrm{op}}\longmapsto R_b,
+\quad R_b(x)=xb.
+\]
+对正则双模，还有 \(\operatorname{End}_{A^e}(A)\cong Z(A)\)。
+\end{proposition}
+\begin{proof}
+\cref{b2:prop:regular-hom-endomorphism}的公式给出每个左模自同态恰为 \(x\mapsto xb\)，其中 \(b=f(1)\) 唯一；这里它自动 \(k\) 线性。又 \(R_bR_c=R_{cb}\)，正好给出反环同构。这样的映射同时保持右乘，当且仅当 \(ab=ba\) 对每个 \(a\in A\) 成立：把右线性等式 \(f(xa)=f(x)a\) 先取 \(x=1\) 得必要性，任意 \(x\) 的等式由同一交换性得到。因此双模自同态恰对应中心元素。中心交换，复合仍对应其通常乘法。
+\end{proof}
+
+对任意左模 \(M\)，\(\operatorname{End}_A(M)\) 中的映射与所有左标量作用交换。若要把这些自同态再作为 \(M\) 的右标量，正确的系数代数是 \(\operatorname{End}_A(M)^{\mathrm{op}}\)：定义 \(m\cdot f=f(m)\)，便有 \((m\cdot f)\cdot g=g\Bigl(f(m)\Bigr)\)。第14章稠密性定理正将采用这个右除环约定。

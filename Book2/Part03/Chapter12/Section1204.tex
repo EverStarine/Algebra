@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 12.4 Krull–Schmidt 定理
-% 纲要位置：计划纲要.md，第 1172 行。
 
 \section{Krull–Schmidt 定理}
 \label{b2:sec:1204}
 
-% TODO: 按以下纲要要点撰写本节。
+有限长度使一次非平凡直和分解的每个分量都变短，因而分解过程会终止。唯一性则更细：两个分解中的分量未必是同一个子模，要先证明某一对分量同构，再交换相应的补模，才能继续比较。局部自同态环恰好保证这一交换能够进行。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 有限长度情形的分解存在性
 % * 不可分解因子的唯一性
@@ -19,14 +18,121 @@
 \subsection{有限长度模的分解存在性}
 \label{b2:subsec:1204:01}
 
-待撰写。
+\begin{proposition}\label{b2:prop:finite-length-decomposition}
+每个非零有限长度模都是有限多个非零不可分解模的直和，分量个数不超过它的长度。零模对应空直和。
+\end{proposition}
+\begin{proof}
+对 \(\ell(M)\) 归纳。长度一时 \(M\) 简单，因而不可分解。一般地，若 \(M\) 不可分解，取它本身为唯一分量。否则可写成 \(M=A\oplus B\)，其中两项非零。由\cref{b2:prop:length-additive}，\(\ell(M)=\ell(A)+\ell(B)\)，所以两项长度都严格小于 \(\ell(M)\)，可以分别使用归纳假设，再将两个有限分解合并。每个非零分量长度至少一，长度可加性还给出分量个数的上界。
+\end{proof}
+
+例如 \(k[t]/\Bigl(t^2(t-1)^3\Bigr)\) 通过互素多项式的中国剩余同构分成
+\[
+k[t]/(t^2)\oplus k[t]/\Bigl((t-1)^3\Bigr).
+\]
+每个循环商的非零子模都含有其最小非零子模，所以两个分量均不可分解，长度分别为二和三。它们各自仍有非平凡合成列：不可分解性不等于没有真子模。
+
+\ProseParagraphBreak
+分解存在性也可以表述为投影的逐步细分。若一个分量还能分解，就把对应幂等元拆成两个非零正交幂等元。\cref{b2:prop:orthogonal-idempotent-decomposition}说明这与模的操作一致；长度每次被分到两个正整数中，所以不可能无限继续。这个证明保证存在有限分解，却尚未比较不同选择得到的分量。
 
 \subsection{不可分解因子的唯一性}
 \label{b2:subsec:1204:02}
 
-待撰写。
+\begin{theorem}[Krull–Schmidt]\label{b2:thm:krull-schmidt}
+若有限长度模 \(M\) 有两个分解
+\[
+M=A_1\oplus\cdots\oplus A_r
+=B_1\oplus\cdots\oplus B_s,
+\]
+其中各项非零且不可分解，则 \(r=s\)，并可重排下标，使 \(A_i\cong B_i\) 对所有 \(i\) 成立。因此不可分解直和分量的同构类型及重数由 \(M\) 唯一确定。
+\end{theorem}
+\begin{proof}
+对 \(\ell(M)\) 归纳，零模只有空分解。非零时，令
+\[
+a_i:A_i\rightarrow M,\quad p_i:M\rightarrow A_i,\qquad
+b_j:B_j\rightarrow M,\quad q_j:M\rightarrow B_j
+\]
+为两组包含和投影。由 \(\sum_jb_jq_j=\operatorname{id}_M\)，在 \(\operatorname{End}_R(A_1)\) 中有
+\begin{equation}\label{b2:eq:krull-schmidt-unit-sum}
+\operatorname{id}_{A_1}=\sum_{j=1}^s p_1b_jq_ja_1.
+\end{equation}
+这个自同态环由\cref{b2:thm:indecomposable-local-end}为局部环。若右边每一项都非可逆，非单位理想的加法封闭性将使其和也非可逆，与左边为恒等矛盾。因此某一项可逆，重排后设 \(p_1b_1q_1a_1\) 可逆。
+
+记 \(u=q_1a_1:A_1\rightarrow B_1\)、\(v=p_1b_1:B_1\rightarrow A_1\)，于是 \(vu\) 可逆。令 \(w=(vu)^{-1}v\)，则 \(wu=\operatorname{id}_{A_1}\)。幂等元 \(uw\) 在 \(B_1\) 上的像为 \(u(A_1)\)、核为 \(\ker w\)，由\cref{b2:prop:idempotent-module-decomposition}，
+\[
+B_1=u(A_1)\oplus\ker w.
+\]
+\(u\) 单射且 \(A_1\ne0\)，第一项非零；\(B_1\) 不可分解，故 \(\ker w=0\)。于是 \(u\) 满且单，得到 \(A_1\cong B_1\)。
+
+接下来不能未经证明就从直和两边约去同构项。令 \(B'=\bigoplus_{j>1}B_j\)，证明实际有 \(M=A_1\oplus B'\)。对任意 \(m\in M\)，因为 \(q_1|_{A_1}=u\) 为同构，可取唯一 \(a\in A_1\) 使 \(q_1(a)=q_1(m)\)。于是 \(m-a\in\ker q_1=B'\)，所以两者生成 \(M\)；若 \(a\in A_1\cap B'\)，则 \(u(a)=0\)，所以 \(a=0\)，得所需直和。
+
+令 \(A'=\bigoplus_{i>1}A_i\)。两个实际分解 \(M=A_1\oplus A'=A_1\oplus B'\) 都将其补模同构到商 \(M/A_1\)：限制商映射的核为零，且每个陪集都有补模中的代表。因此 \(A'\cong B'\)。将 \(B'\) 的分解沿此同构转移到 \(A'\)，就得到长度严格小于 \(\ell(M)\) 的模上的两个不可分解分解。归纳假设给出剩余项一一同构，加上 \(A_1\cong B_1\)，完成证明。
+\end{proof}
+
+这一\term[Krull-Schmidt-dingli]{Krull–Schmidt 定理}[Krull–Schmidt theorem]的唯一性在同构和排列意义下成立，不声称分量作为子模的位置唯一。例如 \(k^2=ke_1\oplus ke_2=ke_1\oplus k(e_1+e_2)\)，第二个分量可以改变；两种分解的不可分解因子都为两个一维空间。
+
+\begin{corollary}[有限长度模的消去]\label{b2:cor:finite-length-cancellation}
+若有限长度模满足 \(A\oplus C\cong B\oplus C\)，则 \(A\cong B\)。
+\end{corollary}
+\begin{proof}
+将 \(A,B,C\) 分别分成有限个不可分解模。由\cref{b2:thm:krull-schmidt}，左右两侧每一种不可分解同构类型的出现次数相等。两侧减去来自 \(C\) 的相同有限重数，得到 \(A,B\) 的分量类型及重数相同，逐项同构的直和便给出 \(A\cong B\)。
+\end{proof}
+
+Jordan–Hölder 定理比较的是合成因子，Krull–Schmidt 定理比较的是不可分解直和因子；它们解决不同的问题。前者不能将扩张信息恢复出来，后者则把尚不能分裂的扩张保留在一个分量内。对有限维代数的表示，二者的有限维版本可参阅 Etingof 等人\cite[Theorem 3.7.1, pp. 50--51; Theorem 3.8.1, pp. 51--52; Remark 3.8.6, p. 53]{EtingofEtAl2011RepresentationTheory}；本章用链条件与 Fitting 引理处理一般有限长度模。
 
 \subsection{分解定理的条件与反例}
 \label{b2:subsec:1204:03}
 
-待撰写。
+有限长度在证明中有两个作用：保证分解过程终止，并保证不可分解模的自同态环局部。去掉它以后，这两步都可能失败，甚至有限生成或 Noether 条件也不足以替代它。
+
+\ProseParagraphBreak
+先看自同态的失效。整数模 \(\mathbb Z\) 不可分解，因为两个非零子群总有非零交；其自同态环却是非局部环 \(\mathbb Z\)。乘二的映射单射而不满，任意 \(n\ge1\) 都有 \(\ker(2^n)=0\)、\(\operatorname{im}(2^n)=2^n\mathbb Z\ne\mathbb Z\)，所以 Fitting 分解也不成立。缺少降链条件使像永远不能稳定。
+
+\begin{example}[没有不可分解直和分解的循环模]\label{b2:ex:no-indecomposable-decomposition}
+令 \(R=\prod_{n\ge1}k\)，按坐标运算。左正则模 \(R\) 虽由一生成，却不能写成任何一族非零不可分解子模的内部直和。
+\end{example}
+\begin{proof}
+任意直和因子的投影 \(p:R\rightarrow R\) 由 \(e=p(1)\) 决定，\(p(r)=re\)。投影条件给出 \(e^2=e\)，每个坐标因 \(k\) 为域只能是零或一。因此直和因子为 \(eR\)，对应一个坐标子集 \(S\)。
+
+若 \(S\) 至少有两个元素，可分成两个非空不交子集，相应指示幂等元把 \(eR\) 分成两个非零直和因子。若 \(S\) 只有一个元素，\(eR\cong k\) 没有非零真子模，故不可分解。因此每个非零不可分解直和因子只能占据一个坐标。
+
+若 \(R\) 是这些因子的内部直和，单位元 \((1,1,\ldots)\) 必须是有限多个分量元素之和。这种和只能有有限个非零坐标，不可能等于单位元，矛盾。
+\end{proof}
+
+唯一性也可能真正失败，而不只是上述证明失去效力。以下例子给出两个不同的有限不可分解分解。
+
+\begin{example}[Noether 模的非唯一分解]\label{b2:ex:krull-schmidt-nonunique}
+令 \(s=\sqrt{-5}\)、\(R=\mathbb Z[s]\subseteq\mathbb C\)，\(I=(2,1+s)\)。则 \(R\) 与 \(I\) 是不同构的不可分解 Noether \(R\) 模，但
+\[
+R\oplus R\cong I\oplus I.
+\]
+\end{example}
+\begin{proof}
+先说明 \(I\) 是非零真理想。将整数模二、将 \(s\) 送到一，给出满同态 \(R\rightarrow\mathbb F_2\)，因为关系 \(s^2+5=0\) 在目标中成立。它将 \(2,1+s\) 送到零，故 \(I\) 真；又 \(2\in I\)，所以 \(I\ne0\)。
+
+对 \(a+bs\in R\)，令 \(N(a+bs)=a^2+5b^2\)，这是乘共轭所得的非负整数，满足 \(N(uv)=N(u)N(v)\)。若 \(I=(u)\)，则 \(u\) 同时整除 \(2\) 和 \(1+s\)，故正整数 \(N(u)\) 同时整除四和六，只能为一或二。若为一，共轭元素就是 \(u\) 的逆，\(I=R\)，矛盾；若为二，方程 \(a^2+5b^2=2\) 无整数解。因此 \(I\) 非主，不能与 \(R\) 同构：一个同构会把一送到 \(I\) 的单个生成元。
+
+计算 \(I^2\) 时，生成元 \(4,2(1+s),(1+s)^2=-4+2s\) 都在 \(2R\) 中。另一方面，\(s-1=(1+s)-2\in I\)，并且
+\[
+2=2(2\cdot2)+(1+s)(s-1),
+\]
+所以 \(2\in I^2\)，得到 \(I^2=2R\)。因此对 \(x,y\in I\)，以下公式的两个坐标都在 \(R\) 中：
+\[
+\Phi(x,y)=
+\left(2x+\frac{s-1}{2}y,\ -\frac{1+s}{2}x+y\right).
+\]
+反向公式为
+\[
+\Psi(r,z)=\Bigl(2r-(s-1)z,\ (1+s)r+4z\Bigr).
+\]
+它确实取值于 \(I\oplus I\)，因为四个系数 \(2,s-1,1+s,4\) 均在 \(I\)。在分式域中写成矩阵，
+\[
+\begin{pmatrix}2&(s-1)/2\\-(1+s)/2&1\end{pmatrix}
+\begin{pmatrix}2&-(s-1)\\1+s&4\end{pmatrix}
+=\begin{pmatrix}1&0\\0&1\end{pmatrix};
+\]
+反序相乘也为单位矩阵，使用的恒等式为 \((s-1)(s+1)=-6\)。因正反公式已核对实际值域，它们给出 \(I\oplus I\cong R^2\) 的 \(R\) 模同构。
+
+任意两个非零 \(R\) 子模 \(A,B\) 若都在 \(R\) 或 \(I\) 内，取非零 \(a\in A,b\in B\)，则 \(ab\in A\cap B\)，且 \(R\) 为整环使 \(ab\ne0\)。因此 \(R,I\) 均不可分解。最后，\(R\) 作为整数模自由，基为 \(1,s\)。任意 \(R\) 子模都是 \(\mathbb Z^2\) 的子模，由\cref{b2:thm:pid-free-submodule}有限生成；一组整数生成元同时也是 \(R\) 生成元。所以 \(R\) 为 Noether 模，\(I\) 作为其子模也为 Noether 模。得到的两个分解均有限，却没有逐项同构的可能。
+\end{proof}
+
+这些例子说明，不能仅凭有限生成或某一种链条件，沿用有限长度下的存在唯一性结论。Krull–Schmidt 还有适用于某些更大范围模的版本，但必须另外给出保证直和分量局部性和分解存在性的假设。

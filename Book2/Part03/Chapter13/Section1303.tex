@@ -5,9 +5,9 @@
 \section{Artin–Wedderburn 定理}
 \label{b2:sec:1303}
 
-% TODO: 按以下纲要要点撰写本节。
+半单环的正则模已分成有限多个简单部分。接下来考虑这些部分之间的全部同态：不同简单类型之间没有非零同态，同一类型的多个副本之间则组成矩阵。由于左正则模的自同态由右乘给出，最后必须通过反环把这个矩阵描述转回原环。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 半单 Artin 环的矩阵环分解
 % * 单 Artin 环与除环
@@ -17,14 +17,106 @@
 \subsection{半单 Artin 环的矩阵环分解}
 \label{b2:subsec:1303:01}
 
-待撰写。
+\begin{theorem}[Artin–Wedderburn]\label{b2:thm:artin-wedderburn}
+含单位元的环 \(R\) 半单，当且仅当存在有限多个除环 \(D_1,\ldots,D_t\) 与正整数 \(n_1,\ldots,n_t\)，使
+\begin{equation}\label{b2:eq:artin-wedderburn}
+R\cong\prod_{i=1}^tM_{n_i}(D_i).
+\end{equation}
+零环对应 \(t=0\) 的空乘积。每个这样的环也右半单，且左右均为 Artin 环和 Noether 环。
+\end{theorem}
+\begin{proof}
+设 \(R\ne0\) 半单。由\cref{b2:thm:semisimple-ring-characterizations}，将正则模的有限简单分解按同构类型合并，写成
+\[
+{}_RR\cong\bigoplus_{i=1}^t S_i^{n_i},
+\]
+其中 \(S_i\) 两两非同构，\(n_i>0\)。令 \(E_i=\operatorname{End}_R(S_i)\)，由\cref{b2:lem:schur}它是除环。Schur 引理还说明不同类型间的 Hom 为零，因此每个自同态保持每个 \(S_i^{n_i}\)，得到
+\[
+\operatorname{End}_R({}_RR)
+\cong\prod_i\operatorname{End}_R(S_i^{n_i})
+\cong\prod_iM_{n_i}(E_i).
+\]
+第二个同构的矩阵条目为“从第 \(j\) 个副本到第 \(i\) 个副本”的映射。若两个自同态的条目分别为 \(f_{ij},g_{ij}\)，复合的条目为 \(\sum_jf_{ij}\circ g_{j\ell}\)，恰好是以复合作为 \(E_i\) 乘法的通常矩阵乘法。
+
+由\cref{b2:prop:regular-hom-endomorphism}，\(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)，具体地每个左线性自同态是右乘 \(r\mapsto ra\)，两个这样的映射复合反转 \(a\) 的乘法次序。再利用
+\[
+M_n(E)^{\mathrm{op}}\longrightarrow M_n(E^{\mathrm{op}}),
+\qquad A\longmapsto A^{\mathsf t},
+\]
+得到原环的分解，取 \(D_i=E_i^{\mathrm{op}}\)。该转置公式是环同态，因为来源的乘法把 \(AB\) 改为 \(BA\)，目标每个条目的乘法也反转；逐条目有
+\(\sum_j b_{\ell j}a_{ji}=(BA)_{\ell i}\)，恰好与转置后的乘积一致。
+
+反过来，设 \(A=M_n(D)\)。对矩阵单位 \(e_j=E_{jj}\)，有左模直和
+\[
+{}_AA=AE_{11}\oplus\cdots\oplus AE_{nn}.
+\]
+每个左理想由只有指定一列可能非零的矩阵组成，作为左模同构于列向量模 \(D^n\)。这个模简单：若 \(v\ne0\)，选 \(v_j\ne0\)；对任意列向量 \(w\)，取只有第 \(j\) 列可能非零的矩阵，其 \((i,j)\) 项为 \(w_i v_j^{-1}\)，便有 \(Bv=w\)。因此任何非零向量都生成全模。故每个矩阵环左半单。有限乘积的正则模再按各因子分解，仍为有限个简单左模的直和。
+
+同样按行分解可证明矩阵环的右正则模半单：对非零行向量，使用一个非零坐标及其逆构造右乘矩阵，把它送到任意行向量。有限乘积保持这一性质。因此左右均半单；两侧正则模都只有有限个简单分量，故同时具有两侧的升链与降链条件。零环的情形各项结论直接成立。
+\end{proof}
+
+这一定理称为\term[Artin-Wedderburn-dingli]{Artin–Wedderburn 定理}[Artin--Wedderburn theorem]。它把所有半单环归结为除环及其有限矩阵环，但不宣称这些除环都交换；有限维的实代数就可能含有四元数除环这一类型。
 
 \subsection{单 Artin 环与除环}
 \label{b2:subsec:1303:02}
 
-待撰写。
+\begin{definition}\label{b2:def:simple-ring}
+非零含单位元的环 \(R\) 若只有 \(0,R\) 两个双边理想，就称为\term[jiandan-huan]{单环}[simple ring]。它与正则模简单是不同条件：后者要求没有非零真左理想，因而更强。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:simple-artinian}
+非零环是单且左 Artin 的，当且仅当它同构于某个 \(M_n(D)\)，其中 \(D\) 为除环、\(n\ge1\)。这些环也右 Artin。特别地，单半单环恰为单个除环上的全矩阵环。
+\end{proposition}
+\begin{proof}
+先设 \(A=M_n(D)\)。上一定理已证明 Artin 性。若双边理想 \(I\) 含非零矩阵 \(B\)，取 \(b_{ij}\ne0\)，则
+\[
+E_{ki}BE_{j\ell}=b_{ij}E_{k\ell}\in I.
+\]
+再左乘对角矩阵 \(b_{ij}^{-1}I_n\)，得到 \(E_{k\ell}\in I\)。任意矩阵是这些矩阵单位的左系数组合，所以 \(I=A\)，证明单性。
+
+反过来，设 \(R\) 单且左 Artin。非零左理想的降链条件保证存在极小非零左理想，它作为左模简单。令 \(U\) 为全部极小左理想之和，则 \(U\ne0\)，且 \(U\) 还是右理想：对简单左理想 \(L\) 和 \(r\in R\)，右乘映射 \(L\to R\) 左线性，其像 \(Lr\) 是零或简单左理想，因而包含于 \(U\)。于是 \(U\) 为非零双边理想，由单性 \(U=R\)。\cref{b2:thm:semisimple-module-characterizations}说明 \({}_RR\) 半单，再由\cref{b2:thm:artin-wedderburn}得到有限矩阵环乘积。若乘积有两个以上非零因子，其中一个因子便给出非零真双边理想，与单性矛盾。因此只剩一个因子。
+\end{proof}
+
+例如 \(M_n(D)\) 在 \(n>1\) 时是单环，却不是除环：\(E_{11}\) 非零而不可逆，且 \(AE_{11}\) 是非零真左理想。相反，若左正则模本身简单，对任意 \(0\ne a\in R\) 有 \(Ra=R\)，于是存在 \(b\) 使 \(ba=1\)。再对 \(b\ne0\) 取 \(c\) 使 \(cb=1\)，则 \(c=cba=a\)，所以 \(ab=1\)。因此每个非零元都有双侧逆，环才是除环。
+
+\ProseParagraphBreak
+上述证明还说明：在单环中，只要存在一个极小非零左理想，就已经可以推出矩阵环结构；左 Artin 条件提供了保证其存在的充分条件。随后用单性把全部极小左理想的和扩大为全环，环的双边理想结构与左模结构分别承担了不同步骤。
 
 \subsection{分解的唯一性及左右约定}
 \label{b2:subsec:1303:03}
 
-待撰写。
+\begin{proposition}[半单分解中的重数]\label{b2:prop:semisimple-multiplicity}
+设 \(M\) 为有限生成半单模，\(S\) 为简单模，\(E=\operatorname{End}_R(S)\)。则 \(\operatorname{Hom}_R(S,M)\) 通过
+\[
+h\cdot e=h\circ e
+\]
+成为右 \(E\) 向量空间。任一简单直和分解中，\(S\) 的同构副本出现次数等于
+\[
+\dim_E\operatorname{Hom}_R(S,M).
+\]
+特别地，简单类型及各自重数不依赖所选分解。
+\end{proposition}
+\begin{proof}
+由复合的结合律，\((h\cdot e)\cdot e'=h\cdot(ee')\)，所以确为右作用。对一个有限简单分解 \(M=\bigoplus_jT_j\)，取各坐标投影给出右 \(E\) 线性同构
+\[
+\operatorname{Hom}_R(S,M)\cong\bigoplus_j\operatorname{Hom}_R(S,T_j).
+\]
+若 \(T_j\not\cong S\)，该项由 Schur 引理为零。若 \(u_j:S\to T_j\) 是同构，则每个同态唯一写为 \(u_j e\)，所以该项是一维右 \(E\) 空间。维数恰为副本数。反过来，\(S\) 出现当且仅当这个 Hom 非零，因此出现的简单类型也由 \(M\) 本身决定。
+\end{proof}
+
+这里除环上的有限维数仍然唯一。基交换论证只需要非零系数可逆：若右线性展开含 \(v_j a\)、\(a\ne0\)，就在右侧乘 \(a^{-1}\) 解出 \(v_j\)，然后逐个替换生成元。一组无关向量不能多于一组有限生成元，交换两组基便得大小相同；不需要交换两个标量的次序。
+
+\ProseParagraphBreak
+每个简单左 \(R\) 模都是正则模的商；当 \(R\) 半单时，该商映射分裂，所以每个简单类型都在 \({}_RR\) 中出现。因此上一命题应用于 \({}_RR\)，就给出 Artin–Wedderburn 分解的唯一性：类型 \(S_i\) 决定除环
+\[
+D_i=\operatorname{End}_R(S_i)^{\mathrm{op}},
+\]
+其在正则模中的重数决定 \(n_i\)。下面核对，在一个已给定的矩阵乘积中，这正好恢复原来的参数。
+
+\ProseParagraphBreak
+对 \(A=M_n(D)\)，正则模是 \(n\) 个列模 \(D^n\) 的直和，它们两两同构。若 \(T\) 简单，满射 \(A\to T\) 在某个列理想上的限制非零，因此 Schur 引理使 \(T\cong D^n\)。而 \(\operatorname{End}_A(D^n)\cong D^{\mathrm{op}}\)：令 \(e_i\) 为标准列，若 \(f\) 与全部矩阵作用交换，由 \(E_{11}f(e_1)=f(e_1)\) 知 \(f(e_1)=e_1d\)，再由 \(e_i=E_{i1}e_1\) 得 \(f(e_i)=e_id\)。对一般向量使用单列矩阵作用，便得 \(f(v)=vd\)。反过来，每个右乘 \(d\) 都与左矩阵作用交换，复合则反转 \(d\) 的乘法。
+
+\ProseParagraphBreak
+若 \(R=\prod_iA_i\)，令 \(c_i\) 为第 \(i\) 个因子的单位元在乘积中的像。它们是中心幂等元，满足 \(c_ic_j=0\)（\(i\ne j\)）及 \(\sum_i c_i=1\)。每个模分解为 \(M=\bigoplus_i c_iM\)；简单模因而只能有一个非零分量，其余因子作用为零。综上，任意两种式\eqref{b2:eq:artin-wedderburn}的分解，其因子数相同，重排后各 \(n_i\) 相同、各 \(D_i\) 作为环同构。
+
+\ProseParagraphBreak
+这里所谓唯一性是参数及因子的同构类型唯一，不是矩阵单位或具体同构映射唯一。改变同一简单类型的副本识别，会改变矩阵坐标。采用左模约定时，自同态除环必须再取反环才得到原环的矩阵系数；若采用右模约定，相应次序随之改变，不能在公式中无说明地省去 \(\mathrm{op}\)。

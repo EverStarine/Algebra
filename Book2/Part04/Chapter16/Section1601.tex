@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 16.1 模范畴与生成元
-% 纲要位置：计划纲要.md，第 1279 行。
 
 \section{模范畴与生成元}
 \label{b2:sec:1601}
 
-% TODO: 按以下纲要要点撰写本节。
+同一个环有许多不同的模，其中某些模能够替代正则模，产生整个模范畴。本节把这种“能够产生所有模”的性质与投射性、有限生成性分开说明。始终使用左模；\(R\text{-}\mathbf{Mod}\) 包含全部幺性左 \(R\) 模，而不只包含有限生成模。后面的等价也将在全部模上成立。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 投射生成元
 % * 有限生成投射生成元
@@ -17,14 +16,92 @@
 \subsection{投射生成元}
 \label{b2:subsec:1601:01}
 
-待撰写。
+\begin{definition}\label{b2:def:module-generator}
+左 \(R\) 模 \(P\) 称为模范畴的一个\term[mo-fanchou-shengchengyuan]{生成元}[generator]，若函子 \(\operatorname{Hom}_R(P,-)\) 忠实，即对任何不同的同态 \(f,g:M\rightarrow N\)，存在 \(h:P\rightarrow M\) 使 \(fh\ne gh\)。兼有投射性的生成元称为\term[toushe-shengchengyuan]{投射生成元}[projective generator]。
+\end{definition}
+
+这里的“生成元”是一个模对象，不是某个模内部的一个元素。忠实性比较的是同态，不能仅要求每个非零模中都有 \(P\) 的非零像。正则模 \(R\) 是生成元：若 \(f(m)\ne g(m)\)，取 \(h(r)=rm\)，在一处求值便可检测两同态不同。
+
+\begin{theorem}[生成元的等价刻画]\label{b2:thm:generator-characterizations}
+对左 \(R\) 模 \(P\)，以下条件等价：
+\begin{equivalences}
+\item\label{b2:item:generator-faithful} \(\operatorname{Hom}_R(P,-)\) 忠实。
+\item\label{b2:item:generator-quotients} 每个左 \(R\) 模都是某个直和 \(P^{(I)}\) 的商。
+\item\label{b2:item:generator-finite-summand} 正则模 \(R\) 是某个有限直和 \(P^n\) 的直和因子。
+\end{equivalences}
+这些等价不要求 \(P\) 已经投射或有限生成。
+\end{theorem}
+\begin{proof}
+先设 Hom 函子忠实。对任意 \(M\)，将全部同态 \(h:P\rightarrow M\) 作为指标，定义评价满像映射
+\[
+q:\bigoplus_{h\in\operatorname{Hom}_R(P,M)}P\longrightarrow M,
+\qquad (p_h)_h\longmapsto\sum_h h(p_h).
+\]
+若像 \(T\) 不等于 \(M\)，商映射 \(\pi:M\rightarrow M/T\) 非零，却满足 \(\pi h=0\) 对每个 \(h\) 成立。于是 \(\operatorname{Hom}_R(P,\pi)\) 与零同态诱导的映射相同，违反忠实性。因此 \(q\) 满射，得到第二项。
+
+将第二项用于 \(M=R\)。一的某个原像只有有限个非零坐标，故限制到相应的 \(P^n\) 后，映射 \(q_0:P^n\rightarrow R\) 仍满射。取 \(v\in P^n\) 使 \(q_0(v)=1\)，则 \(s(r)=rv\) 为左线性截面，\(q_0s=\operatorname{id}_R\)。所以 \(R\) 是 \(P^n\) 的直和因子。
+
+若第三项成立，任意模 \(M\) 的自由满射 \(R^{(I)}\rightarrow M\) 可以与各分量上的分裂满射 \(P^n\rightarrow R\) 复合，得到某个 \(P\) 直和到 \(M\) 的满射，所以第二项成立。最后，若 \(f\ne g:M\rightarrow N\)，而每个 \(h:P\rightarrow M\) 都满足 \(fh=gh\)，则对第二项给出的满射 \(P^{(I)}\rightarrow M\)，两复合在每个直和分量上相同，因而整体相同。满射性迫使 \(f=g\)，矛盾。故 Hom 函子忠实。
+\end{proof}
+
+生成元必为忠实模：若 \(rP=0\)，第三项使 \(r\) 也零化直和因子 \(R\)，故 \(r=r1=0\)。逆命题不成立。例如 \(\mathbb Q\) 作为 \(\mathbb Z\) 模忠实，但 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Q,\mathbb Z)=0\)：任意同态的每个值都被所有正整数整除，只能为零。因此任何 \(\mathbb Q\) 的直和都不能满射到 \(\mathbb Z\)，它不是生成元。
 
 \subsection{有限生成投射生成元}
 \label{b2:subsec:1601:02}
 
-待撰写。
+\begin{definition}\label{b2:def:progenerator}
+同时有限生成、投射并且是生成元的模 \(P\)，称为\term[youxian-toushe-shengchengyuan]{有限生成投射生成元}[progenerator]。投射性指沿任意满同态的提升性质，生成元性质采用\cref{b2:thm:generator-characterizations}的任一等价条件。
+\end{definition}
+
+\cref{b2:prop:finite-projective-summand}与生成元判据合在一起说明，这等价于同时存在有限整数 \(m,n\) 及模 \(Q,Q'\)，使
+\[
+P\oplus Q\cong R^m,\qquad R\oplus Q'\cong P^n.
+\]
+第一个分解控制 \(P\) 的有限生成与投射性，第二个分解保证它能够产生全部模；两者不能互相替代。例如 \(k\times0\) 是 \(k\times k\) 上的有限生成投射模，却不能产生第二个坐标上的简单模。
+
+\begin{definition}\label{b2:def:compact-module-object}
+若对每个模族 \((M_i)\)，自然映射
+\[
+\bigoplus_i\operatorname{Hom}_R(P,M_i)
+\longrightarrow\operatorname{Hom}_R\Bigl(P,\bigoplus_iM_i\Bigr)
+\]
+为双射，称 \(P\) 为这里的\term[jin-duixiang]{紧对象}[compact object]。此处专指 Hom 保持任意直和的范畴条件，不指拓扑上的紧性。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:compact-projective-finite}
+有限生成模都是紧对象。对于投射模 \(P\)，反向也成立：\(P\) 有限生成，当且仅当 \(P\) 为紧对象。
+\end{proposition}
+\begin{proof}
+自然映射始终单射，因为对每个目标分量再作投影，就恢复原同态。若 \(P\) 有有限生成组，任意 \(f:P\rightarrow\bigoplus_iM_i\) 在这些生成元上的像共同只有有限支集，故全像落在一个有限子直和中。于是 \(f\) 是有限多个分量同态之和，证明满射。
+
+反过来，设 \(P\) 投射且紧。由\cref{b2:thm:projective-characterizations}，可取分裂自由满射 \(q:R^{(I)}\rightarrow P\) 及截面 \(s:P\rightarrow R^{(I)}\)。紧性使 \(s\) 的像落在某个有限子直和 \(R^J\) 中。限制 \(q\) 到 \(R^J\) 后仍满足 \(qs=\operatorname{id}_P\)，所以 \(P\) 为有限自由模的直和因子，因而有限生成。
+\end{proof}
+
+这个判据将用于等价定理的反方向：范畴等价保留直和与 Hom 的关系，所以能保留投射对象的这种有限性。对投射对象，它把有限生成性转成了由函子与直和描述的条件。
 
 \subsection{矩阵环与原环的模范畴}
 \label{b2:subsec:1601:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:matrix-morita-equivalence}
+对任意环 \(R\) 和 \(n\ge1\)，令 \(A=M_n(R)\)、\(e=E_{11}\)，将 \(eAe\) 按 \(r\mapsto rE_{11}\) 识别为 \(R\)。以下函子互为拟逆：
+\[
+\mathcal L:R\text{-}\mathbf{Mod}\longrightarrow A\text{-}\mathbf{Mod},
+\quad N\longmapsto N^n,
+\qquad
+\mathcal K:A\text{-}\mathbf{Mod}\longrightarrow R\text{-}\mathbf{Mod},
+\quad M\longmapsto eM.
+\]
+\(\mathcal L\) 使用矩阵乘列的左作用，\(\mathcal K\) 使用角环作用；在同态上分别逐坐标作用和限制到 \(eM\)。
+\end{proposition}
+\begin{proof}
+\(eN^n\) 恰为只有第一坐标可能非零的列，取该坐标自然同构到 \(N\)。另一方向定义
+\[
+\Theta_M:(eM)^n\longrightarrow M,\qquad
+(m_1,\ldots,m_n)\longmapsto\sum_iE_{i1}m_i,
+\]
+并令 \(\Psi_M(m)=(E_{11}m,E_{12}m,\ldots,E_{1n}m)\)。每个坐标都在 \(eM\)。由 \(E_{1j}E_{i1}=\delta_{ij}e\) 与 \(\sum_iE_{i1}E_{1i}=1\)，两映射互逆。
+
+对 \(a=(a_{ij})\in A\)，恒等式 \(aE_{j1}=\sum_iE_{i1}(a_{ij}E_{11})\) 说明 \(\Theta_M\) 把列上的矩阵作用变为 \(M\) 的原作用，故 \(A\) 线性。两映射只使用矩阵单位的作用，与任意 \(A\) 模同态交换，所以构成自然同构。第一坐标同构也显然与 \(R\) 模同态相容，因此两函子确为范畴等价。
+\end{proof}
+
+这个等价不要求 \(R\) 交换。例如 \(M_n(R)\) 的正则左模被 \(\mathcal K\) 送到首行模 \(eA\cong R^n\)，而非正则模 \(R\)。等价比较的是全部对象及同态的结构，未要求两个环的正则模或底集合原样对应。

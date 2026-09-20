@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 8.4 张量运算与表示
-% 纲要位置：计划纲要.md，第 1058 行。
 
 \section{张量运算与表示}
 \label{b2:sec:0804}
 
-% TODO: 按以下纲要要点撰写本节。
+若群同时作用于几个向量空间，多线性构造也随之得到群作用。这个过程使一个表示产生新的表示，并把同态问题转为不变张量问题。本节以任意域 \(k\) 和任意群 \(G\) 开始；凡需有限维或特征零处都另行说明。“对称”所涉及的因子置换与“\(G\) 不变”所涉及的群作用，应始终区分。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 对偶、张量积与对称幂表示
 % * 不变量和对称张量的区别
@@ -19,14 +18,144 @@
 \subsection{对偶、张量积与对称幂表示}
 \label{b2:subsec:0804:01}
 
-待撰写。
+\begin{definition}\label{b2:def:linear-representation}
+群 \(G\) 在 \(k\) 向量空间 \(V\) 上的\term[xianxing-biaoshi]{线性表示}[linear representation]是群同态
+\[
+\rho_V:G\longrightarrow\operatorname{GL}_k(V).
+\]
+常把 \(\rho_V(g)v\) 写成 \(gv\)。两个表示之间的同态是线性映射 \(f:V\rightarrow W\)，满足 \(f(gv)=g f(v)\)；也称等变线性映射，全部这类映射组成空间 \(\operatorname{Hom}_G(V,W)\)。
+\end{definition}
+\symidx{\(\operatorname{Hom}_G(V,W)\)：表示之间的等变线性映射空间}
+\symidx{\(\rho_V(g)\)：群元素在表示空间上的线性作用}
+
+群作用公理在这里具体为 \(1v=v\)、\((gh)v=g(hv)\)，并要求每个 \(g\) 的作用可逆且线性。定义没有要求表示忠实，也没有要求群有限。例如无穷循环群由一个生成元 \(g\) 生成，在 \(\mathbb Q^2\) 上可以规定 \(g\) 的作用矩阵为 \(\operatorname{diag}(2,1/2)\)，再由整数次幂定义全部群元素的作用。
+
+\begin{proposition}\label{b2:prop:tensor-dual-symmetric-representations}
+给定 \(G\) 的表示 \(V,W\)，以下公式分别定义 \(V^*\)、\(V\otimes_kW\) 及 \(\operatorname{Sym}_k^d(V)\) 上的表示：
+\[
+\begin{aligned}
+(g\lambda)(v)&=\lambda(g^{-1}v),\\
+g(v\otimes w)&=gv\otimes gw,\\
+g(v_1\cdots v_d)&=(gv_1)\cdots(gv_d).
+\end{aligned}
+\]
+它们分别称为\term[duiou-biaoshi]{对偶表示}[dual representation]、\term[zhangliangji-biaoshi]{张量积表示}[tensor product representation]和\term[duichenmi-biaoshi]{对称幂表示}[symmetric power representation]。
+\end{proposition}
+\begin{proof}
+对偶公式对 \(v\) 线性，也对 \(\lambda\) 线性。对 \(g,h\in G\)，
+\[
+\Bigl(g(h\lambda)\Bigr)(v)
+=(h\lambda)(g^{-1}v)
+=\lambda(h^{-1}g^{-1}v)
+=\Bigl((gh)\lambda\Bigr)(v).
+\]
+单位元作用为恒等，\(g^{-1}\) 的作用为逆，故为表示。使用逆元正是为了抵消对偶映射反转复合次序的效应。
+
+张量公式由 \(\rho_V(g)\otimes\rho_W(g)\) 给出，良定义来自\cref{b2:prop:tensor-maps}；该命题的复合公式保证群乘法，逆由 \(g^{-1}\) 给出。对称幂的映射是 \(\operatorname{Sym}_k^d\Bigl(\rho_V(g)\Bigr)\)，对称幂函子保持恒等和复合，因此同样为表示。也可直接观察：张量幂作用将每个交换关系送到另一个交换关系，所以它通过对称商。
+\end{proof}
+
+若 \(g\) 在有限维 \(V\) 的基 \(e_1,\ldots,e_r\) 上对角作用，\(ge_i=a_i e_i\)，则它在对偶基上的特征值为 \(a_i^{-1}\)，在张量基 \(e_{i_1}\otimes\cdots\otimes e_{i_d}\) 上的特征值为 \(a_{i_1}\cdots a_{i_d}\)，在对称基 \(e_1^{b_1}\cdots e_r^{b_r}\) 上的特征值为 \(a_1^{b_1}\cdots a_r^{b_r}\)。这里各 \(a_i\ne0\)，因为群元素作用可逆。
+
+\begin{proposition}\label{b2:prop:hom-as-tensor-representation}
+若 \(V\) 有限维，\(W\) 任意，则
+\[
+\Theta:V^*\otimes_kW\longrightarrow\operatorname{Hom}_k(V,W),
+\qquad
+\lambda\otimes w\longmapsto\Bigl(v\mapsto\lambda(v)w\Bigr)
+\]
+是自然线性同构。若两空间均带 \(G\) 作用，则它是表示同构，其中右端的作用为
+\[
+(gA)(v)=g\Bigl(A(g^{-1}v)\Bigr).
+\]
+\end{proposition}
+\begin{proof}
+定义式对 \(\lambda,w\) 双线性，故诱导线性映射。选 \(V\) 的基 \(e_i\) 及对偶基 \(e_i^*\)，反向映射为 \(A\mapsto\sum_i e_i^*\otimes A(e_i)\)。其正向复合在 \(v=\sum_i e_i^*(v)e_i\) 上取值为 \(A(v)\)；反向复合在 \(\lambda\otimes w\) 上使用 \(\lambda=\sum_i\lambda(e_i)e_i^*\)，恢复原张量。所以互逆。原映射的定义不依赖基，所算出的逆因此也不依赖基。
+
+给定线性映射 \(a:V'\rightarrow V\)、\(b:W\rightarrow W'\)，且 \(V'\) 也有限维，两侧的诱导映射分别为 \(a^*\otimes b\) 和 \(A\mapsto bAa\)。对 \(\lambda\otimes w\) 及 \(v'\) 代入，二者均给出 \(\lambda\Bigl(a(v')\Bigr)b(w)\)，所以 \(\Theta\) 自然。
+
+群作用的相容性直接在纯张量上核对：
+\[
+\Theta(g\lambda\otimes gw)(v)
+=\lambda(g^{-1}v)\,gw
+=g\Bigl(\Theta(\lambda\otimes w)(g^{-1}v)\Bigr).
+\]
+这就是右端所给的作用。它本身满足群乘法公理，因为先共轭 \(h\) 再共轭 \(g\)，得到共轭 \(gh\)。
+\end{proof}
+
+当 \(W=V\) 时，恒等算子对应的张量 \(\sum_i e_i^*\otimes e_i\) 不依赖基，并被所有 \(g\) 固定。它不是通过逐个固定基向量得到的；相反，向量与对偶向量的两种变换互相抵消。
 
 \subsection{不变量与对称张量}
 \label{b2:subsec:0804:02}
 
-待撰写。
+\begin{definition}\label{b2:def:invariant-vector}
+表示 \(V\) 中满足 \(gv=v\) 对每个 \(g\in G\) 成立的向量，称为 \(G\) 的\term[bubian-xiangliang]{不变向量}[invariant vector]。全部不变向量组成的子空间记为
+\[
+V^G=\{\,v\in V\mid gv=v\text{ 对每个 }g\in G\,\}.
+\]
+一般满足 \(gU\subseteq U\) 的子空间 \(U\) 称为 \(G\) 不变子空间，也称稳定子空间；这只要求作用保留整个子空间，不能因此断言其中每个向量都被逐点固定。
+\end{definition}
+\symidx{\(V^G\)：群作用下逐点不变的向量空间}
+
+不变条件由一族线性方程给出，故 \(V^G\) 确为子空间。在 \(\operatorname{Hom}_k(V,W)\) 上使用上一命题的作用，有
+\[
+\operatorname{Hom}_k(V,W)^G=\operatorname{Hom}_G(V,W).
+\]
+因为 \(gAg^{-1}=A\) 恰好等价于 \(gA=Ag\)，即等变性。因此当 \(V\) 有限维时，\cref{b2:prop:hom-as-tensor-representation}给出
+\[
+(V^*\otimes_kW)^G\cong\operatorname{Hom}_G(V,W).
+\]
+寻找等变映射，可以转为求张量表示中的固定向量。
+
+\ProseParagraphBreak
+对称张量采用的是 \(S_d\) 对因子位置的作用，\(G\) 不变张量采用的则是 \(G\) 在每个因子上同时作用。即使两种作用发生在同一个空间，也不是同一个条件。取 \(G=\langle g\rangle\) 为无穷循环群，\(V=\mathbb Qe\oplus\mathbb Qf\)，规定 \(ge=2e\)、\(gf=\tfrac12f\)。在 \(V^{\otimes2}\) 中，\(e\otimes e\) 对交换两因子保持不变，却被 \(g\) 乘四，因而不是 \(G\) 不变量；\(e\otimes f\) 被 \(G\) 固定，却被交换因子送到不同的基张量 \(f\otimes e\)，因而不是对称张量。
+
+\ProseParagraphBreak
+本例中
+\[
+(V^{\otimes2})^G=\operatorname{span}_{\mathbb Q}\{e\otimes f,f\otimes e\},
+\]
+因为四个纯基张量的特征值依次为 \(4,1,1,1/4\)。其中的对称部分是一维空间
+\(\mathbb Q(e\otimes f+f\otimes e)\)。二次对称幂的 \(G\) 不变部分则为 \(\mathbb Q ef\)，两者由平均同构对应；该对应确实使用了二的可逆性。
 
 \subsection{张量表示与 Schur–Weyl 理论}
 \label{b2:subsec:0804:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:commuting-tensor-actions}
+在 \(V^{\otimes d}\) 上，一般线性群的对角作用 \(g\mapsto g^{\otimes d}\) 与 \(S_d\) 的位置置换作用相交换：
+\[
+g^{\otimes d}P_\sigma=P_\sigma g^{\otimes d}.
+\]
+因此对称张量子空间和定义对称幂的关系子空间都在一般线性群作用下稳定。
+\end{proposition}
+\begin{proof}
+对 \(v_1\otimes\cdots\otimes v_d\)，两个复合都得到
+\[
+gv_{\sigma^{-1}(1)}\otimes\cdots\otimes gv_{\sigma^{-1}(d)}.
+\]
+纯张量生成全空间，所以两算子相等。若 \(t\) 对所有置换不变，则 \(P_\sigma g^{\otimes d}t=g^{\otimes d}t\)；若一个关系为 \(t-P_\sigma t\)，其像为 \(g^{\otimes d}t-P_\sigma g^{\otimes d}t\)，仍是关系。于是两个稳定性结论分别成立。
+\end{proof}
+
+这已经说明两种对称性可以同时研究，但“作用交换”并不等于“每一种作用已经给出了另一种作用的全部对称算子”。为写清后一问题，若 \(\mathcal A\) 为 \(\operatorname{End}_k(E)\) 的子代数，记
+\[
+\operatorname{End}_{\mathcal A}(E)
+=\Bigl\{\,u\in\operatorname{End}_k(E)\mid ua=au\text{ 对每个 }a\in\mathcal A\,\Bigr\},
+\]
+称为该作用的\term[zhongxinhua-zi]{中心化子}[centralizer]。它是子代数，因为恒等、和、积都继续与 \(\mathcal A\) 交换。
+
+\begin{claim}[Schur–Weyl 对偶，前瞻]\label{b2:claim:schur-weyl-preview}
+设 \(V\) 为有限维复向量空间，\(d\ge1\)。在 \(E=V^{\otimes d}\) 上，令 \(\mathcal A\) 为位置置换算子 \(P_\sigma\) 的复线性生成空间，\(\mathcal B\) 为算子 \(g^{\otimes d}\)、\(g\in\operatorname{GL}(V)\) 的复线性生成空间。则
+\[
+\mathcal A=\operatorname{End}_{\mathcal B}(E),\qquad
+\mathcal B=\operatorname{End}_{\mathcal A}(E).
+\]
+\end{claim}
+
+两种线性生成空间确为子代数，因为各自生成算子的乘积仍属于同类算子。\cref{b2:prop:commuting-tensor-actions}只证明它们互相包含于对方的中心化子；反向包含需要额外论证。这一\term[Schur-Weyl-duiou]{Schur–Weyl 对偶}[Schur–Weyl duality]的完整证明安排在第五卷第7.3节，本章及本章习题均不使用尚未证明的两个反向包含。现阶段可对照 Etingof 等人的《Introduction to Representation Theory》\cite[Theorem 5.18.4, p. 121; Proposition 5.19.1, p. 122]{EtingofEtAl2011RepresentationTheory}。
+
+\ProseParagraphBreak
+在次数二且 \(2\) 可逆时，令交换算子为 \(P\)，两个算子
+\[
+E_+=\frac{\operatorname{id}+P}{2},\qquad
+E_-=\frac{\operatorname{id}-P}{2}
+\]
+满足 \(E_++E_-=\operatorname{id}\)、\(E_\pm^2=E_\pm\)、\(E_+E_-=E_-E_+=0\)，因为 \(P^2=\operatorname{id}\)。由此得到两个稳定子空间的直和：\(P\) 特征值为一的对称张量，以及特征值为负一的反对称张量。这一具体分解不需要 Schur–Weyl 定理；下一章将通过外代数解释第二部分，并专门处理特征二时这两种条件不再分离的情形。

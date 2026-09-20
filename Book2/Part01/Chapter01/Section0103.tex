@@ -5,7 +5,7 @@
 \section{线性算子}
 \label{b2:sec:0103}
 
-% TODO: 按以下纲要要点撰写本节。
+给定一个向量及一个线性算子，可以反复施加算子，得到 \(v,Tv,T^2v,\ldots\)。这些向量之间的关系记录了算子的一部分结构。本节把关系写成多项式，说明一个算子如何使整个多项式环作用在空间上。这将是下一章从向量空间转向模的一个主要例子。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,138 @@
 \subsection{特征子空间与广义特征子空间}
 \label{b2:subsec:0103:01}
 
-待撰写。
+\begin{definition}\label{b2:def:linear-operator}
+向量空间 \(V\) 到自身的线性映射称为\term[xianxing-suanzi]{线性算子}[linear operator]。记
+\(\operatorname{End}_k(V)=\operatorname{Hom}_k(V,V)\)。其中加法逐点定义，乘法采用复合，约定 \(ST=S\circ T\)，即先施加右侧的 \(T\)。恒等算子记为 \(I_V\)，并令 \(T^0=I_V\)。
+\end{definition}
+
+\symidx{\(\operatorname{End}_k(V)\)：线性算子的自同态环}
+
+复合满足结合律，又对逐点加法满足左右分配律，所以 \(\operatorname{End}_k(V)\) 是含幺环。它通常不交换；标量算子 \(aI_V\) 则与每个线性算子交换，因为 \(T(av)=aT(v)\)。以下除单独讨论外，\(V\) 有限维且非零，记 \(n=\dim_kV\)。
+
+\begin{definition}\label{b2:def:eigen-generalized}
+若 \(0\ne v\in V\) 且 \(Tv=\lambda v\)，其中 \(\lambda\in k\)，就称 \(v\) 为 \(T\) 的\term[tezheng-xiangliang]{特征向量}[eigenvector]，\(\lambda\) 为相应的\term[tezheng-zhi]{特征值}[eigenvalue]。相应的\term[tezheng-zi-kongjian]{特征子空间}[eigenspace]和\term[guangyi-tezheng-zi-kongjian]{广义特征子空间}[generalized eigenspace]为
+\[
+E_\lambda(T)=\ker(T-\lambda I_V),\qquad
+G_\lambda(T)=\bigcup_{r\ge1}\ker(T-\lambda I_V)^r.
+\]
+这里 \(\ker(T-\lambda I_V)^r\) 表示算子 \((T-\lambda I_V)^r\) 的核。
+\end{definition}
+
+这些核依次包含，故其并是子空间。每个核都被 \(T\) 保持：\(T\) 与 \((T-\lambda I_V)^r\) 交换。一般地，满足 \(T(U)\subseteq U\) 的子空间 \(U\) 称为 \(T\) 的\term[bubian-zi-kongjian]{不变子空间}[invariant subspace]。
+
+\begin{proposition}\label{b2:prop:kernel-power-stability}
+若 \(\dim V=n\)，则对任意算子 \(N\)，核链 \(\ker N^r\) 至迟在 \(r=n\) 时稳定。因此 \(G_\lambda(T)=\ker(T-\lambda I_V)^n\)。
+\end{proposition}
+\begin{proof}
+令 \(K_r=\ker N^r\)，其中 \(K_0=0\)。若 \(K_r=K_{r+1}\)，对 \(v\in K_{r+2}\) 有 \(Nv\in K_{r+1}=K_r\)，所以 \(v\in K_{r+1}\)。因此一旦相邻两项相等，以后各项都相等。每一次严格包含至少使维数增加一；从维数零开始至多增加 \(n\) 次，故 \(K_n=K_{n+1}=\cdots\)。
+\end{proof}
+
+例如在 \(k^2\) 的基 \(e_1,e_2\) 下取
+\[
+Te_1=\lambda e_1,\qquad Te_2=e_1+\lambda e_2.
+\]
+此时 \(N=T-\lambda I_V\) 满足 \(Ne_2=e_1,Ne_1=0\)。所以 \(E_\lambda=ke_1\)，而 \(G_\lambda=V\)。广义特征向量可以记住连续作用几次才变成零的信息，普通特征向量只能看出第一次作用的核。
+
+\ProseParagraphBreak
+不同特征值的特征向量线性无关。确切地说，若存在含最少非零项的关系 \(\sum_{j=1}^ra_jv_j=0\)，各 \(\lambda_j\) 不同且 \(a_j\ne0\)，则 \(r\ge2\)。施加 \(T-\lambda_rI_V\)，得到少一项的关系，其余系数 \(a_j(\lambda_j-\lambda_r)\) 仍非零，矛盾。不过特征向量未必生成全空间，上面的二维例子已经说明这一点；基域中还可能根本没有特征值。
 
 \subsection{最小多项式与循环向量}
 \label{b2:subsec:0103:02}
 
-待撰写。
+对于 \(p(t)=\sum_{i=0}^da_it^i\in k[t]\)，定义
+\[
+p(T)=\sum_{i=0}^da_iT^i.
+\]
+标量算子与 \(T\) 交换，因而直接展开有限和可得
+\[
+(p+q)(T)=p(T)+q(T),\qquad (pq)(T)=p(T)q(T),\qquad 1(T)=I_V.
+\]
+虽有 \(\operatorname{End}_k(V)\) 中不同算子不交换的可能，所有 \(T\) 的多项式彼此交换。
+
+\begin{definition}\label{b2:def:minimal-polynomial}
+若 \(p(T)=0\)，称多项式 \(p\) \term[linghua]{零化}[annihilate]算子 \(T\)。所有非零零化多项式中次数最小的首一多项式，称为 \(T\) 的\term[zuixiao-duoxiangshi]{最小多项式}[minimal polynomial]，记作 \(m_T(t)\)。
+\end{definition}
+\symidx{\(m_T\)：线性算子的最小多项式}
+
+\begin{proposition}\label{b2:prop:minimal-polynomial-divisibility}
+有限维非零空间上的算子有唯一的最小多项式，且
+\[
+p(T)=0\quad\Longleftrightarrow\quad m_T\mid p.
+\]
+\end{proposition}
+\begin{proof}
+在一组基上指定像，便以 \(n^2\) 个标量确定一个自同态，所以 \(\operatorname{End}_k(V)\) 维数为 \(n^2\)。因此 \(I_V,T,\ldots,T^{n^2}\) 线性相关，存在非零零化多项式。选次数最小者，再除以其首项系数，得到首一的 \(m_T\)。它的次数至少为一，因为非零常数算子不是零算子。
+
+对任意 \(p\) 作带余除法 \(p=qm_T+r\)，其中 \(r=0\) 或 \(\deg r<\deg m_T\)。若 \(p(T)=0\)，则 \(r(T)=0\)；最小性迫使 \(r=0\)。反向蕴含由乘法公式立即得到。另一同次数的首一最小零化多项式必须为 \(m_T\) 的常数倍，首一条件又使这个倍数为一。
+\end{proof}
+
+同样可以只要求 \(p(T)v=0\)。对 \(v\ne0\)，存在唯一的首一最小多项式 \(m_{T,v}\)，使零化 \(v\) 的多项式恰好是它的倍数；证明对 \(v,Tv,\ldots,T^nv\) 作线性相关及带余除法即可。约定 \(m_{T,0}=1\)。由于 \(m_T(T)v=0\)，总有 \(m_{T,v}\mid m_T\)。
+
+\begin{definition}\label{b2:def:cyclic-vector}
+由 \(v\) 产生的\term[xunhuan-zi-kongjian]{循环子空间}[cyclic subspace]是
+\[
+k[T]v=\{p(T)v\mid p\in k[t]\}.
+\]
+若 \(k[T]v=V\)，称 \(v\) 是 \(T\) 的\term[xunhuan-xiangliang]{循环向量}[cyclic vector]。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:cyclic-basis}
+设 \(v\ne0\)，\(d=\deg m_{T,v}\)。则 \(v,Tv,\ldots,T^{d-1}v\) 是 \(k[T]v\) 的基。若 \(v\) 是循环向量，则 \(m_T=m_{T,v}\)，从而 \(\deg m_T=\dim V\)。
+\end{proposition}
+\begin{proof}
+这些向量若相关，就有一个次数小于 \(d\) 的非零多项式零化 \(v\)，矛盾。对任意 \(p\)，用 \(m_{T,v}\) 除去高次项，得到 \(p(T)v=r(T)v\)、\(\deg r<d\)，所以它们生成循环子空间。
+
+若这个空间为 \(V\)，则每个向量写成 \(p(T)v\)。算子多项式彼此交换给出
+\[
+m_{T,v}(T)p(T)v=p(T)m_{T,v}(T)v=0,
+\]
+故 \(m_{T,v}\) 零化整个算子。结合它整除 \(m_T\)，两者同为首一，必相等。
+\end{proof}
+
+循环向量不总存在。\(n>1\) 时，标量算子 \(T=\lambda I_V\) 的每个非零循环子空间都只有一维。相反，前面的二维例子以 \(e_2\) 为循环向量，因为 \(e_2,Te_2\) 生成 \(e_1,e_2\)；其最小多项式为 \((t-\lambda)^2\)。
+
+\begin{proposition}[互素多项式给出的分解]\label{b2:prop:coprime-operator-decomposition}
+若 \(a,b\in k[t]\) 互素且 \(a(T)b(T)=0\)，则
+\[
+V=\ker a(T)\oplus\ker b(T).
+\]
+\end{proposition}
+\begin{proof}
+由第一卷命题11.2.2（Euclid算法）给出的 Bézout 等式，互素多项式 \(a,b\) 的最大公因子为单位，故可取 \(r,s\in k[t]\)，使 \(ra+sb=1\)。于是
+\[
+v=r(T)a(T)v+s(T)b(T)v.
+\]
+第一项被 \(b(T)\) 零化，第二项被 \(a(T)\) 零化，故两核之和为全空间。若 \(v\) 同时在两核中，同一等式给出 \(v=0\)，所以和是直和。核由算子多项式定义，也都是 \(T\) 不变子空间。
+\end{proof}
+
+例如 \((T-\lambda I_V)(T-\mu I_V)=0\) 且 \(\lambda\ne\mu\) 时，每个向量唯一分成两个特征子空间中的分量。重复因子对应的广义特征子空间内部还可能有不同的结构；本节的分解结论尚未将这些结构分类。
 
 \subsection{线性算子的多项式环作用}
 \label{b2:subsec:0103:03}
 
-待撰写。
+现在把 \(T\) 连同全部 \(p(T)\) 一起考虑。在 \(V\) 原有的加法上规定
+\[
+p(t)\cdot v=p(T)v.
+\]
+算子多项式的加法与乘法公式给出
+\[
+(p+q)\cdot v=p\cdot v+q\cdot v,\qquad
+p\cdot(u+v)=p\cdot u+p\cdot v,\qquad
+(pq)\cdot v=p\cdot(q\cdot v),\qquad 1\cdot v=v.
+\]
+常数多项式的作用与原来的 \(k\) 标量乘法一致。下一章会把这种结构称为 \(k[t]\) 上的模。对于任意维空间，以上定义仍成立；只是算子未必有非零零化多项式。例如在 \(k[t]\) 上令 \(T\) 为乘以 \(t\)，若 \(p(T)=0\)，把它作用在 \(1\) 上即得 \(p(t)=0\)。
+
+\begin{proposition}\label{b2:prop:polynomial-action-subspace}
+子空间 \(U\subseteq V\) 被所有 \(p(T)\) 保持，当且仅当它被 \(T\) 保持。若 \(T\in\operatorname{End}_k(V)\)、\(S\in\operatorname{End}_k(W)\)，线性映射 \(F:V\to W\) 满足
+\[
+FT=SF
+\quad\Longleftrightarrow\quad
+F(p(T)v)=p(S)F(v)\quad\text{对所有 }p\in k[t],v\in V.
+\]
+\end{proposition}
+\begin{proof}
+若 \(T(U)\subseteq U\)，反复施加 \(T\) 后仍在 \(U\)，再取有限线性组合就得到 \(p(T)(U)\subseteq U\)；反向取 \(p=t\)。若 \(FT=SF\)，归纳给出 \(FT^j=S^jF\)，包括 \(j=0\)，再由线性性对各项相加即可。反向同样取 \(p=t\)。
+\end{proof}
+
+因此，研究算子的不变子空间，就是研究对全部多项式作用封闭的子空间；比较两个算子，则要找保持这种作用的映射。例如 \(k[T]v\) 不仅是一个线性子空间，它的每个元素还都由同一个 \(v\) 经过多项式作用得到。把 \(p(T)v=0\) 的关系写为 \(m_{T,v}\) 的倍数，正为后面的生成元与关系提供了一个可计算的例子。

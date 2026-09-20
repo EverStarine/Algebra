@@ -5,7 +5,7 @@
 \section{经典群及复数结构}
 \label{b2:sec:1004}
 
-% TODO: 按以下纲要要点撰写本节。
+一个型给空间增加了结构，保持这种结构的可逆线性变换便组成一个群。不同的型给出不同的经典群；复数域上还须区别双线性配对与带共轭的配对。本节最后的 Clifford 代数作为选读延伸，说明二次型也能直接参与一个结合代数的定义。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,152 @@
 \subsection{正交群、辛群与酉群}
 \label{b2:subsec:1004:01}
 
-待撰写。
+设 \(\operatorname{char}k\ne2\)，\((V,q)\) 为有限维非退化二次空间。保持 \(q\) 的线性自同构组成\term[zhengjiao-qun]{正交群}[orthogonal group]
+\[
+\operatorname O(V,q)=\{\,g\in\operatorname{GL}(V)\mid q(gv)=q(v)\text{ 对所有 }v\in V\,\}.
+\]
+由\eqref{b2:eq:normalized-polar}，保持 \(q\) 等价于保持 \(b_q\)。在 Gram 矩阵为 \(B\) 的基下，这个群写为
+\[
+\operatorname O(B)=\{\,G\in\operatorname{GL}_n(k)\mid G^{\mathsf T}BG=B\,\}.
+\]
+保持非退化交替型 \(b\) 的线性自同构则组成\term[xin-qun]{辛群}[symplectic group]。在\cref{b2:thm:alternating-form-normal}给出的辛基下，记为
+\[
+\operatorname{Sp}_{2m}(k)=\{\,G\in\operatorname{GL}_{2m}(k)\mid G^{\mathsf T}J_mG=J_m\,\}.
+\]
+辛群的这一定义允许任意特征。
+\symidx{\(\operatorname O(V,q)\)、\(\operatorname{Sp}_{2m}(k)\)：正交群与辛群}
+
+这些集合确为群：恒等变换保持型；保持型的两个映射的复合也保持型；在保持型的等式中代入逆映射的像，就得到逆映射也保持型。改变基只改变群在一般线性群中的矩阵实现，不改变其抽象含义。
+
+\ProseParagraphBreak
+对 \(G^{\mathsf T}BG=B\) 取行列式，因 \(\det B\ne0\)，得到 \((\det G)^2=1\)。因此特征不为二时，\(\det G\in\{1,-1\}\)。行列式为一的子群称为\term[teshu-zhengjiao-qun]{特殊正交群}[special orthogonal group]，记为 \(\operatorname{SO}(V,q)\)。当 \(V\ne0\) 时，\cref{b2:thm:quadratic-diagonalization}给出非零长度向量，沿它的反射在该直线上为负恒等、在正交补上为恒等，所以行列式为负一。故此时特殊正交群在正交群中指数为二。
+
+\ProseParagraphBreak
+复向量空间 \(\mathbb C^n\) 上的配对
+\[
+h_0(z,w)=\overline z^{\mathsf T}w=\sum_i\overline{z_i}w_i
+\]
+在第二变量线性，在第一变量共轭线性。保持它的复线性变换组成\term[you-qun]{酉群}[unitary group]
+\[
+\operatorname U(n)=\{\,G\in\operatorname{GL}_n(\mathbb C)\mid G^*G=I_n\,\},
+\qquad G^*=\overline G^{\mathsf T}.
+\]
+于是 \(|\det G|^2=1\)。它与复正交群不同：\(iI_n\) 保持 \(h_0\)，但当 \(n>0\) 时使双线性型 \(z^{\mathsf T}w\) 变号，故不属于 \(\operatorname O(I_n)\)。
+\symidx{\(\operatorname U(n)\)、\(G^*=\overline G^{\mathsf T}\)：标准酉群与共轭转置}
+
+二维辛群还有一个直接可算的描述。若 \(G=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}\)，相乘得到
+\[
+G^{\mathsf T}\begin{pmatrix}0&1\\-1&0\end{pmatrix}G
+=(ad-bc)\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\]
+所以 \(\operatorname{Sp}_2(k)=\operatorname{SL}_2(k)\)，且这个等式在特征二中仍成立。它来自这个二维计算，不能把正交群与辛群的一般定义混为一谈。
 
 \subsection{Hermitian 型与域上的对合}
 \label{b2:subsec:1004:02}
 
-待撰写。
+\begin{definition}\label{b2:def:hermitian-form}
+设域 \(K\) 配有一个\term[yu-duihe]{对合}[involution]，即自同构 \(\sigma\) 满足 \(\sigma^2=\operatorname{id}\)，并记 \(\overline a=\sigma(a)\)。\(K\) 向量空间 \(V\) 上的\term[Hermitian-xing]{Hermitian 型}[Hermitian form]（也称厄米型）是双可加映射 \(h:V\times V\to K\)，满足
+\[
+h(au,bv)=\overline a\,b\,h(u,v),\qquad h(v,u)=\overline{h(u,v)}.
+\]
+\termidx[emi-xing]{厄米型}
+若 \(h(v,w)=0\) 对全部 \(w\) 成立只能有 \(v=0\)，称 \(h\) 非退化。保持 \(h\) 的 \(K\) 线性自同构组成的群记为 \(\operatorname U(V,h)\)。
+\end{definition}
+
+恒等对合给出对称双线性型；复共轭给出通常的 Hermitian 型。本书固定第一变量共轭线性、第二变量线性的约定。若 \(H=\Bigl(h(e_i,e_j)\Bigr)\)，则
+\[
+h(u,v)=\overline x^{\mathsf T}Hy,\quad H^*=H,
+\qquad H'=P^*HP.
+\]
+最后一个公式由 \(x=Px',y=Py'\) 直接代入得到。对角元都属于固定域 \(K^\sigma=\{\,a\in K\mid\sigma(a)=a\,\}\)，而保持型的矩阵满足 \(G^*HG=H\)。
+
+\begin{proposition}\label{b2:prop:hermitian-diagonalization}
+若 \(\sigma\ne\operatorname{id}\)，或 \(\operatorname{char}K\ne2\)，则每个有限维 Hermitian 型都有正交基，且对角系数属于 \(K^\sigma\)。在 \(\mathbb C\) 配共轭的情形，对角系数可以归一化为一、负一与零，其个数唯一。
+\end{proposition}
+\begin{proof}
+先证明非零的型必有 \(h(v,v)\ne0\) 的向量。反设全部对角取值为零。令 \(c=h(u,v)\)，从 \(h(u+v,u+v)=0\) 得 \(c+\overline c=0\)。再对 \(u+av\) 作同样展开，得到
+\[
+ac+\overline a\,\overline c=(a-\overline a)c=0.
+\]
+若对合非恒等，选择 \(a\ne\overline a\) 便得 \(c=0\)。若对合恒等而特征不为二，第一式就是 \(2c=0\)，也得 \(c=0\)。任意 \(u,v\) 的配对均为零，与型非零矛盾。
+
+取 \(e\) 使 \(d=h(e,e)\ne0\)。对每个 \(v\)，向量 \(v-e\,h(e,v)/d\) 与 \(e\) 正交，且 \(Ke\) 与其正交补的交为零。因此分离出这个非退化一维分量，再按维数归纳。对角元被 \(\sigma\) 固定，已经由 Hermitian 对称性保证。
+
+在复数情形，这些系数均为实数，缩放基向量可把非零系数改为正负一。若正项空间维数为 \(p_+\)，任意正定复子空间投影到它都单射，因为投影为零的向量的二次取值非正。故 \(p_+\) 是正定子空间最大复维数。负项的个数对 \(-h\) 作同样论证确定，零项数由总维数减去二者得到。这与\cref{b2:thm:sylvester-inertia}中的论证相同，只把实坐标平方换成复坐标模平方。
+\end{proof}
+
+非退化复 Hermitian 型的惯性为 \((p_+,p_-,0)\) 时，对应群常记为 \(\operatorname U(p_+,p_-)\)，其标准矩阵为 \(\operatorname{diag}(I_{p_+},-I_{p_-})\)。标准酉群是 \(p_-=0\) 的情形。这里的“酉”只表示保持指定 Hermitian 型，不自动表示该型正定。
+
+\begin{proposition}\label{b2:prop:unitary-real-complex-structure}
+将 \(\mathbb C^n\) 看成实空间，记 \(Jz=iz\)、\(g(z,w)=\operatorname{Re}h_0(z,w)\)。则 \(J^2=-I\)，而 \(\operatorname U(n)\) 恰为保持 \(g\) 并与 \(J\) 交换的实线性自同构组成的群。
+\end{proposition}
+\begin{proof}
+实线性映射与 \(J\) 交换，当且仅当它还保持乘 \(i\)，也就当且仅当它复线性。又由第一变量的共轭线性，
+\[
+g(Jz,w)=\operatorname{Im}h_0(z,w).
+\]
+若映射保持 \(h_0\)，它显然保持实部，且作为复线性映射与 \(J\) 交换。反过来，若 \(A\) 保持 \(g\) 并与 \(J\) 交换，则
+\[
+g(JAz,Aw)=g(AJz,Aw)=g(Jz,w),
+\]
+所以它也保持 \(h_0\) 的虚部，连同实部便保持 \(h_0\)。
+\end{proof}
+
+满足 \(J^2=-I\) 的实线性算子称为一个\term[fushu-jiegou]{复数结构}[complex structure]：规定 \((a+bi)v=av+bJv\)，就使原实空间成为复向量空间。结合律由 \(J^2=-I\) 验证。上面的命题因而把酉群同时解释为一种实正交群的子群和一种复线性群。
 
 \subsection{Clifford 代数的构造}
 \label{b2:subsec:1004:03}
 
-待撰写。
+本小节为选读延伸，恢复任意域 \(k\)，并令 \(q\) 按\cref{b2:def:quadratic-form}定义。构造允许型退化，也允许特征二；此时仍使用未经除以二的 \(\beta_q\)。
+
+\begin{definition}\label{b2:def:clifford-algebra}
+取张量代数 \(T(V)\)，令 \(I_q\) 为全部 \(v\otimes v-q(v)1\)、\(v\in V\) 生成的双边理想。商代数
+\[
+\operatorname{Cl}(V,q)=T(V)/I_q
+\]
+称为 \(q\) 的\term[Clifford-daishu]{Clifford 代数}[Clifford algebra]。从 \(V\) 到这个商代数的自然线性映射记为 \(\iota\)。
+\end{definition}
+\symidx{\(\operatorname{Cl}(V,q)\)：二次型的 Clifford 代数}
+
+\begin{theorem}[Clifford 代数的泛性质]\label{b2:thm:clifford-universal}
+对任意结合含幺 \(k\) 代数 \(A\)，若线性映射 \(f:V\to A\) 满足 \(f(v)^2=q(v)1_A\) 对每个 \(v\) 成立，则存在唯一含幺代数同态
+\[
+\widetilde f:\operatorname{Cl}(V,q)\longrightarrow A,
+\qquad \widetilde f\iota=f.
+\]
+此外在 Clifford 代数中有
+\begin{equation}\label{b2:eq:clifford-polar-relation}
+\iota(u)\iota(v)+\iota(v)\iota(u)=\beta_q(u,v)1.
+\end{equation}
+\end{theorem}
+\begin{proof}
+\cref{b2:thm:tensor-algebra-universal}将 \(f\) 唯一延伸为 \(T(V)\to A\) 的含幺代数同态。题设等式使 \(I_q\) 的每个生成元映到零，双边理想的全部元素也就映到零，故它通过商代数分解。反过来，任何这样的分解都给出原来的张量代数同态，所以唯一。
+
+将 \(\iota(u+v)^2=q(u+v)1\) 展开，减去 \(\iota(u)^2=q(u)1\) 与 \(\iota(v)^2=q(v)1\)，便得到\eqref{b2:eq:clifford-polar-relation}。特征不为二时，右侧为 \(2b_q(u,v)1\)。
+\end{proof}
+
+定义只给出了映射 \(\iota\)，没有凭商代数记号就断言它单射，也没有预先断言代数维数为 \(2^{\dim V}\)。这些结构结论需要额外证明。下面用一个具体低维计算，展示如何直接核验。
+
+\begin{example}\label{b2:exm:clifford-hyperbolic-plane}
+在特征不为二的域上，\(\operatorname{Cl}(H)\cong M_2(k)\)。
+\end{example}
+\begin{proof}
+以双曲基 \(e,f\) 的像仍记为 \(e,f\)，关系为
+\[
+e^2=f^2=0,\qquad ef+fe=2.
+\]
+先说明 \(1,e,f,ef\) 生成整个代数的向量空间。任何字若出现相邻相同字母便为零；否则字母交替。长度至少三时含 \(efe\) 或 \(fef\)，而
+\[
+efe=e(2-ef)=2e,\qquad fef=(2-ef)f=2f.
+\]
+递减字长后只剩长度至多二的字，再用 \(fe=2-ef\) 即得四个所列元素。
+
+令
+\[
+E=\begin{pmatrix}0&2\\0&0\end{pmatrix},\qquad
+F=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
+\]
+它们满足 \(E^2=F^2=0\)、\(EF+FE=2I_2\)，因此线性映射 \(xe+yf\mapsto xE+yF\) 的平方为 \(2xyI_2\)。由\cref{b2:thm:clifford-universal}得到代数同态到 \(M_2(k)\)。\(I_2,E,F,EF\) 线性无关：两个非对角位置先确定 \(E,F\) 的系数为零，两个对角位置再确定余下系数为零，所用的二可逆。它们构成四维矩阵空间的基。来源已由四个元素生成，故同态既单射又满射。
+\end{proof}
+
+在这个例子里，二次关系产生了一个非交换矩阵代数。关系 \(v\otimes v-q(v)1\) 混合张量次数二与零，所以商代数一般不继承张量次数的自然数分次；不过关系的两项同属偶次数，因而仍保留奇偶分次。一般 Clifford 代数的基以及与正交群的进一步联系，留作进阶阅读。

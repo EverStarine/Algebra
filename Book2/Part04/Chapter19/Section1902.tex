@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 19.2 Goldie 理论
-% 纲要位置：计划纲要.md，第 1369 行。
 
 \section{Goldie 理论}
 \label{b2:sec:1902}
 
-% TODO: 按以下纲要要点撰写本节。
+Ore 条件逐个要求方程 \(at=sb\) 可解，直接核验往往困难。Goldie 理论用环的右理想结构保证这些方程有解，并进一步说明所得分式环为何半单。本节明确改用右模：一致维数、子模和零化子链均按所写的作用方向理解。证明先建立本质右理想中正则元素的存在性，再进行局部化。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 一致维数及零化子条件
 % * 半素右 Goldie 环的分式环
@@ -17,14 +16,143 @@
 \subsection{一致维数与零化子条件}
 \label{b2:subsec:1902:01}
 
-待撰写。
+\begin{definition}\label{b2:def:essential-uniform-dimension}
+右模 \(M\) 的子模 \(E\) 称为\term[benzhi-zimo]{本质子模}[essential submodule]，若每个非零子模 \(N\subseteq M\) 都满足 \(N\cap E\ne0\)。非零右模 \(U\) 称为\term[yizhi-mo]{一致模}[uniform module]，若其任意两个非零子模交非零，等价地，每个非零子模都在 \(U\) 中本质。
+
+若非零子模 \(N_1,\ldots,N_r\) 的和为内部直和，称它们独立。\(M\) 的\term[yizhi-weishu]{一致维数}[uniform dimension] \(\operatorname{udim}M\) 是这种有限独立族大小的上确界，允许为无穷；零模的值为零。有限时也称为 \term[Goldie-zhi]{Goldie 秩}[Goldie rank]。
+\end{definition}
+\symidx{\(\operatorname{udim}M\)：右模的一致维数}
+
+简单模一致，但一致模未必简单。例如交换整环 \(R\) 的右正则模一致：两个非零理想分别取非零元素 \(a,b\)，非零乘积 \(ab\) 落在两者的交中。整数模因此一致，虽然其长度不是有限的。一致维数度量能同时分离多少个非零直和方向，不等同于合成长度。
+
+\begin{lemma}\label{b2:lem:essential-tools}
+本质包含具有传递性。若 \(E\subseteq N\) 本质且 \(f:M\rightarrow N\) 为同态，则 \(f^{-1}(E)\) 在 \(M\) 中本质。有限族本质包含 \(E_i\subseteq M_i\) 还给出本质包含 \(\bigoplus_iE_i\subseteq\bigoplus_iM_i\)。
+\end{lemma}
+\begin{proof}
+若 \(E\) 本质于 \(N\)，而 \(N\) 本质于 \(M\)，任意非零 \(L\subseteq M\) 先与 \(N\) 非零相交，再与 \(E\) 非零相交，故传递性成立。
+
+对非零子模 \(L\subseteq M\)，若 \(f(L)=0\)，则 \(L\subseteq f^{-1}(E)\)；否则 \(f(L)\cap E\ne0\)，取一个非零像的原像 \(x\in L\)，便有 \(0\ne x\in L\cap f^{-1}(E)\)。这证明原像的本质性。
+
+在有限直和中，第 \(i\) 个投影的原像 \(\pi_i^{-1}(E_i)\) 由上段本质。有限个本质子模的交仍本质：先与第一个相交，再逐个与其余相交，每一步保持非零。它们的交恰为 \(\bigoplus_iE_i\)，得到最后结论。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:uniform-dimension-structure}
+有限一致维数的非零模 \(M\) 含有本质子模 \(E=U_1\oplus\cdots\oplus U_d\)，其中各 \(U_i\) 一致，且 \(d=\operatorname{udim}M\)。反过来，只要含有这样的有限本质直和，就有 \(\operatorname{udim}M=d\)。若 \(N\subseteq M\) 且 \(M\) 一致维数有限，则
+\[
+\operatorname{udim}N=\operatorname{udim}M
+\quad\Longleftrightarrow\quad N\text{ 在 }M\text{ 中本质}.
+\]
+每个 Noether 右模都有有限一致维数。
+\end{proposition}
+\begin{proof}
+先说明非零子模中存在一致子模。否则从一个没有一致子模的非零模中选两个相交为零的非零子模，保留其中一个继续分裂，记录另一个。这样逐次得到任意大的独立族；若无限进行，记录下来的子模还组成无限内部直和。有限一致维数排除前一种情形，Noether 条件则排除后者，因为有限部分和构成严格升链。因此在这两种假设下，每个非零子模均含一致子模。
+
+取一致子模 \(U_1\)。若已取的有限直和 \(U_1\oplus\cdots\oplus U_r\) 不本质，就有非零子模与它交于零，在其中再取一致子模 \(U_{r+1}\)。有限一致维数限制新增项数，Noether 条件限制这些严格增加的部分和；所以过程在有限步后停止，得到所需本质直和。
+
+现在证明：本质直和 \(E=\bigoplus_{i=1}^dU_i\) 存在时，任意独立非零族 \(N_1,\ldots,N_s\subseteq M\) 都满足 \(s\le d\)。先以 \(N_j\cap E\) 代替 \(N_j\)，这些交仍非零且独立，故可假设它们在 \(E\) 中。对 \(d\) 归纳。若 \(s>0\)，令 \(W=N_2\oplus\cdots\oplus N_s\)。它与非零 \(N_1\) 交于零，所以不在 \(E\) 中本质。如果每个 \(U_i\cap W\) 都非零，一致性及上一引理将使其直和在 \(E\) 中本质，而该直和包含于 \(W\)，矛盾。因此某个 \(U_i\cap W=0\)。商映射 \(E\rightarrow E/U_i\) 在 \(W\) 上单射，故其余 \(s-1\) 项在 \(E/U_i\cong\bigoplus_{j\ne i}U_j\) 中仍独立。归纳给出 \(s-1\le d-1\)。原来的 \(U_i\) 又给出大小 \(d\) 的独立族，故一致维数恰为 \(d\)。这也证明了 Noether 情形的一致维数有限。
+
+最后，若 \(N\) 本质，把 \(M\) 中任意最大独立族的每项与 \(N\) 相交，得到 \(N\) 中同样大的独立族，所以两维数相等。若 \(N\) 不本质，选 \(0\ne W\subseteq M\) 与 \(N\) 交零。将它加入 \(N\) 的一个最大独立族，得到 \(\operatorname{udim}M\ge\operatorname{udim}N+1\)，故两者不等。
+\end{proof}
+
+对 \(X\subseteq R\)，分别记
+\[
+\begin{aligned}
+\operatorname{ann}_r(X)&=\{\,a\in R:xa=0\text{ 对所有 }x\in X\,\},\\
+\operatorname{ann}_{\ell}(X)&=\{\,a\in R:ax=0\text{ 对所有 }x\in X\,\}.
+\end{aligned}
+\]
+它们分别为右理想与左理想，称为右零化子与左零化子。
+\symidx{\(\operatorname{ann}_r(X)\)：子集的右零化子}
+\symidx{\(\operatorname{ann}_{\ell}(X)\)：子集的左零化子}
+
+\begin{definition}\label{b2:def:semiprime-right-goldie}
+若 \(R\) 没有非零的平方为零的双边理想，称 \(R\) 为\term[bansu-huan]{半素环}[semiprime ring]。若右正则模 \(R_R\) 一致维数有限，且所有子集的右零化子组成的升链均最终稳定，称 \(R\) 为\term[you-Goldie-huan]{右 Goldie 环}[right Goldie ring]。
+\end{definition}
+
+半素也等价于没有非零幂零双边理想：若 \(I^m=0\) 且 \(m\ge2\) 最小，则 \(I^{m-1}\ne0\) 而它的平方为零。半素环中的非零左理想或右理想，其平方也不能为零。比如左理想 \(L\) 若满足 \(L^2=0\)，双边理想 \(LR\) 满足
+\((LR)^2\subseteq L^2R=0\)，故 \(LR=0\)，进而 \(L=0\)；右理想采用 \(RL\) 的对应论证。这里零化子升链条件只针对这些特殊右理想，比全部右理想都满足升链条件弱。
 
 \subsection{半素右 Goldie 环的分式环}
 \label{b2:subsec:1902:02}
 
-待撰写。
+以下各引理均设 \(R\) 为非零半素右 Goldie 环。核心目标是：每个本质右理想都包含一个正则元素。
+
+\begin{lemma}\label{b2:lem:essential-annihilator-zero}
+本质右理想的左零化子为零。
+\end{lemma}
+\begin{proof}
+若结论不成立，就存在非零左理想 \(L\)，其右零化子 \(A=\operatorname{ann}_r(L)\) 为本质右理想：可取 \(L\) 为某个反例本质右理想的左零化子，而 \(A\) 包含该本质右理想。利用右零化子的升链条件，在这些 \(A\) 中选择极大者。
+
+半素性给出 \(L^2\ne0\)，取 \(x,y\in L\) 使 \(xy\ne0\)。\(yR\) 是非零右理想，本质性使其中有非零元素 \(ya\in A\)。于是 \(xya=0\)，但 \(ya\ne0\)，所以
+\[
+\operatorname{ann}_r(y)\subsetneq\operatorname{ann}_r(xy).
+\]
+这两个零化子都包含 \(A\)，并分别等于非零左理想 \(Ry,Rxy\) 的右零化子。因为包含本质右理想，它们也本质；极大性的选择却要求二者都等于 \(A\)，矛盾。因此不存在这样的 \(L\)。
+\end{proof}
+
+\begin{lemma}\label{b2:lem:one-sided-regular-goldie}
+若 \(\operatorname{ann}_r(s)=0\)，则 \(s\) 双侧正则，且 \(sR\) 为本质右理想。
+\end{lemma}
+\begin{proof}
+左乘 \(s\) 给出右模同构 \(R_R\cong sR\)，所以两者一致维数相同。由\cref{b2:prop:uniform-dimension-structure}，\(sR\) 在 \(R\) 中本质。上一引理给出 \(\operatorname{ann}_{\ell}(sR)=0\)，而它正是 \(\operatorname{ann}_{\ell}(s)\)。两侧零化子均为零，所以 \(s\) 正则。
+\end{proof}
+
+\begin{lemma}\label{b2:lem:goldie-ideal-regular-element}
+每个右理想 \(N\) 都含有某个 \(v\)，使 \(\operatorname{ann}_r(v)\cap N=0\)。因此每个本质右理想都含有正则元素。
+\end{lemma}
+\begin{proof}
+先设 \(U\) 为非零一致右理想。由半素性，取 \(x,y\in U\) 使 \(xy\ne0\)。若 \(W=\operatorname{ann}_r(x)\cap U\ne0\)，则 \(W\) 在 \(U\) 中本质。考虑右线性映射 \(\lambda_y:R\rightarrow U\)、\(a\mapsto ya\)。由\cref{b2:lem:essential-tools}，\(\lambda_y^{-1}(W)\) 是本质右理想；但对其中每个 \(a\)，\(xya=0\)，所以它被非零元素 \(xy\) 从左零化，违反\cref{b2:lem:essential-annihilator-zero}。故 \(W=0\)，一致右理想中的结论成立。
+
+若 \(N\ne0\)，它含有一致子模，所以在所有满足
+\[
+v\in V\subseteq N,\qquad \operatorname{ann}_r(v)\cap V=0
+\]
+的非零子模 \(V\) 中，可以选择一致维数最大的一个；这些维数是有上界的正整数。假设仍有 \(\operatorname{ann}_r(v)\cap N\ne0\)，在其中取一致右理想 \(U\)，再由上段取 \(u\in U\) 使 \(\operatorname{ann}_r(u)\cap U=0\)。因为 \(U\subseteq\operatorname{ann}_r(v)\)，有 \(U\cap V=0\)。
+
+令 \(x=u+v\)。若 \(z\in U\oplus V\) 且 \(xz=0\)，则 \(uz\in U,vz\in V\)，直和性给出 \(uz=vz=0\)。写 \(z=a+b\)、\(a\in U,b\in V\)。由于 \(va=0\)，\(vz=0\) 给出 \(vb=0\)，从而 \(b=0\)。再由 \(ua=0\) 得 \(a=0\)，故 \(\operatorname{ann}_r(x)\cap(U\oplus V)=0\)。然而 \(U\oplus V\) 至少比 \(V\) 多一个独立方向，与选择的最大一致维数矛盾。因此 \(\operatorname{ann}_r(v)\cap N=0\)。\(N=0\) 时取 \(v=0\) 即可。
+
+若 \(N\) 本质，这个零交迫使右理想 \(\operatorname{ann}_r(v)\) 为零。由\cref{b2:lem:one-sided-regular-goldie}，\(v\) 双侧正则。
+\end{proof}
+
+\begin{theorem}[Goldie 定理的充分方向]\label{b2:thm:goldie-sufficiency}
+若 \(R\) 为非零半素右 Goldie 环，\(S\) 为全部正则元素，则 \(S\) 满足右 Ore 条件，经典右分式环 \(Q=RS^{-1}\) 为半单 Artin 环。
+\end{theorem}
+\begin{proof}
+一属于 \(S\)，正则元素乘法封闭。给定 \(a\in R,s\in S\)，由\cref{b2:lem:one-sided-regular-goldie}，\(sR\) 本质。映射 \(\lambda_a:R_R\rightarrow R_R\)、\(x\mapsto ax\) 的原像 \(\lambda_a^{-1}(sR)\) 由\cref{b2:lem:essential-tools}本质，故由\cref{b2:lem:goldie-ideal-regular-element}含有正则元素 \(t\)。于是 \(at=sb\) 对某个 \(b\in R\) 成立，恰为右 Ore 条件。\cref{b2:thm:right-ore-localization}给出 \(Q\)。
+
+证明 \(Q\) 没有真本质右理想。设 \(E\) 为 \(Q\) 的本质右理想，\(I\) 为 \(R\) 的任意非零右理想，则 \(IQ\) 是非零右 \(Q\) 理想，所以 \(E\cap IQ\) 含有非零元素 \(q\)。由\cref{b2:prop:ore-clearing-denominators}，可取 \(s\in S\) 使 \(0\ne qs\in I\)。因为 \(E\) 是右理想，\(qs\) 也在 \(E\)，因此 \(E\cap R\) 是 \(R\) 的本质右理想。它含有正则元素 \(t\)，而 \(t\) 在 \(Q\) 中可逆；右理想 \(E\) 因含有单位而等于 \(Q\)。
+
+还需将本质理想的结论变成直和分解。任意独立的非零右 \(Q\) 理想与 \(R\) 的交均非零，且作为右 \(R\) 子模仍独立，所以 \(\operatorname{udim}Q_Q\le\operatorname{udim}R_R<\infty\)。对给定右 \(Q\) 理想 \(J\)，在与 \(J\) 交零的右理想中选一致维数最大的 \(K\)，零理想保证候选非空。若 \(J\oplus K\) 不本质，取非零右理想 \(L\) 与之交零；则 \(K\oplus L\) 仍与 \(J\) 交零，且比 \(K\) 至少多一个独立方向，违反所选最大值。故 \(J\oplus K\) 本质。刚证 \(Q\) 没有真本质右理想，所以 \(J\oplus K=Q\)。
+
+因此正则右模的每个子模都有补模。把\cref{b2:thm:semisimple-module-characterizations}应用于反环，得到 \(Q_Q\) 半单；再用\cref{b2:thm:artin-wedderburn}的右模版本，\(Q\) 为有限个除环上全矩阵环的直积，因而为半单 Artin 环。
+\end{proof}
+
+这给出本章所用的\term[Goldie-dingli]{Goldie 定理}[Goldie's theorem]。其证明没有把右 Goldie 条件替换成全部右理想的升链条件；有限一致维数负责限制独立方向，右零化子的升链条件则用于极大零化子的选择。本章不证明半单经典分式环对这些条件的反向刻画。
+
+\begin{corollary}\label{b2:cor:goldie-rank}
+在上述条件下，\(\operatorname{udim}R_R=\ell(Q_Q)\)。
+\end{corollary}
+\begin{proof}
+若 \(I_1,\ldots,I_d\) 为 \(R\) 中独立非零右理想，则 \(I_iQ\) 仍独立：一条和为零的关系中的各项，通到共同右分母后成为各 \(I_i\) 中和为零的分子，原独立性使每个分子为零。反过来，\(Q\) 中独立非零右理想与 \(R\) 的交都非零，因为单个非零分式可清分母；这些交仍独立。因此 \(R_R,Q_Q\) 一致维数相同。\(Q_Q\) 是有限个简单右模的直和，简单模一致，\cref{b2:prop:uniform-dimension-structure}说明其一致维数正好等于简单分量个数，也就是长度。
+\end{proof}
 
 \subsection{Goldie 假设与交换整环}
 \label{b2:subsec:1902:03}
 
-待撰写。
+若 \(R\) 右 Noether，则全部右理想满足升链条件，特别是右零化子链稳定；\cref{b2:prop:uniform-dimension-structure}又保证右正则模一致维数有限。因此半素右 Noether 环满足 Goldie 定理。对非交换整环，半素性自动成立；所以右 Noether 整环有经典右分式除环。这里非零分式 \(as^{-1}\) 的逆可写成 \(sa^{-1}\)，因为所有非零元素都在分母集中。
+
+\ProseParagraphBreak
+交换整环甚至不必 Noether：其右正则模一致，而含非零元素的子集零化子为零，故零化子链自动稳定。Goldie 定理便恢复通常的分式域。
+
+\ProseParagraphBreak
+在 \(R=M_n(C)\)、\(C\) 为交换整环的例子中，正则矩阵恰为行列式非零的矩阵。行列式非零时，伴随矩阵公式及 \(C\) 中的消去律排除两侧零化元；行列式为零时，在分式域中取非零核列，清分母得非零的 \(C\) 系数核列，将它放入一个矩阵的第一列，其余列为零，就得到非零右零化元。因此所有正则矩阵都在 \(M_n(\operatorname{Frac}C)\) 中可逆，而该环的每个元素已可用非零标量矩阵作一个右分母，故它正是经典分式环。其正则右模长度为 \(n\)，清分母保持独立理想族的同一论证给出 \(\operatorname{udim}R_R=n\)，不是矩阵条目数 \(n^2\)。
+
+\ProseParagraphBreak
+半素性不能删去。二阶上三角矩阵环 \(T_2(k)\) 右 Noether，因而满足右 Goldie 条件，但严格上三角理想非零且平方为零。其正则元素恰为可逆上三角矩阵：对角元都非零时有上三角逆；对 \(A=\begin{pmatrix}a&b\\0&c\end{pmatrix}\)，若 \(a=0\)，则 \(AE_{11}=0\)，若 \(c=0\)，则 \(E_{22}A=0\)，分别给出非零的一侧零化元。因此将正则元素求逆没有扩大此环，经典分式环仍为 \(T_2(k)\)，并不半单。
+
+\ProseParagraphBreak
+一致维数条件也有实际内容。自由代数 \(k\langle x,y\rangle\) 的非零子集右零化子均为零，所以零化子升链条件成立；但右理想
+\[
+yR,\ xyR,\ x^2yR,\ldots
+\]
+独立，因为各自的基字以前缀 \(x^iy\) 开始，这些前缀彼此不会延长成另一个。故一致维数无穷，不能应用 Goldie 定理。这与上一节发现它不满足右 Ore 条件相吻合。

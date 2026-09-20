@@ -5,9 +5,9 @@
 \section{Jacobson 稠密性定理}
 \label{b2:sec:1404}
 
-% TODO: 按以下纲要要点撰写本节。
+在一个简单模上，环元素可以把任意非零向量送到任何向量。稠密性定理把这个单向量事实推广为有限组向量的同时插值。能够自由指定的向量组须对自同态除环线性无关，而不只是对某个较小的底域无关。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 简单模上的作用与自同态除环
 % * 稠密性定理的代数形式
@@ -17,14 +17,71 @@
 \subsection{简单模的作用与自同态除环}
 \label{b2:subsec:1404:01}
 
-待撰写。
+设 \(S\) 为简单左 \(R\) 模。由\cref{b2:lem:schur}，\(\Delta=\operatorname{End}_R(S)\) 是除环。为了把自同态看作右标量，规定
+\[
+D=\Delta^{\mathrm{op}},\qquad v\cdot d=f_d(v),
+\]
+其中 \(f_d\) 是 \(d\) 对应的 \(R\) 模自同态。因为 \(f_{d_1d_2}=f_{d_2}f_{d_1}\)，这给出右 \(D\) 向量空间结构。左 \(R\) 作用与它交换，所以作用同态的目标可缩为
+\[
+\rho:R\longrightarrow\operatorname{End}_D(S_D).
+\]
+这里 \(\operatorname{End}_D\) 表示右 \(D\) 线性自同态。
+\symidx{\(D=\operatorname{End}_R(S)^{\mathrm{op}}\)：简单左模的右标量除环}
+
+一个有限向量组 \(v_1,\ldots,v_n\) 右 \(D\) 线性无关，意指 \(\sum_i v_i d_i=0\) 只可能在全部 \(d_i=0\) 时成立。若它们原本有关系，任何 \(r\in R\) 都必保留该关系，故不能任意指定它们的像。
+
+\ProseParagraphBreak
+例如，令 \(R=\mathbb C\) 在 \(S=\mathbb C\) 上左乘，并同时把 \(S\) 看成二维实空间。向量 \(1,i\) 对实数线性无关，却满足右复关系 \(1\cdot i-i\cdot1=0\)。不可能有同一个左乘把 \(1\) 送到零而把 \(i\) 送到一。这就是必须使用正确标量除环的原因。
 
 \subsection{稠密性定理的代数形式}
 \label{b2:subsec:1404:02}
 
-待撰写。
+\begin{theorem}[Jacobson 稠密性]\label{b2:thm:jacobson-density}
+设 \(S\) 为简单左 \(R\) 模，\(D=\operatorname{End}_R(S)^{\mathrm{op}}\)。对任意右 \(D\) 线性无关的有限组 \(v_1,\ldots,v_n\)，以及任意 \(w_1,\ldots,w_n\in S\)，存在 \(r\in R\) 使
+\[
+rv_i=w_i\qquad(1\le i\le n).
+\]
+\end{theorem}
+
+这称为\term[Jacobson-choumixing-dingli]{Jacobson 稠密性定理}[Jacobson density theorem]。存在的 \(r\) 通常不唯一；定理只在给定的有限组向量上指定其作用。
+
+\begin{proof}
+对 \(n\) 归纳。\(n=1\) 时，\(v_1\ne0\)，简单性给出 \(Rv_1=S\)，结论成立。设已对 \(n-1\) 成立。考虑左理想
+\[
+L=\{\,a\in R:av_1=\cdots=av_{n-1}=0\,\}.
+\]
+\(Lv_n\) 是 \(S\) 的子模，因此或为零，或为 \(S\)。先排除第一种情况。
+
+若 \(Lv_n=0\)，归纳假设说明映射 \(a\mapsto(av_1,\ldots,av_{n-1})\) 从 \(R\) 满射到 \(S^{n-1}\)，因而可以定义
+\[
+F:S^{n-1}\longrightarrow S,
+\qquad F(av_1,\ldots,av_{n-1})=av_n.
+\]
+若两个 \(a\) 给出相同输入，它们之差属于 \(L\)，所以输出之差也为零。这证明良定义。使用代表元的加法及左乘，得到 \(F\) 左 \(R\) 线性。令 \(f_i:S\to S\) 是 \(F\) 在第 \(i\) 个直和分量上的限制，则 \(f_i\in\Delta\)，且
+\[
+v_n=F(v_1,\ldots,v_{n-1})=\sum_{i<n}f_i(v_i)=\sum_{i<n}v_i d_i
+\]
+对某些 \(d_i\in D\) 成立，与给定向量组右线性无关矛盾。因此 \(Lv_n=S\)。
+
+现在先用归纳假设找 \(r_0\) 使 \(r_0v_i=w_i\)、\(i<n\)。再取 \(\ell\in L\) 使 \(\ell v_n=w_n-r_0v_n\)。令 \(r=r_0+\ell\)，则前 \(n-1\) 个值因 \(\ell\in L\) 保持不变，最后一个值也达到要求，归纳完成。
+\end{proof}
+
+更一般地，给定任意右 \(D\) 线性算子 \(T\) 及有限组向量，先在它们的右线性生成空间中选基，再对这组基应用定理，即可找到 \(r\) 在原来的全部向量上与 \(T\) 一致。若把“在给定有限组向量上取相同值”作为邻域条件，这正表示 \(\rho(R)\) 在 \(\operatorname{End}_D(S)\) 中稠密。这个说法强调有限组上的同时一致，尚未断言存在一个 \(r\) 在无限组上同时一致。
 
 \subsection{有限维情形的矩阵代数}
 \label{b2:subsec:1404:03}
 
-待撰写。
+\begin{corollary}\label{b2:cor:density-finite-dimensional}
+若上面的 \(S_D\) 有有限维数 \(n\)，则
+\[
+R/\operatorname{Ann}_R(S)\cong\operatorname{End}_D(S_D)\cong M_n(D).
+\]
+特别地，本原环若有一个对其自同态右除环有限维的忠实简单模，则它是单 Artin 环。
+\end{corollary}
+\begin{proof}
+取右 \(D\) 基 \(v_1,\ldots,v_n\)。对任意 \(T\in\operatorname{End}_D(S)\)，在\cref{b2:thm:jacobson-density}中指定 \(w_i=T(v_i)\)，便找到 \(r\) 在全部基向量上与 \(T\) 相同。两者右线性，所以处处相同，作用同态满射。它的核为 \(\operatorname{Ann}_R(S)\)，由环同构定理得到第一个同构。
+
+把向量写成右坐标列 \(\sum_i v_i d_i\)，若 \(T(v_j)=\sum_i v_i a_{ij}\)，则新坐标为 \((\sum_j a_{ij}d_j)_i\)。因此复合对应通常的矩阵乘法，得到 \(M_n(D)\)，这里不再加一次反环。矩阵环的单性和 Artin 性由\cref{b2:prop:simple-artinian}及其矩阵块说明得到。
+\end{proof}
+
+这并没有证明每个本原环都为矩阵环；有限维条件是将有限组插值变成整个算子的等式所必需的。在前一节的无限维例子中，没有一个有限向量组能充当整个空间的基。

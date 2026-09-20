@@ -5,7 +5,7 @@
 \section{从矩阵到不变量}
 \label{b2:sec:0104}
 
-% TODO: 按以下纲要要点撰写本节。
+一个算子可以有许多矩阵表示，分类时应先确定哪些变化来自坐标选择。本节写清相似关系，并用小型矩阵说明常见不变量各能辨认什么。最后陈述第四章将要证明的标准形结论，说明为什么需要把算子改写成多项式环的作用。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,119 @@
 \subsection{换基与相似}
 \label{b2:subsec:0104:01}
 
-待撰写。
+设 \(V\) 有限维，有序基为 \(\mathcal B=(e_1,\ldots,e_n)\)。向量 \(v\) 的坐标写为列向量 \([v]_{\mathcal B}\)。若算子 \(T\) 的矩阵为 \(A\)，其第 \(j\) 列就是 \([Te_j]_{\mathcal B}\)，因而
+\[
+[Tv]_{\mathcal B}=A[v]_{\mathcal B}.
+\]
+令另一组基 \(\mathcal B'=(e'_1,\ldots,e'_n)\) 满足 \(e'_j=\sum_iP_{ij}e_i\)。由于两组都是基，\(P\) 可逆，且 \([v]_{\mathcal B}=P[v]_{\mathcal B'}\)。于是
+\[
+[Tv]_{\mathcal B'}=P^{-1}AP[v]_{\mathcal B'}.
+\]
+
+\begin{definition}\label{b2:def:matrix-similarity}
+若 \(A,B\in M_n(k)\) 满足 \(B=P^{-1}AP\)，其中 \(P\in\operatorname{GL}_n(k)\)，就称 \(A,B\) \term[xiangsi]{相似}[similar]。同一算子在不同有序基下的矩阵恰好构成一个相似类。
+\end{definition}
+
+这里左右两侧的变换由同一个换基矩阵联系起来。对于一般线性映射 \(V\to W\)，定义域和陪域可以分别换基，矩阵相应变为 \(Q^{-1}AP\)；这称为矩阵等价，与算子的相似分类不同。任意初等行、列操作虽然保持矩阵的秩，却未必保持它代表的算子的相似类。
+
+\begin{proposition}\label{b2:prop:similarity-invariants}
+相似矩阵具有相同的秩、最小多项式、特征多项式及各个多项式 \(p\) 所给的核维数 \(\dim\ker p(A)\)。这里\term[tezheng-duoxiangshi]{特征多项式}[characteristic polynomial]定义为 \(\chi_A(t)=\det(tI_n-A)\)。
+\end{proposition}
+\begin{proof}
+若 \(B=P^{-1}AP\)，归纳得 \(B^j=P^{-1}A^jP\)，故 \(p(B)=P^{-1}p(A)P\)。映射 \(v\mapsto Pv\) 将 \(\ker p(B)\) 同构到 \(\ker p(A)\)，并将 \(\operatorname{im}B\) 同构到 \(\operatorname{im}A\)，所以相应维数不变。又有 \(p(B)=0\iff p(A)=0\)，最小多项式的唯一性给出相等。
+
+在交换环 \(k[t]\) 上使用行列式的乘法公式，得到
+\[
+\det(tI_n-B)=\det\bigl(P^{-1}(tI_n-A)P\bigr)=\det(tI_n-A).
+\]
+因此特征多项式也不变。
+\end{proof}
+
+这里使用读者已学过的行列式展开及乘法公式；行列式的外代数解释将在\chapref{b2:ch:09}建立。\(\chi_T\) 因换基不变而也可作为算子本身的记号。但单独知道特征多项式通常不足以确定相似类。例如
+\[
+A=\begin{pmatrix}0&0\\0&0\end{pmatrix},\qquad
+B=\begin{pmatrix}0&1\\0&0\end{pmatrix}
+\]
+都有特征多项式 \(t^2\)，而 \(m_A=t,m_B=t^2\)，故不相似。秩也相同的例子可以在四维中得到：两个大小为二的零特征值 Jordan 块，与一个大小为三及一个大小为一的块，秩均为二、特征多项式均为 \(t^4\)，最小多项式却分别为 \(t^2,t^3\)。下面会明确这些块的形式。
 
 \subsection{有理标准形与 Jordan 标准形}
 \label{b2:subsec:0104:02}
 
-待撰写。
+先考察循环向量能提供什么。给定次数 \(d\ge1\) 的首一多项式
+\[
+p(t)=t^d+a_{d-1}t^{d-1}+\cdots+a_1t+a_0,
+\]
+其\term[you-juzhen]{友矩阵}[companion matrix]定义为
+\[
+C(p)=
+\begin{pmatrix}
+0&0&\cdots&0&-a_0\\
+1&0&\cdots&0&-a_1\\
+0&1&\cdots&0&-a_2\\
+\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&0&\cdots&1&-a_{d-1}
+\end{pmatrix};
+\]
+逐列说，\(C(p)e_j=e_{j+1}\ (j<d)\)，而 \(C(p)e_d=-\sum_{i=0}^{d-1}a_ie_{i+1}\)；这也包含 \(d=1\) 时的矩阵 \((-a_0)\)。友矩阵与由代数余子式矩阵转置得到的\term[ban-sui-juzhen]{伴随矩阵}[adjugate matrix]是不同对象；本书分别使用这两个名称。
+
+\ProseParagraphBreak
+若 \(v\) 为循环向量，且 \(m_T=p\)，则\cref{b2:prop:cyclic-basis}给出基 \(v,Tv,\ldots,T^{d-1}v\)。前 \(d-1\) 个基向量各被送到后一个，而
+\[
+T^dv=-a_0v-a_1Tv-\cdots-a_{d-1}T^{d-1}v,
+\]
+所以算子在这组基下的矩阵就是 \(C(p)\)。这已完整解释单个循环子空间的矩阵形式。一般算子怎样分成循环部分，以及不同分法为什么给出相同的分类数据，仍需要证明。
+
+\begin{claim}[有理标准形，证明见第四章]\label{b2:claim:rational-canonical-goal}
+每个有限维非零 \(k\) 向量空间上的算子，都相似于
+\[
+\operatorname{diag}\bigl(C(d_1),\ldots,C(d_r)\bigr),
+\qquad d_1\mid d_2\mid\cdots\mid d_r,
+\]
+其中 \(d_i\in k[t]\) 首一且次数为正，\(\sum_i\deg d_i=\dim V\)。这些多项式唯一，且 \(m_T=d_r\)、\(\chi_T=\prod_i d_i\)。
+\end{claim}
+
+这一形式称为\term[youli-biaozhunxing]{有理标准形}[rational canonical form]。“有理”不要求 \(k=\mathbb Q\)，而是说所有构造都在原基域上进行，不要求先把多项式分解成一次因子。存在性与唯一性将在\cref{b2:thm:rational-canonical-form}证明，最小多项式与特征多项式公式见\cref{b2:prop:operator-characteristic-minimal}；本章的证明与习题均不依赖这一前瞻陈述。
+
+\ProseParagraphBreak
+若多项式在 \(k\) 上分裂，还可使用更细的块。定义
+\[
+J_d(\lambda)=
+\begin{pmatrix}
+\lambda&1&&0\\
+&\lambda&\ddots&\\
+&&\ddots&1\\
+0&&&\lambda
+\end{pmatrix},\qquad J_1(\lambda)=(\lambda).
+\]
+它称为\term[Jordan-kuai]{Jordan 块}[Jordan block]。减去 \(\lambda I\) 后，每个 \(e_j\ (j>1)\) 被送到 \(e_{j-1}\)，\(e_1\) 被送到零；因而第 \(r\) 次幂的核维数为 \(\min(r,d)\)。
+
+\begin{claim}[Jordan 标准形，证明见第四章]\label{b2:claim:jordan-canonical-goal}
+若有限维算子 \(T\) 的特征多项式在 \(k\) 上分裂为一次因子的乘积，则 \(T\) 相似于若干 \(J_d(\lambda)\) 的直和。这些块除排列次序外唯一。
+\end{claim}
+
+这称为\term[Jordan-biaozhunxing]{Jordan 标准形}[Jordan canonical form]。完整证明归于\cref{b2:thm:jordan-canonical-form}。核维数序列说明了块大小为什么可望成为可恢复的不变量：对固定特征值，一个大小为 \(d\) 的块在第 \(r\) 次幂的核中贡献 \(\min(r,d)\) 维；相邻差便计算大小至少为 \(r\) 的块数。这是分析已给定块矩阵的直接计算，还不是每个算子都有这种分解的证明。
 
 \subsection{标准形的模论解释}
 \label{b2:subsec:0104:03}
 
-待撰写。
+对于单个循环子空间，多项式与向量之间有一个明确的对应。
+
+\begin{proposition}\label{b2:prop:cyclic-polynomial-quotient}
+设 \(0\ne v\in V\)，\(p=m_{T,v}\)。映射
+\[
+k[t]/(p)\longrightarrow k[T]v,\qquad f+(p)\longmapsto f(T)v
+\]
+是 \(k\) 线性同构，并把左侧乘以 \(t\) 的运算变为右侧施加 \(T\) 的运算。
+\end{proposition}
+\begin{proof}
+映射 \(k[t]\to k[T]v\)、\(f\mapsto f(T)v\) 线性且满，其核恰好是 \(p\) 的全部倍数，即理想 \((p)\)。\cref{b2:prop:linear-first-isomorphism}给出商空间到像的线性同构。对于任何 \(f\)，\((tf)(T)v=T(f(T)v)\)，证明最后的相容性。
+\end{proof}
+
+商环 \(k[t]/(p)\) 在这里同时有向量空间结构和多项式作用。带余除法说明 \(1,t,\ldots,t^{d-1}\) 的陪集是基；用这组基表示乘 \(t\)，又得到 \(C(p)\)。后续的模结构定理要做的，就是把一般有限维算子分解为这样的循环商，并识别每一部分的关系多项式。本节只证明了单个循环部分的对应，不以标准形的存在性作为它的依据。
+
+\ProseParagraphBreak
+基域对分类形式的影响可以从一个二维例子看出。在 \(\mathbb R^2\) 上取
+\[
+A=\begin{pmatrix}0&-1\\1&0\end{pmatrix}=C(t^2+1).
+\]
+因为 \(A^2=-I\)，且 \(e_1,Ae_1=e_2\) 是基，故最小多项式为 \(t^2+1\)。这个多项式在 \(\mathbb R\) 上没有根，算子没有实特征向量。把同一矩阵放在 \(\mathbb C^2\) 上，向量 \((1,-i)\)、\((1,i)\) 分别对应特征值 \(i,-i\)，而且二者独立，所以矩阵在复数域上相似于 \(\operatorname{diag}(i,-i)\)。矩阵条目没有变化，可用的标量与基向量却变了。讨论标准形时，必须同时写明所工作的域。

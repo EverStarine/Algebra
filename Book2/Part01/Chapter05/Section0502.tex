@@ -5,7 +5,7 @@
 \section{自然性}
 \label{b2:sec:0502}
 
-% TODO: 按以下纲要要点撰写本节。
+“不依赖基”说明一个公式不需要先选坐标，却还没有完整说明不同对象之间的关系。自然性要求：先把对象上的向量或态射送到另一个对象，再使用构造，与先使用构造、再施加诱导映射，结果相同。第一章的双对偶评价映射已经满足这种条件；现在把它作为一族映射来讨论。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,105 @@
 \subsection{自然变换与自然同构}
 \label{b2:subsec:0502:01}
 
-待撰写。
+\begin{definition}\label{b2:def:natural-transformation}
+设 \(F,G:\mathcal C\rightarrow\mathcal D\) 为两个函子。一个\term[ziran-bianhuan]{自然变换}[natural transformation] \(\eta:F\Rightarrow G\) 是给每个对象 \(X\) 指定一个态射 \(\eta_X:F(X)\rightarrow G(X)\)，使对每个 \(f:X\rightarrow Y\) 都有
+\begin{equation}\label{b2:eq:naturality-square}
+G(f)\eta_X=\eta_YF(f).
+\end{equation}
+\(\eta_X\) 称为在 \(X\) 处的分量。若有自然变换 \(\theta:G\Rightarrow F\) 使每个 \(\theta_X\eta_X\) 和 \(\eta_X\theta_X\) 都是恒等态射，则称 \(\eta\) 为\term[ziran-tonggou]{自然同构}[natural isomorphism]。
+\end{definition}
+
+式\eqref{b2:eq:naturality-square}也可画成交换图：
+\[
+\begin{tikzcd}
+F(X)\arrow[r,"\eta_X"]\arrow[d,"F(f)"']&G(X)\arrow[d,"G(f)"]\\
+F(Y)\arrow[r,"\eta_Y"']&G(Y).
+\end{tikzcd}
+\]
+定义中必须给出两个函子以及它们对态射的作用。同一个对象公式若配上不同的态射作用，自然性条件就可能不同。两个反变函子之间的自然变换，按它们从 \(\mathcal C^{\mathrm{op}}\) 出发来理解；原态射 \(f:X\rightarrow Y\) 此时给出 \(G(f)\eta_Y=\eta_XF(f)\)。
+
+\begin{proposition}\label{b2:prop:natural-isomorphism-components}
+自然变换 \(\eta:F\Rightarrow G\) 是自然同构，当且仅当每个 \(\eta_X\) 都是 \(\mathcal D\) 中的同构。自然变换可以按分量复合；若 \(\eta:F\Rightarrow G\)、\(\theta:G\Rightarrow H\)，其复合分量为 \((\theta\eta)_X=\theta_X\eta_X\)。
+\end{proposition}
+\begin{proof}
+有自然逆时，每个分量当然有逆。反过来，若分量都可逆，由 \(G(f)\eta_X=\eta_YF(f)\) 两边分别复合逆映射，得到
+\[
+F(f)\eta_X^{-1}=\eta_Y^{-1}G(f).
+\]
+所以分量逆组成自然变换 \(G\Rightarrow F\)，并在每个对象上与 \(\eta\) 互逆。
+
+对复合，由两个自然性等式有
+\[
+H(f)\theta_X\eta_X=\theta_YG(f)\eta_X=\theta_Y\eta_YF(f),
+\]
+故它仍自然。复合的结合律与恒等变换都逐分量继承自 \(\mathcal D\)。
+\end{proof}
+
+例如在交换群范畴上，固定整数 \(n\)，映射 \(\eta_A:A\rightarrow A\)、\(a\mapsto na\) 构成恒等函子到自身的自然变换，因为每个群同态 \(f:A\rightarrow B\) 都满足 \(f(na)=nf(a)\)。\(n=1,-1\) 时为自然同构，\(n=2\) 时在 \(\mathbb Z\) 上不满，在 \(\mathbb Z/2\mathbb Z\) 上也不单，因此不是自然同构。自然变换本身不承诺分量的可逆性。
 
 \subsection{自然同构与选基同构}
 \label{b2:subsec:0502:02}
 
-待撰写。
+记 \(\mathbf{Vect}_k\) 为 \(k\) 向量空间及线性映射的范畴。两次应用对偶反转两次箭头，因而 \(D^2(V)=V^{**}\)、\(D^2(f)=f^{**}\) 是协变函子。评价映射
+\[
+j_V:V\longrightarrow V^{**},\qquad j_V(v)(\lambda)=\lambda(v)
+\]
+与恒等函子有相同方向。
+
+\begin{proposition}\label{b2:prop:natural-double-dual}
+评价映射组成自然变换 \(j:\operatorname{Id}_{\mathbf{Vect}_k}\Rightarrow D^2\)。限制在有限维向量空间范畴上，它是自然同构。
+\end{proposition}
+\begin{proof}
+设 \(f:V\rightarrow W\)，对 \(v\in V\)、\(\mu\in W^*\)，有
+\[
+\Bigl(f^{**}j_V(v)\Bigr)(\mu)
+=j_V(v)(\mu f)=\mu\Bigl(f(v)\Bigr)
+=j_W\Bigl(f(v)\Bigr)(\mu).
+\]
+因此 \(f^{**}j_V=j_Wf\)，这就是自然性。有限维时，\cref{b2:thm:double-dual}说明每个 \(j_V\) 为同构；由\cref{b2:prop:natural-isomorphism-components}，它们组成自然同构。
+\end{proof}
+
+这里对任意维数都验证了自然性，有限维只用于证明分量满射。无限维时则不保证满射：\cref{b2:ex:infinite-double-dual}对 \(V=k^{(\mathbb N)}\) 给出了双对偶中不属于评价像的元素，因而不能把自然变换自动升级为自然同构。
+
+\ProseParagraphBreak
+选基给出的 \(V\cong V^*\) 情况不同。在实一维空间 \(V=\mathbb R e\) 中，用基 \(e\) 规定 \(b_e(e)=e^*\)。改用 \(e'=2e\)，其对偶基为 \((e')^*=\tfrac12e^*\)，所以
+\[
+b_{e'}(e)=\tfrac12b_{e'}(e')=\tfrac14e^*,
+\]
+与 \(b_e(e)=e^*\) 不同。两者都是同构，但并非同一个映射。还须留意，普通对偶函子是反变的，不能直接把 \(\operatorname{Id}\) 与它当作同一对范畴之间的两个协变函子来写自然同构。
+
+\ProseParagraphBreak
+只允许可逆线性映射时，可以定义协变函子 \(V\mapsto V^*\)、\(f\mapsto(f^{-1})^*\)。即使在这个较小的范畴上，也没有与所有实线性同构相容的同构族 \(b_V:V\rightarrow V^*\)：取 \(f=2\operatorname{id}_V\)，自然性将要求
+\[
+\tfrac12 b_V=b_V(2\operatorname{id}_V)=2b_V,
+\]
+于是 \(b_V=0\)，在非零空间上不可能是同构。若另给内积并只允许保持内积的同构，情形会改变；“是否自然”总要相对于明确的对象和态射来判断。
 
 \subsection{模同构与函子同构}
 \label{b2:subsec:0502:03}
 
-待撰写。
+设 \(F,G:\mathcal C\rightarrow R\text{-}\mathbf{Mod}\)。逐个证明 \(F(X)\cong G(X)\) 只比较对象；证明 \(F\cong G\) 则要找一族同构 \(\eta_X\)，对每个态射都满足式\eqref{b2:eq:naturality-square}。任意选择的对象同构未必相容，甚至可能根本不存在相容的选择。
+
+\begin{example}[逐对象同构而非自然同构]\label{b2:ex:conjugation-not-natural}
+对复向量空间 \(V\)，令 \(\overline V\) 与 \(V\) 有相同的加法群，元素记为 \(\bar v\)，标量作用改为
+\[
+\lambda\bar v=\overline{\bar\lambda v}.
+\]
+对复线性映射 \(f:V\rightarrow W\)，令 \(C(f)(\bar v)=\overline{f(v)}\)，并令 \(C(V)=\overline V\)。这给出有限维复向量空间范畴上的函子 \(C\)。每个 \(V\) 都与 \(C(V)\) 同构，恒等函子却不与 \(C\) 自然同构。
+\end{example}
+\begin{proof}
+\(C(f)\) 为复线性，因为
+\[
+C(f)(\lambda\bar v)=\overline{f(\bar\lambda v)}
+=\overline{\bar\lambda f(v)}=\lambda C(f)(\bar v).
+\]
+它保持复合与恒等映射，故是函子。若 \(e_1,\ldots,e_n\) 是 \(V\) 的基，指定 \(e_j\mapsto\bar e_j\) 并作复线性延拓就给出 \(V\cong\overline V\)。注意这个延拓将 \(\sum_j a_je_j\) 送到 \(\overline{\sum_j\bar a_je_j}\)，并非直接取同名元素。
+
+若有自然变换 \(\eta:\operatorname{Id}\Rightarrow C\)，对 \(f=i\operatorname{id}_V\) 使用自然性。\(C(f)\) 在 \(\overline V\) 上是乘 \(-i\)，因为 \(\overline{iv}=(-i)\bar v\)。所以
+\[
+-i\eta_V=C(f)\eta_V=\eta_Vf=i\eta_V.
+\]
+复数域中特征为零，故 \(\eta_V=0\)。非零空间上的分量不可能可逆，因此不存在自然同构。
+\end{proof}
+
+本例把两个层次的差异落实到一个可检验的态射 \(i\operatorname{id}\)。实际验证自然性时，也应把任意输入态射代入相容式；仅说明“公式没有选基”还不足以替代这一检查。另一方面，选择本身并不必然破坏自然性：若选择后同时恰当地定义函子对态射的作用，也可能得到自然同构，\secref{b2:sec:0504}的矩阵范畴将给出这种例子。

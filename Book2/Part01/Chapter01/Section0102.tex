@@ -5,26 +5,351 @@
 \section{对偶与配对}
 \label{b2:sec:0102}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要内容：
 % * 代数对偶及双对偶
 % * 对偶映射与有限维自然同构
 % * 无限维情形不能直接照搬的结论
-%
+
+一个向量可以用坐标描述，也可以用一族线性函数的取值来辨认。例如，在 \(k^n\) 中分别读取各个坐标，就足以确定向量；一个齐次线性方程组的解空间，则由若干线性函数的共同零点给出。对偶空间把这些线性函数本身看成向量，使关于向量和方程的两种描述可以相互比较。本节的基域始终为 \(k\)，不在向量空间上附加拓扑，因而这里的对偶包含全部线性函数。
 
 \subsection{代数对偶与双对偶}
 \label{b2:subsec:0102:01}
 
-待撰写。
+\begin{definition}\label{b2:def:algebraic-dual}
+设 \(V\) 是 \(k\) 向量空间。线性映射 \(\lambda:V\to k\) 称为 \(V\) 上的\term[xianxing-fanhan]{线性泛函}[linear functional]。全体线性泛函组成的空间
+\[
+V^*\coloneqq\operatorname{Hom}_k(V,k)
+\]
+称为 \(V\) 的\term[daishu-duiou]{代数对偶}[algebraic dual]，通常简称对偶空间。其中的加法与数乘按取值定义：
+\[
+(\lambda+\mu)(v)=\lambda(v)+\mu(v),\qquad
+(a\lambda)(v)=a\lambda(v).
+\]
+再对 \(V^*\) 取对偶，得到\term[shuang-duiou]{双对偶}[double dual]
+\(V^{**}\coloneqq(V^*)^*\)。
+\end{definition}
+\symidx{\(V^*\)：向量空间的代数对偶}
+\symidx{\(V^{**}\)：向量空间的双对偶}
+
+这里的运算确实仍给出线性泛函。例如，对 \(a,b\in k\) 及 \(u,v\in V\)，
+\[
+(\lambda+\mu)(au+bv)
+=a(\lambda+\mu)(u)+b(\lambda+\mu)(v).
+\]
+向量空间公理由 \(k\) 中的相应等式逐点成立。\(V^*\) 的元素是作用在向量上的函数，而 \(V^{**}\) 的元素是作用在这些函数上的线性函数；两层定义中的自变量不同。
+
+\ProseParagraphBreak
+在 \(V=k^n\) 中，记 \(\varepsilon_i(x_1,\ldots,x_n)=x_i\)。每个线性泛函都具有唯一形式
+\[
+\lambda(x_1,\ldots,x_n)=a_1x_1+\cdots+a_nx_n,
+\qquad a_i=\lambda(e_i),
+\]
+其中 \(e_i\) 是第 \(i\) 个标准基向量。这就是把齐次线性方程的左边看成一个向量：系数相加，对应泛函相加。
+
+\begin{proposition}[对偶基]\label{b2:prop:dual-basis}
+设 \(V\) 有有限基 \(e_1,\ldots,e_n\)。存在唯一的泛函
+\(\varepsilon_1,\ldots,\varepsilon_n\in V^*\)，满足
+\[
+\varepsilon_i(e_j)=\delta_{ij},
+\qquad
+\delta_{ij}=\begin{cases}1,&i=j,\\0,&i\ne j.\end{cases}
+\]
+它们构成 \(V^*\) 的一组基。特别地，\(\dim_kV^*=\dim_kV=n\)。
+\end{proposition}
+
+\begin{proof}
+定义 \(\varepsilon_i(\sum_jx_je_j)=x_i\)。基展开的唯一性保证良定义，坐标对加法与数乘的相容性保证线性。一个线性映射由基向量的像唯一确定，因此这些泛函唯一。对任意 \(\lambda\in V^*\)，在每个基向量上取值可得
+\[
+\lambda=\sum_{i=1}^n\lambda(e_i)\varepsilon_i.
+\]
+若 \(\sum_i a_i\varepsilon_i=0\)，在 \(e_j\) 上取值得 \(a_j=0\)。所以它们既生成 \(V^*\)，又线性无关。
+\end{proof}
+
+这组 \(\varepsilon_i\) 称为给定基的\term[duiou-ji]{对偶基}[dual basis]。它依赖原来的基；对偶空间本身的定义则没有选择基。例如在 \(k[t]\) 上，取常数项、取 \(t^m\) 的系数、在某个 \(a\in k\) 处取值，都是线性泛函。最后一种泛函满足
+\[
+\lambda_a\Bigl(\sum_{j=0}^n c_jt^j\Bigr)=\sum_{j=0}^n c_ja^j,
+\]
+因而与单个系数泛函有不同的含义。这里每个多项式只含有限项，无须赋予无限和任何意义。
+
+\begin{lemma}[泛函的延拓与分离]\label{b2:lem:functional-extension}
+设 \(U\) 是 \(V\) 的子空间。
+\begin{enumerate}
+\item 每个线性泛函 \(\mu:U\to k\) 都能延拓为 \(V\) 上的线性泛函。
+\item 若 \(v\notin U\)，则存在 \(\lambda\in V^*\)，使 \(\lambda(u)=0\) 对一切 \(u\in U\) 成立，而 \(\lambda(v)=1\)。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+由\cref{b2:thm:vector-basis-extension}，取 \(U\) 的一组基 \(B\)，再把 \(B\) 扩充为 \(V\) 的基 \(B\cup C\)。在 \(B\) 上保留 \(\mu\) 的取值，在 \(C\) 上指定值为零。每个向量的基展开只有有限项且唯一，故按线性组合取值便定义了所需延拓。
+
+若 \(v\notin U\)，则 \(B\cup\{v\}\) 线性无关：关系 \(av+u=0\) 中若 \(a\ne0\)，就会有 \(v=-a^{-1}u\in U\)。将这组无关向量扩充为 \(V\) 的基，指定 \(v\) 的值为一，其余基向量的值为零，就得到第二个结论。
+\end{proof}
+
+延拓一般不唯一：只要 \(U\ne V\)，就可以改变补充基向量上的取值。分离结论则说明，线性泛函足以检测一个向量是否属于指定的子空间；这个事实不限于有限维，只是一般情形的证明使用了基扩充。
+
+\begin{definition}\label{b2:def:linear-pairing}
+设 \(V,W\) 是 \(k\) 向量空间。映射 \(b:V\times W\to k\) 若对每个变量分别线性，即
+\[
+\begin{aligned}
+b(av_1+cv_2,w)&=a\,b(v_1,w)+c\,b(v_2,w),\\
+b(v,aw_1+cw_2)&=a\,b(v,w_1)+c\,b(v,w_2),
+\end{aligned}
+\]
+就称为一个\term[peidui]{配对}[pairing]，也称双线性配对。若只有 \(v=0\) 才满足 \(b(v,w)=0\) 对所有 \(w\in W\) 成立，就称它左非退化；若只有 \(w=0\) 才满足 \(b(v,w)=0\) 对所有 \(v\in V\) 成立，就称它右非退化。两者都成立时称为\term[fei-tuihua-peidui]{非退化配对}[nondegenerate pairing]。
+\end{definition}
+
+例如 \(k^n\times k^n\) 上的 \(b(x,y)=\sum_i x_iy_i\) 非退化，因为用标准基向量作第二个变量，可以逐一读取 \(x\) 的坐标，交换两个变量也是如此。这在任意特征下都成立，并不要求 \(b(x,x)\ne0\) 对每个非零 \(x\) 成立。相反，在 \(k^2\) 上只取 \(b(x,y)=x_1y_1\)，就会漏掉第二个坐标，两侧都退化。\(k^n\) 上的配对也不包含复共轭；当 \(k=\mathbb C\) 时，应将双线性与通常内积中的共轭线性区分开。
+
+\ProseParagraphBreak
+每个配对都给出两个线性映射
+\[
+V\longrightarrow W^*,\quad v\longmapsto b(v,-),
+\qquad
+W\longrightarrow V^*,\quad w\longmapsto b(-,w).
+\]
+其中 \(b(v,-)\) 表示把第一个变量固定为 \(v\) 后得到的泛函。左非退化恰好说明第一个映射单射，右非退化恰好说明第二个映射单射。因此，非退化性说的是能否通过配对区分两侧的向量。
+
+\begin{proposition}[评价配对]\label{b2:prop:evaluation-injective}
+对任意 \(k\) 向量空间 \(V\)，配对
+\[
+V\times V^*\longrightarrow k,\qquad(v,\lambda)\longmapsto\lambda(v)
+\]
+非退化。它给出的\term[pingjia-yingshe]{评价映射}[evaluation map]
+\[
+j_V:V\longrightarrow V^{**},\qquad j_V(v)(\lambda)=\lambda(v)
+\]
+是单射线性映射。
+\end{proposition}
+\symidx{\(j_V\)：从向量空间到双对偶的评价映射}
+
+\begin{proof}
+固定 \(v\) 时，\((a\lambda+c\mu)(v)=a\lambda(v)+c\mu(v)\)，所以 \(j_V(v)\) 确实属于 \(V^{**}\)。固定 \(\lambda\) 时，由 \(\lambda\) 的线性得到 \(j_V(av+cw)=a j_V(v)+c j_V(w)\)。若 \(v\ne0\)，在\cref{b2:lem:functional-extension}中取 \(U=0\)，可得 \(\lambda(v)=1\)，所以 \(j_V(v)\ne0\)，并且配对左非退化。一个非零泛函按定义必在某个向量上非零，因此配对也右非退化。
+\end{proof}
+
+\begin{definition}\label{b2:def:vector-annihilator}
+对 \(U\subseteq V\) 及 \(E\subseteq V^*\)，定义它们关于评价配对的\term[linghuazi]{零化子}[annihilator]（也称湮灭子）为
+\[
+\begin{aligned}
+U^\circ&\coloneqq\{\lambda\in V^*\mid \lambda(u)=0\text{ 对所有 }u\in U\},\\
+{}^\circ E&\coloneqq\{v\in V\mid \lambda(v)=0\text{ 对所有 }\lambda\in E\}.
+\end{aligned}
+\]
+前者位于 \(V^*\)，后者位于 \(V\)，二者都是子空间。本节用圆圈所在的位置区分这两种零化子。
+\end{definition}
+\termidx[yanmiezi]{湮灭子}
+\symidx{\(U^\circ\)：向量子集在对偶空间中的零化子}
+\symidx{\({}^\circ E\)：泛函族在原空间中的零化子}
+
+子空间性来自共同零点对线性组合封闭。例如若 \(v,w\in{}^\circ E\)，则每个 \(\lambda\in E\) 都满足 \(\lambda(av+bw)=0\)。在 \(k^3\) 中取 \(U=k e_1\)，就有
+\[
+U^\circ=k\varepsilon_2+k\varepsilon_3,
+\qquad
+{}^\circ(k\varepsilon_2+k\varepsilon_3)=k e_1.
+\]
+向量生成的空间越大，在它上面恒为零的泛函越少。因此 \(U_1\subseteq U_2\) 蕴含 \(U_2^\circ\subseteq U_1^\circ\)；另一侧同样反转包含关系。
 
 \subsection{对偶映射与有限维自然同构}
 \label{b2:subsec:0102:02}
 
-待撰写。
+给定线性映射 \(f:V\to W\)，一个 \(W\) 上的线性方程可以拉回为 \(V\) 上的线性方程：把原方程中的变量换成 \(f(v)\) 即可。这个简单的代入改变了映射方向。
+
+\begin{definition}\label{b2:def:dual-map}
+线性映射 \(f:V\to W\) 的\term[duiou-yingshe]{对偶映射}[dual map]定义为
+\[
+f^*:W^*\longrightarrow V^*,\qquad f^*(\lambda)=\lambda\circ f.
+\]
+\end{definition}
+\symidx{\(f^*\)：线性映射的对偶映射}
+
+因为线性映射的复合仍线性，\(f^*(\lambda)\) 属于 \(V^*\)；又因为
+\((a\lambda+b\mu)\circ f=a(\lambda\circ f)+b(\mu\circ f)\)，\(f^*\) 本身也是线性映射。注意其定义域为 \(W^*\)，方向与 \(f\) 相反。
+
+\begin{proposition}[对偶映射的复合、核与像]\label{b2:prop:dual-map}
+设 \(f:V\to W\)、\(g:W\to Z\) 为线性映射。则
+\[
+(g\circ f)^*=f^*\circ g^*,\qquad
+(\operatorname{id}_V)^*=\operatorname{id}_{V^*},
+\]
+并且
+\begin{equation}\label{b2:eq:dual-kernel-image}
+\ker f^*=(\operatorname{im}f)^\circ,
+\qquad
+\operatorname{im}f^*=(\ker f)^\circ.
+\end{equation}
+特别地，\(f\) 单射当且仅当 \(f^*\) 满射；\(f\) 满射当且仅当 \(f^*\) 单射。以上结论不要求有限维。
+\end{proposition}
+
+\begin{proof}
+对 \(\lambda\in Z^*\)，直接计算
+\[
+(g\circ f)^*(\lambda)=\lambda\circ g\circ f
+=f^*\bigl(g^*(\lambda)\bigr).
+\]
+恒等映射的结论也是逐个泛函代入定义即得。
+
+\(\lambda\in W^*\) 属于 \(\ker f^*\)，恰好表示 \(\lambda\bigl(f(v)\bigr)=0\) 对每个 \(v\in V\) 成立，这就是第一个零化子公式。若 \(\mu=f^*(\lambda)\)，则 \(v\in\ker f\) 时 \(\mu(v)=\lambda(0)=0\)，所以 \(\operatorname{im}f^*\subseteq(\ker f)^\circ\)。反过来，给定在 \(\ker f\) 上为零的 \(\mu\in V^*\)，在 \(\operatorname{im}f\) 上定义
+\[
+\lambda_0\bigl(f(v)\bigr)=\mu(v).
+\]
+若 \(f(v)=f(v')\)，则 \(v-v'\in\ker f\)，故 \(\mu(v)=\mu(v')\)，证明了良定义。\(f\) 与 \(\mu\) 的线性给出 \(\lambda_0\) 的线性。由\cref{b2:lem:functional-extension}把 \(\lambda_0\) 延拓到 \(W\) 上的 \(\lambda\)，便有 \(f^*(\lambda)=\mu\)。
+
+若 \(f\) 单射，则 \(\ker f=0\)，上述像公式给出 \(\operatorname{im}f^*=V^*\)。若 \(f^*\) 满射，而 \(0\ne v\in\ker f\)，则 \(V^*\) 中每个泛函都在 \(v\) 处为零，与\cref{b2:lem:functional-extension}的分离结论矛盾。若 \(f\) 满射，则核公式给出 \(\ker f^*=W^\circ=0\)。若 \(\operatorname{im}f\ne W\)，取 \(w\notin\operatorname{im}f\)，同一分离结论给出一个非零泛函，在 \(\operatorname{im}f\) 上为零而在 \(w\) 处为一；它属于 \(\ker f^*\)，所以 \(f^*\) 不单射。
+\end{proof}
+
+例如子空间包含映射 \(\iota:U\hookrightarrow V\) 的对偶映射，就是限制映射 \(V^*\to U^*\)。它的满射性是在说泛函能够延拓，其核为 \(U^\circ\)。又如商映射 \(q:V\to V/U\) 的对偶映射是单射，并把 \((V/U)^*\) 识别为 \(U^\circ\)：商空间上的泛函与原空间中在 \(U\) 上为零的泛函一一对应。这里 \(q^*(\lambda)(v)=\lambda(v+U)\)，所以这个识别也不需要选择补空间。
+
+\ProseParagraphBreak
+对偶映射在矩阵上表现为转置。设 \(V,W\) 的基分别为 \(e_1,\ldots,e_n\) 与 \(w_1,\ldots,w_m\)，对偶基分别为 \(\varepsilon_i\) 与 \(\eta_j\)。按列记 \(f\) 的矩阵 \(A=(a_{ji})\)，即 \(f(e_i)=\sum_j a_{ji}w_j\)。于是
+\[
+f^*(\eta_j)(e_i)=a_{ji},\qquad
+f^*(\eta_j)=\sum_{i=1}^n a_{ji}\varepsilon_i.
+\]
+故 \(f^*\) 在这两组对偶基下的矩阵为 \(A^{\mathsf T}\)。例如
+\[
+f:k^3\longrightarrow k^2,\quad f(x,y,z)=(x+z,y+z)
+\]
+的矩阵及其对偶矩阵分别为
+\[
+A=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},\qquad
+A^{\mathsf T}=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix}.
+\]
+\(W\) 上的泛函 \((s,t)\mapsto as+bt\) 拉回后是 \(ax+by+(a+b)z\)，与转置矩阵的计算一致。这一说明也解释了为什么复合取对偶会逆序：矩阵转置满足 \((BA)^{\mathsf T}=A^{\mathsf T}B^{\mathsf T}\)。
+
+\begin{theorem}[有限维双对偶同构]\label{b2:thm:double-dual}
+若 \(V\) 有限维，则评价映射 \(j_V:V\to V^{**}\) 是同构。对任意线性映射 \(f:V\to W\)，不论维数是否有限，总有
+\begin{equation}\label{b2:eq:double-dual-natural}
+j_W\circ f=f^{**}\circ j_V,
+\qquad f^{**}\coloneqq(f^*)^*.
+\end{equation}
+因此，有限维空间与其双对偶的上述同构既不依赖基，又与所有线性映射相容。
+\end{theorem}
+
+\begin{proof}
+\cref{b2:prop:evaluation-injective}已经给出 \(j_V\) 的单射性。取 \(V\) 的基 \(e_1,\ldots,e_n\) 及其对偶基 \(\varepsilon_1,\ldots,\varepsilon_n\)。对任意 \(F\in V^{**}\)，令
+\[
+v=\sum_{i=1}^n F(\varepsilon_i)e_i.
+\]
+\cref{b2:prop:dual-basis}给出 \(\lambda=\sum_i\lambda(e_i)\varepsilon_i\)，故
+\[
+F(\lambda)=\sum_{i=1}^n\lambda(e_i)F(\varepsilon_i)=\lambda(v)=j_V(v)(\lambda).
+\]
+所以每个 \(F\) 都来自某个 \(v\)，证明了满射性。基只用来证明满射；\(j_V\) 的定义本身没有用到这组基。
+
+对一般的 \(f:V\to W\)，给定 \(v\in V\) 与 \(\lambda\in W^*\)，有
+\[
+\begin{aligned}
+\bigl(f^{**}\circ j_V\bigr)(v)(\lambda)
+&=j_V(v)\bigl(f^*(\lambda)\bigr)\\
+&=(\lambda\circ f)(v)\\
+&=\lambda\bigl(f(v)\bigr)\\
+&=\bigl(j_W\circ f\bigr)(v)(\lambda).
+\end{aligned}
+\]
+两个 \(W^*\) 上的泛函在每个 \(\lambda\) 处取值相同，即得\eqref{b2:eq:double-dual-natural}。
+\end{proof}
+
+这里的“自然”具体指\eqref{b2:eq:double-dual-natural}：可以先把向量经 \(f\) 送到 \(W\)，再取评价泛函；也可以先取评价泛函，再施加 \(f^{**}\)，结果相同。\chapref{b2:ch:05}将给这种相容性统一的名称；眼下只需掌握这个等式。与此不同，给有限维空间选择一组基，再把各基向量送到相应的对偶基，虽然也得到 \(V\cong V^*\)，却使用了额外选择。\(V\) 与 \(V^{**}\) 之间有已经指定的评价映射，不应与后一种依赖基的同构混为一谈。
+
+\begin{corollary}[有限维零化子的维数]\label{b2:cor:annihilator-dimension}
+设 \(V\) 是 \(n\) 维空间，\(U\subseteq V\)、\(E\subseteq V^*\) 为子空间。则
+\[
+\begin{aligned}
+\dim U^\circ&=n-\dim U,&{}^\circ(U^\circ)&=U,\\
+\dim{}^\circ E&=n-\dim E,&({}^\circ E)^\circ&=E.
+\end{aligned}
+\]
+其中 \({}^\circ(U^\circ)=U\) 对无限维空间也成立。
+\end{corollary}
+
+\begin{proof}
+设 \(u_1,\ldots,u_r\) 是 \(U\) 的基，把它扩充为 \(V\) 的基 \(u_1,\ldots,u_n\)，记相应对偶基为 \(\varepsilon_1,\ldots,\varepsilon_n\)。泛函在 \(U\) 上为零当且仅当前 \(r\) 个系数为零，所以 \(\varepsilon_{r+1},\ldots,\varepsilon_n\) 是 \(U^\circ\) 的基。对任意维数都有 \(U\subseteq{}^\circ(U^\circ)\)；若 \(v\notin U\)，\cref{b2:lem:functional-extension}给出 \(\lambda\in U^\circ\) 且 \(\lambda(v)=1\)，排除了 \(v\in{}^\circ(U^\circ)\)。
+
+把刚才的维数公式应用到 \(V^*\) 的子空间 \(E\)，可得在 \(V^{**}\) 中对 \(E\) 恒为零的泛函所成空间维数为 \(n-\dim E\)。由\cref{b2:thm:double-dual}，\(j_V\) 将 \({}^\circ E\) 同构到这个空间，因此 \(\dim{}^\circ E=n-\dim E\)。再次使用第一条维数公式，得到 \(\dim({}^\circ E)^\circ=\dim E\)。定义直接给出 \(E\subseteq({}^\circ E)^\circ\)，同维有限维子空间的包含只能是相等。
+\end{proof}
+
+于是，有限维时可以在子空间与它所满足的全部齐次线性方程之间来回转换。比如 \(k^3\) 中的平面 \(x+y+z=0\) 是泛函 \(\varepsilon_1+\varepsilon_2+\varepsilon_3\) 的核；它的零化子恰好由这一个泛函生成。若只列出一份方程表，对偶空间关注的是这些方程张成的空间，重复一条方程或对方程作可逆行变换都不改变它。
+
+\ProseParagraphBreak
+若 \(V,W\) 有限维，结合\eqref{b2:eq:dual-kernel-image}、\cref{b2:cor:annihilator-dimension}及\cref{b2:thm:rank-nullity}，还有
+\[
+\operatorname{rank}f^*
+=\dim(\ker f)^\circ
+=\dim V-\dim\ker f
+=\operatorname{rank}f.
+\]
+因此一个矩阵与其转置的秩相等。这里先描述零化子，再数维数；并没有事先把行秩等于列秩作为依据。
+
+\ProseParagraphBreak
+上述结论还说明，两个有限维空间之间的非退化配对会给出 \(V\cong W^*\) 与 \(W\cong V^*\)。事实上，非退化性给出的两个单射蕴含 \(\dim V\le\dim W\) 及 \(\dim W\le\dim V\)，故两侧同维，这两个单射都是同构。无限维时，仅有两个单射不足以使这两个特定映射满射；评价配对很快就会给出反例。
 
 \subsection{无限维空间的对偶}
 \label{b2:subsec:0102:03}
 
-待撰写。
+有限维时，对偶基能够表达每个泛函；无限维时，基向量仍决定泛函，却不再保证泛函是有限多个坐标泛函的线性组合。区别可以从直和与直积的定义直接看出。
+
+\ProseParagraphBreak
+给定一族 \(k\) 向量空间 \((V_i)_{i\in I}\)，\term[zhiji]{直积}[direct product] \(\prod_{i\in I}V_i\) 包含所有向量族 \((v_i)_{i\in I}\)，运算逐坐标进行。\term[zhihe]{直和}[direct sum] \(\bigoplus_{i\in I}V_i\) 是其中满足 \(v_i\ne0\) 的指标只有有限多个的子空间。因此直和中的向量是有限个分量向量之和，直积中的元素则不必有有限支集。记 \(\iota_i:V_i\to\bigoplus_jV_j\) 为放入第 \(i\) 个坐标的线性映射。
+\symidx{\(\prod_iV_i\)：向量空间族的直积}
+\symidx{\(\bigoplus_iV_i\)：向量空间族的直和}
+
+\begin{proposition}[直和的对偶]\label{b2:prop:dual-direct-sum}
+限制到各个分量给出同构
+\[
+\Phi:\Bigl(\bigoplus_{i\in I}V_i\Bigr)^*
+\longrightarrow\prod_{i\in I}V_i^*,
+\qquad
+\Phi(\lambda)=(\lambda\circ\iota_i)_{i\in I}.
+\]
+\end{proposition}
+
+\begin{proof}
+\(\Phi\) 逐分量线性。给定任意泛函族 \((\lambda_i)\in\prod_iV_i^*\)，定义
+\[
+\lambda\bigl((v_i)_{i\in I}\bigr)=\sum_{i\in I}\lambda_i(v_i)
+\quad\text{对 }(v_i)\in\bigoplus_iV_i.
+\]
+\((v_i)\) 只有有限多个非零分量，所以这是有限和，且逐项相加与数乘证明 \(\lambda\) 线性。它在第 \(i\) 个分量上的限制为 \(\lambda_i\)，故 \(\Phi\) 满射。每个直和中的向量都是有限个分量向量之和，所以全部限制为零的泛函只能为零，证明了单射性。
+\end{proof}
+
+特别地，令 \(\mathbb N=\{1,2,\ldots\}\)，考虑
+\[
+V=k^{(\mathbb N)}
+=\{(x_i)_{i\ge1}\mid x_i\in k,\ x_i\ne0\text{ 仅对有限多个 }i\},
+\qquad
+k^{\mathbb N}=\prod_{i\ge1}k.
+\]
+标准基向量 \(e_i\) 构成 \(V\) 的基。上面的同构把 \(V^*\) 识别为 \(k^{\mathbb N}\)：数列 \(a=(a_i)\) 对应泛函
+\[
+\lambda_a(x)=\sum_{i\ge1}a_ix_i.
+\]
+允许 \(a\) 有无限多个非零分量，因为被代入的 \(x\) 只有有限支集。不能反过来要求 \(a\) 也有有限支集，否则会漏掉合法的线性泛函。
+\symidx{\(k^{(\mathbb N)}\)：有限支集数列空间}
+\symidx{\(k^{\mathbb N}\)：全体数列组成的直积空间}
+
+\ProseParagraphBreak
+取 \(a_i=1\) 对所有 \(i\) 成立，就得到坐标和泛函
+\(\lambda_a(x)=\sum_i x_i\)。它不能是有限多个坐标泛函 \(\varepsilon_i(x)=x_i\) 的线性组合：假如只用了指标集合 \(J\) 中的坐标，取 \(m\notin J\)，便会在 \(e_m\) 上得到零，但 \(\lambda_a(e_m)=1\)。所以 \(\varepsilon_i\) 虽然线性无关，却不是 \(V^*\) 的基；将其称为“无限对偶基”而沿用有限维中的基展开，会造成错误。
+
+\begin{example}[双对偶中不是评价的泛函]\label{b2:ex:infinite-double-dual}
+设 \(V=k^{(\mathbb N)}\)。评价映射 \(j_V:V\to V^{**}\) 不是满射。
+\end{example}
+
+\begin{proof}
+按\cref{b2:prop:dual-direct-sum}把 \(V^*\) 看成 \(k^{\mathbb N}\)。其中有限支集数列组成子空间 \(D=k^{(\mathbb N)}\)，常数列 \(\mathbf1=(1,1,\ldots)\) 不属于 \(D\)。因此 \(D+k\mathbf1\) 中的每个元素有唯一表达 \(d+c\mathbf1\)，可以定义线性泛函
+\[
+F_0:D+k\mathbf1\longrightarrow k,
+\qquad F_0(d+c\mathbf1)=c.
+\]
+唯一性来自 \(D\cap k\mathbf1=0\)：一个非零常数列不可能有有限支集。由\cref{b2:lem:functional-extension}，将 \(F_0\) 延拓为 \(k^{\mathbb N}\) 上的泛函 \(F\)。于是 \(F\in V^{**}\)，\(F\) 在 \(D\) 上为零，而 \(F(\mathbf1)=1\)。
+
+假若 \(F=j_V(v)\)，其中 \(v=(v_i)\in V\)，则把坐标泛函 \(\varepsilon_i\) 看成 \(k^{\mathbb N}\) 中的第 \(i\) 个标准基向量，它属于 \(D\)，故
+\[
+v_i=\varepsilon_i(v)=j_V(v)(\varepsilon_i)=F(\varepsilon_i)=0
+\]
+对所有 \(i\) 成立。因此 \(v=0\)，这又会给出 \(F(\mathbf1)=0\)，与构造矛盾。
+\end{proof}
+
+这个反例在任意基域上有效。延拓 \(F\) 的存在使用基扩充，并没有给出一种从任意数列通过有限次坐标运算计算 \(F\) 的公式。我们只需它在 \(D\) 上为零、在 \(\mathbf1\) 处为一，就足以证明它不可能是某个有限支集向量的评价。非退化评价配对仍然存在，但它给出的映射 \(V\to V^{**}\) 不满，故有限维非退化配对所带来的同构不能照搬到这里。
+
+\ProseParagraphBreak
+零化子的两侧也因此出现差别。在这个例子中，令 \(E\subseteq V^*\) 为所有坐标泛函的线性生成空间，即上面的 \(D\)。坐标能够分辨 \(V\) 中的向量，所以 \({}^\circ E=0\)，进而 \(({}^\circ E)^\circ=V^*\)；然而 \(E\ne V^*\)。相比之下，\cref{b2:cor:annihilator-dimension}中由泛函分离证明的 \({}^\circ(U^\circ)=U\) 对 \(V\) 的任意子空间仍然成立。区分这两个等式，比把所有对偶结论一概限制在有限维更准确。

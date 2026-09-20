@@ -5,26 +5,150 @@
 \section{线性算子的分类}
 \label{b2:sec:0404}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要要点（供目录核对）：
 % * k[t] 模与算子相似
 % * 循环分解及有理标准形
 % * 最小多项式与特征多项式
-%
+
+设 \(k\) 为任意域，\(V\) 为有限维 \(k\) 向量空间，\(T:V\to V\) 为线性算子。第一章把 \(T\) 写成多项式作用，第二章将其定义为 \(k[t]\) 模 \(V_T\)。现在 \(k[t]\) 是主理想整环，模的分类定理已经可用。以下证明不要求 \(k\) 无限，也不要求特征多项式在 \(k\) 中分裂。
 
 \subsection{多项式环模与算子相似}
 \label{b2:subsec:0404:01}
 
-待撰写。
+\begin{proposition}\label{b2:prop:operator-similarity-modules}
+设 \(T:V\to V\)、\(S:W\to W\) 是 \(k\) 线性算子。映射 \(u:V_T\to W_S\) 是 \(k[t]\) 模同态，当且仅当 \(u\) 是 \(k\) 线性映射并满足 \(uT=Su\)。因此两个同维算子的矩阵相似，当且仅当对应 \(k[t]\) 模同构。
+\end{proposition}
+\begin{proof}
+模同态保持常数标量，故 \(k\) 线性；保持 \(t\) 的作用就是 \(uT=Su\)。反过来，由这一等式归纳得 \(uT^j=S^ju\)，对多项式有限求和就得 \(uf(T)=f(S)u\)，所以 \(u\) 保持全部 \(k[t]\) 作用。若 \(u\) 双射，取基后其矩阵 \(P\) 可逆，等式化为 \(PA=BP\)，即 \(B=PAP^{-1}\)；反过来这样的矩阵也定义模同构。
+\end{proof}
+
+算子模具有一个尤其方便的展示。它把原来 \(k\) 上的矩阵转化为 \(k[t]\) 上的关系矩阵，但两种环上的换基问题应当分清：对 \(A\) 的分类是相似，对 \(tI-A\) 的分类是左右独立的幺模等价。
+
+\begin{proposition}\label{b2:prop:operator-polynomial-matrix}
+设 \(A\in M_n(k)\)，并把 \(k^n\) 配上 \(A\) 的作用。则有 \(k[t]\) 模同构
+\[
+V_A\cong\operatorname{coker}(tI_n-A).
+\]
+具体地，映射
+\[
+\varepsilon:k[t]^n\longrightarrow V_A,\qquad
+\sum_{j=0}^d t^jv_j\longmapsto\sum_{j=0}^d A^jv_j
+\]
+是满模同态，核为 \((tI_n-A)k[t]^n\)。
+\end{proposition}
+\begin{proof}
+\(\varepsilon\) 保持常数标量，并满足 \(\varepsilon(tF)=A\varepsilon(F)\)，故对多项式有限求和可知它 \(k[t]\) 线性。任意向量是相应常数向量多项式的像，所以它满射。由于
+\[
+\varepsilon\bigl((tI_n-A)G\bigr)
+=A\varepsilon(G)-A\varepsilon(G)=0,
+\]
+所述关系子模包含在核中。
+
+反过来，矩阵恒等式
+\[
+t^jI_n-A^j=(tI_n-A)\sum_{h=0}^{j-1}t^{j-1-h}A^h
+\qquad(j\ge1)
+\]
+可以相乘后逐项消去中间项验证。因此，若 \(F=\sum_jt^jv_j\)，则
+\[
+F-\varepsilon(F)
+=\sum_{j\ge1}(t^jI_n-A^j)v_j
+\in(tI_n-A)k[t]^n.
+\]
+这里把 \(\varepsilon(F)\) 看成常数向量多项式。若 \(\varepsilon(F)=0\)，便得 \(F\) 属于所述关系子模，证明核的反向包含。最后应用\cref{b2:thm:module-first-isomorphism}得到同构。
+\end{proof}
+
+关系矩阵的第 \(j\) 列记录 \(te_j=\sum_i a_{ij}e_i\)。上面的有限求和恒等式证明，这些一次关系不仅成立，而且生成全部关系；不必再把这个关键断言交给矩阵记号去暗示。
 
 \subsection{循环分解与有理标准形}
 \label{b2:subsec:0404:02}
 
-待撰写。
+一个 \(k\) 基当然也是 \(V_T\) 的 \(k[t]\) 模生成集，所以它有限生成。对每个 \(v\)，向量 \(v,Tv,\ldots,T^nv\) 线性相关，某个非零多项式因而零化 \(v\)。所以 \(V_T\) 是挠 \(k[t]\) 模，\cref{b2:thm:pid-module-structure}中的自由部分为零。
+
+\begin{theorem}[有理标准形]\label{b2:thm:rational-canonical-form}
+对有限维算子 \(T\)，存在唯一一列首一非常数多项式
+\[
+f_1\mid f_2\mid\cdots\mid f_s
+\]
+使 \(V_T\cong\bigoplus_{i=1}^s k[t]/(f_i)\)。若 \(V=0\)，列表为空。对每个
+\[
+f_i=t^{d_i}+a_{d_i-1}t^{d_i-1}+\cdots+a_0,
+\]
+记其友矩阵为
+\[
+C(f_i)=\begin{pmatrix}
+0&0&\cdots&0&-a_0\\
+1&0&\cdots&0&-a_1\\
+0&1&\cdots&0&-a_2\\
+\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&0&\cdots&1&-a_{d_i-1}
+\end{pmatrix}.
+\]
+当 \(d_i=1\) 时此式解释为单项矩阵 \((-a_0)\)。\(V\) 有一组基，使 \(T\) 的矩阵为 \(C(f_1)\oplus\cdots\oplus C(f_s)\)，称为有理标准形。两个算子相似，当且仅当这列多项式相同。
+\end{theorem}
+\begin{proof}
+\(k[t]\) 为主理想整环，且 \(V_T\) 有限生成并为挠模，由\cref{b2:thm:pid-module-structure}得到循环商分解。\cref{b2:thm:pid-elementary-divisors}保证非单位因子在相伴意义下唯一；取首一代表，得到唯一的整除链。
+
+带余除法说明 \(k[t]/(f_i)\) 中 \(1,t,\ldots,t^{d_i-1}\) 的陪集是 \(k\) 基。乘 \(t\) 把前 \(d_i-1\) 项送到下一项，而最后一项满足
+\[
+t^{d_i}=-a_0-a_1t-\cdots-a_{d_i-1}t^{d_i-1}\pmod{f_i},
+\]
+所以该算子的矩阵正是 \(C(f_i)\)。将每个循环商的基通过模同构送入 \(V\)，再把它们合并，得到所需基与分块矩阵。最后，\cref{b2:prop:operator-similarity-modules}把模同构与矩阵相似等同起来；分类唯一性便给出末项判据。
+\end{proof}
+
+这个定理证明了第一章预告的循环分解，而非仅说明已知循环子空间内的基长什么样。每个循环商生成元在 \(V\) 中的像为 \(v_i\)，相应子空间具有基 \(v_i,Tv_i,\ldots,T^{d_i-1}v_i\)。计算 \(tI-A\) 的 Smith 形，可以同时求这些关系多项式；若追踪行变换，\cref{b2:prop:smith-cokernel}还给出可用于恢复循环向量的原坐标。
+
+\ProseParagraphBreak
+例如在 \(\mathbb F_2\) 上，\(p=t^3+t+1\) 在 \(0,1\) 处都非零，三次多项式若可约必有一次因子，故 \(p\) 不可约。矩阵
+\[
+C(p)=\begin{pmatrix}0&0&1\\1&0&1\\0&1&0\end{pmatrix}
+\]
+本身就是一个有理标准形，标准向量 \(e_1\) 的前三个迭代 \(e_1,C(p)e_1,C(p)^2e_1\) 构成基。它在 \(\mathbb F_2\) 中没有特征值，却完全处在本定理的范围内。“有理”在这里不要求系数域等于 \(\mathbb Q\)，而是指无须为取得特征值而扩大原域。
 
 \subsection{最小多项式与特征多项式}
 \label{b2:subsec:0404:03}
 
-待撰写。
+记 \(\chi_T(t)=\det(tI-A)\) 为特征多项式，\(m_T\) 为首一最小多项式。相似矩阵给出相同的特征多项式；最小多项式记录全部向量共同满足的最低次数首一关系。它们在循环分解中分别体现为乘积与最大的关系因子。
+
+\begin{lemma}\label{b2:lem:companion-characteristic}
+对首一 \(f=t^d+a_{d-1}t^{d-1}+\cdots+a_0\)，\(d\ge1\)，有
+\[
+\det(tI_d-C(f))=f(t).
+\]
+\end{lemma}
+\begin{proof}
+\(d=1\) 时等式为 \(t+a_0=f\)。一般情形中，\(tI_d-C(f)\) 的前 \(d-1\) 列只有对角项 \(t\) 与下次对角项 \(-1\)，最后一列为 \((a_0,a_1,\ldots,a_{d-2},t+a_{d-1})^{\mathsf T}\)。按最后一列展开。删除第 \(i\) 行后，其余前 \(d-1\) 列的行列式为 \(t^{i-1}(-1)^{d-i}\)：左上三角块贡献 \(t^{i-1}\)，右下三角块贡献 \((-1)^{d-i}\)。乘代数余子式符号 \((-1)^{i+d}\) 后，系数成为 \(t^{i-1}\)。所以展开式为
+\[
+a_0+a_1t+\cdots+a_{d-2}t^{d-2}+(t+a_{d-1})t^{d-1}=f(t).
+\]
+\end{proof}
+
+\begin{proposition}\label{b2:prop:operator-characteristic-minimal}
+设 \(V\ne0\)，算子的不变因子为 \(f_1\mid\cdots\mid f_s\)。则
+\[
+\chi_T=\prod_{i=1}^s f_i,\qquad m_T=f_s,
+\qquad \dim_kV=\sum_{i=1}^s\deg f_i.
+\]
+特别地，\(m_T\mid\chi_T\) 且 \(\chi_T(T)=0\)。零空间上约定 \(\chi_T=m_T=1\)，维数为零。
+\end{proposition}
+\begin{proof}
+在有理标准形的基中，特征矩阵分块对角。行列式为各块行列式的乘积，由\cref{b2:lem:companion-characteristic}得到 \(\chi_T=\prod_i f_i\)。各块具有 \(\deg f_i\) 个基向量，也给出维数公式。
+
+在 \(k[t]/(f_i)\) 中，一个多项式 \(g\) 零化全模，当且仅当它零化 \(1+(f_i)\)，即 \(f_i\mid g\)。因此 \(g(T)=0\) 等价于每个 \(f_i\mid g\)，由整除链又等价于 \(f_s\mid g\)。首一最小关系因而为 \(f_s\)，并且整除乘积 \(\chi_T\)，从而 \(\chi_T(T)=0\)。
+\end{proof}
+
+这里也给出了\term[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}[Cayley--Hamilton theorem]的证明：每个方阵满足自己的特征多项式。证明先由有限维性得到挠性，再用主理想整环的模分类，没有把 Cayley--Hamilton 定理预先放进分类的论证。
+
+\ProseParagraphBreak
+结合\cref{b2:prop:operator-polynomial-matrix}，\(tI-A\) 的非单位 Smith 因子恰为 \(f_1,\ldots,f_s\)。由于 \(\det(tI-A)\) 为次数 \(n\) 的首一多项式，它不为零，所以 Smith 形没有零对角元；其余 \(n-s\) 项是单位，归一化后为 \(1\)。于是
+\[
+P(t)(tI-A)Q(t)=\operatorname{diag}(1,\ldots,1,f_1,\ldots,f_s)
+\]
+把特征多项式、最小多项式与原矩阵的子式理想连接起来。这个矩阵恒等式也是下一节讨论基域扩张时保留分类数据的依据。
+
+\ProseParagraphBreak
+特征多项式给出全部不变因子的乘积，最小多项式只给出最后一项，所以二者通常还不足以决定相似类型。例如六维空间中的两列不变因子
+\[
+(t^3,t^3),\qquad (t,t^2,t^3)
+\]
+都有特征多项式 \(t^6\)、最小多项式 \(t^3\)，却是不同的整除链，对应算子不相似。第一个算子的核为二维，第二个为三维；核维数已经能把它们区分。

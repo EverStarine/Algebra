@@ -5,38 +5,126 @@
 \section{Smith 标准形}
 \label{b2:sec:0401}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要要点（供目录核对）：
 % * 主理想整环上的幺模行列等价；Euclid 整环上的通常初等行列变换与算法
 % * 不变因子及其唯一性
-% * 模呈示与 Smith 标准形
+% * 模展示与 Smith 标准形
 % * 一般主理想整环上的存在证明使用 Bézout 型可逆变换和主理想的链条件，不预设任意可逆矩阵均可分解为通常三类初等矩阵；术语核对见文末 [V13-1]
 % * 分别陈述矩形矩阵、秩亏矩阵和零矩阵的标准形；不变因子的单位倍不确定性与归一化约定
-%
+
+本节设 \(R\) 为主理想整环，\(K\) 为其分式域。有限生成交换群中的整数关系矩阵曾把分类问题化为整除问题；这里把系数换成 \(R\)，并允许关系个数与生成元个数不同。首先要弄清可用的变换：在一般主理想整环上，存在可逆换基矩阵，不表示任意这样的矩阵都能由通常三类初等矩阵分解。
 
 \subsection{幺模等价与初等行列算法}
 \label{b2:subsec:0401:01}
 
-待撰写。
+对 \(A\in M_{m\times n}(R)\)，左乘 \(P\in\operatorname{GL}_m(R)\) 改变值域坐标，右乘 \(Q\in\operatorname{GL}_n(R)\) 改变定义域坐标。若
+\[
+B=PAQ,
+\]
+称 \(A,B\) \term[yaomo-dengjia]{幺模等价}[unimodularly equivalent]。这里\term[yaomo-juzhen]{幺模矩阵}[unimodular matrix]指系数在 \(R\) 中、逆矩阵仍在 \(R\) 中的方阵；对交换环，它等价于行列式是单位。必要性来自行列式的乘法公式；充分性由伴随矩阵公式给出 \(P^{-1}=(\det P)^{-1}\operatorname{adj}(P)\)。
+
+\ProseParagraphBreak
+交换两行，把一行乘一个单位，把一行加上另一行的任意倍，都是可逆行变换；列变换相同。逆操作分别为再次交换、乘逆单位与减去相同倍数。对 \(\mathbb Z\)，只能把行乘 \(1\) 或 \(-1\)，不能把一行随意除以非零整数。对 \(k[t]\)，可以乘任意非零常数，但不能把整行除以 \(t\)。
+
+\ProseParagraphBreak
+若 \(R\) 是 Euclid 整环，可以通过带余除法缩小一个非零主元。例如要清除主元 \(a\) 下方的 \(b\)，写 \(b=qa+r\)，先减去 \(q\) 倍主元行；若 \(r\ne0\)，交换两行，把主元换成 Euclid 函数值更小的 \(r\)。列方向采用相同做法。余数为零时直接消去该项。这个过程解释了整数与一元多项式上的实际算法；一般主理想整环未必配有 Euclid 函数，存在性证明须换用另一种终止理由。
 
 \subsection{不变因子及其唯一性}
 \label{b2:subsec:0401:02}
 
-待撰写。
+\begin{definition}\label{b2:def:smith-normal-form}
+矩阵 \(A\in M_{m\times n}(R)\) 的\term[Smith-biaozhunxing]{Smith 标准形}[Smith normal form]是一个与 \(A\) 幺模等价的矩形对角矩阵
+\[
+D=\operatorname{diag}(d_1,\ldots,d_r,0,\ldots,0),
+\qquad 0\ne d_1\mid d_2\mid\cdots\mid d_r,
+\]
+其中 \(0\le r\le\min(m,n)\)，所有非对角位置为零。非零对角元称为矩阵的\term[bubian-yinzi]{不变因子}[invariant factors]。
+\end{definition}
 
-\subsection{模呈示与 Smith 标准形}
+\(d_i\) 可以乘单位，因此要谈唯一的元素，须先选每个相伴类的代表。整数上取正数，\(k[t]\) 上取首一多项式；一般主理想整环没有默认的符号或首项系数归一化，只说各 \(d_i\) 在相伴意义下唯一。单位不变因子也属于矩阵的数据，不能在固定尺寸的矩阵等价中直接删去。
+
+\ProseParagraphBreak
+唯一性所依据的数据是各阶子式生成的理想。\secref{b2:sec:0402}将完整证明，这些理想在幺模等价下不变，而标准形的第 \(j\) 个子式理想由 \(d_1\cdots d_j\) 生成。因此，一旦存在性建立，逐项取相邻乘积之比便恢复非零不变因子。以下先解释这种对角形对展示的意义，再证明每个矩阵确实有这样的形状。
+
+\subsection{模展示与 Smith 标准形}
 \label{b2:subsec:0401:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:smith-cokernel}
+若 \(D=PAQ\) 是 \(A\in M_{m\times n}(R)\) 的 Smith 标准形，则
+\[
+\operatorname{coker}A=R^m/A(R^n)
+\cong\bigoplus_{i=1}^r R/(d_i)\ \oplus R^{m-r}.
+\]
+从原余核到对角余核的同构为 \(x+A(R^n)\mapsto Px+D(R^n)\)。
+\end{proposition}
+\begin{proof}
+\(Q\) 满射，故 \(D(R^n)=PAQ(R^n)=P(A(R^n))\)。因此 \(P\) 把两个关系子模互相对应，诱导所写商模同构，逆由 \(P^{-1}\) 给出。
+
+对角矩阵的像是
+\[
+d_1Re_1\oplus\cdots\oplus d_rRe_r\subseteq R^m.
+\]
+逐坐标把前 \(r\) 个坐标模去 \((d_i)\)，保留后 \(m-r\) 个坐标，得到从 \(R^m\) 到题述直和的满同态，其核恰是 \(D(R^n)\)。应用\cref{b2:thm:module-first-isomorphism}便得到结论。
+\end{proof}
+
+在这个分解中，单位因子给出零模 \(R/(1)=0\)，而对角线后的零行给出真正的自由坐标。\(n-r\) 个零列只表示关系之间有冗余，并不增加余核的自由坐标。若需要在原生成元中指出某一循环分量的生成元，它是 \(P^{-1}e_i\) 的陪集；只记录对角元将丢失这项坐标信息。
 
 \subsection{Bézout 变换与存在性证明}
 \label{b2:subsec:0401:04}
 
-待撰写。
+主理想整环中，有限多个元素生成的理想仍有单个生成元。因此对非同时为零的 \(a,b\)，可以取 \(g\ne0\) 使 \((a,b)=(g)\)，并找到 \(u,v\in R\) 满足 \(ua+vb=g\)。于是
+\[
+E=\begin{pmatrix}u&v\\-b/g&a/g\end{pmatrix},
+\qquad
+E\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}g\\0\end{pmatrix},
+\qquad \det E=1.
+\]
+矩阵中的两个商属于 \(R\)，因为 \(g\) 同时整除 \(a,b\)。这是一项 \term[Bezout-bianhuan]{Bézout 变换}[Bézout transformation]。把它嵌入指定的两行得到幺模行变换；转置后右乘则处理同一行中的两项。这里直接给出了可逆矩阵，不需要把它拆成通常三类初等矩阵。
+
+\begin{lemma}\label{b2:lem:pid-ascending-chain}
+主理想整环中的每条升链 \(I_1\subseteq I_2\subseteq\cdots\) 都最终稳定。
+\end{lemma}
+\begin{proof}
+并集 \(I=\bigcup_n I_n\) 是理想：任意两个元素同属某个较大的 \(I_n\)，故它们的和、差与标量倍仍在并集中。写 \(I=(a)\)，则 \(a\in I_N\) 对某个 \(N\) 成立，所以 \(I\subseteq I_N\subseteq I\)。由此 \(I_n=I_N\) 对 \(n\ge N\) 成立。
+\end{proof}
+
+\begin{theorem}[Smith 标准形的存在性]\label{b2:thm:smith-normal-form}
+对主理想整环 \(R\) 上任意 \(m\times n\) 矩阵 \(A\)，存在 \(P\in\operatorname{GL}_m(R)\)、\(Q\in\operatorname{GL}_n(R)\)，使 \(PAQ\) 为 Smith 标准形。其非零对角元个数等于 \(A\) 在分式域 \(K\) 上的秩。
+\end{theorem}
+\begin{proof}
+对 \(\min(m,n)\) 归纳。没有行或没有列时结论直接成立。零矩阵已经是标准形。否则通过交换行列把某个非零元素移到第一项，记当前主元为 \(a\ne0\)。
+
+若第一列中有 \(b\) 不被 \(a\) 整除，对这两行施加上述 Bézout 变换，将主元换成 \(g\)，其中 \((g)=(a,b)\) 严格包含 \((a)\)。若第一行中有不被主元整除的项，对相应两列作转置的变换，得到同样的严格包含。一次这样的操作可能重新产生此前消去的项；重新检查第一行、第一列即可。每次不能直接整除的步骤都严格扩大主元理想，由\cref{b2:lem:pid-ascending-chain}，这样的步骤只有有限次。
+
+若第一行、第一列的所有项都被当前 \(a\) 整除，先用行减法清除第一列下方，再用列减法清除第一行右方。这只需有限步，而且第二轮不破坏已清空的第一列下方。此时得到
+\[
+\begin{pmatrix}a&0\\0&B\end{pmatrix}.
+\]
+若 \(a\) 不整除 \(B\) 的某项 \(b_{ij}\)，把含该项的行加到第一行。第一列主元仍为 \(a\)，第一行却出现不被 \(a\) 整除的 \(b_{ij}\)。再作一次列 Bézout 变换，主元理想又严格扩大。继续上述过程；升链条件保证最终得到这样的分块矩阵，并且 \(a\) 整除 \(B\) 的每一项。
+
+对 \(B\) 应用归纳假设。只在后面的行列内进行的幺模变换把 \(B\) 的新条目写成旧条目的 \(R\) 线性组合，所以它们仍被 \(a\) 整除。因此所得非零对角元满足 \(a\mid d_2\mid\cdots\mid d_r\)。把所有行列变换分别相乘，就得到所需 \(P,Q\)。每个变换都在 \(R\) 上可逆，在 \(K\) 上当然也可逆；对角形的 \(K\) 秩正是非零对角元数，所以等于原矩阵的秩。
+\end{proof}
+
+这项证明中的终止性来自理想严格增大的次数有限。若 \(R\) 恰有 Euclid 除法，前述带余算法则用 Euclid 函数的严格下降来实现这些约化。两种论证有相同的整除目标，却不预设相同的有效计算条件。
 
 \subsection{矩形、秩亏与零矩阵的标准形}
 \label{b2:subsec:0401:05}
 
-待撰写。
+对 \(m\times n\) 的秩为 \(r\) 的矩阵，Smith 标准形可以明确写成
+\[
+\begin{pmatrix}
+\operatorname{diag}(d_1,\ldots,d_r)&0\\
+0&0
+\end{pmatrix},
+\]
+左上块为 \(r\times r\)，剩下的行数是 \(m-r\)，列数是 \(n-r\)。\(r=0\) 时整个矩阵为零；\(r=\min(m,n)\) 时也可能还有零行或零列，取决于哪一个尺寸更大。
+
+\ProseParagraphBreak
+例如
+\[
+D=\begin{pmatrix}1&0&0&0\\0&6&0&0\\0&0&0&0\end{pmatrix}
+\]
+是一个整数矩阵的合法标准形。它有两个非零不变因子，余核为 \(\mathbb Z/6\mathbb Z\oplus\mathbb Z\)，核为最后两个坐标组成的 \(\mathbb Z^2\)。一般地，\(\ker D\) 由最后 \(n-r\) 个标准向量生成，因为整环中的非零 \(d_i\) 满足 \(d_ix_i=0\Rightarrow x_i=0\)。由 \(D=PAQ\)，原核为 \(Q(\ker D)\)。
+
+\ProseParagraphBreak
+若 \(m=0\)，映射 \(R^n\to0\) 的余核为零；若 \(n=0\)，映射 \(0\to R^m\) 的余核为 \(R^m\)。这些情况同样符合公式，不需要另造“非零不变因子”。固定矩阵尺寸时保留单位对角元；转入模的同构分类时才删去它们所代表的零直和分量。

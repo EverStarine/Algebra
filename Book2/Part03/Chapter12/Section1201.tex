@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 12.1 链条件
-% 纲要位置：计划纲要.md，第 1154 行。
 
 \section{链条件}
 \label{b2:sec:1201}
 
-% TODO: 按以下纲要要点撰写本节。
+有限维向量空间的严格子空间链必在有限步后终止，因为每次严格包含都改变维数。一般模没有这样的维数，但仍可直接要求子模链终止。本节区分升链与降链两种条件，并说明它们怎样通过子模、商模和短正合列传递。除另外说明外，\(R\) 为含单位元的环，模均为幺性左 \(R\) 模，不假设环交换。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * Noether 模与 Artin 模
 % * 子模、商模与短正合列中的传递
@@ -17,14 +16,118 @@
 \subsection{Noether 模与 Artin 模}
 \label{b2:subsec:1201:01}
 
-待撰写。
+\begin{definition}\label{b2:def:noetherian-artinian-module}
+若 \(M\) 的每条子模升链
+\[
+N_1\subseteq N_2\subseteq\cdots
+\]
+都最终稳定，即存在 \(r\) 使 \(N_i=N_r\) 对所有 \(i\ge r\) 成立，则称 \(M\) 满足\term[sheng-lian-tiaojian]{升链条件}[ascending chain condition]，也称 \(M\) 为 \term[Noether-mo]{Noether 模}[Noetherian module]。若每条子模降链 \(N_1\supseteq N_2\supseteq\cdots\) 都最终稳定，则称 \(M\) 满足\term[jiang-lian-tiaojian]{降链条件}[descending chain condition]，也称 \(M\) 为 \term[Artin-mo]{Artin 模}[Artinian module]。两种条件分别简称 ACC 与 DCC。
+\end{definition}
+
+“最终稳定”不是说所有链都有一个共同的长度上界。例如 \(\mathbb Z\) 的每个子模为主理想，升链最终稳定；但
+\[
+0\subsetneq 2^n\mathbb Z\subsetneq2^{n-1}\mathbb Z
+\subsetneq\cdots\subsetneq\mathbb Z
+\]
+可以任意长。这个模也不满足降链条件，因为 \(\mathbb Z\supsetneq2\mathbb Z\supsetneq4\mathbb Z\supsetneq\cdots\) 永不稳定。
+
+\begin{proposition}\label{b2:prop:chain-maximal-minimal}
+\(M\) 满足升链条件，当且仅当每个非空子模集合在包含关系下有极大元。把升链、极大元分别换成降链、极小元，也有同样的等价。
+\end{proposition}
+\begin{proof}
+若某个非空子模集合没有极大元，从其中任取 \(N_1\)，再逐次取严格包含前一项的 \(N_{i+1}\)，得到不稳定的升链，矛盾。反之，升链的全部项组成非空集合，若其中某项 \(N_r\) 极大，则以后各项包含它，只能都等于它。降链的论证将包含方向反转即可：无极小元时逐次严格缩小；有极小项时后续项与之相等。这里的逐次选取沿用本书的选择公理约定。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:noetherian-submodules-fg}
+\(M\) 是 Noether 模，当且仅当它的每个子模都有限生成。
+\end{proposition}
+\begin{proof}
+若某个子模 \(N\) 不有限生成，先取 \(x_1\in N\)，再从 \(N\setminus(Rx_1+\cdots+Rx_i)\) 取 \(x_{i+1}\)，得到严格升链
+\[
+Rx_1\subsetneq Rx_1+Rx_2\subsetneq\cdots.
+\]
+这与升链条件矛盾，故每个子模有限生成。零子模由空集生成，不需另选元素。
+
+反过来，给定升链 \((N_i)\)，其并 \(N=\bigcup_iN_i\) 为子模：两个元素同属某个较大的 \(N_i\)，和与标量倍都仍在其中。取 \(N\) 的有限生成元 \(x_1,\ldots,x_s\)，它们共同属于某个 \(N_r\)。于是 \(N\subseteq N_r\subseteq N\)，后续各项只能等于 \(N_r\)，所以升链稳定。
+\end{proof}
+
+特别地，Noether 模本身有限生成，反向却依赖于环。例如 \(R=k[X_1,X_2,\ldots]\) 是循环左 \(R\) 模，但理想链
+\((X_1)\subsetneq(X_1,X_2)\subsetneq\cdots\) 严格上升。严格性可令前 \(i\) 个不定元取零来核验：\(X_{i+1}\) 不可能属于前面的理想。有限生成只控制整个模的生成元，并不自动控制全部子模。
+
+\ProseParagraphBreak
+反方向的差别可在交换群中直接看到。固定素数 \(p\)，令
+\[
+C_{p^\infty}=\mathbb Z[1/p]/\mathbb Z,\qquad
+C_{p^n}=\langle p^{-n}+\mathbb Z\rangle.
+\]
+每个元素的阶为某个 \(p\) 的幂，阶为 \(p^m\) 的元素必生成 \(C_{p^m}\)，因为约分后的分子与 \(p\) 互素。又有
+\(C_p\subsetneq C_{p^2}\subsetneq\cdots\)，所以 \(C_{p^\infty}\) 不是 Noether 模。它的任意子群若含有任意高阶的元素，就含有每个 \(C_{p^n}\)，从而等于全群；若阶有上界，就包含于某个有限循环群 \(C_{p^n}\)，因而为有限循环群。因此其任何降链一旦离开全群，便落在一个有限群中，此后必稳定。故它是 Artin 模，却不是有限生成模。
 
 \subsection{链条件在短正合列中的传递}
 \label{b2:subsec:1201:02}
 
-待撰写。
+\begin{lemma}\label{b2:lem:submodule-intersection-image}
+设 \(A\subseteq B\)，\(q:B\rightarrow B/A\) 为商映射。若 \(L\subseteq L'\subseteq B\) 满足
+\[
+L\cap A=L'\cap A,\qquad q(L)=q(L'),
+\]
+则 \(L=L'\)。
+\end{lemma}
+\begin{proof}
+给定 \(x\in L'\)，由像相同可取 \(y\in L\) 使 \(q(x)=q(y)\)。于是 \(x-y\in L'\cap A=L\cap A\subseteq L\)，所以 \(x=y+(x-y)\in L\)。这证明反向包含，得到相等。
+\end{proof}
+
+\begin{theorem}\label{b2:thm:chain-conditions-exact}
+若 \(0\rightarrow A\rightarrow B\rightarrow C\rightarrow0\) 为短正合列，则 \(B\) 为 Noether 模，当且仅当 \(A,C\) 均为 Noether 模；对 Artin 模也有相同结论。
+\end{theorem}
+\begin{proof}
+将 \(A\) 识别为 \(B\) 的子模，\(C\) 识别为 \(B/A\)。若 \(B\) 的子模升链稳定，\(A\) 中的升链也是 \(B\) 中的升链，故稳定；商模 \(C\) 中的升链拉回为包含 \(A\) 的升链，由\cref{b2:thm:module-correspondence}的子模对应，其稳定性也成立。
+
+反过来，给定 \(B_1\subseteq B_2\subseteq\cdots\)，两条链 \(B_i\cap A\) 与 \(q(B_i)\) 分别在 \(A,C\) 中。若 \(A,C\) 均为 Noether 模，取共同的稳定起点 \(r\)。对每个 \(i\ge r\)，\(B_r\subseteq B_i\) 有相同交与像，\cref{b2:lem:submodule-intersection-image}给出 \(B_r=B_i\)，所以原链稳定。
+
+对降链，子模继承和商模拉回仍然有效。若两端满足降链条件，取交链和像链的共同稳定起点 \(r\)，对 \(i\ge r\) 应用该引理于 \(B_i\subseteq B_r\)，又得相等。因此 Artin 情形的两方向都成立。
+\end{proof}
+
+由 \(0\rightarrow M\rightarrow M\oplus N\rightarrow N\rightarrow0\)，有限直和满足某一种链条件，当且仅当每个分量都满足。这一结论不能推广为无限直和：非零模 \(M_i\) 的可数直和有严格升链 \(\bigoplus_{i\le n}M_i\)，也有严格降链 \(\bigoplus_{i\ge n}M_i\)。两种严格性都可用某个非零坐标元素核验。
+
+\ProseParagraphBreak
+引理中的“有相同交与像”必须配合包含关系使用。两个不同的补模可以与 \(A\) 都交于零、都满射到 \(B/A\)，却仍然不同。例如在 \(k^2\) 中，以 \(A=ke_1\) 为固定子空间，\(ke_2\) 与 \(k(e_1+e_2)\) 就有相同的交与像。链条件证明中，各项彼此可比，才保证引理适用。
 
 \subsection{环的左右链条件}
 \label{b2:subsec:1201:03}
 
-待撰写。
+\begin{definition}\label{b2:def:left-right-chain-ring}
+若左正则模 \({}_RR\) 是 Noether 模或 Artin 模，就分别称 \(R\) 为\term[zuo-Noether-huan]{左 Noether 环}[left Noetherian ring]或\term[zuo-Artin-huan]{左 Artin 环}[left Artinian ring]。相应地，对右正则模 \(R_R\) 定义右 Noether 环和右 Artin 环。它们分别要求左理想链或右理想链满足相应条件。
+\end{definition}
+
+在交换环中，左右理想相同，通常省略方向。非交换环中则必须保留它。\cref{b2:prop:noetherian-submodules-fg}说明，左 Noether 环等价于每个左理想都作为左模有限生成；这没有自动给出右理想的有限生成性。
+
+\begin{proposition}\label{b2:prop:ring-chain-finitely-generated}
+\(R\) 是左 Noether 环，当且仅当每个有限生成左 \(R\) 模都为 Noether 模。把 Noether 换成 Artin，同样成立。
+\end{proposition}
+\begin{proof}
+若左正则模满足所讨论的链条件，\cref{b2:thm:chain-conditions-exact}说明有限直和 \(R^n\) 也满足。任意有限生成模都有满同态 \(R^n\rightarrow M\)，商模继承链条件，所以 \(M\) 满足。反向取有限生成左模 \(M=R\) 即得环本身的条件。两个论证对升链和降链分别有效。
+\end{proof}
+
+左右区别有一个明确的例子。令 \(k=\mathbb Q\)、\(K=\mathbb Q(t)\)，取三角矩阵环
+\[
+R=\Biggl\{\,
+\begin{pmatrix}a&u\\0&b\end{pmatrix}
+\ \Biggm|\ a,u\in K,\ b\in k
+\,\Biggr\}.
+\]
+左模 \(Re_{11}\) 由左上位置的 \(K\) 组成，没有非零真子模；任一非零元素通过 \(K\) 中的标量乘法生成它。左模 \(Re_{22}\) 有子模
+\[
+J=\Biggl\{\,
+\begin{pmatrix}0&u\\0&0\end{pmatrix}\ \Biggm|\ u\in K
+\,\Biggr\},
+\]
+它也没有非零真子模，而 \(Re_{22}/J\cong k\) 在右下标量作用下同样如此。这三个模都满足两种链条件，故由短正合列传递和 \(R=Re_{11}\oplus Re_{22}\)，\(R\) 同时为左 Noether 环和左 Artin 环。
+
+\ProseParagraphBreak
+但在右侧，\(J\) 上的作用只是把 \(u\) 乘以右下角的 \(b\in k\)。所以 \(K\) 的每个 \(k\) 子空间都给出 \(J\) 中的右理想。取
+\[
+U_n=\operatorname{span}_k\{1,t,\ldots,t^n\},\qquad
+W_n=\operatorname{span}_k\{t^j:j\ge n\},
+\]
+得到严格上升的 \(U_n\) 与严格下降的 \(W_n\)，因为不定元的不同幂在 \(k\) 上线性无关。对应的右理想链永不稳定，故这个 \(R\) 既不是右 Noether 环，也不是右 Artin 环。这里即使两种左链条件同时成立，也不能略去左右方向。

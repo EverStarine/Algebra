@@ -5,9 +5,9 @@
 \section{Brauer 群与群上同调的联系}
 \label{b2:sec:1804}
 
-% TODO: 按以下纲要要点撰写本节。
+循环代数只需一个生成自同构和一个参数。一般有限 Galois 扩张有多个自同构；记录它们对应元素相乘时的标量误差，就得到二阶余循环。这里先用显式方程定义这些数据，证明它们与相对 Brauer 群的对应，再说明第四卷如何将其纳入一般群上同调。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 交叉积与2-余循环
 % * 与第四卷群上同调的衔接
@@ -19,14 +19,180 @@
 \subsection{交叉积与二阶余循环}
 \label{b2:subsec:1804:01}
 
-待撰写。
+固定有限 Galois 扩张 \(K/k\)，记 \(G=\operatorname{Gal}(K/k)\)、\(n=|G|=[K:k]\)。
+
+\begin{definition}\label{b2:def:normalized-two-cocycle}
+一个函数 \(c:G\times G\to K^\times\) 若满足
+\begin{equation}\label{b2:eq:two-cocycle}
+c(g,h)c(gh,t)=g\Bigl(c(h,t)\Bigr)c(g,ht),\qquad
+c(1,g)=c(g,1)=1,
+\end{equation}
+称为一个规范化的\term[erjie-yuxunhuan]{二阶余循环}[2-cocycle]，也称二上循环\termidx[er-shangxunhuan]{二上循环}。若取 \(b_g\in K^\times\)、\(b_1=1\)，则
+\[
+(\delta b)(g,h)=b_g g(b_h)b_{gh}^{-1}
+\]
+称为一个\term[erjie-yubianjie]{二阶余边界}[2-coboundary]，也称二上边界\termidx[er-shangbianjie]{二上边界}。
+\end{definition}
+
+直接将 \(\delta b\) 代入\eqref{b2:eq:two-cocycle}，两边都化为 \(b_g g(b_h)gh(b_t)b_{ght}^{-1}\)，所以余边界确为余循环。
+
+\begin{definition}\label{b2:def:galois-crossed-product}
+在左 \(K\) 空间 \(B_c=\bigoplus_{g\in G}Ku_g\) 上规定
+\begin{equation}\label{b2:eq:crossed-product-multiplication}
+(a u_g)(b u_h)=a g(b)c(g,h)u_{gh}.
+\end{equation}
+所得代数称为由 \(K/k\) 和 \(c\) 确定的\term[jiaocha-ji-daishu]{交叉积代数}[crossed product algebra]。
+\end{definition}
+\symidx{\(B_c=(K/k,G,c)\)：Galois 扩张的交叉积代数}
+
+\begin{proposition}\label{b2:prop:crossed-product-central-simple}
+式\eqref{b2:eq:crossed-product-multiplication}给出次数 \(n\) 的中心单 \(k\) 代数，单位为 \(u_1\)。子域 \(K\) 分裂它；每个 \(u_g\) 都可逆。
+\end{proposition}
+\begin{proof}
+比较三项乘积 \((a u_g)(b u_h)(d u_t)\)：除共同因子 \(a g(b)gh(d)\) 外，两种结合方式的系数分别是\eqref{b2:eq:two-cocycle}的两边。因此乘法结合。规范化条件使 \(u_1\) 为单位，底域标量在中心。向量空间维数为 \(n[K:k]=n^2\)。由余循环条件还有 \(c(g,g^{-1})=g\Bigl(c(g^{-1},g)\Bigr)\)，故
+\[
+u_g^{-1}=c(g^{-1},g)^{-1}u_{g^{-1}}.
+\]
+左右相乘均为一。
+
+若 \(x=\sum_g a_g u_g\) 与全部 \(b\in K\) 交换，则比较系数得 \(a_g\Bigl(g(b)-b\Bigr)=0\)。对 \(g\ne1\) 可选使差非零的 \(b\)，所以只有单位指标的系数可能非零。再与各 \(u_g\) 交换，就使该系数被全部 \(G\) 固定，因而属于 \(k\)。故中心是 \(k\)。
+
+对一个非零双边理想，选非零项数最少的元素。乘以一个 \(u_g^{-1}\) 并缩放系数，使单位指标项为一。它与任意 \(b\in K\) 的交换子在单位指标处为零，若非零就违反最少性。于是该元素与 \(K\) 交换，只能为一，理想即为全代数。这证明单性。最后 \([K:k]=n=\deg B_c\)，由\cref{b2:prop:maximal-field-splits-csa}，\(K\) 分裂 \(B_c\)。
+\end{proof}
+
+若改用基元 \(u'_g=b_g u_g\)，新乘法系数为 \(c'=c\delta b\)。所以相差余边界的余循环给出同构代数；这是一项实际的基变换，不只是符号上的等价。
+
+\begin{proposition}\label{b2:prop:crossed-product-split-coboundary}
+\(B_c\) 分裂，当且仅当 \(c\) 是余边界。
+\end{proposition}
+\begin{proof}
+若 \(c(g,h)=b_g g(b_h)b_{gh}^{-1}\)，在 \(k\) 空间 \(K\) 上让 \(K\) 左乘，让 \(u_g\) 按 \(T_g(z)=b_g g(z)\) 作用。这些算子满足 \(T_gT_h=c(g,h)T_{gh}\)，与 \(K\) 的相容关系也正是\eqref{b2:eq:crossed-product-multiplication}，故定义同态 \(B_c\to\operatorname{End}_k(K)\)。由单性及两端同维，它是同构。
+
+若 \(B_c\cong\operatorname{End}_k(W)\)，其中 \(\dim_k W=n\)，限制到 \(K\) 后有 \(\dim_KW=1\)。选基识别 \(W=K\)，\(u_g\) 的作用必须形如 \(T_g(z)=b_g g(z)\)，其中 \(b_g=T_g(1)\ne0\)。代入 \(u_g u_h=c(g,h)u_{gh}\)，得 \(b_g g(b_h)=c(g,h)b_{gh}\)，正是余边界条件。
+\end{proof}
 
 \subsection{Brauer 群与群上同调}
 \label{b2:subsec:1804:02}
 
-待撰写。
+二阶余循环按逐点相乘组成交换群，余边界构成其子群。定义商群
+\[
+H^2(G,K^\times)=\{\text{规范化二阶余循环}\}/\{\text{二阶余边界}\}.
+\]
+这就是当前系数作用下的二阶\term[qun-shangtongdiao]{群上同调}[group cohomology]。只用这个显式商群，已经可以建立如下对应。
+\symidx{\(H^2(G,K^\times)\)：乘法系数的二阶群上同调}
+
+\ProseParagraphBreak
+对于 \(g\in G\)，可加映射 \(T_g\) 若满足 \(T_g(av)=g(a)T_g(v)\)，称其为 \(g\)-\term[banxianxing-yingshe]{半线性映射}[semilinear map]。在矩阵代数上，逐条目施加 \(g\) 就给出这种映射。下面把一个已分裂代数的下降数据写成具体矩阵。
+
+\begin{proposition}\label{b2:prop:split-algebra-factor-set}
+设 \(A_K\cong M_m(K)\)，并将 \(A_K\) 的自然 Galois 作用记为 \(\alpha_g\)。存在 \(C_g\in\operatorname{GL}_m(K)\)、\(C_1=I_m\)，使 \(\alpha_g(X)=C_g g(X)C_g^{-1}\)。由
+\[
+C_g g(C_h)=c(g,h)C_{gh}
+\]
+定义的标量 \(c(g,h)\) 构成规范化余循环，而且 \([A]=-[B_c]\)。
+\end{proposition}
+\begin{proof}
+设 \(A_K\cong M_m(K)\)，将 \(A_K\) 上的自然 Galois 作用传到矩阵代数，记为 \(\alpha_g\)。它在标量上作用为 \(g\)，即为 \(g\)-半线性代数自同构。把逐条目作用 \(g\) 的逆与它复合，就得到一个 \(K\) 代数自同构；由 Skolem--Noether，存在 \(C_g\in\operatorname{GL}_m(K)\)，使
+\begin{equation}\label{b2:eq:brauer-semilinear-matrices}
+\alpha_g(X)=C_g g(X)C_g^{-1},\qquad C_1=I_m.
+\end{equation}
+\(\alpha_g\alpha_h=\alpha_{gh}\) 说明 \(C_g g(C_h)C_{gh}^{-1}\) 与所有矩阵交换，所以为唯一的标量 \(c(g,h)\in K^\times\)。比较三次乘积，得到\eqref{b2:eq:two-cocycle}，故 \(c\) 为规范化余循环。
+
+在 \(k\) 空间 \(V=K^m\) 上，让 \(K\) 按标量乘法作用，让 \(u_g\) 按 \(v\mapsto C_g g(v)\) 作用，得到 \(B_c\) 的表示。它含幺且 \(B_c\) 单，因而忠实。它在 \(\operatorname{End}_k(V)\) 中的中心化子，先因与 \(K\) 交换而是 \(K\) 线性，再因与所有 \(u_g\) 交换而满足 \(X=\alpha_g(X)\)。这些不动矩阵恰为 \(A\) 的像：在 \(A_K\) 中按 \(A\) 的 \(k\) 基展开，不动性恰好使全部系数属于 \(K^G=k\)。由\cref{b2:cor:csa-centralizer-factorization}的中心为 \(k\) 的情形，
+\[
+B_c\otimes_k A\cong\operatorname{End}_k(V).
+\]
+所以 \([A]=-[B_c]\)，得到所述关系。
+\end{proof}
+
+\begin{theorem}\label{b2:thm:relative-brauer-cocycles}
+交叉积给出群同构
+\[
+H^2(G,K^\times)\longrightarrow\operatorname{Br}(K/k),
+\qquad[c]\longmapsto[B_c].
+\]
+\end{theorem}
+\begin{proof}
+首先，\cref{b2:prop:crossed-product-central-simple}使像落在相对 Brauer 群；换基公式保证它不依赖余循环代表。
+
+为核对乘法，取两个余循环 \(c,d\)。有限 Galois 扩张具有代数同构
+\begin{equation}\label{b2:eq:galois-tensor-diagonal}
+K\otimes_kK\longrightarrow\prod_{g\in G}K,
+\qquad a\otimes b\longmapsto\Bigl(a g(b)\Bigr)_{g\in G}.
+\end{equation}
+具体地，第一卷定理16.4.2给出本原元素 \(K=k(\theta)\)；其可分最小多项式在 \(K\) 中分成互异因子 \(T-g(\theta)\)。对 \(K[T]/(f)\) 应用第一卷定理10.4.3的中国剩余定理，便得到上述同构。
+
+记 \(e\in K\otimes K\) 为对应单位指标坐标的一、其他坐标零的幂等元。在 \(B_c\otimes B_d\) 中，用 \(u_g,v_h\) 表示两侧的基元。共轭 \(u_g\otimes v_h\) 对 \(K\otimes K\) 作用为 \(g\otimes h\)。在\eqref{b2:eq:galois-tensor-diagonal}下，它将 \(e\) 移到指标 \(gh^{-1}\) 的幂等元；这是因为第 \(t\) 坐标的值为 \(g\) 作用于原第 \(g^{-1}th\) 坐标的值。因此
+\[
+e(u_g\otimes v_h)e=0\quad\text{若 }g\ne h.
+\]
+当 \(g=h\) 时，令 \(w_g=e(u_g\otimes v_g)e\)。取角后，系数环 \(e(K\otimes K)e\) 通过 \(a\otimes b\mapsto ab\) 识别为 \(K\)，而 \((w_g)_{g\in G}\) 为这个角代数的左 \(K\) 基：原代数在 \(K\otimes K\) 上以全部 \(u_g\otimes v_h\) 为基，取角恰好保留这些对角项。直接计算得到
+\[
+w_g b=g(b)w_g,\qquad w_g w_h=c(g,h)d(g,h)w_{gh}.
+\]
+所以 \(e(B_c\otimes B_d)e\cong B_{cd}\)。非零幂等元取角不改变中心单代数的 Brauer 类：写代数为 \(M_r(D)\)，将该幂等算子的像、核选成右 \(D\) 基，角代数便为某个 \(M_s(D)\)、\(s>0\)，两者有同一除代数代表。因此 \([B_c]+[B_d]=[B_{cd}]\)，映射保持群运算。\(c=1\) 时的交叉积由\cref{b2:prop:crossed-product-split-coboundary}分裂，确实对应零元。
+
+若 \([B_c]=[B_d]\)，两代数的次数同为 \(n\)。由\cref{b2:prop:brauer-division-representative}，同一个除代数上的矩阵大小也相同，故 \(B_c\cong B_d\)。选一个这样的同构，利用\cref{b2:thm:skolem-noether}比较它在 \(K\) 上的限制与标准嵌入，复合适当的内自同构后，可使它在 \(K\) 上为恒等。与 \(K\) 的交换关系随后迫使 \(u_g\) 的像为 \(b_g v_g\)、\(b_g\in K^\times\)：展开后，只有指标 \(g\) 的项能满足对每个 \(a\in K\) 都有 \(xa=g(a)x\)。比较两侧乘法给出
+\[
+c(g,h)b_{gh}=b_g g(b_h)d(g,h).
+\]
+因此 \(c/d\) 为余边界，证明单射性。
+
+最后，对任意 \([A]\in\operatorname{Br}(K/k)\)，\cref{b2:prop:split-algebra-factor-set}给出一个余循环 \(c\)，使 \([A]=-[B_c]\)。由已经证明的乘法相容性，它就是 \([c^{-1}]\) 的像。因此映射满射，所需群同构成立。
+\end{proof}
+
+半线性映射作为 \(k\) 线性算子参与交叉积的表示，却同时改变 \(K\) 标量。乘法公式中的 \(g\Bigl(c(h,t)\Bigr)\) 正记录了这种改变。
+
+\begin{theorem}\label{b2:thm:period-divides-index}
+每个中心单代数的 Brauer 类具有有限阶，并满足 \(\operatorname{per}(A)\mid\operatorname{ind}(A)\)。
+\end{theorem}
+\begin{proof}
+取同一 Brauer 类中的除代数 \(D\)，令 \(d=\deg D=\operatorname{ind}(A)\)，再取一个有限 Galois 分裂域 \(K/k\)。由\cref{b2:prop:split-algebra-factor-set}，对 \(D_K\cong M_d(K)\) 选矩阵 \(C_g\)，得到
+\[
+C_g g(C_h)=c(g,h)C_{gh},\qquad [D]=-[B_c].
+\]
+取矩阵行列式，令 \(b_g=\det C_g\)，则
+\[
+c(g,h)^d=b_g g(b_h)b_{gh}^{-1}.
+\]
+因此 \(c^d\) 为余边界，在 \(H^2(G,K^\times)\) 中为零类。刚证的群同构给出 \(d[B_c]=0\)，所以 \(d[A]=d[D]=0\)。元素的最小正阶于是存在，且整除任何零化它的正整数，特别整除 \(d\)。证明中没有除以 \(d\)，故包括正特征。
+\end{proof}
+
+\begin{example}[周期为二、指数为四]\label{b2:exm:period-two-index-four}
+在域 \(k=\mathbb R((x))((y))\) 上，代数
+\[
+D=\mathbb H\otimes_{\mathbb R}k\ \otimes_k\ (x,y)_k
+\]
+为除代数，且 \(\operatorname{ind}(D)=4\)、\(\operatorname{per}(D)=2\)。这里 \((x,y)_k\) 为四元数代数。
+\end{example}
+\begin{proof}
+给出一个直接的除环模型。先取中心不定元 \(u\)，组成 Laurent 级数除环 \(F=\mathbb H((u))\)。非零级数可以提出其首项，再将剩余的 \(1+h\)、\(h\) 只有正次数，按 \(1-h+h^2-\cdots\) 求逆；每个固定次数的系数只涉及有限多项，所以这个形式逆有意义。
+
+令 \(\tau\) 固定 \(\mathbb H\)，将 \(u\) 送到 \(-u\)。在所有下端有界的形式级数 \(\sum_m a_m v^m\)、\(a_m\in F\) 上规定
+\[
+(a v^r)(b v^s)=a\tau^r(b)v^{r+s}.
+\]
+固定次数的系数仍只涉及有限和；\(\tau\) 是自同构，所以三项乘积的两种括号给出相同系数。这便定义结合环 \(E=F((v;\tau))\)。非零首项 \(a_m v^m\) 可逆，其逆为 \(\tau^{-m}(a_m^{-1})v^{-m}\)；提出首项后，再用同样的正次数几何级数构造逆。因此 \(E\) 是除环。
+
+在 \(E\) 中令 \(x=u^2,y=v^2\)。二者都在中心。把 \(u\) 的次数分成奇偶，再把 \(v\) 的次数分成奇偶，表明 \(E\) 在 \(k=\mathbb R((x))((y))\) 上有十六个基元素
+\[
+h u^\epsilon v^\delta,
+\quad h\in\{1,\mathbf i,\mathbf j,\mathbf k\},\quad
+\epsilon,\delta\in\{0,1\}.
+\]
+每个级数都能按这十六种形式分组；不同的奇偶次数及不同四元数坐标又使系数唯一，所以确为基。
+
+中心恰好是 \(k\)。若一个级数与全部四元数常数交换，其各 \(v\) 次系数只能在 \(\mathbb R((u))\) 中。再与 \(u\) 交换，由 \(v^m u=(-1)^m u v^m\)，奇数 \(v\) 次系数必须为零。最后与 \(v\) 交换，使余下系数被 \(\tau\) 固定，因而只含偶数 \(u\) 次，恰得到 \(\mathbb R((x))((y))\)。
+
+四元数常数与 \(u,v\) 交换，而 \(u^2=x,v^2=y,vu=-uv\)。这些关系及所列基给出 \(E\cong\mathbb H_k\otimes_k(x,y)_k=D\)。因此 \(D\) 自身为十六维中心除代数，指数为四。由\eqref{b2:eq:quaternion-conjugation}，每个四元数代数都通过共轭同构于自身的反代数，其 Brauer 类的二倍为零，所以 \(2[D]=0\)。\(D\) 是不等于 \(k\) 的除代数，Brauer 类非零，故周期恰为二。
+\end{proof}
+
+第四卷第11.1--11.2节将用消解与上链复形系统定义群上同调，并说明一般系数群及低阶解释。本节已经用余循环的显式方程证明了所需的二阶对应；这里的证明没有把第四卷尚未建立的结果作为前提。
 
 \subsection{Brauer 群与 Brauer 诱导定理}
 \label{b2:subsec:1804:03}
 
-待撰写。
+第五卷第5.3节的 Brauer 诱导定理讨论有限群特征标如何由适当子群的特征标诱导得到；本章的 Brauer 群则由中心单代数的稳定等价类组成，运算是张量积。两者虽然同以 Brauer 命名，所研究的对象、群运算和主要结论均不相同。
+
+\ProseParagraphBreak
+相对 Brauer 群把一个固定分裂域上的矩阵模型与底域之间的差异记录为余循环。换模型会改变矩阵和余循环代表，却不改变其上同调类。循环代数中的一个参数，正是循环 Galois 群下这种现象最便于计算的形式；它的范数分裂判据让抽象的类能通过一个具体方程识别。

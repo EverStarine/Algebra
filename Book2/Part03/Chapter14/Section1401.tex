@@ -5,9 +5,9 @@
 \section{Jacobson 根}
 \label{b2:sec:1401}
 
-% TODO: 按以下纲要要点撰写本节。
+简单模给出环最小的非零作用对象。某个环元素可能在每个简单模上都作用为零；这些元素组成 Jacobson 根。本节把这个描述与极大左理想、可逆性及取商联系起来。环 \(R\) 均含单位元，模均幺性，不假设 \(R\) 交换或满足链条件。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 极大左理想的交及等价刻画
 % * 根中的可逆性判据
@@ -17,14 +17,105 @@
 \subsection{极大左理想的交及等价刻画}
 \label{b2:subsec:1401:01}
 
-待撰写。
+\begin{definition}\label{b2:def:jacobson-radical}
+环 \(R\) 的\term[Jacobson-gen]{Jacobson 根}[Jacobson radical]定义为全部极大左理想的交，记为
+\[
+J(R)=\bigcap_{L\text{ 极大左理想}}L.
+\]
+对零环约定 \(J(0)=0\)。非零环的每个真左理想都包含于某个极大左理想。
+\end{definition}
+\symidx{\(J(R)\)：环 \(R\) 的 Jacobson 根}
+
+最后的存在性可由第一卷附录A定理A.1.4的 Zorn 引理得到：包含给定真左理想的真左理想族非空，链的并仍是左理想，而且不含一，因而仍真；空链用原理想作上界。由此取到极大元。这里“极大”在所有真左理想之间比较，不要求它本身是双边理想。
+
+\begin{proposition}\label{b2:prop:radical-simple-annihilators}
+\(J(R)\) 等于全部简单左 \(R\) 模的零化子的交，因而是双边理想。只取形如 \(R/L\)、\(L\) 为极大左理想的简单模，就足以计算这个交。
+\end{proposition}
+\begin{proof}
+交的等式已在\cref{b2:prop:simple-annihilator-intersection}证明：一个元素属于所有极大左理想，恰好使它在每个简单模的每个向量上作用为零。该证明只需使用循环商 \(R/L\)；每个简单模本来就同构于这样的商。模零化子是双边理想，因为 \(xS=0\) 蕴含 \((rx)s=r(xs)=0\)、\((xr)s=x(rs)=0\)。因此这些零化子的交 \(J(R)\) 也为双边理想。零环的等式按约定直接成立。
+\end{proof}
+
+例如，\(R=M_n(k)\) 的列向量模 \(k^n\) 简单且忠实，所以 \(J(R)=0\)。但是 \(E_{12}\) 在 \(n\ge2\) 时是非零幂零元。因此“元素幂零”不等于“元素属于 Jacobson 根”；下一小节会说明幂零理想的不同情形。
 
 \subsection{根中的可逆性判据}
 \label{b2:subsec:1401:02}
 
-待撰写。
+\begin{theorem}[可逆性判据]\label{b2:thm:jacobson-unit-criterion}
+对 \(x\in R\)，以下条件等价：
+\begin{equivalences}
+\item\label{b2:item:radical-member} \(x\in J(R)\)。
+\item\label{b2:item:radical-unit-left} 对每个 \(r\in R\)，\(1-rx\) 为单位。
+\item\label{b2:item:radical-unit-right} 对每个 \(r\in R\)，\(1-xr\) 为单位。
+\end{equivalences}
+\end{theorem}
+\begin{proof}
+先设 \(j\in J(R)\)。若左理想 \(R(1-j)\) 为真，它包含在某个极大左理想 \(L\) 中，而 \(j\in L\)，导致 \(1\in L\)，矛盾。故存在 \(b\) 满足 \(b(1-j)=1\)。这还不是立即得到双侧逆，需再看 \(b=1+bj\in1+J(R)\)。对 \(-bj\in J(R)\) 重复同一论证，有 \(c\) 使 \(cb=1\)。于是
+\[
+c=cb(1-j)=1-j,
+\]
+所以 \((1-j)b=1\)，\(1-j\) 确实可逆。若 \(x\in J(R)\)，双边理想性给出 \(rx\in J(R)\)，因而得到第二项。
+
+若第二项成立而 \(x\notin J(R)\)，取极大左理想 \(L\) 不含 \(x\)。则 \(L+Rx=R\)，存在 \(\ell\in L,r\in R\) 使 \(1=\ell+rx\)。所以单位 \(1-rx=\ell\) 落在真左理想中，左乘其逆即得 \(1\in L\)，矛盾。
+
+最后使用环中的恒等事实：\(1-ab\) 可逆当且仅当 \(1-ba\) 可逆。若 \(u=(1-ab)^{-1}\)，则后者的逆为 \(1+bua\)。例如
+\[
+(1-ba)(1+bua)=1+b(u-1-abu)a=1,
+\]
+因为 \((1-ab)u=1\)；反向乘积用 \(u(1-ab)=1\) 同样得到一。交换 \(a,b\) 给出逆方向。令 \(a=r,b=x\)，第二、三项等价。
+\end{proof}
+
+单位判据中的“对每个 \(r\)”不能省去。矩阵 \(E_{12}\) 虽满足 \(1-E_{12}\) 可逆，取 \(r=E_{21}\) 却得到 \(1-E_{22}\) 不可逆。这个算例对应了它不属于矩阵环根的事实。
+
+\begin{corollary}\label{b2:cor:nil-ideal-radical}
+若双边理想 \(I\) 的每个元素都幂零，则 \(I\subseteq J(R)\)。特别地，若 \(I^n=0\)，结论成立。
+\end{corollary}
+\begin{proof}
+对 \(x\in I,r\in R\)，有 \(rx\in I\)，故存在正整数 \(m\) 使 \((rx)^m=0\)。有限几何级数给出
+\[
+(1-rx)^{-1}=1+rx+\cdots+(rx)^{m-1}.
+\]
+由可逆性判据，\(x\in J(R)\)。理想幂零时，每个元素的同一次幂都为零，故为特例。
+\end{proof}
+
+在 \(k[t]/(t^n)\) 中，理想 \((\bar t)\) 幂零，故包含于根；商为域，\((\bar t)\) 又是极大理想，所以根恰为它。一般环的根未必幂零，例如 \(k[[t]]\) 的单位恰为常数项非零的级数：逐次解系数可构造其逆。因此非单位理想 \((t)\) 是唯一极大理想，\(J\Bigl(k[[t]]\Bigr)=(t)\)，但 \(t^n\ne0\) 对每个 \(n\) 成立。
 
 \subsection{商环与矩阵环的根}
 \label{b2:subsec:1401:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:radical-quotient}
+设 \(I\) 为 \(R\) 的双边理想，\(\pi:R\to R/I\) 为商映射。则 \(\pi\Bigl(J(R)\Bigr)\subseteq J(R/I)\)。若 \(I\subseteq J(R)\)，则
+\[
+J(R/I)=J(R)/I.
+\]
+特别地，\(J\Bigl(R/J(R)\Bigr)=0\)。
+\end{proposition}
+\begin{proof}
+\(R/I\) 的简单左模通过 \(\pi\) 也是简单 \(R\) 模，所以 \(J(R)\) 零化它们，由\cref{b2:prop:radical-simple-annihilators}得到包含。若 \(I\subseteq J(R)\)，则每个极大左理想都含 \(I\)；商与原像使它们与 \(R/I\) 的极大左理想一一对应。逐个取交便得等式，再取 \(I=J(R)\) 得最后断言。
+\end{proof}
+
+一般商的包含可以严格。例如 \(J(\mathbb Z)=0\)：若整数 \(x\ne0\)，则 \(1-3x\) 不是整数单位，单位判据排除 \(x\)。但 \(\mathbb Z/4\mathbb Z\) 的根为非零理想 \((\bar2)\)。
+
+\begin{proposition}\label{b2:prop:matrix-radical}
+对任意含幺环 \(R\) 和整数 \(n\ge1\)，有
+\[
+J\Bigl(M_n(R)\Bigr)=M_n\Bigl(J(R)\Bigr).
+\]
+\end{proposition}
+\begin{proof}
+先取简单左 \(R\) 模 \(S\)。按矩阵乘列作用，\(S^n\) 是简单 \(M_n(R)\) 模：任意非零向量有非零坐标 \(s\)，矩阵单位可把它移到任意坐标，而 \(Rs=S\)，所以该向量生成全部 \(S^n\)。若矩阵 \(B=(b_{ij})\) 属于 \(J\Bigl(M_n(R)\Bigr)\)，它零化每个这样的 \(S^n\)。把 \(s\in S\) 放到第 \(j\) 个坐标，得到 \(b_{ij}s=0\) 对所有 \(i,j,S,s\) 成立。故每个 \(b_{ij}\in J(R)\)。
+
+为证反向，取任意简单左 \(M_n(R)\) 模 \(N\)，令 \(S=E_{11}N\)，由 \(r\cdot s=(rE_{11})s\) 看成左 \(R\) 模。它非零：若 \(0\ne E_{ii}v\)，则 \(E_{1i}v\ne0\)，因为再乘 \(E_{i1}\) 得 \(E_{ii}v\)。若 \(0\ne U\subseteq S\) 是 \(R\) 子模，则 \(\sum_i E_{i1}U\) 在任意矩阵作用下稳定，故等于 \(N\)；再乘 \(E_{11}\) 得 \(U=S\)。所以 \(S\) 简单。
+
+每个 \(v\in N\) 唯一写成 \(\sum_iE_{i1}s_i\)，其中 \(s_i=E_{1i}v\in S\)：求和恢复 \(v\)，施加 \(E_{1j}\) 恢复 \(s_j\)。在这些坐标中，矩阵 \(B\) 按通常的 \(\sum_jb_{ij}s_j\) 作用。如果所有条目都在 \(J(R)\)，它们零化简单模 \(S\)，故 \(B\) 零化全部 \(N\)。再次使用\cref{b2:prop:radical-simple-annihilators}即得反向包含。
+\end{proof}
+
+为给下一章准备半单商，还需要把有限长度与极大子模联系起来。这一步中的有限性条件不能删除。
+
+\begin{proposition}\label{b2:prop:finite-length-radical-zero}
+若有限长度左模 \(M\) 的全部极大子模之交为零，则 \(M\) 半单。因此若正则左模 \({}_RR\) 有限长度，\(R/J(R)\) 为半单环。
+\end{proposition}
+\begin{proof}
+零模直接成立。非零有限长度模有极大子模；例如在真子模中取极大元，存在性由升链条件得到。由降链条件，极大子模的所有有限交中有一个极小者 \(K=\bigcap_{i=1}^r L_i\)。若 \(K\ne0\)，取 \(0\ne x\in K\)。全部极大子模交为零，故某个极大子模 \(L\) 不含 \(x\)，于是 \(K\cap L\subsetneq K\)，矛盾。因此 \(K=0\)。
+
+映射 \(M\to\bigoplus_{i=1}^rM/L_i\) 的核为 \(K=0\)，所以它单射。每个商模简单，目标半单，\cref{b2:prop:semisimple-subquotients}保证其子模也半单，故 \(M\) 半单。对 \(R/J(R)\)，有限长度由取商保留，其极大左理想交为零已在\cref{b2:prop:radical-quotient}证明，应用刚证结论即可。
+\end{proof}

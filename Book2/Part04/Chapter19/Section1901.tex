@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 19.1 Ore 局部化
-% 纲要位置：计划纲要.md，第 1363 行。
 
 \section{Ore 局部化}
 \label{b2:sec:1901}
 
-% TODO: 按以下纲要要点撰写本节。
+交换环中把分母移到乘积的一侧，依靠的是元素可以交换。非交换环里，写下 \(as^{-1}\) 之后，还须解释 \(s^{-1}b\) 如何重新写成分母在右侧的形式。Ore 条件正是为这一步提供可解的方程。本节只讨论由双侧非零因子组成的分母集，从而原环能够单射到分式环；包含零因子的更一般分母理论不在本节范围内。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 分母在非交换情形的障碍
 % * 左、右 Ore 条件
@@ -17,14 +16,133 @@
 \subsection{分母在非交换情形的障碍}
 \label{b2:subsec:1901:01}
 
-待撰写。
+本节设 \(R\ne0\) 为含单位元的环。若 \(s\in R\) 满足
+\[
+sx=0\Longrightarrow x=0,\qquad xs=0\Longrightarrow x=0,
+\]
+称 \(s\) 为\term[zhengze-yuansu]{正则元素}[regular element]，即它既不是左零因子，也不是右零因子。正则元素的乘积仍正则，一也是正则元素。
+
+\ProseParagraphBreak
+假设 \(R\) 已嵌入某个环 \(Q\)，分母集 \(S\) 中的元素在 \(Q\) 中可逆，并且每个 \(Q\) 元素都能写为 \(as^{-1}\)。对 \(a\in R,s\in S\)，必须能把 \(s^{-1}a\) 写成 \(bt^{-1}\)，其中 \(b\in R,t\in S\)。两侧分别乘 \(s,t\)，就得到
+\[
+at=sb.
+\]
+因此右分式的存在必然要求这种共同倍数关系；它不是一种可略去的记号约定。
+
+\ProseParagraphBreak
+以自由代数 \(R=k\langle x,y\rangle\) 为例。由\cref{b2:prop:free-associative-algebra}，有限字构成基。对非零多项式按字长、同长度内再按字典序选最大字，两个多项式的乘积以两个最大字的连接为最大字，系数为两个非零首系数的乘积，故乘积非零。因此所有非零元素正则。
+
+\ProseParagraphBreak
+但 \(xR\cap yR=0\)，因为第一项中的非零字都以 \(x\) 开头，第二项中的非零字都以 \(y\) 开头。若 \(a=x,s=y\) 能满足上述关系且 \(t\ne0\)，就有 \(0\ne xt=yb\in xR\cap yR\)，矛盾。所以这个非交换整环不能通过“所有非零元素作右分母，且每个元素是一个右分式”的方式得到分式除环。这不排除其他类型的扩张环，只说明通常的单分式表达需要额外条件。
 
 \subsection{左、右 Ore 条件}
 \label{b2:subsec:1901:02}
 
-待撰写。
+\begin{definition}\label{b2:def:ore-set}
+设 \(S\subseteq R\) 含一、乘法封闭，且全部元素正则。若对任意 \(a\in R,s\in S\)，存在 \(t\in S,b\in R\) 满足 \(at=sb\)，称 \(S\) 满足\term[you-Ore-tiaojian]{右 Ore 条件}[right Ore condition]，也称为本节意义下的右 Ore 分母集。
+
+左 Ore 条件要求对任意 \(a,s\)，存在 \(t\in S,b\in R\) 使 \(ta=bs\)，它对应左分式 \(s^{-1}a\)。左条件就是反环中的右条件，不因两侧分母都是正则元素就自动相同。
+\end{definition}
+
+\begin{lemma}\label{b2:lem:ore-common-denominators}
+设 \(S\) 满足右 Ore 条件。
+\begin{enumerate}
+\item 若 \(s,su\in S\)，则 \(u\) 正则，但不一定属于 \(S\)。
+\item 任意 \(s,t\in S\) 有共同右倍数 \(su=tv\in S\)，其中乘子 \(u,v\) 均正则。任意有限多个分母也有这样的共同右倍数。
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+若 \(ux=0\)，则 \((su)x=0\)，由 \(su\) 正则得 \(x=0\)。对分子 \(s\) 和分母 \(su\) 使用 Ore 条件，取 \(v\in S,b\in R\) 使 \(sv=(su)b\)。消去左侧正则因子 \(s\)，得 \(v=ub\)。若 \(xu=0\)，则 \(xv=xub=0\)，由 \(v\) 正则得 \(x=0\)。故 \(u\) 双侧正则。
+
+对分子 \(t\)、分母 \(s\) 使用 Ore 条件，得 \(tv=su\)，其中 \(v\in S\)。共同值属于 \(S\)，第一部分保证 \(u\) 也正则。有限多个分母逐次与已经取得的共同分母再作此操作即可；每个旧分母都仍右整除新的共同值。
+\end{proof}
+
+例如在交换环中，若分母都在中心，取 \(t=s\)、\(b=a\) 即满足右 Ore 条件，左条件也成立。一般情形的共同倍数则可能需要非平凡的乘子；不能直接把共同分母写成 \(st\)，因为 \(t\) 未必右整除 \(st\)。
 
 \subsection{典型局部化及其泛性质}
 \label{b2:subsec:1901:03}
 
-待撰写。
+\begin{theorem}[正则分母的右 Ore 局部化]\label{b2:thm:right-ore-localization}
+对右 Ore 分母集 \(S\)，存在环 \(Q=RS^{-1}\) 及单射 \(R\rightarrow Q\)，使 \(S\) 中每个元素可逆，且每个 \(Q\) 元素都为 \(as^{-1}\)。对任意保单位元环同态 \(f:R\rightarrow B\)，若全部 \(f(s)\) 可逆，则存在唯一同态
+\[
+\widetilde f:Q\longrightarrow B,\qquad
+\widetilde f(as^{-1})=f(a)f(s)^{-1}.
+\]
+\end{theorem}
+\begin{proof}
+在 \(R\times S\) 上定义
+\begin{equation}\label{b2:eq:ore-equivalence}
+(a,s)\sim(b,t)
+\quad\Longleftrightarrow\quad
+\exists u,v\in R:\ su=tv\in S,\quad au=bv.
+\end{equation}
+自反性与对称性直接成立。证明传递性时，设 \(su=tv=w\)、\(au=bv\)，又有 \(tu'=rv'=w'\)、\(bu'=cv'\)。取共同倍数 \(w\alpha=w'\beta\in S\)。从 \(tv\alpha=tu'\beta\) 消去 \(t\)，得到 \(v\alpha=u'\beta\)，于是
+\[
+s u\alpha=r v'\beta,\qquad
+a u\alpha=bv\alpha=bu'\beta=cv'\beta.
+\]
+故 \((a,s)\sim(c,r)\)。等价类记为 \([a,s]\)，其集合暂记为 \(F\)。
+
+若取 \(su=tv=w\in S\)，定义
+\[
+[a,s]+[b,t]=[au+bv,w],\qquad -[a,s]=[-a,s].
+\]
+这些运算不依赖选择。确实，两个共同分母可以再精化到共同右倍数；从各分母等式中消去 \(s,t\)，相应分子的两个扩张也相同。若两个代表元已在某个共同分母下相等，则在任意另一个共同分母下也相等：把两种分母再精化后，分子之差乘一个正则乘子为零，故分子之差本来就是零。这里正则乘子由\cref{b2:lem:ore-common-denominators}保证。因此换代表元与换共同分母都不改变和。三个元素通到同一分母后，加法结合律、交换律、零元及负元都归结为 \(R\) 的加法，所以 \(F\) 为交换群。并且
+\begin{equation}\label{b2:eq:ore-zero-numerator}
+[a,s]=0\quad\Longleftrightarrow\quad a=0,
+\end{equation}
+因为等价于零时有 \(au=0\)、\(su\in S\)，正则的 \(u\) 可从右侧消去。
+
+对 \(a\in R\) 定义群自同态 \(L_a[b,t]=[ab,t]\)。等价关系和加法公式说明它良定义且可加，且 \(L_aL_b=L_{ab}\)、\(L_1=\operatorname{id}\)。若 \(s\in S\)，\(L_s\) 单射，因为 \([sb,t]=0\) 迫使 \(sb=0\)，进而 \(b=0\)。它也满射：对 \([b,t]\)，取 \(v\in S,u\in R\) 使 \(bv=su\)，则
+\[
+[b,t]=[bv,tv]=L_s[u,tv].
+\]
+故 \(L_s\) 可逆。
+
+在 \(\operatorname{End}_{\mathbb Z}(F)\) 中考虑所有算子 \(L_aL_s^{-1}\)。若 \(su=tv=w\in S\)，由 \(L_w=L_sL_u=L_tL_v\) 得
+\[
+L_aL_s^{-1}=L_{au}L_w^{-1},\qquad
+L_bL_t^{-1}=L_{bv}L_w^{-1}.
+\]
+因此它们对加法与负元封闭，且等价分式给出相同算子。若 \(bv=su\)、\(v\in S\)，则
+\[
+L_s^{-1}L_b=L_uL_v^{-1},
+\]
+从而
+\begin{equation}\label{b2:eq:right-ore-product}
+(L_aL_s^{-1})(L_bL_t^{-1})=L_{au}L_{tv}^{-1}.
+\end{equation}
+所以这些算子组成含单位元的子环。它们与 \(F\) 的元素一一对应：\(L_aL_s^{-1}\) 在 \([1,1]\) 处的值恰为 \([a,s]\)，因为 \(L_s[1,s]=[1,1]\)。故相同算子必来自相同分式类，反向已由共同分母证明。将这个子环的乘法转移到 \(F\)，得到结合环 \(Q\)。乘法结合律由算子复合继承，分配律也不需另作分母猜测。
+
+映射 \(a\mapsto L_a\) 为保单位元环同态，且由在 \([1,1]\) 处取值及式\eqref{b2:eq:ore-zero-numerator}可知它单射。每个 \(L_s^{-1}=L_1L_s^{-1}\) 也在 \(Q\) 中，所以分母可逆。于是将 \([a,s]\) 记作 \(as^{-1}\) 后，式\eqref{b2:eq:right-ore-product}给出具体乘法
+\[
+(as^{-1})(bt^{-1})=(au)(tv)^{-1},
+\qquad bv=su,\quad v\in S.
+\]
+
+最后核对泛性质。若 \(su=tv=w\in S\)，则 \(f(u)=f(s)^{-1}f(w)\) 可逆，并有
+\[
+f(a)f(s)^{-1}=f(au)f(w)^{-1}.
+\]
+因此式\eqref{b2:eq:ore-equivalence}的相同分子保证 \(\widetilde f\) 良定义，共同分母公式保证可加。由 \(bv=su\)，得到 \(f(s)^{-1}f(b)=f(u)f(v)^{-1}\)，恰好验证乘法公式被保持。单位也被保持。每个元素都是 \(as^{-1}\)，其像已由 \(f\) 及分母求逆决定，故延拓唯一。
+\end{proof}
+\symidx{\(RS^{-1}\)：右 Ore 分式环}
+
+这称为\term[Ore-jubuhua]{Ore 局部化}[Ore localization]。对反环应用同一定理，得到左 Ore 分式环 \(S^{-1}R\)。若同一个 \(S\) 同时满足左右条件，两种环都满足所写的泛性质，唯一延拓便给出保持 \(R\) 的互逆同构。
+
+\begin{proposition}\label{b2:prop:ore-clearing-denominators}
+在 \(Q=RS^{-1}\) 中，任意有限组 \(q_1,\ldots,q_m\) 有共同右分母：存在 \(s\in S\) 使全部 \(q_i s\in R\)。若 \(I\) 为 \(R\) 的右理想，则
+\[
+IQ=\{\,as^{-1}:a\in I,\ s\in S\,\}.
+\]
+每个非零右 \(R\) 子模 \(X\subseteq Q\) 都与 \(R\) 有非零交。
+\end{proposition}
+\begin{proof}
+先把各分母取共同右倍数，分子随之扩张，就得到第一项。\(IQ\) 中元素为有限和 \(\sum_i a_iq_i\)、\(a_i\in I\)，通分后分子仍属于右理想 \(I\)，得到第二式的一向；另一向由 \(as^{-1}\in IQ\) 直接成立。最后，若 \(0\ne as^{-1}\in X\)，右乘 \(s\in R\) 得到 \(0\ne a\in X\cap R\)，其中非零性来自分母在 \(Q\) 中可逆。
+\end{proof}
+
+例如令 \(C\) 为交换整环，\(R=M_n(C)\)，分母取非零标量矩阵 \(sI_n\)。它们在中心且正则，局部化得到
+\[
+RS^{-1}\cong M_n(\operatorname{Frac}C).
+\]
+每个右分式逐条目取标量分母，反向对一个分式域矩阵的有限多个条目取共同分母，便写成一个矩阵右分式；两种操作互逆且保持加乘。原环可能有许多矩阵零因子，但这些元素没有被放入分母集。

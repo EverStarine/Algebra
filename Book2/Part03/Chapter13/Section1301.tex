@@ -5,9 +5,9 @@
 \section{简单模与半单模}
 \label{b2:sec:1301}
 
-% TODO: 按以下纲要要点撰写本节。
+一个模可以有很短的合成列，却仍不能把各个商因子直接拆开。半单性要求更强：组成模本身的简单部分已经作为直和存在，所有子模都能找到补模。本节允许无限直和，不预设模有限生成。环仍含单位元，模仍为幺性左模；简单模总要求非零。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 简单对象和简单模的直和
 % * 半单模的子模与商模
@@ -17,14 +17,90 @@
 \subsection{简单对象和简单模的直和}
 \label{b2:subsec:1301:01}
 
-待撰写。
+\begin{definition}\label{b2:def:simple-module}
+回顾简单模的定义：非零左 \(R\) 模 \(S\) 若只有 \(0,S\) 两个子模，就称为简单模\termidx[jiandan-mo]{简单模}。左 \(R\) 模 \(M\) 若可写为一族简单子模的内部直和
+\[
+M=\bigoplus_{i\in I}S_i,
+\]
+就称为\term[bandan-mo]{半单模}[semisimple module]。
+\label{b2:def:semisimple-module}
+允许 \(I=\varnothing\)，因此零模半单，但不是简单模。
+\end{definition}
+
+例如，域 \(k\) 上的简单模是一维向量空间，每个向量空间选基后都是一维空间的直和，所以半单。整数模 \(\mathbb Z/p\mathbb Z\) 在 \(p\) 为素数时简单；\(\mathbb Z/p^2\mathbb Z\) 则不是半单，尽管它的合成因子都简单：唯一的非零真子模 \(p\mathbb Z/p^2\mathbb Z\) 没有补模。
+
+\ProseParagraphBreak
+模范畴中的简单对象就是上述简单模。给定 \(0\ne s\in S\)，子模 \(Rs\) 非零，故 \(Rs=S\)。因此每个简单模都循环，且形如 \(R/L\)，其中 \(L\) 是极大左理想：满射 \(R\to S\)、\(r\mapsto rs\) 的核为 \(L\)，中间子模对应迫使 \(L\) 极大。反过来，极大左理想的商模只有零子模和全模，因而简单。这里 \(L\) 只要求左理想，不必是双边理想，商对象通常只是模。
+
+\ProseParagraphBreak
+“简单子模之和”暂时不要求和为直和。以下定理说明，只要简单子模的和已经覆盖整个模，总可以从中抽出一个直和分解；同时，它给出不依赖所选简单分解的半单性判据。
+
+\begin{theorem}[半单模的等价刻画]\label{b2:thm:semisimple-module-characterizations}
+对左 \(R\) 模 \(M\)，下列条件等价：
+\begin{equivalences}
+\item \(M\) 是简单子模的直和。
+\item \(M\) 是其简单子模之和。
+\item 对每个子模 \(N\subseteq M\)，存在子模 \(K\) 使 \(M=N\oplus K\)。
+\end{equivalences}
+\end{theorem}
+\begin{proof}
+第一条立即蕴含第二条。设 \(M=\sum_{i\in I}S_i\)，其中每个 \(S_i\) 简单，固定 \(N\subseteq M\)。考察所有子集 \(J\subseteq I\)，使 \(\sum_{j\in J}S_j\) 是直和且与 \(N\) 交为零，按包含排序。空集满足条件。链的并仍满足条件：任何非平凡有限关系或落入 \(N\) 的非零有限和，都只涉及有限多个指标，因而已经出现在链中的某一项。由 Zorn 引理，取极大的 \(J\)，令 \(K=\bigoplus_{j\in J}S_j\)。
+
+若 \(N+K\ne M\)，某个 \(S_i\) 不包含于 \(N+K\)。简单性使 \(S_i\cap(N+K)=0\)，所以可将 \(i\) 加入 \(J\)，保持直和及与 \(N\) 零交，矛盾。因此 \(M=N\oplus K\)，得到第三条。特别地，取 \(N=0\) 便已经得到第一条。
+
+最后假设第三条。先注意该条件传给每个子模 \(U\)：若 \(L\subseteq U\) 且 \(M=L\oplus C\)，则 \(U=L\oplus(U\cap C)\)。因此每个非零子模 \(U\) 都含有简单子模。证明如下：取 \(0\ne x\in U\)，循环模 \(Rx\) 的真子模按包含排序；任一链的并仍不含生成元 \(x\)，故仍为真子模。Zorn 引理给出极大真子模 \(L\)，于是 \(Rx/L\) 简单。由补模条件，\(Rx=L\oplus S\)，所以 \(S\cong Rx/L\) 是 \(U\) 的非零简单子模。
+
+令 \(N\) 为 \(M\) 的全部简单子模之和。如果 \(N\ne M\)，取非零补模 \(K\)。刚才的结论给出 \(K\) 的简单子模 \(S\)，但 \(S\subseteq N\) 又使 \(S\subseteq N\cap K=0\)，矛盾。因此 \(N=M\)，得到第二条，完成等价性证明。
+\end{proof}
 
 \subsection{半单模的子模与商模}
 \label{b2:subsec:1301:02}
 
-待撰写。
+\begin{proposition}\label{b2:prop:semisimple-subquotients}
+半单模的每个子模与商模都半单。任意一族半单模的直和也半单。对半单模 \(M\) 的子模 \(N\)，短正合列
+\[
+0\longrightarrow N\longrightarrow M\longrightarrow M/N\longrightarrow0
+\]
+分裂。
+\end{proposition}
+\begin{proof}
+由\cref{b2:thm:semisimple-module-characterizations}，写 \(M=N\oplus K\)。投影 \(p:M\to N\) 将每个简单子模 \(S_i\) 映为零或简单模：核为 \(0\) 或 \(S_i\)，非零像因此同构于 \(S_i\)。又 \(N=p(M)=\sum_i p(S_i)\)，由等价刻画得 \(N\) 半单。同理投影到 \(K\) 说明 \(K\) 半单，而商映射限制为同构 \(K\to M/N\)，故商模半单，其逆后接 \(K\hookrightarrow M\) 就给出商映射的截面。
+
+若各 \(M_a\) 都已分解为简单模直和，把全部指标并在一起，仍是直接和：任一元素只有有限多个非零外层分量，每个分量又只有有限多个非零内层分量。因此所有简单分量合成所需直和分解。
+\end{proof}
+
+两端半单不保证中项半单。例如
+\[
+0\longrightarrow\mathbb Z/p\mathbb Z\xrightarrow{\bar a\mapsto\overline{pa}}
+\mathbb Z/p^2\mathbb Z\longrightarrow\mathbb Z/p\mathbb Z\longrightarrow0
+\]
+不分裂：中项被 \(p\) 零化的元素全在核中，任何从右端来的同态像都落入该核，不可能成为商映射的截面。这个例子说明，半单性并非只由合成因子的名单决定，还要求这些因子之间的扩张能够拆开。
+
+\ProseParagraphBreak
+有限生成半单模只需有限多个简单分量。若 \(m_1,\ldots,m_t\) 生成 \(\bigoplus_{i\in I}S_i\)，这些生成元共同只涉及有限多个指标，因标量作用不会增添新的非零直和坐标，全部模便只包含这些分量。反过来，每个简单模循环，所以有限直和必有限生成。这一有限性将把半单环的分解限制为有限乘积。
 
 \subsection{Schur 引理及除环}
 \label{b2:subsec:1301:03}
 
-待撰写。
+\begin{lemma}[Schur]\label{b2:lem:schur}
+设 \(S,T\) 为简单左 \(R\) 模。任何非零同态 \(f:S\to T\) 都是同构。因此若 \(S\not\cong T\)，则 \(\operatorname{Hom}_R(S,T)=0\)；而
+\[
+D=\operatorname{End}_R(S)
+\]
+是除环，其乘法为映射复合。
+\end{lemma}
+\begin{proof}
+\(\ker f\) 是 \(S\) 的子模；因 \(f\ne0\)，它不能为 \(S\)，所以为零。\(\operatorname{im}f\) 是 \(T\) 的非零子模，所以为 \(T\)。故 \(f\) 双射；模同态的逆仍是模同态。取 \(S=T\)，每个非零自同态都可逆，恒等映射因 \(S\ne0\) 而非零，所以自同态环是除环。
+\end{proof}
+
+这一结果称为\term[Schur-yinli]{Schur 引理}[Schur's lemma]。结论是除环，不能在一般环上把它直接写成标量域。例如除环 \(D\) 的左正则模简单，而\cref{b2:prop:bimodule-opposite-action}给出其自同态环为 \(D^{\mathrm{op}}\)。即使只讨论域上的代数，\(\mathbb C\) 作为实代数作用在自身上，也是简单模，其自同态环为 \(\mathbb C\)，大于原标量域 \(\mathbb R\)。
+
+\begin{corollary}\label{b2:cor:schur-algebraically-closed}
+设 \(A\) 为代数闭域 \(k\) 上的代数，\(S\) 为非零有限维简单左 \(A\) 模，则
+\(\operatorname{End}_A(S)=k\operatorname{id}_S\)。
+\end{corollary}
+\begin{proof}
+取 \(f\in\operatorname{End}_A(S)\)。由于 \(S\) 有限维且 \(k\) 代数闭，\(f\) 的特征多项式有根 \(\lambda\in k\)，所以 \(f-\lambda\operatorname{id}_S\) 有非零核。该映射仍 \(A\) 线性，因为 \(k\) 的作用在中心。由\cref{b2:lem:schur}，它不可能是非零同态，故 \(f=\lambda\operatorname{id}_S\)。反过来，每个这样的标量映射当然与 \(A\) 作用相容。
+\end{proof}
+
+例如，若 \(S,T\) 非同构且简单，则 \(\operatorname{End}_R(S\oplus T)\cong\operatorname{End}_R(S)\times\operatorname{End}_R(T)\)，因为两个不同分量间的 Hom 都为零。如果改为 \(S\oplus S\)，分量之间则允许非零映射，自同态环成为 \(2\times2\) 矩阵环。这一区别正是 Artin–Wedderburn 分解中“不同块”与“同一块内的矩阵”各自出现的原因。

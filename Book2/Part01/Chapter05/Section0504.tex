@@ -5,7 +5,7 @@
 \section{范畴等价}
 \label{b2:sec:0504}
 
-% TODO: 按以下纲要要点撰写本节。
+选择坐标把线性映射写成矩阵，往往没有改变我们要研究的结构，却改变了对象的具体外形。范畴等价使这种关系成为可证明的陈述。它要求对象可以在同构意义下互相对应，也要求全部态射及其复合得到保留；只列出同构类的对应还不够。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,125 @@
 \subsection{全、忠实与本质满}
 \label{b2:subsec:0504:01}
 
-待撰写。
+\begin{definition}\label{b2:def:fully-faithful-essentially-surjective}
+函子 \(F:\mathcal C\rightarrow\mathcal D\) 对每对对象 \(X,Y\) 给出函数
+\[
+F_{X,Y}:\operatorname{Hom}_{\mathcal C}(X,Y)\longrightarrow
+\operatorname{Hom}_{\mathcal D}\Bigl(F(X),F(Y)\Bigr),\qquad f\longmapsto F(f).
+\]
+若这些函数全部满射，称 \(F\) 为\term[quan-hanzi]{全函子}[full functor]；若全部单射，称为\term[zhongshi-hanzi]{忠实函子}[faithful functor]；若全部双射，称为\term[quanzhongshi-hanzi]{全忠实函子}[fully faithful functor]。若 \(\mathcal D\) 的每个对象都同构于某个 \(F(X)\)，称 \(F\) \term[benzhi-man]{本质满}[essentially surjective]。
+\end{definition}
+
+“忠实”只比较一对固定起点、终点之间的态射，不要求不同对象有不同的像。模到集合的忘却函子忠实：两个模同态若为同一个函数，就确实相等。当 \(R\ne0\) 时它不全，因为正则模底集合上的 \(r\mapsto r+1_R\) 不保持零元；零环的模均为单元素模，此时忘却函子反而全忠实。交换群到群的包含函子全忠实，因为交换群之间的群同态正是交换群同态；它不本质满，因为非交换群不能同构于交换群。
+
+\ProseParagraphBreak
+对偏序集之间的函子 \(F:P\rightarrow Q\)，函子性恰好是保序性。它总忠实，因为起点、终点固定后至多一个态射；它全当且仅当 \(F(x)\le F(y)\) 蕴含 \(x\le y\)。所以“保序”不等于“全”：把两元素反链送到两元素链的对应位置，是忠实而不全的函子。
+
+\begin{proposition}\label{b2:prop:fully-faithful-reflects-isomorphism}
+任意函子把同构送到同构。全忠实函子还反映同构：若 \(F(f)\) 可逆，则 \(f\) 可逆；若 \(F(X)\cong F(Y)\)，则 \(X\cong Y\)。
+\end{proposition}
+\begin{proof}
+若 \(g=f^{-1}\)，函子公理给出 \(F(g)F(f)=F(gf)=\operatorname{id}\) 及反序的同样等式，故 \(F(g)\) 为逆。
+
+现设 \(F\) 全忠实。若 \(F(f)\) 的逆为 \(v:F(Y)\rightarrow F(X)\)，全性给出 \(g:Y\rightarrow X\) 使 \(F(g)=v\)。于是 \(F(gf)=\operatorname{id}_{F(X)}=F(\operatorname{id}_X)\)，忠实性给出 \(gf=\operatorname{id}_X\)；另一侧相同，故 \(g=f^{-1}\)。若只给定 \(a:F(X)\rightarrow F(Y)\) 为同构，先用全性把 \(a\) 提升为 \(f\)，再用刚证明的结论即可。
+\end{proof}
 
 \subsection{范畴等价与范畴同构}
 \label{b2:subsec:0504:02}
 
-待撰写。
+\begin{definition}\label{b2:def:category-equivalence}
+若函子 \(F:\mathcal C\rightarrow\mathcal D\) 配有函子 \(G:\mathcal D\rightarrow\mathcal C\) 及自然同构
+\[
+\eta:\operatorname{Id}_{\mathcal C}\Rightarrow GF,\qquad
+\varepsilon:FG\Rightarrow\operatorname{Id}_{\mathcal D},
+\]
+则称 \(F\) 为\term[fanchou-dengjia]{范畴等价}[equivalence of categories]，\(G\) 为其\term[zhunni]{拟逆}[quasi-inverse]，写作 \(\mathcal C\simeq\mathcal D\)。若可要求 \(GF=\operatorname{Id}_{\mathcal C}\)、\(FG=\operatorname{Id}_{\mathcal D}\) 作为函子严格相等，则称 \(F\) 为\term[fanchou-tonggou]{范畴同构}[isomorphism of categories]。
+\end{definition}
+
+范畴同构在对象上给出真正的双射；等价允许多个互相同构的对象合并到一个代表。比如范畴 \(\mathcal E\) 有两个对象 \(a,b\)，每对对象之间恰有一个态射，复合由唯一性确定。把它们都送到仅有一个对象及恒等态射的范畴 \(\mathbf 1\)，并反向选取 \(a\)，便给出等价：每个对象到 \(a\) 的唯一态射组成所需自然同构。但这两个范畴对象数不同，故不可能同构。
+
+\begin{theorem}[范畴等价的判据]\label{b2:thm:equivalence-criterion}
+函子 \(F:\mathcal C\rightarrow\mathcal D\) 是范畴等价，当且仅当它全、忠实且本质满。反向构造使用选择公理，范畴的大小按\secref{b2:sec:0501}的宇宙约定处理。
+\end{theorem}
+\begin{proof}
+先设 \(G,\eta,\varepsilon\) 给出等价。对每个 \(Y\in\mathcal D\)，同构 \(\varepsilon_Y:F\Bigl(G(Y)\Bigr)\rightarrow Y\) 证明本质满。若 \(f,g:X\rightarrow X'\) 满足 \(F(f)=F(g)\)，\(\eta\) 的自然性给出
+\[
+\eta_{X'}f=GF(f)\eta_X=GF(g)\eta_X=\eta_{X'}g.
+\]
+消去同构 \(\eta_{X'}\)，得 \(f=g\)，所以 \(F\) 忠实。同样，若 \(G(u)=G(v)\)，\(\varepsilon\) 的自然性给出 \(u\varepsilon_Y=v\varepsilon_Y\)，故 \(u=v\)，所以 \(G\) 也忠实。
+
+给定 \(a:F(X)\rightarrow F(X')\)，令
+\[
+f=\eta_{X'}^{-1}G(a)\eta_X:X\longrightarrow X'.
+\]
+由 \(\eta\) 对 \(f\) 的自然性，\(GF(f)\eta_X=\eta_{X'}f=G(a)\eta_X\)。消去 \(\eta_X\)，得 \(G\Bigl(F(f)\Bigr)=G(a)\)；再由 \(G\) 忠实得 \(F(f)=a\)。故 \(F\) 全。
+
+反过来，假设三个条件都成立。为每个 \(Y\in\mathcal D\) 选择对象 \(G(Y)\in\mathcal C\) 及同构 \(\varepsilon_Y:F\Bigl(G(Y)\Bigr)\rightarrow Y\)。对 \(a:Y\rightarrow Y'\)，由全忠实性，存在唯一 \(G(a):G(Y)\rightarrow G(Y')\) 满足
+\begin{equation}\label{b2:eq:quasi-inverse-on-arrows}
+F\Bigl(G(a)\Bigr)=\varepsilon_{Y'}^{-1}a\varepsilon_Y.
+\end{equation}
+当 \(a=\operatorname{id}_Y\) 时，右边为恒等态射，忠实性给出 \(G(\operatorname{id}_Y)=\operatorname{id}_{G(Y)}\)。对 \(a:Y\rightarrow Y'\)、\(b:Y'\rightarrow Y''\)，有
+\[
+\begin{aligned}
+F\Bigl(G(b)G(a)\Bigr)
+&=\varepsilon_{Y''}^{-1}b\varepsilon_{Y'}\varepsilon_{Y'}^{-1}a\varepsilon_Y\\
+&=\varepsilon_{Y''}^{-1}ba\varepsilon_Y=F\Bigl(G(ba)\Bigr).
+\end{aligned}
+\]
+忠实性给出 \(G(b)G(a)=G(ba)\)，故 \(G\) 是函子。式\eqref{b2:eq:quasi-inverse-on-arrows}恰好说 \(\varepsilon\) 是自然同构。
+
+再对每个 \(X\in\mathcal C\)，用全忠实性唯一地选取 \(\eta_X:X\rightarrow GF(X)\)，使
+\[
+F(\eta_X)=\varepsilon_{F(X)}^{-1}.
+\]
+右端可逆，\cref{b2:prop:fully-faithful-reflects-isomorphism}说明 \(\eta_X\) 可逆。对 \(f:X\rightarrow X'\)，式\eqref{b2:eq:quasi-inverse-on-arrows}用于 \(F(f)\) 后给出
+\[
+F\Bigl(GF(f)\eta_X\Bigr)
+=\varepsilon_{F(X')}^{-1}F(f)
+=F\bigl(\eta_{X'}f\bigr).
+\]
+由忠实性，\(GF(f)\eta_X=\eta_{X'}f\)，所以 \(\eta\) 自然，所需等价得证。
+\end{proof}
+
+这项判据及所用的拟逆构造可对照 Riehl\cite[Theorem 1.5.9, pp. 33--34]{Riehl2016CategoryTheory}。证明中全性提供态射，忠实性把像中的等式送回原范畴，本质满则提供拟逆的对象；三个条件承担不同的任务。
+
+\ProseParagraphBreak
+定义矩阵范畴 \(\mathbf{Mat}_k\)：对象为非负整数，\(n\) 到 \(m\) 的态射是 \(m\times n\) 矩阵，复合为矩阵乘法，恒等态射为单位矩阵；零尺寸按唯一的空矩阵处理。函子
+\[
+K:\mathbf{Mat}_k\longrightarrow\mathbf{Vect}_k^{\mathrm{fd}},\qquad
+n\longmapsto k^n,\quad A\longmapsto(v\mapsto Av)
+\]
+全忠实，因为标准基下每个线性映射恰由一个矩阵表示；它本质满，因为有限维空间有基，因而同构于 \(k^n\)。由判据，这两个范畴等价。
+
+\ProseParagraphBreak
+具体选定每个有限维 \(V\) 的坐标同构 \(c_V:k^{\dim V}\rightarrow V\)，拟逆把 \(f:V\rightarrow W\) 送到 \(c_W^{-1}fc_V\) 的矩阵。这样定义态射作用之后，等式 \(fc_V=c_W(c_W^{-1}fc_V)\) 正好保证 \((c_V)\) 自然。选择产生了函子及相应的自然同构，却没有宣称这些坐标同构在选择之前就已唯一确定。这个例子也解释了为什么只记录维数、不记录矩阵，不能充当同一个等价。
 
 \subsection{Morita 理论的范畴语言}
 \label{b2:subsec:0504:03}
 
-待撰写。
+若两个环 \(R,S\) 同构，它们的模论只相差标量的名称。设 \(\varphi:R\rightarrow S\) 为环同构，对左 \(R\) 模 \(M\) 定义左 \(S\) 作用
+\[
+s\cdot m=\varphi^{-1}(s)m.
+\]
+在模同态上保持原映射，得到 \(R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 的函子。以 \(\varphi\) 替代 \(\varphi^{-1}\) 作反向构造，两次作用恢复原作用，两个函子严格互逆。
+
+\ProseParagraphBreak
+如果只要求模范畴等价，是否仍能恢复环同构？\chapref{b2:ch:16}将研究这一问题，并给出比环同构更宽的 \term[Morita-dengjia]{Morita 等价}[Morita equivalence]：它指 \(R\text{-}\mathbf{Mod}\) 与 \(S\text{-}\mathbf{Mod}\) 的范畴等价。那里还将证明矩阵环与原环的具体等价。本章不把这一后续结论用于任何证明；此处先弄清这样的等价必须保留什么。
+
+\begin{proposition}\label{b2:prop:equivalence-preserves-universal-objects}
+范畴等价把初始对象、终止对象分别送到初始对象、终止对象，并把一个已存在的积或余积及其指定映射送到相应的积或余积。
+\end{proposition}
+\begin{proof}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为等价，故全忠实且本质满。若 \(I\) 初始，对任意 \(Y\in\mathcal D\)，选同构 \(a:F(T)\rightarrow Y\)。全忠实性与后复合 \(a\) 给出双射
+\[
+\operatorname{Hom}_{\mathcal C}(I,T)
+\longrightarrow\operatorname{Hom}_{\mathcal D}\Bigl(F(I),Y\Bigr).
+\]
+左边恰一个元素，故 \(F(I)\) 初始。若 \(Z\) 终止，预复合 \(a^{-1}\) 把 \(\operatorname{Hom}_{\mathcal C}(T,Z)\) 双射到 \(\operatorname{Hom}_{\mathcal D}\Bigl(Y,F(Z)\Bigr)\)，故 \(F(Z)\) 终止。
+
+设 \((P,p_i)\) 为 \((X_i)\) 的积。给定 \(b_i:Y\rightarrow F(X_i)\)，仍选 \(a:F(T)\rightarrow Y\)。全忠实性给出唯一 \(c_i:T\rightarrow X_i\) 使 \(F(c_i)=b_i a\)。积的泛性质给出唯一 \(c:T\rightarrow P\)，使 \(p_i c=c_i\)。于是 \(b=F(c)a^{-1}:Y\rightarrow F(P)\) 满足 \(F(p_i)b=b_i\)。若另一态射 \(b'\) 也满足，先把 \(b'a:F(T)\rightarrow F(P)\) 唯一提升为 \(c':T\rightarrow P\)；忠实性给出 \(p_ic'=c_i\)，积的唯一性给出 \(c'=c\)，所以 \(b'=b\)。
+
+对余积 \((Q,j_i)\)，给定 \(b_i:F(X_i)\rightarrow Y\)，把 \(a^{-1}b_i\) 唯一提升为 \(c_i:X_i\rightarrow T\)，由余积得到 \(c:Q\rightarrow T\)，再令 \(b=aF(c)\)。若 \(b'F(j_i)=b_i\)，把 \(a^{-1}b'\) 提升后，用余积的唯一性得到同一个 \(c\)。故余积也被保留。
+\end{proof}
+
+因此模范畴等价保留零模、直和及直积所表达的映射性质。它不要求保持底集合，也不要求把正则模 \({}_RR\) 送成 \({}_SS\)。若想从一个模的自同态环恢复原环，还须识别该模究竟是谁：\cref{b2:prop:regular-hom-endomorphism}给出的是 \(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)，其中反环正来自右乘与复合次序。后续 Morita 理论的双模与标量侧别，不能从范畴等价的记号中省去。

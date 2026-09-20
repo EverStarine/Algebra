@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 8.3 对称代数
-% 纲要位置：计划纲要.md，第 1052 行。
 
 \section{对称代数}
 \label{b2:sec:0803}
 
-% TODO: 按以下纲要要点撰写本节。
+张量代数保留因子的排列顺序。若把 \(uv\) 与 \(vu\) 识别，就得到只记录交换乘积的代数。这个商构造在任意交换底环上都成立；把它认成张量幂中的“不变部分”，却通常需要能除以阶乘。本节把这两个对象分别定义，再说明何时存在指定的同构。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 对称代数的泛性质
 % * 有限自由模上的多项式解释
@@ -17,14 +16,128 @@
 \subsection{对称代数的泛性质}
 \label{b2:subsec:0803:01}
 
-待撰写。
+\begin{definition}\label{b2:def:symmetric-algebra}
+设 \(M\) 为交换环 \(R\) 上的模。令 \(J\) 为 \(T_R(M)\) 中由全部
+\[
+u\otimes v-v\otimes u,\qquad u,v\in M,
+\]
+生成的双边理想。商代数
+\[
+\operatorname{Sym}_R(M)\coloneqq T_R(M)/J
+\]
+称为 \(M\) 的\term[duichen-daishu]{对称代数}[symmetric algebra]。由齐次二次关系及\cref{b2:prop:homogeneous-ideal-quotient}，它有自然分次；其次数 \(d\) 的分量记为 \(\operatorname{Sym}_R^d(M)\)，称为 \(M\) 的 \(d\) 次\term[duichen-mi]{对称幂}[symmetric power]。张量 \(m_1\otimes\cdots\otimes m_d\) 的像记为 \(m_1\cdots m_d\)。
+\end{definition}
+\symidx{\(\operatorname{Sym}_R(M)\)：模的对称代数}
+\symidx{\(\operatorname{Sym}_R^d(M)\)：模的 \(d\) 次对称幂}
+
+关系在次数二，故次数零与一次部分仍分别为 \(R,M\)。全部一次生成元在商中彼此交换；任意两个字可逐个交换其中的生成元，故整个商代数交换。一般模中的线性关系仍予保留，并没有因交换乘法而消失。
+
+\begin{theorem}[对称代数的泛性质]\label{b2:thm:symmetric-algebra-universal}
+对任意交换 \(R\) 代数 \(A\) 及 \(R\) 线性映射 \(f:M\rightarrow A\)，存在唯一 \(R\) 代数同态
+\[
+\widehat f:\operatorname{Sym}_R(M)\longrightarrow A
+\]
+在一次分量上等于 \(f\)。它将 \(m_1\cdots m_d\) 送到 \(f(m_1)\cdots f(m_d)\)。
+\end{theorem}
+\begin{proof}
+\cref{b2:thm:tensor-algebra-universal}先把 \(f\) 延拓为 \(T_R(M)\rightarrow A\)。每个关系的像为 \(f(u)f(v)-f(v)f(u)=0\)，因为 \(A\) 交换。因此延拓同态将 \(J\) 送到零，诱导唯一商同态。反过来，商中的一次分量和结构标量生成全代数，所需同态在它们上的值已指定，故唯一。
+\end{proof}
+
+对线性映射 \(f:M\rightarrow N\)，上述定理给出分次同态 \(\operatorname{Sym}_R(f)\)，其在 \(d\) 次部分的公式为
+\[
+\operatorname{Sym}_R^d(f)(m_1\cdots m_d)=f(m_1)\cdots f(m_d).
+\]
+这些映射保持恒等与复合，因为在一次生成元上保持。因此对称代数与每次对称幂都是函子。目标交换的条件不能删去：若 \(M=R^2\)，把两个基向量任意映到非交换代数中的两个元素，只有它们交换时才可经 \(\operatorname{Sym}_R(M)\) 延拓。
+
+\begin{proposition}\label{b2:prop:symmetric-power-universal}
+商映射 \(q_d:M^{\otimes d}\rightarrow\operatorname{Sym}_R^d(M)\) 的核由所有 \(t-P_\sigma t\)、\(t\in M^{\otimes d}\)、\(\sigma\in S_d\) 生成。因而从 \(\operatorname{Sym}_R^d(M)\) 到 \(N\) 的线性映射，与对变量的任意排列保持不变的多线性映射 \(M^d\rightarrow N\) 一一对应。
+\end{proposition}
+\begin{proof}
+设 \(K_d\) 为所述差生成的子模。先看相邻两个位置的交换：在纯张量上，\(t-P_{(i\ i+1)}t\) 是一个二次交换关系左右各乘其余纯张量的结果，因此在 \(J\) 中。任意置换均可通过相邻交换完成；把一次次交换之差相加，得到任意 \(t-P_\sigma t\in J\)。这先对纯张量成立，再由线性对所有 \(t\) 成立，故 \(K_d\subseteq J\cap M^{\otimes d}\)。
+
+反向，将 \(J\) 的元素写成 \(a(u\otimes v-v\otimes u)b\) 的有限和，再取次数 \(d\) 的分量，并把 \(a,b\) 展开成纯张量的有限和。所得每项都是某个纯张量与相邻交换后的张量之差，所以属于 \(K_d\)。因此核恰为 \(K_d\)。
+
+多线性映射先由\cref{b2:thm:multiple-tensor-universal}唯一合成 \(M^{\otimes d}\rightarrow N\)。变量置换不改变值，恰好要求它在上述核上为零，因而唯一经 \(q_d\) 分解。反向复合显然逐变量线性且对称。
+\end{proof}
 
 \subsection{有限自由模的多项式解释}
 \label{b2:subsec:0803:02}
 
-待撰写。
+\begin{theorem}[多项式解释]\label{b2:thm:symmetric-polynomial-algebra}
+若 \(M\) 有有限基 \(e_1,\ldots,e_r\)，则存在唯一分次 \(R\) 代数同构
+\[
+\operatorname{Sym}_R(M)\longrightarrow R[X_1,\ldots,X_r],
+\qquad e_i\longmapsto X_i.
+\]
+\end{theorem}
+\begin{proof}
+将基向量送到不定元给出线性映射 \(M\rightarrow R[X_1,\ldots,X_r]\)。目标交换，故\cref{b2:thm:symmetric-algebra-universal}给出正向同态。反向把多项式 \(\sum_\alpha a_\alpha X^\alpha\) 送到 \(\sum_\alpha a_\alpha e_1^{\alpha_1}\cdots e_r^{\alpha_r}\)。和为有限和，商中的 \(e_i\) 彼此交换，因此多项式的加法与乘法公式保证它是代数同态。两复合分别在各 \(e_i\) 与 \(X_i\) 上为恒等，并在结构标量上为恒等；生成性使两复合在全代数为恒等。两映射保持生成元的次数，故保持分次。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:symmetric-power-basis}
+在上一结论的条件下，次数 \(d\) 的单项式
+\[
+e_1^{a_1}\cdots e_r^{a_r},\qquad a_i\ge0,\quad a_1+\cdots+a_r=d,
+\]
+构成 \(\operatorname{Sym}_R^d(M)\) 的一组基。若 \(R\ne0\)、\(r\ge1\)，则其秩为 \(\binom{r+d-1}{d}\)。当 \(r=0\) 时，零次部分为 \(R\)，所有正次部分为零。
+\end{proposition}
+\begin{proof}
+多项式作为有限形式和，其不同单项式的系数唯一；上一同构把全次数 \(d\) 的单项式送到题述元素，所以它们构成基。计算数目时，把 \(d\) 个相同的记号排成一行，并插入 \(r-1\) 道隔板。第 \(i\) 段记号的个数就是 \(a_i\)，允许空段。这与从 \(r+d-1\) 个位置选出 \(d\) 个记号位置一一对应，故数目为所述二项式系数。零模情形直接由定义得到。
+\end{proof}
+
+例如 \(R^2\) 的三次对称幂以 \(e_1^3,e_1^2e_2,e_1e_2^2,e_2^3\) 为基，秩为四；相应三次张量幂则有八个有序纯基张量。对称商识别不同排列，但不会额外令 \(e_1^2e_2\) 为零，也不会把它乘上一个排列数再作为定义。
+
+\ProseParagraphBreak
+对向量空间 \(V\)，上述 \(\operatorname{Sym}_k(V)\) 的生成元是向量。若要把生成元看成 \(V\) 上的线性坐标函数，应改用 \(\operatorname{Sym}_k(V^*)\)：线性泛函 \(\lambda\) 在 \(v\) 处取值为 \(\lambda(v)\)，乘积 \(\lambda_1\cdots\lambda_d\) 则取值为 \(\prod_j\lambda_j(v)\)。选定 \(V\) 的基后，其对偶基对应熟悉的坐标不定元；不应在没有给定识别的情况下把 \(V\) 与 \(V^*\) 混用。
+
+\ProseParagraphBreak
+形式多项式也不等同于它定义的函数。例如在 \(\mathbb F_p\) 上，\(X^p-X\) 是非零多项式，却在每个域元素处取零。由二项式展开，中间系数被 \(p\) 整除，故 \((a+1)^p=a^p+1\)；从 \(0^p=0\) 逐次加一，便得每个剩余类满足 \(a^p=a\)。对称代数采用形式多项式的乘法和系数，不因所有取值为零就把它的元素置零。
 
 \subsection{对称幂与正特征现象}
 \label{b2:subsec:0803:03}
 
-待撰写。
+令 \(S_d\) 按\cref{b2:prop:multiple-tensor-functoriality}的公式作用在 \(M^{\otimes d}\) 上。其不变子模为
+\[
+(M^{\otimes d})^{S_d}
+=\{\,t\in M^{\otimes d}\mid P_\sigma t=t\text{ 对所有 }\sigma\in S_d\,\},
+\]
+其中的元素称为\term[duichen-zhangliang]{对称张量}[symmetric tensor]。这是子模；\(\operatorname{Sym}_R^d(M)\) 则由相同作用产生的差取商得到。定义一个是“保持不变”，另一个是“把差置零”，所以应先用不同记号。
+
+\begin{proposition}\label{b2:prop:symmetrization-characteristic}
+若 \(d!\) 在 \(R\) 中可逆，则\term[duichen-hua]{对称化}[symmetrization]算子
+\[
+E_d=\frac1{d!}\sum_{\sigma\in S_d}P_\sigma
+\]
+是投影到 \((M^{\otimes d})^{S_d}\) 的线性映射，并诱导自然同构
+\[
+\overline E_d:\operatorname{Sym}_R^d(M)\xrightarrow{\ \cong\ }(M^{\otimes d})^{S_d}.
+\]
+其逆是商映射 \(q_d\) 在不变子模上的限制。
+\end{proposition}
+\begin{proof}
+左乘一个固定置换只重新排列求和项，因此 \(P_\pi E_d=E_d\)，像都不变；若 \(t\) 已不变，则 \(E_dt=t\)。所以像正是不变子模，且 \(E_d^2=E_d\)。
+
+同样，\(E_dP_\pi=E_d\)，故 \(E_d\) 零化全部 \(t-P_\pi t\)。由\cref{b2:prop:symmetric-power-universal}，它唯一经 \(q_d\) 分解为 \(\overline E_d\)。在对称商中 \(q_dP_\sigma=q_d\)，因而 \(q_dE_d=q_d\)，说明 \(q_d\overline E_d\) 为恒等；在不变子模上 \(E_d\) 为恒等，又说明 \(\overline E_dq_d\) 为恒等。线性映射的张量幂与每个 \(P_\sigma\) 交换，所以也与平均算子相容；所得同构因此自然。
+\end{proof}
+
+可逆条件不能凭符号略去。取 \(k\) 特征为素数 \(p\)，\(V=ke\oplus kf\)，在 \(V^{\otimes p}\) 中令
+\[
+s=\sum_{j=1}^p e\otimes\cdots\otimes
+\underset{\text{第 }j\text{ 个位置}}{f}
+\otimes\cdots\otimes e.
+\]
+各项是互不相同的纯基张量，所以 \(s\ne0\)；置换只重排这些项，所以 \(s\) 不变。但
+\[
+q_p(s)=p\,e^{p-1}f=0.
+\]
+因此商映射在不变张量上不是单射。最小例子是特征二下的 \(e\otimes f+f\otimes e\)：它非零且对称，却在二次对称幂中为零。反过来，\(ef\) 仍是对称幂的一个非零基元素。
+
+\ProseParagraphBreak
+不除以阶乘的求和算子 \(N_d=\sum_\sigma P_\sigma\) 始终存在，但它不是上述同构的无条件替代。例如一维空间 \(ke\) 在次数 \(p\) 时，全部置换作用都是恒等，故 \(N_p=p!\operatorname{id}=0\)，而张量幂、不变子空间和对称幂都非零。此时这三个空间的抽象维数相同，也救不回一个已经变成零的指定映射。
+
+\ProseParagraphBreak
+正特征还改变了取幂的行为。对称代数交换，故在特征 \(p\) 下
+\[
+(v+w)^p=v^p+w^p,\qquad (av)^p=a^pv^p.
+\]
+第一式由二项式系数 \(\binom pi\) 对 \(0<i<p\) 都被 \(p\) 整除得到。这使 \(v\mapsto v^p\) 可加，却一般不是 \(k\) 线性，而是随标量取 \(p\) 次幂；只在所有 \(a\in k\) 都满足 \(a^p=a\) 等适当情形下才成为通常的线性映射。因子对称、取对称商和取 \(p\) 次幂是相互联系但不同的运算。

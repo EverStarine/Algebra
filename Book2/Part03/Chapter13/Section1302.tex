@@ -5,9 +5,9 @@
 \section{半单环}
 \label{b2:sec:1302}
 
-% TODO: 按以下纲要要点撰写本节。
+半单模可以定义在任意环上；半单环则要求环自身的正则模已经半单。因为每个模都由自由模取商得到，这个看似只涉及一个模的要求，实际上会迫使整个模范畴中的子模都能分裂。它还蕴含强烈的有限性，不能与仅仅“没有非零元素同时零化所有简单模”混淆。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 正则模半单的等价条件
 % * 半单环与短正合列分裂
@@ -17,14 +17,79 @@
 \subsection{正则模半单的等价条件}
 \label{b2:subsec:1302:01}
 
-待撰写。
+\begin{definition}\label{b2:def:semisimple-ring}
+若左正则模 \({}_RR\) 是半单模，就称环 \(R\) 为\term[bandan-huan]{半单环}[semisimple ring]。零环的正则模为零，按此约定也是半单环。\secref{b2:sec:1303}将证明该定义与右正则模半单等价。
+\end{definition}
+
+\begin{theorem}\label{b2:thm:semisimple-ring-characterizations}
+对含单位元的环 \(R\)，下列条件等价：
+\begin{equivalences}
+\item 左正则模 \({}_RR\) 半单。
+\item 每个左理想都是 \({}_RR\) 的直和因子。
+\item 每个左 \(R\) 模都是半单模。
+\item 每条左 \(R\) 模的短正合列都分裂。
+\end{equivalences}
+若这些条件成立，\({}_RR\) 是有限多个简单左理想的直和，因而具有有限长度，特别是左 Noether 且左 Artin。
+\end{theorem}
+\begin{proof}
+第一、二条的等价是\cref{b2:thm:semisimple-module-characterizations}应用于 \({}_RR\)。假设第一条，任意自由模 \(R^{(I)}\) 是半单模的直和，因而半单。任意左模 \(M\) 都有满射 \(R^{(I)}\to M\)，而\cref{b2:prop:semisimple-subquotients}保证半单模的商仍半单，所以得到第三条。第三条当然包含第一条。
+
+若第三条成立，短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\) 中，\(i(A)\) 在 \(B\) 内有补模 \(K\)。\(q|_K\) 单射是因为 \(K\cap\ker q=0\)，满射是因为每个 \(b\) 可写成 \(i(a)+k\)。其逆后接 \(K\hookrightarrow B\) 便是截面，所以序列分裂。反过来，将第四条用于每条 \(0\to N\to M\to M/N\to0\)，由\cref{b2:thm:split-exact-sequence}得到每个子模都有补模，故每个 \(M\) 半单。
+
+最后，\(R\) 由 \(1\) 生成，而有限生成半单模只有有限多个简单直和分量；也可直接观察 \(1\) 的有限支集已经生成全部 \(R\)。逐个加上这些简单左理想得到有限合成列，因此 \({}_RR\) 有限长度。由\cref{b2:thm:finite-length-chain-conditions}，左理想的升链与降链都稳定，得到两项有限性结论。
+\end{proof}
+
+在此意义下，“半单 Artin 环”中的左 Artin 条件已由半单性推出。无限直积 \(\prod_{i\ge1}k\) 不会仅因每个因子是域就自动成为半单环：其正则模含有严格下降的左理想链
+\[
+R\supsetneq\{x:x_1=0\}\supsetneq
+\{x:x_1=x_2=0\}\supsetneq\cdots.
+\]
+定理保证半单环必左 Artin，所以这个环不是半单环。有限直积与无限直积在这里有本质区别。
 
 \subsection{半单环与短正合列分裂}
 \label{b2:subsec:1302:02}
 
-待撰写。
+\begin{proposition}\label{b2:prop:semisimple-projective-injective}
+若 \(R\) 半单，则每个左 \(R\) 模既投射又内射。反过来，若每个左模都投射，或每个左模都内射，则 \(R\) 半单。
+\end{proposition}
+\begin{proof}
+设 \(R\) 半单。给定满射 \(q:B\to C\)，其核所确定的短正合列分裂，故有截面 \(s:C\to B\)。对任意 \(f:P\to C\)，映射 \(sf:P\to B\) 是提升，说明任意 \(P\) 投射。给定单射 \(i:A\to B\)，分裂性给出缩回 \(r:B\to A\)；任意 \(f:A\to E\) 都由 \(fr:B\to E\) 延拓，说明任意 \(E\) 内射。
+
+反过来，若所有模都投射，对每条短正合列的商模使用提升性质，将其恒等映射提升为截面，所以所有短正合列都分裂。若所有模都内射，则将子模的恒等映射沿包含延拓，得到缩回，也使每条短正合列分裂。两种情形均由\cref{b2:thm:semisimple-ring-characterizations}推出半单性。
+\end{proof}
+
+这里要求“每个左模”都具有性质。一个给定模半单，不意味着它在原环上投射或内射。例如简单整数模 \(\mathbb Z/p\mathbb Z\) 不是投射模，因为 \(\mathbb Z\to\mathbb Z/p\mathbb Z\) 没有截面；它也不是内射模，因为从 \(p\mathbb Z\) 到它的同态 \(p\mapsto\bar1\) 不能延拓到 \(\mathbb Z\)：任何延拓都会把 \(p\) 送到 \(p\) 倍的某个元素，即零。
+
+\ProseParagraphBreak
+半单环上的直和分解通常不唯一到具体子模。例如 \(k^2\) 中 \(ke_1\) 的补空间可取任意 \(k(e_2+ae_1)\)。半单性保证补模存在，结构定理则描述简单类型及其重数；这两者都不要求为每个子模指定唯一补模。
 
 \subsection{半单性与半本原性}
 \label{b2:subsec:1302:03}
 
-待撰写。
+每个简单模 \(S\) 给出一个双边理想 \(\operatorname{Ann}_R(S)\)，由同时零化 \(S\) 全部元素的标量组成。把这些理想取交，可以检测一个环的所有简单模共同看不见哪些元素。
+
+\begin{proposition}\label{b2:prop:simple-annihilator-intersection}
+对非零含单位元的环 \(R\)，有
+\[
+\bigcap_{S\text{ 简单左模}}\operatorname{Ann}_R(S)
+=\bigcap_{L\text{ 极大左理想}}L.
+\]
+这里左边只需对简单模的同构类代表取交。
+\end{proposition}
+\begin{proof}
+若 \(a\) 零化每个简单模，对每个极大左理想 \(L\)，商模 \(R/L\) 简单，故 \(a(1+L)=0\)，即 \(a\in L\)。这证明左边包含于右边。
+
+反过来，设 \(a\) 属于全部极大左理想。对任意简单模 \(S\) 和 \(0\ne s\in S\)，满射 \(R\to S\)、\(r\mapsto rs\) 的核是极大左理想，因而包含 \(a\)，所以 \(as=0\)。零向量也被零化，于是 \(a\in\operatorname{Ann}_R(S)\)，得到反向包含。
+\end{proof}
+
+上述交为零的条件称为\term[banbenyuan-xing]{半本原性}[semiprimitivity]。第十四章将把这个交系统地作为 Jacobson 根研究；本节只使用已经说明的零化子条件，不调用后面的根理论。
+
+\ProseParagraphBreak
+半单环一定满足这个条件。若 \(a\) 零化所有简单模，就零化左正则模的每个简单直和分量，因而零化整个 \(R\)；特别是 \(a=a1=0\)。但反过来不成立：\(\mathbb Z\) 的简单模为全部 \(\mathbb Z/p\mathbb Z\)，零化子为 \(p\mathbb Z\)，且
+\[
+\bigcap_{p\text{ 素数}}p\mathbb Z=0.
+\]
+若非零整数 \(a\) 属于此交，取 \(|a|+1\) 的任一素因子 \(p\)，它不整除 \(a\)，立即矛盾。另一方面 \(\mathbb Z\) 不半单：若 \(2\mathbb Z\) 有补模 \(K\)，则 \(K\cong\mathbb Z/2\mathbb Z\)，但 \(\mathbb Z\) 中没有非零有限阶元素，故不可能有这样的 \(K\)。
+
+\ProseParagraphBreak
+零环没有非零简单模。若把空族理想的交按约定取为全环，上述交在零环中仍是零，半单性与半本原性在这个退化情形中均成立。后续结构定理将把零环对应于没有矩阵因子的空乘积，避免把它误列为除环。

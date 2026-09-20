@@ -1,13 +1,12 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 16.2 双模实现的函子
-% 纲要位置：计划纲要.md，第 1285 行。
 
 \section{双模实现的函子}
 \label{b2:sec:1602}
 
-% TODO: 按以下纲要要点撰写本节。
+为了把两个模范畴联系起来，需要一个同时接受两侧标量作用的模。先从任意 \((R,S)\) 双模 \(P\) 出发，写出张量函子、Hom 函子及它们的伴随映射；然后再把 \(S\) 选为 \(P\) 的自同态环的反环。这样可以分别检查构造本身的合法性，以及何种条件使它成为等价。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 张量函子与 Hom 函子
 % * 自同态环和反环约定
@@ -17,14 +16,110 @@
 \subsection{张量函子与 Hom 函子}
 \label{b2:subsec:1602:01}
 
-待撰写。
+给定 \({}_RP_S\)，定义
+\[
+F(M)=\operatorname{Hom}_R(P,M),\qquad
+G(N)=P\otimes_SN.
+\]
+这里 \(M\) 为左 \(R\) 模，\(N\) 为左 \(S\) 模。\(G(N)\) 的左 \(R\) 作用留在第一个因子；\(F(M)\) 的左 \(S\) 作用由
+\begin{equation}\label{b2:eq:morita-hom-action}
+(sf)(p)=f(ps)
+\end{equation}
+给出。它仍为左 \(R\) 线性映射，因为 \(P\) 的两侧作用相容；而
+\[
+\Bigl(s_1(s_2f)\Bigr)(p)=f\Bigl((ps_1)s_2\Bigr)
+=\Bigl((s_1s_2)f\Bigr)(p),
+\]
+所以确为左 \(S\) 作用。
+
+\ProseParagraphBreak
+对 \(a:M\rightarrow M'\)，令 \(F(a)(f)=af\)；对 \(b:N\rightarrow N'\)，令 \(G(b)=\operatorname{id}_P\otimes b\)。复合与恒等关系由同态复合和张量函子性得到。它们都是加性函子。由\cref{b2:thm:hom-tensor-adjunction}，有关于两变量自然的对应
+\[
+\operatorname{Hom}_R(P\otimes_SN,M)
+\cong\operatorname{Hom}_S\Bigl(N,\operatorname{Hom}_R(P,M)\Bigr),
+\]
+把 \(h\) 送到 \(n\mapsto\Bigl(p\mapsto h(p\otimes n)\Bigr)\)。因此 \(G\) 左伴随于 \(F\)。一般地，\(F\) 左正合，\(G\) 右正合；\(P\) 左投射时，\cref{b2:cor:projective-hom-exact}才使 \(F\) 正合。
+
+\begin{proposition}\label{b2:prop:finite-projective-hom-tensor}
+若左 \(R\) 模 \(P\) 有限生成且投射，令 \(P^*=\operatorname{Hom}_R(P,R)\)，其 \((S,R)\) 双模作用为
+\[
+(s\lambda)(p)=\lambda(ps),\qquad
+(\lambda r)(p)=\lambda(p)r.
+\]
+则有关于 \(M\) 自然的左 \(S\) 模同构
+\[
+P^*\otimes_RM\longrightarrow F(M),\qquad
+\lambda\otimes m\longmapsto\Bigl(p\mapsto\lambda(p)m\Bigr).
+\]
+\end{proposition}
+\symidx{\(P^*=\operatorname{Hom}_R(P,R)\)：左模的右对偶模}
+\begin{proof}
+两侧作用分别保留左 \(R\) 线性，并且在求值公式中交换，故确为双模。所写两变量映射双可加，且 \((\lambda r)(p)m=\lambda(p)(rm)\)，所以对 \(R\) 平衡；它也保留左 \(S\) 作用，因两种作用路径都在 \(p\) 处给出 \(\lambda(ps)m\)。故诱导所需同态。
+
+由\cref{b2:prop:finite-dual-basis}，取有限个 \(p_i\in P,\lambda_i\in P^*\)，使 \(p=\sum_i\lambda_i(p)p_i\)。反向定义 \(f\mapsto\sum_i\lambda_i\otimes f(p_i)\)。正向复合在 \(p\) 处取值为 \(\sum_i\lambda_i(p)f(p_i)=f(p)\)。另一复合将 \(\lambda\otimes m\) 送到
+\[
+\sum_i\lambda_i\otimes\lambda(p_i)m
+=\Bigl(\sum_i\lambda_i\lambda(p_i)\Bigr)\otimes m
+=\lambda\otimes m.
+\]
+最后一个等式来自对偶基公式施加 \(\lambda\)：\(\lambda(p)=\sum_i\lambda_i(p)\lambda(p_i)\)，其系数次序如式所写。故两映射互逆。对 \(M\) 上的同态，两种路径都将 \(\lambda\otimes m\) 送到 \(p\mapsto\lambda(p)a(m)\)，证明自然性。
+\end{proof}
+
+这个同构说明，在有限生成投射条件下，Hom 函子本身也能写成一个张量函子。公式中的标量 \(\lambda(p)\) 作用在 \(m\) 左侧；交换这两个符号在一般环上并没有意义。
 
 \subsection{自同态环和反环约定}
 \label{b2:subsec:1602:02}
 
-待撰写。
+现在固定一个左 \(R\) 模 \(P\)，取
+\[
+\Delta=\operatorname{End}_R(P),\qquad S=\Delta^{\mathrm{op}}.
+\]
+\symidx{\(S=\operatorname{End}_R(P)^{\mathrm{op}}\)：投射生成元对应的自同态反环}
+若 \(s\in S\) 对应自同态 \(\alpha_s\in\Delta\)，定义 \(ps=\alpha_s(p)\)。因为
+\[
+\alpha_{st}=\alpha_t\circ\alpha_s,
+\qquad (ps)t=\alpha_t\Bigl(\alpha_s(p)\Bigr)=p(st),
+\]
+这是右 \(S\) 作用；各 \(\alpha_s\) 左 \(R\) 线性，保证它与左作用相容。因此 \(P\) 成为 \((R,S)\) 双模，上一个小节的函子与伴随立即适用。
+
+\ProseParagraphBreak
+在此约定下，\(F(P)=\operatorname{End}_R(P)\) 作为左 \(S\) 模自然同构于正则左模 \(S\)：将 \(\alpha_s\) 对应于 \(s\)。事实上，\(t\alpha_s\) 的作用是先做 \(\alpha_t\) 再做 \(\alpha_s\)，即 \(\alpha_s\alpha_t=\alpha_{ts}\)，正对应左乘 \(t\)。这是一个左模识别；作为环，\(\Delta=S^{\mathrm{op}}\)，不能因此省去反环。
+
+\ProseParagraphBreak
+最基本的例子是 \(P={}_RR\)。每个左线性自同态都是右乘某个 \(a\in R\)，所以 \(\Delta\cong R^{\mathrm{op}}\)、\(S\cong R\)，Hom 在一处求值后恢复原模。若取左自由模 \(P=R^{1\times n}\)，写成行向量方便记录作用：每个左线性自同态唯一为右乘矩阵 \(B\in M_n(R)\)，两次右乘的算子复合满足
+\[
+D_BD_C(p)=(pC)B=p(CB).
+\]
+所以 \(S\cong M_n(R)\)。映射 \(f:P\rightarrow M\) 对应其在各标准行上的值组成的列
+\[
+\Bigl(f(e_1),\ldots,f(e_n)\Bigr)^{\mathsf T}\in M^n.
+\]
+由 \(e_iB=\sum_j b_{ij}e_j\)，左 \(S\) 作用恰为矩阵乘这个列。这便与\cref{b2:prop:matrix-morita-equivalence}的显式等价相合。
 
 \subsection{伴随的单位及余单位}
 \label{b2:subsec:1602:03}
 
-待撰写。
+对任意 \((R,S)\) 双模，伴随的单位和余单位由\cref{b2:thm:hom-tensor-adjunction}的两种求值公式给出：
+\begin{align}
+\eta_N:N&\longrightarrow FG(N),
+&\eta_N(n)(p)&=p\otimes n,\label{b2:eq:morita-unit}\\
+\varepsilon_M:GF(M)&\longrightarrow M,
+&\varepsilon_M(p\otimes f)&=f(p).\label{b2:eq:morita-counit}
+\end{align}
+第二式的平衡性为 \(f(ps)=(sf)(p)\)，第一式的左 \(S\) 线性为 \(p\otimes sn=ps\otimes n\)。相应的左 \(R\) 线性分别来自 \(P\) 的左作用和 \(f\) 的线性。因此两者都是所在模范畴中的同态，不只是集合映射。
+
+\begin{proposition}\label{b2:prop:morita-adjunction-maps}
+上述映射关于 \(N,M\) 自然，并满足
+\begin{equation}\label{b2:eq:morita-triangles}
+\varepsilon_{G(N)}G(\eta_N)=\operatorname{id}_{G(N)},\qquad
+F(\varepsilon_M)\eta_{F(M)}=\operatorname{id}_{F(M)}.
+\end{equation}
+若 \(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，则 \(\eta_S\) 与 \(\varepsilon_P\) 都是同构，不要求 \(P\) 已是生成元。
+\end{proposition}
+\begin{proof}
+若 \(b:N\rightarrow N'\)，两种从 \(N\) 到 \(FG(N')\) 的路径在 \(n,p\) 处都为 \(p\otimes b(n)\)；若 \(a:M\rightarrow M'\)，余单位的两种路径在 \(p\otimes f\) 处都为 \(a\Bigl(f(p)\Bigr)\)，所以自然。第一条三角恒等式把 \(p\otimes n\) 送到 \(\eta_N(n)(p)=p\otimes n\)；第二条把 \(f\) 送到函数 \(p\mapsto\varepsilon_M(p\otimes f)=f(p)\)，故都成立。
+
+在所给自同态环约定下，识别 \(P\otimes_SS\cong P\) 及 \(F(P)\cong S\)。\(\eta_S(s)\) 对应 \(p\mapsto ps=\alpha_s(p)\)，再对应到 \(s\)，所以是恒等映射。\(\varepsilon_P\) 在这些识别下为 \(P\otimes_SS\rightarrow P\)、\(p\otimes s\mapsto ps\)，是张量积的单位同构。
+\end{proof}
+
+这两个特殊对象处的同构还不足以宣称整个范畴等价。要覆盖任意模，需要把模写成适当直和之间映射的余核，并证明函子保留相应的直和与正合尾段。有限生成、投射和生成元三个条件将在下一节分别承担这些任务。

@@ -6,11 +6,215 @@
 \label{b2:ch:07}
 \BookChapterNumber{b2:ch:07}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+从自由模出发，映射能够沿满射提升；以内射模为目标，子模上的映射能够延拓；与平坦模张量，则保持单射。本章分别建立这三类模的基本刻画，证明 Baer 判据、足够多内射模的存在性，以及一般环上的有限关系平坦判据。交换环上的有限生成理想张量判据在此就地证明，有限展示平坦模的投射性也由有限关系直接推出。整数模、幂等元及多项式理想的例子说明，各种蕴含的逆命题需要哪些附加条件。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用提升与分裂刻画投射模，能够构造有限对偶基并识别不自由的投射模。
+\item 掌握 Baer 判据的极大延拓证明，理解可除交换群及足够多内射模的构造。
+\item 区分自由、投射、平坦、无挠，使用有限关系或理想张量判据检验具体模。
+\item 说明有限展示在平坦推出投射的证明中如何使用，并认识本章与后续局部理论、同调代数的关系。
+\end{itemize}
+\end{learninggoals}
+
+本章需要\chapref{b2:ch:02}的模与同态、\chapref{b2:ch:03}的自由模、展示及分裂正合列，以及\chapref{b2:ch:06}的张量构造和右正合性。主理想整环上的例子另用\cref{b2:thm:pid-module-structure}。\secref{b2:sec:0701}与\secref{b2:sec:0702}可以先于张量积学习，但\secref{b2:sec:0703}以后应熟悉右模与左模如何配对。Baer 判据使用第一卷附录A定理A.1.4的 Zorn 引理；使用时将实际的偏序集和链上界写出。
+
+\ProseParagraphBreak
+进一步阅读可参阅 Lam 的《Lectures on Modules and Rings》\cite[\S\S 2A--2B, 3A, 3C]{Lam1999ModulesRings}中的投射模、对偶基、Baer 判据及可除性；平坦性检验与有限展示条件见同书\cite[\S\S 4A, 4C--4E]{Lam1999ModulesRings}。本章的主要结论均给出证明，阅读文献时仍须逐次辨别作者采用左模还是右模。
 
 \input{Part01/Chapter07/Section0701}
 \input{Part01/Chapter07/Section0702}
 \input{Part01/Chapter07/Section0703}
 \input{Part01/Chapter07/Section0704}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+投射模是自由模的直和因子，其 Hom 函子保持满射；内射模允许延拓到任意较大的定义域，其反变 Hom 函子保持相应的正合列。Baer 判据把延拓问题缩减到左理想。可除交换群提供基本的内射对象，再由 \(\mathbb Q/\mathbb Z\) 分离元素和余诱导构造，得到任意环上足够多的内射模。
+
+\ProseParagraphBreak
+平坦性补足张量积缺少的左端单射。有限关系判据把这个函子条件变为系数的因子分解，交换环上再化为有限生成理想的张量检验。主理想整环上，无挠恰好等价于平坦；一般整环上，理想 \((x,y)\) 表明两者可以不同。有限展示使全部关系能够同时处理，从而把平坦模写成有限自由模的直和因子。\(\mathbb Q\) 及无限积环的循环商模分别说明，平坦本身和有限生成平坦都不足以推出投射。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:07-projective-quotient-idempotent}
+设 \(R\) 为交换环，\(I\) 为理想。证明 \(R/I\) 是投射 \(R\) 模，当且仅当 \(I=Re\)，其中 \(e^2=e\)。据此判断 \(\mathbb Z/6\mathbb Z\) 作为 \(\mathbb Z\) 模和作为 \(\mathbb Z/12\mathbb Z\) 模是否投射。
+\end{exercise}
+\begin{solution}
+若 \(R/I\) 投射，\(R\to R/I\) 分裂，故存在投影 \(p:R\to I\)，在 \(I\) 上为恒等。令 \(e=p(1)\)，则 \(p(r)=re\)，因而 \(I=Re\)；又 \(p(e)=e\) 给出 \(e^2=e\)。反过来，\(R=Re\oplus R(1-e)\)，所以 \(R/Re\cong R(1-e)\) 投射。
+
+整数环的幂等元只有零和一，\(6\mathbb Z\) 不是相应理想，所以第一种情况不投射。第二种情况的核为 \((\bar6)\subseteq\mathbb Z/12\mathbb Z\)。此理想只有 \(\bar0,\bar6\)，而 \(\bar6^2=\bar0\ne\bar6\)，不存在生成它的幂等元，所以也不投射。作为对照，\(\mathbb Z/3\mathbb Z\) 是 \(\mathbb Z/6\mathbb Z\) 上的投射模：核 \((\bar3)\) 由幂等元 \(\bar3\) 生成。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-explicit-lifting}
+设 \(P\) 有有限对偶基 \((p_i,\varphi_i)\)，\(q:B\to C\) 满射，\(f:P\to C\)。选取 \(b_i\in B\) 使 \(q(b_i)=f(p_i)\)，写出一个提升的公式。若 \(g_0\) 是一个提升，描述所有提升与 \(\operatorname{Hom}_R(P,\ker q)\) 的关系。
+\end{exercise}
+\begin{solution}
+令 \(g(p)=\sum_i\varphi_i(p)b_i\)。每个 \(\varphi_i\) 左线性，故 \(g\) 左线性，而且
+\[
+qg(p)=\sum_i\varphi_i(p)f(p_i)
+=f\Bigl(\sum_i\varphi_i(p)p_i\Bigr)=f(p).
+\]
+任意另一提升 \(g\) 满足 \(q(g-g_0)=0\)，故 \(g-g_0\) 唯一经 \(\ker q\) 的包含分解。反之，给 \(g_0\) 加上任意从 \(P\) 到 \(\ker q\) 的同态，仍为提升。因此选定 \(g_0\) 后，所有提升与该 Hom 群一一对应；没有指定 \(g_0\) 时，不应把某一个提升称为天然的零元。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-idempotent-matrix}
+设 \(R\) 为交换环，\(E\in M_n(R)\) 满足 \(E^2=E\)。证明 \(\operatorname{im}E\) 为有限生成投射模，并由矩阵写出一组有限对偶基。反过来，由有限生成投射模的分裂满射构造这样的幂等矩阵。
+\end{exercise}
+\begin{solution}
+对列向量 \(v\)，有 \(v=Ev+(v-Ev)\)，且 \(v-Ev\in\ker E\)。若 \(v\in\operatorname{im}E\cap\ker E\)，则 \(Ev=v\) 又等于零，故 \(R^n=\operatorname{im}E\oplus\ker E\)。取 \(p_i=Ee_i\)，令 \(\varphi_i\) 为第 \(i\) 个坐标在 \(\operatorname{im}E\) 上的限制，则 \(v=Ev=\sum_i\varphi_i(v)p_i\)，给出所需对偶基。
+
+反过来，取 \(q:R^n\to P\)、\(s:P\to R^n\) 且 \(qs=\operatorname{id}_P\)。端同态 \(sq\) 满足 \((sq)^2=sq\)，其矩阵 \(E\) 幂等，像为 \(s(P)\cong P\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-pid-finite-projective}
+设 \(R\) 为主理想整环，\(M\) 有限生成。证明自由、投射、平坦和无挠四个条件对 \(M\) 等价，并说明去掉有限生成后哪一个逆向蕴含已经失败。
+\end{exercise}
+\begin{solution}
+自由蕴含投射，投射蕴含平坦由\cref{b2:thm:projective-flat}，平坦蕴含无挠由\cref{b2:prop:flat-torsionfree}。有限生成无挠模由\cref{b2:thm:pid-module-structure}自由，闭合这一组等价。去掉有限生成后，\(\mathbb Q\) 作为整数模无挠且平坦，却不投射，\subsecref{b2:subsec:0703:03}已用其到 \(\mathbb Z\) 的同态全为零证明这一点。所以至少“平坦推出投射”和“无挠推出自由”都失败。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-baer-pid}
+设 \(R\) 为主理想整环，称 \(D\) 可除，是指每个 \(0\ne a\in R\) 的乘法 \(D\xrightarrow{\times a}D\) 满射。用 Baer 判据证明 \(D\) 内射当且仅当可除。令 \(K\) 为 \(R\) 的分式域，判断 \(K\) 与 \(K/R\) 的内射性。
+\end{exercise}
+\begin{solution}
+若 \(D\) 内射，对 \(d\in D\) 定义 \(aR\to D\)、\(ar\mapsto rd\)。因 \(R\) 为整环，此定义与表示无关。延拓到 \(R\)，令 \(x\) 为一的像，则 \(ax=d\)。反过来，每个非零理想为 \(aR\)。给定 \(f:aR\to D\)，取 \(x\) 使 \(ax=f(a)\)，则 \(r\mapsto rx\) 延拓 \(f\)；零理想取零延拓。因此 Baer 判据成立。\(K\) 与 \(K/R\) 中均可将分式代表元除以 \(a\)，故两者可除并内射。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-divisible-exact-sequence}
+证明可除交换群的商群仍可除。解释为什么短正合列
+\[
+0\longrightarrow\mathbb Z\longrightarrow\mathbb Q\longrightarrow\mathbb Q/\mathbb Z\longrightarrow0
+\]
+不分裂，尽管中间项与右端都内射。
+\end{exercise}
+\begin{solution}
+若 \(D\) 可除，给定 \(d+A\in D/A\)，先在 \(D\) 中解 \(nx=d\)，则 \(n(x+A)=d+A\)。所以商群可除。
+
+上述序列若分裂，便有缩回 \(r:\mathbb Q\to\mathbb Z\)，但这样的同态全为零：\(r(q)\) 对每个 \(n>0\) 都是 \(n r(q/n)\)，只能为零。因此不可能在 \(\mathbb Z\) 上为恒等。内射性保证的是左端内射时分裂；这里左端 \(\mathbb Z\) 恰恰不内射。右端内射不提供一个从它出发的提升。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-finite-characters}
+设 \(A\) 是有限交换群，记 \(A^\vee=\operatorname{Hom}_{\mathbb Z}(A,\mathbb Q/\mathbb Z)\)。证明 \(|A^\vee|=|A|\)，并证明自然求值映射 \(A\to(A^\vee)^\vee\) 是同构。
+\end{exercise}
+\begin{solution}
+对 \(A=\mathbb Z/n\mathbb Z\)，同态由 \(\bar1\) 的像确定，其像可取 \(j/n+\mathbb Z\)、\(0\le j<n\)，所以恰有 \(n\) 个。有限交换群由\cref{b2:thm:pid-module-structure}分成有限个循环群的直和；Hom 把有限直和变成有限直积，因而个数相乘，得到 \(|A^\vee|=|A|\)。
+
+求值映射把 \(a\) 送到 \(\chi\mapsto\chi(a)\)，为群同态。\cref{b2:lem:qz-separates}说明非零 \(a\) 总被某个 \(\chi\) 检测到，故它单射。两端都是同阶有限群，因而同构。映射的公式不需选循环分解，分解只用于证明两端阶数相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-injective-summands}
+证明内射模的直和因子内射，并给出内射却不平坦的整数模。再说明为什么“一个模嵌入内射模”不能推出它内射。
+\end{exercise}
+\begin{solution}
+若 \(E\) 是内射模 \(J\) 的直和因子，记包含与投影为 \(i,p\)，且 \(pi=\operatorname{id}_E\)。对子模上的 \(f:A\to E\)，先延拓 \(if\) 到较大模 \(B\)，再与 \(p\) 复合，即为 \(f\) 的延拓。
+
+\(\mathbb Q/\mathbb Z\) 可除而内射，但 \(1/2+\mathbb Z\) 为非零挠元，故由\cref{b2:prop:flat-torsionfree}不平坦。\(\mathbb Z\) 嵌入内射模 \(\mathbb Q\)，却不是内射；这也说明上述直和因子的缩回条件不可省去。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-group-algebra-injective}
+设 \(G\) 为有限群，\(k\) 为任意域，\(R=k[G]\)。在 \(J=\operatorname{Hom}_k(R,k)\) 上取左作用 \((rf)(s)=f(sr)\)。证明 \(J\) 是内射左 \(R\) 模，并用群元基证明 \(R\cong J\) 为左模，从而正则左模 \(R\) 内射。这里不假设 \(\operatorname{char}k\) 与 \(|G|\) 互素。
+\end{exercise}
+\begin{solution}
+与\cref{b2:lem:coinduced-injective}相同的显式公式给出 \(\operatorname{Hom}_R(M,J)\cong\operatorname{Hom}_k(M,k)\)。向量空间的子空间有补空间，故任意 \(k\) 线性泛函可延拓；利用此对应，\(J\) 内射。
+
+令 \(\lambda:R\to k\) 取单位群元的系数，定义 \(\Phi(a)(s)=\lambda(sa)\)。有 \(\Phi(ra)(s)=\lambda(sra)=\Bigl(r\Phi(a)\Bigr)(s)\)，故 \(\Phi\) 左线性。若 \(a=\sum_g a_g g\)，则 \(\Phi(a)(g^{-1})=a_g\)，因而 \(\Phi\) 单射。两端维数均为 \(|G|\)，所以同构。这项证明未对群阶作除法，因此对任意特征成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-integer-relation}
+设 \(M\) 为无挠交换群，且 \(6x+10y=0\)。求 \(z\in M\) 使 \(x=5z\)、\(y=-3z\)，从而给出这条关系的一项有限关系分解。去掉无挠条件后结论是否仍成立？
+\end{exercise}
+\begin{solution}
+由无挠性可将关系约去二，得到 \(3x+5y=0\)。取 \(z=2x+3y\)，则 \(5z-x=9x+15y=0\)，而 \(-3z-y=-6x-10y=0\)。系数满足 \(6\cdot5+10\cdot(-3)=0\)，正是有限关系判据的形式。
+
+在 \(M=\mathbb Z/2\mathbb Z\) 中取 \(x=\bar1,y=\bar0\)，原关系成立，但所求等式分别要求 \(z=\bar1\) 与 \(z=\bar0\)，矛盾。因此无挠条件实际用于约去二。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-localization-nonprojective}
+设 \(p\) 为素数。证明 \(\mathbb Z[1/p]\) 是平坦而非投射的整数模，并判断它是否内射。
+\end{exercise}
+\begin{solution}
+它是整数环的局部化，由\cref{b2:prop:localization-flat}平坦。若 \(h:\mathbb Z[1/p]\to\mathbb Z\)，每个 \(h(x)\) 都被任意 \(p^n\) 整除，因为 \(x/p^n\) 仍在定义域内，所以 \(h=0\)。若该模投射，它是自由模的直和因子，其嵌入与每个整数坐标的复合均为零，导致嵌入为零，矛盾。
+
+另取素数 \(q\ne p\)，方程 \(qx=1\) 在 \(\mathbb Z[1/p]\) 中无解，否则有 \(q a=p^n\) 的整数等式。因此该群不可除，由\cref{b2:thm:divisible-injective}不内射。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-dual-numbers-flat}
+令 \(R=k[\varepsilon]/(\varepsilon^2)\)。证明任意 \(R\) 模 \(M\) 平坦，当且仅当 \(\ker(\varepsilon:M\to M)=\varepsilon M\)。若 \(M\) 作为 \(k\) 向量空间有限维，进一步用 Jordan 形解释这时 \(M\) 必为自由 \(R\) 模。
+\end{exercise}
+\begin{solution}
+\(R\) 的理想只有 \(0,(\varepsilon),R\)：常数项非零的元素为单位；其余非零元素是 \(\varepsilon\) 的非零标量倍。作为模，\((\varepsilon)\cong R/(\varepsilon)\)，故由\cref{b2:prop:tensor-quotient}，\((\varepsilon)\otimes_R M\cong M/\varepsilon M\)。理想张量映射变成 \(m+\varepsilon M\mapsto\varepsilon m\)，其单射性等价于题中核像相等。其余两个理想的检验自动成立，所以由\cref{b2:thm:flat-ideal-criterion}得证。
+
+有限维时，由\cref{b2:thm:jordan-canonical-form}，乘 \(\varepsilon\) 是平方为零的算子，Jordan 块只有大小一或二。大小二的块中核等于像，大小一的零块则使核多出一个维度。故上述等式恰好排除大小一的块。每个大小二的块是正则模 \(R\)，所以 \(M\cong R^r\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-ideal-tensor-kernel}
+沿用\cref{b2:exm:torsionfree-not-flat}中的 \(R=k[x,y]\)、\(I=(x,y)\)。证明乘法映射 \(I\otimes_R I\to I^2\) 的整个核同构于 \(R/I\)，由 \(x\otimes y-y\otimes x\) 生成。
+\end{exercise}
+\begin{solution}
+该例给出 \(I\otimes_R I\cong(I\oplus I)/L\)，其中 \(L\) 是全部 \((-yc,xc)\)、\(c\in I\) 组成的子模，乘法为 \((a,b)\mapsto xa+yb\)。在 \(R^2\) 中它的全部零关系为 \((-yd,xd)\)、\(d\in R\)，而这两个坐标总属于 \(I\)。因此所求核是以 \(d\in R\) 为参数的这些向量，模去参数 \(d\in I\) 的向量，即 \(R/I\)。符号相反的生成向量 \((y,-x)\) 对应题中的张量，同样生成整个核。特别地，该核被 \(x,y\) 零化；原模 \(I\) 无挠并不保证它的自张量无挠。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-flat-base-change}
+设 \(R\to S\) 为含幺环同态。证明：若左 \(R\) 模 \(M\) 平坦，则 \(S\otimes_R M\) 是平坦左 \(S\) 模；若 \(P\) 为有限生成投射左 \(R\) 模，则 \(S\otimes_R P\) 为有限生成投射左 \(S\) 模。
+\end{exercise}
+\begin{solution}
+右 \(S\) 模包含 \(U\subseteq V\) 限制标量后仍为右 \(R\) 模包含。张量结合与单位同构给出
+\[
+U\otimes_S(S\otimes_R M)\cong U\otimes_R M,
+\]
+对 \(V\) 同样成立，并与包含映射相容。由 \(M\) 平坦，右侧诱导映射单射，故左侧也单射。
+
+若 \(P\oplus Q\cong R^n\)，则扩张标量后有 \((S\otimes_R P)\oplus(S\otimes_R Q)\cong S^n\)，因为张量保持直和与同构。因此所求模为有限自由左 \(S\) 模的直和因子。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-fp-splitting-formula}
+在\cref{b2:thm:fp-flat-projective}的证明中，记 \(\pi:R^n\to M\)、\(e_i\mapsto x_i\)。若选择 \(c_{jk}\in R\) 使 \(y_j=\sum_k c_{jk}x_k\)，写出 \(\pi\) 的一个截面，并解释为什么有限关系数不可被“对每条关系分别找一个分解”代替。
+\end{exercise}
+\begin{solution}
+记证明中构造的 \(h:M\to R^t\) 满足 \(h(x_i)=\sum_jb_{ij}e'_j\)。定义 \(u:R^t\to R^n\)、\(u(e'_j)=\sum_kc_{jk}e_k\)，则 \(\pi u(e'_j)=y_j\)，所以 \(s=uh\) 满足
+\[
+s(x_i)=\sum_{j,k}b_{ij}c_{jk}e_k,\qquad \pi s(x_i)=x_i.
+\]
+因此 \(\pi s=\operatorname{id}_M\)。全部关系同时满足 \(AB=0\)，才保证 \(h\) 是定义在商模 \(M\) 上的一个同态。若每条关系分别选择不同的矩阵和中间元素，就没有一个统一赋值可据以定义 \(h\)，也无从拼成同一个截面。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-flat-quotient-ideal}
+设 \(R\) 交换，\(I\) 为理想且 \(R/I\) 平坦。证明 \(I/I^2=0\)。若 \(I\) 有限生成，进一步证明它由一个幂等元生成。解释为什么正文中的无限积环例不与此矛盾。
+\end{exercise}
+\begin{solution}
+将单射 \(I\hookrightarrow R\) 与 \(R/I\) 张量。由\cref{b2:prop:tensor-quotient}，定义域为 \(I/I^2\)，而诱导映射到 \(R/I\) 为零。平坦性使其单射，所以 \(I/I^2=0\)。
+
+若 \(I\) 有限生成，则 \(R/I\) 有限展示，由\cref{b2:thm:fp-flat-projective}投射。\cref{b2:ex:07-projective-quotient-idempotent}的证明遂给出 \(I=Re\)、\(e^2=e\)。在无限积环例中，有限支集理想确有 \(I^2=I\)：每个有限支集元素 \(a\) 都满足 \(a=e_Fa\)，其中 \(e_F\in I\) 覆盖其支集。但该理想不有限生成，因而不能应用后一结论。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-projective-hom-tensor}
+设 \(R\) 交换，\(P\) 为有限生成投射模，\(P^*=\operatorname{Hom}_R(P,R)\)。对任意 \(R\) 模 \(N\)，证明自然映射
+\[
+\Theta:N\otimes_R P^*\longrightarrow\operatorname{Hom}_R(P,N),\qquad
+n\otimes\varphi\longmapsto\Bigl(p\mapsto\varphi(p)n\Bigr)
+\]
+是同构，写出其逆映射。
+\end{exercise}
+\begin{solution}
+交换性保证 \(p\mapsto\varphi(p)n\) 是 \(R\) 线性映射；这一赋值对 \((n,\varphi)\) 双线性，故由张量积的泛性质，\(\Theta\) 良定义。选有限对偶基 \((p_i,\varphi_i)\)，令 \(\Psi(f)=\sum_i f(p_i)\otimes\varphi_i\)。则
+\[
+\Theta\Psi(f)(p)=\sum_i\varphi_i(p)f(p_i)=f(p),
+\]
+其中使用 \(p=\sum_i\varphi_i(p)p_i\)。另一方面，对 \(\varphi\in P^*\)，同一等式施加 \(\varphi\) 后给出 \(\varphi=\sum_i\varphi(p_i)\varphi_i\)。于是
+\[
+\Psi\Theta(n\otimes\varphi)=\sum_i\varphi(p_i)n\otimes\varphi_i
+=n\otimes\varphi.
+\]
+纯张量生成定义域，故两映射互逆。\(\Theta\) 的公式与 \(N\) 的同态及 \(P\) 的反向同态相容，因此同构自然；\(\Psi\) 虽借对偶基计算，却是该固定同构的唯一逆映射，不依赖所选对偶基。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:07-compare-three-classes}
+对整数模 \(\mathbb Z\)、\(\mathbb Q\)、\(\mathbb Q/\mathbb Z\)、\(\mathbb Z/n\mathbb Z\)（\(n>1\)），分别判断投射、内射和平坦性。根据答案，指出哪些两类性质之间不存在一般的蕴含。
+\end{exercise}
+\begin{solution}
+\(\mathbb Z\) 自由，所以投射且平坦，但不可除，故不内射。\(\mathbb Q\) 无挠且可除，所以平坦且内射；它到整数的同态全为零，所以不投射。\(\mathbb Q/\mathbb Z\) 可除而有非零挠元，故内射但不平坦，从而也不投射。\(\mathbb Z/n\mathbb Z\) 有挠且不可除，所以不平坦、不内射；投射蕴含平坦，故也不投射。
+
+这些例子说明内射既不蕴含投射，也不蕴含平坦；投射和平坦都不蕴含内射；平坦不蕴含投射。三者之间在任意环上总成立的蕴含是投射推出平坦，其他逆向或横向结论均需另加条件。
+\end{solution}

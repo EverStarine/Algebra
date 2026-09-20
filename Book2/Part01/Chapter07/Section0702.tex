@@ -5,9 +5,9 @@
 \section{内射模}
 \label{b2:sec:0702}
 
-% TODO: 按以下纲要要点撰写本节。
+投射模解决“沿满射提升”的问题。若给定的映射定义在一个子模上，希望把它延拓到整个模，所需的是另一种性质。向量空间可以选补空间后延拓线性映射，一般环上的模却未必有补模；内射性把这种延拓能力直接作为研究对象。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 延拓性质与 Baer 判据
 % * 可除交换群
@@ -17,14 +17,112 @@
 \subsection{延拓性质与 Baer 判据}
 \label{b2:subsec:0702:01}
 
-待撰写。
+\begin{definition}\label{b2:def:injective-module}
+左 \(R\) 模 \(E\) 称为\term[neishemo]{内射模}[injective module]，如果对任意子模包含 \(A\subseteq B\) 和任意同态 \(f:A\to E\)，都存在同态 \(g:B\to E\) 使 \(g|_A=f\)。等价地，对任意单同态 \(i:A\to B\)，都能解出 \(gi=f\)。
+\end{definition}
+
+\(\mathbb Z\) 不是内射 \(\mathbb Z\) 模：把 \(2\mathbb Z\) 映到 \(\mathbb Z\) 的同态 \(2n\mapsto n\) 若能延拓，则 \(2g(1)=1\)，在整数中无解。定义中的“内射”描述目标模的延拓性质，并不表示该模中的所有同态都是单射。
+
+\begin{proposition}\label{b2:prop:injective-characterizations}
+对左模 \(E\)，内射性等价于 \(\operatorname{Hom}_R(-,E)\) 将每个短正合列反向变成短正合列；也等价于每个 \(0\to E\to B\to C\to0\) 都分裂。
+\end{proposition}
+\begin{proof}
+\cref{b2:prop:hom-left-exact}说明 Hom 列只可能在最后一项不满，满射性恰是子模上的同态均能延拓。内射时，将恒等映射 \(E\to E\) 沿 \(E\to B\) 延拓，得到缩回，原列由\cref{b2:thm:split-exact-sequence}分裂。
+
+反过来，设所有左端为 \(E\) 的短正合列分裂。对 \(A\subseteq B\)、\(f:A\to E\)，作商模
+\[
+D=(E\oplus B)/\biggl\{\,\Bigl(f(a),-a\Bigr):a\in A\,\biggr\}.
+\]
+分母集合是同态 \(a\mapsto\Bigl(f(a),-a\Bigr)\) 的像，因而是子模。记商映射为 \(\pi:E\oplus B\to D\)。映射 \(j:E\to D\)、\(e\mapsto\pi(e,0)\) 单射：若 \((e,0)=\Bigl(f(a),-a\Bigr)\)，则 \(a=0,e=0\)。故 \(0\to E\xrightarrow{j}D\to D/j(E)\to0\) 有缩回 \(r:D\to E\)。令 \(g(b)=r\Bigl(\pi(0,b)\Bigr)\)，则对 \(a\in A\)，商中的等式 \(\pi(0,a)=\pi\Bigl(f(a),0\Bigr)\) 给出 \(g(a)=f(a)\)。
+\end{proof}
+
+这里的 \(D\) 正是\cref{b2:prop:module-pullback-pushout}的推出构造。它把任意延拓问题改写为一个以 \(E\) 开头的分裂问题。判断内射性时，还可以把需要检验的子模缩小到环自身的左理想。
+
+\begin{theorem}[Baer 判据]\label{b2:thm:baer-criterion}
+左 \(R\) 模 \(E\) 内射，当且仅当对每个左理想 \(I\subseteq R\)，每个同态 \(f:I\to E\) 都能延拓为 \(R\to E\)。后一条件也可写成：存在 \(e\in E\)，使所有 \(a\in I\) 都满足 \(f(a)=ae\)。
+\end{theorem}
+
+这称为\term[baer-panju]{Baer 判据}[Baer's criterion]。等式形式来自 \(R\to E\) 的同态由 \(1\) 的像唯一确定。注意这里检验所有左理想；除非环有额外有限性条件，不能只检验有限生成的左理想。
+
+\begin{proof}
+必要性直接取 \(A=I,B=R\)。为证充分性，给定 \(A\subseteq B\) 和 \(f:A\to E\)，考虑所有延拓对 \((N,h)\)，其中 \(A\subseteq N\subseteq B\)、\(h:N\to E\)、\(h|_A=f\)。以定义域包含且映射限制相容为序。原始对 \((A,f)\) 保证集合非空；一条链的定义域之并仍是子模，相容的映射在其上拼成同态，给出上界；空链也有 \((A,f)\) 作上界。用第一卷附录A定理A.1.4的 Zorn 引理，取极大对 \((N,h)\)。
+
+若 \(N\ne B\)，取 \(b\in B\setminus N\)，并令
+\[
+I=\{\,a\in R:ab\in N\,\},\qquad u:I\longrightarrow E,\quad u(a)=h(ab).
+\]
+\(I\) 是左理想，\(u\) 是左模同态。按假设取 \(e\in E\) 使 \(u(a)=ae\)。在 \(N+Rb\) 上定义
+\[
+h'(n+rb)=h(n)+re.
+\]
+若 \(n+rb=n'+r'b\)，则 \(a=r-r'\in I\) 且 \(ab=n'-n\)，所以 \(h(n'-n)=ae\)。这恰好说明两种表达所得的 \(h'\) 相同。加法与左标量相容由公式直接验证，且 \(h'|_N=h\)。它把极大延拓的定义域严格扩大，矛盾。因此 \(N=B\)，得到所需延拓。
+\end{proof}
 
 \subsection{可除交换群}
 \label{b2:subsec:0702:02}
 
-待撰写。
+\begin{definition}\label{b2:def:divisible-group}
+交换群 \(D\) 称为\term[kechu-qun]{可除群}[divisible group]，如果对每个整数 \(n>0\) 和每个 \(d\in D\)，都存在 \(x\in D\) 使 \(nx=d\)。这要求乘 \(n\) 为满射，不要求它为单射。
+\end{definition}
+
+\(\mathbb Q\) 与 \(\mathbb Q/\mathbb Z\) 都可除：分别用有理数除以 \(n\)，或把有理数代表元除以 \(n\)。后者有大量有限阶元素，说明可除与无挠是不同条件。非零有限交换群不可能可除，因为取群阶 \(n\)，乘 \(n\) 为零映射。
+
+\begin{theorem}\label{b2:thm:divisible-injective}
+交换群作为 \(\mathbb Z\) 模内射，当且仅当它可除。
+\end{theorem}
+\begin{proof}
+若 \(D\) 内射，给定 \(d\in D\) 与 \(n>0\)，同态 \(n\mathbb Z\to D\)、\(nk\mapsto kd\) 可延拓为 \(g:\mathbb Z\to D\)。取 \(x=g(1)\)，便有 \(nx=g(n)=d\)。
+
+若 \(D\) 可除，用\cref{b2:thm:baer-criterion}检验整数理想。零理想的映射用零映射延拓；对 \(n\mathbb Z\)、\(n>0\)，给定 \(f\)，取 \(x\) 使 \(nx=f(n)\)。令 \(g(k)=kx\)，则 \(g(nk)=kf(n)=f(nk)\)，得到延拓。
+\end{proof}
+
+因此 \(\mathbb Q\) 和 \(\mathbb Q/\mathbb Z\) 都内射，而 \(\mathbb Z\) 投射但不内射。在域上，每个向量空间都有基和补空间，所以每个模既投射又内射；离开域以后，这两个条件分别约束同态的出发端和到达端。
 
 \subsection{模范畴中足够多内射对象}
 \label{b2:subsec:0702:03}
 
-待撰写。
+自由满射说明每个模都能作为投射模的商。内射方向需要证明相反的存在性：每个模都能嵌入某个内射模。下面给出对任意含幺环都有效的构造。
+
+\begin{lemma}\label{b2:lem:qz-separates}
+设 \(A\) 是交换群，\(0\ne a\in A\)。存在群同态 \(\chi:A\to\mathbb Q/\mathbb Z\) 使 \(\chi(a)\ne0\)。
+\end{lemma}
+\begin{proof}
+先在 \(a\) 生成的循环子群上定义映射。若 \(a\) 的阶为 \(n>1\)，令 \(a\mapsto 1/n+\mathbb Z\)；若 \(a\) 为无限阶，令 \(a\mapsto1/2+\mathbb Z\)。两种情况均给出循环群同态，且 \(a\) 的像非零。\cref{b2:thm:divisible-injective}说明 \(\mathbb Q/\mathbb Z\) 内射，所以该同态可延拓到 \(A\)。
+\end{proof}
+
+\begin{lemma}\label{b2:lem:coinduced-injective}
+若交换群 \(D\) 内射，则
+\[
+J=\operatorname{Hom}_{\mathbb Z}(R,D),\qquad (rf)(s)=f(sr)
+\]
+是内射左 \(R\) 模。
+\end{lemma}
+\begin{proof}
+这里 \(R\) 在 Hom 中先作为加法群。公式满足 \(\Bigl(r_1(r_2f)\Bigr)(s)=f(sr_1r_2)=\Bigl((r_1r_2)f\Bigr)(s)\)，并满足其余模公理。对左模 \(M\)，有互逆对应
+\[
+\begin{aligned}
+\operatorname{Hom}_R(M,J)&\longleftrightarrow\operatorname{Hom}_{\mathbb Z}(M,D),\\
+\alpha&\longmapsto\Bigl(m\mapsto\alpha(m)(1)\Bigr),\\
+\chi&\longmapsto\biggl[m\mapsto\Bigl(s\mapsto\chi(sm)\Bigr)\biggr].
+\end{aligned}
+\]
+第二个公式的左线性来自 \(\chi(srm)=\Bigl(r\alpha(m)\Bigr)(s)\)；相互复合为恒等则分别用 \(1m=m\) 和 \(\alpha(sm)(1)=\Bigl(s\alpha(m)\Bigr)(1)=\alpha(m)(s)\)。
+
+若 \(A\subseteq B\) 且给定 \(A\to J\)，把它变为 \(A\to D\) 的加法群同态。由 \(D\) 内射，延拓为 \(B\to D\)，再用反向公式得到 \(B\to J\)。两公式与限制相容，因而后者确实延拓原映射。这也给出\secref{b2:sec:0603}中余诱导在此处的具体用途。
+\end{proof}
+
+\begin{theorem}[足够多内射模]\label{b2:thm:enough-injectives}
+对任意含幺环 \(R\)，每个左 \(R\) 模 \(M\) 都能嵌入一个内射左模。
+\end{theorem}
+\begin{proof}
+令 \(D=\mathbb Q/\mathbb Z\)、\(J=\operatorname{Hom}_{\mathbb Z}(R,D)\)，并以集合 \(H=\operatorname{Hom}_{\mathbb Z}(M,D)\) 为指标。定义
+\[
+\iota:M\longrightarrow\prod_{\chi\in H}J,
+\qquad \iota(m)_\chi(s)=\chi(sm).
+\]
+\cref{b2:lem:coinduced-injective}中的公式保证 \(\iota\) 左线性。若 \(m\ne0\)，\cref{b2:lem:qz-separates}给出 \(\chi(m)\ne0\) 的分量；在 \(s=1\) 处该分量非零，故 \(\iota\) 单射。
+
+由\cref{b2:thm:divisible-injective}及\cref{b2:lem:coinduced-injective}，每个 \(J\) 内射，任意积 \(\prod J\) 也内射：对子模上的映射逐分量延拓，再用\cref{b2:thm:module-product-universal}合成一个映入积的同态。这种合成不要求有限支集；分量族无限时，选择各延拓使用选择公理。因此所构造的积就是所需内射模。
+\end{proof}
+
+“\term[zugouduo-neisheduixiang]{足够多内射对象}[enough injectives]”意指上述嵌入总能找到；不意指每个模本身内射，也不意指内射模可以选得有限生成。例如，有限生成可除交换群只能为零：按\cref{b2:thm:pid-module-structure}分成有限秩自由部分与有限挠部分后，乘二的满射性排除非零自由部分，再乘挠部分的阶便排除非零挠部分。因此任何包含 \(\mathbb Z\) 的内射交换群都不可能有限生成。反复对商模作这样的嵌入，将在第四卷构造内射消解。

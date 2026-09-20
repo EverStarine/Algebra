@@ -5,9 +5,9 @@
 \section{非交换 Nakayama 引理与生成元提升}
 \label{b2:sec:1402}
 
-% TODO: 按以下纲要要点撰写本节。
+模去 Jacobson 根以后，许多生成问题变为除环或半单环上的线性问题。Nakayama 引理说明有限生成模的信息不会在这个商中全部消失，并允许把商模的生成元提升回来。有限生成性在这里是实质条件；环的交换性则不是。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 对有限生成左 \(R\)-模 \(M\) 和双边理想 \(I\subseteq J(R)\)，证明 \(IM=M\Rightarrow M=0\)；用极小生成集与 \(1-a\) 的可逆性论证，不在非交换环上套用交换行列式技巧
 % * 证明 \(M=N+IM\Rightarrow M=N\) 的生成元提升形式，并说明商模的有限生成性
@@ -18,19 +18,82 @@
 \subsection{非交换 Nakayama 引理}
 \label{b2:subsec:1402:01}
 
-待撰写。
+\begin{theorem}[非交换 Nakayama 引理]\label{b2:thm:noncommutative-nakayama}
+设 \(M\) 为有限生成左 \(R\) 模，\(I\) 为包含于 \(J(R)\) 的双边理想。若 \(IM=M\)，则 \(M=0\)。
+\end{theorem}
+
+这称为\term[Nakayama-yinli]{Nakayama 引理}[Nakayama's lemma]。\(IM\) 表示有限和 \(\sum_j a_jm_j\)、\(a_j\in I\) 构成的子模，不表示单独一个乘积的集合。
+
+\begin{proof}
+若 \(M\ne0\)，在所有有限生成组中选元素个数最少的一组 \(x_1,\ldots,x_n\)，此时 \(n\ge1\)。由 \(x_n\in IM\)，先写为有限和 \(x_n=\sum_jb_jm_j\)，再将各 \(m_j\) 按生成组展开。因为 \(I\) 对右乘 \(R\) 稳定，整理后得到
+\[
+x_n=\sum_{i=1}^n a_i x_i,\qquad a_i\in I.
+\]
+所以 \((1-a_n)x_n=\sum_{i<n}a_ix_i\)。\cref{b2:thm:jacobson-unit-criterion}保证 \(1-a_n\) 为单位，左乘其逆便把 \(x_n\) 写成其余生成元的线性组合，与最少性矛盾。\(n=1\) 时右侧为空和，这同样表明唯一生成元为零，矛盾。
+\end{proof}
+
+有限生成条件不能省去。取 \(R=k[t]_{(t)}\)，即所有分母在零点不为零的有理函数组成的局部环。其非单位恰为理想 \((t)\)，故 \(J(R)=(t)\)。作为 \(R\) 模，非零的 \(M=k(t)\) 却满足 \(tM=M\)。它不有限生成：有限组有理函数的分母中所含 \(t\) 的幂有共同上界 \(N\)，用 \(R\) 的元素作系数仍不能得到 \(t^{-N-1}\)。
 
 \subsection{生成元提升与有限生成商模}
 \label{b2:subsec:1402:02}
 
-待撰写。
+\begin{corollary}[生成元提升]\label{b2:cor:nakayama-generators}
+设 \(M\) 有限生成，\(N\subseteq M\) 为子模，\(I\subseteq J(R)\) 为双边理想。若 \(M=N+IM\)，则 \(M=N\)。因此，一组 \(M/IM\) 的生成元在 \(M\) 中的任意提升，都生成 \(M\)。
+\end{corollary}
+\begin{proof}
+商模 \(M/N\) 由原有限生成组的像生成，所以仍有限生成，不需要 \(N\) 有限生成。假设给出 \(I(M/N)=M/N\)，由\cref{b2:thm:noncommutative-nakayama}，商模为零。对于后一断言，令 \(N\) 为所选提升生成的子模；商中生成性正是 \(M=N+IM\)，应用前一断言即可。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:nakayama-surjectivity-test}
+若 \(M\) 是有限生成左模，\(f:P\to M\) 为同态，\(I\) 为包含于 \(J(R)\) 的双边理想，则 \(f\) 满射当且仅当诱导的 \(P/IP\to M/IM\) 满射。这里 \(P\) 不必有限生成。
+\end{proposition}
+\begin{proof}
+正向由代表元直接提升。反向，商映射满射意味着 \(M=f(P)+IM\)。对有限生成目标 \(M\) 应用\cref{b2:cor:nakayama-generators}，得 \(f(P)=M\)。
+\end{proof}
+
+这一判据只检测满射，不能同时用来检测单射。例如 \(k[t]/(t^2)\to k\) 模去根后的映射是同构，原映射却有非零核。恢复映射的另一端需要额外的投射性或其他假设，后面的投射覆盖理论会分别处理这些条件。
 
 \subsection{剩余模与极小生成集}
 \label{b2:subsec:1402:03}
 
-待撰写。
+沿用\cref{b2:def:local-ring}的约定，局部环是非零环，且其非单位组成一个双边理想 \(\mathfrak m\)。此时 \(R/\mathfrak m\) 是除环：每个非零商类都有单位代表元。任意真左理想不含单位，所以包含于 \(\mathfrak m\)；后者已极大，因而是唯一极大左理想，\(J(R)=\mathfrak m\)。
+
+\begin{proposition}\label{b2:prop:local-minimal-generators}
+设 \(R\) 局部，\(D=R/J(R)\)，\(M\) 为有限生成左模。则生成 \(M\) 所需的最少元素个数为
+\[
+\mu_R(M)=\dim_D M/J(R)M.
+\]
+有限生成组关于删去元素极小，当且仅当其像为这个左 \(D\) 向量空间的一组基。
+\end{proposition}
+\symidx{\(\mu_R(M)\)：有限生成模所需的最少生成元个数}
+\begin{proof}
+任意生成组的像都生成剩余模，所以元素数不少于右侧的维数。反向，提升一组有限 \(D\) 基，由\cref{b2:cor:nakayama-generators}得到 \(M\) 的生成组，故最小数恰为该维数。若生成组的像线性相关，在除环上解出某个非零系数所对应的向量，删去它后仍生成剩余模，再用提升推论便仍生成 \(M\)，所以原组不极小。若像为基，删去任意一项连剩余模都不能生成，原组因而极小。
+\end{proof}
+
+若半单商有多个矩阵块，则剩余模一般不是一个除环上的向量空间。正确的计数需同时记录每个简单模的重数与对应矩阵块大小。
+
+\begin{proposition}\label{b2:prop:semisimple-top-generators}
+设 \(M\) 为有限生成左 \(R\) 模，且
+\[
+R/J(R)\cong\prod_{i=1}^s M_{n_i}(D_i),\qquad
+M/J(R)M\cong\bigoplus_{i=1}^s S_i^{m_i},
+\]
+其中 \(S_i=D_i^{n_i}\) 为相应矩阵块的简单列模。则
+\[
+\mu_R(M)=\max_i\left\lceil\frac{m_i}{n_i}\right\rceil.
+\]
+零模的最少生成元个数取零。
+\end{proposition}
+\begin{proof}
+记半单商为 \(B\)。由\cref{b2:thm:artin-wedderburn}的正则模分解，\({}_BB\cong\bigoplus_i S_i^{n_i}\)，故 \(B^r\cong\bigoplus_i S_i^{rn_i}\)。\cref{b2:prop:semisimple-multiplicity}给出的简单模重数唯一性说明，\(\bigoplus_iS_i^{m_i}\) 是 \(B^r\) 的商，当且仅当每个 \(m_i\le rn_i\)：充分性取对应分量投影，必要性由满射的分裂及直和重数相加得到。这正是剩余模可由 \(r\) 个元素生成的条件。原模生成元映到剩余模生成元，而后者的提升又生成原模，所以两者的最少数相同，得到公式。
+\end{proof}
+
+例如 \(R=M_2(k)\)、\(S=k^2\) 时，\(S^3\) 需要两个生成元。可以取 \((e_1,e_2,0)\) 与 \((0,0,e_1)\)：一个任意二阶矩阵的两列能够独立指定，故第一个元素生成前两个分量，第二个生成第三个。三个简单直和分量并不意味着需要三个模生成元。
 
 \subsection{交换环版本与行列式技巧}
 \label{b2:subsec:1402:04}
 
-待撰写。
+交换局部环的常用 Nakayama 引理已经包含在以上结论中。交换性还允许另一种证明方法：用有限生成元的关系矩阵及其伴随矩阵，把若干线性关系转成一个同时零化全部生成元的标量等式。\cref{b2:prop:adjugate-identity}提供相应的矩阵恒等式；第三卷第3.2节将把这种行列式技巧及其整性应用完整展开。
+
+\ProseParagraphBreak
+本节所证的一般形式没有使用行列式，也没有把非交换系数挪过矩阵条目。对于有限维非交换代数，下一章会先使根的幂稳定，再把稳定项看成有限生成左模，用\cref{b2:thm:noncommutative-nakayama}证明该项为零。有限维性与可逆性在这条论证中各有明确作用。

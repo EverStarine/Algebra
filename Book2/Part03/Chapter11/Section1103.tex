@@ -5,9 +5,9 @@
 \section{幂等元与分解}
 \label{b2:sec:1103}
 
-% TODO: 按以下纲要要点撰写本节。
+一个投影满足连续作用两次与作用一次相同，即 \(p^2=p\)。同样的等式写在环内部，就得到幂等元。它能够分离正则模，却未必分离整个环的乘法；区别来自这个幂等元是否位于中心。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 正交幂等元及单位分解
 % * 角环与矩阵分块
@@ -17,14 +17,71 @@
 \subsection{正交幂等元及单位分解}
 \label{b2:subsec:1103:01}
 
-待撰写。
+\begin{definition}\label{b2:def:orthogonal-idempotents}
+代数 \(A\) 中满足 \(e^2=e\) 的元素称为\term[mideng-yuan]{幂等元}[idempotent]。两个幂等元 \(e,f\) 若满足 \(ef=fe=0\)，称它们正交。有限族 \(e_1,\ldots,e_r\) 两两正交且 \(\sum_i e_i=1\) 时，称 \(1=e_1+\cdots+e_r\) 为单位元的正交幂等元分解。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:regular-orthogonal-decomposition}
+这样的分解给出正则模的分解
+\[
+{}_AA=\bigoplus_i Ae_i,\qquad A_A=\bigoplus_i e_iA.
+\]
+若每个 \(e_i\) 还位于中心，则它们给出代数同构 \(A\cong\prod_i Ae_i\)，其中因子 \(Ae_i\) 的单位为 \(e_i\)。
+\end{proposition}
+\begin{proof}
+对任意 \(a\)，有 \(a=\sum_i ae_i\)。若 \(\sum_i a_i e_i=0\)，右乘 \(e_j\) 只留下 \(a_j e_j\)，所以各项为零，左模分解成立。左乘的同样计算给出右模分解。
+
+当各 \(e_i\) 在中心时，\(Ae_i\) 是双边理想和有单位的子代数，不同因子的乘积为零。映射 \(a\mapsto(ae_i)_i\) 保持加法、标量与乘法，并把单位送到各因子的单位族。其逆为求和映射，由刚证的直和分解互逆，得到代数同构。
+\end{proof}
+
+非中心幂等元只保证模分解。例如 \(M_2(k)=M_2(k)E_{11}\oplus M_2(k)E_{22}\) 是按列的左模分解，但左右列之间可以相乘，不能据此把矩阵环写成两个非零环的直积。
 
 \subsection{角环与矩阵分块}
 \label{b2:subsec:1103:02}
 
-待撰写。
+对幂等元 \(e\)，集合 \(eAe\) 对加法、标量及乘法封闭，单位是 \(e\)，称为一个\term[jiao-huan]{角环}[corner ring]，在当前情形也可称角代数。即使 \(e\ne1\)，它仍有自己的单位元；包含 \(eAe\subseteq A\) 通常不保持单位元，所以不能把该包含自动当作本书约定的含幺代数同态。
+
+\begin{proposition}[幂等元分块]\label{b2:prop:peirce-decomposition}
+设 \(1=e_1+\cdots+e_r\) 为一组正交幂等元分解，则
+\begin{equation}\label{b2:eq:peirce-decomposition}
+A=\bigoplus_{i,j}e_iAe_j
+\end{equation}
+作为向量空间成立。乘法满足 \((e_iAe_j)(e_sAe_t)=0\) 当 \(j\ne s\)；当 \(j=s\) 时，乘积属于 \(e_iAe_t\)。
+\end{proposition}
+\begin{proof}
+把 \(a=1a1\) 展开，得到 \(a=\sum_{i,j}e_i a e_j\)。若这类分量之和为零，左乘 \(e_s\)、右乘 \(e_t\) 就只留下第 \((s,t)\) 个分量，所以分解唯一。两分量相乘时中间出现 \(e_je_s\)，它在不同指标时为零，相同指标时为 \(e_j\)，给出所述乘法规则。
+\end{proof}
+
+因此可以把 \(a\) 记作分块矩阵 \((e_i a e_j)\)。乘积第 \((i,j)\) 块为 \(\sum_s(e_i a e_s)(e_s b e_j)\)，正是矩阵乘法式。不同块可能是不同的向量空间，不能未经论证就把它们全当作同一个系数环。
+
+\ProseParagraphBreak
+在 \(M_n(k)\) 中取 \(e_i=E_{ii}\)，各角环为 \(kE_{ii}\)，各块为 \(kE_{ij}\)，于是恢复通常的矩阵条目。若改取上三角代数 \(T_2(k)\)，右上块 \(e_1Ae_2=kE_{12}\) 非零，左下块 \(e_2Ae_1=0\)。两个角环都同构于 \(k\)，但整个代数不是 \(k\times k\)：非零右上块仍参与乘法。
 
 \subsection{模分解与环中幂等元}
 \label{b2:subsec:1103:03}
 
-待撰写。
+\begin{proposition}\label{b2:prop:idempotent-module-decomposition}
+对任意含幺环 \(R\) 和左 \(R\) 模 \(M\)，满足 \(p^2=p\) 的 \(p\in\operatorname{End}_R(M)\) 给出
+\[
+M=\operatorname{im}p\oplus\ker p.
+\]
+反过来，每个指定的直和分解都给出投影幂等元。一组有限两两正交且和为恒等的投影，对应有限个子模的内直和分解。
+\end{proposition}
+\begin{proof}
+写 \(m=p(m)+\Bigl(m-p(m)\Bigr)\)，第二项在核中；若 \(x=p(y)\) 又满足 \(p(x)=0\)，则 \(x=p^2(y)=p(x)=0\)，所以和为直和。反向取沿其余分量投到指定分量的映射，便满足平方为自身。有限族时，和为恒等保证生成，两两正交保证从一个分量到另一个的投影为零，从而分解唯一。
+\end{proof}
+
+在正则左模上，模自同态是右乘，所以投影为 \(a\mapsto ae\)，像为 \(Ae\)，核为 \(A(1-e)\)。不要改用左乘 \(e\) 作为左模投影：它只有在相应交换条件成立时才左线性。
+
+\begin{proposition}\label{b2:prop:corner-endomorphism}
+对幂等元 \(e\in A\)，有代数同构
+\[
+(eAe)^{\mathrm{op}}\longrightarrow\operatorname{End}_A(Ae),
+\qquad b\longmapsto(x\mapsto xb).
+\]
+\end{proposition}
+\begin{proof}
+若 \(f:Ae\to Ae\) 左线性，则 \(f(e)=f(e^2)=ef(e)\)，又 \(f(e)\in Ae\)，故 \(b=f(e)\in eAe\)。对 \(ae\) 有 \(f(ae)=ab=(ae)b\)，所以每个自同态都是这样唯一的右乘。反向 \(b\in eAe\) 确实给出保持 \(Ae\) 的左模同态。复合 \(R_bR_c=R_{cb}\)，单位 \(e\) 对应恒等映射，得到反环同构。
+\end{proof}
+
+这一公式把正则模的分解细化到某个直和因子内部。后续判别 \(Ae\) 是否还能分解时，考察的是它的自同态环中有无非平凡幂等元，也就是角环 \(eAe\) 中的同一问题。

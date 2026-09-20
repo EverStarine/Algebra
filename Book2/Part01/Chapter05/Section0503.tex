@@ -5,7 +5,7 @@
 \section{普遍对象}
 \label{b2:sec:0503}
 
-% TODO: 按以下纲要要点撰写本节。
+同一个商模可以用不同生成元和关系表示，同一个直和也可以有不同的集合实现。若要比较这些实现，最有用的问题是：哪些映射能唯一地经过它？本节把这类泛性质写成统一的语言，并亲自构造模的拉回与推出。所有环仍保单位元，所有模均为左模；这些构造不要求环交换。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,132 @@
 \subsection{初始对象、终止对象、积与余积}
 \label{b2:subsec:0503:01}
 
-待撰写。
+\begin{definition}\label{b2:def:initial-terminal-object}
+范畴 \(\mathcal C\) 中的对象 \(I\) 称为\term[chushi-duixiang]{初始对象}[initial object]，若对每个对象 \(X\)，从 \(I\) 到 \(X\) 恰有一个态射。对象 \(T\) 称为\term[zhongzhi-duixiang]{终止对象}[terminal object]，若对每个 \(X\)，从 \(X\) 到 \(T\) 恰有一个态射。兼为初始对象和终止对象的对象称为\term[ling-duixiang]{零对象}[zero object]。
+\end{definition}
+
+集合范畴的初始对象为空集，终止对象为任一单点集，故没有零对象；模范畴中的零模则为零对象。保单位元同态的环范畴中，\(\mathbb Z\) 是初始对象：到 \(R\) 的映射必为 \(n\mapsto n1_R\)，而此公式确实保持环运算与单位元。零环是终止对象，却不是初始对象，因为从零环到非零环不存在保单位元同态。
+
+\ProseParagraphBreak
+两个初始对象 \(I,I'\) 之间的唯一态射 \(u:I\rightarrow I'\)、\(v:I'\rightarrow I\) 满足 \(vu=\operatorname{id}_I\)、\(uv=\operatorname{id}_{I'}\)，因为相应自态射集合各只有一个元素。因此初始对象之间有唯一同构；反转箭头即得终止对象的相同结论。零对象的存在还为每对对象给出零态射，即经过零对象的唯一复合；在模范畴中它就是通常的零映射。
+
+\begin{definition}\label{b2:def:product-coproduct}
+设 \((X_i)_{i\in I}\) 为由集合 \(I\) 编号的对象族。其\term[ji]{积}[product]是对象 \(P\) 及态射 \(p_i:P\rightarrow X_i\)，满足：对任意对象 \(T\) 及态射族 \(a_i:T\rightarrow X_i\)，存在唯一态射 \(a:T\rightarrow P\) 使全部 \(p_i a=a_i\)。
+
+其\term[yuji]{余积}[coproduct]是对象 \(Q\) 及态射 \(j_i:X_i\rightarrow Q\)，满足：对任意对象 \(T\) 及态射族 \(b_i:X_i\rightarrow T\)，存在唯一态射 \(b:Q\rightarrow T\) 使全部 \(bj_i=b_i\)。
+\end{definition}
+
+在模范畴中，积由逐坐标运算的 \(\prod_i M_i\) 及坐标投影给出。给定 \(a_i:T\rightarrow M_i\)，唯一可能的映射是 \(a(t)=\Bigl(a_i(t)\Bigr)_i\)，它逐坐标保持加法和左标量乘法，故确为模同态。余积由有限支集直和 \(\bigoplus_iM_i\) 及坐标嵌入给出。给定 \(b_i:M_i\rightarrow T\)，定义
+\[
+b\Bigl((m_i)_i\Bigr)=\sum_i b_i(m_i).
+\]
+有限支集保证右边有意义；分配律保证线性；每个直和元素都是有限个 \(j_i(m_i)\) 之和，保证唯一性。这正是\cref{b2:thm:module-product-universal}与\cref{b2:thm:module-sum-universal}在范畴语言中的表达。
+
+\ProseParagraphBreak
+有限个模的积与余积可以由同一个模承载，但其指定映射和泛性质方向不同。无限时不能混用：例如对域 \(k\)，直和 \(k^{(\mathbb N)}\) 中每个元素只有有限个非零坐标，而积 \(k^{\mathbb N}\) 还包含 \((1,1,\ldots)\)。恒等映射族 \(k\rightarrow k\) 合成的映射 \(k\rightarrow k^{\mathbb N}\)、\(a\mapsto(a,a,\ldots)\) 就不能落入直和。空积为终止对象，空余积为初始对象，均可直接从定义读出。
+
+\begin{proposition}\label{b2:prop:universal-object-uniqueness}
+同一对象族的任意两个积之间，存在唯一保持全部投影的同构；两个余积之间，存在唯一保持全部指定嵌入的同构。
+\end{proposition}
+\begin{proof}
+设 \((P,p_i)\)、\((P',p'_i)\) 都为积。用 \(P\) 及其映射族 \((p_i)\) 代入 \(P'\) 的泛性质，得唯一 \(u:P\rightarrow P'\) 满足 \(p'_iu=p_i\)；交换角色得 \(v:P'\rightarrow P\)。于是 \(p_ivu=p_i\)，而 \(\operatorname{id}_P\) 也满足这些等式。\(P\) 的唯一性迫使 \(vu=\operatorname{id}_P\)，同理 \(uv=\operatorname{id}_{P'}\)。\(u\) 的唯一性已经包含在构造中。
+
+对余积 \((Q,j_i)\)、\((Q',j'_i)\)，两次泛性质分别给出 \(u j_i=j'_i\)、\(v j'_i=j_i\)。其复合在每个 \(j_i\) 上等于恒等映射，由余积的唯一性得 \(vu=\operatorname{id}_Q\)、\(uv=\operatorname{id}_{Q'}\)。
+\end{proof}
+
+“唯一”修饰保持指定结构映射的同构；抽去这些映射后，对象本身可能有许多自同构。例如 \(k^2\) 有许多可逆线性变换，只有恒等映射同时保持两个坐标投影。
 
 \subsection{模的拉回与推出}
 \label{b2:subsec:0503:02}
 
-待撰写。
+\begin{definition}\label{b2:def:pullback-pushout}
+给定态射 \(f:M\rightarrow P\)、\(g:N\rightarrow P\)，它们的\term[lahui]{拉回}[pullback]是对象 \(L\) 及态射 \(p:L\rightarrow M\)、\(q:L\rightarrow N\)，满足 \(fp=gq\)，并且对每对满足 \(fa=gb\) 的态射 \(a:T\rightarrow M\)、\(b:T\rightarrow N\)，存在唯一 \(h:T\rightarrow L\) 满足 \(ph=a\)、\(qh=b\)。
+
+给定态射 \(u:P\rightarrow M\)、\(v:P\rightarrow N\)，它们的\term[tuichu]{推出}[pushout]是对象 \(Q\) 及态射 \(i:M\rightarrow Q\)、\(j:N\rightarrow Q\)，满足 \(iu=jv\)，并且对每对满足 \(au=bv\) 的态射 \(a:M\rightarrow T\)、\(b:N\rightarrow T\)，存在唯一 \(h:Q\rightarrow T\) 满足 \(hi=a\)、\(hj=b\)。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:module-pullback-pushout}
+在左 \(R\) 模范畴中，上述拉回和推出分别可取为
+\begin{align}
+M\times_PN&=\Bigl\{\,(m,n)\in M\oplus N\mid f(m)=g(n)\,\Bigr\},\label{b2:eq:module-pullback}\\
+M\amalg_PN&=(M\oplus N)/\biggl\{\,\Bigl(u(p),-v(p)\Bigr)\mid p\in P\,\biggr\}.\label{b2:eq:module-pushout}
+\end{align}
+拉回的映射为坐标投影，推出的映射为 \(i(m)=\Bigl[(m,0)\Bigr]\)、\(j(n)=\Bigl[(0,n)\Bigr]\)。
+\end{proposition}
+\begin{proof}
+若 \(f(m)=g(n)\)、\(f(m')=g(n')\)，则
+\[
+f(m+m')=g(n+n'),\qquad f(rm)=g(rn),
+\]
+所以式\eqref{b2:eq:module-pullback}定义子模，两个投影为模同态并满足相容条件。给定 \(a,b\) 且 \(fa=gb\)，令 \(h(t)=\Bigl(a(t),b(t)\Bigr)\)。相容条件保证其像在拉回中，坐标公式保证线性；两个投影的值又决定元素的两个坐标，所以 \(h\) 唯一。
+
+式\eqref{b2:eq:module-pushout}的分母是同态 \(d:P\rightarrow M\oplus N\)、\(p\mapsto\Bigl(u(p),-v(p)\Bigr)\) 的像，因而已是子模，不必再添加未说明的关系。商模存在，且
+\[
+iu(p)-jv(p)=\biggl[\Bigl(u(p),-v(p)\Bigr)\biggr]=0.
+\]
+若 \(au=bv\)，定义 \(s:M\oplus N\rightarrow T\)、\(s(m,n)=a(m)+b(n)\)。它线性，并在 \(d(P)\) 上为零，所以
+\[
+h\biggl(\Bigl[(m,n)\Bigr]\biggr)=a(m)+b(n)
+\]
+不依赖代表元，给出所需模同态。每个商元素都有形式 \(i(m)+j(n)\)，任何满足 \(hi=a\)、\(hj=b\) 的同态都必须有此公式，因而唯一。
+\end{proof}
+
+这些定义可用一对相反方向的交换图比较：
+\[
+\begin{tikzcd}
+M\times_PN\arrow[r,"q"]\arrow[d,"p"']&N\arrow[d,"g"]\\
+M\arrow[r,"f"']&P
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+P\arrow[r,"v"]\arrow[d,"u"']&N\arrow[d,"j"]\\
+M\arrow[r,"i"']&M\amalg_PN.
+\end{tikzcd}
+\]
+交换性只是条件的一半，还必须验证任意相容映射的唯一分解。用两次泛性质构造比较态射，并用唯一性检验两个复合为恒等，就能像\cref{b2:prop:universal-object-uniqueness}一样证明拉回、推出在保持图中映射的同构意义下唯一。
+
+\ProseParagraphBreak
+例如在整数模中，\(f:\mathbb Z\rightarrow\mathbb Z\) 为乘二，\(g\) 为乘三。拉回的条件是 \(2m=3n\)，故 \(m=3t,n=2t\)，它与 \(\mathbb Z\) 同构，但两个投影分别为乘三、乘二。把两映射改读为从公共定义域出发的 \(u=2\)、\(v=3\)，推出为
+\[
+\mathbb Z^2/\mathbb Z(2,-3)\cong\mathbb Z,
+\qquad \Bigl[(m,n)\Bigr]\longmapsto3m+2n.
+\]
+该映射满射，因为 \(3-2=1\)；其核由 \(3m=-2n\) 确定为 \(\mathbb Z(2,-3)\)，故\cref{b2:thm:module-first-isomorphism}给出同构。此时两个结构映射仍分别是乘三、乘二。同构类型相同并不消除它们所记录的原映射。
+
+\ProseParagraphBreak
+取 \(N=0\)，拉回 \(M\times_P0\) 就是 \(\ker f\)，而推出 \(M\amalg_P0\) 就是 \(M/u(P)\)。这说明核与余核是拉回、推出的特殊情形，但不会改变它们在\cref{b2:def:module-kernel-image-cokernel}中的具体定义。
 
 \subsection{构造的映射性质}
 \label{b2:subsec:0503:03}
 
-待撰写。
+积的泛性质可以重写为双射
+\[
+\operatorname{Hom}_{\mathcal C}(T,P)\longrightarrow
+\prod_i\operatorname{Hom}_{\mathcal C}(T,X_i),\qquad
+h\longmapsto(p_ih)_i.
+\]
+对 \(a:T'\rightarrow T\)，两侧都通过预复合 \(a\) 改变输入，因此这一双射关于 \(T\) 自然。拉回则把右端换成满足 \(fa=gb\) 的映射对；推出的对应从 \(\operatorname{Hom}_{\mathcal C}(Q,T)\) 出发，关于 \(T\) 协变。它们不只数出了映射有多少，而是给出了与复合相容的具体对应。
+
+\begin{proposition}[由映射检测同构]\label{b2:prop:hom-detects-isomorphism}
+设 \(u:P\rightarrow Q\) 为态射。若对每个对象 \(T\)，后复合映射
+\[
+u_*:\operatorname{Hom}_{\mathcal C}(T,P)\longrightarrow
+\operatorname{Hom}_{\mathcal C}(T,Q),\qquad h\longmapsto uh
+\]
+都是双射，则 \(u\) 为同构。更一般地，任何自然同构
+\(\alpha:\operatorname{Hom}_{\mathcal C}(-,P)\Rightarrow
+\operatorname{Hom}_{\mathcal C}(-,Q)\)
+都唯一地由某个同构 \(u:P\rightarrow Q\) 的后复合给出。
+\end{proposition}
+\begin{proof}
+先取 \(T=Q\)。满射性给出 \(v:Q\rightarrow P\)，使 \(uv=\operatorname{id}_Q\)。再取 \(T=P\)，有 \(u(vu)=u=u\operatorname{id}_P\)；这次的单射性给出 \(vu=\operatorname{id}_P\)，所以 \(u\) 可逆。
+
+对自然同构 \(\alpha\)，令 \(u=\alpha_P(\operatorname{id}_P)\)。给定 \(h:T\rightarrow P\)，用 \(h\) 的预复合及 \(\alpha\) 的自然性，得到
+\[
+\alpha_T(h)=\alpha_T(\operatorname{id}_P h)
+=\alpha_P(\operatorname{id}_P)h=uh.
+\]
+所以 \(\alpha\) 的全部分量都由 \(u\) 后复合给出。分量为双射，第一部分说明 \(u\) 是同构；在 \(T=P\) 的恒等态射处取值又说明 \(u\) 唯一。
+\end{proof}
+
+这个论证是通过 Hom 函子研究对象的一个基本情形，完整的 Yoneda 引理将在第四卷展开。本章只需要这里已经证明的版本：构造若给出对所有测试对象自然的映射对应，就能据此辨认对象及其比较映射。对模而言，只比较某个固定 \(T\) 所得到的集合大小通常不足够；即使各个 Hom 集合大小恰好相同，也没有自动得到这些双射的自然相容性。

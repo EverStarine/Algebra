@@ -5,7 +5,7 @@
 \section{Jordan 理论}
 \label{b2:sec:0405}
 
-% TODO: 按以下纲要要点撰写本节。
+有理标准形把算子分成循环部分，并在每一部分保留一个关系多项式。如果这些多项式在基域上都分解为一次因子，就可以再按各个根拆开，并用连续施加 \(T-\lambda I\) 得到的向量选基。这样得到的矩阵只有特征值和少量的一，其块大小还可以从核的维数直接读出。本节始终令 \(V\) 为域 \(k\) 上的非零有限维空间，\(T\in\operatorname{End}_k(V)\)，并记 \(n=\dim_kV\)。零空间对应空的块分解，可单独并入结论。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,234 @@
 \subsection{分裂域上的初等因子}
 \label{b2:subsec:0405:01}
 
-待撰写。
+由\cref{b2:thm:rational-canonical-form,b2:prop:operator-characteristic-minimal}，算子模 \(V_T\) 的非平凡不变因子可以写成
+\[
+f_1\mid f_2\mid\cdots\mid f_s,\qquad
+V_T\cong\bigoplus_{j=1}^s k[t]/(f_j),
+\]
+其中各 \(f_j\) 首一且次数为正，并有
+\[
+\chi_T=\prod_{j=1}^s f_j,\qquad m_T=f_s.
+\]
+因为每个 \(f_j\) 都整除 \(f_s\)，\(\chi_T\) 与 \(m_T\) 具有完全相同的首一不可约因子。因此它们是否在 \(k\) 上分裂为一次因子的乘积，是同一个条件；这里不要求这些一次因子互不相同。
+
+\begin{proposition}\label{b2:prop:jordan-splitting-primary}
+假设 \(m_T\) 在 \(k\) 上分裂，写成
+\[
+m_T(t)=\prod_{\lambda\in\Lambda}(t-\lambda)^{a_\lambda},
+\qquad a_\lambda\ge1,
+\]
+其中 \(\Lambda\subseteq k\) 为有限集，所列 \(\lambda\) 互不相同。则
+\[
+V=\bigoplus_{\lambda\in\Lambda}V_\lambda,
+\qquad V_\lambda=\ker(T-\lambda I)^{a_\lambda},
+\]
+而每个 \(V_\lambda\) 作为 \(k[t]\) 模可以分解为
+\[
+(V_\lambda)_T\cong
+\bigoplus_{j=1}^{r_\lambda}k[t]/\bigl((t-\lambda)^{d_{\lambda,j}}\bigr),
+\qquad d_{\lambda,j}\ge1,
+\qquad \max_j d_{\lambda,j}=a_\lambda.
+\]
+这些幂正是 \(V_T\) 的初等因子。子空间 \(V_\lambda\) 由 \(T\) 唯一确定；其中循环子模的具体选取未必唯一，但各个指数及其出现次数唯一。
+\end{proposition}
+\begin{proof}
+\(V_T\) 是有限生成挠 \(k[t]\) 模，故\cref{b2:thm:pid-elementary-divisors}适用。分裂条件使它的全部不可约因子都是 \(t-\lambda\)，于是得到所述循环商及其指数的唯一性。全模的零化多项式必须同时零化每个循环商，所以 \(m_T\) 中 \(t-\lambda\) 的指数是这些 \(d_{\lambda,j}\) 的最大值。
+
+还须辨认这些抽象直和因子在 \(V\) 中对应的子空间。在因子 \(k[t]/((t-\lambda)^d)\) 上，\((t-\lambda)^{a_\lambda}\) 作用为零。若 \(\mu\ne\lambda\)，则 \((t-\lambda)^{a_\lambda}\) 与 \((t-\mu)^d\) 互素，故存在 \(u,v\in k[t]\)，使
+\[
+u(t)(t-\lambda)^{a_\lambda}+v(t)(t-\mu)^d=1.
+\]
+在 \(k[t]/((t-\mu)^d)\) 上，这个等式说明乘以 \((t-\lambda)^{a_\lambda}\) 可逆，因而其核为零。把这些结论放回全部循环因子的直和，便知 \(\ker(T-\lambda I)^{a_\lambda}\) 恰好由属于 \(\lambda\) 的那些因子组成。这证明了实际子空间的等式及其直和分解。
+\end{proof}
+
+在 \(V_\lambda\) 上，\(N_\lambda=(T-\lambda I)|_{V_\lambda}\) 为幂零算子；在其余 \(V_\mu\) 上，\(T-\lambda I\) 可逆。因此
+\[
+V_\lambda=\bigcup_{r\ge1}\ker(T-\lambda I)^r
+\]
+就是第一章定义的广义特征子空间。普通特征子空间只是其中的 \(\ker(T-\lambda I)\)。把一个广义特征子空间分成循环因子，仍须记录每个因子的幂次数，不能只记录特征值。
+
+\ProseParagraphBreak
+例如，一个算子的初等因子若为
+\[
+(t-1)^3,\qquad (t-1),\qquad (t+1)^2
+\]
+且 \(\operatorname{char}k\ne2\)，那么 \(V_1\) 的维数为四，\(V_{-1}\) 的维数为二。前一个空间内有长度不同的两个循环因子。下一小节将说明长度三与长度一怎样在矩阵中表现出来。特征不等于二的条件用来保证 \(1\) 与 \(-1\) 是两个不同的根。
 
 \subsection{Jordan 块及其唯一性}
 \label{b2:subsec:0405:02}
 
-待撰写。
+回顾第一章采用的 \term[Jordan-kuai]{Jordan 块}[Jordan block]记号：\(J_d(\lambda)\) 的主对角元为 \(\lambda\)，上方紧邻的次对角元为一，其余元素为零；特别地，\(J_1(\lambda)=(\lambda)\)。例如
+\[
+J_3(\lambda)=
+\begin{pmatrix}
+\lambda&1&0\\
+0&\lambda&1\\
+0&0&\lambda
+\end{pmatrix}.
+\]
+块的方向取决于链向量的排列次序。下面从循环商选出的基，将与这里的上次对角约定一致。
+
+\begin{lemma}\label{b2:lem:jordan-chain-block}
+在 \(k[t]/((t-\lambda)^d)\) 上考虑乘以 \(t\) 的算子。按下列顺序排列的陪集是一组 \(k\) 基：
+\[
+e_1=\overline{(t-\lambda)^{d-1}},\quad
+e_2=\overline{(t-\lambda)^{d-2}},\quad\ldots,\quad
+e_d=\overline1.
+\]
+算子在这组基下的矩阵为 \(J_d(\lambda)\)。等价地，若一个循环子空间由 \(v\) 生成且 \(m_{T,v}=(t-\lambda)^d\)，则其相应基为
+\[
+(T-\lambda I)^{d-1}v,\ (T-\lambda I)^{d-2}v,\ \ldots,\ v.
+\]
+\end{lemma}
+\begin{proof}
+把 \(t\) 换成 \((t-\lambda)+\lambda\)，可知次数小于 \(d\) 的多项式都能唯一地写成 \(1,t-\lambda,\ldots,(t-\lambda)^{d-1}\) 的线性组合。带余除法又说明它们的陪集生成所写商空间。若这些陪集有非平凡线性关系，就有一个次数小于 \(d\) 的非零多项式被 \((t-\lambda)^d\) 整除，矛盾。因此逆序排列后仍是一组基。
+
+令 \(N\) 表示乘以 \(t-\lambda\)。在这组基上，\(Ne_1=0\)，而 \(Ne_j=e_{j-1}\) 对 \(2\le j\le d\) 成立。乘 \(t\) 等于 \(\lambda I+N\)，故其第 \(j\) 列恰为 \(\lambda e_j+e_{j-1}\) 的坐标，得到所述矩阵。循环子空间与循环商之间的模同构把 \(\overline1\) 送到 \(v\)，并保持多项式作用，因而把上述基送到第二组向量。
+\end{proof}
+
+这样的向量排列称为一条 \term[Jordan-lian]{Jordan 链}[Jordan chain]：它满足 \((T-\lambda I)e_1=0\) 与 \((T-\lambda I)e_j=e_{j-1}\)。例如在 \(k^3\) 中取
+\[
+A=\begin{pmatrix}
+\lambda&1&1\\
+0&\lambda&1\\
+0&0&\lambda
+\end{pmatrix},\qquad N=A-\lambda I.
+\]
+对标准基向量有 \(Ne_3=e_1+e_2\)、\(N^2e_3=e_1\) 和 \(N^3e_3=0\)。因此 \(e_1,e_1+e_2,e_3\) 是一组 Jordan 链基；三者线性无关，且 \(A\) 在这组基下成为 \(J_3(\lambda)\)。求这样的基，要求实际找到链顶的向量，再逐次施加 \(N\)。
+
+\begin{theorem}[Jordan 标准形]\label{b2:thm:jordan-canonical-form}
+有限维算子 \(T\) 在 \(k\) 上具有 Jordan 块的直和表示，当且仅当其特征多项式在 \(k\) 上分裂；这也等价于最小多项式在 \(k\) 上分裂。存在这种表示时，各特征值的 Jordan 块大小及其重数唯一，只有块的排列次序可以改变。
+\end{theorem}
+\begin{proof}
+若已有 Jordan 块表示，每个块的特征多项式为 \((t-\lambda)^d\)，故全部块的特征多项式相乘后在 \(k\) 上分裂。反过来，分裂条件使\cref{b2:prop:jordan-splitting-primary}适用；在每个循环因子上取\cref{b2:lem:jordan-chain-block}中的基，再把它们合在一起，便得到整个空间的 Jordan 基。
+
+为证明唯一性，固定 \(\lambda\in k\)，令
+\[
+c_\lambda(r)=\dim_k\ker(T-\lambda I)^r\quad(r\ge1),
+\qquad c_\lambda(0)=0.
+\]
+一个属于 \(\lambda\)、大小为 \(d\) 的块，在 \((T-\lambda I)^r\) 的核中贡献 \(\min(r,d)\) 维，因为链的前 \(\min(r,d)\) 个向量恰被零化。对于属于 \(\mu\ne\lambda\) 的块，\(T-\lambda I=(\mu-\lambda)I+N\)，其中 \(N^d=0\)。记 \(c=\mu-\lambda\ne0\)，有限和
+\[
+(cI+N)^{-1}=c^{-1}\sum_{j=0}^{d-1}(-c^{-1}N)^j
+\]
+确为逆算子，所以这样的块对核维数没有贡献。若属于 \(\lambda\) 的块大小为 \(d_{\lambda,1},\ldots,d_{\lambda,r_\lambda}\)，就有
+\begin{equation}\label{b2:eq:jordan-kernel-dimensions}
+c_\lambda(r)=\sum_{j=1}^{r_\lambda}\min(r,d_{\lambda,j}).
+\end{equation}
+两项相减得到
+\[
+c_\lambda(r)-c_\lambda(r-1)
+=\#\{\,j\mid d_{\lambda,j}\ge r\,\}.
+\]
+再取相邻两项之差，便得到大小恰为 \(r\) 的块数。因此全部块大小及其重数都由 \(T\) 的这些核维数决定，不依赖所选基，证明唯一性。
+\end{proof}
+
+这就完成了\cref{b2:claim:jordan-canonical-goal}所预告的结论。Jordan 基本身通常不唯一；唯一的是块的分类数据。不同教材若把一放在下次对角，只需在每条链中逆序排列基向量，即得到这里的约定。
+
+\begin{proposition}\label{b2:prop:jordan-kernel-dimensions}
+在 Jordan 标准形存在的条件下，设 \(\lambda\) 为 \(T\) 的一个特征值，并记 \(c_\lambda(r)\) 如上。对 \(r\ge1\)，属于 \(\lambda\)、大小恰为 \(r\) 的块数是
+\[
+2c_\lambda(r)-c_\lambda(r-1)-c_\lambda(r+1).
+\]
+块的总数为 \(c_\lambda(1)\)，各块大小之和为 \(\dim V_\lambda\)，最大块大小为 \(m_T\) 中 \(t-\lambda\) 的指数。特别地，\(\lambda\) 的几何重数为块的总数，代数重数为各块大小之和。
+\end{proposition}
+\begin{proof}
+恰好大小为 \(r\) 的块数，等于大小至少为 \(r\) 的块数减去大小至少为 \(r+1\) 的块数，由定理证明中的差分公式即得。取 \(r=1\)，每个块贡献一个特征向量，故块总数为 \(c_\lambda(1)\)。全部循环商的维数相加给出 \(\dim V_\lambda\)，其中最大的指数则由\cref{b2:prop:jordan-splitting-primary}确定。最后，每个块在特征多项式中贡献 \((t-\lambda)^d\)，所以块大小之和也是代数重数。
+\end{proof}
+
+例如，一个七维算子只有特征值 \(\lambda\)，已算出
+\[
+c_\lambda(0),c_\lambda(1),\ldots,c_\lambda(5)
+=0,3,5,6,7,7.
+\]
+相邻差为 \(3,2,1,1,0\)，分别表示至少长一、二、三、四、五的块数。因此有一个大小为四的块、一个大小为二的块和一个大小为一的块，没有其他块。它的 Jordan 标准形为
+\[
+J_4(\lambda)\oplus J_2(\lambda)\oplus J_1(\lambda).
+\]
+这里无需先求出全部 Jordan 链，就能由核维数确定标准形；若还要写出换基矩阵，则必须进一步求出链向量。
+
+\begin{corollary}\label{b2:cor:jordan-diagonalizable}
+算子 \(T\) 在 \(k\) 上可对角化，当且仅当 \(m_T\) 是互不相同的一次因子的乘积。
+\end{corollary}
+\begin{proof}
+若 \(m_T\) 具有这种分解，Jordan 标准形存在，且由\cref{b2:prop:jordan-kernel-dimensions}，每个特征值的最大块大小均为一，故整矩阵为对角矩阵。反过来，一个对角矩阵的 Jordan 块全为大小一，因而最小多项式的各一次因子只出现一次。
+\end{proof}
 
 \subsection{基域扩张与标准形}
 \label{b2:subsec:0405:03}
 
-待撰写。
+一个在 \(k\) 上不可约的多项式，到了较大的域 \(L\) 中可能分解。要比较相应的算子，应先说明改变了哪个空间：给定 \(A\in M_n(k)\)，把同一矩阵的条目看成 \(L\) 中的元素，使它作用在 \(L^n\) 上，所得算子记为 \(T_L\)。它并不是把原来的 \(k^n\) 直接当作 \(L\) 向量空间。
+
+\ProseParagraphBreak
+这种比较不依赖最初选取的 \(k\) 基。若 \(A'=P^{-1}AP\) 且 \(P\in\operatorname{GL}_n(k)\)，同一个 \(P\) 也在 \(\operatorname{GL}_n(L)\) 中，因而 \(A,A'\) 在 \(L\) 上仍相似。下面用矩阵说明标准形怎样变化，无须预先使用向量空间的张量积。
+
+\begin{proposition}\label{b2:prop:scalar-extension-invariant-factors}
+设 \(k\subseteq L\) 为域扩张，\(A\in M_n(k)\)。把 \(A\) 看作 \(L\) 上的矩阵后，其首一不变因子仍为原来的多项式 \(f_1,\ldots,f_s\)，只是把系数看成 \(L\) 中的元素。因此最小多项式和特征多项式也保持不变。
+\end{proposition}
+\begin{proof}
+由\cref{b2:prop:operator-polynomial-matrix}，\(tI_n-A\) 是相应算子模的一个展示矩阵。因为 \(k[t]\) 是主理想整环，\cref{b2:thm:smith-normal-form}给出它的 Smith 分解，写成
+\[
+P(t)(tI_n-A)Q(t)
+=\operatorname{diag}(1,\ldots,1,f_1,\ldots,f_s),
+\]
+其中 \(P,Q\) 是 \(k[t]\) 上的可逆矩阵。它们的逆矩阵也有 \(k[t]\) 中的条目，所以放到 \(L[t]\) 上仍可逆，所写等式原样成立。原有的整除关系 \(f_1\mid\cdots\mid f_s\) 保持成立；每个 \(f_j\) 仍首一且次数为正，因而不会在 \(L[t]\) 中变成单位。这仍是 Smith 标准形。
+
+将\cref{b2:prop:operator-polynomial-matrix}用于 \(L^n\)，并用\cref{b2:thm:pid-elementary-divisors}中不变因子的唯一性，便知同一列 \(f_j\) 就是 \(T_L\) 的不变因子。再由\cref{b2:prop:operator-characteristic-minimal}中的公式 \(m_T=f_s\)、\(\chi_T=\prod_j f_j\)，得到最后的断言。
+\end{proof}
+
+这里的“保持不变”是多项式本身不变，不是它的不可约分解不变。例如在 \(\mathbb R\) 上，\((t^2+1)^2\) 是一个不可约多项式的二次幂；到 \(\mathbb C\) 上，它则分解为 \((t-i)^2(t+i)^2\)。这种分解的改变直接影响初等因子。
+
+\begin{proposition}\label{b2:prop:scalar-extension-elementary-divisors}
+设 \(q^e\) 是 \(A\) 在 \(k\) 上的一个初等因子，其中 \(q\) 首一不可约。若在 \(L[t]\) 中有分解
+\[
+q=\prod_{j=1}^u q_j^{h_j},
+\]
+其中 \(q_j\) 为互不相同的首一不可约多项式，\(h_j\ge1\)，则这个循环因子在 \(L\) 上贡献的初等因子为
+\[
+q_1^{eh_1},\ldots,q_u^{eh_u}.
+\]
+对原来的每个初等因子作这项操作，就得到 \(A\) 在 \(L\) 上的全部初等因子，原有的重复次数也分别保留。特别地，若 \(L\) 是 \(\chi_A\) 的分裂域，这些因子全部为一次多项式的幂，相应的幂指数就是 Jordan 块大小。
+\end{proposition}
+\begin{proof}
+由\cref{b2:thm:pid-elementary-divisors}，先把算子模分成初等因子对应的循环商，再在每个 \(k[t]/(q^e)\) 中取 \(1,t,\ldots,t^{\deg(q^e)-1}\) 的陪集为基，就把 \(A\) 写成各个友矩阵 \(C(q^e)\) 的直和。同一个换基矩阵在 \(L\) 上仍可逆，而 \(C(q^e)\) 在 \(L\) 上仍表示 \(L[t]/(q^e)\) 中乘 \(t\) 的算子。因此只需分解这个循环商。
+
+多项式 \(q_j^{eh_j}\) 两两互素。对逐项取余的同态
+\[
+L[t]/(q^e)\longrightarrow
+\bigoplus_{j=1}^u L[t]/(q_j^{eh_j}),
+\]
+核为零，因为能被各个互素因子整除就能被它们的乘积 \(q^e\) 整除。为证明满射，对每个 \(j\) 令 \(Q_j=q^e/q_j^{eh_j}\)，由 Bézout 等式取 \(u_j,v_j\)，使
+\[
+u_jQ_j+v_jq_j^{eh_j}=1.
+\]
+给定各坐标的代表多项式 \(g_j\)，多项式 \(\sum_j g_ju_jQ_j\) 在第 \(j\) 项模 \(q_j^{eh_j}\) 后恰为 \(g_j\)，所以给出原像。于是所写同态为保持 \(t\) 作用的同构，得到结论。不同原不可约因子在 \(k[t]\) 中已有 Bézout 等式，在 \(L[t]\) 中仍互素，因此不会在扩域后混入同一项因子；最后再用初等因子的唯一性即可。
+\end{proof}
+
+例如，令实矩阵 \(A=C((t^2+1)^2)\)。它只有一个不变因子 \((t^2+1)^2\)，最小多项式和特征多项式均等于这个四次多项式。在 \(\mathbb C\) 上，不变因子仍只有这一个，但初等因子变为 \((t-i)^2\) 与 \((t+i)^2\)。因此复数域上的 Jordan 标准形为
+\[
+J_2(i)\oplus J_2(-i).
+\]
+扩大基域使特征值可以写出来，却没有使这个算子可对角化，因为两个块都仍有大小二。
+
+\ProseParagraphBreak
+还要注意，\(q\) 原来不可约，并不保证扩域后各 \(h_j=1\)。这种情况在正特征中会实际出现。取 \(k=\mathbb F_2(s)\)，其中 \(s\) 为不定元，即 \(k\) 是二元域上的有理函数域。多项式
+\[
+q(t)=t^2-s
+\]
+在 \(k[t]\) 中不可约。事实上，二次多项式若可约就有根；若 \(a(s)/b(s)\) 是根，其中 \(a,b\in\mathbb F_2[s]\)、\(b\ne0\)，则
+\[
+a(s)^2=s\,b(s)^2.
+\]
+两侧都非零，次数却分别为偶数 \(2\deg a\) 与奇数 \(1+2\deg b\)，矛盾。
+
+\ProseParagraphBreak
+现取另一个不定元 \(u\)，令 \(L=\mathbb F_2(u)\)，并通过 \(s\mapsto u^2\) 把 \(k\) 嵌入 \(L\)。这是嵌入，因为非零多项式代入超越元 \(u^2\) 后仍非零，故分式的分母不会变成零。在特征二中有
+\[
+q(t)=t^2-u^2=(t-u)^2.
+\]
+于是 \(q\) 在分裂域中只有一个二重根，是一个不可分多项式。矩阵
+\[
+A=C(q)=\begin{pmatrix}0&s\\1&0\end{pmatrix}
+\]
+在 \(k\) 上的初等因子是 \(q\)，即原不可约因子的一次幂；在 \(L\) 上却变成 \((t-u)^2\)，因而相似于 \(J_2(u)\)。也可直接检查 \((A-uI)^2=0\) 而 \(A-uI\ne0\)。所以扩域后的块大小要把根的重数 \(h_j\) 一并计算，不能一概沿用原来的幂指数 \(e\)。

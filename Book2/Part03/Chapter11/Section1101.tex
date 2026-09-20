@@ -5,9 +5,9 @@
 \section{域上的代数}
 \label{b2:sec:1101}
 
-% TODO: 按以下纲要要点撰写本节。
+矩阵可以相加、数乘，也可以相乘；群元素的形式线性组合也具有这三种运算。代数把这些例子放在共同的框架中，要求乘法与向量空间结构相容。本章以域 \(k\) 为底域，除特别说明外，代数结合且含单位元，同态保持单位元；允许零代数，但涉及忠实作用或单代数时会排除它。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 结合含幺代数与代数同态
 % * 结构常数及基变换
@@ -17,14 +17,93 @@
 \subsection{结合含幺代数与代数同态}
 \label{b2:subsec:1101:01}
 
-待撰写。
+\begin{definition}\label{b2:def:field-algebra}
+域 \(k\) 上的结合含幺代数是一个 \(k\) 向量空间 \(A\)，带有双线性乘法 \((a,b)\mapsto ab\) 和元素 \(1_A\)，满足
+\[
+(ab)c=a(bc),\qquad 1_Aa=a1_A=a.
+\]
+\(k\) 代数同态 \(f:A\to B\) 是保持乘法与单位元的 \(k\) 线性映射。\(A\) 中与所有元素交换的元素组成其中心 \(Z(A)\)。
+\end{definition}
+
+这与\cref{b2:def:associative-graded-algebra}的定义一致。双线性给出 \((\lambda1_A)a=\lambda a=a(\lambda1_A)\)，所以 \(\lambda\mapsto\lambda1_A\) 是到中心的保单位元环同态；反过来，这样的结构同态给出标量乘法及上述双线性。若 \(A\ne0\)，这个同态单射，因为其核是域的真理想。零代数的结构同态则不单射，不能无条件把底域当成代数内部的一个子域。
+
+\ProseParagraphBreak
+例如 \(k[t]/(t^2)\) 的元素唯一写成 \(a+b\varepsilon\)，其中 \(\varepsilon^2=0\)。它作为向量空间与 \(k\times k\) 同维，却不是同一个代数：前者有非零幂零元，后者没有。代数分类既要保留线性结构，也要保留乘法。
+
+\begin{proposition}\label{b2:prop:algebra-modules-representations}
+在 \(k\) 向量空间 \(V\) 上指定幺性左 \(A\) 模结构，并使底域作用与已有标量作用相同，等价于指定保单位元的 \(k\) 代数同态
+\[
+\rho:A\longrightarrow\operatorname{End}_k(V).
+\]
+在此对应下，模同态正是满足 \(f\rho_V(a)=\rho_W(a)f\) 的线性映射。
+\end{proposition}
+\begin{proof}
+由模结构令 \(\rho(a)(v)=av\)。分配律给出对 \(a\) 和 \(v\) 的可加性；底域在中心保证每个 \(\rho(a)\) 为 \(k\) 线性。模的结合律与幺性给出 \(\rho(ab)=\rho(a)\rho(b)\)、\(\rho(1)=\operatorname{id}\)，而 \(\rho(\lambda a)=\lambda\rho(a)\)。反向用同一公式定义作用，这些等式逐项给出模公理。最后的相容等式在 \(v\) 处就是 \(f(av)=af(v)\)。
+\end{proof}
+
+这称为 \(A\) 的表示，也可直接使用左模语言。表示的核为 \(V\) 的零化子；核为零恰好表示作用忠实。一个表示可以使许多不同代数元素产生同一个线性算子，定义本身并不排除这种情况。
 
 \subsection{结构常数及基变换}
 \label{b2:subsec:1101:02}
 
-待撰写。
+设 \(A\) 有有限基 \(e_1,\ldots,e_n\)。逐对展开乘积，写成
+\[
+e_ie_j=\sum_{r=1}^n c_{ij}^{r}e_r.
+\]
+标量 \(c_{ij}^{r}\) 称为这组基下的\term[jiegou-changshu]{结构常数}[structure constants]。它们决定全部乘法，因为两个一般元素的乘积可由双线性展开。
+
+\begin{proposition}\label{b2:prop:structure-constants}
+在有基 \(e_1,\ldots,e_n\) 的向量空间上指定上述常数，就指定了唯一双线性乘法。它结合，当且仅当对所有 \(i,j,k,s\)，
+\begin{equation}\label{b2:eq:structure-associativity}
+\sum_r c_{ij}^{r}c_{rk}^{s}=\sum_r c_{jk}^{r}c_{ir}^{s}.
+\end{equation}
+元素 \(u=\sum_i u_i e_i\) 是单位元，当且仅当
+\[
+\sum_i u_i c_{ij}^{s}=\delta_{js},\qquad
+\sum_i u_i c_{ji}^{s}=\delta_{js}
+\quad\text{对所有 }j,s.
+\]
+\end{proposition}
+\begin{proof}
+令两个线性组合的乘积为其所有基乘积按系数展开的有限和。坐标唯一使其良定义，并直接得到双线性。比较 \((e_ie_j)e_k\) 与 \(e_i(e_je_k)\) 的第 \(s\) 个坐标，便得到\eqref{b2:eq:structure-associativity}。两种三变量表达都三线性，故在所有基向量组上相等即在任意输入上相等。类似地，\(ue_j=e_j\) 与 \(e_ju=e_j\) 的坐标恰是两条单位条件；线性性再推广到任意元素。
+\end{proof}
+
+若换基为 \(f_a=\sum_i p_{ia}e_i\)，记 \(P^{-1}=(q_{dr})\)，则新结构常数为
+\begin{equation}\label{b2:eq:structure-basis-change}
+(c')_{ab}^{d}=\sum_{i,j,r}q_{dr}p_{ia}p_{jb}c_{ij}^{r}.
+\end{equation}
+这是先把 \(f_af_b\) 展开到旧基，再用 \(e_r=\sum_dq_{dr}f_d\) 收回新坐标的结果。三个指标都参与换基；它不是对某一个固定矩阵作相似变换。
+
+\ProseParagraphBreak
+例如，在双数代数中以 \(1,y\) 为新基，令 \(y=b+a\varepsilon\)、\(a\ne0\)。直接计算得到 \(y^2=2by-b^2\)。同一个代数在新基下可能出现非零常数项和一次项，结构常数并非代数自身的不变量；应当比较在换基公式下保留下来的性质。
 
 \subsection{群代数和矩阵代数}
 \label{b2:subsec:1101:03}
 
-待撰写。
+\begin{definition}\label{b2:def:group-algebra}
+群 \(G\) 的\term[qun-daishu]{群代数}[group algebra] \(k[G]\) 是以 \(G\) 的元素为基的向量空间。元素为有限和 \(\sum_g a_g g\)，乘法由群乘法双线性延伸：
+\[
+\Bigl(\sum_g a_g g\Bigr)\Bigl(\sum_h b_h h\Bigr)
+=\sum_{g,h}a_gb_h(gh).
+\]
+单位为群单位元对应的基向量。
+\end{definition}
+\symidx{\(k[G]\)：群 \(G\) 的群代数}
+
+两个支集有限，乘积仍是有限和；三重乘积的系数由同一个有限三重和给出，群乘法的结合律保证结果相同。因此该式定义结合代数。它交换当且仅当群交换，因为不同群元素是不同的基向量。若 \(G\) 有限，则 \(\dim_k k[G]=|G|\)。
+
+\begin{proposition}\label{b2:prop:group-algebra-representations}
+\(G\) 的 \(k\) 线性表示与 \(k[G]\) 左模结构一一对应；等变线性映射对应模同态。
+\end{proposition}
+\begin{proof}
+从群表示 \(\rho\) 出发，令 \((\sum_g a_g g)v=\sum_g a_g\rho(g)v\)。所有和有限，\(\rho(gh)=\rho(g)\rho(h)\) 给出模的结合律，其余公理由线性性得到。反向限制到基向量 \(g\)，得到可逆线性算子，因为 \(g^{-1}\) 的作用是其逆。两构造互逆。对全部 \(g\) 相容等价于对它们的任意有限线性组合相容，因此同态也一致。
+\end{proof}
+
+群代数的\term[zengguang]{增广}[augmentation]为 \(\epsilon:k[G]\to k\)、\(\sum_g a_g g\mapsto\sum_g a_g\)。乘积的系数总和为两个系数总和之积，所以它是代数同态；由它得到群平凡作用的一维模。其核由 \(g-1\) 生成，因为系数和为零的元素可写成 \(\sum_g a_g(g-1)\)。
+
+\ProseParagraphBreak
+矩阵代数 \(M_n(k)\)、\(n\ge1\)，以矩阵单位 \(E_{ij}\) 为基，乘法满足
+\[
+E_{ij}E_{rs}=\delta_{jr}E_{is},\qquad 1=\sum_iE_{ii}.
+\]
+它在列向量空间 \(k^n\) 上自然作用。任何非零稳定子空间若含非零向量 \(v\)，取其一个非零坐标 \(v_j\)，则 \(E_{ij}v=v_j e_i\) 给出每个标准基向量；该子空间因而为全空间。这是不可约作用的一个基本例子，下一章之后将用简单模的语言系统研究。

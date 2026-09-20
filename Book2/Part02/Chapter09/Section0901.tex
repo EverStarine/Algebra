@@ -5,9 +5,9 @@
 \section{交替多线性映射}
 \label{b2:sec:0901}
 
-% TODO: 按以下纲要要点撰写本节。
+面积在交换两条边时改变符号，在两条边重合时变为零。这两种性质在熟悉的实数情形中相互联系，但在一般系数环上并不等价。外幂所表达的是“有两个输入相同时为零”的交替性。本章始终设 \(R\) 为含单位元的交换环，所有张量积和多线性映射均在 \(R\) 上；需要域或额外特征条件时另行说明。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 交替性与反对称性的区别
 % * 特征2的特殊性
@@ -17,14 +17,104 @@
 \subsection{交替性与反对称性}
 \label{b2:subsec:0901:01}
 
-待撰写。
+\begin{definition}\label{b2:def:alternating-multilinear}
+设 \(M,L\) 为 \(R\) 模，\(p\ge2\)。一个在每个变量上均为 \(R\) 线性的映射 \(b:M^p\to L\)，若只要某两个输入相同就有
+\[
+b(m_1,\ldots,m_p)=0,
+\]
+就称为\term[jiaoti-duoxianxing-yingshe]{交替多线性映射}[alternating multilinear map]。若每交换两个输入，函数值都变为原值的负元，则称为\term[fanduichen-duoxianxing-yingshe]{反对称多线性映射}[skew-symmetric multilinear map]。\(p=1\) 时，交替条件为空条件，交替映射就是线性映射。
+\end{definition}
+
+\begin{proposition}\label{b2:prop:alternating-implies-skew}
+交替多线性映射必反对称。反过来，若目标模 \(L\) 中 \(2\ell=0\) 蕴含 \(\ell=0\)，则反对称多线性映射也交替。特别地，当 \(2\) 在 \(R\) 中可逆时，两种条件等价。
+\end{proposition}
+\begin{proof}
+固定除第 \(i,j\) 个位置以外的所有输入，把这两个位置都取为 \(x+y\)。交替性使函数值为零；按这两个变量展开，两个含 \((x,x)\)、\((y,y)\) 的项分别为零，故剩下的两项满足
+\[
+b(\ldots,x,\ldots,y,\ldots)
++b(\ldots,y,\ldots,x,\ldots)=0.
+\]
+这就是反对称性。
+
+若反对称映射在两个位置取相同的 \(x\)，交换它们不改变输入，却使值变号，所以这个值 \(\ell\) 满足 \(2\ell=0\)。所给假设使 \(\ell=0\)，即交替。当 \(2\) 可逆时，乘以 \(2^{-1}\) 就能从 \(2\ell=0\) 推出 \(\ell=0\)。
+\end{proof}
+
+将置换写成对换的复合，交替性还给出
+\begin{equation}\label{b2:eq:alternating-permutation}
+b\Bigl(m_{\sigma(1)},\ldots,m_{\sigma(p)}\Bigr)
+=\operatorname{sgn}(\sigma)b(m_1,\ldots,m_p)
+\qquad(\sigma\in S_p).
+\end{equation}
+所用的符号同态及其在换位上取值为 \(-1\) 的性质，已由第一卷定理3.2.3证明。符号 \(\operatorname{sgn}(\sigma)\) 只由置换决定，因此表达不依赖所选的对换分解。这里没有除以 \(p!\)，也不要求它在 \(R\) 中可逆。
+
+\ProseParagraphBreak
+例如，任意交换环上的
+\[
+b\Bigl((x_1,x_2),(y_1,y_2)\Bigr)=x_1y_2-x_2y_1
+\]
+是交替双线性映射。其交替性应直接由 \(x_1x_2-x_2x_1=0\) 核对；不能先用“交换变号”，再在可能存在二挠的环上消去一个 \(2\)。
 
 \subsection{特征二的特殊性}
 \label{b2:subsec:0901:02}
 
-待撰写。
+在域 \(k=\mathbb F_2\) 上，双线性映射 \(b:k\times k\to k\)、\(b(x,y)=xy\) 满足
+\[
+b(y,x)=b(x,y)=-b(x,y),
+\]
+所以反对称，却有 \(b(1,1)=1\)，因而不交替。在特征二中，“交换变号”变成“交换不变”，完全没有强迫对角线取值为零。
+
+\ProseParagraphBreak
+这一区别不只由环的特征决定。取 \(R=\mathbb Z\)、\(M=\mathbb Z\)、\(L=\mathbb Z/2\mathbb Z\)，公式 \(b(a,c)=\overline{ac}\) 同样反对称而不交替。环本身特征零，目标模却有二挠。\cref{b2:prop:alternating-implies-skew}把实际需要的消去条件放在目标模上，正是为了包含这种情形。
+
+\ProseParagraphBreak
+对于基为 \(e_1,\ldots,e_n\) 的自由模，一个双线性形式由矩阵 \(A=(a_{ij})\)、\(a_{ij}=b(e_i,e_j)\) 确定。它交替当且仅当
+\[
+a_{ii}=0,\qquad a_{ij}=-a_{ji}.
+\]
+必要性由交替性及\cref{b2:prop:alternating-implies-skew}得到。反过来，对 \(x=\sum_i x_ie_i\)，展开
+\[
+b(x,x)=\sum_i a_{ii}x_i^2+
+\sum_{i<j}(a_{ij}+a_{ji})x_ix_j=0.
+\]
+所以条件充分。特征二中，这种矩阵是对称且对角线为零的矩阵；一般对称矩阵并不足够。下一章讨论交替形式时仍采用这个定义。
 
 \subsection{外幂的泛性质}
 \label{b2:subsec:0901:03}
 
-待撰写。
+\begin{definition}\label{b2:def:exterior-power}
+对 \(p\ge2\)，在 \(p\) 重张量积 \(M^{\otimes p}\) 中，令 \(J_p\) 为所有具有两个相同因子的纯张量生成的子模。定义 \(M\) 的 \(p\) 次\term[waimi]{外幂}[exterior power]为
+\[
+\bigwedge^p M\coloneqq M^{\otimes p}/J_p,
+\]
+并把 \(m_1\otimes\cdots\otimes m_p\) 的像记为 \(m_1\wedge\cdots\wedge m_p\)。约定 \(\bigwedge^0M=R\)、\(\bigwedge^1M=M\)，空楔积为 \(1\in R\)。
+\end{definition}
+\symidx{\(\bigwedge^p M\)：模的第 \(p\) 次外幂}
+\symidx{\(m_1\wedge\cdots\wedge m_p\)：外幂中的纯楔积}
+
+张量积的商构造使 \((m_1,\ldots,m_p)\mapsto m_1\wedge\cdots\wedge m_p\) 多线性且交替，所有这些纯楔积生成外幂。因此，外幂保留输入之间的多线性关系，并把重复因子造成的退化直接规定为零。
+
+\begin{proposition}[外幂的泛性质]\label{b2:prop:exterior-alternating-universal}
+对任意 \(R\) 模 \(L\) 及交替 \(p\) 线性映射 \(b:M^p\to L\)，存在唯一 \(R\) 线性映射
+\[
+\widetilde b:\bigwedge^pM\longrightarrow L,
+\qquad \widetilde b(m_1\wedge\cdots\wedge m_p)=b(m_1,\ldots,m_p).
+\]
+反过来，每个这样的线性映射都给出交替 \(p\) 线性映射。具有这一性质的对象连同其指定映射，在唯一的相容同构意义下确定。
+\end{proposition}
+\begin{proof}
+先逐次使用\cref{b2:thm:tensor-universal}及\cref{b2:thm:tensor-associativity-unit}，把多线性映射 \(b\) 唯一延伸为 \(M^{\otimes p}\to L\)。交替性恰好说明 \(J_p\) 的每个生成元都被送到零，所以它唯一地通过商模分解。反过来，商映射本身交替，与线性映射复合仍然交替。唯一性来自纯楔积的生成性。
+
+若另一个对象也具有同样的性质，两次应用泛性质得到双向线性映射；它们的复合在每个指定纯楔积上为恒等，故处处为恒等，证明唯一同构。\(p=1\) 的陈述就是线性映射本身；\(p=0\) 时把零变量的值看成指定的 \(\ell\in L\)，它唯一对应 \(R\to L\)、\(r\mapsto r\ell\)。
+\end{proof}
+
+设 \(f:M\to N\) 线性。交替公式
+\[
+(m_1,\ldots,m_p)\longmapsto
+f(m_1)\wedge\cdots\wedge f(m_p)
+\]
+诱导 \(\bigwedge^p f:\bigwedge^pM\to\bigwedge^pN\)。在纯楔积上计算得到
+\begin{equation}\label{b2:eq:exterior-functoriality}
+\bigwedge^p(gf)=\Bigl(\bigwedge^p g\Bigr)\Bigl(\bigwedge^p f\Bigr),
+\qquad \bigwedge^p\operatorname{id}_M=\operatorname{id}_{\bigwedge^pM}.
+\end{equation}
+于是每个外幂都是一个函子；\(p=0\) 时规定所有 \(\bigwedge^0 f\) 都为 \(\operatorname{id}_R\)。与张量积相似，纯楔积的表达也不唯一，外幂的一般元素是有限和，未必能写成一个纯楔积。

@@ -4,9 +4,9 @@
 
 \OptionalSection{Ore 扩张与微分算子环}{b2:sec:2005}
 
-% TODO: 按以下纲要要点撰写本节。
+Weyl 关系在移动系数时增加一个导数项，量子平面则对系数施加自同构。Ore 扩张把这两种操作合在一起。它是添加一个新的形式变量，与第十九章把指定元素变成可逆元的 Ore 局部化不同；本节的构造不使用分母条件。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 环自同态 \(\sigma\) 与 \(\sigma\)-导子 \(\delta\)：\(\delta(ab)=\sigma(a)\delta(b)+\delta(a)b\)
 % * Ore 扩张 \(R[t;\sigma,\delta]\) 的关系 \(ta=\sigma(a)t+\delta(a)\) 与正规表达
@@ -17,19 +17,119 @@
 \subsection{环自同态与扭曲导子}
 \label{b2:subsec:2005:01}
 
-待撰写。
+\begin{definition}\label{b2:def:sigma-derivation}
+设 \(R\) 为任意含幺环，\(\sigma:R\to R\) 为保单位元的环自同态。加法映射 \(\delta:R\to R\) 称为 \term[sigma-daozi]{\(\sigma\) 导子}[sigma-derivation]，如果
+\[
+\delta(ab)=\sigma(a)\delta(b)+\delta(a)b
+\quad(a,b\in R).
+\]
+\(\sigma=\operatorname{id}\) 时就是通常的导子。
+\end{definition}
+
+由 \(\delta(1)=\delta(1)+\delta(1)\) 得 \(\delta(1)=0\)。例如 \(k[x]\) 上的形式求导是恒等自同态的导子；对于任意自同态，零映射总是一个 \(\sigma\) 导子。本节不要求 \(\sigma\) 可逆，若以后需要单射性，会单独说明。
+
+\ProseParagraphBreak
+这条规则正由结合律要求出来。若希望 \(ta=\sigma(a)t+\delta(a)\)，则先移动 \(a\) 再移动 \(b\) 会得到
+\[
+(ta)b=\sigma(a)\sigma(b)t+\sigma(a)\delta(b)+\delta(a)b.
+\]
+它须与 \(t(ab)\) 的展开相同，因而需要上述 \(\sigma\) 导子等式。不过检查这一处相容还不是整个代数存在性的证明，下面给出一个实际模型。
 
 \subsection{Ore 扩张的关系与正规表达}
 \label{b2:subsec:2005:02}
 
-待撰写。
+\begin{theorem}\label{b2:thm:ore-extension-construction}
+给定 \(R,\sigma,\delta\) 如上，存在一个含幺环 \(R[t;\sigma,\delta]\)，包含 \(R\)，且每个元素唯一写成有限和
+\[
+a_0+a_1t+\cdots+a_nt^n,\qquad a_i\in R,
+\]
+满足 \(ta=\sigma(a)t+\delta(a)\)。它作为左 \(R\) 模以 \(1,t,t^2,\ldots\) 为基。
+
+对含幺环同态 \(f:R\to B\) 及满足
+\[
+u f(a)=f\Bigl(\sigma(a)\Bigr)u+f\Bigl(\delta(a)\Bigr)
+\]
+的 \(u\in B\)，存在唯一同态 \(R[t;\sigma,\delta]\to B\)，延伸 \(f\) 并把 \(t\) 送到 \(u\)。
+\end{theorem}
+\begin{proof}
+取形式左自由模 \(P=\bigoplus_{n\ge0}Rz^n\)。在其加法群上定义算子
+\[
+L_a\Bigl(\sum_n b_nz^n\Bigr)=\sum_n ab_nz^n,
+\]
+\[
+T\Bigl(\sum_n b_nz^n\Bigr)
+=\sum_n\Bigl(\sigma(b_n)z^{n+1}+\delta(b_n)z^n\Bigr).
+\]
+它们是加法群自同态，通常不是左 \(R\) 线性映射。由自同态及导子的条件，直接在 \(bz^n\) 上计算得
+\[
+TL_a=L_{\sigma(a)}T+L_{\delta(a)}.
+\]
+令 \(S\) 为 \(\operatorname{End}_{\mathbb Z}(P)\) 中由全部 \(L_a\) 和 \(T\) 生成的子环。利用刚才的等式，可以在每个有限算子字中把所有 \(L_a\) 移到左侧；对 \(T^iL_a\) 按 \(i\) 归纳即可看到，每次展开仍为有限和。因此 \(S\) 中元素都具有 \(\sum_iL_{a_i}T^i\) 的形式。
+
+由于 \(\sigma(1)=1\)、\(\delta(1)=0\)，有 \(T^i(1)=z^i\)。若 \(\sum_iL_{a_i}T^i=0\)，作用在一上便得 \(\sum_i a_iz^i=0\)，所有系数为零。这同时证明正规式唯一，以及 \(a\mapsto L_a\) 单射。令 \(R[t;\sigma,\delta]=S\)、\(t=T\)，结合律由算子复合继承。
+
+对于泛性质，正规式唯一使公式 \(\sum_i a_it^i\mapsto\sum_i f(a_i)u^i\) 良定义。计算两个正规式的乘积时，逐次用 \(ta=\sigma(a)t+\delta(a)\) 移动系数；将每一步的 \(a,t\) 换成 \(f(a),u\)，题设等式保证同一步展开仍成立。因此该公式保持乘法，也保持加法与单位。任何延伸同态的值都由 \(R\) 及 \(t\) 确定，故唯一。
+\end{proof}
+
+这个环称为\term[Ore-kuozhang]{Ore 扩张}[Ore extension]。\(\delta=0\) 时简记为 \(R[t;\sigma]\)；\(\sigma=\operatorname{id}\) 时简记为 \(R[t;\delta]\)。正规式中系数放在左侧是本节固定的约定。
+\symidx{\(R[t;\sigma,\delta]\)：关系 \(ta=\sigma(a)t+\delta(a)\) 的 Ore 扩张}
+
+\begin{proposition}\label{b2:prop:ore-leading-degree}
+若 \(f,g\) 的最高项分别为 \(a_mt^m,b_nt^n\)，则乘积的 \(t^{m+n}\) 系数为 \(a_m\sigma^m(b_n)\)。因此，若 \(R\) 无零因子且 \(\sigma\) 单射，Ore 扩张也无零因子，非零乘积的次数相加。
+\end{proposition}
+\begin{proof}
+由基本关系归纳得 \(t^m b=\sigma^m(b)t^m+\text{较低次项}\)。所以唯一可能贡献最高次项的是两个最高项的乘积，系数正如所述。单射性保证 \(\sigma^m(b_n)\ne0\)，再由 \(R\) 无零因子得到结论。
+\end{proof}
+
+不假设 \(\sigma\) 单射时，正规式仍唯一，但环可以有零因子。例如 \(R=k[x]\)、\(\sigma(f)=f(0)\)、\(\delta=0\) 满足所有构造条件，却有 \(tx=0\)，而 \(t,x\) 都由正规式定理保证非零。
 
 \subsection{微分算子环与 Weyl 代数}
 \label{b2:subsec:2005:03}
 
-待撰写。
+设 \(K\) 为带导子 \(\delta\) 的交换域。定义形式\term[weifen-suanzi-huan]{微分算子环}[differential operator ring]
+\[
+D=K[\partial;\delta],\qquad
+\partial a=a\partial+\delta(a).
+\]
+元素为 \(\sum_i a_i\partial^i\)，乘法表示先作用右侧算子，再作用左侧算子。其在 \(K\) 上的自然作用为
+\[
+\Bigl(\sum_i a_i\partial^i\Bigr)(f)=\sum_i a_i\delta^i(f).
+\]
+Ore 泛性质保证这个作用与乘法相容，但不保证忠实。例如 \(\delta=0\) 时，形式变量 \(\partial\ne0\)，却在 \(K\) 上作用为零。
+
+\ProseParagraphBreak
+取 \(K=k(x)\)、\(\delta=d/dx\)，便有嵌入 \(A_1(k)\to K[\partial;\delta]\)，把 \(x,d\) 送到 \(x,\partial\)。关系成立保证同态存在，Ore 正规式又保证 \(\sum_j f_j(x)\partial^j=0\) 时每个多项式系数都为零，所以它单射。这把多项式系数扩大为有理函数系数。正特征中仍应区别抽象形式算子与它在函数上的具体作用。
+
+\ProseParagraphBreak
+例如当 \(\delta=d/dx\) 时，
+\[
+\partial^2 a=a\partial^2+2\delta(a)\partial+\delta^2(a).
+\]
+这由连续两次移动系数得到。若把 \(a\) 直接与 \(\partial\) 交换，就会同时漏掉中间项和最后一项。
 
 \subsection{左模与线性微分方程}
 \label{b2:subsec:2005:04}
 
-待撰写。
+在 \(K\) 向量空间 \(M\) 上指定左 \(D\) 模结构，等价于指定一个加法算子 \(\nabla:M\to M\)，满足
+\[
+\nabla(am)=a\nabla(m)+\delta(a)m.
+\]
+正向取 \(\nabla(m)=\partial m\)，反向把标量作用及 \(\nabla\) 代入\cref{b2:thm:ore-extension-construction}的泛性质。配有这个算子的空间称为相对于 \(\delta\) 的\term[weifen-mo]{微分模}[differential module]。模同态就是与 \(\nabla\) 交换的 \(K\) 线性映射。\(\nabla\) 通常不是 \(K\) 线性的。
+
+\begin{proposition}\label{b2:prop:differential-cyclic-module}
+设 \(L=\partial^m+a_{m-1}\partial^{m-1}+\cdots+a_0\)、\(m\ge1\)，并令 \(M_L=D/DL\)，其中 \(DL\) 是左理想。则 \(M_L\) 有左 \(K\) 基 \(1,\partial,\ldots,\partial^{m-1}\) 的陪集，且有自然双射
+\[
+\operatorname{Hom}_D(M_L,K)\longrightarrow\Bigl\{\,y\in K\mid L(y)=0\,\Bigr\},
+\qquad f\longmapsto f(1+DL).
+\]
+\end{proposition}
+\begin{proof}
+对任意算子 \(P\)，若次数不小于 \(m\)，用其最高系数乘上适当的 \(\partial^rL\) 消去最高项；每步降低次数，所以得到 \(P=QL+R\)，其中 \(R=0\) 或 \(\deg R<m\)。由\cref{b2:prop:ore-leading-degree}，非零 \(QL\) 的次数至少为 \(m\)，因此这样的余项唯一。这证明所列商类为基。
+
+左模同态由 \(1+DL\) 的像 \(y\) 决定，并必须满足 \(L(y)=0\)。反过来，若该方程成立，公式 \(P+DL\mapsto P(y)\) 与代表元无关，因为 \((QL)(y)=Q\Bigl(L(y)\Bigr)=0\)；它直接保持左 \(D\) 作用。两种构造互逆。
+\end{proof}
+
+解空间自然是常数域 \(C=\Bigl\{\,a\in K\mid\delta(a)=0\,\Bigr\}\) 上的向量空间，一般不是 \(K\) 子空间。\(C\) 确为域：导子公式保证对和、积封闭，并由 \(\delta(aa^{-1})=0\) 得到非零常数的逆仍为常数。
+
+\ProseParagraphBreak
+若把一个解写成 \(Y=(y,\delta y,\ldots,\delta^{m-1}y)^{\mathsf T}\)，则方程等价于一阶系统 \(\delta Y=C_L^{\mathsf T}Y\)，其中 \(C_L\) 是首一多项式 \(T^m+a_{m-1}T^{m-1}+\cdots+a_0\) 的友矩阵。前 \(m-1\) 行把一个导数移到下一个，最后一行正是 \(L(y)=0\)。这里描述的是 \(M_L\) 到函数模的同态的取值；不把所有 \(M_L\) 元素本身都称为方程的解。第三卷附录E继续介绍微分代数与消去；第五卷附录E讨论微分模及微分 Galois 理论，附录D则简介 D-模的几何观点。

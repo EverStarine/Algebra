@@ -1,16 +1,270 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第16章　Morita 理论
-% 纲要位置：计划纲要.md，第 1277 行。
 
 \chapter{Morita 理论}
 \label{b2:ch:16}
 \BookChapterNumber{b2:ch:16}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+Morita 理论研究何时两个不同的环具有等价的模范畴。本章以生成元的映射刻画为起点，证明全部模范畴的等价恰由有限生成投射生成元实现，并明确张量函子、Hom 函子及自同态反环的作用方向。单位与余单位的同构性从自由对象扩展到任意模，满幂等角环则给出可直接计算的等价。最后讨论中心、简单模、投射模、半单性及有限长度等不变量，并用矩阵环说明基域维数与最少生成元数为什么可以改变。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分作为对象的生成元、投射性与有限生成性，证明生成元的三种等价刻画。
+\item 在左模约定下正确使用 \(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，写出伴随单位、余单位和有限对偶基公式。
+\item 从给定范畴等价恢复有限生成投射生成元，并用任意自由展示证明反向的 Morita 等价。
+\item 计算矩阵环与满角环的等价，辨认所保留的模结构及可以改变的坐标、维数和生成元数。
+\end{itemize}
+\end{learninggoals}
+
+本章需要第五章的范畴等价、第六章的双模张量与 Hom–张量伴随，以及第七章的投射模和有限对偶基。第十一章的角环自同态公式与第十五章的基本角代数提供具体应用；中心和有限长度的讨论还使用前两编已建立的自然性与合成列。等价始终指全部左模范畴的等价，不能只检验有限自由模，便跳过对一般模的构造。
+
+\ProseParagraphBreak
+一般环的结构定理及矩阵环例子可参阅 Weibel 的《The K-book》\cite[Chapter II, Theorem 2.7, Example 2.7.2]{Weibel2013KBook}。该书采用右模，本章固定左模并相应使用自同态反环。有限维代数的版本可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[Theorem 9.6.4, Problem 9.6.5, p. 215; Section 9.7, p. 216]{EtingofEtAl2011RepresentationTheory}；那里的有限维模范畴与本章全部模范畴的范围须加以区分。
 
 \input{Part04/Chapter16/Section1601}
 \input{Part04/Chapter16/Section1602}
 \input{Part04/Chapter16/Section1603}
 \input{Part04/Chapter16/Section1604}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+生成元使每个模都成为其某个直和的商，有限生成使 Hom 保持任意直和，投射性使 Hom 正合。三者合起来，允许从正则对象上的伴随同构出发，经由展示和余核覆盖全部模。反方向，等价将正则模送到投射生成元，再由紧性恢复有限生成，所以这一构造恰好描述全部 Morita 等价。
+
+\ProseParagraphBreak
+自同态环的反环记录左模与右作用之间的乘法次序。矩阵环等价和满幂等角环等价都能写成明确的矩阵单位及评价公式；满性保证没有一部分模在取角时被丢弃。基本角代数因而保留原有限维代数的整个模范畴。
+
+\ProseParagraphBreak
+中心可由恒等函子的自然自变换恢复，子模序则由单态射及其因子关系恢复。这些描述解释了简单性、投射性、半单性、链条件和长度为什么保持。与此同时，正则模未必对应正则模，底域维数、元素数和最少生成元数都可能改变。后续比较中心单代数时，将继续使用这种区分，而不把 Morita 等价误当作环同构。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:16-trace-generator}
+对左模 \(P\)，令
+\[
+\operatorname{tr}_R(P)=\sum_{f\in\operatorname{Hom}_R(P,R)}f(P)\subseteq R.
+\]
+证明它是双边理想，且 \(P\) 为生成元当且仅当 \(\operatorname{tr}_R(P)=R\)。给出等价的有限个元素与同态所满足的等式。
+\end{exercise}
+\begin{solution}
+各像为左子模，其和为左理想。若 \(f:P\rightarrow R\) 左线性，则 \(p\mapsto f(p)r\) 对任意 \(r\in R\) 仍左线性，所以右乘也保持这个和，得到双边理想。若迹理想为 \(R\)，一可写成有限和
+\[
+1=\sum_{i=1}^n f_i(p_i).
+\]
+于是 \(P^n\rightarrow R\)、\((x_i)\mapsto\sum_i f_i(x_i)\) 满射，其在 \((p_i)\) 处取一，并由 \(r\mapsto(rp_i)_i\) 分裂。因此\cref{b2:thm:generator-characterizations}使 \(P\) 为生成元。反向，若 \(P^n\rightarrow R\) 分裂满射，取一的原像并将映射限制到各分量，就得到同一有限和等式，所以迹理想为全环。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-object-detection}
+令 \(R=k[\varepsilon]/(\varepsilon^2)\)、\(P=R/(\varepsilon)\)。证明每个非零左 \(R\) 模 \(M\) 都有 \(\operatorname{Hom}_R(P,M)\ne0\)，但此 Hom 函子并不忠实，\(P\) 也不是生成元。
+\end{exercise}
+\begin{solution}
+取 \(0\ne m\in M\)。若 \(\varepsilon m=0\)，取 \(v=m\)；否则取 \(v=\varepsilon m\ne0\)，仍有 \(\varepsilon v=0\)。指定 \(\bar1\mapsto v\) 就给出从 \(P\) 到 \(M\) 的非零同态。
+
+但乘 \(\varepsilon\) 是 \(R\rightarrow R\) 的非零同态。任何 \(h:P\rightarrow R\) 的像均被 \(\varepsilon\) 零化，故 \(h(P)\subseteq(\varepsilon)\)，于是 \(\varepsilon h=0\)。因此这个非零同态和零同态被 Hom 函子送到同一个映射，忠实性失败。等价地，任何 \(P\) 直和都被 \(\varepsilon\) 零化，不能满射到 \(R\)。检测非零对象弱于检测不同同态。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-projective-not-generator}
+取 \(R=k\times k\)、\(P=k\times0\)。计算 \(S=\operatorname{End}_R(P)^{\mathrm{op}}\)、\(F(M_1\oplus M_2)\) 与 \(G(N)\)，其中 \(M_i\) 分别受对应坐标作用。说明单位为何同构，而余单位未必同构。
+\end{exercise}
+\begin{solution}
+\(S\cong k\)，同态从 \(P\) 出发只见到第一个坐标，故 \(F(M_1\oplus M_2)\cong M_1\)。反向 \(G(N)\) 是第一个坐标作用的模 \(N\oplus0\)。于是 \(FG(N)\cong N\)，单位为这个识别下的恒等映射；而 \(GF(M_1\oplus M_2)\cong M_1\oplus0\)，余单位是到原模的包含。当 \(M_2\ne0\) 时不满射。\(P\) 有限生成且投射，却不是生成元，失败正发生在尚未由 \(P\) 产生的第二类模上。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-generator-not-projective}
+证明 \(P=\mathbb Z\oplus\mathbb Z/2\mathbb Z\) 是有限生成生成元，但 \(\operatorname{Hom}_{\mathbb Z}(P,-)\) 不是正合函子，因而不能给出 Morita 等价。
+\end{exercise}
+\begin{solution}
+\(\mathbb Z\) 是 \(P\) 的直和因子，由\cref{b2:thm:generator-characterizations}，\(P\) 为生成元，且显然有限生成。考虑满射 \(q:\mathbb Z\rightarrow\mathbb Z/2\mathbb Z\) 以及 \(P\) 到第二个直和分量的投影 \(f\)。若 \(f\) 能沿 \(q\) 提升为 \(h:P\rightarrow\mathbb Z\)，其在 \(\mathbb Z/2\mathbb Z\) 上的限制只能为零，因为整数中没有非零二阶元素；于是 \(qh\) 不可能等于 \(f\)。所以 Hom 不保持这个满射，\(P\) 不投射，函子不正合。\cref{b2:lem:module-equivalence-structure}说明模范畴等价正合，故它不能是等价。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-projective-generator-not-compact}
+设 \(P=\bigoplus_{i\ge1}ke_i\)。证明 \(P\) 是投射生成元，但不是紧对象，因而 \(\operatorname{Hom}_k(P,-)\) 不可能给出整个模范畴的等价。
+\end{exercise}
+\begin{solution}
+\(P\) 自由，故投射；它含 \(k\) 为直和因子，由\cref{b2:thm:generator-characterizations}是生成元。考虑恒等映射 \(P\rightarrow\bigoplus_{i\ge1}ke_i\)。若它来自 \(\bigoplus_i\operatorname{Hom}_k(P,ke_i)\)，其像应落在有限个坐标的直和中，显然不可能。因此 Hom 不保持此直和，\(P\) 不紧。\cref{b2:lem:module-equivalence-structure}说明等价保持任意直和，所以这个 Hom 函子不是等价，说明有限生成条件的作用不能由投射和生成元两项代替。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-full-idempotent-detects}
+证明幂等元 \(e\in R\) 满，当且仅当对每个左 \(R\) 模 \(M\)，\(eM=0\) 都推出 \(M=0\)。与“任意非零模接受某个 \(P\) 的非零映射”比较，说明这里为何确能得到生成元。
+\end{exercise}
+\begin{solution}
+若 \(1=\sum_i a_i e b_i\) 且 \(eM=0\)，则每个 \(m=\sum_i a_i e b_i m=0\)，所以 \(M=0\)。反过来，若 \(ReR\ne R\)，非零左模 \(M=R/ReR\) 满足 \(eM=0\)，与假设矛盾。故条件等价于满性。
+
+这里 \(eM\cong\operatorname{Hom}_R(Re,M)\)，而 \(Re\) 已是投射模。满性由\cref{b2:prop:full-idempotent-morita}又等价于 \(Re\) 是生成元。对任意模 \(P\) 则没有这个结论，前面的 \(R/(\varepsilon)\) 例子不投射，不能把两种检测条件混同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-rectangular-morita}
+取 \(R=M_3(k)\)、\(e=E_{11}+E_{22}\)。证明 \(eRe\cong M_2(k)\)，给出满性的一次有限和表达，并写出对任意 \(M\) 的评价映射 \(Re\otimes_{eRe}eM\rightarrow M\) 的逆。在自然列模 \(k^3\) 上，这个等价得到哪个 \(M_2(k)\) 模？
+\end{exercise}
+\begin{solution}
+角环是左上二阶矩阵块，单位为 \(e\)，所以同构于 \(M_2(k)\)。等式
+\[
+1=e+E_{31}eE_{13}
+\]
+证明 \(e\) 满。应用\cref{b2:prop:full-idempotent-morita}及其逆式\eqref{b2:eq:full-idempotent-evaluation-inverse}，代入 \((a_1,b_1)=(1,1)\)、\((a_2,b_2)=(E_{31},E_{13})\)，评价逆为
+\[
+m\longmapsto e\otimes em+E_{31}\otimes E_{13}m.
+\]
+这里 \(E_{31}\in Re\)、\(E_{13}m\in eM\)；正向评价后得到 \(em+E_{33}m=m\)，反向复合由角环平衡关系核验。对 \(M=k^3\)，\(eM\) 为前两个坐标组成的自然列模 \(k^2\)。两个简单模的基域维数分别为三和二，但模长度都为一。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-matrix-hom}
+令 \(A=M_n(R)\)。证明每个左 \(A\) 模同态 \(u:M^n\rightarrow N^n\) 都唯一地由一个左 \(R\) 模同态 \(h:M\rightarrow N\) 逐坐标作用得到。
+\end{exercise}
+\begin{solution}
+把 \(m\in M\) 放到第一坐标，因 \(u\) 与 \(E_{11}\) 交换，其像只可能在第一坐标非零，记该坐标为 \(h(m)\)。与 \(rE_{11}\) 交换说明 \(h(rm)=rh(m)\)，加法相容也直接成立，所以 \(h\) 左线性。第 \(i\) 坐标向量由 \(E_{i1}\) 作用于第一坐标向量得到，因此
+\[
+u(0,\ldots,m,\ldots,0)=\Bigl(0,\ldots,h(m),\ldots,0\Bigr).
+\]
+有限加法得到 \(u(m_i)_i=\Bigl(h(m_i)\Bigr)_i\)。反向逐坐标的 \(h\) 保持矩阵作用，故确为 \(A\) 模同态；在第一坐标求值又保证唯一性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-row-column-evaluation}
+取 \(P=R^{1\times2}\)、\(S=M_2(R)\)，任意左 \(R\) 模 \(M\) 有 \(F(M)\cong M^2\)。证明
+\[
+P\otimes_SM^2\longrightarrow M,\qquad
+(a,b)\otimes(m,n)^{\mathsf T}\longmapsto am+bn
+\]
+为同构，并写出不需要选取 \(M\) 生成元的逆。
+\end{exercise}
+\begin{solution}
+矩阵乘法结合律说明行乘列公式对 \(S\) 平衡，故诱导左 \(R\) 线性映射。逆取
+\[
+m\longmapsto(1,0)\otimes(m,0)^{\mathsf T}.
+\]
+正向复合显然为恒等。对任意行 \((a,b)\)，有
+\[
+(a,b)=(1,0)\begin{pmatrix}a&b\\0&0\end{pmatrix}.
+\]
+把该矩阵通过平衡关系移到列因子，得到
+\[
+(a,b)\otimes(m,n)^{\mathsf T}
+=(1,0)\otimes(am+bn,0)^{\mathsf T}.
+\]
+所以另一复合也为恒等。没有移动 \(R\) 系数的次序，结论适用于非交换 \(R\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-dual-bimodule-pair}
+设 \(P\) 为左 \(R\) 的有限生成投射生成元，\(S=\operatorname{End}_R(P)^{\mathrm{op}}\)、\(Q=P^*=\operatorname{Hom}_R(P,R)\)。证明有双模同构
+\[
+P\otimes_SQ\cong R,\qquad Q\otimes_RP\cong S,
+\]
+并写出它们的公式。
+\end{exercise}
+\begin{solution}
+第一式是\eqref{b2:eq:morita-counit}中的 \(\varepsilon_R\)，由\cref{b2:thm:morita-equivalence}为同构，公式为 \(p\otimes\lambda\mapsto\lambda(p)\)。它在左 \(R\) 作用下满足 \(\lambda(rp)=r\lambda(p)\)，在右 \(R\) 作用下满足 \((\lambda r)(p)=\lambda(p)r\)，所以不仅是左模同构，也是双模同构。
+
+第二式先用\cref{b2:prop:finite-projective-hom-tensor}，把 \(\lambda\otimes p\) 送到自同态 \(x\mapsto\lambda(x)p\)，再按 \(F(P)\cong S\) 将其看成 \(S\) 的元素。左 \(S\) 作用由预复合得到，已在该命题核对。右 \(S\) 作用在 \(p\) 上：将 \(p\) 换成 \(ps\)，所得自同态是原自同态后接 \(\alpha_s\)，在反环 \(S\) 中正对应右乘 \(s\)。所以它也保持两侧作用，得到第二个双模同构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-matrix-center}
+直接用矩阵单位证明 \(Z\Bigl(M_n(R)\Bigr)=\Bigl\{\,cI_n:c\in Z(R)\,\Bigr\}\)。把这个显式同构与 Morita 中心不变量比较。
+\end{exercise}
+\begin{solution}
+与各 \(E_{ii}\) 交换使中心矩阵的非对角条目全为零；再与 \(E_{ij}\) 交换，使全部对角元相同，记为 \(c\)。与在某个对角位置放任意 \(r\in R\) 的矩阵交换，得到 \(cr=rc\)，所以 \(c\in Z(R)\)。反向，中心元素乘单位矩阵与所有矩阵交换。因此 \(c\mapsto cI_n\) 是中心之间的环同构，正体现矩阵环与原环虽可能维数不同，中心仍相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-center-obstruction}
+证明 \(M_2\Bigl(k[\varepsilon]/(\varepsilon^2)\Bigr)\) 与 \(M_2(k\times k)\) 不 Morita 等价，尽管它们作为 \(k\) 向量空间的维数相同。
+\end{exercise}
+\begin{solution}
+两个环的 \(k\) 维数都为八。其中心分别为 \(k[\varepsilon]/(\varepsilon^2)\) 与 \(k\times k\)。前者有非零幂零元 \(\varepsilon\)，后者任何幂零元素的两个域坐标都必须为零，所以没有非零幂零元。因此中心不同构，由\cref{b2:prop:morita-center}，两个环不 Morita 等价。单独比较代数维数不能判断等价。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-dimension-length-generators}
+在 \(k\) 与 \(S=M_3(k)\) 的标准等价中，求 \(V=k^7\) 的像的 \(k\) 维数、\(S\) 长度与最少 \(S\) 生成元数。该像是否为自由 \(S\) 模？
+\end{exercise}
+\begin{solution}
+像为 \(V^3\cong(k^3)^7\)，其 \(k\) 维数为二十一。自然列模 \(k^3\) 简单，所以 \(S\) 长度为七，与 \(V\) 的 \(k\) 模长度相同。在\cref{b2:prop:semisimple-top-generators}中代入矩阵块大小三及简单模重数七，最少生成元数为 \(\lceil7/3\rceil=3\)，而原 \(k\) 模需要七个生成元。
+
+它不是自由 \(S\) 模。有限秩自由 \(S\) 模的 \(k\) 维数为九的整数倍，二十一不是；无限秩自由模的 \(k\) 维数无限，也不可能。它仍然投射，因为半单环上的每个模投射，或因为等价保持原自由 \(k\) 模的投射性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-indecomposable-transport}
+令 \(R=k[t]\)、\(A=M_2(R)\)，把 \(M=R/(t^2)\oplus R/(t^3)\) 通过标准等价送到 \(A\) 模。求所得模的不可分解分量个数、长度及 \(k\) 维数，并解释为何不能从底 \(R\) 模的直和个数判断 \(A\) 不可分解性。
+\end{exercise}
+\begin{solution}
+由\cref{b2:thm:module-correspondence}，\(R/(t^j)\) 的子模对应包含 \((t^j)\) 的理想，恰为 \((t^\ell)/(t^j)\)、\(0\le\ell\le j\)。这些子模构成一条链，相邻商均为 \(k\)，所以原循环模不可分解，长度分别为二和三。\cref{b2:prop:matrix-morita-equivalence}给出所用等价；全忠实性和\cref{b2:lem:module-equivalence-structure}的加性给出自同态环同构。由\cref{b2:prop:idempotent-direct-sum}，非平凡幂等元的不存在保证两者的像仍不可分解。再由\cref{b2:prop:morita-invariants}保持长度，像为两个不可分解 \(A\) 模的直和，长度为五。
+
+底 \(k\) 维数乘二，故为十。每个像在忘掉矩阵作用后形如 \(\Bigl(R/(t^j)\Bigr)^2\)，但两个坐标会被矩阵单位相互送入；单个坐标不是 \(A\) 子模，不能将其当作 \(A\) 模的两个直和因子。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-ring-chain-invariants}
+证明两个 Morita 等价的环同时为左 Noether 环，也同时为左 Artin 环。说明仅知道等价保持某个模的链条件，还缺少哪一步。
+\end{exercise}
+\begin{solution}
+设 \(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为等价，\(P=H(R)\)。若 \({}_RR\) 满足某种链条件，\cref{b2:prop:morita-invariants}使 \(P\) 满足同一条件。但 \(P\) 不一定是 \({}_SS\)，因此还不能直接宣称 \(S\) 满足。
+
+\(P\) 是生成元，故由\cref{b2:thm:generator-characterizations}，\(S\) 是某个有限直和 \(P^n\) 的直和因子。\cref{b2:thm:chain-conditions-exact}保证链条件对有限直和及子模传递，因此 \({}_SS\) 也满足。对拟逆使用同一论证得到反向，分别对升链、降链应用即得两种环性质的不变性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-finite-presentation}
+证明 Morita 等价保持有限展示模。不能只以“有限生成被保持”代替对关系数目的检查。
+\end{exercise}
+\begin{solution}
+设 \(M\) 有有限自由展示 \(R^a\xrightarrow{d}R^b\rightarrow M\rightarrow0\)，等价记为 \(H\)，\(P=H(R)\)。正合性给出
+\[
+P^a\longrightarrow P^b\longrightarrow H(M)\longrightarrow0.
+\]
+由\cref{b2:thm:morita-converse}，\(P\) 有限生成且投射；再由\cref{b2:prop:finite-projective-summand}取有限生成投射模 \(Q\)，使 \(P^b\oplus Q\cong S^n\)。由该直和中的投影及上述满射，得到有限自由模 \(S^n\rightarrow H(M)\)。其核为 \(\operatorname{im}H(d)\oplus Q\)：在 \(P^b\) 分量中，核正是像，在 \(Q\) 分量中全部被送到零。
+
+第一项是有限生成模 \(P^a\) 的像，第二项也是有限生成模，因此这个核有限生成。为其取有限自由满射，便得到 \(H(M)\) 的有限自由展示。对拟逆同样成立，故有限展示性双向保持。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-compose-bimodule-equivalences}
+设 \({}_RP_S\)、\({}_SQ_T\) 分别通过张量实现从左 \(S\) 模到左 \(R\) 模、从左 \(T\) 模到左 \(S\) 模的等价。证明复合等价由 \({}_R(P\otimes_SQ)_T\) 实现，并说明该左 \(R\) 模为何为有限生成投射生成元。
+\end{exercise}
+\begin{solution}
+对左 \(T\) 模 \(N\)，\cref{b2:thm:tensor-associativity-unit}给出自然同构
+\[
+P\otimes_S(Q\otimes_TN)\cong(P\otimes_SQ)\otimes_TN,
+\qquad p\otimes(q\otimes n)\longmapsto(p\otimes q)\otimes n.
+\]
+因此复合确实由题述双模张量实现，作用次序不能颠倒。复合仍为范畴等价，而它将正则模 \(T\) 送到 \((P\otimes_SQ)\otimes_TT\cong P\otimes_SQ\)。由\cref{b2:thm:morita-converse}，正则模在等价下的这个像必为有限生成投射生成元，并有自同态反环同构于 \(T\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-equivalent-to-division-ring}
+证明非零环 \(R\) Morita 等价于某个除环，当且仅当 \(R\) 是单 Artin 环。指出这里为何不能把“只有一种简单模的同构类型”单独作为充分条件。
+\end{exercise}
+\begin{solution}
+若 \(R\) 为单 Artin 环，\cref{b2:prop:simple-artinian}给出 \(R\cong M_n(D)\)，再由\cref{b2:prop:matrix-morita-equivalence}即得与除环 \(D\) 等价。反过来，除环的每个模都是简单模的直和，且只有一种简单模类型。\cref{b2:prop:morita-invariants}使 \(R\) 的每个模也半单，并使简单类型只有一种。因此 \(R\) 为半单环，\cref{b2:thm:artin-wedderburn}的分解只能有一个矩阵因子；由\cref{b2:prop:simple-artinian}，它是单 Artin 环。
+
+仅有一种简单类型不够。例如 \(k[t]/(t^2)\) 的简单模都同构于 \(k\)：根 \((t)\) 零化简单模，商为 \(k\)。但正则模的子模 \((t)\) 无补，因为任何非零子模都含它，故环不半单，不能与除环 Morita 等价。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-full-corner-ideals}
+设 \(e\) 为环 \(R\) 的满幂等元，\(S=eRe\)。证明双边理想之间的对应
+\[
+I\longmapsto eIe,\qquad J\longmapsto RJR
+\]
+互逆。再证明 \(R/I\) 与 \(S/eIe\) Morita 等价。
+\end{exercise}
+\begin{solution}
+若 \(I\) 为 \(R\) 理想，\(eIe\) 是 \(S\) 理想。固定 \(1=\sum_i a_i e b_i\)，对 \(x\in I\) 有
+\[
+x=\sum_{i,j}a_i e(b_i x a_j)e b_j\in R(eIe)R.
+\]
+反向包含来自理想性，所以 \(R(eIe)R=I\)。若 \(J\) 为 \(S\) 理想，则
+\[
+e(rjt)e=(ere)j(ete)\in J
+\]
+因为 \(j=eje\)；反向 \(J\subseteq e(RJR)e\) 直接成立。因此两种对应互逆。
+
+在 \(R/I\) 中，\(\bar e\) 仍满，原来的单位有限和表达取商即可。其角环为 \(eRe/eIe\)。应用\cref{b2:prop:full-idempotent-morita}，便得到两个商环的模范畴等价，包含零商环时亦按唯一零模范畴理解。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:16-ideal-autoequivalence}
+沿用\cref{b2:ex:krull-schmidt-nonunique}，令 \(s=\sqrt{-5}\)、\(R=\mathbb Z[s]\)、\(I=(2,1+s)\)。证明 \(I\) 是生成元且 \(\operatorname{End}_R(I)\cong R\)，从而给出 \(R\) 模范畴的一个 Morita 自等价。不得因 \(I\) 非自由便认为它不能作为生成元。
+\end{exercise}
+\begin{solution}
+\cref{b2:ex:krull-schmidt-nonunique}已证明 \(I^2=2R\) 及 \(I\oplus I\cong R^2\)，所以由\cref{b2:prop:finite-projective-summand}，\(I\) 有限生成且投射。两个 \(R\) 线性映射 \(f_1(x)=2x\)、\(f_2(x)=(s-1)x/2\) 都从 \(I\) 取值于 \(R\)：第二个的分子属于 \(I^2=2R\)。并且
+\[
+f_1(2)+f_2(1+s)=4+\frac{s^2-1}{2}=1.
+\]
+所以 \((x,y)\mapsto f_1(x)+f_2(y)\) 给出 \(I\oplus I\) 到 \(R\) 的满同态，其截面为 \(r\mapsto\Bigl(2r,(1+s)r\Bigr)\)。因此 \(R\) 是 \(I\oplus I\) 的直和因子，\cref{b2:thm:generator-characterizations}说明 \(I\) 为生成元。
+
+对任意 \(R\) 线性 \(f:I\rightarrow I\)，等式 \(2f(x)=f(2x)=x f(2)\) 说明它在分式域中为乘 \(c=f(2)/2\)。因 \(cI\subseteq I\)，乘以 \(I\) 得 \(cI^2\subseteq I^2\)，即 \(2cR\subseteq2R\)，消去非零整数二得 \(c\in R\)。反向每个 \(c\in R\) 都给出自同态，且这个对应保持加法、乘法与单位，所以 \(\operatorname{End}_R(I)\cong R\)。
+
+\(R\) 交换，反环仍为 \(R\)。因为 \(I\) 是有限生成投射生成元，由\cref{b2:thm:morita-equivalence}，\(\operatorname{Hom}_R(I,-)\) 与 \(I\otimes_R-\) 通过上述环识别互为等价。这个生成元非自由，正说明自等价可以由非自由投射生成元实现。
+\end{solution}

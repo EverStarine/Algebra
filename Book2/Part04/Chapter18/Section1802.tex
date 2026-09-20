@@ -5,9 +5,9 @@
 \section{循环代数}
 \label{b2:sec:1802}
 
-% TODO: 按以下纲要要点撰写本节。
+一个循环 Galois 扩张不仅能提供标量，还能提供乘法的扭转规则。把扩张的生成自同构写成一个新元素的共轭作用，再规定该元素的某次幂，就得到循环代数。它是否分裂，最后化为原扩张中的一个范数方程。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 循环 Galois 扩张及扭曲乘法
 % * 循环代数的中心单性
@@ -17,14 +17,68 @@
 \subsection{循环 Galois 扩张及扭曲乘法}
 \label{b2:subsec:1802:01}
 
-待撰写。
+设 \(K/k\) 为次数 \(n\) 的循环 Galois 扩张，\(\operatorname{Gal}(K/k)=\langle\sigma\rangle\)，并取 \(a\in k^\times\)。在左 \(K\) 向量空间
+\[
+C=K\oplus Ku\oplus\cdots\oplus Ku^{n-1}
+\]
+上，用下式定义乘法，并按双可加性扩张：
+\begin{equation}\label{b2:eq:cyclic-algebra-product}
+(bu^i)(cu^j)=b\sigma^i(c)a^{\Bigl\lfloor(i+j)/n\Bigr\rfloor}u^{\,i+j-n\Bigl\lfloor(i+j)/n\Bigr\rfloor},
+\qquad 0\le i,j<n.
+\end{equation}
+这个定义把指数超过 \(n-1\) 时产生的每次进位换成一个 \(a\)。当 \(n=1\) 时它就是 \(k\)；以下 \(u\) 的关系在该情形理解为 \(u=a\)。
+
+\begin{proposition}\label{b2:prop:cyclic-algebra-construction}
+式\eqref{b2:eq:cyclic-algebra-product}给出结合含幺 \(k\) 代数，维数为 \(n^2\)。它由子域 \(K\) 和一个可逆元 \(u\) 生成，满足
+\[
+ub=\sigma(b)u\quad(b\in K),\qquad u^n=a.
+\]
+任何包含 \(K\) 的 \(k\) 代数与满足这两种关系的元素，都唯一决定一个从 \(C\) 出发的代数同态。
+\end{proposition}
+\begin{proof}
+先比较三个基型元素 \(bu^i,cu^j,du^\ell\) 的乘积。两种结合次序的系数中，非进位部分都为 \(b\sigma^i(c)\sigma^{i+j}(d)\)，因为 \(\sigma^n=1\)；\(a\) 被所有自同构固定。进位数则都为 \(\Bigl\lfloor(i+j+\ell)/n\Bigr\rfloor\)，从而两种乘积相同。按双可加性便得到全部元素的结合律。\(1\in K\) 为单位，\(k\) 标量位于中心。底向量空间事先已指定为 \(n\) 个 \(K\) 的直和，所以维数确为 \(n^2\)，无需再假设这些形式单项式无关。
+
+关系由定义直接得到，\(u^{-1}=a^{-1}u^{n-1}\)。给定目标中的嵌入及元素 \(v\)，唯一可能的映射把 \(\sum_i b_i u^i\) 送到 \(\sum_i b_i v^i\)。由 \(v^i c=\sigma^i(c)v^i\) 与 \(v^n=a\)，它保持\eqref{b2:eq:cyclic-algebra-product}，所以确为代数同态。
+\end{proof}
+
+该代数称为由这些数据给出的\term[xunhuan-daishu]{循环代数}[cyclic algebra]，记为 \((K/k,\sigma,a)\)。
+\symidx{\((K/k,\sigma,a)\)：循环扩张及参数确定的循环代数}
 
 \subsection{循环代数的中心单性}
 \label{b2:subsec:1802:02}
 
-待撰写。
+\begin{theorem}\label{b2:thm:cyclic-algebra-central-simple}
+\(C=(K/k,\sigma,a)\) 是次数 \(n\) 的中心单 \(k\) 代数，且由 \(K\) 分裂。
+\end{theorem}
+\begin{proof}
+设 \(z=\sum_i b_i u^i\) 与 \(K\) 中所有元素交换。比较 \(zc\) 与 \(cz\)，得 \(b_i\Bigl(\sigma^i(c)-c\Bigr)=0\) 对所有 \(c\in K\) 成立。对 \(i\ne0\)，\(\sigma^i\ne1\)，可以选 \(c\) 使差非零，故 \(b_i=0\)。所以 \(C\) 中 \(K\) 的中心化子就是 \(K\)。若 \(z=b_0\) 再与 \(u\) 交换，则 \(\sigma(b_0)=b_0\)，故 \(z\in k\)。于是中心恰为 \(k\)。
+
+为证单性，取非零双边理想 \(I\)，并在其中选取非零系数个数最少的元素。右乘适当的 \(u\) 的幂，再左乘 \(K^\times\) 中的元素，可以使它的常数系数为一，不改变非零系数个数。记所得元素为 \(x=1+\sum_{i>0}b_i u^i\)。对 \(c\in K\)，交换子 \(xc-cx\) 的常数项为零，非零项数严格小于 \(x\)。若它非零，与极小性矛盾；故它对所有 \(c\) 都为零。由前一段的中心化子计算，\(x\in K\)，进而 \(x=1\)。因此 \(I=C\)，代数单。
+
+现在 \([K:k]=n=\deg C\)，\cref{b2:prop:maximal-field-splits-csa}说明子域 \(K\) 分裂 \(C\)。该命题的实际映射为 \(C\otimes_kK\to\operatorname{End}_K(C)\)，\(c\otimes b\) 作用为 \(x\mapsto cxb\)；这里将原代数 \(C\) 看成右 \(K\) 空间，其维数为 \(n\)，所以目标是 \(M_n(K)\)。
+\end{proof}
+
+在次数二、特征不为二时，若 \(K=k(\sqrt d)\)，则 \(u\sqrt d=-\sqrt d\,u\)，\(u^2=a\)。因而循环代数就是四元数代数 \((d,a)_k\)。这里指定自同构是重要数据；较高次数时，换一个生成元需同时跟踪相应参数，不能只把记号中的 \(\sigma\) 删去。
 
 \subsection{范数与分裂条件}
 \label{b2:subsec:1802:03}
 
-待撰写。
+循环扩张的范数为
+\[
+\operatorname{N}_{K/k}(b)=\prod_{j=0}^{n-1}\sigma^j(b).
+\]
+这是第一卷定理18.2.3的共轭元公式在循环 Galois 扩张上的形式。它给出判断 \(C\) 是否为矩阵代数的条件。
+
+\begin{theorem}[循环代数的分裂判据]\label{b2:thm:cyclic-algebra-norm-splitting}
+\((K/k,\sigma,a)\) 分裂，当且仅当 \(a\in\operatorname{N}_{K/k}(K^\times)\)。
+\end{theorem}
+\begin{proof}
+若 \(a=\operatorname{N}_{K/k}(b)\)，在 \(k\) 向量空间 \(K\) 上让 \(c\in K\) 按左乘作用，让 \(u\) 按 \(T(z)=b\sigma(z)\) 作用。于是 \(T(cz)=\sigma(c)T(z)\)，且 \(T^n(z)=\operatorname{N}_{K/k}(b)z=az\)。构造的泛性质给出含幺同态 \(C\to\operatorname{End}_k(K)\)。来源单而映射非零，所以单射；两端维数都是 \(n^2\)，故为同构。
+
+反过来，设 \(C\cong\operatorname{End}_k(V)\)，其中 \(\dim_kV=n\)。限制到子域 \(K\) 使 \(V\) 成为左 \(K\) 向量空间，比较维数得 \(\dim_KV=1\)。选一个 \(K\) 基向量把 \(V\) 识别为 \(K\)。此时 \(u\) 的作用 \(T\) 满足 \(T(cz)=\sigma(c)T(z)\)，所以由 \(b=T(1)\) 唯一决定，\(T(z)=b\sigma(z)\)。\(u\) 可逆使 \(b\ne0\)，而 \(u^n=a\) 给出 \(\operatorname{N}_{K/k}(b)=a\)。
+\end{proof}
+
+若把生成元改为 \(v=bu\)，则 \(v^n=\operatorname{N}_{K/k}(b)a\)，与 \(K\) 的交换关系仍由 \(\sigma\) 给出。因此参数乘上一个范数不改变代数的同构类型。
+
+\ProseParagraphBreak
+例如，取 \(\sigma\) 为复共轭，\(\mathbb C/\mathbb R\) 的范数为 \(z\overline z\)，非零范数恰为正实数。故 \((\mathbb C/\mathbb R,\sigma,a)\) 在 \(a>0\) 时分裂，在 \(a<0\) 时同构于 \(\mathbb H\)。前一种情况可以缩放 \(u\) 使平方为一，后一种可以缩放使平方为负一；范数判据同时解释为什么两种情况不能同构。

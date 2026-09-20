@@ -6,11 +6,228 @@
 \label{b2:ch:11}
 \BookChapterNumber{b2:ch:11}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+代数同时记录线性结构与乘法，表示则把它们实现为线性算子。本章从结构常数、群代数与矩阵代数出发，说明反环如何记录右作用，包络代数如何把双模变成左模。幂等元连接正则模的分解与角环中的乘法，中心化子则收集与给定作用相容的全部算子。通过正则作用和张量因子的显式计算，建立双中心化子的基本例子，并辨明其何时不能恢复原作用代数。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 根据结构常数检查结合律和单位元，计算换基后的乘法，区分向量空间同构与代数同构。
+\item 在群表示、群代数模、双模及包络代数模之间转换，并核对反环与复合的次序。
+\item 从正交幂等元构造模分解和矩阵分块，解释中心性何时把模分解提升为代数乘积分解。
+\item 计算给定作用的中心化子及双中心化子，区分交换作用、互为中心化子与不可约性。
+\end{itemize}
+\end{learninggoals}
+
+本章使用第二章的模与自同态环、第六章的双模和张量积，以及第八章的结合代数与张量作用。底域始终写作 \(k\)，代数同态保持单位元；一般不假设 \(k\) 代数闭，也不默认代数交换或有限维。矩阵单位提供了可直接核验的计算方法，读者应特别留意一个投影究竟是左乘、右乘，还是模自同态。
+
+\ProseParagraphBreak
+代数和表示的基本语言可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[\S 2.2, pp. 8--9; \S 2.3, pp. 9--10]{EtingofEtAl2011RepresentationTheory}。该书在这一部分默认底域代数闭并排除零代数；本章只在需要这些条件的具体结论中使用它们。后面的半单性与稠密性理论将进一步解释双中心化子计算，但本章各项基本同构均通过显式映射证明。
 
 \input{Part03/Chapter11/Section1101}
 \input{Part03/Chapter11/Section1102}
 \input{Part03/Chapter11/Section1103}
 \input{Part03/Chapter11/Section1104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+代数的结构常数记录一组基下的全部乘法，结合律与单位条件因此成为有限组方程；换基会改变这些常数，却保留代数结构。把代数作用写成到自同态代数的同态，可以同时处理群表示、矩阵作用和一般模。
+
+\ProseParagraphBreak
+右作用对应反环，两个相容的左右作用对应包络代数的一个左作用。正则左模的自同态来自右乘，正则双模的自同态则由中心决定。幂等元同样需要区分所在位置：模自同态中的投影给出子模分解，环中的正交幂等元给出正则模与角环分块，中心幂等元才进一步给出代数乘积。
+
+\ProseParagraphBreak
+中心化子描述与一个作用交换的全部算子，再取中心化子总包含原作用代数，却未必等于它。正则作用及有限维张量因子的独立作用具有双中心化子等式，上三角作用则说明标量中心化子本身不足以保证不可约。后续结构理论要补充的，正是这些具体计算背后的有限性与模分解条件。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:11-two-dimensional-constants}
+设非零代数 \(A\) 有基 \(1,x\)，其中 \(x^2=\alpha x+\beta\)。令 \(y=ux+v\)、\(u\ne0\)。求基 \(1,y\) 下的乘法关系，并证明 \(\Delta=\alpha^2+4\beta\) 在这种换基下变为 \(u^2\Delta\)。说明等式本身是否要求特征不为二。
+\end{exercise}
+\begin{solution}
+展开并消去 \(x=u^{-1}(y-v)\)，得到
+\[
+y^2=(u\alpha+2v)y+(u^2\beta-u\alpha v-v^2).
+\]
+新系数为 \(\alpha'=u\alpha+2v\)、\(\beta'=u^2\beta-u\alpha v-v^2\)，所以
+\[
+(\alpha')^2+4\beta'=u^2\alpha^2+4u^2\beta=u^2\Delta.
+\]
+全部计算都是整系数恒等式，不要求特征不为二；但若要据 \(\Delta\) 的平方性质进一步分类，特征二中会失去信息。另有 \(A\cong k[t]/(t^2-\alpha t-\beta)\)：送 \(t\) 到 \(x\) 给出满同态，商中 \(1,t\) 与目标的 \(1,x\) 分别为基，所以它单射。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-associative-table}
+在有基 \(1,x,y\) 的向量空间中，令 \(1\) 为单位，并规定交换的基乘法
+\(x^2=y\)、\(xy=yx=\lambda y\)、\(y^2=\mu y\)。求这一双线性乘法满足结合律的充要条件，并在满足条件时给出单生成元商代数描述。
+\end{exercise}
+\begin{solution}
+由 \((x^2)y=x(xy)\)，必须有 \(\mu y=\lambda^2y\)，所以 \(\mu=\lambda^2\)。若该条件成立，候选的单生成元关系是 \(t^3=\lambda t^2\)。考察结合代数 \(B=k[t]/(t^3-\lambda t^2)\)，它以 \(1,t,t^2\) 为基，且 \(t\cdot t^2=\lambda t^2\)、\((t^2)^2=\lambda^2t^2\)。基对应 \(1\mapsto1,t\mapsto x,t^2\mapsto y\) 因而保留所有给定基乘法，使 \(B\) 与题给双线性乘法结构同构。后者由此结合，且得到 \(A\cong B\)。这种构造也核对了充分性，而不只检查某一个必要等式。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-nilpotent-representation}
+设 \(A=k[t]/(t^3)\)。在 \(V=k^3\) 上分别令 \(t\) 作用为三阶幂零 Jordan 块 \(J_3\)，以及 \(J_2\oplus0\)。证明这两者都给出 \(A\) 的表示，并求表示的核。
+\end{exercise}
+\begin{solution}
+两个算子都满足 \(T^3=0\)，所以多项式代入 \(f\mapsto f(T)\) 经过商代数 \(A\)，且保持乘法与单位。对 \(J_3\)，若 \(aI+bJ_3+cJ_3^2=0\)，依次比较主对角线、第一条及第二条上对角线，得到 \(a=b=c=0\)，所以表示忠实。对 \(J_2\oplus0\)，有 \(T\ne0,T^2=0\)，且 \(I,T\) 线性无关，所以代入核正好为 \(k\bar t^2=(\bar t^2)\)。同一代数作用在相同维数空间上，仍可有不同的零化子。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-group-algebra-universal}
+设 \(G\) 为群、\(A\) 为非零含幺 \(k\) 代数。证明 \(k\) 代数同态 \(k[G]\to A\) 与群同态 \(G\to A^\times\) 自然一一对应，其中 \(A^\times\) 为可逆元群。
+\end{exercise}
+\begin{solution}
+代数同态将每个基元素 \(g\) 送到可逆元，因为其像与 \(g^{-1}\) 的像相乘为一；保持乘法使限制成为群同态。反过来，给定 \(\rho:G\to A^\times\)，令
+\(\widetilde\rho(\sum_g a_gg)=\sum_g a_g\rho(g)\)。有限和使它良定义且线性，而群同态条件使其保留基乘法，双线性再给出所有元素的乘法相容；单位也被保持。线性映射由基元素的像唯一决定，故两个构造互逆。若后接一个代数同态，两侧都只是对各 \(\rho(g)\) 作同一复合，说明该对应与目标同态相容。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-augmentation-generators}
+设 \(G\) 由子集 \(X\) 生成。证明增广理想 \(\ker\epsilon\subseteq k[G]\) 作为左理想已由 \(x-1\)、\(x\in X\) 生成，不需要把所有群元素逐个列入生成元。说明同样结论也适用于右理想生成。
+\end{exercise}
+\begin{solution}
+令 \(L\) 为这些元素生成的左理想。恒等式
+\[
+gh-1=(g-1)+g(h-1),\qquad x^{-1}-1=-x^{-1}(x-1)
+\]
+说明若已知两个群元素减一属于 \(L\)，则其乘积减一也属于 \(L\)，并且每个生成元的逆减一也在 \(L\)。对生成字长度归纳，得到所有 \(g-1\in L\)。若 \(\sum_g a_gg\in\ker\epsilon\)，其系数和为零，故它等于 \(\sum_g a_g(g-1)\)，也属于 \(L\)。这证明 \(\ker\epsilon\subseteq L\)；反向包含由 \(\epsilon(x-1)=0\) 得到。右理想版本使用 \(gh-1=(g-1)h+(h-1)\) 与 \(x^{-1}-1=-(x-1)x^{-1}\)，其余归纳相同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-cyclic-two-units}
+在 \(k[C_2]\) 中写 \(C_2=\{1,g\}\)、\(g^2=1\)。求 \(a+bg\) 可逆的充要条件和逆元公式，允许 \(\operatorname{char}k=2\)。
+\end{exercise}
+\begin{solution}
+左乘 \(a+bg\) 在基 \(1,g\) 下的矩阵为 \(\begin{pmatrix}a&b\\b&a\end{pmatrix}\)。若元素可逆，该矩阵可逆，故 \(a^2-b^2\ne0\)。反过来，若此数非零，直接相乘得到
+\[
+(a+bg)^{-1}=\frac{a-bg}{a^2-b^2}.
+\]
+这是双侧逆，所以条件充分。在特征二中，条件变为 \((a+b)^2\ne0\)，即 \(a+b\ne0\)，公式仍成立。可逆元不限于非零标量乘群元素，例如在 \(\mathbb Q[C_2]\) 中 \(2+g\) 也可逆。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-matrix-opposite}
+证明转置给出代数同构 \(M_n(k)^{\mathrm{op}}\to M_n(k)\)，但在 \(n\ge2\) 时一般不是从 \(M_n(k)\) 到自身的代数同态。用两个矩阵单位写出具体失败等式。
+\end{exercise}
+\begin{solution}
+来源反环中 \(A\cdot_{\mathrm{op}}B=BA\)，所以
+\((A\cdot_{\mathrm{op}}B)^{\mathsf t}=A^{\mathsf t}B^{\mathsf t}\)。转置线性、保持单位且自身为逆，故是所述同构。在原乘法下取 \(A=E_{12},B=E_{21}\)，则 \((AB)^{\mathsf t}=E_{11}\)，而 \(A^{\mathsf t}B^{\mathsf t}=E_{21}E_{12}=E_{22}\)，两者不同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-matrix-enveloping}
+令 \(A=M_n(k)\)。证明正则双模作用诱导的代数同态
+\[
+A\otimes_kA^{\mathrm{op}}\longrightarrow\operatorname{End}_k(A),
+\qquad a\otimes b^{\mathrm{op}}\longmapsto(x\mapsto axb)
+\]
+为同构。请在矩阵单位基上说明单射和满射，而不只比较两边维数。
+\end{exercise}
+\begin{solution}
+\cref{b2:thm:enveloping-bimodules}已证明作用保持代数乘法。对基元素，
+\[
+(E_{ij}\otimes E_{\ell m}^{\mathrm{op}})(E_{rs})
+=\delta_{jr}\delta_{s\ell}E_{im}.
+\]
+因此这一张量把唯一的基向量 \(E_{j\ell}\) 送到 \(E_{im}\)，将其余全部基向量送到零。四个指标遍历时，恰好得到 \(n^2\) 维空间 \(A\) 的全部矩阵单位，每个出现一次。来源的这些张量也是张量积基，所以映射将一组基双射到一组基，单射和满射同时成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-one-dimensional-bimodules}
+令 \(A=k[t]\)。在一维空间 \(M_{\alpha,\beta}=k\) 上规定左乘 \(t\) 为乘 \(\alpha\)，右乘 \(t\) 为乘 \(\beta\)。证明它总是 \(A\) 双模，并求
+\(\operatorname{Hom}_{A^e}(M_{\alpha,\beta},M_{\gamma,\delta})\)。
+\end{exercise}
+\begin{solution}
+左右作用分别为 \(f(t)m=f(\alpha)m\)、\(m g(t)=g(\beta)m\)。它们都保持多项式乘法、单位与底域标量，且两个标量作用交换，所以确为双模。任一线性映射是乘 \(c\in k\)，保持左、右作用分别要求 \(c\alpha=\gamma c\)、\(c\beta=\delta c\)。若两对参数相同，任意 \(c\) 都可行，Hom 为 \(k\)；只要有一项不同，域中消去非零差便得 \(c=0\)，Hom 为零。两个作用可以不同，这不违反双模的相容性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-polynomial-bimodule-annihilator}
+把 \(A=k[t]\) 的包络代数识别为 \(k[x,y]\)，其中 \(x,y\) 分别记录左右乘 \(t\)。证明正则双模 \(A\) 的零化子恰为 \((x-y)\)，从而作为 \(A^e\) 模有 \(A\cong k[x,y]/(x-y)\)。
+\end{exercise}
+\begin{solution}
+多项式 \(F(x,y)\) 作用为乘以 \(F(t,t)\)。所以它零化整个 \(A\)，当且仅当它在 \(1\) 上作用为零，即 \(F(t,t)=0\)。把 \(F\) 看成 \(k[y][x]\) 中的多项式，用首一多项式 \(x-y\) 作带余除法，得到
+\(F(x,y)=(x-y)Q(x,y)+r(y)\)。代入 \(x=y=t\) 后为 \(r(t)\)，故零化条件恰为 \(r=0\)。于是核正好是 \((x-y)\)，且作用在 \(1\) 上的映射满射到 \(k[t]\)，商模同构随之成立。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-triangular-idempotents}
+求上三角代数 \(T_2(k)\) 的全部幂等元，并从中辨认中心幂等元。由此判断它能否分解为两个非零代数的直积。
+\end{exercise}
+\begin{solution}
+写 \(e=\begin{pmatrix}a&b\\0&c\end{pmatrix}\)。\(e^2=e\) 等价于 \(a^2=a,c^2=c,(a+c-1)b=0\)。域中 \(a,c\in\{0,1\}\)。若 \(a=c\)，则 \(b=0\)，得到零与单位；若 \((a,c)=(1,0)\) 或 \((0,1)\)，则 \(b\) 任意。因此其余幂等元为
+\[
+\begin{pmatrix}1&b\\0&0\end{pmatrix},\qquad
+\begin{pmatrix}0&b\\0&1\end{pmatrix}\quad(b\in k).
+\]
+与 \(E_{11}\) 交换要求 \(b=0\)，再与 \(E_{12}\) 交换要求 \(a=c\)，所以中心幂等元只有零与单位。若存在非零乘积分解，第一因子的单位 \((1,0)\) 会给出非平凡中心幂等元，矛盾。因此不存在这种分解，虽然正则模仍可按 \(E_{11},E_{22}\) 分成两个非零直和因子。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-large-corner}
+在 \(A=M_3(k)\) 中取 \(e=E_{11}+E_{22}\)、\(f=E_{33}\)。写出四个空间 \(eAe,eAf,fAe,fAf\) 的矩阵形状与维数，并求 \(\operatorname{End}_A(Ae)\)。
+\end{exercise}
+\begin{solution}
+按照前两个坐标与第三个坐标分块，四个空间依次是左上 \(2\times2\) 块、右上 \(2\times1\) 块、左下 \(1\times2\) 块、右下 \(1\times1\) 块，其他位置均为零；维数依次为 \(4,2,2,1\)，总和为九。角代数 \(eAe\cong M_2(k)\)，其单位是 \(e\)。由\cref{b2:prop:corner-endomorphism}，
+\(\operatorname{End}_A(Ae)\cong M_2(k)^{\mathrm{op}}\)，所以其维数为四。这个自同态作用为右乘左上块，与 \(Ae\) 的六维底向量空间的全部自同态明显不同。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-corner-hom}
+设 \(e,f\in A\) 为幂等元。证明 \(k\) 线性同构
+\[
+\operatorname{Hom}_A(Ae,Af)\cong eAf,
+\qquad h\longmapsto h(e).
+\]
+若 \(g\) 为另一幂等元，说明在此对应下两个相继同态的复合如何用角块乘法表示。
+\end{exercise}
+\begin{solution}
+左线性给出 \(h(e)=h(e^2)=eh(e)\)，且 \(h(e)\in Af\)，所以取值属于 \(eAf\)。对 \(b\in eAf\)，公式 \(h_b(x)=xb\) 给出 \(Ae\to Af\) 的左线性映射，且 \(h_b(e)=b\)。任意原同态满足 \(h(ae)=ah(e)\)，故这两种构造互逆。若 \(b\in eAf,c\in fAg\)，则
+\(h_c\circ h_b(x)=(xb)c=x(bc)\)，对应元素 \(bc\in eAg\)。这也说明把端点都取为 \(e\) 时，自同态环的复合对应角环的反序乘法。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-commuting-projections}
+设 \(p,q\in\operatorname{End}_R(M)\) 都幂等且相互交换。证明四个算子
+\(pq,p(1-q),(1-p)q,(1-p)(1-q)\) 是两两正交的幂等元且和为恒等，从而给出 \(M\) 的四项直和分解。给出不交换时其中某项不再幂等的例子。
+\end{exercise}
+\begin{solution}
+因 \(p,q\) 交换，\(p,1-p\) 与 \(q,1-q\) 全部互相交换，故各乘积平方等于自身。两个不同乘积至少在一处分别含 \(p,1-p\) 或 \(q,1-q\)，相乘因此为零；展开 \(\Bigl(p+(1-p)\Bigr)\Bigl(q+(1-q)\Bigr)\) 得四项之和为恒等。由\cref{b2:prop:idempotent-module-decomposition}，四个像组成内直和，允许某些像为零。
+
+在 \(k^2\) 上取 \(p=\begin{pmatrix}1&0\\0&0\end{pmatrix}\)、\(q=\begin{pmatrix}1&1\\0&0\end{pmatrix}\)。它们都幂等，但 \(pq=q\)、\(qp=p\)，不交换。此时 \(p(1-q)=\begin{pmatrix}0&-1\\0&0\end{pmatrix}\) 非零而平方为零，所以不是幂等元。原分解不能不加交换条件照搬。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-cyclic-operator-centralizer}
+设 \(\dim_kV=n\ge1\)，\(T:V\to V\) 有循环向量 \(v\)，即 \(v,Tv,\ldots,T^{n-1}v\) 是 \(V\) 的基。证明 \(k[T]'=k[T]\)，从而 \(k[T]''=k[T]\)。写出三阶幂零 Jordan 块的中心化子。
+\end{exercise}
+\begin{solution}
+若 \(S\) 与 \(T\) 交换，将 \(S(v)\) 按循环基展开，唯一写成 \(p(T)v\)，其中 \(\deg p<n\)。于是
+\(S(T^jv)=T^jS(v)=p(T)T^jv\)，所以 \(S=p(T)\)。反过来，\(T\) 的任意多项式都与 \(T\) 交换，得到第一个等式；再取一次中心化子便得第二式。对标准上三角的 \(J_3\)，中心化子中的元素恰为
+\[
+aI+bJ_3+cJ_3^2
+=\begin{pmatrix}a&b&c\\0&a&b\\0&0&a\end{pmatrix},\qquad a,b,c\in k.
+\]
+它包含非零幂零元，说明双中心化子等式本身不意味着作用代数没有幂零元。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-repeated-matrix-blocks}
+在 \(V=k^n\oplus k^n\)、\(n\ge1\)，令 \(\mathcal A=\Bigl\{\operatorname{diag}(B,B):B\in M_n(k)\Bigr\}\)。求 \(\mathcal A'\) 与 \(\mathcal A''\)，并给出两者维数。
+\end{exercise}
+\begin{solution}
+把算子写成四个 \(n\times n\) 块 \(T_{ij}\)。与每个 \(\operatorname{diag}(B,B)\) 交换，等价于每个 \(T_{ij}\) 都与全部 \(B\in M_n(k)\) 交换。逐个与矩阵单位比较，得每块都是标量矩阵，因此中心化子中的元素恰为
+\[
+T=\begin{pmatrix}aI_n&bI_n\\cI_n&dI_n\end{pmatrix},\qquad a,b,c,d\in k.
+\]
+与其中的两个块投影交换使双中心化子为块对角，再与交换两个副本的块矩阵交换使两对角块相等，故 \(\mathcal A''=\mathcal A\)。维数分别为四与 \(n^2\)。这个结果也符合\cref{b2:prop:tensor-factor-centralizers}在 \(k^n\otimes k^2\) 上的两个独立因子作用。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-two-eigenvalue-blocks}
+设 \(T=\operatorname{diag}(\lambda I_r,\mu I_s)\)，其中 \(r,s>0\)、\(\lambda\ne\mu\)。计算 \(k[T]'\) 和 \(k[T]''\)，并说明在 \(r>1\) 或 \(s>1\) 时，这与循环算子的例子有何不同。
+\end{exercise}
+\begin{solution}
+分块交换方程使两个非对角块分别满足 \((\lambda-\mu)X=0\)、\((\mu-\lambda)Y=0\)，故为零；对角块任意，所以
+\[
+k[T]'=M_r(k)\times M_s(k)
+\]
+以块对角方式作用。其中心化子是每块各一个标量，故 \(k[T]''=kI_r\times kI_s\)。线性多项式可以在不同的 \(\lambda,\mu\) 处取任意两个给定值，所以后一代数恰为 \(k[T]\)。当有重数大于一时，第一次中心化子已经严格大于 \(k[T]\)；不过第二次中心化仍能恢复 \(k[T]\)，并不要求第一次中心化子等于自身。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:11-tensor-flip-centralizer}
+设 \(\operatorname{char}k\ne2\)、\(V=k^2\)，令 \(\tau(v\otimes w)=w\otimes v\)。求 \(\tau\) 的中心化子及其双中心化子，并计算维数。此题只讨论交换算子 \(\tau\)，不使用一般 Schur–Weyl 对偶。
+\end{exercise}
+\begin{solution}
+\(\tau\) 的 \(1\) 特征子空间有基
+\(e_1\otimes e_1,e_2\otimes e_2,e_1\otimes e_2+e_2\otimes e_1\)，维数三；\(-1\) 特征子空间由 \(e_1\otimes e_2-e_2\otimes e_1\) 生成，维数一。特征不为二保证这些向量组成四维空间的一组基。与 \(\tau\) 交换恰好要求分别保持这两个特征子空间，因此中心化子为 \(M_3(k)\times k\)，维数十。再取中心化子，得到两个特征空间上的独立标量作用，即
+\[
+k\frac{1+\tau}{2}\oplus k\frac{1-\tau}{2}=kI\oplus k\tau,
+\]
+维数二。这里的投影及块计算全部显式给出，没有据此断言任何尚未证明的一般线性群作用之生成代数等式。
+\end{solution}

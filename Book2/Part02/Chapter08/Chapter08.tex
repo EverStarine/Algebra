@@ -1,16 +1,267 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第8章　张量代数与对称代数
-% 纲要位置：计划纲要.md，第 1038 行。
 
 \chapter{张量代数与对称代数}
 \label{b2:ch:08}
 \BookChapterNumber{b2:ch:08}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+多重张量积把多线性映射改写成线性映射，张量代数把所有次数的有序乘积放在同一分次代数中，对称代数则进一步施加交换关系。本章证明这些构造的泛性质，建立有限自由情形的基与多项式解释，并明确对称商与不变张量在正特征下的差别。最后把对偶、张量积与对称幂用于群表示，说明等变映射如何成为不变张量，并引出第五卷将研究的 Schur–Weyl 对偶问题。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用多重张量积表示多线性映射，说明改变括号与置换因子的指定同构及其相容性。
+\item 构造分次张量代数，区分一般模的张量代数与选定自由生成元后的字代数，利用生成元和关系定义同态。
+\item 证明对称代数的泛性质及多项式解释，计算对称幂的基和维数，并检查阶乘是否可逆。
+\item 写出张量、对偶、对称幂表示的作用公式，区分位置置换不变与群作用不变，将有限维 Hom 识别为张量表示。
+\end{itemize}
+\end{learninggoals}
+
+本章以第六章的张量积泛性质、剩余作用和结合同构为直接基础；自然性采用第五章的定义，有限自由模的坐标与对偶采用第一、三章的结果。除表示部分把底环取为域外，前面大部分构造只需交换底环。第七章的投射、内射和平坦模理论不参与本章主干证明。每遇到一个商构造，读者应先指出商掉的关系，再检验从商出发的映射是否确实零化这些关系。
+
+\ProseParagraphBreak
+张量代数与对称代数的商构造可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[Section 2.12, Definition 2.12.1, p. 35]{EtingofEtAl2011RepresentationTheory}；对偶与张量积表示的公式见\cite[Section 4.4, p. 65]{EtingofEtAl2011RepresentationTheory}。本章对一般交换环的构造给出证明，不通过特征零下的平均算子来定义对称幂；平均法的适用条件将单独说明。
 
 \input{Part02/Chapter08/Section0801}
 \input{Part02/Chapter08/Section0802}
 \input{Part02/Chapter08/Section0803}
 \input{Part02/Chapter08/Section0804}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+多重张量积由多线性映射的泛性质确定。结合和位置置换都由纯张量上的明确公式给出，生成性保证各种相容等式。张量代数把所有次数作直和并连接张量串，因而适合向任意结合代数指定线性生成元的像；只有底模具有一组自由基时，才得到以所有有限字为基的自由结合代数。
+
+\ProseParagraphBreak
+对称代数由交换关系取商，有限自由模的基使它成为多项式代数。它的次数分量是对称商，张量幂中的对称张量则是不变子模；阶乘可逆时，平均算子给出两者的自然同构。正特征的轨道和可能在商中消失，取幂也只满足相应的标量幂次规律，因此不能沿用未经检查的除法公式。
+
+\ProseParagraphBreak
+群表示与张量运算相容，对偶作用中的逆元保证复合次序正确。有限维条件把 \(V^*\otimes W\) 识别为 \(\operatorname{Hom}(V,W)\)，其不变量正是等变映射。位置置换与一般线性群的作用交换，是进一步分解张量表示的起点；关于全部中心化子的结论仍需第五卷的证明。下一章改用交替关系，研究外幂、行列式及其与形式的联系。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b2:ex:08-trilinear-coordinates}
+设 \(M_1=R^2,M_2=R^3,M_3=R^2\)，\(N\) 为 \(R\) 模。给定十二个元素 \(a_{ijk}\in N\)。证明存在唯一三线性映射，使标准基向量组 \((e_i,f_j,e_k)\) 的像为 \(a_{ijk}\)，写出任意三元组的像。若 \(R=k\) 为域且 \(\dim_kN=s<\infty\)，求全部这些三线性映射组成的空间的维数。
+\end{exercise}
+\begin{solution}
+多线性强迫
+\[
+b\Bigl(\sum_i x_i e_i,\sum_j y_jf_j,\sum_k z_ke_k\Bigr)
+=\sum_{i,j,k}x_iy_jz_k a_{ijk}.
+\]
+各坐标唯一，因此公式良定义；对每一个变量分别核对加法与标量乘法，得到三线性，所以存在且唯一。由\cref{b2:prop:multiple-tensor-basis}，定义域张量积的基有十二个元素，其线性映射到 \(N\) 可以在这十二个元素上任意取值，故同构于 \(N^{12}\)，维数为 \(12s\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-permutation-convention}
+设 \(V\) 有三个不同基向量 \(e_1,e_2,e_3\)，取 \(\sigma=(12)\)、\(\pi=(23)\)。分别计算 \(P_\sigma P_\pi(e_1\otimes e_2\otimes e_3)\) 与 \(P_\pi P_\sigma(e_1\otimes e_2\otimes e_3)\)。若将定义改成按 \(\sigma(1),\ldots,\sigma(d)\) 排列，复合次序将如何变化？
+\end{exercise}
+\begin{solution}
+先 \(P_\pi\) 后 \(P_\sigma\) 得到 \(e_3\otimes e_1\otimes e_2\)；先 \(P_\sigma\) 后 \(P_\pi\) 得到 \(e_2\otimes e_3\otimes e_1\)。两者不同，因为它们是不同的纯基张量。若改用 \(Q_\sigma(\bigotimes_jv_j)=\bigotimes_jv_{\sigma(j)}\)，则 \(Q_\sigma=P_{\sigma^{-1}}\)，故
+\[
+Q_\sigma Q_\pi=P_{\sigma^{-1}\pi^{-1}}
+=P_{(\pi\sigma)^{-1}}=Q_{\pi\sigma}.
+\]
+于是得到反序的复合法则。置换作用的公式必须与采用的左、右作用约定一起说明。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-multilinear-dual}
+设 \(M_1,\ldots,M_d\) 为有限自由 \(R\) 模。证明
+\[
+M_1^*\otimes_R\cdots\otimes_RM_d^*
+\longrightarrow\operatorname{Hom}_R(M_1\otimes_R\cdots\otimes_RM_d,R)
+\]
+由 \((\lambda_1\otimes\cdots\otimes\lambda_d)(m_1\otimes\cdots\otimes m_d)=\prod_j\lambda_j(m_j)\) 定义，是自然同构，其中 \(M_j^*=\operatorname{Hom}_R(M_j,R)\)。
+\end{exercise}
+\begin{solution}
+先固定各 \(\lambda_j\)，右端对 \(m_j\) 多线性，故定义张量积上的泛函；所得泛函又对各 \(\lambda_j\) 多线性，所以诱导所写线性映射。对每个 \(M_j\) 选有限基及坐标对偶基。由\cref{b2:prop:multiple-tensor-basis}，纯基张量构成定义域基，而纯对偶基张量的像恰是目标中对应纯基张量的坐标泛函，故映射为同构。给定各 \(f_j:N_j\rightarrow M_j\)，两侧的预复合在纯张量上都取值为 \(\prod_j\lambda_j\Bigl(f_j(n_j)\Bigr)\)，证明自然性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-three-tensor-not-pure}
+在 \((k^2)^{\otimes3}\) 中证明 \(t=e_1\otimes e_1\otimes e_1+e_2\otimes e_2\otimes e_2\) 不是纯张量。由此说明任意张量虽能写成纯张量的有限和，也不能总压缩成一项。
+\end{exercise}
+\begin{solution}
+若 \(t=a\otimes b\otimes c\)，写 \(a=a_1e_1+a_2e_2\)，类似写 \(b,c\)。纯基张量的坐标唯一，给出 \(a_1b_1c_1=1\)、\(a_2b_2c_2=1\)，故六个系数都非零。但 \(e_1\otimes e_1\otimes e_2\) 的系数应为零，即 \(a_1b_1c_2=0\)，与域中无零因子矛盾。因此 \(t\) 不是纯张量，而题中已经给出两项纯张量之和。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-tensor-torsion-module}
+对整数 \(n>1\)，证明 \(T_{\mathbb Z}(\mathbb Z/n\mathbb Z)\cong\mathbb Z[X]/(nX)\) 作为分次代数成立，生成元 \(\bar1\) 对应 \(X\) 的像。指出每个次数的分量，以及它为何不是一个自由 \(\mathbb Z\) 模。
+\end{exercise}
+\begin{solution}
+由\cref{b2:prop:tensor-quotient}，每个正次张量幂均为 \(\mathbb Z/n\mathbb Z\)，由 \(\bar1^{\otimes d}\) 生成；零次为 \(\mathbb Z\)。乘法把这两个纯幂连接为更高次纯幂。另一方面，理想 \((nX)\) 恰由常数项为零、所有正次系数均被 \(n\) 整除的多项式组成。因此商多项式的零次系数在 \(\mathbb Z\)，各正次系数在 \(\mathbb Z/n\mathbb Z\)，乘法正好相同。逐次数对应即给出分次同构。一次分量中的非零元素 \(\bar1\) 被 \(n\) 零化，故整个底模有挠；非零自由 \(\mathbb Z\) 模无挠，所以不是自由模。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-augmentation}
+记 \(I=\bigoplus_{d\ge1}M^{\otimes d}\subseteq T_R(M)\)。证明 \(I\) 为双边理想，\(T_R(M)/I\cong R\)，并证明 \(I/I^2\cong M\)，不要求 \(M\) 自由。
+\end{exercise}
+\begin{solution}
+次数相加说明含一个正次因子的乘积仍为正次，所以 \(I\) 是理想。取零次分量给出满代数同态 \(T_R(M)\rightarrow R\)，其核正是 \(I\)。每个 \(I^2\) 中的元素没有零次或一次分量，因此 \(I^2\subseteq\bigoplus_{d\ge2}M^{\otimes d}\)。反向，\(d\ge2\) 的每个纯张量是第一个一次因子与其余正次因子的积，而纯张量生成该分量，所以等号成立。取一次分量于是诱导 \(I/I^2\cong M\)。这直接说明可以从张量代数的增广理想恢复其一次生成模。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-tensor-algebra-injection-failure}
+令 \(R=k[\varepsilon]/(\varepsilon^2)\)，\(M=(\varepsilon)\subset R\)。证明包含 \(i:M\hookrightarrow R\) 虽为单射，诱导的张量代数同态 \(T_R(i)\) 却不是单射。
+\end{exercise}
+\begin{solution}
+作为 \(R\) 模，\(M\cong R/(\varepsilon)\)，同构把 \(\bar1\) 送到 \(\varepsilon\)。由\cref{b2:prop:tensor-quotient}，\(M\otimes_RM\cong R/(\varepsilon)\)，其生成元 \(\varepsilon\otimes\varepsilon\) 非零。但它在 \(R\otimes_RR\) 中的像满足
+\[
+\varepsilon\otimes\varepsilon=1\otimes\varepsilon^2=0.
+\]
+张量代数同态在次数二正是 \(i\otimes i\)，所以已有非零核。这也说明，泛性质保证构造同态，却不保证它自动继承原线性映射的单射性。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-inhomogeneous-relation}
+设 \(k\) 为域，\(A=k[X]/(X^2-X)\)。证明 \(A\) 中 \(1,x\) 为一组基，其中 \(x\) 是 \(X\) 的像；证明这个商不能继承把 \(x\) 放在次数一的多项式分次。
+\end{exercise}
+\begin{solution}
+由首一多项式的带余除法，每个商元素唯一表示为 \(a+bx\)，所以 \(1,x\) 是基，尤其 \(x\ne0\)。若继承原分次，则 \(x\) 在次数一、\(x^2\) 在次数二。关系 \(x^2=x\ne0\) 使同一个非零元素同时落入两个不同次数分量，与直和分解矛盾。商仍然是代数，失去的只是所指定次数的分次。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-square-zero-algebra}
+证明 \(k\langle x,y\rangle/(x^2,xy,yx,y^2)\) 有基 \(1,x,y\)。除了用关系约化说明生成性，还须证明线性无关性。
+\end{exercise}
+\begin{solution}
+任意长度至少二的字都含一个所列二字关系，故在商中为零，得到生成性。在向量空间 \(B=k\oplus k^2\) 上定义
+\[
+(a,u)(b,v)=(ab,av+bu).
+\]
+单位为 \((1,0)\)。两种三项乘积的第二坐标都等于 \(ab w+ac v+bc u\)，第一坐标都为 \(abc\)，故结合；它是 \(k\) 代数。令 \(x\mapsto(0,e_1)\)、\(y\mapsto(0,e_2)\)，所有二字关系的像为零，故\cref{b2:prop:algebra-relations-universal}给出商到 \(B\) 的同态。\(1,x,y\) 的像是 \(B\) 的一组基，所以它们在原商中线性无关。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-symmetric-quotient}
+设 \(N\subseteq M\) 为子模。令 \((N)\) 表示 \(\operatorname{Sym}_R(M)\) 中由 \(N\) 的一次像生成的理想。证明
+\[
+\operatorname{Sym}_R(M/N)\cong\operatorname{Sym}_R(M)/(N)
+\]
+为自然分次代数同构。
+\end{exercise}
+\begin{solution}
+商映射 \(M\rightarrow M/N\) 诱导对称代数同态，并将 \(N\) 送到零，故得到右端商代数到左端的同态。反过来，映射 \(M\rightarrow\operatorname{Sym}_R(M)/(N)\) 在 \(N\) 上为零，故公式 \(m+N\mapsto\bar m\) 良定义且线性。由\cref{b2:thm:symmetric-algebra-universal}，它延拓为左端到右端的代数同态。两复合在一次生成元和结构标量上均为恒等，所以互逆。构造保持一次分量和次数，也与保持子模的线性映射相容，故为自然分次同构。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-symmetric-direct-sum}
+对交换 \(R\) 代数 \(A,B\)，先核对 \(A\otimes_RB\) 由 \((a\otimes b)(a'\otimes b')=aa'\otimes bb'\) 成为交换 \(R\) 代数。再证明
+\[
+\operatorname{Sym}_R(M\oplus N)\cong
+\operatorname{Sym}_R(M)\otimes_R\operatorname{Sym}_R(N),
+\]
+使 \((m,0)\) 对应 \(m\otimes1\)、\((0,n)\) 对应 \(1\otimes n\)。
+\end{exercise}
+\begin{solution}
+四变量公式 \(aa'\otimes bb'\) 对每个变量线性，且把两对因子中的 \(R\) 平衡关系分别送成相等元素，因此诱导张量积上的双线性乘法。在纯张量上核对结合、交换及单位 \(1\otimes1\)，再由生成性推广，便得交换代数。
+
+题述一次映射由 \(M\oplus N\) 的直和性质定义，继而由对称代数泛性质延拓为正向同态。两次包含 \(M,N\rightarrow M\oplus N\) 分别诱导同态 \(\alpha,\beta\) 到左端；公式 \(a\otimes b\mapsto\alpha(a)\beta(b)\) 平衡，且目标交换，故诱导反向代数同态。两复合在 \(M,N\) 的一次像上为恒等；右端由 \(a\otimes1\)、\(1\otimes b\) 生成，而这些又由相应一次像及标量生成，因此两个复合在全代数为恒等。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-symmetric-dimension}
+若 \(\dim_kV=3\)，求 \(V^{\otimes4}\)、\(\operatorname{Sym}_k^4(V)\) 和商映射 \(q_4\) 的核的维数。说明这些数是否依赖域的特征，并给出核中的一个非零元素。
+\end{exercise}
+\begin{solution}
+张量幂维数为 \(3^4=81\)，对称幂维数为 \(\binom64=15\)。\(q_4\) 满射，故核维数为 \(81-15=66\)。前两项的基分别由有序下标与全次数四的单项式给出，都不涉及除法，因此任何特征下相同。取两个不同基向量 \(e_1,e_2\)，则
+\[
+e_1\otimes e_2\otimes e_1\otimes e_1
+-e_2\otimes e_1\otimes e_1\otimes e_1
+\]
+是两个不同纯基张量之差，非零且在对称商中为零，特征二时也仍非零。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-symmetrization-orbits}
+设 \(V=ke\oplus kf\)，求三次张量幂在 \(S_3\) 下的不变子空间的一组基，并写出商映射在这组基上相对于 \(e^3,e^2f,ef^2,f^3\) 的矩阵。分别讨论 \(k=\mathbb Q\) 与特征三；在 \(\mathbb Q\) 上写出 \(e^2f\) 的平均张量。
+\end{exercise}
+\begin{solution}
+置换把八个纯基张量分成四个轨道，按 \(f\) 出现零、一、二、三次分类。不变性要求同一轨道内系数相同，所以轨道和
+\[
+e^{\otimes3},\quad
+e\otimes e\otimes f+e\otimes f\otimes e+f\otimes e\otimes e,
+\]
+\[
+e\otimes f\otimes f+f\otimes e\otimes f+f\otimes f\otimes e,\quad
+f^{\otimes3}
+\]
+构成基，因为支集互不相交。商映射矩阵为 \(\operatorname{diag}(1,3,3,1)\)。在 \(\mathbb Q\) 上可逆，\(e^2f\) 对应第二个轨道和的三分之一；六项平均中每个不同排列重复两次，给出同一结果。特征三时矩阵秩为二，两个中间轨道和构成核，尽管定义域与目标仍同为四维。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-frobenius-semilinear}
+在 \(k=\mathbb F_2[a]/(a^2+a+1)\) 上，令 \(V=ke\)。证明 \(v\mapsto v^2\in\operatorname{Sym}_k^2(V)\) 可加但不是 \(k\) 线性。说明若将底域换成 \(\mathbb F_2\)，同一公式有何变化。
+\end{exercise}
+\begin{solution}
+多项式 \(a^2+a+1\) 在 \(\mathbb F_2\) 的零、一处都不为零，所以商是四元域，且 \(a^2=a+1\ne a\)。对称代数交换，特征二下交叉项消失，故 \((u+v)^2=u^2+v^2\)。但
+\[
+(ae)^2=a^2e^2\ne ae^2,
+\]
+其中 \(e^2\ne0\) 由对称幂的单项式基保证，所以不是 \(k\) 线性。在 \(\mathbb F_2\) 上，每个标量满足 \(c^2=c\)，公式同时保持加法与标量乘法，因而成为线性映射。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-polynomial-versus-function}
+在 \(\mathbb F_3[X,Y]\) 中，证明齐次多项式 \(X^3Y-XY^3\) 非零，但在 \(\mathbb F_3^2\) 的每一点都取零。说明这对把 \(\operatorname{Sym}_{\mathbb F_3}^4\Bigl((\mathbb F_3^2)^*\Bigr)\) 当作函数空间有什么限制。
+\end{exercise}
+\begin{solution}
+\(X^3Y\) 与 \(XY^3\) 是不同的次数四单项式，系数分别为一和负一，故形式多项式非零。对 \(\mathbb F_3\) 中的每个元素都有 \(a^3=a\)，所以在 \((a,b)\) 处取值为 \(ab-ab=0\)。选取对偶基后，对称幂与这些形式齐次多项式同构，所给非零元素却成为零函数。因此取值映射不单射，不能用函数相等代替对称代数中的元素相等。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-traces}
+设 \(A:V\rightarrow V\)、\(B:W\rightarrow W\) 为有限维空间的线性算子。证明
+\(\operatorname{tr}(A\otimes B)=\operatorname{tr}(A)\operatorname{tr}(B)\)。
+若 \(2\ne0\) 于 \(k\)，进一步证明
+\[
+\operatorname{tr}\Bigl(\operatorname{Sym}^2(A)\Bigr)
+=\frac{(\operatorname{tr}A)^2+\operatorname{tr}(A^2)}2.
+\]
+\end{exercise}
+\begin{solution}
+在张量基 \(e_i\otimes f_j\) 上，\(A\otimes B\) 的对应对角元为 \(a_{ii}b_{jj}\)，求和得第一式。令 \(P\) 为交换两因子的算子。\(A\otimes A\) 与 \(P\) 交换，因而保持 \(P\) 的两个特征子空间。投影 \(E_+=(1+P)/2\) 在特征值为一的子空间上为恒等，在特征值为负一的子空间上为零，所以
+\[
+\operatorname{tr}\Bigl(\operatorname{Sym}^2(A)\Bigr)
+=\operatorname{tr}\Bigl(E_+(A\otimes A)\Bigr).
+\]
+这里使用\cref{b2:prop:symmetrization-characteristic}把对称商与特征值为一的子空间自然识别。\(P(A\otimes A)\) 在 \(e_i\otimes e_j\) 处的对角元为 \(a_{ji}a_{ij}\)，其总和为 \(\operatorname{tr}(A^2)\)。结合第一式并取平均，得到结论，无需假定 \(A\) 可对角化。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-symmetric-unipotent-matrix}
+设 \(A(e)=e\)、\(A(f)=e+f\)。写出 \(\operatorname{Sym}^2(A)\) 在 \(e^2,ef,f^2\) 上的矩阵，求特征二时与特征不为二时的固定子空间维数。
+\end{exercise}
+\begin{solution}
+三列分别由
+\[
+A(e)^2=e^2,\quad A(e)A(f)=e^2+ef,\quad
+A(f)^2=e^2+2ef+f^2
+\]
+给出，所以矩阵为 \(\begin{pmatrix}1&1&1\\0&1&2\\0&0&1\end{pmatrix}\)。固定向量的坐标 \((a,b,c)\) 满足 \(b+c=0\)、\(2c=0\)。特征不为二时 \(b=c=0\)，固定空间为 \(ke^2\)，维数一；特征二时只剩 \(b=c\)，固定空间由 \(e^2,ef+f^2\) 生成，维数二。对称幂的维数均为三，改变的是诱导算子的固定空间。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-hom-invariant-jordan}
+在 \(V=\mathbb Qe_1\oplus\mathbb Qe_2\) 上，让无穷循环群的生成元作用为
+\(\begin{pmatrix}1&1\\0&1\end{pmatrix}\)。
+求 \(\operatorname{End}_G(V)\)，并通过 \(\Theta\) 写出 \((V^*\otimes V)^G\) 的一组基。
+\end{exercise}
+\begin{solution}
+设 \(C=\begin{pmatrix}a&b\\c&d\end{pmatrix}\)。与生成元矩阵相交换等价于 \(c=0,d=a\)，所以等变自同态恰为 \(aI+bE_{12}\)，构成二维空间。与生成元相交换也与其正负整数幂相交换，因此已核对全部群元素。由\cref{b2:prop:hom-as-tensor-representation}及其后不变量的识别，所求不变张量的一组基是
+\[
+e_1^*\otimes e_1+e_2^*\otimes e_2,\qquad e_2^*\otimes e_1.
+\]
+它们分别对应 \(I\) 和 \(E_{12}\)。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-commuting-not-centralizers}
+设 \(V=\mathbb Q^2\)，令平凡群作用在 \(V^{\otimes2}\) 上。它与因子交换当然相交换。证明这不足以使两种作用生成的代数互为中心化子。
+\end{exercise}
+\begin{solution}
+平凡群作用生成的代数是 \(\mathbb Q\operatorname{id}\)，其中心化子为整个 \(\operatorname{End}_{\mathbb Q}(V^{\otimes2})\)，维数为 \(4^2=16\)。因子置换生成的代数是 \(\operatorname{span}_{\mathbb Q}\{\operatorname{id},P\}\)，至多二维，事实上两算子在 \(e_1\otimes e_2\) 上的像不同而线性无关，所以恰二维。它不可能等于前一个中心化子。Schur–Weyl 前瞻中使用全部一般线性群是实质条件，不能仅靠两个作用交换就得到结论。
+\end{solution}
+
+\begin{exercise}\label{b2:ex:08-algebra-base-change}
+设 \(S\) 为交换 \(R\) 代数，\(M\) 为 \(R\) 模。证明存在自然分次 \(S\) 代数同构
+\[
+S\otimes_RT_R(M)\cong T_S(S\otimes_RM),\qquad
+S\otimes_R\operatorname{Sym}_R(M)\cong\operatorname{Sym}_S(S\otimes_RM).
+\]
+\end{exercise}
+\begin{solution}
+左侧的代数乘法由 \((s\otimes a)(t\otimes b)=st\otimes ab\) 给出，标量在中心使它保持两处平衡关系。在线性生成元 \(S\otimes_RM\) 上取 \(s\otimes m\mapsto s\otimes\iota(m)\)，张量代数的泛性质给出从第一式右端到左端的同态。反向在次数 \(d>0\) 上规定
+\[
+s\otimes(m_1\otimes\cdots\otimes m_d)
+\longmapsto
+(s\otimes m_1)\otimes_S(1\otimes m_2)\otimes_S\cdots\otimes_S(1\otimes m_d),
+\]
+零次为 \(S\) 上的恒等。多线性与 \(R\) 平衡关系由 \(s\varphi(r)\otimes m=s\otimes rm\) 保证，故公式良定义。连接两个张量串时，第二串首因子中的 \(S\) 标量可移到整串第一个因子，说明它保持乘法。两个复合在生成元及 \(S\) 上为恒等，所以互逆。这里 \(\varphi:R\rightarrow S\) 是结构同态。
+
+对称代数的两个方向由相同的一次公式及\cref{b2:thm:symmetric-algebra-universal}构造；两端均交换，所有交换关系自动满足。也可以将第一式的两边同时商掉生成元之间的交换关系，得到同一个结果。上述映射保持次数，且与 \(M\) 的线性映射相容，故自然。
+\end{solution}
