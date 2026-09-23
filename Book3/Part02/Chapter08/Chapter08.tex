@@ -1,17 +1,33 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第8章　Gröbner 基与消去
-% 纲要位置：计划纲要.md，第 1718 行。
+% 纲要位置：工作记录/计划纲要.md，第 2036 行。
+% 纲要细目（写作范围）：
+% > 第一卷附录F提供先行入门。本章按本卷的独立阅读需要完整建立单项式序、多元除法、Dickson有限性、Gröbner基与正规式、Buchberger判据及算法、约化基唯一性和消去定理，不以跨卷回引代替基础证明；继而发展理想运算、几何消去与零维计算。高效实现与参数化算法转附录B，局部／形式标准基转附录F；这些进阶附录不构成后续结构理论的未说明前提。
+
+
 
 \chapter{Gröbner 基与消去}
 \label{b3:ch:08}
 \BookChapterNumber{b3:ch:08}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+理想的有限生成性并不直接解决成员判定。本章从单项式序和多元除法出发，完整建立 Gröbner 基、正规式、Buchberger 判据及算法、约化基唯一性，再用消去计算投影闭包、理想交商和饱和。计算过程中始终保存可核验的多项式恒等式。最后以标准单项式和乘法矩阵研究零维商代数，区分向量空间维数、点数与重数，并说明换序和单变量表示的适用条件。
+\end{chapterabstract}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% > 正文建立全局 Gröbner 基、消去及可核验计算的基本方法。高效实现与参数化算法转附录 B；局部／形式标准基转附录 F。两个附录均不构成后续结构理论的未说明的知识依赖。
-%
+\begin{learninggoals}
+\begin{itemize}
+\item 正确选择单项式序，完成多元除法，并解释一般余式与正规式的区别。
+\item 理解最高项抵消的有界表示，证明并执行 Buchberger 算法。
+\item 通过扩展变量计算消去、交、理想商和饱和，同时保留成员表示。
+\item 用标准单项式和乘法矩阵计算有限商代数，辨认参数例外及非约化结构。
+\end{itemize}
+\end{learninggoals}
+
+本章需要多项式、理想、商环及有限维线性代数；投影的几何解释还使用本卷的零点定理。单项式有限性和 Gröbner 基的基础证明都在这里展开，不要求先读其他卷的 Gröbner 基入门。第一次阅读时，宜跟着手算例子同时记录两组数据：当前多项式是什么，以及它怎样由原生成元表示。这能把“发现一个答案”与“证明答案正确”联系起来。
+
+\ProseParagraphBreak
+零维部分可配合 Sturmfels 的《Solving Systems of Polynomial Equations》\cite[Sections 2.1--2.3, pp. 13--19]{Sturmfels2002PolynomialEquations}阅读；其中以标准单项式、局部重数及乘法矩阵组织计算。本章先建立这些计算所需的代数依据，附录B再讨论高效算法与实现，附录F另行处理局部标准基。
+
 
 \input{Part02/Chapter08/Section0801}
 \input{Part02/Chapter08/Section0802}
@@ -19,4 +35,280 @@
 \input{Part02/Chapter08/Section0804}
 \input{Part02/Chapter08/Section0805}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+全局单项式序提供严格下降，Dickson 引理提供有限性。二者结合，既保证多元除法和补充生成元的过程终止，也使理想的全部首项能够由有限个首项控制。Buchberger 判据把最高项抵消归结到有限对的有界表示，约化基则为固定次序下的理想给出唯一描述。
+
+\ProseParagraphBreak
+消去把投影和理想运算化为扩展多项式环中的计算。几何投影通常只得到闭包；参数分母、特殊取值和不能提升的点仍须另行检查。两向生成元表示证明理想相等，S 多项式的约化证明 Gröbner 性，二者承担不同任务。
+
+\ProseParagraphBreak
+零维商代数把问题带入有限维线性代数。标准单项式数计算代数维数，局部因子的长度记录重数，乘法矩阵保留坐标之间的全部关系。后续维数与 Hilbert 函数将把这种有限计数推广为多项式增长；本章的精确首项方法也将用于泛自由性的证明。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:08-three-orders}
+对变量顺序 \(x\succ y\succ z\)，分别按字典序、分次字典序和分次逆字典序将 \(x^4,x^2z,xy^2,yz^3\) 从大到小排列。
+\end{exercise}
+\begin{solution}
+字典序先看 \(x\) 的指数，得到 \(x^4\succ x^2z\succ xy^2\succ yz^3\)。分次字典序先分成四次与三次两组，再看字典序，得到 \(x^4\succ yz^3\succ x^2z\succ xy^2\)。分次逆字典序中，三次两项的最后一个不同坐标是 \(z\) 的指数，较小者较大，故得到 \(x^4\succ yz^3\succ xy^2\succ x^2z\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-weighted-order}
+给定正整数权 \(w_1,\ldots,w_n\)，先比较 \(\sum_iw_i\alpha_i\)，相同再按字典序比较。证明这给出全局单项式序。若允许负权，这个证明在哪一步失效？
+\end{exercise}
+\begin{solution}
+权重值相加，差向量不变，所以乘法相容。任意非空指数集先有最小权重；因各 \(w_i>0\)，不超过某个固定权重的指数只有有限个，从中按字典序取最小者便得良序。若某个 \(w_i<0\)，则 \(1\succ x_i\succ x_i^2\succ\cdots\)，良序性失效。这不是只须调整同权时的比较即可修复的问题。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-monomial-minimal}
+求 \(J=(x^3y,x^2y^2,xy^3,x^4y)\) 的极小单项式生成组，并判断 \(x^2y^3,x^3\) 是否属于 \(J\)。再说明无限变量环中的理想 \((x_1,x_2,\ldots)\) 不存在有限生成组。
+\end{exercise}
+\begin{solution}
+\(x^4y\) 被 \(x^3y\) 整除，其余三项互不整除，故极小组为 \(x^3y,x^2y^2,xy^3\)。\(x^2y^3\) 被后二者整除，属于 \(J\)；\(x^3\) 不含 \(y\)，不属于 \(J\)。无限变量环中，若上述理想由有限个多项式生成，这些多项式只涉及有限个变量。它们都无常数项，把涉及的变量全置零后，生成理想映为零，但某个未涉及的 \(x_j\) 仍非零，矛盾。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-division-choice}
+在 \(k[x,y]\) 的字典序 \(x\succ y\) 下，用 \(g_1=xy-1,g_2=y^2-y\) 的两种排列分别除 \(f=xy^2\)。找出应补入的关系，并给出原理想的约化 Gröbner 基。
+\end{exercise}
+\begin{solution}
+先用 \(g_1\) 得 \(f=yg_1+y\)，余式为 \(y\)。先用 \(g_2\)，得到 \(f=xg_2+xy=xg_2+g_1+1\)，余式为一。差 \(y-1=(1-y)g_1+xg_2\) 在原理想中。又
+\[
+x-1=g_1-x(y-1),\qquad
+g_1=y(x-1)+(y-1),\qquad g_2=y(y-1).
+\]
+所以原理想是 \((x-1,y-1)\)。其首单项式 \(x,y\) 互素，两多项式首一且尾项均为常数，乘积判据说明它们构成约化 Gröbner 基。此时 \(f\) 的正规式是一。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-nonreduced-buchberger}
+在字典序 \(x\succ y\) 下计算 \(I=(x^2-y,xy)\) 的约化 Gröbner 基和标准单项式，并在商环中计算 \(x^3,y^2\)。
+\end{exercise}
+\begin{solution}
+初始 S 多项式为 \(y(x^2-y)-x(xy)=-y^2\)，故加入 \(y^2\)。三对 S 多项式分别为 \(-y^2\)、\(-y^3\)、零，均约化为零。因此
+\[
+G=\{x^2-y,xy,y^2\},\qquad \mathcal B=\{1,x,y\}.
+\]
+各尾项不可再约化，所以该基约化。商中 \(x^3=x(x^2-y)+xy=0\)，且 \(y^2=0\)，但 \(x^2=y\ne0\)，后一点由标准单项式独立性保证。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-order-change-nilpotent}
+对\cref{b3:ex:08-nonreduced-buchberger}的理想，改用字典序 \(y\succ x\)，求约化基，并写出两组标准单项式基之间的变换。
+\end{exercise}
+\begin{solution}
+令 \(h=y-x^2\)。有 \(h=-(x^2-y)\)、\(x^3=x(x^2-y)+xy\)，反向 \(xy=xh+x^3\)，故 \(I=(h,x^3)\)。首单项式 \(y,x^3\) 互素，得到约化基 \(\{y-x^2,x^3\}\)。新标准基是 \((1,x,x^2)\)，旧基为 \((1,x,y)\)，在商中第三项相同，所以按此顺序的换基矩阵是单位矩阵；它们所用的多项式代表却不同。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-product-criterion-use}
+在字典序 \(x\succ y\) 下，证明 \(\{x^2+y,y^2+1\}\) 是 Gröbner 基，并求 \(x^4+y^2\) 的正规式。结果随 \(\operatorname{char}k=2\) 有何变化？
+\end{exercise}
+\begin{solution}
+首单项式 \(x^2,y^2\) 互素，乘积判据适用。商中 \(x^2=-y\)、\(y^2=-1\)，故 \(x^4+y^2=2y^2=-2\)，常数已为标准余式。特征二时正规式为零，原多项式属于理想；其他特征下不属于。两种情况下所给基仍是 Gröbner 基。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-ideal-equality-insufficient}
+说明 \(\{x^2+y,xy+1\}\) 在字典序 \(x\succ y\) 下不是 Gröbner 基，尽管它当然生成自己的理想。给出一个属于该理想却对这组除法留下非零余式的多项式。
+\end{exercise}
+\begin{solution}
+取 S 多项式 \(y(x^2+y)-x(xy+1)=y^2-x\)。其首单项式为 \(x\)，不能被 \(x^2\) 或 \(xy\) 整除，其他项 \(y^2\) 也不能，故余式就是非零的 \(y^2-x\)。这违反 Gröbner 基的成员判据。理想相等只检查生成关系，不能取代首项控制。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-triangular-normal}
+设 \(p(y)\) 首一且次数 \(d\ge1\)，\(h(y)\in k[y]\)。在字典序 \(x\succ y\) 下，证明 \(G=\Bigl\{x-h(y),p(y)\Bigr\}\) 是 Gröbner 基，并写出它约化的充要条件及任意 \(f\) 的正规式求法。
+\end{exercise}
+\begin{solution}
+首单项式为 \(x,y^d\)，互素，故为 Gröbner 基。第一元素的尾项不可被 \(y^d\) 整除恰当且仅当 \(\deg h<d\)，零多项式也允许；第二元素只有较低的 \(y\) 次幂，所以这就是约化的充要条件。差 \(f(x,y)-f\bigl(h(y),y\bigr)\) 被 \(x-h(y)\) 整除，这由每个 \(x^j-h(y)^j\) 的差幂公式得到。先代入 \(x=h(y)\)，再除以 \(p\)，余式只含 \(1,y,\ldots,y^{d-1}\)，因此为唯一正规式。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-cusp-elimination}
+对参数 \(x=t^2,y=t^3\)，求 \(k[t,x,y]\) 中 \((x-t^2,y-t^3)\) 与 \(k[x,y]\) 的交，并说明全部几何点能否提升成参数点。
+\end{exercise}
+\begin{solution}
+代入同态的核就是所求交。显然 \(y^2-x^3\) 在核中；对它按 \(y\) 作首一除法，任意余式形如 \(a(x)+yb(x)\)。代入后成为 \(a(t^2)+t^3b(t^2)\)，前者只有偶次幂，后者只有奇次幂，且各组内部指数互异，故只有 \(a=b=0\) 才能为零。因此交为 \((y^2-x^3)\)。对任一扩域中的点 \((a,b)\)，若 \(a\ne0\)，取 \(t=b/a\)，由 \(b^2=a^3\) 得 \(t^2=a,t^3=b\)；若 \(a=0\)，则 \(b=0\)，取 \(t=0\)。这里的提升来自具体公式，并非一般闭包定理。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-projection-missing}
+设 \(k\) 代数闭，\(X=Z_k(u-x,v-xy)\subseteq k^4\)。求向 \((u,v)\) 平面的投影像、消去理想及其零点集，并描述不能提升成 \(X\) 中点的那些平面点。
+\end{exercise}
+\begin{solution}
+若 \(u\ne0\)，取 \(x=u,y=v/u\) 即可提升；若 \(u=0\)，则 \(x=0\)，只能有 \(v=0\)。因此像为 \(\{u\ne0\}\cup\Bigl\{(0,0)\Bigr\}\)。商环同构于 \(k[x,y]\)，其中 \(u\mapsto x,v\mapsto xy\)。不同单项式 \(u^iv^j\) 映成不同的 \(x^{i+j}y^j\)，故限制同态 \(k[u,v]\to k[x,y]\) 单射，消去理想为零。其零点集及投影闭包都是整个平面；遗漏的点恰为 \(u=0,v\ne0\)，并非某个完整不可约分支。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-intersection-example}
+在 \(k[x,y]\) 中求 \((x^2,y)\cap(x,y^2)\)，并给出每个输出生成元属于两理想的表示。
+\end{exercise}
+\begin{solution}
+单项式属于交，当且仅当同时被第一组和第二组中的某项整除，因而被某一对生成元的最小公倍式整除。四个最小公倍式为 \(x^2,x^2y^2,xy,y^2\)，删去冗余得交为 \((x^2,xy,y^2)\)。分别有 \(x^2=1\cdot x^2=x\cdot x\)、\(xy=x\cdot y=y\cdot x\)、\(y^2=y\cdot y=1\cdot y^2\)，即为两侧的成员表示。单项式成员判据同时证明这些生成元已经穷尽交理想。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-colon-example}
+设 \(I=(x^3,x^2y,y^3)\subset k[x,y]\)。计算 \((I:x^2)\)、\((I:y)\) 及 \(\Bigl(I:(x,y)\Bigr)\)。
+\end{exercise}
+\begin{solution}
+单项式理想除以单项式 \(m\) 的理想商由 \(u/\gcd(u,m)\) 生成，其中 \(u\) 遍历原生成元；逐个指数比较即可验证。于是
+\[
+(I:x^2)=(x,y),\quad (I:y)=(x^3,x^2,y^2)=(x^2,y^2).
+\]
+同理 \((I:x)=(x^2,xy,y^3)\)。与 \((x^2,y^2)\) 取交，使用两组最小公倍式，删去冗余后得到
+\[
+\Bigl(I:(x,y)\Bigr)=(x^2,xy^2,y^3).
+\]
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-saturation-components}
+设 \(I=(xy)\subset k[x,y]\)。求 \((I:x^\infty)\)、\((I:y^\infty)\)、\(\Bigl(I:(x,y)^\infty\Bigr)\) 和 \(\Bigl(I:(xy)^\infty\Bigr)\)，并解释后两者为什么不同。
+\end{exercise}
+\begin{solution}
+由于 \(x,y\) 互素，某个 \(x^Nh\) 被 \(xy\) 整除恰等价于 \(y\mid h\)，所以第一项为 \((y)\)；第二项同理为 \((x)\)。多生成元饱和的交公式给出第三项为 \((x)\cap(y)=(xy)\)。因 \(xy\in I\)，第四项含一，等于全环。第三项要求一个足够高幂理想中的全部乘子有效，第四项只允许乘积 \(xy\) 的幂，量词和乘法集合不同。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-radical-certificate}
+设 \(I=(x^2,y^3)\)。给出一个适用于任意特征的恒等式，证明 \(x+y\in\sqrt I\)，并据此写出 \(1\in I\,k[x,y,u]+\Bigl(1-u(x+y)\Bigr)\) 的证书。
+\end{exercise}
+\begin{solution}
+展开得
+\[
+(x+y)^4=x^2(x^2+4xy+6y^2)+y^3(4x+y).
+\]
+这个整数系数恒等式在任意特征下都成立。记 \(f=x+y\)，则
+\[
+1=u^4f^4+(1-uf)(1+uf+u^2f^2+u^3f^3).
+\]
+将第一式代入第二式的 \(f^4\)，便得到一关于 \(x^2,y^3,1-uf\) 的显式表示。证书不依赖求出任何零点。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-rational-denominator}
+在 \(k[t,x,u]\) 中令 \(H=(tx-1,ut-1)\)。计算 \(H\cap k[x]\)，并比较参数 \(x=1/t\)、\(t\ne0\) 的像与其闭包。为什么不能只消去方程 \(tx-1\) 后宣称每个点都可取参数？
+\end{exercise}
+\begin{solution}
+商环由 \(t,t^{-1}\) 生成，且 \(x=u=t^{-1}\)，同构于 \(k[t,t^{-1}]\)。限制映射 \(k[x]\to k[t,t^{-1}]\) 单射，所以交为零。在代数闭域上，参数像为 \(k^\times\)，闭包为整条直线；零不能提升。消去计算保留了所有多项式关系，却不把“参数分母非零”转成普通闭方程。即使加入辅助变量保证分母可逆，投影后仍可能漏点。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-parameter-split}
+将 \(I=(ax-y,y^2-y)\) 视为 \(k(a)[x,y]\) 中的理想，求字典序 \(x\succ y\) 的约化 Gröbner 基。讨论专门化 \(a=c\) 后的商代数及其维数，并说明为什么 \(a=0\) 要单独处理。
+\end{exercise}
+\begin{solution}
+在有理函数域中，约化基为 \(\{x-a^{-1}y,y^2-y\}\)，两首单项式 \(x,y^2\) 互素且尾项不可约。对 \(c\ne0\)，可直接代入，商代数同构于 \(k[y]/(y^2-y)\simeq k\times k\)，维数二，两个点为 \((0,0),(c^{-1},1)\)。当 \(c=0\) 时，原生成组成为 \(-y,y^2-y\)，理想为 \((y)\)，商为 \(k[x]\)，维数无限。原基含分母 \(a\)，在零处没有定义；单纯删去其分母会错误保留泛点处才成立的条件。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-field-coefficients}
+在 \(\mathbb F_2[\alpha]=\mathbb F_2[z]/(z^2+z+1)\) 上取 \(I=(x-\alpha y,y^2-1)\)，按字典序 \(x\succ y\) 求约化基、标准基及 \(x^2\) 的正规式；这个商代数约化吗？
+\end{exercise}
+\begin{solution}
+给定两生成元首一且首单项式互素，尾项均不可约，已构成约化基；标准基为 \(1,y\)。由 \(\alpha^2=\alpha+1\) 得 \(x^2=\alpha^2y^2=\alpha+1\)。但特征二下 \(y^2-1=(y-1)^2\)，商中的 \(y-1\) 非零而平方为零，故商不约化。系数域本身的不可约定义多项式并不保证另一个商代数约化。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-modular-exception}
+在 \(\mathbb Q[x]\) 中和 \(\mathbb F_2[x]\) 中分别计算由整系数多项式 \(2x,x+1\) 生成的理想。说明一次模素数计算为何不能自动证明有理数域中的理想相等。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb Q[x]\) 中，
+\[
+1=(x+1)-\tfrac12(2x),
+\]
+故理想为全环。在 \(\mathbb F_2[x]\) 中第一生成元变成零，理想为 \((x+1)\)。原证书的分母二在该特征下不可逆，原首系数也消失。因此模素数计算可以提供线索，但要回到有理数域验证精确表示，并排除坏素数。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-certificate-directions}
+在 \(k[x]\) 中分别用 \(F=\{x^2\},G=\{x\}\) 和 \(F=\{x\},G=\{x^2\}\)，说明只核验原生成元对候选组的零余式，或者只核验候选组属于原理想，都不能证明两组理想相等。
+\end{exercise}
+\begin{solution}
+第一组有 \(x^2=x\cdot x\)，故 \(F\) 对 \(G\) 的余式为零，但 \(x\notin(x^2)\)，仅得到 \((F)\subsetneq(G)\)。第二组中 \(x^2\in(x)\)，候选元素确属原理想，但 \(x\notin(x^2)\)，仅得到 \((G)\subsetneq(F)\)。两个候选单元素组本身都是 Gröbner 基；仍须同时验证两向理想包含。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-elimination-growth}
+设 \(n\ge2\)，\(I=(x_{i+1}-x_i^2\mid1\le i<n)\)。求 \(I\cap k[x_1,x_n]\)，并给出关系 \(x_n-x_1^{2^{n-1}}\) 属于 \(I\) 的递推证明。
+\end{exercise}
+\begin{solution}
+记 \(h_j=x_j-x_1^{2^{j-1}}\)。有 \(h_1=0\)，且
+\[
+h_{j+1}=(x_{j+1}-x_j^2)
++\Bigl(x_j+x_1^{2^{j-1}}\Bigr)h_j.
+\]
+递推得到 \(h_n\in I\)。另一方面，商环通过逐次代入同构于 \(k[x_1]\)。任一 \(f(x_1,x_n)\) 对首一 \(h_n\) 除法，余式只含 \(x_1\)；若 \(f\in I\)，该余式在商环中为零，只能是零多项式。所以交理想恰为 \((h_n)\)。输入二次关系的数目随 \(n\) 线性增长，输出关系的次数却为 \(2^{n-1}\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-near-zero-not-zero}
+令 \(I_\varepsilon=(x^2-\varepsilon,xy,y^2)\subseteq\mathbb R[x,y]\)。比较 \(\varepsilon=0\)、\(\varepsilon>0\)、\(\varepsilon<0\) 时商代数的维数、约化性及实零点数，说明小的系数扰动可以改变哪些性质。
+\end{exercise}
+\begin{solution}
+\(\varepsilon=0\) 时理想为 \((x,y)^2\)，商有基 \(1,x,y\)，维数三，非约化，实零点只有原点。若 \(\varepsilon\ne0\)，商中 \(x^2=\varepsilon\) 使 \(x\) 可逆，再由 \(xy=0\) 得 \(y=0\)；反向 \(y=\varepsilon^{-1}\bigl(x(xy)-y(x^2-\varepsilon)\bigr)\) 给出理想中的显式表示。因此商为 \(\mathbb R[x]/(x^2-\varepsilon)\)，维数二且约化。正参数时有两个实根，商为 \(\mathbb R\times\mathbb R\)；负参数时无实根，商为一个同构于 \(\mathbb C\) 的域。任意小的参数区间都包含这三种不同情形，近似系数不能单独决定上述离散数据。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-multiplication-nilpotent}
+对 \(A=k[x,y]/(x^2-y,xy)\)，用基 \((1,x,y)\) 写出 \(T_x,T_y\)，求 \(T_x\) 的最小多项式，并计算 \((1+x)^{-1}\)。
+\end{exercise}
+\begin{solution}
+由\cref{b3:ex:08-nonreduced-buchberger}，
+\[
+T_x=\begin{pmatrix}0&0&0\\1&0&0\\0&1&0\end{pmatrix},
+\qquad T_y=T_x^2=\begin{pmatrix}0&0&0\\0&0&0\\1&0&0\end{pmatrix}.
+\]
+\(T_x^3=0\)、\(T_x^2\ne0\)，所以最小多项式为 \(T^3\)。商中 \((1+x)(1-x+y)=1\)，因为 \(x^2=y\)、\(xy=0\)。故逆为 \(1-x+y\)，任意特征下均成立。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-double-points-length}
+设 \(k\) 为域。对 \(A=k[x,y]/\Bigl(x-y,y^2(y-1)^2\Bigr)\)，求其标准单项式数、局部因子及各点重数。为什么底域已经含有全部根仍不能把维数当作不同点数？
+\end{exercise}
+\begin{solution}
+字典序 \(x\succ y\) 的三角基给出标准单项式 \(1,y,y^2,y^3\)，所以维数四。因 \(y^2\) 与 \((y-1)^2\) 互素，中国剩余定理给出
+\[
+A\simeq k[y]/(y^2)\times k[y]/\Bigl((y-1)^2\Bigr).
+\]
+两个局部因子均长二，分别对应 \((0,0)\)、\((1,1)\)，故每个点重数二。非零幂零元保留在局部因子中，底域是否含根不能将它们消去。零与一在任意特征下都不同，因而这里不需要排除特征二。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-joint-eigenvalues}
+设 \(k\) 代数闭，\(A=k[x_1,\ldots,x_n]/I\) 非零且有限维，\(T_i\) 为坐标乘法矩阵。证明零点 \(a\in Z_k(I)\) 恰对应一组共同特征值：存在非零 \(v\)，使 \(T_iv=a_iv\) 对所有 \(i\) 成立。这是 Sturmfels 的《Solving Systems of Polynomial Equations》中\cite[Theorem 2.6, pp. 17--18]{Sturmfels2002PolynomialEquations}的结论；本题要求包括非约化情形。
+\end{exercise}
+\begin{solution}
+若有这样的 \(v\)，则任意 \(f\in I\) 满足 \(0=f(T_1,\ldots,T_n)v=f(a)v\)，所以 \(f(a)=0\)。反过来，对零点 \(a\) 取相应的局部 Artin 因子 \(A_{\mathfrak m_a}\)。其极大理想 \(\mathfrak n\) 幂零；若 \(\mathfrak n=0\)，取 \(v=1\)，否则取最后一个非零幂 \(\mathfrak n^r\) 中的非零 \(v\)，使 \(\mathfrak n v=0\)。由于 \(x_i-a_i\in\mathfrak n\)，有 \(x_iv=a_iv\)。把这个 \(v\) 放入该局部因子、其余因子取零，就得到 \(A\) 中所需非零向量。此证明不要求 \(I\) 为根理想。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-simultaneous-diagonalization}
+在\cref{b3:ex:08-joint-eigenvalues}的条件下，证明所有 \(T_i\) 能同时对角化，当且仅当 \(A\) 约化。此结论见\cite[Corollary 2.7, p. 18]{Sturmfels2002PolynomialEquations}，这里要求写出两个方向的证明。
+\end{exercise}
+\begin{solution}
+若 \(A\) 约化，局部 Artin 分解及代数闭性给出 \(A\simeq k^D\)。取各因子的一作为基，所有乘法算子同时为对角矩阵。反过来，若 \(T_i\) 同时对角化，每个 \(T_a\) 都是它们的多项式，也为对角矩阵。若 \(a\) 幂零，则 \(T_a\) 是幂零对角矩阵，只能为零；乘法表示单射，故 \(a=0\)。因此 \(A\) 约化。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-fglm-small}
+已知 \(I=(x-y^2,y^3-y)\) 的字典序 \(x\succ y\) Gröbner 基。用商空间基 \(1,y,y^2\) 找出字典序 \(y\succ x\) 的约化基，并写出新标准单项式。
+\end{exercise}
+\begin{solution}
+商中 \(x=y^2\)，故 \(x^2=x\)、\(xy=y\)、\(y^2=x\)。因此候选基为
+\[
+G'=\{y^2-x,\ xy-y,\ x^2-x\}.
+\]
+第一关系是原生成元的负数；第二为 \(y(x-y^2)+(y^3-y)\)；第三由 \(x^2-x=(x+y^2-1)(x-y^2)+y(y^3-y)\) 给出。反向 \(x-y^2=-(y^2-x)\)，\(y^3-y=y(y^2-x)+(xy-y)\)，故理想相等。三对 S 多项式依次可写为 \(y^2-x^2=(y^2-x)-(x^2-x)\)、\(xy^2-x^3=x(y^2-x)-x(x^2-x)\)、零；在该序下均可约化为零。该组已经约化，标准单项式为 \(1,x,y\)，其旧坐标分别为 \(1,y^2,y\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-separating-coordinate}
+在 \(\mathbb Q^2\) 中取三点 \((0,0),(1,0),(0,1)\)，令 \(A\) 为它们的坐标代数。证明 \(t=x+2y\) 生成 \(A\)，并写出满足 \(x=q_x(t),y=q_y(t)\) 的二次以下多项式。
+\end{exercise}
+\begin{solution}
+\(t\) 的取值依次为 \(0,1,2\)，互不相同。取
+\[
+p(T)=T(T-1)(T-2),\quad q_x(T)=T(2-T),\quad
+q_y(T)=\tfrac12T(T-1).
+\]
+这两个坐标多项式在三点分别给出 \(x,y\) 的取值。评价同态给出 \(A\simeq\mathbb Q^3\)，而 \(T\) 的三个取值不同，使 \(\mathbb Q[T]/(p)\to A\) 为同构。分母二也说明这份具体公式不能未经重算就搬到特征二。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-rur-denominator}
+设 \(p(T)=T(T-1)(T-2)\in\mathbb Q[T]\)。判断 \(T+1\) 与 \(T\) 在 \(\mathbb Q[T]/(p)\) 中是否可逆；对前者给出逆，对后者说明使其可逆会丢去哪一个点。
+\end{exercise}
+\begin{solution}
+对 \(T+1\) 的逆在 \(0,1,2\) 处应分别取 \(1,\frac12,\frac13\)。插值得
+\[
+u(T)=1-\tfrac23T+\tfrac16T^2,\qquad
+(T+1)u(T)-1=\tfrac16p(T).
+\]
+故 \(u\) 是逆。\(T\) 在零处为零，不是单位；把它变为单位只保留根一、二对应的两个因子，丢掉根零。因此带分母的单变量表示必须同时检查分母和 \(p\) 互素，或明确分支范围。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-nonmonogenic}
+设 \(r\ge2\)，\(A=k[x_1,\ldots,x_r]/(x_1,\ldots,x_r)^2\)。证明 \(A\) 作为 \(k\) 代数的最少生成元数恰为 \(r\)。再说明有限域上的约化有限代数也未必单生成。
+\end{exercise}
+\begin{solution}
+记 \(\mathfrak m=(\bar x_1,\ldots,\bar x_r)\)，则 \(\mathfrak m^2=0\)，且 \(\dim_k\mathfrak m=r\)。若代数生成元为 \(a_j=c_j+n_j\)、\(1\le j\le s\)，其中 \(n_j\in\mathfrak m\)，由于任何两个 \(n_j\) 的乘积为零，每个生成的多项式都在 \(k+\sum_jkn_j\) 中。因此若它们生成全部 \(A\)，必须使 \(n_j\) 线性生成 \(\mathfrak m\)，从而 \(s\ge r\)。原来的 \(r\) 个变量已经生成，所以最少数为 \(r\)。约化例取 \(B=\mathbb F_2^3\)。一个元素的三个坐标只能取零、一，至少两个坐标相同；其任意多项式在这两坐标也相同，不能生成全部 \(B\)。有限维性本身不保证单变量描述。
+\end{solution}

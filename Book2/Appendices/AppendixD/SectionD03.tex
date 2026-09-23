@@ -1,30 +1,127 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### D.3 正性、态与 GNS 构造
-% 纲要位置：计划纲要.md，第 1472 行。
+% 纲要位置：工作记录/计划纲要.md，第 1685 行。
+
+% 纲要要点（供目录核对）：
+% * 正元素、正线性泛函和态（state）；归一化矩阵迹态的具体计算
+% * 从态构造内积商空间并完备化，得到 Hilbert 空间上的循环 *-表示
+% * 以 GNS 和 Gelfand–Naimark 定理说明抽象与具体表示的关系；选择一个构造或有限维版本给出证明，其余注明引用
 
 \section{正性、态与 GNS 构造}
 \label{b2:sec:D03}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 正元素、正线性泛函和态（state）；归一化矩阵迹态的具体计算
-% * 从态构造内积商空间并完备化，得到 Hilbert 空间上的循环 *-表示
-% * 以 GNS 和 Gelfand–Naimark 定理说明抽象与具体表示的关系；选择一个构造或有限维版本给出证明，其余注明引用
-%
+线性泛函可以给代数元素赋予数值，却不必尊重乘法。要求它对平方取非负值，就能够把这些数值组织成内积，再从左乘构造表示。这是本节的主要构造。为让循环向量直接由单位元给出，本节先固定非零含幺 \(C^*\)-代数 \(A\)。
 
 \subsection{正元素、正线性泛函与态}
 \label{b2:subsec:D03:01}
 
-待撰写。
+\begin{definition}\label{b2:def:positive-element-state}
+若 \(a=a^*\) 且 \(\sigma_A(a)\subseteq[0,\infty)\)，称 \(a\) 为\term[zheng-yuansu]{正元素}[positive element]，记 \(a\ge0\)，全体组成 \(A_+\)。若复线性泛函 \(\varphi:A\to\mathbb C\) 在 \(A_+\) 上取非负实数，称它\term[zheng-xianxing-fanhan]{正线性泛函}[positive linear functional]。满足 \(\varphi(1)=1\) 的正线性泛函称为\term[tai]{态}[state]。
+\symidx{\(A_+\)：\(C^*\)-代数的正元素锥}
+\end{definition}
+
+\begin{proposition}[正性的谱论基础，外部结果]\label{b2:prop:cstar-positive-input}
+\(A_+\) 是闭凸锥，且 \(A_+\cap(-A_+)=\{0\}\)。每个正元素有唯一正平方根；\(x^*x\ge0\) 对任意 \(x\) 成立。对自伴元素定义 \(a\le b\) 为 \(b-a\ge0\)，则
+\[
+0\le a^*a\le\|a\|^2 1,\qquad
+b^*pb\ge0\quad(p\ge0),\qquad
+-\|h\|1\le h\le\|h\|1\quad(h=h^*).
+\]
+\end{proposition}
+
+这部分采用 Blackadar\cite[Propositions II.3.1.2--II.3.1.3; Corollary II.3.1.5; II.3.1.8]{Blackadar2006OperatorAlgebras}的谱论结论。尤其 \(x^*x\) 在抽象 \(C^*\)-代数中总为正，并非仅由记号就能认定。矩阵情形的正元素恰为半正定 Hermitian 矩阵，函数情形则是逐点非负的连续函数。
+
+\begin{lemma}\label{b2:lem:positive-functional-cs}
+正线性泛函满足
+\[
+\varphi(a^*)=\overline{\varphi(a)},\qquad
+\Bigl|\varphi(a^*b)\Bigr|^2\le\varphi(a^*a)\varphi(b^*b).
+\]
+它自动有界，且 \(\|\varphi\|=\varphi(1)\)。
+\end{lemma}
+\begin{proof}
+对自伴 \(h\)，上一个命题使 \(\|h\|1\pm h\) 正，故 \(\varphi(h)\) 为实数。将任意 \(a\) 写成 \(h+ik\)、\(h,k\) 自伴，即得第一式。令 \([a,b]=\varphi(a^*b)\)，这是对第一变量共轭线性、第二变量线性的半正定 Hermitian 形式。
+
+若 \([b,b]>0\)，代入 \(a-\lambda b\)、\(\lambda=[b,a]/[b,b]\)，由其平方值非负得到 \(\Bigl|[a,b]\Bigr|^2\le[a,a][b,b]\)。若 \([b,b]=0\)，非负式 \([a+zb,a+zb]\ge0\) 对任意复数 \(z\) 成立，其关于 \(z\) 的线性项只能为零，故 \([a,b]=0\)。这证明两种情形。
+
+再把不等式用于 \(a,1\)，由 \(\varphi(a^*)=\overline{\varphi(a)}\) 及 \(0\le a^*a\le\|a\|^2 1\) 得
+\[
+\Bigl|\varphi(a)\Bigr|^2\le\varphi(a^*a)\varphi(1)
+\le\|a\|^2\varphi(1)^2.
+\]
+所以 \(\|\varphi\|\le\varphi(1)\)，而在单位元处取值给出反向不等式。
+\end{proof}
+
+例如 \(M_n(\mathbb C)\) 上的归一化迹 \(\tau(a)=\operatorname{tr}(a)/n\) 是态，因为 \(\operatorname{tr}(a^*a)=\sum_{i,j}|a_{ij}|^2\)。对单位向量 \(v\)，\(\omega_v(a)=\langle v,av\rangle\) 也是态；\(C(X)\) 中的点取值则既是态又保持乘法。一般态不保持乘法，如 \(M_2(\mathbb C)\) 中 \(\tau(E_{11})^2=1/4\ne1/2=\tau(E_{11}^2)\)。
 
 \subsection{GNS 构造与循环表示}
 \label{b2:subsec:D03:02}
 
-待撰写。
+\begin{theorem}[Gelfand--Naimark--Segal 构造]\label{b2:thm:gns-unital}
+给定 \(A\) 上的态 \(\varphi\)，存在 Hilbert 空间 \(H_\varphi\)、含幺 \(*\)-表示 \(\pi_\varphi:A\to B(H_\varphi)\) 和单位向量 \(\xi_\varphi\)，使
+\[
+\varphi(a)=\Bigl\langle\xi_\varphi,\pi_\varphi(a)\xi_\varphi\Bigr\rangle,
+\qquad\overline{\pi_\varphi(A)\xi_\varphi}=H_\varphi.
+\]
+这个三元组在保持指定向量并交织表示的酉同构下唯一。
+\symidx{\(H_\varphi\)：态的 GNS Hilbert 空间}
+\symidx{\(\pi_\varphi\)：态的 GNS 表示}
+\symidx{\(\xi_\varphi\)：GNS 表示的指定循环向量}
+\end{theorem}
+\begin{proof}
+令
+\[
+N_\varphi=\Bigl\{\,a\in A:\varphi(a^*a)=0\,\Bigr\}.
+\]
+\symidx{\(N_\varphi\)：GNS 构造中半内积的零空间}
+由\cref{b2:lem:positive-functional-cs}，其中每个元素与任意元素的半内积都为零，故 \(N_\varphi\) 为线性子空间，且
+\[
+\Bigl\langle[a],[b]\Bigr\rangle=\varphi(a^*b)
+\]
+在商 \(A/N_\varphi\) 上良定义并正定。\cref{b2:prop:cstar-positive-input}还给出
+\begin{equation}\label{b2:eq:gns-bounded-left-action}
+\varphi\Bigl((ca)^*(ca)\Bigr)
+=\varphi(a^*c^*ca)\le\|c\|^2\varphi(a^*a).
+\end{equation}
+确实，对正元素 \(\|c\|^2 1-c^*c\) 作 \(a^*(\cdot)a\) 并应用 \(\varphi\)，就得到此不等式。它同时证明 \(N_\varphi\) 为左理想，以及左乘 \([a]\mapsto[ca]\) 为范数至多 \(\|c\|\) 的有界算子。
 
-\subsection{Gelfand–Naimark 表示定理}
+把内积空间完备化为 \(H_\varphi\)，左乘唯一连续延拓为 \(\pi_\varphi(c)\)。乘法及单位元关系先在稠密商空间上成立，连续性使其在完备化后仍成立。又有
+\[
+\Bigl\langle[ca],[b]\Bigr\rangle=\varphi(a^*c^*b)
+=\Bigl\langle[a],[c^*b]\Bigr\rangle,
+\]
+所以 \(\pi_\varphi(c)^*=\pi_\varphi(c^*)\)。取 \(\xi_\varphi=[1]\)，它的范数为一，\(\pi_\varphi(a)\xi_\varphi=[a]\)，因而满足循环性及泛函公式。
+
+若 \((\rho,H,\eta)\) 是另一三元组，在稠密子空间上定义 \([a]\mapsto\rho(a)\eta\)。其内积为
+\(\Bigl\langle\rho(a)\eta,\rho(b)\eta\Bigr\rangle=\varphi(a^*b)\)，故良定义且等距。循环性使其像稠密，所以延拓为满酉算子；它交织左作用并送指定向量到 \(\eta\)。这两个要求又在稠密向量 \([a]\) 上决定它，故唯一。
+\end{proof}
+
+这称为\term[GNS-gouzao]{GNS 构造}[Gelfand--Naimark--Segal construction]。上面的完备化是必需的一步，不能把一般的代数商空间直接当作 Hilbert 空间。非含幺版本及其循环向量的构造可参阅\cite[\nopp II.6.4.1--II.6.4.3]{Blackadar2006OperatorAlgebras}，这里不以不存在的 \([1]\) 代替该论证。
+
+\ProseParagraphBreak
+对 \(M_n(\mathbb C)\) 的迹态，\(N_\tau=0\)，所以 \(H_\tau=M_n(\mathbb C)\)，内积为 \(\operatorname{tr}(a^*b)/n\)，表示为左乘，循环向量为 \(I_n\)。维数为 \(n^2\)，并非自然列模的 \(n\)。对向量态 \(\omega_v\)，则 \(N_{\omega_v}=\{\,a:av=0\,\}\)，映射 \([a]\mapsto av\) 等距满射到 \(\mathbb C^n\)，恢复自然表示。不同态因此可以给出不同的循环模型。
+
+\subsection{Gelfand--Naimark 表示定理}
 \label{b2:subsec:D03:03}
 
-待撰写。
+一次 GNS 构造未必忠实。例如 \(C(X)\) 的点取值只看到一个点，所有在该点为零的函数都被零化。为了看见整个代数，需要足够多的态。
+
+\begin{proposition}[态的存在性，外部结果]\label{b2:prop:norming-state-external}
+对非零含幺 \(C^*\)-代数中的每个正元素 \(p\)，存在态 \(\varphi\) 使 \(\varphi(p)=\|p\|\)。
+\end{proposition}
+
+此处采用 Blackadar\cite[\nopp II.6.3.1; Proposition II.6.3.3]{Blackadar2006OperatorAlgebras}。证明从 \(C^*(1,p)\) 的谱上取值出发，用\term[Hahn-Banach-dingli]{Hahn--Banach 定理}[Hahn--Banach theorem]作保范延拓，再由范数为一且在单位元处取值为一推出延拓仍为正；这是本附录另行引用的分析学步骤。得到该存在性以后，其余表示构造如下。
+
+\begin{theorem}[Gelfand--Naimark，含幺情形]\label{b2:thm:gelfand-naimark-unital}
+每个非零含幺 \(C^*\)-代数都等距 \(*\)-同构于某个 \(B(H)\) 的含幺范数闭子代数。
+\end{theorem}
+\begin{proof}
+对全部态取 \(H=\bigoplus_\varphi H_\varphi\)，令 \(\pi(a)=\bigoplus_\varphi\pi_\varphi(a)\)。式\eqref{b2:eq:gns-bounded-left-action}给出统一界 \(\Bigl\lVert\pi_\varphi(a)\Bigr\rVert\le\|a\|\)，所以此直和确实定义有界算子及含幺 \(*\)-同态。对给定 \(a\)，应用\cref{b2:prop:norming-state-external}于 \(p=a^*a\)，选择相应态，则
+\[
+\Bigl\lVert\pi(a)\Bigr\rVert^2\ge\Bigl\lVert\pi_\varphi(a)\xi_\varphi\Bigr\rVert^2
+=\varphi(a^*a)=\|a^*a\|=\|a\|^2.
+\]
+结合相反方向的统一界得到等距性，特别是单射。等距像因 \(A\) 完备而闭，结论成立。
+\end{proof}
+
+这就是含幺情形的\term[Gelfand-Naimark-biaoshi-dingli]{Gelfand--Naimark 表示定理}[Gelfand--Naimark representation theorem]。本证明把 GNS 的代数商构造与态的分析学存在性分开了。一般非含幺表示定理同样成立，见\cite[Corollary II.6.4.10]{Blackadar2006OperatorAlgebras}；表示未必把人为补入的单位算子留在原代数中。

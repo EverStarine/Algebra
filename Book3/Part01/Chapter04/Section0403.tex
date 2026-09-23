@@ -1,30 +1,109 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 4.3 准素分解定理
-% 纲要位置：计划纲要.md，第 1601 行。
+% 纲要位置：工作记录/计划纲要.md，第 1919 行。
+% 纲要细目（写作范围）：
+% * Noether 环中的存在性
+% * 极小分解、孤立分支和嵌入分支
+% * 哪些部分唯一、哪些部分不唯一
 
 \section{准素分解定理}
 \label{b3:sec:0403}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Noether 环中的存在性
-% * 极小分解、孤立分支和嵌入分支
-% * 哪些部分唯一、哪些部分不唯一
-%
+整数的素因数分解给出 \((12)=(4)\cap(3)\)。一般 Noether 环的理想也能分解为有限个准素理想的交，但“各因子都唯一”不再成立。本节分别证明分解存在、所属素理想唯一和孤立分支唯一；这三项结论的强弱不同。
 
 \subsection{Noether 环中的准素分解存在性}
 \label{b3:subsec:0403:01}
 
-待撰写。
+称真理想 \(I\) 是\term[buke-yue-lixiang]{不可约理想}[irreducible ideal]，如果每当 \(I=J\cap K\) 时，至少有 \(I=J\) 或 \(I=K\)。这里讨论的是理想作为交的不可约性，不是元素的不可约性，也不是模的单性。
+
+\begin{lemma}\label{b3:lem:irreducible-ideal-primary}
+在 Noether 环中，每个真理想是有限个不可约理想的交，而每个不可约理想都是准素理想。
+\end{lemma}
+\begin{proof}
+若有真理想不能写成有限个不可约理想的交，在这些理想中取极大者 \(I\)。它不可能不可约，故 \(I=J\cap K\)，其中 \(J,K\) 都严格包含 \(I\)。极大性保证两者都已有这样的有限分解；将两个分解合并就得到 \(I\) 的分解，矛盾。
+
+设 \(Q\) 不可约且 \(ab\in Q\)、\(b\notin Q\)。升链
+\[
+(Q:a)\subseteq(Q:a^2)\subseteq\cdots
+\]
+稳定；选 \(n\ge1\) 使 \((Q:a^n)=(Q:a^{n+1})\)。我们证明
+\[
+Q=\Bigl(Q+(a^n)\Bigr)\cap\Bigl(Q+(b)\Bigr).
+\]
+只需检查反向包含。若 \(w=q+ra^n=q'+sb\)，其中 \(q,q'\in Q\)，则乘以 \(a\) 后第二式给出 \(aw\in Q\)，于是第一式给出 \(ra^{n+1}\in Q\)。由理想商稳定性，\(ra^n\in Q\)，故 \(w\in Q\)。因为 \(b\notin Q\)，不可约性迫使 \(Q+(a^n)=Q\)，即 \(a^n\in Q\)。这正是准素条件。
+\end{proof}
+
+\begin{theorem}[准素分解存在性]\label{b3:thm:primary-decomposition}
+交换 Noether 环 \(R\) 的每个真理想 \(I\) 都能写成
+\begin{equation}\label{b3:eq:primary-decomposition}
+I=Q_1\cap\cdots\cap Q_r,
+\end{equation}
+其中各 \(Q_i\) 为准素理想。可以进一步要求没有任何 \(Q_i\) 能删去，且各根 \(\mathfrak p_i=\sqrt{Q_i}\) 两两不同。
+\end{theorem}
+\begin{proof}
+\cref{b3:lem:irreducible-ideal-primary}给出一个有限准素分解。把根相同的因子合并为一个交，由\cref{b3:prop:primary-radical-colon}它仍为同根准素理想。再删去冗余因子，即得附加条件。
+\end{proof}
+
+后面的几个计算使用单项式理想的一个直接判据：由单项式 \(m_1,\ldots,m_s\) 生成的理想，作为 \(k\) 向量空间，恰由那些被某个 \(m_i\) 整除的单项式生成。事实上，把各多项式系数展开，就得到这一方向的包含；反向，每个这样的单项式本来就是某个 \(m_i\) 的倍数。由于不同单项式线性无关，一个多项式属于此理想，当且仅当它的每个非零单项都属于此理想。因此两个单项式理想取交时可以逐项检查，不需要预先运行 Gröbner 基算法。
+
+\ProseParagraphBreak
+准素理想不一定不可约。例如在 \(k[x,y]\) 内，
+\[
+(x,y)^2=(x^2,y)\cap(x,y^2).
+\]
+等式可逐个比较单项式：同时属于右端的单项式恰被 \(x^2,xy,y^2\) 之一整除。两边的理想都是 \((x,y)\) 准素理想，右边两个因子却都严格大于左边。因此不可约分解只是证明存在性的一种工具，并不是最后要保存的标准形式。
 
 \subsection{极小分解、孤立分支与嵌入分支}
 \label{b3:subsec:0403:02}
 
-待撰写。
+满足\cref{b3:thm:primary-decomposition}中两个附加条件的分解，称为\term[jixiao-zhunsu-fenjie]{极小准素分解}[minimal primary decomposition]。“极小”在这里表示根互异且无冗余，不声称每个准素因子在包含关系下极小。
+
+\begin{theorem}\label{b3:thm:primary-associated-primes}
+若 \(I=\bigcap_{i=1}^rQ_i\) 是 Noether 环中的极小准素分解，\(\sqrt{Q_i}=\mathfrak p_i\)，则
+\[
+\operatorname{Ass}_R(R/I)=\{\mathfrak p_1,\ldots,\mathfrak p_r\}.
+\]
+特别地，分解中出现哪些素理想与分解的选择无关。
+\end{theorem}
+\begin{proof}
+对角映射给出单射
+\[
+R/I\longrightarrow\bigoplus_{i=1}^rR/Q_i,\qquad
+\bar a\longmapsto(a+Q_1,\ldots,a+Q_r).
+\]
+由\cref{b3:prop:associated-exact-sequence}和\cref{b3:prop:primary-associated-singleton}，左端的关联素理想都在 \(\{\mathfrak p_i\}\) 中。
+
+固定 \(i\)，令 \(J_i=\bigcap_{j\ne i}Q_j\)，在 \(r=1\) 时约定 \(J_i=R\)。无冗余保证 \(J_i/I\ne0\)，而映射 \(J_i/I\rightarrow R/Q_i\) 单射，因其核为 \((J_i\cap Q_i)/I=0\)。由\cref{b3:thm:associated-existence}，这个非零子模有至少一个关联素理想；由于它嵌入 \(R/Q_i\)，该素理想只能是 \(\mathfrak p_i\)。它同时是 \(R/I\) 的子模，故 \(\mathfrak p_i\in\operatorname{Ass}_R(R/I)\)。逐个取 \(i\) 得反向包含。
+\end{proof}
+
+在上述集合中，按包含关系极小的 \(\mathfrak p_i\) 称为\term[guli-guanlian-sulixiang]{孤立关联素理想}[isolated associated prime]，其余称为\term[qianru-guanlian-sulixiang]{嵌入关联素理想}[embedded associated prime]；相应 \(Q_i\) 称为孤立准素分支和嵌入准素分支。由\cref{b3:prop:minimal-primes-associated}，孤立关联素理想恰是包含 \(I\) 的极小素理想。它们对应 \(V(I)\) 的不可约分支，而嵌入素理想对应的闭集包含在这些分支之内。
+
+\ProseParagraphBreak
+例如 \(I=(x^2,xy)\subset k[x,y]\) 满足
+\begin{equation}\label{b3:eq:embedded-line-decomposition}
+I=(x)\cap(x^2,y).
+\end{equation}
+第二因子因根为极大理想 \((x,y)\) 而准素。要验证交，设 \(xf=x^2a+yb\)，模掉 \(x\) 后有 \(y\bar b=0\) 于 \(k[y]\)，故 \(b=xc\)，于是 \(xf=x^2a+xyc\in I\)。两因子均不可删，根分别为 \((x)\) 与 \((x,y)\)，所以前者孤立、后者嵌入。
 
 \subsection{准素分解的唯一性与非唯一性}
 \label{b3:subsec:0403:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:primary-isolated-uniqueness}
+在极小准素分解 \(I=\bigcap_iQ_i\) 中，若 \(\mathfrak p_i=\sqrt{Q_i}\) 为孤立关联素理想，则
+\[
+Q_i=IR_{\mathfrak p_i}\cap R.
+\]
+因此每个孤立准素分支由 \(I\) 与其根唯一决定。
+\end{theorem}
+\begin{proof}
+有限交与局部化交换。若 \(j\ne i\)，由于 \(\mathfrak p_i\) 在所有根中极小且根互异，\(\mathfrak p_j\not\subseteq\mathfrak p_i\)。取 \(a\in\mathfrak p_j\setminus\mathfrak p_i\)，则某个 \(a^n\in Q_j\)，而 \(a\) 在 \(R_{\mathfrak p_i}\) 中成为单位，所以 \(Q_jR_{\mathfrak p_i}=R_{\mathfrak p_i}\)。于是 \(IR_{\mathfrak p_i}=Q_iR_{\mathfrak p_i}\)。\cref{b3:prop:primary-localization}又说明 \(Q_i\) 是其扩张的收缩，得到公式。
+\end{proof}
+
+嵌入分支一般不唯一。在\cref{b3:eq:embedded-line-decomposition}的同一个理想上，对每个 \(n\ge1\) 都有
+\begin{equation}\label{b3:eq:nonunique-embedded-components}
+(x^2,xy)=(x)\cap(x^2,xy,y^n).
+\end{equation}
+右边第二因子的根为 \((x,y)\)，故它准素。由单项式整除判据，第二因子中同时被 \(x\) 整除的单项式恰属于 \((x^2,xy)\)，所以交确实不变。\(x\) 不属于第二因子，\(y^n\) 不属于第一因子，因而各分解都极小；而 \(y^n\) 属于第 \(n\) 个第二因子，却不属于第 \(n+1\) 个，故这些分支互不相同。
+
+\ProseParagraphBreak
+因此，准素分解唯一性应分为两句话记忆：全部所属素理想唯一，孤立准素分支唯一；嵌入准素分支允许改变。不能把“根唯一”误写成“分支唯一”。模的对应结论及另一种存在性证明见下一节；文献中的统一表述可对照 \cite[\S6, Theorem 6.8]{Matsumura1989CommutativeRingTheory}。

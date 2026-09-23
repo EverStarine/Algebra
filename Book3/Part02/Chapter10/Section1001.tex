@@ -1,36 +1,147 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 10.1 赋值与赋值环
-% 纲要位置：计划纲要.md，第 1789 行。
-
-\section{赋值与赋值环}
-\label{b3:sec:1001}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2107 行。
+% 纲要细目（写作范围）：
 % * 赋值群及赋值环的整除性质
 % * 一般赋值环与离散赋值环的区别
 % * 分式域和局部性
 % * 使用第9章已经建立的维数与高度语言解释一维正规局部整环、DVR 及 Dedekind 条件；区分一般赋值环的秩与 Krull 维数，不重复建立高度定理
-%
+
+
+\section{赋值与赋值环}
+\label{b3:sec:1001}
+
+整数中可以比较两个数含有多少个素因子 \(p\)，有理函数中也可以比较它们在一点的零点或极点阶数。赋值把这种比较写成有序群中的加法。先允许一般的有序群，才能看清哪些性质来自整除的全序性，哪些性质另外需要离散性或 Noether 性。
+
 
 \subsection{赋值群与赋值环的整除性质}
 \label{b3:subsec:1001:01}
 
-待撰写。
+\begin{definition}\label{b3:def:valuation}
+设 \(\Gamma\) 为带有全序的加法交换群。若对所有 \(\alpha,\beta,\gamma\in\Gamma\) 有
+\(\alpha\le\beta\Rightarrow\alpha+\gamma\le\beta+\gamma\)，则称 \(\Gamma\) 为\term[quanxu-jiaohuanqun]{全序交换群}[totally ordered abelian group]。
+设 \(K\) 为域，\(\Gamma\) 为全序交换群。若满射
+\(v:K^*\rightarrow\Gamma\) 在扩充规定 \(v(0)=+\infty\) 后满足
+\[
+v(ab)=v(a)+v(b),\qquad
+v(a+b)\ge\min\Bigl\{v(a),v(b)\Bigr\}.
+\]
+则称 \(v\) 为 \(K\) 上取值于 \(\Gamma\) 的\term[fuzhi]{赋值}[valuation]。第一式先对 \(a,b\in K^*\) 理解，第二式对所有 \(a,b\in K\) 成立；\(+\infty\) 大于每个群元素，且
+\(\gamma+(+\infty)=+\infty\)。称 \(\Gamma\) 为赋值群。
+\end{definition}
+
+由第一条公理有 \(v(1)=0\)、\(v(a^{-1})=-v(a)\)。全序群无挠，故由
+\(2v(-1)=0\) 得 \(v(-1)=0\)。如果 \(v(a)<v(b)\)，则
+\(v(a+b)=v(a)\)：否则把 \(a=(a+b)-b\) 代入三角不等式便矛盾。
+这说明最低阶项只有在至少两项同阶时才可能互相抵消。
+
+\begin{definition}\label{b3:def:valuation-ring}
+设 \(K\) 为域，\(v:K^*\rightarrow\Gamma\) 为取值于全序交换群 \(\Gamma\) 的赋值。子环
+\[
+V_v=\{0\}\cup\Bigl\{a\in K^*\mid v(a)\ge0\Bigr\}.
+\]
+称为 \(v\) 的\term[fuzhihuan]{赋值环}[valuation ring]。
+等价地，若整环 \(V\) 的分式域为 \(K\)，且对每个 \(x\in K^*\) 都有
+\(x\in V\) 或 \(x^{-1}\in V\)，则称 \(V\) 为 \(K\) 的赋值环。允许 \(V=K\)，这对应零赋值群，称为平凡赋值。
+\end{definition}
+
+说明两种说法确实等价。赋值不等式保证 \(V_v\) 对加法、减法、乘法封闭，且含 \(1\)；全序性给出倒数条件。
+反过来，若满足倒数条件，令 \(\Gamma=K^*/V^*\)，把商群运算写成加法，并规定
+\[
+[a]\le[b]\quad\Longleftrightarrow\quad b/a\in V.
+\]
+换乘单位不改变此条件；若两个方向同时成立，商为单位，故两类相等。
+倒数条件给出全序，乘法给出与平移的相容性。设 \(v(a)=[a]\)，若
+\(v(a)\le v(b)\)，则 \((a+b)/a=1+b/a\in V\)，于是赋值不等式成立。
+这个构造说明赋值群应取实际像；将它嵌入一个更大的有序群不会增加赋值环的信息。
+
+\begin{proposition}\label{b3:prop:valuation-ideal-comparison}
+设 \(v:K^*\rightarrow\Gamma\) 为域 \(K\) 上的赋值，\(V_v\) 为其赋值环。则 \(V_v\) 的任意两个理想可以按包含关系比较。因此每个有限生成理想都是主理想。
+对非零元素 \(a,b\in V_v\)，有
+\(a\mid b\Longleftrightarrow v(a)\le v(b)\)。
+\end{proposition}
+\begin{proof}
+末一等价式就是 \(b/a\in V_v\)。若理想 \(I\) 不包含于 \(J\)，取
+\(a\in I\setminus J\)。任取 \(0\ne b\in J\)，不能有 \(a\in bV\)，故必有
+\(b\in aV\subseteq I\)，于是 \(J\subseteq I\)。有限多个主理想中有一个包含其余各个，所以它们的和等于这个最大的主理想。
+\end{proof}
 
 \subsection{一般赋值环与离散赋值环}
 \label{b3:subsec:1001:02}
 
-待撰写。
+\begin{definition}\label{b3:def:discrete-valuation-ring}
+设 \(v:K^*\rightarrow\Gamma\) 为域 \(K\) 上的赋值。若赋值群 \(\Gamma\) 与通常排序的 \(\mathbb Z\) 同构，便称相应赋值环 \(V_v\) 为
+离散赋值环\termidx[lisan-fuzhi-huan]{离散赋值环}，缩写为 DVR。本书的 DVR 不是域。
+\end{definition}
+
+“离散”说的是赋值群由整数阶组成，并不是说极大理想的幂所定义的拓扑为离散拓扑。
+
+\ProseParagraphBreak
+对素数 \(p\)，将非零有理数唯一写成 \(p^n a/b\)，其中 \(p\nmid ab\)，定义
+\(v_p(p^na/b)=n\)，所得赋值环是 \(\mathbb Z_{(p)}\)。
+对有理函数 \(f(t)/g(t)\)，用分子中 \(t\) 的次数减去分母中 \(t\) 的次数定义
+\(\operatorname{ord}_0\)，所得赋值环为 \(k[t]_{(t)}\)。两例中乘法阶数相加、加法阶数不下降都可直接由提取最大公因子验证。
+
+\ProseParagraphBreak
+一般赋值未必离散。令
+\(K=\bigcup_{n\ge1}k(t^{1/n!})\)，在一个固定扩域中相容选取这些元；
+取 \(v(t^{1/n!})=1/n!\)，把有理函数的零点阶除以 \(n!\)。这些赋值在嵌套子域上相容，因而定义了 \(K\) 上以 \(\mathbb Q\) 为值群的赋值。
+其极大理想没有最小的正赋值，所以不是有限生成理想；否则\cref{b3:prop:valuation-ideal-comparison}会使它由某个最小正赋值元素生成。
+这给出一个非 Noether 赋值环。
 
 \subsection{分式域与局部性}
 \label{b3:subsec:1001:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:valuation-local-normal}
+设 \(v:K^*\rightarrow\Gamma\) 为域 \(K\) 上的赋值，\(V_v\) 为其赋值环。则 \(V_v\) 的分式域是 \(K\)，它是局部整环，唯一极大理想为
+\[
+\mathfrak m_v=\{0\}\cup\Bigl\{a\in K^*\mid v(a)>0\Bigr\},
+\]
+单位恰为赋值零的元素。每个赋值环都在 \(K\) 中整闭。
+\end{proposition}
+\begin{proof}
+任意 \(x\in K^*\) 或属于 \(V_v\)，或为 \(V_v\) 中非零元素的倒数，故分式域为 \(K\)。
+赋值公理说明 \(\mathfrak m_v\) 是理想；非零 \(a\in V_v\) 可逆恰当 \(v(a)=0\)，所以非单位全体恰是该真理想。这证明局部性。
+
+若 \(x\in K\) 满足首一方程 \(x^n+a_1x^{n-1}+\cdots+a_n=0\)、\(a_i\in V_v\)，而 \(v(x)<0\)，除以 \(x^n\) 得
+\(1+a_1x^{-1}+\cdots+a_nx^{-n}=0\)。除首项外每项均属于 \(\mathfrak m_v\)，于是 \(1\in\mathfrak m_v\)，矛盾。因此 \(x\in V_v\)。
+\end{proof}
+
+局部性不保证是赋值环。例如 \(k[x,y]_{(x,y)}\) 中 \(x/y\) 与 \(y/x\) 都不存在。
+若 \(x/y=f/g\)、\(g\notin(x,y)\)，则 \(gx=fy\)，在多项式唯一分解整环中 \(y\mid g\)，和分母的常数项非零矛盾。另一个分式同理。
+它还是整闭环，所以整闭局部环也不必是赋值环。
 
 \subsection{赋值环的秩、维数与一维正规性}
 \label{b3:subsec:1001:04}
 
-待撰写。
+设 \(\Gamma\) 为全序交换群，\(H\) 为其子群。若对所有 \(\gamma\in\Gamma\) 和 \(h\in H\)，
+\(0\le\gamma\le h\) 均蕴含 \(\gamma\in H\)，则称 \(H\) 为\term[tuzhiqun]{凸子群}[convex subgroup]。
+凸子群按包含关系组成全序：若 \(H_1\not\subseteq H_2\)，取正的
+\(h\in H_1\setminus H_2\)，则 \(H_2\) 的每个正元素均小于 \(h\)，故属于 \(H_1\)。
+赋值的\term[fuzhi-zhixu]{秩}[rank of a valuation]定义为其赋值群中有限严格凸子群链的长度上确界。
+
+\begin{proposition}\label{b3:prop:valuation-rank-dimension}
+设 \(v:K^*\rightarrow\Gamma\) 为域 \(K\) 上的赋值，\(V_v\) 为其赋值环。则 \(\Gamma\) 的凸子群与 \(V_v\) 的素理想有反包含对应
+\[
+H\longmapsto\mathfrak p_H
+=\{0\}\cup\Bigl\{a\in V_v\setminus\{0\}\mid v(a)>h\text{ 对所有 }h\in H\Bigr\}.
+\]
+特别地，赋值的秩等于赋值环的 Krull 维数。
+\end{proposition}
+\begin{proof}
+对非负群元素，属于 \(H\) 或大于 \(H\) 中所有元素，二者必居其一；这是凸性的直接结果。
+所以 \(V_v\setminus\mathfrak p_H\) 恰由赋值属于 \(H\) 的非零元素组成。
+这个集合对乘法封闭，而 \(\mathfrak p_H\) 对相加、乘以 \(V_v\) 元素封闭，故为素理想。
+
+反过来，给定素理想 \(\mathfrak p\)，令
+\(S=\Bigl\{v(a):a\in V_v\setminus\mathfrak p\Bigr\}\subseteq\Gamma_{\ge0}\)。
+它对加法封闭。若 \(0\le\gamma\le s=v(a)\in S\)，取 \(b\in V_v\) 使 \(v(b)=\gamma\)；
+因 \(b\mid a\)，\(b\in\mathfrak p\) 会迫使 \(a\in\mathfrak p\)，所以 \(\gamma\in S\)。
+于是 \(S\) 向下封闭，且 \(H=S-S=S\cup(-S)\) 是凸子群，其非负部分恰为 \(S\)。
+因此 \(\mathfrak p=\mathfrak p_H\)，两构造互逆。包含的反转由公式直接看出。
+有限严格链由此互相对应，长度不变。
+\end{proof}
+
+不要把这里的秩与 \(\dim_{\mathbb Q}(\Gamma\otimes_{\mathbb Z}\mathbb Q)\)，即有理秩，混同。
+例如有序子群 \(\mathbb Z+\sqrt2\mathbb Z\subseteq\mathbb R\) 的有理秩为二，却只有两个凸子群 \(0\) 与自身：任何正元素的整数倍最终超过指定的另一正元素，凸性迫使含一个正元素的凸子群包含全部元素。它的秩为一。
+这也说明“秩一”没有蕴含赋值群为 \(\mathbb Z\)。上面的 \(\mathbb Q\) 值群例子同样为一维整闭局部环，却不是 DVR。下一节增加 Noether 条件后，结论才会成立。

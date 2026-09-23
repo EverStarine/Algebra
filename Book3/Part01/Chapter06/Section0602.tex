@@ -1,30 +1,58 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 6.2 弱零点定理
-% 纲要位置：计划纲要.md，第 1651 行。
-
-\section{弱零点定理}
-\label{b3:sec:0602}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1969 行。
+% 纲要细目（写作范围）：
 % * 代数闭域上的极大理想
 % * 公共零点的存在判据
 % * 非代数闭域的对照
-%
 
-\subsection{代数闭域上的极大理想}
-\label{b3:subsec:0602:01}
+\section{弱零点定理}\label{b3:sec:0602}
 
-待撰写。
+在代数闭域上，极大理想可以由坐标值完整描述。对 \(a=(a_1,\ldots,a_n)\in k^n\)，取值映射
+\(\operatorname{ev}_a:k[x_1,\ldots,x_n]\to k\) 的核为
+\((x_1-a_1,\ldots,x_n-a_n)\)：逐个变量减去其坐标值可把任意多项式写成常数 \(f(a)\) 加上这些线性多项式的倍数之和。因此每个点都给出极大理想。零点定理说明代数闭域上没有遗漏。
 
-\subsection{公共零点的存在判据}
-\label{b3:subsec:0602:02}
+\subsection{代数闭域上的极大理想}\label{b3:subsec:0602:01}
 
-待撰写。
+\begin{theorem}[Hilbert 弱零点定理]\label{b3:thm:weak-nullstellensatz}
+设 \(k\) 是代数闭域。\(k[x_1,\ldots,x_n]\) 的每个极大理想唯一写成
+\[
+\mathfrak m_a=(x_1-a_1,\ldots,x_n-a_n),\qquad a\in k^n.
+\]
+这称为\term[ruo-lingdian-dingli]{弱零点定理}[weak Nullstellensatz]。
+\end{theorem}
+\begin{proof}
+对极大理想 \(\mathfrak m\)，由\cref{b3:cor:finite-type-residue-fields}及代数闭性，结构映射 \(k\to k[x_1,\ldots,x_n]/\mathfrak m\) 是同构。令 \(a_i\in k\) 为 \(x_i\) 在商域中的像，则 \(x_i-a_i\in\mathfrak m\)，故 \(\mathfrak m_a\subseteq\mathfrak m\)。二者都极大，只能相等。若 \(\mathfrak m_a=\mathfrak m_b\)，将 \(x_i-a_i\) 在 \(b\) 处取值，得到 \(b_i=a_i\)，所以点唯一。
+\end{proof}
 
-\subsection{非代数闭域上的对照}
-\label{b3:subsec:0602:03}
+\subsection{公共零点的存在判据}\label{b3:subsec:0602:02}
 
-待撰写。
+对理想 \(I\subseteq k[x_1,\ldots,x_n]\)，记
+\[
+Z_k(I)=\Bigl\{\,a\in k^n\mid f(a)=0\text{ 对每个 }f\in I\,\Bigr\}.
+\]
+\symidx{\(Z_k(I)\)：理想 \(I\) 在 \(k^n\) 中的公共零点集}
+这与素谱中的 \(V(I)\) 需要区别：\(Z_k(I)\) 只记录 \(k\) 坐标点，而 \(V(I)\) 包含所有含 \(I\) 的素理想。在代数闭域上，二者的闭点由弱零点定理对应起来。
+
+\begin{corollary}\label{b3:cor:proper-ideal-common-zero}
+设 \(k\) 代数闭。理想 \(I\subseteq k[x_1,\ldots,x_n]\) 是真理想，当且仅当 \(Z_k(I)\ne\varnothing\)。因此有限组多项式 \(f_1,\ldots,f_r\) 没有公共零点，当且仅当存在多项式 \(g_1,\ldots,g_r\) 满足
+\[
+g_1f_1+\cdots+g_rf_r=1.
+\]
+\end{corollary}
+\begin{proof}
+真理想包含在某个极大理想 \(\mathfrak m_a\) 中；由\cref{b3:thm:weak-nullstellensatz}，这个 \(a\) 就是公共零点。反过来，若 \(a\) 为公共零点，则 \(I\subseteq\ker\operatorname{ev}_a\)，所以 \(1\notin I\)。最后对 \(I=(f_1,\ldots,f_r)\) 使用理想生成的定义即可。
+\end{proof}
+
+例如 \(xy-1\) 和 \(x\) 没有公共零点，等式
+\(yx-(xy-1)=1\) 就是可以直接核验的证据。零点定理保证任何无公共零点的有限系统都有这样的代数组合；它本身没有给出这些系数的次数上界。第一卷附录 F.3 的 Gröbner 基算法可在有精确运算的系数域上寻找理想成员证据。
+
+\subsection{非代数闭域上的对照}\label{b3:subsec:0602:03}
+
+\((x^2+1)\subseteq\mathbb R[x]\) 是真理想，却没有实零点。有限域上的差别甚至会出现在零理想的零点理想中：多项式 \(x^q-x\) 在全部 \(\mathbb F_q\) 元素上取零，本身却不是零多项式。这些例子分别说明公共零点存在性及从点集恢复多项式关系，都依赖所使用的基域。
+
+\ProseParagraphBreak
+不过任何域上的真理想，在代数闭包中都有公共零点。对真理想 \(I\subseteq k[x_1,\ldots,x_n]\)，选择极大理想 \(\mathfrak m\supseteq I\)，其剩余域 \(L\) 由\cref{b3:cor:finite-type-residue-fields}是有限代数扩张。把 \(L\) 嵌入一个固定代数闭包 \(\overline k\)，变量的像给出所求点。这里有限扩域嵌入代数闭包，可按有限组代数生成元逐次选择最小多项式的根完成；不要求 \(L/k\) 可分。
+
+\ProseParagraphBreak
+若只研究实点或有限域上的有理点，就应当保留相应基域的额外关系，而不能把代数闭域版本原样照用。本卷后续的实代数补充也将据此区分不同的零点定理。

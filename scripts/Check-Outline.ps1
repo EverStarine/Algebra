@@ -11,7 +11,7 @@ if ([string]::IsNullOrWhiteSpace($ProjectRoot)) {
     $ProjectRoot = Split-Path -Parent $PSScriptRoot
 }
 $ProjectRoot = [IO.Path]::GetFullPath($ProjectRoot)
-$outlinePath = Join-Path $ProjectRoot '计划纲要.md'
+$outlinePath = Join-Path $ProjectRoot '工作记录/计划纲要.md'
 $lines = [IO.File]::ReadAllLines($outlinePath, [Text.Encoding]::UTF8)
 $numerals = @{ '一'=1; '二'=2; '三'=3; '四'=4; '五'=5; '六'=6; '七'=7; '八'=8; '九'=9; '十'=10 }
 $nodes = [Collections.Generic.List[object]]::new()

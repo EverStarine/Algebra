@@ -1,9 +1,116 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 B 第 3 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.3 带对合的中心单代数
+% 纲要位置：工作记录/计划纲要.md，第 1617 行。
+
+% 纲要要点（供目录核对）：
+% * 带对合的中心单代数
+% #### B.3.1 第一类与第二类对合
+% #### B.3.2 矩阵代数上的伴随对合
+% #### B.3.3 四元数的共轭与正交对合
 
 \section{带对合的中心单代数}
 \label{b2:sec:B03}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+矩阵转置、共轭转置及四元数共轭都反转乘法次序，但它们对中心的作用不同。先分清这一点，才能把双线性型与 Hermitian 型放进同一个代数问题。本节所有中心域的特征均不为二；代数仍有限维、结合且含幺。
 
-待撰写。
+\subsection{第一类与第二类对合}
+\label{b2:subsec:B03:01}
+
+\begin{definition}\label{b2:def:B-algebra-involution}
+设 \(A\) 是中心为 \(K\) 的中心单代数。\(A\) 上的\term[daishu-duihe]{对合}[involution on an algebra]是可加映射 \(\sigma:A\to A\)，满足
+\[
+\sigma(1)=1,\qquad \sigma(xy)=\sigma(y)\sigma(x),\qquad
+\sigma^2=\operatorname{id}.
+\]
+若 \(\sigma|_K=\operatorname{id}_K\)，称为\term[diyilei-duihe]{第一类对合}[involution of the first kind]；否则称为\term[dierlei-duihe]{第二类对合}[involution of the second kind]。
+\end{definition}
+
+中心被对合保持：若 \(z\) 与全部元素交换，则 \(\sigma(z)\) 也与全部 \(\sigma(x)\) 交换，而 \(\sigma\) 满射。因此 \(\tau=\sigma|_K\) 是满足 \(\tau^2=1\) 的域自同构，且
+\[
+\sigma(ax)=\tau(a)\sigma(x)\qquad(a\in K).
+\]
+第一类对合是 \(K\) 线性的。第二类对合只在固定域 \(k=K^\tau\) 上线性，在 \(K\) 上是半线性的；例如复矩阵的共轭转置是实线性的，通常不是复线性的。
+
+\begin{proposition}\label{b2:prop:B-involution-center}
+第二类情形中，\([K:k]=2\)。第一类对合则给出 \(K\) 代数同构 \(A\cong A^{\mathrm{op}}\)，从而 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
+\end{proposition}
+\begin{proof}
+第二类时取 \(t\in K\) 使 \(\tau(t)\ne t\)，令 \(u=t-\tau(t)\)，则 \(u\ne0\)、\(\tau(u)=-u\)。对每个 \(x\in K\)，有唯一分解
+\[
+x=\frac{x+\tau(x)}2+
+u\frac{x-\tau(x)}{2u}.
+\]
+右侧两个系数均被 \(\tau\) 固定，所以 \(K=k\oplus ku\)。其中 \(u\notin k\)，因为 \(2u\ne0\)。故扩张次数为二。
+
+第一类时，对合反转乘法，恰好是到反代数的 \(K\) 代数同构。\cref{b2:thm:brauer-group}说明反代数代表 Brauer 群中的负元，故 \([A]=-[A]\)。这里仅证明了第一类对合存在的必要条件，并未由这个条件构造一般代数上的对合。
+\end{proof}
+
+\subsection{矩阵代数上的伴随对合}
+\label{b2:subsec:B03:02}
+
+设 \(b\) 是 \(K^n\) 上矩阵为 \(B\) 的非退化对称型或交替型。条件
+\[
+b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
+\]
+唯一确定 \(\sigma_B(X)=B^{-1}X^{\mathsf T}B\)，称为 \(b\) 的\term[xing-bansui-duihe]{伴随对合}[adjoint involution]。若 \(B^{\mathsf T}=\varepsilon B\)、\(\varepsilon=1\) 或 \(-1\)，直接代入可见 \(\sigma_B^2=1\)。伴随对合由整个型确定，不是把每个矩阵替换成其代数余子式组成的伴随矩阵。
+
+\begin{theorem}\label{b2:thm:B-split-involutions}
+\(M_n(K)\) 上的每个第一类对合都等于某个 \(\sigma_B\)，其中 \(B\) 可逆且满足 \(B^{\mathsf T}=B\) 或 \(B^{\mathsf T}=-B\)。给定对合时，\(B\) 唯一到乘以非零标量。后一种情形只可能在 \(n\) 为偶数时出现。
+\end{theorem}
+\begin{proof}
+将给定对合与转置复合，得到 \(M_n(K)\) 的 \(K\) 代数自同构。\cref{b2:thm:skolem-noether}说明这种自同构为内自同构，故存在可逆 \(B\) 使 \(\sigma(X)=B^{-1}X^{\mathsf T}B\)。计算平方得
+\[
+\sigma^2(X)=(B^{-1}B^{\mathsf T})X(B^{-1}B^{\mathsf T})^{-1}.
+\]
+它恒等，当且仅当 \(B^{-1}B^{\mathsf T}\) 属于矩阵代数的中心，即 \(B^{\mathsf T}=\lambda B\)。再转置一次得 \(\lambda^2=1\)，所以 \(\lambda=\pm1\)。两个矩阵给出相同对合，当且仅当它们的比与全部矩阵交换，也就相差标量。若 \(B^{\mathsf T}=-B\)，因特征不为二，它对应交替型；\cref{b2:thm:alternating-form-normal}说明非退化交替型的维数必为偶数。
+\end{proof}
+
+对称型产生的对合称为\term[zhengjiao-duihe]{正交对合}[orthogonal involution]，交替型产生的称为\term[xin-duihe]{辛对合}[symplectic involution]。这些名称也用于未分裂的中心单代数：由\cref{b2:cor:csa-algebraic-closure-splits}，在代数闭包 \(\Omega\) 上有 \(A\otimes_K\Omega\cong M_n(\Omega)\)；第一类对合延伸为 \(\sigma\otimes\operatorname{id}_\Omega\)，再看它属于哪种类型。这个定义不依赖分裂同构，因为由内自同构改变分裂同构只会改变型的基。
+
+\begin{proposition}\label{b2:prop:B-involution-type-dimension}
+设 \(\deg A=n\)，且 \(\sigma\) 是第一类对合。不动子空间
+\[
+\operatorname{Sym}(A,\sigma)=\Bigl\{\,a\in A\mid\sigma(a)=a\,\Bigr\}
+\]
+在正交型时的维数为 \(n(n+1)/2\)，在辛型时为 \(n(n-1)/2\)。
+\end{proposition}
+\begin{proof}
+在分裂情形，\(X\mapsto BX\) 把不动条件分别化为 \(BX\) 对称或反对称，数独立的矩阵条目便得维数。一般情形在代数闭包上计算；线性方程 \(\sigma(a)=a\) 的系数矩阵扩域后秩不变，所以解空间维数不变。
+\end{proof}
+
+这里的 \(\operatorname{Sym}\) 表示对合的不动子空间，所取对象与对称群不同。
+\symidx{\(\operatorname{Sym}(A,\sigma)\)：对合的不动子空间}
+
+\begin{proposition}\label{b2:prop:B-unitary-adjoint}
+设 \(K/k\) 是二次扩张，非恒等自同构记为 \(a\mapsto\bar a\)。\(M_n(K)\) 上限制到中心为这个自同构的对合，都可写为
+\[
+\sigma_H(X)=H^{-1}\overline X^{\mathsf T}H,
+\qquad \overline H^{\mathsf T}=H,
+\]
+其中 \(H\) 可逆。这是 Hermitian 型 \(h(v,w)=\overline v^{\mathsf T}Hw\) 的伴随对合。
+\end{proposition}
+\begin{proof}
+令 \(X^*=\overline X^{\mathsf T}\)。给定对合与 \(*\) 的复合在中心上为恒等，因此是 \(K\) 代数自同构。再由\cref{b2:thm:skolem-noether}，可写 \(\sigma(X)=B^{-1}X^*B\)。平方为恒等迫使 \(B^*=\lambda B\)，而再取 \(*\) 得 \(\lambda\bar\lambda=1\)。
+
+需要找 \(a\ne0\) 满足 \(a/\bar a=\lambda\)。若 \(\lambda\ne-1\)，取 \(a=1+\lambda\)；由 \(\bar\lambda=\lambda^{-1}\) 立即得到所需等式。若 \(\lambda=-1\)，取\cref{b2:prop:B-involution-center}证明中的非零 \(u\)，满足 \(\bar u=-u\)，并令 \(a=u\)。于是 \(H=aB\) 满足 \(H^*=\bar a\lambda B=aB=H\)，而乘以标量不改变 \(\sigma_B\)。最后直接代入，得到 \(h(Xv,w)=h\Bigl(v,\sigma_H(X)w\Bigr)\)。
+\end{proof}
+
+第二类对合也称为\term[you-duihe]{酉对合}[unitary involution]。它没有要求 Hermitian 型正定；例如 \(H=\operatorname{diag}(1,-1)\) 也定义一个对合。正定性、范数及完备性属于\appref{b2:app:D}讨论算子代数时另加的结构。
+
+\subsection{四元数的共轭与正交对合}
+\label{b2:subsec:B03:03}
+
+令 \(Q=(a,b)_k\)，其中 \(a,b\ne0\)，并使用 \(1,i,j,ij\) 这组基。\eqref{b2:eq:quaternion-conjugation}给出的共轭 \(\gamma\) 是第一类对合，其不动子空间只有 \(k\)。\(Q\) 的次数为二，故\cref{b2:prop:B-involution-type-dimension}用这个一维不动子空间说明 \(\gamma\) 是辛对合，即使 \(Q\) 是除代数也一样。
+
+\begin{proposition}\label{b2:prop:B-quaternion-orthogonal-involution}
+映射 \(\sigma(x)=i\gamma(x)i^{-1}\) 是 \(Q\) 的正交对合，且
+\[
+\sigma(i)=-i,\qquad \sigma(j)=j,\qquad \sigma(ij)=ij.
+\]
+因此同一个四元数代数可以同时带有辛对合和正交对合。
+\end{proposition}
+\begin{proof}
+内自同构与反同构复合仍反转乘法。由 \(ij=-ji\)，共轭作用 \(x\mapsto ixi^{-1}\) 固定 \(i\)，将 \(j,ij\) 变号；再与 \(\gamma\) 复合便得所列公式。这些公式说明 \(\sigma^2=1\)，且不动子空间为 \(k\oplus kj\oplus k(ij)\)，维数为三。\cref{b2:prop:B-involution-type-dimension}在次数二时把它识别为正交对合。
+\end{proof}
+
+共轭所对应的范数 \(x\gamma(x)\) 总在中心，见\eqref{b2:eq:quaternion-norm}；更换对合后，这个性质不能照搬。例如 \(x=1+j\) 时，\(x\sigma(x)=(1+j)^2=1+b+2j\)，一般不在 \(k\) 中。对合的类型与所使用的范数公式必须一起核对。

@@ -1,30 +1,101 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 9.1 维数与高度
-% 纲要位置：计划纲要.md，第 1761 行。
+% 纲要位置：工作记录/计划纲要.md，第 2079 行。
+% 纲要细目（写作范围）：
+% * 素理想链、环维数和理想高度
+% * 模的维数与支集
+% * 局部化对维数的影响
 
 \section{维数与高度}
 \label{b3:sec:0901}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 素理想链、环维数和理想高度
-% * 模的维数与支集
-% * 局部化对维数的影响
-%
+素谱中的点既可以独立出现，也可以按包含关系排列。一个不可约闭集内还有多少层更小的不可约闭集，是维数要记录的问题。以下的链长只计算严格包含的次数；不假设所有极大链一样长，也不预设任何几何图像中的维数公式。
 
 \subsection{素理想链、环维数与理想高度}
 \label{b3:subsec:0901:01}
 
-待撰写。
+\begin{definition}\label{b3:def:krull-dimension-height}
+设 \(R\) 为交换环。其有限素理想链
+\[
+\mathfrak p_0\subsetneq\mathfrak p_1\subsetneq\cdots\subsetneq\mathfrak p_r
+\]
+的长度 \(r\) 的上确界称为 \(R\) 的\term[Krull-weishu]{Krull 维数}[Krull dimension]，记为 \(\dim R\)。对素理想 \(\mathfrak p\subseteq R\)，以 \(\mathfrak p\) 为末项的此类链长的上确界称为它的\term[gaodu]{高度}[height]，记为 \(\operatorname{ht}\mathfrak p\)。真理想 \(I\subseteq R\) 的高度定义为
+\[
+\operatorname{ht}I=\inf_{\mathfrak p\supseteq I}\operatorname{ht}\mathfrak p.
+\]
+允许维数或高度为 \(+\infty\)。零环的谱为空，约定其维数为 \(-\infty\)；单位理想的高度不在本章使用。
+\end{definition}
+\symidx{\(\dim R\)：环的 Krull 维数}
+\symidx{\(\operatorname{ht}\mathfrak p\)、\(\operatorname{ht}I\)：素理想与真理想的高度}
+
+域只有一个素理想 \(0\)，所以维数为零。整数环的非零素理想都是极大理想，故
+\(\dim\mathbb Z=1\)。一元多项式环 \(k[t]\) 同样为一维：它是主理想整环，每个非零素理想由不可约多项式生成，因而极大。零维并不表示素谱只有一个点；有限个域的直积已经给出多个点。
+
+\begin{proposition}\label{b3:prop:dimension-basic-comparison}
+设 \(R\) 为交换环，\(I\subseteq R\) 为理想，\(R_{\mathrm{red}}=R/\sqrt{(0)}\)。则有 \(\dim(R/I)\le\dim R\)，而
+\(\dim R_{\mathrm{red}}=\dim R\)。若 \(\mathfrak p\) 为素理想，且有关数均有限，则
+\[
+\operatorname{ht}\mathfrak p+\dim(R/\mathfrak p)\le\dim R.
+\]
+有限直积的维数等于各非零因子的维数的最大值。
+\end{proposition}
+\begin{proof}
+商环的素理想链对应原环中包含 \(I\) 的链；模掉幂零根时，所有素理想都保留，故链长完全不变。对第二式，取一条末项为 \(\mathfrak p\) 的最长链，以及一条首项为 \(\mathfrak p\) 的最长链，接在一起即可。有限整数的上确界能取到，故这些链存在。直积环的素理想分别来自一个因子，不同因子所对应的素理想互不包含，所以任何链都留在同一个因子中。
+\end{proof}
+
+上述不等式不能在没有附加条件时写成等式。高度测量点以下的链，商环维数测量点以上的链；两段能连接起来，不表示任何最长链都经过这个指定点。
 
 \subsection{模的维数与支集}
 \label{b3:subsec:0901:02}
 
-待撰写。
+\begin{definition}\label{b3:def:module-dimension}
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模。支集
+\(\operatorname{Supp}_R M=\{\,\mathfrak p\in\operatorname{Spec}R\mid M_{\mathfrak p}\ne0\,\}\)
+内有限严格素理想链长的上确界称为 \(M\) 的\term[mo-weishu]{维数}[dimension of a module]，记为 \(\dim_R M\)。空支集的维数取 \(-\infty\)。
+\end{definition}
+\symidx{\(\dim_R M\)：模的支集维数}
+
+若 \(M\) 有限生成，\cref{b3:thm:support-finite}给出
+\(\operatorname{Supp}_R M=V(\operatorname{Ann}_R M)\)，所以
+\begin{equation}\label{b3:eq:module-dimension-annihilator}
+\dim_R M=\dim\Bigl(R/\operatorname{Ann}_R M\Bigr).
+\end{equation}
+这里的维数不是生成元个数，也不是向量空间维数。例如 \(R=k[x]\) 上的 \(R^r\)、\(r\ge1\)，都有支集 \(\operatorname{Spec}R\)，故维数均为一；而 \(R/(x^n)\)、\(n\ge1\)，的支集只有一个闭点，维数为零，其 \(k\) 向量空间维数却为 \(n\)。
+
+\begin{proposition}\label{b3:prop:dimension-associated-components}
+若 \(R\) 为交换 Noether 环，\(M\ne0\) 为有限 \(R\) 模，则
+\[
+\dim_R M=\max_{\mathfrak p\in\operatorname{Ass}_R M}\dim(R/\mathfrak p).
+\]
+若 \(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 为有限模的短正合列，则
+\[
+\dim_R M=\max\{\dim_R L,\dim_R N\}.
+\]
+\end{proposition}
+\begin{proof}
+由\cref{b3:prop:minimal-primes-associated}，支集中每个素理想都包含某个关联素理想，且关联素理想有限。因此支集等于这些 \(V(\mathfrak p)\) 的有限并。任一链的最小项包含某个这样的 \(\mathfrak p\)，整条链便落在 \(V(\mathfrak p)\) 中，得到第一式。
+短正合列的支集是两端支集之并，见\cref{b3:prop:support-exact}。因有限模的支集是闭集，链的最小项落在哪一端，整条链就留在该端，故得到最大值公式。
+\end{proof}
 
 \subsection{局部化对维数的影响}
 \label{b3:subsec:0901:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:dimension-localization}
+设 \(R\) 为交换环，\(\mathfrak p\subseteq R\) 为素理想，\(S\subseteq R\) 为乘法集。则有
+\[
+\dim R_{\mathfrak p}=\operatorname{ht}\mathfrak p,\qquad
+\dim S^{-1}R\le\dim R,\qquad
+\dim R=\sup_{\mathfrak m\text{ 极大}}\dim R_{\mathfrak m}.
+\]
+若 \(M\) 为有限 \(R\) 模，则 \(\dim_{S^{-1}R}S^{-1}M\le\dim_R M\)。零环情形的空上确界同样取 \(-\infty\)。
+\end{proposition}
+\begin{proof}
+局部化素理想对应保留包含关系。\(R_{\mathfrak p}\) 的素理想恰好对应包含于
+\(\mathfrak p\) 的素理想，每条这样的链都可在末端补上 \(\mathfrak p\)，所以其维数就是高度。一般局部化只保留不遇到 \(S\) 的素理想，故不能增加链长。任一有限素链的末项包含于某个极大理想；在该极大理想处局部化保留整条链，得到第三式。
+
+对模，若 \(\mathfrak q\cap S=\varnothing\)，则先在 \(S\) 处局部化、再在
+\(S^{-1}\mathfrak q\) 处局部化，与直接取 \(M_{\mathfrak q}\) 相同。两者均由允许
+\(R\setminus\mathfrak q\) 中的分母给出，分式的互逆公式保证这一识别。因此局部模的支集链对应原支集中避开 \(S\) 的链，得到不等式。
+\end{proof}
+
+一般点处的局部化可能大幅降低维数。例如整环的零理想处局部环是分式域，维数为零，不论原环有多少维。相反，在多项式环的闭点处，局部化会保留许多不同方向的素理想链；下一节将用理想生成元的个数限制这些链的长度。

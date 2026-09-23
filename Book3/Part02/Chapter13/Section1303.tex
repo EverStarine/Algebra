@@ -1,36 +1,167 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.3 完备化
-% 纲要位置：计划纲要.md，第 1904 行。
-
-\section{完备化}
-\label{b3:sec:1303}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2222 行。
+% 纲要细目（写作范围）：
 % * 逆极限定义
 % * 形式幂级数环
 % * Noether 情形的有限模完备化正合性
 % * 在完备化局部性质之前证明所需的 Noether 性、完备性与有限模的张量表示；把任意逆极限的左正合性与本章有限模完备化的正合性区分开
-%
+
+
+\section{完备化}
+\label{b3:sec:1303}
+
+
+只给出每个精度下的一个答案还不够：高精度答案必须在取商后等于先前的低精度答案。完备化把这种相容性直接写入定义。它首先是一个由商模组成的逆极限；其正合性与 Noether 性则需要另外证明。
 
 \subsection{完备化的逆极限定义}
 \label{b3:subsec:1303:01}
 
-待撰写。
+\begin{definition}\label{b3:def:inverse-limit-completion}
+设 \(R\) 为交换环，\(M_1\xleftarrow{u_1}M_2\xleftarrow{u_2}\cdots\) 为 \(R\) 模及 \(R\) 线性过渡映射组成的逆系统。其\term[niji-xian]{逆极限}[inverse limit]定义为
+\[
+\varprojlim_nM_n=
+\Bigl\{\,(x_n)\in\prod_{n\ge1}M_n\mid u_n(x_{n+1})=x_n\text{ 对所有 }n\,\Bigr\}.
+\]
+加法与标量作用逐坐标进行。给定理想 \(I\subseteq R\) 与 \(R\) 模 \(M\)，取 \(M_n=M/I^nM\) 和自然商映射，得到 \(M\) 的 \term[wanbeihua]{完备化}[completion]
+\[
+\widehat M=\varprojlim_n M/I^nM.
+\]
+自然映射 \(\iota_M:M\rightarrow\widehat M\) 把 \(x\) 送到 \((x+I^nM)_n\)。若此映射为同构，称 \(M\) 为 \(I\) 进完备模；此处“完备”包含分离性。
+\symidx{\(\varprojlim_nM_n\)：模逆系统的逆极限}
+\symidx{\(\widehat R\)、\(\widehat M\)：指定理想进拓扑下的完备化}
+\end{definition}
+
+逆极限的泛性质可以直接核对：从模 \(P\) 到各 \(M_n\) 的相容映射 \(f_n\)，唯一合成映射 \(p\mapsto\Bigl(f_n(p)\Bigr)_n\)。另外，\(\ker\iota_M=\bigcap_nI^nM\)。因此自然映射单射所需的正是分离性。
+
+\ProseParagraphBreak
+记 \(K_n=\ker(\widehat M\rightarrow M/I^nM)\)。以 \(K_n\) 为邻域基时，\(\widehat M\) 分离且完备：Cauchy 序列在每个商中的坐标最终固定，这些固定坐标相容，因而给出唯一极限；\(\bigcap_nK_n=0\) 来自逐坐标为零。自然映射的像稠密，因为任意第 \(n\) 个坐标都可由 \(M\) 中的元素表示。此时尚未证明 \(K_n=I^n\widehat M\)；不能直接把逆极限的拓扑与其理想进拓扑混为一谈。
+
+\ProseParagraphBreak
+环 \(\widehat R\) 的加法、乘法逐商定义，\(\widehat M\) 是 \(\widehat R\) 模，因为 \((a_n)(m_n)=(a_nm_n)\) 保持相容性。模同态按各阶取商得到完备化同态，并保持恒等映射与复合。
 
 \subsection{形式幂级数环}
 \label{b3:subsec:1303:02}
 
-待撰写。
+\begin{definition}\label{b3:def:formal-power-series}
+对任意交换环 \(A\)，\term[xingshi-miji-shu-huan]{形式幂级数环}[formal power series ring] \(A[[x_1,\ldots,x_r]]\) 的元素是全部系数族
+\(\sum_{\alpha\in\mathbb N^r}a_\alpha x^\alpha\)。加法逐系数定义，乘法定义为
+\[
+\left(\sum_\alpha a_\alpha x^\alpha\right)
+\left(\sum_\beta b_\beta x^\beta\right)
+=\sum_\gamma\left(\sum_{\alpha+\beta=\gamma}a_\alpha b_\beta\right)x^\gamma.
+\]
+对固定的多重指标 \(\gamma\)，内层和只有有限项，故不需要分析意义的收敛。
+\end{definition}
+
+交换律、结合律及分配律可在每个固定系数上归结为有限和的同一运算，常数级数 \(1\) 为单位。全次数小于 \(n\) 的截断给出同构
+\begin{equation}\label{b3:eq:power-series-limit}
+A[[x_1,\ldots,x_r]]\cong
+\varprojlim_n A[x_1,\ldots,x_r]/(x_1,\ldots,x_r)^n.
+\end{equation}
+相容截断唯一指定每个单项式的系数，反过来每个系数族给出相容截断，因此此式既证明双射，也说明环运算为何相同。
+
+\begin{proposition}\label{b3:prop:formal-series-unit}
+设 \(A\) 为交换环。级数 \(f\in A[[x_1,\ldots,x_r]]\) 可逆，当且仅当其常数项 \(a_0\) 在 \(A\) 中可逆。
+\end{proposition}
+\begin{proof}
+若有逆，比较常数项得到必要性。反向写 \(f=a_0(1-h)\)，其中 \(h\) 常数项为零。级数 \(\sum_{j\ge0}h^j\) 有意义，因为全次数小于 \(n\) 的项只受前 \(n\) 项影响。逐阶使用有限等比恒等式得到 \((1-h)\sum_{j\ge0}h^j=1\)，所以 \(f^{-1}=a_0^{-1}\sum_{j\ge0}h^j\)。
+\end{proof}
+
+特别地，\(k[[x_1,\ldots,x_r]]\) 是极大理想为 \((x_1,\ldots,x_r)\) 的局部环。局部多项式环 \(k[x_1,\ldots,x_r]_{(x_1,\ldots,x_r)}\) 也有这个完备化：在每个截断商中，所有原点处不为零的多项式已经可逆，所以先局部化不改变各阶商。整数环关于 \((p)\) 的完备化则为 \(\mathbb Z_p=\varprojlim_n\mathbb Z/p^n\mathbb Z\)，其进位规则来自这些商环的运算，不能把它误写成 \(\mathbb F_p[[t]]\)。
 
 \subsection{Noether 环上有限模完备化的正合性}
 \label{b3:subsec:1303:03}
 
-待撰写。
+\begin{lemma}\label{b3:lem:inverse-limit-exact-surjective-kernels}
+设 \(R\) 为交换环，给定三个 \(R\) 模逆系统及逐阶短正合列
+\(0\rightarrow A_n\rightarrow B_n\rightarrow C_n\rightarrow0\)，其中所有过渡映射与列中的映射交换。若过渡映射 \(A_{n+1}\rightarrow A_n\) 全部满射，则
+\[
+0\longrightarrow\varprojlim A_n\longrightarrow\varprojlim B_n
+\longrightarrow\varprojlim C_n\longrightarrow0
+\]
+正合。即使不假设满射，左端及中间位置仍正合。
+\end{lemma}
+\begin{proof}
+单射与中间的核可逐坐标检验。要证明右端满射，给定相容的 \((c_n)\)，先选提升 \(b_1\)。若已选 \(b_n\)，任选 \(c_{n+1}\) 的提升 \(b'_{n+1}\)。它投到 \(B_n\) 后与 \(b_n\) 之差落在 \(A_n\)，由满射性可提升成 \(a_{n+1}\in A_{n+1}\)。令 \(b_{n+1}=b'_{n+1}-a_{n+1}\)，就同时保持提升与相容性。递归构造出所需的 \((b_n)\)。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:completion-exact}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想。对有限生成 \(R\) 模的短正合列
+\(0\rightarrow N\rightarrow M\rightarrow P\rightarrow0\)，其 \(I\) 进完备化
+\[
+0\longrightarrow\widehat N\longrightarrow\widehat M
+\longrightarrow\widehat P\longrightarrow0
+\]
+仍正合。
+\end{theorem}
+\begin{proof}
+把 \(N\) 看作 \(M\) 的子模。逐阶真正正合的列是
+\[
+0\longrightarrow N/(N\cap I^nM)\longrightarrow M/I^nM
+\longrightarrow P/I^nP\longrightarrow0.
+\]
+其左侧过渡映射为自然商映射，因而满射。使用前一引理取逆极限，右端得到 \(\widehat P\)，中间得到 \(\widehat M\)。左端来自诱导滤过；\cref{b3:thm:artin-rees}给出的
+\(I^nN\subseteq N\cap I^nM\subseteq I^{n-c}N\)
+说明该滤过与自身滤过相互共尾。按\cref{b3:prop:stable-filtration-equivalent}的相容余类转换，左端自然同构于 \(\widehat N\)，得到结论。
+\end{proof}
+
+这里没有断言任意逆极限右正合。例如短正合列
+\(0\rightarrow2^n\mathbb Z\rightarrow\mathbb Z\rightarrow\mathbb Z/2^n\mathbb Z\rightarrow0\)
+的逆极限右端为 \(\mathbb Z_2\)，但 \(\mathbb Z\rightarrow\mathbb Z_2\) 不满：每个模 \(2^n\) 的环中 \(3\) 的逆元组成相容系统，若它来自整数 \(a\)，则整数 \(3a-1\) 被所有 \(2^n\) 整除，从而等于零，矛盾。本例的左侧过渡映射为严格包含，不满足引理的满射假设。
 
 \subsection{完备化的 Noether 性、完备性与张量表示}
 \label{b3:subsec:1303:04}
 
-待撰写。
+以下 \(R\) 均为 Noether 环，\(I\) 为固定理想，\(M\) 为有限生成模。
+
+\begin{proposition}\label{b3:prop:completion-quotients}
+设 \(R\) 为交换 Noether 环、\(I,J\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模，所有完备化均关于 \(I\) 进行。在 \(\widehat M\) 中有
+\[
+\operatorname{im}(\widehat{JM}\rightarrow\widehat M)=J\widehat M,
+\qquad \widehat{M/JM}\cong\widehat M/J\widehat M.
+\]
+特别地，
+\[
+\widehat M/I^n\widehat M\cong M/I^nM,
+\qquad \ker(\widehat M\rightarrow M/I^nM)=I^n\widehat M.
+\]
+因此 \(\widehat M\) 对 \(I\widehat R\) 进拓扑完备且分离。
+\end{proposition}
+\begin{proof}
+取 \(J=(a_1,\ldots,a_s)\)。映射
+\(M^s\rightarrow JM\)、\((m_j)\mapsto\sum_ja_jm_j\) 满射。由完备化正合性，其完备化仍满；有限直和的完备化逐坐标等于完备化的直和，所以它在 \(\widehat M\) 中的像恰为 \(\sum_ja_j\widehat M=J\widehat M\)。再完备化 \(0\rightarrow JM\rightarrow M\rightarrow M/JM\rightarrow0\)，得到商的同构。
+
+取 \(J=I^n\)。模 \(M/I^nM\) 在第 \(n\) 阶以后各商都不再改变，故其完备化是自身。于是得到第二组公式；逆极限原有的邻域核正是理想的幂，前面已证的完备性和分离性遂成为理想进完备性与分离性。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:completion-tensor}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模，\(\widehat R\) 与 \(\widehat M\) 均表示 \(I\) 进完备化。则自然映射
+\[
+\widehat R\otimes_RM\longrightarrow\widehat M,
+\qquad a\otimes m\longmapsto a\,\iota_M(m)
+\]
+是同构。特别地，\(\widehat M\) 为有限生成 \(\widehat R\) 模。
+\end{theorem}
+\begin{proof}
+\(R\) 为 Noether 环，故 \(M\) 有有限展示
+\(R^u\xrightarrow{A}R^v\rightarrow M\rightarrow0\)。完备化正合性说明 \(\widehat M\) 为矩阵 \(A:\widehat R^u\rightarrow\widehat R^v\) 的余核。张量积的右正合性说明 \(\widehat R\otimes_RM\) 为同一矩阵的余核。自然映射在自由模处就是逐坐标同构，故在余核处也是同构。这一论证只用张量积的右正合性，没有预先假定 \(\widehat R\) 平坦。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:completion-noetherian}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想，\(\widehat R\) 为 \(I\) 进完备化。则 \(\widehat R\) 是 Noether 环，并且
+\[
+\operatorname{gr}_{I\widehat R}(\widehat R)
+\cong\operatorname{gr}_I(R).
+\]
+\end{theorem}
+\begin{proof}
+记 \(B=\widehat R\)、\(K=IB\)。前面的商识别在相邻两阶之间相容，取核得到 \(K^n/K^{n+1}\cong I^n/I^{n+1}\)，且乘法相容。若 \(I=(a_1,\ldots,a_s)\)，此分次环是 \((R/I)[X_1,\ldots,X_s]\) 的商，故为 Noether 环。
+
+设 \(J\subseteq B\) 为任意理想。对每个非零 \(f\in B\)，分离性使它有唯一阶数 \(d\ge0\)，即 \(f\in K^d\setminus K^{d+1}\)；记其初始形式为 \(\operatorname{in}(f)\)。由所有 \(f\in J\) 的初始形式生成的齐次理想有限生成，故可选有限个 \(f_1,\ldots,f_r\in J\)，使它们的初始形式生成该理想，记阶数为 \(d_i\)。这一步可以选实际初始形式，是因为原生成族中有限个已足以生成同一个理想。
+
+给定 \(f\in J\)，若其阶数为 \(n\)，将初始形式表示成 \(\sum_i\overline a_i\operatorname{in}(f_i)\)，其中 \(\overline a_i\) 齐次次数为 \(n-d_i\)，当 \(n<d_i\) 时该项取零。提升为 \(a_i\in K^{n-d_i}\)，则 \(f-\sum_i a_if_i\in J\cap K^{n+1}\)。对这个余项重复。每次非零余项的阶数严格增加，而 \(d_i\) 固定，所以给每个 \(f_i\) 的系数增量趋于零，并构成 Cauchy 级数。由 \(B\) 的完备性，它们各有和 \(b_i\in B\)。分离性保证余项的极限为零，因而
+\(f=\sum_i b_if_i\)。若中途余项为零，论证提前结束。因此 \(J=(f_1,\ldots,f_r)\)，任意理想均有限生成，\(B\) 为 Noether 环。
+\end{proof}
+
+这个证明同时说明为什么“完备”有实质作用：初始形式只能逐阶消去，系数最后可能成为无穷和。有限阶消去若没有收敛到环中元素的保证，就不能推出原理想由所选元素生成。

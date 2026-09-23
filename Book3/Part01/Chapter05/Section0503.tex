@@ -1,30 +1,88 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 5.3 Going-down 定理
-% 纲要位置：计划纲要.md，第 1629 行。
-
-\section{Going-down 定理}
-\label{b3:sec:0503}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1947 行。
+% 纲要细目（写作范围）：
 % * 整闭基整环等假设的明确版本
 % * 证明及素理想链的应用
 % * 不能把 Going-down 当作任意整扩张的性质
-%
 
-\subsection{整闭基整环上的 Going-down 定理}
-\label{b3:subsec:0503:01}
+\section{Going-down 定理}\label{b3:sec:0503}
 
-待撰写。
+Going-up 从链的下端出发，向上寻找原像。若已经指定上端，能否反过来向下寻找？整性本身不足以保证这一点。本节在底环整闭、两端为整环的条件下证明肯定结论，并给出底环不整闭时失败的例子。
 
-\subsection{定理的证明与素理想链的应用}
-\label{b3:subsec:0503:02}
+\subsection{整闭基整环上的 Going-down 定理}\label{b3:subsec:0503:01}
 
-待撰写。
+\begin{theorem}[Going-down]\label{b3:thm:going-down}
+设 \(A\subseteq B\) 为整环的整扩张，且 \(A\) 在 \(\operatorname{Frac}(A)\) 中整闭。若
+\[
+\mathfrak p_1\subseteq\mathfrak p_2,\qquad
+\mathfrak q_2\cap A=\mathfrak p_2,
+\]
+其中 \(\mathfrak p_i\in\operatorname{Spec}A\)、\(\mathfrak q_2\in\operatorname{Spec}B\)，则存在素理想 \(\mathfrak q_1\subseteq\mathfrak q_2\)，使 \(\mathfrak q_1\cap A=\mathfrak p_1\)。这称为\term[going-down]{Going-down 定理}[going-down theorem]。
+\end{theorem}
 
-\subsection{Going-down 定理的适用条件}
-\label{b3:subsec:0503:03}
+证明将使用整闭性控制最小多项式的系数。设 \(K=\operatorname{Frac}(A)\)，则 \(B\) 的分式域是 \(K\) 的代数扩张：\(B\) 中每个元素代数，两个代数元素的商仍代数。这一观察保证下列最小多项式确实存在。
 
-待撰写。
+\begin{lemma}\label{b3:lem:minimal-polynomial-integral-coefficients}
+设 \(A\) 是整闭整环，\(K=\operatorname{Frac}(A)\)，\(b\) 在一个扩域中且在 \(A\) 上整。则 \(b\) 在 \(K\) 上的首一最小多项式属于 \(A[T]\)。进一步，若 \(A\subseteq B\) 为整环的整扩张，\(\mathfrak p\in\operatorname{Spec}A\)，而 \(b\in\mathfrak pB\)，则此最小多项式的首项以外的全部系数，都属于 \(\mathfrak p\)。
+\end{lemma}
+\begin{proof}
+取 \(b\) 在 \(A\) 上的首一方程 \(F(b)=0\)。其在 \(K\) 上的最小多项式 \(f\) 整除 \(F\)，所以 \(f\) 在分裂域中的全部根都在 \(A\) 上整。把根按重数计入，\(f\) 的系数是这些根的初等对称多项式，由\cref{b3:prop:integral-closure-ring}也在 \(A\) 上整。系数原来属于 \(K\)，整闭性便给出它们属于 \(A\)。
+
+再设 \(b=\sum_{j=1}^r a_jc_j\)，其中 \(a_j\in\mathfrak p\)、\(c_j\in B\)。有限 \(A\) 代数 \(M=A[c_1,\ldots,c_r]\) 包含 \(b\)，并满足 \(bM\subseteq\mathfrak pM\)。对有限组模生成元，乘 \(b\) 的表示矩阵各项均可取在 \(\mathfrak p\) 中。\cref{b3:thm:determinant-trick}因而给出
+\[
+b^m+d_1b^{m-1}+\cdots+d_m=0,\qquad d_i\in\mathfrak p^i.
+\]
+其中 \(M\) 含有一，故算子等式确实推出环内等式。
+
+取 \(f\) 的一个分裂域 \(L/K\)，令 \(C\) 为 \(A\) 在 \(L\) 中的整闭包。由\cref{b3:thm:lying-over}取 \(\mathfrak P\in\operatorname{Spec}C\) 位于 \(\mathfrak p\) 上。\(f\) 的每个根 \(\beta\) 都属于 \(C\)，也满足刚得到的首一方程。模掉 \(\mathfrak P\) 后有 \(\beta^m=0\)，所以每个根都属于 \(\mathfrak P\)。\(f\) 的首项以外系数作为这些根的对称多项式均属于 \(\mathfrak P\)，又属于 \(A\)，从而属于 \(\mathfrak P\cap A=\mathfrak p\)。此处即使有重根也成立。
+\end{proof}
+
+\subsection{定理的证明与素理想链的应用}\label{b3:subsec:0503:02}
+
+\begin{proof}[\cref{b3:thm:going-down}的证明]
+先证
+\begin{equation}\label{b3:eq:going-down-contraction}
+\mathfrak p_1B_{\mathfrak q_2}\cap A=\mathfrak p_1.
+\end{equation}
+若 \(a\) 属于左侧而不在 \(\mathfrak p_1\)，清去有限个分母后有
+\[
+sa\in\mathfrak p_1B,\qquad s\in B\setminus\mathfrak q_2.
+\]
+在 \(A_{\mathfrak p_1}\subseteq(A\setminus\mathfrak p_1)^{-1}B\) 中，\(a\) 可逆，故
+\(s\in\mathfrak p_1(A\setminus\mathfrak p_1)^{-1}B\)。
+由\cref{b3:prop:ufd-integrally-closed}，\(A_{\mathfrak p_1}\) 整闭；其分式域仍是 \(K=\operatorname{Frac}(A)\)。将\cref{b3:lem:minimal-polynomial-integral-coefficients}用于此局部化，得 \(s\) 在 \(K\) 上的首一最小多项式的首项以外系数属于 \(\mathfrak p_1A_{\mathfrak p_1}\)。同一引理用于原包含，说明这些系数属于 \(A\)。因此它们属于
+\[
+A\cap\mathfrak p_1A_{\mathfrak p_1}=\mathfrak p_1\subseteq\mathfrak p_2.
+\]
+把该方程模掉 \(\mathfrak q_2\)，得到 \(s^n=0\)，于是 \(s\in\mathfrak q_2\)，矛盾。这证明了\eqref{b3:eq:going-down-contraction}。
+
+式\eqref{b3:eq:going-down-contraction}说明理想 \(\mathfrak p_1B_{\mathfrak q_2}\) 不交 \(A\setminus\mathfrak p_1\)。把这些元素再倒置，所得理想仍为真理想，故包含在某个极大理想中。将这个极大理想依次收缩到 \(B_{\mathfrak q_2}\) 和 \(B\)，得到素理想 \(\mathfrak q_1\subseteq\mathfrak q_2\)。它包含 \(\mathfrak p_1\)，且不交 \(A\setminus\mathfrak p_1\)，故收缩恰为 \(\mathfrak p_1\)。
+\end{proof}
+
+若指定链的顶端 \(\mathfrak q_r\)，重复向下应用定理，就能把
+\(\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_r\)
+提升为顶端为 \(\mathfrak q_r\) 的严格链。严格性来自收缩理想不同。相反，任意给定的 \(\mathfrak q_r\) 以下严格链收缩后仍严格，由\cref{b3:thm:incomparability}保证。因此在本定理假设下，\(\mathfrak q_r\) 与其收缩以下的有限素理想链，具有相同的可能最大长度；若长度无界，两边同时无界。
+
+\subsection{Going-down 定理的适用条件}\label{b3:subsec:0503:03}
+
+下面给出一个显式失败情形。设 \(\operatorname{char}k\ne2\)，在 \(B=k[t,z]\) 内取
+\[
+u=t^2-1,\qquad v=t(t^2-1),\qquad A=k[u,v,z].
+\]
+因为 \(t\) 满足 \(T^2-(u+1)=0\)，且 \(B=A[t]\)，故 \(B/A\) 有限整。令
+\[
+\mathfrak q_+=(t-1,z),\qquad
+\mathfrak q_-=(t+1,z),\qquad
+\mathfrak r=(z-t-1).
+\]
+\(\mathfrak q_\pm\) 收缩为同一个极大理想
+\(\mathfrak p_2=(u,v,z)\)：代入 \((t,z)=(1,0)\) 或 \((-1,0)\)，\(A\) 上的取值都是把 \(u,v,z\) 送到零。令 \(\mathfrak p_1=\mathfrak r\cap A\)。由于 \(\mathfrak r\subseteq\mathfrak q_-\)，有 \(\mathfrak p_1\subseteq\mathfrak p_2\)；此包含严格，因为 \(z\notin\mathfrak r\)，从而 \(z\notin\mathfrak p_1\)。
+
+\ProseParagraphBreak
+注意 \(u\notin\mathfrak p_1\)，因为模掉 \(\mathfrak r\) 后 \(u=t^2-1\) 非零。倒置 \(u\) 后，\(t=v/u\) 已属于 \(A_u\)，所以 \(A_u=B_u\)。局部化素理想对应因而说明 \(\mathfrak p_1\) 在 \(B\) 中只有一个原像 \(\mathfrak r\)：任何原像都不含 \(u\)，局部化后的原像唯一，再收缩也唯一。但
+\(z-t-1\notin\mathfrak q_+\)，因为它在 \((1,0)\) 取值 \(-2\)。
+所以不存在位于 \(\mathfrak q_+\) 以下、收缩为 \(\mathfrak p_1\) 的素理想。
+
+\ProseParagraphBreak
+这里底环确实不整闭。元素 \(t=v/u\) 属于其分式域且整，却不属于 \(A\)：\(A\) 中的元素在 \((1,0)\) 与 \((-1,0)\) 取相同值，而 \(t\) 的两个值不同。这个例子直接指出整闭性在定理中的作用，不应把 Going-down 加在任意整扩张的性质清单里。

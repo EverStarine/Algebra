@@ -1,0 +1,162 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：### F.2 Gröbner 基与正规式
+% 纲要位置：工作记录/计划纲要.md，第 975 行。
+
+% 纲要要点（供目录核对）：
+% #### F.2.1 单项式理想与有限性
+% * 定义单项式理想，证明单项式属于它当且仅当被某个单项式生成元整除。
+% * 用第一卷已证的 Hilbert 基定理推出有限生成性，说明它与 \(\mathbb N^n\) 按分量比较的 Dickson 有限性之间的对应。
+% * 明确有限存在性与从给定多项式生成组实际求出标准生成组是两个步骤。
+% #### F.2.2 首项理想与 Gröbner 基
+% * 定义理想的首项理想以及 Gröbner 基。
+% * 区分“给定生成元的首项所生成的理想”与“原理想中全部元素的首项所生成的理想”。
+% * 从首项理想的有限单项式生成组提升出多项式，证明每个理想都存在有限 Gröbner 基，并证明这些多项式确实生成原理想。
+% #### F.2.3 正规余式与理想判定
+% * 证明对 Gröbner 基得到的不可约余式唯一；明确固定的是系数域和单项式序。
+% * 证明理想成员判据：\(f\in I\) 当且仅当正规余式为零。
+% * 用互相约化生成元检验理想包含和理想相等；保留零余式对应的线性组合等式。
+
+\section{Gröbner 基与正规式}
+\label{b1:sec:F02}
+
+多元除法的每一步只检查单项式能否整除，因而改进除法首先要弄清一种特别简单的理想：由单项式生成的理想。它们的成员判定完全由指数决定。把一般理想中所有非零多项式的首单项式收集起来，再生成一个这样的理想，便能把“哪些首项必须能够消去”表达为一个有限条件。
+
+\subsection{单项式理想与有限性}
+\label{b1:subsec:F02:01}
+
+\begin{definition}\label{b1:def:F-monomial-ideal}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)。若理想 \(J\subseteq R\) 能由一族单项式生成，即
+\[
+J=(x^\alpha\mid\alpha\in A)
+\]
+对某个 \(A\subseteq\mathbb N^n\) 成立，则称 \(J\) 为\term[danxiangshi-lixiang]{单项式理想}[monomial ideal]。允许 \(A=\varnothing\)，此时 \(J=0\)。
+\end{definition}
+
+例如 \((x^2,xy,y^3)\subseteq k[x,y]\) 是单项式理想，而单个多项式 \(x-y\) 生成的理想不是：若它是单项式理想，下面的判据会使 \(x\) 和 \(y\) 都属于该理想，但把 \(y=x\) 代入 \(x=h(x,y)(x-y)\) 就会得到不成立的多项式等式 \(x=0\)。
+
+\begin{proposition}\label{b1:prop:F-monomial-membership}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)，\(J=(x^\alpha\mid\alpha\in A)\subseteq R\) 是单项式理想。单项式 \(x^\beta\) 属于 \(J\)，当且仅当它被某个 \(x^\alpha\)，其中 \(\alpha\in A\)，整除。更一般地，多项式 \(f\in R\) 属于 \(J\)，当且仅当 \(f\) 中的每个单项式都被某个这样的生成元整除。
+\end{proposition}
+\begin{proof}
+若 \(f\in J\)，按生成理想的定义，存在有限个 \(\alpha^{(1)},\ldots,\alpha^{(m)}\in A\) 及多项式 \(h_1,\ldots,h_m\)，使
+\[
+f=\sum_{j=1}^m h_jx^{\alpha^{(j)}}.
+\]
+展开每个 \(h_j\)，右边出现的每个单项式都被对应的 \(x^{\alpha^{(j)}}\) 整除。合并同类项可能消去一些单项式，却不会引入从未出现过的单项式。因此 \(f\) 的每个单项式都被至少一个生成元整除。反过来，若 \(f\) 的每个单项式都如此，逐项选一个整除它的生成元，就把该项写成这个生成元的单项式倍数再乘一个系数。由于 \(f\) 只有有限项，把这些等式相加即得 \(f\in J\)。对 \(f=x^\beta\) 应用同一结论，便得到单项式的判据。
+\end{proof}
+
+这也说明单项式理想的成员判定不依赖单项式序。例如对 \(J=(x^2,xy,y^3)\)，\(x^4y+x y^2-y^5\) 的每一项都被列出的某个生成元整除，所以它在 \(J\) 中；\(x+y^2\) 的两项都不满足这一要求，故不在 \(J\) 中。对于单项式理想，不存在通过不同项相消而“意外产生”一个不被任何生成元整除的单项式的情况。
+
+\begin{lemma}[单项式生成组的有限性]\label{b1:lem:F-monomial-finite}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)。任一由 \(R\) 中单项式组成的集合 \(M\) 都有有限子集 \(M_0\subseteq M\)，使每个 \(u\in M\) 都被 \(M_0\) 中的某个单项式整除。因此单项式理想可以由有限多个单项式生成，而且可以从任何给定的单项式生成族中选取这些生成元。空集合取 \(M_0=\varnothing\)。
+\end{lemma}
+\begin{proof}
+令 \(J=(M)\)。域只有零理想和单位理想，因而是 Noether 环。由\cref{b1:thm:hilbert-basis}，有限元多项式环 \(R=k[x_1,\ldots,x_n]\) 的每个理想有限生成，故有 \(J=(f_1,\ldots,f_t)\)。每个 \(f_i\) 都是 \(M\) 中有限多个单项式的多项式系数组合；把这有限多次出现的单项式收集起来，得到有限集 \(M_0\subseteq M\)，并有
+\[
+(M_0)\subseteq J=(f_1,\ldots,f_t)\subseteq(M_0).
+\]
+于是 \(J=(M_0)\)。任意 \(u\in M\) 属于这个理想，\cref{b1:prop:F-monomial-membership}就说明 \(u\) 被 \(M_0\) 中某个单项式整除。
+\end{proof}
+
+若把 \(\mathbb N^n\) 按分量比较，\(\alpha\leq\beta\) 表示对每个 \(i\) 都有 \(\alpha_i\leq\beta_i\)，那么引理等价于：每个集合 \(A\subseteq\mathbb N^n\) 都有有限子集 \(A_0\)，使每个 \(\beta\in A\) 都大于或等于某个 \(\alpha\in A_0\)。这称为\term[Dickson-yinli]{Dickson 引理}[Dickson's lemma]。从 \(A_0\) 中删去被其他成员严格压低的元素，可得 \(A\) 的全部极小元；它们仍为有限集。这里比较的是分量偏序，而不是为除法选定的字典序等全序。
+
+\ProseParagraphBreak
+还可以换一个角度看这一有限性。每当向一个单项式生成组中加入不被此前任何生成元整除的新单项式，\cref{b1:prop:F-monomial-membership}就保证相应单项式理想严格增大。\cref{b1:thm:hilbert-basis}和\cref{b1:prop:noetherian-acc}合起来说明，\(R\) 中的理想严格升链不可能无穷延续。下一节的算法正会不断加入这种“此前没有覆盖到”的首单项式。
+
+\subsection{首项理想与 Gröbner 基}
+\label{b1:subsec:F02:02}
+
+回到一般理想 \(I\subseteq R\)，并重新固定一个单项式序 \(\prec\)。对任意给定生成组 \(g_1,\ldots,g_s\)，已经知道的首单项式只来自这几个元素；理想的其他元素却可能通过最高项相消产生新的首单项式。为了保证每个理想成员都能开始消项，必须考虑后者的全体。
+
+\begin{definition}\label{b1:def:F-initial-ideal}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想。令
+\[
+\operatorname{in}_{\prec}(I)
+\coloneqq\Bigl(\operatorname{LM}(f)\mid f\in I,\ f\ne0\Bigr)
+\]
+称 \(\operatorname{in}_{\prec}(I)\) 为 \(I\) 关于 \(\prec\) 的\term[shouxiang-lixiang]{首项理想}[initial ideal]。它是由 \(I\) 中所有非零多项式的首单项式生成的单项式理想。若 \(I=0\)，规定 \(\operatorname{in}_{\prec}(I)=0\)。
+\end{definition}
+
+\symidx{\(\operatorname{in}_{\prec}(I)\)：理想关于所选单项式序的首项理想}
+
+因为每个非零系数在 \(k\) 中可逆，用所有首项 \(\operatorname{LT}(f)\) 生成也得到同一理想。因此“首项理想”的名称与这里使用首单项式的写法相容。这个定义依赖整个理想及所选次序，不依赖写下理想时采用了哪一组生成元。
+
+\begin{definition}\label{b1:def:F-groebner-basis}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想，\(G=\{g_1,\ldots,g_s\}\) 为 \(I\) 中有限个非零多项式组成的集合。若
+\begin{equation}\label{b1:eq:F-groebner-definition}
+\operatorname{in}_{\prec}(I)
+=\Bigl(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)\Bigr),
+\end{equation}
+则称 \(G\) 为 \(I\) 关于 \(\prec\) 的一组\term[Groebner-ji]{Gröbner 基}[Gröbner basis]。零理想采用空集为 Gröbner 基。
+\end{definition}
+
+由\cref{b1:prop:F-monomial-membership}，\eqref{b1:eq:F-groebner-definition}等价于：对每个非零 \(f\in I\)，总有 \(g_i\in G\) 使 \(\operatorname{LM}(g_i)\mid\operatorname{LM}(f)\)。右边生成的单项式理想本来就包含于左边，所以只须保证每个理想成员的首单项式都被覆盖。这个定义暂时没有另行要求 \(G\) 生成 \(I\)；下面会证明生成性由所列条件推出。名称中的“基”也不表示这些多项式在线性代数意义下线性无关，更不表示每个理想成员的多项式系数表示唯一。
+
+\ProseParagraphBreak
+例如\eqref{b1:eq:F-missing-generator}说明，在字典序 \(x\succ y\) 下，\(I=(xy-1,y^2-1)\) 含有 \(x-y\)，所以 \(x\in\operatorname{in}_{\prec}(I)\)。但是 \(x\notin(xy,y^2)\)，因为它不被 \(xy\) 或 \(y^2\) 整除。因此原来的两个生成元不是 Gröbner 基。另一方面，任一单项式理想的有限单项式生成组就是 Gröbner 基：\cref{b1:prop:F-monomial-membership}已说明，该理想中每个多项式的首单项式都被某个生成元整除。
+
+\begin{theorem}[Gröbner 基的存在性]\label{b1:thm:F-groebner-existence}
+设 \(k\) 为域、\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)。对 \(R\) 的任意理想 \(I\) 及任意固定的单项式序，\(I\) 都存在有限 Gröbner 基。任一这样的基 \(G\) 都满足 \(I=(G)\)。
+\end{theorem}
+\begin{proof}
+若 \(I=0\)，取空基即可。设 \(I\ne0\)，把\cref{b1:lem:F-monomial-finite}用于
+\[
+M=\Bigl\{\operatorname{LM}(f)\mid f\in I,\ f\ne0\Bigr\}.
+\]
+可从中选出有限个单项式生成整个 \((M)\)。按 \(M\) 的定义，为每个被选出的单项式取一个给出它的 \(g_i\in I\)。所得有限集 \(G=\{g_1,\ldots,g_s\}\) 满足\eqref{b1:eq:F-groebner-definition}，故为 Gröbner 基。
+
+还须证明任何满足定义的 \(G\) 都生成 \(I\)。显然 \((G)\subseteq I\)。对 \(f\in I\)，按任意顺序用 \(G\) 作\cref{b1:thm:F-division}的除法，得到 \(f=\sum_iq_i g_i+r\)。于是 \(r\in I\)。若 \(r\ne0\)，由 Gröbner 基的定义及\cref{b1:prop:F-monomial-membership}，\(\operatorname{LM}(r)\) 被某个 \(\operatorname{LM}(g_i)\) 整除；这与除法余式中没有这样的单项式矛盾。因此 \(r=0\)，从而 \(f\in(G)\)，即 \(I\subseteq(G)\)。
+\end{proof}
+
+单位理想也没有例外：\(\{1\}\) 是 \(R\) 的 Gröbner 基，用它除任何多项式都得零余式。反过来，单位理想的任何 Gröbner 基必含非零常数，因为其首项理想含有 \(1\)，而唯一能够整除 \(1\) 的单项式就是 \(1\)。存在性定理尚未给出从一组任意多项式生成元算出 Gröbner 基的步骤；它说明所需的补充可以有限，但没有告诉我们应当依次补入哪些多项式。
+
+\subsection{正规余式与理想判定}
+\label{b1:subsec:F02:03}
+
+用一组 Gröbner 基作除法时，商 \(q_i\) 仍可能不唯一。不过，余式所代表的是同一个剩余类，而且它被限制在同一组允许出现的单项式之内。这两条约束合在一起，足以保证余式唯一。
+
+\begin{theorem}[正规式与成员判据]\label{b1:thm:F-normal-form}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备一个单项式序，\(I\subseteq R\) 为理想，\(G=\{g_1,\ldots,g_s\}\) 为 \(I\) 的 Gröbner 基。对任意 \(f\in R\)，存在唯一的 \(r\in R\)，同时满足
+\begin{enumerate}
+\item \(f-r\in I\)；
+\item \(r\) 的每个单项式都不被任何 \(\operatorname{LM}(g_i)\) 整除。
+\end{enumerate}
+用 \(G\) 作除法，无论采用怎样的除式顺序或合法消项选择，余式都等于这个 \(r\)。称它为 \(f\) 关于 \(G\) 的\term[zhenggui-yushi]{正规余式}[normal remainder]，也称\term[zhenggui-shi]{正规式}[normal form]，记为 \(\operatorname{NF}_G(f)\)。并且 \(f\in I\) 当且仅当 \(\operatorname{NF}_G(f)=0\)。
+\end{theorem}
+\begin{proof}
+\cref{b1:thm:F-division}给出至少一个这样的余式，因为 \(G\subseteq I\)，表示式 \(f- r=\sum_iq_i g_i\) 保证第一条。设 \(r\) 和 \(r'\) 都满足两条条件，则 \(r-r'\in I\)。两式相减只可能消去原有单项式，故 \(r-r'\) 中也没有被任何 \(\operatorname{LM}(g_i)\) 整除的单项式。若 \(r-r'\ne0\)，Gröbner 基的定义却要求它的首单项式被某个 \(\operatorname{LM}(g_i)\) 整除，矛盾。因此 \(r=r'\)。所有合法除法的余式均满足这两条，所以都相同。
+
+若 \(r=0\)，第一条直接给出 \(f\in I\)。若 \(f\in I\)，零多项式已经满足两条条件，余式的唯一性便给出 \(r=0\)。
+\end{proof}
+
+\symidx{\(\operatorname{NF}_G(f)\)：关于 Gröbner 基的正规余式}
+这里用 \(G\) 作下标是为了说明用于计算的基；实际上，允许出现的单项式恰是不属于 \(\operatorname{in}_{\prec}(I)\) 的单项式。因此在理想 \(I\) 和单项式序固定时，换用另一组 Gröbner 基也得到同一个正规余式。对一般的生成组，本附录只称“某次除法的余式”，不把它误记为唯一确定的 \(\operatorname{NF}_G(f)\)。
+
+\begin{proposition}\label{b1:prop:F-normal-form-linear}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备一个单项式序，\(I\subseteq R\) 为理想，\(G\) 为 \(I\) 的一组 Gröbner 基。对 \(f,h\in R\) 和 \(a,b\in k\)，有
+\[
+\operatorname{NF}_G(af+bh)
+=a\operatorname{NF}_G(f)+b\operatorname{NF}_G(h).
+\]
+此外，\(f-h\in I\) 当且仅当 \(\operatorname{NF}_G(f)=\operatorname{NF}_G(h)\)。
+\end{proposition}
+\begin{proof}
+右边只含不属于 \(\operatorname{in}_{\prec}(I)\) 的单项式，而且它与 \(af+bh\) 的差属于 \(I\)。由\cref{b1:thm:F-normal-form}的唯一性，右边正是所求正规余式。取 \(a=1\)、\(b=-1\)，再用同一定理的成员判据，便得第二个断言。
+\end{proof}
+
+正规式通常不保持多项式的乘法。例如在 \(k[y]\) 中对 \(G=\{y^2\}\)，有 \(\operatorname{NF}_G(y)=y\)，但 \(\operatorname{NF}_G(y^2)=0\ne y^2\)。商环中的乘法需要先把代表元相乘，再对结果取正规式；\secref{b1:sec:F05}将据此完成具体计算。
+
+\begin{proposition}[理想包含与相等的判定]\label{b1:prop:F-ideal-comparison}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备一个单项式序，\(I=(f_1,\ldots,f_t)\)、\(J=(h_1,\ldots,h_u)\) 为 \(R\) 的理想，并设 \(H\) 为 \(J\) 的一组 Gröbner 基。则
+\[
+I\subseteq J
+\quad\Longleftrightarrow\quad
+\operatorname{NF}_H(f_i)=0\quad(1\leq i\leq t).
+\]
+若还已知 \(I\) 的一组 Gröbner 基 \(G\)，则 \(I=J\) 当且仅当上述条件及 \(\operatorname{NF}_G(h_j)=0\)，其中 \(1\leq j\leq u\)，同时成立。
+\end{proposition}
+\begin{proof}
+由\cref{b1:thm:F-normal-form}，所列余式为零恰好表示各个 \(f_i\) 都在 \(J\) 中。因为 \(J\) 是理想，这又等价于它包含这些元素的全部多项式系数组合，即包含 \(I\)。交换 \(I\) 和 \(J\) 得到反向包含的判据；两个包含同时成立便是相等。
+\end{proof}
+
+这里用于检验的 \(f_i\) 或 \(h_j\) 可以只是普通生成元，不要求它们本身已经是 Gröbner 基；承担消项的那一组则须有 Gröbner 基的保证。每个零余式还应保留除法给出的多项式组合，从而不仅得到“属于”或“不属于”的结论，也能核验相应的包含关系。若某次计算得到非零正规余式，则成员判据已经证明不存在把原多项式写成该理想生成元组合的表示。

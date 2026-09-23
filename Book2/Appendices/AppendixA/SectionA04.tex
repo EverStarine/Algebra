@@ -1,9 +1,91 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 A 第 4 项归纳；原要点保留于 AppendixA.tex。
+% 纲要标题：### A.4 有限域与有理数上的精确算例
+% 纲要位置：工作记录/计划纲要.md，第 1587 行。
+
+% 纲要要点（供目录核对）：
+% * 有限域和有理数上的可复核例题
+% #### A.4.1 有限域上的多项式矩阵
+% #### A.4.2 有理数上的循环基与相似证书
 
 \section{有限域与有理数上的精确算例}
 \label{b2:sec:A04}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+下面的两个算例分别计算多项式矩阵的余核和有理矩阵的相似类。前者使用左右两个独立的换基，后者要求同一线性空间在定义域与值域采用同一组新基。把这两种等价关系混在一起，即使矩阵乘法都算对了，也会回答另一个问题。
 
-待撰写。
+\subsection{有限域上的多项式矩阵}
+\label{b2:subsec:A04:01}
+
+取 \(R=\mathbb F_5[t]\)，考虑
+\[
+B=\begin{pmatrix}t^2+1&t\\t&t^2\end{pmatrix}.
+\]
+所有系数在 \(\mathbb F_5\) 中运算，但 \(t\) 仍是多项式变量，不把它代成域中某个数。先作 \(C_1\leftarrow C_1-tC_2\)，得到
+\[
+\begin{pmatrix}1&t\\t-t^3&t^2\end{pmatrix}.
+\]
+再作 \(R_2\leftarrow R_2+(t^3-t)R_1\)，清除第一列下项，最后作 \(C_2\leftarrow C_2-tC_1\)。这给出
+\begin{equation}\label{b2:eq:A-polynomial-certificate}
+P=\begin{pmatrix}1&0\\t^3-t&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}1&-t\\-t&1+t^2\end{pmatrix},\qquad
+PBQ=\begin{pmatrix}1&0\\0&t^4\end{pmatrix}.
+\end{equation}
+这里 \(\det P=\det Q=1\)，所以换基始终在 \(\mathbb F_5[t]\) 上可逆。独立检查中，一阶子式生成单位理想，因为 \((t^2+1)-t\cdot t=1\)；行列式为 \(t^4\)。由\cref{b2:thm:smith-uniqueness}，不变因子确为 \(1,t^4\)。
+
+\ProseParagraphBreak
+由\cref{b2:prop:smith-cokernel}，原余核为 \(R/(t^4)\)。更具体地，映射
+\[
+R^2\longrightarrow R/(t^4),\qquad
+\binom{u}{v}\longmapsto (t^3-t)u+v+(t^4)
+\]
+是 \(P\) 变换后的第二坐标模去 \(t^4\)，其核恰是 \(B(R^2)\)。因为 \(P^{-1}e_2=e_2\)，原坐标中 \(e_2\) 的陪集生成这个循环模。商模作为 \(\mathbb F_5\) 向量空间的一组基为
+\[
+\overline e_2,\quad t\overline e_2,\quad
+t^2\overline e_2,\quad t^3\overline e_2.
+\]
+乘 \(t\) 的算子在这组基下是 \(C(t^4)\)，其最小多项式为 \(t^4\)。因此余核虽由一个 \(R\) 元素生成，却是四维的 \(\mathbb F_5\) 向量空间。这两个“生成元个数”讨论的是不同的标量作用。
+
+\ProseParagraphBreak
+若只计算 \(B\) 在分式域 \(\mathbb F_5(t)\) 上的秩，会得到二；这只能说明它在那里可逆，不能说明它在 \(R\) 上满射。\(t^4\) 是非零多项式，却不是 \(R\) 中的单位，正是原余核不为零的原因。
+
+\subsection{有理数上的循环基与相似证书}
+\label{b2:subsec:A04:02}
+
+在 \(\mathbb Q^3\) 上取算子矩阵
+\[
+T=\begin{pmatrix}
+\tfrac12&-\tfrac14&3\\
+1&-\tfrac12&2\\
+0&1&0
+\end{pmatrix},\qquad v=\begin{pmatrix}1\\0\\0\end{pmatrix}.
+\]
+逐次乘法给出
+\[
+Tv=\begin{pmatrix}\tfrac12\\1\\0\end{pmatrix},\qquad
+T^2v=\begin{pmatrix}0\\0\\1\end{pmatrix},\qquad
+T^3v=\begin{pmatrix}3\\2\\0\end{pmatrix}=2v+2Tv.
+\]
+前三个向量组成列矩阵
+\[
+S=(v\ Tv\ T^2v)=
+\begin{pmatrix}1&\tfrac12&0\\0&1&0\\0&0&1\end{pmatrix},\qquad \det S=1.
+\]
+因此它们是一组循环基。记 \(f(t)=t^3-2t-2\)，则其友矩阵为
+\[
+C(f)=\begin{pmatrix}0&0&2\\1&0&2\\0&1&0\end{pmatrix}.
+\]
+三列所表示的等式合并为如下相似证书：
+\begin{equation}\label{b2:eq:A-rational-similarity}
+TS=SC(f),\qquad \det S=1,
+\qquad S^{-1}TS=C(f).
+\end{equation}
+于是特征多项式和最小多项式均为 \(f\)，有理标准形只有这一个块。最小多项式的结论也能直接核验：次数至多为二的非零多项式不可能零化 \(v\)，否则 \(v,Tv,T^2v\) 线性相关；而 \(f(T)v=0\)，与 \(T\) 交换后得到 \(f(T)T^jv=0\)，所以 \(f(T)\) 零化整个空间。
+
+\ProseParagraphBreak
+还可以用同一证书求逆。由 \(T^3-2T-2I=0\) 得
+\begin{equation}\label{b2:eq:A-rational-inverse}
+T^{-1}=\tfrac12(T^2-2I).
+\end{equation}
+右侧与 \(T\) 交换，左右乘积均为单位矩阵。全程只使用有理数运算，没有求近似特征值，也不必先把 \(f\) 的根写出来。
+
+\ProseParagraphBreak
+\eqref{b2:eq:A-polynomial-certificate}保存的是两个自由模的独立换基，\eqref{b2:eq:A-rational-similarity}保存的是一个算子在同一空间中的换基。后者必须满足左乘矩阵等于右乘矩阵的逆；任意独立的行列操作通常不保持特征多项式，更不保持相似类。开始计算之前，先明确要判断的是余核同构、线性方程可解性，还是算子相似性，才能选择合适的证书。

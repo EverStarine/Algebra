@@ -1,36 +1,155 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 8.1 全局单项式序与多元除法
-% 纲要位置：计划纲要.md，第 1722 行。
+% 纲要位置：工作记录/计划纲要.md，第 2040 行。
+% 纲要细目（写作范围）：
+% * 定义并验证乘法相容的良序及字典序、分次字典序、分次逆字典序
+% * 建立首项、首项理想和标准单项式，完整证明多元除法及首项界；结合计算说明选序的影响
+% * 说明余式依赖性，完整证明单项式成员判据、Dickson有限性、Gröbner基存在及正规式唯一性
+% * 本章的除法和终止证明依赖全局良序；局部序与混合序转附录 F 简介，不作为后续正文所需的基础
+
+
 
 \section{全局单项式序与多元除法}
 \label{b3:sec:0801}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 乘法相容的良序；字典序、分次字典序与分次逆字典序
-% * 首项、首项理想、标准单项式及多元除法
-% * 余式对除式顺序的依赖；单项式理想与 Dickson 引理
-% * 本章的除法和终止证明依赖全局良序；局部序与混合序转附录 F 简介，不作为后续正文所需的基础
-%
-
+理想的有限生成性只保证存在有限描述，并不立即给出成员判定的方法。一元多项式的带余除法提示我们先处理最高项；多元情形没有唯一的“最高次数项”，必须先选择一个与乘法相容的次序。以下固定域 \(k\)、正整数 \(n\) 和 \(R=k[x_1,\ldots,x_n]\)。代数结论适用于任意域；称某过程为可执行算法时，还要求系数域支持精确四则运算及零判定。
 \subsection{字典序、分次字典序与分次逆字典序}
 \label{b3:subsec:0801:01}
 
-待撰写。
+对 \(\alpha=(\alpha_1,\ldots,\alpha_n)\in\mathbb N^n\)，记
+\[
+x^\alpha=x_1^{\alpha_1}\cdots x_n^{\alpha_n},
+\qquad |\alpha|=\alpha_1+\cdots+\alpha_n.
+\]
+这里 \(\mathbb N\) 含零。\(x^\alpha\) 称为单项式，\(|\alpha|\) 为其全次数；非零系数与单项式的乘积称为项。单项式整除等价于各坐标指数分别不大于。
+
+\begin{definition}\label{b3:def:global-monomial-order}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，其中 \(1\le n<\infty\)。\(R\) 的单项式集合上的全序 \(\prec\)，若每个非空子集都有最小元，且
+\[
+x^\alpha\prec x^\beta
+\quad\Longrightarrow\quad
+x^{\alpha+\gamma}\prec x^{\beta+\gamma}
+\quad(\gamma\in\mathbb N^n),
+\]
+称为\term[danxiangshi-xu]{单项式序}[monomial order]，本章也称全局单项式序。良序性与乘法相容性是两个分别需要核验的条件。
+\end{definition}
+
+单位单项式 \(1\) 必为最小元。否则若 \(m\prec1\)，相乘给出 \(1\succ m\succ m^2\succ\cdots\)，违反良序。反之，一个与乘法相容且以一为最小元的全序，在有限个变量的交换单项式上也必为良序；本节稍后用 Dickson 引理说明这个结论。
+
+\ProseParagraphBreak
+固定变量优先顺序 \(x_1\succ\cdots\succ x_n\)，三种常用次序如下。
+\begin{enumerate}
+\item \term[zidian-xu]{字典序}[lexicographic order]：在 \(\alpha-\beta\) 的第一个非零坐标处，正数对应较大的单项式。
+\item \term[fenci-zidian-xu]{分次字典序}[graded lexicographic order]：先比较全次数，全次数相同时再按字典序比较。
+\item \term[fenci-ni-zidian-xu]{分次逆字典序}[graded reverse lexicographic order]：先比较全次数；相同时，在 \(\alpha-\beta\) 的最后一个非零坐标处，负数对应较大的单项式。
+\end{enumerate}
+字典序的非空指数集有最小元：依次在剩余指数中最小化第一、第二直至第 \(n\) 个坐标。后两种次序先选最小全次数，该次数下只有有限个单项式，再取最小者。给两指数同时加上 \(\gamma\) 不改变差向量，也不改变全次数之差，所以三种次序都与乘法相容。
+
+\ProseParagraphBreak
+在三个变量中，分次字典序把 \(xz\) 排在 \(y^2\) 前面，分次逆字典序却把 \(y^2\) 排在 \(xz\) 前面；字典序则把 \(x\) 排在每个 \(y^N\) 前面，而与 \(N\) 多大无关。所谓“逆”不是把一个良序整体倒过来，而只是在全次数相等时改变最后一个不同指数的比较方向。后文的消去需要特定次序，不能把这三种次序互换而不检查结论。
 
 \subsection{首项、标准单项式与多元除法}
 \label{b3:subsec:0801:02}
 
-待撰写。
+\begin{definition}\label{b3:def:leading-data}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定单项式序 \(\prec\)。将 \(0\ne f\in R\) 按此序写成有限个项之和。最大的单项式记为 \(\operatorname{LM}(f)\)，其系数记为 \(\operatorname{LC}(f)\)，二者的乘积记为 \(\operatorname{LT}(f)\)，分别称为\term[shou-danxiangshi]{首单项式}[leading monomial]、\term[shouxiang-xishu]{首项系数}[leading coefficient]和\term[shouxiang]{首项}[leading term]。零多项式不定义首项。
+\end{definition}
+\symidx{\(\operatorname{LM}(f),\operatorname{LC}(f),\operatorname{LT}(f)\)：首单项式、首项系数与首项}
+
+若 \(f,g\ne0\)，乘法相容性保证
+\[
+\operatorname{LM}(fg)=\operatorname{LM}(f)\operatorname{LM}(g),
+\qquad
+\operatorname{LC}(fg)=\operatorname{LC}(f)\operatorname{LC}(g).
+\]
+因为除了两个最高项的乘积，其余乘积至少有一因子较小，故严格小于最高乘积，不可能抵消它。这里用到了系数域中两个非零数的乘积仍非零。
+
+\begin{theorem}[多元除法]\label{b3:thm:multivariate-division}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序 \(\prec\)。给定 \(R\) 中的有序组 \(G=(g_1,\ldots,g_s)\)，其中各 \(g_i\ne0\)，每个 \(f\in R\) 都能在有限步内写成
+\begin{equation}\label{b3:eq:multivariate-division}
+f=\sum_{i=1}^s q_i g_i+r,
+\end{equation}
+其中 \(r\) 的每个单项式都不被任何 \(\operatorname{LM}(g_i)\) 整除。若 \(f\ne0\)，所有非零乘积 \(q_i g_i\) 以及非零余式 \(r\) 的首单项式均不大于 \(\operatorname{LM}(f)\)。
+\end{theorem}
+\begin{proof}
+令 \(h=f\)，各 \(q_i=0\)，\(r=0\)。若 \(h\ne0\)，查找第一个满足 \(\operatorname{LM}(g_i)\mid\operatorname{LM}(h)\) 的下标。若存在，置
+\[
+u=\frac{\operatorname{LT}(h)}{\operatorname{LT}(g_i)},
+\qquad q_i\longleftarrow q_i+u,\qquad h\longleftarrow h-ug_i.
+\]
+这里 \(u\) 是一个项，系数除法在域 \(k\) 中进行。若不存在，就把 \(\operatorname{LT}(h)\) 加入 \(r\)，再从 \(h\) 中减去它。每步均保持恒等式
+\[
+f=\sum_iq_ig_i+r+h.
+\]
+新的非零待处理式的首单项式严格下降，良序性排除无限执行。最终 \(h=0\)，得到除法等式。移入余式的项不能被任何 \(\operatorname{LM}(g_i)\) 整除，且后来的项更小，不会改变这一性质。
+
+每步加入的乘积 \(ug_i\) 的首单项式等于当时 \(\operatorname{LM}(h)\)，因而不超过初始 \(\operatorname{LM}(f)\)。对同一个 \(i\) 把这些乘子相加，也不会产生更大的项；移入余式的项同样受这个界限制。这证明最后的首项界。\(f=0\) 时全部输出为零；空除数组时逐项移入余式，输出 \(r=f\)。
+\end{proof}
+
+除法因此同时产生余式和一个理想成员的线性组合表示。但是，非零余式目前只说明这次除法没有化为零，尚不能断言 \(f\notin(G)\)。要使这种逆向判断成立，必须对生成组增加条件。
+
+\begin{definition}\label{b3:def:groebner-basis}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序 \(\prec\)。理想 \(I\subseteq R\) 的\term[shouxiang-lixiang]{首项理想}[initial ideal]为
+\[
+\operatorname{in}_{\prec}(I)
+=\Bigl(\operatorname{LM}(f)\mid 0\ne f\in I\Bigr).
+\]
+若有限组 \(G\subseteq I\setminus\{0\}\) 满足
+\[
+\operatorname{in}_{\prec}(I)
+=\Bigl(\operatorname{LM}(g)\mid g\in G\Bigr),
+\]
+称 \(G\) 为 \(I\) 的 \term[Groebner-ji]{Gröbner 基}[Gröbner basis]。不属于首项理想的单项式称为\term[biaozhun-danxiangshi]{标准单项式}[standard monomial]。
+\end{definition}
+\symidx{\(\operatorname{in}_{\prec}(I)\)：理想关于指定单项式序的首项理想}
+
+首项理想也可由首项生成，因为每个非零首系数在域中可逆。定义先要求 \(G\subseteq I\)，尚未把“生成 \(I\)”作为额外公理；下一小节证明这项生成性自动成立。零理想以空组为 Gröbner 基，单位理想以 \(\{1\}\) 为 Gröbner 基。
 
 \subsection{余式的顺序依赖与 Dickson 引理}
 \label{b3:subsec:0801:03}
 
-待撰写。
+在 \(k[x,y]\) 中取字典序 \(x\succ y\)，令
+\[
+g_1=xy-1,\qquad g_2=y^2-1,\qquad f=xy^2.
+\]
+先用 \(g_1\) 得到 \(f=yg_1+y\)，余式为 \(y\)；先用 \(g_2\) 得到 \(f=xg_2+x\)，余式为 \(x\)。两个余式的项都不能被 \(xy,y^2\) 整除，却不相等。进一步，\(x-y=yg_1-xg_2\) 属于原理想，按这组生成元除法却留下非零余式。问题在生成组，而不在除法恒等式。
+
+\begin{lemma}[Dickson]\label{b3:lem:dickson}
+设 \(n\) 为有限正整数。对任意 \(E\subseteq\mathbb N^n\)，存在有限子集 \(E_0\subseteq E\)，使每个 \(\alpha\in E\) 都逐坐标不小于某个 \(\beta\in E_0\)。因此任意单项式理想由有限个单项式生成，单项式理想的升链必稳定。
+\end{lemma}
+\begin{proof}
+先说明每个无限自然数序列都含无限非下降子序列。如果某个值出现无限次，就取常值子序列；否则每个有界区间中只有有限项，可以逐次在尾部选出更大的值。对 \(\mathbb N^n\) 中的无限序列先按第一坐标抽取，再按第二坐标抽取，直至第 \(n\) 个坐标，便得到所有坐标均非下降的无限子序列。特别地，原序列中存在 \(i<j\)，使第 \(i\) 项逐坐标不大于第 \(j\) 项。
+
+若不存在所需有限 \(E_0\)，先选 \(\alpha^{(1)}\in E\)，然后总可选取一个不逐坐标大于等于任何已选指数的新指数。这样得到无限序列，其中没有上一段所说的一对，矛盾。\(E=\varnothing\) 时取空集即可。
+
+由单项式生成的理想，作为向量空间恰由这些单项式的全部倍数生成：展开多项式系数给出一个包含，倍数本身属于理想给出反向包含。不同单项式线性无关，因此单项式属于该理想，当且仅当它被某个生成单项式整除。把指数结论用于所有生成单项式，便得有限生成。对单项式理想升链取并，选并理想的有限组生成元；它们同时落在某个链成员中，此后各成员都等于并理想，故升链稳定。
+\end{proof}
+
+这一论证称为 \term[Dickson-yinli]{Dickson 引理}[Dickson's lemma]。它只使用自然数指数的有限维性质，不预先借用多项式环的 Hilbert 基定理。
+
+\begin{theorem}\label{b3:thm:groebner-existence-normal-form}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序。每个理想 \(I\subseteq R\) 都存在有限 Gröbner 基。若 \(G\) 为其 Gröbner 基，则 \(I=(G)\)，且除法余式是只含标准单项式、与 \(f\) 模 \(I\) 同余的唯一多项式。特别地，
+\[
+f\in I\quad\Longleftrightarrow\quad\operatorname{NF}_G(f)=0,
+\]
+其中 \(\operatorname{NF}_G(f)\) 称为 \(f\) 的\term[zhenggui-shi]{正规式}[normal form]。
+\end{theorem}
+\begin{proof}
+由\cref{b3:lem:dickson}，可从全部 \(\operatorname{LM}(f)\)、\(0\ne f\in I\)，中选出有限个单项式，生成首项理想。各选一个产生它的 \(g_i\in I\)，便得有限 Gröbner 基。
+
+若 \(f\in I\)，按该基除法得到的余式 \(r=f-\sum_iq_ig_i\) 仍在 \(I\) 中。若 \(r\ne0\)，它的首单项式属于首项理想，却又不被任何 \(\operatorname{LM}(g_i)\) 整除，与\cref{b3:lem:dickson}证明中的单项式成员判据矛盾。因此 \(r=0\)，并得到 \(I=(G)\)。
+
+对一般 \(f\)，除法余式只含标准单项式且与 \(f\) 同余。若还有一个这样的 \(r'\)，则非零的 \(r-r'\in I\) 也只含标准单项式，同样矛盾，故 \(r=r'\)。这证明唯一性。理想成员的余式已证为零；反向，余式为零的除法等式直接给出 \(f\in(G)=I\)。
+\end{proof}
+\symidx{\(\operatorname{NF}_G(f)\)：关于 Gröbner 基的正规式}
 
 \subsection{全局良序与算法终止的适用范围}
 \label{b3:subsec:0801:04}
 
-待撰写。
+良序性不是一个可以在证明末尾略去的形式要求。若把一元单项式按 \(1\succ x\succ x^2\succ\cdots\) 排列，则 \(1-x\) 的首项为一。用它约化一，会依次留下 \(x,x^2,x^3,\ldots\)，永不终止。这类局部次序有其用途，但需要其他终止机制，不能直接使用本节的除法算法。
+
+\ProseParagraphBreak
+在本章的有限变量交换情形下，若一个乘法相容的全序以一为最小元，Dickson 引理反而能推出其良序性。否则有严格下降序列 \(m_1\succ m_2\succ\cdots\)；从中取 \(i<j\) 且 \(m_i\mid m_j\)。写 \(m_j=m_i u\)，因 \(1\preceq u\)，乘法相容性使 \(m_i\preceq m_j\)，矛盾。此论证依赖指数属于 \(\mathbb N^n\)，不能直接用于非交换字或无限多个变量。
+
+\ProseParagraphBreak
+存在有限 Gröbner 基与实际计算它仍是两件事：上面的存在性证明从整个理想的首项中选择生成元，尚不是有限输入的计算过程。下一节从已经给定的有限生成组出发，只用有限次四则运算和单项式比较逐步完成这个构造。

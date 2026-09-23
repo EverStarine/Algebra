@@ -1,30 +1,99 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.2 理想与局部化
-% 纲要位置：计划纲要.md，第 1532 行。
+% 纲要位置：工作记录/计划纲要.md，第 1850 行。
+% 纲要细目（写作范围）：
+% * 扩张、收缩和饱和
+% * 局部化后的素理想对应
+% * 剩余域与纤维
 
 \section{理想与局部化}
 \label{b3:sec:0202}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 扩张、收缩和饱和
-% * 局部化后的素理想对应
-% * 剩余域与纤维
-%
+局部化可能使一个非零理想变成零，也可能使一个真理想变成单位理想。要准确追踪理想，必须同时使用扩张与收缩；回到原环后增加的元素，正是能被某个允许的分母送入原理想的元素。本节还把第一章的素谱对应用于剩余域及纤维。
 
 \subsection{扩张、收缩与饱和}
 \label{b3:subsec:0202:01}
 
-待撰写。
+对理想 \(I\subseteq R\)，扩张理想 \(I(S^{-1}R)\) 正好由 \(a/s\)、\(a\in I\)、\(s\in S\) 组成，记为 \(S^{-1}I\)。这是因为这些分式对加法及任意环分式的乘法封闭，而且每个 \(a/s=(a/1)(1/s)\)。对 \(J\subseteq S^{-1}R\)，其收缩是 \(J^c=\{r\in R:r/1\in J\}\)。
+
+\begin{definition}\label{b3:def:multiplicative-saturation}
+理想 \(I\) 关于乘法集 \(S\) 的\term[chengfaji-baohe]{饱和}[saturation with respect to a multiplicative set]为
+\[
+I:S^\infty\coloneqq\{\,r\in R\mid sr\in I\text{ 对某个 }s\in S\text{ 成立}\,\}.
+\]
+若 \(I:S^\infty=I\)，称 \(I\) 关于 \(S\) 饱和。记号中的 \(\infty\) 仅提示允许乘上分母；这里没有把 \(S\) 当作理想取幂。
+\end{definition}
+\symidx{\(I:S^\infty\)：理想关于乘法集的饱和}
+
+\begin{proposition}\label{b3:prop:ideal-localization-saturation}
+对上述理想有
+\[
+(S^{-1}I)^c=I:S^\infty,\qquad S^{-1}(J^c)=J.
+\]
+因此 \(S^{-1}R\) 的理想与 \(R\) 中关于 \(S\) 饱和的理想一一对应。此外，\(S^{-1}I=S^{-1}R\) 当且仅当 \(I\cap S\ne\varnothing\)。
+\end{proposition}
+\begin{proof}
+若 \(r/1=a/s\)、\(a\in I\)，则存在 \(u\in S\) 使 \(u(sr-a)=0\)，所以 \((us)r=ua\in I\)。反过来，若 \(sr\in I\)，则 \(r/1=(sr)/s\in S^{-1}I\)。这证明第一个等式，也证明所定义的饱和是理想。
+
+对 \(a/s\in J\)，有 \(a/1=(s/1)(a/s)\in J\)，因而 \(a\in J^c\)；反向包含由 \(J\) 是理想得到。两个等式还表明扩张收缩在饱和理想上互逆。最后，\(1\in(S^{-1}I)^c\) 等价于存在 \(s\in S\) 属于 \(I\)，这就是单位理想的判据。
+\end{proof}
+
+在 \(R=k[x,y]\) 中，取 \(S=\{1,x,x^2,\ldots\}\)、\(I=(xy)\)，则
+\[
+I:S^\infty=(y),\qquad I R_x=(y)R_x.
+\]
+确实，\(x(y)\subseteq I\) 给出一个包含；若 \(x^n f\in(xy)\)，在整环 \(k[x,y]/(y)=k[x]\) 中约去非零的 \(x^n\)，便得 \(f\in(y)\)。同一个 \(I\) 在 \(x,y\) 都可逆的环中扩张成单位理想。
+
+\ProseParagraphBreak
+若 \(S\) 由单个 \(f\) 的幂组成，这个饱和就是 \(I:f^\infty=\bigcup_n(I:f^n)\)。它与关于多生成元理想 \(J\) 的 \(I:J^\infty\) 不同：后者要求 \(J^n r\subseteq I\)，即该幂理想的每个元素都满足条件；本节的定义只要求存在一个分母。理想商与饱和的系统计算将在\chapref{b3:ch:08}继续讨论。
 
 \subsection{局部化中的素理想对应}
 \label{b3:subsec:0202:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:localized-prime-ideals}
+扩张与收缩给出对应
+\[
+\{\,\mathfrak p\in\operatorname{Spec}R\mid\mathfrak p\cap S=\varnothing\,\}
+\longleftrightarrow\operatorname{Spec}(S^{-1}R),
+\qquad \mathfrak p\longmapsto S^{-1}\mathfrak p.
+\]
+在 \(R_{\mathfrak p}\) 中唯一的极大理想为 \(\mathfrak pR_{\mathfrak p}\)，其素理想对应于 \(R\) 中包含在 \(\mathfrak p\) 内的素理想。
+\end{proposition}
+\begin{proof}
+第一章的\cref{b3:thm:spec-localization}已证明这一对应及其拓扑相容性；这里说明代数上怎样使用。若 \(sr\in\mathfrak p\)、\(s\notin\mathfrak p\)，素性给出 \(r\in\mathfrak p\)，故 \(\mathfrak p\) 饱和。商环
+\[
+(S^{-1}R)/(S^{-1}\mathfrak p)\cong\bar S^{-1}(R/\mathfrak p)
+\]
+是非零整环，因此扩张仍为素理想。相反，局部化环中所有 \(s/1\) 都是单位，不可能落入真素理想；其收缩是与 \(S\) 不交的素理想。由\cref{b3:prop:ideal-localization-saturation}两种操作互逆。
+
+取 \(S=R\setminus\mathfrak p\)。一个素理想与 \(S\) 不交正是它包含于 \(\mathfrak p\)，故最大的一个为 \(\mathfrak p\)。也可直接看出，若 \(a/s\notin\mathfrak pR_{\mathfrak p}\)，则 \(a\notin\mathfrak p\)，其逆为 \(s/a\)；所以剩下的全部元素都是单位，极大理想唯一。
+\end{proof}
 
 \subsection{剩余域与纤维}
 \label{b3:subsec:0202:03}
 
-待撰写。
+\begin{definition}\label{b3:def:residue-field-fibre}
+素理想 \(\mathfrak p\subseteq R\) 处的剩余域为
+\[
+\kappa(\mathfrak p)\coloneqq R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}
+\cong\operatorname{Frac}(R/\mathfrak p).
+\]
+给定环同态 \(\varphi:R\rightarrow A\)，称 \(A\otimes_R\kappa(\mathfrak p)\) 为其在 \(\mathfrak p\) 处的\term[xianwei-daishu]{纤维代数}[fibre algebra]。对 \(R\) 模 \(M\)，相应的剩余向量空间为 \(M\otimes_R\kappa(\mathfrak p)\cong M_{\mathfrak p}/\mathfrak pM_{\mathfrak p}\)。
+\end{definition}
+\symidx{\(\kappa(\mathfrak p)\)：素理想处的剩余域}
+
+剩余域的同构可从分式直接看出：模掉 \(\mathfrak p\) 后，\(R\setminus\mathfrak p\) 的像恰是整环 \(R/\mathfrak p\) 的全部非零元素。两个张量描述则依次使用\cref{b3:prop:localization-tensor}及商模的张量公式。
+
+\begin{proposition}\label{b3:prop:fibre-spectrum}
+纤维代数的素理想自然对应于 \(A\) 中满足 \(\varphi^{-1}(\mathfrak q)=\mathfrak p\) 的素理想 \(\mathfrak q\)。
+\end{proposition}
+\begin{proof}
+令 \(S=R\setminus\mathfrak p\)，则
+\[
+A\otimes_R\kappa(\mathfrak p)
+\cong S^{-1}A/\mathfrak pS^{-1}A.
+\]
+商环的素理想对应于 \(S^{-1}A\) 中包含 \(\mathfrak pS^{-1}A\) 的素理想；局部化对应又把它们识别为 \(A\) 中包含 \(\varphi(\mathfrak p)\) 且与 \(\varphi(S)\) 不交的素理想。这两个条件分别给出 \(\mathfrak p\subseteq\varphi^{-1}(\mathfrak q)\) 及反向包含，故恰好是所述等式。
+\end{proof}
+
+例如 \(k[t]\rightarrow k[x]\)、\(t\mapsto x^2\) 在 \((t-a)\) 处的纤维代数为 \(k[x]/(x^2-a)\)。当 \(a=0\) 时，其中 \(x\) 的像非零却平方为零；即使素谱只有一个点，纤维代数仍保存这项幂零信息。当 \(a\ne0\)、\(\operatorname{char}k\ne2\) 且 \(a=b^2\) 时，中国剩余定理给出 \(k[x]/(x^2-a)\cong k\times k\)。若 \(a\) 在 \(k\) 中没有平方根，商环则为二次域扩张。纤维的点与剩余域都依赖基域。

@@ -1,9 +1,96 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 A 第 1 项归纳；原要点保留于 AppendixA.tex。
+% 纲要标题：### A.1 多项式矩阵与 Smith 标准形算法
+% 纲要位置：工作记录/计划纲要.md，第 1561 行。
+
+% 纲要要点（供目录核对）：
+% * 多项式矩阵、Smith 标准形与精确算法
+% #### A.1.1 行列变换的记录
+% #### A.1.2 主元约化与整除链
+% #### A.1.3 标准形证书与线性方程
 
 \section{多项式矩阵与 Smith 标准形算法}
 \label{b2:sec:A01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+\chapref{b2:ch:04}已经证明 Smith 标准形的存在性和唯一性。实际求解时，还要回答两个问题：允许哪些运算，怎样确认最终输出确实对应原来的矩阵？本节在整数环或一元多项式环上记录每一步换基，使标准形同时给出原坐标中的解、核与余核。
 
-待撰写。
+\subsection{行列变换的记录}
+\label{b2:subsec:A01:01}
+
+设 \(R=\mathbb Z\) 或 \(R=k[t]\)，其中域 \(k\) 的加减乘除和相等判定均可精确执行。输入 \(A\in M_{m\times n}(R)\)，从
+\[
+B=A,\qquad P=I_m,\qquad Q=I_n
+\]
+出发，始终保存 \(B=PAQ\)。作行变换 \(B\leftarrow EB\) 时同步令 \(P\leftarrow EP\)；作列变换 \(B\leftarrow BF\) 时同步令 \(Q\leftarrow QF\)。这里 \(E,F\) 分别是相应尺寸的可逆初等矩阵。注意行变换的矩阵累积在 \(P\) 的左侧，列变换的矩阵累积在 \(Q\) 的右侧。
+
+\ProseParagraphBreak
+这些规则看似只是在保存计算过程，却决定了最后能否把解送回原坐标。若 \(x=Qy\)，原方程 \(Ax=b\) 恰好变成 \(By=Pb\)。因此右端要随行变换改变，而未知量的坐标要用 \(Q\) 变回去，不能把两个换基矩阵混用。
+
+\begin{example}\label{b2:exm:A-integer-certificate}
+取整数矩阵
+\[
+A=\begin{pmatrix}4&6&2\\2&6&4\end{pmatrix}.
+\]
+先交换两行，再从第二行减去第一行的两倍，最后把第二行乘 \(-1\)，得到
+\[
+\begin{pmatrix}2&6&4\\0&6&6\end{pmatrix}.
+\]
+接着依次作 \(C_2\leftarrow C_2-3C_1\)、\(C_3\leftarrow C_3-2C_1\)、\(C_3\leftarrow C_3-C_2\)，其中最后一步的 \(C_2\) 指已经更新的列。结果及累积矩阵为
+\begin{equation}\label{b2:eq:A-integer-certificate}
+P=\begin{pmatrix}0&1\\-1&2\end{pmatrix},\qquad
+Q=\begin{pmatrix}1&-3&1\\0&1&-1\\0&0&1\end{pmatrix},\qquad
+PAQ=\begin{pmatrix}2&0&0\\0&6&0\end{pmatrix}.
+\end{equation}
+两换基矩阵的行列式均为一，且 \(2\mid6\)，所以这个等式是 Smith 标准形的完整证书。原矩阵的一阶子式最大公因子为二，三个二阶子式分别为 \(12,12,12\)，也与对角元的乘积相符。
+\end{example}
+
+\subsection{主元约化与整除链}
+\label{b2:subsec:A01:02}
+
+整数带余除法使用非负余数，多项式带余除法使用次数严格较小的余式。对非零主元 \(a\)，若同一列中有 \(b\)，写 \(b=qa+r\)，减去相应的 \(q\) 倍主元行。余数非零时交换这两行，新的主元是 \(r\)。处理同行元素则使用列变换。为明确最后的整除检查，\cref{b2:alg:A-smith}列出完整步骤；其中 \(j\) 表示当前尚未处理的首个行列位置。
+
+\begin{algorithm}[htbp]
+\caption{整数与一元多项式矩阵的 Smith 约化}
+\label{b2:alg:A-smith}
+\begin{algorithmsteps}{\(A\in M_{m\times n}(R)\)，其中 \(R=\mathbb Z\) 或 \(k[t]\)}{幺模矩阵 \(P,Q\) 及满足 \(PAQ=D\) 的 Smith 标准形 \(D\)}
+\State 初始化 \(B=A\)、\(P=I_m\)、\(Q=I_n\)、\(j=1\)。每次变换同步更新 \(P,Q\)。
+\While{\(j\le\min(m,n)\)}
+\State 若右下剩余子块为零，结束；否则把其中一个非零项移到 \((j,j)\)。
+\State 用带余除法检查第 \(j\) 列和第 \(j\) 行。发现非零余数就把它换成主元，并重新检查；全被主元整除时，清除该列下方及该行右方。
+\State 若主元不整除右下子块某项，把该项所在行加到第 \(j\) 行，返回上一步；否则保留当前主元，令 \(j\leftarrow j+1\)。
+\EndWhile
+\State 把非零对角元归一化为正整数或首一多项式，仍同步更新换基矩阵；输出 \(P,Q,B\)。
+\end{algorithmsteps}
+\end{algorithm}
+
+每遇到非零余数，整数主元的绝对值或多项式主元的次数严格下降。一次完整的行列清除只需有限步；若子块还有不被主元整除的项，把它引入主元行后，下一次约化又产生非零余数。因此同一个位置不可能无限停留。主元整除整个剩余子块后，后续只在子块内作行列变换，新条目仍是旧条目的线性组合，仍被这个主元整除。这样得到的各个非零对角元才构成整除链。
+
+\ProseParagraphBreak
+这正是\cref{b2:thm:smith-normal-form}中存在性证明在 Euclid 整环上的执行方式，所用下降量在这里明确可计算。只做到对角化仍不够：例如 \(\operatorname{diag}(6,10)\) 不满足 Smith 条件，因为 \(6\nmid10\)；其一阶子式最大公因子为二，行列式为六十，\cref{b2:thm:smith-uniqueness}给出的归一化对角元应为 \(2,30\)。
+
+\subsection{标准形证书与线性方程}
+\label{b2:subsec:A01:03}
+
+\begin{proposition}\label{b2:prop:A-smith-solving}
+设 \(R\) 是主理想整环，\(A\in M_{m\times n}(R)\)，并已知
+\[
+PAQ=D,\qquad P\in\operatorname{GL}_m(R),\quad Q\in\operatorname{GL}_n(R),
+\]
+其中 \(D\) 是非零对角元为 \(d_1\mid\cdots\mid d_r\) 的 Smith 标准形。给定 \(b\in R^m\)，记 \(c=Pb\)。方程 \(Ax=b\) 有解当且仅当
+\[
+d_i\mid c_i\quad(1\le i\le r),\qquad c_i=0\quad(r<i\le m).
+\]
+有解时，全部解是 \(x=Qy\)，其中 \(y_i=c_i/d_i\) 对 \(i\le r\) 成立，其余 \(n-r\) 个坐标任取。特别地，\(\ker A\) 的一组基为 \(Qe_{r+1},\ldots,Qe_n\)。
+\end{proposition}
+\begin{proof}
+代入 \(x=Qy\) 并左乘 \(P\)，把原方程等价变为 \(Dy=c\)。前 \(r\) 行分别是 \(d_i y_i=c_i\)，其可解性就是整除条件；由于 \(d_i\ne0\) 且 \(R\) 为整环，可解时该坐标唯一。剩余行左端为零，正好给出所述零坐标条件；剩余列不受限制。\(Q\) 是同构，把这些自由坐标的标准基送成原核的一组基。
+\end{proof}
+
+在\cref{b2:exm:A-integer-certificate}中取 \(b=(10,8)^{\mathsf T}\)，则 \(Pb=(8,6)^{\mathsf T}\)，所以
+\[
+x=\begin{pmatrix}1\\1\\0\end{pmatrix}
+  +z\begin{pmatrix}1\\-1\\1\end{pmatrix},\qquad z\in\mathbb Z.
+\]
+直接乘原矩阵分别得到 \(b\) 和零，便同时核验了一个特解与齐次解。若把右端换成 \((8,8)^{\mathsf T}\)，则变换后的第二个坐标是八，不能被六整除，故没有整数解，即使在 \(\mathbb Q\) 上仍有解。
+
+\ProseParagraphBreak
+完整证书需要同时检验矩阵等式、换基可逆性和整除链。\cref{b2:thm:smith-uniqueness}保证这种输出具有正确的不变因子，\cref{b2:prop:smith-cokernel}则把它解释为原余核的分解。若只需要判断抽象模的同构类型，对角数据已经足够；若需要原坐标中的生成元、关系或具体解，\(P,Q\) 也必须保留。

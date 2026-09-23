@@ -28,7 +28,12 @@
 本书不额外要求 \(\delta(a)\leq\delta(ab)\)。有些文献把这个条件并入定义；此处的除法条件已经足以支持以下全部证明。商和余数通常不唯一，Euclid 函数也未必唯一；对带余除法的存在性证明，还须另行判断是否给出了可执行的求商步骤。
 
 \ProseParagraphBreak
-下面依次除以上一次非零余数的过程，称为\term[euclid-suanfa]{Euclid 算法}[Euclidean algorithm]，也称辗转相除法。
+设 \(R\) 为带 Euclid 函数 \(\delta\) 的 Euclid 整环，\(a,b\in R\) 不全为零。令 \(r_0=a\)、\(r_1=b\)；只要 \(r_j\ne0\)，就选取 \(q_j,r_{j+1}\in R\)，使
+\[
+r_{j-1}=q_jr_j+r_{j+1},\qquad
+r_{j+1}=0\ \text{或}\ \delta(r_{j+1})<\delta(r_j).
+\]
+不断用上一次非零余数作除数，直到余数为零，这个过程称为\term[euclid-suanfa]{Euclid 算法}[Euclidean algorithm]，也称辗转相除法。
 \termidx[zhanzhuanxiangchufa]{辗转相除法}
 
 \begin{proposition}[Euclid 算法]\label{b1:prop:euclidean-algorithm}
@@ -50,7 +55,16 @@ v_{j+1}=v_{j-1}-q_jv_j.
 由 \(r_0=u_0a+v_0b\)、\(r_1=u_1a+v_1b\) 开始归纳，除法等式给出每个 \(r_j=u_ja+v_jb\)。取 \(j=m\) 即得所求关系。
 \end{proof}
 
-同时跟踪上述两列系数，称为\term[kuozhan-euclid-suanfa]{扩展 Euclid 算法}[extended Euclidean algorithm]。若已知一个求商余的具体程序，这就给出了以 \(a,b\) 为输入、以 \(d,u,v\) 为输出的有限计算。
+设 \(R\) 为 Euclid 整环，\(a,b\in R\) 不全为零，且 Euclid 算法给出的商和余数满足 \(r_{j-1}=q_jr_j+r_{j+1}\)。从
+\[
+(u_0,v_0)=(1,0),\qquad (u_1,v_1)=(0,1)
+\]
+开始，同时递推
+\[
+u_{j+1}=u_{j-1}-q_ju_j,\qquad
+v_{j+1}=v_{j-1}-q_jv_j,
+\]
+以求得最后非零余数 \(d=ua+vb\)，这个过程称为\term[kuozhan-euclid-suanfa]{扩展 Euclid 算法}[extended Euclidean algorithm]。若已知一个求商余的具体程序，它就给出了以 \(a,b\) 为输入、以 \(d,u,v\) 为输出的有限计算。
 
 \subsection{整数环及一元多项式环}
 \label{b1:subsec:1102:02}
@@ -109,7 +123,12 @@ N(a+bi)\coloneqq a^2+b^2.
 \symidx{\(\mathbb Z[i]\)：Gauss 整数环}
 
 \begin{proposition}\label{b1:prop:gaussian-euclidean}
-Gauss 整数环关于范数 \(N\) 是 Euclid 整环。
+设
+\[
+R=\mathbb Z[i]=\{\,a+bi\mid a,b\in\mathbb Z\,\},\qquad
+N(a+bi)=a^2+b^2.
+\]
+则 Gauss 整数环 \(R\) 关于 \(R\setminus\{0\}\) 上的范数 \(N\) 是 Euclid 整环。
 \end{proposition}
 \begin{proof}
 对 \(\alpha,\beta\in\mathbb Z[i]\)、\(\beta\ne0\)，在复数域中写 \(\alpha/\beta=s+ti\)。分别选最近的整数 \(m,n\)，使

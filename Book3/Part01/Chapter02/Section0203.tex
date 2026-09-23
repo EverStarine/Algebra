@@ -1,30 +1,126 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.3 模的支集
-% 纲要位置：计划纲要.md，第 1538 行。
+% 纲要位置：工作记录/计划纲要.md，第 1856 行。
+% 纲要细目（写作范围）：
+% * 支集、零化子与有限生成性
+% * 局部化与 Hom 的交换条件
+% * 支集与短正合列
 
 \section{模的支集}
 \label{b3:sec:0203}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 支集、零化子与有限生成性
-% * 局部化与 Hom 的交换条件
-% * 支集与短正合列
-%
+局部化把一个模分散到素谱的各点；支集记录它在哪些点仍然非零。有限生成性使这些局部信息受到一个理想的统一控制。处理同态时，还要进一步区分“有限个生成元”与“有限个生成关系”，因为清分母必须一次覆盖全部有关数据。
 
 \subsection{支集、零化子与有限生成性}
 \label{b3:subsec:0203:01}
 
-待撰写。
+\begin{definition}\label{b3:def:support-annihilator}
+\(R\) 模 \(M\) 的\term[zhiji]{支集}[support]与\term[linghuazi]{零化子}[annihilator]分别为
+\[
+\begin{aligned}
+\operatorname{Supp}_R M
+&=\{\,\mathfrak p\in\operatorname{Spec}R\mid M_{\mathfrak p}\ne0\,\},\\
+\operatorname{Ann}_R M
+&=\{\,a\in R\mid am=0\text{ 对所有 }m\in M\,\}.
+\end{aligned}
+\]
+零化子也称湮灭子。\termidx[yinmiezi]{湮灭子}对单个元素，简记
+\(\operatorname{Ann}_R(m)=\{a\in R:am=0\}\)；它等于循环子模 \(Rm\) 的零化子。
+\end{definition}
+\symidx{\(\operatorname{Supp}_R M\)：模的支集}
+\symidx{\(\operatorname{Ann}_R M\)：模的零化子}
+
+\begin{theorem}\label{b3:thm:support-finite}
+对任意 \(M\) 有
+\[
+\operatorname{Supp}_R M\subseteq V(\operatorname{Ann}_R M).
+\]
+若 \(M\) 有限生成，则等号成立。更具体地，有限生成模满足
+\[
+M_{\mathfrak p}=0
+\quad\Longleftrightarrow\quad
+sM=0\text{ 对某个 }s\notin\mathfrak p\text{ 成立}.
+\]
+\end{theorem}
+\begin{proof}
+若 \(a\in\operatorname{Ann}_R M\setminus\mathfrak p\)，在 \(R_{\mathfrak p}\) 中 \(a\) 可逆，又零化 \(M_{\mathfrak p}\)，故该模为零。这证明一般包含关系。
+
+设 \(M=Rm_1+\cdots+Rm_r\) 且 \(M_{\mathfrak p}=0\)。由\eqref{b3:eq:localized-element-zero}，对每个 \(i\) 有 \(s_i\notin\mathfrak p\) 使 \(s_im_i=0\)。取 \(s=s_1\cdots s_r\)，则 \(s\notin\mathfrak p\) 且 \(sM=0\)。反向由 \(s\) 局部可逆得到。于是 \(M_{\mathfrak p}=0\) 等价于 \(\operatorname{Ann}_R M\not\subseteq\mathfrak p\)，即所述等式。对零模取空生成集及 \(s=1\)，论证仍成立。
+\end{proof}
+
+因而有限生成模的支集是闭集。例如
+\[
+\operatorname{Supp}_{k[x,y]} k[x,y]/(xy)=V(xy)=V(x)\cup V(y).
+\]
+模掉 \(xy\) 得到的模同时分布在两条坐标轴上；若进一步在 \(x\) 处局部化，则只留下 \(y=0\) 且 \(x\ne0\) 的部分。
+
+\ProseParagraphBreak
+有限生成条件不能省去。整数模 \(\mathbb Q/\mathbb Z\) 的零化子为零：对非零整数 \(n\)，选不能整除 \(n\) 的正整数 \(d\)，则 \(n(1/d+\mathbb Z)\ne0\)。但在 \((0)\) 处局部化后，每个元素都被某个非零整数零化，故整个模变成零。所以
+\[
+(0)\in V\Bigl(\operatorname{Ann}_{\mathbb Z}(\mathbb Q/\mathbb Z)\Bigr),
+\qquad
+(0)\notin\operatorname{Supp}_{\mathbb Z}(\mathbb Q/\mathbb Z).
+\]
+此例中每个元素各有一个有效乘子，却没有一个非零整数同时零化全部元素。
 
 \subsection{局部化与 Hom 的交换条件}
 \label{b3:subsec:0203:02}
 
-待撰写。
+设 \(M,N\) 为 \(R\) 模。局部化后的同态可以对分式取值，因而有自然映射
+\begin{equation}\label{b3:eq:hom-localization-map}
+S^{-1}\operatorname{Hom}_R(M,N)
+\longrightarrow
+\operatorname{Hom}_{S^{-1}R}(S^{-1}M,S^{-1}N),
+\qquad
+\frac fs\longmapsto
+\biggl(\frac mt\longmapsto\frac{f(m)}{st}\biggr).
+\end{equation}
+若两侧的分式代表元改变，交叉差仍被某个分母零化；因此该公式良定义。也可先在 \(M\) 上取 \(m\mapsto f(m)/s\)，再用\cref{b3:prop:module-fraction-operations}的延拓泛性质。
+
+\begin{theorem}\label{b3:thm:hom-localization}
+若 \(M\) 有限生成，\eqref{b3:eq:hom-localization-map}为单射。若 \(M\) 有限展示，即存在有限整数 \(a,b\) 及正合列
+\[
+R^a\longrightarrow R^b\longrightarrow M\longrightarrow0,
+\]
+则该映射为同构。两种结论都不要求 \(N\) 有限生成。
+\end{theorem}
+\begin{proof}
+设 \(m_1,\ldots,m_b\) 生成 \(M\)，且 \(f/s\) 在右侧为零。每个 \(f(m_i)/s=0\)，故可取 \(u_i\in S\) 使 \(u_i f(m_i)=0\)。乘积 \(u=\prod_i u_i\) 零化 \(f\) 在全部生成元上的值，因而 \(uf=0\)，即 \(f/s=0\)。这证明单射性。
+
+再设 \(M\) 有上述有限展示，记 \(e_1,\ldots,e_b\) 在 \(M\) 中的像为 \(m_i\)。展示的第一个映射的像由有限个关系
+\(\sum_i a_{ij}m_i=0\)、\(1\le j\le a\) 生成。给定右侧的同态 \(g\)，把有限个 \(g(m_i/1)\) 通分为 \(n_i/s\)。每个关系给出
+\[
+\frac{\sum_i a_{ij}n_i}{s}=0.
+\]
+故可选一个共同的 \(u\in S\)，使全部 \(\sum_i a_{ij}u n_i=0\) 在 \(N\) 中成立。于是 \(m_i\mapsto u n_i\) 满足全部关系，诱导 \(f:M\rightarrow N\)。此时 \(f/(us)\) 在\eqref{b3:eq:hom-localization-map}下的像在 \(m_i/1\) 上等于 \(g\)，因而就是 \(g\)。这证明满射性。
+\end{proof}
+
+有限生成用来同时清除生成元的分母；有限展示还让我们同时清除关系中的分母。若两者都不假设，取 \(R=\mathbb Z\)、\(S=\mathbb Z\setminus\{0\}\)、\(M=\mathbb Q\)、\(N=\mathbb Z\)。任意 \(f:\mathbb Q\rightarrow\mathbb Z\) 都为零，因为 \(f(q)\) 被每个正整数整除；而局部化后的同态环为 \(\operatorname{Hom}_{\mathbb Q}(\mathbb Q,\mathbb Q)=\mathbb Q\)。因此一般的 Hom 不能无条件移过局部化。
 
 \subsection{短正合列中的支集}
 \label{b3:subsec:0203:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:support-exact}
+若 \(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 正合，则
+\[
+\operatorname{Supp}_R M
+=\operatorname{Supp}_R L\cup\operatorname{Supp}_R N.
+\]
+该结论对任意模成立。此外，任意模族满足
+\[
+\operatorname{Supp}_R\Bigl(\bigoplus_{\lambda}M_\lambda\Bigr)
+=\bigcup_{\lambda}\operatorname{Supp}_R M_\lambda.
+\]
+\end{proposition}
+\begin{proof}
+由\cref{b3:thm:localization-exact}，在每个 \(\mathfrak p\) 处仍有短正合列。中间项为零当且仅当两端同时为零，取补集即得第一式。
+
+局部化与直和相容：把分式 \((m_\lambda)_\lambda/s\) 送到 \((m_\lambda/s)_\lambda\)。其像仍为有限支集；反过来，有限支集中的各个分母可以取乘积通分，得到逆映射。直和为零当且仅当各分量为零，因而得到第二式。
+\end{proof}
+
+第一式说明支集忽略了短正合列是否分裂。例如 \(R=k[x]\) 上
+\[
+0\longrightarrow(x)/(x^2)\longrightarrow R/(x^2)
+\longrightarrow R/(x)\longrightarrow0
+\]
+的三个非零模支集都为 \(\Bigl\{(x)\Bigr\}\)，但中间项中的 \(x\) 作用非零而平方为零，两端的 \(x\) 作用均为零。这种厚度信息并未由支集单独记录，后面还要用长度、关联素理想及准素分解作更细的分析。

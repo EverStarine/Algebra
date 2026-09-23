@@ -1,9 +1,120 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 B 第 2 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.2 Witt 环、判别式与低维分类
+% 纲要位置：工作记录/计划纲要.md，第 1607 行。
+
+% 纲要要点（供目录核对）：
+% * Witt 环、判别式及低维分类
+% #### B.2.1 张量积与 Witt 环
+% #### B.2.2 判别式与基本理想
+% #### B.2.3 二元型及实、复情形
 
 \section{Witt 环、判别式与低维分类}
 \label{b2:sec:B02}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+正交直和使二次型的稳定等距类组成 Witt 群。若再让两个型作张量积，就能在这些类上定义乘法；关键是说明被忽略的双曲部分在相乘后仍可忽略。本节仍设 \(\operatorname{char}k\ne2\)，且所有二次空间均有限维、非退化。零维空间也包括在内，其型表示加法零元。
 
-待撰写。
+\subsection{张量积与 Witt 环}
+\label{b2:subsec:B02:01}
+
+设 \((V,q)\)、\((W,r)\) 的归一化极化型分别为 \(b,c\)。在 \(V\otimes W\) 上定义对称双线性型
+\[
+(b\otimes c)(v\otimes w,v'\otimes w')=b(v,v')c(w,w'),
+\]
+并双线性延拓；相应二次型记为 \(q\otimes r\)。这同时说明了非纯张量上的取值；只写 \((q\otimes r)(v\otimes w)=q(v)r(w)\) 还不是对所有向量的完整定义。对角化以后，若 \(q=\langle a_1,\ldots,a_n\rangle\)、\(r=\langle d_1,\ldots,d_m\rangle\)，则张量积的对角系数是全部 \(a_id_j\)，均非零，故它仍非退化。
+
+\begin{lemma}\label{b2:lem:B-hyperbolic-tensor}
+对每个 \(n\) 维非退化型 \(q\)，有 \(H\otimes q\cong H^{\perp n}\)。
+\end{lemma}
+\begin{proof}
+由\cref{b2:thm:quadratic-diagonalization}写 \(q=\langle a_1,\ldots,a_n\rangle\)。张量积对正交直和分配，因此只须计算 \(H\otimes\langle a_i\rangle\)。若 \(e,f\) 是满足 \(b_H(e,f)=1\) 的双曲基，\(v_i\) 的二次取值为 \(a_i\)，则 \(a_i^{-1}e\otimes v_i,f\otimes v_i\) 的二次取值均为零，互相配对为一，正是一个双曲基。把这些两维块直和即得结论。
+\end{proof}
+
+\begin{theorem}\label{b2:thm:B-witt-ring}
+在\cref{b2:thm:witt-group}建立的群 \(W(k)\) 上，规定
+\[
+[q]\,[r]=[q\otimes r].
+\]
+这给出交换含幺环结构，乘法单位为 \(\Bigl[\langle1\rangle\Bigr]\)。
+\end{theorem}
+\begin{proof}
+若 \(q\perp H^{\perp s}\cong q'\perp H^{\perp t}\)，与 \(r\) 张量后，\cref{b2:lem:B-hyperbolic-tensor}将两边新增部分分别化为 \(s\dim r\) 与 \(t\dim r\) 个双曲平面，故 \(q\otimes r\) 与 \(q'\otimes r\) Witt 等价。交换两因子也能改变 \(r\) 的代表元，所以乘法良定义。
+
+结合、交换与分配同构分别由张量积的重新加括号、交换纯张量及分配映射给出。这些映射都保持上述配对，可在纯张量上直接检查，再由双线性推广。\(k\otimes V\to V\)、\(a\otimes v\mapsto av\) 把 \(\langle1\rangle\otimes q\) 等距地送到 \(q\)。加法及负元已由\cref{b2:thm:witt-group}建立，其中 \(-[q]=[-q]\)，于是各项环公理成立。
+\end{proof}
+
+这个环称为\term[Witt-huan]{Witt 环}[Witt ring]。\cref{b2:thm:witt-cancellation}保证它仍保存确定的各向异性型：两个各向异性代表若 Witt 等价，便由\cref{b2:thm:witt-decomposition}的唯一性等距。环的加法不是把所有同维型都认作相同。
+
+\subsection{判别式与基本理想}
+\label{b2:subsec:B02:02}
+
+用 \(k^\times/k^{\times2}\) 表示非零元素的平方类群。若 \(B\) 是 \(n\) 维型 \(q\) 的对称矩阵，换基把它变为 \(P^{\mathsf T}BP\)，行列式乘以 \((\det P)^2\)。因此可以定义
+\begin{definition}\label{b2:def:B-signed-discriminant}
+二次型 \(q\) 的\term[erci-xing-panbieshi]{判别式}[discriminant of a quadratic form]取为平方类
+\[
+\delta(q)=(-1)^{n(n-1)/2}\det B\pmod{k^{\times2}}.
+\]
+这里使用带符号的约定；零维型的行列式规定为一，故 \(\delta(0)=1\)。
+\end{definition}
+\symidx{\(\delta(q)\)：二次型的带符号判别式}
+
+某些文献把不带符号的 \(\det B\) 称为判别式。下面所有公式均采用上述约定，特别是双曲平面满足 \(\delta(H)=1\)。
+
+\begin{proposition}\label{b2:prop:B-discriminant-witt}
+判别式在 Witt 等价下不变。若 \(\dim q=n\)、\(\dim r=m\)，则
+\begin{equation}\label{b2:eq:B-discriminant-sum}
+\delta(q\perp r)=(-1)^{nm}\delta(q)\delta(r).
+\end{equation}
+维数模二定义环同态 \(W(k)\to\mathbb Z/2\mathbb Z\)。其核 \(I(k)\) 是一个理想，且判别式限制为群同态
+\[
+\delta:I(k)\longrightarrow k^\times/k^{\times2},
+\qquad I(k)^2\subseteq\ker\delta.
+\]
+\end{proposition}
+\begin{proof}
+正交直和的矩阵分块对角，行列式相乘。指数差
+\[
+\frac{(n+m)(n+m-1)}2-\frac{n(n-1)}2-\frac{m(m-1)}2=nm
+\]
+给出\eqref{b2:eq:B-discriminant-sum}。取 \(r=H\)，因 \(m=2\) 且 \(\delta(H)=1\)，得到加一个双曲平面不改变判别式；由 Witt 等价的定义，判别式于是对类良定义。
+
+加双曲平面不改变维数奇偶，而直和使维数相加、张量积使维数相乘，所以维数模二是环同态。在其核中，\eqref{b2:eq:B-discriminant-sum}的符号为一，得到所述群同态。最后令 \(n,m\) 均为偶数。张量积的对角系数给出
+\[
+\det(q\otimes r)=(\det q)^m(\det r)^n,
+\]
+它是平方；\(nm\) 被四整除，又使 \((-1)^{nm(nm-1)/2}=1\)。所以 \(\delta(q\otimes r)=1\)。\(I(k)^2\) 中元素是有限个这类乘积的和，利用刚证的群同态性，判别式仍为一。
+\end{proof}
+
+\(I(k)\) 称为 Witt 环的\term[Witt-jiben-lixiang]{基本理想}[fundamental ideal]。维数奇偶和判别式提供前两层容易计算的信息，但判别式在整个 \(W(k)\) 上一般不是加法群同态，式中的 \((-1)^{nm}\) 不能删掉。例如 \(\delta\Bigl(\langle1\rangle\Bigr)=1\)，而 \(\delta\Bigl(\langle1,1\rangle\Bigr)=-1\)。
+\symidx{\(I(k)\)：Witt 环的基本理想}
+
+\subsection{二元型及实、复情形}
+\label{b2:subsec:B02:03}
+
+一维非退化型由系数的平方类分类。二元型 \(\langle a,b\rangle\) 则有 \(\delta=-ab\)。若这个平方类为一，取 \(c^2=-ab\)，则 \((c/a,1)\) 是非零各向同性向量，\cref{b2:lem:hyperbolic-plane-split}说明整个二元型就是双曲平面。反过来双曲平面的判别式为一。因而二元情形的判别式已能判断各向同性，却未必能区分所有各向异性型。
+
+\begin{proposition}\label{b2:prop:B-binary-norm-classification}
+固定非平方 \(d\in k^\times\)，令 \(K=k(\sqrt d)\)，并记
+\[
+q_a=\langle a,-ad\rangle\qquad(a\in k^\times).
+\]
+判别式为 \(d\) 的每个二元非退化型都等距于某个 \(q_a\)。并且
+\[
+q_a\cong q_{a'}\quad\Longleftrightarrow\quad
+a'/a\in N_{K/k}(K^\times),
+\qquad N_{K/k}(x+y\sqrt d)=x^2-dy^2.
+\]
+\end{proposition}
+\begin{proof}
+设型为 \(\langle a,b\rangle\)，且 \(-ab=ds^2\)。把第二个基向量乘以 \(a/s\)，其系数变为 \(-ad\)，得到所需标准式。
+
+把 \(q_a\) 看成 \(K\) 上的二次取值 \(z\mapsto aN_{K/k}(z)\)。若 \(a'/a=N(c)\)，乘 \(c\) 是 \(K\) 的 \(k\) 线性双射，且 \(aN(cz)=a'N(z)\)，所以给出 \(q_{a'}\to q_a\) 的等距。反过来，等距映射把 \(q_{a'}\) 中取值为 \(a'\) 的向量 \(1\) 送到某个非零 \(z\in K\)，于是 \(a'=aN(z)\)。范数公式来自 \((x+y\sqrt d)(x-y\sqrt d)=x^2-dy^2\)。
+\end{proof}
+
+\begin{example}\label{b2:exm:B-rational-norm-obstruction}
+\(\mathbb Q\) 上的 \(\langle1,1\rangle\) 与 \(\langle3,3\rangle\) 判别式相同，却不等距；方程 \(x^2+y^2=3\) 没有有理数解。
+\end{example}
+\begin{proof}
+由\cref{b2:prop:B-binary-norm-classification}，若两型等距，则三是 \(\mathbb Q(i)\) 的范数，即存在有理数 \(x,y\) 使 \(x^2+y^2=3\)。清去分母并约去公因子，得到互素整数 \(X,Y,Z\)、\(Z\ne0\)，满足 \(X^2+Y^2=3Z^2\)。模三可知 \(X,Y\) 都被三整除，代回后 \(Z\) 也被三整除，矛盾。
+\end{proof}
+
+在实数域上，\cref{b2:prop:witt-real-complex}已将 Witt 群用符号差识别为 \(\mathbb Z\)。张量积中同号项给正项、异号项给负项，因此符号差相乘，得到环同构 \(W(\mathbb R)\cong\mathbb Z\)，其中 \(I(\mathbb R)=2\mathbb Z\)。复数域的每个非退化型只由维数决定，维数奇偶同时尊重加法和乘法，故 \(W(\mathbb C)\cong\mathbb Z/2\mathbb Z\)。这些简洁分类依赖底域；一般域上的高维分类不能从判别式单独推出。

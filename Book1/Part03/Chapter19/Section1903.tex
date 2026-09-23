@@ -77,10 +77,18 @@ G\subseteq A_n\quad\Longleftrightarrow\quad
 
 对一个整数多项式，模素数后的因子次数往往容易计算。要把这些数据用于特征零中的 Galois 群，须使有限域中置换根的 Frobenius 自同构来自原分裂域的自同构。以下证明用根生成的整数环及其有限商域实现这一点；用到的工具是\cref{b1:lem:integral-closure-elementary}的整性封闭性、\cref{b1:thm:crt}的中国剩余定理，以及已经建立的有限域和有限 Galois 理论。初读只关注 Galois 对应的读者，可以在需要计算具体多项式的群时再读本小节。
 
+\[
+\underbrace{L}_{\text{特征零分裂域}}
+\supseteq\underbrace{\mathbb Z[\alpha_1,\ldots,\alpha_n]}_{A}
+\longrightarrow\underbrace{A/\mathfrak m}_{\text{有限剩余域 }k}.
+\]
+先构造可约化的整环，再把有限域的 Frobenius 提升为 \(L\) 的自同构，最后比较两侧根的轨道；不能把模 \(p\) 的根直接当作特征零中的根。
+
 \begin{lemma}\label{b1:lem:reduction-cycle-type}
-设 \(f\in\mathbb Z[X]\) 首一，在 \(\mathbb Q\) 上无重根；素数 \(p\) 满足模 \(p\) 的约化 \(\bar f\) 也无重根。若 \(\bar f\) 的不同首一不可约因子的次数为 \(d_1,\ldots,d_r\)，则 \(f\) 在 \(\mathbb Q\) 上的 Galois 群，在全部根上的置换作用中包含循环长度为 \(d_1,\ldots,d_r\) 的元素。
+设 \(f\in\mathbb Z[X]\) 为首一多项式，并且 \(f\) 在 \(\mathbb Q\) 上无重根。令 \(L\) 为 \(f\) 在 \(\mathbb Q\) 上的分裂域，\(G=\operatorname{Gal}(L/\mathbb Q)\)。设素数 \(p\) 使 \(f\) 的模 \(p\) 约化 \(\bar f\in\mathbb F_p[X]\) 也无重根。若 \(\bar f\) 的不同首一不可约因子的次数为 \(d_1,\ldots,d_r\)，则 \(G\) 在 \(f\) 的全部根上的置换作用中包含一个循环长度为 \(d_1,\ldots,d_r\) 的元素。
 \end{lemma}
 \begin{proof}
+\textbf{第一步：构造整环和有限剩余域。}
 设分裂域为 \(L\)，根为 \(\alpha_1,\ldots,\alpha_n\)，\(G=\operatorname{Gal}(L/\mathbb Q)\)，并取环 \(A=\mathbb Z[\alpha_1,\ldots,\alpha_n]\)。所有根都满足首一整数方程，\cref{b1:lem:integral-closure-elementary}说明 \(A\) 由有限多个元素作为 \(\mathbb Z\) 模生成，且每个元素都在 \(\mathbb Z\) 上整。\(G\) 置换这些根，所以保持 \(A\)。由 \(L^G=\mathbb Q\)，\(A^G\) 中的元素为有理整元素，只能是整数：一个既约分数若满足首一整数方程，清除分母后就要求分母整除分子的某次幂，故分母为一。因此 \(A^G=\mathbb Z\)。
 
 理想 \(pA\) 为真理想，否则 \(1/p\in A\)，与刚才的有理整元素判别矛盾。由\cref{b1:prop:maximal-ideal-exists}取极大理想 \(\mathfrak m\supseteq pA\)。商域 \(k=A/\mathfrak m\) 有限，因为 \(A/pA\) 由有限多个元素作为 \(\mathbb F_p\) 向量空间生成，而 \(k\) 是它的商。令
@@ -89,6 +97,7 @@ D=\{\,\sigma\in G\mid\sigma(\mathfrak m)=\mathfrak m\,\},
 \]
 这是 \(\mathfrak m\) 在 \(G\) 作用下的稳定子群，故为子群；它在 \(k\) 上诱导自同构，记其像为 \(H\leq\operatorname{Gal}(k/\mathbb F_p)\)。我们证明这个像为全群。
 
+\textbf{第二步：证明稳定子群覆盖剩余域自同构群。}
 任取 \(x\in k^H\)。\(G\) 作用下 \(\mathfrak m\) 的轨道由有限个不同的极大理想组成，它们两两互素。\cref{b1:thm:crt}给出 \(a\in A\)，在 \(\mathfrak m\) 处的余数为 \(x\)，在其余轨道理想处的余数为零。多项式
 \[
 P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
@@ -100,7 +109,15 @@ P(T)=\prod_{\sigma\in G}\Bigl(T-\sigma(a)\Bigr)
 \]
 其中 \(T^{|G|-p^e}\) 的系数为 \(-u x^{p^e}\)，但 \(\bar P\) 的全部系数在 \(\mathbb F_p\) 中。由于 \(u\) 在该域中可逆，\(x^{p^e}=c\in\mathbb F_p\)，于是 \((x-c)^{p^e}=0\)，得到 \(x=c\)。所以 \(k^H=\mathbb F_p\)。有限域扩张 \(k/\mathbb F_p\) 为 Galois 扩张，\cref{b1:thm:finite-galois-correspondence}迫使 \(H=\operatorname{Gal}(k/\mathbb F_p)\)。
 
+\textbf{第三步：提升 Frobenius 并比较根的轨道。}
 因此 Frobenius \(b\mapsto b^p\) 在 \(D\) 中有一个提升 \(\sigma\)。等式 \(f(X)=\prod_i(X-\alpha_i)\) 约化后表明 \(\alpha_i\) 的像是 \(\bar f\) 的全部根。由于约化无重根，这些像互不相同。由\cref{b1:thm:finite-field-subfields}及\cref{b1:thm:finite-field-automorphisms}，一个次数为 \(d_j\) 的不可约因子的根恰组成长度 \(d_j\) 的轨道：根生成的域有 \(p^{d_j}\) 个元素，而固定该根的最小正 Frobenius 次幂正是 \(d_j\)。提升 \(\sigma\) 在原根集上的循环类型与约化后的 Frobenius 相同，遂得结论。
 \end{proof}
 
 因此，每次无重根的模素数分解都给出群中的一种循环型。将不同素数提供的信息与传递性、判别式判据结合，往往能确定整个群。\cref{b1:prop:quintic-x5-x-1}将用这一方法计算 \(X^5-X-1\) 的 Galois 群；这里的工具本身不依赖根式可解性理论。
+
+\ProseParagraphBreak
+以先前的 \(f=X^3-2\) 为例，模 \(5\) 有
+\[
+\bar f=(X-3)(X^2+3X+4).
+\]
+二次因子的判别式为 \(3\in\mathbb F_5\)，不是平方，故因子次数为 \(1,2\)，且约化无重根。上述引理给出原 Galois 群中的一个换位；这与前面直接算出的 \(S_3\) 相符。这里算因子次数是在有限域中完成的，换位属于特征零的分裂域自同构群则依赖刚才的提升论证。

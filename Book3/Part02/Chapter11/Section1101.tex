@@ -1,30 +1,80 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.1 分次环与分次模
-% 纲要位置：计划纲要.md，第 1818 行。
+% 纲要位置：工作记录/计划纲要.md，第 2136 行。
+% 纲要细目（写作范围）：
+% * 正分次与标准分次
+% * 齐次理想和分次展示
+% * 次数平移及有限生成
 
 \section{分次环与分次模}
 \label{b3:sec:1101}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 正分次与标准分次
-% * 齐次理想和分次展示
-% * 次数平移及有限生成
-%
+多项式的全次数把一个无限维空间分成有限维的片。若方程齐次，取商以后仍可逐次计数；若方程不齐次，则通常只能先保留一个次数滤过。分次理论先研究前一种情形。本章的环都交换，分次环从次数零开始，分次模允许整数次数，但有限生成模的非零分次片总有一个共同的下界。
 
 \subsection{正分次与标准分次}
 \label{b3:subsec:1101:01}
 
-待撰写。
+\begin{definition}\label{b3:def:positive-standard-grading}
+设 \(A\) 为交换环。若其加法群具有满足以下条件的直和分解
+\[
+A=\bigoplus_{n\ge0}A_n,\qquad 1\in A_0,\qquad A_iA_j\subseteq A_{i+j}.
+\]
+则称此分解为 \(A\) 的一个\term[zheng-fenci]{正分次}[positive grading]。属于单个 \(A_n\) 的元素称为次数 \(n\) 的\term[qici-yuansu]{齐次元素}[homogeneous element]。若 \(A=A_0[A_1]\)，且 \(A_1\) 是有限 \(A_0\) 模，称此分次为\term[biaozhun-fenci]{标准分次}[standard grading]。若 \(A\) 模 \(M\) 具有直和分解 \(M=\bigoplus_{n\in\mathbb Z}M_n\)，满足 \(A_iM_j\subseteq M_{i+j}\)，则称 \(M\) 为分次 \(A\) 模。分次同态在本章均指保持次数的模同态。
+\end{definition}
+
+正次数部分 \(A_+=\bigoplus_{n>0}A_n\) 是理想，且 \(A/A_+\cong A_0\)。多项式环的通常全次数给出标准分次；若给变量赋正整数权 \(d_i\)，令 \(\deg x_i=d_i\)，也得到正分次，但未必标准。例如 \(k[x]\) 取 \(\deg x=2\)，奇数次分量全为零。
+
+\ProseParagraphBreak
+直和意味着每个元素只有有限个非零齐次分量。形式幂级数通常有无限多个分量，因此不能把 \(k[[x]]\) 当作这里的 \(\bigoplus_{n\ge0}kx^n\)。它更适合用\chapref{b3:ch:13}的滤过与完备化描述。
+
+\begin{proposition}\label{b3:prop:graded-noetherian}
+设 \(A=\bigoplus_{n\ge0}A_n\) 为交换正分次环。若 \(A_0\) 是 Noether 环，\(A\) 由有限个正次数齐次元素作为 \(A_0\) 代数生成，则 \(A\) 为 Noether 环，每个 \(A_n\) 是有限 \(A_0\) 模。反之，若正分次环 \(A\) 为 Noether 环，则上述两个条件成立。
+\end{proposition}
+\begin{proof}
+正向由\cref{b3:cor:hilbert-module-consequences}得到 Noether 性。若生成元次数为正数 \(d_1,\ldots,d_r\)，给定 \(n\) 时，满足 \(\sum d_i a_i=n\) 的非负整数组只有有限多组，对应单项式生成 \(A_n\)。
+
+反向，\(A_0\cong A/A_+\) 是 Noether 环。对理想 \(A_+\) 取有限组生成元，再把各生成元分成齐次部分，可得到有限组正次数齐次理想生成元 \(x_i\)。若 \(a\in A_n\)、\(n>0\)，在等式 \(a=\sum f_i x_i\) 中只取次数 \(n\) 的部分，得到 \(a=\sum (f_i)_{n-\deg x_i}x_i\)。各系数的次数低于 \(n\)，对 \(n\) 归纳可知 \(a\in A_0[x_1,\ldots,x_r]\)。
+\end{proof}
 
 \subsection{齐次理想与分次展示}
 \label{b3:subsec:1101:02}
 
-待撰写。
+设 \(A\) 为交换正分次环，\(M\) 为分次 \(A\) 模。若子模 \(N\subseteq M\) 包含其中每个元素的所有齐次分量，则称 \(N\) 为\term[qici-zimo]{齐次子模}[graded submodule]。等价地，\(N=\bigoplus_n(N\cap M_n)\)，或 \(N\) 可以由齐次元素生成。后一等价的反向使用了乘积次数相加：把系数也分次后，任意齐次分量仍是原齐次生成元的组合。取 \(M=A\) 就得到齐次理想。
+
+\ProseParagraphBreak
+若 \(N\) 齐次，商模以 \((M/N)_n=M_n/(N\cap M_n)\) 分次；分次同态的核与像都是齐次子模，正合性也可以在每个次数上检查。例如 \((x^2,xy)\subset k[x,y]\) 齐次，而 \((x-1)\) 不是齐次理想：它含 \(x-1\)，却不含其常数部分 \(-1\)。
+
+\begin{proposition}\label{b3:prop:graded-presentation}
+设 \(A\) 为交换 Noether 正分次环，\(M\) 为有限生成分次 \(A\) 模。则 \(M\) 有有限组齐次生成元，也有由齐次关系组成的有限展示。
+\end{proposition}
+\begin{proof}
+把任意有限组生成元的全部齐次分量收集起来，所得仍为有限组，且生成 \(M\)。设它们为 \(m_i\)，次数为 \(a_i\)。给自由模第 \(i\) 个基向量赋次数 \(a_i\)，便有保持次数的自由满射 \(F\rightarrow M\)。其核 \(K\) 是齐次子模，且由 Noether 性有限生成。再把 \(K\) 的有限组生成元拆为齐次部分，就得到有限组齐次关系及相应的分次展示。
+\end{proof}
+
+若两个生成元次数不同，同一个齐次关系中系数的次数也不同。关系的齐次性指“系数次数加上相应生成元次数”相同，而不是要求一列矩阵的所有系数都有相同次数。
 
 \subsection{次数平移与有限生成}
 \label{b3:subsec:1101:03}
 
-待撰写。
+\begin{definition}\label{b3:def:grading-shift}
+设 \(A\) 为交换正分次环，\(M\) 为分次 \(A\) 模，\(a\in\mathbb Z\)。次数平移 \(M(a)\) 定义为
+\[
+M(a)_n=M_{n+a},
+\]
+底层模与作用不变。特别地，\(A(-a)\) 的元素 \(1\) 位于次数 \(a\)。
+\symidx{\(M(a)\)：分次模的次数平移}
+\end{definition}
+
+于是\cref{b3:prop:graded-presentation}的展示可写成
+\[
+\bigoplus_j A(-b_j)\longrightarrow\bigoplus_i A(-a_i)
+\longrightarrow M\longrightarrow0.
+\]
+相应关系矩阵第 \((i,j)\) 项须齐次且次数为 \(b_j-a_i\)；若此差为负，该项只能为零。这一约定避免在后面级数公式中把平移指数写反。
+
+\ProseParagraphBreak
+设 \(A\) 由有限个正次数元素生成，\(M\) 的齐次生成元为 \(m_i\)、\(\deg m_i=a_i\)。逐次取分量有
+\[
+M_n=\sum_i A_{n-a_i}m_i.
+\]
+因此当 \(n<\min_i a_i\) 时 \(M_n=0\)，而每个 \(M_n\) 都是有限 \(A_0\) 模。标准分次时，还可选 \(c\) 使 \(M_{n+1}=A_1M_n\) 对 \(n\ge c\) 成立：只须令 \(c\ge\max_i a_i\)，再用 \(A_{j+1}=A_1A_j\)。这就是有限生成在逐次增长中的具体约束。

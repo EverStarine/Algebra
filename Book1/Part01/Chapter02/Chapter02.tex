@@ -1,8 +1,8 @@
 % !TeX root = ../../Book1.tex
-% 纲要标题：## 第2章　群、子群与同态
+% 纲要标题：## 第2章　群、子群、同态与商群
 % 纲要位置：计划纲要.md，第 159 行。
 
-\chapter{群、子群与同态}
+\chapter{群、子群、同态与商群}
 \label{b1:ch:02}
 \BookChapterNumber{b1:ch:02}
 
@@ -33,7 +33,13 @@
 群中的可逆性给出消去律、方程唯一解和子群判别。陪集同时承担划分与计数两项职责：有限群的子群阶整除群阶，但逆向存在性需要新的论证。
 
 \ProseParagraphBreak
-正规子群恰好可以成为群同态的核，也恰好使原群乘法下降为陪集的乘法。第一同构定理刻画像，第二同构定理处理限制映射，第三同构定理处理两次取商；对应定理则整理商群与原群之间的子群关系。应用这些结果时，先确定原映射，检查它能否下降，再计算核与像，最后写出所得商结构的同构。下一章将用循环群、置换群和几何对称把这些抽象规则落实为显式计算。
+正规子群恰好可以成为群同态的核，也恰好使原群乘法下降为陪集的乘法。第一同构定理刻画像，第二同构定理处理限制映射，第三同构定理处理两次取商；对应定理则整理商群与原群之间的子群关系。应用时先写出原同态 \(f\) 及拟商去的正规子群 \(N\)，检验 \(N\subseteq\ker f\)，从而得到诱导同态 \(\overline f\)。再用
+\[
+\ker\overline f=(\ker f)/N,
+\qquad
+\operatorname{im}\overline f=\operatorname{im}f
+\]
+判断它是否单射、满射或为同构；取 \(N=\ker f\) 并把目标缩小到实际像，就得到第一同构定理。下一章将用循环群、置换群和几何对称把这些抽象规则落实为显式计算。
 \end{chaptersummary}
 
 下面的练习均从本章已证工具出发，包含新的构造与反例。
@@ -56,6 +62,17 @@
 \begin{solution}
 取 \(h\in H\)，所有正幂仍在 \(H\)。有限性给出 \(h^r=h^s\)，其中
 \(1\leq r<s\)，在 \(G\) 中消去得 \(h^{s-r}=1\)，所以单位元在 \(H\)。若 \(s-r=1\)，则 \(h=1\) 的逆已在 \(H\)；否则 \(h^{s-r-1}\in H\) 是 \(h\) 的逆。对每个 \(h\) 同样处理，即得对逆封闭。正整数集合是整数加法群中非空且加法封闭的无限子集，却不是子群。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-coprime-orders-homomorphism}
+设 \(G,K\) 为有限群，且 \(\gcd(\lvert G\rvert,\lvert K\rvert)=1\)。证明每个同态 \(f:G\rightarrow K\) 都是平凡同态。
+\end{exercise}
+\begin{solution}
+像 \(\operatorname{im}f\) 是 \(K\) 的子群，故由\cref{b1:thm:lagrange}，其阶整除 \(\lvert K\rvert\)。另一方面，\cref{b1:prop:kernel-fibers}给出
+\[
+\lvert G\rvert=\lvert\ker f\rvert\,\lvert\operatorname{im}f\rvert,
+\]
+所以像的阶也整除 \(\lvert G\rvert\)。两群阶互素，迫使 \(\lvert\operatorname{im}f\rvert=1\)，即每个元素都被送到 \(K\) 的单位元。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:02-product-subgroups}
@@ -106,7 +123,11 @@ b^{-1}a=kn,\qquad x\coloneqq bk=an^{-1}.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:02-normal-not-transitive}
-令 \(G\) 为实直线上的全部映射 \(x\mapsto ax+b\)，其中 \(a\ne0\)，运算为复合。令 \(H\) 为全部平移，\(N\) 为平移量是整数的平移。证明 \(N\trianglelefteq H\trianglelefteq G\)，但 \(N\) 不正规于 \(G\)。说明为什么不能仅由这条正规子群链就应用第三同构定理，写出 \((G/N)/(H/N)\cong G/H\)。
+令 \(G\) 为实直线上的全部映射 \(x\mapsto ax+b\)，其中 \(a\ne0\)，运算为复合。令 \(H\) 为全部平移，\(N\) 为平移量是整数的平移。证明 \(N\trianglelefteq H\trianglelefteq G\)，但 \(N\) 不正规于 \(G\)。说明为什么不能仅由 \(N\trianglelefteq H\trianglelefteq G\) 就应用第三同构定理；特别指出表达式
+\[
+(G/N)/(H/N)
+\]
+在本题中为什么不能按该定理所要求的方式解释为商群。
 \end{exercise}
 \begin{solution}
 以 \((a,b)\) 记该映射，复合为
@@ -125,9 +146,32 @@ b^{-1}a=kn,\qquad x\coloneqq bk=an^{-1}.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:02-two-index-two}
-设 \(H,K\) 是 \(G\) 中不同的指数 \(2\) 子群。证明 \([G:H\cap K]=4\)，并确定商群 \(G/(H\cap K)\) 的运算结构。
+\begin{enumerate}
+\item 设 \(H,K\leq G\) 均为有限指数子群。证明
+\[
+[G:H\cap K]\leq[G:H][G:K].
+\]
+这里不假设这些子群正规。
+\item 设 \(H,K\) 是 \(G\) 中不同的指数 \(2\) 子群。证明上式取等号，并确定商群 \(G/(H\cap K)\) 的运算结构。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
+\begin{enumerate}
+\item
+在左陪集集合之间定义
+\[
+H/(H\cap K)\longrightarrow G/K,
+\qquad h(H\cap K)\longmapsto hK.
+\]
+若 \(h_1(H\cap K)=h_2(H\cap K)\)，则 \(h_2^{-1}h_1\in H\cap K\subseteq K\)，故两像相同，映射良定义。反过来，若 \(h_1K=h_2K\)，则 \(h_2^{-1}h_1\in K\)；又因 \(h_1,h_2\in H\)，该元素属于 \(H\cap K\)，所以两个原陪集相同。该映射因而单射，进而
+\([H:H\cap K]\leq[G:K]\)。由\cref{b1:prop:index-multiplication}，
+\[
+[G:H\cap K]=[G:H][H:H\cap K]
+\leq[G:H][G:K].
+\]
+这里使用的只是陪集集合，不把 \(H/(H\cap K)\) 当作商群。
+
+\item
 由\cref{b1:prop:normal-basic-examples}，指数 \(2\) 使两子群均正规。若 \(H\subseteq K\)，因二者不同，可取 \(x\in K\setminus H\)。由 \([G:H]=2\)，有 \(G=H\sqcup xH\)，而这两个陪集都包含于 \(K\)，所以 \(K=G\)，与 \([G:K]=2\) 矛盾。交换两子群的角色，得到反向包含也不成立。因此可取 \(h\in H\setminus K\)、\(k\in K\setminus H\)。
 
 每个二元素群都同构于 \((\mathbb Z/2\mathbb Z,+)\)：非单位元的平方不可能等于自身，故只能等于单位元。分别把 \(G/H\) 与 \(G/K\) 的单位元标为模 \(2\) 的类 \(\bar0\)，非单位元标为 \(\bar1\)，所得两个标号映射都是同构。于是联合商映射给出同态
@@ -135,6 +179,7 @@ b^{-1}a=kn,\qquad x\coloneqq bk=an^{-1}.
 f:G\longrightarrow(\mathbb Z/2\mathbb Z)^2.
 \]
 它在 \(1,h,k,hk\) 上依次取值 \((\bar0,\bar0)\)、\((\bar0,\bar1)\)、\((\bar1,\bar0)\)、\((\bar1,\bar1)\)，所以满射，且 \(\ker f=H\cap K\)。由\cref{b1:thm:first-isomorphism}，\(G/(H\cap K)\) 同构于 \((\mathbb Z/2\mathbb Z)^2\)，运算是两坐标分别模 \(2\) 相加。因而 \([G:H\cap K]=4\)，三个非单位元的平方都为单位元。
+\end{enumerate}
 \end{solution}
 
 \begin{exercise}\label{b1:ex:02-quotient-correspondence-calculation}
@@ -152,6 +197,8 @@ H=\langle\bar3\rangle.
 
 \end{exercise}
 \begin{solution}
+\begin{enumerate}
+\item
 由逐次相加，可直接列出
 \[
 \begin{aligned}
@@ -170,9 +217,21 @@ f:G\longrightarrow\mathbb Z/4\mathbb Z,\qquad
 \alpha:G/N\longrightarrow\mathbb Z/4\mathbb Z,\qquad
 \bar a+N\longmapsto[a]_4.
 \]
+记 \(q:G\rightarrow G/N\) 为自然商映射；所用映射链为
+\[
+G\xrightarrow{q}G/N\xrightarrow{\alpha}\mathbb Z/4\mathbb Z.
+\]
 
-直接检查 \(\mathbb Z/4\mathbb Z\) 的子群：若含 \([1]_4\) 或 \([3]_4\)，反复相加便得到全部四个元素；若两者都不含，则只能为 \(\bigl\{[0]_4\bigr\}\) 或 \(\bigl\{[0]_4,[2]_4\bigr\}\)。这些集合确实都是子群。用 \(\alpha\) 把它们看成 \(G/N\) 的子群，再由\cref{b1:thm:subgroup-correspondence}取自然商映射下的原像，依次得到 \(N,K,G\)。因此这三个就是全部包含 \(N\) 的子群，且包含关系为 \(N\subsetneq K\subsetneq G\)。
+直接检查 \(\mathbb Z/4\mathbb Z\) 的子群：若含 \([1]_4\) 或 \([3]_4\)，反复相加便得到全部四个元素；若两者都不含，则只能为 \(\bigl\{[0]_4\bigr\}\) 或 \(\bigl\{[0]_4,[2]_4\bigr\}\)。这些集合确实都是子群。由\cref{b1:thm:subgroup-correspondence}，它们对应于 \(G\) 中全部包含 \(N\) 的子群。
 
+更明确地，对 \(\mathbb Z/4\mathbb Z\) 的子群 \(U\)，先沿 \(\alpha\) 取原像 \(\alpha^{-1}(U)\leq G/N\)，再沿 \(q\) 取原像：
+\[
+q^{-1}\bigl(\alpha^{-1}(U)\bigr)
+=(\alpha\circ q)^{-1}(U).
+\]
+当 \(U\) 依次为 \(\{[0]_4\}\)、\(\{[0]_4,[2]_4\}\)、\(\mathbb Z/4\mathbb Z\) 时，所得子群依次为 \(N,K,G\)。
+
+\item
 由所列元素可知 \(H\cap N=\{\bar0\}\)。\cref{b1:thm:second-isomorphism}保证 \(H+N\) 是子群；它含有 \(\bar4-\bar3=\bar1\)，故包含 \(\bar1\) 的所有整数倍，即 \(H+N=G\)。该定理的同构为
 \[
 H/(H\cap N)\longrightarrow G/N,\qquad
@@ -180,6 +239,7 @@ H/(H\cap N)\longrightarrow G/N,\qquad
 \]
 与 \(\alpha\) 复合后，代表元 \(\bar0,\bar3,\bar6,\bar9\) 分别映到 \([0]_4,[3]_4,[2]_4,[1]_4\)，可以逐项核对这四个类的一一对应。
 
+\item
 最后，\(N\subseteq K\) 且两者均正规于 \(G\)，满足\cref{b1:thm:third-isomorphism}的假设。自然映射
 \[
 \psi:G/N\longrightarrow G/K,\qquad
@@ -191,4 +251,23 @@ H/(H\cap N)\longrightarrow G/N,\qquad
 (\bar a+N)+(K/N)\longmapsto\bar a+K.
 \]
 模 \(2\) 的映射 \(\bar a\mapsto[a]_2\) 满射且核为 \(K\)，所以 \(\bar a+K\mapsto[a]_2\) 是 \(G/K\cong\mathbb Z/2\mathbb Z\) 的具体同构。另一方面，\(\alpha\) 把 \(K/N\) 送到 \(\bigl\{[0]_4,[2]_4\bigr\}\)，因此左边的两层陪集分别由偶数与奇数代表；上述同构也正是按代表整数的奇偶性取值。
+\end{enumerate}
+\end{solution}
+
+\begin{exercise}\label{b1:ex:02-quotient-map-descend}
+沿用上一题的 \(G=\mathbb Z/12\mathbb Z\) 与 \(N=\langle\bar4\rangle\)。判断下列两个公式是否分别定义了 \(G/N\) 上的群同态，并说明理由：
+\[
+\bar a+N\longmapsto[a]_2,
+\qquad
+\bar a+N\longmapsto[a]_3.
+\]
+\end{exercise}
+\begin{solution}
+先在 \(G\) 上考虑满同态
+\[
+f_2(\bar a)=[a]_2,\qquad f_3(\bar a)=[a]_3.
+\]
+它们均良定义，因为模 \(12\) 相等分别蕴含模 \(2\)、模 \(3\) 相等。第一个核为偶数类组成的子群 \(\langle\bar2\rangle\)，它包含 \(N=\{\bar0,\bar4,\bar8\}\)。由\cref{b1:thm:quotient-universal}，\(f_2\) 唯一通过 \(G/N\) 分解，所以第一个公式定义同态。
+
+第二个核为 \(\{\bar0,\bar3,\bar6,\bar9\}\)，不含 \(\bar4\in N\)，因而不满足下降所需的核包含条件。直接看代表元也一样：\(\bar0+N=\bar4+N\)，但 \([0]_3\ne[4]_3=[1]_3\)。所以第二个公式不良定义。商群能否构造由 \(N\) 的正规性决定；一个给定同态能否通过该商群分解，则由 \(N\subseteq\ker f\) 决定。
 \end{solution}

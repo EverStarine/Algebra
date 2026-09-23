@@ -1,0 +1,102 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：### F.4 消去与多项式方程组
+% 纲要位置：工作记录/计划纲要.md，第 1015 行。
+
+% 纲要要点（供目录核对）：
+% #### F.4.1 字典序与消去定理
+% * 定义 \(I\cap k[x_{r+1},\ldots,x_n]\) 这样的消去理想。
+% * 证明字典序下，从 Gröbner 基中取出不含被消去变量的多项式，得到消去理想的一组 Gröbner 基。
+% * 强调结论依赖所选单项式序，不把任意 Gröbner 基的子集直接当作消去基。
+% #### F.4.2 消去后的方程与原方程的解
+% * 用二元方程组演示先求消去方程，再代回恢复其余变量；每一步说明所在系数域和所求解的范围。
+% * 完成一个简单的参数消去算例。
+% * 回引第一卷第12.4节的 \(xy-1=0\) 例子，说明满足消去后关系的点未必能提升为原方程的解。
+% * 几何投影、Zariski 闭包及零点定理的系统解释归第三卷。
+
+\section{消去与多项式方程组}
+\label{b1:sec:F04}
+
+把一组方程改写成容易逐次求解的形式，是计算 Gröbner 基的一项直接用途。理想不变保证全部原关系仍被保存；要让其中一部分关系不再含某些变量，还须有适当的单项式序。本节先证明代数上的消去结论，再区分消去方程的解与原方程的解。
+
+\subsection{字典序与消去定理}
+\label{b1:subsec:F04:01}
+
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)，\(I\subseteq R\) 为理想。对整数 \(0\leq r\leq n\)，令
+\[
+R_r=k[x_{r+1},\ldots,x_n],\qquad I_r=I\cap R_r,
+\]
+其中 \(R_n=k\)。理想 \(I_r\) 称为消去前 \(r\) 个变量的\term[xiaoqu-lixiang]{消去理想}[elimination ideal]。它收集全部只用剩余变量写出的原理想关系；并不是随意删除生成元中含有其他变量的项。
+\symidx{\(I_r=I\cap k[x_{r+1},\ldots,x_n]\)：消去理想}
+
+\begin{theorem}[消去定理]\label{b1:thm:F-elimination}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)，\(I\subseteq R\) 为理想，\(G\) 是 \(I\) 关于字典序 \(x_1\succ\cdots\succ x_n\) 的 Gröbner 基。对整数 \(0\leq r\leq n\)，当 \(r<n\) 时令 \(R_r=k[x_{r+1},\ldots,x_n]\)，并令 \(R_n=k\)；再置
+\[
+I_r=I\cap R_r,\qquad G_r=G\cap R_r.
+\]
+则 \(G_r\) 是 \(I_r\) 关于限制字典序的 Gröbner 基。
+\end{theorem}
+\begin{proof}
+字典序有如下性质：若一个多项式的首单项式不含 \(x_1,\ldots,x_r\)，则它的每个单项式都不含这些变量。否则取某个含这些变量的项，并看其中最早出现的变量；与只含剩余变量的首单项式比较，该项反而较大，矛盾。
+
+现在取 \(0\ne f\in I_r\)。由\cref{b1:def:F-groebner-basis}及\cref{b1:prop:F-monomial-membership}，存在 \(g\in G\)，使 \(\operatorname{LM}(g)\mid\operatorname{LM}(f)\)。所以 \(\operatorname{LM}(g)\) 不含前 \(r\) 个变量，上述性质使整个 \(g\in R_r\)，即 \(g\in G_r\)。因此每个 \(I_r\) 中非零多项式的首单项式，都被 \(G_r\) 中某个首单项式整除。
+
+还须说明 \(G_r\) 生成 \(I_r\)。在 \(R_r\) 中用 \(G_r\) 对 \(f\in I_r\) 作除法，余式 \(h\) 仍在 \(I_r\)。若 \(h\ne0\)，刚证的整除性质与余式中没有可约单项式矛盾。故余式为零，除法等式说明 \(f\in(G_r)\)。于是生成性与首项条件同时成立。若 \(I_r=0\)，空集就是相应的 Gröbner 基，论证也包括这一情形。
+\end{proof}
+
+这个结果称为\term[xiaoqu-dingli]{消去定理}[elimination theorem]。对前面反复计算的 \(I=(xy-1,y^2-1)\subseteq\mathbb Q[x,y]\)，式\eqref{b1:eq:F-main-reduced-basis}给出字典序 \(x\succ y\) 下的约化基 \(\{x-y,y^2-1\}\)。所以
+\begin{equation}\label{b1:eq:F-basic-elimination}
+I\cap\mathbb Q[y]=(y^2-1).
+\end{equation}
+要消去 \(y\) 而保留 \(x\)，应选取 \(y\succ x\) 的字典序，得到 \(\{y-x,x^2-1\}\)。变量次序说明了算法希望优先消去哪一部分，而不是方程原先书写的先后次序。
+
+\subsection{消去后的方程与原方程的解}
+\label{b1:subsec:F04:02}
+
+在任意包含 \(k\) 的域 \(K\) 中，两组生成同一理想的多项式具有相同的公共零点。事实上，若新生成元是旧生成元的多项式线性组合，旧生成元同时为零时，新生成元也为零；用反向表示得到另一包含。这里不需要零点定理，只用已经记录的理想等式。
+
+\begin{proposition}[三角生成组]\label{b1:prop:F-triangular-basis}
+设 \(k\) 为域，\(R=k[x,y]\)，\(h,p\in k[y]\)，其中 \(p\) 首一且次数 \(d\ge1\)。对字典序 \(x\succ y\)，\(\Bigl\{x-h(y),p(y)\Bigr\}\) 是理想 \(I=\Bigl(x-h(y),p(y)\Bigr)\subseteq R\) 的 Gröbner 基。对任意 \(f\in R\)，其正规余式等于先算 \(f\Bigl(h(y),y\Bigr)\)，再除以 \(p(y)\) 所得的一元余式。
+\end{proposition}
+\begin{proof}
+两个首单项式为 \(x,y^d\)。对 \(0\ne f\in I\)，若其首单项式含 \(x\)，就被第一个整除。否则由字典序的性质，\(f\in k[y]\)。在它的理想表示中代入 \(x=h(y)\)，得到 \(f(y)\) 是 \(p(y)\) 的倍数，故其首单项式被 \(y^d\) 整除。这个整除性质及单项式理想成员判据说明给定生成组是 Gröbner 基。
+
+对每个 \(m\ge1\)，恒等式
+\[
+x^m-h(y)^m=\Bigl(x-h(y)\Bigr)\sum_{j=0}^{m-1}x^{m-1-j}h(y)^j
+\]
+说明 \(f(x,y)\) 与代入后的多项式模 \(x-h(y)\) 同余。再作一元除法，得到仅含 \(1,y,\ldots,y^{d-1}\) 的余式，它与 \(f\) 模 \(I\) 同余且不可约，由\cref{b1:thm:F-normal-form}必为正规余式。
+\end{proof}
+
+因此，对上面的有理数算例，先解 \(y^2-1=0\)，再从 \(x-y=0\) 得 \(x=y\)，得到全部有理解及复数解 \((1,1),(-1,-1)\)。这次代回没有丢失条件，因为手中仍保存着与原理想相同的整组 Gröbner 基，而不只有消去方程。
+
+\begin{example}[参数的消去]\label{b1:exm:F-parameter-elimination}
+考虑参数式 \(x=t,y=t^2\)，在 \(k[t,x,y]\) 中取
+\[
+J=(x-t,y-t^2),\qquad t\succ x\succ y.
+\]
+令 \(g_1=t-x\)、\(g_2=x^2-y\)。有
+\[
+g_1=-(x-t),\qquad g_2=(t+x)(x-t)-(y-t^2),
+\]
+以及 \(x-t=-g_1\)、\(y-t^2=-g_2-(t+x)g_1\)，所以 \((g_1,g_2)=J\)。其首单项式为 \(t,x^2\)，唯一需要检查的 S 多项式为
+\[
+x^2g_1-tg_2=ty-x^3=yg_1-xg_2.
+\]
+按 \(g_1,g_2\) 约化，先减去 \(yg_1\)，再消去 \(-xg_2\)，余式为零。\cref{b1:thm:F-buchberger-criterion}说明它们构成 Gröbner 基。因此
+\[
+J\cap k[x,y]=(x^2-y).
+\]
+这个例子中，反过来满足 \(y=x^2\) 的每个域值点都能提升：取 \(t=x\) 即可。该提升来自具体公式，并非一般消去定理的一部分。
+\end{example}
+
+\begin{example}[不能提升的点]\label{b1:exm:F-projection-nonlifting}
+对 \(I=(xy-1)\subseteq k[x,y]\)，有 \(I\cap k[x]=0\)，但原方程没有第一坐标为零的解。
+\end{example}
+\begin{proof}
+若 \(0\ne h\in k[x,y]\)，把多项式看成 \(k[x][y]\) 中的元素。因 \(k[x]\) 是整环，\((xy-1)h\) 关于 \(y\) 的次数为 \(1+\deg_yh\ge1\)，不可能属于 \(k[x]\)。故交理想为零。零理想对剩余坐标没有方程限制，可是 \(x=0\) 时 \(xy-1=-1\ne0\)，所以该点没有提升。
+\end{proof}
+
+这将\subsecref{b1:subsec:1204:01}中的现象放进了消去理想的框架。另一个容易混淆的问题是解所在的域。例如 \((x-y,y^2+1)\subseteq\mathbb Q[x,y]\) 的计算可以完全在有理数中进行，但它没有有理解，在复数域中才有 \((i,i),(-i,-i)\)。系数运算所在的域与允许取解的域应分别写明。
+
+\ProseParagraphBreak
+消去定理本身不要求基域代数闭。若进一步研究投影像与其 Zariski 闭包的关系，则需要第三卷第8.3节的几何解释；本附录只使用这里已经证明的理想等式和逐点代回。

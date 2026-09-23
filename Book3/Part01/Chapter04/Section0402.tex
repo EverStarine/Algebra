@@ -1,30 +1,101 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 4.2 准素理想
-% 纲要位置：计划纲要.md，第 1595 行。
+% 纲要位置：工作记录/计划纲要.md，第 1913 行。
+% 纲要细目（写作范围）：
+% * 准素性与根
+% * 素幂不必准素的注意事项
+% * 局部化中的准素理想
 
 \section{准素理想}
 \label{b3:sec:0402}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 准素性与根
-% * 素幂不必准素的注意事项
-% * 局部化中的准素理想
-%
+素理想在商环中排除一切非零零因子，准素理想则允许零因子存在，但要求它们最终被某个幂消去。这个差别使准素理想既保留一个确定的素支集，又能描述支集上的幂零结构。先把准素性直接写成乘法条件，再研究它与局部化的相容性。
 
 \subsection{准素性与根理想}
 \label{b3:subsec:0402:01}
 
-待撰写。
+\begin{definition}\label{b3:def:primary-ideal}
+交换环 \(R\) 的真理想 \(Q\) 称为\term[zhunsu-lixiang]{准素理想}[primary ideal]，如果对任意 \(a,b\in R\)，
+\[
+ab\in Q,\quad b\notin Q
+\quad\Longrightarrow\quad a^n\in Q\ \text{对某个整数 }n\ge1.
+\]
+若 \(\sqrt Q=\mathfrak p\)，也称 \(Q\) 是 \(\mathfrak p\) 准素理想。
+\end{definition}
+
+等价地，\(R/Q\) 中每个零因子都是幂零元。素理想满足更强的条件 \(n=1\)，因而总是准素理想；反之不成立，例如 \(\mathbb Z/(p^e)\) 中每个非单位都是 \(p\) 的倍数，故 \((p^e)\) 为 \((p)\) 准素理想。
+
+\begin{proposition}\label{b3:prop:primary-radical-colon}
+准素理想 \(Q\) 的根 \(\mathfrak p=\sqrt Q\) 是素理想。对 \(c\notin Q\)，理想商 \((Q:c)\) 仍为 \(\mathfrak p\) 准素理想；若还满足 \(c\notin\mathfrak p\)，则 \((Q:c)=Q\)。同一素理想所属的有限个准素理想的交仍为该素理想所属的准素理想。
+\end{proposition}
+\begin{proof}
+若 \(ab\in\sqrt Q\)、\(b\notin\sqrt Q\)，则某个 \(a^m b^m\in Q\)，且 \(b^m\notin Q\)。准素性给出 \(a^{mn}\in Q\)，从而 \(a\in\sqrt Q\)。根是真理想，故为素理想。
+
+若 \(ab\in(Q:c)\)、\(b\notin(Q:c)\)，即 \(a(bc)\in Q\)、\(bc\notin Q\)，则某个 \(a^n\in Q\subseteq(Q:c)\)。又 \(Q\subseteq(Q:c)\)，而 \(dc\in Q\)、\(c\notin Q\) 蕴涵 \(d\in\mathfrak p\)，所以两者根相同。若 \(c\notin\mathfrak p\)，从 \(dc\in Q\) 与 \(d\notin Q\) 将推出 \(c\in\mathfrak p\)，故 \(d\in Q\)。
+
+最后令 \(Q=\bigcap_{i=1}^rQ_i\)，各 \(Q_i\) 的根均为 \(\mathfrak p\)。若 \(ab\in Q\)、\(b\notin Q\)，则至少一个因子给出 \(a\in\mathfrak p\)。于是每个 \(Q_i\) 都包含 \(a\) 的某个幂，取这些指数的最大值即得 \(a^n\in Q\)；同时 \(\sqrt Q=\bigcap_i\sqrt{Q_i}=\mathfrak p\)。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:maximal-radical-primary}
+若真理想 \(Q\) 的根是极大理想 \(\mathfrak m\)，则 \(Q\) 是 \(\mathfrak m\) 准素理想。因此极大理想的任意正整数次幂均为准素理想。
+\end{proposition}
+\begin{proof}
+\(R/Q\) 只有一个极大理想 \(\mathfrak m/Q\)。若 \(a\notin\mathfrak m\)，其像为单位，故 \(ab\in Q\) 必导致 \(b\in Q\)。取逆否命题即得到准素条件。又 \(\sqrt{\mathfrak m^n}=\mathfrak m\)，得最后一句。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:primary-associated-singleton}
+设 \(R\) 为 Noether 环，\(Q\subsetneq R\)。则 \(Q\) 是准素理想，当且仅当 \(\operatorname{Ass}_R(R/Q)\) 仅有一个元素；这唯一的元素就是 \(\sqrt Q\)。
+\end{proposition}
+\begin{proof}
+若 \(Q\) 为准素理想，对每个非零 \(\bar b\in R/Q\)，\(\operatorname{Ann}_R(\bar b)=(Q:b)\) 的根由\cref{b3:prop:primary-radical-colon}等于 \(\sqrt Q\)。因此当零化子本身为素理想时，它只能是 \(\sqrt Q\)；存在性保证这样的零化子确实出现。
+
+反之，设关联素理想只有 \(\mathfrak p\)。\cref{b3:prop:minimal-primes-associated}说明 \(Q\) 的极小素理想只有 \(\mathfrak p\)，故 \(\sqrt Q=\mathfrak p\)。由\cref{b3:thm:associated-zero-divisors}，商环中的每个零因子来自 \(\mathfrak p\)，所以它都是幂零元，\(Q\) 准素。
+\end{proof}
 
 \subsection{素理想幂不为准素理想的例子}
 \label{b3:subsec:0402:02}
 
-待撰写。
+极大理想幂的结论不能直接推广到任意素理想。以下例子甚至发生在一个有限型整环中。
+
+\begin{example}\label{b3:exm:prime-square-not-primary}
+设 \(k\) 为任意域，
+\[
+R=k[x,y,z]/(xy-z^2),\qquad \mathfrak p=(\bar x,\bar z).
+\]
+则 \(R\) 是整环，\(\mathfrak p\) 是素理想，而 \(\mathfrak p^2\) 不是准素理想。
+\end{example}
+\begin{proof}
+映射 \(\bar x\mapsto s^2\)、\(\bar y\mapsto t^2\)、\(\bar z\mapsto st\) 将 \(R\) 嵌入 \(k[s,t]\)。具体地，利用 \(z^2=xy\)，每个类可写为 \(a(x,y)+zb(x,y)\)；代入后的第一项只含偶数指数对，第二项只含奇数指数对，两类单项式不能抵消，因此映射单射，\(R\) 是整环。又 \(R/\mathfrak p\cong k[y]\)，故 \(\mathfrak p\) 素。
+
+关系 \(xy-z^2\) 是全次数二的齐次式，因而商环仍按全次数分解，互不相同的次数不能相互抵消。理想 \(\mathfrak p^2=(\bar x^2,\bar x\bar z,\bar z^2)\) 由全次数二的齐次元生成，所以非零的一次齐次元 \(\bar x\) 不属于它。然而
+\[
+\bar y\bar x=\bar z^2\in\mathfrak p^2,
+\qquad \bar y^n\notin\mathfrak p\supseteq\mathfrak p^2\quad(n\ge1),
+\]
+后一句由商环 \(k[y]\) 核验。这直接违反准素条件。
+\end{proof}
+
+失效的原因是 \(\bar y\) 虽不在素理想 \(\mathfrak p\) 中，却在 \(R/\mathfrak p^2\) 中成为零因子。只知道 \(\sqrt{\mathfrak p^2}=\mathfrak p\) 并不足以推出准素性；上一小节中的“根是极大理想”确有作用。
 
 \subsection{局部化中的准素理想}
 \label{b3:subsec:0402:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:primary-localization}
+设 \(Q\) 为交换环 \(R\) 的 \(\mathfrak p\) 准素理想，\(S\) 为乘法集。若 \(S\cap\mathfrak p\ne\varnothing\)，则 \(S^{-1}Q=S^{-1}R\)；若 \(S\cap\mathfrak p=\varnothing\)，则 \(S^{-1}Q\) 为 \(S^{-1}\mathfrak p\) 准素理想，且其在 \(R\) 内的收缩是 \(Q\)。反之，\(S^{-1}R\) 中任一准素理想的收缩也是准素理想。
+\end{proposition}
+\begin{proof}
+第一种情形取 \(s\in S\cap\mathfrak p\)，则某个 \(s^n\in Q\)，局部化后 \(Q\) 包含单位。第二种情形中，若 \(a/1\in S^{-1}Q\)，则某个 \(s\in S\) 满足 \(sa\in Q\)；因为 \(s\notin\mathfrak p\)，\cref{b3:prop:primary-radical-colon}给出 \(a\in Q\)，这证明收缩断言，也说明扩张仍是真理想。
+
+若 \((a/s)(b/t)\in S^{-1}Q\)、\(b/t\notin S^{-1}Q\)，收缩断言给出 \(ab\in Q\)、\(b\notin Q\)。于是 \(a^n\in Q\)，进而 \((a/s)^n\in S^{-1}Q\)。又由已证的收缩性质，\((a/s)^n\in S^{-1}Q\) 当且仅当 \(a^n\in Q\)。某个这样的正整数 \(n\) 存在，恰等价于 \(a\in\sqrt Q=\mathfrak p\)，所以局部化后的根为 \(S^{-1}\mathfrak p\)。最后，对于收缩的理想，把 \(ab\)、\(b\) 送入局部化环并应用准素条件，所获 \((a/1)^n\) 属于该理想就意味着 \(a^n\) 属于收缩。
+\end{proof}
+
+\begin{definition}\label{b3:def:symbolic-power}
+对素理想 \(\mathfrak p\subset R\) 及整数 \(n\ge1\)，称
+\[
+\mathfrak p^{(n)}\coloneqq\mathfrak p^nR_{\mathfrak p}\cap R
+\]
+为 \(\mathfrak p\) 的第 \(n\) 个\term[fuhao-mi]{符号幂}[symbolic power]；交表示沿 \(R\rightarrow R_{\mathfrak p}\) 的收缩，不要求该映射单射。
+\symidx{\(\mathfrak p^{(n)}\)：素理想的符号幂}
+\end{definition}
+
+\(\mathfrak pR_{\mathfrak p}\) 是极大理想，所以由\cref{b3:prop:maximal-radical-primary}和\cref{b3:prop:primary-localization}，\(\mathfrak p^{(n)}\) 总是 \(\mathfrak p\) 准素理想，且包含普通幂 \(\mathfrak p^n\)。在\cref{b3:exm:prime-square-not-primary}中，\(\bar y\) 在 \(R_{\mathfrak p}\) 中可逆，故 \(\bar x=\bar z^2/\bar y\in\mathfrak p^2R_{\mathfrak p}\)，于是 \(\bar x\in\mathfrak p^{(2)}\setminus\mathfrak p^2\)。符号幂正是先在目标素理想处集中研究，再把结果收回原环所得的准素对象。

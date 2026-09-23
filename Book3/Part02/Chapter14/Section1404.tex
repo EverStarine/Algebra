@@ -1,44 +1,200 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.4 可分性与光滑性初步
-% 纲要位置：计划纲要.md，第 1950 行。
-
-\section{可分性与光滑性初步}
-\label{b3:sec:1404}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2268 行。
+% 纲要细目（写作范围）：
 % * 有限代数域扩张的微分模
 % * 非分歧与光滑的初步语言
 % * 微分模消失本身不能代替平展（étale）所需的完整条件
 % * 在有限呈示环映射的范围内明确区分 \(\Omega_{B/A}=0\)、形式非分歧、非分歧和平展；平展的判定另含平坦性，完整提升理论放在第23章
 % * 有限可分域扩张与纯不可分域扩张分别计算微分模；保持第23章反例使用的基域及特征约定一致
-%
 % ---
-%
+
+
+\section{可分性与光滑性初步}
+\label{b3:sec:1404}
+
+对域扩张，微分模检测元素之间是否存在不可分关系；对一般环同态，它检测平方零改动的唯一性。两者都属于一阶信息，却不能代替平坦性或提升的存在性。本节证明所需的微分判据，并把非分歧、光滑和平展的条件分别写明。一般的提升定理留到\chapref{b3:ch:23}，这里不把那些尚待证明的等价条件当作依据。
+
 
 \subsection{有限代数域扩张的微分模}
 \label{b3:subsec:1404:01}
 
-待撰写。
+先看一个代数元。设 \(L=K(\alpha)\)，\(f\in K[T]\) 为 \(\alpha\) 的首一不可约多项式。由于 \(L=K[T]/(f)\)，\cref{b3:cor:differential-presentation}给出
+\begin{equation}\label{b3:eq:simple-field-differentials}
+\Omega_{L/K}\cong L\,d\alpha/\Bigl(f'(\alpha)d\alpha\Bigr).
+\end{equation}
+若 \(f\) 可分，\(f'(\alpha)\ne0\) 在域中为单位，故微分模为零。若 \(f\) 不可分，其不可约性迫使 \(f'=0\)，于是微分模为一维。一般有限扩张不一定由一个元素生成；不能把这个单生成元计算直接当作一般情形的证明。
+
+\begin{lemma}\label{b3:lem:exponent-one-differentials}
+设 \(K\subseteq L\) 为特征 \(p>0\) 的有限域扩张，令 \(F=K L^p\) 为由 \(K\) 及所有 \(p\) 次幂生成的子域。存在 \(\alpha_1,\ldots,\alpha_r\in L\)，使
+\[
+[L:F]=p^r,\qquad
+\Omega_{L/K}\cong\bigoplus_{i=1}^r L\,d\alpha_i.
+\]
+其中 \(r=0\) 恰好表示 \(L=K L^p\)。
+\end{lemma}
+\begin{proof}
+每个 \(K\) 导子都零化 \(L^p\)，再由四则运算法则零化 \(F\)，所以 \(K\) 导子与 \(F\) 导子相同，微分模也相同。逐次选取尚未落入已生成子域的 \(\alpha_i\)，直至生成 \(L/F\)。每次都有 \(\alpha_i^p\in F\)，且对应最小多项式为 \(T^p-\alpha_i^p\)：若次数小于 \(p\)，在代数闭包中它为 \((T-\alpha_i)^j\)、\(0<j<p\)，其下一项系数便使 \(\alpha_i\) 已属于前一子域，矛盾。因此每步次数为 \(p\)，而有限次数保证过程终止。
+
+于是 \(\prod_i\alpha_i^{e_i}\)、\(0\le e_i<p\)，组成 \(F\) 基。自然满射
+\[
+F[X_1,\ldots,X_r]/(X_1^p-\alpha_1^p,\ldots,X_r^p-\alpha_r^p)
+\longrightarrow L
+\]
+两侧维数都是 \(p^r\)，故为同构。关系的微分全部为零，\cref{b3:cor:differential-presentation}遂给出所列自由基。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:finite-field-differentials-separable}
+设 \(L/K\) 为有限域扩张。则
+\[
+\Omega_{L/K}=0\quad\Longleftrightarrow\quad L/K\text{ 可分}.
+\]
+若 \(L/K\) 为特征 \(p>0\) 的非平凡有限纯不可分扩张，则 \(\Omega_{L/K}\ne0\)。
+\end{theorem}
+\begin{proof}
+若扩张可分，对任意 \(\alpha\in L\)，其最小多项式 \(f\) 满足 \(f'(\alpha)\ne0\)。微分等式 \(f'(\alpha)d\alpha=0\) 因而给出 \(d\alpha=0\)。这些元素生成微分模，所以该模为零。
+
+先证非平凡纯不可分情形。设 \(L/K\) 的指数不超过 \(e\)，即 \(L^{p^e}\subseteq K\)；有限生成性保证存在同一个 \(e\)。若 \(L=K L^p\)，反复取 \(p\) 次幂并代回便得
+\(L=K L^{p^j}\) 对所有 \(j\ge1\) 成立，特别地 \(L=K\)，矛盾。因此 \(K L^p\subsetneq L\)，前一引理给出至少一个非零微分。
+
+最后设 \(L/K\) 不可分。令 \(E\) 为 \(L\) 中对 \(K\) 可分的元素组成的子域；可分代数扩张对复合及子扩张封闭，保证这些元素对四则运算封闭。\(E/K\) 有限可分。对任意 \(\alpha\in L\)，其不可约多项式在特征 \(p\) 下唯一写成 \(g(T^{p^a})\)，其中 \(g'\ne0\)。多项式 \(g\) 仍不可约，否则将其分解代入 \(T^{p^a}\) 就得到原多项式的分解；故 \(g\) 可分，\(\alpha^{p^a}\) 对 \(K\) 可分并属于 \(E\)。于是 \(L/E\) 纯不可分；由于原扩张不可分，它非平凡。复合微分正合列给出
+\[
+L\otimes_E\Omega_{E/K}\longrightarrow\Omega_{L/K}
+\longrightarrow\Omega_{L/E}\longrightarrow0.
+\]
+左端由已证的可分情形为零，右端由刚证的纯不可分情形非零，所以中间项非零。特征零没有不可分代数扩张，不需此分情形。
+\end{proof}
+
+这里使用的只是通常的域论中可分元素组成子域的事实，微分判据本身已就地证明。对可分扩张的提升性质，可参照松村英之的《Commutative Ring Theory》\cite[\S25, Theorem 25.3, pp. 195--196]{Matsumura1989CommutativeRingTheory}；下一小节将说明“提升”究竟要求什么。
 
 \subsection{非分歧与光滑的基本概念}
 \label{b3:subsec:1404:02}
 
-待撰写。
+\begin{definition}\label{b3:def:formal-infinitesimal-properties}
+设 \(A\to B\) 为交换环同态。对任意交换 \(A\) 代数 \(C\)、满足 \(J^2=0\) 的理想 \(J\subseteq C\)，以及 \(A\) 代数同态 \(u:B\to C/J\)，考虑使下式复合等于 \(u\) 的 \(A\) 代数同态 \(\widetilde u\)：
+\[
+B\xrightarrow{\widetilde u}C\longrightarrow C/J.
+\]
+若每组这样的数据都有提升，称 \(A\to B\) \term[xingshi-guanghua]{形式光滑}[formally smooth]；若每组数据至多有一个提升，称其\term[xingshi-feifenqi]{形式非分歧}[formally unramified]；若每组数据恰有一个提升，称其\term[xingshi-pingzhan]{形式平展}[formally étale]。
+\end{definition}
+
+“至多一个”允许没有提升，“至少一个”允许有多个，必须分开判断。只用平方零理想已足以检验任意幂零理想：若 \(J^N=0\)，可沿 \(C/J\)、\(C/J^2\)、\ldots、\(C/J^N=C\) 逐次提升，因为 \(J^i/J^{i+1}\) 的平方为零；存在性、唯一性分别逐次传递。
+
+\begin{definition}\label{b3:def:finite-presentation-infinitesimal-properties}
+设 \(A\to B\) 为交换环同态，且 \(B\) 可写成
+\(A[X_1,\ldots,X_n]/(f_1,\ldots,f_s)\)，其中生成元和关系均有限。此时称 \(B\) 是有限呈示 \(A\) 代数。在这个有限呈示范围内，若映射形式光滑，称其\term[guanghua]{光滑}[smooth]；若形式非分歧，称其\term[feifenqi]{非分歧}[unramified]；若 \(B\) 作为 \(A\) 模平坦且 \(\Omega_{B/A}=0\)，称其\term[pingzhan]{平展}[étale]。
+\end{definition}
+
+本节固定在有限呈示范围内讨论后面三个名称；不据此改写一般文献中用“有限型”表述非分歧的更宽定义。平展的上述平坦性判据与“有限呈示且形式平展”等价，这是\chapref{b3:ch:23}将建立的一般结果；当前只在下文的具体代数上直接核验两套条件。
+
+\ProseParagraphBreak
+例如多项式代数 \(A[X_1,\ldots,X_n]\) 光滑：把每个 \(u(X_i)\) 任意提升到 \(C\)，即可唯一按这些已选的像延拓为代数同态。若 \(n>0\)，选择本身通常不唯一，所以不能据此称形式非分歧。局部化 \(A_f\) 则形式平展：\(f\) 在 \(C/J\) 中的像为单位时，它在 \(C\) 中也是单位；若 \(ab=1+j\)、\(j^2=0\)，则 \(b(1-j)\) 就是 \(a\) 的逆。局部化的泛性质因而给出唯一提升。再用 \(A_f=A[T]/(fT-1)\)、局部化平坦性及 \(\Omega_{A_f/A}=0\)，也可直接核验其平展性。
 
 \subsection{微分模消失与平展性的条件}
 \label{b3:subsec:1404:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:formally-unramified-differentials}
+设 \(A\to B\) 为任意交换环同态，不加有限性条件。该映射形式非分歧，当且仅当 \(\Omega_{B/A}=0\)。
+\end{theorem}
+\begin{proof}
+设 \(J^2=0\)，且 \(v,w:B\to C\) 为同一个 \(u:B\to C/J\) 的两个提升。差 \(D=v-w\) 取值于 \(J\)。由于 \(J^2=0\)，\(u\) 使 \(J\) 成为一个 \(B\) 模：取 \(u(b)\) 的任意提升乘 \(J\)，结果不依赖选择。展开
+\[
+v(b)v(c)-w(b)w(c)
+=w(b)D(c)+w(c)D(b)+D(b)D(c)
+\]
+可见最后一项为零，故 \(D\) 是 \(A\) 导子。如果 \(\Omega_{B/A}=0\)，微分模泛性质使 \(D=0\)，两个提升相同。
+
+反向在平方零扩张 \(C=B\oplus\Omega_{B/A}\) 中比较
+\(b\mapsto(b,0)\) 与 \(b\mapsto(b,db)\)。\cref{b3:prop:derivation-square-zero}说明两者都是恒等同态 \(B\to B\) 的提升。形式非分歧使它们相同，故所有 \(db=0\)。这些元素生成 \(\Omega_{B/A}\)，所以该模为零。
+\end{proof}
+
+这项等价也解释了它的局限：微分模消失控制两个已存在的提升之间的差，不能凭空产生提升，更不自动保证平坦。
+
+\begin{example}\label{b3:exm:unramified-not-etale}
+设 \(k\) 为域，取商映射 \(A=k[t]\to B=k=A/(t)\)。任意 \(A\) 导子 \(B\to M\) 都为零，因为 \(B\) 的每个元素都来自基环，因此 \(\Omega_{B/A}=0\)，且该映射有限呈示、形式非分歧。但它不平坦：单射 \(A\xrightarrow{t}A\) 张量到 \(B\) 后变成非零模 \(B\) 上的零映射。
+
+\ProseParagraphBreak
+它也不是形式光滑。把 \(C=k[t]/(t^2)\) 看成 \(A\) 代数，令 \(J=(t)/(t^2)\)。恒等映射 \(B=k\to C/J=k\) 不可能提升为 \(A\) 代数映射 \(B\to C\)，因为 \(t\) 在 \(B\) 中为零，在 \(C\) 中却非零。故它是非分歧而非平展的具体例子。
+\end{example}
 
 \subsection{有限呈示映射的形式非分歧、非分歧与平展性}
 \label{b3:subsec:1404:04}
 
-待撰写。
+把目前已证和留待以后证明的关系区分开，可以避免在使用名称时偷偷加入假设。对有限呈示交换环同态 \(A\to B\)，本节已经得到
+\[
+\begin{split}
+\Omega_{B/A}=0
+&\ \Longleftrightarrow\ \text{形式非分歧}
+\ \Longleftrightarrow\ \text{非分歧},\\
+\text{平展}
+&\ \Longleftrightarrow\
+\text{平坦且 }\Omega_{B/A}=0.
+\end{split}
+\]
+第二行使用刚给出的平展判据作为本章定义。有限呈示且形式平展与第二行等价、一般光滑映射必平坦等结果，均为后续提升理论的内容；本章的证明不调用它们。
+
+\begin{proposition}\label{b3:prop:standard-etale-lift}
+设 \(A\) 为交换环，\(f\in A[T]\) 为正次数首一多项式，令
+\(B=\Bigl(A[T]/(f)\Bigr)_g\)，其中 \(g\) 是商环中的一个元素，\(t\) 为 \(T\) 的像。若 \(f'(t)\) 在 \(B\) 中可逆，则 \(A\to B\) 平展，并且形式平展。
+\end{proposition}
+\begin{proof}
+商环由首一除法具有有限 \(A\) 基 \(1,t,\ldots,t^{\deg f-1}\)，因而平坦；再局部化仍对 \(A\) 平坦，由\cref{b3:prop:flat-base-change-transitivity}成立。添加一个生成元及关系 \(gU-1\) 表明 \(B\) 有限呈示，而
+\(\Omega_{B/A}=B\,dt/\Bigl(f'(t)dt\Bigr)=0\)。所以映射平展。
+
+直接检查提升。设 \(J^2=0\)，给定 \(u:B\to C/J\)。取 \(x\in C\) 提升 \(u(t)\)，则 \(f(x)\in J\)，且 \(f'(x)\) 为单位，因为它模 \(J\) 后为单位。令
+\[
+x'=x-f'(x)^{-1}f(x).
+\]
+平方零条件使 Taylor 展开恰好为
+\(f(x')=f(x)+f'(x)(x'-x)=0\)。选取代表 \(g\) 的多项式 \(G\in A[T]\)。因为 \(G(x')\) 模 \(J\) 为单位，它本身为单位；而 \(f(x')=0\) 保证这个值不依赖代表的选择。于是 \(T\mapsto x'\) 唯一延拓为 \(B\to C\)。若另一根 \(x''\) 给出同一模 \(J\) 的像，则
+\(0=f(x'')-f(x')=f'(x')(x''-x')\)，故 \(x''=x'\)。由生成元及局部化泛性质，整个提升唯一。
+\end{proof}
+
+这种一元计算通常称为标准平展代数的基本情形。条件必须在实际局部化的环内检查。例如
+\(A=k[s]\)、\(B=A[t]/(t^2-s)\) 总是秩二自由，但微分模为 \(\Bigl(B/(2t)\Bigr)\,dt\)。若 \(\operatorname{char}k\ne2\)，倒置 \(t\) 后导数为单位，得到平展映射；在 \(t=0\) 处导数不能相除。若 \(\operatorname{char}k=2\)，导数处处为零，非零的局部化也不满足这个非分歧条件。
+
+\ProseParagraphBreak
+光滑的类似计算允许自由方向。设
+\(B=\Bigl(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\Bigr)_g\)，其中 \(r\le n\)，且前 \(r\) 个变量对应的 Jacobian 子式在 \(B\) 中可逆。给定平方零提升问题，先任取所有变量的提升 \(x_j\)，误差向量 \(\Bigl(f_i(x)\Bigr)_{i=1}^r\) 的各分量落入 \(J\)。保持后 \(n-r\) 个变量不变，用可逆的 \(r\times r\) 子矩阵解线性方程
+\[
+\left(\frac{\partial f_i}{\partial X_j}(x)\right)_{1\le i,j\le r}
+\begin{pmatrix}h_1\\ \vdots\\h_r\end{pmatrix}
+=-\begin{pmatrix}f_1(x)\\ \vdots\\f_r(x)\end{pmatrix}.
+\]
+所得 \(h_j\in J\) 使修正后的方程精确为零，\(g\) 仍可逆。故这个有限呈示代数形式光滑，也就是光滑。这里确实给出了提升的存在性；不能把这段证明缩成“微分模是自由的，所以光滑”。
 
 \subsection{可分与纯不可分扩张的微分计算}
 \label{b3:subsec:1404:05}
 
-待撰写。
+取有限域扩张时，平坦性没有额外障碍，因为向量空间总自由。有限扩张也有限呈示：选有限组域生成元，得到有限型 \(K\) 代数，关系理想由多项式环的 Noether 性有限生成。因此\cref{b3:thm:finite-field-differentials-separable}立即给出：有限域扩张平展当且仅当可分。
+
+\ProseParagraphBreak
+例如 \(\mathbb Q\subset\mathbb Q(\sqrt2)\) 有
+\(\Omega=0\)，因为 \(2\sqrt2\) 为单位。相反，若 \(k=\mathbb F_p(s)\)、\(L=k(\alpha)\)、\(\alpha^{p^e}=s\)、\(e\ge1\)，则
+\[
+\Omega_{L/k}=L\,d\alpha.
+\]
+最小多项式 \(T^{p^e}-s\) 的不可约性可用 \(s\) 在 \(\mathbb F_p[s]\) 中的 Eisenstein 判据检验。扩张次数为 \(p^e\)，微分维数却一直为一，因此微分维数不是不可分次数的对数。它测量的是独立的一阶方向，未记录每个方向的全部幂次深度。
+
+\ProseParagraphBreak
+这些纯不可分例子确实不光滑，可以直接构造提升障碍，而不借助尚未建立的光滑性定理。以 \(L=k[u]/(u^p-s)\) 为例，置 \(f=T^p-s\)、\(C=k[T]/(f^2)\)、\(J=(f)/(f^2)\)。有 \(J^2=0\)、\(C/J=L\)。若恒等同态 \(L\to C/J\) 有提升，\(u\) 的像必为 \(T+h\)、\(h\in J\)。但
+\[
+(T+h)^p-s=T^p-s+h^p=f\ne0\quad\text{在 }C\text{ 中},
+\]
+因为 \(p\ge2\) 使 \(h^p=0\)，而 \(f\notin(f^2)\)。这与 \(u^p=s\) 矛盾，所以映射不形式光滑。
+
+\ProseParagraphBreak
+多方向的例子是
+\[
+k=\mathbb F_p(s,t),\qquad
+L=k(\alpha,\beta),\qquad \alpha^p=s,\quad\beta^p=t.
+\]
+有 \([L:k]=p^2\) 及
+\(\Omega_{L/k}=L\,d\alpha\oplus L\,d\beta\)。这里可把 \(L\) 识别为有理函数域 \(\mathbb F_p(\alpha,\beta)\)：不同模 \(p\) 的指数类在多项式恒等式中不会相消，所以 \(\alpha^i\beta^j\)、\(0\le i,j<p\)，对 \(k=\mathbb F_p(\alpha^p,\beta^p)\) 线性无关，并显然生成。对应的两个关系微分都为零，给出所列基。
+
+\ProseParagraphBreak
+在这一例子中，原来的 \(L\) 是域，扩到 \(L\) 本身后却有
+\[
+L\otimes_kL\cong L[\varepsilon,\eta]/(\varepsilon^p,\eta^p).
+\]
+把右边变量分别送到第二因子的 \(\alpha,\beta\) 减去第一因子的相应元素，便得到满射；两侧 \(L\) 维数都是 \(p^2\)，所以为同构。域扩张的不可分性在此表现为基变换后的一阶方向和幂零结构；这也延续了\cref{b3:exm:inseparable-tangent}中“环自身简单，却不相对光滑”的区别。

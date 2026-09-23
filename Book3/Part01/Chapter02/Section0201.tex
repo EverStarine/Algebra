@@ -1,30 +1,107 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.1 模局部化
-% 纲要位置：计划纲要.md，第 1526 行。
+% 纲要位置：工作记录/计划纲要.md，第 1844 行。
+% 纲要细目（写作范围）：
+% * 分式模的构造
+% * 与环局部化的张量描述
+% * 局部化的正合性
 
 \section{模局部化}
 \label{b3:sec:0201}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 分式模的构造
-% * 与环局部化的张量描述
-% * 局部化的正合性
-%
+环的局部化允许把指定元素当作分母；模也可以作同样的变换。不过，模中通常没有乘法，分式相等必须用标量作用来定义。以下始终设 \(R\) 为交换含幺环，\(S\subseteq R\) 含 \(1\) 且对乘法封闭，\(M\) 为幺性 \(R\) 模。允许 \(0\in S\)，此时局部化环及局部化模都为零。第二卷命题6.4.5已给出模局部化的张量描述；本节重新展开分母的处理，使后续局部判据能够直接使用。
 
 \subsection{分式模的构造}
 \label{b3:subsec:0201:01}
 
-待撰写。
+\begin{definition}\label{b3:def:module-localization}
+在 \(M\times S\) 上规定
+\[
+(m,s)\sim(n,t)
+\quad\Longleftrightarrow\quad
+\text{存在 }u\in S\text{ 使 }u(tm-sn)=0.
+\]
+所得等价类记为 \(m/s\)，全部等价类组成的集合记为 \(S^{-1}M\)，称为 \(M\) 关于 \(S\) 的\term[mo-jubuhua]{局部化}[localization of a module]。当 \(S=R\setminus\mathfrak p\) 时记为 \(M_{\mathfrak p}\)；当 \(S=\{1,f,f^2,\ldots\}\) 时记为 \(M_f\)。
+\end{definition}
+\symidx{\(S^{-1}M\)、\(M_{\mathfrak p}\)、\(M_f\)：模的局部化}
+
+先核对这确实是等价关系。自反性取 \(u=1\)，对称性把等式取负。若 \(u(tm-sn)=0\)、\(v(rn-tp)=0\)，则
+\[
+uvt(rm-sp)=uv\Bigl(r(tm-sn)+s(rn-tp)\Bigr)=0,
+\]
+所以传递性也成立。关系中的额外乘子 \(u\) 不能省去：若某个分母已经零化了 \(m\)，局部化后 \(m\) 就应消失。
+
+\begin{proposition}\label{b3:prop:module-fraction-operations}
+下列公式使 \(S^{-1}M\) 成为 \(S^{-1}R\) 模：
+\[
+\frac ms+\frac nt=\frac{tm+sn}{st},\qquad
+\frac as\frac mt=\frac{am}{st}.
+\]
+自然映射 \(\iota_M:M\rightarrow S^{-1}M\)、\(m\mapsto m/1\) 为 \(R\) 线性映射，且
+\begin{equation}\label{b3:eq:localized-element-zero}
+\frac ms=0\quad\Longleftrightarrow\quad
+um=0\text{ 对某个 }u\in S\text{ 成立}.
+\end{equation}
+若 \(N\) 是 \(S^{-1}R\) 模，任意 \(R\) 线性映射 \(h:M\rightarrow N\) 唯一延拓为 \(S^{-1}R\) 线性映射
+\[
+\widetilde h:S^{-1}M\longrightarrow N,\qquad
+\widetilde h(m/s)=(s/1)^{-1}h(m).
+\]
+\end{proposition}
+\begin{proof}
+若 \(m/s=m'/s'\)，取 \(u\in S\) 使 \(u(s'm-sm')=0\)。加上同一个 \(n/t\) 后，两分子的交叉差为 \(t^2(s'm-sm')\)，仍被 \(u\) 零化；乘上同一个 \(a/t\) 后，交叉差为 \(at(s'm-sm')\)，也被 \(u\) 零化。改变第二个加数的代表元同理。若 \(a/t=a'/t'\)，相应交叉差为 \(s(t'a-ta')m\)，由环分式的等价关系零化。因此运算良定义。把有限个分式通分后，结合律、分配律、零元 \(0/1\)、负元 \(-m/s\) 以及单位作用，都化为 \(M\) 中的相应公理。零判据直接把 \(m/s\) 与 \(0/1\) 比较。
+
+若 \(u(tm-sn)=0\)，在 \(N\) 中 \(u,s,t\) 均可逆，施加 \(h\) 再消去这些单位，即得 \(s^{-1}h(m)=t^{-1}h(n)\)。这证明延拓良定义；通分验证线性。因 \(m/s=(1/s)(m/1)\)，任何这样的延拓都只能采用所给公式，故唯一。
+\end{proof}
+
+例如 \(R=\mathbb Z\)、\(M=\mathbb Z/12\mathbb Z\)，在 \((2)\) 处局部化时 \(3\) 可逆，原来阶为 \(3\) 的部分消失，得到 \(M_{(2)}\cong\mathbb Z/4\mathbb Z\)。确切的同构由 \(\bar a/s\mapsto \bar a\bar s^{-1}\) 给出，其中 \(s\) 为奇数；其核为零可由 \(4\mid a\Rightarrow12\mid3a\) 核验。
 
 \subsection{模局部化的张量描述}
 \label{b3:subsec:0201:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:localization-tensor}
+存在关于 \(M\) 自然的 \(S^{-1}R\) 模同构
+\[
+(S^{-1}R)\otimes_R M\longrightarrow S^{-1}M,
+\qquad \frac as\otimes m\longmapsto\frac{am}s.
+\]
+其逆映射为 \(m/s\mapsto(1/s)\otimes m\)。
+\end{proposition}
+\begin{proof}
+正向公式对两个变量可加，且 \((ar/s)\otimes m\) 与 \((a/s)\otimes rm\) 具有相同的像，故由张量积的泛性质给出线性映射。若 \(u(tm-sn)=0\)，则
+\[
+\frac1s\otimes m-\frac1t\otimes n
+=\frac1{ust}\otimes u(tm-sn)=0.
+\]
+因此逆向公式良定义，通分后可直接验证它线性。两种公式的复合在 \(m/s\) 及纯张量 \((a/s)\otimes m\) 上均为恒等，故互为逆映射。模同态 \(f:M\rightarrow N\) 在两边都把分子 \(m\) 变为 \(f(m)\)，这就是自然性。
+\end{proof}
+
+局部化因而是沿 \(R\rightarrow S^{-1}R\) 的标量扩张。它允许把原来的生成元乘以新的分式标量，并消去被某个分母零化的元素。例如对任意理想 \(I\)，该描述给出
+\[
+S^{-1}(M/IM)\cong(S^{-1}M)/(S^{-1}I)(S^{-1}M).
+\]
+这里也可以把分式 \((m+IM)/s\) 直接送到 \(m/s\) 的商类；其良定义和核将在下一小节的正合性中一并得到。
 
 \subsection{局部化的正合性}
 \label{b3:subsec:0201:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:localization-exact}
+模同态 \(f:M\rightarrow N\) 诱导 \(S^{-1}f(m/s)=f(m)/s\)。这一定义给出正合函子：若
+\[
+0\longrightarrow L\xrightarrow{i}M\xrightarrow{q}N\longrightarrow0
+\]
+正合，则局部化后的序列仍正合。因此局部化与核、像、余核及有限交相容。
+\end{theorem}
+\begin{proof}
+若两分式相等，对它们的交叉差施加 \(f\) 即可证明诱导映射良定义；恒等映射与复合的相容性在分子上直接成立。
+
+若 \(i(l)/s=0\)，由\eqref{b3:eq:localized-element-zero}有 \(u i(l)=i(ul)=0\)。原映射 \(i\) 单射，故 \(ul=0\)，于是 \(l/s=0\)。若 \(q(m)/s=0\)，取 \(u\in S\) 使 \(q(um)=0\)，再取 \(l\in L\) 使 \(i(l)=um\)。则
+\[
+\frac ms=\frac{um}{us}=S^{-1}i\Bigl(\frac l{us}\Bigr).
+\]
+反过来，\(qi=0\) 保证像包含于核。最后，对 \(n/s\) 选 \(m\) 满足 \(q(m)=n\)，便有原像 \(m/s\)，证明满射性。
+
+把任意同态分别分解为到其像的满射及像的包含，便得到关于核、像和余核的断言。对子模 \(L_1,L_2\subseteq M\)，把交写为映射 \(L_1\oplus L_2\rightarrow M\)、\((x,y)\mapsto x-y\) 的核，再用 \(S^{-1}(L_1\oplus L_2)\cong S^{-1}L_1\oplus S^{-1}L_2\)，得到有限交的相容性。
+\end{proof}
+
+第二卷命题7.3.9用有限关系判据证明 \(S^{-1}R\) 是平坦 \(R\) 模；结合\cref{b3:prop:localization-tensor}，那也能推出正合性。这里的分式证明则明确指出：落在局部核中不意味着原分子已经在核中，而是要先乘上某个分母。这个区别将在理想的收缩和模的支集中反复使用。

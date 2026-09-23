@@ -1,38 +1,116 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 8.5 零维方程组与商代数
-% 纲要位置：计划纲要.md，第 1750 行。
-
-\section{零维方程组与商代数}
-\label{b3:sec:0805}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2068 行。
+% 纲要细目（写作范围）：
 % * 标准单项式给出的商代数基与乘法矩阵
 % * 有限维商代数的维数、重数与约化性；不能把向量空间维数一概当作不同几何点数
 % * FGLM 换序的动机及零维假设；具体算法转附录 B
 % * 三角形式与有理单变量表示简介；额外假设和退化分支逐项说明
-%
 % ---
-%
+
+
+\section{零维方程组与商代数}
+\label{b3:sec:0805}
+
+
+有限维商代数把多项式关系转成有限个矩阵的关系。标准单项式给出坐标，乘法矩阵保存全部代数运算；它们既能辅助求解，也能记录不同零点个数所不能反映的幂零结构。本节同时说明单变量表示需要哪些附加条件。
 
 \subsection{商代数的标准单项式基与乘法矩阵}
 \label{b3:subsec:0805:01}
 
-待撰写。
+设 \(R=k[x_1,\ldots,x_n]\)、\(I\subsetneq R\)，并固定一个全局单项式序。正规形把每个剩余类写成标准单项式的线性组合。如果标准单项式只有有限多个，所有乘法也就能由有限个矩阵表示；求解方程的问题由此获得另一种计算方法。
+
+\begin{proposition}\label{b3:prop:standard-basis-finite}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，\(I\subsetneq R\)，并固定全局单项式序。不属于 \(\operatorname{in}(I)\) 的标准单项式的剩余类构成 \(A=R/I\) 的 \(k\) 基。下列条件等价：
+\begin{enumerate}
+\item \(\dim_k A<\infty\)；
+\item 标准单项式只有有限多个；
+\item 对每个 \(i\)，存在 \(d_i\ge1\) 使 \(x_i^{d_i}\in\operatorname{in}(I)\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+用 Gröbner 基除法得到的余式只含标准单项式，故它们生成商空间。若其非零线性组合属于 \(I\)，首单项式便同时属于且不属于 \(\operatorname{in}(I)\)，矛盾。
+
+由基的性质，前两项等价。若对某个 \(i\) 没有这样的幂，则 \(1,x_i,x_i^2,\ldots\) 都是标准单项式，违反有限性。反之，第三项使任何标准单项式的 \(x_i\) 指数均小于 \(d_i\)，故总数至多 \(d_1\cdots d_n\)。
+\end{proof}
+
+本节把有限维商代数称为零维商代数。它与素理想链意义的零维一致：有限维代数是 Artin 环，素理想都极大；反之，有限型 \(k\) 代数是 Noether 环，若所有素理想都极大，则由\cref{b3:thm:noether-dimension-zero}和\cref{b3:thm:artin-finite-length}知它有有限合成列，每个简单因子是某个极大理想的剩余域。\Cref{b3:cor:finite-type-residue-fields}保证这些剩余域在 \(k\) 上有限维，逐个相加便得 \(\dim_k A<\infty\)。第9章将系统定义和讨论 Krull 维数。
+
+\ProseParagraphBreak
+设标准单项式基为 \(B=(b_1,\ldots,b_D)\)。对 \(a\in A\)，记乘法映射 \(m_a:A\to A\)、\(v\mapsto av\) 在此基下的矩阵为 \(T_a\)，称为\term[chengfa-juzhen]{乘法矩阵}[multiplication matrix]。其第 \(j\) 列就是 \(ab_j\) 的正规形系数列。因此 \(T_aT_b=T_{ab}\)，各 \(T_{x_i}\) 两两交换，且对任意 \(f\in R\) 有
+\[
+T_{\bar f}=f(T_{x_1},\ldots,T_{x_n}).
+\]
+映射 \(a\mapsto T_a\) 是单射，因为 \(m_a(1)=a\)。特别地，\(f\in I\) 当且仅当这个矩阵为零；\(a\) 为单位当且仅当 \(T_a\) 可逆，后者的逆作用于 \(1\) 就给出 \(a^{-1}\)。
+
+\ProseParagraphBreak
+对 \(I=(x-y^2,y^3-1)\)，取基 \((1,y,y^2)\)，则
+\[
+T_y=\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix},
+\qquad T_x=T_y^2=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix}.
+\]
+因此 \(x^2=y\)、\(x^3=1\) 都可以直接从矩阵乘法读出。Sturmfels 在\cite[Section 2.3, pp. 17--19]{Sturmfels2002PolynomialEquations}中进一步讨论了乘法矩阵与方程求解的联系。
 
 \subsection{商代数的维数、重数与约化性}
 \label{b3:subsec:0805:02}
 
-待撰写。
+商空间的维数计入了剩余域的次数及幂零元所造成的重数。为看清这两项贡献，先在任意域 \(k\) 上写出 Artin 分解
+\[
+A\simeq\prod_{i=1}^r A_{\mathfrak m_i},
+\qquad L_i=A/\mathfrak m_i.
+\]
+由\cref{b3:thm:artin-decomposition}，这些正是全部局部因子。设 \(\ell_i\) 为 \(A_{\mathfrak m_i}\) 在自身上作为模的长度。局部环的简单模只有 \(L_i\)，沿合成列计算 \(k\) 维数得到
+\begin{equation}\label{b3:eq:zero-dimensional-length}
+\dim_k A=\sum_{i=1}^r\ell_i[L_i:k].
+\end{equation}
+因子 \(\ell_i\) 称为这一闭点的重数。当 \(k\) 代数闭时，\(L_i=k\)，故 \(D=\sum_i\ell_i\)；此时不同点数等于 \(D\) 当且仅当每个局部因子都是 \(k\)，也就是 \(A\) 约化。
+
+\ProseParagraphBreak
+这个等价可以不借助任何求根公式来证明。局部 Artin 环的极大理想是幂零理想，所以约化时它只能为零，局部因子成为域；反之，域的有限直积没有非零幂零元。若 \(k\) 不代数闭，则即使 \(A\) 约化，各 \([L_i:k]\) 仍可能大于一。例如 \(\mathbb R[x]/(x^2+1)\) 维数为二，有一个闭点而没有实坐标点。
+
+\ProseParagraphBreak
+在前述三维代数 \(k[x,y]/(x-y^2,y^3-1)\) 中，若 \(k\) 代数闭且特征不为三，\(y^3-1\) 有三个不同的根，代数为 \(k^3\)。若特征为三，则 \(y^3-1=(y-1)^3\)，代数同构于 \(k[\varepsilon]/(\varepsilon^3)\)，只剩一个重数为三的点。这两种情形有完全相同的标准单项式数和乘法矩阵公式，却有不同的约化性。
+
+\ProseParagraphBreak
+基域扩张也须留意可分性。令 \(k=\mathbb F_p(s)\)，则 \(A=k[t]/(t^p-s)\) 是维数为 \(p\) 的域：\(s\) 不是 \(k\) 中的 \(p\) 次幂，其不可约性已在\cref{b3:exm:inseparable-geometric-thickening}中通过最小多项式系数证明。但扩张到含 \(s^{1/p}\) 的域后，关系变成 \((t-s^{1/p})^p=0\)。所以原代数约化，不代表基域扩张后仍约化；谈几何点的数目时，不能略去这一差别。
 
 \subsection{FGLM 换序与零维假设}
 \label{b3:subsec:0805:03}
 
-待撰写。
+同一个零维理想在两种单项式序下的标准单项式可能不同，却给出同一个有限维向量空间。已知一种序下的 Gröbner 基后，可以用其正规形把任意单项式表示成 \(k^D\) 中的列向量，再按照新的单项式序寻找线性相关关系。这就是 FGLM 换序方法的基本思想。
+
+\ProseParagraphBreak
+具体地，已有若干线性无关的单项式剩余类时，考察它们乘各变量所得的候选单项式。若一个候选 \(m\) 的向量在先前较小单项式的线性生成空间中，写成
+\[
+\bar m=\sum_j c_j\bar b_j,
+\]
+便得到首单项式为 \(m\) 的关系 \(m-\sum_jc_jb_j\in I\)；其倍数无需再作为基候选。若向量独立，则把它加入新的基。所有向量均可由乘法矩阵计算。候选的组织方式、完整算法和终止性证明放在附录B；这里先说明为什么新问题能转为有限维线性代数。
+
+\ProseParagraphBreak
+例如旧序 \(x>y\) 的字典序给出基 \(\{x-y^2,y^3-1\}\)。改用 \(y>x\) 后，在旧商空间中 \(1,x,x^2\) 依次对应 \(1,y^2,y\)，因而独立；随后 \(x^3=1\)、\(y=x^2\) 给出新基 \(\{y-x^2,x^3-1\}\)。这次换序只须三维空间中的计算，不需要从原生成元重新完成所有 \(S\)-多项式约化。
+
+\ProseParagraphBreak
+零维条件提供的是有限的 \(D\) 和有限个 \(D\times D\) 乘法矩阵。对 \(k[x,y]/(y)\simeq k[x]\)，单项式 \(1,x,x^2,\ldots\) 永远线性无关，不能沿用这一有限维计算框架。正维理想仍有有限 Gröbner 基，但那是另一种有限性。
 
 \subsection{三角形式、有理单变量表示与退化分支}
 \label{b3:subsec:0805:04}
 
-待撰写。
+若能找到一个元素 \(t\in A\) 使 \(1,t,\ldots,t^{D-1}\) 成为 \(k\) 基，那么每个坐标都能写成 \(x_i=q_i(t)\)，且 \(t\) 满足一个首一 \(D\) 次多项式 \(p\)。于是
+\[
+A\simeq k[T]/\Bigl(p(T)\Bigr),\qquad x_i=q_i(T).
+\]
+这是一种三角描述：先解一个一元方程，再恢复全部坐标。它需要 \(A\) 是单生成代数，不能仅从有限维性推出。
+
+\begin{proposition}\label{b3:prop:finite-reduced-shape}
+设 \(k\) 为代数闭域，\(I\subsetneq k[x_1,\ldots,x_n]\) 是根理想，且商代数维数为 \(D<\infty\)。存在一个线性形式 \(t=\sum c_ix_i\)，在所有零点上取值两两不同。对任意这样的 \(t\)，存在无重根的首一 \(D\) 次多项式 \(p(T)\) 及次数小于 \(D\) 的 \(q_i(T)\)，使上述同构成立。
+\end{proposition}
+\begin{proof}
+由式\eqref{b3:eq:zero-dimensional-length}及约化性，\(A\simeq k^D\)，各因子对应点 \(P_1,\ldots,P_D\)。对每对不同点，等式 \(\sum c_i(P_{ji}-P_{hi})=0\) 定义系数空间中的一个真超平面。无限域上的有限个真超平面不能覆盖整个空间：这些非零线性多项式之积非零，而非零多项式不在无限域的全部点上消失，后一事实对变量数归纳即可。故可以选取避开这些超平面的 \(c\)。
+
+令 \(\lambda_j=t(P_j)\)，取 \(p(T)=\prod_j(T-\lambda_j)\)。Lagrange 插值给出次数小于 \(D\) 的 \(q_i\)，满足 \(q_i(\lambda_j)=P_{ji}\)。映射 \(k[T]\to k^D\)、\(f\mapsto\Bigl(f(\lambda_j)\Bigr)_j\) 满射，核为 \((p)\)，并把 \(q_i\) 送到第 \(i\) 个坐标函数，这就给出所需同构。
+\end{proof}
+
+也可把坐标写为 \(x_i=q_i(T)/q_0(T)\)。若 \(\gcd(q_0,p)=1\)，Euclid 算法给出 \(uq_0+vp=1\)，从而 \(q_0\) 在 \(k[T]/(p)\) 中可逆；这种写法称为\term[youli-danbianliang-biaoshi]{有理单变量表示}[rational univariate representation]，没有增加或丢失根。如果 \(q_0\) 与 \(p\) 有公因子，分母为零的根不能直接代入；在无重根情形应先按 \(\gcd(p,q_0)\) 与其互素补因子分支，在含重根情形则必须保留相应幂次，另行计算局部因子。
+
+\ProseParagraphBreak
+最后列出两种不能忽略的情形。有限域上的线性形式未必分离全部有理点，例如 \(\mathbb F_2^2\) 的四个点不可能通过一个 \(\mathbb F_2\) 值的函数取得四个不同值。含幂零元的代数也未必单生成：\(k[x,y]/(x,y)^2\) 维数为三，每个元素都形如 \(c+n\)、\(n^2=0\)，其生成的子代数最多二维。一般零维计算因此要允许域扩张、多个三角分支或更一般的有限代数表示；不能把一个漂亮的单变量形式当作无条件存在的输出。

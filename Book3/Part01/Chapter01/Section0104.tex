@@ -1,32 +1,80 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 1.4 环同态与素谱
-% 纲要位置：计划纲要.md，第 1516 行。
+% 纲要位置：工作记录/计划纲要.md，第 1834 行。
+% 纲要细目（写作范围）：
+% * 素理想收缩与连续映射
+% * 商环对应闭子空间
+% * 主开集 \(D(f)\) 对应 \(R_f\)；一般局部化的谱对应与乘法集不交的素理想子空间，未必是开子空间
+% ---
 
 \section{环同态与素谱}
 \label{b3:sec:0104}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 素理想收缩与连续映射
-% * 商环对应闭子空间
-% * 主开集 \(D(f)\) 对应 \(R_f\)；一般局部化的谱对应与乘法集不交的素理想子空间，未必是开子空间
-%
-% ---
-%
+环同态将元素沿一个方向送出，素理想则沿收缩反向移动。商环与局部化是理解这个反向关系的两种基本操作：前者给出闭子空间，后者保留避开指定分母的点。主元局部化总对应基本开集；一般乘法集给出的子空间却未必是开集。
 
 \subsection{素理想收缩与谱上的连续映射}
 \label{b3:subsec:0104:01}
 
-待撰写。
+\begin{proposition}\label{b3:prop:spectrum-functor}
+含幺环同态 \(\varphi:R\rightarrow S\) 给出映射
+\[
+\varphi^*:\operatorname{Spec}S\longrightarrow\operatorname{Spec}R,
+\qquad\mathfrak q\longmapsto\varphi^{-1}(\mathfrak q).
+\]
+它连续，且
+\begin{equation}\label{b3:eq:spectrum-pullback}
+(\varphi^*)^{-1}\Bigl(V(I)\Bigr)=V(IS),\qquad
+(\varphi^*)^{-1}\Bigl(D(f)\Bigr)=D\Bigl(\varphi(f)\Bigr),
+\end{equation}
+其中 \(IS\) 由全部 \(\varphi(a)\)、\(a\in I\)，在 \(S\) 中生成。恒等同态诱导恒等映射，而 \((\psi\circ\varphi)^*=\varphi^*\circ\psi^*\)。
+\end{proposition}
+\begin{proof}
+因 \(1\) 不在 \(\mathfrak q\) 中，收缩是真理想；若 \(ab\) 的像在 \(\mathfrak q\)，素性使 \(\varphi(a)\) 或 \(\varphi(b)\) 在其中，所以收缩为素理想。包含 \(I\subseteq\varphi^{-1}(\mathfrak q)\) 等价于 \(IS\subseteq\mathfrak q\)，给出第一式和连续性。对主理想取补集得到第二式。最后两项由原像的恒等及复合规则直接得到。
+\end{proof}
+
+极大理想的收缩未必极大。例如 \(\mathbb Z\hookrightarrow\mathbb Q\) 把域的唯一素理想 \((0)\) 收缩为 \(\mathbb Z\) 的零理想；后者不是极大理想。这也是素谱采用全部素理想而不只采用极大理想的一个理由。
 
 \subsection{商环与闭子空间}
 \label{b3:subsec:0104:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:spec-quotient}
+商映射 \(R\rightarrow R/I\) 诱导同胚
+\[
+\operatorname{Spec}(R/I)\longrightarrow V(I)\subseteq\operatorname{Spec}R,
+\qquad\overline{\mathfrak p}\longmapsto\mathfrak p.
+\]
+这里 \(\mathfrak p\) 是 \(\overline{\mathfrak p}\) 的原像，逆映射为 \(\mathfrak p\mapsto\mathfrak p/I\)。
+\end{theorem}
+\begin{proof}
+理想的商对应和商整环判据给出所列互逆双射。对包含 \(I\) 的理想 \(J\)，\(R/I\) 的闭集 \(V(J/I)\) 对应为 \(V(J)\)，它已包含于 \(V(I)\)；另一方面，\(V(I)\) 中任一子空间闭集可写为 \(V(I)\cap V(K)=V(I+K)\)，也如此得到。故双射及其逆都连续。
+\end{proof}
+
+取 \(I=\operatorname{Nil}(R)\)，所有素理想都包含它，因而得到 \(\operatorname{Spec}R_{\mathrm{red}}\cong\operatorname{Spec}R\)。底拓扑空间看不见被取商消去的幂零元。这不表示两个环相同；后面讨论加厚点与纤维时，会反复用到这一区别。
 
 \subsection{主开集与一般局部化的谱}
 \label{b3:subsec:0104:03}
 
-待撰写。
+设 \(T\subseteq R\) 为含一的乘法集，允许 \(0\in T\)，此时局部化为零环。第一卷定理13.2.2已构造环 \(T^{-1}R\)，其中 \(a/t=0\) 当且仅当存在 \(u\in T\) 使 \(ua=0\)。下面把第一卷定理13.4.4的素理想对应补上拓扑说明。
+
+\begin{theorem}\label{b3:thm:spec-localization}
+局部化映射诱导同胚
+\[
+\operatorname{Spec}(T^{-1}R)\longrightarrow
+X_T=\{\,\mathfrak p\in\operatorname{Spec}R:\mathfrak p\cap T=\varnothing\,\},
+\]
+右侧赋予子空间拓扑。对应的逆为 \(\mathfrak p\mapsto T^{-1}\mathfrak p\)。特别地，\(\operatorname{Spec}R_f\cong D(f)\)。
+\end{theorem}
+\begin{proof}
+局部化中的素理想不能包含可逆分母的像，故其收缩与 \(T\) 不交。若 \(\mathfrak p\cap T=\varnothing\)，则
+\[
+(T^{-1}R)/(T^{-1}\mathfrak p)\cong\overline T^{-1}(R/\mathfrak p)
+\]
+是非零整环，因 \(\overline T\) 不含零。所以扩张为素理想。其收缩仍为 \(\mathfrak p\)：若 \(a/1\in T^{-1}\mathfrak p\)，清分母后某个 \(ta\in\mathfrak p\)，其中 \(t\notin\mathfrak p\)，素性迫使 \(a\in\mathfrak p\)。反向，对局部化的理想，分母可逆说明它由收缩重新扩张得到。这验证了双射。
+
+由\cref{b3:prop:spectrum-functor}，该映射连续。局部化中的基本开集 \(D(a/t)\) 在上述双射下对应 \(D(a)\cap X_T\)：素理想是否含 \(a/t\)，只取决于它是否含分子。这些正是子空间的一组开集基，故逆映射也连续。取 \(T=\{1,f,f^2,\ldots\}\) 时，素理想与 \(T\) 不交恰好等价于不含 \(f\)，得到主开集的断言。
+\end{proof}
+
+一般的 \(X_T=\bigcap_{t\in T}D(t)\) 未必开。取 \(R=\mathbb Z\)、\(T=\mathbb Z\setminus\{0\}\)，其像只有一般点 \((0)\)。任何包含它的基本开集 \(D(n)\)、\(n\ne0\)，都还包含一个 \((p)\)，其中素数 \(p\) 不整除 \(n\)；这样的素数存在，因为有限多个素数不能穷尽全部素数。因此单点 \(\Bigl\{(0)\Bigr\}\) 不是开集，尽管它与 \(\operatorname{Spec}\mathbb Q\) 同胚。
+
+\ProseParagraphBreak
+对素理想 \(\mathfrak p\)，取 \(T=R\setminus\mathfrak p\)，所得 \(R_{\mathfrak p}\) 的谱对应全部包含于 \(\mathfrak p\) 的素理想。它研究的是 \(\mathfrak p\) 及其一般化，而不是包含 \(\mathfrak p\) 的全部特殊化。第二章将把这个点附近的环与模的分式构造一并展开。

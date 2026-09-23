@@ -1,36 +1,179 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 8.2 Buchberger 理论
-% 纲要位置：计划纲要.md，第 1729 行。
+% 纲要位置：工作记录/计划纲要.md，第 2047 行。
+% 纲要细目（写作范围）：
+% * 定义 S 多项式，以有界表示和最高项抵消完整证明 Buchberger 判据
+% * 给出 Buchberger 算法及完整终止性、正确性证明，以 Dickson 有限性控制首项理想升链
+% * 构造约化 Gröbner 基，并完整证明固定基域和单项式序下的唯一性
+% * 用更丰富的手算例题与零余式表示证书深化基础算法，完整书写当前应用的推导
+
+
 
 \section{Buchberger 理论}
 \label{b3:sec:0802}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * S 多项式、Buchberger 判据与算法的正确性
-% * 首项理想升链、算法终止性及 Hilbert 基定理的联系
-% * 固定基域和单项式序下约化 Gröbner 基的唯一性
-% * 显式手算例题与约化为零的表示证书
-%
-
+Gröbner 基控制理想中全部多项式的首项，定义本身包含无限多个检验。有限算法的关键在于理解最高项怎样抵消：两个生成元的首项抵消由一个 S 多项式记录，而多个最高项同时抵消可以分解为这样的两两抵消。本节将这项观察写成首项下降的严格论证，再据此建立算法。仍固定 \(R=k[x_1,\ldots,x_n]\) 及全局单项式序。
 \subsection{S 多项式、Buchberger 判据与算法正确性}
 \label{b3:subsec:0802:01}
 
-待撰写。
+\begin{definition}\label{b3:def:s-polynomial}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序。对非零 \(f,g\in R\)，置
+\[
+L=\operatorname{lcm}\Bigl(\operatorname{LM}(f),\operatorname{LM}(g)\Bigr).
+\]
+称
+\begin{equation}\label{b3:eq:s-polynomial}
+S(f,g)=
+\frac{L}{\operatorname{LM}(f)}\frac{f}{\operatorname{LC}(f)}
+-\frac{L}{\operatorname{LM}(g)}\frac{g}{\operatorname{LC}(g)}
+\end{equation}
+为 \(f,g\) 的 \term[S-duoxiangshi]{\(S\) 多项式}[S-polynomial]。单项式最小公倍式的各个指数取两指数的较大者。
+\end{definition}
+
+两项的首项都归一化成 \(L\)，故它们相减后或者为零，或者首单项式严格小于 \(L\)。仅有 \(S(f,g)\in(f,g)\) 没有检验意义；重要的是能否用原生成元把它表示出来，同时让表示中的每个乘积也严格小于 \(L\)。
+
+\begin{theorem}[Buchberger 判据]\label{b3:thm:buchberger-criterion}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序。设 \(G=(g_1,\ldots,g_s)\) 由 \(R\) 中的非零多项式组成，\(I=(G)\)。以下条件等价：
+\begin{equivalences}
+\item\label{b3:item:buchberger-basis} \(G\) 是 \(I\) 的 Gröbner 基；
+\item\label{b3:item:buchberger-zero} 每个 \(S(g_i,g_j)\)、\(i<j\)，按 \(G\) 除法的余式为零；
+\item\label{b3:item:buchberger-bound} 对每个 \(i<j\)，存在表示
+\begin{equation}\label{b3:eq:s-bounded-representation}
+S(g_i,g_j)=\sum_{\ell=1}^s h_{ij\ell}g_\ell,
+\qquad
+\operatorname{LM}(h_{ij\ell}g_\ell)\prec L_{ij}
+\quad(h_{ij\ell}\ne0),
+\end{equation}
+其中 \(L_{ij}=\operatorname{lcm}\Bigl(\operatorname{LM}(g_i),\operatorname{LM}(g_j)\Bigr)\)。
+\end{equivalences}
+空组对应零理想，后两个条件此时为空条件。
+\end{theorem}
+\begin{proof}
+若\itemref{b3:item:buchberger-basis}成立，S 多项式属于 \(I\)，由\cref{b3:thm:groebner-existence-normal-form}余式为零，得到\itemref{b3:item:buchberger-zero}。再用多元除法的首项界，每个非零乘积的首单项式不超过 S 多项式的首单项式，而后者严格小于 \(L_{ij}\)，便得\itemref{b3:item:buchberger-bound}。S 多项式为零时取所有系数为零。
+
+反过来，假定有这些有界表示，记 \(\widetilde g_i=g_i/\operatorname{LC}(g_i)\)。给定 \(0\ne f\in I\)，将生成元表示的系数展开为项，可写成
+\[
+f=\sum_{\nu=1}^t a_\nu m_\nu\widetilde g_{i_\nu},
+\qquad a_\nu\in k^\times,\quad m_\nu\text{ 为单项式}.
+\]
+在全部这样的表示中，选择
+\[
+M=\max_\nu\Bigl\{m_\nu\operatorname{LM}(g_{i_\nu})\Bigr\}
+\]
+最小的一种，良序性保证它存在。相加不会产生更大的项，故 \(\operatorname{LM}(f)\preceq M\)。如果相等，某个 \(\operatorname{LM}(g_i)\) 整除 \(\operatorname{LM}(f)\)，已经得到所需结论。
+
+否则令 \(J\) 为达到 \(M\) 的那些指标。最高项系数抵消给出 \(\sum_{\nu\in J}a_\nu=0\)。固定 \(\nu_0\in J\)，于是
+\[
+\sum_{\nu\in J}a_\nu m_\nu\widetilde g_{i_\nu}
+=\sum_{\nu\in J\setminus\{\nu_0\}}
+a_\nu\Bigl(m_\nu\widetilde g_{i_\nu}
+-m_{\nu_0}\widetilde g_{i_{\nu_0}}\Bigr).
+\]
+括号中若两个生成元下标相同，则乘子也相同，差为零；否则，令它们首单项式的最小公倍式为 \(L\)。二者都整除 \(M\)，故 \(L\mid M\)，括号中的差恰为 \((M/L)S(g_{i_\nu},g_{i_{\nu_0}})\)。下标反序只改变符号。按假设，这可以用各 \(g_\ell\) 表示，且每个非零乘积的首单项式严格小于 \(M\)。系数展开成项后这个界仍保持。
+
+替换全部达到 \(M\) 的项，其他原项本来就小于 \(M\)，便得到最大首单项式更小的表示，矛盾。因此必有 \(\operatorname{LM}(f)=M\)。每个非零理想成员的首单项式都被某个 \(\operatorname{LM}(g_i)\) 整除，结合 \(G\subset I\) 即得首项理想相等，证明\itemref{b3:item:buchberger-basis}。
+\end{proof}
+
+这称为\term[Buchberger-panju]{Buchberger 判据}[Buchberger criterion]。证明中的第三种表述不仅解释正确性，还使我们能够保存每次计算的具体依据：以后即使加入新生成元，旧的有界表示仍然成立，不必假定不同除法顺序给出相同的中间余式。
 
 \subsection{首项理想升链与算法终止性}
 \label{b3:subsec:0802:02}
 
-待撰写。
+如果一个 S 多项式留下非零余式，余式仍在原理想中，但它的首单项式未被当前生成元控制。把余式加入即可改进生成组；同时必须登记它与原有全部生成元组成的新多项式对。
+
+\begin{algorithm}[htbp]
+\caption{Buchberger 算法}
+\label{b3:alg:buchberger}
+\begin{algorithmsteps}{有限组 \(F=(f_1,\ldots,f_m)\subseteq R\)，全局单项式序及有效给定的系数域。}{\(I=(F)\) 的一个有限 Gröbner 基 \(G\)。}
+\State 删除零多项式，将其余元素首一化，记为 \(G=(g_1,\ldots,g_s)\)。
+\State 建立待处理集合 \(P=\Bigl\{(i,j)\mid1\le i<j\le s\Bigr\}\)。
+\While{\(P\ne\varnothing\)}
+\State 取出并删除一对 \((i,j)\)，按当前 \(G\) 对 \(S(g_i,g_j)\) 除法，得到余式 \(r\)。
+\If{\(r\ne0\)}
+\State 把 \(r/\operatorname{LC}(r)\) 加到 \(G\) 末尾，记新下标为 \(s+1\)。
+\State 将 \((1,s+1),\ldots,(s,s+1)\) 加入 \(P\)，再令 \(s\) 增加一。
+\EndIf
+\EndWhile
+\State \Return \(G\)。
+\end{algorithmsteps}
+\end{algorithm}
+
+\begin{theorem}\label{b3:thm:buchberger-algorithm}
+设域 \(k\) 支持精确四则运算与零判定，输入为 \(k[x_1,\ldots,x_n]\) 中的有限生成组及一个可比较的全局单项式序。\Cref{b3:alg:buchberger}在有限步后终止，输出确为原理想的 Gröbner 基。算法还可同时记录每个新生成元关于原输入的多项式线性组合。
+\end{theorem}
+\begin{proof}
+每轮有等式 \(S(g_i,g_j)=\sum_\ell q_\ell g_\ell+r\)，所以余式仍在当前理想中，添加它不改变理想。非零余式的首单项式不被已有首单项式整除，故每次添加使它们生成的单项式理想严格增大。\Cref{b3:lem:dickson}排除无限次添加。每次添加只引入有限个新对，每轮删除一个待处理对，添加结束后余下的有限个对也会处理完；每轮除法本身终止，因此整个算法终止。
+
+处理某对时，若余式为零，多元除法给出\eqref{b3:eq:s-bounded-representation}。若余式非零，添加首一 \(g_{\rm new}=r/\operatorname{LC}(r)\) 后，有
+\[
+S(g_i,g_j)=\sum_\ell q_\ell g_\ell+
+\operatorname{LC}(r)g_{\rm new}.
+\]
+所有非零乘积的首单项式都不超过原 S 多项式的首单项式，因而严格小于 \(L_{ij}\)。算法保留已有生成元，这些有界表示在后续步骤中仍成立。终止时最终组的每一对都已处理，由\cref{b3:thm:buchberger-criterion}即得 Gröbner 性。
+
+最初首一化仅除以非零常数。已有生成元关于原输入的表示时，将它们代入 S 多项式和除法等式，就得到余式的表示，再除以首系数得到新生成元的表示。因此可以与算法同步，逐步记录全部关系。
+\end{proof}
+
+还可以省去部分 S 多项式的实际除法。例如首一 \(f=a+u,g=b+v\)，其中 \(a,b\) 为首单项式；若 \(a,b\) 互素，则
+\[
+S(f,g)=bf-ag=ug-vf.
+\]
+这里两个非零乘积的首单项式都严格小于 \(ab\)。因此这对已经具有判据所需的有界表示。这个\term[Buchberger-chengji-panju]{Buchberger 乘积判据}[Buchberger product criterion]只略去有数学依据的对；单凭两个多项式看起来简单，不能跳过检验。
 
 \subsection{约化 Gröbner 基的唯一性}
 \label{b3:subsec:0802:03}
 
-待撰写。
+\begin{definition}\label{b3:def:reduced-groebner}
+设 \(k\) 为域，\(I\subseteq k[x_1,\ldots,x_n]\) 为理想，并固定全局单项式序。\(I\) 的 Gröbner 基 \(G\) 若各元素首一，并且每个 \(g\in G\) 的任何单项式都不被其他 \(h\in G\setminus\{g\}\) 的首单项式整除，称为\term[yuehua-Groebner-ji]{约化 Gröbner 基}[reduced Gröbner basis]。零理想的约化基为空，单位理想的约化基为 \(\{1\}\)。
+\end{definition}
+
+\begin{theorem}\label{b3:thm:reduced-groebner-unique}
+设 \(k\) 为域，并在 \(R=k[x_1,\ldots,x_n]\) 上固定全局单项式序。每个理想 \(I\subseteq R\) 都有唯一的约化 Gröbner 基。由任意 Gröbner 基可以在有限步内得到它。
+\end{theorem}
+\begin{proof}
+先在一组 Gröbner 基的首单项式中只保留整除关系下的极小者，相同单项式只保留一个对应多项式。保留者仍属于原理想，且首单项式生成原首项理想，因而仍为 Gröbner 基。将它们首一化，再对每个元素用其他基元素约化尾项。首单项式不被其他极小首单项式整除，所以不会改变；所得多项式仍属于原理想，尾项不被其他首单项式整除，也不能被自己的首单项式整除，因为真倍数严格更大。首单项式集合在整个过程中不变，有限次除法就得到约化基。
+
+两个约化基的首单项式都恰为首项理想中整除关系的极小单项式。这组单项式只由理想决定：任一理想单项式被其中一个整除，而极小者不能被另一个严格更小的理想单项式整除。按相同首单项式配对两个基元素 \(g,h\)。二者首一，故首项相消；所有余下项均为标准单项式。又 \(g-h\in I\)，由\cref{b3:thm:groebner-existence-normal-form}只能有 \(g-h=0\)。逐对相等，证明唯一性。
+\end{proof}
+
+唯一的是固定次序下的约化基，而不是任意 Gröbner 基。增加一个已在理想中的冗余多项式通常不会破坏 Gröbner 基性质；改变次序却可能同时改变首项理想、标准单项式和约化基。两种变化应分别考察。
 
 \subsection{手算例题与零余式的线性组合表示}
 \label{b3:subsec:0802:04}
 
-待撰写。
+在 \(\mathbb Q[x,y]\) 中取字典序 \(x\succ y\)，以
+\[
+f_1=x^2-y,\qquad f_2=xy-1
+\]
+为输入。第一对给出
+\[
+h=yf_1-xf_2=x-y^2.
+\]
+\(h\) 的首单项式 \(x\) 不被 \(x^2,xy\) 整除，所以要加入。随后 \(f_2\) 与 \(h\) 的 S 多项式为
+\[
+p=f_2-yh=y^3-1.
+\]
+这又提供未被控制的纯 \(y\) 首单项式。我们可以不再保留冗余的原生成元，而用以下双向等式核验最终理想：
+\begin{equation}\label{b3:eq:groebner-cubic-certificates}
+\begin{aligned}
+h&=yf_1-xf_2,&
+p&=-y^2f_1+(1+xy)f_2,\\
+f_1&=(x+y^2)h+yp,&
+f_2&=yh+p.
+\end{aligned}
+\end{equation}
+因此 \(I=(f_1,f_2)=(h,p)\)。对最后一组，只需检验一对：
+\[
+S(h,p)=y^3h-xp=x-y^5=h-y^2p.
+\]
+先减去 \(h\)，再消去 \(-y^2p\)，余式为零。判据表明 \(\{x-y^2,y^3-1\}\) 是 Gröbner 基，而且已经约化。所有等式在任意系数域中仍成立；若进一步数几何点，才须另看 \(y^3-1\) 是否有重根。
+
+\ProseParagraphBreak
+换成字典序 \(y\succ x\)，同一理想的约化基为
+\[
+\{y-x^2,\ x^3-1\}.
+\]
+因为 \(y-x^2=-f_1\)、\(x^3-1=xf_1+f_2\)，反向有 \(f_2=x(y-x^2)+(x^3-1)\)；首单项式为 \(y,x^3\)，互素，乘积判据给出 Gröbner 性。两种次序分别先消去 \(x\) 与 \(y\)，商代数虽然相同，适合展示的坐标却不同。
+
+\ProseParagraphBreak
+等式\eqref{b3:eq:groebner-cubic-certificates}还有一个实际作用：检查者只需展开有限个多项式等式，再检查一个 S 多项式，就能确认最终答案。只报告“软件返回这组基”，或只验证原多项式对新组的余式为零，都少了一半理想包含的依据。

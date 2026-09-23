@@ -1,30 +1,84 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 7.2 正则函数与态射
-% 纲要位置：计划纲要.md，第 1696 行。
+% 纲要位置：工作记录/计划纲要.md，第 2014 行。
+% 纲要细目（写作范围）：
+% * 坐标函数与多项式映射
+% * 仿射代数集的坐标环
+% * 态射和环同态的反向对应
 
 \section{正则函数与态射}
 \label{b3:sec:0702}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 坐标函数与多项式映射
-% * 仿射代数集的坐标环
-% * 态射和环同态的反向对应
-%
+坐标多项式显然给出函数，但在一个点附近允许除以不为零的函数，也应得到可用的局部表达。正则性先按这个局部条件定义。本节证明，在整个仿射代数集上处处正则的函数恰好来自坐标环，并由此确定代数集之间的映射应当如何与环同态对应。
 
 \subsection{坐标函数与多项式映射}
 \label{b3:subsec:0702:01}
 
-待撰写。
+\begin{definition}\label{b3:def:regular-function}
+设 \(U\) 是代数集 \(X\) 的开子集。函数 \(f:U\to k\) 若在每个 \(a\in U\) 的某个开邻域内写成 \(g/h\)，其中 \(g,h\in k[X]\)，且 \(h\) 在该邻域处处非零，称为 \(U\) 上的\term[zhengze-hanshu]{正则函数}[regular function]。全部这样的函数构成环 \(\mathcal O_X(U)\)。
+\end{definition}
+
+两个局部表达式相加或相乘时，分母取乘积；在共同邻域内它仍非零，所以正则函数对环运算封闭。它们也连续：在局部表达 \(g/h\) 上，方程 \(f=c\) 等价于 \(g-ch=0\)，是相对闭条件；仿射直线的真闭集为有限点集，由此得到 Zariski 连续性。
+
+\ProseParagraphBreak
+一个映射 \(\varphi:X\to Y\subseteq k^m\)，若其每个坐标函数都在 \(X\) 上正则，称为代数集的\term[daishu-ji-taishe]{态射}[morphism of algebraic sets]。多项式关系的代入仍为正则函数，故这种映射连续，并且正则函数的复合仍正则：在目标的局部表达式中代入各坐标，其分母在相应原像邻域不为零。因而态射对复合封闭。对代数集的开子集，也用同一个局部条件定义其间的态射。
 
 \subsection{仿射代数集的坐标环}
 \label{b3:subsec:0702:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:affine-global-regular}
+自然映射 \(k[X]\to\mathcal O_X(X)\) 是同构。故整个仿射代数集上的正则函数都能由一个多项式表示。
+\end{theorem}
+\begin{proof}
+按坐标环的定义，不同商类给不同的多项式函数，所以映射单射。设 \(f\) 处处正则。在每个点附近，将一个局部表达式 \(a/b\) 的邻域缩小为主开集 \(D_X(h)\)，使它仍包含该点且 \(b\) 在其中非零。令 \(a'=ah,b'=bh\)。在 \(D_X(b')\) 上仍有 \(f=a'/b'\)，这些主开集覆盖 \(X\)。以下将这组分子分母记为 \(a_i,b_i\)。
+
+全部 \(b_i\) 没有公共零点，\(b_i^2\) 也没有。由\cref{b3:cor:proper-ideal-common-zero}在坐标环中的形式，它们生成单位理想；因此存在有限多个指标及 \(c_i\in k[X]\)，使 \(\sum_i c_i b_i^2=1\)。对每个 \(i\)，函数等式
+\[
+b_i^2f=a_i b_i
+\]
+在 \(D_X(b_i)\) 上来自局部表达式，在其补集上则两边都为零，所以在全部 \(X\) 上成立。于是
+\[
+f=\sum_i c_i b_i^2f=\sum_i c_i a_i b_i,
+\]
+右侧是坐标环中的一个函数，证明满射。这一步没有将 \(k[X]\) 假定为整环，所以可约代数集也包括在内。
+\end{proof}
+
+该结论可与 Hartshorne 的《Algebraic Geometry》\cite[Chapter I, Theorem 3.2(a), p. 17]{Hartshorne1977}对照。原书此处以不可约仿射簇为对象；上面的证明直接处理本书允许的可约代数集。它说的是全局正则函数；在真开子集上，分母通常不能全部消去。例如 \(1/t\) 在 \(\mathbb A_k^1\setminus\{0\}\) 上正则，却不是全直线上的多项式函数。
+
+\begin{proposition}\label{b3:prop:regular-germ-local-ring}
+设 \(a\in X\)，记 \(\mathfrak m_a\subseteq A=k[X]\) 为该点的极大理想。正则函数在 \(a\) 处的芽组成的环 \(\mathcal O_{X,a}\) 自然同构于 \(A_{\mathfrak m_a}\)。
+\end{proposition}
+\begin{proof}
+一个芽由包含 \(a\) 的邻域上的正则函数表示；两代表若在某个更小的含 \(a\) 邻域相等，就表示同一芽。分式 \(g/s\)、\(s(a)\ne0\)，在 \(D_X(s)\) 上定义正则函数，局部化的等价关系保证这给出同态 \(A_{\mathfrak m_a}\to\mathcal O_{X,a}\)。每个芽按定义局部都是这样的分式，故同态满射。
+
+若这个分式的芽为零，缩小到 \(a\in D_X(h)\subseteq D_X(s)\) 后有 \(g=0\)。因此函数 \(hg\) 在 \(D_X(h)\) 上为零，在补集上也为零，故 \(hg=0\) 于 \(A\)。又 \(h(a)\ne0\)，分式零判据使 \(g/s=0\) 于 \(A_{\mathfrak m_a}\)，得到单射。
+\end{proof}
+\symidx{\(\mathcal O_{X,a}\)：代数集在点 \(a\) 处的正则函数芽环}
 
 \subsection{态射与环同态的反向对应}
 \label{b3:subsec:0702:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:affine-antiequivalence}
+对代数集 \(X,Y\)，取函数拉回给出双射
+\[
+\operatorname{Hom}(X,Y)\cong
+\operatorname{Hom}_{k\text{-}\mathrm{alg}}\Bigl(k[Y],k[X]\Bigr).
+\]
+它与恒等映射及反向的复合相容。每个约化有限型 \(k\) 代数都同构于某个代数集的坐标环，因此代数集与约化有限型 \(k\) 代数之间得到反变等价。
+\end{theorem}
+\begin{proof}
+态射的坐标正则函数由\cref{b3:thm:affine-global-regular}可用多项式表示。若 \(\varphi:X\to Y\)，令 \(\varphi^*(g)=g\circ\varphi\)，则这是 \(k\) 代数同态。
+
+反过来，给定 \(\psi:k[Y]\to k[X]\)，选 \(Y\subseteq k^m\) 的坐标函数 \(y_1,\ldots,y_m\)，令 \(f_i=\psi(\bar y_i)\)。定义 \(\varphi(a)=\Bigl(f_1(a),\ldots,f_m(a)\Bigr)\)。对任意 \(h\in I(Y)\)，有 \(h(f_1,\ldots,f_m)=\psi(\bar h)=0\) 于 \(k[X]\)，故该坐标点确实落在 \(Y\)。其坐标为多项式函数，所以是态射。所得拉回与 \(\psi\) 在代数生成元上相同，故完全相同；而从原态射开始也恢复相同坐标，所以两个过程互逆。复合次序由函数复合直接得到。
+
+最后，约化有限型代数写成 \(A=k[x_1,\ldots,x_n]/I\)，其中约化性使 \(I\) 为根理想。对 \(X=Z_k(I)\)，强零点定理给出 \(I(X)=I\)，故 \(A\cong k[X]\)。空集对应零环，也符合这组同态与态射的对应。
+\end{proof}
+
+一个双射态射未必是同构。例如尖点的参数式 \(t\mapsto(t^2,t^3)\) 在域值点上双射：\(x\ne0\) 时逆参数为 \(y/x\)，原点则对应零。但是坐标环包含 \(k[t^2,t^3]\subsetneq k[t]\) 不满射，依\cref{b3:thm:affine-antiequivalence}，它不能来自同构。形式上的逆函数存在，不说明它在原点正则。
+
+\ProseParagraphBreak
+对 \(f\in k[X]\)，主开集 \(D_X(f)\) 可识别为闭代数集
+\[
+Y=\Bigl\{\,(a,t)\in X\times k:t f(a)=1\,\Bigr\}
+\]
+的第一坐标投影；反向为 \(a\mapsto\Bigl(a,1/f(a)\Bigr)\)，两者都是态射。其坐标环为 \(k[X][t]/(tf-1)\cong k[X]_f\)，这个商是约化环，因为约化环的局部化约化。故主开集也有自然的仿射代数集结构，且 \(\mathcal O_X\Bigl(D_X(f)\Bigr)\cong k[X]_f\)。这里使用的是具体的正反映射，不要求把一般开子集都当成仿射代数集。

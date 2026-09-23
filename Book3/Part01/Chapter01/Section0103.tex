@@ -1,30 +1,106 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 1.3 素谱的拓扑
-% 纲要位置：计划纲要.md，第 1510 行。
+% 纲要位置：工作记录/计划纲要.md，第 1828 行。
+% 纲要细目（写作范围）：
+% * Zariski 闭集与基本开集
+% * 拟紧性（quasi-compactness，不附加 Hausdorff 条件）及不可约闭集
+% * 一般点与闭点的区别
 
 \section{素谱的拓扑}
 \label{b3:sec:0103}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Zariski 闭集与基本开集
-% * 拟紧性（quasi-compactness，不附加 Hausdorff 条件）及不可约闭集
-% * 一般点与闭点的区别
-%
+把素理想作为点，还要指定哪些点属于同一个闭集。理想的包含关系给出一种自然规则：把包含同一理想的素理想收集起来。这个拓扑通常不是 Hausdorff 拓扑，甚至不同点之间可能有特殊化关系；这些现象正是需要保留的代数信息。
 
 \subsection{Zariski 闭集与基本开集}
 \label{b3:subsec:0103:01}
 
-待撰写。
+\begin{definition}\label{b3:def:spectrum-zariski}
+环 \(R\) 的\term[sulixiang-pu]{素理想谱}[prime spectrum]是集合
+\[
+\operatorname{Spec}R=\{\,\mathfrak p\subset R:\mathfrak p\text{ 是素理想}\,\}.
+\]
+对理想 \(I\)，记 \(V(I)=\{\,\mathfrak p\in\operatorname{Spec}R\mid I\subseteq\mathfrak p\,\}\)。以这些 \(V(I)\) 为闭集得到的拓扑称为\term[Zariski-tuopu]{Zariski 拓扑}[Zariski topology]。对单个元素或有限个元素，简记 \(V(f)=V\Bigl((f)\Bigr)\)、\(V(f_1,\ldots,f_r)=V\Bigl((f_1,\ldots,f_r)\Bigr)\)。对 \(f\in R\)，记
+\[
+D(f)=\operatorname{Spec}R\setminus V(f)
+=\{\,\mathfrak p:f\notin\mathfrak p\,\},
+\]
+称为\term[jiben-kaiji]{基本开集}[basic open subset]，也称主开集\termidx[zhukaiji]{主开集}。
+\end{definition}
+\symidx{\(\operatorname{Spec}R\)：交换环的素理想谱}
+\symidx{\(V(I)\)：包含理想 \(I\) 的素理想组成的闭集}
+\symidx{\(D(f)\)：素谱中的基本开集}
+
+这里的规则确实定义拓扑，因为
+\begin{equation}\label{b3:eq:zariski-closed-identities}
+\begin{gathered}
+V(0)=\operatorname{Spec}R,\qquad V(R)=\varnothing,
+\\
+\bigcap_\lambda V(I_\lambda)=V\Bigl(\sum_\lambda I_\lambda\Bigr),
+\qquad V(I)\cup V(J)=V(IJ).
+\end{gathered}
+\end{equation}
+前三式来自包含关系。最后一式是因为素理想包含 \(IJ\) 当且仅当它包含 \(I\) 或 \(J\)：若两者都不包含，分别从 \(I,J\) 中选取不属于该素理想的元素，它们的乘积属于 \(IJ\)，与素性矛盾。任意理想之和中的每个元素仅为有限和，所以这也说明无限交闭集的条件成立。
+
+\ProseParagraphBreak
+由根的交表示，还有
+\begin{equation}\label{b3:eq:zariski-radical-order}
+V(I)\subseteq V(J)\quad\Longleftrightarrow\quad
+\sqrt J\subseteq\sqrt I.
+\end{equation}
+因此 \(V(I)=V(\sqrt I)\)，根理想与闭子集反向一一对应。另一方面，\(D(f)\cap D(g)=D(fg)\)，且
+\(\operatorname{Spec}R\setminus V(I)=\bigcup_{f\in I}D(f)\)，故基本开集构成开集的一组基。特别地，\(D(f)=\varnothing\) 当且仅当 \(f\) 幂零，\(D(f)=\operatorname{Spec}R\) 当且仅当 \(f\) 是单位。
 
 \subsection{拟紧性与不可约闭集}
 \label{b3:subsec:0103:02}
 
-待撰写。
+一个拓扑空间若每个开覆盖都有有限子覆盖，称为\term[nijin-kongjian]{拟紧空间}[quasi-compact space]。本书不在此词中附加 Hausdorff 条件。
+
+\begin{proposition}\label{b3:prop:spec-quasicompact}
+\(\operatorname{Spec}R\) 及每个基本开集 \(D(f)\) 都拟紧。
+\end{proposition}
+\begin{proof}
+先将任一开覆盖细化为基本开覆盖。若 \(\operatorname{Spec}R=\bigcup_\lambda D(f_\lambda)\)，则不存在包含全部 \(f_\lambda\) 的素理想。由\cref{b3:thm:maximal-existence}，理想 \((f_\lambda)_\lambda\) 必为 \(R\)，所以一是其中有限个元素的组合。这有限个基本开集已经覆盖全谱，再取它们所属的原开集便得有限子覆盖。
+
+对 \(D(f)\) 的任意子空间开覆盖，可先细化成由基本开集与 \(D(f)\) 的交组成的覆盖；交仍是基本开集，因为 \(D(f)\cap D(g)=D(fg)\)。因此只需考虑 \(D(f)\subseteq\bigcup_\lambda D(g_\lambda)\)。补集的包含关系是 \(V\Bigl((g_\lambda)_\lambda\Bigr)\subseteq V(f)\)。由\eqref{b3:eq:zariski-radical-order}，某个 \(f^N\) 属于 \((g_\lambda)_\lambda\)，于是属于其中有限个 \(g_\lambda\) 生成的理想。取基本开集又得到有限子覆盖。\(D(f)\) 为空时同样成立。
+\end{proof}
+
+\begin{definition}\label{b3:def:irreducible-space}
+非空拓扑空间若不能写成两个真闭子集之并，称为\term[bukeyue-kongjian]{不可约空间}[irreducible space]。闭子集的不可约性用其子空间拓扑理解。若空间不能分成两个非空、不交的开集，称为连通；不可约性比连通性强，因为在不可约空间中任意两个非空开集必须相交。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:spec-irreducible}
+非空闭集 \(V(I)\) 不可约，当且仅当 \(\sqrt I\) 为素理想。
+\end{proposition}
+\begin{proof}
+若 \(\sqrt I=\mathfrak p\) 素，且 \(V(I)=\Bigl(V(I)\cap V(J)\Bigr)\cup\Bigl(V(I)\cap V(K)\Bigr)\)，则 \(V(\mathfrak p)\subseteq V(JK)\)。由\eqref{b3:eq:zariski-radical-order}，\(JK\subseteq\mathfrak p\)，故 \(J\subseteq\mathfrak p\) 或 \(K\subseteq\mathfrak p\)。相应的一个闭子集就是整个 \(V(I)\)。
+
+反过来，若 \(\sqrt I\) 不素，选 \(a,b\notin\sqrt I\)、\(ab\in\sqrt I\)。有 \(V(I)\subseteq V(ab)=V(a)\cup V(b)\)，但 \(V(I)\) 不包含于任何一边，否则根的交表示会使 \(a\) 或 \(b\) 属于 \(\sqrt I\)。这给出两个真闭子集之并，违反不可约性。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:noether-spectrum-components}
+若 \(R\) 为 Noether 环，则 \(\operatorname{Spec}R\) 的闭集降链最终稳定，并且它是有限多个极大不可约闭子集之并。它们恰为 \(V(\mathfrak p_1),\ldots,V(\mathfrak p_r)\)，其中 \(\mathfrak p_i\) 是 \(R\) 的全部极小素理想；每个素理想都包含其中至少一个。零环对应空分解。
+\end{proposition}
+\begin{proof}
+闭集降链由\eqref{b3:eq:zariski-radical-order}对应根理想升链，Noether 升链条件使其稳定。若存在不能分成有限个不可约闭集之并的闭集，取其中按包含最小的一个 \(Y\)。降链条件保证这种最小者存在：否则连续选择更小的坏闭集会得到无限严格降链。\(Y\) 本身不可能不可约，故是两个真闭子集之并；两个较小者都有有限不可约分解，相并即给出 \(Y\) 的分解，矛盾。
+
+因此全谱有有限不可约闭分解，删去被其他成员包含者，得到两两不包含的 \(V(\mathfrak p_i)\)，由\cref{b3:prop:spec-irreducible}各 \(\mathfrak p_i\) 素。任一不可约闭集被这些闭集覆盖，反复使用不可约性可知它包含于某个成员，故这些成员就是极大不可约闭集。特别地，对任一素理想 \(\mathfrak q\)，不可约闭集 \(V(\mathfrak q)\) 包含于某个 \(V(\mathfrak p_i)\)，即 \(\mathfrak p_i\subseteq\mathfrak q\)。若还有素理想严格小于某个 \(\mathfrak p_i\)，同一结论和两两不包含性便矛盾。所以所列者恰为全部极小素理想。
+\end{proof}
+
+闭集降链稳定的空间称为\term[Noether-tuopu-kongjian]{Noether 拓扑空间}[Noetherian topological space]；极大不可约闭子集称为\term[bukeyue-fenzhi]{不可约分支}[irreducible component]。不同分支可以相交，例如 \(k[x,y]/(xy)\) 的两条坐标轴分支在 \((\bar x,\bar y)\) 处相交，不能因有两个分支就认定空间不连通。
 
 \subsection{一般点与闭点}
 \label{b3:subsec:0103:03}
 
-待撰写。
+一个点若单独构成闭集，称为\term[bidian]{闭点}[closed point]。素谱中还常有闭包比单点大的点；这种闭包可以直接由理想的包含关系读出。
+
+\begin{proposition}\label{b3:prop:generic-and-closed-points}
+素理想 \(\mathfrak p\) 所对应点的闭包为 \(V(\mathfrak p)\)。因此它是闭点当且仅当 \(\mathfrak p\) 极大；每个不可约闭子集恰有一个闭包为它的点。
+\end{proposition}
+\begin{proof}
+闭集 \(V(I)\) 包含点 \(\mathfrak p\)，当且仅当 \(I\subseteq\mathfrak p\)，这又保证 \(V(\mathfrak p)\subseteq V(I)\)。所以 \(V(\mathfrak p)\) 是包含该点的最小闭集。它只有该点，当且仅当没有更大的真素理想；利用极大理想存在性，这等价于 \(\mathfrak p\) 极大。若闭集不可约，\cref{b3:prop:spec-irreducible}把它唯一写成 \(V(\mathfrak p)\)，根理想与闭集的一一对应保证此 \(\mathfrak p\) 唯一。
+\end{proof}
+
+闭包等于指定不可约闭集的点称为该闭集的\term[yiban-dian]{一般点}[generic point]。例如整环的素谱有一般点 \((0)\)；在 \(\operatorname{Spec}\mathbb Z\) 中，它的闭包是全谱，所有 \((p)\) 则是闭点。不同点具有不同闭包，所以素谱满足 \(T_0\) 分离性质，却一般不满足每点都闭，更不必是 Hausdorff 空间。
+
+\ProseParagraphBreak
+若 \(\mathfrak p\subseteq\mathfrak q\)，称 \(\mathfrak q\) 是 \(\mathfrak p\) 的\term[teshuhua]{特殊化}[specialization]，并称 \(\mathfrak p\) 是 \(\mathfrak q\) 的\term[yibanhua]{一般化}[generalization]；包含方向在这里不能颠倒。一般点保存的是整条不可约分支的共同代数关系，闭点则可能带有一个较大的剩余域。第六、七章将在代数闭基域的有限型情形把闭点解释为通常的坐标点。

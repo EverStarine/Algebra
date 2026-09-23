@@ -1,32 +1,86 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### D.5 与群、张量和非交换几何的联系
-% 纲要位置：计划纲要.md，第 1484 行。
+% 纲要位置：工作记录/计划纲要.md，第 1697 行。
+
+% 纲要要点（供目录核对）：
+% * 从离散群代数 \(\mathbb C[G]\) 到全群／约化群 \(C^*\)-代数及群 von Neumann 代数；以 \(G=\mathbb Z\) 比较 Laurent 多项式与圆周函数
+% * 代数张量积与算子代数张量积需要区分；最小／最大 \(C^*\)-张量范数只说明问题，不建立完整理论
+% * 高阶算子 K 理论、Tomita–Takesaki 理论、非交换几何和非自伴算子代数列为专题出口；本附录不是这些专著的压缩替代；作为本节末阅读说明，不另设小节
+% #### D.5.1 离散群的算子代数
+% #### D.5.2 代数张量积与算子张量范数
+% ---
 
 \section{与群、张量和非交换几何的联系}
 \label{b2:sec:D05}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 从离散群代数 \(\mathbb C[G]\) 到全群／约化群 \(C^*\)-代数及群 von Neumann 代数；以 \(G=\mathbb Z\) 比较 Laurent 多项式与圆周函数
-% * 代数张量积与算子代数张量积需要区分；最小／最大 \(C^*\)-张量范数只说明问题，不建立完整理论
-% * 高阶算子 K 理论、Tomita–Takesaki 理论、非交换几何和非自伴算子代数列为专题出口；本附录不是这些专著的压缩替代
-%
-% ---
-%
+同一个群代数可以有不同的完备化，同一个代数张量积也可以有不同的算子范数。本节只建立辨认这些对象所需的定义，并在整数群及矩阵代数上计算。这样既能看到与本卷代数构造的联系，也能说明后续分析问题究竟增加了什么。
 
 \subsection{离散群的算子代数}
 \label{b2:subsec:D05:01}
 
-待撰写。
+对离散群 \(G\)，群代数 \(\mathbb C[G]\) 的元素是有限和 \(a=\sum_g a_g g\)。规定
+\[
+a^*=\sum_g\overline{a_g}g^{-1}.
+\]
+任何酉表示 \(U:G\to\mathcal U(H)\) 通过线性延拓给出 \(*\)-表示 \(U(a)=\sum_g a_g U_g\)，且
+\[
+\Bigl\|U(a)\Bigr\|\le\sum_g|a_g|.
+\]
+所以 \(\|a\|_{\max}=\sup_U\Bigl\lVert U(a)\Bigr\rVert\) 有限。它不只是一项半范数：在 \(\ell^2(G)\) 的标准正交基上定义左正则表示 \(\lambda_g\delta_h=\delta_{gh}\)，则
+\(\lambda(a)\delta_e=\sum_g a_g\delta_g\)，故 \(a\ne0\) 时 \(\lambda(a)\ne0\)。次乘性、对合及 \(C^*\) 恒等式由各算子表示继承，得到一个真正的 \(C^*\) 范数。
+
+\begin{definition}\label{b2:def:group-operator-algebras}
+\(\mathbb C[G]\) 关于 \(\|\cdot\|_{\max}\) 的完备化称为\term[quan-qun-Cxing-daishu]{全群 \(C^*\)-代数}[full group C*-algebra]，记为 \(C^*(G)\)。左正则像的范数闭包称为\term[yuehua-qun-Cxing-daishu]{约化群 \(C^*\)-代数}[reduced group C*-algebra]，记为 \(C_r^*(G)\)。同一像的 WOT 闭包称为\term[qun-von-Neumann-daishu]{群 von Neumann 代数}[group von Neumann algebra]，记为 \(L(G)\)。
+\end{definition}
+\symidx{\(C^*(G)\)：离散群的全群 \(C^*\)-代数}
+\symidx{\(C_r^*(G)\)：离散群的约化群 \(C^*\)-代数}
+\symidx{\(L(G)\)：群 von Neumann 代数}
+
+\(L(G)=\lambda(G)''\) 由\cref{b2:thm:operator-bicommutant}成立。每个酉表示唯一延拓到 \(C^*(G)\)，因为它对最大范数收缩；但不能不加条件地断言它对约化范数也收缩。全群与约化群代数间的自然映射及其差异见 Blackadar\cite[\nopp II.10.2.3--II.10.2.7]{Blackadar2006OperatorAlgebras}，本节不展开一般群的判据。
+
+\begin{proposition}\label{b2:prop:integer-group-cstar}
+记单位圆为 \(\mathbb T=\Bigl\{z\in\mathbb C:|z|=1\Bigr\}\)。整数群的群代数为 \(\mathbb C[u,u^{-1}]\)，其中 \(u^*=u^{-1}\)，并有
+\[
+C^*(\mathbb Z)\cong C_r^*(\mathbb Z)\cong C(\mathbb T).
+\]
+\end{proposition}
+\begin{proof}
+整数群的酉表示由一个酉算子 \(U\) 决定。其谱包含于 \(\mathbb T\)：\(|z|>1\) 时用 Neumann 级数，\(|z|<1\) 时写 \(U-zI=U(I-zU^*)\)，仍可求逆。故对 Laurent 多项式 \(p\)，\cref{b2:thm:continuous-functional-calculus}给出
+\(\Bigl\lVert p(U)\Bigr\rVert\le\max_{|z|=1}\Bigl|p(z)\Bigr|\)。反过来，每个标量 \(z\in\mathbb T\) 都给出一维酉表示，所以最大范数正好为这个上确界。
+
+圆周弧长测度取总质量一。\term[Fourier-Plancherel-dingli]{Fourier--Plancherel 定理}[Fourier--Plancherel theorem]给出酉同构 \(F:\ell^2(\mathbb Z)\rightarrow L^2(\mathbb T)\)，其在标准基上为 \(F\delta_n(z)=z^n\)；采用\cite[Theorem II.10.1.15(iii)]{Blackadar2006OperatorAlgebras}。由 \(F\lambda_1\delta_n=z^{n+1}\)，双边移位在此同构下恰为乘坐标函数。乘连续函数 \(p\) 的算子范数为 \(\max|p|\)：上界直接成立，下界可取最大值附近正测度弧段上的归一化示性函数，使像的范数任意接近最大值。因此约化范数与最大范数一致。最后，Laurent 多项式含常数、分离圆周上的点且对共轭封闭，由复 Stone--Weierstrass 定理在 \(C(\mathbb T)\) 中一致稠密，完备化即得结论。
+\end{proof}
+
+同一个 Fourier 模型还给出 \(L(\mathbb Z)\cong L^\infty(\mathbb T)\)，这里采用交换群 von Neumann 代数的标准识别\cite[\nopp II.10.8.13]{Blackadar2006OperatorAlgebras}，不在本附录展开测度论证明。它的元素按几乎处处相等认同，包含弧段的示性函数；这些通常不是连续函数。于是代数有限和、范数完备化与弱算子闭包确实是三个不同层次。
 
 \subsection{代数张量积与算子张量范数}
 \label{b2:subsec:D05:02}
 
-待撰写。
+第六章的张量积只有有限和。本小节固定两个非零复 \(C^*\)-代数 \(A,B\)，用 \(A\odot B\) 特别表示它们在复数域上的代数张量积，规定 \((a\otimes b)^*=a^*\otimes b^*\)。符号改变只是为了与下面的完备化区分。
+\symidx{\(A\odot B\)：两个复代数的代数张量积}
 
-\subsection{算子代数的进一步专题}
-\label{b2:subsec:D05:03}
+\ProseParagraphBreak
+取 \(A,B\) 的忠实 Hilbert 空间表示，令 \(a\otimes b\) 在 Hilbert 张量积上逐因子作用，所得算子范数称为\term[kongjian-zhangliang-fanshu]{空间张量范数}[spatial tensor norm]，亦记 \(\|\cdot\|_{\min}\)。另一方面，在同一个 Hilbert 空间上取像互相交换的 \(*\)-表示 \(\pi,\rho\)，考察
+\[
+\sum_i a_i\otimes b_i\longmapsto\sum_i\pi(a_i)\rho(b_i).
+\]
+对所有这种表示取范数上确界，得到\term[zuidazhangliang-fanshu]{最大张量范数}[maximal tensor norm] \(\|\cdot\|_{\max}\)；每项都有上界 \(\sum_i\|a_i\|\cdot\|b_i\|\)。它们的完备化分别记为 \(A\otimes_{\min}B\)、\(A\otimes_{\max}B\)。
+\symidx{\(A\otimes_{\min}B\)：空间张量积的范数完备化}
+\symidx{\(A\otimes_{\max}B\)：最大张量积的范数完备化}
 
-待撰写。
+\ProseParagraphBreak
+空间范数不依赖所选忠实表示，并为所有 \(C^*\) 范数中的最小者；最大范数则允许上述所有交换表示。这些一般结论在此明确作为外部结果采用，见\cite[\nopp II.9.1.3; Theorem II.9.2.1; Corollary II.9.2.2; II.9.2.3; II.9.5.1--II.9.5.2]{Blackadar2006OperatorAlgebras}。对于非含幺代数，忠实表示的存在也使用\secref{b2:sec:D03}所引用的一般表示定理。本节不证明一般张量范数的最小性与最大性；单凭第六章的双线性泛性质，不能推出两种完备化相同。
+
+\ProseParagraphBreak
+在矩阵例子中，\(E_{ij}\otimes E_{ab}\) 送到 \(\mathbb C^n\otimes\mathbb C^m\) 上相应的矩阵单位，给出
+\[
+M_n(\mathbb C)\odot M_m(\mathbb C)\cong M_{nm}(\mathbb C).
+\]
+这一代数同构也保持共轭转置；空间范数就是右边的算子范数。最大范数也相同：任何 \(C^*\) 范数 \(\gamma\) 都使这个有限维空间完备，由\cref{b2:thm:continuous-functional-calculus}作用于正矩阵 \(x^*x\)，其范数为最大特征值，所以 \(\gamma(x)^2=\gamma(x^*x)\) 就是通常算子范数的平方。有限维空间已经完备，因此该例不增加新元素。相比之下，\(C\Bigl([0,1]\Bigr)\odot C\Bigl([0,1]\Bigr)\) 的元素仅是有限和 \(\sum_i f_i(x)g_i(y)\)；这些函数含常数、分离正方形上的点且对共轭封闭，故由 Stone--Weierstrass 定理在一致范数下稠密于 \(C\Bigl([0,1]^2\Bigr)\)，但不包含每一个二元连续函数。\cref{b2:ex:D-tensor-completion}给出这样的具体函数及一致逼近，说明完备化在这里有实际作用。
+
+\ProseParagraphBreak
+
+Gelfand 对偶允许把交换函数代数当作拓扑空间的一种代数描述。将其推广为“非交换空间”的研究方法时，需要先指定保留哪些数据：\(C^*\)-代数重视范数与连续表示，von Neumann 代数重视弱闭包与测度结构，附录C的 Azumaya 理论则固定交换基环并研究局部的代数矩阵结构。这些问题有联系，却不能仅凭名称就认作同一种几何。
+
+\ProseParagraphBreak
+算子 K 理论通过稳定矩阵中的投影、可逆元及连续同伦研究代数；第四卷附录B的代数 K 理论初步只能提供部分比较语言。Tomita--Takesaki 理论从 von Neumann 代数的态和权构造模自同构群；这里的“模”是该理论的专名，不是本卷任意环模的简称。完整的 K 理论、因子分类、谱三元组及非自伴算子代数分别需要相应专著，不作为其他代数卷继续阅读的共同前提。

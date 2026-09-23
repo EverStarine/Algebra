@@ -1,0 +1,259 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：## 附录 F　Gröbner 基初步
+% 纲要位置：工作记录/计划纲要.md，第 951 行。
+% 纲要细目（写作范围）：
+% > 第10—12章之后可插读。承担多元除法、Gröbner基存在性、正规式、Buchberger判据与算法、约化基唯一性、基本消去和标准单项式基的主要初等证明；有限性精确回引第12.4节。第二卷非交换专题建议先读本附录F.1—F.3，第三卷第8章为独立阅读重新完整建立基础理论，再发展进阶应用。
+
+
+
+\chapter{Gröbner 基初步}
+\label{b1:app:F}
+
+\begin{chapterabstract}
+多元多项式除法一般没有唯一余式，理想的任意生成组也未必适合判断一个多项式是否属于理想。本附录从这两个困难出发，建立全局单项式序、Gröbner 基及 Buchberger 算法，证明正规式、约化基与基本消去定理。最后用标准单项式给商环选择坐标，计算乘法、单位与零因子。所有核心论证都在域上的多项式环内完成，并通过可直接展开核验的等式保存计算依据。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分首项、单项式序与全次数，执行多元除法并说明余式为何可能依赖选择。
+\item 从首项理想理解 Gröbner 基，证明存在性、正规式唯一性和成员判定。
+\item 解释 S 多项式的抵消机制，证明并执行 Buchberger 算法，求出约化基。
+\item 选取适当的字典序消去变量，区分消去关系、代回及解所在的域。
+\item 用标准单项式计算商环，检验单位并辨认点集无法直接反映的幂零元素。
+\end{itemize}
+\end{learninggoals}
+
+读完第10—12章即可开始本附录。所需知识是理想、商环、一元除法、多元多项式，以及\cref{b1:thm:hilbert-basis}和\cref{b1:prop:noetherian-acc}；商环的基沿用线性代数中的含义，使用时会写出唯一的线性组合表示。一般定理适用于任意域，算法实际执行则要求系数域的四则运算和零判定能够精确完成。主要算例取 \(\mathbb Q\) 与素域，并明确指出改变系数域的影响。
+
+\ProseParagraphBreak
+本附录是第二卷第20.6节非交换 Gröbner 专题之前的交换情形入门；第三卷第8章将重述必要的定义与结果，再发展理想运算、几何消去和零维计算。初次阅读可先顺读前三节，亲自完成一个从生成组到约化基的计算，再用后两节解释输出的代数意义。
+
+\ProseParagraphBreak
+进一步阅读可参阅 Cox、Little 与 O'Shea 的《Ideals, Varieties, and Algorithms》\cite[Chapter 2, \S\S 2--7; Chapter 3, \S 1; Chapter 5, \S\S 2--3]{CoxLittleOShea2015IdealsVarietiesAlgorithms}。这些位置分别讨论单项式序与 Gröbner 基、消去，以及商环中的计算；本附录将基本证明完整写出，具体计算不以特定软件为前提。
+
+\input{Appendices/AppendixF/SectionF01}
+\input{Appendices/AppendixF/SectionF02}
+\input{Appendices/AppendixF/SectionF03}
+\input{Appendices/AppendixF/SectionF04}
+\input{Appendices/AppendixF/SectionF05}
+
+\begin{chaptersummary}
+单项式序给出了约化的下降方向，Gröbner 基则使原理想的全部首项都能由已知首项辨认。一般除法保证输出一个表示；对 Gröbner 基，输出的不可约余式才唯一，并且余式为零恰好等价于属于理想。有限生成性保证适合的基存在，Buchberger 算法进一步从给定生成组求出它。
+
+\ProseParagraphBreak
+S 多项式检测最高项抵消后可能出现的新关系。每个非零余式都保持原理想，却使首项理想严格增大；Hilbert 基定理给出的升链条件保证这种补充最终结束。约化基的唯一性要固定系数域和单项式序，不能把不同序下的输出直接逐项比较。
+
+\ProseParagraphBreak
+字典序让一部分关系不再含指定变量，标准单项式让每个商类有确定的坐标。消去所得关系的解未必全能提升，商空间维数也未必等于不同解的个数。保留生成关系、工作域和单项式序，才能把计算输出转成可以独立核验的结论。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b1:ex:F-orders}
+在 \(k[x,y,z]\) 中固定变量次序 \(x\succ y\succ z\)。分别用字典序、分次字典序、分次逆字典序排列 \(x^2z,xy^2,z^4\)，并求它们之和的首单项式。
+\end{exercise}
+\begin{solution}
+字典序只先比较 \(x\) 指数，得到 \(x^2z\succ xy^2\succ z^4\)。分次字典序先比较全次数，得到 \(z^4\succ x^2z\succ xy^2\)。分次逆字典序同样把四次项放在最前；在两个三次项中，最后不同的 \(z\) 指数较小的项较大，故 \(z^4\succ xy^2\succ x^2z\)。三种首单项式分别为 \(x^2z,z^4,z^4\)。后两种次序的首项恰巧相同，但对剩下两项的比较不同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-nonwell-order}
+在一元单项式上规定次数越小反而越大，即 \(1\succ x\succ x^2\succ\cdots\)。它与乘法相容吗？若按这个次序对一除以 \(1-x\)，逐次消去当前首项会发生什么？
+\end{exercise}
+\begin{solution}
+两个指数比较后同时加同一个非负整数，大小关系保持，所以乘法相容。但所列就是无限严格下降链，故它不是良序。\(1-x\) 的首项是一；从一减去它后得到 \(x\)，再减去 \(x(1-x)\) 得 \(x^2\)，依次得到 \(x^m\)，永不终止。形式级数的无限求和是另一种运算，不能作为多项式除法的有限步输出。此例说明乘法相容性不能替代良序条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-coefficient-field}
+在 \(\mathbb Z[x]\) 中，\(x\) 的首单项式被 \(2x\) 的首单项式整除，为什么仍不能按本附录算法用 \(2x\) 消去 \(x\)？另在 \((\mathbb Z/6\mathbb Z)[x]\) 中计算 \((2x+1)(3x+1)\)，说明首单项式乘法公式的哪项基础可能失效。
+\end{exercise}
+\begin{solution}
+消去首项需要系数 \(1/2\)，它不属于 \(\mathbb Z\)。而 \(x\notin(2x)\)，因为若 \(x=2xh\)，比较一次系数会要求某个整数的两倍等于一。扩域到 \(\mathbb Q\) 后才允许这个除法。
+
+模六时乘积为 \(5x+1\)，首单项式为 \(x\)，不是两个首单项式乘积 \(x^2\)。最高项系数 \(2\cdot3=0\) 被零因子消去。故一般环既可能缺少首系数的逆，也可能缺少最高项乘积非零这一性质。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-monomial-ideal}
+对 \(J=(x^3y,x^2y^2,xy^3,x^4y^2,y^5)\subseteq k[x,y]\)，删去冗余单项式生成元，判断 \(x^2y^3,x^2y\) 是否属于 \(J\)，并判断商环是否有限维。
+\end{exercise}
+\begin{solution}
+\(x^4y^2\) 被 \(x^3y\) 整除，可删去。余下四个单项式互不整除，所以不能再删。\(x^2y^3\) 被 \(x^2y^2\) 整除，属于 \(J\)；\(x^2y\) 不被任何生成元整除，不属于 \(J\)。所有生成元都含 \(y\)，故每个纯 \(x\) 幂都是标准单项式。由\cref{b1:thm:F-standard-monomial-basis}，商环无限维。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-nonzero-remainder-member}
+在 \(\mathbb Q[x,y]\) 的字典序 \(x\succ y\) 下，令 \(g_1=xy-1,g_2=y^2-2\)。证明 \(f=x^2-1/2\) 除以这个生成组时余式为自身，却仍属于 \((g_1,g_2)\)。
+\end{exercise}
+\begin{solution}
+两个首单项式为 \(xy,y^2\)，都不整除 \(x^2\) 或一，所以除法没有可消去的项，余式就是 \(f\)。但是直接展开有
+\[
+x^2-\frac12=\frac{xy+1}{2}(xy-1)-\frac{x^2}{2}(y^2-2).
+\]
+故 \(f\) 属于原理想。非零余式能够否定成员资格的前提，是所用生成组已经为 Gröbner 基。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-complete-second-example}
+对上一题的 \(g_1,g_2\)，计算首个 S 多项式，求约化 Gröbner 基，并重新计算 \(x^2-1/2\) 的正规余式。
+\end{exercise}
+\begin{solution}
+最小公倍式为 \(xy^2\)，所以 \(S(g_1,g_2)=yg_1-xg_2=2x-y\)。令 \(h=x-y/2\)。原理想等于 \((h,g_2)\)：一边由 \(2h=S(g_1,g_2)\) 得到，另一边由 \(g_1=yh+g_2/2\) 得到。\cref{b1:prop:F-triangular-basis}说明 \(\{x-y/2,y^2-2\}\) 是 Gröbner 基；两者首一，尾项不被任何首单项式整除，故已约化。代入 \(x=y/2\)，再模 \(y^2-2\)，得到 \(x^2-1/2\) 的余式为零，与前题证书相符。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-reduced-versus-redundant}
+对 \(I=(x-y,y^2)\subseteq\mathbb Q[x,y]\) 及字典序 \(x\succ y\)，判断 \(\{x-y,y^2,x^2\}\) 与 \(\{2x-2y,y^2\}\) 是否为 Gröbner 基、是否约化，并求 \(I\) 的约化基。
+\end{exercise}
+\begin{solution}
+由\cref{b1:prop:F-triangular-basis}，\(G=\{x-y,y^2\}\) 为约化基。又 \(x^2=(x+y)(x-y)+y^2\in I\)，它的首单项式已属于 \((x,y^2)\)，所以把它加入 \(G\) 仍给出 Gröbner 基，却因首项冗余而不约化。第二组只是把第一项乘以非零常数，生成理想及首项理想均不变，也是 Gröbner 基；但第一项不首一，故不约化。两者约化后都得到 \(G\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-coefficient-specialization}
+分别在 \(\mathbb Q[x]\) 和 \(\mathbb F_2[x]\) 中计算由 \(x^2+1,x-1\) 生成的理想的约化 Gröbner 基。解释为何不能把有理数上的最终基逐项模二就当作第二个问题的答案。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb Q[x]\) 中，
+\[
+1=\tfrac12(x^2+1)-\tfrac12(x+1)(x-1),
+\]
+所以理想为全环，约化基为 \(\{1\}\)。在 \(\mathbb F_2[x]\) 中，\(x-1=x+1\)，且 \(x^2+1=(x+1)^2\)，所以理想为 \((x+1)\)，约化基为 \(\{x+1\}\)。前一个证书使用 \(1/2\)，没有可模二的意义。改变系数域时必须重新核对运算中所除的数。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-change-order-cubic}
+设 \(I=(x-y^2,y^3-1)\subseteq\mathbb Q[x,y]\)。求字典序 \(x\succ y\) 和 \(y\succ x\) 下的约化基，并分别给出商环的一组标准单项式。
+\end{exercise}
+\begin{solution}
+第一种次序下由\cref{b1:prop:F-triangular-basis}，原两项已经是约化基，标准单项式为 \(1,y,y^2\)。商中 \(x=y^2,y^3=1\) 推出 \(x^2=y,x^3=1\)，故 \(y-x^2,x^3-1\) 属于 \(I\)。反过来，在按后两项取的商中，\(y=x^2,x^3=1\) 推出 \(y^2=x,y^3=1\)，所以两理想相同。交换三角生成组命题中的变量，便知第二种次序下的约化基为 \(\{y-x^2,x^3-1\}\)，标准单项式为 \(1,x,x^2\)。两组基都给出三维商空间，具体单项式却不同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-normal-degree-increase}
+对 \(m\ge2\)，在 \(k[x,y]\) 中取字典序 \(x\succ y\) 及理想 \(I=(x-y^m)\)。证明 \(\{x-y^m\}\) 为 Gröbner 基，并求 \(x^d\)、\(d\ge1\)，的正规余式。这是否违反除法的终止性？
+\end{exercise}
+\begin{solution}
+任一非零理想元素形如 \(h(x-y^m)\)，其首单项式为 \(\operatorname{LM}(h)x\)，所以被 \(x\) 整除，得到 Gröbner 基条件。反复用 \(x=y^m\) 得余式 \(y^{md}\)，其中没有可被 \(x\) 整除的项，故确为正规余式。它的全次数由 \(d\) 增大为 \(md\)。终止依据是指定单项式序的下降；在字典序中，任何 \(y\) 幂都小于 \(x\)，所以全次数增加并不违背这个依据。
+\end{solution}
+
+
+\begin{exercise}\label{b1:ex:F-coprime-leading}
+设 \(f,g\) 首一，且首单项式 \(m,n\) 互素。证明 \(\{f,g\}\) 为 Gröbner 基。再对分次字典序 \(x\succ y\)，将结论用于 \(f=x^2+y,g=y^2+x\)，求商环的一组标准单项式。
+\end{exercise}
+\begin{solution}
+写 \(f=m+f'\)、\(g=n+g'\)。因 \(\operatorname{lcm}(m,n)=mn\)，有
+\[
+S(f,g)=nf-mg=f'g-g'f.
+\]
+若 \(f'\ne0\)，则 \(\operatorname{LM}(f'g)=\operatorname{LM}(f')n\prec mn\)；另一项同理。这给出各项首单项式均严格低于最小公倍式的表示，正是\cref{b1:thm:F-buchberger-criterion}的\itemref{b1:item:F-buchberger-bound}，所以所给两项构成 Gröbner 基。尾项为零时对应求和项直接略去，结论仍成立。
+
+应用中两个首单项式是 \(x^2,y^2\)，互素，所以已有 Gröbner 基。标准单项式为 \(1,x,y,xy\)，商环为四维。这里使用分次字典序；若把它换成单纯的字典序，\(y^2+x\) 的首单项式会改变，不能照搬此项判断。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-elimination-order}
+在 \(\mathbb Q[x,y]\) 中取 \(I=(x-y^2,y^2-2)\)。求 \(I\cap\mathbb Q[x]\) 和 \(I\cap\mathbb Q[y]\)。为什么不能从字典序 \(x\succ y\) 下的一组任意 Gröbner 基中，直接删去含 \(y\) 的项来求第一个交？
+\end{exercise}
+\begin{solution}
+相加两个原生成元得到 \(x-2\)，反向有 \(x-y^2=(x-2)-(y^2-2)\)，所以 \(I=(x-2,y^2-2)\)。在两种变量优先次序下，这组多项式的首单项式分别来自不同变量，均为 Gröbner 基；也可直接用一元代入与除法证明两交为 \((x-2)\) 和 \((y^2-2)\)。
+
+另一方面，\cref{b1:prop:F-triangular-basis}说明原两项本身也是 \(x\succ y\) 下的 Gröbner 基，但它们都含 \(y\)。若直接删去所有含 \(y\) 的多项式，会得到空集，错误地声称 \(I\cap\mathbb Q[x]=0\)。消去 \(y\) 的定理要求把 \(y\) 放在被优先比较的位置；所用次序的条件不能忽略。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-cusp-parameter}
+对任意域 \(k\)，在 \(k[t,x,y]\) 中令 \(J=(x-t^2,y-t^3)\)。证明 \(J\cap k[x,y]=(y^2-x^3)\)。若 \((a,b)\in K^2\)、\(K/k\) 为域扩张，满足 \(b^2=a^3\)，它是否总能写成 \((t^2,t^3)\)？
+\end{exercise}
+\begin{solution}
+把 \(x,y\) 分别代为 \(t^2,t^3\) 的同态，其核为 \(J\)：对任一多项式先按 \(x-t^2\)、再按 \(y-t^3\) 整理，余下就是 \(k[t]\) 中的代入值。因此交理想是代入同态在 \(k[x,y]\) 上的核。
+
+显然 \(y^2-x^3\) 在核中。把任意 \(f(x,y)\) 按关于 \(y\) 首一的 \(y^2-x^3\) 除，余式形如 \(A(x)+yB(x)\)。其代入值为 \(A(t^2)+t^3B(t^2)\)。前一项只含偶次幂，后一项只含奇次幂，单项式独立性使代入值为零当且仅当 \(A=B=0\)。故核没有更多元素。
+
+对所给点，若 \(a=0\)，则 \(b=0\)，取 \(t=0\)。若 \(a\ne0\)，取 \(t=b/a\)，由 \(b^2=a^3\) 得 \(t^2=a\)、\(t^3=b\)。所以这里所有域值点都能提升，且上述公式对任意特征有效。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-three-variable-projection}
+在 \(k[x,y,z]\) 中令 \(I=(xy-1,yz-1)\)，用字典序 \(x\succ y\succ z\) 求一组 Gröbner 基及 \(I\cap k[z]\)。描述原方程的 \(k\) 值解在 \(z\) 坐标上的像。
+\end{exercise}
+\begin{solution}
+令 \(f=xy-1,h=yz-1\)。计算
+\[
+zf-xh=x-z,
+\qquad f=y(x-z)+h,
+\]
+所以 \(I=(x-z,yz-1)\)。这两项的 S 多项式为
+\[
+yz(x-z)-x(yz-1)=x-yz^2=(x-z)-z(yz-1),
+\]
+按所写基先消去 \(x\)，再消去 \(yz^2\)，余式为零。因此它们为 Gröbner 基。基中没有只含 \(z\) 的项，\cref{b1:thm:F-elimination}给出交理想为零。
+
+原方程要求 \(z\ne0\)，此时唯一得到 \((x,y,z)=(z,z^{-1},z)\)。故投影像为 \(k^\times\)，而消去理想的 \(k\) 值零点是整个 \(k\)，仍多出一个不能提升的点。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-two-equations}
+在 \(\mathbb Q[x,y]\) 中取字典序 \(x\succ y\)，对方程组 \(x+y=1,x^2+y^2=1\) 求约化 Gröbner 基，给出全部有理解和复数解，并写明消去过程中所用的生成关系。
+\end{exercise}
+\begin{solution}
+记 \(f=x+y-1\)、\(g=x^2+y^2-1\)。有
+\[
+g-(x-y+1)f=2(y^2-y).
+\]
+因二可逆，原理想等于 \((x+y-1,y^2-y)\)。由\cref{b1:prop:F-triangular-basis}，这已是 \(x\succ y\) 下的约化基。\(y^2-y=0\) 给出 \(y=0,1\)，再由 \(x=1-y\) 得 \((1,0),(0,1)\)。两点都在 \(\mathbb Q\) 中，且在 \(\mathbb C\) 中也没有更多根，所以两种解集相同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-five-dimensional-quotient}
+对 \(A=k[x,y]/(x^3,x^2y,y^2)\)，求标准单项式基及维数。令 \(\mathfrak m=(\bar x,\bar y)\subseteq A\)，计算 \(\mathfrak m^2,\mathfrak m^3\)，并刻画全部单位。
+\end{exercise}
+\begin{solution}
+标准单项式为 \(1,x,x^2,y,xy\)，所以维数为五。像理想 \(\mathfrak m\) 由后四项线性生成，其平方为 \(k\bar x^2+k\bar x\bar y\)，三次幂为零，因为所有三次单项式都被给定生成元整除。
+
+每个元素唯一写为 \(a+u\)、\(a\in k,u\in\mathfrak m\)。若 \(a\ne0\)，逆为 \(a^{-1}-a^{-2}u+a^{-3}u^2\)，相乘后用 \(u^3=0\) 验证。若 \(a=0\)，则元素幂零，不能可逆。因此单位恰为常数项非零的元素。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-two-normal-bases}
+令 \(I=(x^2-y,y^2)\subseteq k[x,y]\)。分别用分次字典序 \(x\succ y\) 与字典序 \(y\succ x\) 求约化基和标准单项式，并证明所得商环同构于 \(k[t]/(t^4)\)。
+\end{exercise}
+\begin{solution}
+分次字典序下，原首单项式为 \(x^2,y^2\)，其 S 多项式为 \(-y^3\)，可被 \(y^2\) 约化为零。因此原生成组为约化基，标准单项式是 \(1,x,y,xy\)。
+
+字典序 \(y\succ x\) 下，理想也写成 \((y-x^2,x^4)\)：有 \(x^4=(x^2+y)(x^2-y)+y^2\)，反向 \(y^2=(y+x^2)(y-x^2)+x^4\)。交换\cref{b1:prop:F-triangular-basis}中的变量，得到 Gröbner 基 \(\{y-x^2,x^4\}\)；两项首一且尾项不可约，所以它已约化，标准单项式为 \(1,x,x^2,x^3\)。赋值 \(t\mapsto\bar x\)，以及反向 \(\bar x\mapsto t,\bar y\mapsto t^2\)，定义互逆同态，故得到所述同构。两组基的对应是 \(\bar y=\bar x^2,\bar x\bar y=\bar x^3\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-inverse-certificate}
+在 \(A=\mathbb Q[x,y]/(x-y^2,y^3-2)\) 中，求 \(x+y+1\) 的剩余类的逆，并将结果写成原多项式环内的一条单位证书。
+\end{exercise}
+\begin{solution}
+商中该元素等于 \(y^2+y+1\)，而
+\((y-1)(y^2+y+1)=y^3-1\equiv1\)。故逆为 \(y-1\) 的剩余类。完整证书是
+\[
+1=(y-1)(x+y+1)-(y-1)(x-y^2)-(y^3-2).
+\]
+展开后立即得到一；由\cref{b1:prop:F-unit-criterion}，它同时验证原元素确为单位及所给逆元正确。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-characteristic-two-main}
+把本附录的双点例子改到 \(\mathbb F_2\)：求 \(A=\mathbb F_2[x,y]/(x-y,y^2-1)\) 的维数、全部单位和幂等元。它在任意域扩张中有几个不同的解？
+\end{exercise}
+\begin{solution}
+令 \(z=\bar y-1\)，则 \(z^2=\bar y^2-2\bar y+1=0\)，且 \(\bar x=\bar y=1+z\)。因此 \(A\cong\mathbb F_2[z]/(z^2)\)，维数为二，四个元素是 \(0,1,z,1+z\)。单位为 \(1,1+z\)，因为常数项必须非零，并且 \((1+z)^2=1\)。若 \(a+bz\) 幂等，则其平方为 \(a\)，所以 \(b=0\)，只剩零与一。原方程的根满足 \((y-1)^2=0\)，在任何域中都迫使 \(y=x=1\)，故只有一个不同的解。有理数情形中除以二得到的两个幂等元，在这里已不能照写。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-points-not-membership}
+给出下列两种现象的直接证明：在 \(k[x]\) 中，\(x\) 在理想 \((x^2)\) 的全部域值零点上为零，却不属于该理想；在 \(\mathbb F_2[x]\) 中，非零多项式 \(x^2-x\) 在每个 \(\mathbb F_2\) 元素上都为零。它们为何不能代替 Gröbner 理想成员判定？
+\end{exercise}
+\begin{solution}
+在任意域扩张中，\(a^2=0\) 蕴含 \(a=0\)，所以第一项确在全部零点消失。但 \(x\) 除以 \(x^2\) 的余式为 \(x\ne0\)，故不属于 \((x^2)\)。第二项代入零、一都为零，却具有非零的多项式系数，因而不属于零理想。前一例即使允许全部域扩张的点，仍没有检测到幂零关系的次数；后一例只考察有限基域中的点，连多项式是否为零都不能判定。成员判据检查的是多项式关系，而不是有限个取值。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-truncated-total-degree}
+设 \(d\ge1\)，在 \(k[x,y]\) 中令 \(I=(x,y)^d\)。求一个对任意全局单项式序都适用的 Gröbner 基，并求商环维数、其中像理想 \((\bar x,\bar y)\) 的幂零指数及全部单位。
+\end{exercise}
+\begin{solution}
+理想由全次数恰为 \(d\) 的单项式 \(x^d,x^{d-1}y,\ldots,y^d\) 生成。这些单项式构成任意单项式序下的 Gröbner 基。标准单项式恰为全次数小于 \(d\) 的单项式，因此维数为
+\[
+\sum_{j=0}^{d-1}(j+1)=\frac{d(d+1)}2.
+\]
+像理想的 \(d\) 次幂为零；若 \(d>1\)，其 \(d-1\) 次幂含非零标准单项式 \(\bar x^{d-1}\)，所以幂零指数恰为 \(d\)。\(d=1\) 时像理想本身为零，最小正指数也为一。写元素为 \(a+u\)，其中 \(u\) 在像理想中；\(a\ne0\) 时逆为有限和 \(a^{-1}\sum_{j=0}^{d-1}(-a^{-1}u)^j\)，\(a=0\) 时元素幂零，不能可逆。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:F-ideal-comparisons}
+在 \(\mathbb Q[x,y]\) 中比较
+\[
+I=(x-y,y^2-1),\quad J=(x-y,x^2-1),\quad K=(x-y,y^3-y).
+\]
+判断哪些相等、哪些包含，并用正规余式给出严格包含的见证。
+\end{exercise}
+\begin{solution}
+由 \(x^2-1=(x+y)(x-y)+(y^2-1)\)，以及该式移项后的反向表达，得到 \(I=J\)。又 \(y^3-y=y(y^2-1)\)，故 \(K\subseteq I\)。\cref{b1:prop:F-triangular-basis}说明 \(\{x-y,y^3-y\}\) 为 \(K\) 的 Gröbner 基；\(y^2-1\) 对它的正规余式仍为自身，非零，因此 \(y^2-1\in I\setminus K\)。所以 \(K\subsetneq I=J\)。只知一组生成元在另一理想中还不够判断相等，必须检查反向包含。
+\end{solution}

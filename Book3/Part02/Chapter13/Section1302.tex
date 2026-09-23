@@ -1,30 +1,79 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.2 Artin–Rees 引理
-% 纲要位置：计划纲要.md，第 1898 行。
+% 纲要位置：工作记录/计划纲要.md，第 2216 行。
+% 纲要细目（写作范围）：
+% * 子模滤过与诱导滤过
+% * Artin–Rees 引理及证明
+% * Krull 交定理的适当局部版本
+
 
 \section{Artin–Rees 引理}
 \label{b3:sec:1302}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 子模滤过与诱导滤过
-% * Artin–Rees 引理及证明
-% * Krull 交定理的适当局部版本
-%
+在子模 \(N\subseteq M\) 内，“\(I\) 的 \(n\) 次幂乘出的元素”组成 \(I^nN\)；“在 \(M\) 中已经达到第 \(n\) 阶的元素”组成 \(N\cap I^nM\)。这两者一般不相等。Artin–Rees 引理说明，在 Noether 条件下，它们的差异能由一个固定的次数偏移控制。
 
 \subsection{子模滤过与诱导滤过}
 \label{b3:subsec:1302:01}
 
-待撰写。
+取 \(R=k[x]\)、\(I=(x)\)、\(M=R\)、\(N=x^rR\)，其中 \(r\ge1\)。直接计算得到
+\[
+I^nN=x^{n+r}R,\qquad N\cap I^nM=x^{\max(r,n)}R.
+\]
+后一滤过到第 \(r\) 阶仍等于整个 \(N\)，前一滤过已经缩小。因此子模的自身理想进滤过和由环境诱导的滤过需要分别处理。
+
+\ProseParagraphBreak
+令 \(F^nN=N\cap I^nM\)。它满足 \(F^0N=N\) 及 \(IF^nN\subseteq F^{n+1}N\)，且其 Rees 模是 \(\mathcal R_I(M)\) 的齐次子模。这个观察把滤过比较转化为一个有限生成问题。
 
 \subsection{Artin–Rees 引理及其证明}
 \label{b3:subsec:1302:02}
 
-待撰写。
+下述\term[artin-rees-yinli]{Artin–Rees 引理}[Artin--Rees lemma]给出诱导滤过最终稳定的精确等式。
+
+\begin{theorem}[Artin–Rees]\label{b3:thm:artin-rees}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模、\(N\subseteq M\) 为子模。存在整数 \(c\ge0\)，使对所有 \(n\ge c\) 都有
+\[
+N\cap I^nM=I^{n-c}(N\cap I^cM).
+\]
+特别地，\(N\) 自身的 \(I\) 进拓扑等于 \(M\) 在 \(N\) 上诱导的拓扑。
+\end{theorem}
+\begin{proof}
+由\cref{b3:prop:rees-finiteness}，\(\mathcal R_I(R)\) 为 Noether 环，\(\mathcal R_I(M)\) 为有限模，所以齐次子模
+\[
+\mathcal N=\bigoplus_{n\ge0}(N\cap I^nM)t^n
+\]
+有限生成。仍由该命题，滤过 \(N\cap I^nM\) 从某个次数 \(c\) 起稳定，逐次使用等式便得到所述公式。也可以具体看生成元：取 \(z_jt^{d_j}\) 且 \(d_j\le c\)，则次数 \(n\ge c\) 的部分为 \(\sum_jI^{n-d_j}z_j\)。每项都属于 \(I^{n-c}(N\cap I^cM)\)，反向包含由 \(I^{n-c}I^cM\subseteq I^nM\) 得到。
+
+最后，
+\[
+I^nN\subseteq N\cap I^nM\subseteq I^{n-c}N\qquad(n\ge c).
+\]
+两个邻域系相互包含任意给定的足够小邻域，故拓扑相同。
+\end{proof}
+
+\cref{b3:lem:induced-filtration-bound}只需要上述两个包含关系。现在得到的等式还说明诱导滤过何时开始逐次由乘 \(I\) 生成。这里的 \(c\) 可以依赖 \(N\subseteq M\) 和 \(I\)，不能解释为对所有子模统一的常数；前面 \(N=x^rR\) 的例子中，最小的 \(c\) 就是 \(r\)。
 
 \subsection{Krull 交定理的局部版本}
 \label{b3:subsec:1302:03}
 
-待撰写。
+\term[krull-jiao-dingli]{Krull 交定理}[Krull intersection theorem]以 Jacobson 根条件保证有限模的分离性。
+
+\begin{theorem}[Krull 交定理]\label{b3:thm:krull-intersection}
+设 \(R\) 为交换 Noether 环、\(M\) 为有限生成 \(R\) 模、\(I\subseteq R\) 为理想。若 \(I\subseteq J(R)\)，则
+\[
+\bigcap_{n\ge0}I^nM=0.
+\]
+此时 \(M\) 的每个子模都闭。特别地，对 Noether 局部环 \((R,\mathfrak m)\)，每个有限模在极大理想进拓扑下分离。
+\end{theorem}
+\begin{proof}
+令 \(N=\bigcap_nI^nM\)。它作为 Noether 模的子模有限生成。对 \(N\subseteq M\) 使用\cref{b3:thm:artin-rees}，在 \(n=c+1\) 时得到
+\[
+N=N\cap I^{c+1}M=I(N\cap I^cM)=IN.
+\]
+由\cref{b3:thm:nakayama}及 \(I\subseteq J(R)\) 得 \(N=0\)。对任意子模 \(L\)，商模 \(M/L\) 也有限生成，因而分离；\cref{b3:prop:adic-closure}说明 \(L\) 闭。
+\end{proof}
+
+有限性不能删去。取 \(R=\mathbb Z_{(p)}\)、\(M=\mathbb Q\)，则 \(p^nM=M\) 对所有 \(n\) 成立，交并不为零。Jacobson 根条件也不能对一般环省略：\(k\times k\) 的幂等理想 \(k\times0\) 的各次幂都相同。
+
+\ProseParagraphBreak
+本节还给出一种实用判断：在 Noether 局部环中，若对每个 \(n\) 都能使 \(x\equiv y_n\pmod{\mathfrak m^nM}\)，其中所有 \(y_n\in N\)，那么 \(x\in N\)。这来自 \(N\) 的闭性；它并不要求这些近似元本身已经构成唯一的表示。

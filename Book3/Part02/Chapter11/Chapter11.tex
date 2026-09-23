@@ -1,16 +1,196 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第11章　分次环、Hilbert 函数与多项式
-% 纲要位置：计划纲要.md，第 1816 行。
+% 纲要位置：工作记录/计划纲要.md，第 2134 行。
+
 
 \chapter{分次环、Hilbert 函数与多项式}
 \label{b3:ch:11}
 \BookChapterNumber{b3:ch:11}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+分次把模分成可以逐片计数的部分。本章先以分次正合列证明 Hilbert 级数的有理性，再说明标准分次下的最终多项式为何记录支集维数。局部环虽然未必分次，却能从理想幂构造伴随分次环；对这些分次片的累计长度进行比较，便得到 Hilbert–Samuel 定理。参数理想、曲线奇点与切锥的计算将说明，维数控制增长的次数，重数记录增长的首项，但这两个数字不能代替完整的局部结构。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分正分次与标准分次，正确处理齐次关系及次数平移。
+\item 从分次正合列计算 Hilbert 级数，判断何时存在最终的单个多项式。
+\item 说明 Hilbert 多项式、累计增长、维数与重数之间的关系。
+\item 构造伴随分次环，并用参数理想和切锥计算局部长度。
+\end{itemize}
+\end{learninggoals}
+
+预备知识为\chapref{b3:ch:03}的有限性和长度、\chapref{b3:ch:05}的 Noether 正规化，以及\chapref{b3:ch:09}的维数和参数系。全章不预先使用完备化：局部增长证明需要的诱导滤过估计在\cref{b3:lem:induced-filtration-bound}中直接由有限分次生成元建立。\chapref{b3:ch:13}再将该估计加强为 Artin–Rees 等式。
+
+\ProseParagraphBreak
+可对照松村英之的《Commutative Ring Theory》\cite[\S13, Theorems 13.2--13.4, pp. 94--100]{Matsumura1989CommutativeRingTheory}阅读 Hilbert 级数与局部增长。使用不同资料时须先核对函数的约定：本章的 \(h(n)\) 记单层长度，\(\chi(n)\) 记累计长度；两者的多项式次数相差一，零维时还须单独处理。
 
 \input{Part02/Chapter11/Section1101}
 \input{Part02/Chapter11/Section1102}
 \input{Part02/Chapter11/Section1103}
 \input{Part02/Chapter11/Section1104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+齐次生成元与齐次关系允许逐次取正合列。乘以一个齐次元所得的核与余核，使 Hilbert 级数按变量数递归，得到有理表达式；标准分次再使分母只含 \(1-t\)，从而产生最终多项式。正权分次虽然仍有有理级数，却可能出现随同余类变化的计数。
+
+\ProseParagraphBreak
+齐次素理想滤过把增长与维数的比较归结为整环，Noether 正规化则用代数独立参数给出上下界。局部情形改用理想幂的伴随分次：素理想链和参数理想分别给出增长次数的两个方向，最终得到累计长度的次数等于模的维数。
+
+\ProseParagraphBreak
+重数取决于所选理想和首项的归一化。相同维数、相同重数甚至相同 Hilbert 函数，都未必意味着同样的切锥或局部环。实际计算应保留所用滤过与全部初始关系；从这一点出发，下一步才适合讨论完备化如何保存这些逐层数据。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:11-weighted-count}
+给 \(k[x,y]\) 赋权 \(\deg x=1\)、\(\deg y=2\)。求 Hilbert 级数与函数，并证明函数最终不是一个多项式。
+\end{exercise}
+\begin{solution}
+次数 \(n\) 的单项式为 \(x^{n-2j}y^j\)，其中 \(0\le j\le\lfloor n/2\rfloor\)。因此
+\[
+H(t)=\frac1{(1-t)(1-t^2)},\qquad h(n)=\lfloor n/2\rfloor+1.
+\]
+若多项式 \(P\) 最终等于它，则增长速度使 \(P\) 为一次多项式，斜率为 \(1/2\)。在全部充分大的偶数上有 \(P(n)=n/2+1\)，多项式恒等原理迫使 \(P(X)=X/2+1\)，而奇数上的实际值为 \((n+1)/2\)，矛盾。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-homogeneous-scaling}
+设 \(k\) 为无限域，\(I\subseteq k[x_1,\ldots,x_r]\) 为理想。证明 \(I\) 齐次，当且仅当对所有 \(a\in k^\times\) 及 \(f\in I\)，都有 \(f(ax_1,\ldots,ax_r)\in I\)。说明有限域上反向不成立。本题将\cite[\S13, Exercise 13.1, p. 102]{Matsumura1989CommutativeRingTheory}的伸缩判据用于多项式环，并补充有限域反例。
+\end{exercise}
+\begin{solution}
+齐次理想包含每个 \(f\) 的齐次部分 \(f_d\)，所以包含 \(\sum_d a^df_d\)。反向对 \(f=\sum_{d=0}^D f_d\)，选 \(D+1\) 个不同非零标量 \(a_i\)。矩阵 \((a_i^d)_{i,d}\) 的 Vandermonde 行列式非零，因而每个 \(f_d\) 是这些伸缩后的多项式的 \(k\) 线性组合，属于 \(I\)。在 \(\mathbb F_q[x]\) 中，\((x^q-x)\) 在所有非零标量伸缩下不变，因为 \(a^q=a\)；但它不包含齐次部分 \(-x\)，所以不是齐次理想。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-graded-ideal-presentation}
+在标准分次 \(S=k[x,y]\) 中，给出 \(I=(x^2,xy)\) 的分次自由展示，计算 \(H_I(t)\) 与 \(H_{S/I}(t)\)。
+\end{exercise}
+\begin{solution}
+关系 \(ax^2+bxy=0\) 可在整环中约去 \(x\)，得到 \(ax+by=0\)。模掉 \(y\) 说明 \(a=yc\)，再得 \(b=-xc\)。因此有正合列
+\[
+0\to S(-3)\xrightarrow{c\mapsto(yc,-xc)}S(-2)^2\to I\to0.
+\]
+两个生成元次数为二，关系的全次数为三，故平移如式所示。由\eqref{b3:eq:hilbert-shift}，
+\[
+H_I(t)=\frac{2t^2-t^3}{(1-t)^2},\qquad
+H_{S/I}(t)=\frac{1-2t^2+t^3}{(1-t)^2}=\frac1{1-t}+t.
+\]
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-length-not-cardinality}
+令 \(A_0=\mathbb Z/p^a\mathbb Z\)、\(a\ge1\)，\(S=A_0[x_1,\ldots,x_r]\)、\(r\ge1\) 标准分次。求 \(S_n\) 的 \(A_0\) 长度，并解释为何不能用它的元素个数代替长度。
+\end{exercise}
+\begin{solution}
+\(A_0\) 的链 \((p^{a-1})\subset\cdots\subset(p)\subset A_0\) 有 \(a\) 个简单因子，故长度为 \(a\)。单项式给出秩 \(\binom{n+r-1}{r-1}\) 的自由基，所以
+\[
+\ell_{A_0}(S_n)=a\binom{n+r-1}{r-1},\qquad H_S(t)=\frac a{(1-t)^r}.
+\]
+元素个数则为 \(p^{a\binom{n+r-1}{r-1}}\)，短正合列中它相乘而不相加。Hilbert 级数的正合列公式依靠长度可加，故不能这样替换。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-zero-divisor-series}
+令 \(A=k[x,y]/(xy)\)。计算 \((0:_A x)\)、\(A/xA\)，并用\eqref{b3:eq:hilbert-induction}求 \(H_A(t)\)。
+\end{exercise}
+\begin{solution}
+\((0:_A x)=(y)\cong k[y](-1)\)，因为任一类可唯一写成 \(c+xp(x)+yq(y)\)，乘 \(x\) 为零恰要求前两部分为零。又 \(A/xA\cong k[y]\)。所以
+\[
+(1-t)H_A(t)=\frac1{1-t}-\frac{t^2}{1-t},
+\qquad H_A(t)=\frac{1+t}{1-t}.
+\]
+若错误地把乘 \(x\) 当作单射，就会漏掉核对应的 \(t^2/(1-t)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-veronese}
+令 \(B=k[x^2,xy,y^2]\)，把三个生成元均定为次数一。计算 Hilbert 函数、维数和重数，并给出 \(B\) 的齐次方程。
+\end{exercise}
+\begin{solution}
+\(B_n\) 由通常次数 \(2n\) 的全部单项式组成，故 \(h_B(n)=2n+1\)，
+\(H_B(t)=(1+t)/(1-t)^2\)。于是\cref{b3:thm:hilbert-polynomial-dimension}给出维数二，重数为二。
+映射 \(k[u,v,w]\to B\)、\((u,v,w)\mapsto(x^2,xy,y^2)\) 杀去 \(uw-v^2\)。模掉此式后，每个单项式可写成 \(u^av^bw^c\)，其中 \(b=0\) 或 \(1\)，因为可用 \(v^2=uw\) 降低 \(v\) 次数。它们的像分别具有指数对 \((2a+b,2c+b)\)，不同三元组产生不同单项式，故线性无关。于是核恰为 \((uw-v^2)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-complete-intersection-count}
+对 \(a,b\ge1\)，求标准分次环 \(k[x,y,z]/(x^a,y^b)\) 的级数、最终 Hilbert 多项式与重数。
+\end{exercise}
+\begin{solution}
+标准单项式为 \(x^iy^jz^l\)，其中 \(0\le i<a\)、\(0\le j<b\)、\(l\ge0\)。因此
+\[
+H(t)=\frac{(1+t+\cdots+t^{a-1})(1+t+\cdots+t^{b-1})}{1-t}.
+\]
+当 \(n\ge a+b-2\) 时，每个 \((i,j)\) 都唯一对应 \(l=n-i-j\ge0\)，所以 \(h(n)=ab\)。维数为一，重数为 \(ab\)。这个直接计数也核实了两个非零因子商的级数公式：\(x^a\) 在多项式环中为非零因子，\(y^b\) 在模掉 \(x^a\) 后仍是非零因子。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-polynomial-forgets-low-degrees}
+比较 \(k[x,y]/(x)\) 与 \(k[x,y]/(x^2,xy)\) 的 Hilbert 函数、Hilbert 多项式和累计函数。它们的最终单层多项式是否确定全部累计多项式？
+\end{exercise}
+\begin{solution}
+前者的级数为 \(1/(1-t)\)，后者为 \(1/(1-t)+t\)。前者各次函数为一，后者只有次数一处额外加一。因此二者 Hilbert 多项式都为一；累计函数分别为 \(n+1\) 与 \(n+2\)（后一式对 \(n\ge1\)）。低次分量在累计函数中留下常数差，所以单层最终多项式不确定累计多项式的常数项。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-zero-dimensional-shift}
+令 \(M=\Bigl(k[x]/(x^a)\Bigr)(-b)\)，其中 \(a\ge1\)、\(b\in\mathbb Z\)。求非零分次片、单层最终多项式及从全部低次开始累计的最终值。
+\end{exercise}
+\begin{solution}
+\(M_n\) 在 \(b\le n\le b+a-1\) 时为一维，其余为零。因此
+\(H_M(t)=t^b(1+t+\cdots+t^{a-1})\)。单层最终多项式为零，\(\sum_{j\le n}\dim_kM_j\) 最终等于 \(a\)，且零维重数为 \(a\)。即使 \(b<0\)，也须计入负次的非零片，不能不加说明地从零次开始求和。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-dvr-adic}
+在 \(R=k[t]_{(t)}\) 中，令 \(I=(t^a)\)、\(a\ge1\)。构造分次同构 \(\operatorname{gr}_I(R)\cong(R/I)[T]\)，并求 \(\chi_{I,R}(n)\)。
+\end{exercise}
+\begin{solution}
+把 \(T\) 送到 \(t^a+I^2\)。在次数 \(n\)，映射为
+\(R/I\to I^n/I^{n+1}\)、\(\bar r\mapsto rt^{an}+I^{n+1}\)。它满射；若像为零，则 \(rt^{an}\in\Bigl(t^{a(n+1)}\Bigr)\)，整环中约去 \(t^{an}\)，得到 \(r\in(t^a)\)，所以单射。各次映射保持乘法，得到同构。每片长度为 \(a\)，故 \(\chi_{I,R}(n)=a(n+1)\)，重数为 \(a\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-three-parameters}
+令 \(R=k[x,y,z]_{(x,y,z)}\)、\(I=(x^a,y^b,z^c)\)，其中 \(a,b,c\ge1\)。求 \(R/I^{n+1}\) 的长度及 \(e_I(R)\)。
+\end{exercise}
+\begin{solution}
+每个单项式唯一写成 \(x^{au+i}y^{bv+j}z^{cw+l}\)，其中 \(i<a,j<b,l<c\) 且均非负。它不属于 \(I^{n+1}\) 当且仅当 \(u+v+w\le n\)。这样的三元组有 \(\binom{n+3}{3}\) 个，故长度为 \(abc\binom{n+3}{3}\)，重数为 \(abc\)。商中极大理想幂零，常数项非零的多项式已经可逆，所以局部化不改变该单项式基。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-higher-cusp}
+对 \(R=k[x,y]_{(x,y)}/(y^3-x^5)\)，求极大理想进切锥、Hilbert 级数与累计长度；无需限制域的特征。
+\end{exercise}
+\begin{solution}
+最低齐次部分为 \(y^3\)，故\cref{b3:prop:hypersurface-tangent-cone}给出
+\(\operatorname{gr}_{\mathfrak m}R\cong k[X,Y]/(Y^3)\)。级数为 \((1+t+t^2)/(1-t)\)，单层长度依次为 \(1,2,3,3,\ldots\)，累计长度在 \(n=0\) 时为一，在 \(n\ge1\) 时为 \(3n\)。维数为一，重数为三。这个计算只用最低项与整环中乘积的最低项相乘，不使用导数，因而不需排除特征三或五。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-extra-initial-relation}
+令 \(R=k[x,y]_{(x,y)}/(x^2+y^3,xy)\)。证明切锥不只由 \(X^2,XY\) 定义，求其完整分次环和 \(R\) 的长度。
+\end{exercise}
+\begin{solution}
+用 \(y(x^2+y^3)-x(xy)=y^4\) 得到额外初始关系 \(Y^4\)。原商的任一元素可约成 \(a+bx+cy+dy^2+ey^3\)。这些五个类独立：在五维向量空间上规定 \(x^2=-y^3\)、\(xy=0\)、\(y^4=0\)，并按这些公式延伸乘法，就得到交换结合代数；结合性中涉及 \(x\) 的非平凡检查为 \(x^2y=xyx=0\)、\(x^3=0\)，其余是截断的 \(k[y]\) 乘法。此代数是原商的像且有该五元基，所以原商中无额外线性关系。其极大理想幂零，局部化不再改变它。
+极大理想的各层基依次为 \(1\)，\(x,y\)，\(y^2\)，\(y^3\)，之后为零。因此
+\[
+\operatorname{gr}_{\mathfrak m}R\cong k[X,Y]/(X^2,XY,Y^4),
+\qquad H(t)=1+2t+t^2+t^3,
+\]
+且长度为五。若只保留两个原生成元的最低项，会错误地得到无限维商。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-power-multiplicity}
+设 \((R,\mathfrak m)\) 为 Noether 局部环，\(M\ne0\) 有限，\(I\) 为 \(\mathfrak m\) 准素理想，\(d=\dim_RM\)。证明 \(e_{I^a}(M)=a^d e_I(M)\)，其中 \(a\ge1\)。
+\end{exercise}
+\begin{solution}
+由定义
+\[
+\chi_{I^a,M}(n)=\ell_R\Bigl(M/I^{a(n+1)}M\Bigr)
+=\chi_{I,M}\Bigl(a(n+1)-1\Bigr).
+\]
+把\cref{b3:thm:hilbert-samuel}的首项 \(e_I(M)n^d/d!\) 代入，变量的一次替换使首项系数乘 \(a^d\)，即得结论。\(d=0\) 时两边均为 \(\ell_R(M)\)，与 \(a^0=1\) 一致。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-inclusion-multiplicity}
+设 \(I\subseteq J\) 为同一 Noether 局部环的两个极大理想准素理想，\(M\ne0\) 为有限模。证明 \(e_I(M)\ge e_J(M)\)，并举严格不等的例子。
+\end{exercise}
+\begin{solution}
+\(I^{n+1}M\subseteq J^{n+1}M\) 使前一个商满射到后一个商，故 \(\chi_{I,M}(n)\ge\chi_{J,M}(n)\)。两者由\cref{b3:thm:hilbert-samuel}具有相同次数 \(d=\dim_RM\)，比较首项得到不等式。在 \(k[t]_{(t)}\) 上取 \(M=R\)、\(I=(t^2)\)、\(J=(t)\)，两重数分别为二和一。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:11-filtration-shift}
+取 \(R=k[t]_{(t)}\)、\(I=(t)\)、\(M=R\)、\(N=t^aR\)，其中 \(a\ge1\)。求 \(I^nM\cap N\)，并求使\cref{b3:lem:induced-filtration-bound}对全部 \(n\ge c\) 成立的最小 \(c\)。
+\end{exercise}
+\begin{solution}
+两个主理想的交为 \(t^{\max(n,a)}R\)，而 \(I^{n-c}N=t^{n-c+a}R\)。取 \(c=a\) 时，对 \(n\ge a\) 两者相等。若 \(c<a\)，取 \(n\ge a\)，则要求 \(t^nR\subseteq t^{n-c+a}R\)，但右边指数严格大于 \(n\)，不成立。因此最小移位为 \(a\)。这也直接展示了诱导滤过与子模自身的理想进滤过通常不逐层相同。
+\end{solution}

@@ -1,38 +1,170 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.4 局部环中的增长
-% 纲要位置：计划纲要.md，第 1836 行。
-
-\section{局部环中的增长}
-\label{b3:sec:1104}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2154 行。
+% 纲要细目（写作范围）：
 % * 伴随分次环
 % * Hilbert–Samuel 函数及多项式
 % * 参数理想和重数的第一批例子；切锥的局部标准基计算见附录 F，不用于本章基础结论的证明
 % * 固定单层长度 \(\ell(\mathfrak m^nM/\mathfrak m^{n+1}M)\) 与累计长度 \(\ell(M/\mathfrak m^{n+1}M)\) 的记号，分别说明多项式次数和重数的归一化；处理零维例外
-%
 % ---
-%
+
+\section{局部环中的增长}
+\label{b3:sec:1104}
+
+局部环未必本来分次，但极大理想的幂提供了逐层近似。每层取商后，乘法恰好保存阶数相加，于是得到一个标准分次环。本节把这一构造与前面的计数联系起来，并证明增长次数等于局部维数；所需的子模滤过估计先在这里证明，不借用后面的完备化理论。
 
 \subsection{伴随分次环}
 \label{b3:subsec:1104:01}
 
-待撰写。
+\begin{definition}\label{b3:def:associated-graded-adic}
+设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模。定义\term[bansui-fenci-huan]{伴随分次环}[associated graded ring]及相应分次模
+\[
+\operatorname{gr}_I(R)=\bigoplus_{n\ge0}I^n/I^{n+1},\qquad
+\operatorname{gr}_I(M)=\bigoplus_{n\ge0}I^nM/I^{n+1}M.
+\]
+乘法由 \([a]_i[b]_j=[ab]_{i+j}\) 给出，模作用同样定义。换代表元时多出的项落入高一阶，因此这些运算良定义。
+\symidx{\(\operatorname{gr}_I(R)\)、\(\operatorname{gr}_I(M)\)：理想进伴随分次环与模}
+\end{definition}
+
+若 \(I=(a_1,\ldots,a_r)\)，则有标准分次满同态
+\[
+(R/I)[X_1,\ldots,X_r]\twoheadrightarrow\operatorname{gr}_I(R),
+\qquad X_i\longmapsto a_i+I^2.
+\]
+这是因为 \(I^n\) 由这些生成元的 \(n\) 次乘积生成。若 \(M\) 有限生成，\(\operatorname{gr}_I(M)\) 由 \(M/IM\) 中的有限组生成元在次数零生成。以下取 \((R,\mathfrak m,k)\) 为非零 Noether 局部环、\(I\) 为 \(\mathfrak m\) 准素理想、\(M\ne0\) 为有限模。此时 \(R/I\) 是 Artin 环，因而可以对上述分次模使用 Hilbert 理论。
+
+\begin{lemma}[诱导滤过的控制]\label{b3:lem:induced-filtration-bound}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模、\(N\subseteq M\) 为子模。则存在 \(c\ge0\)，使对每个 \(n\ge c\) 有
+\[
+I^nN\subseteq I^nM\cap N\subseteq I^{n-c}N.
+\]
+\end{lemma}
+\begin{proof}
+引入一个形式变量 \(t\)，考虑正分次代数及分次模
+\[
+\mathcal R=\bigoplus_{n\ge0}I^nt^n\subseteq R[t],\qquad
+\mathcal M=\bigoplus_{n\ge0}I^nMt^n.
+\]
+若 \(I=(a_1,\ldots,a_r)\)，则 \(\mathcal R=R[a_1t,\ldots,a_rt]\)，由 Hilbert 基定理为 Noether 环。\(M\) 的有限组生成元放在次数零，就生成 \(\mathcal M\) 作为 \(\mathcal R\) 模。于是其齐次子模
+\[
+\mathcal N=\bigoplus_{n\ge0}(I^nM\cap N)t^n
+\]
+有限生成。选齐次生成元 \(z_jt^{d_j}\)，并取 \(c\ge\max_jd_j\)。比较次数 \(n\ge c\) 的部分，得到
+\[
+I^nM\cap N=\sum_j I^{n-d_j}z_j\subseteq I^{n-c}N.
+\]
+另一包含直接来自 \(N\subseteq M\)。零子模时可取 \(c=0\)。
+\end{proof}
+
+这个引理只用 Hilbert 基定理和有限分次生成元，尚未使用维数或完备化。\chapref{b3:ch:13}将用同一构造证明更精确的 Artin–Rees 等式，并系统研究两种滤过的拓扑。
 
 \subsection{Hilbert–Samuel 函数与多项式}
 \label{b3:subsec:1104:02}
 
-待撰写。
+\begin{definition}\label{b3:def:hilbert-samuel-function}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(I\subseteq R\) 为 \(\mathfrak m\) 准素理想，\(M\) 为非零有限生成 \(R\) 模。定义单层长度与累计长度
+\[
+h_{I,M}(n)=\ell_R(I^nM/I^{n+1}M),\qquad
+\chi_{I,M}(n)=\ell_R(M/I^{n+1}M)\quad(n\ge0).
+\]
+累计函数 \(\chi_{I,M}\) 称为\term[hilbert-samuel-hanshu]{Hilbert–Samuel 函数}[Hilbert–Samuel function]；本书始终用下标和 \(\chi\) 区分它与单层函数。
+\symidx{\(h_{I,M}(n)\)、\(\chi_{I,M}(n)\)：单层长度与累计 Hilbert--Samuel 函数}
+\end{definition}
+
+长度均有限，因为 \(\sqrt I=\mathfrak m\) 使每个 \(R/I^n\) 是 Artin 局部环。逐层取商得到
+\begin{equation}\label{b3:eq:samuel-cumulative}
+\chi_{I,M}(n)=\sum_{j=0}^n h_{I,M}(j).
+\end{equation}
+\(R\) 长度与 \(R/I\) 长度在各层相同，故\cref{b3:prop:hilbert-eventual-polynomial}已经说明 \(\chi_{I,M}\) 最终是一个首项为正的多项式。现在确定它的次数。
+
+\ProseParagraphBreak
+这一维数刻画称为\term[hilbert-samuel-dingli]{Hilbert–Samuel 定理}[Hilbert--Samuel theorem]。
+
+\begin{theorem}[Hilbert–Samuel]\label{b3:thm:hilbert-samuel}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(I\subseteq R\) 为 \(\mathfrak m\) 准素理想，\(M\) 为非零有限生成 \(R\) 模，\(d=\dim_R M=\dim\Bigl(R/\operatorname{Ann}_R(M)\Bigr)\)。则对充分大的 \(n\)，
+\[
+\chi_{I,M}(n)=\frac{e_I(M)}{d!}n^d+\text{低次项},
+\qquad e_I(M)\in\mathbb Z_{>0}.
+\]
+特别地，\(\dim\operatorname{gr}_I(M)=d\)。整数 \(e_I(M)\) 称为 \(M\) 关于 \(I\) 的 Hilbert–Samuel 重数。
+\end{theorem}
+\begin{proof}
+先记最终累计多项式的次数为 \(\delta_I(M)\)。取 \(a\ge1\) 使 \(\mathfrak m^a\subseteq I\subseteq\mathfrak m\)。于是
+\[
+\chi_{\mathfrak m,M}(n)\le\chi_{I,M}(n)
+\le\chi_{\mathfrak m,M}\Bigl(a(n+1)-1\Bigr).
+\]
+两个界都是首项为正的多项式增长，故 \(\delta_I(M)=\delta_{\mathfrak m}(M)\)。以下只研究 \(I=\mathfrak m\)，并简记 \(\delta(M)\)。
+
+先取 \(M=R\)。证明 \(\dim R\le\delta(R)\) 时，对任意给定的严格素理想链长度 \(r\) 归纳，证明 \(r\le\delta(R)\)。\(r=0\) 时直接成立。若链为 \(\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_r\)，令 \(B=R/\mathfrak p_0\)，其局部累计长度不超过 \(R\) 的对应长度，所以 \(\delta(B)\le\delta(R)\)。选 \(0\ne f\in\mathfrak p_1/\mathfrak p_0\)，令 \(C=B/fB\)。它有长度 \(r-1\) 的素链。对有限模中的子模 \(fB\subseteq B\) 应用\cref{b3:lem:induced-filtration-bound}，并用整环中乘 \(f\) 的同构 \(B\cong fB\)，可取 \(c\ge1\) 使
+\[
+\ell_B\Bigl(fB/(fB\cap\mathfrak m_B^{n+1})\Bigr)
+\ge\chi_{\mathfrak m_B,B}(n-c).
+\]
+商映射给出的短正合列因此满足
+\[
+\chi_{\mathfrak m_C,C}(n)
+\le\chi_{\mathfrak m_B,B}(n)-\chi_{\mathfrak m_B,B}(n-c).
+\]
+\(C\ne0\)，左边最终为正，故 \(\delta(B)\ne0\)；右边是次数 \(\delta(B)-1\) 的多项式。归纳假设给出
+\(r-1\le\delta(C)\le\delta(B)-1\)，所以 \(r\le\delta(R)\)。对全部链取上确界，得到所需下界。
+
+反向令 \(d=\dim R\)。\cref{b3:thm:system-of-parameters}给出由 \(d\) 个元素生成的 \(\mathfrak m\) 准素理想 \(\mathfrak q\)。\(\operatorname{gr}_{\mathfrak q}(R)\) 是 \((R/\mathfrak q)[X_1,\ldots,X_d]\) 的商，因此单项式计数给出
+\[
+\chi_{\mathfrak m,R}(n)\le\chi_{\mathfrak q,R}(n)
+\le\ell_R(R/\mathfrak q)\binom{n+d}{d}.
+\]
+所以 \(\delta(R)\le d\)。\(d=0\) 时参数理想为零，\(R\) 已为 Artin 环，同一界为常数，论证仍成立。
+
+一般有限模 \(M\) 令 \(B=R/\operatorname{Ann}_R(M)\)，并取生成元 \(m_1,\ldots,m_s\)。有满射 \(B^s\twoheadrightarrow M\)，也有单射
+\[
+B\longrightarrow M^s,\qquad b\longmapsto(bm_1,\ldots,bm_s).
+\]
+前者给出 \(\chi_M(n)\le s\chi_B(n)\)。后者结合诱导滤过控制引理给出某个 \(c\) 使 \(\chi_B(n-c)\le s\chi_M(n)\)。各长度在 \(R\) 与 \(B\) 上相同，所以 \(\delta(M)=\delta(B)=\dim B=d\)。
+
+最后，\(\operatorname{gr}_I(M)\) 的累计函数就是 \(\chi_{I,M}\)。由\cref{b3:thm:hilbert-polynomial-dimension}和\cref{b3:prop:hilbert-eventual-polynomial}，其维数为 \(d\)，累计首项为 \(Q(1)n^d/d!\)，其中约分后的整系数分子在一处取正整数值。令 \(e_I(M)=Q(1)\) 即得结论；零维情形取全部层长度之和。
+\end{proof}
+
+证明中以素理想链给出下界，以参数理想给出上界，两边都在原局部环内完成。完备化保持维数将在此定理之后证明，不是本定理的输入。局部增长与维数的经典比较可对照 \cite[\S13, Theorems 13.3--13.4, pp. 98--100]{Matsumura1989CommutativeRingTheory}。
 
 \subsection{参数理想、重数与切锥的例子}
 \label{b3:subsec:1104:03}
 
-待撰写。
+在 \(R=k[x,y]_{(x,y)}\) 中，令 \(\mathfrak q=(x^a,y^b)\)、\(a,b\ge1\)。模掉 \(\mathfrak q^{n+1}\) 后，单项式唯一写成
+\(x^{au+i}y^{bv+j}\)，其中 \(0\le i<a\)、\(0\le j<b\)、\(u+v\le n\)。因此
+\[
+\chi_{\mathfrak q,R}(n)=ab\binom{n+2}{2},\qquad e_{\mathfrak q}(R)=ab.
+\]
+局部化不改变这些商的 \(k\) 维数，因为它们已经是极大理想幂零的局部环。特别地，\(e_{(x,y)}(R)=1\)。参数理想不同，重数可以不同；不能只记一个没有注明理想的数字。
+
+\begin{proposition}\label{b3:prop:hypersurface-tangent-cone}
+设 \(k\) 为域，\(R_0=k[x_1,\ldots,x_r]_{(x_1,\ldots,x_r)}\)，\(0\ne f\in(x_1,\ldots,x_r)R_0\)，最低非零齐次部分为 \(f_a\)。令 \(R=R_0/(f)\)，\(\mathfrak m\) 为其极大理想。则
+\[
+\operatorname{gr}_{\mathfrak m}(R)\cong k[X_1,\ldots,X_r]/(f_a).
+\]
+\end{proposition}
+\begin{proof}
+\(R_0\) 的分母常数项非零，一个分式的最低齐次部分等于分子的最低齐次部分除以分母常数，因此 \(\operatorname{gr}_{\mathfrak m_0}(R_0)\cong k[X_1,\ldots,X_r]\)。商环的伴随分次是它模掉 \((f)\) 中各非零元素的最低齐次部分生成的理想。这个描述可直接取逐层商的核得到。
+
+若 \(g\ne0\)，多项式伴随分次环为整环，故最低项之积不为零；于是 \(gf\) 的最低齐次部分是 \(g_bf_a\)，其中 \(g_b\) 为 \(g\) 的最低齐次部分。因理想 \((f)\) 中每个元素都是这种乘积，其初始理想恰为 \((f_a)\)，得到公式。
+\end{proof}
+
+伴随分次环的素谱称为此点的\term[qiezhui]{切锥}[tangent cone]。尖点 \(y^2=x^3\) 的切锥由 \(Y^2=0\) 给出；在特征不为二时，结点 \(y^2=x^2(x+1)\) 的切锥由 \(Y^2-X^2=0\) 给出。两者的 Hilbert 级数都是 \((1+t)/(1-t)\)，因此
+\[
+h_{\mathfrak m,R}(0)=1,\quad h_{\mathfrak m,R}(n)=2\ (n\ge1),
+\qquad \chi_{\mathfrak m,R}(n)=2n+1,
+\]
+重数都为二；但前者切锥非约化，后者切锥有两条不同直线。相同重数不意味着相同切锥。多方程的切锥计算需要控制全部初始关系，不能只把原生成元各取最低项；本卷附录 F 将讨论相应的局部标准基。
 
 \subsection{单层长度、累计长度与零维例外}
 \label{b3:subsec:1104:04}
 
-待撰写。
+若 \(d=\dim_RM>0\)，由\eqref{b3:eq:samuel-cumulative}取差分可得
+\[
+h_{I,M}(n)=\frac{e_I(M)}{(d-1)!}n^{d-1}+\text{低次项}
+\quad(n\gg0).
+\]
+累计次数为 \(d\)，单层次数为 \(d-1\)，两者共享同一个重数；各自的阶乘归一化不同。例如在二维多项式局部环上，单层函数是 \(n+1\)，累计函数是 \(\binom{n+2}{2}\)，不能把这两种次数互换。
+
+\ProseParagraphBreak
+若 \(d=0\)，\(M\) 有限长度，某个 \(\mathfrak m^NM\) 为零，所以 \(I^NM=0\)。于是单层长度最终为零，而累计长度最终恒等于 \(\ell_R(M)\)，并有 \(e_I(M)=\ell_R(M)\)。例如 \(R=k[t]/(t^a)\) 的单层长度在 \(0\le n<a\) 时为一，以后为零，累计长度为 \(\min(n+1,a)\)。这里不能把“\(d-1=-1\)”当作一个非零多项式的次数。

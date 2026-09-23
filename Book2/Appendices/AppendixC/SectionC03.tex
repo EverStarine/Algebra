@@ -1,9 +1,95 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 C 第 3 项归纳；原要点保留于 AppendixC.tex。
+% 纲要标题：### C.3 环的 Brauer 群
+% 纲要位置：工作记录/计划纲要.md，第 1651 行。
+
+% 纲要要点（供目录核对）：
+% * 环的 Brauer 群及其与域情形的区别
+% #### C.3.1 等价关系与群运算
+% #### C.3.2 分裂类、基变换与域情形
 
 \section{环的 Brauer 群}
 \label{b2:sec:C03}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+域的 Brauer 群把增加矩阵大小视为无关变化。一般交换环上的有限投射模可能没有统一的自由基，所以相应的可忽略因子应从矩阵代数扩展为 \(\operatorname{End}_R(P)\)，其中 \(P\) 忠实、有限生成且投射。上一节已经证明，这些因子确实属于 Azumaya 代数。
 
-待撰写。
+\subsection{等价关系与群运算}
+\label{b2:subsec:C03:01}
+
+\begin{proposition}\label{b2:prop:azumaya-tensor-opposite}
+若 \(A,B\) 为 Azumaya \(R\) 代数，则 \(A^{\mathrm{op}}\) 与 \(A\otimes_RB\) 也为 Azumaya \(R\) 代数。
+\end{proposition}
+\begin{proof}
+反代数不改变底模，张量积的忠实有限投射性由\cref{b2:lem:azumaya-projective-base-change}保证。对任意极大理想 \(\mathfrak m\)，这些代数的纤维分别为 \(A(\mathfrak m)^{\mathrm{op}}\) 与 \(A(\mathfrak m)\otimes_{\kappa(\mathfrak m)}B(\mathfrak m)\)。原纤维中心单；反代数保留单性与中心，张量积的中心单性由\cref{b2:thm:csa-tensor-product}保证。因此\cref{b2:thm:azumaya-fiber-criterion}适用于两个新代数。
+\end{proof}
+
+\begin{definition}\label{b2:def:ring-brauer-equivalence}
+两个 Azumaya \(R\) 代数 \(A,B\) 称为 \(R\) 上 Brauer 等价，若存在忠实有限生成投射 \(R\) 模 \(P,Q\)，以及 \(R\) 代数同构
+\begin{equation}\label{b2:eq:ring-brauer-equivalence}
+A\otimes_R\operatorname{End}_R(P)
+\cong B\otimes_R\operatorname{End}_R(Q).
+\end{equation}
+\end{definition}
+
+此处同构必须保持指定的 \(R\) 标量，不能只要求抽象环同构。\chapref{b2:ch:18}已经定义域上的 Brauer 等价；这里使用同一名称，并将在下一个小节说明两种定义在域上重合。
+
+\begin{theorem}\label{b2:thm:ring-brauer-group}
+上述关系为等价关系。其等价类在运算
+\[
+[A]+[B]=[A\otimes_RB]
+\]
+下构成交换群，零元为 \([R]\)，\([A]\) 的逆元为 \([A^{\mathrm{op}}]\)。这个群称为交换环 \(R\) 的 Brauer 群，记为 \(\operatorname{Br}(R)\)。
+\end{theorem}
+\symidx{\(\operatorname{Br}(R)\)：交换环的 Brauer 群}
+\begin{proof}
+取 \(P=Q=R\) 得自反性，交换同构两端得对称性。设
+\[
+A\otimes_R\operatorname{End}_R(P)\cong B\otimes_R\operatorname{End}_R(Q),
+\qquad
+B\otimes_R\operatorname{End}_R(U)\cong C\otimes_R\operatorname{End}_R(V).
+\]
+将第一式张量 \(\operatorname{End}_R(U)\)，第二式张量 \(\operatorname{End}_R(Q)\)，再交换中间因子，由式\eqref{b2:eq:azumaya-end-tensor}得到
+\[
+A\otimes_R\operatorname{End}_R(P\otimes_RU)
+\cong C\otimes_R\operatorname{End}_R(V\otimes_RQ).
+\]
+\cref{b2:lem:azumaya-projective-base-change}保证这里的两个张量模仍忠实有限生成且投射，所以关系具有传递性。
+
+若 \(A\) 与 \(A'\)、\(B\) 与 \(B'\) 分别通过式\eqref{b2:eq:ring-brauer-equivalence}等价，将两式张量并交换因子，再用同一个自同态张量公式，就得到 \(A\otimes_RB\) 与 \(A'\otimes_RB'\) 等价。因此运算不依赖代表。结合性、交换性和单位元分别由张量积的结合、交换和单位同构给出。
+
+最后，\(A\) 自身是忠实有限生成投射模，定义中的同构给出
+\[
+A\otimes_RA^{\mathrm{op}}\cong\operatorname{End}_R(A).
+\]
+而 \(\operatorname{End}_R(A)\) 与 \(R\) 等价：在等价关系中分别选 \(R\) 和 \(A\) 作为附加模即可。所以 \([A]+[A^{\mathrm{op}}]=[R]\)，每个元素都有逆元。所有代数均以某个有限自由模的直和因子为底模，它们的同构类型构成集合，因而所述等价类确实构成一个群。
+\end{proof}
+
+特别地，\(\Bigl[\operatorname{End}_R(P)\Bigr]=0\)。这一步说明为何必须消去自同态代数，而不只消去固定大小的矩阵环。在不连通的基环上，\(P\) 的秩甚至可能在不同部分取不同的值。
+
+\subsection{分裂类、基变换与域情形}
+\label{b2:subsec:C03:02}
+
+称与某个 \(\operatorname{End}_R(P)\) 同构的 Azumaya \(R\) 代数为在 \(R\) 上分裂，这里 \(P\) 忠实、有限生成且投射。它们都代表零类。反向也成立，证明见\cref{b2:prop:azumaya-zero-split}；证明将具体使用 Morita 等价，而不是把“同一 Brauer 类”误当成“同构”。
+
+\begin{proposition}\label{b2:prop:ring-brauer-base-change}
+交换环同态 \(f:R\rightarrow S\) 诱导群同态
+\[
+f^*:\operatorname{Br}(R)\longrightarrow\operatorname{Br}(S),
+\qquad [A]\longmapsto[S\otimes_RA].
+\]
+这些同态保持恒等映射，并按基变换次序保持复合。若 \(R=k\) 为域，则 \(\operatorname{Br}(k)\) 与\cref{b2:thm:brauer-group}构造的群相同。
+\end{proposition}
+\begin{proof}
+\cref{b2:thm:azumaya-fiber-criterion}保证基变换后的代数仍为 Azumaya 代数。对式\eqref{b2:eq:ring-brauer-equivalence}取 \(S\otimes_R-\)，式\eqref{b2:eq:azumaya-hom-base-change}把附加因子化为
+\[
+S\otimes_R\operatorname{End}_R(P)
+\cong\operatorname{End}_S(S\otimes_RP),
+\]
+且 \(S\otimes_RP\) 仍忠实有限生成且投射。故等价关系保持。基变换与张量积相容，并把 \(R\) 送到 \(S\)，所以所得映射为群同态；两次基变换的结合识别给出复合相容性。
+
+在域上，忠实有限生成投射模恰为非零有限维向量空间，其自同态代数恰为 \(M_n(k)\)、\(n\ge1\)。又由\cref{b2:prop:azumaya-field-matrix}，代数对象恰为中心单代数。因此等价关系变为 \(M_n(A)\cong M_m(B)\)，群运算也同为张量积，两个构造完全一致。
+\end{proof}
+
+例如，取 \(R=\mathbb R[t]\)，由 \(\mathbb R\rightarrow R\) 扩张得到 \(A=R\otimes_{\mathbb R}\mathbb H\)。这是 Azumaya \(R\) 代数，却不代表零类。若 \([A]=0\)，再按 \(t\mapsto0\) 基变换到 \(\mathbb R\)，便有 \([\mathbb H]=0\)。\cref{b2:prop:brauer-division-representative}说明域上每个 Brauer 类有唯一的中心除代数代表，\(\mathbb H\ne\mathbb R\)，所以这不可能。另一方面，扩张到 \(\mathbb C[t]\) 后 \(A\) 变成 \(M_2\Bigl(\mathbb C[t]\Bigr)\)，其类随之变为零。
+
+\ProseParagraphBreak
+一般交换环上的 Brauer 群仍以代数及其模为对象，但域上“每类选一个除代数”的描述已不适用。例如 \(R=k\times k\) 的任何忠实代数都包含非零的中心幂等元 \((1,0)\)、\((0,1)\)，二者乘积为零，因而不可能是除环。环上的分类问题还须顾及各处的纤维如何在同一个有限投射模上相容。以自同态代数为零类、以张量积为加法的表述，也可参阅 Weibel 的《The K-book: An Introduction to Algebraic K-theory》\cite[Chapter II, Example 5.4.3]{Weibel2013KBook}；该处从对称幺半范畴的群化解释这组关系。

@@ -1,9 +1,113 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 C 第 2 项归纳；原要点保留于 AppendixC.tex。
+% 纲要标题：### C.2 Azumaya 代数的局部性质
+% 纲要位置：工作记录/计划纲要.md，第 1643 行。
+
+% 纲要要点（供目录核对）：
+% * Azumaya 代数的局部性质
+% #### C.2.1 有限投射模的局部检验
+% #### C.2.2 纤维判据与基变换
 
 \section{Azumaya 代数的局部性质}
 \label{b2:sec:C02}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+左右乘作用是两个有限投射模之间的映射，因而可以在剩余域上检验。为避免把尚未学习的交换代数当作前提，本节先建立所需的局部模论。这里的局部化使用\cref{b2:def:localized-module}的分式构造，零判据为式\eqref{b2:eq:localization-zero}；局部化保持正合性，来自\cref{b2:prop:localization-flat}与其张量描述。
 
-待撰写。
+\subsection{有限投射模的局部检验}
+\label{b2:subsec:C02:01}
+
+记 \(\operatorname{Spec}R\) 为 \(R\) 的全部素理想组成的集合，称为\term[sulixiang-pu]{素理想谱}[prime spectrum]。对 \(\mathfrak p\in\operatorname{Spec}R\)，令 \(R_{\mathfrak p}=(R\setminus\mathfrak p)^{-1}R\)，并对模 \(M\) 令 \(M_{\mathfrak p}=R_{\mathfrak p}\otimes_R M\)。环 \(R_{\mathfrak p}\) 的唯一极大理想为 \(\mathfrak pR_{\mathfrak p}\)：分子不在 \(\mathfrak p\) 中的分式可逆，分子在 \(\mathfrak p\) 中的分式都属于这个真理想。它的\term[shengyu-yu]{剩余域}[residue field]及 \(M\) 在该点的\term[xianwei-mo]{纤维}[fiber of a module]分别记为
+\[
+\kappa(\mathfrak p)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p},
+\qquad M(\mathfrak p)=\kappa(\mathfrak p)\otimes_R M.
+\]
+若 \(\mathfrak m\) 极大，则 \(\kappa(\mathfrak m)=R/\mathfrak m\)。局部化 \(M_{\mathfrak p}\) 与纤维 \(M(\mathfrak p)\) 是不同对象，后者还要模去极大理想。
+\symidx{\(\operatorname{Spec}R\)：交换环的素理想谱}
+\symidx{\(\kappa(\mathfrak p)\)：素理想处的剩余域}
+\symidx{\(M(\mathfrak p)\)：模在素理想处的纤维}
+
+\begin{lemma}[局部消失与有限投射模]\label{b2:lem:azumaya-local-toolkit}
+设 \(R\) 为非零交换环。
+\begin{enumerate}
+\item 模 \(M\) 为零，当且仅当每个极大理想处的 \(M_{\mathfrak m}\) 为零。若 \(M\) 有限生成，还可等价地要求全部纤维 \(M(\mathfrak m)\) 为零。
+\item 有限生成投射模 \(P\) 在每个 \(R_{\mathfrak p}\) 上为有限自由模。
+\item 若 \(u:P\rightarrow Q\) 是有限生成投射模之间的映射，则 \(u\) 为同构，当且仅当每个 \(u(\mathfrak m):P(\mathfrak m)\rightarrow Q(\mathfrak m)\) 为同构。
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+若 \(0\ne x\in M\)，其零化子 \(I=\{r\in R:rx=0\}\) 是真理想，取包含它的极大理想 \(\mathfrak m\)。若 \(x/1=0\) 于 \(M_{\mathfrak m}\)，分式零判据给出 \(s\notin\mathfrak m\) 且 \(sx=0\)，与 \(I\subseteq\mathfrak m\) 矛盾。故全部局部化为零时 \(M=0\)。有限生成时，若 \(M(\mathfrak m)=0\)，就有 \(M_{\mathfrak m}=\mathfrak mR_{\mathfrak m}M_{\mathfrak m}\)。对局部环 \(R_{\mathfrak m}\)，Jacobson 根是其唯一极大理想；\cref{b2:thm:noncommutative-nakayama}因而使有限生成模 \(M_{\mathfrak m}\) 为零。反向都由取张量立即得到。
+
+设 \(T\) 是局部环，极大理想为 \(\mathfrak n\)，而 \(L\) 为有限生成投射 \(T\) 模。提升 \(L/\mathfrak nL\) 的一组基，得到 \(f:T^r\rightarrow L\)。\cref{b2:cor:nakayama-generators}说明这些提升生成 \(L\)，所以 \(f\) 满射。投射性使 \(T^r\cong L\oplus K\)，其中 \(K\) 作为有限自由模的直和因子仍有限生成。模去 \(\mathfrak n\) 后，\(f\) 已是同构，故 \(K/\mathfrak nK=0\)；再由 Nakayama 引理，\(K=0\)。于是 \(L\cong T^r\)。把 \(P\oplus P'\cong R^N\) 局部化可知 \(P_{\mathfrak p}\) 仍有限生成且投射，取 \(T=R_{\mathfrak p}\) 即得第二项。
+
+对第三项，\(\operatorname{coker}u\) 有限生成，张量的右正合性使它的全部极大纤维为零。第一项说明 \(u\) 满射。因目标 \(Q\) 投射，该满射分裂，故 \(P\cong\ker u\oplus Q\)。核因而有限生成；对分裂列取纤维仍分裂，纤维同构假设使核的全部纤维为零。再次应用第一项，得到核为零。反向由任何函子保持同构得到。
+\end{proof}
+
+\begin{lemma}[有限投射模与基变换]\label{b2:lem:azumaya-projective-base-change}
+若 \(P,Q\) 为有限生成投射 \(R\) 模，\(R\rightarrow S\) 为交换环同态，则它们的对偶模和张量积仍有限生成且投射，并有自然同构
+\begin{align}
+S\otimes_R\operatorname{Hom}_R(P,Q)
+&\cong\operatorname{Hom}_S(S\otimes_RP,S\otimes_RQ),\label{b2:eq:azumaya-hom-base-change}\\
+\operatorname{End}_R(P)\otimes_R\operatorname{End}_R(Q)
+&\cong\operatorname{End}_R(P\otimes_RQ).\label{b2:eq:azumaya-end-tensor}
+\end{align}
+后一个映射把 \(f\otimes g\) 送到 \(p\otimes q\mapsto f(p)\otimes g(q)\)，并为代数同构。若 \(P\) 还忠实，则它是生成元，且 \(S\otimes_RP\) 是忠实有限生成投射 \(S\) 模。两个忠实有限生成投射模的张量积也忠实。
+\end{lemma}
+\begin{proof}
+有限自由模直和分解取对偶、取基变换或逐因子取张量后仍然分裂，所以所列模均为有限自由模的直和因子。\cref{b2:prop:finite-projective-hom-tensor}给出 \(\operatorname{Hom}_R(P,Q)\cong P^*\otimes_RQ\)。对偶的基变换公式先在有限自由模上由坐标成立，再限制到直和因子，得到式\eqref{b2:eq:azumaya-hom-base-change}。式\eqref{b2:eq:azumaya-end-tensor}在极大理想处化为两个有限自由模的矩阵单位对应，故由\cref{b2:lem:azumaya-local-toolkit}的同构判据成立；映射的公式直接保留乘法。
+
+现在设 \(P\) 忠实。若某个 \(P_{\mathfrak m}=0\)，取 \(P\) 的有限生成组，分别用不在 \(\mathfrak m\) 中的元素零化它们，再取这些元素的乘积，得到 \(s\notin\mathfrak m\) 且 \(sP=0\)。忠实性使 \(s=0\)，矛盾。因此每个 \(P_{\mathfrak m}\) 都自由且秩为正。
+
+令 \(I\) 为全部 \(\lambda(p)\)、\(p\in P,\lambda\in P^*\) 生成的理想。式\eqref{b2:eq:azumaya-hom-base-change}使取局部对偶与取局部化相容，故 \(I_{\mathfrak m}\) 是 \(P_{\mathfrak m}\) 的相应评价理想。选一个基向量及其坐标泛函，便有 \(I_{\mathfrak m}=R_{\mathfrak m}\)。因此 \((R/I)_{\mathfrak m}=0\) 对全部 \(\mathfrak m\) 成立，局部消失判据给出 \(I=R\)。将有限和中的系数吸收到泛函中，可写
+\begin{equation}\label{b2:eq:azumaya-trace-unit}
+1=\sum_{i=1}^t\lambda_i(p_i).
+\end{equation}
+于是 \(P^t\rightarrow R\)、\((x_i)\mapsto\sum_i\lambda_i(x_i)\) 满射，且 \(r\mapsto(rp_i)_i\) 给出截面。\cref{b2:thm:generator-characterizations}说明 \(P\) 为生成元。
+
+基变换后式\eqref{b2:eq:azumaya-trace-unit}仍成立。若 \(s\in S\) 零化 \(S\otimes_RP\)，对这个等式乘以 \(s\)，再利用各扩张泛函的 \(S\) 线性性，得到 \(s=0\)。因此基变换后仍忠实。若 \(Q\) 也忠实，将两者的评价单位式相乘，便得到 \(P\otimes_RQ\) 的评价单位式；同一论证证明张量积忠实。
+\end{proof}
+
+忠实性在这里与有限投射性一起使用。单有忠实性不能推出模为生成元；\(\mathbb Q\) 作为 \(\mathbb Z\) 模的反例已在\subsecref{b2:subsec:1601:01}中说明。
+
+\subsection{纤维判据与基变换}
+\label{b2:subsec:C02:02}
+
+\begin{theorem}[Azumaya 代数的纤维判据]\label{b2:thm:azumaya-fiber-criterion}
+设 \(A\) 为 \(R\) 代数，作为 \(R\) 模忠实、有限生成且投射。以下条件等价：
+\begin{enumerate}
+\item \(A\) 为 Azumaya \(R\) 代数；
+\item 对每个极大理想 \(\mathfrak m\)，\(A(\mathfrak m)\) 为中心单 \(\kappa(\mathfrak m)\) 代数；
+\item 对每个素理想 \(\mathfrak p\)，\(A_{\mathfrak p}\) 为 Azumaya \(R_{\mathfrak p}\) 代数。
+\end{enumerate}
+Azumaya 代数还在任意交换环基变换下保持：\(S\otimes_RA\) 为 Azumaya \(S\) 代数。
+\end{theorem}
+\begin{proof}
+\cref{b2:lem:azumaya-projective-base-change}保证 \(A\otimes_RA^{\mathrm{op}}\) 与 \(\operatorname{End}_R(A)\) 都有限生成且投射，并使 \(\mu_A\) 在 \(\kappa(\mathfrak m)\) 上的基变换恰为 \(\mu_{A(\mathfrak m)}\)。纤维非零，因为局部自由秩为正。由\cref{b2:prop:azumaya-field-matrix}，该纤维映射同构等价于纤维代数中心单；再由\cref{b2:lem:azumaya-local-toolkit}检测同构，第一、二项等价。
+
+若第一项成立，对任意 \(R\rightarrow S\) 取基变换。上一引理给出忠实有限投射性，又有
+\[
+(S\otimes_RA)\otimes_S(S\otimes_RA)^{\mathrm{op}}
+\cong S\otimes_R(A\otimes_RA^{\mathrm{op}}),
+\]
+以及自同态代数的基变换同构。在这些识别下，\(\mu_{S\otimes_RA}\) 是 \(S\otimes_R\mu_A\)，故为同构。这证明基变换断言，也证明第一项蕴含第三项。若第三项成立，再对 \(R_{\mathfrak m}\rightarrow\kappa(\mathfrak m)\) 基变换便得第二项，等价性证毕。
+\end{proof}
+
+\begin{corollary}\label{b2:cor:azumaya-endomorphism}
+若 \(P\) 是忠实有限生成投射 \(R\) 模，则 \(\operatorname{End}_R(P)\) 是 Azumaya \(R\) 代数。
+\end{corollary}
+\begin{proof}
+由\cref{b2:lem:azumaya-projective-base-change}，自同态模为有限投射模。若 \(r\) 零化所有自同态，它就零化恒等映射，故零化 \(P\)，于是 \(r=0\)。每个极大纤维由式\eqref{b2:eq:azumaya-hom-base-change}同构于非零有限维向量空间的自同态代数，所以是中心单代数。纤维判据给出结论。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:azumaya-center}
+Azumaya \(R\) 代数 \(A\) 的中心为 \(R1_A\)。
+\end{proposition}
+\begin{proof}
+先设 \(P\) 为忠实有限生成投射 \(R\) 模，\(T\in\operatorname{End}_R(P)\) 与全部自同态交换。取式\eqref{b2:eq:azumaya-trace-unit}中的 \(p_i,\lambda_i\)。对任意 \(x\in P\)，让 \(T\) 与秩一算子 \(y\mapsto\lambda_i(y)x\) 交换，再在 \(p_i\) 处取值，得到
+\[
+\lambda_i(p_i)T(x)=\lambda_i\Bigl(T(p_i)\Bigr)x.
+\]
+求和说明 \(T(x)=rx\)，其中 \(r=\sum_i\lambda_i\Bigl(T(p_i)\Bigr)\in R\)。所以这些自同态的共同中心化子只有标量。
+
+若 \(z\in Z(A)\)，左乘 \(z\) 与所有左右乘算子交换。\(\mu_A\) 满射，因而它与全部 \(R\) 线性自同态交换。取 \(P=A\)，由刚证结论有 \(L_z=r\operatorname{id}_A\)，在 \(1_A\) 处取值得 \(z=r1_A\)。反向包含是 \(R\) 代数的约定，而忠实性保证这种标量表示唯一。
+\end{proof}
+
+纤维判据中的“中心单”不能换成“在剩余域上已经分裂”而仍声称二者等价。对基环 \(\mathbb R\)，唯一素理想为零，局部化和剩余域都不改变基环；\(\mathbb H\) 的纤维仍为除代数。换到 \(\mathbb C\) 后它才成为 \(M_2(\mathbb C)\)。因此 Azumaya 性并不意味着在 Zariski 局部化后就能选出矩阵单位。关于平展局部的分裂定理，还需要下降与平展态射的理论，本附录不将其作为上述判据的前提。

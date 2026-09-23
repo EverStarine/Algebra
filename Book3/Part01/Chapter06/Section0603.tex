@@ -1,30 +1,82 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 6.3 强零点定理
-% 纲要位置：计划纲要.md，第 1657 行。
-
-\section{强零点定理}
-\label{b3:sec:0603}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1975 行。
+% 纲要细目（写作范围）：
 % * 根理想与零点集的双向对应
 % * Rabinowitsch 技巧
 % * 几何对象与代数对象反变关系的起点
-%
 
-\subsection{根理想与零点集的对应}
-\label{b3:subsec:0603:01}
+\section{强零点定理}\label{b3:sec:0603}
 
-待撰写。
+弱形式只判断方程组是否有解。强形式进一步回答：已知全部解之后，究竟能恢复哪些多项式关系？一个多项式与它的正整数次幂有相同零点，因此期望恢复原理想通常过强；正确对象是根理想。本节除特别说明外，\(k\) 始终为代数闭域。
 
-\subsection{Rabinowitsch 技巧}
-\label{b3:subsec:0603:02}
+\subsection{根理想与零点集的对应}\label{b3:subsec:0603:01}
 
-待撰写。
+对 \(X\subseteq k^n\)，定义它的\term[lingdian-lixiang]{零点理想}[vanishing ideal]
+\[
+I(X)=\Bigl\{\,f\in k[x_1,\ldots,x_n]\mid f(a)=0\text{ 对每个 }a\in X\,\Bigr\}.
+\]
+这是根理想，因为 \(f(a)^r=0\) 在域中推出 \(f(a)=0\)。空集的零点理想按全称命题约定为整个多项式环。
+\symidx{\(I(X)\)：点集 \(X\) 上恒为零的多项式组成的理想}
 
-\subsection{几何与代数的反变关系}
-\label{b3:subsec:0603:03}
+\begin{theorem}[Hilbert 强零点定理]\label{b3:thm:strong-nullstellensatz}
+对任意理想 \(J\subseteq k[x_1,\ldots,x_n]\)，
+\[
+I\Bigl(Z_k(J)\Bigr)=\sqrt J.
+\]
+这称为\term[qiang-lingdian-dingli]{强零点定理}[strong Nullstellensatz]。因此根理想与形如 \(Z_k(J)\) 的代数集，分别经 \(Z_k\) 与 \(I\) 构成反向包含的一一对应。
+\end{theorem}
 
-待撰写。
+例如 \((x^2,y)\) 和 \((x,y)\) 在 \(k^2\) 中都只给出原点；从这个点集恢复的是根理想 \((x,y)\)。商环 \(k[x,y]/(x^2,y)\) 中保留的非零幂零元，无法由普通点集上的取值看到。下一小节证明等式，再核对对应关系。
+
+\subsection{Rabinowitsch 技巧}\label{b3:subsec:0603:02}
+
+把“不等于零”的条件写成“存在倒数”，是从弱形式过渡到强形式的关键。对 \(f\in k[x_1,\ldots,x_n]\)，再加变量 \(T\)，方程 \(Tf-1=0\) 正是要求 \(f\) 的值可逆。这个方法称为\term[rabinowitsch-jiqiao]{Rabinowitsch 技巧}[Rabinowitsch trick]。
+
+\begin{proof}[\cref{b3:thm:strong-nullstellensatz}的证明]
+若 \(f^r\in J\)，则在 \(Z_k(J)\) 的每个点都有 \(f(a)^r=0\)，从而 \(f(a)=0\)。因此 \(\sqrt J\subseteq I\Bigl(Z_k(J)\Bigr)\)。
+
+反向，取在 \(Z_k(J)\) 上恒为零的多项式 \(f\)。当 \(f=0\) 时结论直接成立，以下设 \(f\ne0\)。在 \(k[x_1,\ldots,x_n,T]\) 中考虑
+\[
+J' = J\,k[x_1,\ldots,x_n,T]+(1-Tf).
+\]
+若 \((a,t)\) 为其零点，则 \(a\in Z_k(J)\)，所以 \(f(a)=0\)，但又要求 \(1-tf(a)=0\)，矛盾。由\cref{b3:cor:proper-ideal-common-zero}，\(J'\) 是单位理想。因此存在有限个 \(h_i\in J\) 及多项式 \(g_i(x,T),g(x,T)\)，使
+\[
+1=\sum_{i=1}^r g_i(x,T)h_i(x)+g(x,T)(1-Tf).
+\]
+在局部化 \(k[x_1,\ldots,x_n]_f\) 中代入 \(T=1/f\)，得到
+\(1=\sum_i g_i(x,1/f)h_i(x)\)。
+取整数 \(N\) 至少为所有 \(g_i\) 关于 \(T\) 的次数，把等式乘以 \(f^N\)，便得到
+\[
+f^N=\sum_i H_i(x)h_i(x)\in J.
+\]
+若所得 \(N=0\)，已有 \(1\in J\)，也可取正指数。故 \(f\in\sqrt J\)，等式成立。
+
+两种运算都反向包含。刚证明对根理想 \(J\) 有 \(I\Bigl(Z_k(J)\Bigr)=J\)。对代数集 \(X=Z_k(J)\)，一方面 \(J\subseteq I(X)\) 给出 \(Z_k\Bigl(I(X)\Bigr)\subseteq X\)；另一方面每个 \(a\in X\) 按定义使 \(I(X)\) 中全部多项式为零，得到反向包含。于是两种运算在所述对象上互逆。
+\end{proof}
+
+\subsection{几何与代数的反变关系}\label{b3:subsec:0603:03}
+
+\begin{definition}\label{b3:def:affine-coordinate-ring}
+对代数集 \(X\subseteq k^n\)，商环
+\[
+k[X]=k[x_1,\ldots,x_n]/I(X)
+\]
+称为其\term[zuobiao-huan]{坐标环}[coordinate ring]。其中一个元素就是多项式在 \(X\) 上给出的函数；两个多项式给出同一函数，当且仅当它们之差属于 \(I(X)\)。
+\end{definition}
+\symidx{\(k[X]\)：仿射代数集 \(X\) 的坐标环}
+
+若 \(X\subseteq Y\)，限制函数给出满同态 \(k[Y]\to k[X]\)，其核是
+\(I(X)/I(Y)\)。包含方向在这里反了过来。更一般地，若一个映射
+\[
+\varphi:X\longrightarrow Y,\qquad
+a\longmapsto\Bigl(f_1(a),\ldots,f_m(a)\Bigr)
+\]
+由多项式坐标给出，则代入给出同态
+\[
+\varphi^*:k[Y]\longrightarrow k[X],\qquad
+[g]\longmapsto\Bigl[g(f_1,\ldots,f_m)\Bigr].
+\]
+若 \(g\) 在 \(Y\) 上为零，复合后在 \(X\) 上也为零，所以此同态良定义。直接代入又给出
+\((\psi\circ\varphi)^*=\varphi^*\circ\psi^*\)。
+下一章将以这些已建立的对象为基础，系统证明映射与同态的对应，而不再从图形直觉猜测箭头方向。

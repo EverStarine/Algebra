@@ -1,30 +1,123 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 4.1 关联素理想
-% 纲要位置：计划纲要.md，第 1589 行。
+% 纲要位置：工作记录/计划纲要.md，第 1907 行。
+% 纲要细目（写作范围）：
+% * 元素零化子的素性
+% * 关联素理想的存在和有限性
+% * 零因子作为关联素理想的并
 
 \section{关联素理想}
 \label{b3:sec:0401}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 元素零化子的素性
-% * 关联素理想的存在和有限性
-% * 零因子作为关联素理想的并
-%
+同一个元素可以被许多环元素零化，但它的全部零化子组成一个确定的理想。当这个理想恰好是素理想时，环在该元素生成的循环子模上的作用就具有整环的特征。这给出了从模中提取素理想的方法。本节环均为交换含幺环；存在性要求环是 Noether 环，有限性还要求模有限生成，这两个条件不要混同。
 
 \subsection{元素零化子的素性}
 \label{b3:subsec:0401:01}
 
-待撰写。
+\begin{definition}\label{b3:def:associated-prime}
+设 \(M\) 是 \(R\) 模，\(m\in M\)。元素的零化子为
+\[
+\operatorname{Ann}_R(m)=\{\,a\in R\mid am=0\,\}.
+\]
+若素理想 \(\mathfrak p\subsetneq R\) 等于某个非零元素 \(m\) 的零化子，就称 \(\mathfrak p\) 为 \(M\) 的\term[guanlian-sulixiang]{关联素理想}[associated prime]。所有这样的素理想组成集合 \(\operatorname{Ass}_R(M)\)，并约定 \(\operatorname{Ass}_R(0)=\varnothing\)。
+\symidx{\(\operatorname{Ass}_R(M)\)：模的关联素理想集合}
+\end{definition}
+
+映射 \(R\rightarrow M\)、\(a\mapsto am\) 的核为 \(\operatorname{Ann}_R(m)\)。因此 \(\mathfrak p\in\operatorname{Ass}_R(M)\) 等价于存在单射 \(R/\mathfrak p\hookrightarrow M\)。定义说的是某个元素的零化子，不是整个模的零化子必须为素理想。
+
+\begin{lemma}\label{b3:lem:maximal-element-annihilator-prime}
+若 \(\operatorname{Ann}_R(m)\) 在所有非零元素零化子中极大，则它是素理想。
+\end{lemma}
+\begin{proof}
+记 \(I=\operatorname{Ann}_R(m)\)。因 \(m\ne0\)，\(I\ne R\)。若 \(ab\in I\) 且 \(b\notin I\)，则 \(bm\ne0\)，而 \(I\subseteq\operatorname{Ann}_R(bm)\)。极大性给出相等，故由 \(a(bm)=0\) 得 \(a\in I\)，这正是素性。
+\end{proof}
+
+这里的“极大”指元素零化子这一族中的极大元，并不表示 \(I\) 是环的极大理想。例如整环 \(R\) 作为自身上的模时，每个非零元素的零化子都是 \((0)\)，于是 \(\operatorname{Ass}_R(R)=\Bigl\{(0)\Bigr\}\)，即使 \(R\) 不是域也成立。
+
+\begin{proposition}\label{b3:prop:associated-exact-sequence}
+若 \(0\longrightarrow N\longrightarrow M\longrightarrow P\longrightarrow0\) 正合，则
+\[
+\operatorname{Ass}_R(N)\subseteq\operatorname{Ass}_R(M)
+ \subseteq\operatorname{Ass}_R(N)\cup\operatorname{Ass}_R(P).
+\]
+特别地，有限直和的关联素理想集合是各因子对应集合的并。
+\end{proposition}
+\begin{proof}
+子模中的元素在 \(N\) 与 \(M\) 内有同一个零化子，得第一个包含。给定 \(\mathfrak p\in\operatorname{Ass}_R(M)\)，在 \(M\) 内取 \(L\cong R/\mathfrak p\)。\(L\) 中每个非零元素的零化子都是 \(\mathfrak p\)，因为 \(R/\mathfrak p\) 是整环。如果 \(L\cap N\ne0\)，取交内非零元素即得 \(\mathfrak p\in\operatorname{Ass}_R(N)\)；如果交为零，\(L\) 单射到 \(P\)，故 \(\mathfrak p\in\operatorname{Ass}_R(P)\)。直和结论由分裂正合列和两因子各自的嵌入得到，再对因子数归纳。
+\end{proof}
 
 \subsection{关联素理想的存在性与有限性}
 \label{b3:subsec:0401:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:associated-existence}
+若 \(R\) 是 Noether 环，\(M\ne0\) 是 \(R\) 模，则 \(\operatorname{Ass}_R(M)\ne\varnothing\)。这里不要求 \(M\) 有限生成。
+\end{theorem}
+\begin{proof}
+所有非零元素零化子构成非空理想族。Noether 升链条件保证其中有极大元，再用\cref{b3:lem:maximal-element-annihilator-prime}。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:associated-finite}
+设 \(R\) 是 Noether 环，\(M\) 是有限 \(R\) 模。存在有限子模链
+\[
+0=M_0\subsetneq M_1\subsetneq\cdots\subsetneq M_r=M,
+\qquad M_i/M_{i-1}\cong R/\mathfrak p_i,
+\]
+其中各 \(\mathfrak p_i\) 为素理想；这种链称为\term[sulixiang-lvguo]{素理想滤过}[prime filtration]。并且
+\[
+\operatorname{Ass}_R(M)\subseteq\{\mathfrak p_1,\ldots,\mathfrak p_r\},
+\]
+所以关联素理想只有有限个。\(M=0\) 时采用空滤过。
+\end{theorem}
+\begin{proof}
+若已构造 \(M_i\ne M\)，对非零商模 \(M/M_i\) 应用\cref{b3:thm:associated-existence}，取其中同构于 \(R/\mathfrak p_{i+1}\) 的子模，并令 \(M_{i+1}\) 为其原像。由\cref{b3:prop:noether-finite-modules}，有限模 \(M\) 是 Noether 模，故这个严格上升过程必在有限步停止。对短正合列
+\(0\rightarrow M_{i-1}\rightarrow M_i\rightarrow R/\mathfrak p_i\rightarrow0\)
+逐次应用\cref{b3:prop:associated-exact-sequence}，再用 \(\operatorname{Ass}_R(R/\mathfrak p_i)=\{\mathfrak p_i\}\)，得到所需包含。
+\end{proof}
+
+滤过中出现的素理想可能多于关联素理想。例如 \(\mathbb Z\supset2\mathbb Z\supset0\) 的两个因子为 \(\mathbb Z/2\mathbb Z\) 与 \(\mathbb Z\)，但 \(\operatorname{Ass}_{\mathbb Z}(\mathbb Z)=\Bigl\{(0)\Bigr\}\)。此外，有限生成性不能删除：\(\bigoplus_{p\text{ 为素数}}\mathbb Z/p\mathbb Z\) 的关联素理想包括所有 \((p)\)，因而是无限集。
+
+\begin{proposition}\label{b3:prop:associated-localization}
+设 \(R\) 为 Noether 环，\(S\subseteq R\) 为乘法集，\(M\) 为任意 \(R\) 模。则
+\[
+\operatorname{Ass}_{S^{-1}R}(S^{-1}M)
+=\Bigl\{\,S^{-1}\mathfrak p\mid \mathfrak p\in\operatorname{Ass}_R(M),\quad
+                       \mathfrak p\cap S=\varnothing\,\Bigr\}.
+\]
+\end{proposition}
+\begin{proof}
+若 \(\operatorname{Ann}_R(m)=\mathfrak p\) 且 \(\mathfrak p\cap S=\varnothing\)，则 \(m/1\ne0\)。当 \((a/s)(m/1)=0\) 时，有 \(t\in S\) 使 \(tam=0\)；由 \(ta\in\mathfrak p\)、\(t\notin\mathfrak p\) 得 \(a\in\mathfrak p\)。故其零化子恰为 \(S^{-1}\mathfrak p\)。
+
+反之，设 \(\mathfrak q\) 是 \(m/s\) 的素零化子，令 \(\mathfrak p\) 为 \(\mathfrak q\) 在 \(R\) 中的收缩。以单位 \(s/1\) 乘此元素后可改用 \(m/1\)。取 \(\mathfrak p=(a_1,\ldots,a_l)\)；因 \((a_i m)/1=0\)，可选 \(s_i\in S\) 使 \(s_i a_i m=0\)。令 \(t=s_1\cdots s_l\)，则 \(\mathfrak p\subseteq\operatorname{Ann}_R(tm)\)。若 \(a(tm)=0\)，局部化后 \(a/1\) 零化 \(m/1\)，所以 \(a\in\mathfrak p\)。于是零化子相等；且 \(tm\ne0\)，否则 \(m/1=0\)。这就找到了原模中的关联元素。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:minimal-primes-associated}
+设 \(R\) 为 Noether 环，\(M\) 为非零有限 \(R\) 模。则 \(\operatorname{Supp}_R(M)\) 的每个素理想都包含某个关联素理想，且
+\[
+\min\operatorname{Supp}_R(M)=\min\operatorname{Ass}_R(M).
+\]
+尤其，对任意真理想 \(I\)，包含 \(I\) 的极小素理想都是 \(R/I\) 的关联素理想。
+\end{proposition}
+\begin{proof}
+若 \(\mathfrak p\in\operatorname{Ass}_R(M)\)，上述局部化命题保证 \(M_{\mathfrak p}\ne0\)，故 \(\operatorname{Ass}_R(M)\subseteq\operatorname{Supp}_R(M)\)。给定 \(\mathfrak q\in\operatorname{Supp}_R(M)\)，\(R_{\mathfrak q}\) 是 Noether 环，非零模 \(M_{\mathfrak q}\) 有关联素理想；由\cref{b3:prop:associated-localization}，它来自某个 \(\mathfrak p\in\operatorname{Ass}_R(M)\)，且 \(\mathfrak p\subseteq\mathfrak q\)。因此两集合的极小元一致。对有限模，\(\operatorname{Supp}_R(M)=V\Bigl(\operatorname{Ann}_R(M)\Bigr)\)：一边由零化子局部化得到，另一边用有限组生成元逐个清分母即可。取 \(M=R/I\) 就得到最后一句。
+\end{proof}
 
 \subsection{零因子的关联素理想描述}
 \label{b3:subsec:0401:03}
 
-待撰写。
+称 \(a\in R\) 是 \(M\) 上的\term[mo-shang-lingyinzi]{零因子}[zero divisor on a module]，如果存在 \(0\ne m\in M\) 使 \(am=0\)；否则称它在 \(M\) 上是正则的。记这些零因子的集合为 \(Z_R(M)\)。这里允许 \(a=0\)：对非零模，零当然属于这个集合；对零模，集合为空。
+
+\begin{theorem}\label{b3:thm:associated-zero-divisors}
+设 \(R\) 为 Noether 环，\(M\) 为 \(R\) 模。则
+\[
+Z_R(M)=\bigcup_{\mathfrak p\in\operatorname{Ass}_R(M)}\mathfrak p.
+\]
+若 \(M\) 有限，这就是有限个素理想的并。
+\end{theorem}
+\begin{proof}
+关联素理想中的元素会零化定义它的非零元素，因此右端包含于左端。反向设 \(am=0\)、\(m\ne0\)。在包含 \(\operatorname{Ann}_R(m)\) 的非零元素零化子中选一个极大元 \(\operatorname{Ann}_R(n)\)；它在全部非零元素零化子中也是极大的，因任何更大零化子仍包含 \(\operatorname{Ann}_R(m)\)。\cref{b3:lem:maximal-element-annihilator-prime}说明它是关联素理想，而 \(a\) 在其中。
+\end{proof}
+
+例如在 \(R=k[x,y]/(xy)\) 中，\(\bar x\) 与 \(\bar y\) 的零化子分别为 \((\bar y)\) 和 \((\bar x)\)。每个元素都可唯一写为常数加一个无常数项的 \(x\) 多项式，再加一个无常数项的 \(y\) 多项式；据此相乘可知零因子恰为这两个素理想的并。\(\bar x+\bar y\) 不在其中，因而不是零因子，尽管它的两个加项都是零因子。
+
+\ProseParagraphBreak
+更一般地，若理想 \(J\) 的每个元素都是有限模 \(M\) 上的零因子，由\cref{b3:thm:associated-finite}和\cref{b3:thm:associated-zero-divisors}及\cref{b3:lem:finite-prime-avoidance}的有限素理想回避性质，\(J\) 必包含于某一个关联素理想。这把“逐个检查乘法是否单射”的问题转成了有限个素理想的包含问题。以上存在性、局部化和滤过方法可对照 \cite[\S6, Theorems 6.1--6.5]{Matsumura1989CommutativeRingTheory}。

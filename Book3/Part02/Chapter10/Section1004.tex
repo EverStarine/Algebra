@@ -1,32 +1,115 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 10.4 算术和几何例子
-% 纲要位置：计划纲要.md，第 1808 行。
+% 纲要位置：工作记录/计划纲要.md，第 2126 行。
+% 纲要细目（写作范围）：
+% * 数域整数环的 Dedekind 性
+% * 理想类群及 Picard 群的初步关系
+% * 正规曲线与离散赋值
+% ---
+
 
 \section{算术和几何例子}
 \label{b3:sec:1004}
 
-% TODO: 按以下纲要要点撰写本节。
+整数环和一元多项式环都具有唯一的元素分解，但其有限扩张未必仍有这个性质。Dedekind 理论说明，转向非零理想之后仍能保持唯一分解。曲线上的零点阶数则把同一结构解释为几何数据。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 数域整数环的 Dedekind 性
-% * 理想类群及 Picard 群的初步关系
-% * 正规曲线与离散赋值
-%
-% ---
-%
 
 \subsection{数域整数环的 Dedekind 性}
 \label{b3:subsec:1004:01}
 
-待撰写。
+\begin{definition}\label{b3:def:number-field-integers}
+设域 \(K\) 包含 \(\mathbb Q\)。若 \([K:\mathbb Q]<\infty\)，则称 \(K\) 为\term[shuyu]{数域}[number field]。
+\(\mathbb Z\) 在 \(K\) 中的整闭包，即所有满足首一整数系数多项式的元素组成的环，称为 \(K\) 的\term[zhengshuhuan]{整数环}[ring of integers]，记为 \(\mathcal O_K\)。
+\end{definition}
+\symidx{\(\mathcal O_K\)：数域的整数环}
+
+\begin{theorem}\label{b3:thm:number-integers-dedekind}
+设 \(K/\mathbb Q\) 为有限域扩张，\(\mathcal O_K\) 为 \(\mathbb Z\) 在 \(K\) 中的整闭包。则 \(\mathcal O_K\) 是有限自由 \(\mathbb Z\) 模，秩为 \([K:\mathbb Q]\)，并且是 Dedekind 整环。
+\end{theorem}
+\begin{proof}
+特征零保证 \(K/\mathbb Q\) 可分。\(\mathbb Z\) 是整闭 Noether 整环，故\cref{b3:lem:normalization-separable-finite}给出 \(\mathcal O_K\) 的有限生成性。
+为直接说明自由性，取 \(K\) 的一个有理基，并为 \(\mathcal O_K\) 的有限个整数模生成元的坐标清除公分母。于是 \(\mathcal O_K\) 同构于某个 \(\mathbb Z^n\) 的子群，其中 \(n=[K:\mathbb Q]\)。每个子群 \(H\subseteq\mathbb Z^n\) 都自由，可对 \(n\) 归纳：第一坐标像若为零，就在 \(\mathbb Z^{n-1}\) 中使用归纳；否则其像为 \(d\mathbb Z\)、\(d>0\)，取 \(h\in H\) 的第一坐标为 \(d\)。每个元素唯一写成 \(mh+h_0\)，其中 \(m\in\mathbb Z\)、\(h_0\) 第一坐标为零，故 \(H=\mathbb Zh\oplus H_0\)，再对 \(H_0\) 归纳。这证明 \(\mathcal O_K\) 为有限自由模。
+任何 \(x\in K\) 乘一个非零整数后都对 \(\mathbb Z\) 整：对 \(x\) 的首一有理系数方程清除分母，正如\cref{b3:lem:normalization-separable-finite}证明中的缩放。因此
+\(\mathbb Q\otimes_{\mathbb Z}\mathcal O_K=K\)，自由秩为 \([K:\mathbb Q]\)，分式域也为 \(K\)。
+
+有限 \(\mathbb Z\) 模性使 \(\mathcal O_K\) 为 Noether 环；整闭包对整性传递而整闭。
+由\cref{b3:thm:integral-dimension}，它与 \(\mathbb Z\) 同为一维。于是它是 Dedekind 整环。
+\end{proof}
+
+这个证明也说明正规化有限性在算术中的作用：它先给出 Noether 性，不能只凭“所有元素都整”就断言整数环 Noether。
+对任意 \(0\ne a\in\mathcal O_K\)，乘以 \(a\) 是有限自由整数模上的单射，且在 \(\mathbb Q\) 上为同构，所以余核是有限交换群。
+因此 \(\mathcal O_K/(a)\) 有限；非零素理想的剩余域也有限。
 
 \subsection{理想类群与 Picard 群}
 \label{b3:subsec:1004:02}
 
-待撰写。
+\begin{definition}\label{b3:def:ideal-class-picard}
+设 \(R\) 为 Dedekind 整环，\(K=\operatorname{Frac}(R)\)。分式理想群对其主分式理想子群的商
+\[
+\operatorname{Cl}(R)\coloneqq
+\{\text{非零分式理想}\}/\{xR:x\in K^*\}.
+\]
+称为 \(R\) 的\term[lixiangleiqun]{理想类群}[ideal class group]。
+另设 \(R\) 为任意交换环。考虑有限生成投射 \(R\) 模 \(L\) 的同构类，要求对每个素理想 \(\mathfrak p\subseteq R\)，\(L_{\mathfrak p}\) 都是秩一自由 \(R_{\mathfrak p}\) 模。这些同构类以 \(R\) 上的张量积为乘法所成的群，称为 \(R\) 的\term[Picard-qun]{Picard 群}[Picard group]，记为 \(\operatorname{Pic}(R)\)。
+\end{definition}
+\symidx{\(\operatorname{Cl}(R)\)：Dedekind 整环的理想类群}
+\symidx{\(\operatorname{Pic}(R)\)：秩一有限投射模的 Picard 群}
+
+说明后一构造确实为群。两个有限投射模都是有限自由模的直和因子，张量后仍为有限投射模；局部化后两个秩一自由模的张量积仍秩一。
+对偶 \(L^*=\operatorname{Hom}_R(L,R)\) 也为有限投射模：将分解 \(R^r=L\oplus L'\) 取对偶便得到相应的直和分解。有限投射模也有限展示，因为这项分解中 \(L'\) 是由 \(R^r\) 的有限基经投影得到的有限生成核。因此\cref{b3:thm:hom-localization}适用于 \(L\)，它使求值映射
+\(L\otimes_RL^*\rightarrow R\) 在每个素理想处成为秩一自由模的求值同构。
+由\cref{b3:thm:local-morphism-detection}它本身即为同构。因此 \([L^*]\) 是逆元，\([R]\) 是单位元。
+
+\begin{proposition}\label{b3:prop:dedekind-picard-class}
+设 \(R\) 为 Dedekind 整环，\(K=\operatorname{Frac}(R)\)。则有自然群同构
+\(\operatorname{Cl}(R)\simeq\operatorname{Pic}(R)\)，由 \([I]\mapsto[I]\) 给出。
+而 \(\operatorname{Cl}(R)=0\) 当且仅当 \(R\) 是主理想整环。
+\end{proposition}
+\begin{proof}
+可逆理想由\cref{b3:prop:invertible-local-principal}为有限投射模，并且局部自由秩一。
+乘法映射 \(I\otimes_RJ\rightarrow IJ\) 在每个局部 DVR 上，是两个非零主分式理想的乘法同构，故由局部检测是同构。
+主分式理想同构于 \(R\)，所以映射在类群上良定义且保持乘法。
+
+若 \(I\simeq J\)，将同构张量到 \(K\) 后，得到两个一维 \(K\) 空间间的同构，必为乘以某个 \(x\in K^*\)。于是 \(J=xI\)，说明类群映射单射。
+给定有限投射且局部秩一的 \(L\)，它是自由模的直和因子，因而无挠；所以
+\(L\rightarrow K\otimes_RL\) 单射。后者一维，选择它与 \(K\) 的同构，将 \(L\) 识别为 \(K\) 内有限生成的非零子模。为有限个生成元清除分母后，它成为一个分式理想。因此映射满射。
+最后，类群平凡恰好表示每个非零分式理想都主生成，特别是每个非零通常理想主生成；反向由清分母同样成立。
+\end{proof}
+
+取 \(K=\mathbb Q(\sqrt{-5})\)，记 \(s=\sqrt{-5}\)。此时 \(R=\mathcal O_K=\mathbb Z[s]\)。
+为核实这一步，设 \(a+bs\) 整，其中 \(a,b\in\mathbb Q\)。迹 \(2a\) 和范数 \(a^2+5b^2\) 都为整数，故
+\(-20b^2=(2a)^2-4(a^2+5b^2)\) 为整数。将 \(b\) 写成既约分数，分母的平方整除 \(20\)，所以 \(2b\in\mathbb Z\)。
+写 \(a=A/2,b=B/2\)，由 \(A^2+5B^2\equiv0\pmod4\) 得 \(A,B\) 都为偶数，故 \(a,b\in\mathbb Z\)。反向由 \(s\) 整显然成立。
+
+\ProseParagraphBreak
+理想 \(\mathfrak p=(2,1+s)\) 的商环为 \(\mathbb F_2\)，所以是素理想。
+有 \(\mathfrak p^2=(2)\)：平方的生成元均被 \(2\) 整除，而
+\(2(1+s)-(1+s)^2=6\)，连同 \(4\in\mathfrak p^2\) 得 \(2\in\mathfrak p^2\)。
+它不是主理想。若 \(\mathfrak p=(\alpha)\)、\(\alpha=a+bs\)，其中 \(a,b\in\mathbb Z\)，则由 \(\mathfrak p^2=(2)\) 得 \(\alpha^2=2u\)，其中 \(u\in R^*\)。范数 \(N(a+bs)=a^2+5b^2\) 非负且有乘法性；对单位 \(u\)，\(N(u)N(u^{-1})=1\) 使 \(N(u)=1\)。于是 \(N(\alpha)^2=4\)，即 \(a^2+5b^2=2\)，但这个方程没有整数解。
+因此 \([\mathfrak p]\) 是类群中阶二的非平凡元素。这里已经看到元素分解与理想分解的区别，不需要先计算整个类群。
 
 \subsection{正规曲线与离散赋值}
 \label{b3:subsec:1004:03}
 
-待撰写。
+设 \(k\) 为域，\(A\) 为有限型整 \(k\) 代数。若 \(\dim A=1\)，本节便称 \(A\) 所对应的仿射对象为一条不可约仿射曲线。这里用 \(\operatorname{Spec}A\) 表示该仿射对象，以便包含非代数闭基域的闭点。由\cref{b3:thm:affine-dimension}，其有理函数域在 \(k\) 上的超越次数为一。
+若 \(A\) 整闭，称曲线正规。此时 \(A\) 为 Dedekind 整环，每个闭点
+\(\mathfrak p\) 的局部环是 DVR。
+
+\ProseParagraphBreak
+对 \(0\ne f\in\operatorname{Frac}(A)\)，整数 \(v_{\mathfrak p}(f)\) 表示在该点的阶数：正值是零点阶数，负值是极点阶数，零值表示在该局部环中为单位。
+主分式理想的分解说明只有有限多个非零阶，并给出
+\[
+fA=\prod_{\mathfrak p\ne0}\mathfrak p^{v_{\mathfrak p}(f)}.
+\]
+这里列的是这个仿射曲线上的闭点；没有说已把某个完备曲线上可能存在的其他点也列入。
+
+\ProseParagraphBreak
+在 \(A=k[t]\) 上，闭点由首一不可约多项式 \(q(t)\) 表示，统一化元为 \(q\)，阶数即 \(q\) 在分子和分母中的重数之差。
+在 \(k[t,t^{-1}]\) 上，\((t)\) 已因局部化而消失，\(t\) 是单位，在留下的所有闭点的阶数都为零。
+这解释了删去一点会怎样改变可逆函数，而不改变函数域。
+
+\ProseParagraphBreak
+尖点 \(k[t^2,t^3]\) 的正规化为 \(k[t]\)，见\cref{b3:prop:cusp-normalization}。
+原点上方正规局部环的统一化元是 \(t\)，原来两个坐标的阶数分别为二和三。
+但原来的局部环不含 \(t\)，它的极大理想需要两个生成元，因此自身不是 DVR。
+正规化使零点阶成为一个整数赋值；这不等于把原局部环已经具有的生成关系抹去。

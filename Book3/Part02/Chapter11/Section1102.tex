@@ -1,30 +1,90 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.2 Hilbert 函数
-% 纲要位置：计划纲要.md，第 1824 行。
+% 纲要位置：工作记录/计划纲要.md，第 2142 行。
+% 纲要细目（写作范围）：
+% * 分次片的维数或长度
+% * Hilbert 级数的有理性
+% * 从级数读取增长
 
 \section{Hilbert 函数}
 \label{b3:sec:1102}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 分次片的维数或长度
-% * Hilbert 级数的有理性
-% * 从级数读取增长
-%
+对每一个次数分别计数，比只说模“无限维”提供了更多信息。例如 \(k[x]\) 的每个分次片只有一维，而 \(k[x,y]\) 的第 \(n\) 片有 \(n+1\) 维。下面把这些数同时装进一个形式级数；级数的运算只使用系数，不涉及分析中的收敛。
 
 \subsection{分次片的维数与长度}
 \label{b3:subsec:1102:01}
 
-待撰写。
+本节设 \(A=A_0[x_1,\ldots,x_r]\) 为正分次环，\(A_0\) 为 Artin 环，\(d_i=\deg x_i>0\)，\(M\) 为有限生成分次 \(A\) 模。由\cref{b3:prop:graded-noetherian}，\(A\) 是 Noether 环；各 \(M_n\) 是有限 \(A_0\) 模，故长度有限。
+
+\begin{definition}\label{b3:def:hilbert-function-series}
+设 \(A=A_0[x_1,\ldots,x_r]\) 为交换正分次环，\(A_0\) 为 Artin 环，各 \(x_i\) 的次数为正整数，\(M\) 为有限生成分次 \(A\) 模。\(M\) 的\term[hilbert-hanshu]{Hilbert 函数}[Hilbert function]及\term[hilbert-jishu]{Hilbert 级数}[Hilbert series]分别为
+\[
+h_M(n)=\ell_{A_0}(M_n),\qquad
+H_M(t)=\sum_{n\in\mathbb Z}h_M(n)t^n\in\mathbb Z((t)).
+\]
+这里只有有限多个负次幂。若 \(A_0=k\) 为域，长度就是 \(k\) 维数。
+\symidx{\(h_M(n)\)、\(H_M(t)\)：分次 Hilbert 函数与级数}
+\end{definition}
+
+短正合列 \(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 若保持次数，则 \(h_M(n)=h_L(n)+h_N(n)\)，从而 \(H_M=H_L+H_N\)。长度可加是因为将子模的合成列与商模合成列的逆像连接，就得到中间项的合成列。次数平移则给出
+\begin{equation}\label{b3:eq:hilbert-shift}
+H_{M(a)}(t)=t^{-a}H_M(t).
+\end{equation}
+
+例如 \(k[x_1,\ldots,x_r]\) 取标准分次时，次数 \(n\) 的单项式数为 \(\binom{n+r-1}{r-1}\)、\(r\ge1\)，所以
+\[
+H_{k[x_1,\ldots,x_r]}(t)=\frac1{(1-t)^r}.
+\]
+这也可直接把每个变量的几何级数相乘得到。若底环为任意 Artin 环 \(A_0\)，同一自由单项式基使分子乘上 \(\ell_{A_0}(A_0)\)。
 
 \subsection{Hilbert 级数的有理性}
 \label{b3:subsec:1102:02}
 
-待撰写。
+下面的\term[hilbert-serre-dingli]{Hilbert–Serre 定理}[Hilbert--Serre theorem]把有限生成条件转化为级数分母的有限形式。
+
+\begin{theorem}[Hilbert–Serre]\label{b3:thm:hilbert-serre}
+设 \(A=A_0[x_1,\ldots,x_r]\) 为交换正分次环，\(A_0\) 为 Artin 环，\(\deg x_i=d_i>0\)，\(M\) 为有限生成分次 \(A\) 模。则存在整系数 Laurent 多项式 \(Q(t)\)，使
+\[
+H_M(t)=\frac{Q(t)}{\prod_{i=1}^r(1-t^{d_i})}.
+\]
+若 \(M_n=0\) 对 \(n<0\) 成立，则可取 \(Q(t)\in\mathbb Z[t]\)。
+\end{theorem}
+\begin{proof}
+对代数生成元个数 \(r\) 归纳。\(r=0\) 时，\(M\) 是有限 \(A_0\) 模，有限组齐次生成元的次数之外分量均为零，所以级数为 Laurent 多项式。
+
+令 \(d=d_r\)、\(K=(0:_Mx_r)\)、\(L=M/x_rM\)。乘 \(x_r\) 给出分次正合列
+\[
+0\longrightarrow K(-d)\longrightarrow M(-d)
+\xrightarrow{\ x_r\ }M\longrightarrow L\longrightarrow0.
+\]
+\(K,L\) 都有限生成，并且被 \(x_r\) 零化，故可视为由前 \(r-1\) 个元素生成的代数上的有限分次模。逐片长度可加与\eqref{b3:eq:hilbert-shift}给出
+\begin{equation}\label{b3:eq:hilbert-induction}
+(1-t^d)H_M(t)=H_L(t)-t^dH_K(t).
+\end{equation}
+对右边应用归纳假设即得结论。若 \(M\) 没有负次分量，则它的级数及所乘的分母都没有负次幂，因此所得 Laurent 多项式实际上没有负次项。
+\end{proof}
+
+这里先证明 \(K\) 有限生成再作归纳，是 Noether 性不可省略的一步。此证明可对照 \cite[\S13, Theorem 13.2, pp. 94--95]{Matsumura1989CommutativeRingTheory}。
 
 \subsection{Hilbert 级数与增长}
 \label{b3:subsec:1102:03}
 
-待撰写。
+标准分次时，分母全由 \(1-t\) 构成。把公共因子约去，可写
+\[
+H_M(t)=\frac{Q(t)}{(1-t)^d},\qquad Q(1)\ne0
+\]
+或 \(d=0\)、\(H_M\) 本身为 Laurent 多项式。对于非零模，\(d\) 是在 \(t=1\) 处的极点阶数，约定没有极点时 \(d=0\)。下一节将证明它恰等于模支集的维数。
+
+\ProseParagraphBreak
+例如对 \(A=k[x,y]\)、\(M=A/(x^2)\)，乘 \(x^2\) 在 \(A\) 上单射，故
+\[
+H_M(t)=\frac{1-t^2}{(1-t)^2}=\frac{1+t}{1-t}.
+\]
+所以 \(h_M(0)=1\)，而 \(h_M(n)=2\) 对 \(n\ge1\) 成立。若改取 \(A/(x^2,xy)\)，标准单项式为 \(1,x,y,y^2,\ldots\)，因而
+\[
+H_{A/(x^2,xy)}(t)=\frac1{1-t}+t.
+\]
+额外的嵌入部分只改变有限多个低次值，却不改变最终的常数一。
+
+\ProseParagraphBreak
+正权分次的一般情况不能直接声称最终是单个多项式。例如 \(k[x]\)、\(\deg x=2\) 的级数为 \(1/(1-t^2)\)，函数在偶数处为一、奇数处为零。每个同余类可分别呈现多项式行为，但这不是下一节标准分次结论中的同一个多项式。

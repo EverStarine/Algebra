@@ -1,9 +1,58 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 C 第 1 项归纳；原要点保留于 AppendixC.tex。
+% 纲要标题：### C.1 中心单代数的交换基环推广
+% 纲要位置：工作记录/计划纲要.md，第 1635 行。
+
+% 纲要要点（供目录核对）：
+% * 中心单代数在交换基环上的推广
+% #### C.1.1 Azumaya 代数的定义
+% #### C.1.2 域情形与矩阵代数
 
 \section{中心单代数的交换基环推广}
 \label{b2:sec:C01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+中心单代数的定义包含域上的有限维性，但若把底域换成交换环，有限生成模未必有基，代数本身也通常不再是单环。例如 \(M_n(\mathbb Z)\) 有真双边理想 \(2M_n(\mathbb Z)\)，却在每个素数处保留了矩阵代数的结构。推广时应保留的是有限投射性，以及左右乘作用对全部线性算子的描述。本附录的基环 \(R\) 交换、含幺且非零，代数的结构同态取值于中心；基变换的目标环也约定非零。
 
-待撰写。
+\subsection{Azumaya 代数的定义}
+\label{b2:subsec:C01:01}
+
+对一个 \(R\) 代数 \(A\)，其反代数 \(A^{\mathrm{op}}\) 使用相反次序的乘法。左右乘给出 \(R\) 代数同态
+\begin{equation}\label{b2:eq:azumaya-enveloping}
+\mu_A:A\otimes_R A^{\mathrm{op}}\longrightarrow\operatorname{End}_R(A),
+\qquad a\otimes b^{\mathrm{op}}\longmapsto\Bigl(x\mapsto axb\Bigr).
+\end{equation}
+例如，两次作用的复合把 \(x\) 送到 \(aa'xb'b\)，这正对应张量代数中的乘积 \(aa'\otimes(b'b)^{\mathrm{op}}\)。反代数保证右乘一侧的次序正确。
+
+\begin{definition}\label{b2:def:azumaya-algebra}
+\(R\) 上的\term[Azumaya-daishu]{Azumaya 代数}[Azumaya algebra]是结合含幺 \(R\) 代数 \(A\)，满足以下两项条件：
+\begin{enumerate}
+\item 作为 \(R\) 模，\(A\) 忠实、有限生成且投射。这里忠实指 \(rA=0\) 蕴含 \(r=0\)；有限生成且投射等价于存在一个 \(R\) 模 \(Q\) 及有限整数 \(N\)，使 \(A\oplus Q\cong R^N\)。
+\item 式\eqref{b2:eq:azumaya-enveloping}中的左右乘作用 \(\mu_A\) 是同构。
+\end{enumerate}
+\end{definition}
+
+定义中的直和刻画由\cref{b2:prop:finite-projective-summand}保证。它允许模没有全局基，却仍能在局部选择有限基。忠实性则使结构同态 \(R\rightarrow A\) 单射：若 \(r1_A=0\)，就有 \(rA=0\)。因此可以把 \(R\) 看作 \(A\) 中的标量。\cref{b2:prop:azumaya-center}将进一步证明，\(A\) 的中心恰好是这些标量。
+
+\ProseParagraphBreak
+\(R\) 本身是 Azumaya \(R\) 代数，因为 \(R\otimes_R R\cong R\cong\operatorname{End}_R(R)\)，且这些同构把 \(\mu_R\) 变成恒等映射。相反，\(R\) 的一个真商环 \(R/I\) 不满足忠实性，不能作为同一个基环 \(R\) 上的 Azumaya 代数。改变底环后，它作为自身上的代数当然满足定义；底环是概念的一部分。
+
+\subsection{域情形与矩阵代数}
+\label{b2:subsec:C01:02}
+
+\begin{proposition}\label{b2:prop:azumaya-field-matrix}
+域 \(k\) 上的 Azumaya 代数恰为有限维中心单 \(k\) 代数。对任意非零交换环 \(R\) 及 \(n\ge1\)，\(M_n(R)\) 都是 Azumaya \(R\) 代数。
+\end{proposition}
+\begin{proof}
+域上的忠实有限生成投射模恰为非零有限维向量空间。在此前提下，\cref{b2:thm:csa-enveloping-isomorphism}说明，左右乘作用同构等价于代数中心单。这给出第一个断言的两个方向。
+
+对 \(A=M_n(R)\)，矩阵单位 \(E_{ij}\) 给出 \(A\) 的 \(R\) 基，所以它忠实且有限自由。直接计算得
+\[
+\mu_A(E_{ij}\otimes E_{\ell m}^{\mathrm{op}})(E_{pq})
+=\delta_{jp}\delta_{q\ell}E_{im}.
+\]
+随着 \(i,j,\ell,m\) 变化，右侧恰为 \(\operatorname{End}_R(A)\) 的全部矩阵单位：它把一个指定基向量 \(E_{j\ell}\) 送到一个指定基向量 \(E_{im}\)，并把其余基向量送到零。因此 \(\mu_A\) 把来源的一组基双射到目标的一组基，故为同构。
+\end{proof}
+
+这个证明不要求 \(n\) 在 \(R\) 中可逆，也不要求 \(R\) 没有零因子。例如 \(M_2(\mathbb Z/4\mathbb Z)\) 同样满足定义。Azumaya 性不是把矩阵迹除以矩阵大小所得到的性质。
+
+\ProseParagraphBreak
+另一端的例子是实四元数代数 \(\mathbb H\)。\cref{b2:prop:quaternion-division-or-split}及范数公式\eqref{b2:eq:quaternion-norm}说明，它是中心除 \(\mathbb R\) 代数：非零四元数的范数是四个实数平方之和，因而不为零。所以 \(\mathbb H\) 是 Azumaya \(\mathbb R\) 代数，却不同构于 \(M_2(\mathbb R)\)，因为后者有非零零因子。由此已可预见，Azumaya 性与“在原基环上为矩阵代数”必须区别。

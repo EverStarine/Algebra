@@ -1,42 +1,169 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 6.5 正规化有限性的证明
-% 纲要位置：计划纲要.md，第 1671 行。
-
-\section{正规化有限性的证明}
-\label{b3:sec:0605}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1989 行。
+% 纲要细目（写作范围）：
 % * 用 Noether 正规化把有限型整环的整闭包问题归约为多项式环在有限分式域扩张中的整闭包问题
 % * 对有限可分扩张建立迹配对和公共分母控制引理，利用多项式环的整闭性与 Noether 性得到有限生成
 % * 正特征下单独建立不可分情形所需的有限性引理；通过有限个系数和纯不可分扩张的代数处理完成证明，不把可分迹论证无条件套用，也不默设基域完美
 % * 从整环推广到约化有限型代数的有限个极小素分支；明确总分式环中的正规化与各分支整闭包的关系
 % * 本节接续第6.4节的正规化对象，准确陈述并完整证明有限性定理；不以附录中的一般 Nagata 环定理代替所需引理。结论范围核对见 [V13-2]
-%
+
+\section{正规化有限性的证明}
+\label{b3:sec:0605}
+
+上一节定义了正规化，并在曲线中找到了有限个新生成元。一般有限型代数是否也只需添有限个元素，不能由定义直接得出。本节的关键是控制整元素的分母：可分扩张中用迹配对，不可分扩张中先进行一个只涉及有限个系数的纯不可分变基。整个论证允许基域不完美。这一有限性论证可对照 \cite[\S33, Integral closure of a Noetherian integral domain, pp. 261--263]{Matsumura1989CommutativeRingTheory}；下文把其中的不可分变基与分支处理分别展开。
 
 \subsection{由 Noether 正规化归约整闭包问题}
 \label{b3:subsec:0605:01}
 
-待撰写。
+设 \(C\) 为域 \(k\) 上的有限型整环。由\cref{b3:thm:noether-normalization}，存在代数独立的 \(x_1,\ldots,x_d\in C\)，使
+\[
+A=k[x_1,\ldots,x_d]\subseteq C
+\]
+为有限扩张。记 \(K=\operatorname{Frac}(A)\)、\(L=\operatorname{Frac}(C)\)。\(C\) 的有限组代数生成元在 \(K\) 上代数，且生成 \(L\)，因此 \([L:K]<\infty\)。
+
+\ProseParagraphBreak
+更一般地，若 \(L'/L\) 是任意有限域扩张，则 \(C\) 在 \(L'\) 中的整闭包等于 \(A\) 在 \(L'\) 中的整闭包。一个方向由 \(A\subseteq C\) 直接得到；另一个方向用 \(C/A\) 整和\cref{b3:prop:integral-transitivity}。所以只须证明：多项式环 \(A\) 在任意有限分式域扩张中的整闭包是有限 \(A\) 模。若这一步完成，有限组 \(A\) 模生成元也生成同一个 \(C\) 模，因为 \(A\subseteq C\)。
 
 \subsection{可分扩张中的迹配对与公共分母}
 \label{b3:subsec:0605:02}
 
-待撰写。
+\begin{lemma}\label{b3:lem:normalization-separable-finite}
+设 \(A\) 为整闭 Noether 整环，\(K=\operatorname{Frac}(A)\)，\(L/K\) 为有限可分扩张。则 \(A\) 在 \(L\) 中的整闭包 \(B\) 是有限 \(A\) 模。
+\end{lemma}
+\begin{proof}
+先取一组 \(K\) 基 \(v_1,\ldots,v_n\)；乘以适当的非零 \(A\) 元素，可使各基元素对 \(A\) 整。确切地，若
+\[
+v_i^m+c_1v_i^{m-1}+\cdots+c_m=0,\qquad c_j\in K,
+\]
+选非零 \(d_i\in A\) 清除全部 \(c_j\) 的分母，则 \(u_i=d_iv_i\) 满足首一方程
+\[
+u_i^m+d_ic_1u_i^{m-1}+\cdots+d_i^mc_m=0
+\]
+且其系数均在 \(A\) 内。缩放后 \(u_1,\ldots,u_n\) 仍为 \(K\) 基。
+
+对任一整元素 \(z\in L\)，域迹 \(\operatorname{Tr}_{L/K}(z)\) 属于 \(A\)。事实上，第一卷定理18.2.3把可分扩张的迹写成各 \(K\) 嵌入像之和；每个像都满足 \(z\) 的同一个首一 \(A\) 系数方程，故都对 \(A\) 整。它们的和也整，而迹又属于 \(K\)，由 \(A\) 整闭得此结论。
+
+令
+\[
+T=\Bigl(\operatorname{Tr}_{L/K}(u_i u_j)\Bigr)_{1\le i,j\le n},
+\qquad \Delta=\det T.
+\]
+各 \(u_i u_j\) 都整，故 \(T\) 的条目在 \(A\) 中。第一卷定理18.3.3说明有限可分扩张的迹配对非退化，所以 \(\Delta\ne0\)。给定 \(b\in B\)，写 \(b=\sum_i\lambda_i u_i\)、\(\lambda_i\in K\)。各 \(bu_j\) 仍整，于是
+\[
+T(\lambda_1,\ldots,\lambda_n)^{\mathsf T}
+=\Bigl(\operatorname{Tr}_{L/K}(bu_1),\ldots,
+        \operatorname{Tr}_{L/K}(bu_n)\Bigr)^{\mathsf T}\in A^n.
+\]
+用伴随矩阵乘上式，得每个 \(\Delta\lambda_i\in A\)。因此
+\begin{equation}\label{b3:eq:normalization-trace-denominator}
+B\subseteq\Delta^{-1}\sum_{i=1}^nAu_i.
+\end{equation}
+右端是有限自由 \(A\) 模，左端由\cref{b3:prop:integral-closure-ring}是一个 \(A\) 子模。因 \(A\) 为 Noether 环，有限模的子模有限，故 \(B\) 有限。
+\end{proof}
+
+这一步真正使用可分性的地方是 \(\Delta\ne0\)。在非平凡纯不可分扩张中，域迹恒为零，所有这样的迹矩阵都退化；不能在此情形下仍写 \(\Delta^{-1}\)。下一小节通过有限变基把问题移到可以使用这个引理的地方。
 
 \subsection{正特征不可分扩张中的有限性引理}
 \label{b3:subsec:0605:03}
 
-待撰写。
+\begin{lemma}\label{b3:lem:finite-purely-inseparable-base-change}
+设 \(k\) 为特征 \(p>0\) 的域，\(K=k(x_1,\ldots,x_d)\)，\(L/K\) 为有限扩张。在同一个代数闭包内，可以选取 \(q=p^e\)、有限纯不可分扩张 \(k'/k\) 及元素 \(y_j\) 满足 \(y_j^q=x_j\)，使
+\[
+K'=k'(y_1,\ldots,y_d),\qquad L'=LK'
+\]
+满足 \(L'/K'\) 有限可分。并且 \(A'=k'[y_1,\ldots,y_d]\) 是多项式环，是 \(A=k[x_1,\ldots,x_d]\) 上的有限模。
+\end{lemma}
+\begin{proof}
+取有限组域生成元 \(z_1,\ldots,z_s\)，使 \(L=K(z_1,\ldots,z_s)\)。将每个首一不可约最小多项式写成
+\[
+f_i(T)=g_i(T^{q_i}),\qquad q_i=p^{e_i},\qquad g_i'(T)\ne0.
+\]
+这可以通过反复除去全部指数的公因子 \(p\) 实现。\(g_i\) 仍不可约，否则代入 \(T^{q_i}\) 会分解 \(f_i\)；因而 \(g_i\) 可分。
+
+取 \(q=p^e\) 为所有 \(q_i\) 的公倍数。将各 \(g_i\) 的有限多个系数写成 \(x_1,\ldots,x_d\) 的有理函数，只涉及有限多个 \(k\) 中的分子、分母多项式系数，设其集合为 \(E\)。令
+\[
+k'=k\Bigl(\,c^{1/q}:c\in E\,\Bigr),\qquad y_j=x_j^{1/q}.
+\]
+各次根在固定代数闭包中唯一，\(k'/k\) 有限纯不可分，且 \((k')^q\subseteq k\)。因此 \(y_1,\ldots,y_d\) 在 \(k'\) 上代数独立：若有非零多项式关系，将其取 \(q\) 次幂便得到 \(x_1,\ldots,x_d\) 在 \(k\) 上的非零关系，矛盾。
+
+每个 \(g_i\) 的系数 \(c\in K\) 都有 \(q_i\) 次根属于 \(K'\)。要看到这一点，只须将其分子和分母的每个系数取 \(q_i\) 次根，并把每个 \(x_j\) 换为 \(y_j^{q/q_i}\)；这些系数的次根由已添入的 \(q\) 次根取适当幂得到。写 \(g_i(T)=\sum_jc_{ij}T^j\)，令
+\[
+h_i(T)=\sum_jc_{ij}^{1/q_i}T^j\in K'[T].
+\]
+则 \(h_i(T)^{q_i}=f_i(T)\)，故 \(h_i(z_i)=0\)。而 \(h_i\) 可分：若 \(w\) 同时零化 \(h_i\) 与 \(h_i'\)，取 \(q_i\) 次幂后即得
+\[
+g_i(w^{q_i})=0,\qquad g_i'(w^{q_i})=0,
+\]
+其中导数系数中的整数属于素域，取 \(q_i\) 次幂后不变。这与 \(g_i\) 可分矛盾。因此各 \(z_i\) 在 \(K'\) 上可分，其共同生成的 \(L'/K'\) 也是有限可分扩张。
+
+最后取 \(k'/k\) 的有限基 \(c_1,\ldots,c_t\)。因为 \(y_j^q=x_j\)，\(A'\) 由有限组元素
+\[
+c_l y_1^{a_1}\cdots y_d^{a_d},
+\qquad 1\le l\le t,\quad 0\le a_j<q,
+\]
+作为 \(A\) 模生成。\(d=0\) 或所有 \(q_i=1\) 时，上述构造分别采用空变量组或 \(q=1\)，同样成立。
+\end{proof}
+
+只取“实际用到的有限多个系数”的次根，是这个引理中的有限性所在。任意不完美域的扩张 \(k^{1/p}/k\) 可能无限，因而直接把全部 \(p\) 次根都添进去，反而会失去这里需要的有限模控制。
+
+\begin{theorem}\label{b3:thm:polynomial-normalization-finite}
+设 \(k\) 为任意域，\(A=k[x_1,\ldots,x_d]\)，\(K=\operatorname{Frac}(A)\)。对任意有限扩张 \(L/K\)，\(A\) 在 \(L\) 中的整闭包是有限 \(A\) 模。
+\end{theorem}
+\begin{proof}
+多项式环 \(A\) 是 Noether 唯一分解整环，因而由\cref{b3:prop:ufd-integrally-closed}整闭。若 \(L/K\) 可分，直接应用\cref{b3:lem:normalization-separable-finite}。特征零的情形已全部包括在内。
+
+在正特征中，按\cref{b3:lem:finite-purely-inseparable-base-change}构造 \(A'\)、\(K'\)、\(L'\)。\(A'\) 也是整闭 Noether 多项式环，而 \(L'/K'\) 可分，所以 \(A'\) 在 \(L'\) 中的整闭包 \(B'\) 有限于 \(A'\)。由于 \(A'\) 又有限于 \(A\)，\(B'\) 是有限 \(A\) 模。原来每个对 \(A\) 整的 \(b\in L\) 也对 \(A'\) 整，因此原整闭包 \(B\) 包含于 \(B'\)。\(B\) 是 \(A\) 子模，\(A\) 的 Noether 性于是保证 \(B\) 有限。这里既未假定 \(k\) 完美，也未对不可分扩张使用非退化迹配对。
+\end{proof}
 
 \subsection{约化代数的极小素分支与总分式环}
 \label{b3:subsec:0605:04}
 
-待撰写。
+整环只有一个分式域；约化环可能有多个极小素分支，故应在总分式环中同时处理各分支。下面先给出此前使用的乘积描述的证明。
+
+\begin{proposition}\label{b3:prop:reduced-total-quotient-product}
+设 \(C\ne0\) 为约化 Noether 环，极小素理想为 \(\mathfrak p_1,\ldots,\mathfrak p_r\)，\(K_i=\operatorname{Frac}(C/\mathfrak p_i)\)。则自然映射给出同构
+\begin{equation}\label{b3:eq:reduced-total-quotient-product}
+Q(C)\cong\prod_{i=1}^rK_i.
+\end{equation}
+若 \(B_i\) 为 \(C/\mathfrak p_i\) 在 \(K_i\) 中的整闭包，则 \(C\) 在 \(Q(C)\) 中的整闭包为 \(\prod_iB_i\)。
+\end{proposition}
+\begin{proof}
+由\cref{b3:prop:reduced-ring-no-embedded-primes}和\cref{b3:thm:associated-zero-divisors}，\(C\) 的非零因子组成
+\[
+S=C\setminus\bigcup_i\mathfrak p_i.
+\]
+约化性给出 \(\bigcap_i\mathfrak p_i=0\)，故 \(C\rightarrow\prod_iK_i\) 单射。每个 \(s\in S\) 在所有 \(K_i\) 中非零，因此该映射延伸为单射 \(Q(C)=S^{-1}C\rightarrow\prod_iK_i\)。
+
+为证明满射，对每个 \(i\) 选
+\[
+c_i\in\bigcap_{j\ne i}\mathfrak p_j\setminus\mathfrak p_i.
+\]
+这样的 \(c_i\) 可由逐个取 \(a_j\in\mathfrak p_j\setminus\mathfrak p_i\) 后相乘得到；\(r=1\) 时取 \(c_1=1\)。给定第 \(i\) 个域中的分式 \(\bar a/\bar b\)，其中 \(a,b\in C\)、\(b\notin\mathfrak p_i\)，令
+\[
+s=bc_i+\sum_{j\ne i}c_j.
+\]
+它模 \(\mathfrak p_i\) 等于非零的 \(bc_i\)，模每个 \(\mathfrak p_j\)、\(j\ne i\) 等于非零的 \(c_j\)，所以 \(s\in S\)。分式 \(ac_i/s\) 的第 \(i\) 个坐标就是 \(\bar a/\bar b\)，其余坐标全零。逐坐标相加即可得到任意元组，满射得证。
+
+若 \(b\in Q(C)\) 对 \(C\) 整，投影它的首一方程可见每个坐标 \(b_i\) 属于 \(B_i\)。反之，若各 \(b_i\in B_i\)，为每个 \(i\) 取一个零化 \(b_i\) 的首一 \((C/\mathfrak p_i)\) 系数多项式，并把系数提升为首一 \(f_i(T)\in C[T]\)。对元组 \(b=(b_i)_i\)，多项式 \(\prod_i f_i(T)\) 在每个坐标上都有一个为零的因子 \(f_i(b_i)=0\)，故 \(\prod_i f_i(b)=0\)。这个首一方程证明 \(b\) 对 \(C\) 整。
+\end{proof}
+
+特别地，总分式环中的不同分支彼此独立，正规化也逐分支进行。这里的有限个分支来自 Noether 性；约化性则保证环嵌入这些分式域的乘积。若原环非约化，本书按\cref{b3:def:normalization}的约定先取约化商，再谈这一正规化。
 
 \subsection{正规化有限性定理的完整证明}
 \label{b3:subsec:0605:05}
 
-待撰写。
+\begin{theorem}\label{b3:thm:normalization-finite}
+设 \(k\) 为任意域。
+\begin{enumerate}
+\item 若 \(C\) 为有限型 \(k\) 整环，\(L'/\operatorname{Frac}(C)\) 为有限域扩张，则 \(C\) 在 \(L'\) 中的整闭包是有限 \(C\) 模。特别地，\(C\) 的正规化有限。
+\item 若 \(C\) 为约化有限型 \(k\) 代数，则它在总分式环中的正规化是有限 \(C\) 模。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+第一项取\cref{b3:thm:noether-normalization}给出的有限扩张 \(A=k[x_1,\ldots,x_d]\subseteq C\)。\subsecref{b3:subsec:0605:01}已经核验：\(L'/\operatorname{Frac}(A)\) 有限，且 \(A\) 与 \(C\) 在 \(L'\) 中的整闭包相同。\cref{b3:thm:polynomial-normalization-finite}保证此整闭包有限于 \(A\)，故也有限于 \(C\)。
+
+第二项中，\(C=0\) 时结论直接成立。否则 \(C\) 是 Noether 环，有有限个极小素理想 \(\mathfrak p_i\)。每个 \(C/\mathfrak p_i\) 都是有限型 \(k\) 整环，由第一项其正规化 \(B_i\) 为有限 \(C/\mathfrak p_i\) 模，从而也是有限 \(C\) 模。\cref{b3:prop:reduced-total-quotient-product}把 \(C\) 的正规化识别为有限乘积 \(\prod_iB_i\)，所以它仍是有限 \(C\) 模。
+\end{proof}
+
+这一定理保证下一节计算导子理想时所用的有限扩张确实存在。其假设是“域上的有限型代数”，不能只保留“Noether 环”便照搬结论；而可分性只属于证明的中间步骤，并非最终定理对基域或分式域扩张的附加限制。

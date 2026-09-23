@@ -1,30 +1,112 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.2 Nakayama 引理
-% 纲要位置：计划纲要.md，第 1567 行。
+% 纲要位置：工作记录/计划纲要.md，第 1885 行。
+% 纲要细目（写作范围）：
+% * 行列式技巧
+% * Jacobson 根版本与局部环版本
+% * 极小生成元及剩余向量空间
 
 \section{Nakayama 引理}
 \label{b3:sec:0302}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 行列式技巧
-% * Jacobson 根版本与局部环版本
-% * 极小生成元及剩余向量空间
-%
+在局部环上，把一个有限模模掉极大理想，就得到剩余域上的有限维向量空间。Nakayama 引理说明，向量空间中的生成元可以提升为原模的生成元。这里的有限性十分关键；证明它的行列式技巧，还将在整依赖中给出首一方程。
 
 \subsection{行列式技巧}
 \label{b3:subsec:0302:01}
 
-待撰写。
+\begin{theorem}[行列式技巧]\label{b3:thm:determinant-trick}
+设 \(M\) 由 \(n\ge1\) 个元素生成，\(I\subseteq R\) 为理想，
+\(u:M\rightarrow M\) 为 \(R\) 线性自同态，并且 \(u(M)\subseteq IM\)。则存在
+\[
+P(T)=T^n+c_1T^{n-1}+\cdots+c_n,\qquad c_i\in I^i,
+\]
+使 \(P(u)=0\) 作为 \(M\) 的自同态成立。
+\end{theorem}
+\begin{proof}
+选生成元 \(m_1,\ldots,m_n\)，写
+\(u(m_i)=\sum_j a_{ij}m_j\)、\(a_{ij}\in I\)。在自同态环
+\(\operatorname{End}_R(M)\) 中，标量作用与 \(u\) 交换，所以它们生成一个交换子环 \(R[u]\)；这不要求整个自同态环交换。将上述等式写成
+\[
+(uI_n-A)\begin{pmatrix}m_1\\ \vdots\\m_n\end{pmatrix}=0,
+\qquad A=(a_{ij}).
+\]
+在交换环 \(R[u]\) 上左乘伴随矩阵，得到
+\[
+\det(uI_n-A)m_i=0\qquad(1\le i\le n).
+\]
+令 \(P(T)=\det(TI_n-A)\in R[T]\)。行列式的展开中，\(T^{n-i}\) 的系数每项都含 \(i\) 个 \(A\) 的元素，故 \(c_i\in I^i\)。由于 \(P(u)\) 零化全部生成元，它零化整个 \(M\)。
+\end{proof}
+
+这称为\term[hanglieshi-jiqiao]{行列式技巧}[determinant trick]。其要点是使用生成元而不要求基：矩阵 \(A\) 未必唯一，所产生的首一多项式也不必唯一，但它确实零化给定自同态。若 \(M\) 自由且所取生成元是一组基，便得到熟悉的 Cayley–Hamilton 恒等式。上述一般版本可对照 Matsumura 的《Commutative Ring Theory》\cite[Theorem 2.1, pp. 7--8]{Matsumura1989CommutativeRingTheory}。
+
+\ProseParagraphBreak
+若 \(M=IM\)，对 \(u=\operatorname{id}_M\) 使用该定理，得到
+\[
+(1+c_1+\cdots+c_n)M=0.
+\]
+也就是说，存在 \(a\in I\) 使 \((1-a)M=0\)。有限生成将逐个生成元的关系合成了一个统一的零化元。
 
 \subsection{Jacobson 根版本与局部环版本}
 \label{b3:subsec:0302:02}
 
-待撰写。
+\begin{definition}\label{b3:def:jacobson-radical}
+交换环 \(R\) 的\term[Jacobson-gen]{Jacobson 根}[Jacobson radical]为
+\[
+J(R)=\bigcap_{\mathfrak m\text{ 极大}}\mathfrak m.
+\]
+零环采用空交为整个环的约定。
+\end{definition}
+\symidx{\(J(R)\)：交换环的 Jacobson 根}
+
+若 \(a\in J(R)\)，则 \(1-a\) 不属于任何极大理想，因此是单位。更一般地，每个 \(1-ra\)、\(r\in R\)，都是单位。反过来，若这对所有 \(r\) 成立而 \(a\notin\mathfrak m\)，可在域 \(R/\mathfrak m\) 中取 \(\bar a\) 的逆并提升为 \(r\)，则 \(1-ra\in\mathfrak m\)，矛盾。这给出 Jacobson 根的单位判据；在局部环上，\(J(R)\) 就是唯一的极大理想。
+
+\begin{theorem}[Nakayama 引理]\label{b3:thm:nakayama}
+设 \(M\) 为有限生成 \(R\) 模，\(I\subseteq J(R)\)。
+\begin{enumerate}
+\item 若 \(IM=M\)，则 \(M=0\)。
+\item 若 \(N\subseteq M\) 且 \(M=N+IM\)，则 \(M=N\)。
+\end{enumerate}
+第二项实际上只需 \(M/N\) 有限生成，而不必要求 \(M\) 本身有限生成。特别地，在局部环 \((R,\mathfrak m,\kappa)\) 上，有限生成模满足
+\(M/\mathfrak mM=0\) 当且仅当 \(M=0\)。
+\end{theorem}
+\begin{proof}
+第一项中，若 \(M\ne0\)，选有限个生成元。行列式技巧给出 \(a\in I\) 使 \((1-a)M=0\)。由 \(I\subseteq J(R)\)，\(1-a\) 为单位，乘其逆得到 \(M=0\)，矛盾；零模情形本来成立。第二项对有限生成商模 \(Q=M/N\) 使用第一项，因为原等式恰好表示 \(IQ=Q\)。局部版本取 \(I=\mathfrak m\)。
+\end{proof}
+
+\term[Nakayama-yinli]{Nakayama 引理}[Nakayama's lemma]的这一交换环证明，也可见\cite[Theorem 2.2 and Corollary, p. 8]{Matsumura1989CommutativeRingTheory}。第二卷定理14.2.1则用 Jacobson 根的单位判据直接处理非交换模，没有把交换行列式用于非交换系数。
+
+\ProseParagraphBreak
+两项假设都有明确作用。对局部环 \(R=\mathbb Z_{(p)}\) 的模 \(M=\mathbb Q\)，有 \(pM=M\ne0\)，因为 \(M\) 不有限生成：有限个有理数只能给出有统一上界的负 \(p\) 指数。若省去 \(I\subseteq J(R)\)，则 \(R=\mathbb Z\)、\(I=(2)\)、\(M=\mathbb Z/3\mathbb Z\) 满足 \(IM=M\ne0\)。有限生成与 Jacobson 根条件不能相互替代。
+
+\begin{corollary}\label{b3:cor:finite-surjective-endomorphism}
+交换环上的有限生成模的每个满自同态都是同构。
+\end{corollary}
+\begin{proof}
+设 \(u:M\rightarrow M\) 满。赋予 \(M\) 一个 \(R[T]\) 模结构，令 \(T\) 作用为 \(u\)；原来的有限个 \(R\) 生成元也生成此 \(R[T]\) 模。于是 \(TM=M\)。用行列式技巧所得的一般结论，而不是要求 \((T)\subseteq J\Bigl(R[T]\Bigr)\) 的版本，得到
+\(\Bigl(1-Tg(T)\Bigr)M=0\)，其中 \(g(T)\in R[T]\)。所以
+\(u\,g(u)=g(u)\,u=\operatorname{id}_M\)，给出了双侧逆。
+\end{proof}
 
 \subsection{极小生成元与剩余向量空间}
 \label{b3:subsec:0302:03}
 
-待撰写。
+\begin{corollary}\label{b3:cor:local-generators}
+设 \((R,\mathfrak m,\kappa)\) 为局部环，\(M\) 有限生成。
+元素 \(m_1,\ldots,m_r\) 生成 \(M\)，当且仅当其剩余类生成
+\(\kappa\) 向量空间 \(M/\mathfrak mM\)。它们构成不可再删去元素的极小生成组，当且仅当剩余类构成该向量空间的一组基。因此所有极小生成组的元素个数都等于
+\[
+\mu_R(M)\coloneqq\dim_\kappa(M/\mathfrak mM).
+\]
+\end{corollary}
+\begin{proof}
+正向由取商得到。反向令 \(N=\sum_i Rm_i\)，剩余类生成意味着 \(M=N+\mathfrak mM\)，由\cref{b3:thm:nakayama}有 \(M=N\)。若剩余类为基，删去任一项便不再生成剩余向量空间，故不再生成 \(M\)。若某个极小生成组的剩余类线性相关，可从中删去至少一项而保持对剩余向量空间的生成性；刚证明的反向蕴含说明原模仍被其余元素生成，与极小性矛盾。
+\end{proof}
+\symidx{\(\mu_R(M)\)：局部环上有限模的最少生成元个数}
+
+例如在 \(R=k[x,y]_{(x,y)}\) 中，\(\mathfrak m=(x,y)\) 满足
+\(\mathfrak m/\mathfrak m^2\cong k^2\)，基为 \(x,y\) 的类。确实一次项给出这两个独立坐标，极大理想平方恰好没有一次项；局部化的分母常数项非零，只会把一次项乘以一个非零标量。因此 \(\mathfrak m\) 需要两个生成元，不是主理想。同样，
+\((x,y)^r/(x,y)^{r+1}\) 的基由全次数恰为 \(r\) 的 \(r+1\) 个单项式给出，故 \(\mu_R(\mathfrak m^r)=r+1\)。
+
+\ProseParagraphBreak
+极小生成组不是自由基。例如 \(R=k[\epsilon]/(\epsilon^2)\) 上的模
+\(M=R/(\epsilon)\) 只需一个生成元，但该生成元被非零的 \(\epsilon\) 零化。余向量空间的维数测量生成元数，并没有排除原模的关系。上述极小生成组的结论也可对照\cite[Theorem 2.3, pp. 8--9]{Matsumura1989CommutativeRingTheory}。

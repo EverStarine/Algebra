@@ -1,30 +1,102 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.1 理想进滤过
-% 纲要位置：计划纲要.md，第 1892 行。
+% 纲要位置：工作记录/计划纲要.md，第 2210 行。
+% 纲要细目（写作范围）：
+% * I 进拓扑与分离性
+% * 模滤过和伴随分次
+% * Rees 环与有限生成
+
 
 \section{理想进滤过}
 \label{b3:sec:1301}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * I 进拓扑与分离性
-% * 模滤过和伴随分次
-% * Rees 环与有限生成
-%
+多项式只含有限个系数，形式幂级数却要同时保存任意高阶的系数。把一个对象模掉 \(I,I^2,I^3,\ldots\)，就是逐次保留更多信息的代数方法。本节先说明“两个元素相差很小”的含义；这里的“小”由理想的幂衡量，不依赖绝对值。
 
 \subsection{\texorpdfstring{\(I\)}{I} 进拓扑与分离性}
 \label{b3:subsec:1301:01}
 
-待撰写。
+\begin{definition}\label{b3:def:adic-topology}
+设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模。以
+\[
+x+I^nM\qquad(x\in M,\ n\ge0)
+\]
+为邻域基，得到 \(M\) 的 \term[I-jin-tuopu]{\(I\) 进拓扑}[I-adic topology]：一个集合是开集，是指其中每个点都包含在某个仍位于该集合内的上述邻域中。若
+\(\bigcap_{n\ge0}I^nM=0\)，称此拓扑\term[fenli-tuopu]{分离}[separated]。序列 \(x_j\) 收敛于 \(x\)，是指对每个 \(n\)，充分大的 \(j\) 都有 \(x_j-x\in I^nM\)；若对每个 \(n\)，充分大的 \(i,j\) 都有 \(x_i-x_j\in I^nM\)，则称它为 Cauchy 序列。
+\end{definition}
+
+由于 \(I^{n+1}M\subseteq I^nM\)，这些集合确实给出拓扑。加法与取负连续；\(R\) 自身的 \(I\) 进拓扑还使乘法连续，因为 \(I^n\) 是理想。两个点在每个商 \(M/I^nM\) 中都相同，当且仅当它们的差属于 \(\bigcap_nI^nM\)。因此分离性恰好表示各阶商能够区分不同元素，也等价于此拓扑为 Hausdorff 拓扑。
+
+\ProseParagraphBreak
+在 \(k[x]\) 中，\((x)\) 进收敛表示每个固定次数的系数最终不再改变。例如 \(1+x+\cdots+x^j\) 是 Cauchy 序列，却在 \(k[x]\) 内没有极限。这说明分离性与极限是否存在是两个条件。另取 \(R=k\times k\)、\(I=k\times0\)，则 \(I^n=I\) 对所有 \(n\ge1\) 成立，拓扑不分离；第二个坐标以外的信息已经在第一个商中被永久遗失。
+
+\begin{proposition}\label{b3:prop:adic-closure}
+设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模，并在 \(M\) 上取 \(I\) 进拓扑。子模 \(N\subseteq M\) 的闭包为
+\[
+\overline N=\bigcap_{n\ge0}(N+I^nM).
+\]
+特别地，\(N\) 闭当且仅当 \(M/N\) 的 \(I\) 进拓扑分离。每个模同态都是相应理想进拓扑下的连续映射。
+\end{proposition}
+\begin{proof}
+点 \(x\) 属于闭包，恰指每个邻域 \(x+I^nM\) 都与 \(N\) 相交，等价于 \(x\in N+I^nM\)。又
+\(I^n(M/N)=(I^nM+N)/N\)，得到闭性的刻画。若 \(f:M\rightarrow P\) 线性，则 \(f(I^nM)\subseteq I^nP\)，所以原点处连续；平移后处处连续。
+\end{proof}
 
 \subsection{模滤过与伴随分次}
 \label{b3:subsec:1301:02}
 
-待撰写。
+\begin{definition}\label{b3:def:good-adic-filtration}
+设 \(R\) 为交换环、\(M\) 为 \(R\) 模。下降的子模列
+\(M=F^0M\supseteq F^1M\supseteq\cdots\) 称为一个\term[mo-lvguo]{模滤过}[module filtration]。给定理想 \(I\subseteq R\)，若 \(IF^nM\subseteq F^{n+1}M\) 对每个 \(n\ge0\) 成立，则称它为 \(I\) 滤过；若还有 \(IF^nM=F^{n+1}M\) 对充分大的 \(n\) 成立，则称它为\term[wending-lvguo]{稳定滤过}[stable filtration]。对 \(I\) 滤过，相应伴随分次模为
+\[
+\operatorname{gr}_F(M)=\bigoplus_{n\ge0}F^nM/F^{n+1}M.
+\]
+它是 \(\operatorname{gr}_I(R)\) 模，作用由代表元相乘定义。
+\end{definition}
+
+良定义需要同时检查两个代表元：若 \(a\in I^r\)、\(x\in F^nM\)，更换 \(a\) 增加的项属于 \(I^{r+1}F^nM\subseteq F^{n+r+1}M\)，更换 \(x\) 增加的项也属于此子模。\cref{b3:def:associated-graded-adic}中的滤过 \(F^nM=I^nM\) 是从第一步就稳定的特例。
+
+\begin{proposition}\label{b3:prop:stable-filtration-equivalent}
+设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模，\(F^nM\) 为从次数 \(c\ge0\) 起稳定的 \(I\) 滤过。则对 \(n\ge c\) 有
+\[
+F^nM=I^{n-c}F^cM,\qquad
+I^nM\subseteq F^nM\subseteq I^{n-c}M.
+\]
+因而 \(F^nM\) 与 \(I^nM\) 定义同一拓扑，也给出同一个相容余类的极限对象。
+\end{proposition}
+\begin{proof}
+第一个等式由稳定性归纳得到。由 \(F^0M=M\) 及 \(IF^nM\subseteq F^{n+1}M\)，归纳得左侧包含；右侧包含由第一个等式得到。每个滤过中的邻域都含有另一滤过的某个邻域，因此拓扑相同。相容余类系统可以先投到较粗的商，再用上述包含取回任意给定精度的余类；相容性保证选择更细精度时答案不变。这两个转换互逆。
+\end{proof}
+
+伴随分次保存各阶新增的信息，但未必恢复原环。例如 \(\mathbb Z/p^2\mathbb Z\) 与 \(\mathbb F_p[t]/(t^2)\) 的极大理想进伴随分次环都为 \(\mathbb F_p[T]/(T^2)\)，原环的特征却分别为 \(p^2\) 与 \(p\)。后面将把全部商及它们之间的映射一起保存，而不只保存相邻两层的差。
 
 \subsection{Rees 环与有限生成}
 \label{b3:subsec:1301:03}
 
-待撰写。
+\begin{definition}\label{b3:def:rees-algebra-module}
+设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模，\(F^nM\) 为 \(I\) 滤过。引入形式变量 \(t\)，定义 \term[rees-huan]{Rees 环}[Rees algebra]与 Rees 模
+\[
+\mathcal R_I(R)=\bigoplus_{n\ge0}I^nt^n\subseteq R[t],\qquad
+\mathcal R_F(M)=\bigoplus_{n\ge0}F^nM\,t^n.
+\]
+后者的作用为 \((at^r)(xt^n)=(ax)t^{r+n}\)。这只是给各阶加上标记；不要求原模中的元素本来具有次数。
+\symidx{\(\mathcal R_I(R)\)：理想的 Rees 环}
+\symidx{\(\mathcal R_F(M)\)：滤过的 Rees 模}
+\end{definition}
+
+\begin{proposition}\label{b3:prop:rees-finiteness}
+设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模。则 \(\mathcal R_I(R)\) 为 Noether 环。对 \(M\) 上的 \(I\) 滤过，\(\mathcal R_F(M)\) 作为 \(\mathcal R_I(R)\) 模有限生成当且仅当滤过稳定。
+\end{proposition}
+\begin{proof}
+写 \(I=(a_1,\ldots,a_s)\)，则 \(\mathcal R_I(R)=R[a_1t,\ldots,a_st]\)，由 Hilbert 基定理与商环的 Noether 性得到结论。
+
+若滤过从 \(c\) 起稳定，选 \(F^0M,\ldots,F^cM\) 各自的有限组生成元；这些子模有限生成是因为 \(M\) 为 Noether 模。把这些生成元放入相应次数后，由 \(F^nM=I^{n-c}F^cM\) 可知它们生成全部 Rees 模。
+
+反向可取齐次生成元 \(x_jt^{d_j}\)：将任意有限组生成元分解成齐次部分，所得有限组仍生成。设 \(c=\max_jd_j\)，则
+\[
+F^nM=\sum_jI^{n-d_j}x_j\quad(n\ge c).
+\]
+于是 \(F^{n+1}M=IF^nM\) 对 \(n\ge c\) 成立。零模的情形直接成立。
+\end{proof}
+
+\cref{b3:lem:induced-filtration-bound}的证明已经使用过 Rees 环。这里把它单独命名，是为了强调有限性如何同时控制所有次数：每一层分别有限生成还不够，所需的是全部层能由有界次数内的有限组齐次元素生成。

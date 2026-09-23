@@ -1,9 +1,109 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 B 第 1 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.1 Clifford 代数的泛性质
+% 纲要位置：工作记录/计划纲要.md，第 1597 行。
+
+% 纲要要点（供目录核对）：
+% * Clifford 代数的泛性质
+% #### B.1.1 泛性质与正交直和
+% #### B.1.2 有序单项式与维数
+% #### B.1.3 一至三维的计算
 
 \section{Clifford 代数的泛性质}
 \label{b2:sec:B01}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+把二次取值写成乘法关系 \(v^2=q(v)1\)，会得到多大的代数？\cref{b2:thm:clifford-universal}已经说明这种构造的泛性质，却还没有证明向量空间确实嵌入其中。本节补足这一点，并计算几个能与四元数直接比较的例子。始终设 \(\operatorname{char}k\ne2\)、\(\dim_kV=n<\infty\)，记 \(b=\beta_q/2\)；这里允许 \(q\) 退化。
 
-待撰写。
+\subsection{泛性质与正交直和}
+\label{b2:subsec:B01:01}
+
+回顾\cref{b2:def:clifford-algebra}，\(C=\operatorname{Cl}(V,q)\) 是张量代数按关系 \(v\otimes v-q(v)1\) 所取的商。线性映射 \(f:V\to A\) 只要满足 \(f(v)^2=q(v)1_A\)，就唯一延伸为含幺代数同态 \(C\to A\)。因此等距映射 \(V\to W\) 诱导 Clifford 代数同态；等距同构及其逆诱导互逆同构。这个结论不需要选择基。
+
+\ProseParagraphBreak
+关系混合了次数二与零，却保留次数的奇偶性。故 \(C=C^0\oplus C^1\) 是按 \(\mathbb Z/2\mathbb Z\) 分次的代数，其中 \(C^0\) 是\term[Clifford-ou-zidaishu]{偶 Clifford 代数}[even Clifford algebra]。关系理想由偶元素生成，因而是奇偶分次理想；这解释了为什么商中的两部分仍是直和，而不只是两类生成元的名称。
+\symidx{\(\operatorname{Cl}^0(V,q)\)：偶 Clifford 代数}
+
+\ProseParagraphBreak
+正交分量的向量在 Clifford 代数中反交换，普通张量积却会使不同因子交换。为保存这个符号，若 \(A,B\) 是奇偶分次代数，在向量空间 \(A\otimes_kB\) 上规定
+\[
+(a\otimes b)(a'\otimes b')=(-1)^{|b||a'|}aa'\otimes bb'
+\]
+对齐次元素成立，再双线性延拓。所得代数记作 \(A\widehat\otimes B\)，称为\term[fen-ci-zhangliang-ji]{分次张量积}[graded tensor product]。三因子相乘时，两种结合方式的符号指数同为 \(|b||a'|+|b||a''|+|b'||a''|\)，所以它满足结合律。
+\symidx{\(A\widehat\otimes B\)：按奇偶符号相乘的分次张量积}
+
+\begin{proposition}\label{b2:prop:B-clifford-orthogonal-sum}
+若 \((V,q)=(U,q_U)\perp(W,q_W)\)，则有自然的分次代数同构
+\[
+\operatorname{Cl}(V,q)\cong
+\operatorname{Cl}(U,q_U)\widehat\otimes\operatorname{Cl}(W,q_W).
+\]
+\end{proposition}
+\begin{proof}
+把 \(u+w\) 送到 \(u\otimes1+1\otimes w\)。两个交叉项符号相反，平方等于 \(q_U(u)+q_W(w)\)，故由\cref{b2:thm:clifford-universal}得到从左到右的同态。反向把 \(a\otimes b\) 送到两因子在 \(\operatorname{Cl}(V,q)\) 中的像之积。正交关系给出 \(uw=-wu\)；把两个单项式的各个向量依次交换，得到 \(ba'=(-1)^{|b||a'|}a'b\)，所以反向映射尊重上述乘法。两个复合都在生成向量上为恒等，进而在整个代数上为恒等。
+\end{proof}
+
+\subsection{有序单项式与维数}
+\label{b2:subsec:B01:02}
+
+取 \(V\) 的任意有序基 \(e_1,\ldots,e_n\)。极化关系给出
+\[
+e_i^2=q(e_i),\qquad e_je_i=-e_ie_j+2b(e_i,e_j)\quad(j>i).
+\]
+利用第二式交换逆序字母，再用第一式消去相邻的重复字母，每个字都化为严格递增字的线性组合。可以按字长、同一字长下的逆序数依次归纳，保证这个过程终止。困难在于证明化简后没有额外的线性关系。
+
+\begin{theorem}[Clifford 代数的基]\label{b2:thm:B-clifford-basis}
+下列 \(2^n\) 个元素构成 \(\operatorname{Cl}(V,q)\) 的基：
+\[
+1,\qquad e_{i_1}\cdots e_{i_r}
+\quad(1\le i_1<\cdots<i_r\le n,\ 1\le r\le n).
+\]
+特别地，自然映射 \(V\to\operatorname{Cl}(V,q)\) 单射；当 \(n>0\) 时，偶、奇部分的维数都为 \(2^{n-1}\)。
+\end{theorem}
+\begin{proof}
+生成性已经证明。在线性空间 \(\Lambda V\) 上，令 \(\varepsilon_v(\omega)=v\wedge\omega\)，并定义降一次数的算子
+\[
+\iota_v(w_1\wedge\cdots\wedge w_r)
+=\sum_{j=1}^r(-1)^{j-1}b(v,w_j)
+ w_1\wedge\cdots\wedge\widehat w_j\wedge\cdots\wedge w_r,
+\qquad\iota_v(1)=0.
+\]
+右侧对 \(w_1,\ldots,w_r\) 交替且多线性，因而由\cref{b2:prop:exterior-alternating-universal}定义了外幂上的线性算子。两次删去不同位置的项成对抵消，故 \(\iota_v^2=0\)；外乘也满足 \(\varepsilon_v^2=0\)。直接将首个因子 \(v\) 与其余因子分开，有
+\[
+\iota_v\varepsilon_v+\varepsilon_v\iota_v=b(v,v)\operatorname{id}=q(v)\operatorname{id}.
+\]
+所以 \(T_v=\varepsilon_v+\iota_v\) 满足 \(T_v^2=q(v)\operatorname{id}\)，且对 \(v\) 线性。泛性质给出 \(C\to\operatorname{End}_k(\Lambda V)\)。
+
+假设有序单项式有非零线性关系，取其中最大长度 \(r\)，让相应算子作用于 \(1\in\Lambda^0V\)。长度 \(r\) 的项在外次数 \(r\) 上恰为 \(e_{i_1}\wedge\cdots\wedge e_{i_r}\)，因为只有每次选择外乘才能达到这个次数；较短的项不能贡献次数 \(r\)。\cref{b2:thm:exterior-power-basis}说明这些外积线性无关，故所有最大长度的系数为零，与 \(r\) 的选取矛盾。这证明独立性。偶、奇子集数相等，是因为固定一个指标并改变它是否属于子集，给出两类之间的双射。
+\end{proof}
+
+以后把 \(V\) 与其在 \(C\) 中的像等同。若按字长滤过 \(C\)，有序基还说明次数恰为 \(r\) 的商以长度 \(r\) 的单项式为基。最高次数的关系变成 \(v^2=0\)，于是
+\begin{equation}\label{b2:eq:B-clifford-associated-graded}
+\operatorname{gr}\operatorname{Cl}(V,q)\cong\Lambda V.
+\end{equation}
+这是一项自然的分次代数同构，并不意味着 \(C\) 本身与 \(\Lambda V\) 同构；例如非零的 \(q(v)\) 使 \(v^2\ne0\)。
+
+\subsection{一至三维的计算}
+\label{b2:subsec:B01:03}
+
+一维型 \(\langle a\rangle\) 给出 \(k[t]/(t^2-a)\)。当 \(a=0\) 时这是含非零平方零元的代数；当 \(a\ne0\) 是平方时，它同构于 \(k\times k\)；当 \(a\) 非平方时，它是二次域。单是空间维数相同，不能确定 Clifford 代数的单性。
+
+\begin{proposition}\label{b2:prop:B-low-clifford}
+设 \(a,b,c\in k^\times\)。则
+\[
+\operatorname{Cl}\Bigl(\langle a,b\rangle\Bigr)\cong(a,b)_k,
+\qquad
+\operatorname{Cl}^0\Bigl(\langle a,b\rangle\Bigr)
+\cong k[t]/(t^2+ab),
+\]
+并且
+\[
+\operatorname{Cl}^0\Bigl(\langle a,b,c\rangle\Bigr)
+\cong(-ab,-ac)_k.
+\]
+\end{proposition}
+\begin{proof}
+对角基满足 \(e_1^2=a,e_2^2=b,e_2e_1=-e_1e_2\)，这正是\cref{b2:def:quaternion-algebra}的关系；两边均以 \(1,e_1,e_2,e_1e_2\) 为基，所以关系给出的满同态是同构。偶部分以 \(1,e_1e_2\) 为基，且 \((e_1e_2)^2=-ab\)，得到第二式。
+
+三维情形令 \(u=e_1e_2,v=e_1e_3\)。计算得 \(u^2=-ab,v^2=-ac,uv=-vu\)。又 \(uv=-a e_2e_3\)，其中 \(a\ne0\)，所以 \(1,u,v,uv\) 生成全部偶部分。这四个元素由\cref{b2:thm:B-clifford-basis}线性无关，给出第三式。
+\end{proof}
+
+例如正定实三维型的偶 Clifford 代数为 \((-1,-1)_{\mathbb R}=\mathbb H\)，正定实二维型的偶部分则是 \(\mathbb C\)。两者都在偶部分中出现，而不是把原二次空间直接当成四元数或复数的乘法代数。

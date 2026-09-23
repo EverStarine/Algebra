@@ -1,0 +1,118 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：### F.5 标准单项式与商环中的计算
+% 纲要位置：工作记录/计划纲要.md，第 1030 行。
+
+% 纲要要点（供目录核对）：
+% #### F.5.1 标准单项式构成商环的基
+% * 定义不属于首项理想的标准单项式。
+% * 用正规余式证明：这些单项式的剩余类构成 \(k[x_1,\ldots,x_n]/I\) 的一组 \(k\) 基，分别说明生成性与独立性。
+% * 证明商环有限维当且仅当每个变量的某个正次幂属于首项理想，并用标准单项式计数维数。
+% #### F.5.2 商环的运算、单位与零因子
+% * 用“先相加或相乘，再取正规余式”的办法完成商环运算。
+% * 在 \(\mathbb Q[x,y]/(x-y,y^2-1)\) 中使用基 \(1,y\) 写出乘法，并计算零因子、幂等元和可逆元。
+% * 证明并运用单位判据：\(f+I\) 可逆当且仅当 \(1\in I+(f)\)；从生成关系中提取逆元。
+% * 与 \(\mathbb Q[x,y]/(x,y^2)\) 比较，说明商环维数相同并不意味着不同解的个数相同。
+% 节末用一个短段比较交换单项式和非交换字：前者按指数比较整除，后者需要保留字母顺序并检查连续子字的重叠。阅读第二卷第20.6节时，再系统学习 Diamond 引理及非交换 Gröbner 基。
+% ---
+
+\section{标准单项式与商环中的计算}
+\label{b1:sec:F05}
+
+正规余式不只回答一个多项式是否属于理想，还为商环的每个元素选出一个确定的坐标表达。这样，商环中的乘法可以回到多项式乘法，再用同一个 Gröbner 基整理。本节只使用向量空间的通常知识，不要求预先学习第二卷的一般模论。
+
+\subsection{标准单项式构成商环的基}
+\label{b1:subsec:F05:01}
+
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备全局单项式序 \(\prec\)，\(I\subseteq R\) 为理想，\(G\) 为 \(I\) 的 Gröbner 基。若单项式不属于 \(\operatorname{in}_{\prec}(I)\)，则称它为 \(I\) 关于 \(\prec\) 的\term[biaozhun-danxiangshi]{标准单项式}[standard monomial]，全体记为 \(\mathcal B\)。由\cref{b1:prop:F-monomial-membership}，这恰好是不被任何 \(\operatorname{LM}(g)\)、\(g\in G\)，整除的单项式。
+\symidx{\(\mathcal B\)：给定理想及单项式序下的标准单项式集合}
+
+\begin{theorem}[标准单项式基]\label{b1:thm:F-standard-monomial-basis}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想，\(G\) 为 \(I\) 的 Gröbner 基。令 \(\mathcal B\) 为不属于 \(\operatorname{in}_{\prec}(I)\) 的全部单项式所成集合。则 \(\mathcal B\) 中单项式的剩余类构成 \(R/I\) 的一组 \(k\) 向量空间基；对任意 \(f\in R\)，商类 \(f+I\) 在这组基下的坐标由正规余式 \(\operatorname{NF}_G(f)\) 给出。
+\end{theorem}
+\begin{proof}
+\cref{b1:thm:F-division}将 \(f\) 写成 \(\sum_iq_ig_i+r\)，其中 \(r\) 只含标准单项式。所以 \(f+I=r+I\)，证明这些剩余类生成商空间。
+
+若标准单项式之间有非平凡的有限线性关系，其所代表的非零多项式 \(h\) 属于 \(I\)。但是 \(h\) 的首单项式仍是标准单项式，不能属于 \(\operatorname{in}_{\prec}(I)\)，与 \(h\in I\) 矛盾。因此它们线性无关。上述余式就是\cref{b1:thm:F-normal-form}的唯一正规余式，给出唯一的基坐标。
+\end{proof}
+
+\begin{corollary}\label{b1:cor:F-finite-quotient}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想，并令 \(\mathcal B\) 为相应的标准单项式集合。则 \(R/I\) 为有限维 \(k\) 空间，当且仅当对每个变量 \(x_i\)，存在正整数 \(d_i\) 使 \(x_i^{d_i}\in\operatorname{in}_{\prec}(I)\)。成立时
+\[
+\dim_k(R/I)=|\mathcal B|\le d_1\cdots d_n.
+\]
+\end{corollary}
+\begin{proof}
+若每个这样的幂都属于首项理想，则标准单项式的第 \(i\) 个指数小于 \(d_i\)，所以只可能有至多 \(d_1\cdots d_n\) 个。基定理便给出有限维性及计数公式。反过来，若对某个 \(i\) 的全部正次幂均不属于首项理想，\(1,x_i,x_i^2,\ldots\) 全为标准单项式，基定理使商空间无限维，矛盾。若 \(I=R\)，标准集合为空，商空间为零，取各 \(d_i=1\) 同样满足结论。
+\end{proof}
+
+例如 \(I=(x^2,xy,y^3)\subseteq k[x,y]\) 已由单项式生成；这组生成元是 Gröbner 基，因为理想中的每个单项式都被其中一个整除。标准单项式为 \(1,x,y,y^2\)，所以商的维数为四。只看生成元条数三，并不能得到这个维数。
+
+\ProseParagraphBreak
+维数只依赖商空间，标准单项式的具体选择却依赖单项式序。例如式\eqref{b1:eq:F-main-reduced-basis}给出的商，在 \(x\succ y\) 时使用 \(1,y\)，在 \(y\succ x\) 时使用 \(1,x\)。因为商中 \(x=y\)，两组坐标自然相容。更大规模的标准单项式及零维计算例子，可参阅 Sturmfels 的《Solving Systems of Polynomial Equations》\cite[Section 2.1]{Sturmfels2002PolynomialEquations}；乘法矩阵与重数的系统讨论留到第三卷第8.5节。
+
+\subsection{商环的运算、单位与零因子}
+\label{b1:subsec:F05:02}
+
+令 \(\mathcal N\) 为标准单项式的线性生成空间。上一小节说明 \(\mathcal N\to R/I\) 是线性双射。由此在 \(\mathcal N\) 中表示商环运算：先按通常方式相加或相乘，再取正规余式。具体地，
+\begin{equation}\label{b1:eq:F-normal-arithmetic}
+\begin{aligned}
+\operatorname{NF}_G(f+h)&=\operatorname{NF}_G(f)+\operatorname{NF}_G(h),\\
+\operatorname{NF}_G(fh)&=
+\operatorname{NF}_G\Bigl(\operatorname{NF}_G(f)\operatorname{NF}_G(h)\Bigr).
+\end{aligned}
+\end{equation}
+第一式右端只含标准单项式，并与左端属于同一商类，所以相等。第二式中，两个内层余式分别与 \(f,h\) 模 \(I\) 同余，其乘积便与 \(fh\) 同余；再取唯一正规余式即可。特别地，第二式的最外层约化一般不能省去。
+
+\begin{example}\label{b1:exm:F-two-point-algebra}
+令
+\[
+I=(x-y,y^2-1),\qquad A=\mathbb Q[x,y]/I.
+\]
+在 \(A\) 中记 \(\bar y=y+I\)，则每个元素唯一写成 \(a+b\bar y\)。乘法为
+\[
+(a+b\bar y)(c+d\bar y)=(ac+bd)+(ad+bc)\bar y.
+\]
+取值同态
+\begin{equation}\label{b1:eq:F-two-point-evaluation}
+A\longrightarrow\mathbb Q\times\mathbb Q,
+\qquad a+b\bar y\longmapsto(a+b,a-b)
+\end{equation}
+是代数同构，逆将 \((u,v)\) 送到 \((u+v)/2+(u-v)\bar y/2\)。两个幂等元
+\[
+e_+=\frac{1+\bar y}{2},\qquad e_-=\frac{1-\bar y}{2}
+\]
+满足 \(e_++e_-=1\)、\(e_+e_-=0\)。因此 \(a+b\bar y\) 可逆当且仅当 \(a+b\ne0\) 且 \(a-b\ne0\)；此时其逆为
+\[
+\frac{a-b\bar y}{a^2-b^2}.
+\]
+非零元素为零因子，当且仅当 \(a=b\) 或 \(a=-b\)。全部幂等元则为 \(0,e_+,e_-,1\)，因为 \(\mathbb Q\times\mathbb Q\) 的每个坐标只能是零或一。
+\end{example}
+
+这里计算的依据是正规式与明确的同构，而非由两个解的存在直接猜测商环。一般地，即使全部域值点都已求出，也可能遗漏商环中的非零幂零元素。
+
+\begin{proposition}[单位判据]\label{b1:prop:F-unit-criterion}
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)，\(I\subsetneq R\) 为理想，\(f\in R\)。商类 \(f+I\) 在 \(R/I\) 中可逆，当且仅当 \(1\in I+(f)\)。若 \(I=(g_1,\ldots,g_s)\)，且存在 \(h,a_1,\ldots,a_s\in R\) 使
+\[
+1=hf+\sum_i a_i g_i,
+\]
+则其逆元为 \(h+I\)。在有效给定的系数域上，可以用 Gröbner 基的成员判定检验这个条件；计算过程中保留生成关系便能提取 \(h\)。
+\end{proposition}
+\begin{proof}
+若 \((h+I)(f+I)=1+I\)，则 \(1-hf\in I\)，即 \(1\in I+(f)\)。反向，题示等式取商后给出 \((h+I)(f+I)=1+I\)，因环交换，这就是逆元。计算 Gröbner 基时，每个新增多项式都是此前多项式的组合；从初始生成元递推记录这些组合，最后把一的零余式表示代回，便得到所需等式。
+\end{proof}
+
+对前一例中的 \(2+\bar y\)，不必重跑完整算法，因为
+\[
+1=\frac{2-y}{3}(2+y)+\frac13(y^2-1).
+\]
+所以逆元是 \((2-\bar y)/3\)。这份等式可以直接展开核验，也是单位判据要求的具体证据。
+
+\ProseParagraphBreak
+再比较
+\[
+B=\mathbb Q[x,y]/(x,y^2).
+\]
+此处用 \(\bar y\) 表示 \(y+(x,y^2)\)。商环 \(B\) 同样以 \(1,\bar y\) 为基，维数为二，但 \(\bar y^2=0\)。元素 \(a+b\bar y\) 可逆当且仅当 \(a\ne0\)，逆为 \(a^{-1}-ba^{-2}\bar y\)。方程 \(x=0,y^2=0\) 在任何域扩张中只有一个点，而上例在特征零域中有两个点。这说明商环的向量空间维数不能一概当作不同解的个数；这里的区别可由非零幂零元直接看到，不必先建立一般重数理论。
+
+\ProseParagraphBreak
+本附录的单项式通过指数相加相乘，整除只需按各个指数比较。第二卷第20.6节的非交换字则必须保留字母次序；例如 \(xy\) 与 \(yx\) 不再自动相同，约化时要检查连续子字的包含与重叠。那里将用 Diamond 引理讨论唯一正规式。先掌握本附录的除法、首项和成员判定，再比较两种情形中哪些结论改变，会更容易理解非交换构造的条件。

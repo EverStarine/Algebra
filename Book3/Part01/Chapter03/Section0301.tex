@@ -1,30 +1,77 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.1 有限性条件
-% 纲要位置：计划纲要.md，第 1561 行。
+% 纲要位置：工作记录/计划纲要.md，第 1879 行。
+% 纲要细目（写作范围）：
+% * 有限生成与有限展示
+% * Noether 环上的有限生成模
+% * Hilbert 基定理的模论后果
 
 \section{有限性条件}
 \label{b3:sec:0301}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 有限生成与有限展示
-% * Noether 环上的有限生成模
-% * Hilbert 基定理的模论后果
-%
+有限个生成元能描述整个模，有限个关系能控制映射的定义，而 Noether 条件进一步控制它的每个子模。三种说法不能混用。本节把这些条件连起来，并说明第一卷已经证明的 Hilbert 基定理如何保证本卷主要算例具有所需的有限性。以下环仍交换且含幺。
 
 \subsection{有限生成与有限展示}
 \label{b3:subsec:0301:01}
 
-待撰写。
+\begin{definition}\label{b3:def:finite-presentation}
+若存在 \(m_1,\ldots,m_b\in M\)，使每个 \(m\in M\) 都能写成
+\(\sum_{i=1}^b a_i m_i\)、\(a_i\in R\)，称 \(M\) 为\term[youxian-shengcheng-mo]{有限生成模}[finitely generated module]，也简称有限模。若存在有限整数 \(a,b\ge0\) 及正合列
+\[
+R^a\xrightarrow{A}R^b\longrightarrow M\longrightarrow0,
+\]
+称 \(M\) 为\term[youxian-zhanshi-mo]{有限展示模}[finitely presented module]。该正合列给出一个有限展示：\(R^b\) 的基给出生成元，矩阵 \(A\) 的列生成它们的全部关系。
+\end{definition}
+有限展示也称有限呈示\termidx[youxian-chengshi-mo]{有限呈示模}；本书以“展示”为主称。有限模不表示底集合有限，例如 \(\mathbb Z\) 是有限生成整数模，任意非零有限维实向量空间也是有限模，却都有无限多个元素。
+
+\begin{proposition}\label{b3:prop:finite-presentation-kernel}
+\(M\) 有限展示，当且仅当它有限生成且某个有限自由满射 \(R^b\rightarrow M\) 的核有限生成。此时每个有限自由满射 \(R^n\rightarrow M\) 的核都有限生成。
+\end{proposition}
+\begin{proof}
+第一句只是把关系矩阵的像写成核；反过来，对核选有限个生成元即可构成有限展示。证明最后一句时，设 \(p:R^b\rightarrow M\) 的核 \(L\) 有限生成，另有满射 \(q:R^n\rightarrow M\)。逐个提升基向量的像，得到 \(u:R^b\rightarrow R^n\)、\(v:R^n\rightarrow R^b\)，满足 \(qu=p\)、\(pv=q\)。若 \(K=\ker q\)，则 \(u(L)\subseteq K\)，且
+\(q(1-uv)=q-pv=0\)。对 \(x\in K\)，有 \(vx\in L\)，所以
+\[
+x=u(vx)+(1-uv)x.
+\]
+因此 \(K=u(L)+(1-uv)(R^n)\)，由 \(L\) 的有限生成元的像和有限个 \((1-uv)e_i\) 生成。
+\end{proof}
+
+循环模 \(R/I\) 总是有限生成；由这个命题，它有限展示当且仅当理想 \(I\) 有限生成。取
+\(R=k[x_1,x_2,\ldots]\)、\(I=(x_1,x_2,\ldots)\)，便得到有限生成而非有限展示的模。若 \(I\) 由有限个多项式生成，把其中出现的变量集中在前 \(n\) 个内，再将这 \(n\) 个变量取零；所有生成元的像为零，\(x_{n+1}\) 的像却非零，矛盾。
 
 \subsection{Noether 环上的有限生成模}
 \label{b3:subsec:0301:02}
 
-待撰写。
+\begin{definition}\label{b3:def:noether-artin-module}
+若模 \(M\) 的每条子模升链 \(N_1\subseteq N_2\subseteq\cdots\) 最终稳定，称 \(M\) 为 \term[Noether-mo]{Noether 模}[Noetherian module]。若每条子模降链最终稳定，称为 \term[Artin-mo]{Artin 模}[Artinian module]。对正则模 \(R\) 应用这些条件，分别得到 \term[Noether-huan]{Noether 环}[Noetherian ring]与 \term[Artin-huan]{Artin 环}[Artinian ring]；交换性使此处不必区分左右。
+\end{definition}
+
+一个模是 Noether 模，当且仅当它的每个子模有限生成。若某个子模不有限生成，逐次添入不能由已有元素生成的元素，就得到严格升链。反过来，一条升链的并是子模；其有限个生成元都属于同一个链项，所以以后各项只能等于该项。
+
+\begin{proposition}\label{b3:prop:noether-finite-modules}
+短正合列 \(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 的中间项为 Noether 模，当且仅当两端均为 Noether 模；Artin 模也满足同样结论。特别地，若 \(R\) 为 Noether 环，则每个有限生成 \(R\) 模及其子模都为 Noether 模，并且都有限展示。
+\end{proposition}
+\begin{proof}
+子模的链也是原模的链，商模的链可以取逆像，所以中间项的链条件传给两端。反向设两端具有升链条件。对 \(M\) 的升链 \((M_i)\)，交链 \(M_i\cap L\) 及其在 \(N\) 中的像链都稳定。若 \(M_i\subseteq M_j\)，且交与像相同，对 \(x\in M_j\) 可取 \(y\in M_i\) 有相同的像，则 \(x-y\in M_j\cap L=M_i\cap L\)，所以 \(x\in M_i\)。因此原链稳定。降链在共同的稳定起点后，对反向包含使用同一个论证，即得 Artin 情形。
+
+若 \(R\) 为 Noether 环，由 \(0\rightarrow R^{n-1}\rightarrow R^n\rightarrow R\rightarrow0\) 归纳得到有限自由模为 Noether 模；其商即任意有限生成模仍为 Noether 模，所有子模也如此。对这些模选有限自由满射，核作为 Noether 模的子模有限生成，再用\cref{b3:prop:finite-presentation-kernel}得到有限展示。
+\end{proof}
+
+这个命题把第二卷第12.1节的链条件论证落实到交换环上。它还解释了\cref{b3:thm:hom-localization}在 Noether 环上为何只需假设源模有限生成：有限展示此时自动成立。若底环不满足 Noether 条件，就不能省略那项假设。
 
 \subsection{Hilbert 基定理的模论后果}
 \label{b3:subsec:0301:03}
 
-待撰写。
+第一卷定理12.4.5，即 Hilbert 基定理，已经证明：若 \(R\) 为 Noether 环，则有限变量多项式环 \(R[x_1,\ldots,x_n]\) 仍为 Noether 环。这里不重复其主证明，而将它与\cref{b3:prop:noether-finite-modules}合用。
+
+\begin{corollary}\label{b3:cor:hilbert-module-consequences}
+若 \(R\) 为 Noether 环，\(A=R[a_1,\ldots,a_n]\) 为有限型交换 \(R\) 代数，则 \(A\) 为 Noether 环。每个有限生成 \(A\) 模有有限展示，每个子模有限生成；有限矩阵给出的核、像及余核也都是有限生成 \(A\) 模。
+\end{corollary}
+\begin{proof}
+代入同态 \(R[x_1,\ldots,x_n]\rightarrow A\)、\(x_i\mapsto a_i\) 为满射。由 Hilbert 基定理，来源是 Noether 环；商环的理想链取逆像，故商环 \(A\) 仍为 Noether 环。现在对 \(A\) 使用\cref{b3:prop:noether-finite-modules}，得到关于有限生成模和子模的断言。矩阵的核是有限自由模的子模，像与余核分别是有限自由模的同态像及商，也满足这些结论。
+\end{proof}
+
+例如在 \(A=k[x,y]/(y^2-x^3)\) 上，理想、理想之间的关系以及有限矩阵的解模，都能用有限数据表示。这个结论保证有限描述存在，却没有给出具体的生成元算法；当系数域上可以作精确计算时，第一卷附录F的 Gröbner 基方法和本卷\chapref{b3:ch:08}将进一步处理算法问题。
+
+\ProseParagraphBreak
+必须分清有限型代数与有限模。\(k[x]\) 由一个元素作为 \(k\) 代数生成，却有无限多个线性无关的单项式，因而不是有限 \(k\) 模。上面的推论说有限 \(A\) 模是 Noether 模，没有说它作为 \(R\) 模也有限生成。

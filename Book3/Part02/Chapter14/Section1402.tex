@@ -1,30 +1,99 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.2 基本正合列
-% 纲要位置：计划纲要.md，第 1938 行。
+% 纲要位置：工作记录/计划纲要.md，第 2256 行。
+% 纲要细目（写作范围）：
+% * 商环的余法正合列
+% * 复合环映射的微分序列
+% * 局部化及基变换
+
 
 \section{基本正合列}
 \label{b3:sec:1402}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 商环的余法正合列
-% * 复合环映射的微分序列
-% * 局部化及基变换
-%
+给定代数的生成元以后，导子的值不能任意选择：它必须保持方程的微分关系。两条基本正合列分别处理“添加关系”和“改变基环”，局部化与基变换公式则使这些计算能够转到所需的局部环或基域。
 
 \subsection{商环的余法正合列}
 \label{b3:subsec:1402:01}
 
-待撰写。
+\begin{theorem}[余法正合列]\label{b3:thm:conormal-sequence}
+设 \(A\) 为交换环，\(B\) 为交换 \(A\) 代数、\(J\subseteq B\) 为理想、\(C=B/J\)。有 \(C\) 模正合列
+\[
+J/J^2\xrightarrow{\delta}C\otimes_B\Omega_{B/A}
+\longrightarrow\Omega_{C/A}\longrightarrow0,
+\qquad \delta(f+J^2)=1\otimes df.
+\]
+模 \(J/J^2\) 称为相应商映射的\term[yufa-mo]{余法模}[conormal module]。不在列的左端添加未经证明的零。
+\end{theorem}
+\begin{proof}
+若 \(f\in J^2\)，将它写成有限和 \(\sum_i u_iv_i\)、\(u_i,v_i\in J\)，则 \(df=\sum_i(u_i\,dv_i+v_i\,du_i)\) 在张量到 \(C\) 后为零，故 \(\delta\) 良定义。又 \(d(bf)=b\,df+f\,db\)，第二项在 \(C\) 上为零，所以 \(\delta\) 是 \(C\) 线性的。
+
+将 \(C\otimes_B\Omega_{B/A}\) 模掉全部 \(1\otimes df\)、\(f\in J\)，记商为 \(Q\)。映射 \(b+J\mapsto[1\otimes db]\) 良定义，因为改变代表元只增加一个被模掉的微分。它是 \(A\) 导子。若 \(D:C\rightarrow M\) 是任意 \(A\) 导子，复合 \(B\rightarrow C\) 后的导子对应一个 \(C\otimes_B\Omega_{B/A}\rightarrow M\)，且零化各 \(df\)，故唯一通过 \(Q\)。于是 \(Q\) 有 \(\Omega_{C/A}\) 的泛性质，得到所需正合列。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:differential-presentation}
+设 \(A\) 为交换环，\(f_1,\ldots,f_s\in A[X_1,\ldots,X_n]\)，\(B=A[X_1,\ldots,X_n]/(f_1,\ldots,f_s)\)，\(x_i\) 为变量的像。则有展示
+\[
+B^s\xrightarrow{J_f^{\mathsf t}} B^n\longrightarrow\Omega_{B/A}\longrightarrow0,
+\qquad (J_f)_{ij}=\frac{\partial f_i}{\partial X_j}(x).
+\]
+因此有限呈示交换代数的微分模为有限展示模。
+\end{corollary}
+\begin{proof}
+对 \(P=A[X]\) 的商应用余法正合列，\(\Omega_{P/A}\) 为以 \(dX_i\) 为基的自由模。若 \(f=\sum_i g_if_i\)，在 \(B\) 上有 \(df=\sum_i g_i\,df_i\)，因为含 \(f_i\,dg_i\) 的项消失。因此全部微分关系由各 \(df_i\) 生成，给出所列有限矩阵。
+\end{proof}
+
+左端不一定单射。例如在特征 \(p\) 的域上取 \(B=k[t]\)、\(J=(t^p)\)。模 \(J/J^2\) 是非零的循环 \(B/J\) 模，而 \(\delta(t^p)=p t^{p-1}dt=0\)，所以整个余法映射为零。
 
 \subsection{复合环映射的微分序列}
 \label{b3:subsec:1402:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:differential-transitivity}
+设 \(A\rightarrow B\xrightarrow{g}C\) 为交换环同态，则有 \(C\) 模正合列
+\[
+C\otimes_B\Omega_{B/A}\xrightarrow{\alpha}\Omega_{C/A}
+\xrightarrow{\beta}\Omega_{C/B}\longrightarrow0,
+\]
+其中 \(\alpha(c\otimes db)=c\,d\Bigl(g(b)\Bigr)\)、\(\beta(d_{C/A}c)=d_{C/B}c\)。
+\end{theorem}
+\begin{proof}
+复合 \(B\rightarrow C\xrightarrow{d_{C/A}}\Omega_{C/A}\) 是 \(A\) 导子，故给出 \(\alpha\)。在 \(\Omega_{C/A}\) 中模掉各 \(d\Bigl(g(b)\Bigr)\) 生成的子模后，普遍导子就零化 \(B\) 的像，因此成为 \(B\) 导子。任意 \(B\) 导子首先是 \(A\) 导子，并零化这些指定元素，所以唯一经过此商。该商即 \(\Omega_{C/B}\)，证明正合性。
+\end{proof}
+
+改变基环意味着将更多元素视为常数，所以末端微分模是中间微分模的商。首箭头则可能不单射。例如 \(A=k\)、\(B=k[t^p]\subseteq C=k[t]\)、\(\operatorname{char}k=p\) 时，\(B\) 作为多项式环有非零微分 \(d(t^p)\)，但其在 \(\Omega_{C/k}\) 中的像为零。
 
 \subsection{微分模的局部化与基变换}
 \label{b3:subsec:1402:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:differential-localization}
+设 \(A\to B\) 为交换环同态，\(S\subseteq B\) 为乘法集。则
+\[
+\Omega_{S^{-1}B/A}\cong S^{-1}\Omega_{B/A},
+\qquad d(b/s)=\frac{db}{s}-\frac{b\,ds}{s^2}.
+\]
+若同时局部化基环，则把 \(A\) 中变成可逆的元素在 \(B\) 中一并局部化后，同一公式仍成立。
+\end{proposition}
+\begin{proof}
+对取值于任意 \(S^{-1}B\) 模 \(M\) 的 \(A\) 导子 \(D:B\rightarrow M\)，等式 \(D(s\cdot s^{-1})=0\) 迫使其延拓满足上述分式公式。检查良定义：若 \(b/s=b'/s'\)，则存在 \(t\in S\) 使 \(t(s'b-sb')=0\)。取导数并在 \(M\) 中将 \(t,s,s'\) 视为单位；由于 \(s'b-sb'=0\) 在局部化后成立，得到
+\[
+s'Db+bDs'-sDb'-b'Ds=0.
+\]
+连同 \(s'b=sb'\)，整理即得两个分式公式相等。对分式加法和乘法展开可得加法性与 Leibniz 法则：乘法中的导数项恰分成对第一个和第二个因子的两部分。故延拓存在且唯一。它还零化 \(A\) 中所增添的逆元，因为 \(D(a^{-1})=-a^{-2}D(a)=0\)。由普遍性得到所述同构。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:differential-base-change}
+设 \(B\) 为交换 \(A\) 代数，\(A\to A'\) 为交换环同态，令 \(B'=A'\otimes_AB\)。有自然同构
+\[
+\Omega_{B'/A'}\cong B'\otimes_B\Omega_{B/A}.
+\]
+不需要 \(A'\) 在 \(A\) 上平坦。
+\end{proposition}
+\begin{proof}
+从右侧到左侧的映射由 \(1\otimes db\mapsto d(1\otimes b)\) 定义。反向先在纯张量上定义
+\[
+D(a'\otimes b)=(a'\otimes1)\otimes db.
+\]
+由于 \(d(ab)=a\,db\) 对 \(a\in A\) 成立，此公式保持张量平衡关系，因此对任意有限和良定义。它零化 \(A'\)，并由 \(d(bc)=b\,dc+c\,db\) 满足乘法法则，所以对应 \(\Omega_{B'/A'}\) 到右侧的映射。两复合固定所有 \(d(1\otimes b)\) 或 \(1\otimes db\)，而这些元素分别生成两侧，故互为逆。
+\end{proof}
+
+这两个公式允许先在多项式商上写出 Jacobian 展示，再局部化到指定点，或改变基域后重新考察方程。它们保持微分的计算，却不自动保证原代数的约化性、正则性或光滑性在所有基变换下都保持。

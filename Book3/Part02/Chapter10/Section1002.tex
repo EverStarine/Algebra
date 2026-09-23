@@ -1,30 +1,103 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 10.2 离散赋值环
-% 纲要位置：计划纲要.md，第 1796 行。
+% 纲要位置：工作记录/计划纲要.md，第 2114 行。
+% 纲要细目（写作范围）：
+% * 一维 Noether 正规局部整环的刻画
+% * 极大理想的统一化元
+% * 理想与阶函数
+
 
 \section{离散赋值环}
 \label{b3:sec:1002}
 
-% TODO: 按以下纲要要点撰写本节。
+离散赋值环最有用之处在于，所有非零理想都由同一个元素的幂生成。因此它既能按整数测量阶数，也能从局部环的有限性和整闭性识别。本节的刻画不依赖尚未证明的完备化或一般 Krull 交集定理。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 一维 Noether 正规局部整环的刻画
-% * 极大理想的统一化元
-% * 理想与阶函数
-%
 
 \subsection{一维 Noether 正规局部整环的刻画}
 \label{b3:subsec:1002:01}
 
-待撰写。
+\begin{theorem}\label{b3:thm:dvr-characterizations}
+对非域整环 \(R\)，下列条件等价：
+\begin{equivalences}
+\item\label{b3:item:dvr-valuation} \(R\) 为离散赋值环；
+\item\label{b3:item:dvr-principal-maximal} \(R\) 为 Noether 局部环，且其极大理想由一个元素生成；
+\item\label{b3:item:dvr-normal-dimension-one} \(R\) 为一维 Noether 正规局部整环。
+\end{equivalences}
+它们也等价于 \(R\) 是非域的局部主理想整环。
+\end{theorem}
+\begin{proof}
+先设 \(R=V_v\)、\(v(K^*)=\mathbb Z\)，选 \(\pi\) 满足 \(v(\pi)=1\)。
+每个 \(0\ne a\in R\) 唯一写成 \(a=\pi^nu\)，其中 \(n\ge0\)、\(u\) 为单位。
+非零理想中非零元素的赋值有最小值 \(n\)，于是该理想恰为 \((\pi^n)\)。所以 \(R\) 是主理想整环，且只有 \((0)\)、\((\pi)\) 两个素理想。由\cref{b3:prop:valuation-local-normal}，赋值环整闭，这同时得到\itemref{b3:item:dvr-principal-maximal}和\itemref{b3:item:dvr-normal-dimension-one}。
+
+设\itemref{b3:item:dvr-principal-maximal}成立，\(\mathfrak m=(\pi)\)。令 \(J=\bigcap_{n\ge0}\pi^nR\)。
+若 \(x\in J\)，写 \(x=\pi y\)；由整环中可约去 \(\pi\)，从
+\(x\in\pi^{n+1}R\) 得 \(y\in\pi^nR\)，故 \(y\in J\)。于是 \(J=\pi J\)。
+理想 \(J\) 有限生成，Nakayama 引理给出 \(J=0\)。因此每个非零 \(a\in R\) 有最大的 \(n\) 使 \(a\in\pi^nR\)，并写成 \(\pi^nu\)，其中 \(u\notin\mathfrak m\) 是单位。
+对分式定义 \(v(a/b)=n(a)-n(b)\)。分解的唯一性保证分式表示无关；乘法指数相加，加法在提出较小的幂后仍属于 \(R\)，故满足赋值不等式。
+其值群为 \(\mathbb Z\)，非负值元素恰属于 \(R\)，所以得到\itemref{b3:item:dvr-valuation}。
+
+最后设\itemref{b3:item:dvr-normal-dimension-one}成立，记极大理想为 \(\mathfrak m\)，分式域为 \(K\)。
+取 \(0\ne a\in\mathfrak m\)。维数一说明 \(\sqrt{aR}=\mathfrak m\)，故某个
+\(\mathfrak m^n\subseteq aR\)。这里用到 \(\mathfrak m\) 有限生成：每个生成元的某个幂属于 \(aR\)，展开充分高次的乘积即可。
+取最小的 \(n\ge1\)，再取 \(b\in\mathfrak m^{n-1}\setminus aR\)。
+则 \(x=b/a\notin R\)，但 \(x\mathfrak m\subseteq R\)。
+若 \(x\mathfrak m\subseteq\mathfrak m\)，对有限忠实模 \(\mathfrak m\) 使用\cref{b3:thm:determinant-trick}，便知 \(x\) 在 \(R\) 上整：相应首一多项式零化 \(\mathfrak m\)，而整环中 \(\mathfrak m\ne0\) 使该多项式在 \(K\) 中为零。
+正规性将推出 \(x\in R\)，矛盾。
+所以理想 \(x\mathfrak m\) 含有单位，从而 \(x\mathfrak m=R\)。选 \(\pi\in\mathfrak m\) 满足 \(x\pi=1\)。
+每个 \(y\in\mathfrak m\) 都满足 \(xy\in R\)，于是 \(y=\pi(xy)\)，得到 \(\mathfrak m=(\pi)\)，即\itemref{b3:item:dvr-principal-maximal}。
+局部主理想整环满足\itemref{b3:item:dvr-principal-maximal}，而第一段已证明\itemref{b3:item:dvr-valuation}使每个理想主生成，故最后一个等价条件也成立。
+\end{proof}
+
+证明中两处 Noether 性各有明确用途：让 \(\bigcap\pi^nR\) 可用 Nakayama 引理，以及让极大理想可用行列式技巧。若直接删除有限性，上一节的一维非离散赋值环就给出反例。
 
 \subsection{极大理想的统一化元}
 \label{b3:subsec:1002:02}
 
-待撰写。
+\begin{definition}\label{b3:def:uniformizer}
+设 \((R,\mathfrak m)\) 为 DVR。若元素 \(\pi\in R\) 满足 \(\mathfrak m=(\pi)\)，则称其为
+\term[tongyihuayuan]{统一化元}[uniformizer]。相应赋值取 \(v(\pi)=1\)，称为正规化赋值。
+\end{definition}
+
+统一化元并不唯一：\(\pi'\) 是另一个统一化元，当且仅当 \(\pi'=u\pi\)、\(u\in R^*\)。
+所以元素的展开 \(a=u\pi^n\) 中单位部分依赖选择，整数 \(n\) 则与选择无关。
+对 \(\mathbb Z_{(p)}\) 可取 \(p\)，对 \(k[t]_{(t-c)}\) 可取 \(t-c\)。
+正规化赋值确定了理想的阶数，但没有预先选定剩余域在环内的一套代表，更没有使环自动成为形式幂级数环。
+
+\begin{proposition}\label{b3:prop:noether-valuation-dvr}
+非域赋值环为 Noether 环，当且仅当它为 DVR。
+\end{proposition}
+\begin{proof}
+DVR 已证明为主理想整环。反向，Noether 赋值环的极大理想有限生成，因而由\cref{b3:prop:valuation-ideal-comparison}主生成，再应用\cref{b3:thm:dvr-characterizations}。
+\end{proof}
+
+还须区别“极大理想主生成”和“Noether”。取 \(K=k((u))((t))\)，对非零
+\(f=t^na_n(u)+t^{n+1}a_{n+1}(u)+\cdots\) 定义
+\(v(f)=(n,\operatorname{ord}_u a_n)\)，赋值群按字典序排序的 \(\mathbb Z^2\)。
+首项乘法和加法直接验证赋值公理。最小正值是 \((0,1)\)，所以极大理想由 \(u\) 生成；但赋值为正的第一坐标的元素组成非零素理想
+\(\mathfrak p\subsetneq\mathfrak m\)，其中 \(t/u^r\)、\(r\ge0\)，没有赋值最小者。
+因此 \(\mathfrak p\) 不是有限生成理想，这个环不是 DVR。
 
 \subsection{理想与阶函数}
 \label{b3:subsec:1002:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:dvr-order-ideals}
+在 DVR \((R,\mathfrak m)\) 中，每个非零理想唯一写成 \(\mathfrak m^n\)、\(n\ge0\)。
+对 \(a,b\ge0\)，有
+\[
+\mathfrak m^a\mathfrak m^b=\mathfrak m^{a+b},\qquad
+\mathfrak m^a+\mathfrak m^b=\mathfrak m^{\min(a,b)},\qquad
+\mathfrak m^a\cap\mathfrak m^b=\mathfrak m^{\max(a,b)}.
+\]
+并且 \(\ell_R(R/\mathfrak m^n)=n\)。
+\end{proposition}
+\begin{proof}
+理想形式已在刻画定理中证明；\(\pi^n\notin\mathfrak m^{n+1}\) 保证指数唯一。
+乘积公式由生成元相乘得到，和与交由理想的包含次序得到。
+对每个 \(i\ge0\)，乘以 \(\pi^i\) 给出
+\(R/\mathfrak m\simeq\mathfrak m^i/\mathfrak m^{i+1}\)：满射显然，核为 \(\mathfrak m\)，因为可在整环中约去 \(\pi^i\)。
+因此 \(R/\mathfrak m^n\) 的幂滤过有恰好 \(n\) 个简单商，长度为 \(n\)。
+\end{proof}
+
+若 \(0\ne a\in R\)，则 \(v(a)=\ell_R(R/aR)\)。这样，整数阶也能仅从商模长度恢复。
+在一维正规曲线中，这将给出零点重数的一个局部代数描述。这里的正规性不可省略：尖点环的极大理想不能由一个元素生成，即使它的 Krull 维数也是一。

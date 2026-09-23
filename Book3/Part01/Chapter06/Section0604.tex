@@ -1,42 +1,104 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 6.4 正规化
-% 纲要位置：计划纲要.md，第 1663 行。
-
-\section{正规化}
-\label{b3:sec:0604}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1981 行。
+% 纲要细目（写作范围）：
 % * 域上有限生成代数的正规化及其有限性问题：先处理整环，再处理约化环，非约化情形约定先取约化；定义与模型在本节建立，一般有限性定理在紧接的第6.5节陈述并证明
 % * 正规化不有限的情形
 % * 尖点和结点曲线的代数例子
 % * 整闭包、有限性和双有理性的不同角色；本节的尖点、结点直接通过显式环包含核验，不依赖尚未证明的一般有限性定理
 % * 一般 Noether 整环不能无条件套用域上有限型代数的有限正规化结论；后续 Nagata 性和卓越性仅说明相应结论的适用范围
-%
 
-\subsection{整环、约化环与正规化的定义}
-\label{b3:subsec:0604:01}
+\section{正规化}\label{b3:sec:0604}
 
-待撰写。
+同一个有理函数域可能包含不同的坐标环。尖点的 \(k[t^2,t^3]\) 与直线的 \(k[t]\) 就有相同分式域，但前者漏掉了一个已经满足首一方程的函数 \(t\)。正规化把这样的整元素一并加入。它改变的是环；点集是否改变、扩张是否有限，需要分别核验。
 
-\subsection{非有限正规化的例子}
-\label{b3:subsec:0604:02}
+\subsection{整环、约化环与正规化的定义}\label{b3:subsec:0604:01}
 
-待撰写。
+\begin{definition}\label{b3:def:normalization}
+若 \(A\) 是整环，它在 \(\operatorname{Frac}(A)\) 中的整闭包 \(\widetilde A\) 称为 \(A\) 的\term[zhengguihua]{正规化}[normalization]。若 \(A\) 是约化环，令 \(S\) 为其全部非零因子的集合，定义\term[zong-fenshi-huan]{总分式环}[total ring of fractions]
+\(Q(A)=S^{-1}A\)，并把 \(A\) 在 \(Q(A)\) 中的整闭包称为其正规化。对于非约化环，本书先取 \(A_{\mathrm{red}}=A/\sqrt0\)，再正规化 \(A_{\mathrm{red}}\)，不将幂零元保留在正规化对象中。
+\end{definition}
+\symidx{\(Q(A)\)：约化环的总分式环}
+\symidx{\(\widetilde A\)：环 \(A\) 的正规化}
 
-\subsection{尖点与结点曲线的正规化}
-\label{b3:subsec:0604:03}
+非零因子乘法封闭，而且 \(A\to Q(A)\) 单射：\(a/1=0\) 意味着某个非零因子 \(s\) 满足 \(sa=0\)，从而 \(a=0\)。当 \(A\) 是整环时，定义退回普通分式域，因此两种定义一致。正规化始终是整扩张，但尚不能只凭定义断言它是有限模。
 
-待撰写。
+\ProseParagraphBreak
+对约化 Noether 环，极小素理想只有有限多个，并有
+\[
+Q(A)\cong\prod_{\mathfrak p\in\operatorname{Min}(A)}
+\operatorname{Frac}(A/\mathfrak p).
+\]
+这一分支描述将在\cref{b3:prop:reduced-total-quotient-product}完整证明；目前的定义不以该描述为前提。它预示正规化可能把相交的分支分开，但对于一个整环，总分式环和正规化仍然是整环中的对象，不会凭空分成直积。
 
-\subsection{整闭包、有限性与双有理性}
-\label{b3:subsec:0604:04}
+\subsection{非有限正规化的例子}\label{b3:subsec:0604:02}
 
-待撰写。
+\begin{example}\label{b3:exm:nonfinite-normalization}
+取无限次代数扩域 \(K/k\)，例如 \(\overline{\mathbb Q}/\mathbb Q\)，并令
+\[
+A=k+xK[x]\subseteq B=K[x].
+\]
+则 \(\operatorname{Frac}(A)=K(x)\)，正规化为 \(B\)，但 \(B\) 不是有限 \(A\) 模；此处 \(A\) 不是 Noether 环。
+\end{example}
+\begin{proof}
+对每个 \(c\in K\)，有 \(c=(cx)/x\in\operatorname{Frac}(A)\)，故分式域为 \(K(x)\)。\(K\) 中每个元素在 \(k\) 上代数，因而在 \(A\) 上整；而 \(B\) 由 \(A\) 与这些常数生成，所以\cref{b3:prop:integral-closure-ring}说明 \(B/A\) 整。又 \(B=K[x]\) 是唯一分解整环，按\cref{b3:prop:ufd-integrally-closed}在 \(K(x)\) 中整闭。任何在 \(A\) 上整的 \(z\in K(x)\) 也在 \(B\) 上整，所以属于 \(B\)。这就证明了正规化等于 \(B\)。
 
-\subsection{Nagata 性、卓越性与正规化的有限性}
-\label{b3:subsec:0604:05}
+若 \(B\) 是有限 \(A\) 模，模掉同时为 \(A,B\) 理想的 \(xK[x]\)，就会得到 \(K=B/xK[x]\) 是有限维 \(A/xK[x]=k\) 向量空间，与 \([K:k]=\infty\) 矛盾。最后，理想 \(\mathfrak m=xK[x]\) 满足
+\(\mathfrak m/\mathfrak m^2\cong K\)，其上 \(A\) 的作用经 \(k\) 因子化；若 \(\mathfrak m\) 有限生成，此商将是有限维 \(k\) 空间，仍矛盾。因此 \(A\) 确实不是 Noether 环。
+\end{proof}
 
-待撰写。
+这个例子说明没有额外条件时正规化未必有限；其底环是非 Noether 环。域上有限型代数拥有更强的结构；\cref{b3:thm:normalization-finite}将证明这一范围内的正规化有限，任意基域都允许。
+
+\subsection{尖点与结点曲线的正规化}\label{b3:subsec:0604:03}
+
+\begin{proposition}\label{b3:prop:cusp-normalization}
+对任意域 \(k\)，映射 \(x\mapsto t^2\)、\(y\mapsto t^3\) 给出同构
+\[
+k[x,y]/(y^2-x^3)\cong k[t^2,t^3].
+\]
+此整环的分式域是 \(k(t)\)，正规化为 \(k[t]\)，并且 \(k[t]\) 由 \(1,t\) 作为 \(k[t^2,t^3]\) 模生成。
+\end{proposition}
+\begin{proof}
+按首一多项式 \(y^2-x^3\) 除法，每个商类有代表 \(P(x)+yQ(x)\)。代入后为 \(P(t^2)+t^3Q(t^2)\)，前一项只含偶次幂，后一项只含不小于三的奇次幂，故等于零恰好要求 \(P=Q=0\)。因此核就是所列主理想，像按定义为 \(k[t^2,t^3]\)。
+
+元素 \(t=t^3/t^2\) 在分式域中，且满足 \(T^2-t^2=0\)，所以 \(k[t]=A+At\) 在 \(A=k[t^2,t^3]\) 上有限整。\(k[t]\) 在 \(k(t)\) 中整闭，任何在 \(A\) 上整的分式也在 \(k[t]\) 上整，因而属于 \(k[t]\)。于是它正是整闭包。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:node-normalization}
+设 \(\operatorname{char}k\ne2\)。映射
+\[
+x\longmapsto t^2-1,\qquad y\longmapsto t(t^2-1)
+\]
+给出同构
+\[
+k[x,y]/\Bigl(y^2-x^2(x+1)\Bigr)
+ \cong A=k\Bigl[t^2-1,t(t^2-1)\Bigr].
+\]
+其分式域为 \(k(t)\)，正规化为 \(B=k[t]\)，且 \(B=A+At\)。这称为本章的结点模型。
+\end{proposition}
+\begin{proof}
+模掉关于 \(y\) 的首一关系后，每个商类写为 \(P(x)+yQ(x)\)。像为
+\[
+P(t^2-1)+t(t^2-1)Q(t^2-1).
+\]
+第一项只含偶次幂，第二项只含奇次幂。两者之和为零时分别为零；由于 \(t^2-1\) 在 \(k[t]\) 中超越且非零，得到 \(P=Q=0\)。这证明核的断言。分式 \(y/x=t\) 给出分式域相等，方程 \(t^2=x+1\) 给出有限模生成式，最后由 \(k[t]\) 的整闭性判定它就是正规化。
+\end{proof}
+
+特征不为二用于保证 \(t=1\) 与 \(t=-1\) 是两个不同点；上面的核及整闭包计算本身不需除以二。原点在结点正规化中有两个原像，在尖点正规化中只有一个。两种情形将在导子理想计算时进一步比较，不能只用“增加了参数 \(t\)”就判定它们的几何行为相同。
+
+\subsection{整闭包、有限性与双有理性}\label{b3:subsec:0604:04}
+
+对整环包含 \(A\subseteq B\)，如果诱导的分式域映射是同构，就称其为\term[shuangyouli-kuozhang]{双有理扩张}[birational extension]；相应的仿射映射称为双有理。正规化按定义双有理且整，但有限性是额外结论。例如前面的非 Noether 例仍双有理而不有限。
+
+\ProseParagraphBreak
+反过来，有限整扩张不必双有理：\(k[t^2]\subseteq k[t]\) 虽然由 \(1,t\) 生成，却诱导二次分式域扩张 \(k(t)/k(t^2)\)。即使特征为二、底层点集可能不能区分平方根，这个域扩张仍有次数二。双有理也不意味着有限，例如 \(k[t]\subseteq k[t,t^{-1}]\) 分式域相同，却把零点处的分母倒置；\(t^{-1}\) 不在整闭环 \(k[t]\) 上整，所以此扩张不有限。
+
+\ProseParagraphBreak
+尖点与结点的有限性在\cref{b3:prop:cusp-normalization}及\cref{b3:prop:node-normalization}中已由两项模生成式直接证明。下面的一般定理将覆盖它们，但这些算例的论证没有提前使用该定理。
+
+\subsection{Nagata 性、卓越性与正规化的有限性}\label{b3:subsec:0604:05}
+
+有限型假设将在下一节的证明中两次起作用：先选有限个正规化参数，再控制有限代数扩域所用的有限个系数。只知道一个环是 Noether 环，并不能按同一路证明自动补出这两项数据。因此本章不会把有限型结论无条件外推为“一切 Noether 整环的正规化都有限”。
+
+\ProseParagraphBreak
+后续资料中常见的\term[nagata-huan]{Nagata 环}[Nagata ring]，按一种标准定义，是满足下列条件的 Noether 环 \(A\)：对每个素理想 \(\mathfrak p\)，以及 \(\operatorname{Frac}(A/\mathfrak p)\) 的每个有限域扩张 \(L\)，\(A/\mathfrak p\) 在 \(L\) 中的整闭包都是有限模。这个条件明确把所需有限性写进了适用范围。\term[zhuoyue-huan]{卓越环}[excellent ring]还包含关于形式纤维、维数链及正则性的条件，本节不以这个术语调用任何尚未证明的结果；其定义和一般理论留给本卷附录的补充。当前证明只需要并将直接建立域上有限型代数的结论。

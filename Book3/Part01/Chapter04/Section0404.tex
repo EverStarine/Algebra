@@ -1,32 +1,109 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 4.4 模的版本与例子
-% 纲要位置：计划纲要.md，第 1607 行。
+% 纲要位置：工作记录/计划纲要.md，第 1925 行。
+% 纲要细目（写作范围）：
+% * 子模的准素分解
+% * 嵌入关联素理想的显式例子
+% * 与几何分支及非约化结构的联系
+% ---
 
 \section{模的版本与例子}
 \label{b3:sec:0404}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 子模的准素分解
-% * 嵌入关联素理想的显式例子
-% * 与几何分支及非约化结构的联系
-%
-% ---
-%
+理想分解其实是自由模 \(R\) 中的子模分解。若要研究一个矩阵给出的余核，或研究有限模的支集与局部结构，就需要允许一般有限模。此时准素性必须说明“某个标量的幂零化整个商模”，不能只说它零化眼前的一个元素。本节 \(R\) 均为交换 Noether 环，\(M\) 为有限 \(R\) 模。
 
 \subsection{子模的准素分解}
 \label{b3:subsec:0404:01}
 
-待撰写。
+\begin{definition}\label{b3:def:primary-submodule}
+真子模 \(N\subsetneq M\) 称为\term[zhunsu-zimo]{准素子模}[primary submodule]，如果对任意 \(a\in R\)、\(m\in M\)，
+\[
+am\in N,\quad m\notin N
+\quad\Longrightarrow\quad a^nM\subseteq N
+\ \text{对某个 }n\ge1.
+\]
+若 \(\sqrt{\operatorname{Ann}_R(M/N)}=\mathfrak p\)，也称 \(N\) 为 \(\mathfrak p\) 准素子模。整个条件仅依赖商模 \(M/N\)，但“\(N\) 准素”总须指明它位于哪个模中。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:primary-submodule-associated}
+真子模 \(N\subsetneq M\) 准素，当且仅当 \(\operatorname{Ass}_R(M/N)\) 只有一个元素；此元素就是 \(\sqrt{\operatorname{Ann}_R(M/N)}\)，因而该根是素理想。
+\end{proposition}
+\begin{proof}
+记 \(T=M/N\) 与 \(J=\operatorname{Ann}_R(T)\)。若 \(N\) 准素，取 \(\mathfrak p=\operatorname{Ann}_R(t)\in\operatorname{Ass}_R(T)\)。因 \(J\subseteq\mathfrak p\)，有 \(\sqrt J\subseteq\mathfrak p\)。另一方面，每个 \(a\in\mathfrak p\) 都零化非零元 \(t\)，准素条件给出 \(a^nT=0\)，即 \(a\in\sqrt J\)。故所有关联素理想都等于 \(\sqrt J\)，且存在性保证集合非空。
+
+反向若 \(\operatorname{Ass}_R(T)=\{\mathfrak p\}\)，则\cref{b3:prop:minimal-primes-associated}与 \(\operatorname{Supp}_R(T)=V(J)\) 给出 \(\sqrt J=\mathfrak p\)。若 \(at=0\)、\(t\ne0\)，由\cref{b3:thm:associated-zero-divisors}得 \(a\in\mathfrak p=\sqrt J\)，故某个 \(a^n\in J\)，这就是 \(a^nM\subseteq N\)。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:module-primary-decomposition}
+有限模 \(M\) 的每个真子模 \(N\) 有极小准素分解
+\[
+N=N_1\cap\cdots\cap N_r,
+\qquad \operatorname{Ass}_R(M/N_i)=\{\mathfrak p_i\},
+\]
+其中各 \(\mathfrak p_i\) 互异，且无因子可删。并且
+\[
+\operatorname{Ass}_R(M/N)=\{\mathfrak p_1,\ldots,\mathfrak p_r\}.
+\]
+若 \(\mathfrak p_i\) 为该集合的极小元，记 \(\lambda_i:M\rightarrow M_{\mathfrak p_i}\) 为局部化映射，则
+\[
+N_i=\lambda_i^{-1}(N_{\mathfrak p_i}).
+\]
+\end{theorem}
+\begin{proof}
+称真子模不可约，如果不能写成两个严格更大子模的交。因为 \(M\) 是 Noether 模，\cref{b3:lem:irreducible-ideal-primary}第一段的极大反例证明逐字适用于子模，故 \(N\) 是有限个不可约子模的交。
+
+不可约子模必准素。否则由\cref{b3:prop:primary-submodule-associated}，非零模 \(M/N\) 至少有两个不同关联素理想 \(\mathfrak p,\mathfrak q\)。分别取子模 \(L\cong R/\mathfrak p\)、\(K\cong R/\mathfrak q\)。若它们的交包含非零元素，该元素的零化子会同时等于 \(\mathfrak p\) 和 \(\mathfrak q\)，矛盾。所以 \(L\cap K=0\)，其在 \(M\) 中的原像便把 \(N\) 写成两个严格更大子模的交。
+
+同根准素子模的有限交仍然准素：商模单射到各商模的直和，由\cref{b3:prop:associated-exact-sequence}其关联素理想只能属于这个单元素集合；商模非零，故恰有该关联素理想。于是可以合并同根因子并删除冗余。对所得分解，对角单射 \(M/N\hookrightarrow\bigoplus_iM/N_i\) 给出关联素理想的一边包含。反向，非零模 \((\bigcap_{j\ne i}N_j)/N\) 同时嵌入 \(M/N\) 与 \(M/N_i\)，它的关联素理想非空且只能为 \(\mathfrak p_i\)，故每个 \(\mathfrak p_i\) 都出现。
+
+最后设 \(\mathfrak p_i\) 极小。对 \(j\ne i\)，取 \(a\in\mathfrak p_j\setminus\mathfrak p_i\)。因为 \(\mathfrak p_j=\sqrt{\operatorname{Ann}_R(M/N_j)}\)，某个 \(a^n\) 零化 \(M/N_j\)。局部化后 \(a\) 是单位，故 \((N_j)_{\mathfrak p_i}=M_{\mathfrak p_i}\)，得到 \(N_{\mathfrak p_i}=(N_i)_{\mathfrak p_i}\)。若 \(m/1\in(N_i)_{\mathfrak p_i}\)，则某个 \(s\notin\mathfrak p_i\) 满足 \(sm\in N_i\)。若 \(m\notin N_i\)，准素性将给出 \(s\in\sqrt{\operatorname{Ann}_R(M/N_i)}=\mathfrak p_i\)，矛盾。所以收缩恰为 \(N_i\)，公式得证。
+\end{proof}
 
 \subsection{嵌入关联素理想的显式例子}
 \label{b3:subsec:0404:02}
 
-待撰写。
+先回到 \(R=k[x,y]\)、\(I=(x^2,xy)\)。商模 \(R/I\) 中有
+\[
+\operatorname{Ann}_R(\bar x)=(x,y),\qquad
+\operatorname{Ann}_R(\bar y)=(x).
+\]
+第一式因为 \(f\bar x=f(0,0)\bar x\)；第二式可将 \(fy\in(x^2,xy)\) 模掉 \(x\)，由 \(k[y]\) 是整环得到 \(f\in(x)\)。这不仅列出了素理想，还给出了定义它们的实际元素。它们正是\cref{b3:thm:primary-associated-primes}对\cref{b3:eq:embedded-line-decomposition}所给出的两个关联素理想。
+
+\ProseParagraphBreak
+一个矩阵也可以同时包含孤立与嵌入成分。令
+\[
+\Phi:R^3\longrightarrow R^2,\qquad
+[\Phi]=\begin{pmatrix}x&y&0\\0&0&x\end{pmatrix},
+\qquad T=\operatorname{coker}\Phi.
+\]
+按两个坐标拆开生成关系，得到
+\[
+T\cong R/(x,y)\oplus R/(x).
+\]
+因此 \(\operatorname{Ass}_R(T)=\Bigl\{(x,y),(x)\Bigr\}\)。若 \(e_1,e_2\) 是 \(R^2\) 的标准基，则 \(N=\operatorname{im}\Phi\) 的极小准素分解为
+\[
+N=\Bigl(Re_1\oplus(x)e_2\Bigr)
+   \cap\Bigl((x,y)e_1\oplus Re_2\Bigr).
+\]
+第一个商模为 \(R/(x)\)，第二个为 \(R/(x,y)\)，故两因子分别属于 \((x)\) 与 \((x,y)\)。在 \((x)\) 处局部化时 \(y\) 成为单位，第一坐标的商消失，第二坐标留下 \(k(y)\)。这就是孤立分支公式在一个展示矩阵上的具体表现。
 
 \subsection{几何分支与非约化结构}
 \label{b3:subsec:0404:03}
 
-待撰写。
+对 Noether 环的真理想 \(I\)，闭集 \(V(I)=V(\sqrt I)\) 只保存极小素理想所给出的不可约分支。若把 \(I\) 换为 \(\sqrt I\)，幂零元全部消失；准素分解中记录的额外结构却不一定保留。这里先在素谱中作这种解释，无须预设基域代数闭。
+
+\begin{proposition}\label{b3:prop:reduced-ring-no-embedded-primes}
+若 \(R\) 是约化 Noether 环，则
+\[
+\operatorname{Ass}_R(R)=\min\operatorname{Spec}R.
+\]
+因此约化 Noether 环没有嵌入关联素理想。
+\end{proposition}
+\begin{proof}
+若 \(R=0\)，等式两侧均为空集。以下设 \(R\ne0\)。由\cref{b3:prop:noether-spectrum-components}，Noether 素谱只有有限个极小素理想，记为 \(\mathfrak p_1,\ldots,\mathfrak p_r\)。约化性给出 \(0=\bigcap_i\mathfrak p_i\)。这个交无冗余：固定 \(i\)，对每个 \(j\ne i\) 取 \(a_j\in\mathfrak p_j\setminus\mathfrak p_i\)，则 \(\prod_{j\ne i}a_j\) 属于其余所有素理想而不属于 \(\mathfrak p_i\)；\(r=1\) 时取空积 \(1\)。因此它是极小准素分解，\cref{b3:thm:primary-associated-primes}给出所需等式。
+\end{proof}
+
+其逆命题不成立：\(k[x,y]/(x^2)\) 非约化，却只有孤立关联素理想 \((\bar x)\)。事实上将元素写成 \(a(y)+\bar x b(y)\)，若 \(a(y)\ne0\)，先比较常数项、再比较 \(\bar x\) 的系数可见其乘法是单射；因而零因子全是平方为零的 \(\bar x b(y)\)，\((x^2)\) 为 \((x)\) 准素理想。
+
+\ProseParagraphBreak
+再看 \(A=k[x,y]/(x^2,xy)\)。其幂零理想 \((\bar x)\) 被 \((\bar x,\bar y)\) 零化，且作为 \(k\) 向量空间只有一维；在开集 \(D(\bar y)\) 上它消失。因此这个环在整条直线的通常结构之外，还在原点保留了一份幂零信息，表现为嵌入关联素理想。与之相比，\(k[x,y]/(x^2)\) 的幂零结构沿整条直线存在。两者的约化商都同构于 \(k[y]\)，但其零因子与局部模结构明显不同。这样的区别是后面研究局部环、重数及正规化时必须保留的。

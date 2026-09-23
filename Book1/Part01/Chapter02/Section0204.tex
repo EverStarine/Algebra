@@ -9,7 +9,7 @@
 %
 % * 第一、第二、第三同构定理
 % * 子群对应定理
-% * 同构定理的图解与计算
+% * 同构定理的比较与综合计算
 %
 % ---
 %
@@ -17,14 +17,14 @@
 同构定理把几个常见操作联系起来：把映射的核商掉、把商映射限制到子群、以及连续取两次商。所得公式虽然相似，背后的映射却各不相同。计算时先写清一个元素怎样映射，再求核和像，通常比记忆商式可靠。
 
 \ProseParagraphBreak
-对于商群中的子群，还需要知道它在原群中对应什么。子群对应定理把这个问题统一处理；本节最后用交换图和整数加法群的例子核对各个映射的方向。
+对于商群中的子群，还需要知道它在原群中对应什么。子群对应定理把这个问题统一处理；本节在每条同构定理之后立即核对相应映射，最后再集中比较三种构造。
 
 \subsection{三个同构定理}
 \label{b1:subsec:0204:01}
 
 \term[diyi-tonggou-dingli]{第一同构定理}[first isomorphism theorem]说明任意同态的像就是定义域商去核之后的结构。
 \begin{theorem}[第一同构定理]\label{b1:thm:first-isomorphism}
-对于同态 \(f:G\rightarrow K\)，映射
+设 \(G,K\) 为群，\(f:G\rightarrow K\) 为群同态。则映射
 \[
 G/\ker f\longrightarrow\operatorname{im}f,\qquad
 g\ker f\longmapsto f(g)
@@ -32,18 +32,46 @@ g\ker f\longmapsto f(g)
 是同构。
 \end{theorem}
 
+第一同构定理中的映射可排列成下面的交换图，其中 \(q:G\rightarrow G/\ker f\) 是商映射。图中两条从 \(G\) 到 \(\operatorname{im}f\) 的路径给出同一个映射；诱导同构 \(\overline f\) 由等式 \(\overline f q=f\) 唯一确定。
+\[
+\begin{tikzcd}
+G \arrow[r,"f"] \arrow[d,"q"'] & \operatorname{im}f \\
+G/\ker f \arrow[ur,"\overline f"',"\cong"] &
+\end{tikzcd}
+\]
+
 \begin{proof}
 由\cref{b1:prop:normal-basic-examples}，\(\ker f\trianglelefteq G\)。把 \(f\) 的目标限制为子群 \(\operatorname{im}f\)，核仍为 \(\ker f\)。在\cref{b1:thm:quotient-universal}中取 \(N=\ker f\)，其核包含条件成立，故 \(g\ker f\mapsto f(g)\) 良定义且为同态。它按像的定义为满射；若 \(f(g)=f(h)\)，则 \(h^{-1}g\in\ker f\)，故
 \(g\ker f=h\ker f\)，得到单射。群同态也是幺半群同态，故\cref{b1:prop:monoid-maps}保证其双射逆映射也为同态，因此它是同构。
 \end{proof}
 
+沿用\subsecref{b1:subsec:0202:03}的矩阵例子，令 \(G\) 为全部 \(d\) 阶可逆实矩阵组成的群，并置
+\[
+S=\{A\in G\mid\det A=1\}.
+\]
+行列式同态满射到 \(\mathbb R^\times\)，核为 \(S\)，故第一同构定理给出
+\[
+G/S\longrightarrow\mathbb R^\times,\qquad AS\longmapsto\det A
+\]
+的同构。陪集相等也可直接核对：
+\[
+AS=BS
+\quad\Longleftrightarrow\quad
+B^{-1}A\in S
+\quad\Longleftrightarrow\quad
+\det A=\det B.
+\]
+原群一般不交换，商群却同构于交换群 \(\mathbb R^\times\)；商去核只保留了行列式记录的信息。
+
+\ProseParagraphBreak
 \term[dier-tonggou-dingli]{第二同构定理}[second isomorphism theorem]比较一个子群在商映射下的像与该子群自身的商。
 \begin{theorem}[第二同构定理]\label{b1:thm:second-isomorphism}
-设 \(H\leq G\)、\(N\trianglelefteq G\)。则 \(HN=\{hn\mid h\in H,n\in N\}\) 是子群，\(H\cap N\trianglelefteq H\)，且存在同构
+设 \(G\) 为群，\(H\leq G\)、\(N\trianglelefteq G\)。则 \(HN=\{hn\mid h\in H,n\in N\}\) 是 \(G\) 的子群，\(H\cap N\trianglelefteq H\)，且映射
 \[
 H/(H\cap N)\longrightarrow HN/N,\qquad
-h(H\cap N)\longmapsto hN.
+h(H\cap N)\longmapsto hN
 \]
+是群同构。
 \end{theorem}
 
 \begin{proof}
@@ -54,6 +82,15 @@ h(H\cap N)\longmapsto hN.
 而 \((hn)^{-1}=n^{-1}h^{-1}=h^{-1}(hn^{-1}h^{-1})\in HN\)，故是子群。\(N\) 在 \(HN\) 中仍正规。把商映射限制到 \(H\)，得同态 \(h\mapsto hN\)，其核是 \(H\cap N\)，像是 \(HN/N\)，因为 \(hnN=hN\)。由\cref{b1:prop:normal-basic-examples}，这个限制同态的核 \(H\cap N\) 正规于 \(H\)；再对该同态应用\cref{b1:thm:first-isomorphism}，便得所述同构及其元素公式。
 \end{proof}
 
+一个可以逐项核对的例子是加法群 \(G=\mathbb Z\)，取 \(H=4\mathbb Z\)、\(N=6\mathbb Z\)。有
+\(H\cap N=12\mathbb Z\)，且 \(H+N=2\mathbb Z\)：任意和都是偶数，而 \(6-4=2\) 生成全部偶数。将模 \(6\) 的自然映射限制到子群 \(4\mathbb Z\)，得到
+\[
+4\mathbb Z/12\mathbb Z\longrightarrow2\mathbb Z/6\mathbb Z,
+\qquad4k+12\mathbb Z\longmapsto4k+6\mathbb Z.
+\]
+左边三个类的代表可取 \(0,4,8\)，它们分别送到右边的 \(0,4,2\) 类。这个同构来自指定的限制映射，不是把商式中的数字形式约分。
+
+\ProseParagraphBreak
 这里也回答了\secref{b1:sec:0201}末尾关于生成子群的问题。\(HN\) 是同时包含 \(H,N\) 的子群，而任一同时包含二者的子群都含有全部乘积 \(hn\)，所以
 \[
 HN=\langle H\cup N\rangle.
@@ -63,7 +100,7 @@ HN=\langle H\cup N\rangle.
 \ProseParagraphBreak
 \term[disan-tonggou-dingli]{第三同构定理}[third isomorphism theorem]处理先后两次取商。
 \begin{theorem}[第三同构定理]\label{b1:thm:third-isomorphism}
-若 \(N\leq K\) 且 \(N,K\trianglelefteq G\)，则 \(K/N\trianglelefteq G/N\)，且
+设 \(G\) 为群。若 \(N\leq K\) 且 \(N,K\trianglelefteq G\)，则 \(K/N\trianglelefteq G/N\)，且
 \[
 (G/N)/(K/N)\longrightarrow G/K,\qquad
 (gN)(K/N)\longmapsto gK
@@ -77,47 +114,73 @@ HN=\langle H\cup N\rangle.
 \(\{gN\mid g\in K\}=K/N\)。由\cref{b1:prop:normal-basic-examples}，\(K/N\) 正规于这个映射的定义域 \(G/N\)；再对该满同态应用\cref{b1:thm:first-isomorphism}，即得 \((G/N)/(K/N)\cong G/K\) 及所述元素公式。特别地，两层陪集公式的良定义已经由这两个具体映射保证，无须在嵌套括号中猜测代表元。
 \end{proof}
 
+例如，\(12\mathbb Z\subseteq4\mathbb Z\subseteq\mathbb Z\) 给出满同态
+\[
+\mathbb Z/12\mathbb Z\longrightarrow\mathbb Z/4\mathbb Z,
+\qquad a+12\mathbb Z\longmapsto a+4\mathbb Z.
+\]
+核为三个元素组成的 \(4\mathbb Z/12\mathbb Z\)，所以第三同构定理给出
+\[
+(\mathbb Z/12\mathbb Z)/(4\mathbb Z/12\mathbb Z)
+\cong\mathbb Z/4\mathbb Z.
+\]
+
 \subsection{子群对应定理}
 \label{b1:subsec:0204:02}
 
 给定正规子群 \(N\)，不仅可以形成一个商群，也可以同时描述商群的全部子群。相应的\term[ziqun-duiying-dingli]{子群对应定理}[subgroup correspondence theorem]要求原群一侧的子群必须包含 \(N\)，这项条件不可省略。
 
 \begin{theorem}[子群对应]\label{b1:thm:subgroup-correspondence}
-设 \(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 是商映射。映射
+设 \(G\) 为群，\(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 是商映射。映射
 \[
 H\longmapsto H/N=q(H),\qquad U\longmapsto q^{-1}(U)
 \]
-在含 \(N\) 的子群 \(H\leq G\) 与 \(G/N\) 的子群 \(U\) 之间给出互逆的、保持包含关系的对应。此外：
-\begin{enumerate}
-\item \(H\trianglelefteq G\) 当且仅当 \(H/N\trianglelefteq G/N\)；
-\item 对 \(N\leq K\leq H\leq G\)，有 \([H:K]=[H/N:K/N]\)；
-\item 对应保持任意交，以及非空子群族所生成的子群。空族的交在两侧分别为 \(G\) 与 \(G/N\)；商群中由空族生成的单位子群 \(\{N\}\)，对应于原群中的 \(N\)。
-\end{enumerate}
-
+在含 \(N\) 的子群 \(H\leq G\) 与 \(G/N\) 的子群 \(U\) 之间给出互逆的、保持包含关系的对应。并且，\(H\trianglelefteq G\) 当且仅当 \(H/N\trianglelefteq G/N\)；对 \(N\leq K\leq H\leq G\)，有
+\[
+[H:K]=[H/N:K/N].
+\]
 \end{theorem}
 
 \begin{proof}
+\textbf{对应的构造。}
 把\cref{b1:prop:kernel-fibers}用于限制同态 \(q|_H\)，可知 \(q(H)\) 是子群。同态下子群的原像含单位元，并对 \(ab^{-1}\) 封闭，故由\cref{b1:prop:subgroup-test}也是子群。原像必含 \(\ker q=N\)。若 \(H\supseteq N\)，则
 \(q^{-1}\bigl(q(H)\bigr)=H\)：确实，\(q(g)=q(h)\) 蕴含 \(h^{-1}g\in N\subseteq H\)，从而 \(g\in H\)。另一方面，\(q\) 满射给出
 \(q\bigl(q^{-1}(U)\bigr)=U\)。这证明互逆；包含保持由像与原像的基本性质得到。
 
+\textbf{正规性的对应。}
 若 \(H\) 正规，则任意商群元素 \(gN\) 对 \(H/N\) 的共轭仍落在其中。反之，若 \(H/N\) 正规，则对 \(h\in H,g\in G\)，有
-\(q(ghg^{-1})\in H/N\)，取原像得 \(ghg^{-1}\in H\)，故 \(H\) 正规。指数公式来自左陪集的双射
-\(hK\mapsto(hN)(K/N)\)：由\cref{b1:prop:coset-equivalence}，左边的相等条件为 \(h_2^{-1}h_1\in K\)，右边的相等条件为 \(q(h_2^{-1}h_1)\in q(K)\)；因 \(q^{-1}\bigl(q(K)\bigr)=K\)，二者等价。每个右边的陪集都有这种代表，故该映射确为双射。
+\(q(ghg^{-1})\in H/N\)，取原像得 \(ghg^{-1}\in H\)，故 \(H\) 正规。
 
-交与生成的保持可以用原像公式统一说明。对 \(G/N\) 的任意子群族 \((U_i)_{i\in I}\)，有
+\textbf{指数。}
+映射 \(hK\mapsto(hN)(K/N)\) 由\cref{b1:prop:coset-equivalence}良定义：左边的相等条件为 \(h_2^{-1}h_1\in K\)，右边的相等条件为 \(q(h_2^{-1}h_1)\in q(K)\)；因 \(q^{-1}\bigl(q(K)\bigr)=K\)，二者等价。每个右边的左陪集都有这种代表，故该映射为陪集集合间的双射，指数相等。
+\end{proof}
+
+指数公式不要求 \(K\trianglelefteq H\)，也不要求 \(G,H,K\) 有限。它比较两个左陪集集合的基数，不把 \(H/K\) 当作商群，也不涉及无限基数的除法。
+
+\ProseParagraphBreak
+例如要找 \(\mathbb Z/12\mathbb Z\) 中由 \([4]\) 生成的子群，先在 \(\mathbb Z\) 中取包含 \(12\mathbb Z\) 与 \(4\) 的子群 \(4\mathbb Z\)。它的像是 \(\bigl\{[0],[4],[8]\bigr\}\)，指数为 \([\mathbb Z:4\mathbb Z]=4\)。若原子群不含核，例如 \(5\mathbb Z\)，其像的原像会变大：模 \(12\) 时 \([5]\) 生成全部余数，所以原像是 \(\mathbb Z\)，不是 \(5\mathbb Z\)。
+
+\begin{corollary}[交与生成的对应]\label{b1:cor:subgroup-correspondence-lattice}
+设 \(G\) 为群，\(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 为商映射。对 \(G/N\) 的任意子群族 \((U_i)_{i\in I}\)，有
 \[
 q^{-1}\biggl(\bigcap_{i\in I}U_i\biggr)
-=\bigcap_{i\in I}q^{-1}(U_i).
+=\bigcap_{i\in I}q^{-1}(U_i),
 \]
-当 \(I\) 为空时，这正是 \(q^{-1}(G/N)=G\)。对生成子群，则应写成
+以及
 \[
 q^{-1}\biggl(\Bigl\langle\bigcup_{i\in I}U_i\Bigr\rangle\biggr)
 =\Bigl\langle N\cup\bigcup_{i\in I}q^{-1}(U_i)\Bigr\rangle.
 \]
-为验证第二式，记右侧为 \(L\)。左侧是包含 \(N\) 和全部 \(q^{-1}(U_i)\) 的子群，因而包含 \(L\)。反过来，\(q(L)\) 包含所有 \(U_i\)，故包含它们生成的子群；取原像并用 \(q^{-1}\bigl(q(L)\bigr)=L\)，即得反向包含。若 \(I\) 非空，每个 \(q^{-1}(U_i)\) 已包含 \(N\)，右侧可以省去额外写出的 \(N\)。若 \(I\) 为空，等式两侧都是 \(N\)，而不是 \(\{1\}\)。这证明了第三项。
+因此子群对应保持任意交与任意生成子群。
+\end{corollary}
+
+\begin{proof}
+原像保持任意交，给出第一式；当 \(I\) 为空时，它就是 \(q^{-1}(G/N)=G\)。对第二式，记右侧为 \(L\)。左侧包含 \(N\) 以及每个 \(q^{-1}(U_i)\)，因而包含 \(L\)。反过来，\(q(L)\) 包含所有 \(U_i\)，故包含它们生成的子群；取原像并使用 \(q^{-1}(q(L))=L\)，得到反向包含。若 \(I\) 非空，每个 \(q^{-1}(U_i)\) 已含 \(N\)，右侧可省去另写的 \(N\)；若 \(I\) 为空，两边均为 \(N\)，不是 \(\{1\}\)。
 \end{proof}
 
+包含 \(N\) 的子群所成区间以 \(N\) 为最小元素，而不是以 \(\{1\}\) 为最小元素；这正是空族生成时必须保留 \(N\) 的原因。
+
+\ProseParagraphBreak
 特别地，对包含 \(N\) 的两个子群 \(H_1,H_2\)，上述结论给出
 \[
 \begin{aligned}
@@ -128,36 +191,21 @@ q\Bigl(\bigl\langle H_1\cup H_2\bigr\rangle\Bigr)
 \]
 第一式中包含核的条件很具体：若 \(q(h_1)=q(h_2)\)，其中 \(h_i\in H_i\)，则 \(h_2^{-1}h_1\in N\subseteq H_2\)，故 \(h_1\in H_2\)。所以这个公共的像能由 \(H_1\cap H_2\) 中的同一个元素取得。任意映射的直接像并不自动保持交；这里用到了两子群都包含核。
 
-\ProseParagraphBreak
-例如要找 \(\mathbb Z/12\mathbb Z\) 中由 \([4]\) 生成的子群，先在 \(\mathbb Z\) 中取包含 \(12\mathbb Z\) 与 \(4\) 的子群 \(4\mathbb Z\)。它的像是 \(\bigl\{[0],[4],[8]\bigr\}\)，指数为 \([\mathbb Z:4\mathbb Z]=4\)。若原子群不含核，例如 \(5\mathbb Z\)，其像的原像会变大：模 \(12\) 时 \([5]\) 生成全部余数，所以原像是 \(\mathbb Z\)，不是 \(5\mathbb Z\)。
-
-\subsection{同构定理的图解与计算}
+\subsection{同构定理的比较与综合计算}
 \label{b1:subsec:0204:03}
 
-第一同构定理可排列成下面的交换图。图中两条从 \(G\) 到 \(\operatorname{im}f\) 的路径给出同一个映射；诱导映射 \(\overline f\) 由等式 \(\overline f q=f\) 唯一确定。
-\[
-\begin{tikzcd}
-G \arrow[r,"f"] \arrow[d,"q"'] & \operatorname{im}f \\
-G/\ker f \arrow[ur,"\overline f"',"\cong"] &
-\end{tikzcd}
-\]
-这个图解释“典范”的含义：在商映射 \(q\) 与原同态 \(f\) 已经固定后，\(\overline f\) 没有选择余地。但若只知道两个抽象群同构而没有指定 \(f\)，并不能由此得到唯一同构。
+三条同构定理都由第一同构定理的“商去核”思想得到，但出发同态不同。下表集中列出实际需要计算的映射与核。
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}p{0.17\linewidth}p{0.32\linewidth}p{0.16\linewidth}X@{}}
+\toprule
+所用定理 & 出发同态 & 核 & 所得同构 \\
+\midrule
+第一同构定理 & 给定的 \(f:G\to K\)，目标缩为 \(\operatorname{im}f\) & \(\ker f\) & \(G/\ker f\cong\operatorname{im}f\) \\
+第二同构定理 & 商映射在 \(H\) 上的限制 \(H\to HN/N\) & \(H\cap N\) & \(H/(H\cap N)\cong HN/N\) \\
+第三同构定理 & 诱导满同态 \(G/N\to G/K\) & \(K/N\) & \((G/N)/(K/N)\cong G/K\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
-\ProseParagraphBreak
-第二同构定理的一个可跟算例子是加法群 \(G=\mathbb Z\)，取
-\(H=4\mathbb Z\)、\(N=6\mathbb Z\)。有
-\(H\cap N=12\mathbb Z\)，且
-\(H+N=2\mathbb Z\)：任意和都是偶数，而 \(6-4=2\) 生成全部偶数。限制模 \(6\) 的映射到 \(4\mathbb Z\)，得到
-\[
-4\mathbb Z/12\mathbb Z\longrightarrow2\mathbb Z/6\mathbb Z,
-\qquad4k+12\mathbb Z\longmapsto4k+6\mathbb Z.
-\]
-左边三个类的代表可取 \(0,4,8\)，它们分别送到右边的 \(0,4,2\) 类，确实一一对应。这个同构并不是把“分子与分母同时约去一个数”；它来自指定的模 \(6\) 映射。
-
-\ProseParagraphBreak
-第三同构定理中，\(12\mathbb Z\subseteq4\mathbb Z\subseteq\mathbb Z\) 给出满同态
-\[
-\mathbb Z/12\mathbb Z\longrightarrow\mathbb Z/4\mathbb Z,
-\qquad a+12\mathbb Z\longmapsto a+4\mathbb Z.
-\]
-核是三个元素组成的 \(4\mathbb Z/12\mathbb Z\)，再把这三个元素组成的子群商掉，便得到四元素群。与前例并列时尤其应注意：两处虽然都出现 \(4,12\)，映射的定义域、核和目标不同，不能只凭商式外观套用名称。
+每个同构都由表中的指定同态唯一诱导；只看到两个抽象群同构，并不能断言同构映射唯一。章末综合题将把对应定理与三种同构放在同一个有限群中逐项计算。

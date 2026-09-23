@@ -1,30 +1,130 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.3 切空间与 Jacobian 矩阵（雅可比矩阵）
-% 纲要位置：计划纲要.md，第 1944 行。
+% 纲要位置：工作记录/计划纲要.md，第 2262 行。
+% 纲要细目（写作范围）：
+% * 极大理想模平方与余切空间
+% * 仿射方程的切空间计算
+% * 非完美基域下的额外注意事项
+
 
 \section{切空间与 Jacobian 矩阵（雅可比矩阵）}
 \label{b3:sec:1403}
 
-% TODO: 按以下纲要要点撰写本节。
+一条曲线在一个点附近可能有几条分支，也可能含有重根；只看点集不能分辨这些现象。把点的坐标改成 \(a_i+v_i\varepsilon\)、其中 \(\varepsilon^2=0\)，方程留下的一次关系便限制了允许的方向。先从有理点说明这个计算，再讨论剩余域不是基域的情形。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 极大理想模平方与余切空间
-% * 仿射方程的切空间计算
-% * 非完美基域下的额外注意事项
-%
 
 \subsection{极大理想模平方与余切空间}
 \label{b3:subsec:1403:01}
 
-待撰写。
+\begin{definition}\label{b3:def:zariski-tangent-space}
+设 \(k\) 为域，\(B\) 为有限型交换 \(k\) 代数，\(a:B\to k\) 为一个 \(k\) 代数同态，\(\mathfrak m=\ker a\)。以 \(a\) 赋予 \(k\) 一个 \(B\) 模结构。向量空间
+\[
+T_a(B)=\operatorname{Der}_k(B,k)
+\]
+称为 \(B\) 在这个 \(k\) 有理点处的\term[zariski-qiekongjian]{Zariski 切空间}[Zariski tangent space]；\(\mathfrak m/\mathfrak m^2\) 是该点的余切空间。这里的 \(B\) 可以含有非零幂零元，不要求它是某个点集的约化坐标环。
+\symidx{\(T_a(B)\)：有理点处的 Zariski 切空间}
+\end{definition}
+
+\begin{proposition}\label{b3:prop:tangent-cotangent-rational}
+设 \(k\) 为域，\(B\) 为交换 \(k\) 代数，\(a:B\to k\) 为 \(k\) 代数同态，\(\mathfrak m=\ker a\)。则有自然同构
+\[
+\mathfrak m/\mathfrak m^2\xrightarrow{\sim}
+k\otimes_B\Omega_{B/k},\qquad
+\bar b\longmapsto1\otimes db,
+\]
+以及
+\[
+\operatorname{Der}_k(B,k)
+\cong\operatorname{Hom}_k(\mathfrak m/\mathfrak m^2,k).
+\]
+若以局部环 \(B_{\mathfrak m}\) 代替 \(B\)，所得余切空间及切空间相同。
+\end{proposition}
+\begin{proof}
+对 \(b,c\in\mathfrak m\)，\(1\otimes d(bc)=0\)，故第一个映射良定义。每个 \(b\in B\) 都写成 \(a(b)+\Bigl(b-a(b)\Bigr)\)，其中后项属于 \(\mathfrak m\)，所以这个映射满射。反向定义
+\[
+D:B\longrightarrow\mathfrak m/\mathfrak m^2,
+\qquad D(b)=b-a(b)\pmod{\mathfrak m^2}.
+\]
+将 \(b=a(b)+b_0\)、\(c=a(c)+c_0\) 相乘，模掉 \(\mathfrak m^2\) 后得到
+\(D(bc)=a(b)D(c)+a(c)D(b)\)。故 \(D\) 是取值于剩余域模的 \(k\) 导子，由微分模泛性质诱导逆映射。第二个同构由同一泛性质及第一个同构得到。
+
+若 \(s\notin\mathfrak m\)，它在 \(\mathfrak m/\mathfrak m^2\) 上的乘法就是非零标量 \(a(s)\)，已经可逆。因此局部化不改变该商；由局部化正合性，它又等于
+\(\mathfrak mB_{\mathfrak m}/(\mathfrak mB_{\mathfrak m})^2\)。导子的分式延拓公式也给出相同的切空间。
+\end{proof}
+
+上述导子还有直接的点的解释。给定 \(D\in T_a(B)\)，映射
+\[
+B\longrightarrow k[\varepsilon]/(\varepsilon^2),\qquad
+b\longmapsto a(b)+D(b)\varepsilon
+\]
+是一个模 \(\varepsilon\) 后等于 \(a\) 的 \(k\) 代数同态；乘法相容性恰是导子的公式。反过来，每个这样的同态都唯一给出一个 \(D\)。因此切向量记录的是点向双数环中的一阶延伸。
 
 \subsection{仿射方程的切空间计算}
 \label{b3:subsec:1403:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:jacobian-tangent-space}
+设 \(k\) 为域，\(B=k[X_1,\ldots,X_n]/(f_1,\ldots,f_s)\)，且 \(a=(a_1,\ldots,a_n)\in k^n\) 满足所有 \(f_i(a)=0\)。令
+\[
+J_f(a)=\left(\frac{\partial f_i}{\partial X_j}(a)\right)_{
+1\le i\le s,\,1\le j\le n}.
+\]
+则在变量坐标给出的识别下，
+\[
+T_a(B)=\ker\Bigl(J_f(a):k^n\to k^s\Bigr),
+\qquad \dim_kT_a(B)=n-\operatorname{rank}J_f(a).
+\]
+这个矩阵称为所给方程组的\term[jacobian-juzhen]{Jacobian 矩阵}[Jacobian matrix]，亦称雅可比矩阵\termidx[yakebi-juzhen]{雅可比矩阵}。
+\end{theorem}
+\begin{proof}
+\cref{b3:cor:differential-presentation}给出 \(B^s\to B^n\to\Omega_{B/k}\to0\)。张量到 \(k\) 后仍右正合，再取 \(k\) 线性对偶，得到
+\[
+0\longrightarrow\operatorname{Hom}_k(k\otimes_B\Omega_{B/k},k)
+\longrightarrow k^n\xrightarrow{J_f(a)}k^s.
+\]
+前一命题把左端识别为切空间，因而得到核的描述及维数公式。具体说，一个方向 \(v=(v_j)\) 满足
+\[
+f_i(a_1+v_1\varepsilon,\ldots,a_n+v_n\varepsilon)
+=f_i(a)+\varepsilon\sum_j
+\frac{\partial f_i}{\partial X_j}(a)v_j=0;
+\]
+二次以上的改变量因 \(\varepsilon^2=0\) 全部消失。这也直接解释了每一行约束的含义。
+\end{proof}
+
+例如在 \(B=k[x,y]/(xy-1)\) 中，每个有理点 \((a,b)\) 都有 \(ab=1\)，Jacobian 行为 \((b,a)\)，秩为一，所以切空间由 \(bv_x+av_y=0\) 给出，是一维的。在尖点曲线 \(y^2=x^3\) 的原点，Jacobian 行 \((-3x^2,2y)\) 为零，故切空间是整个 \(k^2\)，任意特征都如此。曲线 \(xy=0\) 的原点也有二维切空间，虽然它有两条分支，而尖点只有一条。这说明切空间维数能发现某些异常，却不能单独数出分支。
+
+\ProseParagraphBreak
+还须保留方程中的幂零结构。\(k[t]/(t^2)\) 只有一个域值点，但该点切空间为一维；约化后的坐标环 \(k\) 则有零切空间。两者的点集相同，一阶延伸却不同。若已经把理想替换成根理想再计算，便无法恢复丢掉的方向。
 
 \subsection{非完美基域上的切空间}
 \label{b3:subsec:1403:03}
 
-待撰写。
+对一般点 \(\mathfrak p\in\operatorname{Spec}B\)，剩余域 \(\kappa(\mathfrak p)\) 未必等于 \(k\)。局部环自身的余切空间
+\(\mathfrak pB_{\mathfrak p}/(\mathfrak pB_{\mathfrak p})^2\)
+与相对微分的纤维 \(\kappa(\mathfrak p)\otimes_B\Omega_{B/k}\) 是两个不同对象。对 \(B_{\mathfrak p}\to\kappa(\mathfrak p)\) 应用余法正合列及微分局部化，得到
+\begin{equation}\label{b3:eq:cotangent-residue-sequence}
+\frac{\mathfrak pB_{\mathfrak p}}{(\mathfrak pB_{\mathfrak p})^2}
+\longrightarrow\kappa(\mathfrak p)\otimes_B\Omega_{B/k}
+\longrightarrow\Omega_{\kappa(\mathfrak p)/k}\longrightarrow0.
+\end{equation}
+当点为 \(k\) 有理点时，前一命题给出了左箭头为同构的额外论证；不能仅凭这条右正合列，在任意点处也补上同构号。
+
+\begin{example}\label{b3:exm:inseparable-tangent}
+设 \(p\) 为素数、\(k=\mathbb F_p(s)\)，其中 \(s\) 为超越元。令
+\[
+L=k[u]/(u^p-s).
+\]
+由于 \(s\) 在 \(k\) 中不是 \(p\) 次幂，\(u^p-s\) 不可约，故 \(L\) 为域。其唯一局部环的极大理想为零，局部环余切空间也为零。但微分展示给出
+\[
+\Omega_{L/k}=L\,du,
+\]
+因为 \(d(u^p-s)=0\)。这里相对微分纤维非零，完全来自剩余域扩张的不可分性。若扩域到 \(K=k(s^{1/p})\)，则
+\[
+K\otimes_kL\cong K[v]/(v^p),\qquad v=u-s^{1/p},
+\]
+几何点处出现一维切空间以及非零幂零元。
+\end{example}
+
+不可约性的一个直接检验如下。在代数闭包中，\(T^p-s=(T-\alpha)^p\)。若 \(\alpha\) 的最小多项式次数 \(r<p\)，它只能为 \((T-\alpha)^r\)，其 \(T^{r-1}\) 系数使 \(r\alpha\in k\)，从而 \(\alpha\in k\)，与 \(s\) 非 \(p\) 次幂矛盾。最后一事实可由有理函数在 \(s=0\) 处的零点阶数核验：\(p\) 次幂的阶数是 \(p\) 的倍数，\(s\) 的阶数则为一。
+
+\ProseParagraphBreak
+这一区别在不完美基域上尤其必要。局部环是域，因而在环论意义下最简单，却不能据此断言它相对于给定基域光滑。后面的正则局部环与光滑性判据将分别处理环自身的性质和扩张基域后的性质；本章的微分计算已经显示两者为何不能合并。

@@ -1,30 +1,78 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 1.1 素理想与极大理想
-% 纲要位置：计划纲要.md，第 1498 行。
+% 纲要位置：工作记录/计划纲要.md，第 1816 行。
+% 纲要细目（写作范围）：
+% * 素理想及商整环
+% * 极大理想及剩余域
+% * 素理想存在性的集合论条件
 
 \section{素理想与极大理想}
 \label{b3:sec:0101}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 素理想及商整环
-% * 极大理想及剩余域
-% * 素理想存在性的集合论条件
-%
+在交换环中，模去一个理想以后，可能得到整环，也可能直接得到域。这两种情形分别由素理想和极大理想刻画。它们将成为本卷所研究空间的点，因此先把代数条件、商环及存在性说清楚。除另有说明外，本卷的环都交换且含幺，同态保持单位；允许零环，但素理想和极大理想必须是真理想。
 
 \subsection{素理想与商整环}
 \label{b3:subsec:0101:01}
 
-待撰写。
+\begin{definition}\label{b3:def:prime-maximal}
+环 \(R\) 的真理想 \(\mathfrak p\) 若满足
+\[
+ab\in\mathfrak p\ \Longrightarrow\ a\in\mathfrak p\text{ 或 }b\in\mathfrak p
+\qquad(a,b\in R),
+\]
+称为\term[sulixiang]{素理想}[prime ideal]。真理想 \(\mathfrak m\) 若不存在严格介于 \(\mathfrak m\) 与 \(R\) 之间的理想，称为\term[jidalixiang]{极大理想}[maximal ideal]。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:prime-maximal-quotient}
+\(\mathfrak p\) 为素理想当且仅当 \(R/\mathfrak p\) 为整环；\(\mathfrak m\) 为极大理想当且仅当 \(R/\mathfrak m\) 为域。特别地，极大理想必为素理想。
+\end{proposition}
+\begin{proof}
+真理想保证商中的单位元不为零。商中 \((a+\mathfrak p)(b+\mathfrak p)=0\) 等价于 \(ab\in\mathfrak p\)，故第一个断言正是无零因子的条件。
+
+若 \(\mathfrak m\) 极大，对 \(a\notin\mathfrak m\) 有 \(\mathfrak m+(a)=R\)，可写 \(1=u+ra\)、\(u\in\mathfrak m\)，所以 \(r+\mathfrak m\) 是 \(a+\mathfrak m\) 的逆。反之，若商为域，设 \(J\) 严格包含 \(\mathfrak m\)，取 \(a\in J\setminus\mathfrak m\)。将商中 \(a+\mathfrak m\) 的逆提升为 \(b\in R\)，则 \(ab-1\in\mathfrak m\subseteq J\)，而 \(ab\in J\)，相减得 \(1\in J\)。所以 \(J=R\)，证明极大性。域是整环，再由第一个断言即得最后结论。
+\end{proof}
+
+这重述了第一卷命题10.2.6的商环判据。实际检验时，寻找一个方便辨认的商环，常比逐一检查所有乘积更直接。例如 \(k[x,y]/(x)\cong k[y]\)，所以 \((x)\) 素而不极大；\(k[x,y]/(x,y)\cong k\)，所以 \((x,y)\) 极大。\(\mathbb Z\) 的素理想为 \((0)\) 和 \((p)\)、\(p\) 为素数，其中只有后者极大。
+
+\ProseParagraphBreak
+还可用理想的乘积表述素性：若 \(I J\subseteq\mathfrak p\)，则 \(I\subseteq\mathfrak p\) 或 \(J\subseteq\mathfrak p\)。否则分别取 \(a\in I\setminus\mathfrak p\)、\(b\in J\setminus\mathfrak p\)，有 \(ab\in\mathfrak p\)，违反素性。这个形式将在闭集并的计算中使用。
 
 \subsection{极大理想与剩余域}
 \label{b3:subsec:0101:02}
 
-待撰写。
+对极大理想 \(\mathfrak m\)，域 \(\kappa(\mathfrak m)=R/\mathfrak m\) 称为该点的\term[shengyu-yu]{剩余域}[residue field]。若 \(R\) 是域 \(k\) 上的非零代数，这个域含有 \(k\) 的像，却未必等于 \(k\)。例如 \(\mathbb R[t]\) 中 \((t^2+1)\) 极大，剩余域为 \(\mathbb C\)，而不存在实数 \(a\) 使这个理想等于 \((t-a)\)。第六章将说明有限型代数在代数闭域上的情形为何不同。
+\symidx{\(\kappa(\mathfrak m)=R/\mathfrak m\)：极大理想处的剩余域}
+
+\begin{theorem}\label{b3:thm:maximal-existence}
+任一真理想都包含于某个极大理想。因而非零环至少有一个素理想；零环没有素理想。
+\end{theorem}
+\begin{proof}
+固定真理想 \(I\)，在包含 \(I\) 的全部真理想中按包含排序。此集合非空。非空链的并仍为理想，且不含一：若一在并中，它已在某个链成员中，矛盾。空链由 \(I\) 提供上界。因此第一卷附录A定理A.1.4的 Zorn 引理给出极大元，它也是 \(R\) 的极大理想。取 \(I=0\) 得非零环的结论。零环没有真理想，故两个定义都不适用。
+\end{proof}
+
+一个常用后果是：\(a\in R\) 可逆当且仅当它不属于任何极大理想。若不可逆，\((a)\) 为真理想，用\cref{b3:thm:maximal-existence}即可找到包含它的极大理想；反向则因为包含单位的理想必为全环。注意这里并不要求 \(R\) 为 Noether 环。
 
 \subsection{素理想存在性的集合论条件}
 \label{b3:subsec:0101:03}
 
-待撰写。
+\begin{lemma}[避开乘法集]\label{b3:lem:prime-disjoint-multiplicative}
+设 \(S\subseteq R\) 含一且对乘法封闭，\(I\) 为与 \(S\) 不交的理想。则存在素理想 \(\mathfrak p\supseteq I\) 与 \(S\) 不交。
+\end{lemma}
+\begin{proof}
+考虑包含 \(I\) 且与 \(S\) 不交的理想。链的并仍与 \(S\) 不交，空链有上界 \(I\)，所以 Zorn 引理给出极大者 \(\mathfrak p\)。它不含一，因而为真理想。若 \(a,b\notin\mathfrak p\)，极大性使 \(\mathfrak p+(a)\)、\(\mathfrak p+(b)\) 分别含有 \(s=u+ra\in S\)、\(t=v+qb\in S\)。若 \(ab\in\mathfrak p\)，展开乘积即得 \(st\in\mathfrak p\)，与 \(st\in S\) 矛盾。因此 \(\mathfrak p\) 素。
+\end{proof}
+
+这里使用选择原理的地方，是在避开乘法集的理想族中取极大元；它未必是原环的极大理想。证明没有默认环已经有某种有限生成性质。对具体多项式环，可以经常直接写出所需的素理想；上述论证则保证任意交换环中相应对象存在。可参阅松村英之的《Commutative Ring Theory》\cite[Theorems 1.1--1.2, pp. 2--3]{Matsumura1989CommutativeRingTheory}。
+
+\begin{lemma}[有限素理想回避]\label{b3:lem:finite-prime-avoidance}
+设 \(I\) 是理想，\(\mathfrak p_1,\ldots,\mathfrak p_r\)、\(r\ge1\)，是有限个素理想。若 \(I\subseteq\bigcup_{i=1}^r\mathfrak p_i\)，则 \(I\subseteq\mathfrak p_i\) 对某个 \(i\) 成立。
+\end{lemma}
+\begin{proof}
+删去被其他素理想包含的成员不改变并集，可设余下者两两不可比。若 \(I\) 不包含于任何一个，选 \(a_i\in I\setminus\mathfrak p_i\)。对 \(j\ne i\)，不可比性使我们可以选 \(b_{ij}\in\mathfrak p_j\setminus\mathfrak p_i\)。令
+\[
+c_i=a_i\prod_{j\ne i}b_{ij},\qquad c=\sum_i c_i.
+\]
+素性使 \(c_i\notin\mathfrak p_i\)，而 \(c_i\in I\) 且属于每个 \(\mathfrak p_j\)、\(j\ne i\)。对固定 \(i\)，和式中其他各项都在 \(\mathfrak p_i\) 内，所以 \(c\notin\mathfrak p_i\)。于是 \(c\in I\) 却不在所给并集中，矛盾。只有一个成员时把空乘积取为一，同一论证仍成立。
+\end{proof}
+
+这称为\term[sulixiang-huibi]{素理想回避引理}[prime avoidance lemma]的有限素理想版本。它说明有限个素理想的并并不比其中某个成员更容易完整地容纳一个理想；有限性是陈述的一部分，不能删去。

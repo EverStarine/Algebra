@@ -1,16 +1,185 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第5章　整扩张、整闭性与 Noether 正规化
-% 纲要位置：计划纲要.md，第 1615 行。
+% 纲要位置：工作记录/计划纲要.md，第 1933 行。
 
-\chapter{整扩张、整闭性与 Noether 正规化}
-\label{b3:ch:05}
+\chapter{整扩张、整闭性与 Noether 正规化}\label{b3:ch:05}
 \BookChapterNumber{b3:ch:05}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+整性把首一方程与有限模联系起来，使环扩张中的元素和素理想都能受到控制。本章从有限模判据出发，建立整闭包、素理想的提升与不可比性，完整证明整闭基整环上的 Going-down 定理。最后用适用于任意域的加权代换证明 Noether 正规化，把有限型代数组织成多项式子环上的有限模。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用有限模判据证明整性，区分有限型、有限与整扩张。
+\item 明确整闭包的环境，检验整闭性及局部化的作用。
+\item 在指定端点上提升素理想链，并核对 Going-up 与 Going-down 的不同假设。
+\item 实际构造整子多项式环，说明有限域上为何需要非线性的加权代换。
+\end{itemize}
+\end{learninggoals}
+
+本章用到环局部化、素理想对应和有限模的行列式技巧。最小多项式与代数独立沿用第一卷的域论定义；Noether 正规化对含零因子的有限型代数也成立，所以不能在证明中暗中改成只讨论整环。素理想链的比较先按包含关系处理，维数术语留待下一编。
+
+\ProseParagraphBreak
+Matsumura 的《Commutative Ring Theory》\cite[§9, Theorems 9.1--9.4, pp. 64--68]{Matsumura1989CommutativeRingTheory}适合对照整性与素理想提升；其中 Going-down 的主证明使用正规扩域中的素理想共轭，本章改用最小多项式系数的局部化论证。\cite[§33, Lemma 2, p. 262]{Matsumura1989CommutativeRingTheory}给出无限域上的线性代换证明，本章同时处理有限域，避免把非零多项式必有非零取值的结论用于有限域。
 
 \input{Part01/Chapter05/Section0501}
 \input{Part01/Chapter05/Section0502}
 \input{Part01/Chapter05/Section0503}
 \input{Part01/Chapter05/Section0504}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+首一方程使一个元素的高次幂落在有限个低次幂的线性生成空间中；行列式技巧给出反向推导。因此有限代数生成与各生成元的整性合起来，才得到有限模。整性可传递，所有整元素组成整闭包，但整闭性总要相对于指定的扩环或分式域来理解。
+
+\ProseParagraphBreak
+整扩张的素谱映射满射且闭，同一纤维中的素理想互不包含。Going-up 不要求整闭性；从指定顶端向下提升则需要本章 Going-down 版本中的整环及整闭假设。证明中整闭性的实际用途，是把最小多项式的系数留在底环内。
+
+\ProseParagraphBreak
+Noether 正规化把任意非零有限型域代数写成多项式子环上的有限扩张。加权代换在有限域上仍能找出唯一的最高幂，因而不依赖域中可供选择的点数。这个多项式子环将在正规化有限性、超越次数和维数的比较中反复使用。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:05-sum-radicals}
+给 \(\alpha=\sqrt2+\sqrt3\) 找一个整数系数的首一方程，并给 \(\mathbb Z[\alpha]\) 找一组至多四个元素的模生成元。
+\end{exercise}
+\begin{solution}
+由 \(\alpha^2=5+2\sqrt6\)，得到 \((\alpha^2-5)^2=24\)，即
+\(\alpha^4-10\alpha^2+1=0\)。依此递降幂次，\(1,\alpha,\alpha^2,\alpha^3\) 生成 \(\mathbb Z[\alpha]\)。这里不需要先证明这个四次多项式不可约。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-inverting-integers}
+设整数 \(n>1\)。证明 \(\mathbb Z[1/n]\) 是有限型 \(\mathbb Z\) 代数，却不是有限 \(\mathbb Z\) 模。
+\end{exercise}
+\begin{solution}
+它由 \(1/n\) 作为代数生成。若为有限模，\cref{b3:prop:integral-finite-criterion}将使 \(1/n\) 整，设其首一方程次数为 \(r\)。乘以 \(n^r\) 后有 \(1+a_1n+\cdots+a_rn^r=0\)，从而 \(n\mid1\)，矛盾。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-nilpotent-perturbation}
+设 \(A\subseteq B\)、\(u\in B\) 幂零。证明 \(b\) 在 \(A\) 上整，当且仅当 \(b+u\) 在 \(A\) 上整。
+\end{exercise}
+\begin{solution}
+若首一 \(f\in A[T]\) 满足 \(f(b)=0\)，则逐项展开得 \(f(b+u)\in uB\)。取 \(u^N=0\)，便有 \(f(b+u)^N=0\)，而 \(f(T)^N\) 仍首一，所以 \(b+u\) 整。把 \(u\) 换成 \(-u\) 得到反向结论。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-integral-union}
+证明一个整扩张是其有限子代数的有向并，并用 \(\overline{\mathbb F}_p/\mathbb F_p\) 说明整扩张不必有限。
+\end{exercise}
+\begin{solution}
+任取有限多个元素，它们生成的子代数由\cref{b3:prop:integral-finite-criterion}有限。两组元素的并仍有限，所以这些子代数有向，且每个元素都属于其中一个。\(\overline{\mathbb F}_p\) 中每个元素代数，因而整；若其维数为 \(d\)，它就只有 \(p^d\) 个元素，不可能同时含有每个有限域 \(\mathbb F_{p^r}\)，故不有限。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-localize-closure}
+设 \(A\) 为整环、\(L\) 为其分式域的扩域、\(C\) 为 \(A\) 在 \(L\) 中的整闭包，且 \(S\subseteq A\setminus\{0\}\) 乘法封闭。证明 \(S^{-1}C\) 是 \(S^{-1}A\) 在 \(L\) 中的整闭包。
+\end{exercise}
+\begin{solution}
+局部化保持整性，所以 \(S^{-1}C\) 中的元素整。反向，若 \(z\) 满足 \(S^{-1}A\) 上首一方程，选公共分母 \(s\in S\)，把各系数写成 \(a_i/s\)。与\cref{b3:prop:ufd-integrally-closed}的第二段证明一样，\(sz\) 满足
+\(T^n+a_1T^{n-1}+a_2sT^{n-2}+\cdots+a_ns^{n-1}\)，故 \(sz\in C\)，于是 \(z\in S^{-1}C\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-quadratic-order}
+证明 \(\mathbb Z[\sqrt5]\) 不整闭，并证明 \((1+\sqrt5)/2\) 所生成的环是有限 \(\mathbb Z[\sqrt5]\) 模。
+\end{exercise}
+\begin{solution}
+\(\omega=(1+\sqrt5)/2\) 满足 \(\omega^2-\omega-1=0\)，属于原环的分式域，却不写成 \(a+b\sqrt5\)、\(a,b\in\mathbb Z\)，因为 \(1,\sqrt5\) 在 \(\mathbb Q\) 上线性无关。又 \(\sqrt5=2\omega-1\)，所以 \(\mathbb Z[\omega]\) 包含原环，并由 \(1,\omega\) 在原环上生成。这只证明一个有限的整扩环，不在此宣称已算出全部整闭包。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-primes-square-map}
+设 \(k\) 代数闭，求 \(k[u]\subseteq k[t]\)、\(u=t^2\) 中位于 \((u-a)\) 上的全部素理想，并区分 \(\operatorname{char}k=2\) 的情形。
+\end{exercise}
+\begin{solution}
+原像由 \(k[t]/(t^2-a)\) 的素理想给出，即 \((t-b)\)，其中 \(b^2=a\)。特征不为二且 \(a\ne0\) 时有两个不同根；\(a=0\) 时只有 \((t)\)。特征二时，代数闭性给出一个平方根 \(b\)，且 \(t^2-a=(t-b)^2\)，所以也只有一个素理想。二重因子不产生第二个点，却使商环含有幂零元。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-integral-homeomorphism}
+证明若一个整包含的素谱收缩映射为双射，则它是同胚。说明双射之外还需要用到什么性质。
+\end{exercise}
+\begin{solution}
+环同态诱导的素谱映射连续，因为闭集 \(V_A(I)\) 的原像为 \(V_B(IB)\)。\cref{b3:prop:integral-spec-closed}进一步说明此映射闭。一个连续闭双射的逆映射连续：逆像为原映射的像，而原映射把闭集送到闭集。因此是同胚。单独的连续双射并不提供这一闭性。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-nonintegral-incomparability}
+在 \(k[x]\subseteq k[x,y]\) 中给出严格包含而收缩相同的两个素理想，并证明这个扩张不整。
+\end{exercise}
+\begin{solution}
+\((0)\subsetneq(y)\) 都收缩到零，两个商环分别为 \(k[x,y]\) 和 \(k[x]\)，所以确为素理想。若 \(y\) 在 \(k[x]\) 上整，就会满足关于独立变量 \(y\) 的首一方程，和多项式表达唯一性矛盾。因此不能在这里应用\cref{b3:thm:incomparability}。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-finite-prime-fibres}
+设 \(A\subseteq B\) 有限，且 \(B\) 可由 \(r\) 个元素作为 \(A\) 模生成。证明每个素理想 \(\mathfrak p\) 上至多有 \(r\) 个素理想。
+\end{exercise}
+\begin{solution}
+纤维代数 \(C=B\otimes_A\kappa(\mathfrak p)\) 的向量空间维数至多为 \(r\)。其任意素商是在域上有限的整环，由\cref{b3:lem:integral-field-criterion}为域，所以每个素理想都极大。若有 \(r+1\) 个不同素理想，中国剩余定理给出 \(C\) 到 \(r+1\) 个非零域的直积的满映射，其目标维数至少为 \(r+1\)，矛盾。局部化再取商的素理想对应将这些素理想识别为原映射的纤维。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-going-down-explicit-ideal}
+在\subsecref{b3:subsec:0503:03}的反例中，证明
+\[
+\mathfrak p_1=\Bigl(u-z^2+2z,\ v-(z-1)u\Bigr)_A.
+\]
+据此再次核验 \(\mathfrak p_1\subsetneq(u,v,z)\)。
+\end{exercise}
+\begin{solution}
+代入 \(t=z-1\) 后，两项都为零。模掉右侧理想，\(u,v\) 都成为 \(z\) 的多项式，所以商环由 \(z\) 生成；另一方面代入给出这个商环到 \(k[z]\) 的映射，其在 \(z\) 上恒等，故商环恰为 \(k[z]\)，核就是 \(\mathfrak r\cap A\)。两生成元都属于 \((u,v,z)\)，但 \(z\) 在商环 \(k[z]\) 中非零，因此包含严格。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-prescribed-top}
+设 \(k\) 代数闭且特征不为二。在 \(A=k[x,y]\subseteq B=k[s,t]\)、\(x=s^2,y=t^2\) 中，把链
+\[
+(0)\subsetneq(x-1)\subsetneq(x-1,y-1)
+\]
+提升为顶端指定为 \((s+1,t-1)\) 的链，并解释 Going-down 的假设为何满足。
+\end{exercise}
+\begin{solution}
+可取 \((0)\subsetneq(s+1)\subsetneq(s+1,t-1)\)。中间理想的商环为 \(k[t]\)，\(A\) 上的核恰为 \((x-1)\)，因为 \(y\mapsto t^2\) 仍超越；顶端的收缩直接取值得到。\(A\) 是唯一分解整环，按\cref{b3:prop:ufd-integrally-closed}整闭，且 \(s,t\) 各满足一个首一二次方程，故 \(B/A\) 整，满足\cref{b3:thm:going-down}。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-monic-quotient-free}
+对任意非零环 \(R\) 及次数 \(n\ge1\) 的首一多项式 \(f\in R[T]\)，证明 \(R[T]/(f)\) 是秩 \(n\) 的自由 \(R\) 模，即使 \(R\) 有零因子也成立。
+\end{exercise}
+\begin{solution}
+首一除法使每个商类有次数小于 \(n\) 的代表，给出 \(1,\overline T,\ldots,\overline T^{n-1}\) 的生成性。若低次多项式 \(g\) 属于 \((f)\)，写 \(g=fh\)。只要 \(h\ne0\)，因 \(f\) 首一，最高项不会消失，\(\deg(fh)=n+\deg h\ge n\)，矛盾。因此代表唯一，这组元素线性无关。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-normal-local-global}
+设 \(A\) 为整环。证明在 \(\operatorname{Frac}(A)\) 内，
+\[
+A=\bigcap_{\mathfrak m\in\operatorname{Max}A}A_{\mathfrak m},
+\]
+并据此证明 \(A\) 整闭当且仅当每个 \(A_{\mathfrak m}\) 整闭。
+\end{exercise}
+\begin{solution}
+若 \(z\notin A\)，则 \(J=\{a\in A\mid az\in A\}\) 是真理想，取极大理想 \(\mathfrak m\supseteq J\)。若 \(z=c/s\in A_{\mathfrak m}\)，其中 \(s\notin\mathfrak m\)，则 \(sz=c\in A\)，即 \(s\in J\)，矛盾。这证明交集等式。整闭性向局部化传递已由\cref{b3:prop:ufd-integrally-closed}证明；反向，若 \(z\) 在 \(A\) 上整，它在每个 \(A_{\mathfrak m}\) 上整，从而属于所有局部环，交集等式给出 \(z\in A\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-two-normalizations}
+在 \(A=k[x,y]/(x^2+y^3-1)\) 中，分别给出多项式子环 \(k[x]\) 与 \(k[y]\) 上的有限模基，并说明两个变量各自代数独立。
+\end{exercise}
+\begin{solution}
+把关系看成关于 \(y\) 的首一三次式，\cref{b3:ex:05-monic-quotient-free}给出自由 \(k[x]\) 模基 \(1,y,y^2\)，同时说明 \(k[x]\to A\) 单射。把关系看成关于 \(x\) 的首一二次式，得到自由 \(k[y]\) 模基 \(1,x\)，并说明 \(k[y]\to A\) 单射。单射正说明对应变量在 \(k\) 上超越。这不需要预先判定关系多项式是否不可约。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-finite-field-weights}
+令 \(A=\mathbb F_2[x,y]/(x^2y-xy^2)\)。作 \(u=x-y^3\)、\(v=y\)，写出关于 \(v\) 的首一关系，并证明 \(u\) 超越，从而给出一个 Noether 正规化。
+\end{exercise}
+\begin{solution}
+在特征二中代入 \(x=u+v^3,y=v\)，得到
+\[
+v^7+v^5+u^2v+uv^2=0.
+\]
+原变量替换是多项式环同构，其逆为 \(u=x-y^3,v=y\)。因此 \(A\) 同构于以所列首一七次式为关系的 \(\mathbb F_2[u,v]\) 商。由\cref{b3:ex:05-monic-quotient-free}的解答，商是自由 \(\mathbb F_2[u]\) 模，基为 \(1,v,\ldots,v^6\)，故 \(\mathbb F_2[u]\) 单射且扩张有限。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-nonnormalization-projection}
+证明 \(k[x,x^{-1}]\) 不在 \(k[x]\) 上有限，却在 \(k[x+x^{-1}]\) 上自由且秩为二。
+\end{exercise}
+\begin{solution}
+第一项由 \(k[x]\) 整闭而 \(x^{-1}\notin k[x]\)，结合有限扩张必整得到。令 \(u=x+x^{-1}\)，关系 \(x^2-ux+1=0\) 给出生成元 \(1,x\)。若 \(P(u)+xQ(u)=0\)，在有理函数域中用自同构 \(x\mapsto x^{-1}\) 再写一次，相减得 \((x-x^{-1})Q(u)=0\)。\(x-x^{-1}\ne0\)，且 \(u\) 超越，所以 \(Q=0\)，继而 \(P=0\)。故所列生成元为基，此论证也适用于特征二。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:05-finite-nonreduced-fibres}
+设 \(A=k[x,y]/(y^2-x^3)\)，以 \(k[x]\) 为底环。计算 \(x=0\) 与 \(x=1\) 的纤维代数，比较其点数与约化性，允许任意特征。
+\end{exercise}
+\begin{solution}
+两纤维分别为 \(k[y]/(y^2)\) 与 \(k[y]/(y^2-1)\)。第一纤维总有一个素理想且非约化。第二纤维在特征不为二时由中国剩余定理同构于 \(k\times k\)，有两个点且约化；特征二时为 \(k[y]/\Bigl((y-1)^2\Bigr)\)，只有一个点且非约化。两者作为 \(k\) 向量空间的维数始终为二。
+\end{solution}

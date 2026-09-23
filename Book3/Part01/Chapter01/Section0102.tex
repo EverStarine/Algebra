@@ -1,30 +1,88 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 1.2 根与约化
-% 纲要位置：计划纲要.md，第 1504 行。
+% 纲要位置：工作记录/计划纲要.md，第 1822 行。
+% 纲要细目（写作范围）：
+% * 幂零根和根理想
+% * 根理想作为素理想的交
+% * 约化环与零维例子
 
 \section{根与约化}
 \label{b3:sec:0102}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 幂零根和根理想
-% * 根理想作为素理想的交
-% * 约化环与零维例子
-%
+素理想能检测一个元素的某次幂是否落在给定理想中，却不能区分这个幂到底是多少。因此，将理想换成其根，会保留素理想的包含信息，同时可能遗失幂零结构。先明确这两种信息的差别，才能理解素谱为什么还需要局部环来补充。
 
 \subsection{幂零根与根理想}
 \label{b3:subsec:0102:01}
 
-待撰写。
+\begin{definition}\label{b3:def:radical-reduced}
+对理想 \(I\subseteq R\)，定义其\term[lixiang-de-gen]{根}[radical of an ideal]为
+\[
+\sqrt I=\{\,a\in R:\text{存在 }n\ge1\text{ 使 }a^n\in I\,\}.
+\]
+若 \(I=\sqrt I\)，称 \(I\) 为\term[genlixiang]{根理想}[radical ideal]。\(\sqrt{(0)}\) 称为 \(R\) 的\term[miling-gen]{幂零根}[nilradical]，记为 \(\operatorname{Nil}(R)\)。若它为零，称 \(R\) 为\term[yuehua-huan]{约化环}[reduced ring]。
+\end{definition}
+\symidx{\(\sqrt I\)：理想的根}
+\symidx{\(\operatorname{Nil}(R)\)：环的幂零根}
+
+\(\sqrt I\) 确实是理想。若 \(a^m,b^n\in I\)，展开 \((a+b)^{m+n-1}\)，每项至少含 \(a^m\) 或 \(b^n\)，故该幂属于 \(I\)；负号和环元素倍乘也保持条件。还直接得到
+\[
+I\subseteq\sqrt I,\qquad \sqrt{\sqrt I}=\sqrt I,
+\qquad \sqrt{I\cap J}=\sqrt{IJ}=\sqrt I\cap\sqrt J.
+\]
+最后一式中，若 \(a^m\in I,a^n\in J\)，则 \(a^{m+n}\in IJ\)；另一方向由 \(IJ\subseteq I\cap J\) 给出。对理想根迭代时，只需把两个存在的正指数相乘，便回到 \(I\)。
+
+\ProseParagraphBreak
+商环的幂零根为 \(\sqrt I/I\)，所以 \(R/I\) 约化当且仅当 \(I\) 是根理想。特别地，\(R_{\mathrm{red}}=R/\operatorname{Nil}(R)\) 约化，称为 \(R\) 的约化商。它把全部幂零元素送到零，而不要求剩下的非零元素都可逆。
+\symidx{\(R_{\mathrm{red}}\)：环的约化商}
+
+\begin{proposition}\label{b3:prop:finite-nil-ideal}
+若理想 \(J=(a_1,\ldots,a_m)\) 的生成元均幂零，且 \(a_i^{n_i}=0\)，则
+\[
+J^N=0,\qquad N=1+\sum_{i=1}^m(n_i-1).
+\]
+因此 Noether 环的幂零根是幂零理想。
+\end{proposition}
+\begin{proof}
+\(J^N\) 由全部 \(N\) 个生成元的乘积线性生成。若每个 \(a_i\) 出现次数都小于 \(n_i\)，总个数至多为 \(N-1\)，矛盾。所以每个乘积含某个 \(a_i^{n_i}\)，均为零。Noether 环的幂零根作为理想有限生成，每个生成元又幂零，故适用第一项。
+\end{proof}
+
+没有有限生成性时，幂零根未必有统一的幂零指数。例如
+\[
+R=k[x_1,x_2,\ldots]/(x_1^2,x_2^2,\ldots).
+\]
+令 \(J=(\bar x_1,\bar x_2,\ldots)\)。每个 \(u\in J\) 只用有限多个变量，设有 \(r\) 个；任何 \(r+1\) 个正次单项式的乘积都会重复一个变量，所以 \(u^{r+1}=0\)。但 \(\bar x_1\cdots\bar x_N\ne0\) 对任意 \(N\) 成立，因为平方关系生成的理想由含某个平方因子的单项式线性生成，不能包含这个平方自由单项式。又因商 \(R/J=k\) 约化，全部幂零元都在 \(J\) 中。因此 \(J=\operatorname{Nil}(R)\) 而 \(J^N\ne0\) 对全部 \(N\) 成立。
 
 \subsection{根理想的素理想交表示}
 \label{b3:subsec:0102:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:radical-prime-intersection}
+任意理想 \(I\subseteq R\) 满足
+\begin{equation}\label{b3:eq:radical-prime-intersection}
+\sqrt I=\bigcap_{\mathfrak p\supseteq I,\ \mathfrak p\text{ 素}}\mathfrak p.
+\end{equation}
+空交取为 \(R\)，因而公式也适用于 \(I=R\)。
+\end{theorem}
+\begin{proof}
+若 \(a^n\in I\subseteq\mathfrak p\)，反复使用素性得到 \(a\in\mathfrak p\)，故左边包含于右边。反过来，若 \(a\notin\sqrt I\)，乘法集 \(S=\{1,a,a^2,\ldots\}\) 与 \(I\) 不交。\cref{b3:lem:prime-disjoint-multiplicative}给出包含 \(I\) 并避开 \(S\) 的素理想 \(\mathfrak p\)，特别是 \(a\notin\mathfrak p\)。因此 \(a\) 不在右边的交中，证明反向包含。
+\end{proof}
+
+取 \(I=0\)，可知一个元素幂零当且仅当它属于全部素理想。于是映射
+\[
+R\longrightarrow\prod_{\mathfrak p\text{ 素}}R/\mathfrak p,
+\qquad a\longmapsto(a+\mathfrak p)_{\mathfrak p}
+\]
+的核恰为 \(\operatorname{Nil}(R)\)。约化环因而可以嵌入整环的乘积，但本身未必是整环：\(k\times k\) 已给出最简单的反例。
+
+\ProseParagraphBreak
+这里必须取全部素理想，而不是只取极大理想。以 \(R=k[t]_{(t)}\) 为例，其唯一极大理想为 \((t)\)，但 \(R\) 是整环，幂零根为零。因此所有极大理想的交，即 Jacobson 根，可以严格大于幂零根。局部化中的这个例子也将在第二章详细解释。
 
 \subsection{约化环与零维例子}
 \label{b3:subsec:0102:03}
 
-待撰写。
+\(k[\varepsilon]/(\varepsilon^2)\) 只有一个素理想 \((\varepsilon)\)：素理想必须包含幂零元 \(\varepsilon\)，商为域 \(k\)。它的约化商是 \(k\)。因此只记录有哪些素理想，尚不能区分这两个环；它们的区别在于前者存在非零平方零元。
+
+\ProseParagraphBreak
+\(\mathbb Z/12\mathbb Z\) 的素理想是 \((\bar2)\)、\((\bar3)\)，其交为 \((\bar6)\)，故幂零根平方为零。约化商为 \(\mathbb Z/6\mathbb Z\cong\mathbb F_2\times\mathbb F_3\)。后者没有非零幂零元，却仍有零因子，例如 \(\bar2\bar3=0\)。约化性只排除幂零元，不排除两个不同非零元素的乘积为零。
+
+\ProseParagraphBreak
+当非零环的每个素理想都是极大理想时，称它为零维环；这里先使用这个等价于“不存在严格的素理想包含”的说法，一般 Krull 维数将在第九章定义。上述双数环及有限个域的乘积都零维。零维性也不单独保证有限长度：无限乘积 \(\prod_{n\ge1}k\) 的每个素商仍为域，因为对任意元素 \(a=(a_n)\)，令 \(b_n=a_n^{-1}\) 若 \(a_n\ne0\)、否则 \(b_n=0\)，便有 \(a=a^2b\)。在整环商中，非零的 \(\bar a\) 因消去而满足 \(\bar a\bar b=1\)。但把前 \(n\) 个坐标规定为零的理想给出无限严格降链，所以该环不是 Artin 环。第三章将说明 Noether 条件与零维性结合后的结论。

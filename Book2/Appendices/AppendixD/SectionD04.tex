@@ -1,30 +1,91 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### D.4 von Neumann 代数与双交换子
-% 纲要位置：计划纲要.md，第 1478 行。
+% 纲要位置：工作记录/计划纲要.md，第 1691 行。
+
+% 纲要要点（供目录核对）：
+% * 弱算子拓扑、强算子拓扑与范数拓扑；含恒等算子的 *-子代数的闭包
+% * 双交换子定理的含幺自伴版本：\(A''=\overline A^{\mathrm{SOT}}=\overline A^{\mathrm{WOT}}\)
+% * 中心、因子、投影与迹的入门语言；\(B(H)\) 和有限维例子，不展开完整因子类型分类与 Tomita–Takesaki 模理论
 
 \section{von Neumann 代数与双交换子}
 \label{b2:sec:D04}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 弱算子拓扑、强算子拓扑与范数拓扑；含恒等算子的 *-子代数的闭包
-% * 双交换子定理的含幺自伴版本：\(A''=\overline A^{\mathrm{SOT}}=\overline A^{\mathrm{WOT}}\)
-% * 中心、因子、投影与迹的入门语言；\(B(H)\) 和有限维例子，不展开完整因子类型分类与 Tomita–Takesaki 模理论
-%
+有限维算子空间上的范数、强算子与弱算子拓扑一致，无限维时则必须区分怎样取极限。双交换子定理的内容，正是把一种算子拓扑的闭包与代数交换关系联系起来。本节始终令 \(H\ne0\) 为复 Hilbert 空间，所有子代数均作为 \(B(H)\) 的具体子集来讨论。
 
 \subsection{弱算子、强算子与范数拓扑}
 \label{b2:subsec:D04:01}
 
-待撰写。
+\begin{definition}\label{b2:def:operator-topologies}
+一网算子 \((T_\alpha)\) 在\term[qiang-suanzi-tuopu]{强算子拓扑}[strong operator topology]中趋于 \(T\)，是指对每个 \(\xi\in H\)，\(\Bigl\lVert(T_\alpha-T)\xi\Bigr\rVert\to0\)。在\term[ruo-suanzi-tuopu]{弱算子拓扑}[weak operator topology]中趋于 \(T\)，是指对每对 \(\xi,\eta\in H\)，\(\Bigl\langle(T_\alpha-T)\xi,\eta\Bigr\rangle\to0\)。两者简称 SOT、WOT；范数收敛则要求 \(\|T_\alpha-T\|\to0\)。
+\end{definition}
+\symidx{SOT：强算子拓扑}
+\symidx{WOT：弱算子拓扑}
+
+这里的网是以有向集为指标的族，极限要求从某个指标起均满足给定邻域条件；不能一般只用序列描述闭包。SOT 的基本邻域同时限制有限多个 \(\Bigl\lVert(S-T)\xi_j\Bigr\rVert\)，WOT 则同时限制有限多个矩阵系数。直接由定义和 Cauchy--Schwarz 不等式可得
+\[
+\text{范数收敛}\ \Longrightarrow\ \text{SOT 收敛}\ \Longrightarrow\ \text{WOT 收敛}.
+\]
+
+\ProseParagraphBreak
+在 \(\ell^2(\mathbb N)\) 中，令 \(P_n\) 投影到前 \(n\) 个标准基向量。对 \(\xi=(\xi_j)\)，尾和 \(\Bigl\lVert(I-P_n)\xi\Bigr\rVert^2=\sum_{j>n}|\xi_j|^2\to0\)，故 \(P_n\to I\) 强收敛；但 \(\|I-P_n\|=1\)，并不范数收敛。再令 \(S e_j=e_{j+1}\)。对有限支集向量 \(\xi,\eta\)，\(\langle S^n\xi,\eta\rangle\) 最终为零；利用有限支集向量的稠密性和 \(\|S^n\|=1\)，可推广到任意 \(\xi,\eta\)。因此 \(S^n\to0\) 弱收敛，但 \(\|S^n e_1\|=1\)，不强收敛。
 
 \subsection{双交换子定理}
 \label{b2:subsec:D04:02}
 
-待撰写。
+对 \(\mathcal S\subseteq B(H)\)，定义\term[jiaohuanzi-daishu]{交换子代数}[commutant]
+\[
+\mathcal S'=\Bigl\{\,T\in B(H):TS=ST\text{ 对所有 }S\in\mathcal S\,\Bigr\},
+\qquad \mathcal S''=(\mathcal S')'.
+\]
+\symidx{\(\mathcal S'\)：有界算子集合的交换子代数}
+\symidx{\(\mathcal S''\)：有界算子集合的双交换子}
+这与第十一章的中心化子是同类代数条件，但环境现在是全部有界算子，闭包也有指定的拓扑。
+
+\begin{theorem}[von Neumann 双交换子]\label{b2:thm:operator-bicommutant}
+若 \(\mathcal A\subseteq B(H)\) 是含 \(I_H\) 的 \(*\)-子代数，则
+\[
+\mathcal A''=\overline{\mathcal A}^{\mathrm{SOT}}
+=\overline{\mathcal A}^{\mathrm{WOT}}.
+\]
+\end{theorem}
+\begin{proof}
+固定 \(S\)，等式 \(TS=ST\) 在 WOT 下是闭条件，因为其每个矩阵系数是
+\(\langle TS\xi,\eta\rangle-\langle T\xi,S^*\eta\rangle\)，对变量 \(T\) 连续。所以交换子代数为 WOT 闭集。又 \(\mathcal A\subseteq\mathcal A''\)，故
+\[
+\overline{\mathcal A}^{\mathrm{SOT}}\subseteq
+\overline{\mathcal A}^{\mathrm{WOT}}\subseteq\mathcal A''.
+\]
+只需证明 \(T\in\mathcal A''\) 可以在任意有限组向量上同时由 \(\mathcal A\) 逼近。
+
+给定 \(\xi_1,\ldots,\xi_m\)，在 \(H^m\) 中令
+\[
+\mathcal M=\overline{\Bigl\{\,(a\xi_1,\ldots,a\xi_m):a\in\mathcal A\,\Bigr\}},
+\]
+闭包使用 Hilbert 范数。这是闭线性子空间，对每个对角作用 \(a^{(m)}\) 不变；由于 \(a^*\in\mathcal A\)，它的正交补也不变。故正交投影 \(P\) 与每个 \(a^{(m)}\) 交换。把 \(P\) 按 \(H^m\) 的分量写成算子矩阵 \((P_{ij})\)，交换关系逐条目给出 \(P_{ij}a=aP_{ij}\)，即 \(P_{ij}\in\mathcal A'\)。
+
+因为 \(T\in\mathcal A''\)，它与每个 \(P_{ij}\) 交换，从而 \(T^{(m)}P=PT^{(m)}\)。单位元使 \(\xi=(\xi_1,\ldots,\xi_m)\in\mathcal M\)，所以
+\(T^{(m)}\xi=T^{(m)}P\xi=PT^{(m)}\xi\in\mathcal M\)。依照 \(\mathcal M\) 的定义，对任意 \(\varepsilon>0\)，存在同一个 \(a\in\mathcal A\) 使
+\[
+\sum_{j=1}^m\Bigl\lVert(T-a)\xi_j\Bigr\rVert^2<\varepsilon^2.
+\]
+这就使 \(a\) 落在指定 SOT 邻域中，证明 \(T\in\overline{\mathcal A}^{\mathrm{SOT}}\)。
+\end{proof}
+
+这称为\term[von-Neumann-shuangjiaohuanzi-dingli]{von Neumann 双交换子定理}[von Neumann bicommutant theorem]。论证中，对伴随封闭用于让正交补不变，单位元用于确保 \(\xi\) 落在循环子空间，有限次放大则用于把“一次逼近一个向量”加强到“同一个算子同时逼近有限多个向量”。可对照 Blackadar\cite[Theorem I.9.1.1; Corollary I.9.1.2]{Blackadar2006OperatorAlgebras}，其中还给出非退化作用的版本；此处只使用已经证明的含幺版本。
+
+\begin{definition}\label{b2:def:von-neumann-algebra}
+含有 \(I_H\) 的 WOT 闭 \(*\)-子代数 \(\mathcal M\subseteq B(H)\) 称为\term[von-Neumann-daishu]{von Neumann 代数}[von Neumann algebra]。由\cref{b2:thm:operator-bicommutant}，这等价于 \(\mathcal M=\mathcal M''\)，也等价于含幺 \(*\)-子代数在 SOT 下闭。
+\end{definition}
 
 \subsection{中心、因子、投影与迹}
 \label{b2:subsec:D04:03}
 
-待撰写。
+\(\mathcal M\) 的中心为 \(Z(\mathcal M)=\mathcal M\cap\mathcal M'\)。若中心只有 \(\mathbb C I\)，称为\term[yinzi-suanzi]{因子}[factor]。满足 \(p=p^*=p^2\) 的元素称为正交投影；它们对应 Hilbert 空间的闭子空间，但并非每个闭子空间的投影都属于给定的 \(\mathcal M\)。满足 \(\tau(ab)=\tau(ba)\) 的态称为\term[jiantai]{迹态}[tracial state]，若对每个非零 \(a\) 有 \(\tau(a^*a)>0\)，再称为忠实的。
+
+\ProseParagraphBreak
+\(B(H)\) 是因子。若 \(T\) 与全部秩一正交投影交换，它保持每条直线，故 \(T\xi=\lambda_\xi\xi\)。对两个线性无关向量再考虑它们的和，得到相同的标量，于是 \(T=\lambda I\)。有限维时 \(M_n(\mathbb C)\) 的归一化迹为忠实迹态；而 \(\bigoplus_{j=1}^rM_{n_j}(\mathbb C)\) 的中心为 \(\mathbb C^r\)，\(r>1\) 时不是因子，其迹态包括
+\[
+\tau(a_1,\ldots,a_r)=\sum_{j=1}^r t_j\frac{\operatorname{tr}(a_j)}{n_j},
+\qquad t_j\ge0,\quad\sum_jt_j=1.
+\]
+所有 \(t_j>0\) 时该态忠实。这些是可直接计算的有限维模型；无限维因子的类型和一般的非有界迹，需要另外的理论，本附录不作分类承诺。

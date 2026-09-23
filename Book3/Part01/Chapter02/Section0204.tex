@@ -1,30 +1,100 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.4 局部—整体原则
-% 纲要位置：计划纲要.md，第 1544 行。
+% 纲要位置：工作记录/计划纲要.md，第 1862 行。
+% 纲要细目（写作范围）：
+% * 元素和模的消失判据
+% * 单射、满射及同构的局部检测
+% * 检查所有素理想与所有极大理想的适用范围
 
 \section{局部—整体原则}
 \label{b3:sec:0204}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 元素和模的消失判据
-% * 单射、满射及同构的局部检测
-% * 检查所有素理想与所有极大理想的适用范围
-%
+在一个素理想处看不见某个元素，只说明有一个不属于该素理想的乘子零化它；若在每个极大理想处都看不见它，这些乘子便不可能共同被任何极大理想限制。本节利用这一点检测元素、模和映射。这里的大部分结论不要求有限生成，有限性只在进一步推广到邻域或生成元个数时出现。
 
 \subsection{元素与模的消失判据}
 \label{b3:subsec:0204:01}
 
-待撰写。
+\begin{theorem}\label{b3:thm:local-zero-detection}
+设 \(m\in M\)。下列条件等价：
+\begin{enumerate}
+\item \(m=0\)；
+\item 对每个素理想 \(\mathfrak p\)，\(m/1=0\) 在 \(M_{\mathfrak p}\) 中成立；
+\item 对每个极大理想 \(\mathfrak m\)，\(m/1=0\) 在 \(M_{\mathfrak m}\) 中成立。
+\end{enumerate}
+因此 \(M=0\) 当且仅当所有 \(M_{\mathfrak m}\) 为零，也当且仅当所有 \(M_{\mathfrak p}\) 为零。
+\end{theorem}
+\begin{proof}
+前两次蕴含直接成立，因为极大理想是素理想。若 \(m\ne0\)，其零化子 \(\operatorname{Ann}_R(m)\) 是真理想，故包含于某个极大理想 \(\mathfrak m\)。若 \(m/1=0\) 在 \(M_{\mathfrak m}\) 中成立，\eqref{b3:eq:localized-element-zero}给出 \(s\notin\mathfrak m\) 且 \(sm=0\)，与 \(\operatorname{Ann}_R(m)\subseteq\mathfrak m\) 矛盾。因此第三个条件推出第一个。对 \(M\) 的每个元素应用该结论，即得模的断言。若 \(R\) 为零环，幺性模只能为零，空集上的检验也与结论相符。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:submodule-local-detection}
+若 \(N\subseteq M\)，则
+\[
+m\in N\quad\Longleftrightarrow\quad
+m/1\in N_{\mathfrak m}\text{ 对每个极大理想 }\mathfrak m.
+\]
+特别地，两个子模 \(N,L\subseteq M\) 相等，当且仅当它们在每个极大理想处局部化后相等。
+\end{corollary}
+\begin{proof}
+由\cref{b3:thm:localization-exact}，\((M/N)_{\mathfrak m}\cong M_{\mathfrak m}/N_{\mathfrak m}\)。所以条件恰好表示 \(m+N\) 在每个局部化中为零；应用\cref{b3:thm:local-zero-detection}即得 \(m+N=0\)。对子模的每个元素分别应用包含判据，得到相等判据。
+\end{proof}
+
+例如整环 \(R\) 在分式域 \(K\) 内满足
+\[
+R=\bigcap_{\mathfrak m\text{ 极大}}R_{\mathfrak m}.
+\]
+确实，对 \(z\in K\)，分母理想 \(I_z=\{a\in R:az\in R\}\) 若为真理想，选包含它的极大理想 \(\mathfrak m\)。若 \(z\in R_{\mathfrak m}\)，则 \(z=b/s\)、\(s\notin\mathfrak m\)，于是 \(s\in I_z\)，矛盾。故处处属于局部环便迫使 \(I_z=R\)、\(z\in R\)。
 
 \subsection{单射、满射与同构的局部检测}
 \label{b3:subsec:0204:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:local-morphism-detection}
+对任意 \(R\) 模同态 \(f:M\rightarrow N\)，单射、满射及同构这三种性质，均可在所有极大理想处的 \(f_{\mathfrak m}\) 上检测，也可在所有素理想处检测。更一般地，一个复形
+\[
+L\xrightarrow{u}M\xrightarrow{v}N,\qquad vu=0,
+\]
+在 \(M\) 处正合，当且仅当每个极大理想处的局部化复形在中间项正合。
+\end{theorem}
+\begin{proof}
+正合性定理给出
+\[
+(\ker f)_{\mathfrak m}\cong\ker f_{\mathfrak m},\qquad
+(\operatorname{coker}f)_{\mathfrak m}\cong
+\operatorname{coker}f_{\mathfrak m}.
+\]
+用\cref{b3:thm:local-zero-detection}分别检测这两个模是否为零，便得到单射与满射的判据；两者同时成立等价于同构。对复形同样考虑
+\(H=(\ker v)/\operatorname{im}u\)。由局部化与核、像及商相容，其局部化恰为局部复形的中间同调。因此所有局部复形正合等价于所有 \(H_{\mathfrak m}=0\)，也就等价于 \(H=0\)。改用所有素理想的证明完全相同。
+\end{proof}
+
+上述结论检测的是一个已经给定的映射。若只知道每个 \(M_{\mathfrak m}\) 与 \(N_{\mathfrak m}\) 各自同构，却没有一个共同的全局映射，就不能直接应用该定理。局部同构之间是否相容，是另一项需要处理的数据。
+
+\ProseParagraphBreak
+给定一组元素 \(m_1,\ldots,m_r\in M\)，它们生成 \(M\)，当且仅当其像生成每个 \(M_{\mathfrak m}\)：把判据应用于 \(R^r\rightarrow M\)、\(e_i\mapsto m_i\) 的满射性即可。这里生成元是全局预先选定的；不能偷换成“每个点都能另选有限个局部生成元”。
 
 \subsection{素理想检测与极大理想检测}
 \label{b3:subsec:0204:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:principal-cover-finiteness}
+设 \(f_1,\ldots,f_r\in R\) 生成单位理想。
+\begin{enumerate}
+\item 若 \(M_{f_i}=0\) 对每个 \(i\) 成立，则 \(M=0\)。
+\item 若每个 \(M_{f_i}\) 都是有限生成 \(R_{f_i}\) 模，则 \(M\) 有限生成。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+对 \(m\in M\)，第一项的假设给出整数 \(n_i\ge1\) 使 \(f_i^{n_i}m=0\)。理想 \((f_1^{n_1},\ldots,f_r^{n_r})\) 仍为单位理想：否则它包含于某个极大理想，该极大理想由素性包含每个 \(f_i\)，与原假设矛盾。将 \(1\) 写成这些幂的线性组合，便得 \(m=0\)。
+
+对第二项，把每个局部模的有限生成元写成 \(m_{ij}/f_i^{a_{ij}}\)。取由全部有限个分子 \(m_{ij}\) 生成的子模 \(N\)。由于 \(f_i\) 已可逆，\(N_{f_i}=M_{f_i}\)；正合性给出 \((M/N)_{f_i}=0\)。第一项应用于 \(M/N\)，即得 \(M=N\)。
+\end{proof}
+
+第一章中 \(D(f_i)\) 覆盖素谱恰好等价于 \((f_1,\ldots,f_r)=R\)。所以该命题说明，在一组有限基本开覆盖上给出有限生成性，足以得到全局有限生成性。若每个点有这样的基本开邻域，还可由素谱拟紧性抽取有限子覆盖。
+
+\ProseParagraphBreak
+仅要求每个茎 \(M_{\mathfrak p}\) 有限生成则不够。例如
+\[
+M=\bigoplus_{p\text{ 为素数}}\mathbb Z/p\mathbb Z
+\]
+不是有限生成整数模，因为有限个元素只涉及有限个直和分量；但 \(M_{(p)}\cong\mathbb Z/p\mathbb Z\)，而 \(M_{(0)}=0\)。故所有素理想处的局部模都有限生成，却未必能把一处的生成元扩大到一个共同邻域。这与\cref{b3:thm:support-finite}对有限生成性的要求相呼应。
+
+\ProseParagraphBreak
+此外，“在局部环上检验”不能随意改成“张量到剩余域上检验”。在 \(R=k[t]_{(t)}\) 上，商映射 \(R/(t^2)\rightarrow R/(t)\) 不是同构，但张量到唯一的剩余域 \(k\) 后成为 \(k\) 上的恒等映射。下一章的 Nakayama 引理能在有限生成条件下用剩余向量空间检测生成性；它并不使剩余域张量变成一般的正合操作。

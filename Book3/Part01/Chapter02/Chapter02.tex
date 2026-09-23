@@ -1,12 +1,28 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第2章　模的局部化、局部环与局部判据
-% 纲要位置：计划纲要.md，第 1524 行。
+% 纲要位置：工作记录/计划纲要.md，第 1842 行。
 
 \chapter{模的局部化、局部环与局部判据}
 \label{b3:ch:02}
 \BookChapterNumber{b3:ch:02}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+把环中的某些元素变为单位，也会把模中的相应挠元消去。本章从分式构造出发，证明局部化的正合性，追踪理想的扩张、收缩与饱和，并用支集记录模在素谱上的分布。随后建立元素、子模和同态的局部检测原则，说明有限生成与有限展示如何控制统一分母。局部环、剩余域及纤维的具体例子，使这些判据与点处计算相联系。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 能用分式零判据处理模局部化中的核、商与子模。
+\item 区分乘法集饱和、理想幂饱和、局部模及剩余向量空间。
+\item 正确使用支集与 Hom 的局部化公式，并指出所需的有限性条件。
+\item 用局部环检测给定同态，理解点处数据与邻域数据的差别。
+\end{itemize}
+\end{learninggoals}
+
+本章需要第一章的环局部化和素谱，以及第二卷第2章的模、核与商、第6章的张量积。除明确说明外，不假设底环是 Noether 环，也不假设所讨论的模有限生成。读者可以一边阅读一边追问：这里需要给一个元素清分母，还是需要给全部生成元或全部关系选择共同分母？这项区别决定了多数定理的假设。
+
+\ProseParagraphBreak
+进一步阅读可参阅 Matsumura 的《Commutative Ring Theory》\cite[Theorems 4.4--4.6, pp. 26--27]{Matsumura1989CommutativeRingTheory}，对照局部化、张量积与局部消失的证明；该书\cite[Theorem 4.10, pp. 28--29]{Matsumura1989CommutativeRingTheory}还说明有限生成、有限展示如何把点处性质延伸到开邻域。
 
 \input{Part01/Chapter02/Section0201}
 \input{Part01/Chapter02/Section0202}
@@ -14,4 +30,229 @@
 \input{Part01/Chapter02/Section0204}
 \input{Part01/Chapter02/Section0205}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+局部化中的等式允许再乘一个分母后成立；这一零判据同时解释了分式模的构造、局部化的正合性和理想收缩时的饱和。剩余域则还要模掉局部环的极大理想，因而保存的信息少于整个局部化模。
+
+\ProseParagraphBreak
+任意模的元素、子模和给定同态都可以在所有极大理想处检测，不要求有限生成。有限生成使支集由零化子的闭集描述，使若干元素的分母可以统一；有限展示进一步使同态的有限个关系可以统一清分母。逐点有限与邻域有限之间仍有差别，不能混同。
+
+\ProseParagraphBreak
+局部环把非单位集中在唯一极大理想中，为下一章的 Nakayama 引理准备了单位判据。多项式局部环、DVR 及 Artin 局部环已经展示不同的极大理想结构；完备化与 Hensel 化各自增加的内容将在后续章节另行建立。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:02-cyclic-integers}
+设 \(n\ge1\)，\(p\) 为素数，写 \(n=p^a d\)、\(p\nmid d\)。求
+\((\mathbb Z/n\mathbb Z)_{(p)}\)，并说明 \(a=0\) 时的结果。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb Z_{(p)}\) 中 \(d\) 是单位，所以
+\(n\mathbb Z_{(p)}=p^a\mathbb Z_{(p)}\)。由商与局部化相容，
+\[
+(\mathbb Z/n\mathbb Z)_{(p)}
+\cong\mathbb Z_{(p)}/p^a\mathbb Z_{(p)}
+\cong\mathbb Z/p^a\mathbb Z.
+\]
+末个同构把 \(b/s\) 送到 \(b s^{-1}\) 模 \(p^a\) 的类，\(p\nmid s\) 保证逆存在；核恰为 \(p^a\mathbb Z_{(p)}\)。若 \(a=0\)，\(n\) 已是单位，商为零。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-fraction-kernel}
+令 \(R=k[x,y]/(xy)\)，仍用 \(x,y\) 记剩余类。求 \(R\rightarrow R_x\) 的核，并显式确定 \(R_x\)。
+\end{exercise}
+\begin{solution}
+\(x\) 可逆后，由 \(xy=0\) 得 \(y=0\)，所以 \(R_x\cong k[x,x^{-1}]\)。每个 \(R\) 中的元素唯一写成
+\(a(x)+y b(y)\)。其在局部化中的像为 \(a(x)\)，由 \(k[x]\) 到 Laurent 多项式环的嵌入可知像为零当且仅当 \(a=0\)。故核为 \((y)\)，恰好是被某个 \(x\) 幂零化的元素组成的理想。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-infinite-product}
+固定素数 \(p\)，取 \(M=\prod_{n\ge1}\mathbb Z/p^n\mathbb Z\)，把 \(p\) 变为单位。证明每个分量的局部化均为零，而 \(M[1/p]\ne0\)。这与局部化正合有无矛盾？
+\end{exercise}
+\begin{solution}
+第 \(n\) 个分量被 \(p^n\) 零化，故局部化为零。取 \(m=(1\bmod p^n)_n\)。对任何 \(r\)，其第 \(r+1\) 个分量满足
+\(p^r\not\equiv0\pmod{p^{r+1}}\)，所以 \(p^rm\ne0\)。由零判据，\(m/1\ne0\)。
+因此局部化不必与无限直积交换。正合性讨论的是核、像和有限的正合条件，不包含任意无限直积相容性，故无矛盾。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-saturation-computation}
+在 \(R=k[x,y]\) 中，令 \(I=(x^2,xy)\)。求 \(I:y^\infty\)、\(I:x^\infty\)，并写出在 \(R_y,R_x\) 中的扩张理想。
+\end{exercise}
+\begin{solution}
+因 \(yx\in I\)，有 \((x)\subseteq I:y^\infty\)。若 \(y^n f\in I\subseteq(x)\)，模掉 \(x\) 后在整环 \(k[y]\) 中得到 \(y^n\bar f=0\)，故 \(\bar f=0\)，即 \(f\in(x)\)。所以 \(I:y^\infty=(x)\)，相应扩张为 \((x)R_y\)。
+又 \(x^2\in I\)，故 \(1\in I:x^\infty\)，得到 \(I:x^\infty=R\)、\(IR_x=R_x\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-two-saturations}
+在 \(k[x,y]\) 中取 \(I=(xy)\)、\(J=(x,y)\)，并令 \(S\) 为 \(x,y\) 生成的乘法集。比较 \(I:J^\infty\) 与 \(I:S^\infty\)。
+\end{exercise}
+\begin{solution}
+若 \(fJ^n\subseteq(xy)\)，则 \(fx^n\) 和 \(fy^n\) 都被 \(xy\) 整除。第一式模掉 \(y\) 后迫使 \(f\in(y)\)，第二式模掉 \(x\) 后迫使 \(f\in(x)\)。多项式的单项式展开给出
+\((x)\cap(y)=(xy)\)，故 \(f\in I\)。反向显然，因而 \(I:J^\infty=I\)。
+另一方面 \(xy\in I\cap S\)，所以 \(I:S^\infty=R\)。前者要求一整个幂理想都送入 \(I\)，后者只要求找到一个乘子。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-primes-invert-six}
+列出 \(\mathbb Z[1/6]\) 的素理想，并求
+\((\mathbb Z/42\mathbb Z)\otimes_{\mathbb Z}\mathbb Z[1/6]\) 的支集。
+\end{exercise}
+\begin{solution}
+素理想对应于 \(\mathbb Z\) 中与 \(\{6^n:n\ge0\}\) 不交的素理想，故为
+\(0\) 及 \((p)\mathbb Z[1/6]\)，其中 \(p\ne2,3\) 为素数。局部化后 \(42=6\cdot7\) 与 \(7\) 生成同一理想，所以该模为 \(\mathbb Z[1/6]/(7)\cong\mathbb F_7\)。其支集只有极大理想 \((7)\mathbb Z[1/6]\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-residue-generic}
+在 \(R=k[x,y]\) 中取 \(\mathfrak p=(x)\)、\(\mathfrak m=(x,y)\)。分别求剩余域，说明为什么 \(R_{\mathfrak p}\) 中 \(y\) 可逆，而 \(R_{\mathfrak m}\) 中不可逆。
+\end{exercise}
+\begin{solution}
+\(R/\mathfrak p=k[y]\)，故 \(\kappa(\mathfrak p)=k(y)\)；\(R/\mathfrak m=k\)，故
+\(\kappa(\mathfrak m)=k\)。因 \(y\notin\mathfrak p\)，它是 \(R_{\mathfrak p}\) 的允许分母；而 \(y\in\mathfrak m\)，在 \(R_{\mathfrak m}\) 中属于唯一极大理想，不能为单位。素理想处的剩余域不必是基域，也不必由一个闭点给出。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-hyperbola-fibres}
+考虑 \(k[t]\rightarrow k[x,y]\)、\(t\mapsto xy\)。求在 \((t-a)\)、\(a\in k\)，处的纤维代数，并分别讨论 \(a=0\) 与 \(a\ne0\)。
+\end{exercise}
+\begin{solution}
+纤维代数为 \(k[x,y]/(xy-a)\)。若 \(a=0\)，素谱是 \(V(x)\cup V(y)\)，且
+\(x,y\) 的非零剩余类乘积为零。若 \(a\ne0\)，关系说明 \(x\) 可逆，逆为 \(a^{-1}y\)；映射
+\[
+k[x,y]/(xy-a)\longrightarrow k[x,x^{-1}],\qquad
+x\longmapsto x,\quad y\longmapsto ax^{-1}
+\]
+的逆把 \(x^{-1}\) 送到 \(a^{-1}y\)，故为同构。此时纤维环是整环，且不包含 \(x=0\) 的点。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-prufer-support}
+求 \(\mathbb Z[1/p]/\mathbb Z\) 的零化子与支集，并据此说明无限生成模的支集与零化子闭集可以不同。
+\end{exercise}
+\begin{solution}
+没有非零整数能同时零化全部 \(p^{-n}+\mathbb Z\)，所以零化子为零。在 \((q)\)、\(q\ne p\)，处，\(p\) 已可逆，每个元素被某个 \(p\) 幂零化，故局部模为零；在 \((0)\) 处同样为零。在 \((p)\) 处，任何不被 \(p\) 整除的整数作用在每个有限循环子群上都是可逆的，因此自然局部化不消去非零元素。支集恰为 \(\Bigl\{(p)\Bigr\}\)，而 \(V(0)=\operatorname{Spec}\mathbb Z\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-zero-neighbourhood}
+设 \(M\) 有限生成且 \(M_{\mathfrak p}=0\)。证明存在 \(f\notin\mathfrak p\) 使 \(M_f=0\)。进一步，若有限个全局元素生成 \(M_{\mathfrak p}\)，证明它们在某个这样的 \(D(f)\) 上生成 \(M_f\)。
+\end{exercise}
+\begin{solution}
+由\cref{b3:thm:support-finite}，存在 \(f\notin\mathfrak p\) 使 \(fM=0\)，因而 \(M_f=0\)。对第二问，令 \(N\) 为这些全局元素生成的子模。有限生成商模 \(Q=M/N\) 满足 \(Q_{\mathfrak p}=0\)，故存在 \(f\notin\mathfrak p\) 使 \(Q_f=0\)。由局部化正合性，\(N_f=M_f\)，正是所需结论。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-hom-finite-generated-insufficient}
+令 \(R=\prod_{n\ge1}k\)，\(I=\bigoplus_{n\ge1}k\subseteq R\) 为有限支集理想。对有限集 \(F\subseteq\mathbb N\)，令 \(e_F\) 为其特征幂等元，取 \(S=\{1-e_F:F\text{ 有限}\}\)。证明 \(M=R/I\) 是有限生成模，但
+\[
+S^{-1}\operatorname{Hom}_R(M,R)\longrightarrow
+\operatorname{Hom}_{S^{-1}R}(S^{-1}M,S^{-1}R)
+\]
+不是满射。
+\end{exercise}
+\begin{solution}
+\(S\) 对乘法封闭，因为 \((1-e_F)(1-e_G)=1-e_{F\cup G}\)，并且包含 \(1\) 而不包含 \(0\)。\(M\) 循环，所以有限生成。若 \(aI=0\)，逐个乘单坐标幂等元得每个坐标 \(a_n=0\)，故 \(\operatorname{Ann}_R I=0\)。由同态在 \(1+I\) 上的值决定它，
+\(\operatorname{Hom}_R(R/I,R)=\operatorname{Ann}_R I=0\)。
+
+每个 \(x\in I\) 的支集含于某个有限 \(F\)，故 \((1-e_F)x=0\)，于是 \(S^{-1}I=0\)。正合性给出 \(S^{-1}M\cong S^{-1}R\)。这个局部化环非零，因为 \(0\notin S\)，而 \(1/1=0\) 将要求 \(S\) 含有零元。因此右侧含非零恒等同态，左侧为零，不可能满射。这具体说明\cref{b3:thm:hom-localization}的满射性不能仅用有限生成替代有限展示。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-unbounded-hom-denominators}
+取 \(M=\bigoplus_{n\ge1}\mathbb Z e_n\)、\(N=\mathbb Z\)，把一个素数 \(p\) 变为单位。证明局部化后由 \(e_n\mapsto p^{-n}\) 定义的同态，不来自
+\(\operatorname{Hom}_{\mathbb Z}(M,\mathbb Z)[1/p]\)。
+\end{exercise}
+\begin{solution}
+局部化后 \(M[1/p]\) 是具有基 \(e_n\) 的自由 \(\mathbb Z[1/p]\) 模，因此指定这些像确实定义同态。若它来自 \(f/p^r\)，则对每个 \(n\) 有
+\(f(e_n)=p^{r-n}\) 作为有理数成立。但 \(n>r\) 时右侧不是整数，矛盾。这个例子的困难已经发生在无限个生成元上，无需再考虑生成关系。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-intersection-calculation}
+在 \(k[x,y]\) 中，先求 \((x)\cap(y)\)，再在 \(y\) 处局部化，核对结果等于两个扩张理想的交。
+\end{exercise}
+\begin{solution}
+属于 \((x)\) 的多项式的每个非零单项式都含 \(x\)，属于 \((y)\) 的则都含 \(y\)。因此交为 \((xy)\)。在 \(R_y\) 中，\((y)R_y=R_y\)，而
+\((xy)R_y=(x)R_y\)，故
+\[
+\Bigl((x)\cap(y)\Bigr)R_y=(x)R_y=(x)R_y\cap(y)R_y.
+\]
+这与有限交的局部化相容性一致；\cref{b3:ex:02-infinite-product}的无限直积反例说明不能因此任意扩展到无限操作。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-omit-prime}
+固定素数 \(q\)。在 \(\mathbb Q\) 内计算 \(\bigcap_{p\ne q}\mathbb Z_{(p)}\)，其中 \(p\) 遍历其余素数。
+\end{exercise}
+\begin{solution}
+把一个有理数写成互素分子分母 \(a/b\)、\(b>0\)。它属于 \(\mathbb Z_{(p)}\) 当且仅当 \(p\nmid b\)。要求对所有 \(p\ne q\) 成立，就等价于 \(b\) 只有素因子 \(q\)。因此交恰为 \(\mathbb Z[1/q]\)。删去一个极大理想处的检测，确实可能失去信息。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-two-open-membership}
+设 \(fR+gR=R\)、\(N\subseteq M\)。若 \(m/1\in N_f\) 且 \(m/1\in N_g\)，直接用分母证明 \(m\in N\)，不要只引用全部极大理想处的判据。
+\end{exercise}
+\begin{solution}
+在 \(M/N\) 中，\(m+N\) 分别在 \(f,g\) 处消失，所以存在 \(r,s\ge1\) 使
+\(f^rm,g^sm\in N\)。理想 \((f^r,g^s)\) 为单位理想：否则一个包含它的极大理想将同时包含 \(f,g\)。取 \(af^r+bg^s=1\)，得到
+\(m=a(f^rm)+b(g^sm)\in N\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-stalk-versus-neighbourhood}
+令 \(M=\bigoplus_p\mathbb Z/p\mathbb Z\)。证明对每个非零整数 \(n\)，\(M[1/n]\) 仍不是有限生成 \(\mathbb Z[1/n]\) 模。由此解释为什么 \(M_{(0)}=0\) 不能在 \((0)\) 的一个基本开邻域上给出有限生成性。
+\end{exercise}
+\begin{solution}
+若 \(p\mid n\)，第 \(p\) 个分量被局部化消去；若 \(p\nmid n\)，\(n\) 在
+\(\mathbb Z/p\mathbb Z\) 上已可逆，该分量保留。故
+\(M[1/n]\cong\bigoplus_{p\nmid n}\mathbb Z/p\mathbb Z\)。
+仍有无限多个非零分量，而有限个元素的 \(\mathbb Z[1/n]\) 线性组合只能涉及有限个分量，所以不有限生成。包含 \((0)\) 的基本开集恰好是非零 \(n\) 给出的 \(D(n)\)，因此没有一个这样的邻域满足所需有限性。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-fibre-misses-kernel}
+对 \(R=k[t]_{(t)}\)，计算 \(R/(t^3)\rightarrow R/(t)\) 的核，并证明张量到剩余域后该核的自然像为零，而张量后的商映射是同构。
+\end{exercise}
+\begin{solution}
+核为 \((t)/(t^3)\)，其中 \(t+(t^3)\ne0\)。张量到 \(k=R/(t)\) 时，两个商模都变成 \(k\)，诱导映射为恒等。核的张量为
+\[
+\Bigl((t)/(t^3)\Bigr)\otimes_R k
+\cong(t)/(t^2)\cong k,
+\]
+但它到 \(\Bigl(R/(t^3)\Bigr)\otimes_R k=k\) 的自然映射把 \(t\) 的类送到零。于是原序列的单射在张量后不再单射；这恰是剩余域张量不能替代局部化正合性的原因。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-local-map-examples}
+证明 \(k[x]_{(x)}\rightarrow k[x,y]_{(x,y)}\) 的自然同态为局部同态，并求其剩余域映射。再说明 \(k[x]_{(x)}\hookrightarrow k(x)\) 为什么不是局部同态。
+\end{exercise}
+\begin{solution}
+来源中允许的分母在 \(x=0\) 处非零，进入目标后在 \((0,0)\) 处仍非零，所以同态存在。极大理想 \((x)\) 映入 \((x,y)\)，故同态局部；两边剩余域都是 \(k\)，诱导映射为恒等。到分式域的嵌入把非单位 \(x\) 变为单位，或者说 \((x)\) 的像不包含于目标极大理想 \(0\)，所以不局部。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-dvr-ideals}
+在 \(R=k[x]_{(x)}\) 中求理想 \(\Bigl(x^3(1+x),x^5\Bigr)\)，并求商环的所有理想及其作为 \(k\) 向量空间的维数。
+\end{exercise}
+\begin{solution}
+\(1+x\) 为单位，所以原理想等于 \((x^3)\)。\(R\) 的每个非零理想为一个
+\((x^r)\)，因此商环 \(R/(x^3)\) 的理想为
+\(0,(\bar x^2),(\bar x),R/(x^3)\)。该商同构于 \(k[x]/(x^3)\)，基为
+\(1,\bar x,\bar x^2\)，维数为 \(3\)；其中三个非零理想的维数分别为 \(1,2,3\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-square-zero-local}
+对 \(A=k[x,y]/(x,y)^2\)，写出一般单位的逆，并证明其极大理想不能由一个元素生成。
+\end{exercise}
+\begin{solution}
+一般元素为 \(a+b\bar x+c\bar y\)。若 \(a\ne0\)，令 \(n=b\bar x+c\bar y\)，有
+\(n^2=0\)，故逆为 \(a^{-1}-a^{-2}n\)。若 \(a=0\)，该元素平方为零，不能为单位。所以极大理想为 \(\mathfrak m=k\bar x\oplus k\bar y\)。因 \(\mathfrak m^2=0\)，一个元素 \(u\in\mathfrak m\) 生成的理想只有 \(ku\)，至多一维，不能等于二维的 \(\mathfrak m\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-completion-compatible}
+直接从相容序列定义构造
+\(\varprojlim_n k[x]/(x^n)\cong k[[x]]\)，并说明 \(1/(1-x)\) 在该同构下的像。
+\end{exercise}
+\begin{solution}
+一个相容序列可唯一写成
+\(a_0+a_1x+\cdots+a_{n-1}x^{n-1}\pmod{x^n}\)，因为相邻项的低次系数必须相同。把它送到 \(\sum_{j\ge0}a_jx^j\) 得到双射；每个固定次数的加法与乘法只涉及有限个系数，故双射保留环运算。
+在每个商环中，\(1-x\) 的逆为 \(1+x+\cdots+x^{n-1}\)，因此相容序列对应
+\(\sum_{j\ge0}x^j\)。这是形式系数的等式，不涉及实数或复数意义的收敛。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:02-root-lifting-warning}
+设 \(\operatorname{char}k\ne2\)。证明 \(T^2-(1+x)\) 在 \(k[[x]]\) 中有唯一常数项为 \(1\) 的根，却在 \(k(x)\) 中没有根。
+\end{exercise}
+\begin{solution}
+令根为 \(1+\sum_{n\ge1}a_nx^n\)。比较一次项得 \(2a_1=1\)；对 \(n\ge2\) 比较系数得
+\[
+2a_n+\sum_{i=1}^{n-1}a_i a_{n-i}=0.
+\]
+因 \(2\) 可逆，这些等式递归且唯一地确定全部系数，并使平方恰为 \(1+x\)。
+若有有理函数根 \(f/g\)，约成互素多项式后由 \(f^2=(1+x)g^2\)，不可约多项式 \(1+x\) 在左侧的指数为偶数，在右侧为奇数，矛盾。因此完备化中可以出现原局部环及其分式域都没有的代数根。
+\end{solution}

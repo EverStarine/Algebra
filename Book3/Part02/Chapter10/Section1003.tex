@@ -1,30 +1,141 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 10.3 Dedekind 整环
-% 纲要位置：计划纲要.md，第 1802 行。
+% 纲要位置：工作记录/计划纲要.md，第 2120 行。
+% 纲要细目（写作范围）：
+% * 定义及局部刻画
+% * 非零理想的素理想分解
+% * 分式理想与可逆性
+
 
 \section{Dedekind 整环}
 \label{b3:sec:1003}
 
-% TODO: 按以下纲要要点撰写本节。
+一个整数的素因子分解，可以分别在每个素数处读取指数。Dedekind 理论保留了这种办法，不过应分解的对象是非零理想。每个非零素理想处的局部环是 DVR，先在那里读出整数阶，再把有限多个局部数据合成原理想。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 定义及局部刻画
-% * 非零理想的素理想分解
-% * 分式理想与可逆性
-%
 
 \subsection{Dedekind 整环的定义与局部刻画}
 \label{b3:subsec:1003:01}
 
-待撰写。
+\begin{definition}\label{b3:def:dedekind-domain}
+设 \(R\) 为整环。若 \(R\) 为 Noether 环、在其分式域中整闭，且每个非零素理想都是极大理想，则称 \(R\) 为\term[Dedekind-zhenghuan]{Dedekind 整环}[Dedekind domain]。
+本书允许域作为零维情形；非域的 Dedekind 整环恰为一维 Noether 正规整环。
+\end{definition}
+
+\begin{theorem}\label{b3:thm:dedekind-local-characterization}
+设 \(R\) 为非域 Noether 整环。则 \(R\) 是 Dedekind 整环，当且仅当每个极大理想
+\(\mathfrak m\) 处的 \(R_{\mathfrak m}\) 都是 DVR。
+\end{theorem}
+\begin{proof}
+若 \(R\) 为 Dedekind 整环，则 \(R_{\mathfrak m}\) 为一维 Noether 局部整环。
+整闭性由\cref{b3:prop:ufd-integrally-closed}传至局部化，所以可用\cref{b3:thm:dvr-characterizations}。
+
+反向，任意非零素理想 \(\mathfrak p\) 包含于某个 \(\mathfrak m\)。其局部化是
+DVR 中的非零素理想，只能等于 \(\mathfrak mR_{\mathfrak m}\)；收缩回去得
+\(\mathfrak p=\mathfrak m\)。再证整闭性。首先在分式域 \(K\) 中有
+\[
+R=\bigcap_{\mathfrak m\text{ 极大}}R_{\mathfrak m}.
+\]
+事实上，若 \(x\notin R\)，则 \(J=\{r\in R:rx\in R\}\) 是真理想。
+取 \(\mathfrak m\supseteq J\)，若 \(x=a/s\in R_{\mathfrak m}\)，则
+\(s\notin\mathfrak m\) 却满足 \(sx=a\in R\)，矛盾。若 \(x\in K\) 在 \(R\) 上整，
+它在每个 \(R_{\mathfrak m}\) 上也整，因各 DVR 整闭而属于上述交集，故属于 \(R\)。
+\end{proof}
+
+Noether 假设在这个表述中是全局条件，不能仅凭每个点处的局部环 Noether 就省略它。
+在已知 Dedekind 的环中，局部化仍为 Dedekind 整环或域：Noether 性、整闭性均保持，而素链只会减少。
 
 \subsection{非零理想的素理想分解}
 \label{b3:subsec:1003:02}
 
-待撰写。
+对 Dedekind 整环 \(R\) 的非零素理想 \(\mathfrak p\)，将
+\(R_{\mathfrak p}\) 的正规化赋值记为 \(v_{\mathfrak p}\)。
+给定非零理想 \(I\)，定义 \(v_{\mathfrak p}(I)\ge0\) 为唯一满足
+\(IR_{\mathfrak p}=(\mathfrak pR_{\mathfrak p})^{v_{\mathfrak p}(I)}\) 的整数。
+\symidx{\(v_{\mathfrak p}(I)\)：理想在素理想处的阶数}
+
+\begin{theorem}\label{b3:thm:dedekind-factorization}
+设 \(R\) 为 Dedekind 整环，\(I\subseteq R\) 为非零理想；对非零素理想 \(\mathfrak p\)，令 \(v_{\mathfrak p}(I)\) 表示 \(IR_{\mathfrak p}\) 在 DVR \(R_{\mathfrak p}\) 中的幂指数。则有唯一分解
+\[
+I=\prod_{\mathfrak p\ne0}\mathfrak p^{v_{\mathfrak p}(I)},
+\]
+其中只有有限多个指数非零。单位理想对应空乘积。
+\end{theorem}
+\begin{proof}
+若 \(I=R\)，空乘积就是所求分解；以下设 \(I\subsetneq R\)，此时 \(R\) 不是域。取 \(0\ne a\in I\)。含 \((a)\) 的素理想全是极大理想，所以
+\(R/(a)\) 是零维 Noether 环，因而是 Artin 环，只有有限多个素理想。
+若 \(v_{\mathfrak p}(I)>0\)，则 \(I\subseteq\mathfrak p\)，故
+\(a\in\mathfrak p\)。因此非零指数只有有限多个。
+
+令右端有限乘积为 \(J\)。在任一非零极大理想 \(\mathfrak q\) 处局部化，所有
+\(\mathfrak p\ne\mathfrak q\) 都含有一个不属于 \(\mathfrak q\) 的元素，因而其局部化为单位理想。
+只有 \(\mathfrak q\) 因子保留，于是 \(JR_{\mathfrak q}=IR_{\mathfrak q}\)。
+由\cref{b3:cor:submodule-local-detection}得到 \(I=J\)。
+
+任一有限素理想乘积在 \(\mathfrak p\) 处局部化时，只保留对应素理想的幂；DVR 中幂指数唯一，所以分解中每个指数都被原理想确定。
+\end{proof}
+
+分解不仅给出乘法。对非零理想 \(I,J\)，局部化并使用 DVR 中的公式可得
+\[
+\begin{aligned}
+v_{\mathfrak p}(IJ)&=v_{\mathfrak p}(I)+v_{\mathfrak p}(J),\\
+v_{\mathfrak p}(I+J)&=\min\Bigl\{v_{\mathfrak p}(I),v_{\mathfrak p}(J)\Bigr\},\\
+v_{\mathfrak p}(I\cap J)&=\max\Bigl\{v_{\mathfrak p}(I),v_{\mathfrak p}(J)\Bigr\}.
+\end{aligned}
+\]
+因此 \(I\subseteq J\) 当且仅当各处指数满足 \(v_{\mathfrak p}(I)\ge v_{\mathfrak p}(J)\)。
+理想的包含方向与“整除得更多”的指数方向相反，使用这些公式时须保留这个次序。
 
 \subsection{分式理想与可逆性}
 \label{b3:subsec:1003:03}
 
-待撰写。
+\begin{definition}\label{b3:def:fractional-invertible-ideal}
+设 \(R\) 为整环，\(K\) 为其分式域，\(I\subseteq K\) 为非零 \(R\) 子模。若存在 \(0\ne d\in R\) 使 \(dI\subseteq R\)，则称 \(I\) 为
+\term[fenshi-lixiang]{分式理想}[fractional ideal]。
+两个分式理想的乘积由全部有限和 \(\sum_i a_ib_i\)、\(a_i\in I,b_i\in J\)，组成。
+定义
+\[
+I^{-1}\coloneqq\{x\in K:xI\subseteq R\}.
+\]
+若 \(II^{-1}=R\)，则称 \(I\) 为\term[keni-lixiang]{可逆理想}[invertible ideal]。
+\end{definition}
+\symidx{\(I^{-1}\)：分式理想的逆理想}
+
+在 Noether 整环上，分式理想都是有限模，因为乘以 \(d\) 将它同构到一个通常理想。
+\(I^{-1}\) 也是分式理想：它包含非零的 \(dR\)；取 \(0\ne a\in I\)，则
+\(aI^{-1}\subseteq R\)，再清除 \(a\) 自身的分母即可得到定义中所需的 \(R\) 元素。
+
+\begin{proposition}\label{b3:prop:invertible-local-principal}
+设 \(R\) 为整环，\(K\) 为其分式域。若分式理想 \(I\subseteq K\) 为有限 \(R\) 模，则它可逆，当且仅当每个极大理想 \(\mathfrak m\subseteq R\) 处的
+\(IR_{\mathfrak m}\) 都由一个非零分式生成。可逆分式理想必为有限生成投射模。
+\end{proposition}
+\begin{proof}
+若 \(II^{-1}=R\)，取有限和 \(\sum_i a_ib_i=1\)，其中 \(a_i\in I\)、\(b_i\in I^{-1}\)。
+每个 \(x\in I\) 都可写成 \(x=\sum_i (xb_i)a_i\)，说明 \(a_i\) 生成 \(I\)。
+映射 \(R^r\rightarrow I\)、\((c_i)\mapsto\sum_i c_ia_i\) 有截面
+\(x\mapsto(xb_i)_i\)，故 \(I\) 是有限自由模的直和因子，因而投射。
+在 \(R_{\mathfrak m}\) 中，和为 \(1\) 使某个 \(a_ib_i\) 成为单位。
+对任意 \(x\in I\)，有 \(x/a_i=(xb_i)/(a_ib_i)\in R_{\mathfrak m}\)，于是 \(I_{\mathfrak m}=a_iR_{\mathfrak m}\)。
+
+反向需要说明逆理想与局部化相容。若 \(I=(a_1,\ldots,a_r)\)，且
+\(xI_{\mathfrak m}\subseteq R_{\mathfrak m}\)，为每个 \(xa_i\) 选一个分母
+\(s_i\notin\mathfrak m\) 使 \(s_ix a_i\in R\)。令 \(s=\prod_i s_i\)，便有
+\(sx\in I^{-1}\)。因此 \((I^{-1})_{\mathfrak m}=(I_{\mathfrak m})^{-1}\)。
+若 \(I_{\mathfrak m}\) 主生成且非零，它与自己的逆相乘为 \(R_{\mathfrak m}\)，故
+\((II^{-1})_{\mathfrak m}=R_{\mathfrak m}\)。若 \(II^{-1}\) 为真理想，将其包含在某个极大理想中会与这个等式矛盾。于是 \(II^{-1}=R\)。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:dedekind-fractional-group}
+设 \(R\) 为 Dedekind 整环。它的全部非零分式理想在乘法下组成交换群。每个分式理想 \(I\) 有唯一表达式
+\[
+I=\prod_{\mathfrak p\ne0}\mathfrak p^{n_{\mathfrak p}},
+\qquad n_{\mathfrak p}\in\mathbb Z,
+\]
+其中只有有限多个指数非零。因此该群是以非零素理想为基的自由交换群。
+\end{corollary}
+\begin{proof}
+若 \(R\) 为域，则唯一非零分式理想为 \(R\)，结论成立。以下设 \(R\) 非域。分式理想有限生成，每个极大理想非零，相应局部环为 DVR，局部化理想均主生成，故由上一命题可逆。
+选 \(0\ne d\in R\) 使 \(dI\) 为通常理想，则 \(I=(dI)(dR)^{-1}\)。
+分别分解这两个通常理想便得到整数指数；在每个 DVR 处读出指数又证明唯一性。乘法的结合律、交换律来自有限和与环乘法，单位元是 \(R\)，所定义的 \(I^{-1}\) 即群逆元。
+\end{proof}
+
+可逆不等于主生成。主分式理想 \(xR\) 总有逆 \(x^{-1}R\)，但一般 Dedekind 整环中还存在非主可逆理想。下一节给出具体算例，并说明它们怎样组成理想类群。

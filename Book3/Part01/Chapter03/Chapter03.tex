@@ -1,16 +1,268 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第3章　Noether 性、Artin 性与 Nakayama 引理
-% 纲要位置：计划纲要.md，第 1559 行。
+% 纲要位置：工作记录/计划纲要.md，第 1877 行。
 
 \chapter{Noether 性、Artin 性与 Nakayama 引理}
 \label{b3:ch:03}
 \BookChapterNumber{b3:ch:03}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+有限生成与有限展示使模能够用有限数据描述，Noether 条件进一步保证子模仍有这样的描述。本章以行列式技巧证明交换环上的 Nakayama 引理，进而用剩余向量空间计算局部模的最少生成元数。对交换 Artin 环，则先证明根的幂零性与有限长度，再得到局部直积分解和零维 Noether 环的刻画。最后比较商、局部化、有限代数与子环中的有限性行为。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分有限生成、有限展示、Noether 性、Artin 性与有限长度。
+\item 能在具体证明中指出行列式技巧和 Nakayama 引理的假设。
+\item 用 \(M/\mathfrak mM\) 选择极小生成组，并避免把生成组误认为自由基。
+\item 分解交换 Artin 环，理解零维刻画中 Noether 条件的作用。
+\end{itemize}
+\end{learninggoals}
+
+预备知识为前两章的理想、素谱、局部化与局部环，以及第二卷第12.2节的有限长度与 Jordan–Hölder 定理。第一卷定理12.4.5承担 Hilbert 基定理的主要证明，本章只据此发展模论后果。阅读 Artin 环的证明时尤其要留意顺序：根的幂零性先于 Noether 性建立，不能在中途调用尚未得到的有限生成性。
+
+\ProseParagraphBreak
+Matsumura 的《Commutative Ring Theory》\cite[Theorems 2.1--2.3, pp. 7--9; Theorem 3.2, p. 16]{Matsumura1989CommutativeRingTheory}可用于对照行列式技巧、局部生成元和交换 Artin 环的证明。这些结果所需的论证也在本章完整给出。
 
 \input{Part01/Chapter03/Section0301}
 \input{Part01/Chapter03/Section0302}
 \input{Part01/Chapter03/Section0303}
 \input{Part01/Chapter03/Section0304}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限展示把生成元与全部关系都限制在有限范围，Noether 环则使每个有限生成模的子模仍有限生成。Hilbert 基定理将这一性质传给有限型代数，因而多项式方程中的理想与有限矩阵的关系模具有有限描述。
+
+\ProseParagraphBreak
+行列式技巧不要求生成元线性无关，却能产生一个统一的首一零化方程。对恒等映射使用它，再利用 Jacobson 根的单位判据，便得到 Nakayama 引理。在局部环上，极小生成元数因此等于剩余向量空间的维数；这项维数不负责判断关系是否消失。
+
+\ProseParagraphBreak
+交换 Artin 环具有有限长度，并分解为各极大理想处的局部环。反向刻画需要 Noether 性与零维同时成立。有限代数、商及局部化保留适当的链条件，任意子环却不保留；后续整扩张与维数论中的有限性假设将继续依赖这些区别。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:03-cyclic-presentation}
+分别给出 \(k[x]/(x^3)\) 作为 \(k[x]\) 模，以及 \(k[x,y]/(x,y)\) 作为 \(k[x,y]\) 模的有限展示。解释展示中的生成元与关系数。
+\end{exercise}
+\begin{solution}
+第一种为
+\(k[x]\xrightarrow{\times x^3}k[x]\rightarrow k[x]/(x^3)\rightarrow0\)，一个生成元为 \(1\) 的类，全部关系由 \(x^3\) 生成。第二种为
+\[
+k[x,y]^2\xrightarrow{\begin{pmatrix}x&y\end{pmatrix}}k[x,y]
+\longrightarrow k[x,y]/(x,y)\longrightarrow0.
+\]
+仍只有一个模生成元，而两个关系 \(x\cdot1=0\)、\(y\cdot1=0\) 生成全部关系。“两个关系”不表示第一个映射单射；关系之间还可能有关系。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-two-variable-relation}
+令 \(R=k[x,y]\)。求映射 \(R^2\rightarrow(x,y)\)、\((a,b)\mapsto ax+by\) 的核，并给出 \((x,y)\) 的有限展示。
+\end{exercise}
+\begin{solution}
+若 \(ax+by=0\)，模掉 \(y\) 后在 \(k[x]\) 中有 \(\bar a x=0\)，故 \(a=yc\)。代回得到 \(y(cx+b)=0\)，整环性给出 \(b=-xc\)。因此核由 \((y,-x)\) 生成，得到正合列
+\[
+0\longrightarrow R\xrightarrow{c\mapsto(yc,-xc)}R^2
+\longrightarrow(x,y)\longrightarrow0.
+\]
+第一个映射单射，因为 \(y\ne0\) 且 \(R\) 为整环。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-finite-extension-modules}
+设 \(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 正合。证明若 \(L,N\) 有限生成，则 \(M\) 有限生成；同时给出 \(M\) 有限生成而 \(L\) 不有限生成的例子。
+\end{exercise}
+\begin{solution}
+取 \(L\) 的有限生成元，并提升 \(N\) 的有限生成元到 \(M\)。对任意 \(m\in M\)，先减去提升元的适当线性组合，使差落入 \(L\)，再用 \(L\) 的生成元表示，故这些有限个元素生成 \(M\)。
+反向取 \(R=k[x_1,x_2,\ldots]\)、\(M=R\)、\(L=(x_1,x_2,\ldots)\)。\(M\) 循环，但 \(L\) 不有限生成，理由是任意有限组多项式只涉及有限个变量，不能生成另一个变量。此处底环不是 Noether 环。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-cusp-finite}
+令 \(A=k[t^2,t^3]\subseteq k[t]\)、\(R=k[t^2]\)。证明 \(A\) 是有限 \(R\) 代数并为 Noether 环；比较 \(k[t,y]\) 作为 \(k[t]\) 代数的有限型性与有限性。
+\end{exercise}
+\begin{solution}
+每个 \(A\) 中的单项式次数都为偶数，或为至少 \(3\) 的奇数，故
+\(A=R+Rt^3\)。所以 \(A\) 是由 \(1,t^3\) 生成的有限 \(R\) 模。\(R\) 同构于一元多项式环，是 Noether 环，故由\cref{b3:prop:finite-algebra-noether}，\(A\) 为 Noether 环。
+另一方面 \(k[t,y]\) 作为 \(k[t]\) 代数由 \(y\) 生成，是有限型代数；若它作为模由有限个多项式生成，生成元的 \(y\) 次数有共同上界，而 \(k[t]\) 系数的组合不能超过这个上界，不能得到任意高次的 \(y^n\)。所以它不是有限代数。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-determinant-integrality}
+设 \(R\) 为整环，\(K\) 为其分式域，\(0\ne M\subseteq K\) 为有限生成 \(R\) 子模。若 \(z\in K\) 满足 \(zM\subseteq M\)，证明 \(z\) 满足一个 \(R\) 系数的首一多项式。
+\end{exercise}
+\begin{solution}
+乘 \(z\) 是 \(M\) 的 \(R\) 线性自同态。对 \(I=R\) 应用\cref{b3:thm:determinant-trick}，得到首一 \(P(T)\in R[T]\)，使
+\(P(z)m=0\) 对所有 \(m\in M\) 成立。取一个非零 \(m\in M\subseteq K\)，在域中约去它，得到 \(P(z)=0\)。非零子模的条件负责最后的约去；若 \(M=0\)，这个论证不能给 \(z\) 任何限制。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-general-nakayama-factor}
+在 \(R=\mathbb Z\)、\(I=(2)\)、\(M=\mathbb Z/3\mathbb Z\) 中，找出 \(a\in I\) 使 \((1-a)M=0\)。解释为什么这不意味着 \(M=0\)。
+\end{exercise}
+\begin{solution}
+取 \(a=4\)，则 \(1-a=-3\) 零化 \(M\)，而 \(4\in(2)\)。这里 \(-3\) 不是整数环的单位，不能从 \((-3)M=0\) 约去 \(-3\)。\((2)\) 也不包含于
+\(J(\mathbb Z)=0\)，因为所有极大理想 \((p)\) 的交为零。所以满足的是行列式技巧给出的统一零化元结论，没有满足 Nakayama 的 Jacobson 根假设。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-local-matrix}
+设 \((R,\mathfrak m,\kappa)\) 为局部环，\(A\in M_n(R)\)。证明 \(A\) 可逆当且仅当其模 \(\mathfrak m\) 的矩阵 \(\bar A\) 可逆。用此解释两组极小生成元之间的 \(n\times n\) 转换矩阵为什么可逆。
+\end{exercise}
+\begin{solution}
+若 \(A\) 可逆，取商后仍可逆。反向若 \(\bar A\) 可逆，则
+\(\det A\bmod\mathfrak m=\det\bar A\ne0\)，故 \(\det A\) 为 \(R\) 的单位，伴随矩阵公式给出 \(A^{-1}=(\det A)^{-1}\operatorname{adj}(A)\)。
+若两组极小生成元各有 \(n\) 个，模掉 \(\mathfrak mM\) 后都是剩余向量空间的基；任何把一组表示为另一组线性组合的矩阵，在剩余域上成为基变换矩阵，因此在 \(R\) 上可逆。生成元未必是自由基，这只说明该转换矩阵可逆。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-minimal-power-generators}
+令 \(R=k[x_1,\ldots,x_d]_{(x_1,\ldots,x_d)}\)、\(\mathfrak m=(x_1,\ldots,x_d)\)，其中 \(d\ge1\)。求 \(\mu_R(\mathfrak m^r)\)、\(r\ge0\)。
+\end{exercise}
+\begin{solution}
+\(\mathfrak m^r/\mathfrak m^{r+1}\) 以全次数 \(r\) 的单项式为 \(k\) 基。局部化分母的常数项非零，在这个商中只影响其非零常数倍，不引入新的线性关系。因此
+\[
+\mu_R(\mathfrak m^r)=\dim_k(\mathfrak m^r/\mathfrak m^{r+1})
+=\binom{r+d-1}{d-1}.
+\]
+末个数是在 \(d\) 个非负整数中分配总和 \(r\) 的方案数。\(r=0\) 时即 \(R/\mathfrak m\) 的维数 \(1\)，与 \(R\) 作为自身的模循环一致。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-nonlocal-minimal}
+证明整数模 \(\mathbb Z\) 同时有极小生成组 \(\{1\}\) 和 \(\{2,3\}\)。说明这不违反局部环上的极小生成元结论。
+\end{exercise}
+\begin{solution}
+\(\{1\}\) 显然生成；\(\{2,3\}\) 也生成，因为 \(3-2=1\)，但删去任意一个只得到 \(2\mathbb Z\) 或 \(3\mathbb Z\)，所以它也极小。“极小”是不能删去元素，并不是在所有生成组中个数最少。
+整数环不是局部环，因此不能把不同极大理想的剩余信息统一成同一个剩余向量空间。局部结论所用的 \(\mathfrak m\) 唯一性在此缺失。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-surjective-endomorphism}
+若 \(M\) 是交换环上的有限生成模，且 \(M\cong M\oplus N\)，证明 \(N=0\)。再用 \(\mathbb Z\) 上的一个单自同态说明“满自同态可逆”不能改成“单自同态可逆”。
+\end{exercise}
+\begin{solution}
+将给定同构 \(M\rightarrow M\oplus N\) 与第一投影复合，得到 \(M\) 的满自同态。由\cref{b3:cor:finite-surjective-endomorphism}它单射，而其核在原同构下恰为 \(0\oplus N\)，故 \(N=0\)。
+整数模的乘二映射为单射但不是满射，因 \(1\) 没有原像，所以不具有逆映射。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-idempotent-ideal}
+设理想 \(I\subseteq R\) 有限生成且 \(I^2=I\)。证明存在幂等元 \(e\in R\) 使 \(I=eR\)。若 \(R\) 局部，说明只能有 \(I=0\) 或 \(I=R\)。
+\end{exercise}
+\begin{solution}
+把 \(I\) 看作有限生成模，行列式技巧应用于 \(I=II\)，得到 \(e\in I\) 使
+\((1-e)I=0\)。于是 \(x=ex\) 对所有 \(x\in I\) 成立，故 \(I\subseteq eR\)；另一包含由 \(e\in I\) 得到。再取 \(x=e\)，便有 \(e=e^2\)。
+在局部环中，\(e\) 与 \(1-e\) 至少一个是单位，因为二者之和为 \(1\)。由
+\(e(1-e)=0\)，若 \(e\) 可逆则 \(e=1\)，若 \(1-e\) 可逆则 \(e=0\)。因此 \(I\) 只能是所述两个理想。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-integer-artin-product}
+显式分解 \(\mathbb Z/360\mathbb Z\) 为 Artin 局部环的直积，并找出三个对应的正交幂等元。
+\end{exercise}
+\begin{solution}
+\(360=8\cdot9\cdot5\)，三因子两两互素，所以
+\[
+\mathbb Z/360\mathbb Z\cong
+\mathbb Z/8\mathbb Z\times\mathbb Z/9\mathbb Z\times\mathbb Z/5\mathbb Z.
+\]
+可取 \(e_1=225\)、\(e_2=280\)、\(e_3=216\) 的剩余类。它们在对应因子中取 \(1\)，在另外两个因子中取 \(0\)；由中国剩余同构可知它们幂等、两两正交，且和为 \(1\)。也可直接核对 \(225+280+216=721\equiv1\pmod{360}\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-artin-square-example}
+对 \(A=k[x,y]/(x^2,y^2)\)，求唯一极大理想、其幂零指数、环的长度，以及零化该极大理想的元素组成的理想。
+\end{exercise}
+\begin{solution}
+\(A\) 的 \(k\) 基为 \(1,\bar x,\bar y,\bar x\bar y\)。非零常数项的元素可用有限几何级数求逆，零常数项的元素幂零，所以唯一极大理想为
+\(\mathfrak m=(\bar x,\bar y)\)。有
+\(\mathfrak m^2=k\bar x\bar y\ne0\)、\(\mathfrak m^3=0\)，幂零指数为 \(3\)。
+商层 \(A/\mathfrak m\)、\(\mathfrak m/\mathfrak m^2\)、\(\mathfrak m^2\) 的维数分别为 \(1,2,1\)，将中间二维层细分即得长度 \(4\)。
+若 \(a+b\bar x+c\bar y+d\bar x\bar y\) 被 \(\bar x,\bar y\) 同时零化，分别相乘得到 \(a=c=0\) 与 \(a=b=0\)，故零化子为 \(k\bar x\bar y\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-polynomial-artin-product}
+分解 \(A=k[t]/\Bigl(t^2(t-1)^3\Bigr)\) 为局部因子，求其长度及约化商。
+\end{exercise}
+\begin{solution}
+\((t^2)\) 与 \(\Bigl((t-1)^3\Bigr)\) 互素，所以
+\[
+A\cong k[t]/(t^2)\times k[t]/\Bigl((t-1)^3\Bigr).
+\]
+两个因子分别在 \((t)\) 与 \((t-1)\) 处局部，具有长度 \(2,3\)，因此 \(A\) 的长度为 \(5\)。幂零根在两个因子中分别为 \((\bar t)\) 与 \((\overline{t-1})\)，约化商为 \(k\times k\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-nilpotent-maximal-not-artin}
+令 \(V\) 为无限维 \(k\) 向量空间，在 \(R=k\oplus V\) 上规定
+\((a,u)(b,v)=(ab,av+bu)\)。证明它是局部环，极大理想平方为零，但它不是 Artin 环。
+\end{exercise}
+\begin{solution}
+该乘法直接满足结合律及分配律，单位为 \((1,0)\)。若 \(a\ne0\)，
+\((a,u)^{-1}=(a^{-1},-a^{-2}u)\)；若 \(a=0\)，元素平方为零，所以非单位集恰为 \(\mathfrak m=0\oplus V\)，且 \(\mathfrak m^2=0\)。
+\(V\) 的每个 \(k\) 子空间都是 \(R\) 理想，因为 \(V\) 对它作用为零，标量 \(k\) 按通常方式作用。选一列线性无关向量并扩充为基，逐次删去前面的向量所得子空间构成严格降链。因此 \(R\) 不是 Artin 环。极大理想幂零本身不能替代有限性。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-zero-dimensional-reduced}
+证明有限维约化交换 \(k\) 代数是有限个有限域扩张的直积（零代数对应空乘积）。指出当 \(k\) 代数闭时这些因子是什么。
+\end{exercise}
+\begin{solution}
+有限维性使理想升链、降链都稳定，故代数为 Artin 环；约化性结合
+\cref{b3:thm:noether-dimension-zero}给出有限个域的直积。各域为原代数的商，因此作为 \(k\) 向量空间仍有限维，是有限域扩张。若 \(k\) 代数闭，每个有限扩张中的元素都有 \(k\) 上的最小多项式，该不可约多项式只能为一次，故各因子均等于 \(k\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-artin-local-length}
+设 \(R\) 为 Artin 局部环，极大理想为 \(\mathfrak m\)，剩余域为 \(\kappa\)，\(M\) 为有限生成模。证明
+\[
+\ell_R(M)=\sum_{i\ge0}
+\dim_\kappa(\mathfrak m^iM/\mathfrak m^{i+1}M).
+\]
+推导 \(\ell_R(M)\ge\mu_R(M)\)，并刻画等号成立的情形。
+\end{exercise}
+\begin{solution}
+\(\mathfrak m\) 幂零，所以和中只有有限个非零项；每个商层被 \(\mathfrak m\) 零化，是有限维 \(\kappa\) 向量空间。按一组基的前若干项构造向量空间旗标，每个一维商作为 \(R\) 模都是简单模 \(\kappa\)。将各层的旗标取逆像并连接，就得到总层数为右侧的合成列。
+第一项为 \(\dim_\kappa M/\mathfrak mM=\mu_R(M)\)，其他项非负，因此有不等式。等号成立等价于 \(\mathfrak mM/\mathfrak m^2M=0\)，再由 Nakayama 引理应用于有限模 \(\mathfrak mM\)，得到 \(\mathfrak mM=0\)。反向若 \(\mathfrak mM=0\)，只有第一项非零，当然取等号。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-artin-localized-length}
+设 \(R\) 为交换 Artin 环，极大理想为 \(\mathfrak m_1,\ldots,\mathfrak m_r\)，\(M\) 为有限生成模。证明
+\[
+\ell_R(M)=\sum_{i=1}^r\ell_{R_{\mathfrak m_i}}(M_{\mathfrak m_i}).
+\]
+\end{exercise}
+\begin{solution}
+由\cref{b3:thm:artin-decomposition}，\(R=\prod_i e_iR\)，且
+\(M=\bigoplus_i e_iM\)、\(e_iM\cong M_{\mathfrak m_i}\)。
+一个 \(e_iM\) 的 \(R\) 子模恰为其 \(e_iR\) 子模，因为其他坐标作用为零；因此两种底环下的合成列及长度相同。分别取各分量的合成列，再在直和中依次添入各分量，便得到长度为各长度之和的 \(M\) 合成列，证明所需等式。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-nonnoether-subring-local}
+令 \(A=k+xk[x,y]\)、\(I=xk[x,y]\)。证明局部环 \(A_I\) 仍不是 Noether 环。
+\end{exercise}
+\begin{solution}
+\(A/I=k\)，故 \(I\) 极大，\(A_I\) 的极大理想为 \(IA_I\)。由局部化正合性及乘积的分式公式，
+\[
+IA_I/(IA_I)^2\cong (I/I^2)_I.
+\]
+\(I/I^2\) 被 \(I\) 零化，且 \(A\setminus I\) 的作用只是非零常数的作用，已经可逆，所以右侧仍为以 \(xy^j+I^2\)、\(j\ge0\)，为基的无限维 \(k\) 向量空间。若 \(IA_I\) 有限生成，其模极大理想后的向量空间就有限维，矛盾。因此该局部环不是 Noether 环。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-finite-gaussian-algebra}
+证明 \(\mathbb Z[i]\) 是 Noether 环，并分解 \(\mathbb Z[i]/(5)\) 为 Artin 局部环的直积。
+\end{exercise}
+\begin{solution}
+\(\mathbb Z[i]\) 由 \(1,i\) 作为 \(\mathbb Z\) 模生成，而整数环为 Noether 环，所以它是有限代数，从而是 Noether 环。模掉 \(5\) 后，
+\[
+\mathbb Z[i]/(5)\cong\mathbb F_5[T]/(T^2+1)
+=\mathbb F_5[T]/\Bigl((T-2)(T+2)\Bigr).
+\]
+两个一次因子互素，由中国剩余定理得到 \(\mathbb F_5\times\mathbb F_5\)。这两个域就是局部因子，商环约化且长度为 \(2\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-pointwise-noether}
+令 \(R=\prod_{n\ge1}k\)。证明每个 \(R_{\mathfrak p}\) 都是域，但 \(R\) 不是 Noether 环。解释为何不违反\cref{b3:prop:finite-presentation-open-cover}。
+\end{exercise}
+\begin{solution}
+每个 \(a\in R\) 都有 \(a=a^2b\)，逐坐标取 \(b_n=a_n^{-1}\) 或 \(0\) 即可。局部化中的元素也满足这种等式：若 \(z=a/s\)，可取 \(w=bs\)，便有 \(z=z^2w\)。
+在局部环 \(R_{\mathfrak p}\) 中，若 \(z\) 属于极大理想，则 \(1-zw\) 为单位；
+\(z(1-zw)=0\) 遂给出 \(z=0\)。所以唯一极大理想为零，局部环是域。
+但有限支集、只在前 \(n\) 个坐标可能非零的理想组成严格升链，故 \(R\) 不是 Noether 环。该命题要求基本开邻域上的 Noether 性并形成覆盖，这里只证明各个茎是 Noether 环，没有得到相应的邻域。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:03-noether-artin-distinction}
+分别给出下列例子并验证：Noether 而非 Artin 的环；Artin 而非 Noether 的模；有限生成但非有限展示的模。最后说明为什么不存在交换 Artin 而非 Noether 的环。
+\end{exercise}
+\begin{solution}
+\(\mathbb Z\) 的每个理想为主理想，故是 Noether 环；理想链
+\(2^n\mathbb Z\) 严格下降，故不是 Artin 环。
+整数模 \(\mathbb Z[1/p]/\mathbb Z\) 的每个真子模有限循环，所以降链稳定；但它含有阶依次为 \(p^n\) 的严格上升子群链，所以不是 Noether 模。
+取 \(R=k[x_1,x_2,\ldots]\)、\(I=(x_1,x_2,\ldots)\)，则 \(R/I\) 循环而有限生成；若它有限展示，\cref{b3:prop:finite-presentation-kernel}会迫使 \(I\) 有限生成，与变量数的论证矛盾。
+最后一种环由\cref{b3:thm:artin-finite-length}排除：交换 Artin 环的正则模具有有限长度，必满足升链条件。
+\end{solution}

@@ -1,30 +1,73 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 7.1 代数集
-% 纲要位置：计划纲要.md，第 1690 行。
+% 纲要位置：工作记录/计划纲要.md，第 2008 行。
+% 纲要细目（写作范围）：
+% * Zariski 拓扑与闭子集
+% * 不可约性与素理想
+% * 连通性和幂等元
 
 \section{代数集}
 \label{b3:sec:0701}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Zariski 拓扑与闭子集
-% * 不可约性与素理想
-% * 连通性和幂等元
-%
+前六章主要从环和模出发；本章把其中一些对象重新解释为多项式方程的解集。为使点集确实能够恢复全部约化关系，本节和下一节固定代数闭域 \(k\)。\secref{b3:sec:0703}才明确放宽基域，并用域值点及纤维代数保留普通点集看不到的信息。
 
 \subsection{Zariski 拓扑与闭子集}
 \label{b3:subsec:0701:01}
 
-待撰写。
+\begin{definition}\label{b3:def:affine-algebraic-set}
+记 \(\mathbb A_k^n=k^n\)。形如 \(X=Z_k(I)\)、\(I\subseteq k[x_1,\ldots,x_n]\) 为理想，的子集称为\term[fangshe-daishu-ji]{仿射代数集}[affine algebraic set]。以这些子集为闭集，得到 \(\mathbb A_k^n\) 的 Zariski 拓扑；每个代数集赋予子空间拓扑。本书允许代数集为空或可约；非空不可约的代数集称为\term[fangshe-daishu-cu]{仿射代数簇}[affine variety]。
+\end{definition}
+
+此处采用的“簇”约定比“代数集”多一个不可约条件。拓扑公理可与\eqref{b3:eq:zariski-closed-identities}相同地验证：任意交对应理想之和，有限并对应理想之积。对闭集 \(X\)，\cref{b3:thm:strong-nullstellensatz}给出 \(I(X)\) 为根理想，且 \(X=Z_k\Bigl(I(X)\Bigr)\)。
+
+\ProseParagraphBreak
+沿用\cref{b3:def:affine-coordinate-ring}记 \(A=k[X]\)。对 \(f\in A\)，记
+\[
+D_X(f)=\Bigl\{\,a\in X:f(a)\ne0\,\Bigr\},\qquad
+Z_X(J)=\Bigl\{\,a\in X:g(a)=0\text{ 对全部 }g\in J\,\Bigr\}.
+\]
+这里 \(J\) 是 \(A\) 的理想；这些定义不依赖在多项式环中选择的代表。\(D_X(f)\) 构成 \(X\) 的开集基。由弱零点定理，映射
+\begin{equation}\label{b3:eq:closed-points-affine}
+X\longrightarrow\operatorname{MaxSpec}A,
+\qquad a\longmapsto\mathfrak m_a=\Bigl\{f\in A:f(a)=0\Bigr\}
+\end{equation}
+是双射，且把上述拓扑对应为素谱中极大理想子集的子空间拓扑。因为 \(a\in Z_X(J)\) 恰好等价于 \(J\subseteq\mathfrak m_a\)，它同时识别了闭集。
+\symidx{\(D_X(f)\)：代数集上的主开集}
+\symidx{\(\operatorname{MaxSpec}A\)：环的极大理想集合，赋予素谱的子空间拓扑}
+
+因此 \(X\) 的每个点都闭，而 \(\operatorname{Spec}k[X]\) 还可能有非闭的一般点。两种空间记录的信息不同；例如仿射直线的坐标点是 \((t-a)\)，素谱还含零理想。
 
 \subsection{不可约性与素理想}
 \label{b3:subsec:0701:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:affine-irreducible}
+非空代数集 \(X\subseteq k^n\) 不可约，当且仅当 \(I(X)\) 素，也当且仅当 \(k[X]\) 为整环。每个代数集有有限个不可约分支，它们对应 \(k[X]\) 的极小素理想。
+\end{proposition}
+\begin{proof}
+若 \(fg\in I(X)\)，则每个点上至少一个因子为零，故
+\(X=Z_X(f)\cup Z_X(g)\)。不可约性使其中一个等于 \(X\)，即 \(f\) 或 \(g\) 属于 \(I(X)\)，所以这个真理想素。
+
+反过来，若 \(I(X)\) 素，而 \(X=Y\cup Z\) 是两个闭子集之并，假设两者都真。由强零点定理，包含反向严格，因而可取 \(f\in I(Y)\setminus I(X)\)、\(g\in I(Z)\setminus I(X)\)。乘积在全部 \(X\) 上为零，违反素性。商整环的等价性由\cref{b3:prop:prime-maximal-quotient}给出。
+
+最后 \(A=k[X]\) 为 Noether 环。由\cref{b3:prop:noether-spectrum-components}，它有有限个极小素理想 \(\mathfrak p_i\)，且因 \(A\) 约化而 \(\bigcap_i\mathfrak p_i=0\)。零点运算把这个有限交变成 \(X=\bigcup_i Z_X(\mathfrak p_i)\)。前面的判据说明各成员不可约，极小素理想互不包含，故它们恰为全部不可约分支。
+\end{proof}
+
+在 \(X=Z_k(xy)\) 中，两分支为两条坐标轴，它们都不可约，却在原点相交。相比之下，\(Z_k\Bigl(x(x-1)\Bigr)\subseteq\mathbb A_k^1\) 是两个分开的点。不可约分支的数目和连通分支的数目因而是不同的数据。
 
 \subsection{连通性与幂等元}
 \label{b3:subsec:0701:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:affine-connected-idempotents}
+代数集 \(X\) 连通，当且仅当 \(k[X]\) 没有除零与一以外的幂等元。
+\end{theorem}
+\begin{proof}
+设 \(e^2=e\)。在每个点上，\(e(a)\) 为零或一，所以
+\[
+X=Z_X(e)\sqcup Z_X(1-e).
+\]
+两部分闭且互为补集，故也开。如果 \(e\ne0,1\)，因 \(k[X]\) 的元素确为函数，两部分都非空，得到不连通性。
+
+反过来，若 \(X=Y\sqcup Z\)，其中 \(Y,Z\) 非空且均开闭，取它们在 \(A=k[X]\) 中的零点理想 \(J,K\)。因为并为 \(X\)，有 \(J\cap K=0\)；因为交为空，由\cref{b3:cor:proper-ideal-common-zero}，\(J+K=A\)。第一卷定理10.4.3的中国剩余定理给出 \(A\cong A/J\times A/K\)。两因子非零，元素 \((1,0)\) 的原像就是非平凡幂等元。空集的坐标环为零环，零与一相同，也符合所述判据。
+\end{proof}
+
+例如两条交叉直线的坐标环可嵌入 \(k[x]\times k[y]\)，其像为两坐标常数项相同的多项式对。一个幂等元的两个坐标都只能为零或一，再要求常数项相同，只剩 \((0,0)\)、\((1,1)\)。因此这个可约代数集仍连通。相比之下，两点代数的坐标环为 \(k\times k\)，其两个非平凡幂等元把两个点分开。

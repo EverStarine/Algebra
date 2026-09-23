@@ -1,9 +1,80 @@
 % !TeX root = ../../Book2.tex
-% 本节标题据《计划纲要.md》附录 B 第 4 项归纳；原要点保留于 AppendixB.tex。
+% 纲要标题：### B.4 自旋群与算术二次型
+% 纲要位置：工作记录/计划纲要.md，第 1627 行。
+
+% 纲要要点（供目录核对）：
+% * 自旋群和算术二次型的后续方向
+% <!-- 短节：不设小节 -->
 
 \section{自旋群与算术二次型}
 \label{b2:sec:B04}
 
-% TODO: 按附录入口保留的纲要要点撰写本节。
+Clifford 代数的可逆元能通过共轭作用产生正交变换。这个构造还会显露底域的影响：实数域上的满射，换成有理数点后可能不再满。本节只建立所需的代数定义和一个平面模型，不预先使用李群的覆盖空间理论。仍假设 \(\operatorname{char}k\ne2\)，且 \((V,q)\) 非退化、\(\dim V\ge1\)。
 
-待撰写。
+\ProseParagraphBreak
+把每个生成向量固定而把乘法次序颠倒，定义 Clifford 代数上的反同构
+\[
+\tau(v_1\cdots v_r)=v_r\cdots v_1.
+\]
+其良定义可由\cref{b2:thm:clifford-universal}检验：向反代数送入同一个向量仍满足 \(v^2=q(v)1\)，故唯一延伸为反同构，且平方在生成元上为恒等。\(\tau\) 称为\term[Clifford-fanxu]{反序对合}[reversion]。同时反转乘法次序、把每个 \(v\) 变为 \(-v\) 的反同构则称为\term[Clifford-gonge]{Clifford 共轭}[Clifford conjugation]；两者在偶部分上一致。
+
+\begin{definition}\label{b2:def:B-spin-group}
+设 \(C=\operatorname{Cl}(V,q)\)，将 \(V\) 按\cref{b2:thm:B-clifford-basis}嵌入 \(C\)。定义其 \(k\) 点的\term[zixuan-qun]{自旋群}[spin group]为
+\[
+\operatorname{Spin}(V,q)(k)=
+\Bigl\{\,g\in(C^0)^\times\ \Bigm|\,
+gVg^{-1}=V,\ \tau(g)g=1\,\Bigr\}.
+\]
+这里讨论的是这个具体群；若进一步把同一构造随交换 \(k\) 代数作基变换，才进入代数群的表述。
+\end{definition}
+\symidx{\(\operatorname{Spin}(V,q)(k)\)：自旋群的 \(k\) 点}
+
+\begin{proposition}\label{b2:prop:B-spin-action}
+上述集合在乘法下成群。共轭作用给出同态
+\[
+\rho:\operatorname{Spin}(V,q)(k)\longrightarrow\operatorname{SO}(V,q),
+\qquad \rho(g)(v)=gvg^{-1},
+\]
+其核为 \(\{1,-1\}\)。这里不对一般底域的 \(k\) 点断言满射。
+\end{proposition}
+\begin{proof}
+正规化 \(V\) 的条件对乘法及逆封闭。若 \(\tau(g)g=\tau(h)h=1\)，则
+\[
+\tau(gh)gh=\tau(h)\tau(g)gh=1,
+\qquad \tau(g^{-1})g^{-1}=1.
+\]
+所以所给集合是群。共轭在 \(V\) 上线性且可逆；又
+\[
+(gvg^{-1})^2=gv^2g^{-1}=q(v)1,
+\]
+故它保持 \(q\)。
+
+取正交基 \(e_1,\ldots,e_n\)，各 \(q(e_i)\ne0\)，并令 \(\omega=e_1\cdots e_n\)。每个 \(e_i\) 与 \(\omega\) 的交换符号为 \((-1)^{n-1}\)，所以每个偶单项式都与 \(\omega\) 交换。于是 \(g\omega g^{-1}=\omega\)。另一方面左侧等于 \(\rho(g)(e_1)\cdots\rho(g)(e_n)\)；在\eqref{b2:eq:B-clifford-associated-graded}的最高次数中比较，得到
+\[
+\det\rho(g)\,e_1\wedge\cdots\wedge e_n
+=e_1\wedge\cdots\wedge e_n.
+\]
+外积非零，故行列式为一。
+
+若 \(g\) 在核中，它与每个 \(e_j\) 交换。按有序偶单项式展开 \(g\)：当指标子集 \(I\) 不含 \(j\) 时，偶单项式 \(e_I\) 与 \(e_j\) 交换；当 \(j\in I\) 时二者反交换。不同 \(I\) 乘以可逆的 \(e_j\) 后仍对应不同的基元素。因此 \([g,e_j]=0\) 迫使所有包含 \(j\) 的系数为零，所用的 \(2q(e_j)\) 非零。对全部 \(j\) 应用这一点，只有空子集的标量项保留，故 \(g\in k^\times\)。条件 \(\tau(g)g=1\) 化为 \(g^2=1\)，给出核 \(\{1,-1\}\)。
+\end{proof}
+
+作为实际计算，取 \(q=\langle1,1\rangle\)，令 \(u=e_1e_2\)，则 \(u^2=-1\)、\(\tau(u)=-u\)。所有偶元素形如 \(g=a+bu\)，且
+\[
+\tau(g)g=a^2+b^2.
+\]
+若 \(a^2+b^2=1\)，则 \(g^{-1}=a-bu\)，直接相乘得到
+\begin{equation}\label{b2:eq:B-spin-plane}
+\rho(a+bu)=
+\begin{pmatrix}a^2-b^2&2ab\\-2ab&a^2-b^2\end{pmatrix}.
+\end{equation}
+因此这时正规化条件自动成立，自旋群恰由 \(a^2+b^2=1\) 的偶元素组成。在 \(k=\mathbb R\) 上令 \(g=\cos\theta-\sin\theta\,u\)，所得变换是角度 \(2\theta\) 的旋转。每个平面旋转有两个互为负数的原像，倍角现象完全来自这次 Clifford 乘法计算。
+
+\ProseParagraphBreak
+在 \(k=\mathbb Q\) 上，旋转矩阵 \(\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}\) 仍属于 \(\operatorname{SO}\Bigl(\langle1,1\rangle\Bigr)\)，却没有有理自旋原像。否则\eqref{b2:eq:B-spin-plane}要求 \(a^2=b^2=1/2\)，而 \(1/2\) 不是有理数的平方。这说明不能把实平面的满射结论无条件搬到任意域。
+
+\ProseParagraphBreak
+底域也决定二次方程是否有非零解。例如 \(x^2+y^2-3z^2=0\) 在实数域有解 \((\sqrt3,0,1)\)，在有理数域却只有零解：\(z=0\) 时显然 \(x=y=0\)，而 \(z\ne0\) 时除以 \(z^2\)，就得到\cref{b2:exm:B-rational-norm-obstruction}已经排除的范数方程 \((x/z)^2+(y/z)^2=3\)。这里的模三计算提供了实数方法看不到的算术障碍。
+
+\ProseParagraphBreak
+继续研究这些问题时，自旋群的一般结构需要代数群与群作用的知识；数域二次型则要比较实、复及非 Archimedes 完备化上的解，并研究这些信息能否决定原域上的解。本附录不使用这类局部与整体之间的深层定理。眼前已经可用的工具是明确的范数方程、平方类、Clifford 乘法，以及\cref{b2:prop:B-binary-norm-classification}所给的二元分类判据。

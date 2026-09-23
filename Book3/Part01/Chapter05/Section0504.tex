@@ -1,32 +1,81 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 5.4 Noether 正规化
-% 纲要位置：计划纲要.md，第 1635 行。
-
-\section{Noether 正规化}
-\label{b3:sec:0504}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 1953 行。
+% 纲要细目（写作范围）：
 % * 域上有限生成代数的整子多项式环
 % * 域有限与无限时的证明处理
 % * 代数独立和有限映射
-%
 % ---
-%
 
-\subsection{有限生成代数的整子多项式环}
-\label{b3:subsec:0504:01}
+\section{Noether 正规化}\label{b3:sec:0504}
 
-待撰写。
+有限型代数通常由带关系的生成元给出。Noether 正规化要从中找出一组没有代数关系的元素，使剩下的全部复杂性成为有限模扩张。这一构造既为维数提供坐标，也为下一章的正规化有限性提供一个可控制的底环。
 
-\subsection{有限基域与无限基域上的证明}
-\label{b3:subsec:0504:02}
+\subsection{有限生成代数的整子多项式环}\label{b3:subsec:0504:01}
 
-待撰写。
+\begin{theorem}[Noether 正规化]\label{b3:thm:noether-normalization}
+设 \(k\) 为任意域，\(A\ne0\) 为有限型 \(k\) 代数。存在代数独立元素 \(y_1,\ldots,y_d\in A\)，使
+\[
+k[y_1,\ldots,y_d]\subseteq A
+\]
+为有限扩张；这里允许 \(d=0\)，此时底环为 \(k\)。这称为\term[noether-zhengguihua]{Noether 正规化定理}[Noether normalization theorem]。
+\end{theorem}
 
-\subsection{代数独立与有限映射}
-\label{b3:subsec:0504:03}
+本定理不要求 \(A\) 是整环或约化环。例如
+\(k[x,\varepsilon]/(\varepsilon^2)\) 在 \(k[x]\) 上由 \(1,\varepsilon\) 生成；幂零元由有限扩张承载，而 \(x\) 本身仍然代数独立。“Noether 正规化”是找整子多项式环；下一章把环换成其整闭包的“正规化”是另一构造。
 
-待撰写。
+\subsection{有限基域与无限基域上的证明}\label{b3:subsec:0504:02}
+
+\begin{proof}[\cref{b3:thm:noether-normalization}的证明]
+写 \(A=k[a_1,\ldots,a_n]\)，对生成元个数 \(n\) 归纳。\(n=0\) 时 \(A=k\)。若 \(a_1,\ldots,a_n\) 代数独立，则已完成构造。否则存在非零多项式 \(f\in k[X_1,\ldots,X_n]\)，使 \(f(a_1,\ldots,a_n)=0\)。
+
+选整数 \(N\) 大于 \(f\) 中出现的全部单个变量指数，对 \(i<n\) 令 \(m_i=N^i\)，并作代换
+\[
+X_i=Y_i+Y_n^{m_i}\quad(i<n),\qquad X_n=Y_n.
+\]
+原来指数为 \(\alpha=(\alpha_1,\ldots,\alpha_n)\) 的单项式，在新的 \(Y_n\) 中产生最高次数
+\[
+w(\alpha)=\alpha_n+\alpha_1N+\cdots+\alpha_{n-1}N^{n-1}.
+\]
+由于每个指数小于 \(N\)，不同的 \(\alpha\) 有不同的 \(N\) 进制表示，从而这些次数互异。取其中最大的一个，其最高次 \(Y_n\) 项的系数恰为原单项式的非零系数；其他项不能抵消它。除以此系数后，变换所得多项式作为 \(Y_n\) 的多项式首一，系数在 \(k[Y_1,\ldots,Y_{n-1}]\) 中。
+
+令 \(b_i=a_i-a_n^{m_i}\)，则刚才的关系说明 \(a_n\) 在
+\(C=k[b_1,\ldots,b_{n-1}]\) 上整；又 \(a_i=b_i+a_n^{m_i}\)，所以
+\(A=C[a_n]\) 是有限 \(C\) 模。对至多由 \(n-1\) 个元素生成的非零代数 \(C\) 应用归纳假设，得到一个多项式子环 \(R=k[y_1,\ldots,y_d]\)，使 \(C/R\) 有限。将两层有限组模生成元相乘便知 \(A/R\) 有限，证明完成。
+\end{proof}
+
+加权代换对有限域和无限域同样有效。无限域上还有次数通常较低的做法：设 \(f\) 的最高齐次部分为 \(f_m\)。非零多项式在无限域上不可能处处为零，因此可取
+\[
+f_m(c_1,\ldots,c_{n-1},1)\ne0.
+\]
+这里代入最后变量为一不会把非零齐次式变成零多项式：其余各变量的指数确定后，最后一个指数由总次数唯一确定。代换 \(X_i=Y_i+c_iY_n\) 即使 \(f\) 对 \(Y_n\) 首一。所用的非零多项式取值事实可对变量个数归纳：固定前面的变量使某个非零系数不消失，再避开最后一个变量的有限个根。
+
+\ProseParagraphBreak
+有限域上这一步不能照搬。例如
+\(X^qY-XY^q\) 是 \(\mathbb F_q[X,Y]\) 中的非零齐次多项式，却在全部 \(\mathbb F_q\) 有理方向上取零。上面的加权证明不需要寻找非零取值，因而避免了这个障碍。
+
+\subsection{代数独立与有限映射}\label{b3:subsec:0504:03}
+
+若 \(A\) 是整环，正规化得到的 \(R=k[y_1,\ldots,y_d]\) 满足
+\[
+k(y_1,\ldots,y_d)\subseteq\operatorname{Frac}(A)
+\]
+为有限域扩张。事实上，把 \(R\) 的非零元素倒置后得到有限维整环 \(A\otimes_R\operatorname{Frac}(R)\)，由\cref{b3:lem:integral-field-criterion}它是域，因而就是 \(\operatorname{Frac}(A)\)。所以 \(d\) 等于此分式域在 \(k\) 上的超越次数：\(y_i\) 代数独立，整个扩域在它们生成的有理函数域上代数。这里使用第一卷定义14.3.1的超越基判据及定理14.3.6的超越次数不变性；本卷后面的维数理论将把这个数与素理想链长度联系起来。
+
+\begin{example}\label{b3:exm:noether-normalization-curves}
+在 \(A=k[x,y]/(xy-1)\) 中，\(A\) 不在 \(k[x]\) 上有限，因为 \(y=x^{-1}\) 不是在 \(k[x]\) 上的整元素。取 \(u=x+y\) 则不同：
+\[
+x^2-ux+1=0,\qquad y=u-x.
+\]
+因此 \(A=k[u][x]\) 由 \(1,x\) 作为 \(k[u]\) 模生成。\(u\) 代数独立，因为在同构 \(A=k[x,x^{-1}]\) 下，若次数 \(r\) 的非零多项式在 \(x+x^{-1}\) 处取零，其最高 Laurent 次数 \(x^r\) 的系数却非零，矛盾。对尖点 \(k[t^2,t^3]\)，直接取 \(u=t^2\) 即得由 \(1,t^3\) 生成的有限扩张。
+\end{example}
+
+\begin{definition}\label{b3:def:finite-affine-map}
+若环同态 \(R\to A\) 使 \(A\) 成为有限 \(R\) 模，称诱导的素谱映射为\term[youxian-aishe]{有限映射}[finite morphism]。本节只在仿射素谱之间使用这一术语。
+\end{definition}
+
+于是 Noether 正规化给出从 \(\operatorname{Spec}A\) 到某个多项式环素谱的有限满射。有限性蕴含整性，满射性由\cref{b3:thm:lying-over}保证。其点集纤维也是有限集：对 \(\mathfrak p\in\operatorname{Spec}R\)，纤维对应于
+\[
+\operatorname{Spec}\Bigl(A\otimes_R\kappa(\mathfrak p)\Bigr).
+\]
+该代数在剩余域上有限维，任意素理想都极大；不同的有限组极大理想两两互素，中国剩余定理给出的非零域商直积的维数不超过代数维数，因此极大理想总数也不超过这一维数。纤维对应可先把 \(R\setminus\mathfrak p\) 倒置，再模掉 \(\mathfrak p\)，逐次使用局部化及商环的素理想对应得到。有限映射仍可能把不同点合在一起，也可能有非约化纤维；有限性没有消除这些现象。

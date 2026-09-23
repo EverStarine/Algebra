@@ -1,32 +1,95 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.4 有限性在变换下的行为
-% 纲要位置：计划纲要.md，第 1579 行。
+% 纲要位置：工作记录/计划纲要.md，第 1897 行。
+% 纲要细目（写作范围）：
+% * 商、局部化和有限代数
+% * Noether 性并非任意子环继承
+% * 有限性假设的常见误用
+% ---
 
 \section{有限性在变换下的行为}
 \label{b3:sec:0304}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 商、局部化和有限代数
-% * Noether 性并非任意子环继承
-% * 有限性假设的常见误用
-%
-% ---
-%
+商、局部化和有限代数都保留相当多的有限性，而取子环一般不保留。把这些结论放在一起，可以避免在具体计算中因“环变小了”或“只剩一个点了”就误判其理想结构。本节还区分茎上的条件与基本开邻域上的条件。
 
 \subsection{商、局部化与有限代数}
 \label{b3:subsec:0304:01}
 
-待撰写。
+\begin{proposition}\label{b3:prop:chain-conditions-localization}
+Noether 环的商环及任意局部化仍为 Noether 环；Artin 环的商环及任意局部化仍为 Artin 环。有限生成模与有限展示模局部化后仍分别有限生成、有限展示。
+\end{proposition}
+\begin{proof}
+商环的理想链取逆像，严格包含仍严格，故两种链条件都传给商。局部化环中每个理想都是其收缩的扩张，见\cref{b3:prop:ideal-localization-saturation}。因此一条严格理想链收缩后仍严格；原环的相应链条件排除了无限严格升链或降链。
+
+模的生成元取分式 \(m_i/1\) 就生成局部化模。对有限展示
+\(R^a\rightarrow R^b\rightarrow M\rightarrow0\)，使用\cref{b3:thm:localization-exact}，得到
+\((S^{-1}R)^a\rightarrow(S^{-1}R)^b\rightarrow S^{-1}M\rightarrow0\)，故有限展示也被保持。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:finite-algebra-noether}
+若交换 \(R\) 代数 \(A\) 作为 \(R\) 模有限生成，称 \(A\) 为有限 \(R\) 代数。
+\begin{enumerate}
+\item 若 \(R\) 为 Noether 环，则 \(A\) 为 Noether 环。
+\item 若 \(R\) 为 Artin 环，则 \(A\) 为 Artin 环。
+\item 若 \(M\) 为有限生成 \(A\) 模，则它也是有限生成 \(R\) 模。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+第一项中，\(A\) 作为有限生成 \(R\) 模满足升链条件，而每个 \(A\) 理想都是 \(R\) 子模，所以理想升链稳定。第二项同理：由\cref{b3:thm:artin-finite-length}，\(A\) 作为 \(R\) 模具有有限长度，其 \(R\) 子模降链稳定，特别地 \(A\) 理想降链稳定。第三项中，若 \(a_1,\ldots,a_s\) 生成 \(A\) 作为 \(R\) 模，\(m_1,\ldots,m_t\) 生成 \(M\) 作为 \(A\) 模，则全部 \(a_i m_j\) 生成 \(M\) 作为 \(R\) 模。
+\end{proof}
+
+这里的“有限”比有限型严格得多。\(k[x]\) 是域 \(k\) 上的有限型代数，却不是 Artin 环，因为 \((x)\supsetneq(x^2)\supsetneq\cdots\)。有限型代数保留 Noether 性靠 Hilbert 基定理，有限代数保留 Artin 性则靠模的有限长度，二者是不同的论证。
+
+\begin{proposition}\label{b3:prop:finite-presentation-open-cover}
+若 \(f_1,\ldots,f_r\) 生成 \(R\) 的单位理想，且每个 \(M_{f_i}\) 是有限展示
+\(R_{f_i}\) 模，则 \(M\) 有限展示。若每个 \(R_{f_i}\) 是 Noether 环，则 \(R\) 为 Noether 环。
+\end{proposition}
+\begin{proof}
+由\cref{b3:prop:principal-cover-finiteness}，\(M\) 有限生成，取满射
+\(R^n\rightarrow M\)，核为 \(K\)。局部化后仍正合，且目标有限展示，所以由
+\cref{b3:prop:finite-presentation-kernel}，每个 \(K_{f_i}\) 有限生成。再次使用有限基本开覆盖上的有限生成性判据，得到 \(K\) 有限生成，因而 \(M\) 有限展示。
+
+对第二句，任取理想 \(I\subseteq R\)。其局部化是 Noether 环 \(R_{f_i}\) 的理想，故有限生成。对 \(I\) 使用同一有限生成性判据，得到每个理想都有限生成，所以 \(R\) 为 Noether 环。
+\end{proof}
 
 \subsection{Noether 环的非 Noether 子环}
 \label{b3:subsec:0304:02}
 
-待撰写。
+取多项式环 \(B=k[x,y]\) 的子环
+\[
+A=k+xk[x,y]
+=k[x,xy,xy^2,\ldots].
+\]
+等号右侧表示常数项之外的每个单项式都至少含一个 \(x\)；它对乘法封闭，并且与 \(B\) 具有相同的单位元。环 \(B\) 由 Hilbert 基定理是 Noether 环，\(A\) 却不是。
+
+\ProseParagraphBreak
+为此令 \(I=xk[x,y]\)，它是 \(A\) 的理想，\(A/I\cong k\)，而
+\(I^2=x^2k[x,y]\)。于是
+\[
+I/I^2
+=\bigoplus_{j\ge0}k\cdot(xy^j+I^2)
+\]
+为无限维 \(k\) 向量空间。如果 \(I\) 由有限个元素作为 \(A\) 理想生成，模掉 \(I^2\) 后，这些元素的剩余类就会在 \(A/I=k\) 上生成 \(I/I^2\)，与无限维性矛盾。故 \(I\) 不有限生成，\(A\) 不是 Noether 环。
+
+\ProseParagraphBreak
+这个例子也显示问题所在：在较大的环 \(B\) 中，\(I\) 由一个元素 \(x\) 生成，因为可以任意乘以 \(y\)；在 \(A\) 中没有这个乘子。取子环虽然减少了元素，却也减少了生成理想时允许使用的系数，可能使有限生成性失败。
 
 \subsection{有限性假设的适用范围}
 \label{b3:subsec:0304:03}
 
-待撰写。
+前面的结论可以从三个具体问题来检验。第一，原模有限生成，是否能控制所有子模？只有底环的 Noether 性等附加条件才能作出肯定回答。无限变量多项式环作为自身的模由 \(1\) 生成，却包含不有限生成的变量理想。
+
+\ProseParagraphBreak
+第二，所有点处都有限生成，是否已经给出有限的全局描述？\subsecref{b3:subsec:0204:03}中的
+\(\bigoplus_p\mathbb Z/p\mathbb Z\) 在每个素理想处都有限生成，但全局不是有限生成模。\cref{b3:prop:principal-cover-finiteness}及\cref{b3:prop:finite-presentation-open-cover}要求的是一组基本开邻域上的有限数据；仅检查各个茎不足以自动得到这些邻域。
+
+\ProseParagraphBreak
+第三，Artin 模是否必为有限生成模？交换 Artin 环的有限模确有有限长度，但任意环上的 Artin 模不必如此。整数模
+\[
+C_{p^\infty}=\mathbb Z[1/p]/\mathbb Z
+\]
+中，每个真子模都是有限循环群：若一个子模中元素的阶无界，它就含有每个
+\(p^{-n}+\mathbb Z\) 所生成的群，因而等于全模；若阶有界，它就包含于其中一个有限循环群。故任何降链一旦离开全模便进入有限群，此后稳定，而该模并不有限生成。环本身的 Artin 条件在\cref{b3:thm:artin-finite-length}中具有特殊力量，不应推广成对任意 Artin 模的断言。
+
+\ProseParagraphBreak
+后续证明遇到有限性条件时，可以据此逐项辨认它的职责：有限生成负责选取统一分母或应用 Nakayama 引理，有限展示负责一次处理全部关系，Noether 条件负责把子对象仍然放在有限描述之内，Artin 条件则限制降链，并在环的层面带来局部直积分解。它们的使用位置各不相同。

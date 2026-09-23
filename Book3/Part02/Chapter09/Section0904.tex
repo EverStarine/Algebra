@@ -1,32 +1,96 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 9.4 局部维数
-% 纲要位置：计划纲要.md，第 1779 行。
+% 纲要位置：工作记录/计划纲要.md，第 2097 行。
+% 纲要细目（写作范围）：
+% * 参数系
+% * 嵌入维数与 Krull 维数
+% * 正则局部环的定义先行，结构理论留给第18章
+% ---
+
 
 \section{局部维数}
 \label{b3:sec:0904}
 
-% TODO: 按以下纲要要点撰写本节。
+在局部环中，维数有两种容易混淆的比较对象：使零点只剩闭点需要多少个方程，以及生成整个极大理想需要多少个元素。前者等于 Krull 维数，后者可能更大。两者相等时得到正则局部环的定义。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 参数系
-% * 嵌入维数与 Krull 维数
-% * 正则局部环的定义先行，结构理论留给第18章
-%
-% ---
-%
 
 \subsection{参数系}
 \label{b3:subsec:0904:01}
 
-待撰写。
+\begin{definition}\label{b3:def:system-of-parameters}
+设 \((R,\mathfrak m)\ne0\) 为交换 Noether 局部环，\(d=\dim R\)。若一组元素
+\(x_1,\ldots,x_d\in\mathfrak m\) 满足
+\(\sqrt{(x_1,\ldots,x_d)}=\mathfrak m\)，则称它们为 \(R\) 的\term[canshuxi]{参数系}[system of parameters]，称它们生成的理想为\term[canshu-lixiang]{参数理想}[parameter ideal]。
+\end{definition}
+
+\begin{theorem}\label{b3:thm:system-of-parameters}
+设 \((R,\mathfrak m)\ne0\) 为交换 Noether 局部环，\(d=\dim R\)。则 \(R\) 有参数系，其维数等于生成一个根为 \(\mathfrak m\) 的理想所需的最少元素个数。
+若 \(x_1,\ldots,x_d\) 是参数系，则对 \(0\le i\le d\)，有
+\[
+\dim R/(x_1,\ldots,x_i)=d-i.
+\]
+此外，对任意 \(a_1,\ldots,a_r\in\mathfrak m\)，都有
+\(\dim R/(a_1,\ldots,a_r)\ge d-r\)。
+\end{theorem}
+\begin{proof}
+存在性已由\cref{b3:lem:dimension-cutting}证明，高度定理说明少于 \(d\) 个元素不可能生成根为 \(\mathfrak m\) 的理想。
+设 \(e=\dim R/(a_1,\ldots,a_r)\)，在此商环中选一个有 \(e\) 个元素的参数系并提升。
+它与 \(a_1,\ldots,a_r\) 合起来生成根为 \(\mathfrak m\) 的理想，所以 \(d\le r+e\)。
+对参数系的前 \(i\) 项应用这个不等式，得到商维数至少是 \(d-i\)；剩余 \(d-i\) 项在商环中生成极大根理想，高度定理又给出反向不等式。
+\end{proof}
+
+\(R/(x_1,\ldots,x_d)\) 是零维 Noether 局部环，故是 Artin 环，且作为 \(R\) 模具有有限长度。
+反之，若商模具有有限长度，其支集只含闭点，于是生成理想的根为 \(\mathfrak m\)。所以参数系也可以通过商环的有限长度识别。
+
+\ProseParagraphBreak
+例如在 \(k[x,y]_{(x,y)}\) 中，\(x,y\) 和 \(x^2,y^3\) 都是参数系，后者并不生成极大理想。
+在尖点局部环 \(k[t^2,t^3]_{(t^2,t^3)}\) 中，\(t^2\) 单独构成参数系：模掉它后
+\((t^3)^2=(t^2)^3=0\)，故商环只有一个素理想。参数并不要求能作自由的坐标。
 
 \subsection{嵌入维数与 Krull 维数}
 \label{b3:subsec:0904:02}
 
-待撰写。
+\begin{definition}\label{b3:def:embedding-dimension}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，剩余域为 \(\kappa=R/\mathfrak m\)。定义
+\[
+\operatorname{edim}R\coloneqq\dim_\kappa(\mathfrak m/\mathfrak m^2),
+\]
+称为 \(R\) 的\term[qianru-weishu]{嵌入维数}[embedding dimension]。
+\end{definition}
+\symidx{\(\operatorname{edim}R\)：局部环的嵌入维数}
+
+\(\mathfrak m/\mathfrak m^2\) 上的标量作用来自 \(R\)，并因 \(\mathfrak m\) 零化该商模而降为 \(\kappa\) 作用。
+\cref{b3:cor:local-generators}说明，嵌入维数恰好等于极大理想的最少生成元数。
+由高度定理立即得到
+\begin{equation}\label{b3:eq:dimension-embedding-bound}
+\dim R\le\operatorname{edim}R.
+\end{equation}
+
+这个向量空间仅保留函数的一次信息；乘积落入 \(\mathfrak m^2\) 而消失。取
+\[
+R=k[x_1,\ldots,x_n]_{(x_1,\ldots,x_n)},
+\]
+则变量的像构成
+\(\mathfrak m/\mathfrak m^2\) 的基。生成性显然；若线性式属于局部化后的平方理想，则乘一个常数项非零的分母后，其一次部分仍是该线性式乘以非零常数，故各系数必须为零。因此嵌入维数为 \(n\)。坐标素链在此局部化中全部保留，Krull 维数也为 \(n\)。
+
+\ProseParagraphBreak
+尖点的情形不同。\(t^2,t^3\) 在 \(\mathfrak m/\mathfrak m^2\) 中线性独立，因为平方理想中每个非零元素的最低次数至少为四，局部化的单位分母不改变这一结论。因此该环的嵌入维数为二，Krull 维数为一。这两个数字之差已经能辨认这个点与直线上的点不同。
 
 \subsection{正则局部环的定义}
 \label{b3:subsec:0904:03}
 
-待撰写。
+\begin{definition}\label{b3:def:regular-local-ring}
+若交换 Noether 局部环 \((R,\mathfrak m)\) 满足
+\(\dim R=\dim_{R/\mathfrak m}(\mathfrak m/\mathfrak m^2)\)，则称它为
+\term[zhengze-jubuhuan]{正则局部环}[regular local ring]。
+\end{definition}
+
+域是零维正则局部环；反过来，零维正则局部环的极大理想满足
+\(\mathfrak m/\mathfrak m^2=0\)，由 Nakayama 引理有 \(\mathfrak m=0\)，所以它是域。
+上小节的多项式局部环是正则的，尖点局部环则不是。
+另一个简单的非正则例子为 \(k[\epsilon]/(\epsilon^2)\)：其 Krull 维数为零，而嵌入维数为一。
+
+\ProseParagraphBreak
+在 \(d\) 维正则局部环中，任一极大理想的极小生成组都是一个有 \(d\) 项的参数系，称为\term[zhengze-canshuxi]{正则参数系}[regular system of parameters]。
+这句话目前只使用生成元数，不包含“这些元素构成正则序列”的证明；正则序列在\chapref{b3:ch:15}引入，正则局部环的结构理论在\chapref{b3:ch:18}建立。
+同样，正规表示整闭，正则表示上述维数等式，它们是不同定义。下一章将先在一维整环情形证明二者与离散赋值环的关系。

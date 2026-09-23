@@ -15,7 +15,7 @@
 \label{b1:subsec:B03:01}
 
 \begin{definition}\label{b1:def:B-reed-solomon}
-取 \(\mathbb F_q\) 中互异元素 \(a_1,\ldots,a_n\)，其中 \(1\leq k\leq n\leq q\)。所有次数小于 \(k\) 的多项式（包含零多项式）在这些点的取值构成的线性码
+设 \(\mathbb F_q\) 为有限域，\(k,n\) 为满足 \(1\leq k\leq n\leq q\) 的整数，并取两两不同的元素 \(a_1,\ldots,a_n\in\mathbb F_q\)。所有次数小于 \(k\) 的多项式（包含零多项式）在这些点的取值构成线性码
 \[
 C=\Bigl\{\,\bigl(f(a_1),\ldots,f(a_n)\bigr)\mid
 f\in\mathbb F_q[x],\ \deg f<k\,\Bigr\}
@@ -26,7 +26,12 @@ f\in\mathbb F_q[x],\ \deg f<k\,\Bigr\}
 这一名称在文献中有关于取值点的不同约定；本附录允许任意互异有限域元素，不另加非零坐标乘子，也不加入无穷远点。使用其他版本的参数结论时，应先对照定义。
 
 \begin{theorem}\label{b1:thm:B-rs-parameters}
-\cref{b1:def:B-reed-solomon}中的码是 \([n,k,n-k+1]\) 码。它达到任意非零 \([n,k,d]\) 线性码都满足的 \(d\leq n-k+1\)。
+设 \(\mathbb F_q\) 为有限域，\(k,n\) 为满足 \(1\leq k\leq n\leq q\) 的整数，\(a_1,\ldots,a_n\in\mathbb F_q\) 两两不同，并令
+\[
+C=\{\,\bigl(f(a_1),\ldots,f(a_n)\bigr)\mid
+f\in\mathbb F_q[x],\ \deg f<k\,\}.
+\]
+则 \(C\) 是 \([n,k,n-k+1]\) Reed--Solomon 码，并达到任意非零 \([n,k,d]\) 线性码都满足的界 \(d\leq n-k+1\)。
 \end{theorem}
 
 \begin{proof}
@@ -39,7 +44,7 @@ f(x)=\prod_{i=1}^{k-1}(x-a_i).
 最后对任意最小距离为 \(d\) 的线性码，删去固定的 \(d-1\) 个坐标。所得映射在 \(C\) 上单射，否则两个不同码字只在被删去的位置不同，距离至多为 \(d-1\)。所以 \(q^k=|C|\leq q^{n-d+1}\)，即 \(d\leq n-k+1\)。
 \end{proof}
 
-最后的不等式称为\term[Singleton-jie]{Singleton 界}[Singleton bound]；达到等号的线性码称为\term[zuidajuli-kefen-ma]{最大距离可分码}[maximum distance separable code]，简称 MDS 码。这里的“最大”是在固定长度和维数的比较中而言，并不意味着其他编码需求也同时最优。
+设 \(\mathbb F_q\) 为有限域，\(n,k,d\) 为正整数，\(C\subseteq\mathbb F_q^n\) 为非零 \([n,k,d]\) 线性码。不等式 \(d\leq n-k+1\) 称为\term[Singleton-jie]{Singleton 界}[Singleton bound]；若 \(d=n-k+1\)，则称 \(C\) 为\term[zuidajuli-kefen-ma]{最大距离可分码}[maximum distance separable code]，简称 MDS 码。这里的“最大”是在固定长度和维数的比较中而言，并不意味着其他编码需求也同时最优。
 
 \ProseParagraphBreak
 以系数行向量 \((u_0,\ldots,u_{k-1})\) 表示 \(f=\sum_j u_jx^j\)，一个生成矩阵为
@@ -79,7 +84,15 @@ q_0+a_iq_1+\cdots+a_i^kq_k-y_i e_0=y_i a_i.
 因此未知数共有 \(k+2\) 个，可以在 \(\mathbb F_q\) 中用线性方程组的消元法求解。把 \(E\) 规定为首一，是为了排除 \(E=Q=0\) 这种不携带任何信息的解。方程数至少等于未知数个数本身并不保证解存在或解码正确；下一命题将利用“至多一个错误”和多项式根数界证明这两点。
 
 \begin{proposition}\label{b1:prop:B-single-error-decoding}
-在上述条件下，\eqref{b1:eq:B-single-error-system}有解，而且每个解都满足 \(Q=Ef\)，其中 \(f\) 为原信息多项式。因此先解线性方程组，再作多项式除法 \(f=Q/E\)，即可纠正至多一个错误。
+设 \(\mathbb F_q\) 为有限域，\(k,n\) 为满足 \(1\leq k\leq n-2\) 的整数，\(a_1,\ldots,a_n\in\mathbb F_q\) 两两不同，\(f\in\mathbb F_q[x]\) 满足 \(\deg f<k\)。若收到的向量 \(y=(y_1,\ldots,y_n)\) 与 \(\bigl(f(a_1),\ldots,f(a_n)\bigr)\) 至多有一个坐标不同，则关于
+\[
+E=x+e_0,\qquad \deg Q\leq k
+\]
+的线性方程组
+\[
+Q(a_i)=y_iE(a_i)\qquad(1\leq i\leq n)
+\]
+有解，而且每个解都满足 \(Q=Ef\)。因此先解该线性方程组，再作多项式除法 \(f=Q/E\)，即可纠正至多一个错误。
 \end{proposition}
 
 \begin{proof}

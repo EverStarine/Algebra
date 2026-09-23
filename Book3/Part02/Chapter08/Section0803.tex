@@ -1,36 +1,148 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 8.3 消去与理想运算
-% 纲要位置：计划纲要.md，第 1736 行。
-
-\section{消去与理想运算}
-\label{b3:sec:0803}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2054 行。
+% 纲要细目（写作范围）：
 % * 消去定理与投影的 Zariski 闭包；不要把消去所得闭包无条件当作投影像
 % * 理想成员、交、理想商与饱和的计算
 % * 隐式化、参数消去及 Rabinowitsch 技巧的有效版本
 % * 保留理想等式与乘子表示，以便独立核验
-%
+
+
+\section{消去与理想运算}
+\label{b3:sec:0803}
+
+消去变量的目的，是把一个含参数或辅助变量的问题转成原坐标中的理想问题。但消去所得方程只记录闭条件；被排除的分母和不能提升的点，未必能由这些方程单独恢复。本节在计算理想时保留等式，在解释零点时另外核对基域、闭包和分母条件。
+
 
 \subsection{消去定理与投影的 Zariski 闭包}
 \label{b3:subsec:0803:01}
 
-待撰写。
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_r,y_1,\ldots,y_s]\)，\(S=k[y_1,\ldots,y_s]\)。对理想 \(I\subseteq R\)，交 \(I\cap S\) 称为对前 \(r\) 个变量的\term[xiaoqu-lixiang]{消去理想}[elimination ideal]。取字典序，且全部 \(x\) 变量先于 \(y\) 变量。它的关键性质是：只含 \(y\) 的单项式小于任何含 \(x\) 的单项式。
+
+\begin{theorem}[消去定理]\label{b3:thm:groebner-elimination}
+设 \(k\) 为域，\(I\subseteq R=k[x_1,\ldots,x_r,y_1,\ldots,y_s]\) 为理想，\(S=k[y_1,\ldots,y_s]\)。对全部 \(x\) 变量先于 \(y\) 变量的字典序，若 \(G\) 是 \(I\) 的 Gröbner 基，则 \(G\cap S\) 是 \(I\cap S\) 的 Gröbner 基。
+\end{theorem}
+\begin{proof}
+取 \(0\ne f\in I\cap S\)。因 \(G\) 为 Gröbner 基，某个 \(g\in G\) 的首单项式整除 \(\operatorname{LM}(f)\)。后者只含 \(y\)，故 \(\operatorname{LM}(g)\) 也只含 \(y\)。如果 \(g\) 中另有含 \(x\) 的项，该项在当前次序下将大于 \(\operatorname{LM}(g)\)，矛盾。因此 \(g\in G\cap S\)。于是 \(I\cap S\) 中任一非零元素的首单项式都被 \(G\cap S\) 的某个首单项式整除；这些基元素本来就在交理想中，故首项理想相等。由\cref{b3:thm:groebner-existence-normal-form}，它们也生成整个交理想。
+\end{proof}
+
+这个结果称为\term[xiaoqu-dingli]{消去定理}[elimination theorem]。证明同样适用于满足上述变量分块比较性质的全局序；对任意次序则没有这种保证。
+
+\begin{theorem}[投影的闭包]\label{b3:thm:elimination-projection-closure}
+设 \(k\) 代数闭，\(R=k[x_1,\ldots,x_r,y_1,\ldots,y_s]\)，\(S=k[y_1,\ldots,y_s]\)，\(I\subseteq R\) 为理想，\(\pi:k^{r+s}\to k^s\) 为忘掉 \(x\) 坐标的投影。则
+\[
+\overline{\pi\bigl(Z_k(I)\bigr)}^{\mathrm{Zar}}=Z_k(I\cap S).
+\]
+此外，投影像的消失理想为 \(\sqrt I\cap S=\sqrt{I\cap S}\)。
+\end{theorem}
+\begin{proof}
+对 \(f\in S\)，它在 \(\pi\Bigl(Z_k(I)\Bigr)\) 上为零，当且仅当把它看成不含 \(x\) 的多项式后，在 \(Z_k(I)\) 上为零。由\cref{b3:thm:strong-nullstellensatz}，后者等价于 \(f\in\sqrt I\)。因此消失理想为 \(\sqrt I\cap S\)。对 \(f\in S\)，某个 \(f^N\) 在 \(I\) 中当且仅当在 \(I\cap S\) 中，故这也等于 \(\sqrt{I\cap S}\)。任一集合的 Zariski 闭包是其消失理想的零点集，结论随之成立。
+\end{proof}
+
+例如 \(I=(xy-1)\subseteq k[x,y]\) 满足 \(I\cap k[y]=0\)：商环同构于 \(k[y,y^{-1}]\)，所以 \(k[y]\) 映入商环为单射。投影像是 \(k\setminus\{0\}\)，闭包却是整个直线。闭包定理没有断言每个闭包中的点都能补出被消去的坐标。
+
+\ProseParagraphBreak
+代数闭条件也有实际作用。在 \(\mathbb R[x,y]\) 中取 \(I=(x^2+1)\)，其消去理想为零，实零点集却为空。代数的消去计算仍正确，关于实点投影闭包的上述公式则不适用；实零点的消去需要额外的有序域理论。
 
 \subsection{理想成员、交、理想商与饱和}
 \label{b3:subsec:0803:02}
 
-待撰写。
+成员判定由\cref{b3:thm:groebner-existence-normal-form}完成。下面把其他理想运算也化成可以消去的理想。暂设 \(I=(f_1,\ldots,f_a)\)、\(J=(g_1,\ldots,g_b)\) 都在 \(R=k[x_1,\ldots,x_n]\) 中。
+
+\begin{proposition}\label{b3:prop:ideal-intersection-elimination}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，\(I,J\subseteq R\) 为理想。在 \(R[u]\) 中扩张这两个理想后，有
+\[
+I\cap J=\bigl(uI+(1-u)J\bigr)\cap R.
+\]
+右侧可对生成组 \(uf_i,(1-u)g_j\) 取消去 \(u\) 的 Gröbner 基求得。
+\end{proposition}
+\begin{proof}
+若 \(h\in I\cap J\)，写 \(h=uh+(1-u)h\)，便得右侧包含它。反过来，若 \(h\in R\) 有表示
+\(h=u\sum A_if_i+(1-u)\sum B_jg_j\)，置 \(u=1\) 得 \(h\in I\)，置 \(u=0\) 得 \(h\in J\)。两次代入也把计算所得的表示分别变成原环中的成员表示。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:colon-saturation-elimination}
+设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，\(I\subseteq R\) 为理想。若 \(0\ne g\in R\)，并已求得 \(I\cap(g)=(h_1,\ldots,h_c)\)，则各 \(h_i\) 被 \(g\) 整除，且
+\[
+(I:g)=(h_1/g,\ldots,h_c/g).
+\]
+对任意 \(g\in R\)，记 \((I:g^\infty)=\bigcup_{N\ge0}(I:g^N)\)，则
+\[
+(I:g^\infty)=\bigl(IR[u]+(1-ug)\bigr)\cap R.
+\]
+若 \(J=(g_1,\ldots,g_b)\)，有
+\[
+(I:J)=\bigcap_{j=1}^b(I:g_j),\qquad
+(I:J^\infty)=\bigcap_{j=1}^b(I:g_j^\infty).
+\]
+空生成组即 \(J=0\) 时，后两式均按交为空时等于 \(R\) 的约定解释。
+\end{proposition}
+\begin{proof}
+对第一式，若 \(ag\in I\)，它属于 \(I\cap(g)\)，写成 \(ag=\sum c_i h_i\)，在整环中消去非零 \(g\) 得 \(a=\sum c_i(h_i/g)\)。反向直接乘以 \(g\) 即得。
+
+若 \(g^Nh\in I\)，在 \(R[u]\) 中有恒等式
+\[
+h=u^Ng^Nh+(1-ug)h\sum_{j=0}^{N-1}(ug)^j,
+\]
+故 \(h\) 在所述消去理想中，\(N=0\) 时直接使用 \(h\in I\)。反向，对一个成员表示代入 \(u=g^{-1}\)，得到 \(h/1\in IR_g\)；有限清分母给出某个 \(g^Nh\in I\)。\(g=0\) 时右端含 \(1\)，左端也等于 \(R\)，单独处理即可。
+
+理想商的交式直接来自逐个生成元检验。对饱和，若 \(J^Nh\subseteq I\)，则 \(g_j^Nh\in I\)，给出一个包含。反向，设分别有 \(g_j^{N_j}h\in I\)，可增大到 \(N_j\ge1\)。取 \(N=1+\sum_j(N_j-1)\)。\(J^N\) 的每个生成单项式至少含某个 \(g_j^{N_j}\)，故乘以 \(h\) 后都在 \(I\) 中。这证明另一包含。
+\end{proof}
+
+例如 \(I=(x^2,xy)\subseteq k[x,y]\)，直接计算得
+\[
+(I:x)=(x,y),\qquad (I:y)=(x),\qquad
+(I:x^\infty)=R,\qquad (I:y^\infty)=(x).
+\]
+第一式由 \(xh=x(ax+by)\) 消去 \(x\) 得到；第二式中 \(yh\in(x)\) 迫使 \(h\in(x)\)，反向由 \(xy\in I\) 得到。因 \(x^2\in I\)，关于 \(x\) 的饱和为全环；关于 \(y\) 的饱和保持 \((x)\)。于是
+\(\Bigl(I:(x,y)^\infty\Bigr)=(x)\)。若误把多生成元饱和写成关于乘积 \(xy\) 的饱和，就会错误地得到全环。
 
 \subsection{隐式化、参数消去与 Rabinowitsch 技巧}
 \label{b3:subsec:0803:03}
 
-待撰写。
+\begin{proposition}[参数映射的隐式理想]\label{b3:prop:parametric-implicit-ideal}
+设 \(k\) 为域，\(t=(t_1,\ldots,t_m)\) 为代数无关元，\(0\ne q\in k[t]\)，\(p_1,\ldots,p_n\in k[t]\)。定义
+\[
+\phi:k[x_1,\ldots,x_n]\longrightarrow k[t,q^{-1}],
+\qquad x_i\longmapsto p_i/q.
+\]
+则
+\[
+\ker\phi=
+(qx_1-p_1,\ldots,qx_n-p_n,uq-1)\cap k[x_1,\ldots,x_n],
+\]
+右边的理想先在 \(k[t,x,u]\) 中生成，再消去 \(t,u\)。
+\end{proposition}
+\begin{proof}
+令右边取交前的理想为 \(H\)。商环中 \(q\) 可逆，逆元为 \(u\)，并有 \(x_i=up_i\)。所以把 \(t_j\) 送到自身、\(u\) 送到 \(q^{-1}\)、\(x_i\) 送到 \(p_i/q\)，给出商环到 \(k[t,q^{-1}]\) 的同构；逆映射由局部化泛性质将 \(q^{-1}\) 送回 \(\bar u\)。限制到 \(k[x]\)，核就是 \(H\cap k[x]\)，得到公式。
+\end{proof}
+
+例如有理参数化
+\[
+x=\frac{t-1}{t},\qquad y=\frac{t}{t-1},\qquad t(t-1)\ne0
+\]
+满足 \(xy=1\)。它的隐式理想恰为 \((xy-1)\)：商 \(k[x,y]/(xy-1)\cong k[x,x^{-1}]\) 映入 \(k(t)\) 时，\(x\) 的像 \(1-t^{-1}\) 是超越元，所以映射单射。在代数闭域上，参数像是双曲线删去 \((1,1)\)；因为其余点可由 \(t=(1-x)^{-1}\) 恢复。消去得到整条双曲线，原来的分母条件仍须另记。
+
+\ProseParagraphBreak
+Rabinowitsch 技巧还给出一个有效的根理想成员判据。对 \(f\in R\)，
+\begin{equation}\label{b3:eq:effective-rabinowitsch}
+f\in\sqrt I\quad\Longleftrightarrow\quad
+1\in IR[u]+(1-uf).
+\end{equation}
+这是\cref{b3:prop:colon-saturation-elimination}中“关于 \(f\) 的饱和为全环”的情形，也可直接使用其中的恒等式。右边可以用 Gröbner 基检验；若结果为真，保存
+\(1=\sum A_i(u,x)f_i+B(u,x)(1-uf)\)，代入 \(u=f^{-1}\) 再清分母，便产生某个实际指数 \(N\) 和等式 \(f^N=\sum c_i f_i\)。这个判据不要求底域代数闭；只有把它解释为“在全部几何零点上消失”时才调用零点定理。
 
 \subsection{理想等式与乘子表示的核验}
 \label{b3:subsec:0803:04}
 
-待撰写。
+消去算法输出的一组生成元，应当带着它们属于原理想的表示。若原生成组为 \(F=(f_1,\ldots,f_m)\)，计算时可把每个新多项式连同一个向量一起保存：
+\[
+g_j=\sum_{i=1}^m a_{ij}f_i.
+\]
+加减多项式、乘单项式及首一化时，对表示向量执行同一运算，因而始终保持等式。若最终还验证每个 \(f_i\) 对 \(G=(g_j)\) 的余式为零，就得到反向表示 \(f_i=\sum_j b_{ji}g_j\)。两组等式分别证明 \((G)\subseteq(F)\) 与 \((F)\subseteq(G)\)；Gröbner 性则由有界 S 多项式表示单独证明，不能只凭理想相等推出。
+
+\ProseParagraphBreak
+对交理想，\cref{b3:prop:ideal-intersection-elimination}的表示在 \(u=0,1\) 的两次取值给出两边的成员证明。对饱和，清分母后得到 \(g^Nh\in I\)；不同生成元可以有不同指数，取最大值便统一成一个指数。对于消去理想的完备性，只检验“所得多项式确实消去变量”还不够，还需确认使用了消去序且原扩展理想的 Gröbner 基已经算完。
+
+\ProseParagraphBreak
+例如要证明 \((xy,xz)\cap(y,z)=(xy,xz)\)，只须观察两生成元都在 \((y,z)\) 中，原理想本来已包含于后者；不必为每个简单理想关系都重算一次 Gröbner 基。算法提供一般办法，具体结构往往给出更短的证明。无论采用哪种方法，都应保留足以恢复两侧包含的等式或论证。

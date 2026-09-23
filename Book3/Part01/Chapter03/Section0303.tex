@@ -1,30 +1,138 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.3 Artin 环
-% 纲要位置：计划纲要.md，第 1573 行。
+% 纲要位置：工作记录/计划纲要.md，第 1891 行。
+% 纲要细目（写作范围）：
+% * 降链条件与有限长度
+% * 交换 Artin 环的局部直积分解
+% * 幂零根及零维 Noether 环
 
 \section{Artin 环}
 \label{b3:sec:0303}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 降链条件与有限长度
-% * 交换 Artin 环的局部直积分解
-% * 幂零根及零维 Noether 环
-%
+降链条件对一般模弱于有限长度，但对交换环本身有更强的后果：它迫使极大理想只有有限多个，迫使 Jacobson 根幂零，最终迫使正则模具有有限长度。本节把这些步骤逐一证明，特别避免在尚未证明 Noether 性时假设根理想有限生成。
 
 \subsection{降链条件与有限长度}
 \label{b3:subsec:0303:01}
 
-待撰写。
+一个非零模若只有 \(0\) 和自身两个子模，称为\term[jiandan-mo]{简单模}[simple module]。一个模若存在有限子模链
+\[
+0=M_0\subsetneq M_1\subsetneq\cdots\subsetneq M_r=M,
+\]
+且每个 \(M_i/M_{i-1}\) 都简单，则称为\term[youxian-changdu-mo]{有限长度模}[module of finite length]。上述链称为\term[hecheng-lie]{合成列}[composition series]，各商称为合成因子。第二卷定理12.2.3，即模的 Jordan–Hölder 定理，已经证明其层数与所取链无关，称为模的\term[mo-changdu]{长度}[length of a module]，记作 \(\ell_R(M)\)。第二卷定理12.2.4进一步证明：有限长度等价于同时满足升链与降链条件。此处使用它检测正则模，而不假设任意 Artin 模已经有限生成。
+\symidx{\(\ell_R(M)\)：模的长度}
+
+\begin{lemma}\label{b3:lem:artin-primes-radical}
+设 \(R\ne0\) 为交换 Artin 环。则每个素理想都极大，极大理想只有有限多个，而且 \(J(R)\) 幂零。
+\end{lemma}
+\begin{proof}
+若 \(\mathfrak p\) 素，则整环 \(R/\mathfrak p\) 仍满足降链条件。在任意满足该条件的整环中，对非零 \(a\)，主理想链
+\((a)\supseteq(a^2)\supseteq\cdots\) 稳定，所以 \(a^n=a^{n+1}b\) 对某个 \(n,b\) 成立。约去非零的 \(a^n\)，得到 \(ab=1\)。该整环是域，故 \(\mathfrak p\) 极大。
+
+若有无穷多个不同的极大理想 \(\mathfrak m_1,\mathfrak m_2,\ldots\)，令
+\(I_n=\mathfrak m_1\cdots\mathfrak m_n\)。对每个 \(i\le n\)，选
+\(a_i\in\mathfrak m_i\setminus\mathfrak m_{n+1}\)，则
+\(\prod_i a_i\in I_n\setminus\mathfrak m_{n+1}\)，因为 \(\mathfrak m_{n+1}\) 素。另一方面
+\(I_{n+1}\subseteq I_n\cap\mathfrak m_{n+1}\)，故
+\(I_{n+1}\subsetneq I_n\)，与降链条件矛盾。因此极大理想只有
+\(\mathfrak m_1,\ldots,\mathfrak m_r\)。
+
+记 \(J=J(R)\)。降链条件给出 \(J^n=J^{n+1}\)，其中 \(n\ge1\)。令
+\(K=\operatorname{Ann}_R(J^n)\)，则
+\[
+(K:J)=\operatorname{Ann}_R(J^{n+1})=K.
+\]
+若 \(K\ne R\)，在严格包含 \(K\) 的理想中选一个极小者 \(K'\)；降链条件保证这种选择存在。取 \(x\in K'\setminus K\)，极小性给出
+\(K'=K+Rx\)。商模 \(K'/K\) 循环且非零，故由\cref{b3:thm:nakayama}，
+\(J(K'/K)\ne K'/K\)。但是 \(Jx+K\) 介于 \(K,K'\) 之间，极小性遂迫使
+\(Jx\subseteq K\)。于是 \(x\in(K:J)=K\)，矛盾。所以 \(K=R\)，即 \(J^n=0\)。
+\end{proof}
+
+这个证明只对循环模 \(K'/K\) 使用 Nakayama 引理。若直接从
+\(J^n=JJ^n\) 推出 \(J^n=0\)，就会漏掉 \(J^n\) 尚未证明有限生成的问题。上面的处理可参阅\cite[Theorem 3.2, p. 16]{Matsumura1989CommutativeRingTheory}。
+
+\begin{theorem}\label{b3:thm:artin-finite-length}
+交换 Artin 环作为自身的模具有有限长度，因而是 Noether 环。它的每个有限生成模也具有有限长度。
+\end{theorem}
+\begin{proof}
+零环的结论直接成立，以下设 \(R\ne0\)。沿用\cref{b3:lem:artin-primes-radical}中极大理想及其幂零交的记号，不同极大理想两两互素，中国剩余定理给出
+\[
+R/J\cong\prod_{i=1}^r R/\mathfrak m_i.
+\]
+考虑有限滤过 \(R\supseteq J\supseteq\cdots\supseteq J^n=0\)。每个商层
+\(J^i/J^{i+1}\) 被 \(J\) 零化，因而是 \(R/J\) 模；它又是 Artin 模，因为子模和商模继承降链条件。
+
+有限个域的直积上的模，可由各坐标幂等元分成有限直和；每个分量是相应域上的向量空间。一个满足降链条件的向量空间必有限维：若含无限线性无关序列，扩充为基，逐次删去其中前几个向量所得的线性生成空间就构成严格降链。所以每个商层是有限个有限维向量空间的直和，具有有限长度。把各商层的合成列取逆像并连接，得到 \(R\) 的有限合成列。
+
+由第二卷定理12.2.4，有限长度推出 Noether 性。若 \(M\) 由 \(s\) 个元素生成，它是 \(R^s\) 的商；有限直和与商都保留有限长度，因此 \(M\) 也具有有限长度。
+\end{proof}
 
 \subsection{交换 Artin 环的局部直积分解}
 \label{b3:subsec:0303:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:artin-decomposition}
+设 \(R\ne0\) 为交换 Artin 环，极大理想为
+\(\mathfrak m_1,\ldots,\mathfrak m_r\)。对充分大的 \(n\)，自然映射给出
+\[
+R\cong\prod_{i=1}^r R/\mathfrak m_i^n
+\cong\prod_{i=1}^r R_{\mathfrak m_i}.
+\]
+每个因子都是非零 Artin 局部环。相应地，\(1=e_1+\cdots+e_r\) 分解为两两正交的非零幂等元，每个 \(R\) 模都有
+\(M=e_1M\oplus\cdots\oplus e_rM\)。这些局部因子由各极大理想唯一确定，分解仅差排列。
+\end{theorem}
+\begin{proof}
+取 \(n\) 使 \(J(R)^n=0\)。对不同的 \(i,j\)，有
+\(\mathfrak m_i+\mathfrak m_j=R\)。写 \(a+b=1\)、\(a\in\mathfrak m_i\)、\(b\in\mathfrak m_j\)，展开 \((a+b)^{2n-1}\) 后每一项至少含 \(a^n\) 或 \(b^n\)，故
+\(\mathfrak m_i^n+\mathfrak m_j^n=R\)。于是
+\[
+\bigcap_i\mathfrak m_i^n
+=\prod_i\mathfrak m_i^n
+=\Bigl(\prod_i\mathfrak m_i\Bigr)^n=J(R)^n=0.
+\]
+中国剩余定理给出第一个同构。
+
+包含 \(\mathfrak m_i^n\) 的极大理想必包含 \(\mathfrak m_i\)：对每个 \(a\in\mathfrak m_i\)，有 \(a^n\in\mathfrak m_i^n\)，再用素性即可。因此商环 \(R/\mathfrak m_i^n\) 的极大理想唯一，它又是 Artin 环的商，所以是 Artin 局部环。
+
+在直积中，令 \(e_i\) 对应第 \(i\) 个坐标为 \(1\)、其余为 \(0\) 的元素。则 \(e_i\notin\mathfrak m_i\)，在 \(R_{\mathfrak m_i}\) 中它是单位；又有
+\(e_i e_j=0\)，故 \(e_j\) 在该局部化中为零，\(j\ne i\)。只留下第 \(i\) 个局部因子，而该因子中对应于 \(R\setminus\mathfrak m_i\) 的元素已经是单位，所以
+\(R_{\mathfrak m_i}\cong R/\mathfrak m_i^n\)。这个描述也说明因子只由 \(\mathfrak m_i\) 决定。
+
+最后 \(m=\sum_i e_i m\) 给出模的分解；若 \(\sum_i m_i=0\)、\(m_i\in e_iM\)，逐次乘 \(e_j\) 得 \(m_j=0\)，故和是直和。任一非零局部直积因子恰好贡献一个极大理想，且在该极大理想处局部化恢复它，因此所有这类分解只有排列的差别。
+\end{proof}
+
+例如
+\[
+\mathbb Z/72\mathbb Z\cong\mathbb Z/8\mathbb Z\times\mathbb Z/9\mathbb Z,
+\]
+对应幂等元可取 \(e_1=9\)、\(e_2=64\) 的剩余类：二者和为 \(1\)，乘积为零，且各自平方等于自身。在这个环上的模中，\(9M\) 和 \(64M\) 分别保留 \(2\) 主部分与 \(3\) 主部分；分解来自环的幂等元，而不需要为模另选生成元。
 
 \subsection{幂零根与零维 Noether 环}
 \label{b3:subsec:0303:03}
 
-待撰写。
+本小节把“零维”用于每个素理想都极大的非零环；一般 Krull 维数的定义和基本定理留在\chapref{b3:ch:09}。零环作为单独的平凡情形处理。
+
+\begin{theorem}\label{b3:thm:noether-dimension-zero}
+对非零交换环 \(R\)，下列条件等价：
+\begin{enumerate}
+\item \(R\) 为 Artin 环；
+\item \(R\) 为 Noether 环，且每个素理想都极大。
+\end{enumerate}
+此时幂零根与 Jacobson 根相等，均为幂零理想。\(R\) 约化当且仅当它是有限个域的直积。
+\end{theorem}
+\begin{proof}
+由\cref{b3:lem:artin-primes-radical}及\cref{b3:thm:artin-finite-length}，第一项推出第二项。
+
+反过来，设 \(R\) 为 Noether 环且每个素理想极大。第一章的\cref{b3:prop:noether-spectrum-components}表明其极小素理想只有有限多个，且每个素理想包含一个极小素理想。现在包含在两个素理想之间只能是相等，所以整个素谱就是有限个极大理想
+\(\mathfrak m_1,\ldots,\mathfrak m_r\)。由\cref{b3:thm:radical-prime-intersection}，
+\[
+\sqrt{(0)}=\bigcap_i\mathfrak m_i=J(R).
+\]
+Noether 条件使幂零根有限生成；它的每个元素幂零，故由\cref{b3:prop:finite-nil-ideal}，该理想的某个幂为零。
+
+记 \(J=J(R)\)，中国剩余定理仍给出 \(R/J\cong\prod_i R/\mathfrak m_i\)。各个
+\(J^j/J^{j+1}\) 是有限生成 \(R\) 模，并且被 \(J\) 零化，所以是有限生成的
+\(R/J\) 模。有限生成模在有限个域的直积上分成有限维向量空间，因而具有有限长度。沿有限的 \(J\) 幂滤过连接合成列，得到 \(R\) 具有有限长度，故满足降链条件。
+
+最后，若 \(R\) 约化，上述公共根为零，直接得到 \(R\cong\prod_i R/\mathfrak m_i\)。有限个域的直积没有非零幂零元，反向也成立。
+\end{proof}
+
+这里的逆向论证只用了 Noether 素谱的有限不可约分支与有限生成幂零理想的幂零性，并未预用下一章的准素分解。去掉 Noether 条件，零维便不足以推出 Artin 性：例如 \(R=\prod_{n\ge1}k\) 中每个元素 \(a\) 都满足 \(a=a^2b\)，只需对非零坐标取逆、零坐标取零。模掉任意素理想后，所得整环仍有这项性质，约去非零 \(a\) 得 \(ab=1\)，所以所有素理想都极大。但使前 \(n\) 个坐标为零的理想构成严格降链，故 \(R\) 不是 Artin 环。

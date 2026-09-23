@@ -1,30 +1,80 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 12.2 有限性与局部自由
-% 纲要位置：计划纲要.md，第 1854 行。
-
-\section{有限性与局部自由}
-\label{b3:sec:1202}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2172 行。
+% 纲要细目（写作范围）：
 % * 有限展示平坦模
 % * 局部环上的有限自由性
 % * 有限生成投射模与局部自由模
-%
 
-\subsection{有限展示平坦模}
-\label{b3:subsec:1202:01}
+\section{有限性与局部自由}\label{b3:sec:1202}
 
-待撰写。
+平坦性不限制模的大小，例如无穷秩自由模仍平坦。有限展示则同时限制生成元和关系，使一点处的自由性可以扩大到一个邻域，再拼成有限投射性。本节先在局部环中证明自由性，随后解释有限展示为何用于从局部返回整体。
 
-\subsection{局部环上的有限自由性}
-\label{b3:subsec:1202:02}
+\subsection{有限展示平坦模}\label{b3:subsec:1202:01}
 
-待撰写。
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模。如果存在有限非负整数 \(a,b\) 及正合列
+\(R^a\to R^b\to M\to0\)，就称 \(M\) 有限展示。如果 \(M\) 同构于某个有限秩自由模的直和项，就称它为有限生成投射模。如果每个素理想都有一个主开邻域 \(D(f)\)，使 \(M_f\cong R_f^r\)、\(r\) 为有限非负整数，就称 \(M\) 局部自由且秩有限；\(r\) 可随邻域改变。
 
-\subsection{有限生成投射模与局部自由模}
-\label{b3:subsec:1202:03}
+\begin{theorem}\label{b3:thm:finite-presentation-flat-projective}
+设 \(R\) 为交换环。下列三类 \(R\) 模相同：
+\begin{enumerate}
+\item 有限展示平坦模；
+\item 有限生成投射模；
+\item 有限展示且在每个素理想处自由的模。
+\end{enumerate}
+它们也恰为局部自由且秩有限的模；这里的局部自由要求在邻域上成立，不能仅把“有限展示”从第三项删去。
+\end{theorem}
 
-待撰写。
+证明将在下面两小节完成。有限展示的用处不是使张量积右正合，而是使有限个关系可统一处理，使 Hom 与局部化相容。
+
+\subsection{局部环上的有限自由性}\label{b3:subsec:1202:02}
+
+\begin{lemma}\label{b3:lem:finite-flat-local-free}
+设 \((R,\mathfrak m)\) 为交换局部环，\(M\) 为平坦 \(R\) 模。如果 \(m_1,\ldots,m_n\in M\) 在 \(M/\mathfrak mM\) 中的像对域 \(R/\mathfrak m\) 线性无关，则它们在 \(M\) 中对 \(R\) 线性无关。特别地，有限生成平坦模在交换局部环上自由。
+\end{lemma}
+\begin{proof}
+对 \(n\) 归纳。若 \(am_1=0\)，由\cref{b3:lem:flat-relations}写
+\(m_1=\sum_l b_l y_l\)、\(ab_l=0\)。因为 \(m_1\notin\mathfrak mM\)，至少一个 \(b_l\notin\mathfrak m\)，为单位，于是 \(a=0\)。
+
+一般设 \(\sum_i a_im_i=0\)。有限关系引理给出
+\(m_i=\sum_l b_{il}y_l\)、\(\sum_i a_i b_{il}=0\)。
+在最后一行，至少有一个 \(b_{nl}\) 是单位，否则 \(m_n\in\mathfrak mM\)。由这一列可写
+\(a_n=\sum_{i<n}c_i a_i\)，故
+\[
+\sum_{i<n}a_i(m_i+c_i m_n)=0.
+\]
+这 \(n-1\) 个新元素在剩余域中仍线性无关：任何关系都会成为原 \(n\) 个独立像之间的关系。归纳假设给出 \(a_i=0\) 对 \(i<n\)，再得 \(a_n=0\)。
+
+若 \(M\) 有限生成，取 \(M/\mathfrak mM\) 的有限基并提升为 \(m_i\)。\cref{b3:cor:local-generators}即 Nakayama 生成元判据说明它们生成 \(M\)；刚证的独立性说明它们是一组自由基。
+\end{proof}
+
+这一步实际上只要求模有限生成。有限展示在下一步扩大邻域时才不可替代。局部环上的结论及其有限关系证明，可对照\cite[\S7, Theorem 7.10, pp. 51--52]{Matsumura1989CommutativeRingTheory}。
+
+\subsection{有限生成投射模与局部自由模}\label{b3:subsec:1202:03}
+
+\begin{lemma}\label{b3:lem:free-stalk-neighborhood}
+设 \(R\) 为交换环，\(M\) 为有限展示 \(R\) 模，\(\mathfrak p\subseteq R\) 为素理想。若 \(M_{\mathfrak p}\cong R_{\mathfrak p}^r\)、\(r\) 为非负整数，则存在 \(f\in R\setminus\mathfrak p\)，使 \(M_f\cong R_f^r\)。
+\end{lemma}
+\begin{proof}
+选 \(M\) 中有限个元素，其在 \(\mathfrak p\) 处的像经乘单位后是一组基，定义 \(u:R^r\to M\)。余核有限生成且在 \(\mathfrak p\) 处为零，所以逐个清除生成元的分母，得到 \(f\notin\mathfrak p\)，使 \(u_f\) 满射。
+
+以下在 \(R_f\) 上工作，并暂省去局部化下标，使 \(u\) 确为满射。有限展示保证这个有限自由满射的核 \(K\) 有限生成。具体地，若另有有限展示 \(R^a\xrightarrow D R^b\xrightarrow v M\to0\)，分别将 \(u\) 的基像提升到 \(R^b\)、把 \(v\) 的基像提升到 \(R^r\)，得映射 \(\alpha:R^r\to R^b\)、\(\beta:R^b\to R^r\)，满足 \(v\alpha=u\)、\(u\beta=v\)。对 \(z\in\ker u\)，\(\alpha z\) 属于 \(\operatorname{im}D\)，而
+\(z=\beta\alpha z+(1-\beta\alpha)z\)；
+因此 \(\ker u\) 由 \(\beta D\) 的有限列及 \(1-\beta\alpha\) 的有限列生成。
+
+核 \(K\) 在 \(\mathfrak p\) 处为零，再清有限个分母。恢复原环记号，可取 \(g\in R\setminus\mathfrak p\)，使 \(u_{fg}\) 同时单射和满射。
+\end{proof}
+
+\begin{proof}[\cref{b3:thm:finite-presentation-flat-projective}的证明]
+第一项由\cref{b3:lem:finite-flat-local-free}推出第三项；第三项由\cref{b3:thm:flatness-local}推出第一项。若 \(M\) 是有限自由模的直和项，它平坦，且有限展示：设 \(R^n=M\oplus N\)，两投影的像都有限生成，核 \(N\) 因而给出 \(M\) 的有限展示。所以第二项推出第一项。
+
+反向，设 \(M\) 满足第三项，取有限自由满射 \(F\to M\)。考虑
+\[
+\operatorname{Hom}_R(M,F)\longrightarrow\operatorname{Hom}_R(M,M)
+\]
+的余核。在任意极大理想处，由\cref{b3:thm:hom-localization}及 \(M\) 有限展示，局部化后的 Hom 正是局部 Hom；\(M_{\mathfrak m}\) 自由使局部满射有截面，故恒等映射在余核中的类处处为零。由\cref{b3:thm:local-zero-detection}，这个类本来就为零，于是 \(F\to M\) 有全局截面，\(M\) 为有限自由模的直和项。
+
+第三项由\cref{b3:lem:free-stalk-neighborhood}给出邻域局部自由。反过来，若在主开邻域上有限自由，由谱拟紧性选有限覆盖 \(D(f_i)\)。\cref{b3:prop:principal-cover-finiteness}先使 \(M\) 有限生成。取 \(R^n\to M\) 满射，其核在每个 \(D(f_i)\) 上是有限自由模的直和项，故有限生成；再次应用同一命题使核整体有限生成。因此 \(M\) 有限展示，并满足第三项。
+\end{proof}
+
+局部自由的秩在每个平凡化邻域上恒定，因而为局部常值函数；若素谱连通，秩为一个常数。模仍未必整体自由：从局部的基到一个全局基，还需要在重叠处协调基变换。选读的\secref{b3:sec:1206}将把这种相容性写成具体数据。

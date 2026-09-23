@@ -1,16 +1,281 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第10章　赋值环、离散赋值环与 Dedekind 整环
-% 纲要位置：计划纲要.md，第 1787 行。
+% 纲要位置：工作记录/计划纲要.md，第 2105 行。
+
 
 \chapter{赋值环、离散赋值环与 Dedekind 整环}
 \label{b3:ch:10}
 \BookChapterNumber{b3:ch:10}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+赋值把整除关系化为有序群中的大小比较。离散赋值环中，每个非零元素由统一化元的幂和一个单位相乘而成；本章从一维、Noether 性与整闭性出发证明这一结构。Dedekind 整环把这些局部整数阶合成为全局理想的唯一分解。数域整数环、理想类群和正规曲线展示这种分解怎样应用于算术与几何。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 从赋值构造局部环，区分赋值的秩、有理秩与离散性。
+\item 证明一维 Noether 正规局部整环是 DVR，计算理想的阶数与商模长度。
+\item 通过局部化恢复 Dedekind 整环的非零理想分解，并构造分式理想的逆。
+\item 区分可逆理想与主理想，理解理想类群和秩一投射模之间的关系。
+\end{itemize}
+\end{learninggoals}
+
+本章使用第2章的局部化检测、第3章的行列式技巧与 Nakayama 引理、第5—6章的整闭性和正规化有限性，以及第9章的维数语言。Picard 群部分还用有限投射模、对偶和张量积，这些构造已在第二卷建立；这里不使用 Ext、Tor 或完备化。
+
+\ProseParagraphBreak
+一般赋值可参阅 Matsumura 的《Commutative Ring Theory》\cite[\S10, General valuations, pp. 71--77]{Matsumura1989CommutativeRingTheory}。DVR 的等价刻画与可逆理想见\cite[Theorems 11.1--11.3, pp. 78--81]{Matsumura1989CommutativeRingTheory}；Dedekind 整环的分解定理见\cite[Theorem 11.6, pp. 82--84]{Matsumura1989CommutativeRingTheory}。本章保留一般赋值与离散赋值的区别，再在 Noether 条件下开展理想分解。
 
 \input{Part02/Chapter10/Section1001}
 \input{Part02/Chapter10/Section1002}
 \input{Part02/Chapter10/Section1003}
 \input{Part02/Chapter10/Section1004}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+赋值环的整除关系是全序的，这使有限生成理想成为主理想；但值群可以稠密，也可以具有多个凸子群。因此整闭、局部、一维或极大理想主生成等零散条件，都不能单独代替 DVR 的完整刻画。Noether 性使行列式技巧和 Nakayama 引理能够把一维正规局部结构转化为统一化元的整数幂。
+
+\ProseParagraphBreak
+Dedekind 整环的非零理想在各个 DVR 处留下有限多个整数指数，局部检测再恢复唯一的全局分解。分式理想允许负指数，于是组成自由交换群；模掉主分式理想得到类群。类群也可以用秩一有限投射模来描述，这为后来讨论可逆模和线丛提供了已证明的代数例子。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:10-lowest-valuation}
+设 \(a_1+\cdots+a_r=0\)，其中各 \(a_i\) 是赋值域的非零元素。证明最小的
+\(v(a_i)\) 至少出现两次。给出两个同阶元素之和阶数严格增大的例子。
+\end{exercise}
+\begin{solution}
+若最小值只在 \(a_1\) 处出现，则有限和的赋值不小于各项的最小值给出
+\(v(a_2+\cdots+a_r)>v(a_1)\)，但左侧为 \(v(-a_1)=v(a_1)\)，矛盾。
+在 \(k(t)\) 的零点赋值中，\(1\) 与 \(-1+t\) 都为零阶，其和 \(t\) 为一阶；这在任意特征都成立。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-rational-orders}
+在 \(\mathbb Q\) 中计算 \(v_2(84/75)\)、\(v_3(84/75)\)、\(v_5(84/75)\)，判断该有理数属于哪些 \(\mathbb Z_{(p)}\)，并指出在哪些局部环中为单位。
+\end{exercise}
+\begin{solution}
+\(84/75=2^2\cdot7/(3\cdot5^2)\)，所以三个赋值分别为 \(2,-1,-2\)。
+它恰在 \(p\ne3,5\) 时属于 \(\mathbb Z_{(p)}\)；在这些环中，\(p=2,7\) 时非单位，其余素数处是单位。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-irrational-weight}
+取正无理数 \(\alpha\)。对 \(0\ne f=\sum c_{ij}x^iy^j\in k[x,y]\)，令
+\(v(f)=\min\{i+\alpha j:c_{ij}\ne0\}\)。证明它延拓为 \(k(x,y)\) 的赋值，并求其值群的秩和有理秩。这一构造见\cite[Exercise 10.11, p. 78]{Matsumura1989CommutativeRingTheory}，这里补入两种秩的比较。
+\end{exercise}
+\begin{solution}
+无理性使不同单项式具有不同权重，所以每个非零多项式有唯一最低权项。两个最低权项的乘积是乘积多项式唯一最低权项，系数非零，故
+\(v(fg)=v(f)+v(g)\)。相加只能消去已有项，因而满足赋值不等式。
+定义 \(v(f/g)=v(f)-v(g)\)，乘法等式保证与分式表示无关。值群为
+\(\mathbb Z+\alpha\mathbb Z\)，作为实数有序子群，其非零凸子群必为全群，秩一。
+\(1,\alpha\) 在 \(\mathbb Q\) 上线性独立，所以有理秩二。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-rational-value-maximal}
+对正文中值群为 \(\mathbb Q\) 的赋值环，证明极大理想 \(\mathfrak m\) 满足
+\(\mathfrak m^2=\mathfrak m\)，并说明为什么 Nakayama 引理不能使它为零。
+\end{exercise}
+\begin{solution}
+取 \(0\ne a\in\mathfrak m\)，设 \(v(a)=q>0\)。由赋值满射可取 \(b\) 使
+\(v(b)=q/2\)；于是 \(b,a/b\in\mathfrak m\)，故 \(a\in\mathfrak m^2\)。反向包含总成立。
+\(\mathfrak m\) 非零却不有限生成；它没有最小正赋值元素，有限生成会迫使主生成。
+这正是 Nakayama 引理的有限性条件失效之处。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-principal-comparison}
+证明整环 \(V\) 为赋值环，当且仅当任意两个主理想可按包含比较。再说明“每个有限生成理想都主生成”单独是否足够。
+\end{exercise}
+\begin{solution}
+赋值环的主理想可比较已在正文证明。反向，对 \(x=a/b\in\operatorname{Frac}(V)^*\)，
+若 \(aV\subseteq bV\)，则 \(x\in V\)；若 \(bV\subseteq aV\)，则 \(x^{-1}\in V\)。
+仅要求有限生成理想主生成不够，例如 \(\mathbb Z\) 是主理想整环，但 \((2)\) 和 \((3)\) 不可比较，\(2/3\) 及其倒数均不在 \(\mathbb Z\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-overrings}
+设 \(V\) 为 \(K\) 的赋值环，且 \(V\subseteq W\subseteq K\) 为子环。证明存在
+\(\mathfrak p\in\operatorname{Spec}V\) 使 \(W=V_{\mathfrak p}\)。
+\end{exercise}
+\begin{solution}
+对 \(x\in K^*\)，\(x\) 或 \(x^{-1}\) 已在 \(V\)，当然也在 \(W\)，故 \(W\) 为赋值环。
+设 \(\mathfrak n\) 为其极大理想，\(\mathfrak p=\mathfrak n\cap V\)。
+\(V\setminus\mathfrak p\) 中的元在 \(W\) 可逆，所以 \(V_{\mathfrak p}\subseteq W\)。
+对 \(x\in W\setminus V\)，倒数条件给 \(x^{-1}\in V\)，它在 \(W\) 中的逆为 \(x\)，故
+\(x^{-1}\notin\mathfrak p\)，于是 \(x\in V_{\mathfrak p}\)。这证明反向包含。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-lexicographic-primes}
+对正文中 \(\mathbb Z^2\) 字典序赋值环，列出全部素理想，并证明它的极大理想主生成而环不 Noether。
+\end{exercise}
+\begin{solution}
+凸子群恰为 \(0\)、\(\{0\}\times\mathbb Z\) 和 \(\mathbb Z^2\)。若凸子群含某个第一坐标非零的元素，换号后可令第一坐标为正，其正整数倍超过任意给定元素，凸性使子群为全群；其余凸子群归结为 \(\mathbb Z\) 的凸子群。
+对应素理想为 \(\mathfrak m\)、\(\mathfrak p=\{0\}\cup\Bigl\{f:v(f)_1>0\Bigr\}\) 和 \((0)\)。
+最小正值是 \((0,1)=v(u)\)，所以 \(\mathfrak m=(u)\)。若 \(\mathfrak p\) 有限生成，它会主生成并有最小赋值，但 \((1,-r)=v(t/u^r)\) 随 \(r\) 无界下降，且第一坐标一是 \(\mathfrak p\) 中最小可能第一坐标，故不存在最小赋值。环不 Noether。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-cusp-fails-dvr}
+对尖点局部环 \(R=k[t^2,t^3]_{(t^2,t^3)}\)，计算 \(R/t^2R\) 和 \(R/t^3R\) 的长度。说明这两个数虽然等于正规化环中相应元素的阶数，仍不能推出 \(R\) 为 DVR。
+\end{exercise}
+\begin{solution}
+在 \(k[t^2,t^3]\) 中，出现的幂指数恰为 \(0,2,3,4,\ldots\)。模掉 \(t^2\) 后留下 \(1,t^3\) 作为 \(k\) 基；模掉 \(t^3\) 后留下 \(1,t^2,t^4\) 作为 \(k\) 基。两商环中非常数部分均幂零，故原来常数项非零的分母已可逆，局部化不改变这两个商环。它们的剩余域为 \(k\)，每个简单因子都是一维 \(k\) 空间，因此长度分别为二和三。
+有限型代数保证原环 Noether，其分式域为 \(k(t)\)，维数为一；原点极大理想非零，所以 \(R\) 仍一维。长度与零点阶的这些相等关系却不足以判定整闭性。
+元素 \(t\) 满足首一方程 \(X^2-t^2=0\)，却不属于 \(R\)。若
+\(t=f/g\)、\(g\) 常数项非零，而 \(f,g\in k[t^2,t^3]\)，则 \(tg=f\) 左边的 \(t\) 系数非零，右边无一次项，矛盾。
+因此它不整闭，不能为 DVR。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-dvr-colon}
+设 \(R\) 为 DVR。求 \((\mathfrak m^a:\mathfrak m^b)\)、\(a,b\ge0\)，以及
+\(R/\mathfrak m^n\) 中被 \(\pi^r\) 零化的子模的长度。
+\end{exercise}
+\begin{solution}
+条件 \(x\mathfrak m^b\subseteq\mathfrak m^a\) 等价于 \(v(x)+b\ge a\)，且 \(x\in R\)，
+所以理想商为 \(\mathfrak m^{\max(a-b,0)}\)。第二个子模为
+\(\mathfrak m^{\max(n-r,0)}/\mathfrak m^n\)，其长度为 \(\min(r,n)\)，这里 \(r\ge0\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-dvr-presentation}
+设 \(R\) 为 DVR，计算矩阵
+\(\left(\begin{smallmatrix}\pi^2&\pi\\0&\pi^3\end{smallmatrix}\right)\)
+所定义的 \(R^2\rightarrow R^2\) 的余核分解与长度。
+\end{exercise}
+\begin{solution}
+交换两列得到 \(\left(\begin{smallmatrix}\pi&\pi^2\\\pi^3&0\end{smallmatrix}\right)\)。
+第二行减去第一行的 \(\pi^2\) 倍，再令第二列减去第一列的 \(\pi\) 倍，得到
+\(\operatorname{diag}(\pi,-\pi^4)\)。这些均为可逆基变换，故余核为
+\(R/(\pi)\oplus R/(\pi^4)\)，长度五。行列式的阶也为五，在这里与长度计算一致。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-ramification-basic}
+设 \(R\subseteq S\) 为 DVR 间的局部单射，\(\pi,\tau\) 分别为统一化元。
+证明存在整数 \(e\ge1\) 使 \(v_S(x)=e\,v_R(x)\) 对全部 \(x\in\operatorname{Frac}(R)^*\) 成立。
+计算 \(k[t]_{(t)}\subseteq k[u]_{(u)}\)、\(t=u^e\)，的这个整数。
+\end{exercise}
+\begin{solution}
+局部同态使 \(\pi\) 落入 \(S\) 的极大理想，又因单射而非零，故
+\(v_S(\pi)=e\ge1\)。\(R\) 中的单位在 \(S\) 仍是单位，因为其逆也被映入。
+写 \(x=\pi^n a\)、\(a\in R^*\)、\(n\in\mathbb Z\)，便得公式。
+例子中 \(v_u(t)=v_u(u^e)=e\)，恰为所求整数；结论不要求特征不整除 \(e\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-fractional-integers}
+在 \(\mathbb Z\) 中取分式理想 \(I=(6/35)\)、\(J=(14/15)\)。求它们的和、交、积和各自的逆。
+\end{exercise}
+\begin{solution}
+统一分母为 \(105\)，分子理想分别为 \((18)\) 和 \((98)\)。最大公因数为二，最小公倍数为 \(882\)，故
+\[
+I+J=(2/105),\qquad I\cap J=(42/5),\qquad IJ=(4/25).
+\]
+主分式理想的逆由生成元取倒数给出，分别为 \((35/6)\) 和 \((15/14)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-hom-fractional}
+若 \(R\) 为 Dedekind 整环，\(I,J\) 为非零分式理想，证明
+\(\operatorname{Hom}_R(I,J)\simeq JI^{-1}\)，右边的元素通过乘法定义映射。
+\end{exercise}
+\begin{solution}
+任一 \(R\) 线性映射张量到 \(K\) 后成为一维 \(K\) 空间之间的线性映射，因而是乘以某个 \(x\in K\)。
+它取 \(I\) 到 \(J\) 当且仅当 \(xI\subseteq J\)。乘以 \(I^{-1}\) 得这等价于
+\(xR\subseteq JI^{-1}\)，即 \(x\in JI^{-1}\)。
+反向包含也直接由 \(I^{-1}I=R\) 得到。零映射对应 \(x=0\)，所以这是全部 Hom 模的同构。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-dedekind-quotient-length}
+设 \(R\) 为 Dedekind 整环。若 \(I=\prod_{i=1}^r\mathfrak p_i^{n_i}\ne0\)，其中 \(n_i>0\)、各 \(\mathfrak p_i\) 为不同的非零素理想，证明
+\[
+R/I\simeq\prod_{i=1}^rR/\mathfrak p_i^{n_i},
+\qquad \ell_R(R/I)=\sum_{i=1}^r n_i.
+\]
+\end{exercise}
+\begin{solution}
+不同极大理想的幂互素：若 \(a+b=1\)、\(a\in\mathfrak p_i,b\in\mathfrak p_j\)，展开
+\((a+b)^{n_i+n_j-1}\) 即见每项属于两幂之一。中国剩余定理给出直积同构。
+\(R/\mathfrak p^n\) 中每个 \(s\notin\mathfrak p\) 都可逆，因为 \(R/\mathfrak p^n\) 只有一个极大理想。
+因此该商环同构于 \(R_{\mathfrak p}/\mathfrak p^nR_{\mathfrak p}\)，它的 DVR 幂滤过有 \(n\) 个简单因子，每个作为 \(R\) 模也同构于 \(R/\mathfrak p\)。长度为 \(n\)，对有限直积相加得到结论。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-semilocal-dedekind}
+证明只有有限多个极大理想的 Dedekind 整环是主理想整环。此题见\cite[Exercise 11.7, p. 86]{Matsumura1989CommutativeRingTheory}。
+\end{exercise}
+\begin{solution}
+域的情形显然。设极大理想为 \(\mathfrak p_1,\ldots,\mathfrak p_r\)，取非零理想
+\(I=\prod_i\mathfrak p_i^{n_i}\)。每个
+\(\mathfrak p_i^{n_i}/\mathfrak p_i^{n_i+1}\ne0\)，可选
+\(a_i\in\mathfrak p_i^{n_i}\setminus\mathfrak p_i^{n_i+1}\)。
+中国剩余定理给 \(a\in R\) 使 \(a\equiv a_i\pmod{\mathfrak p_i^{n_i+1}}\) 同时成立，故
+\(v_{\mathfrak p_i}(a)=n_i\)。已列出所有非零素理想，所以唯一分解给 \(aR=I\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-localization-class-group}
+设 \(R\) 为 Dedekind 整环，\(S\) 为不含零的乘法集。证明
+\(\operatorname{Cl}(R)\rightarrow\operatorname{Cl}(S^{-1}R)\)、\([I]\mapsto[S^{-1}I]\)，满射，且核由所有满足 \(\mathfrak p\cap S\ne\varnothing\) 的素理想类生成。
+\end{exercise}
+\begin{solution}
+局部化后，遇到 \(S\) 的素理想成为单位理想，其余非零素理想与局部化环的非零素理想一一对应。因此分式理想群之间的映射删去前一类基元素，是满射，并将主理想映为主理想。
+若 \(S^{-1}I=xS^{-1}R\)，则分式理想 \(x^{-1}I\) 在所有避开 \(S\) 的素理想处的指数为零，因而由遇到 \(S\) 的素理想及其逆组成。
+在类群中 \([x^{-1}I]=[I]\)，所以核恰由这些类生成。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-every-ideal-invertible}
+设 \(R\) 为整环，且每个非零通常理想都可逆。证明 \(R\) 为 Dedekind 整环。
+\end{exercise}
+\begin{solution}
+可逆理想有限生成，见\cref{b3:prop:invertible-local-principal}证明中的有限单位分解，因此全部理想有限生成，\(R\) 为 Noether 环。
+若 \(R\) 非域，每个极大理想 \(\mathfrak m\ne0\) 可逆，在 \(\mathfrak m\) 处局部主生成。
+于是 \(R_{\mathfrak m}\) 是非域 Noether 局部整环，极大理想主生成，故为 DVR。
+由\cref{b3:thm:dedekind-local-characterization}，\(R\) 是 Dedekind 整环。域也符合定义。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-quadratic-ideal-three}
+在 \(R=\mathbb Z[\sqrt{-5}]\) 中，令 \(s=\sqrt{-5}\)、
+\(\mathfrak q=(3,1+s)\)、\(\mathfrak q'=(3,1-s)\)。证明它们为不同素理想，并计算
+\(\mathfrak q\mathfrak q'\) 及 \((1+s)\) 的素理想分解。
+\end{exercise}
+\begin{solution}
+两个商环均为 \(\mathbb F_3\)，但 \(s\) 的像分别为 \(-1\) 与 \(1\)，故是不同素理想。
+乘积由 \(9,3(1+s),3(1-s),6\) 生成，所有生成元属于 \((3)\)，而 \(9-6=3\) 属于乘积，故乘积为 \((3)\)。
+记 \(\mathfrak p=(2,1+s)\)。因 \(\mathfrak p\) 和 \(\mathfrak q\) 都含 \(1+s\)，有
+\((1+s)\subseteq\mathfrak p\mathfrak q\)，这里使用不同极大理想的交等于积。
+在商环 \(R/(1+s)\) 中有 \(s=-1\)，原来的关系 \(s^2+5=0\) 变成 \(6=0\)，故
+\(R/(1+s)\cong\mathbb Z/6\mathbb Z\)。中国剩余定理给
+\(|R/\mathfrak p\mathfrak q|=2\cdot3=6\)，故两个有限指数子群相等，即
+\((1+s)=\mathfrak p\mathfrak q\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-invertible-nonfree}
+对正文中的 \(\mathfrak p=(2,1+\sqrt{-5})\)，证明它是秩一有限投射模，但不是自由模；再求
+\(\mathfrak p\otimes_R\mathfrak p\) 的同构类型。
+\end{exercise}
+\begin{solution}
+Dedekind 整环中非零理想可逆，故有限投射且局部秩一。若自由，其与分式域张量后维数一，故只能自由秩一，从而主生成，和正文中的范数计算矛盾。
+乘法给出 \(\mathfrak p\otimes_R\mathfrak p\simeq\mathfrak p^2=(2)\simeq R\)。因此非自由秩一投射模的张量平方可以自由。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-number-prime-residue}
+设 \(K/\mathbb Q\) 为次数 \(n\) 的数域，\(p\) 为素数。证明
+\(|\mathcal O_K/p\mathcal O_K|=p^n\)。若
+\(p\mathcal O_K=\prod_i\mathfrak p_i^{e_i}\)，且
+\(|\mathcal O_K/\mathfrak p_i|=p^{f_i}\)，证明 \(\sum_i e_if_i=n\)。
+\end{exercise}
+\begin{solution}
+整数环是秩 \(n\) 的自由整数模，模掉 \(p\) 后为 \(n\) 维 \(\mathbb F_p\) 空间，元素数为 \(p^n\)。
+中国剩余定理分解商环。每个 \(\mathcal O_K/\mathfrak p_i^{e_i}\) 的幂滤过有
+\(e_i\) 个同构于剩余域的因子，因此其元素数为 \(p^{e_if_i}\)。相乘并比较 \(p\) 的指数，得到公式。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-affine-orders}
+设 \(k\) 为域。求 \(f=(t-1)^3/\Bigl(t^2(t+1)\Bigr)\) 在仿射直线各闭点的阶数，分别讨论
+\(\operatorname{char}k=2\) 与不等于二的情形。再将环换成 \(k[t,t^{-1}]\)。
+\end{exercise}
+\begin{solution}
+特征不为二时，\(0,1,-1\) 是互异的 \(k\) 点，阶数分别为 \(-2,3,-1\)，其余闭点为零。
+特征二时 \(t+1=t-1\)，约去后 \(f=(t-1)^2/t^2\)，在 \(0,1\) 的阶数分别为 \(-2,2\)，其余为零。
+换成 Laurent 多项式环后，点 \((t)\) 被删除；其他点和阶数保持，只需从上述表中删去零点处的条目。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:10-normal-affine-membership}
+若 \(A\) 为正规仿射曲线的坐标环，\(f\in\operatorname{Frac}(A)^*\)，证明
+\(f\in A\) 当且仅当所有闭点处 \(v_{\mathfrak p}(f)\ge0\)；证明 \(f\in A^*\) 当且仅当各处阶数都为零。
+\end{exercise}
+\begin{solution}
+\(A\) 等于全部极大理想局部环之交，已在\cref{b3:thm:dedekind-local-characterization}证明。
+每个局部环是 DVR，属于该环恰等价于赋值非负，故得到第一结论。
+单位条件要求 \(f\) 和 \(f^{-1}\) 同时属于 \(A\)，等价于各赋值同时非负和非正，即全部为零。
+\end{solution}

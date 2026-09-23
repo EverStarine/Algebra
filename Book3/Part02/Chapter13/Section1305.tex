@@ -1,38 +1,79 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.5 有限阶近似与形式邻域
-% 纲要位置：计划纲要.md，第 1919 行。
-
-\section{有限阶近似与形式邻域}
-\label{b3:sec:1305}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 2237 行。
+% 纲要细目（写作范围）：
 % * 商 \(R/\mathfrak m^N\)、截断数据及相容逆系统
 % * 有限阶计算、完整形式对象与收敛解析对象的不同信息量
 % * Noether 局部环中理想向完备化扩张再收缩的保持；与忠实平坦性的联系
 % * 算法须注明多项式、代数幂级数或有限截断的输入形式；不能对任意不可计算幂级数声称有限有效求解
-%
 % ---
-%
+
+
+\section{有限阶近似与形式邻域}
+\label{b3:sec:1305}
+
+
+完备化由全部有限阶商组成，但一次计算通常只能得到其中有限多个。本节说明这类计算究竟确定什么，以及何时能够从所有阶的近似恢复原环中的结论。
 
 \subsection{有限阶商、截断数据与相容逆系统}
 \label{b3:subsec:1305:01}
 
-待撰写。
+设 \((R,\mathfrak m)\) 为 Noether 局部环。\(R/\mathfrak m^N\) 保留点附近小于 \(N\) 阶的信息，称为一个有限阶邻域的坐标环；这些商的相容系统描述\term[xingshi-linyu]{形式邻域}[formal neighbourhood]。此处只使用商环和逆极限，不假定读者已有形式概形知识。
+
+\ProseParagraphBreak
+在 \(k[x,y]_{(x,y)}\) 中模掉 \((x,y)^3\)，得到基
+\(1,x,y,x^2,xy,y^2\)。相乘后删去全次数至少三的单项式，即为商环乘法。对尖点局部环
+\(R=k[x,y]_{(x,y)}/(y^2-x^3)\)，二阶邻域 \(R/\mathfrak m^3\) 中变成关系 \(y^2=0\)；直到模 \(\mathfrak m^4\) 时，右侧的三次项才重新可见。一个低阶商无法单独区分所有高阶方程。
+
+\begin{proposition}\label{b3:prop:compatible-formal-solutions}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(\widehat R\) 为极大理想进完备化，\(f_1,\ldots,f_s\in R[X_1,\ldots,X_r]\)。在 \(\widehat R^r\) 中给定一个共同零点，等价于给定对每个 \(N\ge1\) 的零点
+\(a_N\in(R/\mathfrak m^N)^r\)，且 \(a_{N+1}\) 模 \(\mathfrak m^N\) 等于 \(a_N\)。
+\end{proposition}
+\begin{proof}
+零点逐阶取商显然相容。反向由逆极限定义，各坐标的相容余类给出 \(a\in\widehat R^r\)。多项式运算与取商交换，所以每个 \(f_i(a)\) 在所有有限阶商中为零；\(\widehat R\) 分离，故 \(f_i(a)=0\)。
+\end{proof}
+
+命题要求的是一组相容的选择，不能把“每阶分别找到一个解”不加说明地当作已构成形式解。保证或构造这种相容选择，需要利用方程本身的条件；简单根的逐阶提升将在\chapref{b3:ch:23}系统讨论。
 
 \subsection{有限阶、形式与收敛解析对象}
 \label{b3:subsec:1305:02}
 
-待撰写。
+在复数域上，多项式、原点附近收敛的幂级数与任意形式幂级数分别给出
+\[
+\mathbb C[x]\subseteq\mathbb C\{x\}\subseteq\mathbb C[[x]].
+\]
+这里 \(\mathbb C\{x\}\) 表示具有正收敛半径的幂级数环。\(\sum_{n\ge0}x^n\) 收敛但不是多项式；\(\sum_{n\ge0}n!x^n\) 是形式级数，却在每个非零 \(x\) 处连通项趋零都不满足，因此不收敛。后一个判断来自相邻通项绝对值之比 \((n+1)|x|\) 最终大于二。
+
+\ProseParagraphBreak
+任意给定的形式级数模 \(x^N\) 都等于一个多项式。因此有限阶数据不能判定它是否收敛。完备化是代数上的逐阶补全，不自动赋予解析意义；若研究收敛性，还必须另加系数估计或相应的解析定理。
 
 \subsection{完备化中理想的扩张与收缩}
 \label{b3:subsec:1305:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:completion-ideal-contraction}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(B=\widehat R\) 为极大理想进完备化。对每个理想 \(J\subseteq R\)，有
+\[
+JB\cap R=J,\qquad B/JB\cong\widehat{R/J}.
+\]
+后一完备化关于 \((\mathfrak m+J)/J\) 进行。更一般地，有限生成 \(R\) 模 \(M\) 的子模 \(N\) 满足：一个 \(x\in M\) 的像属于 \(\operatorname{im}(\widehat N\rightarrow\widehat M)\)，当且仅当 \(x\in N\)；这里各模均取 \(\mathfrak m\) 进完备化。
+\end{proposition}
+\begin{proof}
+\cref{b3:thm:krull-intersection}使 \(R\rightarrow B\) 单射，故可写交。商识别已由\cref{b3:prop:completion-quotients}给出，而 \(R/J\) 为有限模，Krull 交定理又使 \(R/J\rightarrow\widehat{R/J}\) 单射。因此 \(x\in R\) 的像属于 \(JB\) 恰当且仅当 \(x\in J\)。一般情形完备化 \(0\rightarrow N\rightarrow M\rightarrow M/N\rightarrow0\)，再使用 \(M/N\) 到其完备化的单射即可。
+\end{proof}
+
+同一理想收缩等式也可由忠实平坦性和\cref{b3:prop:faithfully-flat-detection}得到。前一证明突出所有阶近似与闭性的关系，后一证明把它纳入标量扩张的统一结果。两者都不声称 \(B\) 的每个理想都是某个 \(R\) 理想的扩张。
 
 \subsection{幂级数计算的输入形式与有效算法的适用范围}
 \label{b3:subsec:1305:04}
 
-待撰写。
+当输入为域 \(k\) 上的多项式并指定精度 \(N\) 时，模 \((x_1,\ldots,x_r)^N\) 的加法、乘法及求单位的逆只涉及有限个系数。若 \(k\) 的运算可有效执行，这些是有限算法。例如对常数项为一的 \(f=1-h\)，其模 \((x)^N\) 的逆可取
+\[
+1+h+\cdots+h^{N-1}\pmod{(x)^N},
+\]
+因为 \(h\in(x)\)。本节的截断计算均属于这种明确给出精度的任务。
+
+\ProseParagraphBreak
+若输入是代数幂级数，必须同时给出定义方程、所选分支及取得所需系数的方法；方程本身可能有多个分支，甚至不能用选定参数表示成幂级数。任意形式级数则含有无限数据，未必具有有限编码或可计算的系数序列。不能仅凭“它属于完备环”，就声称存在读入这个对象并完成任意精确判等的有限算法。
+
+\ProseParagraphBreak
+即使允许逐个查询系数，有限次查询也无法区分零级数与一个在所有已查询位置为零、在更高次数才非零的级数。因此截断计算给出的是指定精度内的确定结论；要从中推断完整等式，还须有额外的次数界、有限生成关系或已经证明的提升与唯一性结果。局部标准基如何提供这类有限控制，将在本卷附录 F 中进一步讨论。

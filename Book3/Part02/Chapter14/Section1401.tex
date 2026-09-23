@@ -1,30 +1,88 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.1 导子与微分模
-% 纲要位置：计划纲要.md，第 1932 行。
+% 纲要位置：工作记录/计划纲要.md，第 2250 行。
+% 纲要细目（写作范围）：
+% * 基环上线性导子
+% * 微分模的泛性质
+% * 多项式环的微分模
+
 
 \section{导子与微分模}
 \label{b3:sec:1401}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 基环上线性导子
-% * 微分模的泛性质
-% * 多项式环的微分模
-%
+把方程中的变量作一个平方为零的改动，乘法展开时只剩常数项与一次项。导子记录的正是这个一次变化。微分模把所有可能的导子合并成一个普遍对象，使后面的商环、局部化和切空间计算都能从同一构造出发。这里研究的是代数本身允许的导子，不是在环上预先指定某一个微分算子。
 
 \subsection{基环上的线性导子}
 \label{b3:subsec:1401:01}
 
-待撰写。
+\begin{definition}\label{b3:def:relative-derivation}
+设 \(\varphi:A\rightarrow B\) 为交换环同态，\(M\) 为 \(B\) 模。如果映射 \(D:B\rightarrow M\) 对所有 \(b,c\in B\)、\(a\in A\) 都满足
+\[
+D(b+c)=D(b)+D(c),\qquad D(bc)=bD(c)+cD(b),\qquad D\Bigl(\varphi(a)\Bigr)=0,
+\]
+就称 \(D\) 为 \(A\) 上的\term[daozi]{导子}[derivation]。全体这样的映射记为 \(\operatorname{Der}_A(B,M)\)。点态相加及 \((bD)(c)=bD(c)\) 使它成为 \(B\) 模。
+\symidx{\(\operatorname{Der}_A(B,M)\)：从代数到模的相对导子}
+\end{definition}
+
+Leibniz 法则给出 \(D(1)=2D(1)\)，故 \(D(1)=0\)，并由归纳得到 \(D(b^n)=nb^{n-1}D(b)\)。又
+\(D\Bigl(\varphi(a)b\Bigr)=\varphi(a)D(b)\)，所以导子确为 \(A\) 线性映射；它通常不是 \(B\) 线性的，否则 \(D(b)=bD(1)=0\)。例如 \(d/dx:k[x]\rightarrow k[x]\) 是 \(k\) 导子，而 \((d/dx)(x)=1\)，并不满足 \(k[x]\) 线性。
+
+\ProseParagraphBreak
+若 \(\operatorname{char}B=p>0\)，则任何导子都满足 \(D(b^p)=0\)。这不是说所有导子都为零：在 \(k[x]\) 上，\(D(x)=1\) 的形式求导仍然存在。它说明导子无法检测 \(p\) 次幂方向，也预示了不可分扩张中的特殊现象。
+
+\begin{proposition}\label{b3:prop:derivation-square-zero}
+设 \(A\to B\) 为交换环同态，\(M\) 为 \(B\) 模。在加法群 \(B\oplus M\) 上定义
+\[
+(b,m)(c,n)=(bc,bn+cm).
+\]
+这给出一个 \(A\) 代数，单位为 \((1,0)\)，理想 \(0\oplus M\) 的平方为零。映射 \(b\mapsto\Bigl(b,D(b)\Bigr)\) 是投影到 \(B\) 的 \(A\) 代数截面，当且仅当 \(D\in\operatorname{Der}_A(B,M)\)。
+\end{proposition}
+\begin{proof}
+三因子乘积的第二坐标都是 \(bc\,u+b d\,n+c d\,m\)，其中第三因子为 \((d,u)\)，故结合律成立；交换律、分配律和单位可直接由公式检验。平方为零来自两因子的第一坐标同时为零。截面必须有 \(\Bigl(b,D(b)\Bigr)\) 的形式，保持加法、乘法以及 \(A\) 的像分别就是导子的三个条件。
+\end{proof}
+
+这个环称为平方零扩张 \(B\oplus M\)。它把“无穷小变化”变成确切的环运算；这里的无穷小并非一个任意小的实数，而是乘积被规定为零的理想元素。
 
 \subsection{微分模的泛性质}
 \label{b3:subsec:1401:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:universal-differentials}
+设 \(A\) 为交换环，\(B\) 为交换 \(A\) 代数。存在 \(B\) 模 \(\Omega_{B/A}\) 与 \(A\) 导子 \(d:B\rightarrow\Omega_{B/A}\)，使对任意 \(B\) 模 \(M\)，映射
+\[
+\operatorname{Hom}_B(\Omega_{B/A},M)\longrightarrow
+\operatorname{Der}_A(B,M),\qquad h\longmapsto h\circ d
+\]
+为自然双射。二者组成的对象在唯一的保持 \(d\) 的同构意义下唯一，称为 \term[kahler-weifen-mo]{Kähler 微分模}[module of Kähler differentials]；\(d\) 称为\term[pubian-daozi]{普遍导子}[universal derivation]。
+\symidx{\(\Omega_{B/A}\)、\(d_{B/A}\)：Kähler 微分模与普遍导子}
+\end{theorem}
+\begin{proof}
+记结构同态为 \(\varphi:A\to B\)。取以集合 \(B\) 为指标的自由 \(B\) 模 \(F=\bigoplus_{b\in B}Be_b\)，模掉下列元素生成的子模：
+\[
+e_{b+c}-e_b-e_c,\qquad
+ e_{bc}-be_c-ce_b,\qquad e_{\varphi(a)}
+\quad(b,c\in B,\ a\in A).
+\]
+记所得商为 \(\Omega_{B/A}\)，令 \(db\) 为 \(e_b\) 的像。三个关系使 \(d\) 满足导子的三个公理。对任意导子 \(D\)，从自由模出发的唯一线性映射 \(e_b\mapsto D(b)\) 恰好零化这些关系，故下降为 \(h:\Omega_{B/A}\rightarrow M\)。因各 \(db\) 生成微分模，这个 \(h\) 唯一。
+
+若另一对 \((\Omega',d')\) 也有此性质，分别应用泛性质得到 \(u:\Omega\rightarrow\Omega'\)、\(v:\Omega'\rightarrow\Omega\)，满足 \(ud=d'\)、\(vd'=d\)。于是 \(vud=d\)，唯一性给出 \(vu=1\)，同理 \(uv=1\)。对 \(M\) 的同态作复合即说明双射的自然性。
+\end{proof}
+
+普遍性并不表示 \(d\) 是最容易手算的导子，而是任何导子都只能通过它再接一个线性映射。若 \(B\) 由 \(b_i\) 作为 \(A\) 代数生成，则 \(\Omega_{B/A}\) 由 \(db_i\) 作为 \(B\) 模生成，因为乘法法则能把任意多项式的微分化成这些元素的线性组合。生成元之间的代数关系则会带来微分关系。
 
 \subsection{多项式环的微分模}
 \label{b3:subsec:1401:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:polynomial-differentials}
+设 \(A\) 为交换环，\(n\ge0\) 为整数，\(P=A[X_1,\ldots,X_n]\)。则
+\[
+\Omega_{P/A}=\bigoplus_{i=1}^nP\,dX_i,
+\qquad df=\sum_{i=1}^n\frac{\partial f}{\partial X_i}\,dX_i.
+\]
+对任意 \(P\) 模 \(M\) 和元素 \(m_1,\ldots,m_n\in M\)，存在唯一 \(A\) 导子 \(D:P\rightarrow M\) 满足 \(D(X_i)=m_i\)。
+\end{proposition}
+\begin{proof}
+在单项式上反复使用 Leibniz 法则，任何导子都必须满足所列公式。反向用该公式定义 \(D(f)=\sum_i(\partial f/\partial X_i)m_i\)，多项式形式偏导的乘法公式直接给出 Leibniz 法则，且它零化 \(A\)，所以存在性也成立。于是自由模 \(\bigoplus_iP\,dX_i\) 具有普遍导子的泛性质，等同于 \(\Omega_{P/A}\)。也可用导子 \(\partial/\partial X_j\) 检查线性无关：它将假定关系 \(\sum_if_i\,dX_i=0\) 送到 \(f_j=0\)。
+\end{proof}
+
+例如在 \(k[x,y]\) 中，\(d(x^2y)=2xy\,dx+x^2\,dy\)。若再施加关系 \(y^2=x^3\)，则必有 \(2y\,dy-3x^2\,dx=0\)；下一节将证明怎样获得全部这样的关系。对形式幂级数环则需要额外区分连续导子与任意代数导子，本章的多项式结论不未经证明地推广到无限级数。
