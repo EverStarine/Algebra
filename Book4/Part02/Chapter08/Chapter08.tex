@@ -6,7 +6,24 @@
 \label{b4:ch:08}
 \BookChapterNumber{b4:ch:08}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+导出函子把加性函子不保持正合性的部分组织为可计算的不变量。投射和内射消解给出左、右导出函子，消去性则说明这些构造由零次函子及其长正合列的泛性质确定。Hom 产生 Ext，张量积产生 Tor；通过有限对角双复形，分别证明可以在两个变量中的任意一侧取消解。本章用循环模、幂零元商环与两变量 Koszul 消解进行计算，再用一次消失判据检验投射、内射和平坦性，最后建立后续局部代数所需的维数平移。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 写出左、右导出函子的次数约定，并说明零次为何需要相应单侧正合性。
+\item 通过消去性构造泛 \(\delta\)-函子的延拓，区分上同调与同调泛性的方向。
+\item 在两个变量中计算 Ext 和 Tor，证明平衡性并正确使用左右模约定。
+\item 从长正合列解释 Hom、张量积的正合性失败，使用一次消失判据。
+\item 定义相对于消解的合冲模，推导正次数平移及零次的核、余核公式。
+\end{itemize}
+\end{learninggoals}
+
+本章需要\chapref{b4:ch:07}的比较定理和马蹄引理，以及\secref{b4:sec:0604}的有限对角双复形比较。第二卷第6.1—6.3节给出张量积与 Hom 的基本性质，第7.3节证明投射模平坦。以下讨论 Ext 时两个变量都是同一含幺环的左模；讨论 Tor 时第一变量为右模，第二变量为左模。除明确写出的交换情形外，不增加底环交换性的假设。
+
+\ProseParagraphBreak
+本章可与 Weibel 的《An Introduction to Homological Algebra》\cite[Section 2.1, Definition 2.1.4; Sections 2.4--2.7]{Weibel1994HomologicalAlgebra}对照。消去性判据的表述见\cite[Theorem 2.4.7, Exercise 2.4.5]{Weibel1994HomologicalAlgebra}，本章将该判据的证明纳入正文；平衡性见\cite[Theorem 2.7.2, Theorem 2.7.6]{Weibel1994HomologicalAlgebra}。关于整数模的 Tor 与平坦性，另见\cite[Sections 3.1--3.2]{Weibel1994HomologicalAlgebra}。本章的双复形证明在每个总次数仅进行有限次消元，不预先调用后面尚未建立的谱序列。
 
 \input{Part02/Chapter08/Section0801}
 \input{Part02/Chapter08/Section0802}
@@ -14,4 +31,145 @@
 \input{Part02/Chapter08/Section0804}
 \input{Part02/Chapter08/Section0805}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+导出函子先由消解定义，比较定理保证选择独立，马蹄引理给出长正合列，消去性进一步确定它的泛性质。Ext 对第一变量反变、第二变量协变；Tor 对两个变量协变且要求相反的模侧别。平衡性通过同一个双复形比较两种计算，没有把“左右都能算”当作未经证明的约定。
+
+\ProseParagraphBreak
+一次 Ext 与 Tor 足以分别检验投射、内射和平坦性，但测试变量必须遍历所有相应模。维数平移利用投射或内射项的高次消失，把高次问题逐步移到合冲模或商对象。零次仍含 Hom 或张量项，不能套用正次数同构。这些工具既用于下一章的扩张解释，也用于后续同调维数及第三卷的局部自由消解。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:08-derived-exactness}
+设 \(\mathcal A\) 有足够多内射对象，\(F:\mathcal A\to\mathcal B\) 为交换范畴间加性左正合函子。证明 \(F\) 正合当且仅当 \(R^1F(A)=0\) 对每个 \(A\) 成立，并说明此时所有正次均消失。
+\end{exercise}
+\begin{solution}
+若 \(F\) 正合，内射消解的增广正合性经 \(F\) 保留，故所有正次上同调为零。若一次全消失，对任意 \(0\to A\to B\to C\to0\)，长正合列使 \(F(B)\to F(C)\) 满；结合已有左正合性，\(F\) 正合。最后再用正向结论即得全消失。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-derived-natural-transformation}
+设 \(F,G:\mathcal A\to\mathcal B\) 是加性左正合函子，\(\mathcal A\) 有足够多内射对象，\(a:F\to G\) 自然。用同一内射消解构造 \(R^na:R^nF\to R^nG\)，并证明它与泛性给出的延拓相同。
+\end{exercise}
+\begin{solution}
+对 \(A\to I_A^\bullet\)，各分量 \(a_{I_A^q}\) 因自然性与微分交换，故形成复形映射。取上同调，利用比较映射的自然性得到自然变换 \(R^na\)。对马蹄消解施加 \(a\) 给出短正合复形列之间的映射，故它与连接态射相容。零次通过核的识别正是 \(a_A\)，所以由\cref{b4:thm:derived-universal}的唯一性，等于泛延拓。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-central-actions}
+设 \(R\) 是交换环，\(M,N\) 为 \(R\) 模。证明 \(r\in R\) 通过 \(M\) 的乘法映射或 \(N\) 的乘法映射诱导的 Ext 自同态相同。对 Tor 也证明相应结论。
+\end{exercise}
+\begin{solution}
+对 \(M\) 的投射消解，逐次乘 \(r\) 是乘法态射的提升。在 \(\operatorname{Hom}_R(P_n,N)\) 上，预合成 \(r\) 与后合成 \(r\) 相同，因为 \(f(rp)=rf(p)\)。因此在上同调上相同。Tor 的消解张量中有 \(rp\otimes n=p\otimes rn\)，故同样成立。若 \(rM=0\) 或 \(rN=0\)，对应零态射诱导零，因此该 \(r\) 零化所有相关 Ext 与 Tor。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-ext-sum-product}
+设 \(R\) 是含幺环，\((M_i)_{i\in I}\)、\(N\) 是左模。证明对每个 \(n\ge0\)，有
+\[
+\operatorname{Ext}_R^n(\bigoplus_iM_i,N)\cong\prod_i\operatorname{Ext}_R^n(M_i,N).
+\]
+指出无限指标处所用的集合论选择。
+\end{exercise}
+\begin{solution}
+各 \(M_i\) 的投射消解作直和仍正合，逐项直和投射，所以得到直和的投射消解。Hom 把该直和复形变为 Hom 复形的直积。交换群的积中核逐分量计算；边界也逐分量计算，因为对每个属于像的分量可以选择原像，合成一个积中的元素。因此积的同调为同调的积。无限族的原像选择以及投射对象直和的提升使用选择公理。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-ext-map-cyclic}
+设 \(m,n\) 为正整数且 \(n\mid m\)，取商映射 \(q:\mathbb Z/m\to\mathbb Z/n\)。对交换群 \(N\)，在 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/r,N)\cong N/rN\) 的识别下，求 \(q^*\)。
+\end{exercise}
+\begin{solution}
+零次自由提升为恒等，一次提升为乘 \(m/n\)，因为 \(n(m/n)=m\)。预合成后一次 Hom 映射为乘 \(m/n\)，所以
+\[
+q^*:N/nN\longrightarrow N/mN,\qquad [a]\longmapsto[(m/n)a].
+\]
+若 \(a\) 改变 \(nb\)，像改变 \(mb\)，故良定义。这个公式表明 Ext 的反变方向不是简单地沿自然取商。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-tor-map-cyclic}
+仍设 \(m,n\) 为正整数且 \(n\mid m\)，对交换群 \(N\) 求上述 \(q\) 诱导的 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/m,N)\to\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/n,N)\)。
+\end{exercise}
+\begin{solution}
+沿相同的链提升作张量，一次为乘 \(m/n\)。故映射为
+\[
+\{\,a\in N\mid ma=0\,\}\longrightarrow\{\,b\in N\mid nb=0\,\},
+\qquad a\longmapsto(m/n)a.
+\]
+\(n(m/n)a=ma=0\)，确实进入目标。它是协变的，而前一题 Ext 沿同一 \(q\) 反向。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-integer-four-six}
+计算 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/4,\mathbb Z/6)\)、\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/4,\mathbb Z/6)\)、\(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/4,\mathbb Z/6)\)，并分别写出具体代表。
+\end{exercise}
+\begin{solution}
+三者的抽象群均为 \(\mathbb Z/2\)。Hom 由 \(\bar1\) 的像 \(0\) 或 \(3\) 决定；Tor 是 \(\mathbb Z/6\) 中乘四的核 \(\{0,3\}\)；Ext 是 \((\mathbb Z/6)/4(\mathbb Z/6)\)，其子群 \(4(\mathbb Z/6)=\{0,2,4\}\)，可用 \(0,1\) 代表两个类。核中的元素和余核中的类承担不同角色。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-tor-conormal}
+设 \(R\) 是交换环，\(I\) 是理想。证明有自然同构 \(\operatorname{Tor}_1^R(R/I,R/I)\cong I/I^2\)，无需假定 \(I\) 平坦。
+\end{exercise}
+\begin{solution}
+对 \(0\to I\to R\to R/I\to0\) 在另一变量取 \(R/I\)，长正合列及 \(R\) 投射给出
+\[
+0\longrightarrow\operatorname{Tor}_1^R(R/I,R/I)
+\longrightarrow I\otimes_RR/I\longrightarrow R\otimes_RR/I.
+\]
+最后一个映射为零，因为 \(I\) 的元素在 \(R/I\) 中为零。又 \(I\otimes_RR/I\cong I/I^2\)，所以连接态射给出所求同构。它来自自然长正合列与自然张量商同构，因而自然。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-truncated-cubic-ring}
+设 \(R=k[t]/(t^3)\)、\(k=R/(t)\)。写出 \(k\) 的周期自由消解，计算 \(\operatorname{Ext}_R^n(k,k)\)、\(\operatorname{Tor}_n^R(k,k)\) 以及 \(\operatorname{Ext}_R^n(k,R)\) 的正次数。
+\end{exercise}
+\begin{solution}
+消解微分从 \(P_1\to P_0\) 起交替为乘 \(t\)、乘 \(t^2\)。乘 \(t\) 的核为 \((t^2)\)，乘 \(t^2\) 的核为 \((t)\)，故正合。以 \(k\) 作 Hom 目标或张量因子时微分全为零，所以各非负次均为 \(k\)。以 \(R\) 作 Hom 目标时，上链微分交替为乘 \(t\)、乘 \(t^2\)，同样的核像等式使所有正次 Ext 为零；零次是 \((t^2)\cong k\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-one-module-test-fails}
+给出一个非投射模 \(M\) 与一个非零模 \(N\)，使 \(\operatorname{Ext}^n(M,N)=0\) 对全部 \(n>0\) 成立；再给出非内射 \(N\) 和非零 \(M\) 的相应例子。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb Z\) 上取 \(M=\mathbb Z/2\)、\(N=\mathbb Q\)，第二变量内射使正次全消失，而 \(M\) 不是投射。再取 \(M=N=\mathbb Z\)，第一变量投射使正次全消失，\(N\) 却不内射，因为 \(2\mathbb Z\to\mathbb Z\)、\(2a\mapsto a\) 无法延拓。两个例子都说明判据中的全称测试不能缩成任意一次测试。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-flat-kernel}
+设 \(R\) 是含幺环，\(0\to A\to B\to C\to0\) 为左模短正合列，\(B,C\) 平坦。证明 \(A\) 平坦。
+\end{exercise}
+\begin{solution}
+对任意右模 \(M\)，长正合列含有 \(\operatorname{Tor}_2^R(M,C)\to\operatorname{Tor}_1^R(M,A)\to\operatorname{Tor}_1^R(M,B)\)。两端因平坦而为零，故中间为零。再由\cref{b4:thm:tor-flat-criterion}得到 \(A\) 平坦。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-extension-flat}
+设 \(0\to A\to B\to C\to0\) 是任意含幺环上的左模短正合列，\(A,C\) 平坦。证明 \(B\) 平坦。若 \(A,B\) 平坦，结论能否改为 \(C\) 平坦？
+\end{exercise}
+\begin{solution}
+对任意右模 \(M\)，一次 Tor 片段 \(\operatorname{Tor}_1(M,A)\to\operatorname{Tor}_1(M,B)\to\operatorname{Tor}_1(M,C)\) 两端为零，故 \(B\) 平坦。反向断言不成立：\(0\to\mathbb Z\xrightarrow2\mathbb Z\to\mathbb Z/2\to0\) 前两项自由，末项与自身的一次 Tor 非零，故不平坦。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-zero-degree-shift}
+以 \(0\to2\mathbb Z\to\mathbb Z\to\mathbb Z/2\to0\) 为例，说明不能把 \(\operatorname{Ext}^i(\Omega M,N)\cong\operatorname{Ext}^{i+1}(M,N)\) 延伸到 \(i=0\)。写出正确的余核公式。
+\end{exercise}
+\begin{solution}
+取 \(N=\mathbb Z\)，则 \(\operatorname{Hom}(2\mathbb Z,\mathbb Z)\cong\mathbb Z\)，而 \(\operatorname{Ext}^1(\mathbb Z/2,\mathbb Z)\cong\mathbb Z/2\)。限制映射 \(\operatorname{Hom}(\mathbb Z,\mathbb Z)\to\operatorname{Hom}(2\mathbb Z,\mathbb Z)\) 在以 \(2\) 的像作坐标时为乘二，故其余核才是 \(\mathbb Z/2\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-injective-shift-integers}
+设 \(m\) 为正整数。用 \(0\to\mathbb Z\to\mathbb Q\to\mathbb Q/\mathbb Z\to0\) 和内射方向的低次平移，重新求 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z)\)，并给出同构的具体元素。
+\end{exercise}
+\begin{solution}
+\(\operatorname{Hom}(\mathbb Z/m,\mathbb Q)=0\)，故低次正合列给出 \(\operatorname{Ext}^1(\mathbb Z/m,\mathbb Z)\cong\operatorname{Hom}(\mathbb Z/m,\mathbb Q/\mathbb Z)\)。一个同态由 \(\bar1\mapsto a/m+\mathbb Z\) 决定，其中 \(a\) 模 \(m\) 取值。因此得到 \(\mathbb Z/m\)，此处的元素通过连接态射对应 Ext 类。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-syzygy-change}
+设 \(R\) 为环，\(0\to K\to P\to M\to0\) 为左 \(R\)-模投射展示，\(Q\) 为任意投射左模。构造另一投射展示，其核是 \(K\oplus Q\)。证明对任意左 \(R\)-模 \(N\)、右 \(R\)-模 \(A\) 及 \(n\ge1\)，有
+\[
+\operatorname{Ext}_R^n(K\oplus Q,N)\cong\operatorname{Ext}_R^n(K,N),\qquad
+\operatorname{Tor}_n^R(A,K\oplus Q)\cong\operatorname{Tor}_n^R(A,K).
+\]
+\end{exercise}
+\begin{solution}
+取 \(P\oplus Q\to M\)、\((p,q)\mapsto\bar p\)，其核为 \(K\oplus Q\)。有限双积的投射消解可逐项作双积，Hom 或张量后仍分成两部分。\(Q\) 的正次导出函子消失，故所得正次 Ext、Tor 分别等于 \(K\) 的相应值。这不意味着零次 Hom 或张量也相同，它们仍含 \(Q\) 的贡献。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:08-truncate-independent}
+设一个左 \(R\) 模 \(M\) 有长度不超过 \(r\) 的投射消解，其中 \(r\ge1\)。证明在任意另一投射消解中，第 \(r\) 次合冲模投射，而第 \(r-1\) 次未必投射。
+\end{exercise}
+\begin{solution}
+已知短消解使 \(\operatorname{Ext}_R^{r+1}(M,N)=0\) 对全部 \(N\) 成立。另一消解的迭代平移给出 \(\operatorname{Ext}_R^1(\Omega^rM,N)=0\)，故该合冲模投射。取 \(R=k[x,y]\)、\(M=R/(x,y)\)、\(r=2\)，则 \(\Omega M=(x,y)\) 与 \(k\) 的一次 Tor 为 \(k\ne0\)，故它不投射；二次合冲模却为 \(R\)。
+\end{solution}

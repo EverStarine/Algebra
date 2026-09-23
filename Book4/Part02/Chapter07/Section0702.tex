@@ -5,7 +5,6 @@
 \section{比较定理}
 \label{b4:sec:0702}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,46 @@
 \subsection{态射的提升}
 \label{b4:subsec:0702:01}
 
-待撰写。
+\begin{theorem}[比较定理]\label{b4:thm:resolution-comparison}
+设 \(\mathcal A\) 是交换范畴，\(P_\bullet\to M\) 是投射消解，\(Q_\bullet\to N\) 是任意非负增广正合复形。每个态射 \(f:M\to N\) 都提升为增广链映射 \(f_\bullet:P_\bullet\to Q_\bullet\)。若 \(N\to I^\bullet\) 是内射消解，\(M\to J^\bullet\) 是任意非负增广正合上链复形，则 \(f\) 延拓为 \(J^\bullet\to I^\bullet\)。
+\end{theorem}
+\begin{proof}
+先提升 \(f\varepsilon_P:P_0\to N\) 沿满态射 \(Q_0\to N\)，得到 \(f_0\)。假定已构造到 \(f_n\)，且链映射等式成立。复合 \(f_nd_{P,n+1}\) 被 \(d_{Q,n}\) 零化；当 \(n=0\) 时，此处 \(d_{Q,0}\) 指增广。因此它分解到 \(K_n=\ker d_{Q,n}\)。正合性使 \(Q_{n+1}\to K_n\) 满，而 \(P_{n+1}\) 投射，故可以提升得到 \(f_{n+1}\)。这恰使 \(d_{Q,n+1}f_{n+1}=f_nd_{P,n+1}\)。归纳完成所有次数。
+
+内射版本把以上构造用于反范畴：核换成余核，投射提升换成内射延拓。在通常箭头方向下，先把 \(M\to N\to I^0\) 沿 \(M\hookrightarrow J^0\) 延拓，再对商对象归纳；得到的正是所要求的上链映射。
+\end{proof}
+
+目标复形 \(Q_\bullet\) 不必由投射对象组成；证明只使用其正合性。这一点在比较投射消解与其他正合模型时很有用。类似地，内射版本要求目标内射，不要求源复形内射。
 
 \subsection{提升的链同伦唯一性}
 \label{b4:subsec:0702:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:comparison-homotopy-unique}
+在\cref{b4:thm:resolution-comparison}的投射情形下，同一 \(f:M\to N\) 的任意两个提升 \(u,v:P_\bullet\to Q_\bullet\) 链同伦；内射情形的两个延拓也同伦。
+\end{proposition}
+\begin{proof}
+写 \(h=u-v\)，逐次构造 \(s_n:P_n\to Q_{n+1}\)，使
+\[
+h_n=d_{Q,n+1}s_n+s_{n-1}d_{P,n},\qquad s_{-1}=0.
+\]
+因 \(u,v\) 提升同一态射，\(h_0\) 在增广后为零，故可沿 \(Q_1\to\ker\varepsilon_Q\) 提升为 \(s_0\)。若已构造到 \(s_{n-1}\)，计算
+\[
+d_Q(h_n-s_{n-1}d_P)
+=h_{n-1}d_P-(h_{n-1}-s_{n-2}d_P)d_P=0.
+\]
+正合性及 \(P_n\) 的投射性给出 \(s_n\)，满足所需等式。内射情形在反范畴作同一归纳。
+\end{proof}
+
+同伦唯一性并不表示提升本身唯一。例如令 \(M=N=\mathbb Z/2\mathbb Z\)，源与目标都取 \(\mathbb Z\xrightarrow2\mathbb Z\) 的两项消解。恒等映射有每一项都乘奇数 \(1+2t\) 的提升。它与逐项恒等之差由 \(s_0=\times t\) 给出同伦，所有这些提升在模 \(2\) 后都相同。
 
 \subsection{消解选择与不变量}
 \label{b4:subsec:0702:03}
 
-待撰写。
+\begin{corollary}\label{b4:cor:resolutions-homotopy-equivalent}
+设 \(\mathcal A\) 是交换范畴。一个对象的任意两个投射消解之间存在提升恒等态射的同伦等价，且这样的等价在同伦意义下唯一。内射消解满足对偶结论。任意加性函子作用于这些同伦等价后，仍得到同伦等价。
+\end{corollary}
+\begin{proof}
+给两个消解 \(P,Q\) 分别取提升恒等的映射 \(u:P\to Q\)、\(v:Q\to P\)。复合 \(vu\) 与 \(1_P\) 提升同一恒等态射，故由\cref{b4:prop:comparison-homotopy-unique}同伦；\(uv\) 同理。加性函子保持同伦等式 \(u-v=ds+sd\) 中的加法和复合，因此保持这一结论。
+\end{proof}
+
+由\cref{b4:prop:homotopy-cohomology}，函子作用后所取的同调对象不依赖消解选择，比较同构还满足传递律：经第三个消解得到的复合与直接比较提升同一态射，因而同伦。这比“某两次计算恰好同构”强；它使每个态射都诱导确定的同调态射，并使恒等与复合受到保持。

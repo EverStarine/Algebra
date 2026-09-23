@@ -5,8 +5,6 @@
 \section{导出逆极限}
 \label{b4:sec:1303}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * R^i lim 的定义
@@ -17,14 +15,76 @@
 \subsection{\texorpdfstring{逆极限的导出函子 \(R^i\!\varprojlim\)}{逆极限的导出函子}}
 \label{b4:subsec:1303:01}
 
-待撰写。
+设 \(R\) 为环，\(\mathcal I\) 为小范畴。模图表的极限是常值图表函子的右伴随，因而左正合。由\cref{b4:prop:diagram-enough-injectives}，可以在图表范畴内取消解
+\[
+0\longrightarrow M\longrightarrow I^0\longrightarrow I^1\longrightarrow\cdots.
+\]
+定义\term[daochu-nijixian]{导出逆极限}[derived inverse limit]
+\[
+R^q\!\varprojlim_{\mathcal I} M
+\coloneqq H^q\bigl(\varprojlim_{\mathcal I} I^\bullet\bigr),\qquad q\ge0.
+\]
+\symidx{\(R^q\varprojlim\)：逆极限的右导出函子}
+消解比较与泛性已在\cref{b4:thm:resolution-comparison}及\cref{b4:thm:derived-universal}建立。这里消解的对象是整张图表；在各个位置分别任取内射消解而不构造相容箭头，不能直接代入此定义。
+
+\ProseParagraphBreak
+零次为通常极限。一个图表短正合列产生长正合列，其第一个连接态射衡量相容提升失败。以下对可数塔把这套抽象构造化为只有两项的具体复形。
 
 \subsection{可数塔的乘积差映射}
 \label{b4:subsec:1303:02}
 
-待撰写。
+\begin{theorem}\label{b4:thm:countable-derived-limit}
+设 \(R\) 为环，\(M=(M_n,u_n)\) 为左 \(R\)-模可数逆向塔。令
+\[
+\Delta_M:\prod_{n\ge0}M_n\longrightarrow\prod_{n\ge0}M_n,
+\qquad \Delta_M(x)_n=x_n-u_nx_{n+1}.
+\]
+则自然地有
+\[
+\varprojlim M_n=\ker\Delta_M,\qquad
+R^1\!\varprojlim M_n\simeq\operatorname{coker}\Delta_M,
+\qquad R^q\!\varprojlim M_n=0\quad(q\ge2).
+\]
+若每个 \(u_n\) 满射，则 \(R^1\!\varprojlim M_n=0\)，且极限到每个 \(M_n\) 的投影满射。
+\end{theorem}
+\begin{proof}
+核的等式正是相容性定义。暂记 \(T^0=\ker\Delta\)、\(T^1=\operatorname{coker}\Delta\)，\(T^q=0\) 对 \(q\ge2\)。对塔短正合列取两行模的直积，并以 \(\Delta\) 作竖直箭头；积正合，蛇引理给出自然六项正合列。因此 \(T^\bullet\) 是上同调 \(\delta\)-函子。
+
+若过渡映射均满，给定 \(y=(y_n)\)，任选 \(x_0\)，逐次选 \(x_{n+1}\) 使 \(u_nx_{n+1}=x_n-y_n\)，便得 \(\Delta(x)=y\)。所以 \(T^1(M)=0\)。为证明极限投影满，固定某个位置的元素，向前用过渡映射确定较小指标的值，向后逐次取原像即可。
+
+\cref{b4:prop:diagram-enough-injectives}把任意塔嵌入一个过渡满射的内射塔，故 \(T^1\) 可消去，其余正次已为零。由\cref{b4:thm:derived-universal}，\(T^\bullet\) 与逆极限的右导出函子通过零次恒等典范同构，且同构保持连接态射。这就同时证明计算公式、自然性和高次消失。
+\end{proof}
+
+以后对可数模塔把 \(R^1\!\varprojlim\) 简写成 \(\varprojlim{}^1\)。对短正合塔列，其长正合列只有
+\[
+\begin{gathered}
+0\to\varprojlim A_n\to\varprojlim B_n\to\varprojlim C_n
+\xrightarrow{\partial}\varprojlim{}^1 A_n\\
+\longrightarrow\varprojlim{}^1B_n\longrightarrow\varprojlim{}^1C_n\longrightarrow0.
+\end{gathered}
+\]
+\cref{b4:prop:compatible-lift-obstruction}正是这里 \(\partial\) 的元素计算。
+
+\begin{example}\label{b4:exm:derived-limit-adic-quotient}
+对\subsecref{b4:subsec:1302:01}的整数塔，常值塔 \(\mathbb Z\) 及约化塔 \(\mathbb Z/p^{n+1}\) 的过渡映射都满。上列因而给出
+\[
+\varprojlim{}^1_n p^{n+1}\mathbb Z\simeq\mathbb Z_p/\mathbb Z\ne0.
+\]
+把 \(p^{n+1}\mathbb Z\) 用 \(p^{n+1}a\leftrightarrow a\) 识别为 \(\mathbb Z\)，其过渡映射变成乘 \(p\)。所以这也算出了常取值、非恒等过渡塔 \(\mathbb Z\xleftarrow{p}\mathbb Z\xleftarrow{p}\cdots\) 的一次导出极限。
+\end{example}
 
 \subsection{可数塔与一般指标范畴的高阶差异}
 \label{b4:subsec:1303:03}
 
-待撰写。
+上一定理使用两项复形，并不是因为所有极限都只有一阶相容条件。可数塔的箭头由相邻过渡唯一确定，允许用一族差值 \(x_n-u_nx_{n+1}\) 记录全部关系；一般图表会有额外的复合关系。
+
+\begin{example}\label{b4:exm:general-index-higher-limit}
+取仅有一个对象、态射群为 \(C_2\) 的范畴 \(BC_2\)。交换群值函子等价于左 \(\mathbb Z[C_2]\)-模，极限等价于不变量函子。因此其导出极限是\cref{b4:def:group-cohomology}的群上同调。对平凡模 \(M=\mathbb F_2\)，\cref{b4:thm:cyclic-group-cohomology}的周期公式给出
+\[
+R^q\!\varprojlim_{BC_2}M=H^q(C_2,\mathbb F_2)=\mathbb F_2
+\qquad(q\ge0).
+\]
+这个有限指标范畴已经有任意高次非零导出极限；它不是一座塔，也不是有向偏序集。
+\end{example}
+
+一般偏序集的多项复形可参阅 Weibel\cite[Vista 3.5.12]{Weibel1994HomologicalAlgebra}。这里不把可数塔的高次消失推广到任意有向集，也不将上例当成有向集的反例。改变指标形状或改变值域范畴，都需要另行证明相应的导出极限公式。

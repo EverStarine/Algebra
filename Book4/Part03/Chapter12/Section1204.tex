@@ -5,8 +5,6 @@
 \section{实例与形变障碍}
 \label{b4:sec:1204}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 矩阵代数与 Morita 不变性
@@ -19,14 +17,137 @@
 \subsection{矩阵代数与 Morita 不变性}
 \label{b4:subsec:1204:01}
 
-待撰写。
+矩阵代数的乘法看起来比标量代数复杂，但模范畴之间的等价会保留相应的同调信息。下面直接用矩阵单位证明本章需要的 Morita 不变性，不把它当作未经解释的计算捷径。
+
+\begin{theorem}\label{b4:thm:hh-matrix-morita}
+设 \(A\) 为结合含幺 \(k\) 代数，\(r\ge1\)，\(B=M_r(A)\)。对任意 \(A\) 双模 \(N\)，令 \(M_r(N)\) 带有左右矩阵乘法作用。则对所有 \(n\ge0\)，有自然同构
+\[
+\operatorname{HH}_n(B,M_r(N))\cong\operatorname{HH}_n(A,N),\qquad
+\operatorname{HH}^n(B,M_r(N))\cong\operatorname{HH}^n(A,N).
+\]
+\end{theorem}
+\begin{proof}
+记 \(E_{ij}\) 为矩阵单位，\(e=E_{11}\)，并识别 \(eBe=A\)。双模函子
+\[
+F(M)=eMe,\qquad G(N)=M_r(N)
+\]
+互为等价。具体地，\(FG(N)=N\)，而
+\[
+M\longrightarrow M_r(eMe),\qquad
+m\longmapsto(E_{1i}mE_{j1})_{i,j}
+\]
+的逆将 \((n_{ij})\) 送到 \(\sum_{i,j}E_{i1}n_{ij}E_{1j}\)。矩阵单位等式 \(E_{ij}E_{uv}=\delta_{ju}E_{iv}\) 验证两次复合为恒等，且这些映射保持双模作用。两个函子均正合：\(eMe\) 是由幂等线性算子截出的直和因子，\(M_r(-)\) 是有限直和。它们也保持投射对象，因为一个提升问题经逆等价转移后仍是满射的提升问题。
+
+对 \(B\) 取投射双模消解 \(P_\bullet\to B\)。施加 \(F\) 后得到 \(A\) 的投射双模消解，而且等价的满忠实性给出复形同构
+\[
+\operatorname{Hom}_{B^e}(P_\bullet,M)
+\cong\operatorname{Hom}_{A^e}(F(P_\bullet),F(M)).
+\]
+取上同调便证明上同调断言。
+
+对同调，先考察右正合函子 \(Q_B(M)=M/[B,M]\)。有自然同构
+\[
+Q_B(M)\longrightarrow Q_A(eMe),\qquad
+[m]\longmapsto\Bigl[\sum_iE_{1i}mE_{i1}\Bigr].
+\]
+其良定义可直接检验。将 \(1=\sum_jE_{j1}E_{1j}\) 插入 \(b\) 与 \(m\) 之间，得到
+\[
+E_{1i}bmE_{i1}=\sum_j(E_{1i}bE_{j1})(E_{1j}mE_{i1}).
+\]
+在目标交换子商中交换这两个因子的先后，再交换求和指标 \(i,j\)，就得到 \(\sum_iE_{1i}mbE_{i1}\)。逆映射由角部的包含 \(eMe\subseteq M\) 给出。在 \(Q_B(M)\) 中，关系
+\[
+E_{ii}m-E_{1i}mE_{i1}=[E_{i1},E_{1i}m]
+\]
+说明逆向复合是恒等；正向复合在 \(eMe\) 上也显然为恒等。
+
+由\cref{b4:prop:hochschild-low-degrees}和\cref{b4:thm:tor-balanced}，\(\operatorname{HH}_n(B,M)\) 是 \(Q_B\) 关于双模变量 \(M\) 的左导出函子。这里 \(M\mapsto M^{\mathrm r}\) 是左右 \(B^e\) 模之间的精确等价，因而可在 \(M\) 的双模投射消解上计算。\(F\) 正合且保持投射，将同一个消解送到 \(F(M)\) 的投射消解；上面的零次自然同构逐项给出同调同构。取 \(M=M_r(N)\) 即得结论。
+\end{proof}
+
+一般的 \(k\) 线性 Morita 等价由互逆的张量双模实现；其 Hochschild 同调不变性见 Weibel\cite[Theorem 9.5.6]{Weibel1994HomologicalAlgebra}。本章只在矩阵情形展开证明，所用范畴等价与原书\cite[Proposition 9.5.2, Corollary 9.5.3]{Weibel1994HomologicalAlgebra}一致。
+
+\begin{example}\label{b4:exm:matrix-hochschild-vanishing}
+对任意域 \(k\) 和 \(r\ge1\)，\(k^e=k\)，所以
+\[
+\begin{gathered}
+\operatorname{HH}_0(M_r(k))=k,\qquad
+\operatorname{HH}^0(M_r(k))=k,\\
+\operatorname{HH}_n(M_r(k))=\operatorname{HH}^n(M_r(k))=0\quad(n>0).
+\end{gathered}
+\]
+零次同调的同构是普通迹在交换子商上诱导的映射，其逆送 \(c\) 到 \([cE_{11}]\)，不需要除以 \(r\)。即使特征整除 \(r\)，\([I_r]\) 的迹为零，也不妨碍整个同调空间是一维。由\cref{b4:prop:hochschild-low-degrees}，矩阵代数的导子都是内导子；由\cref{b4:thm:hh2-deformation-classification}，其一阶形变均等价于平凡形变。
+\end{example}
 
 \subsection{光滑交换代数的 Hochschild 同调}
 \label{b4:subsec:1204:02}
 
-待撰写。
+\(\operatorname{HH}_1(A)=\Omega_{A/k}\) 提示：在合适的交换代数上，高次同调应当与微分的外幂有关。先看一个可以只用已学消解算完的情形。
+
+\begin{proposition}\label{b4:prop:polynomial-hochschild}
+设 \(A=k[x_1,\ldots,x_d]\)，其中 \(k\) 为域，\(d\ge0\)。作为分次 \(A\) 模，
+\[
+\operatorname{HH}_n(A)\cong\bigwedge_A^n A^d,
+\qquad
+\operatorname{HH}^n(A)\cong\bigwedge_A^n (A^d)^*.
+\]
+在同调端可把标准基与 \(dx_1,\ldots,dx_d\) 对应；两者在 \(n>d\) 时都为零。
+\end{proposition}
+\begin{proof}
+包络代数为 \(S=k[x_1,\ldots,x_d,y_1,\ldots,y_d]\)，\(A\) 是商 \(S/(x_1-y_1,\ldots,x_d-y_d)\)。依次令 \(x_i=y_i\) 后仍为多项式环，所以下一个 \(x_j-y_j\) 不为零因子。这是正则列，由\cref{b4:prop:koszul-resolution}，相应 Koszul 复形是 \(A\) 的有限自由 \(S\) 模消解。与 \(A\) 张量或取 \(\operatorname{Hom}_S(-,A)\) 后，每个 \(x_i-y_i\) 的作用为零，微分全部消失。各项分别为 \(\bigwedge_A^n A^d\) 及其对偶。有限自由模的楔积基将后者识别为 \(\bigwedge_A^n(A^d)^*\)。微分模的基 \(dx_i\) 则由多项式逐变量求导的泛性质得到。
+\end{proof}
+
+要推广到一般交换代数，需要区分光滑与仅仅没有明显奇异方程。下面给出用于外部结果的精确条件。
+
+\begin{definition}\label{b4:def:smooth-algebra-hh}
+设 \(A\) 为有限展示的交换含幺 \(k\) 代数。若对每个交换含幺 \(k\) 代数 \(E\)、每个平方零理想 \(J\subseteq E\) 及每个 \(k\) 代数同态 \(A\to E/J\)，都存在提升 \(A\to E\)，则称 \(A\) 在 \(k\) 上\term[guanghua-daishu]{光滑}[smooth]。平方零指 \(J^2=0\)，提升不要求唯一。
+\end{definition}
+
+多项式代数满足此条件，因为分别提升各生成元的像即可。这里要求 \(E\) 交换；它不等同于对所有非交换扩张的提升性质，也不蕴含 \(\operatorname{HH}^2(A)=0\)。例如两个变量的多项式代数在\cref{b4:prop:polynomial-hochschild}中有非零二次上同调。
+
+\ProseParagraphBreak
+以下比较结果作为选读的外部定理使用，本章不证明一般光滑情形。Weibel\cite[Theorem 9.4.7]{Weibel1994HomologicalAlgebra}给出更一般的本质有限型版本；这里仅陈述有限展示的情形。
+
+\begin{theorem}[Hochschild--Kostant--Rosenberg 定理，外部引用]\label{b4:thm:hkr-external}
+设 \(k\) 为域，\(A\) 为在 \(k\) 上光滑的有限展示交换代数。则有自然 \(A\) 模同构
+\[
+\bigwedge_A^n\Omega_{A/k}\longrightarrow\operatorname{HH}_n(A)
+\qquad(n\ge0).
+\]
+它把 \(a_0\,da_1\wedge\cdots\wedge da_n\) 送到
+\[
+\left[\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+a_0\otimes a_{\sigma(1)}\otimes\cdots\otimes a_{\sigma(n)}\right].
+\]
+\end{theorem}
+
+该同构不要求特征零。若另有 \(\operatorname{char}k=0\)，逆映射可写成
+\([a_0\otimes\cdots\otimes a_n]\mapsto
+\frac1{n!}a_0\,da_1\wedge\cdots\wedge da_n\)；正特征下不能直接沿用含 \(1/n!\) 的公式。上面的多项式计算提供了各次数大小的具体检验。这里没有把同调比较升级为整个上链复形的乘法或括号比较，后者需要另行讨论。
 
 \subsection{一阶形变的高阶延拓障碍}
 \label{b4:subsec:1204:03}
 
-待撰写。
+\cref{b4:exm:dual-numbers-first-deformation}的一阶形变确能继续延拓：\(k[[t]][x]/(x^2-t)\) 以 \(1,x\) 为自由基，结合性来自多项式商。但下面的同样小的代数已经有不能通过第二阶的形变。
+
+\begin{example}\label{b4:exm:obstructed-deformation}
+设 \(k\) 为任意域，\(A=k\oplus kx\oplus ky\)，其中 \(V=kx\oplus ky\) 满足 \(V^2=0\)，\(1\) 为单位。定义归一化二次上链 \(\phi\)，在 \(V\times V\) 上规定
+\[
+\phi(x,x)=y,\qquad \phi(y,x)=y,\qquad
+\phi(x,y)=\phi(y,y)=0.
+\]
+当三个自变量属于 \(V\) 时，\(\delta\phi\) 的左右作用项因 \(V^2=0\) 消失，内部项也因相邻乘积为零而消失；某个自变量为 \(1\) 时，归一化使其余两项抵消。由三线性，\(\delta\phi=0\)。故 \(a*b=ab+t\phi(a,b)\) 确是一阶形变。
+
+\ProseParagraphBreak
+然而
+\[
+(\phi\circ\phi)(x,x,x)
+=\phi(y,x)-\phi(x,y)=y\ne0.
+\]
+对任意二次上链 \(\psi\)，交换性和 \(x^2=0\) 给出
+\[
+(\delta\psi)(x,x,x)
+=x\psi(x,x)-\psi(x,x)x=0.
+\]
+因此 \(\phi\circ\phi\) 不可能是余边，\eqref{b4:eq:second-deformation-obstruction}无解。这个一阶形变在任何特征下都不能延拓至模 \(t^3\)。
+\end{example}
+
+此例还说明，障碍不只是一句存在性警告。给出乘法表后，先计算二余圈，再在一个特定三元组上计算障碍，最后证明所有余边在该三元组上的值都为零，就足以判定无法延拓。其余未选的二阶系数不能改变这一结论。

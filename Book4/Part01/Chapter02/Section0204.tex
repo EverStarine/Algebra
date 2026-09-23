@@ -5,8 +5,6 @@
 \section{函子与极限}
 \label{b4:sec:0204}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 可交换的充分条件
@@ -19,14 +17,167 @@
 \subsection{极限与余极限交换的充分条件}
 \label{b4:subsec:0204:01}
 
-待撰写。
+把一个图表先取极限再施加函子，与先施加函子再取极限，是两种不同的操作。即使两边都有对象，也还需要一个由泛性质决定的比较映射，才能准确询问它们是否相同。
+
+\begin{definition}[保持极限与余极限]\label{b4:def:preserves-limits}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为函子，\(J\) 为小范畴，\(D:J\rightarrow\mathcal C\) 为有极限的图表。若 \(F\) 把其极限锥送到 \(FD\) 的极限锥，则称 \(F\) 保持这个极限。当 \(\lim_JFD\) 也已选定时，这等价于由锥 \(F(\pi_j)\) 诱导的比较映射
+\[
+F(\lim_JD)\longrightarrow\lim_JFD
+\]
+为同构。保持余极限的定义相应地要求余极限余锥被送到余极限余锥；在两边均存在时，比较映射的方向为
+\[
+\operatorname{colim}_JFD\longrightarrow
+F(\operatorname{colim}_JD).
+\]
+\end{definition}
+
+若 \(F\) 保持相关大小的积与等化子，则由\cref{b4:thm:limits-products-equalizers}可知它保持相应的极限：把该定理构造中的两个积及其等化子依次施加 \(F\)，所得仍是同一图表的极限构造。对偶地，保持余积与余等化子足以保证保持相应的余极限。这里包括空积或空余积，不能只检查非空族。
+
+\begin{proposition}[Hom 函子保持极限]\label{b4:prop:representables-preserve-limits}
+设 \(\mathcal C\) 为局部小范畴，\(X\in\mathcal C\)。函子
+\(\mathcal C(X,-):\mathcal C\rightarrow\mathbf{Set}\)
+保持所有已经存在的小极限。具体地，若 \(D:J\rightarrow\mathcal C\) 有极限，则
+\[
+\mathcal C(X,\lim_JD)
+\ \cong\
+\lim_{j\in J}\mathcal C(X,D(j)).
+\]
+对偶地，若 \(D\) 有余极限，则
+\[
+\mathcal C(\operatorname{colim}_JD,X)
+\ \cong\
+\lim_{j\in J^{\mathrm{op}}}\mathcal C(D(j),X).
+\]
+\end{proposition}
+\begin{proof}
+第一式右边的元素是一族态射 \(f_j:X\rightarrow D(j)\)，满足
+\(D(\alpha)f_j=f_k\)。它正是以 \(X\) 为顶点的锥，所以极限泛性质将它与唯一的 \(f:X\rightarrow\lim_JD\) 对应。这个双射就是比较映射，因为它把 \(f\) 送到 \((\pi_jf)\)。第二式的右边是与图表相容的态射族 \(D(j)\rightarrow X\)，余极限泛性质给出所求双射。两式都与预复合、后复合相容，因此也是自然的对应。
+\end{proof}
+
+这个证明只使用泛性质。\chapref{b4:ch:03}把这类 Hom 函子称为可表函子，并进一步研究哪些函子来自一个对象；在这里不需要先使用 Yoneda 引理。
+
+\begin{proposition}[同类极限的交换]\label{b4:prop:limits-fubini}
+设 \(I,J\) 为小范畴，\(D:I\times J\rightarrow\mathcal C\) 为图表。若 \(\mathcal C\) 具有所需的小极限，则存在保持全部结构映射的自然同构
+\[
+\lim_{i\in I}\lim_{j\in J}D(i,j)
+\ \cong\
+\lim_{(i,j)\in I\times J}D(i,j)
+\ \cong\
+\lim_{j\in J}\lim_{i\in I}D(i,j).
+\]
+若 \(\mathcal C\) 具有所需的小余极限，则余极限之间也有相应的交换同构。
+\end{proposition}
+\begin{proof}
+从对象 \(T\) 到第一个迭代极限的态射，等价于一族对 \(i\) 相容的态射
+\(T\rightarrow\lim_jD(i,j)\)，又等价于一族
+\(T\rightarrow D(i,j)\)，对 \(i,j\) 两个方向的箭头均相容。积范畴中的每条箭头都可分解为这两个方向的箭头，所以它正是积范畴图表上的锥。这就验证了该迭代对象满足中间极限的泛性质。交换 \(i,j\) 得到另一同构。所有同构由结构映射确定，因而具有所述自然性。反转箭头得到余极限版本。
+\end{proof}
+
+这一命题讨论极限与极限、余极限与余极限的交换。极限与余极限混合时，通常需要额外条件，下面的滤过性与有限性就是一组重要的充分条件。
 
 \subsection{有限与无限的积和余积}
 \label{b4:subsec:0204:02}
 
-待撰写。
+在有限积中选取元素，只涉及有限个分量；在等化子中检验元素，只涉及一个等式。因此，滤过余极限的单阶段判据可以处理有限极限。但对于无限多个分量，各分量需要的阶段可能没有共同上界。
+
+\begin{proposition}[滤过余极限与有限极限交换]\label{b4:prop:filtered-colimits-finite-limits}
+设 \(I\) 为滤过小范畴，\(J\) 为对象与态射均有限的范畴，\(\mathcal C\) 为 \(\mathbf{Set}\) 或 \(R\text{-}\mathbf{Mod}\)，其中 \(R\) 为含幺环。对每个图表 \(D:I\times J\rightarrow\mathcal C\)，自然比较映射
+\[
+\operatorname{colim}_{i\in I}\lim_{j\in J}D(i,j)
+\longrightarrow
+\lim_{j\in J}\operatorname{colim}_{i\in I}D(i,j)
+\]
+是同构。
+\end{proposition}
+\begin{proof}
+先取 \(\mathcal C=\mathbf{Set}\)，且 \(J\) 非空。右边的一个元素是一族相容的类 \((\overline x_j)\)。因为 \(J\) 只有有限个对象，可选一个共同的 \(i\)，使全部 \(\overline x_j\) 均由 \(x_j\in D(i,j)\) 表示。对每条 \(\alpha:j\rightarrow k\)，相容性说明 \(D(i,\alpha)x_j\) 与 \(x_k\) 在滤过余极限中相等，因此某个后续态射能使此等式成立。只有有限条箭头，由有限数据共同比较引理可把所有等式安排在同一个后续对象 \(i'\) 中成立。于是这些像构成 \(\lim_jD(i',j)\) 的元素，证明比较映射满射。
+
+若左边两个元素具有相同的像，先把它们的代表送到一个共同对象 \(i\)。这给出两个相容元组 \((x_j)\)、\((y_j)\)。右边相等表示每个 \(x_j,y_j\) 在滤过余极限中相等；有限多个等式可在同一个后续对象实现，因此两个元组在那里相等。它们在左边的类也相等，证明单射。
+
+当 \(J\) 为空时，每个内层极限是单点集。非空滤过范畴中任意两个对象有共同目标，所以常值单点集图表的余极限仍是单点集，两边相同。
+
+在模范畴中，极限的底集合由相容元组组成，滤过余极限的底集合由\cref{b4:prop:filtered-module-elements}给出同样的元素模型。因而刚才的论证证明比较映射为双射。它本来就是模同态，所以是模同构；空图表时两边均为零模。
+\end{proof}
+
+\begin{example}[无限积使比较映射失去满射性]\label{b4:exm:filtered-infinite-product}
+设 \(k\) 为域，以非负整数 \(n\) 组成有向指标集，以正整数 \(j\) 标记一族模。令
+\[
+D_{n,j}=
+\begin{cases}
+k,&j\le n,\\
+0,&j>n,
+\end{cases}
+\]
+并以自然包含作为 \(n\) 方向的映射。对每个固定的 \(j\)，都有 \(\varinjlim_nD_{n,j}=k\)，但比较映射为
+\[
+\varinjlim_n\prod_{j\ge1}D_{n,j}
+=\bigoplus_{j\ge1}k
+\ \longrightarrow\
+\prod_{j\ge1}\varinjlim_nD_{n,j}
+=\prod_{j\ge1}k.
+\]
+它遗漏了 \((1,1,\ldots)\)。左边任何元素都在一个有限阶段出现，因此只有有限多个非零分量；右边允许各分量在不同阶段出现，没有统一的有限阶段。
+\end{example}
+
+有限个模的积与余积相同，不表示相应的无限构造也相同。一般的自然同态
+\(\bigoplus_iM_i\rightarrow\prod_iM_i\)
+是把有限支集元组视为任意元组；只有当其余元组都满足有限支集条件时，它才是满射。在集合范畴中，甚至两个非空集合的积与不交并也没有这样统一的同构。
 
 \subsection{正合函子与无限极限、余极限}
 \label{b4:subsec:0204:03}
 
-待撰写。
+第二卷在模范畴中研究了正合性。现在可以问：保持短正合列，是否足以保持本章的全部构造？对于有限极限与有限余极限，答案是肯定的；对于无限构造，还需要更多条件。
+
+\begin{definition}[模范畴之间的正合函子]\label{b4:def:exact-module-functor}
+设 \(R,S\) 为含幺环。若函子 \(F:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 在每个 Hom 群上保持加法，则称 \(F\) 为加性函子。若加性函子 \(F\) 把每个短正合列送到短正合列，则称它为正合函子。
+\end{definition}
+
+\begin{proposition}[正合性与有限构造]\label{b4:prop:exact-preserves-finite}
+设 \(R,S\) 为含幺环。正合函子
+\(F:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\)
+保持全部有限极限与有限余极限。
+\end{proposition}
+\begin{proof}
+加性给出 \(F(0)=0\)：零模的恒等映射是零态射，故 \(F(0)\) 的恒等映射也为零，它只能是零模。对有限直和的包含与投影，关系
+\(p_i\iota_j=\delta_{ij}\)、\(\sum_i\iota_ip_i=1\)
+在施加加性函子后仍成立。这些关系表明 \(F\) 保持有限直和，也就是模中的有限积与余积。
+
+对同态 \(f:M\rightarrow N\)，将它分解为满射 \(M\rightarrow\operatorname{im}f\) 与包含 \(\operatorname{im}f\rightarrow N\)。分别对
+\[
+0\longrightarrow\ker f\longrightarrow M
+\longrightarrow\operatorname{im}f\longrightarrow0,\qquad
+0\longrightarrow\operatorname{im}f\longrightarrow N
+\longrightarrow\operatorname{coker}f\longrightarrow0
+\]
+使用正合性，得到 \(F(\ker f)\cong\ker F(f)\) 及
+\(F(\operatorname{coker}f)\cong\operatorname{coker}F(f)\)，且同构保持相应结构映射。因此 \(F\) 保持核与余核。又因
+\(F(f-g)=F(f)-F(g)\)，它保持等化子与余等化子。最后应用积与等化子、余积与余等化子的构造判据。
+\end{proof}
+
+\begin{example}[正合函子不保持无限积]\label{b4:exm:exact-not-products}
+函子 \(F:\mathbf{Ab}\rightarrow\mathbb Q\text{-}\mathbf{Mod}\)，
+\(F(M)=\mathbb Q\otimes_{\mathbb Z}M\)，是正合的，却不保持可数积。先说明正合性所用的事实：这个张量积可写成分母为非零整数的分式模，且 \(m/s=0\) 当且仅当某个非零整数零化 \(m\)。张量积到分式模的映射为 \((a/b)\otimes m\mapsto am/b\)，逆映射为 \(m/s\mapsto(1/s)\otimes m\)，由平衡关系可验证互逆。对于短正合列 \(0\rightarrow A\rightarrow B\rightarrow C\rightarrow0\)，分式模中的单射性由上述零元判据得到；若 \(b/s\) 在 \(C\) 中为零，则某个非零整数 \(t\) 使 \(tb\) 来自 \(A\)，从而 \(b/s=(tb)/(ts)\) 来自 \(A\)；满射性则逐个提升分子。这证明了 \(F\) 正合。
+
+\ProseParagraphBreak
+现在考虑比较映射
+\[
+\mathbb Q\otimes_{\mathbb Z}\prod_{n\ge1}\mathbb Z
+\longrightarrow\prod_{n\ge1}\mathbb Q.
+\]
+左边每个元素都可通分为一个 \((a_n)/s\)，故其像具有统一的非零整数分母。元组 \((2^{-n})_{n\ge1}\) 没有这种分母，因此不在像中。失败的是无限积；有限个分母总能通分，与上一命题并不矛盾。
+\end{example}
+
+\begin{example}[正合函子不保持无限余积]\label{b4:exm:exact-not-coproducts}
+设 \(k\) 为域，取 \(F:k\text{-}\mathbf{Mod}\rightarrow k\text{-}\mathbf{Mod}\)，\(F(V)=\prod_{n\ge1}V\)，态射逐分量作用。这个函子是加性的，并且正合：向量空间的每个短正合列都分裂，选定的线性截面逐分量作用，就给出施加 \(F\) 后的截面；核仍逐分量计算。
+
+\ProseParagraphBreak
+对于可数族 \(V_j=k\)，余积的比较映射为
+\[
+\bigoplus_{j\ge1}\prod_{n\ge1}k
+\longrightarrow
+\prod_{n\ge1}\bigoplus_{j\ge1}k.
+\]
+左边元素只有有限多个非零的 \(j\) 分量，所以像中的所有行在同一个有限的列集合内非零。右边允许每一行分别具有有限支集。矩阵 \(a_{n,j}=\delta_{n,j}\) 属于右边，却不在左边的像中，故比较映射不是满射。
+\end{example}
+
+由此，正合性控制核、余核与有限直和，却不能自动控制无限积或无限余积。若另知正合函子保持所有小积，则它保持所有小极限；若另知它保持所有小余积，则它保持所有小余极限。这些结论仍由本章已经证明的构造判据得到，不需要额外的正合性公理。

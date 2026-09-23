@@ -5,7 +5,7 @@
 \section{Yoneda 引理}
 \label{b4:sec:0302}
 
-% TODO: 按以下纲要要点撰写本节。
+% 正文按纲要写入；各节的基础结果在本章证明。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,114 @@
 \subsection{Yoneda 嵌入}
 \label{b4:subsec:0302:01}
 
-待撰写。
+对局部小范畴 \(\mathcal C\) 中的对象 \(A\)，函子 \(h_A=\operatorname{Hom}_{\mathcal C}(-,A)\) 记录从每个对象到 \(A\) 的态射。若 \(a:A\rightarrow B\)，后复合给出自然变换
+\[
+h_a:h_A\Longrightarrow h_B,
+\qquad (h_a)_X(f)=a\circ f.
+\]
+自然性来自 \(a\circ(f\circ u)=(a\circ f)\circ u\)，其中 \(u:X'\rightarrow X\)。又有 \(h_{1_A}=1_{h_A}\) 及 \(h_{ba}=h_b\circ h_a\)。当 \(\mathcal C\) 小时，因此得到函子
+\[
+\mathsf y:\mathcal C\longrightarrow[\mathcal C^{\mathrm{op}},\mathbf{Set}],
+\qquad A\longmapsto h_A,\quad a\longmapsto h_a.
+\]
+它称为\term[yoneda-qianru]{Yoneda 嵌入}[Yoneda embedding]。名称中的“嵌入”将在下面证明为全忠实性；一般不能把它理解成对象集合上的字面包含。
+\symidx{\(\mathsf y\)：Yoneda 嵌入}
+
+\ProseParagraphBreak
+若 \(\mathcal C\) 仅局部小，下文只按分量处理 \(h_A\) 以及涉及它的自然变换，不预设整个集合值函子范畴都在\chapref{b4:ch:01}的大小范围内。引理将证明，以 \(h_A\) 为源、\(F\) 为目标的自然变换由集合 \(F(A)\) 参数化。因此只考虑可表函子之间的变换时，每个 Hom 族仍为集合；此时“Yoneda 嵌入全忠实”具体指下文给出的 Hom 集双射。
+
+\ProseParagraphBreak
+在集合范畴，\(h_A(X)\) 是所有 \(X\) 指标的 \(A\) 中元素族；改变指标的映射 \(X'\rightarrow X\)，就是把元素族拉回。一个映射 \(a:A\rightarrow B\) 对每个族逐项应用 \(a\)，于是自动产生相容的族变换。对于一般范畴，态射 \(X\rightarrow A\) 取代了元素族。关键问题是：每一种对所有 \(X\) 都相容的变换，是否都这样得到？
 
 \subsection{Yoneda 引理的证明与自然性}
 \label{b4:subsec:0302:02}
 
-待撰写。
+记 \(\operatorname{Nat}(H,F)\) 为函子 \(H\) 到 \(F\) 的自然变换族。\term[yoneda-yinli]{Yoneda 引理}[Yoneda lemma]说明，以可表函子为源时，只需计算一个分量中的一个值。
+
+\begin{theorem}[Yoneda 引理]\label{b4:thm:yoneda}
+设 \(\mathcal C\) 为局部小范畴，\(F:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\) 为函子，\(A\in\mathcal C\)。求值映射
+\[
+\Phi_{A,F}:\operatorname{Nat}(h_A,F)\longrightarrow F(A),
+\qquad \alpha\longmapsto\alpha_A(1_A)
+\]
+是双射。其逆把 \(u\in F(A)\) 送到自然变换 \(\alpha^u\)，其中
+\[
+\alpha^u_X(f)=F(f)(u)\qquad(f:X\rightarrow A).
+\]
+这一双射在 \(A\) 与 \(F\) 上自然：若 \(a:A\rightarrow B\)、\(\alpha:h_B\Rightarrow F\)、\(\beta:F\Rightarrow G\)，则
+\[
+\begin{aligned}
+\Phi_{A,F}(\alpha\circ h_a)&=F(a)\bigl(\Phi_{B,F}(\alpha)\bigr),\\
+\Phi_{A,G}(\beta\circ\gamma)&=\beta_A\bigl(\Phi_{A,F}(\gamma)\bigr)
+\qquad(\gamma:h_A\Rightarrow F).
+\end{aligned}
+\]
+对协变函子 \(F:\mathcal C\rightarrow\mathbf{Set}\)，相应结论为
+\(\operatorname{Nat}(h^A,F)\cong F(A)\)，逆映射仍由 \(f:A\rightarrow X\mapsto F(f)(u)\) 给出。
+\end{theorem}
+\begin{proof}
+给定 \(u\in F(A)\)，首先验证公式确实定义自然变换。对 \(v:X'\rightarrow X\) 及 \(f:X\rightarrow A\)，反变函子公理给出
+\[
+\alpha^u_{X'}(fv)=F(fv)(u)=F(v)F(f)(u)
+=F(v)\bigl(\alpha^u_X(f)\bigr).
+\]
+所以 \(\alpha^u\) 自然，且 \(\alpha^u_A(1_A)=u\)。反过来，若 \(\alpha:h_A\Rightarrow F\) 自然，将其自然性用于 \(f:X\rightarrow A\) 和 \(1_A\in h_A(A)\)，得到
+\[
+\alpha_X(f)=F(f)\bigl(\alpha_A(1_A)\bigr).
+\]
+这说明从 \(\alpha_A(1_A)\) 按所给公式重建的自然变换就是 \(\alpha\)，故两个映射互逆。
+
+现在检查两个参数的自然性。对 \(a:A\rightarrow B\) 及 \(\alpha:h_B\Rightarrow F\)，有
+\[
+(\alpha\circ h_a)_A(1_A)=\alpha_A(a)
+=F(a)\bigl(\alpha_B(1_B)\bigr).
+\]
+对 \(\beta:F\Rightarrow G\) 及 \(\gamma:h_A\Rightarrow F\)，则
+\[
+(\beta\circ\gamma)_A(1_A)
+=\beta_A\bigl(\gamma_A(1_A)\bigr).
+\]
+这分别证明了两条自然性等式。协变形式对相反范畴 \(\mathcal C^{\mathrm{op}}\) 应用刚证的结论即可；在原范畴中，所用态射方向恰变成 \(A\rightarrow X\)。
+\end{proof}
+
+上述证明中的恒等态射有明确作用。任意 \(f:X\rightarrow A\) 都由 \(1_A\) 沿 \(f\) 前复合得到；自然性迫使一个变换在 \(f\) 上的值由它在 \(1_A\) 上的值决定。反过来，函子公理保证这个被迫得到的公式在所有对象间相容。引理并不是说随便选择一个分量即可恢复自然变换，而是使用表示对象的恒等态射。
+
+\begin{corollary}\label{b4:cor:yoneda-embedding}
+设 \(\mathcal C\) 为局部小范畴。对任意 \(A,B\in\mathcal C\)，映射
+\[
+\operatorname{Hom}_{\mathcal C}(A,B)\longrightarrow\operatorname{Nat}(h_A,h_B),
+\qquad a\longmapsto h_a
+\]
+是双射，故 Yoneda 嵌入为全忠实函子。若 \(h_A\) 与 \(h_B\) 自然同构，则 \(A\cong B\)。
+\end{corollary}
+\begin{proof}
+在 Yoneda 引理中取 \(F=h_B\)，右边为 \(h_B(A)=\operatorname{Hom}_{\mathcal C}(A,B)\)，逆对应正是后复合。因此态射映射为双射。若自然同构 \(\alpha:h_A\xrightarrow{\sim}h_B\) 及其逆分别来自 \(a:A\rightarrow B\)、\(b:B\rightarrow A\)，则
+\[
+h_{ba}=\alpha^{-1}\alpha=1_{h_A}=h_{1_A},\qquad
+h_{ab}=1_{h_B}=h_{1_B}.
+\]
+忠实性给出 \(ba=1_A\)、\(ab=1_B\)，故 \(a\) 是同构。
+\end{proof}
+
+这一嵌入的标准表述可参阅 Weibel《An Introduction to Homological Algebra》\cite[Example A.3.4]{Weibel1994HomologicalAlgebra}。对于协变 Hom 函子，方向相反：\(\operatorname{Nat}(h^A,h^B)\cong\operatorname{Hom}_{\mathcal C}(B,A)\)。实际使用时先写清固定的是源还是目标，便能避免把变换对应的态射反向。
 
 \subsection{用态射探测对象}
 \label{b4:subsec:0302:03}
 
-待撰写。
+\begin{proposition}\label{b4:prop:hom-detects-morphisms}
+设 \(\mathcal C\) 为局部小范畴，\(f:A\rightarrow B\) 为态射。则：\(f\) 为单态射，当且仅当每个 \(X\in\mathcal C\) 的后复合映射 \(\operatorname{Hom}_{\mathcal C}(X,A)\rightarrow\operatorname{Hom}_{\mathcal C}(X,B)\) 都单射；\(f\) 为满态射，当且仅当每个 \(X\) 的前复合映射 \(\operatorname{Hom}_{\mathcal C}(B,X)\rightarrow\operatorname{Hom}_{\mathcal C}(A,X)\) 都单射。此外，\(f\) 为同构，当且仅当上述后复合映射对每个 \(X\) 都双射。
+\end{proposition}
+\begin{proof}
+前两项分别把单态射与满态射的消去条件按 Hom 集重写，没有增加条件。若 \(f\) 是同构，后复合 \(f^{-1}\) 给出每个映射的逆。反过来，取 \(X=B\)，满射性给出 \(g:B\rightarrow A\) 使 \(fg=1_B\)。再取 \(X=A\)，由于 \(f(gf)=f=f1_A\)，单射性给出 \(gf=1_A\)。所以 \(f\) 是同构。
+\end{proof}
+
+这里必须保留“对每个 \(X\)”或另证明所选对象足以检验。在群范畴中，从平凡群到任意群都只有一个同态，仅用这个对象不能区分群。对左 \(R\) 模则可以用 \(R\) 检验同构，因为 \(\operatorname{Hom}_R(R,M)\cong U(M)\)，而双射的模同态具有线性的逆。这一特殊结论依赖具体范畴，不能当作所有范畴都有的底集合判据。
+
+\begin{example}[交换群中的自然一元运算]\label{b4:exm:yoneda-abelian-operations}
+设 \(U:\mathbf{Ab}\rightarrow\mathbf{Set}\) 为忘却函子。对每个交换群 \(A\)，给一个集合映射 \(t_A:U(A)\rightarrow U(A)\)，并要求对每个群同态 \(f:A\rightarrow B\) 有 \(f(t_A(a))=t_B(f(a))\)。则存在唯一整数 \(n\)，使所有 \(A\) 和 \(a\in A\) 都满足 \(t_A(a)=na\)。
+
+\ProseParagraphBreak
+事实上，取 \(n=t_{\mathbb Z}(1)\)。对唯一满足 \(f_a(1)=a\) 的同态 \(f_a:\mathbb Z\rightarrow A\)，自然性给出 \(t_A(a)=f_a(n)=na\)。反过来，乘固定整数与所有群同态交换。这里从未事先要求 \(t_A\) 为群同态；这一性质被对所有群的自然性迫出。用 Yoneda 语言，这是 \(U\cong h^{\mathbb Z}\) 与 \(\operatorname{Nat}(h^{\mathbb Z},U)\cong U(\mathbb Z)\) 的具体计算。
+\end{example}
+
+若只研究一个群 \(A\)，它的任意集合自映射都可以被指定；把这些映射要求为对全部群同态自然，选择就缩减为一个整数。Yoneda 引理的用途正在于把这种同时涉及许多对象的相容条件，转化成一个明确的参数集合。

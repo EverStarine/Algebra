@@ -5,8 +5,6 @@
 \section{低阶解释}
 \label{b4:sec:1102}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * H^0、H^1 和 H^2
@@ -17,14 +15,112 @@
 \subsection{\texorpdfstring{\(H^0\)、\(H^1\) 与 \(H^2\)}{H0、H1 与 H2}}
 \label{b4:subsec:1102:01}
 
-待撰写。
+次数零是“不动”的条件，次数一衡量同态方程的扭曲，次数二则衡量截面的乘法缺陷。先把余链方程写清，才能看出这些解释来自同一套微分。
+
+\begin{proposition}\label{b4:prop:group-first-cohomology}
+设 \(G\) 是群，\(M\) 是左 \(\mathbb ZG\) 模。则 \(H^0(G,M)=M^G\)，且
+\[
+H^1(G,M)=
+\frac{\{\,c:G\to M\mid c(gh)=c(g)+g c(h)\,\}}
+{\{\,g\mapsto ga-a\mid a\in M\,\}}.
+\]
+分子中的函数称为\term[jiaocha-tongtai]{交叉同态}[crossed homomorphism]，分母中的函数称为主交叉同态。若 \(G\) 在 \(M\) 上平凡作用，则
+\[
+H^1(G,M)\cong\operatorname{Hom}(G_{\mathrm{ab}},M),
+\qquad G_{\mathrm{ab}}=G/[G,G].
+\]
+\end{proposition}
+\begin{proof}
+由\eqref{b4:eq:group-cochain-differential}，一次余圈的条件正是所列方程，一次余边是 \(g\mapsto ga-a\)。代入 \(g=h=1\) 可知每个交叉同态均有 \(c(1)=0\)。平凡作用时该方程成为群同态方程，主交叉同态全为零；任何到交换群 \(M\) 的同态都且只通过交换化群分解。
+\end{proof}
+
+对 \(G=C_2=\langle s\rangle\) 在 \(M=\mathbb Z\) 上的取负作用，交叉同态由任意整数 \(c(s)\) 决定，因为 \(c(s^2)=c(s)-c(s)=0\)；主交叉同态的值为 \(-2a\)。所以 \(H^1(C_2,\mathbb Z_{\mathrm{sgn}})=\mathbb Z/2\)。这与平凡系数的 \(H^1(C_2,\mathbb Z)=0\) 不同。
+
+\ProseParagraphBreak
+次数二的余圈条件和余边公式分别是
+\begin{align}
+g f(h,\ell)-f(gh,\ell)+f(g,h\ell)-f(g,h)&=0,
+\label{b4:eq:group-two-cocycle}\\
+(\delta b)(g,h)&=g b(h)-b(gh)+b(g).
+\label{b4:eq:group-two-coboundary}
+\end{align}
+可以让每个二次上同调类都有满足 \(f(1,g)=f(g,1)=0\) 的代表，称为\term[guiyihua-er-yuquan]{归一化 \(2\)-余圈}[normalized 2-cocycle]。事实上，将余圈方程分别用于 \((1,g,h)\)、\((g,1,h)\)，得到 \(f(1,h)=t\)、\(f(g,1)=gt\)，其中 \(t=f(1,1)\)；减去常值一余链 \(b(g)=t\) 的余边即可。两个归一化代表若相差 \(\delta b\)，代入 \((1,g)\) 又得到 \(b(1)=0\)。因此归一化不会改变这里的分类问题。
 
 \subsection{交叉同态与核为交换群的群扩张}
 \label{b4:subsec:1102:02}
 
-待撰写。
+\begin{definition}\label{b4:def:extension-fixed-action}
+设 \(G\) 是群，\(M\) 是给定的左 \(\mathbb ZG\) 模。一条群的正合列
+\[
+1\longrightarrow M\xrightarrow{\iota}E\xrightarrow{\pi}G\longrightarrow1
+\]
+中，若 \(M\) 作为核使用其加法群结构，并且任取 \(\pi(e)=g\) 都有
+\(e\iota(m)e^{-1}=\iota(gm)\)，就称它为实现给定作用的扩张。两个这样的扩张的等价，是一个中间群同构与两端的恒等映射组成正合列之间的映射。
+\end{definition}
+
+共轭作用不依赖 \(e\) 的选择，因为同一纤维中的两个提升相差核中的元素，而核交换。条件并不要求核位于中心；只有给定作用平凡时，才得到中心扩张。这里把核和商与既定的 \(M,G\) 识别，也是分类数据的一部分。
+
+\begin{theorem}[群扩张的上同调分类]\label{b4:thm:group-extensions-h2}
+设 \(G\) 是群，\(M\) 是给定的左 \(\mathbb ZG\) 模。实现该作用的扩张的等价类与 \(H^2(G,M)\) 一一对应。零类对应分裂扩张 \(M\rtimes G\)。
+\end{theorem}
+\begin{proof}
+给定扩张，选集合截面 \(s:G\to E\)，使 \(\pi s=1_G\)、\(s(1)=1_E\)。唯一确定的函数 \(f:G^2\to M\) 满足
+\[
+s(g)s(h)=\iota(f(g,h))s(gh).
+\]
+比较 \((s(g)s(h))s(\ell)\) 与 \(s(g)(s(h)s(\ell))\)，前者的核分量为 \(f(g,h)+f(gh,\ell)\)，后者为 \(g f(h,\ell)+f(g,h\ell)\)。结合律因而恰给出\eqref{b4:eq:group-two-cocycle}；截面在单位元处的条件给出归一化。若改取 \(s'(g)=\iota(b(g))s(g)\)，其中 \(b(1)=0\)，则
+\[
+f'(g,h)=f(g,h)+b(g)+g b(h)-b(gh)=f(g,h)+\delta b(g,h).
+\]
+等价扩张传送截面后给出相同函数，故得到良定义的上同调类。
+
+反过来，取归一化 \(2\)-余圈 \(f\)，在集合 \(M\times G\) 上规定
+\[
+(a,g)(b,h)=(a+g b+f(g,h),gh).
+\]
+两种三项乘法之差正是循环方程，故运算结合。\((0,1)\) 是单位元，\((a,g)\) 的逆为
+\[
+\bigl(-g^{-1}a-g^{-1}f(g,g^{-1}),g^{-1}\bigr).
+\]
+循环方程在 \((g,g^{-1},g)\) 处给出 \(f(g,g^{-1})=g f(g^{-1},g)\)，保证此式同时是左右逆。嵌入 \(a\mapsto(a,1)\) 与投影 \((a,g)\mapsto g\) 形成所需扩张，共轭在核上确为给定作用。
+
+若 \(f'=f+\delta b\)，则
+\((a,g)\mapsto(a+b(g),g)\)
+是从 \(E_{f'}\) 到 \(E_f\) 的扩张等价；代入乘法公式即可看到 \(\delta b\) 的三项分别被吸收。反过来，任何固定两端的扩张等价都以这种形式作用于 \((0,g)\)，因而使两循环相差边界。原扩张中的每个元素唯一写为 \(\iota(a)s(g)\)，这个表示把重建的 \(E_f\) 同构到原扩张，故两项构造互逆。
+
+最后，\(f=0\) 时乘法就是半直积乘法；扩张分裂时可选同态截面，其 \(f\) 为零。一个类为零的扩张通过上述截面改变也能令 \(f=0\)，故零类恰对应分裂扩张。
+\end{proof}
+
+上述构造也解释了 \(H^1\)。在已经分裂的扩张 \(M\rtimes G\) 中，一个同态截面必为 \(g\mapsto(c(g),g)\)，同态条件恰是交叉同态方程。用 \((a,1)\) 共轭截面，把 \(c(g)\) 改成 \(c(g)+a-ga\)。于是 \(H^1(G,M)\) 分类的是这些截面在核的共轭下的等价类；\(H^2\) 首先判断扩张本身是否能够分裂，两者回答不同问题。
+
+\begin{example}\label{b4:exm:cyclic-two-extension}
+令 \(G=C_2=\langle s\rangle\)、\(M=\mathbb Z/2\)，作用平凡。归一化 \(2\)-余圈只剩一个可能非零的值 \(f(s,s)\)，余圈条件对这两种取值都成立。归一化 \(2\)-余边在 \((s,s)\) 处为 \(2b(s)=0\)。故 \(H^2(C_2,\mathbb Z/2)=\mathbb Z/2\)：零类给出 \(C_2\times C_2\)，非零类中 \((0,s)^2=(1,1)\)，给出 \(C_4\)。这里是扩张分类，不能把它推广为“不指定核、商及作用的所有群的同构分类”。
+\end{example}
 
 \subsection{Hilbert 第90定理的上同调解释}
 \label{b4:subsec:1102:03}
 
-待撰写。
+设 \(L/K\) 是有限循环 Galois 扩张，\(G=\langle\sigma\rangle\)、\(|G|=m\)。第一卷定理20.2.1和定理20.2.2已经分别证明 Hilbert 第90定理的乘法形式与加法形式。现在只需把它们的方程同上一小节联系起来，而不再重复域论证明。
+
+\begin{proposition}\label{b4:prop:hilbert90-cohomology}
+设 \(L/K\) 是有限循环 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)。对 Galois 自然作用，有
+\[
+H^1(G,L^\times)=0,\qquad H^1(G,L)=0,
+\]
+其中第二个系数使用域的加法群。
+\end{proposition}
+\begin{proof}
+乘法记号下，一余圈满足 \(c(gh)=c(g)\,g(c(h))\)。由 \(a=c(\sigma)\) 递推，
+\[
+c(\sigma^j)=a\,\sigma(a)\cdots\sigma^{j-1}(a).
+\]
+与 \(\sigma^m=1\) 相容当且仅当 \(N_{L/K}(a)=1\)。第一卷定理20.2.1给出 \(a=b/\sigma(b)\)，从而 \(c(g)=b/g(b)\) 对所有 \(g\) 成立。这是以 \(b^{-1}\) 为参数的主交叉同态，所以类为零。我们的边界写作 \(g(u)/u\)，与第一卷 \(b/g(b)\) 的写法参数互逆，但边界子群相同。
+
+加法情形同理：交叉同态由 \(a=c(\sigma)\) 决定，与群关系相容的条件是 \(\operatorname{Tr}_{L/K}(a)=0\)。第一卷定理20.2.2给出 \(a=b-\sigma(b)\)，于是 \(c(g)=b-g(b)=g(-b)-(-b)\) 为边界。该证明不要求扩张次数在 \(K\) 中可逆。
+\end{proof}
+
+对 \(\mathbb C/\mathbb R\)，乘法一次余圈由单位圆上的 \(a\) 决定；Hilbert 第90定理断言它总能写成 \(b/\bar b\)。但这不表示所有正次数都消失：下一节将由周期消解算出
+\(H^2(C_2,\mathbb C^\times)=\mathbb R^\times/N_{\mathbb C/\mathbb R}(\mathbb C^\times)\cong\mathbb Z/2\)。
+
+\ProseParagraphBreak
+任意有限 Galois 扩张也有乘法 \(H^1\) 消失定理；本小节已经证明的是与第一卷相应的循环版本。更一般的陈述和两种系数的区别，可查 Weibel 的《An Introduction to Homological Algebra》\cite[Hilbert's Theorem 90 6.3.7, Hilbert's Theorem 90 6.4.7, Example 6.4.8]{Weibel1994HomologicalAlgebra}。后续使用这里的结论时仍应核对系数是加法群还是乘法群。

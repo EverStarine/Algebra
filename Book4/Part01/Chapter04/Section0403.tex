@@ -5,8 +5,6 @@
 \section{正合函子}
 \label{b4:sec:0403}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 左正合、右正合与正合
@@ -17,14 +15,81 @@
 \subsection{左正合、右正合与正合}
 \label{b4:subsec:0403:01}
 
-待撰写。
+函子保持态射的复合，却不一定保持核或者商。正合性的意义是检验这些构造在应用函子以后还能保留多少。这里首先要求函子与态射加法相容，否则连零态射都未必保持。
+
+\begin{definition}\label{b4:def:exact-functor}
+设 \(\mathcal A,\mathcal B\) 是加性范畴。函子 \(F:\mathcal A\to\mathcal B\) 若在每个态射群上诱导群同态，则称为\term[jiaxing-hanzi]{加性函子}[additive functor]。若两范畴都是交换范畴，则对每个短正合列 \(0\to X\to Y\to Z\to0\)，加性函子 \(F\) 若总使
+\[
+0\longrightarrow F(X)\longrightarrow F(Y)\longrightarrow F(Z)
+\]
+正合，就称为\term[zuozhenghe]{左正合}[left exact]；若总使
+\[
+F(X)\longrightarrow F(Y)\longrightarrow F(Z)\longrightarrow0
+\]
+正合，就称为\term[youzhenghe]{右正合}[right exact]；两者都满足时称为\term[zhenghe-hanzi]{正合函子}[exact functor]。对反变函子，按协变函子 \(\mathcal A^{\mathrm{op}}\to\mathcal B\) 使用相同定义，因此应用后须把箭头次序反转。
+\end{definition}
+
+加性函子保持零对象和有限双积。事实上，\(F(1_0)=F(0)=0\)，所以 \(F(0)\) 的恒等态射为零，任何到它或从它出发的态射都唯一。双积的五个公式则经 \(F\) 后仍成立。因此，“保持核”与“保持余核”是加性函子额外需要满足的两项要求。
+
+\begin{theorem}\label{b4:thm:exact-functor-kernels}
+设 \(F:\mathcal A\to\mathcal B\) 是交换范畴之间的加性函子。它左正合当且仅当保持所有核；右正合当且仅当保持所有余核。正合函子保持像以及任意正合序列的正合性。
+\end{theorem}
+\begin{proof}
+若保持核，则对短正合列，\(F(X)\to F(Y)\) 是 \(F(Y)\to F(Z)\) 的核，故左正合。反过来，设 \(F\) 左正合，分解 \(f:X\to Y\) 为 \(X\xrightarrow eI\xrightarrow iY\)，其中 \(I=\operatorname{im}f\)。短正合列
+\[
+0\to\ker f\to X\xrightarrow e I\to0,\qquad
+0\to I\xrightarrow iY\to\operatorname{coker}f\to0
+\]
+表明 \(F(\ker f)\to F(X)\) 是 \(F(e)\) 的核，且 \(F(i)\) 单。因此它也是 \(F(f)=F(i)F(e)\) 的核。余核结论在反范畴中按同一论证得到。
+
+若 \(F\) 正合，\(\operatorname{im}f=\ker(\operatorname{coker}f)\) 的构造被保持，故 \(F(\operatorname{im}f)\cong\operatorname{im}F(f)\)，同构与像嵌入相容。对序列中每个相邻对 \(f,g\)，\(\operatorname{im}f=\ker g\) 因而仍成立。
+\end{proof}
+
+一个只有 \(X\to Y\to Z\) 三项的正合序列，并不自带两端的单满性质；定义中的两个零对象各有作用。例如 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 保持核，却把 \(\mathbb Z\to\mathbb Z/2\) 送成 \(0\to\mathbb Z/2\)。下面说明这种失去满射的现象来自何处。
 
 \subsection{Hom 与张量积的正合性}
 \label{b4:subsec:0403:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:hom-left-exact}
+设 \(\mathcal A\) 是局部小交换范畴，\(T\) 是其对象。函子 \(\operatorname{Hom}_{\mathcal A}(T,-):\mathcal A\to\mathbf{Ab}\) 与反变函子 \(\operatorname{Hom}_{\mathcal A}(-,T)\) 都左正合。
+\end{proposition}
+\begin{proof}
+设 \(k:K\to X\) 是 \(f:X\to Y\) 的核。复合映射
+\[
+\operatorname{Hom}(T,K)\xrightarrow{k_*}\operatorname{Hom}(T,X)
+\xrightarrow{f_*}\operatorname{Hom}(T,Y)
+\]
+中，\(k_*\) 单；一个 \(u:T\to X\) 满足 \(fu=0\) 当且仅当它唯一地通过 \(k\)。因而 \(k_*\) 恰是 \(f_*\) 的核，\cref{b4:thm:exact-functor-kernels}适用。对反变 Hom，在交换范畴 \(\mathcal A^{\mathrm{op}}\) 中应用相同结论即可。具体说，\(\operatorname{Hom}(-,T)\) 把余核的泛性质转成交换群中的核条件。
+\end{proof}
+
+对于左 \(R\)-模，\(\operatorname{Hom}_R(P,-)\) 总能检验“映到零”，但把一个映到商模的同态提升到原模，需要 \(P\) 的投射性。第二卷推论7.1.5已证明：左 \(R\)-模 \(P\) 投射当且仅当该 Hom 函子正合；第二卷命题7.2.2说明 \(\operatorname{Hom}_R(-,E)\) 正合刻画内射模。这些 Hom 集首先是交换群；若 \(R\) 不交换，不可不加说明地把它们当作左 \(R\)-模。
+
+\begin{proposition}\label{b4:prop:tensor-right-exact}
+设 \(R,S\) 为含幺环，\({}_SP_R\) 为双模。函子
+\[
+P\otimes_R-:R\text{-}\mathbf{Mod}\longrightarrow S\text{-}\mathbf{Mod}
+\]
+右正合。固定右 \(R\)-模时，张量积视为取值于 \(\mathbf{Ab}\) 的函子也有同样结论。
+\end{proposition}
+\begin{proof}
+\cref{b4:prop:hom-tensor-adjunction}把此函子作为 \(\operatorname{Hom}_S(P,-)\) 的左伴随，后者的左 \(R\)-作用为 \((r\varphi)(x)=\varphi(xr)\)。由\cref{b4:thm:adjoints-preserve-colimits}，它保持余核。它还加性，因为 \(1_P\otimes(f+g)\) 与 \((1_P\otimes f)+(1_P\otimes g)\) 在每个纯张量上相同；纯张量生成张量积，所以二者相等。应用\cref{b4:thm:exact-functor-kernels}即可。取 \(S=\mathbb Z\) 得最后的断言。
+\end{proof}
+
+对短正合列 \(0\to\mathbb Z\xrightarrow{\times2}\mathbb Z\to\mathbb Z/2\to0\) 张量 \(\mathbb Z/2\)，左侧乘 \(2\) 变成零映射，故张量函子未必左正合。第二卷命题7.3.2已把平坦性表述为固定一侧后的张量函子保持全部短正合列。后续构造导出函子时，将为这些失去的正合性给出可以计算的对象；此处只需要看清它们可能失去在哪一端。
 
 \subsection{有限极限、有限余极限与正合性}
 \label{b4:subsec:0403:03}
 
-待撰写。
+\begin{theorem}\label{b4:thm:finite-limits-exactness}
+每个交换范畴都有所有有限极限与有限余极限。交换范畴之间的加性函子左正合当且仅当保持有限极限；右正合当且仅当保持有限余极限。因此，加性的右伴随左正合，加性的左伴随右正合。
+\end{theorem}
+\begin{proof}
+有限积由双积给出，\(f,g:X\to Y\) 的等化子是 \(\ker(f-g)\)。\cref{b4:thm:limits-products-equalizers}的构造对有限图表只用有限积与等化子，故有限极限存在。其对偶给出有限余极限。
+
+加性函子已保持零对象和有限双积。若它保持核，便保持 \(\ker(f-g)\)，继而保持上述构造出的有限极限；反向因为核是有限极限而立即成立。结合\cref{b4:thm:exact-functor-kernels}即得左正合的刻画。余极限论证对偶。最后应用\cref{b4:thm:adjoints-preserve-limits,b4:thm:adjoints-preserve-colimits}。
+\end{proof}
+
+“有限”不能删去，交换范畴公理也不保证任意积与余积存在。例如有限维 \(k\)-向量空间构成交换范畴，但无限个非零一维空间的积不能仍为有限维：若积 \(P\) 存在，每一个坐标都会给出 \(\operatorname{Hom}(k,P)\) 中一条线性独立的坐标向量，与有限维性矛盾。
+
+\ProseParagraphBreak
+即便无限构造存在，正合也不能保证保持它们。\cref{b4:exm:exact-not-products}中的有理化函子不保持可数积，\cref{b4:exm:exact-not-coproducts}中的可数直积函子不保持可数余积；两者却都正合。现在可以准确说明它们与本节定理的关系：核、余核及有限双积受正合性控制，而无限族还要求额外的保持性质。

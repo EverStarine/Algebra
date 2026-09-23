@@ -5,7 +5,7 @@
 \section{可表函子}
 \label{b4:sec:0301}
 
-% TODO: 按以下纲要要点撰写本节。
+% 正文按纲要写入；各节的基础结果在本章证明。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +17,106 @@
 \subsection{Hom 函子及表示对象}
 \label{b4:subsec:0301:01}
 
-待撰写。
+自由模的泛性质把一组任意指定的元素变成线性映射；张量积的泛性质把双线性映射变成线性映射。这两种描述都随着目标对象的改变而相容。本节把这种情形统一为一个问题：一个取值于集合的函子，能否用从某个固定对象出发或到达某个固定对象的态射来描述？
+
+\ProseParagraphBreak
+设 \(\mathcal C\) 为局部小范畴，\(A\in\mathcal C\)。记
+\[
+h^A(X)=\operatorname{Hom}_{\mathcal C}(A,X),\qquad
+h_A(X)=\operatorname{Hom}_{\mathcal C}(X,A).
+\]
+对态射 \(u:X\rightarrow Y\)，分别令 \(h^A(u)(f)=u\circ f\) 与 \(h_A(u)(g)=g\circ u\)。复合的结合律保证 \(h^A:\mathcal C\rightarrow\mathbf{Set}\) 是协变函子，\(h_A:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\) 是反变函子。下标固定的是目标，上标固定的是源；只有自由变动的那个变量决定函子的变性。
+\symidx{\(h^A,h_A\)：以 \(A\) 为固定源或固定目标的 Hom 函子}
+
+\begin{definition}\label{b4:def:representable-functor}
+设 \(\mathcal C\) 为局部小范畴。若函子 \(F:\mathcal C\rightarrow\mathbf{Set}\) 存在对象 \(A\in\mathcal C\) 和自然同构 \(\theta:h^A\xrightarrow{\sim}F\)，则称 \(F\) 为\term[kebiao-hanzi]{可表函子}[representable functor]，称 \((A,\theta)\) 为 \(F\) 的一个表示，\(A\) 为表示对象。对于 \(F:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\)，相应要求为自然同构 \(\theta:h_A\xrightarrow{\sim}F\)。
+\end{definition}
+
+这里既要求每个 \(\theta_X\) 为双射，也要求这些双射组成自然变换。协变情形的相容条件为
+\[
+F(u)\bigl(\theta_X(f)\bigr)=\theta_Y(u\circ f)
+\quad(f:A\rightarrow X,\ u:X\rightarrow Y).
+\]
+只知道各个集合具有相同基数，并未给出一个表示。把同一个对象在不同目标中的作用拼在一起，正是自然性所承担的工作。
+
+\begin{example}\label{b4:exm:representable-forgetful}
+设 \(R\) 为含幺环，\(U:R\text{-}\mathbf{Mod}\rightarrow\mathbf{Set}\) 为左模的忘却函子。左正则模 \({}_RR\) 表示 \(U\)，相应双射为
+\[
+\operatorname{Hom}_R(R,M)\longrightarrow U(M),\qquad f\longmapsto f(1).
+\]
+逆映射把 \(m\in M\) 送到 \(r\mapsto rm\)，故无需选择 \(M\) 的基。若 \(v:M\rightarrow N\) 左 \(R\) 线性，则 \((v\circ f)(1)=v(f(1))\)，这恰好是自然性。特别地，\(\mathbb Z\) 表示交换群的底集合函子。
+\end{example}
+
+可表性也包括反变例子。对集合 \(X\)，把子集 \(B\subseteq X\) 对应到特征函数 \(\chi_B:X\rightarrow\{0,1\}\)。等式 \(\chi_{u^{-1}(B)}=\chi_B\circ u\) 表明，取逆像的幂集函子由二元集合表示。这里必须取逆像；取直接像得到另一个协变函子，不能与这一表示混用。
 
 \subsection{张量积和自由对象的可表性解释}
 \label{b4:subsec:0301:02}
 
-待撰写。
+固定一个集合 \(X\) 和一个含幺环 \(R\)。函子
+\[
+M\longmapsto U(M)^X
+\]
+把左 \(R\) 模 \(M\) 送到从 \(X\) 到其底集合的全部映射；模同态通过后复合作用。第二卷第3.1节的自由模泛性质已说明，自由左模 \(R^{(X)}=\bigoplus_{x\in X}Re_x\) 满足
+\[
+\operatorname{Hom}_R(R^{(X)},M)\xrightarrow{\sim}U(M)^X,
+\qquad f\longmapsto\bigl(x\mapsto f(e_x)\bigr).
+\]
+逆映射将有限和 \(\sum_x r_xe_x\) 送到 \(\sum_xr_xa(x)\)。有限支集保证这个公式在一般模中有意义；对模同态 \(v\)，等式 \(v(\sum_xr_xa(x))=\sum_xr_xv(a(x))\) 给出自然性。因此自由模表示的是“指定 \(X\) 个元素”的函子。
+
+\ProseParagraphBreak
+再固定右 \(R\) 模 \(M_R\) 与左 \(R\) 模 \({}_RN\)。对交换群 \(A\)，记 \(\operatorname{Bal}_R(M,N;A)\) 为所有双可加且满足
+\[
+b(mr,n)=b(m,rn)
+\]
+的映射 \(b:M\times N\rightarrow A\) 组成的集合。交换群同态 \(v:A\rightarrow A'\) 将 \(b\) 送到 \(v\circ b\)，于是得到 \(\mathbf{Ab}\rightarrow\mathbf{Set}\) 的函子。第二卷第6.1节的张量积构造及泛性质给出表示
+\[
+\operatorname{Hom}_{\mathbb Z}(M\otimes_RN,A)
+\xrightarrow{\sim}\operatorname{Bal}_R(M,N;A),
+\qquad f\longmapsto\bigl((m,n)\mapsto f(m\otimes n)\bigr).
+\]
+关于 \(A\) 的自然性就是 \(v(f(m\otimes n))=(v\circ f)(m\otimes n)\)。这里不假定 \(R\) 交换，张量积首先是交换群；若还要把它看成某个环上的模，必须另给相容的双模结构。
+
+\ProseParagraphBreak
+这两例不仅给出表示对象，也各自带有一个特别的元素：自由模带有映射 \(x\mapsto e_x\)，张量积带有平衡映射 \((m,n)\mapsto m\otimes n\)。每个所研究的映射都由这个元素经唯一态射得到。下面的命题把这一观察写成可直接使用的判据。
+
+\begin{proposition}[泛元素判据]\label{b4:prop:universal-element}
+设 \(\mathcal C\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathbf{Set}\) 为函子。给定 \(A\in\mathcal C\) 及 \(u\in F(A)\)，公式
+\[
+\theta_X(f)=F(f)(u),\qquad f:A\rightarrow X,
+\]
+定义自然变换 \(h^A\Rightarrow F\)。它是自然同构，当且仅当每个 \(X\in\mathcal C\) 及 \(x\in F(X)\) 都对应唯一态射 \(f:A\rightarrow X\)，使 \(F(f)(u)=x\)。此时称 \(u\) 为该表示的\term[fanyuan-su]{泛元素}[universal element]。每个表示 \(\theta:h^A\xrightarrow{\sim}F\) 都由 \(u=\theta_A(1_A)\) 按上述公式得到。
+\end{proposition}
+\begin{proof}
+若 \(g:X\rightarrow Y\)，则
+\[
+F(g)\bigl(\theta_X(f)\bigr)=F(g)F(f)(u)
+=F(gf)(u)=\theta_Y(gf),
+\]
+故 \(\theta\) 自然。每个分量为双射，等价于所述存在唯一性。反过来，若 \(\theta\) 已是一个表示，则将自然性用于 \(f:A\rightarrow X\) 以及 \(1_A\)，得到
+\[
+\theta_X(f)=\theta_X(f\circ1_A)=F(f)\bigl(\theta_A(1_A)\bigr).
+\]
+所以这个泛元素给出的公式恢复全部分量。
+\end{proof}
+
+对反变函子 \(F:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\)，相同论证给出 \(u\in F(A)\) 与双射 \(f:X\rightarrow A\mapsto F(f)(u)\)。自由模例子的泛元素是一个以 \(X\) 为指标的元素族，张量积例子的泛元素是一个平衡映射；“元素”指 \(F(A)\) 中的成员，并不一定是对象 \(A\) 底集合中的一个点。
 
 \subsection{表示对象的典范唯一性}
 \label{b4:subsec:0301:03}
 
-待撰写。
+\begin{proposition}\label{b4:prop:representing-unique}
+设 \(\mathcal C\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathbf{Set}\) 为函子。若 \((A,u)\)、\((B,v)\) 都满足\cref{b4:prop:universal-element}中的存在唯一性，则有唯一同构 \(s:A\rightarrow B\)，使 \(F(s)(u)=v\)。对于反变函子，亦有唯一同构 \(s:A\rightarrow B\)，使 \(F(s)(v)=u\)。
+\end{proposition}
+\begin{proof}
+先处理协变情形。由 \((A,u)\) 的泛性质，有唯一 \(s:A\rightarrow B\) 满足 \(F(s)(u)=v\)；由 \((B,v)\) 的泛性质，有唯一 \(t:B\rightarrow A\) 满足 \(F(t)(v)=u\)。于是
+\[
+F(ts)(u)=u=F(1_A)(u),\qquad
+F(st)(v)=v=F(1_B)(v).
+\]
+泛性质的唯一性分别给出 \(ts=1_A\) 与 \(st=1_B\)，故 \(s\) 是同构。任一满足条件的同构首先也是满足条件的态射，已由构造中的唯一性确定。反变情形对 \(\mathcal C^{\mathrm{op}}\) 应用协变结论，再把所得同构取逆，便得到所写的方向和等式。
+\end{proof}
+
+“唯一”指保持表示数据的同构唯一，并非两个底对象之间只有一个同构。例如 \(\mathbb Z\) 作为交换群有恒等与取负两个自同构，但保持代表底集合函子所用泛元素 \(1\) 的只有恒等。对张量积，这个条件具体成为 \(m\otimes n\mapsto m\mathbin{\widetilde\otimes}n\)；任意一个群同构未必具有这种相容性。
+
+\ProseParagraphBreak
+自然性还会决定表示对象之间的态射。前一命题只讨论同构，下一节将证明更强的结论：Hom 函子之间的任意自然变换，都来自唯一的对象间态射。表示对象的唯一性由此成为一个一般事实的特例。

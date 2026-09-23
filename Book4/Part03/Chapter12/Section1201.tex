@@ -5,8 +5,6 @@
 \section{包络代数方法}
 \label{b4:sec:1201}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 双模与包络代数
@@ -17,14 +15,112 @@
 \subsection{双模与包络代数}
 \label{b4:subsec:1201:01}
 
-待撰写。
+一个代数的乘法同时允许从左、从右乘元素。若要用模的消解研究乘法，就应把这两种作用放在同一个模范畴内。本章始终以域 \(k\) 为底域，代数均为非零的结合含幺 \(k\) 代数，代数同态保持单位；张量积未标底环时均在 \(k\) 上进行。代数不必交换，也不必有限维。
+
+\begin{definition}\label{b4:def:enveloping-algebra}
+设 \(A\) 为结合含幺 \(k\) 代数。其反代数 \(A^{\mathrm{op}}\) 有相同的向量空间，而乘法次序反转。代数
+\[
+A^e=A\otimes_k A^{\mathrm{op}},\qquad
+(a\otimes b^{\mathrm{op}})(c\otimes d^{\mathrm{op}})
+=ac\otimes(db)^{\mathrm{op}}
+\]
+称为 \(A\) 的\term[baoluo-daishu]{包络代数}[enveloping algebra]。
+一个 \(k\) 向量空间 \(M\) 若带有含幺左、右 \(A\) 模作用，满足 \((am)b=a(mb)\)，且两侧的 \(k\) 作用都是原有标量乘法，便称为 \(A\) 双模。它对应的左 \(A^e\) 模作用为
+\[
+(a\otimes b^{\mathrm{op}})m=amb.
+\]
+\end{definition}
+
+这确实给出模作用，因为复合两次作用得到 \(acmdb\)，与包络代数的乘法相符。反过来，限制到 \(A\otimes1\) 和 \(1\otimes A^{\mathrm{op}}\) 就恢复左右作用。因两个子代数彼此交换，两种作用相容。因此双模及双模同态组成的范畴就是左 \(A^e\) 模范畴。
+
+\ProseParagraphBreak
+张量积计算还需要右模。对同一个双模 \(M\)，另记 \(M^{\mathrm r}\) 为右 \(A^e\) 模，其作用规定为
+\[
+m\cdot(a\otimes b^{\mathrm{op}})=bma.
+\]
+先作用 \(a\otimes b^{\mathrm{op}}\)，再作用 \(c\otimes d^{\mathrm{op}}\)，所得为 \(dbmac\)，与乘积 \(ac\otimes(db)^{\mathrm{op}}\) 的作用一致。上标 \(\mathrm r\) 只提醒这里更换了作用方向，并未更换底层向量空间。
 
 \subsection{Hochschild 同调和上同调}
 \label{b4:subsec:1201:02}
 
-待撰写。
+\begin{definition}\label{b4:def:hochschild-derived}
+设 \(A\) 为结合含幺 \(k\) 代数，\(M\) 为 \(A\) 双模，\(n\ge0\)。把 \(A\) 本身看作左 \(A^e\) 模，定义
+\[
+\operatorname{HH}_n(A,M)=\operatorname{Tor}^{A^e}_n(M^{\mathrm r},A),
+\qquad
+\operatorname{HH}^n(A,M)=\operatorname{Ext}_{A^e}^n(A,M).
+\]
+它们分别称为带系数 \(M\) 的 \term[hochschild-tongdiao]{Hochschild 同调}[Hochschild homology]和 \term[hochschild-shangtongdiao]{Hochschild 上同调}[Hochschild cohomology]。当 \(M=A\) 时简记为 \(\operatorname{HH}_n(A)\)、\(\operatorname{HH}^n(A)\)。
+\symidx{\(\operatorname{HH}_n(A,M),\operatorname{HH}^n(A,M)\)：Hochschild 同调与上同调}
+\end{definition}
+
+零次已能看出两种不同的问题。一个双模同态 \(A\to M\) 由 \(1\) 的像 \(m\) 决定，而左右线性要求 \(am=ma\)。另一方面，\(M^{\mathrm r}\otimes_{A^e}A\) 把左右乘法产生的差消去。这两种零次函子的高次导出，分别测量它们没有保持正合的部分。
+
+\ProseParagraphBreak
+这里把底环限制为域具有实际作用：稍后 bar 消解的各项都将是 \(A^e\) 自由模。在一般交换底环上，同一个 bar 复形未必绝对投射，不能不加条件地把它计算的相对理论等同于上述 Ext、Tor。这个区别可参看 Weibel\cite[Lemma 9.1.3, Corollary 9.1.5]{Weibel1994HomologicalAlgebra}。
 
 \subsection{bar 消解}
 \label{b4:subsec:1201:03}
 
-待撰写。
+我们需要一个直接由乘法写出的消解，而不只是任意选择自由满射。对 \(n\ge0\)，令
+\[
+B_n(A)=A^{\otimes(n+2)},\qquad
+d_n(a_0\otimes\cdots\otimes a_{n+1})
+=\sum_{i=0}^{n}(-1)^i
+a_0\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_{n+1},
+\]
+其中 \(d_n\) 在 \(n\ge1\) 时使用；增广 \(\varepsilon:B_0(A)\to A\) 为乘法。左右 \(A\) 作用分别放在最外面的两个因子上。
+
+\begin{proposition}\label{b4:prop:algebra-bar-resolution}
+设 \(A\) 为结合含幺 \(k\) 代数。以上增广链复形 \(B_\bullet(A)\to A\) 是左 \(A^e\) 模的自由消解，称为 \(A\) 的双模 bar 消解。
+\end{proposition}
+\begin{proof}
+两次合并不相邻因子时，两种次序得到同一张量而符号相反；合并三个连续因子时，结合律使两项相等而符号相反。因此 \(d^2=0\)，增广与微分也相容。
+
+各项有左 \(A^e\) 模同构
+\[
+A^e\otimes_k A^{\otimes n}\longrightarrow B_n(A),\qquad
+(a\otimes b^{\mathrm{op}})\otimes(x_1\otimes\cdots\otimes x_n)
+\longmapsto a\otimes x_1\otimes\cdots\otimes x_n\otimes b.
+\]
+为中间向量空间选一组 \(k\) 基，便得到一组 \(A^e\) 基。
+
+在底层向量空间上定义
+\[
+s_{-1}(a)=1\otimes a,\qquad
+s_n(a_0\otimes\cdots\otimes a_{n+1})
+=1\otimes a_0\otimes\cdots\otimes a_{n+1}.
+\]
+\(d_{n+1}s_n\) 的首项是原张量；其余合并项与 \(s_{n-1}d_n\) 逐项抵消，所以 \(ds+sd=1\)，增广处为 \(\varepsilon s_{-1}=1\)。故底层向量空间复形正合，也即双模复形正合。这里的 \(s_n\) 通常不是双模同态；底层可缩保证正合，并没有声称 \(A\) 是投射双模。
+\end{proof}
+
+施加 Hom 得到上链复形
+\[
+C^n(A,M)=\operatorname{Hom}_k(A^{\otimes n},M),\qquad C^0(A,M)=M,
+\]
+因为双模同态由其在 \(1\otimes a_1\otimes\cdots\otimes a_n\otimes1\) 上的值决定。微分写成
+\begin{equation}\label{b4:eq:hochschild-coboundary}
+\begin{aligned}
+(\delta f)(a_1,\ldots,a_{n+1})
+={}&a_1 f(a_2,\ldots,a_{n+1})\\
+&+\sum_{i=1}^{n}(-1)^i
+ f(a_1,\ldots,a_i a_{i+1},\ldots,a_{n+1})\\
+&+(-1)^{n+1}f(a_1,\ldots,a_n)a_{n+1}.
+\end{aligned}
+\end{equation}
+它计算 \(\operatorname{HH}^n(A,M)\)。这里采用消解上通常的预合成微分，与\cref{b4:def:ext}一致；它不同于把消解当上链复形后直接使用内部 Hom 所带的逐次符号。
+
+\ProseParagraphBreak
+作张量则得到 \(C_n(A,M)=M\otimes_k A^{\otimes n}\)。具体识别把
+\(m\otimes_{A^e}(a_0\otimes\cdots\otimes a_{n+1})\) 送到
+\(a_{n+1}ma_0\otimes a_1\otimes\cdots\otimes a_n\)，微分为
+\begin{equation}\label{b4:eq:hochschild-boundary}
+\begin{aligned}
+b(m\otimes a_1\otimes\cdots\otimes a_n)
+={}&ma_1\otimes a_2\otimes\cdots\otimes a_n\\
+&+\sum_{i=1}^{n-1}(-1)^i
+m\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_n\\
+&+(-1)^n a_n m\otimes a_1\otimes\cdots\otimes a_{n-1}.
+\end{aligned}
+\end{equation}
+它计算 \(\operatorname{HH}_n(A,M)\)。特别地，\(b(m\otimes a)=ma-am\)；最后一项的次序正由右 \(A^e\) 作用决定。

@@ -5,7 +5,7 @@
 \section{伴随的后果}
 \label{b4:sec:0304}
 
-% TODO: 按以下纲要要点撰写本节。
+% 正文按纲要写入；各节的基础结果在本章证明。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +19,132 @@
 \subsection{左伴随与余极限}
 \label{b4:subsec:0304:01}
 
-待撰写。
+余极限的泛性质通过从所得对象出发的映射表述，伴随双射恰好能改写这种映射。下面的结论因此不依赖余极限在某个范畴中的具体构造。
+
+\begin{theorem}\label{b4:thm:adjoints-preserve-colimits}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathcal D\) 有右伴随 \(G\)。若小范畴 \(J\) 上的图表 \(K:J\rightarrow\mathcal C\) 有余极限 \((L,(\iota_j)_{j\in J})\)，则 \((FL,(F\iota_j)_{j\in J})\) 是 \(FK\) 的余极限。因此左伴随保持所有存在的小余极限，包括空图表的余极限。
+\end{theorem}
+\begin{proof}
+函子保持复合，故 \((F\iota_j)\) 是余锥。取任意 \(Y\in\mathcal D\) 及余锥 \(q_j:FK(j)\rightarrow Y\)。令
+\[
+s_j=\Phi_{K(j),Y}(q_j):K(j)\longrightarrow GY.
+\]
+对 \(a:i\rightarrow j\)，余锥相容性为 \(q_jFK(a)=q_i\)。伴随在第一变量的自然性给出 \(s_jK(a)=s_i\)，所以 \((s_j)\) 是 \(K\) 的余锥。由 \(L\) 的泛性质，存在唯一 \(s:L\rightarrow GY\) 满足 \(s\iota_j=s_j\)。令 \(q=\Phi^{-1}_{L,Y}(s):FL\rightarrow Y\)。再次利用自然性，
+\[
+\Phi_{K(j),Y}\bigl(qF(\iota_j)\bigr)
+=\Phi_{L,Y}(q)\iota_j=s\iota_j=s_j=\Phi_{K(j),Y}(q_j),
+\]
+双射性给出 \(qF(\iota_j)=q_j\)。若 \(q'\) 也满足这些等式，则 \(\Phi(q')\) 也经过每个 \(\iota_j\) 给出 \(s_j\)，由余极限的唯一性有 \(\Phi(q')=s\)，从而 \(q'=q\)。证明没有要求 \(J\) 非空；在空图表情形，它就是始对象的泛性质。
+\end{proof}
+
+例如 \({}_SP_R\) 固定时，\cref{b4:prop:hom-tensor-adjunction}表明 \(P\otimes_R-\) 保持任意直和、余等化子及滤过余极限。这并非说所有相关对象的底集合都按同一公式构造，而是说它们具有同一个余极限泛性质。具体的比较同构由结构映射唯一确定，例如
+\[
+\bigoplus_i(P\otimes_RM_i)\xrightarrow{\sim}P\otimes_R\biggl(\bigoplus_iM_i\biggr)
+\]
+在第 \(i\) 个直和项上把 \(p\otimes m\) 送到 \(p\otimes\iota_i(m)\)。
+
+\ProseParagraphBreak
+左伴随的条件本身不保证保持积。\cref{b4:exm:exact-not-products}已经用共同分母证明，\(\mathbb Q\otimes_{\mathbb Z}-:\mathbf{Ab}\rightarrow\mathbb Q\text{-}\mathbf{Mod}\) 不保持可数个 \(\mathbb Z\) 的积。现在将\cref{b4:prop:hom-tensor-adjunction}用于 \({}_{\mathbb Q}\mathbb Q_{\mathbb Z}\)，又知道它是左伴随，因此这个例子也检验了保持定理的方向：它保持余极限，却仍然可能不保持无限积。此处不能从无限积失败推断有限积也失败。
 
 \subsection{右伴随与极限}
 \label{b4:subsec:0304:02}
 
-待撰写。
+\begin{theorem}\label{b4:thm:adjoints-preserve-limits}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathcal D\) 左伴随于 \(G:\mathcal D\rightarrow\mathcal C\)。若小图表 \(K:J\rightarrow\mathcal D\) 有极限 \((L,(p_j)_{j\in J})\)，则 \((GL,(Gp_j)_{j\in J})\) 是 \(GK\) 的极限。因此右伴随保持所有存在的小极限，包括空图表的极限。
+\end{theorem}
+\begin{proof}
+给定 \(X\in\mathcal C\) 以及锥 \(s_j:X\rightarrow GK(j)\)，用逆伴随双射得到 \(q_j:FX\rightarrow K(j)\)。对 \(a:i\rightarrow j\)，关系 \(GK(a)s_i=s_j\) 通过第二变量自然性等价于 \(K(a)q_i=q_j\)。因此 \((q_j)\) 为锥，唯一确定 \(q:FX\rightarrow L\)，使 \(p_jq=q_j\)。令 \(s=\Phi_{X,L}(q)\)，第二变量自然性给出
+\[
+Gp_j\circ s=\Phi_{X,K(j)}(p_jq)=s_j.
+\]
+任何具有这些复合的 \(s'\)，在逆双射下都给出具有投影 \(q_j\) 的态射 \(q'\)，由 \(L\) 的唯一性有 \(q'=q\)，进而 \(s'=s\)。空图表情形同样成立，给出终对象的保持。
+\end{proof}
+
+固定源的 Hom 函子保持极限已在\cref{b4:prop:representables-preserve-limits}直接证明。若一个函子与它自然同构，相应的锥经分量同构转换，仍具有相同的唯一分解性质，所以任意协变可表函子保持极限。反变可表函子则把原范畴的余极限变成集合的极限；必须连同相反范畴一起读这个断言，不能遗漏方向。
+
+\ProseParagraphBreak
+由 Hom–张量伴随，\(\operatorname{Hom}_S(P,-)\) 保持积与等化子。若给定左 \(S\) 模同态 \(u:N\rightarrow N'\)，它的核是 \(u\) 与零映射的等化子，故
+\[
+\operatorname{Hom}_S(P,\ker u)
+\cong\ker\bigl(\operatorname{Hom}_S(P,u)\bigr).
+\]
+右边由那些满足 \(u\circ f=0\) 的 \(f:P\rightarrow N\) 组成。一般情形下，\(\operatorname{Hom}_S(P,-)\) 未必保持满同态；例如 \(\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\) 在 \(n>1\) 时满射，而
+\[
+\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n\mathbb Z,\mathbb Z)=0,
+\qquad
+\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n\mathbb Z,\mathbb Z/n\mathbb Z)
+\cong\mathbb Z/n\mathbb Z.
+\]
+因此诱导映射不是满射。下一章会用左正合、右正合的语言系统整理这些不同的保持性质。
+
+\ProseParagraphBreak
+保持极限是一项必要条件，并非任意情况下都足以推出存在左伴随。证明存在伴随还要为每个对象构造相应的表示对象，或给出足以保证存在性的额外条件。本章只使用已经构造出的伴随；一般伴随函子定理留在附录的阅读讨论中。
 
 \subsection{单子与余单子的动机}
 \label{b4:subsec:0304:03}
 
-待撰写。
+对伴随 \(F\dashv G\)，复合 \(T=GF\) 是 \(\mathcal C\) 上的自函子。单位给出 \(X\rightarrow TX\)；余单位还使两次复合可以归并为一次：
+\[
+\mu_X=G(\varepsilon_{FX}):T^2X=GFGFX\longrightarrow GFX=TX.
+\]
+在自由模例子中，\(TX\) 是 \(X\) 的形式有限线性组合，而 \(T^2X\) 是“形式线性组合的形式线性组合”。\(\mu_X\) 展开括号并合并同类项。这提示我们暂时只保留自函子、插入元素和归并运算。
+
+\begin{definition}\label{b4:def:monad}
+设 \(\mathcal C\) 为范畴，\(T:\mathcal C\rightarrow\mathcal C\) 为自函子，\(\eta:1_{\mathcal C}\Rightarrow T\)、\(\mu:T^2\Rightarrow T\) 为自然变换。若对每个 \(X\in\mathcal C\) 都有
+\[
+\mu_X\circ T(\mu_X)=\mu_X\circ\mu_{TX},
+\qquad
+\mu_X\circ T(\eta_X)=1_{TX}=\mu_X\circ\eta_{TX},
+\]
+则称 \((T,\eta,\mu)\) 为 \(\mathcal C\) 上的\term[danzi]{单子}[monad]。第一式称结合律，后两式称单位律。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:adjunction-monad}
+设 \(F:\mathcal C\rightarrow\mathcal D\)、\(G:\mathcal D\rightarrow\mathcal C\) 为局部小范畴之间的伴随，其单位、余单位为 \(\eta,\varepsilon\)。则
+\[
+T=GF,\qquad \mu_X=G(\varepsilon_{FX})
+\]
+与原有单位 \(\eta\) 组成 \(\mathcal C\) 上的单子。
+\end{proposition}
+\begin{proof}
+\(\mu\) 的自然性来自 \(\varepsilon\) 的自然性和函子复合。两条单位律分别为
+\[
+\begin{aligned}
+\mu_XT(\eta_X)
+&=G\bigl(\varepsilon_{FX}F(\eta_X)\bigr)=1_{GFX},\\
+\mu_X\eta_{TX}
+&=G(\varepsilon_{FX})\eta_{GFX}=1_{GFX},
+\end{aligned}
+\]
+所用的正是两个三角恒等式。再将 \(\varepsilon\) 的自然性用于态射 \(\varepsilon_{FX}:FGFX\rightarrow FX\)，得到
+\[
+\varepsilon_{FX}\circ FG(\varepsilon_{FX})
+=\varepsilon_{FX}\circ\varepsilon_{FGFX}.
+\]
+对此应用 \(G\)，左边为 \(\mu_XT(\mu_X)\)，右边为 \(\mu_X\mu_{TX}\)，故结合律成立。
+\end{proof}
+
+在自由左 \(R\) 模伴随中，令 \(e_x\) 表示 \(TX\) 中的形式生成元，而 \(e_{v_i}\) 表示 \(T^2X\) 中由 \(v_i\in TX\) 标记的生成元，则
+\[
+\mu_X\biggl(\sum_i r_i e_{v_i}\biggr)
+=\sum_i r_iv_i
+=\sum_x\biggl(\sum_i r_is_{i,x}\biggr)e_x,
+\qquad v_i=\sum_xs_{i,x}e_x.
+\]
+所有和都有限，标量次序为 \(r_is_{i,x}\)，不能在非交换环中调换。两种展开三层括号的次序相同，对应结合律；插入一个单项式再展开不改变原和，对应单位律。
+
+\begin{definition}\label{b4:def:comonad}
+设 \(\mathcal D\) 为范畴，\(Q:\mathcal D\rightarrow\mathcal D\) 为自函子，\(\varepsilon:Q\Rightarrow1_{\mathcal D}\)、\(\delta:Q\Rightarrow Q^2\) 为自然变换。若对每个 \(Y\in\mathcal D\) 都有
+\[
+Q(\delta_Y)\circ\delta_Y=\delta_{QY}\circ\delta_Y,
+\qquad
+Q(\varepsilon_Y)\circ\delta_Y=1_{QY}
+=\varepsilon_{QY}\circ\delta_Y,
+\]
+则称 \((Q,\varepsilon,\delta)\) 为 \(\mathcal D\) 上的\term[yudanzi]{余单子}[comonad]。
+\end{definition}
+
+伴随 \(F\dashv G\) 在另一范畴上给出 \(Q=FG\)、\(\delta_Y=F(\eta_{GY})\)，余单位仍为 \(\varepsilon\)。这可以把\cref{b4:prop:adjunction-monad}应用于伴随 \(G^{\mathrm{op}}\dashv F^{\mathrm{op}}\) 得到：其单位为 \(\varepsilon^{\mathrm{op}}\)，所得乘法是 \((F\eta G)^{\mathrm{op}}\)，反转箭头后正好成为所列余单子公理。
+
+\ProseParagraphBreak
+单子记录可以复合的运算，而由伴随得到它时，另一范畴的全部信息未必都被记录。怎样定义单子上的代数、何时原范畴可以从这些代数恢复，需要另外的构造与判据。本章不把这项恢复工作包含在伴随定理中；\appref{b4:app:A}再讨论这些问题。

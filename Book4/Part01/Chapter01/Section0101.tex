@@ -5,9 +5,7 @@
 \section{范畴的定义与例子}
 \label{b4:sec:0101}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 对象、态射及局部小性
 % * 模范畴、偏序范畴及单对象范畴
@@ -17,14 +15,99 @@
 \subsection{对象、态射及局部小性}
 \label{b4:subsec:0101:01}
 
-待撰写。
+研究向量空间时，线性映射不仅用来判断两个空间是否同构，还用来构造核、商空间、对偶和张量积。换成群或模，映射的具体定义改变了，恒等映射与映射复合却仍满足同样的规律。范畴先保留这些规律；此后讨论的泛性质只依赖对象之间允许哪些映射，以及这些映射怎样复合。
+
+\begin{definition}\label{b4:def:category}
+一组数据 \(\mathcal C\) 包含一个对象类 \(\operatorname{Ob}\mathcal C\)，每对对象 \(X,Y\) 之间的一个态射类
+\(\mathcal C(X,Y)=\operatorname{Hom}_{\mathcal C}(X,Y)\)，每个对象的恒等态射 \(1_X\in\mathcal C(X,X)\)，以及复合
+\[
+\mathcal C(Y,Z)\times\mathcal C(X,Y)\longrightarrow\mathcal C(X,Z),
+\qquad (g,f)\longmapsto g\circ f.
+\]
+每个态射带有指定的起点和终点。若复合满足
+\[
+h\circ(g\circ f)=(h\circ g)\circ f,\qquad
+1_Y\circ f=f=f\circ1_X
+\]
+对所有可复合态射成立，则称这些数据组成一个\term[fanchou]{范畴}[category]。若每个 \(\mathcal C(X,Y)\) 都是集合，称 \(\mathcal C\) 为\term[jubuxiaofanchou]{局部小范畴}[locally small category]。
+\end{definition}
+
+复合 \(gf\) 始终表示先作 \(f\)、再作 \(g\)。结合律只在各箭头首尾相接时使用；它不允许复合两个终点、起点不匹配的态射。本卷以后所说的范畴默认局部小，涉及更大范围时另作说明。空的对象类也允许，它给出空范畴。
+
+\ProseParagraphBreak
+定义没有要求态射一定是底集合之间的函数。许多代数范畴确实如此，但偏序与单对象范畴会说明，箭头也可以记录一个关系或一个代数元素。范畴公理讨论的是箭头的复合，不能在尚未给定底集合时直接取“一个对象的元素”。
+
+\begin{definition}\label{b4:def:categorical-isomorphism}
+设 \(\mathcal C\) 为范畴，\(f:X\rightarrow Y\) 为其中态射。若存在态射 \(g:Y\rightarrow X\)，使
+\(gf=1_X\)、\(fg=1_Y\)，则称 \(f\) 为同构，并记 \(X\cong Y\)。
+\end{definition}
+
+逆态射唯一：若 \(g,h\) 都是 \(f\) 的逆，则
+\(g=g(fh)=(gf)h=h\)。恒等态射是同构，同构的复合仍为同构，且
+\((gf)^{-1}=f^{-1}g^{-1}\)。这使“对象同构”成为对象之间的等价关系，但不使所有同构对象成为同一个对象。
+
+\begin{definition}\label{b4:def:monomorphism-epimorphism}
+设 \(\mathcal C\) 为范畴，\(f:X\rightarrow Y\) 为态射。
+若对每个对象 \(T\) 及态射 \(u,v:T\rightarrow X\)，等式 \(fu=fv\) 都推出 \(u=v\)，称 \(f\) 为\term[dantaishe]{单态射}[monomorphism]。
+若对每个对象 \(T\) 及态射 \(u,v:Y\rightarrow T\)，等式 \(uf=vf\) 都推出 \(u=v\)，称 \(f\) 为\term[mantaishe]{满态射}[epimorphism]。
+\end{definition}
+
+单态射是可在等式左侧消去的箭头，满态射是可在右侧消去的箭头。它们不是关于对象元素的定义。同构同时是单态射与满态射，反过来在一般范畴中并不成立。
 
 \subsection{模范畴、偏序范畴及单对象范畴}
 \label{b4:subsec:0101:02}
 
-待撰写。
+集合及函数组成范畴 \(\mathbf{Set}\)，群及群同态组成 \(\mathbf{Grp}\)，交换群组成 \(\mathbf{Ab}\)。含幺环及保幺环同态组成 \(\mathbf{Ring}\)，其中交换环组成 \(\mathbf{CRing}\)；这里允许零环。恒等映射保持相应结构，保持结构的映射之复合仍保持结构，结合律来自函数复合，因此它们都满足范畴公理。
+
+\ProseParagraphBreak
+固定含幺环 \(R\)，幺性左 \(R\) 模及 \(R\) 线性映射组成
+\(R\text{-}\mathbf{Mod}\)。任意固定的两个模 \(M,N\) 之间的同态是函数集合 \(N^M\) 的一个子集，所以这个范畴局部小。域 \(k\) 上的模范畴也记为 \(\mathbf{Vect}_k\)；只保留有限维对象，得到 \(\mathbf{Vect}_k^{\mathrm{fd}}\)。
+
+\begin{proposition}\label{b4:prop:module-monos-epis}
+设 \(R\) 为含幺环，\(f:M\rightarrow N\) 为幺性左 \(R\) 模同态。在 \(R\text{-}\mathbf{Mod}\) 中，\(f\) 为单态射当且仅当它作为函数单射；\(f\) 为满态射当且仅当它作为函数满射。因此在这个范畴中，同时为单态射与满态射的态射就是同构。
+\end{proposition}
+\begin{proof}
+单射或满射函数分别具有相应的消去性质，所以两个正向例子成立。若 \(f\) 不是单射，取 \(0\ne m\in\ker f\)。映射
+\(a:R\rightarrow M\)、\(a(r)=rm\)，与零映射不同，却满足 \(fa=0\)，所以 \(f\) 不是单态射。
+
+若 \(f\) 不是满射，则商模 \(Q=N/f(M)\ne0\)。商映射
+\(q:N\rightarrow Q\) 与零映射不同，而 \(qf=0\)，所以 \(f\) 不是满态射。最后，双射模同态的集合逆保持加法与标量乘法：把所需等式施以 \(f\)，两边相等，再用单射性即可。因此它是模同构。
+\end{proof}
+
+不能把最后一句原样用于环范畴。保幺包含 \(\mathbb Z\hookrightarrow\mathbb Q\) 在 \(\mathbf{CRing}\) 中既单又满：单性来自底函数单射；若
+\(a,b:\mathbb Q\rightarrow S\) 在 \(\mathbb Z\) 上相同，则每个分数的像都由
+\[
+a(m/n)=a(m)\,a(n)^{-1}
+\]
+唯一确定，故 \(a=b\)。然而这个包含不是环同构，因为它不是满射。这项例子也说明，满态射要求检测的目标及允许的映射必须属于指定范畴。
+
+\begin{example}\label{b4:ex:poset-category}
+设 \((P,\le)\) 为偏序集。以 \(P\) 的元素为对象，规定当 \(x\le y\) 时有唯一箭头 \(x\rightarrow y\)，否则没有箭头。反身性给出恒等箭头，传递性给出复合；任意两个相同起终点的箭头都相等，所以结合律自动成立。同构 \(x\cong y\) 要求同时有 \(x\le y\)、\(y\le x\)，故只在 \(x=y\) 时成立。每个箭头都单且满，因为所有需要比较的平行箭头本来就至多一个。
+\end{example}
+
+若只要求关系反身、传递，不要求反对称，仍得到范畴，称为预序范畴；此时不同对象可以同构。比如两个元素各自都与另一个元素满足关系，就给出两个不同而同构的对象。一个集合还可以看作只有恒等态射的离散范畴。
+
+\begin{example}\label{b4:ex:one-object-category}
+设 \(M\) 为含单位元 \(1\) 的幺半群。只取一个对象 \(*\)，规定
+\(\mathcal BM(*,*)=M\)，并令 \(b\circ a=ba\)，就得到单对象范畴 \(\mathcal BM\)。反过来，一个局部小单对象范畴的全部自态射，在复合下组成幺半群。同构态射恰好对应幺半群的可逆元；当 \(M=G\) 为群时，每个箭头都可逆。
+\end{example}
+
+这三个例子展示了相同公理的不同用法：模范畴保留所有线性映射，偏序范畴记录何时存在一个比较，单对象范畴则把整个乘法放进自态射集合中。后文的函子必须分别尊重线性映射的复合、次序关系或幺半群乘法。
 
 \subsection{集合大小的约定}
 \label{b4:subsec:0101:03}
 
-待撰写。
+\begin{definition}\label{b4:def:small-category}
+设 \(\mathcal C\) 为局部小范畴。若 \(\operatorname{Ob}\mathcal C\) 为集合，称 \(\mathcal C\) 为\term[xiaofanchou]{小范畴}[small category]；此时全部态射也是集合，因为它们是集合指标的一族 Hom 集的并。若对象类不为集合，称 \(\mathcal C\) 为大范畴。
+\end{definition}
+
+“局部小”只控制每一对对象之间的态射，“小”还控制对象总数。偏序集和幺半群构成的小范畴满足后一条件；全部集合、全部群或全部 \(R\) 模组成的范畴通常只局部小。若试图把所有集合收进一个集合，便会遇到集合论悖论，所以不能省略这项区别。
+
+\ProseParagraphBreak
+本卷使用通常的集合与类语言，并允许集合指标的选择公理。写 \(\mathbf{Set}\) 时是指所讨论范围中的集合范畴，不把它的对象类当作一个可任意取幂集的集合。形成函子范畴 \([\mathcal C,\mathcal D]\) 时，通常要求源范畴 \(\mathcal C\) 小、目标 \(\mathcal D\) 局部小；这样两函子之间的自然变换构成集合，具体证明见\subsecref{b4:subsec:0103:02}。
+
+\ProseParagraphBreak
+另一个需要大小约定的地方是“为每个对象选一个同构代表”。若要选择的对象组成集合，通常的选择公理可以使用；真类指标的选择并不自动由此得到。涉及大范畴等价时，本卷会给出具体的拟逆，或把所需代表及同构作为已选数据。若采用固定宇宙的写法，也必须在更大的工作范围中进行这些集合选择；这是一种大小安排，不能代替对选择步骤的说明。
+
+\ProseParagraphBreak
+这几条约定已经足够本编使用。此后每个“任意族”“所有函子”或“逐对象选择”都有指定范围；不需要为了学习范畴论先建立另一套集合论，却也不能把真类当作普通集合计算。

@@ -5,8 +5,6 @@
 \section{加性范畴}
 \label{b4:sec:0401}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * Hom 群结构与双积
@@ -17,14 +15,68 @@
 \subsection{Hom 群结构与双积}
 \label{b4:subsec:0401:01}
 
-待撰写。
+两个模同态能够相加，分配律又允许把同态的复合展开。这些运算使矩阵方法不只适用于向量空间：只要保留态射的加法与有限直和，就能写出同样的矩阵公式。下面先说明这种运算需要哪些条件，再讨论核与余核是否存在。
+
+\begin{definition}\label{b4:def:additive-category}
+设 \(\mathcal A\) 是局部小范畴。若每个 \(\operatorname{Hom}_{\mathcal A}(X,Y)\) 带有交换群结构，且态射复合对两侧加法均满足分配律，则称 \(\mathcal A\) 为\term[yujiaxing-fanchou]{预加性范畴}[preadditive category]。若它还有零对象及所有有限双积，则称为\term[jiaxing-fanchou]{加性范畴}[additive category]。这里，\term[shuangji]{双积}[biproduct] \(X\oplus Y\) 是带有态射 \(i_X,i_Y,p_X,p_Y\) 的对象，满足
+\[
+p_Xi_X=1_X,\quad p_Yi_Y=1_Y,\quad p_Xi_Y=p_Yi_X=0,
+\qquad i_Xp_X+i_Yp_Y=1_{X\oplus Y}.
+\]
+态射集中的零元称为零态射。复合的分配律保证 \(f0=0\) 与 \(0g=0\)。
+\end{definition}
+
+定义中的 \(0\) 不是另选的一组常值映射，而是态射群的零元。设零对象为 \(O\)，则 \(X\to O\to Y\) 的复合正是这个零态射：\(1_O=0\)，故经过 \(O\) 的任一复合都为零。没有零对象的预加性范畴仍有零态射。
+
+\begin{proposition}\label{b4:prop:biproduct-calculus}
+在预加性范畴中，上述双积同时是积与余积；反之，任意两个对象的积若存在，便可赋予唯一的标准双积结构。因此，有零对象及有限积的预加性范畴是加性范畴。双积之间的态射由其分量矩阵唯一决定，复合对应矩阵乘法。
+\end{proposition}
+\begin{proof}
+给定 \(u:T\to X\)、\(v:T\to Y\)，唯一具有投影分量 \(u,v\) 的态射是 \(i_Xu+i_Yv\)：存在性由四个投影公式给出，唯一性由最后一个恒等式给出。给定 \(a:X\to T\)、\(b:Y\to T\)，余积要求的态射同样唯一地等于 \(ap_X+bp_Y\)。
+
+反过来，若 \((P,p_X,p_Y)\) 是积，则由积的泛性质定义 \(i_X\) 的分量为 \((1_X,0)\)，\(i_Y\) 的分量为 \((0,1_Y)\)。\(i_Xp_X+i_Yp_Y\) 与 \(1_P\) 的两个投影相同，所以相等。这给出全部双积公式。空积是终对象；在预加性范畴中，若终对象 \(O\) 存在，则 \(1_O=0\)，任何 \(O\to X\) 都只能为零，所以 \(O\) 也是始对象。
+
+对有限双积，态射 \(f:\bigoplus_jX_j\to\bigoplus_iY_i\) 的分量为 \(f_{ij}=p_if i_j\)，并有 \(f=\sum_{i,j}i_if_{ij}p_j\)。插入中间双积的恒等式 \(1=\sum_k i_kp_k\)，即得 \((gf)_{ij}=\sum_k g_{ik}f_{kj}\)。
+\end{proof}
+
+例如，任意含幺环 \(R\) 的左模范畴 \(R\text{-}\mathbf{Mod}\) 是加性范畴。有限直和里的投影和包含满足定义中的公式。有限维 \(k\)-向量空间及其线性映射也构成加性范畴，但非零向量空间组成的全子范畴没有零对象；不能因为其中仍能相加映射，就称它为加性范畴。
 
 \subsection{零对象、核与余核}
 \label{b4:subsec:0401:02}
 
-待撰写。
+有了零态射，“被某一映射送到零”便可表述为一个等式。为了定义核，不必先把对象看成元素的集合。
+
+\begin{definition}\label{b4:def:kernel-cokernel}
+在有零态射的范畴中，态射 \(f:X\to Y\) 的\term[he]{核}[kernel]是态射 \(k:K\to X\)，满足 \(fk=0\)，且每个满足 \(ft=0\) 的态射 \(t:T\to X\) 都唯一地分解为 \(t=ku\)。其\term[yuhe]{余核}[cokernel]是态射 \(q:Y\to Q\)，满足 \(qf=0\)，且每个满足 \(sf=0\) 的态射 \(s:Y\to T\) 都唯一地分解为 \(s=vq\)。也将 \(K,Q\) 分别记为 \(\ker f,\operatorname{coker}f\)，但在复合公式中必须保留结构态射 \(k,q\)。
+\end{definition}
+
+核就是 \(f\) 与零态射的等化子，余核就是它们的余等化子。因此核态射是单态射，余核态射是满态射。这里的“单”“满”指态射的消去性质；在模范畴中才分别等价于集合映射的单射、满射。在加性范畴中，核的泛性质还说明：若核存在，则 \(f\) 为单态射当且仅当 \(\ker f=0\)。事实上，\(fu=fv\) 等价于 \(f(u-v)=0\)，这时 \(u-v\) 分解经过零对象。余核给出对偶结论。
+
+\ProseParagraphBreak
+在左 \(R\)-模中，这一定义恢复通常的子模 \(\{x:f(x)=0\}\) 及商模 \(Y/f(X)\)。在任意加性范畴中，定义却不保证这些对象存在。有限生成自由交换群构成的全子范畴就是一个需要谨慎的例子：它没有与交换群范畴相同的余核。\(\mathbb Z\xrightarrow{\times2}\mathbb Z\) 在这个子范畴中的余核反而是 \(\mathbb Z\to0\)，因为自由交换群没有非零的二阶元。\secref{b4:sec:0402}将说明这为何使它不能成为交换范畴。
 
 \subsection{分裂幂等元及其意义}
 \label{b4:subsec:0401:03}
 
-待撰写。
+若一个对象已经写成 \(X\oplus Y\)，复合 \(i_Xp_X\) 满足平方等于自身。反过来，一个这样的态射是否一定来自直和分解？这取决于其像能否作为范畴中的对象出现。
+
+\begin{definition}\label{b4:def:split-idempotent}
+在范畴中，满足 \(e^2=e\) 的自态射 \(e:X\to X\) 称为\term[mideng-taishe]{幂等态射}[idempotent morphism]。若存在 \(i:Y\to X\)、\(p:X\to Y\) 使 \(pi=1_Y\)、\(ip=e\)，则称它\term[fenlie-mideng]{分裂}[split]。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:idempotent-kernel-splitting}
+在加性范畴中，若幂等态射 \(e:X\to X\) 的 \(\ker e\) 和 \(\ker(1-e)\) 都存在，则
+\[
+X\cong\ker(1-e)\oplus\ker e,
+\]
+且 \(e\) 对应矩阵 \(\begin{pmatrix}1&0\\0&0\end{pmatrix}\)。特别地，每个具有全部核的加性范畴中，幂等态射都分裂。
+\end{proposition}
+\begin{proof}
+记两个核态射为 \(i:Y\to X\)、\(j:Z\to X\)。由 \((1-e)e=0\) 和 \(e(1-e)=0\)，存在唯一 \(p:X\to Y\)、\(q:X\to Z\)，使 \(ip=e\)、\(jq=1-e\)。等式 \(ei=i\)、\(ej=0\) 与单态射 \(i,j\) 的消去性质给出
+\[
+pi=1_Y,\quad qj=1_Z,\quad pj=0,\quad qi=0.
+\]
+又有 \(ip+jq=1_X\)，故 \((i,j):Y\oplus Z\to X\) 与 \((p,q)^{\mathsf T}\) 互逆。最后，\(e i=i\)、\(e j=0\) 给出所说的矩阵。
+\end{proof}
+
+例如，在全部左 \(R\)-模中，幂等矩阵的像和核都是模，因而上述分解总存在。在有限秩自由左 \(R\)-模组成的范畴中，其像可能只是投射模，并非自由模。若 \(R=k\times k\)，则 \(R\to R\)、\(r\mapsto(1,0)r\) 是幂等态射，像为 \(k\times0\)；它不可能同构于 \(R^n\)，因为乘以 \((0,1)\) 后，前者为零，后者为 \(k^n\)。这个幂等态射不能在有限秩自由模范畴内分裂。这说明讨论分裂时必须指定所在范畴，而不能只检查矩阵满足 \(E^2=E\)。

@@ -5,9 +5,7 @@
 \section{Künneth 公式}
 \label{b4:sec:0904}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 域和主理想整环的基本版本
 % * Tor 项及成立假设
@@ -19,14 +17,92 @@
 \subsection{域和主理想整环的基本版本}
 \label{b4:subsec:0904:01}
 
-待撰写。
+\begin{theorem}[Künneth 公式]\label{b4:thm:kunneth-pid}
+设 \(R\) 为主理想整环，\(C,D\) 为下有界的自由 \(R\)-模链复形。对每个整数 \(n\)，有自然的短正合列
+\[
+\begin{split}
+0\longrightarrow&\ \bigoplus_{p+q=n}H_p(C)\otimes_R H_q(D)
+ \xrightarrow{\kappa_n}H_n(C\otimes_R D)\\
+ \longrightarrow&\ \bigoplus_{p+q=n-1}\operatorname{Tor}_1^R(H_p(C),H_q(D))
+ \longrightarrow0.
+\end{split}
+\]
+此列非典范地分裂。特别地，若 \(R=k\) 为域，则 \(\kappa_n\) 是自然同构。
+\end{theorem}
+\begin{proof}
+把 \(Z_p=Z_p(C)\) 放在次数 \(p\)，组成零微分复形 \(Z\)；把 \(B_{p-1}=B_{p-1}(C)\) 放在次数 \(p\)，组成零微分复形 \(B'\)。短正合列 \(0\to Z\to C\to B'\to0\) 逐项分裂，因此与 \(D\) 张量后仍是短正合列。\(Z_p,B_p\) 都自由，由\cref{b4:prop:flat-coefficients-homology}，两侧复形的同调分别是
+\[
+ \bigoplus_{p+q=n}Z_p\otimes H_q(D),\qquad
+ \bigoplus_{p+q=n}B_{p-1}\otimes H_q(D).
+\]
+在同调长正合列中，连接同态在每一项上由包含 \(B_{p-1}\hookrightarrow Z_{p-1}\) 张量 \(H_q(D)\) 给出。具体地，把边界元素提升到 \(C_p\)，再作总微分，来自 \(D\) 的一项对圈代表为零，剩下的就是该包含。其余核与核由自由消解
+\(0\to B_p\to Z_p\to H_p(C)\to0\) 分别识别为张量积及 \(\operatorname{Tor}_1\)，从而得到所写自然正合列。
+
+还须证明分裂。为每个 \(p\) 选取 \(C_p\simeq Z_p\oplus B_{p-1}\)，便把 \(C\) 同构为两项复形
+\[
+ E(p):\quad B_p\longrightarrow Z_p
+ \quad(\text{次数 }p+1,p)
+\]
+的直和。同样把 \(D\) 分成 \(F(q)\)，其中 \(F(q)\) 是 \(H_q(D)\) 的长度一自由消解平移至次数 \(q\)。于是张量复形分解为 \(E(p)\otimes F(q)\) 的直和；每个总次数只涉及有限多个 \((p,q)\)。
+
+去掉平移后，\(E(p)\otimes F(q)\to E(p)\otimes H_q(D)\) 是拟同构，由\cref{b4:prop:bounded-flat-tensor}适用，因为 \(E(p)\) 有界且自由。右侧只有次数 \(0,1\) 的同调，分别为 \(H_p(C)\otimes H_q(D)\) 与 \(\operatorname{Tor}_1^R(H_p(C),H_q(D))\)。在总次数 \(n\)，前者来自 \(p+q=n\)，后者来自 \(p+q=n-1\)，故给出直和分解，而且其张量积部分正是 \(\kappa_n\) 的像。因此自然短正合列分裂；所选的圈模补空间解释了分裂的非典范性。
+
+域上所有模平坦，Tor 项为零，故最后的结论成立。
+\end{proof}
+
+这里的证明只使用短正合列和两项自由消解，不依赖后文的谱序列。Weibel 给出更一般的平坦条件版本，见\cite[Theorem 3.6.3]{Weibel1994HomologicalAlgebra}；本节选择主理想整环上的自由版本，以便同时得到可直接计算的分裂结论。
 
 \subsection{Tor 项及成立假设}
 \label{b4:subsec:0904:02}
 
-待撰写。
+\begin{example}\label{b4:exm:kunneth-two-cyclic}
+设 \(m,n\) 为正整数，在 \(\mathbb Z\) 上分别取两项自由消解 \(C=(\mathbb Z\xrightarrow{m}\mathbb Z)\)、\(D=(\mathbb Z\xrightarrow{n}\mathbb Z)\)，次数均为 \(1,0\)。张量总复形是
+\[
+ 0\longrightarrow\mathbb Z\xrightarrow{\binom{-n}{m}}
+ \mathbb Z^2\xrightarrow{(m\ \ n)}\mathbb Z\longrightarrow0.
+\]
+令 \(g=\gcd(m,n)\)。第一个映射单射；第二个映射的像为 \(g\mathbb Z\)，核由 \((n/g,-m/g)\) 生成，而第一个映射的像是该核的 \(g\) 倍。因此
+\[
+ H_0(C\otimes D)=\mathbb Z/g,\qquad H_1(C\otimes D)=\mathbb Z/g,
+ \qquad H_2(C\otimes D)=0.
+\]
+第二个非零群是 Tor 项；只取两个消解原有同调的张量积，会漏掉它。
+\end{example}
+
+定理中的自由性假设不能直接删去。仍取主理想整环 \(R=\mathbb Z\)，让 \(C,D\) 都是集中在次数零的 \(\mathbb Z/2\)。此时普通张量复形仅在次数零非零，但 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。若无条件套用上面的短正合列，在次数一会错误地要求零模满射到 \(\mathbb Z/2\)。这里应先取平坦消解再张量；普通张量复形本身没有包含该高阶信息。
+
+\ProseParagraphBreak
+主定理采用两复形下有界的假设，足以保证所用总化及分解没有无限对角线的问题。若需要处理无界复形，应先说明采用哪种总化、哪一因子具有保持拟同构的性质；逐项自由这一条件本身不能替代该说明，见\cref{b4:exm:unbounded-flat-tensor}。
 
 \subsection{与第三卷 Koszul 计算的联系}
 \label{b4:subsec:0904:03}
 
-待撰写。
+第三卷第十五章的 Koszul 复形，可以看成两项复形的张量积。对交换环 \(R\) 中元素 \(x\)，写
+\[
+ K(x):\quad 0\longrightarrow R\xrightarrow{x}R\longrightarrow0
+ \qquad(\text{次数 }1,0).
+\]
+多个元素的 Koszul 复形由 \(K(x_1)\otimes_R\cdots\otimes_R K(x_r)\) 给出。各因子次数一生成元的交换引入负号，这与外代数描述中的符号相同。第三卷命题15.2.2已经证明该张量识别，第15.3节证明正则序列时的正合性；这里说明换系数后如何读出新的同调。
+
+\begin{proposition}\label{b4:prop:koszul-adjoin-element}
+设 \(R\) 为交换环，\(C\) 为 \(R\)-模链复形，\(x\in R\)。对每个整数 \(n\)，有自然短正合列
+\[
+ 0\longrightarrow H_n(C)/xH_n(C)
+ \longrightarrow H_n(C\otimes_R K(x))
+ \longrightarrow\{\,z\in H_{n-1}(C):xz=0\,\}
+ \longrightarrow0.
+\]
+这里不要求 \(R\) 为主理想整环，也不保证分裂。
+\end{proposition}
+\begin{proof}
+张量复形在次数 \(n\) 是 \(C_n\oplus C_{n-1}\)，其微分为
+\(d(a,b)=(d_Ca+(-1)^{n-1}xb,d_Cb)\)。取包含 \(a\mapsto(a,0)\) 及投影 \(q_n(a,b)=(-1)^{n-1}b\)，便得到短正合列
+\(0\to C\to C\otimes K(x)\xrightarrow{q}C[1]\to0\)，其中链记号下 \(C[1]_n=C_{n-1}\)、\(d_{C[1]}=-d_C\)。等式 \(q_{n-1}d=-d_Cq_n\) 直接保证投影是链映射。对于 \(C_{n-1}\) 中的圈 \(z\)，提升为 \((0,(-1)^{n-1}z)\)，微分是 \((xz,0)\)，故连接同态就是乘 \(x\)。因此同调长正合列的相关部分是
+\[
+ H_n(C)\xrightarrow{x}H_n(C)\longrightarrow H_n(C\otimes K(x))
+ \longrightarrow H_{n-1}(C)\xrightarrow{x}H_{n-1}(C).
+\]
+取中间部分的核与余核即得结论。
+\end{proof}
+
+例如在 \(R=k[x]\) 上取两个相同元素 \(x,x\)。第一个复形 \(K(x)\) 只有 \(H_0=k\)，而 \(x\) 在该同调上作用为零，故 \(K(x,x)\) 的 \(H_0,H_1\) 都是 \(k\)。次数一的具体圈是 \(e_1-e_2\)，其倍数 \(x(e_1-e_2)\) 是次数二的边界（依生成元次序差一个负号）。这说明第二个 \(x\) 不是 \(R/(x)\) 上的非零因子，故重复元素不能形成正则序列。

@@ -5,9 +5,7 @@
 \section{同调维数}
 \label{b4:sec:1001}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 投射、内射及平坦维数
 % * 整体维数
@@ -17,14 +15,83 @@
 \subsection{投射、内射及平坦维数}
 \label{b4:subsec:1001:01}
 
-待撰写。
+一个模可以有许多不同的消解，也可以在任意消解中加入可缩的两项复形，使表面长度增加。要量度模本身的复杂程度，必须取所有允许的消解中最短的长度。
+
+\begin{definition}\label{b4:def:homological-dimensions}
+设 \(R\) 为环，\(M\ne0\) 为左 \(R\)-模。若有正合列
+\[
+ 0\longrightarrow P_n\longrightarrow\cdots\longrightarrow P_0
+ \longrightarrow M\longrightarrow0
+\]
+且每个 \(P_i\) 投射，则这类列的最小长度 \(n\) 称为 \(M\) 的\term[toushe-weishu]{投射维数}[projective dimension]，记为 \(\operatorname{pd}_RM\)。把投射模换为平坦左模，得到\term[pingtan-weishu]{平坦维数}[flat dimension] \(\operatorname{fd}_RM\)。若改用正合列
+\[
+ 0\longrightarrow M\longrightarrow I^0\longrightarrow\cdots\longrightarrow I^n\longrightarrow0
+\]
+且每个 \(I^j\) 内射，则最小长度称为\term[neishe-weishu]{内射维数}[injective dimension]，记为 \(\operatorname{id}_RM\)。没有有限长度消解时，对应维数为 \(\infty\)；对零模三者均约定为 \(-\infty\)。右模的维数定义在 \(R^{\mathrm{op}}\) 上。
+\end{definition}
+
+非零模的投射、内射、平坦维数为零，分别等价于它本身投射、内射、平坦。因为投射模平坦，总有 \(\operatorname{fd}_RM\le\operatorname{pd}_RM\)，但这不表示两种维数相同。例如 \(\mathbb Q\) 是平坦 \(\mathbb Z\)-模，却不是投射模：若它投射，就为某个自由交换群的直和因子，因而自由；非零自由交换群不可能是可除群。由主理想整环上的长度一自由消解，\(\operatorname{pd}_{\mathbb Z}\mathbb Q=1\)。
+
+\ProseParagraphBreak
+同一个交换群改变底环后也会改变维数。\(\mathbb Z/p\) 作为 \(\mathbb F_p\)-模投射维数为零，作为整数模的投射维数为一，而作为 \(\mathbb Z/p^2\)-模有无限投射维数。最后一项将由消失判据和周期消解验证，不能从群的大小判断。
 
 \subsection{整体维数}
 \label{b4:subsec:1001:02}
 
-待撰写。
+\begin{definition}\label{b4:def:global-dimension}
+设 \(R\) 为非零环。所有左 \(R\)-模投射维数的上确界
+\[
+ \operatorname{l.gl.dim}R=\sup\{\,\operatorname{pd}_RM:M\text{ 为左 }R\text{-模}\,\}
+\]
+称为 \(R\) 的\term[zuozhengtiweishu]{左整体维数}[left global dimension]。右整体维数定义为 \(\operatorname{r.gl.dim}R=\operatorname{l.gl.dim}R^{\mathrm{op}}\)。交换环时记为 \(\operatorname{gl.dim}R\)。
+\end{definition}
+
+域及除环的所有模都有基，故相应整体维数为零。非交换环的左、右整体维数不能不加说明地混写。这里的上确界也包括无限生成模；只讨论有限模时，得到的是另一个受限制的问题。
+
+\ProseParagraphBreak
+整体维数为零当且仅当每个短正合左模列分裂。事实上，每个模投射意味着每个满射都有截面；反过来，若所有短正合列分裂，那么任意到该模的自由满射分裂，使该模成为自由模的直和因子。第二卷第十三章的半单模结构理论进一步把这种性质与半单环联系起来；本章只使用上述直接判别。
 
 \subsection{有限维数与消失判据}
 \label{b4:subsec:1001:03}
 
-待撰写。
+\begin{theorem}\label{b4:thm:dimension-vanishing}
+设 \(R\) 为环，\(M\) 为左 \(R\)-模，\(d\ge0\)。有以下等价条件：
+\begin{enumerate}
+\item \(\operatorname{pd}_RM\le d\)，当且仅当对每个左 \(R\)-模 \(N\) 有 \(\operatorname{Ext}_R^{d+1}(M,N)=0\)；这又等价于所有 \(i>d\) 的这些 Ext 群为零。
+\item \(\operatorname{id}_RM\le d\)，当且仅当对每个左 \(R\)-模 \(N\) 有 \(\operatorname{Ext}_R^{d+1}(N,M)=0\)；这又等价于所有 \(i>d\) 的这些 Ext 群为零。
+\item \(\operatorname{fd}_RM\le d\)，当且仅当对每个右 \(R\)-模 \(T\) 有 \(\operatorname{Tor}_{d+1}^R(T,M)=0\)；这又等价于所有 \(i>d\) 的这些 Tor 群为零。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+投射情形，有限投射消解直接计算出高次 Ext 为零。反过来，取任意投射消解，令第 \(d\) 个合冲模为 \(K_d\)，\(d=0\) 时令 \(K_0=M\)。由\cref{b4:prop:iterated-dimension-shift}，当 \(d>0\) 时
+\(\operatorname{Ext}_R^1(K_d,N)\simeq\operatorname{Ext}_R^{d+1}(M,N)\)。因此\cref{b4:thm:ext-projective-injective}使 \(K_d\) 投射；以它作为最左一项截短，就得到长度 \(d\) 的消解。\(d=0\) 直接用同一投射判据。
+
+内射情形，取内射消解的第 \(d\) 个余核 \(L^d\)，由内射方向的平移得到 \(\operatorname{Ext}_R^1(N,L^d)\simeq\operatorname{Ext}_R^{d+1}(N,M)\)。消失使 \(L^d\) 内射，因而截短为长度 \(d\) 的内射消解。有限内射消解同样给出全部更高次的消失。
+
+平坦情形，平坦模与任意右模的正次数 Tor 均为零，见\cref{b4:thm:tor-flat-criterion}及平衡计算。把长度 \(d\) 的平坦消解拆成短正合列，\cref{b4:thm:tor-long-exact}逐次平移，得到高于 \(d\) 次的 Tor 消失。反过来，可先取一个自由消解；其第 \(d\) 个合冲模 \(K_d\) 满足
+\(\operatorname{Tor}_1^R(T,K_d)\simeq\operatorname{Tor}_{d+1}^R(T,M)=0\)。平坦判据使 \(K_d\) 平坦，截短即得有限平坦消解。三个证明也说明只要指定的一个次数对所有测试模消失，全部更高次数就自动消失。
+\end{proof}
+
+\begin{corollary}\label{b4:cor:global-dimension-ext}
+设 \(R\) 为非零环。左整体维数也等于所有左 \(R\)-模内射维数的上确界，并且等于
+\[
+ \sup\{\,n\ge0:\operatorname{Ext}_R^n(M,N)\ne0
+       \text{ 对某些左 }R\text{-模 }M,N\,\}.
+\]
+\end{corollary}
+\begin{proof}
+对每个有限 \(d\)，所有左模的投射维数不超过 \(d\)，等价于所有双变量的 \(\operatorname{Ext}^{d+1}\) 为零；由内射判据，这又等价于所有左模的内射维数不超过 \(d\)。若没有有限上界，则任意 \(d\) 都有某一双变量的 \(\operatorname{Ext}^{d+1}\) 非零。\(R\ne0\) 保证 \(\operatorname{Hom}_R(R,R)\ne0\)，涵盖维数零情形。
+\end{proof}
+
+因此非域主理想整环 \(R\) 的整体维数恰为一：\cref{b4:thm:pid-free-submodule}给出所有模长度至多一的自由消解；取非零非单位 \(a\)，则 \(\operatorname{Ext}_R^1(R/(a),R)=R/(a)\ne0\)，给出下界。
+
+\begin{example}\label{b4:exm:infinite-dimension-dual-numbers}
+设 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)。模 \(k=R/(\varepsilon)\) 的自由消解为
+\[
+ \cdots\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R
+ \xrightarrow{\varepsilon}R\longrightarrow k\longrightarrow0.
+\]
+对它施加 \(\operatorname{Hom}_R(-,k)\) 或 \(-\otimes_R k\)，全部微分都为零，故每个非负次数的 Ext、Tor 都是 \(k\)。于是 \(\operatorname{pd}_Rk=\operatorname{id}_Rk=\operatorname{fd}_Rk=\infty\)，且 \(\operatorname{gl.dim}R=\infty\)。
+\end{example}
+
+维数与消失条件的系统对应可参阅 Weibel\cite[Section 4.1, pd Lemma 4.1.6, id Lemma 4.1.8, fd Lemma 4.1.10]{Weibel1994HomologicalAlgebra}。注意这些判据对测试模的量词是“所有”，并非只检验一个随手选取的模。

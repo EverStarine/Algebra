@@ -5,8 +5,6 @@
 \section{有限构造}
 \label{b4:sec:0201}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 积、余积、等化子与余等化子
@@ -17,14 +15,139 @@
 \subsection{积、余积、等化子与余等化子}
 \label{b4:subsec:0201:01}
 
-待撰写。
+给定两个对象，常要同时记录通向它们的两个映射；给定两个平行映射，则常要找出使这两个映射相等的部分。积与等化子分别处理这两种要求。把全部箭头反向，又得到余积与余等化子。以下定义不预先规定对象必须由哪些元素组成，而是规定它应当容许哪些映射。
+
+\begin{definition}\label{b4:def:initial-terminal-zero}
+设 \(\mathcal C\) 为范畴。若对象 \(I\) 到每个对象 \(X\) 恰有一个态射，则称 \(I\) 为\term[shi-duixiang]{始对象}[initial object]，也称初对象。若每个对象 \(X\) 到 \(T\) 恰有一个态射，则称 \(T\) 为\term[zhong-duixiang]{终对象}[terminal object]。同时为始对象与终对象的对象称为\term[ling-duixiang]{零对象}[zero object]，常记为 \(0\)。
+\end{definition}
+
+集合范畴的始对象是空集，终对象是单点集，所以没有零对象。模范畴的零模则同时满足两种唯一性。任意两个始对象之间有唯一同构：分别取两个方向的唯一态射，其复合只能是各自的恒等态射；终对象同理。因此这些名称确定对象的泛性质，而不要求所选对象在字面上唯一。
+
+\begin{definition}[积与余积]\label{b4:def:product-coproduct}
+设 \(\mathcal C\) 为范畴，\((X_i)_{i\in I}\) 为集合 \(I\) 指标的对象族。对象 \(P\) 连同态射 \(p_i:P\rightarrow X_i\) 若满足：对每个对象 \(T\) 及每族态射 \(f_i:T\rightarrow X_i\)，存在唯一的 \(f:T\rightarrow P\)，使 \(p_if=f_i\)，则称 \((P,(p_i))\) 为该对象族的\term[ji]{积}[product]，记为 \(\prod_{i\in I}X_i\)。
+
+\ProseParagraphBreak
+对象 \(Q\) 连同态射 \(\iota_i:X_i\rightarrow Q\) 若满足：每族 \(g_i:X_i\rightarrow T\) 唯一来自一个 \(g:Q\rightarrow T\)，即 \(g\iota_i=g_i\)，则称它为该对象族的\term[yuji]{余积}[coproduct]，记为 \(\coprod_{i\in I}X_i\)。
+\end{definition}
+
+这里连同映射一起给出的数据才是积或余积。仅有一个同构于积的对象，却没有指定投影，就不足以写出具体的泛性质。空族的积要求从每个对象到它恰有一个态射，因此是终对象；空族的余积相应是始对象。集合范畴中，单点集为终对象，空集为始对象。
+
+\begin{proposition}[积与余积的唯一性]\label{b4:prop:product-unique}
+设 \(\mathcal C\) 为范畴。一个集合指标对象族的任意两个积之间，存在唯一的保持全部投影的同构；余积也满足对偶的结论。积的投影族联合决定态射：若 \(p_if=p_ig\) 对所有 \(i\) 成立，则 \(f=g\)。
+\end{proposition}
+\begin{proof}
+对两个积 \((P,p_i)\)、\((P',p_i')\)，泛性质分别给出 \(u:P\rightarrow P'\)、\(v:P'\rightarrow P\)，满足 \(p_i'u=p_i\)、\(p_iv=p_i'\)。于是 \(vu\) 与 \(1_P\) 具有相同的全部投影，由唯一性相等。同理 \(uv=1_{P'}\)。这也证明了同构的唯一性。最后一个断言正是泛性质中唯一性的另一种表述。反转箭头得到余积的证明。
+\end{proof}
+
+\begin{definition}[等化子与余等化子]\label{b4:def:equalizer-coequalizer}
+设 \(f,g:X\rightarrow Y\) 是范畴 \(\mathcal C\) 中的两个平行态射。态射 \(e:E\rightarrow X\) 若满足 \(fe=ge\)，且每个满足 \(fh=gh\) 的 \(h:T\rightarrow X\) 均唯一分解为 \(h=e\widetilde h\)，则称它为 \(f,g\) 的\term[denghuazi]{等化子}[equalizer]。态射 \(q:Y\rightarrow Q\) 若满足 \(qf=qg\)，且每个满足 \(hf=hg\) 的 \(h:Y\rightarrow T\) 均唯一分解为 \(h=\widetilde hq\)，则称它为 \(f,g\) 的\term[yudenghuazi]{余等化子}[coequalizer]。
+\end{definition}
+
+等化子总是单态射。事实上，若 \(ea=eb\)，则 \(a,b\) 都是态射 \(ea\) 的分解，故相等。对偶地，余等化子总是满态射。这些结论只用了泛性质，不需要把单态射解释为单射。
+
+\begin{example}[集合与模中的四种构造]\label{b4:exm:elementary-limits}
+集合的积是笛卡儿积，余积是不交并；\(f,g:X\rightarrow Y\) 的等化子是集合 \(\{x\in X\mid f(x)=g(x)\}\) 的包含映射，余等化子则是 \(Y\) 按包含所有关系 \(f(x)\sim g(x)\) 的最小等价关系所取的商。关系本身未必具有传递性，所以这里必须取其生成的等价关系。
+
+\ProseParagraphBreak
+设 \(R\) 为含幺环，模均为含幺左 \(R\) 模。在 \(R\text{-}\mathbf{Mod}\) 中，
+\[
+\prod_{i\in I}M_i=\{\,(m_i)_{i\in I}\mid m_i\in M_i\,\},\qquad
+\coprod_{i\in I}M_i=\bigoplus_{i\in I}M_i.
+\]
+直和只允许有限个非零分量。由直和给出的映射为
+\(\sum_i\iota_i(m_i)\mapsto\sum_i f_i(m_i)\)，有限支集保证右边有意义。对于两个模同态 \(f,g:M\rightarrow N\)，等化子为 \(\ker(f-g)\) 的包含映射，余等化子为 \(N\rightarrow N/\operatorname{im}(f-g)\)。商模的泛性质恰好说明，令 \(f\) 与 \(g\) 在商后相等，就应当把每个 \(f(m)-g(m)\) 置为零。
+\end{example}
+
+有限个模的直和同时也是积，两个泛性质却仍有不同的方向。无限多个模时，有限支集条件将这两个对象分开；这个区别将在\secref{b4:sec:0204}产生实质影响。
 
 \subsection{纤维积与纤维余积}
 \label{b4:subsec:0201:02}
 
-待撰写。
+若两个映射 \(f:X\rightarrow Z\)、\(g:Y\rightarrow Z\) 给出同一对象的两种信息，把 \(X\) 与 \(Y\) 简单放在一起还不够，还必须要求它们在 \(Z\) 中的像相同。纤维积就是附加这一相容条件的积。
+
+\begin{definition}[纤维积与纤维余积]\label{b4:def:pullback-pushout}
+设 \(f:X\rightarrow Z\)、\(g:Y\rightarrow Z\) 是范畴 \(\mathcal C\) 中的态射。对象 \(P\) 连同 \(p:P\rightarrow X\)、\(q:P\rightarrow Y\) 若满足 \(fp=gq\)，且每对满足 \(fa=gb\) 的 \(a:T\rightarrow X\)、\(b:T\rightarrow Y\) 唯一分解为 \(a=ph,b=qh\)，则称它为该对态射的\term[xianweiji]{纤维积}[pullback]，记为 \(X\times_ZY\)。
+
+\ProseParagraphBreak
+设 \(u:A\rightarrow X\)、\(v:A\rightarrow Y\)。对象 \(Q\) 连同 \(i:X\rightarrow Q\)、\(j:Y\rightarrow Q\) 若满足 \(iu=jv\)，且每对满足 \(au=bv\) 的 \(a:X\rightarrow T\)、\(b:Y\rightarrow T\) 唯一分解为 \(a=hi,b=hj\)，则称它为这两个态射的\term[xianweiyuji]{纤维余积}[pushout]，记为 \(X\amalg_A Y\)。
+\end{definition}
+
+纤维余积回答的是另一种问题：在两个对象中已经指定了来自 \(A\) 的数据，怎样把它们粘在一起，使这些数据的两个像一致。定义并不要求 \(u,v\) 为单态射，也不保证 \(i,j\) 为单态射。
+
+\begin{proposition}[模的纤维积与纤维余积]\label{b4:prop:module-pullback-pushout}
+设 \(R\) 为含幺环，\(X,Y,Z,A\) 为左 \(R\) 模，所有映射均为 \(R\) 模同态。对于 \(f:X\rightarrow Z\)、\(g:Y\rightarrow Z\)，有
+\[
+X\times_ZY=\{\,(x,y)\in X\oplus Y\mid f(x)=g(y)\,\}.
+\]
+对于 \(u:A\rightarrow X\)、\(v:A\rightarrow Y\)，有
+\[
+X\amalg_A Y=(X\oplus Y)/
+\operatorname{im}\bigl(A\xrightarrow{(u,-v)}X\oplus Y\bigr).
+\]
+这些公式分别配以坐标投影和直和的两个包含映射诱导的商映射。
+\end{proposition}
+\begin{proof}
+第一式是子模。若 \(fa=gb\)，则 \(t\mapsto(a(t),b(t))\) 的像落在该子模中；其两个投影决定它，故分解存在且唯一。
+
+第二式中 \(i(u(a))=j(v(a))\)，因为两者之差为 \((u(a),-v(a))\) 的类。若 \(a_0:X\rightarrow T\)、\(b_0:Y\rightarrow T\) 满足 \(a_0u=b_0v\)，则同态 \((x,y)\mapsto a_0(x)+b_0(y)\) 在被商去的子模上为零，从而唯一下降到商模。其在 \(X,Y\) 上的限制又唯一决定它。
+\end{proof}
+
+\begin{example}[由相同商粘合两个整数]\label{b4:exm:integer-pullback}
+取两个约化映射 \(\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\)，其中 \(n\ge1\)。纤维积为
+\[
+\{(a,b)\in\mathbb Z^2\mid a\equiv b\pmod n\}
+=\mathbb Z(1,1)\oplus\mathbb Z(n,0).
+\]
+两个投影均满射，但这个子模通常不等于整个 \(\mathbb Z^2\)。条件记录的是两个整数的剩余类必须相同。
+\end{example}
+
+集合中的纤维积有同样的元素公式。集合的纤维余积则从 \(X\amalg Y\) 出发，把 \(u(a)\) 与 \(v(a)\) 识别，并取生成的等价关系。映射出这个商集，恰好等于分别给出 \(X,Y\) 上的映射且在 \(A\) 上一致，这就验证了泛性质。由此也可看出，同一个泛性质在不同范畴中往往需要不同的具体商构造。
 
 \subsection{群、环与模中的极限计算}
 \label{b4:subsec:0201:03}
 
-待撰写。
+群、环和模的许多极限都能在笛卡儿积中取满足相容条件的子对象。余极限则通常需要先加入足够多的元素，再施加关系。以下比较说明，只记住集合范畴中的公式并不足以完成代数计算。
+
+\begin{proposition}[群中的基本构造]\label{b4:prop:group-limits-colimits}
+在群范畴 \(\mathbf{Grp}\) 中，积为直积，两个同态 \(f,g:G\rightarrow H\) 的等化子为子群 \(\{x\in G\mid f(x)=g(x)\}\)。余等化子为
+\[
+H\longrightarrow H/N,\qquad
+N=\NormalClosure{\,f(x)g(x)^{-1}\mid x\in G\,},
+\]
+其中正规闭包取在 \(H\) 中。两个群的余积为自由积；同态 \(u:A\rightarrow G\)、\(v:A\rightarrow H\) 的纤维余积为
+\[
+(G*H)/\NormalClosure{\,u(a)v(a)^{-1}\mid a\in A\,},
+\]
+式中 \(u(a),v(a)\) 表示它们在自由积中的像。
+\end{proposition}
+\begin{proof}
+直积与等化子的公式由逐分量群运算直接验证。若 \(q:H\rightarrow K\) 满足 \(qf=qg\)，则其核包含每个 \(f(x)g(x)^{-1}\)，从而包含它们的正规闭包。这等价于 \(q\) 唯一经过所写商群分解，证明了余等化子公式。
+
+自由积可以直接由第一卷第8章的自由群泛性质和群展示构造：在 \(G,H\) 的底集合不交并上取自由群，再商去分别表达 \(G,H\) 内部乘法和单位元的关系。所得群接收来自 \(G,H\) 的同态；任意一对 \(G\rightarrow K,H\rightarrow K\) 使这些关系成立，故唯一给出商群到 \(K\) 的同态。这就是余积的泛性质。最后再令 \(u(a)\) 与 \(v(a)\) 相等，恰好添加公式中的正规关系，得到纤维余积。
+\end{proof}
+
+这里的自由积不同于直积。例如 \(C_2*C_2\) 的两个生成元可以分别作用为实直线上的反射 \(t\mapsto-t\)、\(t\mapsto2-t\)。它们的复合是非平凡平移，具有无限阶。因此 \(C_2*C_2\) 是无限群，而 \(C_2\times C_2\) 只有四个元素。
+
+\begin{proposition}[交换环中的基本构造]\label{b4:prop:ring-limits-colimits}
+在允许零环、态射保持单位元的交换环范畴 \(\mathbf{CRing}\) 中，积为逐分量运算的直积，等化子为两个同态相等的子环。对于交换环同态 \(f,g:A\rightarrow B\)，余等化子为
+\[
+B\longrightarrow B/(\,f(a)-g(a)\mid a\in A\,).
+\]
+对于交换环 \(R\) 及两个交换 \(R\) 代数 \(A,B\)，相应的纤维余积为 \(A\otimes_RB\)。特别地，两个交换环的余积为 \(A\otimes_{\mathbb Z}B\)。始对象为 \(\mathbb Z\)，终对象为零环。
+\end{proposition}
+\begin{proof}
+直积和等化子的单位元均来自相应的坐标单位元，所以所写构造仍在本范畴中。商环公式由一个同态满足 \(hf=hg\) 当且仅当其核包含全部差 \(f(a)-g(a)\) 得到。
+
+在张量积上规定
+\[
+(a\otimes b)(a'\otimes b')=aa'\otimes bb',\qquad
+1=1_A\otimes1_B.
+\]
+张量积的平衡关系保证乘法良定义；结合律与交换律可先对纯张量检查，再由双线性推广。给定两个环同态 \(\varphi:A\rightarrow T,\psi:B\rightarrow T\)，且它们在 \(R\) 上一致，则 \((a,b)\mapsto\varphi(a)\psi(b)\) 为 \(R\) 平衡的双加性映射，故唯一诱导加性映射 \(A\otimes_RB\rightarrow T\)。乘法公式说明它保持乘法与单位元。反之，任何兼容于两个结构映射的环同态必须把 \(a\otimes b=(a\otimes1)(1\otimes b)\) 送到这个乘积，因此唯一。最后，任何交换环唯一接收 \(\mathbb Z\) 的保幺同态，且唯一映到零环。
+\end{proof}
+
+张量积的模构造及平衡映射泛性质已在第二卷第6.1节建立。上面的证明另外核对了乘法，因此才能把模的构造用于交换环的纤维余积。对于一般非交换环，这个证明中的乘法公式与交换像条件不能照搬。
+
+\begin{example}[余积可能成为零环]\label{b4:exm:ring-zero-coproduct}
+在 \(\mathbf{CRing}\) 中，\(\mathbb Z/2\mathbb Z\) 与 \(\mathbb Z/3\mathbb Z\) 的余积为零环：任何同时接收它们的环中都有 \(2\cdot1=3\cdot1=0\)，于是 \(1=0\)。它们的积却是六元环 \(\mathbb Z/2\mathbb Z\times\mathbb Z/3\mathbb Z\)。若任意排除零环，这个例子就会失去所需的余积。
+\end{example}

@@ -5,8 +5,6 @@
 \section{Euler–Poincaré 映射}
 \label{b4:sec:0504}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 有限长度或有限维情形的交错和
@@ -19,14 +17,91 @@
 \subsection{有限长度与有限维情形的交错和}
 \label{b4:subsec:0504:01}
 
-待撰写。
+求出所有同调群有时很费力，但一个交错和却能在求核取商之前计算。原因是每个边界对象在两个相邻次数中各出现一次，且符号相反。
+
+\begin{definition}\label{b4:def:euler-characteristic}
+设 \(k\) 是域，\(C\) 是由有限维 \(k\)-向量空间组成的有界复形。规定
+\[
+\chi(C)\coloneqq\sum_n(-1)^n\dim_k C^n,
+\]
+称其为\term[Euler-tezheng]{Euler 特征}[Euler characteristic]。若 \(C\) 是由有限长度左 \(R\)-模组成的有界复形，也可以用 \(\ell_R(C^n)\) 替代维数，得到长度的 Euler 特征。
+\end{definition}
+
+这里有限长度指具有有限合成列，其长度是合成因子的个数；长度的良定义与短正合列可加性已在第二卷命题12.2.5“长度的可加性”证明。有限维情形只需秩零度公式。两种情形都有
+\[
+0\to U\to V\to W\to0
+\quad\Longrightarrow\quad
+\lambda(V)=\lambda(U)+\lambda(W),
+\]
+其中 \(\lambda\) 分别表示维数或长度。因而对有界复形的短正合列，逐次相加即可得到 \(\chi(B)=\chi(A)+\chi(C)\)。
+
+\begin{example}\label{b4:exm:graph-euler}
+取一个有限图，顶点数为 \(v\)，边数为 \(e\)，连通分支数为 \(c\)。给每条边定向，在域 \(k\) 上定义链复形 \(k^e\xrightarrow{\partial}k^v\)，把一条边送到其终点减起点。每个分支中，边界张成坐标和为零的子空间：沿一条路径相加可以得到任意两顶点之差，这些差张成该空间。因此 \(\operatorname{rank}\partial=v-c\)，从而
+\[
+\dim_kH_0=c,\qquad \dim_kH_1=e-v+c,
+\qquad v-e=\dim_kH_0-\dim_kH_1.
+\]
+例如三角形的 \(H_1\) 为一维，而加上一条没有构成新回路的悬挂边不改变这个维数。
+\end{example}
 
 \subsection{\texorpdfstring{Grothendieck 群 \(K_0\) 中的可加不变量}{Grothendieck 群 K0 中的可加不变量}}
 \label{b4:subsec:0504:02}
 
-待撰写。
+维数把所有一维向量空间看成同一种贡献；一般交换范畴中可能有几种不能互相替代的简单对象。为了保留这种差别，可以只规定短正合列应满足的加法关系。
+
+\begin{definition}\label{b4:def:grothendieck-group}
+设 \(\mathcal A\) 是本质小的交换范畴，即其对象同构类组成一个集合。取以各同构类 \([M]\) 为基的自由交换群，再除去全部关系
+\[
+[B]-[A]-[C]
+\qquad\bigl(0\to A\to B\to C\to0\text{ 短正合}\bigr)
+\]
+所生成的子群，所得群记为 \(K_0(\mathcal A)\)，称为 \(\mathcal A\) 的\term[Grothendieck-qun]{Grothendieck 群}[Grothendieck group]。
+\end{definition}
+\symidx{\(K_0(\mathcal A)\)：交换范畴的 Grothendieck 群}
+
+本质小的条件保证上述自由群以集合为基。对于全部模组成的大范畴，需要先限制大小或选取所关心的本质小子范畴；不能不加说明地对真类取自由群。本节只用交换范畴的版本。由有限生成投射模及分裂短正合列定义的环的 \(K_0(R)\) 是另一种常用构造，不能仅凭同一个符号将两者等同。
+
+\begin{proposition}\label{b4:prop:grothendieck-universal}
+设 \(\mathcal A\) 是本质小交换范畴，\(G\) 是交换群。对同构类赋值 \(\lambda(M)\in G\)，若每条短正合列均满足 \(\lambda(B)=\lambda(A)+\lambda(C)\)，则存在唯一群同态 \(\bar\lambda:K_0(\mathcal A)\to G\)，使 \(\bar\lambda([M])=\lambda(M)\)。正合函子 \(F:\mathcal A\to\mathcal B\) 在 \(\mathcal B\) 也本质小时诱导 \(K_0(F):[M]\mapsto[F(M)]\)。
+\end{proposition}
+\begin{proof}
+由自由交换群的泛性质，生成元上的赋值唯一延拓为群同态。可加性恰好说定义 \(K_0\) 的每个关系都映到零，故唯一地通过商群分解。第二项中正合函子把定义关系送到定义关系，因此同样可以下降。关系 \([0]=[0]+[0]\) 还说明 \([0]=0\)，不必另外添加零对象关系。
+\end{proof}
+
+\begin{example}\label{b4:exm:kzero-vectors}
+有限维 \(k\)-向量空间范畴满足 \([V]=(\dim_kV)[k]\)，因为基给出 \(V\cong k^{\dim V}\)，且直和对应分裂短正合列。维数诱导 \(K_0\to\mathbb Z\)，而 \(1\mapsto[k]\) 是其逆，故 \(K_0\cong\mathbb Z\)。若改为有限维 \(k\times k\)-模，则 \(M=e_1M\oplus e_2M\)，两项维数给出 \(K_0\cong\mathbb Z^2\)。总维数只是这两个坐标之和，不能区别两种简单模。
+\end{example}
 
 \subsection{有界复形与同调的 Euler 特征}
 \label{b4:subsec:0504:03}
 
-待撰写。
+\begin{theorem}[Euler–Poincaré 等式]\label{b4:thm:euler-poincare}
+设 \(\mathcal A\) 是本质小交换范畴，\(C\) 是其中的有界复形。则在 \(K_0(\mathcal A)\) 中有
+\[
+\chi_{K_0}(C)\coloneqq\sum_n(-1)^n[C^n]
+=\sum_n(-1)^n[H^n(C)].
+\]
+这称为\term[Euler-Poincare-dengshi]{Euler–Poincaré 等式}[Euler–Poincaré formula]。因此任何取值于交换群的短正合列可加不变量，都使复形与其同调的交错和相等。
+\end{theorem}
+\begin{proof}
+对每个 \(n\)，有两条短正合列
+\[
+0\to Z^n(C)\to C^n\to B^{n+1}(C)\to0,
+\qquad
+0\to B^n(C)\to Z^n(C)\to H^n(C)\to0.
+\]
+第一条用微分的像分解，第二条就是同调的定义。因此
+\[
+[C^n]=[B^n(C)]+[H^n(C)]+[B^{n+1}(C)].
+\]
+乘 \((-1)^n\) 并求和。复形有界保证全部和有限，且边界项在支集两端也为零；\([B^j(C)]\) 的总系数是 \((-1)^j+(-1)^{j-1}=0\)。剩下的正是所需公式。最后对该等式应用\cref{b4:prop:grothendieck-universal}的群同态即可。
+\end{proof}
+
+\begin{corollary}\label{b4:cor:euler-quasi-invariance}
+对有界有限维向量空间复形或有界有限长度模复形，复形各项的维数或长度交错和等于其同调的相应交错和。若复形映射在每个次数诱导同调同构，则两复形的 Euler 特征相等；有界无同调复形的 Euler 特征为零。
+\end{corollary}
+\begin{proof}
+维数和长度都是短正合列上的可加不变量，应用上一定理即可。同调同构使等式右端逐项相同；无同调时每项为零。
+\end{proof}
+
+有限性不能只当作便于书写的条件。例如每个非负次数都取 \(k\)、微分交替为恒等和零，可以得到无同调复形，但 \(1-1+1-1+\cdots\) 不是这里定义的有限交错和。若要给无界复形赋予更广的 Euler 特征，必须另外指定收敛或有限支集条件；本定理并不提供这样的延拓。

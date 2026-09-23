@@ -5,8 +5,6 @@
 \section{图引理}
 \label{b4:sec:0404}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 蛇引理与五引理的抽象形式
@@ -19,14 +17,143 @@
 \subsection{蛇引理与五引理的抽象形式}
 \label{b4:subsec:0404:01}
 
-待撰写。
+第二卷第三章的蛇引理和五引理通过模的元素证明。在一般交换范畴中，不能假定每个对象已有一个底集合，也不能假定满态射允许从任意测试对象直接提升映射。下面先证明满态射沿纤维积保持，再用这一事实严密地解释“取原像”。
+
+\begin{lemma}\label{b4:lem:epi-pullback}
+设 \(\mathcal A\) 是交换范畴。满态射 \(e:E\to Y\) 沿任意态射 \(t:T\to Y\) 的拉回 \(u:E\times_YT\to T\) 仍是满态射。对偶地，单态射沿推出仍为单态射。
+\end{lemma}
+\begin{proof}
+纤维积的结构态射 \(k:P\to E\oplus T\) 是 \((e,-t):E\oplus T\to Y\) 的核。记 \(p_E,p_T\) 为投影，则 \(u=p_Tk\)。行态射 \((e,-t)\) 满，因为若 \(h(e,-t)=0\)，则 \(he=0\)，继而 \(h=0\)。它因而是 \(k\) 的余核。
+
+若 \(c:T\to Q\) 满足 \(cu=0\)，则 \((0,c)k=0\)，所以存在 \(h:Y\to Q\) 满足 \(h(e,-t)=(0,c)\)。第一分量给出 \(he=0\)，故 \(h=0\)，第二分量随即给出 \(c=0\)。这证明 \(u\) 满。把证明用于反范畴即得推出结论。
+\end{proof}
+
+给对象 \(X\) 一个来自任意对象的态射 \(x:T\to X\)，可把它看作以 \(T\) 为参数的\term[guangyi-yuansu]{广义元素}[generalized element]。若 \(e:E\to X\) 满，拉回引理允许找到满态射 \(u:T'\to T\) 和 \(\tilde x:T'\to E\)，使 \(e\tilde x=xu\)。下文把这种操作简称为“在满态射后提升”。它不声称 \(x\) 本身可以提升；在模中，\(\mathbb Z\to\mathbb Z/2\) 就不能提升 \(\mathbb Z/2\) 的恒等映射。
+
+\begin{lemma}\label{b4:lem:generalized-element-calculus}
+在交换范畴中，下面的检验方法成立。
+\begin{enumerate}
+\item 态射等式可以在预合成满态射后检验；有限次提升可以使用同一个共同的满态射。
+\item 态射 \(v:X\to Y\) 满，当且仅当任意 \(y:T\to Y\) 都能在满态射后通过 \(v\) 提升。
+\item 设 \(f:X\to Y\)、\(g:Y\to Z\) 且 \(gf=0\)。它们在 \(Y\) 正合，当且仅当每个满足 \(gy=0\) 的 \(y:T\to Y\) 都能在满态射后写成 \(f x\)。
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+第一项的等式检验就是满态射的消去性质。两次不同的满态射替换可取其在原对象上的纤维积，两个投影仍满；有限次重复得到共同的替换，连续替换则用满态射的复合。
+
+第二项的正向是\cref{b4:lem:epi-pullback}。反向只要对 \(1_Y:Y\to Y\) 使用条件，便有 \(v x=u\) 满，从而 \(v\) 满。
+
+第三项中，若正合，则 \(f\) 分解为到 \(K=\ker g\) 的满态射后接核嵌入；把 \(y\) 分解到 \(K\)，再拉回这个满态射即可。反过来，由 \(gf=0\)，\(f\) 有到 \(K\) 的诱导态射 \(\tilde f\)。对 \(K\to Y\) 使用所给条件，得到 \(\tilde f x=u\) 为满态射；故 \(\tilde f\) 满，\(\operatorname{im}f=K\)。
+\end{proof}
+
+\begin{theorem}[蛇引理]\label{b4:thm:snake-lemma}
+设 \(\mathcal A\) 是交换范畴，且下图交换，两行正合：
+\[
+\begin{tikzcd}[column sep=large]
+A\arrow[r,"i"]\arrow[d,"\alpha"']&B\arrow[r,"p"]\arrow[d,"\beta"]&C\arrow[r]\arrow[d,"\gamma"]&0\\
+A'\arrow[r,"j"']&B'\arrow[r,"q"']&C'&
+\end{tikzcd}
+\qquad(j\text{ 单}).
+\]
+则有典范的\term[lianjie-tongtai]{连接同态}[connecting homomorphism]
+\(\delta:\ker\gamma\to\operatorname{coker}\alpha\)，使
+\[
+\ker\alpha\longrightarrow\ker\beta\longrightarrow\ker\gamma
+\xrightarrow{\delta}\operatorname{coker}\alpha
+\longrightarrow\operatorname{coker}\beta
+\longrightarrow\operatorname{coker}\gamma
+\]
+在四个内项处正合。若 \(i\) 单，则可在最左端补 \(0\)；若 \(q\) 满，则可在最右端补 \(0\)。此结果称为\term[she-yinli]{蛇引理}[snake lemma]。
+\end{theorem}
+\begin{proof}
+记 \(k:K\to C\) 为 \(\gamma\) 的核，\(r:A'\to Q\) 为 \(\alpha\) 的余核。取纤维积 \(E=B\times_C K\)，结构态射为 \(v:E\to B\)、\(u:E\to K\)。\(u\) 满，且
+\[
+q\beta v=\gamma pv=\gamma ku=0.
+\]
+由于 \(j\) 是 \(q\) 的核，存在唯一 \(h:E\to A'\)，使 \(jh=\beta v\)。我们要使 \(rh\) 沿 \(u\) 下降。
+
+设 \(s:D\to E\) 是 \(u\) 的核，则 \(pvs=kus=0\)。上排正合，故 \(vs\) 在某个满态射 \(w:D'\to D\) 后写成 \(i a\)。于是
+\[
+jhsw=\beta vsw=\beta i a=j\alpha a,
+\]
+由 \(j\) 单得到 \(hsw=\alpha a\)，继而 \(rhsw=0\)。\(w\) 满给出 \(rhs=0\)。又因 \(u\) 是其核的余核，存在唯一 \(\delta:K\to Q\)，使 \(\delta u=rh\)。这给出了真正的态射，而非依赖提升选择的记号。其计算规则是：先把 \(c\in\ker\gamma\) 在满态射后提升成 \(b\)，再唯一解出 \(j a'=\beta b\)，最后取 \(r a'\)。下面所有广义元素等式均在所需的共同满态射后进行，并由\cref{b4:lem:generalized-element-calculus}判断正合性。
+
+在 \(\ker\beta\) 处，若 \(\beta b=0\)、\(pb=0\)，则局部有 \(b=i a\)，且 \(j\alpha a=\beta b=0\)，故 \(\alpha a=0\)。反向来自 \(pi=0\)。
+
+在 \(\ker\gamma\) 处，若 \(c=pb\) 且 \(\beta b=0\)，计算规则给出 \(\delta c=0\)。反过来，若 \(\gamma c=0\)、\(\delta c=0\)，先局部提升 \(c=pb\)，并令 \(j a'=\beta b\)。条件 \(r a'=0\) 使 \(a'\) 局部写成 \(\alpha a\)。于是 \(b-i a\) 被 \(\beta\) 消去，且 \(p(b-i a)=c\)，得到所需原像。
+
+在 \(\operatorname{coker}\alpha\) 处，\(\delta c\) 的代表元满足 \(j a'=\beta b\)，所以它在 \(\operatorname{coker}\beta\) 中为零。反过来，把一个映到零的广义元素局部表示为 \(r a'\)。它映到零意味着 \(j a'\) 局部等于 \(\beta b\)。令 \(c=pb\)，则 \(\gamma c=q\beta b=qj a'=0\)，且 \(\delta c=r a'\)。
+
+在 \(\operatorname{coker}\beta\) 处，若局部代表 \(b'\) 满足 \(q b'\) 在 \(\operatorname{coker}\gamma\) 中为零，则局部有 \(q b'=\gamma c\)。再由 \(p\) 满，局部取 \(p b=c\)。故 \(q(b'-\beta b)=0\)，唯一写成 \(j a'\)，于是 \(b'\) 的余核类来自 \(a'\) 的余核类。反向由 \(qj=0\) 给出。
+
+若 \(i\) 单，它在核上诱导的态射也单。若 \(q\) 满，任何 \(\operatorname{coker}\gamma\) 的广义元素可以先局部提升到 \(C'\)，再提升到 \(B'\)，故最后一个余核态射满。这样得到两个端部断言。
+\end{proof}
+
+\begin{theorem}[五引理]\label{b4:thm:five-lemma}
+设交换范畴中有交换图
+\[
+\begin{tikzcd}[column sep=large]
+A_1\arrow[r,"a_1"]\arrow[d,"f_1"']&A_2\arrow[r,"a_2"]\arrow[d,"f_2"]&A_3\arrow[r,"a_3"]\arrow[d,"f_3"]&A_4\arrow[r,"a_4"]\arrow[d,"f_4"]&A_5\arrow[d,"f_5"]\\
+B_1\arrow[r,"b_1"']&B_2\arrow[r,"b_2"']&B_3\arrow[r,"b_3"']&B_4\arrow[r,"b_4"']&B_5
+\end{tikzcd}
+\]
+两行在三个内项处正合。若 \(f_1\) 满，\(f_2,f_4\) 为同构，\(f_5\) 单，则 \(f_3\) 为同构。此结果称为\term[wu-yinli]{五引理}[five lemma]。
+\end{theorem}
+\begin{proof}
+先证 \(f_3\) 单。设 \(x:T\to A_3\) 满足 \(f_3x=0\)。因为 \(f_4a_3x=b_3f_3x=0\) 且 \(f_4\) 单，\(a_3x=0\)，故在满态射后有 \(x=a_2y\)。于是 \(b_2f_2y=f_3x=0\)，再次局部提升得到 \(f_2y=b_1z\)。\(f_1\) 满使 \(z\) 局部写成 \(f_1w\)，所以
+\[
+f_2(y-a_1w)=b_1z-b_1f_1w=0.
+\]
+由 \(f_2\) 单，\(y=a_1w\)，故 \(x=a_2a_1w=0\)。消去所有预合成的满态射，原来的 \(x\) 也为零。
+
+再证 \(f_3\) 满。对 \(z:T\to B_3\)，由 \(f_4\) 满，局部可取 \(y:T'\to A_4\) 使 \(f_4y=b_3z\)。由 \(f_5a_4y=b_4f_4y=0\) 且 \(f_5\) 单，\(a_4y=0\)，所以局部有 \(y=a_3x\)。于是 \(b_3(z-f_3x)=0\)，局部写成 \(z-f_3x=b_2w\)。再利用 \(f_2\) 满，局部令 \(w=f_2v\)，便得 \(z=f_3(x+a_2v)\)。提升判据证明 \(f_3\) 满。既单又满的态射在交换范畴中可逆。
+\end{proof}
 
 \subsection{连接映射的自然性}
 \label{b4:subsec:0404:02}
 
-待撰写。
+蛇引理中的连接同态不是为每一张图任意选出的映射。若两张蛇引理图之间的六个态射与所有水平、竖直态射交换，则核、余核及连接同态也应组成交换方块。这一性质决定了以后构造的长正合列能否随原始资料一起变化。
+
+\begin{proposition}\label{b4:prop:snake-naturality}
+在交换范畴中，设两张满足\cref{b4:thm:snake-lemma}条件的图之间给定交换图的态射。其诱导的 \(s:\ker\gamma\to\ker\widetilde\gamma\) 与 \(t:\operatorname{coker}\alpha\to\operatorname{coker}\widetilde\alpha\) 满足
+\[
+t\delta=\widetilde\delta s.
+\]
+它们与其余核、余核态射一起，构成蛇引理两条序列之间的态射。
+\end{proposition}
+\begin{proof}
+沿用蛇引理构造中的 \(E=B\times_C\ker\gamma\)、\(u:E\to\ker\gamma\)、\(h:E\to A'\)，以波浪号表示第二张图的对象。原图的态射诱导唯一 \(E\to\widetilde E\)，记为 \(w\)。记 \(a':A'\to\widetilde A'\) 为左下角的态射。由核的唯一性，\(\widetilde h w=a'h\)；由余核的定义，\(t r=\widetilde r a'\)。因此
+\[
+t\delta u=trh=\widetilde r a'h
+=\widetilde r\widetilde h w
+=\widetilde\delta\widetilde u w
+=\widetilde\delta s u.
+\]
+消去满态射 \(u\) 得所需等式。其余方块的交换直接来自核与余核的唯一分解性质。
+\end{proof}
+
+这里固定的正号约定是 \(j a'=\beta b\)、\(\delta c=[a']\)，与第二卷第三章的模论证明一致。如果原图改用负的水平箭头，连接同态的符号也可能改变；比较两个长正合列之前，应先比较生成它们的原图。
 
 \subsection{长正合列的统一构造}
 \label{b4:subsec:0404:03}
 
-待撰写。
+长正合列中的连接箭头通常不能由原图沿一个方向直接复合得到。它先利用满态射作提升，再用核条件改变目标，最后经过余核取商。蛇引理把这三步固定下来，也把其正合性和自然性一并给出。
+
+\ProseParagraphBreak
+例如，设有两条短正合列及其间的三个竖直映射。蛇引理给出
+\[
+0\to\ker\alpha\to\ker\beta\to\ker\gamma
+\xrightarrow\delta\operatorname{coker}\alpha
+\to\operatorname{coker}\beta\to\operatorname{coker}\gamma\to0.
+\]
+它说明仅逐项取核，右端一般不会保持满；仅逐项取余核，左端一般不会保持单。中间的 \(\delta\) 把这两种失败联系起来。以交换群为例，取
+\[
+\begin{tikzcd}[column sep=large]
+0\arrow[r]&\mathbb Z\arrow[r,"\times2"]\arrow[d,"\times2"']&\mathbb Z\arrow[r]\arrow[d,"\times2"]&\mathbb Z/2\arrow[r]\arrow[d,"0"]&0\\
+0\arrow[r]&\mathbb Z\arrow[r,"\times2"']&\mathbb Z\arrow[r]&\mathbb Z/2\arrow[r]&0 .
+\end{tikzcd}
+\]
+将 \(\bar1\) 提升成 \(1\)，向下得到 \(2\)，再通过下排乘 \(2\) 的箭头取原像 \(1\)。所以 \(\delta:\mathbb Z/2\to\mathbb Z/2\) 是恒等同态，随后的余核态射则为零。这是一条确实需要连接箭头才能正合的序列。
+
+\ProseParagraphBreak
+下一编研究的复形，是连续复合为零的态射列；其上同调对象是“核除以像”。对复形的短正合列，需要把上一段的核与余核构造按次数排列，再把相邻次数的结果接起来。有关核与像的识别将在复形定义之后证明；这里不把尚未定义的上同调列当作已建立的定理。当前可以直接使用的是蛇引理的完整结论及其自然性：只要后续构造出符合条件的交换图，连接态射与需要核查的正合位置就已经确定。

@@ -6,11 +6,160 @@
 \label{b4:ch:04}
 \BookChapterNumber{b4:ch:04}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+模同态的加法、直和、核与商模能够用态射的泛性质表述，但这些性质并不来自同一层要求。本章先建立加性范畴中的双积运算，再以余像到像的典范同构定义交换范畴。正合函子的两种单侧条件分别对应保持核与余核，也对应保持有限极限与有限余极限。最后用纤维积证明满态射的提升性质，在不假定对象带有底集合的情况下建立蛇引理、五引理及连接同态的自然性。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 用双积的结构态射写出矩阵公式，辨别加性、核余核存在性与交换范畴条件。
+\item 构造像与余像之间的典范态射，解释模范畴和小范畴上的函子范畴为何是交换范畴。
+\item 从保持核与余核判定左、右正合性，说明 Hom 与张量积的不同表现。
+\item 用满态射后的提升完成图追踪，构造蛇引理的连接同态并验证自然性。
+\end{itemize}
+\end{learninggoals}
+
+本章使用前三章的范畴、自然变换、有限极限和伴随，也以第二卷第三章的模正合列作为具体例子。\secref{b4:sec:0401}与\secref{b4:sec:0402}建立本卷以后使用的对象环境；\secref{b4:sec:0403}说明哪些函子保持正合性；\secref{b4:sec:0404}独立证明一般交换范畴中的图引理，不要求先知道范畴嵌入模范畴的定理。
+
+\ProseParagraphBreak
+交换范畴的基本定义可参阅 Weibel 的《An Introduction to Homological Algebra》\cite[Section A.4, A.4.1, Definition A.4.2]{Weibel1994HomologicalAlgebra}；函子范畴及正合函子见\cite[Section 1.6, Functor Categories 1.6.4, Definition 1.6.6]{Weibel1994HomologicalAlgebra}。该书的\cite[Snake Lemma 1.3.2]{Weibel1994HomologicalAlgebra}先给出模的版本，再借嵌入定理解释一般情形；本章改用拉回满态射，便于直接看出提升操作所需的条件。
 
 \input{Part01/Chapter04/Section0401}
 \input{Part01/Chapter04/Section0402}
 \input{Part01/Chapter04/Section0403}
 \input{Part01/Chapter04/Section0404}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+加性范畴允许相加态射，并使有限积与有限余积成为同一个双积。核与余核仍须另外要求存在；交换范畴进一步把余像到像的典范态射变成同构。这一条件保证单态射与满态射分别由核、余核描述，也使正合性能够脱离元素记号表述。
+
+\ProseParagraphBreak
+加性函子的左、右正合性分别由核、余核检验，有限极限与有限余极限随之保持。无限构造需要另加条件。蛇引理中的提升通过满态射的拉回实现，下降通过余核实现；连接同态的唯一构造又给出自然性。这些结论将用于复形、同调对象及导出函子的正合列。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:04-triangular-matrix}
+在加性范畴中，给定 \(a:Y\to X\)，证明双积上的矩阵 \(\begin{pmatrix}1_X&a\\0&1_Y\end{pmatrix}\) 是同构。对 \(b:X\to Y\)，计算它与 \(\begin{pmatrix}1_X&0\\b&1_Y\end{pmatrix}\) 的两种复合，并给出两者交换的充要条件。
+\end{exercise}
+\begin{solution}
+第一个矩阵的逆是把 \(a\) 换成 \(-a\) 的矩阵。按\cref{b4:prop:biproduct-calculus}乘法，两种复合分别是
+\[
+\begin{pmatrix}1_X+ab&a\\b&1_Y\end{pmatrix},\qquad
+\begin{pmatrix}1_X&a\\b&1_Y+ba\end{pmatrix}.
+\]
+因此交换当且仅当 \(ab=0\)、\(ba=0\)，两个条件不能在对象不同时混为一个。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-image-comparison}
+对交换群同态 \(f:\mathbb Z^2\to\mathbb Z\)、\(f(x,y)=2x+4y\)，写出核、余核、像、余像及其典范比较同构。把 \(f\) 看成有限秩自由交换群范畴中的态射时，哪些答案改变？
+\end{exercise}
+\begin{solution}
+在 \(\mathbf{Ab}\) 中，核由 \((-2,1)\) 生成，余核是 \(\mathbb Z/2\)，像是 \(2\mathbb Z\)，余像是 \(\mathbb Z^2/\mathbb Z(-2,1)\)。余像由 \([(1,0)]\) 自由生成，典范比较把这个生成元送到 \(2\)，故是同构。
+
+在自由交换群子范畴中，核及余像不变；余核变为零，因为任何到自由交换群并消去 \(2\mathbb Z\) 的同态都为零。因此像变为 \(\mathbb Z\)，典范比较在上述坐标下成为乘 \(2\)，不可逆。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-projection-complements}
+设 \(X,Y\) 是加性范畴的对象，\(a:Y\to X\)。证明 \(e=\begin{pmatrix}1&a\\0&0\end{pmatrix}\) 幂等，并直接写出使其与 \(\operatorname{diag}(1,0)\) 共轭的自同构。这个计算如何解释同一子对象可能有不同补对象？
+\end{exercise}
+\begin{solution}
+矩阵乘法给出 \(e^2=e\)。取 \(U=\begin{pmatrix}1&-a\\0&1\end{pmatrix}\)，则
+\[
+U\begin{pmatrix}1&0\\0&0\end{pmatrix}U^{-1}
+=\begin{pmatrix}1&a\\0&0\end{pmatrix}.
+\]
+像仍由 \(x\mapsto(x,0)\) 给出，而核由 \(y\mapsto(-ay,y)\) 给出。不同 \(a\) 给出不同的补对象嵌入，尽管这些补对象都同构于 \(Y\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-nonadditive-tensor-square}
+对域 \(k\)，令 \(F(V)=V\otimes_k V\)、\(F(f)=f\otimes f\)。证明这是保持零对象的函子，但不是加性函子；说明仅检查零对象为什么不够。
+\end{exercise}
+\begin{solution}
+恒等态射和复合的保持来自纯张量公式，且 \(0\otimes0=0\)。在 \(V=k^2\) 上令 \(p_1,p_2\) 为两个坐标投影，则 \(p_1+p_2=1_V\)。\(F(p_1+p_2)\) 固定 \(e_1\otimes e_2\)，而 \((F(p_1)+F(p_2))(e_1\otimes e_2)=0\)。此纯张量非零，故两态射不同，与 \(k\) 的特征无关。保持零对象没有控制混合项。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-arrow-nonsplit}
+在 \(k\)-向量空间的箭头范畴中，令 \(A=(0\to k)\)、\(B=(k\xrightarrow1 k)\)、\(C=(k\to0)\)。用各位置的零映射或恒等映射构造 \(0\to A\to B\to C\to0\)。证明它短正合，却不分裂，尽管每个对象位置的向量空间短正合列均分裂。
+\end{exercise}
+\begin{solution}
+从 \(A\) 到 \(B\) 的分量是 \(0:0\to k\) 与 \(1:k\to k\)，从 \(B\) 到 \(C\) 的分量是 \(1:k\to k\) 与 \(0:k\to0\)，都满足方块交换。两个位置分别是 \(0\to0\to k\xrightarrow1k\to0\) 与 \(0\to k\xrightarrow1k\to0\to0\)，所以逐位置短正合且分裂。
+
+若有自然截面 \(s:C\to B\)，源位置分量必为 \(1_k\)，目标位置分量只能为零。但对箭头 \(0\to1\) 的自然性要求 \(1_k1_k=0\)，矛盾。因此逐对象分裂并不能保证这些选择相容。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-finite-abelian-category}
+证明有限交换群组成的全子范畴是交换范畴，但不具有可数个 \(\mathbb Z/2\) 的积或余积。
+\end{exercise}
+\begin{solution}
+零群、有限双积、核及余核都仍有限，且通常的余像到像同构仍在这个全子范畴中，故它是交换范畴。若积 \(P\) 存在，泛性质给出
+\[
+\operatorname{Hom}(\mathbb Z/2,P)\cong
+\prod_{n\geq1}\operatorname{Hom}(\mathbb Z/2,\mathbb Z/2).
+\]
+左边有限，右边无限，矛盾。若余积 \(Q\) 存在，对 \(\operatorname{Hom}(Q,\mathbb Z/2)\) 使用对偶公式得到同一矛盾。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-torsion-and-quotient}
+固定整数 \(n\geq2\)。在交换群范畴中，证明 \(T_n(M)=\{m:nm=0\}\) 左正合，\(Q_n(M)=M/nM\) 右正合，并用同一条短正合列证明两者一般都不正合。
+\end{exercise}
+\begin{solution}
+映射 \(\varphi\mapsto\varphi(\bar1)\) 给出 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n,M)\cong T_n(M)\)，且与 \(M\) 的同态相容，所以 \(T_n\) 左正合。\((\bar a,m)\mapsto am+nM\) 诱导 \((\mathbb Z/n)\otimes M\cong Q_n(M)\)，逆把 \(m+nM\) 送到 \(\bar1\otimes m\)，故 \(Q_n\) 右正合。
+
+对 \(0\to\mathbb Z\xrightarrow{\times n}\mathbb Z\to\mathbb Z/n\to0\)，\(T_n\) 得到 \(0\to0\to0\to\mathbb Z/n\)，末端不满；\(Q_n\) 中左侧成为 \(\mathbb Z/n\xrightarrow0\mathbb Z/n\)，不单。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-split-sequence-functor}
+证明加性范畴中一个带截面的余核列 \(X\xrightarrow iY\xrightarrow pZ\) 若 \(i=\ker p\) 且存在 \(s:Z\to Y\)、\(ps=1_Z\)，则 \(Y\cong X\oplus Z\)。由此证明加性函子保持分裂短正合列，即使它并不正合。
+\end{exercise}
+\begin{solution}
+\(p(1_Y-sp)=0\)，所以存在唯一 \(r:Y\to X\)，使 \(ir=1_Y-sp\)。由 \(i\) 单，得到 \(ri=1_X\)、\(rs=0\)。结合 \(pi=0\)、\(ps=1_Z\)、\(ir+sp=1_Y\)，\((i,s)\) 与 \((r,p)^{\mathsf T}\) 互逆。加性函子保持这些五个等式，因此仍得到标准双积的包含与投影，后者形成分裂短正合列。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-explicit-pullback}
+沿同态 \(t:\mathbb Z\to\mathbb Z/6\)、\(t(a)=\overline{3a}\)，拉回商映射 \(e:\mathbb Z\to\mathbb Z/6\)。计算纤维积、到第二个 \(\mathbb Z\) 的满射及其核，并给出该满射的截面。原来的 \(e\) 有截面吗？
+\end{exercise}
+\begin{solution}
+纤维积为 \(P=\{(b,a):b-3a\in6\mathbb Z\}\)。每个元素唯一写成 \(c(6,0)+a(3,1)\)，所以它是秩二自由交换群。投影 \((b,a)\mapsto a\) 满，其核由 \((6,0)\) 生成，截面为 \(a\mapsto(3a,a)\)。原商映射没有截面，因为从有限群 \(\mathbb Z/6\) 到无挠群 \(\mathbb Z\) 的同态只能为零。一次拉回可以分裂，并不意味着原满射分裂。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-snake-integers}
+令 \(m,n\geq2\)，两行都为 \(0\to\mathbb Z\xrightarrow{\times m}\mathbb Z\to\mathbb Z/m\to0\)，三个竖直映射都为乘 \(n\)。用 \(d=\gcd(m,n)\) 写出蛇引理的非零部分，并计算连接同态。
+\end{exercise}
+\begin{solution}
+前两个核为零，第三个核由 \(\overline{m/d}\) 生成，阶为 \(d\)。前两个余核为 \(\mathbb Z/n\)，第三个余核为 \(\mathbb Z/d\)。对满足 \(m\mid nc\) 的代表元 \(c\)，先提升到整数，再向下乘 \(n\)，经下排乘 \(m\) 取原像，得到
+\[
+\delta(\bar c)=\overline{nc/m}\in\mathbb Z/n.
+\]
+更换 \(c\) 为 \(c+ma\) 只改变 \(na\)，所以公式良定义。把第三个核识别为 \(\mathbb Z/d\) 后，序列成为
+\[
+0\to\mathbb Z/d\xrightarrow{\bar1\mapsto\overline{n/d}}
+\mathbb Z/n\xrightarrow{\times m}\mathbb Z/n
+\longrightarrow\mathbb Z/d\to0.
+\]
+第一支像正是乘 \(m\) 的核；最后一支是模 \(d\) 的商映射，其核由 \(\bar m\) 生成，因而逐项正合。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-short-five}
+设交换范畴中两条短正合列之间给定交换图。如果左右两个竖直态射是同构，证明中间一个也是同构；若左右两个都单，或都满，分别能得到什么结论？
+\end{exercise}
+\begin{solution}
+两端都是同构时，在两条短正合列的零对象处补出五项图，\cref{b4:thm:five-lemma}给出结论。若两端都单，则蛇引理前部为 \(0\to0\to\ker\beta\to0\)，故 \(\ker\beta=0\)，中间态射单。若两端都满，则尾部为 \(0\to\operatorname{coker}\beta\to0\to0\)，故中间态射满。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-pushout-extension}
+在交换范畴中，设 \(0\to A\xrightarrow iB\xrightarrow pC\to0\) 短正合，\(f:A\to A'\) 任意。构造推出 \(B'\)，并证明有短正合列 \(0\to A'\to B'\to C\to0\)。
+\end{exercise}
+\begin{solution}
+取 \(B'=\operatorname{coker}((i,-f):A\to B\oplus A')\)，记余核为 \(v\)，并令 \(j(a')=v(0,a')\)。推出泛性质由余核泛性质给出，\cref{b4:lem:epi-pullback}的对偶表明 \(j\) 单。\((p,0)\) 消去 \((i,-f)\)，故下降为 \(p':B'\to C\)。它满，因为 \(p'v\) 在 \(B\) 分量上是满态射 \(p\)。
+
+若 \(h:B'\to T\) 消去 \(j\)，则 \(hv\) 的 \(A'\) 分量为零，它在 \(B\) 上的分量消去 \(i\)，故唯一地通过 \(p\)。由 \(v\) 满，这等价于 \(h\) 唯一通过 \(p'\)。因此 \(p'\) 是 \(j\) 的余核；\(j\) 单又是其余核的核，所给列短正合。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:04-faithful-exact-reflects}
+设 \(F:\mathcal A\to\mathcal B\) 是交换范畴之间的忠实正合函子。证明它反映同构与正合性，即 \(F(f)\) 为同构推出 \(f\) 为同构；\(F(X)\to F(Y)\to F(Z)\) 正合推出原来的三项序列正合。
+\end{exercise}
+\begin{solution}
+若 \(F(T)=0\)，则 \(F(1_T)=0=F(0)\)，忠实性给出 \(1_T=0\)，故 \(T\) 为零对象。若 \(F(f)\) 可逆，正合性使 \(F(\ker f)\) 与 \(F(\operatorname{coker}f)\) 都为零，故原核、余核均为零，\(f\) 既单又满而可逆。
+
+对三项序列 \(f,g\)，忠实性先由 \(F(gf)=0\) 得 \(gf=0\)。令 \(I=\operatorname{im}f\)、\(K=\ker g\)，有自然单态射 \(I\to K\)。\(F\) 保持像和核，假设正合说明它把此态射送成同构；前一结论使 \(I\to K\) 本身可逆，故原序列正合。
+\end{solution}

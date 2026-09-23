@@ -5,8 +5,6 @@
 \section{Mittag–Leffler 条件}
 \label{b4:sec:1304}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 稳定像条件
@@ -19,14 +17,97 @@
 \subsection{稳定像条件}
 \label{b4:subsec:1304:01}
 
-待撰写。
+过渡满射能使逐层提升继续进行，但它并非唯一有用的条件。即使某些元素始终不能从下一层提升，只要后来各层在当前层的像最终稳定，也足以排除一次导出障碍。
+
+\begin{definition}\label{b4:def:mittag-leffler-tower}
+设 \(R\) 为环，\(M=(M_n,u_n)\) 为左 \(R\)-模可数塔，\(u_{n,m}:M_m\to M_n\) 表示复合过渡映射，\(u_{n,n}=1\)。若对每个 \(n\)，存在 \(m_0\ge n\)，使
+\[
+\operatorname{im}u_{n,m}=\operatorname{im}u_{n,m_0}
+\qquad(m\ge m_0),
+\]
+则称该塔满足\term[mittag-leffler-tiaojian]{Mittag–Leffler 条件}[Mittag--Leffler condition]，简称 ML 条件。
+\end{definition}
+
+过渡满射塔满足此条件。每层为 Artin 模的塔也满足，因为固定层中的像形成递降子模列；有限交换群塔、有限维向量空间塔都是例子。这里要求每个固定层的像最终稳定，并不要求所有层共用一个稳定指标。
+
+\begin{lemma}\label{b4:lem:stable-image-tower}
+设 \(M\) 为满足 ML 条件的左 \(R\)-模可数塔，以 \(S_n\subseteq M_n\) 记各层的稳定像。则 \(S=(S_n)\) 是过渡满射的子塔；商塔 \(Q_n=M_n/S_n\) 满足：对每个 \(n\)，所有足够远的过渡 \(Q_m\to Q_n\) 均为零。
+\end{lemma}
+\begin{proof}
+取同时超过第 \(n\) 和 \(n+1\) 层稳定指标的 \(m\)。\(M_m\to M_n\) 经过 \(M_{n+1}\)，所以 \(u_n(S_{n+1})\subseteq S_n\)。任意 \(s\in S_n\) 都可从这同一个 \(M_m\) 提升，其在 \(M_{n+1}\) 的像属于 \(S_{n+1}\)，故限制映射满。最后，足够远的 \(M_m\to M_n\) 的像正是 \(S_n\)，模掉它以后映射为零。
+\end{proof}
 
 \subsection{\texorpdfstring{可数塔的 \(\varprojlim{}^1\) 消失判据}{可数塔的 lim1 消失判据}}
 \label{b4:subsec:1304:02}
 
-待撰写。
+\begin{theorem}\label{b4:thm:mittag-leffler-vanishing}
+设 \(R\) 为环，\(M\) 为满足 ML 条件的左 \(R\)-模可数塔。则
+\(\varprojlim{}^1M_n=0\)。因此，对塔短正合列 \(0\to A\to B\to C\to0\)，若 \(A\) 满足 ML 条件，取逆极限后仍为短正合列。
+\end{theorem}
+\begin{proof}
+先处理每层的足够远过渡均为零的塔 \(Q\)。对任意 \(y\in\prod Q_n\)，令
+\[
+x_n=\sum_{m\ge n}u_{n,m}y_m.
+\]
+固定 \(n\) 时只有有限多个非零项，所以这是模中的有限和。相邻两式相减得到 \(x_n-u_nx_{n+1}=y_n\)，故 \(\Delta_Q\) 满，\(\varprojlim{}^1Q_n=0\)。
+
+对一般 ML 塔用\cref{b4:lem:stable-image-tower}分成 \(0\to S\to M\to Q\to0\)。\(S\) 的过渡满射，\(Q\) 满足刚证明的条件，所以两者的一次导出极限为零。\cref{b4:thm:countable-derived-limit}的六项正合列于是给出 \(\varprojlim{}^1M_n=0\)。末项结论再次应用同一六项正合列。
+\end{proof}
+
+ML 是一个便于检查的充分条件，本书不把它称为所有塔上的充要条件。例如取每层为 \(\mathbb Z_p\)、过渡为乘 \(p\) 的塔，固定层的像 \(p^m\mathbb Z_p\) 严格递降，故不满足 ML；但对任意 \((y_n)\) 可定义
+\[
+x_n=\sum_{j\ge0}p^j y_{n+j}\in\mathbb Z_p.
+\]
+此式的意义是：模 \(p^r\) 时只取前 \(r\) 项，它们随 \(r\) 相容，因而由逆极限定义一个元素。于是 \(x_n-px_{n+1}=y_n\)，\(\Delta\) 仍满。严格递降可由 \(p^m\) 模 \(p^{m+1}\) 非零检验；这里无需使用分析意义的级数收敛。
+
+\ProseParagraphBreak
+可数塔的乘积计算、稳定像方法及条件范围可分别对照 Weibel\cite[Definition 3.5.1, Corollary 3.5.4, Definition 3.5.6, Proposition 3.5.7]{Weibel1994HomologicalAlgebra}。
 
 \subsection{完备化与 Milnor 型正合列}
 \label{b4:subsec:1304:03}
 
-待撰写。
+先看完备化。设 \(R\) 交换、\(I\) 为理想，\(0\to A\to B\to C\to0\) 为模短正合列。每层有
+\[
+0\to A/(A\cap I^nB)\to B/I^nB\to C/I^nC\to0\qquad(n\ge1).
+\]
+左塔的过渡满射，故由\cref{b4:thm:mittag-leffler-vanishing}，其极限列仍正合。此时左端是 \(A\) 关于诱导滤过的完备化，还不能无条件换成 \(\widehat A=\varprojlim A/I^nA\)。
+
+\ProseParagraphBreak
+若 \(R\) Noether 且 \(B\) 有限生成，第三卷定理13.2.1的 Artin–Rees 引理给出某个 \(c\)，使
+\[
+I^nA\subseteq A\cap I^nB\subseteq I^{n-c}A\qquad(n\ge c).
+\]
+两个滤过相互包含足够深的一层，诱导的极限映射互逆。因此得到 \(0\to\widehat A\to\widehat B\to\widehat C\to0\)。第三卷定理13.3.5已独立证明这一完备化正合性；这里解释它所用的相容提升为何没有一次导出障碍。Noether 与有限生成假设用于比较两种滤过，而不是用于“过渡满射塔的极限保持这条短正合列”。
+
+\ProseParagraphBreak
+对复形组成的逆系统，一次导出还记录了“先取上同调”与“先取逆极限”之间的差别。下面的短正合列称为\term[milnor-zhenghelie]{Milnor 正合列}[Milnor exact sequence]。
+
+\begin{theorem}[Milnor 型正合列]\label{b4:thm:milnor-exact-sequence}
+设 \(R\) 为环，\((C_n)_{n\ge0}\) 为左 \(R\)-模上链复形的逆向塔。假定对每个次数 \(j\)，模塔 \((C_n^j)_n\) 满足 ML 条件。则对每个整数 \(q\)，有自然短正合列
+\[
+0\longrightarrow\varprojlim{}^1 H^{q-1}(C_n)
+\longrightarrow H^q(\varprojlim C_n)
+\longrightarrow\varprojlim H^q(C_n)\longrightarrow0.
+\]
+若同调塔 \((H^{q-1}(C_n))_n\) 也满足 ML 条件，右侧比较映射是同构。
+\end{theorem}
+\begin{proof}
+逐次数使用\cref{b4:thm:countable-derived-limit}及\cref{b4:thm:mittag-leffler-vanishing}，得到复形的短正合列
+\[
+0\longrightarrow\varprojlim C_n\longrightarrow\prod_n C_n
+\xrightarrow{\Delta}\prod_n C_n\longrightarrow0.
+\]
+其同调长正合列中，两个积的同调由\cref{b4:prop:products-cohomology}识别为同调群的积，诱导态射也是对应的乘积差映射。因此 \(H^q(\varprojlim C_n)\) 左边的余核为 \(\varprojlim{}^1H^{q-1}(C_n)\)，右边的核为 \(\varprojlim H^q(C_n)\)。截取长正合列即得结论。原短列及其同调连接态射都自然，故所获短列自然；最后再用 ML 消失定理。
+\end{proof}
+
+这里有两种不同的 ML 条件：各次数模的条件保证计算复形正确，同调模的条件进一步使修正项消失。它们不能互相替代。这个上链版本可与 Weibel\cite[Theorem 3.5.8, Variant]{Weibel1994HomologicalAlgebra}对照；链版本的修正项则在 \(q+1\) 次。
+
+\begin{example}\label{b4:exm:milnor-nonzero-correction}
+令 \(C_n\) 是次数 \(0,1\) 的复形 \(\mathbb Z\to\mathbb Z/p^{n+1}\)，微分为商映射；过渡为恒等与约化。各次塔都过渡满射，但 \(H^0(C_n)=p^{n+1}\mathbb Z\)、\(H^1(C_n)=0\)。极限复形为 \(\mathbb Z\to\mathbb Z_p\)，所以
+\[
+H^1(\varprojlim C_n)=\mathbb Z_p/\mathbb Z
+=\varprojlim{}^1H^0(C_n),
+\qquad \varprojlim H^1(C_n)=0.
+\]
+这里新增的一次同调完全来自相容性障碍，而不是任何有限层的一次同调。
+\end{example}

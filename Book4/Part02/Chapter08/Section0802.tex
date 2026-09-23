@@ -5,7 +5,6 @@
 \section{Ext}
 \label{b4:sec:0802}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,94 @@
 \subsection{Hom 的右导出函子}
 \label{b4:subsec:0802:01}
 
-待撰写。
+\begin{definition}\label{b4:def:ext}
+设 \(R\) 是含幺环，\(M,N\) 是左 \(R\) 模。对 \(N\) 取内射消解 \(N\to I^\bullet\)，定义交换群
+\[
+\operatorname{Ext}_R^n(M,N)\coloneqq
+H^n\bigl(\operatorname{Hom}_R(M,I^\bullet)\bigr),\qquad n\ge0.
+\]
+这就是左正合函子 \(\operatorname{Hom}_R(M,-)\) 的右导出函子。
+\end{definition}
+\symidx{\(\operatorname{Ext}_R^n(M,N)\)：Ext 群}
+
+零次是 \(\operatorname{Hom}_R(M,N)\)。在一般非交换环上，Ext 首先是交换群，不自动是左 \(R\) 模；若 \(R\) 交换，标量乘法与所有微分相容，便得到自然的 \(R\) 模结构。下标的环也不能略去，例如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z/2)\) 与 \(\operatorname{Ext}_{\mathbb F_2}^1(\mathbb F_2,\mathbb F_2)\) 不同。
+
+\ProseParagraphBreak
+固定 \(N\) 时，\(\operatorname{Hom}_R(-,N)\) 是从左模反范畴到交换群的左正合函子。左模的投射对象正是反范畴的内射对象，所以投射消解也能给出一套右导出函子。两套计算是否一致，需要证明，不能由名字相同得出。
 
 \subsection{反变与协变变量}
 \label{b4:subsec:0802:02}
 
-待撰写。
+\begin{theorem}[Ext 的平衡性]\label{b4:thm:ext-balanced}
+设 \(R\) 是含幺环，\(M,N\) 是左 \(R\) 模，\(P_\bullet\to M\) 为投射消解，\(N\to I^\bullet\) 为内射消解。取
+\[
+\operatorname{Hom}_R(P_\bullet,N)^n=\operatorname{Hom}_R(P_n,N),
+\qquad \delta^n(f)=f\,d_{n+1}.
+\]
+则有自然同构
+\[
+H^n\bigl(\operatorname{Hom}_R(P_\bullet,N)\bigr)
+\cong\operatorname{Ext}_R^n(M,N).
+\]
+它对 \(M\) 反变，对 \(N\) 协变，并与两变量的连接态射相容。
+\end{theorem}
+\begin{proof}
+令 \(D^{p,q}=\operatorname{Hom}_R(P_p,I^q)\)，其中 \(p,q\ge0\)，定义
+\[
+d_h(f)=f d_P,\qquad d_v(f)=(-1)^p d_I f.
+\]
+两次水平或竖直微分为零；一水平一竖直的两种复合相差一个负号，故 \(d_h d_v+d_vd_h=0\)。总次数为 \(p+q\)，每条对角线有限，因而总复形只用有限直和。
+
+固定 \(p\)，\(P_p\) 的投射性使 \(\operatorname{Hom}_R(P_p,-)\) 正合，所以竖列只在 \(q=0\) 有上同调 \(\operatorname{Hom}_R(P_p,N)\)。固定 \(q\)，\(I^q\) 的内射性使 \(\operatorname{Hom}_R(-,I^q)\) 正合，所以横行只在 \(p=0\) 有上同调 \(\operatorname{Hom}_R(M,I^q)\)。增广分别给出两条复形映射
+\[
+\operatorname{Hom}_R(P_\bullet,N)\longrightarrow\operatorname{Tot}D,
+\qquad
+\operatorname{Hom}_R(M,I^\bullet)\longrightarrow\operatorname{Tot}D.
+\]
+在第一条的 \(q=0\) 边，竖直微分为零；在第二条的 \(p=0\) 边，水平微分为零。因此它们确实与总微分相容。\cref{b4:cor:double-complex-comparison}分别沿竖列和横行说明这两条映射都是拟同构。该结果的证明只逐个消去有限对角线上的分量，不使用谱序列。
+
+投射、内射比较映射使上述两条映射对 \(M,N\) 自然；不同选择同伦，故同调态射确定。对短正合列选择马蹄消解后，所有总复形也组成逐次短正合列；两侧增广给出它们之间的交换图。\cref{b4:thm:cohomology-long-exact}的自然性于是保证同构与连接态射相容。
+\end{proof}
+
+为了方便表示上同调类，本定理使用无符号的 \(\delta(f)=fd\)。若把 \(P_n\) 放在上链次数 \(-n\)，按一般内部 Hom 规则会得到 \(\delta(f)=(-1)^{n+1}fd\)；每个次数 \(n\) 乘 \((-1)^{n(n+1)/2}\) 给出这两种复形的同构。本节以后用前一种计算约定。
+
+\ProseParagraphBreak
+给定 \(u:M'\to M\)，其投射消解提升经预合成给出 \(u^*:\operatorname{Ext}_R^n(M,N)\to\operatorname{Ext}_R^n(M',N)\)；给定 \(v:N\to N'\)，后合成给出 \(v_*\)。预合成与后合成交换，所以 Ext 是两个变量的函子，而非仅对每个固定模分别定义的一组交换群。
 
 \subsection{Ext 长正合列及具体计算}
 \label{b4:subsec:0802:03}
 
-待撰写。
+\begin{theorem}\label{b4:thm:ext-long-exact}
+设 \(R\) 是含幺环。左 \(R\) 模短正合列 \(0\to A\to B\to C\to0\) 对任意左模 \(N\) 给出自然长正合列
+\[
+\begin{aligned}
+0&\longrightarrow\operatorname{Hom}_R(C,N)\longrightarrow\operatorname{Hom}_R(B,N)
+\longrightarrow\operatorname{Hom}_R(A,N)\\
+&\longrightarrow\operatorname{Ext}_R^1(C,N)\longrightarrow\operatorname{Ext}_R^1(B,N)
+\longrightarrow\operatorname{Ext}_R^1(A,N)\longrightarrow\cdots.
+\end{aligned}
+\]
+对任意左模 \(M\)，左模短正合列 \(0\to N'\to N\to N''\to0\) 给出自然长正合列
+\[
+\begin{aligned}
+0&\longrightarrow\operatorname{Hom}_R(M,N')\longrightarrow\operatorname{Hom}_R(M,N)
+\longrightarrow\operatorname{Hom}_R(M,N'')\\
+&\longrightarrow\operatorname{Ext}_R^1(M,N')\longrightarrow\operatorname{Ext}_R^1(M,N)
+\longrightarrow\operatorname{Ext}_R^1(M,N'')\longrightarrow\cdots.
+\end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+第一列取 \(N\) 的内射消解，逐次施加反变正合函子 \(\operatorname{Hom}_R(-,I^q)\)，得到 \(0\to\operatorname{Hom}(C,I)\to\operatorname{Hom}(B,I)\to\operatorname{Hom}(A,I)\to0\)，再取同调长正合列。第二列取 \(M\) 的投射消解，对给定序列逐次施加正合函子 \(\operatorname{Hom}_R(P_p,-)\)，取长正合列，再用\cref{b4:thm:ext-balanced}识别各项。增广在零次给出通常 Hom 映射，连接态射与选择独立且自然。
+\end{proof}
+
+\begin{example}\label{b4:exm:ext-cyclic}
+设 \(R\) 是主理想整环，\(0\ne a\in R\)，\(N\) 是 \(R\) 模。把 \(R/(a)\) 的两项消解送入 Hom，得到 \(N\xrightarrow{a}N\)，故
+\[
+\operatorname{Ext}_R^0(R/(a),N)=\{\,n\in N\mid an=0\,\},
+\qquad\operatorname{Ext}_R^1(R/(a),N)=N/aN,
+\]
+二次及以上为零。特别地，\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n)\mathbb Z\)，其中 \(m,n>0\)。若改取 \(N=\mathbb Q\)，乘 \(m\) 为同构，零次及正次均为零；这与 \(\mathbb Q\) 内射一致。
+\end{example}
+
+在 \(R=k[\epsilon]/(\epsilon^2)\) 上，对\secref{b4:sec:0701}给出的 \(k\) 的周期消解施加 \(\operatorname{Hom}_R(-,k)\)，所有微分为零。因此 \(\operatorname{Ext}_R^n(k,k)\cong k\) 对每个 \(n\ge0\) 成立。相同的底层向量空间，在底环为 \(k\) 时正次 Ext 全为零；记录底环是计算的一部分。

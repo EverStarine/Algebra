@@ -6,11 +6,246 @@
 \label{b4:ch:03}
 \BookChapterNumber{b4:ch:03}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章把自由模、张量积等泛性质写成可表函子的形式，说明表示对象的唯一性包含对指定结构的相容要求。Yoneda 引理进一步把以可表函子为源的自然变换化为一个元素，并由此证明对象和态射都能通过 Hom 函子识别。随后从 Hom 集的自然双射建立伴随，证明它与单位、余单位及三角恒等式的刻画等价，再推导左右伴随对余极限、极限的保持性质。单子与余单子只讨论基本定义、伴随所给构造和具体运算，不提前使用单子性理论。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 为一个具体集合值函子找出表示对象、泛元素和自然双射，并辨认协变与反变的方向。
+\item 证明 Yoneda 引理，分别检查对象变量与函子变量中的自然性，利用它求自然变换。
+\item 从伴随双射构造单位与余单位，也能从三角恒等式恢复双射及其两变量自然性。
+\item 写出自由—忘却、交换化以及 Hom–张量伴随的具体映射，核对非交换模的侧别。
+\item 用泛性质证明伴随保持相应的极限，给出不能保持另一类极限的反例，并理解单子公理的运算含义。
+\end{itemize}
+\end{learninggoals}
+
+本章使用\chapref{b4:ch:01}的函子、自然变换及全忠实性，以及\chapref{b4:ch:02}的极限、余极限。模论例子调用第二卷第3.1节的自由模泛性质、第6.1节的张量积构造和第6.3节的 Hom–张量伴随；这些构造已在第二卷证明，本章研究它们所共有的范畴性质。交换化的例子另用群的交换子和商群。不需要预先掌握交换范畴、消解或导出函子。
+
+\ProseParagraphBreak
+可对照 Weibel《An Introduction to Homological Algebra》中的 Yoneda 嵌入\cite[Example A.3.4]{Weibel1994HomologicalAlgebra}及伴随的表述\cite[A.6.1; Theorem A.6.2]{Weibel1994HomologicalAlgebra}。本章依次证明泛元素判据、Yoneda 引理、伴随的两种刻画及保持定理；阅读时可把每个一般公式立即用于自由模或张量积，检查它作用于生成元或纯张量时究竟做了什么。
+
 
 \input{Part01/Chapter03/Section0301}
 \input{Part01/Chapter03/Section0302}
 \input{Part01/Chapter03/Section0303}
 \input{Part01/Chapter03/Section0304}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+可表函子把一个对象的泛性质组织成随目标或源自然变化的双射。表示对象必须连同这个双射或泛元素一起比较；保持这些数据的同构才是唯一确定的。Yoneda 引理把自然变换的全部分量缩减为在恒等态射上的取值，并说明这种恢复在对象和函子两个参数上仍然自然。
+
+\ProseParagraphBreak
+伴随把两个范畴之间的 Hom 集联系起来。单位与余单位来自恒等态射，转置公式说明它们已经决定全部双射，三角恒等式则恰好保证正反两种转置互逆。左伴随保持余极限、右伴随保持极限，都是把锥的相容条件和唯一分解经自然双射传送的结果；未获保证的那一类保持性质仍需另外检验。
+
+\ProseParagraphBreak
+单子保留自函子上的单位与归并运算，余单子反转这些箭头。自由模的嵌套形式和给出了可直接计算的例子。它们在这里解释伴随所附带的结构；怎样从单子恢复一个代数范畴，仍是另一个问题。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:03-torsion-representations}
+设 \(m,n\ge1\)，对交换群 \(A\) 定义 \(T_n(A)=\{a\in A:na=0\}\)，并以群同态的限制定义态射作用。证明 \(T_n:\mathbf{Ab}\rightarrow\mathbf{Set}\) 可表。求从 \(T_m\) 到 \(T_n\) 的全部自然变换，并具体列出 \(m=6,n=4\) 时的答案。
+\end{exercise}
+\begin{solution}
+同态 \(\mathbb Z/n\mathbb Z\rightarrow A\) 由 \(\bar1\) 的像唯一决定，该像恰为一个被 \(n\) 杀死的元素。因此 \(T_n\cong h^{\mathbb Z/n\mathbb Z}\)，且该对应与后复合相容。协变 Yoneda 引理给出
+\[
+\operatorname{Nat}(T_m,T_n)
+\cong\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n\mathbb Z,\mathbb Z/m\mathbb Z).
+\]
+右边由满足 \(nc\equiv0\pmod m\) 的剩余类 \(\bar c\) 参数化，对应变换为 \(a\mapsto ca\)。这个公式不依赖 \(c\) 的代表，因为 \(ma=0\)；条件保证 \(nca=0\)。可选剩余类共有 \(\gcd(m,n)\) 个。若 \(m=6,n=4\)，条件为 \(6\mid4c\)，故 \(c\equiv0,3\pmod6\)，两变换分别为零与乘三。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-units-nilpotents}
+在含幺交换环及保幺同态的范畴中，证明可逆元函子 \(A\mapsto A^\times\) 与函子 \(A\mapsto\{a\in A:a^n=0\}\)（固定 \(n\ge1\)）都可表。分别写出表示对象及泛元素，并解释为何第二个函子的定义必须固定 \(n\)。
+\end{exercise}
+\begin{solution}
+可逆元函子由 \(\mathbb Z[t,t^{-1}]\) 表示，泛元素为 \(t\)：给定可逆元 \(a\)，唯一同态为 \(t\mapsto a,t^{-1}\mapsto a^{-1}\)。关系 \(tt^{-1}=1\) 保证每个同态确实给出可逆元。第二个函子由 \(\mathbb Z[t]/(t^n)\) 表示，泛元素为 \(\bar t\)，因为指定 \(t\mapsto a\) 能通过商环当且仅当 \(a^n=0\)。两种对应均与环同态后复合相容。若把 \(n\) 去掉而只要求某个幂为零，得到的是所有幂零元的函子，不能由上面任一固定商环表示；例如 \(\mathbb Z[t]/(t^{n+1})\) 中 \(\bar t\) 幂零却不满足 \(\bar t^n=0\)。本题不据此断言后一函子绝不可能有别的表示。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-constant-representable}
+设 \(\mathcal C\) 为局部小范畴。证明常值单元素协变函子可表，当且仅当 \(\mathcal C\) 有始对象；反变版本对应终对象。再证明常值空集合函子在任意 \(\mathcal C\) 上都不可表。
+\end{exercise}
+\begin{solution}
+表示对象 \(A\) 满足 \(\operatorname{Hom}_{\mathcal C}(A,X)\) 对每个 \(X\) 恰有一个元素，这正是始对象条件。所有到单元素集合的映射自动相容，所以不存在额外自然性要求。反变版本同样把条件写成每个 \(\operatorname{Hom}_{\mathcal C}(X,A)\) 为单元素集，得到终对象。若空集合函子由 \(A\) 表示，则在 \(A\) 处得到 \(\operatorname{Hom}_{\mathcal C}(A,A)\cong\varnothing\)，与恒等态射存在矛盾；若 \(\mathcal C\) 没有对象，更没有可选的表示对象。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-powerset-operations}
+令 \(\mathcal P:\mathbf{Set}^{\mathrm{op}}\rightarrow\mathbf{Set}\) 为以逆像定义态射作用的幂集函子。求 \(\mathcal P\) 的全部自然自变换，不事先要求它们保持并、交或补。
+\end{exercise}
+\begin{solution}
+由特征函数可知 \(\mathcal P\cong h_{\{0,1\}}\)。Yoneda 引理把自然自变换对应到四个映射 \(c:\{0,1\}\rightarrow\{0,1\}\)，变换作用为 \(\chi_A\mapsto c\circ\chi_A\)。恒等、交换 \(0,1\)、常值零、常值一，分别给出
+\[
+A\longmapsto A,\qquad A\longmapsto X\setminus A,
+\qquad A\longmapsto\varnothing,\qquad A\longmapsto X
+\quad(A\subseteq X).
+\]
+这些操作均与逆像交换，且全忠实性证明没有其他变换。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-natural-multioperations}
+固定非负整数 \(r\)。对每个交换群 \(A\)，给定集合映射 \(t_A:A^r\rightarrow A\)，并要求其对群同态自然。证明存在唯一整数族 \((n_1,\ldots,n_r)\)，使
+\(t_A(a_1,\ldots,a_r)=\sum_i n_i a_i\)。说明 \(r=0\) 的含义。
+\end{exercise}
+\begin{solution}
+\(A\mapsto A^r\) 由带标准基 \(e_1,\ldots,e_r\) 的 \(\mathbb Z^r\) 表示。令 \(v=t_{\mathbb Z^r}(e_1,\ldots,e_r)=\sum_i n_ie_i\)。对唯一满足 \(f(e_i)=a_i\) 的群同态 \(f:\mathbb Z^r\rightarrow A\)，自然性给出 \(t_A(a_1,\ldots,a_r)=f(v)=\sum_i n_ia_i\)。取 \(A=\mathbb Z^r\) 及标准基恢复系数，故唯一；反过来这些整数线性组合均自然。\(r=0\) 时定义域是单元素集合，表示对象为零群，自然选择的元素只能是各群的零元。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-center-natural-endomorphisms}
+设 \(R\) 为含幺环。证明恒等函子 \(1_{R\text{-}\mathbf{Mod}}\) 的自然自变换与环中心 \(Z(R)\) 一一对应；若把分量只要求为底集合映射，自然自变换则由全部 \(R\) 参数化。
+\end{exercise}
+\begin{solution}
+设 \(t\) 的分量首先只是集合映射，对模同态自然。令 \(a=t_R(1)\)。对左线性映射 \(f_m:R\rightarrow M\)、\(r\mapsto rm\)，自然性给出 \(t_M(m)=f_m(a)=am\)。反之固定 \(a\in R\) 的左乘与所有左模同态交换，故给出底集合函子的自然自变换。若还要求 \(t_R\) 左 \(R\) 线性，则对 \(r\in R\)，一方面 \(t_R(r)=ar\)，另一方面 \(t_R(r)=rt_R(1)=ra\)，所以 \(a\in Z(R)\)。中心元素的左乘在每个左模上确实左线性，给出逆对应。这里自然性与分量的线性是两个不同条件。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-adjoint-unique}
+设局部小范畴之间的函子 \(F:\mathcal C\rightarrow\mathcal D\) 同时以 \(G,G':\mathcal D\rightarrow\mathcal C\) 为右伴随，伴随双射已指定。证明存在唯一与这两组双射相容的自然同构 \(G\cong G'\)。
+\end{exercise}
+\begin{solution}
+对每个 \(Y\in\mathcal D\)，两组双射复合给出自然于 \(X\) 的同构
+\[
+\operatorname{Hom}_{\mathcal C}(X,GY)
+\xrightarrow{\Phi^{-1}}\operatorname{Hom}_{\mathcal D}(FX,Y)
+\xrightarrow{\Phi'}\operatorname{Hom}_{\mathcal C}(X,G'Y).
+\]
+Yoneda 引理给出唯一同构 \(s_Y:GY\rightarrow G'Y\)，使上述映射为后复合 \(s_Y\)。若 \(b:Y\rightarrow Y'\)，两组伴随在 \(Y\) 上自然，故后复合 \(G'(b)s_Y\) 与后复合 \(s_{Y'}G(b)\) 对所有 \(X\) 相同。Yoneda 忠实性给出 \(G'(b)s_Y=s_{Y'}G(b)\)，所以 \(s\) 自然。逆双射同样产生自然逆，且相容性逐个 \(Y\) 确定 \(s_Y\)，故唯一。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-composite-adjunction}
+设 \(F:\mathcal C\rightarrow\mathcal D\)、\(G:\mathcal D\rightarrow\mathcal C\) 与 \(F':\mathcal D\rightarrow\mathcal E\)、\(G':\mathcal E\rightarrow\mathcal D\) 是局部小范畴之间的伴随 \(F\dashv G\)、\(F'\dashv G'\)。证明 \(F'F\dashv GG'\)，并用两组单位、余单位写出复合伴随的单位与余单位。
+\end{exercise}
+\begin{solution}
+按顺序复合自然双射
+\[
+\operatorname{Hom}_{\mathcal E}(F'FX,Z)
+\cong\operatorname{Hom}_{\mathcal D}(FX,G'Z)
+\cong\operatorname{Hom}_{\mathcal C}(X,GG'Z).
+\]
+复合仍对 \(X,Z\) 自然，故给出伴随。将 \(1_{F'FX}\) 代入，先得到 \(\eta'_{FX}\)，再得到 \(G(\eta'_{FX})\eta_X\)，所以单位为该复合。将 \(1_{GG'Z}\) 经两个逆双射送回，得到余单位
+\[
+F'FGG'Z\xrightarrow{F'(\varepsilon_{G'Z})}F'G'Z
+\xrightarrow{\varepsilon'_Z}Z.
+\]
+这些映射来自所构造的伴随双射，因而由\cref{b4:thm:adjunction-unit-counit}满足三角恒等式。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-rounding-adjoints}
+把 \(\mathbb Z\) 与 \(\mathbb R\) 按通常次序看成范畴，令 \(i:\mathbb Z\rightarrow\mathbb R\) 为包含。证明 \(\lceil-\rceil\dashv i\dashv\lfloor-\rfloor\)，并解释单位、余单位是什么。
+\end{exercise}
+\begin{solution}
+偏序范畴的每个 Hom 集为空或单元素，所以伴随双射等价于相应不等式同时成立。对 \(x\in\mathbb R,n\in\mathbb Z\)，
+\[
+\lceil x\rceil\le n\iff x\le n,
+\qquad
+n\le x\iff n\le\lfloor x\rfloor.
+\]
+向上取整、向下取整均单调，故为函子；偏序范畴的任意两个具有相同源和目标的态射自动相等，因此双射自然。\(\lceil-\rceil\dashv i\) 的单位为 \(x\le\lceil x\rceil\)，余单位为整数处的等式 \(\lceil n\rceil=n\)；\(i\dashv\lfloor-\rfloor\) 的单位为 \(n=\lfloor n\rfloor\)，余单位为 \(\lfloor x\rfloor\le x\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-set-exponential-adjunction}
+固定集合 \(A\)。证明 \(-\times A:\mathbf{Set}\rightarrow\mathbf{Set}\) 左伴随于 \((-)^A\)，写出单位、余单位，并直接验证三角恒等式。包括 \(A=\varnothing\) 的情形。
+\end{exercise}
+\begin{solution}
+双射把 \(f:X\times A\rightarrow Y\) 送到 \(x\mapsto(a\mapsto f(x,a))\)，逆把 \(g:X\rightarrow Y^A\) 送到 \((x,a)\mapsto g(x)(a)\)。前复合 \(u:X'\rightarrow X\) 或后复合 \(v:Y\rightarrow Y'\) 后，两条路径在 \((x',a)\) 上均取值 \(v(f(u(x'),a))\)，故自然。单位为 \(\eta_X(x)(a)=(x,a)\)，余单位为求值 \(\varepsilon_Y(h,a)=h(a)\)。第一条三角恒等式将 \((x,a)\) 送到 \(\eta_X(x)(a)=(x,a)\)；第二条将 \(h:A\rightarrow Y\) 送到函数 \(a\mapsto h(a)\)。若 \(A\) 空，左函子常值为空集，右函子常值为单元素集，两个 Hom 集都为单元素集，上述公式仍成立。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-s3-abelianization}
+求 \(S_3\) 的交换化，并据此求对任意交换群 \(A\) 的全部群同态 \(S_3\rightarrow A\)。把结果与伴随的单位联系起来。
+\end{exercise}
+\begin{solution}
+符号同态的目标交换，故 \([S_3,S_3]\subseteq A_3\)。按交换子约定 \([x,y]=xyx^{-1}y^{-1}\)，\([(12),(23)]=(132)\)，它生成 \(A_3\)，所以 \([S_3,S_3]=A_3\)。因此 \(S_3^{\mathrm{ab}}\cong C_2\)，单位就是符号商映射。到交换群 \(A\) 的每个同态唯一经过它，继而由 \(C_2\) 的生成元的像决定；该像是满足 \(2a=0\) 的任意元素 \(a\in A\)。具体地，偶置换映到零，奇置换映到 \(a\)。非平凡的 \(A_3\) 被单位消去，显示此伴随的单位并非同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-fully-faithful-adjoint}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 左伴随于 \(G:\mathcal D\rightarrow\mathcal C\)，两范畴局部小。证明 \(G\) 全忠实，当且仅当每个余单位 \(\varepsilon_Y:FGY\rightarrow Y\) 是同构。
+\end{exercise}
+\begin{solution}
+若余单位均为同构，则对 \(Y,Y'\in\mathcal D\)，复合双射
+\[
+\operatorname{Hom}_{\mathcal D}(Y,Y')
+\xrightarrow{-\circ\varepsilon_Y}
+\operatorname{Hom}_{\mathcal D}(FGY,Y')
+\xrightarrow{\Phi}
+\operatorname{Hom}_{\mathcal C}(GY,GY')
+\]
+把 \(h\) 送到 \(G(h)G(\varepsilon_Y)\eta_{GY}=G(h)\)。所以 \(G\) 在 Hom 集上给出双射。
+
+反过来，设 \(G\) 全忠实。由全性，存在 \(s_Y:Y\rightarrow FGY\) 使 \(G(s_Y)=\eta_{GY}\)。三角恒等式给出 \(G(\varepsilon_Ys_Y)=1_{GY}\)，忠实性推出 \(\varepsilon_Ys_Y=1_Y\)。另一方面，
+\[
+\Phi(s_Y\varepsilon_Y)
+=G(s_Y)G(\varepsilon_Y)\eta_{GY}
+=\eta_{GY}=\Phi(1_{FGY}).
+\]
+\(\Phi\) 的单射性给出 \(s_Y\varepsilon_Y=1_{FGY}\)，故 \(\varepsilon_Y\) 可逆。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-torsion-quotient-adjunction}
+固定 \(n>1\)，在交换群范畴中取 \(P=\mathbb Z/n\mathbb Z\)。把 Hom–张量伴随写成 \(M/nM\) 与 \(N[n]=\{x\in N:nx=0\}\) 的形式，并具体写出单位、余单位。对 \(M=N=\mathbb Z\) 分别计算它们。
+\end{exercise}
+\begin{solution}
+自然同构为
+\[
+P\otimes_{\mathbb Z}M\cong M/nM,
+\quad\bar1\otimes m\longmapsto\bar m,
+\qquad
+\operatorname{Hom}_{\mathbb Z}(P,N)\cong N[n],
+\quad f\longmapsto f(\bar1).
+\]
+第一个逆为 \(\bar m\mapsto\bar1\otimes m\)，关系 \(\bar1\otimes nm=n\bar1\otimes m=0\) 保证良定义；第二个逆由生成元像唯一延拓。因此伴随为 \(M\mapsto M/nM\) 左伴随于 \(N\mapsto N[n]\)。单位是商映射 \(M\rightarrow(M/nM)[n]=M/nM\)；余单位是 \(N[n]/nN[n]=N[n]\) 到 \(N\) 的包含。对 \(\mathbb Z\)，前者为 \(\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\)，后者为 \(0\rightarrow\mathbb Z\)，两者均非同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-tensor-equalizer-failure}
+在交换群范畴中取平行态射 \(2,0:\mathbb Z\rightrightarrows\mathbb Z\)。证明左伴随 \((\mathbb Z/2\mathbb Z)\otimes_{\mathbb Z}-\) 不保持这对态射的等化子。
+\end{exercise}
+\begin{solution}
+原等化子为 \(\{m\in\mathbb Z:2m=0\}=0\)。张量后两个态射都成为 \(\mathbb Z/2\mathbb Z\) 上的零映射，其等化子为整个 \(\mathbb Z/2\mathbb Z\)。原等化子的张量仍为零，比较映射是 \(0\rightarrow\mathbb Z/2\mathbb Z\)，不是同构。这表明一般左伴随甚至不必保持有限极限，尽管它保持所有存在的小余极限。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-free-product-comparison}
+令 \(F:\mathbf{Set}\rightarrow\mathbf{Ab}\) 为自由交换群函子。计算 \(X=Y=\{*\}\) 时的积比较映射 \(F(X\times Y)\rightarrow F(X)\times F(Y)\)，并判断 \(F\) 是否保持终对象及二元积。
+\end{exercise}
+\begin{solution}
+源为 \(\mathbb Z\)，目标为 \(\mathbb Z^2\)。两个投影都把唯一生成元送到相应的生成元，所以比较映射为 \(m\mapsto(m,m)\)，并不满射。因此 \(F\) 不保持二元积。集合范畴的终对象是单元素集合，它的像为 \(\mathbb Z\)，而交换群范畴的终对象为零群，所以也不保持终对象。这里的自由基来自指定集合，问题不在于选择了哪一组基。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-constant-adjoints}
+固定集合 \(A\)，令 \(K_A:\mathbf{Set}\rightarrow\mathbf{Set}\) 为常值 \(A\) 的函子，所有态射映成 \(1_A\)。分别判断它什么时候有右伴随、什么时候有左伴随，并写出相应伴随。
+\end{exercise}
+\begin{solution}
+若 \(K_A\) 有右伴随，它是左伴随，必须保持始对象 \(\varnothing\)，故 \(A=\varnothing\)。反过来，\(\operatorname{Hom}(\varnothing,Y)\) 与 \(\operatorname{Hom}(X,\{*\})\) 恒为单元素集，给出自然双射，故 \(K_\varnothing\dashv K_{\{*\}}\)。若 \(K_A\) 有左伴随，它是右伴随，必须保持终对象，故 \(A\) 为单元素集合；刚才的伴随给出充分性。于是这两类情形完全确定。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-torsion-inverse-system}
+固定素数 \(p\)，以约化映射组成逆系统 \(\mathbb Z/p^r\mathbb Z\)，\(r\ge1\)，令 \(L\) 为其逆极限。证明每个 \((\mathbb Z/p^r\mathbb Z)[p]\) 都非零，而 \(L[p]=0\)。解释这为何不违背右伴随保持逆极限。
+\end{exercise}
+\begin{solution}
+第 \(r\) 层被 \(p\) 杀死的元素为 \(\bar c p^{r-1}\)，\(c\in\mathbb Z/p\mathbb Z\)，所以组成阶为 \(p\) 的非零群。但从第 \(r+1\) 层到第 \(r\) 层的限制映射把 \(\bar c p^r\) 送到零，因此这些 \(p\) 挠子群构成的逆系统，其转移映射全为零，相容族只能是零族。
+
+直接地，若 \((a_r)_r\in L\) 被 \(p\) 杀死，则 \(a_{r+1}\) 在第 \(r+1\) 层为 \(p^r\) 的倍数，它约化到第 \(r\) 层为零，故每个 \(a_r=0\)。函子 \(M\mapsto M[p]\cong\operatorname{Hom}_{\mathbb Z}(\mathbb Z/p\mathbb Z,M)\) 是右伴随，所得同构恰为
+\[
+L[p]\cong\varprojlim_r(\mathbb Z/p^r\mathbb Z)[p]=0.
+\]
+各层非零不能代替相容性。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-reader-monad}
+固定集合 \(A\)，令 \(TX=X^A\)，\(T(f)\) 为后复合 \(f\)。定义 \(\eta_X(x)\) 为常值 \(x\) 的函数，并对 \(u:A\rightarrow X^A\) 定义 \(\mu_X(u)(a)=u(a)(a)\)。证明 \((T,\eta,\mu)\) 是集合范畴上的单子。
+\end{exercise}
+\begin{solution}
+\(T\) 的恒等与复合律来自函数复合。对 \(f:X\rightarrow Y\)，两种把 \(u\in T^2X\) 送到 \(TY\) 的方式在 \(a\) 处都取值 \(f(u(a)(a))\)，所以 \(\mu\) 自然；\(\eta\) 的自然性来自常值函数的后复合。对 \(v\in TX\)，\(T\eta_X(v)\) 在 \(a\) 处是常值 \(v(a)\) 的函数，故 \(\mu_XT\eta_X(v)=v\)；\(\eta_{TX}(v)\) 为常值 \(v\) 的函数，故 \(\mu_X\eta_{TX}(v)=v\)。最后，对 \(w\in T^3X\)，两种归并在 \(a\) 处都得到 \(w(a)(a)(a)\)，从而结合律成立。若 \(A\) 空，各函数集合为单元素集，以上等式仍成立。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-product-comonad}
+固定集合 \(A\)，令 \(QX=A\times X\)，\(Qf=1_A\times f\)。定义 \(\varepsilon_X(a,x)=x\)、\(\delta_X(a,x)=(a,(a,x))\)。证明这给出余单子；若 \(A=\varnothing\)，结论是否仍成立？
+\end{exercise}
+\begin{solution}
+对任意函数 \(f\)，先重复 \(A\) 坐标再应用 \(f\)，与先应用 \(f\) 再重复坐标结果相同，所以 \(\delta\) 自然；投影的自然性由 \(f(\varepsilon_X(a,x))=f(x)=\varepsilon_Y(a,f(x))\) 给出。两种余结合复合都把 \((a,x)\) 送到 \((a,(a,(a,x)))\)。复合 \(Q\varepsilon_X\circ\delta_X\) 与 \(\varepsilon_{QX}\circ\delta_X\) 都把它送回 \((a,x)\)。所以三条公理成立。\(A\) 空时 \(Q\) 常值为空集合，所有公理比较的映射都有空定义域，仍成立。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:03-list-monad}
+对集合 \(X\)，令 \(TX=\coprod_{n\ge0}X^n\) 为全部有限有序表的集合，包括空表；对函数逐项应用。以单元素表定义 \(\eta_X:X\rightarrow TX\)，以依次连接各子表定义 \(\mu_X:T^2X\rightarrow TX\)。证明这是一个单子，并说明空表在这个构造中的作用。
+\end{exercise}
+\begin{solution}
+逐项应用函数保持表长和次序，因此给出函子。逐项应用函数与插入单元素表、连接各子表相容，所以 \(\eta,\mu\) 自然。对表 \((x_1,\ldots,x_n)\)，先把每项换成单元素表再连接，或先把整个表视为唯一子表再连接，都恢复原表，这给出两条单位律。对三层表，两种归并都按先外层位置、再中层位置、最后内层位置的次序输出同一列元素，故结合律成立；空子表贡献零个元素，不影响论证。
+
+空表使 \(T\varnothing\) 仍有一个元素，并允许连接中出现零个子表；在将此构造解释为自由幺半群时，它正是单位元。若全部改为非空有限表，也会得到另一个满足单子公理的构造，但它表达的是不要求单位元的半群，已不是本题所定义的全部有限表。
+\end{solution}

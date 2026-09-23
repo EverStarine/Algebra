@@ -5,9 +5,7 @@
 \section{等价与新范畴}
 \label{b4:sec:0103}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 全、忠实及本质满
 % * 对偶、积、函子范畴及切片范畴
@@ -17,14 +15,230 @@
 \subsection{全函子、忠实函子与本质满函子}
 \label{b4:subsec:0103:01}
 
-待撰写。
+一个函子可能忘掉对象的一部分结构，也可能只为同一结构换一种表示。要区分这两种情况，既要检查对象是否都被包括，又要检查对象之间的每个态射是否得到保留。只比较对象的同构类，会漏掉后一个问题。
+
+\begin{definition}\label{b4:def:fully-faithful-essentially-surjective}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为局部小范畴之间的函子。对每对对象 \(X,Y\)，考虑函数
+\[
+F_{X,Y}:\mathcal C(X,Y)\longrightarrow\mathcal D(FX,FY),
+\qquad f\longmapsto F(f).
+\]
+若这些函数都满射，称 \(F\) 为\term[quanhanzi]{全函子}[full functor]；若都单射，称为\term[zhongshihanzi]{忠实函子}[faithful functor]；若都双射，称为\term[quanzhongshihanzi]{全忠实函子}[fully faithful functor]。若每个 \(Y\in\mathcal D\) 都同构于某个 \(F(X)\)，称 \(F\) 为\term[benzhimanhanzi]{本质满函子}[essentially surjective functor]。
+\end{definition}
+
+\begin{definition}\label{b4:def:subcategory}
+设 \(\mathcal C\) 为范畴。选择其中一部分对象，并在这些对象之间选择包含所有相应恒等态射、且对复合封闭的一部分态射，采用原来的复合，得到的范畴称为 \(\mathcal C\) 的子范畴。若所选任意对象 \(X,Y\) 之间的全部 \(\mathcal C(X,Y)\) 都被保留，称为\term[quanzifanchou]{全子范畴}[full subcategory]。
+\end{definition}
+
+子范畴的包含函子忠实，全子范畴的包含函子全忠实。规定一类对象后，还须说明是否保留它们之间的全部态射；例如有限维空间的全子范畴，与只允许这些空间之间同构的子范畴，是两个不同范畴。
+
+\ProseParagraphBreak
+“忠实”只比较固定起点和终点的两条箭头，不要求对象映射单射。例如把两个彼此同构且每对对象间恰有一个箭头的对象合并成一个对象，可以全忠实。反过来，给两个不同对象取不同的像，并不能保证它们之间的态射没有被合并。
+
+\ProseParagraphBreak
+忘却函子 \(\mathbf{Vect}_k\rightarrow\mathbf{Set}\) 忠实，但不全，因为函数 \(k\rightarrow k\)、\(x\mapsto x+1\) 不是线性映射。包含
+\(\mathbf{Ab}\rightarrow\mathbf{Grp}\) 全忠实，但不本质满，因为非交换群不能同构于交换群。对偏序集之间的保序映射，所得函子总忠实；它全当且仅当
+\(F(x)\le F(y)\) 还能推出 \(x\le y\)。这些条件各自检测不同的信息。
+
+\begin{proposition}\label{b4:prop:fully-faithful-reflects-isomorphisms}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为全忠实函子。若态射 \(f:X\rightarrow Y\) 的像 \(F(f)\) 可逆，则 \(f\) 可逆；若对象 \(FX,FY\) 同构，则 \(X,Y\) 同构。
+\end{proposition}
+\begin{proof}
+全性给出 \(g:Y\rightarrow X\)，使 \(F(g)=F(f)^{-1}\)。因此
+\(F(gf)=1_{FX}=F(1_X)\)，由忠实性得 \(gf=1_X\)；另一侧同理。若只给 \(a:FX\rightarrow FY\) 为同构，先用全性提升为 \(f:X\rightarrow Y\)，再用已证结论。
+\end{proof}
+
+\begin{definition}\label{b4:def:equivalence}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为函子。若存在函子
+\(G:\mathcal D\rightarrow\mathcal C\) 及自然同构
+\[
+\eta:\operatorname{Id}_{\mathcal C}\Rightarrow GF,\qquad
+\varepsilon:FG\Rightarrow\operatorname{Id}_{\mathcal D},
+\]
+称 \(F\) 为\term[fanchoudengjia]{范畴等价}[equivalence of categories]，称 \(G\) 为其\term[zhunni]{拟逆}[quasi-inverse]，记 \(\mathcal C\simeq\mathcal D\)。若存在 \(G\) 使
+\(GF=\operatorname{Id}_{\mathcal C}\)、\(FG=\operatorname{Id}_{\mathcal D}\) 作为函子严格相等，称 \(F\) 为范畴同构。
+\end{definition}
+
+范畴同构在对象上必须给出真正的双射；范畴等价允许把互相同构的不同对象换成一个代表。自然同构保证这种替换对全部态射相容，而不只是在每个对象处分别碰巧有一个同构。
+
+\begin{theorem}[范畴等价的判据]\label{b4:thm:equivalence-criterion}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathcal D\) 为函子。
+\begin{enumerate}
+\item 若 \(F\) 是等价，则它全忠实且本质满。
+\item 若 \(F\) 全忠实，并且已为每个 \(Y\in\mathcal D\) 指定对象 \(X_Y\in\mathcal C\) 及同构 \(\varepsilon_Y:F(X_Y)\rightarrow Y\)，则这些数据给出 \(F\) 的一个拟逆。
+\end{enumerate}
+特别地，对于小范畴，在选择公理下，\(F\) 是等价当且仅当它全忠实且本质满。
+\end{theorem}
+\begin{proof}
+先设 \(G,\eta,\varepsilon\) 为等价数据。每个
+\(\varepsilon_Y:F(GY)\rightarrow Y\) 已证明本质满。若
+\(F(f)=F(g)\)，其中 \(f,g:X\rightarrow X'\)，自然性给出
+\[
+\eta_{X'}f=GF(f)\eta_X=GF(g)\eta_X=\eta_{X'}g.
+\]
+消去同构 \(\eta_{X'}\)，得 \(f=g\)，所以 \(F\) 忠实。由 \(\varepsilon\) 的自然性，同样得到 \(G\) 忠实。
+
+给定 \(a:FX\rightarrow FX'\)，令
+\(f=\eta_{X'}^{-1}G(a)\eta_X\)。对这个 \(f\) 使用 \(\eta\) 的自然性，得
+\[
+GF(f)\eta_X=\eta_{X'}f=G(a)\eta_X.
+\]
+约去 \(\eta_X\)，再用 \(G\) 的忠实性，得到 \(F(f)=a\)。因此 \(F\) 全。这个论证只用定义中的两个自然同构，没有额外假设它们满足其他相容恒等式。
+
+反向，令 \(G(Y)=X_Y\)。对 \(a:Y\rightarrow Y'\)，全忠实性保证存在唯一态射 \(G(a)\)，使
+\begin{equation}\label{b4:eq:quasi-inverse-arrow}
+F(G(a))=\varepsilon_{Y'}^{-1}a\varepsilon_Y.
+\end{equation}
+代入恒等箭头，右侧为恒等，所以 \(G(1_Y)=1_{G(Y)}\)。对可复合的 \(a,b\)，右侧共轭公式满足
+\[
+\bigl(\varepsilon_{Y''}^{-1}b\varepsilon_{Y'}\bigr)
+\bigl(\varepsilon_{Y'}^{-1}a\varepsilon_Y\bigr)
+=\varepsilon_{Y''}^{-1}ba\varepsilon_Y.
+\]
+由 \(F\) 忠实，\(G(b)G(a)=G(ba)\)。故 \(G\) 是函子，且\eqref{b4:eq:quasi-inverse-arrow}正是 \(\varepsilon:FG\Rightarrow\operatorname{Id}_{\mathcal D}\) 的自然性。
+
+对 \(X\in\mathcal C\)，用全忠实性唯一确定
+\(\eta_X:X\rightarrow GFX\)，满足
+\[
+F(\eta_X)=\varepsilon_{FX}^{-1}.
+\]
+由\cref{b4:prop:fully-faithful-reflects-isomorphisms}，\(\eta_X\) 可逆。若 \(f:X\rightarrow X'\)，则
+\[
+F\bigl(GF(f)\eta_X\bigr)
+=\varepsilon_{FX'}^{-1}F(f)
+=F\bigl(\eta_{X'}f\bigr).
+\]
+忠实性给出 \(\eta\) 的自然性，故得到所需等价。
+
+当两个范畴都小时，本质满使每个 \(Y\) 的候选对
+\((X,\varepsilon:FX\cong Y)\) 构成非空集合。这些集合由
+\(\operatorname{Ob}\mathcal D\) 这个集合取指标，选择公理给出第二项所需的数据。
+\end{proof}
+
+对大范畴，判据第二项把所需选择明确放在假设中；单独说“本质满”只给出逐对象的存在命题，不会自动提供真类指标的选择函数。Weibel 对骨架代表的讨论也明确以能够选择代表和同构为前提，见\cite[A.2.4, p. 422; A.3.2, pp. 423--424]{Weibel1994HomologicalAlgebra}。
+
+\begin{example}\label{b4:ex:equivalent-not-isomorphic}
+令 \(\mathcal E\) 有两个对象 \(a,b\)，每对对象之间恰有一个态射。所有复合由唯一性决定，箭头均可逆。令 \(\mathbf1\) 为只有一个对象及恒等态射的范畴。唯一函子
+\(\mathcal E\rightarrow\mathbf1\) 全忠实且本质满，反向选取 \(a\) 就给出一个具体拟逆。它们等价，却不可能同构，因为对象数不同。
+\end{example}
 
 \subsection{对偶范畴、积范畴、函子范畴与切片范畴}
 \label{b4:subsec:0103:02}
 
-待撰写。
+\begin{definition}\label{b4:def:opposite-category}
+设 \(\mathcal C\) 为范畴。保留同一对象类，规定
+\(\mathcal C^{\mathrm{op}}(X,Y)=\mathcal C(Y,X)\)，并把复合反向：若
+\(f^{\mathrm{op}}:Y\rightarrow X\)、\(g^{\mathrm{op}}:Z\rightarrow Y\) 分别来自
+\(f:X\rightarrow Y\)、\(g:Y\rightarrow Z\)，则
+\[
+f^{\mathrm{op}}\circ g^{\mathrm{op}}=(g\circ f)^{\mathrm{op}}.
+\]
+所得范畴称为 \(\mathcal C\) 的\term[duioufanchou]{对偶范畴}[opposite category]。
+\end{definition}
+
+原范畴的结合律与恒等律反向后仍成立，所以这是一个范畴；再取对偶恢复原范畴。一个从 \(\mathcal C\) 到 \(\mathcal D\) 的反变函子，正是一个协变函子
+\(\mathcal C^{\mathrm{op}}\rightarrow\mathcal D\)。单态射与满态射的定义也互为对偶，因为左消去与右消去在箭头反向后交换。
+
+\begin{definition}\label{b4:def:product-category}
+设 \(\mathcal C,\mathcal D\) 为范畴。以对象对 \((X,Y)\) 为对象，规定
+\[
+(\mathcal C\times\mathcal D)\bigl((X,Y),(X',Y')\bigr)
+=\mathcal C(X,X')\times\mathcal D(Y,Y'),
+\]
+恒等与复合逐分量计算，所得范畴称为它们的积范畴。
+\end{definition}
+
+两个投影是函子。积范畴使一个同时依赖多个对象的构造仍可写成普通函子，例如
+\[
+\operatorname{Hom}_{\mathcal C}:
+\mathcal C^{\mathrm{op}}\times\mathcal C\longrightarrow\mathbf{Set}.
+\]
+箭头 \((a^{\mathrm{op}},b):(X,Y)\rightarrow(X',Y')\)，其中
+\(a:X'\rightarrow X\)、\(b:Y\rightarrow Y'\)，把 \(u:X\rightarrow Y\) 送到 \(bua\)。复合规律来自结合律；第一个变量反变、第二个变量协变已经由源范畴中的对偶符号体现。
+
+\begin{definition}\label{b4:def:functor-category}
+设 \(\mathcal C\) 为小范畴，\(\mathcal D\) 为局部小范畴。以函子
+\(F:\mathcal C\rightarrow\mathcal D\) 为对象、自然变换为态射，并按分量复合，所得范畴记为
+\([\mathcal C,\mathcal D]\) 或 \(\mathcal D^{\mathcal C}\)，称为\term[hanzifanchou]{函子范畴}[functor category]。其 Hom 集也记为
+\(\operatorname{Nat}(F,G)\)。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:functor-category-locally-small}
+若 \(\mathcal C\) 小、\(\mathcal D\) 局部小，则
+\([\mathcal C,\mathcal D]\) 是局部小范畴；若 \(\mathcal D\) 也小，它还是小范畴。
+\end{proposition}
+\begin{proof}
+复合、恒等与范畴公理由\cref{b4:prop:vertical-composition}得到。固定 \(F,G\) 后，所有分量族属于集合
+\[
+\prod_{X\in\operatorname{Ob}\mathcal C}\mathcal D(FX,GX),
+\]
+而自然变换正是其中满足所有自然性等式的子集，因此 Hom 为集合。若 \(\mathcal D\) 也小，对象映射与态射映射分别是两个集合之间的函数；所有满足函子条件的这样的函数对仍组成集合，故函子范畴小。
+\end{proof}
+
+源范畴小保证上式是集合指标的乘积。若源对象组成真类，这个证明不再给出集合，本卷不会未经说明就把所有这样的函子与变换放进同一局部小范畴。
+
+\ProseParagraphBreak
+令 \([1]\) 为两个对象 \(0,1\) 及一个非恒等箭头 \(0\rightarrow1\) 组成的范畴。函子
+\([1]\rightarrow\mathcal C\) 恰好指定 \(\mathcal C\) 中的一条箭头；两者之间的自然变换恰好是一个交换方块。因此
+\([[1],\mathcal C]\) 是箭头范畴，它把“箭头之间的映射”变成一个可以继续研究的对象。
+
+\begin{definition}\label{b4:def:slice-coslice-category}
+设 \(\mathcal C\) 为范畴，\(A\in\mathcal C\)。
+以态射 \(p:X\rightarrow A\) 为对象，以满足 \(qh=p\) 的态射
+\(h:X\rightarrow Y\) 作为 \(p:X\rightarrow A\) 到 \(q:Y\rightarrow A\) 的态射，得到\term[qiepianfanchou]{切片范畴}[slice category] \(\mathcal C/A\)。
+若改以 \(p:A\rightarrow X\) 为对象，以满足 \(hp=q\) 的 \(h:X\rightarrow Y\) 为态射，则得到余切片范畴 \(A/\mathcal C\)。
+\end{definition}
+
+恒等态射满足所列三角形条件。若 \(qh=p\)、\(rk=q\)，则
+\(r(kh)=(rk)h=qh=p\)，所以切片中的复合仍在其中，结合律来自 \(\mathcal C\)；余切片同理。两者的 Hom 都是原 Hom 集的子集，因而在 \(\mathcal C\) 局部小时局部小。例子是
+\(\{*\}/\mathbf{Set}\)：从单点集到 \(X\) 的映射指定一个点，三角形条件要求态射保持这个点，所以它就是带基点集合范畴。
 
 \subsection{逗号范畴的基本例子}
 \label{b4:subsec:0103:03}
 
-待撰写。
+切片固定一个对象，再记录到它或从它出发的映射。有时映射两端都来自构造：例如给一个集合 \(X\)，研究把它映到某个模的底集合中的所有方式。逗号范畴把这些“对象连同一个指定映射”统一写出。
+
+\begin{definition}\label{b4:def:comma-category}
+设 \(\mathcal A,\mathcal B,\mathcal C\) 为范畴，
+\(S:\mathcal A\rightarrow\mathcal C\)、\(T:\mathcal B\rightarrow\mathcal C\) 为函子。
+以三元组
+\((A,B,u)\)，其中 \(A\in\mathcal A\)、\(B\in\mathcal B\)、\(u:S(A)\rightarrow T(B)\)，为对象。态射
+\[
+(a,b):(A,B,u)\longrightarrow(A',B',u')
+\]
+由 \(a:A\rightarrow A'\)、\(b:B\rightarrow B'\) 组成，要求
+\[
+T(b)u=u'S(a).
+\]
+按两个分量分别复合，所得范畴记为 \((S\downarrow T)\)，称为\term[douhaofanchou]{逗号范畴}[comma category]。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:comma-category-construction}
+以上数据确实组成范畴，向 \(\mathcal A,\mathcal B\) 的两个投影是函子。若
+\(\mathcal A,\mathcal B\) 局部小，则 \((S\downarrow T)\) 局部小。
+\end{proposition}
+\begin{proof}
+恒等对满足方块条件。若先后有 \((a,b)\)、\((a',b')\)，则
+\[
+T(b'b)u=T(b')T(b)u
+=T(b')u'S(a)
+=u''S(a')S(a)=u''S(a'a).
+\]
+所以复合仍满足条件。结合律及恒等律逐分量继承；投影显然保持它们。固定两个三元组后，态射集合是
+\(\mathcal A(A,A')\times\mathcal B(B,B')\) 的一个子集，故局部小。
+\end{proof}
+
+令 \(\mathbf1\rightarrow\mathcal C\) 选择对象 \(A\)。取 \(S=\operatorname{Id}_{\mathcal C}\)，便得到
+\((\operatorname{Id}_{\mathcal C}\downarrow A)=\mathcal C/A\)；取
+\(T=\operatorname{Id}_{\mathcal C}\)，则得到
+\((A\downarrow\operatorname{Id}_{\mathcal C})=A/\mathcal C\)。这里省略了三元组中固定不变的分量。
+
+\ProseParagraphBreak
+对忘却函子 \(U:R\text{-}\mathbf{Mod}\rightarrow\mathbf{Set}\) 和固定集合 \(X\)，
+\((X\downarrow U)\) 的对象是一个模 \(M\) 及函数 \(j:X\rightarrow U(M)\)。
+从 \((M,j)\) 到 \((N,k)\) 的态射是满足 \(U(f)j=k\) 的线性映射 \(f:M\rightarrow N\)。
+自由模给出对象 \((F_R(X),\iota_X)\)，且第二卷第3.1节的泛性质说明，从它到每个 \((M,j)\) 恰有一个态射。下一章把这种性质命名为始对象；在这里，指定函数 \(j\) 已经被纳入对象，所以唯一性的条件不再需要附加在范畴之外。
+
+\ProseParagraphBreak
+另一个例子固定两个对象 \(X,Y\in\mathcal C\)。令离散的单对象范畴分别选出它们，则逗号范畴的对象是态射 \(X\rightarrow Y\)，而只有恒等态射。相比之下，若取
+\((\operatorname{Id}_{\mathcal C}\downarrow\operatorname{Id}_{\mathcal C})\)，则两端都可变化，得到的是箭头范畴。是否固定端点，决定了它们之间允许哪些比较。

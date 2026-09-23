@@ -5,9 +5,7 @@
 \section{无上同调对象}
 \label{b4:sec:1003}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 相对于函子的无上同调性
 % * 使用无上同调消解计算导出函子
@@ -17,14 +15,77 @@
 \subsection{相对于函子的无上同调性}
 \label{b4:subsec:1003:01}
 
-待撰写。
+内射消解对每个左正合函子都可用，但有时它的各项过大，实际计算并不方便。若只计算一个指定函子 \(F\)，可以使用对这个函子没有高次导出贡献的对象。
+
+\begin{definition}\label{b4:def:functor-acyclic}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子。若对象 \(Q\in\mathcal A\) 满足 \(R^iF(Q)=0\) 对所有 \(i>0\) 成立，则称 \(Q\) 为 \(F\)-\term[wushangtongdiaoduixiang]{无上同调对象}[acyclic object]。正合列
+\[
+ 0\longrightarrow M\longrightarrow A^0\longrightarrow A^1\longrightarrow\cdots
+\]
+若每个 \(A^j\) 都为 \(F\)-无上同调对象，则称为 \(M\) 的 \(F\)-无上同调消解。
+\end{definition}
+
+“无上同调”在这里依赖 \(F\)，不是对象脱离函子后自带的绝对性质。内射对象对每个左正合加性函子都无上同调；反过来，对一个函子无上同调并不意味着内射。例如 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 时，\(\mathbb Z/3\) 无上同调，因为一次 Ext 等于 \((\mathbb Z/3)/2(\mathbb Z/3)=0\)，更高次因整数整体维数为一而消失；但 \(\mathbb Z/3\) 不是可除群，因而不是内射交换群。
+
+\begin{proposition}\label{b4:prop:acyclic-closure}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子，且 \(0\to A\to B\to C\to0\) 为 \(\mathcal A\) 中的短正合列。若 \(A,C\) 都 \(F\)-无上同调，则 \(B\) 也如此；若 \(A,B\) 都 \(F\)-无上同调，则 \(C\) 也如此。若 \(B,C\) 都 \(F\)-无上同调，则 \(A\) 无上同调当且仅当 \(F(B)\to F(C)\) 为满态射。
+\end{proposition}
+\begin{proof}
+前两项分别由长正合列中的
+\(R^iF(A)\to R^iF(B)\to R^iF(C)\) 及
+\(R^iF(B)\to R^iF(C)\to R^{i+1}F(A)\) 得到。最后一种情形有 \(R^iF(A)=0\) 对 \(i\ge2\)，而列首给出 \(R^1F(A)=\operatorname{coker}(F(B)\to F(C))\)，于是得到所需充要条件。
+\end{proof}
 
 \subsection{无上同调消解与导出函子的计算}
 \label{b4:subsec:1003:02}
 
-待撰写。
+\begin{theorem}\label{b4:thm:acyclic-resolution}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子。若 \(0\to M\to A^0\to A^1\to\cdots\) 是 \(F\)-无上同调消解，则对每个 \(n\ge0\)，有典范同构
+\[
+ R^nF(M)\simeq H^n(F(A^\bullet)).
+\]
+此同构对增广消解之间的态射自然。
+\end{theorem}
+\begin{proof}
+令 \(K^0=M\)，把正合消解拆成
+\[
+ 0\longrightarrow K^j\longrightarrow A^j\longrightarrow K^{j+1}\longrightarrow0
+ \qquad(j\ge0).
+\]
+长正合列和 \(A^j\) 的无上同调性给出
+\[
+\begin{gathered}
+ 0\to F(K^j)\to F(A^j)\to F(K^{j+1})\to R^1F(K^j)\to0,\\
+ R^iF(K^{j+1})\simeq R^{i+1}F(K^j)\qquad(i\ge1).
+\end{gathered}
+\]
+由于 \(F\) 左正合，\(F(K^j)\to F(A^j)\) 单射，而 \(F(A^j)\to F(A^{j+1})\) 通过 \(F(K^{j+1})\) 分解。因此 \(F(A^\bullet)\) 在次数 \(n\) 的圈对象为 \(F(K^n)\)。当 \(n\ge1\) 时，同调就是
+\[
+ \operatorname{coker}\bigl(F(A^{n-1})\to F(K^n)\bigr)
+ \simeq R^1F(K^{n-1})\simeq R^nF(M).
+\]
+次数零则由左正合性直接等于 \(F(M)\)。这些同构只使用给定的正合列和连接同态，未选分裂，因而对消解态射自然。
+
+为说明这里的“典范”也与最初采用内射消解的定义一致，取 \(M\to I^\bullet\)。内射性把 \(M\to I^0\) 延拓到 \(A^0\)，随后在每一步先经 \(K^{j+1}\) 分解，再延拓到 \(A^{j+1}\)，得到增广链映射 \(A^\bullet\to I^\bullet\)。两种选择的差，用同样的逐次延拓构造链同伦，所以施加加性函子后诱导同一个同调映射。上面的短正合列在该映射下构成交换图，连接同态自然性说明其诱导映射正是已经构造的同构。因此不同无上同调消解都通过给定的 \(R^nF(M)\) 典范比较，而不要求它们之间任意方向都有链映射。
+\end{proof}
+
+对有足够投射对象的交换范畴及右正合加性函子，取相反范畴就得到左导出版本：若 \(Q_\bullet\to M\) 正合，且 \(L_iF(Q_j)=0\) 对所有 \(i>0,j\ge0\) 成立，则 \(L_nF(M)\simeq H_n(F(Q_\bullet))\)。次数反转把刚才每个核改成余核，每个内射延拓改成投射提升，正合列和同构全部反向，因而证明不需要新增假设。特别地，平坦消解能够计算张量积的左导出函子 Tor；它不必逐项投射。
 
 \subsection{正合复形作为消解的条件}
 \label{b4:subsec:1003:03}
 
-待撰写。
+应用定理时要分别检查三件事：增广列确实正合，各项对指定函子无上同调，以及消解从次数零沿一个方向展开。前两项负责连接同态的平移，最后一项使每个固定次数只需有限次平移。一个无界正合复形没有这种起点，不能直接套用定理。
+
+\begin{example}\label{b4:exm:arbitrary-resolution-fails}
+取 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 和 \(M=\mathbb Z/2\)。正合列
+\[
+ 0\longrightarrow M\longrightarrow M\oplus\mathbb Z
+ \longrightarrow\mathbb Z\longrightarrow0
+\]
+用自然包含和投影，确实是一个长度一的右消解。但施加 \(F\) 后，非增广上链复形为 \(\mathbb Z/2\to0\)，一次上同调为零，而 \(R^1F(M)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。失败是因为 \(M\oplus\mathbb Z\) 对 \(F\) 并不无上同调；原列正合不足以保证导出计算正确。
+\end{example}
+
+另一方面，\(0\to\mathbb Z\to\mathbb Q\to\mathbb Q/\mathbb Z\to0\) 是内射消解，取同一 \(F\) 后得到 \(0\to\mathbb Z/2\)（次数 \(0,1\)），正确算出 \(R^1F(\mathbb Z)=\mathbb Z/2\)。两种计算的差别在于各项对 \(F\) 的性质，而非消解中箭头的数目。
+
+\ProseParagraphBreak
+无上同调对象及消解计算可参阅 Weibel\cite[F-Acyclic Objects 2.4.3, Exercise 2.4.3, Section 2.5]{Weibel1994HomologicalAlgebra}。该书在左导出部分提出此类对象，并以维数平移给出练习；本节把当前所需的右导出版本作为正文定理证明。

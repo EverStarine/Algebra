@@ -5,8 +5,6 @@
 \section{交换范畴}
 \label{b4:sec:0402}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 像与余像
@@ -17,14 +15,71 @@
 \subsection{像与余像}
 \label{b4:subsec:0402:01}
 
-待撰写。
+模同态 \(f:X\to Y\) 有两个看似不同的对象：商模 \(X/\ker f\) 描述在源端识别了哪些元素，子模 \(f(X)\) 描述在目标端到达了什么。第一同构定理把两者联系起来。交换范畴把这一联系作为一条结构要求。
+
+\begin{definition}\label{b4:def:abelian-category}
+设 \(\mathcal A\) 是具有全部核与余核的加性范畴。对态射 \(f:X\to Y\)，定义
+\[
+\operatorname{im}f=\ker(Y\to\operatorname{coker}f),\qquad
+\operatorname{coim}f=\operatorname{coker}(\ker f\to X),
+\]
+分别称为\term[xiang]{像}[image]与\term[yuxiang]{余像}[coimage]。若每个 \(f\) 的典范态射 \(\operatorname{coim}f\to\operatorname{im}f\) 都是同构，则称 \(\mathcal A\) 为\term[jiaohuan-fanchou]{交换范畴}[abelian category]，亦称 Abel 范畴。
+\end{definition}
+
+定义中的典范态射可以直接构造。记 \(k=\ker f\)、\(q=\operatorname{coker}f\)、\(i=\ker q\)、\(p=\operatorname{coker}k\)。由 \(qf=0\)，先有唯一 \(f':X\to\operatorname{im}f\) 满足 \(if'=f\)。又因 \(if'k=0\) 且 \(i\) 单，\(f'k=0\)，所以 \(f'\) 唯一地下降为 \(\bar f:\operatorname{coim}f\to\operatorname{im}f\)。于是
+\[
+f=i\bar f p.
+\]
+在模范畴中，\(\bar f\) 正是 \(x+\ker f\mapsto f(x)\)。在一般范畴中则没有这个元素公式，定义要求上述由泛性质得到的态射可逆。
+
+\begin{proposition}\label{b4:prop:abelian-normal-factorization}
+在交换范畴中，每个单态射是其余核的核，每个满态射是其核的余核。每个态射都有“满态射后接单态射”的像分解；既单又满的态射是同构。反范畴仍是交换范畴。
+\end{proposition}
+\begin{proof}
+若 \(f:X\to Y\) 单，则 \(\ker f=0\)，故其余像可取 \(X\)，\(p=1_X\)。\(\bar f\) 可逆表明 \(f=i\bar f\) 本身也满足 \(\ker q\) 的泛性质。对偶地，每个满态射是其核的余核。一般的分解 \(f=i(\bar f p)\) 中，\(p\) 满且 \(\bar f\) 可逆，故 \(\bar f p\) 满。若 \(f\) 又单又满，则核、余核都为零，从而余像是 \(X\)，像是 \(Y\)，\(\bar f=f\) 可逆。最后，对偶交换核与余核、像与余像，且典范态射的方向同时反转，故定义仍成立。
+\end{proof}
+
+\begin{definition}\label{b4:def:exact-sequence-abelian}
+交换范畴中，序列 \(X\xrightarrow fY\xrightarrow gZ\) 若满足 \(gf=0\)，且 \(\operatorname{im}f\) 与 \(\ker g\) 是 \(Y\) 的同一个子对象，则称在 \(Y\) 处\term[zhenghe]{正合}[exact]。这里子对象相同，是指二者之间有与嵌入 \(Y\) 相容的同构。序列
+\[
+0\longrightarrow X\xrightarrow fY\xrightarrow gZ\longrightarrow0
+\]
+处处正合时称为\term[duanzhenghe-lie]{短正合列}[short exact sequence]；等价地，\(f\) 是 \(g\) 的核，\(g\) 是 \(f\) 的余核。
+\end{definition}
+
+最后一个等价性可以由像分解看出：短正合性给出 \(f\) 单、\(g\) 满及 \(\operatorname{im}f=\ker g\)，所以 \(f\) 是 \(g\) 的核，而\cref{b4:prop:abelian-normal-factorization}又使 \(g\) 成为 \(f\) 的余核。反向则直接成立。
 
 \subsection{模范畴与函子范畴}
 \label{b4:subsec:0402:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:module-functor-abelian}
+任意含幺环 \(R\) 的左模范畴是交换范畴。若 \(\mathcal I\) 是小范畴，\(\mathcal A\) 是局部小交换范畴，则函子范畴 \([\mathcal I,\mathcal A]\) 也是交换范畴；其核、余核与正合性均可逐对象计算。
+\end{proposition}
+\begin{proof}
+模范畴中，态射相加及双积已在前节给出；核为通常的核子模，余核为像子模的商。第一同构定理给出所需的余像到像的同构。
+
+对函子范畴，两个自然变换相加时逐分量相加，自然性由复合的分配律保持。零函子及逐对象双积提供加性结构。设 \(\eta:F\Rightarrow G\)，对每个 \(i\) 取 \(k_i:K_i\to F(i)\) 为 \(\eta_i\) 的核。若 \(a:i\to j\)，则
+\[
+\eta_jF(a)k_i=G(a)\eta_i k_i=0,
+\]
+所以存在唯一 \(K(a):K_i\to K_j\)，使 \(k_jK(a)=F(a)k_i\)。由单态射 \(k_j\) 的消去性质，\(K\) 保持恒等态射及复合，且 \(k:K\Rightarrow F\) 自然。任一被 \(\eta\) 消去的自然变换逐分量唯一地通过 \(k_i\)；这些分解因唯一性而自然。这就证明 \(k\) 是函子范畴中的核。对偶构造余核。
+
+因而像与余像也逐对象计算，它们之间的典范态射逐分量可逆。可逆分量的逆仍构成自然变换，故该典范态射是同构。正合性随之等价于各对象处的正合性。小性保证自然变换集合是 \(\prod_i\operatorname{Hom}(F(i),G(i))\) 的子集，并允许在集合指标上选择上述核与余核。
+\end{proof}
+
+取 \(\mathcal I\) 为只有一支非恒等箭头 \(0\to1\) 的范畴，就得到由模同态及交换方块组成的交换范畴。若一个方块的两支竖直映射分别有核 \(K_0,K_1\)，它在箭头范畴中的核是诱导映射 \(K_0\to K_1\)，而不只是某一个核模。这样，带有相容结构的对象也可以用同一种正合语言研究。
 
 \subsection{加性范畴与交换范畴的区别}
 \label{b4:subsec:0402:03}
 
-待撰写。
+加性结构只规定如何相加态射和形成有限双积。交换范畴还要求核、余核及像分解彼此协调。几个看起来很接近模范畴的全子范畴，可以把这两层要求区分开来。
+
+\begin{example}\label{b4:exm:free-category-not-abelian}
+有限秩自由交换群组成的全子范畴是加性范畴。\(f=\times2:\mathbb Z\to\mathbb Z\) 是单态射，也是该子范畴中的满态射：若两个到自由交换群 \(F\) 的同态在 \(2\mathbb Z\) 上相同，其差把每个整数送到被 \(2\) 消去的元素，而 \(F\) 无挠，所以差为零。但 \(f\) 没有整数系数的逆。由\cref{b4:prop:abelian-normal-factorization}，该范畴不是交换范畴。这里 \(\operatorname{coim}f=\mathbb Z=\operatorname{im}f\)，典范比较态射仍是乘 \(2\)，不是同构。
+\end{example}
+
+\begin{example}\label{b4:exm:finite-even-dimension}
+固定域 \(k\)，只取偶数维有限维 \(k\)-向量空间及全部线性映射，得到加性范畴，但 \(\operatorname{diag}(1,0):k^2\to k^2\) 的核在其中不存在。若核 \(K\) 存在，其到 \(k^2\) 的映射必须单射：用来自 \(k^2\) 的测试映射可以检验任意非零核向量。其像包含在一维的第二坐标轴中；另一方面，把 \(k^2\) 映满该坐标轴的映射必须通过 \(K\)，所以核的像恰为该轴。这迫使 \(\dim K=1\)，与对象要求矛盾。
+\end{example}
+
+这两个例子各有不同的障碍：前一个已经出现单满而不可逆的态射，后一个连核对象都不能在指定范畴内找到。进入同调代数时，不能只说“这里也有线性映射”，就照用全部模范畴的结论。

@@ -5,9 +5,7 @@
 \section{群扩张谱序列}
 \label{b4:sec:1504}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * Lyndon–Hochschild–Serre 谱序列
 % * 不变量函子的复合
@@ -20,19 +18,89 @@
 \subsection{Lyndon–Hochschild–Serre 谱序列}
 \label{b4:subsec:1504:01}
 
-待撰写。
+设 \(1\to N\to G\xrightarrow{\pi}Q\to1\) 是离散群的扩张，\(M\) 为左 \(\mathbb ZG\)-模。研究 \(G\) 的上同调，可以先研究正规子群 \(N\)，再研究商群 \(Q\) 对所得上同调的作用。这里的第二步需要保留作用；即使已经算出底交换群 \(H^q(N,M)\)，也还不足以计算商群的上同调。
+
+\begin{theorem}[Lyndon--Hochschild--Serre 谱序列]\label{b4:thm:lhs-spectral-sequence}
+设 \(1\to N\to G\to Q\to1\) 是离散群扩张，\(M\) 为左 \(\mathbb ZG\)-模。则有自然的第一象限强收敛\term[lhs-puxulie]{Lyndon--Hochschild--Serre 谱序列}[Lyndon--Hochschild--Serre spectral sequence]
+\[
+ E_2^{p,q}=H^p(Q,H^q(N,M))\Longrightarrow H^{p+q}(G,M).
+\]
+其中 \(Q\) 在 \(H^q(N,M)\) 上的作用由 \(G\) 的共轭和系数作用共同诱导。其边缘同态分别为膨胀与限制所诱导的映射。
+\end{theorem}
+
+下一小节给出证明。这里所有群都带离散结构；连续群上同调需要连续模及相应消解，不能直接把 \(G\) 换成拓扑群而保留全部假设。
 
 \subsection{不变量函子的复合}
 \label{b4:subsec:1504:02}
 
-待撰写。
+\begin{proof}[\cref{b4:thm:lhs-spectral-sequence}的证明]
+在模范畴之间取
+\[
+ F:\mathbb ZG\text{-}\mathbf{Mod}\longrightarrow
+ \mathbb ZQ\text{-}\mathbf{Mod},\quad F(M)=M^N,
+ \qquad G_0=(-)^Q.
+\]
+\(N\) 正规保证 \(M^N\) 带 \(Q\) 作用，且 \(G_0F(M)=M^G\)。两个函子都加性左正合。
+
+由\cref{b4:prop:normal-subgroup-invariants}，\((- )^N\) 是膨胀函子的右伴随；膨胀不改变底交换群的正合性，因而正合。所以 \(F\) 送内射 \(\mathbb ZG\)-模到内射 \(\mathbb ZQ\)-模，特别地其像对 \((- )^Q\) 无上同调。另一方面，\(\mathbb ZG\) 作为右 \(\mathbb ZN\)-模自由，故诱导 \(\mathbb ZG\otimes_{\mathbb ZN}-\) 正合；其右伴随限制函子保持内射对象。因此 \(G\)-内射消解限制到 \(N\) 后仍是内射消解，得到
+\[
+ R^qF(M)=H^q(N,M)
+\]
+作为 \(Q\)-模的自然识别，而不只作为交换群的识别。\cref{b4:prop:normal-subgroup-invariants}同时说明它与余链上的共轭作用一致。
+
+现在 Grothendieck 定理的全部假设已经核对。代入\cref{b4:thm:grothendieck-spectral-sequence}，第二页是所写群上同调，目标为不变量函子 \((- )^G\) 的导出，即 \(H^*(G,M)\)。底行的增广对应把 \(Q\)-余链沿 \(G\to Q\) 拉回并用 \(M^N\hookrightarrow M\) 作为系数映射，这正是膨胀；最左列的增广对应把 \(G\)-余链限制到 \(N\)，并由正规性落在 \(Q\)-不变类中。因此边缘同态是所述膨胀和限制。自然性与强收敛均由复合函子构造得到。
+\end{proof}
+
+这个证明没有要求群有限。有限性将在具体消解计算中使用，或者使某些平均算子可用；它不是谱序列存在的必要条件。原著讨论可参阅 Weibel\cite[Lemma 6.8.1, Lyndon/Hochschild-Serre Spectral Sequence 6.8.2]{Weibel1994HomologicalAlgebra}。
 
 \subsection{五项正合列与群扩张}
 \label{b4:subsec:1504:03}
 
-待撰写。
+由\cref{b4:prop:spectral-five-term}，每个离散群扩张及左 \(\mathbb ZG\)-模 \(M\) 给出
+\begin{equation}\label{b4:eq:lhs-five-term}
+\begin{aligned}
+0&\longrightarrow H^1(Q,M^N)\xrightarrow{\mathrm{inf}}H^1(G,M)
+\xrightarrow{\mathrm{res}}H^1(N,M)^Q\\
+&\xrightarrow{\mathrm{tr}}H^2(Q,M^N)
+\xrightarrow{\mathrm{inf}}H^2(G,M).
+\end{aligned}
+\end{equation}
+这里 \(\mathrm{tr}=d_2^{0,1}\) 称为\term[chuandi-yingshe]{传递映射}[transgression]。这个名称专指谱序列中的低阶微分，不是有限指数子群的 transfer（亦称余限制）。其含义是：一个 \(N\) 上的 \(Q\)-不变一次上同调类，若想成为 \(G\) 上一次类的限制，必须且只须其传递类消失。
+
+\ProseParagraphBreak
+若系数 \(A\) 的作用平凡，一次上同调就是群同态 \(G\to A\)。此时限制能否延拓具有直观解释。给截面 \(s:Q\to G\)，乘积 \(s(x)s(y)\) 与 \(s(xy)\) 的差落在 \(N\)；一个 \(N\to A\) 的同态作用于这些差，产生二次余圈。若这项障碍不能用改变截面上的取值消去，同态就无法延拓到 \(G\)。下一小节在一个四阶群中把各项和这项障碍全部算出。低阶正合列的原著位置是 Weibel\cite[Low Degree Terms 6.8.3]{Weibel1994HomologicalAlgebra}。
 
 \subsection{有限循环群扩张的传递映射}
 \label{b4:subsec:1504:04}
 
-待撰写。
+取
+\[
+ 1\longrightarrow N=\langle t^2\rangle\longrightarrow
+ G=\langle t\mid t^4=1\rangle\longrightarrow Q=C_2\longrightarrow1,
+ \qquad M=\mathbb F_2
+\]
+并令系数作用平凡。所有共轭作用也平凡。由\cref{b4:thm:cyclic-group-cohomology}，五项列中五个非零候选项均为 \(\mathbb F_2\)：
+\[
+ 0\longrightarrow\mathbb F_2\xrightarrow{\mathrm{inf}}
+ \mathbb F_2\xrightarrow{\mathrm{res}}\mathbb F_2
+ \xrightarrow{\mathrm{tr}}\mathbb F_2
+ \xrightarrow{\mathrm{inf}}\mathbb F_2.
+\]
+第一次膨胀把 \(Q\) 的生成元映到一的同态拉回到 \(t\mapsto1\)，所以为恒等同构。限制却为零，因为任意 \(f:G\to\mathbb F_2\) 满足 \(f(t^2)=2f(t)=0\)。正合性已迫使 \(\mathrm{tr}\) 为同构，最后一次膨胀为零。
+
+\ProseParagraphBreak
+还可以写出传递类的余圈。用加法记 \(Q=\{0,1\}\)，取 \(s(0)=1\)、\(s(1)=t\)。令 \(\phi:N\to\mathbb F_2\) 由 \(\phi(t^2)=1\) 定义，则
+\[
+ c(x,y)=s(x)s(y)s(x+y)^{-1}\in N,
+ \qquad u(x,y)=\phi(c(x,y))
+\]
+仅在 \((x,y)=(1,1)\) 取一。直接代入余圈等式
+\(u(y,z)-u(x+y,z)+u(x,y+z)-u(x,y)=0\)，或者用截面乘法的结合律，即可验证 \(u\) 是二次余圈。它不是余边：若 \(u=\delta v\)，归一化要求 \(v(0)=0\)，而 \(\delta v(1,1)=v(1)-v(0)+v(1)=0\)，与 \(u(1,1)=1\) 矛盾。\(H^2(C_2,\mathbb F_2)\) 只有一个非零元，因此已证明非零的传递映射把 \([\phi]\) 送到 \([u]\)。本例特征为二，改变连接同态的整体符号不改变答案。
+
+\ProseParagraphBreak
+为直接核对最后一次膨胀为零，对 \(0\le i\le3\) 定义一余链 \(b(t^i)=\lfloor i/2\rfloor\pmod2\)。把 \(i=2a+r\)、\(j=2a'+r'\)（\(r,r'\in\{0,1\}\)）代入，得到
+\[
+ \delta b(t^i,t^j)=b(t^j)-b(t^{i+j})+b(t^i)=rr'
+ =u(\pi(t^i),\pi(t^j)).
+\]
+指数取模四不影响右边的模二计算。因此膨胀后的二余圈确实成为余边。与分裂扩张 \(C_2\to C_2\times C_2\to C_2\) 比较，后一情形每个 \(N\to\mathbb F_2\) 都通过第一因子延拓，限制为满，故传递映射为零。这个差别说明低阶微分记录了群扩张本身的信息，而不只由核群与商群的同构类型决定。

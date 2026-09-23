@@ -5,8 +5,6 @@
 \section{一般极限}
 \label{b4:sec:0202}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 图表及其锥
@@ -17,14 +15,118 @@
 \subsection{图表及其锥}
 \label{b4:subsec:0202:01}
 
-待撰写。
+积要求给出一族映射，纤维积还要求两条复合相等。一般的极限只是把需要兼容的对象与箭头一起列出来。为防止“所有条件”成为含混的说法，先用一个小范畴记录图表的形状。
+
+\begin{definition}[图表、锥与余锥]\label{b4:def:diagram-cone}
+设 \(J\) 为小范畴，\(\mathcal C\) 为范畴。函子 \(D:J\rightarrow\mathcal C\) 称为一个 \(J\) 形\term[tubiao]{图表}[diagram]。以 \(T\in\mathcal C\) 为顶点的\term[zhui]{锥}[cone]是一族态射 \(\lambda_j:T\rightarrow D(j)\)，满足对每个 \(\alpha:j\rightarrow k\)，
+\[
+D(\alpha)\lambda_j=\lambda_k.
+\]
+若 \(\lambda_j:T\rightarrow D(j)\)、\(\lambda_j':T'\rightarrow D(j)\) 是两个锥，它们之间的态射为满足 \(\lambda_j'h=\lambda_j\) 的 \(h:T\rightarrow T'\)。
+
+\ProseParagraphBreak
+以 \(T\) 为顶点的\term[yuzhui]{余锥}[cocone]是一族态射 \(\mu_j:D(j)\rightarrow T\)，满足 \(\mu_kD(\alpha)=\mu_j\)。余锥之间的态射 \(h:T\rightarrow T'\) 满足 \(h\mu_j=\mu_j'\)。
+\end{definition}
+
+固定 \(D\) 后，锥及其态射组成一个范畴；余锥也一样。锥中的“相容”不仅涉及图中画出的某几条箭头，而是涉及指标范畴中的每条态射。当 \(J\) 由若干箭头生成时，核对这些生成箭头即可，因为复合条件随后自动成立。
+
+\ProseParagraphBreak
+记 \(\Delta T:J\rightarrow\mathcal C\) 为把每个对象送到 \(T\)、每个态射送到 \(1_T\) 的常值图表。利用\secref{b4:sec:0102}的自然变换，锥就是自然变换 \(\Delta T\Rightarrow D\)，余锥就是 \(D\Rightarrow\Delta T\)。自然性方块的交换条件，正是定义中所写的相容等式。
+
+\begin{example}[几种指标范畴]\label{b4:exm:diagram-shapes}
+若 \(J\) 只有一族对象及各自的恒等态射，锥就是通向这些对象的一族任意态射，因而积属于这种形状。若 \(J\) 由两个平行箭头 \(0\rightrightarrows1\) 组成，则锥相容条件要求两个复合相等。若 \(J\) 的形状为 \(0\rightarrow2\leftarrow1\)，锥就是纤维积定义中的相容映射对。空范畴也被允许：此时每个对象恰有一个空锥。
+\end{example}
 
 \subsection{极限与余极限的泛性质}
 \label{b4:subsec:0202:02}
 
-待撰写。
+\begin{definition}[极限与余极限]\label{b4:def:limit-colimit}
+设 \(J\) 为小范畴，\(D:J\rightarrow\mathcal C\) 为图表。该图表的锥范畴中的终对象称为 \(D\) 的\term[jixian]{极限}[limit]，记为 \((\lim_JD,(\pi_j))\)。具体地，每个锥 \((T,(\lambda_j))\) 唯一来自一个态射 \(h:T\rightarrow\lim_JD\)，使 \(\pi_jh=\lambda_j\)。
+
+\ProseParagraphBreak
+该图表的余锥范畴中的始对象称为 \(D\) 的\term[yujixian]{余极限}[colimit]，记为 \((\operatorname{colim}_JD,(\iota_j))\)。每个余锥 \((T,(\mu_j))\) 唯一来自一个态射 \(h:\operatorname{colim}_JD\rightarrow T\)，使 \(h\iota_j=\mu_j\)。
+\end{definition}
+
+\begin{proposition}[唯一性与诱导映射]\label{b4:prop:limit-uniqueness-functoriality}
+设 \(J\) 为小范畴，\(D,D':J\rightarrow\mathcal C\) 为图表。一个图表的任意两个极限之间存在唯一的保持结构映射的同构；余极限也如此。若 \(D,D'\) 的极限存在，则自然变换 \(\eta:D\Rightarrow D'\) 唯一诱导态射
+\[
+\lim_J\eta:\lim_JD\longrightarrow\lim_JD',
+\qquad
+\pi_j'\,(\lim_J\eta)=\eta_j\pi_j.
+\]
+这些诱导映射保持恒等变换与复合。余极限具有相同方向的诱导映射与相同的复合性质。
+\end{proposition}
+\begin{proof}
+唯一性证明与积的证明一致：用两个泛性质得到互相的映射，其两个复合都是保持结构映射的自映射，从而必须为恒等映射。
+
+自然性给出
+\(D'(\alpha)\eta_j\pi_j=\eta_kD(\alpha)\pi_j=\eta_k\pi_k\)，
+所以 \((\eta_j\pi_j)\) 是 \(D'\) 上的锥，极限泛性质给出所求映射。恒等情形与复合情形均可逐个复合到 \(\pi_j'\) 后检查，再用唯一性得到。余极限的证明反转全部箭头即可。
+\end{proof}
+
+在所讨论的图表中选定极限后，就可以把取极限看作函子。这里的选择只是为了写出具体对象；任何两种选择之间已有唯一的相容同构。涉及真类范围的所有图表时，不在没有说明的情况下另加一次真类指标的选择。
+
+\ProseParagraphBreak
+在局部小范畴中，极限泛性质还可以写成集合间的双射
+\[
+\mathcal C(T,\lim_JD)
+\ \cong\
+\{\text{以 }T\text{ 为顶点的 }D\text{ 的锥}\}.
+\]
+这把一个通向极限的态射解释为一组相容态射。随 \(T\) 改变，这个双射与预复合相容；随图表改变，又与上一命题的诱导映射相容。\secref{b4:sec:0204}将由此证明 Hom 函子保持极限。
+
+\begin{definition}[完备与余完备]\label{b4:def:complete-cocomplete-category}
+若范畴 \(\mathcal C\) 中每个小图表都有极限，则称 \(\mathcal C\) 为\term[wanbeifanchou]{完备范畴}[complete category]；若每个小图表都有余极限，则称它为\term[yuwanbeifanchou]{余完备范畴}[cocomplete category]。若只要求指标范畴的对象和态射均有限，分别称为有限完备和有限余完备。
+\end{definition}
+
+这里的完备性属于范畴的泛性质，与赋范空间或局部环的完备性是不同概念。定义也不要求真类大小的图表存在极限。
 
 \subsection{由积与等化子构造极限}
 \label{b4:subsec:0202:03}
 
-待撰写。
+一般图表可能含有很多相容条件，但每个条件仍只是两个复合相等。因此，可以先用积收集全部候选数据，再用一个等化子同时施加全部条件。
+
+\begin{theorem}[由积与等化子构造极限]\label{b4:thm:limits-products-equalizers}
+设 \(J\) 为小范畴，\(D:J\rightarrow\mathcal C\) 为图表。假设下列两个积和所需的等化子存在：
+\[
+P=\prod_{j\in\operatorname{Ob}J}D(j),\qquad
+Q=\prod_{\alpha:j\rightarrow k\ \text{in }J}D(k).
+\]
+设 \(p_j:P\rightarrow D(j)\) 为投影。定义 \(s,t:P\rightarrow Q\)，使其在 \(\alpha:j\rightarrow k\) 分量上分别为
+\[
+s_\alpha=D(\alpha)p_j,\qquad t_\alpha=p_k.
+\]
+若 \(e:E\rightarrow P\) 是 \(s,t\) 的等化子，则 \((E,(p_je))\) 是 \(D\) 的极限。对偶地，若相应余积与余等化子存在，则 \(D\) 的余极限是下列两个态射的余等化子：
+\[
+\coprod_{\alpha:j\rightarrow k}D(j)
+\ \rightrightarrows\
+\coprod_{j\in\operatorname{Ob}J}D(j),
+\]
+其中在 \(\alpha\) 对应的余积项上，两个态射分别为 \(\iota_kD(\alpha)\) 与 \(\iota_j\)。
+\end{theorem}
+\begin{proof}
+由 \(se=te\)，对每个 \(\alpha:j\rightarrow k\) 都有
+\(D(\alpha)p_je=p_ke\)，故 \((p_je)\) 是锥。给定任意锥 \((T,(\lambda_j))\)，积的泛性质唯一给出 \(h:T\rightarrow P\)，使 \(p_jh=\lambda_j\)。锥的相容性说明 \(sh=th\)，因为二者在 \(Q\) 的每个分量上相等。因此 \(h\) 唯一经过 \(e\) 分解。这一分解就是所求的 \(T\rightarrow E\)。其唯一性先由 \(P\) 的投影确定到 \(P\) 的映射，再由等化子的唯一性确定到 \(E\) 的映射。
+
+对于余极限，令 \(q:\coprod_jD(j)\rightarrow C\) 为所列态射对的余等化子。等式 \(q\iota_kD(\alpha)=q\iota_j\) 说明 \((q\iota_j)\) 是余锥。任意余锥先唯一给出余积到其顶点的映射，相容性又保证这个映射使两个平行态射相等，故唯一经过 \(q\) 分解。
+\end{proof}
+
+\begin{corollary}[完备性的构造判据]\label{b4:cor:completeness-criterion}
+具有所有小积及等化子的范畴是完备的；具有所有小余积及余等化子的范畴是余完备的。把“小”改为“有限”，结论仍成立。因而 \(\mathbf{Set}\)、\(\mathbf{Grp}\)、\(\mathbf{CRing}\) 和 \(R\text{-}\mathbf{Mod}\) 均具有所有小极限；其中 \(\mathbf{Set}\) 与 \(R\text{-}\mathbf{Mod}\) 也具有所有小余极限。
+\end{corollary}
+\begin{proof}
+第一部分直接应用上一构造，有限指标范畴只需要有限个积项或余积项。所列范畴中的积及等化子已在\secref{b4:sec:0201}给出，集合与模的任意小余积、余等化子也已给出。
+\end{proof}
+
+群和交换环也余完备，但本章不需要再为任意多个环建立一套生成关系记号。群的任意小余积可按有限个群时同样的自由群构造得到；交换环的任意小余积可在所有元素符号生成的交换多项式环中加入各环的加法、乘法和单位关系，再用余等化子构造一般余极限。这些关系均由集合指标给出，故仍是通常的环构造。
+
+\begin{example}[集合极限与余极限的统一公式]\label{b4:exm:set-limit-formulas}
+对于小图表 \(D:J\rightarrow\mathbf{Set}\)，极限由相容元组组成：
+\[
+\lim_JD
+=\{\,(x_j)\in\prod_jD(j)\mid
+D(\alpha)(x_j)=x_k\text{ 对每个 }\alpha:j\rightarrow k\,\}.
+\]
+余极限则是 \(\coprod_jD(j)\) 对关系
+\((j,x)\sim(k,D(\alpha)(x))\) 生成的等价关系所取的商。一般情况下，两个元素相等可能需要沿若干正反方向的关系反复连接，不能直接断言它们在某一个后续对象中已经相等。下一节将说明，滤过性恰好使这种更简单的判据成立。
+\end{example}

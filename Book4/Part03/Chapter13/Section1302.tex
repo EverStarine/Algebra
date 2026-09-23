@@ -5,8 +5,6 @@
 \section{逆极限的左正合性}
 \label{b4:sec:1302}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 不保持满射的具体系统
@@ -17,14 +15,75 @@
 \subsection{逆极限不保持满射的例子}
 \label{b4:subsec:1302:01}
 
-待撰写。
+本章的\term[keshu-nixiangta]{可数逆向塔}[countable inverse tower]采用指标 \(n=0,1,\ldots\)，写为
+\[
+M_0\xleftarrow{u_0}M_1\xleftarrow{u_1}M_2\xleftarrow{}\cdots.
+\]
+塔态射与所有过渡映射交换，短正合列逐层判断；这是\cref{b4:prop:module-functor-abelian}给出的交换范畴。逆极限为相容元组组成的子模
+\[
+\varprojlim M_n=\{\,(x_n)\in\prod_{n\ge0}M_n:x_n=u_nx_{n+1}\text{ 对所有 }n\,\}.
+\]
+\cref{b4:thm:finite-limits-exactness}或直接逐坐标检验说明逆极限左正合。
+
+\ProseParagraphBreak
+\cref{b4:exm:inverse-limit-not-exact}已用整数的相容剩余类说明逆极限不保持满射。这里将它写成可用于导出计算的形式。固定素数 \(p\)，取
+\[
+0\to p^{n+1}\mathbb Z\to\mathbb Z\to\mathbb Z/p^{n+1}\to0.
+\]
+三座塔的过渡映射分别是包含、恒等和约化。极限为
+\[
+0\longrightarrow0\longrightarrow\mathbb Z\longrightarrow\mathbb Z_p,
+\qquad \mathbb Z_p=\varprojlim_n\mathbb Z/p^{n+1}.
+\]
+取 \(1-p^2\) 在每个商环中的逆元，得到相容元组；若它来自整数 \(a\)，则 \((1-p^2)a-1\) 被所有 \(p^{n+1}\) 整除，只能为零，但 \((1-p^2)a=1\) 在整数中无解。故末箭头不是满射。下一节将把其余核 \(\mathbb Z_p/\mathbb Z\) 识别为一个一次导出极限。
 
 \subsection{相容条件的障碍}
 \label{b4:subsec:1302:02}
 
-待撰写。
+对塔短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{v}C\to0\)，取相容元组 \(c=(c_n)\in\varprojlim C_n\)。每个 \(c_n\) 都能提升到 \(b_n\in B_n\)，但这批提升不一定相容。因为 \(c_n-u_n^Cc_{n+1}=0\)，存在唯一 \(a_n\in A_n\) 使
+\[
+i_n(a_n)=b_n-u_n^Bb_{n+1}.
+\]
+若把提升改成 \(b_n+i_n(x_n)\)，则 \(a_n\) 改成 \(a_n+x_n-u_n^Ax_{n+1}\)。因此真正的障碍不是某个单独的 \(a_n\)，而是整族 \((a_n)\) 在“相容性差值”模中的余类。
+
+\begin{proposition}\label{b4:prop:compatible-lift-obstruction}
+设 \(R\) 为环，\(0\to A\to B\to C\to0\) 是左 \(R\)-模可数塔的短正合列。定义
+\[
+\Delta_A:\prod_nA_n\longrightarrow\prod_nA_n,
+\qquad (x_n)\longmapsto(x_n-u_n^Ax_{n+1}).
+\]
+上述构造给出自然同态
+\(\partial:\varprojlim C_n\to\operatorname{coker}\Delta_A\)。它的核恰为 \(\varprojlim B_n\to\varprojlim C_n\) 的像。
+\end{proposition}
+\begin{proof}
+改变提升所产生的差属于 \(\operatorname{im}\Delta_A\)，故余类与选择无关。两族提升相加仍为和的提升，标量相乘同理，所以得到模同态。若 \((a_n)=\Delta_A(x_n)\)，则 \(b_n-i_n(x_n)\) 已经相容，给出极限中的提升；反过来，若相容提升存在，与最初提升的差提供这样的 \((x_n)\)。对塔短正合列之间的态射，先提升再映过去是一种允许的提升，由选择无关性便得到自然性。
+\end{proof}
+
+这个描述也说明为什么需要对整座塔取导出函子。只在每一层作一次核与余核，尚未处理无限多个相容性等式。
 
 \subsection{逆系统范畴中的内射方法}
 \label{b4:subsec:1302:03}
 
-待撰写。
+为定义导出极限，必须先知道图表范畴有足够多内射对象。逐层嵌入内射模还不够：嵌入之间需要与图表箭头相容。下面的伴随构造同时解决这两件事。
+
+\begin{proposition}\label{b4:prop:diagram-enough-injectives}
+设 \(R\) 为环，\(\mathcal I\) 为小范畴。左 \(R\)-模值图表范畴 \([\mathcal I,R\text{-}\mathbf{Mod}]\) 有足够多内射对象。对可数逆向塔，可以把任意塔单射地映入一个逐层过渡映射均为满射的内射塔。
+\end{proposition}
+\begin{proof}
+固定 \(j\in\mathcal I\)。求值函子 \(X\mapsto X_j\) 正合，其右伴随把模 \(E\) 送到图表
+\[
+(J_jE)_i=\prod_{\alpha:i\to j}E.
+\]
+箭头 \(\beta:i\to i'\) 把坐标族送到以 \(\alpha':i'\to j\) 为指标的族，其值取原族的 \(\alpha'\beta\) 坐标。这个公式保持恒等与复合。伴随同构是
+\[
+\operatorname{Hom}(X,J_jE)\simeq\operatorname{Hom}_R(X_j,E).
+\]
+正向映射在 \(j\) 处取 \(1_j\) 坐标；反向把 \(f:X_j\to E\) 送到坐标 \(fX(\alpha)\)。自然性证明二者互逆。求值正合，所以\cref{b4:prop:right-adjoint-injectives}使 \(J_jE\) 在 \(E\) 内射时内射。
+
+为每个 \(j\) 选内射嵌入 \(X_j\to E_j\)。伴随给出
+\(X\to\prod_jJ_jE_j\)，它在对象 \(i\) 的 \(j=i,\alpha=1_i\) 坐标是原嵌入，所以逐对象单射。内射对象的积仍内射：给定单态射后的延拓问题，逐坐标利用内射性选择延拓，再合并成积中的态射。这证明足够多内射对象的存在。
+
+对于塔，\((J_jE)_n\) 在 \(n\ge j\) 时是 \(E\)，在 \(n<j\) 时是零；前一范围内的箭头为恒等。因此所构造内射塔的第 \(n\) 层为 \(\prod_{j=0}^nE_j\)，过渡映射是删除最后一个坐标的投影，确实满射。
+\end{proof}
+
+右伴随保持内射的判据来自上一编，而不是待证明的逆极限理论。这使导出极限的定义具有独立的消解基础。

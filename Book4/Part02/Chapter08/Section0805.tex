@@ -5,7 +5,6 @@
 \section{维数平移与合冲模初步}
 \label{b4:sec:0805}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -20,19 +19,99 @@
 \subsection{投射消解中的 Ext 与 Tor 维数平移}
 \label{b4:subsec:0805:01}
 
-待撰写。
+\begin{definition}\label{b4:def:syzygy-basic}
+设 \(R\) 是含幺环，\(M\) 是左 \(R\) 模。给定投射满射 \(P\to M\)，其核记为 \(\Omega M\)，称为与这一选择对应的第一\term[hechongmo]{合冲模}[syzygy module]。在固定投射消解 \(P_\bullet\to M\) 中，令 \(\Omega^0M=M\)，\(\Omega^{r+1}M=\ker(P_r\to\Omega^rM)\)，\(r\ge0\)。右模用右投射消解作同一定义。
+\end{definition}
+
+\begin{theorem}[基础维数平移]\label{b4:thm:dimension-shift-basic}
+设 \(R\) 是含幺环，\(0\to K\to P\to M\to0\) 是左 \(R\) 模短正合列，且 \(P\) 投射。则对任意左模 \(N\)、右模 \(A\) 及 \(i\ge1\)，连接态射给出自然同构
+\[
+\operatorname{Ext}_R^i(K,N)\cong\operatorname{Ext}_R^{i+1}(M,N),
+\qquad
+\operatorname{Tor}_{i+1}^R(A,M)\cong\operatorname{Tor}_i^R(A,K).
+\]
+低次则为正合列
+\[
+\begin{aligned}
+0&\longrightarrow\operatorname{Hom}_R(M,N)\longrightarrow\operatorname{Hom}_R(P,N)
+\longrightarrow\operatorname{Hom}_R(K,N)\\
+&\longrightarrow\operatorname{Ext}_R^1(M,N)\longrightarrow0,\\
+0&\longrightarrow\operatorname{Tor}_1^R(A,M)\longrightarrow A\otimes_RK
+\longrightarrow A\otimes_RP\\
+&\longrightarrow A\otimes_RM\longrightarrow0.
+\end{aligned}
+\]
+若原列为右模短正合列，则 Tor 结论改为 \(\operatorname{Tor}_{i+1}^R(M,N)\cong\operatorname{Tor}_i^R(K,N)\)，其中 \(N\) 为左模。
+\end{theorem}
+\begin{proof}
+第一变量 Ext 长正合列在相关位置为
+\[
+\operatorname{Ext}_R^i(P,N)\longrightarrow\operatorname{Ext}_R^i(K,N)
+\longrightarrow\operatorname{Ext}_R^{i+1}(M,N)
+\longrightarrow\operatorname{Ext}_R^{i+1}(P,N).
+\]
+\(i\ge1\) 时两端由投射性消失。Tor 的相应片段两端为 \(P\) 的正次 Tor，由投射蕴含平坦而消失。零次的 Hom 和张量项一般不为零，保留这些项就得到所列低次正合列。自然性来自原长正合列对短正合列态射的自然性；右模情形把同一证明用于另一变量。
+\end{proof}
+
+这一操作称为\term[weishu-pingyi]{维数平移}[dimension shifting]。它把一个高次问题换成一个新模的一次问题，但不能在 \(i=0\) 时直接把上面的同构照抄下来。
 
 \subsection{内射消解中的 Ext 平移与自然性}
 \label{b4:subsec:0805:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:injective-dimension-shift}
+设 \(R\) 是含幺环，\(0\to N\to I\to C\to0\) 为左模短正合列，\(I\) 内射。对每个左模 \(M\) 和 \(i\ge1\)，有自然同构
+\[
+\operatorname{Ext}_R^i(M,C)\cong\operatorname{Ext}_R^{i+1}(M,N).
+\]
+零次给出 \(\operatorname{Ext}_R^1(M,N)\cong
+\operatorname{coker}\bigl(\operatorname{Hom}_R(M,I)\to\operatorname{Hom}_R(M,C)\bigr)\)。
+\end{proposition}
+\begin{proof}
+第二变量长正合列中所有 \(\operatorname{Ext}_R^j(M,I)\)、\(j>0\)，由内射性消失，故中间连接态射为同构；在零次保留两个 Hom 项便得到余核表达。
+\end{proof}
+
+可以把这里的商 \(C\) 暂记为 \(\Sigma N\)，但它取决于所选内射嵌入，不能把 \(\Sigma\) 与已经定义的复形移位 \([1]\) 混同。类似地，\(\Omega M\) 不是由 \(M\) 唯一决定的具体模。稳定不变的是通过给定短正合列得到的导出函子同构，以及更换消解时比较定理所给的相容关系。
+
+\begin{lemma}[Schanuel 引理]\label{b4:lem:schanuel}
+设 \(R\) 是含幺环。两个左模短正合列 \(0\to K\to P\to M\to0\)、\(0\to K'\to P'\to M\to0\) 的中间模都投射，则 \(K\oplus P'\cong K'\oplus P\)。
+\end{lemma}
+\begin{proof}
+取纤维积 \(E=P\times_M P'\)。投影给出短正合列 \(0\to K\to E\to P'\to0\) 和 \(0\to K'\to E\to P\to0\)。因右端投射，两列均分裂，故 \(E\cong K\oplus P'\cong K'\oplus P\)。
+\end{proof}
+
+这个\term[schanuel-yinli]{Schanuel 引理}[Schanuel's lemma]说明两种合冲模在加上投射直和因子后同构。分裂的选择一般不唯一，所以它没有提供 \(K\cong K'\) 的典范同构。例如自由模 \(M\) 可以取恒等满射，核为零；也可以取 \(M\oplus R\to M\)，核为 \(R\)。
 
 \subsection{迭代平移与截短消解}
 \label{b4:subsec:0805:03}
 
-待撰写。
+\begin{proposition}\label{b4:prop:iterated-dimension-shift}
+设 \(R\) 是含幺环，\(M,N\) 是左模，\(A\) 是右模。固定 \(M\) 的投射消解及其 \(r\) 次合冲模，\(r\ge0\)。则对 \(i\ge1\)，有
+\[
+\operatorname{Ext}_R^i(\Omega^rM,N)\cong\operatorname{Ext}_R^{i+r}(M,N),
+\qquad
+\operatorname{Tor}_i^R(A,\Omega^rM)\cong\operatorname{Tor}_{i+r}^R(A,M).
+\]
+若固定 \(N\) 的内射消解并依次取商 \(\Sigma^rN\)，则 \(\operatorname{Ext}_R^i(M,\Sigma^rN)\cong\operatorname{Ext}_R^{i+r}(M,N)\)。此外，固定消解中的 \(\Omega^rM\) 投射，当且仅当对所有左模 \(N\)，\(\operatorname{Ext}_R^{r+1}(M,N)=0\)。
+\end{proposition}
+\begin{proof}
+对各短正合列 \(0\to\Omega^{j+1}M\to P_j\to\Omega^jM\to0\) 依次用\cref{b4:thm:dimension-shift-basic}，复合连接同构即得前两式。内射式反复用\cref{b4:prop:injective-dimension-shift}。最后令 \(i=1\)，并用\cref{b4:thm:ext-projective-injective}检验 \(\Omega^rM\) 的投射性。
+\end{proof}
+
+若 \(r=0\)，这一条件就是 \(M\) 本身投射。若 \(r\ge1\) 且 \(\Omega^rM\) 投射，原消解可截成
+\[
+0\longrightarrow\Omega^rM\longrightarrow P_{r-1}\longrightarrow\cdots
+\longrightarrow P_0\longrightarrow M\longrightarrow0.
+\]
+反过来，任何长度不超过 \(r\) 的投射消解使所有 \(\operatorname{Ext}^{r+1}(M,-)\) 消失，因而任意投射消解的第 \(r\) 次合冲模都投射。此处先得到截短的判据；\chapref{b4:ch:10}再用它定义并比较各种同调维数。
 
 \subsection{维数平移在局部代数中的应用}
 \label{b4:subsec:0805:04}
 
-待撰写。
+第三卷的局部代数以有限自由消解记录生成元和关系。这里已经得到其中所需的基本同调推理：把 \(0\to\Omega M\to P\to M\to0\) 送入 Ext 或 Tor 的长正合列，利用 \(P\) 的正次导出函子消失，把次数降低一步。有限性和局部性在选择极小自由消解、利用 Nakayama 引理时另有作用；上述维数平移本身对任意含幺环成立。
+
+\begin{example}\label{b4:exm:local-shift-koszul}
+设 \(k\) 是域，\(R=k[x,y]_{(x,y)}\)，\(\mathfrak m=(x,y)R\)，剩余域记为 \(k\)。\(R\) 是整环，\(R/(x)\cong k[y]_{(y)}\) 也是整环，所以 \(x,y\) 满足\cref{b4:prop:koszul-resolution}的假设。相应两步自由消解与 \(k\) 张量后微分为零，故 \(\operatorname{Tor}_2^R(k,k)\cong k\)。短正合列 \(0\to\mathfrak m\to R\to k\to0\) 遂给出 \(\operatorname{Tor}_1^R(\mathfrak m,k)\cong k\)，从而 \(\mathfrak m\) 不投射。
+
+\ProseParagraphBreak
+另一方面，Koszul 消解的最高非零项为 \(R\)，故 \(\Omega^2k\cong R\) 投射；\(\Omega k=\mathfrak m\) 却不投射。维数平移精确地区分了这两个阶段。这里没有从“有两个参数”直接猜测消解长度，而是同时给出长度二的消解和阻止提前截短的一次 Tor。
+\end{example}

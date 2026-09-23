@@ -5,8 +5,6 @@
 \section{乘积与括号}
 \label{b4:sec:1203}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 杯积
@@ -17,14 +15,146 @@
 \subsection{杯积}
 \label{b4:subsec:1203:01}
 
-待撰写。
+当系数是 \(A\) 本身时，可以把两个上链的值相乘。另一种做法是把一个上链的值代入另一个上链。前者给出杯积，后者适合表达结合律及形变障碍；两种运算的次数不同。
+
+\begin{definition}\label{b4:def:hochschild-cup}
+设 \(A\) 为结合含幺 \(k\) 代数，\(f\in C^p(A,A)\)、\(g\in C^q(A,A)\)，其中 \(p,q\ge0\)。定义\term[beiji]{杯积}[cup product]
+\[
+(f\smile g)(a_1,\ldots,a_{p+q})
+=f(a_1,\ldots,a_p)g(a_{p+1},\ldots,a_{p+q}).
+\]
+当某次为零时，相应上链就是一个 \(A\) 中元素，占据该因子的位置。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:hochschild-cup-differential}
+设 \(A\) 为结合含幺 \(k\) 代数。上述杯积结合，零次上链 \(1\) 是单位，且
+\[
+\delta(f\smile g)=(\delta f)\smile g+(-1)^p f\smile\delta g
+\quad(f\in C^p(A,A)).
+\]
+因而它诱导 \(\operatorname{HH}^*(A)\) 上的带单位分次结合代数结构。
+\end{proposition}
+\begin{proof}
+结合性来自 \(A\) 的乘法结合性。在微分公式中，合并前 \(p+1\) 个位置产生 \((\delta f)\smile g\) 的各内部项，合并后 \(q+1\) 个位置产生 \((-1)^pf\smile\delta g\) 的各内部项。两部分交界处额外出现的项分别为
+\((-1)^{p+1}f(a_1,\ldots,a_p)a_{p+1}g(\ldots)\) 与
+\((-1)^pf(a_1,\ldots,a_p)a_{p+1}g(\ldots)\)，恰好抵消；最左、最右作用项保留下来，即为 \(\delta(f\smile g)\)。零次情形由同一左右乘法公式成立。
+
+因此两个余圈的杯积仍是余圈。若 \(f=\delta u\)、\(\delta g=0\)，则 \(f\smile g=\delta(u\smile g)\)；另一因子为余边时同样成立。这证明乘法在上同调类上良定义。
+\end{proof}
+
+例如中心中的元素通过零次杯积作用于所有上同调群。一般系数双模 \(M\) 没有自带的 \(M\otimes M\to M\)，所以不能不加数据就为 \(\operatorname{HH}^*(A,M)\) 写出同样的乘法。
 
 \subsection{Gerstenhaber 括号的构造思想}
 \label{b4:subsec:1203:02}
 
-待撰写。
+杯积把两组自变量前后排列，不能直接表达 \(\phi(\phi(a,b),c)\)。为比较这类嵌套乘法，需要记录插入的位置及其符号。
+
+\begin{definition}\label{b4:def:gerstenhaber-bracket}
+设 \(A\) 为结合含幺 \(k\) 代数。对 \(f\in C^p(A,A)\)、\(g\in C^q(A,A)\)，在 \(p\ge1\) 时定义
+\[
+\begin{aligned}
+f\circ g&=\sum_{i=0}^{p-1}(-1)^{i(q-1)}f\circ_i g,\\
+(f\circ_i g)(a_1,\ldots,a_{p+q-1})
+&=f(a_1,\ldots,a_i,g(a_{i+1},\ldots,a_{i+q}),
+a_{i+q+1},\ldots,a_{p+q-1}).
+\end{aligned}
+\]
+\(q=0\) 时将常数 \(g\in A\) 插入第 \(i+1\) 个位置；\(p=0\) 时规定 \(f\circ g=0\)。定义
+\[
+[f,g]=f\circ g-(-1)^{(p-1)(q-1)}g\circ f.
+\]
+这个次数为 \(-1\) 的运算称为 \term[gerstenhaber-kuohao]{Gerstenhaber 括号}[Gerstenhaber bracket]；两个零次上链的括号取零。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:gerstenhaber-identities}
+设 \(A\) 为结合含幺 \(k\) 代数，以 \(|f|=p-1\) 表示 \(f\in C^p(A,A)\) 的移后次数。上述括号满足分次反对称性及分次 Jacobi 恒等式，且诱导
+\[
+\operatorname{HH}^p(A)\times\operatorname{HH}^q(A)
+\longrightarrow\operatorname{HH}^{p+q-1}(A).
+\]
+这里约定负次数的上同调为零。若 \(m(a,b)=ab\) 为原乘法，则
+\[
+[m,f]=(-1)^{p-1}\delta f.
+\]
+\end{proposition}
+\begin{proof}
+先比较双重插入。\((f\circ g)\circ h\) 中，把 \(h\) 插入已经放入的 \(g\) 内部的项，正好组成 \(f\circ(g\circ h)\)：在 \(f\) 的位置 \(i\) 放 \(g\)，再在 \(g\) 的位置 \(j\) 放 \(h\)，两边符号都是
+\((-1)^{i(|g|+|h|)+j|h|}\)。其余项把 \(g,h\) 放在 \(f\) 的两个不同位置。交换两者的插入次序，后一个位置跨过的自变量数改变 \(|g|\) 或 \(|h|\)，所以符号改变 \((-1)^{|g||h|}\)。这建立了恒等式
+\[
+(f\circ g)\circ h-f\circ(g\circ h)
+=(-1)^{|g||h|}\bigl((f\circ h)\circ g-f\circ(h\circ g)\bigr).
+\]
+常数上链没有内部位置，相应内部和为空，剩下的不同位置项仍按同一规则配对。
+
+括号的反对称性直接来自定义。把三个括号展开为插入运算，再用刚得的等式将不同位置的项配对抵消，得到
+\[
+(-1)^{|f||h|}[f,[g,h]]
++(-1)^{|g||f|}[g,[h,f]]
++(-1)^{|h||g|}[h,[f,g]]=0.
+\]
+将二次上链 \(m\) 代入括号定义，最外两项是左右乘法，内部各项是合并相邻自变量，给出 \([m,f]=(-1)^{p-1}\delta f\)。特别地，令 \(D f=[m,f]\)，Jacobi 恒等式给出
+\[
+D[f,g]=[Df,g]+(-1)^{|f|}[f,Dg].
+\]
+\(D\) 与 \(\delta\) 在每次只差一个符号，因此有相同的余圈、余边。最后一个等式说明余圈的括号仍为余圈，且一个因子为余边、另一个为余圈时结果为余边。这就使括号下降到上同调。
+\end{proof}
+
+对一次上链，即线性自映射，括号为普通交换子 \([D,E]=D\circ E-E\circ D\)。因此导子的交换子仍是导子，并给出 \(\operatorname{HH}^1(A)\) 上的 Lie 括号。对二次上链 \(\phi\)，则
+\[
+(\phi\circ\phi)(a,b,c)
+=\phi(\phi(a,b),c)-\phi(a,\phi(b,c)).
+\]
+当 \(\operatorname{char}k\ne2\) 时，它等于 \(\tfrac12[\phi,\phi]\)。在特征二中不能用除以二的写法；实际障碍始终是左边这个插入表达式。
 
 \subsection{\texorpdfstring{形变障碍与 \(\operatorname{HH}^3\)}{形变障碍与 HH3}}
 \label{b4:subsec:1203:03}
 
-待撰写。
+一次结合律只给线性方程，第二次就出现刚才的二次表达式。若已知 \(\phi\) 是归一化二余圈，尝试令
+\[
+a*b=ab+t\phi(a,b)+t^2\psi(a,b)\pmod {t^3}.
+\]
+比较结合律的二次系数，所需且仅需的条件是
+\begin{equation}\label{b4:eq:second-deformation-obstruction}
+\delta\psi=\phi\circ\phi.
+\end{equation}
+因此出现一个三次上同调问题：右边不仅要是余圈，还必须是余边。
+
+\begin{theorem}\label{b4:thm:hochschild-obstruction}
+设 \(A\) 为结合含幺 \(k\) 代数，\(N\ge1\)。给定保持单位、模 \(t^{N+1}\) 结合的乘法
+\[
+m_t=m+t\mu_1+\cdots+t^N\mu_N,
+\]
+其中各 \(\mu_i:A\otimes_kA\to A\) 归一化。令
+\[
+O_{N+1}(a,b,c)=
+\sum_{\substack{i+j=N+1\\i,j\ge1}}
+\bigl(\mu_i(\mu_j(a,b),c)-\mu_i(a,\mu_j(b,c))\bigr).
+\]
+则 \(O_{N+1}\) 是归一化三余圈。该给定形变能延拓到模 \(t^{N+2}\) 的保持单位形变，当且仅当
+\([O_{N+1}]=0\) 于 \(\operatorname{HH}^3(A)\)。
+\end{theorem}
+\begin{proof}
+在现有截断多项式乘法后加上 \(t^{N+1}\nu\)，结合子的 \(t^{N+1}\) 系数为 \(O_{N+1}-\delta\nu\)，因为涉及原乘法 \(m\) 与 \(\nu\) 的四项恰好是 \(-\delta\nu\)。故延拓要求 \(\delta\nu=O_{N+1}\)。
+
+为证明右边是余圈，不需要除以任何整数。对任意双线性乘法 \(*\)，记其结合子为 \(F(a,b,c)=(a*b)*c-a*(b*c)\)。直接展开可得
+\[
+\begin{aligned}
+0={}&a*F(b,c,d)-F(a*b,c,d)+F(a,b*c,d)\\
+&-F(a,b,c*d)+F(a,b,c)*d.
+\end{aligned}
+\]
+每个带括号的四重乘积恰出现两次，符号相反。对尚未加入 \(\nu\) 的 \(m_t\) 使用此式。因结合子的所有低于 \(N+1\) 次系数为零，比较 \(t^{N+1}\) 系数时，外部乘法只取原乘法，所得正是 \(\delta O_{N+1}=0\)。各 \(\mu_i\) 归一化也使 \(O_{N+1}\) 任一自变量为 \(1\) 时为零。
+
+若延拓存在，\(O_{N+1}=\delta\nu\) 已说明其类为零。反过来，若类为零，先取任意 \(\nu\) 使 \(\delta\nu=O_{N+1}\)。右边在带单位的三元组上为零，所以与\cref{b4:thm:hh2-deformation-classification}中相同的两次代入给出
+\(\nu(1,a)=ca\)、\(\nu(a,1)=ac\)，其中 \(c=\nu(1,1)\)。选择 \(h(1)=c\)，以 \(\nu-\delta h\) 替代 \(\nu\)，即可既保持 \(\delta\nu=O_{N+1}\)，又使 \(\nu\) 归一化。所得延拓保持单位。
+\end{proof}
+
+\begin{corollary}\label{b4:cor:hh3-unobstructed}
+设 \(A\) 为结合含幺 \(k\) 代数。若 \(\operatorname{HH}^3(A)=0\)，则每个保持单位的一阶形变都能逐次延拓成 \(A[[t]]\) 上的形式乘法
+\(m_t=m+\sum_{i\ge1}t^i\mu_i\)。
+\end{corollary}
+\begin{proof}
+用\cref{b4:thm:hochschild-obstruction}归纳选择各 \(\mu_i\)。对形式级数定义乘积时，一个固定次数的系数只涉及有限多个系数，故乘法有意义；每个次数的结合律已在某个有限截断中成立。单位同理由归一化保证。
+\end{proof}
+
+这是形式延拓，不涉及实数或复数分析中的收敛。若 \(\operatorname{HH}^3(A)\ne0\)，也不能反向断言所有形变都会受阻；要计算的是当前已选系数产生的特定类 \([O_{N+1}]\)。后续系数的不同选择还可能影响更高阶障碍。

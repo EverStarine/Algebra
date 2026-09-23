@@ -5,9 +5,7 @@
 \section{复合函子的导出}
 \label{b4:sec:1004}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 函子作用于内射对象后的条件
 % * 复合导出的障碍
@@ -19,14 +17,74 @@
 \subsection{内射对象在函子下的像}
 \label{b4:subsec:1004:01}
 
-待撰写。
+取一个内射消解后，先作用 \(F\) 再作用 \(G\)，看似能够计算复合函子。但 \(F(I)\) 不一定内射，也不一定对 \(G\) 无上同调。这一步是复合导出问题中必须单独检查的对象条件。
+
+\begin{proposition}\label{b4:prop:right-adjoint-injectives}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(U:\mathcal A\to\mathcal B\) 是加性函子，具有正合左伴随 \(V:\mathcal B\to\mathcal A\)。则 \(U\) 把内射对象送到内射对象。
+\end{proposition}
+\begin{proof}
+设 \(I\) 为 \(\mathcal A\) 的内射对象，给定 \(\mathcal B\) 中单态射 \(X\to Y\)。正合性使 \(V(X)\to V(Y)\) 单射，所以每个 \(V(X)\to I\) 延拓至 \(V(Y)\)。利用伴随同构
+\(\operatorname{Hom}_{\mathcal B}(-,U(I))\simeq\operatorname{Hom}_{\mathcal A}(V(-),I)\)，这恰好表示每个 \(X\to U(I)\) 都可延拓到 \(Y\)，故 \(U(I)\) 内射。
+\end{proof}
+
+例如，对环同态 \(R\to S\)，限制标量 \(S\text{-}\mathbf{Mod}\to R\text{-}\mathbf{Mod}\) 的左伴随是 \(S\otimes_R-\)。若 \(S\) 作为右 \(R\)-模平坦，限制标量就保持内射对象。没有平坦性时这个结论可能失败：\(\mathbb Z/2\) 作为 \(\mathbb F_2\)-模内射，作为整数模却不内射。
+
+\begin{theorem}\label{b4:thm:derived-composite-exact-first}
+设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A,\mathcal B\) 有足够内射对象。设加性函子 \(F:\mathcal A\to\mathcal B\) 正合，\(G:\mathcal B\to\mathcal C\) 左正合，且每个内射 \(I\in\mathcal A\) 的像 \(F(I)\) 都对 \(G\) 无上同调。则对每个 \(M\in\mathcal A\) 及 \(n\ge0\)，有自然同构
+\[
+ R^n(GF)(M)\simeq R^nG(F(M)).
+\]
+\end{theorem}
+\begin{proof}
+取 \(M\to I^\bullet\) 的内射消解。\(F\) 正合使 \(F(M)\to F(I^\bullet)\) 仍为正合消解，像的条件使它成为 \(G\)-无上同调消解。由\cref{b4:thm:acyclic-resolution}，其经 \(G\) 后的同调是 \(R^nG(F(M))\)；同一复形 \(GF(I^\bullet)\) 按定义又计算 \(R^n(GF)(M)\)。消解比较映射给出对 \(M\) 的自然性。
+\end{proof}
 
 \subsection{复合导出的障碍}
 \label{b4:subsec:1004:02}
 
-待撰写。
+若 \(F\) 只有左正合性，\(F(I^\bullet)\) 的正次上同调正是 \(R^qF(M)\)，一般不是 \(F(M)\) 的消解。即使其各项都对 \(G\) 无上同调，也不能在上一个证明中删去 \(F\) 正合这一条件。
+
+\begin{example}\label{b4:exm:composite-first-not-exact}
+取素数 \(p\)，令
+\[
+ F:\mathbf{Ab}\longrightarrow\mathbb F_p\text{-}\mathbf{Mod},\quad F(A)=A[p],
+ \qquad G:\mathbb F_p\text{-}\mathbf{Mod}\longrightarrow\mathbf{Ab}
+\]
+分别为 \(p\)-挠子群函子及忘却函子。\(F\) 左正合，\(G\) 正合。因为中间范畴是向量空间范畴，所有 \(F(I)\) 都对 \(G\) 无上同调。然而取 \(M=\mathbb Z\)，有
+\[
+ R^1(GF)(\mathbb Z)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z)
+ =\mathbb Z/p,\qquad R^1G(F(\mathbb Z))=0.
+\]
+非零项来自先作用 \(F\) 时产生的一次导出，而不是来自 \(G\) 的导出。
+\end{example}
+
+\begin{proposition}\label{b4:prop:derived-composite-exact-second}
+设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子，\(G:\mathcal B\to\mathcal C\) 为正合加性函子。则
+\[
+ R^n(GF)(M)\simeq G(R^nF(M))\qquad(n\ge0)
+\]
+自然成立。
+\end{proposition}
+\begin{proof}
+取 \(M\to I^\bullet\)。正合函子保持核、像及商对象，故
+\(H^n(GF(I^\bullet))\simeq G(H^n(F(I^\bullet)))\)。两端按导出函子定义就是所写对象；识别使用核与余核的自然态射，故自然。
+\end{proof}
+
+这两个结果处理的是不同的简化情形：前函子正合时，只剩后函子的导出；后函子正合时，它直接作用于前函子的导出。两者都只有左正合性时，两类高次信息必须同时保留。
 
 \subsection{Grothendieck 谱序列的假设}
 \label{b4:subsec:1004:03}
 
-待撰写。
+本小节只说明后文定理的对象和假设，不把尚未建立的谱序列用于本章证明。设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，前两者有足够内射对象，\(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 均为左正合加性函子。关键附加条件是
+\[
+ R^pG(F(I))=0\qquad(p>0,\ I\text{ 为 }\mathcal A\text{ 的内射对象}).
+\]
+第十五章第15.3节将用双复形建立在这些条件下的 Grothendieck 谱序列，其第二页和目标分别为
+\[
+ E_2^{p,q}=R^pG(R^qF(M))
+ \quad\Longrightarrow\quad R^{p+q}(GF)(M),\qquad p,q\ge0.
+\]
+这个箭头表示目标带有有限滤过，极限页描述其相邻商；它不直接给出各个 \(E_2\) 项的直和分解。谱序列的微分、收敛及滤过要在第十四章建立以后才有完整意义。
+
+\ProseParagraphBreak
+若 \(F\) 正合，只有 \(q=0\) 行可能非零；若 \(G\) 正合，只有 \(p=0\) 列可能非零。这与前两小节已经独立证明的公式相符。一般情形中，先对 \(F(I^\bullet)\) 作进一步消解，再比较两个取同调次序；内射像的无上同调条件保证其中一个次序确实计算 \(R^*(GF)\)，而不是另一个没有识别的对象。至此，本章提供了使用该定理之前必须检查的条件，谱序列本身及其低阶正合列仍归第十五章证明。

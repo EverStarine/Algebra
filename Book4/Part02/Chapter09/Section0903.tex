@@ -5,9 +5,7 @@
 \section{万有系数定理}
 \label{b4:sec:0903}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 主理想整环上的标准形式
 % * 自然短正合列与非典范分裂
@@ -17,14 +15,100 @@
 \subsection{主理想整环上的标准形式}
 \label{b4:subsec:0903:01}
 
-待撰写。
+主理想整环上，自由模的子模仍自由，即使自由模的秩无限也成立，见\cref{b4:thm:pid-free-submodule}。因此自由链复形的圈和边界都是自由模。这个事实既使 Tor 项可由长度一的消解算出，也保证下面的短正合列能够分裂。
+
+\begin{theorem}[同调的万有系数定理]\label{b4:thm:uct-homology}
+设 \(R\) 为主理想整环，\(C\) 为自由 \(R\)-模链复形，\(A\) 为 \(R\)-模。对每个整数 \(n\)，有关于 \(C,A\) 自然的短正合列
+\[
+ 0\longrightarrow H_n(C)\otimes_R A
+ \xrightarrow{\kappa}H_n(C\otimes_R A)
+ \xrightarrow{\rho}\operatorname{Tor}_1^R(H_{n-1}(C),A)
+ \longrightarrow0.
+\]
+此列分裂，但一般没有关于 \(C\) 自然的分裂。
+\end{theorem}
+\begin{proof}
+令 \(Z_n=\ker d_n\)、\(B_n=\operatorname{im}d_{n+1}\)。由于 \(B_{n-1}\) 自由，序列 \(0\to Z_n\to C_n\to B_{n-1}\to0\) 分裂。张量后仍是短正合列，并拼成复形的短正合列，其中外侧复形的微分为零。其同调长正合列在所需位置给出
+\[
+ B_n\otimes A\longrightarrow Z_n\otimes A\longrightarrow H_n(C\otimes A)
+ \longrightarrow B_{n-1}\otimes A\longrightarrow Z_{n-1}\otimes A.
+\]
+末箭头是包含 \(B_{n-1}\hookrightarrow Z_{n-1}\) 张量 \(A\)，这是由连接同态对提升的微分直接算出的。前一箭头的余核是 \(H_n(C)\otimes A\)；后一箭头的核由自由消解 \(0\to B_{n-1}\to Z_{n-1}\to H_{n-1}(C)\to0\) 识别为所写的 Tor 群。所有映射在选分裂之前已经定义，所以序列自然。
+
+选取 \(C_n\to Z_n\) 的投影，其在张量后的圈上仍是恒等于 \(Z_n\otimes A\) 的投影，又把边界保留在 \(Z_n\otimes A\) 中。商去边界，得到 \(H_n(C\otimes A)\to H_n(C)\otimes A\) 的左逆，从而分裂。这个投影依赖补模的选择；下一小节给出无法作自然选择的例子。
+\end{proof}
+
+\begin{theorem}[上同调的万有系数定理]\label{b4:thm:uct-cohomology}
+设 \(R\) 为主理想整环，\(C\) 为自由 \(R\)-模链复形，\(A\) 为 \(R\)-模。令上链复形 \(\operatorname{Hom}_R(C,A)^n=\operatorname{Hom}_R(C_n,A)\)，微分为 \(f\mapsto f d_{n+1}\)。则有自然的短正合列
+\[
+ 0\longrightarrow\operatorname{Ext}_R^1(H_{n-1}(C),A)
+ \longrightarrow H^n(\operatorname{Hom}_R(C,A))
+ \xrightarrow{r}\operatorname{Hom}_R(H_n(C),A)\longrightarrow0.
+\]
+此列分裂，一般不具有关于 \(C\) 自然的分裂。
+\end{theorem}
+\begin{proof}
+余圈 \(f:C_n\to A\) 零化 \(B_n\)，所以限制到 \(Z_n\) 后经 \(H_n(C)\) 分解；余边的限制为零，这定义了 \(r\)。由于 \(Z_n\) 在 \(C_n\) 中为直和因子，任意 \(H_n(C)\to A\) 都能先拉回 \(Z_n\) 再延拓至 \(C_n\)，故 \(r\) 满射。
+
+\(r([f])=0\) 恰好表示 \(f|_{Z_n}=0\)，因而 \(f=t d_n\)，其中 \(t:B_{n-1}\to A\)。这样的 \(f\) 是余边，当且仅当 \(t\) 能延拓至 \(C_{n-1}\)。因为 \(Z_{n-1}\) 也是直和因子，这又等价于 \(t\) 能延拓至 \(Z_{n-1}\)。于是
+\[
+ \ker r=\operatorname{Hom}_R(B_{n-1},A)/
+ \operatorname{res}\operatorname{Hom}_R(Z_{n-1},A)
+ =\operatorname{Ext}_R^1(H_{n-1}(C),A).
+\]
+这个核的识别不使用选择，故序列自然。选定投影 \(C_n\to Z_n\) 后，把 \(H_n(C)\to A\) 与该投影及 \(Z_n\to H_n(C)\) 复合，得到 \(r\) 的右逆，证明分裂。
+\end{proof}
+
+上述 Hom 计算与\cref{b4:def:hom-complex}的内部 Hom 仅差每度的符号重标识，所得上同调相同。两个版本可与 Weibel\cite[Universal Coefficient Theorem for Homology 3.6.2, Universal Coefficient Theorem for Cohomology 3.6.5]{Weibel1994HomologicalAlgebra}对照；该书把同调版本先写在自由交换群上，本节使用同一证明得到主理想整环版本。
 
 \subsection{自然短正合列与非典范分裂}
 \label{b4:subsec:0903:02}
 
-待撰写。
+“自然短正合列”是指链映射 \(C\to C'\) 及系数同态 \(A\to A'\) 诱导整个正合列的交换图；它不意味着左右两项在中间项中都已选定。自然的是第一项的像及第二项的商，而直接把中间项写成直和还要作额外选择。
+
+\begin{example}\label{b4:exm:uct-no-natural-splitting}
+在 \(\mathbb Z\) 上取 \(C_1=\mathbb Za\oplus\mathbb Zb\)、\(C_0=\mathbb Zc\)，\(d(a)=2c\)、\(d(b)=0\)，其余项为零。取系数 \(A=\mathbb F_2\)。链自同构
+\[
+ f_1(a)=a+b,\quad f_1(b)=b,\quad f_0(c)=c
+\]
+在 \(H_1(C)=\mathbb Zb\) 及 \(H_0(C)=\mathbb Z/2\) 上都诱导恒等映射，而在
+\(H_1(C\otimes A)=A\bar a\oplus A\bar b\) 上是非平凡剪切。同调万有系数列左项是 \(A\bar b\)，商由 \(\bar a\) 表示。任何商的截面都把 \(1\) 送到 \(\bar a+\lambda\bar b\)，但 \(f\) 把它改成 \(\bar a+(\lambda+1)\bar b\)。所以没有与全部链映射相容的截面。
+
+\ProseParagraphBreak
+上同调版本也由同一例子说明。在 \(H^1(\operatorname{Hom}(C,A))\) 中，左端 Ext 项由 \(a^*\) 生成，右端 Hom 项由 \(b^*\) 表示。\(f^*(a^*)=a^*\)、\(f^*(b^*)=a^*+b^*\)，再一次排除了自然截面。
+\end{example}
+
+如果 \(A\) 平坦，同调公式的 Tor 项消失，\(\kappa\) 就是自然同构；如果 \(H_{n-1}(C)\) 自由，两个版本的附加项都消失。这两种简化来自明确的消失条件，不需要选择分裂。
 
 \subsection{系数变换的计算}
 \label{b4:subsec:0903:03}
 
-待撰写。
+设 \(C\) 是有限秩自由整数链复形。若已由 Smith 标准形算得
+\[
+ H_n(C)\simeq\mathbb Z^{r_n}\oplus\bigoplus_j\mathbb Z/d_{n,j},
+ \qquad d_{n,j}>1,
+\]
+则改变系数不必重新化简整个张量复形。对 \(A=\mathbb Z/m\)，令 \(g_{n,j}=\gcd(d_{n,j},m)\)。长度一的循环模消解给出
+\[
+ (\mathbb Z/d)\otimes\mathbb Z/m\simeq\mathbb Z/\gcd(d,m),\qquad
+ \operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/d,\mathbb Z/m)
+ \simeq\mathbb Z/\gcd(d,m).
+\]
+因此同调的同构类型是
+\[
+ H_n(C\otimes\mathbb Z/m)\simeq
+ (\mathbb Z/m)^{r_n}\oplus\bigoplus_j\mathbb Z/g_{n,j}
+ \oplus\bigoplus_j\mathbb Z/g_{n-1,j}.
+\]
+这个式子确定模的同构类型，并未指定内部直和因子。
+
+\begin{example}\label{b4:exm:uct-integer-computation}
+取 \(C_2=\mathbb Z\)、\(C_1=\mathbb Z^2\)、\(C_0=\mathbb Z\)，
+\[
+ d_2(t)=(0,6t),\qquad d_1(x,y)=4x.
+\]
+有 \(H_2(C)=0\)、\(H_1(C)=\mathbb Z/6\)、\(H_0(C)=\mathbb Z/4\)。取 \(A=\mathbb Z/2\)，两个微分都变成零，故新的同调依次为 \(A,A^2,A\)（次数 \(2,1,0\)）。在次数 \(1\)，其中一份 \(A\) 来自 \(H_1(C)\otimes A\)，另一份来自 \(\operatorname{Tor}_1(H_0(C),A)\)；次数 \(2\) 完全来自 \(\operatorname{Tor}_1(H_1(C),A)\)。
+
+\ProseParagraphBreak
+取上同调的整数系数，则 \(H^0(\operatorname{Hom}(C,\mathbb Z))=0\)、\(H^1=\mathbb Z/4\)、\(H^2=\mathbb Z/6\)。这些群都来自相邻次数的 Ext 项；直接对两个微分作转置也得到同样结果。因而“对偶以后只需对同调取 Hom”会漏去本例全部的非零上同调。
+\end{example}

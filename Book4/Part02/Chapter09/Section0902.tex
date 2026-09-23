@@ -5,9 +5,7 @@
 \section{张量与同调}
 \label{b4:sec:0902}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 张量复形的微分
 % * 平坦性和有界性的作用
@@ -17,14 +15,76 @@
 \subsection{张量复形的微分}
 \label{b4:subsec:0902:01}
 
-待撰写。
+本节及后两节用链下标书写同调公式：\(C_n=C^{-n}\)，微分为 \(d:C_n\to C_{n-1}\)。这只是第五章上链约定的重新编号。对张量积，\((-1)^{-n}=(-1)^n\)，所以符号规则保持不变。
+
+\ProseParagraphBreak
+对于右 \(R\)-模链复形 \(C\) 与左 \(R\)-模链复形 \(D\)，\cref{b4:def:tensor-complex}的张量复形在次数 \(n\) 为
+\[
+ (C\otimes_R D)_n=\bigoplus_{p+q=n}C_p\otimes_R D_q,
+ \qquad d(c\otimes e)=d_Cc\otimes e+(-1)^pc\otimes d_De.
+\]
+这里一般只得到交换群复形；若 \(R\) 交换，才有自然的 \(R\)-模结构。\cref{b4:def:tensor-complex}已经核验两个混合项相消，因此 \(d^2=0\)。直和意味着一个元素只涉及有限多个 \((p,q)\)，不能无说明改成乘积。
+
+\begin{proposition}\label{b4:prop:tensor-homology-map}
+设 \(R\) 为环，\(C\) 为右 \(R\)-模链复形，\(D\) 为左 \(R\)-模链复形。圈的张量积诱导自然同态
+\[
+ \kappa_n:\bigoplus_{p+q=n}H_p(C)\otimes_R H_q(D)
+ \longrightarrow H_n(C\otimes_R D),\qquad
+ [c]\otimes[e]\longmapsto[c\otimes e].
+\]
+\end{proposition}
+\begin{proof}
+若 \(c,e\) 都是圈，则微分公式说明 \(c\otimes e\) 是圈。把 \(c\) 换成 \(c+d_Cu\)，差为 \(d(u\otimes e)\)；把 \(e\) 换成 \(e+d_Dv\)，差为 \((-1)^p d(c\otimes v)\)。所以对同调类良定义。双加性和 \(R\)-平衡性来自张量积，故诱导所写同态。链映射保持这些代表元公式，给出自然性。
+\end{proof}
+
+这个映射始终存在，但不总是同构。即使两个复形都逐项自由，同调中也可能产生一个由 Tor 描述的新部分；\secref{b4:sec:0904}将准确计算这一部分。
 
 \subsection{平坦性与有界性}
 \label{b4:subsec:0902:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:bounded-flat-tensor}
+设 \(R\) 为环，\(C\) 是下有界的平坦右 \(R\)-模链复形，\(f:D\to E\) 是下有界左 \(R\)-模链复形之间的拟同构。则
+\(1_C\otimes f:C\otimes_R D\to C\otimes_R E\) 是拟同构。
+\end{proposition}
+\begin{proof}
+先设下有界复形 \(A\) 正合。对每个 \(p\)，平坦性保证 \(C_p\otimes_R A\) 正合。双复形 \(C_p\otimes_R A_q\) 的每条对角线只有有限多个非零项，因为两个方向都有共同的下界。于是\cref{b4:lem:bounded-double-complex}给出 \(C\otimes_R A\) 正合。对一般 \(f\)，其映射锥下有界且正合。张量后与 \(1_C\otimes f\) 的映射锥同构：在锥的移位分量 \(C_p\otimes D_{q-1}\) 上乘 \((-1)^p\)，在非移位分量上取恒等映射即可核对微分。故后一个锥正合，由\cref{b4:prop:cone-quasi-isomorphism}得到结论。
+\end{proof}
+
+平坦性用于保持各列的正合性，有界性用于从各列正合推出总复形正合。后一条件也有更广的替代条件，但不能直接删去。
+
+\begin{example}\label{b4:exm:unbounded-flat-tensor}
+设 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)。在所有整数次数上取 \(C_n=R\)，每个微分都是乘 \(\varepsilon\)。由于 \(\ker(\varepsilon)=(\varepsilon)=\operatorname{im}(\varepsilon)\)，复形 \(C\) 正合且逐项自由。然而
+\[
+ C\otimes_R k=(\cdots\longrightarrow k\xrightarrow{0}k\xrightarrow{0}k\longrightarrow\cdots)
+\]
+在每次都有同调 \(k\)。这个计算先说明，正合且逐项平坦的复形与任意模换系数后未必正合；这里的圈模 \((\varepsilon)\) 并不平坦。
+
+\ProseParagraphBreak
+还能用它检验固定张量因子的有界条件。令 \(P\to k\) 为 \(k\) 的非负次数自由消解，各项为 \(R\)、微分乘 \(\varepsilon\)。每个有限上截短 \(P_{\le r}\) 是子复形，\(C\otimes P_{\le r}\) 由有限多个正合复形 \(C\otimes R\) 总化得到，故正合。它们的滤过余极限是 \(C\otimes P\)，由\cref{b4:prop:filtered-colimits-exact}仍正合。然而 \(C\otimes k\) 的每次同调都是 \(k\)，所以固定的无界自由因子 \(C\) 并不保持下有界拟同构 \(P\to k\)。
+\end{example}
 
 \subsection{同调与张量积的交换条件}
 \label{b4:subsec:0902:03}
 
-待撰写。
+\begin{proposition}\label{b4:prop:flat-coefficients-homology}
+设 \(R\) 为环，\(C\) 为任意右 \(R\)-模链复形，\(F\) 为平坦左 \(R\)-模。对每个整数 \(n\)，有自然同构
+\[
+ H_n(C)\otimes_R F\simeq H_n(C\otimes_R F).
+\]
+\end{proposition}
+\begin{proof}
+写 \(Z_n=\ker d_n\)、\(B_n=\operatorname{im}d_{n+1}\)。把两列
+\[
+ 0\longrightarrow Z_n\longrightarrow C_n\longrightarrow B_{n-1}\longrightarrow0,
+ \qquad
+ 0\longrightarrow B_n\longrightarrow Z_n\longrightarrow H_n(C)\longrightarrow0
+\]
+与 \(F\) 张量，它们仍正合。同时 \(B_{n-1}\otimes F\to C_{n-1}\otimes F\) 仍为单射。因此新复形的圈、边界分别为 \(Z_n\otimes F\)、\(B_n\otimes F\)，其商就是 \(H_n(C)\otimes F\)。识别由圈代表元给出，因而自然。
+\end{proof}
+
+若 \(F\) 不平坦，第一列在左端可能不再正合，张量后出现新的圈；这些圈是不能把“先取同调”和“先换系数”直接交换的原因。例如在整数链复形
+\[
+ C:\quad 0\longrightarrow\mathbb Z\xrightarrow{\,2\,}\mathbb Z\longrightarrow0
+ \qquad(\text{次数 }1,0)
+\]
+中，\(H_1(C)=0\)，但 \(H_1(C\otimes\mathbb Z/2)=\mathbb Z/2\)。它将成为万有系数定理中的 \(\operatorname{Tor}_1^{\mathbb Z}(H_0(C),\mathbb Z/2)\)。

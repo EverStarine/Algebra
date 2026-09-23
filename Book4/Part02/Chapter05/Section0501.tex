@@ -5,8 +5,6 @@
 \section{复形}
 \label{b4:sec:0501}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 链复形与上链复形
@@ -17,14 +15,82 @@
 \subsection{链复形与上链复形}
 \label{b4:subsec:0501:01}
 
-待撰写。
+知道两个相邻映射的复合为零，便知道前一个映射的像落在后一个映射的核中；但像未必填满这个核。同调正是用来记录这一差额的。本章先把这样的三项计算按所有次数排列，再研究它们怎样随映射和短正合列变化。
+
+\begin{definition}\label{b4:def:cochain-complex}
+设 \(\mathcal A\) 是交换范畴。给定对象 \(C^n\) 及态射 \(d_C^n:C^n\to C^{n+1}\)（\(n\in\mathbb Z\)），若每个 \(n\) 都满足 \(d_C^{n+1}d_C^n=0\)，则称 \(C=(C^n,d_C^n)\) 为 \(\mathcal A\) 中的\term[shanglian-fuxing]{上链复形}[cochain complex]，\(d_C^n\) 称为微分。类似地，对象 \(C_n\) 及态射 \(\partial_n:C_n\to C_{n-1}\) 满足 \(\partial_{n-1}\partial_n=0\) 时，组成\term[lian-fuxing]{链复形}[chain complex]。
+\end{definition}
+
+链与上链的差别在指标方向：链微分降一次，上链微分升一次。它们的核、像和正合性问题相同。为统一后面的 Hom 复形、移位和映射锥，本编主要用上链指标；讨论消解或 Tor 时也会使用链指标，并明确作转换。
+
+\begin{example}\label{b4:exm:two-term-complex}
+在左 \(R\)-模范畴中，任一同态 \(u:M\to N\) 都给出仅在次数 \(0,1\) 非零的复形 \(M\xrightarrow{u}N\)。它是复形，因为其余微分均为零；不要求 \(u^2=0\)，一般甚至没有定义这个复合。相反，若每个次数均放同一模 \(M\)，并在每一步都用同一自同态 \(a\)，便确实需要 \(a^2=0\)。例如 \(R=k[\varepsilon]/(\varepsilon^2)\) 上反复乘 \(\varepsilon\) 给出复形。
+\end{example}
+
+\begin{definition}\label{b4:def:bounded-complex}
+设 \(C\) 是交换范畴中的上链复形。若存在整数 \(a\)，使 \(n<a\) 时 \(C^n=0\)，则称 \(C\) 下有界；若存在 \(b\)，使 \(n>b\) 时 \(C^n=0\)，则称其上有界；同时满足二者时称其\term[youjie-fuxing]{有界复形}[bounded complex]。对象 \(M\) 放在次数零、其余项为零所得复形记为 \(M[0]\)。
+\end{definition}
 
 \subsection{圈、边界与同调}
 \label{b4:subsec:0501:02}
 
-待撰写。
+\begin{definition}\label{b4:def:cohomology}
+设 \(C\) 是交换范畴 \(\mathcal A\) 中的上链复形。记
+\[
+Z^n(C)\coloneqq\ker d_C^n,\qquad
+B^n(C)\coloneqq\operatorname{im}d_C^{n-1}.
+\]
+由 \(d_C^nd_C^{n-1}=0\)，像嵌入唯一地通过 \(Z^n(C)\) 分解。因此可以定义
+\[
+H^n(C)\coloneqq\operatorname{coker}\bigl(B^n(C)\longrightarrow Z^n(C)\bigr).
+\]
+它称为次数 \(n\) 的\term[shangtongdiao]{上同调对象}[cohomology object]。对模复形，\(Z^n(C)\) 的元素称\term[yuquan]{余圈}[cocycle]，\(B^n(C)\) 的元素称\term[yubian]{余边}[coboundary]，且 \(H^n(C)=Z^n(C)/B^n(C)\)。链复形相应定义 \(Z_n=\ker\partial_n\)、\(B_n=\operatorname{im}\partial_{n+1}\) 及\term[tongdiao]{同调对象}[homology object] \(H_n=Z_n/B_n\)；其中元素分别称\term[quan]{圈}[cycle]与\term[bianjie]{边界}[boundary]。
+\end{definition}
+\symidx{\(Z^n(C),B^n(C),H^n(C)\)：余圈、余边与上同调对象}
+
+两个余圈代表同一上同调类，恰好表示它们之差是余边。同调并不记住每个余圈，而是把能够由前一步微分产生的改变忽略掉。在一般交换范畴中，“除以”严格指上述余核，不能预先假定对象带有元素。
+
+\begin{definition}\label{b4:def:acyclic-complex}
+设 \(C\) 是交换范畴中的复形。若所有次数的同调对象均为零，则称 \(C\) 为\term[wutongdiao-fuxing]{无同调复形}[acyclic complex]，也称正合复形；这等价于每一项的像等于下一微分的核。
+\end{definition}
+
+\begin{example}\label{b4:exm:integer-three-complex}
+取交换群复形
+\[
+C^0=\mathbb Z\xrightarrow{\ d^0\ }C^1=\mathbb Z^2
+\xrightarrow{\ d^1\ }C^2=\mathbb Z,
+\qquad d^0(a)=(2a,0),\quad d^1(x,y)=3y.
+\]
+复合为零，且
+\[
+H^0(C)=0,\qquad H^1(C)=\mathbb Z/2,\qquad H^2(C)=\mathbb Z/3.
+\]
+中间的核由 \((1,0)\) 生成，前一步只得到其偶数倍；末项没有下一步限制，却须除去 \(3\mathbb Z\)。这两个商分别记录不同次数的非正合性。
+\end{example}
 
 \subsection{指标转换与次数平移约定}
 \label{b4:subsec:0501:03}
 
-待撰写。
+把链复形改记为上链复形时，本书取
+\[
+C^n=C_{-n},\qquad d_C^n=\partial_{-n},\qquad H^n(C)=H_{-n}(C).
+\]
+这里没有额外的负号；负号出现在下面的移位中。
+
+\begin{definition}\label{b4:def:complex-shift}
+设 \(C\) 是交换范畴中的上链复形，\(r\in\mathbb Z\)。规定
+\[
+C[r]^n=C^{n+r},\qquad d_{C[r]}^n=(-1)^r d_C^{n+r},
+\]
+所得复形称为 \(C\) 的 \(r\) 次\term[yiwei]{移位}[shift]。对复形之间的零次态射，移位只改指标，不增加符号。
+\end{definition}
+\symidx{\(C[r]\)：复形的移位，\(C[r]^n=C^{n+r}\)}
+
+微分平方仍为零，因为两次乘上的符号相乘为一。核与像不因微分乘 \(-1\) 改变，所以
+\[
+H^n(C[r])=H^{n+r}(C),\qquad (C[r])[s]=C[r+s].
+\]
+例如 \(M[0][1]\) 的唯一非零项在次数 \(-1\)，不是次数 \(1\)。若沿用链记号，同一约定写成 \((C[r])_n=C_{n-r}\)、\(\partial_{C[r]}=(-1)^r\partial_C\)。阅读采用相反移位记号的文献时，须同时转换次数和微分。
+
+\ProseParagraphBreak
+移位的负号使复形能够相容地组成映射锥，并使同伦在移位后仍满足同一形式的公式。此处先固定约定，\secref{b4:sec:0602}将通过微分平方和连接同态的计算说明它的作用。

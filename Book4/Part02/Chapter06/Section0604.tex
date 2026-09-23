@@ -5,8 +5,6 @@
 \section{双复形的预备}
 \label{b4:sec:0604}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 横、纵微分的反交换约定
@@ -20,19 +18,108 @@
 \subsection{横纵微分的反交换约定}
 \label{b4:subsec:0604:01}
 
-待撰写。
+当两个不同构造各自带一个微分时，例如分别对张量积的两个变量取消解，就会出现两个次数。它们能否合成一个复形，取决于两个方向的微分怎样相互作用。
+
+\begin{definition}\label{b4:def:double-complex}
+设 \(\mathcal A\) 是加性范畴。给定对象 \(E^{p,q}\) 及态射
+\[
+d_h:E^{p,q}\to E^{p+1,q},\qquad
+ d_v:E^{p,q}\to E^{p,q+1},
+\]
+若 \(d_h^2=d_v^2=0\) 且 \(d_hd_v+d_vd_h=0\)，则称 \(E\) 为\term[shuang-fuxing]{双复形}[double complex]。这里两个方向的方格反交换。双复形映射保持两个次数并分别与 \(d_h,d_v\) 交换。
+\end{definition}
+
+例如右 \(R\)-模复形 \(C\) 与左 \(R\)-模复形 \(D\) 给出
+\[
+E^{p,q}=C^p\otimes_R D^q,\qquad
+ d_h=d_C\otimes1,\qquad d_v=(-1)^p(1\otimes d_D).
+\]
+先横后纵时，纵向符号变为 \((-1)^{p+1}\)；先纵后横时仍为 \((-1)^p\)，所以两次复合之和为零。这个例子会在 Tor 的两个变量比较中使用。
+
+\ProseParagraphBreak
+若最初给出的横纵微分 \(\partial_h,\partial_v\) 满足交换关系 \(\partial_h\partial_v=\partial_v\partial_h\)，则取 \(d_h=\partial_h\)、\(d_v|_{E^{p,q}}=(-1)^p\partial_v\) 才得到本书意义下的双复形。后文总化时不再另添一次相同的符号。
 
 \subsection{直和总复形与直积总复形}
 \label{b4:subsec:0604:02}
 
-待撰写。
+\begin{definition}\label{b4:def:total-complex}
+设 \(E\) 是交换范畴 \(\mathcal A\) 中的双复形。若相应的可数余积或积存在，分别定义\term[zhihe-zongfuxing]{直和总复形}[direct-sum total complex]与\term[zhiji-zongfuxing]{直积总复形}[product total complex]：
+\[
+\operatorname{Tot}_{\oplus}(E)^n=\bigoplus_{p+q=n}E^{p,q},\qquad
+\operatorname{Tot}_{\Pi}(E)^n=\prod_{p+q=n}E^{p,q},
+\qquad d=d_h+d_v.
+\]
+若每条对角线 \(p+q=n\) 仅有有限个非零对象，则二者都是有限双积，典范相同，简记为 \(\operatorname{Tot}(E)\)。
+\end{definition}
+\symidx{\(\operatorname{Tot}_{\oplus},\operatorname{Tot}_{\Pi}\)：直和与直积总复形}
+
+直和中每个输入分量至多产生两个输出分量；直积中每个输出分量也只依赖两个输入分量，因此公式都定义了态射。反交换关系给出 \(d^2=d_h^2+d_hd_v+d_vd_h+d_v^2=0\)。一般交换范畴未必有无限直和或直积；当每条对角线有限时，有限双积已经足够。例如支持在 \(p\ge a,q\ge b\) 或支持在 \(p\le a,q\le b\) 的双复形均满足此条件。
+
+\begin{lemma}\label{b4:lem:bounded-double-complex}
+设 \(E\) 是交换范畴中的双复形，每条对角线仅有有限个非零项。若每个纵列 \((E^{p,\bullet},d_v)\) 正合，则 \(\operatorname{Tot}(E)\) 正合。交换横纵两个方向后，同一结论成立。
+\end{lemma}
+\begin{proof}
+先用模的元组记号写出有限消元过程。固定总次数 \(n\)，设 \(z=(z_p)\) 为余圈，其中 \(z_p\in E^{p,n-p}\)。从最小的可能非零横指标 \(p\) 开始。该位置的总余圈等式为 \(d_vz_p+d_hz_{p-1}=0\)，而较小分量已为零，所以 \(d_vz_p=0\)。纵列正合，故可取 \(y_p\in E^{p,n-p-1}\) 使 \(d_vy_p=z_p\)。从 \(z\) 减去 \(dy_p\)，第 \(p\) 个分量消失，至多改变第 \(p+1\) 个分量。
+
+继续沿横指标增加的方向操作。只有总次数 \(n\) 和 \(n-1\) 两条对角线中的位置会被使用，它们的非零位置并集有限，所以过程在有限步后停止。若某一步所需的 \(E^{p,n-p-1}\) 为零，纵列正合已迫使当前余圈分量为零，无须选择。最终 \(z=d(\sum_p y_p)\)，所以每个余圈是余边。
+
+在一般交换范畴中，从任意广义余圈 \(T\to Z^n(\operatorname{Tot}E)\) 开始，每次用\cref{b4:lem:generalized-element-calculus}沿满态射提升 \(z_p\) 到 \(y_p\)。步骤有限，所有等式可以在一个共同满态射后成立。因此每个广义余圈局部来自前一步微分，该引理的正合性判据证明总复形正合。横纵互换仍满足反交换关系，对角有限性不变，故得到横行版本。
+\end{proof}
+
+\begin{corollary}\label{b4:cor:double-complex-comparison}
+设 \(u:E\to F\) 是交换范畴中的双复形映射，两双复形每条对角线均只有有限个非零项。若 \(u\) 在每个纵列上是拟同构，则 \(\operatorname{Tot}(u)\) 是拟同构。逐横行拟同构也有同样结论。
+\end{corollary}
+\begin{proof}
+对每个纵列取映射锥，组成双复形
+\[
+G^{p,q}=F^{p,q}\oplus E^{p,q+1},\quad
+ d_v^G=\begin{pmatrix}d_v^F&u\\0&-d_v^E\end{pmatrix},\quad
+ d_h^G=\begin{pmatrix}d_h^F&0\\0&-d_h^E\end{pmatrix}.
+\]
+两个微分的反交换来自原反交换关系及 \(d_h^Fu=ud_h^E\)；新双复形仍逐对角有限。每个纵列是拟同构的锥，由\cref{b4:prop:cone-quasi-isomorphism}正合。上一引理使 \(\operatorname{Tot}(G)\) 正合，而其微分矩阵正是 \(\operatorname{Cone}(\operatorname{Tot}(u))\) 的矩阵。再次用锥判据即可。横行版本交换两个指标进行同一构造。
+\end{proof}
 
 \subsection{无界总复形的差异}
 \label{b4:subsec:0604:03}
 
-待撰写。
+每条对角线有限是上一个证明真正使用的条件；总次数固定，并不自动使一次消元只走有限步。下面的例子同时说明两种无限总化为什么不同。
+
+\begin{example}\label{b4:exm:sum-product-total-difference}
+设 \(k\) 是域。对每个整数 \(p\ge0\)，在 \((p,-p)\) 放一维空间 \(k a_p\)，在 \((p,1-p)\) 放 \(k b_p\)，其余位置为零。定义
+\[
+d_v(a_p)=b_p,\qquad d_h(a_p)=-b_{p+1},\qquad
+ d_v(b_p)=d_h(b_p)=0.
+\]
+每个纵列都是同构 \(k a_p\to k b_p\)，因而正合；两个微分的所有二次复合为零，故满足反交换条件。总复形只有次数零和一，两种总微分均为
+\[
+(a_0,a_1,a_2,\ldots)\longmapsto
+(a_0,a_1-a_0,a_2-a_1,\ldots).
+\]
+直积情形中，对任意 \((b_p)\) 唯一取 \(a_p=\sum_{i=0}^pb_i\)，所以微分是同构，总复形正合。
+
+\ProseParagraphBreak
+直和情形中，每个序列须有有限支集。微分仍单，但像恰好是坐标总和为零的有限支集序列：像的坐标和通过相邻相消为零；反过来，若 \(\sum_i b_i=0\)，上述部分和 \(a_p\) 最终为零，确实属于直和。因此
+\[
+H^0\operatorname{Tot}_{\oplus}(E)=0,\qquad
+H^1\operatorname{Tot}_{\oplus}(E)\cong k,
+\]
+而直积总复形同调全零。一个纵列处处正合的双复形，在直和总化后仍可能出现同调。
+\end{example}
+
+这里不是有限计算中某个符号出了错误，而是解差分方程得到的部分和未必有有限支集。后面的谱序列会系统讨论滤过和收敛；在此之前，使用\cref{b4:lem:bounded-double-complex}时应逐一核对对角有限性，不能把无界情形省略掉。
 
 \subsection{总微分与总化的符号}
 \label{b4:subsec:0604:04}
 
-待撰写。
+为便于后续计算，把两种起点区别如下。若横纵微分已经反交换，总微分就是 \(d_h+d_v\)；若原方格交换，则应先把纵微分改为 \((-1)^p\partial_v\)，总微分才是 \(\partial_h+(-1)^p\partial_v\)。这两句话描述同一个构造，不能把后一个符号重复施加到前一种约定上。
+
+\begin{example}\label{b4:exm:double-square-sign}
+设 \(R\) 交换，\(a,b\in R\)。在四个位置 \((0,0),(1,0),(0,1),(1,1)\) 都放 \(R\)，原横箭头均为乘 \(a\)，原纵箭头均为乘 \(b\)。它们交换。把第 \(p\) 列的纵箭头乘 \((-1)^p\)，并把总次数一按 \((1,0),(0,1)\) 排列，总复形成为
+\[
+R\xrightarrow{t\mapsto(at,bt)}R^2
+\xrightarrow{(u,v)\mapsto-bu+av}R.
+\]
+复合为 \(-bat+abt=0\)。若漏掉负号，复合一般为 \(2abt\)，所以仅知道原方格交换不足以直接相加。该复形是两个两项复形的张量总化，也是后面两元 Koszul 计算中会反复遇到的形式。
+\end{example}
+
+有限对角双复形的消元引理在下一章之后会用于比较两套消解；它只说明已满足条件的总复形正合，并不要求读者预先知道谱序列。若某个应用的对角线上出现无限多项，应重新说明所取的是直和还是直积，以及为何所用的提升或消元能够成立。

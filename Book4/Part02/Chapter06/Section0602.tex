@@ -5,8 +5,6 @@
 \section{映射锥}
 \label{b4:sec:0602}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 锥与柱的显式构造
@@ -17,14 +15,105 @@
 \subsection{锥与柱的显式构造}
 \label{b4:subsec:0602:01}
 
-待撰写。
+同调长正合列从短正合列出发，而许多问题最初只有一个映射 \(f:C\to D\)。映射锥把这个映射本身放进一个新复形，使其同调同时比较 \(C\)、\(D\) 的同调及 \(H(f)\)。
+
+\begin{definition}\label{b4:def:mapping-cone}
+设 \(f:C\to D\) 是加性范畴中的上链复形映射。规定
+\[
+\operatorname{Cone}(f)^n=D^n\oplus C^{n+1},\qquad
+ d_{\operatorname{Cone}(f)}^n=
+ \begin{pmatrix}d_D^n&f^{n+1}\\0&-d_C^{n+1}\end{pmatrix}.
+\]
+所得复形称为 \(f\) 的\term[yingshe-zhui]{映射锥}[mapping cone]。在模中写作 \(d(y,x)=(d_Dy+f(x),-d_Cx)\)。
+\end{definition}
+\symidx{\(\operatorname{Cone}(f)\)：复形映射的映射锥}
+
+矩阵平方的非对角项为 \(d_Df-fd_C=0\)，对角项为两个微分的平方，因此确为复形。若把右下角的负号删去，非对角项通常会变成 \(d_Df+fd_C\)，不能保证为零。
+
+\begin{definition}\label{b4:def:mapping-cylinder}
+设 \(f:C\to D\) 是加性范畴中的上链复形映射。规定
+\[
+\operatorname{Cyl}(f)^n=D^n\oplus C^n\oplus C^{n+1},
+\qquad
+ d(y,c,a)=(d_Dy+f(a),\ d_Cc-a,\ -d_Ca).
+\]
+所得复形称为 \(f\) 的\term[yingshe-zhu]{映射柱}[mapping cylinder]。元组公式在一般加性范畴中表示相应双积矩阵。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:cylinder-factorization}
+设 \(f:C\to D\) 是加性范畴中的复形映射。令
+\[
+j(c)=(0,c,0),\qquad r(y,c,a)=y+f(c),\qquad s(y)=(y,0,0).
+\]
+则 \(rj=f\)、\(rs=1_D\)，\(r,s\) 互为同伦逆。\(j:C\to\operatorname{Cyl}(f)\) 逐次为分裂单态射，且其商复形为 \(\operatorname{Cone}(f)\)。在交换范畴中因而有逐次分裂短正合列
+\[
+0\longrightarrow C\xrightarrow{j}\operatorname{Cyl}(f)
+\xrightarrow{(y,c,a)\mapsto(y,a)}\operatorname{Cone}(f)\longrightarrow0.
+\]
+\end{proposition}
+\begin{proof}
+将微分公式再用一次，三个分量分别为 \(d_D^2y+d_Df(a)-fd_C(a)\)、\(d_C^2c-d_Ca+d_Ca\)、\(d_C^2a\)，均为零。由 \(f\) 与微分交换，\(j,r,s\) 都是复形映射；两个复合等式直接成立。
+
+定义降次态射 \(h(y,c,a)=(0,0,-c)\)。则
+\[
+dh(y,c,a)=(-f(c),c,d_Cc),\qquad
+hd(y,c,a)=(0,0,-d_Cc+a),
+\]
+相加得 \((-f(c),c,a)=(1-sr)(y,c,a)\)。因此 \(sr\simeq1\)。最后逐次模去中间分量，微分成为 \((d_Dy+f(a),-d_Ca)\)，正是映射锥的微分。
+\end{proof}
 
 \subsection{锥的同调长正合列}
 \label{b4:subsec:0602:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:cone-long-exact}
+设 \(\mathcal A\) 是交换范畴，\(f:C\to D\) 是复形映射。嵌入 \(y\mapsto(y,0)\) 与投影 \((y,x)\mapsto x\) 给出逐次分裂短正合列
+\[
+0\longrightarrow D\longrightarrow\operatorname{Cone}(f)
+\longrightarrow C[1]\longrightarrow0.
+\]
+其连接态射在 \(H^n(C[1])=H^{n+1}(C)\) 的识别下就是 \(H^{n+1}(f)\)。因此有自然长正合列
+\[
+\cdots\to H^n(C)\xrightarrow{H^n(f)}H^n(D)
+\to H^n\operatorname{Cone}(f)\to H^{n+1}(C)
+\xrightarrow{H^{n+1}(f)}H^{n+1}(D)\to\cdots.
+\]
+\end{proposition}
+\begin{proof}
+微分矩阵表明嵌入与投影均为复形映射，核与商的识别逐项成立。对 \(x\in Z^{n+1}(C)\)，在锥中提升为 \((0,x)\)，微分为 \((f(x),0)\)。\cref{b4:prop:connecting-map-construction}于是给出连接同态 \([x]\mapsto[f(x)]\)。在一般交换范畴中，对余圈子对象使用相同的态射矩阵即可，或用满态射后的广义元素提升；这里提升 \(x\mapsto(0,x)\) 甚至是已指定的逐次截面。应用\cref{b4:thm:cohomology-long-exact}便得全部正合性。
+\end{proof}
+
+\begin{example}\label{b4:exm:cone-single-map}
+把左 \(R\)-模 \(M,N\) 放在次数零，同态 \(u:M\to N\) 的锥只有次数 \(-1,0\) 非零，恰为 \(M\xrightarrow{u}N\)。所以
+\[
+H^{-1}\operatorname{Cone}(u)=\ker u,\qquad
+H^0\operatorname{Cone}(u)=\operatorname{coker}u.
+\]
+例如 \(\mathbb Z\xrightarrow{m}\mathbb Z\) 的锥在 \(m\ne0\) 时只剩零次同调 \(\mathbb Z/m\)。一个锥能够同时容纳核与余核，这是它在同调计算中有用的最简单表现。
+\end{example}
 
 \subsection{移位和锥的符号检验}
 \label{b4:subsec:0602:03}
 
-待撰写。
+锥的不同符号约定可以彼此同构，但必须明确写出比较映射。例如有些文献把 \(C^{n+1}\) 放在前面，并在 \(f\) 前加负号；这时交换两个分量并改变其中一个分量的符号，才能与本书定义比较。
+
+\begin{proposition}\label{b4:prop:cone-sign-compatibility}
+设 \(f,g:C\to D\) 是加性范畴中的复形映射。
+\begin{enumerate}
+\item 若 \(f-g=d_Dh+hd_C\)，则 \((y,x)\mapsto(y+h(x),x)\) 给出 \(\operatorname{Cone}(f)\cong\operatorname{Cone}(g)\)。
+\item 对整数 \(r\)，映射 \((y,x)\mapsto(y,(-1)^r x)\) 给出 \(\operatorname{Cone}(f[r])\cong\operatorname{Cone}(f)[r]\)。
+\item \(\operatorname{Cone}(1_C)\) 可缩，收缩同伦为 \((y,x)\mapsto(0,y)\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+第一项的映射与微分交换等价于
+\[
+d_Dy+d_Dh(x)+g(x)=d_Dy+f(x)-h(d_Cx),
+\]
+这恰为同伦公式；逆映射把 \(h\) 换成 \(-h\)。第二项中源的微分矩阵为
+\[
+\begin{pmatrix}(-1)^rd_D&f\\0&-(-1)^rd_C\end{pmatrix},
+\]
+目标的微分矩阵为 \((-1)^r\begin{pmatrix}d_D&f\\0&-d_C\end{pmatrix}\)。用 \(\operatorname{diag}(1,(-1)^r)\) 作比较，两个复合相等。第三项令 \(h(y,x)=(0,y)\)，则 \(dh(y,x)=(y,-dy)\)、\(hd(y,x)=(0,dy+x)\)，其和为 \((y,x)\)。
+\end{proof}
+
+移位后的同伦也须改符号：若 \(h\) 是 \(f\simeq g\) 的同伦，则 \(h_r^n=(-1)^r h^{n+r}\) 是 \(f[r]\simeq g[r]\) 的同伦。这从两边微分均乘 \((-1)^r\) 直接得出。只移动指标而不处理这个符号，会把 \(f-g\) 错写成其负值。

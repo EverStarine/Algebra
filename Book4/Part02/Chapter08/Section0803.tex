@@ -5,7 +5,6 @@
 \section{Tor}
 \label{b4:sec:0803}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,71 @@
 \subsection{张量积的左导出函子}
 \label{b4:subsec:0803:01}
 
-待撰写。
+\begin{definition}\label{b4:def:tor}
+设 \(R\) 是含幺环，\(M\) 是右 \(R\) 模，\(N\) 是左 \(R\) 模。对 \(M\) 取右模投射消解 \(P_\bullet\to M\)，定义交换群
+\[
+\operatorname{Tor}_n^R(M,N)\coloneqq H_n(P_\bullet\otimes_R N),\qquad n\ge0.
+\]
+这就是右正合函子 \(-\otimes_R N\) 的左导出函子。
+\end{definition}
+\symidx{\(\operatorname{Tor}_n^R(M,N)\)：Tor 群}
+
+零次自然同构于 \(M\otimes_R N\)。左右侧别不可交换省略；只有在交换环上，左右模有自然识别，张量交换映射才进一步给出 Tor 的对称性。一般环上下一小节所说的平衡性，是可以在两个变量中的任意一个取消解，而不是把两个变量颠倒。
 
 \subsection{平衡性}
 \label{b4:subsec:0803:02}
 
-待撰写。
+\begin{theorem}[Tor 的平衡性]\label{b4:thm:tor-balanced}
+设 \(R\) 是含幺环，\(M\) 是右 \(R\) 模，\(N\) 是左 \(R\) 模。若 \(Q_\bullet\to N\) 是左模投射消解，则有对两个变量自然的同构
+\[
+\operatorname{Tor}_n^R(M,N)\cong H_n(M\otimes_RQ_\bullet).
+\]
+因而可以在任意一侧取投射消解计算 Tor。
+\end{theorem}
+\begin{proof}
+取右模投射消解 \(P_\bullet\to M\)，令 \(D_{p,q}=P_p\otimes_RQ_q\)，\(p,q\ge0\)，以
+\[
+d_h=d_P\otimes1,\qquad d_v=(-1)^p1\otimes d_Q
+\]
+为微分。它们反交换，所以总链微分平方为零。第二卷定理7.3.4已证明任意侧的投射模平坦：自由模张量为直和，保持正合性，投射直和因子继承正合性。因此各竖列的增广同调为 \(P_p\otimes_RN\)，各横行的增广同调为 \(M\otimes_RQ_q\)，其他次数均为零。
+
+总复形向这两个边缘复形的增广映射均为拟同构，由\cref{b4:cor:double-complex-comparison}的链版本得出。每条总次数对角线只有 \(n+1\) 个可能非零项，消元过程有限，不存在无限和问题。取同调并组合两同构即得结论。比较映射与增广交换，比较选择同伦，故所得同构对两变量自然；对马蹄消解组成的图使用长正合列的自然性，亦得与连接态射相容。
+\end{proof}
+
+若 \(R\) 交换，在上述双消解之间使用 \(x\otimes y\mapsto(-1)^{pq}y\otimes x\)，可得 \(\operatorname{Tor}_n^R(M,N)\cong\operatorname{Tor}_n^R(N,M)\)。符号使横、纵微分交换后仍与总微分相容。非交换环没有这一无条件的对称结论。
 
 \subsection{Tor 长正合列及具体计算}
 \label{b4:subsec:0803:03}
 
-待撰写。
+\begin{theorem}\label{b4:thm:tor-long-exact}
+设 \(R\) 是含幺环，\(M\) 是右 \(R\) 模，\(N\) 是左 \(R\) 模。右模短正合列 \(0\to M'\to M\to M''\to0\) 给出
+\[
+\begin{aligned}
+\cdots&\longrightarrow\operatorname{Tor}_1^R(M,N)
+\longrightarrow\operatorname{Tor}_1^R(M'',N)
+\longrightarrow M'\otimes_RN\\
+&\longrightarrow M\otimes_RN\longrightarrow M''\otimes_RN\longrightarrow0,
+\end{aligned}
+\]
+其中一般连接态射为 \(\operatorname{Tor}_n^R(M'',N)\to\operatorname{Tor}_{n-1}^R(M',N)\)。左模短正合列 \(0\to N'\to N\to N''\to0\) 同样给出连接态射 \(\operatorname{Tor}_n^R(M,N'')\to\operatorname{Tor}_{n-1}^R(M,N')\) 的自然长正合列。
+\end{theorem}
+\begin{proof}
+在第一变量取马蹄消解，逐次分裂性保证张量后仍短正合，再取同调长正合列。第二变量可用平衡性改在该侧取马蹄消解，或固定右侧投射消解并用各 \(P_n\) 平坦。两种构造由\cref{b4:thm:tor-balanced}相容。
+\end{proof}
+
+\begin{example}\label{b4:exm:tor-cyclic}
+若 \(R\) 是主理想整环，\(a\ne0\)，\(N\) 是 \(R\) 模，则两项消解给出
+\[
+\operatorname{Tor}_0^R(R/(a),N)=N/aN,
+\qquad \operatorname{Tor}_1^R(R/(a),N)=\{\,n\in N\mid an=0\,\},
+\]
+且高次为零。对 \(R=\mathbb Z\)、\(N=\mathbb Z/n\)、\(a=m>0\)，一次 Tor 同构于 \(\mathbb Z/\gcd(m,n)\mathbb Z\)。这一次它来自乘 \(m\) 的核，而 Ext 的一次项来自余核；虽然有限循环群算例给出同构的群，两项没有因此成为同一构造。
+\end{example}
+
+令 \(R=k[x,y]\)、\(k=R/(x,y)\)。将\cref{b4:prop:koszul-resolution}中的两变量消解与 \(k\) 张量，所有微分为零，于是
+\[
+\operatorname{Tor}_0^R(k,k)\cong k,\qquad
+\operatorname{Tor}_1^R(k,k)\cong k^2,\qquad
+\operatorname{Tor}_2^R(k,k)\cong k,
+\]
+更高次为零。Tor 不仅看到商模的生成元，也看到生成关系之间的关系。

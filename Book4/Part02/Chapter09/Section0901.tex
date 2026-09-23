@@ -5,9 +5,7 @@
 \section{Yoneda 扩张}
 \label{b4:sec:0901}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * Ext^1 与短正合扩张
 % * 高阶扩张及等价
@@ -17,14 +15,127 @@
 \subsection{\texorpdfstring{\(\operatorname{Ext}^1\) 与短正合扩张}{Ext1 与短正合扩张}}
 \label{b4:subsec:0901:01}
 
-待撰写。
+给定左 \(R\)-模 \(M,N\)，\(\operatorname{Ext}_R^1(M,N)\) 既可由消解计算，也能描述把 \(N\) 放在核位置、把 \(M\) 放在商位置的所有短正合列。这里分类的数据包括两端的指定映射；仅知道中间模的同构类型还不够。
+
+\begin{definition}\label{b4:def:yoneda-extension}
+设 \(R\) 为环，\(M,N\) 为左 \(R\)-模。短正合列
+\[
+ \xi:\quad 0\longrightarrow N\xrightarrow{i}E\xrightarrow{p}M\longrightarrow0
+\]
+称为 \(M\) 被 \(N\) 的一个\term[kuozhang]{扩张}[extension]。若另一个扩张 \(\xi'\) 与它之间存在同态 \(f:E\to E'\)，满足 \(fi=i'\)、\(p'f=p\)，则称两扩张等价。这里两端的映射固定为恒等映射；短五引理保证 \(f\) 自动为同构。
+\end{definition}
+
+\begin{theorem}\label{b4:thm:ext1-extensions}
+设 \(R\) 为环，\(M,N\) 为左 \(R\)-模。扩张的等价类与 \(\operatorname{Ext}_R^1(M,N)\) 自然一一对应，分裂扩张对应零元。
+\end{theorem}
+\begin{proof}
+选定正合列 \(0\to K\xrightarrow{j}P\to M\to0\)，其中 \(P\) 投射。由\cref{b4:thm:ext-long-exact}，
+\[
+ \operatorname{Ext}_R^1(M,N)
+ =\operatorname{Hom}_R(K,N)\big/\{\,a j:a\in\operatorname{Hom}_R(P,N)\,\}.
+\]
+对扩张 \(\xi\)，提升 \(P\to M\) 为 \(t:P\to E\)。因为 \(ptj=0\)，唯一存在 \(u:K\to N\) 使 \(iu=tj\)。换成另一提升 \(t'\)，差 \(t'-t\) 经 \(N\) 分解，故 \(u'-u\) 是某个 \(P\to N\) 的限制；扩张等价也不改变此余类。
+
+反过来，对 \(u:K\to N\) 作推出
+\[
+ E_u=(N\oplus P)/\{\,(u(k),-j(k)):k\in K\,\}.
+\]
+由 \(n\mapsto[(n,0)]\) 及 \([(n,p)]\mapsto\bar p\) 得到扩张。第一个映射单射，因为 \(j\) 单射；第二个映射的核由 \(\bar p=0\) 即 \(p=j(k)\) 算出，恰好是 \(N\) 的像。如果 \(u-v=a j\)，映射 \([(n,p)]\mapsto[(n+a(p),p)]\) 给出 \(E_u\to E_v\) 的扩张同构。对原来的 \(\xi\)，映射 \([(n,p)]\mapsto i(n)+t(p)\) 给出 \(E_u\to E\) 的扩张同构。因此两个构造互逆。
+
+\(u\) 可延拓至 \(P\) 当且仅当可把 \(t\) 改成在 \(K\) 上为零的提升；后者恰好下降为 \(M\to E\) 的截面。这证明零元判据。对 \(N\to N'\) 作推出相当于把 \(u\) 后复合，对 \(M'\to M\) 作拉回相当于提升该映射到投射消解后预复合，故对应自然。
+\end{proof}
+
+扩张类的加法也有直接构造。对两个扩张先取直和，再沿对角映射 \(M\to M\oplus M\) 拉回，最后沿加法 \(N\oplus N\to N\) 推出。所得扩张称为\term[baerhe]{Baer 和}[Baer sum]。具体说，中间模是
+\[
+ (E\times_M E')/\{\,(i(n),-i'(n)):n\in N\,\}.
+\]
+
+\begin{proposition}\label{b4:prop:baer-addition}
+对于环 \(R\) 上的左模 \(M,N\)，Baer 和在扩张等价类上给出交换群结构；\cref{b4:thm:ext1-extensions}的对应是群同构。
+\end{proposition}
+\begin{proof}
+从同一个 \(P\to M\) 分别提升到 \(E,E'\)，其合并提升到纤维积；再作推出后，在 \(K\) 上诱导的映射就是 \(u+u'\)。因而 Baer 和对应 \(\operatorname{Ext}^1\) 中的加法。这个等式同时证明构造不依赖代表元、结合律和交换律；分裂扩张为零，沿 \(-1_N\) 推出得到负元。
+\end{proof}
+
+例如，对素数 \(p\)，\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z/p)=\mathbb Z/p\)。非零类的中间群都同构于 \(\mathbb Z/p^2\)，但指定的核嵌入可以不同，所以这些扩张仍有 \(p-1\) 个不同的非零类。这个区别在用扩张恢复结构时不能省略。
 
 \subsection{高阶扩张及等价}
 \label{b4:subsec:0901:02}
 
-待撰写。
+\begin{definition}\label{b4:def:higher-yoneda-extension}
+设 \(R\) 为环，\(M,N\) 为左 \(R\)-模，\(n\ge1\)。正合列
+\[
+ \xi:\quad 0\longrightarrow N\longrightarrow E_{n-1}\longrightarrow\cdots
+ \longrightarrow E_0\longrightarrow M\longrightarrow0
+\]
+称为一个 \(n\) 阶扩张。两个这样的扩张之间，两端为恒等映射的链映射称为扩张态射。由扩张态射生成的等价关系称为 \term[yonedakuozhang]{Yoneda 扩张}[Yoneda extension]的等价关系：允许有限串扩张态射，箭头方向可以交替。等价类集合记为 \(\operatorname{YExt}_R^n(M,N)\)。
+\end{definition}
+
+当 \(n>1\) 时，中间各项的映射不必可逆。因此不能把等价关系写成“存在中间项的同构”，也不能只允许一个固定方向的扩张态射。下面同时说明这些类确实构成集合，并给出计算它们的方法。
+
+\begin{theorem}\label{b4:thm:yoneda-ext-comparison}
+设 \(R\) 为环，\(M,N\) 为左 \(R\)-模，\(n\ge1\)。有自然双射
+\[
+ \operatorname{YExt}_R^n(M,N)\simeq\operatorname{Ext}_R^n(M,N).
+\]
+沿 \(M\) 的对角映射拉回、沿 \(N\) 的加法映射推出所定义的高阶 Baer 和，对应右侧的加法。
+\end{theorem}
+\begin{proof}
+固定投射消解 \(P_\bullet\to M\)，令 \(\Omega^nM=\ker(P_{n-1}\to P_{n-2})\)，其中 \(P_{-1}=M\)。\cref{b4:thm:dimension-shift-basic,b4:prop:iterated-dimension-shift}的平移公式及第一步正合列给出
+\[
+ \operatorname{Ext}_R^n(M,N)
+ \simeq\operatorname{Hom}_R(\Omega^nM,N)
+ /\operatorname{res}\operatorname{Hom}_R(P_{n-1},N).
+\]
+也可直接从消解读出此式：余圈 \(P_n\to N\) 在 \(\ker(P_n\to\Omega^nM)\) 上为零，故经 \(\Omega^nM\) 分解；余边恰好来自 \(P_{n-1}\to N\)。这里沿用第八章消解计算中的微分 \(f\mapsto f d\)。
+
+给定 \(n\) 阶扩张，依次利用 \(P_i\) 的投射性构造交换的提升 \(t_i:P_i\to E_i\)，\(0\le i<n\)。最后 \(t_{n-1}|_{\Omega^nM}\) 落在 \(N\) 中，得到 \(u:\Omega^nM\to N\)。说明其余类与提升无关：对两套提升 \(t,s\)，从最低次数起构造 \(h_i:P_i\to E_{i+1}\)，使
+\[
+ t_i-s_i=d_Eh_i+h_{i-1}d_P\qquad(0\le i<n-1),\qquad h_{-1}=0.
+\]
+每一步待提升的差在前一个微分下为零，故落在下一个微分的像中，投射性允许提升。于是 \(t_{n-1}-s_{n-1}-h_{n-2}d_P\) 落在 \(N\) 中，给出 \(a:P_{n-1}\to N\)；限制到 \(\Omega^nM\) 后得到 \(u_t-u_s=a|_{\Omega^nM}\)。\(n=1\) 时直接用 \(t_0-s_0\) 即可。扩张态射把一套提升变成另一扩张的提升，因而整个箭头串都保持该余类。
+
+对任意 \(u:\Omega^nM\to N\)，把截短消解
+\[
+ 0\longrightarrow\Omega^nM\longrightarrow P_{n-1}\longrightarrow\cdots
+ \longrightarrow P_0\longrightarrow M\longrightarrow0
+\]
+的最左端沿 \(u\) 推出。新项是
+\(E_{n-1}(u)=(N\oplus P_{n-1})/\{(u(x),-x)\}\)，其余项保持 \(P_i\)。与一阶情形相同，核及像的计算证明新列正合。若 \(u-v=a|_{\Omega^nM}\)，在新项上用 \([(z,p)]\mapsto[(z+a(p),p)]\)，在其他项上用恒等映射，就得到两个新扩张的同构。
+
+从任意原扩张取出的 \(u\) 又给出这个推出扩张到原扩张的态射：最左新项用 \([(z,p)]\mapsto i(z)+t_{n-1}(p)\)，其他项用 \(t_i\)。因此原扩张与所构造的扩张等价，两个方向互逆。换消解时使用\cref{b4:thm:resolution-comparison}；比较映射与其同伦保持上述余类，故识别不依赖消解，且对两变量自然。最后，把两套提升先直和，再拉回和推出，其末端映射成为 \(u+v\)，证明加法相容。
+\end{proof}
+
+对 \(n=0\)，约定 \(\operatorname{YExt}_R^0(M,N)=\operatorname{Hom}_R(M,N)\)。在没有足够投射或内射对象的一般交换范畴中，仍可讨论扩张及其箭头串；本节已证的与导出函子的比较则是在模范畴中进行的。
 
 \subsection{Yoneda 乘积与消解乘积}
 \label{b4:subsec:0901:03}
 
-待撰写。
+若一列以 \(N\) 为商，另一列以 \(N\) 为核，就能把它们首尾连接。这一操作给出 Ext 群之间并非来自普通数乘的乘法。
+
+\begin{definition}\label{b4:def:yoneda-product}
+设 \(R\) 为环，\(L,N,M\) 为左 \(R\)-模，\(m,n\ge1\)。对 \(\alpha\in\operatorname{YExt}_R^m(N,L)\)、\(\beta\in\operatorname{YExt}_R^n(M,N)\)，把代表扩张在共同的 \(N\) 处拼接，删除两处 \(N\)，以原来的满射到 \(N\) 与从 \(N\) 出发的单射之复合作为中间箭头。所得 \((m+n)\) 阶扩张类记为 \(\alpha\beta\)，称为\term[yonedachengji]{Yoneda 乘积}[Yoneda product]。次数为零时分别用推出或拉回定义乘积。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:yoneda-resolution-product}
+设 \(R\) 为环，\(L,N,M\) 为左 \(R\)-模。Yoneda 乘积良定义、双加性且结合，并在\cref{b4:thm:yoneda-ext-comparison}下等于下述消解乘积。取投射消解 \(P_\bullet\to M\)、\(Q_\bullet\to N\)。若 \(b:P_n\to N\)、\(a:Q_m\to L\) 是余圈，把 \(b\) 逐次提升为
+\[
+ t_i:P_{n+i}\longrightarrow Q_i,\qquad
+ \varepsilon_Qt_0=b,\qquad d_Qt_i=t_{i-1}d_P\quad(i\ge1),
+\]
+则乘积由余圈 \(a t_m:P_{n+m}\to L\) 代表。
+\end{proposition}
+\begin{proof}
+拼接在共同项处正合，因为像和核都由被删除的 \(N\) 描述；对任一因子的扩张态射拼接恒等映射，仍是扩张态射，所以它保持定义中的等价关系。依次拼接三列不改变列中的项和复合箭头，故结合。
+
+对于消解公式，\(b d_P=0\) 保证 \(t_0d_P\) 落在 \(\ker\varepsilon_Q\)，可用 \(P_{n+1}\) 的投射性提升至 \(Q_1\)。以后每步同样先用 \(d_P^2=0\) 核对落在核中，再提升。\(a t_m d_P=a d_Qt_{m+1}=0\)，故所得是余圈。
+
+现在用\cref{b4:thm:yoneda-ext-comparison}的推出代表 \(\alpha,\beta\)。把 \(P_0,\ldots,P_{n-1}\) 提升到 \(\beta\) 的部分后，末端映射是 \(b\) 经 \(\Omega^nM\) 的分解；进入 \(\alpha\) 的部分时，逐项提升正由 \(t_0,t_1,\ldots\) 给出。到达最左端 \(L\) 的映射就是 \(a t_m\) 经 \(\Omega^{n+m}M\) 的分解。因而拼接扩张对应给定公式；前一定理也保证换提升、换余圈代表或换消解均不改变结果。
+
+固定 \(b\) 的提升时，\((a+a')t_m=a t_m+a't_m\)；固定 \(a\) 时，两套 \(b,b'\) 的提升之和提升 \(b+b'\)。因此乘积双加性。零次乘积由同态预复合、后复合描述，与拉回、推出相同。
+\end{proof}
+
+于是 \(\bigoplus_{n\ge0}\operatorname{Ext}_R^n(M,M)\) 成为带单位的分次环，单位是 \(1_M\)。这里没有一般的分次交换性断言：次数零部分已经可能是非交换环 \(\operatorname{End}_R(M)\)。例如 \(M=k^2\) 时，这一部分是矩阵环 \(M_2(k)\)。
+
+\ProseParagraphBreak
+消解乘积的计算采用 \(\delta f=f d\) 的次数约定。若改用\cref{b4:def:hom-complex}中内部 Hom 的微分，则须同时使用第五章的移位符号及每度的重标识，不能只改一个微分的符号而保留全部提升公式。Ext 扩张的基本对应和 Baer 和可参阅 Weibel\cite[Theorem 3.4.3, Definition 3.4.4, Corollary 3.4.5]{Weibel1994HomologicalAlgebra}；高阶扩张的进一步讨论见该书\cite[Vista 3.4.6]{Weibel1994HomologicalAlgebra}。

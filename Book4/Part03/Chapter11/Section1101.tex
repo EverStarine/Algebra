@@ -5,8 +5,6 @@
 \section{定义与消解}
 \label{b4:sec:1101}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 不变量、余不变量及群代数
@@ -17,14 +15,126 @@
 \subsection{不变量、余不变量及群代数}
 \label{b4:subsec:1101:01}
 
-待撰写。
+一个群在模上作用以后，可以只保留被所有群元素固定的向量，也可以把同一轨道上的向量强制认同。这两种做法分别产生子模与商模；前者一般不能保持满射，后者一般不能保持单射。群的上同调与同调记录的正是这两种正合性的缺失。
+
+\begin{definition}\label{b4:def:group-invariants}
+设 \(k\) 是交换环，\(G\) 是群。\term[qundaishu]{群代数}[group algebra] \(kG\) 是以 \(G\) 为基的自由 \(k\) 模，乘法由群乘法作 \(k\) 双线性延拓。左 \(kG\) 模就是带有 \(k\) 线性 \(G\) 作用的 \(k\) 模。对这样的模 \(M\)，定义
+\[
+M^G\coloneqq\{\,m\in M\mid gm=m\text{ 对所有 }g\in G\,\},
+\qquad
+M_G\coloneqq M/\langle gm-m\mid g\in G,\ m\in M\rangle_k,
+\]
+分别称为\term[bubianliang]{不变量}[invariants]与\term[yububianliang]{余不变量}[coinvariants]。群代数上的\term[zengguang]{增广}[augmentation]是环同态
+\(\varepsilon:kG\to k\)、\(\sum_g a_g g\mapsto\sum_g a_g\)；其核记为 \(I_G\)，称为增广理想。通过 \(\varepsilon\) 赋予 \(k\) 平凡的左、右 \(kG\) 模结构。
+\end{definition}
+\symidx{\(M^G,M_G\)：群作用的不变量与余不变量}
+
+\begin{proposition}\label{b4:prop:group-invariant-functors}
+设 \(k\) 是交换环，\(G\) 是群，\(M\) 是左 \(kG\) 模。存在自然同构
+\[
+\operatorname{Hom}_{kG}(k,M)\cong M^G,
+\qquad k\otimes_{kG}M\cong M_G=M/I_GM.
+\]
+因此不变量函子左正合，余不变量函子右正合。
+\end{proposition}
+\begin{proof}
+一个 \(kG\) 线性映射 \(k\to M\) 由 \(1\) 的像决定，这个像必须且只须被 \(G\) 固定。另一方面，\(I_G\) 作为 \(k\) 模由 \(g-1\) 生成，因为
+\(\sum_g a_g g=\sum_g a_g(g-1)\) 对增广为零的元素成立。映射 \(a\otimes m\mapsto a\bar m\) 与 \(\bar m\mapsto1\otimes m\) 因而良定义且互逆。最后分别调用 Hom 的左正合性与张量积的右正合性。
+\end{proof}
+
+取 \(k=\mathbb Z\)、\(G=C_2=\langle s\rangle\)，让 \(s\) 在 \(\mathbb Z\) 上作用为取负。约化满射 \(\mathbb Z\to\mathbb Z/2\) 等变，但不变量映射是 \(0\to\mathbb Z/2\)，并不满。对同一作用下的单射 \(\mathbb Z\xrightarrow{2}\mathbb Z\)，余不变量映射则是 \(\mathbb Z/2\xrightarrow{0}\mathbb Z/2\)，并不单。两个高次理论都有实际需要。
 
 \subsection{Ext、Tor 定义与 bar 消解}
 \label{b4:subsec:1101:02}
 
-待撰写。
+\begin{definition}\label{b4:def:group-cohomology}
+设 \(G\) 是群，\(M\) 是左 \(\mathbb ZG\) 模，即带 \(G\) 作用的交换群。对 \(n\ge0\)，定义
+\[
+H^n(G,M)\coloneqq\operatorname{Ext}_{\mathbb ZG}^n(\mathbb Z,M),
+\qquad
+H_n(G,M)\coloneqq\operatorname{Tor}^{\mathbb ZG}_n(\mathbb Z,M),
+\]
+分别称为 \(G\) 以 \(M\) 为系数的\term[qunshangtongdiao]{群上同调}[group cohomology]与\term[quntongdiao]{群同调}[group homology]；Tor 中的 \(\mathbb Z\) 是平凡右模。若系数已给为左 \(kG\) 模，也可用 \(\operatorname{Ext}_{kG}^n(k,M)\)、\(\operatorname{Tor}^{kG}_n(k,M)\) 计算同样的群。
+\end{definition}
+\symidx{\(H^n(G,M),H_n(G,M)\)：群上同调与群同调}
+
+这里最后一句不要求 \(M\) 在 \(k\) 上投射。原因是平凡模有一套只用群元素编写的自由消解，在两种底环上给出完全相同的系数复形。下面把这件事展开。
+
+\begin{proposition}\label{b4:prop:group-bar-resolution}
+设 \(k\) 是交换环，\(G\) 是群。对 \(n\ge0\)，令 \(B_n(k,G)\) 为以 \(G^{n+1}\) 为基的自由 \(k\) 模，赋予同时左乘坐标的 \(G\) 作用。取删除坐标的交错微分及增广
+\[
+d(g_0,\ldots,g_n)=\sum_{i=0}^n(-1)^i(g_0,\ldots,\widehat{g_i},\ldots,g_n),
+\qquad \varepsilon(g_0)=1.
+\]
+所得增广复形是平凡左 \(kG\) 模 \(k\) 的自由消解，称为齐次 bar 消解。
+\end{proposition}
+\begin{proof}
+这正是\cref{b4:exm:homogeneous-bar}已经建立的消解：每个轨道唯一包含首项为 \(1\) 的元组，故各项自由；两次删除成对抵消；底层 \(k\) 模上的收缩为插入首项 \(1\)。这些论证对任意交换环 \(k\) 成立，并不要求群有限。因而这里可以直接把它用于 Ext 的投射消解计算。
+
+若令同一个模上的右作用为 \(b\cdot g=g^{-1}b\)，同一增广和微分也给出平凡右模的自由消解 \(B_\bullet^{\mathrm r}\)。因此群同调由 \(B_\bullet^{\mathrm r}\otimes_{kG}M\) 计算。对 \(kG\) 系数，这个张量复形与 \(B_\bullet(\mathbb Z,G)^{\mathrm r}\otimes_{\mathbb ZG}M\) 自然同构：两者在各次都由同一组自由轨道代表与 \(M\) 组成，微分也使用同一群作用公式。Hom 复形的比较相同。这就证明了定义末尾的底环说明。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:group-homology-degree-zero}
+设 \(G\) 是群，\(M\) 是左 \(\mathbb ZG\) 模。则 \(H^0(G,M)=M^G\)、\(H_0(G,M)=M_G\)。每个短正合 \(G\) 模列都产生群上同调与群同调的长正合列；其中前者的低次部分为
+\[
+0\longrightarrow A^G\longrightarrow B^G\longrightarrow C^G
+\xrightarrow{\partial}H^1(G,A)\longrightarrow H^1(G,B)\longrightarrow\cdots.
+\]
+\end{proposition}
+\begin{proof}
+零次结论由\cref{b4:prop:group-invariant-functors}及 Ext、Tor 的零次识别得到。长正合列分别是\cref{b4:thm:ext-long-exact}与\cref{b4:thm:tor-long-exact}在平凡模处的特例。
+\end{proof}
 
 \subsection{齐次和非齐次余链}
 \label{b4:subsec:1101:03}
 
-待撰写。
+Hom 复形中的元素可写成满足
+\[
+F(tg_0,\ldots,tg_n)=tF(g_0,\ldots,g_n)
+\]
+的函数 \(F:G^{n+1}\to M\)。这样的函数称为齐次余链；其微分就是交错删除坐标。为了减少一个自变量，令
+\[
+[g_1|\cdots|g_n]\coloneqq(1,g_1,g_1g_2,\ldots,g_1\cdots g_n).
+\]
+这些元素恰好组成 \(B_n\) 的 \(kG\) 基。删除首项后要用 \(g_1\) 把余下元组移回标准形式，删除中间项则把相邻的两个群元素乘合。因此同一微分写为
+\[
+\begin{split}
+d[g_1|\cdots|g_n]
+={}&g_1[g_2|\cdots|g_n]\\
+&+\sum_{i=1}^{n-1}(-1)^i[g_1|\cdots|g_i g_{i+1}|\cdots|g_n]
++(-1)^n[g_1|\cdots|g_{n-1}].
+\end{split}
+\]
+
+\begin{definition}\label{b4:def:group-inhomogeneous-cochains}
+设 \(G\) 是群，\(M\) 是左 \(\mathbb ZG\) 模。令 \(C^n(G,M)\) 为全部函数 \(G^n\to M\) 组成的交换群，\(C^0(G,M)=M\)。其中的元素称为\term[feiqici-yulian]{非齐次余链}[inhomogeneous cochain]。定义
+\begin{equation}\label{b4:eq:group-cochain-differential}
+\begin{split}
+(\delta f)(g_1,\ldots,g_{n+1})
+={}&g_1f(g_2,\ldots,g_{n+1})\\
+&+\sum_{i=1}^{n}(-1)^i f(g_1,\ldots,g_i g_{i+1},\ldots,g_{n+1})\\
+&+(-1)^{n+1}f(g_1,\ldots,g_n).
+\end{split}
+\end{equation}
+称 \(Z^n(G,M)=\ker\delta\) 中的元素为余圈，称 \(B^n(G,M)=\operatorname{im}\delta\) 中的元素为余边；次数零的余边规定为零。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:group-cochain-model}
+设 \(G\) 是群，\(M\) 是左 \(\mathbb ZG\) 模。齐次与非齐次余链复形通过下列互逆公式同构：
+\[
+\begin{split}
+f(g_1,\ldots,g_n)&=F(1,g_1,g_1g_2,\ldots,g_1\cdots g_n),\\
+F(g_0,\ldots,g_n)&=g_0f(g_0^{-1}g_1,g_1^{-1}g_2,\ldots,g_{n-1}^{-1}g_n).
+\end{split}
+\]
+特别地，\(\delta^2=0\)，且 \(H^n(G,M)=Z^n(G,M)/B^n(G,M)\)。
+\end{proposition}
+\begin{proof}
+逐次相乘恢复 \(g_0^{-1}g_i\)，故两式互逆。齐次余链对同时左乘的等变性正好保证第二式定义的是 \(\mathbb ZG\) 线性映射。上面的基变换计算说明 Hom 中的微分 \(f\mapsto fd\) 恰为\eqref{b4:eq:group-cochain-differential}，所以它与微分交换。现在由 \(d^2=0\) 及 bar 消解计算 Ext，即得各项结论。这里沿用\cref{b4:thm:ext-balanced}之后约定的无额外符号的 Hom 微分。
+\end{proof}
+
+例如 \(\delta a(g)=ga-a\)，而
+\[
+\delta f(g,h)=g f(h)-f(gh)+f(g).
+\]
+前一式检验不变量，后一式已经显示：次数一的余圈未必是普通群同态，它会受到 \(G\) 在系数上的作用修正。这个修正将解释群扩张中的截面为什么不总能选为同态。

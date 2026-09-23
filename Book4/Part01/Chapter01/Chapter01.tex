@@ -6,11 +6,269 @@
 \label{b4:ch:01}
 \BookChapterNumber{b4:ch:01}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+范畴用对象、态射与复合组织数学结构；函子同时变换对象和态射；自然变换则比较两个这样的构造。本章从模、偏序和幺半群的例子出发，建立这三层概念，证明范畴等价的判据，并构造对偶、积、函子、切片和逗号范畴。最后回到双对偶、张量积和模结构定理，说明对象同构、自然同构与依赖选择的分解各自表达什么。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 在具体例子中核对范畴公理，区分局部小范畴与小范畴。
+\item 准确写出协变和反变构造的态射方向，并检验自然性方块。
+\item 计算自然变换的复合，证明自然同构可以逐分量判断。
+\item 区分全、忠实和本质满，在说明选择条件后构造拟逆。
+\item 使用函子、切片与逗号范畴记录图表及指定映射。
+\item 辨认已有模同构中的自然部分与依赖选择的部分。
+\end{itemize}
+\end{learninggoals}
+
+本章从定义开始，不要求预先学习范畴论。主要例子需要集合与映射、群同态、环和模的基本知识。第二卷第5章曾围绕模论介绍最低限度的范畴语言；本章把大小条件、自然变换的复合和新范畴的构造展开，供本卷独立使用。最后一节回顾第二卷第1.2节的双对偶、第6.2节的张量同构及第4.3节的 PID 模结构定理，只调用其中已经建立的具体结论。
+
+\ProseParagraphBreak
+参考阅读可从 Weibel\cite[Sections A.1--A.3, pp. 417--424]{Weibel1994HomologicalAlgebra}开始：A.1 给出范畴与大小的基本例子，A.2 讨论函子及代表选择，A.3 介绍自然变换、等价与函子范畴。本章对等价判据给出完整证明，并把一般大范畴中所需的选择数据单独写入陈述。
 
 \input{Part01/Chapter01/Section0101}
 \input{Part01/Chapter01/Section0102}
 \input{Part01/Chapter01/Section0103}
 \input{Part01/Chapter01/Section0104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+范畴保留对象之间的态射及复合，不要求每个对象都有预先指定的底集合。单态射和满态射因此用消去性质定义；在模范畴中它们分别对应单射和满射，在环范畴中则不能照搬后一解释。
+
+\ProseParagraphBreak
+函子必须说明怎样作用于态射，自然变换必须对源范畴中的全部态射满足方块条件。变换逐分量复合，逐分量取逆也仍然自然。由此可以把函子本身作为对象；源范畴的小性保证自然变换组成集合。
+
+\ProseParagraphBreak
+全忠实性控制 Hom 集，本质满控制对象的同构类型。选择代表及同构以后，这些条件给出拟逆；小范畴中的选择由通常选择公理承担，大范畴则须明确指定相应数据。切片与逗号范畴把附加映射纳入对象，为后续泛性质提供统一的叙述方式。
+
+\ProseParagraphBreak
+自然性不等于唯一性，也不禁止一切选择。它总是相对于两个确定函子而言。模的挠子模及无挠商对同态自然，但把每个模分裂成这两部分通常不能自然进行；分类对象与比较映射因而是不同任务。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:01-additive-monoid-category}
+把加法幺半群 \((\mathbb N,0,+)\) 看作单对象范畴。求其同构态射、单态射与满态射；再把它与偏序范畴 \((\mathbb N,\le)\) 比较，说明相同的符号集合为什么可以给出不同范畴。
+\end{exercise}
+\begin{solution}
+在单对象范畴中，复合为加法，恒等态射是 \(0\)。只有 \(0\) 有加法逆，所以只有恒等态射可逆。自然数加法左右可消去，因此每个态射都单且满。偏序范畴则有一个对象对应每个自然数，只有当 \(m\le n\) 时才有从 \(m\) 到 \(n\) 的唯一箭头；其同构也只有恒等，所有箭头同样单且满。两者的对象类和 Hom 集完全不同，不能只凭都使用自然数就把它们混同。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-preorder-quotient}
+设 \(P\) 为集合上的预序，定义 \(x\sim y\) 当且仅当 \(x\le y\) 且 \(y\le x\)。证明 \(P/{\sim}\) 是偏序集，并把商映射解释为范畴等价，注明选择所用的位置。
+\end{exercise}
+\begin{solution}
+反身与传递性使 \(\sim\) 为等价关系。定义 \([x]\le[y]\) 当且仅当 \(x\le y\)；更换代表时由两端的双向关系及传递性可知条件不变。反对称性来自 \(\sim\) 的定义。商函子在每对对象的 Hom 上都是两个空集之间或两个单点集之间的双射，且每个等价类有代表，所以全忠实且本质满。对象集为集合，选择公理可为每类取一个代表，再由等价判据构造拟逆。选择只用于选代表，不用于商偏序自身的定义。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-group-functors-intertwiners}
+设 \(G,H\) 为群。把函子 \(\mathcal BG\rightarrow\mathcal BH\) 与群同态对应。若函子由 \(\rho,\sigma:G\rightarrow H\) 给出，描述全部自然变换 \(\rho\Rightarrow\sigma\)，并判断何时二者自然同构。
+\end{exercise}
+\begin{solution}
+对象映射没有选择，态射映射保持复合与恒等，恰好是保单位的乘法同态，也就是群同态。自然变换只有一个分量 \(h\in H\)，对每个 \(g\in G\) 的自然性是
+\[
+\sigma(g)h=h\rho(g).
+\]
+因此它等价于 \(\sigma(g)=h\rho(g)h^{-1}\) 对所有 \(g\) 成立。因为 \(H\) 中每个元素可逆，每个自然变换都是自然同构；存在自然同构恰好表示两个同态在 \(H\) 中共轭。自变换的分量构成 \(\rho(G)\) 在 \(H\) 中的中心化子群。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-powerset-variance}
+证明幂集赋值 \(X\mapsto\mathcal P(X)\) 可以通过直接像成为协变函子，也可以通过逆像成为反变函子。证明单元素子集给出
+\(\operatorname{Id}_{\mathbf{Set}}\Rightarrow\mathcal P\) 的自然变换，其中 \(\mathcal P\) 取直接像；再证明取补集是逆像版本的自然自同构。
+\end{exercise}
+\begin{solution}
+对函数 \(f:X\rightarrow Y\)，直接像为 \(A\mapsto f(A)\)，逆像为
+\(B\mapsto f^{-1}(B)\)。等式
+\((gf)(A)=g(f(A))\) 与
+\((gf)^{-1}(C)=f^{-1}(g^{-1}(C))\)
+分别给出协变与反变复合，恒等情况直接成立。因 \(f(\{x\})=\{f(x)\}\)，单元素子集的方块交换。对补集映射 \(c_X(A)=X\setminus A\)，有
+\[
+f^{-1}(Y\setminus B)=X\setminus f^{-1}(B),
+\]
+所以它在反变版本中自然，且 \(c_X^2=1\)。它对直接像一般不自然，例如空函数 \(\varnothing\rightarrow\{*\}\) 的直接像不能把空集合的补集送成 \(\{*\}\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-abelianization-functor}
+对群 \(G\)，记 \([G,G]\) 为交换子子群。证明 \(G\mapsto[G,G]\) 可以由限制同态成为群范畴上的函子，且交换化 \(G\mapsto G/[G,G]\) 成为取值于交换群的函子。说明它与正文中的中心构造有何不同。
+\end{exercise}
+\begin{solution}
+群同态 \(f:G\rightarrow H\) 满足
+\(f([x,y])=[f(x),f(y)]\)，所以把生成交换子子群的元素送入 \([H,H]\)，进而限制同态良定义。恒等和复合与限制相容。它也诱导
+\(\bar f:G/[G,G]\rightarrow H/[H,H]\)，商群交换；诱导映射保持恒等与复合，所以给出函子，商映射满足
+\(\bar f q_G=q_Hf\)。中心的定义要求与目标群中所有元素交换，而一般同态只控制像中的元素；交换子生成元的像则直接仍是交换子，因此后者的函子规则适用于全部同态。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-n-torsion-quotient}
+固定整数 \(n\ge2\)。对交换群 \(A\)，令 \(A[n]=\{a:na=0\}\)。
+证明包含后取商给出自然变换
+\[
+A[n]\longrightarrow A/nA.
+\]
+用 \(A=\mathbb Z\) 与 \(A=\mathbb Z/n^2\mathbb Z\) 说明其分量不必满，也不必单。
+\end{exercise}
+\begin{solution}
+同态把被 \(n\) 零化的元素送到同样的元素，也把 \(nA\) 送入 \(nB\)，故两端均为函子，映射
+\(a\mapsto a+nA\) 良定义。对 \(f:A\rightarrow B\)，两条路径都把 \(a\) 送到 \(f(a)+nB\)，所以自然。若 \(A=\mathbb Z\)，源为零、目标为 \(\mathbb Z/n\mathbb Z\)，不满；若 \(A=\mathbb Z/n^2\mathbb Z\)，源是非零子群 \(nA\)，它在目标中全部变成零，所以不单。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-poset-natural-transformations}
+设 \(P,Q\) 为偏序集，\(F,G:P\rightarrow Q\) 为保序映射。证明存在自然变换 \(F\Rightarrow G\) 当且仅当每个 \(p\in P\) 都有 \(F(p)\le G(p)\)，并证明这样的变换唯一。何时它是自然同构？
+\end{exercise}
+\begin{solution}
+在 \(p\) 处有分量箭头，恰好等价于 \(F(p)\le G(p)\)。若每处分量存在，所有自然性方块的两条复合路径都有相同起点和终点；偏序范畴中这样的箭头至多一个，所以方块必交换。分量本来就唯一，因此变换唯一。分量可逆等价于 \(F(p)=G(p)\)，故自然同构存在当且仅当两个保序映射逐点相等。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-interchange-law}
+设 \(F_0,F_1,F_2:\mathcal C\rightarrow\mathcal D\)、
+\(H_0,H_1,H_2:\mathcal D\rightarrow\mathcal E\)，以及
+\[
+\eta:F_0\Rightarrow F_1,\quad\theta:F_1\Rightarrow F_2,\quad
+\alpha:H_0\Rightarrow H_1,\quad\beta:H_1\Rightarrow H_2.
+\]
+证明横向与逐分量复合满足
+\((\beta\alpha)*(\theta\eta)=(\beta*\theta)(\alpha*\eta)\)。
+\end{exercise}
+\begin{solution}
+两端都从 \(H_0F_0\) 到 \(H_2F_2\)。右端在 \(X\) 处为
+\[
+\beta_{F_2X}H_1(\theta_X)\alpha_{F_1X}H_0(\eta_X).
+\]
+对箭头 \(\theta_X:F_1X\rightarrow F_2X\)，\(\alpha\) 的自然性给出
+\(H_1(\theta_X)\alpha_{F_1X}=\alpha_{F_2X}H_0(\theta_X)\)。
+代入后得到
+\[
+\beta_{F_2X}\alpha_{F_2X}H_0(\theta_X\eta_X),
+\]
+这正是左端的分量。每个对象处分量相同，故两自然变换相等。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-three-conditions-independent}
+分别给出满足以下两项而不满足第三项的有限范畴间函子：
+全且本质满但不忠实；忠实且本质满但不全；全忠实但不本质满。
+\end{exercise}
+\begin{solution}
+第一例取 \(\mathcal B(\mathbb Z/2\mathbb Z)\rightarrow\mathbf1\)，它在唯一 Hom 上满射且对象本质满，却把两个不同态射合并。第二例取两个对象的离散范畴到两元素链 \(0<1\) 的恒等对象映射；每个 Hom 上单射且对象全被包括，但源中没有提升 \(0\rightarrow1\) 的箭头。第三例取单对象离散范畴到两对象离散范畴的包含；保留对象之间的 Hom 全相同，但另一个对象没有同构原像。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-skeletal-equivalence}
+若一个范畴中同构对象必相等，称它为骨架范畴。证明两个小骨架范畴之间的范畴等价其实是范畴同构。
+\end{exercise}
+\begin{solution}
+设等价为 \(F:\mathcal C\rightarrow\mathcal D\)。本质满和 \(\mathcal D\) 的骨架性说明每个 \(Y\) 实际等于某个 \(FX\)，所以对象映射满射。若 \(FX=FX'\)，全忠实反射同构，得 \(X\cong X'\)，再由 \(\mathcal C\) 的骨架性得 \(X=X'\)，故对象映射双射。对对象采用真正逆函数，对态射采用各 Hom 双射的逆，函子性由 \(F\) 保持恒等与复合及单射性推出。这个逆与 \(F\) 的两次复合严格为恒等。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-composite-equivalence}
+设 \(F:\mathcal C\rightarrow\mathcal D\)、\(H:\mathcal D\rightarrow\mathcal E\) 分别有拟逆 \(G,K\)。给定自然同构
+\(\eta:\operatorname{Id}_{\mathcal C}\Rightarrow GF\)、\(\varepsilon:FG\Rightarrow\operatorname{Id}_{\mathcal D}\)、
+\(\mu:\operatorname{Id}_{\mathcal D}\Rightarrow KH\)、\(\nu:HK\Rightarrow\operatorname{Id}_{\mathcal E}\)。
+直接写出 \(HF\) 的拟逆与两族自然同构。
+\end{exercise}
+\begin{solution}
+拟逆取 \(GK\)。从 \(\operatorname{Id}_{\mathcal C}\) 到 \(GKHF\) 的自然同构为
+\[
+X\xrightarrow{\eta_X}GFX
+\xrightarrow{G(\mu_{FX})}GKHFX.
+\]
+从 \(HFGK\) 到 \(\operatorname{Id}_{\mathcal E}\) 的自然同构为
+\[
+HFGKZ\xrightarrow{H(\varepsilon_{KZ})}HKZ
+\xrightarrow{\nu_Z}Z.
+\]
+每个分量为同构，且两族分别由自然变换与函子的左右复合及逐分量复合得到，所以自然。这直接验证范畴等价可复合。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-arrow-poset-count}
+令 \([2]\) 为链 \(0<1<2\) 对应的范畴。描述函子范畴 \([[1],[2]]\)，列出其对象，并计算全部态射的数目。
+\end{exercise}
+\begin{solution}
+对象为有序对 \((i,j)\)，其中 \(0\le i\le j\le2\)，共六个：
+\[
+(0,0),(0,1),(0,2),(1,1),(1,2),(2,2).
+\]
+由偏序自然变换的判据，\((i,j)\) 到 \((i',j')\) 有唯一态射，当且仅当 \(i\le i'\)、\(j\le j'\)。所以这个函子范畴本身为逐坐标比较的偏序范畴。按所列顺序，各对象发出的态射数分别为 \(6,5,3,3,2,1\)，总数为 \(20\)，其中包括六个恒等态射。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-slice-two-points}
+设 \(S=\{0,1\}\)。构造明确的等价
+\(\mathbf{Set}/S\simeq\mathbf{Set}\times\mathbf{Set}\)，不得通过为全部集合选择代表来构造拟逆。
+\end{exercise}
+\begin{solution}
+把 \(p:X\rightarrow S\) 送到两条纤维
+\((p^{-1}(0),p^{-1}(1))\)，切片态射因保持 \(p\) 而分别限制到两纤维。这给出一个函子。反向把 \((A,B)\) 送到带标记不交并
+\((\{0\}\times A)\sqcup(\{1\}\times B)\rightarrow S\)，映射按标记所在分量作用。这是具体定义的函子，不用选择。先取纤维再不交并，有自然双射
+\((p(x),x)\mapsto x\)；反向复合得到的纤维由去掉固定标记自然同构于 \(A,B\)。两族映射与各分量函数相容，所以给出等价。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-actions-as-functors}
+设 \(G\) 为群。证明函子 \(\mathcal BG\rightarrow\mathbf{Set}\) 等价于一个左 \(G\)-集合结构，自然变换等价于等变映射。
+\end{exercise}
+\begin{solution}
+函子给唯一对象指定集合 \(X\)，给每个 \(g\in G\) 指定函数 \(\rho(g):X\rightarrow X\)，满足
+\(\rho(gh)=\rho(g)\rho(h)\)、\(\rho(1)=1_X\)。令 \(gx=\rho(g)(x)\)，这就是左作用；每个 \(\rho(g)\) 的逆为 \(\rho(g^{-1})\)。反过来，左作用的两条公理给出函子。两个这样的函子间自然变换只有一个分量 \(u:X\rightarrow Y\)，自然性为
+\(u(gx)=g\,u(x)\)，恰是等变性。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-comma-tautological-map}
+对逗号范畴 \((S\downarrow T)\) 的投影
+\(P:(S\downarrow T)\rightarrow\mathcal A\)、
+\(Q:(S\downarrow T)\rightarrow\mathcal B\)，证明对象中的第三分量给出自然变换 \(SP\Rightarrow TQ\)。说明在箭头范畴中这族分量是什么。
+\end{exercise}
+\begin{solution}
+在对象 \((A,B,u)\) 处分量就是 \(u:S(A)\rightarrow T(B)\)。
+对逗号态射 \((a,b)\)，自然性恰为定义中的等式
+\(T(b)u=u'S(a)\)，故成立。在箭头范畴中，\(P,Q\) 是取起点与终点的函子，分量就是被研究的箭头自身；交换方块正是这一变换的自然性。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-natural-subset-choices}
+设 \(\mathcal P:\mathbf{Set}\rightarrow\mathbf{Set}\) 使用直接像。求所有自然变换
+\(\eta:\operatorname{Id}_{\mathbf{Set}}\Rightarrow\mathcal P\)。
+\end{exercise}
+\begin{solution}
+在单点集 \(\{*\}\) 上，\(\eta_{\{*\}}(*)\) 只有两个可能值：空集或整个单点集。对任意 \(x\in X\)，用函数 \(a_x:\{*\}\rightarrow X\) 的自然性，得
+\[
+\eta_X(x)=a_x\bigl(\eta_{\{*\}}(*)\bigr).
+\]
+故第一种情形所有分量把元素送到空集，第二种情形把 \(x\) 送到 \(\{x\}\)。这两族对任意函数都自然，空集处的函数也唯一，所以恰有两种自然变换。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-frobenius-natural}
+固定素数 \(p\)，考虑交换 \(\mathbb F_p\)-代数及保幺 \(\mathbb F_p\)-代数同态的范畴。证明
+\(a\mapsto a^p\) 给出恒等函子的自然自变换，并用一个例子说明它不必是自然同构。
+\end{exercise}
+\begin{solution}
+交换性与二项式系数模 \(p\) 消失使
+\((a+b)^p=a^p+b^p\)，并有 \((ab)^p=a^pb^p\)、\(1^p=1\)。
+对 \(c\in\mathbb F_p\)，\(c^p=c\)，所以这还是 \(\mathbb F_p\)-代数同态。任意同态 \(f\) 满足 \(f(a^p)=f(a)^p\)，故自然。在 \(\mathbb F_p[t]\) 上，像只有次数为 \(p\) 的倍数的单项式的组合，\(t\) 不在像中，因此这一分量不满，不是自然同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-rationalization-not-reflect}
+使用第二卷已建立的张量函子
+\(\mathbb Q\otimes_{\mathbb Z}-:\mathbf{Ab}\rightarrow\mathbf{Vect}_{\mathbb Q}\)，给出一个不是同构但其像为同构的群同态。说明为什么这不与全忠实反射同构的命题冲突。
+\end{exercise}
+\begin{solution}
+取 \(f:\mathbb Z\rightarrow\mathbb Z\)、\(f(n)=2n\)。它不满，因而不是同构；张量后在
+\(\mathbb Q\otimes\mathbb Z\simeq\mathbb Q\) 上为乘 \(2\)，逆为乘 \(1/2\)。此函子不全忠实：例如 \(\mathbb Z/2\mathbb Z\) 张量后为零，其恒等同态与零同态有相同的像，故甚至不忠实。保留同构适用于任意函子，反射同构则需要额外条件。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-primary-decomposition-natural}
+对有限交换群 \(A\) 和素数 \(p\)，令
+\(A_{(p)}=\{a:\text{某个 }p^r\text{ 零化 }a\}\)。
+利用第一卷的有限交换群分类或第二卷的 PID 模结构，说明自然映射
+\(\bigoplus_pA_{(p)}\rightarrow A\) 是自然同构。解释为什么这与正文中不存在自然挠子模补群的结论不同。
+\end{exercise}
+\begin{solution}
+同态保留被 \(p\) 的幂零化的元素，因此各 \(A_{(p)}\) 是函子，其包含自然。已证的初等因子分解说明每个有限交换群是若干素数幂阶循环群的直和；在该分解下，\(A_{(p)}\) 正是所有 \(p\)-幂阶分量之和。所以各包含之和为双射，也就是同构。映射本身由包含定义，不依赖用于证明双射的分类同构；它对所有同态自然。这里各主分量由元素的零化性质内在确定，正文的自由补群则没有这种自然指定。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-two-coordinate-functors}
+对一族有限维 \(k\) 空间，分别固定两组坐标同构
+\(\theta_V:V\rightarrow k^{\dim V}\)、\(\psi_V:V\rightarrow k^{\dim V}\)，并据此定义两个坐标函子 \(F_\theta,F_\psi\)。写出它们之间的自然同构，计算每个线性映射的两个矩阵之间的关系。
+\end{exercise}
+\begin{solution}
+取 \(P_V=\psi_V\theta_V^{-1}\)。对 \(f:V\rightarrow W\)，有
+\[
+F_\psi(f)=\psi_Wf\psi_V^{-1}
+=P_WF_\theta(f)P_V^{-1}.
+\]
+因此 \(F_\psi(f)P_V=P_WF_\theta(f)\)，正是
+\(P:F_\theta\Rightarrow F_\psi\) 的自然性。每个 \(P_V\) 可逆，故为自然同构。若 \(V=W\) 且只考察一个算子，等式退化为熟悉的相似变换；一般映射的两端空间不同，应保留两个不同的换基矩阵。
+\end{solution}

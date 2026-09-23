@@ -5,7 +5,6 @@
 \section{马蹄引理}
 \label{b4:sec:0703}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,67 @@
 \subsection{短正合列与相容消解}
 \label{b4:subsec:0703:01}
 
-待撰写。
+假设已有短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\)，又已分别选好 \(A,C\) 的投射消解。希望构造 \(B\) 的消解时，最自然的逐次对象是 \(P_n^A\oplus P_n^C\)。困难在于微分通常不能取两个微分的直和：那样得到的零次同调是 \(A\oplus C\)，未必是 \(B\)。原列的不分裂信息必须进入微分的非对角项。
+
+\begin{lemma}\label{b4:lem:horseshoe-step}
+设 \(\mathcal A\) 是交换范畴，\(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\) 正合，\(p_A:P_A\to A\)、\(p_C:P_C\to C\) 满，且 \(P_C\) 投射。选 \(t:P_C\to B\) 使 \(qt=p_C\)，令 \(p_B=(ip_A,t):P_A\oplus P_C\to B\)。则 \(p_B\) 满，且
+\[
+0\longrightarrow\ker p_A\longrightarrow\ker p_B
+\longrightarrow\ker p_C\longrightarrow0
+\]
+正合。
+\end{lemma}
+\begin{proof}
+在两行分别为 \(0\to P_A\to P_A\oplus P_C\to P_C\to0\) 和给定短正合列的图中，竖直态射取 \(p_A,p_B,p_C\)。图由 \(qt=p_C\)、\(qi=0\) 交换。\cref{b4:thm:snake-lemma}给出核、余核的正合列；因 \(p_A,p_C\) 均满，它们的余核为零。于是核列右端也满，且 \(\operatorname{coker}p_B=0\)，这正是结论。
+\end{proof}
 
 \subsection{马蹄引理的投射与内射版本}
 \label{b4:subsec:0703:02}
 
-待撰写。
+\begin{theorem}[马蹄引理]\label{b4:thm:horseshoe}
+设 \(\mathcal A\) 是交换范畴，\(0\to A\to B\to C\to0\) 是短正合列。给定 \(A,C\) 的投射消解 \(P^A_\bullet,P^C_\bullet\)，存在 \(B\) 的投射消解 \(P^B_\bullet\)，使增广相容，且
+\[
+0\longrightarrow P^A_\bullet\longrightarrow P^B_\bullet
+\longrightarrow P^C_\bullet\longrightarrow0
+\]
+逐次分裂正合，并可取 \(P_n^B=P_n^A\oplus P_n^C\)。对偶地，给定 \(A,C\) 的内射消解，可取 \(I_B^n=I_A^n\oplus I_C^n\)，得到相容且逐次分裂的短正合列 \(0\to I_A^\bullet\to I_B^\bullet\to I_C^\bullet\to0\)。此结果称为\term[matiyinli]{马蹄引理}[horseshoe lemma]。
+\end{theorem}
+\begin{proof}
+先将\cref{b4:lem:horseshoe-step}用于 \(P_0^A\to A\)、\(P_0^C\to C\)，得到 \(P_0^B\to B\) 及其核列。记这三个核为 \(K_1^A,K_1^B,K_1^C\)。给定消解中的下一项分别满射到 \(K_1^A,K_1^C\)，于是再用引理得到 \(P_1^B\to K_1^B\)，其核又组成短正合列。归纳继续。把 \(P_n^B\to K_n^B\) 与 \(K_n^B\hookrightarrow P_{n-1}^B\) 复合，就是中间消解的微分；每一步定义保证像等于下一个核。
+
+各次包含与投影通过核图构造，因而与微分交换。其对象列是双积的分裂列；\(P_n^A\oplus P_n^C\) 投射，因为两个分量的态射可以分别提升后相加。这样得到全部结论。内射版本在 \(\mathcal A^{\mathrm{op}}\) 应用已证投射版本，并反转箭头与链指标；有限双积在反范畴仍是双积，故逐次分裂性不变。
+\end{proof}
+
+选定逐次双积表示以后，微分写成
+\[
+d_n^B=\begin{pmatrix}d_n^A&h_n\\0&d_n^C\end{pmatrix},
+\qquad d_{n-1}^Ah_n+h_{n-1}d_n^C=0.
+\]
+第二个等式就是 \((d^B)^2=0\) 的非对角分量，显示原来的扩张如何影响消解。它也解释为什么逐次分裂并不推出短正合列作为复形分裂。
 
 \subsection{导出长正合列的构造}
 \label{b4:subsec:0703:03}
 
-待撰写。
+\begin{proposition}\label{b4:prop:horseshoe-functor-sequence}
+设 \(F:\mathcal A\to\mathcal B\) 是交换范畴间的加性函子。\cref{b4:thm:horseshoe}中的消解短正合列经 \(F\) 作用后仍逐次短正合。因此其同调对象有自然连接态射及长正合列。
+\end{proposition}
+\begin{proof}
+分裂短正合列由态射等式 \(ri=1\)、\(ps=1\)、\(ir+sp=1\) 表示。加性函子保持这些等式，故不必假定 \(F\) 正合。再用\cref{b4:thm:cohomology-long-exact}，在链情形反转指标，即得到长正合列。
+
+还须检查“自然”不依赖构造时的提升。给两个短正合列间的态射，源端马蹄消解记为 \(P^A,P^B,P^C\)，目标记为 \(Q^A,Q^B,Q^C\)。选端点比较映射 \(u:P^A\to Q^A\)、\(v:P^C\to Q^C\)。用双积表示两套微分，分别记非对角项为 \(h_n\)、\(h'_n\)。我们构造中间比较映射
+\[
+w_n=\begin{pmatrix}u_n&y_n\\0&v_n\end{pmatrix}.
+\]
+零次的增广条件要求 \(y_0:P_0^C\to Q_0^A\) 提升一个到目标左端对象的态射：给定的中间对象映射与目标消解的右侧提升之差，在右端增广后为零，故落入左端子对象；由 \(P_0^C\) 投射可沿 \(Q_0^A\to A_{\mathrm{target}}\) 提升。
+
+已构造到次数 \(n-1\) 后，次数 \(n\) 的链映射条件只剩非对角块
+\[
+d_n^{Q^A}y_n=r_n,
+\qquad r_n=u_{n-1}h_n+y_{n-1}d_n^{P^C}-h'_nv_n.
+\]
+其余三块由 \(u,v\) 是链映射及零块自动满足。将 \(d_{n-1}^{Q^A}\) 作用于 \(r_n\)，利用 \(d^Ah+hd^C=0\)、\(d^{Q^A}h'+h'd^{Q^C}=0\)、\(u,v\) 的链等式及上一次数的 \(y\) 等式，三组项逐对抵消，结果为零；\(n=1\) 时将该微分换成左端增广，用已满足的零次增广等式，结论相同。因此 \(r_n\) 落入目标的核，正合性与 \(P_n^C\) 投射使它提升为 \(y_n\)。归纳给出消解短正合列之间的严格交换图。
+
+对图施加 \(F\)，再用复形长正合列的自然性。两个选择在三个端点均提升同一对象态射，由\cref{b4:prop:comparison-homotopy-unique}诱导同一同调态射。因此连接态射对确定的同调态射自然。内射情形在反范畴作上述块矩阵构造。
+\end{proof}
+
+连接态射有可操作的含义：把商复形中的圈提升到中间复形，对提升取微分，再把所得像读成左端复形中的圈。马蹄引理保证即使函子不正合，仍有逐次正合的复形列来执行这一过程；下一章的 Ext 与 Tor 正是由此获得正合列。

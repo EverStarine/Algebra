@@ -5,8 +5,6 @@
 \section{正向与逆向系统}
 \label{b4:sec:0203}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 滤过余极限即通常的正向极限
@@ -17,14 +15,167 @@
 \subsection{滤过余极限与正向极限}
 \label{b4:subsec:0203:01}
 
-待撰写。
+考虑递增的子模族。它们的并仍是子模，因为任意两个元素总能放入同一个较大的子模，再在那里完成加法。这个简单事实指出了一种重要条件：有限次计算所涉及的数据，应当能够在同一个对象中比较。
+
+\begin{definition}[滤过范畴与正向系统]\label{b4:def:filtered-category}
+一个非空小范畴 \(J\) 若满足以下两个条件，则称为\term[lvguofanchou]{滤过范畴}[filtered category]：
+\begin{enumerate}
+\item 对任意对象 \(i,j\)，存在对象 \(k\) 及态射 \(i\rightarrow k,j\rightarrow k\)；
+\item 对任意平行态射 \(u,v:i\rightarrow j\)，存在 \(w:j\rightarrow k\)，使 \(wu=wv\)。
+\end{enumerate}
+以滤过范畴为指标的余极限称为\term[lvguoyujixian]{滤过余极限}[filtered colimit]。若指标范畴来自一个非空有向偏序集 \(I\)，即任意两个元素有共同上界，则图表由对象 \(M_i\) 及满足
+\[
+f_{ii}=1,\qquad f_{jk}f_{ij}=f_{ik}\quad(i\le j\le k)
+\]
+的态射 \(f_{ij}:M_i\rightarrow M_j\) 组成，称为\term[zhengxiangxitong]{正向系统}[direct system]。其余极限也称为\term[zhengxiangjixian]{正向极限}[direct limit]，记为 \(\varinjlim_i M_i\)。
+\end{definition}
+
+偏序范畴中两个给定对象之间至多有一条态射，所以滤过定义中的第二个条件自动成立。对于一般范畴，这个条件不能省略：它用来协调同一数据被两种不同路径送到同一对象时产生的差别。
+
+\begin{lemma}[有限数据的共同比较]\label{b4:lem:filtered-finite-data}
+设 \(J\) 为滤过范畴。从 \(J\) 中指定有限个对象以及它们之间有限条态射后，存在一个对象 \(k\) 及从这些对象到 \(k\) 的态射，使每条指定态射对应的三角形交换。
+\end{lemma}
+\begin{proof}
+先反复使用共同上界条件，把所有指定对象映到一个对象 \(k_0\)。对一条指定态射 \(\alpha:i\rightarrow j\)，从 \(i\) 到 \(k_0\) 有两条需要相等的态射：已选的 \(i\rightarrow k_0\) 与经过 \(j\) 的复合。滤过的第二条件给出 \(k_0\rightarrow k_1\)，使二者相等。把所有已选映射后复合到 \(k_1\)，先前已成立的等式仍然成立。对剩余的有限条态射重复此步即可。没有指定对象时，使用 \(J\) 非空即可。
+\end{proof}
+
+\begin{proposition}[滤过余极限的元素判据]\label{b4:prop:filtered-colimit-elements}
+设 \(J\) 为滤过小范畴，\(D:J\rightarrow\mathbf{Set}\) 为图表。余极限的每个元素可由某个 \(x\in D(i)\) 表示。两个代表 \(x\in D(i)\)、\(y\in D(j)\) 给出同一元素，当且仅当存在 \(u:i\rightarrow k\)、\(v:j\rightarrow k\)，使 \(D(u)x=D(v)y\)。特别地，若 \(x,y\in D(i)\)，则它们在余极限中相等，当且仅当存在一个态射 \(w:i\rightarrow k\)，使 \(D(w)x=D(w)y\)。
+\end{proposition}
+\begin{proof}
+在不交并上，把有这样一个共同目标的两个代表记为 \(x\sim y\)。反身性与对称性直接成立。为证传递性，设 \(x,y\) 在对象 \(k\) 中相等，\(y,z\) 在对象 \(l\) 中相等。先把 \(k,l\) 映到共同对象 \(t\)。此时从 \(y\) 所在对象到 \(t\) 有两条态射；再后复合某个 \(t\rightarrow t'\) 使它们相等，就得到 \(x,z\) 在 \(t'\) 中相等。因此 \(\sim\) 是等价关系。
+
+这个关系包含每个图表关系 \(x\sim D(\alpha)x\)。反过来，若两个代表在共同目标中相等，则它们都由图表关系与那个共同像等价，所以 \(\sim\) 恰好是一般余极限公式中的生成等价关系。最后，当两个代表同属 \(D(i)\) 时，共同目标判据可能先给出两条不同的态射 \(u,v:i\rightarrow k\)。将它们后复合为同一条态射，即得到最后一个结论。
+\end{proof}
+
+这个判据有两个经常使用的结果：有限多个元素可以同时选在某个共同对象中；有限多个已经在余极限中成立的等式，可以在继续向后映射一次后同时成立。第二句话需要先取各等式的见证，再用\cref{b4:lem:filtered-finite-data}协调这些见证，不能把不同等式的目标对象当作自动相同。
+
+\begin{example}[递增的并与分母]\label{b4:exm:direct-limit-localization}
+若 \(M_i\) 是同一模 \(M\) 的有向递增子模族，则其正向极限为 \(\bigcup_iM_i\)：相容同态族在这个并上逐元定义，交叠处的一致性由共同上界保证。
+
+\ProseParagraphBreak
+整数模的系统
+\[
+\mathbb Z\xrightarrow{\times p}\mathbb Z
+\xrightarrow{\times p}\mathbb Z\xrightarrow{\times p}\cdots
+\]
+以 \(n=0,1,\ldots\) 编号，其正向极限为 \(\mathbb Z[1/p]\)。第 \(n\) 项的 \(a\) 对应 \(a/p^n\)，该对应与过渡映射相容；两个分数相等，当且仅当它们在某个更大指标处的整数代表相等。这也直接验证了其泛性质。
+\end{example}
 
 \subsection{逆极限及其元素描述}
 \label{b4:subsec:0203:02}
 
-待撰写。
+正向系统把信息逐步送到后面；逆向系统则记录同一个对象在不同精度下的投影。逆极限要求所有精度的选择同时相容，因此其元素通常是一整族数据，而不是某一个阶段的一个元素。
+
+\begin{definition}[逆向系统与逆极限]\label{b4:def:inverse-system}
+设 \(I\) 为非空有向偏序集，\(\mathcal C\) 为范畴。对象 \(M_i\) 及态射 \(\rho_{ij}:M_j\rightarrow M_i\)（\(i\le j\)）若满足
+\(\rho_{ii}=1\)、\(\rho_{ij}\rho_{jk}=\rho_{ik}\)，则称为一个\term[nixiangxitong]{逆向系统}[inverse system]，即图表 \(I^{\mathrm{op}}\rightarrow\mathcal C\)。该图表的极限称为\term[nijixian]{逆极限}[inverse limit]，记为 \(\varprojlim_i M_i\)。
+\end{definition}
+
+在集合、群、交换环或模中，逆极限均可写为相容元组：
+\[
+\varprojlim_iM_i=
+\{\,(m_i)\in\prod_iM_i\mid
+\rho_{ij}(m_j)=m_i\text{ 对所有 }i\le j\,\}.
+\]
+代数运算逐分量进行。投影映射给出一个锥，而任何其他锥只能把元素送到其全部分量组成的元组，因而上述公式满足泛性质。
+
+\begin{example}[整数的相容剩余类]\label{b4:exm:adic-inverse-limit}
+对素数 \(p\)，约化映射组成逆向系统
+\[
+\cdots\longrightarrow\mathbb Z/p^3\mathbb Z
+\longrightarrow\mathbb Z/p^2\mathbb Z
+\longrightarrow\mathbb Z/p\mathbb Z.
+\]
+其逆极限环记为 \(\mathbb Z_p\)。一个元素是一族相容剩余类 \((a_n)\)，并不要求存在一个整数同时代表全部 \(a_n\)。每个整数给出这样的族；若其全部剩余类均为零，则它被所有 \(p^n\) 整除，故为零。因此 \(\mathbb Z\rightarrow\mathbb Z_p\) 为单射。
+
+\ProseParagraphBreak
+逐步选择代表可将每族唯一写成数字 \(c_0,c_1,\ldots\)，其中 \(0\le c_i<p\)，且
+\[
+a_n\equiv c_0+c_1p+\cdots+c_{n-1}p^{n-1}\pmod{p^n}.
+\]
+先由 \(a_1\) 决定 \(c_0\)，再由相容性逐项决定下一位即可。这里的无穷数字首先表达相容剩余类，不涉及实数意义下的无穷级数。
+\end{example}
+
+\begin{example}[逆极限不保持满射]\label{b4:exm:inverse-limit-not-exact}
+对 \(n\ge1\)，考虑短正合列
+\[
+0\longrightarrow2^n\mathbb Z\longrightarrow\mathbb Z
+\longrightarrow\mathbb Z/2^n\mathbb Z\longrightarrow0.
+\]
+向较小指标的过渡映射依次为包含映射、恒等映射和约化映射，故各列组成相容的逆向系统。取逆极限后得到
+\[
+0\longrightarrow0\longrightarrow\mathbb Z
+\longrightarrow\mathbb Z_2.
+\]
+最后的映射不是满射。事实上，令 \(b_n\) 为 \(3\) 在
+\(\mathbb Z/2^n\mathbb Z\) 中的逆元。逆元的唯一性说明 \((b_n)\) 相容。若它来自整数 \(b\)，则 \(3b-1\) 被所有 \(2^n\) 整除，故 \(3b=1\)，矛盾。
+\end{example}
+
+每个阶段的满射都能逐个提升元素，却未必能够把这些提升选成彼此相容的一族。上例显示，讨论逆极限的正合性时，不能把正向极限的结论直接反转。至于核，情况更简单：相容元组落在同态的核中，当且仅当其每个分量均落在对应的核中。因此逆极限保持模中的核，并且是左正合的。
 
 \subsection{模范畴中的显式公式}
 \label{b4:subsec:0203:03}
 
-待撰写。
+模的极限通过方程截取直积，余极限则通过关系商去直和。这两种公式都适用于任意小指标范畴，不要求指标有向。
+
+\begin{proposition}[模的极限与余极限公式]\label{b4:prop:module-limit-formulas}
+设 \(R\) 为含幺环，\(J\) 为小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。定义
+\[
+\begin{aligned}
+\delta:\prod_{j\in\operatorname{Ob}J}M_j
+&\longrightarrow\prod_{\alpha:j\rightarrow k}M_k,
+&
+\delta((m_j))_\alpha&=M(\alpha)m_j-m_k,\\
+d:\bigoplus_{\alpha:j\rightarrow k}M_j
+&\longrightarrow\bigoplus_{j\in\operatorname{Ob}J}M_j,
+&
+d(\iota_\alpha(m))&=\iota_k(M(\alpha)m)-\iota_j(m).
+\end{aligned}
+\]
+则 \(\lim_JM=\ker\delta\)，而
+\[
+\operatorname{colim}_JM
+=\operatorname{coker}d
+=\left(\bigoplus_jM_j\right)/
+\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\,\bigr\rangle_R.
+\]
+\end{proposition}
+\begin{proof}
+第一式的核正好由相容元组组成。第二式中，直和的每个元素只有有限支集，所以 \(d\) 良定义；其像是公式所列关系生成的子模。给定一族同态 \(f_j:M_j\rightarrow N\)，它们唯一给出直和上的同态。该同态在 \(\operatorname{im}d\) 上为零，当且仅当 \(f_kM(\alpha)=f_j\) 对所有 \(\alpha\) 成立。这正是余锥条件，因此它唯一下降到所列余核，得到泛性质。
+\end{proof}
+
+\begin{proposition}[滤过模图表的单阶段表示]\label{b4:prop:filtered-module-elements}
+设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。其模余极限的每个元素均可表示为某个 \(m\in M_i\) 的像；两个代表相等的判据与\cref{b4:prop:filtered-colimit-elements}相同。特别地，\(m\in M_i\) 的像为零，当且仅当某个 \(u:i\rightarrow j\) 满足 \(M(u)m=0\)。
+\end{proposition}
+\begin{proof}
+先在底集合的滤过余极限上定义运算。对 \(m\in M_i,n\in M_j\)，取共同目标 \(k\)，把和定义为两个像在 \(M_k\) 中之和的类；标量乘法由 \([m]\mapsto[rm]\) 定义。若改变代表或共同目标，有限数据共同比较引理能把两次计算映到同一对象，并使所需等式同时成立。因此运算与选择无关。全部模公理也只涉及有限多个元素，可送到一个共同对象后由该模中的公理验证。
+
+所得模接收各 \(M_i\) 的相容线性映射；任意模值余锥在底集合层面诱导的唯一映射保持加法与标量乘法，所以也是模同态。因此这个模就是模范畴的余极限，底集合的元素判据随之成立。零元可在任意对象中取零代表，对同阶段的两个元素使用单个后续态射的判据，即得最后一句。
+\end{proof}
+
+\begin{proposition}[滤过余极限的正合性]\label{b4:prop:filtered-colimits-exact}
+设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(A,B,C:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。若自然变换 \(A\xrightarrow{u}B\xrightarrow{v}C\) 在每个对象 \(j\) 上给出短正合列
+\[
+0\longrightarrow A_j\xrightarrow{u_j}B_j
+\xrightarrow{v_j}C_j\longrightarrow0,
+\]
+则诱导的序列
+\[
+0\longrightarrow\operatorname{colim}_JA
+\xrightarrow{\overline u}\operatorname{colim}_JB
+\xrightarrow{\overline v}\operatorname{colim}_JC
+\longrightarrow0
+\]
+也是短正合列。
+\end{proposition}
+\begin{proof}
+若 \(a\in A_i\) 的类被 \(\overline u\) 送到零，则存在 \(\alpha:i\rightarrow j\)，使
+\(B(\alpha)u_i(a)=0\)。由自然性，这等于
+\(u_jA(\alpha)(a)\)。\(u_j\) 为单射，故 \(A(\alpha)(a)=0\)，于是 \(a\) 在余极限中为零，证明了单射性。
+
+若 \(b\in B_i\) 的类属于 \(\ker\overline v\)，则某个 \(\alpha:i\rightarrow j\) 使
+\(v_jB(\alpha)(b)=0\)。阶段 \(j\) 的正合性给出 \(a\in A_j\)，满足 \(u_j(a)=B(\alpha)(b)\)，所以 \([b]=\overline u([a])\)。反向包含由 \(v_ju_j=0\) 得到。最后，任意 \(c\in C_i\) 可在同一阶段提升为某个 \(b\in B_i\)，故 \(\overline v\) 为满射。
+\end{proof}
+
+证明没有要求过渡映射单射，也没有把余极限预先识别为某个并。关键只在于：一个元素为零的事实，可以在某个后续对象中实现。这种有限数据可以在单一阶段处理的性质，还将解释滤过余极限为什么能与有限极限交换。

@@ -5,9 +5,7 @@
 \section{维数平移}
 \label{b4:sec:1002}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 截短消解及合冲模
 % * Ext 和 Tor 的维数平移
@@ -17,14 +15,80 @@
 \subsection{截短消解及合冲模}
 \label{b4:subsec:1002:01}
 
-待撰写。
+第八章已经证明一步维数平移：短正合列中的投射或内射对象使长正合列的相邻高次项同构。本节用它确定消解何时真正能够终止，而不再重复连接同态的构造。
+
+\begin{proposition}\label{b4:prop:truncation-dimension}
+设 \(R\) 为环，\(M\) 为左 \(R\)-模，\(d\ge1\)。给定正合列
+\[
+ 0\longrightarrow K_d\longrightarrow P_{d-1}\longrightarrow\cdots
+ \longrightarrow P_0\longrightarrow M\longrightarrow0,
+\]
+其中各 \(P_i\) 投射。则 \(\operatorname{pd}_RM\le d\) 当且仅当 \(K_d\) 投射。若 \(0\to M\to I^0\to\cdots\to I^{d-1}\to L^d\to0\) 正合且各 \(I^i\) 内射，则 \(\operatorname{id}_RM\le d\) 当且仅当 \(L^d\) 内射。若第一列的 \(P_i\) 仅要求平坦，则 \(\operatorname{fd}_RM\le d\) 当且仅当 \(K_d\) 平坦。
+\end{proposition}
+\begin{proof}
+若末端对象具有所需性质，给定列本身就是相应长度的消解。反向分别利用
+\[
+ \operatorname{Ext}_R^1(K_d,N)\simeq\operatorname{Ext}_R^{d+1}(M,N),\qquad
+ \operatorname{Ext}_R^1(N,L^d)\simeq\operatorname{Ext}_R^{d+1}(N,M),
+\]
+以及 \(\operatorname{Tor}_1^R(T,K_d)\simeq\operatorname{Tor}_{d+1}^R(T,M)\)。投射和内射的式子是\cref{b4:prop:iterated-dimension-shift}；平坦版本对各短正合列用 Tor 长正合列，并用平坦项高次 Tor 为零。右侧由\cref{b4:thm:dimension-vanishing}消失，左侧的次数一判据给出所需性质。
+\end{proof}
+
+因此某个 \(d\) 步合冲模投射时，任何投射消解的 \(d\) 步合冲模都投射，但这些合冲模不必同构。给一个消解额外加入自由直和项，就会改变实际的核；不变的是上述消失条件及其表达的维数。
 
 \subsection{Ext 和 Tor 的维数平移}
 \label{b4:subsec:1002:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:dimension-short-exact}
+设 \(R\) 为环，\(0\to A\to B\to C\to0\) 为左 \(R\)-模短正合列。投射维数满足
+\[
+\begin{aligned}
+ \operatorname{pd}B&\le\max\{\operatorname{pd}A,\operatorname{pd}C\},\\
+ \operatorname{pd}A&\le\max\{\operatorname{pd}B,\operatorname{pd}C-1\},\\
+ \operatorname{pd}C&\le\max\{\operatorname{pd}B,\operatorname{pd}A+1\}.
+\end{aligned}
+\]
+平坦维数满足相同的三式。内射维数满足
+\[
+\begin{aligned}
+ \operatorname{id}B&\le\max\{\operatorname{id}A,\operatorname{id}C\},\\
+ \operatorname{id}A&\le\max\{\operatorname{id}B,\operatorname{id}C+1\},\\
+ \operatorname{id}C&\le\max\{\operatorname{id}B,\operatorname{id}A-1\}.
+\end{aligned}
+\]
+这里非零模的维数非负，零模的维数为 \(-\infty\)，并按通常扩展约定处理 \(\pm\infty\) 与有限整数的加减。
+\end{proposition}
+\begin{proof}
+固定左模 \(N\)。Ext 的第一变量长正合列包含
+\[
+ \operatorname{Ext}^i(C,N)\to\operatorname{Ext}^i(B,N)\to\operatorname{Ext}^i(A,N)
+ \to\operatorname{Ext}^{i+1}(C,N).
+\]
+第一式由两端的消失得到中间的消失；第二式用 \(\operatorname{Ext}^i(B,N)\) 及 \(\operatorname{Ext}^{i+1}(C,N)\)；第三式把次数改成 \(i-1,i\)，使用 \(\operatorname{Ext}^{i-1}(A,N)\) 及 \(\operatorname{Ext}^i(B,N)\)。对每个大于相应上界的正整数次数，这些群均为零，再用\cref{b4:thm:dimension-vanishing}。若上界为负，则只能来自零对象或 \(B=0\) 的平凡短列，结论直接成立。
+
+平坦情形固定右模 \(T\)，用 \(\operatorname{Tor}_i(T,-)\) 的长正合列中三种相邻位置得到相同上界。内射情形改用第二变量长正合列
+\(\operatorname{Ext}^i(N,A)\to\operatorname{Ext}^i(N,B)\to\operatorname{Ext}^i(N,C)\to\operatorname{Ext}^{i+1}(N,A)\)，逐一取相邻项，得到所写三式。
+\end{proof}
+
+这些不等式也给出精确的一步下降。例如 \(0\to K\to P\to M\to0\) 中 \(P\) 投射，若 \(\operatorname{pd}M=d\ge1\) 有限，则 \(\operatorname{pd}K=d-1\)：一式给出不超过 \(d-1\)，另一式排除更小值。若 \(d=0\)，短列分裂，\(K\) 投射或为零；不能强行套用数值 \(d-1=-1\)。
 
 \subsection{局部投射维数与一般平移理论}
 \label{b4:subsec:1002:03}
 
-待撰写。
+第三卷命题17.1.2已经在交换 Noether 局部环上构造有限模的极小自由消解，并证明其微分矩阵的元素都在极大理想中。定理17.2.3据此建立局部投射维数判据。本节的一般理论不取代这些局部结果；它说明其中“某一步消失就能截短”的依据为什么来自维数平移。
+
+\ProseParagraphBreak
+具体地，设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\)-模，\(F_\bullet\to M\) 为极小自由消解。第三卷命题17.1.3的极小消解与 Betti 数结论给出
+\[
+ \operatorname{Tor}_i^R(k,M)\simeq k\otimes_R F_i,\qquad
+ \operatorname{Ext}_R^i(M,k)\simeq\operatorname{Hom}_R(F_i,k).
+\]
+理由是两个复形的微分都变为零。有限性使 Nakayama 引理适用，所以 \(k\otimes F_i=0\) 就是 \(F_i=0\)，此后极小消解终止。结合本节的截短判据，投射维数等于这些 Tor 非零次数的上确界。这解释了为什么在这一特定环境中只需测试剩余域，而一般环上的判据必须量化所有模。
+
+\ProseParagraphBreak
+例如在 \(R=k[x,y]_{(x,y)}\) 上，剩余域的 Koszul 消解为
+\[
+ 0\longrightarrow R\xrightarrow{\binom{-y}{x}}R^2
+ \xrightarrow{(x\ \ y)}R\longrightarrow k\longrightarrow0.
+\]
+它极小，故 \(\operatorname{Tor}_2^R(k,k)=k\ne0\)，同时长度二给出高次消失，从而 \(\operatorname{pd}_Rk=2\)。相反，\cref{b4:exm:infinite-dimension-dual-numbers}的每一步都保留一个自由项，有限生成并不意味着有限投射维数。这里不重证第三卷的极小消解存在性或 Auslander--Buchsbaum 公式；它们分别依赖局部有限生成理论和深度理论。

@@ -5,9 +5,7 @@
 \section{函子与自然变换}
 \label{b4:sec:0102}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 协变、反变及自然性方块
 % * 函子复合与自然变换复合
@@ -17,14 +15,194 @@
 \subsection{协变函子、反变函子与自然性方块}
 \label{b4:subsec:0102:01}
 
-待撰写。
+把一个模忘掉标量作用后变成交换群，是一种对对象的操作；把模同态也看成群同态，才说明这种操作怎样与映射相容。函子同时规定这两部分。只列出每个对象要变成什么，还没有给出函子。
+
+\begin{definition}\label{b4:def:functor}
+设 \(\mathcal C,\mathcal D\) 为范畴。给每个 \(X\in\mathcal C\) 指定对象 \(F(X)\in\mathcal D\)，给每个态射 \(f:X\rightarrow Y\) 指定态射
+\(F(f):F(X)\rightarrow F(Y)\)。若
+\[
+F(1_X)=1_{F(X)},\qquad F(gf)=F(g)F(f)
+\]
+对所有对象及可复合态射成立，称这组指定为从 \(\mathcal C\) 到 \(\mathcal D\) 的\term[xiebianhanzi]{协变函子}[covariant functor]，记为 \(F:\mathcal C\rightarrow\mathcal D\)。本书简称“函子”时指协变函子。
+\end{definition}
+
+\begin{definition}\label{b4:def:contravariant-functor}
+设 \(\mathcal C,\mathcal D\) 为范畴。给每个对象 \(X\) 指定 \(F(X)\)，给每个 \(f:X\rightarrow Y\) 指定反向态射
+\(F(f):F(Y)\rightarrow F(X)\)。若
+\[
+F(1_X)=1_{F(X)},\qquad F(gf)=F(f)F(g),
+\]
+称这组指定为从 \(\mathcal C\) 到 \(\mathcal D\) 的\term[fanbianhanzi]{反变函子}[contravariant functor]。
+\end{definition}
+
+固定局部小范畴 \(\mathcal C\) 中的对象 \(A\)，有两个取值于集合的例子：
+\[
+\begin{aligned}
+\mathcal C(A,-)&:\ X\longmapsto\mathcal C(A,X),
+&f:X\rightarrow Y&\longmapsto(u\mapsto fu),\\
+\mathcal C(-,A)&:\ X\longmapsto\mathcal C(X,A),
+&f:X\rightarrow Y&\longmapsto(v\mapsto vf).
+\end{aligned}
+\]
+前者协变，后者反变。其恒等式分别来自 \(1_Xu=u\)、\(v1_X=v\)，复合规律分别来自 \((gf)u=g(fu)\)、\(v(gf)=(vg)f\)。这类 Hom 函子的系统作用将在第3章讨论。
+
+\ProseParagraphBreak
+域 \(k\) 上的代数对偶也是反变函子：\(V^*=\operatorname{Hom}_k(V,k)\)，而
+\(f^*(\lambda)=\lambda f\)。若 \(V\xrightarrow{f}W\xrightarrow{g}Z\)，则对 \(\mu\in Z^*\)，
+\((gf)^*(\mu)=\mu gf=f^*(g^*(\mu))\)。第二卷的转置矩阵规则正是这个复合次序在坐标中的表达。
+
+\begin{proposition}\label{b4:prop:functors-preserve-isomorphisms}
+设 \(F:\mathcal C\rightarrow\mathcal D\) 为函子。若 \(f:X\rightarrow Y\) 是同构，则 \(F(f)\) 是同构，且
+\(F(f^{-1})=F(f)^{-1}\)。反变函子也保留同构。
+\end{proposition}
+\begin{proof}
+对等式 \(f^{-1}f=1_X\)、\(ff^{-1}=1_Y\) 应用协变函子，得到 \(F(f^{-1})\) 的左右逆等式。反变情形把乘积次序调换，仍然得到这两个逆等式。
+\end{proof}
+
+\begin{definition}\label{b4:def:natural-transformation}
+设 \(F,G:\mathcal C\rightarrow\mathcal D\) 为两个函子。对每个对象 \(X\)，给定态射
+\(\eta_X:F(X)\rightarrow G(X)\)。若对每个 \(f:X\rightarrow Y\)，都有
+\[
+G(f)\eta_X=\eta_YF(f),
+\]
+则称这族态射为从 \(F\) 到 \(G\) 的\term[ziranbianhuan]{自然变换}[natural transformation]，记为 \(\eta:F\Rightarrow G\)，称 \(\eta_X\) 为在 \(X\) 处的分量。
+\end{definition}
+
+等式可以画为自然性方块：
+\[
+\begin{tikzcd}
+F(X)\arrow[r,"\eta_X"]\arrow[d,"F(f)"']&
+G(X)\arrow[d,"G(f)"]\\
+F(Y)\arrow[r,"\eta_Y"']&G(Y).
+\end{tikzcd}
+\]
+它比较两种次序：先用分量映射再沿 \(f\) 变化，或者先沿 \(f\) 变化再用分量映射。必须对源范畴中的每个态射成立，而不仅是对同构或某一组选定的态射成立。
+
+\ProseParagraphBreak
+两个反变函子之间的自然变换使用同样的要求，但原箭头 \(f:X\rightarrow Y\) 的两个函数箭头反向，因此等式为
+\(G(f)\eta_Y=\eta_XF(f)\)。一个协变函子与一个反变函子之间通常不能直接套用以上方块；要先检查它们是否真有相同的源和目标。
+
+\begin{example}\label{b4:ex:torsion-natural-inclusion}
+对交换群 \(A\)，记 \(t(A)=\{a:\text{存在整数 }n\ge1,\ na=0\}\)。
+若 \(na=0\)、\(mb=0\)，则 \(nm(a-b)=0\)，所以这是子群。群同态 \(f:A\rightarrow B\) 把挠元送到挠元，因为 \(nf(a)=f(na)=0\)。于是限制映射定义函子 \(t:\mathbf{Ab}\rightarrow\mathbf{Ab}\)，包含
+\(j_A:t(A)\hookrightarrow A\) 组成自然变换 \(j:t\Rightarrow\operatorname{Id}\)。
+\end{example}
+
+这项自然性没有说挠子群都相同，也没有选取任何补群。它说每个同态都保留这个已经由对象自身确定的子群。同样，对固定整数 \(n\)，逐对象取乘 \(n\) 的同态，得到
+\(\operatorname{Id}_{\mathbf{Ab}}\Rightarrow\operatorname{Id}_{\mathbf{Ab}}\)；这里自然性就是 \(f(na)=nf(a)\)。
 
 \subsection{函子复合与自然变换复合}
 \label{b4:subsec:0102:02}
 
-待撰写。
+函子 \(F:\mathcal C\rightarrow\mathcal D\)、\(H:\mathcal D\rightarrow\mathcal E\) 可以复合，规定
+\((HF)(X)=H(F(X))\)、\((HF)(f)=H(F(f))\)。两次使用函子公理，便有
+\[
+HF(gf)=H\bigl(F(g)F(f)\bigr)=HF(g)\,HF(f).
+\]
+恒等也被保留。对象和态射都不改变的函子记为 \(\operatorname{Id}_{\mathcal C}\)，复合结合律及恒等律逐对象、逐态射成立。
+
+\begin{proposition}\label{b4:prop:vertical-composition}
+设 \(F,G,H:\mathcal C\rightarrow\mathcal D\) 为函子，
+\(\eta:F\Rightarrow G\)、\(\theta:G\Rightarrow H\) 为自然变换。则
+\[
+(\theta\eta)_X=\theta_X\eta_X
+\]
+定义自然变换 \(\theta\eta:F\Rightarrow H\)。这种复合具有结合律；分量为 \(1_{F(X)}\) 的变换 \(1_F\) 为恒等变换。
+\end{proposition}
+\begin{proof}
+对 \(f:X\rightarrow Y\)，依次使用两个自然性等式得到
+\[
+H(f)\theta_X\eta_X
+=\theta_YG(f)\eta_X
+=\theta_Y\eta_YF(f).
+\]
+所以复合自然。三个变换的复合在对象 \(X\) 处是三个 \(\mathcal D\) 态射的复合，结合律及恒等律直接来自 \(\mathcal D\)。
+\end{proof}
+
+\begin{definition}\label{b4:def:natural-isomorphism}
+设 \(F,G:\mathcal C\rightarrow\mathcal D\) 为函子，\(\eta:F\Rightarrow G\) 为自然变换。若存在自然变换 \(\theta:G\Rightarrow F\)，使
+\(\theta\eta=1_F\)、\(\eta\theta=1_G\)，称 \(\eta\) 为\term[zirantonggou]{自然同构}[natural isomorphism]，记为 \(F\cong G\)。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:natural-iso-components}
+设 \(F,G:\mathcal C\rightarrow\mathcal D\) 为函子，\(\eta:F\Rightarrow G\) 为自然变换。则 \(\eta\) 为自然同构，当且仅当每个分量 \(\eta_X\) 都是 \(\mathcal D\) 中的同构。
+\end{proposition}
+\begin{proof}
+自然逆的各分量显然是分量逆。反过来，假设每个分量可逆。由
+\(G(f)\eta_X=\eta_YF(f)\)，左右分别复合相应逆态射，得到
+\[
+F(f)\eta_X^{-1}=\eta_Y^{-1}G(f).
+\]
+因此 \((\eta_X^{-1})_X\) 本身是一族自然变换；逐对象复合为恒等，故是自然逆。逆态射唯一，所以这里不需要为每个对象另作一次选择。
+\end{proof}
+
+自然变换还可以与函子在左右两侧复合。若 \(\eta:F\Rightarrow G\)，
+\(H:\mathcal D\rightarrow\mathcal E\)，则
+\((H\eta)_X=H(\eta_X)\) 给出 \(HF\Rightarrow HG\)，因为
+\[
+HG(f)\,H(\eta_X)
+=H\bigl(G(f)\eta_X\bigr)
+=H\bigl(\eta_YF(f)\bigr).
+\]
+若 \(K:\mathcal B\rightarrow\mathcal C\)，则
+\((\eta K)_B=\eta_{K(B)}\) 给出 \(FK\Rightarrow GK\)，自然性就是 \(\eta\) 对箭头 \(K(u)\) 的自然性。
+
+\begin{proposition}\label{b4:prop:horizontal-composition}
+设 \(F,G:\mathcal C\rightarrow\mathcal D\)、\(H,L:\mathcal D\rightarrow\mathcal E\) 为函子，
+\(\eta:F\Rightarrow G\)、\(\alpha:H\Rightarrow L\) 为自然变换。则
+\[
+(\alpha*\eta)_X
+=\alpha_{G(X)}H(\eta_X)
+=L(\eta_X)\alpha_{F(X)}
+\]
+定义自然变换 \(HF\Rightarrow LG\)。
+\end{proposition}
+\begin{proof}
+两个公式相等，正是 \(\alpha\) 对 \(\mathcal D\) 中态射
+\(\eta_X:F(X)\rightarrow G(X)\) 的自然性。第一个公式表示自然变换
+\(H\eta:HF\Rightarrow HG\) 与 \(\alpha G:HG\Rightarrow LG\) 的逐分量复合，故由\cref{b4:prop:vertical-composition}自然。
+\end{proof}
+
+这项公式以后用于比较复合函子。计算时先写出起点、终点，再判断哪个自然性方块可以交换；不能因为符号都叫“变换”，就任意调换其复合次序。
 
 \subsection{忘却结构与附加结构}
 \label{b4:subsec:0102:03}
 
-待撰写。
+忘却函子保留底层映射，只忘掉一部分对象结构。例如
+\[
+R\text{-}\mathbf{Mod}\longrightarrow\mathbf{Ab}
+\longrightarrow\mathbf{Set}
+\]
+先忘掉 \(R\) 的作用，再忘掉加法。它们确实是函子，因为恒等与复合的底函数都没有改变。反方向则不能把一个任意集合直接宣称为模；必须构造新的元素及运算。
+
+\begin{example}\label{b4:ex:free-module-functor}
+固定含幺环 \(R\)。第二卷第3.1节构造的自由左模
+\[
+R^{(X)}=\left\{\sum_{x\in X}r_xe_x:
+r_x\in R,\ \text{只有有限多个 }r_x\ne0\right\}
+\]
+给出函子 \(F_R:\mathbf{Set}\rightarrow R\text{-}\mathbf{Mod}\)。
+对函数 \(u:X\rightarrow Y\)，规定
+\[
+F_R(u)\left(\sum_xr_xe_x\right)=\sum_xr_xe_{u(x)}.
+\]
+若不同 \(x\) 有同一个像，就把相应系数相加；支集有限保证和有意义。这个公式保持加法与左标量作用。又有
+\(F_R(1_X)(e_x)=e_x\) 及
+\(F_R(vu)(e_x)=e_{v(u(x))}=F_R(v)F_R(u)(e_x)\)，由基生成性可知它保持恒等与复合。
+\end{example}
+
+设 \(U:R\text{-}\mathbf{Mod}\rightarrow\mathbf{Set}\) 为忘却函子。映射
+\(\iota_X:X\rightarrow U F_R(X)\)、\(x\mapsto e_x\)，组成自然变换
+\(\operatorname{Id}_{\mathbf{Set}}\Rightarrow UF_R\)，因为
+\(UF_R(u)(e_x)=e_{u(x)}\)。另一个方向有线性映射
+\[
+\epsilon_M:F_RU(M)\longrightarrow M,\qquad
+\sum_{m\in M}r_me_m\longmapsto\sum_mr_mm.
+\]
+对模同态 \(f:M\rightarrow N\)，在基元 \(e_m\) 上，
+\(f\epsilon_M(e_m)=f(m)=\epsilon_NF_RU(f)(e_m)\)，所以这些映射也自然。这两族映射不必是同构；第3章会说明它们怎样组成自由与忘却之间的伴随。
+
+\ProseParagraphBreak
+构造是否能够成为函子，还取决于允许哪些态射。例如群的中心 \(Z(G)\) 对同构有相容的映射，但任意同态
+\(f:G\rightarrow H\) 未必把 \(Z(G)\) 送入 \(Z(H)\)。取
+\(G=\{1,(12)\}\subset S_3=H\)，则 \(G\) 交换，中心为自身，而 \(S_3\) 的中心平凡；包含映射便不能限制为 \(Z(G)\rightarrow Z(H)\)。问题不是中心不存在，而是所提议的态射规则不成立。

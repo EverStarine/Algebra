@@ -6,11 +6,161 @@
 \label{b4:ch:05}
 \BookChapterNumber{b4:ch:05}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+一列映射连续复合为零，并不意味着它已经正合；同调对象把核与像之间的差别保存下来。本章建立链与上链两套指标的转换，定义 Hom 复形和张量复形，并说明它们为什么必须采用分次符号。随后从蛇引理构造同调长正合列，实际计算连接同态。最后把维数或长度的交错和推广到 Grothendieck 群，证明有界复形与其同调具有相同的 Euler 特征。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 从给定微分计算圈、边界及同调，并正确转换链指标、上链指标和移位。
+\item 区分复形映射与任意分次映射，核对 Hom 与张量复形的微分平方。
+\item 构造并计算短正合列的连接同态，解释长正合列的自然性。
+\item 用短正合关系理解 \(K_0\)，说明 Euler–Poincaré 等式中的有限性条件。
+\end{itemize}
+\end{learninggoals}
+
+本章需要\chapref{b4:ch:04}的交换范畴、核与余核及蛇引理。模的算例另用第二卷第6.1节的张量积泛性质；有限长度版本用第二卷第12.2节已经证明的长度可加性，初读时可以先限于有限维向量空间。复形的基本运算与长正合列可参阅 Weibel\cite[Sections 1.1--1.3, Theorem 1.3.1, Addendum 1.3.3, Proposition 1.3.4]{Weibel1994HomologicalAlgebra}；\(K_0\) 的关系与 Euler 特征见\cite[Chapter II, Definition 6.1.1, Proposition 6.6]{Weibel2013KBook}。移位和映射锥在文献中有不同符号，本书始终采用 \(C[1]^n=C^{n+1}\)、\(d_{C[1]}=-d_C\)。
 
 \input{Part02/Chapter05/Section0501}
 \input{Part02/Chapter05/Section0502}
 \input{Part02/Chapter05/Section0503}
 \input{Part02/Chapter05/Section0504}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+同调对象是相邻微分的核模去像，复形映射使它随原资料函子性地变化。复形范畴的正合性逐次判断，但同调函子一般不保持短正合列；缺少的连接箭头由提升余圈、施加微分和取商构造。Hom 复形使用直积，张量复形使用直和，两者的符号分别保证微分平方为零。
+
+\ProseParagraphBreak
+有界复形的边界对象在交错和中成对抵消，因此 Euler 特征可以直接由复形各项计算，也可以由同调计算。Grothendieck 群把这种计算表达为普遍的短正合关系，保留了数值维数可能忘掉的信息。下一章将比较复形之间的同伦与拟同构，说明哪些改变保持同调、哪些改变实际上更强。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:05-periodic}
+在每个整数次数放 \(\mathbb Z/12\)，每个微分均为乘 \(6\)。验证得到复形并计算各阶上同调。把 \(6\) 改为 \(4\) 后还能得到复形吗？
+\end{exercise}
+\begin{solution}
+\(6^2\equiv0\pmod {12}\)，故是复形。乘 \(6\) 的核为偶数剩余类组成的六阶循环群，像是 \(\{0,6\}\)，故每阶上同调同构于 \(\mathbb Z/3\)。而 \(4^2\equiv4\not\equiv0\pmod {12}\)，连续两次微分不为零，不能谈其同调。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-integer-matrices}
+计算次数 \(0,1,2\) 的交换群复形
+\(\mathbb Z\xrightarrow{a\mapsto(2a,4a)}\mathbb Z^2
+\xrightarrow{(x,y)\mapsto6x-3y}\mathbb Z\)
+的上同调。指出中间同调的一个生成元。
+\end{exercise}
+\begin{solution}
+复合为 \(12a-12a=0\)。第一个映射单，故 \(H^0=0\)。第二个映射的核是 \(\mathbb Z(1,2)\)，而前一步的像是 \(2\mathbb Z(1,2)\)，故 \(H^1\cong\mathbb Z/2\)，生成元由 \((1,2)\) 表示。末项上同调是 \(\mathbb Z/3\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-shift-support}
+设 \(M\) 是模，\(M[0]\) 集中在次数零。分别写出 \(M[0][2]\)、\(M[0][-3]\) 的非零次数。若 \(C\) 的非零项仅在 \([-2,4]\)，\(C[3]\) 的非零项可能位于哪里？
+\end{exercise}
+\begin{solution}
+\(M[0][2]\) 只在 \(-2\) 次非零，\(M[0][-3]\) 只在 \(3\) 次非零。\(C[3]^n=C^{n+3}\)，所以可能非零的范围为 \(-5\le n\le1\)。一般移位 \([r]\) 使支集向左移动 \(r\)，并使微分乘 \((-1)^r\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-hom-support}
+设 \(M,N\) 是左 \(R\)-模，\(a,b\in\mathbb Z\)。确定 \(\operatorname{Hom}_R^\bullet(M[0][a],N[0][b])\) 的全部项和微分。
+\end{exercise}
+\begin{solution}
+源仅在 \(p=-a\) 非零，目标仅在 \(-b\) 非零，故 \(p+m=-b\) 等价于 \(m=a-b\)。该次数为 \(\operatorname{Hom}_R(M,N)\)，其余项为零，所有微分为零。因而它是 \(\operatorname{Hom}_R(M,N)[0][b-a]\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-tensor-integers}
+设 \(m,n\) 是非零整数。令 \(P=(\mathbb Z\xrightarrow{m}\mathbb Z)\)、\(Q=(\mathbb Z\xrightarrow{n}\mathbb Z)\) 均放在次数 \(-1,0\)。写出 \(P\otimes Q\) 的微分并计算上同调。
+\end{exercise}
+\begin{solution}
+在次数 \(-1\) 按 \(P^0\otimes Q^{-1}\)、\(P^{-1}\otimes Q^0\) 排列两项。于是复形为
+\[
+\mathbb Z\xrightarrow{t\mapsto(mt,-nt)}\mathbb Z^2
+\xrightarrow{(u,v)\mapsto nu+mv}\mathbb Z.
+\]
+令 \(g=\gcd(m,n)>0\)。第一箭头单，第二箭头的像为 \(g\mathbb Z\)，核由 \((m/g,-n/g)\) 生成，前一像为该生成元的 \(g\) 倍。因此 \(H^{-2}=0\)，\(H^{-1}\cong H^0\cong\mathbb Z/g\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-tensor-wrong-sign}
+设 \(k\) 是特征不为二的域，\(C=D=(k\xrightarrow{1}k)\) 均在次数 \(0,1\)。若把张量微分误写成 \(d(x\otimes y)=dx\otimes y+x\otimes dy\)，证明其平方不为零。
+\end{exercise}
+\begin{solution}
+取次数零的基向量 \(e\in C^0\)、\(f\in D^0\)。其二次微分为 \(2d_Ce\otimes d_Df\)，这是次数二的一维空间中的非零向量。正确公式使两条混合路径的系数分别为 \(-1\) 和 \(1\)，从而相消。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-homology-not-mono}
+找出一个逐次单射的交换群复形映射，使其诱导的某个上同调映射不是单射。再找出逐次满射却不在某个上同调次数满射的例子。
+\end{exercise}
+\begin{solution}
+令 \(D=(\mathbb Z\xrightarrow{2}\mathbb Z)\) 在次数 \(0,1\)。逐次乘 \(2\) 是单射，而 \(H^1(D)=\mathbb Z/2\) 上诱导零映射，不单。逐次商映射 \(D\to D/2D\) 满，但 \(H^0(D)=0\)、\(H^0(D/2D)=\mathbb Z/2\)，所以零次上同调映射不满。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-prescribed-connecting}
+给定左 \(R\)-模同态 \(u:M\to N\)，构造逐次分裂的复形短正合列，其连接同态 \(H^0(C)\to H^1(A)\) 恰为 \(u\)。
+\end{exercise}
+\begin{solution}
+令 \(B=(M\xrightarrow{u}N)\) 在次数 \(0,1\)，令 \(A\) 仅在次数一等于 \(N\)，并嵌入 \(B\)，则 \(C=B/A\) 仅在次数零等于 \(M\)。两次数的短列都显然分裂。\(m\in C^0\) 的提升为同一 \(m\in B^0\)，其微分为 \(u(m)\in N\)，所以 \(\delta^0=u\)。特别地，连接同态可以是任意模同态。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-modfour-connecting}
+取 \(D=(\mathbb Z\xrightarrow{2}\mathbb Z)\) 在次数 \(0,1\)。计算 \(0\to D\xrightarrow{4}D\to D/4D\to0\) 的连接同态，并写出非零部分的长正合列。
+\end{exercise}
+\begin{solution}
+\(H^0(D)=0\)、\(H^1(D)=\mathbb Z/2\)。在商复形中，\(H^0(D/4D)=\{\bar0,\bar2\}\cong\mathbb Z/2\)，\(H^1(D/4D)=(\mathbb Z/4)/2(\mathbb Z/4)\cong\mathbb Z/2\)。提升 \(\bar2\) 为整数二，微分为四，除以左端嵌入的四得到一，所以连接同态是上述生成元下的同构。长列为
+\[
+0\to\mathbb Z/2\xrightarrow{1}\mathbb Z/2
+\xrightarrow{0}\mathbb Z/2\xrightarrow{1}\mathbb Z/2\to0.
+\]
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-split-complex-les}
+设交换范畴中的复形短正合列 \(0\to A\to B\to C\to0\) 有复形截面 \(s:C\to B\)。证明所有连接同态为零，并说明 \(H^n(B)\) 的分解依赖于什么选择。
+\end{exercise}
+\begin{solution}
+\(s\) 将余圈提升为余圈，因此连接公式中的微分为零。复形同构 \(A\oplus C\to B\)、\((a,c)\mapsto i(a)+s(c)\) 给出 \(H^n(B)\cong H^n(A)\oplus H^n(C)\)。若截面改为 \(s+i t\)，其中 \(t:C\to A\) 是复形映射，则分解坐标改变 \((a,c)\mapsto(a-H^n(t)c,c)\)。所以有直和同构不表示已经有不依赖截面的同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-euler-ranks}
+设域 \(k\) 上的复形仅在次数 \(0,1,2\) 非零，维数依次为 \(3,5,4\)，且两个微分的秩依次为 \(2,2\)。计算各阶同调维数和 Euler 特征。说明给定秩为何与复形条件相容。
+\end{exercise}
+\begin{solution}
+维数分别为 \(3-2=1\)、\((5-2)-2=1\)、\(4-2=2\)。Euler 特征为 \(3-5+4=2=1-1+2\)。中间项可以选择二维子空间作为第一微分的像，再把它放入第二微分的三维核中，因此满足复合为零的线性映射确实存在。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-finite-groups-kzero}
+证明有限交换群范畴的 Grothendieck 群是以素数为指标的自由交换群，其中 \([\mathbb Z/p]\) 对应第 \(p\) 个基向量。
+\end{exercise}
+\begin{solution}
+有限交换群有合成列：对非零群取非零的极小子群，其阶为素数，再对商群按群阶归纳。短正合关系因此把任意 \([M]\) 写成 \([\mathbb Z/p]\) 的有限整数和。另一方面，令 \(v_p(|M|)\) 为群阶中素数 \(p\) 的指数；短正合列满足 \(|B|=|A||C|\)，故这些赋值诱导 \(K_0\to\bigoplus_p\mathbb Z\)。它把 \([\mathbb Z/p]\) 送到对应基向量，与前述生成映射互为逆，因而没有额外关系。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-countable-swindle}
+令 \(\mathcal A\) 为域 \(k\) 上至多可数维向量空间范畴。证明它本质小且为交换范畴，并计算 \(K_0(\mathcal A)\)。为何结果与有限维范畴不同？
+\end{exercise}
+\begin{solution}
+同构类由 \(0,1,2,\ldots,\aleph_0\) 表示，故本质小；核、余核及有限双积仍至多可数维，故是交换范畴。令 \(V\) 有可数无限基，则对任意 \(W\in\mathcal A\)，都有 \(V\oplus W\cong V\)。分裂正合关系给出 \([V]+[W]=[V]\)，从而 \([W]=0\)，故 \(K_0=0\)。整数维数不能延拓为这一范畴上的可加整数值函数，否则 \([k]=0\) 将与维数一矛盾。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-kzero-more-than-dimension}
+设 \(R=k\times k\)，\(S_1=k\times0\)、\(S_2=0\times k\)。令复形 \(C\) 在次数零为 \(S_1\)、次数一为 \(S_2\)，微分为零。比较它的 \(k\)-维数 Euler 特征与 \(K_0\) 中的 Euler 特征。
+\end{exercise}
+\begin{solution}
+数值为 \(1-1=0\)。在\cref{b4:exm:kzero-vectors}的同构 \(K_0\cong\mathbb Z^2\) 下，\(\chi_{K_0}(C)=(1,-1)\ne0\)。因此总维数为零并不表示各种简单对象的贡献分别抵消。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-euler-shift-tensor}
+对有限维 \(k\)-向量空间的有界复形 \(C,D\)，证明 \(\chi(C[r])=(-1)^r\chi(C)\) 及 \(\chi(C\otimes_kD)=\chi(C)\chi(D)\)。这里是否需要先知道张量复形的同调公式？
+\end{exercise}
+\begin{solution}
+第一式令 \(j=n+r\) 重新编号即可。第二式由有限求和得到
+\[
+\sum_n(-1)^n\sum_{p+q=n}\dim C^p\dim D^q
+=\Bigl(\sum_p(-1)^p\dim C^p\Bigr)
+ \Bigl(\sum_q(-1)^q\dim D^q\Bigr).
+\]
+全程只计算复形各项，不需要张量与同调交换，也不需要 Künneth 公式。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:05-euler-zero-insufficient}
+给出有界有限维复形，使 Euler 特征为零但同调不全为零；再说明仅给定 Euler 特征为什么不能恢复各阶同调。
+\end{exercise}
+\begin{solution}
+取次数 \(0,1\) 的 \(k\xrightarrow0k\)。它有 \(H^0=H^1=k\)，而 Euler 特征为零。次数 \(0,1\) 的 \(k\xrightarrow1k\) 则同调全零且有相同 Euler 特征。交错和会把相邻次数的维数抵消，所以不能保留全部逐次信息。
+\end{solution}
