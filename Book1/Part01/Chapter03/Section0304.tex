@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 3.4 正多面体群
-% 纲要位置：计划纲要.md，第 207 行。
+% 纲要位置：计划纲要.md，第 210 行。
 
 \section{正多面体群}
 \label{b1:sec:0304}
@@ -9,7 +9,7 @@
 %
 % * 正四面体、立方体与正八面体
 % * 正二十面体与正十二面体的构造及对称
-% * 顶点、边、面上的置换作用
+% * 几何对象上的置换与同态的核
 % * 旋转群与含反射的全对称群的区别
 %
 % ---
@@ -18,7 +18,37 @@
 几何图形的对称必须连同所在空间一起说明。正多边形在平面中的旋转与反射已经给出循环群和二面体群；进入三维以后，顶点、边、面和体对角线都可以作为被置换的对象。同一个空间旋转在这些集合上可能具有不同的置换符号。
 
 \ProseParagraphBreak
-以下把多面体中心放在原点，以保持图形的正交线性变换为对称。行列式为 \(1\) 的称为旋转，行列式为 \(-1\) 的反转空间定向。确定一个图形的对称群时，我们依次构造对称、证明没有其他对称，再通过具体同态识别群结构；本节的计数不预先借用下一章的群作用定理。
+若读者首先希望掌握群的具体模型，可以先读本章前三节；在本节中，可以先读正四面体、立方体以及几何对象上的置换。这些内容不依赖正二十面体与正十二面体的完整坐标构造。后者适合作为几何综合阅读，但本节对这两个多面体的对称计数以及相应习题仍以该构造为依据。
+
+\ProseParagraphBreak
+以下把多面体中心放在原点。保持图形的全部欧氏等距变换构成其全对称群；下述引理说明，此时只需枚举保持图形的正交线性变换。行列式为 \(1\) 的对称称为旋转，行列式为 \(-1\) 的对称反转空间定向。确定一个图形的对称群时，我们依次构造对称、证明没有其他对称，再通过具体同态识别群结构；本节的计数不预先借用下一章的群作用定理。
+
+\begin{lemma}[欧氏等距变换的标准形式]\label{b1:lem:euclidean-isometry-affine}
+若映射 \(F\colon\mathbb R^3\to\mathbb R^3\) 保持任意两点间的距离，则存在唯一的三阶正交矩阵 \(U\) 和向量 \(b\in\mathbb R^3\)，使
+\[
+F(x)=Ux+b.
+\]
+特别地，若有限点集 \(V\subseteq\mathbb R^3\) 的平均值为原点，且 \(F(V)=V\)，则 \(b=0\)，从而 \(F\) 是正交线性变换。
+\end{lemma}
+\begin{proof}
+令 \(b=F(0)\) 及 \(U(x)=F(x)-b\)。极化恒等式给出
+\[
+\langle U(x),U(y)\rangle
+=\frac{\lVert U(x)\rVert^2+\lVert U(y)\rVert^2
+       -\lVert U(x)-U(y)\rVert^2}{2}
+=\langle x,y\rangle.
+\]
+因此 \(U(e_1),U(e_2),U(e_3)\) 是一组标准正交基，而且
+\(\langle U(x),U(e_i)\rangle=x_i\)。故
+\(U(x)=\sum_i x_iU(e_i)\)，所以 \(U\) 是正交线性变换。将 \(x=0\) 代入可知 \(b\) 唯一，继而 \(U\) 也唯一。
+
+若 \(V=\{v_1,\ldots,v_m\}\) 的平均值为原点且 \(F\) 置换 \(V\)，则由仿射形式可得
+\[
+b=F\left(\frac1m\sum_{i=1}^m v_i\right)
+ =\frac1m\sum_{i=1}^m F(v_i)=0.
+\]
+这就得到最后的断言。
+\end{proof}
 
 \begin{lemma}[三维旋转的固定轴]\label{b1:lem:rotation-axis}
 设 \(T\) 是三阶实正交矩阵，且 \(\det T=1\)。若 \(T\ne I\)，则
@@ -43,30 +73,89 @@
 平面旋转固定一个非零向量便是恒等变换，于是整个 \(T=I\)，与假设矛盾。因此固定空间恰为一维，平面上的旋转也非恒等。
 \end{proof}
 
-为了从顶点坐标确定多面体，先说明本节所需的几个几何概念。有限点集 \(V=\{v_1,\ldots,v_m\}\) 的\term[tubao]{凸包}[convex hull]是所有凸组合
+为了从顶点坐标确定多面体，先说明本节所需的几个几何概念。对有限点集 \(V=\{v_1,\ldots,v_m\}\subseteq\mathbb R^3\)，令
 \[
 \operatorname{conv}V
-=\left\{\,\sum_{i=1}^m t_i v_i\ \middle|\ t_i\geq0,\ \sum_{i=1}^m t_i=1\,\right\}.
+=\left\{\,\sum_{i=1}^m t_i v_i\ \middle|\ t_i\geq0,\ \sum_{i=1}^m t_i=1\,\right\}
 \]
-若所有顶点满足 \(\langle a,v_i\rangle\leq b\)，其中 \(a\ne0\)，且至少一个顶点取等号，
-则平面 \(\langle a,x\rangle=b\) 称为凸包的\term[zhichi-pingmian]{支持平面}[supporting plane]。
-凸组合取等号时只能使用取等号的顶点，所以凸包与该平面的交恰是这些顶点的凸包。
-交集若为二维多边形，便是多面体的一个面；例如恰有三个不共线顶点取等号时，交集是三角面。
-指向 \(\langle a,x\rangle>b\) 一侧的法向称为该面的\term[wai-faxiang]{外法向}[outward normal]。
+称 \(\operatorname{conv}V\) 为 \(V\) 的\term[tubao]{凸包}[convex hull]。
+若凸包 \(P=\operatorname{conv}V\) 不包含在任何平面内，则称 \(P\) 为三维凸多面体。设 \(a\in\mathbb R^3\setminus\{0\}\) 且 \(b\in\mathbb R\)，若
+\[
+P\subseteq\{x\mid\langle a,x\rangle\leq b\},
+\qquad P\cap\{x\mid\langle a,x\rangle=b\}\ne\varnothing,
+\]
+则称平面 \(\langle a,x\rangle=b\) 为 \(P\) 的\term[zhichi-pingmian]{支持平面}[supporting plane]，并称它与 \(P\) 的交为支持面。一个支持面若分别为零维、一维或二维，就称为 \(P\) 的顶点、边或面。指向 \(\langle a,x\rangle>b\) 一侧的法向称为相应支持面的\term[wai-faxiang]{外法向}[outward normal]。由凸组合可知，支持面恰是位于该支持平面上的那些生成点的凸包。
 
-\ProseParagraphBreak
-下面还会用截面判断面是否已经列全。用一个平面在某顶点附近截下一个小角，并让其余顶点都位于截面的另一侧，截面就是一个凸多边形。
-经过原顶点的边给出截面的顶点，经过原顶点的面给出截面的边：在每个面内，截面切出连接相邻两条边的线段。
-凸多边形等于各边所在直线的内侧闭半平面之交。因此，若几个已经找到的面在截面上围成一个多边形，截面既包含这个多边形，又被这些面的内侧半平面限制在其中，两者便相等。
-原顶点与每条截面边唯一确定对应面的平面，故截面没有额外的边，就说明没有遗漏经过原顶点的面。
+\begin{lemma}[顶点截面]\label{b1:lem:vertex-section}
+设三维凸多面体
+\[
+P=\operatorname{conv}\{v,w_1,\ldots,w_m\}\subseteq\mathbb R^3
+\]
+的顶点集恰为 \(\{v,w_1,\ldots,w_m\}\)。设 \(\ell\colon\mathbb R^3\to\mathbb R\) 是线性函数，且实数 \(c\) 满足
+\[
+\max_{1\leq i\leq m}\ell(w_i)<c<\ell(v).
+\]
+若
+\[
+\Pi=\{x\mid\ell(x)=c\},
+\qquad S=P\cap\Pi,
+\]
+则 \(S\) 是凸多边形。经过 \(v\) 的边与 \(S\) 的顶点一一对应，经过 \(v\) 的面与 \(S\) 的边一一对应。具体地，令
+\[
+p_i=v+\frac{\ell(v)-c}{\ell(v)-\ell(w_i)}(w_i-v),
+\]
+则
+\begin{equation}\label{b1:eq:vertex-section-hull}
+S=\operatorname{conv}\{p_1,\ldots,p_m\}.
+\end{equation}
+其中 \(p_i\) 是 \(S\) 的顶点，当且仅当 \([v,w_i]\) 是 \(P\) 的边。
+\end{lemma}
+\begin{proof}
+记 \(\delta=\ell(v)-c>0\) 以及 \(d_i=\ell(v)-\ell(w_i)>\delta\)。若
+\(x=\alpha v+\sum_i\beta_iw_i\in S\)，其中各系数非负且
+\(\alpha+\sum_i\beta_i=1\)，则
+\[
+\sum_i\beta_i d_i=\ell(v)-\ell(x)=\delta.
+\]
+令 \(\lambda_i=\beta_i d_i/\delta\)，便有 \(\sum_i\lambda_i=1\)，并且直接整理可得
+\[
+x=\sum_i\lambda_i p_i.
+\]
+反过来，每个 \(p_i\) 都在 \([v,w_i]\cap\Pi\) 中，所以其任意凸组合都属于 \(P\cap\Pi\)。这就证明了\eqref{b1:eq:vertex-section-hull}；又因 \(P\) 是三维的，\(S\) 是二维凸多边形。
+
+下面证明局部支持面的对应。平移 \(v\) 后，令
+\[
+C=\left\{\,\sum_{i=1}^m t_i(w_i-v)\ \middle|\ t_i\geq0\,\right\},
+\qquad h(y)=-\ell(y).
+\]
+函数 \(h\) 在 \(C\setminus\{0\}\) 上为正，且
+\[
+S-v=C\cap\{y\mid h(y)=\delta\}.
+\]
+后一等式的反向包含也值得说明：若
+\(y=\sum_i t_i(w_i-v)\in C\) 且 \(h(y)=\delta\)，则
+\(\delta=\sum_i t_i d_i>\delta\sum_i t_i\)，所以 \(\sum_i t_i<1\)，从而
+\[
+v+y=\left(1-\sum_i t_i\right)v+\sum_i t_iw_i\in P.
+\]
+经过 \(v\) 且所截支持面维数至少为一的支持平面，平移后成为经过原点的 \(C\) 的支持平面；它的支持面与 \(S-v\) 相交，便给出后者的支持面。反过来，设 \(S-v\) 的一条支持直线由某个线性函数在平面 \(h=\delta\) 上的限制 \(a(y)\leq r\) 给出。线性函数
+\[
+g(y)=a(y)-\frac r\delta h(y)
+\]
+在这条直线上为零，并在 \(S-v\) 上非正。对任意非零 \(y\in C\)，将它唯一缩放到平面 \(h=\delta\)，便知 \(g(y)\leq0\)；故 \(g=0\) 是 \(C\) 的支持平面。若等号集在 \(S-v\) 中退化为一个支持点，同一构造给出的等号集在 \(C\) 中就是经过该点的射线。
+
+因此，\(S-v\) 的零维支持面恰好来自 \(C\) 的一维支持面，而一维支持面恰好来自 \(C\) 的二维支持面。把锥平移回 \(v\) 并与 \(P\) 相交，就分别得到经过 \(v\) 的边和面，且上述构造彼此互逆。最后，射线 \(\mathbb R_{\geq0}(w_i-v)\) 与切割平面相交于 \(p_i-v\)，所以最后一个断言也成立。
+\end{proof}
+
+顶点截面引理给出了本节所需的全部局部几何依据。若干已经找到的面在 \(S\) 上切出一个多边形，而这些面的内侧半平面又把 \(S\) 限制在该多边形中，则 \(S\) 正是该多边形。此时 \(S\) 没有额外的边，由引理可知原多面体也没有遗漏经过该顶点的面。
 
 \subsection{正四面体、立方体与正八面体}
 \label{b1:subsec:0304:01}
 
-有限多面体的任意欧氏对称会置换顶点，所以保持所有顶点的平均值，也就是这里取作原点的中心。故把中心移到原点后，只需研究正交线性变换。它们的复合仍正交、逆仍正交，保持给定图形的那些变换形成其\term[jihe-duichengqun]{几何对称群}[symmetry group]，其中的旋转形成\term[xuanzhuanqun]{旋转群}[rotation group]。
+有限多面体的任意欧氏对称都会置换顶点。由\cref{b1:lem:euclidean-isometry-affine}，它是仿射变换，因而保持所有顶点的平均值。把这个平均值移到原点后，每个欧氏对称都是正交线性变换。它们的复合仍正交、逆仍正交，保持给定图形的那些变换形成其\term[jihe-duichengqun]{几何对称群}[symmetry group]，其中的旋转形成\term[xuanzhuanqun]{旋转群}[rotation group]。
 
 \begin{proposition}[正四面体]\label{b1:prop:tetrahedral-group}
-正四面体的全对称群在四个顶点上的置换给出与 \(S_4\) 的同构；旋转群对应 \(A_4\)。
+设三维欧氏空间中的正四面体以原点为中心，并以保持它的正交线性变换为其全对称群。该群在四个顶点上的置换给出它与 \(S_4\) 的同构；其中行列式为 \(1\) 的旋转群对应 \(A_4\)。
 \end{proposition}
 \begin{proof}
 取顶点
@@ -81,28 +170,32 @@ v_3=(-1,1,-1),\quad v_4=(-1,-1,1).
 \end{proof}
 
 \begin{proposition}[立方体与正八面体]\label{b1:prop:cubic-rotation-group}
-立方体与正八面体的旋转群同构于 \(S_4\)，各有 \(24\) 个元素；各自全对称群有 \(48\) 个元素。
+设三维欧氏空间中的立方体与正八面体均以原点为中心，并以保持图形的正交线性变换为全对称，以其中行列式为 \(1\) 的变换为旋转。二者的旋转群同构于 \(S_4\)，各有 \(24\) 个元素；各自的全对称群有 \(48\) 个元素。立方体全对称群在四条体对角线上的置换同态以 \(\{I,-I\}\) 为核；限制到旋转群后，该核为 \(\{I\}\)。
 \end{proposition}
 \begin{proof}
 取立方体顶点为 \((\pm1,\pm1,\pm1)\)。对称置换六个面的外法向
 \(\pm e_1,\pm e_2,\pm e_3\)，所以矩阵的每列、每行恰有一个非零元，非零元为 \(\pm1\)。反过来，每个这样的带符号坐标置换都保持立方体。共有 \(3!\cdot2^3=48\) 个，其中行列式正负各半，故旋转共 \(24\) 个。同一组六个法向本身构成正八面体的顶点集，因此两个图形有相同的正交对称群。
 
-立方体的四条体对角线可由\eqref{b1:eq:tetrahedron-vertices}中的 \(v_1,v_2,v_3,v_4\) 表示，每条线忽略向量的正负。旋转置换这四条线，给出到 \(S_4\) 的同态。若旋转 \(T\) 固定每条线，则
+立方体的四条体对角线可由\eqref{b1:eq:tetrahedron-vertices}中的 \(v_1,v_2,v_3,v_4\) 表示，每条线忽略向量的正负。全对称群置换这四条线，给出到 \(S_4\) 的同态。若全对称 \(T\) 固定每条线，则
 \(Tv_i=\varepsilon_i v_i\)，\(\varepsilon_i\in\{1,-1\}\)。这四向量的唯一线性关系由和为零生成，所以
 \(\sum_i\varepsilon_i v_i=0\) 迫使四个 \(\varepsilon_i\) 相同。故
-\(T=I\) 或 \(T=-I\)；后一矩阵在三维中行列式为 \(-1\)，不是旋转。核因而平凡，\cref{b1:prop:kernel-fibers}保证这个同态单射；两边都有 \(24\) 个元素，所以是同构。
+\(T=I\) 或 \(T=-I\)，而这两个变换也确实固定每条体对角线。因此全对称群上同态的核是 \(\{I,-I\}\)。由于 \(\det(-I)=-1\)，限制到旋转群后的核只有 \(I\)；\cref{b1:prop:kernel-fibers}保证这个限制是单射。旋转群与 \(S_4\) 都有 \(24\) 个元素，所以该限制是同构。
 \end{proof}
 
 \subsection{正二十面体与正十二面体}
 \label{b1:subsec:0304:icosahedron-dodecahedron}
 
 正二十面体也可以从坐标构造。这里先确认顶点、边和面的完整结构，再计算对称群；正十二面体则由这些面的中心构造。令
-\(\phi=(1+\sqrt5)/2\)，取十二个顶点
+\(\phi=(1+\sqrt5)/2\)，取十二个点
 \[
 V=\bigl\{(0,\pm1,\pm\phi),\ (\pm1,\pm\phi,0),\
 (\pm\phi,0,\pm1)\bigr\}.
 \]
-记 \(P=\operatorname{conv}V\)。下面验证它是正二十面体。
+记 \(P=\operatorname{conv}V\)。这些点长度相同；对每个 \(z\in V\)，线性函数
+\(x\mapsto\langle z,x\rangle\) 在 \(V\) 中仅于 \(z\) 取最大值。因此十二个点都是 \(P\) 的顶点。下面验证 \(P\) 是正二十面体。
+
+\ProseParagraphBreak
+\textbf{正二十面体的坐标模型。}
 各顶点的长度的平方为 \(\phi+2\)，最短的顶点间距离为 \(2\)。以
 \(v=(0,1,\phi)\) 为例，距离为 \(2\) 的五个点依次记为 \(w_1,\ldots,w_5\)：
 \[
@@ -110,6 +203,14 @@ V=\bigl\{(0,\pm1,\pm\phi),\ (\pm1,\pm\phi,0),\
 (-1,\phi,0),\ (-\phi,0,1).
 \]
 它们与 \(v\) 的内积都为 \(\phi\)，在垂直于 \(v\) 的同一平面中构成正五边形：相邻点距离为 \(2\)，非相邻点距离为 \(2\phi\)。
+这个正五边形的中心为
+\begin{equation}\label{b1:eq:icosahedron-neighbor-center}
+c=\frac{\phi}{\phi+2}v.
+\end{equation}
+事实上，\(c\) 是原点在平面 \(\langle v,x\rangle=\phi\) 上的正交投影；又因
+\(\lVert w_i\rVert^2=\phi+2\) 对所有 \(i\) 成立，各 \(w_i\) 到 \(c\) 的距离相同。因此这个正五边形以 \(c\) 为中心，而 \(c\in\mathbb Rv\)。
+
+\ProseParagraphBreak
 以下下标按模 \(5\) 计算。五个三角形 \(\operatorname{conv}\{v,w_i,w_{i+1}\}\) 都是等边三角形。
 对于其中任意一个，记其三个顶点为 \(u,v,w\)，则
 \[
@@ -121,19 +222,29 @@ V=\bigl\{(0,\pm1,\pm\phi),\ (\pm1,\pm\phi,0),\
 \(\langle u+v+w,z\rangle\leq3\phi\)。因此每个候选三角形确实是 \(P\) 的面。
 
 \ProseParagraphBreak
-为排除遗漏，在 \(v\) 附近取截面
+为排除遗漏，在 \(v\) 附近取切割平面及相应的截面多边形
 \[
-\langle v,x\rangle=\phi+2-\varepsilon,
+\Pi_{v,\varepsilon}
+=\{x\mid\langle v,x\rangle=\phi+2-\varepsilon\},
+\qquad
+S_{v,\varepsilon}=P\cap\Pi_{v,\varepsilon},
 \qquad 0<\varepsilon<2.
 \]
-除 \(v\) 外的所有顶点在此平面的另一侧。它与 \([v,w_i]\) 的交点为
+除 \(v\) 外的所有顶点都严格位于 \(\Pi_{v,\varepsilon}\) 的另一侧。线段 \([v,w_i]\) 与该平面的交点为
 \[
 p_i=\left(1-\frac{\varepsilon}{2}\right)v
      +\frac{\varepsilon}{2}w_i.
 \]
-五个已证三角面与截面相交成五条线段 \([p_i,p_{i+1}]\)，它们围成一个正五边形。
-截面包含这五个点的凸包，又位于这五条边的各自内侧，所以恰是这个正五边形。
-经过 \(v\) 的边和面因而各有五个，正是已经列出的那些。
+五个已证三角面分别沿线段 \([p_i,p_{i+1}]\) 与 \(S_{v,\varepsilon}\) 相交。这五条线段围成正五边形
+\[
+C\coloneqq\operatorname{conv}\{p_1,\ldots,p_5\}
+\subseteq S_{v,\varepsilon}.
+\]
+另一方面，每个已证三角面的支持半空间与 \(\Pi_{v,\varepsilon}\) 相交，给出以 \([p_i,p_{i+1}]\) 所在直线为边界的内侧闭半平面。这五个闭半平面在 \(\Pi_{v,\varepsilon}\) 内的交恰为 \(C\)，故
+\[
+S_{v,\varepsilon}\subseteq C.
+\]
+于是 \(S_{v,\varepsilon}=C\)。由\cref{b1:lem:vertex-section}，经过 \(v\) 的边和面因而各有五个，正是已经列出的那些。
 
 \ProseParagraphBreak
 坐标循环置换和任意两个坐标同时变号保持 \(V\)，并能把 \(v\) 送到任意顶点，所以每个顶点都有同样的邻接结构。
@@ -144,15 +255,37 @@ E=\frac{12\cdot5}{2}=30,
 \]
 这些面全是全等的等边三角形，每个顶点恰有五个面相交，得到正二十面体。
 
+\begin{lemma}[固定一个正二十面体顶点的旋转]\label{b1:lem:icosahedral-vertex-stabilizer}
+令 \(\phi=(1+\sqrt5)/2\)，并令
+\[
+V=\bigl\{(0,\pm1,\pm\phi),\ (\pm1,\pm\phi,0),\
+(\pm\phi,0,\pm1)\bigr\},
+\qquad v=(0,1,\phi).
+\]
+在满足 \(T(V)=V\) 的三阶特殊正交矩阵中，恰有五个固定 \(v\)。它们是绕轴 \(\mathbb Rv\) 转过 \(2k\pi/5\) 的旋转，其中 \(k\in\{0,1,2,3,4\}\)。
+\end{lemma}
+\begin{proof}
+将 \(V\) 中与 \(v\) 距离为 \(2\) 的五个点依次记为 \(w_1,\ldots,w_5\)。固定 \(v\) 的旋转必定置换这五个点。它在 \(v^\perp\) 上保持定向，所以在仿射平面 \(c+v^\perp\) 上诱导这个正五边形的保定向对称；这样的对称至多有五个。
+
+反过来，\eqref{b1:eq:icosahedron-neighbor-center}说明该正五边形的中心 \(c\) 位于 \(\mathbb Rv\) 上。它绕 \(c\) 转过 \(2k\pi/5\) 的平面旋转可唯一延伸为绕 \(\mathbb Rv\) 的三维旋转。这个旋转固定 \(v,-v\)，将五个 \(w_i\) 按 \(k\) 步循环位移，并以同样方式置换五个 \(-w_i\)。由于
+\[
+V=\{v,-v\}\mathbin{\dot\cup}\{w_1,\ldots,w_5\}
+  \mathbin{\dot\cup}\{-w_1,\ldots,-w_5\},
+\]
+它保持整个 \(V\)。这给出五个彼此不同的旋转，故它们正好是全部固定 \(v\) 的旋转。
+\end{proof}
+
 \begin{proposition}[正二十面体与正十二面体]\label{b1:prop:icosahedral-order}
-正二十面体与正十二面体各有 \(60\) 个旋转对称，\(120\) 个全对称。
+设三维欧氏空间中的正二十面体与正十二面体均以原点为中心，并以保持图形的正交线性变换为全对称，以其中行列式为 \(1\) 的变换为旋转。二者各有 \(60\) 个旋转对称、\(120\) 个全对称。
 \end{proposition}
 \begin{proof}
-坐标循环置换与任意两个坐标同时变号都是行列式为 \(1\) 的对称，它们能把上面的 \(v\) 送到十二个顶点中的任意一个。固定 \(v\) 的旋转必须置换其五个邻点，并在垂直于 \(v\) 的平面中保持定向，故只能是该正五边形的五个旋转之一。这五个旋转确实保持整个顶点集：它们固定 \(v,-v\)，置换五个邻点，也置换这五点的相反点，而这些点恰好构成全部十二个顶点。
+\textbf{固定顶点的旋转与整体计数。}
+坐标循环置换与任意两个坐标同时变号都是行列式为 \(1\) 的对称，它们能把上面的 \(v\) 送到十二个顶点中的任意一个。由\cref{b1:lem:icosahedral-vertex-stabilizer}，固定 \(v\) 的旋转恰有五个。
 
 对每个目标顶点 \(w\)，固定一个把 \(v\) 送到 \(w\) 的旋转 \(t_w\)。所有把 \(v\) 送到 \(w\) 的旋转恰为 \(t_w\) 与那五个固定 \(v\) 的旋转的复合：左乘 \(t_w^{-1}\) 即可验证这一一对应。所以总数为 \(12\cdot5=60\)。中心反演 \(-I\) 保持顶点集且反转定向，与它复合建立两类定向之间的双射，故全对称群有 \(120\) 个元素。
 
-再构造正十二面体。对每个三角面 \(F\) 的三个顶点 \(u,w,z\)，令
+\textbf{面中心构成的正十二面体。}
+对每个三角面 \(F\) 的三个顶点 \(u,w,z\)，令
 \[
 c_F=\frac{u+w+z}{3},\qquad
 Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
@@ -164,10 +297,10 @@ Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
 \langle v,c_F\rangle
 =\frac{(\phi+2)+\phi+\phi}{3}=\phi+\frac23;
 \]
-若 \(v\notin F\)，则 \(\langle v,c_F\rangle\leq\phi\)。特别地，若 \(F\ne F'\)，取 \(v\in F\setminus F'\)，这两种内积取值便说明 \(c_F\ne c_{F'}\)。
+若 \(v\notin F\)，则 \(\langle v,c_F\rangle\leq\phi\)。特别地，若 \(F\ne F'\)，取 \(a\in F\setminus F'\)，则 \(\langle a,c_F\rangle=\phi+2/3\) 而 \(\langle a,c_{F'}\rangle\leq\phi\)，所以 \(c_F\ne c_{F'}\)。
 因此，经过 \(v\) 的五个三角面的中心恰在 \(Q\) 的支持平面
 \(\langle v,x\rangle=\phi+\frac23\) 上。
-绕 \(v\) 轴的五次旋转循环置换这五点，所以它们围成正五边形面，记为 \(Q_v\)。
+由\cref{b1:lem:icosahedral-vertex-stabilizer}，取绕 \(\mathbb Rv\) 转过 \(2\pi/5\) 的旋转；它循环置换这五点，所以它们围成正五边形面，记为 \(Q_v\)。
 坐标对称把各个 \(v\) 互相变换，故这十二个五边形全等。
 一个五边形及其相反面不在同一平面内，故 \(Q\) 是三维凸多面体。
 
@@ -179,15 +312,19 @@ Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
 
 由于各面中心等长且两两不同，线性函数 \(x\mapsto\langle c_F,x\rangle\) 在这些点中仅于 \(c_F\) 取最大值，故每个 \(c_F\) 确为 \(Q\) 的顶点。
 取 \(\eta>0\) 小于所有正数
-\(\lVert c_F\rVert^2-\langle c_F,c_{F'}\rangle\)，其中 \(F'\ne F\)，用
-\(\langle c_F,x\rangle=\lVert c_F\rVert^2-\eta\) 作截面。
-上述三条边给出三个截点。每一对截点分别位于同一个正五边形在 \(c_F\) 处的两条不同邻边上，故两两不同。
-它们也不共线：否则这条直线同时位于两个五边形的平面内，只能是它们的公共边所在直线；但那条直线经过 \(c_F\)，与截面只有一个交点。
-所以三个已证五边形在截面上给出一个三角形的三条边。
-截面包含这个三角形，又被这三条边的内侧半平面限制在其中，故恰是三角形。
-所以每个 \(c_F\) 处只有这三个面；任何面都含有顶点，十二个 \(Q_v\) 因而已经列全。
+\(\lVert c_F\rVert^2-\langle c_F,c_{F'}\rangle\)，其中 \(F'\ne F\)，并令
+\[
+\Pi_{F,\eta}
+=\{x\mid\langle c_F,x\rangle=\lVert c_F\rVert^2-\eta\},
+\qquad
+S_{F,\eta}=Q\cap\Pi_{F,\eta}.
+\]
+这样，\(\Pi_{F,\eta}\) 将顶点 \(c_F\) 与 \(Q\) 的其余顶点严格分开。上述三条边与 \(\Pi_{F,\eta}\) 给出三个截点。每一对截点分别位于同一个正五边形在 \(c_F\) 处的两条不同邻边上，故两两不同。
+它们也不共线：否则这条直线同时位于两个五边形的平面内，只能是它们的公共边所在直线；但那条直线经过 \(c_F\)，与 \(\Pi_{F,\eta}\) 只有一个交点。
+所以三个已证五边形在 \(S_{F,\eta}\) 上给出一个三角形的三条边。三个截点的凸包包含于 \(S_{F,\eta}\)，而三个已证面的支持半空间又把 \(S_{F,\eta}\) 限制在该三角形内，故 \(S_{F,\eta}\) 恰是这个三角形。由\cref{b1:lem:vertex-section}，每个 \(c_F\) 处只有这三个面；任何面都含有顶点，十二个 \(Q_v\) 因而已经列全。
 新多面体有 \(20\) 个顶点、\(20\cdot3/2=30\) 条边及 \(12\) 个全等正五边形面，即正十二面体。
 
+\textbf{两个对称群的比较。}
 保持 \(P\) 的正交变换置换其三角面，也就置换面中心并保持 \(Q\)。
 反过来，保持 \(Q\) 的正交变换置换已列全的十二个面，其单位外法向恰为
 \(v/\sqrt{\phi+2}\)，其中 \(v\in V\)。因此它也保持 \(V\)，从而保持 \(P\)。
@@ -196,7 +333,7 @@ Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
 
 这里直接求出了两种群的阶，并没有把阶相同当作同构证明。识别正二十面体旋转群与 \(A_5\) 的进一步关系，需要另选合适的五个几何对象或补充群结构论证，本节不使用这一识别作为前提。
 
-\subsection{顶点、边与面上的置换作用}
+\subsection{几何对象上的置换与同态的核}
 \label{b1:subsec:0304:02}
 
 每个几何对称都置换顶点、边和面，且复合对称所得的置换是原置换的复合。因此选择这些有限集合，就得到从几何对称群到某个对称群的同态。这是把连续空间中的几何运动化为有限代数计算的方法；下一章将把这种做法统一称为群作用。
@@ -212,19 +349,13 @@ Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
 这说明“空间旋转对应偶置换”并非普遍规则。对于四面体顶点它成立，是因为已经证明三维行列式等于该顶点排列的符号；换成另一套被置换对象后，必须重新判断。前面的立方体旋转群同构 \(S_4\)，也正是四条体对角线的置换所给出的，而非八个顶点的全部置换群。
 
 \begin{proposition}\label{b1:prop:cube-lines-kernel}
-立方体全对称群在四条体对角线上的置换同态的核为 \(\{I,-I\}\)，而在八个顶点上的置换同态的核为 \(\{I\}\)。
+设立方体以原点为中心，并以保持它的正交线性变换为全对称群。这个群在四条体对角线上的置换同态的核为 \(\{I,-I\}\)，而在八个顶点上的置换同态的核为 \(\{I\}\)。
 \end{proposition}
 \begin{proof}
-设 \(T\) 固定四条体对角线。沿用\eqref{b1:eq:tetrahedron-vertices}的四个等长向量，正交性给出 \(Tv_i=\varepsilon_i v_i\)，其中 \(\varepsilon_i\in\{1,-1\}\)。由于 \(v_1,v_2,v_3\) 线性无关且 \(v_4=-v_1-v_2-v_3\)，等式 \(\sum_i Tv_i=0\) 变为
-\[
-(\varepsilon_1-\varepsilon_4)v_1+
-(\varepsilon_2-\varepsilon_4)v_2+
-(\varepsilon_3-\varepsilon_4)v_3=0.
-\]
-所以四个符号相同，\(T=I\) 或 \(T=-I\)。这重用了\cref{b1:prop:cubic-rotation-group}证明中的线性关系，但此处允许反转定向，所以两者都保留；它们也确实固定每条体对角线。若顶点置换恒等，则 \(T\) 固定基向量 \(v_1,v_2,v_3\)，只能是 \(I\)。
+四条体对角线上的核已经在\cref{b1:prop:cubic-rotation-group}中算出。若顶点置换恒等，则 \(T\) 固定\eqref{b1:eq:tetrahedron-vertices}中的基向量 \(v_1,v_2,v_3\)，只能是 \(I\)。
 \end{proof}
 
-所以顶点、边、面或对角线的选择会改变同态的核。较小的置换集合通常使计算更简洁，但必须检查它是否仍能分辨全部对称，或者明确记录哪些对称被视为相同。
+所以改变被置换的几何对象可能改变同态的核。较小的置换集合通常使计算更简洁，但必须检查它是否仍能分辨全部对称，或者明确记录哪些对称被视为相同。
 
 \subsection{旋转群与全对称群}
 \label{b1:subsec:0304:03}
@@ -251,7 +382,7 @@ Q=\operatorname{conv}\{\,c_F\mid F\text{ 是 }P\text{ 的三角面}\,\}.
 其中正四面体、立方体和正八面体的旋转群已分别识别为 \(A_4,S_4,S_4\)；正十二面体与正二十面体在本节完成了对称群阶数的计算及两者之间的对应，旋转群与 \(A_5\) 的同构尚未在这里证明。
 
 \ProseParagraphBreak
-中心对称的三维图形还有一个更具体的分解。若 \(R\) 是其旋转群，则任意全对称都唯一写成 \((-I)^\varepsilon r\)，其中 \(r\in R\)、\(\varepsilon\in\{0,1\}\)。存在性由行列式决定是否乘一次 \(-I\)，唯一性来自 \(-I\) 不是旋转；又因 \(-I\) 与所有线性变换交换，乘法为
+对本节所讨论的、以原点为中心的中心对称多面体，还有一个更具体的分解。若 \(R\) 是其旋转群，则任意全对称都唯一写成 \((-I)^\varepsilon r\)，其中 \(r\in R\)、\(\varepsilon\in\{0,1\}\)。存在性由行列式决定是否乘一次 \(-I\)，唯一性来自 \(-I\) 不是旋转；又因 \(-I\) 与所有线性变换交换，乘法为
 \[
 \bigl((-I)^\varepsilon r\bigr)\bigl((-I)^\delta s\bigr)
 =(-I)^{\varepsilon+\delta}(rs).
