@@ -6,11 +6,149 @@
 \label{b3:ch:17}
 \BookChapterNumber{b3:ch:17}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+局部环上的自由消解可以按照极小生成元逐步构造。所有微分的系数都落在极大理想中，因而模掉极大理想后微分全为零；消解各项的秩于是成为可计算的 Betti 数。它们检测投射维数以及消解能否终止。对非零有限模，有限投射维数与深度由 Auslander–Buchsbaum 公式联系起来；周期消解则显示有限性条件为何必要。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 构造局部极小自由消解，区分极小消解长度与任意消解长度。
+\item 用剩余域的 Tor 或 Ext 计算 Betti 数，并检验有限模的投射维数。
+\item 沿短正合列作维数平移，说明除以共同非零因子后的消解变化。
+\item 证明并使用 Auslander–Buchsbaum 公式，识别无限投射维数造成的失效情形。
+\end{itemize}
+\end{learninggoals}
+
+本章使用\cref{b3:cor:local-generators}、\cref{b3:thm:koszul-acyclic}与\cref{b3:thm:depth-ext}，并沿用前章已给出的 Ext、Tor 基础。自由、投射、张量积与 Hom 来自第二卷第3、6、7章；一般消解比较及维数平移的系统论述安排在第四卷第5—8章，其中第8.5节专门处理维数平移。当前所需的具体形式已在本卷正文证明。
+
+\ProseParagraphBreak
+极小消解及末端 Ext 的非消失可参阅松村英之的《Commutative Ring Theory》\cite[\S19, Minimal free resolutions, Lemma 1, pp. 153--154]{Matsumura1989CommutativeRingTheory}；本章中心公式见同书\cite[Theorem 19.1, p. 155]{Matsumura1989CommutativeRingTheory}。
 
 \input{Part03/Chapter17/Section1701}
 \input{Part03/Chapter17/Section1702}
 \input{Part03/Chapter17/Section1703}
 \input{Part03/Chapter17/Section1704}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+极小消解把局部有限模的生成关系变成一列由模自身决定的自由秩。剩余域使微分消失，所以任一正次 Betti 数为零就表示消解已经终止。对一般消解，这样直接读取自由秩的方法不成立。
+
+\ProseParagraphBreak
+有限投射维数使自由消解具有末端，Auslander–Buchsbaum 公式由此把消解长度和深度相加为环的深度。公式在投射维数为一时依赖极小矩阵对剩余域 Ext 的零作用，较长情形再逐步取合冲模。周期消解说明深度相等不能单独推出自由；下一章把剩余域的消解终止与环的正则性联系起来。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:17-contractible-summand}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部整环，\(0\ne x\in\mathfrak m\)。验证矩阵 \(\operatorname{diag}(x,1)\) 给出 \(R/(x)\) 的长度一自由消解，并从中分离出极小消解。说明为什么不能把该矩阵的阶数作为 \(\beta_1\)。
+\end{exercise}
+\begin{solution}
+矩阵单射，因为 \(x\) 为非零因子；其余核由第一坐标模 \(x\) 给出，故余核为 \(R/(x)\)。此消解是 \(0\to R\xrightarrow{x}R\to R/(x)\to0\) 与零增广的 \(R\xrightarrow{1}R\) 的直和。后一复形可收缩且没有同调，却把两项自由秩各增加一。极小消解的两个秩都是一，故 \(\beta_0=\beta_1=1\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-dvr-betti}
+设 \(R\) 为 DVR，统一化元为 \(\pi\)。令
+\(M=R^r\oplus\bigoplus_{j=1}^sR/(\pi^{a_j})\)，其中 \(a_j>0\)。求其 Betti 数。再求 \(\operatorname{Tor}_1^R(R/(\pi^a),R/(\pi^b))\) 与 \(\operatorname{Ext}_R^1(R/(\pi^a),R/(\pi^b))\)。
+\end{exercise}
+\begin{solution}
+把各循环模的 \(0\to R\xrightarrow{\pi^{a_j}}R\to R/(\pi^{a_j})\to0\) 直和，再接上自由项，得到极小消解。因此 \(\beta_0=r+s\)、\(\beta_1=s\)，其余为零。
+记 \(N=R/(\pi^b)\)。Tor 是 \(N\xrightarrow{\pi^a}N\) 的核，即 \(\pi^{\max(b-a,0)}R/\pi^bR\)，同构于 \(R/(\pi^{\min(a,b)})\)。Ext 是同一乘法的余核 \(N/\pi^aN\)，也同构于 \(R/(\pi^{\min(a,b)})\)。两个同构的取得方式不同：一个由子模，一个由商模得到。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-embedded-point-resolution}
+设 \(R=k[x,y]_{(x,y)}\)、\(M=R/(x^2,xy)\)。构造其极小自由消解，计算投射维数与深度，并在 \(M\) 中找一个非零基座元素。
+\end{exercise}
+\begin{solution}
+消解为
+\[
+0\to R\xrightarrow{\binom{-y}{x}}R^2
+\xrightarrow{(x^2\quad xy)}R\to M\to0.
+\]
+若 \(ax^2+bxy=0\)，约去 \(x\) 后有 \(ax+by=0\)。模 \(x\) 得 \(b\in(x)\)，写 \(b=cx\)，则 \(a=-cy\)，故核恰为所示像；左箭头单射。微分元素均在极大理想中，消解极小，所以投射维数二。\(R\) 的深度二，公式给 \(\operatorname{depth}M=0\)。\(\bar x\ne0\)，但 \(x\bar x=y\bar x=0\)，就是所求基座元素。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-square-maximal-ideal}
+在 \(R=k[x,y]_{(x,y)}\) 中，求 \(I=(x,y)^2\) 以及 \(R/I\) 的极小自由消解和 Betti 数。
+\end{exercise}
+\begin{solution}
+\(I\) 的生成元为 \(x^2,xy,y^2\)，关系由 \((-y,x,0)\)、\((0,-y,x)\) 生成。确实，若 \(ax^2+bxy+cy^2=0\)，模 \(x\) 得 \(c=xv\)，约去 \(x\) 得 \(ax+(b+vy)y=0\)，再得 \(b+vy=xu\)、\(a=-uy\)。因此关系向量为 \(u(-y,x,0)+v(0,-y,x)\)。两向量线性独立，因为第一坐标先使 \(u=0\)，第三坐标再使 \(v=0\)。所以
+\[
+0\to R^2\xrightarrow{\left(\begin{smallmatrix}-y&0\\x&-y\\0&x\end{smallmatrix}\right)}R^3\to I\to0
+\]
+极小，\(I\) 的 Betti 数为 \((3,2)\)。接上 \(I\to R\to R/I\) 得商的极小消解，Betti 数为 \((1,3,2)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-tor-choice-matters}
+令 \(R=k[x,y]_{(x,y)}\)、\(M=R/(x)\)。分别计算
+\(\operatorname{Tor}_1^R(M,R/(y))\)、\(\operatorname{Tor}_1^R(M,M)\) 和 \(\operatorname{Tor}_1^R(M,k)\)。
+\end{exercise}
+\begin{solution}
+以 \(0\to R\xrightarrow{x}R\to M\to0\) 计算。张量 \(R/(y)\) 后乘 \(x\) 单射，所以第一个 Tor 为零。张量 \(M\) 后乘 \(x\) 为零，第二个 Tor 为 \(M\)。张量 \(k\) 后也为零，第三个 Tor 为 \(k\)。尽管第一个测试结果为零，\(M\) 的投射维数仍为一。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-dual-number-ext}
+设 \(R=k[\epsilon]/(\epsilon^2)\)。求全部 \(\operatorname{Ext}_R^i(k,k)\) 与 \(\operatorname{Ext}_R^i(k,R)\)，并说明只以 \(R\) 为第二变量测试可能漏掉什么。
+\end{exercise}
+\begin{solution}
+用正文的周期极小消解。映入 \(k\) 后微分全零，故每个 \(i\ge0\) 都有 \(\operatorname{Ext}_R^i(k,k)\cong k\)。映入 \(R\) 后仍为连续乘 \(\epsilon\) 的复形；正次数的核、像都为 \((\epsilon)\)，所以这些 Ext 全零，而零次 Hom 为 \((\epsilon)\cong k\)。后一个消失没有使 \(k\) 投射维数有限，因而不能将局部判据中的测试剩余域擅自换成 \(R\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-direct-sum-betti}
+设 \(M,N\) 为同一个交换 Noether 局部环上的有限模。证明
+\(\beta_i(M\oplus N)=\beta_i(M)+\beta_i(N)\)，并求
+\(k\oplus R/(x)\) 在 \(R=k[x,y]_{(x,y)}\) 上的 Betti 数与深度。
+\end{exercise}
+\begin{solution}
+两极小消解的有限直和仍正合、自由且极小，所以各自由秩相加。例子中两列 Betti 数为 \((1,2,1)\) 与 \((1,1)\)，和为 \((2,3,1)\)。因此投射维数二，深度为零；也可由直和含一个被极大理想零化的非零元素直接得到深度零。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-rank-euler}
+设 \(R\) 为交换 Noether 局部整环，\(M\) 为投射维数有限的有限模。证明
+\(\operatorname{rank}_RM=\sum_i(-1)^i\beta_i^R(M)\)。用它核对上题和平方极大理想的计算。
+\end{exercise}
+\begin{solution}
+把有限极小消解张量到分式域 \(K\)。局部化正合，得到有限维向量空间的正合列；将每个核的维数在相邻两项中抵消，得到末端维数等于自由秩的交错和。上题两个商模都是挠模，和的秩为零，\(2-3+1=0\)。理想 \((x,y)^2\) 的秩为一，\(3-2=1\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-completion-betti}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限模。证明完备化保持全部 Betti 数和投射维数，包括投射维数无穷的情形。
+\end{exercise}
+\begin{solution}
+\(\widehat R\) 忠实平坦，极大理想为 \(\mathfrak m\widehat R\)。把极小自由消解张量 \(\widehat R\) 后仍正合，微分仍落在新极大理想中，且自由项的秩不变；其末端为 \(M\otimes_R\widehat R\cong\widehat M\)。因此它是完备化模的极小消解。两列 Betti 数相同，其非零次数的上确界也相同。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-localization-pd-drop}
+设 \(R=k[x,y]_{(x,y)}\)、\(I=(x,y)\)。比较 \(I\) 在 \(R\) 上及 \(I_{(x)}\) 在 \(R_{(x)}\) 上的投射维数，并解释为什么局部化极小消解后不一定仍极小。
+\end{exercise}
+\begin{solution}
+正文给出 \(\operatorname{pd}_RI=1\)。在 \((x)\) 处 \(y\) 成为单位，故 \(I_{(x)}=R_{(x)}\)，投射维数零。原关系矩阵 \(\binom{-y}{x}\) 局部化后出现单位项，可以拆掉一个可收缩的自由复形；微分不再全落在 \((x)R_{(x)}\) 中。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-basechange-hypothesis}
+在 \(R=k[x,y]_{(x,y)}\) 中取 \(B=R/(x)\)。分别对 \(M=R/(y)\) 与 \(N=R/(x)\) 比较原环和商环上的消解，说明共同非零因子条件的作用。
+\end{exercise}
+\begin{solution}
+\(x\) 在 \(R\) 和 \(M\) 上均单射，故 \(M/xM=k\) 的 \(B\) 消解为 \(0\to B\xrightarrow{y}B\to k\to0\)，投射维数仍为一。
+但 \(x\) 在 \(N\) 上为零。\(N\) 原来的消解模 \(x\) 后得到零微分 \(B\xrightarrow{0}B\)，一次同调为 \(B\)，不是消解。\(N/xN=B\) 在 \(B\) 上自由，投射维数从一变成零。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-node-depth-one}
+设 \(R=k[x,y]_{(x,y)}/(xy)\)。对 \(M=R/(x)\)，确定各个极小合冲模的同构类型，核对它们的深度。
+\end{exercise}
+\begin{solution}
+第一合冲模为 \((x)\cong R/(y)\)，第二合冲模为 \((y)\cong R/(x)\)，此后交替。前一同构来自乘 \(x\) 的核为 \((y)\)，后一同理。这两个商分别是 \(k[x]_{(x)}\) 和 \(k[y]_{(y)}\)，作为 \(R\) 模深度都为一。无限消解中的深度达到环的深度后保持不变，并不迫使消解终止。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-nonfinite-warning}
+令 \(R=\mathbb Z_{(p)}\)、\(K=\mathbb Q\)。证明 \(K\) 平坦但不是有限生成 \(R\) 模，且 \(K/pK=0\)。说明为什么不能用“剩余域张量为零”在此推出 \(K=0\)。
+\end{exercise}
+\begin{solution}
+\(K\) 是 \(R\) 的局部化，故平坦。若由有限个分式生成，取它们分母中 \(p\) 的最高次数 \(a\)，生成模将包含于 \(p^{-a}R\)，但 \(p^{-a-1}\in K\) 不在其中，矛盾。由于 \(p\) 在 \(K\) 中可逆，\(pK=K\)。Nakayama 引理要求有限生成；这里既没有有限极小生成组，也不能用 \(\beta_0=0\) 的有限模结论。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:17-unit-cancellation}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环。若一个有限自由消解的某个正次微分矩阵含有单位元素，证明可以通过换基拆出一个 \(R\xrightarrow{1}R\) 直和复形。由此说明有限自由消解可以经有限步化成极小消解。
+\end{exercise}
+\begin{solution}
+把单位元素交换到左上角，再用可逆行列变换清除其同行同列的其他元素并把它化为一，微分便成为 \(\operatorname{diag}(1,D)\)。由相邻微分复合为零，上一个微分的像在这一基方向的坐标为零，下一个微分则在对应的像方向为零。因此这两个基方向单独构成一个直和复形 \(R\xrightarrow{1}R\)，其余项仍为自由消解。若位于次数一，增广映射也在被拆出的像上为零，因为增广与微分复合为零。
+每拆一次，总自由秩减少二；原消解有限且各项有限自由，所以只能拆有限次。停止后所有正次微分元素均非单位，即属于唯一极大理想 \(\mathfrak m\)，所得消解极小。
+\end{solution}

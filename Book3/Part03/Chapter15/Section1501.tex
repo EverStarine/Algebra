@@ -5,7 +5,6 @@
 \section{正则序列}
 \label{b3:sec:1501}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,19 +17,64 @@
 \subsection{模上非零因子与逐次商}
 \label{b3:subsec:1501:01}
 
-待撰写。
+一个方程对模的影响，要同时考察它删去了什么和留下了什么。乘法 \(m\mapsto xm\) 若有核，方程 \(x=0\) 已在原模中遇到被 \(x\) 零化的部分；若其商为零，则这个方程把整个模都消去了。正则序列排除这两种情形，并要求每增加一个方程后重新作同样的检查。
+
+\begin{definition}\label{b3:def:regular-sequence}
+设 \(R\) 为交换环，\(M\ne0\) 为 \(R\) 模。若乘法映射 \(M\xrightarrow{x}M\) 单射，则称 \(x\in R\) 为 \(M\) 上的\term[mo-feilingyinzi]{非零因子}[non-zero-divisor on a module]。设 \(x_1,\ldots,x_r\in R\)，记
+\[
+M_i=M/(x_1,\ldots,x_i)M,\qquad M_0=M.
+\]
+若每个 \(x_i:M_{i-1}\rightarrow M_{i-1}\) 都单射，且 \(M_r\ne0\)，则称有序组 \(x_1,\ldots,x_r\) 为一个 \(M\) 上的\term[zhengze-xulie]{正则序列}[regular sequence on a module]。取 \(M=R\) 时称为 \(R\) 的正则序列。空序列在非零模上正则。
+\end{definition}
+
+末端商非零也保证每个中间商非零，因为末端商是它们的商。非零因子只说明乘法单射，未要求乘法不满射；因此单位元是任意模上的非零因子，却不能成为正则序列的第一项。对 \(R=k[X,Y]\)，序列 \(X,Y\) 正则：第一次商是 \(k[Y]\)，其中 \(Y\) 的乘法单射，最后的商为 \(k\ne0\)。序列 \(X,XY\) 则不正则，因为 \(XY\) 在 \(R/(X)\) 中为零。
+
+\ProseParagraphBreak
+模也会改变结论。同一个 \(X\in k[X,Y]\) 在环本身上是非零因子，在模 \(k[X,Y]/(X)\) 上却把所有元素送到零。此后说“正则”时必须说明所作用的模，不能只看生成理想的表达式。
 
 \subsection{正则序列的次序}
 \label{b3:subsec:1501:02}
 
-待撰写。
+逐次取商使次序看起来不可避免。对一般环与模，次序确实可能改变正则性。例如令
+\[
+R=k[X,Y],\qquad M=R\oplus R/(X-1,Y).
+\]
+在第二个直和项上，\(X\) 作用为恒等映射，\(Y\) 作用为零。因此 \(X\) 在 \(M\) 上单射，且 \(M/XM\cong k[Y]\)，所以 \(X,Y\) 是 \(M\) 正则序列；但 \(Y\) 在 \(M\) 上已有非零核，\(Y,X\) 不是正则序列。这个例子中有一个直和项被第一步完全消去。
+
+\begin{theorem}\label{b3:thm:regular-sequence-permutation}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。若 \(x_1,\ldots,x_r\in\mathfrak m\) 是 \(M\) 正则序列，则其任意置换仍为 \(M\) 正则序列。
+\end{theorem}
+\begin{proof}
+任意置换可分解为相邻交换，只需在已经除去前面各项后的有限模 \(N\) 上交换相邻的 \(x,y\)。已知 \(x\) 在 \(N\) 上单射，\(y\) 在 \(N/xN\) 上单射。若 \(yn=0\)，则 \(n=xn_1\)；由 \(xyn_1=0\) 和 \(x\) 单射得 \(yn_1=0\)。反复进行得到 \(n\in x^aN\) 对每个 \(a\) 成立。因 \(x\in\mathfrak m\subseteq J(R)\)，\cref{b3:thm:krull-intersection}给出 \(n=0\)。故 \(y\) 在 \(N\) 上单射。
+
+若 \(xn=yn'\)，则在 \(N/xN\) 中有 \(y\bar n'=0\)，所以 \(n'=xn''\)。代回并约去 \(x\)，得到 \(n=yn''\)。这证明 \(x\) 在 \(N/yN\) 上单射。两个次序的末端商同为 \(N/(x,y)N\)，保持非零，后续逐次商也相同。因此相邻交换保持正则性。
+\end{proof}
+
+这里 Noether 性和有限性用于 Krull 交定理，元素位于极大理想中则排除了前例中单位元提前消去一部分模的现象。不能把这些假设从结论中删掉。
 
 \subsection{局部条件与理想包含条件}
 \label{b3:subsec:1501:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:regular-sequence-base-change}
+设 \(R\rightarrow S\) 为交换环之间的平坦同态，\(M\ne0\) 为 \(R\) 模，\(x_1,\ldots,x_r\) 为 \(M\) 正则序列。若
+\[
+\bigl(M/(x_1,\ldots,x_r)M\bigr)\otimes_RS\ne0,
+\]
+则其像为 \(M\otimes_RS\) 上的正则序列。特别地，忠实平坦扩张保持并反映正则序列。
+\end{proposition}
+\begin{proof}
+每一步的短正合列 \(0\rightarrow M_{i-1}\xrightarrow{x_i}M_{i-1}\rightarrow M_i\rightarrow0\) 经平坦张量后仍正合，而余核为相应的逐次商；加上给定的非零条件即得正则性。若同态忠实平坦，则非零模的张量仍非零，故这个条件自动满足。反过来，设扩张后的序列正则；每个乘法核张量后为零，由忠实性原核为零，末端商若为零，其张量也将为零，故原序列正则。
+\end{proof}
+
+因此局部化保持逐步单射；但末端商可能消失。设 \(R\) Noether、\(M\) 有限，\(I=(x_1,\ldots,x_r)\)。在 \(\mathfrak p\in\operatorname{Supp}M\cap V(I)\) 处，\cref{b3:thm:nakayama}保证 \(M_{\mathfrak p}/IM_{\mathfrak p}\ne0\)，正则序列可以在那里局部化。在不包含 \(I\) 的素理想处，某个 \(x_i\) 成为单位，末端商则为零。
+
+\ProseParagraphBreak
+也要区别“所有相关局部化上正则”与“按指定次序在原模上正则”。序列以外的支集部分可能已经被某个方程删去，而前面各步的核仍在那里存在。若要检验原来每个乘法的单射性，应在原环的全部极大理想处检验其核，而不是只检验末端商的支集。
 
 \subsection{局部有限模正则序列的非退化约定}
 \label{b3:subsec:1501:04}
 
-待撰写。
+此后局部理论的基本对象固定为 Noether 局部环 \((R,\mathfrak m)\) 上的非零有限模 \(M\)，并只从 \(\mathfrak m\) 中选取正则序列。每个有限商 \(M_i\) 若由非零的 \(M_{i-1}\) 除以 \(x_iM_{i-1}\) 得到，Nakayama 引理保证它仍非零。因此在这一范围内，检查逐次乘法单射已经足够；定义中的末端非零条件仍保留，以便在其他情形中准确使用。
+
+\ProseParagraphBreak
+对零模，所有乘法映射都单射，若允许以此构成任意长正则序列，长度便失去有限模结构的含义。本书不在零模上定义上述非退化正则序列；下一章另外约定 \(\operatorname{depth}_R0=+\infty\)，使短正合列中的深度公式统一成立。这个数值约定不改变本章的定义。

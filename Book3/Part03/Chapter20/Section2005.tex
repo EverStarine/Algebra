@@ -4,9 +4,8 @@
 
 \OptionalSection{秩一反射模、除子类群与局部阶乘性}{b3:sec:2005}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 在 Noether 正规整环上定义有限模的双对偶与反射性，说明秩一反射模与高度一局部数据的联系
 % * 以分式理想的反射包络解释除子类群的运算，比较可逆模的 Picard 群与 Weil 除子类群
@@ -19,19 +18,124 @@
 \subsection{双对偶、反射性与高度一局部数据}
 \label{b3:subsec:2005:01}
 
-待撰写。
+\begin{definition}\label{b3:def:reflexive-module}
+设 \(R\) 为交换 Noether 正规整环，\(M\) 为有限 \(R\) 模。令
+\(M^*=\operatorname{Hom}_R(M,R)\)、\(M^{**}=\operatorname{Hom}_R(M^*,R)\)。若求值映射
+\[
+M\longrightarrow M^{**},\qquad m\longmapsto\bigl(\varphi\mapsto\varphi(m)\bigr)
+\]
+为同构，则称 \(M\) 为\term[fanshemo]{反射模}[reflexive module]。若再有
+\(\dim_K(M\otimes_RK)=1\)，其中 \(K=\operatorname{Frac}(R)\)，则称其秩为一。
+\end{definition}
+
+有限投射模是反射模，因为有限自由模的求值映射为同构，这一性质可取直和项。有限无挠模的求值映射则至少为单射：把它嵌入 \(M\otimes_RK\)，选取域上线性坐标并清掉有限组生成元的分母，便得到足以分离非零元的 \(R\) 线性函数。但单射未必满射，例子 \((x,y)\subset k[x,y]\) 的双对偶将变为整个环。
+
+\begin{theorem}\label{b3:thm:reflexive-height-one}
+设 \(R\) 为交换 Noether 正规整环，\(K=\operatorname{Frac}(R)\)，\(M\) 为有限无挠 \(R\) 模，\(V=M\otimes_RK\)。在 \(V\) 中自然识别后，有
+\[
+M^{**}=\bigcap_{\operatorname{ht}\mathfrak p=1}M_{\mathfrak p}.
+\]
+特别地，\(M\) 反射当且仅当它等于右侧交集；\(M^{**}\) 总是反射模。
+\end{theorem}
+\begin{proof}
+有限展示保证 Hom 与局部化交换，故 \(M^*\otimes_RK\cong V^*\)，再对偶得到 \(M^{**}\otimes_RK\cong V\)。求值意义下，\(v\in V\) 属于 \(M^{**}\)，当且仅当对所有 \(\varphi\in M^*\)，都有 \(\varphi(v)\in R\)。利用\cref{b3:thm:normal-height-one-intersection}，这等价于对每个高度一 \(\mathfrak p\)，所有这些值均属于 \(R_{\mathfrak p}\)。
+
+又由\cref{b3:thm:hom-localization}，\((M^*)_{\mathfrak p}\cong(M_{\mathfrak p})^*\)，所以这个条件等价于 \(v\in(M_{\mathfrak p})^{**}\)。\(R_{\mathfrak p}\) 是 DVR，\cref{b3:prop:dvr-order-ideals}说明它为主理想整环；第二卷定理4.3.2“有限生成模的不变因子分解”使有限无挠模 \(M_{\mathfrak p}\) 自由。因此 \((M_{\mathfrak p})^{**}=M_{\mathfrak p}\)，得到交集公式。
+
+最后，\(M^{**}\) 有限无挠，且其高度一局部化仍为 \(M_{\mathfrak p}\)。把已证交集公式用于 \(M^{**}\)，即得 \((M^{**})^{**}=M^{**}\)。
+\end{proof}
+
+任意有限模的挠子模会被所有到 \(R\) 的同态零化，因此双对偶实际等于其无挠商的双对偶。上一定理中的无挠假设用于把原模放在同一个向量空间内，不能在有挠时省略。
 
 \subsection{分式理想的反射包络、Picard 群与除子类群}
 \label{b3:subsec:2005:02}
 
-待撰写。
+秩一有限无挠模选定 \(M\otimes_RK\cong K\) 后成为一个非零分式理想 \(I\subset K\)。这里“分式理想”指存在 \(0\ne a\in R\) 使 \(aI\subseteq R\) 的非零 \(R\) 子模；Noether 性保证它有限生成。对每个高度一 \(\mathfrak p\)，定义
+\[
+v_{\mathfrak p}(I)=\min\{v_{\mathfrak p}(f):0\ne f\in I\}.
+\]
+取有限组生成元即可求此最小值，且只有有限多个素理想处的值非零。
+
+\begin{lemma}\label{b3:lem:divisor-fractional-module}
+设 \(R\) 为交换 Noether 正规整环，\(K\) 为其分式域。对有限除子
+\(D=\sum n_{\mathfrak p}[\mathfrak p]\)，令
+\[
+I_D=\{0\}\cup\{f\in K^*:v_{\mathfrak p}(f)\ge n_{\mathfrak p}
+\text{ 对所有高度一 }\mathfrak p\}.
+\]
+则 \(I_D\) 是非零有限分式理想，且
+\((I_D)_{\mathfrak p}=\pi_{\mathfrak p}^{n_{\mathfrak p}}R_{\mathfrak p}\)，其中 \(\pi_{\mathfrak p}\) 为任一局部统一化元。因此 \(I_D\) 反射。
+\end{lemma}
+\begin{proof}
+对系数为正的有限多个素理想分别取其中一个非零元素并提升适当幂次，相乘得到 \(I_D\) 的非零元。对系数为负的素理想作同样处理，得到 \(0\ne a\in R\)，使 \(aI_D\) 的每个高度一赋值都非负，故 \(aI_D\subseteq R\)。它是 \(R\) 的理想，因而有限生成。
+
+固定高度一素理想 \(\mathfrak p\)。先取 \(f\in K^*\) 满足 \(v_{\mathfrak p}(f)=n_{\mathfrak p}\)，例如取局部统一化元的相应整数次幂。只有有限多个其他素理想 \(\mathfrak q\) 不满足 \(v_{\mathfrak q}(f)\ge n_{\mathfrak q}\)。对每个这样的 \(\mathfrak q\)，选 \(a_{\mathfrak q}\in\mathfrak q\setminus\mathfrak p\)；两素理想同为高度一且不同，所以这样的元素存在。将 \(f\) 乘以足够大的各 \(a_{\mathfrak q}\) 幂次，能修补所有不足的赋值，且不改变 \(\mathfrak p\) 处的值，也不会降低其他地方的值。所得 \(g\in I_D\) 在 \(\mathfrak p\) 处恰为所需阶数，因此局部化等式成立。交集公式随即给出 \(I_D^{**}=I_D\)。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:class-group-reflexive}
+设 \(R\) 为交换 Noether 正规整环。秩一有限反射 \(R\) 模的同构类在
+\[
+[M]\mathbin{\star}[N]=[(M\otimes_RN)^{**}]
+\]
+下组成交换群，单位为 \([R]\)，逆为 \([M^*]\)。选取分式理想表示 \(I\subset K\) 后，映射
+\[
+[I]\longmapsto\left[\sum_{\operatorname{ht}\mathfrak p=1}
+v_{\mathfrak p}(I)[\mathfrak p]\right]
+\]
+给出该群到 \(\operatorname{Cl}(R)\) 的同构。
+\end{theorem}
+\begin{proof}
+反射分式理想由其高度一局部化唯一确定。局部化到 DVR 后，张量积的阶数相加，对偶的阶数取负，故双对偶乘法、结合律、单位及逆元均由各处的整数运算确定。张量积可能有挠子，但取双对偶会先消去这些挠子，局部计算仍适用。
+
+换一个 \(I\otimes_RK\cong K\) 的识别，相当于把 \(I\) 乘以 \(f\in K^*\)，其除子增加 \(\operatorname{div}(f)\)，所以映射良定义。反之，两个分式理想之间的模同构张量到 \(K\) 后必为乘以一个非零标量；若它们的除子相差 \(\operatorname{div}(f)\)，则交集公式直接给出 \(J=fI\)，证明单射。上引理为每个除子构造 \(I_D\)，证明满射。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:picard-class-group}
+设 \(R\) 为交换 Noether 正规整环。把秩一有限投射模视为秩一反射模，得到自然单射
+\(\operatorname{Pic}(R)\hookrightarrow\operatorname{Cl}(R)\)。其像恰由那些在每个素点处都是秩一自由模的反射模类组成。
+\end{proposition}
+\begin{proof}
+有限投射模反射，两个这样的模的张量积仍投射，故上述群运算与 Picard 群运算一致。如果其类在 \(\operatorname{Cl}(R)\) 中为零，上一定理使该模同构于 \(R\)，证明单射。由于 \(R\) 为 Noether 环，此处有限模都是有限展示模，\cref{b3:thm:finite-presentation-flat-projective}和\cref{b3:lem:finite-flat-local-free}使逐点自由秩一等价于秩一有限投射性。
+\end{proof}
 
 \subsection{正则局部环的类群消失与非阶乘模型}
 \label{b3:subsec:2005:03}
 
-待撰写。
+\cref{b3:thm:regular-local-ufd}与\cref{b3:thm:class-zero-ufd}说明，正则局部环的除子类群为零。这个结论用到了比正规性更强的假设；二维锥面能给出一个非零类。
+
+\begin{example}\label{b3:exm:quadric-nonfactorial-class}
+在\cref{b3:exm:normal-quadric-cone}的环
+\(A=k[x,y,z]_{(x,y,z)}/(xy-z^2)\) 中，令 \(\mathfrak p=(\bar x,\bar z)\)。则 \(\mathfrak p\) 高度一，类 \([\mathfrak p]\in\operatorname{Cl}(A)\) 非零，且其阶为二。
+\end{example}
+\begin{proof}
+商 \(A/\mathfrak p\cong k[y]_{(y)}\) 为整环，所以 \(\mathfrak p\) 为素理想。它是 \((\bar x)\) 的唯一极小素理想，主理想定理使其高度一。在 \(A_{\mathfrak p}\) 中，\(\bar y\) 为单位，\(\bar x=\bar z^2/\bar y\)，故 \(\bar z\) 生成极大理想，
+\(v_{\mathfrak p}(\bar x)=2\)。其他高度一素理想不含 \(\bar x\)，从而
+\(\operatorname{div}(\bar x)=2[\mathfrak p]\)。
+
+若 \([\mathfrak p]=0\)，则\cref{b3:thm:class-zero-ufd}证明中针对单个高度一素理想的论证会使 \(\mathfrak p\) 为主理想。但 \(\mathfrak p/\mathfrak m\mathfrak p\) 的 \(k\) 维数为二：\(\bar x,\bar z\) 生成它，若某个非平凡常系数线性组合属于 \(\mathfrak m\mathfrak p\subseteq\mathfrak m^2\)，就与 \(\mathfrak m/\mathfrak m^2\) 中三个坐标线性独立矛盾。Nakayama 引理说明 \(\mathfrak p\) 至少需要两个生成元，故其类非零。与两倍为零结合，阶恰为二。
+\end{proof}
+
+这里 \(\operatorname{Pic}(A)=0\)，因为局部环上的有限投射模自由；但 \(\operatorname{Cl}(A)\ne0\)。所以 Picard 群到类群的单射一般不是满射。
 
 \subsection{局部阶乘性、全局主理想性与唯一分解}
 \label{b3:subsec:2005:04}
 
-待撰写。
+\begin{definition}\label{b3:def:locally-factorial-domain}
+设 \(R\) 为交换 Noether 整环。若每个素理想 \(\mathfrak q\) 处的局部环 \(R_{\mathfrak q}\) 都为唯一分解整环，则称 \(R\) 为\term[jubujiechengzhenghuan]{局部阶乘整环}[locally factorial domain]。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:locally-factorial-pic-cl}
+设 \(R\) 为交换 Noether 正规整环。则 \(R\) 局部阶乘，当且仅当
+\(\operatorname{Pic}(R)\longrightarrow\operatorname{Cl}(R)\) 为同构。
+\end{proposition}
+\begin{proof}
+设 \(R\) 局部阶乘。每个高度一素理想 \(\mathfrak p\) 的局部化，在不含它的素点处为单位理想，在包含它的素点处是 UFD 的高度一素理想，因而主生成。它作为有限模逐点自由秩一，所以为可逆理想。其除子恰为 \([\mathfrak p]\)，这些元素生成类群，故 Picard 群映射满射，结合已证单射即为同构。
+
+反之，假定映射满射。高度一素理想 \(\mathfrak p\) 本身是反射理想，因为
+\[
+\mathfrak p=\{f\in R:v_{\mathfrak p}(f)\ge1\}=I_{[\mathfrak p]}.
+\]
+其反射模类因此有一个可逆代表，上一定理给出的同构说明 \(\mathfrak p\) 也是可逆模。固定 \(\mathfrak q\)，\(R_{\mathfrak q}\) 的每个高度一素理想都来自某个 \(\mathfrak p\subseteq\mathfrak q\)，因而主生成。Noether 整环中由高度一素理想主性推出 UFD 的论证已在\cref{b3:thm:class-zero-ufd}证明，遂知每个 \(R_{\mathfrak q}\) 均为 UFD。
+\end{proof}
+
+局部阶乘性允许不同开邻域采用不同生成元；全局 UFD 则要求每个高度一素理想在整个环中主生成。Dedekind 整环总是局部阶乘，但可以有非零理想类群，例如\secref{b3:sec:1004}中的 \(\mathbb Z[\sqrt{-5}]\)。即使环已经是 UFD，也不必所有理想都主生成；\(k[x,y]\) 中的 \((x,y)\) 就不是主理想。这三种性质因而不能互换。

@@ -5,9 +5,8 @@
 \section{Cohen–Macaulay 模}
 \label{b3:sec:1901}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 深度等于维数
 % * 局部与非局部定义
@@ -17,14 +16,75 @@
 \subsection{深度等于维数}
 \label{b3:subsec:1901:01}
 
-待撰写。
+维数描述支集中素理想链的长度，深度则数出在极大理想中能够连续选取多少个非零因子。一般只有深度不超过维数；两者相等时，每次降维都能由一个不产生额外零化关系的方程完成。这种相等性比正则性宽松，因而能够容纳许多有奇点的环。
+
+\begin{definition}\label{b3:def:cohen-macaulay-module}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\) 为有限 \(R\) 模。若 \(M\ne0\) 且
+\[
+\operatorname{depth}_R M=\dim_R M,
+\]
+则称 \(M\) 为 \term[CohenMacaulaymo]{Cohen–Macaulay 模}[Cohen--Macaulay module]，简称 CM 模。也约定零模为 CM 模，但不把零模代入上述有限数值等式。若 \(R\) 作为自身的模为 CM 模，则称 \(R\) 为 \term[CohenMacaulayhuan]{Cohen–Macaulay 环}[Cohen--Macaulay ring]。
+\end{definition}
+
+这里 \(\dim_RM=\dim(R/\operatorname{Ann}_R M)\)。它未必等于 \(\dim R\)：例如 \(R=k[x,y]_{(x,y)}\) 上的 \(M=R/(x)\) 的深度和维数都为一，所以 \(M\) 是 CM 模。若非零有限模还满足 \(\operatorname{depth}_RM=\dim R\)，则称为\term[jidaCohenMacaulaymo]{极大 Cohen–Macaulay 模}[maximal Cohen--Macaulay module]。深度不超过模维数、模维数不超过环维数，保证这种模确实为 CM 模。
+
+\begin{proposition}\label{b3:prop:cm-associated-dimensions}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 CM 模，\(d=\dim_RM\)。则每个 \(\mathfrak p\in\operatorname{Ass}_RM\) 都满足 \(\dim(R/\mathfrak p)=d\)，并且
+\(\operatorname{Ass}_RM=\operatorname{Min}\operatorname{Supp}_RM\)。
+\end{proposition}
+\begin{proof}
+\cref{b3:cor:associated-depth-bound}给出
+\(d=\operatorname{depth}_RM\le\dim(R/\mathfrak p)\le\dim_RM=d\)。若 \(\mathfrak p\) 严格包含支集中的极小素理想 \(\mathfrak q\)，则在从 \(\mathfrak p\) 到 \(\mathfrak m\) 的一条最长链前添上 \(\mathfrak q\)，得到
+\(\dim(R/\mathfrak q)\ge\dim(R/\mathfrak p)+1>d\)，矛盾。反向包含由\cref{b3:prop:minimal-primes-associated}成立。
+\end{proof}
+
+所以 CM 性同时控制支集各分支的维数和嵌入关联素理想。反过来，仅知道没有嵌入关联素理想并不足以得到 CM 性；在维数至少二时，还要检查商去一个非零因子后是否仍能继续。
 
 \subsection{Cohen–Macaulay 性的局部与非局部定义}
 \label{b3:subsec:1901:02}
 
-待撰写。
+\begin{definition}\label{b3:def:global-cohen-macaulay}
+设 \(R\) 为交换 Noether 环，\(M\) 为有限 \(R\) 模。若对每个 \(\mathfrak p\in\operatorname{Supp}_RM\)，局部环 \(R_{\mathfrak p}\) 上的模 \(M_{\mathfrak p}\) 都为 CM 模，则称 \(M\) 为 CM 模。取 \(M=R\) 得到非局部环的 CM 性定义。
+\end{definition}
+
+局部定义只比较一个极大理想处的两个整数，非局部定义则逐点比较。两者是否一致，需要证明局部 CM 模在进一步局部化后仍为 CM 模；\cref{b3:thm:cm-localization}将完成这一步。完成后，检查所有极大理想便足够，但此时不以这个尚待证明的简化代替定义。
+
+\ProseParagraphBreak
+对有限直积 \(R_1\times\cdots\times R_s\)，每个素理想只来自一个因子，故该环为 CM 环当且仅当每个因子为 CM 环。不同因子的维数可以不同。这说明局部 CM 模的各分支等维结论不能原样改写成“任意 CM 环的所有连通分支维数相同”。
 
 \subsection{参数系与正则序列}
 \label{b3:subsec:1901:03}
 
-待撰写。
+\begin{definition}\label{b3:def:module-system-parameters}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限模，\(d=\dim_RM\)。若 \(x_1,\ldots,x_d\in\mathfrak m\) 且
+\(M/(x_1,\ldots,x_d)M\) 为有限长度模，则称此序列为 \(M\) 的\term[mochanshuxi]{参数系}[system of parameters for a module]。对 \(d=0\)，采用空序列。
+\end{definition}
+
+令 \(A=R/\operatorname{Ann}_RM\)。由 Nakayama 引理在各个素点处的应用，
+\[
+\operatorname{Supp}(M/IM)=\operatorname{Supp}(M)\cap V(I)
+\]
+对任意理想 \(I\subseteq R\) 成立。因此参数系等价于其像在 \(A\) 中生成一个极大理想准素理想；\cref{b3:thm:system-of-parameters}保证它存在，并保证少于 \(d\) 个元素不能达到这一要求。
+
+\begin{theorem}\label{b3:thm:cm-parameters}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模，\(d=\dim_RM\)。下列条件等价：
+\begin{equivalences}
+\item \(M\) 为 CM 模；
+\item \(M\) 的每个参数系均为 \(M\) 正则序列；
+\item \(M\) 的某个参数系为 \(M\) 正则序列。
+\end{equivalences}
+此外，在 CM 情形中，任意参数系的前 \(r\) 项所给商模仍为 CM 模，维数为 \(d-r\)。
+\end{theorem}
+\begin{proof}
+先设 \(M\) 为 CM 模，并对 \(d\) 归纳；\(d=0\) 时没有元素需要检验。取参数系 \(x_1,\ldots,x_d\)。若 \(x_1\) 属于某个 \(\mathfrak p\in\operatorname{Ass}M\)，则\cref{b3:prop:cm-associated-dimensions}给出 \(\dim R/\mathfrak p=d\)。但 \(x_2,\ldots,x_d\) 在 \(R/\mathfrak p\) 中已经生成极大理想准素理想：参数系的全部元素具有这一性质，而第一项的像为零。这与维数为 \(d\) 的局部环不能用 \(d-1\) 个参数降到维数零矛盾。
+
+所以 \(x_1\) 避开所有关联素理想，是 \(M\) 上的非零因子。\cref{b3:cor:regular-quotient-depth}和\cref{b3:prop:regular-quotient-dimension}分别给出
+\[
+\operatorname{depth}(M/x_1M)=d-1=\dim(M/x_1M).
+\]
+余下的元素为这个非零商模的参数系，归纳即可；逐次应用同一论证也得到附加结论。
+
+每个参数系正则当然推出存在一个正则参数系。若存在长度为 \(d\) 的正则参数系，则深度至少为 \(d\)，而深度不超过维数，故两者相等。
+\end{proof}
+
+这个判据的可用之处在于“每个”。在一般局部环中，参数系只保证把支集降至闭点；在 CM 模中，它同时保证每次乘法都单射。例如 \(k[x,y]_{(x,y)}/(x^2)\) 的维数为一，\(y\) 是参数又是非零因子，而环内的 \(x\) 仍为非零幂零元。CM 性并不排除幂零元。

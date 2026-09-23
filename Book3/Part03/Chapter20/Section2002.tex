@@ -5,9 +5,8 @@
 \section{Serre 正规性判据}
 \label{b3:sec:2002}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * Noether 环上 R_1 与 S_2 的组合
 % * 与局部环整闭性的等价
@@ -17,14 +16,86 @@
 \subsection{Noether 环上的 \texorpdfstring{\(R_1\)}{R1} 与 \texorpdfstring{\(S_2\)}{S2} 条件}
 \label{b3:subsec:2002:01}
 
-待撰写。
+\begin{definition}\label{b3:def:normal-noether-ring}
+设 \(R\) 为交换 Noether 环。若对每个素理想 \(\mathfrak p\)，\(R_{\mathfrak p}\) 都是在自身分式域中整闭的整环，则称 \(R\) 为\term[zhengguihuan]{正规环}[normal ring]。当 \(R\) 为整环时，这与 \(R\) 在 \(\operatorname{Frac}(R)\) 中整闭等价。
+\end{definition}
+
+整环情形的等价已由\cref{b3:prop:normality-local-detection}证明。一般正规环可以有多个分支，但一个局部环不能同时包含相交的不同分支；例如 \(k\times k\) 正规，而 \(k[x,y]_{(x,y)}/(xy)\) 不正规。本节同时处理这种非整情形。
+
+\begin{lemma}\label{b3:lem:s2-principal-associated-height}
+设 \(R\) 为满足 \(S_2\) 的交换 Noether 环，\(a\in R\) 为非零因子且非单位。则
+\[
+\mathfrak p\in\operatorname{Ass}_R(R/aR)
+\quad\Longrightarrow\quad\operatorname{ht}\mathfrak p=1.
+\]
+\end{lemma}
+\begin{proof}
+在这样的 \(\mathfrak p\) 处，\((R/aR)_{\mathfrak p}\) 深度为零，而 \(a\) 在 \(R_{\mathfrak p}\) 上仍是非零因子。\cref{b3:cor:regular-quotient-depth}给出 \(\operatorname{depth}R_{\mathfrak p}=1\)。条件 \(S_2\) 强迫 \(\dim R_{\mathfrak p}\le1\)；深度不超过维数又使其至少为一。
+\end{proof}
+
+\begin{lemma}\label{b3:lem:s2-fraction-membership}
+设 \(R\) 为满足 \(S_2\) 的交换 Noether 环，\(a\) 为 \(R\) 非零因子，\(b\in R\)。若对每个高度一素理想 \(\mathfrak p\) 都有 \(b\in aR_{\mathfrak p}\)，则 \(b\in aR\)。
+\end{lemma}
+\begin{proof}
+若 \(b\notin aR\)，则商类 \(\bar b\) 生成 \(R/aR\) 的一个非零子模，存在
+\(\mathfrak p\in\operatorname{Ass}(R\bar b)\subseteq\operatorname{Ass}(R/aR)\)。上引理使 \(\operatorname{ht}\mathfrak p=1\)。在该处子模仍非零，特别是 \(\bar b/1\ne0\)，与假设相矛盾。若 \(a\) 为单位，结论直接成立。
+\end{proof}
+
+这一步把“某个分式不是环元素”变成“在某个高度一素点已经不是环元素”。关键不是随意选择一个高度一素理想，而是利用非零商类的关联素理想；\(S_2\) 保证这个关联素理想恰好具有所需高度。
 
 \subsection{局部环整闭性与 Serre 判据}
 \label{b3:subsec:2002:02}
 
-待撰写。
+\begin{lemma}\label{b3:lem:normal-local-depth-two}
+设 \((R,\mathfrak m)\) 为交换 Noether 整闭局部整环。若 \(\dim R\ge2\)，则 \(\operatorname{depth}R\ge2\)。
+\end{lemma}
+\begin{proof}
+选 \(0\ne a\in\mathfrak m\)，它是非零因子。只需证明
+\(\mathfrak m\notin\operatorname{Ass}(R/aR)\)，然后用\cref{b3:lem:finite-prime-avoidance}在 \(\mathfrak m\) 中选第二个非零因子。
+
+若反而存在 \(b\notin aR\) 使 \(\mathfrak mb\subseteq aR\)，置 \(z=b/a\in\operatorname{Frac}(R)\setminus R\)，则 \(z\mathfrak m\subseteq R\)。假如 \(z\mathfrak m\subseteq\mathfrak m\)，对有限生成忠实模 \(\mathfrak m\) 应用\cref{b3:thm:determinant-trick}：写 \(z\) 在一组生成元上的作用矩阵，再取 \(\det(TI-A)\)，便得到零化 \(z\) 的首一 \(R\) 系数多项式。整闭性会使 \(z\in R\)，矛盾。
+
+所以有 \(u\in\mathfrak m\) 使 \(zu\in R\setminus\mathfrak m\)，即 \(zu\) 为单位。对任意 \(v\in\mathfrak m\)，
+\[
+\frac vu=\frac{zv}{zu}\in R,
+\]
+故 \(\mathfrak m=uR\)。\cref{b3:thm:principal-ideal-theorem}使 \(\dim R\le1\)，又矛盾。因此 \(R/aR\) 的极大理想不是关联素理想，存在 \(c\in\mathfrak m\) 在 \(R/aR\) 上正则，\(a,c\) 即为长度二的正则序列。
+\end{proof}
+
+\begin{theorem}[Serre 正规性判据]\label{b3:thm:serre-normality}
+设 \(R\) 为交换 Noether 环，不要求 \(R\) 为整环。则
+\[
+R\text{ 正规}\quad\Longleftrightarrow\quad R\text{ 同时满足 }R_1\text{ 与 }S_2.
+\]
+\end{theorem}
+\begin{proof}
+零环时两侧都是空条件；以下设 \(R\ne0\)。两侧都是局部条件，故可在任意给定素点处再局部化。
+
+先设 \(R\) 正规。在高度零处局部环为域；在高度一处，一维 Noether 整闭局部整环由\cref{b3:thm:dvr-characterizations}为 DVR，所以 \(R_1\) 成立。对任意素点，若局部维数为一，整环中可取非零非单位，深度至少一；若局部维数至少二，上引理给出深度至少二；维数零处无要求。这证明 \(S_2\)。
+
+反之，设 \(R_1\) 与 \(S_2\) 成立。由\cref{b3:prop:reduced-serre-criterion}，\(R\) 约化。取总分式环 \(Q(R)\) 中一个对 \(R\) 整的元素 \(z=b/a\)，其中 \(a\) 为非零因子。在每个高度一素理想 \(\mathfrak p\) 处，\(R_{\mathfrak p}\) 为 DVR，因而整闭。分式 \(b/a\) 的像仍满足同一个首一方程，所以属于 \(R_{\mathfrak p}\)。由\cref{b3:lem:s2-fraction-membership}，\(b\in aR\)，即 \(z\in R\)。这证明 \(R\) 在 \(Q(R)\) 中整闭。
+
+最后还须从总分式环的整闭性得到局部环是整环。把 \(R\) 局部化后，上述论证仍适用，因而现在可设 \(R\) 局部。\cref{b3:prop:reduced-total-quotient-product}给出
+\[
+Q(R)\cong\prod_{\mathfrak p\in\operatorname{Min}R}\operatorname{Frac}(R/\mathfrak p).
+\]
+每个坐标幂等元 \(e\) 满足 \(e^2-e=0\)，对 \(R\) 整，所以属于 \(R\)。局部环只有幂等元 \(0,1\)：若 \(e(1-e)=0\)，则 \(e\) 与 \(1-e\) 中至少一个为单位，迫使另一个为零。因此上面的乘积只能有一个因子。约化性随后使唯一极小素理想为零，\(R\) 是整环，已经证明的总分式环整闭性就是分式域整闭性。各点局部环都如此，故原环正规。
+\end{proof}
+
+上述\term[Serre-zhenggui-xing-panju]{Serre 正规性判据}[Serre's criterion for normality]可与松村英之的证明比较\cite[Theorem 23.8, pp. 183--184]{Matsumura1989CommutativeRingTheory}。非整情形中的幂等元步骤不能省略，否则只能证明“在总分式环中整闭”，还没有解释不同分支为什么不能在局部相交。
 
 \subsection{非零因子与深度方法}
 \label{b3:subsec:2002:03}
 
-待撰写。
+\begin{corollary}\label{b3:cor:normal-product-domains}
+非零交换 Noether 环 \(R\) 正规，当且仅当它是有限个 Noether 整闭整环的直积。
+\end{corollary}
+\begin{proof}
+若 \(R\) 正规，定理证明已说明它约化且在总分式环中整闭。总分式环的各坐标幂等元 \(e_1,\ldots,e_s\) 都属于 \(R\)，于是
+\(R\cong Re_1\times\cdots\times Re_s\)。每个 \(Re_i\) 嵌入相应的分式域，是 Noether 整环；若该分式域中的元素对 \(Re_i\) 整，把它放在第 \(i\) 个坐标、其余坐标置零，便得到对 \(R\) 整的元素，所以仍在 \(Re_i\) 中。反向由直积环的每个局部环都是一个因子的局部环得到。
+\end{proof}
+
+判据中的各个条件因而各有明确作用。Noether 性保证关联素理想有限、商模有可选的关联素理想，并使行列式技巧作用于有限生成极大理想。\(R_1\) 使高度一局部环成为整闭的 DVR。\(S_2\) 则保证分母清不掉的障碍已经出现在高度一处，而不是只藏在较高余维。
+
+\ProseParagraphBreak
+这也解释了为什么不能只凭“奇点集合余维至少二”就断言正规：该句话至多提供 \(R_1\)，还必须另有 \(S_2\)。例如 CM 环自动提供 \(S_2\)，于是对 CM 环，正规性确实等价于 \(R_1\)；两张平面只在一点相交的例子正是缺少这项深度条件。

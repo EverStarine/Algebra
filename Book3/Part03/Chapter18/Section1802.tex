@@ -5,9 +5,7 @@
 \section{同调刻画}
 \label{b3:sec:1802}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 剩余域的有限投射维数
 % * Auslander–Buchsbaum–Serre 正则性判据
@@ -17,14 +15,82 @@
 \subsection{剩余域的有限投射维数}
 \label{b3:subsec:1802:01}
 
-待撰写。
+如果 \(R\) 是 \(d\) 维正则局部环，极大理想的一组极小生成元是正则序列。其 Koszul 复形是剩余域的极小自由消解，故
+\begin{equation}\label{b3:eq:regular-residue-betti}
+\operatorname{pd}_Rk=d,\qquad \beta_i^R(k)=\binom di.
+\end{equation}
+真正困难的是反向：自由消解能够终止，为什么会迫使极大理想恰有 \(d\) 个生成元？下面先准备一个选择元素的步骤。
+
+\begin{lemma}\label{b3:lem:linear-regular-element-choice}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(\mathfrak m\ne0\) 且 \(\operatorname{depth}R>0\)。则存在
+\(x\in\mathfrak m\setminus\mathfrak m^2\) 在 \(R\) 上为非零因子。
+\end{lemma}
+\begin{proof}
+正深度保证 \(\mathfrak m\notin\operatorname{Ass}R\)。从有限个关联素理想中只保留包含极大的那些，记为 \(\mathfrak p_1,\ldots,\mathfrak p_s\)，它们两两不包含。Nakayama 引理使 \(\mathfrak m\ne\mathfrak m^2\)，取 \(y\in\mathfrak m\setminus\mathfrak m^2\)。
+
+对每个满足 \(y\in\mathfrak p_i\) 的指标，选 \(a_i\in\mathfrak m\setminus\mathfrak p_i\)，并对 \(j\ne i\) 选 \(b_{ij}\in\mathfrak p_j\setminus\mathfrak p_i\)。令
+\(w_i=a_i^2\prod_{j\ne i}b_{ij}\)。则 \(w_i\in\mathfrak m^2\)，它不在 \(\mathfrak p_i\) 中，却在其余所有 \(\mathfrak p_j\) 中。于是
+\(x=y+\sum_{y\in\mathfrak p_i}w_i\)
+模 \(\mathfrak m^2\) 与 \(y\) 相同，并避开每个 \(\mathfrak p_i\)：若 \(y\in\mathfrak p_i\)，唯一不属于该素理想的加项为 \(w_i\)；否则全部修正项均属于它。关联素理想检验使 \(x\) 为非零因子。这个构造不要求剩余域无限。
+\end{proof}
 
 \subsection{Auslander–Buchsbaum–Serre 正则性判据}
 \label{b3:subsec:1802:02}
 
-待撰写。
+\begin{theorem}[Auslander–Buchsbaum–Serre]\label{b3:thm:regular-local-global-dimension}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环。则 \(R\) 正则，当且仅当 \(\operatorname{pd}_Rk<\infty\)。此时每个 \(R\) 模的投射维数至多 \(\dim R\)，并且
+\[
+\operatorname{gldim}R=\operatorname{pd}_Rk=\dim R,
+\qquad
+\operatorname{gldim}R\coloneqq\sup_{M}\operatorname{pd}_RM,
+\]
+其中上确界取遍全部 \(R\) 模，包括非有限生成模。
+\end{theorem}
+
+这称为\term[auslander-buchsbaum-serre-panju]{Auslander–Buchsbaum–Serre 正则性判据}[Auslander--Buchsbaum--Serre criterion]；\(\operatorname{gldim}R\) 称为环的\term[zhengti-weishu]{整体维数}[global dimension]。下面先证明等价性，随后补上从有限模到所有模的步骤。这一证明依照\cite[Theorem 19.2, pp. 156--157]{Matsumura1989CommutativeRingTheory}中对极大理想的处理。
+
+\begin{proof}[\cref{b3:thm:regular-local-global-dimension}的证明]
+正则性推出 \(\operatorname{pd}_Rk=d\) 已由\eqref{b3:eq:regular-residue-betti}得到。反过来假设 \(\operatorname{pd}_Rk<\infty\)，对嵌入维数 \(e\) 归纳。\(e=0\) 时 Nakayama 引理给 \(\mathfrak m=0\)，环为域。
+
+设 \(e>0\)。若 \(k\) 投射，则它有限自由；模 \(\mathfrak m\) 后比较秩可知秩为一，故 \(\operatorname{Ann}_Rk=0\)，从而 \(\mathfrak m=0\)，矛盾。因此 \(\operatorname{pd}_Rk>0\)，Auslander–Buchsbaum 公式及 \(\operatorname{depth}_Rk=0\) 给 \(\operatorname{depth}R>0\)。由\cref{b3:lem:linear-regular-element-choice}取正则元 \(x\in\mathfrak m\setminus\mathfrak m^2\)，令 \(B=R/(x)\)、\(\mathfrak n=\mathfrak m/(x)\)。
+
+短正合列 \(0\to\mathfrak m\to R\to k\to0\) 说明 \(\mathfrak m\) 投射维数有限。\(x\) 在 \(\mathfrak m\subseteq R\) 上也为非零因子，故\cref{b3:lem:regular-element-resolution-basechange}使 \(\mathfrak m/x\mathfrak m\) 成为有限投射维数的 \(B\) 模。
+
+必须注意 \(\mathfrak m/x\mathfrak m\) 并不等于 \(\mathfrak n\)。把 \(x\) 扩充为极小生成组 \(x,x_2,\ldots,x_e\)，令 \(\mathfrak b=(x_2,\ldots,x_e)\)。若 \(xa\in\mathfrak b\) 且 \(a\) 为单位，则 \(x\in\mathfrak b\)，违反极小性。因此
+\(\mathfrak b\cap xR\subseteq x\mathfrak m\)，从而自然映射
+\[
+\mathfrak n\cong\mathfrak b/(\mathfrak b\cap xR)
+\longrightarrow\mathfrak m/x\mathfrak m
+\longrightarrow\mathfrak m/xR=\mathfrak n
+\]
+的复合为恒等。\(\mathfrak n\) 是直和因子，故由\cref{b3:cor:residue-pd-bound}的直和因子结论，它在 \(B\) 上投射维数有限。给 \(\mathfrak n\) 的有限自由消解末端接上
+\(0\to\mathfrak n\to B\to k\to0\)，便知 \(\operatorname{pd}_Bk<\infty\)。
+
+\(B\) 的嵌入维数为 \(e-1\)，由归纳它正则。又因 \(x\) 为非零因子，\cref{b3:prop:regular-quotient-dimension}给
+\(\dim R=\dim B+1=e\)。所以 \(R\) 正则。由\cref{b3:cor:residue-pd-bound}，所有有限 \(R\) 模的投射维数至多 \(d\)。下一小节的\cref{b3:lem:cyclic-global-dimension-test}把此界推广到所有模，得到 \(\operatorname{gldim}R\le d\)；取 \(M=k\) 得反向不等式。
+\end{proof}
 
 \subsection{正则局部环的整体维数}
 \label{b3:subsec:1802:03}
 
-待撰写。
+有限模上的统一界并不靠“每个模都是有限模的并”直接推广；自由性和投射性不由任意有向并保持。需要使用内射对象检验 Ext。
+
+\begin{lemma}\label{b3:lem:cyclic-global-dimension-test}
+设 \(R\) 为交换环，\(n\ge0\)。若对每个理想 \(I\subseteq R\)，有 \(\operatorname{pd}_R(R/I)\le n\)，则对每个 \(R\) 模 \(M\)，均有 \(\operatorname{pd}_RM\le n\)。
+\end{lemma}
+\begin{proof}
+这里使用第二卷第7.2节已经证明的 Baer 判据和足够多内射模定理：每个模能嵌入内射模，且模 \(E\) 内射恰好等价于每个 \(I\to E\) 能延拓到 \(R\)。后一条件由 \(0\to I\to R\to R/I\to0\) 的 Hom 长正合列，等价于 \(\operatorname{Ext}_R^1(R/I,E)=0\) 对全部理想成立。
+
+固定任意模 \(N\)，连续把它及所得余核嵌入内射模，得到
+\(0\to N\to E^0\to\cdots\to E^{n-1}\to C\to0\)；\(n=0\) 时取 \(C=N\)。内射模使正次 \(\operatorname{Ext}_R^i(M,E^j)\) 为零，因为 \(\operatorname{Hom}_R(-,E^j)\) 正合。沿第二变量的长正合列平移，得到
+\[
+\operatorname{Ext}_R^1(R/I,C)
+\cong\operatorname{Ext}_R^{n+1}(R/I,N)=0.
+\]
+Baer 判据使 \(C\) 内射。因此对任意 \(M\)，同样平移给出
+\(\operatorname{Ext}_R^{n+1}(M,N)\cong\operatorname{Ext}_R^1(M,C)=0\)。这对任意 \(N\) 成立。
+
+取 \(M\) 的自由消解，截到第 \(n\) 个合冲模 \(K\)。第一变量的维数平移给 \(\operatorname{Ext}_R^1(K,N)=0\) 对所有 \(N\) 成立；\secref{b3:sec:1702}中已说明，这使到 \(K\) 的自由满射分裂，故 \(K\) 投射。于是截断的序列是长度 \(n\) 的投射消解。
+\end{proof}
+
+这就完成了前一定理最后一步的依据。它同时说明为何整体维数不能在定义中悄悄只取有限模：两个上确界相等是一条需要证明的结论。

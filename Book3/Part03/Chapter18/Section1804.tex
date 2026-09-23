@@ -5,9 +5,7 @@
 \section{正则局部环的阶乘性}
 \label{b3:sec:1804}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 证明正则局部环是唯一分解整环，先把目标化为高度一素理想的主性；完整保留 Noether 局部假设
 % * 准备所需行列式线引理：利用有限自由消解控制主开集上的可逆模；在使用处明确有限展示模延拓与局部化正合性的论证
@@ -19,24 +17,97 @@
 \subsection{唯一分解与高度一素理想的主性}
 \label{b3:subsec:1804:01}
 
-待撰写。
+第一卷的唯一分解理论把元素的分解归结为不可约元素是否为素元。在 Noether 整环中，还可以把目标改写为高度一素理想的主性。这一形式便于在局部化中比较。
+
+\begin{proposition}\label{b3:prop:height-one-ufd-criterion}
+交换 Noether 整环 \(A\) 是唯一分解整环，当且仅当每个高度一素理想都是主理想。
+\end{proposition}
+\begin{proof}
+若 \(A\) 是唯一分解整环，取高度一素理想 \(\mathfrak p\) 中的非零元并将它分解为素元之积。至少一个素元 \(a\) 属于 \(\mathfrak p\)，于是
+\((0)\subsetneq(a)\subseteq\mathfrak p\)。高度一迫使 \(\mathfrak p=(a)\)。
+
+反过来，Noether 性保证每个非零非单位可分解为有限个不可约元素：否则反复选取仍不能分解的真因子，得到严格递增的主理想链，违反升链条件。取不可约元 \(a\)，并取 \((a)\) 上的极小素理想 \(\mathfrak p\)。主理想定理及整性给 \(\operatorname{ht}\mathfrak p=1\)，故 \(\mathfrak p=(b)\)。写 \(a=bc\)，其中 \(b\) 非单位，由不可约性知 \(c\) 为单位。所以 \((a)=\mathfrak p\)，\(a\) 为素元。所有不可约元素都是素元，分解存在且唯一到次序与单位。
+\end{proof}
+
+判据及下面的下降步骤可对照\cite[Theorems 20.1--20.2, pp. 161--162]{Matsumura1989CommutativeRingTheory}。高度一的局部计算还不能直接给出全局生成元；以下行列式论证专门处理这个问题。
 
 \subsection{行列式线与主开集上的可逆模}
 \label{b3:subsec:1804:02}
 
-待撰写。
+第二卷第9.2—9.3节已经建立外幂、直和的外幂分解和行列式线。对交换整环 \(A\) 上常秩 \(r\) 的有限投射模 \(P\)，记
+\(\det P=\bigwedge_A^rP\)，并约定 \(\det0=A\)。它是秩一投射模；局部取基即可验证这一点。秩一有限投射模也称可逆模，其对偶是张量逆。
+
+\begin{lemma}\label{b3:lem:determinant-finite-free-resolution}
+设 \(A\) 为交换整环，\(L\) 为秩一有限投射 \(A\) 模。若 \(L\) 具有有限自由消解，则 \(L\cong A\)。
+\end{lemma}
+\begin{proof}
+设消解为 \(0\to F_s\to\cdots\to F_0\to L\to0\)，令 \(K_0=L\)，并把它分成
+\(0\to K_{i+1}\to F_i\to K_i\to0\)。由于 \(K_0\) 投射，第一列分裂，\(K_1\) 是有限自由模的直和项，故有限投射。依次进行，所有 \(K_i\) 有限投射，最后 \(K_s\cong F_s\)。其秩为常数：局部自由秩都等于张量到分式域后的维数。
+
+对分裂短正合列 \(0\to P\to F\to Q\to0\)，取一个截面得 \(F\cong P\oplus Q\)。第二卷的直和外幂公式在最高次给出
+\(\det F\cong\det P\otimes_A\det Q\)。这个同构不依赖截面：局部以 \(P\) 的基开头，再接 \(Q\) 的基的提升；改变提升只是给后面的列加上前面列的线性组合，最高楔积不变。局部同构因而相容，给出全局同构。
+
+把各短正合列的行列式等式依次代入，得到
+\[
+L=\det L\cong
+\det F_0\otimes(\det F_1)^*\otimes\det F_2
+\otimes\cdots\otimes(\det F_s)^{(-1)^s},
+\]
+其中负指数表示取对偶。每个 \(F_i\) 自由，其最高外幂也自由秩一，右边因而同构于 \(A\)。
+\end{proof}
+
+\begin{lemma}\label{b3:lem:principal-open-invertible-free}
+设 \(R\) 为交换 Noether 正则局部环，\(0\ne f\in R\)。每个可逆 \(R_f\) 模都自由秩一；换言之，\(\operatorname{Pic}(R_f)=0\)。
+\end{lemma}
+\begin{proof}
+给定可逆模 \(L\)，它有限投射，故有限展示。选展示矩阵
+\(D:R_f^a\to R_f^b\)，使 \(L\cong\operatorname{coker}D\)。只有有限个矩阵元素，可取一个共同分母 \(f^N\)，使 \(D'=f^ND\) 的元素全在 \(R\) 中。令
+\(M=\operatorname{coker}(D':R^a\to R^b)\)。局部化后 \(f^N\) 为单位，两个矩阵有相同像，故 \(M_f\cong L\)。这说明延拓的是一个有限展示模，不是先假定 \(L\) 能延拓为自由或投射模。
+
+由\cref{b3:thm:regular-local-global-dimension}，有限模 \(M\) 有有限投射维数；其极小消解各项有限自由，故是有限自由消解。局部化保持正合，把它变为 \(L\) 的有限自由 \(R_f\) 消解。\(R_f\) 是整环，由\cref{b3:lem:determinant-finite-free-resolution}，\(L\cong R_f\)。
+\end{proof}
 
 \subsection{正则参数、维数归纳与秩一模}
 \label{b3:subsec:1804:03}
 
-待撰写。
+现在取 \(d\) 维正则局部环 \((R,\mathfrak m)\)、\(d>0\)，选
+\(x\in\mathfrak m\setminus\mathfrak m^2\)。由\cref{b3:cor:regular-parameter-quotient}，\(R/(x)\) 正则，因而由\cref{b3:prop:regular-local-domain}为整环。所以 \(x\) 不仅是非零因子，还是素元。
+
+\ProseParagraphBreak
+假设较低维的正则局部环都已知为唯一分解整环。对任意非极大素理想 \(\mathfrak q\)，局部环 \(R_{\mathfrak q}\) 正则，而且维数小于 \(d\)：其素链在 \(R\) 中末端还可接上 \(\mathfrak m\)。因此维数归纳适用于所有这样的点。
+
+\begin{lemma}\label{b3:lem:prime-generator-descends}
+设 \(R\) 为交换 Noether 整环，\(x\) 为素元，\(\mathfrak p\) 为不含 \(x\) 的素理想。若 \(\mathfrak pR_x\) 主生成，则 \(\mathfrak p\) 主生成。
+\end{lemma}
+\begin{proof}
+把局部生成元乘一个 \(x\) 的幂，可写成 \(f\in\mathfrak p\)，且 \(\mathfrak pR_x=fR_x\)。若 \(x\mid f\)，约去一次 \(x\) 后的元仍属于 \(\mathfrak p\)，因为它素且不含 \(x\)。这个约去过程不能无限继续，否则得到严格递增的主理想链。故可选 \(f\notin xR\)。
+
+对 \(z\in\mathfrak p\)，局部等式给出 \(x^nz=fh\)，其中 \(h\in R\)、\(n\ge0\)。若 \(n>0\)，\(x\) 素且不整除 \(f\)，故 \(x\mid h\)。约去一个 \(x\) 并重复，得到 \(h=x^nh'\)，于是 \(z=fh'\)。这证明 \(\mathfrak p\subseteq fR\)，反向包含由 \(f\in\mathfrak p\) 显然。
+\end{proof}
 
 \subsection{局部主性与主开集上的自由性}
 \label{b3:subsec:1804:04}
 
-待撰写。
+设 \(\mathfrak p\) 为高度一素理想且 \(x\notin\mathfrak p\)。在 \(R_x\) 的任意素点 \(\mathfrak qR_x\) 处，\(\mathfrak q\ne\mathfrak m\)。若 \(\mathfrak p\nsubseteq\mathfrak q\)，局部化后的理想是整个 \(R_{\mathfrak q}\)；若 \(\mathfrak p\subseteq\mathfrak q\)，它仍是高度一素理想，较低维的唯一分解性使它主生成。因此 \(\mathfrak pR_x\) 在每个素点都自由秩一。
+
+\ProseParagraphBreak
+这里有两次不同的推论。首先，\(R_x\) Noether 使 \(\mathfrak pR_x\) 有限展示，\cref{b3:thm:finite-presentation-flat-projective}才允许从各点自由推出它是可逆模。其次，\cref{b3:lem:principal-open-invertible-free}利用原环 \(R\) 的有限自由消解，才把这个可逆模变成 \(R_x\) 上的自由模。前一步本身没有产生全局基。
+
+\ProseParagraphBreak
+第二步不能从论证中省去。\chapref{b3:ch:10}中 \(\mathbb Z[\sqrt{-5}]\) 的理想 \((2,1+\sqrt{-5})\) 在各素点局部主生成，却不是主理想。局部主性的结论在该例中完全成立，缺少的正是保证可逆模自由的进一步条件。
 
 \subsection{正则局部环阶乘性的证明及其与除子的联系}
 \label{b3:subsec:1804:05}
 
-待撰写。
+\begin{theorem}\label{b3:thm:regular-local-ufd}
+每个交换 Noether 正则局部环都是唯一分解整环。
+\end{theorem}
+\begin{proof}
+由\cref{b3:prop:regular-local-domain}，它首先是整环。对维数 \(d\) 归纳。\(d=0\) 时为域。设 \(d>0\)，取 \(x\in\mathfrak m\setminus\mathfrak m^2\)。\cref{b3:cor:regular-parameter-quotient}及\cref{b3:prop:regular-local-domain}使 \(x\) 为素元。
+
+取高度一素理想 \(\mathfrak p\)。若 \(x\in\mathfrak p\)，则非零素理想 \((x)\subseteq\mathfrak p\) 由高度一得到相等。若 \(x\notin\mathfrak p\)，对每个 \(R_x\) 素点，\cref{b3:thm:regular-local-localization}及维数归纳使其局部环为唯一分解整环。因此上一小节的两步论证适用：\(\mathfrak pR_x\) 是可逆模，继而由\cref{b3:lem:principal-open-invertible-free}为自由秩一，故主生成。\cref{b3:lem:prime-generator-descends}再使 \(\mathfrak p\) 在 \(R\) 中主生成。
+
+所有高度一素理想都已主生成，\cref{b3:prop:height-one-ufd-criterion}给出唯一分解性。
+\end{proof}
+
+这一同调证明的经典形式见\cite[Theorem 20.3, pp. 163--164]{Matsumura1989CommutativeRingTheory}。它把自由消解用于控制秩一模，进而回到元素分解。到\chapref{b3:ch:20}讨论除子时，高度一素理想将成为除子的基本组成部分；本节已经证明，在正则局部环中这些组成部分都由一个元素给出。

@@ -5,9 +5,8 @@
 \section{概形理论专题简介}
 \label{b3:sec:2404}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 分离性、有限型及固有性（properness）的学习地图
 % * 层上同调简介
@@ -19,14 +18,112 @@
 \subsection{分离性、有限型与固有性}
 \label{b3:subsec:2404:01}
 
-待撰写。
+前面构造了概形和具体黏合。进一步研究态射时，需要同时比较一个空间与所有可能的基变换。为此先说明纤维积；它在仿射环上就是已经熟悉的张量积。
+
+\begin{definition}\label{b3:def:scheme-fiber-product}
+设 \(X,Y\) 都带有到概形 \(T\) 的态射。带相容投影 \(P\rightarrow X\)、\(P\rightarrow Y\) 的概形 \(P\)，若对任意概形 \(Z\)，每对在 \(T\) 上相容的态射 \(Z\rightarrow X\)、\(Z\rightarrow Y\) 都唯一经过 \(Z\rightarrow P\)，则称 \(P\) 为\term[xianwei-ji]{纤维积}[fiber product]，记为 \(X\times_TY\)。投影 \(X\times_TY\rightarrow Y\) 称为 \(X\rightarrow T\) 沿 \(Y\rightarrow T\) 的基变换。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:scheme-fiber-products-exist}
+概形的纤维积存在，并在保留投影的意义下唯一。对交换环同态 \(A\rightarrow B\)、\(A\rightarrow C\)，有
+\[
+\operatorname{Spec}B\times_{\operatorname{Spec}A}\operatorname{Spec}C
+\cong\operatorname{Spec}(B\otimes_AC).
+\]
+\end{proposition}
+\begin{proof}
+先把\cref{b3:thm:affine-scheme-hom}稍作扩展：对任意概形 \(Z\)，态射 \(Z\rightarrow\operatorname{Spec}A\) 与环同态 \(A\rightarrow\Gamma(Z,\mathcal O_Z)\) 对应。给定环同态后，在 \(Z\) 的各仿射开集上使用该定理；限制到重叠的更小仿射开集时，两者由相同的截面限制决定，所以能唯一黏合。这也证明此扩展的唯一性。张量积的泛性质现在直接给出上式，包括以任意 \(Z\) 检验的纤维积性质。
+
+若 \(X\times_TY\) 已存在，则 \(X\) 的开子概形 \(U\) 在第一投影下的原像具有 \(U\times_TY\) 的泛性质。假设 \(X\) 有开覆盖 \(X_i\)，且各 \(X_i\times_TY\) 存在；在重叠处，这些空间的开子概形都表示同一个纤维积，故由泛性质唯一同构。唯一性还保证三重交集的余圈条件。黏合它们并黏合投影，所得空间对任意 \(Z\) 可在 \(Z\rightarrow X\) 的开原像上检验泛性质，因此是 \(X\times_TY\)。
+
+从仿射环公式出发，先在 \(T,Y\) 仿射时对 \(X\) 使用这一黏合步骤，再交换 \(X,Y\)，处理 \(T\) 仿射的一般情形。最后把 \(T\) 作仿射开覆盖，同时限制 \(X,Y\) 后再次黏合。存在性成立；任意两个实现由泛性质给出互逆同构。
+\end{proof}
+
+这也解释为何纤维积的点集通常不是点集纤维积。例如
+\(\operatorname{Spec}\mathbb C\times_{\operatorname{Spec}\mathbb R}\operatorname{Spec}\mathbb C\)
+由 \(\mathbb C\otimes_{\mathbb R}\mathbb C\cong\mathbb C\times\mathbb C\) 给出两个点，而两个因子的底空间各只有一个点。
+
+\begin{definition}\label{b3:def:separated-finite-type-proper}
+设 \(f:X\rightarrow Y\) 为概形态射。若它把 \(X\) 同胚地识别为 \(Y\) 的闭子空间，且层同态 \(\mathcal O_Y\rightarrow f_*\mathcal O_X\) 满射，则称它为闭嵌入。若对角态射 \(\Delta_f:X\rightarrow X\times_YX\) 是闭嵌入，则称 \(f\) 具有\term[fenli-xing]{分离性}[separatedness]。若对每个仿射开集 \(V=\operatorname{Spec}A\subseteq Y\)，其原像可被有限个仿射开集 \(\operatorname{Spec}B_i\) 覆盖，且各 \(B_i\) 为有限型 \(A\) 代数，则称 \(f\) 为有限型态射。若 \(f\) 分离、有限型，且沿任意 \(Y'\rightarrow Y\) 基变换后的映射都把闭集送到闭集，则称 \(f\) 具有\term[guyou-xing]{固有性}[properness]，或称为固有态射。
+\end{definition}
+
+在仿射情形中，对角对应乘法满射 \(B\otimes_AB\rightarrow B\)，所以两个仿射概形之间的态射分离。双原点直线却不分离：在来自两张不同仿射图的乘积 \(\operatorname{Spec}k[s,t]\) 中，对角的交是直线 \(s=t\) 去掉原点，缺少的原点对应两个不同原点组成的一对点。这一集合不闭。
+
+\ProseParagraphBreak
+有限环映射给出固有态射。它有限型，且源与目标均仿射，故分离；有限性经任意张量基变换保持。对有限环扩张中的闭集 \(V(J)\)，商环仍整于底环除以收缩理想，由\cref{b3:thm:lying-over}其像恰为 \(V(J\cap A)\)。任意概形基变换后，在基底的仿射开覆盖上应用此计算，便知所得映射仍闭。另一方面，\(\mathbb A_k^1\rightarrow\operatorname{Spec}k\) 虽分离且有限型，却不固有：沿 \(\mathbb A_k^1\) 基变换后，闭集 \(xy=1\) 的投影为 \(D(x)\)，它不是闭集。
+
+\ProseParagraphBreak
+射影空间为何能补足这一缺陷，是后续几何中的重要结果。本节引用如下标准结论：Noether 概形之间，能够分解为到某个 \(\mathbb P_Y^r\) 的闭嵌入再接投影的态射是固有的。其一般证明使用赋值判据，见\cite[Chapter II, Theorems 4.7 and 4.9, pp. 101--104]{Hartshorne1977}；本章不把这一定理算作已经由上面的有限映射例子证明。固有性的定义本身见同书\cite[Chapter II, p. 100]{Hartshorne1977}。
 
 \subsection{层上同调简介}
 \label{b3:subsec:2404:02}
 
-待撰写。
+层公理解决相容截面的黏合，却不保证局部存在的原像能够选得相容。全局截面函子保持核，但可能把层的满射变成不满射；层上同调记录这种差别。
+
+\begin{definition}\label{b3:def:sheaf-cohomology}
+设 \(X\) 为拓扑空间，\(\mathcal F\) 为交换群层。取层范畴中的内射消解 \(0\rightarrow\mathcal F\rightarrow\mathcal I^\bullet\)，定义
+\[
+H^i(X,\mathcal F)=H^i\bigl(\Gamma(X,\mathcal I^\bullet)\bigr).
+\]
+这些群称为 \(\mathcal F\) 的\term[ceng-shangtongdiao]{层上同调}[sheaf cohomology]；特别地 \(H^0(X,\mathcal F)=\Gamma(X,\mathcal F)\)。
+\end{definition}
+
+上述层范畴有足够多内射对象，比较映射保证定义不依赖消解。存在性可从各点的茎嵌入内射群后，取相应直像层的乘积得到；一般证明与环模层的比较见\cite[Chapter III, Proposition 2.2, Corollary 2.3 and Proposition 2.6, pp. 207--208]{Hartshorne1977}。本小节只说明定义及一个可算的实例，不建立完整的层上同调理论。
+
+\ProseParagraphBreak
+短正合列 \(0\rightarrow\mathcal F'\rightarrow\mathcal F\rightarrow\mathcal F''\rightarrow0\) 诱导自然的长正合列
+\[
+0\rightarrow H^0(X,\mathcal F')\rightarrow H^0(X,\mathcal F)
+\rightarrow H^0(X,\mathcal F'')\xrightarrow{\delta}
+H^1(X,\mathcal F')\rightarrow H^1(X,\mathcal F)\rightarrow\cdots.
+\]
+构造与\secref{b3:sec:2201}中的导出函子相同：先把两端嵌入内射对象，再取直和为中间项，逐次对余核重复，得到逐项分裂的内射消解短正合列。取全局截面仍逐项分裂，随后用复形的连接同态即得上述序列。尤其 \(\delta\) 把局部可提升、全局未必可提升的截面送到它的障碍类。
+
+\ProseParagraphBreak
+对开覆盖 \(\mathfrak U=(U_i)\)，把各重叠上的截面组成复形
+\[
+\check C^p(\mathfrak U,\mathcal F)
+=\prod_{i_0<\cdots<i_p}\mathcal F(U_{i_0}\cap\cdots\cap U_{i_p}),
+\qquad
+(\delta s)_{i_0\cdots i_{p+1}}
+=\sum_{\nu=0}^{p+1}(-1)^\nu
+s_{i_0\cdots\widehat{i_\nu}\cdots i_{p+1}}|.
+\]
+末尾的限制取到共同交集。删除两指标的两种次序符号相反，故 \(\delta^2=0\)。其零次核就是全局截面，但高次同调不对任意覆盖自动等于刚定义的 \(H^i\)。
+
+\ProseParagraphBreak
+下面采用明确的外部比较定理：若 \(X\) 是 Noether 分离概形，\(\mathcal F\) 拟凝聚，\(\mathfrak U\) 是仿射开覆盖，则该 Čech 复形计算 \(H^i(X,\mathcal F)\)。它依赖仿射概形上拟凝聚层的正次上同调消失；两条结果分别见\cite[Chapter III, Theorem 3.5, p. 215; Theorem 4.5, p. 222]{Hartshorne1977}。它们的范围包括下面的射影直线与两张标准仿射图。
+
+\begin{proposition}\label{b3:prop:projective-line-cohomology}
+设 \(k\) 为域，\(n\in\mathbb Z\)。在 \(X=\mathbb P_k^1\) 上，
+\[
+\dim_kH^0(X,\mathcal O_X(n))=\max\{n+1,0\},\qquad
+\dim_kH^1(X,\mathcal O_X(n))=\max\{-n-1,0\},
+\]
+且 \(H^i(X,\mathcal O_X(n))=0\) 对 \(i\ge2\) 成立。
+\end{proposition}
+\begin{proof}
+用两张标准图及上一小节的生成元 \(e_1=t^ne_0\)，Čech 复形只有两项，其微分可写为
+\[
+k[t]\oplus k[t^{-1}]\longrightarrow k[t,t^{-1}],
+\qquad (a,b)\longmapsto a-t^nb.
+\]
+改变整个微分的符号不影响核与余核。核已在上一节算出：\(n\ge0\) 时由 \(1,t,\ldots,t^n\) 参数化，\(n<0\) 时为零。余核为
+\[
+\frac{k[t,t^{-1}]}{k[t]+t^nk[t^{-1}]}.
+\]
+分母包含指数 \(j\ge0\) 以及 \(j\le n\) 的全部单项式。留下的基恰为 \(t^j\)、\(n<j<0\)，故维数是 \(\max\{-n-1,0\}\)。没有更高的 Čech 项；由刚引用的比较定理，所得即为层上同调。
+\end{proof}
+
+例如 \(H^1(\mathbb P_k^1,\mathcal O(-2))\) 由 \(t^{-1}\) 表示。它说明交集上存在不能写成两张图中截面之差的元素，这是一项真正的黏合障碍，而非仅仅引入了新的函子符号。
 
 \subsection{概形理论的进一步学习}
 \label{b3:subsec:2404:03}
 
-待撰写。
+至此，环、模、分次环与几何对象之间已有三种可实际使用的对应：仿射概形由环及其局部化决定，仿射拟凝聚层由模决定，射影概形则把分次数据放在次数零的局部图中。第三种对应会忘掉某些分次模信息，因此不能把仿射模层等价直接搬到 Proj。
+
+\ProseParagraphBreak
+继续学习时，可依次阅读 Hartshorne 的《Algebraic Geometry》：Chapter II, §§1--3 建立层、概形及纤维积；§4 研究分离与固有态射；§5 系统整理拟凝聚层和扭曲层；§7 把线性系与射影态射联系起来\cite[Chapter II, \S\S 1--5 and \S 7]{Hartshorne1977}。本章已经展开基本构造，但射影嵌入的系统判据、凝聚上同调的有限性以及一般基变换定理仍须另行学习。
+
+\ProseParagraphBreak
+本卷的代数方法也由此获得几何解释。模在素点的局部化变成层的茎，Fitting 理想描述纤维维数发生变化的闭条件；正则局部环描述点的局部结构，光滑性还要比较基域或基概形。局部上同调研究指定闭支集附近的截面障碍，与本节不带支集的层上同调有关，但不能仅因二者使用 Čech 复形便把它们的次数和对象混同。具体联系需要同时写明开集、闭支集和所用增广复形。

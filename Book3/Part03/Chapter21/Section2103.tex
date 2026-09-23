@@ -5,26 +5,80 @@
 \section{消解与 Hilbert 级数}
 \label{b3:sec:2103}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 交错和公式
 % * 从 Betti 数据恢复 Hilbert 级数
 % * 不能由 Hilbert 级数唯一恢复全部消解
 %
 
+自由消解含有矩阵及其次数两类信息。Hilbert 级数只看每个次数的向量空间维数，因而能从消解的次数数据求出，却未必能恢复微分和每层生成元。下面先给出精确的交错和公式，再用两个小例子说明它保留和丢失了什么。
+
 \subsection{消解的交错和公式}
 \label{b3:subsec:2103:01}
 
-待撰写。
+\begin{proposition}\label{b3:prop:resolution-hilbert-series}
+设 \(S=k[x_1,\ldots,x_n]\) 为域上的标准分次多项式环，\(M\) 为有限生成分次 \(S\) 模。若有限分次自由消解的第 \(i\) 项为 \(F_i=\bigoplus_jS(-j)^{b_{i,j}}\)，则
+\begin{equation}\label{b3:eq:betti-hilbert-numerator}
+H_M(t)=\frac{\sum_{i,j}(-1)^ib_{i,j}t^j}{(1-t)^n}.
+\end{equation}
+极小时 \(b_{i,j}=\beta_{i,j}\)。
+\end{proposition}
+\begin{proof}
+对每个整数 \(q\)，消解的次数 \(q\) 部分是有限维 \(k\) 空间的有限正合列，故其维数的交错和为零，得到 \(\dim_kM_q=\sum_i(-1)^i\dim_k(F_i)_q\)。乘 \(t^q\) 后求和，使用 \(H_{S(-j)}(t)=t^j/(1-t)^n\)，即得公式。所有模的次数有共同下界，各次维数有限，故此运算在形式 Laurent 级数中合法。
+\end{proof}
+
+非极小消解也给出同一个公式。在相邻两层同时出现的同次数可缩直和项，贡献恰为 \(t^j-t^j=0\)。所以级数天然忽略了一部分消解信息。
 
 \subsection{由 Betti 数据恢复 Hilbert 级数}
 \label{b3:subsec:2103:02}
 
-待撰写。
+若 \(f_1,\ldots,f_r\) 是 \(S=k[x_1,\ldots,x_n]\) 中的齐次正则序列，\(\deg f_i=d_i>0\)，Koszul 消解第 \(q\) 项是各 \(S(-\sum_{i\in J}d_i)\)、\(|J|=q\) 的直和。因此
+\[
+H_{S/(f_1,\ldots,f_r)}(t)
+=\frac{\prod_{i=1}^r(1-t^{d_i})}{(1-t)^n}.
+\]
+例如 \(k[x,y]/(x^2,y^3)\) 的级数为
+\[
+\frac{1-t^2-t^3+t^5}{(1-t)^2}
+=(1+t)(1+t+t^2).
+\]
+六个标准单项式 \(1,x,y,xy,y^2,xy^2\) 也直接给出同一计数。
+
+\ProseParagraphBreak
+对 \(S/(x^2,xy)\)，上一节的消解给出
+\[
+H_M(t)=\frac{1-2t^2+t^3}{(1-t)^2}
+=\frac{1+t-t^2}{1-t}.
+\]
+其标准单项式为 \(1,x,y,y^2,\ldots\)，因此级数也等于 \(1+2t+t^2+t^3+\cdots\)。分子在 \(t=1\) 处的消去使极点阶从二降为一，与商环维数一致。这说明读取消解中的次数时，必须先把全部交错贡献相加，不能只看某一层的最大次数。
 
 \subsection{Hilbert 级数对消解的决定范围}
 \label{b3:subsec:2103:03}
 
-待撰写。
+设 \(S=k[x,y]\)。两个理想
+\[
+I=(x^2,y^2),\qquad J=(x^2,xy,y^3)
+\]
+的商分别以 \(1,x,y,xy\) 和 \(1,x,y,y^2\) 为齐次基，故 Hilbert 级数同为 \(1+2t+t^2\)。第一个商的极小消解来自两元 Koszul 复形：
+\[
+0\longrightarrow S(-4)\longrightarrow S(-2)^2
+\longrightarrow S\longrightarrow S/I\longrightarrow0.
+\]
+第二个商则有极小消解
+\[
+0\longrightarrow S(-3)\oplus S(-4)
+\xrightarrow{\left(\begin{smallmatrix}y&0\\-x&y^2\\0&-x\end{smallmatrix}\right)}
+S(-2)^2\oplus S(-3)\xrightarrow{(x^2\ xy\ y^3)}
+S\longrightarrow S/J\longrightarrow0.
+\]
+为核对正合性，若 \(ax^2+bxy+cy^3=0\)，先模 \(x\) 得 \(c=xc'\)，再约去 \(x\) 并模 \(y\) 得 \(a=ya'\)，于是 \(b=-xa'-y^2c'\)。该关系等于 \(a'(y,-x,0)-c'(0,y^2,-x)\)。两列独立则由第一、第三坐标在整环中的非零因子性得到。
+
+\ProseParagraphBreak
+两者的 Hilbert 分子分别为
+\[
+1-2t^2+t^4,
+\qquad1-(2t^2+t^3)+(t^3+t^4),
+\]
+确实相等，但第二者多一个三次生成元及一个三次关系。相邻层的贡献可以在交错和中抵消，即使各自的消解已经极小。因此 Hilbert 级数不能唯一决定 Betti 表，更不能确定全部微分矩阵。

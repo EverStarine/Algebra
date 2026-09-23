@@ -5,9 +5,7 @@
 \section{Auslander–Buchsbaum 公式}
 \label{b3:sec:1703}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * Noether 局部环及非零有限模的假设
 % * 有限投射维数条件
@@ -17,14 +15,55 @@
 \subsection{Noether 局部环与非零有限模的假设}
 \label{b3:subsec:1703:01}
 
-待撰写。
+深度问“能连续除去多少个非零因子”，投射维数问“自由消解需要多少步”。这两种计数一般没有相加公式；只有消解确实终止，末端自由项才能把两者联系起来。
+
+\begin{theorem}[Auslander–Buchsbaum]\label{b3:thm:auslander-buchsbaum}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模，且 \(\operatorname{pd}_RM<\infty\)。则
+\begin{equation}\label{b3:eq:auslander-buchsbaum}
+\operatorname{pd}_RM+\operatorname{depth}_RM=\operatorname{depth}R.
+\end{equation}
+\end{theorem}
+
+这称为\term[auslander-buchsbaum-gongshi]{Auslander–Buchsbaum 公式}[Auslander--Buchsbaum formula]。下面先解释有限性条件，再给出证明。局部性使极小微分的系数同时属于一个极大理想；有限生成使 Nakayama 引理和有限极小消解的项可以使用；\(M\ne0\) 则保证深度是有限整数。证明的方法可对照\cite[Theorem 19.1, p. 155]{Matsumura1989CommutativeRingTheory}。
 
 \subsection{有限投射维数条件}
 \label{b3:subsec:1703:02}
 
-待撰写。
+若 \(M\) 本身是非零有限自由模，它和 \(R\) 具有同样的正则序列，所以公式立即成立。若 \(M\) 只有一层非零关系，极小消解为
+\[
+0\longrightarrow F_1\xrightarrow{u}F_0\longrightarrow M\longrightarrow0.
+\]
+关键不只是两端自由，而是 \(u\) 的矩阵元素都在 \(\mathfrak m\) 中。它们在 \(\operatorname{Ext}_R^i(k,R)\) 上作用为零，这正使深度下降一。
+
+\ProseParagraphBreak
+这一零化作用正是\cref{b3:lem:ext-basic-properties}的第二项在第一变量为 \(k\) 时的应用：\(\mathfrak m\) 零化 \(k\)，故也零化全部 \(\operatorname{Ext}_R^i(k,R)\)。
 
 \subsection{Auslander–Buchsbaum 公式的证明}
 \label{b3:subsec:1703:03}
 
-待撰写。
+\begin{proof}[\cref{b3:thm:auslander-buchsbaum}的证明]
+记 \(r=\operatorname{pd}_RM\)、\(t=\operatorname{depth}R\)，对 \(r\) 归纳。\(r=0\) 时局部有限投射模自由，结论已说明。
+
+设 \(r=1\)，取上一小节的极小消解，其中 \(F_1\ne0\)。记自由秩为 \(b_1,b_0\)。应用 \(\operatorname{Hom}_R(k,-)\) 的长正合列。由\cref{b3:lem:ext-basic-properties}，映射
+\[
+\operatorname{Ext}_R^i(k,F_1)\longrightarrow\operatorname{Ext}_R^i(k,F_0)
+\]
+为零：它是 \(u\) 的同一矩阵作用于若干个 \(\operatorname{Ext}_R^i(k,R)\)。若 \(t=0\)，则 \(\operatorname{Hom}_R(k,F_1)\ne0\)，但单射 \(F_1\to F_0\) 使它必须单射地映入 \(\operatorname{Hom}_R(k,F_0)\)，与该映射为零矛盾。故 \(t\ge1\)。
+
+对 \(i<t-1\)，长正合列两侧的自由项 Ext 均为零，故 \(\operatorname{Ext}_R^i(k,M)=0\)。在次数 \(t-1\)，得到
+\[
+\operatorname{Ext}_R^{t-1}(k,M)
+\cong\operatorname{Ext}_R^t(k,F_1)\ne0.
+\]
+\cref{b3:thm:depth-ext}给出 \(\operatorname{depth}M=t-1\)。
+
+若 \(r\ge2\)，取极小满射的核 \(0\to K\to F_0\to M\to0\)。由\cref{b3:prop:pd-minimal-length}，\(K\ne0\) 且投射维数为 \(r-1\)。归纳得
+\(s\coloneqq\operatorname{depth}K=t-r+1<t\)。若 \(s=0\)，则 \(K\to F_0\) 的单射在 \(\operatorname{Hom}_R(k,-)\) 下给出非零模到零模的单射，矛盾。因此 \(s\ge1\)。在同一长正合列中，次数小于 \(s-1\) 的 \(\operatorname{Ext}_R^i(k,M)\) 为零，而
+\[
+\operatorname{Ext}_R^{s-1}(k,M)
+\cong\operatorname{Ext}_R^s(k,K)\ne0,
+\]
+因为 \(F_0\) 的深度 \(t>s\)。于是 \(\operatorname{depth}M=s-1=t-r\)，归纳完成。
+\end{proof}
+
+证明同时给出 \(\operatorname{pd}_RM\le\operatorname{depth}R\)。这不是对所有有限模的无条件上界，而是对已经知道投射维数有限的模的上界。

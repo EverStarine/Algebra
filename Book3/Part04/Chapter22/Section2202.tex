@@ -5,9 +5,7 @@
 \section{典范模}
 \label{b3:sec:2202}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 存在条件与定义范围
 % * 局部对偶的标准完备局部版本
@@ -21,34 +19,373 @@
 \subsection{典范模的定义与存在条件}
 \label{b3:subsec:2202:01}
 
-待撰写。
+有限维向量空间的对偶仍然有限维，取两次对偶就回到原空间。局部上同调则常常不是有限模。例如对离散赋值环 \(A=k[[t]]\)，由两项 Čech 复形得到
+\[
+H^1_{(t)}(A)=k((t))/k[[t]].
+\]
+右端含有任意高的负幂，不能由有限个元素生成。因此，要把局部上同调与有限模联系起来，首先需要一种不同于 \(\operatorname{Hom}_A(-,A)\) 的对偶。
+
+\ProseParagraphBreak
+这个对偶的取值对象将是剩余域的内射包络。它既能接受子模上同态的延拓，又能检测任意非零元素；在完备 Noether 局部环上，它把有限模与 Artin 模互相转换。典范模正是通过这一对偶，把环自身的最高次局部上同调表示成一个有限模。为了让定义中的对象都有明确含义，本节先说明问题及适用范围，在\subsecref{b3:subsec:2202:04}建立内射包络和对偶，再于\cref{b3:def:canonical-module-regular-quotient}给出正式定义。
+
+\ProseParagraphBreak
+本节要证明的存在性有一组明确的数据：给定满射 \(S\twoheadrightarrow R\)，其中 \(S\) 是 \(n\) 维完备正则局部环，\(R\) 是 \(d\) 维 Cohen–Macaulay 局部环。此时可取
+\[
+\omega_R=\operatorname{Ext}_S^{n-d}(R,S).
+\]
+右端能够用 \(R\) 的有限自由 \(S\) 消解计算，因而先给出了一个实际可构造的有限模。它为什么具有对偶性质，以及为什么余维 \(n-d\) 恰好出现，都将在证明中由局部上同调的消失区间解释。
 
 \subsection{完备局部环上的局部对偶}
 \label{b3:subsec:2202:02}
 
-待撰写。
+先把上述离散赋值环的例子算得更具体。令 \(A=k[[t]]\)、\(K=k((t))\)、\(E=K/A\)。第二卷第7.2节的 Baer 判据说明 \(E\) 是内射 \(A\) 模：任意非零理想为 \(t^rA\)，若 \(f(t^r)=a+A\)，则取 \(g(1)=t^{-r}a+A\)，就得到延拓 \(g:A\rightarrow E\)。零理想的映射用零映射延拓。
+
+\ProseParagraphBreak
+\(E\) 中每个非零元素都能乘以某个 \(t\) 的幂，得到非零的 \(t^{-1}\) 项。因此子模 \(kt^{-1}\cong k\) 与 \(E\) 的任意非零子模相交非零。这说明内射性没有加入与剩余域毫无关系的直和因子；这正是下文“内射包络”中包络条件的含义。
+
+\ProseParagraphBreak
+记 \(D_A(N)=\operatorname{Hom}_A(N,E)\)。这里有
+\[
+D_A(A)=E,
+\qquad
+D_A(A/t^rA)=(0:_Et^r)=t^{-r}A/A\cong A/t^rA.
+\]
+最后一个同构把 \(a+t^rA\) 送到 \(at^{-r}+A\)。这使有限长度模的对偶仍是有限长度模，而自由模的对偶是非有限生成的 \(E\)。本节要建立的一般关系为
+\[
+H^i_{\mathfrak m}(M)
+\cong D_R\bigl(\operatorname{Ext}_R^{d-i}(M,\omega_R)\bigr),
+\]
+其中 \(R\) 满足前一小节给出的假设，\(M\) 是有限 \(R\) 模。这一式子目前只是待证明的目标；其完整陈述和证明在\cref{b3:thm:canonical-module-local-duality}。
 
 \subsection{典范模的存在性问题}
 \label{b3:subsec:2202:03}
 
-待撰写。
+上面的目标包含三种不同的条件。Noether 性保证有限模具有有限生成的关系，并使内射包络的元素能用极大理想的幂控制。完备性使取两次对偶后的环仍是原环；若环不完备，首先出现的是它的完备化。Cohen–Macaulay 性则把环自身的局部上同调集中在唯一的次数 \(d\)，于是一个模 \(\omega_R\) 就足以承担全部对偶公式。
+
+\ProseParagraphBreak
+这些条件不能由“局部环”三个字替代。一般非 Cohen–Macaulay 环可能同时有几个非零局部上同调模，不能把上述公式中的 \(\omega_R\) 原样用于所有次数。即使某个环具有典范模，也不表示它的全部对偶信息已经集中在该模上。\subsecref{b3:subsec:2202:06}将给出一个含有嵌入点的幂级数商环，直接检验这种失败。
+
+\ProseParagraphBreak
+此外，\(S\twoheadrightarrow R\) 是本节存在性定理的假设，不是从符号 \(R\) 自动取得的构造。Cohen 结构定理能够提供更一般的完备正则局部覆盖，但它另有证明责任；本节末尾会明确说明使用该定理时增加了什么依据。
 
 \subsection{内射包络、Matlis 对偶与有限模和 Artin 模}
 \label{b3:subsec:2202:04}
 
-待撰写。
+先说明如何在所有可能的内射扩张中选择一个尽量小的对象。这里使用第二卷第7.2节已证明的两个结果：每个模都可嵌入内射模；Baer 判据用理想上的同态延拓检验内射性。内射包络及以下对偶定理在本节证明。松村英之《Commutative Ring Theory》的对应论述见\cite[\S 18, Theorems 18.4--18.7, pp. 145--150]{Matsumura1989CommutativeRingTheory}。
+
+\begin{definition}\label{b3:def:injective-hull}
+设 \(R\) 为交换环，\(N\subseteq M\) 为 \(R\) 模。若 \(M\) 的每个非零子模都与 \(N\) 相交非零，则此包含为\term[benzhi-kuozhang]{本质扩张}[essential extension]。若 \(M\) 还为内射模，就称 \(N\subseteq M\) 为 \(N\) 的\term[neishe-baoluo]{内射包络}[injective hull]，记一个这样的模为 \(E_R(N)\)。
+\end{definition}
+
+本质性有一个常用的检验形式：若映射 \(f:M\rightarrow L\) 在 \(N\) 上单射，则它在整个 \(M\) 上单射，因为非零的 \(\ker f\) 必与 \(N\) 相交。
+
+\begin{proposition}\label{b3:prop:injective-hull-existence}
+设 \(R\) 为交换环，\(N\) 为 \(R\) 模。\(N\) 有内射包络，且任意两个内射包络之间存在限制在 \(N\) 上为恒等的同构。这里不声称这个同构唯一。
+\end{proposition}
+\begin{proof}
+把 \(N\) 嵌入内射模 \(J\)。在 \(J\) 中所有本质包含 \(N\) 的子模中按包含排序；一条链的并仍本质包含 \(N\)，因为并中的非零元素已落在链的某个成员中。Zorn 引理给出极大者 \(E\)。
+
+\(E\) 没有真本质扩张。事实上，若 \(E\subseteq X\) 本质，则本质性的传递性使 \(N\subseteq X\) 本质；内射性把 \(E\hookrightarrow J\) 延拓为 \(X\rightarrow J\)。此映射的核与 \(E\) 交零，故为零。其像在 \(J\) 中仍本质包含 \(N\)，极大性使像等于 \(E\)。映射又在 \(E\) 上为恒等，故 \(X=E\)。
+
+再把 \(E\) 嵌入内射模 \(J'\)，选取与 \(E\) 交零的极大子模 \(L\subseteq J'\)。商模 \(J'/L\) 本质包含 \(E\)：若一个非零子模与 \(E\) 的像交零，其原像就是真包含 \(L\) 且与 \(E\) 交零的子模，矛盾。由上一段，\(J'/L=E\) 的像，故 \(J'=E\oplus L\)。内射模的直和因子内射，得存在性。
+
+若 \(E,E'\) 都是包络，由 \(E'\) 的内射性延拓 \(N\) 上的恒等为 \(u:E\rightarrow E'\)。本质性使 \(u\) 单射，而内射子模 \(u(E)\) 在 \(E'\) 中分裂。补因子与 \(N\) 交零，本质性迫使补因子为零，所以 \(u\) 是同构。
+\end{proof}
+
+以下固定交换 Noether 局部环 \((R,\mathfrak m,k)\) 及包络 \(k\subseteq E=E_R(k)\)。
+
+\begin{proposition}\label{b3:prop:injective-hull-local-properties}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(E=E_R(k)\)。则
+\[
+\operatorname{Soc}_R E=(0:_E\mathfrak m)=k,
+\qquad
+E=\bigcup_{r\ge1}(0:_E\mathfrak m^r).
+\]
+此外，对任意 \(R\) 模 \(M\) 及 \(0\ne x\in M\)，存在 \(f:M\rightarrow E\) 使 \(f(x)\ne0\)。
+\end{proposition}
+\begin{proof}
+\((0:_E\mathfrak m)\) 是 \(k\) 向量空间；它的每条一维子空间都须与指定的 \(k\) 相交，所以它恰为该 \(k\)。
+
+固定 \(e\in E\)。若 \(\mathfrak p\in\operatorname{Ass}_R(Re)\)，则 \(Re\) 有一个同构于 \(R/\mathfrak p\) 的子模。该子模与 \(k\) 相交非零；而 \(R/\mathfrak p\) 的每个非零元素的零化子都是 \(\mathfrak p\)，相交元素的零化子又是 \(\mathfrak m\)，故 \(\mathfrak p=\mathfrak m\)。\cref{b3:prop:minimal-primes-associated}应用于有限循环模 \(Re\)，得到 \(\sqrt{\operatorname{Ann}_R(e)}=\mathfrak m\)。\(\mathfrak m\) 有限生成，因而某个 \(\mathfrak m^r\) 包含于该零化子，得并集公式。
+
+对非零 \(x\)，\(\operatorname{Ann}_R(x)\) 是真理想。复合
+\(Rx\cong R/\operatorname{Ann}_R(x)\twoheadrightarrow k\hookrightarrow E\)
+把 \(x\) 送到非零元素，再用内射性将它延拓到 \(M\)。
+\end{proof}
+
+\begin{definition}\label{b3:def:matlis-dual}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，固定 \(E=E_R(k)\)。对 \(R\) 模 \(M\)，模
+\[
+D_R(M)\coloneqq\operatorname{Hom}_R(M,E)
+\]
+为它的\term[Matlis-duiou]{Matlis 对偶}[Matlis dual]。同态 \(u:M\rightarrow N\) 对应预复合映射 \(D_R(u):D_R(N)\rightarrow D_R(M)\)。
+\end{definition}
+
+\(D_R\) 是反变正合函子，因为 \(E\) 内射。上一命题还说明 \(D_R(M)=0\) 蕴含 \(M=0\)。评价映射
+\[
+\delta_M:M\longrightarrow D_RD_R(M),
+\qquad \delta_M(x)(f)=f(x)
+\]
+对每个模都单射。不过，满射性需要限制模的类别。
+
+\begin{lemma}\label{b3:lem:matlis-finite-length}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(D_R\) 如上。若 \(M\) 为有限长度 \(R\) 模，则
+\[
+\ell_R D_R(M)=\ell_R M,
+\qquad \delta_M:M\xrightarrow{\sim}D_RD_R(M).
+\]
+并且乘法给出环同构
+\[
+\widehat R\xrightarrow{\sim}\operatorname{End}_R\bigl(E_R(k)\bigr),
+\qquad \widehat R=\varprojlim_r R/\mathfrak m^r.
+\]
+\end{lemma}
+\begin{proof}
+先由 \(D_R(k)=\operatorname{Soc}E\cong k\) 及正合性，对组成列长度归纳得到长度等式。评价单射的两端长度相等，故为同构。
+
+令 \(E_r=(0:_E\mathfrak m^r)=D_R(R/\mathfrak m^r)\)。前述有限长度对偶给出
+\(D_R(E_r)\cong R/\mathfrak m^r\)，且元素 \(a+\mathfrak m^r\) 对应 \(e\mapsto ae\)。由 \(E=\bigcup_rE_r\)，一个 \(E\) 上的同态等价于各 \(E_r\) 上相容的同态族。因此
+\[
+\operatorname{End}_R(E)
+=\varprojlim_r\operatorname{Hom}_R(E_r,E)
+\cong\varprojlim_rR/\mathfrak m^r.
+\]
+这些同构把复合变为乘法，故是环同构。
+\end{proof}
+
+完备性在这里有了具体作用：只有 \(R=\widehat R\) 时，\(D_RD_R(R)=D_R(E)\) 才由同一个环 \(R\) 表示。以下的\term[Matlis-duiou-dingli]{Matlis 对偶定理}[Matlis duality theorem]将这一等式推广到两个完整的模类别。
+
+\begin{theorem}[Matlis 对偶]\label{b3:thm:matlis-duality}
+设 \((R,\mathfrak m,k)\) 为交换完备 Noether 局部环，\(E=E_R(k)\)，\(D_R=\operatorname{Hom}_R(-,E)\)。则 \(E\) 是 Artin 模；\(D_R\) 把有限 \(R\) 模变成 Artin \(R\) 模，把 Artin \(R\) 模变成有限 \(R\) 模。对这两类中的任意模 \(M\)，评价映射 \(\delta_M\) 是同构。因此 \(D_R\) 在有限模范畴与 Artin 模范畴之间给出反变等价。
+\end{theorem}
+\begin{proof}
+先证 \(E\) 满足降链条件。对子模 \(L\subseteq E\) 记
+\[
+L^\perp=\{\,a\in R\mid aL=0\,\},
+\qquad
+J^\perp=(0:_EJ)\quad(J\subseteq R\text{ 为理想}).
+\]
+显然 \(L\subseteq L^{\perp\perp}\)。若 \(e\notin L\)，元素检测性质在 \(E/L\) 上给出同态 \(f:E/L\rightarrow E\)，使 \(f(e+L)\ne0\)。其与商映射的复合是 \(E\) 的自同态，前一引理和完备性使它为乘以某个 \(a\in R\)。此时 \(aL=0\) 而 \(ae\ne0\)，所以 \(e\notin L^{\perp\perp}\)。故 \(L=L^{\perp\perp}\)。同样，对 \(a\notin J\)，在 \(R/J\) 上检测 \(a+J\) 的同态给出 \(e\in J^\perp\) 且 \(ae\ne0\)，故 \(J=J^{\perp\perp}\)。两次取垂直把 \(E\) 的子模与 \(R\) 的理想建立反向对应，\(R\) 的升链条件遂给出 \(E\) 的降链条件。
+
+若 \(M\) 有限，由满射 \(R^r\twoheadrightarrow M\) 得单射 \(D_R(M)\hookrightarrow E^r\)，故 \(D_R(M)\) 为 Artin 模。\(R\) 的 Noether 性又给出有限展示 \(R^s\rightarrow R^r\rightarrow M\rightarrow0\)。\(D_RD_R\) 是正合协变函子，\(\delta_R\) 由前一引理是同构，所以将该展示取两次对偶并比较余核，得到 \(\delta_M\) 同构。
+
+若 \(A\) 为 Artin 模，考察全部映射 \(A\rightarrow E^r\) 的核，其中 \(r\) 可为任意非负整数。降链条件保证这些核中有极小者 \(K\)。若 \(0\ne x\in K\)，可再加一个分量 \(A\rightarrow E\) 检测 \(x\)，把核严格缩小，矛盾。因此某个映射给出单射 \(A\hookrightarrow E^r\)。取对偶得到满射 \(R^r\twoheadrightarrow D_R(A)\)，故 \(D_R(A)\) 有限。
+
+最后，直接计算评价可得
+\[
+D_R(\delta_A)\circ\delta_{D_R(A)}
+=1_{D_R(A)}.
+\]
+因为 \(D_R(A)\) 有限，\(\delta_{D_R(A)}\) 已是同构，故 \(D_R(\delta_A)\) 同构。\(D_R\) 正合且检测非零模，遂使 \(\delta_A\) 的核和余核均为零。评价的自然性说明这些同构与一切模同态相容，给出所述反变等价。
+\end{proof}
+
+Artin 性与有限长度仍须区分。例如 \(k((t))/k[[t]]\) 是上述定理中的 Artin 模，但它包含严格上升的子模链 \(t^{-1}A/A\subsetneq t^{-2}A/A\subsetneq\cdots\)，并非有限长度模。Matlis 对偶中的两个类别恰好允许这种差别。
 
 \subsection{Cohen–Macaulay 商环的典范模}
 \label{b3:subsec:2202:05}
 
-待撰写。
+有了 Matlis 对偶，下一步是找出正则局部环的最高次局部上同调。为此只需极小内射消解在极大理想处的那一部分，无须先分类所有不可分解内射模。
+
+\begin{lemma}\label{b3:lem:injective-maximal-torsion}
+设 \((A,\mathfrak n,k)\) 为交换 Noether 局部环，\(E=E_A(k)\)，\(J\) 为内射 \(A\) 模。若 \(\{u_\lambda\}_{\lambda\in\Lambda}\) 为 \(\operatorname{Soc}_A J\) 的一个 \(k\) 基，则
+\[
+\Gamma_{\mathfrak n}(J)\cong E^{(\Lambda)}.
+\]
+其中 \(E^{(\Lambda)}\) 为直和，指标数等于该基座的维数。
+\end{lemma}
+\begin{proof}
+先注意，在 Noether 环上内射模的任意直和仍内射。由 Baer 判据，只需把理想 \(L\) 上的映射延拓到 \(A\)。因为 \(L\) 有限生成，其像落在有限个直和项中；逐分量延拓后再合成即可。
+
+把每个映射 \(k\rightarrow J\)、\(1\mapsto u_\lambda\) 延拓到 \(E\rightarrow J\)，并合成为 \(v:E^{(\Lambda)}\rightarrow J\)。直和的每个元素由有限个分量组成，且由\cref{b3:prop:injective-hull-local-properties}被某个 \(\mathfrak n\) 的幂零化。因此它的任何非零子模都含有被 \(\mathfrak n\) 零化的非零元素：取零化幂数最小的元素，再乘 \(\mathfrak n\) 的适当幂。故 \(k^{(\Lambda)}\) 在该直和中本质。\(v\) 在这一个基座上单射，遂整体单射。
+
+其像内射，故 \(J=v(E^{(\Lambda)})\oplus J'\)。\(J'\) 的基座为零，因为 \(u_\lambda\) 已张成 \(J\) 的全部基座。若 \(\Gamma_{\mathfrak n}(J')\ne0\)，同样取最小零化幂数就会找到非零基座元素，矛盾。因此极大理想幂挠部分恰为第一直和项。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:regular-local-top-cohomology}
+设 \((S,\mathfrak n,k)\) 为 \(n\) 维交换 Noether 正则局部环。则
+\[
+H^q_{\mathfrak n}(S)=0\quad(q\ne n),
+\qquad
+H^n_{\mathfrak n}(S)\cong E_S(k).
+\]
+此处不要求 \(S\) 完备，最后的同构依赖于一个剩余域基座的识别。
+\end{proposition}
+\begin{proof}
+取 \(\mathfrak n\) 的正则生成系 \(x_1,\ldots,x_n\)，其存在由\cref{b3:thm:regular-local-characterizations}保证。\cref{b3:thm:koszul-regular-resolution}给出 \(k\) 的 Koszul 自由消解。外积配对
+\(\bigwedge^qS^n\times\bigwedge^{n-q}S^n\rightarrow\bigwedge^nS^n\cong S\)
+把其对偶复形识别为反向的 Koszul 复形。具体地，令 \(\Phi_q(v)(u)\) 为 \(u\wedge v\) 的最高外积系数。对 \(u\in K_{q+1}\)、\(v\in K_{n-q}\)，等式 \(d(u\wedge v)=0\) 给
+\(\delta\Phi_q(v)=(-1)^q\Phi_{q+1}(dv)\)。故以 \((-1)^{q(q-1)/2}\Phi_q\) 作第 \(q\) 项的识别，所有微分均相容。因此
+\[
+\operatorname{Ext}_S^q(k,S)=
+\begin{cases}k,&q=n,\\0,&q\ne n.\end{cases}
+\]
+等价地，也可将 \(n\) 个两项复形 \(S\xrightarrow{x_i}S\) 逐个对偶，每对偶一个因子便把它的非零余核提高一个次数。
+
+现构造极小内射消解：令 \(C^0=S\)、\(J^q=E_S(C^q)\)、\(C^{q+1}=J^q/C^q\)，微分为商映射与 \(C^{q+1}\hookrightarrow J^{q+1}\) 的复合。本质性使 \(\operatorname{Soc}J^q\subseteq C^q\)，故 \(\operatorname{Hom}_S(k,J^\bullet)\) 的全部微分为零。于是其第 \(q\) 项就是 \(\operatorname{Ext}_S^q(k,S)\)。按内射消解计算 Ext 与按自由消解计算相同：对自由消解 \(P_\bullet\rightarrow k\) 及 \(J^\bullet\)，双复形 \(\operatorname{Hom}_S(P_\bullet,J^\bullet)\) 沿内射方向的正合性给前一种计算，沿自由方向的正合性给后一种计算；每个总次数只有有限项，逐次消去正合的行或列即可比较。
+
+上述消解可在第 \(n\) 项结束。事实上，\cref{b3:thm:regular-local-global-dimension}给 \(\operatorname{Ext}_S^{n+1}(S/L,S)=0\) 对所有理想 \(L\) 成立。沿消解维数平移得 \(\operatorname{Ext}_S^1(S/L,C^n)=0\)，Baer 判据使 \(C^n\) 内射，所以 \(J^n=C^n\)、\(C^{n+1}=0\)。
+
+前一引理与所得基座维数表明，\(\Gamma_{\mathfrak n}(J^q)\) 在 \(q\ne n\) 时为零，在 \(q=n\) 时为一份 \(E_S(k)\)。按支集挠子函子的导出函子计算局部上同调，立即得到结论。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:regular-local-duality}
+设 \((S,\mathfrak n,k)\) 为 \(n\) 维交换完备 Noether 正则局部环，\(E=E_S(k)\)，\(D_S=\operatorname{Hom}_S(-,E)\)。固定前一命题中的识别后，对每个有限 \(S\) 模 \(N\) 和每个整数 \(i\)，有关于 \(N\) 自然的同构
+\[
+H^i_{\mathfrak n}(N)
+\cong D_S\bigl(\operatorname{Ext}_S^{n-i}(N,S)\bigr),
+\qquad
+D_S\bigl(H^i_{\mathfrak n}(N)\bigr)
+\cong\operatorname{Ext}_S^{n-i}(N,S).
+\]
+负次 Ext 约定为零。各 \(H^i_{\mathfrak n}(N)\) 均为 Artin 模。
+\end{theorem}
+\begin{proof}
+令 \(C^\bullet\) 为正则生成系 \(x_1,\ldots,x_n\) 的 Čech 复形，\(P_\bullet\rightarrow N\) 为长度至多 \(n\) 的有限秩自由消解。将 \(P_j\) 放在上链次数 \(-j\)，并考察总复形 \(C^\bullet\otimes_SP_\bullet\)。总微分采用
+\(d(c\otimes p)=d_Cc\otimes p+(-1)^{\deg c}c\otimes d_Pp\)，故平方为零。
+
+每个 \(C^q\) 都平坦，所以沿 \(P\) 方向取同调只留下 \(C^q\otimes_SN\)。因此总上同调为 \(H^i_{\mathfrak n}(N)\)，这里使用\cref{b3:thm:cech-local-cohomology}。换一个方向，前一命题给 \(H^q(C^\bullet)=0\) 对 \(q\ne n\)，而 \(H^n(C^\bullet)=E\)。各 \(P_j\) 自由，故这次只留下复形 \(E\otimes_SP_\bullet\)，其链次数 \(j\) 对应总次数 \(n-j\)。两次比较可直接用有限滤过完成：按一方向次数过滤总复形，把一个圈从最外侧的分量开始处理；若该行或列正合，就减去一个边界消去该分量，有限次后只剩非零同调所在的行；边界的比较同样进行。因复形在两个方向都有界，此过程终止，也与复形映射相容。于是
+\[
+H^i_{\mathfrak n}(N)
+\cong H_{n-i}(E\otimes_SP_\bullet).
+\]
+有限自由性给出逐项同构
+\[
+E\otimes_SP_j
+\cong\operatorname{Hom}_S\bigl(\operatorname{Hom}_S(P_j,S),E\bigr),
+\quad e\otimes p\longmapsto[\lambda\mapsto\lambda(p)e].
+\]
+此同构与微分相容。\(D_S\) 正合，故右侧复形的同调为 \(D_S(\operatorname{Ext}_S^{n-i}(N,S))\)，得到第一个同构。Ext 模有限，Matlis 对偶定理使其对偶为 Artin 模；再取一次对偶并使用有限模的评价同构，得到第二个同构。
+\end{proof}
+
+现在可以准确地命名所需的有限模。
+
+\begin{definition}\label{b3:def:canonical-module-regular-quotient}
+设 \((R,\mathfrak m,k)\) 为 \(d\) 维交换完备 Noether 局部环，\(D_R=\operatorname{Hom}_R(-,E_R(k))\)。若有限 \(R\) 模 \(\omega_R\) 满足
+\[
+D_R(\omega_R)\cong H^d_{\mathfrak m}(R),
+\]
+则称 \(\omega_R\) 为 \(R\) 的\term[dianfanmo]{典范模}[canonical module]。定义要求存在这样的有限模；单独写下符号 \(\omega_R\) 不代表存在性已得到证明。
+\end{definition}
+
+Matlis 对偶定理说明，一旦典范模存在，其同构类型由 \(D_R(H^d_{\mathfrak m}(R))\) 决定。这里不指定某一个同构，所以“典范”不表示所有实现之间有唯一的同构。
+
+\begin{proposition}\label{b3:prop:canonical-module-quotient}
+设 \((S,\mathfrak n,k)\) 为 \(n\) 维交换完备 Noether 正则局部环，\(I\subsetneq S\) 为理想，\(R=S/I\)、\(\mathfrak m=\mathfrak n/I\)、\(d=\dim R\)。则
+\[
+\omega_R=\operatorname{Ext}_S^{n-d}(R,S)
+\]
+是 \(R\) 的典范模。若 \(R\) 还是 Cohen–Macaulay 环，令 \(c=n-d\)，则
+\[
+\operatorname{Ext}_S^q(R,S)=0\quad(q\ne c),
+\qquad
+\operatorname{depth}_R\omega_R=d.
+\]
+不同的给定完备正则局部覆盖产生同构的典范模。
+\end{proposition}
+\begin{proof}
+先比较两个环上的对偶对象。模
+\[
+E_R=\operatorname{Hom}_S(R,E_S(k))=(0:_{E_S(k)}I)
+\]
+作为 \(R\) 模内射，因为对每个 \(R\) 模 \(M\)，评价于 \(1\) 给出
+\(\operatorname{Hom}_R(M,E_R)\cong\operatorname{Hom}_S(M,E_S(k))\)，右端是正合函子。\(E_R\) 中的 \(k\) 本质，因为它已经在 \(E_S(k)\) 中本质。因此 \(E_R\) 就是 \(E_R(k)\) 的一个实现，而 \(D_R(M)=D_S(M)\)。由同一组生成元的 Čech 复形，\(H^i_{\mathfrak m}(M)=H^i_{\mathfrak n}(M)\)。正则局部对偶应用于 \(M=R\)，便给出典范模定义要求的同构；\cref{b3:lem:ext-basic-properties}说明 Ext 有限且被第一变量的零化子 \(I\) 零化，故是有限 \(R\) 模。
+
+现假设 \(R\) 为 CM 环。\cref{b3:thm:depth-local-cohomology}与\cref{b3:thm:local-cohomology-dimension-vanishing}使 \(H^i_{\mathfrak m}(R)\) 仅在 \(i=d\) 非零。正则局部对偶立即给出 Ext 的集中次数。
+
+进一步，\(R\) 作为 \(S\) 模的深度也是 \(d\)，因为 \(\mathfrak n\) 中元素在 \(R\) 上的作用只由其在 \(\mathfrak m\) 中的像决定。由\cref{b3:thm:auslander-buchsbaum}，\(\operatorname{pd}_SR=c\)。取长度 \(c\) 的有限自由消解 \(F_\bullet\rightarrow R\)。对偶复形 \(\operatorname{Hom}_S(F_\bullet,S)\) 仅在最后一项有上同调 \(\omega_R\)；反向排列后，它就是 \(\omega_R\) 的长度 \(c\) 的自由消解。再对偶一次，逐项双对偶回到 \(F_\bullet\)，所以
+\[
+\operatorname{Ext}_S^q(\omega_R,S)=
+\begin{cases}R,&q=c,\\0,&q\ne c.\end{cases}
+\]
+故 \(\operatorname{pd}_S\omega_R=c\)，再次应用 Auslander–Buchsbaum 公式得深度 \(n-c=d\)。\(S\) 与 \(R\) 上的深度相同，得到所述结论。不同覆盖的独立性来自典范模的上述唯一同构类型。
+\end{proof}
+
+存在性一项本身没有要求 CM 性。CM 性所增加的是 Ext 的全部其他次数消失；正是这个更强结论允许下一小节把整个对偶公式写成只含 \(\omega_R\) 的形式。
 
 \subsection{局部上同调与 Ext 的 Matlis 对偶}
 \label{b3:subsec:2202:06}
 
-待撰写。
+为了从环境环 \(S\) 转到商环 \(R\)，需要把两个 Ext 计算联系起来。以下换环引理仅处理上一步已经出现的“只有一个非零次数”，并不要求读者先掌握一般谱序列。
+
+\begin{lemma}\label{b3:lem:canonical-change-of-rings}
+设 \(S\) 为交换 Noether 环，\(R=S/I\)。假设 \(S\) 作为自身上的模有有界内射消解，且存在整数 \(c\ge0\) 使
+\(\operatorname{Ext}_S^q(R,S)=0\) 对 \(q\ne c\) 成立。记 \(W=\operatorname{Ext}_S^c(R,S)\)。则对每个有限 \(R\) 模 \(M\) 及每个 \(p\ge0\)，有自然同构
+\[
+\operatorname{Ext}_R^p(M,W)
+\cong\operatorname{Ext}_S^{p+c}(M,S),
+\]
+且 \(\operatorname{Ext}_S^q(M,S)=0\) 对 \(q<c\) 成立。
+\end{lemma}
+\begin{proof}
+取有界内射 \(S\) 消解 \(J^\bullet\) 及有限秩自由 \(R\) 消解 \(P_\bullet\rightarrow M\)。令
+\[
+T^q=\operatorname{Hom}_S(R,J^q),
+\qquad B^{p,q}=\operatorname{Hom}_R(P_p,T^q).
+\]
+每个 \(T^q\) 都是内射 \(R\) 模，理由是
+\(\operatorname{Hom}_R(-,T^q)\cong\operatorname{Hom}_S(-,J^q)\)
+正合。\(B\) 位于第一象限；总次数 \(p+q\) 固定时只含有限个分量，微分加上通常的交替符号使两方向反交换。
+
+先沿 \(p\) 方向取上同调。内射性使正次消失，零次为 \(\operatorname{Hom}_R(M,T^q)\cong\operatorname{Hom}_S(M,J^q)\)，所以总上同调是 \(\operatorname{Ext}_S^*(M,S)\)。再沿 \(q\) 方向取上同调。\(P_p\) 自由，故
+\[
+H^q(B^{p,\bullet})
+=\operatorname{Hom}_R(P_p,H^q(T^\bullet)),
+\]
+它只在 \(q=c\) 留下 \(\operatorname{Hom}_R(P_p,W)\)。因此总次数 \(p+c\) 的上同调就是 \(\operatorname{Ext}_R^p(M,W)\)。这里的单行比较与前一定理中相同：用次数滤过逐行提升圈、消去正合行中的分量，剩余行上的边界恰是总边界的像；每个固定总次数只经过有限步。此构造与同态诱导的消解映射相容，给出自然性。
+\end{proof}
+
+\begin{theorem}[局部对偶]\label{b3:thm:canonical-module-local-duality}
+设 \((S,\mathfrak n,k)\) 为 \(n\) 维交换完备 Noether 正则局部环，\(I\subsetneq S\)，且 \((R,\mathfrak m,k)=(S/I,\mathfrak n/I,k)\) 为 \(d\) 维 Cohen–Macaulay 环。取
+\[
+\omega_R=\operatorname{Ext}_S^{n-d}(R,S),
+\qquad D_R=\operatorname{Hom}_R(-,E_R(k)).
+\]
+则对每个有限 \(R\) 模 \(M\) 和每个整数 \(i\)，有关于 \(M\) 自然的同构
+\begin{equation}\label{b3:eq:canonical-local-duality}
+\begin{aligned}
+H^i_{\mathfrak m}(M)
+&\cong D_R\bigl(\operatorname{Ext}_R^{d-i}(M,\omega_R)\bigr),\\
+D_R\bigl(H^i_{\mathfrak m}(M)\bigr)
+&\cong\operatorname{Ext}_R^{d-i}(M,\omega_R).
+\end{aligned}
+\end{equation}
+负次局部上同调和负次 Ext 均取零。特别地，所有 \(H^i_{\mathfrak m}(M)\) 都是 Artin 模，且 \(\operatorname{Ext}_R^p(M,\omega_R)=0\) 对 \(p>d\) 成立。
+\end{theorem}
+\begin{proof}
+令 \(c=n-d\)。\cref{b3:prop:canonical-module-quotient}给出 \(\operatorname{Ext}_S^q(R,S)\) 只在 \(q=c\) 非零。\(S\) 的有界内射消解已在\cref{b3:prop:regular-local-top-cohomology}的证明中构造。故前一引理给出
+\[
+\operatorname{Ext}_S^{n-i}(M,S)
+\cong\operatorname{Ext}_R^{d-i}(M,\omega_R)
+\]
+在 \(d-i\ge0\) 时成立；若 \(d-i<0\)，左端也由引理的低次消失为零。再用\cref{b3:thm:regular-local-duality}，以及已验证的 \(D_S(M)=D_R(M)\)、\(H^i_{\mathfrak n}(M)=H^i_{\mathfrak m}(M)\)，得到两行公式。Artin 性来自正则局部对偶；当 \(i<0\) 时，局部上同调为零，第二行给出最后的 Ext 消失。
+\end{proof}
+
+上式称为\term[jubu-duiou]{局部对偶}[local duality]。它允许用有限模的消解研究通常不有限生成的局部上同调，但没有把后者断言为有限模。例如在 \(k[[t]]\) 上，\(\omega_R\cong R\)，公式的最高次仍然是 \(H^1_{(t)}(R)\cong E_R(k)\)，与节首计算一致。
+
+\ProseParagraphBreak
+最后用\subsecref{b3:subsec:2201:03}的例子检验 CM 假设的作用。取域 \(k\) 及
+\[
+S=k[[x,y]],\qquad R=S/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
+\]
+此前已算得
+\[
+\dim R=1,
+\qquad H^0_{\mathfrak m}(R)=k\bar x\ne0.
+\]
+\cref{b3:prop:canonical-module-quotient}仍给出典范模 \(\omega_R=\operatorname{Ext}_S^1(R,S)\)，但若把局部对偶的单模公式用于 \(M=R\)、\(i=0\)，就会得到
+\[
+0\ne D_R\bigl(H^0_{\mathfrak m}(R)\bigr)
+\cong\operatorname{Ext}_R^1(R,\omega_R)=0,
+\]
+矛盾。真正保留这部分信息的是另一个非零模 \(\operatorname{Ext}_S^2(R,S)\cong D_R(H^0_{\mathfrak m}(R))\)。因此一般情形须保留具有多个上同调的对偶复形，不能只取最高次局部上同调对应的那一个模。
 
 \subsection{正则局部覆盖与 Cohen 结构定理}
 \label{b3:subsec:2202:07}
 
-待撰写。
+本节所有存在性及局部对偶证明都从给定满射 \(S\twoheadrightarrow R\) 开始。对显式幂级数商环，这份数据已经在题目中；例如 \(k[[x_1,\ldots,x_n]]/I\) 的环境环就是所需的完备正则局部环。混合特征时也可以从给定完备离散赋值环 \(V\) 上的幂级数环 \(V[[x_1,\ldots,x_r]]\) 开始，而不把系数环误写成域。
+
+\ProseParagraphBreak
+对一个未给出展示的交换完备 Noether 局部环，Cohen 结构定理保证存在这种完备正则局部覆盖。此处将该存在性作为外部结果说明，其一般证明不属于本节：松村英之《Commutative Ring Theory》在\cite[\S 29, Theorems 29.3--29.4, pp. 225--226]{Matsumura1989CommutativeRingTheory}先建立系数环，再把环写为其上的幂级数商；本卷附录 D 安排讨论这个结构问题。本节给定覆盖的版本不需要调用这一结构定理。
+
+\ProseParagraphBreak
+若另外采用这一外部存在性结果，则每个交换完备 Noether 局部环都有本节意义下的典范模；若该环还为 CM 环，就可使用\eqref{b3:eq:canonical-local-duality}。这一推广增加的是覆盖存在性的依据，并未删除 CM 假设。至于非完备局部环，把其完备化的典范模下降为原环上的有限模，还需要另外的条件和论证，本节不作无条件的存在性断言。

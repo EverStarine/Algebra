@@ -5,9 +5,7 @@
 \section{光滑与平展}
 \label{b3:sec:2303}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 光滑映射的标准局部模型
 % * 平展的平坦性及非分歧性
@@ -17,14 +15,152 @@
 \subsection{光滑映射的标准局部模型}
 \label{b3:subsec:2303:01}
 
-待撰写。
+平方零提升把方程线性化，因而最容易处理的情形是：一部分变量恰好可以用来独立修正全部关系。其余变量则留下自由变化的方向。
+
+\begin{definition}\label{b3:def:standard-smooth-model}
+设 \(A\) 为交换含幺环，\(0\le r\le n\)，且
+\[
+B=\bigl(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\bigr)_g.
+\]
+如果 Jacobian 矩阵 \((\partial f_i/\partial X_j)\) 的某个 \(r\) 阶子式 \(\Delta\) 在 \(B\) 中为单位，就称这个展示为一个\term[biaozhun-guanghua-moxing]{标准光滑模型}[standard smooth presentation]。当 \(r=n\) 时称为\term[biaozhun-pingzhan-moxing]{标准平展模型}[standard étale presentation]。\(r=0\) 时空子式取为 \(1\)，得到多项式环的局部化。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:standard-smooth-lifting}
+设 \(A\) 为交换含幺环，\(0\le r\le n\)，\(B=(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r))_g\)，且 Jacobian 矩阵的一个 \(r\) 阶子式在 \(B\) 中可逆。则 \(A\to B\) 光滑。若可逆子式由前 \(r\) 列组成，则 \(\Omega_{B/A}\) 自由，以 \(dX_{r+1},\ldots,dX_n\) 为基。特别地，\(r=n\) 时 \(A\to B\) 形式平展。
+\end{proposition}
+\begin{proof}
+有限呈示显然成立，因为逆元可增加一个生成元及关系 \(gY-1\)。对 \(u:B\to C/J\)、\(J^2=0\)，任取变量像的提升 \(c_i\)。\(g(c)\) 与 \(\Delta(c)\) 都是单位，因为它们模 \(J\) 是单位。将后 \(n-r\) 个变量保持不动，令前 \(r\) 个变量的修正 \(h_j\in J\) 解线性方程
+\[
+\sum_{j=1}^r\frac{\partial f_i}{\partial X_j}(c)h_j=-f_i(c),
+\qquad 1\le i\le r.
+\]
+系数矩阵可逆，故有唯一这样的修正。平方零 Taylor 公式使全部方程精确成立，局部化所需的单位也仍是单位，故得到提升。
+
+微分模的关系矩阵恰为这个 Jacobian 矩阵。其前 \(r\) 列可逆，因而可以且只能以其余 \(dX_j\) 表示 \(dX_1,\ldots,dX_r\)，并且不产生其余关系。这证明所述自由性。\(r=n\) 时微分模为零，由形式非分歧判据及已证的形式光滑性，得到形式平展。
+\end{proof}
+
+标准模型不仅给出一类例子。有限呈示使任意光滑代数都能在每一点附近写成这样的形式；其中关键是把关系模中的一组基变成真正的理想生成元。
+
+\begin{theorem}[光滑映射的局部标准形]\label{b3:thm:smooth-local-standard-form}
+设 \(A\) 为交换含幺环，\(B\) 为有限呈示交换 \(A\) 代数。则 \(A\to B\) 光滑，当且仅当对每个 \(\mathfrak q\in\operatorname{Spec}B\)，存在 \(b\notin\mathfrak q\)，使 \(B_b\) 在 \(A\) 上具有标准光滑模型。
+\end{theorem}
+\begin{proof}
+先设 \(B\) 形式光滑。写 \(B=P/I\)，其中 \(P=A[X_1,\ldots,X_n]\)，\(I\) 有限生成。由\cref{b3:thm:formal-smooth-conormal-splitting}，\(I/I^2\) 是 \(B^n\) 的直和项，故为有限生成投射模。在给定 \(\mathfrak q\) 的某个主开邻域上，它自由；从 \(I\) 的一组有限生成元中可选取 \(f_1,\ldots,f_r\)，使其像成为这一邻域上的基。更具体地，先在剩余域上选出基，再用局部自由性及相应行列式非零，缩小邻域使它们确为基。
+
+设 \(Q\subseteq P\) 为 \(\mathfrak q\) 的逆像。因为 \(I/I^2\to B^n\) 分裂单射，\(df_1,\ldots,df_r\) 在剩余域上仍独立，所以它们的 Jacobian 矩阵有一个 \(r\) 阶子式 \(\Delta\notin Q\)。还要证明这些 \(f_i\) 在邻域上生成 \(I\)，而不只是模 \(I^2\) 生成。令 \(F=(f_1,\ldots,f_r)\)。在局部环 \(P_Q\) 中，
+\[
+I_Q=F_Q+I_Q^2.
+\]
+有限生成模 \(N=I_Q/F_Q\) 因而满足 \(N=I_QN\)。由于 \(I_Q\subseteq QP_Q\)，Nakayama 引理给出 \(N=0\)。模 \(I/F\) 有限生成，所以它在 \(Q\) 处为零意味着存在一个 \(h\notin Q\)，使 \(I_h=F_h\)：对有限组生成元分别选择零化它们的分母，再取乘积即可。因此
+\[
+B_{\bar h\bar\Delta}
+\cong\bigl(P/(f_1,\ldots,f_r)\bigr)_{h\Delta},
+\]
+这就是包含 \(\mathfrak q\) 的标准光滑邻域。这里没有假设 \(A\) 为 Noether 环；所用有限性来自 \(I\) 有限生成。
+
+反之，设这样的邻域覆盖 \(\operatorname{Spec}B\)。仍取固定的有限呈示 \(B=P/I\)。微分模 \(\Omega_{B/A}\) 有限展示，且由\cref{b3:prop:standard-smooth-lifting}在这些邻域上有限自由，故由\cref{b3:thm:finite-presentation-flat-projective}为有限生成投射模。另一方面，在每个邻域中 \(B_b\) 形式光滑，关系模判据对局部化的多项式环仍适用，故固定映射 \(I/I^2\to B^n\) 在该邻域上单射。其核处处局部化为零，所以全局单射。于是
+\(0\to I/I^2\to B^n\to\Omega_{B/A}\to0\)
+正合。因末项投射，此列分裂，第一箭头有左逆。再用关系模判据，得到 \(B\) 形式光滑。
+\end{proof}
+
+定理的证明区分了三个步骤：先在关系模中选基，再用 Jacobian 子式检测线性独立，最后用 Nakayama 引理消除尚未列出的关系。只写“Jacobian 的秩足够”会遗漏最后一步，也就还没有得到邻域上的实际方程组。
 
 \subsection{平展映射的平坦性与非分歧性}
 \label{b3:subsec:2303:02}
 
-待撰写。
+第14章对首一单变量模型，已经用商环的自由基直接证明平坦性。一般标准光滑模型不一定以这种单变量形式出现；从提升性质推出平坦性，需要一个更深的局部结果。本选读章明确采用下述外部定理，其余从局部到一般底环的步骤在这里完成。
+
+\begin{theorem}[Noether 局部形式光滑蕴含平坦；外部引用]\label{b3:thm:local-formal-smooth-flat-external}
+设 \((A,\mathfrak m)\to(B,\mathfrak n)\) 为交换 Noether 局部环之间的局部同态。若 \(B\) 在 \(A\) 上形式光滑，则 \(B\) 是平坦 \(A\) 模。
+\end{theorem}
+
+这里采用松村英之\cite[Theorem 28.9, p. 222]{Matsumura1989CommutativeRingTheory}的蕴含方向。原书的假设实际更弱，只要求 \(\mathfrak n\) 进形式光滑，即对满足 \(u(\mathfrak n^N)=0\)（某个 \(N\)）的平方零提升问题可解；本书的形式光滑要求所有这样的提升问题可解，所以满足原书假设。该定理在原书中也作为引用列出。本章不以 Jacobian 修正已经完成为理由省去这个平坦性结果。
+
+\begin{theorem}\label{b3:thm:smooth-flat}
+设 \(A\to B\) 为交换含幺环之间的光滑同态，则 \(B\) 在 \(A\) 上平坦。
+\end{theorem}
+\begin{proof}
+先处理标准模型 \(B=(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r))_g\)，设其可逆子式为 \(\Delta\)。再使 \(\Delta\) 可逆不改变 \(B\)，故可把局部化元素写成 \(g\Delta\)。令 \(A_0\) 为 \(A\) 中由 \(f_i,g\) 的全部系数及整数像生成的子环。它是有限型 \(\mathbb Z\) 代数，因而为 Noether 环。定义
+\[
+B_0=\bigl(A_0[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\bigr)_{g\Delta}.
+\]
+这是 Noether 环，且 \(B\cong A\otimes_{A_0}B_0\)。对每个素理想 \(\mathfrak q\subseteq B_0\)，令 \(\mathfrak p=\mathfrak q\cap A_0\)。标准模型的提升证明及局部化的保持性说明
+\((A_0)_{\mathfrak p}\to(B_0)_{\mathfrak q}\)
+形式光滑。底环的局部化不引入额外要求：\(\mathfrak p\) 外的元素在目标中已经可逆，提升也自动保持其逆元。因此外部局部定理给出 \((B_0)_{\mathfrak q}\) 在 \((A_0)_{\mathfrak p}\) 上平坦，从而在 \(A_0\) 上平坦。
+
+这足以证明 \(B_0\) 在 \(A_0\) 上平坦。事实上，对任意 \(A_0\) 模单射 \(U\to V\)，张量后映射的核是一个 \(B_0\) 模；把它在每个 \(\mathfrak q\) 处局部化，得到与平坦模 \((B_0)_{\mathfrak q}\) 张量后的核，均为零。由模的局部零检测，这个核为零。最后由平坦性在基变换下保持，\(B=A\otimes_{A_0}B_0\) 在 \(A\) 上平坦。
+
+一般光滑代数由\cref{b3:thm:smooth-local-standard-form}在目标上被这样的标准模型覆盖。同样对张量映射的核逐个邻域作局部化，就得到全局平坦性。
+\end{proof}
+
+为了把“平坦且微分为零”与唯一提升真正对应起来，还需要处理反向蕴含。下面的引理说明，微分为零怎样在对角理想中产生一个分裂。
+
+\begin{lemma}\label{b3:lem:unramified-diagonal-splitting}
+设 \(A\) 为交换含幺环，\(C\) 为有限型交换 \(A\) 代数，且 \(\Omega_{C/A}=0\)。若 \(M\) 为一个 \(C\) 模并且在 \(A\) 上平坦，则 \(M\) 在 \(C\) 上也平坦。
+\end{lemma}
+\begin{proof}
+令 \(D=C\otimes_AC\)，\(\mu:D\to C\) 为乘法，\(K=\ker\mu\)。若 \(c_1,\ldots,c_l\) 生成 \(C\)，则 \(K\) 由有限个 \(c_i\otimes1-1\otimes c_i\) 生成：模去这些差以后，两份 \(C\) 的像相同，商正是 \(C\)。映射 \(c\mapsto c\otimes1-1\otimes c\bmod K^2\) 为导子，并由其泛性质给出
+\(K/K^2\cong\Omega_{C/A}\)。也可直接用这些生成元及乘积的求导关系验证这个同构。因此 \(K=K^2\)。
+
+有限生成且幂等的理想由一个幂等元生成。为说明这一点，取生成元列 \(a\)，由 \(K=K^2\) 写 \(a=Ea\)，其中矩阵 \(E\) 的各项属于 \(K\)。伴随矩阵给出 \(\det(1-E)K=0\)。写 \(\det(1-E)=1-e\)、\(e\in K\)，则 \((1-e)e=0\)，即 \(e^2=e\)，而每个 \(x\in K\) 满足 \(x=ex\)，所以 \(K=(e)\)。令 \(z=1-e\)，则
+\[
+\mu(z)=1,\qquad(c\otimes1-1\otimes c)z=0\quad(c\in C).
+\]
+写 \(z=\sum_i u_i\otimes v_i\)。映射
+\[
+s:M\longrightarrow C\otimes_AM,
+\qquad m\longmapsto\sum_i u_i\otimes v_i m
+\]
+由第二个等式为 \(C\) 线性，且乘法映射 \(C\otimes_AM\to M\) 与它的复合为恒等映射。故 \(M\) 是 \(C\otimes_AM\) 的直和项。后者由基变换在 \(C\) 上平坦，直和项也平坦，结论成立。
+\end{proof}
+
+\begin{theorem}[平展的等价刻画]\label{b3:thm:etale-equivalent-characterizations}
+设 \(A\) 为交换含幺环，\(B\) 为有限呈示交换 \(A\) 代数。下列条件等价：
+\begin{enumerate}
+\item \(B\) 在 \(A\) 上平坦，且 \(\Omega_{B/A}=0\)，即 \(A\to B\) 平展；
+\item \(A\to B\) 形式平展；
+\item 每个 \(\mathfrak q\in\operatorname{Spec}B\) 都有主开邻域，在该邻域上 \(B\) 具有标准平展模型。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+若形式平展，则形式光滑，由局部标准形定理得到标准光滑邻域。形式非分歧又使 \(\Omega_{B/A}=0\)，而标准模型的微分模自由秩为 \(n-r\)；在非空邻域中这迫使 \(n=r\)，故模型标准平展。反之，标准平展邻域由局部标准形定理使 \(B\) 光滑，且微分模处处为零，因而全局为零，得到形式平展。光滑蕴含平坦又给出条件1。
+
+还需从条件1出发构造标准平展邻域。写 \(B=P/I\)、\(P=A[X_1,\ldots,X_n]\)，其中 \(I\) 有限生成。给定 \(\mathfrak q\)，关系正合列和 \(\Omega_{B/A}=0\) 说明 \(I/I^2\to B^n\) 满射。模去 \(\mathfrak q\) 后，可选出 \(n\) 个关系 \(f_1,\ldots,f_n\)，使其 Jacobian 行列式 \(\Delta\notin\mathfrak q\)。令
+\[
+C=\bigl(P/(f_1,\ldots,f_n)\bigr)_\Delta,
+\qquad B'=B_{\bar\Delta}=C/J.
+\]
+这里 \(J\) 由其余有限个关系生成，\(C\) 为标准平展模型，故 \(\Omega_{C/A}=0\)。\(B'\) 在 \(A\) 上平坦，因为它是平坦 \(A\) 代数 \(B\) 的局部化。由\cref{b3:lem:unramified-diagonal-splitting}，\(B'\) 在 \(C\) 上平坦。
+
+用 \(B'\) 张量单射 \(J\to C\)，得到单射 \(J/J^2\to B'\)；该映射又为零，故 \(J=J^2\)。设 \(\mathfrak r\subseteq C\) 为所选 \(\mathfrak q\) 的逆像，则 \(J\subseteq\mathfrak r\)。在 \(C_{\mathfrak r}\) 中，有限生成模 \(J_{\mathfrak r}\) 满足
+\(J_{\mathfrak r}=J_{\mathfrak r}^2\)，由 Nakayama 引理为零。因此存在 \(h\notin\mathfrak r\)，使 \(J_h=0\)。于是 \(B'_h=C_h\)，这是包含给定点的标准平展邻域。这样条件1也推出条件3。
+\end{proof}
+
+这完成了第14章所预告的定义比较。有限呈示在选择有限组关系、把一点处的消失扩大到邻域，以及形成标准模型时都有实际作用；平坦性则在最后一个证明中消去了多余的商理想。只要求 \(\Omega_{B/A}=0\) 不足以做到这一点，\(k[t]\to k\) 正是已经算过的反例。
 
 \subsection{局部同胚直觉与平展的代数条件}
 \label{b3:subsec:2303:03}
 
-待撰写。
+在复数几何中，可逆 Jacobian 容易使人联想到逆函数定理。这个直觉有助于理解“相对零维而没有无穷小变化”，却不能把平展直接定义成 Zariski 拓扑中的局部同构，更不能只检查点集映射。
+
+\begin{example}\label{b3:exm:etale-not-zariski-isomorphism}
+设 \(A=\mathbb C[s,s^{-1}]\)、\(B=\mathbb C[t,t^{-1}]\)，映射由 \(s\mapsto t^2\) 给出。写成
+\(B\cong A[T]/(T^2-s)\)，其中 \(T\) 自动可逆，导数 \(2T\) 为单位。故此映射平展，且 \(B\) 为秩二自由 \(A\) 模。
+
+\ProseParagraphBreak
+然而不能把源中的某个非空 Zariski 开集限制成到目标某个非空开集的同构。若有这种同构，两个开集的函数域就会同构且尊重给定映射，迫使 \(\mathbb C(s)\to\mathbb C(t)\)、\(s\mapsto t^2\) 为同构；但其次数为二，因为有理函数 \(s\) 在零点的阶数为一，不能是平方。这与复解析拓扑中可以局部选定平方根并不矛盾：两种邻域并不相同。
+\end{example}
+
+\begin{example}\label{b3:exm:frobenius-homeomorphism-not-etale}
+设 \(k\) 为特征 \(p>0\) 的代数闭域，考虑 \(k[s]\to k[t]\)、\(s\mapsto t^p\)。目标以 \(1,t,\ldots,t^{p-1}\) 为自由基，所以映射有限且平坦。在素谱上，它把一般点送到一般点，并把闭点 \((t-a)\) 送到 \((s-a^p)\)；代数闭域上 \(a\mapsto a^p\) 为双射。有限整映射是闭映射，因此这个素谱映射为同胚。
+
+\ProseParagraphBreak
+但
+\[
+\Omega_{k[t]/k[s]}
+\cong k[t]\,dt/(d(t^p))=k[t]\,dt\ne0.
+\]
+故它不是非分歧映射，也不是平展映射。点集与其普通拓扑没有看到纤维里的幂零方向，而微分模看到了这个方向。
+\end{example}
+
+因此，对给定代数映射，平展性应当由有限呈示、平坦性、微分模，或由已经证明等价的标准模型来检验。只知道两个环都正则，或者两个素谱同胚，都不够。

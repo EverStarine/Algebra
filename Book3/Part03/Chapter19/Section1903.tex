@@ -5,9 +5,8 @@
 \section{完全交}
 \label{b3:sec:1903}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 正则环中由正则序列定义的商
 % * Koszul 消解
@@ -17,14 +16,76 @@
 \subsection{正则环中正则序列定义的商}
 \label{b3:subsec:1903:01}
 
-待撰写。
+“有 \(r\) 个方程”与“余维为 \(r\)”通常不能互相替代：方程可能重复，也可能在商去前几个方程后成为零因子。正则序列正是逐项排除这类冗余的条件。
+
+\begin{definition}\label{b3:def:local-complete-intersection}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环。若存在完备正则局部环 \((S,\mathfrak n)\) 及 \(S\) 正则序列 \(f_1,\ldots,f_c\in\mathfrak n\)，使
+\[
+\widehat R\cong S/(f_1,\ldots,f_c),
+\]
+则称 \(R\) 为\term[wanquanjiaojubuhuan]{完全交局部环}[complete intersection local ring]。允许 \(c=0\)。若交换 Noether 环的每个素点局部环都是完全交局部环，则称它为\term[jubuwanquanjiaohuan]{局部完全交环}[locally complete intersection ring]。
+\end{definition}
+
+定义中的完备化使名称不依赖手头是否已经写出一个正则局部环到 \(R\) 的满射。本章直接处理给定的正则局部环商，不主张为任意 Noether 局部环构造这种覆盖；一般覆盖的存在性与 Cohen 结构定理有关，另见本卷附录的相应安排。
+
+\begin{proposition}\label{b3:prop:given-complete-intersection}
+设 \((S,\mathfrak n)\) 为交换 Noether 正则局部环，\(f_1,\ldots,f_c\in\mathfrak n\) 为 \(S\) 正则序列，\(R=S/(f_1,\ldots,f_c)\)。则 \(R\) 为完全交局部环，且
+\(\dim R=\dim S-c\)。
+\end{proposition}
+\begin{proof}
+维数等式由\cref{b3:prop:regular-quotient-dimension}逐次应用得到。\cref{b3:thm:completion-exact}和\cref{b3:prop:completion-quotients}给出
+\(\widehat R\cong\widehat S/(f_1,\ldots,f_c)\widehat S\)。平坦性把每一步单射乘法变为单射，局部商非零保证张量后的序列仍正则；\cref{b3:thm:regular-local-completion}说明 \(\widehat S\) 正则，因而符合定义。
+\end{proof}
+
+例如 \(k[[x,y,z]]/(xy-z^2)\) 是二维完全交局部环：\(k[[x,y,z]]\) 是三维正则局部整环，\(xy-z^2\) 是一个非零非单位。相比之下，\(k[[x,y]]/(x^2,xy)\) 的两个给定方程不构成正则序列；在商去 \(x^2\) 后，非零的 \(x\) 被 \(xy\) 零化。
 
 \subsection{完全交的 Koszul 消解}
 \label{b3:subsec:1903:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:ci-koszul-resolution}
+设 \((S,\mathfrak n,k)\) 为交换 Noether 正则局部环，\(f_1,\ldots,f_c\in\mathfrak n\) 为 \(S\) 正则序列，\(R=S/(f_1,\ldots,f_c)\)。Koszul 复形 \(K(f_1,\ldots,f_c;S)\) 为 \(R\) 的极小自由 \(S\) 消解，其第 \(i\) 项的秩为 \(\binom ci\)。因而
+\[
+\dim_k\operatorname{Tor}_i^S(k,R)=\binom ci\quad(0\le i\le c),
+\qquad\operatorname{pd}_S R=c.
+\]
+\end{proposition}
+\begin{proof}
+\cref{b3:thm:koszul-regular-resolution}把此正则序列的 Koszul 复形识别为 \(R\) 的自由消解。该复形第 \(i\) 项为 \(\bigwedge^iS^c\)，微分矩阵的各项是 \(0\) 或 \(\pm f_j\)，均属于 \(\mathfrak n\)。与 \(k\) 张量后所有微分为零，得到所列 Tor 维数。最高次 Tor 在 \(c\) 次非零，而自由消解长度为 \(c\)，故投射维数恰为 \(c\)。
+\end{proof}
+
+以上投射维数的底环是 \(S\)。作为 \(R\) 模，\(R\) 本身当然自由，剩余域 \(k\) 的投射维数则可能无穷。例如 \(R=k[[x]]/(x^2)\) 上，复形
+\[
+\cdots\xrightarrow{x}R\xrightarrow{x}R\xrightarrow{x}R\longrightarrow k\longrightarrow0
+\]
+正合，因为每个乘 \(x\) 映射的核和像均为 \((x)\)。所有微分仍在极大理想中，故 \(\operatorname{Tor}_i^R(k,k)\cong k\) 对每个 \(i\ge0\) 都非零。有限的环境环消解与无限的商环消解可以同时存在。
 
 \subsection{完全交、Cohen–Macaulay 性与正则性的关系}
 \label{b3:subsec:1903:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:complete-intersection-cm}
+对于交换 Noether 局部环，有
+\[
+\text{正则}\ \Longrightarrow\ \text{完全交}\ \Longrightarrow\ \text{Cohen--Macaulay}.
+\]
+\end{theorem}
+\begin{proof}
+正则环的完备化仍正则，取空序列即可得到第一项蕴含。若 \(R\) 为完全交局部环，则按定义 \(\widehat R=S/(f_1,\ldots,f_c)\)。\(S\) 为 CM 环，\cref{b3:thm:cm-regular-quotient}使该商为 CM 环，再由\cref{b3:thm:cm-completion}下降至 \(R\)。
+\end{proof}
+
+\(k[[x]]/(x^2)\) 是完全交而非正则：其维数为零，极大理想却非零。为了给出第二个逆向蕴含的反例，需要一个能够排除所有完全交表示的条件，不能仅说“当前写出的关系不是正则序列”。
+
+\begin{lemma}\label{b3:lem:artinian-ci-socle}
+设 \((R,\mathfrak m,k)\) 为零维交换 Noether 完全交局部环。则其基座
+\(\operatorname{Soc}(R)=(0:_R\mathfrak m)\) 满足 \(\dim_k\operatorname{Soc}(R)=1\)。
+\end{lemma}
+\begin{proof}
+零维 Noether 局部环为 Artin 环，极大理想幂零，所以 \(R=\widehat R\)。写 \(R=S/(f_1,\ldots,f_c)\)，其中 \(S\) 完备正则局部。维数公式给出 \(c=\dim S\)。取 \(S\) 极大理想的一个正则生成系 \(x_1,\ldots,x_c\)。
+
+用 \(f\) 的 Koszul 消解计算，\cref{b3:prop:ci-koszul-resolution}给出 \(\operatorname{Tor}_c^S(k,R)\cong k\)。另一方面，用 \(x\) 的 Koszul 消解消解 \(k\)，再与 \(R\) 张量，其最高次同调为
+\[
+\{a\in R:x_1a=\cdots=x_ca=0\}=(0:_R\mathfrak m).
+\]
+两种计算得到同一个 Tor；其一致性由\cref{b3:lem:tor-basic-properties}的平衡性保证，具体是把两个自由消解张量所得的双复形分别沿两方向取同调。因此基座的维数为一；\(c=0\) 时 \(R=k\)，结论同样成立。
+\end{proof}
+
+现在取 \(A=k[x,y]/(x,y)^2\)。这是零维局部环，向量空间基为 \(1,x,y\)，所以自动是 CM 环；其基座为 \((x,y)\)，维数为二，故不可能是完全交局部环。这个反例也表明，CM 性并不强迫关系由正则序列生成。

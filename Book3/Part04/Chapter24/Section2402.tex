@@ -5,9 +5,8 @@
 \section{模与层}
 \label{b3:sec:2402}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 模对应的拟凝聚层
 % * 局部自由层及向量丛
@@ -17,14 +16,104 @@
 \subsection{模对应的拟凝聚层}
 \label{b3:subsec:2402:01}
 
-待撰写。
+环 \(A\) 在谱上形成结构层，\(A\) 模 \(M\) 也应在每个点保留 \(M_{\mathfrak p}\)。这里的局部元素不是标量函数，但同样可以在分母不消失的区域内表示为分式。
+
+\begin{definition}\label{b3:def:associated-module-sheaf}
+设 \(A\) 为交换环，\(M\) 为 \(A\) 模，\(X=\operatorname{Spec}A\)。在开集 \(U\) 上取所有局部可写为同一分式 \(m/f\) 的族 \(s_{\mathfrak p}\in M_{\mathfrak p}\)，配以限制与逐点模运算，所得 \(\mathcal O_X\) 模层记为 \(\widetilde M\)，称为 \(M\) 的伴随层。这里一个 \(\mathcal O_X\) 模层 \(\mathcal F\) 要求每个 \(\mathcal F(U)\) 为 \(\mathcal O_X(U)\) 模，且限制与标量限制相容。
+\end{definition}
+
+上一节的黏合引理本来就是对模证明的。用同样的局部族构造和分母核验，得到
+\begin{equation}\label{b3:eq:module-sheaf-localization}
+\Gamma(D(f),\widetilde M)=M_f,\qquad
+(\widetilde M)_{\mathfrak p}=M_{\mathfrak p},\qquad
+\Gamma(X,\widetilde M)=M.
+\end{equation}
+模同态在各局部化上给出相容同态，因而诱导层态射。层的核可逐开集取核；余核则一般须把局部余类重新黏合，不能直接把每个开集上的余核当作层。等价地，层序列的正合性在每个茎上检验：一个芽属于像，表示在某个足够小的邻域中有原像，不要求全局已经选好原像。
+
+\begin{definition}\label{b3:def:quasicoherent-sheaf}
+设 \(X\) 为概形，\(\mathcal F\) 为 \(\mathcal O_X\) 模层。若存在仿射开覆盖 \(X=\bigcup_iU_i\)、\(U_i=\operatorname{Spec}A_i\)，以及 \(A_i\) 模 \(M_i\)，使 \(\mathcal F|_{U_i}\cong\widetilde{M_i}\)，则称 \(\mathcal F\) 为\term[niningju-ceng]{拟凝聚层}[quasi-coherent sheaf]。在 Noether 概形上，若还能选各 \(M_i\) 为有限模，则称 \(\mathcal F\) 为\term[ningju-ceng]{凝聚层}[coherent sheaf]。
+\end{definition}
+
+后一用语在本章只用于 Noether 概形，不把“有限生成”作为任意底空间上凝聚性的完整定义。拟凝聚性首先按某个仿射覆盖定义；下一定理说明在仿射空间上，它仍由一个全局模决定。
+
+\ProseParagraphBreak
+先说明定理中所用的层运算。对拓扑空间上的预层 \(\mathcal P\)，取所有局部由 \(\mathcal P\) 的同一截面表示的芽族，得到层 \(\mathcal P^+\)，称为其层化。限制和黏合逐芽进行，正如结构层的构造；\(\mathcal P\rightarrow\mathcal P^+\) 在茎上为同构。若 \(\mathcal P\rightarrow\mathcal G\) 的目标已经是层，各局部代表的像便能唯一黏合，故该映射唯一经过 \(\mathcal P^+\)。这样，模层 \(\mathcal F,\mathcal G\) 的张量积就是预层 \(U\mapsto\mathcal F(U)\otimes_{\mathcal O_X(U)}\mathcal G(U)\) 的层化，其茎为 \(\mathcal F_x\otimes_{\mathcal O_{X,x}}\mathcal G_x\)。
+
+\ProseParagraphBreak
+对连续映射 \(f:Y\rightarrow X\)，逆像层 \(f^{-1}\mathcal F\) 是预层
+\[
+U\longmapsto\varinjlim_{f(U)\subseteq V}\mathcal F(V)
+\]
+的层化，其中 \(U\subseteq Y\)、\(V\subseteq X\) 开，转移映射为缩小 \(V\) 的限制。它的茎为 \((f^{-1}\mathcal F)_y=\mathcal F_{f(y)}\)：两边的代表都是 \(f(y)\) 邻域上的截面，而连续性允许把该邻域拉回到 \(y\) 的邻域。若 \(f\) 是概形态射，就可进一步扩张标量，定义
+\(f^*\mathcal F=\mathcal O_Y\otimes_{f^{-1}\mathcal O_X}f^{-1}\mathcal F\)，称为模层的拉回。直像层则直接定义为 \((f_*\mathcal G)(V)=\mathcal G(f^{-1}V)\)；开覆盖的原像仍为开覆盖，所以它已经满足层公理。
+
+\begin{theorem}\label{b3:thm:affine-quasicoherent-equivalence}
+设 \(A\) 为交换环，\(X=\operatorname{Spec}A\)。函子 \(M\mapsto\widetilde M\) 与 \(\mathcal F\mapsto\Gamma(X,\mathcal F)\) 给出 \(A\) 模和 \(X\) 上拟凝聚层的互逆等价。它们保持正合列，且
+\[
+\widetilde{M\otimes_A N}\cong
+\widetilde M\otimes_{\mathcal O_X}\widetilde N.
+\]
+对 \(A\rightarrow B\) 所诱导的 \(f:\operatorname{Spec}B\rightarrow X\)，拉回满足 \(f^*\widetilde M\cong\widetilde{B\otimes_AM}\)。
+\end{theorem}
+\begin{proof}
+先证明拟凝聚层的截面可以清分母。将其定义中的覆盖细化为有限个环境谱 \(X\) 的基本开集 \(D(g_i)\)，使 \(\mathcal F|_{D(g_i)}=\widetilde{N_i}\)。具体地，若 \(D_X(g)\subseteq U=\operatorname{Spec}B\) 且 \(\mathcal F|_U=\widetilde N\)，令 \(b\in B\) 是全局函数 \(g\) 在 \(U\) 上的限制。一个点处的 \(g\) 可逆与其限制 \(b\) 可逆等价，所以 \(D_X(g)=D_U(b)\)，而限制层来自 \(N_b\)。这证明所需细化保持模的描述；有限性来自 \(X\) 的拟紧性。
+
+若 \(s\in\Gamma(X,\mathcal F)\) 限制到 \(D(f)\) 后为零，则它在各 \(N_i\) 中的像被 \(f\) 的某个幂零化。取统一的幂后，由层的唯一性有 \(f^Ns=0\)。若 \(t\in\Gamma(D(f),\mathcal F)\)，则在每个 \(D(g_i)\cap D(f)\) 上，它是 \(N_i\) 的分式。乘统一的 \(f^N\) 可延拓为 \(D(g_i)\) 上截面 \(t_i\)。在每个交集 \(D(g_ig_j)\) 上，差 \(t_i-t_j\) 限制到 \(D(fg_ig_j)\) 为零。对该仿射交集使用刚证的零化结论，再乘统一的 \(f^L\)，各截面即相容，能够黏合为全局截面。
+
+因此，令 \(M=\Gamma(X,\mathcal F)\)，自然映射
+\(M_f\rightarrow\Gamma(D(f),\mathcal F)\) 既单又满。它们在基本开集上相容，遂给出 \(\widetilde M\cong\mathcal F\)。式\eqref{b3:eq:module-sheaf-localization}给出另一方向的复合为恒等。层态射取全局截面后，其在基本开集上的作用由分式唯一确定，所以态射也得到互逆对应。
+
+局部化正合，故模的正合列在取伴随层后仍正合。反之，模列若局部化到全部素理想后正合，其核与像的商在全部素点为零，因而本身为零；这使用非零模元素的零化子可包含在某个极大理想中的检测法。因此逆函子在拟凝聚层中也保持正合。张量积公式在每个基本开集上就是局部化与张量积的相容式。
+
+最后，拉回模层按“先取局部截面的逆像，再把标量由 \(f^{-1}\mathcal O_X\) 扩为 \(\mathcal O_{\operatorname{Spec}B}\)”定义，即
+\(f^*\mathcal F=\mathcal O_{\operatorname{Spec}B}\otimes_{f^{-1}\mathcal O_X}f^{-1}\mathcal F\)；在仿射基本开集上代入分式，恰得到 \(B\otimes_AM\) 及其局部化。这证明最后一式。
+\end{proof}
+
+例如 \(\widetilde{A/I}\) 在点 \(\mathfrak p\) 的茎为 \(A_{\mathfrak p}/IA_{\mathfrak p}\)，故它的支集是 \(V(I)\)，且仍保留商环中可能存在的幂零元。上述等价的标准叙述及清分母引理见\cite[Chapter II, Lemma 5.3, Proposition 5.4 and Corollary 5.5, pp. 112--113]{Hartshorne1977}。
 
 \subsection{局部自由层与向量丛}
 \label{b3:subsec:2402:02}
 
-待撰写。
+\begin{definition}\label{b3:def:locally-free-sheaf}
+设 \(X\) 为概形，\(\mathcal E\) 为 \(\mathcal O_X\) 模层。若每点都有开邻域 \(U\)，使 \(\mathcal E|_U\cong\mathcal O_U^r\)、\(r\) 为有限非负整数，则称 \(\mathcal E\) 为有限秩\term[jubu-ziyou-ceng]{局部自由层}[locally free sheaf]。秩可在不同连通分支改变；恒为一的情形称为可逆层。
+\end{definition}
+
+\begin{corollary}\label{b3:cor:vector-bundle-projective-module}
+设 \(A\) 为交换环，\(X=\operatorname{Spec}A\)。在\cref{b3:thm:affine-quasicoherent-equivalence}中，有限生成投射 \(A\) 模恰对应有限秩局部自由层。
+\end{corollary}
+\begin{proof}
+若 \(M\) 有限生成投射，\cref{b3:thm:finite-presentation-flat-projective}使其在每点的某个基本开邻域上为有限秩自由模，式\eqref{b3:eq:module-sheaf-localization}随即给出局部自由层。反之，局部自由层显然拟凝聚，写成 \(\widetilde M\)。取有限个基本开集使其平凡，则每个 \(M_{f_i}\) 为有限秩自由模。\cref{b3:prop:finite-presentation-open-cover}先保证 \(M\) 有限展示，再由同一局部自由判据得 \(M\) 投射。
+\end{proof}
+
+纤维与茎承担不同任务。在点 \(x\) 处，纤维是
+\(\mathcal E(x)=\mathcal E_x\otimes_{\mathcal O_{X,x}}\kappa(x)\)；
+茎则是邻域数据的局部环模。一个有限模的所有纤维维数相同，仍不能在有幂零元的基底上保证局部自由。例如 \(A=k[\varepsilon]/(\varepsilon^2)\)、\(M=A/(\varepsilon)\) 只有一个一维纤维，却不自由：若自由，维数要求它为秩一，而其非零零化子 \((\varepsilon)\) 排除了这一点。
+
+\ProseParagraphBreak
+局部自由层也有向量丛的几何描述。在平凡化 \(U_i\) 上取 \(\mathbb A_{U_i}^r\)。若基矩阵满足 \(e_j=e_iG_{ij}\)，则坐标按 \(v_i=G_{ij}v_j\) 变换；关系 \(G_{ij}G_{jk}=G_{ik}\) 保证三重交集相容。把这些平凡丛按该规则黏合，得到纤维为 \(\kappa(x)^r\) 的代数向量丛。反向取其局部线性截面便恢复 \(\mathcal E\)。局部自由并不表示存在一组全局基；下面的射影直线将给出最简单的非平凡可逆层。
 
 \subsection{局部化相容性与黏合}
 \label{b3:subsec:2402:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:sheaf-gluing}
+设 \(X\) 为概形，\(X=\bigcup_iU_i\) 为开覆盖。给定各 \(U_i\) 上的模层 \(\mathcal F_i\) 及同构
+\(\theta_{ij}:\mathcal F_j|_{U_i\cap U_j}\rightarrow\mathcal F_i|_{U_i\cap U_j}\)，满足 \(\theta_{ii}=1\) 和 \(\theta_{ij}\theta_{jk}=\theta_{ik}\)。则存在模层 \(\mathcal F\) 及相容同构 \(\mathcal F|_{U_i}\cong\mathcal F_i\)，并在保留这些同构的意义下唯一。若各 \(\mathcal F_i\) 拟凝聚或局部自由，则 \(\mathcal F\) 也分别具有该性质。
+\end{proposition}
+\begin{proof}
+对开集 \(V\subseteq X\)，定义 \(\mathcal F(V)\) 为全部族
+\[
+s_i\in\mathcal F_i(V\cap U_i),\qquad
+s_i=\theta_{ij}(s_j)\ \text{于 }V\cap U_i\cap U_j.
+\]
+限制和标量作用逐分量给出。局部相容族先在每个 \(U_i\) 内由层公理黏合，所得截面仍满足交集关系，因而 \(\mathcal F\) 是层。在 \(V\subseteq U_i\) 时，第 \(i\) 分量决定其余分量为 \(\theta_{ji}(s_i)\)；余圈关系保证相容，遂得所需同构。任何其他实现都按这些局部同构给出同一个相容族，得到唯一性。最后两项性质本来就是开局部条件。
+\end{proof}
+
+概形本身也可以沿开子概形黏合。给定 \(X_i\)、开集 \(U_{ij}\subseteq X_i\) 和同构 \(U_{ij}\rightarrow U_{ji}\)，要求同构互逆，且在三重重叠处具有相同复合。先把不交并按这些同构取商；每个 \(X_i\) 到商空间是开嵌入，因为其开集的饱和在各分量仍开。再按上面相容族的方法黏合环层，茎在每个局部仍是原茎。因此商空间的每点有原来的仿射邻域，得到概形。这里同时拼合拓扑和结构层，只有点集的粘接并不够。
+
+\ProseParagraphBreak
+取两份 \(\operatorname{Spec}k[t]\)，沿 \(D(t)\) 用恒等映射黏合，得到带双原点的仿射直线。它的全局函数是
+\[
+\{(a(t),b(t))\in k[t]^2:a=b\text{ 于 }k[t,t^{-1}]\}
+\cong k[t].
+\]
+若此概形仿射，全局函数环将由\cref{b3:thm:affine-scheme-hom}恢复整个概形；但两个原点在全局函数上的取值理想均为 \((t)\)，不可能在同一个素谱中成为两个不同点。故它不是仿射概形。这个例子说明，知道各仿射块和全局函数仍不足以丢掉黏合数据。

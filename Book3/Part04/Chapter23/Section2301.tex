@@ -5,9 +5,7 @@
 \section{Hensel 引理}
 \label{b3:sec:2301}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 单根提升与因式分解提升
 % * 完备局部环的 Hensel 性
@@ -17,14 +15,123 @@
 \subsection{单根提升与因式分解提升}
 \label{b3:subsec:2301:01}
 
-待撰写。
+设 \((R,\mathfrak m)\) 是局部环，\(k=R/\mathfrak m\)。把多项式的系数约化到 \(k\)，常会得到一个容易求解的方程。问题是：约化方程的解，能否成为原方程的解的第一项？如果约化根是单根，导数便可以用来修正误差；如果它是重根，误差未必能消去，也可能有不止一种消去方法。
+
+\begin{theorem}[单根的 Hensel 提升]\label{b3:thm:hensel-simple-root}
+设 \((R,\mathfrak m)\) 为交换含幺局部环，且自然映射 \(R\to\varprojlim_n R/\mathfrak m^n\) 是同构。设 \(f\in R[T]\)，\(\bar a\in k=R/\mathfrak m\) 满足
+\[
+\bar f(\bar a)=0,\qquad \bar f'(\bar a)\ne0.
+\]
+则存在唯一的 \(a\in R\)，使 \(f(a)=0\) 且 \(a\bmod\mathfrak m=\bar a\)。这里不要求 \(f\) 首一。
+\end{theorem}
+\begin{proof}
+任取 \(\bar a\) 的提升 \(a_0\)。因为 \(f'(a_0)\) 模 \(\mathfrak m\) 非零，它是单位。递归令
+\[
+a_{j+1}=a_j-\frac{f(a_j)}{f'(a_j)}.
+\]
+每次修正都在 \(\mathfrak m\) 中，故所有 \(a_j\) 具有相同的剩余类，\(f'(a_j)\) 始终可逆。多项式恒等式
+\(f(u+v)=f(u)+f'(u)v+v^2h(u,v)\) 给出：若 \(f(a_j)\in\mathfrak m^{2^j}\)，则
+\[
+a_{j+1}-a_j\in\mathfrak m^{2^j},\qquad
+f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
+\]
+初始误差属于 \(\mathfrak m\)，所以归纳成立。由完备性，\((a_j)\) 收敛到 \(a\in R\)。有限次加法与乘法对 \(\mathfrak m\) 进拓扑连续，故 \(f(a)\in\bigcap_n\mathfrak m^n=0\)，并且 \(a\) 仍提升 \(\bar a\)。
+
+若 \(a,b\) 都是这样的根，则
+\[
+0=f(a)-f(b)=(a-b)\bigl(f'(b)+(a-b)c\bigr)
+\]
+其中 \(c\in R\)。括号内的元素模 \(\mathfrak m\) 等于 \(\bar f'(\bar a)\)，所以是单位，因而 \(a=b\)。这个唯一性论证本身不需要完备性。
+\end{proof}
+
+\begin{example}\label{b3:exm:hensel-root-five-adic}
+在 \(\mathbb Z_5\) 中，\(T^2+1\) 的约化根 \(2\) 是单根。故恰有一个根同余于 \(2\pmod5\)。写作 \(2+5c\)，模 \(25\) 的方程为 \(5+20c\equiv0\)，得 \(c\equiv1\pmod5\)，所以这个根模 \(25\) 等于 \(7\)。从约化根 \(3\) 得到另一个根，它是前一个的负数。这里是在指定剩余类内唯一，并不是说多项式在环中只能有一个根。
+\end{example}
+
+\begin{definition}\label{b3:def:henselian-local-ring}
+设 \((R,\mathfrak m,k)\) 为交换含幺局部环。若对每个首一 \(f\in R[T]\) 及每个分解
+\[
+\bar f=\bar g\bar h\quad\text{于 }k[T],
+\]
+其中 \(\bar g,\bar h\) 首一且互素，都存在首一 \(g,h\in R[T]\)，满足
+\(f=gh\)、\(g\bmod\mathfrak m=\bar g\)、\(h\bmod\mathfrak m=\bar h\)，并且次数分别等于 \(\deg\bar g,\deg\bar h\)，则称 \(R\) 为 \term[Hensel-huan]{Hensel 环}[Henselian local ring]，也称 \(R\) 具有 Hensel 性。
+\end{definition}
+
+在这个定义中取 \(\bar g=T-\bar a\)，便得到首一多项式的单根提升：另一个因子与它互素，恰好表示 \(\bar f'(\bar a)\ne0\)。因式提升还可以保留一整组根，而不要求它们分别属于剩余域。下面直接证明完备性足以保证这种较一般的提升。
 
 \subsection{完备局部环的 Hensel 性}
 \label{b3:subsec:2301:02}
 
-待撰写。
+\begin{theorem}[互素因式的 Hensel 提升]\label{b3:thm:hensel-factor-lifting}
+设 \((R,\mathfrak m,k)\) 为交换含幺局部环，并且 \(R\cong\varprojlim_n R/\mathfrak m^n\)。设 \(f\in R[T]\) 首一，且
+\(\bar f=\bar g\bar h\)，其中 \(\bar g,\bar h\in k[T]\) 首一互素，次数分别为 \(r,s\)。则存在唯一的首一分解 \(f=gh\)，其中 \(g,h\) 具有上述次数和约化像。特别地，每个完备分离局部环都是 Hensel 环。
+\end{theorem}
+\begin{proof}
+可假设 \(r,s>0\)，因为零次的首一因子只能是 \(1\)。先在 \(k\) 上考虑线性映射
+\[
+L:k[T]_{<r}\oplus k[T]_{<s}\longrightarrow k[T]_{<r+s},
+\qquad (u,v)\longmapsto\bar h u+\bar g v.
+\]
+若像为零，由 \(\bar g\mid\bar h u\) 及互素性可得 \(\bar g\mid u\)。次数限制迫使 \(u=0\)，继而 \(v=0\)。两端维数均为 \(r+s\)，故 \(L\) 为同构。这正是每一阶修正都可以且只能有一种方式完成的原因。
+
+任取首一提升 \(g_1,h_1\)，次数固定为 \(r,s\)，于是 \(f-g_1h_1\in\mathfrak m R[T]\)。设已构造 \(g_n,h_n\)，使误差属于 \(\mathfrak m^nR[T]\)。在 \(\mathfrak m^n/\mathfrak m^{n+1}\) 上对 \(L\) 作张量积，仍为同构，故存在系数属于 \(\mathfrak m^n\) 的多项式 \(u_n,v_n\)，次数分别小于 \(r,s\)，使
+\[
+f-g_nh_n\equiv h_nu_n+g_nv_n\pmod{\mathfrak m^{n+1}R[T]}.
+\]
+令 \(g_{n+1}=g_n+u_n\)、\(h_{n+1}=h_n+v_n\)。乘积中另外出现的 \(u_nv_n\) 属于 \(\mathfrak m^{2n}R[T]\subseteq\mathfrak m^{n+1}R[T]\)，故新的误差提高一阶。修正不改变首项和次数。
+
+固定次数使每个系数各自成为 Cauchy 序列。逐个取极限得到首一 \(g,h\)；分离性使 \(f-gh=0\)。若还有另一个分解 \(g'h'\)，起初 \(g'-g,h'-h\) 的系数在 \(\mathfrak m\) 中。假设已经在 \(\mathfrak m^n\) 中，则模 \(\mathfrak m^{n+1}\) 有
+\[
+\bar h(g'-g)+\bar g(h'-h)=0.
+\]
+由同一个 \(L\) 的单射性，两差的系数都在 \(\mathfrak m^{n+1}\) 中。归纳并使用分离性可得 \(g'=g,h'=h\)。
+\end{proof}
+
+上述证明采用逐次修正系数的方法；同样的因式提升可参阅松村英之的《Commutative Ring Theory》\cite[Theorem 8.3, p. 58]{Matsumura1989CommutativeRingTheory}。单根情形的 Newton 修正每次至少使误差的理想次幂加倍，而这里逐阶求解一个固定的线性方程组；两者都依靠一次近似处的可逆性。
+
+\ProseParagraphBreak
+互素条件不能省略。例如 \(T^2-5\) 在 \(\mathbb Z_5\) 中约化为 \(T\cdot T\)，但若有根 \(a\)，则 \(2v_5(a)=1\)，不可能成立。因此这个约化分解不能提升为两个首一一次因子。完备性保证误差修正的极限存在，却不能代替求解修正方程所需的可逆条件。
 
 \subsection{Hensel 化与完备化}
 \label{b3:subsec:2301:03}
 
-待撰写。
+完备化同时加入所有相容的 \(\mathfrak m\) 进近似。若只希望使上述互素因式能够提升，就不必加入这么多元素。描述这个较小扩张的合适方式，是规定它到其他 Hensel 局部环的映射。
+
+\begin{definition}\label{b3:def:henselization}
+设 \((R,\mathfrak m)\) 为交换含幺局部环，\(\iota:R\to R^{\mathrm h}\) 为到 Hensel 局部环的局部同态。若对任意 Hensel 局部环 \(S\) 和局部同态 \(u:R\to S\)，存在唯一的局部同态 \(v:R^{\mathrm h}\to S\)，使 \(v\iota=u\)，则称 \(\iota:R\to R^{\mathrm h}\) 为 \(R\) 的 \term[Hensel-hua]{Hensel 化}[Henselization]。
+\end{definition}
+
+这一定义立即给出唯一性：两个具有该性质的对象之间各有唯一的相容局部同态，复合由唯一性等于恒等映射。存在性则不是形式推论；它需要把带有指定剩余点的有限代数扩张组织起来。下面明确引用这一构造定理，不把完备化当作它的证明。
+
+\begin{theorem}[Hensel 化的存在；外部引用]\label{b3:thm:henselization-existence}
+每个交换含幺局部环 \((R,\mathfrak m,k)\) 都有 Hensel 化 \(R^{\mathrm h}\)。它的极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域为 \(k\)，且 \(R^{\mathrm h}\) 在 \(R\) 上忠实平坦。若 \(R\) 为 Noether 环，则 \(R^{\mathrm h}\) 也为 Noether 环，而且对每个 \(n\ge1\)，自然映射
+\[
+R/\mathfrak m^n\longrightarrow
+R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}
+\]
+为同构。因此二者的相应完备化自然同构。
+\end{theorem}
+
+本定理的存在性、泛性质、平坦性及完备化比较，采用永田雅宜《Local Rings》中的结论\cite[\S43, (43.3), (43.5), (43.8)--(43.10), pp. 180--183]{Nagata1975LocalRings}。该书先在正规情形构造扩张，再由商环处理一般情形；其中局部平坦同态的忠实性也可由本卷忠实平坦判据得出。本节不展开整个存在性证明。它是本选读章所引用的独立结果，后面光滑与平展的证明不以此定理为前提。
+
+\ProseParagraphBreak
+对 Noether 局部环，由 \(\widehat R\) 的 Hensel 性及泛性质，得到相容的局部同态
+\[
+R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
+\]
+前者只需解决 Hensel 提升问题，后者还允许任意阶的相容极限。不能仅凭两环有相同的各阶商，就断言两环相同；还必须检查它们自身是否完备。
+
+\begin{example}\label{b3:exm:henselization-not-completion}
+令 \(R=\mathbb Q[t]_{(t)}\)，则 \(\widehat R=\mathbb Q[[t]]\)。多项式 \(F(X)=X^2-X-t\) 模 \(t\) 有单根 \(0\)，但在 \(\mathbb Q(t)\) 中没有根：若有根，则 \(1+4t\) 是有理函数的平方；然而它在 \(t=-1/4\) 处的零点阶数为一，平方的零点阶数必为偶数。因此 \(R\) 不是 Hensel 环。
+
+\ProseParagraphBreak
+在 Hensel 化中，这个根存在；它在完备化中的展开以
+\[
+-t+t^2-2t^3+5t^4+\cdots
+\]
+开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)，所以 \(R^{\mathrm h}\) 是可数集；\(\mathbb Q[[t]]\) 却不可数，因为它包含所有系数只取 \(0,1\) 的无穷序列。因此
+\[
+R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
+\]
+这个例子同时区分了局部化、Hensel 化与完备化，而不是仅仅赋予同一环三个名称。
+\end{example}

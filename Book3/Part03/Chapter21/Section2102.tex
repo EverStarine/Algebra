@@ -5,26 +5,74 @@
 \section{Hilbert 合冲定理}
 \label{b3:sec:2102}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 多项式环的有限整体维数
 % * Hilbert 合冲定理及证明
 % * 自由消解长度与变量数
 %
 
+Noether 性保证每一层关系有限生成，尚不能阻止关系层数无限增加。多项式环的特殊之处是变量数给出统一上界。先证明对任意模成立的投射维数上界，再用分次极小性把它转为有限自由消解；这样无须提前假设一般有限投射模都自由。
+
 \subsection{多项式环的有限整体维数}
 \label{b3:subsec:2102:01}
 
-待撰写。
+以下整体维数取所有模的投射维数的上确界，包括无限生成模。增加一个变量时，有一条简单的正合列比较新旧环上的模。
+
+\begin{lemma}\label{b3:lem:polynomial-module-sequence}
+设 \(A\) 为交换环，\(B=A[t]\)，\(M\) 为任意 \(B\) 模。把 \(M\) 限制为 \(A\) 模后，有自然的 \(B\) 模短正合列
+\[
+0\longrightarrow B\otimes_AM\xrightarrow{\delta}B\otimes_AM
+\xrightarrow{\varepsilon}M\longrightarrow0,
+\]
+其中 \(\delta(b\otimes m)=bt\otimes m-b\otimes tm\)，\(\varepsilon(b\otimes m)=bm\)。
+\end{lemma}
+\begin{proof}
+两式尊重 \(A\) 平衡关系并且 \(B\) 线性，且 \(\varepsilon\delta=0\)、\(\varepsilon(1\otimes m)=m\)。作为 \(A\) 模，\(B\otimes_AM\) 是各 \(t^i\otimes M\) 的直和。若 \(u=\sum_{i=0}^rt^i\otimes m_i\ne0\)、\(m_r\ne0\)，则 \(\delta(u)\) 的最高项为 \(t^{r+1}\otimes m_r\)，故 \(\delta\) 单射。模掉其像，可以反复用 \(t^i\otimes m\equiv t^{i-1}\otimes tm\)，最终得
+\(u\equiv1\otimes\sum_i t^im_i=1\otimes\varepsilon(u)\)。所以 \(\ker\varepsilon=\operatorname{im}\delta\)。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:polynomial-global-bound}
+设交换环 \(A\) 的整体维数至多为有限整数 \(d\)。则 \(A[t]\) 的整体维数至多为 \(d+1\)。因而对任意域 \(k\)，多项式环 \(k[x_1,\ldots,x_n]\) 的整体维数至多为 \(n\)。
+\end{proposition}
+\begin{proof}
+对任意 \(B=A[t]\) 模 \(M\)，取其作为 \(A\) 模的长度至多 \(d\) 的投射消解 \(P_\bullet\)。\(B\) 在 \(A\) 上自由，故张量后得到 \(B\otimes_AM\) 的投射消解，长度仍至多为 \(d\)：自由模的直和项张量后仍为自由模的直和项。
+
+在上一引理的两份 \(B\otimes_AM\) 上选这样的消解 \(P'_\bullet,Q'_\bullet\)，把 \(\delta\) 逐层提升为链映射 \(a:P'_\bullet\rightarrow Q'_\bullet\)。链复形
+\[
+C_i=Q'_i\oplus P'_{i-1},\qquad
+D_i(q,p)=(d_Qq+a_{i-1}p,-d_Pp)
+\]
+配上增广 \(Q'_0\rightarrow M\) 给出长度至多 \(d+1\) 的投射消解。确实，\(D^2=0\) 来自链映射等式；短正合复形 \(0\rightarrow Q'\rightarrow C\rightarrow P'[1]\rightarrow0\) 的同调连接映射是 \(\delta\)，其中 \(P'[1]_i=P'_{i-1}\)，所以正次数的同调为零，零次同调为 \(\operatorname{coker}\delta=M\)。这也可以从上述公式逐次提升圈元直接检验。于是任意 \(M\) 的投射维数至多 \(d+1\)。域上所有向量空间自由，整体维数为零，逐个添加变量完成归纳。
+\end{proof}
 
 \subsection{Hilbert 合冲定理及其证明}
 \label{b3:subsec:2102:02}
 
-待撰写。
+\begin{theorem}[Hilbert 合冲定理]\label{b3:thm:hilbert-syzygy}
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次。每个有限生成分次 \(S\) 模都有长度至多为 \(n\) 的有限分次自由消解；它的分次极小自由消解在第 \(n\) 层以后全部为零。此外，\(S\) 的整体维数恰为 \(n\)。
+\end{theorem}
+\begin{proof}
+由\cref{b3:prop:graded-minimal-existence}先构造可能无限的极小消解 \(F_\bullet\)。上一命题说明 \(M\) 有长度至多 \(n\) 的投射消解，故 \(i>n\) 时 \(\operatorname{Tor}_i^S(M,k)=0\)。由式\eqref{b3:eq:graded-betti-tor}得 \(F_i\otimes_Sk=0\)，所以 \(F_i=0\)，得到所需有限自由消解。
+
+另一方面，\(x_1,\ldots,x_n\) 是 \(S\) 正则序列：逐次商为剩余变量的多项式环，每一步所乘变量都是非零因子，末端商为 \(k\ne0\)。\Cref{b3:thm:koszul-regular-resolution}因此给出 \(k\) 的自由消解。张量 \(k\) 后微分为零，第 \(n\) 项为 \(\bigwedge^n k^n\simeq k\)，故 \(\operatorname{Tor}_n^S(k,k)\ne0\)。这迫使 \(\operatorname{pd}_Sk\ge n\)，结合上界得 \(\operatorname{gldim}S=n\)。\(n=0\) 时环为域，同样成立。
+\end{proof}
+
+这就是\term[Hilbert-hechong-dingli]{Hilbert 合冲定理}[Hilbert's syzygy theorem]的分次形式。证明中有两项不同的有限性：有限生成性使每一项自由模具有有限秩，变量数则使非零项的数目有统一上界。对于任意非分次模，上一个命题给的是有限长度投射消解；本定理中的自由性是借助分次极小消解得到的，不能在缺少分次条件时直接照搬这一步。
 
 \subsection{自由消解长度与变量数}
 \label{b3:subsec:2102:03}
 
-待撰写。
+上界可以达到：\(k=S/(x_1,\ldots,x_n)\) 的 Koszul 消解长度恰为 \(n\)，其 Betti 数为 \(\beta_{i,i}=\binom ni\)。若只商掉前 \(r\) 个变量，则相同证明给出长度恰为 \(r\) 的极小消解。相反，一个自由模的消解长度为零，与所选生成元次数无关。
+
+\ProseParagraphBreak
+长度也可以从合冲模辨认。对 \(0\ne M\) 的极小消解，若 \(F_r\ne0\)、\(F_{r+1}=0\)，则 \(\operatorname{Tor}_r^S(M,k)\ne0\)，所以不存在更短的投射消解。此时第 \(r\) 个合冲模是自由模，而此前各层若已自由，就能截短消解，产生矛盾。因而“已经找到某个有限消解”与“已经找到最短长度”是两种结论；后者需要极小性或非消失同调作为证据。
+
+\ProseParagraphBreak
+例如 \(S=k[x,y]\)、\(M=S/(x^2,xy)\) 有消解
+\[
+0\longrightarrow S(-3)\xrightarrow{\binom{y}{-x}}S(-2)^2
+\xrightarrow{(x^2\ xy)}S\longrightarrow M\longrightarrow0.
+\]
+正合性由 \(ax^2+bxy=0\) 在整环中约去 \(x\)，再使用 \(ax+by=0\) 的计算得到；全部非零微分项在 \((x,y)\) 中，故消解极小，投射维数为二。商环的维数却是一。这一差别由前面深度与投射维数的理论解释，不能把消解长度直接等同于几何维数。

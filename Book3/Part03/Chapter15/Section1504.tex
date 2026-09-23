@@ -5,7 +5,6 @@
 \section{几何和计算例子}
 \label{b3:sec:1504}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +18,72 @@
 \subsection{超曲面与完全交模型}
 \label{b3:subsec:1504:01}
 
-待撰写。
+在多项式环 \(R=k[X_1,\ldots,X_n]\) 中，非零非常数多项式 \(f\) 是环上的非零因子，并且 \(R/(f)\ne0\)。其消解只有一条乘法：
+\[
+0\longrightarrow R\xrightarrow{f}R\longrightarrow R/(f)\longrightarrow0.
+\]
+这解释了超曲面为何有特别简单的关系结构。若 \(f_1,\ldots,f_c\) 正则，商环则有长度 \(c\) 的 Koszul 自由消解，第 \(i\) 项秩为 \(\binom ci\)。这类由正则序列给出的商是完全交的基本模型；完全交局部环的定义及其与 Cohen--Macaulay 性的关系将在\chapref{b3:ch:19}讨论，本节只使用明确给出的方程。
+
+\ProseParagraphBreak
+序列 \(X^a,Y^b\) 在 \(k[X,Y]\) 上正则，其中 \(a,b\ge1\)。模掉 \(X^a\) 后，环作为 \(k[Y]\) 模自由，基为 \(1,X,\ldots,X^{a-1}\)，故乘 \(Y^b\) 单射。商的 \(k\) 基为
+\[
+\{\,X^iY^j\mid0\le i<a,\ 0\le j<b\,\},
+\]
+维数为 \(ab\)。正则序列并不要求商环约化：\(a>1\) 时 \(\bar X\) 可以是非零幂零元。它要求方程逐次作用时没有零因子，不要求最后剩下的点没有重数。
 
 \subsection{小长度正则序列的显式计算}
 \label{b3:subsec:1504:02}
 
-待撰写。
+令 \(R=k[X,Y,Z]\)。序列 \(X,YZ\) 正则，因为第一次商 \(k[Y,Z]\) 为整环。其长度二消解为
+\[
+0\longrightarrow R\xrightarrow{\binom{-YZ}{X}}R^2
+\xrightarrow{(X\ \ YZ)}R\longrightarrow R/(X,YZ)\longrightarrow0.
+\]
+直接核验中间正合性：若 \(Xa+YZb=0\)，由 \(X\nmid YZ\) 得 \(b=Xc\)，随后 \(a=-YZc\)。商对应平面 \(X=0\) 内的两条相交直线，具有不同不可约分支，仍不妨碍正则性。
+
+\ProseParagraphBreak
+但 \(XY,XZ\) 不正则：第一次商中 \(\bar Y\ne0\)，而 \(XZ\bar Y=0\)。多项式环是整环，只保证第一个非零方程正则；第二步必须在已经取商的环中检验。两个方程在原环中都非零，不能替代这一检验。
+
+\ProseParagraphBreak
+若环本身已有零因子，例如 \(A=k[U,V]/(UV)\)，则 \(U\) 不能作第一项；不过 \(U+V\) 可以。把 \(A\) 嵌入 \(k[U]\oplus k[V]\)，像为两分量常数项相同的配对。乘 \(U+V\) 对应分别乘 \(U,V\)，两者都单射，所以在 \(A\) 上也单射。最后的商同构于 \(k[U]/(U^2)\)，再次出现非约化的正则截面。
 
 \subsection{外代数与 Tor 的联系}
 \label{b3:subsec:1504:03}
 
-待撰写。
+第二卷外代数中的基与反对称乘法，在这里决定自由模的秩和微分符号；“外积”并不是对链复形额外添加的装饰。再把自由消解张量一个模，就会发现原来的正合性可能丢失，这些新增同调正是 Tor 所记录的现象。
+
+\begin{definition}\label{b3:def:tor-koszul-recall}
+设 \(R\) 为交换环，\(N,M\) 为 \(R\) 模，\(F_\bullet\rightarrow N\rightarrow0\) 为自由消解。复形 \(F_\bullet\otimes_RM\) 的第 \(i\) 个同调模记为 \(\operatorname{Tor}_i^R(N,M)\)，称为第 \(i\) 个 \(\operatorname{Tor}\) 模。
+\end{definition}
+
+这个定义不依赖自由消解的选择。具体地，自由性允许从次数零起逐级提升 \(N\) 的恒等映射，得到任意两条消解间的链映射；两次提升的差落在下一微分的像中，再逐级提升此差，得到链同伦。两方向的复合因此与恒等映射链同伦；张量仍保留同伦等式，所以诱导同调互逆。第四卷第7、8章将系统讨论这一构造；本处补充后面几章实际需要的基本性质。
+
+\begin{lemma}\label{b3:lem:tor-basic-properties}
+设 \(R\) 为交换环，\(N,M\) 为 \(R\) 模。Tor 具有自然同构
+\[
+\operatorname{Tor}_i^R(N,M)\cong\operatorname{Tor}_i^R(M,N),
+\]
+并在任一变量的短正合列上给出同调长正合列。若 \(a\in R\) 满足 \(aN=0\) 或 \(aM=0\)，则 \(a\operatorname{Tor}_i^R(N,M)=0\)。若其中一个模平坦，则所有 \(i>0\) 的 Tor 为零。
+\end{lemma}
+\begin{proof}
+给 \(N,M\) 分别选自由消解 \(P,Q\)。在第一象限的双复形 \(P_p\otimes_RQ_q\) 中，按 \(p+q\) 合并次数，微分取
+\[
+d(u\otimes v)=d_Pu\otimes v+(-1)^p u\otimes d_Qv.
+\]
+到 \(P\otimes M\) 的增广映射逐项满射，其核在每个固定 \(p\) 的竖列上正合，因为 \(P_p\) 自由。该核的全复形也正合：给一个全次数的圈，取其非零分量中最大的 \(p\)。这一分量在竖直方向是圈，故可沿该正合列提升为边界；减去此提升的全微分，就消掉最大的 \(p\) 分量，只可能增加 \(p-1\) 的分量。有限次重复即把原圈写成边界。每个全次数只有有限多个 \(p\)，所以不涉及无限求和。于是增广映射诱导同调同构。同样沿横行处理，可把全复形的同调识别为 \(N\otimes Q\) 的同调。交换张量因子时加上符号 \((-1)^{pq}\)，使微分相容，得到所述平衡同构。
+
+固定 \(P\) 后，第二变量的短正合列张量 \(P_i\) 仍逐项正合，圈的提升、取微分和投回子复形给出长正合列；第一变量由平衡同构得到。若 \(aN=0\)，消解上的乘法 \(a\) 提升零映射，逐级提升可构造同伦 \(a\operatorname{id}=dh+hd\)，张量后仍成立，所以它在同调上为零。若 \(aM=0\)，乘法已在张量复形上为零。最后，若 \(M\) 平坦，把自由消解分成核与像之间的短正合列，逐条张量仍正合，所以正次数同调消失；若 \(N\) 平坦，交换两个变量即可。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:koszul-tor}
+设 \(R\) 为交换环，\(x_1,\ldots,x_r\) 是 \(R\) 正则序列，\(I=(x_1,\ldots,x_r)\)。对任意 \(R\) 模 \(M\)，有
+\[
+\operatorname{Tor}_i^R(R/I,M)\cong H_i(x;M).
+\]
+若 \(IM=0\)，则 \(\operatorname{Tor}_i^R(R/I,M)\cong M^{\binom ri}\) 对 \(0\le i\le r\) 成立，其他次数为零。
+\end{corollary}
+\begin{proof}
+用\cref{b3:thm:koszul-regular-resolution}给出的自由消解计算 Tor。若 \(IM=0\)，张量后的每个微分项 \(x_jm\) 都为零，同调就是复形本身各项，即所述的有限直和。
+\end{proof}
+
+例如 \(R=k[X,Y]\)、\(M=k=R/(X,Y)\) 时，三个非零 Tor 模依次为 \(k,k^2,k\)。这些维数来自两个独立方向的外幂；把商环中的 \(X,Y\) 都设为零，也把消解中原来非零的微分全部变成了零。

@@ -6,7 +6,23 @@
 \label{b3:ch:21}
 \BookChapterNumber{b3:ch:21}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章把有限生成分次模写成有限自由消解，证明 Hilbert 合冲定理，并用分次 Betti 数记录各层不可删减的生成元。随后建立全局模项序和 Schreyer 构造，把 Gröbner 基计算扩展到全部关系的计算；最后说明如何消去单位微分项，以及为何矩阵乘积为零、Hilbert 级数相等都不能单独证明一个候选消解正确。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 从生成元和关系逐层构造分次自由消解，分清同调次数与内次数。
+\item 证明多项式环的整体维数等于变量数，并说明分次有限模为何有有限自由消解。
+\item 由 Betti 数据计算 Hilbert 级数，辨认交错和不能保留的消解信息。
+\item 运用模 Gröbner 基、Schreyer 关系和单位项消去，实际构造并验证小规模消解。
+\end{itemize}
+\end{learninggoals}
+
+本章需要\chapref{b3:ch:08}的 Gröbner 基、\chapref{b3:ch:11}的分次模，以及\chapref{b3:ch:15}的 Koszul 复形。投射消解、Tor 和比较映射沿用本编前面的约定；链复形的同调次数向下降，分次模的内次数由矩阵的齐次性保存。先用整体维数证明终止长度，再给计算方法，是为了把“存在一个有限消解”与“如何算出并核验它”分别说明。
+
+\ProseParagraphBreak
+分次极小消解与局部极小消解使用相近的思想，但有限生成分次模的次数下界替代了局部环条件。局部版本及其 Tor 解释可参阅松村英之的《Commutative Ring Theory》\cite[\S 19, Lemma 1, pp. 153--154]{Matsumura1989CommutativeRingTheory}，并与\chapref{b3:ch:17}对照。全局模项序与 Schreyer 构造在本章直接建立，阅读它们不要求先学习局部标准基。
 
 \input{Part03/Chapter21/Section2101}
 \input{Part03/Chapter21/Section2102}
@@ -14,4 +30,172 @@
 \input{Part03/Chapter21/Section2104}
 \input{Part03/Chapter21/Section2105}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+自由消解逐层记录生成元之间的关系。分次极小性使微分在剩余域上变为零，因而各层各次的自由秩恰为 Tor 的分次维数。Hilbert 合冲定理进一步说明，在 \(n\) 个变量的多项式环上，有限分次模的极小自由消解不会超过 \(n\) 层。
+
+\ProseParagraphBreak
+计算时，模项序与 Schreyer 构造给出全部核关系，单位微分项则指出可以删去的可缩部分。正确的记录既要有微分相乘为零的等式，也要有像等于核的依据。Hilbert 级数能由各层次数的交错和恢复，但无法反过来决定 Betti 表；初始理想的单项式计数也必须与原理想的消解信息分开。
+\end{chaptersummary}
+
+\BookExercises
+以下各题中 \(k\) 为域，多项式环取标准分次，未注明的模映射均保持内次数。
+
+\begin{exercise}\label{b3:ex:21-common-factor}
+在 \(S=k[x,y]\) 中令 \(I=(x^2,xy^2)\)。求 \(I\) 的全部关系，写出 \(S/I\) 的极小自由消解、分次 Betti 数与 Hilbert 级数。
+\end{exercise}
+\begin{solution}
+若 \(ax^2+bxy^2=0\)，约去 \(x\) 得 \(ax+by^2=0\)。因 \(x,y\) 互素，\(b=-cx\)、\(a=cy^2\)。故消解为
+\[
+0\rightarrow S(-4)\xrightarrow{\binom{y^2}{-x}}S(-2)\oplus S(-3)
+\xrightarrow{(x^2\ xy^2)}S\rightarrow S/I\rightarrow0.
+\]
+左映射单射，其余正合性由上述全部关系计算得出；各微分项在 \((x,y)\) 中，故极小。非零 Betti 数为 \(\beta_{0,0}=\beta_{1,2}=\beta_{1,3}=\beta_{2,4}=1\)，级数为 \((1-t^2-t^3+t^4)/(1-t)^2\)。标准单项式 \(y^a\ (a\ge0)\)、\(x\)、\(xy\) 也给出 \(1/(1-t)+t+t^2\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-nakayama-bound}
+取 \(S=k[x]\)、\(M=k[x,x^{-1}]\)，以通常次数分次。证明 \(M=xM\ne0\)，并说明它为何不反驳分次 Nakayama 引理。
+\end{exercise}
+\begin{solution}
+任意 Laurent 多项式 \(f\) 都等于 \(x(x^{-1}f)\)，故 \(M=xM\)。但 \(x^{-r}\ne0\) 对所有 \(r\ge0\) 成立，非零次数没有下界；任何有限齐次生成组都有最低次数，其 \(S\) 线性组合无法达到更低次数，所以此模也非有限生成。引理依赖的最低非零次数在这里不存在。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-direct-sum-shifts}
+设 \(S=k[x,y]\)，求 \(M=S/(x^2)\oplus (S/(y))(-1)\) 的极小自由消解与分次 Betti 数。
+\end{exercise}
+\begin{solution}
+两部分分别由乘 \(x^2\) 与乘 \(y\) 的单射消解，直和后为
+\[
+0\rightarrow S(-2)^2\xrightarrow{\left(\begin{smallmatrix}x^2&0\\0&y\end{smallmatrix}\right)}
+S\oplus S(-1)\rightarrow M\rightarrow0.
+\]
+第二行目标基次数一，故第二列的 \(y\) 仍使总次数为二。矩阵项都在极大齐次理想中，因此 \(\beta_{0,0}=\beta_{0,1}=1\)、\(\beta_{1,2}=2\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-detect-localization}
+设 \(S=k[x_1,\ldots,x_n]\)、\(\mathfrak m=(x_1,\ldots,x_n)\)，\(M\) 为有限生成分次模。证明 \(M_{\mathfrak m}=0\) 当且仅当 \(M=0\)。进一步说明分次极小消解局部化于 \(\mathfrak m\) 后仍极小。
+\end{exercise}
+\begin{solution}
+若 \(M_{\mathfrak m}=0\)，取有限组生成元并合并各自使其为零的分母，得 \(s\notin\mathfrak m\) 且 \(sM=0\)。写 \(s=c+s_+\)、\(c\in k^\times\)，模 \(\mathfrak m\) 得 \(c(M/\mathfrak mM)=0\)，故商为零，再由\cref{b3:lem:graded-nakayama}得 \(M=0\)。反向直接成立。局部化保持正合与自由，极小微分的系数仍落入 \(\mathfrak mS_{\mathfrak m}\)，所以得到局部极小消解，且非零自由项不会消失。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-projective-graded-free}
+设 \(P\) 为 \(S=k[x_1,\ldots,x_n]\) 上有限生成分次模，其底层模投射。证明 \(P\) 是有限分次自由模。
+\end{exercise}
+\begin{solution}
+取齐次极小满射 \(F\rightarrow P\)，核为 \(K\subseteq\mathfrak mF\)。由于 \(P\) 投射，短正合列在底层模范畴分裂，故张量 \(k\) 后仍正合。另一方面 \(F/\mathfrak mF\rightarrow P/\mathfrak mP\) 为同构，于是 \(K/\mathfrak mK=0\)。核有限生成且分次，由分次 Nakayama 引理为零，故原分次满射是同构。此证明利用了既有分次，并未证明一般无分次的投射模都自由。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-polynomial-sequence-point}
+把\cref{b3:lem:polynomial-module-sequence}用于 \(A=k\)、\(B=k[t]\)、\(M=k\)，其中 \(t\) 作用为乘 \(\lambda\in k\)。写出对应短正合列，并由它计算 \(\operatorname{Tor}_1^B(M,M)\)。
+\end{exercise}
+\begin{solution}
+两份 \(B\otimes_kM\) 都同构于 \(B\)，\(\delta\) 成为乘 \(t-\lambda\)，而 \(\varepsilon\) 是在 \(\lambda\) 处求值。因此得到 \(0\rightarrow B\xrightarrow{t-\lambda}B\rightarrow M\rightarrow0\)。张量 \(M\) 后微分为零，故 \(\operatorname{Tor}_1^B(M,M)\simeq M\)。当 \(\lambda\ne0\) 时该例按通常分次并非分次模例子，但引理本来适用于任意模。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-infinite-singular-resolution}
+设 \(R=k[\varepsilon]/(\varepsilon^2)\)。证明 \(k=R/(\varepsilon)\) 有无限极小自由消解，计算全部 \(\operatorname{Tor}_i^R(k,k)\)，并指出 Hilbert 合冲定理不能直接用于此环的原因。
+\end{exercise}
+\begin{solution}
+乘 \(\varepsilon\) 的核与像均为 \(k\varepsilon\)，所以
+\(\cdots\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R\rightarrow k\rightarrow0\)
+正合。局部极大理想为 \((\varepsilon)\)，因此消解极小，张量 \(k\) 后全为零微分，得每个 \(i\ge0\) 的 Tor 均为 \(k\)。所以投射维数无限。\(R\) 是多项式环的商而非域上的多项式环；商去非零理想不保持上述整体维数上界。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-cubic-powers}
+在 \(S=k[x,y,z]\) 中写出 \(S/(x^2,y^2,z^2)\) 的极小消解各项、分次 Betti 数和 Hilbert 级数，不必把所有微分展开成矩阵。
+\end{exercise}
+\begin{solution}
+逐次商后每个新变量的平方仍是非零因子：商可按其余变量的单项式写成关于该变量的多项式，乘其平方只是平移指数。因此用 Koszul 消解得
+\(F_0=S\)、\(F_1=S(-2)^3\)、\(F_2=S(-4)^3\)、\(F_3=S(-6)\)。微分系数为变量平方，故极小，\(\beta_{i,2i}=\binom3i\)。级数为 \((1-t^2)^3/(1-t)^3=(1+t)^3\)，总维数八，也由各变量指数为零或一的八个单项式得到。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-cancel-hilbert-not-exact}
+构造一个有限分次自由复形，使 Hilbert 级数的交错和为零、微分平方为零，但至少两个同调模非零。
+\end{exercise}
+\begin{solution}
+取仅有 \(F_1=S,F_0=S\) 两项且微分为零的复形。其交错和 \(H_S-H_S=0\)，但 \(H_1=H_0=S\ne0\)。这说明交错和是正合性的必要后果，单独满足它却不是充分条件。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-rank-euler}
+设 \(M\) 是多项式环 \(S=k[x_1,\ldots,x_n]\) 上有限分次模，\(K=\operatorname{Frac}(S)\)。证明
+\(\dim_K(M\otimes_SK)=\sum_i(-1)^i\beta_i(M)\)。据此给出挠模的 Betti 数必须满足的一项等式。
+\end{exercise}
+\begin{solution}
+将有限极小消解张量 \(K\)，局部化正合性给出有限维 \(K\) 空间的正合列，逐项取维数的交错和即得公式。若 \(M\) 为挠模，则每个有限组生成元都被某非零元素零化，取乘积后张量 \(K\) 全为零，故 \(\sum_i(-1)^i\beta_i=0\)。这是总秩条件，不决定各内次数的分布。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-mixed-shifts}
+在 \(S=k[x,y]\) 中考虑增广行矩阵 \((x^2\ y)\)。确定使其保持次数的自由项，求其核及极小消解，并检验每个矩阵项的次数。
+\end{exercise}
+\begin{solution}
+源为 \(S(-2)\oplus S(-1)\)，目标为 \(S\)。由互素性，全部关系由 \((-y,x^2)\) 生成，其总次数是三，所以左项为 \(S(-3)\)。第一列系数 \(-y\) 的次数为 \(3-2=1\)，第二列系数 \(x^2\) 的次数为 \(3-1=2\)。得到 \(S/(x^2,y)\) 的长度二极小消解，首映射因整环性单射。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-different-components}
+设 \(F=k[x,y]e_1\oplus k[x,y]e_2\)，取位置优先且 \(e_1\succ e_2\) 的模项序。证明 \(g_1=xe_1+e_2\)、\(g_2=ye_2\) 是其生成子模的 Gröbner 基，并求全部合冲关系。
+\end{exercise}
+\begin{solution}
+两首项位置不同，不存在需检验的 \(S\)-向量，故由\cref{b3:prop:module-groebner-algorithm}为 Gröbner 基。也可直接看：若 \(a\ne0\)，\(ag_1+bg_2\) 的第一分量为 \(ax\ne0\)，首项被 \(xe_1\) 整除；若 \(a=0\)，非零首项被 \(ye_2\) 整除。若总和为零，第一分量给出 \(a=0\)，第二分量再得 \(b=0\)，所以合冲模为零。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-same-component}
+设 \(F=k[x,y]e_1\oplus k[x,y]e_2\)，\(G=(x^2e_1,ye_1,e_2)\)。计算其 Schreyer 关系，并求 \(F/(G)\)。
+\end{exercise}
+\begin{solution}
+只有前两个首项位置相同，得到关系 \(y\epsilon_1-x^2\epsilon_2\)。第三位置无法与其余项抵消，所以它生成全部合冲模。商中 \(e_2=0\)，第一分量模掉 \((x^2,y)\)，故 \(F/(G)\simeq k[x]/(x^2)\)。要讨论分次消解，可给三个源生成元分别赋次数二、一、零，关系次数为三。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-redundant-original-generators}
+在 \(S=k[x,y]\) 中，求有序组 \((x^2,xy,y^2,x^2+y^2)\) 的全部关系，说明怎样从它恢复 \((x,y)^2\) 的极小消解。
+\end{exercise}
+\begin{solution}
+全部关系由
+\((y,-x,0,0)\)、\((0,y,-x,0)\)、\((-1,0,-1,1)\)
+生成。因为给定关系 \((a,b,c,d)\)，减去 \(d\) 倍最后一个向量后第四分量为零，前三分量成为 \((a+d,b,c+d)\)，由式\eqref{b3:eq:square-maximal-resolution}的核计算可表示为前两个关系的组合。最后的常数关系消去冗余生成元 \(x^2+y^2\)，留下正文的三生成元极小消解。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-divisibility-relations}
+给 \(S=k[x,y]\) 中的三个单项式 \(x^3,x^2y,xy^2\) 求最小关系生成组，并求其商的 Hilbert 级数。
+\end{exercise}
+\begin{solution}
+三个生成元都含公共因子 \(x\)，在整环中约去它，关系与 \(x^2,xy,y^2\) 相同，故由 \((y,-x,0)\)、\((0,y,-x)\) 自由生成。所得极小消解各项为 \(S\)、\(S(-3)^3\)、\(S(-4)^2\)，级数为 \((1-3t^3+2t^4)/(1-t)^2\)。约去公共因子不改变关系系数，却改变生成元和关系的内次数。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-unit-homotopy}
+对两项复形 \(0\rightarrow S(-a)\xrightarrow{c}S(-a)\rightarrow0\)、\(c\in k^\times\)，写出恒等映射与零映射之间的链同伦。解释为什么它可以从消解中删去。
+\end{exercise}
+\begin{solution}
+令从低次项到高次项的同伦映射为乘 \(c^{-1}\)，其余同伦分量为零。则两项上分别有 \(dh=1\)、\(hd=1\)，故 \(dh+hd\) 为恒等。这个复形可缩，特别正合；若它是某消解的直和项，去掉后各同调不变。仅在微分矩阵里看见一个非零常数还须先作相容换基，才能保证它确实构成直和项。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-tor-socle}
+设 \(A=k[x,y]/(x^2,y^3)\)。直接用以 \(A\) 为系数的两元 Koszul 复形求 \(\operatorname{Tor}_2^{k[x,y]}(A,k)\) 的维数与内次数。
+\end{exercise}
+\begin{solution}
+最高同调对应被 \(x,y\) 同时零化的元素。把元素按基 \(1,x,y,xy,y^2,xy^2\) 展开，乘 \(x\) 为零使只剩 \(x,xy,xy^2\) 的组合，再乘 \(y\) 为零只剩 \(kxy^2\)。此元素内次数三，加上 \(e_x\wedge e_y\) 的次数二，所得 Tor 为一维且内次数五，符合完整消解左项 \(S(-5)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-betti-specialization}
+设 \(a\in k\)，在 \(S=k[x,y]\) 中令 \(I_a=(x^2,xy+ay^2,y^3)\)。证明所有 \(S/I_a\) 的 Hilbert 级数相同，但 \(a=0\) 与 \(a\ne0\) 的 Betti 表不同。
+\end{exercise}
+\begin{solution}
+字典序 \(x\succ y\) 下这三个多项式构成 Gröbner 基：前两者的 \(S\)-多项式先约化成 \(a^2y^3\)，第二、第三对约化为 \(ay^4\)，均由 \(y^3\) 消去；第一、第三对首项互素。标准单项式恒为 \(1,x,y,y^2\)，级数为 \(1+2t+t^2\)。
+
+若 \(a\ne0\)，恒等式
+\(yx^2-(x-ay)(xy+ay^2)=a^2y^3\)
+使第三生成元冗余；前两者互素，构成二次正则序列，非零 Betti 多项式为 \(1,2t^2,t^4\)。若 \(a=0\)，则为正文的 \((x^2,xy,y^3)\)，Betti 多项式为 \(1,2t^2+t^3,t^3+t^4\)。消去三次生成元的系数涉及 \(a^{-2}\)，因此不能把一般参数下的极小化直接代入 \(a=0\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-kernel-certificate}
+设多项式矩阵 \(F,G,U,V,T\) 满足 \(G=FU\)、\(F=GV\)，且 \(T\) 的列生成 \(\ker G\)。说明为什么只给出 \(UT\) 的列未必生成 \(\ker F\)，并给出一个具体例子。
+\end{exercise}
+\begin{solution}
+遗漏了改换生成组本身产生的关系 \(1-UV\)。例如取 \(F=(x\ x)\)、\(G=(x)\)，\(U=\binom10\)、\(V=(1\ 1)\)。因 \(S=k[x]\) 为整环，\(\ker G=0\)，故 \(UT\) 没有列。但 \(\ker F\) 由 \((-1,1)\) 生成，恰来自 \(1-UV=\left(\begin{smallmatrix}0&-1\\0&1\end{smallmatrix}\right)\) 的第二列。只验证两个像相同，不能忽略生成组之间的额外核。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:21-top-degree-bound}
+设 \(M\ne0\) 是 \(S=k[x_1,\ldots,x_n]\) 上有限分次模，且 \(M_j=0\) 对所有 \(j>b\) 成立。证明 \(\beta_{i,j}(M)=0\) 当 \(j>b+i\)。
+\end{exercise}
+\begin{solution}
+以 \(M\) 为系数的变量 Koszul 复形第 \(i\) 项是 \(M(-i)^{\binom ni}\)，其次数 \(j\) 部分为若干 \(M_{j-i}\) 的直和。当 \(j>b+i\) 时该项为零，同调对应次数也为零；再由 Tor 与 Betti 数的等式得到结论。该上界来自各项本身为零，不需要预先求出微分的秩。
+\end{solution}

@@ -5,7 +5,6 @@
 \section{Serre 条件}
 \label{b3:sec:1604}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -19,14 +18,59 @@
 \subsection{模的 \texorpdfstring{\(S_k\)}{Sk} 条件}
 \label{b3:subsec:1604:01}
 
-待撰写。
+单个局部环的深度只描述一个点附近的模。若希望排除所有点处的某种退化，就需要同时约束各个局部化。
+
+\begin{definition}\label{b3:def:serre-sk}
+设 \(R\) 为交换 Noether 环，\(M\) 为有限 \(R\) 模，\(k\ge0\) 为整数。若对每个 \(\mathfrak p\in\operatorname{Supp}_RM\) 都有
+\[
+\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}
+\ge\min\{k,\dim_{R_{\mathfrak p}}M_{\mathfrak p}\},
+\]
+则称 \(M\) 满足\term[serre-tiaojian]{Serre 条件}[Serre's condition] \((S_k)\)。对 \(M=R\) 采用同一定义，称环 \(R\) 满足 \((S_k)\)。零模的条件为空。
+\end{definition}
+
+这里采用局部模的维数，不能把它统一换成 \(\dim R_{\mathfrak p}\)：模的支集可能只有环境的一部分。例如 \(R=k[X,Y]_{(X,Y)}\) 上的 \(M=R/(X)\) 深度与模维数都为一，按本定义在各点满足全部 \((S_k)\)，而它并非深度为二的 \(R\) 模。
 
 \subsection{局部化后的深度要求}
 \label{b3:subsec:1604:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:serre-localization}
+设 \(R\) 为交换 Noether 环，\(M\) 为有限 \(R\) 模。
+\begin{enumerate}
+\item 若 \(M\) 满足 \((S_k)\)，则任意局部化 \(S^{-1}M\) 在 \(S^{-1}R\) 上满足 \((S_k)\)。
+\item \(M\) 满足 \((S_k)\) 当且仅当每个极大理想处的 \(M_{\mathfrak m}\) 满足 \((S_k)\)。
+\item \((S_{k+1})\) 蕴含 \((S_k)\)，而每个有限模都满足 \((S_0)\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+局部化环的素理想对应于原环中避开乘法集的素理想，且在这些素理想处再局部化所得的环和模与直接局部化相同。因此深度与模维数都相同，第一条成立。任意素理想包含于某个极大理想，在该极大理想处先局部化再取原素理想，对象仍相同，得到第二条的反向；正向来自第一条。第三条直接比较最小值，非零有限局部模的深度非负。
+\end{proof}
+
+注意第二条要求极大理想处的局部模本身满足 \((S_k)\)，因而已经检查其全部素理想处的条件。只检查原环各极大理想处的一条深度数值，并不能自动完成定义中的所有检查。
 
 \subsection{\texorpdfstring{\(S_1\)}{S1}、\texorpdfstring{\(S_2\)}{S2} 与嵌入分支}
 \label{b3:subsec:1604:03}
 
-待撰写。
+\begin{theorem}\label{b3:thm:serre-s1-associated}
+设 \(R\) 为交换 Noether 环，\(M\ne0\) 为有限 \(R\) 模。则 \(M\) 满足 \((S_1)\) 当且仅当
+\[
+\operatorname{Ass}_RM=\operatorname{Min}(\operatorname{Supp}_RM),
+\]
+即其关联素理想全是支集的极小素理想。
+\end{theorem}
+\begin{proof}
+若 \(M\) 满足 \((S_1)\)，取 \(\mathfrak p\in\operatorname{Ass}_RM\)。由\cref{b3:prop:associated-localization}，\(\mathfrak pR_{\mathfrak p}\) 是 \(M_{\mathfrak p}\) 的关联素理想，故局部深度为零。\((S_1)\) 迫使 \(\dim M_{\mathfrak p}=0\)，这表示支集中没有严格小于 \(\mathfrak p\) 的素理想。
+
+反之，假设关联素理想都极小。若 \(\mathfrak p\in\operatorname{Supp}M\) 且 \(\dim M_{\mathfrak p}>0\)，则 \(\mathfrak p\) 不是支集极小元，故不属于 \(\operatorname{Ass}M\)。关联素理想的局部化公式给出 \(\mathfrak pR_{\mathfrak p}\notin\operatorname{Ass}M_{\mathfrak p}\)，由\cref{b3:cor:depth-zero-socle}局部深度至少为一。维数为零的各点自动满足条件。最后，支集的极小素理想总是关联素理想，故“全都极小”也给出了集合等号。
+\end{proof}
+
+\((S_1)\) 排除了嵌入关联素理想；\((S_2)\) 还要求模维数至少为二的点处能选两步正则序列。两者的差别可以在 \(R=k[X,Y]_{(X,Y)}\)、\(M=(X,Y)\) 上看见：\(M\) 为整环中的非零理想，所有非零元的零化子都是零，所以 \(\operatorname{Ass}M=\{0\}\)，满足 \((S_1)\)；但前节算出其深度为一，模维数为二，故不满足 \((S_2)\)。
+
+\begin{proposition}\label{b3:prop:s2-regular-section-s1}
+设 \(R\) 为交换 Noether 环，\(M\) 为满足 \((S_2)\) 的有限 \(R\) 模，\(x\in R\) 在 \(M\) 上为非零因子。则 \(M/xM\) 满足 \((S_1)\)。
+\end{proposition}
+\begin{proof}
+取 \(\mathfrak p\in\operatorname{Supp}(M/xM)\)。此时 \(x\in\mathfrak p\)，且在非零有限模 \(M_{\mathfrak p}\) 上正则。\cref{b3:prop:regular-quotient-dimension}和\cref{b3:cor:regular-quotient-depth}都适用。若 \(\dim(M/xM)_{\mathfrak p}>0\)，则 \(\dim M_{\mathfrak p}\ge2\)，所以 \(\operatorname{depth}M_{\mathfrak p}\ge2\)，商的深度至少为一。若商的局部维数为零，\((S_1)\) 条件自动满足。
+\end{proof}
+
+因此 \((S_2)\) 不只排除当前模的嵌入部分，也控制正则截面不会新生这种部分。它仍不是正规性的完整条件；\chapref{b3:ch:20}将另外加入余维一处的正则性，并证明两种要求如何共同刻画正规环。

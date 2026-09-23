@@ -5,9 +5,8 @@
 \section{Gorenstein 环}
 \label{b3:sec:2203}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * Noether 局部环的有限自内射维数
 % * 与 Cohen–Macaulay 性的联系
@@ -17,14 +16,139 @@
 \subsection{Noether 局部环的有限自内射维数}
 \label{b3:subsec:2203:01}
 
-待撰写。
+正则局部环用有限自由消解控制所有模；Gorenstein 性则问环本身能否有有限的内射消解。两种要求的方向不同。特别是，剩余域有无限自由消解，并不排除环作为自身的模内射。
+
+\begin{definition}\label{b3:def:injective-dimension-gorenstein}
+设 \(R\) 为交换环，\(N\ne0\) 为 \(R\) 模。若存在正合列
+\[
+0\longrightarrow N\longrightarrow E^0\longrightarrow\cdots
+\longrightarrow E^s\longrightarrow0
+\]
+且每个 \(E^i\) 内射，则满足此条件的最小 \(s\) 称为 \(N\) 的\term[neisheweishu]{内射维数}[injective dimension]，记为 \(\operatorname{id}_RN\)；若不存在有限长度的此种消解，则记为 \(\infty\)。对交换 Noether 局部环 \(R\)，条件 \(\operatorname{id}_RR<\infty\) 成立时，称 \(R\) 为 \term[Gorensteinhuan]{Gorenstein 环}[Gorenstein ring]。交换 Noether 环在每个素理想处的局部环均有此性质时，也称为 Gorenstein 环。
+\end{definition}
+\symidx{\(\operatorname{id}_RN\)：内射维数}
+
+内射消解中的模通常不是有限模。譬如离散赋值环 \(R\) 的分式域 \(K\) 给出
+\[
+0\longrightarrow R\longrightarrow K\longrightarrow K/R\longrightarrow0.
+\]
+两个右端模都可除，由主理想整环上的 Baer 判据都内射；而 \(R\) 不是内射，因为均匀参数的倒数不在 \(R\) 中。因此 \(\operatorname{id}_RR=1\)。这里仍是用一个有限长度的消解描述一个一维环，却不能要求消解各项有限生成。
+
+\begin{lemma}\label{b3:lem:injective-dimension-test}
+设 \(R\) 为交换环，\(N\ne0\) 为 \(R\) 模，\(s\ge0\)。下列两条件等价：
+\[
+\operatorname{id}_RN\le s;\qquad
+\operatorname{Ext}_R^{s+1}(R/J,N)=0
+\text{ 对每个理想 }J\subseteq R\text{ 成立}.
+\]
+\end{lemma}
+\begin{proof}
+第一条件推出更高次的 Ext 全部为零。反过来，在一个内射消解中截取
+\(0\to N\to E^0\to\cdots\to E^{s-1}\to C\to0\)；\(s=0\) 时令 \(C=N\)。逐次使用第二变量长正合列，得到
+\(\operatorname{Ext}_R^1(R/J,C)\cong\operatorname{Ext}_R^{s+1}(R/J,N)=0\)。
+由 \(0\to J\to R\to R/J\to0\) 的 Hom 长正合列，每个 \(J\to C\) 均可延拓到 \(R\)。第二卷第7.2节的 Baer 判据使 \(C\) 内射，故上述截断就是长度至多 \(s\) 的内射消解。
+
+这里使用的内射计算与此前用自由消解定义的 Ext 一致：把自由消解 \(P_\bullet\to R/J\) 和内射消解 \(N\to E^\bullet\) 组成 \(\operatorname{Hom}_R(P_p,E^q)\)，两个方向分别由自由性和内射性保持正合，因而分别只剩 \(\operatorname{Hom}_R(P_\bullet,N)\) 与 \(\operatorname{Hom}_R(R/J,E^\bullet)\)。给定总次数中只有有限个项，双复形的圈消去论证给出相同上同调。
+\end{proof}
 
 \subsection{Gorenstein 性与 Cohen–Macaulay 性}
 \label{b3:subsec:2203:02}
 
-待撰写。
+有限自内射维数不仅给出一项同调界，还强迫环达到 Cohen--Macaulay 深度。下面采用一个一般判别定理作为本章的外部结果；它不要求环完备，也不要求事先给定正则局部覆盖。松村英之的《Commutative Ring Theory》在 \cite[\S 18, Theorem 18.1, pp. 141--144]{Matsumura1989CommutativeRingTheory}证明其等价条件；证明以该节 Lemmas 1--4 的内射维数检验、正则元素换环及素点间 Ext 比较为准备。此处不以随后给定覆盖下的局部对偶冒充一般情形的证明。
+
+\begin{theorem}[Gorenstein 环的判别]\label{b3:thm:gorenstein-bass-criterion}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(d=\dim R\)。下列条件等价：
+\begin{equivalences}
+\item \(R\) 为 Gorenstein 环；
+\item \(R\) 为 Cohen--Macaulay 环，且
+\(\dim_k\operatorname{Ext}_R^d(k,R)=1\)；
+\item \(\operatorname{Ext}_R^i(k,R)=0\) 对 \(i\ne d\) 成立，且
+\(\operatorname{Ext}_R^d(k,R)\cong k\)。
+\end{equivalences}
+这些条件成立时，\(\operatorname{id}_RR=d\)。
+\end{theorem}
+
+对一个 \(d\) 维 CM 局部环 \(R\)，整数
+\(\dim_k\operatorname{Ext}_R^d(k,R)\) 称为它的\term[CohenMacaulayleixing]{Cohen–Macaulay 类型}[Cohen--Macaulay type]。深度的 Ext 刻画保证这个整数为正。判别定理说明 Gorenstein 环恰是类型为一的 CM 环；只有“CM”仍不足够。零维环的类型就是其基座的维数，所以 \(k[x,y]/(x,y)^2\) 是 CM 环但不是 Gorenstein 环。
+
+\begin{proposition}\label{b3:prop:gorenstein-completion-localization}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环。则 \(R\) 为 Gorenstein 环当且仅当其 \(\mathfrak m\)-进完备化 \(\widehat R\) 为 Gorenstein 环。若 \(R\) 为 Gorenstein 环，则每个 \(R_{\mathfrak p}\)、\(\mathfrak p\in\operatorname{Spec}R\)，也为 Gorenstein 环。
+\end{proposition}
+\begin{proof}
+完备化保维数并忠实平坦，且由\cref{b3:thm:cm-completion}保持及反映 CM 性。取 \(k\) 的有限秩自由 \(R\) 消解，逐项张量 \(\widehat R\) 后仍是 \(k\) 的自由消解。有限秩保证 Hom 与此张量相容，平坦性保证上同调与张量相容，故
+\[
+\operatorname{Ext}_R^i(k,R)\otimes_R\widehat R
+\cong\operatorname{Ext}_{\widehat R}^i(k,\widehat R).
+\]
+左侧原本被 \(\mathfrak m\) 零化，张量后不变。应用上一判别定理，便得完备化等价性。
+
+为处理局部化，先说明内射模 \(E\) 的局部化 \(E_{\mathfrak p}\) 对 \(R_{\mathfrak p}\) 内射。该局部环的每个理想都是某个有限生成理想 \(J\subseteq R\) 的局部化。Noether 性使 \(J\) 有限展示，从而
+\[
+\operatorname{Hom}_{R_{\mathfrak p}}(J_{\mathfrak p},E_{\mathfrak p})
+\cong\operatorname{Hom}_R(J,E)_{\mathfrak p}.
+\]
+原内射性使 \(\operatorname{Hom}_R(R,E)\to\operatorname{Hom}_R(J,E)\) 满射，局部化后仍满射，再用 Baer 判据即可。把 \(R\) 的有限内射消解逐项局部化，就得到 \(R_{\mathfrak p}\) 的有限内射消解。
+\end{proof}
+
+在给定正则覆盖的情形，典范模提供另一种直接的充分条件，并说明自内射维数为何能由局部对偶控制。
+
+\begin{proposition}\label{b3:prop:canonical-free-gorenstein}
+设 \((S,\mathfrak n)\) 为 \(n\) 维交换 Noether 完备正则局部环，\(R=S/I\ne0\) 为 \(d\) 维 Cohen--Macaulay 环，典范模为
+\(\omega_R=\operatorname{Ext}_S^{n-d}(R,S)\)。若 \(\omega_R\cong R\) 为 \(R\) 模，则 \(R\) 为 Gorenstein 环。
+\end{proposition}
+\begin{proof}
+对每个理想 \(J\subseteq R\)，模 \(R/J\) 有限。\cref{b3:thm:canonical-module-local-duality}给出
+\[
+\operatorname{Ext}_R^{d+1}(R/J,\omega_R)
+\cong D_R\bigl(H_{\mathfrak m}^{-1}(R/J)\bigr)=0.
+\]
+用给定的 \(\omega_R\cong R\) 替换第二变量，再由\cref{b3:lem:injective-dimension-test}得 \(\operatorname{id}_RR\le d\)。此外 CM 性及\cref{b3:thm:depth-ext}使 \(\operatorname{Ext}_R^d(k,R)\ne0\)，所以内射维数恰为 \(d\)。
+\end{proof}
+
+此处典范模同构是一个 \(R\) 模同构，通常没有指定的自然选择。把典范模选成 \(R\) 也不等于对每个有限模使用普通线性对偶 \(\operatorname{Hom}_R(-,R)\)：局部对偶中的次数 \(d-i\) 和 Matlis 对偶仍然不可省略。
 
 \subsection{完全交的 Gorenstein 性}
 \label{b3:subsec:2203:03}
 
-待撰写。
+完全交商的 Koszul 消解有一种对称性：取 \(S\) 线性对偶后，复形各项的顺序倒过来，微分仍是原正则序列给出的矩阵。这使典范模的计算十分具体。
+
+\begin{proposition}\label{b3:prop:ci-canonical-module}
+设 \((S,\mathfrak n)\) 为 \(n\) 维交换 Noether 完备正则局部环，\(f_1,\ldots,f_c\in\mathfrak n\) 为 \(S\) 正则序列，\(R=S/(f_1,\ldots,f_c)\)。则 \(d=\dim R=n-c\)，而且
+\[
+\operatorname{Ext}_S^j(R,S)=
+\begin{cases}
+R,&j=c,\\
+0,&j\ne c.
+\end{cases}
+\]
+特别地，\(R\) 的典范模 \(\omega_R\) 同构于 \(R\)。
+\end{proposition}
+\begin{proof}
+\cref{b3:thm:complete-intersection-cm}及\cref{b3:prop:given-complete-intersection}给出 CM 性和维数。用\cref{b3:prop:ci-koszul-resolution}的 Koszul 消解 \(K_\bullet(f;S)\) 计算 Ext。外积给出完美配对
+\[
+\bigwedge^jS^c\times\bigwedge^{c-j}S^c
+\longrightarrow\bigwedge^cS^c\cong S,
+\]
+最后一个同构取有序基 \(e_1\wedge\cdots\wedge e_c\mapsto1\)。若 \(u\) 的次数为 \(j\)，Koszul 微分满足
+\(d(u\wedge v)=du\wedge v+(-1)^ju\wedge dv\)。因此配对使对偶微分与倒序 Koszul 微分相差一个只依赖次数的符号；逐次把某些次数上的配对乘以 \(-1\)，便得到复形同构
+\[
+\operatorname{Hom}_S(K_\bullet(f;S),S)^j
+\cong K_{c-j}(f;S).
+\]
+正则序列使右侧只有链次数零的同调 \(R\)，所以对偶上同调只在 \(j=c\) 为 \(R\)。\(c=0\) 时消解只有 \(S\)，结论同样成立。由于 \(n-d=c\)，这正是典范模定义要求的次数。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:complete-intersection-gorenstein}
+每个交换 Noether 完全交局部环都是 Gorenstein 环。因此，对交换 Noether 局部环有
+\[
+\text{正则}\ \Longrightarrow\ \text{完全交}\
+\Longrightarrow\ \text{Gorenstein}\
+\Longrightarrow\ \text{Cohen--Macaulay}.
+\]
+\end{theorem}
+\begin{proof}
+按照\cref{b3:def:local-complete-intersection}，完全交局部环 \(R\) 的完备化具有
+\(\widehat R=S/(f_1,\ldots,f_c)\) 的表示，其中 \(S\) 完备正则局部，\(f_1,\ldots,f_c\) 为正则序列。前一命题使 \(\omega_{\widehat R}\cong\widehat R\)，再由\cref{b3:prop:canonical-free-gorenstein}得 \(\widehat R\) 为 Gorenstein 环。\cref{b3:prop:gorenstein-completion-localization}把此性质下降到 \(R\)。链中的第一项由\cref{b3:thm:complete-intersection-cm}证明中的空正则序列论证成立，最后一项来自\cref{b3:thm:gorenstein-bass-criterion}。
+\end{proof}
+
+这里没有为任意完备局部环暗中选择一个正则局部覆盖：完全交的定义已经提供了本次所需覆盖。一般完备局部环的覆盖存在性属于 Cohen 结构定理的范围，安排在本卷附录。对于一个已经给定的正则局部环 \(S\) 及非零非单位 \(f\)，商 \(S/(f)\) 是超曲面，因而也是 Gorenstein 环；它是否正则仍须另外判断。

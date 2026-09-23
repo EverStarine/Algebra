@@ -5,9 +5,7 @@
 \section{局部性质的比较与反例}
 \label{b3:sec:2304}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 尖点正规化在尖点处的局部计算
 % * 光滑性、正则性与可分性的比较
@@ -22,29 +20,139 @@
 \subsection{尖点正规化的局部计算}
 \label{b3:subsec:2304:01}
 
-待撰写。
+本节固定特征零域 \(k\)，考察平面尖点及其参数化
+\[
+A=k[t^2,t^3]\subseteq B=k[t].
+\]
+这是一个尤其适合比较局部性质的例子：参数环很简单，映射有限且双有理，但在尖点处既不非分歧，也不平坦。后三个小节分别计算微分模、特殊纤维和去掉尖点后的环，以区分这三项判断。
+
+\begin{proposition}\label{b3:prop:cusp-normalization-setup}
+设 \(k\) 为特征零域，\(A=k[t^2,t^3]\)、\(B=k[t]\)。则
+\[
+A\cong k[x,y]/(y^2-x^3),\qquad B=A+At,
+\qquad\operatorname{Frac}(A)=\operatorname{Frac}(B)=k(t).
+\]
+并且 \(B\) 是 \(A\) 在这个分式域中的整闭包。尖点对应 \(\mathfrak m=(t^2,t^3)\subseteq A\)，其上方唯一的素理想为 \(\mathfrak n=(t)\subseteq B\)。
+\end{proposition}
+\begin{proof}
+映射 \(k[x,y]\to B\)、\(x\mapsto t^2,y\mapsto t^3\) 的像为 \(A\)，核包含 \(y^2-x^3\)。模去此关系后，每个多项式都能写成 \(F(x)+yG(x)\)。代入后，\(F(t^2)\) 只含偶次幂，\(t^3G(t^2)\) 只含至少三次的奇次幂，不能相互抵消；所以核恰为上述主理想。
+
+\(t\) 满足首一方程 \(T^2-t^2=0\)，且所有次数至少二的单项式都在 \(A\) 中，因此 \(B=A+At\) 为有限整扩张。又有 \(t=t^3/t^2\in\operatorname{Frac}(A)\)，故分式域相同。\(B=k[t]\) 为整闭整环；若分式域中元素整于 \(A\)，它也满足系数在 \(B\) 中的同一个首一方程，故属于 \(B\)。这证明整闭包的断言。
+
+若 \(\mathfrak q\subseteq B\) 位于 \(\mathfrak m\) 上方，则 \(t^2\in\mathfrak q\)，从而 \(t\in\mathfrak q\)，所以 \(\mathfrak q=(t)\)。反向收缩显然为 \(\mathfrak m\)。
+\end{proof}
+
+局部环 \(A_{\mathfrak m}\) 维数为一，而 \(\mathfrak m/\mathfrak m^2\) 以 \(t^2,t^3\) 的像为基，维数为二，故不正则。相反，\(B_{\mathfrak n}=k[t]_{(t)}\) 是离散赋值环，因而正则。正规化改善了目标坐标环本身的奇点，但这种改善并不意味着原来的环同态光滑。
 
 \subsection{光滑性、正则性与可分性}
 \label{b3:subsec:2304:02}
 
-待撰写。
+正则性属于局部环本身：比较 \(\dim R\) 与 \(\dim_{R/\mathfrak m}\mathfrak m/\mathfrak m^2\) 就可作出判断。光滑性属于一个带有底环的同态。同一个域看作自身上的代数总是光滑，换成一个较小而不完美的基域以后却可能不光滑。
+
+\begin{theorem}[完美基域上的比较；外部引用]\label{b3:thm:perfect-field-regular-smooth}
+设 \(k\) 为完美域，\(B\) 为有限型交换 \(k\) 代数，\(\mathfrak q\in\operatorname{Spec}B\)。则 \(B_{\mathfrak q}\) 为正则局部环，当且仅当存在 \(b\notin\mathfrak q\)，使 \(k\to B_b\) 光滑。
+\end{theorem}
+
+这里引用松村英之的 Jacobian 判据及其比较说明\cite[Theorem 30.3 and Remark 2, pp. 233--235]{Matsumura1989CommutativeRingTheory}；相应的局部几何正则性刻画见\cite[Theorem 28.7, pp. 219--220]{Matsumura1989CommutativeRingTheory}。其中的局部判据结合有限组关系，把非零 Jacobian 子式固定在一个主开邻域中，便得到本定理的邻域表述。本章不另行重证该判据中的可分性部分。
+
+\begin{example}\label{b3:exm:regular-not-smooth-imperfect}
+设 \(k=\mathbb F_p(s)\)，\(L=k[u]/(u^p-s)\)。多项式 \(T^p-s\) 不可约，故 \(L\) 是域，自身作为零维局部环正则。但是 \(L\) 在 \(k\) 上不光滑。为直接看到提升失败，令
+\[
+C=k[T]/\bigl((T^p-s)^2\bigr),\qquad
+J=(T^p-s)C.
+\]
+则 \(J^2=0\)、\(C/J\cong L\)。若恒等映射 \(L\to C/J\) 可以提升，\(u\) 的像必为 \(T+h\)、\(h\in J\)。然而特征 \(p\) 下
+\((T+h)^p-s=T^p-s+h^p=T^p-s\ne0\)，因为 \(h^p=0\)。关系不成立，矛盾。
+
+\ProseParagraphBreak
+这个例子已在第14章出现；这里的新比较是 \(L\) 的正则性与 \(k\to L\) 的不光滑性可以同时成立。基变换后
+\(L\otimes_kL\cong L[\varepsilon]/(\varepsilon^p)\)
+也解释了差别：正则的原环在不可分基变换后产生幂零元。
+\end{example}
+
+上述完美性条件不能简单改写成“光滑点的剩余域必须可分于基域”。例如在 \(k=\mathbb F_p(s)\) 上，多项式代数 \(k[T]\) 光滑，但闭点 \((T^p-s)\) 的剩余域正是这个不可分扩张。光滑性研究整个代数映射的无穷小行为，并不要求每个闭点本身都是一个平展的 \(k\) 点。
 
 \subsection{代数几何中的不同拓扑}
 \label{b3:subsec:2304:03}
 
-待撰写。
+Zariski 邻域只使用环的局部化；平展映射则容许加入在给定点附近唯一可提升的代数解。为了使这些不同的局部研究方式各有相应的覆盖概念，代数几何使用比普通开集覆盖更一般的约定。这里只介绍仿射环所描述的三种覆盖，不展开层与上同调理论。
+
+\begin{definition}\label{b3:def:affine-etale-fppf-covers}
+设 \(A\) 为交换含幺环，\((A\to B_i)_{i\in I}\) 为一族交换 \(A\) 代数。若每个 \(\mathfrak p\in\operatorname{Spec}A\) 都是某个 \(B_i\) 中素理想的收缩，就称这一族在素谱上联合满射。
+\begin{enumerate}
+\item 形如 \(A\to A_{f_i}\) 且联合满射的族，是仿射的 Zariski 基本开覆盖；其条件等价于 \((f_i\mid i\in I)=A\)。
+\item 若每个 \(A\to B_i\) 平展且这一族联合满射，称为一个\term[pingzhan-fugai]{平展覆盖}[étale covering]。
+\item 若每个 \(A\to B_i\) 平坦、有限呈示且这一族联合满射，称为一个 \term[fppf-fugai]{fppf 覆盖}[fppf covering]。
+\end{enumerate}
+\end{definition}
+
+字母 fppf 来自法语 \emph{fidèlement plat et de présentation finie}。对单个映射，平坦并在素谱上满射等价于忠实平坦，所以这个名称与第12章的代数条件相符。基本开覆盖是平展覆盖，平展覆盖也是 fppf 覆盖；但这些覆盖的每一项不必是原素谱的一个开子集。
+
+\ProseParagraphBreak
+例如平方映射 \(\mathbb C[s,s^{-1}]\to\mathbb C[t,t^{-1}]\) 是单个平展覆盖，因为它有限自由且素谱满射，却不是基本开嵌入。特征 \(p\) 下的映射 \(k[s]\to k[t]\)、\(s\mapsto t^p\) 则是 fppf 覆盖，而不是平展覆盖。因此在这些覆盖中说“局部存在解”，可能需要先扩张环；它不等同于在原来的 Zariski 开集中寻找解。
+
+\ProseParagraphBreak
+一般的平展拓扑与 fppf 拓扑把这样的覆盖作为基本资料，交叠由张量积描述。第12章的忠实平坦下降说明，扩张环以后得到的模及同构，只有满足交叠上的相容条件才来自原环。这也是为什么采用更丰富的覆盖后，仍须记录如何把局部对象拼回去。
 
 \subsection{尖点正规化的微分模与非分歧性}
 \label{b3:subsec:2304:04}
 
-待撰写。
+\begin{proposition}\label{b3:prop:cusp-relative-differentials}
+设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)。则作为 \(B\) 模，
+\[
+\Omega_{B/A}\cong B/(t)\,dt.
+\]
+因此 \(A\to B\) 在 \(\mathfrak n=(t)\) 处不是非分歧映射。
+\end{proposition}
+\begin{proof}
+对 \(k\to A\to B\) 的微分传递正合列为
+\[
+B\otimes_A\Omega_{A/k}\longrightarrow\Omega_{B/k}
+\longrightarrow\Omega_{B/A}\longrightarrow0.
+\]
+\(\Omega_{B/k}=B\,dt\)，而 \(A\) 由 \(t^2,t^3\) 在 \(k\) 上生成，所以第一箭头的像由
+\(d(t^2)=2t\,dt\)、\(d(t^3)=3t^2\,dt\) 生成。特征零使 \(2\) 可逆，故像为 \((t)\,dt\)，得到所述商模。在 \((t)\) 处局部化后，这个模仍同构于 \(k\,dt\)，不为零，所以该点不满足形式非分歧判据，也不满足非分歧条件。
+\end{proof}
+
+这一计算说明参数化在尖点处有一个不能被底环中的函数检测的一阶方向：对平方零参数 \(\varepsilon\)，代入 \(t=\varepsilon\) 后，\(t^2,t^3\) 都变成零，但 \(t\) 本身未必为零。因此底环只看到同一个点，上方却存在不同的无穷小变化。
 
 \subsection{尖点纤维的长度与非平坦性}
 \label{b3:subsec:2304:05}
 
-待撰写。
+\begin{proposition}\label{b3:prop:cusp-fiber-nonflat}
+设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)，\(\mathfrak m=(t^2,t^3)\)、\(\mathfrak n=(t)\)。则特殊纤维为
+\[
+B\otimes_A A/\mathfrak m
+\cong B/(t^2,t^3)B
+\cong k[t]/(t^2),
+\]
+其长度为二；而一般纤维为 \(k(t)\)，维数为一。因此局部映射 \(A_{\mathfrak m}\to B_{\mathfrak n}\) 不平坦。
+\end{proposition}
+\begin{proof}
+特殊纤维的同构直接由商与张量积相容得到；\(1,t\) 构成其 \(k\) 基，且唯一极大理想 \((t)\) 的平方为零，所以长度为二。令 \(K=\operatorname{Frac}(A)=k(t)\)。由于 \(t=t^3/t^2\)，有 \(B\otimes_AK=K\)，故一般秩为一。
+
+注意 \(B\otimes_AA_{\mathfrak m}\) 是有限 \(A_{\mathfrak m}\) 代数，其极大理想只能位于 \(\mathfrak m\) 上方，而那里唯一的素理想是 \(\mathfrak n\)。因此这个有限代数是局部环，并等于 \(B_{\mathfrak n}\)：\(B\) 中 \(\mathfrak n\) 外元素在它里面全为单位。
+
+若 \(B_{\mathfrak n}\) 在 \(A_{\mathfrak m}\) 上平坦，则它作为有限生成平坦模，由\cref{b3:lem:finite-flat-local-free}必须自由，设秩为 \(r\)。与 \(K\) 张量给出 \(r=1\)。再与剩余域 \(k\) 张量，便应得到一维 \(k\) 空间，却与刚算出的二维纤维矛盾。因此局部映射不平坦。
+\end{proof}
+
+这里比较纤维长度时，有限模在局部环上自由是必不可少的论证。单说“纤维大小发生变化”不足以证明一般映射不平坦；必须把这种变化与平坦性在当前有限条件下的具体后果联系起来。
 
 \subsection{尖点外的同构与局部性质的比较}
 \label{b3:subsec:2304:06}
 
-待撰写。
+\begin{proposition}\label{b3:prop:cusp-isomorphism-off-origin}
+设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)。则
+\[
+A_{t^2}=B_{t^2}=k[t,t^{-1}].
+\]
+因此正规化映射在去掉尖点后为同构；尖点之外的局部映射都平展且光滑。
+\end{proposition}
+\begin{proof}
+在 \(A_{t^2}\) 中，\(t=t^3/t^2\)，而 \(t\) 的逆元为 \(t/t^2\)，故 \(k[t,t^{-1}]\subseteq A_{t^2}\)。反向包含显然，\(B_{t^2}\) 也等于这个环。又若 \(A\) 的素理想包含 \(t^2\)，则由 \((t^3)^2=(t^2)^3\) 也包含 \(t^3\)，从而等于极大理想 \(\mathfrak m\)。所以 \(D(t^2)\) 正是尖点的补集。环同构保持全部平方零提升且作为模自由秩一，故局部映射平展和光滑。
+\end{proof}
+
+现在可以分别读出三个结论。在原点，\(\Omega_{B/A}\) 不为零，所以非分歧性失败；特殊纤维长度二而一般秩一，所以平坦性失败；在原点外，显式公式 \(t=t^3/t^2\) 给出同构。这些结论来自三个不同的计算，不能以“正规化去掉了奇点”一句话相互替代。
+
+\ProseParagraphBreak
+另一方面，\(B_{(t)}\) 本身正则，\(k\to B\) 也光滑，但 \(A_{\mathfrak m}\to B_{(t)}\) 不光滑，因为光滑必平坦。这个例子再次说明：讨论光滑时必须写清底环；讨论非分歧时必须保留无穷小信息；讨论平坦时则必须考察模的关系是否在张量之后仍被正确保留。

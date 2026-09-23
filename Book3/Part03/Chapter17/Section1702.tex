@@ -5,9 +5,7 @@
 \section{投射维数}
 \label{b3:sec:1702}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容：
 %
 % * 有限模的投射维数
 % * Ext、Tor 与投射维数判据
@@ -18,19 +16,96 @@
 \subsection{有限模的投射维数}
 \label{b3:subsec:1702:01}
 
-待撰写。
+\begin{definition}\label{b3:def:projective-dimension}
+设 \(R\) 为交换环，\(M\ne0\) 为 \(R\) 模。若存在正合列
+\[
+0\longrightarrow P_n\longrightarrow\cdots\longrightarrow P_0
+\longrightarrow M\longrightarrow0
+\]
+且各 \(P_i\) 投射，则使这种列存在的最小非负整数 \(n\) 称为 \(M\) 的\term[toushe-weishu]{投射维数}[projective dimension]，记 \(\operatorname{pd}_RM\)。若不存在，记为 \(\infty\)；约定 \(\operatorname{pd}_R0=-\infty\)。
+\end{definition}
+
+投射维数衡量消解必须延伸多少步，而非某个任意消解碰巧写了多少项。在局部有限模情形，极小消解使这个整数可以直接读取；任意消解却可以插入 \(R\xrightarrow{1}R\)，人为增加长度。
+
+\begin{proposition}\label{b3:prop:pd-minimal-length}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。若 \(F_\bullet\to M\) 是极小自由消解，则
+\[
+\operatorname{pd}_RM=\sup\{\,i:F_i\ne0\,\}
+=\sup\{\,i:\operatorname{Tor}_i^R(M,k)\ne0\,\}.
+\]
+\end{proposition}
+\begin{proof}
+投射模的提升性质使自由消解的比较映射论证同样适用于投射消解。因此有限投射消解在高于其长度的次数计算出零 Tor，故极小消解的这些项由\cref{b3:prop:minimal-resolution-betti}为零。反向，若极小消解在次数 \(n\) 后为零，它本身就是长度 \(n\) 的投射消解。两种比较也说明：极小消解若永不终止，就不可能另有有限投射消解。
+\end{proof}
 
 \subsection{Ext、Tor 与投射维数判据}
 \label{b3:subsec:1702:02}
 
-待撰写。
+\begin{theorem}\label{b3:thm:local-pd-vanishing}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限 \(R\) 模，\(n\ge0\)。下列条件等价：
+\begin{equivalences}
+\item \(\operatorname{pd}_RM\le n\)；
+\item \(\operatorname{Tor}_{n+1}^R(M,k)=0\)；
+\item \(\operatorname{Ext}_R^{n+1}(M,k)=0\)；
+\item 对每个 \(R\) 模 \(N\)，有 \(\operatorname{Ext}_R^{n+1}(M,N)=0\)。
+\end{equivalences}
+若 \(M\ne0\) 且 \(r=\operatorname{pd}_RM<\infty\)，则每个非零有限 \(R\) 模 \(N\) 都满足 \(\operatorname{Ext}_R^r(M,N)\ne0\)。
+\end{theorem}
+\begin{proof}
+前面三项分别等价于极小消解的 \(F_{n+1}=0\)，由\cref{b3:cor:betti-gap-termination}得到同一终止条件。第一项使 Hom 复形在次数 \(n+1\) 后为零，推出第四项；第四项取 \(N=k\) 推出第三项。
+
+若最后非零项为 \(F_r\)，则
+\[
+\operatorname{Ext}_R^r(M,N)
+=\operatorname{Hom}_R(F_r,N)/\operatorname{im}(d_r^*).
+\]
+极小性给 \(\operatorname{im}(d_r^*)\subseteq\mathfrak m\operatorname{Hom}_R(F_r,N)\)。后者 Hom 是非零有限个 \(N\) 的直和，由 Nakayama 引理不能等于自己的 \(\mathfrak m\) 倍，所以这个商非零。\(r=0\) 时像为零，同样成立。
+\end{proof}
+
+这里能够用一次消失判断全部后续消失，是因为测试对象为剩余域且采用极小消解。把 \(k\) 随意换成其他模，不能沿用这段证明。
 
 \subsection{维数平移}
 \label{b3:subsec:1702:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:dimension-shifting-local}
+设 \(R\) 为交换环，\(0\to K\to P\to M\to0\) 正合且 \(P\) 投射。对任意 \(R\) 模 \(N\) 和 \(i\ge1\)，有自然同构
+\[
+\operatorname{Ext}_R^i(K,N)\cong\operatorname{Ext}_R^{i+1}(M,N),
+\qquad
+\operatorname{Tor}_i^R(K,N)\cong\operatorname{Tor}_{i+1}^R(M,N).
+\]
+\end{proposition}
+\begin{proof}
+投射模是自由模的直和项，故它的所有正次 Ext 和 Tor 为零。在\cref{b3:lem:ext-basic-properties}和\cref{b3:lem:tor-basic-properties}的长正合列中，连接映射两边相邻的 \(P\) 项都为零，因而连接映射为同构。这就是第四卷第8.5节一般维数平移在当前短正合列上的形式。
+\end{proof}
+
+令 \(\Omega^0M=M\)，并令 \(\Omega^{j+1}M\) 为极小满射 \(F_j\to\Omega^jM\) 的核；这些是\cref{b3:def:syzygy-local}中合冲模在极小消解上的选择。上述同构可以迭代。例如
+\(\operatorname{Ext}_R^1(\Omega^nM,N)\cong\operatorname{Ext}_R^{n+1}(M,N)\)。一般投射模也可由 \(\operatorname{Ext}^1(P,-)=0\) 检验：对自由满射 \(F\to P\) 的核 \(K\)，其短正合列的连接映射把 \(\operatorname{id}_P\) 送到扩张类；此类为零恰好给出截面。因此所有这些 Ext 都消失时，\(P\) 是自由模的直和项。
+
+\ProseParagraphBreak
+特别地，若有限模的投射维数为 \(r>0\)，则 \(\Omega M\ne0\) 且
+\(\operatorname{pd}_R\Omega M=r-1\)。极小消解去掉零次项就是 \(\Omega M\) 的极小消解，所以这个等式还可以不经一般判据而直接看出。
 
 \subsection{局部有限模的同调消失判据}
 \label{b3:subsec:1702:04}
 
-待撰写。
+\begin{corollary}\label{b3:cor:residue-pd-bound}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环。每个有限 \(R\) 模 \(M\) 都满足
+\(\operatorname{pd}_RM\le\operatorname{pd}_Rk\)。有限模的有限直和因子具有不大于原模的投射维数。
+\end{corollary}
+\begin{proof}
+若 \(k\) 有长度 \(n\) 的投射消解，用它计算第二变量便得
+\(\operatorname{Tor}_{n+1}^R(M,k)=0\)，由\cref{b3:thm:local-pd-vanishing}得到结论。若 \(\operatorname{pd}_Rk=\infty\)，不等式没有额外内容。对直和因子，张量复形及其同调保留有限直和；原模的该阶 Tor 为零时，各因子也为零，再应用同一判据。
+\end{proof}
+
+\begin{lemma}\label{b3:lem:regular-element-resolution-basechange}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(x\in\mathfrak m\) 在 \(R\) 和有限模 \(M\) 上均为非零因子。令 \(B=R/(x)\)。把 \(M\) 的极小自由消解模掉 \(x\)，得到 \(M/xM\) 的极小 \(B\) 自由消解。因此
+\[
+\operatorname{pd}_B(M/xM)=\operatorname{pd}_RM.
+\]
+\end{lemma}
+\begin{proof}
+\(B\) 的二项 \(R\) 自由消解为 \(0\to R\xrightarrow{x}R\to B\to0\)。与 \(M\) 张量后，正次同调均为零：一次同调是乘 \(x\) 的核，高次没有项。由张量计算的平衡性，\(F_\bullet\otimes_RB\) 在正次数正合。各微分仍在 \(B\) 的极大理想内，故为极小消解。\(F_i/xF_i\) 非零当且仅当 \(F_i\) 非零，于是两边的长度相同，包括无穷情形。
+\end{proof}
+
+此处比较的是 \(M\) 与它的正则商 \(M/xM\)。它不是说对任意被 \(x\) 零化的模，换底环后投射维数总有这样简单的公式。

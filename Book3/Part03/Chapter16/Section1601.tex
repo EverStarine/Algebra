@@ -5,7 +5,6 @@
 \section{深度}
 \label{b3:sec:1601}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,99 @@
 \subsection{极大正则序列的长度}
 \label{b3:subsec:1601:01}
 
-待撰写。
+维数数的是素理想链，正则序列则问有多少个元素能够依次以单射作用。后一种长度似乎依赖选择：一个不能再延长的序列，是否可能比另一个短？局部有限性使这些长度相同，Koszul 同调给出一个可以同时比较所有选择的量。
+
+\begin{definition}\label{b3:def:maximal-regular-sequence}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。若 \(x_1,\ldots,x_t\in\mathfrak m\) 为 \(M\) 正则序列，而且不能再添上任何 \(y\in\mathfrak m\) 得到更长的正则序列，则称它为 \(\mathfrak m\) 中的一个\term[jida-zhengze-xulie]{极大正则序列}[maximal regular sequence]。这里“极大”指不能延长，尚未预先断言其长度最大。
+\end{definition}
+
+\begin{theorem}\label{b3:thm:maximal-regular-length}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。每个由 \(\mathfrak m\) 中元素构成的 \(M\) 正则序列都能延长为极大正则序列，且所有极大正则序列长度相同。若 \(\mathfrak m=(y_1,\ldots,y_e)\)，其共同长度为
+\[
+e-\max\{\,i\mid H_i(y_1,\ldots,y_e;M)\ne0\,\}.
+\]
+\end{theorem}
+\begin{proof}
+每添加一个正则元素，已选元素生成的理想严格增大：若新元素在原理想中，它在非零的逐次商上作用为零，不可能单射。Noether 环的理想升链条件保证这个过程在有限步停止。
+
+先看非零有限模 \(N\) 上的空序列何时已经极大。此时 \(\mathfrak m\) 中每个元素都是 \(N\) 的零因子。由\cref{b3:thm:associated-zero-divisors}及\cref{b3:lem:finite-prime-avoidance}，\(\mathfrak m\) 包含于某个 \(\mathfrak p\in\operatorname{Ass}_RN\)，于是 \(\mathfrak p=\mathfrak m\)。存在 \(n\ne0\) 满足 \(\mathfrak mn=0\)。因此 Koszul 最高同调
+\[
+H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
+\]
+非零，且没有次数超过 \(e\) 的项。反过来，这样的 \(n\) 也使 \(\mathfrak m\) 中任何元素都不可能正则。
+
+对任意非零有限模 \(N\)，令 \(q(N)=\max\{i\mid H_i(y;N)\ne0\}\)。这个最大值存在，因为 \(H_0=N/\mathfrak mN\ne0\)。若 \(x\in\mathfrak m\) 在 \(N\) 上正则，把 \(0\rightarrow N\xrightarrow{x}N\rightarrow N/xN\rightarrow0\) 张量 Koszul 复形得到逐项短正合列。圈的提升与取微分给出同调长正合列；其两个乘法 \(x\) 都为零，因为\cref{b3:prop:koszul-signs-homotopy}说明 \(\mathfrak m\) 零化 Koszul 同调。因此
+\[
+0\longrightarrow H_i(y;N)\longrightarrow H_i(y;N/xN)
+\longrightarrow H_{i-1}(y;N)\longrightarrow0
+\]
+正合。于是 \(q(N/xN)=q(N)+1\)。若极大正则序列长为 \(t\)，连续应用这个等式，在末端商处得到 \(e=q(M)+t\)。右端除 \(t\) 外不依赖所选序列，故所有长度相同。
+\end{proof}
 
 \subsection{深度的存在性与有限性}
 \label{b3:subsec:1601:02}
 
-待撰写。
+\begin{definition}\label{b3:def:depth}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。\(\mathfrak m\) 中任一极大 \(M\) 正则序列的长度称为 \(M\) 在 \(R\) 上的\term[shendu]{深度}[depth]，记为 \(\operatorname{depth}_RM\)。约定 \(\operatorname{depth}_R0=+\infty\)；环的深度是其作为自身模的深度。
+\end{definition}
+\symidx{\(\operatorname{depth}_RM\)：局部模的深度}
+
+定义的选择无关性由\cref{b3:thm:maximal-regular-length}保证，也说明非零有限模的深度是有限非负整数。固定极大理想的有限生成组后，它不超过生成元数。零模取无穷大的约定只用于公式，不把零模解释为可以在本章定义下具有任意长正则序列的对象。
+
+\begin{corollary}\label{b3:cor:depth-zero-socle}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。以下条件等价：
+\begin{equivalences}
+\item \(\operatorname{depth}_RM=0\)；
+\item \(\mathfrak m\in\operatorname{Ass}_RM\)；
+\item \(\operatorname{Hom}_R(k,M)\ne0\)。
+\end{equivalences}
+\end{corollary}
+\begin{proof}
+前两个条件的等价已在\cref{b3:thm:maximal-regular-length}的证明中得到。一个同态 \(k\rightarrow M\) 由 \(1\) 的像决定，该像恰为被 \(\mathfrak m\) 零化的元素；非零时其零化子等于 \(\mathfrak m\)，故后两个条件等价。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:regular-quotient-depth}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模，\(x\in\mathfrak m\) 在 \(M\) 上为非零因子。则
+\[
+\operatorname{depth}_R(M/xM)
+=\operatorname{depth}_{R/(x)}(M/xM)
+=\operatorname{depth}_RM-1.
+\]
+\end{corollary}
+\begin{proof}
+在 \(M/xM\) 上取极大正则序列，提升其元素到 \(\mathfrak m\)，并把 \(x\) 放在最前面，得到 \(M\) 上的极大正则序列，长度增加一。\(R\) 与 \(R/(x)\) 的作用在此商模上相同，两者的极大理想内元素及逐次商一一对应，故两种底环下深度相等。
+\end{proof}
+
+例如 \(k[X,Y]_{(X,Y)}\) 上的环本身深度为二，而模 \(k\) 深度为零。若 \(R\) 为任意非零 Artin 局部环，则非零有限模的基座非零，所以深度为零。这并不表示模很小：基座只保证正则序列无法迈出第一步。
 
 \subsection{深度与维数的不等式}
 \label{b3:subsec:1601:03}
 
-待撰写。
+\begin{proposition}\label{b3:prop:regular-quotient-dimension}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模，\(x\in\mathfrak m\) 在 \(M\) 上为非零因子。则
+\[
+\dim_R(M/xM)=\dim_RM-1.
+\]
+\end{proposition}
+\begin{proof}
+令 \(A=R/\operatorname{Ann}_RM\)，其极大理想仍记为 \(\mathfrak m\)。在任一素理想处，若 \(x\) 不在该素理想中，商模的局部化为零；若 \(x\) 在其中且 \(M\) 的局部化非零，Nakayama 引理说明商模的局部化非零。因此
+\[
+\operatorname{Supp}(M/xM)=\operatorname{Supp}M\cap V(x),\qquad
+\dim(M/xM)=\dim A/(x).
+\]
+由\cref{b3:prop:minimal-primes-associated}，\(\operatorname{Supp}M\) 的极小素理想都是关联素理想。\(x\) 为非零因子，故避开这些素理想。每条包含 \(x\) 的支集素链都可以在底部再补上一个极小素理想，所以 \(\dim A/(x)\le\dim A-1\)。
+
+反向不等式用参数系。设 \(d'=\dim A/(x)\)，由\cref{b3:thm:system-of-parameters}在该局部商环选 \(d'\) 个元素，其生成理想的根为极大理想。提升到 \(A\)，再加上 \(x\)，得到由 \(d'+1\) 个元素生成的 \(\mathfrak m\) 准素理想。\cref{b3:thm:height-theorem}给出 \(\dim A\le d'+1\)，两式合并得等式。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:depth-dimension-bound}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模。则
+\[
+0\le\operatorname{depth}_RM\le\dim_RM\le\dim R.
+\]
+\end{corollary}
+\begin{proof}
+沿一个长度为 \(t\) 的极大正则序列逐次取商，维数每次下降一，末端模仍非零，其维数至少为零。因此 \(t\le\dim_RM\)。最后一式来自支集是素谱的子集。
+\end{proof}
+
+深度可能严格小于维数。例如 \(A=k[X,Y]_{(X,Y)}/(X^2,XY)\) 的维数为一，但非零元 \(\bar X\) 被极大理想零化，故深度为零。维数仍看见 \(Y\) 方向的素理想链，正则性却已被闭点处的附加部分阻止。

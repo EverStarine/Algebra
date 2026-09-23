@@ -5,7 +5,6 @@
 \section{Koszul 正合性}
 \label{b3:sec:1503}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -17,14 +16,72 @@
 \subsection{正则序列给出的自由消解}
 \label{b3:subsec:1503:01}
 
-待撰写。
+先解释加进最后一个元素如何改变同调。设 \(C_\bullet=K_\bullet(x_1,\ldots,x_{r-1};M)\)，记 \(y=x_r\)。把新增的基向量放在外积左端，则每个次数有
+\[
+K_i(x_1,\ldots,x_{r-1},y;M)\cong C_i\oplus C_{i-1},
+\qquad d(a,b)=(da+yb,-db).
+\]
+第一项的包含与第二项的投影给出短正合列 \(0\rightarrow C\rightarrow K\rightarrow C[1]\rightarrow0\)，其中链移位满足 \(C[1]_i=C_{i-1}\)、\(d_{C[1]}=-d_C\)。
+
+\begin{lemma}\label{b3:lem:koszul-adjoin-exact}
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(x_1,\ldots,x_{r-1},y\in R\)，\(C=K_\bullet(x_1,\ldots,x_{r-1};M)\)。有自然正合列
+\[
+\cdots\longrightarrow H_i(C)\xrightarrow{y}H_i(C)
+\longrightarrow H_i(x_1,\ldots,x_{r-1},y;M)
+\longrightarrow H_{i-1}(C)\xrightarrow{y}H_{i-1}(C)\longrightarrow\cdots.
+\]
+\end{lemma}
+\begin{proof}
+对第二项投影得到的圈 \(b\in C_{i-1}\)，提升为 \((0,b)\)，其微分是 \((yb,0)\)。所以连接映射就是乘法 \(y\)。其余正合性也可从这一个公式核对：若圈 \((a,b)\) 投影为边界 \(b=dc\)，则加上边界 \(d(0,c)=(yc,-dc)\) 后得到 \((a+yc,0)\)，来自 \(C\)；若 \(C\) 中圈 \(a\) 在 \(K\) 中是边界，则 \(a=du+yv\)、\(dv=0\)，故其同调类来自乘法 \(y\)；最后，若 \(yb=-da\)，则 \((a,b)\) 是把 \([b]\) 提升到 \(K\) 的圈。这验证了长列中循环出现的三类位置。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:koszul-regular-resolution}
+设 \(R\) 为交换环，\(M\ne0\) 为 \(R\) 模，\(x_1,\ldots,x_r\) 为 \(M\) 正则序列，\(I=(x_1,\ldots,x_r)\)。则
+\[
+H_i(x;M)=0\quad(i>0),\qquad H_0(x;M)=M/IM.
+\]
+若序列在 \(R\) 上正则，则增广复形 \(K_\bullet(x;R)\rightarrow R/I\rightarrow0\) 为由有限秩自由模组成的自由消解。
+\end{theorem}
+\begin{proof}
+一元情形已由乘法核算出。对长度归纳，令 \(C\) 如上。归纳假设给出 \(H_i(C)=0\) 对 \(i>0\)，而 \(H_0(C)=M/(x_1,\ldots,x_{r-1})M\)。上述正合列使新复形在 \(i\ge2\) 的同调为零，在次数一的同调为 \(y:H_0(C)\rightarrow H_0(C)\) 的核，它由正则性为零；次数零的余核恰为 \(M/IM\)。在 \(M=R\) 时，各项为外幂 \(\bigwedge^iR^r\)，因而自由，增广映射为自然取商。
+\end{proof}
+
+“自由消解”指一条正合的增广链复形，其各项为自由模。对一般 \(M\)，上述各项是 \(M\) 的有限直和，不一定自由；正则序列保证它的正合性，不能因此把它称为自由消解。
 
 \subsection{Noether 局部有限模的反向判据}
 \label{b3:subsec:1503:02}
 
-待撰写。
+\begin{theorem}[Koszul 正合性判据]\label{b3:thm:koszul-acyclic}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限 \(R\) 模，\(x_1,\ldots,x_r\in\mathfrak m\)。以下条件等价：
+\begin{equivalences}
+\item \(x_1,\ldots,x_r\) 为 \(M\) 正则序列；
+\item \(H_i(x;M)=0\) 对所有 \(i>0\) 成立；
+\item \(H_1(x;M)=0\)。
+\end{equivalences}
+\end{theorem}
+\begin{proof}
+第一条件蕴含第二条件由\cref{b3:thm:koszul-regular-resolution}得到，第二条件显然蕴含第三条件。由第三条件对 \(r\) 归纳；\(r=0\) 或 \(1\) 的结论直接来自定义和 Nakayama 引理。设 \(r>1\)，记 \(C=K_\bullet(x_1,\ldots,x_{r-1};M)\)、\(y=x_r\)。\cref{b3:lem:koszul-adjoin-exact}给出
+\[
+H_1(C)\xrightarrow{y}H_1(C)\longrightarrow0
+\longrightarrow H_0(C)\xrightarrow{y}H_0(C).
+\]
+因 \(R\) Noether 且 \(M\) 有限，\(H_1(C)\) 是有限模。第一箭头满射且 \(y\in\mathfrak m\)，Nakayama 引理给出 \(H_1(C)=0\)。归纳得前 \(r-1\) 项正则，而最后一个箭头单射说明 \(y\) 在相应商上为非零因子。末端商由 Nakayama 引理非零，得到全部序列正则。
+\end{proof}
+
+这个证明只需次数一的消失；它通过有限性迫使较短序列的次数一同调也消失。若元素成为单位，乘法满射不能再由 Nakayama 推出模为零，这正是局部条件不能省略之处。
 
 \subsection{Koszul 同调与非正则性}
 \label{b3:subsec:1503:03}
 
-待撰写。
+在 \(R=k[X,Y]\) 中取序列 \(X^2,XY\)。若 \((a,b)\in R^2\) 是一次圈，则
+\[
+X^2a+XYb=0\quad\Longleftrightarrow\quad Xa+Yb=0.
+\]
+因 \(X,Y\) 互素，存在唯一 \(c\in R\)，使 \(a=-Yc,b=Xc\)。边界由 \((-XY,X^2)c=X(-Y,X)c\) 给出，故
+\[
+H_1(X^2,XY;R)\cong R/(X),\qquad H_2(X^2,XY;R)=0.
+\]
+最后一个等式来自 \(R\) 为整环。第一次商 \(R/(X^2)\) 中非零的 \(\bar X\) 被 \(XY\) 零化；同调把这一失败记录为整个 \(R/(X)\)，而不只是报告“序列不正则”。
+
+\ProseParagraphBreak
+另取 \(R=k[X,Y]\)、序列 \(X,Y,0\)。前两个元素给出 \(k\) 的自由消解，最后一个零元素给出的二项复形微分为零。因此新复形是原复形与其移位的直和，有 \(H_0\cong k\)、\(H_1\cong k\)，其余为零。重复一个已经由前面生成的方程会产生相应的冗余关系；例如序列 \(X,Y,X+Y\) 经可逆的基变换化为 \(X,Y,0\)，具有相同同调。

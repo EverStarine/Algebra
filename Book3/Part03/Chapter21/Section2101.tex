@@ -5,26 +5,92 @@
 \section{合冲模}
 \label{b3:sec:2101}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 关系之间的关系
 % * 分次极小自由消解
 % * 分次 Betti 数
 %
 
+设 \(S=k[x_1,\ldots,x_n]\) 取标准分次，\(\mathfrak m=(x_1,\ldots,x_n)\)。一个齐次方程组的生成元可能有关系，这些关系还可能有关系。逐层保存它们得到自由消解。本章不仅要证明这种过程何时终止，还要说明矩阵及其次数怎样记录不可省去的生成元。次数平移沿用\cref{b3:def:grading-shift}：\(S(-a)\) 的基向量位于次数 \(a\)。
+
 \subsection{关系之间的关系}
 \label{b3:subsec:2101:01}
 
-待撰写。
+设 \(M\) 是有限生成分次 \(S\) 模。选齐次生成元 \(m_1,\ldots,m_r\)，次数为 \(a_1,\ldots,a_r\)，得到分次满射
+\[
+\varepsilon:F_0=\bigoplus_{j=1}^rS(-a_j)\longrightarrow M,
+\qquad e_j\longmapsto m_j.
+\]
+其核由满足 \(\sum f_jm_j=0\) 的系数组组成。因此核既是一个模，也是原生成组的全部关系。由\cref{b3:prop:graded-presentation}，它有有限组齐次生成元，可以再取分次自由满射 \(F_1\rightarrow\ker\varepsilon\)。
+
+\begin{definition}\label{b3:def:graded-syzygy-resolution}
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(M\) 为分次 \(S\) 模。若保持次数的映射构成正合列
+\[
+\cdots\longrightarrow F_2\xrightarrow{d_2}F_1
+\xrightarrow{d_1}F_0\xrightarrow{\varepsilon}M\longrightarrow0,
+\]
+且每个 \(F_i\) 是若干 \(S(-a)\) 的直和，则称其为 \(M\) 的分次自由消解。置 \(\Omega^0M=M\)、\(\Omega^1M=\ker\varepsilon\)，并对 \(i\ge1\) 置 \(\Omega^{i+1}M=\ker d_i\)，这些核称为此消解中的\term[hechong-mo]{合冲模}[syzygy module]。这里上标记录关系的层数，不表示对偶或幂运算。
+\end{definition}
+
+各 \(F_i\) 的有限生成性由 Noether 性逐层保证，但目前还不能保证层数有限。合冲模也依赖所选生成组：给 \(M\) 增加一个冗余生成元，会增加一个可以消去的自由关系。所谓极小消解，就是在每一层都排除这类冗余。
+
+\ProseParagraphBreak
+例如在 \(S=k[x,y]\) 中，理想 \((x,y)\) 的关系满足 \(ax+by=0\)。因为 \(x\mid by\) 且 \(x,y\) 互素，必有 \(b=-cx\)，再得 \(a=cy\)。于是
+\[
+0\longrightarrow S(-2)\xrightarrow{\binom{y}{-x}}S(-1)^2
+\xrightarrow{(x\ y)}(x,y)\longrightarrow0
+\]
+正合，首映射也因 \(S\) 为整环而单射。若末项改成 \(S/(x,y)\)，则须在右端增加 \(S\rightarrow S/(x,y)\)，消解长度随之增加一。
 
 \subsection{分次极小自由消解}
 \label{b3:subsec:2101:02}
 
-待撰写。
+局部极小生成元由模掉极大理想后的向量空间决定。在这里 \(S\) 虽非局部环，分次的下界仍给出类似结论。
+
+\begin{lemma}\label{b3:lem:graded-nakayama}
+设 \(S=k[x_1,\ldots,x_n]\) 为域上的标准分次多项式环，\(\mathfrak m=(x_1,\ldots,x_n)\)，\(M\) 为次数有下界的分次 \(S\) 模。若 \(M=\mathfrak mM\)，则 \(M=0\)。若有限组齐次元素的像生成 \(M/\mathfrak mM\)，则它们生成 \(M\)；这些元素构成不可删减的齐次生成组，当且仅当其像构成 \(M/\mathfrak mM\) 的 \(k\) 基。
+\end{lemma}
+\begin{proof}
+若 \(M\ne0\)，选最低非零次数 \(q\)。等式 \(M=\mathfrak mM\) 将 \(M_q\) 的元素表示成正次数元素乘低于 \(q\) 次的元素，矛盾。对由指定元素生成的齐次子模 \(N\)，条件给出 \(M/N=\mathfrak m(M/N)\)，故 \(M=N\)。
+
+若像线性相关，按次数取一个非平凡关系，并解出其中一个基向量的像，剩下的像仍生成商空间，故该生成元可删。反之，若原生成元可删，在商空间取像便使相应向量成为其他向量的线性组合。因此不可删减等价于像为基。
+\end{proof}
+
+\begin{definition}\label{b3:def:graded-minimal-resolution}
+设 \(S=k[x_1,\ldots,x_n]\) 为域上的标准分次多项式环，\(\mathfrak m=(x_1,\ldots,x_n)\)，\(M\) 为有限生成分次 \(S\) 模。若一个分次自由消解的各项均有限生成，并满足
+\[
+d_i(F_i)\subseteq\mathfrak mF_{i-1}\quad(i\ge1),
+\]
+则称它为\term[fenci-jixiao-ziyou-xiaojie]{分次极小自由消解}[minimal graded free resolution]。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:graded-minimal-existence}
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次。每个有限生成分次 \(S\) 模 \(M\) 都有分次极小自由消解，暂允许该消解有无限多个非零项。
+\end{proposition}
+\begin{proof}
+选 \(M/\mathfrak mM\) 的齐次 \(k\) 基并提升为 \(M\) 的生成元，得到 \(F_0\rightarrow M\)。模掉 \(\mathfrak m\) 后这映射是同构，故其核 \(K_1\) 包含于 \(\mathfrak mF_0\)。核齐次且有限生成。再选 \(K_1/\mathfrak mK_1\) 的基提升，取 \(F_1\rightarrow K_1\)；其核包含于 \(\mathfrak mF_1\)。逐层重复，既保证正合，也保证每个微分的像包含于前项的 \(\mathfrak m\) 倍。
+\end{proof}
+
+例如若一个分次展示的关系矩阵含非零常数项，该关系就能解出一个自由生成元；这样的展示还没有极小化。反之，全部矩阵项在 \(\mathfrak m\) 中时，模掉 \(\mathfrak m\) 后所有微分都为零。这个特征使极小消解能由同调辨认。
 
 \subsection{分次 Betti 数}
 \label{b3:subsec:2101:03}
 
-待撰写。
+设一个极小消解写成
+\[
+F_i=\bigoplus_{j\in\mathbb Z}S(-j)^{\beta_{i,j}}.
+\]
+每一层只有有限个非零 \(\beta_{i,j}\)。将消解张量 \(k=S/\mathfrak m\) 后所有微分为零，按 Tor 的消解定义便有
+\begin{equation}\label{b3:eq:graded-betti-tor}
+\operatorname{Tor}_i^S(M,k)_j\simeq (F_i\otimes_Sk)_j,
+\qquad\beta_{i,j}=\dim_k\operatorname{Tor}_i^S(M,k)_j.
+\end{equation}
+因此这些数与选择无关，称为 \(M\) 的\term[fenci-Betti-shu]{分次 Betti 数}[graded Betti numbers]；\(\beta_i=\sum_j\beta_{i,j}\) 是第 \(i\) 层的总秩。下标 \(i\) 记录同调次数，\(j\) 记录元素的内次数，二者不能混用。
+
+\ProseParagraphBreak
+这里用到的消解比较原理可以直接看出：两个自由消解间覆盖恒等映射的链映射可逐层提升，因为各微分满射到下一层的核；两个提升之差逐层落入这些核，因而可再逐层提升为链同伦。保持次数的自由生成元允许每一步都选择同次数的原像。于是两个方向的比较映射在张量 \(k\) 后互逆，因为同伦公式中的微分全为零。
+
+\ProseParagraphBreak
+这还说明两个极小消解在分次链复形意义下同构。每层比较映射模 \(\mathfrak m\) 为同构，故由\cref{b3:lem:graded-nakayama}满射；两层自由模的各次基向量数相同。选分次截面后，核是有限生成分次直和项，模 \(\mathfrak m\) 为零，再用同一引理得核为零。映射因此逐层为同构。对前面 \(S/(x,y)\) 的例子，非零 Betti 数为 \(\beta_{0,0}=1\)、\(\beta_{1,1}=2\)、\(\beta_{2,2}=1\)。
