@@ -5,9 +5,8 @@
 \section{局部化}
 \label{b4:sec:1701}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容（保留纲要核验项目）：
 %
 % * 把拟同构变成可逆态射
 % * 局部化的泛性质
@@ -17,14 +16,48 @@
 \subsection{拟同构的可逆化}
 \label{b4:subsec:1701:01}
 
-待撰写。
+链同伦等价必为拟同构，但反向不成立。消解 \(P\to M\) 的作用恰在于：虽然它可能不是同伦等价，上同调信息却与 \(M\) 完全相同。若希望既允许换消解又保持态射的复合，就应把所有拟同构都当作可逆态射。
+
+\begin{definition}\label{b4:def:derived-category}
+设 \(\mathcal A\) 为局部小交换范畴，\(S\) 为 \(K(\mathcal A)\) 中的拟同构，即在各次上同调上诱导同构的态射类。在适当的集合大小约定下，\term[daochu-fanchou]{导出范畴}[derived category] 定义为
+\[
+ D(\mathcal A)=K(\mathcal A)[S^{-1}].
+\]
+其局部化函子记为 \(Q:K(\mathcal A)\to D(\mathcal A)\)。这里的逆是新范畴中的逆，不要求拟同构原本具有复形映射意义的逆。
+\end{definition}
+\symidx{\(D(\mathcal A)\)：复形的导出范畴}
+
+一个无上同调复形在 \(D(\mathcal A)\) 中成为零，因为它到零复形的映射是拟同构。反过来，各次上同调函子能经 \(Q\) 分解，所以在 \(D(\mathcal A)\) 中为零的对象必无上同调。由此看出，导出范畴的零对象比同伦范畴的零对象多。
 
 \subsection{局部化的泛性质}
 \label{b4:subsec:1701:02}
 
-待撰写。
+\begin{definition}\label{b4:def:category-localization}
+设 \(\mathcal C\) 为范畴，\(S\) 为一类态射。\(S\) 处的\term[fanchou-jubuhua]{范畴局部化}[localization of a category] 是函子 \(Q:\mathcal C\to\mathcal C[S^{-1}]\)，使 \(Q(s)\) 对 \(s\in S\) 可逆，并满足：任何将 \(S\) 送为同构的函子 \(F:\mathcal C\to\mathcal E\)，唯一写成 \(F=\overline FQ\)。自然变换也应唯一经此分解。采用对象不变的标准构造时，这里的唯一性是严格的；更换等价模型后则为唯一到自然同构。
+\end{definition}
+
+小范畴的一个直接构造，是在原有箭头之外为每个 \(s\in S\) 添一个反向符号 \(s^{-1}\)，取有限可复合箭头串，再按原范畴的复合关系以及 \(ss^{-1}=1,s^{-1}s=1\) 取商。复合由连接箭头串给出。函子 \(F\) 在新符号上只能取 \(F(s)^{-1}\)，因而唯一延拓；自然变换在新符号上的自然性由在 \(s\) 上的自然性乘逆得到。这也证明了自然变换的分解性质。
+
+\ProseParagraphBreak
+这种构造证明存在，却不便计算。下一节证明：同伦范畴中的拟同构允许把任意箭头串缩成一个分母在左的屋顶。这里不能先假定任意范畴都有这样的分式形式；它需要专门的交换与消去条件。
+
+\ProseParagraphBreak
+还可直接从复形范畴把拟同构倒过来。两种做法等价：拟同构包含链同伦等价，故\cref{b4:prop:homotopy-universal}迫使任何这样的函子先经 \(K(\mathcal A)\) 分解；之后再用局部化的泛性质即可。
 
 \subsection{集合大小与构造假设}
 \label{b4:subsec:1701:03}
 
-待撰写。
+若 \(\mathcal A\) 的对象不是一个集合，前述箭头串也可能形成真类，不能仅凭原范畴局部小就断言局部化仍局部小。本书对一般交换范畴使用固定的较大集合范围来作局部化；讨论 Hom 群时，要么假定局部化在所用范围内局部小，要么使用下面模范畴的大小控制，或\secref{b4:sec:1704}的有界消解模型。这里不把无界的任意交换范畴情形一概当作已解决。
+
+\begin{proposition}\label{b4:prop:module-derived-size}
+设 \(R\) 为含幺环，\(X\) 为左 \(R\)-模复形。存在一集合的拟同构 \(X_i\to X\)，使每个拟同构 \(s:Y\to X\) 都能由某个 \(X_i\to X\) 经拟同构 \(X_i\to Y\) 细化。因此在允许屋顶演算后，\(D(R\text{-}\mathbf{Mod})\) 的每个态射类确实组成集合。
+\end{proposition}
+\begin{proof}
+取无限基数 \(\kappa\) 至少为 \(|R|\)、\(\aleph_0\) 及所有 \(|X^n|\) 的上界。给定 \(s\)，为 \(X\) 每次上同调的每个类选一个 \(Y\) 中余圈，其像代表该类。所选元素生成一个各次大小至多 \(\kappa\) 的子复形 \(Y_0\subseteq Y\)。
+
+归纳构造 \(Y_j\)：对 \(Y_j\) 中每个余圈 \(z\)，若 \(s(z)\) 在 \(X\) 中为余边，则 \(s\) 的上同调单射性保证 \(z=dy\) 对某个 \(y\in Y\) 成立。把这些 \(y\) 加入并生成子复形，得 \(Y_{j+1}\)。每一步至多加入 \(\kappa\) 个元素；取可数并 \(Y'=\bigcup_jY_j\)，其大小仍至多 \(\kappa\)。起初的选择保证 \(H(Y')\to H(X)\) 满，每个落入核的余圈会在下一步成为余边，所以该映射也单。于是 \(Y'\to X\) 和 \(Y'\to Y\) 都是拟同构。
+
+所有大小至多 \(\kappa\) 的模复形可以在固定集合上编码，它们到 \(X\) 的映射也组成集合。取其代表即得所需的一集合分母。每个屋顶 \(X\leftarrow Y\to Z\) 都可换成以某个 \(X_i\) 为中间对象的屋顶，而 \(\bigcup_i\operatorname{Hom}_{K}(X_i,Z)\) 为集合，其商仍为集合。
+\end{proof}
+
+这里用 \(\le\kappa\) 控制大小，避免了“可数次合并以后仍严格小于某个基数”的不当推断。相关大小问题可对照 Weibel\cite[Set-Theoretic Considerations 10.3.6; Proposition 10.4.4]{Weibel1994HomologicalAlgebra}。

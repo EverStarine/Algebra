@@ -5,9 +5,8 @@
 \section{三角范畴公理}
 \label{b4:sec:1602}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容（保留纲要核验项目）：
 %
 % * 好三角与旋转
 % * 态射公理与八面体公理
@@ -18,19 +17,150 @@
 \subsection{好三角与旋转}
 \label{b4:subsec:1602:01}
 
-待撰写。
+\begin{definition}\label{b4:def:triangulated-category}
+\term[sanjiao-fanchou]{三角范畴}[triangulated category] 是加性范畴 \(\mathcal T\)、一个自等价 \([1]\)，以及一类称为好三角的图式 \(X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]\)，满足下面四条公理。自等价的迭代及其逆均固定一次。
+\begin{enumerate}
+\item[(TR1)] 好三角对同构封闭；\(X\xrightarrow{1}X\to0\to X[1]\) 是好三角；每个态射 \(u\) 都能补成好三角。
+\item[(TR2)] 一个三角为好三角，当且仅当其旋转
+\(Y\xrightarrow{v}Z\xrightarrow{w}X[1]\xrightarrow{-u[1]}Y[1]\) 为好三角。
+\item[(TR3)] 两个好三角的前两项之间若已有交换方块，则可以补上第三项的态射，成为三角态射。
+\item[(TR4)] 对可复合的 \(X\xrightarrow{u}Y\xrightarrow{v}Z\)，以及分别补全 \(u,v,vu\) 的好三角，存在下面小节所列的相容态射，使三个锥也组成一个好三角。
+\end{enumerate}
+\end{definition}
+
+旋转中的负号不能任意删去。它与平移复形的负微分一起，使同一条长正合列在换起点后仍由三角产生。连续旋转三次所得是三个箭头都带负号的平移三角；在三个对象上分别取 \(1,-1,1\) 作同构，可将它改写为箭头 \(u[1],v[1],-w[1]\) 的好三角。这里最后一条箭头仍带负号，不能把三个符号一起删去。
+
+\ProseParagraphBreak
+这里暂时是在给出抽象定义；\(K(\mathcal A)\) 满足这些公理的证明在本节末尾。先说明只用前三条公理能够推出哪些事实，可避免在核对八面体时暗中使用待证结论。
 
 \subsection{态射公理与八面体公理}
 \label{b4:subsec:1602:02}
 
-待撰写。
+(TR3) 只要求补全存在，没有要求唯一。(TR4) 则规定这种补全对于复合态射还应满足什么相容关系。把三个三角写成
+\[
+ X\xrightarrow{u}Y\xrightarrow{i_u}C_u\xrightarrow{p_u}X[1],\quad
+ Y\xrightarrow{v}Z\xrightarrow{i_v}C_v\xrightarrow{p_v}Y[1],
+\]
+\[
+ X\xrightarrow{vu}Z\xrightarrow{i_{vu}}C_{vu}\xrightarrow{p_{vu}}X[1].
+\]
+所要求的是 \(\alpha:C_u\to C_{vu}\)、\(\beta:C_{vu}\to C_v\)，满足
+\[
+ \alpha i_u=i_{vu}v,\quad p_{vu}\alpha=p_u,\quad
+ \beta i_{vu}=i_v,\quad p_v\beta=u[1]p_{vu},
+\]
+并使
+\[
+ C_u\xrightarrow{\alpha}C_{vu}\xrightarrow{\beta}C_v
+ \xrightarrow{i_u[1]p_v}C_u[1]
+\]
+为好三角。这一形式称为\term[bamian-ti-gongli]{八面体公理}[octahedral axiom]，名称来自把上述四个三角画成八面体的四个面。后面的证明使用这些等式，不依赖空间图形的直观。
+
+\begin{lemma}\label{b4:lem:pretriangle-hom}
+设加性范畴 \(\mathcal T\) 带平移及满足 (TR1)--(TR3) 的好三角。对好三角 \(X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]\)，相邻箭头复合为零，且对任意 \(W\)，两个 Hom 序列
+\[
+ \operatorname{Hom}(W,X)\longrightarrow\operatorname{Hom}(W,Y)
+ \longrightarrow\operatorname{Hom}(W,Z),
+\]
+\[
+ \operatorname{Hom}(Z,W)\longrightarrow\operatorname{Hom}(Y,W)
+ \longrightarrow\operatorname{Hom}(X,W)
+\]
+均在中间正合。三角态射中任意两个分量为同构，则第三个也为同构。
+\end{lemma}
+\begin{proof}
+从恒等三角到给定三角应用 (TR3)，前两个分量取 \(1_X,u\)，第三个分量由零对象出发，得到 \(vu=0\)。旋转后同理得到其余零复合。
+
+若 \(a:W\to Y\) 满足 \(va=0\)，对上方好三角
+\(W\to0\to W[1]\xrightarrow{-1}W[1]\)
+和下方旋转三角
+\(Y\xrightarrow{v}Z\xrightarrow{w}X[1]\xrightarrow{-u[1]}Y[1]\)
+使用 (TR3)，前两个分量取 \(a,0\)。所得第三个分量 \(b:W[1]\to X[1]\) 满足 \(u[1]b=a[1]\)，所以 \(a=ub[-1]\)。这给出第一列的反向包含。
+
+反变结论可以直接对箭头倒向后的同一论证应用 (TR3)；更明确地说，在反范畴中取平移 \([-1]\)，把好三角反向并旋转，即仍满足前三条公理，前述提升论证便给出 \(a:Y\to W\)、\(au=0\) 时 \(a=bv\)。最后把两类正合列旋转延长。若一个三角态射的前两个分量同构，对每个 \(W\) 用五引理得第三个分量在 \(\operatorname{Hom}(W,-)\) 上诱导同构；先取 \(W\) 为其目标得到右逆，再取 \(W\) 为其源得到左逆，故它本身同构。其他两种情形由旋转归约。
+\end{proof}
+
+因此，同一态射的两个好三角可以用 (TR3) 补出同构；但补出的同构是否唯一，是另一回事。
 
 \subsection{三角范畴与交换范畴的区别}
 \label{b4:subsec:1602:03}
 
-待撰写。
+交换范畴用核和余核描述一个态射，三角范畴则用第三个对象同时保留它前后次数的信息。不能把这个对象简单称作余核：即使 \(u=0\)，它也通常是 \(Y\oplus X[1]\)，而不是 \(Y\)。
+
+\begin{proposition}\label{b4:prop:triangle-mono-splits}
+设 \(\mathcal T\) 是三角范畴。\(\mathcal T\) 中每个范畴意义的单态射均分裂，每个范畴意义的满态射也均分裂。
+\end{proposition}
+\begin{proof}
+若 \(u:X\to Y\) 单，把它补成好三角 \(X\to Y\to Z\xrightarrow{w}X[1]\)。由 \(u[1]w=0\) 和 \(u[1]\) 单得 \(w=0\)。旋转并应用\cref{b4:lem:pretriangle-hom}的反变正合列，得到
+\[
+ \operatorname{Hom}(Y,X)\longrightarrow\operatorname{Hom}(X,X)
+ \xrightarrow{(-w[-1])^*}\operatorname{Hom}(Z[-1],X).
+\]
+最后的映射为零，故 \(1_X\) 提升为 \(r:Y\to X\)，即 \(ru=1_X\)。满态射的论证对偶。
+\end{proof}
+
+\(K(\mathbf{Ab})\) 不是交换范畴。否则上命题使每个单、满态射分裂；把任意态射 \(f\) 分解为余像上的满态射和像的包含，就可得到某个 \(t\) 满足 \(ftf=f\)。对次数零的复形 \(\mathbb Z\) 和乘二映射，这要求整数 \(t\) 满足 \(4t=2\)，矛盾。这里已经用到的三角结构将在下一小节核实。
+
+\ProseParagraphBreak
+尤其要区分“各次数均为单射”和“在同伦范畴中为单态射”。乘二 \(\mathbb Z[0]\to\mathbb Z[0]\) 逐次单，却不是同伦范畴中的单态射。令 \(C=\operatorname{Cone}(2)\)，则 \(C[-1]\to\mathbb Z\) 的投影同伦类非零，而复合乘二后为零伦。非零性由整数中不存在 \(2t=1\) 得到。这不是计算矛盾，而是更换态射范畴后的真实变化。
 
 \subsection{显式锥构造与八面体的符号}
 \label{b4:subsec:1602:04}
 
-待撰写。
+\begin{theorem}\label{b4:thm:homotopy-triangulated}
+设 \(\mathcal A\) 为局部小加性范畴。以平移 \([1]\) 和\cref{b4:def:good-cone-triangle}的好三角，\(K(\mathcal A)\) 是三角范畴；\(K^b,K^+,K^-\) 也各自为三角范畴。
+\end{theorem}
+\begin{proof}
+(TR1) 来自锥的定义和 \(\operatorname{Cone}(1)\) 的收缩。为核对 (TR2)，写 \(C_f=B\oplus A[1]\)。包含 \(i_f:B\to C_f\) 的锥在次数 \(n\) 为
+\[
+ B^n\oplus A^{n+1}\oplus B^{n+1},\qquad
+ d(b,a,b')=(db+fa+b',-da,-db').
+\]
+映射 \(r(b,a,b')=a\) 和 \(s(a)=(0,a,-fa)\) 给出它与 \(A[1]\) 的同伦等价。确实 \(rs=1\)，而 \(1-sr=dh+hd\)，其中 \(h(b,a,b')=(0,0,b)\)。该锥的最后投影与 \(s\) 复合为 \(-f[1]\)，故旋转三角是好三角。逆向旋转由同一构造和平移得到：\(\operatorname{Cone}(f[r])\cong\operatorname{Cone}(f)[r]\) 的同构为 \((b,a)\mapsto(b,(-1)^ra)\)。
+
+为核对 (TR3)，先取两个标准锥三角，设前两个分量为 \(a:A\to A'\)、\(b:B\to B'\)。同伦交换表示可以选择 \(H\) 使
+\(bf-f'a=dH+Hd\)。定义
+\[
+ c:C_f\longrightarrow C_{f'},\qquad c(y,x)=(by+Hx,ax).
+\]
+计算第一分量的微分相容性，恰好得到上述同伦等式；第二分量由 \(a\) 为复形映射得到。它与包含和投影严格相容，所以补成三角态射。任意好三角先用同构换成标准锥即可。至此前三条公理成立，因而可用\cref{b4:lem:pretriangle-hom}：对固定首箭头，不同的好三角之间存在保持前两项的同构。
+
+现在核对 (TR4)。设复形映射 \(f:A\to B\)、\(g:B\to C\)。在三个标准锥上取
+\[
+ \alpha(b,a)=(gb,a),\qquad
+ \beta(c,a)=(c,fa),\qquad
+ \gamma(c,b)=(b,0).
+\]
+最后一个目标为 \(C_f[1]\)。它们都是复形映射，且满足公理中四个相容等式和 \(\gamma=i_f[1]p_g\)。复合 \(\beta\alpha\) 的零伦为 \((b,a)\mapsto(0,b)\)；这一步说明为什么中间还需要一个锥。
+
+把 \(\operatorname{Cone}(\alpha)^n\) 按顺序写作
+\(C^n\oplus A^{n+1}\oplus B^{n+1}\oplus A^{n+2}\)，则
+\[
+ d(c,a,b,a')=(dc+gf a+gb,\,-da+a',\,-db-fa',\,da').
+\]
+定义
+\[
+ r(c,a,b,a')=(c,b+fa),\qquad s(c,b)=(c,0,b,0).
+\]
+它们是到 \(C_g\) 及从 \(C_g\) 出发的复形映射，\(rs=1\)。取 \(h(c,a,b,a')=(0,0,0,a)\)，直接得到
+\[
+ (dh+hd)(c,a,b,a')=(0,a,-fa,a')=(1-sr)(c,a,b,a').
+\]
+故 \(r,s\) 是同伦逆。若 \(j:C_{gf}\to\operatorname{Cone}(\alpha)\) 是包含，\(q\) 是最后投影，则 \(rj=\beta\)、\(qs=\gamma\)。因此标准锥三角经此同伦等价成为
+\(C_f\xrightarrow{\alpha}C_{gf}\xrightarrow{\beta}C_g\xrightarrow{\gamma}C_f[1]\)，正是要求的好三角。给定的三个三角若非标准形式，利用前述保持首两项的同构运送所有箭头，四个相容等式随之保留。这完成八面体公理的验证。
+
+所有构造只使用有限双积、平移和锥。它们保持两端有界、有上界或有下界，因此三个有界方向的满子范畴同样满足全部公理。
+\end{proof}
+
+八面体在这里表达一个具体事实：依次作 \(f\) 与 \(g\) 时，\(f\)、\(gf\)、\(g\) 各自造成的差别并非互不相关，三个锥还受一个锥三角约束。证明中的 \(b+fa\) 正是把复合过程中的重复项消去；这个公式比只记图形更便于核对符号。
+
+\begin{definition}\label{b4:def:triangle-functor}
+设 \(\mathcal T,\mathcal U\) 为三角范畴。加性函子 \(F:\mathcal T\to\mathcal U\) 连同自然同构 \(\phi_X:F(X[1])\to F(X)[1]\)，若把每个好三角 \(X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]\) 送到好三角
+\[
+ F(X)\xrightarrow{F(u)}F(Y)\xrightarrow{F(v)}F(Z)
+ \xrightarrow{\phi_XF(w)}F(X)[1],
+\]
+则称 \((F,\phi)\) 为\term[sanjiao-hanzi]{三角函子}[triangle functor]，也称三角范畴间的正合函子。具有三角准逆的此类函子称为三角等价。
+\end{definition}
+
+比较同构 \(\phi\) 是数据的一部分。例如平移函子 \([1]\) 配上 \(X[2]\) 上的负恒等比较，才把一个好三角送到箭头为 \(u[1],v[1],-w[1]\) 的好三角。下章的局部化函子则采用与复形平移严格相容的比较。对于复形范畴上的逐项加性函子，有限双积及锥矩阵的保持直接给出三角函子。

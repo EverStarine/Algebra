@@ -5,7 +5,6 @@
 \section{DG 代数与 DG 范畴}
 \label{b4:sec:2001}
 
-% TODO: 按以下纲要要点撰写本节。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -18,19 +17,118 @@
 \subsection{分次微分与带符号 Leibniz 法则}
 \label{b4:subsec:2001:01}
 
-待撰写。
+在导出范畴中，一个态射已经是经过同伦和拟同构识别后的结果。若还要研究态射之间的同伦、复合的具体代表以及端同态的导出结构，只保存态射集合便不够了。一个自然的做法是保留整个 Hom 复形。本节先说明这种做法所需的乘法符号，再把它推广到许多个对象。
+
+\begin{definition}\label{b4:def:dg-algebra}
+设 \(k\) 为交换环，\(A=\bigoplus_{n\in\mathbb Z}A^n\) 为含幺的分次结合 \(k\)-代数，单位位于 \(A^0\)。设 \(d:A^n\to A^{n+1}\) 为 \(k\)-线性映射，满足 \(d^2=0\)，并且对 \(a\in A^p,b\in A^q\) 有
+\[
+ d(ab)=d(a)b+(-1)^p a\,d(b).
+\]
+称 \((A,d)\) 为\term[weifenfencidaishu]{微分分次代数}[differential graded algebra]，简称 DG 代数。其态射保持分次、乘法、单位与微分。
+\end{definition}
+
+由 \(d(1)=d(1\cdot1)=2d(1)\) 得 \(d(1)=0\)，这里不需要除以 \(2\)。符号取决于左因子的次数：微分越过一个 \(p\) 次元素时出现 \((-1)^p\)。普通 \(k\)-代数放在零次、微分取零，便成为 DG 代数；DG 代数则不要求乘法分次交换。
+
+\ProseParagraphBreak
+第三卷附录 E 的微分代数从一个满足普通 Leibniz 法则的指定导子出发，导子不一定平方为零。本节的微分升高次数，既有符号条件，又必须平方为零。例如 \(k[x]\) 上的 \(\partial/\partial x\) 并不因名称中含有“微分”就给出这里的结构；在特征零时，它作用于 \(x^2\) 两次的结果为 \(2\)。
+
+\begin{example}\label{b4:exm:dg-koszul-one-element}
+设 \(R\) 为交换环，\(a\in R\)。令 \(A^0=R\)、\(A^{-1}=R\varepsilon\)，其余次数为零，规定 \(\varepsilon^2=0\)、\(d\varepsilon=a\)、\(dR=0\)。这给出一个 DG \(R\)-代数。唯一需要特别检查的关系是
+\[
+ d(\varepsilon^2)=a\varepsilon-\varepsilon a=0.
+\]
+其上同调为 \(H^0(A)=R/aR\)、\(H^{-1}(A)=\operatorname{ann}_R(a)\)。当 \(a\) 不是零因子时，增广 \(A\to R/aR\) 是拟同构；当 \(a\) 为单位时，底层复形可缩。这里重现了单元素 Koszul 复形，但同时记录了外代数乘法。
+\end{example}
+
+\begin{proposition}\label{b4:prop:dg-cohomology-product}
+设 \(A\) 为交换环 \(k\) 上的 DG 代数。公式 \([a][b]=[ab]\) 在 \(H^*(A)=\bigoplus_n H^n(A)\) 上给出分次结合代数结构。
+\end{proposition}
+\begin{proof}
+若 \(da=db=0\)，则 Leibniz 法则给出 \(d(ab)=0\)。若把 \(a\) 改为 \(a+du\)，其中 \(u\) 为 \(p-1\) 次元素，则乘积之差为 \((du)b=d(ub)\)；若把 \(b\) 改为 \(b+dv\)，则 \(a(dv)=(-1)^p d(av)\)。因此乘积不依赖余圈代表。结合律和单位由 \(A\) 中的对应等式下降；若 \([1]=0\)，所得上同调代数为零代数。
+\end{proof}
 
 \subsection{带微分的分次态射空间}
 \label{b4:subsec:2001:02}
 
-待撰写。
+设 \(R\) 为含幺环，\(C,D\) 为左 \(R\)-模上链复形。一个次数为 \(r\) 的齐次映射，是一族不必与微分交换的 \(R\)-线性映射 \(f^n:C^n\to D^{n+r}\)。全部这类映射组成
+\[
+ \underline{\operatorname{Hom}}_R(C,D)^r
+ =\prod_{n\in\mathbb Z}\operatorname{Hom}_R(C^n,D^{n+r}).
+\]
+积号不能随意改为直和：一个齐次映射可以在无限多个次数上非零。令
+\begin{equation}\label{b4:eq:dg-hom-differential}
+ (\partial f)^n=d_D^{n+r}f^n-(-1)^r f^{n+1}d_C^n.
+\end{equation}
+这正是前面总 Hom 复形的微分；此处把同一公式用于组织所有复形之间的映射。
+
+\begin{proposition}\label{b4:prop:dg-hom-complex}
+对任意含幺环 \(R\) 及左 \(R\)-模复形 \(C,D\)，\eqref{b4:eq:dg-hom-differential}满足 \(\partial^2=0\)。其零次余圈是复形映射，零次余边是零伦映射，因而
+\[
+ H^0\underline{\operatorname{Hom}}_R(C,D)
+ \cong\operatorname{Hom}_{K(R\text{-}\mathrm{Mod})}(C,D).
+\]
+\end{proposition}
+\begin{proof}
+省略上标而保留次数，展开两次微分得到
+\[
+ \partial^2 f=d_D^2f-(-1)^r d_Dfd_C
+             -(-1)^{r+1}d_Dfd_C-fd_C^2=0.
+\]
+在零次，\(\partial f=0\) 就是 \(d_Df=fd_C\)。若 \(h\) 的次数为 \(-1\)，则 \(\partial h=d_Dh+hd_C\)，恰是零伦公式。取商即得到所述同伦范畴中的态射群。
+\end{proof}
+
+较高次数也有明确意义：\(\partial f=0\) 等价于把 \(f^n\) 看作 \(C^n\to D[r]^n\) 后得到复形映射，因为 \(d_{D[r]}=(-1)^r d_D\)。相应余边与同伦只差一个整体符号，故 \(H^r\underline{\operatorname{Hom}}_R(C,D)=\operatorname{Hom}_{K(R\text{-}\mathrm{Mod})}(C,D[r])\)。若 \(C\) 是有界投射复形，\cref{b4:thm:bounded-projective-model}又把这里的同伦态射识别为导出态射。任意复形则不能省去这个条件。
 
 \subsection{复合与符号}
 \label{b4:subsec:2001:03}
 
-待撰写。
+齐次映射仍按通常次序复合。若 \(f:C\to D\) 的次数为 \(p\)，\(g:D\to E\) 的次数为 \(q\)，则 \((gf)^n=g^{n+p}f^n\)，次数为 \(p+q\)。直接展开可得
+\begin{equation}\label{b4:eq:dg-composition-leibniz}
+ \partial(gf)=(\partial g)f+(-1)^q g(\partial f).
+\end{equation}
+右边的中间两项为 \(-(-1)^q gd_Df\) 与 \(( -1)^q gd_Df\)，正好抵消。因此符号由写在左边、后执行的 \(g\) 的次数决定，而不是由先执行的 \(f\) 决定。
+
+\begin{definition}\label{b4:def:dg-category}
+设 \(k\) 为交换环。给定一族对象；对每两个对象 \(X,Y\)，给定 \(k\)-模复形 \(\mathcal E(X,Y)\)；给定双线性、保持总次数的复合，以及零次余圈 \(1_X\in\mathcal E(X,X)^0\)。若复合结合，\(1_X\) 是单位，并且齐次态射满足\eqref{b4:eq:dg-composition-leibniz}，便得到一个\term[weifenfencifanchou]{微分分次范畴}[differential graded category]，简称 DG 范畴。
+
+两个 \(k\)-线性 DG 范畴之间，若对象对应与各 Hom 复形之间的复形映射保持单位和复合，称其为\term[DGhanzi]{DG 函子}[DG functor]。
+\end{definition}
+
+\(R\)-模复形及上述 Hom 复形组成 DG 范畴 \(\mathrm{Ch}_{\mathrm{dg}}(R)\)。只有一个对象的 DG 范畴等价于一个 DG 代数；特别是 \(\underline{\operatorname{End}}_R(C)=\underline{\operatorname{Hom}}_R(C,C)\) 以复合作为乘法，是 DG 代数。其零次上同调才是 \(C\) 的同伦端同态环，二者一般不是同一个对象。
+
+\ProseParagraphBreak
+张量积中出现的符号有相同来源。设 \(A,B\) 为交换环 \(k\) 上的 DG 代数，对齐次元素规定
+\[
+ (a\otimes b)(a'\otimes b')=(-1)^{|b||a'|}aa'\otimes bb',
+ \qquad
+ d(a\otimes b)=da\otimes b+(-1)^{|a|}a\otimes db.
+\]
+在展开乘积的微分时，把 \(b\) 越过 \(a'\) 所需的符号恰好使 Leibniz 法则成立。与此相配，DG 反代数的乘法为 \(a\mathbin{\cdot_{\mathrm{op}}}b=(-1)^{|a||b|}ba\)，而不只是反转次序。这些约定在 DG 双模和张量函子中不可省略；集中在零次时，它们还原为普通约定。
 
 \subsection{同伦范畴及增强}
 \label{b4:subsec:2001:04}
 
-待撰写。
+对 DG 范畴 \(\mathcal E\)，保留对象而把态射复形换成零次上同调，得到范畴 \(H^0(\mathcal E)\)。复合良定义，是因为余圈复合仍是余圈，而且一个零次余边与零次余圈复合后仍是余边。\cref{b4:prop:dg-hom-complex}说明
+\[
+ H^0\bigl(\mathrm{Ch}_{\mathrm{dg}}(R)\bigr)=K(R\text{-}\mathrm{Mod}).
+\]
+因此取 \(H^0\) 已经忘掉了同伦的具体选择。它还没有自动把所有拟同构倒置。
+
+\begin{definition}\label{b4:def:dg-quasi-equivalence}
+设 \(F:\mathcal E\to\mathcal F\) 为交换环 \(k\) 上的 DG 函子。若每个 \(\mathcal E(X,Y)\to\mathcal F(FX,FY)\) 是拟同构，而且 \(H^0(F)\) 本质满，称 \(F\) 为\term[nidengjia]{拟等价}[quasi-equivalence]。
+\end{definition}
+
+拟等价诱导 \(H^0\) 上的等价，因为零次上同调上的映射已经双射。反过来，仅知道零次上同调范畴等价，并没有提供高次映射或与微分、复合相容的提升。
+
+\ProseParagraphBreak
+说一个三角范畴具有 DG 描述，还必须解释它的移位与好三角来自哪里。为此可以用 DG 模表达闭性条件。一个右 DG \(\mathcal E\)-模是 DG 函子 \(\mathcal E^{\mathrm{op}}\to\mathrm{Ch}_{\mathrm{dg}}(k)\)，其中反范畴的复合采用上一小节的符号。对两个这样的模 \(M,N\)，次数 \(r\) 的态射是一族次数 \(r\) 的 \(k\)-线性映射 \(\eta_Y:M(Y)\to N(Y)\)，满足 \(N(f)\eta_Y=(-1)^{r|f|}\eta_{Y'}M(f)\)，其中 \(f:Y'\to Y\) 为 \(\mathcal E\) 中的任意齐次态射。态射复形的微分仍为\eqref{b4:eq:dg-hom-differential}；模的移位、映射锥逐对象构造。对齐次态射 \(f\)，移位作用为 \(M[1](f)=(-1)^{|f|}M(f)\)；对闭的零次模态射 \(u:M\to N\)，锥上的作用为 \(\operatorname{diag}(N(f),(-1)^{|f|}M(f))\)。这些符号使作用与移位及锥的微分相容。可表模 \(h_X\) 把 \(Y\) 送到 \(\mathcal E(Y,X)\)，齐次 \(f:Y'\to Y\) 对 \(a:Y\to X\) 的作用为 \((-1)^{|f||a|}af\)。这就是带符号的 Yoneda 构造。
+
+\begin{definition}\label{b4:def:dg-enhancement}
+设 \(\mathcal E\) 为交换环 \(k\) 上的 DG 范畴。若其可表右 DG 模在 DG 模的同伦范畴中包含零对象，并且对移位及零次闭态射的映射锥封闭到同构，称 \(\mathcal E\) 为\term[yu-sanjiao-DGfanchou]{预三角 DG 范畴}[pretriangulated DG category]。设 \(\mathcal T\) 为 \(k\)-线性三角范畴；一对数据 \((\mathcal E,\Phi)\)，其中 \(\mathcal E\) 预三角而 \(\Phi:H^0(\mathcal E)\to\mathcal T\) 为三角等价，称为 \(\mathcal T\) 的\term[DGzengqiang]{DG 增强}[DG enhancement]。
+\end{definition}
+
+此定义中的三角结构由 DG 模的锥给出。其依据是 DG Yoneda 映射在态射复形上全忠实，而 DG 模同伦范畴的锥满足三角公理；后一个结论与复形的锥论证相同，也可查 Keller 的《Deriving DG categories》\cite[Sections 1.2 and 2.2]{Keller1994DerivingDG}。一般 DG 范畴可能既没有移位对象，也没有锥对象，因而不能仅凭取 \(H^0\) 就宣称得到三角范畴。
+
+\begin{example}\label{b4:exm:bounded-projective-enhancement}
+设 \(R\) 为含幺环。取所有有界、每项有限生成投射的左 \(R\)-模复形以及它们的整个 Hom 复形，得到 \(\mathrm{Ch}^b_{\mathrm{dg}}(R\text{-}\mathrm{proj})\)。移位仍在其中；映射锥的项为两个有限生成投射模的直和，也仍在其中。因此它是预三角的，\(H^0\) 是 \(K^b(R\text{-}\mathrm{proj})\)。下一节把这个范畴识别为完美复形的导出范畴模型。这是一个直接可写出的增强，而非从抽象三角公理中反求出来的结构。
+\end{example}

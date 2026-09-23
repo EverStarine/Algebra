@@ -5,8 +5,6 @@
 \section{导出张量积}
 \label{b4:sec:1802}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 平坦或投射替换
@@ -17,14 +15,91 @@
 \subsection{平坦替换与投射替换}
 \label{b4:subsec:1802:01}
 
-待撰写。
+普通张量积不能保持所有拟同构。例如整数模复形 \(\mathbb Z\xrightarrow{2}\mathbb Z\)（次数 \(-1,0\)）拟同构于 \(\mathbb Z/2\)，但与 \(\mathbb Z/2\) 张量后前者多出一次负次数同调。为了让张量积在导出范畴中有意义，需要能保存拟同构的替换。
+
+\begin{lemma}\label{b4:lem:bounded-flat-tensor-preserves}
+设 \(R\) 为环，\(P\) 为逐项平坦且有上界的右 \(R\)-模复形，\(A\) 为任意正合的左 \(R\)-模复形。采用直和总化时，\(P\otimes_RA\) 正合。因此 \(P\otimes_R-\) 保持任意复形之间的拟同构。交换左右侧别后也成立。
+\end{lemma}
+\begin{proof}
+若 \(P\) 只有一项，平坦性说明张量保留 \(A\) 的各个核像短列，所以结果正合。若 \(P\) 有有限个非零项，按最高非零项逐次剥去，所得复形短列逐次分裂；张量后仍是短正合列，用同调长正合列归纳，得到正合性。
+
+一般情形取粗截断 \(P_{\ge m}\)，即低于 \(m\) 的项换成零。它是 \(P\) 的子复形，且因有上界而只有有限个非零项。随着 \(m\) 向负方向移动，\(P\) 是这些子复形的滤过余极限。张量与直和总化都与此余极限交换，而模范畴的滤过余极限正合并与同调交换，见\cref{b4:prop:filtered-colimits-cohomology}。因此 \(P\otimes_RA\) 正合。
+
+若 \(u:A\to B\) 是拟同构，其锥正合。张量锥与张量映射的锥自然同构：在 \(P^p\otimes A[1]\) 分量乘 \((-1)^p\)，恰好把张量微分改成锥的微分。于是张量后的锥正合，得到后一结论。
+\end{proof}
+
+\begin{theorem}\label{b4:thm:derived-tensor}
+设 \(R\) 是环。对有上界的右 \(R\)-模复形 \(X\) 和有上界的左 \(R\)-模复形 \(Y\)，选择逐项投射的有上界替换 \(P\to X\)、\(Q\to Y\)。公式
+\[
+X\otimes_R^{\mathbf L}Y\coloneqq P\otimes_RQ
+\]
+定义双函子
+\[
+-\otimes_R^{\mathbf L}-:
+D^-(\operatorname{Mod}\text{-}R)\times D^-(R\text{-}\operatorname{Mod})
+\longrightarrow D^-(\mathbf{Ab}).
+\]
+它称为\term[daochu-zhangliangji]{导出张量积}[derived tensor product]。也可以只替换一个变量，使用 \(P\otimes_RY\) 或 \(X\otimes_RQ\)；有上界的逐项平坦替换同样可用。
+\end{theorem}
+\begin{proof}
+上一引理分别应用于 \(P\) 和 \(Q\)，说明自然映射
+\[
+P\otimes_RY\longleftarrow P\otimes_RQ\longrightarrow X\otimes_RQ
+\]
+都是拟同构。投射模型中的态射由同伦类表示，张量积保持同伦，所以先在两个投射同伦范畴上得到双函子，再由两侧的投射模型等价下降到所写导出范畴。
+
+若 \(P'\to X\) 是另一有上界逐项平坦替换，则取其投射替换 \(U\to P'\)。\(U\to P'\) 与 \(Q\to Y\) 分别在已平坦替换的另一变量上张量，得到比较拟同构
+\(U\otimes Q\to P'\otimes Q\to P'\otimes Y\)；\(U\) 又是 \(X\) 的投射替换。因此平坦计算与投射计算相同。每个比较都由原替换的映射产生，因而在导出范畴中自然。两变量有上界使每个总次数只涉及有限条对角项，且输出仍有上界。
+\end{proof}
+\symidx{\(X\otimes_R^{\mathbf L}Y\)：导出张量积}
+
+对于非交换环，上式一般只给交换群复形；不能在结果上无说明添一个左 \(R\)-模结构。若 \(X\) 还带与右 \(R\)-作用交换的左 \(S\)-作用，可以固定 \(X\)，仅用左 \(R\)-模投射复形 \(Q\) 替换 \(Y\)，使 \(X\otimes_RQ\) 保留左 \(S\)-作用；若改为替换 \(X\)，就应说明替换如何保留该作用。只在底层右模上任取消解，不能保证附加作用仍逐项存在。模的有上界导出张量积可对照 Weibel\cite[Definition 10.6.1, Lemma 10.6.2, Theorem 10.6.3]{Weibel1994HomologicalAlgebra}。
 
 \subsection{结合律与单位同构}
 \label{b4:subsec:1802:02}
 
-待撰写。
+\begin{proposition}\label{b4:prop:derived-tensor-associativity}
+设 \(R\) 为交换环，\(X,Y,Z\in D^-(R\text{-}\operatorname{Mod})\)。导出张量积有自然同构
+\[
+(X\otimes_R^{\mathbf L}Y)\otimes_R^{\mathbf L}Z
+\simeq X\otimes_R^{\mathbf L}(Y\otimes_R^{\mathbf L}Z),
+\qquad
+R\otimes_R^{\mathbf L}X\simeq X\simeq X\otimes_R^{\mathbf L}R.
+\]
+还有对称同构 \(X\otimes_R^{\mathbf L}Y\simeq Y\otimes_R^{\mathbf L}X\)，在齐次代表上为 \(x\otimes y\mapsto(-1)^{pq}y\otimes x\)，其中 \(x\in X^p,y\in Y^q\)。
+\end{proposition}
+\begin{proof}
+取有上界逐项平坦替换 \(P,Q,U\)。交换环上两个平坦模的张量积平坦，因为它给出的张量函子是两个正合张量函子的复合。故 \(P\otimes_RQ\) 及 \(Q\otimes_RU\) 均逐项平坦、有上界，可以直接用来计算下一次导出张量。
+
+两边都由三重张量总复形表示，齐次纯张量的微分为
+\[
+d(p\otimes q\otimes u)=dp\otimes q\otimes u
++(-1)^{|p|}p\otimes dq\otimes u
++(-1)^{|p|+|q|}p\otimes q\otimes du.
+\]
+普通张量的结合映射保持此公式，给出复形同构；对四个因子，所有结合映射都只改变括号，所以它们的不同复合相同。\(R[0]\) 本身平坦，通常的单位映射逐项给出单位同构。交换两个因子的公式中，微分越过次数 \(p\) 或 \(q\) 时产生的符号正好补偿 \((-1)^{pq}\) 的改变，直接代入便得到复形映射；两次交换的符号是 \((-1)^{2pq}=1\)，故为同构。替换的自然比较使以上同构下降后仍自然。
+\end{proof}
+
+单位结论不需要交换性：对任意环 \(R\)，右模复形 \(X\) 满足 \(X\otimes_R^{\mathbf L}R\simeq X\)，左模复形 \(Y\) 满足 \(R\otimes_R^{\mathbf L}Y\simeq Y\)，此处 \(R\) 带通常的 \((R,R)\)-双模结构。非交换环上的多重张量也有结合映射，但每两个相邻因子必须具有匹配的左右作用，并须核对保留这些作用的替换；上面的交换环命题没有免除这些要求。
 
 \subsection{Tor 与导出张量的同调}
 \label{b4:subsec:1802:03}
 
-待撰写。
+\begin{corollary}\label{b4:cor:tor-derived-tensor}
+设 \(R\) 为环，\(M\) 为右 \(R\)-模，\(N\) 为左 \(R\)-模，二者视作零次复形。则对每个 \(n\ge0\)，有自然同构
+\[
+H^{-n}(M\otimes_R^{\mathbf L}N)\simeq\operatorname{Tor}_n^R(M,N),
+\]
+而正次数同调为零。特别地，零次同调为 \(M\otimes_RN\)。
+\end{corollary}
+\begin{proof}
+把 \(M\) 的投射链消解 \(P_\bullet\to M\) 重编号为 \(P^{-n}=P_n\)，并只替换第一变量。张量复形在 \(-n\) 次的同调正是\cref{b4:thm:tor-balanced}所计算的 \(\operatorname{Tor}_n\)。其复形没有正次数项，零次同调由张量的右正合性识别。
+\end{proof}
+
+例如，设 \(R\) 为交换环，\(a\in R\) 不是零因子。\(R/(a)\) 由 \(R\xrightarrow{a}R\) 的两项自由复形替换，因此对任意 \(R\)-模 \(N\)，
+\[
+R/(a)\otimes_R^{\mathbf L}N\simeq
+\bigl(N\xrightarrow{a}N\bigr),\qquad
+H^{-1}=\{\,n\in N\mid an=0\,\},\quad H^0=N/aN.
+\]
+若 \(a\) 同时零化 \(N\)，微分为零，故在导出范畴中这是 \(N\oplus N[1]\)。若 \(a\) 在 \(N\) 上仍为非零因子，则负次同调消失，此时才可用普通张量积代替。这里 \(a\) 在 \(R\) 上不是零因子的条件用于两项复形确为消解，不能删去后继续套用。

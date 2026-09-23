@@ -5,8 +5,6 @@
 \section{导出 Hom}
 \label{b4:sec:1803}
 
-% TODO: 按以下纲要要点撰写本节。
-
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * RHom 与 Ext
@@ -18,19 +16,195 @@
 \subsection{RHom 与 Ext}
 \label{b4:subsec:1803:01}
 
-待撰写。
+\cref{b4:def:hom-complex}已经定义
+\[
+\operatorname{Hom}_R^n(X,Y)=
+\prod_p\operatorname{Hom}_R(X^p,Y^{p+n}),\qquad
+\delta f=d_Yf-(-1)^nfd_X.
+\]
+零次余圈是复形映射，零次余边是零同伦映射。更一般地，次数 \(n\) 的余圈满足 \(d_Yf=(-1)^nfd_X\)，正好给出 \(X\to Y[n]\) 的复形映射，因此
+\(H^n\operatorname{Hom}_R^\bullet(X,Y)=\operatorname{Hom}_{K(R)}(X,Y[n])\)。把同伦范畴换成导出范畴，也需要修正 Hom 复形。
+
+\begin{theorem}\label{b4:thm:derived-hom}
+设 \(R\) 为环，\(X\) 为有上界的左 \(R\)-模复形，\(Y\) 为有下界的左 \(R\)-模复形。取有上界投射替换 \(P\to X\) 与有下界内射替换 \(Y\to I\)。三个交换群复形
+\[
+\operatorname{Hom}_R^\bullet(P,Y),\qquad
+\operatorname{Hom}_R^\bullet(P,I),\qquad
+\operatorname{Hom}_R^\bullet(X,I)
+\]
+自然拟同构，定义
+\[
+\mathbf R\operatorname{Hom}_R:
+D^-(R\text{-}\operatorname{Mod})^{\mathrm{op}}
+\times D^+(R\text{-}\operatorname{Mod})
+\longrightarrow D^+(\mathbf{Ab}).
+\]
+这称为\term[daochu-Hom]{导出 Hom}[derived Hom]。其同调满足
+\[
+H^n\mathbf R\operatorname{Hom}_R(X,Y)
+\simeq\operatorname{Hom}_{D(R)}(X,Y[n])
+\quad(n\in\mathbb Z).
+\]
+若 \(R\) 交换，所构造的 Hom 复形带自然的 \(R\)-模结构，输出可取在 \(D^+(R\text{-}\operatorname{Mod})\) 中。
+\end{theorem}
+\begin{proof}
+\cref{b4:thm:bounded-projective-model}的比较结论说明，对于任意正合复形 \(A\)，所有 \(P\to A[n]\) 都零同伦，所以 \(\operatorname{Hom}_R^\bullet(P,A)\) 正合。\cref{b4:thm:bounded-injective-model}对偶地说明 \(\operatorname{Hom}_R^\bullet(A,I)\) 正合。因此对 \(Y\to I\) 和 \(P\to X\) 的正合锥施加 Hom，便得到所写的两条拟同构。Hom 与锥相容时使用其定义中的符号，或在每次同调上直接用上述同伦类解释，都会给出同一结论。
+
+投射及内射比较态射在同伦意义下唯一，因此此构造在两个变量上自然，并把拟同构送到同构，从而定义所写双函子。若 \(P^p=0\) 对 \(p>a\)，\(I^j=0\) 对 \(j<b\)，则 \(\operatorname{Hom}^n(P,I)=0\) 对 \(n<b-a\)，所以输出有下界。最后
+\[
+H^n\operatorname{Hom}_R^\bullet(P,I)
+=\operatorname{Hom}_{K(R)}(P,I[n])
+\simeq\operatorname{Hom}_{D(R)}(X,Y[n]),
+\]
+最后一步仍是投射或内射比较结论。交换环时，标量与所有映射及比较相容，故得到 \(R\)-模版本。
+\end{proof}
+\symidx{\(\mathbf R\operatorname{Hom}_R(X,Y)\)：导出 Hom}
+
+对模 \(M,N\) 置于零次，以上公式化为
+\[
+H^n\mathbf R\operatorname{Hom}_R(M,N)=\operatorname{Ext}_R^n(M,N)
+\quad(n\ge0),
+\]
+负次为零，与\cref{b4:thm:derived-ext-identification}一致。把所有 Ext 群单独列出，通常不能恢复导出 Hom 复形；后者还保留它在三角和复合中的相容关系。只替换第二变量时可以允许第一变量无界，只替换第一变量时可以允许第二变量无界；本节的共同有界范围使两种计算可以直接比较。参阅 Weibel\cite[Definition 10.7.2, Theorem 10.7.4, Corollary 10.7.5]{Weibel1994HomologicalAlgebra}。
 
 \subsection{导出 Hom–张量伴随}
 \label{b4:subsec:1803:02}
 
-待撰写。
+普通的 Hom--张量伴随把双线性映射写成一族线性映射。复形版本仍用同一个代入公式，不过必须核对各个次数和微分。
+
+\begin{theorem}\label{b4:thm:derived-hom-tensor-adjunction}
+设 \(R\) 为交换环，\(X,Y\in D^-(R\text{-}\operatorname{Mod})\)，\(Z\in D^+(R\text{-}\operatorname{Mod})\)。存在自然同构
+\[
+\mathbf R\operatorname{Hom}_R(X\otimes_R^{\mathbf L}Y,Z)
+\simeq
+\mathbf R\operatorname{Hom}_R
+\bigl(X,\mathbf R\operatorname{Hom}_R(Y,Z)\bigr).
+\]
+特别地，在零次同调上得到
+\[
+\operatorname{Hom}_{D(R)}(X\otimes_R^{\mathbf L}Y,Z)
+\simeq
+\operatorname{Hom}_{D(R)}
+\bigl(X,\mathbf R\operatorname{Hom}_R(Y,Z)\bigr).
+\]
+\end{theorem}
+\begin{proof}
+取有上界投射替换 \(P\to X\)、\(Q\to Y\)，以及有下界内射替换 \(Z\to I\)。\(P\otimes_RQ\) 是有上界逐项投射复形：交换环上两个投射模的张量是投射模，因为它是两个自由模张量的直和项。故左侧由 \(\operatorname{Hom}^\bullet_R(P\otimes_RQ,I)\) 表示。
+
+内层 \(\mathbf R\operatorname{Hom}_R(Y,Z)\) 由 \(\operatorname{Hom}^\bullet_R(Q,I)\) 表示，而且有下界。外层可只替换第一变量，故右侧由
+\(\operatorname{Hom}^\bullet_R(P,\operatorname{Hom}^\bullet_R(Q,I))\) 表示。逐次定义
+\[
+\Phi(f)(p)(q)=f(p\otimes q).
+\]
+若 \(f\) 的次数为 \(n\)，\(p,q\) 的次数为 \(a,b\)，则值在 \(I^{a+b+n}\)，与两边的次数规定一致。展开右侧的微分得到
+\[
+d_I f(p\otimes q)
+-(-1)^{a+n}f(p\otimes d_Qq)
+-(-1)^n f(d_Pp\otimes q),
+\]
+它正是左侧微分后再施加 \(\Phi\) 的结果。普通张量泛性质逐项给出逆映射；Hom 中的积允许对所有次数同时指定映射，所以这个对应没有有限生成假设。它是自然的复形同构。取零次同调，并用\cref{b4:thm:derived-hom}，得到第二个公式。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:derived-extension-restriction}
+设 \(f:R\to S\) 为含幺环同态，不要求交换。对有上界的左 \(R\)-模复形 \(X\) 与有下界的左 \(S\)-模复形 \(Y\)，有自然同构
+\[
+\operatorname{Hom}_{D(S)}(S\otimes_R^{\mathbf L}X,Y)
+\simeq\operatorname{Hom}_{D(R)}(X,\operatorname{Res}_R^S Y).
+\]
+其中导出标量扩张由 \(S\otimes_RP\) 计算，\(P\to X\) 为有上界投射替换，且 \(S\) 带左 \(S\)、右 \(R\) 的通常双模结构。
+\end{proposition}
+\begin{proof}
+\(S\otimes_RP\) 逐项是投射左 \(S\)-模，因为标量扩张把自由模送到自由模并保持直和项。普通伴随逐项给出复形同构
+\[
+\operatorname{Hom}_S^\bullet(S\otimes_RP,Y)
+\simeq\operatorname{Hom}_R^\bullet(P,\operatorname{Res}_R^S Y),
+\]
+映射为 \(g\mapsto(p\mapsto g(1\otimes p))\)，逆为 \(h\mapsto(s\otimes p\mapsto sh(p))\)。二者保持 Hom 微分。投射比较把两边的零次同调分别识别为所需导出态射群。
+\end{proof}
+
+这一伴随不要求 \(S\) 在 \(R\) 上平坦，因为已经替换 \(X\)。忘却函子本来正合，不另取导出；它与导出标量扩张的关系可对照 Weibel\cite[Theorem 10.7.6]{Weibel1994HomologicalAlgebra}，该书在此使用交换环版本。
 
 \subsection{基变换的充分条件与反例}
 \label{b4:subsec:1803:03}
 
-待撰写。
+基变换有两种不同的问题。一个是把 \(R\) 换成 \(S\) 后，普通张量是否已能计算导出张量；另一个是张量能否穿过 Hom。前者由平坦性控制，后者还涉及有限生成条件，不能只核对其中一项。
+
+\begin{proposition}\label{b4:prop:flat-base-change-hom}
+设 \(R\to S\) 是交换环同态，\(S\) 作为 \(R\)-模平坦。设 \(X\) 同构于有限生成投射 \(R\)-模的有上界复形 \(P\)，\(Y\) 为有下界的 \(R\)-模复形。则自然映射
+\[
+S\otimes_R\mathbf R\operatorname{Hom}_R(X,Y)
+\longrightarrow
+\mathbf R\operatorname{Hom}_S(S\otimes_RX,S\otimes_RY)
+\]
+是同构。左侧及右侧变量中的普通张量均已代表导出标量扩张。
+\end{proposition}
+\begin{proof}
+平坦性使 \(S\otimes_R-\) 保持拟同构，故可用 \(P\) 替换 \(X\)。对有限生成投射模 \(P^i\)，自然映射
+\[
+S\otimes_R\operatorname{Hom}_R(P^i,Y^j)
+\longrightarrow
+\operatorname{Hom}_S(S\otimes_RP^i,S\otimes_RY^j)
+\]
+为同构：有限自由模时是有限个副本的恒等识别，直和项给出投射情形。固定总次数 \(n=j-i\)，有上界的 \(P\) 与有下界的 \(Y\) 只留下有限多个非零位置，所以张量可以与该次数中的 Hom 积交换。以上逐项同构与微分相容，给出复形同构。\(S\otimes_RP\) 逐项投射，故其 Hom 计算右侧。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:derived-base-change-perfect}
+设 \(R\to S\) 是任意交换环同态，\(X\) 同构于有限生成投射 \(R\)-模的有界复形，\(Y\) 为有界的 \(R\)-模复形。则存在自然同构
+\[
+S\otimes_R^{\mathbf L}\mathbf R\operatorname{Hom}_R(X,Y)
+\simeq
+\mathbf R\operatorname{Hom}_S
+\bigl(S\otimes_R^{\mathbf L}X,S\otimes_R^{\mathbf L}Y\bigr).
+\]
+\end{proposition}
+\begin{proof}
+用给定的有界有限生成投射复形 \(P\) 表示 \(X\)，取有上界投射替换 \(Q\to Y\)。由于 \(P\) 有界，\(\operatorname{Hom}_R^\bullet(P,Q)\) 有上界，每项是有限个投射模的直和：\(\operatorname{Hom}_R(P^i,Q^j)\) 是有限个 \(Q^j\) 的直和项。因此它既表示 \(\mathbf R\operatorname{Hom}_R(X,Y)\)，又可直接计算左侧的导出张量。
+
+\(S\otimes_RP\) 仍为有界投射复形，故右侧可由
+\(\operatorname{Hom}_S^\bullet(S\otimes_RP,S\otimes_RQ)\) 计算。有限生成投射模的逐项 Hom--基变换同构不需要平坦性；此处每次只有有限个项，把它们合起来便得到所需复形同构。虽然 \(S\otimes_RQ\) 可能没有下界，\(S\otimes_RP\) 是有界投射复形，故\cref{b4:thm:derived-hom}证明中第一变量的计算仍适用。
+\end{proof}
+
+平坦性不能在第一个命题中直接删去。取 \(R=\mathbb Z\)、\(S=\mathbb Z/2\)、\(M=\mathbb Z/2\)、\(N=\mathbb Z\)。则
+\[
+S\otimes_{\mathbb Z}\operatorname{Hom}_{\mathbb Z}(M,N)=0,
+\qquad
+\operatorname{Hom}_S(S\otimes M,S\otimes N)=S.
+\]
+在一次 Ext 上，左侧 \(S\otimes\operatorname{Ext}_{\mathbb Z}^1(M,N)=S\)，右侧 \(\operatorname{Ext}_S^1(S,S)=0\)。这些计算已显示普通基变换不能直接移入 Hom 或 Ext。对前一命题中的全复形比较，用自由消解构造的 Hom 模型，\(\mathbf R\operatorname{Hom}_{\mathbb Z}(S,\mathbb Z)\) 由零、一次的 \(\mathbb Z\xrightarrow{-2}\mathbb Z\) 表示；对这个模型作普通张量，得到两次均为 \(S\)、微分为零的复形，而右侧 \(\mathbf R\operatorname{Hom}_S(S,S)=S[0]\)。失配出现在一次上同调。由于普通张量不保持拟同构，离开平坦假设后，左侧若不指定模型，甚至不是导出范畴上的良定义运算；改成导出张量才能消除这一问题。
+
+\ProseParagraphBreak
+有限生成条件也有实质作用。即使 \(\mathbb Q\) 在 \(\mathbb Z\) 上平坦，对 \(P=\bigoplus_{j\ge1}\mathbb Z\)、\(N=\mathbb Z\)，比较映射为
+\[
+\mathbb Q\otimes_{\mathbb Z}\prod_{j\ge1}\mathbb Z
+\longrightarrow\prod_{j\ge1}\mathbb Q.
+\]
+左侧像中的序列有一个共同分母，右侧的 \((1/j!)_{j\ge1}\) 没有共同分母，所以不满。无限自由虽然投射，仍不能把张量从无限 Hom 积外直接搬入。
 
 \subsection{双数代数上的周期消解与非平坦基变换}
 \label{b4:subsec:1803:04}
 
-待撰写。
+\begin{example}\label{b4:exm:dual-numbers-derived-base-change}
+设 \(k\) 是域，\(R=k[\varepsilon]/(\varepsilon^2)\)，\(k=R/(\varepsilon)\)。取每项为 \(R\) 的有上界自由复形
+\[
+P=\bigl(\cdots\xrightarrow{\varepsilon}R
+\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R\bigr),
+\qquad P^i=R\ (i\le0),
+\]
+并用零次的商映射增广到 \(k\)。在 \(R\) 中，乘 \(\varepsilon\) 的核与像都是 \((\varepsilon)\)，故增广正合，\(P\to k\) 是自由替换。与 \(k\) 张量后微分全为零，因此
+\[
+H^{-n}(k\otimes_R^{\mathbf L}k)=k\quad(n\ge0),\qquad
+k\otimes_Rk=k.
+\]
+普通张量只保留零次项，所有负次同调均被遗漏。这同时说明 \(k\) 在 \(R\) 上不平坦，且投射维数无限；这里是在导出对象上重新观察\cref{b4:exm:infinite-dimension-dual-numbers}的同一个周期消解。
+
+\ProseParagraphBreak
+令 \(f:R\to k\)。限制标量本来正合，而再作导出标量扩张会得到 \(k\otimes_R^{\mathbf L}k\)，不是恒等对象 \(k\)。因此“先忘却，再扩张就回到原对象”即使对商环上的自由秩一模也不成立。伴随的余单位确实给出
+\(k\otimes_R^{\mathbf L}k\to k\)，在上述代表中它保留零次项、把负次数送到零；它的存在不表示它是同构。
+
+\ProseParagraphBreak
+同一个 \(P\) 计算导出 Hom 时，\(\operatorname{Hom}_R(P,k)\) 的微分也全为零，于是
+\[
+\operatorname{Ext}_R^n(k,k)=k\quad(n\ge0).
+\]
+张量的额外同调向负次数延伸，Hom 的额外同调向正次数延伸，二者都在记录未能用有限长自由消解代替 \(k\) 的事实。把 \(R\) 直接换成 \(k\) 后，\(k\) 成为自由模，高次 \(\operatorname{Tor}^k\) 和 \(\operatorname{Ext}_k\) 全部消失；这正是普通非平坦基变换丢失的信息。
+\end{example}

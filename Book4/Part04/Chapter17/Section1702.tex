@@ -5,9 +5,8 @@
 \section{屋顶与分式}
 \label{b4:sec:1702}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要内容（保留纲要核验项目）：
 %
 % * 屋顶图表示态射
 % * 适当的分式演算
@@ -17,14 +16,74 @@
 \subsection{态射的屋顶图表示}
 \label{b4:subsec:1702:01}
 
-待撰写。
+\begin{definition}\label{b4:def:derived-roof}
+设 \(\mathcal A\) 为交换范畴。导出范畴中的一个\term[wuding]{屋顶}[roof] 是 \(K(\mathcal A)\) 中的图式
+\[
+ X\xleftarrow{s}U\xrightarrow{f}Y,\qquad s\text{ 为拟同构},
+\]
+表示 \(Q(f)Q(s)^{-1}:X\to Y\)。若存在拟同构 \(a:V\to U\)、\(b:V\to U'\)，使 \(sa=s'b\)、\(fa=f'b\)，则称两个屋顶有共同细化；所有等式都在同伦范畴中理解。
+\end{definition}
+
+在模消解的典型例子中，\(P\to M\) 是左分母，而 \(P\to N[n]\) 记录一个 Ext 余圈。屋顶因此不是额外的画图规则，而是“先换成可计算的模型，再作映射”的正式表达。接下来证明共同细化足以判别相等。
 
 \subsection{分式演算}
 \label{b4:subsec:1702:02}
 
-待撰写。
+\begin{lemma}\label{b4:lem:quasi-ore}
+设 \(\mathcal A\) 为交换范畴。\(K(\mathcal A)\) 中的拟同构包含恒等态射，对复合和平移封闭，并满足二取三性质。它们还满足以下条件及箭头倒向的版本。
+\begin{enumerate}
+\item 给定 \(f:X\to Y\) 和拟同构 \(s:Z\to Y\)，存在拟同构 \(t:W\to X\) 和 \(g:W\to Z\)，使 \(ft=sg\)。
+\item 若拟同构 \(s:Y\to Y'\) 满足 \(sf=sg\)，其中 \(f,g:X\to Y\)，则存在拟同构 \(t:X'\to X\)，使 \(ft=gt\)。
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+前几项直接对各次上同调核对。对第一项，补全 \(Z\xrightarrow{s}Y\to C\to Z[1]\)。因 \(s\) 为拟同构，\(C\) 无上同调。再把复合 \(X\xrightarrow{f}Y\to C\) 补成旋转后的好三角 \(W\xrightarrow{t}X\to C\to W[1]\)。长正合列说明 \(t\) 是拟同构；对这两个三角使用 (TR3)，即可得到 \(g\) 及 \(ft=sg\)。
+
+对第二项令 \(h=f-g\)。由 \(sh=0\) 和三角的 Hom 正合性，\(h\) 经无上同调对象 \(\operatorname{Cone}(s)[-1]\) 分解为 \(X\xrightarrow{a}C[-1]\to Y\)。补全 \(a\)，得到三角 \(X'\xrightarrow{t}X\xrightarrow{a}C[-1]\to X'[1]\)。\(t\) 是拟同构，且 \(ht=0\)。把整个论证放在反三角范畴中，得到两个倒向版本；其中同样只用无上同调锥、(TR3) 和 Hom 正合性。
+\end{proof}
+
+\begin{theorem}\label{b4:thm:roof-calculus}
+设 \(\mathcal A\) 为交换范畴，并采用\subsecref{b4:subsec:1701:03}的集合大小约定。\(D(\mathcal A)\) 中每个态射可由屋顶表示，两个屋顶表示同一态射当且仅当它们有共同细化。特别地，\(Q(f)=Q(g)\) 当且仅当存在拟同构 \(t\) 使 \(ft=gt\)；也可用后复合的拟同构检验。
+\end{theorem}
+\begin{proof}
+先用共同细化定义屋顶的等价。自反、对称显然。对传递性，把两次细化到共同中间屋顶的分母用\cref{b4:lem:quasi-ore}第一项再作共同细化，二取三保证新添的箭头仍为拟同构；复合之后，左右两条边同时相等。这证明它确为等价关系。
+
+复合 \((s,f):X\to Y\) 与 \((t,g):Y\to Z\) 时，对 \(f:U\to Y\) 和 \(t:V\to Y\) 取 \(a:W\to U\)、\(b:W\to V\)，其中 \(a\) 拟同构且 \(fa=tb\)，定义复合为 \((sa,gb)\)。若另一选择为 \((a',b')\)，先共同细化拟同构 \(a,a'\)，得到 \(ac=a'c'\)。于是 \(tbc=tb'c'\)，用引理第二项再前复合一个拟同构，便使 \(bc=b'c'\) 也成立。因此两复合屋顶等价。更换原屋顶的代表时，把其共同细化与这一计算合并，同样得到等价的复合。
+
+三重屋顶的两种括号分别使用有限个这样的交换方块。先将它们涉及的分母逐一共同细化，再用消去条件使所有指向同一对象的两条有限路径相等，就得到一个同时计算两种括号的屋顶；其左边是各分母的复合，右边是各分子的复合。因此结合律归结为 \(K(\mathcal A)\) 的结合律。这里每次只处理三重复合中的有限个方块，不涉及无限图式的同时提升。恒等屋顶为 \((1,1)\)，单位律由取恒等交换方块得到。
+
+函子 \(Q\) 把 \(f\) 送到 \((1,f)\)。若 \(s\) 拟同构，\((s,1)\) 是 \(Q(s)\) 的逆。任意倒转拟同构的函子必须把屋顶送到 \(F(f)F(s)^{-1}\)；共同细化保证此式与代表无关，复合公式保证它保持复合。所以屋顶范畴满足局部化泛性质，正是 \(D(\mathcal A)\)。最后把两个普通态射看作分母恒等的屋顶，共同细化条件便是所写的相等判据；倒向版本用引理的对偶形式得到。
+\end{proof}
+
+两个屋顶相加时，先把左分母通分为同一个 \(s\)，再令 \((s,f)+(s,g)=(s,f+g)\)。进一步细化与加法相容，故良定义；复合公式及原来的双线性给出新复合的双线性。零对象和有限双积由 \(K(\mathcal A)\) 保留下来。因此 \(D(\mathcal A)\) 是加性范畴，\(Q\) 为加性函子。屋顶演算的一般形式可参阅 Weibel\cite[Theorem 10.3.7; Corollaries 10.3.8--10.3.11]{Weibel1994HomologicalAlgebra}。
 
 \subsection{从同伦范畴到导出范畴}
 \label{b4:subsec:1702:03}
 
-待撰写。
+\begin{theorem}\label{b4:thm:derived-triangulated}
+设 \(\mathcal A\) 为交换范畴，并采用上述集合大小约定。在 \(D(\mathcal A)\) 中，以平移诱导的自等价为平移，以同构于 \(K(\mathcal A)\) 中好三角之像的三角为好三角，则 \(D(\mathcal A)\) 是三角范畴，\(Q\) 保持平移和好三角。
+\end{theorem}
+\begin{proof}
+平移保持拟同构，所以经局部化诱导自等价。(TR1) 中的恒等三角和对同构封闭性已成立。任意屋顶 \(X\xleftarrow{s}U\xrightarrow{f}Y\) 的左箭头在 \(D\) 中可逆，因此 \(f\) 的锥三角运送后给出该屋顶的好三角。(TR2) 由 \(K\) 中的旋转直接得到。
+
+核对 (TR3) 时，先把两个三角换成 \(K\) 中标准三角的像，首箭头记为 \(f:X\to Y\)、\(f':X'\to Y'\)。给定导出范畴中的交换方块 \((\alpha,\beta)\)，分别取屋顶
+\(X\xleftarrow{s}S\xrightarrow{a}X'\)、\(Y\xleftarrow{t}T\xrightarrow{b}Y'\)。沿拟同构 \(t\) 通分 \(fs\)，得到拟同构 \(u:U\to S\) 和 \(k:U\to T\)，满足 \(t k=fsu\)。方块在 \(D\) 中交换，故 \(Q(f'au)=Q(bk)\)。由屋顶相等判据，再取拟同构 \(v:V\to U\)，使 \(f'auv=bkv\) 在 \(K\) 中成立。
+
+现在标准三角的首箭头 \(kv:V\to T\) 同时映到 \(f\) 和 \(f'\) 的三角：前一对分量为 \((suv,t)\)，后一对为 \((auv,b)\)。在 \(K\) 中分别用 (TR3) 补全。前一补全的第三个分量是拟同构，因为前两个分量是拟同构，对各次上同调长正合列使用五引理即可。因此这一三角态射在 \(D\) 中成为同构；先取其逆，再复合后一三角态射，就得到原方块的补全。这证明 (TR3)，并使\cref{b4:lem:pretriangle-hom}现在也可在 \(D\) 中使用。
+
+对 (TR4)，设 \(\alpha:X\to Y\)、\(\beta:Y\to Z\) 为两个导出态射。先取 \(\beta\) 的屋顶 \(Y\xleftarrow{t}T\to Z\)，再取 \(\alpha\) 的屋顶 \(X\xleftarrow{s}S\to Y\)，并沿 \(t\) 通分右边。得到 \(K\) 中一串 \(U\to T\to Z\)，以及拟同构 \(U\to X\)、\(T\to Y\)，其局部化像正好代表原来的可复合对。在 \(K\) 中对此串应用已证的显式八面体，再施加 \(Q\)，四个面仍为好三角，所有相容等式仍成立。原先若指定了另外三个好三角，可用 (TR3) 和\cref{b4:lem:pretriangle-hom}将其与所得三个三角同构，并运送八面体的各条箭头。这便满足针对任意指定三角的 (TR4)。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:derived-short-exact-triangle}
+设 \(\mathcal A\) 为交换范畴，\(0\to A\xrightarrow{i}B\xrightarrow{q}C\to0\) 是复形短正合列，不要求逐次分裂。令 \(r:\operatorname{Cone}(i)\to C\) 为 \(r(b,a)=q(b)\)。则 \(r\) 是拟同构，且
+\[
+ A\xrightarrow{i}B\xrightarrow{q}C\xrightarrow{\delta}A[1],
+ \qquad\delta=Q(p_i)Q(r)^{-1},
+\]
+是 \(D(\mathcal A)\) 中的好三角。
+\end{proposition}
+\begin{proof}
+\(r\) 逐次满，其核自然同构于 \(\operatorname{Cone}(1_A)\)：通过 \(i\) 识别 \(\ker q\) 后，微分就是恒等映射的锥微分。该核可缩，故短正合列的长正合列说明 \(r\) 拟同构。把 \(i\) 的锥三角经 \(Q(r)\) 运送即可。
+\end{proof}
+
+最后的符号采用\cref{b4:prop:degreewise-split-triangle}的正投影约定；在逐次分裂表示中仍得到 \(\delta=-t\)。此外，\(D\) 中态射为同构，当且仅当其锥为零：用三角的 Hom 正合列，锥为零使该态射对每个 Hom 群诱导同构，从而可逆；反向由三角上同调或同样的 Hom 列得到。对原来的复形映射，这恰好恢复拟同构判据。
