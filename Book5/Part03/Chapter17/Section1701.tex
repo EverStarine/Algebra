@@ -1,13 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 17.1 Weyl 群
-% 纲要位置：计划纲要.md，第 3607 行。
+% 纲要位置：工作记录/计划纲要.md，第 4258 行。
 
 \section{Weyl 群}
 \label{b5:sec:1701}
 
-% TODO: 按以下纲要要点撰写本节。
+从单个根反射走向它们生成的群，需要同时研究反射乘积和正根符号。交换引理将把最短表达、Weyl 室及支配代表联系起来。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * 简单反射
 % * Weyl 室与长度
@@ -17,14 +19,141 @@
 \subsection{简单反射}
 \label{b5:subsec:1701:01}
 
-待撰写。
+\begin{definition}\label{b5:def:weyl-group}
+设 \(E\) 为有限维实内积空间，\(\Phi\subseteq E\) 为有限约化结晶根系，\(s_\alpha\) 为根 \(\alpha\) 对应的正交反射。由这些反射生成的正交变换群称为 \(\Phi\) 的\term{Weyl 群}[Weyl group]，记为 \(W\)。固定简单根基
+\(\Delta=\{\alpha_1,\ldots,\alpha_r\}\) 后，记 \(s_i=s_{\alpha_i}\)。
+\end{definition}
+
+因为 \(W\) 置换有限集合 \(\Phi\)，而 \(\Phi\) 生成 \(E\)，故这个置换作用忠实，\(W\) 是有限群。\cref{b5:prop:simple-reflection-positive}还说明它由简单反射生成：每个根写成 \(w\alpha_i\)，其中 \(w\) 是简单反射的乘积，则
+\(s_{w\alpha_i}=ws_iw^{-1}\)。
+这里得到的是生成元；反射之间的完整关系尚未作出断言。
+
+\begin{lemma}[删去一个反射]\label{b5:lem:weyl-exchange}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，选定正根集合及其简单根基 \(\{\alpha_1,\ldots,\alpha_r\}\)，记 \(s_i=s_{\alpha_i}\) 为相应简单反射。设
+\(w=s_{i_1}\cdots s_{i_m}\)。若 \(w\alpha_j\) 为负根，则
+\(ws_j\) 可由所列乘积删去某一个因子得到。
+\end{lemma}
+\begin{proof}
+从右向左依次把各反射作用于 \(\alpha_j\)。它起初为正，最终为负，故某一步首次把正根变成负根。
+简单反射只把自己的简单根变为负根，因此存在 \(k\)，使
+\[
+v\alpha_j=\alpha_{i_k},\qquad
+v=s_{i_{k+1}}\cdots s_{i_m}.
+\]
+反射的共轭公式给出 \(vs_jv^{-1}=s_{i_k}\)，故
+\[
+ws_j
+=s_{i_1}\cdots s_{i_{k-1}}s_{i_k}vs_j
+=s_{i_1}\cdots s_{i_{k-1}}v.
+\]
+这正是删去第 \(k\) 个因子的乘积。
+\end{proof}
 
 \subsection{Weyl 室与长度}
 \label{b5:subsec:1701:02}
 
-待撰写。
+全部根超平面
+\(H_\alpha=\Bigl\{\,x\in E\mid(x,\alpha)=0\,\Bigr\}\)
+把其补集分成若干连通分支，称为\term{Weyl 室}[Weyl chamber]。
+选定简单根所对应的基本室为
+\[
+C=\Bigl\{\,x\in E\mid(x,\alpha_i)>0\text{ 对所有 }i\,\Bigr\}.
+\]
+它确是一个连通分支：正根为简单根的非负整数和，所以 \(C\) 中所有正根的值都为正；它又是若干开半空间的交，因而凸且连通。任何不穿过根超平面的连续路径都不能改变这些符号。
+
+\begin{theorem}\label{b5:thm:weyl-chambers-length}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(E\) 为实内积空间，\(W\) 为其 Weyl 群。选定正根集合 \(\Phi^+\) 及简单根基 \(\{\alpha_1,\ldots,\alpha_r\}\)，令 \(C=\{v\in E\mid(v,\alpha_i)>0\text{ 对所有 }i\}\) 为基本 Weyl 室，\(\overline C\) 为其闭包。对 \(w\in W\)，令 \(\ell(w)\) 为其最短简单反射乘积的因子数。则
+\begin{equation}\label{b5:eq:weyl-length-inversions}
+\ell(w)=\#\{\,\alpha\in\Phi^+\mid w\alpha\in-\Phi^+\,\}.
+\end{equation}
+此外，\(W\) 在 Weyl 室上单纯传递，每个 \(W\)-轨道与闭基本室
+\(\overline C\) 相交于唯一一点。
+\end{theorem}
+\begin{proof}
+将右边记为 \(N(w)\)。因 \(s_i\) 置换除 \(\alpha_i\) 外的正根，有
+\[
+N(ws_i)=
+\begin{cases}
+N(w)+1,&w\alpha_i>0,\\
+N(w)-1,&w\alpha_i<0.
+\end{cases}
+\]
+对一个最短表达 \(w=us_i\)，其前缀也是最短表达。若 \(u\alpha_i<0\)，\cref{b5:lem:weyl-exchange}会把 \(us_i\) 写成比当前表达少两个因子的乘积，矛盾。因此 \(u\alpha_i>0\)，按长度归纳得到 \(N(w)=\ell(w)\)。
+
+取 \(c\in C\)。对任意 \(x\in E\)，在有限轨道 \(Wx\) 中选取与 \(c\) 内积最大的 \(y\)。若 \((y,\alpha_i)<0\)，则
+\[
+(s_i y,c)-(y,c)
+=-\frac{2(y,\alpha_i)(\alpha_i,c)}{(\alpha_i,\alpha_i)}>0,
+\]
+矛盾。所以 \(y\in\overline C\)；若 \(x\) 不在任何根超平面上，则 \(y\in C\)。这说明各室均为某个 \(wC\)。
+若 \(wC=C\)，则 \(w\) 保持正根，故 \(N(w)=0\)，从而 \(w=1\)。
+
+还要处理闭室的边界。若 \(w=s_{i_1}\cdots s_{i_m}\) 最短，则每个
+\(\beta_k=s_{i_1}\cdots s_{i_{k-1}}\alpha_{i_k}\) 为正根；否则交换引理使相应前缀变短。对任意支配向量 \(\mu\in\overline C\)，望远镜求和给出
+\begin{equation}\label{b5:eq:dominant-weyl-difference}
+\mu-w\mu
+=\sum_{k=1}^m
+\frac{2(\mu,\alpha_{i_k})}{(\alpha_{i_k},\alpha_{i_k})}\,\beta_k.
+\end{equation}
+所以 \(\mu-w\mu\) 是简单根的非负实线性组合。若 \(w\mu\) 也支配，反过来用 \(w^{-1}\)，则 \(w\mu-\mu\) 也是这样的组合。简单根线性无关，迫使二者都为零。因此闭室中的代表唯一。
+\end{proof}
+
+在 \(A_{n-1}\) 的标准坐标中，\(W=S_n\) 置换坐标；一个基本室由
+\(x_1>x_2>\cdots>x_n\)、\(\sum x_i=0\) 给出。
+长度公式便成为排列的逆序数公式。坐标相等时，向量落在室的边界上，其稳定子群可以非平凡，这与室内部的单纯传递性并不冲突。
 
 \subsection{权格和根格}
 \label{b5:subsec:1701:03}
 
-待撰写。
+\begin{definition}\label{b5:def:weight-lattice}
+设 \(E\) 为有限维实内积空间，\(\Phi\subseteq E\) 为有限约化结晶根系，固定简单根基 \(\{\alpha_1,\ldots,\alpha_r\}\)，记 \(\overline C=\{v\in E\mid(v,\alpha_i)\ge0\text{ 对所有 }i\}\) 为闭基本室。
+令 \(\alpha^\vee=2\alpha/(\alpha,\alpha)\)，并记
+\(\langle\lambda,\alpha^\vee\rangle=2(\lambda,\alpha)/(\alpha,\alpha)\)。
+两个格
+\[
+Q=\sum_i\mathbb Z\alpha_i,\qquad
+P=\Bigl\{\,\lambda\in E\mid
+\langle\lambda,\alpha^\vee\rangle\in\mathbb Z
+\text{ 对所有 }\alpha\in\Phi\,\Bigr\}
+\]
+分别称为\term{根格}[root lattice]和\term{权格}[weight lattice]。
+满足 \(\langle\omega_i,\alpha_j^\vee\rangle=\delta_{ij}\) 的向量
+\(\omega_i\) 称为\term{基本权}[fundamental weight]。
+属于 \(P\cap\overline C\) 的向量称为\term{支配整权}[dominant integral weight]，其集合记为 \(P^+\)。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:weight-fundamental-basis}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(\{\alpha_1,\ldots,\alpha_r\}\) 为简单根基，\(\omega_i\) 为相应基本权，即 \(\langle\omega_i,\alpha_j^\vee\rangle=\delta_{ij}\)。记 \(P\) 为权格，\(Q\) 为根格，\(P^+\) 为支配整权集合。则
+\[
+P=\bigoplus_i\mathbb Z\omega_i,\qquad
+P^+=\sum_i\mathbb Z_{\geq0}\omega_i,\qquad
+Q\subseteq P,
+\]
+且 \(P/Q\) 有限。检验一个向量是否属于 \(P\)，只须检验它与简单余根的配对是否全为整数。
+\end{proposition}
+\begin{proof}
+余根集合本身也是根系：反射与原根系相同，结晶整数交换了原来的两个根参数。
+每个正根的余根都是简单余根的非负实组合。若一个简单余根是两个正余根之和，比较在简单余根基下的非负实系数，两个加数都只能在该简单余根的射线上；约化性使它们都等于该简单余根，矛盾。
+因此全部简单余根都是余根系的简单根；它们已有 \(r\) 个，由\cref{b5:thm:simple-roots}，正好组成余根系的简单根基。
+故每个余根都是简单余根的整数和，检验简化随之成立。
+基本权是简单余根的对偶基，所以所列两种展开立即成立。结晶条件给出 \(Q\subseteq P\)。
+把简单根写成基本权的整数线性组合，所得矩阵可逆，故其像在 \(\mathbb Z^r\) 中具有有限指数；例如伴随矩阵恒等式说明行列式的绝对值乘每个基本权都落在 \(Q\) 中。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:weyl-dominant-order}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(\{\alpha_1,\ldots,\alpha_r\}\) 为所选简单根基，\(W\) 为 Weyl 群，\(P\) 为权格，\(P^+\) 为支配整权集合。每个 \(\mu\in P\) 的 \(W\) 轨道都有唯一支配整权。若 \(\mu\in P^+\)、\(w\in W\)，则
+\(\mu-w\mu\in\sum_i\mathbb Z_{\geq0}\alpha_i\)。
+\end{proposition}
+\begin{proof}
+反射公式说明 \(W\) 保持 \(P\)，故闭室代表仍为整权。存在唯一性已经由\cref{b5:thm:weyl-chambers-length}证明。公式\eqref{b5:eq:dominant-weyl-difference}中的系数此时都是非负整数，而 \(\beta_k\) 为正根，故给出后一结论。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:rho-coroot}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(\Phi^+\) 为所选正根集合，\(\{\alpha_1,\ldots,\alpha_r\}\) 为相应简单根基，\(\omega_i\) 为基本权，\(\alpha_i^\vee\) 为简单余根。令 \(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)。则
+\(\rho=\sum_i\omega_i\)，特别地
+\(\langle\rho,\alpha_i^\vee\rangle=1\)。
+\end{proposition}
+\begin{proof}
+\(s_i\) 置换除 \(\alpha_i\) 外的正根，故 \(s_i\rho=\rho-\alpha_i\)。
+与反射公式比较便得每个配对等于 \(1\)，再用基本权基展开。
+\end{proof}

@@ -1,30 +1,133 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 3.3 诱导特征标
-% 纲要位置：计划纲要.md，第 3152 行。
+% 纲要位置：工作记录/计划纲要.md，第 3803 行。
+% 纲要细目（写作范围）：
+% * 诱导特征标公式
+% * 置换特征标
+% * 从子群构造不可约表示
+
 
 \section{诱导特征标}
 \label{b5:sec:0303}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 诱导特征标公式
-% * 置换特征标
-% * 从子群构造不可约表示
-%
+陪集模型不仅能写出矩阵，也能直接求迹。一个群元素把不同陪集上的分量互相交换时，这些分量对迹没有贡献；只有固定陪集才留下对角块。以下涉及特征标内积与不可约分解时均在复数域上工作。
 
 \subsection{诱导特征标公式}
 \label{b5:subsec:0303:01}
 
-待撰写。
+\begin{theorem}[诱导特征标公式]\label{b5:thm:induced-character}
+设 \(G\) 为有限群，\(H\le G\)，\(W\) 为有限维复 \(H\)-表示，特征标为 \(\psi\)。对左陪集 \(G/H\) 的任一代表集 \(T\)，\(\operatorname{Ind}_H^G W\) 的特征标满足
+\begin{align}
+ (\operatorname{Ind}_H^G\psi)(g)
+ &=\sum_{\substack{t\in T\\t^{-1}gt\in H}}\psi(t^{-1}gt)
+ \label{b5:eq:induced-character-cosets}\\
+ &=\frac1{|H|}\sum_{\substack{x\in G\\x^{-1}gx\in H}}\psi(x^{-1}gx),
+ \qquad g\in G.
+ \label{b5:eq:induced-character-all}
+\end{align}
+\end{theorem}
+\begin{proof}
+由\cref{b5:prop:induced-coset-model}，\(g\) 把第 \(t\) 个分量送到第 \(t'\) 个分量，其中 \(gt=t'h\)。若 \(t'\ne t\)，该块不在对角线上，对迹贡献为零。若 \(t'=t\)，则 \(h=t^{-1}gt\in H\)，其对角块就是 \(h\) 在 \(W\) 上的作用，迹为 \(\psi(t^{-1}gt)\)。逐块相加得到第一式。
+
+将 \(t\) 换成同一左陪集中的 \(th\) 后，共轭元素变成 \(h^{-1}t^{-1}gth\)。条件是否属于 \(H\) 不变，而 \(\psi\) 是 \(H\) 上的类函数，所以函数值不变。对整个群求和时，每个左陪集恰有 \(|H|\) 个元素，除以 \(|H|\) 即得第二式。
+\end{proof}
+
+第一式的逐块求迹论证在任意域上也成立。第二式含有除以 \(|H|\) 的运算，在特征整除 \(|H|\) 时不能直接作为域内公式使用。本节固定复数域，因而没有这一障碍。其标准形式可对照 Etingof 等人的 Theorem 5.9.1 及 Remark 5.9.2\cite[Section 5.9, pp. 106--107]{EtingofEtAl2011RepresentationTheory}；该书使用右陪集函数模型，把代表元取逆便得到这里的方向。
+
+\ProseParagraphBreak
+\eqref{b5:eq:induced-character-all}也适用于任意复类函数 \(\alpha:H\rightarrow\mathbb C\)，并定义一个线性映射 \(\operatorname{Ind}_H^G\) 到 \(G\) 的类函数空间。把 \(g\) 换成 \(ygy^{-1}\)，再把求和变量 \(x\) 换成 \(yx\)，可见所得函数对共轭不变。对任意 \(G\) 上的类函数 \(\beta\)，有限求和换序给出
+\begin{align*}
+ \langle\operatorname{Ind}_H^G\alpha,\beta\rangle_G
+ &=\frac1{|G||H|}\sum_{x\in G}\sum_{h\in H}
+       \overline{\alpha(h)}\,\beta(xhx^{-1})\\
+ &=\frac1{|H|}\sum_{h\in H}\overline{\alpha(h)}\,\beta(h)
+ =\langle\alpha,\operatorname{Res}_H^G\beta\rangle_H.
+\end{align*}
+这证明了\eqref{b5:eq:frobenius-character}对所有复类函数仍成立，不必先把它们写成特征标的线性组合。
+
+\ProseParagraphBreak
+公式还给出两个快速检查：若 \(g\) 不共轭于 \(H\) 中任何元素，则诱导特征标在 \(g\) 处为零；在 \(g=1\) 处，它的值为 \([G:H]\psi(1)\)，恰是诱导空间的维数。
 
 \subsection{置换特征标}
 \label{b5:subsec:0303:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:permutation-character}
+设有限群 \(G\) 作用在有限集 \(X\) 上，\(\mathbb C[X]\) 以 \(X\) 为基并由 \(G\) 置换这组基。其\term[zhihuantezhengbiao]{置换特征标}[permutation character] \(\pi_X\) 满足
+\[
+ \pi_X(g)=|X^g|,
+ \qquad X^g=\{\,x\in X:gx=x\,\},\qquad g\in G.
+\]
+若 \(H\le G\) 且 \(X=G/H\) 带左乘作用，则 \(\mathbb C[X]\cong\operatorname{Ind}_H^G\mathbf1_H\)，其中 \(\mathbf1_H\) 为平凡复 \(H\)-表示。此外，记 \(\mathbf1_G\) 为平凡复 \(G\)-表示的特征标，则
+\[
+ \langle\mathbf1_G,\pi_X\rangle_G=|G\backslash X|,
+ \qquad
+ \langle\pi_X,\pi_X\rangle_G=|G\backslash(X\times X)|,
+\]
+右边分别为轨道数，\(X\times X\) 上使用对角作用。
+\end{proposition}
+\begin{proof}
+置换矩阵的对角元在对应基向量固定时为 \(1\)，否则为 \(0\)，故迹为固定点数。对 \(X=G/H\)，映射 \(g\otimes1\mapsto e_{gH}\) 保持 \(gh\otimes1=g\otimes1\) 的关系，且把\cref{b5:prop:induced-coset-model}中的基双射到陪集基，因而是 \(G\)-同构。
+
+\(\mathbb C[X]\) 的不变向量在同一轨道上有相同系数，所以不变空间以各轨道的基向量之和为基，维数等于轨道数。\cref{b5:thm:character-hom-inner-product}将其维数写成第一内积。又 \(\pi_X(g)\) 为实数，且 \((X\times X)^g=X^g\times X^g\)，故
+\[
+ \langle\pi_X,\pi_X\rangle_G
+ =\frac1{|G|}\sum_{g\in G}|X^g|^2
+ =\langle\mathbf1_G,\pi_{X\times X}\rangle_G.
+\]
+把已经证明的轨道数公式用于 \(X\times X\) 即得第二式。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:two-transitive-augmentation}
+设有限群 \(G\) 传递地作用在有限集 \(X\) 上，且 \(|X|\ge2\)。复置换表示中的子空间
+\[
+ U_X=\Bigl\{\,\sum_{x\in X}a_xe_x:\sum_{x\in X}a_x=0\,\Bigr\}
+\]
+不可约，当且仅当 \(G\) 在不同点的有序对集合上也传递，即原作用为\term[erchongchuandi]{二重传递}[doubly transitive]作用。
+\end{corollary}
+\begin{proof}
+复数域中 \(|X|\ne0\)，所以常向量子空间与 \(U_X\) 直和为 \(\mathbb C[X]\)。传递性使平凡表示的重数为 \(1\)，故
+\[
+ \langle\pi_X-\mathbf1_G,\pi_X-\mathbf1_G\rangle_G
+ =|G\backslash(X\times X)|-1.
+\]
+由\cref{b5:cor:character-irreducibility}，非零表示 \(U_X\) 不可约恰好要求右边为 \(1\)。对角线本身是一个轨道，因此总轨道数为 \(2\)，恰好等价于所有不同点的有序对构成另一个轨道。
+\end{proof}
+
+例如 \(S_n\) 在 \(n\) 个字母上的自然作用于 \(n\ge2\) 时二重传递，因而坐标和为零的 \((n-1)\)-维复表示不可约。这给出一族无需逐个计算特征标表的不可约表示。
 
 \subsection{从子群构造不可约表示}
 \label{b5:subsec:0303:03}
 
-待撰写。
+诱导不保证保持不可约性；\cref{b5:exm:s3-transposition-induction}中的两个一维表示都诱导成可约表示。实际构造时可以先求诱导特征标，再利用范数为 \(1\) 的判据。若诱导后限制的分解容易看出，\eqref{b5:eq:frobenius-character}还会进一步缩短计算。
+
+\begin{example}\label{b5:exm:dihedral-induced-family}
+设 \(n\ge3\)，取阶为 \(2n\) 的二面体群
+\[
+ G=D_{2n}=\langle r,s\mid r^n=s^2=1,\ srs=r^{-1}\rangle,
+ \qquad H=\langle r\rangle.
+\]
+固定 \(n\) 次本原单位根 \(\zeta\in\mathbb C\)。对 \(j\in\mathbb Z/n\mathbb Z\)，令 \(\lambda_j(r)=\zeta^j\)，并记 \(V_j=\operatorname{Ind}_H^G\lambda_j\)。陪集代表 \(1,s\) 给出
+\[
+ r\longmapsto\begin{pmatrix}\zeta^j&0\\0&\zeta^{-j}\end{pmatrix},
+ \qquad
+ s\longmapsto\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+因此 \(\operatorname{Res}_H^G V_j\cong\lambda_j\oplus\lambda_{-j}\)。循环群的这两个一维特征标相同，当且仅当 \(2j=0\) 于 \(\mathbb Z/n\mathbb Z\)。由 Frobenius 互反律及一维特征标的正交性，
+\[
+ \langle\chi_{V_j},\chi_{V_j}\rangle_G
+ =\langle\lambda_j,\lambda_j+\lambda_{-j}\rangle_H
+ =\begin{cases}1,&2j\ne0,\\2,&2j=0.\end{cases}
+\]
+所以 \(2j\ne0\) 时 \(V_j\) 不可约。交换两个基向量给出 \(V_j\cong V_{-j}\)；反之，限制的不可约分解唯一性表明 \(V_i\cong V_j\) 只能在 \(i=j\) 或 \(i=-j\) 时成立。
+
+\ProseParagraphBreak
+若 \(2j=0\)，则 \(r\) 为标量矩阵，\(s\) 的两个特征向量给出两种一维表示：\(r\mapsto\zeta^j\)，\(s\mapsto1\) 或 \(-1\)。当 \(n\) 为奇数时，这样得到两种一维表示及 \((n-1)/2\) 种二维不可约表示；当 \(n\) 为偶数时，得到四种一维表示及 \((n-2)/2\) 种二维不可约表示。两种情形的维数平方和分别为
+\[
+ 2+4\frac{n-1}{2}=2n,
+ \qquad
+ 4+4\frac{n-2}{2}=2n.
+\]
+由\cref{b5:thm:regular-decomposition}，已经列尽全部不可约复表示。这个例子说明哪些一维表示诱导后不可约，哪些给出同构的诱导表示，以及哪些诱导表示会分解。
+\end{example}
+
+一般子群的诱导后限制未必像循环正规子群这样容易分解。下一章将用双陪集把它拆成若干较小的诱导表示，从而把本节的范数检验发展为系统的不可约性判据。

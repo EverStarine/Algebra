@@ -1,13 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 17.3 根系分类
-% 纲要位置：计划纲要.md，第 3619 行。
+% 纲要位置：工作记录/计划纲要.md，第 4270 行。
 
 \section{根系分类}
 \label{b5:sec:1703}
 
-% TODO: 按以下纲要要点撰写本节。
+本节先证明候选图形的穷尽性，再用坐标构造证明每种候选确实出现。两个步骤缺一不可：只画出经典图形不能排除其他图，只列出正定矩阵也没有自动给出根集合。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * 不可约有限根系
 % * 经典型与例外型
@@ -17,14 +19,238 @@
 \subsection{不可约有限根系}
 \label{b5:subsec:1703:01}
 
-待撰写。
+\begin{definition}\label{b5:def:irreducible-root-system}
+设 \(\Phi\subseteq E\) 为非空有限约化结晶根系。若不能把它写成两个非空子集
+\(\Phi_1,\Phi_2\) 的不交并，使两子集中的根两两正交，则称 \(\Phi\) 为\term{不可约根系}[irreducible root system]。
+\end{definition}
+
+Dynkin 图的连通分支与根系的正交不可约分支相对应。事实上，简单反射只在自己的图分支中改变坐标，每个根又都是简单根的反射像，故没有根跨越两个分支。于是分类只须处理连通图。
+
+\begin{lemma}\label{b5:lem:finite-dynkin-list}
+每个不可约有限约化结晶根系的 Dynkin 图，必为下列图形之一：
+\[
+A_r\ (r\geq1),\quad B_r\ (r\geq2),\quad C_r\ (r\geq3),\quad
+D_r\ (r\geq4),\quad E_6,E_7,E_8,F_4,G_2.
+\]
+\end{lemma}
+\begin{proof}
+先证明图的穷尽性。使用上一节的正定矩阵 \(G\)，其对角元为 \(2\)，边上的负非对角元为 \(1,\sqrt2,\sqrt3\)。在非负向量上增大边权只会减小二次型，所以以下排除也适用于重边。
+
+图不能有圈：在一个最短圈上赋值 \(1\)，其余为零，得到 \(x^{\mathsf T}Gx\leq0\)。一顶点不能有四个邻点：中心取 \(2\)，四邻点取 \(1\)，同样得到非正值。不能有两个三叉点：连接两点的路径全部取 \(2\)，两端各取两个外邻点赋值 \(1\)，其余为零；路径若有 \(l\) 个顶点，则在单边情形
+\[
+\frac12x^{\mathsf T}Gx=4l+4-4(l-1)-8=0.
+\]
+因此图为链，或只有一个三叉点的树。
+
+若有三叉点，图不能有重边。取从三叉点到最近重边的路径，再保留三叉点另外两个方向各一个叶点，以及重边的另一端。对这个主子矩阵逐次消去叶点：两个单叶点使中心的有效对角元从 \(2\) 降为 \(1\)；沿路径的单边消元反复给出 \(2-1/1=1\)；最后重数 \(m\geq2\) 的边使终点对角元成为 \(2-m\leq0\)。这与正定矩阵的 Schur 补仍正定矛盾。
+
+所以分叉情形全部为单边。设三个臂长为 \(p-1,q-1,r-1\)，其中
+\(2\leq p\leq q\leq r\)。中心坐标为 \(t\)，一条臂的坐标为
+\(x_1,\ldots,x_{p-1}\)，补记 \(x_0=t,x_p=0\)，再令
+\(z_j=x_j-(1-j/p)t\)。逐臂配方得到
+\[
+\frac12x^{\mathsf T}Gx
+=\frac12\sum_{\text{三个臂}}\sum_{j=0}^{p-1}(z_j-z_{j+1})^2
++\frac12\left(\frac1p+\frac1q+\frac1r-1\right)t^2.
+\]
+正定性等价于三个倒数之和大于 \(1\)。若 \(p\geq3\)，和至多为 \(1\)，故 \(p=2\)；
+若 \(q=2\)，所有 \(r\geq2\) 可行，得到 \(D_{r+2}\)；
+若 \(q\geq4\)，仍不可能严格大于 \(1\)；剩下 \(q=3\)，只能
+\(r=3,4,5\)，分别得到 \(E_6,E_7,E_8\)。
+
+再处理链。链上至多有一条重边。否则取从第一条到下一条重边的最短子链；从首端消元后，有效对角元为 \(2-m/2\leq1\)，沿中间单边保持至多为 \(1\)，至末端便得到
+\(2-m'/d\leq0\)，违反正定性。三重边若还有一个相邻顶点，三阶主子式至多为
+\(8-2\cdot3-2\cdot1=0\)，所以三重边只能单独构成 \(G_2\)。
+
+若唯一重边为双边，设其两侧的单链分别有 \(p,q\) 个顶点，包含重边端点。
+单链矩阵的行列式为 \(p+1\)，末端逆矩阵条目为 \(p/(p+1)\)，二者都由三对角行列式递推得到。对双边作 Schur 补，正定条件为
+\[
+1-\frac{2pq}{(p+1)(q+1)}>0,
+\qquad\text{即}\qquad(p-1)(q-1)<2.
+\]
+交换两侧后设 \(p\leq q\)。于是或者 \(p=1\)，双边位于端部，按箭头方向得到 \(B_r,C_r\)；或者 \(p=q=2\)，得到 \(F_4\)。
+没有重边的链为 \(A_r\)。这已经排除了所有其他形状；箭头方向由长度比决定，树上没有额外的相容性障碍。
+
+这已经证明所列图形的穷尽性。
+\end{proof}
+
+上述证明与箭图中 ADE 正定型的分类有共同部分，但这里还处理了不等长根及重边。简单根 Gram 矩阵的正定性限制了 Dynkin 图可能的形状。
 
 \subsection{经典型与例外型}
 \label{b5:subsec:1703:02}
 
-待撰写。
+以下坐标均使用普通欧氏内积，只用于展示根系的形状。记 \(e_i\) 为标准正交基。四个经典族为
+\begin{equation}\label{b5:eq:classical-root-models}
+\begin{aligned}
+A_r&:\ \{\,e_i-e_j\mid i\ne j,\ 1\leq i,j\leq r+1\,\}
+\subseteq\{\textstyle\sum x_i=0\},\\
+B_r&:\ \{\,\pm e_i,\ \pm e_i\pm e_j\mid i<j\,\},\\
+C_r&:\ \{\,\pm2e_i,\ \pm e_i\pm e_j\mid i<j\,\},\\
+D_r&:\ \{\,\pm e_i\pm e_j\mid i<j\,\}.
+\end{aligned}
+\end{equation}
+两处正负号独立选取。\(A_r\) 取简单根 \(e_i-e_{i+1}\)；
+\(B_r,C_r\) 前 \(r-1\) 个也如此，末根分别取 \(e_r,2e_r\)；
+\(D_r\) 取 \(e_1-e_2,\ldots,e_{r-1}-e_r,e_{r-1}+e_r\)。
+反射分别是坐标互换、改变一个坐标的符号，或互换两坐标并同时变号；
+这些操作保持所列集合，结晶整数也由坐标立即读出。每个正根都能沿相邻差逐次展开，例如
+\(e_i-e_j=\alpha_i+\cdots+\alpha_{j-1}\)；
+对和根先沿两条相邻差移到末端，再用末端简单根表达，系数全非负。
+因此所列根确为简单根，图分别是相应的链或分叉树。
+
+\ProseParagraphBreak
+
+例外型同样可以从有限坐标集合得到，毋须先构造例外李代数。
+先取八维格
+\[
+L=\{\,z\in\mathbb Z^8\mid\textstyle\sum z_i\in2\mathbb Z\,\}
+\ \cup\
+\Biggl(\frac12(1,\ldots,1)+
+\{\,z\in\mathbb Z^8\mid\textstyle\sum z_i\in2\mathbb Z\,\}\Biggr).
+\]
+它对加法封闭，所有向量的平方长度为偶整数，任意两个向量的内积为整数。
+其中平方长度为 \(2\) 的向量恰为
+\begin{equation}\label{b5:eq:e8-root-model}
+\Phi_{E_8}=
+\{\,\pm e_i\pm e_j\mid i<j\,\}
+\ \cup\
+\Biggl\{\,\frac12(\pm e_1\pm\cdots\pm e_8)
+\ \Biggm|\ \text{负号个数为偶数}\,\Biggr\}.
+\end{equation}
+前一类有 \(112\) 个，后一类有 \(128\) 个。对任意这样的 \(\alpha\)，
+\(s_\alpha(x)=x-(x,\alpha)\alpha\) 保持格 \(L\) 及长度，故保持这 \(240\) 个向量；
+这也同时验证了反射与结晶公理。
+
+\ProseParagraphBreak
+
+取下列八个根：
+\begin{equation}\label{b5:eq:e8-simple-roots}
+\begin{aligned}
+\alpha_1&=\tfrac12(e_1+e_8-e_2-e_3-e_4-e_5-e_6-e_7),&
+\alpha_2&=e_1+e_2,\\
+\alpha_3&=e_2-e_1,&
+\alpha_4&=e_3-e_2,\\
+\alpha_5&=e_4-e_3,&
+\alpha_6&=e_5-e_4,\\
+\alpha_7&=e_6-e_5,&
+\alpha_8&=e_7-e_6.
+\end{aligned}
+\end{equation}
+它们的图有中心 \(\alpha_4\)，三个臂长为 \(1,2,4\)。
+还须验证它们确为简单根，不能只看图形。对 \(x=\sum c_i\alpha_i\in L\)，直接解坐标方程得到
+\[
+\begin{aligned}
+c_1&=2x_8,&
+c_2&=\tfrac12(x_1+x_2+\cdots+x_7+5x_8),\\
+c_3&=\tfrac12(-x_1+x_2+\cdots+x_7+7x_8),&
+c_4&=x_3+\cdots+x_7+5x_8,\\
+c_5&=x_4+\cdots+x_7+4x_8,&
+c_6&=x_5+x_6+x_7+3x_8,\\
+c_7&=x_6+x_7+2x_8,&
+c_8&=x_7+x_8.
+\end{aligned}
+\]
+在 \(L\) 的两种陪集中，这些数都是整数。若一个平方长度为 \(2\) 的格向量同时有正、负系数，把它分成支集不交的非负组合 \(u-v\)。
+不同简单根的内积非正，故 \((u,v)\leq0\)；两个非零格向量的平方长度至少为 \(2\)，遂有
+\((u-v,u-v)\geq4\)，矛盾。
+所以所有根的系数同号；每个 \(\alpha_i\) 因此不可分解，确为简单根。
+
+\ProseParagraphBreak
+
+在 \(\Phi_{E_8}\) 中分别取与 \(e_7+e_8\) 正交的根，以及同时与
+\(e_7+e_8,e_6-e_7\) 正交的根，便得到 \(E_7,E_6\)。
+与一个子空间相交所得的根集合对其中各根的反射封闭；上述坐标公式说明它们的简单根分别为前七个和前六个 \(\alpha_i\)，因而张成所需子空间。
+\(E_7\) 有 \(62\) 个整数根与 \(64\) 个半整数根，总计 \(126\) 个；
+\(E_6\) 有 \(40\) 个整数根与 \(32\) 个半整数根，总计 \(72\) 个。
+这样也核验了三个例外图的存在，而非仅仅列出符号。
+
+\ProseParagraphBreak
+
+\(F_4\) 的根集合为
+\[
+\{\,\pm e_i,\ \pm e_i\pm e_j\mid i<j\,\}
+\ \cup\
+\Bigl\{\,\tfrac12(\pm e_1\pm e_2\pm e_3\pm e_4)\,\Bigr\},
+\]
+共有 \(48\) 个根，取简单根
+\[
+e_2-e_3,\quad e_3-e_4,\quad e_4,\quad
+\tfrac12(e_1-e_2-e_3-e_4).
+\]
+符号改变与坐标置换显然保持根集合；剩下只须检验关于
+\(\tfrac12(e_1+e_2+e_3+e_4)\) 的反射。
+它把坐标短根变成半整数短根，把两坐标同号的长根变成另外两坐标的长根，
+保持两坐标异号的长根；对半整数短根，按负号数 \(0,1,2,3,4\) 逐项代入，分别得到半整数根、坐标根、原根、坐标根、半整数根。
+因此反射公理成立，配对的整数性也由这些同类计算给出。
+若 \(x=\sum c_i\alpha_i\)，则
+\[
+c_4=2x_1,\quad c_1=x_1+x_2,\quad
+c_2=2x_1+x_2+x_3,\quad c_3=3x_1+x_2+x_3+x_4.
+\]
+对所列三类根，按第一个非零坐标的符号检查，系数全为同号整数；
+这证明四根构成简单根基，图中间为双边。
+
+\ProseParagraphBreak
+
+\(G_2\) 在 \(\sum x_i=0\) 的三维坐标平面中取
+\[
+\Bigl\{\,\pm(e_i-e_j)\mid i<j\,\Bigr\}
+\ \cup\
+\Bigl\{\,\pm(2e_i-e_j-e_k)\mid\{i,j,k\}=\{1,2,3\}\,\Bigr\}.
+\]
+简单根可取 \(\alpha_1=e_1-e_2\)、\(\alpha_2=-2e_1+e_2+e_3\)，正根为
+\[
+\alpha_1,\ \alpha_2,\ \alpha_1+\alpha_2,\
+2\alpha_1+\alpha_2,\ 3\alpha_1+\alpha_2,\
+3\alpha_1+2\alpha_2.
+\]
+两简单反射在坐标 \((a,b)\) 上分别作用为
+\((a,b)\mapsto(-a+3b,b)\)、\((a,b)\mapsto(a,a-b)\)。
+它们置换上述六个根及其负根，并把每个根变到一个简单根；
+故关于任意根的反射也是这两个反射的共轭，四条根系公理随之成立。
+
+\begin{theorem}[根系分类]\label{b5:thm:root-classification}
+不可约有限约化结晶根系的同构类型恰为
+\(A_r\ (r\geq1)\)、\(B_r\ (r\geq2)\)、\(C_r\ (r\geq3)\)、
+\(D_r\ (r\geq4)\)、\(E_6,E_7,E_8,F_4,G_2\)，其中允许在一个不可约根系上同时缩放全部长度。
+任意有限约化结晶根系唯一分成这些类型的正交直和，忽略分支的排列次序。
+\end{theorem}
+\begin{proof}
+\cref{b5:lem:finite-dynkin-list}排除了全部其他图。
+本小节逐一给出的坐标集合满足根系公理，并已检查简单根及 Dynkin 图，所以每种图均存在。
+\cref{b5:prop:cartan-determines-roots}说明相同的带箭头图确定根集合，长度只差整体正比例。
+最后，图的连通分支恰好给出根系的正交不可约分支，且图的连通分解唯一。
+\end{proof}
 
 \subsection{低秩例子和同构}
 \label{b5:subsec:1703:03}
 
-待撰写。
+上述参数范围去掉了低秩重复。\(B_1,C_1\) 都给出 \(A_1\)；
+\(B_2\) 与 \(C_2\) 通过平面旋转及整体缩放同构；
+\(D_3\) 的分叉退化为 \(A_3\)，而 \(D_2=A_1\oplus A_1\) 可约。
+秩至少为 \(3\) 时，\(B_r\) 与 \(C_r\) 的长短根数量相反，不能再通过整体相似互换。
+它们的 Weyl 群却相同，都是全部带符号的坐标置换群。这说明 Weyl 群本身并不确定根系。
+
+\begin{proposition}\label{b5:prop:root-components-simple-ideals}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\subseteq\mathfrak g\) 为 Cartan 子代数，\(\Phi\) 为相应根系。记 \(\mathfrak g_\alpha\) 为根空间，\(t_\alpha\in\mathfrak h\) 为满足 \(\kappa_{\mathfrak g}(t_\alpha,h)=\alpha(h)\) 对所有 \(h\in\mathfrak h\) 成立的元素。\(\Phi\) 的不可约分支与 \(\mathfrak g\) 的简单理想一一对应；对应于分支 \(\Psi\subseteq\Phi\) 的理想为
+\[
+\mathfrak g(\Psi)
+=\operatorname{span}_{\mathbb C}\{\,t_\alpha\mid\alpha\in\Psi\,\}
+\oplus\bigoplus_{\alpha\in\Psi}\mathfrak g_\alpha.
+\]
+\end{proposition}
+\begin{proof}
+不同根系分支正交，且不存在跨分支的根和。根空间括号公式及
+\([t_\alpha,\mathfrak g_\beta]=\beta(t_\alpha)\mathfrak g_\beta\)
+说明不同的 \(\mathfrak g(\Psi)\) 互相交换，且各自为理想，其直和为 \(\mathfrak g\)。
+另一方面，\cref{b5:thm:semisimple-ideal-decomposition}将 \(\mathfrak g\) 分成简单理想。
+先在各简单理想中取 Cartan 子代数；它们之和自中心化且为环面，故是 \(\mathfrak g\) 的 Cartan 子代数。
+不同简单理想的根互相正交；一个简单理想的根系若可分解，前一段的构造又会把该理想分成两个非零理想，矛盾。
+最后用\cref{b5:thm:cartan-conjugacy}把这份 Cartan 子代数搬到当前 \(\mathfrak h\)，所以每个不可约分支恰对应一个简单理想。
+\end{proof}
+
+经典根系由
+\(\mathfrak{sl}_{r+1}\)、\(\mathfrak{so}_{2r+1}\)、\(\mathfrak{sp}_{2r}\)、
+\(\mathfrak{so}_{2r}\) 实现。例外型也将由下一节的统一展示构造得到。
+例如 \(G_2,F_4\) 另有与八元数代数、Albert 代数的导子有关的具体模型，
+但这些模型需要额外的非结合代数理论；这里的分类证明不以它们为前提。

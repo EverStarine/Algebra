@@ -1,30 +1,179 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 7.1 对称函数
-% 纲要位置：计划纲要.md，第 3302 行。
-
-\section{对称函数}
-\label{b5:sec:0701}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3953 行。
 % * 初等对称函数、完全对称函数与幂和对称函数
 % * Schur 函数及行列式公式
 % * 次数分次与内积
-%
+\section{对称函数}
+\label{b5:sec:0701}
+
+一个置换的共轭类由各长度的轮换数决定，对称多项式的基也常以分拆编号。要联系这两种参数，须先定义与变量个数变化相容的运算。本节中的无穷多个变量只是一种逐次稳定的记法，不涉及无穷级数的解析收敛。
 
 \subsection{初等、完全与幂和对称函数}
 \label{b5:subsec:0701:01}
 
-待撰写。
+\begin{definition}\label{b5:def:symmetric-function}
+设 \(n\ge0\) 为整数。对每个整数 \(N\ge0\) 给定一个 \(N\) 元、\(n\) 次齐次有理系数对称多项式 \(f_N\)。若对所有 \(N\ge0\) 有
+\[
+f_{N+1}(x_1,\ldots,x_N,0)=f_N(x_1,\ldots,x_N).
+\]
+则称相容族 \((f_N)_{N\ge0}\) 为 \(n\) 次\term[duicheng-hanshu]{对称函数}[symmetric function]。这些相容族构成有理向量空间 \(\Lambda_{\mathbb Q}^n\)。令
+\[
+\Lambda_{\mathbb Q}=\bigoplus_{n\ge0}\Lambda_{\mathbb Q}^n.
+\]
+逐个变量数相乘给出这个空间上的分次代数结构。将系数扩充为复数，记为 \(\Lambda_{\mathbb C}\)。
+\end{definition}
+
+对分拆 \(\lambda\vdash n\)，令 \(m_\lambda(x_1,\ldots,x_N)\) 为指数多重集等于 \(\lambda\)（补零）的不同单项式之和；若 \(\ell(\lambda)>N\)，规定它为零。对称多项式在同一变量置换轨道上的单项式系数相同，所以 \(m_\lambda\) 构成 \(\Lambda_{\mathbb Q}^n\) 的一组基。特别地，固定次数 \(n\) 后，取 \(N\ge n\) 已能检测任意恒等式；无须同时处理无限多个非零项。
+
+\begin{definition}\label{b5:def:ehp-symmetric}
+在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 中，对整数 \(r\ge1\)，由每个有限变量数 \(N\) 下的多项式
+\[
+e_r=\sum_{i_1<\cdots<i_r}x_{i_1}\cdots x_{i_r},\qquad
+h_r=\sum_{i_1\le\cdots\le i_r}x_{i_1}\cdots x_{i_r},\qquad
+p_r=\sum_i x_i^r
+\]
+组成的相容族，依次称为\term[chudeng-duicheng-hanshu]{初等对称函数}[elementary symmetric function]、\term[wanquan-duicheng-hanshu]{完全对称函数}[complete symmetric function]和\term[mihe-duicheng-hanshu]{幂和对称函数}[power-sum symmetric function]；各求和指标均在 \(\{1,\ldots,N\}\) 中取值。规定 \(e_0=h_0=1\)，而 \(e_r=h_r=0\) 对 \(r<0\) 成立。对分拆 \(\lambda\)，用 \(e_\lambda,h_\lambda,p_\lambda\) 分别表示按其各部分相乘。
+\end{definition}
+
+例如 \(h_2=m_{(2)}+m_{(1,1)}\)，\(e_2=m_{(1,1)}\)，\(p_2=m_{(2)}\)。完全对称函数允许指标重复，初等对称函数不允许；这个差别后来对应对称幂与外幂。
+
+\begin{proposition}\label{b5:prop:symmetric-generators}
+设 \(\Lambda_{\mathbb Q}\) 为有理系数对称函数代数，\(e_r,h_r,p_r\) 分别为初等、完全、幂和对称函数，\(t\) 为形式变量。在 \(\Lambda_{\mathbb Q}[[t]]\) 中有
+\begin{align}
+E(t)&\coloneqq\sum_{r\ge0}e_rt^r=\prod_i(1+x_it),&
+H(t)&\coloneqq\sum_{r\ge0}h_rt^r=\prod_i(1-x_it)^{-1},
+\label{b5:eq:eh-generating}\\
+E(-t)H(t)&=1,&
+H(t)&=\exp\Bigl(\sum_{r\ge1}\frac{p_r}{r}t^r\Bigr).
+\label{b5:eq:hp-generating}
+\end{align}
+乘积按每个有限变量数下的相容多项式族理解。对每个非负整数 \(n\)，三族 \(e_\lambda,h_\lambda,p_\lambda\)，其中 \(\lambda\vdash n\)，分别为 \(\Lambda_{\mathbb Q}^n\) 的基。
+\end{proposition}
+\begin{proof}
+在有限变量中展开每个因子即可得到前两式；乘积相消得到第三式。对 \(H\) 取形式对数，用 \(-\log(1-z)=\sum_{r\ge1}z^r/r\) 得最后一式。每个系数只需有限次运算，故这些形式恒等式也在稳定族中成立。
+
+先说明 \(e_\lambda\) 的基性质。在 \(N\) 个变量中取字典序 \(x_1>\cdots>x_N\)。任意非零对称多项式的首项指数可写成 \(a_1\ge\cdots\ge a_N\ge0\)。乘积
+\[
+e_1^{a_1-a_2}e_2^{a_2-a_3}\cdots e_N^{a_N}
+\]
+的首项恰为 \(x_1^{a_1}\cdots x_N^{a_N}\)，系数为一。依次减去相应倍数，首项严格下降；固定总次数只有有限个单项式，故过程终止，得到生成性。不同的上述乘积有不同首项，故线性无关。取 \(N\ge n\)，得到稳定的次数 \(n\) 结论。
+
+由 \(E(-t)H(t)=1\)，\(h_r=(-1)^{r-1}e_r\) 加上只含 \(e_1,\ldots,e_{r-1}\) 的多项式；这是可逆三角变换。因此 \(h_r\) 也自由生成。对最后一式求导并乘以 \(t\)，得到
+\begin{equation}\label{b5:eq:newton-h}
+r h_r=\sum_{i=1}^r p_i h_{r-i}.
+\end{equation}
+其中 \(p_r=rh_r\) 加上较低指标的多项式；由于系数域为 \(\mathbb Q\)，还可反向除以 \(r\)。所以 \(p_r\) 同样自由生成，三族的次数 \(n\) 单项式均为基。
+\end{proof}
+
+有理系数在幂和基的结论中不可省略。例如 \(h_2=(p_1^2+p_2)/2\)，一般不能把完全对称函数写成幂和的整系数多项式。
 
 \subsection{Schur 函数及行列式公式}
 \label{b5:subsec:0701:02}
 
-待撰写。
+令 \(\delta_N=(N-1,N-2,\ldots,0)\)。对严格递减的非负整数列 \(\alpha\)，记
+\[
+a_\alpha(x)=\det(x_i^{\alpha_j})_{1\le i,j\le N},
+\qquad
+\Delta_N(x)=a_{\delta_N}(x)=\prod_{i<j}(x_i-x_j).
+\]
+交错多项式在 \(x_i=x_j\) 时为零，因而被每个 \(x_i-x_j\) 整除。这些一次因子两两互素，所以被它们的乘积整除。
+
+\begin{definition}\label{b5:def:schur-function}
+设 \(\lambda\) 为分拆，\(\ell(\lambda)\) 为其长度，\(N\ge\ell(\lambda)\) 为整数，并把 \(\lambda\) 补零到 \(N\) 项。在 \(\mathbb Q[x_1,\ldots,x_N]\) 中，对称多项式
+\[
+s_\lambda(x_1,\ldots,x_N)
+=\frac{\det(x_i^{\lambda_j+N-j})_{1\le i,j\le N}}
+{\prod_{1\le i<j\le N}(x_i-x_j)}
+\]
+称为相应的\term[Schur-duoxiangshi]{Schur 多项式}[Schur polynomial]。当 \(N<\ell(\lambda)\) 时规定其为零。它们形成的相容族称为\term[Schur-hanshu]{Schur 函数}[Schur function]，仍记 \(s_\lambda\)。
+\end{definition}
+
+分子交错，所以上述商确为多项式；交换两个变量时分子、分母同时变号，故商对称。若最后一个变量为零且 \(\lambda_N=0\)，展开分子、分母的最后一行，剩余行列式各提出 \(\prod_{i<N}x_i\)，恰得到 \(N-1\) 元版本。若 \(\lambda_N>0\)，分子被 \(\prod_i x_i^{\lambda_N}\) 整除，商也如此，代入 \(x_N=0\) 为零。这就证明了定义中的相容性。
+
+\begin{lemma}[Cauchy 恒等式]\label{b5:lem:schur-cauchy}
+设 \(x=(x_i)\)、\(y=(y_j)\) 为两组独立形式变量，\(s_\lambda\) 为有理系数 Schur 函数，\(p_\mu\) 为幂和对称函数的分拆乘积。按每个有限变量数下的形式幂级数、逐次理解无穷和，有
+\begin{equation}\label{b5:eq:schur-cauchy}
+\begin{aligned}
+\prod_{i,j}(1-x_i y_j)^{-1}
+&=\sum_\lambda s_\lambda(x)s_\lambda(y)
+=\sum_\mu\frac{p_\mu(x)p_\mu(y)}{z_\mu},
+\\
+z_\mu&=\prod_{r\ge1}r^{m_r(\mu)}m_r(\mu)!.
+\end{aligned}
+\end{equation}
+两和均遍历全部分拆；这里 \(m_r(\mu)\) 为分拆 \(\mu\) 中部分 \(r\) 的重数。
+\end{lemma}
+\begin{proof}
+先取两组各 \(N\) 个变量。Cauchy 行列式恒等式为
+\[
+\det\Bigl(\frac1{1-x_i y_j}\Bigr)_{i,j=1}^N
+=\frac{\Delta_N(x)\Delta_N(y)}{\prod_{i,j}(1-x_i y_j)}.
+\]
+确实，通分后的分子分别对两组变量交错；其关于每个 \(x_i\)、每个 \(y_j\) 的次数至多 \(N-1\)。除去两组 Vandermonde 因子后只能剩常数。该常数为一：在每个条目中展开 \(\sum_{a\ge0}x_i^a y_j^a\)，行列式最低的非零总次数来自互异指数 \(0,\ldots,N-1\)，其贡献就是 \(\Delta_N(x)\Delta_N(y)\)。
+
+再对这个级数行列式使用行列式的多线性展开。重复指数的项为零，互异指数按递减顺序排列后得到
+\[
+\det\Bigl(\sum_{a\ge0}x_i^a y_j^a\Bigr)_{i,j=1}^N
+=\sum_{\alpha_1>\cdots>\alpha_N\ge0}a_\alpha(x)a_\alpha(y).
+\]
+每个 \(\alpha\) 唯一写为 \(\lambda+\delta_N\)。除去 Vandermonde 因子，得到第一条展开。不同变量数可先补变量，再令多余变量为零。
+
+另一方面，对乘积取形式对数，得 \(\sum_{r\ge1}p_r(x)p_r(y)/r\)。指数化后，第 \(r\) 项选取 \(m_r\) 次的系数为 \(1/(r^{m_r}m_r!)\)。逐个 \(r\) 相乘，得到最后一条展开。
+\end{proof}
+
+\begin{theorem}[Jacobi--Trudi 公式]\label{b5:thm:jacobi-trudi}
+设 \(\lambda\) 为分拆，\(N\ge\ell(\lambda)\) 为整数，把 \(\lambda\) 补零至 \(N\) 项，\(s_\lambda\) 为 Schur 函数，\(h_r\) 为完全对称函数。在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 中有
+\begin{equation}\label{b5:eq:jacobi-trudi}
+s_\lambda=\det(h_{\lambda_i-i+j})_{1\le i,j\le N}.
+\end{equation}
+其中 \(h_0=1\)，负指标的 \(h_r\) 为零。对每个非负整数 \(n\)，\(s_\lambda\)（\(\lambda\vdash n\)）构成 \(\Lambda_{\mathbb Q}^n\) 的基。
+\end{theorem}
+\begin{proof}
+将\eqref{b5:eq:schur-cauchy}乘以 \(\Delta_N(y)\)，并取 \(y_1^{\lambda_1+N-1}\cdots y_N^{\lambda_N}\) 的系数。右端中 \(a_{\mu+\delta_N}(y)\) 只有在 \(\mu=\lambda\) 时贡献一，因为其指数列严格递减；所得系数是 \(s_\lambda(x)\)。左端可写成
+\[
+\det(y_i^{N-j})_{i,j=1}^N\prod_{i=1}^N
+\Bigl(\sum_{r\ge0}h_r(x)y_i^r\Bigr).
+\]
+展开行列式后，该系数恰为 \(\sum_\sigma\operatorname{sgn}(\sigma)\prod_i h_{\lambda_i-i+\sigma(i)}(x)\)，即所需行列式。对任意有限变量数均成立，故得到稳定恒等式。
+
+最后，在 \(N\ge n\) 个变量中，乘以 \(\Delta_N\) 将 \(n\) 次对称多项式一一对应到次数 \(n+N(N-1)/2\) 的交错多项式。后者按单项式的变量置换轨道分组，每个非零轨道恰由一个严格递减指数列代表，因此以 \(a_{\lambda+\delta_N}\) 为基。除以 \(\Delta_N\)，得到 \(s_\lambda\) 的基性质。
+\end{proof}
+
+例如
+\[
+s_{(r)}=h_r,\qquad
+s_{(2,1)}=h_2h_1-h_3,\qquad
+s_{(2,2)}=h_2^2-h_1h_3.
+\]
+又 \(s_{(1^r)}=e_r\)：从\eqref{b5:eq:jacobi-trudi}沿首行展开，所得行列式 \(D_r\) 满足
+\[
+D_r=h_1D_{r-1}-h_2D_{r-2}+\cdots+(-1)^{r-1}h_r,\qquad D_0=1.
+\]
+这正是 \(E(-t)H(t)=1\) 对 \(e_r\) 给出的递推及初值。所以单行和单列分别给出前面两种对称函数。
 
 \subsection{次数分次与内积}
 \label{b5:subsec:0701:03}
 
-待撰写。
+\begin{definition}\label{b5:def:hall-inner-product}
+设 \(\Lambda_{\mathbb Q}\) 为有理系数对称函数代数，\(p_\lambda\) 为幂和基，\(m_r(\lambda)\) 为分拆 \(\lambda\) 中部分 \(r\) 的重数，\(z_\lambda=\prod_{r\ge1}r^{m_r(\lambda)}m_r(\lambda)!\)。在 \(\Lambda_{\mathbb Q}\) 上，以
+\[
+\langle p_\lambda,p_\mu\rangle=\delta_{\lambda\mu}z_\lambda
+\]
+确定一个对称双线性配对，称为\term[Hall-peidui]{Hall 配对}[Hall pairing]。在 \(\Lambda_{\mathbb C}\) 上，沿同一正交基改用第一变量共轭线性、第二变量线性的正定内积，称为相应的 Hall 内积。不同次数的齐次分量相互正交。
+\end{definition}
+
+本章涉及复特征标时始终使用后一种内积；有理系数上的计算在两种约定下相同。比如 \(\langle h_2,h_2\rangle=1\)，而 \(\langle p_1^2,p_1^2\rangle=2\)。幂和基便于读取循环型，Schur 基则会对应不可约表示。
+
+\begin{proposition}\label{b5:prop:schur-orthonormal}
+在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 上，对任意分拆 \(\lambda,\mu\) 对应的 Schur 函数 \(s_\lambda,s_\mu\)，Hall 配对满足
+\[
+\langle s_\lambda,s_\mu\rangle=\delta_{\lambda\mu}.
+\]
+复化后，Schur 函数同样构成各齐次分量的一组标准正交基。
+\end{proposition}
+\begin{proof}
+固定次数 \(n\)。以 \(p_\lambda\) 为基时，配对矩阵为对角矩阵 \(D=\operatorname{diag}(z_\lambda)\)；因而张量 \(\sum_\lambda p_\lambda\otimes p_\lambda/z_\lambda\) 的系数矩阵是逆矩阵 \(D^{-1}\)。一般地，若一个非退化配对在基 \(v_i\) 下的矩阵为 \(G\)，同一张量就写成 \(\sum_{i,j}(G^{-1})_{ij}v_i\otimes v_j\)：这是换基矩阵两次相乘的直接结果。
+
+\cref{b5:lem:schur-cauchy}证明这个张量在 Schur 基下为 \(\sum_\lambda s_\lambda\otimes s_\lambda\)。其系数矩阵是单位矩阵，所以配对矩阵也是单位矩阵。所有换基系数为有理数，复化并在第一变量取共轭后结论不变。
+\end{proof}

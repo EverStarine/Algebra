@@ -1,13 +1,27 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 C　李群、算术表示与几何表示论简介
-% 纲要位置：计划纲要.md，第 3810 行。
+% 纲要位置：工作记录/计划纲要.md，第 4606 行。
 
 \chapter{李群、算术表示与几何表示论简介}
 \label{b5:app:C}
+\BookChapterNumber{b5:app:C}
 
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
+\begin{chapterabstract}
+本附录讨论表示论中三类额外结构。李群表示需要处理积分与覆盖核，紧群的函数分解需要 Haar 测度和 Hilbert 完备化，\(p\) 进群表示则以紧开子群与光滑向量为基本对象。这里沿路径解矩阵方程证明表示积分，从左不变体积构造 Haar 测度，再以紧自伴卷积算子证明 Peter--Weyl 完备性。几何方面，从射影直线的两张坐标图构造线丛截面和微分算子模，计算它们与最高权及中心关系的联系。
+\end{chapterabstract}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+\begin{learninggoals}
+\begin{itemize}
+\item 区分积分到单连通群与下降到指定商群，并计算圆群及 \(SO(3)\) 的下降条件。
+\item 从 Haar 平均推出完全可约性和矩阵系数正交性，说明 Peter--Weyl 展开的收敛含义。
+\item 区分光滑、连续与可容许表示，计算 \(\mathbb Q_p^\times\) 的一个 Hecke 代数。
+\item 在 \(\mathbb P^1\) 上计算线丛截面、微分算子和中心商，不把局部算例误作一般局部化定理。
+\end{itemize}
+\end{learninggoals}
+
+前两节需要有限维流形、覆盖空间及基本积分和 Hilbert 空间知识；本附录直接使用这些分析基础。第三节使用完备化与投射有限群，第四节使用仿射簇、射影空间和层的粘合。具体表示计算只依赖本卷的 \(\mathfrak{sl}_2\)、张量积与中心理论。一般李群积分和 Peter--Weyl 理论参见\cite[Chapters 3--4]{Kirillov2008LieGroups}；后续几何理论只作简要说明并给出阅读建议，本卷的证明不依赖这些理论。
+
+% 纲要范围：
 %
 % * 李代数表示何时积分成李群表示
 % * 紧李群、Peter–Weyl 理论所需的分析前提
@@ -21,3 +35,175 @@
 \input{Appendices/AppendixC/SectionC02}
 \input{Appendices/AppendixC/SectionC03}
 \input{Appendices/AppendixC/SectionC04}
+
+\begin{chaptersummary}
+相同李代数并不决定指定李群的表示：从普遍覆盖下降时还要零化离散中心核。紧群平均延续了有限群的分裂与正交方法，而 Peter--Weyl 的新内容是矩阵系数在函数空间中的完备性；其自然结论是 Hilbert 范数收敛。
+
+\ProseParagraphBreak
+\(p\) 进光滑表示由开稳定子群控制，紧开群平均可以逐向量在有限商上计算。对 \(\mathbb Q_p^\times\) 而言，双陪集卷积就是 Laurent 多项式乘法，非分歧特征标成为生成元的非零特征值。几何算例中，线丛的过渡函数决定截面与微分算子的相容性，并把 \(\mathfrak{sl}_2\) 的中心参数具体化为 \(m(m+2)\)。这些附加结构各有自己的条件，不能仅因都称为表示就互相替换。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:C-circle-jordan}
+判断 \(A=\operatorname{diag}(i,3i)\) 与 \(B=\begin{pmatrix}i&1\\0&i\end{pmatrix}\) 所给实一维李代数表示能否下降到 \(\mathbb R/2\pi\mathbb Z\)。
+\end{exercise}
+\begin{solution}
+\(e^{2\pi A}=I\)，故前者可以，两个特征标分别为 \(z\) 和 \(z^3\)。后者写成 \(iI+N\)，\(N^2=0\)、\(N\ne0\)，所以 \(e^{2\pi B}=I+2\pi N\ne I\)，不能下降。特征值满足整数条件仍不够，还需排除非平凡 Jordan 块。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-disconnected-differential}
+给出两个不同构的有限维李群表示，它们的微分相同，说明积分唯一性中的连通条件。
+\end{exercise}
+\begin{solution}
+取离散有限李群 \(C_2\)。其李代数为零，平凡一维表示和符号表示的微分都是零，却因非单位元分别作用为 \(1,-1\) 而不同构。微分无法看到不属于单位连通分支的群元素。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-su2-tensor-descent}
+判断 \(L_m\otimes L_n\) 的 \(SU(2)\) 表示何时下降到 \(SO(3)\)，并与 Clebsch--Gordan 分解核对。
+\end{exercise}
+\begin{solution}
+中心 \(-I\) 在张量积上按 \((-1)^{m+n}\) 作用，所以下降当且仅当 \(m+n\) 偶数。分解中的简单项最高权为 \(m+n,m+n-2,\ldots,|m-n|\)，全部同奇偶；故恰在同一条件下，每一简单项都能下降。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-product-descent}
+对于 \(SU(2)\times SU(2)\) 的表示 \(L_m\boxtimes L_n\)，分别求下降到 \(SO(3)\times SO(3)\) 及下降到由 \((-I,-I)\) 生成的中心子群的商的条件。
+\end{exercise}
+\begin{solution}
+前一商的核由 \((-I,I)\) 与 \((I,-I)\) 生成，两者分别作用为 \((-1)^m\)、\((-1)^n\)，所以要求 \(m,n\) 都偶数。后一商只要求 \((-1)^{m+n}=1\)，即两者同奇偶。不同中心商具有不同的下降条件。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-circle-average}
+圆群在 \(\mathbb C^3\) 上按 \(\operatorname{diag}(1,z,z^{-1})\) 作用。计算 Haar 平均投影，以及任意线性算子 \(T=(t_{ij})\) 的共轭平均。
+\end{exercise}
+\begin{solution}
+各非零整数指数的积分为零，所以向量平均为 \(\operatorname{diag}(1,0,0)\)。三条权两两不同，共轭作用下矩阵单位 \(E_{ij}\) 带权等于第 \(i\) 条权减第 \(j\) 条权；只有 \(i=j\) 的权为零。因此 \(T\) 的共轭平均为 \(\operatorname{diag}(t_{11},t_{22},t_{33})\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-su2-fourth-moments}
+以 \(SU(2)\) 的矩阵坐标 \(a,b\) 表示群元素。利用对称平方的矩阵系数正交性，计算 \(\int|a|^4\,dg\) 与 \(\int|a|^2|b|^2\,dg\)。
+\end{exercise}
+\begin{solution}
+在对称平方的规范基 \(e_1^2,(e_1e_2+e_2e_1)/\sqrt2,e_2^2\) 中，自然作用的一列含 \(a^2\)、\(-\sqrt2a\overline b\)、\(\overline b^{2}\)。该表示是三维不可约 \(L_2\)，每个矩阵系数的平方范数为 \(1/3\)。故两积分分别为 \(1/3\)、\(1/6\)。这也与 \(|a|^2+|b|^2=1\) 及对称性相容。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-fourier-convolution}
+对圆群上的有限 Fourier 和 \(f=\sum a_nz^n\)、\(h=\sum b_nz^n\)，计算归一化卷积 \((f*h)(z)=\int f(w)h(w^{-1}z)\,dw\)，并比较点乘。
+\end{exercise}
+\begin{solution}
+展开后 \(w\) 的指数为 \(r-s\)，积分只保留 \(r=s\)，故 \(f*h=\sum a_nb_nz^n\)。点乘却为 \(fh=\sum_n(\sum_r a_rb_{n-r})z^n\)。因此卷积在 Fourier 系数上逐项相乘，点乘在系数上卷积，二者不能混同。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-characters-not-all-functions}
+说明 \(SU(2)\) 的不可约特征标不能线性稠密地生成全部 \(L^2\Bigl(SU(2)\Bigr)\)。给出一个非零函数与全部特征标正交。
+\end{exercise}
+\begin{solution}
+取自然矩阵的 \((1,2)\) 系数 \(b\)，其范数平方为 \(1/2\)。它与其他不可约表示的所有矩阵系数正交，也与自然表示的两个对角系数正交，因此与所有不可约特征标正交。特征标只张成共轭不变函数空间；全部矩阵系数才给出 Peter--Weyl 完备族。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-torus-measure-warning}
+把 \(SU(2)\) 自然表示的特征标限制到环面，得到 \(2\cos\theta\)。计算它关于 \(\mathrm{d}\theta/(2\pi)\) 的平方范数，并与群 Haar 范数比较。
+\end{exercise}
+\begin{solution}
+\((2\pi)^{-1}\int_0^{2\pi}4\cos^2\theta\,\mathrm{d}\theta=2\)。但不可约群特征标的 Haar 范数平方为一。差别说明环面均匀测度不是由 \(SU(2)\) 共轭类参数直接得到的积分测度；不能省去 Weyl 积分公式中的权因子。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-padic-cosets}
+证明 \(p^r\mathbb Z_p\) 在加法群 \(\mathbb Q_p\) 中既紧又开，并计算 \(\mathbb Z_p/p^r\mathbb Z_p\) 在 \(r\ge0\) 时的阶。
+\end{exercise}
+\begin{solution}
+乘以非零 \(p^r\) 是拓扑自同构，故将紧开的 \(\mathbb Z_p\) 送成紧开集合。模掉 \(p^r\) 只保留前 \(r\) 个 \(p\) 进数字，每位有 \(p\) 种选择，所以商有 \(p^r\) 个元素；\(r=0\) 时为平凡群。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-profinite-regular-invariants}
+让 \(\mathbb Z_p\) 经有限商 \(\mathbb Z/p^n\mathbb Z\) 在其复正则表示上作用。求 \(p^r\mathbb Z_p\) 不变量空间的维数。
+\end{exercise}
+\begin{solution}
+在有限商上，固定函数必须在 \(p^r\mathbb Z_p\) 的平移轨道上常值。若 \(r<n\)，共有 \(p^r\) 个陪集；若 \(r\ge n\)，作用平凡而维数为 \(p^n\)。所以维数为 \(p^{\min(r,n)}\)。该表示光滑且有限维，因而可容许。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-continuous-not-smooth}
+对每个 \(n\ge1\)，取 \(\mathbb Z_p\) 上核为 \(p^n\mathbb Z_p\) 的单位圆值特征标 \(\chi_n\)。在 \(\ell^2(\mathbb N)\) 上按 \(\pi(g)v_n=\chi_n(g)v_n\) 作用。证明它强连续，却有非光滑向量。
+\end{exercise}
+\begin{solution}
+对任意平方可和向量，先使尾部范数足够小；酉作用使变化后的尾部差范数至多为原尾部范数的两倍。前有限个坐标上的特征标连续，故它们的差同时趋零，证明强连续。取 \(v=\sum_{n\ge1}2^{-n}v_n\)。若某个开子群固定它，则包含某个 \(p^r\mathbb Z_p\)，从而这个子群必须包含于全部 \(\ker\chi_n\)，不可能，因为 \(n>r\) 时 \(p^r\mathbb Z_p\not\subseteq p^n\mathbb Z_p\)。所以该向量不光滑。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-nonarchimedean-character}
+对 \(\chi_a(p^nu)=a^n\)，判断何时可选择正定 Hermitian 内积使该一维表示酉。
+\end{exercise}
+\begin{solution}
+一维内积只差一个正常数，不能改变标量算子的模。\(p\) 作用为 \(a\)，故酉性必要要求 \(|a|=1\)。此条件成立时所有 \(a^n\) 的模都为一，单位群作用又平凡，所以也充分。光滑可容许条件只要求 \(a\ne0\)，比酉性宽。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-smaller-level-hecke}
+取奇素数 \(p\)，\(K'=1+p\mathbb Z_p\subset\mathbb Q_p^\times\)。把 \(K'\) 的乘法体积归一化为一，计算 \(\mathcal H(\mathbb Q_p^\times,K')\)。
+\end{exercise}
+\begin{solution}
+赋值及单位模 \(p\) 给出 \(\mathbb Q_p^\times/K'\cong\mathbb Z\times\mathbb F_p^\times\)。各陪集示性函数的卷积仍按群乘法相乘，故
+\[
+\mathcal H(\mathbb Q_p^\times,K')
+\cong\mathbb C[T,T^{-1}]\otimes\mathbb C[\mathbb F_p^\times].
+\]
+有限交换群 \(\mathbb F_p^\times\) 有 \(p-1\) 个复特征标，其群代数为 \(p-1\) 份 \(\mathbb C\) 的直积。因此该 Hecke 代数为 \(p-1\) 份 Laurent 多项式代数的直积；额外的离散参数记录单位群模 \(p\) 的特征标。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-average-positive-characteristic}
+说明紧开平均的正合性对特征 \(p\) 系数可能失败，给出一个通过有限商的例子。
+\end{exercise}
+\begin{solution}
+让 \(\mathbb Z_p\) 经过商 \(C_p\)，在 \(k[C_p]\) 上正则作用，\(\operatorname{char}k=p\)。增广满射 \(k[C_p]\to k\) 的源不变量由 \(\sum_{g\in C_p}g\) 张成，但它在增广下映为 \(p=0\)。目标不变量为全部 \(k\)，所以不变量函子不保持该满射。两表示都光滑，失败来自系数特征而不是拓扑不连续。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-three-dimensional-flag-cell}
+在 \(\mathbb C^3\) 的旗簇中，用
+\(\begin{pmatrix}1&0&0\\a&1&0\\b&c&1\end{pmatrix}\)
+作用于标准旗，描述所得旗，并说明三个参数唯一。
+\end{exercise}
+\begin{solution}
+所得直线由 \((1,a,b)\) 张成，二维平面由该向量与 \((0,1,c)\) 张成。直线第一坐标不为零时可以唯一归一为一，确定 \(a,b\)；平面中第一坐标为零的方向若第二坐标不为零，可唯一归一为 \((0,1,c)\)，确定 \(c\)。这些非零条件定义开集，故得到旗簇中的一个仿射三维开图。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-line-bundle-evaluation}
+设 \(m\ge1\)。计算 \(\mathcal O(m)\) 的整体截面在点 \([1:0]\) 的求值核的维数，并用齐次多项式描述这个核。
+\end{exercise}
+\begin{solution}
+在 \(X\ne0\) 的平凡化中，求值为 \(a(z)\mapsto a(0)\)。核由 \(z,z^2,\ldots,z^m\) 张成，维数 \(m\)。齐次描述是所有被 \(Y\) 整除的次数 \(m\) 多项式，即 \(Y\mathbb C[X,Y]_{m-1}\)。核对固定该点的子群稳定，却一般不对全群稳定。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-line-bundle-product}
+对 \(m,n\ge0\)，证明截面乘法
+\(H^0\Bigl(\mathcal O(m)\Bigr)\otimes H^0\Bigl(\mathcal O(n)\Bigr)\to H^0\Bigl(\mathcal O(m+n)\Bigr)\)
+满射，求核维数并解释其表示意义。
+\end{exercise}
+\begin{solution}
+任何次数 \(m+n\) 单项式都可把 \(Y\) 的次数拆成 \(j+k\)，其中 \(0\le j\le m\)、\(0\le k\le n\)，从而写成两个所需次数的单项式之积。故乘法满射，核维数为 \((m+1)(n+1)-(m+n+1)=mn\)。微分算子对乘积满足 Leibniz 法则，所以该映射保持 \(\mathfrak{sl}_2\) 作用；它正是从 \(L_m\otimes L_n\) 投到最高权 \(m+n\) 的简单分量的满射。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-weyl-no-finite-modules}
+证明第一 Weyl 代数在特征零域上没有非零有限维模。
+\end{exercise}
+\begin{solution}
+若有维数 \(d>0\) 的模，则关系 \(\partial z-z\partial=1\) 在该模上成为两个 \(d\) 阶矩阵的交换子等于 \(I_d\)。取迹得到 \(0=d\)，在特征零域中矛盾。正文的多项式模与 \(D/Dz\) 因此必为无限维，这与它们的显式基相符。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-delta-simple}
+证明第一 Weyl 代数模 \(D/Dz\) 简单。
+\end{exercise}
+\begin{solution}
+其元素可唯一写成 \(P(\partial)\delta\)。若非零子模含次数 \(r\) 的此类向量，反复作用 \(z\)，由 \(z\partial^j\delta=-j\partial^{j-1}\delta\)，得到 \(\delta\) 的非零标量倍数。再作用全部 \(\partial\) 幂就生成整个模。因此没有非零真子模。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-negative-line-bundle-local-module}
+在 \(\mathbb C[z]\) 上取 \(e=\partial_z\)、\(h=m-2z\partial_z\)、\(f=mz-z^2\partial_z\)，其中 \(m\notin\mathbb Z_{\ge0}\)。证明这个 \(\mathfrak{sl}_2\) 模简单，并解释 \(m=-1\) 时它不等于 \(H^0\Bigl(\mathbb P^1,\mathcal O(-1)\Bigr)\)。
+\end{exercise}
+\begin{solution}
+非零子模取任意非零多项式，反复求导可得非零常数。又 \(f^j1=m(m-1)\cdots(m-j+1)z^j\)，因参数不为非负整数，所有系数均非零，所以子模含全部单项式，等于 \(\mathbb C[z]\)。\(m=-1\) 时这是一个非零无限维局部截面模，而线丛的整体截面必须同时满足另一张图的正则性，\(H^0\Bigl(\mathcal O(-1)\Bigr)=0\)。局部算子作用不等于已经完成全局粘合。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:C-p1-vector-field-change}
+对 \(\mathcal O(0)\) 核验 \(e=\partial_z\)、\(h=-2z\partial_z\)、\(f=-z^2\partial_z\) 在 \(w=1/z\) 图中的表达，并说明它们没有在无穷远处产生极点。
+\end{exercise}
+\begin{solution}
+链式法则给出 \(\partial_z=-w^2\partial_w\)。所以三个算子分别变成 \(-w^2\partial_w\)、\(2w\partial_w\)、\(\partial_w\)。系数都是 \(w\) 的多项式，故在 \(w=0\) 即无穷远处正则。一个图上出现二次多项式系数并不表示在射影直线上有奇点，必须实际做坐标变换。
+\end{solution}

@@ -1,30 +1,87 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 8.1 半单性的失效
-% 纲要位置：计划纲要.md，第 3332 行。
+% 纲要位置：工作记录/计划纲要.md，第 3983 行。
 
 \section{半单性的失效}
 \label{b5:sec:0801}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 特征 p 整除群阶
 % * 群代数的根及不可分解模
 % * 循环 p 群的完整基本例子
 %
 
+当底域的特征整除群阶时，平均投影中的除法不再有意义。表示仍然可以有合成列，但这些简单商之间的扩张未必分裂；因此研究简单模还不够，还须研究不可分解模及其根层。本章以循环 \(p\) 群为反复计算的例子，始终区分直和分解与合成因子。
+
 \subsection{\texorpdfstring{特征 \(p\) 整除群阶的情形}{特征 p 整除群阶的情形}}
 \label{b5:subsec:0801:01}
 
-待撰写。
+\begin{definition}\label{b5:def:modular-representation}
+设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域。\(G\) 的有限维 \(k\) 表示称为特征 \(p\) 的\term[mo-biaoshi]{模表示}[modular representation]。本章重点讨论 \(p\mid|G|\) 的情形；若 \(p\nmid|G|\)，\cref{b5:thm:maschke}仍保证完全可约。
+\end{definition}
+由\cref{b5:prop:maschke-converse}，当 \(p\mid|G|\) 时，增广映射
+\[
+\varepsilon:kG\longrightarrow k,\qquad \sum_g a_gg\longmapsto\sum_g a_g
+\]
+没有 \(kG\) 线性截面。具体地，一个不动元必须为 \(c\sum_g g\)，它的增广为 \(c|G|=0\)，所以不能提升目标中的一。这既给出不完全可约的正则模，也给出取不动空间不保持满射的例子。
+\ProseParagraphBreak
+最小的矩阵例子是 \(C_p=\langle s\rangle\) 在 \(k^2\) 上作用为
+\[
+s\longmapsto\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+\]
+第一坐标轴和商都为平凡表示，但没有不变补。这个表示与平凡二维表示有相同的两个简单合成因子，却不同构：前者的生成元不是恒等。后面定义的 Brauer 特征标会记录合成因子的重数，不会额外记录这条扩张是否分裂。
 
 \subsection{群代数的根与不可分解模}
 \label{b5:subsec:0801:02}
 
-待撰写。
+设 \(A\) 为有限维含幺 \(k\) 代数。其 Jacobson 根可写为全部简单左模的零化子的交，记为 \(J=J(A)\)。若 \(M\) 为有限维左模，则 \(JM\) 是其\term[mo-gen]{根}[radical of a module]，即全部极大子模的交；商 \(M/JM\) 称为\term[mo-ding]{顶}[top of a module]。根层 \(J^iM/J^{i+1}M\) 记录从顶逐步向下的简单成分。它们通常不能在原模中同时选成直和项。
+\begin{proposition}\label{b5:prop:finite-radical-layers}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，\(J=J(A)\)。则 \(J\) 幂零，\(A/J\) 半单。对任意有限维左 \(A\) 模 \(M\)，全部根层 \(J^iM/J^{i+1}M\) 都是半单模，且 \(JM=M\) 蕴涵 \(M=0\)。
+\end{proposition}
+\begin{proof}
+取左正则模 \(A\) 的有限合成列，设长度为 \(\ell\)。\(J\) 零化每个简单商，故乘以 \(J\) 将每一步送入前一步，迭代得到 \(J^\ell A=0\)，即 \(J^\ell=0\)。有限维代数的半单商结构由第二卷定理15.1.4及该节建立的半单商分解给出：\(A/J\) 为有限个除环上矩阵代数的直积。每个根层被 \(J\) 零化，是 \(A/J\) 模，因而半单。最后若 \(JM=M\)，则 \(M=J^\ell M=0\)。
+\end{proof}
+上述最后一步是这里需要的 Nakayama 引理。它也说明为什么顶不能为零：任何非零有限维模都有非零的顶。有限维模按不可分解项的直和分解及其唯一性可用第二卷定理12.4.2；该定理的有限长度条件在此由有限维性满足。不可分解模的各根层则可能包含多种简单模。
+\begin{proposition}\label{b5:prop:p-group-local}
+设 \(p\) 为素数，\(P\) 为有限 \(p\)-群，\(k\) 为特征 \(p\) 的域，\(\varepsilon:kP\to k\) 为增广映射 \(\sum_g a_gg\mapsto\sum_g a_g\)。唯一的简单左 \(kP\)-模是平凡一维模 \(k\)，且
+\[
+J(kP)=\ker\varepsilon,\qquad kP/J(kP)\cong k.
+\]
+因此 \(kP\) 是局部代数。
+\end{proposition}
+\begin{proof}
+按 \(|P|\) 归纳。若 \(P\ne1\)，第一卷定理4.2.5给出 \(p\mid|Z(P)|\)：类方程中各非中心类的大小都被 \(p\) 整除。取中心中一个非单位元，再取其适当的 \(p\) 次幂，便得阶恰为 \(p\) 的元 \(z\)。在简单模 \(S\) 上，\(z-1\) 是模自同态，且 \((z-1)^p=z^p-1=0\)。Schur 引理使非零自同态可逆，幂零自同态不可能可逆，所以 \(z-1\) 作用为零。于是 \(S\) 通过较小的 \(P/\langle z\rangle\) 作用，归纳使它平凡。平凡作用下简单性又迫使维数为一。根是这个唯一简单模的零化子，恰为增广理想。模掉根是域，所以非单位元恰为根，代数局部。
+\end{proof}
+例如一个非循环 \(p\) 群仍然只有一个简单模，但其不可分解模远不止一种。简单类型的数目很少，并不意味着扩张和直和分解的分类也很短。
 
 \subsection{\texorpdfstring{循环 \(p\) 群的基本例子}{循环 p 群的基本例子}}
 \label{b5:subsec:0801:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:cyclic-p-modules}
+设 \(p\) 为素数，\(k\) 为特征 \(p\) 的域，\(r\ge1\) 为整数，\(G=C_{p^r}=\langle s\rangle\)，并记 \(m=p^r\)。则
+\[
+kG\cong k[t]/(t^m),\qquad t\longmapsto s-1.
+\]
+全部有限维不可分解左 \(kG\)-模的同构类代表恰为
+\[
+M_d=k[t]/(t^d),\qquad 1\le d\le m.
+\]
+每个有限维左 \(kG\)-模唯一分解成这些模的直和，唯一性指各项同构类的重数唯一。记 \(J=J(kG)\)，则对 \(i\ge0\) 及 \(1\le a,b,d\le m\) 有
+\[
+J^iM_d=t^iM_d,\qquad
+\operatorname{soc}(M_d)=kt^{d-1},\qquad
+\dim_k\operatorname{Hom}_{kG}(M_a,M_b)=\min(a,b).
+\]
+其中\term[jizuo]{基座}[socle] \(\operatorname{soc}(M_d)\) 是全部简单子模之和。
+\end{theorem}
+\begin{proof}
+特征 \(p\) 中重复使用 \((x-1)^p=x^p-1\)，得到 \((s-1)^m=0\)。由 \(s=1+t\) 可知所给代数同态满射，两侧维数都是 \(m\)，故同构。模结构因此由满足 \(T^m=0\) 的线性算子 \(T\) 决定。幂零算子的 Jordan 链分解，或第二卷定理4.3.2在 \(k[t]\) 上的应用，给出模为 \(k[t]/(t^d)\) 的直和，且 \(d\le m\)。这里多项式只有不可约因子 \(t\)，所以不要求 \(k\) 代数闭。
+\(M_d\) 的自同态由一的像决定，环为 \(k[t]/(t^d)\)。这个环的常数项非零元素可用有限几何级数求逆，常数项零元素幂零，故它局部，没有非平凡幂等元。因此 \(M_d\) 不可分解；不同 \(d\) 的维数不同。任一分解中，大小至少为 \(j\) 的块数等于
+\[
+\dim\ker T^j-\dim\ker T^{j-1},
+\]
+所以块的重数唯一。根层由 \(J=(t)\) 直接给出；简单子模被 \(t\) 零化，而 \(\ker(t:M_d\to M_d)=kt^{d-1}\)，得到基座。最后，\(M_a\to M_b\) 的同态由一个满足 \(t^a v=0\) 的 \(v\in M_b\) 决定，这个核的维数为 \(\min(a,b)\)。
+\end{proof}
+这些模的全部子模也成一条链。因为 \(M_d\) 是 \(k[t]\) 的循环商模，子模对应包含 \((t^d)\) 的理想，恰为 \((t^j)\)、\(0\le j\le d\)。例如 \(M_3\) 的根层各为一个平凡模，却不是三个平凡模的直和；其不动空间只有一维，后者有三维。

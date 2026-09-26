@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 15.2 滤过与 PBW
-% 纲要位置：计划纲要.md，第 3555 行。
+% 纲要位置：工作记录/计划纲要.md，第 4206 行。
 
 \section{滤过与 PBW}
 \label{b5:sec:1502}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 标准滤过
 % * Poincaré–Birkhoff–Witt 定理
@@ -15,22 +14,109 @@
 % * 正文选择有序单项式与滤过的独立 PBW 证明，所需重排引理就地建立；第二卷第20.6节的 Diamond 引理仅提供另一证明，不是必需的选读内容
 %
 
+张量次数在关系中可以下降，却不会上升。把这种现象写成滤过后，原来的非交换乘法在最高次上变成交换乘法。PBW 定理进一步断言：在最高次上，除了交换关系以外没有新的关系。
+
 \subsection{标准滤过}
 \label{b5:subsec:1502:01}
 
-待撰写。
+令 \(F_dU(\mathfrak g)\) 为长度不超过 \(d\) 的张量在商中的像，\(d\ge0\)，并令 \(F_{-1}=0\)。则
+\[
+F_0=k,\qquad F_dF_e\subseteq F_{d+e},\qquad
+U(\mathfrak g)=\bigcup_{d\ge0}F_d.
+\]
+这称为标准滤过。伴随分次代数为
+\[
+\operatorname{gr}U(\mathfrak g)
+=\bigoplus_{d\ge0}F_d/F_{d-1}.
+\]
+由基本关系 \(\iota(x)\iota(y)-\iota(y)\iota(x)=\iota\Bigl([x,y]\Bigr)\in F_1\)，两个次数一的主符号交换。更一般地，利用
+\([ab,c]=a[b,c]+[a,c]b\) 逐次展开，可得
+\[
+[F_d,F_e]\subseteq F_{d+e-1}.
+\]
+因此伴随分次代数交换，次数一的符号给出满同态
+\[
+\operatorname{Sym}(\mathfrak g)\longrightarrow\operatorname{gr}U(\mathfrak g).
+\]
+满射只说明最高次的生成性；它是否单射，正是下面要证明的内容。
 
 \subsection{Poincaré–Birkhoff–Witt 定理}
 \label{b5:subsec:1502:02}
 
-待撰写。
+\begin{theorem}[Poincaré--Birkhoff--Witt]\label{b5:thm:pbw}
+设 \(\mathfrak g\) 为任意域 \(k\) 上的李代数，并选定一组带全序的基 \((x_i)_{i\in I}\)，其中 \(I\) 为全序指标集。记 \(\iota:\mathfrak g\to U(\mathfrak g)\) 为自然映射，并按乘积长度给 \(U(\mathfrak g)\) 取张量次数滤过。在 \(U(\mathfrak g)\) 中，单位与全部有序单项式
+\[
+\iota(x_{i_1})\cdots\iota(x_{i_r}),
+\qquad r\ge1,\quad i_1\le\cdots\le i_r,
+\]
+构成一组 \(k\) 基。因此自然映射
+\(\operatorname{Sym}(\mathfrak g)\to\operatorname{gr}U(\mathfrak g)\)
+是分次代数同构，\(\iota:\mathfrak g\to U(\mathfrak g)\) 单射。
+\end{theorem}
+\begin{proof}
+在张量代数的字上，遇到逆序的相邻因子 \(x_jx_i\)、\(j>i\)，便使用重排
+\[
+x_jx_i\ \longmapsto\ x_ix_j+[x_j,x_i],
+\]
+把右端括号按所选基展开。对一个字，先比较长度，再比较逆序对数。交换项保持长度而减少一个逆序对，括号项长度减少一；因此每条重写分支都终止。原字长度固定，较短字的逆序数也有统一上界，每次括号又只有有限个基系数，所以整个重写只有有限项。
+下面证明结果与选择哪一对先重排无关。对长度及逆序数作归纳。两次重排若发生在不相交的位置，分别展开两处会给出相同的四组项；归纳假设保证其余较小项继续重排的结果相同。唯一的重叠情形是三个相邻基元 \(x_kx_jx_i\)、\(k>j>i\)。先处理左边再继续交换，得到
+\[
+x_ix_jx_k+[x_j,x_i]x_k+x_j[x_k,x_i]+[x_k,x_j]x_i;
+\]
+先处理右边，则得到
+\[
+x_ix_jx_k+x_i[x_k,x_j]+[x_k,x_i]x_j+x_k[x_j,x_i].
+\]
+两式之差都是长度二的项。在归纳中，任意两个线性生成元 \(u,v\) 已满足
+\(\operatorname{NF}(uv-vu)=\operatorname{NF}\Bigl([u,v]\Bigr)\)：先对基元检查所选次序，再双线性延拓即可。因此这个差的正规式等于
+\[
+\operatorname{NF}\biggl(
+\Bigl[[x_j,x_i],x_k\Bigr]+\Bigl[x_j,[x_k,x_i]\Bigr]+\Bigl[[x_k,x_j],x_i\Bigr]
+\biggr)=0
+\]
+其中括号内的和由 Jacobi 恒等式为零。若前后还有其他因子，同样的差只含比原字短一的项，故在相同归纳范围内。这证明所有重写选择相容，给出到有序字空间的线性正规式映射 \(\operatorname{NF}\)。
+每次重排之差都属于定义理想 \(I\)，所以任意字与其正规式模 \(I\) 相同。反过来，对于任意字 \(u,v\) 及基元 \(x_i,x_j\)，
+\[
+\operatorname{NF}\biggl(u\Bigl(x_jx_i-x_ix_j-[x_j,x_i]\Bigr)v\biggr)=0,
+\]
+因为中间的一次重排与随后正规化相容。由双线性及理想生成性，\(I\subseteq\ker\operatorname{NF}\)。有序字被 \(\operatorname{NF}\) 原样保留，所以任何属于 \(I\) 的有序字线性组合都只能是零。这同时证明它们在商中生成并线性无关。
+按长度分组，长度恰为 \(d\) 的这些基元给出 \(F_d/F_{d-1}\) 的基，与对称代数的单项式基对应，故自然满射为同构。长度一的基元因此仍线性无关，得到 \(\iota\) 单射。
+\end{proof}
+这称为 PBW 定理。证明只使用交替性、Jacobi 及重排，没有除以整数，所以不需要特征零。以下在不会混淆时省去 \(\iota\)，把 \(\mathfrak g\) 作为 \(U(\mathfrak g)\) 的线性子空间。
 
 \subsection{伴随分次与对称代数}
 \label{b5:subsec:1502:03}
 
-待撰写。
+\begin{corollary}\label{b5:cor:pbw-dimension-domain}
+设 \(\mathfrak g\) 为域 \(k\) 上的 \(n\) 维李代数，\(F_dU(\mathfrak g)\) 为其泛包络代数中由长度不超过整数 \(d\ge0\) 的乘积生成的 \(k\) 子空间，其中长度零的乘积是单位。则
+\[
+\dim F_dU(\mathfrak g)=\binom{n+d}{n}\qquad(d\ge0),
+\]
+且 \(U(\mathfrak g)\) 没有零因子。若 \(\mathfrak g\ne0\)，则 \(U(\mathfrak g)\) 无限维。
+\end{corollary}
+\begin{proof}
+PBW 基把问题化为计算 \(n\) 个变量中全次数不超过 \(d\) 的单项式数；加一个记录剩余次数的变量后，用非负整数解计数得到 \(\binom{n+d}{n}\)。\(n=0\) 时两侧均为一。
+若 \(u,v\ne0\)，取它们在标准滤过中的最高次主符号。由 PBW，伴随分次是多项式整环，两个非零主符号的乘积不为零，所以 \(uv\ne0\)。若 \(n\ge1\)，某个基元的任意不同次幂都是 PBW 基元，故代数无限维。
+\end{proof}
+\begin{proposition}\label{b5:prop:pbw-symmetrization}
+设 \(k\) 为特征零域，\(\mathfrak g\) 为 \(k\) 上的李代数，\(\operatorname{Sym}(\mathfrak g)\) 为其对称代数。对整数 \(r\ge0\) 及 \(x_1,\ldots,x_r\in\mathfrak g\)，在右端通过自然映射把各 \(x_i\) 看作 \(U(\mathfrak g)\) 中的元素，则对称化公式
+\[
+\operatorname{sym}(x_1\cdots x_r)
+=\frac1{r!}\sum_{\sigma\in S_r}x_{\sigma(1)}\cdots x_{\sigma(r)}
+\]
+给出 \(\operatorname{Sym}(\mathfrak g)\to U(\mathfrak g)\) 的滤过向量空间同构。它与伴随作用相容，但一般不是代数同构。
+\end{proposition}
+\begin{proof}
+右端对 \(x_1,\ldots,x_r\) 对称且多线性，故由对称幂的泛性质良定义。其最高次符号等于 \(x_1\cdots x_r\)，所以诱导的分次映射为恒等。对每个有限次数按滤过归纳，先匹配最高次，再处理较低次，即得满射；非零核元的最高次不可能映为零，故单射。
+伴随作用在张量乘积上按导子规则逐项作用，并与排列因子交换，所以对称化保持作用。若它是代数同态，则应将 \(xy=yx\) 送成 \(xy=yx\) 于 \(U(\mathfrak g)\)；PBW 的单射性会迫使原括号全部为零。因此在非交换李代数上它不是代数同态。
+\end{proof}
 
 \subsection{有序单项式、重排引理与独立证明}
 \label{b5:subsec:1502:04}
 
-待撰写。
+PBW 的重排证明分为三步：每次操作降低复杂度，故过程终止；Jacobi 恒等式使三重重叠相容，故正规式不依赖重排次序；正规式原样保留有序字，从而得到线性无关性。单凭重排能写出有序字的线性组合，还只能证明生成性。
+\ProseParagraphBreak
+例如对三个逆序元 \(x_k,x_j,x_i\)，两种重排留下的二次差分别包含
+\([x_j,x_i]x_k-x_k[x_j,x_i]\) 等项。这里必须把这些差继续化为括号，才能使用 Jacobi。若把原关系改为任意二次与一次项的组合而不检查这一步，可能会产生额外低次关系，使原来的生成元也线性相关。
+\ProseParagraphBreak
+第二卷的非交换重写与 Diamond 引理提供了另一种组织这种检查的方法。本节已经在当前重排中逐项证明终止与重叠相容，所以 PBW 不以前置那一选读专题为条件。对于以有序生成元表示的具体元素，使用本节的相邻重排即可得到唯一的 PBW 系数。

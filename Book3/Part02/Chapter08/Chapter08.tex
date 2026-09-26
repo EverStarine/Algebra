@@ -11,15 +11,16 @@
 \BookChapterNumber{b3:ch:08}
 
 \begin{chapterabstract}
-理想的有限生成性并不直接解决成员判定。本章从单项式序和多元除法出发，完整建立 Gröbner 基、正规式、Buchberger 判据及算法、约化基唯一性，再用消去计算投影闭包、理想交商和饱和。计算过程中始终保存可核验的多项式恒等式。最后以标准单项式和乘法矩阵研究零维商代数，区分向量空间维数、点数与重数，并说明换序和单变量表示的适用条件。
+理想的有限生成性并不直接解决成员判定。本章从单项式序和多元除法出发，完整建立 Gröbner 基、正规式、Buchberger 判据及算法、约化基唯一性，再用消去计算投影闭包、理想交商和饱和。标准单项式与乘法矩阵把零维方程组化为线性代数问题，并区分点数与重数。最后建立结式及其与范数、判别式的联系，在完整算例中比较消去、回代和商代数计算。
 \end{chapterabstract}
 
 \begin{learninggoals}
 \begin{itemize}
 \item 正确选择单项式序，完成多元除法，并解释一般余式与正规式的区别。
 \item 理解最高项抵消的有界表示，证明并执行 Buchberger 算法。
-\item 通过扩展变量计算消去、交、理想商和饱和，同时保留成员表示。
+\item 通过扩展变量计算消去、交、理想商和饱和，同时保留成员表示；在不变环算例中分别证明生成性和关系的完备性。
 \item 用标准单项式和乘法矩阵计算有限商代数，辨认参数例外及非约化结构。
+\item 从 Sylvester 矩阵计算结式与判别式，并在参数特殊化后核查候选解。
 \end{itemize}
 \end{learninggoals}
 
@@ -34,15 +35,16 @@
 \input{Part02/Chapter08/Section0803}
 \input{Part02/Chapter08/Section0804}
 \input{Part02/Chapter08/Section0805}
+\input{Part02/Chapter08/Section0806}
 
 \begin{chaptersummary}
 全局单项式序提供严格下降，Dickson 引理提供有限性。二者结合，既保证多元除法和补充生成元的过程终止，也使理想的全部首项能够由有限个首项控制。Buchberger 判据把最高项抵消归结到有限对的有界表示，约化基则为固定次序下的理想给出唯一描述。
 
 \ProseParagraphBreak
-消去把投影和理想运算化为扩展多项式环中的计算。几何投影通常只得到闭包；参数分母、特殊取值和不能提升的点仍须另行检查。两向生成元表示证明理想相等，S 多项式的约化证明 Gröbner 性，二者承担不同任务。
+消去把投影和理想运算化为扩展多项式环中的计算。几何投影通常只得到闭包；参数分母、特殊取值和不能提升的点仍须另行检查。同时变号的不变环则展示了另一种用法：先由作用找齐不变多项式，再以核理想描述生成元之间的全部关系。两向生成元表示证明理想相等，S 多项式的约化证明 Gröbner 性；这两项核验不能互相代替。
 
 \ProseParagraphBreak
-零维商代数把问题带入有限维线性代数。标准单项式数计算代数维数，局部因子的长度记录重数，乘法矩阵保留坐标之间的全部关系。后续维数与 Hilbert 函数将把这种有限计数推广为多项式增长；本章的精确首项方法也将用于泛自由性的证明。
+零维商代数把问题带入有限维线性代数。标准单项式数计算代数维数，局部因子的长度记录重数，乘法矩阵的共同特征信息恢复相容的坐标。结式则以行列式提供消去关系；参数导致次数下降时，还须重新检查原方程。后续维数与 Hilbert 函数将把有限计数推广为多项式增长；本章的精确首项方法也将用于泛自由性的证明。
 \end{chaptersummary}
 
 \BookExercises
@@ -258,17 +260,17 @@ A\simeq k[y]/(y^2)\times k[y]/\Bigl((y-1)^2\Bigr).
 \end{solution}
 
 \begin{exercise}\label{b3:ex:08-joint-eigenvalues}
-设 \(k\) 代数闭，\(A=k[x_1,\ldots,x_n]/I\) 非零且有限维，\(T_i\) 为坐标乘法矩阵。证明零点 \(a\in Z_k(I)\) 恰对应一组共同特征值：存在非零 \(v\)，使 \(T_iv=a_iv\) 对所有 \(i\) 成立。这是 Sturmfels 的《Solving Systems of Polynomial Equations》中\cite[Theorem 2.6, pp. 17--18]{Sturmfels2002PolynomialEquations}的结论；本题要求包括非约化情形。
+设 \(k\) 代数闭，\(A=k[x_1,\ldots,x_n]/I\) 非零且有限维，\(T_i\) 为坐标乘法矩阵。对零点 \(a\)，证明求值泛函 \(\varepsilon_a\in A^*\) 是共同左特征向量，即 \(\varepsilon_aT_i=a_i\varepsilon_a\)。证明对应 \(a\) 的共同左特征空间总为一维，即使 \(A\) 非约化也如此。
 \end{exercise}
 \begin{solution}
-若有这样的 \(v\)，则任意 \(f\in I\) 满足 \(0=f(T_1,\ldots,T_n)v=f(a)v\)，所以 \(f(a)=0\)。反过来，对零点 \(a\) 取相应的局部 Artin 因子 \(A_{\mathfrak m_a}\)。其极大理想 \(\mathfrak n\) 幂零；若 \(\mathfrak n=0\)，取 \(v=1\)，否则取最后一个非零幂 \(\mathfrak n^r\) 中的非零 \(v\)，使 \(\mathfrak n v=0\)。由于 \(x_i-a_i\in\mathfrak n\)，有 \(x_iv=a_iv\)。把这个 \(v\) 放入该局部因子、其余因子取零，就得到 \(A\) 中所需非零向量。此证明不要求 \(I\) 为根理想。
+因 \(I\) 中的多项式在 \(a\) 消失，求值在商上良定义，且 \(\varepsilon_a(x_ib)=a_i\varepsilon_a(b)\)，所以给出共同左特征向量。若 \(\ell T_i=a_i\ell\)，则对任意多项式 \(f\)，有 \(\ell(f\cdot1)=f(a)\ell(1)\)。所有商元素均由多项式表示，故 \(\ell=\ell(1)\varepsilon_a\)。非零 \(\ell\) 必有 \(\ell(1)\ne0\)，共同左特征空间因此恰为 \(k\varepsilon_a\)。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:08-simultaneous-diagonalization}
-在\cref{b3:ex:08-joint-eigenvalues}的条件下，证明所有 \(T_i\) 能同时对角化，当且仅当 \(A\) 约化。此结论见\cite[Corollary 2.7, p. 18]{Sturmfels2002PolynomialEquations}，这里要求写出两个方向的证明。
+设 \(k\) 代数闭，\(A=k[x,y]/(x,y)^2\)。求坐标乘法矩阵及其对应 \((0,0)\) 的共同右特征空间，并比较该空间的维数、不同零点数及局部因子长度。说明共同特征向量的个数为何不能直接代替重数。
 \end{exercise}
 \begin{solution}
-若 \(A\) 约化，局部 Artin 分解及代数闭性给出 \(A\simeq k^D\)。取各因子的一作为基，所有乘法算子同时为对角矩阵。反过来，若 \(T_i\) 同时对角化，每个 \(T_a\) 都是它们的多项式，也为对角矩阵。若 \(a\) 幂零，则 \(T_a\) 是幂零对角矩阵，只能为零；乘法表示单射，故 \(a=0\)。因此 \(A\) 约化。
+取基 \((1,x,y)\)，则 \(T_x\) 只有第 \((2,1)\) 项为一，\(T_y\) 只有第 \((3,1)\) 项为一，其余项均为零。两个核的交为 \(kx\oplus ky\)，维数二。不同零点只有原点一个，而商代数的长度为三，因为它是剩余域为 \(k\) 的三维局部代数。二、一、三依次是两核交的维数、零点数和商代数长度。由\cref{b3:thm:multiplication-joint-eigenvalues}，这些非零幂零乘法矩阵也不可能同时对角化。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:08-fglm-small}
@@ -311,4 +313,60 @@ u(T)=1-\tfrac23T+\tfrac16T^2,\qquad
 \end{exercise}
 \begin{solution}
 记 \(\mathfrak m=(\bar x_1,\ldots,\bar x_r)\)，则 \(\mathfrak m^2=0\)，且 \(\dim_k\mathfrak m=r\)。若代数生成元为 \(a_j=c_j+n_j\)、\(1\le j\le s\)，其中 \(n_j\in\mathfrak m\)，由于任何两个 \(n_j\) 的乘积为零，每个生成的多项式都在 \(k+\sum_jkn_j\) 中。因此若它们生成全部 \(A\)，必须使 \(n_j\) 线性生成 \(\mathfrak m\)，从而 \(s\ge r\)。原来的 \(r\) 个变量已经生成，所以最少数为 \(r\)。约化例取 \(B=\mathbb F_2^3\)。一个元素的三个坐标只能取零、一，至少两个坐标相同；其任意多项式在这两坐标也相同，不能生成全部 \(B\)。有限维性本身不保证单变量描述。
+\end{solution}
+
+
+\begin{exercise}\label{b3:ex:08-resultant-quadratic}
+在 \(k[X]\) 中令 \(f=X^2-a\)、\(g=X-b\)。分别用 Sylvester 矩阵和乘法矩阵求结式，判断何时有公共根，并说明 \(a=b=0\) 时公共根是否为单根。
+\end{exercise}
+\begin{solution}
+Sylvester 矩阵为 \(\left(\begin{smallmatrix}1&1&0\\0&-b&1\\-a&0&-b\end{smallmatrix}\right)\)，行列式为 \(b^2-a\)。在基 \((1,X)\) 下，乘 \(X-b\) 的矩阵为 \(\left(\begin{smallmatrix}-b&a\\1&-b\end{smallmatrix}\right)\)，有相同行列式。因此公共根存在恰当且仅当 \(a=b^2\)，此时根为 \(b\)。当 \(a=b=0\)，零是 \(f\) 的二重根、\(g\) 的单根；结式为零只检测公共根存在，不单独给出两个多项式各自的重数。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-resultant-degree-drop}
+在 \(\mathbb Q[t,X]\) 中取 \(f=tX-1\)、\(g=tX^2-X+1\)。计算关于 \(X\) 的结式，并检查其零点是否给出原方程的解。
+\end{exercise}
+\begin{solution}
+在 \(\mathbb Q(t)\) 中由根公式得到 \(\operatorname{Res}_X(f,g)=t^2g(1/t)=t^2\)；两边均为 \(\mathbb Q[t]\) 中多项式，所以这也是原系数环的行列式。结式只给候选 \(t=0\)，但此时 \(f=-1\)，方程无解。还可直接用 \(g-Xf=1\) 看出原理想为单位理想，因而对任何参数都无解。此例要求同时核查原生成元，不可只返回结式零点。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-swap-invariants}
+设 \(k\) 为任意域，\(C_2\) 在 \(k[x,y]\) 上通过交换 \(x,y\) 作用。证明其不变环为 \(k[x+y,xy]\)，且 \(x+y,xy\) 代数无关。解释为什么这个结论在特征二时仍成立。
+\end{exercise}
+\begin{solution}
+设 \(f(x,y)=f(y,x)\)。先处理非零齐次 \(f\)，在字典序 \(x\succ y\) 下记其首项为 \(cx^ay^b\)。必有 \(a\ge b\)：否则由对称性，\(cx^by^a\) 也出现且更大。多项式
+\[
+c(x+y)^{a-b}(xy)^b
+\]
+有相同首项；从 \(f\) 中减去它，所得多项式仍对称、齐次，而且首单项式严格减小。同一次数只有有限多个单项式，故反复减去后得到零，证明每个齐次对称多项式都在 \(k[x+y,xy]\) 中。一般 \(f\) 的各齐次部分仍对称，分别应用此过程即可。两个生成元本身不变，故得到等式。
+
+对非负整数 \(i,j\)，\((x+y)^i(xy)^j\) 的首单项式为 \(x^{i+j}y^j\)，首项系数为一。不同 \((i,j)\) 给出不同指数对。若存在非零关系 \(F(x+y,xy)=0\)，在 \(F\) 的有限多个非零项中，取代入后首单项式最大的那一项；其他项的任何单项式都比它小，不能抵消它，矛盾。因此代入同态 \(k[u,v]\to k[x,y]\) 单射。这些步骤没有除以二，特征二时交换两个变量也仍不是恒等作用，所以结论保持成立。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:08-cubic-diagonal-invariants}
+设 \(k\) 为特征不为三的域，并含有一个三阶本原单位根 \(\zeta\)。令 \(C_3=\langle s\rangle\) 在 \(k[x,y]\) 上作用为 \(s\cdot x=\zeta x\)、\(s\cdot y=\zeta^{-1}y\)。证明
+\[
+k[x,y]^{C_3}=k[x^3,xy,y^3]
+\cong k[u,v,w]/(uw-v^3),
+\]
+并把全部关系的核写成一个消去理想。不要只检验 \(uw-v^3\) 确实在核中。
+\end{exercise}
+\begin{solution}
+单项式 \(x^iy^j\) 的作用因子为 \(\zeta^{i-j}\)。因为 \(\zeta\) 恰有三阶，比较系数说明不变多项式只含 \(i\equiv j\pmod3\) 的项。此时唯一地写成 \(i=3a+r,j=3c+r\)，其中 \(r\in\{0,1,2\}\)，从而
+\[
+x^iy^j=(x^3)^a(xy)^r(y^3)^c.
+\]
+这证明所列三个元素生成全部不变环。
+
+令 \(\phi:k[u,v,w]\to k[x,y]\) 分别把变量送到 \(x^3,xy,y^3\)。对 \(v^3-uw\) 按 \(v\) 作首一除法，任意余式唯一形如
+\[
+A_0(u,w)+vA_1(u,w)+v^2A_2(u,w).
+\]
+其中 \(u^av^rw^c\) 的像为 \(x^{3a+r}y^{3c+r}\)。由两个指数模三的余数可恢复 \(r\)，再恢复 \(a,c\)，故不同的这些单项式的像互不相同。若余式映为零，则各系数全为零。于是 \(\ker\phi=(uw-v^3)\)。
+
+最后，\cref{b3:prop:parametric-implicit-ideal}取分母一、参数 \(x,y\)，给出
+\[
+\ker\phi=(u-x^3,v-xy,w-y^3)\cap k[u,v,w],
+\]
+取交前的理想在 \(k[x,y,u,v,w]\) 中生成。它等于上述主理想，既有生成关系的验证，也有余式独立性给出的反向包含。
 \end{solution}

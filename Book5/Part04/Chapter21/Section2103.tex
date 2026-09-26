@@ -1,30 +1,106 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 21.3 有理表示
-% 纲要位置：计划纲要.md，第 3751 行。
+% 纲要位置：工作记录/计划纲要.md，第 4403 行。
 
 \section{有理表示}
 \label{b5:sec:2103}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 余模与有理表示
 % * 权和代数环面
 % * 与李代数表示的关系及积分问题
 %
 
+代数群表示不能只要求每个群元素给出一个矩阵，还要让矩阵条目随群元素正则地变化。余模的系数恰好记录这些函数，因此能把“有理表示”的条件写成有限个代数等式。这里的有理表示是正则群态射，不是允许任意带极点的有理映射。
+
 \subsection{余模与有理表示}
 \label{b5:subsec:2103:01}
 
-待撰写。
+\begin{definition}\label{b5:def:rational-representation}
+设 \(G=\operatorname{Spec}A\) 为域 \(k\) 上的有限型仿射群概形，\(V\) 为有限维 \(k\) 空间。群概形态射 \(G\to\operatorname{GL}(V)\) 称为一个有限维\term[youli-biaoshi]{有理表示}[rational representation]。
+\end{definition}
+\begin{theorem}\label{b5:thm:rational-comodule}
+设 \(k\) 为域，\((A,\Delta,\varepsilon,S)\) 为有限生成的交换 \(k\) Hopf 代数，\(G=\operatorname{Spec}A\)。有限维有理 \(G\) 表示与有限维右 \(A\) 余模等价。具体地，给定有限维右余模 \((V,\delta)\) 及交换含幺 \(k\) 代数 \(R\)，若在 \(V\) 的一组 \(k\) 基 \(v_1,\ldots,v_n\) 下有
+\[
+\delta(v_j)=\sum_i v_i\otimes a_{ij},
+\]
+则对应的 \(R\) 点 \(g:A\to R\) 在 \(V\otimes_k R\) 上的作用矩阵为 \(\Bigl(g(a_{ij})\Bigr)\)，且
+\[
+\Delta(a_{ij})=\sum_\ell a_{i\ell}\otimes a_{\ell j},\qquad
+\varepsilon(a_{ij})=\delta_{ij}.
+\]
+\end{theorem}
+\begin{proof}
+余模的两条公理分别给出所列矩阵系数等式。对 \(R\) 点求值，前式表示乘法相容，后式表示单位作用为恒等。对极给出逆矩阵 \(\Bigl(S(a_{ij})\Bigr)\)，因此这些矩阵在每个 \(R\) 上都可逆，定义到 \(\operatorname{GL}_n\) 的态射。反过来，群态射的矩阵系数必满足同样等式，定义余作用。换基只是同时改变这组系数的表达，同态相容条件也相同，所以得到基无关的范畴等价。
+\end{proof}
+\begin{lemma}\label{b5:lem:comodule-locally-finite}
+设 \(k\) 为域，\(C\) 为 \(k\) 余代数，\(V\) 为右 \(C\) 余模，不要求有限维。每个 \(v\in V\) 都属于一个有限维 \(k\) 子余模。
+\end{lemma}
+\begin{proof}
+写 \(\delta(v)=\sum_{i=1}^r v_i\otimes c_i\)，令 \(c_i\) 线性无关。选线性泛函 \(\phi_i\) 满足 \(\phi_i(c_j)=\delta_{ij}\)。令
+\(W=\operatorname{span}\{v_i\}\)，亦即所有 \((1\otimes\phi)\delta(v)\) 的线性生成空间。
+余结合律在最后一个因子上应用任意 \(\phi\)，给出
+\[
+\delta\bigl((1\otimes\phi)\delta(v)\bigr)
+=\sum_i v_i\otimes(1\otimes\phi)\Delta(c_i)\in W\otimes C.
+\]
+故 \(W\) 稳定；余单位公式使 \(v=\sum_i\varepsilon(c_i)v_i\in W\)。
+\end{proof}
+\begin{corollary}\label{b5:thm:affine-group-linear}
+域 \(k\) 上每个有限型仿射群概形都可以闭嵌入某个 \(\operatorname{GL}_n\)。
+\end{corollary}
+\begin{proof}
+将 \(A=k[G]\) 本身看作余作用为 \(\Delta\) 的右余模。取 \(A\) 的有限个代数生成元，利用前一引理，选包含这些元及一的有限维子余模 \(W\)。在 \(W\) 的基 \(w_j\) 上写系数为 \(a_{ij}\)。由
+\(w_j=(\varepsilon\otimes1)\Delta(w_j)=\sum_i\varepsilon(w_i)a_{ij}\)，
+所有 \(w_j\) 都在这些矩阵系数的线性生成空间中。因此表示给出的
+\(k\Bigl[\operatorname{GL}(W)\Bigr]\to A\) 的像包含全部代数生成元，是满射；这就是闭嵌入。
+\end{proof}
+这项证明同时说明有限生成坐标环的用途。余模局部有限性保证任何一个函数都受有限维矩阵系数控制，而有限生成性保证一次选择便能控制整个坐标环。
 
 \subsection{权和代数环面}
 \label{b5:subsec:2103:02}
 
-待撰写。
+\begin{theorem}\label{b5:thm:torus-weight-decomposition}
+设 \(k\) 为任意特征的域，\(M\) 为有限生成交换群，\(G=D(M)=\operatorname{Spec}k[M]\)，\(e^m\) 为群代数 \(k[M]\) 中元素 \(m\in M\) 对应的基元。对有限维有理 \(G\) 表示，以及更一般的任意右 \(k[M]\) 余模 \((V,\delta)\)，令 \(V_m=\{v\in V\mid\delta(v)=v\otimes e^m\}\)。则有唯一的分解
+\[
+V=\bigoplus_{m\in M}V_m,\qquad
+\delta(v)=v\otimes e^m\quad(v\in V_m).
+\]
+有限维时只有有限多个非零项。因此每个有理表示完全可约，简单表示是一维权；结论在任意特征下成立。
+\end{theorem}
+\begin{proof}
+群代数的 \(e^m\) 是一组基，对每个 \(v\) 唯一写
+\(\delta(v)=\sum_m v_m\otimes e^m\)，有限多个系数非零。余结合比较第三因子的 \(e^m\) 系数，得到
+\(\delta(v_m)=v_m\otimes e^m\)；余单位使 \(v=\sum_m v_m\)。
+若一组不同权向量的和为零，对其余作用比较不同 \(e^m\) 系数便知每项为零，所以是直和。表示同态保各权空间，一维子空间在同一权空间内都稳定，故分解为一维表示。唯一性也来自系数唯一性。
+\end{proof}
+对 \(\mathbb G_m^r\)，权是整数元组 \((m_1,\ldots,m_r)\)，作用字符为
+\(t_1^{m_1}\cdots t_r^{m_r}\)。这不是任意复指数。比如一维交换李代数的任意复标量作用都给出李代数表示，却只有整数标量才能从 \(\mathbb G_m\) 的有理表示微分得到。
+\ProseParagraphBreak
+即使 \(G=\mu_p\) 在特征 \(p\) 中不约化，上述按 \(\mathbb Z/p\) 分次的结论仍成立。它与常数群 \(C_p\) 的模特征表示完全不同：后者的群代数是局部非半单代数，而这里讨论的是不同的群概形及其坐标余模。
 
 \subsection{与李代数表示的关系及积分问题}
 \label{b5:subsec:2103:03}
 
-待撰写。
+把一个 \(R\) 点在单位附近代入双数环 \(k[\epsilon]/(\epsilon^2)\)，便得到无穷小作用。具体地，对 \(\varepsilon:A\to k\)，线性映射 \(d:A\to k\) 满足
+\[
+d(ab)=\varepsilon(a)d(b)+d(a)\varepsilon(b)
+\]
+时，\(\varepsilon+\epsilon d\) 为双数值代数同态。这些 \(d\) 构成 \(\operatorname{Lie}(G)\)；括号由卷积交换子给出。有理表示的余作用因此诱导
+\(\rho_*(d)=(1\otimes d)\delta\)。
+群交换子的二次项，或直接用余结合展开，说明这是一项李代数表示。坐标方程在 \(I+\epsilon X\) 处线性化便恢复熟悉的矩阵条件，例如 \(\operatorname{Lie}(\operatorname{SL}_n)=\mathfrak{sl}_n\)。
+\begin{proposition}\label{b5:prop:additive-rational-representations}
+设 \(k\) 为特征零域，\(V\) 为 \(n\) 维 \(k\) 向量空间。加法群 \(\mathbb G_a\) 在 \(V\) 上的每个有理表示，在选定 \(k\) 基后唯一形如
+\[
+\rho(t)=\exp(tN)=\sum_{j\ge0}\frac{t^jN^j}{j!},
+\]
+其中 \(N\) 为幂零矩阵，故该和有限。每个有限维有理 \(\mathbb G_m\) 表示的微分则可对角化，特征值为整数。
+\end{proposition}
+\begin{proof}
+加法群的矩阵条目为 \(t\) 的多项式，满足
+\(\rho(t+u)=\rho(t)\rho(u)\)、\(\rho(0)=I\)。
+对 \(u\) 求导并令 \(u=0\)，得到 \(\rho'(t)=\rho(t)N\)，其中 \(N=\rho'(0)\)。逐次比较多项式系数得到 \(A_j=N^j/j!\)。多项式次数有限，所以充分大的 \(N^j=0\)。反过来，幂零 \(N\) 的有限指数满足加法公式，给出有理表示。乘法群的结论由\cref{b5:thm:torus-weight-decomposition}中 \(t^m\) 的导数得到。
+\end{proof}
+因此从李代数表示到代数群有理表示会多出条件；即使两群的李代数都一维交换，\(\mathbb G_a\) 要求幂零作用，\(\mathbb G_m\) 要求整数半单作用。复李群的积分问题还涉及拓扑覆盖，留在附录C说明。在特征 \(p\) 中，群态射 \(t\mapsto t^p\) 的微分为零却不是零态射，微分还会进一步丢掉信息。

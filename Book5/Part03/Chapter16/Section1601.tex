@@ -1,13 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 16.1 Cartan 子代数
-% 纲要位置：计划纲要.md，第 3578 行。
+% 纲要位置：工作记录/计划纲要.md，第 4229 行。
 
 \section{Cartan 子代数}
 \label{b5:sec:1601}
 
-% TODO: 按以下纲要要点撰写本节。
+本节先把同时对角化所需的子代数建立起来。全节的基域为复数，Killing 型记为 \(B=\kappa_{\mathfrak g}\)；“半单元素”指伴随算子可对角化，不是把元素本身当作一个已经选定的矩阵。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * 半单李代数中的 Cartan 子代数
 % * 同时对角化与正则元素
@@ -18,19 +20,167 @@
 \subsection{半单李代数中的 Cartan 子代数}
 \label{b5:subsec:1601:01}
 
-待撰写。
+\begin{definition}\label{b5:def:toral-cartan}
+设 \(\mathfrak g\) 为有限维复半单李代数。若 \(x\in\mathfrak g\) 的伴随算子 \(\operatorname{ad}x\) 可对角化，则称 \(x\) 为半单元素；若该算子幂零，则称 \(x\) 为幂零元素。若交换子代数 \(\mathfrak t\subseteq\mathfrak g\) 的每个元素都半单，称 \(\mathfrak t\) 为\term{环面子代数}[toral subalgebra]。若环面子代数 \(\mathfrak h\) 按包含关系极大，就称它为 \(\mathfrak g\) 的\term{Cartan 子代数}[Cartan subalgebra]。
+\end{definition}
+
+这里的“极大”按包含关系理解，不预先指定维数。例如 \(\mathfrak{sl}_n(\mathbb C)\) 中迹零对角矩阵构成环面子代数。要证明它极大，只须注意：与全部迹零对角矩阵交换的矩阵仍为对角矩阵。一般情形不能凭借矩阵的外观作判断，须先把线性代数中的 Jordan 分解移到 \(\mathfrak g\) 内部。
+
+\begin{lemma}\label{b5:lem:inner-derivations-jordan}
+设 \(\mathfrak g\) 为有限维复半单李代数，Killing 型为 \(B\)。每个导子 \(D\) 都唯一写成 \(\operatorname{ad}x\)。每个 \(x\in\mathfrak g\) 都唯一分解为
+\[
+x=x_{\mathrm s}+x_{\mathrm n},\qquad
+[x_{\mathrm s},x_{\mathrm n}]=0,
+\]
+其中 \(x_{\mathrm s}\) 半单，\(x_{\mathrm n}\) 幂零；对应的伴随算子正是 \(\operatorname{ad}x\) 的半单部分和幂零部分。
+\end{lemma}
+\begin{proof}
+由\cref{b5:thm:killing-semisimple}，\(B\) 非退化。给定导子 \(D\)，取唯一的 \(x\) 满足
+\(B(x,y)=\operatorname{tr}(D\operatorname{ad}y)\) 对所有 \(y\) 成立。令 \(D_0=D-\operatorname{ad}x\)，则 \(\operatorname{tr}(D_0\operatorname{ad}y)=0\)。导子恒等式给出
+\[
+\begin{aligned}
+B(D_0u,v)
+&=\operatorname{tr}\Bigl([D_0,\operatorname{ad}u]\operatorname{ad}v\Bigr)\\
+&=\operatorname{tr}\Bigl(D_0[\operatorname{ad}u,\operatorname{ad}v]\Bigr)=0.
+\end{aligned}
+\]
+所以 \(D_0u=0\)。中心为零保证 \(\operatorname{ad}\) 单射，从而内导子的表示唯一。
+
+再对任意导子 \(D\) 作广义特征空间分解
+\(\mathfrak g=\bigoplus_\lambda V_\lambda\)。
+导子法则的二项式展开表明
+\([V_\lambda,V_\mu]\subseteq V_{\lambda+\mu}\)：若
+\((D-\lambda)^a u=0\)、\((D-\mu)^b v=0\)，则在
+\((D-\lambda-\mu)^{a+b-1}[u,v]\) 的展开中，每项至少有一个因子为零。
+令 \(D_{\mathrm s}\) 在 \(V_\lambda\) 上为 \(\lambda\) 倍恒等，则
+\(D_{\mathrm s}[u,v]=[D_{\mathrm s}u,v]+[u,D_{\mathrm s}v]\)；
+所以 \(D_{\mathrm s}\) 及 \(D_{\mathrm n}=D-D_{\mathrm s}\) 都是导子。
+应用前一段，写成 \(\operatorname{ad}x_{\mathrm s}\)、
+\(\operatorname{ad}x_{\mathrm n}\)。取 \(D=\operatorname{ad}x\)，算子的 Jordan 分解及 \(\operatorname{ad}\) 的单射性给出全部断言。
+\end{proof}
+
+下面的中心化子结论把极大性与零权空间联系起来。
+
+\begin{lemma}\label{b5:lem:toral-centralizer}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(B\) 为其 Killing 型，\(\mathfrak t\subseteq\mathfrak g\) 为环面子代数，\(\mathfrak c=Z_{\mathfrak g}(\mathfrak t)\) 为其中心化子。则 \(B|_{\mathfrak c}\) 非退化，且 \(\mathfrak c\) 对内在 Jordan 分解封闭。若 \(\mathfrak t\) 是极大环面子代数，则 \(\mathfrak c=\mathfrak t\)。
+\end{lemma}
+\begin{proof}
+交换的可对角化算子可同时对角化，故
+\(\mathfrak g=\mathfrak c\oplus\bigoplus_{\lambda\ne0}V_\lambda\)，其中
+\([h,v]=\lambda(h)v\)。\(B\) 的不变性给出
+\(\Bigl(\lambda(h)+\mu(h)\Bigr)B(u,v)=0\)。
+于是 \(\mathfrak c\) 与全部非零权空间正交；\(B\) 在整个 \(\mathfrak g\) 上非退化，故其在 \(\mathfrak c\) 上也非退化。
+
+若 \(x\in\mathfrak c\)，则 \(\operatorname{ad}x\) 与各 \(\operatorname{ad}h\) 交换；其 Jordan 两部分是该算子的多项式，因而同样交换。由 \(\operatorname{ad}\) 单射，\(x_{\mathrm s},x_{\mathrm n}\in\mathfrak c\)。极大性说明 \(x_{\mathrm s}\in\mathfrak t\)：否则可把交换的半单元素 \(x_{\mathrm s}\) 加入 \(\mathfrak t\)，得到更大的环面子代数。因此在 \(\mathfrak c\) 上，\(\operatorname{ad}x=\operatorname{ad}x_{\mathrm n}\) 幂零。\cref{b5:thm:engel}遂说明 \(\mathfrak c\) 幂零，特别是可解。
+
+将\cref{b5:thm:lie-triangularization}用于 \(\mathfrak c\) 在 \(\mathfrak g\) 上的伴随表示。所有伴随矩阵同时上三角，交换子矩阵严格上三角，所以
+\(B\Bigl([\mathfrak c,\mathfrak c],\mathfrak c\Bigr)=0\)。限制型非退化给出
+\([\mathfrak c,\mathfrak c]=0\)。此时 \(\operatorname{ad}x_{\mathrm n}\) 与全部 \(\operatorname{ad}y\)（\(y\in\mathfrak c\)）交换，其乘积幂零，因而
+\(B(x_{\mathrm n},y)=0\)。再次使用非退化性，得到 \(x_{\mathrm n}=0\)；于是 \(\mathfrak c\) 的全部元素都在 \(\mathfrak t\) 中。
+\end{proof}
 
 \subsection{同时对角化与正则元素}
 \label{b5:subsec:1601:02}
 
-待撰写。
+固定 Cartan 子代数 \(\mathfrak h\)。上一引理给出同时特征空间分解
+\[
+\mathfrak g=\mathfrak h\oplus
+\bigoplus_{\lambda\in\Omega}V_\lambda,\qquad
+V_\lambda=\Bigl\{\,x\mid[h,x]=\lambda(h)x\text{ 对所有 }h\in\mathfrak h\,\Bigr\},
+\]
+其中 \(\Omega\) 为有限个非零线性泛函。下一节将把这些泛函称为根。
+选取 \(h\in\mathfrak h\)，使每个 \(\lambda(h)\ne0\)，则
+\(Z_{\mathfrak g}(h)=\mathfrak h\)。这样的元素存在：复向量空间不可能是有限个真超平面的并。
+这些元素称为相对于 \(\mathfrak h\) 的\term{正则元素}[regular element]。
+此处只讨论 Cartan 子代数内的半单元素；任意李代数中用最小中心化子维数定义的正则性将在需要时另作说明。
+
+\ProseParagraphBreak
+
+若 \(x\in V_\lambda\)，则 \(\operatorname{ad}x\) 幂零。事实上，
+\([V_\lambda,V_\mu]\subseteq V_{\lambda+\mu}\)，而有限的权集合中不可能含有
+\(\mu,\mu+\lambda,\mu+2\lambda,\ldots\) 的无限序列。相应的指数
+\[
+\exp(t\operatorname{ad}x)
+=\sum_{j\geq0}\frac{t^j(\operatorname{ad}x)^j}{j!}
+\]
+只是有限和，是 \(\mathfrak g\) 的多项式自同构。它保持括号，因为导子法则给出指数的乘法相容性，其逆为把 \(t\) 改成 \(-t\) 的同一表达式。本章所说的\term{内自同构}[inner automorphism]，包括这些指数及其有限乘积。
 
 \subsection{Cartan 子代数的存在性与共轭性}
 \label{b5:subsec:1601:03}
 
-待撰写。
+这里把仿射空间中多项式零点集的补集及其任意并称为 Zariski 开集，记
+\(D(q)=\Bigl\{\,x\mid q(x)\ne0\,\Bigr\}\)。所需的开像事实可以用有限代数直接证明。
+
+\begin{lemma}\label{b5:lem:polynomial-open-image}
+设 \(F:\mathbb C^n\to\mathbb C^n\) 为多项式映射，其 Jacobian 行列式不是零多项式。若 \(U\subseteq\mathbb C^n\) 是非空 Zariski 开集，则 \(F(U)\) 含有非空 Zariski 开集。
+\end{lemma}
+\begin{proof}
+记坐标多项式为 \(f_1,\ldots,f_n\)。它们代数独立：否则取最低次数的非零关系
+\[
+P(f_1,\ldots,f_n)=0.
+\]
+求偏导并在有理函数域中乘 Jacobian 的逆，得到
+\[
+\frac{\partial P}{\partial T_i}(f_1,\ldots,f_n)=0
+\qquad(1\le i\le n).
+\]
+特征零保证非恒定 \(P\) 至少有一个非零偏导，这与所选关系的最低次数矛盾。因而
+\(\mathbb C(f_1,\ldots,f_n)\subseteq\mathbb C(x_1,\ldots,x_n)\)
+是有限代数扩张。将各 \(x_i\) 的首一代数方程清除系数的分母，可取非零 \(d\in A=\mathbb C[f_1,\ldots,f_n]\)，使
+\(A_d\subseteq\mathbb C[x_1,\ldots,x_n]_d\) 为有限整扩张。
+
+取非零多项式 \(q\)，使 \(D(q)\subseteq U\)。把 \(q^{-1}\) 也看成有限函数域扩张中的代数元素，再增大 \(d\)，便能使 \(q^{-1}\) 整于 \(A_d\)。于是
+\(A_d\subseteq\mathbb C[x_1,\ldots,x_n,1/d,1/q]\)
+仍为有限整扩张，记右端为 \(R\)。对 \(D(d)\) 的一点，其在 \(A_d\) 中的极大理想记为 \(\mathfrak m\)。
+必有 \(\mathfrak mR\ne R\)：否则取有限个 \(A_d\)-模生成元 \(u_i\)，可写
+\(u_i=\sum_j a_{ij}u_j\)，其中 \(a_{ij}\in\mathfrak m\)；
+乘伴随矩阵说明 \(\det\Bigl(I-(a_{ij})\Bigr)\in1+\mathfrak m\) 零化 \(R\)。
+但 \(A_d\) 嵌入 \(R\) 且 \(1\in R\)，这会迫使该行列式等于零，矛盾。
+所以 \(R/\mathfrak mR\) 为非零有限维复代数。取其一个极大理想，商是 \(\mathbb C\) 的有限域扩张，只能为 \(\mathbb C\)，因而给出所求原像。
+因 \(q\) 在 \(R\) 中可逆，所有这些原像都在 \(D(q)\subseteq U\)，故 \(D(d)\subseteq F(U)\)。
+\end{proof}
+
+\begin{theorem}[Cartan 子代数的存在与共轭]\label{b5:thm:cartan-conjugacy}
+每个有限维复半单李代数 \(\mathfrak g\) 都有 Cartan 子代数。任意两个 Cartan 子代数都由有限个幂零伴随指数的乘积互相变换，因而维数相同。
+\end{theorem}
+\begin{proof}
+零代数取零子代数即可。若 \(\mathfrak g\ne0\) 的所有元素都幂零，Engel 定理会使 \(\mathfrak g\) 幂零，与半单性矛盾。因此存在 \(x\) 使 \((\operatorname{ad}x)_{\mathrm s}\ne0\)；由\cref{b5:lem:inner-derivations-jordan}，\(\mathbb Cx_{\mathrm s}\) 是非零环面子代数。在有限维空间中不断扩张，便得到极大者。
+
+固定一个 Cartan 子代数 \(\mathfrak h\)，在全部非零权空间中取基 \(x_1,\ldots,x_m\)，其权为 \(\lambda_1,\ldots,\lambda_m\)。考虑
+\[
+F_{\mathfrak h}:\mathbb C^m\times\mathfrak h\longrightarrow\mathfrak g,
+\quad
+(t_1,\ldots,t_m,h)\longmapsto
+\exp(t_1\operatorname{ad}x_1)\cdots
+\exp(t_m\operatorname{ad}x_m)h.
+\]
+源、靶维数相等。在 \(t_1=\cdots=t_m=0\) 且 \(h\) 正则处，微分在 \(\mathfrak h\) 方向为恒等，在第 \(i\) 个参数方向为
+\([x_i,h]=-\lambda_i(h)x_i\)，故可逆。\cref{b5:lem:polynomial-open-image}说明：正则元素的这些内自同构像含有 \(\mathfrak g\) 中的非空 Zariski 开集 \(O_{\mathfrak h}\)。
+
+若 \(\mathfrak h'\) 是另一个 Cartan 子代数，相应开集与 \(O_{\mathfrak h}\) 相交；因为仿射空间的坐标环是整环，两个非空开集必相交。取
+\(z=a(h)=b(h')\)，其中 \(h,h'\) 正则，\(a,b\) 均为上述指数的乘积。对中心化子取像，得到
+\[
+a(\mathfrak h)=Z_{\mathfrak g}(z)=b(\mathfrak h').
+\]
+因此 \(b^{-1}a\) 给出所需共轭。
+\end{proof}
+
+这份证明只用有限和的指数及多项式映射，没有假定已经建立复 Lie 群。开像引理中的行列式论证也解释了有限整扩张如何保证闭点有原像。
 
 \subsection{Jordan 分解与中心化子}
 \label{b5:subsec:1601:04}
 
-待撰写。
+\begin{proposition}\label{b5:prop:jordan-centralizer}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(x=x_{\mathrm s}+x_{\mathrm n}\) 为其内在 Jordan 分解。则
+\[
+Z_{\mathfrak g}(x)
+=Z_{\mathfrak g}(x_{\mathrm s})\cap Z_{\mathfrak g}(x_{\mathrm n}).
+\]
+此外，每个自同构保持此分解；在任意半单元素 \(s\) 的中心化子中，Killing 型的限制非退化。
+\end{proposition}
+\begin{proof}
+若 \([y,x]=0\)，则 \(\operatorname{ad}y\) 与 \(\operatorname{ad}x\) 交换，也与其两个多项式 Jordan 部分交换；伴随表示单射给出 \([y,x_{\mathrm s}]=[y,x_{\mathrm n}]=0\)。反向包含显然成立。自同构把交换的半单、幂零两部分送到同样性质的两部分，故由唯一性保持分解。最后应用\cref{b5:lem:toral-centralizer}于 \(\mathbb Cs\)。
+\end{proof}
+
+在一般有限维李代数中，Cartan 子代数通常定义为幂零且等于自身正规化子的子代数。本章的 \(\mathfrak h\) 满足这个条件：它交换；若
+\([x,\mathfrak h]\subseteq\mathfrak h\)，把 \(x\) 按同时权空间分解，所有非零权分量都被这个包含关系迫为零，所以 \(x\in\mathfrak h\)。本章只在复半单情形使用已经证明的极大环面刻画，不把“Cartan 子代数交换”推广到任意李代数。

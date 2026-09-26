@@ -1,30 +1,213 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 20.3 李代数上同调
-% 纲要位置：计划纲要.md，第 3723 行。
+% 纲要位置：工作记录/计划纲要.md，第 4374 行。
 
 \section{李代数上同调}
 \label{b5:sec:2003}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * Chevalley–Eilenberg 复形
 % * 低阶上同调、导子及扩张
 % * Whitehead 引理与 Levi 分解的证明联系
+% * 在本节证明 Whitehead 第一、第二引理，并沿可解根的交换理想归纳，完成第12.4节预告的 Levi 一般存在性与共轭性；不能只以交换核的单次修正代替一般证明
 %
+
+本节回到\secref{b5:sec:1204}留下的两个问题：线性截面怎样修正成李代数同态，不同的半单补怎样互相共轭。误差分别满足二阶和一阶余圈恒等式。先建立这些恒等式所属的复形，再证明消失结果，最后处理一般可解根中的逐层修正。
 
 \subsection{Chevalley–Eilenberg 复形}
 \label{b5:subsec:2003:01}
 
-待撰写。
+\begin{definition}\label{b5:def:chevalley-eilenberg}
+设 \(\mathfrak a\) 为复李代数，\(M\) 为左 \(\mathfrak a\) 模，\(q\ge0\) 为整数。令
+\(C^q(\mathfrak a,M)=\operatorname{Hom}_{\mathbb C}(\Lambda^q\mathfrak a,M)\)，并置 \(C^0=M\)。定义升次映射
+\begin{align*}
+(\mathrm{d}\varphi)(x_0,\ldots,x_q)
+={}&\sum_{i=0}^q(-1)^i x_i\cdot
+\varphi(x_0,\ldots,\widehat{x_i},\ldots,x_q)\\
+&+\sum_{0\le i<j\le q}(-1)^{i+j}
+\varphi\Bigl([x_i,x_j],x_0,\ldots,\widehat{x_i},\ldots,
+\widehat{x_j},\ldots,x_q\Bigr).
+\end{align*}
+帽号表示删去对应变量。此上链复形称为\term[Chevalley-Eilenberg-fuxing]{Chevalley--Eilenberg 复形}[Chevalley--Eilenberg complex]；其上同调
+\(H^q(\mathfrak a,M)=\ker \mathrm{d}^q/\operatorname{im}\mathrm{d}^{q-1}\)
+称为\term[li-daishu-shangtongdiao]{李代数上同调}[Lie algebra cohomology]，其中约定 \(\mathrm{d}^{-1}=0\)。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:ce-differential}
+设 \(\mathfrak a\) 为复李代数，\(M\) 为左 \(\mathfrak a\) 模，\(C^q(\mathfrak a,M)=\operatorname{Hom}_{\mathbb C}(\Lambda^q\mathfrak a,M)\)，\(\mathrm{d}\) 为 Chevalley--Eilenberg 微分。则 \(\mathrm{d}^2=0\)。若 \(\mathfrak a\) 有限维，则对每个整数 \(q\ge0\)，\(C^q(\mathfrak a,-)\) 是正合函子；短正合系数列由此诱导上同调长正合列。
+\end{proposition}
+\begin{proof}
+展开 \(\mathrm{d}(\mathrm{d}\varphi)\)。两次各取一个作用项时，每对 \(i<j\) 合并为带符号的
+\(x_i\cdot(x_j\cdot v)-x_j\cdot(x_i\cdot v)\)；先取括号再让该括号作用的项给出相反符号的 \([x_i,x_j]\cdot v\)。它们由模公理抵消。一次作用与一个不含该变量的括号对应两种先后次序；删除变量的次序相差一次换位，符号相反，故两两抵消。两对互不相交的括号也按交换先后次序两两抵消。剩余项只涉及三个变量，其内部组合为
+\[
+\Bigl[[x_i,x_j],x_k\Bigr]+\Bigl[[x_j,x_k],x_i\Bigr]+\Bigl[[x_k,x_i],x_j\Bigr],
+\]
+在 \(\varphi\) 的同一位置出现，外部排列符号相同；Jacobi 恒等式使之为零。这覆盖了展开中的全部项，故 \(\mathrm{d}^2=0\)。
+
+域上的线性映射总能沿满射提升，所以 \(\operatorname{Hom}_{\mathbb C}(\Lambda^q\mathfrak a,-)\) 正合。逐次提升一个余圈、对提升取微分，再在核中读取结果，就得到连接同态；不同提升相差余边，证明其良定义。核与像的追逐与一般复形的长正合列构造相同。
+\end{proof}
+
+低次数公式值得单独写出：
+\begin{align*}
+(\mathrm{d}m)(x)&=x\cdot m,\\
+(\mathrm{d}b)(x,y)&=x\cdot b(y)-y\cdot b(x)-b\Bigl([x,y]\Bigr),\\
+(\mathrm{d}c)(x,y,z)&=x\cdot c(y,z)-y\cdot c(x,z)+z\cdot c(x,y)\\
+&\quad-c\Bigl([x,y],z\Bigr)+c\Bigl([x,z],y\Bigr)
+-c\Bigl([y,z],x\Bigr).
+\end{align*}
+它们与\cref{b5:prop:levi-abelian-obstruction}中的截面误差完全一致。
 
 \subsection{低阶上同调、导子及扩张}
 \label{b5:subsec:2003:02}
 
-待撰写。
+由定义，\(H^0(\mathfrak a,M)=M^{\mathfrak a}\)，而 \(H^1\) 是满足
+\(b\Bigl([x,y]\Bigr)=x\cdot b(y)-y\cdot b(x)\)
+的线性映射模掉 \(b(x)=x\cdot m\) 的映射。系数为伴随模 \(\mathfrak a\) 时，前者正是导子；后者等于 \(x\mapsto[x,m]=-\operatorname{ad}(m)x\)，所以
+\[
+H^1(\mathfrak a,\mathfrak a)
+\cong\operatorname{Der}(\mathfrak a)/\operatorname{ad}(\mathfrak a).
+\]
+
+\begin{proposition}\label{b5:prop:lie-h2-extensions}
+设 \(\mathfrak a\) 为复李代数，\(M\) 为其左模。交换核扩张
+\[
+0\longrightarrow M\longrightarrow\mathfrak e\longrightarrow\mathfrak a
+\longrightarrow0
+\]
+中诱导的 \(\mathfrak a\) 作用固定为所给作用，并且扩张同构要求在 \(M\) 和 \(\mathfrak a\) 上均为恒等。则其同构类与 \(H^2(\mathfrak a,M)\) 一一对应，零类对应半直积扩张。
+\end{proposition}
+\begin{proof}
+选商映射 \(\pi:\mathfrak e\to\mathfrak a\) 的线性截面 \(s\)，令
+\[
+x\cdot m=\Bigl[s(x),m\Bigr],\qquad
+c(x,y)=\Bigl[s(x),s(y)\Bigr]-s\Bigl([x,y]\Bigr).
+\]
+因为核 \(M\) 交换，前式不依赖提升的选择，且 Jacobi 恒等式使之满足模公理；这里正取命题要求固定的作用。第二式的像落在 \(\ker\pi=M\)。将它代入 \(\mathfrak e\) 的 Jacobi 恒等式，得到
+\[
+\begin{aligned}
+0={}&x\cdot c(y,z)-y\cdot c(x,z)+z\cdot c(x,y)\\
+&-c\Bigl([x,y],z\Bigr)+c\Bigl([x,z],y\Bigr)
+-c\Bigl([y,z],x\Bigr)=(\mathrm{d}c)(x,y,z).
+\end{aligned}
+\]
+若 \(s'=s+b\)、\(b:\mathfrak a\to M\) 线性，则展开括号并用 \([M,M]=0\)，有
+\[
+c'(x,y)-c(x,y)
+=x\cdot b(y)-y\cdot b(x)-b\Bigl([x,y]\Bigr)
+=(\mathrm{d}b)(x,y).
+\]
+这些正是\cref{b5:prop:levi-abelian-obstruction}中的截面障碍计算；该处虽在有限维条件下陈述，逐项计算并未使用维数限制，因此同样适用于当前的一般扩张。反过来，对余圈 \(c\) 在 \(M\oplus\mathfrak a\) 上定义
+\[
+\Bigl[(m,x),(n,y)\Bigr]
+=\Bigl(x\cdot n-y\cdot m+c(x,y),[x,y]\Bigr).
+\]
+反对称性成立。涉及两个 \(M\) 变量的 Jacobi 式为零；一个 \(M\) 变量的情形正是模公理；三个 \(\mathfrak a\) 变量的 \(M\) 分量为 \(\mathrm{d}c\)，另一个分量为 \(\mathfrak a\) 的 Jacobi 式。因此这是李代数。
+
+改变截面等价于改变坐标 \((m,x)\mapsto\Bigl(m+b(x),x\Bigr)\)，相应余圈相差 \(\mathrm{d}b\)。任何在两端为恒等的扩张同构都具有这种坐标形式，故余圈类相等恰好等价于扩张同构。最后 \(c=0\) 时上述括号是半直积；一个类为零的扩张可通过改换截面使 \(c=0\)。
+\end{proof}
+
+例如 \(\mathfrak a=\mathbb Cx\oplus\mathbb Cy\) 交换、\(M=\mathbb Cz\) 平凡时，所有微分为零，故 \(H^2(\mathfrak a,M)\) 一维。取 \(c(x,y)=z\)，得到 \([x,y]=z\)、\(z\) 中心的三维 Heisenberg 李代数。这一扩张不分裂，因为若有交换补，提升 \(x,y\) 后无论加上多少中心分量，括号仍是 \(z\)。
 
 \subsection{Whitehead 引理与 Levi 分解}
 \label{b5:subsec:2003:03}
 
-待撰写。
+\begin{theorem}[Whitehead 第一引理]\label{b5:thm:whitehead-first}
+设 \(\mathfrak s\) 为有限维复半单李代数，\(M\) 为有限维复 \(\mathfrak s\) 模。则 \(H^1(\mathfrak s,M)=0\)。
+\end{theorem}
+\begin{proof}
+一阶余圈条件正是\cref{b5:lem:semisimple-crossed-map}中的交叉映射条件。该引理已经用 Killing Casimir 证明存在 \(m\in M\) 使 \(b(x)=x\cdot m\)，而这里的右端就是 \((\mathrm{d}m)(x)\)。故所有一阶余圈都是余边。引理要求的半单性与有限维性恰为当前假设。
+\end{proof}
+
+第二引理还需要把 Casimir 修正推广到更高阶。下面给出可直接检验的链同伦公式；它同时说明非平凡简单系数与平凡系数为什么应分别处理。
+
+\begin{lemma}\label{b5:lem:casimir-ce-homotopy}
+设 \(\mathfrak s\) 为有限维复半单李代数，\(M\) 为左 \(\mathfrak s\) 模，\((x_i)\) 和 \((x^i)\) 为 \(\mathfrak s\) 的两组 Killing 对偶基。记 \(C^q(\mathfrak s,M)=\operatorname{Hom}_{\mathbb C}(\Lambda^q\mathfrak s,M)\)，\(\mathrm{d}\) 为 Chevalley--Eilenberg 微分，\(C_M:m\mapsto\sum_i x_i\cdot(x^i\cdot m)\) 为 Killing Casimir 在 \(M\) 上的作用。对整数 \(q\ge1\)，在 \(C^q(\mathfrak s,M)\) 上定义
+\[
+(H\varphi)(y_1,\ldots,y_{q-1})
+=\sum_i x_i\cdot\varphi(x^i,y_1,\ldots,y_{q-1}),
+\]
+且 \(H=0\) 于次数零。则 \(\mathrm{d}H+H\mathrm{d}=C_M\)，其中右边只让 Killing Casimir 作用于 \(\varphi\) 的取值。若 \(C_M\) 可逆，则所有 \(H^q(\mathfrak s,M)\) 均为零。
+\end{lemma}
+\begin{proof}
+用 \(R_x\) 表示只对取值施加 \(x\) 作用，用 \(i_x\) 表示在交错形式第一个变量插入 \(x\)。若 \(a_j\) 是任意基，\(\epsilon^j\) 表示与其对偶线性形式作外乘，则直接把微分的作用项和括号项分开，得到
+\begin{align*}
+\mathrm{d}R_x-R_x\mathrm{d}&=\sum_j\epsilon^j R_{[a_j,x]},\\
+\mathrm{d}i_x+i_x\mathrm{d}&=L_x
+=R_x-\sum_j\epsilon^j i_{[x,a_j]}.
+\end{align*}
+第二式的右边在 \(q\) 个变量上就是
+\(x\cdot\varphi(y_1,\ldots,y_q)
+-\sum_r\varphi\Bigl(y_1,\ldots,[x,y_r],\ldots,y_q\Bigr)\)：微分中未涉及插入变量的项因插入位置移动而抵消，留下这一式。
+
+因为 \(H=\sum_i R_{x_i}i_{x^i}\)，代入上面两式得到
+\begin{align*}
+\mathrm{d}H+H\mathrm{d}
+={}&\sum_i R_{x_i}R_{x^i}\\
+&+\sum_{i,j}\epsilon^j
+\Bigl(R_{[a_j,x_i]}i_{x^i}+R_{x_i}i_{[a_j,x^i]}\Bigr).
+\end{align*}
+第二行由\eqref{b5:eq:casimir-tensor-invariance}为零，第一行就是 \(C_M\)。\(C_M\) 为模自同态，因而与 \(\mathrm{d}\) 交换。若 \(\mathrm{d}\varphi=0\) 且 \(C_M\) 可逆，则
+\(\varphi=\mathrm{d}(C_M^{-1}H\varphi)\)，即每个余圈都是余边。
+\end{proof}
+
+\begin{theorem}[Whitehead 第二引理]\label{b5:thm:whitehead-second}
+设 \(\mathfrak s\) 为有限维复半单李代数，\(M\) 为有限维复 \(\mathfrak s\) 模。则 \(H^2(\mathfrak s,M)=0\)。
+\end{theorem}
+\begin{proof}
+由\cref{b5:thm:weyl-complete-reducibility}，\(M\) 是有限个简单模的直和；上同调与这一有限直和相容。非平凡简单分量上的 Killing Casimir 是非零标量，由\cref{b5:lem:casimir-positive-simple}和\cref{b5:lem:casimir-ce-homotopy}，这些分量的二阶上同调为零。因此只需处理平凡系数 \(\mathbb C\)。\(\mathfrak s=0\) 时结论直接成立，以下允许用非退化 Killing 型 \(B\)。
+
+取交错二余圈 \(\omega:\Lambda^2\mathfrak s\to\mathbb C\)。由 \(B\) 非退化，存在唯一线性算子 \(D\) 满足
+\(B(Dx,y)=\omega(x,y)\)。交错性说明 \(D\) 关于 \(B\) 斜对称。平凡系数的余圈式给出
+\[
+\omega\Bigl([x,y],z\Bigr)=\omega\Bigl(x,[y,z]\Bigr)+\omega\Bigl(y,[z,x]\Bigr).
+\]
+结合 Killing 型的不变性，右边等于
+\(B\Bigl([Dx,y],z\Bigr)+B\Bigl([x,Dy],z\Bigr)\)。非退化性因此给出
+\(D[x,y]=[Dx,y]+[x,Dy]\)，即 \(D\) 是导子。
+
+将\cref{b5:thm:whitehead-first}用于有限维伴随模 \(\mathfrak s\)，得所有导子都是内导子。于是 \(D=\operatorname{ad}a\) 对某个 \(a\in\mathfrak s\) 成立。令线性形式 \(b(x)=-B(a,x)\)，则平凡系数时
+\[
+(\mathrm{d}b)(x,y)=-b\Bigl([x,y]\Bigr)=B\Bigl(a,[x,y]\Bigr)
+=B\Bigl([a,x],y\Bigr)=\omega(x,y).
+\]
+故平凡系数的每个二余圈也是余边，完成证明。
+\end{proof}
+
+这两个结果合称\term[Whitehead-yinli]{Whitehead 引理}[Whitehead lemmas]。它们不声称半单李代数在任意次数、任意系数下的上同调都消失；例如平凡系数的三阶上同调可以非零。有限维假设也不能从上述 Casimir 分解中删除。
+
+\begin{theorem}[Levi--Malcev 定理的证明]\label{b5:thm:levi-malcev}
+设 \(\mathfrak g\) 为有限维复李代数，\(\mathfrak r=\operatorname{rad}\mathfrak g\)。则存在半单子代数 \(\mathfrak s\)，使
+\(\mathfrak g=\mathfrak r\rtimes\mathfrak s\)。任意两个这样的子代数可由若干
+\(\exp(\operatorname{ad}z)\)、\(z\in[\mathfrak g,\mathfrak r]\)
+的有限乘积互相变换；这些指数均为有限多项式。
+\end{theorem}
+\begin{proof}
+先证存在性，对 \(\dim\mathfrak r\) 归纳。若 \(\mathfrak r=0\)，取 \(\mathfrak s=\mathfrak g\)。否则取 \(\mathfrak r\) 导出列的最后一个非零项 \(A\)。它是非零交换理想；导出列各项被保持 \(\mathfrak r\) 的导子保持，故 \(A\) 也是 \(\mathfrak g\) 的理想。
+
+由\cref{b5:prop:radical-quotient-semisimple}，\(\mathfrak g/A\) 的可解根为 \(\mathfrak r/A\)。归纳假设给出该商中的 Levi 子代数 \(\overline{\mathfrak s}\)。设 \(\mathfrak e\) 是其在 \(\mathfrak g\) 中的逆像，则
+\[
+0\longrightarrow A\longrightarrow\mathfrak e
+\longrightarrow\overline{\mathfrak s}\longrightarrow0
+\]
+有交换核。商通过括号在 \(A\) 上作用，与提升选择无关。由\cref{b5:thm:whitehead-second}，这个扩张的二阶类为零；\cref{b5:prop:lie-h2-extensions}便给出李代数截面。其像 \(\mathfrak s\) 同构于 \(\overline{\mathfrak s}\)，所以半单。商中 \(\overline{\mathfrak s}\) 与 \(\mathfrak r/A\) 相交为零，且截面像与 \(A\) 相交为零，故 \(\mathfrak s\cap\mathfrak r=0\)。维数或满射到 \(\mathfrak g/\mathfrak r\) 又给出 \(\mathfrak g=\mathfrak r+\mathfrak s\)。
+
+再证共轭性，同样对 \(\dim\mathfrak r\) 归纳。取两个 Levi 子代数 \(\mathfrak s_1,\mathfrak s_2\)；在上述商 \(\mathfrak g/A\) 中，它们的像都是 Levi 子代数。归纳假设把两个像用若干指数共轭起来。商中的每个共轭元属于
+\([\mathfrak g/A,\mathfrak r/A]\)，可提升为 \([\mathfrak g,\mathfrak r]\) 中的元素。由\cref{b5:prop:radical-commutator-nilpotent}的证明，这些元素在 \(\mathfrak g\) 上的伴随算子都幂零，所以提升后的指数是良定义的自同构，并诱导原商中的指数。对 \(\mathfrak s_1\) 先施加这些自同构后，可以假定二者在商中有相同的像。
+
+于是它们都位于同一个子代数 \(\mathfrak e=\mathfrak s_1+A\) 中，并且都与 \(A\) 互补。以 \(\mathfrak s_1\) 为基准，\(\mathfrak s_2\) 写成图
+\[
+\Bigl\{\,x+b(x)\mid x\in\mathfrak s_1\,\Bigr\},
+\qquad b:\mathfrak s_1\longrightarrow A.
+\]
+\(A\) 交换使子代数条件化为 \(b\Bigl([x,y]\Bigr)=x\cdot b(y)-y\cdot b(x)\)。由第一引理，\(b(x)=x\cdot m\) 对某个 \(m\in A\) 成立。
+
+还须保证共轭元处在定理要求的 \([\mathfrak g,\mathfrak r]\) 中。由 Weyl 完全可约性，有限维 \(\mathfrak s_1\) 模 \(A\) 分解为平凡部分与非平凡简单部分之和，后者恰为 \([\mathfrak s_1,A]\)。把 \(m\) 的平凡分量删去不改变 \(b\)，故可取
+\(m\in[\mathfrak s_1,A]\subseteq[\mathfrak g,\mathfrak r]\)。由于 \([m,\mathfrak g]\subseteq A\) 且 \([m,A]=0\)，有 \((\operatorname{ad}m)^2=0\)。因而
+\[
+\exp(-\operatorname{ad}m)x=x-[m,x]=x+x\cdot m=x+b(x),
+\]
+这个最后的指数把 \(\mathfrak s_1\) 送到 \(\mathfrak s_2\)。连同已经提升的有限个指数，得到一般共轭性。存在性和共轭性的每次归纳都严格降低可解根维数，故过程终止。
+\end{proof}
+
+这就证明了\cref{b5:thm:levi-malcev-preview}。二阶上同调消失使每一层交换核的扩张分裂，一阶上同调消失给出同一层中两个补的共轭；沿可解根归纳，便得到任意有限维复李代数的 Levi 分解与共轭性。

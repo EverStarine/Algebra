@@ -1,5 +1,9 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### B.3 带对合的中心单代数
+% 本轮补充的纲要细目：
+% * 证明相似型对应共轭的伴随对合，解释中央标量倍为何不改变伴随运算
+% * 在右四元数模的明确约定下计算 Hermitian 型及伴随对合，保留标量的次序
+% * 用 Goldman 元与极大右理想证明第一类对合的存在性判据
 % 纲要位置：工作记录/计划纲要.md，第 1617 行。
 
 % 纲要要点（供目录核对）：
@@ -17,12 +21,12 @@
 \label{b2:subsec:B03:01}
 
 \begin{definition}\label{b2:def:B-algebra-involution}
-设 \(A\) 是中心为 \(K\) 的中心单代数。\(A\) 上的\term[daishu-duihe]{对合}[involution on an algebra]是可加映射 \(\sigma:A\to A\)，满足
+设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数。如果可加映射 \(\sigma:A\to A\) 满足
 \[
 \sigma(1)=1,\qquad \sigma(xy)=\sigma(y)\sigma(x),\qquad
-\sigma^2=\operatorname{id}.
+\sigma^2=\operatorname{id},
 \]
-若 \(\sigma|_K=\operatorname{id}_K\)，称为\term[diyilei-duihe]{第一类对合}[involution of the first kind]；否则称为\term[dierlei-duihe]{第二类对合}[involution of the second kind]。
+就称 \(\sigma\) 为 \(A\) 上的\term[daishu-duihe]{对合}[involution on an algebra]。若 \(\sigma|_K=\operatorname{id}_K\)，就称其为第一类对合；否则称为\term[dierlei-duihe]{第二类对合}[involution of the second kind]。
 \end{definition}
 
 中心被对合保持：若 \(z\) 与全部元素交换，则 \(\sigma(z)\) 也与全部 \(\sigma(x)\) 交换，而 \(\sigma\) 满射。因此 \(\tau=\sigma|_K\) 是满足 \(\tau^2=1\) 的域自同构，且
@@ -32,7 +36,7 @@
 第一类对合是 \(K\) 线性的。第二类对合只在固定域 \(k=K^\tau\) 上线性，在 \(K\) 上是半线性的；例如复矩阵的共轭转置是实线性的，通常不是复线性的。
 
 \begin{proposition}\label{b2:prop:B-involution-center}
-第二类情形中，\([K:k]=2\)。第一类对合则给出 \(K\) 代数同构 \(A\cong A^{\mathrm{op}}\)，从而 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
+设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数，\(\sigma\) 为 \(A\) 上的对合。若 \(\sigma\) 为第二类，记 \(k=K^{\sigma|_K}\)，则 \([K:k]=2\)。若 \(\sigma\) 为第一类，则它给出 \(K\) 代数同构 \(A\cong A^{\mathrm{op}}\)，从而 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
 \end{proposition}
 \begin{proof}
 第二类时取 \(t\in K\) 使 \(\tau(t)\ne t\)，令 \(u=t-\tau(t)\)，则 \(u\ne0\)、\(\tau(u)=-u\)。对每个 \(x\in K\)，有唯一分解
@@ -42,8 +46,45 @@ u\frac{x-\tau(x)}{2u}.
 \]
 右侧两个系数均被 \(\tau\) 固定，所以 \(K=k\oplus ku\)。其中 \(u\notin k\)，因为 \(2u\ne0\)。故扩张次数为二。
 
-第一类时，对合反转乘法，恰好是到反代数的 \(K\) 代数同构。\cref{b2:thm:brauer-group}说明反代数代表 Brauer 群中的负元，故 \([A]=-[A]\)。这里仅证明了第一类对合存在的必要条件，并未由这个条件构造一般代数上的对合。
+第一类时，对合反转乘法，恰好是到反代数的 \(K\) 代数同构。\cref{b2:thm:brauer-group}说明反代数代表 Brauer 群中的负元，故 \([A]=-[A]\)。
 \end{proof}
+
+\begin{theorem}[Albert]\label{b2:thm:B-albert-involution}
+设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数。则 \(A\) 存在第一类对合，当且仅当 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
+\end{theorem}
+\begin{proof}
+必要性由上一个命题得到。证明充分性时，先写 \(A\cong M_r(D)\)，其中 \(D\) 为中心除代数，令 \(d=\dim_KD\)。\(2[A]=0\) 使 \(D\otimes_KD\) 分裂，故它同构于 \(M_d(K)\)。若 \(D=K\)，转置已经给出所需对合。以下设 \(\deg D=n>1\)，因而 \(d=n^2\)。
+
+构造一个能交换两张量因子的元素。\cref{b2:thm:csa-enveloping-isomorphism}的同构 \(D\otimes_KD^{\mathrm{op}}\cong\operatorname{End}_K(D)\) 遗忘乘法后，给出向量空间同构
+\[
+\operatorname{Sand}:D\otimes_KD\longrightarrow\operatorname{End}_K(D),
+\qquad \operatorname{Sand}(a\otimes b)(x)=axb.
+\]
+令 \(g\) 为线性映射 \(x\mapsto\operatorname{Trd}_D(x)1\) 在此同构下的原像。约化迹与标量扩张相容；在分裂域上，\(D\) 变成 \(M_n\)，直接用矩阵单位计算得
+\[
+g=\sum_{i,j}E_{ij}\otimes E_{ji},\qquad
+g^2=1,\qquad g(a\otimes b)=(b\otimes a)g.
+\]
+这些等式在分裂域成立，故由标量扩张的单射性在 \(K\) 上成立。上述元素称为 Goldman 元。它在分裂后的自然张量空间上交换两因子，固定非零向量 \(v\otimes v\)，所以 \(1-g\) 不可逆。
+
+在 \(B=D\otimes_KD\cong M_d(K)\) 中，真右理想 \((1-g)B\) 包含于一个极大右理想 \(I\)。矩阵代数的简单右模维数为 \(d\)，故 \(\dim_KI=d^2-d\)。而 \(1\otimes D\) 的每个非零元素在 \(B\) 中可逆，不能属于真右理想。因此
+\[
+I\cap(1\otimes D)=0,\qquad B=I\oplus(1\otimes D).
+\]
+对每个 \(a\in D\)，定义唯一的 \(\sigma(a)\in D\)，使 \(a\otimes1-1\otimes\sigma(a)\in I\)。投影的线性给出 \(\sigma\) 的 \(K\) 线性，且 \(\sigma(1)=1\)。因为 \(I\) 为右理想，
+\[
+\begin{aligned}
+ab\otimes1-1\otimes\sigma(b)\sigma(a)
+={}&(a\otimes1-1\otimes\sigma(a))(b\otimes1)\\
+&+(b\otimes1-1\otimes\sigma(b))(1\otimes\sigma(a))\in I.
+\end{aligned}
+\]
+唯一性遂给出 \(\sigma(ab)=\sigma(b)\sigma(a)\)。它的核为真双边理想，除代数的单性使核为零；有限维数进一步使它双射。
+
+最后核对平方。将 \(a\otimes1-1\otimes\sigma(a)\in I\) 右乘 \(g\)，使用 Goldman 恒等式，得到 \(g(1\otimes a-\sigma(a)\otimes1)\in I\)。又因 \(1-g\in I\)，任意 \(z\in B\) 都有 \(gz-z\in I\)，所以 \(1\otimes a-\sigma(a)\otimes1\in I\)。与定义应用于 \(\sigma(a)\) 的等式相加，得 \(1\otimes(a-\sigma^2(a))\in I\cap(1\otimes D)=0\)。故 \(\sigma^2=1\)，它是 \(D\) 的第一类对合。在 \(M_r(D)\) 上逐项施加 \(\sigma\) 后转置，即得到 \(A\) 上的第一类对合。
+\end{proof}
+
+这个证明采用 Goldman 元和除代数代表，见\cite[Theorem (3.1); Proposition (3.6); Theorem (3.8); Remark (3.11), pp. 31--36]{KnusMerkurjevRostTignol1998Involutions}。判据限制的是 Brauer 类的周期，并非说除代数的次数至多为二；\cref{b2:exm:period-two-index-four}已有周期二、指数四的例子。
 
 \subsection{矩阵代数上的伴随对合}
 \label{b2:subsec:B03:02}
@@ -55,7 +96,7 @@ b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
 唯一确定 \(\sigma_B(X)=B^{-1}X^{\mathsf T}B\)，称为 \(b\) 的\term[xing-bansui-duihe]{伴随对合}[adjoint involution]。若 \(B^{\mathsf T}=\varepsilon B\)、\(\varepsilon=1\) 或 \(-1\)，直接代入可见 \(\sigma_B^2=1\)。伴随对合由整个型确定，不是把每个矩阵替换成其代数余子式组成的伴随矩阵。
 
 \begin{theorem}\label{b2:thm:B-split-involutions}
-\(M_n(K)\) 上的每个第一类对合都等于某个 \(\sigma_B\)，其中 \(B\) 可逆且满足 \(B^{\mathsf T}=B\) 或 \(B^{\mathsf T}=-B\)。给定对合时，\(B\) 唯一到乘以非零标量。后一种情形只可能在 \(n\) 为偶数时出现。
+设 \(K\) 为特征不为二的域，\(n\ge1\)。\(M_n(K)\) 上的每个第一类对合都可写为 \(\sigma_B(X)=B^{-1}X^{\mathsf T}B\)，其中 \(B\in\operatorname{GL}_n(K)\) 满足 \(B^{\mathsf T}=B\) 或 \(B^{\mathsf T}=-B\)。给定对合时，\(B\) 唯一到乘以非零标量。后一种情形只可能在 \(n\) 为偶数时出现。
 \end{theorem}
 \begin{proof}
 将给定对合与转置复合，得到 \(M_n(K)\) 的 \(K\) 代数自同构。\cref{b2:thm:skolem-noether}说明这种自同构为内自同构，故存在可逆 \(B\) 使 \(\sigma(X)=B^{-1}X^{\mathsf T}B\)。计算平方得
@@ -68,7 +109,7 @@ b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
 对称型产生的对合称为\term[zhengjiao-duihe]{正交对合}[orthogonal involution]，交替型产生的称为\term[xin-duihe]{辛对合}[symplectic involution]。这些名称也用于未分裂的中心单代数：由\cref{b2:cor:csa-algebraic-closure-splits}，在代数闭包 \(\Omega\) 上有 \(A\otimes_K\Omega\cong M_n(\Omega)\)；第一类对合延伸为 \(\sigma\otimes\operatorname{id}_\Omega\)，再看它属于哪种类型。这个定义不依赖分裂同构，因为由内自同构改变分裂同构只会改变型的基。
 
 \begin{proposition}\label{b2:prop:B-involution-type-dimension}
-设 \(\deg A=n\)，且 \(\sigma\) 是第一类对合。不动子空间
+设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数，\(\deg A=n\)，且 \(\sigma\) 是 \(A\) 上的第一类对合。不动 \(K\) 线性子空间
 \[
 \operatorname{Sym}(A,\sigma)=\Bigl\{\,a\in A\mid\sigma(a)=a\,\Bigr\}
 \]
@@ -82,7 +123,7 @@ b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
 \symidx{\(\operatorname{Sym}(A,\sigma)\)：对合的不动子空间}
 
 \begin{proposition}\label{b2:prop:B-unitary-adjoint}
-设 \(K/k\) 是二次扩张，非恒等自同构记为 \(a\mapsto\bar a\)。\(M_n(K)\) 上限制到中心为这个自同构的对合，都可写为
+设 \(K/k\) 是特征不为二的二次域扩张，非恒等 \(k\) 自同构记为 \(a\mapsto\bar a\)，且 \(n\ge1\)。\(M_n(K)\) 上限制到中心为这个自同构的对合，都可写为
 \[
 \sigma_H(X)=H^{-1}\overline X^{\mathsf T}H,
 \qquad \overline H^{\mathsf T}=H,
@@ -97,13 +138,38 @@ b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
 
 第二类对合也称为\term[you-duihe]{酉对合}[unitary involution]。它没有要求 Hermitian 型正定；例如 \(H=\operatorname{diag}(1,-1)\) 也定义一个对合。正定性、范数及完备性属于\appref{b2:app:D}讨论算子代数时另加的结构。
 
+\begin{proposition}\label{b2:prop:B-similar-forms-adjoint}
+设 \(K\) 为特征不为二的域，配有一个允许恒等的对合 \(a\mapsto\bar a\)，固定域为 \(F\)。记 \(X^*=\overline X^{\mathsf T}\)，固定 \(\varepsilon\in\{1,-1\}\)，并设 \(H,H'\in\operatorname{GL}_n(K)\) 满足 \(H^*=\varepsilon H\)、\(H'^*=\varepsilon H'\)。则伴随对合 \(\sigma_H(X)=H^{-1}X^*H\) 与 \(\sigma_{H'}\) 相同，当且仅当 \(H'=cH\) 对某个 \(c\in F^\times\) 成立。更一般地，若
+\[
+H'=cP^*HP,\qquad c\in F^\times,\quad P\in\operatorname{GL}_n(K),
+\]
+则 \(\sigma_{H'}=\operatorname{Int}(P^{-1})\sigma_H\operatorname{Int}(P)\)，其中 \(\operatorname{Int}(P)(X)=PXP^{-1}\)。
+\end{proposition}
+\begin{proof}
+乘以中心标量显然不改变伴随公式。若两个伴随对合相同，对任意 \(X\) 都有
+\[
+X^*H'H^{-1}=H'H^{-1}X^*.
+\]
+由于 \(X^*\) 取遍全部矩阵，\(H'H^{-1}\) 属于矩阵环中心，所以 \(H'=cH\)。再取共轭转置，\(H'^*=\bar c\,\varepsilon H\)，与 \(H'^*=\varepsilon H'=\varepsilon cH\) 比较得到 \(\bar c=c\)。最后直接计算
+\[
+\begin{aligned}
+\sigma_{H'}(X)
+&=P^{-1}H^{-1}(P^*)^{-1}X^*P^*HP\\
+&=P^{-1}\sigma_H(PXP^{-1})P,
+\end{aligned}
+\]
+这就是所述共轭关系。
+\end{proof}
+
+因此伴随对合通常记录型的相似类，而不记录其全部等距信息。例如 \(\mathbb R^n\)、\(n\ge1\) 上的标准正定型与它的负型给出同一个转置对合，却不能等距，因为非零向量的二次取值符号相反。命题也解释了为什么研究带对合代数的自同构时会自然遇到相似变换，而不只是等距变换。
+
 \subsection{四元数的共轭与正交对合}
 \label{b2:subsec:B03:03}
 
 令 \(Q=(a,b)_k\)，其中 \(a,b\ne0\)，并使用 \(1,i,j,ij\) 这组基。\eqref{b2:eq:quaternion-conjugation}给出的共轭 \(\gamma\) 是第一类对合，其不动子空间只有 \(k\)。\(Q\) 的次数为二，故\cref{b2:prop:B-involution-type-dimension}用这个一维不动子空间说明 \(\gamma\) 是辛对合，即使 \(Q\) 是除代数也一样。
 
 \begin{proposition}\label{b2:prop:B-quaternion-orthogonal-involution}
-映射 \(\sigma(x)=i\gamma(x)i^{-1}\) 是 \(Q\) 的正交对合，且
+设 \(k\) 为特征不为二的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\) 为以 \(i^2=a\)、\(j^2=b\)、\(ij=-ji\) 定义的四元数代数，\(\gamma\) 为其标准共轭，则映射 \(\sigma(x)=i\gamma(x)i^{-1}\) 是 \(Q\) 的正交对合，且
 \[
 \sigma(i)=-i,\qquad \sigma(j)=j,\qquad \sigma(ij)=ij.
 \]
@@ -114,3 +180,30 @@ b(Xv,w)=b\Bigl(v,\sigma_B(X)w\Bigr)
 \end{proof}
 
 共轭所对应的范数 \(x\gamma(x)\) 总在中心，见\eqref{b2:eq:quaternion-norm}；更换对合后，这个性质不能照搬。例如 \(x=1+j\) 时，\(x\sigma(x)=(1+j)^2=1+b+2j\)，一般不在 \(k\) 中。对合的类型与所使用的范数公式必须一起核对。
+
+\begin{example}\label{b2:exm:B-quaternion-hermitian-right-module}
+在这个例子中明确采用右模：令 \(D=\mathbb H\)，\(M=D^2\) 为列向量右 \(D\) 模，标量逐坐标从右相乘。定义
+\[
+h(x,y)=\bar x_1y_1-\bar x_2y_2
+=\overline x^{\mathsf T}Jy,\qquad J=\operatorname{diag}(1,-1).
+\]
+这里的共轭是四元数标准共轭。它满足
+\[
+h(xa,yb)=\bar a\,h(x,y)b,\qquad
+h(y,x)=\overline{h(x,y)}.
+\]
+若 \(h(x,y)=0\) 对全部 \(y\) 成立，依次取两个标准基向量便得 \(x=0\)，故它非退化。这是除环上的一个 Hermitian 型；公式中的标量次序是定义的一部分。
+\end{example}
+
+右 \(D\) 线性自同态由矩阵从左相乘给出，所以 \(\operatorname{End}_D(M)=M_2(D)\)。令 \(T^*=\overline T^{\mathsf T}\)，相乘仍有 \((ST)^*=T^*S^*\)：四元数共轭与转置同时反转相应的顺序。于是
+\[
+T^\dagger=J^{-1}T^*J,\qquad
+h(Tx,y)=h(x,T^\dagger y)
+\]
+给出一个实线性、反转乘法且平方为恒等的运算。伴随的唯一性也可由非退化性直接得到。比如
+\[
+T=\begin{pmatrix}0&i\\j&0\end{pmatrix}
+\quad\Longrightarrow\quad
+T^\dagger=\begin{pmatrix}0&j\\i&0\end{pmatrix}.
+\]
+这一模型已经不同于域上的 Hermitian 型：值落在非交换除环中，不能随意交换两个标量。它说明如何在除代数上的矩阵代数中构造对合；一般带型模之间的等价理论不在这里引入。

@@ -1,30 +1,175 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 7.2 Frobenius 特征映射
-% 纲要位置：计划纲要.md，第 3308 行。
-
-\section{Frobenius 特征映射}
-\label{b5:sec:0702}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3959 行。
 % * 对称群表示环与对称函数
 % * 诱导乘积与对称函数乘法
 % * 特征标计算的组合化
-%
+\section{Frobenius 特征映射}
+\label{b5:sec:0702}
+
+幂和函数适合记录轮换长度：一个 \(r\) 轮换对应一个 \(p_r\)，互不相交的轮换对应乘积。然而同一循环型的共轭类大小不同，直接把特征标值作为系数会破坏内积。中心化子阶 \(z_\mu\) 正好给出所需的归一化。
 
 \subsection{对称群表示环与对称函数}
 \label{b5:subsec:0702:01}
 
-待撰写。
+\begin{definition}\label{b5:def:frobenius-characteristic}
+设 \(n\) 为非负整数，\(f\) 为 \(S_n\) 上的复类函数，\(f(\mu)\) 表示它在循环型 \(\mu\vdash n\) 上的值，\(z_\mu\) 为该循环型的中心化子阶，\(p_\mu\in\Lambda_{\mathbb C}^n\) 为幂和对称函数的分拆乘积。定义
+\[
+\operatorname{ch}_n(f)
+=\sum_{\mu\vdash n}\frac{f(\mu)}{z_\mu}p_\mu.
+\]
+从复类函数空间 \(\operatorname{CF}(S_n)\) 到复对称函数的 \(n\) 次齐次分量 \(\Lambda_{\mathbb C}^n\) 的这个线性映射称为\term[Frobenius-tezheng-yingshe]{Frobenius 特征映射}[Frobenius characteristic map]。对有限维复 \(S_n\)-表示 \(U\)，也记 \(\operatorname{ch}(U)=\operatorname{ch}_n(\chi_U)\)。
+\end{definition}
+
+这里的 \(z_\mu\) 与\cref{b5:lem:schur-cauchy}一致。事实上，与一个循环型为 \(\mu\) 的置换交换的置换，可以交换等长轮换，再在每个轮换内部独立转动。因此其中心化子阶为 \(\prod_r r^{m_r(\mu)}m_r(\mu)!\)，共轭类大小为 \(n!/z_\mu\)。
+
+\begin{proposition}\label{b5:prop:frobenius-isometry}
+对任意非负整数 \(n\)，Frobenius 特征映射 \(\operatorname{ch}_n:\operatorname{CF}(S_n)\to\Lambda_{\mathbb C}^n\) 是复向量空间同构。对任意复类函数 \(f,g\in\operatorname{CF}(S_n)\)，以第一变量共轭线性的 Hall 内积配对它们的像，有
+\[
+\Bigl\langle\operatorname{ch}_n(f),\operatorname{ch}_n(g)\Bigr\rangle
+=\frac1{n!}\sum_{\sigma\in S_n}\overline{f(\sigma)}g(\sigma)
+=\sum_{\mu\vdash n}\frac{\overline{f(\mu)}g(\mu)}{z_\mu}.
+\]
+这里 \(f(\mu),g(\mu)\) 为循环型 \(\mu\) 上的值，\(z_\mu\) 为相应中心化子阶。并且平凡表示与符号表示的像分别为完全对称函数 \(h_n\)、初等对称函数 \(e_n\)。
+\end{proposition}
+\begin{proof}
+各循环型的示性函数构成类函数基，像是非零倍数的 \(p_\mu\)，所以映射为同构。Hall 内积对幂和基的对角公式立即给出所写等式；共轭类大小解释了两种求和形式。
+
+平凡表示的像为 \(\sum_{\mu\vdash n}p_\mu/z_\mu\)。把所有 \(n\) 汇总，其生成函数为
+\[
+\prod_{r\ge1}\Bigl(\sum_{a\ge0}\frac{p_r^a t^{ra}}{r^a a!}\Bigr)
+=\exp\Bigl(\sum_{r\ge1}\frac{p_r}{r}t^r\Bigr)=H(t).
+\]
+符号在循环型 \(\mu\) 上的值为 \(\prod_r(-1)^{(r-1)m_r(\mu)}\)。相应地把上式中 \(p_r\) 换成 \((-1)^{r-1}p_r\)，得到 \(E(t)\)，所以次数 \(n\) 项为 \(e_n\)。
+\end{proof}
+
+普通表示环 \(R_{\mathbb C}(S_n)\) 的乘法来自同一个群上的张量积。本节还需要另一种乘法，它会改变对称群的次数；这两种运算不能混用。
 
 \subsection{诱导乘积与对称函数乘法}
 \label{b5:subsec:0702:02}
 
-待撰写。
+\begin{definition}\label{b5:def:induction-product}
+设 \(R_{\mathbb C}(S_n)\) 为对称群 \(S_n\) 的复表示环，\(\mathcal R=\bigoplus_{n\ge0}R_{\mathbb C}(S_n)\)。给定非负整数 \(a,b\)、有限维复 \(S_a\)-表示 \(U\) 和 \(S_b\)-表示 \(W\)，记 \([U],[W]\) 为其在表示环中的类，\(U\boxtimes W\) 为 \(S_a\times S_b\) 在 \(U\otimes_{\mathbb C}W\) 上按各因子分别作用的表示。把 \(S_a\times S_b\) 按前 \(a\) 个与后 \(b\) 个字母的置换嵌入 \(S_{a+b}\)，定义
+\[
+[U]*[W]
+=\Bigl[\operatorname{Ind}_{S_a\times S_b}^{S_{a+b}}(U\boxtimes W)\Bigr],
+\]
+并对虚表示双线性延拓。这称为\term[youdao-chengji]{诱导乘积}[induction product]。次数零的平凡表示是单位。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:frobenius-induction-product}
+设 \(a,b\) 为非负整数，\(f,g\) 分别为 \(S_a,S_b\) 的复类函数，\((f\boxtimes g)(\sigma,\tau)=f(\sigma)g(\tau)\)，\(S_a\times S_b\le S_{a+b}\) 按两个连续字母块嵌入。对 Frobenius 特征映射，有
+\[
+\operatorname{ch}_{a+b}
+\Bigl(\operatorname{Ind}_{S_a\times S_b}^{S_{a+b}}(f\boxtimes g)\Bigr)
+=\operatorname{ch}_a(f)\operatorname{ch}_b(g).
+\]
+因而诱导乘积使 \(\mathcal R=\bigoplus_{n\ge0}R_{\mathbb C}(S_n)\) 成为分次交换环，Frobenius 特征映射保持该乘法。
+\end{proposition}
+\begin{proof}
+固定循环型 \(\nu\vdash a+b\) 的置换 \(\sigma\)。陪集空间 \(S_{a+b}/(S_a\times S_b)\) 可以看作全部 \(a\) 元子集。诱导特征标的求和只有在 \(\sigma\) 保持该子集时才有贡献；这样的子集必为若干完整轮换之并。若它及其补集的循环型分别为 \(\alpha,\beta\)，则
+\[
+m_r(\alpha)+m_r(\beta)=m_r(\nu),\qquad
+|\alpha|=a,\quad|\beta|=b,
+\]
+而选择这些轮换的方法数为
+\[
+\prod_r\binom{m_r(\nu)}{m_r(\alpha)}
+=\frac{z_\nu}{z_\alpha z_\beta}.
+\]
+每种选择贡献 \(f(\alpha)g(\beta)\)。所以诱导类函数在 \(\nu\) 处的值除以 \(z_\nu\)，等于
+\[
+\sum_{\alpha\cup\beta=\nu}
+\frac{f(\alpha)g(\beta)}{z_\alpha z_\beta}.
+\]
+这正是右端幂和乘积中 \(p_\nu\) 的系数，证明了等式。类函数上的特征映射单射，而右端乘法结合、交换且有次数零的单位，因此同样性质在虚表示上成立。
+\end{proof}
+
+设 \(\mu=(\mu_1,\ldots,\mu_r)\vdash n\)，Young 置换模为
+\[
+M^\mu=\operatorname{Ind}_{S_{\mu_1}\times\cdots\times S_{\mu_r}}^{S_n}1.
+\]
+由刚证明的乘法公式及 \(\operatorname{ch}(1_{S_a})=h_a\)，有
+\begin{equation}\label{b5:eq:young-permutation-characteristic}
+\operatorname{ch}(M^\mu)=h_\mu.
+\end{equation}
+同样的记法可用于任意非负整数组合：重排各部分只改变块的排列，诱导表示同构；零部分可以删去。
+
+\begin{theorem}\label{b5:thm:frobenius-characteristic}
+设 \(n\) 为非负整数，\(\lambda\vdash n\)，\(S^\lambda\) 为对应的复 Specht 左 \(\mathbb C[S_n]\)-模，\(s_\lambda\) 为 Schur 函数，\(\operatorname{ch}_n\) 为 Frobenius 特征映射，记 \(\operatorname{ch}(S^\lambda)=\operatorname{ch}_n(\chi_{S^\lambda})\)。则
+\begin{equation}\label{b5:eq:specht-schur}
+\operatorname{ch}(S^\lambda)=s_\lambda.
+\end{equation}
+因此直和映射 \(\operatorname{ch}=\bigoplus_{n\ge0}\operatorname{ch}_n\) 将带诱导乘积的 \(\mathcal R=\bigoplus_{n\ge0}R_{\mathbb C}(S_n)\) 同构到 \(\Lambda_{\mathbb Q}\) 中以 \(s_\lambda\) 为整数基的子环，并将不可约表示的类对应到 Schur 基。
+\end{theorem}
+\begin{proof}
+取 \(N\ge n\)，将 \(\lambda\) 补零到 \(N\) 项。由 Jacobi--Trudi 公式和\eqref{b5:eq:young-permutation-characteristic}，\(s_\lambda\) 是下列虚特征标的像：
+\[
+\theta_\lambda
+=\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)\,
+\chi_{M^{\alpha(\sigma)}},
+\qquad
+\alpha_i(\sigma)=\lambda_i-i+\sigma(i).
+\]
+含负部分的项规定为零；其他项将 \(\alpha(\sigma)\) 重排成分拆 \(\mu(\sigma)\)。
+
+对任意 \(k\)，有
+\[
+\sum_{i=1}^k\alpha_i(\sigma)
+=\sum_{i=1}^k\lambda_i+
+\sum_{i=1}^k\sigma(i)-\frac{k(k+1)}2
+\ge\sum_{i=1}^k\lambda_i.
+\]
+重排后的前 \(k\) 项和不会减小，故 \(\mu(\sigma)\) 支配 \(\lambda\)。若 \(\sigma\ne1\)，存在一个 \(k\) 使 \(\Bigl\{\sigma(1),\ldots,\sigma(k)\Bigr\}\ne\{1,\ldots,k\}\)，此时上式严格，故 \(\mu(\sigma)\ne\lambda\)。
+
+现在应用\cref{b5:prop:specht-dominance}：\(M^\mu\) 只含支配 \(\mu\) 的 Specht 类型，并且 \(S^\mu\) 的重数是一。因此
+\[
+\theta_\lambda=\chi_{S^\lambda}
++\sum_{\eta\triangleright\lambda}c_\eta\chi_{S^\eta},
+\qquad c_\eta\in\mathbb Z,
+\]
+其中 \(\triangleright\) 表示严格支配。另一方面，特征映射等距且 Schur 函数范数为一，故
+\[
+1=\langle s_\lambda,s_\lambda\rangle
+=\langle\theta_\lambda,\theta_\lambda\rangle
+=1+\sum_{\eta\triangleright\lambda}c_\eta^2.
+\]
+最后一式使用的是已经在\cref{b5:thm:specht-classification}建立的不可约分类与特征标正交性。于是全部 \(c_\eta=0\)，得到 \(\theta_\lambda=\chi_{S^\lambda}\)。证明没有用 Schur 函数反过来建立 Specht 分类。整数基及乘法结论随后由诱导乘积公式得到。
+\end{proof}
 
 \subsection{特征标计算的组合化}
 \label{b5:subsec:0702:03}
 
-待撰写。
+\begin{corollary}[Frobenius 特征标公式]\label{b5:cor:frobenius-coefficient}
+设 \(n\) 为非负整数，\(\lambda,\mu\vdash n\)，\(S^\lambda\) 为复 Specht 模，\(\chi_{S^\lambda}(\mu)\) 为其特征标在循环型 \(\mu\) 上的值，\(z_\mu\) 为相应中心化子阶。取整数 \(N\ge n\)，把 \(\lambda\) 补零至 \(N\) 项，令 \(x=(x_1,\ldots,x_N)\)、\(\delta_N=(N-1,\ldots,0)\)、\(\Delta_N(x)=\prod_{i<j}(x_i-x_j)\)。对这些变量中的 Schur 多项式和幂和多项式，有
+\[
+p_\mu(x)=\sum_{\lambda\vdash n}\chi_{S^\lambda}(\mu)s_\lambda(x),
+\qquad
+\chi_{S^\lambda}(\mu)
+=[x^{\lambda+\delta_N}]\Delta_N(x)p_\mu(x).
+\]
+等价地，\(s_\lambda\) 中 \(p_\mu\) 的系数乘以 \(z_\mu\)，就是 \(\chi_{S^\lambda}(\mu)\)。
+\end{corollary}
+\begin{proof}
+由\eqref{b5:eq:specht-schur}，\(\langle p_\mu,s_\lambda\rangle=\chi_{S^\lambda}(\mu)\)。这些特征标值为实数：一个置换与其逆具有相同循环型，而有限群特征标满足 \(\chi(g^{-1})=\overline{\chi(g)}\)。所以交换内积的两个参数不会改变该值。在 Schur 标准正交基下展开 \(p_\mu\)，得第一式。乘以 \(\Delta_N\)，不同严格递减指数列的交错式互不混淆，读取 \(x^{\lambda+\delta_N}\) 的系数便得第二式。
+\end{proof}
+
+例如
+\[
+h_2=\frac{p_1^2+p_2}{2},\qquad
+h_3=\frac{p_1^3+3p_1p_2+2p_3}{6},
+\qquad
+s_{(2,1)}=\frac{p_1^3-p_3}{3}.
+\]
+由于 \(z_{(1^3)}=6\)、\(z_{(2,1)}=2\)、\(z_{(3)}=3\)，立即读出 \(S_3\) 的二维特征标为 \((2,0,-1)\)。
+
+\ProseParagraphBreak
+对四次情形，
+\[
+s_{(2,2)}=h_2^2-h_1h_3
+=\frac{p_1^4}{12}+\frac{p_2^2}{4}-\frac{p_1p_3}{3}.
+\]
+按循环型 \((1^4),(2,1,1),(2,2),(3,1),(4)\) 排列，特征标值为 \((2,0,2,-1,0)\)。同一个行列式因而同时编码维数、换位上的迹以及较长轮换上的迹。
+
+\ProseParagraphBreak
+若实际计算 \(S^\lambda\) 在指定循环型上的特征标，可以先用 Jacobi--Trudi 求 \(s_\lambda\)，再用\eqref{b5:eq:newton-h}逐个把所需 \(h_r\) 化成幂和，最后读取一个系数。不需要预先求整张特征标表。Etingof 等人的叙述在\cite[Sections 5.14--5.15, pp. 114--118]{EtingofEtAl2011RepresentationTheory}中以 Young 置换模、三角性及 Cauchy 行列式建立相应公式；这里已把等距性与诱导乘法一并写出，以便继续处理张量分解。

@@ -1,36 +1,228 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.3 Weierstrass 方法与局部计算
-% 纲要位置：计划纲要.md，第 2339 行。
 
 \section{Weierstrass 方法与局部计算}
 \label{b3:sec:D03}
 
-% TODO: 按以下纲要要点撰写本节。
+级数除法的目标是把无限项压到一个次数有界的余式中，而不是逐项计算到某个截断阶数便停止。形式情形靠理想进完备性，收敛情形还要控制系数的范数；两种停止依据须分别证明。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 形式及收敛情形的 Weierstrass 除法和预备定理，分别写出系数环与正规性假设
 % * 与附录 F 的 Hironaka 型标准基、初始指数和局部有限映射的联系
 % * 低维曲线分支、切锥和交数计算简介；Newton 滤过作为进一步方法
 % * 形式解、收敛解和代数解的区分；不能把形式除法中的级数自动视为收敛
 %
+% #### D.3.1 形式与收敛情形的 Weierstrass 除法和预备定理
+% #### D.3.2 Hironaka 型标准基、初始指数与局部有限映射
+% #### D.3.3 曲线分支、切锥、交数与 Newton 滤过
+% #### D.3.4 形式解、收敛解与代数解
+
 
 \subsection{形式与收敛情形的 Weierstrass 除法和预备定理}
 \label{b3:subsec:D03:01}
 
-待撰写。
+一元多项式可以除以首一多项式，余式次数受到控制。对于级数，被除式可能有无穷多个项，除式也未必是多项式。Weierstrass 方法的作用是：只要除式沿一个选定变量有确定的非零阶数，仍能得到次数有界的余式，并把除式本身换成一个首一多项式乘以单位。
+
+\begin{definition}\label{b3:def:distinguished-series}
+设 \((A,\mathfrak m)\) 为局部环，\(k=A/\mathfrak m\)，\(f\in A[[T]]\)。若其像
+\(\overline f\in k[[T]]\) 恰有阶数 \(d\)，则称 \(f\) 关于 \(T\) 为 \(d\) 阶正规级数。若多项式形如
+\[
+W=T^d+a_{d-1}T^{d-1}+\cdots+a_0,\qquad a_i\in\mathfrak m,
+\]
+则称它为\term[distinguishedpolynomial]{Weierstrass 多项式}[distinguished polynomial]。
+\end{definition}
+
+这里“正规”只指指定变量上的非零阶数，与整闭意义下的正规环无关。若把 \(k[[x_1,\ldots,x_n]]\) 看作
+\(k[[x_1,\ldots,x_{n-1}]][[T]]\)，其中 \(T=x_n\)，条件就是
+\(f(0,\ldots,0,T)\) 的首个非零项为次数 \(d\)。
+
+\begin{theorem}[形式 Weierstrass 除法与预备定理]\label{b3:thm:formal-weierstrass}
+设 \((A,\mathfrak m)\) 为完备 Noether 局部环，\(k=A/\mathfrak m\)，\(f\in A[[T]]\) 关于 \(T\) 为 \(d\) 阶正规级数。则有：
+\begin{enumerate}
+\item 每个 \(h\in A[[T]]\) 唯一写成
+\[
+h=qf+r,\qquad q\in A[[T]],\quad r\in A[T],\quad\deg r<d.
+\]
+其中 \(d=0\) 时余式为零。
+\item 唯一存在单位 \(u\in A[[T]]^\times\) 及 \(d\) 次Weierstrass 多项式 \(W\)，使 \(f=uW\)。
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+先说明所用的完备性。由于 \(\mathfrak m^a\) 有限生成，一个级数的所有系数属于 \(\mathfrak m^a\)，当且仅当它属于 \(\mathfrak m^aA[[T]]\)。因此
+\[
+A[[T]]/\mathfrak m^aA[[T]]
+\simeq(A/\mathfrak m^a)[[T]],
+\]
+逐系数取逆极限表明 \(A[[T]]\) 对 \(\mathfrak m A[[T]]\) 也完备分离。注意这不是宣称该拓扑与 \((\mathfrak m,T)\)-进拓扑相同。
+
+写
+\[
+f=T^du_0(T)+\sum_{i<d}a_iT^i,
+\qquad u_0(0)\in A^\times,\quad a_i\in\mathfrak m.
+\]
+\(u_0\) 可逆，故 \(F=u_0^{-1}f=T^d+b\)，其中 \(b\in\mathfrak m A[[T]]\)。对任意级数 \(g\)，定义 \(R_0(g)\) 为次数小于 \(d\) 的截断，\(Q_0(g)\) 由
+\(g=T^dQ_0(g)+R_0(g)\) 确定。它们都是保持每个 \(\mathfrak m^a\) 的 \(A\)-线性映射。
+
+欲写 \(h=qF+r\)，比较次数至少 \(d\) 的部分，必须满足
+\[
+q=Q_0(h)-Q_0(bq).
+\]
+算子 \(E(q)=-Q_0(bq)\) 把 \(\mathfrak m^aA[[T]]\) 送入 \(\mathfrak m^{a+1}A[[T]]\)，所以
+\[
+q=\sum_{j\ge0}E^jQ_0(h)
+\]
+在上述拓扑中收敛，并满足方程。令 \(r=R_0(h-bq)\)，即得 \(h=qF+r\)。换回 \(f\) 时把商改为 \(qu_0^{-1}\)。若两种表示之差给出 \(0=qF+r\)，则 \(q=E(q)\)，反复使用可知 \(q\) 属于每个 \(\mathfrak m^aA[[T]]\)，故 \(q=0\)，进而 \(r=0\)。除法的存在唯一性得证。
+
+对 \(h=T^d\) 应用除法，得 \(T^d=qf+r\)。模 \(\mathfrak m\) 后在域上的级数环中比较，得到
+\(\overline r=0\)、\(\overline q=\overline u_0^{-1}\)，所以 \(q\) 为单位。
+于是 \(W=T^d-r\) 是Weierstrass 多项式，且 \(f=q^{-1}W\)。
+
+若又有 \(f=u'W'\)，则 \(W'=(u')^{-1}uW\)。把 \(W'\) 除以 \(W\)：一方面级数商为 \((u')^{-1}u\)、余式为零；另一方面，两个首一 \(d\) 次多项式的通常除法给出商 \(1\)、余式 \(W'-W\)。唯一性迫使 \(W'=W\)，进而 \(u'=u\)。
+\end{proof}
+
+这个证明是逐次修正，不是把通常多项式长除法无限重复后直接宣布结束。误差算子每次增加的是系数中的 \(\mathfrak m\)-阶；正是这一点使无穷和有意义。
+
+\begin{theorem}[收敛 Weierstrass 除法与预备定理]\label{b3:thm:analytic-weierstrass}
+设 \(n\ge1\)，\(x'=(x_1,\ldots,x_{n-1})\)，\(f\in\mathbb C\{x',T\}\)，且 \(f(0,T)\) 的阶数恰为非负整数 \(d\)。对每个 \(h\in\mathbb C\{x',T\}\)，唯一存在
+\[
+q\in\mathbb C\{x',T\},\qquad
+r\in\mathbb C\{x'\}[T],\quad\deg_T r<d,
+\]
+使 \(h=qf+r\)。同时唯一有 \(f=uW\)，其中 \(u\) 为收敛单位，\(W\) 是首一 \(d\) 次多项式，低次系数属于 \((x')\mathbb C\{x'\}\)。
+\end{theorem}
+
+\begin{proof}
+若 \(d=0\)，则 \(f\) 为收敛单位，取 \(q=h/f\)、\(r=0\)、\(W=1\) 即可。以下设 \(d>0\)。写 \(f(0,T)=T^dv(T)\)，其中 \(v(0)\ne0\)，并置
+\(F=f/v(T)=T^d+b(x',T)\)。于是 \(b(0,T)=0\)，且 \(b\) 收敛。
+
+固定足够小的 \(T\) 半径 \(\rho>0\)，再取各 \(x'\) 变量的共同半径 \(\varepsilon>0\)。对绝对可和的级数使用范数
+\[
+\left\|\sum_{\alpha,j}c_{\alpha j}(x')^\alpha T^j\right\|_{\varepsilon,\rho}
+=\sum_{\alpha,j}|c_{\alpha j}|\varepsilon^{|\alpha|}\rho^j.
+\]
+有限范数的级数组成完备赋范代数，乘法满足 \(\|ab\|\le\|a\|\|b\|\)。先把 \(\rho\) 选在 \(b,h\) 的收敛范围内；由于 \(b(0,T)=0\)，减小 \(\varepsilon\) 可使
+\(\rho^{-d}\|b\|_{\varepsilon,\rho}<1\)。当没有 \(x'\) 变量时，\(b=0\)，无需这一步。
+
+仍令 \(R_0(g)\) 为 \(T\) 次数小于 \(d\) 的部分，令 \(g=T^dQ_0(g)+R_0(g)\)。有
+\(\|Q_0(g)\|\le\rho^{-d}\|g\|\)。所以算子 \(E(q)=-Q_0(bq)\) 的范数小于一，几何级数
+\[
+q_0=\sum_{j\ge0}E^jQ_0(h),\qquad r=R_0(h-bq_0)
+\]
+在该范数下收敛，给出 \(h=q_0F+r\)。\(r\) 的有限多个 \(T\) 系数都是收敛的 \(x'\) 级数；取 \(q=q_0/v\)，得到所求收敛除法。任何两组收敛表示在形式环中也成立，故形式除法的唯一性保证它们相同。
+
+对 \(T^d\) 作这次除法，得 \(T^d=qf+r\)。令 \(x'=0\)，唯一性给出 \(r(0,T)=0\)、\(q(0,T)=v(T)^{-1}\)，故 \(q\) 为收敛单位。于是 \(W=T^d-r\)、\(u=q^{-1}\) 满足预备结论；其唯一性仍由形式预备定理得到。范数收敛正是形式证明之外必须增加的估计。
+\end{proof}
+
+永田雅宜\cite[(45.3), pp. 191--193]{Nagata1975LocalRings}用系数估计建立收敛除法；这里将同一控制写成收缩算子的形式。
+
+\begin{example}\label{b3:exm:weierstrass-cusp-division}
+在 \(k[[x]][[y]]\) 中，\(f=y^2-x^3\) 是关于 \(y\) 的二次Weierstrass 多项式。每个级数模 \(f\) 唯一写成
+\(a(x)+b(x)y\)。例如
+\[
+y^5+x^2y^2\equiv x^6y+x^5\pmod{y^2-x^3}.
+\]
+这里余式关于 \(y\) 的次数小于二，关于 \(x\) 则可以有无穷多项；“次数有界”必须说明是哪个变量。
+\end{example}
 
 \subsection{Hironaka 型标准基、初始指数与局部有限映射}
 \label{b3:subsec:D03:02}
 
-待撰写。
+\begin{proposition}\label{b3:prop:weierstrass-finite-free}
+设 \((A,\mathfrak m)\) 为完备 Noether 局部环，\(f\in A[[T]]\) 关于 \(T\) 为正整数 \(d\) 阶正规级数。则
+\[
+A[[T]]/(f)
+\]
+是以 \(1,T,\ldots,T^{d-1}\) 的像为基的自由 \(A\)-模。若 \(n\ge1\)，\(x'=(x_1,\ldots,x_{n-1})\)，\(g\in\mathbb C\{x',T\}\) 满足 \(g(0,T)\) 的阶数为同一个正整数 \(d\)，则 \(\mathbb C\{x',T\}/(g)\) 也以 \(1,T,\ldots,T^{d-1}\) 的像为基，成为自由 \(\mathbb C\{x'\}\)-模。
+\end{proposition}
+\begin{proof}
+除法说明这些元素张成商模。若次数小于 \(d\) 的多项式属于 \((f)\)，除法唯一性使该余式为零，证明线性无关。解析情形使用收敛除法作完全相同的论证。
+\end{proof}
+
+因而一个适当选取坐标的超曲面，可以通过忘掉最后一个变量，有限地映到较低维的坐标空间。比如尖点的坐标环作为 \(k[[x]]\)-模秩为二：给定 \(x\) 后，方程对 \(y\) 是二次的。这里的模秩包括分支合并时的重数，并不保证每个点上都有两个互不相同的几何点。
+
+\ProseParagraphBreak
+只有一个Weierstrass 多项式时，余式范围由 \(1,T,\ldots,T^{d-1}\) 控制；多个方程时，需要同时记录所有可能首项。形式级数中的一个常用做法是先按总次数从低到高、同次再按固定次序，取非零级数的第一个非零单项式。这样的次序在每个次数范围内只有有限多个项，因此首项有意义。若首项的指数为 \(\alpha\)，则称 \(\alpha\) 为该级数的初始指数。
+
+\ProseParagraphBreak
+对理想 \(I\subset k[[x_1,\ldots,x_n]]\)，所有初始指数及其向正方向的平移组成集合
+\[
+\Delta(I)=\{\alpha+\beta:
+\alpha\text{ 是某个 }0\ne f\in I\text{ 的初始指数},
+\ \beta\in\mathbb N^n\}.
+\]
+其对应单项式理想由有限多个单项式生成；选择具有这些首项的元素，便得到有限个候选约化式。真正的形式除法还必须说明无穷约化在什么拓扑中收敛，并证明余式范围和唯一性；这不是有限生成性本身的推论。
+
+\ProseParagraphBreak
+附录 F 负责这种标准基方法：\secref{b3:sec:F01}区分局部项序与极小生成元，后续各节处理形式除法、局部算法及截断计算。本节只用已经证明的一元Weierstrass 多项式除法。二者相同的思想是先确定允许保留的单项式，再把环或模中的元素化为这些单项式的组合；多方程情况下，还要处理首项相消产生的新关系。
 
 \subsection{曲线分支、切锥、交数与 Newton 滤过}
 \label{b3:subsec:D03:03}
 
-待撰写。
+以下在 \(\mathbb C[[x,y]]\) 中计算。一个约化平面曲线方程的不同不可约因子表示它的形式分支。分支数、切线数和重数不必相同；最低次项和完整因式分解回答的是不同问题。
+
+\begin{proposition}\label{b3:prop:formal-cusp-normalization}
+设 \(t\) 为不定元。代入 \(x=t^2,y=t^3\) 给出同构
+\[
+\mathbb C[[x,y]]/(y^2-x^3)
+\simeq \mathbb C[[t^2,t^3]]
+=\mathbb C+t^2\mathbb C[[t]].
+\]
+其分式域为 \(\mathbb C((t))\)，整闭包为 \(\mathbb C[[t]]\)，并且这个整闭包是原环上的有限模。
+\end{proposition}
+\begin{proof}
+形式除法把商中元素唯一写成 \(a(x)+yb(x)\)。代入后为
+\(a(t^2)+t^3b(t^2)\)；前者只有偶数次项，后者只有从三次起的奇数次项，故两部分相消只能同时为零。这证明单射，也说明像恰为没有一次项的级数。
+
+在分式域中 \(t=y/x\)，而且任何 Laurent 级数乘一个足够大的 \(t\) 的偶数次幂，都落入原环，所以分式域为 \(\mathbb C((t))\)。\(t\) 满足首一关系 \(t^2-x=0\)，且
+\(\mathbb C[[t]]=A+At\)，其中 \(A=\mathbb C+t^2\mathbb C[[t]]\)，故扩张有限且整。环 \(\mathbb C[[t]]\) 是 DVR，整闭；反过来，若分式域中的元素在 \(A\) 上整，它在 \(\mathbb C[[t]]\) 上也整，必已属于后者。因此后者恰为整闭包。
+\end{proof}
+
+因此尖点只有一个分支。其最低次齐次方程却是 \(y^2\)，切锥是一条带二重结构的直线，而不是两条不同分支。比较另一个方程
+\[
+g=y^2-x^2(1+x).
+\]
+收敛的单位 \(u=\sqrt{1+x}\)、\(u(0)=1\)，给出
+\(g=(y-xu)(y+xu)\)。两个因子各自把 \(y\) 表为 \(x\) 的收敛级数，商都同构于 \(\mathbb C[[x]]\)，故它们是两个不同的光滑分支，切线分别为 \(y=x\)、\(y=-x\)。
+
+\begin{definition}\label{b3:def:plane-local-intersection-number}
+设 \(f,g\in(x,y)\mathbb C[[x,y]]\)，且
+\(\mathbb C[[x,y]]/(f,g)\) 有限维。称
+\[
+i_0(f,g)=\dim_{\mathbb C}\mathbb C[[x,y]]/(f,g)
+\]
+为这两个方程在原点的局部交数。若商无限维，本附录不把它记成一个有限交数。
+\end{definition}
+
+对尖点 \(f=y^2-x^3\)，有
+\[
+i_0(f,x)=2,\qquad i_0(f,y)=3,\qquad
+i_0(f,y-\lambda x)=2\quad(\lambda\ne0).
+\]
+前两个商分别为 \(\mathbb C[[y]]/(y^2)\)、\(\mathbb C[[x]]/(x^3)\)；第三个商中方程变为
+\(x^2(\lambda^2-x)\)，后一个因子为单位。这些长度既区分切线方向，也保留单纯点集看不出的接触程度。
+
+\begin{definition}\label{b3:def:weighted-newton-filtration}
+设 \(w_1,w_2\) 为正整数，并在 \(\mathbb C[[x,y]]\) 中计算。单项式 \(x^ay^b\) 的权为 \(w_1a+w_2b\)，非零形式级数的权阶为其非零项权的最小值。对整数 \(r\ge0\)，权阶至少 \(r\) 的级数组成理想 \(F_r\)，称 \((F_r)_{r\ge0}\) 为相应的权滤过。一个非零级数的 Newton 多边形，是其非零项指数集合加上 \(\mathbb R_{\ge0}^2\) 后所得集合的凸包。
+\end{definition}
+
+权均为正，故每个权以下只有有限多个单项式，初始部分仍是多项式，并有 \(F_rF_s\subseteq F_{r+s}\)。对尖点取 \(w(x)=2,w(y)=3\)，则 \(y^2\) 与 \(x^3\) 同为权 \(6\)，Newton 多边形的有界边连接 \((3,0)\) 与 \((0,2)\)。加入权大于 \(6\) 的项不会改变这条最低权关系；但这项观察本身并没有证明扰动后的曲线与原曲线同构，也没有替代完整的分支计算。
 
 \subsection{形式解、收敛解与代数解}
 \label{b3:subsec:D03:04}
 
-待撰写。
+设一个多项式方程组的系数属于 \(\mathbb C[x]\)。其解可能取值于代数幂级数环、收敛幂级数环或形式幂级数环。方程保持相同，允许取值的环不同；因而说“已经求出一个解”时，必须同时说明解属于哪个环。
+
+\ProseParagraphBreak
+方程 \(Y^2-(1+x)=0\) 的两个形式解是代数且收敛的，Weierstrass 除法或单根提升确定每个分支。相反，方程 \(Y-Z^2=0\) 允许任意形式级数 \(h(x)\) 给出解
+\((Y,Z)=(h(x)^2,h(x))\)。若 \(h=\sum r!x^r\)，这个特定解不收敛，尽管方程的系数是多项式。所以“方程代数”并不推出“每个形式解代数”。
+
+\begin{example}\label{b3:exm:formal-graph-not-analytic-equation}
+取 \(h(x)\in x\mathbb C[[x]]\) 为发散级数。在形式环中，理想
+\(J=(y-h(x))\) 定义一个光滑形式图像，商环同构于 \(\mathbb C[[x]]\)。然而 \(J\) 不能由一个在 \(y\) 方向导数非零的收敛函数生成：若存在收敛 \(g\) 生成 \(J\)，则 \(g=u(y-h(x))\)，其中 \(u\) 为形式单位，所以
+\(\partial g/\partial y(0,0)=u(0,0)\ne0\)。收敛隐函数定理或一次的收敛 Weierstrass 预备定理使其唯一形式根收敛，矛盾。
+
+\ProseParagraphBreak
+这个结论针对给定坐标下的嵌入。作为抽象完备局部环，商仍然是一个幂级数环，当然有代数模型；不能把“这个形式图像不是解析图像”误写成“这个抽象环没有代数模型”。
+\end{example}
+
+在实际计算中，常只能确定解模 \((x)^N\) 的值。所有高于此阶的项都被舍去，因此一个有限截断既不能证明整个级数收敛，也不能排除高阶才出现的新关系。下一节的逼近定理保证某些方程的形式解可以在任意指定有限阶上由真正代数解替代；这个结论需要明确的环与方程假设。

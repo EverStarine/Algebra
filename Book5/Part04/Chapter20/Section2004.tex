@@ -1,13 +1,11 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 20.4 BGG 方法
-% 纲要位置：计划纲要.md，第 3729 行。
+% 纲要位置：工作记录/计划纲要.md，第 4381 行。
 
 \section{BGG 方法}
 \label{b5:sec:2004}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * BGG 消解的典型版本
 % * Ext 与最高权范畴
@@ -16,17 +14,122 @@
 % ---
 %
 
+取最高权模的简单商时，要商去较低最高权生成的子模。若出现多个这样的子模，还须考虑它们的交及相互关系。BGG 消解通过一个正合复形逐次描述这些关系。
+
 \subsection{BGG 消解的典型版本}
 \label{b5:subsec:2004:01}
 
-待撰写。
+\begin{theorem}[BGG 消解]\label{b5:thm:bgg-resolution}
+设 \(\mathfrak g\) 为有限维复半单李代数，固定 Cartan 子代数 \(\mathfrak h\) 及正根集合 \(\Phi^+\)，\(\lambda\in\mathfrak h^*\) 为相应的支配整权，\(W\) 为 Weyl 群，\(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)。记 \(M(\mu)\) 为最高权 \(\mu\in\mathfrak h^*\) 的 Verma 模，\(L(\mu)\) 为其唯一简单商，\(\ell(w)\) 为 \(w\in W\) 的简单反射长度，\(w_0\) 为最长元，\(N=\ell(w_0)\)。对 \(0\le j\le N\)，记
+\[
+D_j=\bigoplus_{\ell(w)=j}M(w\mathbin{\cdot}\lambda),
+\qquad w\mathbin{\cdot}\lambda=w(\lambda+\rho)-\rho.
+\]
+可以选择模同态 \(D_j\to D_{j-1}\)，使
+\[
+0\longrightarrow D_N\longrightarrow\cdots\longrightarrow D_1
+\longrightarrow D_0\longrightarrow L(\lambda)\longrightarrow0
+\]
+正合。它称为\term[BGG-xiaojie]{BGG 消解}[Bernstein--Gelfand--Gelfand resolution]。
+\end{theorem}
+
+\begin{proofsketch}
+先取 \(\lambda=0\)。令 \(\mathfrak b=\mathfrak h\oplus\mathfrak n_+\)，以 \(\mathfrak b\) 的伴随作用把 \(\mathfrak g/\mathfrak b\) 看成 \(\mathfrak b\) 模。考虑相对 Chevalley--Eilenberg 复形的各项
+\[
+ E_j=U(\mathfrak g)\otimes_{U(\mathfrak b)}
+ \bigwedge^j(\mathfrak g/\mathfrak b),
+ \qquad 0\le j\le N.
+\]
+删去一个外幂因子的作用项与两两括号项组成微分，Jacobi 恒等式使相邻微分复合为零。PBW 分解 \(\mathfrak g=\mathfrak n_-\oplus\mathfrak b\) 将此复形作为向量空间识别为 \(\mathfrak n_-\) 的标准消解；给 \(U(\mathfrak n_-)\) 取 PBW 滤过后，其分次复形是对称代数的 Koszul 消解，所以除了末端的平凡模外没有同调。
+
+这些 \(E_j\) 暂时只是具有 Verma 滤过的模。将复形投影到含平凡模的中心特征标分块，仍保持正合。\(\bigwedge^j(\mathfrak g/\mathfrak b)\) 的权是 \(j\) 个不同负根的和；其中与零权处于同一移位 \(W\) 轨道的，恰为 \(w\mathbin{\cdot}0=w\rho-\rho\)、\(\ell(w)=j\)，各出现一次。故分块后的第 \(j\) 项具有每个 \(M(w\mathbin{\cdot}0)\) 恰一次的 Verma 滤过。同一长度的不同 \(w\) 互不处于严格 Bruhat 比较关系，Verma 模间相应的 \(\operatorname{Ext}^1\) 消失，于是这个滤过分裂，得到定理所要求的直和项。
+
+一般支配整权 \(\lambda\) 可从这一复形出发，先逐项张量有限维模 \(L(\lambda)\)，再投影到 \(\lambda\) 的中心特征标分块。这两步均正合，末端变为 \(L(\lambda)\)。逐项的 Verma 滤过中，每个 \(w\mathbin{\cdot}\lambda\) 恰出现一次，其他权落在别的分块；同样的 \(\operatorname{Ext}^1\) 消失给出 \(D_j\) 的直和形式。所得微分由相对复形的微分诱导，因而满足 \(\mathrm{d}_{j-1}\mathrm{d}_j=0\)，并保持正合。
+
+这里省略了相对微分的良定义及滤过消解核验、外幂权的唯一性引理、Verma 扩张消失，以及张量后分块中没有额外因子的权计算；这些步骤分别保证复形存在、正合与每项恰为所写直和。关于 Verma 模的扩张与消解方法，可进一步参阅\cite[Chapter 6]{Humphreys2008BGGCategoryO}。\cite[Section 8.4, Theorem 8.30]{Kirillov2008LieGroups}给出了同一定理的陈述，但未展开证明。
+\end{proofsketch}
+
+下面在秩一情形给出具体映射，并直接证明正合性。
+
+\begin{proposition}\label{b5:prop:bgg-sl2-explicit}
+设 \(\mathfrak g=\mathfrak{sl}_2(\mathbb C)\)，\(m\in\mathbb Z_{\ge0}\)，记 \(M(\mu)\) 为 \(\mathfrak g\) 的最高权 \(\mu\) 的 Verma 模，\(L_m\) 为最高权 \(m\)、维数 \(m+1\) 的不可约 \(\mathfrak g\) 模。令 \(v,u\) 分别为 \(M(m),M(-m-2)\) 的非零最高权生成元，\(f=E_{21}\)，其中 \(E_{21}\) 为矩阵单位。则下式给出一个不分裂的短正合列，\(\iota\) 按所有整数 \(j\ge0\) 时的公式定义：
+\[
+0\longrightarrow M(-m-2)\overset{\iota}{\longrightarrow}
+M(m)\longrightarrow L_m\longrightarrow0,
+\qquad \iota(f^ju)=f^{j+m+1}v,
+\]
+\end{proposition}
+\begin{proof}
+向量 \(f^{m+1}v\) 的权为 \(-m-2\)，且
+\(ef^{m+1}v=(m+1)(m-m)f^mv=0\)。Verma 泛性质给出 \(\iota\)；PBW 基表明所有 \(f^{j+m+1}v\) 线性无关，所以 \(\iota\) 单射。商模以 \(v,fv,\ldots,f^mv\) 为基，\(e,f,h\) 的作用正是有限维简单模 \(L_m\) 的标准公式，故商为 \(L_m\)。
+
+若正合列分裂，商中最高向量的像必须是 \(M(m)\) 中权 \(m\) 的向量，因此是 \(v\) 的非零倍数。这个向量生成整个 \(M(m)\)，却在 \(L_m\) 中应被 \(f^{m+1}\) 零化，矛盾。因此它不分裂。
+\end{proof}
+
+在一般消解中，逐权取维数仍合法，因为每个权空间有限维。欧拉交错和给出
+\[
+\operatorname{ch}L(\lambda)
+=\sum_{w\in W}(-1)^{\ell(w)}\operatorname{ch}M(w\mathbin{\cdot}\lambda).
+\]
+再用 PBW 的
+\(\operatorname{ch}M(\mu)=e^\mu\prod_{\alpha>0}(1-e^{-\alpha})^{-1}\)，即可恢复 Weyl 公式。这个推导是使用 BGG 消解的另一种解释；前章已经不借 BGG 独立证明了该公式。
 
 \subsection{Ext 与最高权范畴}
 \label{b5:subsec:2004:02}
 
-待撰写。
+\begin{definition}\label{b5:def:yoneda-ext-o}
+设 \(\mathfrak g\) 为有限维复半单李代数，固定 Cartan 子代数及正根集合，令 \(\mathcal O\) 为相应的范畴 O，\(M,N\in\mathcal O\)。中间项 \(E\) 也在 \(\mathcal O\) 内的短正合列
+\(0\to N\to E\to M\to0\)，按在两端为恒等的交换图取等价类，并用拉回、推出定义 Baer 加法，所得群记作 \(\operatorname{Ext}^1_{\mathcal O}(M,N)\)。零类恰为分裂列。
+\end{definition}
+
+\cref{b5:prop:bgg-sl2-explicit}因此给出
+\(\operatorname{Ext}^1_{\mathcal O}\Bigl(L_m,M(-m-2)\Bigr)\ne0\)。这里不能把 BGG 消解误称为投射消解：它的各项是 Verma 模，而 Verma 模并非都投射。
+
+\begin{example}\label{b5:exm:o-costandard-sl2}
+在 \(M(m)\) 的每个一维权空间上取对偶，令 \(\varphi_j\) 与 \(f^jv\) 对偶，取其代数直和 \(D M(m)=\bigoplus_{j\ge0}\mathbb C\varphi_j\)。以交换 \(e,f\)、固定 \(h\) 的反自同构定义对偶作用，便有
+\[
+h\varphi_j=(m-2j)\varphi_j,\qquad
+e\varphi_j=\varphi_{j-1},\qquad
+f\varphi_j=(j+1)(m-j)\varphi_{j+1},
+\]
+其中 \(\varphi_{-1}=0\)。这些公式也可以直接验证三个 \(\mathfrak{sl}_2\) 括号。
+若 \(m\ge0\)，前 \(m+1\) 个向量生成子模 \(L_m\)；商的最高权为 \(-m-2\)，后续 \(f\) 作用均非零，故经逐项缩放基后商同构于 \(M(-m-2)\)。中间模由 \(\varphi_{m+1}\) 生成，具有有限维权空间且 \(e\) 局部幂零，所以属于 \(\mathcal O\)。得到
+\[
+0\longrightarrow L_m\longrightarrow D M(m)
+\longrightarrow M(-m-2)\longrightarrow0.
+\]
+该列不分裂：商的最高向量只有 \(\varphi_{m+1}\) 的标量倍提升能保持权，而
+\(e\varphi_{m+1}=\varphi_m\ne0\)。于是 \(M(-m-2)\) 不是 \(\mathcal O\) 中的投射对象。
+\end{example}
+
+最高权范畴把简单模、标准模和投射模放在同一个偏序下。一个常用的有限版本如下：设有限长度的 \(\mathbb C\) 线性交换范畴具有有限维同态空间，有有限多个简单对象 \(L(\lambda)\)，由有限偏序集标记，并有投射覆盖 \(P(\lambda)\)。若可选择标准对象 \(\Delta(\lambda)\)，使其顶为 \(L(\lambda)\)、其余合成因子参数严格小于 \(\lambda\)，且
+\(\operatorname{End}\Delta(\lambda)=\mathbb C\)，同时
+\(P(\lambda)\twoheadrightarrow\Delta(\lambda)\)
+的核有参数严格大于 \(\lambda\) 的标准对象滤过，就得到一种\term[zuigaoquan-fanchou]{最高权范畴}[highest weight category]结构。这个定义陈述了额外条件；不能仅因简单模有最高权，就跳过投射覆盖与滤过的存在证明。
+
+\ProseParagraphBreak
+可以直接看见投射性如何依赖范畴范围。对 \(\mathfrak{sl}_2\)，在权只允许为
+\(m,m-2,m-4,\ldots\) 的 \(\mathcal O\) 全子范畴中，
+\[
+\operatorname{Hom}\Bigl(M(m),N\Bigr)\cong N_m.
+\]
+因为 \(N\) 中没有权 \(m+2\)，任何权 \(m\) 的向量都被 \(e\) 零化，Verma 泛性质便给出这个同构。取一个固定权空间是正合函子，故 \(M(m)\) 在这个受限范畴中投射。这个计算与上面的非投射例并不矛盾：投射性的判断始终包含允许哪些对象这一条件。
+
+\ProseParagraphBreak
+一般 \(\mathcal O\) 的分块与最高权结构还需要有限长度、投射覆盖和标准滤过理论，本节暂不展开。计算高阶 \(\operatorname{Ext}\) 时，应使用相应范畴中的投射或内射消解，或先证明替代消解的各项对目标函子无上同调。BGG 消解的正合性本身尚不足以说明对它施加 \(\operatorname{Hom}\) 就能计算 \(\operatorname{Ext}\)。
 
 \subsection{几何表示论所需的进一步工具}
 \label{b5:subsec:2004:03}
 
-待撰写。
+几何方法从旗簇上的局部对象构造表示。在 \(\mathfrak{sl}_2\) 情形，旗簇就是 \(\mathbb P^1\)。次数为 \(m\ge0\) 的齐次多项式是线丛 \(\mathcal O(m)\) 的整体截面，而算子
+\[
+e=X\frac{\partial}{\partial Y},\qquad
+f=Y\frac{\partial}{\partial X},\qquad
+h=X\frac{\partial}{\partial X}-Y\frac{\partial}{\partial Y}
+\]
+使它成为 \(L_m\)。在坐标 \(z=Y/X\) 下，这些算子变成
+\(e=\partial_z\)、\(h=m-2z\partial_z\)、\(f=mz-z^2\partial_z\)。
+\appref{b5:app:C}将从坐标变换核验这些局部微分算子以及相应中心关系。
+
+\ProseParagraphBreak
+高维旗簇的 Schubert 分解按 Weyl 群编号，但胞腔闭包可能奇异。一般简单模的重数问题因而需要层的导出函子、交叉上同调和微分算子模等工具；光滑胞腔与其可能奇异的闭包也须区分。关于 BGG 与旗簇、几何表示的关系，可参见\cite[Section 8.4 and Further reading, Geometric representation theory]{Kirillov2008LieGroups}。这些几何方法将进一步研究表示的构造与重数，本章的 Whitehead 引理和 Levi 分解则已用代数方法证明。

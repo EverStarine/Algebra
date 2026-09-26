@@ -1,30 +1,114 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 14.2 最高权模
-% 纲要位置：计划纲要.md，第 3526 行。
+% 纲要位置：工作记录/计划纲要.md，第 4177 行。
 
 \section{最高权模}
 \label{b5:sec:1402}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 最高权向量
 % * 有限维不可约模的构造
 % * 维数与权链
 %
 
+从一个被升算子零化的向量开始，反复作用降算子，便得到一条权链。交换关系确定链上所有系数；链必须终止这一有限维条件，又迫使最高权成为非负整数。
+
 \subsection{最高权向量}
 \label{b5:subsec:1402:01}
 
-待撰写。
+\begin{definition}\label{b5:def:sl2-highest-vector}
+设 \(V\) 为复 \(\mathfrak{sl}_2(\mathbb C)\) 模。记矩阵单位为 \(E_{ij}\)，取基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。若 \(v\in V\setminus\{0\}\)、\(\lambda\in\mathbb C\) 满足 \(ev=0\)、\(hv=\lambda v\)，就称 \(v\) 为最高权为 \(\lambda\) 的\term[zuigaquan-xiangliang-sl2]{最高权向量}[highest weight vector]。由 \(v,fv,f^2v,\ldots\) 生成的子空间将在下面证明为子模，称为它生成的最高权模。
+\end{definition}
+\begin{lemma}\label{b5:lem:sl2-ladder}
+设 \(V\) 为复 \(\mathfrak{sl}_2(\mathbb C)\) 模。记矩阵单位为 \(E_{ij}\)，取基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。对整数 \(j\ge1\)，这些基元素在 \(V\) 上的作用算子满足
+\[
+[e,f^j]=j f^{j-1}(h-j+1).
+\]
+因此若 \(v\in V\setminus\{0\}\) 满足 \(ev=0\)、\(hv=\lambda v\)，其中 \(\lambda\in\mathbb C\)，则
+\[
+h f^jv=(\lambda-2j)f^jv,\qquad
+e f^jv=j(\lambda-j+1)f^{j-1}v.
+\]
+\end{lemma}
+\begin{proof}
+\(j=1\) 是 \([e,f]=h\)。若公式对 \(j\) 成立，则
+\[
+[e,f^{j+1}]=[e,f^j]f+f^j[e,f]
+=j f^{j-1}(h-j+1)f+f^jh.
+\]
+利用 \(hf=f(h-2)\)，右边为
+\((j+1)f^j(h-j)\)，完成归纳。权公式由 \([h,f]=-2f\) 同样归纳得到；将交换子公式用于 \(ev=0\) 即得升算子的作用。
+\end{proof}
+\begin{proposition}\label{b5:prop:sl2-finite-string}
+设 \(V\) 为有限维复 \(\mathfrak{sl}_2(\mathbb C)\) 模。记矩阵单位为 \(E_{ij}\)，取基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。设 \(v\in V\setminus\{0\}\)、\(\lambda\in\mathbb C\) 满足 \(ev=0\)、\(hv=\lambda v\)。则 \(\lambda=m\) 为非负整数，且
+\(v,fv,\ldots,f^mv\)
+线性无关、\(f^{m+1}v=0\)。它们生成一个维数 \(m+1\) 的子模。
+\end{proposition}
+\begin{proof}
+由\cref{b5:lem:sl2-highest-vector-exists}中关于降算子的结论，存在最大的 \(m\ge0\) 使 \(f^mv\ne0\)。这些非零向量的权两两不同，所以线性无关。把\cref{b5:lem:sl2-ladder}用于 \(j=m+1\)，得到
+\(0=(m+1)(\lambda-m)f^mv\)。
+特征零使 \(m+1\ne0\)，所以 \(\lambda=m\)。升降公式说明该线性生成空间在 \(e,f,h\) 下均不变，故为子模。
+\end{proof}
 
 \subsection{有限维不可约模的构造}
 \label{b5:subsec:1402:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:sl2-model}
+对每个整数 \(m\ge0\)，令 \(L_m\) 为具有基 \(v_0,\ldots,v_m\) 的复向量空间。记 \(E_{ij}\) 为矩阵单位，取 \(\mathfrak{sl}_2(\mathbb C)\) 的基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)，规定
+\[
+hv_i=(m-2i)v_i,\qquad
+fv_i=v_{i+1},\qquad
+ev_i=i(m-i+1)v_{i-1},
+\]
+其中 \(v_{-1}=v_{m+1}=0\)。这些公式给出一个不可约 \(\mathfrak{sl}_2\) 模。
+\end{proposition}
+\begin{proof}
+代入可得 \([h,e]v_i=2ev_i\)、\([h,f]v_i=-2fv_i\)。又
+\[
+(ef-fe)v_i
+=\Bigl((i+1)(m-i)-i(m-i+1)\Bigr)v_i
+=(m-2i)v_i,
+\]
+端点处也同样成立，故三条交换关系全部满足。
+若非零子模包含某个非零向量，利用 \(h\) 的互异特征值作多项式投影，便包含某个 \(v_i\)。系数 \(j(m-j+1)\) 对 \(1\le j\le m\) 都非零，所以反复作用 \(e\) 得到 \(v_0\)，再作用 \(f\) 得到全部基向量。子模因此是整个 \(L_m\)。
+\end{proof}
+这个模型也可以写成二元齐次多项式。令
+\[
+e=x\frac{\partial}{\partial y},\qquad
+f=y\frac{\partial}{\partial x},\qquad
+h=x\frac{\partial}{\partial x}-y\frac{\partial}{\partial y}.
+\]
+它们保持全次数为 \(m\) 的空间；在基
+\[
+v_i=\frac{m!}{(m-i)!}\,x^{m-i}y^i,\qquad 0\le i\le m,
+\]
+上正好给出上述公式。这一归一化使降算子的系数为一。若直接使用单项式基，则升降系数分别是 \(i\) 与 \(m-i\)，描述的表示相同。
 
 \subsection{维数与权链}
 \label{b5:subsec:1402:03}
 
-待撰写。
+\(L_m\) 的权为
+\[
+m,m-2,\ldots,-m,
+\]
+每个权空间一维。因此 \(L_0\) 是平凡模，\(L_1\) 是自然二维模，\(L_2\) 同构于伴随模：取最高向量 \(e\)，沿 \(\operatorname{ad}f\) 下降得到 \(e,-h,-2f\)，其作用与模型一致。
+\ProseParagraphBreak
+每个 \(L_m\) 有最高权和最低权，且两端互为相反数。维数不是最高权本身，而是最高权加一。两个不同的非负整数给出不同构表示，既可由维数看出，也可由最高权看出。
+\begin{proposition}\label{b5:prop:sl2-dual}
+设 \(m\ge0\) 为整数，\(L_m\) 为\cref{b5:prop:sl2-model}给出的 \((m+1)\) 维复 \(\mathfrak{sl}_2(\mathbb C)\) 模，\(v_0,\ldots,v_m\) 为该模型的基。则 \(L_m^*\cong L_m\)。记矩阵单位为 \(E_{ij}\)，取标准基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。若在 \(L_m\) 上定义双线性型
+\[
+B(v_i,v_j)=0\quad(i+j\ne m),\qquad
+B(v_i,v_{m-i})=(-1)^i,
+\]
+则 \(B\) 非退化并对 \(h\) 和 \(f\) 的作用不变；它对 \(e\) 也不变。其对称性为
+\(B(w,v)=(-1)^mB(v,w)\)。
+\end{proposition}
+\begin{proof}
+矩阵只有反对角线上的非零元，所以非退化。\(h\) 不变性由两项权之和为零得到。对 \(f\)，可能非零的等式
+\(B(fv_i,v_j)+B(v_i,fv_j)=0\)
+只在 \(i+j=m-1\) 时出现，两系数为 \((-1)^{i+1}\) 与 \((-1)^i\)，和为零。对 \(e\)，只需检查 \(i+j=m+1\)；此时两个作用系数
+\(i(m-i+1)\) 与 \(j(m-j+1)\) 相等，相应符号相反，所以和仍为零。交换反对角线的两个位置使符号乘 \((-1)^m\)，得到最后结论。不变性使 \(v\mapsto B(v,-)\) 是到对偶表示的同态，非退化性使它为同构。
+\end{proof}
+所以奇数 \(m\) 的模型带有非退化交替型，偶数 \(m\) 的模型带有非退化对称型。这个性质将把低维 \(\mathfrak{sl}_2\) 表示与辛、正交李代数联系起来；此处的判断来自显式配对，而非仅凭维数猜测。

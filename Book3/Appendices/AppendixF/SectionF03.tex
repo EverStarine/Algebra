@@ -1,30 +1,127 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### F.3 形式幂级数与切锥
-% 纲要位置：计划纲要.md，第 2397 行。
 
 \section{形式幂级数与切锥}
 \label{b3:sec:F03}
 
-% TODO: 按以下纲要要点撰写本节。
+形式级数的计算要说明每个固定次数的系数为何最终稳定，才能从有限步骤得到一个无限恒等式。最低次齐次关系进一步决定切锥，但只保留一个首单项式会丢失同次数中的其他项。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * Hironaka 型标准基和形式除法的基本语言；形式收敛不等于有限步算法终止，收敛幂级数另需分析假设
 % * \(\operatorname{gr}_{\mathfrak m}(R/I)\cong\operatorname{gr}_{\mathfrak m}R/\operatorname{in}_{\mathfrak m}(I)\) 与切锥；区别初始齐次形式和首单项式
 % * 以尖点 \(y^2-x^3=0\) 和零维加厚点展示切锥与重数；初始理想不能只靠任意生成元的最低次项得到
 %
+% #### F.3.1 Hironaka 型标准基、形式除法与收敛性
+% #### F.3.2 伴随分次环、初始齐次理想与切锥
+% #### F.3.3 尖点、加厚点与重数计算
+
 
 \subsection{Hironaka 型标准基、形式除法与收敛性}
 \label{b3:subsec:F03:01}
 
-待撰写。
+设 \(A=k[[x_1,\ldots,x_n]]\)，\(\mathfrak m=(x_1,\ldots,x_n)\)。本小节固定局部次数序：总次数较低的单项式较大，同次用固定的乘法相容次序比较。非零级数虽有无限项，但有最低非零次数，且该次只有有限个单项式，因此仍有首项。
+
+\begin{theorem}[形式除法]\label{b3:thm:F-formal-division}
+设 \(k\) 为域，\(A=k[[x_1,\ldots,x_n]]\)，固定先把低总次数放在前面、同次再以乘法相容次序比较的局部次数序，并给定非零级数 \(g_1,\ldots,g_s\)。每个 \(f\in A\) 都有表示
+\[
+f=\sum_{i=1}^s q_i g_i+r,\qquad q_i,r\in A,
+\]
+使 \(r\) 中每个出现的单项式都不被任何 \(\operatorname{LM}(g_i)\) 整除。规定每次使用首项可整除的最小下标，并把不可约项移入余项，即确定一种这样的表示。
+\end{theorem}
+\begin{proof}
+若当前首单项式被某个 \(\operatorname{LM}(g_i)\) 整除，就用相应的单项式倍数消去首项，并把这个单项式系数记入 \(q_i\)；否则把该项移到 \(r\)。每次操作后，新待处理首项严格变小，即次数变高，或同次中更靠后。同一次数只有有限项，故只有有限次操作会处理给定次数以下的项。
+
+因此每个 \(q_i\) 和 \(r\) 的任意给定次数系数最终稳定：对 \(q_i\) 的次数至多 \(d\) 的新增项，只会在处理次数至多 \(d+\operatorname{ord}(g_i)\) 时出现。逐次累积得到形式级数 \(q_i,r\)。未处理余项的阶趋于无穷，故在完备的 \(\mathfrak m\)-进拓扑中趋于零，极限给出所述等式。移入 \(r\) 的每个单项式都不可约，证明余项条件。若过程提前结束，同样等式是有限计算的结果。
+\end{proof}
+
+对 \(J\subset A\)，用所有非零元素的首项生成多项式环中的单项式理想 \(L(J)\)。Dickson 引理允许选择有限 \(g_1,\ldots,g_s\in J\)，使它们的首项生成 \(L(J)\)。形式除法给出的余项仍在 \(J\) 中；若非零，其首项又必须属于 \(L(J)\)，矛盾。因此这些 \(g_i\) 生成 \(J\)，形成形式幂级数环的标准基。这里的推理只使用有限个 \(q_i g_i\)，并不需要把“无限多个理想元素的和仍属于理想”作为未经说明的步骤。
+
+\ProseParagraphBreak
+这种标准基和形式除法常归入 Hironaka 型方法。名称并不额外提供解析收敛性：本节的收敛仅指每个次数以下的系数最终不再变化。即使全部输入为复收敛幂级数，也不能只凭以上形式证明断言所得商与余项在某邻域收敛。解析除法须另有估计和相应的定理；形式级数、代数级数及收敛级数的比较见\appref{b3:app:D}。
 
 \subsection{伴随分次环、初始齐次理想与切锥}
 \label{b3:subsec:F03:02}
 
-待撰写。
+首单项式只保留一个项，切锥则要保留最低次的全部项。设 \((R,\mathfrak m)\) 为 Noether 局部环。对 \(0\ne f\in R\)，若 \(f\in\mathfrak m^d\setminus\mathfrak m^{d+1}\)，记其在 \(\mathfrak m^d/\mathfrak m^{d+1}\) 中的像为 \(\operatorname{in}_{\mathfrak m}(f)\)。对理想 \(I\subset R\)，令 \(\operatorname{in}_{\mathfrak m}(I)\) 为这些初始形式生成的齐次理想。零元素不提供生成元。
+
+\begin{proposition}\label{b3:prop:F-associated-quotient}
+设 \((R,\mathfrak m)\) 为 Noether 局部环，\(I\subset R\) 为真理想，并令 \(\overline{\mathfrak m}=\mathfrak m/I\)。商环采用其极大理想的滤过，则有自然分次同构
+\[
+\operatorname{gr}_{\overline{\mathfrak m}}(R/I)
+\cong
+\operatorname{gr}_{\mathfrak m}R/
+\operatorname{in}_{\mathfrak m}(I).
+\]
+\end{proposition}
+\begin{proof}
+次数 \(d\) 上的自然映射为
+\[
+\mathfrak m^d/\mathfrak m^{d+1}
+\longrightarrow
+(\mathfrak m^d+I)/(\mathfrak m^{d+1}+I).
+\]
+它满射。若 \(f\in\mathfrak m^d\) 的像为零，写 \(f=h+a\)，其中 \(h\in\mathfrak m^{d+1}\)、\(a\in I\)。于是 \(a\in I\cap\mathfrak m^d\)，且 \(f,a\) 代表同一分次类。该类若非零，就是 \(a\) 的次数 \(d\) 初始形式；反之，每个这样的初始形式显然落在核中。各次核之和正是由 \(I\) 的全部初始形式组成的齐次理想，遂得同构。
+\end{proof}
+
+在 \(R=k[x]_{(x)}\) 或 \(k[[x]]\) 中，\(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\)。由上述商分次环定义的仿射概形称为原局部对象的切锥；它保留最低阶关系，也保留其中的幂零结构。例如 \(f=x^2+y^2+x^3\) 的初始形式为 \(X^2+Y^2\)，而其首单项式还取决于同次如何排序。
+
+\ProseParagraphBreak
+计算可以先用局部次数序找标准基，再对所得基取初始齐次形式。下面说明这一步为何足够。若 \(G\) 是 \(I\) 的标准基，对 \(I\) 中阶为 \(d\) 的元素只消去次数 \(d\) 的首项：这些项有限，且消去后不会出现低于 \(d\) 的项。直到所有次数 \(d\) 的项消失，所记等式恰把原初始形式表示成各 \(\operatorname{in}_{\mathfrak m}(g)\) 的齐次组合。因此
+\[
+\operatorname{in}_{\mathfrak m}(I)
+=(\operatorname{in}_{\mathfrak m}(g):g\in G).
+\]
+如果起初仅有任意生成组，消去过程中可能产生新的最低次关系，便不能直接使用这个等式。
 
 \subsection{尖点、加厚点与重数计算}
 \label{b3:subsec:F03:03}
 
-待撰写。
+尖点 \(y^2-x^3=0\) 在原点的局部环为
+\[
+A=k[x,y]_{(x,y)}/(y^2-x^3).
+\]
+由\cref{b3:prop:hypersurface-tangent-cone}，
+\[
+\operatorname{gr}_{\mathfrak m}A\cong k[X,Y]/(Y^2),
+\qquad
+H_{\operatorname{gr}A}(t)=\frac{1+t}{1-t}.
+\]
+最低次关系给出一条带二重结构的直线，而不是两条不同切线。于是
+\(\ell(A/\mathfrak m^{q+1})=2q+1\)（\(q\ge0\)），Hilbert--Samuel 重数为 \(2\)。重数来自分次层的增长，不能仅数切锥的不同点或不同直线。
+
+\begin{example}\label{b3:exm:F-two-equations}
+在 \(R=k[x,y]_{(x,y)}\) 中取
+\[
+f_1=x^2-y^3,\qquad f_2=xy-y^4,\qquad I=(f_1,f_2).
+\]
+若只取这两个多项式的最低次项，就会误猜切锥理想为 \((X^2,XY)\)，其商仍为一维。实际有
+\[
+yf_1-xf_2=(x-1)y^4.
+\]
+因为 \(x-1\) 是局部单位，\(y^4\in I\)，继而 \(xy=f_2+y^4\in I\)。所以
+\[
+I=(x^2-y^3,xy,y^4)R.
+\]
+在多项式环中，\(G=(x^2-y^3,xy,y^4)\) 关于 \(x>y\) 的字典序是 Gröbner 基：前两个元素的 \(S\)-多项式为 \(-y^4\)，第一、第三个的 \(S\)-多项式为 \(-y^7\)，其余为零，都约化为零。因而多项式商的基为
+\[
+1,\ x,\ y,\ y^2,\ y^3.
+\]
+这个商中 \(x,y\) 都幂零，故它是局部环，局部化不会改变它。
+
+\ProseParagraphBreak
+其极大理想各幂为
+\[
+\mathfrak m=(x,y,y^2,y^3),\quad
+\mathfrak m^2=(y^2,y^3),\quad
+\mathfrak m^3=(y^3),\quad
+\mathfrak m^4=0,
+\]
+其中 \(x^2=y^3\)。故伴随分次环各层维数为 \(1,2,1,1\)，并且
+\[
+\operatorname{gr}_{\mathfrak m}(R/I)
+\cong k[X,Y]/(X^2,XY,Y^4).
+\]
+右边满射到左边，二者同为五维，故这个满射确为同构。于是 \(G\) 同时也是局部次数序的标准基，局部长度为 \(5\)，切锥理想必须包含由消去得到的额外关系 \(Y^4\)。
+\end{example}
+
+这次计算中，“原方程的生成组”“足以控制全部首项的标准基”“分次商的标准单项式”都有明确的用途。先验证理想等式，再计算有限基及滤过，避免了用未经检查的最低次项去猜维数。

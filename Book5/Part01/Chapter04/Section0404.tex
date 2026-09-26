@@ -1,32 +1,188 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 4.4 射影表示初步
-% 纲要位置：计划纲要.md，第 3186 行。
+% 纲要位置：工作记录/计划纲要.md，第 3837 行。
+% 纲要细目（写作范围）：
+% * 延拓表示的障碍
+% * 因子集与2-余圈
+% * 与第四卷群上同调和第二卷交叉积的联系
+% ---
+
 
 \section{射影表示初步}
 \label{b5:sec:0404}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 延拓表示的障碍
-% * 因子集与2-余循环
-% * 与第四卷群上同调和第二卷交叉积的联系
-%
-% ---
-%
+惯性群中的元素都把 \(W\) 变成同构的表示，但为每个元素分别选一个同构，并不保证这些同构按照群乘法相乘。差出的标量恰好记下延拓的障碍。本节直接由这些标量建立所需理论，不预先要求群上同调。
 
 \subsection{表示延拓的障碍}
 \label{b5:subsec:0404:01}
 
-待撰写。
+\begin{definition}\label{b5:def:representation-extension}
+设 \(I\) 为有限群，\(N\trianglelefteq I\)，\(W\) 为有限维复向量空间，\(\rho:N\to\operatorname{GL}_{\mathbb C}(W)\) 为表示。若表示 \(\widetilde\rho:I\to\operatorname{GL}_{\mathbb C}(W)\) 在 \(N\) 上等于 \(\rho\)，则称它为 \(\rho\) 到 \(I\) 的\term[biaoshi-yantuo]{延拓}[extension of a representation]。
+\end{definition}
 
-\subsection{因子集与 2-余循环}
+延拓保持原来的向量空间，维数不变；它与一般会增大维数的诱导是不同的构造。如果 \(\rho\) 能延拓，则对 \(g\in I\)，矩阵 \(\widetilde\rho(g)\) 实现 \(W\cong{}^gW\)，故 \(W\) 的同构类必须被 \(I\) 固定。下面精确考察这个必要条件还差什么。
+
+\begin{theorem}[延拓的标量障碍]\label{b5:thm:extension-obstruction}
+设 \(I\) 为有限群，\(N\trianglelefteq I\)，\(\rho:N\to\operatorname{GL}_{\mathbb C}(W)\) 为不可约有限维复表示，并假定 \({}^gW\cong W\) 对所有 \(g\in I\) 成立。令 \(Q=I/N\)，选取商映射的集合截面 \(s:Q\to I\)，满足 \(s(1)=1\)，并对 \(p,q\in Q\) 记
+\[
+c(p,q)=s(p)s(q)s(pq)^{-1}\in N.
+\]
+可以选取 \(T_q\in\operatorname{GL}_{\mathbb C}(W)\)，使 \(T_1=1_W\)，且
+\begin{equation}\label{b5:eq:extension-intertwiner}
+T_q\rho(n)T_q^{-1}
+=\rho\Bigl(s(q)ns(q)^{-1}\Bigr)\qquad(n\in N).
+\end{equation}
+存在唯一标量 \(\alpha(p,q)\in\mathbb C^\times\)，使
+\begin{equation}\label{b5:eq:extension-factor}
+T_pT_q=\alpha(p,q)\rho\Bigl(c(p,q)\Bigr)T_{pq}.
+\end{equation}
+这些标量满足
+\begin{equation}\label{b5:eq:factor-cocycle}
+\alpha(1,q)=\alpha(q,1)=1,\qquad
+\alpha(p,q)\alpha(pq,r)=\alpha(q,r)\alpha(p,qr)\quad(p,q,r\in Q).
+\end{equation}
+表示 \(W\) 能延拓到 \(I\)，当且仅当存在 \(b:Q\to\mathbb C^\times\)、\(b(1)=1\)，使
+\begin{equation}\label{b5:eq:extension-rescaling}
+b(p)b(q)\alpha(p,q)=b(pq)\qquad(p,q\in Q).
+\end{equation}
+\end{theorem}
+\begin{proof}
+共轭不变性给出满足\eqref{b5:eq:extension-intertwiner}的可逆交织映射。\(T_pT_q\) 和 \(\rho\Bigl(c(p,q)\Bigr)T_{pq}\) 都实现由 \(s(p)s(q)\) 所给的共轭，所以二者之比与 \(\rho(N)\) 对易。\cref{b5:cor:schur-algebraically-closed}说明该比值为唯一非零标量，得到\eqref{b5:eq:extension-factor}。
+
+每个 \(g\in I\) 唯一写成 \(ns(q)\)。定义可逆算子
+\[
+P\Bigl(ns(q)\Bigr)=\rho(n)T_q.
+\]
+若 \(g=ns(p)\)、\(h=ms(q)\)，则
+\[
+\begin{aligned}
+P(g)P(h)
+&=\rho\Bigl(n s(p)m s(p)^{-1}\Bigr)T_pT_q\\
+&=\alpha(p,q)
+\rho\Bigl(n s(p)m s(p)^{-1}c(p,q)\Bigr)T_{pq}\\
+&=\alpha(p,q)P(gh).
+\end{aligned}
+\]
+对三个元素比较 \(\Bigl(P(g)P(h)\Bigr)P(\ell)\) 与 \(P(g)\Bigl(P(h)P(\ell)\Bigr)\)，并消去可逆的 \(P(gh\ell)\)，就得到\eqref{b5:eq:factor-cocycle}中的第二个等式；单位元处的等式来自 \(T_1=1_W\)。
+
+如果存在 \(b\) 满足\eqref{b5:eq:extension-rescaling}，则
+\(\widetilde\rho\Bigl(ns(q)\Bigr)=\rho(n)b(q)T_q\) 按上述乘法计算是群表示，而且在 \(N\) 上等于 \(\rho\)。反过来，若有延拓，则 \(\widetilde\rho\Bigl(s(q)\Bigr)\) 与 \(T_q\) 实现同一个共轭。Schur 引理给出 \(\widetilde\rho\Bigl(s(q)\Bigr)=b(q)T_q\)，再比较两者乘法便得到\eqref{b5:eq:extension-rescaling}。
+\end{proof}
+
+不能把“不变”直接换成“可延拓”。取
+\[
+I=Q_8=\{\pm1,\pm i,\pm j,\pm ij\},\qquad
+N=\{\pm1\},
+\]
+并令 \(\rho(-1)=-1\)。\(N\) 在中心，故这个一维表示被全部 \(I\) 固定。但任何一维 \(Q_8\)-表示都把交换子送到 \(1\)，而 \(iji^{-1}j^{-1}=-1\)，所以它不能延拓。这个障碍在下一小节可以直接算成一个不对称的标量函数。
+
+\subsection{因子集与 2-余圈}
 \label{b5:subsec:0404:02}
 
-待撰写。
+\begin{definition}\label{b5:def:projective-representation}
+设 \(Q\) 为有限群，\(E\neq0\) 为有限维复向量空间。若映射 \(R:Q\to\operatorname{GL}_{\mathbb C}(E)\) 满足 \(R(1)=1_E\)，并对每个 \(p,q\in Q\) 存在非零标量 \(\alpha(p,q)\)，使
+\[
+R(p)R(q)=\alpha(p,q)R(pq),
+\]
+则称 \(R\) 为 \(Q\) 的\term[sheying-biaoshi]{射影表示}[projective representation]，称 \(\alpha\) 为所选矩阵的\term[yinziji]{因子集}[factor set]。若 \(E\) 没有非零真子空间同时被所有 \(R(q)\) 保持，则称这个射影表示不可约。
+\end{definition}
+
+把矩阵模去非零标量后，射影表示给出群同态
+\(Q\to\operatorname{PGL}(E)\)。反之，这样的群同态选取矩阵代表后就给出因子集；代表不同，因子集也可能不同。
+
+\begin{definition}\label{b5:def:scalar-two-cocycle}
+设 \(Q\) 为有限群，\(\alpha:Q\times Q\to\mathbb C^\times\) 为函数。若对所有 \(p,q,r\in Q\) 有
+\[
+\alpha(1,q)=\alpha(q,1)=1,\qquad
+\alpha(p,q)\alpha(pq,r)=\alpha(q,r)\alpha(p,qr),
+\]
+则称 \(\alpha\) 为系数作用平凡的\term[guiyihua-eryuquan]{归一化 \(2\)-余圈}[normalized 2-cocycle]。若存在 \(a:Q\to\mathbb C^\times\)、\(a(1)=1\)，使
+\[
+\alpha(p,q)=\frac{a(p)a(q)}{a(pq)}\qquad(p,q\in Q),
+\]
+则称 \(\alpha\) 为一个\term[eryubian]{\(2\)-余边}[2-coboundary]。
+\end{definition}
+
+矩阵乘法的结合律说明每个因子集都是归一化 \(2\)-余圈。将 \(R(q)\) 改成 \(b(q)R(q)\)，因子集变成
+\begin{equation}\label{b5:eq:factor-coboundary-change}
+\alpha'(p,q)=\frac{b(p)b(q)}{b(pq)}\alpha(p,q).
+\end{equation}
+所以\cref{b5:thm:extension-obstruction}可表述为：延拓存在，当且仅当所得因子集是一个 \(2\)-余边。
+
+\begin{proposition}\label{b5:prop:factor-choice-independence}
+设 \(I\) 为有限群，\(N\trianglelefteq I\)，\(\rho:N\to\operatorname{GL}_{\mathbb C}(W)\) 为同构类被 \(I\) 固定的不可约有限维复表示。令 \(Q=I/N\)，取商映射的截面 \(s:Q\to I\)、\(s(1)=1\)，以及算子 \(T_q\in\operatorname{GL}_{\mathbb C}(W)\)，使 \(T_1=1_W\) 且 \(T_q\rho(n)T_q^{-1}=\rho(s(q)ns(q)^{-1})\) 对 \(q\in Q,n\in N\) 成立。对 \(p,q\in Q\)，记 \(c(p,q)=s(p)s(q)s(pq)^{-1}\)，由 \(T_pT_q=\alpha(p,q)\rho(c(p,q))T_{pq}\) 确定因子集 \(\alpha:Q\times Q\to\mathbb C^\times\)。更换交织算子或截面后，新因子集 \(\alpha'\) 满足 \(\alpha'/\alpha\) 是一个 \(2\)-余边。因此，“能否延拓”的判断不依赖这些选择。
+\end{proposition}
+\begin{proof}
+固定截面时，任意另一组交织算子由 Schur 引理写成 \(T'_q=b(q)T_q\)，其因子集由\eqref{b5:eq:factor-coboundary-change}给出。
+
+若改用 \(s'(q)=d(q)s(q)\)，其中 \(d(q)\in N\)、\(d(1)=1\)，先选 \(T'_q=\rho\Bigl(d(q)\Bigr)T_q\)。对同一个群元素，写成 \(ns(q)=n's'(q)\) 就有 \(n=n'd(q)\)，从而 \(\rho(n)T_q=\rho(n')T'_q\)。所以证明中定义的 \(P(g)\) 完全不变，因子集也不变。再作其他交织算子选择时，才按前一段改变一个余边。
+\end{proof}
+
+回到 \(Q_8\)。把 \(Q=Q_8/N\) 写成 \(\mathbb F_2^2\)，取 \(s(a,b)=i^aj^b\) 及 \(T_{(a,b)}=1\)。这里
+\[
+\alpha\Bigl((a,b),(c,d)\Bigr)=(-1)^{ac+bd+bc}.
+\]
+指数按模 \(2\) 计算。这是双线性式，所以直接展开也可验证余圈恒等式。取 \(p=(1,0)\)、\(q=(0,1)\)，得到 \(\alpha(p,q)=1\) 而 \(\alpha(q,p)=-1\)。交换群上的余边 \(a(p)a(q)/a(pq)\) 对称，故这个因子集不是余边。
 
 \subsection{与群上同调、交叉积的联系}
 \label{b5:subsec:0404:03}
 
-待撰写。
+把所有归一化 \(2\)-余圈按逐点相乘组成交换群，再模去 \(2\)-余边子群，就得到记为 \(H^2(Q,\mathbb C^\times)\) 的群。这里 \(\mathbb C^\times\) 上的 \(Q\)-作用是平凡的。它是群上同调的一个具体低阶形式；当前的延拓障碍就是 \([\alpha]\)，不需要借助消解或导出函子才能计算。
+
+\ProseParagraphBreak
+
+同一个因子集还可写成一个代数的乘法。给定有限群 \(Q\) 和归一化 \(2\)-余圈 \(\alpha\)，在以 \(u_q\) 为基的复向量空间上定义
+\[
+u_pu_q=\alpha(p,q)u_{pq}.
+\]
+归一化条件使 \(u_1\) 为单位元，余圈恒等式恰好使乘法结合；各个 \(u_q\) 都可逆。这个代数称为\term[niuqu-qundaisu]{扭曲群代数}[twisted group algebra]，记为 \(\mathbb C^\alpha[Q]\)。它是系数域上作用平凡的交叉积。给出一个非零有限维左 \(\mathbb C^\alpha[Q]\)-模，等价于给出因子集为 \(\alpha\) 的射影表示：令 \(u_q\) 按 \(R(q)\) 作用即可。重标定基 \(u_q\) 与\eqref{b5:eq:factor-coboundary-change}完全对应。
+\symidx{\(\mathbb C^\alpha[Q]\)：扭曲群代数}
+
+\begin{theorem}[重数空间上的射影表示]\label{b5:thm:clifford-projective-multiplicity}
+设 \(I\) 为有限群，\(N\trianglelefteq I\)，\(\rho:N\to\operatorname{GL}_{\mathbb C}(W)\) 为同构类被 \(I\) 固定的不可约有限维复表示。令 \(Q=I/N\)，取商映射的截面 \(s:Q\to I\)、\(s(1)=1\)，以及算子 \(T_q\in\operatorname{GL}_{\mathbb C}(W)\)，使 \(T_1=1_W\) 且
+\[
+T_q\rho(n)T_q^{-1}=\rho(s(q)ns(q)^{-1})\qquad(n\in N,\ q\in Q).
+\]
+对 \(p,q\in Q\)，记 \(c(p,q)=s(p)s(q)s(pq)^{-1}\)，以
+\[
+T_pT_q=\alpha(p,q)\rho(c(p,q))T_{pq}
+\]
+确定因子集 \(\alpha:Q\times Q\to\mathbb C^\times\)。给定正整数 \(e\)，满足 \(\operatorname{Res}_N^I U\cong W^{\oplus e}\) 的非零有限维复 \(I\)-表示 \(U\)，等价地由 \(e\) 维复向量空间 \(E\) 上因子集为 \(\alpha^{-1}\) 的射影 \(Q\)-表示 \(S:Q\to\operatorname{GL}_{\mathbb C}(E)\) 给出，其作用为
+\begin{equation}\label{b5:eq:clifford-projective-tensor}
+ns(q)\longmapsto \rho(n)T_q\otimes S(q)
+\quad\hbox{作用在 }W\otimes_{\mathbb C}E\hbox{ 上}.
+\end{equation}
+而且 \(U\) 不可约，当且仅当 \(S\) 不可约。
+\end{theorem}
+\begin{proof}
+先给定 \(U\)，记其表示为 \(\pi\)，并令
+\(E=\operatorname{Hom}_{\mathbb C[N]}(W,U)\)。由于 \(U|_N\cong W^{\oplus e}\) 且 \(\operatorname{End}_N(W)=\mathbb C\)，求值映射
+\[
+W\otimes E\longrightarrow U,\qquad w\otimes f\longmapsto f(w)
+\]
+由\cref{b5:prop:isotypic-decomposition}是 \(N\)-同构，且 \(\dim E=e\)。定义
+\[
+S(q)f=\pi\Bigl(s(q)\Bigr)\,f\,T_q^{-1}.
+\]
+由\eqref{b5:eq:extension-intertwiner}，对 \(n\in N\) 有
+\[
+\begin{aligned}
+\Bigl(S(q)f\Bigr)\rho(n)
+&=\pi\Bigl(s(q)\Bigr)f
+\rho\Bigl(s(q)^{-1}ns(q)\Bigr)T_q^{-1}\\
+&=\pi(n)\pi\Bigl(s(q)\Bigr)fT_q^{-1}
+=\pi(n)\Bigl(S(q)f\Bigr).
+\end{aligned}
+\]
+所以此复合仍是 \(N\)-线性映射，确实属于 \(E\)。求值映射把 \(T_q\otimes S(q)\) 的作用变成 \(\pi\Bigl(s(q)\Bigr)\)，从而得到\eqref{b5:eq:clifford-projective-tensor}。
+
+将这个等式对 \(p,q\) 相乘。左侧的群作用相乘为 \(\pi\Bigl(c(p,q)\Bigr)\pi\Bigl(s(pq)\Bigr)\)，右侧的第一个张量因子满足\eqref{b5:eq:extension-factor}。消去可逆算子 \(\rho\Bigl(c(p,q)\Bigr)T_{pq}\)，得到
+\[
+S(p)S(q)=\alpha(p,q)^{-1}S(pq).
+\]
+反过来，若 \(S\) 满足此等式，则\eqref{b5:eq:clifford-projective-tensor}中两个因子产生的标量互相抵消，因而给出普通的 \(I\)-表示；在 \(N\) 上它是 \(\rho(n)\otimes1_E\)。
+
+最后，\(W\otimes E\) 的每个 \(N\)-子模都是 \(W\otimes F\) 的形式，其中 \(F\subseteq E\)：将该子模分解为 \(W\) 的直和，并对它应用同一个求值同构即可。由于每个 \(T_q\) 可逆，子空间 \(W\otimes F\) 被 \(I\) 保持，当且仅当 \(F\) 被所有 \(S(q)\) 保持。这就证明了不可约性的等价。
+\end{proof}
+
+结合\cref{b5:thm:clifford-correspondence}，先在惯性群中求这些射影表示，再诱导到 \(G\)，便得到限制中含有 \(W\) 的全部不可约表示。若障碍为零，可以重标定 \(T_q\)，使它们给出 \(W\) 的延拓；此时 \(\alpha=1\)，重数空间上的表示也成为普通的商群表示。

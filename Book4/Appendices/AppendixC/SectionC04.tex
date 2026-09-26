@@ -1,10 +1,77 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 C 的第 4 条要点整理。
+% 纲要标题：### C.4 代数拓扑与平展上同调简介
+% 纲要位置：工作记录/计划纲要.md，第 3629 行。
+% 纲要细目（写作范围）：
+% #### C.4.1 拓扑空间上的常值层
+% #### C.4.2 平展上同调与 Galois 上同调
+% ---
+
 
 \section{代数拓扑与平展上同调简介}
 \label{b4:sec:C04}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 不将代数拓扑或平展上同调的完整理论并入本卷
+本节比较拓扑空间上的常值层上同调与域上的平展上同调。两者都由截面函子导出，但采用不同的覆盖和系数范畴。一般代数拓扑、概形的平展位点及 \(\ell\)-进上同调留待进一步学习。
 
-待撰写。
+\subsection{拓扑空间上的常值层}
+\label{b4:subsec:C04:01}
+
+对拓扑空间 \(X\) 和交换群 \(A\)，开集 \(U\) 上所有局部常值函数 \(U\rightarrow A\) 组成一个层，记为 \(\underline A_X\)，称为\term[changzhiceng]{常值层}[constant sheaf]。若 \(U\) 不连通，它的截面未必是同一个常数；例如两个不相交区间上的截面为 \(A\oplus A\)。把每个非空开集都直接赋为 \(A\) 的常值预层通常还需要层化，不能忽略这一差别。
+
+\ProseParagraphBreak
+用两个连通开弧 \(U,V\) 覆盖圆周 \(S^1\)，使 \(U\cap V\) 有两个连通分支。常值层的 Čech 复形为
+\[
+ A\oplus A\longrightarrow A\oplus A,
+ \qquad(a,b)\longmapsto(b-a,b-a).
+\]
+核为对角的 \(A\)，余核由 \((u,v)\mapsto v-u\) 识别为 \(A\)，故这个覆盖给出 \(\check H^0=A\)、\(\check H^1=A\)。当 \(A=\mathbb Z\) 时，这是 Hartshorne 的圆周计算\cite[Chapter III, Example 4.0.4, p. 220]{Hartshorne1977}。
+
+\ProseParagraphBreak
+把结果解释为通常的拓扑上同调，还需要比较定理。对有限单纯复形的几何实现 \(X\)，常值层上同调与奇异上同调自然同构，后者又与单纯上同调相同。相关比较背景见 Hartshorne\cite[Chapter III, Section 2, Historical Note, p. 211]{Hartshorne1977}。
+\begin{proofsketch}
+在每个开集 \(U\) 上取奇异余链复形 \(C^q(U;A)=\operatorname{Hom}_{\mathbb Z}(C_q(U),A)\)，再层化为 \(\mathcal S^q\)。常值函数给出增广 \(\underline A_X\to\mathcal S^0\)。\(X\) 有局部可缩的邻域基；在这些邻域中，正次奇异上同调为零，零次等于 \(A\)。茎是滤过余极限，而该余极限正合，故增广复形
+\(0\to\underline A_X\to\mathcal S^0\to\mathcal S^1\to\cdots\) 在每个茎上正合，是层消解。
+
+还要比较全局截面。有限多面体及其开子集是可度量的仿紧空间，允许把局部余链代表的覆盖作局部有限细化与星形加细。利用交集上代表的局部一致性，可给每个足够小的奇异单形指定一个一致的余链值；其他单形的值任意取零。这使每个 \(\mathcal S^q\) 的截面由一个普通余链代表。开子集上的余链可对不在该子集中的单形取零，因而 \(\mathcal S^q\) 松弛，可以用于计算层上同调。
+
+一个普通余链层化后为零，当且仅当它在某个开覆盖中的全部小单形上为零。因此全局截面复形等于随开覆盖加细而取的余极限
+\[
+ \Gamma(X,\mathcal S^\bullet)
+ =\varinjlim_{\mathcal U}
+ \operatorname{Hom}_{\mathbb Z}(C_*^{\mathcal U}(X),A),
+\]
+其中 \(C_*^{\mathcal U}(X)\) 由像包含在某个覆盖开集内的奇异单形生成。重心细分使每个单形经过有限次细分后变小；细分与恒等之间的棱柱同伦，逐维保持边界相容，给出 \(C_*^{\mathcal U}(X)\hookrightarrow C_*(X)\) 的链同伦等价。对任意交换群 \(A\) 取 Hom 后仍是余链同伦等价，故上述余极限的上同调为奇异上同调。结合松弛消解便得到比较。把单纯链嵌入奇异链并使用同一细分和逐维同伦，得到与单纯上同调的比较。
+
+概要省略局部余链代表在星形加细上的粘合细节，以及小链同伦在各维度的具体棱柱公式；局部可缩性与仿紧性正用于这些步骤，不能对任意拓扑空间照搬。
+\end{proofsketch}
+
+圆周、开弧及其有限个区间分支满足上述条件，因而开弧上的正次常值层上同调为零。\cref{b4:thm:C-cech-comparison}遂给出 \(H^0(S^1,\underline A)=H^1(S^1,\underline A)=A\)，且 \(H^n(S^1,\underline A)=0\) 对 \(n>1\) 成立。一般空间仍须另行检查比较条件。
+
+\subsection{平展上同调与 Galois 上同调}
+\label{b4:subsec:C04:02}
+
+代数几何中的 Zariski 开集有时不足以容纳所需局部构造。例如，在域 \(K\) 上添入一个可分多项式的根，通常要经过有限可分域扩张，不能只在单点空间 \(\operatorname{Spec}K\) 内缩小开集。平展覆盖将这种局部变换也纳入覆盖：在域的情形，基本对象是有限个有限可分扩张的直积，它们称为有限平展 \(K\)-代数。
+
+\ProseParagraphBreak
+一般的\term[pingzhanshangtongdiao]{平展上同调}[étale cohomology]以平展覆盖所定义的层范畴为基础，对全局截面取右导出。这里的对象与覆盖已超出通常拓扑空间的开子集，不应把同一个符号 \(H^n\) 理解为只改了下标的 Zariski 上同调。本附录不建立一般平展位点理论，只使用域上的基本识别：交换群平展层对应离散连续 \(G_K\)-模 \(M\)，全局截面对应 \(M^{G_K}\)，所以
+\begin{equation}\label{b4:eq:C-etale-field}
+ H^n_{\mathrm{\acute et}}(\operatorname{Spec}K,M)
+ \cong H^n_{\mathrm{cts}}(G_K,M).
+\end{equation}
+\begin{proofsketch}
+对有限平展 \(K\)-代数 \(B\)，取有限集合 \(T_B=\operatorname{Hom}_{K\text{-}\mathrm{alg}}(B,K^s)\)，带自然连续 \(G_K\) 作用。每个传递有限 \(G_K\)-集为 \(G_K/H\)，其中 \(H\) 开；它对应有限可分域 \((K^s)^H\)。任意有限集分成有限个轨道，对应域的有限直积。取一个有限 Galois 扩张同时包含各域的全部嵌入，再用固定元素恢复代数，便证明有限平展 \(K\)-概形与有限连续 \(G_K\)-集等价。平展覆盖在这里对应有限集上的联合满射。
+
+给定离散连续模 \(M\)，定义层在 \(T\) 上的值为 \(\operatorname{Hom}_{G_K}(T,M)\)；在 \(T=G_K/H\) 上，它就是 \(M^H\)。联合满射的有限集覆盖上，函数的唯一拼接直接验证层公理。反过来，对一个交换群平展层，沿有限 Galois 扩张取截面群的余极限，得到几何茎 \(M\)。每个元素在某个有限层出现，故有开稳定子群，所得作用连续。层公理应用于 \(\operatorname{Spec}N\to\operatorname{Spec}L\) 的有限 Galois 覆盖及其双纤维积，恰给出 \(F(L)=M^{G_L}\)。于是两项构造互逆。
+
+此等价把短正合列送到短正合列，因为两边的正合性均由几何茎上的核与像检测；等价也保持内射对象。全局截面对应 \(M^{G_K}\)，所以在两边选取相应内射消解，再施行截面或不变量函子，得到相同复形。这就证明\eqref{b4:eq:C-etale-field}。概要省略有限平展位点中所有开覆盖可由上述有限代数对象细化的记号整理；核心的有限 Galois 下降已由层的等化子条件给出。此描述亦见 Weibel\cite[Chapter III, Sketch 6.10 and Example 6.10.1, pp. 241--242]{Weibel2013KBook}。
+\end{proofsketch}
+
+一个完全可计算的例子是有限域 \(K=\mathbb F_q\)。其可分闭包是各有限扩张 \(\mathbb F_{q^r}\) 的并，Frobenius \(x\mapsto x^q\) 在每个有限层生成阶为 \(r\) 的 Galois 群，所以 \(G_K\cong\widehat{\vphantom{Z}\mathbb Z}\)。对平凡有限系数 \(A=\mathbb Z/n\mathbb Z\)，\cref{b4:prop:C-procyclic-h1}及\cref{b4:prop:C-procyclic-h2}给出
+\[
+ H^0_{\mathrm{\acute et}}(\operatorname{Spec}\mathbb F_q,A)=A,
+ \quad H^1_{\mathrm{\acute et}}(\operatorname{Spec}\mathbb F_q,A)=A,
+ \quad H^2_{\mathrm{\acute et}}(\operatorname{Spec}\mathbb F_q,A)=0.
+\]
+其 Zariski 底空间只有一个点，相应交换群层的截面函子却是恒等函子，正次上同调全为零。两者不同，原因在于覆盖和系数范畴不同，并非导出函子出了矛盾。
+
+\ProseParagraphBreak
+最后，\(\mu_n\) 与常值 \(\mathbb Z/n\) 的 Galois 作用也未必相同。\eqref{b4:eq:C-kummer}中必须保留 \(\mu_n\) 的自然作用；而 \(\ell\)-进系数 \(\mathbb Z_\ell=\varprojlim_r\mathbb Z/\ell^r\) 还涉及系数系统的逆极限。\chapref{b4:ch:13}已经说明逆极限未必正合，不能把有限系数的结论逐项写下后直接删除所有导出极限项。

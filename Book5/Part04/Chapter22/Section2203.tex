@@ -1,30 +1,101 @@
 % !TeX root = ../../Book5.tex
-% 纲要标题：### 22.3 典型不变量
-% 纲要位置：计划纲要.md，第 3780 行。
-
-\section{典型不变量}
+% 纲要标题：### 22.3 Hilbert 级数与 Molien 公式
+% 纲要位置：工作记录/计划纲要.md，第 4460 行。
+% * 在复数域或明确的特征零范围内，由各次对称幂上的平均迹完整推导 Molien 公式
+% * 计算循环群及小型反射群的 Hilbert 级数，解释各次系数而不只给出有理函数
+% * 区分 Hilbert 级数、生成元与关系；正特征的域内迹不能无条件当作整数维数
+% #### 22.3.1 齐次不变量的维数与特征标
+% #### 22.3.2 Molien 公式
+% #### 22.3.3 循环群与小型反射群的计算
+\section{Hilbert 级数与 Molien 公式}
 \label{b5:sec:2203}
 
-% TODO: 按以下纲要要点撰写本节。
+有限生成告诉我们最终可以找到一张有限的生成元表，但没有立即给出每个次数有多少独立不变量。把这个维数问题转成迹的计算，就能直接使用有限群特征标。本节在复数域上讨论，以便将迹与整数维数明确对应。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 对称多项式
-% * 矩阵共轭和迹不变量的例子
-% * 经典群及张量不变量
-%
-
-\subsection{对称多项式}
+\subsection{齐次不变量的维数与特征标}
 \label{b5:subsec:2203:01}
 
-待撰写。
+\begin{definition}\label{b5:def:invariant-hilbert-series}
+设 \(k\) 为域，\(A=\bigoplus_{d\ge0}A_d\) 为非负分次 \(k\) 代数，每个 \(A_d\) 都是有限维 \(k\) 向量空间。形式幂级数
+\[
+H_A(t)=\sum_{d\ge0}(\dim_k A_d)t^d\in\mathbb Z[[t]]
+\]
+称为 \(A\) 的\term[Hilbert-jishu]{Hilbert 级数}[Hilbert series]。其分次属于数据的一部分；生成元的次数不是一时，不能擅自按次数一计算。
+\end{definition}
 
-\subsection{矩阵共轭和迹不变量的例子}
+例如次数为 \(a_1,\ldots,a_r>0\) 的多项式环有级数
+\[
+\prod_{i=1}^r(1-t^{a_i})^{-1},
+\]
+因为展开各几何级数就是按单项式的次数计数。这里不要求 \(t\) 是复数，也没有收敛问题。
+
+\begin{lemma}\label{b5:lem:invariant-dimension-trace}
+设有限群 \(G\) 作用在有限维复空间 \(W\) 上。则
+\[
+\dim W^G=\frac1{|G|}\sum_{g\in G}\operatorname{tr}(g\mid W).
+\]
+\end{lemma}
+\begin{proof}
+平均算子是像为 \(W^G\) 的幂等算子。按像与核分解 \(W\)，其矩阵为 \(\operatorname{diag}(I,0)\)，故迹等于像的维数；迹的线性性给出右端。
+\end{proof}
+
+应用于 \(W=\operatorname{Sym}^d(V^*)\)，便把第 \(d\) 次不变量的数目写成对称幂特征标的平均。模特征中，即使偶然可以构造别的投影，域内的迹也至多记录维数在该域中的像，不能直接恢复整数维数。
+
+\subsection{Molien 公式}
 \label{b5:subsec:2203:02}
 
-待撰写。
+\begin{theorem}[Molien 公式]\label{b5:thm:molien}
+设有限群 \(G\) 线性作用在有限维复向量空间 \(V\) 上，\(g_V,g_{V^*}\) 分别表示 \(g\in G\) 在 \(V\) 及对偶空间上的算子，\(I\) 为相应恒等算子。记 \(H_{\mathbb C[V]^G}(t)\) 为不变环按多项式总次数分次的 Hilbert 级数，则
+\[
+H_{\mathbb C[V]^G}(t)
+=\frac1{|G|}\sum_{g\in G}\frac1{\det(I-tg_{V^*})}
+=\frac1{|G|}\sum_{g\in G}\frac1{\det(I-tg_V)}.
+\]
+两端均按 \(t=0\) 展开为形式幂级数。
+\end{theorem}
+\begin{proof}
+每个 \(g\) 有有限阶，在复数域上可对角化。设其在 \(V^*\) 上的特征值为 \(\lambda_1,\ldots,\lambda_n\)。在特征向量的单项式基下，
+\[
+\sum_{d\ge0}\operatorname{tr}\Bigl(g\mid\operatorname{Sym}^d(V^*)\Bigr)t^d
+=\sum_{a_1,\ldots,a_n\ge0}\lambda_1^{a_1}\cdots\lambda_n^{a_n}t^{a_1+\cdots+a_n}
+=\prod_i(1-\lambda_it)^{-1}.
+\]
+现在逐次使用\cref{b5:lem:invariant-dimension-trace}，有限求和可以与形式级数相交换，得到第一式。对偶作用的矩阵为 \(g_V^{-T}\)，而 \(g\mapsto g^{-1}\) 置换群元素，所以求和后可把它换成 \(g_V\)，得到第二式。两式相等不表示两个对应单项对每个 \(g\) 都相等。
+\end{proof}
 
-\subsection{经典群及张量不变量}
+计算时可按共轭类求和，因为同一共轭类的特征多项式相同。级数的系数虽写成单位根表达式的平均，最终必为非负整数，正是各次不变子空间的维数。
+
+\subsection{循环群与小型反射群的计算}
 \label{b5:subsec:2203:03}
 
-待撰写。
+令 \(C_m\) 在一维复空间上由本原 \(m\) 次单位根 \(\zeta\) 数乘。只有 \(x^{jm}\) 不变，故
+\[
+\frac1m\sum_{r=0}^{m-1}\frac1{1-\zeta^rt}
+=\frac1{1-t^m}.
+\]
+直接展开左端也能看到这一点：\(t^d\) 的系数是 \(\frac1m\sum_r\zeta^{rd}\)，它在 \(m\mid d\) 时为一，其余为零。
+
+\begin{example}\label{b5:exm:molien-sign-plane}
+对同时变号的二维作用，单位元与非平凡元分别贡献 \((1-t)^{-2}\)、\((1+t)^{-2}\)，所以
+\[
+H(t)=\frac12\biggl(\frac1{(1-t)^2}+\frac1{(1+t)^2}\biggr)
+=\frac{1+t^2}{(1-t^2)^2}
+=\frac{1-t^4}{(1-t^2)^3}.
+\]
+因此次数 \(2r\) 的维数为 \(2r+1\)，奇数次维数为零。最后一个表达式与三个二次生成元、一个四次关系相容；仅由级数本身，还不能断定存在这样的展示。
+\end{example}
+
+再让 \(S_3\) 置换 \(\mathbb C^3\) 的坐标。单位元、三个换位、两个三轮换分别给出
+\[
+H(t)=\frac16\biggl(
+\frac1{(1-t)^3}
++\frac3{(1-t)^2(1+t)}
++\frac2{1-t^3}
+\biggr)
+=\frac1{(1-t)(1-t^2)(1-t^3)}.
+\]
+这与初等对称多项式的次数 \(1,2,3\) 一致。在反射表示 \(x_1+x_2+x_3=0\) 上，平凡的一维方向被去掉；由于特征为零，分解为该平面与平凡直线是直和，故其级数为
+\[
+\frac1{(1-t^2)(1-t^3)}.
+\]
+例如二次与三次不变量空间各一维，六次则有两个独立候选 \(e_2^3,e_3^2\)。下一节说明如何把这种计数用于检验生成元及其关系。

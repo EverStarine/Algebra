@@ -1,30 +1,80 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 2.3 群代数的分解
-% 纲要位置：计划纲要.md，第 3124 行。
+% 纲要位置：工作记录/计划纲要.md，第 3775 行。
+% 纲要细目（写作范围）：
+% * 正则特征标
+% * 不可约表示维数的平方和
+% * 中心幂等元及块的半单情形
+
 
 \section{群代数的分解}
 \label{b5:sec:0203}
 
-% TODO: 按以下纲要要点撰写本节。
+正则表示包含全部不可约类型，并且它的迹很容易计算。两者结合，把不可约次数与群阶联系起来。随后再用中心幂等元从群代数中直接取出各个等型分量，说明特征标不仅记录数字，也能构造投影。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 正则特征标
-% * 不可约表示维数的平方和
-% * 中心幂等元及块的半单情形
-%
 
 \subsection{正则特征标}
 \label{b5:subsec:0203:01}
 
-待撰写。
+\begin{theorem}\label{b5:thm:regular-decomposition}
+设 \(G\) 为有限群，\(\chi_1,\ldots,\chi_r\) 为全部不可约复特征标，次数为 \(d_i=\chi_i(1)\)，相应表示为 \(S_i\)。正则特征标满足
+\[
+\chi_{\rm reg}(g)=
+\begin{cases}|G|,&g=1,\\0,&g\ne1,\end{cases}
+\qquad
+\mathbb C[G]\simeq\bigoplus_iS_i^{\oplus d_i}.
+\]
+特别地，\(\sum_i d_i^2=|G|\)。
+\end{theorem}
+\begin{proof}
+左平移 \(x\mapsto gx\) 只有在 \(g=1\) 时有不动点，所以置换特征标给出第一式。由\cref{b5:cor:character-irreducibility}，\(S_i\) 在正则表示中的重数为
+\[
+\langle\chi_i,\chi_{\rm reg}\rangle_G
+=\overline{\chi_i(1)}=d_i.
+\]
+于是得到分解。比较两侧维数即得平方和。
+\end{proof}
+
+如果已经构造了一组两两不同构的不可约表示，且它们的次数平方和等于群阶，那么列表已经完备：任何遗漏的不可约还会给正则分解增加一个正的平方。反过来，平方和吻合本身不能证明候选表示不可约，也不能排除列表重复；这两项需要先核验。
 
 \subsection{不可约表示维数的平方和}
 \label{b5:subsec:0203:02}
 
-待撰写。
+\begin{theorem}\label{b5:thm:complex-group-algebra}
+设 \(G\) 为有限群，\(S_1,\ldots,S_r\) 为全部不同构的不可约有限维复表示，\(d_i=\dim_{\mathbb C}S_i\)，记 \(\rho_i\) 为 \(S_i\) 的作用及其在 \(\mathbb C[G]\) 上的线性延伸。由作用定义的复代数同态
+\[
+\Phi:\mathbb C[G]\longrightarrow\prod_{i=1}^r
+\operatorname{End}_{\mathbb C}(S_i),\qquad
+a\longmapsto\bigl(\rho_i(a)\bigr)_i
+\]
+为同构。因此 \(\mathbb C[G]\simeq\prod_i M_{d_i}(\mathbb C)\)。
+\end{theorem}
+\begin{proof}
+各作用保持乘法和单位，故是代数同态。若 \(a\) 的全部像为零，它零化每个不可约，因而由正则分解也零化 \(\mathbb C[G]\)；作用于一得到 \(a=0\)。所以 \(\Phi\) 单射。两侧复维数分别为 \(|G|\) 和 \(\sum_i d_i^2\)，由\cref{b5:thm:regular-decomposition}相等，有限维线性代数使它满射。
+\end{proof}
+
+不选 \(S_i\) 的基时，右端写成自同态代数，作用同态本身有明确意义；写成具体矩阵代数则需要选基。一般底域下可能出现非平凡除代数，正特征整除群阶时还会失去半单性，所以这个复群代数公式不能原样用于所有域。
 
 \subsection{中心幂等元及块的半单情形}
 \label{b5:subsec:0203:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:central-character-idempotents}
+设 \(G\) 为有限群，\(S_1,\ldots,S_r\) 为全部不同构的不可约有限维复表示，其特征标为 \(\chi_i\)，\(d_i=\chi_i(1)\)。令
+\begin{equation}\label{b5:eq:central-idempotent}
+e_i=\frac{d_i}{|G|}\sum_{g\in G}\chi_i(g^{-1})g.
+\end{equation}
+则 \(e_i\in\mathbb C[G]\) 是两两正交的中心幂等元，\(\sum_i e_i=1\)，并且在 \(G\) 的任意有限维复表示 \(V\) 中，\(e_iV\) 正是类型 \(S_i\) 的等型分量。理想 \(\mathbb C[G]e_i\) 同构于 \(M_{d_i}(\mathbb C)\)。
+\end{theorem}
+\begin{proof}
+因系数在共轭类上常值，\(e_i\) 位于中心。在不可约 \(S_j\) 上，其作用为标量，取迹得到
+\[
+\operatorname{tr}\rho_j(e_i)
+=d_i\langle\chi_i,\chi_j\rangle_G=d_i\delta_{ij}.
+\]
+除以 \(d_j\) 可知它在 \(S_i\) 上为一，在其他 \(S_j\) 上为零。借\cref{b5:thm:complex-group-algebra}的单射性，作用上的平方、相互乘积与和的等式在群代数中也成立。对一般 \(V\) 用不可约分解，得到等型投影。最后 \(\Phi(e_i)\) 仅在第 \(i\) 个矩阵因子为单位，故相应理想恰是那个因子。
+\end{proof}
+
+不能再写成两个非零正交中心幂等元之和的非零中心幂等元，称为本原中心幂等元；由上面的矩阵乘积分解，各 \(e_i\) 恰为全部这类元素。它们对应的直和因子称为群代数的\term[qun-daishu-kuai]{块}[block of a group algebra]。在当前复半单情形，每个块只有一个不可约类型；模特征情形的块可能包含多个简单类型，不能把当前特点写成块的一般定义。
+
+\ProseParagraphBreak
+中心还可直接用共轭类和描述。对每个共轭类 \(C\)，令 \(z_C=\sum_{g\in C}g\)。一个群代数元素与全部群元素交换，当且仅当其系数在各共轭类上相同，所以这些 \(z_C\) 构成中心的一组基。中心幂等元基与类和基给出同一个空间的两种描述；第五章将进一步考察类和乘法的整数系数。

@@ -1,30 +1,97 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 3.1 限制与诱导
-% 纲要位置：计划纲要.md，第 3140 行。
+% 纲要位置：工作记录/计划纲要.md，第 3791 行。
+% 纲要细目（写作范围）：
+% * 群代数上的扩张标量
+% * 陪集模型
+% * 诱导表示的维数与显式矩阵
+
 
 \section{限制与诱导}
 \label{b5:sec:0301}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 群代数上的扩张标量
-% * 陪集模型
-% * 诱导表示的维数与显式矩阵
-%
+一个群的作用限制到子群上，不需要增加任何数据。反向的任务却不能仅靠给原空间补写几个矩阵来完成：子群的表示未必能在同一空间上延拓。诱导的办法是允许空间增大，把子群已给定的作用作为关系保留下来，再让整个群自由地作用。本节先把这些关系写成商空间，随后选择陪集代表得到可计算的模型。以下构造适用于任意域，暂不要求群阶在域中可逆。
 
 \subsection{群代数上的扩张标量}
 \label{b5:subsec:0301:01}
 
-待撰写。
+\begin{definition}\label{b5:def:restriction-induction}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)。若 \(V\) 为左 \(k[G]\)-模，把作用仅限于 \(H\)，所得左 \(k[H]\)-模称为 \(V\) 的\term[xianzhibiaoshi]{限制表示}[restricted representation]，记为 \(\operatorname{Res}_H^G V\)。若 \(W\) 为左 \(k[H]\)-模，把 \(k[G]\) 以左右乘法看成 \(\Bigl(k[G],k[H]\Bigr)\)-双模，则
+\[
+\operatorname{Ind}_H^G W\coloneqq k[G]\otimes_{k[H]}W,
+\qquad g(a\otimes w)=ga\otimes w
+\]
+给出一个左 \(k[G]\)-模，称为 \(W\) 的\term[youdaobiaoshi]{诱导表示}[induced representation]。
+\end{definition}
+\symidx{\(\operatorname{Res}_H^G\)：从 \(G\) 到 \(H\) 的限制}
+\symidx{\(\operatorname{Ind}_H^G\)：从 \(H\) 到 \(G\) 的诱导}
+
+这里的张量积可以直接构造如下。先取域上的张量积 \(k[G]\otimes_k W\)，再模去所有
+\[
+ ah\otimes w-a\otimes hw
+ \qquad\Bigl(a\in k[G],\ h\in H,\ w\in W\Bigr)
+\]
+生成的线性子空间。群元素生成 \(k[H]\)，所以商空间中的关系也包含 \(ab\otimes w=a\otimes bw\)，其中 \(b\in k[H]\)。左乘 \(g\) 把上述关系送到同样形式的关系，因而作用良定义；\(g_1\Bigl(g_2(a\otimes w)\Bigr)=(g_1g_2)a\otimes w\)，且单位元作用为恒等。
+
+\ProseParagraphBreak
+这一商构造还说明怎样从诱导空间定义线性映射。一个 \(k\)-双线性映射 \(B:k[G]\times W\rightarrow U\) 能唯一写成 \(B(a,w)=F(a\otimes w)\)，当且仅当
+\[
+ B(ab,w)=B(a,bw)\qquad\Bigl(b\in k[H]\Bigr).
+\]
+必要性来自张量关系；充分性来自 \(B\) 所诱导的域上张量积映射在被模去的子空间上为零。后面的同构都将实际检查这条平衡关系。
+
+\ProseParagraphBreak
+若 \(u:W\rightarrow W'\) 为 \(H\)-同态，则 \(a\otimes w\mapsto a\otimes u(w)\) 保持关系，并与 \(G\) 作用交换。于是诱导不只作用于表示，也作用于表示之间的同态；它保持恒等映射与复合。限制则把一个 \(G\)-同态原样看成 \(H\)-同态。这就是后文把两者称为函子的具体含义。
 
 \subsection{陪集模型}
 \label{b5:subsec:0301:02}
 
-待撰写。
+选择左陪集 \(G/H\) 的一组代表 \(T\)。每个 \(g\in G\) 唯一写成 \(th\)，其中 \(t\in T\)、\(h\in H\)。所以 \(k[G]=\bigoplus_{t\in T}t k[H]\) 是右 \(k[H]\)-模的直和分解；这里使用左陪集，正是因为张量积中群代数位于右模一侧。
+
+\begin{proposition}\label{b5:prop:induced-coset-model}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)，\(W\) 为左 \(k[H]\)-模，\(T\) 为左陪集 \(G/H\) 的代表集。映射
+\[
+ \bigoplus_{t\in T}W\longrightarrow\operatorname{Ind}_H^G W,
+ \qquad(w_t)_{t\in T}\longmapsto\sum_{t\in T}t\otimes w_t
+\]
+是 \(k\)-线性同构。在此模型中，若 \(gt=t'h\)，其中 \(t'\in T\)、\(h\in H\)，则 \(g\) 把第 \(t\) 个分量中的 \(w\) 送到第 \(t'\) 个分量中的 \(hw\)。
+\end{proposition}
+\begin{proof}
+把 \(a\in k[G]\) 唯一写为 \(a=\sum_{t\in T}t b_t\)，\(b_t\in k[H]\)。给 \((a,w)\) 指定向量族 \((b_tw)_t\)，得到一个双线性映射。把 \(a\) 换成 \(ab\) 时，各系数变为 \(b_tb\)，所以这与把 \(w\) 换成 \(bw\) 的结果相同。它因而通过张量积，给出所述映射的逆。作用公式来自
+\(g(t\otimes w)=gt\otimes w=t'h\otimes w=t'\otimes hw\)。
+\end{proof}
+
+代表元的改变只改变坐标，不改变诱导表示。例如把 \(t\) 换成同一陪集中的 \(th_t\)，则旧坐标 \(w_t\) 在新代表下应写成 \(h_t^{-1}w_t\)，因为
+\(t\otimes w_t=th_t\otimes h_t^{-1}w_t\)。这条变换也解释了为何不能把各陪集上的空间看成带有预先指定基的副本。
+
+\begin{corollary}\label{b5:cor:induction-exact}
+设 \(G\) 为有限群，\(H\le G\)，\(k\) 为任意域。诱导函子 \(\operatorname{Ind}_H^G:k[H]\text{-}\mathrm{Mod}\to k[G]\text{-}\mathrm{Mod}\) 与限制函子 \(\operatorname{Res}_H^G:k[G]\text{-}\mathrm{Mod}\to k[H]\text{-}\mathrm{Mod}\) 都保持短正合列，其中各模范畴均取左模。诱导还保持直和，并且对每个左 \(k[H]\)-模 \(W\)，\(\operatorname{Ind}_H^G W=0\) 当且仅当 \(W=0\)。
+\end{corollary}
+\begin{proof}
+限制不改变底向量空间和底映射，所以核、像不变。选定 \(T\) 后，诱导一个同态就是在每个 \(t\) 分量上应用该同态；核与像均逐分量计算。因此短正合性保持，直和也可逐分量交换。代表集非空，故诱导空间为零恰好要求每个副本 \(W\) 为零。这里没有使用 Maschke 定理。
+\end{proof}
 
 \subsection{诱导表示的维数与显式矩阵}
 \label{b5:subsec:0301:03}
 
-待撰写。
+若 \(W\) 有限维，由\cref{b5:prop:induced-coset-model}立即得到
+\begin{equation}\label{b5:eq:induction-dimension}
+ \dim_k\operatorname{Ind}_H^G W=[G:H]\dim_k W.
+\end{equation}
+更具体地，设 \(T=\{t_1,\ldots,t_m\}\)，\(w_1,\ldots,w_d\) 是 \(W\) 的基。按 \(t_i\otimes w_j\) 排列诱导空间的基。对固定 \(g\)，写
+\[
+ gt_i=t_{\sigma_g(i)}h_i(g),\qquad h_i(g)\in H.
+\]
+若 \(\rho\) 为 \(W\) 的矩阵表示，则 \(g\) 的矩阵在第 \(i\) 个块列中仅有一个非零块，位于第 \(\sigma_g(i)\) 个块行，等于 \(\rho\Bigl(h_i(g)\Bigr)\)。这给出了有限次群乘法和子群矩阵计算构成的具体程序。
+
+\begin{example}\label{b5:exm:s3-cyclic-induction}
+在 \(G=S_3=\langle r,s\mid r^3=s^2=1,\ srs=r^{-1}\rangle\) 中，取 \(H=\langle r\rangle\)。设 \(k\) 为域，\(\lambda\in k^\times\) 满足 \(\lambda^3=1\)，并令 \(W=k w\)、\(rw=\lambda w\)。选择左陪集代表 \(1,s\)，诱导表示在 \(1\otimes w,s\otimes w\) 下的矩阵为
+\[
+ R=\begin{pmatrix}\lambda&0\\0&\lambda^{-1}\end{pmatrix},
+ \qquad
+ S=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+确实，\(rs=sr^{-1}\)，而 \(s\) 交换两个代表。矩阵满足 \(R^3=S^2=I\) 及 \(SRS=R^{-1}\)，与群关系一致。若 \(k=\mathbb C\)、\(\lambda\ne1\)，则 \(R\) 有两个不同特征值。任何一维不变子空间都须为其坐标特征线，但 \(S\) 交换两条线，故该二维表示不可约。取 \(\lambda=1\) 时则得到 \(S_3/H\) 上的置换表示；在复数域上，它分解为平凡表示与符号表示。
+\end{example}
+
+最后注意，“诱导”与“延拓”回答不同问题。延拓要求在原空间上定义整个 \(G\) 的作用；诱导的空间则按\eqref{b5:eq:induction-dimension}扩大。上例中 \(\lambda\ne1\) 的一维 \(H\)-表示不能在一维空间中延拓：若能延拓，标量之间交换，关系 \(srs=r^{-1}\) 将迫使 \(\lambda=\lambda^{-1}\)，与 \(\lambda\) 为三次本原单位根矛盾。

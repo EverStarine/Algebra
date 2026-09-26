@@ -1,21 +1,278 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：## 附录 A　单子、下降与可表性
-% 纲要位置：计划纲要.md，第 3055 行。
+% 纲要位置：工作记录/计划纲要.md，第 3527 行。
+% 纲要细目（写作范围）：
+% > 完整构造单子代数、自由伴随及比较函子；证明分裂余等化版本的 Barr–Beck 判据、忠实平坦模下降及带解集条件的一般伴随函子定理。
+
 
 \chapter{单子、下降与可表性}
 \label{b4:app:A}
 
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
+\begin{chapterabstract}
+单子描述自由构造及其归并规则，单子上的代数则为形式表达式指定相容的求值。本附录构造自由代数与比较函子，以分裂余等化子证明 Barr–Beck 单子性判据，并分别讨论限制标量的单子性和忠实平坦模下降。最后从泛元素与弱始对象集出发，证明一般伴随函子定理，说明保持极限与解集条件怎样共同保证自由对象或表示对象存在。
+\end{chapterabstract}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 单子与余单子
-% * 单子上的代数和自由对象
-% * Barr–Beck 定理的假设与典型例子
-% * 可表性问题与伴随函子定理的阅读建议
-%
+\begin{learninggoals}
+\begin{itemize}
+\item 按单位、乘法及求值等式识别单子代数，构造自由代数与其伴随。
+\item 区分比较函子的存在、保守性和单子性，逐项核验分裂余等化子条件。
+\item 用余单子写出模下降数据，并从相容元素构造恢复模。
+\item 把可表性与伴随存在性化为始对象问题，辨认极限假设和大小假设的不同作用。
+\end{itemize}
+预备知识为局部小范畴、自然变换、伴随、等化子与余等化子，以及模的张量积和正合性。关于范畴大小，所有“小”均相对于固定的集合范围；不对真类大小的对象族任意取积。
+\end{learninggoals}
+
+正文中的伴随经常来自已经知道的自由对象。这里还要追问两件事：伴随产生的单子是否保存了另一范畴的全部信息，以及在尚未构造自由对象时，哪些条件能保证它存在。前一个问题由单子性判据处理，后一个问题由伴随函子定理处理。下降则提供一个具体用途：从扩张后的模及其相容数据恢复原模。伴随数据的基本定义可对照 Weibel 的叙述\cite[A.6.1; Theorem A.6.2, pp. 429--431]{Weibel1994HomologicalAlgebra}。
 
 \input{Appendices/AppendixA/SectionA01}
 \input{Appendices/AppendixA/SectionA02}
 \input{Appendices/AppendixA/SectionA03}
 \input{Appendices/AppendixA/SectionA04}
+
+\begin{chaptersummary}
+单子代数把形式运算变成求值，单位和结合律保证求值与归并相容。每个单子都有自由代数与遗忘伴随；原来的伴随能否由它恢复，则取决于比较函子是否为等价。Barr–Beck 判据把这个问题归结为反映同构以及正确处理遗忘后分裂的余等化子。
+
+\ProseParagraphBreak
+
+模的限制标量总具有单子性，不需要平坦性；忠实平坦下降则讨论扩张标量的余单子，平坦性保证等化子保留，忠实性保证原对象与态射没有被丢失。可表性和伴随存在性又有不同的困难：极限组织相容条件，解集把候选对象限制为集合大小，始对象的泛性质最终保证存在唯一性。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:A-pointed-monad}
+在集合范畴上令 \(TX=X\amalg\{*\}\)，单位为自然包含，乘法 \(T^2X\to TX\) 固定 \(X\) 中元素并把两个新元素都送到 \(*\)。验证单子公理，并识别其代数范畴。
+\end{exercise}
+\begin{solution}
+在三次复合中，无论按哪一顺序合并，原来的 \(x\in X\) 都保持不变，任意一层的新元素都变成唯一的 \(*\)，故结合律成立。两条单位律也逐点成立。代数结构 \(a:X\amalg\{*\}\to X\) 由单位律迫使在 \(X\) 上为恒等，只剩指定 \(x_0=a(*)\)。第二条公理只要求所有新元素最后都送到 \(x_0\)，不增加条件。代数同态恰好是保持 \(x_0\) 的函数，所以代数范畴是带基点集合范畴；空集合不能带这样的代数结构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-nonempty-list}
+把有限表单子中的空表删除，只保留非空有限表，仍用单元素表及连接定义单位和乘法。识别所得代数范畴，特别说明空底集合的情况，并指出它与幺半群情形的差别。
+\end{exercise}
+\begin{solution}
+非空表的非空表仍能连接成非空表，两种连接顺序相同，单位也仍成立。若 \(a\) 为代数结构，定义 \(x\cdot y=a\Bigl([x,y]\Bigr)\)，对三元素表的两种分组应用代数公理，得到结合律。归纳给出所有非空表的求值都等于依次相乘，因此没有额外数据。反过来，结合乘法定义所有非空表的值，满足代数公理，同态恰好保持这个乘法。
+
+这里 \(T\varnothing=\varnothing\)，所以空集合也有唯一的代数结构。因而完整的代数范畴允许空底集合上的结合乘法；限制到非空对象，才是通常要求底集合非空的半群范畴。构造中没有空表，所以没有被指定的单位元，也没有要求一个本来存在的单位元被同态保持。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-cofree-coalgebra}
+设 \(Q\) 为局部小范畴 \(\mathcal D\) 上的余单子。证明 \((QY,\delta_Y)\) 是余代数，并给出
+\[
+\operatorname{Hom}_{\mathcal D_Q}
+\Bigl((X,c),(QY,\delta_Y)\Bigr)
+\cong\operatorname{Hom}_{\mathcal D}(X,Y)
+\]
+的显式双射。这说明遗忘函子有什么伴随？
+\end{exercise}
+\begin{solution}
+余单子的公理就是 \((QY,\delta_Y)\) 的余代数公理。把余代数同态 \(f:X\to QY\) 送到 \(\varepsilon_Yf\)；给定 \(h:X\to Y\)，逆映射为 \(Q(h)c\)。后者是余代数同态，因为
+\[
+\delta_YQ(h)c=Q^2(h)\delta_Xc
+=Q^2(h)Q(c)c=Q\Bigl(Q(h)c\Bigr)c.
+\]
+余单位自然性及 \(\varepsilon_Xc=1_X\) 说明第一种复合为 \(h\)。反方向使用余代数同态条件：
+\[
+Q(\varepsilon_Yf)c
+=Q(\varepsilon_Y)Q(f)c
+=Q(\varepsilon_Y)\delta_Yf=f.
+\]
+公式与态射复合相容，故双射自然。遗忘函子因而有右伴随 \(Y\mapsto(QY,\delta_Y)\)，称为余自由余代数构造。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-rationalization}
+在交换群范畴上考虑单子 \(T(A)=\mathbb Q\otimes_{\mathbb Z}A\)。证明它幂等，并证明其代数范畴等价于 \(\mathbb Q\)-向量空间范畴。描述其固定对象在交换群语言中的性质。
+\end{exercise}
+\begin{solution}
+乘法为 \(q\otimes r\otimes a\mapsto qr\otimes a\)，逆为 \(q\otimes a\mapsto q\otimes1\otimes a\)。要看另一复合为恒等，可先将有理系数通分；两边乘以公共分母后都是整数张量的平衡关系，而公共分母在有理向量空间中可逆。因此乘法为同构。
+
+由\cref{b4:prop:A-restriction-scalars-monadic}，代数结构正是延伸原来整数作用的 \(\mathbb Q\)-作用。其底层交换群中，乘每个非零整数都是双射。反过来，若这些乘法均双射，则定义 \((a/b)x\) 为唯一满足 \(by=ax\) 的 \(y\)，通分与唯一性给出有理标量作用，故固定对象就是唯一可除交换群。幂等性说明这一作用一旦存在便唯一。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-torsionfree-reflection}
+对交换群 \(A\)，令 \(t(A)\) 为全部有限阶元素所成的子群。证明 \(A/t(A)\) 无挠，并证明 \(A\mapsto A/t(A)\) 左伴随于无挠交换群范畴的包含函子。说明相应单子为何幂等。
+\end{exercise}
+\begin{solution}
+若 \(n\Bigl(a+t(A)\Bigr)=0\)，则 \(na\) 有限阶，所以存在 \(m>0\) 使 \(mna=0\)，即 \(a\in t(A)\)。因此商群无挠。到无挠群 \(B\) 的任何同态都把 \(t(A)\) 送到零，故唯一经过 \(A/t(A)\) 分解；这个商映射的泛性质对两变量自然，给出伴随。再次除去挠子群已经不改变无挠商，所以单子乘法为同构。此反射与有理化不同，例如 \(\mathbb Z\) 已经无挠，却不是唯一可除的。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-em-limits}
+设 \(T\) 为局部小范畴 \(\mathcal C\) 上的单子，\(D:J\to\mathcal C^T\) 为小图。若底层图 \(U^TD\) 在 \(\mathcal C\) 中有极限，证明该极限上有唯一代数结构使极限锥成为代数同态锥，且它给出 \(\mathcal C^T\) 中的极限。这里是否需要 \(T\) 保持极限？
+\end{exercise}
+\begin{solution}
+记底层极限为 \(L\)，投影为 \(\pi_j:L\to X_j\)，各代数结构为 \(a_j:TX_j\to X_j\)。映射 \(a_jT(\pi_j):TL\to X_j\) 构成锥，因为图中的态射是代数同态。故存在唯一 \(a:TL\to L\)，使
+\(\pi_ja=a_jT(\pi_j)\)。
+
+在两条代数公理的两边分别复合所有 \(\pi_j\)，利用 \(a_j\) 的单位、结合律与自然性，得到相同结果。极限投影联合为单，故 \(a\) 满足两条公理。对任意代数锥，底层唯一的极限态射与代数结构相容，同样可在复合所有 \(\pi_j\) 后检验，所以它给出代数范畴中的极限。整个构造只向底层极限送入一个锥，未曾要求 \(TL\) 是某个极限，因此不需要 \(T\) 保持极限。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-free-module-monad}
+设 \(R\) 为含幺环，在集合范畴上令 \(TX\) 为以 \(X\) 为基的自由左 \(R\)-模的底集合，单位为 \(x\mapsto e_x\)，乘法为展开有限形式线性组合。证明这个单子的代数范畴等价于左 \(R\)-模范畴。
+\end{exercise}
+\begin{solution}
+给定代数求值 \(a:TX\to X\)，定义
+\[
+0_X=a(0),\qquad
+x+y=a(e_x+e_y),\qquad
+rx=a(re_x).
+\]
+单位律给出 \(a(e_x)=x\)。代数结合律说明，对任意有限个 \(v_i\in TX\)，
+\[
+a\biggl(\sum_i r_i e_{a(v_i)}\biggr)
+=a\biggl(\sum_i r_i v_i\biggr).
+\]
+因此在内层先作加法或标量乘法，与在自由模中先展开后求值相同。自由模中的加法交换、结合、零元与负元等式分别给出 \(X\) 中的相应等式；取内层 \(v=se_x\) 得 \(r(sx)=(rs)x\)，取 \(v=e_x+e_y\) 得分配律，单位元给出 \(1x=x\)。所以得到左 \(R\)-模。
+
+反向，一个左模把 \(\sum r_ie_{x_i}\) 求值为 \(\sum r_ix_i\)，满足两条代数公理。上面的等式也说明原求值必等于这种有限线性组合求值，所以构造互逆。保持求值的函数恰好保持零、加法与标量乘法，也就是左模同态。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-forgetful-not-full}
+对带基点集合的遗忘函子，说明它忠实且反映同构，但不是全函子。给出一个底层为分裂满射而非同构的代数结构 \(a:TX\to X\)。
+\end{exercise}
+\begin{solution}
+一个带基点映射由其底层函数确定，所以遗忘函子忠实；保持基点的双射，其逆也保持基点，所以反映同构。对同一个带基点二点集 \(\Bigl(\{0,1\},0\Bigr)\)，交换 \(0,1\) 的底层函数不保持基点，故函子不全。
+
+取 \(X=\{0,1\}\)，令 \(a:X\amalg\{*\}\to X\) 固定 \(X\) 并把 \(*\) 送到 \(0\)。它与单位包含复合为恒等，因而是分裂满射；但 \(a(0)=a(*)\)，所以不是同构。单子代数的单位律只保证求值分裂满，不保证求值可逆。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-monoid-presentation}
+设 \(M\) 为幺半群，以每个 \(x\in M\) 为一个形式生成元 \([x]\) 构造自由幺半群。证明由关系
+\[
+[x][y]=[xy],\qquad []=[1_M]
+\]
+所得的商幺半群同构于 \(M\)。解释它与单子代数的自由对象展示的关系。
+\end{exercise}
+\begin{solution}
+把一个词 \([x_1]\cdots[x_n]\) 送到 \(x_1\cdots x_n\)，空词送到 \(1_M\)，得到满同态，而且消去所列关系。反过来，关系允许把每个非空词依次缩成单个 \([x_1\cdots x_n]\)，把空词改成 \([1_M]\)。因此两个词只要求值相同，便在商中相同；若商中相同，求值当然相同。故核同余恰由这些关系生成，得到同构。
+
+关系比较的正是“先在一层表内求值”与“先连接表再求值”。自由代数展示中的两支箭头分别执行这两种操作，余等化子把它们强制为同一个结果。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-reflexive-not-split}
+令 \(B=\{0,1,2\}\)、\(A=B\amalg\{a,b\}\)。定义 \(f,g:A\rightrightarrows B\)，在 \(B\) 上都为恒等，另令
+\[
+f(a)=0,\quad g(a)=1,\qquad f(b)=1,\quad g(b)=2.
+\]
+它们有共同截面 \(B\to A\)。求集合中的余等化子，并证明这个有序叉形图不能补成\cref{b4:def:A-split-coequalizer}中的分裂余等化子。
+\end{exercise}
+\begin{solution}
+余等化关系包含 \(0\sim1\sim2\)，所以余等化子为单元素集合。若存在分裂，设截面 \(s\) 选择了 \(c\in B\)。条件 \(ft=1_B\)、\(gt=sq\) 要求：对每个 \(x\in B\)，都有一个 \(t(x)\) 满足 \(f\Bigl(t(x)\Bigr)=x\)、\(g\Bigl(t(x)\Bigr)=c\)。对 \(x=2\)，唯一的可能是 \(t(2)=2\)，所以 \(c=2\)。但没有元素同时满足 \(f=0,g=2\)，故 \(t(0)\) 不存在。共同截面使这对态射反身，却不足以给出所需的分裂余等化子。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-abelian-forgetful-coequalizer}
+证明交换群到集合的遗忘函子不保持全部余等化子。可以比较 \(\mathbb Z\) 上的恒等映射与取负映射。同时说明这为何不与该遗忘函子的单子性矛盾。
+\end{exercise}
+\begin{solution}
+在交换群中，恒等与取负的差为乘二，所以余等化子为 \(\mathbb Z/2\mathbb Z\)。在集合中，生成的等价关系仅把 \(n\) 与 \(-n\) 识别，商集由 \(0,1,2,\ldots\) 标记，为无限集。因此底集合函子不保持这个余等化子。
+
+由\cref{b4:ex:A-free-module-monad}取 \(R=\mathbb Z\)，该遗忘函子确有单子性。Barr–Beck 判据只要求保持底层可分裂的那些余等化子，不要求保持这一切平行态射的余等化子。此例也说明不能把定理中的限定删掉后再声称所得条件必要。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-nonflat-monadic}
+考虑 \(\mathbb Z\to\mathbb Z/2\mathbb Z\)。说明限制标量具有单子性，而扩张标量不保持单射。求对应单子的固定对象。
+\end{exercise}
+\begin{solution}
+限制标量的单子性由\cref{b4:prop:A-restriction-scalars-monadic}得到，不需要平坦性。扩张标量把单射 \(\mathbb Z\xrightarrow{\times2}\mathbb Z\) 变成 \(\mathbb Z/2\xrightarrow0\mathbb Z/2\)，所以不保持单射。
+
+单子为 \(T(A)=A/2A\)，再作用一次不变，故幂等。固定对象满足 \(2A=0\)，正是 \(\mathbb F_2\)-向量空间的底层交换群。其标量作用由加法唯一确定，这与幂等单子的代数结构唯一相符。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-product-descent}
+设 \(R\) 为交换环，\(S=R\times R\)，底环映射为对角嵌入。写 \(S\)-模 \(M=M_1\oplus M_2\)。证明一个模下降数据等价于一个 \(R\)-模同构 \(f:M_1\to M_2\)，并具体求恢复模。
+\end{exercise}
+\begin{solution}
+把 \(S\otimes_RM\) 识别为 \(M\oplus M\)。\(S\)-线性及余单位条件迫使
+\[
+\gamma(m_1,m_2)
+=\biggl(\Bigl(m_1,f(m_1)\Bigr),\Bigl(g(m_2),m_2\Bigr)\biggr)
+\]
+具有这个形式，其中 \(f:M_1\to M_2\)、\(g:M_2\to M_1\) 为 \(R\)-线性映射。将余结合律写在
+\(S\otimes_RS\otimes_RM\) 的四个分量上：第 \((1,2)\) 个分量分别为
+\(\Bigl(gf(m_1),f(m_1)\Bigr)\) 与 \(\Bigl(m_1,f(m_1)\Bigr)\)，第 \((2,1)\) 个分量分别为
+\(\Bigl(g(m_2),fg(m_2)\Bigr)\) 与 \(\Bigl(g(m_2),m_2\Bigr)\)。另两分量自动相等。因此余结合律恰好等价于 \(gf=1_{M_1}\)、\(fg=1_{M_2}\)。
+
+恢复模为
+\[
+V=\Bigl\{(m_1,m_2):m_2=f(m_1)\Bigr\},
+\]
+即 \(f\) 的图，同构于 \(M_1\)，也同构于 \(M_2\)。下降数据不仅给出两份模，还指定把两份识别起来的同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-rational-descent-loss}
+对平坦但不忠实的映射 \(\mathbb Z\to\mathbb Q\)，证明每个 \(\mathbb Q\)-向量空间上的模下降数据唯一。比较原来的两个交换群 \(\mathbb Z\) 与 \(\mathbb Q\) 所产生的数据，说明恢复失去何种唯一性。
+\end{exercise}
+\begin{solution}
+对 \(\mathbb Q\)-空间 \(M\)，余单位
+\(\mathbb Q\otimes_{\mathbb Z}M\to M\)、\(q\otimes m\mapsto qm\) 为同构，其逆为 \(m\mapsto1\otimes m\)。由余单位条件，\(\gamma\) 必是这个逆，故唯一；它也满足余结合律。
+
+\(\mathbb Q\otimes_{\mathbb Z}\mathbb Z\) 与
+\(\mathbb Q\otimes_{\mathbb Z}\mathbb Q\) 都同构于 \(\mathbb Q\)，并带有同一个唯一数据，但 \(\mathbb Z\) 与 \(\mathbb Q\) 作为交换群不同构：前者非零元素不能无限次被二整除，后者可以。故扩张后的数据不能唯一决定原模。恢复等化子对这份数据给出的是 \(\mathbb Q\) 的底层交换群，并不能区分所有可能的原对象。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-faithful-counit}
+设 \(F\dashv U\) 为局部小范畴之间的伴随，余单位为 \(\varepsilon\)。证明 \(U\) 忠实，当且仅当每个 \(\varepsilon_Y:FUY\to Y\) 都为满态射。这与 \(U\) 反映同构有何区别？
+\end{exercise}
+\begin{solution}
+若 \(U\) 忠实且 \(r\varepsilon_Y=s\varepsilon_Y\)，应用 \(U\) 后可消去具有右逆 \(\eta_{UY}\) 的 \(U\varepsilon_Y\)，得到 \(Ur=Us\)，再由忠实性得 \(r=s\)。所以 \(\varepsilon_Y\) 满。
+
+反过来，若所有 \(\varepsilon_Y\) 满且 \(Ur=Us\)，余单位自然性给出
+\[
+r\varepsilon_Y=\varepsilon_ZF(Ur)
+=\varepsilon_ZF(Us)=s\varepsilon_Y,
+\]
+消去后得到 \(r=s\)，故 \(U\) 忠实。底集合函子 \(\mathbf{Top}\to\mathbf{Set}\) 忠实，却不反映同构，因为连续双射不一定为同胚。因此这一判据不能替代 Barr–Beck 定理中的保守性。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-nilpotent-not-representable}
+在含幺交换环范畴上令 \(N(A)\) 为全部幂零元的集合。证明这个协变函子不可表。比较固定一个正整数 \(n\) 时的函子 \(N_n(A)=\{a:a^n=0\}\)。
+\end{exercise}
+\begin{solution}
+若 \(N\) 由 \((B,u)\) 表示，则泛元素 \(u\in N(B)\) 满足某个 \(u^n=0\)。任何经环同态得到的像也都满足 \(n\) 次幂为零。但在 \(\mathbb Z[t]/(t^{n+1})\) 中，\(\bar t\) 幂零且 \(\bar t^n\neq0\)，不可能由 \(u\) 得到，与泛元素条件矛盾。所以 \(N\) 不可表。
+
+固定 \(n\) 时，\(\mathbb Z[t]/(t^n)\) 连同 \(\bar t\) 表示 \(N_n\)。可表性在这里要求一个统一的运算关系；把所有可能的幂零阶混在一起，不能继续沿用同一个表示对象。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-general-linear-representability}
+设 \(R\) 为交换环、\(n\ge1\)。在交换 \(R\)-代数范畴上证明函子 \(A\mapsto\operatorname{GL}_n(A)\) 可表，并写出表示代数和泛元素。
+\end{exercise}
+\begin{solution}
+令 \(X=(x_{ij})\) 为 \(n\times n\) 不定元矩阵，取
+\[
+B=R[x_{ij},t]/\Bigl(t\det X-1\Bigr).
+\]
+指定 \(R\)-代数同态 \(B\to A\)，等价于指定矩阵 \(M=(a_{ij})\) 及 \(b\in A\)，满足 \(b\det M=1\)。交换环上的伴随矩阵恒等式说明这等价于 \(M\) 可逆，而此时 \(b=(\det M)^{-1}\) 唯一。因此同态自然地对应于 \(\operatorname{GL}_n(A)\)，泛元素是 \((\bar x_{ij})\)。这里 \(A\) 不必是域，可逆性由行列式为单位来判断。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-nonempty-sets-initial}
+在所有非空集合及全部函数组成的范畴中，证明单元素集合为弱始对象，但不存在始对象。找出该范畴缺少的一个等化子，说明弱始对象集引理的完备性假设不能删去。
+\end{exercise}
+\begin{solution}
+每个非空集合至少接收一个来自单元素集合的函数，所以单元素集合弱始。任一非空集合 \(X\) 到二元素集合至少有两个不同的常值函数，因此没有对象能为始对象。
+
+在二元素集合上取恒等映射与交换两点的映射，它们在集合范畴中的等化子为空集。任何非空集合都不可能映入这个等化图，因为两映射没有相等的取值点。因此所述非空集合范畴没有这个等化子，不能应用弱始对象集引理。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:A-ordinal-solution-set}
+考虑所有序数组成的范畴 \(\mathcal O\)，规定从 \(\alpha\) 到 \(\beta\) 存在唯一态射，当且仅当 \(\alpha\ge\beta\)。证明它局部小且有全部小极限，但没有始对象。由此给出一个保持小极限却没有左伴随的函子，并说明解集条件在哪里失败。
+\end{optionalexercise}
+\begin{solution}
+每个同态集合为空或单元素，所以局部小。对任一小图，所有顶点序数形成一个集合，其上确界是该图的极限；空图的极限是 \(0\)。这是因为极限锥的顶点恰为所有这些序数的共同上界，最小共同上界给出唯一分解。
+
+若有始对象 \(\alpha\)，就必须有 \(\alpha\ge\beta\) 对所有序数成立，与 \(\beta=\alpha+1\) 矛盾。到单对象单态射范畴 \(\mathbf1\) 的唯一函子保持小极限；如果它有左伴随，左伴随在唯一对象处的值就应为 \(\mathcal O\) 的始对象，故不存在。
+
+对任意集合大小的候选序数族，取大于其上确界的序数 \(\beta\)，就没有任何候选对象到 \(\beta\) 的态射。因此不存在弱始对象集，解集条件恰好失败。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-torsion-inclusion}
+设 \(\mathbf{TorAb}\) 为挠交换群的满子范畴，\(J:\mathbf{TorAb}\to\mathbf{Ab}\) 为包含函子。证明 \(J\) 有右伴随，却没有左伴随。
+\end{exercise}
+\begin{solution}
+到任意交换群 \(A\) 的一个挠群同态，其像都在 \(t(A)\) 中，所以
+\[
+\operatorname{Hom}_{\mathbf{Ab}}(JT,A)
+\cong\operatorname{Hom}_{\mathbf{TorAb}}\Bigl(T,t(A)\Bigr).
+\]
+因此 \(t\) 是 \(J\) 的右伴随。
+
+如果 \(J\) 有左伴随，则 \(J\) 本身是右伴随，应保持全部存在的积。取 \(T_n=\mathbb Z/2^n\mathbb Z\)。在 \(\mathbf{TorAb}\) 中，其积为
+\(t(\prod_nT_n)\)：来自挠群的任意相容映射族在全积中的像仍为挠元素，故满足所需泛性质。但 \(\prod_nT_n\) 中的元素 \((\bar1)_n\) 有无限阶，所以这个挠子群不是全积。包含函子不保持该积，矛盾，故没有左伴随。把挠元取出来是余反射，而不能据此猜测一个反方向的“最大挠商”具有同样泛性质。
+\end{solution}

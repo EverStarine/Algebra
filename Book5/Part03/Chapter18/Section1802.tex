@@ -1,30 +1,124 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 18.2 权与最高权
-% 纲要位置：计划纲要.md，第 3641 行。
+% 纲要位置：工作记录/计划纲要.md，第 4292 行。
+% * Borel 子代数及三角分解
+% * 最高权向量和最高权模
+% * 权偏序
 
 \section{权与最高权}
 \label{b5:sec:1802}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Borel 子代数及三角分解
-% * 最高权向量和最高权模
-% * 权偏序
-%
+完全可约性把有限维表示的研究归结为简单模。要给简单模编号，需要选定 Cartan 子代数及正根；对这一选择而言，一个简单模会有唯一的最高权。改变正根系会改变这个标签的表达，但不会改变原来的表示。
 
 \subsection{Borel 子代数及三角分解}
 \label{b5:subsec:1802:01}
 
-待撰写。
+固定有限维复半单李代数 \(\mathfrak g\)、Cartan 子代数 \(\mathfrak h\)、根系 \(\Phi\)、正根集 \(\Phi^+\) 及简单根 \(\alpha_1,\ldots,\alpha_\ell\)。由\cref{b5:thm:root-decomposition}，记
+\[
+\mathfrak n^+=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_\alpha,
+\qquad
+\mathfrak n^-=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_{-\alpha},
+\qquad
+\mathfrak b=\mathfrak h\oplus\mathfrak n^+.
+\]
+于是有向量空间的三角分解
+\[
+\mathfrak g=\mathfrak n^-\oplus\mathfrak h\oplus\mathfrak n^+.
+\]
+这里“向量空间”不可省略：三个直和项并不是三个彼此交换的理想。
+
+\begin{definition}\label{b5:def:borel-subalgebra}
+设 \(\mathfrak g\) 为有限维复李代数。它的一个可解子代数若不真包含在另一个可解子代数中，就称为\term[Borel-zidaishu]{Borel 子代数}[Borel subalgebra]。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:positive-borel}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根。令 \(\mathfrak n^+=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_\alpha\)、\(\mathfrak b=\mathfrak h\oplus\mathfrak n^+\)，其中 \(\mathfrak g_\alpha\) 为根空间。则 \(\mathfrak n^+\) 幂零，\(\mathfrak b\) 是 Borel 子代数，且
+\[
+[\mathfrak b,\mathfrak b]=\mathfrak n^+.
+\]
+\end{proposition}
+\begin{proof}
+根空间括号满足 \([\mathfrak g_\alpha,\mathfrak g_\beta]\subseteq\mathfrak g_{\alpha+\beta}\)。连续对正根向量取括号会使简单根高度相加，而正根高度有有限上界，所以 \(\mathfrak n^+\) 幂零。\(\mathfrak h\) 交换，故 \([\mathfrak b,\mathfrak b]\subseteq\mathfrak n^+\)。每个根 \(\alpha\ne0\)，可取 \(h\in\mathfrak h\) 使 \(\alpha(h)\ne0\)，于是 \(x_\alpha=\alpha(h)^{-1}[h,x_\alpha]\)，得到反向包含。由此 \(\mathfrak b\) 可解。
+
+若子代数 \(\mathfrak c\) 真包含 \(\mathfrak b\)，则因 \(\mathfrak h\subseteq\mathfrak c\)，它在 \(\operatorname{ad}\mathfrak h\) 下稳定。根分解的投影可由若干 \(\operatorname{ad}h\) 的多项式给出，所以 \(\mathfrak c\) 也按根空间分解。它已含 \(\mathfrak h\) 和所有正根空间，严格增加只能使它含有某个 \(\mathfrak g_{-\alpha}\)、\(\alpha>0\)。连同已在其中的 \(\mathfrak g_\alpha\)，根 \(\mathfrak{sl}_2\) 定理使它包含一个 \(\mathfrak{sl}_2\) 子代数。可解代数的子代数仍可解，而 \(\mathfrak{sl}_2=[\mathfrak{sl}_2,\mathfrak{sl}_2]\ne0\)，矛盾。因此 \(\mathfrak b\) 极大可解。
+\end{proof}
+
+\begin{definition}\label{b5:def:lie-weight-space}
+设 \(V\) 为复李代数 \(\mathfrak g\) 的模，\(\mathfrak h\subseteq\mathfrak g\) 为交换子代数。对 \(\mu\in\mathfrak h^*\)，令
+\[
+V_\mu=\Bigl\{\,v\in V\mid h\cdot v=\mu(h)v\text{ 对所有 }h\in\mathfrak h\,\Bigr\}.
+\]
+它称为相应的\term[quan-kongjian]{权空间}[weight space]。若 \(V_\mu\ne0\)，称 \(\mu\) 为 \(V\) 的\term[quan]{权}[weight]。若 \(V=\bigoplus_\mu V_\mu\)，就说 \(V\) 具有权分解。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:finite-module-weights}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数。选择简单根 \(\alpha_1,\ldots,\alpha_\ell\)，记其对应余根为 \(h_1,\ldots,h_\ell\)。每个有限维复 \(\mathfrak g\) 模 \(V\) 都有相对于 \(\mathfrak h\) 的权分解，且全部权属于权格
+\(P=\Bigl\{\,\mu\in\mathfrak h^*\mid\mu(h_i)\in\mathbb Z\text{ 对所有 }i\,\Bigr\}\)。
+对相应根系中的每个根 \(\alpha\)、根向量 \(x_\alpha\in\mathfrak g_\alpha\) 及 \(\mu\in\mathfrak h^*\)，有 \(x_\alpha V_\mu\subseteq V_{\mu+\alpha}\)。
+\end{proposition}
+\begin{proof}
+将 \(V\) 限制到每个简单根的 \(\mathfrak{sl}_2\) 子代数。由\cref{b5:thm:sl2-complete-reducibility}和\cref{b5:thm:sl2-classification}，\(h_i\) 的作用可对角化，且特征值为整数。这些算子彼此交换，并生成 \(\mathfrak h\) 的作用，因此可同时对角化，得到权分解和整性。
+
+若 \(v\in V_\mu\)，则
+\[
+h(x_\alpha v)=[h,x_\alpha]v+x_\alpha hv
+=\Bigl(\alpha(h)+\mu(h)\Bigr)x_\alpha v.
+\]
+所以 \(x_\alpha v\) 要么为零，要么处于 \(\mu+\alpha\) 权空间。
+\end{proof}
 
 \subsection{最高权向量和最高权模}
 \label{b5:subsec:1802:02}
 
-待撰写。
+\begin{definition}\label{b5:def:highest-weight-module}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(\mathfrak n^+=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_\alpha\)。给定复 \(\mathfrak g\) 模 \(V\)、非零向量 \(v\in V\) 及 \(\lambda\in\mathfrak h^*\)。若满足
+\[
+hv=\lambda(h)v\quad(h\in\mathfrak h),\qquad
+\mathfrak n^+v=0,
+\]
+就称为权 \(\lambda\) 的最高权向量。若还满足 \(V=U(\mathfrak g)v\)，则称 \(V\) 为\term[zuigaoquan-mo]{最高权模}[highest weight module]，称 \(\lambda\) 为其最高权。此定义允许 \(V\) 无限维。
+\end{definition}
+
+由\cref{b5:prop:root-bracket-generation}，\(\mathfrak n^+\) 由简单根向量 \(e_i\) 生成。因此 \(\mathfrak n^+v=0\) 等价于 \(e_iv=0\) 对每个 \(i\) 成立；任意反复括号作用在 \(v\) 上也为零。
+
+\begin{proposition}\label{b5:prop:finite-simple-highest}
+设 \(\mathfrak g\) 为有限维复半单李代数，固定 Cartan 子代数 \(\mathfrak h\) 及相应根系的一组正根。相对于这份选择，每个非零有限维复 \(\mathfrak g\) 模都有最高权向量；每个有限维简单模都是最高权模。
+\end{proposition}
+\begin{proof}
+由\cref{b5:prop:finite-module-weights}，权集有限。取根实空间上对全部简单根为正的线性泛函，选它在权集上达到最大值的权 \(\lambda\)，并取 \(0\ne v\in V_\lambda\)。对每个简单根，\(\lambda+\alpha_i\) 不在权集中，所以 \(e_iv=0\)。简单根向量生成 \(\mathfrak n^+\)，故 \(v\) 为最高权向量。若 \(V\) 简单，非零子模 \(U(\mathfrak g)v\) 必为整个 \(V\)。
+\end{proof}
+
+对 \(\mathfrak{sl}_r\)，取对角 Cartan 子代数和上三角正根向量。自然模 \(\mathbb C^r\) 中 \(e_1\) 被全部严格上三角矩阵零化，故为最高权向量；其他标准基向量通常不是。这里最高权取决于已经选定的正根。
 
 \subsection{权偏序}
 \label{b5:subsec:1802:03}
 
-待撰写。
+记
+\[
+Q_+=\sum_{i=1}^\ell\mathbb Z_{\ge0}\alpha_i.
+\]
+对 \(\lambda,\mu\in\mathfrak h^*\)，若 \(\lambda-\mu\in Q_+\)，记 \(\mu\le\lambda\)。这是\term[quan-pianxu]{权偏序}[weight order]；简单根线性无关使 \(Q_+\cap(-Q_+)=\{0\}\)，因此反对称性成立。两个权可能不可比较。
+
+\begin{proposition}\label{b5:prop:highest-weight-support}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(\alpha_1,\ldots,\alpha_\ell\) 为简单根。令 \(\mathfrak n^-=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_{-\alpha}\)、\(Q_+=\sum_{i=1}^\ell\mathbb Z_{\ge0}\alpha_i\)。设 \(V=U(\mathfrak g)v\ne0\) 为相对于此选择的最高权模，\(v\) 的权为 \(\lambda\in\mathfrak h^*\)，以 \(\operatorname{wt}(V)\) 表示其权集。则
+\[
+V=U(\mathfrak n^-)v,\qquad
+\operatorname{wt}(V)\subseteq\lambda-Q_+,\qquad
+V_\lambda=\mathbb Cv.
+\]
+\(V\) 有权分解，每个权空间有限维；其子模与商模也有相应的权分解。
+\end{proposition}
+\begin{proof}
+对先负根、再 Cartan、再正根的有序基应用\cref{b5:thm:pbw}。正根部分零化 \(v\)，Cartan 部分在 \(v\) 上按标量作用，所以 \(V\) 由负根单项式作用于 \(v\) 生成。每个单项式
+\[
+f_{\beta_1}^{a_1}\cdots f_{\beta_N}^{a_N}v,
+\qquad \beta_j\in\Phi^+,
+\]
+若非零，其权为 \(\lambda-\sum_j a_j\beta_j\)。只有全部 \(a_j=0\) 才可能保持最高权，因为每个正根都有正高度。故 \(V_\lambda=\mathbb Cv\)。
+
+不同权的共同特征空间线性无关，因而上述生成给出直和分解。对固定差 \(\lambda-\mu\)，各 \(a_j\) 的和至多为该差的高度，故只有有限多个单项式，证明权空间有限维。
+
+若子模 \(U\) 含有 \(u=u_{\mu_1}+\cdots+u_{\mu_s}\)，取 \(h\in\mathfrak h\) 使有限多个 \(\mu_j(h)\) 两两不同。对 \(h\) 使用 Lagrange 插值多项式，可从 \(u\) 提取每个 \(u_{\mu_j}\)，仍在 \(U\) 中。所以 \(U=\bigoplus_\mu(U\cap V_\mu)\)，商模随即按 \(V_\mu/(U\cap V_\mu)\) 分解。
+\end{proof}
+
+这个结论还说明，一个最高权模的最高权生成元只差非零标量。若另一个最高权生成元的权为 \(\mu\)，两个生成结论分别给出 \(\mu\le\lambda\) 和 \(\lambda\le\mu\)，故 \(\lambda=\mu\)；最高权空间一维。模中可能另有较低权的最高权向量，但它们不能生成整个模，这正是研究子模时要区分的两件事。

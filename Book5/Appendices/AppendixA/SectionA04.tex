@@ -1,10 +1,167 @@
 % !TeX root = ../../Book5.tex
-% 节标题由计划纲要.md 中附录 A 的第 4 条要点整理。
-
-\section{Hecke 代数与 Kazhdan–Lusztig 理论}
+% 纲要标题：### A.4 Hecke 代数与 Kazhdan--Lusztig 理论
+% 纲要位置：工作记录/计划纲要.md，第 4563 行。
+% #### A.4.1 参数、二次关系与标准基
+% #### A.4.2 反演算子与规范基
+% #### A.4.3 胞腔与一个二维表示
+\section{Hecke 代数与 Kazhdan--Lusztig 理论}
 \label{b5:sec:A04}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * Hecke 代数和 Kazhdan–Lusztig 理论的基本概念
+群代数中简单反射满足平方为一。如果把这个二次关系变形，同时保留辫关系，就得到 Hecke 代数。它的标准基仍由群元素标号，却还存在与一个参数反演相容的特殊基。本节固定一种归一化，并通过 \(S_3\) 把不同基与胞腔表示具体算出来。
 
-待撰写。
+\subsection{参数、二次关系与标准基}
+\label{b5:subsec:A04:01}
+
+\begin{definition}\label{b5:def:hecke-algebra}
+设 \((W,S)\) 为 Coxeter 系统，\(v\) 为形式变量，\(R=\mathbb Z[v,v^{-1}]\)。用生成元 \(H_s\)（\(s\in S\)）、关系
+\[
+(H_s-v)(H_s+v^{-1})=0
+\]
+以及与 Coxeter 系统相同的辫关系定义的含单位结合 \(R\) 代数，称为等参数\term[Hecke-daishu]{Hecke 代数}[Hecke algebra]，记为 \(\mathcal H(W)\)。
+\end{definition}
+
+\begin{theorem}[Hecke 标准基]\label{b5:thm:hecke-standard-basis}
+设 \((W,S)\) 为 Coxeter 系统，\(\ell\) 为关于 \(S\) 的长度函数，\(v\) 为形式变量，\(R=\mathbb Z[v,v^{-1}]\)。令 \(\mathcal H(W)\) 为以 \(H_s\)、\(s\in S\)，生成的等参数 Hecke \(R\) 代数，满足 \((H_s-v)(H_s+v^{-1})=0\) 及该 Coxeter 系统的辫关系。对约化词 \(w=s_1\cdots s_r\)，乘积
+\(H_w=H_{s_1}\cdots H_{s_r}\) 与约化词的选择无关，而且 \(\{H_w\mid w\in W\}\) 为 \(R\) 基。乘法满足
+\begin{equation}\label{b5:eq:hecke-standard-multiplication}
+H_sH_w=
+\begin{cases}
+H_{sw},&\ell(sw)=\ell(w)+1,\\
+H_{sw}+(v-v^{-1})H_w,&\ell(sw)=\ell(w)-1.
+\end{cases}
+\end{equation}
+\end{theorem}
+\begin{proof}
+记 \(d=v-v^{-1}\)。由\cref{b5:thm:coxeter-word-properties}的辫词性质，\(H_w\) 良定义。若 \(sw\) 较短，则 \(w=s(sw)\) 是约化分解，二次关系 \(H_s^2=1+dH_s\) 给出第二种乘法；较长时直接接上 \(s\)。因此所有生成元乘积都在这些 \(H_w\) 的生成空间中。
+
+为证线性无关，取自由模 \(E=\bigoplus_{w\in W}Re_w\)，按同一长度规则定义算子
+\[
+ L_se_w=e_{sw}+\begin{cases}0,&\ell(sw)>\ell(w),\\de_w,&\ell(sw)<\ell(w),\end{cases}
+ \quad
+ R_te_w=e_{wt}+\begin{cases}0,&\ell(wt)>\ell(w),\\de_w,&\ell(wt)<\ell(w).\end{cases}
+\]
+在 \(e_w,e_{sw}\) 上直接算得 \(L_s^2=1+dL_s\)。还须验证 \(L_sR_t=R_tL_s\)。如果 \(sw\ne wt\)，交换性质说明：两次长度改变方向相同时，\(swt\) 的长度再沿该方向改变一次；方向相反时，最终长度回到 \(\ell(w)\)。例如两边都增加而最终不增加，则对约化词 \(wt\) 左乘 \(s\) 的交换性质只能删去末尾的 \(t\)，否则会使 \(sw\) 较短，故只能有 \(sw=wt\)；两边都减少的情形将这个论证反用即可。在这些长度情形中代入上式，两种复合具有相同的各基系数。若 \(sw=wt\)，两边都增加时，两种复合均为 \(e_w+de_{sw}\)；两边都减少时，均为 \((1+d^2)e_w+de_{sw}\)。于是左右算子确实交换。
+
+当 \(m_{st}<\infty\) 时，\(s,t\) 的两条长度 \(m_{st}\) 交替词是该二面体子群最长元的约化词，故相应左算子乘积在 \(e_1\) 上有相同值。两种乘积都与全部 \(R_u\) 交换，而各个 \(e_w\) 都能由 \(e_1\) 沿一个约化词依次右乘得到，故两种乘积在全 \(E\) 上相同。这样 \(L_s\) 满足全部定义关系，给出 \(\mathcal H(W)\) 在 \(E\) 上的表示。最后 \(H_we_1=e_w\)，所以任何 \(H_w\) 的线性关系作用到 \(e_1\) 后都只能有零系数。
+\end{proof}
+
+原始 Hecke 代数的基及乘法约定见\cite[Section 1, p. 165]{KazhdanLusztig1979Hecke}。原文使用 \(q=v^2\) 与 \(T_w=v^{\ell(w)}H_w\)，于是二次式变为 \((T_s+1)(T_s-q)=0\)。比较公式时须先写清参数与归一化的对应。
+
+\ProseParagraphBreak
+在秩一情形无需任何一般词理论：
+\[
+\mathcal H(C_2)=R[H]/\Bigl(H^2-(v-v^{-1})H-1\Bigr).
+\]
+首一除法直接给出基 \(1,H\)。当 \(v=1\) 时，关系成为 \(H^2=1\)，恢复群环 \(\mathbb Z[C_2]\)；一般 Coxeter 情形由标准基定理同样得到
+\(\mathcal H(W)/(v-1)\simeq\mathbb Z[W]\)。
+\ProseParagraphBreak
+在 \(S_3=\langle s,t\rangle\) 中，标准基为
+\[
+1,\ H_s,\ H_t,\ H_{st},\ H_{ts},\ H_{sts},
+\]
+而 \eqref{b5:eq:hecke-standard-multiplication}给出
+\[
+H_sH_{st}=H_t+(v-v^{-1})H_{st},\qquad
+H_sH_{ts}=H_{sts}.
+\]
+一个乘法用了长度下降，另一个用了长度上升；不能在两种情况下都直接把群元素下标相乘。
+
+\subsection{反演算子与规范基}
+\label{b5:subsec:A04:02}
+
+二次关系给出 \(H_s^{-1}=H_s-(v-v^{-1})\)。由此可定义半线性环对合
+\[
+\overline v=v^{-1},\qquad
+\overline{H_w}=H_{w^{-1}}^{-1}.
+\]
+它保持乘法而反演系数参数。良定义可从生成关系核验：逆元满足参数反演后的二次关系，取逆并反向读取辫关系仍得到同一对辫词；再作一次变换恢复各生成元。因此它不是把乘法次序倒转的反自同构。
+
+\begin{theorem}[Kazhdan--Lusztig 规范基]\label{b5:thm:kl-basis}
+设 \((W,S)\) 为 Coxeter 系统，\(\ell\) 为关于 \(S\) 的长度函数，\(v\) 为形式变量，\(R=\mathbb Z[v,v^{-1}]\)。令 \(\mathcal H(W)\) 为满足 \((H_s-v)(H_s+v^{-1})=0\) 及 Coxeter 辫关系的等参数 Hecke \(R\) 代数，\(H_w\) 为其标准基。以 \(\overline v=v^{-1}\)、\(\overline{H_w}=H_{w^{-1}}^{-1}\) 定义半线性环对合。对每个 \(w\in W\)，存在唯一元素 \(C'_w\in\mathcal H(W)\) 满足
+\[
+\overline{C'_w}=C'_w,\qquad
+C'_w=H_w+\sum_{y<w}a_{y,w}(v)H_y,\qquad
+a_{y,w}(v)\in v^{-1}\mathbb Z[v^{-1}],
+\]
+其中 \(<\) 为 Bruhat 严格序。这些元素构成 \(\mathcal H(W)\) 的 \(R\) 基，且对形式变量 \(q\) 有
+\[
+a_{y,w}(v)=v^{\ell(y)-\ell(w)}P_{y,w}(v^2),
+\qquad P_{y,w}(q)\in\mathbb Z[q],
+\]
+对 \(y<w\) 有 \(\deg P_{y,w}\le\Bigl(\ell(w)-\ell(y)-1\Bigr)/2\)，并置 \(P_{w,w}=1\)。
+\end{theorem}
+
+\begin{proof}
+先注意 \(\overline{H_w}=H_w+\sum_{y<w}r_{y,w}H_y\)：沿约化词把每个 \(H_s\) 换成 \(H_s-d\)，非最高项来自删去位置的子词，利用乘法规则和子词判据便得到所示三角形展开。所有涉及的 Bruhat 区间有限。
+
+按长度构造 \(C'_w\)，取 \(C'_1=1\)。设 \(w=su\) 且 \(\ell(w)=\ell(u)+1\)，较短元素的规范基已经构造。乘积
+\(D=(H_s+v^{-1})C'_u\) 自对偶，最高项为 \(H_w\)，其余项的下标都小于 \(w\)。由乘法规则，\(D\) 的低项系数没有正次幂；唯一可能的常数项是
+\(\mu(y,u)\)，即 \(a_{y,u}\) 中 \(v^{-1}\) 的系数，而且只在 \(y<u\)、\(sy<y\) 时出现。因此定义
+\[
+ C'_w=D-\sum_{\substack{y<u\\sy<y}}\mu(y,u)C'_y.
+\]
+减项仍自对偶，恰消去各个常数项；其低项系数原本只有负次幂，故不会产生新的常数项。这给出所需存在性。
+
+同时归纳验证：\(a_{y,w}\) 中每个指数不小于 \(\ell(y)-\ell(w)\)，且与该数同奇偶。初始情形成立；乘法规则中的 \(v^{-1}\) 及 \(v-v^{-1}\) 各移动一次指数，与长度改变相符。减项中 \(\mu(y,u)\ne0\) 要求 \(\ell(u)-\ell(y)\) 为奇数，所以 \(\ell(w)-\ell(y)\) 为偶数；该减项也保持奇偶性和指数下界。结合所有指数严格为负，便可唯一写成
+\(v^{\ell(y)-\ell(w)}P_{y,w}(v^2)\)，其中 \(P_{y,w}\) 为整系数多项式，次数不超过所给上界。
+
+若有两个符合刻画的元素，取其差中 Bruhat 极大的非零下标 \(y\)。三角形反演说明对应系数 \(f\) 必满足 \(f(v)=f(v^{-1})\)。但 \(f\) 只有严格负次幂，只能为零，矛盾。这证明唯一性。最后，有限下区间上的单位三角形变换可逐项反解，故全部 \(C'_w\) 组成 \(R\) 基。
+\end{proof}
+
+这是原论文\cite[Theorem 1.1, equivalent formulation (1.1.c), p. 166]{KazhdanLusztig1979Hecke}的归一化改写。多项式 \(P_{y,w}\) 称为\term[Kazhdan-Lusztig-duoxiangshi]{Kazhdan--Lusztig 多项式}[Kazhdan--Lusztig polynomial]。下述低秩计算可直接检验递推；一般系数的正性以及李代数中的特征标公式则是另外的结果。
+
+\ProseParagraphBreak
+对简单反射，
+\[
+C'_s=H_s+v^{-1}.
+\]
+由逆元公式，\(\overline{H_s+v^{-1}}=H_s-(v-v^{-1})+v=H_s+v^{-1}\)，所以确为自对偶。若记 \(a=v^{-1}\)，在 \(S_3\) 中得到
+\begin{align*}
+C'_{st}&=C'_sC'_t
+=H_{st}+a(H_s+H_t)+a^2,\\
+C'_{ts}&=C'_tC'_s
+=H_{ts}+a(H_s+H_t)+a^2,\\
+C'_{sts}&=C'_sC'_tC'_s-C'_s\\
+&=H_{sts}+a(H_{st}+H_{ts})+a^2(H_s+H_t)+a^3.
+\end{align*}
+每个乘积和差均自对偶；展开后最高项系数一，其余系数只含严格负次幂，且下标在已计算的 Bruhat 区间中。因此它们就是所求规范基。最后一个式子的减项不可省略：未减之前 \(H_s\) 的系数为 \(1+a^2\)，含常数项，不满足规范条件。这里所有 \(P_{y,w}\)（\(y\le w\)）都等于一，但高秩时不会一直如此。
+
+\subsection{胞腔与一个二维表示}
+\label{b5:subsec:A04:03}
+
+\begin{definition}\label{b5:def:kl-left-cell}
+设 \((W,S)\) 为 Coxeter 系统，\(v\) 为形式变量，\(\mathcal H(W)\) 为满足 \((H_s-v)(H_s+v^{-1})=0\) 的等参数 Hecke \(\mathbb Z[v,v^{-1}]\) 代数，\(C'_w\)、\(w\in W\)，为 Kazhdan--Lusztig 规范基。对 \(x,y\in W\)，若某个 \(s\in S\) 使 \(C'_sC'_y\) 的展开含非零的 \(C'_x\) 系数，就画有向关系 \(y\to x\)。令 \(x\preceq_L y\) 表示存在从 \(y\) 到 \(x\) 的有向链，允许空链。互相可达给出的等价类称为\term[zuo-baoqiang]{左胞腔}[left cell]。改用右乘定义右胞腔，同时允许两种乘法则定义双边胞腔。
+\end{definition}
+
+这不是 Bruhat 偏序：它由乘法结构常数决定，互相可达还可能把不同长度的元素放在一起。定义采用的规范基版本必须一致；原文同时使用 \(C_w,C'_w\)，其等价的图定义及表示论用途见\cite[Section 1, Definition 1.2 and Theorems 1.3--1.4, pp. 166--167]{KazhdanLusztig1979Hecke}。
+
+\ProseParagraphBreak
+令 \(\Gamma\) 是一个左胞腔。所有满足 \(x\preceq_L y\)、某个 \(y\in\Gamma\) 的基元的线性生成空间是左理想，因为乘以 \(C'_s\) 只能沿有向关系继续向下走，而 \(H_s=C'_s-v^{-1}\)。其中不属于 \(\Gamma\) 的那些基元也生成左理想：若还能乘回 \(\Gamma\)，它就与 \(\Gamma\) 互相可达，矛盾。这两个左理想的商因而给出一个以 \(\Gamma\) 为基的胞腔表示。这一步只用定义与基的线性无关性。
+
+\ProseParagraphBreak
+在 \(S_3\) 中，置 \(b=v+v^{-1}\)，直接由前面的展开和二次关系得到
+\[
+(C'_s)^2=bC'_s,\quad
+C'_tC'_s=C'_{ts},\quad
+C'_sC'_{ts}=C'_{sts}+C'_s,\quad
+C'_tC'_{ts}=bC'_{ts}.
+\]
+交换 \(s,t\) 给出另外四式，而 \(C'_sC'_{sts}=C'_tC'_{sts}=bC'_{sts}\)。由此左胞腔恰为
+\[
+\{1\},\qquad\{s,ts\},\qquad\{t,st\},\qquad\{sts\}.
+\]
+对 \(\Gamma=\{s,ts\}\)，令商中的两基向量为 \(e_s,e_{ts}\)。在商中删去 \(C'_{sts}\) 项后，
+\[
+[C'_s]_\Gamma=
+\begin{pmatrix}b&1\\0&0\end{pmatrix},
+\qquad
+[C'_t]_\Gamma=
+\begin{pmatrix}0&0\\1&b\end{pmatrix}.
+\]
+由 \(H_i=C'_i-v^{-1}\) 得到 Hecke 生成元矩阵。在 \(v=1\) 处，它们成为
+\[
+s\longmapsto\begin{pmatrix}1&1\\0&-1\end{pmatrix},
+\qquad
+t\longmapsto\begin{pmatrix}-1&0\\1&1\end{pmatrix}.
+\]
+两者平方为一，乘积迹为 \(-1\)、行列式为一，且满足辫关系。三个换位的迹为零，两个三轮换的迹为 \(-1\)，所以在复数域上它就是 \(S_3\) 的二维标准表示。胞腔方法由此把一个乘法基中的组合结构变成了实际的表示矩阵。

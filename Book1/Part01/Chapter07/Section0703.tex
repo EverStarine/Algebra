@@ -1,20 +1,21 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 7.3 幂零群
-% 纲要位置：计划纲要.md，第 314 行。
+% 纲要位置：计划纲要.md，第 318 行。
 
 \section{幂零群}
 \label{b1:sec:0703}
 
-可解性要求逐层得到的因子都是交换群，但这些因子中的元素未必与其余部分交换。幂零性进一步要求：在模去前面各层以后，新的一层应落在整个商群的中心。这个条件既可以从单位子群向上构造，也可以从全群向下取交换子。两种中心列将给出等价判据，并把有限 \(p\) 群与 Sylow 子群的直积分解联系起来。
+可解性要求逐层得到的因子都是交换群，但这些因子中的元素未必与其余部分交换。幂零性进一步要求：在模去前面各层以后，新的一层应落在整个商群的中心。这个条件既可以从单位子群向上构造，也可以从全群向下取交换子。两种中心列将给出等价判据；幂零性传给子群和商群，但不具有一般的扩张稳定性；在有限群中，它又把有限 \(p\)-群与 Sylow 子群的直积分解联系起来。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 上、下中心列
-% * 有限 p 群的幂零性
-% * 有限幂零群与 Sylow 子群直积
+% * 上、下中心列与幂零性的判据
+% * 幂零性的稳定性质与反例
+% * 有限 p-群的幂零性
+% * 有限幂零群的 Sylow 判据
 %
 
-\subsection{上、下中心列}
+\subsection{上、下中心列与幂零性的判据}
 \label{b1:subsec:0703:01}
 
 下中心列不断取与全群的交换子；上中心列则先取中心，再在商群中重复取中心。注意前者下降、后者上升，两种指标的起点也不同。
@@ -32,7 +33,7 @@ Z_{i+1}(G)=\Bigl\{x\in G\mid [g,x]\in Z_i(G)
 \]
 所得子群列称为 \(G\) 的\term[shang-zhongxin-lie]{上中心列}[upper central series]。
 若存在非负整数 \(c\)，使从 \(\gamma_1(G)=G\) 出发反复取与全群的交换子后得到
-\(\gamma_{c+1}(G)=1\)，则称 \(G\) 为\term[mi-ling-qun]{幂零群}[nilpotent group]；最小这样的 \(c\) 是其幂零类。
+\(\gamma_{c+1}(G)=1\)，则称 \(G\) 为\term[mi-ling-qun]{幂零群}[nilpotent group]；最小的这样的 \(c\) 称为 \(G\) 的\term[mi-ling-lei]{幂零类}[nilpotency class]。
 \end{definition}
 
 \symidx{\(\gamma_i(G)\)：下中心列}
@@ -103,6 +104,40 @@ C_i/C_{i-1}\le Z(G/C_{i-1}).
 第三条件还给出 \([C_i,C_i]\le[G,C_i]\le C_{i-1}\)，故由\cref{b1:prop:derived-quotient}，每个因子 \(C_i/C_{i-1}\) 都是交换群。把链按下降次序排列，再用该命题关于因子均为交换群的次正规列判据，便得 \(G\) 可解。
 \end{proof}
 
+回到\cref{b1:prop:unitriangular-filtration}中的实单位上三角群 \(U_m\)。对固定整数 \(m\ge2\)，该命题定义了子群 \(V_k=I_m+J_k\)，并给出
+\[
+\bigl[U_m,V_k\bigr]\le V_{k+1}\le V_k
+\qquad(1\le k<m).
+\]
+因此每个 \(V_k\) 都正规于 \(U_m\)，而
+\[
+1=V_m\le V_{m-1}\le\cdots\le V_1=U_m
+\]
+是一条中心列：若对 \(0\le i\le m-1\) 令 \(C_i=V_{m-i}\)，则对每个 \(1\le i\le m-1\) 都有
+\([U_m,C_i]\le V_{m-i+1}=C_{i-1}\)。由中心列的等价判据，\(U_m\) 幂零，幂零类至多为 \(m-1\)。
+
+\ProseParagraphBreak
+同一个交换子估计还给出两种不同的迭代。\cref{b1:prop:unitriangular-filtration}已经证明
+\[
+U_m^{(r)}\le V_{2^r}\qquad(r\ge0),
+\]
+而从 \(\gamma_1(U_m)=U_m=V_1\) 出发归纳，则有
+\[
+\gamma_k(U_m)\le V_k\qquad(k\ge1).
+\]
+前一式每次让当前子群与自身取交换子，滤过指标从 \(a\) 变为 \(2a\)；后一式每次让当前子群与全群 \(U_m=V_1\) 取交换子，滤过指标从 \(k\) 变为 \(k+1\)。两种迭代使用同一个估计，却产生不同的指标递推。
+
+\subsection{幂零性的稳定性质与反例}
+\label{b1:subsec:0703:nilpotent-stability}
+
+幂零性传给子群及商群。具体地，设 \(G\) 为群，\(H\le G\)，并设 \(f:G\rightarrow Q\) 为满同态，则
+\begin{equation}\label{b1:eq:lower-central-functoriality}
+\gamma_j(H)\le\gamma_j(G),\qquad
+f\Bigl(\gamma_j(G)\Bigr)=\gamma_j(Q)\quad(j\ge1).
+\end{equation}
+第一式由 \(\gamma_1(H)=H\le G=\gamma_1(G)\) 出发，使用交换子生成元的包含关系归纳得到。第二式以 \(f(G)=Q\) 为起点，将式\eqref{b1:eq:commutator-image}逐次用于 \(\bigl[G,\gamma_j(G)\bigr]\) 即得。因此，若 \(\gamma_{c+1}(G)=1\)，则 \(H\) 和 \(Q\) 的第 \(c+1\) 项也都是单位群。
+
+\ProseParagraphBreak
 非平凡交换群的幂零类为一。四元数群满足
 \[
 Q_8'=Z(Q_8)=\{1,-1\},\qquad \bigl[Q_8,\{1,-1\}\bigr]=1,
@@ -117,7 +152,10 @@ Q_8'=Z(Q_8)=\{1,-1\},\qquad \bigl[Q_8,\{1,-1\}\bigr]=1,
 因此 \(1<A_3<S_3\) 的两层因子虽然都交换，这条链却不是中心列：第一层已经不满足 \([S_3,A_3]\le1\)。
 
 \ProseParagraphBreak
-持续严格下降也可能不在有限步终止。考虑\secref{b1:sec:0602}的取逆作用半直积 \(G=\mathbb Z\rtimes C_2\)，其中 \(r=(1,0)\) 具有无限阶，\(s=(0,1)\) 满足 \(srs^{-1}=r^{-1}\)。每个元素唯一写成 \(r^ts^\varepsilon\)，\(t\in\mathbb Z\)、\(\varepsilon\in\{0,1\}\)。由半直积乘法直接得到
+这个例子还说明幂零性不具有一般的扩张稳定性：\(A_3\cong C_3\) 与商群 \(S_3/A_3\cong C_2\) 都是交换群，因而都幂零，但 \(S_3\) 不幂零。
+
+\ProseParagraphBreak
+\textbf{无限情形的补充例子。}持续严格下降也可能不在有限步终止。利用\cref{b1:def:semidirect-product}的半直积构造，令 \(C_2=\{0,1\}\) 的非零元 \(1\) 在加法群 \(\mathbb Z\) 上作取逆自同构 \(t\mapsto-t\)，得到 \(G=\mathbb Z\rtimes C_2\)。其中 \(r=(1,0)\) 具有无限阶，\(s=(0,1)\) 满足 \(srs^{-1}=r^{-1}\)。每个元素唯一写成 \(r^ts^\varepsilon\)，其中 \(t\in\mathbb Z\)、\(\varepsilon\in\{0,1\}\)。由半直积乘法直接得到
 \[
 [r^t,r^k]=1,\qquad [r^ts,r^k]=r^{-2k},
 \]
@@ -127,22 +165,14 @@ Q_8'=Z(Q_8)=\{1,-1\},\qquad \bigl[Q_8,\{1,-1\}\bigr]=1,
 \]
 这些子群严格递减；它们的交也平凡，因为一个整数若被任意高的 \(2\) 次幂整除，就只能为零。但每一项仍含非单位元，因而 \(G\) 不幂零。
 
-\ProseParagraphBreak
-幂零性传给子群及商群。具体地，对 \(H\le G\) 和满同态 \(f:G\to Q\)，有
-\begin{equation}\label{b1:eq:lower-central-functoriality}
-\gamma_j(H)\le\gamma_j(G),\qquad
-f\Bigl(\gamma_j(G)\Bigr)=\gamma_j(Q)\quad(j\ge1).
-\end{equation}
-第一式由交换子生成元的包含关系归纳得到；第二式以 \(f(G)=Q\) 为起点，将式\eqref{b1:eq:commutator-image}逐次用于 \(\Bigl[G,\gamma_j(G)\Bigr]\) 即得。因此 \(\gamma_{c+1}(G)=1\) 会使 \(H,Q\) 的相应项也为单位群。不过，“可解扩张仍可解”不能换成“幂零扩张仍幂零”：\(A_3\cong C_3\trianglelefteq S_3\) 及商群 \(S_3/A_3\cong C_2\) 都是交换群，而 \(S_3\) 不幂零。
-
-\subsection{有限 \texorpdfstring{\(p\)}{p} 群的幂零性}
+\subsection{有限 \texorpdfstring{\(p\)}{p}-群的幂零性}
 \label{b1:subsec:0703:02}
 
 \begin{theorem}[有限 \(p\)-群的幂零性]\label{b1:thm:p-group-nilpotent}
 设 \(p\) 为素数。每个有限 \(p\)-群都幂零；若其阶为 \(p^a\)，则幂零类至多为 \(a\)。
 \end{theorem}
 \begin{proof}
-所用的中心结论是\cref{b1:thm:p-group-center}：若 \(Q\) 是非平凡有限 \(p\) 群，则 \(p\mid\Bigl|Z(Q)\Bigr|\)，特别地 \(\Bigl|Z(Q)\Bigr|\ge p\)。下面把它逐次用于 \(Q=G/Z_i(G)\)。
+所用的中心结论是\cref{b1:thm:p-group-center}：若 \(Q\) 是非平凡有限 \(p\)-群，则 \(p\mid\Bigl|Z(Q)\Bigr|\)，特别地 \(\Bigl|Z(Q)\Bigr|\ge p\)。下面把它逐次用于 \(Q=G/Z_i(G)\)。
 
 若 \(a=0\)，则 \(G=1\)，幂零类为零。设 \(a\ge1\)。每个 \(Z_i(G)\) 都是正规子群；\cref{b1:thm:lagrange}说明，当 \(Z_i(G)\ne G\) 时，商群 \(Q\) 的阶为正的 \(p\) 次幂，所以满足中心定理的全部假设。结合式\eqref{b1:eq:upper-central-quotient}，得到
 \[
@@ -167,7 +197,7 @@ D_8=\langle r,s\rangle,\qquad r^4=s^2=1,\qquad srs^{-1}=r^{-1}.
 \]
 它与 \(Q_8\) 同为二类幂零群，但两群不相互同构：前者有五个二阶元，后者只有一个。幂零类衡量的是交换子消失的层数，不是群的完全分类资料。
 
-\subsection{有限幂零群与 Sylow 子群直积}
+\subsection{有限幂零群的 Sylow 判据}
 \label{b1:subsec:0703:03}
 
 有限群的幂零性还可以从 Sylow 子群是否彼此独立看出来。证明先用一个对无限幂零群也成立的观察。
@@ -184,16 +214,18 @@ D_8=\langle r,s\rangle,\qquad r^4=s^2=1,\qquad srs^{-1}=r^{-1}.
 \end{proof}
 
 \begin{theorem}[有限幂零群的 Sylow 判据]\label{b1:thm:finite-nilpotent-sylow}
-对有限群 \(G\)，以下条件等价：\(G\) 幂零；\(G\) 的每个 Sylow 子群都正规；\(G\) 是其各个 Sylow 子群的内直积。
+对有限群 \(G\)，以下条件等价：\(G\) 幂零；对每个整除 \(|G|\) 的素数 \(p\)，\(G\) 的 Sylow \(p\)-子群都正规；\(G\) 是对应于所有整除 \(|G|\) 的素数的 Sylow 子群的内直积。
 \end{theorem}
 \begin{proof}
-设 \(G\) 幂零，\(P\) 是一个 Sylow \(p\) 子群，令 \(N=N_G(P)\)。由 \(P\le N\le G\) 及\cref{b1:thm:lagrange}，整除 \(|N|\) 的最高 \(p\) 幂恰为 \(|P|\)，所以 \(P\) 也是 \(N\) 的 Sylow 子群。它在 \(N\) 中正规，\cref{b1:thm:sylow-count}因而说明它是 \(N\) 的唯一 Sylow \(p\) 子群。任何 \(N\) 的自同构都保持子群阶，故必须保持 \(P\)。
+若 \(G=1\)，没有素数整除 \(|G|\)，相应的 Sylow 子群族为空，其内直积按约定为平凡群，三个条件都成立。以下设 \(G\ne1\)。
+
+设 \(G\) 幂零，\(p\) 是整除 \(|G|\) 的素数，\(P\) 是一个 Sylow \(p\)-子群，令 \(N=N_G(P)\)。由 \(P\le N\le G\) 及\cref{b1:thm:lagrange}，整除 \(|N|\) 的最高 \(p\) 次幂恰为 \(|P|\)，所以 \(P\) 也是 \(N\) 的 Sylow \(p\)-子群。它在 \(N\) 中正规，\cref{b1:thm:sylow-count}因而说明它是 \(N\) 的唯一 Sylow \(p\)-子群。任何 \(N\) 的自同构都保持子群阶，故必须保持 \(P\)。
 
 特别地，若 \(g\in N_G(N)\)，则 \(g\) 在 \(N\) 上的共轭是自同构，必有 \(gPg^{-1}=P\)。所以 \(N_G(N)\le N_G(P)=N\)。
 
 若 \(N<G\)，\cref{b1:lem:nilpotent-normalizer}用于真子群 \(N\) 却给出 \(N<N_G(N)\)，矛盾。因此 \(N=G\)，即 \(P\trianglelefteq G\)。
 
-再设各 Sylow 子群 \(P_1,\ldots,P_t\) 正规，其中 \(P_i\) 对应不同素数 \(p_i\)。对 \(x\in P_i,y\in P_j\)，正规性使 \([x,y]\) 同时属于 \(P_i\) 和 \(P_j\)；由\cref{b1:thm:lagrange}，交的阶同时整除两个互素的数 \(|P_i|,|P_j|\)，故交为单位群。这说明不同因子逐元素交换，因此乘积映射
+再设对每个整除 \(|G|\) 的素数，其 Sylow 子群都正规。把这些不同素数记为 \(p_1,\ldots,p_t\)，并令 \(P_i\) 为 Sylow \(p_i\)-子群。对 \(i\ne j\)、\(x\in P_i\) 和 \(y\in P_j\)，正规性使 \([x,y]\) 同时属于 \(P_i\) 和 \(P_j\)；由\cref{b1:thm:lagrange}，交的阶同时整除两个互素的数 \(|P_i|,|P_j|\)，故交为单位群。这说明不同因子逐元素交换，因此乘积映射
 \[
 P_1\times\cdots\times P_t\longrightarrow G,
 \qquad (x_1,\ldots,x_t)\longmapsto x_1\cdots x_t
@@ -208,7 +240,7 @@ P_1\times\cdots\times P_t\longrightarrow G,
 \[
 \gamma_k(P_1\times\cdots\times P_t)=\prod_i\gamma_k(P_i).
 \]
-该等式可对 \(k\) 归纳：逐坐标投影给出左侧包含于右侧，而把单个因子的交换子嵌入对应坐标、其余坐标取单位元，给出反向包含。取 \(c=\max_i c_i\)，则第 \(c+1\) 项的每个坐标都为单位群，故直积幂零。若 \(G=1\)，没有 Sylow 因子，空直积就是平凡群，结论同样成立。
+该等式可对 \(k\) 归纳：逐坐标投影给出左侧包含于右侧，而把单个因子的交换子嵌入对应坐标、其余坐标取单位元，给出反向包含。取 \(c=\max_i c_i\)，则第 \(c+1\) 项的每个坐标都为单位群，故直积幂零。
 \end{proof}
 
-例如，阶为 \(12\) 的 \(C_3\times C_4\) 和 \(C_3\times V_4\) 均幂零，\(A_4\) 却不幂零，因为其 Sylow 三子群不唯一。判断有限群时，可先检查 Sylow 子群；计算无限群时，则应回到中心列的定义，不能直接搬用有限 Sylow 直积判据。
+例如，阶为 \(12\) 的 \(C_3\times C_4\) 和 \(C_3\times V_4\) 均幂零，\(A_4\) 却不幂零，因为其 Sylow \(3\)-子群不唯一。判断有限群时，可先检查 Sylow 子群；计算无限群时，则应回到中心列的定义，不能直接搬用有限 Sylow 直积判据。

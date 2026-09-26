@@ -5,7 +5,7 @@
 % 纲要要点（供目录核对）：
 % * 正元素、正线性泛函和态（state）；归一化矩阵迹态的具体计算
 % * 从态构造内积商空间并完备化，得到 Hilbert 空间上的循环 *-表示
-% * 以 GNS 和 Gelfand–Naimark 定理说明抽象与具体表示的关系；选择一个构造或有限维版本给出证明，其余注明引用
+% * 证明正性、态存在、GNS 与含幺和非含幺的 Gelfand--Naimark 表示定理
 
 \section{正性、态与 GNS 构造}
 \label{b2:sec:D03}
@@ -16,12 +16,12 @@
 \label{b2:subsec:D03:01}
 
 \begin{definition}\label{b2:def:positive-element-state}
-若 \(a=a^*\) 且 \(\sigma_A(a)\subseteq[0,\infty)\)，称 \(a\) 为\term[zheng-yuansu]{正元素}[positive element]，记 \(a\ge0\)，全体组成 \(A_+\)。若复线性泛函 \(\varphi:A\to\mathbb C\) 在 \(A_+\) 上取非负实数，称它\term[zheng-xianxing-fanhan]{正线性泛函}[positive linear functional]。满足 \(\varphi(1)=1\) 的正线性泛函称为\term[tai]{态}[state]。
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数，\(a\in A\)。若 \(a=a^*\) 且其谱 \(\sigma_A(a)\subseteq[0,\infty)\)，则称 \(a\) 为\term[zheng-yuansu]{正元素}[positive element]，记 \(a\geq0\)，全体正元素组成 \(A_+\)。若复线性泛函 \(\varphi:A\to\mathbb C\) 对每个 \(a\in A_+\) 都满足 \(\varphi(a)\geq0\)，则称它为\term[zheng-xianxing-fanhan]{正线性泛函}[positive linear functional]。若正线性泛函 \(\varphi\) 还满足 \(\varphi(1_A)=1\)，则称它为 \(A\) 上的\term[tai]{态}[state]。
 \symidx{\(A_+\)：\(C^*\)-代数的正元素锥}
 \end{definition}
 
-\begin{proposition}[正性的谱论基础，外部结果]\label{b2:prop:cstar-positive-input}
-\(A_+\) 是闭凸锥，且 \(A_+\cap(-A_+)=\{0\}\)。每个正元素有唯一正平方根；\(x^*x\ge0\) 对任意 \(x\) 成立。对自伴元素定义 \(a\le b\) 为 \(b-a\ge0\)，则
+\begin{proposition}[正性的谱论基础]\label{b2:prop:cstar-positive-input}
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数，\(A_+\) 为其正元素集合，则 \(A_+\) 是闭凸锥，且 \(A_+\cap(-A_+)=\{0\}\)。每个正元素有唯一正平方根；对任意 \(x\in A\)，有 \(x^*x\geq0\)。对自伴元素 \(s,t\in A\)，定义 \(s\leq t\) 为 \(t-s\geq0\)，则对任意 \(a,b\in A\)、\(p\in A_+\) 及自伴 \(h\in A\)，有
 \[
 0\le a^*a\le\|a\|^2 1,\qquad
 b^*pb\ge0\quad(p\ge0),\qquad
@@ -29,10 +29,39 @@ b^*pb\ge0\quad(p\ge0),\qquad
 \]
 \end{proposition}
 
-这部分采用 Blackadar\cite[Propositions II.3.1.2--II.3.1.3; Corollary II.3.1.5; II.3.1.8]{Blackadar2006OperatorAlgebras}的谱论结论。尤其 \(x^*x\) 在抽象 \(C^*\)-代数中总为正，并非仅由记号就能认定。矩阵情形的正元素恰为半正定 Hermitian 矩阵，函数情形则是逐点非负的连续函数。
+\begin{proof}
+对自伴元 \(h\)，\cref{b2:thm:continuous-functional-calculus}把 \(C^*(1,h)\) 识别为实谱上的连续函数代数。因此 \(h\ge0\) 等价于谱上坐标函数非负，且
+\[
+h\ge0,\ \|h\|\le1
+\quad\Longleftrightarrow\quad
+h=h^*,\ \|h\|\le1,\ \|1-h\|\le1.
+\]
+右侧是三个闭凸集的交，故 \(A_+\) 与单位球的交闭且凸。将有界收敛序列或有限多个正元素同时缩放到单位球中，就得到正锥的闭性与凸性。非负实数倍仍为正，故它是闭凸锥。若 \(h\) 与 \(-h\) 都正，其谱只能是 \(\{0\}\)，自伴元的范数等于谱半径，故 \(h=0\)。
+
+同一函数演算给出 \(p^{1/2}\)，并使每个自伴元有分解
+\[
+c=c_+-c_-,\qquad c_\pm\ge0,\quad c_+c_-=0,
+\]
+其中 \(c_+(t)=\max(t,0)\)、\(c_-(t)=\max(-t,0)\)。若正元素 \(q\) 满足 \(q^2=p\)，则 \(q\) 与 \(p\) 交换，也与 \(p^{1/2}\) 交换。在这两个元素生成的交换代数中，非负函数的平方根逐点唯一，故 \(q=p^{1/2}\)。
+
+还须证明非正规元的 \(x^*x\) 正。对任意 \(u,v\)，\(1-uv\) 可逆当且仅当 \(1-vu\) 可逆，因为一个方向的逆为
+\[
+(1-vu)^{-1}=1+v(1-uv)^{-1}u,
+\]
+另一方向交换 \(u,v\) 即得。因此 \(y^*y\) 与 \(yy^*\) 的非零谱相同，两者的正性等价。写 \(x=a+ib\)，其中 \(a,b\) 自伴，便有 \(x^*x+xx^*=2a^2+2b^2\ge0\)。令 \(c=x^*x=c_+-c_-\)，取 \(y=xc_-\)。于是
+\[
+y^*y=c_-cc_-=-c_-^3,\qquad
+yy^*=(y^*y+yy^*)+c_-^3\ge0.
+\]
+第二式对 \(y\) 使用同样的平方和等式。非零谱相同又使 \(y^*y\ge0\)；它的相反数也正，故 \(c_-^3=0\)，进而 \(c_-=0\)。因此 \(x^*x\ge0\)。
+
+正规元的谱半径公式给出 \(\sigma(a^*a)\subseteq[0,\|a\|^2]\)，函数演算遂得 \(0\le a^*a\le\|a\|^2 1\)。又有 \(b^*pb=(p^{1/2}b)^*(p^{1/2}b)\ge0\)。自伴 \(h\) 的谱位于 \([-\|h\|,\|h\|]\)，同理得到最后两个界。
+\end{proof}
+
+这个论证也见 Blackadar\cite[Propositions II.3.1.2--II.3.1.3; Corollary II.3.1.5; II.3.1.8]{Blackadar2006OperatorAlgebras}。矩阵情形的正元素恰为半正定 Hermitian 矩阵，函数情形则是逐点非负的连续函数。
 
 \begin{lemma}\label{b2:lem:positive-functional-cs}
-正线性泛函满足
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数，\(\varphi:A\rightarrow\mathbb C\) 为正线性泛函，则对任意 \(a,b\in A\)，有
 \[
 \varphi(a^*)=\overline{\varphi(a)},\qquad
 \Bigl|\varphi(a^*b)\Bigr|^2\le\varphi(a^*a)\varphi(b^*b).
@@ -58,7 +87,7 @@ b^*pb\ge0\quad(p\ge0),\qquad
 \label{b2:subsec:D03:02}
 
 \begin{theorem}[Gelfand--Naimark--Segal 构造]\label{b2:thm:gns-unital}
-给定 \(A\) 上的态 \(\varphi\)，存在 Hilbert 空间 \(H_\varphi\)、含幺 \(*\)-表示 \(\pi_\varphi:A\to B(H_\varphi)\) 和单位向量 \(\xi_\varphi\)，使
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数，\(\varphi\) 为 \(A\) 上的态，则存在复 Hilbert 空间 \(H_\varphi\)、保幺 \(*\)-表示 \(\pi_\varphi:A\to B(H_\varphi)\) 和单位向量 \(\xi_\varphi\)，使对每个 \(a\in A\)，
 \[
 \varphi(a)=\Bigl\langle\xi_\varphi,\pi_\varphi(a)\xi_\varphi\Bigr\rangle,
 \qquad\overline{\pi_\varphi(A)\xi_\varphi}=H_\varphi.
@@ -106,14 +135,25 @@ N_\varphi=\Bigl\{\,a\in A:\varphi(a^*a)=0\,\Bigr\}.
 
 一次 GNS 构造未必忠实。例如 \(C(X)\) 的点取值只看到一个点，所有在该点为零的函数都被零化。为了看见整个代数，需要足够多的态。
 
-\begin{proposition}[态的存在性，外部结果]\label{b2:prop:norming-state-external}
-对非零含幺 \(C^*\)-代数中的每个正元素 \(p\)，存在态 \(\varphi\) 使 \(\varphi(p)=\|p\|\)。
+\begin{proposition}[达到范数的态]\label{b2:prop:norming-state-external}
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数。对每个正元素 \(p\in A_+\)，存在 \(A\) 上的态 \(\varphi\) 使 \(\varphi(p)=\|p\|\)。
 \end{proposition}
 
-此处采用 Blackadar\cite[\nopp II.6.3.1; Proposition II.6.3.3]{Blackadar2006OperatorAlgebras}。证明从 \(C^*(1,p)\) 的谱上取值出发，用\term[Hahn-Banach-dingli]{Hahn--Banach 定理}[Hahn--Banach theorem]作保范延拓，再由范数为一且在单位元处取值为一推出延拓仍为正；这是本附录另行引用的分析学步骤。得到该存在性以后，其余表示构造如下。
+\begin{proof}
+由函数演算，\(\|p\|\) 属于 \(p\) 的谱；在 \(C^*(1,p)\cong C(\sigma_A(p))\) 上取该点的取值泛函 \(\psi\)。它满足 \(\|\psi\|=\psi(1)=1\)、\(\psi(p)=\|p\|\)。\term[Hahn-Banach-dingli]{Hahn--Banach 定理}[Hahn--Banach theorem]将它保范延拓为 \(A\) 上的复线性泛函 \(\varphi\)，仍有 \(\|\varphi\|=\varphi(1)=1\)。
+
+核对延拓的正性。对自伴元 \(h\) 及实数 \(t\)，\(C^*\) 恒等式给出
+\[
+|1+it\varphi(h)|^2\le\|1+ith\|^2
+=\|1+t^2h^2\|\le1+t^2\|h\|^2.
+\]
+左端关于 \(t\) 的一次项为 \(-2t\operatorname{Im}\varphi(h)\)。让 \(t\) 从正、负两侧趋于零，必得 \(\operatorname{Im}\varphi(h)=0\)。若 \(q\ge0\)、\(\|q\|\le1\)，正性的谱论基础使 \(\|1-q\|\le1\)，故 \(|1-\varphi(q)|\le1\)。因为 \(\varphi(q)\) 为实数，必有 \(\varphi(q)\ge0\)。任意正元素可缩放到这种情形，所以 \(\varphi\) 是态，并保留所需取值。
+\end{proof}
+
+这里仅用 Hahn--Banach 的保范延拓作为分析学基础；延拓何以仍为正已在证明中核对。这个存在性论证亦见\cite[\nopp II.6.3.1; Proposition II.6.3.3]{Blackadar2006OperatorAlgebras}。
 
 \begin{theorem}[Gelfand--Naimark，含幺情形]\label{b2:thm:gelfand-naimark-unital}
-每个非零含幺 \(C^*\)-代数都等距 \(*\)-同构于某个 \(B(H)\) 的含幺范数闭子代数。
+设 \(A\ne0\) 为含幺复 \(C^*\)-代数，则存在复 Hilbert 空间 \(H\) 及保幺等距 \(*\)-同态 \(A\rightarrow B(H)\)，其像为 \(B(H)\) 的含幺范数闭子代数。
 \end{theorem}
 \begin{proof}
 对全部态取 \(H=\bigoplus_\varphi H_\varphi\)，令 \(\pi(a)=\bigoplus_\varphi\pi_\varphi(a)\)。式\eqref{b2:eq:gns-bounded-left-action}给出统一界 \(\Bigl\lVert\pi_\varphi(a)\Bigr\rVert\le\|a\|\)，所以此直和确实定义有界算子及含幺 \(*\)-同态。对给定 \(a\)，应用\cref{b2:prop:norming-state-external}于 \(p=a^*a\)，选择相应态，则
@@ -124,4 +164,31 @@ N_\varphi=\Bigl\{\,a\in A:\varphi(a^*a)=0\,\Bigr\}.
 结合相反方向的统一界得到等距性，特别是单射。等距像因 \(A\) 完备而闭，结论成立。
 \end{proof}
 
-这就是含幺情形的\term[Gelfand-Naimark-biaoshi-dingli]{Gelfand--Naimark 表示定理}[Gelfand--Naimark representation theorem]。本证明把 GNS 的代数商构造与态的分析学存在性分开了。一般非含幺表示定理同样成立，见\cite[Corollary II.6.4.10]{Blackadar2006OperatorAlgebras}；表示未必把人为补入的单位算子留在原代数中。
+这就是含幺情形的\term[Gelfand-Naimark-biaoshi-dingli]{Gelfand--Naimark 表示定理}[Gelfand--Naimark representation theorem]。本证明先构造态，再以它们的 GNS 表示组成忠实表示。
+
+\begin{proposition}[添幺与非含幺表示]\label{b2:prop:cstar-unitization-representation}
+设 \(A\ne0\) 为不含幺的复 \(C^*\)-代数。它可等距嵌入一个含幺 \(C^*\)-代数 \(\widetilde A\)，作为闭双边 \(*\)-理想，且 \(\widetilde A/A\cong\mathbb C\)。特别地，\(A\) 有忠实等距 Hilbert 空间表示。
+\end{proposition}
+\begin{proof}
+取向量空间 \(\widetilde A=A\oplus\mathbb C1\)，规定
+\[
+(a+\lambda1)(b+\mu1)=ab+\lambda b+\mu a+\lambda\mu1,
+\qquad (a+\lambda1)^*=a^*+\bar\lambda1.
+\]
+把它作用于 Banach 空间 \(A\)，令 \(L_{a+\lambda1}x=ax+\lambda x\)，定义 \(N(c)=\|L_c\|\)。若 \(N(a+\lambda1)=0\) 且 \(\lambda\ne0\)，\(-a/\lambda\) 就是 \(A\) 的左单位；取对合得到右单位，两者相同，违反不含幺假设。若 \(\lambda=0\)，则 \(aa^*=0\)，故 \(a=0\)。因此 \(N\) 是范数，且由 \(x=a^*/\|a\|\) 得 \(N(a)=\|a\|\)。
+
+对 \(c\in\widetilde A\)、\(x\in A\)，有
+\[
+\|c^*x\|^2=\|x^*cc^*x\|
+\le\|x\|N(c)\|c^*x\|.
+\]
+消去非零因子并取上确界，得 \(N(c^*)\le N(c)\)；取对合又得相等。再由
+\[
+\|cx\|^2=\|x^*c^*cx\|\le\|x\|^2N(c^*c)
+\]
+和次乘性，得到 \(N(c)^2=N(c^*c)\)。
+
+还须检查完备性。必有 \(|\lambda|\le N(a+\lambda1)\)：否则在 \(B(A)\) 中有 \(\|I+L_{a/\lambda}\|<1\)，Neumann 级数使 \(L_a\) 可逆。取 \(e\in A\) 满足 \(ae=a\)，则 \(a(ex-x)=0\) 及 \(L_a\) 单射给出 \(ex=x\)，又会产生单位元。因此 \(\|a\|\le2N(a+\lambda1)\)。一个 \(N\)-柯西列的 \(A\) 坐标和复数坐标分别柯西，取两坐标的极限便得它的 \(N\)-极限。于是 \(\widetilde A\) 确为含幺 \(C^*\)-代数，\(A\) 为其中闭理想，取复数坐标给出商同构。将上一定理的等距表示限制到 \(A\)，即得非含幺结论。
+\end{proof}
+
+这个表示的原代数像未必含有 Hilbert 空间的单位算子；添幺和一般表示的比较见\cite[\nopp II.1.2; Corollary II.6.4.10]{Blackadar2006OperatorAlgebras}。

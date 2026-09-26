@@ -1,0 +1,96 @@
+% !TeX root = ../../Book5.tex
+% 纲要标题：### 22.6 仿射商与轨道闭包
+% 纲要位置：工作记录/计划纲要.md，第 4502 行。
+% * 从有限群不变环及有限模性建立仿射商，写清泛性质、底域及几何点条件
+% * 用环面作用的具体例子区分轨道与商点；一般闭轨道定理逐项标明假设和证明状态
+% * 通过矩阵的半单部分与轨道闭包解释多项式不变量不能区分全部共轭轨道
+% #### 22.6.1 由不变环构造仿射商
+% #### 22.6.2 有限群商与有限态射
+% #### 22.6.3 代数环面作用与轨道闭包
+% #### 22.6.4 矩阵共轭与闭轨道
+\section{仿射商与轨道闭包}
+\label{b5:sec:2206}
+
+不变环可以看作商空间上的函数环，但“商”不一定就是原有轨道组成的集合。有限群作用时二者十分接近；连续变化的代数群作用则会把不同轨道合并。下面先从坐标环说明商的确切含义，再计算这些合并怎样发生。
+
+\subsection{由不变环构造仿射商}
+\label{b5:subsec:2206:01}
+
+\begin{definition}\label{b5:def:affine-invariant-quotient}
+设 \(G\) 为域 \(k\) 上的仿射代数群，作用在仿射 \(k\) 概形 \(X=\operatorname{Spec}A\) 上，\(\delta:A\to A\otimes_k k[G]\) 为诱导的右余作用。若不变子代数 \(B=A^G\) 是有限生成 \(k\) 代数，则把
+\[
+X/\!/G=\operatorname{Spec}B,\qquad
+\pi:X\longrightarrow X/\!/G
+\]
+称为由不变环定义的\term[fangshe-shang]{仿射商}[affine quotient]；其中 \(\pi\) 由包含 \(B\hookrightarrow A\) 给出。不变元是余作用满足 \(\delta(b)=b\otimes1\) 的元，这一定义也适用于非代数闭域和群概形。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:affine-quotient-universal}
+设 \(k\) 为域，仿射代数群 \(G\) 作用在 \(X=\operatorname{Spec}A\) 上，且 \(B=A^G\) 是有限生成 \(k\) 代数。令 \(\pi:X\to X/\!/G=\operatorname{Spec}B\) 为包含 \(B\hookrightarrow A\) 定义的态射。对任意仿射 \(k\) 概形 \(Y=\operatorname{Spec}C\)，每个 \(G\) 不变态射 \(f:X\to Y\) 都唯一分解为
+\[
+X\xrightarrow{\pi}X/\!/G\xrightarrow{\overline f}Y.
+\]
+这里 \(G\) 在 \(Y\) 上平凡作用，不变性是作用态射与投影复合后相等。
+\end{proposition}
+\begin{proof}
+态射 \(f\) 对应代数同态 \(f^*:C\to A\)。不变性恰表示其每个像元素满足余作用等式，因而像包含在 \(B\) 中。限制值域得到唯一同态 \(C\to B\)，反变地就是所需 \(\overline f\)。唯一性来自 \(B\hookrightarrow A\) 为单射。
+\end{proof}
+
+这里证明的是相对于仿射目标的泛性质；它没有自行断言对任意概形目标也成立。即使 \(\pi\) 存在，同一个商点也可能代表多个轨道。
+
+\subsection{有限群商与有限态射}
+\label{b5:subsec:2206:02}
+
+\begin{theorem}\label{b5:thm:finite-group-quotient}
+设 \(k\) 为代数闭域，有限群 \(G\) 作用在仿射代数集 \(X=\operatorname{Spec}A\) 上。则 \(B=A^G\) 有限生成，商态射
+\(\pi:X\to\operatorname{Spec}B\) 有限且满射；在 \(k\) 点上，其每个纤维恰为一个 \(G\) 轨道。
+\end{theorem}
+\begin{proof}
+\cref{b5:thm:finite-invariant-generation}给出 \(B\) 有限生成及 \(A\) 为有限 \(B\) 模；后者正是仿射态射有限的定义。整扩张的上覆性质给出素谱满射。回顾该性质在此的理由：对 \(\mathfrak p\in\operatorname{Spec}B\)，局部化 \(A_{B\setminus\mathfrak p}\) 非零且在 \(B_{\mathfrak p}\) 上整；取其极大理想，收缩是 \(B_{\mathfrak p}\) 的极大理想，所以为 \(\mathfrak pB_{\mathfrak p}\)。收缩为极大的依据是整扩张中，上环为域时下环也为域：任意非零下环元素的逆在上环中满足首一整性方程，乘以适当幂就把该逆写回下环。再收缩到 \(A\) 即得覆盖 \(\mathfrak p\) 的素理想。
+
+对 \(B\) 的极大理想，覆盖它的素理想亦为极大，商域是 \(k\) 的有限扩张；代数闭性使它仍是 \(k\)，所以 \(k\) 点上的映射也满射。同一轨道显然有同样的不变量值。若两个点不在同一轨道，\cref{b5:prop:finite-invariants-separate}给出在它们上取零、一的不变量，故不会映到同一商点。于是各纤维恰为轨道。
+\end{proof}
+
+对同时变号作用，商是方程 \(uw=v^2\) 定义的二次锥，商映射为
+\[
+(x,y)\longmapsto(x^2,xy,y^2).
+\]
+在特征不为二的代数闭域上，每个非原点纤维有两个点，原点纤维只有一个点。商可以产生奇点，即使原来的平面光滑；这是不能把“有限商”理解成处处局部同构的一个简单理由。
+
+\subsection{代数环面作用与轨道闭包}
+\label{b5:subsec:2206:03}
+
+设 \(k\) 为代数闭域，\(\mathbb G_m\) 在 \(\mathbb A^2\) 上作用为
+\[
+t\cdot(x,y)=(tx,t^{-1}y).
+\]
+由单项式的权，\(k[x,y]^{\mathbb G_m}=k[xy]\)，所以仿射商映射是 \(\pi(x,y)=xy\)。当 \(c\ne0\) 时，曲线 \(xy=c\) 是一个轨道：给定两点，取 \(t=x'/x\) 即可互相变换，而且该轨道为闭集。
+
+\ProseParagraphBreak
+零纤维却包含三个轨道：原点、去掉原点的 \(x\) 轴、去掉原点的 \(y\) 轴。后两个轨道都不是闭集，其闭包都包含原点；只有原点是闭轨道。因此商点零合并了三个轨道，而保留了它们共同趋向的闭轨道。
+
+\ProseParagraphBreak
+若改成 \(t\cdot(x,y)=(tx,ty)\)，所有非恒定单项式都有非零权，不变环只有 \(k\)，仿射商只有一点。每条过原点直线去掉原点都给出一个轨道，其闭包仍包含原点。在射影空间中这些直线却是不同的点；要保留这种信息，需要后面带有线性化的射影构造，不能直接沿用这个仿射商。
+
+\subsection{矩阵共轭与闭轨道}
+\label{b5:subsec:2206:04}
+
+\begin{proposition}\label{b5:prop:matrix-closed-orbits}
+设 \(k\) 为代数闭域。矩阵 \(A\in M_n(k)\) 的共轭轨道为 Zariski 闭集，当且仅当 \(A\) 半单，即可对角化。每个轨道闭包包含一个且仅一个半单共轭轨道，它由 \(A\) 的特征多项式确定。
+\end{proposition}
+\begin{proof}
+在 Jordan 标准形中写 \(A=D+N\)，其中 \(D\) 在各块上为标量，\(N\) 具有通常的超对角一。在一个大小 \(r\) 的块上用
+\(\operatorname{diag}(t^{r-1},t^{r-2},\ldots,1)\) 共轭，便把 \(N\) 变为 \(tN\)。合并各块得到：\(t\ne0\) 时 \(D+tN\) 与 \(A\) 共轭，\(t=0\) 时等于 \(D\)。由多项式映射 \(t\mapsto D+tN\)，\(D\) 在轨道闭包中；若 \(A\) 不是半单的，二者不共轭，原轨道因此不闭。
+
+反过来，设 \(D\) 的不同特征值为 \(\lambda_1,\ldots,\lambda_r\)，其固定特征多项式为 \(P(T)\)。矩阵集合
+\[
+\Bigl\{\,B\in M_n(k)\ \Bigm|\
+\det(TI-B)=P(T),\
+\prod_{i=1}^r(B-\lambda_iI)=0\,\Bigr\}
+\]
+是闭集，因为它由矩阵条目的多项式方程定义。第二条件使最小多项式无重根，故 \(B\) 可对角化；第一条件又固定各特征值的重数，所以这个闭集恰为 \(D\) 的共轭轨道。半单轨道于是闭。
+
+特征多项式系数在一个轨道闭包上恒定。任何落在闭包中的半单矩阵均具有 \(A\) 的特征多项式，因而与 \(D\) 共轭。这给出唯一性。
+\end{proof}
+
+\cref{b5:thm:single-matrix-invariants}与此命题相互解释：所有不变量只记住半单共轭类，而不会区分具有相同特征值和重数的不同 Jordan 块。一般约化群仿射作用也有以闭轨道解释商纤维的理论；这里只对上面的环面模型和矩阵共轭完整证明该现象，不由个别模型推断任意代数群都有同样性质。

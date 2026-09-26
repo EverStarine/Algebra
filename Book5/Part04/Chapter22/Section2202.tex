@@ -1,36 +1,100 @@
 % !TeX root = ../../Book5.tex
-% 纲要标题：### 22.2 有限生成
-% 纲要位置：计划纲要.md，第 3773 行。
-
-\section{有限生成}
+% 纲要标题：### 22.2 有限生成与次数界
+% 纲要位置：工作记录/计划纲要.md，第 4445 行。
+% * 逐步证明轨道多项式给出的整性、有限模性及不变子环的有限生成，并就地建立 Artin–Tate 引理
+% * 有限群不变量的有限生成不要求群阶可逆，不能把平均法失效误作有限生成失效
+% * 特征零下完整证明可取次数不超过群阶的齐次生成元，并说明有限搜索如何终止；更广特征的次数界另列证明范围
+% * 模特征情形给具体比较；线性约化群的一般有限生成归22.7，不参与本节有限群证明
+% #### 22.2.1 轨道多项式与整性
+% #### 22.2.2 有限模性及 Artin–Tate 引理
+% #### 22.2.3 有限群不变量的有限生成
+% #### 22.2.4 Noether 次数界与有效计算
+\section{有限生成与次数界}
 \label{b5:sec:2202}
 
-% TODO: 按以下纲要要点撰写本节。
+有限生成代数的子环未必有限生成。有限群作用提供了额外的整性条件；特征零时，平均法与极化还给出可以停止计算的明确次数。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 有限群不变量的整性证明
-% * 线性约化群的有限生成定理
-% * 不把所有群作用的不变量环都默认为有限生成
-% * 有限群不变量的有限生成证明中，就地建立所需 Artin–Tate 有限性引理；将轨道多项式给出的整性、有限模性和不变子环的有限生成区分为不同步骤
-%
-
-\subsection{有限群不变量的整性}
+\subsection{轨道多项式与整性}
 \label{b5:subsec:2202:01}
 
-待撰写。
+\begin{proposition}\label{b5:prop:orbit-polynomial-integrality}
+设 \(k\) 为域，有限群 \(G\) 通过 \(k\) 代数自同构作用在交换含幺 \(k\) 代数 \(A\) 上，\(A^G\) 为其不变子代数。则每个 \(a\in A\) 都在 \(A^G\) 上整。若 \(A\) 是有限生成 \(k\) 代数，则 \(A\) 是有限生成 \(A^G\) 模。
+\end{proposition}
+\begin{proof}
+多项式
+\[
+P_a(T)=\prod_{g\in G}(T-g\cdot a)
+\]
+首一，其系数因群作用只置换因子而不变，且 \(P_a(a)=0\)。若 \(A=k[a_1,\ldots,a_n]\)，则也有 \(A=A^G[a_1,\ldots,a_n]\)。设 \(a_i\) 满足次数 \(d_i\) 的首一整性方程。反复用它降低指数，得到有限模生成集
+\[
+\{\,a_1^{e_1}\cdots a_n^{e_n}\mid0\le e_i<d_i\,\}.
+\]
+\end{proof}
 
-\subsection{线性约化群不变量的有限生成}
+轨道多项式允许重复因子，特征也可以整除群阶；这里没有使用平均。
+
+\subsection{有限模性及 Artin--Tate 引理}
 \label{b5:subsec:2202:02}
 
-待撰写。
+\begin{lemma}[Artin--Tate]\label{b5:lem:invariants-artin-tate}
+设 \(k\) 为域，\(k\subseteq B\subseteq A\) 为交换含单位代数。若 \(A\) 是有限生成 \(k\) 代数，又是有限生成 \(B\) 模，则 \(B\) 是有限生成 \(k\) 代数。
+\end{lemma}
+\begin{proof}
+取 \(A=k[a_1,\ldots,a_n]\)，并取 \(B\) 模生成元 \(e_1,\ldots,e_r\)，增补后可设 \(e_1=1\)。将各 \(a_i\) 与各 \(e_je_\ell\) 写成 \(e_j\) 的 \(B\) 线性组合，由这些有限多个系数生成的 \(k\) 子代数记为 \(B_0\)。模 \(M=\sum_j B_0e_j\) 包含一和全部 \(a_i\)，又因已收齐乘法结构系数而对乘法封闭。因此 \(A\subseteq M\subseteq A\)，即 \(A\) 是有限 \(B_0\) 模。
 
-\subsection{不变量环有限生成的条件}
+\(B_0\) 为有限生成 \(k\) 代数，由 Hilbert 基定理为 Noether 环。因此有限 \(B_0\) 模 \(A\) 的子模 \(B\) 有有限生成元 \(b_1,\ldots,b_s\)，从而 \(B=B_0[b_1,\ldots,b_s]\)，这是有限生成 \(k\) 代数。
+\end{proof}
+
+不能直接对尚不知为 Noether 环的 \(B\) 使用子模有限生成；引入 \(B_0\) 正是为了避免循环。
+
+\subsection{有限群不变量的有限生成}
 \label{b5:subsec:2202:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:finite-invariant-generation}
+设 \(k\) 为任意域，有限群 \(G\) 通过 \(k\) 代数自同构作用在有限生成交换含幺 \(k\) 代数 \(A\) 上，\(A^G\) 为其不变子代数。则 \(A^G\) 是有限生成 \(k\) 代数，且 \(A\) 是有限生成 \(A^G\) 模。若 \(A=k[V]=\operatorname{Sym}_k(V^*)\) 来自有限维 \(k\) 线性表示 \(V\)，可以取齐次不变量作为代数生成元。
+\end{theorem}
+\begin{proof}
+\cref{b5:prop:orbit-polynomial-integrality}给出有限模性，再对 \(B=A^G\) 使用\cref{b5:lem:invariants-artin-tate}。在线性作用下，各齐次分量分别不变，将已有有限生成元全部拆成齐次分量，所得有限集仍生成整个不变环。
+\end{proof}
 
-\subsection{Artin–Tate 引理与不变量的有限性}
+模特征中失效的是平均法，而非此定理。例如在特征 \(p>0\) 中，令阶 \(p\) 群在 \(k[x,y]\) 上由 \(\sigma(x)=x+y,\ \sigma(y)=y\) 生成。元素 \(z=x^p-xy^{p-1}\) 不变，而且
+\begin{equation}\label{b5:eq:modular-transvection-invariants}
+k[x,y]^{\langle\sigma\rangle}=k[y,z].
+\end{equation}
+事实上，首一关系 \(x^p=z+xy^{p-1}\) 使每个多项式唯一写为
+\(\sum_{i=0}^{p-1}a_i(y,z)x^i\)。唯一性来自各项最高 \(x\) 次数模 \(p\) 不同。若某个正指标的 \(a_i\ne0\)，取最大的 \(i\)；在 \(\sigma(f)-f\) 中，基向量 \(x^{i-1}\) 的系数是 \(iya_i\ne0\)，矛盾。于是只剩 \(a_0\)。
+
+\subsection{Noether 次数界与有效计算}
 \label{b5:subsec:2202:04}
 
-待撰写。
+\begin{theorem}[特征零下的 Noether 次数界]\label{b5:thm:noether-degree-bound}
+设 \(k\) 为特征零域，有限群 \(G\) 线性作用在有限维 \(k\) 向量空间 \(V\) 上，\(m=|G|\)，\(k[V]=\operatorname{Sym}_k(V^*)\) 为多项式函数代数，各线性函数的次数为一。则不变环 \(k[V]^G\) 由全次数不超过 \(m\) 的齐次不变量生成。
+\end{theorem}
+\begin{proof}
+令 \(S=k[V]\)，并令 \(J\subseteq S\) 为次数在 \(1,\ldots,m\) 内的全部齐次不变量生成的理想。对任意线性形式 \(\ell\in V^*\)，有
+\[
+\prod_{g\in G}(T-g\cdot\ell)
+=T^m+c_1T^{m-1}+\cdots+c_m,\qquad c_i\in S_i^G.
+\]
+代入 \(T=\ell\)，得到 \(\ell^m\in J\)。
+
+对任意 \(\ell_1,\ldots,\ell_m\in V^*\)，容斥展开给出极化等式
+\[
+m!\,\ell_1\cdots\ell_m
+=\sum_{I\subseteq\{1,\ldots,m\}}(-1)^{m-|I|}
+\Bigl(\sum_{i\in I}\ell_i\Bigr)^m.
+\]
+遗漏某个指标的项相消，所有指标各出现一次的项共有 \(m!\) 个。特征零使 \(m!\) 可逆，因此 \(S_m\subseteq J\)，进而 \(S_d\subseteq J\) 对 \(d\ge m\) 成立。
+
+在每个 \(S_i^G\)（\(1\le i\le m\)）取基，合并记为 \(f_1,\ldots,f_r\)，其生成的代数记为 \(B\)。对次数归纳。次数不超过 \(m\) 的不变量已在 \(B\) 中。若 \(f\in S_d^G,\ d>m\)，可写
+\[
+f=\sum_j a_jf_j,\qquad \deg a_j=d-\deg f_j<d,
+\]
+其中取齐次系数即可。应用\cref{b5:prop:invariant-reynolds}得
+\(f=\sum_j\mathcal R(a_j)f_j\)。各系数是不变元且次数下降，由归纳假设属于 \(B\)，故 \(f\in B\)。最后拆分齐次分量便得到全部结论。
+\end{proof}
+
+因而只需在次数 \(1,\ldots,|G|\) 中列出单项式，计算其平均，并用线性代数选基，就能找到有限生成集。它通常冗余，且单项式数目可能很大；次数界保证终止，不保证快速。
+
+\ProseParagraphBreak
+上述证明也适用于特征大于 \(|G|\) 的域。群阶可逆而特征不大于群阶时，极化所需的阶乘仍可能为零，因而仅由本证明不能得到同一次数界。模特征则应另用具体构造，例如\eqref{b5:eq:modular-transvection-invariants}。

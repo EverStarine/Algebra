@@ -1,36 +1,166 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 19.5 维数与重数
-% 纲要位置：计划纲要.md，第 3691 行。
-
-\section{维数与重数}
-\label{b5:sec:1905}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4342 行。
 % * Weyl 维数公式
 % * 权重数的计算
 % * 特征标乘法与张量分解
 % * 由形式代换或最低次项比较导出 Weyl 维数公式；不把分子分母同时为零时的直接代入当作证明
-%
+
+\section{维数与重数}
+\label{b5:sec:1905}
+
+Weyl 特征标公式已经同时包含维数和全部权重数，但取出这两类信息的方法不同。求维数要处理分子分母的共同消失；求单个权重数则可在负根锥中展开倒数。张量分解最后归结为乘法和最高项的逐次消去。
 
 \subsection{Weyl 维数公式}
 \label{b5:subsec:1905:01}
 
-待撰写。
+\begin{theorem}[Weyl 维数公式]\label{b5:thm:weyl-dimension}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(P^+\) 为支配整权集。令 \(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)，以 \(h_\alpha\) 表示根 \(\alpha\) 的余根，\((\, ,\,)\) 表示 Killing 型在 \(\mathfrak h^*\) 上诱导的型。对 \(\lambda\in P^+\)，相应有限维简单最高权模 \(L(\lambda)\) 满足
+\begin{equation}\label{b5:eq:weyl-dimension}
+\dim L(\lambda)
+=\prod_{\alpha>0}\frac{(\lambda+\rho,\alpha)}{(\rho,\alpha)}
+=\prod_{\alpha>0}\frac{(\lambda+\rho)(h_\alpha)}{\rho(h_\alpha)}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+记 \(N=|\Phi^+|\)。取 \(H\in\mathfrak h\) 使所有 \(\alpha(H)\ne0\)，作形式代换
+\(e^\mu\mapsto\exp\Bigl(t\mu(H)\Bigr)\in\mathbb C[[t]]\)。
+这在有限群环上是环同态。对
+\(A_\nu(tH)=\sum_w\varepsilon(w)\exp\Bigl(t(w\nu)(H)\Bigr)\)，其 \(t^j\) 系数分别是关于 \(H\) 和 \(\nu\) 的 \(j\) 次齐次多项式，并且在两个变量中各自反对称。
+
+任意关于 \(H\) 的反对称多项式在每个根反射的固定超平面 \(\alpha(H)=0\) 上为零，故被所有正根线性因子的乘积整除。不同正根的线性因子不相伴，因而 \(j<N\) 时该系数为零。对 \(j=N\)，该系数关于 \(H\) 必为
+\(\prod_{\alpha>0}\alpha(H)\) 的倍数；再对 \(\nu\) 用同样论证，得
+\[
+[t^N]A_\nu(tH)
+=c\prod_{\alpha>0}\alpha(H)\prod_{\alpha>0}(\nu,\alpha),
+\]
+其中 \(c\) 与 \(H,\nu\) 都无关。
+
+令 \(\nu=\rho\)。分母恒等式给出
+\[
+A_\rho(tH)
+=e^{t\rho(H)}\prod_{\alpha>0}\Bigl(1-e^{-t\alpha(H)}\Bigr)
+=t^N\prod_{\alpha>0}\alpha(H)+O(t^{N+1}).
+\]
+因此 \(c=\prod_{\alpha>0}(\rho,\alpha)^{-1}\)。
+将 Weyl 特征标公式的乘法形式
+\(A_{\lambda+\rho}=A_\rho\,\operatorname{ch}L(\lambda)\)
+作同一代换并比较 \(t^N\) 系数，右端的特征标只贡献常数项
+\(\sum_\mu m_\lambda(\mu)=\dim L(\lambda)\)。约去非零的
+\(\prod_{\alpha>0}\alpha(H)\)，得到第一式。每一项分子分母同时乘
+\(2/(\alpha,\alpha)\)，得到余根形式。
+\end{proof}
+
+例如对 \(\mathfrak{sl}_3\)，正余根为 \(h_1,h_2,h_1+h_2\)。
+\(\lambda=a\omega_1+b\omega_2\) 时，
+\[
+\dim L(a\omega_1+b\omega_2)
+=\frac{(a+1)(b+1)(a+b+2)}2.
+\]
+所以自然模、对偶自然模、对称平方和伴随模的维数依次为三、三、六、八。取 \(a=b=m\) 时，维数为 \((m+1)^3\)。
 
 \subsection{权重数的计算}
 \label{b5:subsec:1905:02}
 
-待撰写。
+\begin{definition}\label{b5:def:kostant-partition}
+设 \(\Phi\) 为有限维复半单李代数的根系，\(\Phi^+\) 为一组正根，\(\alpha_1,\ldots,\alpha_\ell\) 为简单根。令 \(E=\operatorname{span}_{\mathbb R}\Phi\)、\(Q=\sum_i\mathbb Z\alpha_i\)、\(Q_+=\sum_i\mathbb Z_{\ge0}\alpha_i\)。对根格 \(Q\) 中的 \(\beta\)，令
+\[
+\mathcal P(\beta)
+=\#\Bigl\{\,(n_\alpha)_{\alpha>0}\in\mathbb Z_{\ge0}^{|\Phi^+|}
+\ \Bigm|\ \sum_{\alpha>0}n_\alpha\alpha=\beta\,\Bigr\}.
+\]
+若 \(\beta\notin Q_+\)，规定为零；特别地 \(\mathcal P(0)=1\)。
+它称为\term[Kostant-fenchai-hanshu]{Kostant 分拆函数}[Kostant partition function]。对不在根格中的向量也规定其值为零。
+\end{definition}
+
+由于正根高度为正，固定 \(\beta\) 时所有 \(n_\alpha\) 都有界，故这个数有限。其形式生成函数为
+\[
+\prod_{\alpha>0}(1-e^{-\alpha})^{-1}
+=\sum_{\beta\in Q_+}\mathcal P(\beta)e^{-\beta}.
+\]
+
+\begin{theorem}[Kostant 重数公式]\label{b5:thm:kostant-multiplicity}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为相应根系，\(\Phi^+\) 为一组正根，\(P\) 为权格，\(P^+\) 为支配整权集，\(W\) 为 Weyl 群。令 \(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)、\(\varepsilon(w)=\det(w|_{\operatorname{span}_{\mathbb R}\Phi})\)，以 \(\mathcal P\) 表示 \(\Phi^+\) 的 Kostant 分拆函数。设 \(\lambda\in P^+\)，\(L(\lambda)\) 为相应有限维简单最高权模，\(\mu\in P\)，\(m_\lambda(\mu)=\dim_{\mathbb C}L(\lambda)_\mu\)。则
+\begin{equation}\label{b5:eq:kostant-multiplicity}
+m_\lambda(\mu)
+=\sum_{w\in W}\varepsilon(w)
+\mathcal P\Bigl(w(\lambda+\rho)-(\mu+\rho)\Bigr).
+\end{equation}
+\end{theorem}
+\begin{proof}
+在负锥形式环中，将 Weyl 特征标公式的分母倒数展开：
+\[
+\operatorname{ch}L(\lambda)
+=\sum_{w\in W}\varepsilon(w)e^{w(\lambda+\rho)-\rho}
+\sum_{\beta\in Q_+}\mathcal P(\beta)e^{-\beta}.
+\]
+固定 \(e^\mu\) 的系数，所需 \(\beta\) 恰为
+\(w(\lambda+\rho)-(\mu+\rho)\)，于是得到公式。Weyl 群有限，且每个系数的形式乘法有限，因而没有交换发散级数的问题。
+\end{proof}
+
+在 \(A_2\) 中，正根为 \(\alpha_1,\alpha_2,\alpha_1+\alpha_2\)。所以
+\[
+\mathcal P(a\alpha_1+b\alpha_2)
+=\begin{cases}
+\min(a,b)+1,&a,b\in\mathbb Z_{\ge0},\\
+0,&\text{其他情形}.
+\end{cases}
+\]
+因为组合中第三条根可选 \(0,\ldots,\min(a,b)\) 次，选定后前两条根的次数即确定。对
+\(\lambda=m(\alpha_1+\alpha_2)=m\rho\)、\(\mu=0\)，Kostant 和中只有单位元项非零：其他轨道权
+\(w\Bigl((m+1)\rho\Bigr)-\rho\) 至少有一个简单根系数为负。因此
+\[
+m_{m\rho}(0)=\mathcal P(m\alpha_1+m\alpha_2)=m+1.
+\]
+当 \(m=2\) 时，二十七维简单模有三维零权空间。
+
+\ProseParagraphBreak
+Freudenthal 递推适合按较高权逐层计算，Kostant 公式则直接把一个重数写成有限个分拆数的交错和。后者的中间项可能很大，并且发生抵消，不意味着它在所有秩中都更省计算。两者均由本章已经证明的等式得到，可用来互相核验。
 
 \subsection{特征标乘法与张量分解}
 \label{b5:subsec:1905:03}
 
-待撰写。
+设 \(\lambda,\mu\in P^+\)。先把
+\[
+F=\operatorname{ch}L(\lambda)\operatorname{ch}L(\mu)
+\]
+展开为有限权和。由完全可约性，它是若干简单特征标的非负整数和。
+选其支集中对权偏序极大的权 \(\nu\)，该权必为某个简单直和项的最高权，因而支配。令 \(a\) 为 \(e^\nu\) 的系数；减去 \(a\,\operatorname{ch}L(\nu)\)，就删掉相应的全部简单直和项。继续这个过程，每次都使表示的总维数下降，有限步后停止。若同时有多个不可比较的极大权，可按任意次序处理。
+
+\begin{example}\label{b5:exm:sl3-natural-dual-tensor}
+设 \(V=\mathbb C^3\) 为 \(\mathfrak{sl}_3\) 自然模。由已算出的特征标，
+\[
+\operatorname{ch}(V\otimes V^*)
+=(x_1+x_2+x_3)(x_1^{-1}+x_2^{-1}+x_3^{-1})
+=3+\sum_{i\ne j}\frac{x_i}{x_j}.
+\]
+减去最高权 \(\omega_1+\omega_2\) 的伴随特征标
+\(2+\sum_{i\ne j}x_i/x_j\)，剩下一个常数一。因此
+\[
+V\otimes V^*\cong L(\omega_1+\omega_2)\oplus L(0).
+\]
+这与 \(\operatorname{End}(V)=\mathfrak{sl}_3\oplus\mathbb CI\) 一致。
+类似地，
+\[
+V\otimes V\cong L(2\omega_1)\oplus L(\omega_2),
+\]
+因为 \((x_1+x_2+x_3)^2\) 分成
+\(\sum_{i\le j}x_ix_j\) 与 \(\sum_{i<j}x_ix_j\)，它们分别是对称平方和外平方的特征标。
+\end{example}
 
 \subsection{形式代换与最低次项比较}
 \label{b5:subsec:1905:04}
 
-待撰写。
+维数公式中，不能直接令所有 \(e^\mu=1\) 后把 Weyl 商的分子与分母相除：两者都会变为零。正确做法是保留一个形式参数 \(t\)，找到共同的首个非零次数，再比较系数。这个次数是正根数 \(N\)，原因是反对称多项式必须含有每一条反射超平面的线性因子。
+
+\ProseParagraphBreak
+在 \(A_1\) 中，这个过程只有一次消失。取 \(\omega(H)=1\)，则
+\[
+A_{(m+1)\omega}(tH)=2(m+1)t+O(t^3),\qquad
+A_\omega(tH)=2t+O(t^3),
+\]
+比值的常数项为 \(m+1\)。在 \(A_2\) 中，三条正根使分子分母都从 \(t^3\) 开始，最高次首项的比值就是
+\((a+1)(b+1)(a+b+2)/2\)。这里的 \(O(t^r)\) 只表示形式幂级数中次数至少为 \(r\) 的项，不调用解析极限。
+
+\ProseParagraphBreak
+维数、权重数和张量重数分别回答“总共有多少个向量方向”“某个 Cartan 权出现几次”“某个简单模出现几份”。三个数应分开记录；本章通过特征标把它们联系起来，却没有把它们混作一种重数。

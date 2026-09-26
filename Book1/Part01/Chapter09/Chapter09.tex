@@ -1,13 +1,13 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 第9章　有限生成交换群
-% 纲要位置：计划纲要.md，第 356 行。
+% 纲要位置：计划纲要.md，第 362 行。
 
 \chapter{有限生成交换群}
 \label{b1:ch:09}
 \BookChapterNumber{b1:ch:09}
 
 \begin{chapterabstract}
-有限生成交换群可以完全分类。本章从整数格出发，证明自由交换群的子群仍自由，识别挠子群及无挠商群，再通过整数关系矩阵的 Smith 化简建立直和分解。分解的唯一性由自由秩和各主分量连续倍数子群的层商阶确定，不借助后续模论。最后给出商格、指数和坐标变换的具体计算。
+有限生成交换群可以完全分类。本章从整数格出发，证明自由交换群的子群仍自由，识别挠子群及无挠商群，再通过整数关系矩阵的 Smith 化简建立直和分解。分解的唯一性由自由秩和各主分量连续倍数子群的层商阶确定，不借助后续模论。最后给出整数格商群、有限指数和坐标变换的具体计算。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -21,7 +21,7 @@
 本章的有限生成分类需要群同态、商群、循环群，以及整数的带余除法、Bézout 等式和线性代数中的行列式。交换群统一使用加法。\secref{b1:sec:0901}先用普通归纳证明整数格的子群定理，再用商群 \(A/2A\) 的元素数证明有限秩不变性；读完\subsecref{b1:subsec:0901:03}即可进入\secref{b1:sec:0902}，继而学习\secref{b1:sec:0903}的结构定理和\secref{b1:sec:0904}的计算。\subsecref{b1:subsec:0901:04}另讲任意秩的推广，使用良序、超限归纳和无限基数比较，跳过它不影响上述分类与计算。本章的初等证明不依赖第二卷的模论。
 
 \ProseParagraphBreak
-交换群的结构可参阅 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapter 10]{Rotman1995TheoryGroups}。从主理想整环上的模理解有限生成交换群分类，可读 Roman 的《Advanced Linear Algebra》\cite[Chapters 4--6]{Roman2008AdvancedLinearAlgebra}；其中的模论需要另学基本定义。若侧重整数运算与有限交换群的计算，可参阅 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapter 6]{Shoup2008NumberTheoryAlgebra}。
+交换群的结构可参阅 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapter 10]{Rotman1995TheoryGroups}。若要从主理想整环上的模理解本章分类，可先用 Roman 的《Advanced Linear Algebra》第4—5章补充模论预备，再读第6章第142—158页关于主理想整环上的自由模、无挠与自由、主循环分解和不变因子分解\cite[Chapters 4--5; Chapter 6, pp. 142--158]{Roman2008AdvancedLinearAlgebra}。Shoup 的《A Computational Introduction to Number Theory and Algebra》中，Euclid 算法、扩展 Euclid 算法及同余计算见第4.1—4.3节\cite[Sections 4.1--4.3]{Shoup2008NumberTheoryAlgebra}，有限交换群结构的另一种证明见第6.6节第163—165页\cite[Section 6.6, pp. 163--165]{Shoup2008NumberTheoryAlgebra}。
 
 \input{Part01/Chapter09/Section0901}
 \input{Part01/Chapter09/Section0902}
@@ -97,21 +97,24 @@ k(6,0,0)+y(-2,1,0)+z(-3,0,1),
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-free-quotient-splitting}
-设 \(B\le A\)，其中 \(A\) 交换，且 \(A/B\) 为自由交换群。证明存在子群 \(C\) 使 \(A=B\oplus C\)。举例说明 \(C\) 未必唯一。
-
-再设 \(H\le\mathbb Z^m\)，其中 \(m\ge0\)。证明以下条件等价：
-\begin{enumerate}[label=\Roman*.]
+\begin{enumerate}
+\item 设 \(B\leq A\)，其中 \(A\) 交换，且 \(A/B\) 为自由交换群。证明存在子群 \(C\) 使 \(A=B\oplus C\)，并举例说明 \(C\) 未必唯一。
+\item 设 \(H\leq\mathbb Z^m\)，其中 \(m\geq0\)。证明以下条件等价：
+\begin{equivalences}
 \item \(H\) 的一组基能扩充为 \(\mathbb Z^m\) 的基；
 \item \(H\) 是 \(\mathbb Z^m\) 的直和因子；
 \item \(\mathbb Z^m/H\) 无挠。
-\end{enumerate}
+\end{equivalences}
 把最后一个条件改写为只涉及 \(H\) 和整数倍的元素判据。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
-对 \(A/B\) 的每个基元素选一个提升 \(c_i\in A\)。由\cref{b1:prop:free-abelian-universal}，指定这些基元素的像唯一地延拓为同态 \(s:A/B\to A\)。记商映射为 \(\pi:A\to A/B\)，则 \(\pi s\) 在每个基元素上等于恒等映射，因而由该命题的唯一性，\(\pi s=1_{A/B}\)。
+\textbf{（1）}
+对 \(A/B\) 的每个基元素选一个提升 \(c_i\in A\)。基无限时，这里对全部非空原像集合同时选取代表使用通常的选择公理；若自由商群具有有限基，则只需有限次选择。由\cref{b1:prop:free-abelian-universal}，指定这些基元素的像唯一地延拓为同态 \(s:A/B\to A\)。记商映射为 \(\pi:A\to A/B\)，则 \(\pi s\) 在每个基元素上等于恒等映射，因而由该命题的唯一性，\(\pi s=1_{A/B}\)。
 
 令 \(C=s(A/B)\)。任意 \(a\in A\) 可写成 \(\biggl(a-s\Bigl(\pi(a)\Bigr)\biggr)+s\pi(a)\)，首项属于 \(B\)，故 \(A=B+C\)。若 \(s(x)\in B\)，施以 \(\pi\) 得 \(x=0\)，故交为零。对 \(A=\mathbb Z\oplus C_2\)、\(B=0\oplus C_2\)，子群 \(\bigl\langle(1,\bar0)\bigr\rangle\) 与 \(\bigl\langle(1,\bar1)\bigr\rangle\) 都是这样的补群，且彼此不同。这个分裂结论不要求 \(A\) 有限生成。
 
+\textbf{（2）}
 现在考虑 \(H\le\mathbb Z^m\)。若 \(H\) 的一组基能扩充为母群的基，取新增基元素生成的子群 \(C\)，坐标的存在性与唯一性直接给出 \(\mathbb Z^m=H\oplus C\)。若已有这样的直和分解，\cref{b1:thm:finite-rank-free-abelian-subgroup}说明 \(C\) 自由，而商群同构于 \(C\)，所以 \(\mathbb Z^m/H\) 无挠。
 
 反过来，若 \(\mathbb Z^m/H\) 无挠，它由母群标准基的像有限生成；\cref{b1:thm:fga-structure}使它成为有限秩自由交换群。应用本题已证的分裂结论，得到 \(\mathbb Z^m=H\oplus C\)。子群定理给出 \(H,C\) 各有一组有限基，它们的并由直和坐标的唯一性成为母群的基。事实上，\(H\) 的任意一组基均可与 \(C\) 的一组基合并，得到这种扩充。三条件因而等价。
@@ -125,14 +128,28 @@ nx\in H,\quad x\in\mathbb Z^m,\quad n\ge1
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-cyclic-hom}
-把同态集合按逐点相加组成交换群，证明
+设 \(m,n\) 为正整数。把从 \(C_m\) 到 \(C_n\) 的同态集合按逐点相加组成交换群，证明
 \[
 \operatorname{Hom}(C_m,C_n)\cong C_{\gcd(m,n)}.
 \]
 进而计算从 \(C_{12}\oplus C_{18}\) 到 \(C_6\) 的同态数与满同态数。
 \end{exercise}
 \begin{solution}
-由\cref{b1:prop:cyclic-homomorphisms}，\(C_m\to C_n\) 的同态由 \(\bar1\) 的像 \(x\) 唯一确定，而这样的像恰好满足 \(mx=0\)。取值映射 \(f\mapsto f(\bar1)\) 保持逐点加法，因此将同态群同构到 \(C_n\) 中被 \(m\) 消去的子群。令 \(d=\gcd(m,n)\)，满足条件的元素恰为 \(\overline{(n/d)t}\)，其中 \(t\) 模 \(d\) 取值，在加法下构成 \(C_d\)。本题两生成元在 \(C_6\) 中都可以任取像，所以共有三十六个同态。若像由 \(\bar a,\bar b\) 生成，满射当且仅当存在整数 \(u,v\) 使 \(ua+vb\equiv1\pmod6\)，由 Bézout 等式，这等价于 \(\gcd(a,b,6)=1\)。非满情况是两者都为二的倍数或都为三的倍数：分别有九种与四种，两者都满足有一种。故满同态数为 \(36-9-4+1=24\)。
+对同态 \(f,g:C_m\rightarrow C_n\)，逐点定义
+\[
+(f+g)(x)=f(x)+g(x).
+\]
+因为目标群 \(C_n\) 交换，
+\[
+\begin{aligned}
+(f+g)(x+y)
+&=f(x)+f(y)+g(x)+g(y)\\
+&=(f+g)(x)+(f+g)(y),
+\end{aligned}
+\]
+所以 \(f+g\) 仍为同态。零映射是单位元，逐点取负给出逆元，其余交换群公理逐点成立。因此这些同态确实在逐点加法下组成交换群。
+
+由\cref{b1:prop:cyclic-homomorphisms}，\(C_m\to C_n\) 的同态由 \(\bar1\) 的像 \(x\) 唯一确定，而这样的像恰好满足 \(mx=0\)。取值映射 \(f\mapsto f(\bar1)\) 保持逐点加法，因此将同态群同构到 \(C_n\) 中被 \(m\) 消去的子群。令 \(d=\gcd(m,n)\)，满足条件的元素恰为 \(\overline{(n/d)t}\)，其中 \(t\) 模 \(d\) 取值，在加法下构成 \(C_d\)。本题两生成元在 \(C_6\) 中都可以任取像，所以共有三十六个同态。若像由 \(\bar a,\bar b\) 生成，满射当且仅当存在整数 \(u,v\) 使 \(ua+vb\equiv1\pmod6\)，由 Bézout 等式，这等价于 \(\gcd(a,b,6)=1\)。非满情况是两者都为二的倍数或都为三的倍数：分别有九种与四种，同时满足两种条件的只有零元像这一种。故满同态数为 \(36-9-4+1=24\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-minimal-generators}
@@ -148,16 +165,42 @@ A\cong\mathbb Z^r\oplus C_{d_1}\oplus\cdots\oplus C_{d_s},
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-torsion-layers}
-设有限交换二群 \(A\) 满足
+\begin{enumerate}
+\item
+设有限交换 \(2\)-群 \(A\) 满足
 \[
 |A/2A|=8,\quad |2A/4A|=4,\quad
 |4A/8A|=2,\quad 8A=0.
 \]
 确定 \(A\)，并求其中阶恰为四的元素个数。
+\item 设 \(p\) 为素数，\(B\) 为有限交换 \(p\)-群，并定义非负整数 \(c_j\)（\(j\geq1\)）使
+\[
+\bigl|p^{j-1}B/p^jB\bigr|=p^{c_j}.
+\]
+证明 \(c_j\geq c_{j+1}\)。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
+\textbf{（1）}
 对本题的二主群，\eqref{b1:eq:primary-torsion-layers}给出 \(|2^{j-1}A/2^jA|=2^{c_j}\)，其中 \(c_j\) 是指数至少为 \(j\) 的循环因子数。题设因而给出 \(c_1=3,c_2=2,c_3=1,c_4=0\)。指数恰为 \(j\) 的因子数是 \(c_j-c_{j+1}\)，所以指数一、二、三各出现一次，再由\cref{b1:thm:fga-structure}，得到
 \(A\cong C_2\oplus C_4\oplus C_8\)。被四消去的元素数为 \(2\cdot4\cdot4=32\)，被二消去的元素数为 \(2\cdot2\cdot2=8\)。阶恰为四的元素就是两者之差，共二十四个。
+
+\textbf{（2）}
+乘以 \(p\) 给出映射
+\[
+\begin{aligned}
+p^{j-1}B/p^jB&\longrightarrow p^jB/p^{j+1}B,\\
+x+p^jB&\longmapsto px+p^{j+1}B.
+\end{aligned}
+\]
+若改变 \(x\) 的代表，差属于 \(p^jB\)，乘以 \(p\) 后落入 \(p^{j+1}B\)，所以映射良定义。每个目标陪集可写成 \(p^jb+p^{j+1}B\)，它是 \(p^{j-1}b+p^jB\) 的像，故映射满射。因此
+\[
+p^{c_{j+1}}
+=\bigl|p^jB/p^{j+1}B\bigr|
+\leq\bigl|p^{j-1}B/p^jB\bigr|
+=p^{c_j},
+\]
+从而 \(c_j\geq c_{j+1}\)。这给出了层商数据可实现所必须满足的单调性。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-fg-endomorphism}
@@ -176,14 +219,44 @@ A\cong\mathbb Z^r\oplus C_{d_1}\oplus\cdots\oplus C_{d_s},
 \end{solution}
 
 \begin{exercise}\label{b1:ex:09-rectangular-smith}
+\begin{enumerate}
+\item
 设
 \[
 M=\begin{pmatrix}2&1\\0&3\\0&0\end{pmatrix},\qquad
 A=\mathbb Z^3/M\mathbb Z^2.
 \]
 求 \(M\) 的 Smith 标准形，并给出整数可逆矩阵 \(U,V\) 作为核验；写出 \(A\) 的具体坐标同构，并在原坐标中指出有限循环因子和自由因子的生成元。
+\item 设
+\[
+M_0=
+\begin{pmatrix}
+4&0&2\\
+0&6&2
+\end{pmatrix},
+\qquad
+A_0=\mathbb Z^2/M_0\mathbb Z^3.
+\]
+用行列式因子确定 \(A_0\)，并核验
+\[
+V_0=
+\begin{pmatrix}
+2&1&3\\
+1&1&2\\
+-3&-2&-6
+\end{pmatrix},
+\qquad
+M_0V_0=
+\begin{pmatrix}
+2&0&0\\
+0&2&0
+\end{pmatrix}.
+\]
+说明为什么不能任取 \(M_0\) 的两列，直接用这两列组成的行列式计算完整关系格的指数。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
+\textbf{（1）}
 先交换两列，再将第二行减去第一行的三倍，得到
 \[
 \begin{pmatrix}2&1\\0&3\\0&0\end{pmatrix}
@@ -222,4 +295,31 @@ V=\begin{pmatrix}0&-1\\1&2\end{pmatrix}.
 \((0,6,0)=-(2,0,0)+2(1,3,0)\)，属于关系子群，因此逆映射也良定义。一个方向的复合显然固定 \(\Bigl([t]_6,w\Bigr)\)；另一个方向中，原向量与返回的 \((0,v-3u,w)\) 之差为 \(u(1,3,0)\)，也属于关系子群。因此两映射互逆。
 
 原坐标中的 \((0,1,0)+M\mathbb Z^2\) 对应 \(\Bigl([1]_6,0\Bigr)\)，阶为六；\((0,0,1)+M\mathbb Z^2\) 对应 \(\Bigl([0]_6,1\Bigr)\)，生成无限循环因子。这里自由秩是目标坐标数减非零主元数，即 \(3-2=1\)；不能用关系数减非零主元数来计算。
+
+\textbf{（2）}
+矩阵 \(M_0\) 的全部一阶子式的最大公因数为
+\[
+\Delta_1(M_0)=\gcd(4,6,2)=2.
+\]
+三个二阶子式依次为 \(24,8,-12\)，所以
+\[
+\Delta_2(M_0)=\gcd(24,8,12)=4.
+\]
+由\cref{b1:prop:determinantal-divisors}，两个非零 Smith 对角元为
+\[
+d_1=\Delta_1=2,\qquad
+d_2=\frac{\Delta_2}{\Delta_1}=2.
+\]
+因此
+\[
+A_0\cong C_2\oplus C_2.
+\]
+
+直接计算给出题设的等式 \(M_0V_0=\begin{pmatrix}2&0&0\\0&2&0\end{pmatrix}\)，并且 \(\det V_0=-1\)，故 \(V_0\) 是整数可逆矩阵。这一列变换既核验了 Smith 形，也说明第三个零列来自三条原关系的可逆整数重组。
+
+若只取第一、二列，所得方阵行列式绝对值为 \(24\)；取第一、三列或第二、三列时分别得到 \(8\) 和 \(12\)。这些数都是相应两列所生成子格的指数，却都不是三列共同生成的完整关系格指数
+\[
+[\mathbb Z^2:M_0\mathbb Z^3]=\Delta_2(M_0)=4.
+\]
+因此满行秩矩形矩阵必须取全部最大阶子式绝对值的最大公因数，不能任取一个方阵子组代替。
 \end{solution}

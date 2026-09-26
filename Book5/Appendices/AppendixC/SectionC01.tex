@@ -1,10 +1,101 @@
 % !TeX root = ../../Book5.tex
+% 纲要标题：### C.1 李代数表示与李群表示的积分
+% 纲要位置：工作记录/计划纲要.md，第 4613 行。
+% #### C.1.1 微分表示与积分定理
+% #### C.1.2 下降到商群的条件
+% #### C.1.3 \texorpdfstring{\(SU(2)\) 与 \(SO(3)\) 的表示差别}{SU(2) 与 SO(3) 的表示差别}
 % 节标题由计划纲要.md 中附录 C 的第 1 条要点整理。
 
 \section{李代数表示与李群表示的积分}
 \label{b5:sec:C01}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 % * 李代数表示何时积分成李群表示
 
-待撰写。
+李代数记录单位元附近的一阶变化。要把这种变化沿整个群延伸，还须检查群的连通性与绕闭路的影响。本节只讨论有限维表示；无限维空间上还要指定算子的定义域和拓扑，不能直接沿用这里的结论。
+
+\subsection{微分表示与积分定理}
+\label{b5:subsec:C01:01}
+
+\begin{definition}\label{b5:def:lie-group-representation}
+设 \(G\) 为实李群，\(V\) 为有限维复向量空间。光滑群同态 \(\pi:G\to\operatorname{GL}_{\mathbb C}(V)\) 称为 \(G\) 的有限维复表示。它在单位元处的微分
+\(\mathrm{d}\pi:\operatorname{Lie}(G)\to\mathfrak{gl}_{\mathbb C}(V)\)
+是实线性李代数同态。给定实线性李代数表示 \(\rho:\operatorname{Lie}(G)\to\mathfrak{gl}_{\mathbb C}(V)\)，若 \(\mathrm{d}\pi=\rho\)，就称 \(\pi\) 是 \(\rho\) 的\term[jifen-biaoshi]{积分表示}[integrated representation]。若 \(G\) 为复李群，则本节所说的复表示要求群同态全纯，其微分要求复线性。
+\end{definition}
+
+对一参数子群有
+\[
+\pi(\exp_G tx)=\exp\Bigl(t\,\mathrm{d}\pi(x)\Bigr).
+\]
+左边是一般线性群中的一参数子群，其单位元处导数为 \(\mathrm{d}\pi(x)\)；常微分方程 \(Y'=\mathrm{d}\pi(x)Y\)、\(Y(0)=I\) 的唯一解就是右边。微分保持括号可以从群交换子在二阶处的展开得到；同样的展开已经在矩阵李代数中出现。
+
+\begin{theorem}[李代数表示的积分]\label{b5:thm:lie-representation-integration}
+设 \(G\) 为连通且单连通的实李群，\(\mathfrak g=\operatorname{Lie}(G)\)，\(V\) 为有限维复向量空间。每个实线性李代数表示 \(\rho:\mathfrak g\to\mathfrak{gl}_{\mathbb C}(V)\) 都唯一积分为光滑群表示 \(\pi:G\to\operatorname{GL}_{\mathbb C}(V)\)。微分给出有限维光滑复 \(G\)-表示与有限维实线性 \(\mathfrak g\)-表示的范畴等价。若 \(G\) 为连通且单连通的复李群，则每个有限维复线性李代数表示都唯一积分为全纯群表示，并给出相应的范畴等价。
+\end{theorem}
+
+\begin{proof}
+设 \(\gamma:[0,1]\to G\) 是从单位元到 \(g\) 的分段光滑路径，令
+\(a(t)=(\mathrm{d}L_{\gamma(t)^{-1}})\gamma'(t)\in\mathfrak g\)。沿这条路径解矩阵常微分方程
+\[
+ U'(t)=U(t)\rho\bigl(a(t)\bigr),\qquad U(0)=I.
+\]
+解在有限区间上存在唯一且可逆；例如行列式满足一个标量线性方程，初值为一。拟定义 \(\pi(g)=U(1)\)，关键是验证其与路径无关。
+
+对保持端点的光滑同伦 \(\gamma(t,s)\)，再令
+\(b(t,s)=(dL_{\gamma(t,s)^{-1}})\partial_s\gamma(t,s)\)。左 Maurer--Cartan 形式的恒等式给出
+\[
+ \partial_s a-\partial_t b=[a,b].
+\]
+由于 \(\rho\) 保持括号，直接对
+\(W=\partial_sU-U\rho(b)\) 求 \(t\) 导数，得到
+\(\partial_tW=W\rho(a)\)。端点固定使 \(b(0,s)=b(1,s)=0\)，故 \(W(0,s)=0\)，唯一性推出 \(W=0\)，进而 \(\partial_sU(1,s)=0\)。分段光滑同伦可逐段使用同一计算。李群上的路径及同伦可以光滑化，而单连通性保证任意两条同端点路径同伦，所以定义良好。
+
+把通向 \(g\) 的路径与左平移后的通向 \(h\) 的路径拼接，第二段的左对数导数仍为原路径的 \(a(t)\)。解方程便得
+\(\pi(gh)=\pi(g)\pi(h)\)。在单位元附近取路径 \(t\mapsto\exp(tx)\)，则
+\(\pi(\exp x)=e^{\rho(x)}\)，所以 \(\pi\) 光滑且 \(\mathrm{d}\pi=\rho\)。复李群情形中，这一局部公式是全纯的，再用群平移得到全群上的全纯性。
+
+指数像含单位元邻域，而连通群由任何这样的邻域生成，故微分相同的两个表示必在全群上相同。若线性映射与两个李代数作用交换，它便与相应矩阵指数交换，因而与群作用交换；反向对群同态求微分即可。于是微分既在对象上给出存在唯一性，又在同态上给出双射，得到范畴等价。上述路径构造使用常微分方程的存在唯一性及 Maurer--Cartan 恒等式；李群同态版本见\cite[Theorem 3.41 and Theorem 4.3]{Kirillov2008LieGroups}。
+\end{proof}
+
+\subsection{下降到商群的条件}
+\label{b5:subsec:C01:02}
+
+连通李群 \(G\) 的普遍覆盖可以带上唯一使覆盖映射成为群同态的李群结构。记为
+\(p:\widetilde G\to G\)，其核 \(D\) 是离散中心子群。离散性来自覆盖；中心性则因为对固定 \(d\in D\)，连续映射 \(g\mapsto gdg^{-1}\) 从连通的 \(\widetilde G\) 进入离散集合 \(D\)，只能恒为 \(d\)。
+
+\begin{proposition}\label{b5:prop:representation-descent-cover}
+设 \(G\) 为连通实李群，\(p:\widetilde G\to G\) 为作为李群同态的普遍覆盖，\(V\) 为有限维复向量空间，\(\rho:\operatorname{Lie}(G)\to\mathfrak{gl}_{\mathbb C}(V)\) 为实线性李代数表示。记 \(\widetilde\pi:\widetilde G\to\operatorname{GL}_{\mathbb C}(V)\) 为 \(\rho\circ\mathrm{d}p\) 的唯一积分。则 \(\rho\) 能积分为 \(G\) 的光滑复表示，当且仅当 \(\widetilde\pi(d)=1_V\) 对每个 \(d\in\ker p\) 成立。
+\end{proposition}
+\begin{proof}
+若已有 \(G\) 表示，复合 \(p\) 后必零化覆盖核。反之，在覆盖核上平凡时，定义 \(\pi(g)=\widetilde\pi(\widetilde g)\)，其中 \(p(\widetilde g)=g\)。任意两个提升相差核元素，所以值不依赖提升。群乘法相容性由 \(\widetilde\pi\) 保证；覆盖局部是微分同胚，所以 \(\pi\) 光滑且具有原微分。
+\end{proof}
+
+这说明“李代数表示可以积分”必须说明积分到哪个群。连通但非单连通的群可能丢掉一些表示；非连通群还需要补充连通分支群的作用，这些信息根本不在单位元切空间中。
+
+\begin{example}\label{b5:exm:circle-integration}
+对圆群 \(S^1=\mathbb R/2\pi\mathbb Z\)，一个李代数复表示由算子 \(A\) 给出，在普遍覆盖上的积分为 \(t\mapsto e^{tA}\)。下降条件为 \(e^{2\pi A}=I\)，等价于 \(A\) 可对角化且特征值属于 \(i\mathbb Z\)。确实，Jordan 块的半单部分必须满足 \(e^{2\pi\lambda}=1\)，其幂零部分 \(N\) 满足 \(e^{2\pi N}=I\)。但
+\(e^{2\pi N}-I=NQ(N)\)，其中 \(Q(0)=2\pi\ne0\)，故 \(Q(N)\) 可逆，迫使 \(N=0\)。反向验证则直接代入。因此 \(A=i\alpha\) 的一维表示仅当 \(\alpha\in\mathbb Z\) 时下降；一个非零幂零 Jordan 块也不能下降。
+\end{example}
+
+\subsection{\texorpdfstring{\(SU(2)\) 与 \(SO(3)\) 的表示差别}{SU(2) 与 SO(3) 的表示差别}}
+\label{b5:subsec:C01:03}
+
+群 \(SU(2)\) 可写成
+\[
+\left\{\,
+\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix}
+\ \middle|\ |a|^2+|b|^2=1\,\right\}.
+\]
+作为流形它是三维球面，故单连通。其李代数的复化为 \(\mathfrak{sl}_2(\mathbb C)\)，因此前文的每个 \(L_m\) 唯一积分到 \(SU(2)\)。可以直接把它实现为自然二维表示的对称幂 \(\operatorname{Sym}^m\mathbb C^2\)。
+
+\ProseParagraphBreak
+\(SU(2)\) 在实三维空间 \(\mathfrak{su}_2\) 上的共轭作用保持正定内积 \(-\operatorname{tr}(XY)\)，给出 \(SU(2)\to SO(3)\)。它的微分是三维单李代数的伴随表示，单射且两边等维，故像含单位元邻域；\(SO(3)\) 连通使像为整个群。核由与全部 \(\mathfrak{su}_2\) 交换的矩阵组成，只能为 \(\{I,-I\}\)。因此它是二重覆盖。
+
+\begin{proposition}\label{b5:prop:su2-so3-parity}
+设 \(m\) 为非负整数，\(L_m\) 为最高权 \(m\) 的有限维简单左 \(\mathfrak{sl}_2(\mathbb C)\)-模。将它限制到实李代数 \(\mathfrak{su}_2\)，并积分为 \(SU(2)\) 的光滑复表示。对由伴随作用给出的二重覆盖 \(SU(2)\to SO(3)\)，其核为 \(\{I,-I\}\)，该积分表示能够下降为 \(SO(3)\) 表示，当且仅当 \(m\) 为偶数。
+\end{proposition}
+\begin{proof}
+在 \(\operatorname{Sym}^m\mathbb C^2\) 上，\(-I\) 对每个次数 \(m\) 单项式按 \((-1)^m\) 作用。覆盖核由 \(-I\) 生成，所以\cref{b5:prop:representation-descent-cover}恰给出偶数条件。
+\end{proof}
+
+自然二维模是最小的反例：它是 \(SU(2)\) 的表示，却不是 \(SO(3)\) 的表示。三维伴随模对应 \(m=2\)，可以下降。同一个复化李代数因此并不意味着两个给定李群具有相同的表示。

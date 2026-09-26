@@ -1,10 +1,95 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 C 的第 1 条要点整理。
+% 纲要标题：### C.1 投射有限群与连续离散模
+% 纲要位置：工作记录/计划纲要.md，第 3605 行。
+% 纲要细目（写作范围）：
+% #### C.1.1 有限商与开正规子群
+% #### C.1.2 离散连续模与连续余链
+% #### C.1.3 有限商计算与导出函子
+
 
 \section{投射有限群与连续离散模}
 \label{b4:sec:C01}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 投射有限群及连续离散模
+有限商决定投射有限群的拓扑，却不意味着它的上同调等于任意一个有限商的上同调。余链必须连续，有限层还会随余链变化。本节回顾\cref{b4:def:continuous-group-cochains}的系数范畴，补齐其导出函子解释，并说明\cref{b4:prop:continuous-finite-quotients}的计算公式应怎样使用。
 
-待撰写。
+\subsection{有限商与开正规子群}
+\label{b4:subsec:C01:01}
+
+投射有限群 \(G\) 是有限离散群的投射极限，取有限群直积的子空间拓扑。群运算逐坐标进行，故连续；相容条件定义闭子集，因此 \(G\) 紧且 Hausdorff。有限多个坐标投影核的交是开正规子群，并组成单位元处的邻域基。这里所需的紧性是有限离散空间直积的紧性；同一拓扑事实已在\subsecref{b4:subsec:1104:03}说明。
+
+\ProseParagraphBreak
+开子群 \(H\le G\) 的各陪集覆盖紧空间 \(G\)，因而只有有限多个，故 \([G:H]<\infty\)。它也是闭集，因为补集是其他开陪集之并。取它的有限多个共轭子群之交，便得到包含在 \(H\) 中的开正规子群。反过来，若闭子群有有限指数，则其每个陪集的补集是有限个闭陪集之并，故它是开子群。这些判断中不能把“闭”省掉后随意把抽象有限指数子群当作开子群。
+
+\begin{proposition}\label{b4:prop:C-finite-module-quotient}
+设 \(G\) 为投射有限群，\(M\) 为有限交换群。\(G\) 对离散 \(M\) 的作用连续，当且仅当存在开正规子群 \(U\triangleleft G\)，使 \(U\) 在 \(M\) 上平凡作用；此时作用通过有限群 \(G/U\)。此外，从 \(G\) 到有限离散群的群同态连续，当且仅当其核为开子群。
+\end{proposition}
+\begin{proof}
+连续作用使每个 \(m\in M\) 的稳定子群开；将有限多个稳定子群相交，得到作用同态的核，这是开正规子群。反过来，经有限离散商的作用显然连续。对于群同态，各个非空纤维都是核的陪集，故所有纤维开与核开等价，也就与到离散群的连续性等价。
+\end{proof}
+
+两类基本例子是
+\[
+ \widehat{\vphantom{Z}\mathbb Z}=\varprojlim_n\mathbb Z/n\mathbb Z,
+ \qquad
+ \mathbb Z_p=\varprojlim_r\mathbb Z/p^r\mathbb Z.
+\]
+第一式按正整数的整除关系取极限，第二式固定素数 \(p\)。整数的像在两者中都稠密，\(1\) 是一个拓扑生成元；但 \(\widehat{\vphantom{Z}\mathbb Z}\) 具有任意阶的有限循环商，\(\mathbb Z_p\) 的有限连续商只能是循环 \(p\)-群。后一限制将直接反映在上同调计算中。
+\symidx{\(\widehat{\vphantom{Z}\mathbb Z}\)：整数群的投射有限完备化}
+\symidx{\(\mathbb Z_p\)：\(p\)-进整数的加法群}
+
+\subsection{离散连续模与连续余链}
+\label{b4:subsec:C01:02}
+
+设 \(G\) 为投射有限群。一个离散连续 \(G\)-模是带 \(G\) 作用的交换群 \(M\)，其中每个元素的稳定子群都是开的；这正是\cref{b4:def:continuous-group-cochains}中作用映射连续的等价条件。对象不必有限。例如，若 \(K^s\) 是域 \(K\) 的可分闭包，则每个代数元被某个有限扩张的 Galois 子群固定，所以 \((K^s,+)\) 和 \((K^s)^\times\) 都是离散连续 \(G_K\)-模，其中 \(G_K=\operatorname{Gal}(K^s/K)\) 取 Krull 拓扑。
+
+\ProseParagraphBreak
+记这些模及 \(G\)-同态所成的范畴为 \(\mathcal D_G\)。核、像和商都仍为离散连续模：子模中的元素保留原稳定子群，商中的元素则由任一代表的开稳定子群固定。因此 \(\mathcal D_G\) 是交换范畴，嵌入全部抽象 \(\mathbb ZG\)-模的函子正合。不过，两范畴的内射对象不能不经检查便混为一谈。
+
+\ProseParagraphBreak
+连续余链为 \(C^n_{\mathrm{cts}}(G,M)=\operatorname{Map}_{\mathrm{cts}}(G^n,M)\)，次数零取 \(M\)。为方便独立查阅，非齐次微分写为
+\begin{align*}
+ (\delta f)(g_1,\ldots,g_{n+1})
+ &=g_1f(g_2,\ldots,g_{n+1})\\
+ &\quad+\sum_{i=1}^n(-1)^i
+ f(g_1,\ldots,g_ig_{i+1},\ldots,g_{n+1})\\
+ &\quad+(-1)^{n+1}f(g_1,\ldots,g_n).
+\end{align*}
+零次公式为 \((\delta m)(g)=gm-m\)。这是\eqref{b4:eq:group-cochain-differential}的同一公式，微分平方为零的代数验证继续适用；连续性则来自乘法、作用与有限求和的连续性。
+
+\begin{proposition}\label{b4:prop:C-cochains-exact}
+设 \(G\) 为投射有限群，\(\mathcal D_G\) 为离散连续 \(G\)-模及 \(G\)-同态组成的交换范畴。对每个 \(n\ge0\)，函子 \(C^n_{\mathrm{cts}}(G,-):\mathcal D_G\rightarrow\mathbf{Ab}\) 正合。因此连续群上同调对离散连续模的短正合列给出长正合列。
+\end{proposition}
+\begin{proof}
+核和单射逐点计算。对满射 \(M\rightarrow N\)，一个连续余链 \(f:G^n\rightarrow N\) 从紧空间映到离散空间，像只有有限多个值。为每个值选一个 \(M\) 中的原像，在它的开闭纤维上取对应常值，得到连续提升。不要求所选原像固定于原先同一个开子群。次数零就是原满射。于是短正合列给出逐次短正合的余链复形，长正合列来自\cref{b4:thm:cohomology-long-exact}的连接态射构造。
+\end{proof}
+
+\subsection{有限商计算与导出函子}
+\label{b4:subsec:C01:03}
+
+\cref{b4:prop:continuous-finite-quotients}已经证明，对任意离散连续 \(G\)-模 \(M\)，
+\begin{equation}\label{b4:eq:C-finite-quotient-cohomology}
+ H^n_{\mathrm{cts}}(G,M)
+ \cong\varinjlim_{U\triangleleft_{\mathrm{open}}G}H^n(G/U,M^U).
+\end{equation}
+指标按开正规子群的反向包含排列：从 \(U\) 到更小的 \(V\) 使用膨胀及系数包含 \(M^U\subseteq M^V\)。证明中的两个有限性步骤是：连续余链像有限，并且它在某个共同开正规子群的陪集上常值。再缩小这个子群使其固定有限像，余链便通过 \((G/U)^n\) 且取值于 \(M^U\)。\cref{b4:prop:filtered-colimits-cohomology}保证取余极限与取上同调相容。
+
+\ProseParagraphBreak
+若 \(M\) 有限，先固定一个作用核 \(U_0\)，以后仅取 \(U\subseteq U_0\) 即可，这些指标共尾，且 \(M^U=M\)。但不能只计算 \(H^n(G/U_0,M)\) 后停止：更小子群带来的膨胀映射可能使原有上同调类消失。
+
+\begin{theorem}\label{b4:thm:C-continuous-derived}
+设 \(G\) 为投射有限群，\(\mathcal D_G\) 为离散连续 \(G\)-模及 \(G\)-同态组成的交换范畴。则 \(\mathcal D_G\) 有足够多内射对象，并且对每个 \(n\ge0\)，有
+\[
+ H^n_{\mathrm{cts}}(G,M)\cong R^n(-)^G(M)
+ \qquad(M\in\mathcal D_G).
+\]
+右边的导出函子在离散连续模范畴内计算。
+\end{theorem}
+\begin{proof}
+对任意抽象 \(\mathbb ZG\)-模 \(B\)，令 \(D(B)\) 为所有被某个开子群固定的元素所成子模。有限交保证加法封闭，开子群的共轭仍开保证 \(G\) 稳定。每个从离散连续模 \(M\) 到 \(B\) 的同态都落入 \(D(B)\)，所以 \(D\) 是正合嵌入 \(\mathcal D_G\rightarrow\mathbb ZG\text{-}\mathbf{Mod}\) 的右伴随。抽象模范畴有足够多内射对象；把 \(M\) 嵌入一个抽象内射模 \(J\)，其像落入 \(D(J)\)。\cref{b4:prop:right-adjoint-injectives}说明 \(D(J)\) 在 \(\mathcal D_G\) 中内射，于是得到足够多内射对象。
+
+令 \(I\) 是 \(\mathcal D_G\) 中的内射对象。对开正规子群 \(U\)，不变量 \(I^U\) 是 \(G/U\)-模。函子 \((-)^U\) 是从 \(G/U\)-模沿商映射膨胀到 \(\mathcal D_G\) 的右伴随：映入 \(I\) 的 \(G\)-同态必须落在 \(I^U\)。膨胀不改变底群而正合，故 \(I^U\) 是内射 \(G/U\)-模。因此\eqref{b4:eq:C-finite-quotient-cohomology}使 \(H^n_{\mathrm{cts}}(G,I)=0\) 对所有 \(n>0\) 成立。
+
+由\cref{b4:prop:C-cochains-exact}，连续上同调构成上同调 \(\delta\)-函子，零次为 \(M^G\)。刚证的内射嵌入使其正次可消去，故\cref{b4:thm:derived-universal}将它自然识别为不变量函子的右导出函子。
+\end{proof}
+
+这给出了\subsecref{b4:subsec:1104:03}中使用的导出识别。上述范畴与有限商证明可对照 Weibel\cite[Definition 6.11.8; Lemma 6.11.10; Theorem 6.11.13, pp. 210--213]{Weibel1994HomologicalAlgebra}。如果系数带有 \(p\)-进拓扑，例如把 \(\mathbb Z_p\) 本身作为拓扑模，就已离开 \(\mathcal D_G\)；相关连续上同调还要处理逆极限与系数拓扑，本附录不作无说明的替换。

@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 15.4 诱导模初步
-% 纲要位置：计划纲要.md，第 3568 行。
+% 纲要位置：工作记录/计划纲要.md，第 4219 行。
 
 \section{诱导模初步}
 \label{b5:sec:1504}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 子代数上的扩张标量
 % * 三角分解的预告
@@ -16,17 +15,90 @@
 % ---
 %
 
+子代数的表示可以借扩张标量诱导为较大李代数的表示。与有限群的诱导不同，这样构造出的模通常无限维。PBW 给出所需的自由右模基，由此可构造最高权模，并证明其最高权向量非零。
+
 \subsection{子代数上的扩张标量}
 \label{b5:subsec:1504:01}
 
-待撰写。
+\begin{theorem}\label{b5:thm:lie-induction-adjunction}
+设 \(\mathfrak h\subseteq\mathfrak g\) 为域 \(k\) 上李代数的子代数。自然映射
+\(U(\mathfrak h)\to U(\mathfrak g)\) 单射，且 \(U(\mathfrak g)\) 是自由右 \(U(\mathfrak h)\) 模。对左 \(\mathfrak h\) 模 \(M\)，定义
+\[
+\operatorname{Ind}_{\mathfrak h}^{\mathfrak g}M
+=U(\mathfrak g)\otimes_{U(\mathfrak h)}M,
+\]
+其中 \(\mathfrak g\) 通过第一因子左乘作用。对任意左 \(\mathfrak g\) 模 \(V\)，记 \(V|_{\mathfrak h}\) 为限制到 \(\mathfrak h\) 的模，则有自然同构
+\[
+\operatorname{Hom}_{\mathfrak g}
+\Bigl(\operatorname{Ind}_{\mathfrak h}^{\mathfrak g}M,V\Bigr)
+\cong
+\operatorname{Hom}_{\mathfrak h}(M,V|_{\mathfrak h}).
+\]
+诱导函子保持正合列，且 \(M\to\operatorname{Ind}_{\mathfrak h}^{\mathfrak g}M\)、\(m\mapsto1\otimes m\) 单射。
+\end{theorem}
+\begin{proof}
+把 \(\mathfrak h\) 的基扩为 \(\mathfrak g\) 的基，排序时令补充基元在前，子代数的基元在后。PBW 先说明子代数的有序单项式在大代数中仍独立，所以自然映射单射；又说明每个大代数基元唯一写成一个补充基元有序单项式乘以一个 \(U(\mathfrak h)\) 基元。这正给出自由右模基，其中包括空单项式一。
+伴随同构把 \(F\) 送到 \(m\mapsto F(1\otimes m)\)。反向把 \(\mathfrak h\) 同态 \(T\) 送到 \(u\otimes m\mapsto uT(m)\)；\(T\) 与 \(U(\mathfrak h)\) 作用相容，保证公式对张量关系良定义。两者直接互逆并自然。
+右自由性使诱导的底层向量空间为若干份 \(M\) 的直和，故保持正合性；空单项式对应的直和分量正好给出所列单射。
+\end{proof}
+例如从零子代数的平凡一维模诱导得到 \(U(\mathfrak g)\) 本身。只要 \(\mathfrak g\ne0\)，它就无限维。诱导的泛性质先构造所有可能的作用，有限维性往往要靠随后取商和加入额外关系获得。
 
 \subsection{三角分解的动机}
 \label{b5:subsec:1504:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:pbw-triangular-factorization}
+设域 \(k\) 上的李代数 \(\mathfrak g\) 作为向量空间分解为
+\[
+\mathfrak g=\mathfrak n^-\oplus\mathfrak h\oplus\mathfrak n^+,
+\]
+其中三项都是子代数。则乘法给出向量空间同构
+\[
+U(\mathfrak n^-)\otimes_kU(\mathfrak h)\otimes_kU(\mathfrak n^+)
+\longrightarrow U(\mathfrak g).
+\]
+若另有 \(\mathfrak b=\mathfrak h\oplus\mathfrak n^+\) 为子代数，则
+\(U(\mathfrak g)\cong U(\mathfrak n^-)\otimes_kU(\mathfrak b)\)
+作为右 \(U(\mathfrak b)\) 模相容。
+\end{proposition}
+\begin{proof}
+分别取三项的有序基，并按负、零、正的次序合并。PBW 给出的有序字恰好是三段有序字的乘积，因此乘法把左边的张量积基双射到右边的基。若后两项合成子代数，按同一分组即可得到右模陈述。
+\end{proof}
+这个同构一般不是结合代数同构，因为三段之间的元素未必交换。它的作用是把自由方向和将要规定作用的方向分开。若 \(\mathfrak h\) 交换、\([\mathfrak h,\mathfrak n^+]\subseteq\mathfrak n^+\)，任意线性泛函 \(\lambda:\mathfrak h\to k\) 都给出 \(\mathfrak b\) 的一维模：\(\mathfrak h\) 按 \(\lambda\) 作用，\(\mathfrak n^+\) 按零作用。诱导以后，底层向量空间便是 \(U(\mathfrak n^-)\)。
+\ProseParagraphBreak
+在 \(\mathfrak{sl}_2\) 中可取
+\(\mathfrak n^-=\mathbb Cf\)、\(\mathfrak h=\mathbb Ch\)、\(\mathfrak n^+=\mathbb Ce\)。
+这正是次序 \(f<h<e\) 的来源。一般半单李代数中的三项，将在根分解中由负根、Cartan 子代数和正根构成；本命题只用给定的子空间分解，没有预先假定那套结构存在。
 
 \subsection{诱导模与 Verma 模}
 \label{b5:subsec:1504:03}
 
-待撰写。
+\begin{definition}\label{b5:def:sl2-verma}
+设 \(\lambda\in\mathbb C\)，记 \(\mathfrak{sl}_2=\mathfrak{sl}_2(\mathbb C)\)，\(E_{ij}\) 为矩阵单位，\(e=E_{12}\)、\(h=E_{11}-E_{22}\)，令 \(\mathfrak b=\mathbb Ch\oplus\mathbb Ce\)。在一维复空间 \(\mathbb C_\lambda\) 上规定 \(h\) 作用为 \(\lambda\)、\(e\) 作用为零，得到一个左 \(\mathfrak b\) 模。诱导模
+\[
+M(\lambda)=U(\mathfrak{sl}_2)\otimes_{U(\mathfrak b)}\mathbb C_\lambda
+\]
+称为 \(\mathfrak{sl}_2\) 的最高权为 \(\lambda\) 的\term[Verma-mo]{Verma 模}[Verma module]。
+\end{definition}
+由 PBW 三角分解，\(M(\lambda)\) 有基
+\(v_j=f^j\otimes1\)、\(j\ge0\)，并满足
+\[
+hv_j=(\lambda-2j)v_j,\qquad
+fv_j=v_{j+1},\qquad
+ev_j=j(\lambda-j+1)v_{j-1}.
+\]
+这些式子与有限模型相同，但这里没有预先规定 \(v_{m+1}=0\)。特别地，最高向量 \(v_0\) 非零；这由 PBW 证明，而不是诱导记号本身的形式性质。
+\begin{theorem}\label{b5:thm:sl2-verma-submodules}
+设 \(\lambda\in\mathbb C\)，\(M(\lambda)\) 为复 \(\mathfrak{sl}_2(\mathbb C)\) 的最高权为 \(\lambda\) 的 Verma 模，\(v_\lambda\) 为其标准最高权生成元，记 \(v_j=f^jv_\lambda\)，其中 \(f=E_{21}\)、\(E_{21}\) 为矩阵单位。若 \(\lambda\notin\mathbb Z_{\ge0}\)，则 \(M(\lambda)\) 简单。若 \(\lambda=m\in\mathbb Z_{\ge0}\)，则它唯一的非零真子模为
+\[
+N_m=\operatorname{span}_{\mathbb C}\{v_{m+1},v_{m+2},\ldots\}
+\cong M(-m-2),
+\]
+且 \(M(m)/N_m\cong L_m\)，其中 \(L_m\) 为最高权 \(m\)、维数 \(m+1\) 的不可约复 \(\mathfrak{sl}_2\) 模。列
+\(0\to N_m\to M(m)\to L_m\to0\) 不分裂。
+\end{theorem}
+\begin{proof}
+任一非零子模中的非零向量只有有限多个权分量，而 \(h\) 的权两两不同。对这一有限集合使用插值多项式，便使子模包含某个 \(v_j\)。如果 \(\lambda\) 不是非负整数，所有升算子系数 \(r(\lambda-r+1)\)、\(r\ge1\) 都非零，所以能升到 \(v_0\)，再用 \(f\) 生成全部模，证明简单。
+若 \(\lambda=m\)，则 \(ev_{m+1}=0\)，所列尾部空间稳定；在其中把 \(v_{m+1}\) 作为最高向量，作用公式恰是最高权 \(-m-2\) 的同一模型，因此与 \(M(-m-2)\) 同构且简单。任何真子模不能包含 \(v_j\)、\(j\le m\)，否则可升到 \(v_0\)；若它非零，就包含某个 \(j\ge m+1\) 的 \(v_j\)，再升到 \(v_{m+1}\)，因而包含整个 \(N_m\)。而商的前 \(m+1\) 个基向量给出 \(L_m\)，故没有其他非零真子模。
+最后，\(f\) 在 \(M(m)\) 上单射，在非零有限维模 \(L_m\) 上却幂零。若存在同态截面，它的像会给出一个非零有限维子模，与 \(f\) 单射而幂零的矛盾相冲突。因此列不分裂。
+\end{proof}
+这个例子也说明有限维条件的重要性：有限维复 \(\mathfrak{sl}_2\) 模完全可约，并不意味着所有包络代数模都完全可约。后面的一般最高权构造会采用相同方法，先建立非零的诱导模，再证明何时其简单商有限维。

@@ -1,5 +1,13 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 12.4 多元多项式与有限性
+% 本轮补充的纲要细目：
+% * 在任意交换系数环上完整证明对称表达的存在唯一性，明确有界次数下消项终止；用幂和及根乘积说明计算
+% * 区分有限域上的形式多项式与点集函数；正文与习题均不靠除以对称群阶证明基本定理
+% #### 12.4.1 单项式、次数与消去
+% #### 12.4.2 变量置换与不变多项式
+% #### 12.4.3 初等对称多项式与基本定理
+% #### 12.4.4 Noether 环与升链条件
+% #### 12.4.5 Hilbert 基定理
 % 纲要位置：计划纲要.md，第 462 行。
 
 \section{多元多项式与有限性}
@@ -8,13 +16,14 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 单项式、多项式次数及消去的动机
+% * 变量置换、不变多项式与对称多项式基本定理
 % * Noether 环与升链条件
 % * Hilbert 基定理；第三卷只复用证明并发展模论版本
 %
 % ---
 %
 
-一元多项式的带余除法依靠次数，把一个除法过程不断缩短。多元多项式仍有次数，却不能仅凭全次数把任意多项式除以另一个多项式。于是问题从“能否用一个生成元表示理想”转为“是否至少能用有限个生成元表示”。Hilbert 基定理回答的正是后一个问题。
+一元多项式的带余除法依靠次数，把一个除法过程不断缩短。多元多项式仍有次数，却不能仅凭全次数把任意多项式除以另一个多项式。本节先研究一个具体问题：交换变量而不改变的多项式，能否用少数几个固定的多项式表示？对称多项式基本定理给出肯定答案。随后转向理想的有限生成性，证明 Hilbert 基定理。这两个问题分别关心子环和理想，结论相近，证明却各有依据。
 
 \subsection{单项式、次数与消去}
 \label{b1:subsec:1204:01}
@@ -24,7 +33,7 @@
 x^\alpha=x_1^{\alpha_1}\cdots x_n^{\alpha_n},\qquad
 |\alpha|=\alpha_1+\cdots+\alpha_n
 \]
-称 \(x^\alpha\) 为变量 \(x_1,\ldots,x_n\) 的一个\term[danxiangshi]{单项式}[monomial]。若各系数 \(a_\alpha\in R\) 且只有有限多个非零，则称形式和 \(f=\sum_\alpha a_\alpha x^\alpha\) 为 \(R\) 上的 \(n\) 元多项式。按系数相加，并将乘法由 \(x^\alpha x^\beta=x^{\alpha+\beta}\) 分配展开，所得环记为 \(R[x_1,\ldots,x_n]\)。也可以逐次添加不定元，把它看作 \(\Bigl(R[x_1,\ldots,x_{n-1}]\Bigr)[x_n]\)；两种描述都将同一组有限支撑的系数对应到同一个形式和。
+称 \(x^\alpha\) 为变量 \(x_1,\ldots,x_n\) 的一个\term[danxiangshi]{单项式}[monomial]。若各系数 \(a_\alpha\in R\) 且只有有限多个非零，则称形式和 \(f=\sum_\alpha a_\alpha x^\alpha\) 为 \(R\) 上的 \(n\) 元多项式。按系数相加，并将乘法由 \(x^\alpha x^\beta=x^{\alpha+\beta}\) 分配展开，所得环记为 \(R[x_1,\ldots,x_n]\)。也可以逐次添加不定元，把它看作 \(\Bigl(R[x_1,\ldots,x_{n-1}]\Bigr)[x_n]\)；两种描述等价，均以只有有限多个非零项的系数族表示多项式。
 \symidx{\(x^\alpha\)：多重指数对应的单项式}
 
 \begin{definition}\label{b1:def:multivariate-degree}
@@ -57,6 +66,133 @@ I\cap\mathbb Q[x]=(x^2-1).
 
 \ProseParagraphBreak
 一般消去并不保证每个消去后方程的解都能提升为原方程组的解。例如设 \(K\) 为域；在 \(K[x,y]\) 中，\((xy-1)\cap K[x]=0\)：非零的 \((xy-1)h\) 关于 \(y\) 的次数至少为一，所以不能只含 \(x\)。消去理想因而不限制 \(x\)，可是 \(x=0\) 无论配上什么 \(y\)，都不能满足 \(xy=1\)。\appref{b1:app:F}将给出 Gröbner 基及消去的初步计算方法，几何解释在第三卷第8章继续发展。
+
+\subsection{变量置换与不变多项式}
+\label{b1:subsec:1204:invariants}
+
+一元首一多项式若已分解为一次因子的乘积，改变各因子的次序不会改变它的系数。例如
+\[
+(T-x)(T-y)=T^2-(x+y)T+xy
+\]
+中的 \(x+y\) 和 \(xy\)，在交换 \(x,y\) 后都不变。暂且把根看作独立的不定元，就得到一个可以在多项式环内讨论的问题；此时无需先求出某个方程的根。
+
+\begin{definition}\label{b1:def:permutation-invariant-polynomial}
+设 \(R\) 为交换环，\(n\ge1\)，\(G\) 为对称群 \(S_n\) 的一个子群。对 \(\sigma\in G\) 和 \(f\in R[x_1,\ldots,x_n]\)，规定
+\[
+\sigma\cdot f=f\Bigl(x_{\sigma(1)},\ldots,x_{\sigma(n)}\Bigr).
+\]
+如果 \(\sigma\cdot f=f\) 对所有 \(\sigma\in G\) 都成立，就称 \(f\) 为这个作用下的\term[bubian-duoxiangshi]{不变多项式}[invariant polynomial]。全部不变多项式组成的子环记为 \(R[x_1,\ldots,x_n]^G\)，称为该作用的\term[bubian-huan]{不变环}[invariant ring]。当 \(G=S_n\) 时，称这样的 \(f\) 为\term[duichen-duoxiangshi]{对称多项式}[symmetric polynomial]。
+\end{definition}
+\symidx{\(R[x_1,\ldots,x_n]^G\)：变量置换作用下的不变环}
+
+上述代入确实给出左群作用。它固定系数，把 \(x_i\) 送到 \(x_{\sigma(i)}\)，并保持加法与乘法；先作用 \(\tau\) 再作用 \(\sigma\)，会把 \(x_i\) 送到 \(x_{(\sigma\tau)(i)}\)，与 \(\sigma\tau\) 的作用一致。恒等置换给出恒等映射，逆置换给出逆映射，因此各个作用映射都是环自同构。如果 \(f,g\) 不变，则 \(f-g\) 与 \(fg\) 也不变，常数同样不变，故定义中的集合确为包含 \(R\) 的子环。
+
+\ProseParagraphBreak
+检验不变性时，可以比较各单项式的系数。变量置换也置换单项式，所以多项式不变，当且仅当同一个单项式轨道内的系数相等。例如三元多项式
+\[
+x^2y+y^2z+z^2x
+\]
+在循环置换 \(x\mapsto y\mapsto z\mapsto x\) 下不变，但交换 \(x,y\) 后变为 \(xy^2+yz^2+zx^2\)。这两个多项式含有不同的单项式，故在任何非零系数环上都不相等。它是循环子群的不变量，却不是对称多项式。
+
+\ProseParagraphBreak
+这里比较的是形式多项式，不只是它们在系数环上的取值。在 \(\mathbb F_2[x,y]\) 中，\(x^2-x\) 在 \(x=0,1\) 时都为零，所以它所给出的函数在每一点都为零，交换两个坐标当然不改变这个函数；可是交换变量得到的多项式是 \(y^2-y\)，与原多项式不同。因而它并不属于 \(\mathbb F_2[x,y]^{S_2}\)。不能把多项式函数的不变性直接当作形式多项式的不变性。
+
+\subsection{初等对称多项式与基本定理}
+\label{b1:subsec:1204:symmetric-polynomials}
+
+\begin{definition}\label{b1:def:elementary-symmetric-polynomials}
+设 \(R\) 为交换环，\(x_1,\ldots,x_n\) 为 \(n\ge1\) 个不定元。对 \(1\le j\le n\)，令
+\[
+e_j=\sum_{1\le i_1<\cdots<i_j\le n}x_{i_1}\cdots x_{i_j}.
+\]
+称 \(e_j\) 为这 \(n\) 个变量的第 \(j\) 个\term[chudeng-duichen-duoxiangshi]{初等对称多项式}[elementary symmetric polynomial]。另约定 \(e_0=1\)。
+\end{definition}
+\symidx{\(e_j\)：第 \(j\) 个初等对称多项式}
+
+例如 \(e_1=x_1+\cdots+x_n\)，\(e_n=x_1\cdots x_n\)。变量置换只会重排求和中的各个 \(j\) 元子集，故每个 \(e_j\) 都对称。展开一次因子的乘积得到
+\begin{equation}\label{b1:eq:elementary-symmetric-product}
+\prod_{i=1}^n(T-x_i)
+=T^n-e_1T^{n-1}+e_2T^{n-2}-\cdots+(-1)^ne_n.
+\end{equation}
+事实上，\(T^{n-j}\) 的系数来自选择 \(j\) 个因子中的 \(-x_i\)、其余因子中的 \(T\)，因而恰为 \((-1)^je_j\)。这就是根与系数关系的多项式恒等式。
+
+\begin{theorem}[对称多项式基本定理]\label{b1:thm:fundamental-symmetric-polynomials}
+设 \(R\) 为交换环，\(n\ge1\)，\(e_1,\ldots,e_n\in R[x_1,\ldots,x_n]\) 为初等对称多项式。对每个对称多项式 \(f\)，存在唯一的多项式 \(F\in R[t_1,\ldots,t_n]\)，使
+\[
+f=F(e_1,\ldots,e_n).
+\]
+换言之，固定系数的代入同态
+\[
+R[t_1,\ldots,t_n]\longrightarrow R[x_1,\ldots,x_n]^{S_n},
+\qquad F\longmapsto F(e_1,\ldots,e_n)
+\]
+是环同构。
+\end{theorem}
+\begin{proof}
+先说明比较单项式的办法。对不同的指数元组 \(\alpha,\beta\in\mathbb Z_{\ge0}^n\)，从第一项起寻找第一个不同的位置 \(i\)；若 \(\alpha_i>\beta_i\)，就规定 \(x^\alpha\succ x^\beta\)，称前者较大。这是按 \(x_1\succ\cdots\succ x_n\) 排列的\term[zidian-xu]{字典序}[lexicographic order]。任一非零多项式只有有限项，故有唯一的最大单项式，称它为\term[shou-danxiangshi]{首单项式}[leading monomial]。这个比较与乘法相容：给两组指数都加上同一个元组，第一个不同的位置及大小关系不变。
+
+设非零对称多项式 \(f\) 的首项为 \(cx_1^{\alpha_1}\cdots x_n^{\alpha_n}\)，其中 \(c\ne0\)。必有
+\[
+\alpha_1\ge\alpha_2\ge\cdots\ge\alpha_n.
+\]
+否则，若 \(\alpha_i<\alpha_{i+1}\)，交换这两个变量所得的单项式比原首单项式更大；对称性保证它的系数仍为 \(c\ne0\)，与首单项式的选择矛盾。
+
+\(e_j\) 的首单项式是 \(x_1\cdots x_j\)，系数为一。由比较与乘法的相容性，任意乘积 \(e_1^{b_1}\cdots e_n^{b_n}\) 的首单项式为
+\begin{equation}\label{b1:eq:symmetric-leading-monomial}
+x_1^{b_1+\cdots+b_n}x_2^{b_2+\cdots+b_n}\cdots x_n^{b_n},
+\end{equation}
+系数仍为一：只有在每个因子中都选首单项式才能得到这个最大项，其他选择所得的项都更小。于是取
+\[
+b_i=\alpha_i-\alpha_{i+1}\ (1\le i<n),
+\qquad b_n=\alpha_n,
+\]
+便使 \(e_1^{b_1}\cdots e_n^{b_n}\) 的首单项式恰为 \(x^\alpha\)。从 \(f\) 减去 \(ce_1^{b_1}\cdots e_n^{b_n}\)，首项被消掉，余下的多项式仍然对称，且为零或具有更小的首单项式。
+
+还需证明反复消项一定终止。记原多项式的全次数为 \(d\)。刚才所减的乘积齐次，次数为
+\[
+\sum_{j=1}^n jb_j=\alpha_1+\cdots+\alpha_n\le d.
+\]
+因而消项过程中所有多项式的全次数始终不超过 \(d\)。满足 \(\alpha_1+\cdots+\alpha_n\le d\) 的非负整数元组只有有限多个，例如每个坐标都在 \(0,\ldots,d\) 之间。首单项式每步严格变小，不可能在这个有限集合中无限进行，所以经过有限步必得到零。把各次减去的初等对称多项式乘积相加，便得到所需的 \(F\)。若 \(f=0\)，可直接取 \(F=0\)。
+
+最后证明唯一性。若非零多项式 \(H\in R[t_1,\ldots,t_n]\) 在代入后成为零，将它写成不同单项式的有限线性组合。不同元组 \((b_1,\ldots,b_n)\) 在\eqref{b1:eq:symmetric-leading-monomial}中给出不同的首单项式，因为从各指数的相邻差及最后一个指数可以恢复全部 \(b_i\)。在这些首单项式中选取最大的一个；它的系数就是 \(H\) 中相应的非零系数，其余项的全部单项式都比它小，故不能将它消去。这与 \(H(e_1,\ldots,e_n)=0\) 矛盾。因此代入同态的核为零，表达式唯一。
+\end{proof}
+
+上述证明只作加减和乘法，不需要除以 \(n!\) 或任何整数，所以对整数系数、正特征系数以及有零因子的交换环都成立。它也给出了实际计算的步骤：先固定变量次序，依次消去对称多项式的首项，并记录对应的 \(e_j\) 乘积。这里的唯一性指作为 \(t_1,\ldots,t_n\) 的多项式的表达式唯一；任意加括号或恒等变形当然可以写出不同外观的同一个表达式。
+
+\begin{example}\label{b1:exm:symmetric-cubic-expression}
+在 \(\mathbb Z[x,y,z]\) 中，令 \(e_1=x+y+z\)、\(e_2=xy+xz+yz\)、\(e_3=xyz\)，并求 \(f=x^3+y^3+z^3\) 的对称表达式。按 \(x\succ y\succ z\) 的字典序，\(f\) 的首单项式为 \(x^3\)，先减去 \(e_1^3\)，得
+\[
+f-e_1^3=-3(x^2y+x^2z+xy^2+y^2z+xz^2+yz^2)-6xyz.
+\]
+余式的首单项式为 \(x^2y\)，系数为 \(-3\)。而
+\[
+e_1e_2=x^2y+x^2z+xy^2+y^2z+xz^2+yz^2+3xyz,
+\]
+所以 \(f-e_1^3+3e_1e_2=3e_3\)。这给出
+\begin{equation}\label{b1:eq:power-sum-three}
+x^3+y^3+z^3=e_1^3-3e_1e_2+3e_3.
+\end{equation}
+它是整数系数恒等式，因而可以代入任意交换环中的三个元素。特别地，在特征为三的环上，右端后两项消失；计算时不曾除以三，所以这个特例仍有效。
+\end{example}
+
+\begin{example}\label{b1:exm:symmetric-elimination}
+仍在 \(\mathbb Z[x,y,z]\) 中记 \(e_1=x+y+z\)、\(e_2=xy+xz+yz\)、\(e_3=xyz\)。若要找出三个两两乘积 \(xy,yz,zx\) 共同满足的方程，可以先写
+\[
+\begin{aligned}
+(T-xy)(T-yz)(T-zx)
+&=T^3-(xy+yz+zx)T^2\\
+&\quad+xyz(x+y+z)T-x^2y^2z^2\\
+&=T^3-e_2T^2+e_1e_3T-e_3^2.
+\end{aligned}
+\]
+右端的系数都已经用初等对称多项式表示。于是，若 \(a,b,c\) 是 \(X^3-3X+1\) 在某个包含 \(\mathbb Q\) 的域中的三个根，按重数列出，则根与系数关系给出 \(e_1(a,b,c)=0\)、\(e_2(a,b,c)=-3\)、\(e_3(a,b,c)=-1\)。代入上式便得到
+\[
+(T-ab)(T-bc)(T-ca)=T^3+3T^2-1.
+\]
+因此不必分别求出 \(a,b,c\)，就能消去它们，得到两两乘积满足的方程。这里的结论来自明确的多项式恒等式；并没有断言任意消去计算都会给出最小多项式。
+\end{example}
+
+对称多项式基本定理告诉我们，不变环 \(R[x_1,\ldots,x_n]^{S_n}\) 由有限个元素 \(e_1,\ldots,e_n\) 生成，而且这些生成元之间没有非零多项式关系。其他群的不变环未必也有后一性质。接下来讨论的 Noether 性则要求一个环的每个理想有限生成，不能仅从上述特例直接推出。
 
 \subsection{Noether 环与升链条件}
 \label{b1:subsec:1204:02}
@@ -123,4 +259,11 @@ f-\sum_{j=1}^{r_n}b_jx^{d-n}f_{nj}
 这称为\term[hilbert-ji-dingli]{Hilbert 基定理}[Hilbert basis theorem]。证明没有假定 \(R\) 是整环：即使它有零因子，按固定次数收集系数仍然得到理想升链，最后的消项也只用加法和乘法。这一点使定理能用于很多商环。
 
 \ProseParagraphBreak
-特别地，域上的有限元多项式环中，每个理想都由有限个多项式生成。因此任意一族多项式方程所生成的理想，均可由有限个多项式生成；这些生成元各自又是原方程中有限项的组合，所以甚至可以从原方程族中选出有限多个，生成同一个理想。不过，这个存在性证明没有给出从任意输入有效寻找生成元的算法，也没有证明它们组成某种适于消去的标准形式。\appref{b1:app:F}将在\cref{b1:thm:F-buchberger-algorithm}中用这里的升链条件证明算法终止；它从给定有限生成组求出适于成员判定与消去的 Gröbner 基。第三卷第8章进一步讨论计算与几何应用，并在相应模论部分发展有限性条件。这里的 Hilbert 基定理是这些讨论的前提，不依赖后面的算法。
+上述证明为何要为稳定前的各个 \(J_n\) 分别选取多项式，可以从理想 \(I=(2x,x^2)\subseteq\mathbb Z[x]\) 看出。按证明中的定义，
+\[
+J_0=0,\qquad J_1=2\mathbb Z,\qquad J_n=\mathbb Z\quad(n\ge2).
+\]
+升链从 \(N=2\) 起稳定；可为 \(J_1\) 选 \(f_{11}=2x\)，为 \(J_2\) 选 \(f_{21}=x^2\)。稳定层的生成元 \(1\in J_2\) 虽可由 \(x^2\) 的首项系数代表，但 \(x^2\) 单独不能生成 \(2x\)，所以低次层的信息仍须保留。这里的“基”指理想的有限生成组，不要求生成元像自由模的基那样使系数表达唯一；例如 \(x(2x)-2(x^2)=0\) 就是这组生成元之间的一个非零关系。
+
+\ProseParagraphBreak
+特别地，域上有限个不定元的多项式环中，每个理想都由有限个多项式生成。因此任意一族多项式方程所生成的理想，均可由有限个多项式生成；这些生成元各自又是原方程中有限项的组合，所以甚至可以从原方程族中选出有限多个，生成同一个理想。不过，这个存在性证明没有给出从任意输入有效寻找生成元的算法，也没有证明它们组成某种适于消去的标准形式。\appref{b1:app:F}将在\cref{b1:thm:F-buchberger-algorithm}中用这里的升链条件证明算法终止；它从给定有限生成组求出适于成员判定与消去的 Gröbner 基。第三卷第8章进一步讨论计算与几何应用，并在相应模论部分发展有限性条件。这里的 Hilbert 基定理是这些讨论的前提，不依赖后面的算法。

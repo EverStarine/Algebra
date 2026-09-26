@@ -1,15 +1,240 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第22章*　不变量理论与商
-% 纲要位置：计划纲要.md，第 3765 行。
+% 纲要位置：工作记录/计划纲要.md，第 4429 行。
+% 本轮补充的纲要细目：
+% > 前四节以有限群为主，可在掌握本卷第一编与多项式基础后阅读；所需分次与有限性事实就地重述。后几节再使用第21章的代数群语言，不要求先通读全部李代数理论。
 
 \OptionalChapter{不变量理论与商}{b5:ch:22}
 \BookChapterNumber{b5:ch:22}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+群作用使许多看似不同的坐标数据代表同一个对象。不变量理论寻找在作用下保持不变的多项式，并研究由这些多项式构造的商。本章从有限群平均开始，证明有限生成、特征零的 Noether 次数界和 Molien 公式，再用消去与带权 Hilbert 级数求生成元的全部关系。对称多项式、矩阵共轭和向量配对给出三类经典实例；最后证明线性约化群的有限生成，并计算一个带有线性化的射影商。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 区分形式多项式、点集函数、轨道分离及轨道闭包。
+\item 证明有限群不变环有限生成，利用次数界找到生成集，并用 Molien 公式计算各次维数。
+\item 为具体不变环求出生成元和全部关系，保持正确的分次。
+\item 把 Schur--Weyl 对偶转化为配对不变量定理，理解协变式与相对不变量。
+\item 解释仿射商合并非闭轨道的方式，并辨认线性约化与几何约化的不同作用。
+\end{itemize}
+\end{learninggoals}
+
+前四节只需要有限群表示、多项式环和有限生成模的基本性质。第五节的配对定理使用\cref{b5:thm:schur-weyl}，不依赖最高权分类。后两节使用第21章的坐标环与有理余模；其中有限群商、矩阵闭轨道和线性约化有限生成在此证明，一般正特征约化群的有关结论引用文献中的结果。
+
+\ProseParagraphBreak
+计算不变环时，宜先确定作用与底域，再证明候选元生成整个不变环，最后求出它们之间的全部关系。本章也按这个次序进行，再讨论商的几何意义。关于极化、几何约化以及商的进一步背景，可参阅\cite[Sections 1.2, 3.4 and 6.1; Chapters 7--9]{Dolgachev2003InvariantTheory}。
 
 \input{Part04/Chapter22/Section2201}
 \input{Part04/Chapter22/Section2202}
 \input{Part04/Chapter22/Section2203}
 \input{Part04/Chapter22/Section2204}
+\input{Part04/Chapter22/Section2205}
+\input{Part04/Chapter22/Section2206}
+\input{Part04/Chapter22/Section2207}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+有限群的轨道多项式给出整性，Artin--Tate 引理再给出不变环的有限生成；这个论证在模特征也成立。群阶可逆时，Reynolds 投影能够改造系数；特征零的极化进一步将生成次数限制在群阶以内。Molien 公式计算各齐次分量的维数，但不能独自代替生成元与关系的证明。
+
+\ProseParagraphBreak
+消去把代入同态的核写成一个理想的交。候选关系给出保持分次的满射之后，Hilbert 级数相等才保证没有遗漏关系。循环作用的曲面、矩阵的特征多项式及向量与对偶向量的配对这几类算例，分别采用单项式、稠密性和张量中心化子的方法。
+
+\ProseParagraphBreak
+有限群商的几何纤维是轨道，一般代数群的商则可能合并多个轨道。矩阵共轭下，每个轨道闭包中有唯一半单轨道，不变量正好记住它。线性约化性使 Reynolds 投影推广到有理表示，并支持 Hilbert 的有限生成证明；正特征的一般约化群需要几何约化理论。射影商还依赖线性化和半稳定点的选择。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{optionalexercise}\label{b5:ex:22-coordinate-versus-points}
+在 \(\mathbb F_q[x]\) 中，令乘法群 \(\mathbb F_q^\times\) 通过 \(x\mapsto ax\) 作用。求形式多项式的不变环，并给出其中在所有 \(\mathbb F_q\) 点上取零的非零元。
+\end{optionalexercise}
+\begin{solution}
+单项式 \(x^d\) 不变当且仅当 \(q-1\mid d\)，因为 \(\mathbb F_q^\times\) 为循环群。因此不变环为 \(\mathbb F_q[x^{q-1}]\)。非零多项式 \(x^{q-1}(x^{q-1}-1)\) 在零点及每个非零点上都为零；在 \(q=2\) 时也得到 \(x(x-1)\)。所以评价到点集函数并非单射。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-sign-one-coordinate}
+设 \(\operatorname{char}k\ne2\)，\(s(x)=-x,s(y)=y\)。求 \(k[x,y]^{\langle s\rangle}\)，并写出 \(x^3+x^2y+xy^2+y^3\) 的 Reynolds 平均。
+\end{optionalexercise}
+\begin{solution}
+不变单项式恰有偶数的 \(x\) 指数，所以不变环为 \(k[x^2,y]\)；二者代数独立，因为其不同幂积给出不同单项式。平均删去奇数 \(x\) 指数项，结果为 \(x^2y+y^3\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-normal-invariants}
+设有限群 \(G\) 作用于交换 \(k\) 代数 \(A\)，且 \(N\trianglelefteq G\)。证明 \(A^N\) 上有良定的 \(G/N\) 作用，并证明 \((A^N)^{G/N}=A^G\)。
+\end{optionalexercise}
+\begin{solution}
+若 \(a\in A^N\)，则对 \(n\in N\) 有 \(n(ga)=g(g^{-1}ng)a=ga\)，故 \(ga\in A^N\)。代表元 \(gn\) 与 \(g\) 在 \(A^N\) 上相同，因此商群作用良定。一个 \(a\in A^N\) 被每个陪集固定，当且仅当被每个 \(g\in G\) 固定，这正给出所述等式。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-orbit-polynomial}
+设 \(C_3\) 循环置换 \(x,y,z\)。写出 \(x\) 的轨道多项式，并据此给出 \(k[x,y,z]\) 在不变环上的一组有限模生成元；说明该组未必最小。
+\end{optionalexercise}
+\begin{solution}
+轨道多项式为
+\[
+T^3-(x+y+z)T^2+(xy+yz+zx)T-xyz.
+\]
+三个变量都满足它，因此 \(x^ay^bz^c\)、\(0\le a,b,c<3\) 这 \(27\) 个元生成该模。首一关系保证可以逐次降低每个指数。这仅给上界；三元和等不变量还能产生额外线性关系，例如 \(z=(x+y+z)-x-y\)，所以不能据此声称模秩为 \(27\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-modular-affine}
+设 \(\operatorname{char}k=p>0\)，阶 \(p\) 群在 \(k[x]\) 上按 \(\sigma(x)=x+1\) 作用。求不变环。
+\end{optionalexercise}
+\begin{solution}
+令 \(z=x^p-x\)，则 \(\sigma(z)=z\)。每个多项式唯一写成 \(\sum_{i=0}^{p-1}a_i(z)x^i\)：首一关系给出存在，不同 \(i\) 的最高 \(x\) 次数模 \(p\) 不同给出唯一。若最大非零正指标为 \(i\)，差 \(\sigma(f)-f\) 的 \(x^{i-1}\) 基系数是 \(ia_i(z)\ne0\)，矛盾。因此 \(k[x]^{C_p}=k[z]\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-noether-sharp}
+在复数域上构造一个阶为 \(m\) 的有限群线性作用，使不变环不能由次数严格小于 \(m\) 的元生成。
+\end{optionalexercise}
+\begin{solution}
+取 \(C_m\) 在一维上由本原 \(m\) 次单位根作用。不变环为 \(\mathbb C[x^m]\)。所有小于 \(m\) 次的不变量都是常数，不能生成 \(x^m\)。因此统一的 Noether 上界在这族例子中达到。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-molien-scalar-three}
+让 \(C_2\) 在 \(\mathbb C^3\) 上同时变号。求 Hilbert 级数及次数 \(2r\) 的系数，并指出二次生成元有多少个。
+\end{optionalexercise}
+\begin{solution}
+Molien 公式给出
+\[
+H(t)=\frac12\Bigl((1-t)^{-3}+(1+t)^{-3}\Bigr)
+=\frac{1+3t^2}{(1-t^2)^3}.
+\]
+次数 \(2r\) 的系数为 \(\binom{2r+2}{2}\)，奇数次为零。二次单项式有六个。每个偶数次单项式可把其变量因子两两配对，故六个二次元确能生成；级数却不等于 \((1-t^2)^{-6}\)，说明它们有关系。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-molien-reflection}
+让 \(C_2\) 在 \(\mathbb C^2\) 上由 \(\operatorname{diag}(-1,1)\) 作用。用 Molien 公式求级数，并解释为什么它与同时变号作用不同。
+\end{optionalexercise}
+\begin{solution}
+结果为
+\[
+\frac12\biggl(\frac1{(1-t)^2}+\frac1{1-t^2}\biggr)
+=\frac1{(1-t)(1-t^2)}.
+\]
+它对应自由生成元 \(y,x^2\)，各次维数为 \(\lfloor d/2\rfloor+1\)。同时变号没有一次不变量且有二次元之间的关系；这两个作用虽来自同一个群，却不是同一个表示。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-cubic-cyclic}
+令 \(C_3\) 在 \(\mathbb C[x,y]\) 上作用为 \(x\mapsto\zeta x,y\mapsto\zeta^{-1}y\)。在次数六中列出一组不变量基，并与展示 \(uv=w^3\) 比较。
+\end{optionalexercise}
+\begin{solution}
+单项式 \(x^ay^{6-a}\) 的权为 \(2a-6\)，故 \(a=0,3,6\)。基为 \(y^6,x^3y^3,x^6\)。展示中它们分别为 \(v^2,w^3,u^2\)，而看似第四个的 \(uv\) 等于 \(w^3\)。带权次数分别为 \(\deg u=\deg v=3,\deg w=2\)，不能把 \(uv=w^3\) 当成通常三变量次数下的齐次关系。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-cusp-elimination}
+对同态 \(k[u,v]\to k[t]\)、\((u,v)\mapsto(t^2,t^3)\)，求核及像的 Hilbert 级数，取 \(\deg t=1\)。
+\end{optionalexercise}
+\begin{solution}
+关系为 \(v^2-u^3\)。模它后每个多项式形如 \(A(u)+vB(u)\)，其像分别含偶次幂 \(t^{2a}\) 和奇次幂 \(t^{2b+3}\)，互不相交且各自独立，故核就是该主理想。级数为
+\[
+\frac{1-t^6}{(1-t^2)(1-t^3)}
+=1+t^2+t^3+t^4+\cdots.
+\]
+消去计算求出了子代数 \(k[t^2,t^3]\) 的生成关系。要把它识别为某个群作用的不变环，还须给出该群作用并证明相应的不变性与生成性。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-equal-series-not-isomorphism}
+给出两个 Hilbert 级数相同但不同构的非负分次 \(k\) 代数，说明为什么不能省略\cref{b5:lem:hilbert-surjection-test}中的满射。
+\end{optionalexercise}
+\begin{solution}
+取 \(A=k[x,y]/(xy)\) 与 \(B=k[x,y]/(x^2)\)，变量次数一。两者级数均为 \((1-t^2)/(1-t)^2\)。但 \(A\) 约化：若多项式幂被 \(xy\) 整除，两个素元 \(x,y\) 都整除该多项式，故它本身被 \(xy\) 整除；而 \(B\) 中非零的 \(x\) 平方为零。因此两环不同构。若存在保持次数的满射，级数判别反而会迫使同构，说明本例中不存在这种满射。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-symmetric-reduction}
+在三个变量中把 \(x^2y^2+x^2z^2+y^2z^2\) 写成初等对称多项式，并由根为 \(1,2,3\) 的首一多项式的系数计算它在这组三根上的值。
+\end{optionalexercise}
+\begin{solution}
+展开 \(e_2^2\) 得
+\(x^2y^2+x^2z^2+y^2z^2+2xyz(x+y+z)\)，故所求为 \(e_2^2-2e_1e_3\)。根 \(1,2,3\) 给出 \(e_1=6,e_2=11,e_3=6\)，所以值为 \(121-72=49\)，也等于 \(4+9+36\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-signed-permutation}
+在特征不为二的域上，求独立变号及坐标互换生成的二维群的不变环和 Hilbert 级数。
+\end{optionalexercise}
+\begin{solution}
+先对变号取不变量得到 \(k[x^2,y^2]\)，再对互换取不变量得到 \(k[x^2+y^2,x^2y^2]\)。对称多项式基本定理说明两个生成元代数独立，次数为二、四，故级数为 \((1-t^2)^{-1}(1-t^4)^{-1}\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-newton-three}
+在特征零域上，用 \(p_i=\operatorname{tr}(A^i)\)、\(1\le i\le3\)，表示三阶矩阵的特征多项式系数。
+\end{optionalexercise}
+\begin{solution}
+Newton 递推依次给出
+\[
+c_1=p_1,\qquad c_2=\frac{p_1^2-p_2}{2},\qquad
+c_3=\frac{p_1^3-3p_1p_2+2p_3}{6}.
+\]
+因此特征多项式为 \(T^3-c_1T^2+c_2T-c_3\)。分母说明这个直接计算在特征二、三中不能照搬；系数 \(c_i\) 本身仍可由行列式定义。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-pairing-rank-one}
+设 \(k\) 为特征零域，\(V=k\)，取两个向量变量 \(a,b\) 及两个对偶变量 \(c,d\)。求 \(\operatorname{GL}(V)\) 作用下配对不变量的全部关系。
+\end{optionalexercise}
+\begin{solution}
+四个配对为 \(u=ac,v=bc,w=ad,z=bd\)，满足 \(uz-vw=0\)。由配对定理，它们生成全部不变环。消去 \(uz\) 后留下不同时含 \(u,z\) 的单项式。若两个这样的单项式有相同的 \(a,b,c,d\) 指数，其 \(u,v,w,z\) 指数差必为 \((r,-r,-r,r)\)；若 \(r>0\)，第一个同时含 \(u,z\)，若 \(r<0\)，第二个同时含 \(u,z\)，均矛盾。因此标准单项式的像互不相同，核就是 \((uz-vw)\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-unbalanced-polarization}
+设 \(k\) 特征零，\(V\ne0\)。证明 \(\operatorname{GL}(V)\) 在 \(V^{\oplus r}\) 上的多项式不变量只有常数，并说明为什么 \(\operatorname{SL}(V)\) 未必如此。
+\end{optionalexercise}
+\begin{solution}
+次数 \(d>0\) 的齐次函数在标量矩阵 \(tI\) 下使函数值乘以 \(t^d\)。无限域中可取 \(t^d\ne1\)，不变性迫使函数为零。若 \(\dim V=n\)、\(r\ge n\)，在 \(\operatorname{SL}(V)\) 下，前 \(n\) 个向量的行列式是非恒定不变量，因为左乘群矩阵只使它乘以行列式一。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-binary-quadratic}
+在特征零域上，计算 \(F=X^2+XY+Y^2\) 在 \(g=\operatorname{diag}(2,1)\) 下的新型及判别式，并核验相对不变因子。
+\end{optionalexercise}
+\begin{solution}
+在特征零域中，\(g\cdot F=\frac14X^2+\frac12XY+Y^2\)。原判别式为 \(-3\)，新判别式为 \(1/4-1=-3/4\)，恰等于 \((\det g)^{-2}(-3)\)。若把它误当作一般线性群不变量，两数就会发生矛盾。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-hessian-cubic}
+在特征零域上，计算 \(F=X^3+Y^3\) 与 \(F=X^3\) 的 Hessian，说明该构造如何辨认这两个型。
+\end{optionalexercise}
+\begin{solution}
+第一种的二阶导数矩阵为 \(\operatorname{diag}(6X,6Y)\)，Hessian 为 \(36XY\)；第二种矩阵为 \(\operatorname{diag}(6X,0)\)，Hessian 为零。因此在特征零时，协变性质说明二者不可能在 \(\operatorname{GL}_2\) 下互相变换，因为变换不能把零 Hessian 变为非零 Hessian。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-finite-quotient-real}
+令 \(C_2\) 在实直线上变号。写出实代数簇的商态射，并说明为什么它在实点上不满射，这是否与有限群商定理矛盾。
+\end{optionalexercise}
+\begin{solution}
+不变环为 \(\mathbb R[x^2]\)，商态射为 \(x\mapsto u=x^2\)。其在实点上的像为非负实数，遗漏负数。素谱态射仍满射，例如 \(u+1\) 上方有极大理想 \((x^2+1)\)，其剩余域为 \(\mathbb C\)；它不是实点。正文的 \(k\) 点满射结论假定 \(k\) 代数闭，因此没有矛盾。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-torus-weight-two}
+令 \(\mathbb G_m\) 在 \(k^2\) 上作用为 \(t\cdot(x,y)=(t^2x,t^{-1}y)\)，\(k\) 代数闭。求仿射不变环，描述非零商纤维及零纤维的轨道。
+\end{optionalexercise}
+\begin{solution}
+单项式不变当且仅当 \(2a-b=0\)，故不变环为 \(k[xy^2]\)。若 \(xy^2=c\ne0\)，取 \(t=y/y'\) 就把任意一点送到另一点，因为 \(x'=x(y/y')^2\)，所以非零纤维是一个轨道。零纤维是两坐标轴，分为原点及两条去原点的轴；在代数闭域中平方映射满射，故去原点的 \(x\) 轴也只有一个轨道。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-nilpotent-degeneration}
+设 \(k\) 为特征零的代数闭域。在 \(M_3(k)\) 中写出从大小三的幂零 Jordan 块到零矩阵的显式共轭退化，并说明秩为什么不能由这个作用下的多项式不变量给出。
+\end{optionalexercise}
+\begin{solution}
+取 \(D(t)=\operatorname{diag}(t^2,t,1)\)，则 \(D(t)J_3D(t)^{-1}=tJ_3\)。当 \(t\to0\) 的代数族取值为零，而 \(t\ne0\) 时都属于同一轨道。若秩由一个不变多项式给出，该多项式在所有 \(t\ne0\) 上为二，因而作为 \(t\) 的多项式在零处也应为二；实际零矩阵秩为零，矛盾。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-reynolds-ideal-contraction}
+设 \(G\) 线性约化，有理作用在有限生成交换代数 \(A\) 上，\(B=A^G\)。对理想 \(J\subseteq B\) 证明 \(JA\cap B=J\)。
+\end{optionalexercise}
+\begin{solution}
+包含 \(J\subseteq JA\cap B\) 显然。若 \(b\in JA\cap B\)，写 \(b=\sum_i j_i a_i\)，其中 \(j_i\in J\)。应用 \(B\) 线性的 Reynolds 投影得 \(b=\sum_i j_i\mathcal R_A(a_i)\in J\)，所以等号成立。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-positive-characteristic-splitting}
+在特征二的代数闭域上，将正文 \(\operatorname{SL}_2\) 表示 \(k[X,Y]_2\) 的不可分裂性写成一个三维矩阵计算。
+\end{optionalexercise}
+\begin{solution}
+取基 \(X^2,XY,Y^2\)，子模 \(U=\langle X^2,Y^2\rangle\)。对角元 \(\operatorname{diag}(t,t^{-1})\) 的权为 \(2,0,-2\)，因此任何稳定一维补空间都必须为 \(kXY\)。但上幺幂变换 \(Y\mapsto Y+X\) 将 \(XY\) 送到 \(XY+X^2\)，其矩阵的第二列含非零的第一分量，所以 \(kXY\) 不稳定。这里权 \(2\) 与权 \(-2\) 是不同的环面特征，不能因域的特征二而将它们当作相同。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:22-projective-twist}
+在 \(\mathbb P^1\) 上考虑 \(t\cdot[x:y]=[tx:y]\)。分别使用线性提升 \((x,y)\mapsto(tx,y)\) 和 \((x,y)\mapsto(x,t^{-1}y)\) 给出的 \(\mathcal O(1)\) 线性化，求半稳定集。
+\end{optionalexercise}
+\begin{solution}
+两个线性提升相差整体标量 \(t^{-1}\)，所以给出同一射影作用。第一个提升的不变多项式环为 \(k[y]\)，半稳定集为 \(y\ne0\)；第二个为 \(k[x]\)，半稳定集为 \(x\ne0\)。因此同一射影作用在不同线性化下，半稳定集确可不同；不能只由点上的群作用确定它。
+\end{solution}

@@ -1,14 +1,128 @@
 % !TeX root = ../../Book3.tex
-% 标题依据：计划纲要.md，附录 A 第 2 条要点。
+% 纲要标题：### A.2 数域整数环、判别式与理想分解
 
 \section{数域整数环、判别式与理想分解}
 \label{b3:sec:A02}
 
-% TODO: 按以下纲要要点撰写本节，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 数域整数环、判别式与理想分解的例题
 %
+% <!-- 短节：不设小节 -->
 
-待撰写。
+
+\begin{theorem}\label{b3:thm:integer-ideal-factorization}
+设 \(K\) 为数域，\(\mathcal O_K\) 为其代数整数环，\(R=\mathcal O_K\)。每个非零真理想 \(I\subset R\) 唯一写成
+\[
+I=\mathfrak p_1^{a_1}\cdots\mathfrak p_r^{a_r},
+\qquad a_i\ge1,
+\]
+其中 \(\mathfrak p_i\) 为互不相同的非零素理想。
+\end{theorem}
+\begin{proof}
+这是\cref{b3:thm:dedekind-factorization}对整数环的应用。为把指数与算术联系起来，先注意上一节的常数项论证说明 \(I\) 含有某个非零整数 \(c\)。因 \(R\) 是有限秩整数格，\(R/I\) 有限，故只有有限多个极大理想包含 \(I\)，记为 \(\mathfrak p_1,\ldots,\mathfrak p_r\)。指数由
+\[
+IR_{\mathfrak p_i}=(\mathfrak p_iR_{\mathfrak p_i})^{a_i}
+\]
+唯一确定。第10章已经证明，这些局部等式通过局部检测给出所列全局唯一分解。
+\end{proof}
+
+一般等价条件可查松村英之\cite[Theorem 11.6, pp. 82--84]{Matsumura1989CommutativeRingTheory}。此处使用第10章建立的理论，接下来计算它在数域中的具体数据。
+
+\begin{definition}\label{b3:def:integer-discriminant-norm}
+设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为 \(K\) 的代数整数环。若 \(\omega_1,\ldots,\omega_n\) 是 \(\mathcal O_K\) 的一组 \(\mathbb Z\)-基，则称之为一组\term[integralbasis]{整基}[integral basis]。整数
+\[
+d_K=\det\bigl(\operatorname{Tr}_{K/\mathbb Q}(\omega_i\omega_j)\bigr)
+\]
+称为 \(K\) 的判别式。对非零理想 \(I\subseteq\mathcal O_K\)，记
+\(N(I)=|\mathcal O_K/I|\)，称为 \(I\) 的\term[idealnorm]{理想范数}[ideal norm]。
+\end{definition}
+
+两组整基之间的变换矩阵行列式为 \(\pm1\)，迹矩阵的行列式乘以该行列式的平方，所以 \(d_K\) 与整基无关。更一般地，若子环 \(S\subseteq\mathcal O_K\) 也是秩 \(n\) 的整数格，则
+\[
+\operatorname{disc}(S)=[\mathcal O_K:S]^2d_K.
+\]
+这是整数矩阵的指数公式与迹矩阵的换基公式的直接结合。判别式可能带有来自子环指数的额外平方因子，不能在未检查整数环时就把它们全都解释为分歧。
+
+\begin{example}\label{b3:exm:quadratic-integer-ring}
+设 \(d\ne0,1\) 为平方自由整数，\(K=\mathbb Q(\sqrt d)\)。则
+\[
+\mathcal O_K=
+\begin{cases}
+\mathbb Z[(1+\sqrt d)/2],&d\equiv1\pmod4,\\
+\mathbb Z[\sqrt d],&d\equiv2,3\pmod4,
+\end{cases}
+\qquad
+d_K=
+\begin{cases}
+d,&d\equiv1\pmod4,\\
+4d,&d\equiv2,3\pmod4.
+\end{cases}
+\]
+为证明整数环公式，写一个整元素为 \(r+s\sqrt d\)。迹和范数给出
+\(a=2r\in\mathbb Z\) 以及 \(r^2-ds^2\in\mathbb Z\)。令 \(b=2s\in\mathbb Q\)，则 \(db^2\in\mathbb Z\)。若 \(b=u/v\) 为既约分数，便有 \(v^2\mid d\)，平方自由性迫使 \(v=1\)。于是
+\[
+a,b\in\mathbb Z,\qquad a^2-db^2\equiv0\pmod4.
+\]
+若 \(d\equiv2,3\pmod4\)，\(b\) 不可能为奇数，进而 \(a,b\) 都为偶数；若 \(d\equiv1\pmod4\)，条件等价于 \(a,b\) 同奇偶。反过来，这些条件使迹、范数均为整数，所以相应元素满足首一二次整系数方程。最后在所列整基中直接计算迹矩阵，即得判别式。
+\end{example}
+
+\begin{proposition}\label{b3:prop:prime-decomposition-degree}
+设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(p\) 为有理素数，并写
+\[
+p\mathcal O_K=\prod_{i=1}^r\mathfrak p_i^{e_i}.
+\]
+则 \(\mathcal O_K/\mathfrak p_i\) 是某个 \(\mathbb F_{p^{f_i}}\)，且
+\[
+\sum_{i=1}^r e_if_i=n,\qquad
+N(\mathfrak p_i^a)=p^{af_i}.
+\]
+称 \(e_i\) 为分歧指数，\(f_i\) 为剩余次数；若某个 \(e_i>1\)，则称 \(p\) 在 \(K\) 中分歧。
+\end{proposition}
+\begin{proof}
+每个剩余域是有限的 \(\mathbb F_p\)-扩张。对于固定的 \(\mathfrak p_i\)，模
+\(\mathfrak p_i^j/\mathfrak p_i^{j+1}\) 在其余极大理想处为零，在 \(\mathfrak p_i\) 处则由 DVR 的一个参数的 \(j\) 次幂生成，故它是剩余域上的一维空间。这给出范数公式。不同极大理想的幂两两互素，中国剩余定理及 \(R/pR\) 的 \(\mathbb F_p\)-维数 \(n\) 给出
+\[
+p^n=|R/pR|=\prod_i|R/\mathfrak p_i^{e_i}|=p^{\sum_i e_if_i}.
+\]
+\end{proof}
+
+\begin{proposition}\label{b3:prop:monogenic-prime-factorization}
+设 \(K=\mathbb Q(\theta)\)，\(\theta\) 为整元素，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(f\in\mathbb Z[T]\) 为 \(\theta\) 的最小多项式。设素数 \(p\) 不整除 \([\mathcal O_K:\mathbb Z[\theta]]\)，并在 \(\mathbb F_p[T]\) 中分解
+\[
+\overline f=\prod_{i=1}^r g_i^{e_i},
+\]
+其中 \(g_i\) 为互不相同的首一不可约多项式。取任意整系数提升 \(\widetilde g_i\)，则
+\[
+p\mathcal O_K=\prod_{i=1}^r
+\bigl(p,\widetilde g_i(\theta)\bigr)^{e_i},
+\]
+各括号内的理想为素理想，其剩余次数为 \(\deg g_i\)。
+\end{proposition}
+\begin{proof}
+令 \(S=\mathbb Z[\theta]\)、\(R=\mathcal O_K\)。有限群 \(R/S\) 的阶与 \(p\) 互素，乘以 \(p\) 在此群上是同构。因此 \(S\cap pR=pS\) 且 \(S+pR=R\)，给出
+\[
+R/pR\simeq S/pS\simeq\mathbb F_p[T]/(\overline f).
+\]
+右端的极大理想对应各 \(g_i\)，剩余域次数为 \(\deg g_i\)，故素理想正如所列。中国剩余定理把右端分成 \(\mathbb F_p[T]/(g_i^{e_i})\)；其在唯一极大理想处的合成长度为 \(e_i\)。另一方面，若 \(pR\) 在 \(\mathfrak p_i\) 处的赋值为 \(a_i\)，则 DVR 商 \(R_{\mathfrak p_i}/pR_{\mathfrak p_i}\) 的长度为 \(a_i\)。比较得 \(a_i=e_i\)。
+\end{proof}
+
+\begin{example}\label{b3:exm:quadratic-five-splitting}
+在 \(K=\mathbb Q(\sqrt5)\) 中取 \(\omega=(1+\sqrt5)/2\)，则
+\(\mathcal O_K=\mathbb Z[\omega]\)，最小多项式为 \(T^2-T-1\)。模 \(2\) 不可约，故 \(2\mathcal O_K\) 本身为素理想，剩余域为 \(\mathbb F_4\)。模 \(5\) 等于 \((T-3)^2\)，故
+\[
+5\mathcal O_K=(5,\omega-3)^2.
+\]
+模 \(11\) 的两个根为 \(4,8\)，所以
+\[
+11\mathcal O_K=(11,\omega-4)(11,\omega-8).
+\]
+三个素数分别展示不分裂、分歧和完全分裂。若改用 \(\mathbb Z[\sqrt5]\)，它的指数为 \(2\)、判别式为 \(20\)；模 \(2\) 的重因子不能用于以上判据，因为指数条件恰好在这里失败。
+\end{example}
+
+\begin{proposition}\label{b3:prop:discriminant-ramification}
+设 \(K\) 为数域，\(d_K\) 为其整数环 \(\mathcal O_K\) 的判别式，\(p\) 为有理素数。则 \(p\) 在 \(K\) 中分歧，当且仅当 \(p\mid d_K\)。
+\end{proposition}
+\begin{proof}
+整基使 \(R=\mathcal O_K\) 上的乘法矩阵约化为 \(R/pR\) 上的乘法矩阵。因此 \(d_K\) 模 \(p\) 是有限维 \(\mathbb F_p\)-代数 \(C=R/pR\) 的迹配对的行列式。
+若 \(C\) 有非零幂零元 \(a\)，则每个 \(ab\) 都幂零，乘法算子也幂零，故 \(\operatorname{Tr}(ab)=0\)；迹配对退化。若 \(C\) 约化，有限维交换约化代数为有限域扩张之积，而有限域上的有限扩张可分，各迹配对均非退化。因此配对非退化恰好等价于 \(C\) 约化。由理想分解及 DVR 中的商环计算，\(C\) 约化恰好等价于每个 \(e_i=1\)。
+\end{proof}

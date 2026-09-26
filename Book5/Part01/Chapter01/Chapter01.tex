@@ -1,16 +1,211 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第1章　表示、群代数与完全可约性
-% 纲要位置：计划纲要.md，第 3082 行。
+% 纲要位置：工作记录/计划纲要.md，第 3721 行。
+
 
 \chapter{表示、群代数与完全可约性}
 \label{b5:ch:01}
 \BookChapterNumber{b5:ch:01}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+表示把群元素变成可逆线性变换，群代数则把同一作用写成模结构。本章从置换、循环群及张量构造认识这些对象，以平均投影证明 Maschke 定理，并给出模特征下的反例。Schur 引理随后确定不可约表示之间的同态，区分代数闭域与一般域，建立等型分解及重数的唯一性。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 在群作用、矩阵及群代数模三种描述之间转换，正确核验同态与同构。
+\item 构造置换、正则、一维、对偶、张量及外幂表示。
+\item 用平均投影分解表示，指出群阶可逆性在证明中的作用。
+\item 将平均法用于各次齐次多项式，计算 Reynolds 算子及简单不变环。
+\item 用 Schur 引理判断交织空间，区分等型分量与所选的简单直和项。
+\end{itemize}
+\end{learninggoals}
+
+本章假定读者熟悉群、商群和有限维线性代数。模、张量及外代数只使用其基本构造，所需的群作用公式均在正文中给出。先从一个具体矩阵表示开始，再寻找不变子空间，往往比只记术语更能看清可约性与完全可约性的差别。
+
+\ProseParagraphBreak
+可参阅 Etingof 等人的《Introduction to Representation Theory》\cite[Proposition 2.3.9; Corollary 2.3.10; Section 4.1, pp. 59--61]{EtingofEtAl2011RepresentationTheory}。该书从一般代数的表示讲起，再讨论有限群；本章先讨论群作用，一般底域上分解所涉及的除代数条件另在使用处说明。
 
 \input{Part01/Chapter01/Section0101}
 \input{Part01/Chapter01/Section0102}
 \input{Part01/Chapter01/Section0103}
 \input{Part01/Chapter01/Section0104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+群代数把有限个群作用线性组合起来，表示与左模因而给出等价描述。置换和正则表示从群作用直接构造，对偶和张量则从已有表示产生新表示；每种构造都须保留正确的作用次序。
+
+\ProseParagraphBreak
+群阶可逆时，平均将普通投影改成不变投影，所有有限维表示完全可约。模特征中的增广映射不分裂，说明分解结论不能脱离特征条件。不可约与不可分解在这里也必须区分。
+
+\ProseParagraphBreak
+把平均逐次用于对称代数，就得到保持次数的 Reynolds 算子。它是到不变多项式的投影，并对不变子环线性；反射的例子说明这种投影一般不是环同态。生成元与关系的问题因此需要在平均之外继续研究。
+
+\ProseParagraphBreak
+Schur 引理控制不可约之间的同态，代数闭性进一步把自同态除代数化成标量。等型分量及其重数由表示本身确定，而同型成分内部的直和分解依赖选择。下一章将用迹与正交关系把这些重数变成可计算的数值。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:01-cyclic-diagonalization}
+设 \(k\) 中 \(m\) 可逆，且 \(T^m-1\) 在 \(k\) 上分裂。证明 \(C_m\) 的每个有限维 \(k\) 表示都能选基使全部作用矩阵同时对角，并用生成元的特征空间写出分解。
+\end{exercise}
+\begin{solution}
+生成元矩阵 \(A\) 满足 \(A^m=I\)。多项式 \(T^m-1\) 与导数 \(mT^{m-1}\) 互素，故分裂为互异一次因子。最小多项式也无重根，所以 \(V=\bigoplus_{\lambda^m=1}\ker(A-\lambda I)\)。群元素均为生成元的幂，在每个该特征空间上以 \(\lambda^j\) 作用；对各空间分别选基便得同时对角化。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-change-basis}
+在 \(\mathbb C^2\) 上令 \(C_2\) 生成元分别作用为 \(\operatorname{diag}(1,-1)\) 和 \(\begin{pmatrix}0&1\\1&0\end{pmatrix}\)。写出两表示之间的同构及全部交织算子。
+\end{exercise}
+\begin{solution}
+取 \(P=\begin{pmatrix}1&1\\1&-1\end{pmatrix}\)，有 \(BP=PA\)，且 \(\det P=-2\ne0\)，所以 \(P\) 给同构。任意交织 \(T\) 的第一列须属于 \(B\) 的一特征空间，第二列属于负一特征空间，故
+\[
+T=\begin{pmatrix}a&b\\a&-b\end{pmatrix}.
+\]
+它可逆恰好要求 \(ab\ne0\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-regular-hom}
+设 \(G\) 为有限群，\(k\) 为域，\(V\) 为有限维表示。证明评价 \(T\mapsto T(1)\) 给出 \(\operatorname{Hom}_G\Bigl(k[G],V\Bigr)\simeq V\)。不假设群阶可逆。
+\end{exercise}
+\begin{solution}
+交织条件给出 \(T(g)=gT(1)\)，再由线性性得到 \(T(a)=aT(1)\)，所以该评价单射。给定 \(v\in V\)，公式 \(a\mapsto av\) 定义左模同态，评价为 \(v\)，故满射。两构造都是线性的，且对 \(V\) 的表示同态相容。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-faithful-linear}
+证明有限群有忠实一维复表示，当且仅当它是循环群。
+\end{exercise}
+\begin{solution}
+忠实一维表示将群嵌入 \(\mathbb C^\times\)。设群阶为 \(m\)，每个像的 \(m\) 次方为一，故像是由 \(\exp(2\pi\mathrm i/m)\) 生成的循环群的子群，仍循环。反向将 \(C_m\) 的生成元送到这个本原单位根，得到忠实表示。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-permutation-hom-orbits}
+设有限群 \(G\) 作用于有限集合 \(X,Y\)。证明 \(\dim_k\operatorname{Hom}_G\Bigl(k[X],k[Y]\Bigr)\) 等于对角作用下 \(Y\times X\) 的轨道数，任意域均成立。计算 \(S_n\) 在自然 \(n\) 点置换表示上的自同态维数，其中 \(n\ge2\)。
+\end{exercise}
+\begin{solution}
+矩阵条目记为 \(a_{y,x}\)，交织条件恰为 \(a_{gy,gx}=a_{y,x}\)。每个轨道上可自由选一个常数，各轨道指示矩阵线性无关且生成全部交织算子，所以维数为轨道数。\(S_n\) 在有序点对上有对角与非对角两个轨道，故维数二；矩阵可写为 \(aI+bJ\)，其中 \(J\) 的全部条目为一。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-modular-simple}
+在 \(\mathbb F_2^3\) 中，设 \(S_3\) 置换三个坐标。证明和为零的二维子空间不可约，虽然底域特征整除 \(|S_3|\)。
+\end{exercise}
+\begin{solution}
+该子空间的非零向量为 \((1,1,0),(1,0,1),(0,1,1)\)，群在三者上传递。一个不变的一维子空间只有一个非零向量，若存在就要求该向量被全群固定，矛盾。因此此二维表示不可约。Maschke 条件失效只是说并非全部表示完全可约，不是说不可约表示不再存在。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-invariants-exact}
+设有限群 \(G\) 的阶在 \(k\) 中可逆。证明对短正合表示列 \(0\to U\to V\to W\to0\)，取不动空间后仍短正合。
+\end{exercise}
+\begin{solution}
+核及单射可以直接在原列中检验。对 \(w\in W^G\) 选任一提升 \(v\in V\)，平均 \(v_0=|G|^{-1}\sum_g gv\) 不动，且映到 \(|G|^{-1}\sum_g gw=w\)。因此右端满射。这个提升证明明确使用了群阶的逆元。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-double-dual}
+证明有限维表示的自然映射 \(V\to V^{**}\)、\(v\mapsto\Bigl(\varphi\mapsto\varphi(v)\Bigr)\)，是表示同构。说明对偶作用中的逆元如何保证等变性。
+\end{exercise}
+\begin{solution}
+有限维线性代数使评价映射双射。对 \(g\in G\)，双对偶中 \(g\) 作用于评价泛函的值为 \((g^{-1}\varphi)(v)=\varphi(gv)\)，正好是 \(gv\) 的评价。若在第一次对偶中漏掉逆元，复合的作用次序就不再是左群作用，此计算也无法保持给定的等变关系。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-coevaluation}
+设 \(V\) 为 \(d\) 维表示。证明 \(\sum_i v_i\otimes\varphi_i\in V\otimes V^*\) 与所选对偶基无关且为不动向量；评价 \(v\otimes\varphi\mapsto\varphi(v)\) 将它送到什么？当 \(\operatorname{char}k\mid d\) 时，这一复合为什么不能给出平凡表示的分裂？
+\end{exercise}
+\begin{solution}
+在\cref{b5:prop:hom-tensor-invariants}的自然识别下，这个张量对应恒等算子，因此与基无关且不动。评价等于算子的迹，所以值为 \(d\cdot1_k\)。若该值为零，则从 \(k\) 送入这个不动向量、再评价回 \(k\) 的复合为零，不能是恒等映射。这里仅否定这对具体映射构成分裂，不排除使用其他映射得到补空间。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-exterior-dual}
+对 \(d\ge1\) 的 \(d\) 维 \(k\) 表示 \(V\)，证明自然同构
+\[
+\Lambda^{d-1}V\simeq V^*\otimes\Lambda^dV
+\]
+与群作用相容。
+\end{exercise}
+\begin{solution}
+将 \(u\in\Lambda^{d-1}V\) 送到 \(v\mapsto v\wedge u\) 的线性映射，得到 \(\Lambda^{d-1}V\to\operatorname{Hom}_k(V,\Lambda^dV)\)。在一组基下，删去第 \(i\) 个基向量的楔积映为带符号的第 \(i\) 个对偶基乘最高楔积，因此双射，任意特征均成立。群作用保持楔积，故映射等变；再用有限维 Hom 与张量的自然识别即得所述同构。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-cyclic-modular-regular}
+设 \(k\) 特征为 \(p\)，\(G=C_p\)。证明 \(k[G]\simeq k[t]/(t^p)\)，并求正则表示的全部子表示。它是否不可分解？
+\end{exercise}
+\begin{solution}
+把 \(t\) 送到 \(r-1\)，由 \((r-1)^p=r^p-1=0\) 得满同态；两侧维数 \(p\)，故同构。子表示就是理想。任一非零理想中取最低非零次数最小的元素 \(t^j u\)，其中 \(u\) 常数项非零，因有限等比求逆而可逆，所以理想含 \(t^j\)，而其他元素都为它的倍数。故全部子表示为 \((t^j)\)、\(0\le j\le p\)。这些子模成一条链，任意两个非零子模有非零交，因此正则表示不可分解；当 \(p>1\) 时它却不是不可约。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-augmentation-idempotent}
+设 \(|G|\) 在 \(k\) 中可逆，\(e=|G|^{-1}\sum_g g\)。证明 \(e\) 为中心幂等元，\(\ker\varepsilon=k[G](1-e)\)，并写出群代数的直和分解。
+\end{exercise}
+\begin{solution}
+左右乘群元素都固定群元素之和，且 \(e^2=e\)，所以 \(e\) 中心。对任意 \(a\)，有 \(ae=\varepsilon(a)e\)。若 \(\varepsilon(a)=0\)，则 \(a=a(1-e)\)；反向 \(\varepsilon(1-e)=0\)，得核等式。因此
+\[
+k[G]=ke\oplus k[G](1-e).
+\]
+第一项为平凡表示，第二项为增广理想；正交幂等元同时给出代数直积分解。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-finite-field-schur}
+在 \(\mathbb F_3^2\) 上令 \(C_4\) 生成元作用为 \(A=\begin{pmatrix}0&-1\\1&0\end{pmatrix}\)。证明此表示不可约，并计算自同态环。
+\end{exercise}
+\begin{solution}
+\(A^2=-I,A^4=I\)。多项式 \(T^2+1\) 在 \(\mathbb F_3\) 无根，所以 \(A\) 没有不变直线，表示不可约。解矩阵交换方程得到全部自同态为 \(aI+bA\)。于是
+\[
+\operatorname{End}_{C_4}(V)\simeq\mathbb F_3[T]/(T^2+1),
+\]
+是九元域。这个除代数比标量域大，正好显示 Schur 标量结论需要代数闭性。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-isotypic-diagonal}
+设 \(S\) 为有限群 \(G\) 的不可约复表示。分类 \(S\oplus S\) 的不可约子表示，说明为什么两个坐标子空间并非唯一的简单直和项。
+\end{exercise}
+\begin{solution}
+任意不可约子表示至少有一个非零坐标投影，故由 Schur 引理同构于 \(S\)。其嵌入由一对标量 \((a,b)\ne(0,0)\) 给出，即 \(v\mapsto(av,bv)\)。两对标量给同一个像，当且仅当相差一个共同非零倍数，所以这些子表示由射影直线 \(\mathbb P^1(\mathbb C)\) 参数化。两条不同参数对应的子表示交为零，维数相加为 \(2\dim S\)，从而给出许多不同的直和分解。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-center-faithful}
+设有限群 \(G\) 有忠实不可约复表示。证明 \(Z(G)\) 循环。
+\end{exercise}
+\begin{solution}
+中心元素的作用与全群作用交换，故由 Schur 引理都是标量。忠实性使中心到这些非零标量的同态单射。因此中心同构于 \(\mathbb C^\times\) 的有限子群，由\cref{b5:ex:01-faithful-linear}的单位根论证为循环群。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-invariant-hermitian}
+设 \(V\) 为不可约复表示。证明两种不变正定 Hermitian 内积仅相差一个正实数倍。
+\end{exercise}
+\begin{solution}
+固定第一种内积，存在唯一线性算子 \(A\)，使第二种写成 \((v,Aw)_1\)。两内积均不变，故 \(A\) 与群作用交换；Schur 引理使 \(A=cI\)。在任意非零向量上比较两个正实范数平方，得到 \(c>0\)。因此两内积相差正实数倍。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-tensor-weights}
+设 \(C_5=\langle r\rangle\)，\(\zeta\) 为本原五次单位根。若 \(V\) 的生成元矩阵为 \(\operatorname{diag}(\zeta,\zeta^{-1})\)，分解 \(V\otimes V\)、\(\Lambda^2V\) 及 \(V^*\)。
+\end{exercise}
+\begin{solution}
+取特征基 \(v_+,v_-\)，张量基的权分别为 \(\zeta^2,1,1,\zeta^{-2}\)。因此 \(V\otimes V=\lambda_2\oplus1^{\oplus2}\oplus\lambda_{-2}\)。最高楔积的权为一，所以 \(\Lambda^2V\) 平凡。对偶的两个权互换，故 \(V^*\simeq V\)。这些分解来自具体权空间，不以维数吻合代替同构。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-polynomial-average}
+设 \(\zeta\in\mathbb C\) 为本原三次单位根，\(G=C_3=\langle s\rangle\) 在 \(V=\mathbb C^2\) 上的生成元矩阵为 \(\operatorname{diag}(\zeta,\zeta^{-1})\)。以 \(x,y\) 为对偶坐标，对整数 \(a,b\ge0\) 计算 \(\mathcal R(x^ay^b)\)，并求全次数 \(0\le d\le4\) 的不变齐次多项式空间的基。另将全部二次齐次多项式组成的表示分解为一维表示。
+\end{exercise}
+\begin{solution}
+对偶作用为 \(s(x)=\zeta^{-1}x\)、\(s(y)=\zeta y\)，所以
+\[
+\mathcal R(x^ay^b)=
+\frac{1+\zeta^{b-a}+\zeta^{2(b-a)}}3\,x^ay^b
+=
+\begin{cases}
+x^ay^b,&a\equiv b\pmod3,\\
+0,&a\not\equiv b\pmod3.
+\end{cases}
+\]
+后一情形用到三次单位根之和 \(1+\zeta+\zeta^2=0\)。单项式是各齐次部分的基，且均为特征向量，因而按同余条件选出的单项式给出不动空间的全部基。次数依次为零至四时，可以取
+\[
+\{1\},\qquad \varnothing,\qquad \{xy\},\qquad
+\{x^3,y^3\},\qquad \{x^2y^2\}.
+\]
+全部二次多项式以 \(x^2,xy,y^2\) 为基，生成元在这三个向量上的特征值依次为 \(\zeta,1,\zeta^2\)。因此它是三个不同一维表示的直和，不动项恰为 \(\mathbb Cxy\)。这些有限次数的计算尚未单独证明整个不变环的生成定理。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:01-cyclic-unipotent}
+设 \(k\) 特征为 \(p\)，\(1\le d\le p\)，\(N\) 为一个 \(d\) 阶幂零 Jordan 块。证明 \(r\mapsto I+N\) 给出 \(C_p\) 的不可分解表示，并求其不动空间维数。
+\end{exercise}
+\begin{solution}
+\((I+N)^p=I+N^p=I\)，所以群关系成立。不动空间是 \(\ker N\)，维数一。若表示是两个非零子表示的直和，\(N\) 在每一项上幂零，故每项都有非零核，两核直和会使 \(\dim\ker N\ge2\)，矛盾。因此不可分解；\(d=1\) 时还不可约，\(d>1\) 时有真子表示 \(\ker N\)。
+\end{solution}

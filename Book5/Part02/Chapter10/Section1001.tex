@@ -1,42 +1,157 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 10.1 Euler 型与维数向量
-% 纲要位置：计划纲要.md，第 3399 行。
-
-\section{Euler 型与维数向量}
-\label{b5:sec:1001}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4050 行。
 % * 箭图的 Euler 双线性型
 % * Hom、Ext 与维数向量
 % * 二次型的正定性
 % * 从有限无环箭图定义 \(q_Q(\mathbf d)=\sum_i d_i^2-\sum_{a:i\to j}d_id_j\)，独立处理其正定性与 ADE 图的关系
 % * 在顶点整数格上定义简单反射和正根，证明本章需要的基本性质；与第17章根系的对应在构造后说明，不预设全部半单李代数理论
-%
+\section{Euler 型与维数向量}
+\label{b5:sec:1001}
+
+同一组顶点空间可以承载许多不同的箭映射。维数向量遗忘了这些映射，却仍能限制自同态和扩张的大小。本节从这个限制出发，把有限分类的问题化为一个实二次型的问题。这里的正定性始终指实数上的正定性，与表示的基域是否有序无关。
 
 \subsection{箭图的 Euler 双线性型}
 \label{b5:subsec:1001:01}
 
-待撰写。
+\begin{definition}\label{b5:def:quiver-euler-form}
+设 \(Q=(Q_0,Q_1,s,t)\) 为有限无有向环箭图，\(Q_0=\{1,\ldots,n\}\)，其中 \(s,t\) 为箭的起点、终点映射。对 \(\mathbf x=(x_i)\)、\(\mathbf y=(y_i)\in\mathbb Z^{Q_0}\)，定义
+\[
+\langle\mathbf x,\mathbf y\rangle_Q
+=\sum_{i\in Q_0}x_i y_i-\sum_{a:i\to j}x_i y_j.
+\]
+这一双线性型称为 \(Q\) 的\term{Euler 型}[Euler form]。它的二次型及对称化分别记为
+\begin{equation}\label{b5:eq:quiver-tits-form}
+\begin{aligned}
+q_Q(\mathbf x)&=\sum_i x_i^2-\sum_{a:i\to j}x_i x_j,\\
+B_Q(\mathbf x,\mathbf y)&=\langle\mathbf x,\mathbf y\rangle_Q+
+\langle\mathbf y,\mathbf x\rangle_Q.
+\end{aligned}
+\end{equation}
+二次型 \(q_Q\) 也称为\term{Tits 型}[Tits form]。上述公式同时把它们延拓到实向量空间 \(\mathbb R^{Q_0}\)。
+\end{definition}
+
+箭的方向影响 Euler 型，但不影响 \(q_Q\) 或 \(B_Q\)。把方向忘掉而保留每条边的重数，所得无向图记为 \(\Gamma\)。若 \(m_{ij}\) 为顶点 \(i,j\) 间的边数，则 \(B_Q\) 的矩阵为 \(C=(c_{ij})\)，其中
+\[
+c_{ii}=2,\qquad c_{ij}=-m_{ij}\quad(i\neq j),\qquad
+B_Q(\mathbf x,\mathbf x)=2q_Q(\mathbf x).
+\]
+本章不允许环，但允许平行箭；无向圈与有向圈是两种不同条件。
 
 \subsection{Hom、Ext 与维数向量}
 \label{b5:subsec:1001:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:quiver-euler-hom-ext}
+设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(V,W\) 为 \(Q\) 的有限维 \(k\)-表示，维数向量分别为 \(\mathbf d,\mathbf e\)。记 \(\langle\ ,\ \rangle_Q\) 为箭图的 Euler 型，\(q_Q(\mathbf x)=\langle\mathbf x,\mathbf x\rangle_Q\)，将两表示视作左 \(kQ\)-模，则
+\begin{equation}\label{b5:eq:quiver-euler-hom-ext}
+\langle\mathbf d,\mathbf e\rangle_Q
+=\dim_k\operatorname{Hom}_Q(V,W)
+-\dim_k\operatorname{Ext}^1_{kQ}(V,W).
+\end{equation}
+特别地，\(q_Q(\mathbf d)=\dim_k\operatorname{End}_Q(V)-
+\dim_k\operatorname{Ext}^1_{kQ}(V,V)\)。
+\end{proposition}
+\begin{proof}
+\cref{b5:thm:quiver-hom-ext-euler}给出的正合列是
+\[
+\begin{aligned}
+0\longrightarrow\operatorname{Hom}_Q(V,W)
+&\longrightarrow\bigoplus_i\operatorname{Hom}_k(V_i,W_i)\\
+&\longrightarrow\bigoplus_{a:i\to j}\operatorname{Hom}_k(V_i,W_j)
+\longrightarrow\operatorname{Ext}^1_{kQ}(V,W)\longrightarrow0.
+\end{aligned}
+\]
+它适用于当前的有限无环箭图和有限维表示。对有限维正合列取维数交错和，两个中间项的维数分别为 \(\sum_i d_i e_i\) 与 \(\sum_{a:i\to j}d_i e_j\)，即得公式。再令 \(W=V\)。
+\end{proof}
+
+例如，对 \(1\to2\)，令 \(V\) 为 \(k\xrightarrow{1}k\)，则自同态为两端相同的标量，故 \(\dim\operatorname{End}_Q(V)=1\)。因为 \(q_Q(1,1)=1\)，公式给出 \(\operatorname{Ext}^1_{kQ}(V,V)=0\)。若把箭映射换成零，同一维数向量上的表示成为 \(S_1\oplus S_2\)，自同态空间维数增为 \(2\)，自扩张空间的维数也增为 \(1\)。因此 \(q_Q(\mathbf d)=1\) 并不表示维数为 \(\mathbf d\) 的每个表示都不可分解。
 
 \subsection{二次型的正定性}
 \label{b5:subsec:1001:03}
 
-待撰写。
+\begin{definition}\label{b5:def:positive-quiver-form}
+设 \(Q\) 为有限无有向环箭图，\(q_Q(\mathbf x)=\sum_{i\in Q_0}x_i^2-\sum_{a:i\to j}x_ix_j\) 为其实二次型。若对每个非零 \(\mathbf x\in\mathbb R^{Q_0}\) 都有 \(q_Q(\mathbf x)>0\)，则称 \(q_Q\) 为\term{正定二次型}[positive definite quadratic form]。
+\end{definition}
+
+对一条有 \(n\) 个顶点的无向链，二次型为
+\begin{equation}\label{b5:eq:chain-positive-form}
+q(\mathbf x)=\frac12\Bigl(x_1^2+x_n^2+
+\sum_{i=1}^{n-1}(x_i-x_{i+1})^2\Bigr).
+\end{equation}
+若右端为零，则首项和全部相邻差都为零，故 \(\mathbf x=0\)。所以任何定向的链都给出正定型。这个配方也适用于 \(n=1\)，此时首尾两项都是 \(x_1^2\)。
+
+\ProseParagraphBreak
+
+相反，若无向图含有一个圈，在圈的顶点上赋值 \(1\)，其余顶点上赋值 \(0\)，便有 \(q(\mathbf x)\leq0\)：圈上的顶点数和边数相等，可能存在的弦只会继续减小二次型。这个例子提示我们，有限分类所容许的图必须相当稀疏。
 
 \subsection{有限无环箭图的二次型与 ADE 图}
 \label{b5:subsec:1001:04}
 
-待撰写。
+本章用图形本身定义 ADE 名称。\(A_n\) 是有 \(n\geq1\) 个顶点的链；\(D_n\) 是有一个三叉顶点、三个臂长分别为 \(1,1,n-3\) 的树，其中 \(n\geq4\)；\(E_6,E_7,E_8\) 的三个臂长依次为 \((1,2,2)\)、\((1,2,3)\)、\((1,2,4)\)。臂长计中心以外的顶点数。它们统称本章的\term{Dynkin 图}[Dynkin diagram]，也称 ADE 图；这里没有使用李代数的分类结果。
+
+\begin{theorem}[正定型的图判别]\label{b5:thm:ade-positive-form}
+设 \(Q\) 为有限无有向环箭图，\(\Gamma\) 为保留边重数的无向基础图，\(q_Q(\mathbf x)=\sum_{i\in Q_0}x_i^2-\sum_{a:i\to j}x_ix_j\)。则实二次型 \(q_Q\) 正定，当且仅当 \(\Gamma\) 的每个连通分支都是 ADE 图。若这一条件不成立，则存在非零 \(\mathbf d\in\mathbb Z_{\geq0}^{Q_0}\)，使 \(q_Q(\mathbf d)\leq0\)。
+\end{theorem}
+\begin{proof}
+不同连通分支的变量不相交，二次型是各分支二次型之和，因而只需处理连通图。我们先排除四类子图。所取向量在子图之外均赋值零；子图顶点间若还有额外边，其贡献非正，不会破坏所得不等式。
+
+若两顶点间有 \(m\geq2\) 条边，在这两点赋值 \(1\)，得到 \(q=2-m\leq0\)。若有无向圈，取上一小节的全 \(1\) 向量。所以正定图必须是没有重边的树。若一顶点至少连接四个邻点，在该顶点赋值 \(2\)，在四个邻点赋值 \(1\)，则 \(q=4+4-8=0\)。最后，若树有两个三叉顶点，取连接它们的简单路径；路径上各点赋值 \(2\)，再在两端各选两个不在路径上的邻点赋值 \(1\)。树的性质使这四个邻点互不相同，且没有额外相连的边。设路径上有 \(l\) 个顶点，则
+\[
+q=4l+4-4(l-1)-8=0.
+\]
+因此尚可能正定的图只有链和恰有一个三叉点的树。
+
+链的正定性由\eqref{b5:eq:chain-positive-form}成立。设三叉树三个臂长为 \(p-1,q-1,r-1\)，按 \(2\leq p\leq q\leq r\) 排列。中心值记为 \(t\)。对长度为 \(p-1\) 的臂，补记 \(x_0=t,x_p=0\)，并令
+\[
+z_j=x_j-\left(1-\frac jp\right)t\qquad(0\leq j\leq p).
+\]
+两端有 \(z_0=z_p=0\)。对三条臂分别作此代换，展开相邻差的平方并用 \(\sum_{j=0}^{p-1}(z_j-z_{j+1})=0\)，得到
+\begin{equation}\label{b5:eq:three-arm-square-completion}
+q_Q(\mathbf x)=\frac12\sum_{\text{三个臂}}\sum_{j=0}^{p-1}
+(z_j-z_{j+1})^2
++\frac12\left(\frac1p+\frac1q+\frac1r-1\right)t^2.
+\end{equation}
+第一个和式中每条臂的上界采用该臂自己的参数。当 \(1/p+1/q+1/r>1\) 时，等号为零强迫 \(t=0\)，继而每条臂的全部 \(z_j=0\)，所以二次型正定。当这个和不大于 \(1\) 时，取 \(t\) 为 \(p,q,r\) 的正公倍数，并令每条臂上 \(x_j=(1-j/p)t\)，便得到一个非负整数向量，其二次型不大于零。
+
+还须解出严格不等式。若 \(p\geq3\)，三个倒数之和至多为 \(1\)，故 \(p=2\)。若 \(q=2\)，所有 \(r\geq2\) 都可行，给出 \(D_{r+2}\)。若 \(q\geq4\)，则和至多为 \(1/2+1/4+1/4=1\)；剩下 \(q=3\)，而 \(1/r>1/6\) 恰好给出 \(r=3,4,5\)，分别为 \(E_6,E_7,E_8\)。这证明了正定判别，也在所有被排除的情形构造了所需整数向量。
+\end{proof}
 
 \subsection{整数格上的简单反射与正根}
 \label{b5:subsec:1001:05}
 
-待撰写。
+\begin{definition}\label{b5:def:quiver-roots-reflections}
+设 \(\Gamma\) 为有限 ADE 图的不交并，顶点集为 \(\Gamma_0\)，\(m_{ij}\) 为顶点 \(i,j\) 间的边数。在 \(\mathbb Z^{\Gamma_0}\) 上令 \(q(\mathbf x)=\sum_i x_i^2-\sum_{\{i,j\}\text{ 为边}}x_ix_j\)，\(B(\mathbf x,\mathbf y)=q(\mathbf x+\mathbf y)-q(\mathbf x)-q(\mathbf y)\)。整数向量 \(\boldsymbol\alpha\in\mathbb Z^{\Gamma_0}\) 满足 \(q(\boldsymbol\alpha)=1\) 时，称为一个\term{根}[root]；所有坐标非负的根称为\term{正根}[positive root]。标准基向量 \(\mathbf e_i\) 称为\term{简单根}[simple root]。对顶点 \(i\in\Gamma_0\)，定义
+\begin{equation}\label{b5:eq:quiver-simple-reflection}
+s_i(\mathbf x)=\mathbf x-B(\mathbf x,\mathbf e_i)\mathbf e_i,
+\qquad
+(s_i\mathbf x)_i=-x_i+\sum_j m_{ij}x_j,
+\end{equation}
+其余坐标保持不变；线性变换 \(s_i\) 称为顶点 \(i\) 的\term{简单反射}[simple reflection]。
+\end{definition}
+
+\begin{lemma}\label{b5:lem:positive-root-reflection}
+设 \(\Gamma\) 为有限 ADE 图的不交并，在顶点整数格上令 \(q(\mathbf x)=\sum_i x_i^2-\sum_{\{i,j\}\text{ 为边}}x_ix_j\)，\(B(\mathbf x,\mathbf y)=q(\mathbf x+\mathbf y)-q(\mathbf x)-q(\mathbf y)\)，\(\mathbf e_i\) 为标准基向量，\(s_i(\mathbf x)=\mathbf x-B(\mathbf x,\mathbf e_i)\mathbf e_i\)。以 \(q=1\) 的整数向量为根、非负根为正根，则有下列性质。
+\begin{enumerate}
+\item 根的集合有限；每个根或者是正根，或者是一个正根的负数。
+\item \(s_i^2=1\)，且 \(s_i\) 保持 \(q\) 及整数格。若 \(\boldsymbol\alpha\) 为正根且不等于 \(\mathbf e_i\)，则 \(s_i\boldsymbol\alpha\) 仍为正根；\(s_i\mathbf e_i=-\mathbf e_i\)。
+\item 每个非简单正根都可经某个简单反射变成坐标和较小的正根。因此每个根都可由简单根经有限次简单反射得到。
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+正定性给出常数 \(c>0\)，使 \(q(\mathbf x)\geq c\sum_i x_i^2\)：可在欧氏单位球面上取 \(q\) 的正最小值。因此 \(q=1\) 的整数向量只有有限多个。将任意整数向量写为 \(\mathbf u-\mathbf v\)，其中 \(\mathbf u,\mathbf v\) 非负且支集不交。由于 \(B\) 的非对角元非正，有 \(B(\mathbf u,\mathbf v)\leq0\)。若两者都非零，正定性和整数性给出
+\[
+q(\mathbf u-\mathbf v)=q(\mathbf u)+q(\mathbf v)-B(\mathbf u,\mathbf v)\geq2.
+\]
+所以根不能同时有正、负坐标。
+
+由 \(B(\mathbf e_i,\mathbf e_i)=2\)，代入反射公式即得 \(s_i^2=1\) 和 \(q(s_i\mathbf x)=q(\mathbf x)\)；系数均为整数。反射只改变第 \(i\) 个坐标。若一个正根反射后为负根，它原先在其他坐标必全为零，故由 \(q=1\) 得原根为 \(\mathbf e_i\)。这也证明了第二项中的正性断言。
+
+最后，对正根 \(\boldsymbol\alpha\)，有
+\[
+\sum_i\alpha_i B(\boldsymbol\alpha,\mathbf e_i)
+=B(\boldsymbol\alpha,\boldsymbol\alpha)=2.
+\]
+故某个 \(\alpha_i>0\) 的位置满足 \(B(\boldsymbol\alpha,\mathbf e_i)>0\)。若根非简单，第二项保证 \(s_i\boldsymbol\alpha\) 为正根，而其坐标和减少这个正整数。反复进行，正整数的坐标和最终不能再减少，终点只能是简单根。反向使用同一组反射即得最后的断言；负根先由 \(s_i\mathbf e_i=-\mathbf e_i\) 处理。
+\end{proof}
+
+这些根暂时只是整数格中的向量。它们与不可分解表示的对应将在\secref{b5:sec:1003}证明；以后李代数中也会出现相同的 ADE 图，但本章不以那里的理论作为前提。根与反射的这套构造可对照\cite[Section 6.4, pp. 160--163]{EtingofEtAl2011RepresentationTheory}。

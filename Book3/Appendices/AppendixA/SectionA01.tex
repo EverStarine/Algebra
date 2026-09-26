@@ -1,14 +1,67 @@
 % !TeX root = ../../Book3.tex
-% 标题依据：计划纲要.md，附录 A 第 1 条要点。
+% 纲要标题：### A.1 整闭包的算术意义
 
 \section{整闭包的算术意义}
 \label{b3:sec:A01}
 
-% TODO: 按以下纲要要点撰写本节，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 有限扩张中整闭包的算术意义
 %
+% <!-- 短节：不设小节 -->
 
-待撰写。
+
+有理整数的整除问题进入数域以后，首先需要确定哪些元素应当算作这个域中的整数。只取某个生成元的整数多项式往往不够。例如在 \(\mathbb Q(\sqrt5)\) 中，\(\sqrt5\) 是整的，\((1+\sqrt5)/2\) 也满足首一整系数方程；环 \(\mathbb Z[\sqrt5]\) 却没有包含后一个元素。整闭包使这个选择不再依赖生成元。
+
+\ProseParagraphBreak
+沿用\cref{b3:def:number-field-integers}，数域是有限扩张 \(K/\mathbb Q\)，它的整数环为
+\[
+\mathcal O_K=\{a\in K:a\text{ 在 }\mathbb Z\text{ 上整}\}.
+\]
+整数环的 Dedekind 性已在\cref{b3:thm:number-integers-dedekind}证明。本节补出一个便于算术计算的迹矩阵证明，给所有整数的分母作出统一估计。
+
+\ProseParagraphBreak
+由\cref{b3:prop:integral-closure-ring}，这个集合确实是子环。这里的“整数”不要求实数意义下的大小或正负；它表达的是首一多项式关系。
+
+\begin{lemma}\label{b3:lem:number-field-clear-denominators}
+设 \(K/\mathbb Q\) 为有限扩张，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(a\in K\)。存在非零整数 \(d\)，使 \(da\in\mathcal O_K\)。特别地，\(\operatorname{Frac}(\mathcal O_K)=K\)。
+\end{lemma}
+\begin{proof}
+写 \(a^r+c_1a^{r-1}+\cdots+c_r=0\)，其中 \(c_i\in\mathbb Q\)。取正整数 \(d\) 使每个 \(dc_i\) 都为整数，则
+\[
+(da)^r+(dc_1)(da)^{r-1}+(d^2c_2)(da)^{r-2}+\cdots+d^rc_r=0
+\]
+是首一整系数关系。最后 \(a=(da)/d\)，即得分式域的结论。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:number-field-integral-lattice}
+设 \(K/\mathbb Q\) 为次数 \(n\) 的扩张，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(\beta_1,\ldots,\beta_n\) 为由整元素组成的 \(\mathbb Q\)-基，\(L=\sum_i\mathbb Z\beta_i\)。令
+\(D=\det(\operatorname{Tr}_{K/\mathbb Q}(\beta_i\beta_j))\)。
+则 \(D\in\mathbb Z\setminus\{0\}\)，且
+\[
+L\subseteq\mathcal O_K\subseteq D^{-1}L.
+\]
+特别地，\(\mathcal O_K\) 是秩 \(n\) 的自由 \(\mathbb Z\)-模，也是一维 Noether 整闭整环。
+\end{theorem}
+\begin{proof}
+这样的整元素基可由任意有理基分别清分母得到。若 \(u\in\mathcal O_K\)，其最小多项式属于 \(\mathbb Z[T]\)：共轭根都整，所以系数是有理的整元素，因而是整数。于是
+\(\operatorname{Tr}_{K/\mathbb Q}(u)\in\mathbb Z\)，因为这个迹是最小多项式中次高项系数的一个整数倍。
+
+特征零扩张可分，其迹配对非退化，见第一卷定理18.3.3。故整数矩阵
+\[
+T=\bigl(\operatorname{Tr}_{K/\mathbb Q}(\beta_i\beta_j)\bigr)_{i,j}
+\]
+的行列式 \(D\) 非零。对任意 \(u=\sum_jc_j\beta_j\in\mathcal O_K\)，各 \(\operatorname{Tr}(\beta_i u)\) 均为整数，因而 \(T(c_j)_j\in\mathbb Z^n\)。乘以伴随矩阵得 \(Dc_j\in\mathbb Z\)，所以
+\[
+L\subseteq\mathcal O_K\subseteq D^{-1}L.
+\]
+自由 \(\mathbb Z\)-模的子模自由，而且右端有限生成；第二卷定理4.3.2的主理想整环上模结构定理遂说明 \(\mathcal O_K\) 自由，秩由两侧包含关系知为 \(n\)。
+
+一个理想也是有限生成 \(\mathbb Z\)-子模；它的整数生成元同时是理想生成元。因此 \(\mathcal O_K\) Noether。若 \(x\in K\) 在 \(\mathcal O_K\) 上整，整性的传递性使它在 \(\mathbb Z\) 上整，故 \(x\in\mathcal O_K\)。
+
+最后，设 \(\mathfrak p\) 为非零素理想，取 \(0\ne a\in\mathfrak p\)。其最小多项式的常数项 \(c\) 非零，并且多项式关系给出 \(c\in a\mathcal O_K\subseteq\mathfrak p\)。故 \(\mathfrak p\cap\mathbb Z=(p)\)，其中 \(p\) 是素数。环 \(\mathcal O_K/\mathfrak p\) 是有限域 \(\mathbb F_p\) 上的有限整环，所以是域，\(\mathfrak p\) 极大。另一方面，整扩张 \(\mathbb Z\subseteq\mathcal O_K\) 的上升定理保证存在位于 \((p)\) 上方的素理想。因此维数恰为一。
+\end{proof}
+
+这个证明给出的不仅是有限生成性。迹矩阵把所有可能的整数夹在两个可以比较的整数格之间，因而也提供了寻找整基的有限性依据。它没有说任意整元素生成的环已经等于整数环。
+
+\ProseParagraphBreak
+\cref{b3:def:dedekind-domain}已经定义 Dedekind 整环，并允许域作为零维情形；非域情形恰为一维 Noether 整闭整环。整数环属于后一种情形。由\cref{b3:thm:dvr-characterizations}，在它的任意非零素理想处局部化，得到离散赋值环。整数环未必有元素的唯一分解，然而每个这样的局部环都有一个参数来衡量整除次数。下一节将把这些局部次数用于理想的唯一分解。

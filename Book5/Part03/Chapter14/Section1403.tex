@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 14.3 有限维表示
-% 纲要位置：计划纲要.md，第 3532 行。
+% 纲要位置：工作记录/计划纲要.md，第 4183 行。
 
 \section{有限维表示}
 \label{b5:sec:1403}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 不可约分类
 % * 完全可约性
@@ -15,22 +14,112 @@
 % * \(\mathfrak{sl}_2\) 的完全可约性采用升降算子与相应 Casimir 型算子的独立证明；不引用第18.1节尚未证明的一般 Weyl 定理
 %
 
+最高权链已经给出了候选的不可约表示，但一般有限维模中还可能存在不分裂的扩张。本节先完成不可约分类，再直接排除这些扩张。所用 Casimir 算子只由三个作用矩阵组成，不需要一般半单李代数的完全可约定理。
+
 \subsection{不可约分类}
 \label{b5:subsec:1403:01}
 
-待撰写。
+\begin{theorem}\label{b5:thm:sl2-classification}
+对每个整数 \(m\ge0\)，记 \(L_m\) 为\cref{b5:prop:sl2-model}给出的 \((m+1)\) 维标准最高权模型。每个有限维不可约复 \(\mathfrak{sl}_2(\mathbb C)\) 模都恰好同构于一个 \(L_m\)。其最高权为 \(m\)，维数为 \(m+1\)。
+\end{theorem}
+\begin{proof}
+由\cref{b5:lem:sl2-highest-vector-exists}选最高权向量。由\cref{b5:prop:sl2-finite-string}，它生成一个与某个 \(L_m\) 同构的非零子模；不可约性使这个子模为整个表示。\cref{b5:prop:sl2-model}已经逐个构造并证明 \(L_m\) 不可约，而不同的 \(m\) 给出不同维数，所以类型唯一。
+\end{proof}
+这个结论也确定了任何有限维表示的简单合成因子。仅凭合成因子，还不能断言原模是它们的直和；上一编的模特征例子已经说明这种推断可能失败。下面用 \(\mathfrak{sl}_2\) 的额外关系证明，在当前复数情形它确实成立。
 
 \subsection{完全可约性}
 \label{b5:subsec:1403:02}
 
-待撰写。
+\begin{lemma}\label{b5:lem:sl2-casimir-operator}
+设 \(V\) 为复 \(\mathfrak{sl}_2(\mathbb C)\) 模。记矩阵单位为 \(E_{ij}\)，取基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。则 \(V\) 上的算子
+\[
+C=h^2+2h+4fe
+\]
+与 \(e,f,h\) 都交换。对整数 \(m\ge0\)，在最高权为 \(m\) 的标准模型 \(L_m\) 上，它为标量 \(m(m+2)\)。
+\end{lemma}
+\begin{proof}
+由 \([h,fe]=0\)，得 \([h,C]=0\)。其余两式直接计算为
+\[
+\begin{aligned}
+[e,C]&=-2(eh+he)-4e+4he=2[h,e]-4e=0,\\
+[f,C]&=2(fh+hf)+4f-4fh=2[h,f]+4f=0.
+\end{aligned}
+\]
+在最高向量上，\(fev_0=0\)、\(hv_0=mv_0\)，故 \(Cv_0=m(m+2)v_0\)。\(C\) 与 \(f\) 交换，而所有 \(v_i=f^iv_0\)，所以这个标量作用遍及整个 \(L_m\)。
+\end{proof}
+\begin{theorem}\label{b5:thm:sl2-complete-reducibility}
+每个有限维复 \(\mathfrak{sl}_2(\mathbb C)\) 模完全可约。特别地，标准 Cartan 元 \(h=\operatorname{diag}(1,-1)\) 在任意这种表示上可对角化，关于 \(h\) 的全部权为整数。
+\end{theorem}
+\begin{proof}
+按 \(\dim V\) 归纳。若 \(V\) 简单，已由\cref{b5:thm:sl2-classification}分类。否则取极大真子模 \(U\)，使 \(V/U\cong L_m\)；归纳假设使 \(U\) 为若干 \(L_n\) 的直和。
+因为 \(C\) 与作用交换，它的广义特征空间都是子模。除特征值 \(c=m(m+2)\) 对应的一项外，其余各项映到 \(V/U\) 都为零，故已经包含在半单模 \(U\) 中。只需考虑广义 \(c\) 空间；它仍映满 \(L_m\)。非负整数中，等式 \(n(n+2)=m(m+2)\) 只在 \(n=m\) 时成立，所以该项的核为 \(L_m\) 的若干份直和。以下把此项仍记为 \(V\)，把其核仍记为 \(U\)。
+现在 \(h\) 在 \(U\) 与 \(V/U\) 上的特征值都属于
+\(m,m-2,\ldots,-m\)，故在 \(V\) 上也只有这些特征值，但暂不假定它可对角化。将商的最高向量提升到 \(V\) 的广义 \(m\) 特征空间，记为 \(v\)。升降关系给出
+\(ev=0\)、\(f^{m+1}v=0\)，因为相应目标广义特征空间不存在。又令
+\(a=(h-m)v\)，则 \(a\in U\)；\(U\) 上的 \(h\) 已可对角化，所以事实上 \(a\in U_m\)。
+由\cref{b5:lem:sl2-ladder}的算子等式，
+\[
+0=ef^{m+1}v=(m+1)f^m(h-m)v=(m+1)f^m a.
+\]
+在 \(U\cong L_m^{\oplus r}\) 中，\(f^m:U_m\to U_{-m}\) 是同构，包括 \(m=0\) 的情形。因此 \(a=0\)，即 \(v\) 是最高权向量。它生成一个 \(L_m\) 子模，且到 \(V/U\) 的映射在最高向量上非零，因而为同构。这个子模与 \(U\) 交为零并映满商，得到 \(V=U\oplus L_m\)。加回其他 \(C\) 广义特征空间即完成归纳。
+最后，所有 \(L_m\) 上的 \(h\) 都在所给基上对角化且权为整数，直和也有这些性质。
+\end{proof}
+这一证明分别使用了最高权链、Casimir 的不同标量以及同一最高权的扩张计算。它没有先假定一般 Weyl 定理，也没有把 \(h\) 的可对角化放进表示的定义。
 
 \subsection{张量积的 Clebsch–Gordan 分解}
 \label{b5:subsec:1403:03}
 
-待撰写。
+对有限维复 \(\mathfrak{sl}_2\) 模 \(V\)，定义有限 Laurent 多项式
+\[
+\chi_V(z)=\sum_{r\in\mathbb Z}(\dim V_r)z^r.
+\]
+由张量作用 \(h(v\otimes w)=hv\otimes w+v\otimes hw\)，有
+\(\chi_{V\otimes W}=\chi_V\chi_W\)，直和则对应相加。
+\begin{theorem}[Clebsch--Gordan]\label{b5:thm:sl2-clebsch-gordan}
+对每个非负整数 \(r\)，记 \(L_r\) 为最高权 \(r\)、维数 \(r+1\) 的标准复 \(\mathfrak{sl}_2(\mathbb C)\) 模。则对非负整数 \(m,n\)，有模分解
+\[
+L_m\otimes L_n\cong
+\bigoplus_{j=0}^{\min(m,n)}L_{m+n-2j}.
+\]
+\end{theorem}
+\begin{proof}
+由完全可约性，只须确定不可约直和项的重数。已知
+\(\chi_{L_m}=z^m+z^{m-2}+\cdots+z^{-m}\)。
+可交换 \(m,n\)，故假设 \(m\ge n\)。乘积中 \(z^{m+n-2r}\) 的系数为满足
+\(a+b=r\)、\(0\le a\le m\)、\(0\le b\le n\) 的整数对数，即
+\[
+\min(n,r)-\max(0,r-m)+1
+\quad(0\le r\le m+n).
+\]
+候选和 \(\sum_{j=0}^{n}\chi_{L_{m+n-2j}}\) 的同次系数为满足
+\(0\le j\le n\)、\(j\le r\le m+n-j\) 的整数 \(j\) 数，即
+\(\min(n,r,m+n-r)+1\)。
+若 \(r\le m\)，两式都为 \(\min(n,r)+1\)；若 \(r>m\)，两式都为 \(m+n-r+1\)。所以这两个 Laurent 多项式相同。
+上述 Laurent 多项式 \(\chi_{L_a}\) 线性无关：在任何非零有限线性组合中，最大的 \(a\) 所给最高项 \(z^a\) 无法抵消。因此所列重数就是完全可约分解的重数。
+\end{proof}
+例如 \(L_1\otimes L_1=L_2\oplus L_0\)，分别对应自然二维模的对称平方与外平方；又有
+\(L_2\otimes L_2=L_4\oplus L_2\oplus L_0\)。
+后一式的维数为 \(9=5+3+1\)。这些等式先由权重数证明，再作维数核验，不能把维数和正确当作分解的唯一理由。
 
-\subsection{升降算子与 Casimir 型算子的独立证明}
+\subsection{Casimir 算子的谱与分解}
 \label{b5:subsec:1403:04}
 
-待撰写。
+完全可约之后，Casimir 算子还给出一种内在的分块方式。设 \(V\) 中出现的不可约类型的最高权组成有限集合 \(S\)。对 \(m\in S\)，定义
+\[
+P_m=\prod_{\substack{n\in S\\n\ne m}}
+\frac{C-n(n+2)I}{m(m+2)-n(n+2)}.
+\]
+每个分母非零，且空乘积取恒等。该多项式在 \(C\) 的特征值 \(m(m+2)\) 处为一，在其余特征值处为零，所以 \(P_m\) 恰好投到所有 \(L_m\) 直和项组成的等型分量。它与群作用无关，只使用李代数的三个算子和多项式插值。
+\ProseParagraphBreak
+重数还可直接从权空间维数读出：
+\[
+[V:L_m]=\dim V_m-\dim V_{m+2}\qquad(m\ge0).
+\]
+因为 \(L_n\) 含有权 \(m\)，当且仅当 \(n\ge m\) 且二者同奇偶；两项相减只留下 \(n=m\)。在有限维空间中，这给出一个从算子 \(h\) 的谱到不可约重数的计算步骤。
+\ProseParagraphBreak
+本章的 \(C=h^2+2h+4fe\) 与 Killing 对偶基所给的 Casimir 相差常数。由\cref{b5:prop:sl2-simple}，对偶基为 \(h/8,f/4,e/4\)，所以 Killing 归一化的元素作用为
+\[
+\frac{h^2}{8}+\frac{ef+fe}{4}
+=\frac{h^2+2h+4fe}{8}.
+\]
+其标量因此是 \(m(m+2)/8\)。后面使用 Killing 型构造 Casimir 时保留这一常数；本章为了使升降公式清楚，使用的是分母已清掉的算子 \(C\)。

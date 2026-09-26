@@ -1,32 +1,117 @@
 % !TeX root = ../../Book3.tex
-% 纲要标题：### G.5 计算、优化及其与其他分支的联系
-% 纲要位置：计划纲要.md，第 2437 行。
+% 纲要标题：### G.5 实根计算、平方和优化与相关专题
 
-\section{计算、优化及其与其他分支的联系}
+\section{实根计算、平方和优化与相关专题}
 \label{b3:sec:G05}
 
-% TODO: 按以下纲要要点撰写本节。
+近似数值可以帮助寻找实根或平方和表示，最终核验仍要依靠精确的符号与矩阵数据。根计数给出隔离区间的证明，Gram 矩阵则把平方和问题转为带半正定条件的有限线性关系。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * Sturm 序列、实根隔离和柱状代数分解的任务；有效算法注明精确系数与比较运算的输入条件
 % * 平方和的 Gram 矩阵、半正定规划与矩问题仅作简要介绍，区别浮点近似和精确代数证书
 % * 半代数拓扑、Nash 几何、o-minimal 几何及完整矩问题转相应专题；不要求在学习交换代数时掌握这些领域的完整理论
 %
-% ---
+% #### G.5.1 Sturm 序列、实根隔离与柱状代数分解
+% #### G.5.2 Gram 矩阵、半正定规划与精确代数证书
+% #### G.5.3 半代数拓扑、Nash 几何、o-minimal 几何与矩问题
 %
+% ---
+
+
+% 正文按纲要完成；所列定理给出证明或证明概要。
 
 \subsection{Sturm 序列、实根隔离与柱状代数分解}
 \label{b3:subsec:G05:01}
 
-待撰写。
+\begin{theorem}[Sturm 根计数]\label{b3:thm:appendix-sturm-count}
+设 \(p\in\mathbb Q[x]\) 非常数且无重因子，置 \(p_0=p,p_1=p'\)，递归作带负号的余式
+\[
+p_{j-1}=q_jp_j-p_{j+1},
+\]
+直到末项为非零常数。对实数 \(t\)，删去 \((p_0(t),\ldots,p_m(t))\) 中的零项后，记符号变化次数为 \(V(t)\)。若实数 \(a<b\) 满足 \(p(a)p(b)\ne0\)，则 \((a,b)\) 内的实根个数为 \(V(a)-V(b)\)。
+\end{theorem}
+\begin{proof}
+Euclid 算法与 \(\gcd(p,p')=1\) 保证末项为常数，且相邻项没有公共零点。在一个中间项 \(p_j\) 的零点处，余式关系给出 \(p_{j-1}=-p_{j+1}\ne0\)。因此无论 \(p_j\) 从哪种符号变为哪种符号，它与两侧项合计恰有一次符号变化，变化总数不跳动。若多个不相邻中间项同时为零，各自控制互不重复的相邻符号对，结论相同。只有 \(p_0\) 的根可能改变 \(V\)。在单根 \(c\) 附近，\(p_0(x)\) 的符号等于 \((x-c)p_1(c)\) 的符号，而 \(p_1(x)\) 符号不变；穿过 \(c\) 时第一对由异号变同号，使 \(V\) 减一。各项只有有限多个根，分段相加即得公式。
+\end{proof}
+
+这也回顾了第一卷附录 E.3 的 Sturm 定理；计算表述见\cite[Section 1.3, Theorem 1.4]{Sturmfels2002PolynomialEquations}。有重根时先以 \(p/\gcd(p,p')\) 代替 \(p\)，从而计数不同实根；若还要重数，另保留平方自由分解。
+
+\begin{example}\label{b3:exm:sturm-quartic-isolation}
+对 \(p=x^4-5x^2+4\)，可把各非零余式乘以正有理常数简化，得到符号等价的 Sturm 序列
+\[
+x^4-5x^2+4,\quad4x^3-10x,\quad5x^2-8,\quad x,\quad1.
+\]
+在 \(-3,-3/2,0,3/2,3\) 处的符号分别为
+\[
+\begin{array}{c|ccccc|c}
+t&p_0&p_1&p_2&p_3&p_4&V(t)\\\hline
+-3&+&-&+&-&+&4\\
+-3/2&-&+&+&-&+&3\\
+0&+&0&-&0&+&2\\
+3/2&-&-&+&+&+&1\\
+3&+&+&+&+&+&0
+\end{array}
+\]
+故相邻五个端点给出的四个区间各含一个实根，其他地方没有实根。虽然本例可直接分解为 \((x^2-1)(x^2-4)\)，计数过程只用有理数运算和符号比较。
+\end{example}
+
+\begin{proposition}[有理系数实根隔离]\label{b3:prop:rational-real-root-isolation}
+给定非零 \(p\in\mathbb Q[x]\)，可用有限次有理数运算及整数比较，输出所有不同实根的两两不交有理开区间，每个区间恰含一根；有理根也可单列为精确数值。
+\end{proposition}
+\begin{proof}
+若 \(p\) 为非零常数，返回空表。否则先去重因子并化成首一。若 \(p=x^d+\sum_{i<d}a_ix^i\)，取整数 \(B>1+\max_i|a_i|\)。当 \(|x|\ge B\) 时，低次项绝对值之和小于 \(|x|^d\)，所以全部实根在 \((-B,B)\)。以 Sturm 公式计算区间根数：零根区间丢弃，一根区间保留，多根区间继续分割。
+
+分割一个区间 \((a,b)\) 时，在其中间三分之一内依次试取有理数，选到一个满足 \(p(c)\ne0\) 的数 \(c\)，再分为 \((a,c)\)、\((c,b)\)。非零多项式只有有限个根，故选点总会结束；所有区间端点也始终不是根。每次分割后子区间长度至多为原来的 \(2/3\)。若至少有两个不同实根，它们之间存在最小正间距；区间长度小于该间距后不可能仍含多根，所以全部分割在有限步内结束。只有零个或一个实根时，第一次计数便已结束。最终保留的区间两两不交，各含一根，且涵盖全部实根。算法遇到有理根时可以将其单列，但并不需要为此删除因子或更换正在计数的多项式。
+\end{proof}
+
+精确实代数系数也可用相应的域运算及序比较处理，但必须提供这些操作的有效表示。任意实数只给若干小数位时，无法据此保证重根判断和终止性。高维 CAD 反复需要一维隔离，却还增加参数退化分析；不能把上述一维终止性当作完整 CAD 正确性证明。
 
 \subsection{Gram 矩阵、半正定规划与精确代数证书}
 \label{b3:subsec:G05:02}
 
-待撰写。
+\begin{proposition}[平方和的 Gram 矩阵]\label{b3:prop:sos-gram-matrix}
+设 \(n\ge1\)、\(d\ge0\) 为整数，\(f\in\mathbb R[x_1,\ldots,x_n]\) 的次数不超过 \(2d\)，\(v_d\) 为所有次数不超过 \(d\) 的单项式组成的列向量。则 \(f\) 为平方和，当且仅当存在实对称半正定矩阵 \(Q\) 使
+\[
+f=v_d^{\mathsf T}Qv_d.
+\]
+\end{proposition}
+\begin{proof}
+若 \(f=\sum_jq_j^2\)，最高次平方和不能抵消，故可取 \(\deg q_j\le d\)。写 \(q_j=c_j^{\mathsf T}v_d\)，则 \(Q=\sum_jc_jc_j^{\mathsf T}\) 半正定。反之，第二卷第10.2节的实二次型对角化给出 \(Q=C^{\mathsf T}C\)，其每行作用于 \(v_d\) 就得到所需平方。这里用的是半正定性；仅有实对称性会产生正负平方之差。
+\end{proof}
+
+展开 \(v_d^{\mathsf T}Qv_d=f\) 是关于 \(Q\) 各项的线性方程，加上 \(Q\succeq0\)，形成\term{半正定规划}[semidefinite programming]的可行性问题。这把第二卷的二次型用于更高次多项式；所增加的是单项式向量，而不是改变二次型定理。相关解释见\cite[Sections 7.1 and 7.3]{Sturmfels2002PolynomialEquations}。
+
+\begin{example}\label{b3:exm:exact-gram}
+令 \(v=(1,x,y)^{\mathsf T}\)，取
+\[
+Q=\begin{pmatrix}1&0&0\\0&1&-1\\0&-1&1\end{pmatrix}.
+\]
+则 \(v^{\mathsf T}Qv=1+(x-y)^2\)。矩阵和分解均为有理数，可逐项核验；其特征值为 \(1,0,2\)，零特征值并不妨碍证书成立。若把零特征值以浮点计算得到一个很小的负数，便不能直接断言矩阵半正定，须重新取得精确分解或其他严格证明。
+\end{example}
+
+对于求最小值问题，找到 \(f-\lambda\) 的约束平方和证书即可证明 \(\lambda\) 是下界；找到一个可行点达到它才完成最优性证明。若 \(M(g)\) 满足 Archimedean 条件、\(K\ne\varnothing\)，则每个 \(\lambda<\min_Kf\) 都有 Putinar 证书。由于每份证书只含有限次数，逐步提高允许次数得到的最优下界收敛到真正最小值。这一推论没有声称某个预先固定次数就能达到最优值。
 
 \subsection{半代数拓扑、Nash 几何、o-minimal 几何与矩问题}
 \label{b3:subsec:G05:03}
 
-待撰写。
+半代数集合也有欧氏拓扑。在 \(\mathbb R\) 上，开半代数集上的光滑半代数函数称为\term{Nash 函数}[Nash function]；例如 \(\sqrt{1+x^2}\) 是 Nash 函数，其图像由 \(y^2=1+x^2,y>0\) 刻画。定义与光滑代数几何的关系可读\cite[Appendix B, Definitions B.2.3--B.2.4]{Mangolte2020RealAlgebraicVarieties}。它兼有代数约束与微分性质，不能把任意光滑函数都归入此类。
+
+\ProseParagraphBreak
+半代数集合在直线上是有限个点与区间的并：组成其定义的有限多个非零多项式只有有限多个实根，在这些根之间每个多项式符号固定。\term{o-minimal 结构}[o-minimal structure]把这种一维有限性作为公理：在有序域各有限次幂上指定含代数集合、对布尔运算、直积和投影封闭的集合族，并要求一维集合都是有限个点与区间的并。Tarski--Seidenberg 定理保证半代数集合构成一个例子。更广结构、分层与拓扑不变量的理论不在此展开。
+
+\ProseParagraphBreak
+平方和的对偶计算引出\term{矩问题}[moment problem]。给定实数族 \((y_\alpha)_{\alpha\in\mathbb N^n}\)，先定义线性泛函 \(L(x^\alpha)=y_\alpha\)，再问是否存在支于 \(K\) 的正测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\)。必要条件 \(L(q^2)\ge0\) 等价于所有有限矩矩阵 \((y_{\alpha+\beta})\) 半正定；若支集还满足 \(g_i\ge0\)，则须有 \(L(g_iq^2)\ge0\)。这些条件显然必要，但仅检查一张有限矩阵不能自动产生测度。
+
+\ProseParagraphBreak
+\begin{theorem}[Archimedean 二次模的矩表示]\label{b3:thm:archimedean-moment-representation}
+设 \(g_1,\ldots,g_s\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x:g_i(x)\ge0\text{ 对所有 }i\}\)，且存在 \(N>0\) 使 \(N-\sum_i x_i^2\in M(g)\)。若实线性泛函 \(L:\mathbb R[x]\to\mathbb R\) 满足 \(L(1)=1\) 与 \(L(M(g))\subseteq[0,\infty)\)，则存在支于 \(K\) 的 Borel 概率测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\) 对每个多项式 \(p\) 成立。
+\end{theorem}
+\begin{proofsketch}
+先由\cref{b3:thm:compact-positivity-certificates}的 Putinar 部分得出：若 \(p\ge0\) 于 \(K\)，则对每个 \(\varepsilon>0\)，\(p+\varepsilon\in M(g)\)，故 \(L(p)+\varepsilon\ge0\)，令 \(\varepsilon\to0\) 得 \(L(p)\ge0\)。\(K\) 不能为空，否则 \(-1\) 也严格正于空集，正性定理给出 \(-1\in M(g)\)，与 \(L(1)=1\) 矛盾。
+
+若 \(p\) 在 \(K\) 上为零，分别用于 \(p\) 与 \(-p\) 得 \(L(p)=0\)，所以 \(L\) 下降为 \(K\) 上多项式函数的线性泛函。由 \(\|p\|_K\pm p\ge0\)，有 \(|L(p)|\le\|p\|_K\)。多项式含常数并分离 \(K\) 的点；Stone--Weierstrass 定理使它们在 \(C(K,\mathbb R)\) 中一致稠密。这个界给出 \(L\) 的唯一连续延拓，非负连续函数用多项式一致逼近后仍有非负像。
+
+最后，紧 Hausdorff 空间上的 Riesz 正泛函表示定理把这个连续正泛函写成对正 Borel 测度的积分；\(L(1)=1\) 使其总质量为一。这里省略 Stone--Weierstrass 与 Riesz 两个分析定理的证明，保留它们的具体适用条件；从 Putinar 证书到矩表示的上述推导见\cite[Section 1, Theorem 2; Section 3, proof of Theorem 2]{Schweighofer2005Optimization}。
+\end{proofsketch}
+
+矩表示把多项式的正性条件转为正泛函，再转为测度；只检查一张有限矩矩阵则尚未提供对所有多项式所需的正性。

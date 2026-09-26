@@ -1,42 +1,121 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 5.5 共轭类、特征标约束与 Burnside 可解性定理
-% 纲要位置：计划纲要.md，第 3231 行。
-
-\section{共轭类、特征标约束与 Burnside 可解性定理}
-\label{b5:sec:0505}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3882 行。
+% 纲要细目（写作范围）：
 % * 先准确陈述 Burnside 的 \(p^aq^b\) 阶群可解性定理，再完成下列共轭类论证；允许其中一个指数为零，并分别处理平凡群和素数幂阶群。
 % * 从类和作用和代数整数性建立群论所需的特征标消失或标量作用引理；注明次数与共轭类大小互素的使用位置
 % * 证明有限非交换单群不存在非平凡的素数幂大小共轭类，并处理类大小为1的中心情形
 % * 对 \(|G|=p^aq^b\) 利用 Sylow 子群中心中的元素构造所需共轭类，再按群阶归纳并使用可解性的扩张稳定性完成证明
 % * 比较本定理、轨道计数引理和不可约矩阵代数定理的对象、工具与结论；不将三个 Burnside 名称混合使用
-%
+
+\section{共轭类、特征标约束与 Burnside 可解性定理}
+\label{b5:sec:0505}
+
+整性还有一个与诱导定理独立的用途：它能把“某个共轭类很小”变成正规子群的存在性。以下只使用本卷的特征标正交、\cref{b5:prop:central-character-integrality}与代数整数基本运算；无需调用刚完成的 Brauer 诱导。
 
 \subsection{\texorpdfstring{Burnside 的 \(p^aq^b\) 阶群可解性定理}{Burnside 的 paqb 阶群可解性定理}}
 \label{b5:subsec:0505:01}
 
-待撰写。
+对群 \(G\)，记 \(G'=\langle xyx^{-1}y^{-1}:x,y\in G\rangle\)，递归定义 \(G^{(0)}=G\)、\(G^{(n+1)}=\Bigl(G^{(n)}\Bigr)'\)。若某个 \(G^{(r)}=1\)，则称 \(G\) 为\term[kejiequn]{可解群}[solvable group]。这一定义等价于存在各商交换的有限正规列：导出列本身给出一个方向；反过来，若一个正规列的末商交换，则 \(G'\) 包含于其前一项，逐层便使导出列降到 \(1\)。
+
+\begin{theorem}[Burnside 可解性定理]\label{b5:thm:burnside-solvability}
+设 \(p,q\) 为素数，\(a,b\) 为非负整数。每个阶为 \(p^a q^b\) 的有限群 \(G\) 都是可解群。
+\end{theorem}
+此结论称为\term[Burnsidekejie]{Burnside 可解性定理}[Burnside's \(p^a q^b\) theorem]。允许 \(a=0\)、\(b=0\)；若 \(p=q\)，结论仍归入素数幂阶情形。证明在本节先建立共轭类工具，再于\subsecref{b5:subsec:0505:04}完成。
+
+\ProseParagraphBreak
+定理并不说 \(G\) 交换，也不说全部 Sylow 子群正规。例如 \(S_3\) 阶为 \(2\cdot3\)，其导出群为 \(A_3\)，故可解，但三阶以外的 Sylow 子群并不正规。这里的目标是在导出列中逐步消去非交换部分。
 
 \subsection{类和作用与特征标消失引理}
 \label{b5:subsec:0505:02}
 
-待撰写。
+\begin{lemma}[单位根平均值]\label{b5:lem:root-unity-average}
+设 \(d\ge1\) 为整数，\(\xi_1,\ldots,\xi_d\) 为复单位根。若
+\[
+\alpha=\frac{\xi_1+\cdots+\xi_d}{d}
+\]
+是代数整数，则或者 \(\alpha=0\)，或者 \(\xi_1=\cdots=\xi_d\)。
+\end{lemma}
+\begin{proof}
+若这些单位根不全相同，三角不等式的等号条件给出 \(|\alpha|<1\)。选取公倍数 \(m\)，使各 \(\xi_i\) 都属于 \(\mathbb Q(\zeta_m)\)。\(\alpha\) 的每个代数共轭仍是 \(d\) 个单位根的平均，故绝对值不超过 \(1\)。这里的共轭描述可这样核验：\(\mathbb Q(\alpha)\) 到 \(\mathbb C\) 的任一嵌入都可延拓到 \(\mathbb Q(\alpha,\zeta_m)\)，只需把 \(\zeta_m\) 在前一域上的极小多项式的系数施行嵌入，再选一个复根；商域的评价给出延拓。延拓保持 \(\zeta_m^m=1\)，因而保持“是单位根”这一性质。
+
+若 \(\alpha\ne0\)，其全部共轭根的乘积非零；由\cref{b5:lem:algebraic-integer-arithmetic}该乘积为整数。但其中一个因子的绝对值严格小于 \(1\)，其余不超过 \(1\)，故乘积的绝对值严格小于 \(1\)，矛盾。
+\end{proof}
+
+\begin{lemma}[消失或标量作用]\label{b5:lem:coprime-class-scalar}
+设 \(G\) 为有限群，\(\rho:G\rightarrow\operatorname{GL}_{\mathbb C}(V)\) 为次数 \(d\) 的复不可约表示，特征标为 \(\chi\)，\(g\in G\)。设 \(K=g^G\) 且 \(\gcd(d,|K|)=1\)。则或者 \(\chi(g)=0\)，或者 \(\rho(g)\) 为标量矩阵。
+\end{lemma}
+\begin{proof}
+取整数 \(a,b\)，使 \(a|K|+bd=1\)。由\cref{b5:prop:central-character-integrality}，\(|K|\chi(g)/d\) 是代数整数；\(\chi(g)\) 也由\cref{b5:prop:character-values-integral}为代数整数。因此
+\[
+\frac{\chi(g)}d
+=a\frac{|K|\chi(g)}d+b\chi(g)
+\]
+是代数整数。这正是互素条件的使用处。\(\rho(g)\) 可对角化，其特征值 \(\xi_1,\ldots,\xi_d\) 为单位根；由\cref{b5:lem:root-unity-average}，或者它们的和为零，或者全部相同。后者连同可对角化性给出标量矩阵。
+\end{proof}
+
+不能删去互素条件。例如 \(S_3\) 的二维不可约表示在三循环处取值 \(-1\)，并非零；对应矩阵的两个特征值为互不相同的本原三次单位根，所以不是标量。该共轭类大小为 \(2\)，恰与表示次数有公因子。
 
 \subsection{非交换单群的素数幂大小共轭类}
 \label{b5:subsec:0505:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:prime-power-class-normal-subgroup}
+设 \(G\) 为有限群，某个共轭类 \(K\) 的大小为 \(p^r\)，其中 \(p\) 为素数、\(r\ge1\)。则 \(G\) 有非平凡真正规子群。特别地，有限非交换单群没有这样的共轭类。
+\end{proposition}
+\begin{proof}
+取 \(g\in K\)，则 \(g\ne1\)。由\cref{b5:thm:regular-decomposition}，正则特征标在非单位元处为零，故
+\begin{equation}\label{b5:eq:burnside-regular-sum}
+0=\sum_{\chi\in\operatorname{Irr}(G)}\chi(1)\chi(g).
+\end{equation}
+我们先证明存在非平凡不可约 \(\chi\)，满足 \(p\nmid\chi(1)\) 且 \(\chi(g)\ne0\)。否则，\eqref{b5:eq:burnside-regular-sum}除去平凡特征标的贡献 \(1\)，其余可能非零的项的次数均被 \(p\) 整除，从而
+\[
+-\frac1p
+=\sum_{\substack{\chi\in\operatorname{Irr}(G)\\p\mid\chi(1)}}
+\frac{\chi(1)}p\,\chi(g)
+\]
+为代数整数。这与\cref{b5:lem:algebraic-integer-arithmetic}的有理数判别矛盾。
+
+取这样的 \(\chi\) 及表示 \(\rho\)。因为 \(\gcd\Bigl(\chi(1),p^r\Bigr)=1\) 且 \(\chi(g)\ne0\)，\cref{b5:lem:coprime-class-scalar}说明 \(\rho(g)\) 为标量。所有 \(K\) 中的元素共轭于 \(g\)，所以它们在 \(\rho\) 下给出同一个标量。令
+\[
+N=\langle xy^{-1}:x,y\in K\rangle.
+\]
+共轭保持 \(K\)，故 \(N\triangleleft G\)；又 \(N\subset\ker\rho\)。由于 \(\rho\) 非平凡，\(\ker\rho\ne G\)，所以 \(N\ne G\)。而 \(|K|>1\) 给出不同的 \(x,y\)，此时 \(xy^{-1}\ne1\)，所以 \(N\ne1\)。
+\end{proof}
+
+大小为 \(1\) 的类须另行处理，它对应中心元素。有限非交换单群的中心只能为 \(1\)：中心若非平凡，单性使整个群交换；有限交换单群则必为素数阶循环群。因此非交换单群的非单位元既不能有大小为 \(1\) 的类，也不能有更大的素数幂大小的类。
 
 \subsection{Sylow 中心、群阶归纳与可解扩张}
 \label{b5:subsec:0505:04}
 
-待撰写。
+先记录可解性的群论运算，避免把归纳的最后一步藏在一句“因此可解”中。
+\begin{lemma}\label{b5:lem:solvable-extensions}
+设 \(G\) 为群，\(N\triangleleft G\)。若 \(N\) 与 \(G/N\) 都可解，则 \(G\) 可解。可解群的子群和商群也可解。对每个素数 \(p\)，每个有限 \(p\)-群都可解。
+\end{lemma}
+\begin{proof}
+若 \((G/N)^{(r)}=1\)，商映射保持交换子，故 \(G^{(r)}\subset N\)。若 \(N^{(s)}=1\)，则 \(G^{(r+s)}\subset N^{(s)}=1\)。子群 \(H\le G\) 满足 \(H^{(i)}\subset G^{(i)}\)，而满同态把导出列映为商群的导出列，由此得到另外两项稳定性。
+
+对有限 \(p\)-群 \(P\) 按阶归纳。若 \(P\ne1\)，其类方程中非中心类的大小均被 \(p\) 整除，故 \(|Z(P)|\) 被 \(p\) 整除，中心非平凡。若 \(Z(P)=P\)，群交换；否则 \(P/Z(P)\) 阶较小，由归纳假设可解。中心自身交换，再由已经证明的扩张性质得 \(P\) 可解。
+\end{proof}
+
+\begin{proof}[\cref{b5:thm:burnside-solvability}的证明]
+平凡群可解；若 \(a=0\)、\(b=0\) 或 \(p=q\)，由\cref{b5:lem:solvable-extensions}的有限 \(p\)-群结论可得。以下设 \(p\ne q\) 且 \(a,b>0\)，按 \(|G|\) 归纳。
+
+若 \(G\) 有非平凡真正规子群 \(N\)，则 \(N\) 与 \(G/N\) 的阶仍只含素因子 \(p,q\)，且都小于 \(|G|\)。归纳假设使两者可解，再由\cref{b5:lem:solvable-extensions}得 \(G\) 可解。只需排除 \(G\) 为单群的情形。它不可能是交换单群，因为交换单群只有一个素因子。
+
+取 Sylow \(p\)-子群 \(P\)。由 \(p\)-群的类方程，选 \(1\ne x\in Z(P)\)。于是 \(P\subset C_G(x)\)，故
+\[
+|x^G|=\Bigl[G:C_G(x)\Bigr]
+\]
+是 \(q\) 的幂。若这个指数为 \(1\)，则 \(x\in Z(G)\setminus\{1\}\)，与非交换单性矛盾；若指数大于 \(1\)，则\cref{b5:prop:prime-power-class-normal-subgroup}给出非平凡真正规子群，同样矛盾。因此 \(G\) 不可能为单群，归纳即得可解性。
+\end{proof}
+
+这个证明需要的是在 Sylow 子群的中心中取元素，不要求所取 Sylow 子群在 \(G\) 中正规。整性与共轭类步骤可对照 Etingof 等\cite[Theorems 5.4.3, 5.4.4, 5.4.6; Lemmas 5.4.5, 5.4.7, pp. 98--100]{EtingofEtAl2011RepresentationTheory}；这里的最后一步以 Sylow 中心显式构造所需共轭类。
 
 \subsection{Burnside 三类定理的辨析}
 \label{b5:subsec:0505:05}
 
-待撰写。
+本节证明的结论以群阶仅含两个素因子为假设，结论是可解性。轨道计数公式则研究有限集合上的群作用：
+\[
+|G\backslash X|=\frac1{|G|}\sum_{g\in G}|X^g|.
+\]
+它来自对固定点对 \((g,x)\) 的双重计数，不涉及群是否可解。第三个同名结果是不可约矩阵代数定理：代数闭域上，有限维向量空间上的不可约含幺矩阵子代数等于全部自同态代数。它讨论矩阵代数的大小，也没有上述群阶条件。下一节通过应用进一步比较这些不同结论。

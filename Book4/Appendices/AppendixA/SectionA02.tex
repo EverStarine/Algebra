@@ -1,10 +1,124 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 A 的第 2 条要点整理。
+% 纲要标题：### A.2 单子上的代数与自由对象
+% 纲要位置：工作记录/计划纲要.md，第 3539 行。
+% 纲要细目（写作范围）：
+% #### A.2.1 单子上的代数与同态
+% #### A.2.2 自由代数与遗忘伴随
+% #### A.2.3 比较函子与典型代数范畴
+
 
 \section{单子上的代数与自由对象}
 \label{b4:sec:A02}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 单子上的代数和自由对象
+单子给出形式运算，但形式表达式还须在一个对象中求值。求值要把单个元素还原为自身，并要求“先在内层求值再在外层求值”与“一次归并后求值”相同。单子上的代数就是满足这两个条件的对象。
 
-待撰写。
+\subsection{单子上的代数与同态}
+\label{b4:subsec:A02:01}
+
+\begin{definition}\label{b4:def:A-monad-algebra}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子，\(X\in\mathcal C\)，\(a:TX\to X\) 为态射。若满足
+\begin{equation}\label{b4:eq:A-algebra-laws}
+a\eta_X=1_X,\qquad aT(a)=a\mu_X,
+\end{equation}
+则称 \((X,a)\) 为 \(T\) 上的\term[danzi-shang-daishu]{代数}[algebra for a monad]。对两个 \(T\)-代数 \((X,a)\)、\((Y,b)\)，若 \(\mathcal C\) 中的态射 \(f:X\to Y\) 满足
+\[
+fa=bT(f)
+\]
+则称 \(f\) 为它们之间的代数同态。所有这些代数与同态组成的范畴记为 \(\mathcal C^T\)，称为 \term[eilenberg-moore-fanchou]{Eilenberg–Moore 范畴}[Eilenberg--Moore category]。
+\end{definition}
+\symidx{\(\mathcal C^T\)：单子 \(T\) 上的代数范畴}
+
+恒等态射满足同态等式；若 \(f a=bT(f)\)、\(g b=cT(g)\)，则
+\((gf)a=cT(gf)\)。所以它们确实组成范畴。遗忘函子
+\(U^T:\mathcal C^T\to\mathcal C\) 把 \((X,a)\) 送到 \(X\)，把同态送到底层态射；它是忠实函子，但一般不是全函子。
+
+\begin{proposition}\label{b4:prop:A-idempotent-algebras}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的幂等单子，\(X\in\mathcal C\)。\(X\) 存在 \(T\)-代数结构，当且仅当单位分量 \(\eta_X:X\to TX\) 可逆；此时结构唯一，为 \(a=\eta_X^{-1}\)。满足此条件的对象之间的每个 \(\mathcal C\)-态射都是代数同态。
+\end{proposition}
+\begin{proof}
+若 \(a\eta_X=1_X\)，由 \(\eta\) 的自然性及幂等性得到
+\[
+\eta_Xa=T(a)\eta_{TX}=T(a)T(\eta_X)=1_{TX}.
+\]
+所以 \(a\) 必为 \(\eta_X\) 的逆。反之，若 \(\eta_X\) 可逆，令 \(a=\eta_X^{-1}\)。单位律显然成立，且
+\[
+T(a)=T(\eta_X)^{-1}=\mu_X,
+\]
+从而 \(aT(a)=a\mu_X\)。若 \(f:X\to Y\)，自然性 \(T(f)\eta_X=\eta_Yf\) 在两边乘以单位的逆，就得到代数同态等式。
+\end{proof}
+
+\subsection{自由代数与遗忘伴随}
+\label{b4:subsec:A02:02}
+
+\begin{theorem}[自由代数与遗忘伴随]\label{b4:thm:A-em-adjunction}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子，\(\mathcal C^T\) 为其代数范畴，\(U^T:\mathcal C^T\to\mathcal C\) 为取底层对象与态射的遗忘函子。对 \(X\in\mathcal C\) 及 \(\mathcal C\) 中的态射 \(f:X\to X'\)，公式
+\[
+F^T(X)=(TX,\mu_X),\qquad F^T(f)=T(f)
+\]
+定义函子 \(F^T:\mathcal C\to\mathcal C^T\)，且 \(F^T\dashv U^T\)。对任意 \(T\)-代数 \((Y,b)\)，伴随双射为
+\begin{equation}\label{b4:eq:A-em-adjunction}
+\operatorname{Hom}_{\mathcal C^T}\Bigl(F^TX,(Y,b)\Bigr)
+\cong\operatorname{Hom}_{\mathcal C}(X,Y),
+\qquad h\longmapsto h\eta_X,
+\end{equation}
+其逆把 \(f\) 送到 \(bT(f)\)。这个伴随产生的单子正是原来的 \(T\)。
+\end{theorem}
+\begin{proof}
+\eqref{b4:eq:A-monad-laws}说明 \((TX,\mu_X)\) 满足代数公理。乘法的自然性
+\(T(f)\mu_X=\mu_YT^2(f)\) 说明 \(T(f)\) 是代数同态，函子性来自 \(T\)。
+
+对 \(f:X\to Y\)，令 \(\overline f=bT(f)\)。利用代数公理及乘法自然性，
+\[
+\overline f\mu_X
+=b\mu_YT^2(f)
+=bT(b)T^2(f)=bT(\overline f),
+\]
+所以它是代数同态。又
+\(\overline f\eta_X=b\eta_Yf=f\)。
+反过来，若 \(h:(TX,\mu_X)\to(Y,b)\) 为代数同态，则
+\[
+bT(h\eta_X)=bT(h)T(\eta_X)
+=h\mu_XT(\eta_X)=h.
+\]
+故两公式互逆。与源、目标的态射复合时，这两个公式仍相容，因而构成自然双射。
+
+单位为 \(\eta_X\)，余单位在 \((Y,b)\) 处就是 \(b:(TY,\mu_Y)\to(Y,b)\)。所以遗忘后复合自由函子仍为 \(T\)，伴随产生的乘法在 \(X\) 处为自由代数的结构态射 \(\mu_X\)，与原数据相同。
+\end{proof}
+
+例如，有限表单子的代数给出幺半群。对求值 \(a:TX\to X\)，定义
+\[
+e=a\Bigl([]\Bigr),\qquad x\cdot y=a\Bigl([x,y]\Bigr).
+\]
+对由三张单元素表组成的分组，以及把其中两张先连接的分组，代数结合律说明
+\((x\cdot y)\cdot z=x\cdot(y\cdot z)=a\Bigl([x,y,z]\Bigr)\)；对含空表的分组得到左右单位律。归纳可知 \(a\Bigl([x_1,\ldots,x_n]\Bigr)=x_1\cdots x_n\)。反过来，幺半群的有序乘积满足两条代数公理。代数同态恰好保持空表和二元素表的值，也就是幺半群同态。
+
+\subsection{比较函子与典型代数范畴}
+\label{b4:subsec:A02:03}
+
+\begin{proposition}\label{b4:prop:A-comparison-functor}
+设 \(F:\mathcal C\to\mathcal D\)、\(U:\mathcal D\to\mathcal C\) 为局部小范畴之间的伴随 \(F\dashv U\)，单位、余单位为 \(\eta,\varepsilon\)，所生单子为 \(T=UF\)。则
+\[
+K(Y)=\Bigl(UY,U(\varepsilon_Y)\Bigr),\qquad K(f)=U(f)
+\]
+定义函子 \(K:\mathcal D\to\mathcal C^T\)，满足 \(U^TK=U\)、\(KF=F^T\)。它称为该伴随的\term[bijiao-hanzi]{比较函子}[comparison functor]。
+\end{proposition}
+\begin{proof}
+记 \(a_Y=U(\varepsilon_Y)\)。三角恒等式给出 \(a_Y\eta_{UY}=1_{UY}\)。把余单位自然性用于 \(\varepsilon_Y:FUY\to Y\)，得到
+\[
+\varepsilon_YFU(\varepsilon_Y)
+=\varepsilon_Y\varepsilon_{FUY}.
+\]
+应用 \(U\)，便有 \(a_YT(a_Y)=a_Y\mu_{UY}\)，所以 \(K(Y)\) 是代数。对 \(f:Y\to Z\)，余单位自然性又给出
+\(U(f)a_Y=a_ZT\Bigl(U(f)\Bigr)\)，因此 \(K(f)\) 是代数同态。其余函子等式来自定义。
+\end{proof}
+
+\begin{definition}\label{b4:def:A-monadic-functor}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，函子 \(U:\mathcal D\to\mathcal C\) 有左伴随 \(F:\mathcal C\to\mathcal D\)，伴随的余单位为 \(\varepsilon:FU\Rightarrow1_{\mathcal D}\)。以 \(\mathcal C^{UF}\) 表示所生单子的代数范畴，定义比较函子 \(K(Y)=(UY,U(\varepsilon_Y))\)、\(K(f)=U(f)\)。若 \(K:\mathcal D\to\mathcal C^{UF}\) 是范畴等价，则称 \(U\) 为\term[danzixing-hanzi]{单子性函子}[monadic functor]，也说这个伴随具有单子性。
+\end{definition}
+
+对自由幺半群与底集合的伴随，比较函子把幺半群送到“有限表取乘积”的代数。上一小节已经证明每个代数都唯一确定这种乘法，而且代数同态就是幺半群同态，所以遗忘函子具有单子性。\(\mathcal C^T\) 在这里保留了全部代数结构。
+
+\ProseParagraphBreak
+
+并非每个伴随都能如此恢复另一范畴。离散拓扑函子
+\(F:\mathbf{Set}\to\mathbf{Top}\) 左伴随于底集合函子 \(U\)，且 \(UF=1_{\mathbf{Set}}\)，所生单子只是恒等单子。它的代数范畴仍为集合范畴，不能恢复所有拓扑。具体地，同一个二点集从离散拓扑到平凡拓扑的恒等映射是连续双射，却不是同胚；下节的判据会指出这个例子在哪项假设上失败。

@@ -1,14 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 6.4 不可约分类
-% 纲要位置：计划纲要.md，第 3274 行。
-
-\section{不可约分类}
-\label{b5:sec:0604}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3925 行。
 % * 特征零下的不可约性
 % * 不同分拆给出不同不可约表示
 % * 分类完备性
@@ -16,39 +8,179 @@
 % * 用 Specht 模上的不变配对与子模定理证明特征零不可约性，明确正特征下哪一步失效
 % * 用支配序和 Young 子群分析不同分拆的非同构性；不把参数个数相等当作非同构性的证明
 % * 在不可约性和非同构性建立后，结合共轭类个数与半单群代数完成分类完备性；钩长公式不作为这一步的未证前提
-%
+\section{不可约分类}
+\label{b5:sec:0604}
+
+标准基解决的是向量空间的大小，尚未说明群作用能否保持一个更小的非零子空间。本节在表类基上引入不变配对；列反对称化对这个配对有一种特别简单的秩一作用，从而控制 Specht 模的所有子模。
 
 \subsection{特征零下的不可约性}
 \label{b5:subsec:0604:01}
 
-待撰写。
+在 \(M_R^\lambda\) 上把不同行表类规定为正交，并令每个基向量与自身的配对为 \(1\)，得到对称双线性型
+\[
+B\Bigl(\sum_u a_u\{u\},\sum_u d_u\{u\}\Bigr)=\sum_u a_ud_u.
+\]
+群作用置换这组基，所以 \(B(gv,gw)=B(v,w)\)。这里采用双线性型；在复数域上不把它与共轭线性的 Hermitian 内积混为一谈。
+
+\begin{lemma}\label{b5:lem:specht-rank-one}
+设 \(R\) 为交换含幺环，\(n\) 为非负整数，\(\lambda\vdash n\)，\(t\) 为形状 \(\lambda\) 的 Young 表，\(C_t\) 为其列群。记 \(M_R^\lambda\) 为行表类置换模，\(b_t=\sum_{c\in C_t}\operatorname{sgn}(c)c\)、\(e_t=b_t\{t\}\)，\(B\) 为以行表类基为标准正交基的对称双线性型。对任意 \(v\in M_R^\lambda\)，有
+\begin{equation}\label{b5:eq:specht-rank-one}
+b_tv=B(v,e_t)e_t.
+\end{equation}
+\end{lemma}
+\begin{proof}
+先令 \(v=\{u\}\)。若 \(t\) 的某一列有两个数字位于 \(u\) 的同一行，交换它们的换位既属于 \(C_t\) 又固定 \(\{u\}\)；把列群求和配成符号相反的二项，即得 \(b_t\{u\}=0\)。
+
+若不存在这样的两个数字，则 \(u\) 的第一行共有 \(\lambda_1\) 个数字，它们恰从 \(t\) 的每列各取一个。可用列置换把这些数字送到 \(t\) 的第一行。删去已匹配的第一行，对剩余各列与第二行重复：第二行必须恰从尚非空的每列各取一个。逐行进行，得到 \(c\in C_t\) 使 \(\{u\}=\{ct\}\)。于是 \(b_t\{u\}=\operatorname{sgn}(c)e_t\)。这证明 \(b_tv\) 总是 \(e_t\) 的标量倍数。
+
+因为 \(c\) 与 \(c^{-1}\) 符号相同，\(b_t\) 关于 \(B\) 自伴随。故 \(b_tv\) 中 \(\{t\}\) 的系数为
+\(B\Bigl(b_tv,\{t\}\Bigr)=B\Bigl(v,b_t\{t\}\Bigr)=B(v,e_t)\)。而 \(e_t\) 中 \(\{t\}\) 的系数为 \(1\)，所求标量即为此数。
+\end{proof}
+
+\begin{theorem}[子模定理]\label{b5:thm:specht-submodule}
+设 \(k\) 为任意域，\(n\) 为非负整数，\(\lambda\vdash n\)，\(M_k^\lambda\) 为行表类置换模，\(S_k^\lambda\subseteq M_k^\lambda\) 为 Specht 模，\(U\) 为 \(M_k^\lambda\) 的左 \(k[S_n]\)-子模。则至少有下列一项成立：
+\[
+S_k^\lambda\subseteq U,\qquad
+U\subseteq(S_k^\lambda)^\perp,
+\]
+其中正交补取在 \(M_k^\lambda\) 中，\(B\) 为以行表类基为标准正交基的对称双线性型。
+\end{theorem}
+\begin{proof}
+若第二项不成立，因为全部 \(e_t\) 生成 \(S_k^\lambda\)，存在 \(u\in U\) 与某个 \(t\) 使 \(B(u,e_t)\ne0\)。由\eqref{b5:eq:specht-rank-one}，
+\(b_tu=B(u,e_t)e_t\in U\)。域中非零标量可逆，故 \(e_t\in U\)；这个向量的 \(S_n\)-轨道生成整个 Specht 模，所以第一项成立。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:specht-char-zero-simple}
+设 \(k\) 为特征零域，\(n\) 为非负整数，\(\lambda\vdash n\)，\(M_k^\lambda\) 为行表类置换模，\(S_k^\lambda\) 为其中的 Specht 模。以 \(M_k^\lambda\) 的行表类基为标准正交基的对称双线性型 \(B\)，在 \(S_k^\lambda\) 上非退化，且 \(S_k^\lambda\) 作为左 \(k[S_n]\)-模绝对不可约。
+\end{proposition}
+\begin{proof}
+在整数标准基中写出 \(B\) 的 Gram 矩阵 \(G_\lambda\)，其条目为整数。把它看作实矩阵时，由\cref{b5:thm:specht-standard-basis}，这些基向量在实表类空间中线性无关，而表类配对为正定型。因此 \(\det G_\lambda\) 是非零整数。它在任意特征零域中的像仍非零，故限制型非退化。
+
+若 \(0\ne U\subseteq S_k^\lambda\) 是子模，子模定理或者给出 \(S_k^\lambda\subseteq U\)，或者给出
+\(U\subseteq S_k^\lambda\cap(S_k^\lambda)^\perp=0\)。后者不可能，故 \(U=S_k^\lambda\)。对 \(k\) 的任何扩域，标准基与同一个非零 Gram 行列式仍成立，所以上述不可约性在扩域后保持，即为绝对不可约。
+\end{proof}
 
 \subsection{不同分拆与非同构表示}
 \label{b5:subsec:0604:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:specht-dominance}
+设 \(k\) 为特征零域，\(n\) 为非负整数，\(\lambda,\mu\vdash n\)，\(S_k^\lambda,S_k^\mu\) 为相应 Specht 左 \(k[S_n]\)-模，\(M_k^\lambda,M_k^\mu\) 为相应行表类置换模。若
+\(\operatorname{Hom}_{k[S_n]}(S_k^\lambda,M_k^\mu)\ne0\)，则 \(\lambda\trianglerighteq\mu\)。此外，
+\[
+\dim_k\operatorname{Hom}_{k[S_n]}(S_k^\lambda,M_k^\lambda)=1.
+\]
+特别地，\(S_k^\lambda\cong S_k^\mu\) 当且仅当 \(\lambda=\mu\)。
+\end{proposition}
+\begin{proof}
+固定一个 \(\lambda\)-表 \(t\)，并令 \(\varphi:S_k^\lambda\rightarrow M_k^\mu\) 非零。因为 \(e_t\) 生成整个模，\(\varphi(e_t)\ne0\)。列群对 \(e_t\) 按符号作用，因此
+\[
+b_t\varphi(e_t)=\varphi(b_te_t)=|C_t|\varphi(e_t)\ne0.
+\]
+所以至少有一个 \(\mu\)-行表类 \(\{u\}\) 满足 \(b_t\{u\}\ne0\)。与秩一引理中的配对消去相同，\(u\) 的任何一行不能含有 \(t\) 同一列的两个数字。前 \(a\) 行从第 \(j\) 列至多取 \(\min(a,\lambda'_j)\) 个数字，故
+\[
+\mu_1+\cdots+\mu_a
+\leq\sum_j\min(a,\lambda'_j)
+=\lambda_1+\cdots+\lambda_a.
+\]
+这就是支配条件。
+
+当 \(\mu=\lambda\) 时，\cref{b5:lem:specht-rank-one}又说明 \(b_t\varphi(e_t)\in ke_t\)。因 \(|C_t|\) 可逆，\(\varphi(e_t)\) 为 \(e_t\) 的标量倍数；由生成性，\(\varphi\) 是包含映射的标量倍数。包含映射确实非零，故 Hom 空间恰为一维。
+
+最后，若两个 Specht 模同构，把同构与 \(S_k^\mu\subseteq M_k^\mu\) 复合，得到 \(\lambda\trianglerighteq\mu\)；用逆同构得到 \(\mu\trianglerighteq\lambda\)。支配序的反对称性给出 \(\lambda=\mu\)。反方向显然成立。
+\end{proof}
 
 \subsection{分类完备性}
 \label{b5:subsec:0604:03}
 
-待撰写。
+\begin{theorem}[对称群的不可约分类]\label{b5:thm:specht-classification}
+设 \(k\) 为特征零域，\(n\geq0\) 为整数。全部 Specht 模 \(S_k^\lambda\)，其中 \(\lambda\vdash n\)，是互不同构的绝对不可约左 \(k[S_n]\)-模，并穷尽所有不可约有限维左 \(k[S_n]\)-模。
+\end{theorem}
+\begin{proof}
+不可约性和非同构性已经分别由\cref{b5:prop:specht-char-zero-simple}及\cref{b5:prop:specht-dominance}证明。先取 \(k=\mathbb C\)。\cref{b5:prop:symmetric-conjugacy-partitions}说明共轭类数等于分拆数，而\cref{b5:thm:irreducible-character-basis}说明不可约复表示的类型数等于共轭类数。我们已经为每个分拆构造出互不同构的不可约表示，因此没有其他复不可约类型。
+
+为把完备性推广到任意特征零域，不能直接使用只对复表示证明的类函数论。改用整数标准基写出所有表示矩阵，得到一个在有理数上定义的代数同态
+\[
+\Phi_{\mathbb Q}:\mathbb Q[S_n]\longrightarrow
+\prod_{\lambda\vdash n}
+\operatorname{End}_{\mathbb Q}(S_{\mathbb Q}^\lambda).
+\]
+扩张到复数后，此映射单射：若群代数元素在所有不可约上作用为零，Maschke 定理使它在正则表示上也作用为零；作用于单位元即知该元素为零。由\cref{b5:thm:row-column-orthogonality}在单位共轭类处得到的维数平方和，目标维数为
+\(\sum_\lambda(f^\lambda)^2=n!\)，所以这个单射还是同构。
+
+因此 \(\Phi_{\mathbb Q}\) 在所选基中是方阵，其有理行列式非零。在任意特征零域 \(k\) 中，这个行列式的像仍非零，故
+\begin{equation}\label{b5:eq:symmetric-split-algebra}
+k[S_n]\cong\prod_{\lambda\vdash n}M_{f^\lambda}(k).
+\end{equation}
+一个不可约模只能由这组正交中心幂等元中的一个非零作用，所以只属于一个矩阵块。矩阵代数 \(M_d(k)\) 的不可约模只有列向量模：取非零 \(E_{ii}v\)，映射
+\(k^d\rightarrow V\)、第 \(j\) 个基向量映到 \(E_{ji}v\)，由矩阵单位关系是非零模同态；列向量模简单，其像在不可约 \(V\) 中必为全体。这证明\eqref{b5:eq:symmetric-split-algebra}所列的 Specht 模也穷尽 \(k\) 上全部类型。
+\end{proof}
+
+这里先证明“每个都是不可约”及“彼此不同”，最后才计数。没有前两项，参数个数与共轭类个数相等并不能证明分类。
 
 \subsection{Garnir 关系与标准基的分类用途}
 \label{b5:subsec:0604:04}
 
-待撰写。
+标准基使 Gram 行列式、基域扩张与群作用矩阵都有整系数的共同来源。它也使 Young 对称化子可以精确归一化：
+
+\begin{proposition}\label{b5:prop:young-quasi-idempotent}
+设 \(k\) 为特征零域，\(n\) 为非负整数，\(\lambda\vdash n\)，\(t\) 为形状 \(\lambda\) 的 Young 表，\(R_t,C_t\) 分别为其行群、列群。令 \(a_t=\sum_{r\in R_t}r\)、\(b_t=\sum_{c\in C_t}\operatorname{sgn}(c)c\)、\(c_t=b_ta_t\in k[S_n]\)，并记 \(f^\lambda\) 为形状 \(\lambda\) 的标准表数。则
+\[
+c_t^2=\frac{n!}{f^\lambda}c_t,
+\]
+且 \(\frac{f^\lambda}{n!}c_t\) 是一个幂等元，它生成的左理想同构于 Specht 模 \(S_k^\lambda\)。
+\end{proposition}
+\begin{proof}
+由\cref{b5:prop:young-ideal-model}，计算 \(c_t^2\) 等价于计算
+\(b_ta_te_t\)。秩一公式给出
+\(b_ta_te_t=B(a_te_t,e_t)e_t\)。记这个整数系数为 \(\alpha\)，便有 \(c_t^2=\alpha c_t\)。
+
+在实表类空间中，\(a_t\) 自伴随且 \(a_t^2=|R_t|a_t\)，所以
+\[
+\alpha=\frac{B(a_te_t,a_te_t)}{|R_t|}>0.
+\]
+严格不等号的理由是 \(a_te_t\) 中 \(\{t\}\) 的系数为 \(|R_t|\)：每个行置换都固定 \(\{t\}\)，而 \(e_t\) 在该处系数为 \(1\)。因此 \(\alpha\ne0\)。
+
+右乘 \(c_t/\alpha\) 是 \(k[S_n]\) 上的投影，像是 \(k[S_n]c_t\)，其维数为 \(f^\lambda\)。由 \(R_t\cap C_t=\{1\}\)，\(c_t\) 中单位元系数为 \(1\)，所以在群元素基下，右乘 \(c_t/\alpha\) 的每个对角元都是 \(1/\alpha\)，迹为 \(n!/\alpha\)。投影的迹等于像的维数，得到 \(\alpha=n!/f^\lambda\)。
+\end{proof}
+
+这项构造可与 Etingof 等人的 Young 对称化子证明对照\cite[Sections 5.12--5.13, pp. 110--113]{EtingofEtAl2011RepresentationTheory}。该书采用预先归一化的行、列求和及相反乘法次序，因而相应的倍数也随约定改变；本节的归一化是在当前模型内算出的。
 
 \subsection{不变配对、子模定理与特征条件}
 \label{b5:subsec:0604:05}
 
-待撰写。
+子模定理本身允许任意特征；不可约性证明需要的额外事实是 Specht 模上配对非退化。非零整数 Gram 行列式在正特征中可能变成零，这正是不能照搬证明的位置。
+
+\begin{example}\label{b5:exm:specht-mod-three}
+设 \(k\) 为特征 \(3\) 的域。由\cref{b5:exm:specht-21}，
+\(S_k^{(2,1)}\) 是三点置换模中的坐标和为零子空间。向量
+\(v_1+v_2+v_3\) 非零，因 \(3=0\) 而属于这个二维子空间，并生成一维平凡子模，所以 \(S_k^{(2,1)}\) 可约。在基 \(v_2-v_1,v_3-v_1\) 中，
+\[
+G_{(2,1)}=
+\begin{pmatrix}2&1\\1&2\end{pmatrix},
+\qquad
+\det G_{(2,1)}=3.
+\]
+其根恰好是上述平凡子模。标准基仍有两个向量，退化的是配对与不可约性。
+\end{example}
 
 \subsection{支配序、Young 子群与非同构性}
 \label{b5:subsec:0604:06}
 
-待撰写。
+由于 \(M_k^\mu=\operatorname{Ind}_{S_\mu}^{S_n}k\)，Frobenius 互反性把它与 Young 子群不动向量联系起来。在特征零下，完全可约性和 Specht 模的绝对不可约性又说明，一个不可约模在 \(M_k^\mu\) 中的重数等于
+\(\dim_k\operatorname{Hom}_{k[S_n]}(S_k^\lambda,M_k^\mu)\)。因此\cref{b5:prop:specht-dominance}给出三角性：
+\[
+M_k^\mu\cong S_k^\mu\oplus
+\bigoplus_{\substack{\lambda\trianglerighteq\mu\\\lambda\ne\mu}}
+(S_k^\lambda)^{\oplus m_{\lambda\mu}},
+\qquad m_{\lambda\mu}\in\mathbb Z_{\geq0}.
+\]
+这里尚未计算所有重数，但对角重数已经精确等于 \(1\)。后面建立 Frobenius 特征映射时，正是这项有方向的三角性帮助识别 Schur 函数。
 
 \subsection{共轭类计数与分类的完备性}
 \label{b5:subsec:0604:07}
 
-待撰写。
+分类还给出一个事后检验维数的方法：
+\[
+n!=\sum_{\lambda\vdash n}(f^\lambda)^2.
+\]
+左边来自群的阶，右边来自各个标准表集合的大小。这个恒等式在分类完成时已经成立；钩长公式将使每一项都能迅速算出。它适合检查是否漏了分拆或算错维数，却不能在没有不可约性和非同构性证明时单独充当分类论证。

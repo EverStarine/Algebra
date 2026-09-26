@@ -1,21 +1,129 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 B　量子群、簇代数与范畴化
-% 纲要位置：计划纲要.md，第 3803 行。
-
-\chapter{量子群、簇代数与范畴化}
-\label{b5:app:B}
-
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4570 行。
 % * 量子群作为 Hopf 代数的例子
 % * 簇代数的变异及小秩例子
 % * 表示论中的范畴化思想
 % * 简介不代替相应专题课程的完整理论
-%
+\chapter{量子群、簇代数与范畴化}
+\label{b5:app:B}
+\begin{chapterabstract}
+本附录通过三个可以动手计算的模型介绍量子群、簇代数与范畴化。量子 \(\mathfrak{sl}_2\) 展示非余交换 Hopf 结构及参数对表示的影响；二阶簇变异给出五周期和 Laurent 表达，并通过三步消去概述一般 Laurent 现象的证明；Grothendieck 群则说明对象、正合列与函子怎样产生环中的等式。最后比较参数特殊化与有理坐标代入的适用范围。
+\end{chapterabstract}
+\begin{learninggoals}
+\begin{itemize}
+\item 核验量子包络代数的关系与Hopf公式，判断普通张量翻转为何可能不等变。
+\item 计算二阶簇变量，区分单个算例的Laurent性与一般定理。
+\item 比较分裂Grothendieck群和短正合Grothendieck群，并用张量函子解释乘法。
+\item 在单位根、参数退化及点代入中检查原有证明的假设。
+\end{itemize}
+\end{learninggoals}
+
+本附录需要第14—15章的 \(\mathfrak{sl}_2\) 与包络代数、第21章的 Hopf 代数，以及有限长度模的合成列。簇代数小例只用有理函数的恒等变形，一般 Laurent 现象的证明概要另用通用系数和唯一分解。其余证明围绕所选模型展开；一般量子群、簇代数和高阶范畴化的系统理论可参阅相应专著。
+\ProseParagraphBreak
+量子 \(\mathfrak{sl}_2\) 与参数版本可参阅\cite[Section 5.6]{EtingofEtAl2015TensorCategories}；簇代数原始文献为\cite[Sections 2--3, 6]{FominZelevinsky2002ClusterFoundations}，所引节号依作者公开稿。
 
 \input{Appendices/AppendixB/SectionB01}
 \input{Appendices/AppendixB/SectionB02}
 \input{Appendices/AppendixB/SectionB03}
 \input{Appendices/AppendixB/SectionB04}
+
+\begin{chaptersummary}
+量子包络代数改变了乘法和余乘法的具体公式，簇变异改变生成元的选择，范畴化则用对象与映射解释数值或环中的等式。三者的联系须通过具体构造来说明。
+\ProseParagraphBreak
+泛型参数的结论可能在单位根处失效，有理变换也可能在特定点无定义。保留工作环、分母、分次和正合关系，才能准确判断一种计算在变化后的环境中是否仍然有效。
+\end{chaptersummary}
+\BookExercises
+\begin{exercise}\label{b5:ex:B:01}
+从量子整数定义证明 \([r+1]_q=q[r]_q+q^{-r}\)，并计算 \([2]_q,[3]_q\)。
+\end{exercise}
+\begin{solution}
+把两边乘 \(q-q^{-1}\)，右边为 \(q^{r+1}-q^{1-r}+q^{1-r}-q^{-r-1}\)，即所需分子。所以 \([2]_q=q+q^{-1}\)、\([3]_q=q^2+1+q^{-2}\)。这两个表达式已经是 Laurent 多项式，即使原来的分式写法需要排除 \(q=\pm1\)，它们本身仍可特殊化。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:02}
+写出 \(m=2\) 量子模型的 \(E,F,K\) 矩阵，并指出使正文不可约性证明成立的系数条件。
+\end{exercise}
+\begin{solution}
+依基 \(v_0,v_1,v_2\)，有 \(K=\operatorname{diag}(q^2,1,q^{-2})\)，\(F\) 在次对角线两个位置为一，\(E\) 在上对角线两个位置均为 \([2]_q\)，其余为零。正文方法要求三个 \(K\) 特征值互异且 \([2]_q\ne0\)。一般参数满足这些条件；若 \(q^2=-1\)，则 \([2]_q=0\)，而首尾权也相同，方法失效。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:03}
+在两个二维量子模型的张量积中，求一个被 \(E,F\) 零化且被 \(K\) 固定的非零向量。
+\end{exercise}
+\begin{solution}
+令 \(w=v_0\otimes v_1-q^{-1}v_1\otimes v_0\)。两项权都是一，故 \(Kw=w\)。余乘法给 \(Ew=(1-q^{-1}q)v_0\otimes v_0=0\)。又 \(F(v_0\otimes v_1)=v_1\otimes v_1\)，\(F(v_1\otimes v_0)=qv_1\otimes v_1\)，所以 \(Fw=0\)。这给出平凡子模，不需要预先知道整个张量分解。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:04}
+计算 \(S^2(E),S^2(F),S^2(K)\)，说明对极的平方未必为恒等。
+\end{exercise}
+\begin{solution}
+反乘法性给 \(S^2(E)=-S(K^{-1})S(E)=KEK^{-1}=q^2E\)，同理 \(S^2(F)=KFK^{-1}=q^{-2}F\)，\(S^2(K)=K\)。故 \(S^2=\operatorname{Int}(K)\)。当 \(q^2\ne1\) 时，从非零二维表示上也能看出它一般不等于恒等。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:05}
+设 \(q\) 为奇数阶 \(\ell\ge3\) 的本原单位根。求 \(m=\ell\) 模型商去 \(\operatorname{span}\{v_1,\ldots,v_\ell\}\) 后的一维表示。
+\end{exercise}
+\begin{solution}
+商由 \(v_0\) 的类生成。\(Ev_0=0\)，\(Fv_0=v_1\) 在商中为零，且 \(Kv_0=q^\ell v_0=v_0\)，所以商为平凡模。所取子空间非零，故原模型可约；这也具体显示最高权标记相同不保证在特殊参数上保持泛型简单性。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:06}
+取无系数种子 \((x_1,x_2,x_3)\) 及矩阵
+\[
+B=\begin{pmatrix}0&1&0\\-1&0&1\\0&-1&0\end{pmatrix}.
+\]
+沿第二个位置变异，求新变量和新矩阵，指出原来零条目处出现了什么变化。
+\end{exercise}
+\begin{solution}
+第二列的正、负条目分别位于第一、第三行，所以
+\(x_2'=(x_1+x_3)/x_2\)，其余变量不变。第二行、列反号，而
+\(b_{13}'=0+[1]_+[1]_+-[-1]_+[-1]_+=1\)，故
+\[
+B'=\begin{pmatrix}0&-1&1\\1&0&-1\\-1&1&0\end{pmatrix}.
+\]
+原来第一、第三位置之间的零条目变成非零；变异不仅反转相邻条目的符号，也会改变未涉及该位置的条目。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:07}
+对正文的 \(A_2\) 五个变量验证恒等式 \(z_1z_3-z_2=1\)、\(z_2z_4-z_3=1\)、\(z_3z_5-z_4=1\)，并解释为什么这没有直接给出全部代数关系的生成理想。
+\end{exercise}
+\begin{solution}
+将五个有理式代入，前两式即递推；第三式分子为 \((1+x)(1+y)-(1+x+y)=xy\)，除以 \(xy\) 为一。因此这些多项式属于相应参数映射的核。要说明它们生成全部核，仍须消去或证明商到目标的单射，不能从发现三条关系直接断定完整展示。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:08}
+在 \(A_2\) 的初始点 \(x=y=1\) 计算五变量；再在 \(x=y=-1\) 计算，比较哪个相邻簇可作为非零坐标。
+\end{exercise}
+\begin{solution}
+第一点得到 \(1,1,2,3,2\)，全部非零。第二点得到 \(-1,-1,0,-1,0\)，只有初始簇两变量都非零；其他四个相邻簇至少含一个零。原初始Laurent表达在两点都有意义，但把含零的簇直接作为可逆坐标会出现分母问题。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:09}
+令 \(z_1=x,z_2=y\)，并取递推 \(z_{i-1}z_{i+1}=1+z_i^2\)。计算 \(z_3,z_4\)，证明这两步仍为 Laurent 多项式。
+\end{exercise}
+\begin{solution}
+\(z_3=(1+y^2)/x\)，而 \(z_4=\Bigl(x^2+(1+y^2)^2\Bigr)/(x^2y)\)。分母均为单项式，所以是Laurent表达。这只核验两步，不能据此证明所有变异的Laurent性或有限型。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:10}
+设 \(A=k[t]/(t^2)\)。比较其有限维模范畴的分裂Grothendieck群与 \(G_0\)，并写出自然满同态的核。
+\end{exercise}
+\begin{solution}
+不可分解模为 \(k\) 和 \(A\)，故分裂群为 \(\mathbb Z[k]\oplus\mathbb Z[A]\)。合成列 \(0\to k\to A\to k\to0\) 给 \([A]=2[k]\)，所以 \(G_0\cong\mathbb Z[k]\)，自然映射的核由 \([A]-2[k]\) 生成。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:11}
+在 \(\mathfrak{sl}_2\) 的表示Grothendieck环中，以 \(t=[L_1]\) 表示 \([L_2],[L_3],[L_4]\)，并求 \([L_2]^2\)。
+\end{exercise}
+\begin{solution}
+递推给 \([L_2]=t^2-1\)、\([L_3]=t^3-2t\)、\([L_4]=t^4-3t^2+1\)。因此 \([L_2]^2=t^4-2t^2+1=[L_4]+[L_2]+[L_0]\)，与完整Clebsch--Gordan分解一致。多项式中的负系数来自换基，并不意味着实际张量分解有负重数。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:B:12}
+令 \(C^\bullet\) 为两项分次复形，\(C^0=k\oplus k\langle1\rangle\)、\(C^1=k\langle1\rangle\)，其中 \(k\langle1\rangle\) 表示集中在内部次数一的一维空间。若微分在次数一上为恒等，求其Euler类与上同调分次。
+\end{exercise}
+\begin{solution}
+Euler类为 \((1+v)-v=1\)。微分把唯一内部次数一部分同构送到后一项，所以 \(H^0\cong k\) 在内部次数零，\(H^1=0\)。若把整个复形移一位，Euler类变成 \(-1\)，而若只把内部次数平移一位，则变成 \(v\)。
+\end{solution}

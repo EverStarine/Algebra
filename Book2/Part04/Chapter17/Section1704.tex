@@ -1,5 +1,7 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 17.4 具体代数
+% 本轮补充的纲要细目：
+% * 以四元数左右乘构造范数相似变换，证明乘子及对角标量核；不由核的计算断言满射
 % 纲要位置：计划纲要.md，第 1325 行。
 
 \section{具体代数}
@@ -20,20 +22,20 @@
 \label{b2:subsec:1704:01}
 
 \begin{definition}\label{b2:def:quaternion-algebra}
-由两个生成元 \(i,j\) 及关系
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)。将自由结合代数 \(k\langle i,j\rangle\) 对下列关系生成的双边理想取商：
 \[
 i^2=a,\qquad j^2=b,\qquad ji=-ij
 \]
-定义的含幺 \(k\) 代数称为\term[siyuanshu-daishu]{四元数代数}[quaternion algebra]，记为 \((a,b)_k\)。具体地，它是自由结合代数 \(k\langle i,j\rangle\) 按这些关系生成的双边理想所取的商。
+所得含幺 \(k\) 代数称为\term[siyuanshu-daishu]{四元数代数}[quaternion algebra]，记为 \((a,b)_k\)。
 \end{definition}
 \symidx{\((a,b)_k\)：参数为 \(a,b\) 的四元数代数}
 
 关系使每个字都能先把 \(i\) 移到 \(j\) 左边，再将两个指数降到零或一，所以 \(1,i,j,ij\) 生成这个代数。它们还线性无关，这一点不能仅由关系写法直接断言。
 
 \begin{proposition}\label{b2:prop:quaternion-basis-splitting}
-\(Q=(a,b)_k\) 以 \(1,i,j,ij\) 为 \(k\) 基，并且是次数二的中心单代数。若扩域 \(K/k\) 含有 \(\alpha\) 满足 \(\alpha^2=a\)，则有分裂同构
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，则 \(Q\) 以 \(1,i,j,ij\) 为 \(k\) 基，并且是次数二的中心单 \(k\) 代数。若域扩张 \(K/k\) 含有 \(\alpha\) 满足 \(\alpha^2=a\)，则有分裂同构
 \[
-Q_K\longrightarrow M_2(K),\qquad
+Q_K=K\otimes_kQ\longrightarrow M_2(K),\qquad
 i\longmapsto I=\begin{pmatrix}\alpha&0\\0&-\alpha\end{pmatrix},
 \quad j\longmapsto J=\begin{pmatrix}0&b\\1&0\end{pmatrix}.
 \]
@@ -59,7 +61,11 @@ q\bar q=\bar q q
 \end{equation}
 
 \begin{proposition}\label{b2:prop:quaternion-norm}
-把式\eqref{b2:eq:quaternion-norm}的标量记为 \(N(q)\)，称为\term[siyuanshu-fanshu]{四元数范数}[quaternion norm]。则
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)。对 \(q=x_0+x_1i+x_2j+x_3ij\in Q\)，令 \(\bar q=x_0-x_1i-x_2j-x_3ij\)。由于
+\[
+q\bar q=\bar q q=x_0^2-a x_1^2-b x_2^2+ab x_3^2\in k,
+\]
+可将这个标量记为 \(N(q)\)，称为\term[siyuanshu-fanshu]{四元数范数}[quaternion norm]。对任意 \(q,r\in Q\)，有
 \[
 N(qr)=N(q)N(r),\qquad
 q\in Q^\times\Longleftrightarrow N(q)\ne0.
@@ -84,11 +90,33 @@ x_2-\alpha x_3&x_0-\alpha x_1
 \end{proof}
 \symidx{\(N(q)=q\bar q\)：四元数范数}
 
+\begin{proposition}\label{b2:prop:quaternion-norm-similitudes}
+设 \(k\) 为特征不为二的域，\(Q=(a,b)_k\)、\(a,b\in k^\times\)，\(N(x)=x\bar x\) 为四元数范数。对 \(u,v\in Q^\times\)，定义 \(k\) 线性映射
+\[
+L_{u,v}:Q\longrightarrow Q,\qquad x\longmapsto uxv^{-1}.
+\]
+它是范数二次型的相似变换，乘子为 \(N(u)/N(v)\)。映射 \((u,v)\mapsto L_{u,v}\) 是从 \(Q^\times\times Q^\times\) 到该相似变换群的群同态，其核为 \(\{(c,c)\mid c\in k^\times\}\)。特别地，内自同构 \(x\mapsto uxu^{-1}\) 保持 \(N\)。
+\end{proposition}
+\begin{proof}
+范数的对角系数为 \(1,-a,-b,ab\)，均非零，所以二次型非退化。\cref{b2:prop:quaternion-norm}的乘法性给出
+\[
+N(uxv^{-1})=\frac{N(u)}{N(v)}N(x).
+\]
+由特征不为二，极化同样使相应双线性型乘以这个标量。又有
+\[
+L_{u,v}L_{u',v'}(x)=uu'xv'^{-1}v^{-1}
+=L_{uu',vv'}(x),
+\]
+故是群同态。若 \(L_{u,v}\) 为恒等，在 \(x=1\) 处即得 \(u=v\)；再对全部 \(x\) 使用等式，得到 \(u\) 属于 \(Q\) 的中心，也就是 \(k^\times\)。反过来，对角标量显然作用为恒等。这证明核的描述，而取 \(u=v\) 就得到等距结论。
+\end{proof}
+
+这给出一族由代数乘法产生的几何变换。仅从核的计算不能断言它们穷尽全部相似变换；这里只使用上述明确构造，也不预先调用正交群的进一步分类。
+
 \subsection{矩阵代数与非分裂例子}
 \label{b2:subsec:1704:02}
 
 \begin{proposition}\label{b2:prop:quaternion-division-or-split}
-四元数代数 \(Q\) 或者是除代数，或者同构于 \(M_2(k)\)。它分裂，当且仅当其范数二次型有非平凡零点，即存在 \(q\ne0\) 使 \(N(q)=0\)。
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，\(N:Q\rightarrow k\) 为其四元数范数，则 \(Q\) 或者是除代数，或者同构于 \(M_2(k)\)。它分裂，当且仅当二次型 \(N\) 有非平凡零点，即存在 \(q\in Q\setminus\{0\}\) 使 \(N(q)=0\)。
 \end{proposition}
 \begin{proof}
 由\cref{b2:prop:csa-division-description}，\(Q\cong M_r(D)\)，其中 \(D\) 是除代数，且 \(4=r^2\dim_kD\)。若 \(r=1\)，\(Q\) 是除代数；否则只能 \(r=2,\dim_kD=1\)，即 \(D=k\)，所以 \(Q\cong M_2(k)\)。
@@ -112,7 +140,7 @@ x_2-\alpha x_3&x_0-\alpha x_1
 \label{b2:subsec:1704:03}
 
 \begin{theorem}[四元数的范数分裂判据]\label{b2:thm:quaternion-splitting}
-设 \(a\) 不是 \(k\) 中的平方，\(L=k(\alpha)\)、\(\alpha^2=a\)。则
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)。若 \(a\) 不是 \(k\) 中的平方，令 \(L=k(\alpha)\)，其中 \(\alpha^2=a\)，则
 \[
 (a,b)_k\text{ 分裂}\quad\Longleftrightarrow\quad
 b\in N_{L/k}(L^\times)

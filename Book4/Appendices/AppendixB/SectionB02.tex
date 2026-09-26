@@ -1,10 +1,113 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 B 的第 2 条要点整理。
+% 纲要标题：### B.2 \(K_0\) 与 Euler–Poincaré 可加性
+% 纲要位置：工作记录/计划纲要.md，第 3577 行。
+% 纲要细目（写作范围）：
+% #### B.2.1 Grothendieck 群的定义与泛性质
+% #### B.2.2 复形的 Euler 类与三角可加性
+% #### B.2.3 有限生成投射模的类与算例
 
 \section{\texorpdfstring{\(K_0\) 与 Euler–Poincaré 可加性}{K0 与 Euler–Poincaré 可加性}}
 \label{b4:sec:B02}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * K_0 与 Euler–Poincaré 可加性
+维数把向量空间的短正合列变成整数加法。模的长度、秩以及复形的 Euler 特征也遵守类似规则。与其逐个选择数值，不如先构造一个交换群，使每个满足同一可加规律的不变量都从它得到。
 
-待撰写。
+\subsection{Grothendieck 群的定义与泛性质}
+\label{b4:subsec:B02:01}
+
+\begin{definition}\label{b4:def:B-grothendieck-group}
+设 \(\mathcal E\) 为本质小的正合范畴。以对象同构类 \([X]\) 为生成元，以每个可容许短正合列
+\(0\rightarrow A\rightarrow B\rightarrow C\rightarrow0\)
+给出的
+\[
+[B]=[A]+[C]
+\]
+为关系构成的交换群，称为 \(\mathcal E\) 的 Grothendieck 群，记为 \(K_0(\mathcal E)\)。本质小性保证对象同构类组成集合。这把\cref{b4:def:grothendieck-group}中交换范畴的定义推广到指定的正合结构。
+\end{definition}
+\symidx{\(K_0(\mathcal E)\)：正合范畴的 Grothendieck 群}
+
+取零列即得 \([0]=0\)，取分裂列即得 \([A\oplus C]=[A]+[C]\)。但若正合结构含非分裂列，还会加入新的关系。\([B]=[A]+[C]\) 一般并不意味着 \(B\simeq A\oplus C\)。
+
+\begin{proposition}[可加不变量的泛性质]\label{b4:prop:B-k0-universal}
+设 \(\mathcal E\) 为本质小正合范畴，\(M\) 为交换群，\(v\) 为从 \(\mathcal E\) 的对象同构类到 \(M\) 的函数。存在唯一群同态 \(\overline v:K_0(\mathcal E)\rightarrow M\)，使 \(\overline v\Bigl([X]\Bigr)=v(X)\) 对每个 \(X\in\mathcal E\) 成立，当且仅当 \(v(B)=v(A)+v(C)\) 对全部可容许短正合列 \(0\to A\to B\to C\to0\) 成立。
+\end{proposition}
+\begin{proof}
+自由交换群的泛性质给出唯一的同态 \(\sum_i n_i[X_i]\mapsto\sum_i n_i v(X_i)\)。它下降到所定义的商群，当且仅当每个关系元 \([B]-[A]-[C]\) 被送到零，恰是所述条件。
+\end{proof}
+
+因而正合函子 \(F:\mathcal E\rightarrow\mathcal F\) 诱导群同态 \(K_0(F)\)，由 \([X]\mapsto\Bigl[F(X)\Bigr]\) 确定。对于分裂结构，\(K_0\) 正是对象同构类在直和下的交换幺半群的群完备化；若原范畴允许非分裂列，则须再除以这些列的关系。这里的定义和泛性质见 Weibel\cite[Chapter II, Definition 7.1]{Weibel2013KBook}。
+
+\subsection{复形的 Euler 类与三角可加性}
+\label{b4:subsec:B02:02}
+
+\begin{proposition}[Euler–Poincaré 等式的重述]\label{b4:prop:B-euler-cohomology}
+设 \(\mathcal A\) 为本质小交换范畴，\(X^\bullet\) 为其中的有界上链复形。则
+\[
+\sum_n(-1)^n[X^n]=\sum_n(-1)^n\Bigl[H^n(X)\Bigr]
+\quad\text{在 }K_0(\mathcal A)\text{ 中成立}.
+\]
+\end{proposition}
+\begin{proof}
+这是\cref{b4:thm:euler-poincare}已经证明的结论。为说明下面推广时须检查什么，重述其两条短正合列。记 \(Z^n=\ker \mathrm{d}^n\)、\(B^n=\operatorname{im}\mathrm{d}^{n-1}\)，则
+\[
+0\rightarrow Z^n\rightarrow X^n\rightarrow B^{n+1}\rightarrow0,
+\qquad
+0\rightarrow B^n\rightarrow Z^n\rightarrow H^n(X)\rightarrow0
+\]
+给出 \([X^n]=[B^n]+\Bigl[H^n(X)\Bigr]+[B^{n+1}]\)。乘以 \((-1)^n\) 并求和，相邻的边界项抵消。由于复形有界，全部求和有限，没有收敛或换序问题。
+\end{proof}
+
+本命题在正合子范畴中使用时，还须保证上述边界、余圈和上同调对象都在该子范畴中，且这两列可容许。不能仅因每个 \(X^n\) 属于子范畴，就自动在它的 \(K_0\) 中写上同调的类。Weibel\cite[Chapter II, Proposition 7.5 and Corollary 7.5.1]{Weibel2013KBook}给出了保证这些条件的一类假设。
+
+\begin{definition}\label{b4:def:B-triangulated-k0}
+设 \(\mathcal T\) 为本质小三角范畴。以其对象同构类为生成元，并对每个好三角 \(A\rightarrow B\rightarrow C\rightarrow A[1]\) 加入关系 \([B]=[A]+[C]\)，所得交换群记为 \(K_0(\mathcal T)\)。
+\end{definition}
+
+对三角 \(X\rightarrow0\rightarrow X[1]\rightarrow X[1]\)，有 \(\Bigl[X[1]\Bigr]=-[X]\)。这解释了交错号与移位之间的关系，而不只是数值公式上的巧合。
+
+\begin{theorem}[完美复形的 Euler 同构]\label{b4:thm:B-euler-isomorphism}
+设 \(R\) 为含幺环，\(R\text{-}\mathrm{proj}\) 为有限生成投射左 \(R\)-模范畴，取通常的、亦即分裂的正合结构。令 \(K_0(R)=K_0(R\text{-}\mathrm{proj})\)。零次嵌入给出同构
+\[
+K_0(R)\ \simeq\ K_0\Bigl(K^b(R\text{-}\mathrm{proj})\Bigr)
+\ \simeq\ K_0\bigl(\operatorname{Perf}(R)\bigr),
+\]
+第一个同构的逆由有界投射复形的 Euler 类
+\(\chi(P^\bullet)=\sum_n(-1)^n[P^n]\)
+给出。
+\end{theorem}
+\begin{proof}
+先说明 Euler 类在同伦同构下不变。一个有界无同调投射复形从最高非零次向下逐项分裂：最高项是投射模，前一微分到它的满射分裂，其核又为投射；重复便得到
+\(P^n\simeq Z^n\oplus Z^{n+1}\)，其中各 \(Z^n\) 有限生成投射。因此该复形的 Euler 类为零。若 \(P\rightarrow Q\) 为同伦等价，其锥无同调且仍有界投射，所以
+\(\chi(Q)-\chi(P)=\chi\Bigl(\operatorname{Cone}(f)\Bigr)=0\)。
+
+锥的 \(n\) 次项为 \(Q^n\oplus P^{n+1}\)，因此对锥三角有
+\(\chi(Q)=\chi(P)+\chi\Bigl(\operatorname{Cone}(f)\Bigr)\)。
+每个好三角同构于锥三角，所以 Euler 类诱导从三角 \(K_0\) 到 \(K_0(R)\) 的群同态。另一方面，投射模的可容许短正合列分裂；零次嵌入把它送到分裂三角，故也诱导反方向同态。Euler 类作用于零次投射模就是原来的类。
+
+最后，对有界复形逐次取截去最低项后的子复形 \(F^{n+1}P\subset F^nP\)，逐次分裂短正合列给出好三角
+\[
+F^{n+1}P\longrightarrow F^nP\longrightarrow P^n[-n]
+\longrightarrow F^{n+1}P[1].
+\]
+有限次使用三角关系及 \(\Bigl[X[1]\Bigr]=-[X]\)，得到
+\([P^\bullet]=\sum_n(-1)^n[P^n]\)。
+故另一方向复合亦为恒等。最后的同构来自\cref{b4:prop:perfect-homotopy-model}的三角等价：该等价全忠实且每个完美对象有有界投射模型，因而准确保持所用的好三角关系。
+\end{proof}
+
+例如对整数 \(m\ge2\)，\(\mathbb Z/m\) 作为完美 \(\mathbb Z\)-复形有两项模型 \(\mathbb Z\xrightarrow{m}\mathbb Z\)，故其 \(K_0\) 类为零，但这个导出对象并不为零。Grothendieck 群记录可加信息，不能完整分类对象。
+
+\subsection{有限生成投射模的类与算例}
+\label{b4:subsec:B02:03}
+
+\begin{proposition}\label{b4:prop:B-basic-k0}
+对任意域 \(k\)，有 \(K_0(k)\simeq\mathbb Z\)；并且 \(K_0(\mathbb Z)\simeq\mathbb Z\)。若 \(R=k_1\times\cdots\times k_r\) 为有限多个域的直积，则 \(K_0(R)\simeq\mathbb Z^r\)。
+\end{proposition}
+\begin{proof}
+域上有限生成投射模就是有限维向量空间，同构类由维数分类，直和对应自然数相加，群完备化得到 \(\mathbb Z\)。整数上的有限生成投射模是有限自由模的直和项，因而是有限生成无挠交换群，由\cref{b4:thm:pid-free-submodule}关于主理想整环上自由模子模的结论，仍为自由模；有限生成性又使其秩有限；秩同样给出所需同构。
+
+对域直积，令 \(e_i\) 为相应的中心幂等元。任一左 \(R\)-模分解为 \(\bigoplus_i e_iM\)，每个 \(e_iM\) 为 \(k_i\)-向量空间。有限生成投射模恰对应有限维向量空间的 \(r\)-元组：每个 \(Re_i\) 是 \(R\) 的投射直和项，而每个这样的元组都是有限多个 \(Re_i\) 的直和。维数向量因此给出 \(\mathbb N^r\)，群完备化为 \(\mathbb Z^r\)。
+\end{proof}
+
+若 \(R\) 为左 Noether 环，还可在全部有限生成左模的交换范畴上构造 \(G_0(R)\)。包含投射模的正合函子给出 \(K_0(R)\rightarrow G_0(R)\)，但二者使用的对象不同；不应只因记号相似便认为总同构。存在有限投射消解时，模的类可以用消解的 Euler 类表达；高投射维数的情形则需要进一步判断。
+
+\ProseParagraphBreak
+对 \(k\times k\)，\(K_0\) 已能区分两个投射直和项 \(k\times0\) 与 \(0\times k\)：它们的类分别为 \((1,0)\)、\((0,1)\)。只取底层 \(k\)-维数会把两者都送到 \(1\)，丢失了由两个中心幂等元确定的分量信息。

@@ -1,30 +1,91 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 15.3 具体计算
-% 纲要位置：计划纲要.md，第 3562 行。
+% 纲要位置：工作记录/计划纲要.md，第 4213 行。
 
 \section{具体计算}
 \label{b5:sec:1503}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 有序单项式
 % * sl_2 的包络代数
 % * Casimir 元的例子
 %
 
+有序单项式基使元素的坐标和乘积都可以直接计算。先固定次序，再按交换关系重排，并保留每次交换产生的低次项；漏掉括号项会改变元素。伴随导子也与这种重排相容，后面将用这一性质证明最高权商模上的局部幂零性。
+
 \subsection{有序单项式}
 \label{b5:subsec:1503:01}
 
-待撰写。
+设 \(\mathfrak g\) 有有序基 \(x_1<\cdots<x_n\)。PBW 使每个元素唯一写成有限和
+\[
+u=\sum_{a_1,\ldots,a_n\ge0}
+c_{a_1,\ldots,a_n}x_1^{a_1}\cdots x_n^{a_n}.
+\]
+相邻逆序替换是求这些系数的算法；最高次数的部分按交换多项式相乘，而低次数由李括号补正。特别地，PBW 是向量空间基定理，不表示这些 \(x_i\) 在 \(U(\mathfrak g)\) 中已经交换。
+\begin{proposition}\label{b5:prop:enveloping-adjoint-nilpotence}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(x\in\mathfrak g\)，并假设 \(\operatorname{ad}x\) 在 \(\mathfrak g\) 上局部幂零，即对每个 \(y\in\mathfrak g\)，都存在整数 \(a\ge1\) 使 \((\operatorname{ad}x)^a y=0\)。则 \(\operatorname{ad}x\) 在泛包络代数 \(U(\mathfrak g)\) 上的导子延拓也局部幂零。在此假设下，若左 \(\mathfrak g\) 模 \(V\) 由向量 \(v\in V\) 生成，且 \(x^b v=0\) 对某个整数 \(b\ge1\) 成立，则 \(x\) 在整个 \(V\) 上局部幂零。
+\end{proposition}
+\begin{proof}
+记 \(D(u)=xu-ux\)。它是结合代数的导子，且在 \(\mathfrak g\) 上就是给定的伴随作用。对一个乘积 \(y_1\cdots y_r\)，选 \(a_i\ge1\) 使 \(D^{a_i}y_i=0\)。反复使用 Leibniz 规则，\(D^N\) 的每项是在各因子上分别作用 \(j_i\) 次、且 \(\sum_i j_i=N\) 的乘积。若 \(N>\sum_i(a_i-1)\)，至少一个 \(j_i\ge a_i\)，该项为零。线性组合只有有限项，故 \(D\) 在每个包络代数元素上局部幂零。
+再由 \(xu=D(u)+ux\)，对 \(N\) 归纳得到
+\[
+x^Nu=\sum_{j=0}^N\binom NjD^j(u)x^{N-j}.
+\]
+若 \(D^a(u)=0\)、\(x^bv=0\)，取 \(N\ge a+b-1\)，每项或有 \(j\ge a\)，或有 \(N-j\ge b\)，于是 \(x^Nuv=0\)。\(V\) 中元素为有限个 \(uv\) 的线性组合，取各个界的最大值即可。
+\end{proof}
+这个证明不要求一个统一的幂同时零化整个包络代数；指数可以依赖具体元素。后面构造有限维最高权模时，先在最高向量上加幂关系，再借本命题将局部幂零性传到它生成的整个模。
 
 \subsection{\texorpdfstring{\(\mathfrak{sl}_2\) 的包络代数}{sl2 的包络代数}}
 \label{b5:subsec:1503:02}
 
-待撰写。
+对 \(\mathfrak{sl}_2(\mathbb C)\)，选择次序 \(f<h<e\)。则
+\[
+\{\,f^a h^b e^c\mid a,b,c\ge0\,\}
+\]
+为 \(U(\mathfrak{sl}_2)\) 的基。三个基本重排为
+\[
+ef=fe+h,\qquad eh=(h-2)e,\qquad hf=f(h-2).
+\]
+例如
+\[
+efh=f(h-2)e+h^2,\qquad
+e^2f=fe^2+2(h-1)e.
+\]
+第二式由 \(e(ef)=e(fe+h)\) 展开，再把 \(eh\) 按规则重排得到。
+\ProseParagraphBreak
+\cref{b5:lem:sl2-ladder}的算子恒等式同样是包络代数中的恒等式：
+\[
+ef^r=f^re+r f^{r-1}(h-r+1)\qquad(r\ge1).
+\]
+它的原证明只用了三个交换关系，故可以在当前结合代数里原样进行。以 \(r=2\) 继续计算，可得
+\[
+\begin{aligned}
+e^2f^2
+&=e\Bigl(f^2e+2f(h-1)\Bigr)\\
+&=f^2e^2+2f(h-1)e+2(fe+h)(h-1)\\
+&=f^2e^2+4f(h-2)e+2h(h-1).
+\end{aligned}
+\]
+末式已是所选次序下的表达。这里的低次项在具体表示上可能与高次项相消，但在包络代数本身并没有消失。
 
 \subsection{Casimir 元的例子}
 \label{b5:subsec:1503:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:sl2-casimir-central}
+记 \(\mathfrak{sl}_2=\mathfrak{sl}_2(\mathbb C)\)，\(E_{ij}\) 为矩阵单位，取标准基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)，并通过自然映射把它们看作泛包络代数的元素。在 \(U(\mathfrak{sl}_2)\) 中，元素
+\[
+C=h^2+2h+4fe=h^2-2h+4ef
+\]
+属于中心。对任意复 \(\mathfrak{sl}_2\) 模 \(V\)，若 \(v\in V\setminus\{0\}\)、\(\lambda\in\mathbb C\) 满足 \(ev=0\)、\(hv=\lambda v\)，则 \(C\) 在 \(v\) 上作用为 \(\lambda(\lambda+2)\)；如果整个模由 \(v\) 生成，同一个标量作用遍及整个模。
+\end{proposition}
+\begin{proof}
+两个表达式由 \(ef-fe=h\) 相等。\cref{b5:lem:sl2-casimir-operator}中的交换子计算只用这三条关系，因此在包络代数中仍给出
+\([e,C]=[f,C]=[h,C]=0\)。这三个元素生成整个结合代数，所以 \(C\) 中央。最高向量 \(v\) 满足 \(ev=0\)、\(hv=\lambda v\)，代入第一式即得标量；对任意 \(u\)，中央性使
+\(C(uv)=uCv=\lambda(\lambda+2)uv\)。
+\end{proof}
+PBW 还说明 \(C\) 不是一个标量元素：它的最高次主符号为
+\(h^2+4fe\)，在交换多项式环中非零。一个中央元素在每个特定不可约模上可以成为标量，不等于它在代数里本来就是标量。
+\ProseParagraphBreak
+若按 Killing 型取对偶基，则对应的 Casimir 元是 \(C/8\)，见上一章末的归一化计算。选择哪一种写法并不改变中央性，但会改变其特征值常数。本编一般半单代数的公式将采用 Killing 归一化。

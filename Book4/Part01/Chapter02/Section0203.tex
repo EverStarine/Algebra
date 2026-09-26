@@ -5,6 +5,8 @@
 \section{正向与逆向系统}
 \label{b4:sec:0203}
 
+递增子模的并允许先把有限个元素放入共同阶段再计算；逆系统则要求全部坐标同时相容。这一区别决定了两种极限的元素公式和后面的正合性质。
+
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 滤过余极限即通常的正向极限
@@ -18,16 +20,16 @@
 考虑递增的子模族。它们的并仍是子模，因为任意两个元素总能放入同一个较大的子模，再在那里完成加法。这个简单事实指出了一种重要条件：有限次计算所涉及的数据，应当能够在同一个对象中比较。
 
 \begin{definition}[滤过范畴与正向系统]\label{b4:def:filtered-category}
-一个非空小范畴 \(J\) 若满足以下两个条件，则称为\term[lvguofanchou]{滤过范畴}[filtered category]：
+设 \(J\) 为非空小范畴。若 \(J\) 满足以下两个条件：
 \begin{enumerate}
 \item 对任意对象 \(i,j\)，存在对象 \(k\) 及态射 \(i\rightarrow k,j\rightarrow k\)；
 \item 对任意平行态射 \(u,v:i\rightarrow j\)，存在 \(w:j\rightarrow k\)，使 \(wu=wv\)。
 \end{enumerate}
-以滤过范畴为指标的余极限称为\term[lvguoyujixian]{滤过余极限}[filtered colimit]。若指标范畴来自一个非空有向偏序集 \(I\)，即任意两个元素有共同上界，则图表由对象 \(M_i\) 及满足
+则称 \(J\) 为\term[lvguofanchou]{滤过范畴}[filtered category]。以滤过范畴为指标的余极限称为\term[lvguoyujixian]{滤过余极限}[filtered colimit]。设 \(\mathcal C\) 为范畴，\(I\) 为非空有向偏序集，即任意两个元素有共同上界。给定 \(\mathcal C\) 中的对象 \(M_i\) 及态射 \(f_{ij}:M_i\rightarrow M_j\)（\(i\le j\)）；若满足
 \[
 f_{ii}=1,\qquad f_{jk}f_{ij}=f_{ik}\quad(i\le j\le k)
 \]
-的态射 \(f_{ij}:M_i\rightarrow M_j\) 组成，称为\term[zhengxiangxitong]{正向系统}[direct system]。其余极限也称为\term[zhengxiangjixian]{正向极限}[direct limit]，记为 \(\varinjlim_i M_i\)。
+则称这些对象与态射组成一个\term[zhengxiangxitong]{正向系统}[direct system]。其余极限也称为\term[zhengxiangjixian]{正向极限}[direct limit]，记为 \(\varinjlim_i M_i\)。
 \end{definition}
 
 偏序范畴中两个给定对象之间至多有一条态射，所以滤过定义中的第二个条件自动成立。对于一般范畴，这个条件不能省略：它用来协调同一数据被两种不同路径送到同一对象时产生的差别。
@@ -120,7 +122,7 @@ a_n\equiv c_0+c_1p+\cdots+c_{n-1}p^{n-1}\pmod{p^n}.
 模的极限通过方程截取直积，余极限则通过关系商去直和。这两种公式都适用于任意小指标范畴，不要求指标有向。
 
 \begin{proposition}[模的极限与余极限公式]\label{b4:prop:module-limit-formulas}
-设 \(R\) 为含幺环，\(J\) 为小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。定义
+设 \(R\) 为含幺环，\(J\) 为小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模图表，记 \(M_j=M(j)\)。以下 \(\iota_j\) 与 \(\iota_\alpha\) 分别表示以对象和态射为指标的直和的结构包含。定义
 \[
 \begin{aligned}
 \delta:\prod_{j\in\operatorname{Ob}J}M_j
@@ -137,8 +139,11 @@ d(\iota_\alpha(m))&=\iota_k(M(\alpha)m)-\iota_j(m).
 \[
 \operatorname{colim}_JM
 =\operatorname{coker}d
-=\left(\bigoplus_jM_j\right)/
-\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\,\bigr\rangle_R.
+=\left(\bigoplus_jM_j\right)/S,
+\]
+其中关系子模为
+\[
+S=\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\mid \alpha:j\rightarrow k\text{ 在 }J\text{ 中},\ m\in M_j\,\bigr\rangle_R.
 \]
 \end{proposition}
 \begin{proof}
@@ -146,7 +151,7 @@ d(\iota_\alpha(m))&=\iota_k(M(\alpha)m)-\iota_j(m).
 \end{proof}
 
 \begin{proposition}[滤过模图表的单阶段表示]\label{b4:prop:filtered-module-elements}
-设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。其模余极限的每个元素均可表示为某个 \(m\in M_i\) 的像；两个代表相等的判据与\cref{b4:prop:filtered-colimit-elements}相同。特别地，\(m\in M_i\) 的像为零，当且仅当某个 \(u:i\rightarrow j\) 满足 \(M(u)m=0\)。
+设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模图表，记 \(M_i=M(i)\)。其模余极限的每个元素均可表示为某个 \(m\in M_i\) 的像。两个代表 \(m\in M_i\)、\(n\in M_j\) 给出同一元素，当且仅当存在 \(u:i\rightarrow k\)、\(v:j\rightarrow k\)，使 \(M(u)m=M(v)n\)。特别地，\(m\in M_i\) 的像为零，当且仅当某个 \(u:i\rightarrow j\) 满足 \(M(u)m=0\)。
 \end{proposition}
 \begin{proof}
 先在底集合的滤过余极限上定义运算。对 \(m\in M_i,n\in M_j\)，取共同目标 \(k\)，把和定义为两个像在 \(M_k\) 中之和的类；标量乘法由 \([m]\mapsto[rm]\) 定义。若改变代表或共同目标，有限数据共同比较引理能把两次计算映到同一对象，并使所需等式同时成立。因此运算与选择无关。全部模公理也只涉及有限多个元素，可送到一个共同对象后由该模中的公理验证。
@@ -155,7 +160,7 @@ d(\iota_\alpha(m))&=\iota_k(M(\alpha)m)-\iota_j(m).
 \end{proof}
 
 \begin{proposition}[滤过余极限的正合性]\label{b4:prop:filtered-colimits-exact}
-设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(A,B,C:J\rightarrow R\text{-}\mathbf{Mod}\) 为图表。若自然变换 \(A\xrightarrow{u}B\xrightarrow{v}C\) 在每个对象 \(j\) 上给出短正合列
+设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(A,B,C:J\rightarrow R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模图表，记 \(A_j=A(j)\)、\(B_j=B(j)\)、\(C_j=C(j)\)。若自然变换 \(A\xrightarrow{u}B\xrightarrow{v}C\) 在每个对象 \(j\) 上给出短正合列
 \[
 0\longrightarrow A_j\xrightarrow{u_j}B_j
 \xrightarrow{v_j}C_j\longrightarrow0,

@@ -1,21 +1,215 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 A　组合代数与反射群
-% 纲要位置：计划纲要.md，第 3796 行。
-
-\chapter{组合代数与反射群}
-\label{b5:app:A}
-
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4532 行。
 % * Coxeter 群及长度和 Bruhat 序
 % * 对称函数、Young 表和组合恒等式
 % * 代数结合组合的计数方法
 % * Hecke 代数和 Kazhdan–Lusztig 理论的基本概念
-%
+
+\chapter{组合代数与反射群}
+\label{b5:app:A}
+\BookChapterNumber{b5:app:A}
+
+\begin{chapterabstract}
+反射关系、表格插入和生成函数使组合对象能够参与代数计算。本附录证明置换长度等于逆序数，解释 Bruhat 序与弱序的差别，并概述一般 Coxeter 词性质的证明；由 Pieri 规则得到 Schur 多项式的半标准表展开，建立 Robinson--Schensted 对应。轨道计数、循环指标及有限域子空间计数提供了几种常用的计数方法。最后证明 Hecke 标准基与 Kazhdan--Lusztig 规范基定理，在 \(S_3\) 中计算胞腔表示。
+\end{chapterabstract}
+\begin{learninggoals}
+\begin{itemize}
+\item 在对称群中计算约化词、长度及低秩 Bruhat 序。
+\item 用横条链、行插入与逆插入处理 Young 表计数。
+\item 根据作用群和权重建立轨道计数式，使用分次生成函数及有限域计数。
+\item 比较 Hecke 代数的两组基，核验低秩乘法和胞腔表示矩阵。
+\end{itemize}
+\end{learninggoals}
+
+所需基础是有限群作用及本卷第6、7章的 Young 表、Schur 函数和 Pieri 规则。一般 Coxeter 词性质以根的符号变化和秩二反射计算给出证明概要；在此基础上，Hecke 标准基和 Kazhdan--Lusztig 规范基的证明在本附录展开。所选计数结果均作证明，并给出秩一和 \(S_3\) 的具体代数计算。一般胞腔分类、规范基正性和 Schubert 簇的上同调理论可留待进一步学习。
 
 \input{Appendices/AppendixA/SectionA01}
 \input{Appendices/AppendixA/SectionA02}
 \input{Appendices/AppendixA/SectionA03}
 \input{Appendices/AppendixA/SectionA04}
+
+\begin{chaptersummary}
+邻位换位每次改变一个逆序，所以最短词与逆序数一致。Bruhat 序允许乘任意反射，弱序只允许简单生成元；两者从 \(S_3\) 开始已有区别。半标准表通过逐次加横条解释 Schur 多项式，而行插入与逆插入把置换分配到同形状的成对标准表，给出标准表数平方和的恒等式。
+
+\ProseParagraphBreak
+轨道计数利用轨道大小与稳定子群阶的关系，子空间计数则把线性无关元组的数目除以每个子空间的有序基数。生成函数记录次数、逆序数或颜色数量。Hecke 代数将反射的二次关系变形；它的规范基以自对偶和三角条件刻画，低秩胞腔已经能产生非平凡表示矩阵。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:A-dihedral-four}
+设 \(W=\Bigl\langle s,t\mid s^2=t^2=1,(st)^4=1\Bigr\rangle\)。列出全部元素的长度，并求长度生成多项式。
+\end{exercise}
+\begin{solution}
+元素依次为
+\[
+1;\quad s,t;\quad st,ts;\quad sts,tst;\quad stst=tsts.
+\]
+在长度小于四时，约去相邻相同字母后只剩交替词，两个不同交替词在正方形的旋转反射模型中不同。长度四的两词由辫关系相等，其他更长词可利用这个关系并约去相同邻字继续缩短。因而所列长度分别为 \(0,1,2,3,4\)，生成多项式为 \(1+2q+2q^2+2q^3+q^4\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-bubble-word}
+求置换 \(4213\) 的长度，并用邻位换位写出一个约化表达式。
+\end{exercise}
+\begin{solution}
+四贡献三个逆序，二与一再贡献一个，所以长度四。从 \(4213\) 右乘 \(s_2,s_1,s_2,s_3\)，依次得到 \(4123,1423,1243,1234\)。因此
+\(4213=s_3s_2s_1s_2\)。这个词有四项，达到逆序下界，故约化。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-bruhat-not-length}
+在 \(S_3\) 中给出两个长度相同却不能在 Bruhat 序下比较的不同元素；再给出一对在 Bruhat 序下可比而在右弱序下不可比的元素，并直接核验。
+\end{exercise}
+\begin{solution}
+\(s\) 与 \(t\) 均长度一。Bruhat 的非空链严格增加长度，所以二者不可比。另一例取 \(t\) 与 \(st\)：右乘反射 \(tst\) 有 \(t(tst)=st\)，长度增加，故 \(t\le st\)。若右弱序可比，长度差一迫使 \(st=tr\)、\(r\in\{s,t\}\)，但 \(ts\ne st\)、\(tt=1\)，矛盾。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-longest-complement}
+设 \(w_0=n(n-1)\cdots1\in S_n\)。证明
+\(\ell(w_0w)=\binom n2-\ell(w)\)，并据此说明长度多项式的系数为何对称。
+\end{exercise}
+\begin{solution}
+\((w_0w)(i)=n+1-w(i)\)，所以每一对位置在 \(w_0w\) 中逆序，当且仅当在 \(w\) 中不逆序。位置对共有 \(\binom n2\)，由长度等于逆序数得到公式。映射 \(w\mapsto w_0w\) 是双射，因此长度 \(d\) 与长度 \(\binom n2-d\) 的置换等数。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-semistandard-21}
+求用 \(1,2,3\) 填写的形状 \((2,1)\) 的半标准表数，并按重量说明计数。
+\end{exercise}
+\begin{solution}
+重量为某两个数字中的一个出现两次、另一个一次时，只要确有两个不同数字，恰有一张半标准表；三个数字中选择重复数字及另一数字，给出六张。重量 \((1,1,1)\) 时，左上角必须是一，二、三可以交换放在右上角和左下角，给出两张。只有一个数字时列严格递增不可能。因此共八张，对应
+\[
+s_{(2,1)}(x_1,x_2,x_3)
+=\sum_{i\ne j}x_i^2x_j+2x_1x_2x_3.
+\]
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-insert-2413}
+对置换 \(2413\) 进行行插入，求 \(P,Q\)，再从所得表对逆向恢复置换。
+\end{exercise}
+\begin{solution}
+前两步第一行为 \(2,4\)。插入一时弹出二，得到第一行 \(1,4\)、第二行 \(2\)；插入三时弹出四，附到第二行，故
+\[
+P=\begin{array}{cc}1&3\\2&4\end{array},
+\qquad Q=\begin{array}{cc}1&2\\3&4\end{array}.
+\]
+先删 \(Q\) 的四所在格：取出 \(P\) 的四，向上替换最右边小于四的三，输出三。删三所在格：取出二，向上替换一，输出一。余下第一行 \(2,4\)，依次输出四、二。逆序读取输出即恢复 \(2,4,1,3\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-inverse-pair}
+给定
+\[
+P=\begin{array}{ccc}1&3&4\\2&&\end{array},
+\qquad
+Q=\begin{array}{ccc}1&2&4\\3&&\end{array},
+\]
+求对应的置换。
+\end{exercise}
+\begin{solution}
+删记录数字四的格子直接输出四。删数字三所在的第二行格子，取出二，在上行把一替换为二，输出一。此时上行为 \(2,3\)，接着输出三、二。因此置换为 \(2314\)。正向插入二、三后第一行为 \(2,3\)，插入一弹出二，最后把四附到第一行，核验了原表对。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-catalan-five}
+列出形状 \((3,3)\) 的全部标准表，只写第一行即可，并与 Catalan 数核验。
+\end{exercise}
+\begin{solution}
+第一行可能是 \(123,124,125,134,135\)，第二行由其余三个数字递增填入。它们的每个读取前缀均满足第一行数字数不少于第二行数字数；其他选择会违反该条件。共有五张，符合 \(\frac14\binom63=5\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-necklace-three-colors}
+四个圆周位置用三种固定颜色染色，只把旋转视为相同。求总轨道数，并求其中第一种颜色出现两次、其余颜色各一次的轨道数。
+\end{exercise}
+\begin{solution}
+循环指标给出总数
+\((3^4+3^2+2\cdot3)/4=24\)。
+指定重量为 \(a^2bc\) 时，只有恒等置换的固定染色有贡献，系数为
+\(\frac14\cdot4!/(2!1!1!)=3\)。半周旋转强迫每种颜色出现偶数次，四分之一周旋转强迫全部同色，故其余项不贡献。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-bracelet-three-colors}
+把上一题的等价关系扩大为正方形的全部旋转和反射，求三色染色的轨道数。
+\end{exercise}
+\begin{solution}
+四个旋转的固定染色总和为 \(96\)。两条经过对顶点的反射轴具有循环型 \(1^22\)，各固定 \(3^3=27\) 种；两条经过对边中点的轴具有型 \(2^2\)，各固定 \(3^2=9\) 种。因此总轨道数为
+\((96+54+18)/8=21\)。这小于只允许旋转时的二十四，说明多三对旋转轨道被反射合并。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-partition-six}
+分别列出六的不同部分分拆与全部部分为奇数的分拆，核验二者等数。
+\end{exercise}
+\begin{solution}
+不同部分分拆为 \(6,5+1,4+2,3+2+1\)。奇数部分分拆为 \(5+1,3+3,3+1+1+1,1+1+1+1+1+1\)，各四个。两张清单中的对象并不按写法直接相同，等数来自生成函数恒等式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-length-four-coefficient}
+求 \(S_4\) 中长度为二的置换数，不必逐个列出置换。
+\end{exercise}
+\begin{solution}
+长度多项式为 \((1+q)(1+q+q^2)(1+q+q^2+q^3)\)。取得 \(q^2\) 有两种方式：从后二个因子之一取 \(q^2\)，共二种；或从三个非平凡因子中选两个取 \(q\)，共三种。所以系数为五。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-gaussian-four-two}
+求 \(\mathbb F_2^4\) 的二维子空间数，并求包含一条指定直线的二维子空间数。
+\end{exercise}
+\begin{solution}
+总数为
+\[
+{4\brack2}_2=\frac{(16-1)(16-2)}{(4-1)(4-2)}=35.
+\]
+包含指定直线 \(L\) 的二维空间与 \(\mathbb F_2^4/L\) 的直线一一对应，故数目为 \((2^3-1)/(2-1)=7\)。商空间对应的原像维数为二，这说明对应确实双向成立。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-flag-three}
+计算 \(\mathbb F_3^3\) 的完整旗数，并用“先选直线，再选平面”重新计算。
+\end{exercise}
+\begin{solution}
+公式给出 \((1)(1+3)(1+3+9)=52\)。直接计算时，直线共有十三条；固定直线 \(L\) 后，包含它的平面对应二维商空间的直线，共四条。因此也得到 \(13\cdot4=52\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-hecke-rank-one-powers}
+在秩一 Hecke 代数中，令 \(d=v-v^{-1}\)。计算 \(H^3,H^4\)，并核验 \(v=1\) 时的结果。
+\end{exercise}
+\begin{solution}
+由 \(H^2=dH+1\)，
+\[
+H^3=(d^2+1)H+d,\qquad
+H^4=(d^3+2d)H+d^2+1.
+\]
+令 \(v=1\) 后 \(d=0\)，分别得到 \(H^3=H,H^4=1\)，符合二阶群生成元的幂。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-hecke-inverse}
+在 \(S_3\) 的 Hecke 代数中计算 \(H_{st}^{-1}\)，并解释为什么它不同于 \(\overline{H_{st}}\)。
+\end{exercise}
+\begin{solution}
+令 \(d=v-v^{-1}\)。则
+\[
+H_{st}^{-1}=H_t^{-1}H_s^{-1}
+=H_{ts}-d(H_s+H_t)+d^2.
+\]
+而 \(\overline{H_{st}}=H_s^{-1}H_t^{-1}
+=H_{st}-d(H_s+H_t)+d^2\)。标准基中 \(H_{st}\ne H_{ts}\)，所以两者不同。反演参数的横线映射保持乘法次序，取群元素逆的运算则反转次序。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-kl-simple-square}
+在系数域 \(\mathbb Q(v)\) 上，构造秩一 Hecke 代数的两个正交本原幂等元；说明它们在 \(v=1\) 时的意义，以及为什么不能将同一分式直接特化到 \(v^2=-1\)。
+\end{exercise}
+\begin{solution}
+令 \(b=v+v^{-1}\)，取
+\[
+e_+=\frac{H_s+v^{-1}}b,\qquad
+e_-=\frac{v-H_s}b.
+\]
+二者之和为一，乘积由二次关系为零，所以各自平方等于自身。它们对应不同根 \(v,-v^{-1}\) 的两个一维代数分量，因而本原。在 \(v=1\) 处，得到 \((1+s)/2\) 与 \((1-s)/2\)，分别投影到平凡和符号部分。若 \(v^2=-1\)，分母为零且二次关系的两根重合；所得代数形如 \(k[H]/(H-v)^2\)，不是两个域的乘积，不能延用这个幂等分解。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:A-cell-specialization}
+对正文的二维胞腔表示，计算 \(H_s,H_t\) 在 \(R=\mathbb Z[v,v^{-1}]\) 上的矩阵，并验证其中一条二次关系。再求 \(v=1\) 时两个一维胞腔的表示。
+\end{exercise}
+\begin{solution}
+从规范基矩阵减去 \(v^{-1}I\)，得到
+\[
+H_s=\begin{pmatrix}v&1\\0&-v^{-1}\end{pmatrix},
+\qquad H_t=\begin{pmatrix}-v^{-1}&0\\1&v\end{pmatrix}.
+\]
+对于 \(H_s\)，矩阵 \(H_s-vI\) 与 \(H_s+v^{-1}I\) 相乘，对角项为零，右上项为 \(0\cdot1+1\cdot0=0\)，其余也为零，故二次关系成立。胞腔 \(\{1\}\) 中，\(C'_s\cdot1=C'_s\) 属于被取商去掉的部分，所以 \(H_s\) 作用为 \(-v^{-1}\)，特化为符号表示。胞腔 \(\{sts\}\) 中 \(C'_s\) 作用为 \(v+v^{-1}\)，故 \(H_s\) 作用为 \(v\)，特化为平凡表示。
+\end{solution}

@@ -1,16 +1,339 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第7章　对称函数与 Schur–Weyl 对偶
-% 纲要位置：计划纲要.md，第 3300 行。
+% 纲要位置：工作记录/计划纲要.md，第 3951 行。
 
 \chapter{对称函数与 Schur–Weyl 对偶}
 \label{b5:ch:07}
 \BookChapterNumber{b5:ch:07}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+对称函数把对称群的特征标计算变成基变换与多项式乘法。本章建立 Schur 函数的行列式公式、Hall 内积和 Frobenius 特征映射，证明 Specht 特征标恰好对应 Schur 函数。随后从张量幂上的两个交换作用出发，用极化和半单矩阵块证明 Schur--Weyl 对偶，并确定哪些分拆在给定维数中出现。Schur 函子将对称幂与外幂统一起来，Pieri 规则及低阶 Littlewood--Richardson 计算给出可实际操作的张量分解。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 在初等、完全、幂和与 Schur 基之间作计算，区分稳定对称函数与固定变量数的多项式。
+\item 证明特征映射的等距性及诱导乘法公式，并据此读取 Specht 特征标。
+\item 用极化计算张量幂中心化子，理解双中心化子结论所需的半单性。
+\item 按分拆行数判断 Schur 函子是否为零，并用 Pieri 规则计算张量积。
+\end{itemize}
+\end{learninggoals}
+
+本章使用上一章已证的 Specht 分类及 Young 置换模的支配三角性，也使用第一编的特征标正交关系与诱导表示。对称函数先在有理系数上讨论，再按需要复化；Schur--Weyl 对偶及 Schur 函子则在任意特征零域上成立。
+
+\ProseParagraphBreak
+本章不要求李代数的最高权理论。证明从有限群与有限维线性代数出发，最后得到一般线性群的一族不可约表示；更一般的分类在后文讨论。特征标公式、双中心化子及 Schur 多项式的联系可对照 Etingof 等人的《Introduction to Representation Theory》\cite[Sections 5.14--5.15, pp. 114--118; Sections 5.18--5.19, pp. 119--122; Sections 5.21--5.22, pp. 128--130]{EtingofEtAl2011RepresentationTheory}。
 
 \input{Part02/Chapter07/Section0701}
 \input{Part02/Chapter07/Section0702}
 \input{Part02/Chapter07/Section0703}
 \input{Part02/Chapter07/Section0704}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+循环型决定幂和基，不可约特征标决定 Schur 基；Frobenius 特征映射把这两组信息放在同一个分次代数中。其等距性来自中心化子阶 \(z_\mu\)，乘法相容性来自把轮换分配到两个不变子集的计数。Jacobi--Trudi 与 Young 置换模的三角性进一步确定了不可约类型的标签，而不只是证明两边维数相等。
+
+\ProseParagraphBreak
+张量幂上的因子置换与同时线性变换彼此交换。极化证明它们已经给出全部中心化子；半单矩阵块再产生双向对应。分拆超过空间维数的行数时，相应重数空间为零，群代数作用因此可能不忠实，即使对称群本身仍忠实作用。
+
+\ProseParagraphBreak
+Schur 函子的张量积由 Schur 函数乘法控制。单行与单列乘法分别按横条、竖条展开，Pieri 规则给出计算低阶 Littlewood--Richardson 系数的方法。一般系数可解释为诱导重数；本章只证明单行和单列的组合规则。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:07-stable-specialization}
+求 \(\dim_{\mathbb Q}\Lambda_{\mathbb Q}^5\)。再求将对称函数代入两个变量的映射在次数五上的核，并说明取多少个变量可以保证对所有次数五的对称函数单射。
+\end{exercise}
+\begin{solution}
+五的分拆为 \((5),(4,1),(3,2),(3,1,1),(2,2,1),(2,1,1,1),(1^5)\)，故维数为七。两个变量中，前三个单项式对称函数仍互相独立，其余四个为零。因此核以这四个 \(m_\lambda\) 为基，维数四。取五个变量时全部七个基元素均存在且独立，所以单射；少于五个变量时 \(e_5=m_{(1^5)}\) 被送到零，因此五也是最少的数目。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-degree-four-generators}
+将 \(h_4\) 与 \(e_4\) 写成幂和函数的多项式，并由此计算 \(\langle h_4,e_4\rangle\)。
+\end{exercise}
+\begin{solution}
+由指数生成函数取四次项，
+\begin{align*}
+h_4&=\frac{p_1^4+6p_1^2p_2+3p_2^2+8p_1p_3+6p_4}{24},\\
+e_4&=\frac{p_1^4-6p_1^2p_2+3p_2^2+8p_1p_3-6p_4}{24}.
+\end{align*}
+五种循环型的 \(z_\mu\) 依次为 \(24,4,8,3,4\)。Hall 内积因而为
+\[
+\frac{24-36\cdot4+9\cdot8+64\cdot3-36\cdot4}{24^2}=0.
+\]
+这也与 \(h_4=s_{(4)}\)、\(e_4=s_{(1^4)}\) 正交一致。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-schur-two-variables}
+用行列式求 \(s_{(3,1)}\)，再把它代入两个变量 \(x,y\)。求 \(s_{(3,1)}(1,1)\) 与 \(s_{(3,1)}(1)\)。
+\end{exercise}
+\begin{solution}
+Jacobi--Trudi 给出 \(s_{(3,1)}=h_3h_1-h_4\)。两变量中 \(h_3h_1-h_4=x^3y+x^2y^2+xy^3=xy(x^2+xy+y^2)\)。所以两项取值分别为三与零；后一结论也由分拆有两行、而变量只有一个得到。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-h-m-duality}
+证明完全对称函数基与单项式对称函数基在 Hall 配对下互为对偶：
+\[
+\langle h_\lambda,m_\mu\rangle=\delta_{\lambda\mu}.
+\]
+\end{exercise}
+\begin{solution}
+在 Cauchy 乘积中先按 \(y\) 的单项式展开：
+\[
+\prod_{i,j}(1-x_iy_j)^{-1}
+=\prod_j\Bigl(\sum_{r\ge0}h_r(x)y_j^r\Bigr)
+=\sum_\lambda h_\lambda(x)m_\lambda(y).
+\]
+最后一式将同一变量置换轨道的单项式合并，每个轨道的系数为 \(h_\lambda(x)\)。同一个 Cauchy 核又为 \(\sum_\nu p_\nu(x)p_\nu(y)/z_\nu\)，是 Hall 配对的逆矩阵张量。因此在第二因子的 \(m_\lambda\) 基下，第一因子的系数恰为对偶基，即 \(h_\lambda\)，得到结论。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-omega}
+令代数自同构 \(\omega:\Lambda_{\mathbb Q}\to\Lambda_{\mathbb Q}\) 由 \(\omega(p_r)=(-1)^{r-1}p_r\) 确定。证明它为保次数的等距对合，并交换 \(h_r\) 与 \(e_r\)。
+\end{exercise}
+\begin{solution}
+幂和自由生成，所以该赋值唯一延拓为代数自同构；再施一次各生成元都不变，因此 \(\omega^2=1\)。它将 \(p_\lambda\) 乘以符号 \((-1)^{|\lambda|-\ell(\lambda)}\)，故保持幂和基的正交范数，因而等距。对 \(H(t)\) 的指数表达式施 \(\omega\)，得到 \(E(t)\)，所以 \(\omega h_r=e_r\)；再施一次得到反向等式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-class-indicator}
+设 \(1_\mu\) 为 \(S_n\) 中循环型 \(\mu\) 的示性函数。求 \(\operatorname{ch}(1_\mu)\) 与 \(p_\mu\) 对应的类函数，并说明后一类函数一般不是实际表示的特征标。
+\end{exercise}
+\begin{solution}
+由定义，\(\operatorname{ch}(1_\mu)=p_\mu/z_\mu\)，故 \(p_\mu\) 对应 \(z_\mu1_\mu\)。若 \(\mu\ne(1^n)\)，该类函数在单位元处为零，却在指定共轭类上非零。实际表示若在单位元处迹为零，则维数为零，特征标处处为零，所以这里不是实际特征标。它仍是虚特征标，因为由 Frobenius 公式，其不可约展开系数为整数 \(\chi_{S^\lambda}(\mu)\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-sign-twist}
+设 \(U\) 为 \(S_n\) 的复表示。用\cref{b5:ex:07-omega}中的 \(\omega\)证明
+\[
+\operatorname{ch}(U\otimes\mathrm{sgn})=\omega\operatorname{ch}(U).
+\]
+计算 \(S_3\) 的 \(S^{(2,1)}\) 张量符号表示后是否改变。
+\end{exercise}
+\begin{solution}
+循环型 \(\mu\) 上，符号为 \((-1)^{n-\ell(\mu)}\)，而 \(\omega p_\mu\) 恰乘同一个符号。逐项代入特征映射定义得到公式。\(s_{(2,1)}=(p_1^3-p_3)/3\) 在 \(\omega\) 下不变，所以该二维表示张量符号后同构于自身。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-induced-sign-trivial}
+分解 \(\operatorname{Ind}_{S_2\times S_2}^{S_4}(\mathrm{sgn}\boxtimes1)\)，并核对维数。
+\end{exercise}
+\begin{solution}
+特征映射给出 \(e_2h_2=s_{(1,1)}h_2\)。从两格竖列添大小二的横条，得到 \((3,1)\) 与 \((2,1,1)\)，所以分解为 \(S^{(3,1)}\oplus S^{(2,1,1)}\)。两者维数均为三，和为六，恰为指数 \([S_4:S_2\times S_2]\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-subset-permutation}
+设 \(0\le r\le n/2\)。分解 \(S_n\) 在全部 \(r\) 元子集上的复置换表示，并说明它是否有重复的不可约类型。
+\end{exercise}
+\begin{solution}
+一个 \(r\) 元子集的稳定子群为 \(S_r\times S_{n-r}\)，故特征映射为 \(h_rh_{n-r}\)。在长度 \(n-r\) 的单行上添 \(r\) 格横条，只能得到 \((n-i,i)\)，其中 \(0\le i\le r\)。这些形状都确实可以得到，而且系数为一。因此置换表示为 \(\bigoplus_{i=0}^rS^{(n-i,i)}\)，没有重复类型。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-two-products}
+以 \(S_2\) 的平凡表示为例，说明 Frobenius 特征映射不把同一个对称群上的张量积送到普通的对称函数乘法。
+\end{exercise}
+\begin{solution}
+\(1_{S_2}\otimes1_{S_2}\simeq1_{S_2}\)，其像为次数二的 \(h_2\)。普通乘积 \(h_2^2\) 却是次数四的 \(s_{(4)}+s_{(3,1)}+s_{(2,2)}\)，对应从 \(S_2\times S_2\) 到 \(S_4\) 的诱导。次数已不同，因而两种乘法不可能混同。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-standard-character}
+对 \(n\ge2\)，用 \(s_{(n-1,1)}=h_{n-1}h_1-h_n\) 证明
+\[
+\chi_{S^{(n-1,1)}}(\sigma)=m_1(\sigma)-1,
+\]
+其中 \(m_1(\sigma)\) 为 \(\sigma\) 的不动点数。
+\end{exercise}
+\begin{solution}
+\(h_{n-1}h_1\) 对应从 \(S_{n-1}\times S_1\) 诱导的平凡表示，即 \(n\) 个字母的置换表示。其特征标等于不动字母数 \(m_1\)。减去 \(h_n\) 对应的平凡特征标一，得到所求式。这同时说明该 Specht 模就是去掉常数直线后的标准表示。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-two-row-character}
+对 \(n\ge4\)，证明
+\[
+\chi_{S^{(n-2,2)}}(\sigma)
+=\binom{m_1(\sigma)}2+m_2(\sigma)-m_1(\sigma),
+\]
+其中 \(m_2(\sigma)\) 为二轮换数。
+\end{exercise}
+\begin{solution}
+\(\sigma\) 固定的二元子集或者由两个不动点组成，或者是某个二轮换的支集，所以二元子集置换特征标为 \(\binom{m_1}2+m_2\)。由横条规则，该置换表示为 \(S^{(n)}\oplus S^{(n-1,1)}\oplus S^{(n-2,2)}\)。前两项特征标之和为 \(1+(m_1-1)=m_1\)，减去即得公式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-regular-schur}
+证明 \(p_1^n=\sum_{\lambda\vdash n}f^\lambda s_\lambda\)，其中 \(f^\lambda=\dim S^\lambda\)。据此解释 \(\langle p_1^n,p_1^n\rangle=n!\)。
+\end{exercise}
+\begin{solution}
+\(p_1=h_1\) 对应 \(S_1\) 的平凡表示，\(n\) 次诱导乘积就是从平凡子群到 \(S_n\) 诱导，即正则表示。正则表示的 Specht 重数为其维数，给出所求展开。Schur 正交性随后给出范数平方为 \(\sum_\lambda(f^\lambda)^2=n!\)。也可直接由幂和范数 \(z_{(1^n)}=n!\) 得到同样数值。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-centralizer-dimensions}
+设 \(V=\mathbb C^2\)，\(T=V^{\otimes3}\)。求对称群作用像 \(A\) 及一般线性群作用生成代数 \(B\) 的维数，并说明为什么不能把两个数相乘来计算 \(\dim\operatorname{End}(T)\)。
+\end{exercise}
+\begin{solution}
+只出现 \((3),(2,1)\)。相应 Specht 维数为一、二，重数空间维数为四、二。所以 \(\dim A=1^2+2^2=5\)，\(\dim B=4^2+2^2=20\)。而 \(\dim\operatorname{End}(T)=8^2=64\)，不是一百。两个代数在各等型块中分别作用于不同因子，但在不同块上不是任意组合；乘法映射 \(A\otimes B\to\operatorname{End}(T)\) 还有交叉块被送到零，不能据此相乘维数。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-commuting-insufficient}
+在二维复空间中，取 \(A=B=\mathbb C I\)。检验它们相互交换，但不满足 Schur--Weyl 型的双中心化子结论，并指出缺少什么。
+\end{exercise}
+\begin{solution}
+标量矩阵与一切矩阵交换，所以两者当然相互交换。然而 \(\operatorname{End}_A(\mathbb C^2)=M_2(\mathbb C)\ne B\)。\(A\) 虽然半单，但 \(B\) 并未取为它的全部中心化子。因此半单性与交换关系合在一起仍不够；还须实际证明其中一个中心化子等式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-polarization-cubic}
+在特征零域上，将
+\[
+u\otimes u\otimes v+u\otimes v\otimes u+v\otimes u\otimes u
+\]
+写成三个向量的三次纯幂的线性组合。
+\end{exercise}
+\begin{solution}
+展开 \((u+v)^{\otimes3}-(u-v)^{\otimes3}\)，含偶数个 \(v\) 的项相消，含一个 \(v\) 的三项各出现两次，另有 \(2v^{\otimes3}\)。因此所求表达式为
+\[
+\frac12\Bigl((u+v)^{\otimes3}-(u-v)^{\otimes3}-2v^{\otimes3}\Bigr).
+\]
+这里张量乘法不交换，所以展开时须保留三个不同的位置。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-alternating-kernel}
+设 \(\dim_{\mathbb C}V=2\)。证明 \(\mathbb C[S_3]\to\operatorname{End}(V^{\otimes3})\) 的核恰由
+\[
+a=\sum_{\sigma\in S_3}\operatorname{sgn}(\sigma)\sigma
+\]
+线性生成，而 \(S_3\) 本身仍忠实作用。
+\end{exercise}
+\begin{solution}
+唯一未出现的分拆是 \((1,1,1)\)，它的矩阵块一维；因而核一维。\(a/6\) 是符号类型的中心投影，作用像为三阶反对称张量，而 \(\bigwedge^3V=0\)，所以 \(a\) 在核中。它的单位元系数为一，故非零，必生成整个核。另一方面，两个独立向量已可构造只有一个特殊位置的基张量来检测任意非恒等置换，故群作用忠实。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-general-linear-kernel}
+对 \(d\ge1\)，分别求 \(\operatorname{GL}_d(\mathbb R)\) 在二次与三次张量幂上的核，再与复数域比较。
+\end{exercise}
+\begin{solution}
+核由满足 \(c^n=1\) 的标量 \(cI\) 组成。实数域上二次幂的核为 \(\{I,-I\}\)，三次幂的核只有 \(I\)。复数域上分别有两个和三个标量根，所以三次张量表示在实数域上忠实，在复数域上不忠实。这里讨论的是有理点群的作用，不能忽略底域。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-schur-dimensions}
+对 \(d\ge1\)，求 \(\dim\mathbb S_{(2,1)}(k^d)\) 与 \(\dim\mathbb S_{(2,2)}(k^d)\)，其中 \(k\) 为特征零域。
+\end{exercise}
+\begin{solution}
+在 \(d\) 个一处，\(h_r(1^d)=\binom{d+r-1}{r}\)，因为它数次数 \(r\) 的单项式。代入两个 Jacobi--Trudi 公式，
+\begin{align*}
+\dim\mathbb S_{(2,1)}(k^d)
+&=\binom{d+1}{2}d-\binom{d+2}{3}
+=\frac{d(d^2-1)}3,\\
+\dim\mathbb S_{(2,2)}(k^d)
+&=\binom{d+1}{2}^2-d\binom{d+2}{3}
+=\frac{d^2(d^2-1)}{12}.
+\end{align*}
+\(d=1\) 时均为零，与两行限制相符；\(d=3\) 时分别为八与六。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-determinant-shift}
+设 \(k\) 为特征零域，\(V\) 为 \(d\ge1\) 维 \(k\) 向量空间，\(\lambda\) 为至多有 \(d\) 行的分拆，\(r\) 为非负整数，\(\det V=\bigwedge^dV\)，\(\lambda+(r^d)\) 表示补零后各部分加 \(r\)。证明 \(\operatorname{GL}_k(V)\)-表示同构
+\[
+\mathbb S_{\lambda+(r^d)}(V)
+\simeq\mathbb S_\lambda(V)\otimes(\det V)^{\otimes r}.
+\]
+\end{exercise}
+\begin{solution}
+在交错式商中，各指数同时增加 \(r\)，分子提出 \((x_1\cdots x_d)^r\)，故
+\[
+s_{\lambda+(r^d)}(x)=(x_1\cdots x_d)^r s_\lambda(x).
+\]
+\(\det V=\bigwedge^dV\) 为一维表示。右侧是 \(V^{\otimes(|\lambda|+rd)}\) 的直和项，因而完全可约，其特征标恰为左侧 Schur 多项式。该张量次数的 Schur 特征标线性无关，所以表示同构。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-gl2}
+设 \(k\) 为特征零域，\(V\) 为二维 \(k\) 向量空间，\(a,b\) 为满足 \(a\ge b\ge0\) 的整数，\(\det V=\bigwedge^2V\)。证明
+\[
+\mathbb S_{(a,b)}(V)\simeq
+\operatorname{Sym}^{a-b}V\otimes(\det V)^{\otimes b},
+\]
+并求其维数。
+\end{exercise}
+\begin{solution}
+从单行分拆 \((a-b,0)\) 开始，向两行同时添 \(b\) 格，即得 \((a,b)\)。用\cref{b5:ex:07-determinant-shift}中的行列式计算，特征标为 \((xy)^b h_{a-b}(x,y)\)，所以得到所述同构。行列式因子一维，而二维空间的 \(r\) 次对称幂以 \(x^{r-i}y^i\)、\(0\le i\le r\) 为基，所以维数为 \(a-b+1\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-symmetric-exterior-product}
+设 \(k\) 为特征零域，\(V\) 为有限维 \(k\) 向量空间，\(a,b\ge1\) 为整数。分解 \(\operatorname{GL}_k(V)\)-表示 \(\operatorname{Sym}^aV\otimes_k\bigwedge^bV\)，并在 \(\dim_kV=b\) 时简化答案。
+\end{exercise}
+\begin{solution}
+在单行 \((a)\) 上添 \(b\) 格竖条，第一行或者添一格，或者不添，得到
+\[
+\operatorname{Sym}^aV\otimes\bigwedge^bV
+\simeq\mathbb S_{(a+1,1^{b-1})}(V)
+\oplus\mathbb S_{(a,1^b)}(V).
+\]
+当 \(\dim V=b\) 时，第二项有 \(b+1\) 行而为零。第一种形状 \((a+1,1^{b-1})\) 对每行同时减一后成为 \((a,0,\ldots,0)\)，故第一项为 \(\operatorname{Sym}^{a}V\otimes\det V\)。这与左侧 \(\bigwedge^bV=\det V\) 的直接计算一致。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-square-symmetric-exterior}
+设 \(k\) 为特征零域，\(V\) 为有限维 \(k\) 向量空间。分别分解 \(\operatorname{GL}_k(V)\)-表示 \(\operatorname{Sym}^2V\otimes_k\operatorname{Sym}^2V\) 与 \(\bigwedge^2V\otimes_k\bigwedge^2V\)，并说明二维空间中哪些项消失。
+\end{exercise}
+\begin{solution}
+横条与竖条规则给出
+\begin{align*}
+h_2^2&=s_{(4)}+s_{(3,1)}+s_{(2,2)},\\
+e_2^2&=s_{(2,2)}+s_{(2,1,1)}+s_{(1,1,1,1)}.
+\end{align*}
+分别把 \(s_\lambda\) 换成 \(\mathbb S_\lambda(V)\) 得到分解。二维时第一式三项均存在，维数为五、三、一，总计九；第二式只剩 \(\mathbb S_{(2,2)}(V)=(\det V)^{\otimes2}\)，维数为一。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-lr-dimension-two}
+令 \(V\) 为二维特征零空间。从\eqref{b5:eq:lr-square-21}求 \(\mathbb S_{(2,1)}(V)^{\otimes2}\)，再用一般线性群的二维表达式核对。
+\end{exercise}
+\begin{solution}
+删去三行及更多行的分拆，得到
+\[
+\mathbb S_{(2,1)}(V)^{\otimes2}
+\simeq\mathbb S_{(4,2)}(V)\oplus\mathbb S_{(3,3)}(V).
+\]
+另一方面，\(\mathbb S_{(2,1)}(V)\simeq V\otimes\det V\)，其平方为 \(V^{\otimes2}\otimes(\det V)^{\otimes2}\)。将 \(V^{\otimes2}\) 分成 \(\operatorname{Sym}^2V\oplus\det V\)，得到 \(\operatorname{Sym}^2V\otimes(\det V)^{\otimes2}\) 与 \((\det V)^{\otimes3}\)，正对应上述两项。维数为 \(3+1=4\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-cauchy-degree-two}
+设 \(V,W\) 为特征零域上的有限维空间。证明自然同构
+\[
+\operatorname{Sym}^2(V\otimes W)
+\simeq
+(\operatorname{Sym}^2V\otimes\operatorname{Sym}^2W)
+\oplus(\bigwedge^2V\otimes\bigwedge^2W),
+\]
+并写出 \(\bigwedge^2(V\otimes W)\) 的对应分解。
+\end{exercise}
+\begin{solution}
+把 \((V\otimes W)^{\otimes2}\) 重排成 \(V^{\otimes2}\otimes W^{\otimes2}\)。交换两个 \(V\otimes W\) 因子，对应 \(P_V\otimes P_W\)。两个交换算子的特征值都是 \(\pm1\)，相同符号相乘为正，异号相乘为负。因此正特征空间给出题中分解，负特征空间给出
+\[
+\bigwedge^2(V\otimes W)
+\simeq(\operatorname{Sym}^2V\otimes\bigwedge^2W)
+\oplus(\bigwedge^2V\otimes\operatorname{Sym}^2W).
+\]
+所有重排与投影均与线性映射相容，所以同构自然。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-schur-functor-nonlinearity}
+设 \(V=k\)、\(\lambda=(2)\)，其中 \(k\) 为特征零域。直接说明 \(\mathbb S_\lambda\) 保持映射复合，却不把映射之和变成映射之和。再求 \(\mathbb S_\lambda(cI_V)\) 对一般 \(\lambda\vdash n\) 的作用。
+\end{exercise}
+\begin{solution}
+一维空间上的线性映射由标量 \(a\) 表示，对称平方将它送到 \(a^2\)。所以 \((ab)^2=a^2b^2\)，但取 \(a=b=1\) 时 \((a+b)^2=4\ne2=a^2+b^2\)。一般地，\((cI)^{\otimes n}=c^nI\)，故对整个 Hom 重数空间也作用为 \(c^nI\)。函子性要求保持复合，不要求关于态射加法线性。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-trace-cubic}
+设 \(g\) 为特征零域上有限维空间的可逆算子，记 \(t_r=\operatorname{tr}(g^r)\)。证明
+\begin{align*}
+\operatorname{tr}(\operatorname{Sym}^3g)
+&=\frac{t_1^3+3t_1t_2+2t_3}{6},\\
+\operatorname{tr}(\bigwedge^3g)
+&=\frac{t_1^3-3t_1t_2+2t_3}{6}.
+\end{align*}
+对三维单个幺幂 Jordan 块计算这两个迹。
+\end{exercise}
+\begin{solution}
+对称幂与外幂的特征标为 \(h_3,e_3\)。将幂和 \(p_r\) 代入 \(t_r\)，使用其指数生成函数的三次项，得到两个公式；它们对不可对角化的 \(g\) 同样成立，因为三角化后的对角特征值仍计算全部幂的迹。三维幺幂 Jordan 块满足 \(t_1=t_2=t_3=3\)，故两个值为十与一。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:07-modular-obstruction}
+设 \(k\) 的特征为二，\(V=k^2\)，取基 \(u,v\)。证明非零张量 \(u\otimes v+v\otimes u\) 在对称平方商映射 \(V^{\otimes2}\to\operatorname{Sym}^2V\) 下为零。由此说明正文把对称张量与对称幂相互识别的证明为何不能直接搬到此处。
+\end{exercise}
+\begin{solution}
+两个基张量互不相同，所以其和非零；交换它们后和不变，故它是对称张量。在对称平方中二者都映到 \(uv\)，和映到 \(2uv=0\)。因此商映射在对称张量子空间上不单射。正文的逆需要除以 \(2!\)，在特征二中不存在；不变子空间与对称商空间不能再由那组平均映射识别。
+\end{solution}

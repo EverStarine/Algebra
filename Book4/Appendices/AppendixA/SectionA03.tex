@@ -1,10 +1,231 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 A 的第 3 条要点整理。
+% 纲要标题：### A.3 Barr–Beck 定理的假设与典型例子
+% 纲要位置：工作记录/计划纲要.md，第 3547 行。
+% 纲要细目（写作范围）：
+% #### A.3.1 分裂余等化子
+% #### A.3.2 Barr–Beck 单子性判据
+% #### A.3.3 模的限制标量与单子性
+% #### A.3.4 忠实平坦下降的含义
+
 
 \section{Barr–Beck 定理的假设与典型例子}
 \label{b4:sec:A03}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * Barr–Beck 定理的假设与典型例子
+比较函子总能构造，但它何时为等价，需要一个可以检验的条件。基本观察是：每个单子代数都能由两个自由代数之间的余等化子给出，而且遗忘结构后，这个余等化子具有显式分裂。下面只要求原范畴正确处理这种特殊的余等化子。
 
-待撰写。
+\subsection{分裂余等化子}
+\label{b4:subsec:A03:01}
+
+\begin{definition}\label{b4:def:A-split-coequalizer}
+在范畴 \(\mathcal C\) 中，设
+\[
+A\mathrel{\substack{\xrightarrow{\ f\ }\\[-0.4ex]\xrightarrow[\ g\ ]{}}}B
+\xrightarrow{q}C,\qquad qf=qg.
+\]
+如果还存在 \(s:C\to B\)、\(t:B\to A\)，满足
+\begin{equation}\label{b4:eq:A-split-coequalizer}
+qs=1_C,\qquad ft=1_B,\qquad gt=sq,
+\end{equation}
+则称这个叉形图连同 \(s,t\) 为一个\term[fenlie-yudenghuazi]{分裂余等化子}[split coequalizer]。
+\end{definition}
+
+\begin{lemma}\label{b4:lem:A-split-absolute}
+设 \(\mathcal C\) 为范畴，\(f,g:A\rightrightarrows B\)、\(q:B\to C\) 为其中的态射。若 \(qf=qg\)，并存在 \(s:C\to B\)、\(t:B\to A\) 满足 \(qs=1_C\)、\(ft=1_B\)、\(gt=sq\)，则 \(q\) 确实是 \(f,g\) 的余等化子。任意函子 \(H:\mathcal C\to\mathcal E\)（\(\mathcal E\) 为任意范畴）都保持这个余等化子及其分裂。
+\end{lemma}
+\begin{proof}
+若 \(h:B\to Z\) 满足 \(hf=hg\)，则
+\[
+h=hft=hgt=hsq.
+\]
+所以 \(hs:C\to Z\) 给出所需分解。若 \(uq=h\)，则 \(u=uqs=hs\)，因而唯一。任意函子都保持复合、恒等及所列等式，对像图应用同一证明即可。
+\end{proof}
+
+对函子 \(U:\mathcal D\to\mathcal C\)，如果平行态射 \(f,g:A\rightrightarrows B\) 的像在 \(\mathcal C\) 中可以补成一个分裂余等化子，就称它们是 \(U\)-分裂的。分裂态射只要求存在于 \(\mathcal C\)，不要求来自 \(\mathcal D\)。
+
+\begin{proposition}\label{b4:prop:A-em-split-coequalizers}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子，\(\mathcal C^T\) 为其代数范畴，\(U^T:\mathcal C^T\to\mathcal C\) 为遗忘函子。若 \(\mathcal C^T\) 中一对平行代数同态
+\[
+f,g:(A,a)\rightrightarrows(B,b)
+\]
+的底层图在 \(\mathcal C\) 中有分裂余等化子 \(q:B\to C\)，则 \(C\) 上存在唯一代数结构 \(c:TC\to C\)，使 \(q\) 为代数同态；带此结构的 \(q\) 是 \(\mathcal C^T\) 中的余等化子。此外，\(U^T\) 反映同构。
+\end{proposition}
+\begin{proof}
+\cref{b4:lem:A-split-absolute}说明 \(Tq\) 是 \(Tf,Tg\) 的余等化子。又
+\[
+qbT(f)=qfa=qga=qbT(g),
+\]
+所以存在唯一 \(c:TC\to C\)，使 \(cTq=qb\)。这正是 \(q\) 成为代数同态的条件。
+
+由于 \(q\) 为满态射，验证 \(c\eta_C=1_C\) 可以在右边复合 \(q\)；此时由单位自然性得到
+\[
+c\eta_Cq=cTq\eta_B=qb\eta_B=q.
+\]
+结合律则在右边复合 \(T^2q\)。这个态射也是分裂满态射，且
+\[
+cT(c)T^2q=qbT(b),\qquad
+c\mu_CT^2q=qb\mu_B.
+\]
+两者由 \(b\) 的代数公理相等，故 \(cT(c)=c\mu_C\)。
+
+若代数同态 \(h:(B,b)\to(D,d)\) 满足 \(hf=hg\)，则底层余等化子的泛性质给出唯一 \(v:C\to D\)，使 \(vq=h\)。复合满态射 \(Tq\) 后，
+\[
+vcTq=vqb=hb=dT(h)=dT(v)Tq,
+\]
+所以 \(vc=dT(v)\)，即 \(v\) 仍是代数同态。这证明了余等化子的泛性质。
+
+最后，若代数同态 \(u:(X,a)\to(Y,b)\) 的底层态射可逆，从 \(ua=bT(u)\) 两边乘以逆，得到 \(u^{-1}b=aT(u^{-1})\)。因此底层逆也是代数同态，\(U^T\) 反映同构。
+\end{proof}
+
+\subsection{Barr–Beck 单子性判据}
+\label{b4:subsec:A03:02}
+
+如果函子把某个态射送成同构就能推出该态射本身为同构，称这个函子\term[baoshou-hanzi]{保守}[conservative]，也称它反映同构。这个条件不同于忠实：忠实只要求每个同态集合上的映射为单射。
+
+\begin{theorem}[Barr–Beck 单子性判据]\label{b4:thm:A-beck-monadicity}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(U:\mathcal D\to\mathcal C\) 有左伴随 \(F:\mathcal C\to\mathcal D\)，伴随的余单位为 \(\varepsilon\)，所生单子为 \(T=UF\)。对每个 \(T\)-代数 \((X,a)\)，考虑平行态射 \(F(a),\varepsilon_{FX}:FTX\rightrightarrows FX\)。当这些平行对的余等化子存在时，假定可为全体 \(T\)-代数同时选定余等化子 \(q_{(X,a)}:FX\to L_{(X,a)}\)。则比较函子 \(K:\mathcal D\to\mathcal C^T\) 是等价，当且仅当下列条件均成立：
+\begin{enumerate}
+\item \(U\) 反映同构；
+\item 每一对 \(U\)-分裂平行态射在 \(\mathcal D\) 中都有余等化子，且 \(U\) 保持该余等化子。
+\end{enumerate}
+\end{theorem}
+这是 \term[barr-beck-danzixing]{Barr–Beck 单子性定理}[Barr--Beck monadicity theorem]的分裂余等化子版本。第二项只涉及指定的一类平行态射，而不是要求原范畴存在并保持全部余等化子。
+\begin{proof}
+若 \(K\) 为等价，必要性由\cref{b4:prop:A-em-split-coequalizers}得到：忘掉代数结构后分裂的余等化子，可以唯一赋予代数结构；同构也由底层反映。范畴等价保持这些由泛性质刻画的结论。
+
+反过来，假定两项条件成立。先证明每个 \(T\)-代数都由比较函子得到。给定 \((X,a)\)，考虑 \(\mathcal D\) 中的平行态射
+\begin{equation}\label{b4:eq:A-free-presentation}
+FTX
+\mathrel{\substack{\xrightarrow{\ \varepsilon_{FX}\ }\\[-0.4ex]
+\xrightarrow[\ F(a)\ ]{}}}
+FX.
+\end{equation}
+应用 \(U\) 后，它们是 \(\mu_X,T(a):T^2X\rightrightarrows TX\)。代数公理说明 \(a:TX\to X\) 余等化这对态射。取 \(s=\eta_X\)、\(t=\eta_{TX}\)，便有
+\[
+a\eta_X=1_X,\qquad
+\mu_X\eta_{TX}=1_{TX},\qquad
+T(a)\eta_{TX}=\eta_Xa.
+\]
+因此这是一个分裂余等化子。由第二项假设，\eqref{b4:eq:A-free-presentation}存在余等化子 \(q:FX\to L\)，且 \(Uq\) 也是底层余等化子。唯一性给出同构 \(UL\cong X\)，在此识别下 \(Uq=a\)。
+
+令 \(b=U(\varepsilon_L):TX\to X\) 为 \(K(L)\) 的代数结构。余单位关于 \(q\) 的自然性给出
+\[
+a\mu_X=bT(a).
+\]
+而 \(a\mu_X=aT(a)\)。由于 \(T(a)T(\eta_X)=1_{TX}\)，态射 \(T(a)\) 为分裂满态射，可以消去，得到 \(b=a\)。所以 \(K(L)\cong(X,a)\)，证明本质满性。
+
+接着证明比较函子全忠实。对 \(Y\in\mathcal D\)，写 \(a_Y=U(\varepsilon_Y)\)。相同构造给出
+\[
+FTUY\rightrightarrows FUY\xrightarrow{q}Y',
+\]
+其中两箭头为 \(\varepsilon_{FUY}\)、\(F(a_Y)\)，而 \(Uq\) 是余等化子。余单位自然性说明 \(\varepsilon_Y:FUY\to Y\) 也余等化这对态射，故唯一分解为 \(hq\)。\(U(\varepsilon_Y)=a_Y\) 本身是上面已经验证的分裂余等化子，所以 \(Uh\) 为两个余等化子之间的同构。由第一项假设，\(h\) 为同构。因此 \(\varepsilon_Y\) 就是这一对态射的余等化子，特别是满态射。
+
+若 \(r,s:Y\to Z\) 满足 \(Ur=Us\)，则余单位自然性给出
+\[
+r\varepsilon_Y=\varepsilon_ZF(Ur)
+=\varepsilon_ZF(Us)=s\varepsilon_Y.
+\]
+消去满态射 \(\varepsilon_Y\)，得到 \(r=s\)，故 \(U\) 以及 \(K\) 忠实。
+
+现在给定代数同态 \(\alpha:K(Y)\to K(Z)\)，即
+\(\alpha a_Y=a_ZT(\alpha)\)。令 \(\widehat\alpha=\varepsilon_ZF(\alpha):FUY\to Z\)。两次使用余单位自然性可得
+\[
+\begin{aligned}
+\widehat\alpha\,\varepsilon_{FUY}
+&=\varepsilon_Z\varepsilon_{FUZ}FT(\alpha)\\
+&=\varepsilon_ZF(a_Z)FT(\alpha)\\
+&=\varepsilon_ZF(\alpha a_Y)
+=\widehat\alpha\,F(a_Y).
+\end{aligned}
+\]
+因此它经过余等化子 \(\varepsilon_Y\) 唯一分解为 \(r\varepsilon_Y\)，其中 \(r:Y\to Z\)。应用 \(U\)，得到
+\[
+(Ur)a_Y=a_ZT(\alpha)=\alpha a_Y.
+\]
+\(a_Y\) 有右逆 \(\eta_{UY}\)，消去后便有 \(Ur=\alpha\)。这证明全性。假设中同时选定的余等化子为每个代数 \((X,a)\) 指定了代表 \(L_{(X,a)}\)，且上述构造给出同构 \(K(L_{(X,a)})\cong(X,a)\)。因此\cref{b4:thm:equivalence-criterion}中带有已选代表的判据适用，\(K\) 为范畴等价。
+\end{proof}
+
+离散拓扑伴随的反例现在有了明确解释：底集合函子不反映同构，连续双射可能不是同胚。对其他例子，即使已核验保守性，也仍须检查第二项指定的余等化子条件。
+
+\subsection{模的限制标量与单子性}
+\label{b4:subsec:A03:03}
+
+\begin{proposition}\label{b4:prop:A-restriction-scalars-monadic}
+设 \(R\to S\) 为含幺环同态，以下模范畴均以幺性左模及模同态为对象和态射。限制标量函子
+\[
+U:S\text{-}\mathbf{Mod}\longrightarrow R\text{-}\mathbf{Mod}
+\]
+具有单子性。相应单子在幺性左 \(R\) 模 \(M\) 上为 \(T(M)=S\otimes_RM\)，其中 \(S\) 的右 \(R\) 作用与所得张量积的左 \(R\) 作用均由 \(R\to S\) 给出；单位为 \(m\mapsto1\otimes m\)，乘法为 \(s\otimes t\otimes m\mapsto st\otimes m\)。
+\end{proposition}
+\begin{proof}
+左伴随为扩张标量 \(F(M)=S\otimes_RM\)：映射
+\[
+\operatorname{Hom}_S(S\otimes_RM,N)\longrightarrow
+\operatorname{Hom}_R(M,UN),\qquad
+f\longmapsto\Bigl(m\mapsto f(1\otimes m)\Bigr)
+\]
+的逆为 \(h\mapsto\Bigl(s\otimes m\mapsto sh(m)\Bigr)\)。平衡关系及 \(R\)-线性保证逆映射良定义。
+
+一个 \(S\)-线性映射若在底层为可逆 \(R\)-线性映射，其逆仍保持 \(S\)-作用，所以 \(U\) 反映同构。对 \(S\)-线性平行态射 \(f,g:M\rightrightarrows N\)，余等化子为
+\[
+N/\operatorname{im}(f-g).
+\]
+像本来就是 \(S\)-子模；遗忘到 \(R\) 后，底层像与商均不变，仍是 \(R\)-模中的余等化子。因此全部余等化子都存在并被 \(U\) 保持，\cref{b4:thm:A-beck-monadicity}适用。
+\end{proof}
+
+这里的代数结构也能直接辨认。对 \(R\)-模 \(M\)，一个 \(T\)-代数态射 \(a:S\otimes_RM\to M\) 定义 \(s\cdot m=a(s\otimes m)\)。单位律给出 \(1m=m\)，结合律给出 \((st)m=s(tm)\)，平衡关系使它延伸原来的 \(R\)-作用。反向由任何 \(S\)-模作用都得到这样的 \(a\)。这个直接说明与比较函子恰好一致。
+
+\subsection{忠实平坦下降的含义}
+\label{b4:subsec:A03:04}
+
+限制标量的单子性对任意环同态成立。下降研究另一个方向：从已经扩张标量的对象以及相容数据，恢复原来的对象。因此这里使用扩张标量函子的余单子，而不是把上一命题再改写一次。
+
+\begin{definition}\label{b4:def:A-faithfully-flat-descent-data}
+设 \(R\to S\) 为交换环同态，\(M\) 为 \(S\)-模。若 \(S\)-线性映射
+\(\gamma:M\to S\otimes_RM\) 满足
+\begin{equation}\label{b4:eq:A-module-descent-data}
+\begin{aligned}
+e\gamma&=1_M,\qquad e(s\otimes m)=sm,\\
+(1_S\otimes\gamma)\gamma&=\delta\gamma,\qquad
+\delta(s\otimes m)=s\otimes1\otimes m,
+\end{aligned}
+\end{equation}
+则称 \((M,\gamma)\) 为一个以余单子形式给出的\term[mo-xiajiang-shuju]{模下降数据}[module descent datum]。这里 \(S\) 在张量积的第一个因子上作用。对两份数据 \((M,\gamma)\)、\((M',\gamma')\)，若 \(S\) 线性映射 \(f:M\to M'\) 满足 \((1_S\otimes f)\gamma=\gamma'f\)，则称 \(f\) 为它们之间的同态。
+\end{definition}
+
+这些条件正是伴随 \(S\otimes_R-\dashv U\) 所生余单子的余代数公理。对 \(R\)-模 \(V\)，扩张模 \(S\otimes_RV\) 总带有这样的数据：
+\[
+\gamma_V(s\otimes v)=s\otimes(1\otimes v).
+\]
+等式逐个在纯张量上成立。问题是给定的数据是否都这样产生，以及保持数据的态射是否也来自唯一的 \(R\)-线性映射。
+
+\begin{theorem}[忠实平坦模下降]\label{b4:thm:A-faithfully-flat-descent}
+设 \(R\to S\) 为交换含幺环同态，且 \(S\) 是忠实平坦 \(R\) 模，即 \(S\otimes_R-\) 正合，并对每个 \(R\) 模 \(V\) 满足
+\(S\otimes_RV=0\Rightarrow V=0\)。以 \(\mathsf{Desc}(S/R)\) 表示 \(S/R\) 模下降数据及其同态组成的范畴。令 \(\gamma_V(s\otimes v)=s\otimes(1\otimes v)\)，则
+\[
+V\longmapsto(S\otimes_RV,\gamma_V)
+\]
+是 \(R\) 模范畴到 \(\mathsf{Desc}(S/R)\) 的等价，态射 \(f:V\to V'\) 被送到 \(1_S\otimes f\)。给定下降数据 \((M,\gamma)\)，一个恢复对象为
+\begin{equation}\label{b4:eq:A-descent-equalizer}
+V=\Bigl\{m\in M:\gamma(m)=1\otimes m\Bigr\},
+\end{equation}
+相应同构 \(S\otimes_RV\to M\) 为 \(s\otimes v\mapsto sv\)。
+\end{theorem}
+\begin{proof}
+把\cref{b4:thm:A-beck-monadicity}应用于对偶范畴：左伴随 \(F=S\otimes_R-\) 具有余单子性，只须它反映同构，并保持所有在 \(F\) 下分裂的等化子。平坦性使 \(F\) 正合，从而保持模范畴中的全部等化子。若 \(F(f)\) 可逆，则正合性给出
+\[
+F(\ker f)=0,\qquad F(\operatorname{coker}f)=0.
+\]
+忠实性假设使原来的核、余核都为零，故 \(f\) 可逆。因此对偶判据适用，得到范畴等价。
+
+为说明所列恢复公式，令 \(V\) 为\eqref{b4:eq:A-descent-equalizer}中的 \(R\)-子模。平坦性使 \(S\otimes_RV\) 是
+\[
+1_S\otimes\gamma,\ 1_S\otimes\eta_M:
+S\otimes_RM\rightrightarrows S\otimes_RS\otimes_RM
+\]
+的等化子，其中 \(\eta_M(m)=1\otimes m\)。另一方面，\eqref{b4:eq:A-module-descent-data}说明 \(\gamma\) 的像属于这个等化子，且 \(e\gamma=1_M\)。
+
+若 \(z\in S\otimes_RM\) 满足两映射取值相同，对该等式施行
+\(s\otimes t\otimes m\mapsto st\otimes m\)。由于 \(\gamma\) 是 \(S\)-线性的，左边变成 \(\gamma\Bigl(e(z)\Bigr)\)，右边变成 \(z\)。因此 \(z=\gamma\Bigl(e(z)\Bigr)\)，说明 \(\gamma\) 把 \(M\) 同构到该等化子。将它与 \(S\otimes_RV\) 的等化子识别相比较，逆映射正是 \(s\otimes v\mapsto sv\)，得到所述公式。
+\end{proof}
+
+例如 \(R\to R\times R\)、\(r\mapsto(r,r)\) 是忠实平坦的，因为张量函子把 \(V\) 送到 \(V\oplus V\)。下降数据要求这两份在再次扩张后相容；定理保证它们来自一个 \(R\)-模。反之，\(\mathbb Z\to\mathbb Q\) 虽平坦却不忠实，所有有限交换群都被张量成零，因此仅从扩张后的数据无法唯一恢复原模。这里的失败首先在于丢失对象，而不在于张量公式写得不够充分。

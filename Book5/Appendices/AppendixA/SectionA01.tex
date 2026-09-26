@@ -1,10 +1,120 @@
 % !TeX root = ../../Book5.tex
-% 节标题由计划纲要.md 中附录 A 的第 1 条要点整理。
-
+% 纲要标题：### A.1 Coxeter 群、长度与 Bruhat 序
+% 纲要位置：工作记录/计划纲要.md，第 4539 行。
+% #### A.1.1 反射关系与 Coxeter 系统
+% #### A.1.2 约化表达式与逆序数
+% #### A.1.3 Bruhat 序与弱序的区别
 \section{Coxeter 群、长度与 Bruhat 序}
 \label{b5:sec:A01}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * Coxeter 群及长度和 Bruhat 序
+Weyl 群的元素可以写成简单反射组成的词，从而通过生成关系进行计算。Coxeter 群把这种计算抽象出来。这里先给出一般定义，再在对称群中证明长度公式，并用低秩例子区分两种常见的偏序。
 
-待撰写。
+\subsection{反射关系与 Coxeter 系统}
+\label{b5:subsec:A01:01}
+
+\begin{definition}\label{b5:def:coxeter-system}
+设 \(S\) 为有限集合，整数或符号 \(m_{st}\) 满足
+\(m_{ss}=1\)、\(m_{st}=m_{ts}\in\{2,3,\ldots,\infty\}\) 对 \(s\ne t\) 成立。由生成元 \(S\) 及关系
+\[
+s^2=1,\qquad (st)^{m_{st}}=1\quad(m_{st}<\infty)
+\]
+定义的群 \(W\)，连同指定的生成集 \(S\)，称为\term[Coxeter-xitong]{Coxeter 系统}[Coxeter system]。\(m_{st}=\infty\) 表示不添加这一对的关系。与某个 \(s\in S\) 共轭的群元素称为该系统的反射。
+\end{definition}
+
+当 \(s,t\) 为对合时，关系 \((st)^m=1\) 等价于两边各有 \(m\) 项的辫关系
+\[
+sts\cdots=tst\cdots.
+\]
+这是将右端逆词乘到左端后得到的同一个交替词。因此 \(m=2\) 表示交换，\(m=3\) 表示 \(sts=tst\)。秩二情形设 \(r=st\)，则 \(srs=r^{-1}\)，每个词都可化为 \(r^i\) 或 \(r^is\)；若 \(m<\infty\)，再令 \(0\le i<m\)，群至多有 \(2m\) 个元素。正 \(m\) 边形的旋转和反射实现这些不同元素，所以 \(m\ge3\) 时恰为阶 \(2m\) 的二面体群；\(m=2\) 给出四元交换群。
+
+\ProseParagraphBreak
+对称群 \(S_n\) 的邻位换位 \(s_i=(i,i+1)\) 满足
+\[
+s_i^2=1,\qquad s_is_j=s_js_i\ (|i-j|>1),\qquad
+s_is_{i+1}s_i=s_{i+1}s_is_{i+1}.
+\]
+它们给出 \(A_{n-1}\) 型 Coxeter 系统。为证明由这些关系定义的抽象群确实同构于 \(S_n\)，记该群为 \(W_n\)，其子群 \(H\) 由 \(s_1,\ldots,s_{n-2}\) 生成。置
+\[
+r_n=1,\qquad r_j=s_{n-1}s_{n-2}\cdots s_j\quad(1\le j<n).
+\]
+集合 \(\bigcup_{j=1}^n Hr_j\) 对右乘每个 \(s_i\) 封闭：若 \(i<j-1\)，将 \(s_i\) 交换到左侧；若 \(i=j-1\) 或 \(i=j\)，结果分别是 \(r_{j-1}\) 或 \(r_{j+1}\)；若 \(i>j\)，辫关系和交换关系给出 \(r_js_i=s_{i-1}r_j\)。对 \(r_n=1\) 则直接处理 \(i<n-1\) 与 \(i=n-1\)。故它覆盖 \(W_n\)，于是归纳得到 \(|W_n|\le n!\)。另一方面，把生成元送到邻位换位得到满射 \(W_n\to S_n\)，而 \(|S_n|=n!\)，所以此映射是同构。
+
+\subsection{约化表达式与逆序数}
+\label{b5:subsec:A01:02}
+
+\begin{definition}\label{b5:def:coxeter-length}
+设 \((W,S)\) 为 Coxeter 系统，\(w\in W\)。在所有满足 \(w=s_1\cdots s_r\)、\(s_i\in S\)、\(r\ge0\) 的表达式中，最小的 \(r\) 记为 \(\ell(w)\)。达到这个长度的表达式称为\term[yuehua-biaodashi]{约化表达式}[reduced expression]；空词表示单位元。
+\end{definition}
+
+这里的“长度”依赖指定的 \(S\)，不是任意群生成集给出的不变数量。因为生成元为对合，反转一个最短词给出 \(\ell(w^{-1})=\ell(w)\)。
+
+\begin{proposition}\label{b5:prop:permutation-length-inversions}
+设 \(n\ge1\) 为整数，\(w\in S_n\)，用单行记号 \(\Bigl(w(1),\ldots,w(n)\Bigr)\) 表示，并用邻位换位 \(s_i=(i,i+1)\)、\(1\le i<n\)，定义长度 \(\ell\)。则
+\[
+\ell(w)=\operatorname{inv}(w)
+\coloneqq\#\Bigl\{\,(i,j)\mid i<j,\ w(i)>w(j)\,\Bigr\}.
+\]
+特别地，\(\ell(ws_i)=\ell(w)+1\) 当且仅当 \(w(i)<w(i+1)\)。
+\end{proposition}
+\begin{proof}
+右乘 \(s_i\) 交换相邻位置的值。除它们彼此形成的那一对外，它们与其他位置贡献的逆序总数不变，所以逆序数恰增减一。因此从单位元出发的任意表达式至少有 \(\operatorname{inv}(w)\) 项。
+
+若 \(w\ne1\)，它的单行记号不严格递增，故存在相邻下降 \(w(i)>w(i+1)\)。右乘 \(s_i\) 减少一个逆序。重复此过程，经过恰 \(\operatorname{inv}(w)\) 步得到单位元；反转这些换位就给出同长表达式。因此下界达到，并得到最后的增减判断。
+\end{proof}
+
+例如 \(w=3412\) 有四个逆序，
+\[
+w=s_2s_1s_3s_2.
+\]
+该词有四项，因而约化。逆序数也立即给出最长置换
+\(w_0=(n,n-1,\ldots,1)\) 的长度 \(n(n-1)/2\)。
+
+\subsection{Bruhat 序与弱序的区别}
+\label{b5:subsec:A01:03}
+
+\begin{definition}\label{b5:def:bruhat-order}
+设 \((W,S)\) 为 Coxeter 系统，\(\ell\) 为关于 \(S\) 的长度函数，\(T=\{\,wsw^{-1}\mid w\in W,\ s\in S\,\}\)，\(u,v\in W\)。若存在链
+\[
+u=u_0,\ u_1,\ldots,u_r=v,\qquad
+u_{i+1}=u_it_i,\quad t_i\in T,\quad
+\ell(u_{i+1})>\ell(u_i),
+\]
+则记 \(u\le v\)，称为\term[Bruhat-xu]{Bruhat 序}[Bruhat order]；允许空链。若每步只许右乘简单生成元且长度增加一，则得到右弱序。
+\end{definition}
+
+反身性和传递性由链直接得到；非空链长度严格增加，所以同时 \(u\le v\) 与 \(v\le u\) 只能有 \(u=v\)，这证明它们都是偏序。弱序可描述为约化词的前缀关系：增加简单生成元的链拼成约化词；反过来，每个约化词的前缀仍约化，否则用更短词代换前缀会缩短整个词。
+
+\ProseParagraphBreak
+在 \(S_n\) 中，反射就是所有换位，不限于邻位换位。以 \(S_3=\langle s,t\rangle\) 为例，Bruhat 序按长度分层为
+\[
+\{1\},\qquad\{s,t\},\qquad\{st,ts\},\qquad\{sts=tst\}.
+\]
+相邻两层之间所有可能的连接都存在。特别地 \(s\le ts\)，因为
+\(s(sts)=ts\) 且长度从一增加到二；但在右弱序中没有 \(s\le ts\)，因为 \(\ell(s^{-1}ts)=3\)，不能只增加一步简单生成元。
+
+\ProseParagraphBreak
+后面构造 Hecke 代数需要三项一般词性质。
+\begin{theorem}[交换性质与子词判据]\label{b5:thm:coxeter-word-properties}
+设 \((W,S)\) 为 Coxeter 系统，\(\ell\) 为关于 \(S\) 的长度函数，\(T\) 为该系统的反射集合，\(\le\) 为 Bruhat 序。则对 \(u,v,w\in W\) 有下列性质。
+\begin{enumerate}
+  \item 若 \(w=s_1\cdots s_r\) 为约化词，\(s_i\in S\)，反射 \(t\in T\) 满足 \(\ell(wt)<\ell(w)\)，则 \(wt\) 可由该词删去一个生成元得到。特别地，\(\ell(ws)=\ell(w)\pm1\) 对 \(s\in S\) 成立。
+  \item 同一元素的任意两个约化词可用有限次辫关系相互变换。
+  \item 对 \(v\) 的任意固定约化词，\(u\le v\) 当且仅当 \(u\) 是该词的一个子词的乘积。每个区间 \(\{u:u\le v\}\) 都有限。
+\end{enumerate}
+\end{theorem}
+\begin{proofsketch}
+在实向量空间 \(\bigoplus_{s\in S}\mathbb R\alpha_s\) 上规定
+\[
+ B(\alpha_s,\alpha_s)=1,\qquad
+ B(\alpha_s,\alpha_t)=-\cos(\pi/m_{st}),\qquad
+ s(x)=x-2B(x,\alpha_s)\alpha_s,
+\]
+其中 \(m_{st}=\infty\) 时取 \(\cos(\pi/m_{st})=1\)。秩二反射计算验证这些算子满足群的生成关系。根是各个 \(w\alpha_s\)。基本的根符号引理说：每个根的简单根系数全非负或全非正，而且
+\(w\alpha_s\) 为负根恰当 \(\ell(ws)<\ell(w)\)。其证明按词长归纳，将末尾两个不同生成元组成的交替词单独处理；有限二面体情形是相邻反射轴的夹角 \(\pi/m\) 的计算，无限情形的系数递推一直留在正锥中。这是本概要省略的主要归纳，详见\cite[Sections 5.3--5.7, pp. 108--116]{Humphreys1990ReflectionGroups}。
+
+简单反射只把它对应的简单正根变负，其余正根仍为正。根符号判别对一般反射给出：若 \(\ell(wt)<\ell(w)\)，则相应正根 \(\alpha\) 满足 \(w\alpha<0\)。从约化词右端逐次作用，必有第一次发生符号变化的位置；当时的根只能是该位置的简单根。将这个等式共轭回去，便得到 \(wt\) 正好是删除该位置的词。这给出第一项。对非约化词取最早的非约化前缀，其末字母使前一约化前缀变短；交换性质删去前缀中的一位，再删去末字母，得到不改变乘积的双位置删除。重复便可将任何非约化词变为约化子词。
+
+第二项按 \(\ell(w)\) 归纳。两个约化词首字母相同，就约去首字母；不同，记为 \(s,t\)。用交换性质把 \(w\) 写成秩二抛物子群的元素乘一个最短左陪集代表，长度相加。由于 \(s,t\) 都使左乘长度下降，该秩二因子必须是有限二面体群的最长元。它的两个交替约化词正由一条辫关系联系；余下较短词再用归纳。这一步省略最短陪集代表的唯一性验证，它同样由交换性质得到。
+
+若 \(u\le v\)，沿反射下降链重复使用第一项，每步所得词若不约化，就先作双位置删除；整个过程始终只从原词删除位置，故得到子词。反向按原词长度归纳：不选末字母时使用较短前缀；选末字母时，交换性质给出的提升性质说明，\(x\le v\) 蕴含 \(xs\le v\) 或 \(xs\le vs\)。这把已选子词接到最后一位。提升性质的两个长度情形及此项归纳见\cite[Sections 5.8--5.10, pp. 117--121]{Humphreys1990ReflectionGroups}。最后，一个长度 \(r\) 的固定词仅有 \(2^r\) 个位置子集，所以区间有限。
+\end{proofsketch}

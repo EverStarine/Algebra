@@ -1,48 +1,156 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 5.1 表示环、代数整数性与类和
-% 纲要位置：计划纲要.md，第 3198 行。
-
-\section{表示环、代数整数性与类和}
-\label{b5:sec:0501}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3849 行。
+% 纲要细目（写作范围）：
 % * 表示环
 % * 特征标值的代数整数性
 % * 诱导法处理表示环问题
 % * 分圆域与特征标的域
 % * 从有限阶矩阵的单位根特征值证明特征标值的代数整数性，再建立群代数中心类和及其标量作用所需的整性引理
 % * 所需代数整数的和、积与有理代数整数判别在本节就地准备，不把第三卷整扩张理论作为首次学习有限群表示的前提
-%
+
+\section{表示环、代数整数性与类和}
+\label{b5:sec:0501}
+
+特征标的加法来自直和，乘法来自张量积。允许相减以后，诱导问题便可以放进一个环中讨论。整数系数的诱导比有理系数的诱导要求更强，需要研究特征标格、单位根和有限生成的整系数模。本节介绍这些工具。
 
 \subsection{表示环}
 \label{b5:subsec:0501:01}
 
-待撰写。
+\begin{definition}\label{b5:def:complex-representation-ring}
+设 \(G\) 为有限群，\(\operatorname{Irr}(G)\) 为其复不可约特征标的集合。所有有限和
+\[
+R_{\mathbb C}(G)\coloneqq
+\bigoplus_{\chi\in\operatorname{Irr}(G)}\mathbb Z\chi
+\]
+在类函数的逐点加法、乘法下组成的环，称为 \(G\) 的复\term[biaoshihuan]{表示环}[representation ring]，以下简记为 \(R(G)\)。其元素称为\term[xutezhengbiao]{虚特征标}[virtual character]。乘法单位是平凡特征标 \(1_G\)，而不是正则特征标。
+\end{definition}
+\symidx{\(R(G)\)：有限群的复表示环}
+
+乘积确实仍在上述整数格内：若 \(V,W\) 为复表示，则 \(\chi_{V\otimes W}=\chi_V\chi_W\)，将 \(V\otimes W\) 分解成不可约表示便得到非负整数系数。每个虚特征标都能写成 \(\chi_V-\chi_W\)；此记号只记录直和的形式差，不声称存在一个维数可能为负的向量空间。
+
+\ProseParagraphBreak
+次数映射 \(\dim:R(G)\rightarrow\mathbb Z\)、\(\alpha\mapsto\alpha(1)\) 是环同态。其核称为增广理想。次数非负的虚特征标未必是实际特征标：在 \(C_2\) 中，若非平凡一维特征标为 \(\varepsilon\)，则 \(2\cdot1-\varepsilon\) 的次数为 \(1\)，但不可约展开有负系数。由正交关系，\(\alpha\in R(G)\) 是实际特征标，当且仅当对所有不可约 \(\chi\)，\(\langle\chi,\alpha\rangle_G\ge0\)。本章内积对第一变量共轭线性。
 
 \subsection{特征标值的代数整数性}
 \label{b5:subsec:0501:02}
 
-待撰写。
+\begin{definition}\label{b5:def:algebraic-integer}
+设 \(z\in\mathbb C\)。若存在 \(n\ge1\) 及整数 \(a_0,\ldots,a_{n-1}\)，使
+\[
+z^n+a_{n-1}z^{n-1}+\cdots+a_0=0,
+\]
+则称 \(z\) 为\term[daishuzhengshu]{代数整数}[algebraic integer]。
+\end{definition}
+
+下面的判据避免每遇到一个和或积便重新猜测其首一方程。
+\begin{lemma}[有限模判据]\label{b5:lem:finite-module-integrality}
+设 \(A\subset B\) 为含同一单位的交换环，\(B\) 作为 \(A\)-模由有限多个元素生成。每个 \(b\in B\) 都满足某个首一 \(A\)-系数多项式。特别地，若 \(B\subset\mathbb C\) 且 \(B\) 是有限生成的 \(\mathbb Z\)-模，则 \(B\) 中每个元素都是代数整数。
+\end{lemma}
+\begin{proof}
+选取模生成元 \(u_1,\ldots,u_r\)，写成 \(bu_j=\sum_i a_{ij}u_i\)。矩阵 \(bI-(a_{ij})\) 的伴随矩阵恒等式说明，首一多项式
+\(F(T)=\det\Bigl(TI-(a_{ij})\Bigr)\)
+的值 \(F(b)\) 零化每个 \(u_j\)。由于 \(1\) 是这些生成元的 \(A\)-线性组合，\(F(b)\cdot1=0\)，故 \(F(b)=0\)。此论证不要求生成元线性无关。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:character-values-integral}
+设 \(G\) 为有限群，\(m\) 为各元素阶的最小公倍数，\(\zeta_m=e^{2\pi i/m}\)。每个复虚特征标 \(\alpha\in R(G)\) 的值均属于 \(\mathbb Z[\zeta_m]\)，并且都是代数整数。
+\end{proposition}
+\begin{proof}
+任一表示矩阵 \(\rho(g)\) 满足 \(\rho(g)^m=I\)。由于 \(T^m-1\) 在 \(\mathbb C\) 中无重根，\(\rho(g)\) 可对角化，其特征值都是 \(\zeta_m\) 的幂。取迹及整数线性组合便得 \(\alpha(g)\in\mathbb Z[\zeta_m]\)。环 \(\mathbb Z[\zeta_m]\) 由 \(1,\zeta_m,\ldots,\zeta_m^{m-1}\) 生成，应用\cref{b5:lem:finite-module-integrality}即可。
+\end{proof}
+
+代数整数不必是实数，更不必是通常的整数。循环群的一维特征标可以取单位根为值；整性限制的是它满足的多项式，而非其在实轴上的位置。
 
 \subsection{表示环中的诱导法}
 \label{b5:subsec:0501:03}
 
-待撰写。
+对有限群的子群 \(H\le G\)，限制是环同态 \(\operatorname{Res}_H^G:R(G)\rightarrow R(H)\)，诱导首先是加法群同态 \(\operatorname{Ind}_H^G:R(H)\rightarrow R(G)\)。由\cref{b5:thm:tensor-identity}，它们满足
+\begin{equation}\label{b5:eq:induction-ring-projection}
+\alpha\operatorname{Ind}_H^G\beta
+=\operatorname{Ind}_H^G\Bigl(\operatorname{Res}_H^G\alpha\cdot\beta\Bigr),
+\qquad \alpha\in R(G),\quad\beta\in R(H).
+\end{equation}
+这条张量恒等式说明诱导像虽然未必含单位，却受到整个表示环乘法的控制。
+
+\begin{proposition}\label{b5:prop:induction-ideal}
+设 \(G\) 为有限群，\(\mathcal F\) 为它的一族子群，\(R(H)\) 表示有限群 \(H\) 的复表示环。令
+\[
+I_{\mathcal F}(G)=\sum_{H\in\mathcal F}\operatorname{Ind}_H^G R(H).
+\]
+则 \(I_{\mathcal F}(G)\) 是 \(R(G)\) 的理想。因此所有虚特征标均属于这个诱导像之和，当且仅当 \(1_G\in I_{\mathcal F}(G)\)。
+\end{proposition}
+\begin{proof}
+定义已经给出加法子群。\eqref{b5:eq:induction-ring-projection}把一个诱导生成元与任意 \(\alpha\in R(G)\) 的乘积仍写成来自同一个 \(H\) 的诱导。若理想含 \(1_G\)，则含每个 \(\alpha=\alpha1_G\)；反向显然。
+\end{proof}
+
+诱导一般不保持乘法。若 \(H=1<G\)，则 \(\operatorname{Ind}_1^G1\) 是次数 \(|G|\) 的正则特征标。其平方的次数为 \(|G|^2\)，而 \(\operatorname{Ind}_1^G(1\cdot1)\) 的次数只有 \(|G|\)。
 
 \subsection{分圆域与特征标的域}
 \label{b5:subsec:0501:04}
 
-待撰写。
+\(\mathbb Q(\zeta_m)\) 称为相应的\term[fenyuanyu]{分圆域}[cyclotomic field]。对复特征标 \(\chi\)，由全部值生成的域 \(\mathbb Q\Bigl(\chi(g):g\in G\Bigr)\) 称为其特征标值域。\cref{b5:prop:character-values-integral}说明它包含于一个有限分圆扩张；这并不立即给出一组使全部表示矩阵也落在该值域中的基。
+
+\begin{lemma}\label{b5:lem:cyclotomic-power-automorphisms}
+设 \(m\ge1\) 为整数，\(\zeta_m=e^{2\pi\mathrm i/m}\)，\(a\) 为与 \(m\) 互素的整数。代换 \(\zeta_m\mapsto\zeta_m^a\) 给出 \(\mathbb Q(\zeta_m)\) 的自同构 \(\sigma_a\)。对有限群 \(G\) 的复虚特征标 \(\alpha\)，若 \(m\) 是 \(G\) 的指数，则对每个 \(g\in G\) 有
+\[
+\sigma_a\Bigl(\alpha(g)\Bigr)=\alpha(g^a).
+\]
+\end{lemma}
+\begin{proof}
+补充自同构存在性的理由。先说明将用到的有理首一因子判据。有限多个代数整数生成的环是有限生成的 \(\mathbb Z\)-模：依次用各自的首一方程约去高次幂即可。因此由\cref{b5:lem:finite-module-integrality}，这些数的和、积也都是代数整数。若既约分数 \(u/v\)、\(v>0\) 满足首一整方程，清除分母便得 \(v\mid u^n\)，故 \(v=1\)。一个首一整系数多项式的首一有理因子的系数，是原多项式部分根的整系数对称式，既有理又为代数整数，因而仍是整数。
+
+分圆多项式 \(\Phi_m(T)\) 以所有本原 \(m\) 次单位根为根；递推分解 \(T^m-1=\prod_{d\mid m}\Phi_d(T)\) 及首一多项式的整系数除法给出 \(\Phi_m\in\mathbb Z[T]\)。取 \(\zeta_m\) 的首一不可约多项式 \(f\)，由刚证的因子判据有 \(f\in\mathbb Z[T]\)，且 \(f\mid\Phi_m\)。
+
+若素数 \(\ell\nmid m\) 而 \(\zeta_m^\ell\) 不是 \(f\) 的根，令 \(h\ne f\) 为它在 \(\Phi_m\) 中的首一不可约因子。因为 \(h(\zeta_m^\ell)=0\)，有 \(f(T)\mid h(T^\ell)\)。模 \(\ell\) 约化后，\(\overline f\mid\overline h(T)^\ell\)，故 \(\overline f,\overline h\) 有非平凡公因子。可是 \(fh\mid T^m-1\)，这将使 \(T^m-1\) 模 \(\ell\) 后有重因子，与其导数 \(mT^{m-1}\) 互素矛盾。因此 \(\zeta_m^\ell\) 仍是 \(f\) 的根。对每一个已得到的本原根重复论证，可覆盖全部与 \(m\) 互素的正整数次幂，故 \(f=\Phi_m\)。这些根给出所需自同构，其逆由 \(a\) 模 \(m\) 的逆元给出。最后，将特征标值写成单位根的整数线性组合，逐项施行 \(\sigma_a\) 即得公式。
+\end{proof}
+
+这里已经在证明中核验了首一因子的整系数性，没有预借一般分裂域理论。特征标值域与表示矩阵的定义域仍须分别考虑。
 
 \subsection{单位根、中心类和与标量作用的整性}
 \label{b5:subsec:0501:05}
 
-待撰写。
+设 \(K_1,\ldots,K_r\) 为 \(G\) 的共轭类，取 \(g_j\in K_j\)。在群代数中记 \(z_j=\sum_{g\in K_j}g\)。这些\term[leihe]{类和}[class sum]构成 \(Z\Bigl(\mathbb C[G]\Bigr)\) 的一组基：群代数元素位于中心，恰好意味着其系数在共轭类上不变。并且
+\[
+z_i z_j=\sum_k a_{ijk}z_k,\qquad a_{ijk}\in\mathbb Z_{\ge0},
+\]
+其中 \(a_{ijk}\) 等于把 \(K_k\) 中某个固定元素写成 \(xy\)、\(x\in K_i,y\in K_j\) 的方法数；同时共轭给出不同固定元素之间的双射。
+
+\begin{proposition}[中心标量的整性]\label{b5:prop:central-character-integrality}
+设 \(G\) 为有限群，\(\chi\) 为次数 \(d\) 的复不可约特征标，\(g\in G\)，\(K\) 为 \(g\) 的共轭类。类和 \(z_K=\sum_{x\in K}x\in\mathbb C[G]\) 在对应不可约表示上作用为标量
+\[
+\omega_\chi(K)=\frac{|K|\chi(g)}{d},
+\]
+且此标量是代数整数。
+\end{proposition}
+\begin{proof}
+类和位于中心，由\cref{b5:cor:schur-algebraically-closed}，在复不可约表示上的作用为标量。取迹得到 \(d\omega_\chi(K)=|K|\chi(g)\)。整系数类和格 \(\bigoplus_j\mathbb Zz_j\) 是含单位的环，并且是有限生成的 \(\mathbb Z\)-模。\cref{b5:lem:finite-module-integrality}给出类和满足的首一整系数方程；施行表示后，标量 \(\omega_\chi(K)\) 满足同一方程。
+\end{proof}
+
+这比特征标值本身的整性更强，因为式中除以了次数 \(d\)。Burnside 证明将把这个分母与共轭类大小的互素条件结合。
 
 \subsection{代数整数的基本运算与有理数判别}
 \label{b5:subsec:0501:06}
 
-待撰写。
+\begin{lemma}\label{b5:lem:algebraic-integer-arithmetic}
+代数整数的和、差、积仍为代数整数；有理数是代数整数，当且仅当它是整数。若代数整数 \(\alpha\) 的首一极小多项式为 \(f\in\mathbb Q[T]\)，则 \(f\in\mathbb Z[T]\)，因而全部共轭根的乘积是整数。
+\end{lemma}
+\begin{proof}
+若 \(\alpha,\beta\) 分别满足次数 \(r,s\) 的首一整系数方程，则环 \(\mathbb Z[\alpha,\beta]\) 由 \(\alpha^i\beta^j\)、\(0\le i<r,0\le j<s\) 有限生成。\cref{b5:lem:finite-module-integrality}同时处理和、差、积。若既约分数 \(u/v\)、\(v>0\) 满足次数 \(n\) 的首一整系数方程，乘以 \(v^n\) 得 \(v\mid u^n\)，所以 \(v=1\)。
+
+最后，\(f\) 的每个根也是 \(\alpha\) 所满足的那个首一整系数多项式的根，因而都是代数整数。\(f\) 的系数是这些根的整数多项式，又属于 \(\mathbb Q\)，由刚证的两项结论可知均为整数。根的乘积就是带符号的常数项。
+\end{proof}
+
+\begin{corollary}[Frobenius 次数整除定理]\label{b5:cor:character-degree-divisibility}
+有限群 \(G\) 的每个复不可约特征标的次数 \(d\) 都整除 \(|G|\)。
+\end{corollary}
+\begin{proof}
+设该特征标为 \(\chi\)。由\cref{b5:thm:character-hom-inner-product}与\cref{b5:cor:schur-algebraically-closed}，有 \(\langle\chi,\chi\rangle_G=1\)。按共轭类求和得
+\[
+\frac{|G|}{d}
+=\sum_j\frac{|K_j|\chi(g_j)}{d}\,\overline{\chi(g_j)}.
+\]
+右侧各因子由\cref{b5:prop:central-character-integrality}及\cref{b5:prop:character-values-integral}均为代数整数。因此 \(|G|/d\) 是有理代数整数，由\cref{b5:lem:algebraic-integer-arithmetic}属于 \(\mathbb Z\)。
+\end{proof}
+
+整性与次数整除可参阅 Etingof 等\cite[Sections 5.2--5.3, pp. 93--98]{EtingofEtAl2011RepresentationTheory}。后文只需上述有限模、类和与有理数判别，不预设一般整扩张理论。

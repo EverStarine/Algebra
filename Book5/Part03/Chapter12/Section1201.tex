@@ -1,30 +1,98 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.1 Engel 定理
-% 纲要位置：计划纲要.md，第 3464 行。
+% 纲要位置：工作记录/计划纲要.md，第 4115 行。
 
 \section{Engel 定理}
 \label{b5:sec:1201}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 幂零算子构成的李代数
 % * 公共零向量
 % * Engel 定理及幂零性
 %
 
+一个矩阵幂零，只约束它自身的幂；一族矩阵能够在同一组基下写成严格上三角形，则同时约束它们的所有混合乘积。Engel 定理说明：若这族矩阵是一个李子代数，并且其中每个元素都幂零，前一个条件便足以推出后一个条件。李括号封闭性在这里不可省略。
+
 \subsection{幂零算子构成的李代数}
 \label{b5:subsec:1201:01}
 
-待撰写。
+\begin{lemma}\label{b5:lem:ad-of-nilpotent-matrix}
+设 \(V\) 是域 \(k\) 上的有限维向量空间，\(r\ge1\) 为整数，\(x\in\operatorname{End}_k(V)\) 且 \(x^r=0\)。则算子
+\(\operatorname{ad}x:T\mapsto xT-Tx\) 在 \(\operatorname{End}_k(V)\) 上幂零，并且对每个整数 \(m\ge0\) 及 \(T\in\operatorname{End}_k(V)\)，有
+\[
+(\operatorname{ad}x)^m(T)
+=\sum_{j=0}^{m}(-1)^j\binom mj x^{m-j}Tx^j,\qquad
+(\operatorname{ad}x)^{2r-1}=0.
+\]
+\end{lemma}
+\begin{proof}
+左乘 \(x\) 与右乘 \(x\) 交换，二项式公式给出第一式。当 \(m=2r-1\) 时，每一项的两个指数中至少一个不小于 \(r\)，故每一项都为零。证明适用于任意特征。
+\end{proof}
+
+注意“每个元素幂零”要求全部线性组合都幂零。\(\mathfrak{sl}_2(\mathbb C)\) 中的 \(E_{12}\) 和 \(E_{21}\) 分别幂零，但它们的和平方为单位矩阵；只检查一组生成元并不够。
 
 \subsection{公共零向量}
 \label{b5:subsec:1201:02}
 
-待撰写。
+下面是\term[Engel-dingli]{Engel 定理}[Engel's theorem]的算子形式。
+
+\begin{theorem}[Engel 定理的算子形式]\label{b5:thm:engel-common-zero}
+设 \(V\ne0\) 是域 \(k\) 上的 \(n\) 维向量空间，\(L\subseteq\mathfrak{gl}(V)\) 是李子代数。若 \(L\) 的每个元素都是幂零算子，则存在 \(v\in V\setminus\{0\}\)，使 \(xv=0\) 对所有 \(x\in L\) 成立。进一步，存在完全旗标
+\[
+0=V_0\subset V_1\subset\cdots\subset V_n=V,\qquad
+\dim V_i=i,\qquad LV_i\subseteq V_{i-1}.
+\]
+因此 \(L\) 中全部算子可同时严格上三角化。
+\end{theorem}
+\begin{proof}
+先对 \(\dim L\) 归纳证明公共零向量的存在。零代数没有限制；以下设 \(L\ne0\)，并假定维数较小的算子李代数已经满足结论。取 \(L\) 的极大真子代数 \(M\)。对 \(m\in M\)，\cref{b5:lem:ad-of-nilpotent-matrix}说明 \(\operatorname{ad}m\) 在 \(L\)，从而在 \(L/M\) 上幂零。\(M\) 在 \(L/M\) 上作用的像维数至多为 \(\dim M<\dim L\)，故归纳假设给出非零陪集 \(x+M\)，满足 \([M,x]\subseteq M\)。于是正规化子
+\[
+N_L(M)=\Bigl\{\,x\in L\mid[x,M]\subseteq M\,\Bigr\}
+\]
+严格包含 \(M\)。Jacobi 恒等式保证这个正规化子是子代数；由极大性它等于 \(L\)，所以 \(M\) 是理想。
+
+商 \(L/M\) 不含非零真子代数，而任意一维子空间都是李子代数，故 \(\dim L/M=1\)。取 \(x\notin M\)，有 \(L=M+kx\)。归纳假设又给出
+\[
+W=\{\,v\in V\mid Mv=0\,\}\ne0.
+\]
+若 \(w\in W\)、\(m\in M\)，则
+\[
+m(xw)=x(mw)+[m,x]w=0,
+\]
+故 \(xW\subseteq W\)。幂零算子 \(x|_W\) 在非零空间 \(W\) 上必有非零核；核中的任意非零向量都被 \(M\) 与 \(x\) 同时零化，因而被 \(L\) 零化。
+
+取这样的 \(v_1\)，令 \(V_1=kv_1\)。\(L\) 在 \(V/V_1\) 上的每个诱导算子仍幂零。重复已经证明的公共零向量结论，逐次提升商空间中的一维子空间，便得所需旗标。选取与旗标相适应的基，矩阵即为严格上三角形。
+\end{proof}
+
+证明中的两个归纳作用不同：对 \(\dim L\) 的归纳解决“同时”的问题；随后对商空间的重复使用把一条公共零直线扩充为完全旗标。后一过程没有要求新的代数闭性条件。
 
 \subsection{Engel 定理及幂零性}
 \label{b5:subsec:1201:03}
 
-待撰写。
+Engel 定理的抽象形式把算子条件转回李代数自身。
+
+\begin{theorem}[Engel 定理]\label{b5:thm:engel}
+设 \(\mathfrak g\) 是域 \(k\) 上的有限维李代数。则 \(\mathfrak g\) 幂零，当且仅当对每个 \(x\in\mathfrak g\)，\(\operatorname{ad}_{\mathfrak g}x\) 都是幂零算子。
+\end{theorem}
+\begin{proof}
+若下降中心列 \(\gamma_1\mathfrak g=\mathfrak g\)、
+\(\gamma_{i+1}\mathfrak g=[\mathfrak g,\gamma_i\mathfrak g]\)
+在 \(\gamma_{c+1}\mathfrak g\) 处为零，则
+\((\operatorname{ad}x)^c(\mathfrak g)\subseteq\gamma_{c+1}\mathfrak g=0\)。
+
+反之，对伴随像 \(L=\operatorname{ad}\mathfrak g\subseteq\mathfrak{gl}(\mathfrak g)\) 应用\cref{b5:thm:engel-common-zero}。若 \(n=\dim\mathfrak g\)，则任意 \(n\) 个伴随算子的乘积都沿该定理的旗标降到零。因此所有形如
+\[
+\biggl[x_1,\Bigl[x_2,\ldots,[x_n,y]\ldots\Bigr]\biggr]
+\]
+的括号都为零；这些元素生成 \(\gamma_{n+1}\mathfrak g\)，故 \(\mathfrak g\) 幂零。零代数的结论直接成立。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:nilpotent-center}
+任意域上非零有限维幂零李代数 \(\mathfrak g\) 的中心非零。
+\end{corollary}
+\begin{proof}
+在 \(\mathfrak g\) 的伴随表示中，\cref{b5:thm:engel-common-zero}给出的公共零向量正是一个非零中心元素。
+\end{proof}
+
+这里的幂零条件针对伴随表示。一个一维交换李代数可以在一维空间上作用为单位算子，因而幂零李代数的任意表示并不必由幂零算子组成。这一点在下一节的三角化结论中会更加明显。

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 第8章　自由群与生成关系
-% 纲要位置：计划纲要.md，第 328 行。
+% 纲要位置：计划纲要.md，第 333 行。
 
 \chapter{自由群与生成关系}
 \label{b1:ch:08}
@@ -24,7 +24,7 @@
 图论选读节可以在掌握约化字后阅读，所需图和树的事实均随证明说明。初读时可暂缓\cref{b1:prop:free-rank-invariant}证明中的无限基数比较，以及一般无限图的生成树选择论证；有限秩结论与有限图的计算均不依赖这两步。
 
 \ProseParagraphBreak
-自由群、自由积和字问题可先读 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapters 11--12]{Rotman1995TheoryGroups}。Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter I, 1--3; Chapter II, 1--2]{LyndonSchupp2001}适合继续学习生成关系及组合群论；阅读时应区分约化字的标准形、由关系推出等式的步骤，以及能否对每个字都在有限步内作出判定。
+自由群与自由积的当前内容可对照 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapter 11]{Rotman1995TheoryGroups}；该书第12章关于有限展示群字问题不可判定性的内容属于进阶阅读，不是本章结论。Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter I, \S\S~1--3; Chapter II, \S\S~1--2]{LyndonSchupp2001}适合继续学习生成关系及组合群论。该书通常采用 \([h,k]=h^{-1}k^{-1}hk\)，并把群元素的作用写在对象右侧；本书的交换子与置换复合约定不同，比较共轭公式和 Schreier 代表公式时应先核对约定。
 
 \input{Part01/Chapter08/Section0801}
 \input{Part01/Chapter08/Section0802}
@@ -32,7 +32,7 @@
 \input{Part01/Chapter08/Section0804}
 
 \begin{chaptersummary}
-自由群先由字的等价类构造，约化字唯一性再给出可计算的标准表示。展示通过关系字的正规闭包定义商群；验证一个具体展示，既要检查关系与生成性，也要证明所给关系没有留下多余的群元素。自由积允许独立给定两个因子的同态，直积则额外要求两像逐元素交换。
+自由群先由字的等价类构造，约化字唯一性再给出标准表示；当字母具有可判定的编码和比较方式时，这一过程也给出实际计算。展示通过关系字的正规闭包定义商群；验证一个具体展示，既要检查关系与生成性，也要证明所给关系没有留下多余的群元素。自由积允许独立给定两个因子的同态，直积则额外要求两像逐元素交换。
 
 \ProseParagraphBreak
 选读部分把自由群的子群识别为 Schreier 图的闭路径群。选定生成树后，每条非树边给出一个自由基元素；有限指数时，边数与顶点数决定基的个数。下一章转入交换群，将生成与关系写成整数线性组合和关系矩阵。
@@ -48,10 +48,22 @@
 \end{solution}
 
 \begin{exercise}\label{b1:ex:08-squares-embedding}
-在 \(F\bigl(\{a,b\}\bigr)\) 中，证明 \(a^2,b^2\) 自由生成一个真子群。
+在 \(F=F\bigl(\{a,b\}\bigr)\) 中令 \(H=\langle a^2,b^2\rangle\)。
+\begin{enumerate}
+\item 证明 \(a^2,b^2\) 自由生成真子群 \(H<F\)。
+\item （选读，需使用 Schreier 秩公式）证明 \([F:H]=\infty\)。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
+\textbf{（1）}
 由\cref{b1:thm:free-group-universal}，存在唯一同态 \(F\bigl(\{x,y\}\bigr)\to F\bigl(\{a,b\}\bigr)\) 发送 \(x\mapsto a^2,y\mapsto b^2\)。一个非空约化字可按相同生成元的最大块写成 \(x^{m_1}y^{n_1}\cdots\) 一类交替表达式，所有出现的指数非零；端部可以从任一类型开始或结束。替换后各指数乘二，交替的非零块之间没有消去。由\cref{b1:lem:unique-reduced-word}，像非单位，故同态的核只有单位元；它因而单射，并给出到 \(\langle a^2,b^2\rangle\) 的同构。映射到 \(C_2\) 时令 \(a\mapsto1,b\mapsto0\)，则 \(a^2,b^2\) 的像均为零，而 \(a\) 的像非零。因此生成子群不含 \(a\)，是真子群。
+
+\textbf{（2）}
+第一问说明 \(H\) 是秩为二的自由群。若其指数是有限数 \(d\)，\cref{b1:thm:schreier-rank}给出
+\[
+2=\operatorname{rank}H=1+d(2-1)=1+d,
+\]
+所以 \(d=1\)。这会推出 \(H=F\)，与第一问证明的真包含矛盾。因此 \([F:H]=\infty\)。这也说明无限指数子群仍可能具有有限秩。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:08-quaternion-presentation}
@@ -102,34 +114,77 @@ v(gG',hH')=\alpha(gG')\beta(hH').
 \end{solution}
 
 \begin{exercise}\label{b1:ex:08-redundant-generator}
-设 \(P=\langle S\mid R\rangle\)，\(w\in F(S)\)，并取新符号 \(t\notin S\)。证明增加生成元和关系所得
+设 \(P=\langle S\mid R\rangle\)，\(w\in F(S)\)。
+\begin{enumerate}
+\item 取新符号 \(t\notin S\)。证明
 \[
 Q=\bigl\langle S\sqcup\{t\}\mid R,\ t=w\bigr\rangle
 \]
-与 \(P\) 同构。说明为何只增加 \(t\) 而不增加关系通常会改变群。
+与 \(P\) 同构，并说明为何只增加 \(t\) 而不增加关系通常会改变群。
+\item 证明自然满同态
+\[
+\rho:\langle S\mid R\rangle
+\longrightarrow
+\langle S\mid R\cup\{w\}\rangle
+\]
+为同构，当且仅当
+\[
+w\in\NormalClosure{R}_{F(S)}.
+\]
+\end{enumerate}
 \end{exercise}
 \begin{solution}
+\textbf{（1）}
 映射 \(S\to P\) 取原有生成元在 \(P\) 中的像，并令 \(t\mapsto\overline w\)，满足 \(Q\) 的全部关系，故\cref{b1:prop:presentation-homomorphism}给出同态 \(Q\to P\)。由 \(S\) 在 \(Q\) 中仍满足 \(R\)，同一命题也给出 \(P\to Q\)。复合在 \(S\) 上均为恒等，在 \(Q\) 的 \(t\) 上则由 \(t=w\) 得到恒等，因此两者互逆。若只加新符号，在自由积的展示公式\eqref{b1:eq:free-product-presentation}中取第二个群为 \(\mathbb Z=\langle t\mid\varnothing\rangle\)：两组生成符号不交，合并后的关系仍只有 \(R\)，所以所得群为 \(P*\mathbb Z\)。例如 \(P=1\) 时它变为 \(\mathbb Z\)，所以缺少关系会引入新的自由选择。
+
+\textbf{（2）}
+在 \(F(S)\) 中记
+\[
+N=\NormalClosure{R}_{F(S)},\qquad
+M=\NormalClosure{R\cup\{w\}}_{F(S)}.
+\]
+因为 \(N\leq M\)，商映射诱导自然满同态 \(\rho:F(S)/N\rightarrow F(S)/M\)，其核为 \(M/N\)。因此 \(\rho\) 为同构，当且仅当 \(M=N\)。若 \(M=N\)，则 \(w\in M=N\)；反过来，若 \(w\in N\)，则正规子群 \(N\) 已包含 \(R\cup\{w\}\)，故 \(M\leq N\)，再结合 \(N\leq M\) 得 \(M=N\)。这就证明了所述充要条件。
 \end{solution}
 
 \begin{optionalexercise}\label{b1:ex:08-index-three}
 设 \(F=F\bigl(\{a,b\}\bigr)\)，令 \(H\) 为同态 \(F\to C_3\)、\(a\mapsto1,b\mapsto0\) 的核。用 Schreier 图写出 \(H\) 的自由基。
+记所得自由基为
+\[
+A=a^3,\qquad B_0=b,\qquad
+B_1=aba^{-1},\qquad B_2=a^2ba^{-2}.
+\]
+再沿 Schreier 图读取 \(w=ababab^{-1}\)，把它改写成 \(A,B_0,B_1,B_2\) 的字，并说明原自由群约化与新自由基约化所使用的字母表有何不同。
 \end{optionalexercise}
 \begin{solution}
 陪集为 \(H,Ha,Ha^2\)。三条正向 \(a\) 边依次构成三角形，每个顶点另有一个 \(b\) 环。取前两条 \(a\) 边为树，树代表字为 \(1,a,a^2\)。非树 \(a\) 边给出 \(a^3\)，三个 \(b\) 环分别给出
 \[
 b,\qquad aba^{-1},\qquad a^2ba^{-2}.
 \]
-具体地，按\eqref{b1:eq:schreier-basis}，末条 \(a\) 边给出 \(a^2a\cdot1^{-1}=a^3\)，各顶点的 \(b\) 环给出 \(a^kba^{-k}\)（\(k=0,1,2\)）。\cref{b1:lem:graph-loop-free}断言每条非树边恰对应一个自由基元素，而\cref{b1:thm:nielsen-schreier}证明中的标签映射是闭路径群到 \(H\) 的同构，所以这四个元素确实构成自由基。由\cref{b1:thm:first-isomorphism}，该满同态的核指数为三；\cref{b1:thm:schreier-rank}也给出秩 \(1+3(2-1)=4\)。
+具体地，按\eqref{b1:eq:schreier-basis}，末条 \(a\) 边给出 \(a^2a\cdot1^{-1}=a^3\)，各顶点的 \(b\) 环给出 \(a^kba^{-k}\)（\(k=0,1,2\)）。\cref{b1:lem:graph-loop-free}断言每条非树边恰对应一个自由基元素，而式\eqref{b1:eq:schreier-label-isomorphism}把闭路径群同构地识别为 \(H\)，所以这四个元素确实构成自由基。由\cref{b1:thm:first-isomorphism}，该满同态的核指数为三；\cref{b1:thm:schreier-rank}也给出秩 \(1+3(2-1)=4\)。
+
+现在沿图读取
+\[
+w=ababab^{-1}.
+\]
+第一次 \(b\) 出现在顶点 \(Ha\)，记录 \(B_1\)；第二次 \(b\) 出现在顶点 \(Ha^2\)，记录 \(B_2\)；随后从 \(Ha^2\) 沿非树 \(a\) 边回到根，记录 \(A\)；最后在根处反向绕 \(b\) 环，记录 \(B_0^{-1}\)。因此
+\[
+w=B_1B_2AB_0^{-1}.
+\]
+在原基中展开右端得到
+\[
+(aba^{-1})(a^2ba^{-2})a^3b^{-1}
+=ababab^{-1},
+\]
+与原字一致。左式作为 \(A,B_0,B_1,B_2\) 的字已经约化，右式则使用原字母 \(a,b\)；两种约化分别发生在子群的新自由基字母表和母群的原自由基字母表中，不能把两套相邻逆字母的判断混同。
 \end{solution}
 
 \begin{optionalexercise}\label{b1:ex:08-infinite-rank-kernel}
 设 \(F=F\bigl(\{a,b\}\bigr)\)，同态 \(F\to\mathbb Z\) 发送 \(a\mapsto1,b\mapsto0\)。记该同态的核为 \(H\)。证明 \(H\) 自由，且自由基为 \(\{a^kba^{-k}\mid k\in\mathbb Z\}\)；再证明 \(H=\NormalClosure{b}_{F}\)，并比较正规生成与普通子群生成。
 \end{optionalexercise}
 \begin{solution}
-核的右陪集由整数 \(k\) 标记，代表字取 \(a^k\)。正向 \(a\) 边从 \(k\) 指向 \(k+1\)，正向 \(b\) 边是各顶点的环。所有 \(a\) 边组成一条双向无限的树，所有非树边正好是 \(b\) 环。由\eqref{b1:eq:schreier-basis}，位于 \(k\) 的 \(b\) 环对应 \(a^kba^{-k}\)。\cref{b1:lem:graph-loop-free}与\cref{b1:thm:nielsen-schreier}证明中的标签同构说明，所有这些非树边对应的元素构成 \(H\) 的自由基。若 \(H\) 有有限生成集，这些生成元的约化字总共只涉及有限个基字母，其乘积不可能产生其余基字母，矛盾。因此该核不是有限生成群，尽管母群只需两个生成元。
+核的右陪集由整数 \(k\) 标记，代表字取 \(a^k\)。正向 \(a\) 边从 \(k\) 指向 \(k+1\)，正向 \(b\) 边是各顶点的环。所有 \(a\) 边组成一条双向无限的树，所有非树边正好是 \(b\) 环。由\eqref{b1:eq:schreier-basis}，位于 \(k\) 的 \(b\) 环对应 \(a^kba^{-k}\)。\cref{b1:lem:graph-loop-free}与式\eqref{b1:eq:schreier-label-isomorphism}说明，所有这些非树边对应的元素构成 \(H\) 的自由基。若 \(H\) 有有限生成集，这些生成元的约化字总共只涉及有限个基字母，其乘积不可能产生其余基字母，矛盾。因此该核不是有限生成群，尽管母群只需两个生成元。
 
-令 \(N=\NormalClosure{b}_{F}\)。因 \(b\in H\) 且 \(H\) 是同态的核，\cref{b1:def:group-presentation}中的正规闭包定义给出 \(N\le H\)。反过来，正规性使 \(N\) 包含每个 \(a^kba^{-k}\)，而这些元素已证为 \(H\) 的自由基，所以 \(H\le N\)。于是 \(H=N\)：它在母群 \(F\) 中由一个元素正规生成，作为普通群却不能由有限多个元素生成。这里正规闭包取在 \(F\) 中，而不是取在 \(H\) 自身中。
+令 \(N=\NormalClosure{b}_{F}\)。因 \(b\in H\) 且 \(H\) 是同态的核，\cref{b1:def:normal-closure}给出 \(N\le H\)。反过来，正规性使 \(N\) 包含每个 \(a^kba^{-k}\)，而这些元素已证为 \(H\) 的自由基，所以 \(H\le N\)。于是 \(H=N\)：它在母群 \(F\) 中由一个元素正规生成，作为普通群却不能由有限多个元素生成。这里正规闭包取在 \(F\) 中，而不是取在 \(H\) 自身中。
 \end{solution}
 
 \begin{optionalexercise}\label{b1:ex:08-nonnormal-schreier}
@@ -169,7 +224,7 @@ Ka\xrightarrow{b}K&:\quad a\cdot b\cdot1^{-1}=ab,\\
 Kb\xrightarrow{b}Ka&:\quad b\cdot b\cdot a^{-1}=b^2a^{-1}.
 \end{aligned}
 \]
-\cref{b1:lem:graph-loop-free}给出非树边对应的闭路径自由基，而\cref{b1:thm:nielsen-schreier}证明中的标签同构将它送到 \(K\)，故这四个元素是 \(K\) 的自由基。\cref{b1:thm:schreier-rank}也给出秩 \(1+3(2-1)=4\)。
+\cref{b1:lem:graph-loop-free}给出非树边对应的闭路径自由基，而式\eqref{b1:eq:schreier-label-isomorphism}将它同构地送到 \(K\)，故这四个元素是 \(K\) 的自由基。\cref{b1:thm:schreier-rank}也给出秩 \(1+3(2-1)=4\)。
 
 最后，按从右向左作用的置换乘法，\(\varphi(ab)=(23)\in L\)，而
 \[

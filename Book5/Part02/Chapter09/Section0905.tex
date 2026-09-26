@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 9.5 基本代数、Ext 箭图与关系
-% 纲要位置：计划纲要.md，第 3385 行。
+% 纲要位置：工作记录/计划纲要.md，第 4036 行。
 
 \section{基本代数、Ext 箭图与关系}
 \label{b5:sec:0905}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 对代数闭域上的有限维代数，调用第二卷的投射覆盖和 Morita 理论构造基本代数，并说明分裂基域假设的用途
 % * 从本原幂等元及 \(J/J^2\) 构造箭图，按第9.2节既定的路径和左模约定核验箭的方向及 \(\operatorname{Ext}^1\) 维数
@@ -18,27 +17,109 @@
 % ---
 %
 
+前面从箭图造出代数。现在反过来：一个有限维代数的简单模之间有哪些最初的联系，能否由箭表示？答案要先去掉半单商中重复的矩阵大小，再用根的第一层作箭，用更高层的乘法作关系。代数闭基域在这一步有明确作用。
+
 \subsection{基本代数与分裂基域假设}
 \label{b5:subsec:0905:01}
 
-待撰写。
+设 \(A\) 为代数闭域 \(k\) 上的有限维含幺代数，记 \(J=J(A)\)。第二卷定理15.1.4证明了 \(J\) 幂零；半单结构定理把商写为
+\[
+A/J\cong\prod_{i=1}^r M_{n_i}(k).
+\]
+每个简单模的自同态除环在代数闭域上为 \(k\)，所以这里没有额外的除代数系数。第二卷定理15.3.4又允许将各矩阵块的对角矩阵单位提升为一组完整正交幂等元。
+\begin{definition}\label{b5:def:split-basic-algebra}
+设 \(k\) 为域，\(B\) 为非零有限维含幺 \(k\) 代数。若
+\(B/J(B)\cong k^r\) 对某个 \(r\ge1\) 成立，就称 \(B\) 为一个分裂\term[jiben-daishu]{基本代数}[basic algebra]。在代数闭域上，“分裂”自动满足；一般基本代数的半单商可以是若干不同除代数的直积，本节不把它们都换成 \(k\)。
+\end{definition}
+\begin{proposition}\label{b5:prop:basic-morita-reduction}
+设 \(k\) 为代数闭域，\(A\) 为非零有限维含幺 \(k\) 代数。可取一个幂等元 \(e\in A\)，使 \(AeA=A\)，且 \(B=eAe\) 是分裂基本代数。将 \(Ae\) 按乘法看成 \((A,B)\)-双模，则函子
+\[
+M\longmapsto eM,\qquad N\longmapsto Ae\otimes_B N
+\]
+给出左 \(A\) 模与左 \(B\) 模的等价，并保持有限维性。
+\end{proposition}
+\begin{proof}
+在每个 \(M_{n_i}(k)\) 块中选一个秩一对角幂等元，取相容提升 \(e_i\)，并令 \(e=\sum_i e_i\)。第二卷命题15.4.5关于基本角代数的结论在这里给出
+\[
+J(eAe)=eJe,\qquad eAe/eJe\cong k^r.
+\]
+这些条件也可直接检查：\(eJe\) 幂零，商角环恰是在每个矩阵块保留一个对角位置，因此半单且为 \(k^r\)。
+商代数中每个所选秩一幂等元生成整个对应矩阵块，故 \(AeA+J=A\)。令 \(M=A/AeA\)，则 \(JM=M\)；迭代得到 \(M=J^NM=0\)，所以 \(AeA=A\)。这验证了第二卷命题16.3.4的满幂等元条件，该命题用乘法映射
+\(Ae\otimes_B eM\to M\)、\(ae\otimes m\mapsto am\)
+和 \(eAe\otimes_BN\to N\) 证明所列函子互为拟逆。这里 \(Ae\) 有限维，故两个函子也保持有限维对象。
+\end{proof}
+非代数闭域上的限制不能忽略。例如实代数 \(\mathbb C\) 已是除代数，只有一个简单模类型；一个普通单顶点、无箭的实箭图只给出 \(\mathbb R\)，不能用它记录 \(\mathbb C\) 的除代数结构。本节的普通箭图结论以分裂条件为基础。
 
 \subsection{根商构造的箭图、箭向与扩张维数}
 \label{b5:subsec:0905:02}
 
-待撰写。
+以下设 \(B/J\cong k^r\)，并选取提升标准坐标元的一组完整正交幂等元 \(e_1,\ldots,e_r\)，其中 \(J=J(B)\)。简单模为 \(S_i=Be_i/Je_i\)，每个都一维。选取每个空间
+\[
+e_j(J/J^2)e_i
+\]
+的一组 \(k\) 基，对每个基元画一支箭 \(i\to j\)。这里包括 \(i=j\) 的圈。根只保留第一层，是因为 \(J^2\) 中的元素已经可能由两支箭的复合产生，不应当再次作为独立箭。
+\begin{proposition}\label{b5:prop:ext-quiver-direction}
+设 \(k\) 为域，\(B\) 为非零有限维含幺分裂基本 \(k\) 代数，\(J=J(B)\)，\(B/J\cong k^r\)。取一组完整正交幂等元 \(e_1,\ldots,e_r\in B\)，其模 \(J\) 的像分别为 \(k^r\) 的标准坐标幂等元，令简单左模 \(S_i=Be_i/Je_i\)。则对 \(1\le i,j\le r\) 有
+\[
+\operatorname{Ext}_B^1(S_i,S_j)
+\cong \operatorname{Hom}_k\Bigl(e_j(J/J^2)e_i,k\Bigr).
+\]
+以 \(1,\ldots,r\) 为顶点，对每个 \(e_j(J/J^2)e_i\) 的基元画一支箭 \(i\to j\)，则所得箭图中从 \(i\) 到 \(j\) 的箭数为 \(\dim_k\operatorname{Ext}_B^1(S_i,S_j)\)。
+\end{proposition}
+\begin{proof}
+\(Be_i\) 是正则模的直和因子，因而投射。将\cref{b5:prop:projective-presentation-extensions}用于
+\(0\to Je_i\to Be_i\to S_i\to0\)。
+从 \(Be_i\) 到 \(S_j\) 的任何模同态都把 \(Je_i\) 送到 \(JS_j=0\)，故该 Hom 映射的限制为零。于是
+\[
+\operatorname{Ext}_B^1(S_i,S_j)\cong\operatorname{Hom}_B(Je_i,S_j).
+\]
+右侧的同态又零化 \(J^2e_i\)，所以可在 \(Je_i/J^2e_i\) 上计算。这个模被 \(J\) 零化，是 \(k^r\) 模；映到 \(S_j\) 的同态只保留第 \(j\) 个坐标，并在该坐标上为任意 \(k\) 线性泛函。选 \(e_j\) 在 \(S_j\) 中的像为基，便得到所列同构。
+\end{proof}
+这个箭图称为 \(B\) 的\term[Ext-jiantu]{Ext 箭图}[Ext quiver]。箭的具体基依赖选择，但每一对顶点间的箭数由扩张空间决定。注意顺序是 \(\operatorname{Ext}^1(S_i,S_j)\) 对应 \(i\to j\)：其扩张以 \(S_j\) 为子模、\(S_i\) 为商模。
 
 \subsection{容许关系、路径代数与有限维性}
 \label{b5:subsec:0905:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:basic-algebra-bound-quiver}
+设 \(k\) 为域，\(B\) 为非零有限维含幺分裂基本 \(k\) 代数，\(J=J(B)\)，\(B/J\cong k^r\)。取一组完整正交幂等元 \(e_1,\ldots,e_r\)，其模 \(J\) 的像为各标准坐标幂等元。以 \(1,\ldots,r\) 为顶点，对每个 \(e_j(J/J^2)e_i\) 的一组 \(k\) 基中的元素画一支箭 \(i\to j\)，构成有限箭图 \(Q\)。则存在 \(kQ\) 的容许关系理想 \(I\)，使
+\[
+B\cong kQ/I.
+\]
+特别地，每个代数闭域上的非零有限维代数都与某个这种商代数 Morita 等价。
+\end{theorem}
+\begin{proof}
+记 \(J=J(B)\)。将顶点送到选定的 \(e_i\)，将每支箭 \(i\to j\) 送到其基元的某个提升 \(x_a\in e_jJe_i\)。顶点关系成立，由路径代数的构造得到同态 \(\phi:kQ\to B\)。令 \(C\) 为这些像生成的子代数，\(L\) 为箭像的线性生成空间。基的选择给出 \(J=L+J^2\)，而顶点像生成 \(B/J\)，故 \(B=C+J\)。
+将 \(J=L+J^2\) 的乘积展开，可得
+\(J^m\subseteq L^m+J^{m+1}\subseteq C+J^{m+1}\)。
+逐层代入 \(B=C+J\)，最终用 \(J^N=0\) 得到 \(B=C\)。所以 \(\phi\) 满射。
+令 \(I=\ker\phi\)，并令 \(\mathfrak a\) 为箭理想。因每支箭映入 \(J\)，有 \(\mathfrak a^N\subseteq I\)，必要时增大 \(N\) 使 \(N\ge2\)。为证 \(I\subseteq\mathfrak a^2\)，把核中一个元素拆成长度零项、长度一项及较长路径。其像模 \(J\) 为零，迫使全部顶点系数为零；再模 \(J^2\)，箭像的基独立性迫使全部长度一系数为零。故它只含长度至少二的路径。所求理想容许，第一同构定理给出商表示。最后结合\cref{b5:prop:basic-morita-reduction}，得到一般代数闭基域情形。
+\end{proof}
+关系理想通常不唯一，因为箭的提升与基可以改变。定理给出的是一种适合模范畴的展示，并不宣称所有代数都有唯一的一组路径关系。这里的生成性也用到了根的幂零性；若只知道根的第一层而没有这种有限性，就不能用同样的有限步推导结束。
 
 \subsection{三角矩阵、双数与带关系代数}
 \label{b5:subsec:0905:04}
 
-待撰写。
+上三角矩阵代数 \(T_3(k)\) 的根由 \(E_{12},E_{23},E_{13}\) 生成，根平方由 \(E_{13}=E_{12}E_{23}\) 生成。因此箭图只有 \(3\to2\to1\) 的两支箭；其六条路径对应六个上三角矩阵单位，不必再加入关系。这也复核了左模约定下的箭向。
+\ProseParagraphBreak
+双数代数 \(k[t]/(t^2)\) 则只有一个顶点和一支圈，关系为圈的平方为零。它的简单模 \(S=k\) 满足
+\[
+\operatorname{Ext}^1(S,S)\cong k,
+\]
+因为 \(J/J^2=kt\)。同样的单圈若改加 \(t^3=0\)，Ext 箭图仍相同，代数维数却从二变成三，最长不可分解的幂零链也从二变成三。箭图本身没有记录全部乘法，关系不可省去。
+\begin{example}\label{b5:exm:zero-composition-bound-quiver}
+设 \(k\) 为域，\(Q=(1\xrightarrow{a}2\xrightarrow{b}3)\)，\(B=kQ/(ba)\)。其基为 \(e_1,e_2,e_3,a,b\)，根平方为零，Ext 箭图仍是原来的三顶点直线。然而维数向量 \((1,1,1)\) 不再有不可分解表示：两支箭由标量 \(\alpha,\beta\) 给出，关系要求 \(\beta\alpha=0\)，故至少一支箭为零，表示沿该处拆成直和。在无关系的 \(kQ\) 上，\(I[1,3]\) 则是这个维数向量的不可分解表示。
+\end{example}
+因此下一章关于无关系路径代数的根分类，不能直接用于具有同一箭图的任意商代数。
 
 \subsection{ADE 二次型与反射简介}
 \label{b5:subsec:0905:05}
 
-待撰写。
+对有限无环箭图，\cref{b5:thm:quiver-hom-ext-euler}已经给出
+\[
+q_Q(\mathbf d)=\sum_i d_i^2-\sum_{a:i\to j}d_i d_j
+=\dim\operatorname{End}_Q(V)-\dim\operatorname{Ext}_Q^1(V,V),
+\quad \mathbf d=\mathbf d(V).
+\]
+右边来自表示的线性方程，左边却只用图和整数向量。在线性定向 \(A_n\) 中，一个区间向量含有 \(b-a+1\) 个一，区间内有 \(b-a\) 支箭，所以其值为一。我们已经用选基法证明了这些区间给出全部不可分解表示；这个数值因而有实际分类意义。
+\ProseParagraphBreak
+其他无向图是否也有类似现象，需要继续研究 \(q_Q\) 的正定性以及改变箭向的办法。\chapref{b5:ch:10}将定义整数格上的反射，证明所需的 ADE 图判别，再构造反射函子；不要求先读李代数的根系分类。对于带关系代数，\cref{b5:exm:zero-composition-bound-quiver}已经说明，仅仅保留同一个图上的二次式还不足以恢复不可分解表示。

@@ -1,42 +1,175 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 7.3 Schur–Weyl 对偶
-% 纲要位置：计划纲要.md，第 3314 行。
-
-\section{Schur–Weyl 对偶}
-\label{b5:sec:0703}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3965 行。
 % * 张量幂上对称群与一般线性群的交换作用
 % * 特征零下的双中心化子定理
 % * 分解及维数条件
 % * 采用特征零下的半单性、极化及中心化子计算建立双中心化子结论，不前置第18章最高权分类或第19章 Weyl 特征标公式
 % * 在张量次数大于向量空间维数时明确可出现的分拆行数限制；交换作用不自动意味着双方表示均忠实
-%
+\section{Schur–Weyl 对偶}
+\label{b5:sec:0703}
+
+张量幂中有两种不同的对称性：可以同时改变每个因子中的向量，也可以重新排列因子。二者交换很容易验证；要证明它们互为中心化子，还须证明全部与一种作用交换的线性算子都能由另一种作用线性生成。本节用半单代数的矩阵块和极化证明这一结论，无须调用一般线性群表示的最高权分类。
 
 \subsection{张量幂上的对称群与一般线性群作用}
 \label{b5:subsec:0703:01}
 
-待撰写。
+设 \(k\) 为特征零域，\(V\) 为 \(d\ge1\) 维 \(k\) 向量空间，\(n\ge1\)，记 \(T=V^{\otimes n}\)。定义两个左作用：
+\[
+P_\sigma(v_1\otimes\cdots\otimes v_n)
+=v_{\sigma^{-1}(1)}\otimes\cdots\otimes v_{\sigma^{-1}(n)},
+\qquad
+R_g=g^{\otimes n},
+\]
+其中 \(\sigma\in S_n\)、\(g\in\operatorname{GL}(V)\)。逆号保证 \(P_\sigma P_\tau=P_{\sigma\tau}\)；若省掉它，就会写成反向乘法。逐个因子计算给出 \(P_\sigma R_g=R_gP_\sigma\)。
+
+\ProseParagraphBreak
+记两种作用在线性自同态代数中张成的代数为
+\[
+A=\operatorname{im}\Bigl(k[S_n]\longrightarrow\operatorname{End}_k(T)\Bigr),
+\qquad
+B=\operatorname{span}_k\Bigl\{\,g^{\otimes n}\mid g\in\operatorname{GL}(V)\,\Bigr\}.
+\]
+\(B\) 确为含单位的子代数，因为 \(g^{\otimes n}h^{\otimes n}=(gh)^{\otimes n}\)。这里讨论的是像代数；两个原始作用有核，并不妨碍它们的像成为彼此的中心化子。
 
 \subsection{特征零下的双中心化子定理}
 \label{b5:subsec:0703:02}
 
-待撰写。
+\begin{lemma}[分裂半单代数的双中心化子]\label{b5:lem:split-double-centralizer}
+设 \(k\) 为域，\(E\) 为有限维非零 \(k\) 向量空间，\(A\subseteq\operatorname{End}_k(E)\) 为含单位的分裂半单子代数，即 \(A\simeq\prod_iM_{r_i}(k)\)。令 \(C=\operatorname{End}_A(E)\)。则 \(C\) 也是分裂半单代数，且
+\[
+\operatorname{End}_C(E)=A.
+\]
+更具体地，若 \(S_i\) 遍历 \(A\) 的简单左模的同构类代表，并令 \(L_i=\operatorname{Hom}_A(S_i,E)\)，以 \(c\cdot f=c\circ f\) 定义左 \(C\) 作用，则
+\[
+E\simeq\bigoplus_i S_i\otimes_k L_i,\qquad
+A\simeq\prod_i\operatorname{End}_k(S_i),\qquad
+C\simeq\prod_i\operatorname{End}_k(L_i).
+\]
+所有 \(L_i\) 均非零，并且是 \(C\) 的全部互不同构简单模。
+\end{lemma}
+\begin{proof}
+分裂半单性给出 \(E\) 的简单直和分解。\(A\) 在 \(E\) 上忠实，因为 \(A\) 已是自同态代数的子代数；若某个简单类型未出现，其矩阵块的单位元就会零化 \(E\)，与忠实性矛盾。因此各 \(L_i\ne0\)。评价映射 \(s\otimes f\mapsto f(s)\) 给出第一式。
+
+与 \(A\) 交换的算子须保持其中心幂等元划出的各块。块内与所有矩阵单位 \(E_{ab}\otimes1\) 交换的算子恰为 \(1\otimes U\)，其中 \(U\in\operatorname{End}_k(L_i)\)：先与 \(E_{aa}\) 交换排除非对角块，再与 \(E_{ab}\) 交换使所有对角块相同。因此得到 \(C\) 的乘积描述。反过来，重复这个矩阵单位计算，与全部 \(1\otimes\operatorname{End}_k(L_i)\) 交换的算子正是 \(\operatorname{End}_k(S_i)\otimes1\)，即 \(A\)。
+
+最后，每个 \(L_i\) 是第 \(i\) 个全矩阵代数的列向量简单模，不同块由中心幂等元区分。这些也是乘积矩阵代数的全部简单模。
+\end{proof}
+
+本引理说明，只要算出一侧的中心化子，另一侧的等式就可由半单性推出。但“两个作用交换”本身只给包含关系，不足以调用这个结论。
 
 \subsection{分解及维数条件}
 \label{b5:subsec:0703:03}
 
-待撰写。
+由\cref{b5:thm:specht-classification}，\(k[S_n]\) 在特征零时是分裂半单代数，简单模为 \(S^\lambda_k\)。因此先不判断一般线性群一侧的不可约性，也已有自然分解
+\begin{equation}\label{b5:eq:tensor-isotypic}
+T\simeq\bigoplus_{\lambda\vdash n}S^\lambda_k\otimes_k L_\lambda(V),
+\qquad
+L_\lambda(V)=\operatorname{Hom}_{k[S_n]}(S^\lambda_k,T).
+\end{equation}
+一般线性群在重数空间上作用为 \(g\cdot f=g^{\otimes n}\circ f\)。这个定义良定，正是因为 \(g^{\otimes n}\) 与 \(S_n\) 作用交换；评价映射与两个作用均相容。
+
+\ProseParagraphBreak
+例如 \(n=2\) 时，两个 Specht 模分别是平凡模与符号模。投影 \(\Bigl(1+P_{(12)}\Bigr)/2\)、\(\Bigl(1-P_{(12)}\Bigr)/2\) 把 \(V^{\otimes2}\) 分成对称和反对称张量。一般分拆对应的重数空间可以看作这两种构造的推广；接下来将证明它们除了为零的情形以外都是不可约表示。
 
 \subsection{半单性、极化与中心化子计算}
 \label{b5:subsec:0703:04}
 
-待撰写。
+\begin{lemma}[极化]\label{b5:lem:tensor-polarization}
+设 \(k\) 为特征零域，\(U\) 为有限维 \(k\) 向量空间，\(n\ge1\)。置换张量因子作用下的不变子空间 \((U^{\otimes n})^{S_n}\)，由纯幂 \(u^{\otimes n}\)（\(u\in U\)）线性生成。
+\end{lemma}
+\begin{proof}
+平均投影把纯张量的生成集送到对称化张量的生成集。对 \(u_1,\ldots,u_n\in U\)，有极化恒等式
+\[
+\sum_{J\subseteq\{1,\ldots,n\}}(-1)^{n-|J|}
+\Bigl(\sum_{j\in J}u_j\Bigr)^{\otimes n}
+=\sum_{\sigma\in S_n}u_{\sigma(1)}\otimes\cdots\otimes u_{\sigma(n)}.
+\]
+展开左端，一项若只使用真子集 \(I\) 中的指标，其系数为 \(\sum_{J\supseteq I}(-1)^{n-|J|}=0\)。若使用全部 \(n\) 个指标，在 \(n\) 个位置中每个指标必须恰出现一次，系数为一。这证明恒等式。除以 \(n!\)，每个平均纯张量都成为纯幂的线性组合；特征零保证可以作此除法。
+\end{proof}
+
+\begin{theorem}[Schur--Weyl 对偶]\label{b5:thm:schur-weyl}
+设 \(k\) 为特征零域，\(V\) 为有限维非零 \(k\) 向量空间，\(n\ge1\) 为整数。在 \(T=V^{\otimes n}\) 中，\(S_n\) 按置换张量因子作左作用。令 \(A\) 为这个 \(k[S_n]\) 作用的像，\(B\) 为全部 \(g^{\otimes n}\)（\(g\in\operatorname{GL}_k(V)\)）的 \(k\)-线性生成空间，\(S_k^\lambda\) 为分拆 \(\lambda\vdash n\) 的 Specht 模，\(L_\lambda(V)=\operatorname{Hom}_{k[S_n]}(S_k^\lambda,T)\)，其一般线性群作用为 \(g\cdot f=g^{\otimes n}\circ f\)。则
+\[
+\operatorname{End}_A(T)=B,\qquad
+\operatorname{End}_B(T)=A.
+\]
+两者均为分裂半单代数。在自然分解 \(T\cong\bigoplus_{\lambda\vdash n}S_k^\lambda\otimes_k L_\lambda(V)\) 中，非零 \(L_\lambda(V)\) 是互不同构的不可约有限维 \(\operatorname{GL}_k(V)\) 表示。
+\end{theorem}
+\begin{proof}
+令 \(U=\operatorname{End}_k(V)\)。自然映射
+\[
+U^{\otimes n}\longrightarrow\operatorname{End}_k(V^{\otimes n}),
+\quad
+a_1\otimes\cdots\otimes a_n\longmapsto
+\Bigl(v_1\otimes\cdots\otimes v_n\mapsto
+a_1v_1\otimes\cdots\otimes a_nv_n\Bigr)
+\]
+是向量空间同构：选择 \(V\) 的基，两侧相应的张量矩阵单位一一对应。共轭 \(F\mapsto P_\sigma F P_\sigma^{-1}\) 在左侧对应置换 \(U\) 的张量因子。所以 \(\operatorname{End}_A(T)\) 对应 \((U^{\otimes n})^{S_n}\)。
+
+由\cref{b5:lem:tensor-polarization}，后者由 \(a^{\otimes n}\)、\(a\in U\) 生成。还需把任意 \(a\) 换成可逆算子。多项式 \(\det(a+tI)\) 不是零多项式，所以只有有限多个 \(t\in k\) 使 \(a+tI\) 不可逆。域 \(k\) 无限，可取 \(n+1\) 个互异的可用值 \(t_0,\ldots,t_n\)。向量值多项式 \((a+tI)^{\otimes n}\) 次数至多 \(n\)，由 Lagrange 插值，其在 \(t=0\) 的值 \(a^{\otimes n}\) 是这 \(n+1\) 个可逆算子张量幂的线性组合。因此 \(\operatorname{End}_A(T)\subseteq B\)。反向包含已由两个作用交换得到，所以相等。
+
+\(A\) 是分裂半单群代数 \(k[S_n]\) 的商，仍为若干全矩阵块的乘积。现在对 \(E=T\) 使用\cref{b5:lem:split-double-centralizer}，得到另一中心化子等式及 \(B\) 的分裂半单性。该引理还说明各非零重数空间是 \(B\) 的互不同构简单模。一个子空间对所有 \(g^{\otimes n}\) 不变，当且仅当对它们的线性生成代数 \(B\) 不变；群交织映射与 \(B\) 交织映射也相同。因此这恰是一般线性群表示的不可约性及非同构性。
+\end{proof}
+
+这一证明只用 Specht 分类、矩阵单位和极化。有关双中心化子及可逆矩阵张量幂的论证，也可参阅\cite[Theorem 5.18.1; Proposition 5.19.1 and Corollary 5.19.2, pp. 120--122]{EtingofEtAl2011RepresentationTheory}；本书直接处理群作用，不以前置李代数包络代数作为证明条件。
 
 \subsection{分拆行数限制与作用的忠实性}
 \label{b5:subsec:0703:05}
 
-待撰写。
+\begin{proposition}\label{b5:prop:schur-functor-character}
+设 \(k\) 为特征零域，\(V\) 为 \(d\ge1\) 维 \(k\) 向量空间，\(n\ge1\) 为整数，\(\lambda\vdash n\)，\(S_k^\lambda\) 为 Specht 模，\(L_\lambda(V)=\operatorname{Hom}_{k[S_n]}(S_k^\lambda,V^{\otimes n})\)，其中 \(S_n\) 置换张量因子。一般线性群在该 Hom 空间上以 \(g\cdot f=g^{\otimes n}\circ f\) 作用。对 \(g\in\operatorname{GL}_k(V)\)，设 \(x_1,\ldots,x_d\) 为其在 \(k\) 的代数闭包中的特征值，按重数列出，\(s_\lambda\) 为 Schur 多项式。则
+\[
+\operatorname{tr}\Bigl(g\mid L_\lambda(V)\Bigr)=s_\lambda(x_1,\ldots,x_d).
+\]
+空间 \(L_\lambda(V)\) 非零当且仅当 \(\ell(\lambda)\le d\)。在此条件下，把 \(\lambda\) 补零到 \(d\) 项，有
+\begin{equation}\label{b5:eq:schur-dimension}
+\dim_k L_\lambda(V)
+=s_\lambda(1,\ldots,1)
+=\prod_{1\le i<j\le d}\frac{\lambda_i-\lambda_j+j-i}{j-i}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+设 \(\sigma\in S_n\) 的循环型为 \(\mu\)。按 \(V\) 的一组基计算迹，每个轮换使相应矩阵指标首尾连接，一个 \(r\) 轮换贡献 \(\operatorname{tr}(g^r)\)。因此
+\[
+\operatorname{tr}(g^{\otimes n}P_\sigma)
+=\prod_r\operatorname{tr}(g^r)^{m_r(\mu)}
+=p_\mu(x_1,\ldots,x_d).
+\]
+另一方面，对\eqref{b5:eq:tensor-isotypic}取迹，得
+\[
+p_\mu(x)=\sum_{\lambda\vdash n}
+\chi_{S^\lambda}(\mu)\operatorname{tr}\Bigl(g\mid L_\lambda(V)\Bigr).
+\]
+\cref{b5:cor:frobenius-coefficient}给出同样的展开，其系数为 \(s_\lambda(x)\)。\(S_n\) 的特征标表可逆，故比较得到所需迹公式。该比较在任意特征零域都合法：Specht 模来自有理系数模型，特征标表及其正交逆矩阵具有有理系数；所用对称函数恒等式也在 \(\mathbb Q\) 上成立。故无需把一般的 \(k\) 嵌入复数域。
+
+令 \(g=I\)，得到维数等于 \(s_\lambda(1^d)\)。若 \(\ell(\lambda)>d\)，有限变量 Schur 多项式为零，所以该空间维数为零。若 \(\ell(\lambda)\le d\)，在交错式商中先代入 \(x_i=q^{i-1}\)。对指数 \(\lambda_j+d-j\) 使用 Vandermonde 公式，再约去分母，得到
+\[
+s_\lambda(1,q,\ldots,q^{d-1})
+=q^{\sum_i(i-1)\lambda_i}
+\prod_{i<j}\frac{1-q^{\lambda_i-\lambda_j+j-i}}{1-q^{j-i}}.
+\]
+每个商在 \(q=1\) 的值是相应指数之比，得到\eqref{b5:eq:schur-dimension}。所有分子、分母都是正整数，因此该有理数严格为正；它又是已经算出的维数，故 \(L_\lambda(V)\ne0\)。
+\end{proof}
+
+例如 \(\dim V=2\) 时，三次张量幂只出现 \((3)\) 与 \((2,1)\)，不出现三行的 \((1,1,1)\)。其重数空间维数分别为四与二，Specht 维数分别为一与二，所以
+\[
+2^3=1\cdot4+2\cdot2.
+\]
+这是两边维数的乘积之和，不能把重数空间的维数直接当成 Specht 模的维数。
+
+\begin{proposition}\label{b5:prop:tensor-faithfulness}
+设 \(k\) 为特征零域，\(V\) 为 \(d\ge1\) 维 \(k\) 向量空间，\(n\ge1\) 为整数。\(S_n\) 在 \(V^{\otimes n}\) 上置换张量因子，\(\operatorname{GL}_k(V)\) 以 \(g\mapsto g^{\otimes n}\) 作用。则 \(k[S_n]\) 的作用忠实，当且仅当 \(d\ge n\)。当 \(n\ge2\) 时，群 \(S_n\) 的作用忠实，当且仅当 \(d\ge2\)。一般线性群作用的核为
+\[
+\{\,cI_V\mid c\in k^\times,\ c^n=1\,\}.
+\]
+\end{proposition}
+\begin{proof}
+群代数的核是未出现的 Specht 类型所对应矩阵块之和。由\cref{b5:prop:schur-functor-character}，所有分拆都出现当且仅当 \(d\ge n\)；当 \(d<n\) 时至少遗漏 \((1^n)\)，所以得到第一条。
+
+若 \(d=1\)，所有因子置换都作用为恒等。若 \(d\ge2\)，选独立向量 \(u,v\)。对非恒等 \(\sigma\)，取被它移动的位置 \(i\)，构造只在第 \(i\) 位放 \(v\)、其他位置放 \(u\) 的基张量。置换后 \(v\) 的位置改变，所得张量不同，故群作用忠实。
+
+最后，若 \(g^{\otimes n}=I\)，则 \((gv)^{\otimes n}=v^{\otimes n}\) 对每个 \(v\ne0\) 成立，因而 \(gv\) 与 \(v\) 共线：若不共线，可取线性泛函在 \(v\) 上为零、在 \(gv\) 上非零，对张量的各因子应用该泛函便产生矛盾。一个线性算子若保持每条直线，必为标量；在基向量及两两之和上比较即可证明各标量相同。于是 \(g=cI\)，再代回得到 \(c^n=1\)。反向显然。
+\end{proof}
+
+特别地，在 \(d=2<n\) 时，对称群本身仍可忠实作用，而群代数作用已经不忠实。群元素之间互不相同，并不意味着这些元素的作用矩阵线性无关。

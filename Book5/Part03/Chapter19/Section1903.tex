@@ -1,24 +1,153 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 19.3 Weyl 分母、反对称性与形式算子
-% 纲要位置：计划纲要.md，第 3679 行。
+% 纲要位置：工作记录/计划纲要.md，第 4330 行。
+% * 在权格群环中建立反对称元素的展开与 Weyl 分母恒等式，核验简单反射的符号变化及最高项
+% * 将 Freudenthal 递推整理为形式指数上的代数算子恒等式；对所用群环局部化或锥支集形式级数明确乘法和求和的意义
 
 \section{Weyl 分母、反对称性与形式算子}
 \label{b5:sec:1903}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 在权格群环中建立反对称元素的展开与 Weyl 分母恒等式，核验简单反射的符号变化及最高项
-% * 将 Freudenthal 递推整理为形式指数上的代数算子恒等式；对所用群环局部化或锥支集形式级数明确乘法和求和的意义
-%
+特征标在 Weyl 群下不变；乘上一个适当的反对称元素后，它会变成若干轨道交错和的线性组合。本节先独立建立这个反对称元素的乘积与求和表达，再把 Freudenthal 递推整理成算子等式。分母恒等式的证明不依赖尚待证明的特征标公式。
 
 \subsection{反对称展开与 Weyl 分母恒等式}
 \label{b5:subsec:1903:01}
 
-待撰写。
+记 \(\varepsilon(w)=\det(w|_E)\in\{\pm1\}\)，其中 \(E\) 是根实空间。对 \(\nu\in P\)，定义有限和
+\[
+A_\nu=\sum_{w\in W}\varepsilon(w)e^{w\nu}.
+\]
+若 \(f\in\mathbb Z[P]\) 满足 \(w(f)=\varepsilon(w)f\)，称它为
+\term[Weyl-fanduicheng-yuansu]{Weyl 反对称元素}[Weyl anti-invariant element]。
+
+\begin{lemma}\label{b5:lem:weyl-alternant-basis}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为相应根系，\(P\) 为权格，\(W\) 为 Weyl 群，\(E=\operatorname{span}_{\mathbb R}\Phi\)。选择正根及对应简单余根 \(h_1,\ldots,h_\ell\)，令 \(\varepsilon(w)=\det(w|_E)\)、\(A_\nu=\sum_{w\in W}\varepsilon(w)e^{w\nu}\)（\(\nu\in P\)）。每个满足 \(w(f)=\varepsilon(w)f\) 对所有 \(w\in W\) 成立的反对称元素
+\(f\in\mathbb Z[P]\) 都可唯一写为
+\[
+f=\sum_{\nu\in P,\ \nu(h_i)>0\ \forall i} a_\nu A_\nu,
+\]
+其中 \(a_\nu\in\mathbb Z\)，只有有限多个 \(a_\nu\ne0\)，且 \(a_\nu\) 等于 \(f\) 中 \(e^\nu\) 的系数。
+\end{lemma}
+\begin{proof}
+将 \(f\) 的有限支集按 Weyl 轨道分组。每个轨道有唯一支配代表。若这个代表位于某个墙上，就被一个简单反射固定；反对称性使该处系数等于自己的负数，故为零，整条轨道的系数都为零。
+
+其余轨道的支配代表 \(\nu\) 位于室内部，其稳定子群平凡。因此轨道上 \(e^{w\nu}\) 的系数由反对称性唯一确定为 \(\varepsilon(w)a_\nu\)，恰为 \(a_\nu A_\nu\)。不同轨道互不相交，得到存在与唯一性。
+\end{proof}
+
+\begin{theorem}[Weyl 分母恒等式]\label{b5:thm:weyl-denominator}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为相应根系，\(\Phi^+\) 为一组正根，\(P\) 为权格，\(W\) 为 Weyl 群。令 \(E=\operatorname{span}_{\mathbb R}\Phi\)、\(\varepsilon(w)=\det(w|_E)\)、\(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)。则在 \(\mathbb Z[P]\) 中有
+\begin{equation}\label{b5:eq:weyl-denominator}
+D\coloneqq e^\rho\prod_{\alpha>0}(1-e^{-\alpha})
+=\sum_{w\in W}\varepsilon(w)e^{w\rho}=A_\rho.
+\end{equation}
+特别地，\(D\) 反对称，最高项为 \(e^\rho\)，其系数为一。
+\end{theorem}
+\begin{proof}
+简单反射 \(s_i\) 将 \(\alpha_i\) 变为 \(-\alpha_i\)，并置换其他正根；同时 \(s_i\rho=\rho-\alpha_i\)。所以
+\[
+s_iD=e^{\rho-\alpha_i}(1-e^{\alpha_i})
+\prod_{\substack{\alpha>0\\\alpha\ne\alpha_i}}(1-e^{-\alpha})=-D.
+\]
+简单反射生成 \(W\)，故 \(D\) 反对称。乘积展开中全部权都在 \(\rho-Q_+\)，并且只有全部选择常数项才能得到 \(e^\rho\)，所以最高项系数为一。
+
+用\cref{b5:lem:weyl-alternant-basis}展开 \(D\)。一个可能出现的严格支配整权 \(\nu\) 必满足 \(\nu\le\rho\)。因为 \(\nu(h_i)\) 是正整数，而 \(\rho(h_i)=1\)，所以 \(\gamma=\nu-\rho\) 是支配整权；另一方面 \(\gamma\in-Q_+\)。写
+\(-\gamma=\sum_i c_i\alpha_i\)、\(c_i\ge0\)，则
+\[
+\|\gamma\|^2=-\sum_i c_i(\gamma,\alpha_i)\le0.
+\]
+正定性迫使 \(\gamma=0\)，故唯一可能的轨道代表为 \(\rho\)。最高项系数一又给出 \(D=A_\rho\)。
+\end{proof}
 
 \subsection{Freudenthal 递推的形式算子恒等式}
 \label{b5:subsec:1903:02}
 
-待撰写。
+乘积 \(D\) 在有限群环中不是单位。为展开其倒数，使用一个明确的形式级数环：
+\[
+\widehat{\mathbb C[P]}_-
+=\Biggl\{\,
+\sum_{\mu\in P}a_\mu e^\mu\ \Biggm|\
+\begin{gathered}
+\operatorname{supp}(a)\subseteq\bigcup_{i=1}^s(\lambda_i-Q_+)\\
+\text{对某个有限集合 }\{\lambda_i\}
+\end{gathered}
+\,\Biggr\}.
+\]
+加法逐系数进行，乘法按 \(e^\mu e^\nu=e^{\mu+\nu}\) 进行。它们都良定：固定乘积中某个指数 \(\gamma\) 后，来自两锥的指标满足
+\(\beta+\delta=\lambda_i+\kappa_j-\gamma\)、\(\beta,\delta\in Q_+\)；
+简单根坐标给出每个坐标的有限选择，因此每个系数只有有限项贡献。
+
+\ProseParagraphBreak
+在这个环中
+\[
+(1-e^{-\alpha})^{-1}=\sum_{j\ge0}e^{-j\alpha},\qquad
+q_\alpha\coloneqq\frac{e^{-\alpha}}{1-e^{-\alpha}}
+=\sum_{j\ge1}e^{-j\alpha}
+\quad(\alpha>0).
+\]
+这是形式恒等式，不需要给 \(e^\alpha\) 赋数值或比较其绝对值。Weyl 群的作用只用于有限群环中的元素；它一般不会保持这里选定的负锥级数环，不能不加说明地对任意无穷展开施反射。
+
+\begin{definition}\label{b5:def:formal-root-derivatives}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为相应根系，\(P\) 为权格，\(E=\operatorname{span}_{\mathbb R}\Phi\)。选择正根及简单根 \(\alpha_1,\ldots,\alpha_\ell\)，令 \(Q_+=\sum_i\mathbb Z_{\ge0}\alpha_i\)。以 \(\widehat{\mathbb C[P]}_-\) 表示支集包含在有限个 \(\lambda_i-Q_+\)（\(\lambda_i\in P\)）的并中的形式级数环，内积取 Killing 型在 \(E\) 上诱导的正定型。对 \(\eta\in E\) 及 \(\mu\in P\)，定义
+\[
+\partial_\eta(e^\mu)=(\eta,\mu)e^\mu.
+\]
+若 \(u_1,\ldots,u_\ell\) 为 \(E\) 的一组正交单位基，令
+\[
+\Delta=\sum_{a=1}^\ell\partial_{u_a}^2,
+\qquad
+\Delta(e^\mu)=\|\mu\|^2e^\mu.
+\]
+这些算子逐系数延拓；后一个表达式说明 \(\Delta\) 不依赖正交基的选择。
+\end{definition}
+
+\(\partial_\eta\) 满足 Leibniz 法则，因为
+\((\eta,\mu+\nu)=(\eta,\mu)+(\eta,\nu)\)。每个系数只有有限项参与乘法，也保证这些法则适用于所选形式环中的无穷和。
+
+\begin{proposition}\label{b5:prop:freudenthal-operator}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(P\) 为权格，\(P^+\) 为支配整权集，\(Q_+\) 为简单根的非负整数组合所成的锥。令 \(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)，内积 \((\, ,\,)\) 取 Killing 型诱导的型，\(\|\nu\|^2=(\nu,\nu)\)。设 \(\lambda\in P^+\)，\(f=\operatorname{ch}L(\lambda)\)，其中 \(L(\lambda)\) 为相应有限维简单最高权模，令
+\[
+D=e^\rho\prod_{\alpha\in\Phi^+}(1-e^{-\alpha}),\qquad
+q_\alpha=\sum_{j\ge1}e^{-j\alpha},\qquad
+c_\lambda=(\lambda,\lambda+2\rho).
+\]
+采用逐系数算子 \(\partial_\eta(e^\mu)=(\eta,\mu)e^\mu\)、\(\Delta(e^\mu)=\|\mu\|^2e^\mu\)。以 \(\widehat{\mathbb C[P]}_-\) 表示支集包含在有限个 \(\nu_i-Q_+\)（\(\nu_i\in P\)）的并中的形式级数环。在
+\(\widehat{\mathbb C[P]}_-\) 中有
+\begin{equation}\label{b5:eq:freudenthal-operator}
+\left(\Delta+2\partial_\rho+
+2\sum_{\alpha>0}q_\alpha\partial_\alpha\right)f
+=c_\lambda f.
+\end{equation}
+并且在有限群环中有
+\begin{equation}\label{b5:eq:denominator-laplacian}
+\Delta(Df)=\|\lambda+\rho\|^2Df.
+\end{equation}
+\end{proposition}
+\begin{proof}
+算子 \(q_\alpha\partial_\alpha\) 作用于 \(f\) 后，\(e^\mu\) 的系数为
+\[
+\sum_{j\ge1}(\mu+j\alpha,\alpha)m_\lambda(\mu+j\alpha).
+\]
+因此\eqref{b5:eq:freudenthal-operator}的每个系数正是
+\eqref{b5:eq:freudenthal}，证明第一式。
+
+对 \(D=e^\rho\prod_{\alpha>0}(1-e^{-\alpha})\) 求形式导数，可得
+\[
+D^{-1}\partial_\eta D
+=(\eta,\rho)+\sum_{\alpha>0}(\eta,\alpha)q_\alpha.
+\]
+由 Leibniz 法则，
+\begin{align*}
+\Delta(Df)
+&=D\Delta f+2\sum_a(\partial_{u_a}D)(\partial_{u_a}f)+f\Delta D\\
+&=D\left(\Delta f+2\partial_\rho f+
+2\sum_{\alpha>0}q_\alpha\partial_\alpha f\right)+f\Delta D.
+\end{align*}
+而\cref{b5:thm:weyl-denominator}把 \(D\) 写成 \(A_\rho\)。Weyl 群保持范数，故
+\(\Delta D=\|\rho\|^2D\)。代入第一式，得到
+\[
+\Delta(Df)=(c_\lambda+\|\rho\|^2)Df
+=\|\lambda+\rho\|^2Df.
+\]
+虽然中间借用了形式倒数，最后两边都是有限群环元素；其等式因有限群环嵌入形式环而成立。
+\end{proof}
+
+这个二阶等式的用途十分具体：\(Df\) 中每个非零指数都必须与 \(\lambda+\rho\) 有相同范数。反对称性将允许我们只看严格支配的指数，最高权限制再排除其他可能。

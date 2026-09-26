@@ -1,14 +1,29 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第11章　李代数及其表示
-% 纲要位置：计划纲要.md，第 3432 行。
+% 纲要位置：工作记录/计划纲要.md，第 4083 行。
 
 \chapter{李代数及其表示}
 \label{b5:ch:11}
 \BookChapterNumber{b5:ch:11}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章从矩阵交换子引入李括号，建立子代数、理想、商、导子和伴随表示。随后定义李代数的模，推导对偶、张量及同态空间上的作用，并以具体表示区分不可约、不可分解与完全可约。最后介绍导出列和下降中心列，明确可解、幂零、半单与单李代数的含义，说明复数域与正特征中的重要差别。
+\end{chapterabstract}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+\begin{learninggoals}
+\begin{itemize}
+\item 能检验交替性和 Jacobi 恒等式，认识矩阵交换子和保持双线性型的经典例子。
+\item 区分子代数与理想，正确构造商并计算同态的核、像和交换化。
+\item 能计算中心、导子和伴随表示，理解伴随作用所遗失的中心信息。
+\item 掌握对偶作用中的负号、张量作用的加法规则及不变子空间的含义。
+\item 会计算两种结构列，并用例子辨别可解性、幂零性和半单性。
+\end{itemize}
+预备知识为有限维线性代数、矩阵乘法、双线性型和张量积，以及前两编的表示、子模和商模观念。这里不要求先学习李群、流形或 Haar 测度。除明确说明的一般域计算外，本编后续核心结构定理将采用有限维复李代数。
+\end{learninggoals}
+
+有限群表示把群元素送到可逆算子；李代数表示则把李括号送到算子交换子。两者共享大量线性代数构造，作用公式却并不相同。读这一章时，可以先用小矩阵逐项核验这些公式，再把相同计算移到抽象的向量空间上。李代数和表示的基本定义及例子可参阅\cite[Section 2.9, pp.~22--25]{EtingofEtAl2011RepresentationTheory}；本章始终把交替条件单独写出，以兼顾特征二。
+
+% 纲要范围：
 %
 % > 本编核心以有限维复李代数为统一默认对象；改变基域或特征时另行列出假设。无需先学 Lie 群、流形或 Haar 测度。
 %
@@ -18,4 +33,366 @@
 \input{Part03/Chapter11/Section1103}
 \input{Part03/Chapter11/Section1104}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+Jacobi 恒等式使每个伴随算子都是导子，并保证伴随映射保持李括号。理想就是伴随表示的不变子空间，而中心是这个表示的核。同态保持李括号，理想条件使商空间上的括号良定，表示则把括号关系变为算子的交换关系。
+
+\ProseParagraphBreak
+
+对偶作用中的负号、张量作用中的两个加项以及 Hom 上的交换差，都必须与李括号逐项核对。一般李代数表示未必完全可约，甚至自同态只有标量也不能反推不可约；后面的结构定理会说明哪些附加条件能够改变这种情形。
+
+\ProseParagraphBreak
+
+导出列和下降中心列测量不同的性质。幂零蕴含可解，但两个交换代数的扩张未必幂零；中央扩张则保留幂零性。下一章将用同时三角化进一步研究这些条件，而半单性与简单理想分解要由 Killing 型建立。正特征下的标量中心和特征二例子提醒我们，不能忽略定理中写明的基域。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:11-characteristic-two-alternating}
+设 \(k\) 的特征为 \(2\)。在基为 \(x,z\) 的空间上定义双线性括号
+\([x,x]=z\)，其余基向量括号全为零。证明此括号反对称且满足 Jacobi 恒等式，但不是李代数括号。
+\end{exercise}
+\begin{solution}
+括号是对称的，而特征二时 \(-1=1\)，所以对称性同时意味着
+\([u,v]=-[v,u]\)。每个括号都落在 \(kz\)，且 \(z\) 与所有元素的括号为零，因此所有三重括号均为零，Jacobi 成立。但
+\([x,x]=z\ne0\)，违反交替性。这表明在一般域的定义中不能只写反对称性。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-three-parameter-brackets}
+在域 \(k\) 上取基 \(x,y,z\)，规定
+\[
+[x,y]=az,\qquad[y,z]=bx,\qquad[z,x]=cy,
+\]
+并交替双线性延拓，其中 \(a,b,c\in k\)。证明任意参数都给出李代数；若 \(abc\ne0\)，求其中心与导出代数。
+\end{exercise}
+\begin{solution}
+Jacobi 表达式三线性，所以只需查基向量三元组。出现重复向量时，两项互为相反数而第三项为零；三个不同向量时，
+\(\Bigl[x,[y,z]\Bigr]=[x,bx]=0\)，另两项也各自为零。因此 Jacobi 对全部参数成立。
+若 \(abc\ne0\)，三条括号直接给出全部基向量，所以导出代数是整个代数。令 \(u=\alpha x+\beta y+\gamma z\) 为中心元，先由
+\([u,x]=-\beta az+\gamma cy=0\) 得 \(\beta=\gamma=0\)，再由
+\([u,y]=\alpha az=0\) 得 \(\alpha=0\)。故中心为零。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-commutator-span}
+设 \(n\ge2\)，\(k\) 为任意域。证明
+\[
+\Bigl[\mathfrak{gl}_n(k),\mathfrak{gl}_n(k)\Bigr]=\mathfrak{sl}_n(k).
+\]
+这里左端是全部交换子的线性生成空间，不要求每个迹零矩阵单独就是一个交换子。
+\end{exercise}
+\begin{solution}
+交换子的迹为零，所以左端包含于右端。反向，非对角矩阵单位满足
+\(E_{ij}=[E_{ii},E_{ij}]\)，对角差满足
+\(E_{ii}-E_{jj}=[E_{ij},E_{ji}]\)。
+这些矩阵张成所有迹零矩阵：非对角部分已处理；若对角元
+\(a_1+\cdots+a_n=0\)，其对角矩阵等于
+\(\sum_{i<n}a_i(E_{ii}-E_{nn})\)。故右端也包含于左端，任意特征均成立。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-forgetting-associative}
+证明复结合代数 \(\mathbb C\times\mathbb C\) 与
+\(\mathbb C[\varepsilon]/(\varepsilon^2)\) 的底层李代数同构，而它们作为结合代数不同构。
+\end{exercise}
+\begin{solution}
+两代数都交换且复维数为 \(2\)，所以底层李括号恒零，任意线性同构都是李同构。但第二个代数含非零幂零元 \(\varepsilon\)，第一个代数中若
+\((a,b)^m=(0,0)\)，则 \(a=b=0\)，没有非零幂零元。结合代数同构保持幂零元，故不存在结合代数同构。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-change-bilinear-matrix}
+设 \(B\) 是域 \(k\) 上可逆矩阵，\(P\in\operatorname{GL}_n(k)\)，
+\(B'=P^{\mathsf T}BP\)。证明
+\[
+X\longmapsto P^{-1}XP
+\]
+将满足 \(X^{\mathsf T}B+BX=0\) 的李代数同构到满足
+\(Y^{\mathsf T}B'+B'Y=0\) 的李代数。
+\end{exercise}
+\begin{solution}
+置 \(Y=P^{-1}XP\)，则
+\[
+Y^{\mathsf T}B'+B'Y
+=P^{\mathsf T}(X^{\mathsf T}B+BX)P.
+\]
+所以条件在两边等价。共轭是线性可逆映射，并且
+\([P^{-1}XP,P^{-1}ZP]=P^{-1}[X,Z]P\)，故为李代数同构。对称或交错性质也在这种换基下保持。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-centralizer-normalizer}
+在 \(\mathfrak{gl}_2(\mathbb C)\) 中求直线 \(\mathbb CE_{12}\) 的中心化子与正规化子，并计算二者的维数。
+\end{exercise}
+\begin{solution}
+令 \(X=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}\)，则
+\[
+[X,E_{12}]=\begin{pmatrix}-c&a-d\\0&c\end{pmatrix}.
+\]
+要使它为零，须 \(c=0,a=d\)，中心化子为
+\(\{\begin{psmallmatrix}a&b\\0&a\end{psmallmatrix}\}\)，维数 \(2\)。
+要使它属于 \(\mathbb CE_{12}\)，只须 \(c=0\)，正规化子为全部上三角矩阵，维数 \(3\)。中心化要求逐元素括号为零，正规化只要求保持整个子空间，因此这里二者不同。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-heisenberg-ideals}
+设 \(\mathfrak h\) 为域 \(k\) 上的三维 Heisenberg 李代数，
+\([x,y]=z\)。列出其全部理想，区分一维子代数与一维理想。
+\end{exercise}
+\begin{solution}
+零与整个代数是理想，中心直线 \(kz\) 也是理想。若理想含有
+\(u=ax+by+cz\) 且 \((a,b)\ne(0,0)\)，则
+\([x,u]=bz\)、\([y,u]=-az\)，至少一式非零，所以它必须包含 \(z\)。
+因此任何非零理想都包含 \(kz\)。商 \(\mathfrak h/kz\) 交换，故其中每个子空间的逆像都是理想。全部理想便为零、\(kz\)、所有包含 \(kz\) 的二维平面以及 \(\mathfrak h\)。每条直线都是子代数，因为交替性使同一直线上的括号为零，但只有 \(kz\) 是非零一维理想。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-center-quotient-increase}
+对三维 Heisenberg 代数及中心理想 \(kz\)，比较
+\(Z(\mathfrak h)/kz\) 与 \(Z(\mathfrak h/kz)\)。由此判断中心是否与取商交换。
+\end{exercise}
+\begin{solution}
+中心为 \(kz\)，所以前一个空间为零。商由 \(x+kz,y+kz\) 张成且括号全零，因此后一个中心是整个二维商。两者不同。一般而言，某些括号在取商后变成零，可以产生新的中心元素；中心的像只保证包含于商的中心。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-heisenberg-derivations}
+在复三维 Heisenberg 代数 \([x,y]=z\) 中，求全部导子及内导子的维数。
+\end{exercise}
+\begin{solution}
+写
+\[
+Dx=ax+by+cz,\qquad Dy=dx+ey+fz.
+\]
+导子条件强迫
+\[
+Dz=D[x,y]=[Dx,y]+[x,Dy]=(a+e)z.
+\]
+对 \([x,z]=[y,z]=0\) 的条件随此式自动成立，因为 \(Dz\) 仍在中心。反之任意 \(a,b,c,d,e,f\) 都给出导子，所以导子空间六维。内导子
+\(\operatorname{ad}(px+qy+rz)\) 满足
+\(x\mapsto-qz,y\mapsto pz,z\mapsto0\)，形成二维子空间；因此不是所有导子都为内导子。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-derivation-preserves-series}
+设 \(D\) 是李代数 \(\mathfrak g\) 的导子。证明 \(D\) 保持中心、每个导出项以及每个下降中心项。
+\end{exercise}
+\begin{solution}
+若 \(z\in Z(\mathfrak g)\)，则对任意 \(x\)，
+\([Dz,x]=D[z,x]-[z,Dx]=0\)，故 \(Dz\) 仍在中心。
+如果 \(D\) 保持子空间 \(I,J\)，则
+\(D[I,J]\subseteq[DI,J]+[I,DJ]\subseteq[I,J]\)。
+从 \(D\mathfrak g\subseteq\mathfrak g\) 出发，对两种递归定义逐次应用，便得到导出列和下降中心列每一项都被保持。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-natural-versus-adjoint}
+将 Heisenberg 代数实现为
+\(\operatorname{span}_k\{E_{12},E_{23},E_{13}\}\subseteq\mathfrak{gl}_3(k)\)。
+比较自然表示与伴随表示的核，并判断伴随像是否交换。
+\end{exercise}
+\begin{solution}
+自然表示是这个矩阵子代数的包含映射，核为零。伴随表示的核为中心
+\(kE_{13}\)，所以伴随像同构于二维商
+\(\mathfrak h/kE_{13}\)。商的括号为零，故伴随像交换。一个非交换李代数的伴随像可以交换，原因是原来全部非零括号都落在被核消去的中心中。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-semidirect-module}
+设 \(\mathfrak g\) 是域 \(k\) 上的李代数，\(M\) 是其左模。在
+\(M\oplus\mathfrak g\) 上定义
+\[
+\Bigl[(m,x),(n,y)\Bigr]=\Bigl(x n-y m,[x,y]\Bigr).
+\]
+证明这是李代数，\(M\) 是交换理想，商同构于 \(\mathfrak g\)。何时标准两个分量成为理想直和？
+\end{exercise}
+\begin{solution}
+双线性与交替性直接成立。Jacobi 和的第二分量为 \(\mathfrak g\) 的 Jacobi 和，故为零；第一分量按 \(m,n,\ell\) 分组，分别包含
+\[
+\Bigl(xy-yx-[x,y]\Bigr)\ell,\quad
+\Bigl(yz-zy-[y,z]\Bigr)m,\quad
+\Bigl(zx-xz-[z,x]\Bigr)n,
+\]
+各项由模的表示条件为零。\(M\oplus0\) 自身括号为零，与任意元素括号仍在其中，所以是交换理想；投影到第二分量是满同态且核为 \(M\)。
+标准的 \(0\oplus\mathfrak g\) 总是子代数，但若它还是理想，则它与理想 \(M\) 的括号必须落在交集零中，所以所有 \(xm=0\)。反之作用平凡时两分量互相交换，便为理想直和。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-dual-minus-sign}
+在二维复代数 \([h,e]=e\) 的表示
+\[
+\rho(h)=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+\rho(e)=E_{12}
+\]
+中，直接检验只取转置而不加负号不能给出对偶表示；再检验正确的负转置公式。
+\end{exercise}
+\begin{solution}
+只取转置时，\(h,e\) 分别作用为 \(H=\operatorname{diag}(1,0)\)、\(E_{21}\)，而
+\([H,E_{21}]=-E_{21}\ne E_{21}\)，不满足 \([h,e]=e\)。
+取负转置后，作用为 \(-H,-E_{21}\)，其交换子
+\([-H,-E_{21}]=[H,E_{21}]=-E_{21}\)，恰等于 \(e\) 的新作用矩阵，满足表示条件。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-canonical-tensor}
+设 \(V\) 是有限维 \(\mathfrak g\)-模，\(v_i,v_i^*\) 为对偶基。证明
+\(\sum_i v_i^*\otimes v_i\in V^*\otimes V\) 不依赖基且被 \(\mathfrak g\) 零化。另证明配对
+\(V^*\otimes V\rightarrow k\)、\(\varphi\otimes v\mapsto\varphi(v)\)
+是到平凡模的同态。
+\end{exercise}
+\begin{solution}
+在自然同构 \(V^*\otimes V\cong\operatorname{End}_k(V)\) 下，该张量对应恒等算子，因而不依赖基。Hom 作用把恒等算子送到
+\(\rho(x)I-I\rho(x)=0\)，故它不变。对配对则有
+\[
+(x\varphi)(v)+\varphi(xv)=-\varphi(xv)+\varphi(xv)=0,
+\]
+正好等于平凡模上 \(x\) 对标量的作用，所以配对是模同态。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-top-exterior-character}
+设 \(V\) 是 \(n\) 维 \(\mathfrak g\)-模。证明在一维模
+\(\bigwedge^nV\) 上，元素 \(x\) 作用为 \(\operatorname{tr}\rho(x)\)。由此解释迹为什么零化所有李括号。
+\end{exercise}
+\begin{solution}
+选基 \(v_1,\ldots,v_n\)，写
+\(\rho(x)v_j=\sum_i a_{ij}v_i\)。在
+\(v_1\wedge\cdots\wedge v_n\) 上逐个因子作用时，\(i\ne j\) 的项含重复基向量，均为零；剩下的系数为
+\(\sum_j a_{jj}=\operatorname{tr}\rho(x)\)。
+因为一维表示的作用矩阵交换，任何括号都作用为零，所以
+\(\operatorname{tr}\rho\Bigl([x,y]\Bigr)=0\)。这也与矩阵交换子的迹计算一致。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-tensor-trace}
+设 \(V,W\) 是有限维李代数表示。证明张量表示满足
+\[
+\operatorname{tr}_{V\otimes W}\rho_{V\otimes W}(x)
+=(\dim W)\operatorname{tr}_V\rho_V(x)
++(\dim V)\operatorname{tr}_W\rho_W(x).
+\]
+\end{exercise}
+\begin{solution}
+张量作用是
+\(\rho_V(x)\otimes I_W+I_V\otimes\rho_W(x)\)。
+在张量积基下，\(A\otimes I_W\) 的对角元把 \(A\) 的每个对角元重复
+\(\dim W\) 次；另一项同理把 \(W\) 的对角元重复 \(\dim V\) 次。利用迹的线性性相加即得公式。这里是两个作用之和，而非群表示中两个矩阵的张量积。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-jordan-endomorphisms}
+令一维复交换李代数的基向量在 \(\mathbb C^2\) 上作用为
+\(N=E_{12}\)。计算模自同态环，并证明这个表示可约而不可分解。
+\end{exercise}
+\begin{solution}
+解 \(TN=NT\) 得
+\[
+\operatorname{End}_{\mathfrak g}(V)
+=\left\{\begin{pmatrix}a&b\\0&a\end{pmatrix}\right\}
+=\mathbb CI+\mathbb CN.
+\]
+第一坐标轴不变，所以表示可约。若存在非平凡直和分解，相应投影给出模自同态环中的非平凡幂等元。令
+\((aI+bN)^2=aI+bN\)，得到 \(a^2=a\)、\(2ab=b\)。在复数域上 \(a=0\) 或 \(1\)，两种情形均迫使 \(b=0\)，所以只有 \(0,I\) 两个幂等元，不能分解。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-tensor-hom-adjunction}
+设 \(U,V,W\) 是同一域上的 \(\mathfrak g\)-模。验证自然对应
+\[
+\operatorname{Hom}_{\mathfrak g}(V\otimes W,U)
+\cong
+\operatorname{Hom}_{\mathfrak g}
+\Bigl(V,\operatorname{Hom}_k(W,U)\Bigr),
+\]
+其中 Hom 空间采用正文的李代数作用。
+\end{exercise}
+\begin{solution}
+底层线性对应把 \(f\) 送到 \(F(v)(w)=f(v\otimes w)\)。若 \(f\) 是模同态，则
+\[
+F(xv)(w)
+=x f(v\otimes w)-f(v\otimes xw)
+=\Bigl(xF(v)\Bigr)(w),
+\]
+所以 \(F\) 是模同态。反过来把这个等式移项，便得
+\(x f(v\otimes w)=f(xv\otimes w+v\otimes xw)\)，所以 \(f\) 与张量作用相容。底层对应与逆对应互逆，且两方向都保留模同态条件，因而得到同构。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-one-dimensional-operations}
+设 \(\lambda,\mu:\mathfrak g\rightarrow k\) 都零化
+\([\mathfrak g,\mathfrak g]\)，对应一维模 \(k_\lambda,k_\mu\)。求其张量积、对偶及 Hom 表示，并判断何时有非零模同态。
+\end{exercise}
+\begin{solution}
+张量规则给出 \(k_\lambda\otimes k_\mu\cong k_{\lambda+\mu}\)；
+对偶规则给出 \(k_\lambda^*\cong k_{-\lambda}\)；
+Hom 规则给出
+\(\operatorname{Hom}_k(k_\lambda,k_\mu)\cong k_{\mu-\lambda}\)。
+模同态正是 Hom 中被全部作用零化的元素。因此当
+\(\lambda=\mu\) 时 Hom 为一维，否则取使 \(\mu(x)-\lambda(x)\ne0\) 的 \(x\)，迫使不变元素为零。于是非零模同态存在当且仅当两泛函相等。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-gln-one-dimensional}
+设 \(n\ge2\)，\(k\) 是任意域。求 \(\mathfrak{gl}_n(k)\) 的全部一维表示；说明结论在 \(\operatorname{char}k\mid n\) 时仍成立。
+\end{exercise}
+\begin{solution}
+一维作用泛函 \(\lambda\) 必零化所有交换子。非对角矩阵单位
+\(E_{ij}=[E_{ii},E_{ij}]\) 与对角差
+\(E_{ii}-E_{jj}=[E_{ij},E_{ji}]\) 张成迹零空间，所以 \(\lambda\) 零化
+\(\mathfrak{sl}_n(k)\)。迹映射满射，因为 \(\operatorname{tr}E_{11}=1\)，核为迹零空间，因此 \(\lambda=c\operatorname{tr}\)，其中 \(c\in k\) 任意。反过来迹零化交换子，所以每个这样的泛函都给出表示。证明没有除以 \(n\)，故当特征整除 \(n\) 时仍成立。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-triangular-three-series}
+对复三阶上三角矩阵代数 \(\mathfrak b_3\)，计算导出列和下降中心列。再对严格上三角子代数 \(\mathfrak n_3\) 重复计算。
+\end{exercise}
+\begin{solution}
+对 \(\mathfrak b_3\)，对角交换子为零，而与对角矩阵取括号可产生每个
+\(E_{12},E_{23},E_{13}\)，所以
+\[
+\mathfrak b_3^{(1)}=\mathfrak n_3,\qquad
+\mathfrak b_3^{(2)}=\mathbb CE_{13},\qquad
+\mathfrak b_3^{(3)}=0.
+\]
+同时 \([\mathfrak b_3,\mathfrak n_3]=\mathfrak n_3\)，故
+\(\gamma_r(\mathfrak b_3)=\mathfrak n_3\) 对所有 \(r\ge2\) 成立，它不幂零。
+严格上三角情形唯一基本非零括号为
+\([E_{12},E_{23}]=E_{13}\)，所以
+\[
+\mathfrak n_3^{(1)}=\mathbb CE_{13},\quad
+\mathfrak n_3^{(2)}=0,\qquad
+\gamma_2(\mathfrak n_3)=\mathbb CE_{13},\quad
+\gamma_3(\mathfrak n_3)=0.
+\]
+因此 \(\mathfrak n_3\) 幂零类为二。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-central-extension-class}
+在四维复空间上取基 \(x,y,z,w\)，规定
+\([x,y]=z\)、\([x,z]=w\)，其余基向量括号为零并交替延拓。
+验证 Jacobi，计算中心与幂零类，并比较模去中心后的幂零类。
+\end{exercise}
+\begin{solution}
+重复基向量的 Jacobi 自动相消；对互异三元组，唯一需要注意
+\((x,y,z)\)，其三项为 \(0,[y,-w],[z,z]\)，均为零。含 \(w\) 的三元组也全部为零，故确为李代数。
+若 \(u=ax+by+cz+dw\) 在中心，由
+\([u,y]=az\) 得 \(a=0\)，再由
+\([u,x]=-bz-cw\) 得 \(b=c=0\)，所以中心为 \(\mathbb Cw\)。
+下降中心列为
+\[
+\gamma_2=\mathbb Cz+\mathbb Cw,\qquad
+\gamma_3=\mathbb Cw,\qquad\gamma_4=0.
+\]
+故幂零类为三。模去中心后得到三维 Heisenberg 代数，幂零类为二，说明中央扩张可以使幂零类确实增加一。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-direct-sum-series}
+设 \(\mathfrak g,\mathfrak h\) 是有限维李代数。证明直和的导出列及下降中心列逐项为两个对应项的直和，并求可解长度和幂零类的关系。
+\end{exercise}
+\begin{solution}
+直和括号逐分量计算，因此
+\[
+(\mathfrak g\oplus\mathfrak h)^{(r)}
+=\mathfrak g^{(r)}\oplus\mathfrak h^{(r)},\qquad
+\gamma_r(\mathfrak g\oplus\mathfrak h)
+=\gamma_r(\mathfrak g)\oplus\gamma_r(\mathfrak h)
+\]
+由归纳得到。若两者都可解，直和导出列首次为零的次数就是两个次数的最大值；若都幂零，幂零类也是二者的最大值。反之，只要一个分量相应列不终止，直和也不终止。零代数可约定对应长度为零，不影响这些公式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:11-modular-central-complement}
+设 \(k\) 的特征为 \(p>0\)。证明
+\(\mathfrak{gl}_p(k)=\mathfrak{sl}_p(k)\oplus kE_{11}\)
+是向量空间直和，且两个分量都是子代数；但不存在由中心直线构成的
+\(\mathfrak{sl}_p(k)\) 的补。
+\end{exercise}
+\begin{solution}
+迹在 \(E_{11}\) 上为 \(1\)，所以
+\(X=\Bigl(X-\operatorname{tr}(X)E_{11}\Bigr)+\operatorname{tr}(X)E_{11}\)
+给出所述直和，交集为零。迹零空间是理想，一维直线是子代数，因此这是子代数补；但不一定是理想直和。
+与全部矩阵单位交换的矩阵只能为标量，所以
+\(Z(\mathfrak{gl}_p)=kI_p\)。因为
+\(\operatorname{tr}I_p=p=0\)，整个中心已经包含于
+\(\mathfrak{sl}_p\)，任何中心直线都不能作为补。特征零中常用的
+\(\mathfrak{gl}_n=\mathfrak{sl}_n\oplus kI\) 在这里失效。
+\end{solution}

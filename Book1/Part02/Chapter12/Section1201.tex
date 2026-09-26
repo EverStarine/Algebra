@@ -9,7 +9,7 @@
 %
 % * 带余除法、根与重数
 % * 形式导数与重根判别
-% * 插值及代数基本定理的代数部分
+% * Lagrange 插值与代数闭域中的分解
 %
 
 同一个多项式可以被看作系数的有限序列，也可以在给定元素处求值。前一种观点适合讨论整除，后一种观点适合讨论方程的根。带余除法把这两种观点联系起来：除以 \(x-a\) 的余数，恰好就是在 \(a\) 处的值。本节的系数域记为 \(K\)；涉及更大的域时，会明确说明系数与根分别位于哪里。
@@ -76,9 +76,9 @@ f'\coloneqq\sum_{i=1}^n i a_i x^{i-1}
 这里的“任何包含 \(K\) 的域”不能改成仅检查 \(K\) 本身。例如 \((x^2+1)^2\) 在 \(\mathbb Q\) 中没有根，在 \(\mathbb C\) 中却有重根。上述判别通过最大公因式，避免先求出所有根。
 
 \ProseParagraphBreak
-特征为素数 \(p\) 时，\(f'=0\) 当且仅当所有非零系数项的指数都被 \(p\) 整除：若 \(p\nmid i\)，则 \(i\cdot1_K\ne0\)，从 \(ia_i=0\) 可消去它而得 \(a_i=0\)。因此非恒定多项式也可能导数为零。例如在 \(\mathbb F_p[x]\) 中，\(x^p-1=(x-1)^p\)，它的导数为零；等式来自中间二项式系数都被 \(p\) 整除。不能把特征零下“导数为零则为常数”的经验直接搬到这里。
+特征为素数 \(p\) 时，\(f'=0\) 当且仅当所有非零系数项的指数都被 \(p\) 整除：若 \(p\nmid i\)，则 \(i\cdot1_K\ne0\)，从 \(ia_i=0\) 可消去它而得 \(a_i=0\)。因此非常数多项式也可能导数为零。例如在 \(\mathbb F_p[x]\) 中，\(x^p-1=(x-1)^p\)，它的导数为零；等式来自中间二项式系数都被 \(p\) 整除。不能把特征零下“导数为零则为常数”的经验直接搬到这里。
 
-\subsection{插值及代数基本定理的代数部分}
+\subsection{Lagrange 插值与代数闭域中的分解}
 \label{b1:subsec:1201:03}
 
 根数估计还带来另一种用途：两个次数有界的多项式，在足够多的点处相等，就必定相同。
@@ -101,6 +101,14 @@ f(x)=\frac{(x-1)(x-2)}2-2x(x-2)+\frac{5x(x-1)}2=x^2+1.
 \]
 唯一性只对次数至多为二的多项式成立；加上任意 \(x(x-1)(x-2)h(x)\)，这三个值都不改变。有限域中也必须区分多项式与它定义的函数，不能从所有点处取值相等无条件推出多项式相等。
 
+这个插值公式也可以从\cref{b1:thm:crt}理解。对定理中的互异元素 \(a_0,\ldots,a_n\)，令 \(I_i=(x-a_i)\subseteq K[x]\)。若 \(i\ne j\)，则 \((x-a_i)-(x-a_j)=a_j-a_i\) 是非零常数，故 \(I_i+I_j=K[x]\)。中国剩余定理给出同构
+\[
+K[x]\Big/\left(\prod_{i=0}^n(x-a_i)\right)
+\longrightarrow K^{n+1},\qquad
+[g]\longmapsto\bigl(g(a_0),\ldots,g(a_n)\bigr).
+\]
+公式\eqref{b1:eq:lagrange-interpolation}中的 \(\ell_i(x)=\prod_{\substack{0\le j\le n\\j\ne i}}\frac{x-a_j}{a_i-a_j}\)，在这个商环中对应第 \(i\) 个坐标幂等元。中国剩余定理说明可以任意指定各点的值；再将多项式除以首一多项式 \(\prod_{i=0}^n(x-a_i)\)，便知每个陪集都有唯一的次数至多为 \(n\) 的代表。
+
 \begin{definition}\label{b1:def:algebraically-closed}
 若域 \(K\) 上每个非常数多项式在 \(K\) 中都有根，就称 \(K\) 为\term[daishu-bi-yu]{代数闭域}[algebraically closed field]。
 \end{definition}
@@ -116,4 +124,13 @@ f(x)=a_n\prod_{i=1}^n(x-\alpha_i),\qquad \alpha_i\in K,
 若 \(K\) 代数闭，选 \(f\) 的一个根 \(\alpha_1\)。\cref{b1:prop:factor-root}给出 \(f=(x-\alpha_1)g\)，而 \(\deg g=n-1\)。对次数归纳，直到商为非零常数，得到所需分解，常数因子由首项系数确定。每个根出现的次数恰为\cref{b1:prop:factor-root}中唯一确定的重数，因此根的多重集合唯一。反过来，所列分解直接给出任一非常数多项式的一个根。
 \end{proof}
 
-通常所称的\term[daishu-jiben-dingli]{代数基本定理}[fundamental theorem of algebra]断言 \(\mathbb C\) 是代数闭域。这一关于复数域的存在性结论不在这里证明，也不是复数的定义。本节已经完整证明的是它的代数后果：一旦知道复数域代数闭，任意 \(n\) 次复系数多项式就恰有 \(n\) 个根，按重数计，并可分解为一次因子的乘积。后面的不可约性讨论必须始终注明系数域；例如 \(x^2+1\) 在 \(\mathbb R\) 中无根，在 \(\mathbb C[x]\) 中却等于 \((x-i)(x+i)\)。
+对通常的复数域，根的存在还要另作论证。以下结论称为\term[daishu-jiben-dingli]{代数基本定理}[fundamental theorem of algebra]；它不是复数的定义。这里采用实分析的中间值定理，并调用\appref{b1:app:E}中已经证明的实闭域刻画。
+
+\begin{theorem}[代数基本定理]\label{b1:thm:fundamental-theorem-algebra}
+复数域 \(\mathbb C\) 是代数闭域。因此，每个次数为 \(n\ge1\) 的复系数多项式都有恰好 \(n\) 个复根，按重数计，并可分解为一次因子的乘积。
+\end{theorem}
+\begin{proof}
+实数的通常序使非零平方为正，所以 \(-1\) 不可能是有限个平方的和，\(\mathbb R\) 是形式实域。若 \(a>0\)，多项式 \(X^2-a\) 在 \(0\) 处为负，在充分大的正实数处为正；中间值定理给出 \(a\) 的正平方根。若实系数多项式 \(f\) 的次数为奇数，它的最高次项在充分大的正、负实数处压过其余各项，故两处取值异号；中间值定理又给出一个实根。因此 \(\mathbb R\) 满足\cref{b1:thm:real-closed-characterizations}的第二项，该定理的第二项推出第三项的证明说明 \(\mathbb R(i)=\mathbb C\) 代数闭。这里的域论论证使用 Sylow 定理与有限 Galois 对应，具体证明在所引附录中。最后应用\cref{b1:prop:algebraically-closed-splitting}，即得按重数计的根数与分解。
+\end{proof}
+
+不可约性讨论必须始终注明系数域；例如 \(x^2+1\) 在 \(\mathbb R\) 中无根，在 \(\mathbb C[x]\) 中却等于 \((x-i)(x+i)\)。

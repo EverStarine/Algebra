@@ -1,0 +1,147 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### 8.6 结式与消去计算
+% * Sylvester 矩阵、公共因子判据与结式的 Bézout 表示
+% * 结式与乘法行列式、范数及首一多项式判别式
+% * 参数特殊化时的次数下降及例外分支
+% * 消去、回代和全部解的精确核验；一般多变量及稀疏结式暂不展开
+% ---
+
+\section{结式与消去计算}
+\label{b3:sec:0806}
+
+消去一个变量时，有时不必先计算整个理想的 Gröbner 基。两个一元多项式是否有公共根，可以由一个行列式判断；把其系数看成其余变量的多项式，就得到消去关系。本节建立这一方法，并说明消去所得的候选解为何仍须回代。Cox、Little 与 O'Shea 的《Using Algebraic Geometry》\cite[Chapter 3, \S 1, pp. 71--72]{CoxLittleOShea1998UsingAG}采用相同的 Sylvester 矩阵约定，并列出公共因子与消去性质。
+
+\subsection{Sylvester 矩阵与公共因子}
+\label{b3:subsec:0806:01}
+
+设 \(k\) 为域，\(f=a_mX^m+\cdots+a_0\)、\(g=b_nX^n+\cdots+b_0\) 属于 \(k[X]\)，其中 \(a_m b_n\ne0\)、\(m,n>0\)。记 \(k[X]_{<d}\) 为次数小于 \(d\) 的多项式空间。寻找次数受限的关系 \(uf+vg=0\)，就是研究线性映射
+\[
+\Phi_{f,g}:k[X]_{<n}\oplus k[X]_{<m}
+\longrightarrow k[X]_{<m+n},\qquad (u,v)\longmapsto uf+vg.
+\]
+两侧维数相同，所以非零核可以由行列式检测。
+
+\begin{definition}\label{b3:def:resultant}
+设 \(k\) 为域，\(f,g\in k[X]\) 的次数分别为正整数 \(m,n\)。考虑 \(k\) 线性映射
+\[
+\Phi_{f,g}:k[X]_{<n}\oplus k[X]_{<m}\longrightarrow k[X]_{<m+n},
+\qquad (u,v)\longmapsto uf+vg,
+\]
+其中 \(k[X]_{<d}\) 表示次数小于 \(d\) 的多项式组成的空间。在各空间中按幂次从高到低取基，并先列第一个直和因子的基。所得矩阵的列依次为
+\[
+X^{n-1}f,\ldots,f,\ X^{m-1}g,\ldots,g
+\]
+在 \((X^{m+n-1},\ldots,1)\) 下的系数列，称为 \(f,g\) 的\term[Sylvester-juzhen]{Sylvester 矩阵}[Sylvester matrix]，记为 \(S(f,g)\)。其行列式
+\[
+\operatorname{Res}_X(f,g)\coloneqq\det S(f,g)
+\]
+称为关于 \(X\) 的\term[jieshi]{结式}[resultant]。
+\end{definition}
+
+例如 \(f=aX+b\)、\(g=cX+d\) 时，结式为 \(ad-bc\)。交换两个多项式，相当于交换长分别为 \(n,m\) 的两组列，所以
+\(\operatorname{Res}_X(g,f)=(-1)^{mn}\operatorname{Res}_X(f,g)\)。固定次数后，结式是系数的整系数多项式；因此同一矩阵也可在任意交换系数环上计算。
+
+\begin{proposition}\label{b3:prop:resultant-common-factor}
+设 \(k\) 为域，\(f,g\in k[X]\) 分别具有正次数 \(m,n\)。则 \(\operatorname{Res}_X(f,g)=0\)，当且仅当 \(f,g\) 有正次数公因子，也当且仅当它们在 \(\overline k\) 中有公共根。
+\end{proposition}
+\begin{proof}
+若有正次数公因子 \(h\)，取 \(u=g/h\)、\(v=-f/h\)，便得 \(uf+vg=0\)，且 \(\deg u<n\)、\(\deg v<m\)。所以 \(\Phi_{f,g}\) 有非零核，行列式为零。
+
+若 \(f,g\) 互素而 \(uf+vg=0\)，则 \(f\mid vg\)。由 Bézout 等式与互素性得 \(f\mid v\)；次数限制迫使 \(v=0\)，进而 \(u=0\)。所以映射单射，行列式非零。正次数公因子在代数闭包中有根；反过来，若互素，多项式 Bézout 等式 \(af+bg=1\) 排除任何扩域中的公共根。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:resultant-bezout}
+设 \(R\) 为交换环，\(f,g\in R[X]\) 的次数分别不超过固定的正整数 \(m,n\)，按这两个次数补零构造 \(S(f,g)\)，并记其行列式为 \(D\)。存在 \(u,v\in R[X]\)，满足 \(\deg u<n\)、\(\deg v<m\) 及 \(uf+vg=D\)。这里 \(u,v\) 的系数均为 \(f,g\) 系数的整系数多项式。
+\end{proposition}
+\begin{proof}
+设 \(e\) 是目标空间中常数一的系数列，即最后一个标准基向量。伴随矩阵恒等式给出
+\(S\operatorname{adj}(S)e=De\)。把向量 \(\operatorname{adj}(S)e\) 的前 \(n\) 项和后 \(m\) 项解释为 \(u,v\) 的系数，即得等式。伴随矩阵各项是子式，故还得到最后的系数说明。论证没有除法，也不要求 \(R\) 为域。
+\end{proof}
+
+\subsection{结式、乘法行列式与判别式}
+\label{b3:subsec:0806:02}
+
+\begin{proposition}\label{b3:prop:resultant-norm}
+设 \(k\) 为域，\(f\in k[X]\) 首一且次数为 \(m>0\)，\(g\in k[X]\)。在有限代数 \(A=k[X]/(f)\) 上，记乘 \(\bar g\) 的矩阵为 \(T_g\)。则
+\[
+\operatorname{Res}_X(f,g)=\det T_g
+=\prod_{i=1}^m g(\alpha_i),
+\]
+其中 \(\alpha_1,\ldots,\alpha_m\) 是 \(f\) 在 \(\overline k\) 中按重数排列的根；对常数 \(g=c\)，约定结式为 \(c^m\)。若 \(f\) 的首项系数为任意 \(a_m\ne0\)，且 \(\deg g=n>0\)，则相应根公式为 \(a_m^n\prod_i g(\alpha_i)\)。
+\end{proposition}
+\begin{proof}
+先设 \(g\) 次数为 \(n>0\)，且 \(f\) 首一。目标空间的有序基
+\[
+X^{n-1}f,\ldots,f,\ X^{m-1},\ldots,1
+\]
+到原幂基的变换矩阵为对角元全一的三角矩阵。关于新基，\(\Phi_{f,g}\) 的矩阵分块为 \(\left(\begin{smallmatrix}1&Q\\0&T_g\end{smallmatrix}\right)\)：后 \(m\) 个坐标正是除以 \(f\) 的余式。因此两边行列式相等。
+
+变基到 \(\overline k\) 不改变行列式。置 \(h_j=\prod_{i=1}^j(X-\alpha_i)\)，则商代数中有理想滤过 \((1)\supset(h_1)\supset\cdots\supset(h_m)=0\)。每个 \((h_{j-1})/(h_j)\) 一维，且乘 \(X\) 的作用为 \(\alpha_j\)。适应该滤过取基，乘 \(g\) 的矩阵为三角矩阵，对角元为 \(g(\alpha_j)\)，从而得到乘积公式。这也包含重根情形。常数情形的乘法矩阵为 \(c1_m\)。最后，将一般的 \(f\) 换成 \(f/a_m\)，Sylvester 矩阵的前 \(n\) 列各提出 \(a_m\)，便得一般公式。
+\end{proof}
+
+这里的行列式是有限维代数中乘法的范数；即使 \(A\) 有幂零元也有意义。当 \(f\) 不可约时，它就是第一卷域扩张范数的计算。因而同一个数既检测公共根，也检测 \(\bar g\) 在 \(A\) 中是否为单位。
+
+\begin{corollary}\label{b3:cor:resultant-discriminant}
+设 \(k\) 为域，\(f\in k[X]\) 首一、次数为 \(m>0\)，根按重数记为 \(\alpha_i\)。定义
+\(\operatorname{disc}(f)=\prod_{i<j}(\alpha_i-\alpha_j)^2\)。则
+\[
+\operatorname{disc}(f)=(-1)^{m(m-1)/2}\operatorname{Res}_X(f,f').
+\]
+其中 \(f'=0\) 时结式取零。判别式属于 \(k\)，并且非零当且仅当 \(f\) 无重根。
+\end{corollary}
+\begin{proof}
+若有重根，\(f,f'\) 有公共根，等式两侧均为零。若无重根，则 \(f'(\alpha_i)=\prod_{j\ne i}(\alpha_i-\alpha_j)\)；相乘后，每一对指标贡献一个负号与一个平方。用\cref{b3:prop:resultant-norm}即得公式。右端由 \(k\) 中系数的行列式组成，故属于 \(k\)。\(m=1\) 时空乘积与 \(\operatorname{Res}(f,1)\) 都为一。
+\end{proof}
+
+例如在 \(k[X]/(X^2+aX+b)\) 的基 \((1,X)\) 下，
+\[
+T_X=\begin{pmatrix}0&-b\\1&-a\end{pmatrix},\qquad
+T_{f'}=2T_X+a1_2=\begin{pmatrix}a&-2b\\2&-a\end{pmatrix}.
+\]
+其行列式为 \(4b-a^2\)，故判别式为 \(a^2-4b\)。这个计算在特征二时仍有效，此时无重根条件化为 \(a\ne0\)。
+
+\subsection{参数特殊化与消去条件}
+\label{b3:subsec:0806:03}
+
+设 \(f,g\in k[t_1,\ldots,t_s][X]\)，按其关于 \(X\) 的次数构造结式 \(D(t)\)。由\cref{b3:prop:resultant-bezout}，任何共同零点 \((t,x)\) 都满足 \(D(t)=0\)。另一方面，只有在特殊化后两个首项系数仍非零时，才能直接用\cref{b3:prop:resultant-common-factor}从 \(D(t)=0\) 推出存在公共根。
+
+\ProseParagraphBreak
+例如在 \(\mathbb Q[t,X]\) 中取 \(f=tX+1\)、\(g=tX+2\)，则结式为 \(t\)。候选参数 \(t=0\) 使两个次数都下降，所得常数方程 \(1=0\)、\(2=0\) 无解。实际上 \(g-f=1\)，原理想是单位理想。结式为零在这里反映了固定尺寸矩阵的退化，不能证明仿射方程存在解。
+
+\ProseParagraphBreak
+因此参数计算须分开处理首项系数非零的部分与其零点部分。前一部分使用公共根判据；后一部分把参数条件代入原生成元，重算实际次数和公共因子。若某个多项式变成零多项式，只剩另一个方程；若出现非零常数，则该分支无解。这些操作也解释了为什么消去关系通常是必要条件，而非不经检查的完整解集。
+
+\subsection{消去、回代与全部解的验证}
+\label{b3:subsec:0806:04}
+
+在 \(\mathbb Q[x,y]\) 中考虑
+\[
+f=xy-1=0,\qquad g=x^2+y^2-5=0.
+\]
+将它们视为关于 \(x\) 的一次与二次多项式，得到
+\[
+\operatorname{Res}_x(f,g)
+=\det\begin{pmatrix}y&0&1\\-1&y&0\\0&-1&y^2-5\end{pmatrix}
+=y^4-5y^2+1.
+\]
+这一结果还能由恒等式直接核验：
+\[
+y^2g-(xy+1)f=y^4-5y^2+1.
+\]
+结式的任何根 \(y\) 都非零，故可由第一个方程唯一恢复 \(x=1/y\)。代回第二个方程得到 \(g=(y^4-5y^2+1)/y^2=0\)，说明每个候选确实能提升，不存在遗漏或多余分支。
+
+\ProseParagraphBreak
+令 \(z=y^2\)，则 \(z^2-5z+1=0\)，从而
+\[
+y=\pm\sqrt{\frac{5+\sqrt{21}}2}
+\quad\text{或}\quad
+y=\pm\sqrt{\frac{5-\sqrt{21}}2},\qquad x=1/y.
+\]
+两个根号内的数都为正，故四个解均为实点，且彼此不同。若只要求精确代数表示，保留 \(y^4-5y^2+1=0\)、\(x=1/y\) 已足够。
+
+\ProseParagraphBreak
+本例还可比较两种消去方法。由结式关系得到
+\[
+(f,g)=(x+y^3-5y,\ y^4-5y^2+1).
+\]
+确实，置 \(h=x+y^3-5y\)、\(r=y^4-5y^2+1\)，有 \(h=yg-xf\)、\(r=y^2g-(xy+1)f\)，反向有 \(f=yh-r\)、\(g=xh-(y^2-5)f\)。右端是字典序 \(x\succ y\) 的 Gröbner 基，标准单项式为 \(1,y,y^2,y^3\)。所以商代数维数为四，与已找出的四个不同点一致。结式给出了消去多项式，双向生成元表示和标准单项式则进一步核验了原理想的完整结构。

@@ -1,13 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 16.2 根空间分解
-% 纲要位置：计划纲要.md，第 3585 行。
+% 纲要位置：工作记录/计划纲要.md，第 4236 行。
 
 \section{根空间分解}
 \label{b5:sec:1602}
 
-% TODO: 按以下纲要要点撰写本节。
+同时特征值记录 Cartan 子代数怎样作用于整个李代数。本节固定一份 Cartan 子代数，先确定括号可能落入的权空间，再利用 Killing 型把相反的权空间配对。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * 根、根空间与秩
 % * 根空间括号关系
@@ -17,14 +19,88 @@
 \subsection{根、根空间与秩}
 \label{b5:subsec:1602:01}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-roots}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为 Cartan 子代数。对 \(\alpha\in\mathfrak h^*\)，令
+\[
+\mathfrak g_\alpha
+=\Bigl\{\,x\in\mathfrak g\mid[h,x]=\alpha(h)x
+\text{ 对所有 }h\in\mathfrak h\,\Bigr\}.
+\]
+若 \(\alpha\ne0\) 且 \(\mathfrak g_\alpha\ne0\)，则称 \(\alpha\) 为一个根，\(\mathfrak g_\alpha\) 为\term{根空间}[root space]。全部根组成的集合记为 \(\Phi\)。Cartan 子代数的共同维数称为 \(\mathfrak g\) 的\term{秩}[rank]。
+\end{definition}
+
+\begin{theorem}[根空间分解]\label{b5:thm:root-decomposition}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\subseteq\mathfrak g\) 为 Cartan 子代数，\(\Phi\subseteq\mathfrak h^*\) 为相应根集合，\(\mathfrak g_\alpha\) 为根 \(\alpha\) 对应的根空间。则
+\begin{equation}\label{b5:eq:root-decomposition}
+\mathfrak g=\mathfrak h\oplus\bigoplus_{\alpha\in\Phi}\mathfrak g_\alpha.
+\end{equation}
+根的集合有限，且在复数上生成 \(\mathfrak h^*\)。
+\end{theorem}
+\begin{proof}
+同时对角化给出全部权空间的直和，零权空间由\cref{b5:lem:toral-centralizer}恰为 \(\mathfrak h\)。若 \(h\in\mathfrak h\) 被所有根零化，则它与各根空间以及 \(\mathfrak h\) 都交换，因而在 \(\mathfrak g\) 的中心中。中心为零，所以根的公共零空间为零，即根生成对偶空间。
+\end{proof}
+
+例如，对 \(\mathfrak{sl}_n(\mathbb C)\)，取迹零对角子代数，令
+\(\varepsilon_i\Bigl(\operatorname{diag}(h_1,\ldots,h_n)\Bigr)=h_i\)。
+由 \([h,E_{ij}]=(h_i-h_j)E_{ij}\)，得到
+\[
+\Phi=\{\,\varepsilon_i-\varepsilon_j\mid i\ne j\,\},\qquad
+\mathfrak g_{\varepsilon_i-\varepsilon_j}=\mathbb CE_{ij}.
+\]
+这里 \(\sum_i\varepsilon_i=0\)，秩为 \(n-1\)，而不是矩阵的阶数 \(n\)。
 
 \subsection{根空间括号关系}
 \label{b5:subsec:1602:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:root-space-bracket}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数。对 \(\alpha\in\mathfrak h^*\)，记 \(\mathfrak g_\alpha\) 为伴随作用的权空间；其中 \(\mathfrak g_0=\mathfrak h\)，不存在的权空间为零。则对任意 \(\alpha,\beta\in\mathfrak h^*\)，有
+\[
+[\mathfrak g_\alpha,\mathfrak g_\beta]
+\subseteq\mathfrak g_{\alpha+\beta}.
+\]
+特别地，每个根向量 \(x\in\mathfrak g_\alpha\) 的 \(\operatorname{ad}x\) 幂零。
+\end{proposition}
+\begin{proof}
+对 \(h\in\mathfrak h\) 及相应根向量，Jacobi 恒等式给出
+\[
+\Bigl[h,[x,y]\Bigr]=\Bigl[[h,x],y\Bigr]+\Bigl[x,[h,y]\Bigr]
+=\Bigl(\alpha(h)+\beta(h)\Bigr)[x,y].
+\]
+这证明包含关系。重复与 \(x\) 作括号，会把权 \(\beta\) 逐次移到 \(\beta+k\alpha\)。权集合有限且 \(\alpha\ne0\)，所以充分多次后必为零。
+\end{proof}
+
+这个包含关系尚未断言：当 \(\alpha+\beta\) 为根时括号一定非零。后一断言要用下一节的 \(\mathfrak{sl}_2\) 表示理论。先分清“由权决定可能的值域”和“实际达到该值域”，可以避免在构造简单根向量时循环论证。
 
 \subsection{Killing 型诱导的配对}
 \label{b5:subsec:1602:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:root-killing-pairing}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\subseteq\mathfrak g\) 为 Cartan 子代数，\(B\) 为其 Killing 型，\(\mathfrak g_\alpha\) 为根 \(\alpha\) 的根空间。则 \(B|_{\mathfrak h}\) 非退化，且对任意两个根 \(\alpha,\beta\)，有
+\[
+B(\mathfrak g_\alpha,\mathfrak g_\beta)=0
+\quad\text{若 }\alpha+\beta\ne0.
+\]
+每个根 \(\alpha\) 的负数也是根，且
+\(B:\mathfrak g_\alpha\times\mathfrak g_{-\alpha}\to\mathbb C\)
+为非退化配对。定义唯一的 \(t_\alpha\in\mathfrak h\)，使
+\(B(t_\alpha,h)=\alpha(h)\)，则
+\begin{equation}\label{b5:eq:opposite-root-bracket}
+[x,y]=B(x,y)t_\alpha
+\quad(x\in\mathfrak g_\alpha,\ y\in\mathfrak g_{-\alpha}).
+\end{equation}
+\end{proposition}
+\begin{proof}
+限制型的非退化性已经由\cref{b5:lem:toral-centralizer}给出。不变性说明
+\[
+B\Bigl([h,x],y\Bigr)=-B\Bigl(x,[h,y]\Bigr),
+\]
+故 \(\Bigl(\alpha(h)+\beta(h)\Bigr)B(x,y)=0\)。只要 \(\alpha+\beta\ne0\)，可选 \(h\) 使该系数非零。若某个非零 \(x\in\mathfrak g_\alpha\) 与 \(\mathfrak g_{-\alpha}\) 全部正交，它也与其余权空间正交，违反 \(B\) 非退化；这同时证明负根存在及配对非退化。最后，括号属于 \(\mathfrak h\)，并且
+\[
+B\Bigl([x,y],h\Bigr)=B\Bigl(x,[y,h]\Bigr)
+=\alpha(h)B(x,y).
+\]
+在 \(\mathfrak h\) 上用非退化性比较，即得所列公式。
+\end{proof}
+
+我们把 \(B|_{\mathfrak h}\) 的对偶型记为
+\((\alpha,\beta)=B(t_\alpha,t_\beta)\)。此时它首先是复双线性型，尚不能称作正定内积。下一节先证明根的平方非零，再在根的实线性生成空间上证明正定性；不能把复数上的非退化性误当成正定性。

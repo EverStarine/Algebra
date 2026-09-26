@@ -22,7 +22,10 @@
 本章使用第一编的交换群、同态、商群与整数子群的分类；矩阵和线性映射只需基本线性代数。环的乘法起初可以不交换，每次进入只适用于交换环的结论时都会另行说明。一般极大理想的存在使用 Zorn 引理，其使用条件在证明中写出；具体计算通常可以直接构造理想与商映射。
 
 \ProseParagraphBreak
-环、理想及商环的中文入门读物可选席南华的《基础代数》第一卷\cite[第5章]{Xi2016BasicAlgebraI}。交换环中的素理想、极大理想与商构造，可继续读 Atiyah 与 Macdonald 的《Introduction to Commutative Algebra》\cite[Chapter 1]{AtiyahMacdonald1969CommutativeAlgebra}；中国剩余定理的整数计算则可对照 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Section 4.3]{Shoup2008NumberTheoryAlgebra}。
+首次学习商环和后续多项式理论时，宜先连贯掌握环及同态的约定、双边理想、商环与同构定理、素理想和极大理想的商环判据，以及理想的基本运算。若暂时只做具体计算，可先跳过一般极大理想存在性的 Zorn 证明；以后需要无条件调用该存在性结论时，仍须补读证明。理想商及准素理想可在掌握上述内容后继续学习；习题中若用到准素理想，应先阅读\cref{b1:def:primary-ideal}。
+
+\ProseParagraphBreak
+环的定义、基本例子与同态可对照席南华《基础代数》第一卷\cite[第5章第5.3节]{Xi2016BasicAlgebraI}。交换环中的理想、素理想、极大理想与商构造，可继续读 Atiyah 与 Macdonald 的《Introduction to Commutative Algebra》\cite[Chapter 1]{AtiyahMacdonald1969CommutativeAlgebra}；中国剩余定理的整数计算则可对照 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Section 4.3]{Shoup2008NumberTheoryAlgebra}。
 
 \input{Part02/Chapter10/Section1001}
 \input{Part02/Chapter10/Section1002}
@@ -30,10 +33,10 @@
 \input{Part02/Chapter10/Section1004}
 
 \begin{chaptersummary}
-商环要求被抹去的加法子群同时吸收左右乘法，这给出了理想的定义及核的基本性质。交换环的素理想对应整环商，极大理想对应域商；这两种条件都比“非零理想”更精确。理想的和、交、积是三种不同的运算，取根识别哪些元素在商环中成为幂零元，理想商则收集满足指定乘法条件的元素；取零理想作第一项就得到零化子。
+商环要求被抹去的加法子群同时吸收左右乘法，这给出了理想的定义及核的基本性质。交换环的素理想对应整环商，极大理想对应域商；素性与极大性和理想是否非零是不同的问题。理想的和、交、积是三种不同的运算，取根识别哪些元素在商环中成为幂零元，理想商则收集满足指定乘法条件的元素；取零理想作第一项就得到零化子。
 
 \ProseParagraphBreak
-中国剩余定理的关键是构造能够分别选择各余数分量的元素；有限商环的分解由此转化为正交幂等元的分解。下一章将从主理想的包含关系返回元素整除，考察整数式的分解规律在怎样的环中仍然成立。
+中国剩余定理的关键是构造能够分别选择各余数分量的元素；商环的有限直积分解由此转化为正交幂等元的分解。下一章将从主理想的包含关系返回元素整除，考察整数式的分解规律在怎样的环中仍然成立。
 \end{chaptersummary}
 
 \BookExercises
@@ -47,6 +50,13 @@
 \(\Bigl\{\,[kn]_m\mid0\leq k<m/n\,\Bigr\}\)，即由 \([n]_m\) 生成的理想，含 \(m/n\) 个元素。\(n=1\) 时目标为零环，公式仍成立；\(m=1\) 时则只能有 \(n=1\)。
 \end{solution}
 
+\begin{exercise}\label{b1:ex:10-characteristic-product}
+设 \(R=\mathbb Z/4\mathbb Z\times\mathbb Z/6\mathbb Z\)。求 \(R\) 的特征及自然同态 \(\mathbb Z\rightarrow R\) 的核、像，并说明该同态为什么不是满射。
+\end{exercise}
+\begin{solution}
+\(n1_R=0\) 等价于 \(4\mid n\) 且 \(6\mid n\)，最小正解为 \(12\)，故特征为 \(12\)，核为 \(12\mathbb Z\)。\cref{b1:thm:ring-first-iso}给出像同构于 \(\mathbb Z/12\mathbb Z\)，有 \(12\) 个元素；而 \(R\) 有 \(24\) 个元素，故不满射。更具体地，\cref{b1:prop:integer-crt-compatible}说明坐标 \(([a]_4,[b]_6)\) 在像中当且仅当 \(a\equiv b\pmod2\)，因为两模数的最大公因子为二。例如 \(([0]_4,[1]_6)\) 不在像中。环的特征决定这个自然像，却不决定全环的元素个数。
+\end{solution}
+
 \begin{exercise}\label{b1:ex:10-matrix-ideals}
 设 \(k\) 为域，\(n\geq2\)。证明 \(M_n(k)\) 只有零理想和全环两个双边理想，并说明它既不是整环，也不是除环。
 \end{exercise}
@@ -56,7 +66,17 @@
 \end{solution}
 
 \begin{exercise}\label{b1:ex:10-triangular}
-设 \(T\) 为域 \(k\) 上的二阶上三角矩阵环，\(N\) 为严格上三角矩阵的集合。求 \(T/N\)、\(T\) 的单位和幂零元，并判断对角矩阵集合是否为 \(T\) 的理想。
+设 \(T\) 为域 \(k\) 上的二阶上三角矩阵环，\(N\) 为严格上三角矩阵的集合。
+\begin{enumerate}
+\item 求 \(T/N\)、\(T\) 的单位和幂零元，并判断对角矩阵集合是否为 \(T\) 的理想。
+\item 令
+\[
+I=\left\{\begin{pmatrix}a&b\\0&0\end{pmatrix}:a,b\in k\right\},
+\qquad
+J=\left\{\begin{pmatrix}0&b\\0&c\end{pmatrix}:b,c\in k\right\}.
+\]
+证明 \(I,J\) 都是 \(T\) 的双边理想，并计算 \(I+J\)、\(I\cap J\)、\(IJ\) 与 \(JI\)。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
 映射
@@ -66,6 +86,25 @@
 \begin{pmatrix}a^{-1}&-a^{-1}bc^{-1}\\0&c^{-1}\end{pmatrix}.
 \]
 若矩阵可逆，其像 \((a,c)\) 在 \(k\times k\) 中必须可逆，故这也是必要条件。矩阵的 \(r\) 次幂的对角元为 \(a^r,c^r\)，所以幂零必有 \(a=c=0\)；反过来这样的矩阵平方为零。对角矩阵集合含单位但不等于 \(T\)，因而不可能为理想；也可直接计算 \(E_{11}E_{12}=E_{12}\) 看出吸收性失败。
+
+取右下对角坐标的同态 \(T\to k\) 的核为 \(I\)，取左上对角坐标的同态之核为 \(J\)，故两者都是双边理想。它们相加含 \(E_{11},E_{12},E_{22}\)，所以 \(I+J=T\)；同时属于两者的矩阵恰为严格上三角矩阵，故 \(I\cap J=N\)。直接相乘可得
+\[
+\begin{pmatrix}a&b\\0&0\end{pmatrix}
+\begin{pmatrix}0&u\\0&c\end{pmatrix}
+=\begin{pmatrix}0&au+bc\\0&0\end{pmatrix},
+\qquad
+\begin{pmatrix}0&u\\0&c\end{pmatrix}
+\begin{pmatrix}a&b\\0&0\end{pmatrix}=0.
+\]
+由于 \(E_{11}E_{12}=E_{12}\)，第一类乘积生成整个 \(N\)，故 \(IJ=N\)，而 \(JI=0\)。这说明即使两个双边理想之和为全环，它们在非交换环中的乘积仍可能随次序改变。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-one-sided-quotient}
+设 \(k\) 为域，\(R=M_2(k)\)，\(L\) 是第二列为零的矩阵集合。证明 \(L=RE_{11}\) 是左理想，并用具体代表元说明加法商群 \(R/L\) 不能按 \((A+L)(B+L)=AB+L\) 定义乘法。
+\end{exercise}
+\begin{solution}
+右乘 \(E_{11}\) 保留矩阵第一列并把第二列置零，故 \(L=RE_{11}\)。它对减法封闭，且 \(C(AE_{11})=(CA)E_{11}\in L\)，所以是左理想。\(E_{11}\in L\)，因而 \(E_{11}+L=0+L\)。但是
+\(E_{11}E_{12}=E_{12}\notin L\)，而 \(0E_{12}=0\in L\)。同一个左因子陪集的两个代表产生不同的乘积陪集，故乘法不良定义。理想的右吸收性在\cref{b1:prop:quotient-ring}中正是为排除这种现象而要求的。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:10-dual-numbers}
@@ -79,6 +118,20 @@
 若 \(a=0\)，元素平方为零，不可能可逆。因此一个真理想中的每个元素均为 \(b\varepsilon\)；只要它含某个 \(b\ne0\) 的元素，乘 \(b^{-1}\) 就含 \(\varepsilon\)，从而等于 \((\varepsilon)\)。全部理想为 \((0),(\varepsilon),R\)。若 \(a+b\varepsilon\) 幂零，其常数项的某次幂为零，故 \(a=0\)；反向已验证。商 \(R/(\varepsilon)\cong k\)，而 \(R\) 本身不约化，说明有唯一极大理想不意味着环是域。
 \end{solution}
 
+\begin{exercise}\label{b1:ex:10-group-ring-augmentation}
+设 \(k\) 为域，\(G\) 为群。在群环 \(k[G]\) 上定义系数和映射
+\(\epsilon(\sum_g a_gg)=\sum_g a_g\)。证明它为满环同态，并证明其核作为 \(k[G]\) 的双边理想由全部 \(g-1\)、\(g\in G\) 生成。若 \(G\) 为二阶群且 \(\operatorname{char}k=2\)，证明该核的平方为零。
+\end{exercise}
+\begin{solution}
+系数和保持加法与单位；乘积的系数和为
+\(\sum_{g,h}a_gb_h=(\sum_ga_g)(\sum_hb_h)\)，所以保持乘法。常数 \(a\cdot1_G\) 映到 \(a\)，故满射。每个 \(g-1\) 属于核，故它们生成的理想包含在核中。反过来，若 \(\sum_g a_g=0\)，则
+\[
+\sum_g a_gg=\sum_g a_g(g-1),
+\]
+是这些生成元的有限线性组合，得到反向包含。若 \(G=\{1,g\}\)、\(g^2=1\)，核由 \(g-1\) 生成；群环在此交换，且在特征二下
+\((g-1)^2=g^2-2g+1=0\)，所以核的平方为零。由\cref{b1:thm:ring-first-iso}，这时商环仍为 \(k\)，但原群环有非零幂零元 \(g-1\)。
+\end{solution}
+
 \begin{exercise}\label{b1:ex:10-product-ideals}
 设 \(R,S\) 是交换环。证明 \(R\times S\) 的每个理想唯一为 \(I\times J\)，其中 \(I,J\) 分别为两环的理想；进一步确定其全部素理想。
 \end{exercise}
@@ -87,6 +140,76 @@
 \(I=\Bigl\{\,a\mid(a,0)\in K\,\Bigr\}\)、\(J=\Bigl\{\,b\mid(0,b)\in K\,\Bigr\}\)，减法与吸收性直接说明两者为理想，上述拆分及相加给出 \(K=I\times J\)。投影到各坐标又保证唯一性。
 
 若 \(K\) 是素理想，由 \((1,0)(0,1)=0\) 可知至少一个坐标幂等元属于 \(K\)；两者不能同时属于 \(K\)，否则其和 \((1,1)\in K\)。若 \((0,1)\in K\)，则 \(J=S\)，且商环同构于 \(R/I\)，由\cref{b1:prop:prime-max-quotient}知 \(I\) 素；另一种情形给出 \(R\times J\)、\(J\) 素。反过来，这两种形式的商分别是整环，故确为素理想。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-integer-ideal-operations}
+在 \(\mathbb Z\) 中取 \(I=12\mathbb Z,J=18\mathbb Z\)。计算 \(I+J\)、\(I\cap J\)、\(IJ\)、\(I^2\) 及这些理想的根，说明哪些理想不同但根相同。
+\end{exercise}
+\begin{solution}
+因为 \(18-12=6\)，且所有两者的整数线性组合都被六整除，有 \(I+J=6\mathbb Z\)。共同倍数恰为 \(36\) 的倍数，故 \(I\cap J=36\mathbb Z\)。积理想为 \(216\mathbb Z\)，而 \(I^2=144\mathbb Z\)，直接由主理想的乘积定义得到。
+
+所列生成数以及 \(12,18\) 的素因子集合均为 \(\{2,3\}\)。若其中任一个数整除 \(a^r\)，必有 \(2\mid a,3\mid a\)；反过来，若 \(6\mid a\)，取足够大的幂，就能包含该生成数所需的二、三的幂次。因此 \(I,J,I+J,I\cap J,IJ,I^2\) 的根全部为 \(6\mathbb Z\)。这些不同理想保留着不同幂次信息，取根以后该区别消失。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-integer-colon}
+设 \(a,b\) 为正整数，\(d=\gcd(a,b)\)。计算整数环中的理想商 \((a\mathbb Z:b\mathbb Z)\)，并判断何时将它乘以 \(b\mathbb Z\) 能恢复 \(a\mathbb Z\)。再求 \(\mathbb Z/a\mathbb Z\) 中 \([b]_a\) 的零化子及其元素个数。
+\end{exercise}
+\begin{solution}
+写 \(a=da_0,b=db_0\)，其中 \(\gcd(a_0,b_0)=1\)。由\cref{b1:def:ideal-quotient}，\(r\) 属于所求理想当且仅当 \(a\mid rb\)，约去 \(d\) 后等价于 \(a_0\mid rb_0\)。取整数 \(u,v\) 使 \(ua_0+vb_0=1\)，两边乘 \(r\) 可知该条件迫使 \(a_0\mid r\)；反向显然成立。故
+\[
+(a\mathbb Z:b\mathbb Z)=(a/d)\mathbb Z.
+\]
+乘回 \(b\mathbb Z\) 后得到 \((ab/d)\mathbb Z\)。由于两个生成数均为正，它等于 \(a\mathbb Z\) 当且仅当 \(b/d=1\)，即 \(b\mid a\)。
+
+在商环中，\([r]_a\) 零化 \([b]_a\) 恰好要求 \(a\mid rb\)，所以零化子由 \([a/d]_a\) 生成，其元素为
+\[
+\Bigl\{\,[j a/d]_a\mid0\leq j<d\,\Bigr\}.
+\]
+这些类互不相同：两者相等要求 \(a\mid(j-j')a/d\)，即 \(d\mid j-j'\)，在给定范围内只能 \(j=j'\)。故零化子恰有 \(d\) 个元素。例如 \(a=24,b=6\) 时，理想商为 \(4\mathbb Z\)，商环中零化子有六个元素。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-nonprincipal-ideal}
+在 \(R=\mathbb Z[x]\) 中令 \(I=(2,x)\)。证明 \(I\) 不是主理想，并计算 \(I^2\)、\(\sqrt{I^2}\) 与 \((I^2:I)\)。
+\end{exercise}
+\begin{solution}
+映射 \(\psi:R\to\mathbb F_2\)、\(f\mapsto[f(0)]_2\) 是满环同态，核为 \(I\)。因此 \(I\) 是真素理想，且 \(\sqrt I=I\)。若 \(I=(f)\)，则 \(f\) 整除常数 \(2\)，故 \(f\) 只能是整数常数 \(\pm1\) 或 \(\pm2\)；又因 \(x\in I\)，它须整除 \(x\)，于是 \(f=\pm1\)，与 \(I\ne R\) 矛盾。
+
+由理想积的定义，
+\[
+I^2=(4,2x,x^2).
+\]
+其中的多项式恰是常数项被 \(4\) 整除、一次项系数为偶数的多项式。因为 \(I^2\subseteq I=\sqrt I\)，有 \(\sqrt{I^2}\subseteq I\)；反过来，每个 \(f\in I\) 都满足 \(f^2\in I^2\)，故 \(\sqrt{I^2}=I\)。
+
+若 \(f\in(I^2:I)\)，则 \(fx\in I^2\)，由一次项系数的条件得到 \(f(0)\) 为偶数，亦即 \(f\in I\)。反过来，\(I\cdot I=I^2\) 表明每个 \(f\in I\) 都属于 \((I^2:I)\)。所以 \((I^2:I)=I\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-units-lift-nil}
+设 \(R\) 为交换环，理想 \(I\) 中每个元素都是幂零元。证明 \(a\in R\) 可逆，当且仅当 \(a+I\) 在 \(R/I\) 中可逆。再给出删去幂零假设后结论失败的例子。
+\end{exercise}
+\begin{solution}
+单位在商同态下仍为单位。反过来，若 \(a+I\) 可逆，选逆的一个代表 \(b\)，则 \(ab=1+n\)，其中 \(n\in I\)。取 \(n^m=0\)，有限几何级数公式给出
+\[
+(1+n)^{-1}=1-n+n^2-\cdots+(-n)^{m-1}.
+\]
+于是 \(a\) 的逆为 \(b(1+n)^{-1}\)，左右相乘均为一。若 \(R=\mathbb Z,I=5\mathbb Z,a=2\)，则 \(a+I\) 在商域中可逆，但整数二不可逆；这个理想不满足题设的幂零条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:10-primary-integers}
+\begin{enumerate}
+\item 设 \(R\) 为交换环，\(Q\subsetneq R\) 为理想。证明 \(Q\) 为准素理想，当且仅当 \(R/Q\) 的每个非零零因子都幂零。
+\item 对整数 \(n\geq2\)，判定何时 \(n\mathbb Z\) 是准素理想。用 \(n=12\) 写出直接违反准素性条件的两个整数，并比较 \(\mathbb Z/4\mathbb Z\) 与 \(\mathbb Z/12\mathbb Z\) 中非零零因子的幂零性。
+\end{enumerate}
+\end{exercise}
+\begin{solution}
+\begin{enumerate}
+\item 若 \(Q\) 准素，设非零类 \(b+Q\) 被非零类 \(a+Q\) 零化，则 \(ab\in Q\)、\(a\notin Q\)。准素性给出某个 \(j\geq1\) 使 \(b^j\in Q\)，即 \(b+Q\) 幂零。反过来，若每个非零零因子都幂零，而 \(ab\in Q\)、\(a\notin Q\)，则当 \(b\in Q\) 时结论已经成立；当 \(b\notin Q\) 时，非零类 \(b+Q\) 被 \(a+Q\ne0\) 零化，故某次幂为零。这正是 \(Q\) 的准素性。
+
+\item 若 \(n=p^r\) 为素数幂，且 \(ab\in n\mathbb Z\)、\(a\notin n\mathbb Z\)，则 \(p^r\mid ab\) 而 \(p^r\nmid a\)，整数的素数分解迫使 \(p\mid b\)。于是 \(b^r\in n\mathbb Z\)，所以 \(n\mathbb Z\) 准素。
+
+若 \(n\) 不是素数幂，可写 \(n=p^r m\)，其中 \(m>1\)、\(r\geq1\)、\(p\nmid m\)。取 \(a=p^r,b=m\)，则 \(ab=n\in n\mathbb Z\)，但 \(a\notin n\mathbb Z\)，而 \(b\) 的任意正次幂都不被 \(p\) 整除，因而不在 \(n\mathbb Z\) 中。这违反准素性。故 \(n\mathbb Z\) 准素当且仅当 \(n\) 为素数幂。
+
+在 \(n=12\) 时可取 \(a=4,b=3\)：\(4\cdot3\in12\mathbb Z\)，\(4\notin12\mathbb Z\)，且没有 \(3^j\) 是十二的倍数。模四时唯一的非零零因子是 \([2]_4\)，其平方为零；模十二时 \([6]_{12}\) 是平方为零的非零零因子，但 \([3]_{12}\) 被非零的 \([4]_{12}\) 零化而所有正次幂都非零，故零因子并非全都幂零。
+\end{enumerate}
 \end{solution}
 
 \begin{exercise}\label{b1:ex:10-compatible-congruences}
@@ -114,88 +237,9 @@
 \(1=(a+b)^{r+s-1}\)，每一项的 \(a\) 次数至少为 \(r\)，或 \(b\) 次数至少为 \(s\)，所以整个和属于 \(I^r+J^s\)。这证明两幂理想互素。对这两个理想应用\cref{b1:thm:crt}，映射 \(x\mapsto(x+I^r,x+J^s)\) 满射，核为 \(I^r\cap J^s=I^rJ^s\)，故诱导所求同构。此题说明互素关系可以提升到任意正整数幂，而不只是 \(\sqrt{I^r}=\sqrt I\) 所表达的根相同。
 \end{solution}
 
-
-\begin{exercise}\label{b1:ex:10-characteristic-product}
-设 \(R=\mathbb Z/4\mathbb Z\times\mathbb Z/6\mathbb Z\)。求 \(R\) 的特征及自然同态 \(\mathbb Z\rightarrow R\) 的核、像，并说明该同态为什么不是满射。
-\end{exercise}
-\begin{solution}
-\(n1_R=0\) 等价于 \(4\mid n\) 且 \(6\mid n\)，最小正解为 \(12\)，故特征为 \(12\)，核为 \(12\mathbb Z\)。\cref{b1:thm:ring-first-iso}给出像同构于 \(\mathbb Z/12\mathbb Z\)，有 \(12\) 个元素；而 \(R\) 有 \(24\) 个元素，故不满射。更具体地，\cref{b1:prop:integer-crt-compatible}说明坐标 \(([a]_4,[b]_6)\) 在像中当且仅当 \(a\equiv b\pmod2\)，因为两模数的最大公因子为二。例如 \(([0]_4,[1]_6)\) 不在像中。环的特征决定这个自然像，却不决定全环的元素个数。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:10-group-ring-augmentation}
-设 \(k\) 为域，\(G\) 为群。在群环 \(k[G]\) 上定义系数和映射
-\(\epsilon(\sum_g a_gg)=\sum_g a_g\)。证明它为满环同态，并证明其核由全部 \(g-1\)、\(g\in G\) 生成。若 \(G\) 为二阶群且 \(\operatorname{char}k=2\)，证明该核的平方为零。
-\end{exercise}
-\begin{solution}
-系数和保持加法与单位；乘积的系数和为
-\(\sum_{g,h}a_gb_h=(\sum_ga_g)(\sum_hb_h)\)，所以保持乘法。常数 \(a\cdot1_G\) 映到 \(a\)，故满射。每个 \(g-1\) 属于核，故它们生成的理想包含在核中。反过来，若 \(\sum_g a_g=0\)，则
-\[
-\sum_g a_gg=\sum_g a_g(g-1),
-\]
-是这些生成元的有限线性组合，得到反向包含。若 \(G=\{1,g\}\)、\(g^2=1\)，核由 \(g-1\) 生成；群环在此交换，且在特征二下
-\((g-1)^2=g^2-2g+1=0\)，所以核的平方为零。由\cref{b1:thm:ring-first-iso}，这时商环仍为 \(k\)，但原群环有非零幂零元 \(g-1\)。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:10-one-sided-quotient}
-设 \(R=M_2(k)\)，\(L\) 是第二列为零的矩阵集合。证明 \(L=RE_{11}\) 是左理想，并用具体代表元说明加法商群 \(R/L\) 不能按 \((A+L)(B+L)=AB+L\) 定义乘法。
-\end{exercise}
-\begin{solution}
-右乘 \(E_{11}\) 保留矩阵第一列并把第二列置零，故 \(L=RE_{11}\)。它对减法封闭，且 \(C(AE_{11})=(CA)E_{11}\in L\)，所以是左理想。\(E_{11}\in L\)，因而 \(E_{11}+L=0+L\)。但是
-\(E_{11}E_{12}=E_{12}\notin L\)，而 \(0E_{12}=0\in L\)。同一个左因子陪集的两个代表产生不同的乘积陪集，故乘法不良定义。理想的右吸收性在\cref{b1:prop:quotient-ring}中正是为排除这种现象而要求的。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:10-integer-ideal-operations}
-在 \(\mathbb Z\) 中取 \(I=12\mathbb Z,J=18\mathbb Z\)。计算 \(I+J\)、\(I\cap J\)、\(IJ\)、\(I^2\) 及它们的根理想，说明哪些理想不同但根相同。
-\end{exercise}
-\begin{solution}
-因为 \(18-12=6\)，且所有两者的整数线性组合都被六整除，有 \(I+J=6\mathbb Z\)。共同倍数恰为 \(36\) 的倍数，故 \(I\cap J=36\mathbb Z\)。积理想为 \(216\mathbb Z\)，而 \(I^2=144\mathbb Z\)，直接由主理想的乘积定义得到。
-
-所列生成数以及 \(12,18\) 的素因子集合均为 \(\{2,3\}\)。若其中任一个数整除 \(a^r\)，必有 \(2\mid a,3\mid a\)；反过来，若 \(6\mid a\)，取足够大的幂，就能包含该生成数所需的二、三的幂次。因此 \(I,J,I+J,I\cap J,IJ,I^2\) 的根全部为 \(6\mathbb Z\)。这些不同理想保留着不同幂次信息，取根以后该区别消失。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:10-units-lift-nil}
-设 \(R\) 为交换环，理想 \(I\) 中每个元素都是幂零元。证明 \(a\in R\) 可逆，当且仅当 \(a+I\) 在 \(R/I\) 中可逆。再给出删去幂零假设后结论失败的例子。
-\end{exercise}
-\begin{solution}
-单位在商同态下仍为单位。反过来，若 \(a+I\) 可逆，选逆的一个代表 \(b\)，则 \(ab=1+n\)，其中 \(n\in I\)。取 \(n^m=0\)，有限几何级数公式给出
-\[
-(1+n)^{-1}=1-n+n^2-\cdots+(-n)^{m-1}.
-\]
-于是 \(a\) 的逆为 \(b(1+n)^{-1}\)，左右相乘均为一。若 \(R=\mathbb Z,I=5\mathbb Z,a=2\)，则 \(a+I\) 在商域中可逆，但整数二不可逆；这个理想不满足题设的幂零条件。
-\end{solution}
-
 \begin{exercise}\label{b1:ex:10-function-idempotents}
 设 \(k\) 为域，\(X\) 为集合。求函数环 \(k^X\) 的全部幂等元。对 \(A\subseteq X\)，利用对应的幂等元解释分解 \(k^X\cong k^A\times k^{X\setminus A}\)，并在 \(X\) 有 \(n\) 个元素时求幂等元个数。
 \end{exercise}
 \begin{solution}
 函数 \(e\) 幂等当且仅当每个 \(x\) 都满足 \(e(x)^2=e(x)\)。域中只有零、一两个幂等元，所以 \(e\) 恰为某个子集 \(A\) 的示性函数：在 \(A\) 上为一，其他点为零。\(e\) 与 \(1-e\) 正交且和为一，\cref{b1:prop:idempotent-product}给出 \(k^X\cong e k^X\times(1-e)k^X\)。两个分量分别通过限制到 \(A\) 与 \(X\setminus A\) 识别为题述函数环；逆映射把两个函数在互不相交的定义域上拼成一个函数。因此有限 \(X\) 的幂等元与其全部子集一一对应，共 \(2^n\) 个。空集时函数环为零环，上述计数仍给出唯一元素。
-\end{solution}
-
-
-\begin{exercise}\label{b1:ex:10-integer-colon}
-设 \(a,b\) 为正整数，\(d=\gcd(a,b)\)。计算整数环中的理想商 \((a\mathbb Z:b\mathbb Z)\)，并判断何时将它乘以 \(b\mathbb Z\) 能恢复 \(a\mathbb Z\)。再求 \(\mathbb Z/a\mathbb Z\) 中 \([b]_a\) 的零化子及其元素个数。
-\end{exercise}
-\begin{solution}
-写 \(a=da_0,b=db_0\)，其中 \(\gcd(a_0,b_0)=1\)。由\cref{b1:def:ideal-quotient}，\(r\) 属于所求理想当且仅当 \(a\mid rb\)，约去 \(d\) 后等价于 \(a_0\mid rb_0\)。取整数 \(u,v\) 使 \(ua_0+vb_0=1\)，两边乘 \(r\) 可知该条件迫使 \(a_0\mid r\)；反向显然成立。故
-\[
-(a\mathbb Z:b\mathbb Z)=(a/d)\mathbb Z.
-\]
-乘回 \(b\mathbb Z\) 后得到 \((ab/d)\mathbb Z\)。由于两个生成数均为正，它等于 \(a\mathbb Z\) 当且仅当 \(b/d=1\)，即 \(b\mid a\)。
-
-在商环中，\([r]_a\) 零化 \([b]_a\) 恰好要求 \(a\mid rb\)，所以零化子由 \([a/d]_a\) 生成，其元素为
-\[
-\Bigl\{\,[j a/d]_a\mid0\leq j<d\,\Bigr\}.
-\]
-这些类互不相同：两者相等要求 \(a\mid(j-j')a/d\)，即 \(d\mid j-j'\)，在给定范围内只能 \(j=j'\)。故零化子恰有 \(d\) 个元素。例如 \(a=24,b=6\) 时，理想商为 \(4\mathbb Z\)，商环中零化子有六个元素。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:10-primary-integers}
-设整数 \(n\geq2\)。证明 \(n\mathbb Z\) 是准素理想，当且仅当 \(n\) 是某个素数的正整数次幂。用 \(n=12\) 写出直接违反准素性条件的两个整数，并比较 \(\mathbb Z/4\mathbb Z\) 与 \(\mathbb Z/12\mathbb Z\) 中非零零因子的幂零性。
-\end{exercise}
-\begin{solution}
-先设 \(n=p^r\)。若 \(ab\in n\mathbb Z\) 而 \(a\notin n\mathbb Z\)，则 \(p^r\mid ab\) 且 \(p^r\nmid a\)。整数的素数分解迫使 \(p\mid b\)，于是 \(b^r\in n\mathbb Z\)，故为准素理想。
-
-若 \(n\) 不是素数幂，可写 \(n=p^r m\)，其中 \(m>1\)、\(r\geq1\)、\(p\nmid m\)。取 \(a=p^r,b=m\)，则 \(ab=n\) 属于该理想，\(a\) 却不属于；而任意 \(b^j\) 都不被 \(p\) 整除，因而不可能属于 \(n\mathbb Z\)。这违反准素性，证明必要性。\(n=12\) 时可取 \(a=4,b=3\)：\(4\cdot3\in12\mathbb Z\)，\(4\notin12\mathbb Z\)，且没有 \(3^j\) 是十二的倍数。
-
-模四时只有 \([2]_4\) 是非零零因子，并且平方为零；模十二时 \([3]_{12}\) 被非零的 \([4]_{12}\) 零化，但所有正次幂都非零。一般地，设 \(Q\) 为交换环的真理想，则 \(Q\) 准素当且仅当商环中的非零零因子都幂零。若 \(Q\) 准素，非零类 \(a+Q\) 零化 \(b+Q\) 意味着 \(ab\in Q,a\notin Q\)，定义给出 \((b+Q)^j=0\)。反过来，若所有非零零因子均幂零，而 \(ab\in Q,a\notin Q\)，当 \(b+Q=0\) 时已有 \(b\in Q\)；当它非零时，非零的 \(a+Q\) 零化它，所以它为非零零因子，某次幂必为零。这两种情形都给出准素性所需的条件。
 \end{solution}

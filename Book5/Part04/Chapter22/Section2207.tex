@@ -1,0 +1,183 @@
+% !TeX root = ../../Book5.tex
+% 纲要标题：### 22.7* 约化群与几何不变量理论初步
+% 纲要位置：工作记录/计划纲要.md，第 4516 行。
+% * 在第21章有理表示语言下完整证明所采用的线性约化群有限生成版本，不默认所有群的不变环均有限生成
+% * 区分特征零与正特征；给出几何约化性及有限生成的证明概要，不用有限群平均代替
+% * 给出一个含明确线性化的低维射影例子；完整 Hilbert–Mumford 判据、模空间与变分 GIT 留给后续专著
+% #### 22.7.1 线性约化性与 Hilbert 有限生成定理
+% #### 22.7.2 正特征、几何约化性及适用范围
+% #### 22.7.3 稳定性与射影商的一个例子
+% ---
+\OptionalSection{约化群与几何不变量理论初步}{b5:sec:2207}
+
+有限群平均可以把系数投影到不变部分。对于无限代数群，有理表示的完全可约性也能给出这样的投影。本节先用这一投影证明有限生成，再介绍正特征的几何约化性与射影商的构造。
+
+\subsection{线性约化性与 Hilbert 有限生成定理}
+\label{b5:subsec:2207:01}
+
+\begin{definition}\label{b5:def:linearly-reductive}
+设 \(G\) 为域 \(k\) 上的仿射群概形。若每个有限维有理 \(G\) 表示都可分解为简单有理表示的直和，则称 \(G\) 为\term[xianxing-yuehua]{线性约化群}[linearly reductive group]。对可能无限维的有理表示，本节使用右 \(k[G]\) 余模的含义。
+\end{definition}
+
+\begin{lemma}\label{b5:lem:reductive-reynolds}
+设 \(G\) 为域 \(k\) 上的线性约化仿射群概形，\(M\) 为有理 \(G\) 表示，\(M^G\) 为其不动子空间。则有自然的 \(G\) 等变投影
+\(\mathcal R_M:M\to M^G\)。取不变量保持有理表示的短正合列。若 \(A\) 是有理 \(G\) 代数，则 \(\mathcal R_A\) 是 \(A^G\) 线性的。
+\end{lemma}
+\begin{proof}
+有限维时，将 \(M\) 分解为简单模。平凡简单模之和恰为 \(M^G\)，其余简单模之和记为 \(M'\)。没有非零同态能在平凡简单模与非平凡简单模之间来回映射：非零简单模同态必为同构。因此这两个等型部分及投影均不依赖分解的选择，并且任意等变同态保持它们。
+
+由\cref{b5:lem:comodule-locally-finite}，一般 \(M\) 中每个向量都属于有限维子表示。两个这样的子表示都包含在它们的有限维和中；投影的自然性使定义相容。因此有限维投影黏合为 \(\mathcal R_M\)，且仍对所有同态自然。
+
+取不变量本来左正合。对等变满射 \(M\to N\) 和 \(n\in N^G\)，选原像 \(m\)；自然性说明 \(\mathcal R_M(m)\) 映到 \(\mathcal R_N(n)=n\)，所以右端也满射。最后，若 \(a\in A^G\)，乘法映射 \(x\mapsto ax\) 是等变线性映射；对它用自然性即得
+\(\mathcal R_A(ax)=a\mathcal R_A(x)\)。
+\end{proof}
+
+\begin{theorem}[线性约化群的有限生成]\label{b5:thm:reductive-hilbert-finiteness}
+设 \(k\) 为域，\(G\) 为 \(k\) 上的线性约化群，\(A\) 为有限生成交换 \(k\) 代数，具有有理 \(G\) 作用。则 \(A^G\) 是有限生成 \(k\) 代数。
+\end{theorem}
+\begin{proof}
+先设 \(A=S=\operatorname{Sym}(W)\)，其中 \(W\) 有限维，作用保持标准分次。令 \(I\subseteq S\) 为全部正次齐次不变量生成的理想。Hilbert 基定理说明 \(S\) 为 Noether 环，所以可从这些不变量中选出有限个齐次元 \(f_1,\ldots,f_r\) 生成 \(I\)。确实，先取有限理想生成元，再展开它们所用的有限多个原始不变量即可。
+
+对不变量的次数归纳。常数不需要生成；若 \(f\in S_d^G,\ d>0\)，由 \(f\in I\) 可写
+\[
+f=\sum_i a_if_i,\qquad \deg a_i=d-\deg f_i<d,
+\]
+只保留相应齐次部分即可。\cref{b5:lem:reductive-reynolds}以及分次投影的自然性给出
+\[
+f=\sum_i\mathcal R_S(a_i)f_i.
+\]
+这些系数不变且次数下降，由归纳假设属于 \(k[f_1,\ldots,f_r]\)，所以 \(S^G=k[f_1,\ldots,f_r]\)。
+
+一般情形先取 \(A\) 的有限个代数生成元。余模局部有限性使它们包含在有限维 \(G\) 稳定子空间 \(W\subseteq A\) 中。乘法延拓给出等变满射
+\(\operatorname{Sym}(W)\to A\)。引理的不变量正合性又给出
+\(\operatorname{Sym}(W)^G\to A^G\) 满射。前者已经有限生成，故其商 \(A^G\) 也有限生成。
+\end{proof}
+
+分裂环面在任意特征都线性约化：\cref{b5:thm:torus-weight-decomposition}把表示分成一维权表示，Reynolds 算子就是取权零部分。有限群在群阶可逆时则由 Maschke 定理得到这一性质。这里的一般证明没有给出类似 \(|G|\) 的次数上界；有限生成与有效的次数估计仍应区分。
+
+\subsection{正特征、几何约化性及适用范围}
+\label{b5:subsec:2207:02}
+
+在代数闭域上，连通光滑仿射代数群若没有非平凡连通正规幺幂子群，便称为约化群；幺幂群是能够表示为对角元全为一的上三角矩阵群的代数群。约化性是群本身的结构条件，线性约化性则是全部有限维有理表示的分解条件。特征零时两者对连通群等价；正特征时不能这样替换。
+
+\ProseParagraphBreak
+例如在特征 \(p>0\) 的代数闭域上，考虑 \(\operatorname{SL}_2\) 的 \(p\) 次对称幂 \(k[X,Y]_p\)。子空间
+\[
+U=kX^p+kY^p
+\]
+因 \((aX+bY)^p=a^pX^p+b^pY^p\) 而稳定。假设存在稳定补空间 \(L\)。对角环面的权分别为 \(p,p-2,\ldots,-p\)，作为代数群的特征它们仍互不相同；中间权 \(p-2\) 迫使 \(X^{p-1}Y\in L\)。然而使 \(X\mapsto X,\ Y\mapsto Y+tX\) 的幺幂元将它送为
+\[
+X^{p-1}Y+tX^p.
+\]
+取 \(t\ne0\)，稳定性便迫使 \(X^p\in L\cap U\)，矛盾。因此这个表示不完全可约，即使 \(\operatorname{SL}_2\) 是约化群。
+
+\begin{definition}\label{b5:def:geometrically-reductive}
+设 \(k\) 为代数闭域，\(G\) 为 \(k\) 上的仿射代数群。若对每个有限维有理 \(G\) 表示 \(V\) 及每个非零固定向量 \(v\in V^G\)，都有某个正次齐次不变量 \(f\in k[V]^G\) 满足 \(f(v)\ne0\)，则称 \(G\) 为\term[jihe-yuehua]{几何约化群}[geometrically reductive group]。
+\end{definition}
+
+线性约化时可将不变直线 \(kv\) 等变地投影出来，得到在 \(v\) 上非零的不变线性函数，因此必几何约化。几何约化允许使用更高次数，这是它能够适应正特征的关键区别。
+
+\ProseParagraphBreak
+\begin{theorem}[Haboush 定理]\label{b5:thm:haboush-geometric-reductivity}
+设 \(k\) 为代数闭域，\(G\) 为 \(k\) 上的连通约化仿射代数群。则 \(G\) 几何约化。
+\end{theorem}
+\begin{proofsketch}
+环面的有理表示按权分解，因而已线性约化。取半单部分的单连通覆盖，再与中心环面作乘积，可用满同态覆盖 \(G\)；对满同态的拉回表示，不变向量和不变多项式都不变。因此只须处理半单单连通群。固定最大环面 \(T\)。
+
+给定 \(0\ne v\in V^G\)，选 \(\ell\in V^*\) 使 \(\ell(v)=1\)。矩阵系数映射
+\[
+ \phi:V\longrightarrow k[G],\qquad
+ \phi(w)(g)=\ell(g^{-1}w)
+\]
+对于左平移 \((h\cdot f)(g)=f(h^{-1}g)\) 等变，且 \(\phi(v)=1\)。右 \(T\) 作用与左 \(G\) 作用交换；取右权零部分的 Reynolds 投影，便得到 \(G\) 等变映射 \(\pi\phi:V\to k[G]^T\)，仍把 \(v\) 送到 \(1\)。
+
+关键表示论输入是：\(k[G]^T\) 是一族有限维 \(G\) 子模的递增并，这些子模同构于 \(\operatorname{End}(E)\)，\(G\) 在后者按共轭作用，常数 \(1\) 对应恒等端同态的非零倍数。这个输入的构造取相反 Borel 子群 \(B,B^-\)，利用 \(G/T\) 在 \(G/B\times G/B^-\) 中的开轨道，把正则函数写成线丛截面的带分母张量。清去大胞腔定义截面的幂后，所得有限维子模为
+\(E_{n\rho}\otimes E_{n\rho}\)，其中 \(E_{n\rho}=H^0(G/B,\mathcal L_{n\rho})\)、\(\rho\) 是正根半和。特征零时这些模不可约；特征 \(p>0\) 时取 \(n=p^r-1\)，Steinberg 表示的不可约性与维数 \(p^{rN}\)（\(N\) 为正根数），结合 Weyl 维数公式和充分大 \(n\) 时的 Serre 消失，给出所需无限多个不可约 \(E_{n\rho}\)。这些自对偶模的张量正是 \(\operatorname{End}(E_{n\rho})\)。
+
+\(\pi\phi(V)\) 有限维，故包含在某个这样的子模中。记相应同构为 \(\sigma\)，则
+\[
+ f(w)=\det\bigl(\sigma\pi\phi(w)\bigr)
+\]
+是正次齐次多项式，因行列式保持共轭而 \(G\) 不变，且
+\(f(v)=\det(cI_E)=c^{\dim E}\ne0\)。这就得到几何约化定义要求的多项式；不需除以 \(\dim E\)。
+
+这里省略了约化群的中心覆盖结构、大胞腔截面的构造，以及 Steinberg 模、Serre 消失与模的约化比较。矩阵系数、\(k[G]^T\) 的递增并和行列式论证见\cite[Section 3, Propositions 1--2, pp. 140--143]{Demazure1976MumfordConjecture}，该讲稿完整讲述 Haboush 的证明；原论文为\cite{Haboush1975GeometricallyReductive}。这些深层输入解释了正特征为何可以得到高次不变量，却不能一般地得到不变线性投影。
+\end{proofsketch}
+
+\begin{lemma}[不变量的幂提升]\label{b5:lem:geometric-reductive-power-lifting}
+设 \(k\) 为代数闭域，\(G\) 为几何约化仿射代数群，\(A\) 为有理 \(G\) 作用的交换 \(k\) 代数，\(I\subseteq A\) 为 \(G\) 稳定理想。对每个 \(u\in(A/I)^G\)，存在整数 \(m>0\) 及 \(b\in A^G\)，使 \(b\) 在 \(A/I\) 中的像为 \(u^m\)。
+\end{lemma}
+\begin{proof}
+\(u=0\) 时取 \(b=0\)。否则选原像 \(a\in A\)，令 \(W\) 为其 \(G\) 平移生成的有限维子表示。所有平移在商中都映到 \(u\)，故商映射限制为等变满射 \(q:W\to ku\)；以 \(u\) 识别 \(ku=k\)，把 \(q\) 看作 \(W^*\) 中的非零固定向量。几何约化给出齐次不变量 \(F\in k[W^*]^G=\operatorname{Sym}(W)^G\)，满足 \(F(q)\ne0\)。除以这个非零标量，可设 \(F(q)=1\)。
+
+包含 \(W\subseteq A\) 延拓为等变代数映射 \(\operatorname{Sym}(W)\to A\)。令 \(b\) 为 \(F\) 的像，便有 \(b\in A^G\)。若 \(F\) 的次数为 \(m>0\)，每个 \(w\in W\) 在商中等于 \(q(w)u\)，故 \(b\) 的商像恰为 \(F(q)u^m=u^m\)。
+\end{proof}
+
+\begin{theorem}[Nagata 有限生成定理]\label{b5:thm:geometric-reductive-finite-generation}
+设 \(k\) 为代数闭域，\(G\) 为几何约化仿射代数群，\(A\) 为有限生成约化交换 \(k\) 代数，具有有理 \(G\) 作用。则 \(A^G\) 有限生成。
+\end{theorem}
+\begin{proofsketch}
+\cref{b5:lem:geometric-reductive-power-lifting}说明
+\(A^G/(I\cap A^G)\subseteq(A/I)^G\) 是整扩张：商中每个不变量的某个正幂来自左边。这是取代 Reynolds 满射的关键，不能把它误写为不变量函子正合。
+
+虽然定理只陈述约化代数，证明同时推进较强的归纳断言：任意有限生成交换有理 \(G\) 代数的不变环均有限生成，允许代数带幂零元。这样对 \(G\) 稳定理想取商后仍在同一归纳范围内；不能只对约化商使用归纳假设。对保持分次且零次为 \(k\) 的代数，先按稳定理想作 Noether 归纳，可假设每个非零真商的不变环已有限生成。
+
+若没有正次不变量，则 \(A^G=k\)；否则选正次齐次 \(0\ne f\in A^G\)。若 \(f\) 在 \(A\) 中不为零因子，由幂提升，\((A/fA)^G\) 整于 \(A^G/fA^G\)；这里 \(fA\cap A^G=fA^G\)，因为 \(f\) 可以从不变等式中消去。有限型代数的整子代数仍有限型，故 \(A^G/fA^G\) 有限生成。提升其正次生成元并添上 \(f\)，再按次数归纳，就生成 \(A^G\)。若 \(f\) 在 \(A\) 中为零因子，则同时对 \(fA\) 与 \(\operatorname{Ann}_A(f)\) 取商；从两商提升有限生成元，再添上有限多个 \(fb_i\)，即可恢复 \(A^G\)。因为 \(b_i\) 的作用差落在 \(\operatorname{Ann}_A(f)\)，这些 \(fb_i\) 都不变。幂零的 \(f\) 也按这一双商分支处理。
+
+一般 \(A\) 是某个有限维有理表示的对称代数 \(S\) 的等变商。已证的齐次情形使 \(S^G\) 有限生成，幂提升使 \(A^G\) 整于其像 \(B\)。当 \(A^G\) 为整环时，它的分式域嵌入 \(A\) 某个整环分量的有限型分式域，因而自身为有限生成域；它对 \(\operatorname{Frac}(B)\) 既代数又有限生成，故为有限扩张。有限型代数在有限分式域扩张中的整闭包是有限模，\(A^G\) 作为该整闭包的 \(B\) 子模也有限。零因子情形继续沿前面的两个真商归纳。
+
+本概要省略 Noether 归纳中零因子的双商粘接及包含非约化商的完整归纳、有限型整子代数的交换代数引理和整闭包有限性。双商分支同时处理幂零不变量，归纳范围因而必须允许非约化代数；其余步骤分别保证整性足以传递有限生成，以及一般商情形可结束。完整归纳方法与幂提升引理见\cite[Section 3.4, Theorem 3.3 and Lemma 3.5, pp. 41--45]{Dolgachev2003InvariantTheory}。结合\cref{b5:thm:haboush-geometric-reductivity}，便得到约化群在这里所述有限型约化代数上的不变环有限生成。
+\end{proofsketch}
+
+\subsection{稳定性与射影商的一个例子}
+\label{b5:subsec:2207:03}
+
+设代数闭域 \(k\) 上的线性约化群 \(G\) 线性作用于 \(V\)。这个线性作用诱导 \(\mathbb P(V)\) 及其同义反复线丛 \(\mathcal O(-1)\) 上的作用，因而给出对偶线丛 \(\mathcal O(1)\) 的线性化。选择提升到线丛的作用称为选择线性化；同一个射影作用可以有不同选择。
+
+\begin{definition}\label{b5:def:projective-semistability}
+设 \(k\) 为代数闭域，线性约化群 \(G\) 线性作用在有限维 \(k\) 空间 \(V\) 上，并在 \(\mathbb P(V)\) 上取此作用诱导的 \(\mathcal O(1)\) 线性化。点 \([v]\in\mathbb P(V)\) 若存在正次齐次不变量 \(f\in k[V]^G\) 使 \(f(v)\ne0\)，称为\term[banwending-dian]{半稳定点}[semistable point]。若还可选择这样的 \(f\)，使轨道在仿射开集
+\(D_+(f)=\Bigl\{\,[w]\mid f(w)\ne0\,\Bigr\}\) 中闭，且稳定子群有限，则称为\term[wending-dian]{稳定点}[stable point]。
+\end{definition}
+
+这一定义与线性化有关。先说明不变齐次环如何给出半稳定集上的商映射，再用一个环面作用计算其纤维。
+
+\begin{proposition}\label{b5:prop:projective-invariant-quotient-construction}
+设 \(k\) 为代数闭域，线性约化群 \(G\) 线性作用在有限维 \(k\) 向量空间 \(V\) 上，在 \(\mathbb P(V)\) 上取诱导的 \(\mathcal O(1)\) 线性化。记 \(S=k[V]\)、\(R=S^G\)，\(\mathbb P(V)^{\mathrm{ss}}\) 为半稳定点构成的开子集。则 \(R\) 是有限生成分次代数，并有自然的 \(G\) 不变态射
+\[
+ \pi:\mathbb P(V)^{\mathrm{ss}}\longrightarrow\operatorname{Proj}R.
+\]
+对每个非零正次齐次 \(f\in R\)，其限制
+\(D_+(f)\to\operatorname{Spec}(R_f)_0\) 是由该仿射开集的不变环定义的仿射商。下标零表示齐次局部化的次数零部分。
+\end{proposition}
+\begin{proof}
+\cref{b5:thm:reductive-hilbert-finiteness}给出有限生成，作用保持次数使 \(R\) 保持分次。半稳定定义说明 \(\mathbb P(V)^{\mathrm{ss}}\) 正是这些 \(D_+(f)\) 的并。按 Proj 的仿射图构造，\(D_+(f)\) 的坐标环为 \(A_f=(S_f)_0\)，目标相应图的坐标环为 \(B_f=(R_f)_0\)。
+
+因为 \(f\) 不变，\(A_f^G=B_f\)。确实，\(A_f\) 的元可写成 \(a/f^m\)，其中 \(a\) 齐次且 \(\deg a=m\deg f\)；它不变时，其余作用满足 \(\delta(a)/(f^m\otimes1)=(a\otimes1)/(f^m\otimes1)\)。\(S\) 是整环，且 \(S\otimes_k k[G]\) 作为 \(S\) 模自由，所以 \(f\otimes1\) 不为零因子。清分母得到 \(\delta(a)=a\otimes1\)，即 \(a\in R\)，反向显然。这也适用于非光滑的线性约化群概形。\cref{b5:prop:affine-quotient-universal}于是给出每张图上的仿射商。
+
+两张图的交是 \(D_+(ff')\)。在次数零环中，若 \(\deg f=r\)、\(\deg f'=s\)，这一交由不变函数 \((f')^r/f^s\) 的非零条件截出；两张图之间的坐标变换就是进一步局部化。因此上述商态射在交上相容，粘合为 \(\pi\)。这证明所陈述的射影构造；关于稳定点上的轨道商及完整数值判据，还须另作论证。
+\end{proof}
+
+\begin{example}\label{b5:exm:projective-torus-quotient}
+设 \(k\) 为代数闭域，\(G=\mathbb G_m\) 在 \(V=k^3\) 上作用为
+\[
+t\cdot(x,y,z)=(tx,y,t^{-1}z).
+\]
+取这个线性作用给出的 \(\mathcal O(1)\) 线性化。单项式的权为 \(a-c\)，所以
+\[
+k[V]^G=k[y,xz],\qquad \deg y=1,\quad\deg(xz)=2.
+\]
+正次不变量同时为零的射影点恰为
+\([1:0:0]\)、\([0:0:1]\)。因此半稳定集是去掉这两点的开集。
+
+取第二个 Veronese 子环，得到 \(k[y^2,xz]\)，两个生成元的重分次均为一，其 Proj 是 \(\mathbb P^1\)。原分次环与此子环具有相同的 Proj：在 \(D_+(y)\) 与 \(D_+(xz)\) 的次数零局部化中，分子分母可以同乘一个齐次元，使次数成为二的倍数，因此对应仿射图及其交完全相同。商映射在本例具体为
+\[
+[x:y:z]\longmapsto[y^2:xz].
+\]
+两坐标在半稳定集上不同时为零，故这是正则映射。
+
+若 \(xz\ne0\)，稳定子群有限：当 \(y\ne0\) 时为单位群，当 \(y=0\) 时满足 \(t^2=1\)，作为群概形也是有限的。轨道在 \(D_+(xz)\) 中闭。事实上，给定比例 \(y^2/(xz)\)，在代数闭域上可用射影倍数及群参数把任意两个 \(xz\ne0\) 的点互相变换；所以该轨道就是 \(D_+(xz)\) 中商映射的一个闭纤维。
+
+若 \(xz=0,\ y\ne0\)，则 \([0:1:0]\) 是固定点，不稳定；其余点在半稳定集中沿轨道趋向这个固定点，也不稳定。因此稳定集恰为 \(xz\ne0\)，而商点 \([1:0]\) 对应一个固定轨道与两个退化到它的非闭轨道。
+\end{example}
+
+这个例子已经显示射影商保留了仿射商未必保留的方向信息，也显示半稳定集必须先选出来。完整的 Hilbert--Mumford 判据、一般商的几何性质与改变线性化时的变化，可以继续阅读\cite[Chapters 7--9]{Dolgachev2003InvariantTheory}；这些内容不由一个环面例子的计算代替。

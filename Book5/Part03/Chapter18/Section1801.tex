@@ -1,30 +1,143 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 18.1 完全可约性
-% 纲要位置：计划纲要.md，第 3635 行。
+% 纲要位置：工作记录/计划纲要.md，第 4286 行。
+% * Weyl 完全可约性定理
+% * Casimir 方法的证明
+% * 与有限群平均投影的比较
 
 \section{完全可约性}
 \label{b5:sec:1801}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Weyl 完全可约性定理
-% * Casimir 方法的证明
-% * 与有限群平均投影的比较
-%
+有限群表示的平均投影依赖有限求和。李代数没有可以直接照搬的群元素平均式，但半单性提供了另一种工具：一个由不变双线性型构造的中心算子。它能消去截面不保持作用所产生的误差，从而证明任意子模都有不变补。本节始终讨论有限维复半单李代数及其有限维复表示。
 
 \subsection{Weyl 完全可约性定理}
 \label{b5:subsec:1801:01}
 
-待撰写。
+若一个模是简单模的直和，就称它完全可约。对于有限维模，这等价于每个子模都有子模补空间：后一条件允许逐次取一个简单子模并分裂；前一条件则可按有限直和归纳证明任意子模都可分裂。本节将直接证明所有短正合列分裂，因而不把分解的存在作为证明前提。
+
+\ProseParagraphBreak
+先固定需要保持一致的双线性型。设 \(\mathfrak g\) 为复半单李代数，\(B(x,y)=\operatorname{tr}_{\mathfrak g}(\operatorname{ad}x\operatorname{ad}y)\) 为其 Killing 型。对一组基 \(x_1,\ldots,x_N\)，用 \(x^1,\ldots,x^N\) 表示满足 \(B(x_i,x^j)=\delta_i^j\) 的对偶基。在包络代数中定义
+\begin{equation}\label{b5:eq:killing-casimir}
+C=\sum_{i=1}^N x_i x^i\in U(\mathfrak g).
+\end{equation}
+它称为 Killing 型对应的\term[Casimir-yuan]{Casimir 元}[Casimir element]。不同不变型给出的 Casimir 元可能相差因子；本书以后未另加说明时都使用\eqref{b5:eq:killing-casimir}。
+
+\begin{proposition}\label{b5:prop:casimir-central}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(B\) 为其 Killing 型。取 \(\mathfrak g\) 的一组基 \(x_1,\ldots,x_N\) 及满足 \(B(x_i,x^j)=\delta_i^j\) 的对偶基 \(x^1,\ldots,x^N\)，令 \(C=\sum_{i=1}^N x_ix^i\in U(\mathfrak g)\)。则 \(C\) 不依赖对偶基的选择，并属于 \(U(\mathfrak g)\) 的中心。因此在任意复 \(\mathfrak g\) 模上，\(C\) 的作用与全部 \(\mathfrak g\) 作用交换。
+\end{proposition}
+\begin{proof}
+在 \(B\) 给出的 \(\mathfrak g^*\simeq\mathfrak g\) 识别下，张量 \(\sum_i x_i\otimes x^i\) 对应 \(\operatorname{End}(\mathfrak g)\) 的恒等算子，故不依赖基。Killing 型的不变性使此识别与伴随作用相容；恒等算子在共轭作用下不变，所以
+\begin{equation}\label{b5:eq:casimir-tensor-invariance}
+\sum_i[x,x_i]\otimes x^i+\sum_i x_i\otimes[x,x^i]=0
+\qquad(x\in\mathfrak g).
+\end{equation}
+对这个等式应用乘法 \(\mathfrak g\otimes\mathfrak g\to U(\mathfrak g)\)，得到 \([x,C]=0\)。由于 \(\mathfrak g\) 生成包络代数，\(C\) 与整个 \(U(\mathfrak g)\) 交换。
+\end{proof}
+
+中心性本身还不够：一个中心算子可能为零。下一步要证明，\(C\) 在每个非平凡的有限维简单模上作用为非零标量。所用正性只在根的实空间与整数权上出现，并非给整个复李代数选择正定 Killing 型。
 
 \subsection{Casimir 方法的证明}
 \label{b5:subsec:1801:02}
 
-待撰写。
+\begin{lemma}\label{b5:lem:casimir-positive-simple}
+设 \(\mathfrak g\ne0\) 为有限维复半单李代数，\(M\) 为非零有限维简单 \(\mathfrak g\) 模。其 Killing Casimir 元作用为标量 \(c_M\)。若 \(M\) 非平凡，则 \(c_M\) 是正实数；若 \(M\) 平凡，则 \(c_M=0\)。
+\end{lemma}
+\begin{proof}
+中心性和 Schur 引理给出标量作用。由\cref{b5:thm:semisimple-ideal-decomposition}，将 \(\mathfrak g\) 写成简单理想的直和 \(\bigoplus_j\mathfrak g_j\)，并令
+\[
+B_M(x,y)=\operatorname{tr}_M\Bigl(\rho(x)\rho(y)\Bigr).
+\]
+这是不变对称双线性型。不同简单理想之间的配对为零：若 \(x=[u,v]\in\mathfrak g_j\)、\(y\in\mathfrak g_\ell\)、\(j\ne\ell\)，则不变性给出 \(B_M(x,y)=B_M\Bigl(u,[v,y]\Bigr)=0\)；每个简单理想由其括号生成。
+
+在 \(\mathfrak g_j\) 上，用非退化的 Killing 型将 \(B_M\) 写成 \(B(Tx,y)\)。不变性说明 \(T\) 与伴随作用交换。简单理想的伴随模不可约，因此 \(T=b_jI\)，即 \(B_M|_{\mathfrak g_j}=b_jB|_{\mathfrak g_j}\)。
+
+若 \(\mathfrak g_j\) 在 \(M\) 上作用为零，则 \(b_j=0\)。否则其表示核为简单理想的真理想，只能为零。取该因子的一个根余根 \(h_\alpha\)。由\cref{b5:thm:root-sl2}，它属于一个标准 \(\mathfrak{sl}_2\) 三元组；由独立证明的\cref{b5:thm:sl2-complete-reducibility}及\cref{b5:thm:sl2-classification}，\(\rho(h_\alpha)\) 可对角化且特征值为整数。忠实性使此算子非零，所以
+\[
+B_M(h_\alpha,h_\alpha)
+=\sum_{\text{特征值 }m}m^2>0.
+\]
+Killing 诱导型在根实空间正定，因而 \(B(h_\alpha,h_\alpha)>0\)。所以 \(b_j>0\)。这里没有使用一般半单李代数的完全可约性，只把 \(M\) 限制到已经解决的三维子代数。
+
+分别选择各简单理想的 Killing 对偶基，得到
+\[
+c_M\dim M=\operatorname{tr}_M C
+=\sum_j b_j\dim\mathfrak g_j.
+\]
+非平凡表示至少在一个简单因子上非零，所以右侧严格为正。平凡模上所有基元素都作用为零，结论也成立。
+\end{proof}
+
+\begin{lemma}\label{b5:lem:casimir-zero-primary}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(M\) 为有限维复 \(\mathfrak g\) 模，\(C\in U(\mathfrak g)\) 为 Killing 型对应的 Casimir 元。则 \(M\) 有 \(\mathfrak g\) 子模直和分解
+\[
+M=M_0\oplus M_\times,
+\]
+其中 \(M_0\) 是 \(C\) 的广义零特征空间，\(\mathfrak g\) 在 \(M_0\) 上作用为零，而 \(C\) 在 \(M_\times\) 上可逆。
+\end{lemma}
+\begin{proof}
+对与 \(\mathfrak g\) 交换的线性算子 \(C\) 作广义特征空间分解，取零特征空间为 \(M_0\)，其余广义特征空间之和为 \(M_\times\)。两者都是子模，且 \(C\) 在后者上可逆。
+
+\(M_0\) 的每个简单合成因子上，\(C\) 同时为幂零算子和标量，所以标量为零。\cref{b5:lem:casimir-positive-simple}说明这些因子都是平凡的一维模。取适应合成列的基，则所有 \(\rho(x)|_{M_0}\) 都为严格上三角矩阵，故像李代数可解。另一方面，\cref{b5:cor:semisimple-perfect}给出 \([\mathfrak g,\mathfrak g]=\mathfrak g\)，所以其像也等于自身的导出代数。一个既可解又等于自身导出代数的李代数只能为零。于是 \(\mathfrak g\) 在 \(M_0\) 上平凡作用。
+\end{proof}
+
+\begin{lemma}[交叉映射的消去]\label{b5:lem:semisimple-crossed-map}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(M\) 为有限维复 \(\mathfrak g\) 模。若复线性映射 \(d:\mathfrak g\to M\) 对所有 \(x,y\in\mathfrak g\) 满足
+\[
+d\Bigl([x,y]\Bigr)=x\cdot d(y)-y\cdot d(x),
+\]
+则存在 \(m\in M\)，使 \(d(x)=x\cdot m\) 对全部 \(x\in\mathfrak g\) 成立。
+\end{lemma}
+\begin{proof}
+用\cref{b5:lem:casimir-zero-primary}分解 \(M\)。投到平凡分量后，上式变成 \(d_0\Bigl([x,y]\Bigr)=0\)，而 \(\mathfrak g=[\mathfrak g,\mathfrak g]\)，所以 \(d_0=0\)。因而只须处理 \(C\) 可逆的分量。
+
+在该分量中令
+\[
+a=\sum_i x_i\cdot d(x^i).
+\]
+对任意 \(x\)，使用交叉映射恒等式，得到
+\begin{align*}
+x\cdot a
+&=\sum_i[x,x_i]\cdot d(x^i)
++\sum_i x_i\cdot\Bigl(x\cdot d(x^i)\Bigr)\\
+&=\sum_i[x,x_i]\cdot d(x^i)
++\sum_i x_i\cdot d\Bigl([x,x^i]\Bigr)
++\sum_i x_i x^i\cdot d(x).
+\end{align*}
+前两和由\eqref{b5:eq:casimir-tensor-invariance}相消，所以 \(x\cdot a=C\,d(x)\)。令 \(m=C^{-1}a\)，由于 \(C^{-1}\) 仍与作用交换，便有 \(x\cdot m=d(x)\)。
+\end{proof}
+
+这个引理通常可用一阶李代数上同调的语言表达。这里给出的是所需线性恒等式及其直接解法，不要求先学上同调。
+
+\begin{theorem}[Weyl 完全可约性]\label{b5:thm:weyl-complete-reducibility}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(V\) 为有限维复 \(\mathfrak g\) 模。每个子模 \(U\subseteq V\) 都有一个子模 \(U'\)，使 \(V=U\oplus U'\)。因此每个这样的 \(V\) 都是有限个简单模的直和。
+\end{theorem}
+\begin{proof}
+令 \(W=V/U\)，选一个复线性截面 \(s:W\to V\)，暂不要求它保持李代数作用。对 \(x\in\mathfrak g\) 定义
+\[
+d(x)=\rho_V(x)s-s\rho_W(x):W\longrightarrow U.
+\]
+商映射作用于该差为零，故其像确实在 \(U\)。在
+\(M=\operatorname{Hom}_{\mathbb C}(W,U)\) 上取作用
+\[
+x\cdot T=\rho_U(x)T-T\rho_W(x).
+\]
+展开两边，并使用三个表示都保持括号，可得
+\(d\Bigl([x,y]\Bigr)=x\cdot d(y)-y\cdot d(x)\)；其中含 \(s\rho_W(x)\rho_W(y)\) 的项组成 \(-s\rho_W\Bigl([x,y]\Bigr)\)，含 \(\rho_V(x)\rho_V(y)s\) 的项组成 \(\rho_V\Bigl([x,y]\Bigr)s\)，交叉项抵消。
+
+由\cref{b5:lem:semisimple-crossed-map}，存在 \(T:W\to U\) 使 \(d(x)=x\cdot T\)。所以 \(s'=s-T\) 保持 \(\mathfrak g\) 作用，且仍是商映射的截面。取 \(U'=s'(W)\)，则 \(U'\) 是子模，并且 \(V=U\oplus U'\)。最后对维数归纳，先取非零最小子模，再分裂补空间，得到简单模直和分解。
+\end{proof}
 
 \subsection{与有限群平均投影的比较}
 \label{b5:subsec:1801:03}
 
-待撰写。
+有限群情形从任意线性投影出发，平均后得到保持作用的投影；这里从任意线性截面出发，用 Casimir 算出修正项 \(T\)，再减去误差。两者都把“有一个线性分裂”改造成“有一个表示分裂”，但所依据的条件不同。当前证明用到了特征零、有限维性、Killing 型非退化以及半单李代数的完美性。
+
+\ProseParagraphBreak
+条件不能随意删除。一维交换李代数 \(\mathbb Cx\) 在 \(\mathbb C^2\) 上令 \(x\) 作用为一个非零平方零 Jordan 块，就有一维子模而没有不变补。即使李代数半单，无限维模也不一定完全可约；下一节之后的 Verma 模会给出实例。因此本定理没有声称包络代数本身是半单环，也没有声称其任意模都完全可约。
+
+\ProseParagraphBreak
+在标准 \(\mathfrak{sl}_2\) 基 \(e,f,h\) 中，\([h,e]=2e\)、\([h,f]=-2f\)、\([e,f]=h\)，Killing 型满足 \(B(h,h)=8\)、\(B(e,f)=4\)。所以本节的 Casimir 元为
+\begin{equation}\label{b5:eq:sl2-killing-casimir}
+C=\frac{h^2}{8}+\frac{ef+fe}{4}
+=\frac{h^2+2h+4fe}{8}.
+\end{equation}
+若前面的 \(\mathfrak{sl}_2\) 计算使用 \(h^2+2h+4fe\)，其特征值应在这里除以八。这个常数将在下一章的根长与递推中继续保持。

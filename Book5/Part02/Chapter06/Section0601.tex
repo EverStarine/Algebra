@@ -1,30 +1,85 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 6.1 分拆与 Young 图
-% 纲要位置：计划纲要.md，第 3254 行。
-
-\section{分拆与 Young 图}
-\label{b5:sec:0601}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3905 行。
 % * 分拆、Young 图与标准表
 % * 共轭类与分拆
 % * Young 子群
-%
+\section{分拆与 Young 图}
+\label{b5:sec:0601}
+
+对称群的共轭类由轮换长度决定。令人感兴趣的是，同一组整数资料也能标记它的不可约表示。不过，共轭类与表示并不是把名称一一配上便有了联系：我们还要从每一个分拆构造出一个向量空间和群作用，再证明这些空间不可约且没有遗漏。
 
 \subsection{分拆、Young 图与标准表}
 \label{b5:subsec:0601:01}
 
-待撰写。
+\begin{definition}\label{b5:def:partition-tableau}
+设 \(n\) 为非负整数。有限的非增正整数列 \(\lambda=(\lambda_1,\ldots,\lambda_r)\) 满足 \(\sum_i\lambda_i=n\) 时，称为 \(n\) 的一个\term[zhengshu-fenchai]{分拆}[partition]，记为 \(\lambda\vdash n\)；\(n=0\) 时允许空列。集合
+\[
+[\lambda]=\Bigl\{(i,j):1\leq i\leq r,\ 1\leq j\leq\lambda_i\Bigr\}
+\]
+称为其 \term[Young-tu]{Young 图}[Young diagram]。第一个坐标由上向下表示行，第二个坐标由左向右表示列。从 \([\lambda]\) 到 \(\{1,\ldots,n\}\) 的双射称为形状为 \(\lambda\) 的 \term[Young-biao]{Young 表}[Young tableau]。若每行从左向右、每列从上向下都严格递增，则称其为\term[biaozhun-Young-biao]{标准 Young 表}[standard Young tableau]。
+\end{definition}
+\symidx{\(\lambda\vdash n\)：整数分拆}
+
+只要求列递增时称为列标准表；只要求行递增时称为行标准表。这两个条件不可混同。例如形状 \((3,2)\) 的表
+\[
+t=\begin{array}{ccc}1&2&4\\3&5&\end{array},
+\qquad
+u=\begin{array}{ccc}1&4&2\\3&5&\end{array}
+\]
+都列标准，只有 \(t\) 标准。图的格子仍固定在原位，置换作用改变的是格内的数字。
+
+\begin{definition}\label{b5:def:conjugate-dominance}
+设 \(n\) 为非负整数，\(\lambda,\mu\) 为 \(n\) 的分拆，并在各序列的末尾补零。令 \(\lambda'_j=\#\{i:\lambda_i\geq j\}\)，则 \(\lambda'=(\lambda'_1,\lambda'_2,\ldots)\) 去掉末尾的零后称为 \(\lambda\) 的\term[gonge-fenchai]{共轭分拆}[conjugate partition]。若对每个正整数 \(a\) 都有
+\[
+\lambda_1+\cdots+\lambda_a\geq\mu_1+\cdots+\mu_a,
+\]
+便称 \(\lambda\) 在\term[zhipei-xu]{支配序}[dominance order]下大于或等于 \(\mu\)，记为 \(\lambda\trianglerighteq\mu\)。
+\end{definition}
+
+转置 Young 图便得到共轭分拆，所以 \((\lambda')'=\lambda\)。支配序是偏序：反对称性由各个部分和相减得到。它一般不是全序，例如 \((4,1,1)\) 与 \((3,3)\) 的第一部分和及前两部分和呈相反的大小关系。
+
+\begin{lemma}\label{b5:lem:standard-remove-largest}
+设 \(n\ge1\) 为整数，\(\lambda=(\lambda_1,\ldots,\lambda_r)\vdash n\)，约定 \(\lambda_{r+1}=0\)，\(t\) 为形状 \(\lambda\) 的标准表。数字 \(n\) 所在的格子 \((i,\lambda_i)\) 满足 \(\lambda_i>\lambda_{i+1}\)。删去这个格子，得到一个大小为 \(n-1\) 的标准表。反之，任何满足该条件的格子都能由这个过程出现。
+\end{lemma}
+\begin{proof}
+最大数字右边、下边都不能还有格子，因此它在行末，而且下一行更短。删去后仍保持行列递增。反过来，给删格后的任意标准表补上数字 \(n\)，新格子的左边、上边数字均小于 \(n\)，右边、下边没有格子，所以仍为标准表。
+\end{proof}
+
+满足引理条件的格子称为\term[keyi-fangge]{可移方格}[removable box]，删去它以后仍是 Young 图。可移方格的位置将给出表示限制到 \(S_{n-1}\) 时的各个成分。
 
 \subsection{共轭类与分拆}
 \label{b5:subsec:0601:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:symmetric-conjugacy-partitions}
+对每个整数 \(n\geq1\)，\(S_n\) 的共轭类与 \(n\) 的分拆一一对应：把置换写成不交轮换之积，并把轮换长度按非增次序排列。若分拆 \(\lambda\vdash n\) 中数字 \(j\) 出现 \(m_j\) 次，则对应的中心化子阶与共轭类大小分别为
+\[
+z_\lambda=\prod_{j\geq1}j^{m_j}m_j!,
+\qquad
+\frac{n!}{z_\lambda}.
+\]
+\end{proposition}
+\begin{proof}
+共轭把轮换 \((a_1\,\cdots\,a_j)\) 变成 \(\Bigl(g(a_1)\,\cdots\,g(a_j)\Bigr)\)，所以保持各个轮换的长度。反过来，长度相同的两组轮换可以逐个配对，再逐位置定义一个置换 \(g\)，这个 \(g\) 就把第一组共轭到第二组。
+
+与给定置换对易的元素必须把一个轮换轨道送到同长度轨道。长度为 \(j\) 的 \(m_j\) 个轨道可以有 \(m_j!\) 种排列，每个轨道的像又由一个起点确定，有 \(j\) 种选择；各个长度之间相互独立，得到中心化子的阶。轨道与稳定子群公式给出共轭类大小。
+\end{proof}
+
+例如 \(S_4\) 的五个分拆为 \((4),(3,1),(2,2),(2,1,1),(1,1,1,1)\)，相应共轭类大小为 \(6,8,3,6,1\)。它们的和为 \(24\)。这里用分拆描述的是轮换类型；后面用分拆标记 Specht 模，是另一项需要证明的构造。
 
 \subsection{Young 子群}
 \label{b5:subsec:0601:03}
 
-待撰写。
+\begin{definition}\label{b5:def:row-column-groups}
+设 \(n\) 为非负整数，\(\lambda=(\lambda_1,\ldots,\lambda_r)\vdash n\)，\(t\) 为形状 \(\lambda\) 的 Young 表。使每一行的数字集合分别保持不变的置换组成子群 \(R_t\leq S_n\)，使每一列的数字集合分别保持不变的置换组成子群 \(C_t\leq S_n\)，分别称为 \(t\) 的行群与列群。按行依次填入 \(1,\ldots,n\) 所得表的行群记为
+\[
+S_\lambda=S_{\lambda_1}\times\cdots\times S_{\lambda_r}\leq S_n,
+\]
+称为相应的 \term[Young-ziqun]{Young 子群}[Young subgroup]；这里各个因子置换互不相交的连续数字段。
+\end{definition}
+
+行群的阶为 \(\prod_i\lambda_i!\)，列群的阶为 \(\prod_j\lambda'_j!\)。若置换同时保持每行和每列，便固定每一个行列交点，故
+\begin{equation}\label{b5:eq:row-column-intersection}
+R_t\cap C_t=\{1\}.
+\end{equation}
+对任意 \(g\in S_n\)，有 \(R_{gt}=gR_tg^{-1}\) 和 \(C_{gt}=gC_tg^{-1}\)。因此表的具体填数会改变子群在 \(S_n\) 中的位置，却不会改变它们的共轭类型。

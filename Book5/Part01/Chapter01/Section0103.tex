@@ -1,30 +1,123 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 1.3 Maschke 定理
-% 纲要位置：计划纲要.md，第 3096 行。
+% 纲要位置：工作记录/计划纲要.md，第 3735 行。
+% 本轮补充的纲要细目：
+% * 在对偶空间的对称代数上逐次应用平均法，定义不变多项式、不变环和 Reynolds 算子，并计算反射例子
+% * 用低次循环群算例核验平均投影与对偶作用的方向；生成元、关系及商的系统理论留第22章
+% #### 1.3.1 特征与群阶的互素条件
+% #### 1.3.2 平均投影与 Maschke 定理
+% #### 1.3.3 多项式上的平均与 Reynolds 算子
+% #### 1.3.4 模特征情形的反例
+% 纲要细目（写作范围）：
+% * 特征不整除群阶的条件
+% * 平均投影的证明
+% * 模特征情形的反例
+
 
 \section{Maschke 定理}
 \label{b5:sec:0103}
 
-% TODO: 按以下纲要要点撰写本节。
+线性空间中的子空间总有补空间，但任意选择的补未必被群保持。有限群允许对所有群元素取平均；只要群阶在底域中可逆，就能把一个普通投影改成与群作用相容的投影。这个除法条件决定了完全可约性是否成立。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 特征不整除群阶的条件
-% * 平均投影的证明
-% * 模特征情形的反例
-%
 
 \subsection{特征与群阶的互素条件}
 \label{b5:subsec:0103:01}
 
-待撰写。
+对有限群 \(G\)，若 \(\operatorname{char}k=0\)，或 \(\operatorname{char}k=p>0\) 且 \(p\nmid|G|\)，则 \(|G|\cdot1_k\ne0\)，可以在 \(k\) 中除以 \(|G|\)。此时，在任意有限维表示 \(V\) 上定义
+\[
+E_V=\frac1{|G|}\sum_{g\in G}\rho(g).
+\]
+对 \(h\in G\)，左乘或右乘 \(h\) 只是重排求和项，故 \(\rho(h)E_V=E_V=E_V\rho(h)\)。因此像包含于 \(V^G\)，而不动向量经此映射保持不变，于是 \(E_V^2=E_V\)，像恰为 \(V^G\)。
+
+\ProseParagraphBreak
+这里的分母是真正的标量逆，不是一个形式记号。若特征整除群阶，同一分子 \(\sum_g\rho(g)\) 仍有意义，却可能在不动空间上为零，所以不再给出投影。
 
 \subsection{平均投影与 Maschke 定理}
 \label{b5:subsec:0103:02}
 
-待撰写。
+\begin{theorem}[Maschke]\label{b5:thm:maschke}
+设 \(G\) 为有限群，\(k\) 为域，且 \(|G|\ne0\) 于 \(k\)。\(G\) 的每个有限维 \(k\) 表示 \(V\) 的任意子表示 \(U\) 都有不变补空间，因而每个这样的表示完全可约。
+\end{theorem}
+\begin{proof}
+取一个普通线性投影 \(p:V\to U\)，使 \(p|_U=1_U\)，定义
+\[
+\overline p=\frac1{|G|}\sum_{g\in G}\rho(g)p\rho(g^{-1}).
+\]
+每一项的像都在 \(U\)，因为 \(U\) 不变。对 \(u\in U\)，先有 \(\rho(g^{-1})u\in U\)，再经 \(p\) 不变，所以每一项将 \(u\) 送回 \(u\)，得到 \(\overline p|_U=1_U\)。对任意 \(h\)，将求和指标 \(g\) 改成 \(hg\)，得
+\(\rho(h)\overline p\rho(h^{-1})=\overline p\)。
+于是 \(\overline p\) 是 \(G\) 线性投影，\cref{b5:prop:invariant-complement-projection}给出 \(V=U\oplus\ker\overline p\)，并推出完全可约性。
+\end{proof}
+
+这就是\term[Maschke-dingli]{Maschke 定理}[Maschke's theorem]。平均只修正投影，没有假定已经知道不可约表示有哪些。因此它先提供分解的存在性，分类和重数仍需其他工具。
+
+\begin{proposition}\label{b5:prop:unitary-average}
+设 \(G\) 为有限群，\(\rho:G\to\operatorname{GL}_{\mathbb C}(V)\) 为有限维复表示。\(V\) 上存在被 \(G\) 保持的正定 Hermitian 内积；相对于其标准正交基，每个 \(\rho(g)\) 都是酉矩阵。
+\end{proposition}
+\begin{proof}
+任选正定 Hermitian 内积 \((\, ,\,)_0\)，约定第一变量共轭线性、第二变量线性。置
+\[
+(v,w)=\frac1{|G|}\sum_g\Bigl(\rho(g)v,\rho(g)w\Bigr)_0.
+\]
+非零 \(v\) 的每个加数都为正实数，所以正定；两变量的线性规则不变，重排求和给出不变性。取标准正交基即得酉矩阵。若 \(U\) 不变，其正交补也不变，因为 \((u,gw)=(g^{-1}u,w)=0\)。这另给出复数情形的不变补空间。
+\end{proof}
+
+\subsection{多项式上的平均与 Reynolds 算子}
+\label{b5:subsec:0103:reynolds}
+
+线性作用还会作用于多项式。设 \(V\) 是有限维 \(k\) 表示，取对偶空间的一组基 \(x_1,\ldots,x_n\)，写
+\[
+k[V]\coloneqq\operatorname{Sym}(V^*)=k[x_1,\ldots,x_n].
+\]
+对偶作用 \(g\ell=\ell\circ\rho(g^{-1})\) 唯一延伸为这个多项式环的代数自同构。评价在向量处时，公式为
+\[
+(g f)(v)=f\Bigl(\rho(g^{-1})v\Bigr).
+\]
+这里先按线性替换定义形式多项式上的作用；尤其当 \(k\) 有限时，不能把两个多项式在全部 \(k\) 点取值相同当成多项式相等。逆元则保证 \(g(hf)=(gh)f\)。
+
+\begin{definition}\label{b5:def:polynomial-invariant-ring}
+设 \(k\) 为域，\(G\) 为群，\(\rho:G\to\operatorname{GL}_k(V)\) 为有限维表示。在 \(k[V]=\operatorname{Sym}(V^*)\) 上，将对偶作用 \(g\ell=\ell\circ\rho(g^{-1})\) 延伸为代数自同构，其中 \(\ell\in V^*\)、\(g\in G\)。满足 \(gf=f\) 对所有 \(g\in G\) 成立的多项式 \(f\in k[V]\)，称为\term[bubian-duoxiangshi]{不变多项式}[invariant polynomial]。它们组成的 \(k\) 子代数
+\[
+k[V]^G=\Bigl\{\,f\in k[V]\mid gf=f\text{ 对所有 }g\in G\,\Bigr\}
+\]
+称为该作用的\term[bubian-huan]{不变环}[invariant ring]。若 \(G\) 有限且 \(|G|\ne0\) 于 \(k\)，则映射
+\[
+\mathcal R(f)=\frac1{|G|}\sum_{g\in G}gf
+\]
+称为\term[Reynolds-suanzi]{Reynolds 算子}[Reynolds operator]。
+\end{definition}
+
+线性替换保持全次数，故 \(k[V]_d\) 是有限维表示。把本节开头的平均投影分别用于每个 \(k[V]_d\)，可知 \(\mathcal R\) 保持次数，像恰为 \(k[V]^G\)，且 \(\mathcal R^2=\mathcal R\)。对于 \(a\in k[V]^G\)，逐项使用 \(g(af)=a\,g(f)\)，还有
+\[
+\mathcal R(af)=a\mathcal R(f).
+\]
+所以平均可以同乘以不变多项式交换，但一般不保持任意乘积。
+
+\begin{example}\label{b5:exm:reynolds-reflection}
+设 \(\operatorname{char}k\ne2\)，令 \(C_2\) 在 \(k^2\) 上作用为 \((u,v)\mapsto(-u,v)\)。在对偶坐标 \(x,y\) 中，
+\[
+\mathcal R(f)=\frac{f(x,y)+f(-x,y)}2.
+\]
+它删掉所有含奇数次 \(x\) 的单项式，所以不变环为 \(k[x^2,y]\)。这个生成结论来自逐个单项式的计算，不仅来自平均公式。例如 \(\mathcal R(x)=0\)，却有 \(\mathcal R(x^2)=x^2\)，因此 \(\mathcal R\) 不是环同态。
+\end{example}
+
+这里已能把不变多项式按次数作为表示来研究。至于怎样找到有限个生成元、确定它们之间的全部关系，以及能否由不变量区分两个轨道，留待\chapref{b5:ch:22}讨论；这些问题不参与下面的模特征反例及 Schur 引理的证明。
 
 \subsection{模特征情形的反例}
 \label{b5:subsec:0103:03}
 
-待撰写。
+若 \(k\) 的特征为 \(p\)，在 \(C_p=\langle r\rangle\) 上取
+\[
+\rho(r)=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+\]
+写为 \(I+N\)，其中 \(N^2=0\)。二项式展开给出 \((I+N)^p=I\)，所以这是表示。直线 \(ke_1\) 不变。任何补直线可由 \(ae_1+e_2\) 生成；若它不变，\(r\) 在这条一维空间上的标量的 \(p\) 次方为一，在特征 \(p\) 下只能是一。但是
+\[
+\rho(r)(ae_1+e_2)=(a+1)e_1+e_2\ne ae_1+e_2,
+\]
+故不存在不变补。这个表示可约但不可分解。
+
+\begin{proposition}\label{b5:prop:maschke-converse}
+设 \(G\) 为有限群，\(k\) 为域。若 \(\operatorname{char}k\mid|G|\)，则正则表示 \(k[G]\) 不完全可约。因此 \(G\) 的全部有限维 \(k\) 表示完全可约，当且仅当群阶在 \(k\) 中可逆。
+\end{proposition}
+\begin{proof}
+增广映射 \(\varepsilon:k[G]\to k\)、\(\sum a_gg\mapsto\sum a_g\)，在目标采用平凡作用时为满的表示同态。若它有 \(G\) 线性截面，单位的一的像 \(v\) 必为不动向量。正则作用迫使 \(v=c\sum_g g\)，所以 \(\varepsilon(v)=c|G|=0\)，不能等于一。于是其核没有不变补，正则表示不完全可约。反方向正是\cref{b5:thm:maschke}。
+\end{proof}

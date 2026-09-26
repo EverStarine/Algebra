@@ -1,36 +1,85 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 5.2 Artin 有理诱导
-% 纲要位置：计划纲要.md，第 3207 行。
-
-\section{Artin 有理诱导}
-\label{b5:sec:0502}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3858 行。
+% 纲要细目（写作范围）：
 % * Artin 诱导定理
 % * 有理系数与整数系数的区别
 % * 明确所取 Artin 诱导版本：\(R_{\mathbb C}(G)\otimes_{\mathbb Z}\mathbb Q\) 由循环子群表示的诱导张成；有理系数的线性组合不意味着所有特征标值都在 \(\mathbb Q\) 中
 % * 把从循环子群一般特征标诱导的表述与仅从平凡特征标诱导的有理值版本分开；用 Frobenius 互反和类函数检测组织证明
-%
+
+\section{Artin 有理诱导}
+\label{b5:sec:0502}
+
+每个群元素都在一个循环子群里。单靠这句话无法拼合实际表示，却足以检测类函数是否为零。借助 Frobenius 互反，把这种检测转置过来，便得到诱导的有理张成结论。
 
 \subsection{Artin 诱导定理}
 \label{b5:subsec:0502:01}
 
-待撰写。
+\begin{theorem}[Artin 有理诱导]\label{b5:thm:artin-induction}
+设 \(G\) 为有限群。每个复虚特征标 \(\alpha\in R(G)\) 都能写成
+\[
+\alpha=\sum_{j=1}^s a_j\operatorname{Ind}_{C_j}^G\lambda_j,
+\qquad a_j\in\mathbb Q,
+\]
+其中 \(C_j\le G\) 为循环子群，\(\lambda_j\) 为 \(C_j\) 的一维复特征标。等价地，这些诱导特征标张成 \(\mathbb Q\otimes_{\mathbb Z}R(G)\)。
+\end{theorem}
+\term[Artinyoudao]{Artin 诱导定理}[Artin's induction theorem]在这里是关于系数的结论；它没有断言 \(\alpha(g)\) 为有理数。
+
+\begin{proof}
+先在复类函数空间中证明张成。若类函数 \(f\) 与每个 \(\operatorname{Ind}_C^G\lambda\) 正交，则由\cref{b5:cor:frobenius-character}，\(\operatorname{Res}_C^Gf\) 与循环群 \(C\) 的每个不可约特征标正交。互反等式也适用于任意类函数：\cref{b5:thm:irreducible-character-basis}把类函数写成不可约特征标的复线性组合，等式可按半线性延拓。因此 \(f|_C=0\)。对每个 \(g\in G\) 取 \(C=\langle g\rangle\)，便得 \(f(g)=0\)。有限维内积空间中正交补为零，所以这些诱导特征标复线性张成全部类函数。
+
+取不可约特征标为基，把全部循环子群的一维诱导特征标写为列向量，所得矩阵的元素是非负整数。刚证的结论说该矩阵满行秩，因而存在一个行数阶的非零整数子式。用对应方阵求解任一不可约特征标的坐标，逆矩阵的元素均为有理数。这就将复张成加强为有理张成，再对整数线性组合使用加法即可。
+\end{proof}
+
+最后一步必须使用整数矩阵；仅证明复线性张成，尚未自动说明一个指定向量的坐标是有理数。Etingof 等\cite[Theorem 5.26.1, Remark 5.26.2 and Corollary 5.26.3, pp. 141--142]{EtingofEtAl2011RepresentationTheory}给出了相应的子群检测表述。
 
 \subsection{有理系数与整数系数}
 \label{b5:subsec:0502:02}
 
-待撰写。
+\begin{corollary}\label{b5:cor:artin-finite-index}
+设 \(G\) 为有限群，\(R(G)\) 为其复表示环，令 \(I_{\mathrm{cyc}}(G)=\sum_{C\le G,\ C\text{ 循环}}\operatorname{Ind}_C^G R(C)\)。加法商群
+\[
+R(G)/I_{\mathrm{cyc}}(G)
+\]
+有限；特别地，存在同一个正整数 \(N\)，使全部 \(\alpha\in R(G)\) 均满足 \(N\alpha\in I_{\mathrm{cyc}}(G)\)。
+\end{corollary}
+\begin{proof}
+由\cref{b5:thm:artin-induction}，对有限多个不可约特征标分别清除有理系数的分母，再取这些分母的公倍数 \(N\)。于是 \(NR(G)\subset I_{\mathrm{cyc}}(G)\)，所述商群是有限群 \(R(G)/NR(G)\) 的商。
+\end{proof}
+
+分母确实可能无法只靠循环子群去掉。取四元交换群 \(G=C_2\times C_2\)。每个循环子群的阶为 \(1\) 或 \(2\)，从它诱导的一维特征标的次数为 \(4\) 或 \(2\)。因此循环诱导的任意整数线性组合都有偶数次数，不可能等于 \(1_G\)。若 \(H_1,H_2,H_3\) 是三个二阶子群，则
+\begin{equation}\label{b5:eq:klein-artin-denominator}
+1_G=\frac12\sum_{i=1}^3\operatorname{Ind}_{H_i}^G1_{H_i}
+-\frac12\operatorname{Ind}_1^G1.
+\end{equation}
+在单位元处右侧等于 \((6-4)/2=1\)；每个非单位元恰属一个 \(H_i\)，相应置换特征标取值 \(2\)，其余项取值 \(0\)。这逐点核验了公式，也显示负系数与分母的不同职责。
 
 \subsection{循环子群诱导与有理张成}
 \label{b5:subsec:0502:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:subgroup-cover-induction}
+设 \(G\) 为有限群，\(\mathcal F\) 为对 \(G\)-共轭封闭的一族子群，\(R(G)\) 为复表示环，\(\operatorname{Irr}(H)\) 为 \(H\) 的不可约复特征标集合。下列条件等价：每个 \(g\in G\) 属于某个 \(H\in\mathcal F\)；所有 \(\operatorname{Ind}_H^G\theta\)、\(H\in\mathcal F\)、\(\theta\in\operatorname{Irr}(H)\) 有理张成 \(\mathbb Q\otimes_{\mathbb Z}R(G)\)。
+\end{proposition}
+\begin{proof}
+若子群覆盖 \(G\)，则与全部诱导正交的类函数在每个 \(H\) 上为零，因而恒为零。\cref{b5:thm:artin-induction}证明中的整数矩阵秩论证给出有理张成。
+
+反之，若 \(g\) 不属于任何 \(H\in\mathcal F\)，共轭封闭性说明 \(g\) 也不能共轭到这些子群中。\cref{b5:thm:induced-character}的求和集合为空，所以全部诱导特征标在 \(g\) 处均为零。其有理线性组合便不可能得到在 \(g\) 处取值 \(1\) 的平凡特征标。
+\end{proof}
+
+循环子群不需要互不相交，也不需要每个元素只被覆盖一次。这里使用的是限制能检测零函数；重叠部分不会破坏正交补论证。但这种检测仅得出有理系数结果，不能据此跳过下一节的整性问题。
 
 \subsection{一般特征标诱导与有理值版本}
 \label{b5:subsec:0502:04}
 
-待撰写。
+若要求仅从 \(1_C\) 诱导，得到的都是置换特征标，因而必为整数值。它们的有理线性组合也只能是有理值。对有限群 \(G\) 中的元素 \(u,v\)，若存在与 \(|u|\) 互素的整数 \(a\)，使 \(v\) 共轭于 \(u^a\)，则称 \(u,v\) 有理共轭；这等价于它们生成的循环子群共轭。
+
+\begin{proposition}[有理值版本]\label{b5:prop:rational-valued-artin}
+设 \(G\) 为有限群。所有在 \(G\) 的有理共轭类上常值的函数 \(f:G\to\mathbb Q\)，由 \(\operatorname{Ind}_C^G1_C\) 在 \(\mathbb Q\) 上张成，其中 \(C\le G\) 遍历循环子群，\(1_C\) 为平凡复特征标。特别地，每个取值于 \(\mathbb Q\) 的复虚特征标都有这种表达。
+\end{proposition}
+\begin{proof}
+从循环子群共轭类中选代表 \(C_1,\ldots,C_s\)，各取生成元 \(c_i\)，按 \(|C_i|\) 从大到小排列。置换特征标 \(\pi_j=\operatorname{Ind}_{C_j}^G1\) 在 \(c_i\) 处非零，恰好在某个共轭的 \(C_j\) 包含 \(C_i\) 时发生。因此矩阵 \(\Bigl(\pi_j(c_i)\Bigr)\) 为三角矩阵：同阶的不同代表之间该值为零，对角元是 \(\Bigl[N_G(C_i):C_i\Bigr]>0\)。矩阵为整系数且可逆，故每一组有理数值都能由这些 \(\pi_j\) 的有理线性组合得到。一个有理共轭类恰对应一个循环子群共轭类，所以这已覆盖所述函数空间。
+
+若虚特征标 \(\alpha\) 为有理值，由\cref{b5:lem:cyclotomic-power-automorphisms}得 \(\alpha(g^a)=\alpha(g)\)，其中 \(a\) 与群指数互素。若只给定 \(a\) 与 \(|g|\) 互素，可在同一模 \(|g|\) 剩余类中选择与群指数互素的整数：对未整除 \(|g|\) 的素因子另规定非零剩余类，再用中国剩余定理。于是 \(\alpha\) 在有理共轭类上常值，应用前一结论即可。
+\end{proof}
+
+例如 \(C_3=\langle c\rangle\) 的特征标 \(\lambda(c)=e^{2\pi i/3}\) 不能由平凡特征标的循环诱导有理张成，因为它不是有理值；但它就是 \(\operatorname{Ind}_{C_3}^{C_3}\lambda\)，完全符合\cref{b5:thm:artin-induction}。两种表述的区别在于允许使用哪些子群特征标，不能把“有理系数”改说成“有理表示”。

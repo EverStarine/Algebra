@@ -1,30 +1,92 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 1.1 表示与模
-% 纲要位置：计划纲要.md，第 3084 行。
+% 纲要位置：工作记录/计划纲要.md，第 3723 行。
+% 纲要细目（写作范围）：
+% * 群的线性表示
+% * 群代数模与表示的等价
+% * 子表示、商表示及直和
+
 
 \section{表示与模}
 \label{b5:sec:0101}
 
-% TODO: 按以下纲要要点撰写本节。
+一个群可以置换顶点，也可以旋转平面。表示论把后一类作用推广到任意向量空间：每个群元素给出一个可逆线性变换，群乘法对应变换复合。以下从作用的定义讲起，再把它改写成群代数模；这两种说法记录的是同一组运算。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 群的线性表示
-% * 群代数模与表示的等价
-% * 子表示、商表示及直和
-%
 
 \subsection{群的线性表示}
 \label{b5:subsec:0101:01}
 
-待撰写。
+\begin{definition}\label{b5:def:linear-representation}
+设 \(G\) 为群，\(k\) 为域，\(V\) 为有限维 \(k\) 向量空间。若映射 \(\rho:G\to\operatorname{GL}_k(V)\) 满足
+\[
+\rho(gh)=\rho(g)\rho(h)\quad(g,h\in G),\qquad \rho(1)=1_V,
+\]
+则称 \((V,\rho)\) 为 \(G\) 的一个 \(k\)-\term[xianxing-biaoshi]{线性表示}[linear representation]，\(\dim_kV\) 称为其\term[biaoshi-cishu]{次数}[degree of a representation]。通常简写 \(gv=\rho(g)v\)。若 \(\rho\) 单射，称表示\term[zhongshi-biaoshi]{忠实}[faithful representation]。
+\end{definition}
+
+选择 \(V\) 的基后得到矩阵。换基矩阵为 \(P\) 时，全部矩阵同时变成 \(P^{-1}\rho(g)P\)；不能对不同群元素各自选一个无关的换基。零维空间也给出零表示，但后面“不可约”总排除零表示。
+
+\begin{definition}\label{b5:def:intertwiner}
+设 \(k\) 为域，\(G\) 为群，\((V,\rho)\)、\((W,\sigma)\) 为 \(G\) 的有限维 \(k\) 表示。若 \(k\) 线性映射 \(T:V\to W\) 满足
+\[
+T\rho(g)=\sigma(g)T\qquad(g\in G),
+\]
+则称 \(T\) 为表示同态，也称\term[jiaozhi-suanzi]{交织算子}[intertwining operator]。这类映射组成的 \(k\) 向量空间记为 \(\operatorname{Hom}_G(V,W)\)。若其中有可逆映射，则称两表示同构。
+\end{definition}
+\symidx{\(\operatorname{Hom}_G(V,W)\)：表示之间的交织算子空间}
+
+若 \(T\) 可逆，上述等式乘以 \(T^{-1}\) 就表明逆也是交织算子。表示同构因而恰好是不依赖所选基的“同时相似”。例如循环群 \(C_m=\langle r\mid r^m=1\rangle\) 的表示由一个矩阵 \(A\) 给定，唯一要求为 \(A^m=I\)。给一组群生成元指定矩阵时，同样必须核验全部生成关系。
 
 \subsection{群代数模与表示的等价}
 \label{b5:subsec:0101:02}
 
-待撰写。
+\begin{definition}\label{b5:def:group-algebra}
+设 \(G\) 为有限群，\(k\) 为域。以形式符号 \(g\in G\) 为基的向量空间
+\[
+k[G]=\Bigl\{\sum_{g\in G}a_gg\mid a_g\in k\Bigr\}
+\]
+上，若将群乘法按双线性延伸，即令
+\[
+\Bigl(\sum_g a_gg\Bigr)\Bigl(\sum_h b_hh\Bigr)
+=\sum_{g,h}a_gb_h(gh),
+\]
+则所得含幺结合 \(k\) 代数称为 \(G\) 的\term[qun-daishu]{群代数}[group algebra]。其单位是群单位元对应的基向量。
+\end{definition}
+
+结合律在基向量上就是群的结合律，双线性将它推广到全部元素。若 \(G\) 非交换，群代数通常也非交换。不要把基向量 \(g\) 与一个任意线性组合混同；虽然每个基向量都可逆，群代数却一般不是除环。
+
+\begin{proposition}\label{b5:prop:representations-group-modules}
+设 \(G\) 为有限群，\(k\) 为域。在一个有限维 \(k\) 空间 \(V\) 上，\(G\) 的线性表示与幺性左 \(k[G]\) 模结构一一对应。表示同态恰为相应的 \(k[G]\) 模同态。
+\end{proposition}
+\begin{proof}
+由表示定义
+\[
+\Bigl(\sum_ga_gg\Bigr)v=\sum_ga_g\rho(g)v.
+\]
+分配律直接成立，表示的乘法等式给出 \((ab)v=a(bv)\)，单位作用为恒等，所以得到模。反过来，从模限制到基向量 \(g\)，它与 \(g^{-1}\) 的作用互逆，故得到可逆线性变换，模结合律给出群同态。两次构造在基向量上互逆，线性延伸后在全部群代数上互逆。最后，线性映射与每个 \(\rho(g)\) 交换，当且仅当与所有这些作用的线性组合交换，这正是模同态条件。
+\end{proof}
+
+因此核、像、商和直和都可以在表示或模的语言中讨论。本卷始终使用左作用；群代数张量积的右模结构会在诱导表示的定义中另行写出。
 
 \subsection{子表示、商表示及直和}
 \label{b5:subsec:0101:03}
 
-待撰写。
+\begin{definition}\label{b5:def:subrepresentation-semisimple}
+设 \(k\) 为域，\(G\) 为群，\((V,\rho)\) 为 \(G\) 的有限维 \(k\) 表示。若线性子空间 \(U\subseteq V\) 满足 \(\rho(g)U\subseteq U\) 对所有 \(g\in G\) 成立，称 \(U\) 为\term[zi-biaoshi]{子表示}[subrepresentation]。若 \(V\ne0\) 且子表示只有零与自身，称 \(V\) \term[bukeyue-biaoshi]{不可约}[irreducible representation]。若 \(V\) 可写成不可约子表示的有限直和，称其\term[wanquan-keyue-biaoshi]{完全可约}[completely reducible representation]，也称半单表示。\termidx[biaoshi-bandan]{半单表示}空直和对应零表示。
+\end{definition}
+
+由于也对 \(g^{-1}\) 成立，不变条件实际上给出 \(\rho(g)U=U\)。商作用为 \(g(v+U)=gv+U\)，改变代表所产生的差仍在 \(U\)，故良定义。直和 \(V\oplus W\) 逐分量作用；交织算子的核与像同样不变。不可约与不能分成两个非零子表示的直和不是同一个条件，后者称为\term[bukefenjie-biaoshi]{不可分解}[indecomposable representation]。
+
+\begin{proposition}\label{b5:prop:invariant-complement-projection}
+设 \(k\) 为域，\(G\) 为群，\(V\) 为 \(G\) 的有限维 \(k\) 表示，\(U\subseteq V\) 为子表示。\(U\) 有不变补空间，当且仅当存在 \(G\) 线性映射 \(p:V\to U\) 满足 \(p|_U=1_U\)。此外，\(V\) 完全可约当且仅当它的每个子表示都有不变补空间。
+\end{proposition}
+\begin{proof}
+若 \(V=U\oplus W\) 且两项不变，沿 \(W\) 的投影与群作用交换。反向，\(p^2=p\)，故 \(V=U\oplus\ker p\)，核不变。
+
+若每个子表示都可补，对维数归纳：非零空间中选维数最小的非零不变子空间，它不可约；取补后继续归纳。反向设 \(V=S_1\oplus\cdots\oplus S_r\) 为不可约直和，对 \(r\) 归纳证明任意子表示 \(U\) 可补。若某个 \(S_i\subseteq U\)，则 \(U=S_i\oplus(U\cap\bigoplus_{j\ne i}S_j)\)，用归纳完成。若没有这样的 \(S_i\)，而 \(U\ne0\)，取 \(U\) 内不可约子表示 \(T\)。至少一个坐标投影 \(T\to S_i\) 非零；其核和像不变，故为同构。因此
+\[
+V=T\oplus\bigoplus_{j\ne i}S_j,\qquad
+U=T\oplus\Bigl(U\cap\bigoplus_{j\ne i}S_j\Bigr),
+\]
+再次归纳。\(U=0\) 直接取 \(V\) 为补。
+\end{proof}

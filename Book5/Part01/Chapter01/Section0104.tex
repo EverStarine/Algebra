@@ -1,32 +1,89 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 1.4 Schur 引理与分解
-% 纲要位置：计划纲要.md，第 3102 行。
+% 纲要位置：工作记录/计划纲要.md，第 3753 行。
+% 纲要细目（写作范围）：
+% * 不可约表示的自同态环
+% * 代数闭域和一般域的区别
+% * 与第二卷半单代数理论的对接
+% ---
+
 
 \section{Schur 引理与分解}
 \label{b5:sec:0104}
 
-% TODO: 按以下纲要要点撰写本节。
+完全可约性让我们能够拆开表示，还须知道拆出的成分是否唯一。交织算子给出这个问题的答案：两个不可约成分之间的非零映射必可逆，而一个不可约表示的自同态环一般是除代数。只有在合适的底域上，才能再把它缩成标量。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 不可约表示的自同态环
-% * 代数闭域和一般域的区别
-% * 与第二卷半单代数理论的对接
-%
-% ---
-%
 
 \subsection{不可约表示的自同态环}
 \label{b5:subsec:0104:01}
 
-待撰写。
+\begin{lemma}[Schur]\label{b5:lem:schur}
+设 \(G\) 为群，\(k\) 为域，\(V,W\) 为非零不可约有限维 \(k\) 表示。每个非零 \(T\in\operatorname{Hom}_G(V,W)\) 都是同构。因此不相同构时 \(\operatorname{Hom}_G(V,W)=0\)，而 \(\operatorname{End}_G(V)\) 是一个有限维 \(k\) 除代数。
+\end{lemma}
+\begin{proof}
+\(\ker T\) 与 \(\operatorname{im}T\) 都是子表示。非零性及不可约性使它们分别等于零和 \(W\)，所以 \(T\) 双射，逆仍与作用交换。对 \(V=W\) 就得到每个非零自同态可逆；它作为 \(\operatorname{End}_k(V)\) 的线性子空间有限维。
+\end{proof}
+
+这称为\term[Schur-yinli]{Schur 引理}[Schur's lemma]。其第一部分不要求群有限，也不需要完全可约性；它只比较已经不可约的表示。
 
 \subsection{代数闭域与一般域}
 \label{b5:subsec:0104:02}
 
-待撰写。
+\begin{corollary}\label{b5:cor:schur-algebraically-closed}
+设 \(k\) 代数闭，\(G\) 为群，\(V\) 为非零不可约有限维 \(k\) 表示。则
+\[
+\operatorname{End}_G(V)=k\,1_V.
+\]
+特别地，有限交换群在代数闭域上的不可约表示都是一维的。
+\end{corollary}
+\begin{proof}
+对 \(T\in\operatorname{End}_G(V)\)，代数闭性保证存在特征值 \(\lambda\in k\)。\(T-\lambda I\) 不可逆，由 Schur 引理只能为零。若群交换，每个 \(\rho(g)\) 都是交织算子，因而都是标量，于是每条直线不变。不可约性迫使维数为一。
+\end{proof}
+
+底域条件不能省去。例如实空间 \(\mathbb R^2\) 上，令 \(C_3\) 的生成元作用为旋转 \(120^\circ\) 的矩阵。它没有实特征向量，所以没有不变实直线，表示不可约。与旋转交换的实矩阵却为
+\[
+\begin{pmatrix}a&-b\\b&a\end{pmatrix},\qquad a,b\in\mathbb R,
+\]
+构成与 \(\mathbb C\) 同构的实除代数，而非只有实标量。复化后旋转出现两个不同特征值，表示分裂成两个一维复表示。
+
+\ProseParagraphBreak
+即使底域代数闭，结论“自同态只有标量”也不能无条件反推不可约。例如以后会见到某些非半单代数的不可分解模，其自同态也只有标量。本卷在有限群、群阶可逆的条件下使用这个逆向判据时，会同时使用 Maschke 分解。
 
 \subsection{与半单代数理论的联系}
 \label{b5:subsec:0104:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:isotypic-decomposition}
+设 \(G\) 为有限群，\(k\) 为代数闭域，\(|G|\ne0\) 于 \(k\)，\(V\) 为 \(G\) 的有限维 \(k\) 表示。若
+\[
+V\simeq\bigoplus_{i=1}^r S_i^{\oplus m_i}
+\]
+且 \(S_i\) 为两两不同构的不可约有限维 \(k\) 表示、\(m_i\) 为非负整数，则
+\[
+m_i=\dim_k\operatorname{Hom}_G(S_i,V),\qquad
+\operatorname{End}_G(V)\simeq\prod_{i=1}^rM_{m_i}(k).
+\]
+相应的\term[dengxing-fenliang]{等型分量}[isotypic component] \(V_i\)，即 \(V\) 中所有同构于 \(S_i\) 的简单子表示之和，是内在确定的；其内部拆成 \(m_i\) 个简单直和项通常不唯一。
+\end{proposition}
+\begin{proof}
+把同态分别投到各个直和坐标，Schur 引理使不同类型间的块为零，相同类型间的块为标量。因此 \(\operatorname{Hom}_G(S_i,V)\simeq k^{m_i}\)，并得到自同态的分块矩阵公式。
+
+任意同构于 \(S_i\) 的子表示向其他类型的坐标投影都为零，所以它全在所选分解的 \(S_i^{\oplus m_i}\) 中；反过来，这些坐标子表示已生成整个块。故所有同型简单子表示之和恰为该块，不依赖所选分解。评价映射
+\[
+S_i\otimes_k\operatorname{Hom}_G(S_i,V)\longrightarrow V_i,
+\qquad v\otimes f\longmapsto f(v)
+\]
+在所选分解下就是 \(m_i\) 份 \(S_i\) 的恒等识别，因而是自然同构。任意改变重数空间的基都会改变内部简单直和项，却不改变 \(V_i\)。
+\end{proof}
+
+在一般域上，令 \(D_i=\operatorname{End}_G(S_i)\)。同一分块论证给出 \(\operatorname{End}_G(V)\simeq\prod_iM_{m_i}(D_i)\)，而重数须从
+\[
+\dim_k\operatorname{Hom}_G(S_i,V)=m_i\dim_kD_i
+\]
+读出，不能删掉除代数的维数。这里已经看见半单代数理论中的矩阵块和除代数；本章所需的分解与重数判断均由平均投影和 Schur 引理直接得到。
+
+\begin{lemma}\label{b5:lem:irreducibles-in-regular}
+设 \(G\) 为有限群，\(k\) 为域，\(|G|\ne0\) 于 \(k\)。每个不可约有限维 \(k\) 表示都同构于正则表示的某个直和项，因此不可约表示只有有限多个同构类型。
+\end{lemma}
+\begin{proof}
+对不可约 \(S\) 选 \(0\ne v\in S\)。映射 \(k[G]\to S\)、\(a\mapsto av\)，像是非零子表示，故满射。由 Maschke 定理，其核有不变补，所以 \(S\) 是正则表示的直和项。把有限维正则表示分成有限个不可约项；任意不可约 \(S\) 向这些项的至少一个投影非零，Schur 引理使它同构于该项。因而该有限列表已经穷尽所有类型。
+\end{proof}

@@ -1,0 +1,170 @@
+% !TeX root = ../../Book5.tex
+% 纲要标题：### 22.5 经典不变量与协变式
+% 纲要位置：工作记录/计划纲要.md，第 4487 行。
+% * 就地陈述并解释对称多项式基本定理；一般有限反射群定理标明选读及外部证明范围
+% * 从单矩阵特征多项式及特征零下的迹出发；同特征多项式不等于矩阵共轭，多个矩阵的迹字理论另列范围
+% * 完整处理一般线性群的配对不变量基本定理及其实际依赖，选一个正交或辛群的 Gram 型例子
+% * 以低次二元型区分不变量、相对不变量与协变式，明确一般线性群和特殊线性群下判别式的不同变换性质
+% #### 22.5.1 对称多项式与反射群的例子
+% #### 22.5.2 矩阵共轭下的特征多项式与迹
+% #### 22.5.3 向量与对偶向量的配对不变量
+% #### 22.5.4 二元型的判别式与协变式
+\section{经典不变量与协变式}
+\label{b5:sec:2205}
+
+不同的群产生不同的不变量问题。置换坐标保留对称多项式，改变矩阵的基保留特征多项式，同时改变向量与对偶向量则保留配对。本节从这些具体作用中证明几类基本结果，并说明不变量之外还有相对不变量和协变式。
+
+\subsection{对称多项式与反射群的例子}
+\label{b5:subsec:2205:01}
+
+这一基本定理的主要证明已在第一卷定理12.4.4给出。为使本节的对称群与矩阵例子能够独立阅读，下面回顾陈述及首项消去证明，并保留它在正特征中的适用范围。
+
+\begin{theorem}[对称多项式基本定理]\label{b5:thm:invariant-symmetric-polynomials}
+设 \(k\) 为域，\(S_n\) 置换 \(k[x_1,\ldots,x_n]\) 的变量。令 \(e_i\) 为 \(i\) 次初等对称多项式，则
+\[
+k[x_1,\ldots,x_n]^{S_n}=k[e_1,\ldots,e_n],
+\]
+且 \(e_1,\ldots,e_n\) 代数独立。此结论不要求特征零。
+\end{theorem}
+\begin{proof}
+固定字典序 \(x_1>\cdots>x_n\)，先处理齐次对称多项式 \(f\)。其首单项式为 \(x_1^{a_1}\cdots x_n^{a_n}\)，必有 \(a_1\ge\cdots\ge a_n\)：若 \(a_i<a_j\) 且 \(i<j\)，互换这两个变量便出现更大的同系数单项式，矛盾。多项式
+\[
+e_1^{a_1-a_2}e_2^{a_2-a_3}\cdots e_{n-1}^{a_{n-1}-a_n}e_n^{a_n}
+\]
+恰有该首单项式，首系数为一。乘以 \(f\) 的首系数后相减，首项严格下降。全次数不变，而同次数只有有限多个单项式，所以有限步后余式为零。拆分齐次分量就证明生成性。
+
+另一方面，不同的 \(e_1^{b_1}\cdots e_n^{b_n}\) 的首指数是
+\[
+(b_1+\cdots+b_n,\ b_2+\cdots+b_n,\ldots,b_n),
+\]
+它唯一确定 \((b_1,\ldots,b_n)\)。非零多项式关系中的最大首项因而不可能相消，所以不存在这样的关系。
+\end{proof}
+
+还可令符号置换群 \((C_2)^n\rtimes S_n\) 作用在特征不为二的 \(k^n\) 上。先对各坐标独立变号取不变量，得到 \(k[x_1^2,\ldots,x_n^2]\)；再对置换取不变量，得到
+\[
+k\Bigl[e_1(x_1^2,\ldots,x_n^2),\ldots,e_n(x_1^2,\ldots,x_n^2)\Bigr].
+\]
+其基本次数为 \(2,4,\ldots,2n\)。这里两步都给出了生成性的证明。这是反射群具有多项式不变环的典型例子；一般复有限反射群的多项式性及其逆命题属于 Chevalley--Shephard--Todd 定理，不能仅由这两个例子推广得出，本章不调用该一般定理。
+
+\subsection{矩阵共轭下的特征多项式与迹}
+\label{b5:subsec:2205:02}
+
+\begin{theorem}\label{b5:thm:single-matrix-invariants}
+设 \(k\) 为代数闭域，\(n\ge1\) 为整数，\(\operatorname{GL}_n(k)\) 在 \(M_n(k)\) 上按共轭作用，\(k[M_n]\) 表示矩阵空间的多项式函数代数。对 \(A\in M_n(k)\)，定义特征多项式的系数函数 \(c_i\) 为
+\[
+\det(TI-A)=T^n-c_1(A)T^{n-1}+\cdots+(-1)^nc_n(A).
+\]
+则 \(k[M_n]^{\operatorname{GL}_n}=k[c_1,\ldots,c_n]\)，且这些生成元代数独立。若 \(\operatorname{char}k=0\)，也可用
+\(\operatorname{tr}(A),\ldots,\operatorname{tr}(A^n)\) 生成。
+\end{theorem}
+\begin{proof}
+把不变量 \(f\) 限制到对角矩阵。置换矩阵共轭说明这个限制是对称多项式，故由\cref{b5:thm:invariant-symmetric-polynomials}等于某个 \(P(e_1,\ldots,e_n)\)。于是 \(f-P(c_1,\ldots,c_n)\) 在对角矩阵及其全部共轭矩阵上为零。
+
+特征多项式有互异根的矩阵构成非空 Zariski 开集：其补集是判别式多项式的零集，而取互异对角元证明该多项式非零。仿射空间的非空开集稠密，这个开集中的矩阵都可对角化。因此差多项式在稠密集上为零，只能恒为零，得到生成性。任何 \(c_i\) 的关系限制到对角矩阵就是 \(e_i\) 的关系，故代数独立。
+
+令 \(p_j(A)=\operatorname{tr}(A^j)\)，并置 \(c_0=1\)。在对角矩阵上使用 Newton 恒等式，再由稠密性延拓，得到
+\[
+rc_r=\sum_{j=1}^r(-1)^{j-1}c_{r-j}p_j
+\qquad(1\le r\le n).
+\]
+特征零允许逐次除以 \(r\)，故每个 \(c_r\) 都在前 \(r\) 个迹生成的代数中。反向也由这些恒等式递推得到。
+\end{proof}
+
+特征多项式相同并不意味共轭。例如零矩阵与非零的二阶幂零 Jordan 块有相同特征多项式，因而所有多项式不变量都相同，却有不同的秩。多个矩阵的同时共轭涉及 \(\operatorname{tr}(A_{i_1}\cdots A_{i_r})\) 等迹字；上面的对角化证明不能用于一组未必交换的矩阵，本节只处理单矩阵。
+
+\subsection{向量与对偶向量的配对不变量}
+\label{b5:subsec:2205:03}
+
+\begin{theorem}[一般线性群的配对不变量]\label{b5:thm:gl-pairing-fft}
+设 \(k\) 为特征零域，\(V\) 为有限维非零 \(k\) 向量空间，\(r,s\ge0\) 为整数。群 \(\operatorname{GL}(V)\) 在
+\[
+W=V^{\oplus r}\oplus(V^*)^{\oplus s}
+\]
+上同时按原作用与对偶作用。则 \(k[W]^{\operatorname{GL}(V)}\) 由配对
+\[
+p_{ji}(v_1,\ldots,v_r,\phi_1,\ldots,\phi_s)=\phi_j(v_i)
+\]
+生成。
+\end{theorem}
+\begin{proof}
+先处理对每个向量、对偶向量变量都一次齐次的多线性不变量，共有 \(a\) 个向量变量和 \(b\) 个对偶向量变量。标量矩阵 \(tI\) 使函数值乘以 \(t^{a-b}\)。域 \(k\) 无限，若 \(a\ne b\)，选 \(t\) 使此因子不等于一，就知道该函数为零。因此只需 \(a=b=d\)。
+
+这时一个多线性函数 \(F\) 唯一对应算子 \(A\in\operatorname{End}_k(V^{\otimes d})\)，使
+\[
+F(v_1,\ldots,v_d,\phi_1,\ldots,\phi_d)
+=(\phi_1\otimes\cdots\otimes\phi_d)
+\Bigl(A(v_1\otimes\cdots\otimes v_d)\Bigr).
+\]
+有限维张量配对的非退化性给出存在性与唯一性。\(F\) 不变当且仅当 \(A\) 与每个 \(g^{\otimes d}\) 交换。\cref{b5:thm:schur-weyl}的第二个中心化子等式说明，\(A\) 是因子置换算子 \(P_\sigma\) 的线性组合。其对应函数为
+\[
+\prod_{j=1}^d\phi_j\Bigl(v_{\sigma^{-1}(j)}\Bigr),
+\]
+故每个多线性不变量都是配对乘积的线性组合。次数零的情形只给常数。
+
+最后对一般不变量 \(f\) 取多重齐次分量；作用不混合各变量组，所以每个分量仍不变。设它在 \(v_i\) 上的次数为 \(a_i\)，在 \(\phi_j\) 上的次数为 \(b_j\)。将
+\[
+v_i=\sum_{\nu=1}^{a_i}t_{i\nu}v_{i\nu},\qquad
+\phi_j=\sum_{\mu=1}^{b_j}u_{j\mu}\phi_{j\mu}
+\]
+代入，并取所有参数各一次的系数。所得函数 \(\widetilde f\) 对新增变量多线性，且不变，因为代入和取系数均与群作用交换。让同一组副本相等，得到
+\[
+\widetilde f=\left(\prod_i a_i!\right)
+\left(\prod_j b_j!\right)f.
+\]
+这由齐次性及多项展开的多项式系数给出。特征零允许除以这些阶乘；先把 \(\widetilde f\) 写成配对乘积，再合并副本，便把 \(f\) 写成原配对的多项式。
+\end{proof}
+
+这个结论只断言生成性。若 \(\dim V=n\)，配对矩阵 \((p_{ji})\) 的秩至多 \(n\)，故其 \((n+1)\) 阶子式都是关系；证明这些子式生成全部关系，是另外的关系定理，不能由生成性直接得到。
+
+\ProseParagraphBreak
+在二维交错空间 \(V=k^2\) 中，标准交错型为
+\(\omega(v,w)=\det(v,w)\)，保持它的群是 \(\operatorname{SL}_2\)。对两个向量组成的矩阵 \(X=(v,w)\)，有
+\[
+k[V\oplus V]^{\operatorname{SL}_2}=k\Bigl[\omega(v,w)\Bigr]
+\]
+（这里仍设特征零）。证明也很具体：若 \(\det X=t\ne0\)，矩阵
+\(\operatorname{diag}(1,t)X^{-1}\) 的行列式为一，把 \(X\) 送到 \(\operatorname{diag}(1,t)\)。所以不变量 \(f\) 在可逆矩阵上等于多项式
+\(F(\det X)\)，其中 \(F(t)=f\Bigl(\operatorname{diag}(1,t)\Bigr)\)；由稠密性，这个等式在全部矩阵上成立。这里的交错 Gram 矩阵只有一个独立条目，其余是零及其负值。
+
+\subsection{二元型的判别式与协变式}
+\label{b5:subsec:2205:04}
+
+\begin{definition}\label{b5:def:relative-invariant-covariant}
+设 \(k\) 为域，\(G\) 为 \(k\) 上的仿射代数群，有理作用在有限维 \(k\) 空间 \(U,W\) 上。多项式函数 \(f:U\to k\) 若作为代数态射满足
+\(f(gu)=\chi(g)f(u)\)，其中 \(\chi:G\to\mathbb G_m\) 为代数群同态，则称 \(f\) 为具有特征 \(\chi\) 的\term[xiangdui-bubianliang]{相对不变量}[relative invariant]。若多项式映射 \(F:U\to W\) 作为代数态射满足 \(F(gu)=gF(u)\)，则称 \(F\) 为\term[xiebian-shi]{协变式}[covariant]。相对不变量也可看作取值于一维表示 \(k_\chi\) 的协变式，其中 \(G\) 在 \(k_\chi\) 上按 \(\chi\) 数乘作用。
+\end{definition}
+
+设 \(k\) 的特征零，令 \(\operatorname{GL}_2\) 在二元型上作用为
+\((g\cdot F)(X,Y)=F\Bigl(g^{-1}(X,Y)^T\Bigr)\)。对二次型
+\[
+F=aX^2+bXY+cY^2,\qquad
+Q=\begin{pmatrix}a&b/2\\b/2&c\end{pmatrix},
+\]
+变换后矩阵为 \(g^{-T}Qg^{-1}\)，故判别式
+\(\Delta=b^2-4ac=-4\det Q\) 满足
+\[
+\Delta(g\cdot F)=(\det g)^{-2}\Delta(F).
+\]
+因此它在一般线性群下是相对不变量，在特殊线性群下是不变量。
+
+\ProseParagraphBreak
+一个实际的协变构造是 Hessian。对次数 \(d\ge2\) 的二元型，置
+\[
+\mathcal H(F)=
+\det\begin{pmatrix}F_{XX}&F_{XY}\\F_{XY}&F_{YY}\end{pmatrix}.
+\]
+链式法则给出
+\[
+\mathcal H(g\cdot F)(X,Y)
+=(\det g)^{-2}\,
+\mathcal H(F)\Bigl(g^{-1}(X,Y)^T\Bigr).
+\]
+故在 \(\operatorname{SL}_2\) 下，\(\mathcal H\) 是从 \(d\) 次型空间到 \(2d-4\) 次型空间的协变式；在 \(\operatorname{GL}_2\) 下须把值域作用另乘 \((\det g)^{-2}\)。例如
+\[
+F=aX^3+3bX^2Y+3cXY^2+dY^3
+\]
+给出
+\[
+\mathcal H(F)=36\Bigl((ac-b^2)X^2+(ad-bc)XY+(bd-c^2)Y^2\Bigr).
+\]
+它随型变成另一个型，通常不是标量不变量。区分“系数次数”和“关于 \(X,Y\) 的次数”也很必要：这里前者为二，后者也为二；对一般 \(d\)，二者分别为二和 \(2d-4\)。

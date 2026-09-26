@@ -1,30 +1,112 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 4.3 正规子群与 Clifford 理论
-% 纲要位置：计划纲要.md，第 3180 行。
+% 纲要位置：工作记录/计划纲要.md，第 3831 行。
+% 纲要细目（写作范围）：
+% * 不可约表示限制到正规子群
+% * 共轭轨道与惯性群
+% * 等型分解
+
 
 \section{正规子群与 Clifford 理论}
 \label{b5:sec:0403}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 不可约表示限制到正规子群
-% * 共轭轨道与惯性群
-% * 等型分解
-%
+一个不可约表示限制到子群后通常会分解。子群正规时，共轭作用把这些分量联系起来：它们不能来自彼此无关的若干共轭轨道。本节在复数域上证明这一结构，并由其中一个等型分量恢复整个表示。
 
 \subsection{不可约表示限制到正规子群}
 \label{b5:subsec:0403:01}
 
-待撰写。
+先回顾\cref{b5:prop:isotypic-decomposition}中的等型分量。对有限群 \(N\) 的有限维复表示 \(V\)，以及不可约复 \(N\)-表示 \(W\)，令 \(V_W\) 为 \(V\) 中所有同构于 \(W\) 的 \(N\)-子模之和；若没有这种子模，就令 \(V_W=0\)。
+
+\ProseParagraphBreak
+
+由\cref{b5:thm:maschke}，\(V\) 是各个非零 \(V_W\) 的直和，而且 \(V_W\cong W^{\oplus e_W}\)。这个子空间不依赖所选的不可约直和分解：任意简单子模到不同类型分量的投影均为零，因为\cref{b5:lem:schur}说明不同不可约表示之间没有非零同态。同样的理由说明，任意 \(N\)-子模 \(U\subseteq V\) 都有
+\begin{equation}\label{b5:eq:isotypic-submodule}
+U=\bigoplus_{[W]}(U\cap V_W).
+\end{equation}
+事实上，先把 \(U\) 分解为简单子模，每个简单子模都只落在一种等型分量中。
+
+\begin{theorem}[Clifford 限制定理]\label{b5:thm:clifford-restriction}
+设 \(G\) 为有限群，\(N\trianglelefteq G\)，\(V\) 为不可约有限维复 \(G\)-表示，\(W\) 为 \(\operatorname{Res}_N^G V\) 的一个不可约成分。则限制表示中的不可约类型恰好组成 \(W\) 在 \(G\) 共轭作用下的一个轨道，而且所有类型的重数相等。
+\end{theorem}
+这一结论及其后续对应构成 \term[clifford-lilun]{Clifford 理论}[Clifford theory]的基本部分。
+\begin{proof}
+由于 \(N\) 正规，\({}^gW\) 仍是 \(N\)-表示。若 \(A\subseteq V\) 是同构于 \(W\) 的 \(N\)-子模，则
+\[
+n(ga)=g(g^{-1}ng)a\qquad(n\in N,\ a\in A)
+\]
+说明 \(gA\cong{}^gW\)。对所有这样的 \(A\) 求和，得到
+\begin{equation}\label{b5:eq:clifford-component-transport}
+gV_W=V_{{}^gW}.
+\end{equation}
+因此，同一共轭轨道对应的等型分量之和是非零 \(G\)-子模。\(V\) 不可约，迫使这个和等于 \(V\)，故不可能出现第二个轨道。
+
+若 \(V_W\cong W^{\oplus e}\)，则等式右边由左边的线性同构得到
+\(V_{{}^gW}\cong({}^gW)^{\oplus e}\)。所以各个类型出现相同的重数 \(e\)。
+\end{proof}
+
+证明中的完全可约性用于限制到 \(N\) 的表示和它的子模，由复数域上的 Maschke 定理保证。若要推广到其他特征，需要另行检验这一步。
 
 \subsection{共轭轨道与惯性群}
 \label{b5:subsec:0403:02}
 
-待撰写。
+\begin{definition}\label{b5:def:inertia-group}
+设 \(G\) 为有限群，\(N\trianglelefteq G\)，\(W\) 为不可约有限维复 \(N\)-表示。子集
+\[
+I_G(W)=\{g\in G:{}^gW\cong W\}
+\]
+称为 \(W\) 在 \(G\) 中的\term[guanxing-qun]{惯性群}[inertia group]。
+\end{definition}
+\symidx{\(I_G(W)\)：不可约表示的惯性群}
+
+共轭构成 \(G\) 在不可约同构类上的作用，所以 \(I_G(W)\) 是子群。每个 \(n\in N\) 都属于它：若 \(W\) 的作用为 \(\rho\)，则 \(\rho(n)\) 把 \({}^nW\) 交织到 \(W\)。因此 \(N\subseteq I_G(W)\)，轨道由左陪集 \(G/I_G(W)\) 标记。
+
+\begin{corollary}\label{b5:cor:clifford-character}
+设 \(G\) 为有限群，\(N\trianglelefteq G\)，\(V\) 为不可约有限维复 \(G\)-表示，\(W\) 为 \(\operatorname{Res}_N^G V\) 的一个不可约成分。令 \(I=I_G(W)\)，令 \(e\) 为 \(W\) 在该限制表示中的重数。若 \(\chi,\theta\) 分别是 \(V,W\) 的特征标，则
+\[
+\operatorname{Res}_N^G V\cong
+\bigoplus_{gI\in G/I}({}^gW)^{\oplus e},
+\qquad
+\chi|_N=e\sum_{gI\in G/I}\theta^g,
+\]
+其中 \(\theta^g(n)=\theta(g^{-1}ng)\)、\(n\in N\)，各和取 \(G/I\) 的一组左陪集代表元。特别地，
+\[
+\dim_{\mathbb C}V=e[G:I]\dim_{\mathbb C}W.
+\]
+\end{corollary}
+\begin{proof}
+\cref{b5:thm:clifford-restriction}给出一个共轭轨道及相同重数。轨道中的类型恰由 \(G/I\) 标记，因而得到模分解。对作用矩阵取迹得到特征标等式，在单位元处取值得到维数等式。
+\end{proof}
+
+例如，\(S_3\) 的二维不可约表示限制到 \(N=A_3\) 后，是两个非平凡一维表示之和。若 \(\theta((123))=\exp(2\pi i/3)\)，则换位把 \(\theta\) 变成 \(\theta^{-1}\)，二者不同，因而 \(I_{S_3}(\theta)=A_3\)。这正是\cref{b5:exm:dihedral-induction}中 \(n=3\) 的情形。
 
 \subsection{等型分解}
 \label{b5:subsec:0403:03}
 
-待撰写。
+\begin{theorem}[Clifford 对应]\label{b5:thm:clifford-correspondence}
+设 \(G\) 为有限群，\(N\trianglelefteq G\)，\(W\) 为不可约有限维复 \(N\)-表示，\(I=I_G(W)\)。诱导给出以下两类有限维表示的同构类之间的双射：
+\begin{enumerate}
+\item 限制到 \(N\) 时含有 \(W\) 的不可约复 \(I\)-表示 \(U\)；
+\item 限制到 \(N\) 时含有 \(W\) 的不可约复 \(G\)-表示 \(V\)。
+\end{enumerate}
+正向映射为 \(U\mapsto\operatorname{Ind}_I^G U\)，逆映射为 \(V\mapsto V_W\)，其中 \(V_W\) 为 \(\operatorname{Res}_N^G V\) 中的 \(W\)-等型分量。特别地，\(V_W\) 是不可约 \(I\)-表示，而自然映射
+\begin{equation}\label{b5:eq:clifford-reconstruction}
+\mathbb C[G]\otimes_{\mathbb C[I]}V_W\longrightarrow V,
+\qquad g\otimes v\longmapsto gv
+\end{equation}
+是 \(G\)-同构。
+\end{theorem}
+\begin{proof}
+先给定第二类中的 \(V\)。等式\eqref{b5:eq:clifford-component-transport}说明 \(V_W\) 是 \(I\)-不变的。若 \(0\neq U\subseteq V_W\) 是 \(I\)-子模，则选取 \(G/I\) 的代表元后，\(\bigoplus_{gI}gU\) 是 \(G\)-子模：任何群元素左乘代表元，只会改变代表元并带出一个 \(I\) 中的因子。这个和非零，所以等于 \(V\)。不同 \(gU\) 落在不同的 \(N\)-等型分量，取其中的 \(W\)-等型部分便有 \(U=V_W\)。故 \(V_W\) 不可约。
+
+映射\eqref{b5:eq:clifford-reconstruction}的平衡关系由 \(I\)-作用保证。它的像包含所有 \(gV_W\)，故满射；源端的各个陪集分量映到目标中不同的等型分量，而且每一分量上的映射均为线性同构。因此它也单射。
+
+反过来，设 \(U\) 属于第一类。对有限群 \(I\) 及其正规子群 \(N\) 应用\cref{b5:thm:clifford-restriction}，由于 \(I\) 固定 \(W\) 的同构类，得到 \(U|_N\cong W^{\oplus e}\)。令 \(Y=\operatorname{Ind}_I^G U\)。作为 \(N\)-模，它的陪集分解为
+\[
+Y=\bigoplus_{gI\in G/I}g\otimes U,
+\]
+每一项的类型是 \({}^gW\)，不同陪集的类型互不相同。
+
+若 \(0\neq Z\subseteq Y\) 是 \(G\)-子模，等式\eqref{b5:eq:isotypic-submodule}说明它与某个 \(g\otimes U\) 有非零交。用 \(g^{-1}\) 作用，把非零交移到 \(1\otimes U\)。于是 \(Z\cap(1\otimes U)\) 是非零 \(I\)-子模，必等于 \(1\otimes U\)。再用 \(G\) 作用，得到 \(Z=Y\)。所以 \(Y\) 不可约。它的 \(W\)-等型分量恰为 \(1\otimes U\)，故两种构造互为逆；同构也在取等型分量时被保留。
+\end{proof}
+
+Clifford 对应把问题从 \(G\) 缩到惯性群 \(I\)。当 \(I=N\) 时，\(W\) 本身已经诱导出不可约 \(G\)-表示；当 \(I=G\) 时，限制只含一种类型，但重数 \(e\) 仍可能大于 \(1\)。后一种情形需要研究 \(W\) 能否延拓，以及重数空间上究竟有怎样的作用。

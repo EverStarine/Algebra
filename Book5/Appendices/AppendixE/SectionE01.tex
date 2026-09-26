@@ -1,30 +1,92 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### E.1 微分模与线性方程
-% 纲要位置：计划纲要.md，第 3841 行。
-
-\section{微分模与线性方程}
-\label{b5:sec:E01}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4683 行。
 % * 微分域上的有限维微分模、Leibniz 条件及选基后的系统 \(\delta Y=AY\)
 % * 微分算子环 \(K[\partial;\delta]\) 的模、张量与水平截面；联络算子（connection operator）不要求平方为零
 % * 与第二卷 Ore 扩张及本卷附录 D 的 D-模比较，只给一个低维模型
-%
+% #### E.1.1 微分模、Leibniz 条件与线性系统
+% #### E.1.2 微分算子环、张量与水平截面
+% #### E.1.3 Ore 扩张与 D-模的低维比较
+\section{微分模与线性方程}
+\label{b5:sec:E01}
+
+线性微分方程的未知量可以写成函数，也可以组织成向量空间上的附加算子。后者允许我们谈论子模、张量积和对偶；换基时变化的是方程矩阵，方程所描述的微分模则不变。本节固定一个导子，不讨论若干偏导算子的相容性。
 
 \subsection{微分模、Leibniz 条件与线性系统}
 \label{b5:subsec:E01:01}
 
-待撰写。
+\begin{definition}\label{b5:def:E-differential-module}
+设 \(K\) 为特征零域，\(\delta:K\to K\) 为加法映射，满足 \(\delta(ab)=\delta(a)b+a\delta(b)\)。二元组 \((K,\delta)\) 称为\term[weifen-yu]{微分域}[differential field]，其\term[changshu-yu]{常数域}[field of constants]为 \(C_K=\ker\delta\)。若有限维 \(K\) 向量空间 \(M\) 上的加法算子 \(\nabla\) 满足
+\[
+ \nabla(am)=\delta(a)m+a\nabla(m)\qquad(a\in K,m\in M),
+\]
+则 \((M,\nabla)\) 称为 \((K,\delta)\) 上的\term[weifen-mo]{微分模}[differential module]。两个微分模之间与这些算子交换的 \(K\) 线性映射称为微分模同态。
+\end{definition}
+
+常数域确实是域：由 \(\delta(1)=0\) 和 \(\delta(a^{-1})=-a^{-2}\delta(a)\)，非零常数的逆仍为常数。第三卷命题 E.1.2 证明了整环上的导子向分式域的唯一延拓；这里所需的公式就是
+\[
+ \delta(a/b)=\frac{\delta(a)b-a\delta(b)}{b^2}.
+\]
+\(\nabla\) 一般只对常数域线性。它是联络方向上的算子，不是复形的微分，定义不要求 \(\nabla^2=0\)。
+
+\ProseParagraphBreak
+把一组基写成行 \(e=(e_1,\ldots,e_n)\)，约定 \(\nabla(e_j)=-\sum_i A_{ij}e_i\)。对坐标列 \(v\) 有
+\begin{equation}\label{b5:eq:E-horizontal-system}
+ \nabla(ev)=e\Bigl(\delta(v)-Av\Bigr).
+\end{equation}
+所以 \(\nabla(ev)=0\) 恰好是线性系统 \(\delta(v)=Av\)。这里的负号使水平向量与通常写法的解相符。
+若新基 \(\widetilde e=eP\)，其中 \(P\in\operatorname{GL}_n(K)\)，则直接应用 Leibniz 法则得到
+\begin{equation}\label{b5:eq:E-gauge-change}
+ \widetilde A=P^{-1}AP-P^{-1}\delta(P).
+\end{equation}
+这称为\term[guifan-bianhuan]{规范变换}[gauge transformation]；它不是通常的矩阵相似，因为基向量的系数也要被求导。
+\ProseParagraphBreak
+例如 \(K=\mathbb C(x)\)、\(\delta=\mathrm{d}/\mathrm{d}x\) 上的二阶方程 \(y''+ay'+by=0\) 等价于
+\[
+ \binom{y}{y'}'=\begin{pmatrix}0&1\\-b&-a\end{pmatrix}\binom{y}{y'}.
+\]
+第一行保证第二坐标是第一坐标的导数，第二行再恢复原方程，因而两个方向都成立。一般系统能否化成单个标量方程，需要循环向量定理；本附录不以这个额外结论作为计算的前提。
 
 \subsection{微分算子环、张量与水平截面}
 \label{b5:subsec:E01:02}
 
-待撰写。
+形式多项式 \(\sum_{j=0}^m a_j\partial^j\) 在关系
+\[
+ \partial a=a\partial+\delta(a)
+\]
+下组成环 \(K[\partial;\delta]\)，系数一律写在左边。第二卷定理 20.5.2 证明了 Ore 扩张乘法的存在与结合性；这里取底环 \(K\)、自同态 \(\sigma=\operatorname{id}_K\)，其 \(\sigma\) 导子条件恰为通常的 Leibniz 法则。微分模对应于在 \(K\) 上有限维的左 \(K[\partial;\delta]\) 模：令 \(\partial m=\nabla(m)\)，上面的环关系正好成为定义中的 Leibniz 法则。
+
+\begin{proposition}\label{b5:prop:E-tensor-horizontal}
+设 \((M,\nabla_M)\)、\((N,\nabla_N)\) 为特征零微分域 \((K,\delta)\) 上的有限维微分模，\(C_K=\ker\delta\)，\(M^*=\operatorname{Hom}_K(M,K)\)。下列公式分别在 \(M\otimes_KN\) 和 \(M^*\) 上定义微分模结构：
+\[
+\begin{aligned}
+ \nabla(m\otimes n)&=\nabla_M(m)\otimes n+m\otimes\nabla_N(n),\\
+ (\nabla\varphi)(m)&=\delta\Bigl(\varphi(m)\Bigr)-\varphi\Bigl(\nabla_M(m)\Bigr)
+ \qquad(\varphi\in M^*).
+\end{aligned}
+\]
+若 \(H(M)=\ker\nabla_M\)，则 \(H(M)\) 是 \(C_K\) 向量空间，且
+\(\dim_{C_K}H(M)\le\dim_KM\)。
+\end{proposition}
+\begin{proof}
+将 \((am)\otimes n\) 代入第一式得到的额外项是 \(\delta(a)m\otimes n\)，将 \(m\otimes(an)\) 代入也得到同一项，故公式尊重张量平衡关系。再把 \(a\) 提到任一因子外即可验证 Leibniz 法则。对偶公式中，将 \(am\) 代入时两个 \(\delta(a)\varphi(m)\) 项抵消，故 \(\nabla\varphi\) 仍为 \(K\) 线性泛函；对 \(a\varphi\) 代入则给出相应 Leibniz 法则。
+
+最后证明任意常数线性无关的水平向量也在 \(K\) 上线性无关。若不然，取项数最少的非平凡关系，归一化为 \(m_r=\sum_{i<r}a_i m_i\)。其前 \(r-1\) 项在 \(K\) 上无关；对关系施加 \(\nabla\)，得到 \(\sum_{i<r}\delta(a_i)m_i=0\)，从而所有 \(a_i\) 都是常数，与原来的常数线性无关矛盾。维数上界随即成立。
+\end{proof}
+
+\(H(M)\) 中的元素称为\term[shuiping-jiemian]{水平截面}[horizontal section]。在微分扩域 \(L/K\) 中，延拓公式为
+\(\nabla(\ell\otimes m)=\delta(\ell)\otimes m+\ell\otimes\nabla(m)\)。
+延拓后可能出现足够多的水平截面。例如 \(\nabla(e)=-e\) 在 \(\mathbb C(x)e\) 中没有非零水平截面，而加入 \(t\) 满足 \(t'=t\) 后，\(te\) 就是水平基向量。
 
 \subsection{Ore 扩张与 D-模的低维比较}
 \label{b5:subsec:E01:03}
 
-待撰写。
+在 \(K=\mathbb C(x)\) 中，\(D=K[\partial;\mathrm{d}/\mathrm{d}x]\) 含有多项式系数的 Weyl 代数 \(A_1(\mathbb C)\)。但 \(D\) 模忘记了有限点上的部分信息：在 \(A_1\) 模 \(A_1/A_1x\) 中，非零向量 \(\overline1\) 被 \(x\) 零化，扩系数到 \(K\) 后它变为零，整个模也变为零。这样的点支撑模不可能由一个非零的有限维微分域模反映。
+
+\ProseParagraphBreak
+还应区别两种“解”。非零标量算子 \(P\in D\) 给出左模 \(Q=D/DP\)，它在 \(K\) 上有限维：若 \(P\) 的阶为 \(r\)，利用可逆首系数逐次减去 \(P\) 的左倍数，便得到阶小于 \(r\) 的唯一余式；唯一性来自非零乘积的阶相加。因此 \(1,\partial,\ldots,\partial^{r-1}\) 的类为基（\(r=0\) 时商模为零）。对任意微分扩域 \(L/K\)，映射
+\[
+ \operatorname{Hom}_D(Q,L)\longrightarrow\Bigl\{y\in L:P(y)=0\Bigr\},
+ \qquad f\longmapsto f(\overline1)
+\]
+是双射：从解 \(y\) 反向定义 \(f(R+DP)=R(y)\)，关系 \(P(y)=0\) 保证良定义。这是反变的解空间。与之相对，\eqref{b5:eq:E-horizontal-system}用的是指定微分模的水平截面；前者等于对偶微分模的水平截面。若 \(P=\partial-a\)，则 \(\partial\overline1=a\overline1\)，该商模本身的水平坐标满足 \(v'=-av\)，而其同态解满足 \(y'=ay\)。这里的符号差别来自对偶，比较两种解空间时须注意这一点。

@@ -1,30 +1,86 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 15.1 泛包络代数
-% 纲要位置：计划纲要.md，第 3549 行。
+% 纲要位置：工作记录/计划纲要.md，第 4200 行。
 
 \section{泛包络代数}
 \label{b5:sec:1501}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 张量代数按李括号关系取商
 % * 泛包络代数的泛性质
 % * 李代数模与包络代数模
 %
 
+一个李代数表示只要求括号相容，而作用算子及其乘积属于端同态结合代数。泛包络代数以李代数为生成元，以李括号为乘法关系，使这些乘积可以在同一个代数中计算。取商构造之后，还须证明原李代数到泛包络代数的自然映射是单射；这将由 PBW 定理得到。
+
 \subsection{张量代数按李括号关系取商}
 \label{b5:subsec:1501:01}
 
-待撰写。
+设 \(\mathfrak g\) 为域 \(k\) 上李代数。张量代数
+\[
+T(\mathfrak g)=\bigoplus_{r\ge0}\mathfrak g^{\otimes r},
+\qquad \mathfrak g^{\otimes0}=k,
+\]
+以张量拼接为乘法，是由向量空间 \(\mathfrak g\) 自由生成的含幺结合代数。给定线性映射 \(\mathfrak g\to A\)，把纯张量送到各因子像的乘积，就唯一得到一个含幺代数同态 \(T(\mathfrak g)\to A\)。
+\begin{definition}\label{b5:def:universal-enveloping}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，记 \(T(\mathfrak g)\) 为其底层 \(k\) 向量空间的张量代数。令 \(I\) 为 \(T(\mathfrak g)\) 中由
+\[
+x\otimes y-y\otimes x-[x,y]\qquad(x,y\in\mathfrak g)
+\]
+生成的双边理想，其中 \([x,y]\) 看作次数一的张量。代数
+\[
+U(\mathfrak g)=T(\mathfrak g)/I
+\]
+称为 \(\mathfrak g\) 的\term[fanbaoluo-daishu]{泛包络代数}[universal enveloping algebra]。次数一部分的自然映射记为
+\(\iota:\mathfrak g\to U(\mathfrak g)\)。
+\end{definition}
+\symidx{\(U(\mathfrak g)\)：李代数的泛包络代数}
+由关系立即得到
+\(\iota\Bigl([x,y]\Bigr)=\iota(x)\iota(y)-\iota(y)\iota(x)\)，
+所以 \(\iota\) 是到 \(U(\mathfrak g)^{-}\) 的李代数同态，其单射性将在 PBW 定理中证明。将全部正次数张量送到零的增广映射零化 \(I\)，故 \(U(\mathfrak g)\to k\) 保持单位，特别地，\(U(\mathfrak g)\) 的单位非零。
+\ProseParagraphBreak
+关系含有次数二与次数一的两部分，所以商一般不是由张量次数直接得到的分次代数。不过，“次数不超过 \(r\)”的子空间仍能传到商中，下一节将用这个滤过研究它。
 
 \subsection{泛包络代数的泛性质}
 \label{b5:subsec:1501:02}
 
-待撰写。
+\begin{theorem}\label{b5:thm:enveloping-universal}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(A\) 为含幺结合 \(k\) 代数，\(A^{-}\) 为其交换子李代数，\(\iota:\mathfrak g\to U(\mathfrak g)\) 为泛包络代数的自然映射。对每个李代数同态 \(\phi:\mathfrak g\to A^{-}\)，存在唯一含幺 \(k\) 代数同态
+\(\widetilde\phi:U(\mathfrak g)\to A\)，使
+\(\widetilde\phi\iota=\phi\)。
+\end{theorem}
+\begin{proof}
+先由张量代数的自由性延拓 \(\phi\)。因为 \(\phi\) 保持括号，每个关系元的像为
+\(\phi(x)\phi(y)-\phi(y)\phi(x)-\phi\Bigl([x,y]\Bigr)=0\)。
+所以延拓零化双边理想 \(I\)，下降到商。\(U(\mathfrak g)\) 由单位和 \(\iota(\mathfrak g)\) 生成，因此这些生成元上的值唯一决定代数同态。
+\end{proof}
+这就是泛包络代数的泛性质。它也使构造对同态自然：李代数同态
+\(f:\mathfrak g\to\mathfrak l\)
+唯一诱导 \(U(f):U(\mathfrak g)\to U(\mathfrak l)\)，复合与恒等都因唯一性而保持。是否把单射映成单射，不能仅从泛性质推出；PBW 将另外给出这一结论。
+\begin{proposition}\label{b5:prop:enveloping-quotient}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(\mathfrak a\subseteq\mathfrak g\) 为理想，\(\iota:\mathfrak g\to U(\mathfrak g)\) 为泛包络代数的自然映射。令 \(J\) 为 \(U(\mathfrak g)\) 中由 \(\iota(\mathfrak a)\) 生成的双边理想，则
+\[
+U(\mathfrak g/\mathfrak a)\cong U(\mathfrak g)/J.
+\]
+\end{proposition}
+\begin{proof}
+映射 \(\mathfrak g\to U(\mathfrak g)/J\) 零化 \(\mathfrak a\)，故通过商李代数分解，再由泛性质延拓为左边到右边的同态。反过来，商映射 \(\mathfrak g\to\mathfrak g/\mathfrak a\) 诱导的包络代数同态零化 \(J\)，得到右边到左边的同态。两复合都在单位及来自 \(\mathfrak g\) 的生成元上为恒等，所以互逆。
+\end{proof}
+若 \(\mathfrak g\) 交换，定义中的关系只是让两个生成元交换，因而
+\(U(\mathfrak g)=\operatorname{Sym}(\mathfrak g)\)。
+特别地，一维交换李代数的包络代数是 \(k[t]\)，其表示可以由任意线性算子给出，不存在类似有限循环群关系 \(T^n=I\) 的限制。
 
 \subsection{李代数模与包络代数模}
 \label{b5:subsec:1501:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:lie-enveloping-modules}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(\iota:\mathfrak g\to U(\mathfrak g)\) 为泛包络代数的自然映射。左 \(\mathfrak g\) 模与幺性左 \(U(\mathfrak g)\) 模给出同一个范畴：在相同 \(k\) 向量空间上，作用通过 \(\iota\) 限制或按泛性质唯一延拓；同态、子模、商模与正合列均保持。
+\end{theorem}
+\begin{proof}
+一个李代数表示 \(\rho:\mathfrak g\to\mathfrak{gl}(V)\) 是到结合代数
+\(\operatorname{End}_k(V)\) 的交换子李代数的同态，故由\cref{b5:thm:enveloping-universal}唯一延拓为 \(U(\mathfrak g)\) 的含幺作用。反向限制显然恢复表示条件，唯一性使两种过程互逆。
+一个线性映射若与全部 \(\rho(x)\) 交换，就与它们的有限乘积及线性组合交换，即与整个包络代数作用交换。所以两种同态相同，子空间的不变性也相同，核、商及正合性因而不变。
+\end{proof}
+这并不把李代数中的单个元素与包络代数中的任意元素混为一谈。例如在 \(\mathfrak{sl}_2\) 模上，\(ef\)、\(h^2\) 或它们的和都是自然的算子，但一般不是某个李代数元素的作用。上一章的 Casimir 算子正需要这种乘积；现在可以把它看成一个与具体表示无关的代数元素。

@@ -1,30 +1,118 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 11.2 子代数、理想与商
-% 纲要位置：计划纲要.md，第 3442 行。
+% 纲要位置：工作记录/计划纲要.md，第 4093 行。
 
 \section{子代数、理想与商}
 \label{b5:sec:1102}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 同态及同构定理
 % * 中心与导子
 % * 伴随表示
 %
 
+李代数的子对象和商仍须与括号相容。理想条件保证一个括号在取商后不依赖代表；伴随表示则把这种相容性写成线性算子的交换关系。这些构造是后面分解李代数的基础。
+
 \subsection{同态及同构定理}
 \label{b5:subsec:1102:01}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-subalgebra-ideal}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数。子空间 \(\mathfrak h\subseteq\mathfrak g\) 若满足 \([\mathfrak h,\mathfrak h]\subseteq\mathfrak h\)，就称为子代数；子空间 \(\mathfrak a\subseteq\mathfrak g\) 若满足 \([\mathfrak g,\mathfrak a]\subseteq\mathfrak a\)，就称为理想。这里 \([U,W]\) 表示所有 \([u,w]\)、\(u\in U,w\in W\) 的线性生成空间。
+\end{definition}
+\begin{definition}\label{b5:def:lie-homomorphism}
+设 \(\mathfrak g,\mathfrak l\) 为同一域 \(k\) 上的李代数。一个 \(k\) 线性映射 \(f:\mathfrak g\to\mathfrak l\) 若满足
+\(f\Bigl([x,y]\Bigr)=\Bigl[f(x),f(y)\Bigr]\) 对所有 \(x,y\in\mathfrak g\) 成立，就称为李代数同态；若它还是线性同构，就称为李代数同构。
+\end{definition}
+例如上三角矩阵在 \(\mathfrak{gl}_n(k)\) 中为子代数，严格上三角矩阵在上三角代数中为理想。后一空间通常不是整个 \(\mathfrak{gl}_n(k)\) 的理想：在二维中，
+\([E_{21},E_{12}]=E_{22}-E_{11}\)
+不再严格上三角。理想的环境不能从叙述中省去。
+\begin{proposition}\label{b5:prop:lie-isomorphism}
+设 \(\mathfrak g,\mathfrak l\) 为同一域 \(k\) 上的李代数，\(f:\mathfrak g\to\mathfrak l\) 为李代数同态。则 \(\ker f\) 为 \(\mathfrak g\) 的理想，\(\operatorname{im}f\) 为 \(\mathfrak l\) 的子代数，且
+\[
+\mathfrak g/\ker f\cong\operatorname{im}f.
+\]
+更一般地，对 \(\mathfrak g\) 的理想 \(\mathfrak a\)，商空间上的括号
+\([x+\mathfrak a,y+\mathfrak a]=[x,y]+\mathfrak a\)
+良定义；包含 \(\mathfrak a\) 的理想与商李代数的理想一一对应。
+\end{proposition}
+\begin{proof}
+若 \(x\in\ker f\)，则 \(f\Bigl([y,x]\Bigr)=\Bigl[f(y),0\Bigr]=0\)，证明核为理想；像对括号封闭直接由同态等式得到。若更换两个商代表，括号的差为
+\([a,y]+[x,b]+[a,b]\)，其中 \(a,b\in\mathfrak a\)，各项都在理想中，故良定义。双线性、交替性与 Jacobi 从原代数下降。映射 \(x+\ker f\mapsto f(x)\) 线性双射并保持括号，得到同构。最后，理想沿商映射取像或逆像时分别保持括号相容条件，两种操作互逆。
+\end{proof}
+同样的计算还给出第二、第三同构定理。例如若 \(\mathfrak h\) 为子代数、\(\mathfrak a\) 为理想，则
+\(\mathfrak h/(\mathfrak h\cap\mathfrak a)\cong(\mathfrak h+\mathfrak a)/\mathfrak a\)；
+若 \(\mathfrak a\subseteq\mathfrak b\) 为理想，则
+\((\mathfrak g/\mathfrak a)/(\mathfrak b/\mathfrak a)\cong\mathfrak g/\mathfrak b\)。
+这些映射分别由包含和复合商映射给出，核与像已由前一命题确定。
 
 \subsection{中心与导子}
 \label{b5:subsec:1102:02}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-center-derivations}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数。其中心为
+\[
+Z(\mathfrak g)=\Bigl\{\,z\in\mathfrak g\mid[z,x]=0\text{ 对所有 }x\in\mathfrak g\,\Bigr\}.
+\]
+\(k\) 线性映射 \(D:\mathfrak g\to\mathfrak g\) 若对所有 \(x,y\in\mathfrak g\) 满足
+\[
+D\Bigl([x,y]\Bigr)=\Bigl[D(x),y\Bigr]+\Bigl[x,D(y)\Bigr],
+\]
+就称为 \(\mathfrak g\) 的\term[Li-daishu-daozi]{导子}[derivation of a Lie algebra]。全部导子的空间记为 \(\operatorname{Der}(\mathfrak g)\)。
+\end{definition}
+中心是一个交换理想。对一个子空间 \(U\subseteq\mathfrak g\)，还分别定义
+\[
+C_{\mathfrak g}(U)=\Bigl\{\,x\mid[x,U]=0\,\Bigr\},\qquad
+N_{\mathfrak g}(U)=\Bigl\{\,x\mid[x,U]\subseteq U\,\Bigr\},
+\]
+称为中心化子与正规化子。若 \(U\) 是子代数，Jacobi 恒等式说明这两者也是子代数。
+\begin{proposition}\label{b5:prop:lie-derivations}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数。导子空间 \(\operatorname{Der}(\mathfrak g)\) 在算子交换子下组成李代数。对每个 \(x\in\mathfrak g\)，映射
+\[
+\operatorname{ad}x:\mathfrak g\longrightarrow\mathfrak g,\qquad
+y\longmapsto[x,y]
+\]
+为导子，并对每个 \(D\in\operatorname{Der}(\mathfrak g)\) 满足
+\[
+[D,\operatorname{ad}x]=\operatorname{ad}(D x).
+\]
+因此这些内导子的空间 \(\operatorname{ad}\mathfrak g\) 为 \(\operatorname{Der}(\mathfrak g)\) 的理想。
+\end{proposition}
+\begin{proof}
+对导子 \(D,E\)，将 \(DE\Bigl([x,y]\Bigr)-ED\Bigl([x,y]\Bigr)\) 展开，混合项
+\(\Bigl[D(x),E(y)\Bigr]\)、\(\Bigl[E(x),D(y)\Bigr]\) 成对消去，剩下
+\(\Bigl[[D,E]x,y\Bigr]+\Bigl[x,[D,E]y\Bigr]\)，所以交换子仍为导子。Jacobi 的导子形式直接说明 \(\operatorname{ad}x\) 为导子。再对 \(y\) 计算
+\(D\Bigl([x,y]\Bigr)-\Bigl[x,D(y)\Bigr]=[Dx,y]\)，得到最后的等式。
+\end{proof}
+导子未必都为内导子。例如一维交换李代数的全部内导子为零，每个线性自同态却都是导子。半单复李代数中的情况将不同，但不能把那个结论用于当前任意李代数。
 
 \subsection{伴随表示}
 \label{b5:subsec:1102:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:adjoint-representation}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数。映射
+\[
+\operatorname{ad}:\mathfrak g\longrightarrow\mathfrak{gl}(\mathfrak g),
+\qquad x\longmapsto\operatorname{ad}x
+\]
+是李代数同态，其核为 \(Z(\mathfrak g)\)。一个子空间 \(\mathfrak a\subseteq\mathfrak g\) 在所有 \(\operatorname{ad}x\) 下不变，当且仅当它是理想。
+\end{proposition}
+\begin{proof}
+对 \(z\in\mathfrak g\)，Jacobi 恒等式给出
+\[
+[\operatorname{ad}x,\operatorname{ad}y](z)
+=\Bigl[x,[y,z]\Bigr]-\Bigl[y,[x,z]\Bigr]
+=\Bigl[[x,y],z\Bigr].
+\]
+故它保持括号。核与不变子空间两项结论分别就是中心和理想的定义。
+\end{proof}
+这称为\term[bansui-biaoshi]{伴随表示}[adjoint representation]。它把李代数的内部括号转成一组线性算子，因而可用特征值、迹与三角化研究结构。但它一般不忠实：三维 Heisenberg 代数中的 \(z\) 就全部作用为零，伴随表示看见的是模去中心后的代数。
+\ProseParagraphBreak
+例如二维代数取基 \(h,e\)，规定 \([h,e]=e\)。在这组基下，
+\[
+\operatorname{ad}h=\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\qquad
+\operatorname{ad}e=\begin{pmatrix}0&0\\-1&0\end{pmatrix}.
+\]
+两矩阵的交换子等于第二个矩阵，与原来的关系一致。这个小例子以后将区分可解性与幂零性。

@@ -1,30 +1,128 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 4.2 Mackey 分解
-% 纲要位置：计划纲要.md，第 3174 行。
+% 纲要位置：工作记录/计划纲要.md，第 3825 行。
+% 纲要细目（写作范围）：
+% * 双陪集公式
+% * 交织算子空间的计算
+% * 不可约性判据
+
 
 \section{Mackey 分解}
 \label{b5:sec:0402}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 双陪集公式
-% * 交织算子空间的计算
-% * 不可约性判据
-%
+双陪集分块中的 \(x\otimes W\) 受交集 \(K\cap xHx^{-1}\) 作用。这个作用不是原封不动地把 \(W\) 限制到交集：必须先通过 \(x\) 把交集搬回 \(H\)。将这一点写清以后，Mackey 公式便可由一个显式张量映射得到。
 
 \subsection{双陪集公式}
 \label{b5:subsec:0402:01}
 
-待撰写。
+\begin{definition}\label{b5:def:conjugate-representation}
+设 \(G\) 为有限群，\(H\leq G\)，\(k\) 为域，\(\rho:H\to\operatorname{GL}_k(W)\) 为有限维表示，\(x\in G\)。在同一向量空间 \(W\) 上定义 \(xHx^{-1}\) 的作用
+\[
+\rho^x(a)=\rho(x^{-1}ax)\qquad(a\in xHx^{-1}).
+\]
+所得表示记为 \({}^xW\)，称为 \(W\) 的\term[gonge-biaoshi]{共轭表示}[conjugate representation]。
+\end{definition}
+\symidx{\({}^xW\)：共轭表示}
+
+这个方向约定与左陪集相配合：在诱导表示中，
+\(a(x\otimes w)=x\otimes\rho(x^{-1}ax)w\)。此外，先取 \({}^yW\) 再取其 \(x\)-共轭，所得表示为 \({}^{xy}W\)。
+
+\begin{theorem}[Mackey 分解]\label{b5:thm:mackey-decomposition}
+设 \(G\) 为有限群，\(H,K\leq G\)，\(k\) 为任意域，\(W\) 为有限维左 \(k[H]\)-模。取 \(K\backslash G/H\) 的一组代表元 \(X\)，并令 \(L_x=K\cap xHx^{-1}\)。则有左 \(k[K]\)-模同构
+\begin{equation}\label{b5:eq:mackey-decomposition}
+\operatorname{Res}_K^G\operatorname{Ind}_H^G W
+\cong
+\bigoplus_{x\in X}
+\operatorname{Ind}_{L_x}^K
+\operatorname{Res}_{L_x}^{xHx^{-1}}({}^xW).
+\end{equation}
+\end{theorem}
+这一分解称为 \term[mackey-fenjie]{Mackey 分解}[Mackey decomposition]，公式也称为 Mackey 双陪集公式。
+\begin{proof}
+根据\cref{b5:prop:double-coset-blocks}，只须识别每一块。固定 \(x\)，把 \({}^xW\) 限制到 \(L_x\)，定义
+\[
+\begin{aligned}
+\Phi_x:k[K]\otimes_{k[L_x]}{}^xW
+&\longrightarrow k[KxH]\otimes_{k[H]}W,\\
+a\otimes w&\longmapsto ax\otimes w.
+\end{aligned}
+\]
+对 \(\ell\in L_x\)，有
+\[
+a\ell x\otimes w
+=ax(x^{-1}\ell x)\otimes w
+=ax\otimes\rho(x^{-1}\ell x)w.
+\]
+这正是源端平衡关系的像，故映射良定义；左 \(K\)-线性直接来自左乘。目标中的生成元 \(axh\otimes w\) 等于 \(\Phi_x(a\otimes hw)\)，所以映射满射。两端维数都为 \([K:L_x]\dim_k W\)，因而它是同构。对所有 \(x\) 取直和即得结论。
+\end{proof}
+
+选取别的代表元会改变上式各项的具体写法，却不改变\cref{b5:prop:double-coset-blocks}中由双陪集本身确定的子空间。公式的作用是把这些子空间写成熟悉的诱导模。
 
 \subsection{交织算子空间的计算}
 \label{b5:subsec:0402:02}
 
-待撰写。
+\begin{theorem}[交织空间公式]\label{b5:thm:mackey-intertwining}
+设 \(G\) 为有限群，\(H,K\leq G\)，\(k\) 为域，\(U,W\) 分别为有限维左 \(k[K]\)-模、左 \(k[H]\)-模。取双陪集集 \(K\backslash G/H\) 的代表元集 \(X\)，对 \(x\in X\) 令 \(L_x=K\cap xHx^{-1}\)。有 \(k\) 向量空间同构
+\begin{equation}\label{b5:eq:mackey-intertwining}
+\begin{aligned}
+&\operatorname{Hom}_{k[G]}
+\Bigl(\operatorname{Ind}_K^G U,\operatorname{Ind}_H^G W\Bigr)\\
+&\qquad\cong
+\bigoplus_{x\in X}\operatorname{Hom}_{k[L_x]}
+\Bigl(\operatorname{Res}_{L_x}^K U,
+\operatorname{Res}_{L_x}^{xHx^{-1}}({}^xW)\Bigr).
+\end{aligned}
+\end{equation}
+\end{theorem}
+\begin{proof}
+\cref{b5:thm:frobenius-reciprocity}把左侧识别为
+\(\operatorname{Hom}_{k[K]}(U,\operatorname{Res}_K^G\operatorname{Ind}_H^G W)\)。
+将\cref{b5:thm:mackey-decomposition}代入第二个变量，便得到各个
+\(\operatorname{Hom}_{k[K]}(U,\operatorname{Ind}_{L_x}^K{}^xW)\) 的直和。
+
+此时诱导出现在 Hom 的第二个变量，不能再次直接使用同一方向的左伴随。\cref{b5:thm:induction-coinduction}说明有限群的诱导与余诱导自然同构；\cref{b5:prop:coinduction-adjunction}给出的右伴随性质把这一项识别为
+\(\operatorname{Hom}_{k[L_x]}(\operatorname{Res}_{L_x}^K U,{}^xW)\)。
+这里每一步只用有限群的模构造，未用完全可约性。
+\end{proof}
+
+在复数域上，取特征标后，公式也计算两个诱导特征标的内积。取 \(K=H\)、\(U=W=\mathbf1_H\)，每一项都是一维空间，故
+\[
+\dim_{\mathbb C}\operatorname{End}_{\mathbb C[G]}
+\Bigl(\mathbb C[G/H]\Bigr)=|H\backslash G/H|.
+\]
+例如，\(S_n\) 在 \(n\) 个点上的置换表示对应 \(H=S_{n-1}\)；当 \(n\geq2\) 时只有两个双陪集，所以它的自同态空间维数为 \(2\)。平凡表示出现一次，其余直和项的重数平方和因而为 \(1\)，得到一个不可约的 \((n-1)\) 维分量。
 
 \subsection{不可约性判据}
 \label{b5:subsec:0402:03}
 
-待撰写。
+\begin{theorem}[Mackey 不可约性判据]\label{b5:thm:mackey-irreducibility}
+设 \(G\) 为有限群，\(H\leq G\)，\(W\) 为非零有限维复 \(H\)-表示。则 \(\operatorname{Ind}_H^G W\) 不可约，当且仅当 \(W\) 不可约，且对每个不等于 \(H\) 的双陪集 \(HxH\)，令 \(L_x=H\cap xHx^{-1}\) 后有
+\[
+\operatorname{Hom}_{\mathbb C[L_x]}
+\Bigl(\operatorname{Res}_{L_x}^H W,
+\operatorname{Res}_{L_x}^{xHx^{-1}}({}^xW)\Bigr)=0.
+\]
+\end{theorem}
+\begin{proof}
+\cref{b5:thm:maschke}说明有限群的复表示完全可约。若一个非零表示分解为互不同构不可约表示 \(V_i\) 的 \(\bigoplus_iV_i^{\oplus m_i}\)，则\cref{b5:prop:isotypic-decomposition}给出其自同态空间维数为 \(\sum_i m_i^2\)；这个数等于 \(1\)，恰好意味着表示不可约。
+
+对\cref{b5:thm:mackey-intertwining}取 \(K=H\)、\(U=W\)，代表元 \(x=1\) 的项就是 \(\operatorname{End}_{\mathbb C[H]}W\)。所有直和项的维数非负，且这一项至少为 \(1\)。因此总维数为 \(1\)，当且仅当这一项维数为 \(1\) 而其余项都为零。再次使用完全可约性与上述维数公式，前一条件等价于 \(W\) 不可约。
+\end{proof}
+
+不可约性判据中的基域条件不能从前面的模同构公式中自动删去。在模特征下，表示可能不是完全可约的；此时自同态空间一维并不足以推出不可约。
+
+\begin{example}\label{b5:exm:dihedral-induction}
+设 \(G=D_{2n}=\langle r,s:r^n=s^2=1,\ srs=r^{-1}\rangle\)，其中 \(n\geq3\)，且 \(H=\langle r\rangle\)。令 \(\zeta\) 为本原 \(n\) 次单位根，取 \(\lambda_j(r)=\zeta^j\)。因为 \(H\) 正规，双陪集代表元为 \(1,s\)，交集均为 \(H\)，并且 \({}^s\lambda_j=\lambda_{-j}\)。所以
+\(\operatorname{Ind}_H^G\lambda_j\) 不可约，当且仅当 \(2j\not\equiv0\pmod n\)。
+
+\ProseParagraphBreak
+在基 \(1\otimes1,s\otimes1\) 下，两个生成元的矩阵为
+\[
+r\longmapsto
+\begin{pmatrix}\zeta^j&0\\0&\zeta^{-j}\end{pmatrix},
+\qquad
+s\longmapsto
+\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+当 \(2j\equiv0\) 时，向量 \((1,1)\) 和 \((1,-1)\) 各自生成不变直线，诱导表示分成两个一维表示。这也从矩阵上解释了判据中的例外。
+\end{example}

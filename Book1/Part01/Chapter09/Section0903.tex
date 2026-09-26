@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 9.3 结构定理
-% 纲要位置：计划纲要.md，第 370 行。
+% 纲要位置：计划纲要.md，第 377 行。
 
 \section{结构定理}
 \label{b1:sec:0903}
@@ -10,7 +10,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 不变因子分解与初等因子分解
-% * 结构定理的初等证明
+% * Smith 化简与分解的存在性
 % * 分解的唯一性
 %
 
@@ -38,16 +38,37 @@ C_4\oplus C_6\cong C_4\oplus C_2\oplus C_3
 \]
 初等因子是 \(4,2,3\)，不变因子是 \(2,12\)。这两种写法表达同一个群，但各自必须遵守相应的归一化条件；不能在任意循环因子拆分之间直接谈唯一性。
 
-\subsection{结构定理的初等证明}
+\subsection{Smith 化简与分解的存在性}
 \label{b1:subsec:0903:02}
 
-生成元与关系构成一个整数矩阵。要整理关系，只能用可逆的整数行、列操作，不能像实数线性代数那样任意除以主元；除法会改变整数格。
+先说明关系矩阵从何而来。取有限生成交换群 \(A\) 的一组生成元 \(a_1,\ldots,a_m\)，由\cref{b1:prop:free-abelian-universal}把 \(e_i\mapsto a_i\) 延拓为满同态
+\[
+\pi:\mathbb Z^m\longrightarrow A.
+\]
+令 \(K=\ker\pi\)。\cref{b1:thm:first-isomorphism}给出 \(A\cong\mathbb Z^m/K\)，而\cref{b1:thm:finite-rank-free-abelian-subgroup}说明 \(K\) 有一组有限基 \(k_1,\ldots,k_t\)，其中 \(t\le m\)。把这些基元素在 \(\mathbb Z^m\) 标准基下的坐标依次排成列，得到 \(m\times t\) 整数矩阵 \(M\)。于是
+\[
+K=M\mathbb Z^t,\qquad
+A\cong\mathbb Z^m/M\mathbb Z^t.
+\]
+当 \(t=0\) 时，关系子群为零，已经有 \(A\cong\mathbb Z^m\)；以下矩阵化简处理 \(t>0\) 的情形。
 
 \begin{definition}[整数可逆矩阵]\label{b1:def:integer-invertible-matrix}
 设 \(U\) 为整数方阵。如果存在与 \(U\) 同阶的整数方阵 \(V\)，使 \(UV=VU=I\)，则将 \(U\) 称为\term[zhengshu-keni-juzhen]{整数可逆矩阵}[unimodular matrix]。换言之，\(U\) 可逆且 \(U^{-1}\) 的各项仍是整数。
 \end{definition}
 
 这等价于 \(\det U=\pm1\)：若逆矩阵也为整数矩阵，则 \(\det U\det U^{-1}=1\) 是两个整数的乘积；反之，若 \(\det U=\pm1\)，伴随矩阵公式给出的逆矩阵仍有整数项。这样的矩阵恰好给出整数格上的可逆坐标变换。
+
+\ProseParagraphBreak
+右乘一个 \(t\times t\) 整数可逆矩阵 \(V\) 只重组关系子群的一组基。事实上，\(V\mathbb Z^t=\mathbb Z^t\)，所以
+\[
+MV\mathbb Z^t=M\mathbb Z^t=K.
+\]
+左乘一个 \(m\times m\) 整数可逆矩阵 \(U\) 则在环境格 \(\mathbb Z^m\) 中作自同构；它不必逐点保持 \(K\)，但给出商群同构
+\[
+\mathbb Z^m/K\longrightarrow\mathbb Z^m/U(K),
+\qquad x+K\longmapsto Ux+U(K),
+\]
+其逆由 \(U^{-1}\) 给出。因此，列操作保持关系子群本身，行操作通过环境格的坐标变换识别商群。Smith 化简所要解决的问题是：在这些不改变商群同构类型的操作下，能否把关系变成彼此独立的整数倍关系？
 
 \begin{lemma}[整数矩阵的 Smith 化简]\label{b1:lem:smith-integer}
 设 \(m,n\) 为正整数。对任意 \(m\times n\) 整数矩阵 \(M\)，可以通过交换两行或两列、把一行或一列乘 \(-1\)、把某行或列的整数倍加到另一行或列，化为矩形对角阵
@@ -57,7 +78,9 @@ C_4\oplus C_6\cong C_4\oplus C_2\oplus C_3
 \]
 \end{lemma}
 \begin{proof}
-若矩阵全零则结束。否则把一个非零元素移到左上角，并使其为正，记为 \(a\)。对第一列的某个元素 \(b\)，作整数除法 \(b=qa+r\)，其中 \(0\le r<a\)，再把第一行的 \(q\) 倍从该行减去。如果 \(r>0\)，交换该行与第一行，使正主元严格变小；若 \(r=0\)，就消去了该元素。对第一行作同样的列操作。每当出现非零余数，主元严格下降，因此这种下降只可能发生有限次；主元不下降时，有限步内可把第一行和第一列的其余元素都清零。
+若矩阵全零则结束。否则把一个非零元素移到左上角，并使其为正，记为 \(a\)。对第一列的某个元素 \(b\)，作整数除法 \(b=qa+r\)，其中 \(0\le r<a\)，再把第一行的 \(q\) 倍从该行减去。如果 \(r>0\)，交换该行与第一行，使正主元严格变小；若 \(r=0\)，就消去了该元素。对第一行作同样的列操作。
+
+在主元 \(a\) 不变的一轮中，先用行操作清除第一列的其余元素。此时第一列只有首项非零；再用第一列的整数倍清除第一行的其余元素，不会恢复第一列下方已经清零的位置。只有整数除法产生非零余数并交换行或列时，才重新开始清理，而这时正主元已经严格减小。因此，主元固定的一轮只有有限次消元，需要重启时主元又严格下降；正整数不能无限下降，首行首列的清理必在有限步后完成。
 
 此时矩阵形如
 \[
@@ -92,15 +115,13 @@ C_4\oplus C_6\cong C_4\oplus C_2\oplus C_3
 主元由 \(2\) 降到 \(1\) 后，才得到整除链 \(1\mid6\)。其群论含义是 \(C_2\oplus C_3\cong C_6\)，其中对角元 \(1\) 对应的平凡因子应删去。矩阵的非零 Smith 对角元允许等于 \(1\)，而结构定理中列出的群的不变因子要求大于 \(1\)，两处的归一化约定应加以区别。
 
 \begin{proof}[\cref{b1:thm:fga-structure}的存在性证明]
-取 \(A\) 的有限生成元 \(a_1,\ldots,a_m\)，由\cref{b1:prop:free-abelian-universal}把 \(e_i\mapsto a_i\) 延拓为满同态 \(\pi:\mathbb Z^m\to A\)。由\cref{b1:thm:first-isomorphism}，\(\pi\) 诱导同构 \(\mathbb Z^m/\ker\pi\to A\)，具体发送 \(x+\ker\pi\mapsto\pi(x)\)。由\cref{b1:thm:finite-rank-free-abelian-subgroup}，核 \(K=\ker\pi\) 有有限基 \(k_1,\ldots,k_t\)，其中 \(t\le m\)。把它们在标准基下的坐标作为列，组成 \(m\times t\) 整数矩阵 \(M\)。
-
-对 \(M\) 应用\cref{b1:lem:smith-integer}，设行列操作的总矩阵分别为 \(U,V\)，于是 \(UMV=D\) 为 Smith 对角阵；\(U,V\) 及其逆的元素均为整数。列操作不改变关系子群，因为 \(V\mathbb Z^t=\mathbb Z^t\)，所以 \(MV\mathbb Z^t=M\mathbb Z^t=K\)。行操作给出具体同构
+沿用本小节在 Smith 引理之前构造的 \(\pi,K,M\)。若 \(t=0\)，则 \(K=0\) 且 \(A\cong\mathbb Z^m\)，所需分解已经得到。以下设 \(t>0\)；因为 \(t\le m\)，此时 \(m,t\) 都为正整数，可以对 \(M\) 应用\cref{b1:lem:smith-integer}。设行列操作的总矩阵分别为 \(U,V\)，于是 \(UMV=D\) 为 Smith 对角阵。由前面说明的行列操作意义，
 \[
-\mathbb Z^m/K\longrightarrow\mathbb Z^m/U(K),
-\qquad x+K\longmapsto Ux+U(K),
+A\cong\mathbb Z^m/K\cong\mathbb Z^m/U(K),
+\qquad
+U(K)=UMV\mathbb Z^t=D\mathbb Z^t.
 \]
-其逆由 \(U^{-1}\) 给出。并且
-\(U(K)=UMV\mathbb Z^t=D\mathbb Z^t\)，即由
+最后一个关系子群由
 \[
 d_1e_1,\ldots,d_te_t
 \]
@@ -122,7 +143,11 @@ A\cong
 保持加法。其核中整数代表 \(x\) 同时被 \(u,v\) 整除；由于 \(\gcd(u,v)=1\)，必有 \(uv\mid x\)，所以核平凡。两边又同有 \(uv\) 个元素，因而为同构。反复应用便把每个有限循环因子拆成素数幂阶循环群，得到初等因子形式。
 \end{proof}
 
-证明同时得到：有限生成无挠交换群自由；一般有限生成交换群的挠子群可以分离成一个直和因子。不过具体选出的自由补群依赖基的选择，结构定理没有宣称这个补群唯一。
+证明同时得到：有限生成无挠交换群自由；一般有限生成交换群的挠子群可以分离成一个直和因子。挠子群以及上一节得到的各主分量与主分量投影都由群本身确定；自由补群则通常依赖自由商群基及其提升的选择。即使商群的基已经固定，补群也未必唯一。例如对
+\[
+A=\mathbb Z\oplus C_2,\qquad T=0\oplus C_2,
+\]
+商群 \(A/T\cong\mathbb Z\) 的标准生成元分别提升为 \((1,\bar0)\) 和 \((1,\bar1)\)，所得两个无限循环子群都是 \(T\) 的自由补群，却彼此不同。
 
 \ProseParagraphBreak
 在已经得到的分解中，挠元恰为自由坐标全为零的元素，所以 \(A/A_{\mathrm{tor}}\cong\mathbb Z^r\)。再由\cref{b1:prop:finite-rank-free-abelian}，这个商群的基数目不依赖基的选择。这就允许先定义自由秩，而无须预先使用下面的不变因子唯一性证明。
@@ -136,7 +161,7 @@ A\cong
 \label{b1:subsec:0903:03}
 
 \begin{proof}[\cref{b1:thm:fga-structure}的唯一性证明]
-先恢复自由部分，再分别恢复每个素数的幂阶。同构保持元素的阶，故将挠子群 \(T=A_{\mathrm{tor}}\) 映到相应挠子群。在已得的分解中，挠元恰为自由坐标全零的元素：\(\mathbb Z^r\) 无挠，有限个有限循环因子的每个元素又都有有限阶。因此 \(A/T\cong\mathbb Z^r\)，由\cref{b1:prop:finite-rank-free-abelian}，该商群的自由秩唯一确定 \(r\)。
+先恢复自由部分，再分别恢复每个素数的幂阶。同构保持元素的阶，故将挠子群 \(T=A_{\mathrm{tor}}\) 映到相应挠子群。由\cref{b1:def:fga-free-rank}及其前面已经建立的 \(A/T\cong\mathbb Z^r\)，整数 \(r=\operatorname{rank}_{\mathbb Z}A\) 由群本身唯一确定。
 
 由\cref{b1:prop:fg-abelian-subgroups}，\(T\) 有限；由\cref{b1:thm:abelian-primary}，它是各 \(p\) 主分量的直和。每个主分量由“被某个 \(p\) 幂消去”这一内在条件确定，同构也保持它。对 \(B=T_p\)，考虑全由整数倍定义的子群及商群
 \[
@@ -157,12 +182,19 @@ d_1\mid d_2\mid\cdots\mid d_s.
 反过来，任何满足整除链且 \(d_1>1\) 的不变因子分解，其每个素数的指数必非降，去掉左端的零以后恰为该素数的初等因子指数。至少有一个素数整除 \(d_1\)，所以某个列表的长度恰为 \(s\)，不会额外留下全为零的位置。由此不变因子也唯一。
 \end{proof}
 
-例如，设 \(B\) 是有限交换二群，且
+例如，设 \(B\) 是有限交换 \(2\)-群，且
 \[
 |B/2B|=2^3,\qquad |2B/4B|=2^2,\qquad
 |4B/8B|=2^2,\qquad |8B/16B|=1.
 \]
 由\eqref{b1:eq:primary-torsion-layers}，指数至少为 \(1,2,3,4\) 的因子分别有 \(3,2,2,0\) 个。因此指数一出现一次，指数二不出现，指数三出现两次，得到 \(B\cong C_2\oplus C_8\oplus C_8\)。只知道群的阶为 \(2^7\) 无法作出这一判断，逐层取整数倍才恢复了各个循环因子的长度。
+
+\ProseParagraphBreak
+一般地，设 \(p\) 为素数，\(B\) 是有限交换 \(p\)-群，并且对某个 \(j\ge0\) 有 \(p^jB=p^{j+1}B\)。反复乘以 \(p\) 得到
+\[
+p^jB=p^{j+r}B\qquad(r\ge0).
+\]
+若 \(|B|=p^a\)，则对任意 \(x\in B\)，\cref{b1:thm:lagrange}说明 \(x\) 的阶整除 \(p^a\)，因而 \(p^aB=0\)。取满足 \(j+r\ge a\) 的 \(r\)，便有 \(p^jB=p^{j+r}B=0\)。所以有限 \(p\)-群中的倍数子群一旦稳定，就已经降到零。
 
 \ProseParagraphBreak
 这里必须保留有限性。\cref{b1:def:prufer-group}中的 Prüfer 群 \(P=C_{2^\infty}\) 的倍二映射是满射，所以 \(2P=P\)。因此无限群

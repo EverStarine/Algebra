@@ -1,30 +1,109 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.2 Lie 定理
-% 纲要位置：计划纲要.md，第 3470 行。
+% 纲要位置：工作记录/计划纲要.md，第 4121 行。
 
 \section{Lie 定理}
 \label{b5:sec:1202}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 可解复李代数的共同特征向量
 % * 表示的同时上三角化
 % * 特征零与代数闭假设的作用
 %
 
+严格上三角矩阵的对角线全为零，而一般上三角矩阵允许非零特征值。相应地，可解李代数的表示通常没有公共零向量，却在复数域上总有公共特征向量。证明需要先说明一个理想的特征空间何时被整个李代数保持。
+
 \subsection{可解复李代数的共同特征向量}
 \label{b5:subsec:1202:01}
 
-待撰写。
+\begin{lemma}[理想的特征空间]\label{b5:lem:ideal-weight-stable}
+设 \(\mathfrak g\) 是有限维复李代数，\(V\) 为有限维复向量空间，\(\rho:\mathfrak g\rightarrow\mathfrak{gl}(V)\) 是表示，\(\mathfrak a\subseteq\mathfrak g\) 是理想，\(\lambda:\mathfrak a\rightarrow\mathbb C\) 是线性泛函。若
+\[
+V_\lambda=\Bigl\{\,v\in V\mid \rho(a)v=\lambda(a)v
+\text{ 对所有 }a\in\mathfrak a\,\Bigr\}\ne0,
+\]
+则 \(\lambda\Bigl([\mathfrak g,\mathfrak a]\Bigr)=0\)，且 \(V_\lambda\) 是 \(\mathfrak g\)-子模。
+\end{lemma}
+\begin{proof}
+省略作用符号 \(\rho\)。固定 \(x\in\mathfrak g\) 与非零 \(v\in V_\lambda\)，设
+\[
+W=\operatorname{span}_{\mathbb C}\{v,xv,\ldots,x^{m-1}v\},
+\]
+其中 \(m\) 是首次出现线性相关时所取的维数，所以 \(W\) 被 \(x\) 保持。对 \(j\) 归纳，由
+\[
+a x^jv=x a x^{j-1}v+[a,x]x^{j-1}v,\qquad[a,x]\in\mathfrak a,
+\]
+得到
+\[
+a x^jv-\lambda(a)x^jv
+\in\operatorname{span}_{\mathbb C}\{v,\ldots,x^{j-1}v\}.
+\]
+归纳时第二项对 \([a,x]\) 使用同一归纳断言，恰落在上述低次空间。因此 \(\mathfrak a\) 保持 \(W\)，每个 \(a\in\mathfrak a\) 在这组基下的对角元都是 \(\lambda(a)\)。特别地，
+\[
+m\lambda\Bigl([a,x]\Bigr)=\operatorname{tr}_W[a,x]=0.
+\]
+复数域上 \(m\ne0\)，故 \(\lambda\Bigl([a,x]\Bigr)=0\)。最后，对任意 \(w\in V_\lambda\) 有
+\[
+a(xw)=x(aw)+[a,x]w=\lambda(a)xw,
+\]
+所以 \(xw\in V_\lambda\)。
+\end{proof}
+
+\begin{theorem}[Lie 定理的特征向量形式]\label{b5:thm:lie-common-eigenvector}
+设 \(\mathfrak g\) 是有限维可解复李代数，\(V\ne0\) 是有限维复表示。则 \(V\) 含有一维 \(\mathfrak g\)-子模，即存在 \(v\ne0\) 和线性泛函 \(\lambda:\mathfrak g\rightarrow\mathbb C\)，使 \(xv=\lambda(x)v\) 对所有 \(x\in\mathfrak g\) 成立。
+\end{theorem}
+\begin{proof}
+对 \(\dim\mathfrak g\) 归纳。零代数时任取非零向量。非零可解代数满足 \([\mathfrak g,\mathfrak g]\ne\mathfrak g\)，否则导出列不能终止。取交换商
+\(\mathfrak g/[\mathfrak g,\mathfrak g]\) 中一个余维一子空间，其逆像 \(\mathfrak a\) 是余维一理想。它仍可解，故归纳假设给出非零的 \(\mathfrak a\)-公共特征空间 \(V_\mu\)。由\cref{b5:lem:ideal-weight-stable}，这个空间被 \(\mathfrak g\) 保持。
+
+写 \(\mathfrak g=\mathfrak a+\mathbb Cx\)。由于复数域代数闭，\(x|_{V_\mu}\) 有特征向量 \(v\ne0\)。这个 \(v\) 已经是 \(\mathfrak a\) 的公共特征向量，因而也是 \(\mathfrak g\) 的公共特征向量。其特征值对 \(x\) 线性，便得到所述 \(\lambda\)。
+\end{proof}
 
 \subsection{表示的同时上三角化}
 \label{b5:subsec:1202:02}
 
-待撰写。
+\term[Lie-dingli]{Lie 定理}[Lie's theorem]通常表述为下面的形式。
+
+\begin{theorem}[Lie 三角化定理]\label{b5:thm:lie-triangularization}
+有限维可解复李代数 \(\mathfrak g\) 的任意有限维复表示 \(\rho:\mathfrak g\rightarrow\mathfrak{gl}(V)\) 都可同时上三角化。等价地，\(V\) 有一条每个相邻商都为一维的 \(\mathfrak g\)-子模旗标。
+\end{theorem}
+\begin{proof}
+\cref{b5:thm:lie-common-eigenvector}给出一维子模 \(V_1\)。在 \(V/V_1\) 上再用同一定理，并提升所得旗标。对 \(\dim V\) 归纳即得完全旗标。选取与之适应的基后，全部作用矩阵均上三角。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:solvable-derived-nilpotent}
+设 \(\mathfrak g\) 是有限维可解复李代数，\(V\) 为有限维复向量空间，\(\rho:\mathfrak g\to\mathfrak{gl}(V)\) 是表示。则 \(\rho\Bigl([\mathfrak g,\mathfrak g]\Bigr)\) 中的每个算子幂零，而且
+\[
+\operatorname{tr}\Bigl(\rho(x)\rho(y)\Bigr)=0
+\quad\Bigl(x\in\mathfrak g,\ y\in[\mathfrak g,\mathfrak g]\Bigr).
+\]
+此外，\([\mathfrak g,\mathfrak g]\) 本身是幂零李代数，\(\mathfrak g\) 的每个非零不可约有限维复表示都是一维的。
+\end{proposition}
+\begin{proof}
+在\cref{b5:thm:lie-triangularization}给出的基下，上三角矩阵的交换子对角元全为零，所以 \(\rho(y)\) 严格上三角，\(\rho(x)\rho(y)\) 也严格上三角。前两个结论随之成立。取 \(\rho=\operatorname{ad}_{\mathfrak g}\)，再限制到不变子空间 \([\mathfrak g,\mathfrak g]\)，由\cref{b5:thm:engel}得到导出代数幂零。最后，不可约表示中的一维不变子空间只能是整个空间。
+\end{proof}
+
+三角化不等于对角化。令一维交换李代数的生成元作用为非零 Jordan 幂零块，就得到不可分解而非不可约的表示；它的完全旗标存在，但通常没有不变直和补。
 
 \subsection{特征零与代数闭假设的作用}
 \label{b5:subsec:1202:03}
 
-待撰写。
+\begin{example}\label{b5:exm:lie-real-failure}
+实一维交换李代数 \(\mathbb Rx\) 在 \(\mathbb R^2\) 上作用为
+\[
+\rho(x)=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+\]
+特征多项式 \(T^2+1\) 在 \(\mathbb R\) 中没有根，因此不存在实不变直线。复化后则分成特征值 \(i\)、\(-i\) 对应的两条直线。
+\end{example}
+
+\begin{example}\label{b5:exm:lie-positive-characteristic}
+设 \(k\) 的特征为素数 \(p\)，\(V=k[t]/(t^p)\)。乘以 \(t\) 的算子记为 \(T\)，形式求导记为 \(D\)；因 \(D(t^p)=0\)，求导在商空间上良定义，且
+\[
+[D,T]=I,\qquad[D,I]=[T,I]=0.
+\]
+故 \(L=\operatorname{span}_k\{D,T,I\}\) 是可解李代数，甚至其导出代数 \(kI\) 位于中心。然而 \(D,T\) 不可能有公共特征向量：若 \(Dv=av\)、\(Tv=bv\)，则
+\([D,T]v=(ab-ba)v=0\)，与 \([D,T]v=v\ne0\) 矛盾。
+\end{example}
+
+第二个例子还说明：幂零李代数的表示在正特征下也未必可三角化。这里的 \(I\) 不是幂零算子，因此不满足 Engel 定理的假设。Lie 定理的证明利用\cref{b5:lem:ideal-weight-stable}中的 \(m\lambda\Bigl([a,x]\Bigr)=0\Rightarrow\lambda\Bigl([a,x]\Bigr)=0\) 排除这种现象，而这一步需要特征零。

@@ -1,30 +1,75 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 2.1 特征标
-% 纲要位置：计划纲要.md，第 3112 行。
+% 纲要位置：工作记录/计划纲要.md，第 3763 行。
+% 纲要细目（写作范围）：
+% * 迹、类函数与表示同构
+% * 特征标在直和、张量和对偶下的行为
+% * 本章默认复表示
+
 
 \section{特征标}
 \label{b5:sec:0201}
 
-% TODO: 按以下纲要要点撰写本节。
+一个表示给每个群元素一个矩阵，但矩阵条目随换基而改变。迹在相似变换下不变，又与直和和张量积相容，因此可以把整组矩阵压缩成一个群上的函数。本章固定有限群的有限维复表示；正特征下，不能仅凭这些迹确定表示的同构类型。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 迹、类函数与表示同构
-% * 特征标在直和、张量和对偶下的行为
-% * 本章默认复表示
-%
 
 \subsection{迹、类函数与表示同构}
 \label{b5:subsec:0201:01}
 
-待撰写。
+\begin{definition}\label{b5:def:character}
+设 \(G\) 为有限群，\(\rho:G\to\operatorname{GL}_{\mathbb C}(V)\) 为有限维复表示。函数
+\[
+\chi_V:G\longrightarrow\mathbb C,\qquad
+\chi_V(g)=\operatorname{tr}\rho(g)
+\]
+称为 \(V\) 的\term[tezhengbiao]{特征标}[character]。非零不可约表示的特征标称为不可约特征标。
+\end{definition}
+
+有 \(\chi_V(1)=\dim V\)。因为 \(\rho(hgh^{-1})=\rho(h)\rho(g)\rho(h)^{-1}\)，迹的相似不变性使特征标在每个共轭类上取常值。群上在共轭类上常值的复函数称为\term[lei-hanshu]{类函数}[class function]；它们组成空间 \(\operatorname{CF}(G)\)，维数等于共轭类个数。
+
+\ProseParagraphBreak
+同构表示的特征标相同，但逆命题此时还没有得到。只有先证明不可约特征标的正交性，才能从特征标中读出不可约分解的重数，继而恢复表示的同构类型。不能把这项结论误当成迹的定义的一部分。
 
 \subsection{直和、张量与对偶的特征标}
 \label{b5:subsec:0201:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:character-operations}
+设 \(G\) 为有限群，\(V,W\) 为 \(G\) 的有限维复表示，\(g\in G\)。则
+\[
+\chi_{V\oplus W}=\chi_V+\chi_W,\qquad
+\chi_{V\otimes W}=\chi_V\chi_W,\qquad
+\chi_{V^*}(g)=\chi_V(g^{-1})=\overline{\chi_V(g)}.
+\]
+若 \(G\) 作用于有限集合 \(X\)，则对每个 \(g\in G\)，相应复置换表示 \(\mathbb C[X]\) 的特征标为 \(g\) 在 \(X\) 中的不动点数。
+\end{proposition}
+\begin{proof}
+直和矩阵分块对角，迹相加；张量矩阵的对角元为两矩阵对角元的两两乘积，故迹相乘。对偶作用矩阵为逆矩阵的转置，所以其迹为 \(\chi_V(g^{-1})\)。若 \(g\) 的阶为 \(m\)，\(\rho(g)\) 满足 \(T^m-1\)，这个复多项式无重根，故矩阵可对角化，特征值均为单位根；它们的逆正是复共轭，给出最后等式。置换矩阵的对角元仅在基元素被固定时为一，其余为零，所以迹等于不动点数。
+\end{proof}
+
+例如 \(S_3\) 在三个字母上的置换特征标，在单位元、换位、三轮换上依次取 \(3,1,0\)。其不动直线的特征标恒为一，和为零的二维补表示因而有值 \(2,0,-1\)。下一节将从这些数值确认该二维表示不可约。
+
+\ProseParagraphBreak
+外平方与对称平方也能从原特征标计算：
+\begin{equation}\label{b5:eq:symmetric-exterior-character}
+\chi_{\Lambda^2V}(g)=\frac{\chi_V(g)^2-\chi_V(g^2)}2,\qquad
+\chi_{\operatorname{Sym}^2V}(g)=\frac{\chi_V(g)^2+\chi_V(g^2)}2.
+\end{equation}
+确实，若 \(\rho(g)\) 的特征值为 \(\lambda_i\)，外平方的特征值为 \(i<j\) 的 \(\lambda_i\lambda_j\)，对称平方还包含各 \(\lambda_i^2\)。展开 \((\sum_i\lambda_i)^2\) 即得两式。这些具体公式使用了复数域中二可逆的条件。
 
 \subsection{复表示的基本约定}
 \label{b5:subsec:0201:03}
 
-待撰写。
+类函数空间采用 Hermitian 内积
+\begin{equation}\label{b5:eq:character-inner-product}
+\langle f,h\rangle_G=\frac1{|G|}\sum_{g\in G}\overline{f(g)}h(g).
+\end{equation}
+它在第一变量共轭线性、第二变量线性，与本书向量空间内积的约定一致。若共轭类代表为 \(g_1,\ldots,g_r\)，类大小为 \(c_j\)，则
+\[
+\langle f,h\rangle_G=\frac1{|G|}\sum_{j=1}^r c_j\overline{f(g_j)}h(g_j).
+\]
+\symidx{\(\langle f,h\rangle_G\)：有限群类函数的内积}
+
+类函数空间可以包含完全不是特征标的函数；例如一个任意负常数不能是非零表示在单位元处的值。后面的正交基定理会表明，类函数成为实际特征标的条件是不可约基下的系数全部为非负整数。允许整数而不要求非负，则得到虚特征标。
+
+\ProseParagraphBreak
+若在特征 \(p\) 下直接取 \(k\) 值迹，平凡表示的 \(p\) 重直和与零表示都给出零函数，却不同构。特征整除群阶时，表示还可能不完全可约。这两种困难不能靠继续套用本章复数内积消除；模表示与 Brauer 特征标在后面的选读章另行处理。

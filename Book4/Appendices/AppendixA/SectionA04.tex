@@ -1,10 +1,113 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 A 的第 4 条要点整理。
+% 纲要标题：### A.4 可表性与伴随函子定理
+% 纲要位置：工作记录/计划纲要.md，第 3557 行。
+% 纲要细目（写作范围）：
+% #### A.4.1 可表性与泛元素
+% #### A.4.2 解集条件与伴随函子定理
+% ---
+
 
 \section{可表性与伴随函子定理}
 \label{b4:sec:A04}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 可表性问题与伴随函子定理的阅读建议
+前面的自由代数从一个已经给定的单子构造出来。更一般地，面对一个遗忘函子，是否存在自由对象本身可能就是问题。本节把这个存在性问题化为带有指定元素的对象是否有始对象，并说明小性条件在其中的作用。
 
-待撰写。
+\subsection{可表性与泛元素}
+\label{b4:subsec:A04:01}
+
+设 \(\mathcal C\) 为局部小范畴，\(H:\mathcal C\to\mathbf{Set}\) 为协变函子。它的\term[yuansu-fanchou]{元素范畴}[category of elements]在这里采用如下方向：对象为 \((X,x)\)，其中 \(x\in H(X)\)；态射
+\((X,x)\to(Y,y)\) 为满足 \(H(f)(x)=y\) 的 \(f:X\to Y\)。复合由 \(H\) 的函子性保证，记此范畴为 \(\int H\)。
+
+\begin{proposition}\label{b4:prop:A-representability-initial}
+设 \(\mathcal C\) 为局部小范畴，\(H:\mathcal C\to\mathbf{Set}\) 为函子。记 \(\int H\) 为以 \((X,x)\)（\(X\in\mathcal C,x\in H(X)\)）为对象、以满足 \(H(f)(x)=y\) 的态射 \(f:X\to Y\) 为 \((X,x)\to(Y,y)\) 的态射的元素范畴。则 \(H\) 可表，当且仅当 \(\int H\) 有始对象。具体地，若 \((A,u)\) 为始对象，则
+\[
+\operatorname{Hom}_{\mathcal C}(A,X)\longrightarrow H(X),
+\qquad f\longmapsto H(f)(u)
+\]
+为自然双射。
+\end{proposition}
+\begin{proof}
+从 \((A,u)\) 到 \((X,x)\) 存在唯一态射，恰好意味着每个 \(x\in H(X)\) 唯一写成 \(H(f)(u)\)。这就是\cref{b4:prop:universal-element}的泛元素判据。其自然性也直接来自
+\(H(g)H(f)(u)=H(gf)(u)\)。反向由一个表示取 \(u\) 为恒等态射对应的元素，就得到同样的存在唯一性。
+\end{proof}
+
+例如固定交换环 \(R\) 及 \(a\in R\)，在交换 \(R\)-代数范畴上研究
+\[
+H(A)=\{x\in A:x^2=a\,1_A\}.
+\]
+环 \(R[t]/(t^2-a)\) 连同 \(\bar t\) 给出泛元素：把 \(\bar t\) 送到 \(x\) 的 \(R\)-代数同态存在，当且仅当 \(x^2=a\,1_A\)，而多项式代入使它唯一。这一可表性并不声称每个 \(A\) 中都有平方根；没有根时，相应同态集合也为空。
+
+\ProseParagraphBreak
+
+由\cref{b4:prop:representables-preserve-limits}，可表函子保持所有已经存在的小极限。因此它必须把终对象送到单元素集合，并保持积与等化子。这里的条件是函子条件，而不是逐个比较集合基数。例如取直接像的幂集函子把单元素集合送到一个二元素集合，所以它不可协变表示；取逆像的反变幂集函子却由二元素集合表示。改变变性会改变整个问题。
+
+\subsection{解集条件与伴随函子定理}
+\label{b4:subsec:A04:02}
+
+一般范畴的全部对象可能组成真类，不能未经检查就把它们全部取积。伴随函子定理中的解集条件，正是要把足以产生全部解的对象控制在一个集合内。
+
+\begin{lemma}\label{b4:lem:A-weakly-initial-set}
+设 \(\mathcal E\) 为局部小、具有全部小极限的范畴。如果存在由一个集合指标化的对象族 \((E_i)_{i\in I}\)，使每个 \(X\in\mathcal E\) 至少接收一个来自某个 \(E_i\) 的态射，那么 \(\mathcal E\) 有始对象。
+\end{lemma}
+这样的族称为一个\term[ruoshi-duixiangji]{弱始对象集}[weakly initial set]；“弱”表示只要求态射存在，尚不要求唯一。
+\begin{proof}
+取积 \(P=\prod_{i\in I}E_i\)。对任意 \(X\)，先选一个 \(E_i\to X\)，再与积投影 \(P\to E_i\) 复合，得到 \(P\to X\)。所以 \(P\) 是弱始对象。
+
+局部小性保证 \(\operatorname{End}_{\mathcal E}(P)\) 是一个集合。取全部对 \((f,1_P)\) 的共同等化子 \(e:E\to P\)，即
+\[
+fe=e\qquad\Bigl(f\in\operatorname{End}_{\mathcal E}(P)\Bigr).
+\]
+这可由集合指标的积与一个等化子构造，故存在。任意 \(X\) 都接收 \(E\to P\to X\)，所以只须证明唯一性。
+
+给定 \(u,v:E\rightrightarrows X\)，取等化子 \(q:Y\to E\)。由 \(P\) 弱始，有 \(r:P\to Y\)。复合 \(eqr\) 是 \(P\) 的自同态，所以
+\[
+eqre=e.
+\]
+消去单态射 \(e\)，得到 \(qre=1_E\)。因此 \(q\) 同时为单态射和分裂满态射，是同构。由 \(uq=vq\) 得 \(u=v\)。这就证明 \(E\) 为始对象。
+\end{proof}
+
+\begin{definition}\label{b4:def:A-solution-set}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(U:\mathcal D\to\mathcal C\) 为函子。若对每个 \(X\in\mathcal C\)，都存在由集合 \(I_X\) 指标的对象族 \((Y_i)_{i\in I_X}\)（\(Y_i\in\mathcal D\)）与态射族
+\[
+\{u_i:X\to UY_i\}_{i\in I_X},
+\]
+使对每个 \(Y\in\mathcal D\) 及态射 \(u:X\to UY\)，都存在 \(i\in I_X\) 与态射 \(v:Y_i\to Y\)，满足 \(u=U(v)u_i\)，则称 \(U\) 满足\term[jieji-tiaojian]{解集条件}[solution set condition]。
+\end{definition}
+
+分解不要求唯一，所选族也可以随 \(X\) 改变。要求的是存在一个集合大小的候选族，足以经由后续态射产生所有解。
+
+\begin{theorem}[一般伴随函子定理]\label{b4:thm:A-general-adjoint-functor}
+设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(\mathcal D\) 有全部小极限，\(U:\mathcal D\to\mathcal C\) 为函子。假定当 \(U\) 满足解集条件时，所需的各解集及小极限可以按对象类同时选择；可把这些选择作为已给数据，或采用足以保证这些选择的类选择公理。在这一选择前提下，\(U\) 有左伴随，当且仅当它保持全部小极限并满足解集条件。
+\end{theorem}
+这一形式称为 \term[freyd-bansui-hanzi-dingli]{Freyd 一般伴随函子定理}[Freyd's general adjoint functor theorem]。
+\begin{proof}
+若 \(F\dashv U\)，\cref{b4:thm:adjoints-preserve-limits}说明 \(U\) 保持小极限。对每个 \(X\)，伴随单位这一个态射 \(\eta_X:X\to UFX\) 已经满足解集条件：每个 \(X\to UY\) 唯一经它分解。
+
+反过来，固定 \(X\in\mathcal C\)。考虑逗号范畴 \((X\downarrow U)\)：对象为 \((Y,u:X\to UY)\)，态射为使 \(U(v)u=u'\) 的 \(v:Y\to Y'\)。它局部小，因为每个态射集合是 \(\mathcal D\) 中某个态射集合的子集。它也有全部小极限。确实，对一个小图，先在 \(\mathcal D\) 中取底层对象的极限 \(L\)；由于 \(U\) 保持此极限，图中各个 \(X\to UY\) 唯一合成 \(X\to UL\)。极限锥与这个态射便满足逗号范畴的极限泛性质。
+
+解集条件恰好说 \((X\downarrow U)\) 有弱始对象集。使用假定中可同时选定的解集及所需小极限，按\cref{b4:lem:A-weakly-initial-set}的构造，为每个 \(X\in\mathcal C\) 同时指定始对象，记为
+\((FX,\eta_X:X\to UFX)\)。其泛性质是：任意 \(u:X\to UY\) 都唯一写成 \(U(f)\eta_X\)，其中 \(f:FX\to Y\)。
+
+对 \(a:X\to X'\)，用这个泛性质唯一规定 \(F(a):FX\to FX'\)，使
+\[
+U\Bigl(F(a)\Bigr)\eta_X=\eta_{X'}a.
+\]
+唯一性说明 \(F(1_X)=1_{FX}\)、\(F(ba)=F(b)F(a)\)，所以 \(F\) 成为函子。上述分解还给出自然双射
+\(\operatorname{Hom}_{\mathcal D}(FX,Y)\cong
+\operatorname{Hom}_{\mathcal C}(X,UY)\)，因而 \(F\dashv U\)。
+\end{proof}
+
+例如群的底集合函子 \(U:\mathbf{Grp}\to\mathbf{Set}\) 保持小极限：积与等化子上的群运算逐坐标定义，底集合正是集合极限；\cref{b4:thm:limits-products-equalizers}再给出全部小极限。对固定集合 \(X\)，令
+\(\kappa=\max(|X|,\aleph_0)\)。任意映射 \(X\to UG\) 的像生成一个基数至多为 \(\kappa\) 的子群，因为它的元素由有限长的生成元及其逆的词给出。把所有基数不超过 \(\kappa\) 的群搬到某个固定集合的子集上，其可能的乘法、逆及映射 \(X\to G\) 组成一个集合。这些映射给出解集：原来的映射先进入像生成的子群，再包含到 \(G\)。因此定理证明自由群存在，并同时给出其泛性质；具体的既约词模型是进一步的构造。
+
+\begin{corollary}\label{b4:cor:A-representability-solution-set}
+设 \(\mathcal C\) 为局部小、具有全部小极限的范畴，\(H:\mathcal C\to\mathbf{Set}\) 为保持小极限的函子。若存在一个集合
+\(\Bigl\{(A_i,x_i):x_i\in H(A_i)\Bigr\}_{i\in I}\)，使每个 \(x\in H(X)\) 都形如 \(H(f)(x_i)\)，其中 \(f:A_i\to X\)，则 \(H\) 可表。反过来，可表函子满足这些条件。
+\end{corollary}
+\begin{proof}
+保持极限说明元素范畴 \(\int H\) 有全部小极限：先在 \(\mathcal C\) 中取极限，再利用 \(H\) 保持该极限，把相容元素族合成为一个元素。假设中的集合是它的弱始对象集，故\cref{b4:lem:A-weakly-initial-set}给出始对象，再由\cref{b4:prop:A-representability-initial}得到可表性。
+
+反过来，可表函子保持小极限，而表示对象连同其泛元素这一个对象对，已经给出所需的集合。
+\end{proof}
+
+因此，保持极限解决相容性问题，解集条件解决大小问题，始对象的唯一性再给出泛性质。使用这类定理时，应分别指出这三步的根据，而不能把“保持极限”单独作为存在自由对象或表示对象的充分理由。

@@ -1,36 +1,134 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 19.4 Weyl 特征标公式
-% 纲要位置：计划纲要.md，第 3684 行。
-
-\section{Weyl 特征标公式}
-\label{b5:sec:1904}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4335 行。
 % * Weyl 分母
 % * 准确陈述 Weyl 特征标公式，调用第19.2、19.3节已经建立的 Casimir—Freudenthal 恒等式、Weyl 分母与反对称性，在本节完成完整证明
 % * 结合反对称性、最高权项与 Casimir 对应的范数限制，排除额外的支配最高项，得到 Weyl 特征标公式
 % * sl_2、sl_3 的完整计算
-%
+
+\section{Weyl 特征标公式}
+\label{b5:sec:1904}
+
+证明 Weyl 特征标公式将用到有限维特征标的 Weyl 不变性、分母的反对称性，以及 Casimir 给出的二阶算子等式。反对称性确定可能出现的轨道和，二阶等式与最高权条件则排除较低项。
 
 \subsection{Weyl 分母}
 \label{b5:subsec:1904:01}
 
-待撰写。
+由\eqref{b5:eq:weyl-denominator}，\(D=A_\rho\)。乘积形式便于在负根锥中求逆，交错和形式便于利用 Weyl 群对称性。若把 \(e^\mu\) 最终代成函数 \(\exp\Bigl(\mu(h)\Bigr)\)，某些 \(h\) 会让分母为零；本节先在群环中证明乘法恒等式，以区别形式商和可能未定义的数值商。
+
+\ProseParagraphBreak
+例如在 \(A_1\) 中，根为 \(2\omega\)，故
+\(D=e^\omega-e^{-\omega}\)。在 \(A_2\) 中，\(\rho=\alpha_1+\alpha_2\)，故
+\[
+D=e^{\alpha_1+\alpha_2}
+(1-e^{-\alpha_1})(1-e^{-\alpha_2})
+\Bigl(1-e^{-(\alpha_1+\alpha_2)}\Bigr).
+\]
+后一式展开后只有六项，因为抵消后它正是 \(A_\rho\)，而 \(W\cong S_3\) 有六个元素。
 
 \subsection{Weyl 特征标公式的陈述与证明}
 \label{b5:subsec:1904:02}
 
-待撰写。
+\begin{theorem}[Weyl 特征标公式]\label{b5:thm:weyl-character}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为相应根系，\(\Phi^+\) 为一组正根，\(P\) 为权格，\(P^+\) 为支配整权集，\(W\) 为 Weyl 群。令 \(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)、\(\varepsilon(w)=\det(w|_{\operatorname{span}_{\mathbb R}\Phi})\)，并在 \(\mathbb Z[P]\) 中定义
+\[
+D=e^\rho\prod_{\alpha\in\Phi^+}(1-e^{-\alpha}),\qquad
+A_\nu=\sum_{w\in W}\varepsilon(w)e^{w\nu}\quad(\nu\in P).
+\]
+设 \(\lambda\in P^+\)，\(L(\lambda)\) 为相应有限维简单最高权模。则在权格群环中有
+\begin{equation}\label{b5:eq:weyl-character}
+D\,\operatorname{ch}L(\lambda)
+=\sum_{w\in W}\varepsilon(w)e^{w(\lambda+\rho)}=A_{\lambda+\rho}.
+\end{equation}
+因此在群环的分式域中可写为
+\[
+\operatorname{ch}L(\lambda)
+=\frac{A_{\lambda+\rho}}{A_\rho}
+=\frac{\sum_{w\in W}\varepsilon(w)e^{w(\lambda+\rho)}}
+{e^\rho\prod_{\alpha>0}(1-e^{-\alpha})}.
+\]
+右端实际属于 \(\mathbb Z[P]\)，其系数就是权重数。
+\end{theorem}
+\begin{proof}
+令 \(f=\operatorname{ch}L(\lambda)\)。由\cref{b5:prop:formal-character-weyl-invariant}，\(f\) 在 \(W\) 下不变，而 \(D\) 反对称，所以 \(Df\) 反对称。由\cref{b5:lem:weyl-alternant-basis}，可唯一写成
+\[
+Df=\sum_{\nu\text{ 严格支配整权}}a_\nu A_\nu.
+\]
+它的支集包含于 \(\lambda+\rho-Q_+\)，故每个出现的 \(\nu\) 都满足
+\(\nu\le\lambda+\rho\)。最高项 \(e^{\lambda+\rho}\) 的系数为一：\(f\) 的最高项是 \(e^\lambda\)，\(D\) 的最高项是 \(e^\rho\)，其余项都严格向下。因此 \(a_{\lambda+\rho}=1\)。
+
+另一方面，\cref{b5:prop:freudenthal-operator}给出
+\(\Delta(Df)=\|\lambda+\rho\|^2Df\)。对每个交错和，
+\(\Delta A_\nu=\|\nu\|^2A_\nu\)。它们线性无关，故
+\(a_\nu\ne0\) 时必须有 \(\|\nu\|^2=\|\lambda+\rho\|^2\)。
+
+若 \(\nu<\lambda+\rho\)，令 \(\beta=\lambda+\rho-\nu\in Q_+\setminus\{0\}\)。
+\(\lambda+\rho\) 和 \(\nu\) 都严格支配，所以
+\[
+\|\lambda+\rho\|^2-\|\nu\|^2
+=(\beta,\lambda+\rho+\nu)>0.
+\]
+严格性来自 \(\beta\) 为简单根的非零非负组合，而
+\((\alpha_i,\lambda+\rho+\nu)>0\) 对每个 \(i\) 成立。
+这与范数相等矛盾。因此只剩 \(\nu=\lambda+\rho\) 一项，且系数为一，得到主等式。
+
+权格群环同构于有限个 Laurent 变量的整系数多项式环，故为整环，而 \(D\ne0\)。因此可在其分式域中除以 \(D\)。所得商等于已经存在的有限维模特征标，故确为有限整数和。
+\end{proof}
+
+Humphreys 在\cite[Section 24.3, pp. 138--139]{Humphreys1972LieAlgebras}中给出同一特征标公式和维数公式。本节用 Freudenthal 递推、形式算子和反对称展开证明这些公式，不需要紧群积分或 BGG 消解。
 
 \subsection{反对称性、最高项与范数限制}
 \label{b5:subsec:1904:03}
 
-待撰写。
+若只知道 \(Df\) 反对称且最高项为 \(e^{\lambda+\rho}\)，仍可添加较低的反对称轨道和。\eqref{b5:eq:denominator-laplacian}再给出范数限制，结合最高权支集与严格支配代表上的范数比较，才排除这些项。单凭范数相等还不够，因为一个球面可以与许多 Weyl 轨道相交。
+
+\ProseParagraphBreak
+上一章已构造有限维 \(L(\lambda)\)，本章据此计算其特征标。公式中的商等于这个表示的特征标，因此只有有限项，且系数均为非负整数。
 
 \subsection{\texorpdfstring{\(\mathfrak{sl}_2\) 与 \(\mathfrak{sl}_3\) 的特征标计算}{sl2 与 sl3 的特征标计算}}
 \label{b5:subsec:1904:04}
 
-待撰写。
+对 \(\mathfrak{sl}_2\)，令 \(z=e^\omega\)，\(\lambda=m\omega\)。公式变为
+\[
+\operatorname{ch}L(m\omega)
+=\frac{z^{m+1}-z^{-(m+1)}}{z-z^{-1}}
+=z^m+z^{m-2}+\cdots+z^{-m}.
+\]
+最后一步是有限等比恒等式，可直接乘回 \(z-z^{-1}\) 验证。它恢复了独立建立的 \(\mathfrak{sl}_2\) 分类中的全部权和重数。
+
+\ProseParagraphBreak
+对 \(\mathfrak{sl}_3\)，用 \(x_1x_2x_3=1\) 的形式变量记录对角权，正根为
+\(\varepsilon_1-\varepsilon_2,\varepsilon_2-\varepsilon_3,\varepsilon_1-\varepsilon_3\)。
+令 \(\lambda=a\omega_1+b\omega_2\)、\(a,b\ge0\)。在该权格中可以用指数列
+\((a+b,b,0)\) 表示 \(\lambda\)，用 \((2,1,0)\) 表示 \(\rho\)，所以
+\begin{equation}\label{b5:eq:sl3-weyl-determinant}
+\operatorname{ch}L(a\omega_1+b\omega_2)
+=\frac{
+\det\begin{pmatrix}
+x_1^{a+b+2}&x_1^{b+1}&1\\
+x_2^{a+b+2}&x_2^{b+1}&1\\
+x_3^{a+b+2}&x_3^{b+1}&1
+\end{pmatrix}}
+{\det\begin{pmatrix}
+x_1^2&x_1&1\\x_2^2&x_2&1\\x_3^2&x_3&1
+\end{pmatrix}}.
+\end{equation}
+分子、分母都是对变量置换的交错和，因而确实是 Weyl 公式的直接改写。
+
+\ProseParagraphBreak
+取 \((a,b)=(1,0)\)、\((0,1)\)、\((2,0)\)，分别得到
+\[
+x_1+x_2+x_3,\qquad
+x_1^{-1}+x_2^{-1}+x_3^{-1},\qquad
+\sum_{i\le j}x_ix_j.
+\]
+例如第一式乘以分母时，只留下指数列 \((3,1,0)\) 的交错式：乘积中的重复指数行列式为零；第三式同样由完全对称二次式的行列式恒等式验证。
+
+\ProseParagraphBreak
+取 \((a,b)=(1,1)\)，商为
+\[
+2+\sum_{i\ne j}\frac{x_i}{x_j}.
+\]
+可将它乘回 Vandermonde 分母，逐项交错化得到指数列 \((4,2,0)\) 的分子；也可用
+\((x_1+x_2+x_3)(x_1^{-1}+x_2^{-1}+x_3^{-1})-1\)
+展开为同一式。这六个非零权正是六个根，常数项二对应二维 Cartan 空间，与前面的伴随模计算一致。

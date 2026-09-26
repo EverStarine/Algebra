@@ -5,12 +5,16 @@
 \section{理想运算}
 \label{b1:sec:1003}
 
-一个理想记录一组允许被视为零的元素。把两组条件合并、同时要求两组条件成立，以及把两组元素相乘，分别产生理想的和、交与积。这三种运算通常不同。本节先写出它们的元素形式，再在交换环中讨论取幂、取根，以及反过来寻找哪些乘子能把一个理想送入另一个理想。
+一个理想记录一组允许被视为零的元素。设 \(I,J\) 为环 \(R\) 的双边理想。若在同一个商环中令 \(I\) 和 \(J\) 的元素都成为零，就要商去 \(I+J\)；同时属于 \(I\) 和 \(J\) 的元素则组成 \(I\cap J\)，它们在两个商环中都映为零。具体地，自然同态 \(r\mapsto(r+I,r+J)\) 满足
+\[
+\ker\!\left(R\longrightarrow R/I\times R/J\right)=I\cap J.
+\]
+理想积 \(IJ\) 由 \(I\) 中元素与 \(J\) 中元素的乘积的有限和组成。这三种运算通常不同。本节先写出它们的元素形式，再在交换环中讨论取幂、取根，以及寻找哪些乘子能把一个理想送入另一个理想。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 和、积、交与生成理想
-% * 幂理想与根理想
+% * 理想的幂与根
 % * 不同理想运算之间的包含关系
 % * 理想商、零化子与基本运算性质
 %
@@ -51,16 +55,22 @@ I(J+K)=IJ+IK,\qquad (I+J)K=IK+JK,\qquad (IJ)K=I(JK).
 \]
 前两式把一个乘积的因子展开，再合并有限和；末式两边都是元素 \(abc\)、\(a\in I,b\in J,c\in K\) 的有限和。这些论证只用结合律和分配律，不要求交换性。
 
-\subsection{幂理想与根理想}
+例如设 \(k\) 为域，在 \(k[x,y]\) 中取 \(I=(x,y)\)、\(J=(x,y^2)\)。把两组生成元两两相乘，得到
+\[
+IJ=(x^2,xy^2,xy,y^3)=(x^2,xy,y^3).
+\]
+其中 \(xy\) 是容易漏掉的混合乘积；\(xy^2\) 已由 \(xy\) 生成，因此可从生成元列表中删去。
+
+\subsection{理想的幂与根}
 \label{b1:subsec:1003:02}
-设 \(I\) 为环 \(R\) 的双边理想。定义 \(I^0=R\)、\(I^1=I\)，并对整数 \(n\geq1\) 递归定义 \(I^{n+1}=I^nI\)。每个 \(I^n\) 是由 \(n\) 个 \(I\) 中元素的乘积形成的有限和，而不是只由某个元素的 \(n\) 次幂组成。交换环的主理想满足 \((a)^n=(a^n)\)，但多生成元时各个混合乘积也必须计算。
+设 \(I\) 为环 \(R\) 的双边理想。约定 \(I^0=R\)、\(I^1=I\)，并对整数 \(n\geq1\) 递归定义 \(I^{n+1}=I^nI\)。对 \(n\geq1\)，\(I^n\) 由 \(n\) 个 \(I\) 中元素的乘积的有限和组成，而不只由某个元素的 \(n\) 次幂组成。交换环的主理想满足 \((a)^n=(a^n)\)，但多生成元时各个混合乘积也必须计算。
 
 \begin{definition}\label{b1:def:radical-ideal}
 设 \(R\) 为交换环，\(I\) 为 \(R\) 的理想。集合
 \[
 \sqrt I\coloneqq\{\,a\in R\mid a^n\in I\text{ 对某个正整数 }n\text{ 成立}\,\}
 \]
-称为 \(I\) 的\term[genlixiang]{根理想}[radical of an ideal]。若 \(I=\sqrt I\)，也称 \(I\) 为根理想。\(\sqrt{(0)}\) 称为环的\term[milinggen]{幂零根}[nilradical]。
+称为 \(I\) 的\term[lixiang-de-gen]{根}[radical of an ideal]。若 \(I=\sqrt I\)，则称 \(I\) 为\term[genlixiang]{根理想}[radical ideal]。\(\sqrt{(0)}\) 称为环的\term[milinggen]{幂零根}[nilradical]。
 \end{definition}
 \symidx{\(\sqrt I\)：理想的根}
 
@@ -78,11 +88,15 @@ I(J+K)=IJ+IK,\qquad (I+J)K=IK+JK,\qquad (IJ)K=I(JK).
 每个素理想都是根理想，因为 \(a^n\in\mathfrak p\) 可反复用素性推出 \(a\in\mathfrak p\)。\(\mathbb Z\) 中，\(\sqrt{12\mathbb Z}=6\mathbb Z\)：若 \(12\mid a^n\)，素数 \(2,3\) 均整除 \(a\)；反过来 \(6\mid a\) 时 \(12\mid a^2\)。这也说明根理想的作用是忘掉某些幂次信息，而不是忘掉全部整除信息。
 
 \ProseParagraphBreak
-若希望分解理想而保留幂次信息，就会遇到\term[zhunsu-lixiang]{准素理想}[primary ideal]。设 \(Q\) 为交换环 \(R\) 的真理想；如果对任意 \(a,b\in R\)，条件 \(ab\in Q\) 且 \(a\notin Q\) 总能推出存在正整数 \(m\) 使 \(b^m\in Q\)，就称 \(Q\) 为准素理想。例如整数环中的 \(p^r\mathbb Z\)（\(p\) 为素数，\(r\geq1\)）具有此性质。若 \(p^r\mid ab\) 而 \(p^r\nmid a\)，整数的素数分解说明 \(p\mid b\)，故 \(p^r\mid b^r\)。特别地，
+若希望分解理想而保留幂次信息，就会用到下述概念。
+\begin{definition}\label{b1:def:primary-ideal}
+设 \(Q\) 为交换环 \(R\) 的真理想。若对任意 \(a,b\in R\)，只要 \(ab\in Q\) 且 \(a\notin Q\)，就存在正整数 \(m\) 使 \(b^m\in Q\)，则称 \(Q\) 为\term[zhunsu-lixiang]{准素理想}[primary ideal]。
+\end{definition}
+例如整数环中的 \(p^r\mathbb Z\)（\(p\) 为素数，\(r\geq1\)）是准素理想。若 \(p^r\mid ab\) 而 \(p^r\nmid a\)，整数的素数分解说明 \(p\mid b\)，故 \(p^r\mid b^r\)。特别地，
 \[
 12\mathbb Z=4\mathbb Z\cap3\mathbb Z
 \]
-把一个理想写成两个准素理想的交，仍保留因子二所带的平方信息。这里仅用这个例子说明分解问题；一般的准素理想、Noether 环中的准素分解及其唯一性范围，安排在第三卷第4.2--4.4节，不作为本章后续论证的前提。
+把一个理想写成两个准素理想的交，仍保留因子二所带的平方信息。这里仅用这个例子说明分解问题；一般的准素分解理论，包括 Noether 环中的存在性与唯一性范围，安排在第三卷第4.2--4.4节，不作为本章后续论证的前提。
 
 \subsection{理想运算的包含关系}
 \label{b1:subsec:1003:03}

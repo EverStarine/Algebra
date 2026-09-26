@@ -1,13 +1,144 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 附录 B　计算交换代数专题
-% 纲要位置：计划纲要.md，第 2286 行。
 
 \chapter{计算交换代数专题}
 \label{b3:app:B}
 
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
+\begin{chapterabstract}
+本附录讨论交换代数计算中怎样表示输入、组织计算并核验输出。先区分系数域、整数系数和幂级数截断的不同要求，再完整建立零维理想的 FGLM 换序算法，并说明模素数计算、参数分支和单项式计数的用途。最后把第21章的模 Gröbner 基与合冲构造落实为生成元变换和消解验证的数据。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 明确系数环、工作环、项序、精度和展示矩阵在计算中的作用。
+\item 用商代数的乘法矩阵执行 FGLM 换序，证明算法终止并核验结果。
+\item 区分一般参数与退化分支，用有限等式验证重构与分解的候选答案。
+\item 追踪理想和模的生成元变换，分清矩阵复形与已经证明正合的消解。
+\end{itemize}
+\end{learninggoals}
+
+本附录主要使用\chapref{b3:ch:08}的全局 Gröbner 基与零维商代数；分解部分还用到\chapref{b3:ch:04}的准素分解，模计算部分使用\chapref{b3:ch:21}。局部标准基的具体方法另在\appref{b3:app:F}讲述。前两节可在第8章之后阅读，最后一节宜在学过自由消解后阅读。
+
+\ProseParagraphBreak
+Cox、Little 与 O'Shea 的《Using Algebraic Geometry》从消去方程与商环结构的配合引入计算问题，见\cite[Chapter 2, pp. 24--25]{CoxLittleOShea1998UsingAG}。本附录把这种计算观点落实为明确的输入、输出和正确性依据。F4、F5、Gröbner walk、一般正则链和正规化算法只说明原理与进一步需要解决的问题；完整证明的算法是域上零维 FGLM 换序，其基础除法与核关系计算则调用正文已建立的结果。
 
 \input{Appendices/AppendixB/SectionB01}
 \input{Appendices/AppendixB/SectionB02}
 \input{Appendices/AppendixB/SectionB03}
 \input{Appendices/AppendixB/SectionB04}
+
+\begin{chaptersummary}
+有限输入首先要说明它表示哪一个环、理想或模。系数能否精确判零、首系数能否求逆、分母是否属于指定乘性集，都会改变算法的合法步骤。FGLM 的有限性来自商代数的有限维数：候选单项式中线性无关的类至多出现 \(D\) 个，其余类给出新项序的关系。
+
+\ProseParagraphBreak
+计算方法与验证方法可以分开。行消元、签名、模素数重构和参数分支有助于产生答案；两向生成元表示、首项判据和精确矩阵等式使答案能够独立复核。模的计算还必须保存生成元变换，并在每一层证明像等于核。单项式计数与 Hilbert 数据很有用，但不能代替理想相等、准素性或消解正合性的证明。
+\end{chaptersummary}
+
+\BookExercises
+以下各题的系数运算均为精确运算；未另作说明时，\(k\) 为域。
+
+\begin{exercise}\label{b3:ex:B-truncation}
+只给定 \(f\in k[[x]]\) 模 \((x)^N\) 的截断，能否判断 \(f=0\)，或在 \(f\ne0\) 时确定其阶？若截断中的最低非零项为 \(a_rx^r\)，其中 \(r<N\)，可以确定什么？
+\end{exercise}
+\begin{solution}
+零截断同时允许 \(f=0\)、\(f=x^N\) 和 \(f=x^{N+1}\)，故不能判断是否为零，也不能确定非零时的阶。若截断已出现最低非零项 \(a_rx^r\)，后面的未知项次数均至少为 \(N>r\)，不能改变该项，故可确定 \(f\ne0\)、\(\operatorname{ord}(f)=r\) 以及初始形式 \(a_rx^r\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-strong-basis}
+在 \(\mathbb Z[x]\) 中证明 \(\{2,x\}\) 是理想 \(I=(2,x)\) 的强 Gröbner 基。求 \(\mathbb Z[x]/I\)，并说明扩张到 \(\mathbb Q[x]\) 后发生什么。
+\end{exercise}
+\begin{solution}
+属于 \(I\) 的常数为偶数，所以次数零的非零首项被 \(2\) 整除；次数至少为一的首项都被 \(x\) 整除。故给定集合是强 Gröbner 基。商环先令 \(x=0\)，再模 \(2\)，得到 \(\mathbb F_2\)。在 \(\mathbb Q[x]\) 中 \(2\) 可逆，扩张理想为整个环，商为零环；因此从分式域上的零商不能恢复原商的整数扭结构。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-fglm-nonreduced}
+对 \(I=(y-x^2,x^3)\subset k[x,y]\)，已知 \(y>x\) 字典序的标准基为 \(1,x,x^2\)。用 FGLM 改为 \(x>y\) 字典序，写出候选的处理次序、返回基及标准单项式。解释为什么算法不需要 \(I\) 为根理想。
+\end{exercise}
+\begin{solution}
+在旧商环中 \(y=x^2\)、\(x^3=0\)。先接受 \(1\)，候选为 \(y,x\)；接受 \(y\)，其坐标是 \(x^2\)。接着处理 \(y^2\)，坐标为零，产生 \(y^2\)。随后接受 \(x\)，坐标与 \(1,x^2\) 独立；处理 \(xy\) 时坐标为 \(x^3=0\)，产生 \(xy\)；处理 \(x^2\) 时坐标等于 \(y\)，产生 \(x^2-y\)。返回
+\[
+G=(y^2,xy,x^2-y),\qquad B=(1,y,x).
+\]
+这些首项为 \(y^2,xy,x^2\)，商维数为三。\(x\) 在商中是非零幂零元，所以 \(I\) 非根理想；FGLM 使用的是坐标线性相关和有限维数，从未要求乘法矩阵可对角化。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-fglm-unit}
+在 FGLM 算法中，若去掉“只从加入 \(B\) 的单项式产生相邻倍数”，改为从每个处理过的单项式都产生相邻倍数，为什么原来的候选数证明失效？以 \(k[x]/(x)\) 为例说明。
+\end{exercise}
+\begin{solution}
+原证明把每一批至多 \(n\) 个新候选分配给一个独立向量，独立向量至多 \(D\) 个。若所有被丢弃的候选也产生后继，这个计数不再成立。在 \(k[x]/(x)\) 中接受 \(1\) 后处理 \(x\)，得到关系 \(x\)；若继续从被丢弃的 \(x^r\) 产生 \(x^{r+1}\)，队列会永远非空。即使每个 \(x^r\) 都立即被首项整除判据丢弃，也不能保证整个循环结束。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-rational-reconstruction}
+模 \(101\) 的剩余类 \(34\) 在范围 \(|a|\le5,\ 1\le b\le5\) 内重构为互素分数 \(a/b\)，并要求 \(b\) 模 \(101\) 可逆。求答案并证明唯一。
+\end{exercise}
+\begin{solution}
+\(3\cdot34=102\equiv1\pmod{101}\)，故 \(a/b=1/3\) 满足条件。若有另一解 \(c/d\)，交叉差 \(ad-bc\) 被 \(101\) 整除，而其绝对值至多 \(2\cdot5\cdot5=50<101\)，故它等于零。互素且分母为正的分数表示唯一。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-one-sided-certificate}
+给出候选生成组 \(G\subset(F)\) 但 \((G)\ne(F)\) 的例子，以及 \((F)\subset(G)\) 但二者不等的例子。说明哪些附加数据可以排除它们。
+\end{exercise}
+\begin{solution}
+在 \(k[x]\) 中取 \(F=(x)\)、\(G=(x^2)\)，有 \(G=F(x)\)，但 \(x\notin(x^2)\)。反向取 \(F=(x^2)\)、\(G=(x)\)，则 \(F=G(x)\)，但 \(x\notin(F)\)。同时给出 \(G=FU\) 与 \(F=GV\) 的矩阵等式便排除这两类遗漏；要进一步声称 Gröbner 基，还需验证临界对或等价的首项条件。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-parameter}
+对 \(a x^2+b x\in k[a,b,x]\)，给出覆盖全部参数的分支及各分支的首一 Gröbner 基。哪些分支的商代数维数相同但根结构可能不同？
+\end{exercise}
+\begin{solution}
+分为 \(a\ne0\)、\(a=0,b\ne0\)、\(a=b=0\)。相应基为
+\[
+\{x^2+(b/a)x\},\qquad \{x\},\qquad\varnothing.
+\]
+商维数依次为 \(2,1,\infty\)。在第一分支内，\(b\ne0\) 时有两个不同根 \(0,-b/a\)，\(b=0\) 时只有一个二重根；商维数同为二。此结论在任意特征成立，因为 \(b/a\ne0\) 就使两个根不同。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-primary-components}
+证明对每个 \(r\ge1\)，
+\[
+(x^2,xy)=(x)\cap(x^2,xy,y^r)
+\]
+是 \(k[x,y]\) 的一个不可约简准素分解。
+\end{exercise}
+\begin{solution}
+交理想的单项式生成元由两组生成元的最小公倍数给出，即 \(x^2,xy,xy^r\)，最后一个被 \(xy\) 整除，得到原理想。\((x)\) 为素理想。第二分量的商中 \(x,y\) 幂零，且其唯一极大理想为 \((x,y)\) 的像；极大理想外的元素为单位，故零因子只能是幂零元，第二分量准素。\((x)\) 不包含于第二分量，因为 \(x\) 不属于它；第二分量也不包含于 \((x)\)，因为 \(y^r\notin(x)\)。因此任何分量都不可删去。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-monomial-series}
+求 \(k[x,y]/(x^3,x^2y,y^2)\) 的标准单项式、Hilbert 级数和长度，并用容斥公式核对。
+\end{exercise}
+\begin{solution}
+标准单项式为 \(1,x,x^2,y,xy\)，故级数为 \(1+2t+2t^2\)，长度为 \(5\)。容斥分子为
+\[
+1-(t^3+t^3+t^2)+(t^4+t^5+t^4)-t^5
+=1-t^2-2t^3+2t^4.
+\]
+它等于 \((1-t)^2(1+2t+2t^2)\)，与标准单项式计数一致。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-module-change}
+对 \(F=(x,y,x+y)\)，直接证明其全部关系由 \((y,-x,0)^{\mathsf T}\) 与 \((-1,-1,1)^{\mathsf T}\) 生成，不使用 Gröbner 基。
+\end{exercise}
+\begin{solution}
+若 \(ax+by+c(x+y)=0\)，则 \((a+c)x+(b+c)y=0\)。因 \(x,y\) 互素，存在 \(h\) 使 \(a+c=hy,\ b+c=-hx\)。所以
+\[
+(a,b,c)^{\mathsf T}
+=h(y,-x,0)^{\mathsf T}+c(-1,-1,1)^{\mathsf T}.
+\]
+两个给定向量显然都是关系，故生成全部核。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-local-vs-global}
+在 \(k[x]\) 中取 \(I=(x(x-1)^2)\)。分别求其在 \((x)\) 与 \((x-1)\) 处局部化后的理想，以及两个局部商的长度。
+\end{exercise}
+\begin{solution}
+在 \((x)\) 处，\(x-1\) 可逆，故扩张理想为 \((x)\)，商为 \(k\)，长度一。在 \((x-1)\) 处，\(x\) 可逆，故扩张理想为 \(((x-1)^2)\)，商基为 \(1,x-1\)，长度二。全局商有维数三，与两个局部长度之和一致。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:B-complex-not-resolution}
+在 \(S=k[x]\) 中，考虑 \(S\xrightarrow{0}S\xrightarrow{x}S\)。解释为何相邻微分相乘为零却不能据此称为自由消解。若左端之前为零，指出失败的正合位置。
+\end{exercise}
+\begin{solution}
+复形条件只检查 \(x\cdot0=0\)。若完整序列左端为 \(0\to S\xrightarrow{0}S\xrightarrow{x}S\)，则第一个 \(S\) 处的核为整个 \(S\)，前一个像为零，故不正合。在中间 \(S\) 处，乘 \(x\) 的核为零，倒是等于前一个零映射的像。每个位置都必须分别证明像等于核；一个位置成功不能代替其余位置。
+\end{solution}

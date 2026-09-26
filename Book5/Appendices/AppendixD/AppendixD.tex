@@ -1,11 +1,142 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 D　微分算子、D-模与微分 Galois 理论
-% 纲要位置：计划纲要.md，第 3819 行。
+% 纲要位置：工作记录/计划纲要.md，第 4646 行。
 
 \chapter{微分算子、D-模与微分 Galois 理论}
 \label{b5:app:D}
 
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
+\begin{chapterabstract}
+本附录把线性微分方程写成微分算子环上的模，解释阶滤过、主符号和特征簇，证明良滤过的基本性质，并计算直线上的联络与点支撑例子。Bernstein 不等式以法向微分算子分解给出证明概要。随后比较形式解和解析解，用一个发散级数及其扇形积分说明 Stokes 现象，并概述正则联络及导出 Riemann--Hilbert 对应的证明。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 会从线性方程或方程组构造左微分算子模，并用同态恢复解。
+\item 区分阶滤过与 Bernstein 滤过，计算主理想商模的特征簇。
+\item 理解 holonomic 条件，辨别联络、点支撑模及一般相干 D-模。
+\item 区分形式存在性、解析单值和扇形渐近数据，知道正则性为何不可省略。
+\end{itemize}
+代数部分需要左模、滤过与伴随分次、仿射簇和层的基本语言；最后的解析讨论另需复函数的 Laurent 展开、解析延拓及留数定理。导出 Hom 算例只需自由消解，一般对应的概要则涉及消解奇点、GAGA 和导出层论。附录 E 的 PV 理论可独立阅读，表示论正文不以这些分析与几何专题为前提。
+\end{learninggoals}
+
+方程的解随允许的函数空间而变。把方程先写成模，有助于分清哪些关系来自算子本身，哪些现象来自局部化、拓扑或渐近条件。阅读时可先算清 \(D/D\partial\) 与 \(D/Dx\)，再把两种模在特征簇上的差异与其解的行为对照。
 
 \input{Appendices/AppendixD/SectionD01}
 \input{Appendices/AppendixD/SectionD02}
+
+\begin{chaptersummary}
+Leibniz 法则成为 Weyl 代数的交换关系，线性方程则成为自由左模中的关系。阶滤过把这种非交换结构转为余切空间上的交换代数；特征簇据此记录约束的几何形状。它不能用任意滤过的符号零点集代替，计算一般左理想时也必须掌握整个分次理想。
+
+\ProseParagraphBreak
+形式级数递推、解析延拓和扇形渐近各自保存不同的信息。正则联络可以由局部系统描述，但非正则方程还可能带有 Stokes 数据；全局原函数的障碍又需要上同调记录。因此 Riemann--Hilbert 对应中的正则性、构造性和导出范畴都有具体作用。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}
+设 \(k\) 为特征零域，\(m\ge1\)。在 \(A_1(k)\) 中求 \(\partial^m x\) 与 \(\partial^2x^3\) 的正规表达。
+\end{exercise}
+\begin{solution}
+由 \(\partial x=x\partial+1\) 归纳得
+\(\partial^m x=x\partial^m+m\partial^{m-1}\)。先算
+\(\partial x^3=x^3\partial+3x^2\)，再求导一次，得
+\[
+ \partial^2x^3=x^3\partial^2+6x^2\partial+6x.
+\]
+额外项来自求导对系数的作用，不能按交换多项式相乘。
+\end{solution}
+
+\begin{exercise}
+在特征零域 \(k\) 上证明 Weyl 代数没有非零有限维左模。说明这不妨碍存在在 \(k(x)\) 上有限维的微分模。
+\end{exercise}
+\begin{solution}
+若模在 \(k\) 上维数为正整数 \(d\)，对作用关系
+\([\partial,x]=I\) 取矩阵迹，左边为零，右边为 \(d\ne0\)，矛盾。微分模有限维是指对系数域 \(k(x)\) 的维数；把它仅看作 \(k\) 向量空间通常无限维，故上述迹论证并不适用。
+\end{solution}
+
+\begin{exercise}
+设 \(D=A_1(\mathbb C)\)。构造一个左 \(D\) 模，使其到任意函数模 \(V\) 的同态对应方程组 \(y_1'=y_2\)、\(y_2'=-y_1\) 的解。把它化为单个循环模。
+\end{exercise}
+\begin{solution}
+取 \(D^2\) 的基 \(e_1,e_2\)，模去关系
+\(\partial e_1-e_2\)、\(\partial e_2+e_1\) 生成的左子模。同态把基送到 \(y_1,y_2\)，故关系恰好成为所给方程。由第一关系 \(e_2=\partial e_1\)，第二关系化为
+\((\partial^2+1)e_1=0\)。映射 \(D/D(\partial^2+1)\to M\)、\(1\mapsto e_1\) 与
+\(e_1\mapsto\overline1,e_2\mapsto\partial\overline1\) 互逆。
+\end{solution}
+
+\begin{exercise}
+在 \(D=A_1(\mathbb C)\) 中，求 \(P=x^2\partial^3+\partial-x^5\) 的阶主符号与 Bernstein 主符号，说明相应零点集为何不同。
+\end{exercise}
+\begin{solution}
+最大微分阶为 \(3\)，故阶主符号是 \(x^2\xi^3\)。Bernstein 次数把 \(x,\partial\) 都计为一次；首项和末项的次数均为 \(5\)，故符号是
+\(x^2\xi^3-x^5=x^2(\xi^3-x^3)\)。前者零点为坐标轴之并，后者还带有 \(\xi^3=x^3\) 的斜线；它们不能用作同一个阶特征簇。
+\end{solution}
+
+\begin{exercise}
+在 \(D=A_1(\mathbb C)\) 中，令 \(I=D\partial+Dx\)。证明 \(I=D\)。说明为什么仅取这两个生成元的主符号零点集会给出错误的特征簇。这是 \cite[Exercise 2.2.6, pp. 61--62]{HottaTakeuchiTanisaki2008DModules}所问现象的一个具体例子。
+\end{exercise}
+\begin{solution}
+\(\partial x\in Dx\)、\(x\partial\in D\partial\)，故
+\(1=\partial x-x\partial\in I\)。于是商模为零，特征簇为空。但生成元的阶符号为 \(\xi,x\)，其共同零点是 \((0,0)\)。真正的分次理想还含 \(1\) 的符号，等于整个分次环。一般左理想的生成元主符号不必生成其整个分次理想。
+\end{solution}
+
+\begin{exercise}
+对 \(D=A_1(\mathbb C)\) 及 \(a\in\mathbb C\)，计算
+\(D/D\Bigl((x-a)\partial\Bigr)\) 的特征簇，并求该方程在 \(\mathbb C[x]\) 中的解。
+\end{exercise}
+\begin{solution}
+\cref{b5:prop:D-principal-characteristic}给出
+\(\operatorname{Ch}=V\Bigl((x-a)\xi\Bigr)\)，即零截面与 \(a\) 上余切纤维之并。多项式解满足 \((x-a)y'=0\)，多项式环无零因子，故 \(y'=0\)，解仅为常数。特征簇的额外分支不等于新增的多项式解，它记录方程在特殊点的退化。
+\end{solution}
+
+\begin{exercise}
+在 \(\mathbb A^2_\mathbb C\) 的平凡线丛上设
+\(\nabla_x=\partial_x+a(x,y)\)、\(\nabla_y=\partial_y+b(x,y)\)，其中 \(a,b\in\mathbb C[x,y]\)。
+求成为 D-模的条件，并判定 \(a=y,b=x\) 与 \(a=y,b=0\) 两例。
+\end{exercise}
+\begin{solution}
+对任意函数作用后相减，所有一阶求导项抵消，留下乘法算子
+\(\partial_xb-\partial_ya\)。所以条件为 \(\partial_xb=\partial_ya\)。
+第一例两边都是 \(1\)，成立；第二例两边为 \(0,1\)，不成立。Leibniz 法则自身不足以保证多个微分方向相容。
+\end{solution}
+
+\begin{exercise}
+在 \(\mathbb C[[x]]\) 中，对形式方程 \(y'=xy\)、\(y(0)=1\)，求全部形式系数，并决定是否收敛。
+\end{exercise}
+\begin{solution}
+设 \(y=\sum a_mx^m\)，有 \(a_1=0\) 及
+\((m+1)a_{m+1}=a_{m-1}\) 对 \(m\ge1\) 成立。于是奇数系数为零，\(a_{2j}=1/(2^jj!)\)，即
+\(y=\exp(x^2/2)\)。比值判别表明对每个 \(x\) 都收敛；这里收敛性是另外核验的，不能只由形式递推推出。
+\end{solution}
+
+\begin{exercise}
+设 \(\lambda\in\mathbb C\)、\(m\in\mathbb Z\)。比较穿孔复圆盘上的方程 \(y'=\lambda y/z\) 与 \(v'=(\lambda-m)v/z\)。求两者的亚纯换基及单值，并说明参数相差整数为何不改变局部系统。
+\end{exercise}
+\begin{solution}
+令 \(y=z^mv\)，代入后正得第二方程；\(z^m\) 是穿孔圆盘上的可逆亚纯函数。两单值分别为 \(e^{2\pi i\lambda}\) 与 \(e^{2\pi i(\lambda-m)}\)，它们相等。联络矩阵的留数随格的选择可相差整数，而拓扑延拓只保留其指数。
+\end{solution}
+
+\begin{exercise}
+判断秩一方程 \(y'=(z^{-3}+2z^{-1})y\) 在 \(0\) 的正则性，求一个解析基本解和单值。解释单值能否判定正则性。
+\end{exercise}
+\begin{solution}
+积分得 \(y=z^2\exp\Bigl(-1/(2z^2)\Bigr)\)，它在穿孔圆盘单值，故单值为 \(1\)。但是系数的三阶极点不能由亚纯 \(g'/g\) 消去，由定义~\ref{b5:def:D-regular-singular}前后的秩一判别，它非正则。单值为 \(1\) 并不意味着正则或解析可去。
+\end{solution}
+
+\begin{exercise}
+在任意闭扇形 \(|\arg x|\le\theta<\pi/2\) 中证明 \(e^{-1/x}=O(|x|^N)\) 对每个整数 \(N\ge0\) 成立。由此说明发散形式解的渐近展开不能唯一确定例~\ref{b5:exm:D-euler-stokes}的解析解。
+\end{exercise}
+\begin{solution}
+有 \(\operatorname{Re}(1/x)\ge\cos\theta/|x|\)，故
+\(|e^{-1/x}|\le e^{-\cos\theta/|x|}\)。令 \(s=1/|x|\)，函数
+\(s^Ne^{-\cos\theta s}\) 有界，给出所需估计。因此给某个扇形解加上 \(ce^{-1/x}\)，所有有限阶渐近系数都不改变，却一般得到不同解析函数。
+\end{solution}
+
+\begin{exercise}
+设 \(\lambda\in\mathbb C\)。在 \(R=\mathbb C[x,x^{-1}]\) 上求线性映射
+\(T_\lambda(f)=xf'-\lambda f\) 的核与余核，分别讨论 \(\lambda\in\mathbb Z\) 和 \(\lambda\notin\mathbb Z\)。
+\end{exercise}
+\begin{solution}
+Laurent 单项式是基，且 \(T_\lambda(x^m)=(m-\lambda)x^m\)。
+若 \(\lambda\notin\mathbb Z\)，每个系数均非零，对有限 Laurent 和逐项相除即可，故核和余核均为零。若 \(\lambda\in\mathbb Z\)，核由 \(x^\lambda\) 生成，像恰为缺少这一项的 Laurent 多项式，故余核也由 \(x^\lambda\) 的类生成。这是一个同时计算零次解和一次障碍的两项复形。
+\end{solution}

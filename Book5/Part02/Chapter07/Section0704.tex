@@ -1,32 +1,184 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 7.4 张量分解
-% 纲要位置：计划纲要.md，第 3322 行。
-
-\section{张量分解}
-\label{b5:sec:0704}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3973 行。
 % * Schur 函子
 % * Pieri 规则及低阶 Littlewood–Richardson 例子
 % * 与第二卷对称幂、外幂的统一
-%
 % ---
-%
+\section{张量分解}
+\label{b5:sec:0704}
+
+Schur--Weyl 对偶给每个分拆配置了一个重数空间。改变向量空间或施加线性映射时，这些空间也会相容地改变，因而形成函子。对称函数的乘法随后给出其张量积规则；需要注意，这种乘法对应对称群一侧的诱导，不能误认为同一对称群上的内部张量积。
 
 \subsection{Schur 函子}
 \label{b5:subsec:0704:01}
 
-待撰写。
+\begin{definition}\label{b5:def:schur-functor}
+设 \(k\) 为特征零域，\(n\) 为非负整数，\(\lambda\vdash n\)，固定一个 Specht 左 \(k[S_n]\)-模 \(S^\lambda_k\)。对有限维 \(k\) 向量空间 \(V\)，在 \(V^{\otimes n}\) 上采用置换张量因子的左 \(S_n\) 作用，令
+\[
+\mathbb S_\lambda(V)
+=\operatorname{Hom}_{k[S_n]}(S^\lambda_k,V^{\otimes n}).
+\]
+对有限维 \(k\) 向量空间之间的线性映射 \(f:V\to W\)，以及 \(u\in\mathbb S_\lambda(V)\)，令
+\[
+\mathbb S_\lambda(f)(u)=f^{\otimes n}\circ u.
+\]
+这称为分拆 \(\lambda\) 对应的\term[Schur-hanzi]{Schur 函子}[Schur functor]。空分拆对应常值空间 \(k\)；正次数时规定 \(\mathbb S_\lambda(0)=0\)。
+\end{definition}
+
+因为 \(f^{\otimes n}\) 与因子置换相容，上述复合仍为 \(S_n\) 同态。恒等映射和复合也被保持，所以确实得到函子。选定基时，其作用由 \(f\) 的矩阵条目的 \(n\) 次齐次多项式给出；通常它不是关于 \(f\) 的线性运算。例如 \(\operatorname{Sym}^2(f+g)\) 中有交叉项，不能写成两个平方的和。
+
+\ProseParagraphBreak
+这个定义中的空间就是上一节的 \(L_\lambda(V)\)。因此它在非零时是不可约的一般线性群表示，特征标为 \(s_\lambda\)，且 \(\ell(\lambda)>\dim V\) 时为零。在不同维数下使用同一分拆，不需要重新定义构造。
+
+\begin{definition}\label{b5:def:lr-coefficient}
+设 \(a,b\) 为非负整数，\(\lambda\vdash a\)、\(\mu\vdash b\)。在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 中，用 Schur 基展开乘积：
+\[
+s_\lambda s_\mu=\sum_{\nu\vdash a+b}c_{\lambda\mu}^{\nu}s_\nu.
+\]
+系数 \(c_{\lambda\mu}^{\nu}\) 称为\term[Littlewood-Richardson-xishu]{Littlewood--Richardson 系数}[Littlewood--Richardson coefficient]。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:schur-tensor-coefficients}
+设 \(k\) 为特征零域，\(a,b\) 为非负整数，\(\lambda\vdash a\)、\(\mu\vdash b\)，\(c_{\lambda\mu}^{\nu}\) 为 Schur 函数乘积的 Littlewood--Richardson 系数，\(S^\eta\) 表示 \(k\) 上相应的 Specht 左模，\(\boxtimes\) 表示外张量积，\(S_a\times S_b\le S_{a+b}\) 按两个连续字母块嵌入。则所有 \(c_{\lambda\mu}^{\nu}\) 是非负整数，且
+\[
+\operatorname{Ind}_{S_a\times S_b}^{S_{a+b}}
+(S^\lambda\boxtimes S^\mu)
+\simeq\bigoplus_{\nu\vdash a+b}(S^\nu)^{\oplus c_{\lambda\mu}^{\nu}}.
+\]
+对任意有限维 \(k\) 向量空间 \(V\)，以 \(\mathbb S_\eta\) 记 Schur 函子，还有 \(\operatorname{GL}_k(V)\)-表示的同构
+\begin{equation}\label{b5:eq:schur-tensor-decomposition}
+\mathbb S_\lambda(V)\otimes\mathbb S_\mu(V)
+\simeq
+\bigoplus_{\substack{\nu\vdash a+b\\\ell(\nu)\le\dim V}}
+\mathbb S_\nu(V)^{\oplus c_{\lambda\mu}^{\nu}}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+第一式由诱导乘积公式及 Specht--Schur 对应得到；其系数是半单表示的实际分解重数，所以是非负整数。
+
+每个非零 \(\mathbb S_\lambda(V)\) 可选为 \(V^{\otimes a}\) 中一个一般线性群直和项，\(\mathbb S_\mu(V)\) 同样可选为 \(V^{\otimes b}\) 的直和项。张量所得是 \(V^{\otimes(a+b)}\) 的直和项，故由 Schur--Weyl 对偶完全可约，全部不可约项都形如右侧。对角矩阵上的特征标为 \(s_\lambda(x)s_\mu(x)\)。有限变量 Schur 多项式中，行数不超过 \(\dim V\) 的部分线性无关，所以其展开系数只能为 \(c_{\lambda\mu}^{\nu}\)。在任意特征零域上，这个比较仍在分裂半单的有理系数模型及其扩张上成立；也可以把迹视为对角元素的多项式，利用域无限逐项比较系数。
+\end{proof}
+
+上述论证解释了分解系数的表示意义，一般 Littlewood--Richardson 表格规则尚需另作证明。下面证明最常用的单行、单列情形，再计算一个出现重数二的例子。
 
 \subsection{Pieri 规则与 Littlewood–Richardson 低阶例子}
 \label{b5:subsec:0704:02}
 
-待撰写。
+\begin{definition}\label{b5:def:horizontal-vertical-strip}
+设分拆 \(\mu\) 的 Young 图包含分拆 \(\lambda\) 的 Young 图。差图 \(\mu/\lambda\) 若每列至多有一格，称为\term[hengtiao]{横条}[horizontal strip]；若每行至多有一格，称为\term[shutiao]{竖条}[vertical strip]。其大小是新增格数 \(|\mu|-|\lambda|\)。
+\end{definition}
+
+\begin{theorem}[Pieri 规则]\label{b5:thm:pieri}
+在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 中，记 \(s_\lambda\) 为 Schur 函数、\(h_r,e_r\) 分别为完全、初等对称函数。对分拆 \(\lambda\) 和整数 \(r\ge0\)，有
+\begin{align}
+s_\lambda h_r&=\sum_{\mu/\lambda\text{ 为大小 }r\text{ 的横条}}s_\mu,
+\label{b5:eq:pieri-horizontal}\\
+s_\lambda e_r&=\sum_{\mu/\lambda\text{ 为大小 }r\text{ 的竖条}}s_\mu.
+\label{b5:eq:pieri-vertical}
+\end{align}
+每项的系数均为一。
+\end{theorem}
+\begin{proof}
+取 \(N\ge|\lambda|+r\)，令 \(\alpha=\lambda+\delta_N\)。先证横条公式。交错多项式 \(a_\alpha h_r\) 可唯一写成严格递减非负指数列 \(\beta\) 对应的 \(a_\beta\) 的线性组合。其系数等于单项式 \(x^\beta\) 的系数。由于 \(h_r\) 中每个次数 \(r\) 的单项式系数都是一，该系数为
+\[
+\sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)
+\prod_{i=1}^N\mathbf1_{\Bigl\{\beta_i\ge\alpha_{\sigma(i)}\Bigr\}}
+=\det\Bigl(\mathbf1_{\{\beta_i\ge\alpha_j\}}\Bigr)_{i,j=1}^N,
+\]
+其中已限定 \(|\beta|=|\alpha|+r\)。
+
+\(\alpha,\beta\) 都严格递减。因此矩阵第 \(i\) 行先为若干个零，随后全为一；其第一个一的位置 \(q_i\) 随 \(i\) 不减。如果有零行或重复行，行列式为零。其余情形的 \(N\) 个不同起始位置只能依次为 \(1,\ldots,N\)，即 \(q_i=i\)，矩阵上三角且对角元全为一。这个条件等价于
+\[
+\beta_1\ge\alpha_1,\qquad
+\alpha_i\le\beta_i<\alpha_{i-1}\quad(2\le i\le N).
+\]
+写 \(\beta=\mu+\delta_N\)，它化为
+\[
+\mu_i\ge\lambda_i,\qquad
+\mu_i\le\lambda_{i-1}\quad(i\ge2).
+\]
+恰好表示新增格子不能在同一列重复，即横条条件。除以 \(\Delta_N\)，得到第一式。
+
+再证竖条公式。以 \(\operatorname{Alt}\) 表示对变量置换带符号求和；则 \(a_\alpha=\operatorname{Alt}(x^\alpha)\)。因为 \(e_r\) 对称，
+\[
+a_\alpha e_r
+=\sum_{\substack{J\subseteq\{1,\ldots,N\}\\|J|=r}}
+a_{\alpha+\mathbf1_J}.
+\]
+原指数相邻至少相差一，增加零或一后仍不增。若有相等指数，交错式为零；否则仍严格递减，不需要重新排列，也不产生负号。非零项正好满足 \(\mu_i-\lambda_i\in\{0,1\}\) 且 \(\mu\) 为分拆，也就是每行至多增加一格。每个 \(\mu\) 来自唯一的 \(J\)，系数为一。再除以 \(\Delta_N\) 即得第二式。稳定检测保证有限变量证明给出对称函数恒等式。
+\end{proof}
+
+例如
+\[
+s_{(2,1)}h_2=s_{(4,1)}+s_{(3,2)}+s_{(3,1,1)}+s_{(2,2,1)}.
+\]
+\((3,2)\) 的新增格位于第一行第三列和第二行第二列，属于横条；不能把“横条”误解为全部新格须在同一行。
+
+\begin{example}\label{b5:exm:lr-square-21}
+利用 \(s_{(2,1)}=h_2h_1-h_3\)，计算 \(s_{(2,1)}^2\)。先按横条规则乘 \(h_2\)，得到上面的四项，再逐项添一格：
+\begin{align*}
+s_{(2,1)}h_2h_1
+={}&s_{(5,1)}+2s_{(4,2)}+2s_{(4,1,1)}+s_{(3,3)}
++3s_{(3,2,1)}\\
+&+s_{(3,1,1,1)}+s_{(2,2,2)}+s_{(2,2,1,1)}.
+\end{align*}
+另一方面，
+\[
+s_{(2,1)}h_3
+=s_{(5,1)}+s_{(4,2)}+s_{(4,1,1)}+s_{(3,2,1)}.
+\]
+相减得到
+\begin{align}
+s_{(2,1)}^2
+={}&s_{(4,2)}+s_{(4,1,1)}+s_{(3,3)}+2s_{(3,2,1)}
+\notag\\
+&+s_{(3,1,1,1)}+s_{(2,2,2)}+s_{(2,2,1,1)}.
+\label{b5:eq:lr-square-21}
+\end{align}
+因此一般 Littlewood--Richardson 系数不一定是零或一。对三维空间，只保留至多三行的项；它们的维数依次为 \(27,10,10,8,1\)，其中八维项出现两次，合计 \(64\)，与 \(\dim\mathbb S_{(2,1)}(k^3)^2=8^2\) 相符。
+\end{example}
 
 \subsection{Schur 函子与对称幂、外幂}
 \label{b5:subsec:0704:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:schur-symmetric-exterior}
+设 \(k\) 为特征零域，\(V\) 为有限维 \(k\) 向量空间，\(n\ge1\) 为整数，\(\mathbb S_\lambda\) 为分拆 \(\lambda\) 对应的 Schur 函子。则自然地有
+\[
+\mathbb S_{(n)}(V)\simeq\operatorname{Sym}^nV,\qquad
+\mathbb S_{(1^n)}(V)\simeq\bigwedge^nV.
+\]
+因而对任意分拆 \(\lambda\) 与非负整数 \(r\)，张量积
+\(\mathbb S_\lambda(V)\otimes\operatorname{Sym}^rV\) 按横条分解，
+\(\mathbb S_\lambda(V)\otimes\bigwedge^rV\) 按竖条分解；行数超过 \(\dim V\) 的项删去。
+\end{proposition}
+\begin{proof}
+\(S^{(n)}\) 为平凡模，故 \(\mathbb S_{(n)}(V)\) 是对称张量子空间。对称幂的商映射 \(q:V^{\otimes n}\to\operatorname{Sym}^nV\)，在该子空间上是同构，其逆为
+\[
+v_1\cdots v_n\longmapsto
+\frac1{n!}\sum_{\sigma\in S_n}
+v_{\sigma(1)}\otimes\cdots\otimes v_{\sigma(n)}.
+\]
+右式对因子排列不变，所以良定；与商映射复合为恒等，对已对称张量再平均也为恒等。故两个复合都正确，且与线性映射相容。
+
+\(S^{(1^n)}\) 为符号模，故相应 Hom 空间识别为反对称张量。外幂的商映射在此子空间上的逆为
+\[
+v_1\wedge\cdots\wedge v_n\longmapsto
+\frac1{n!}\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+v_{\sigma(1)}\otimes\cdots\otimes v_{\sigma(n)}.
+\]
+有两个相等向量时，右端按交换它们的置换配对相消，所以通过外幂的定义关系；两次复合同样为恒等。最后把这两种识别代入\eqref{b5:eq:schur-tensor-decomposition}，并使用\cref{b5:thm:pieri}，即得所述分解。
+\end{proof}
+
+例如
+\[
+\operatorname{Sym}^2V\otimes V
+\simeq\operatorname{Sym}^3V\oplus\mathbb S_{(2,1)}(V),
+\qquad
+\bigwedge^2V\otimes V
+\simeq\mathbb S_{(2,1)}(V)\oplus\bigwedge^3V.
+\]
+因此同一个 \(\mathbb S_{(2,1)}\) 同时出现在“先对称两个因子”和“先反对称两个因子”这两种构造中。对称、反对称只是一般 Young 对称性的两端情形。
+
+\ProseParagraphBreak
+本章已经用有限群与张量计算证明这些分解，没有借用后面的最高权理论。读到一般线性李代数时，分拆又会作为最高权出现；那时得到的是对当前构造的进一步解释。Schur 多项式的迹与维数计算可对照\cite[Sections 5.21--5.22, pp. 128--130]{EtingofEtAl2011RepresentationTheory}。

@@ -1,30 +1,92 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 8.2 投射与块
-% 纲要位置：计划纲要.md，第 3338 行。
+% 纲要位置：工作记录/计划纲要.md，第 3989 行。
 
 \section{投射与块}
 \label{b5:sec:0802}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 不可分解投射模
 % * 投射覆盖与 Cartan 矩阵
 % * 块分解的基本概念
 %
 
+非半单模往往不能拆成简单模，但仍可用投射模覆盖它。不可分解投射模由简单顶来区分，Cartan 矩阵记录它们内部的合成因子；块则把整个代数分成互不联系的部分。本节先把这三种层次分别说清，再在小群中计算。
+
 \subsection{不可分解投射模}
 \label{b5:subsec:0802:01}
 
-待撰写。
+若 \(P\) 为有限维左 \(A\) 模，且每个到 \(P\) 的满射都分裂，便称 \(P\) 投射；等价地，从 \(P\) 出发的同态可沿任意满射提升。有限生成情形中，这又等价于 \(P\) 是有限自由模的直和因子。将满射 \(A^n\to P\) 分裂即可得到后一条件，反向的提升可先在自由模上逐基选取。
+\begin{definition}\label{b5:def:modular-projective-cover}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，\(P,M\) 为有限维左 \(A\)-模。若 \(\pi:P\to M\) 为满射模同态，\(P\) 投射，并且 \(\ker\pi\) 是多余子模，即
+\(U+\ker\pi=P\) 对子模 \(U\subseteq P\) 只能在 \(U=P\) 时成立，就称 \(\pi\) 为 \(M\) 的\term[toushe-fugai]{投射覆盖}[projective cover]。
+\end{definition}
+\begin{proposition}\label{b5:prop:projective-cover-top}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，\(J=J(A)\)，\(P,M\) 为有限维左 \(A\)-模，且 \(P\) 投射、\(\pi:P\to M\) 为满射模同态。\(\pi\) 是投射覆盖，当且仅当 \(\ker\pi\subseteq JP\)，也当且仅当它诱导的映射 \(P/JP\to M/JM\) 为同构。
+\end{proposition}
+\begin{proof}
+若 \(N=\ker\pi\) 多余，则任何极大子模都包含 \(N\)，否则与 \(N\) 的和为 \(P\)，矛盾。故 \(N\subseteq JP\)。反过来，若 \(N\subseteq JP\) 且 \(U+N=P\)，则 \(P/U=J(P/U)\)，由\cref{b5:prop:finite-radical-layers}为零。最后 \(\pi(JP)=JM\)，商映射的核为 \((N+JP)/JP\)，得到等价性。
+\end{proof}
+对 \(A=k[t]/(t^m)\)，自然满射 \(A\to M_d\) 是投射覆盖，因为核 \((t^d)\) 包含在根 \((t)\) 中。当 \(d<m\) 时它不分裂：若分裂，循环模 \(A\) 就有非平凡直和分解，与其局部自同态环矛盾。所以这些较短的不可分解模都不是投射模。
 
 \subsection{投射覆盖与 Cartan 矩阵}
 \label{b5:subsec:0802:02}
 
-待撰写。
+\begin{theorem}\label{b5:thm:split-projective-covers}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，且对正整数 \(s,n_1,\ldots,n_s\) 有
+\[
+A/J(A)\cong\prod_{i=1}^sM_{n_i}(k).
+\]
+取简单左 \(A\)-模的同构类代表 \(S_1,\ldots,S_s\)，其中 \(\dim_kS_i=n_i\)，记 \([M:S_i]\) 为 \(S_i\) 在有限维左 \(A\)-模 \(M\) 的合成列中的重数。则每个 \(S_i\) 有不可分解投射覆盖 \(P_i\to S_i\)，且作为左 \(A\)-模有
+\[
+A\cong\bigoplus_iP_i^{\oplus n_i},\qquad
+\dim_k\operatorname{Hom}_A(P_i,M)=[M:S_i]
+\]
+对任意有限维左 \(A\) 模 \(M\) 成立。全部有限维投射模均为这些 \(P_i\) 的直和，各 \(P_i\) 的类型由顶 \(S_i\) 唯一确定。
+\end{theorem}
+\begin{proof}
+利用根的幂零性及第二卷定理15.3.4，把商中各矩阵块的对角矩阵单位提升为一组完整正交幂等元 \(e_{ij}\)、\(1\le j\le n_i\)。令 \(P_{ij}=Ae_{ij}\)。它们是正则模的直和因子，顶为简单列模 \(S_i\)，且自然商的核为 \(Je_{ij}\)，由\cref{b5:prop:projective-cover-top}为覆盖。顶简单也使 \(P_{ij}\) 不可分解：若它分成两个非零项，两项的顶都非零，会分解这个简单顶。
+同一个简单模的两个覆盖必在目标上同构。确实，投射性给相互提升 \(u:P\to P'\)、\(v:P'\to P\)，复合 \(vu\) 在顶上为恒等。于是 \(P=vu(P)+JP\)，对商用根幂零性得到 \(vu(P)=P\)；有限维性使 \(vu\) 可逆。同理 \(uv\) 可逆，从而 \(u\) 为同构。故 \(P_{ij}\) 只依赖 \(i\)，记为 \(P_i\)，正交分解给出正则模公式。
+一般 \(M\) 的顶是简单模的直和。取相应 \(P_i\) 之和，通过投射性把到顶的同构提升为到 \(M\) 的映射；余核的顶为零，故余核为零，且核包含来源的根。这构造了 \(M\) 的覆盖。若 \(M\) 投射，这个覆盖分裂，而多余的核在分裂中只能为零，所以 \(M\) 就是这些 \(P_i\) 的直和。
+最后 \(\operatorname{Hom}_A(P_i,S_j)\) 的维数为 \(\delta_{ij}\)，因为所有映射都通过简单顶，再用分裂假设下的 Schur 引理。函子 \(\operatorname{Hom}_A(P_i,-)\) 正合，沿 \(M\) 的合成列逐步取维数，便得到重数公式。
+\end{proof}
+\begin{definition}\label{b5:def:modular-cartan-matrix}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，且 \(A/J(A)\cong\prod_{i=1}^sM_{n_i}(k)\)，其中 \(s,n_i\) 为正整数。取全部简单左 \(A\)-模的不同构代表 \(S_i\)，以及它们的有限维投射覆盖 \(P_i\to S_i\)，以 \([P_j:S_i]\) 表示合成因子的重数，记
+\[
+c_{ij}=[P_j:S_i]=\dim_k\operatorname{Hom}_A(P_i,P_j).
+\]
+矩阵 \(C_A=(c_{ij})\) 称为 \(A\) 的\term[Cartan-juzhen-daishu]{Cartan 矩阵}[Cartan matrix of an algebra]。本章按“行对应简单模，列对应投射覆盖”排列；它不是后来由根系定义的另一种 Cartan 矩阵。
+\end{definition}
+在循环 \(p^r\) 群的例子中，唯一的 \(P_1\) 是 \(kG=M_{p^r}\)，故 Cartan 矩阵为一阶矩阵 \((p^r)\)。这个数字记录合成长度，不是不可分解投射模的种类数。
 
 \subsection{块分解的基本概念}
 \label{b5:subsec:0802:03}
 
-待撰写。
+\begin{definition}\label{b5:def:algebra-block}
+设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数，\(b\in Z(A)\) 为非零幂等元。若 \(b\) 不能再写成两个非零正交中心幂等元之和，就称 \(b\) 为块幂等元，称以 \(b\) 为单位的代数 \(Ab\) 为 \(A\) 的一个\term[kuai]{块}[block]。
+\end{definition}
+反复分解中心幂等元，维数下降使过程终止，得到
+\[
+1=b_1+\cdots+b_\ell,\qquad A\cong\prod_{\nu=1}^{\ell}Ab_\nu.
+\]
+这个分解唯一到重排：若另有 \(1=\sum c_\mu\)，则
+\(b_\nu=\sum_\mu b_\nu c_\mu\) 是正交中心幂等分解，本原性使恰有一项非零，再对 \(c_\mu\) 同样分析，就使两组块对应相等。任何模都有 \(M=\bigoplus_\nu b_\nu M\)，不可分解模只属于其中一个块。不同块之间的模同态为零，扩张也分裂，因为对扩张中项分别乘各 \(b_\nu\) 即给出分解。
+\begin{example}\label{b5:exm:s3-two-blocks}
+设 \(k\) 为特征二的域，\(G=S_3=\langle r,s\mid r^3=s^2=1,\ srs=r^{-1}\rangle\)。令
+\[
+e=1+r+r^2,\qquad f=1-e.
+\]
+有 \(e^2=e\)，且 \(e\) 中心，故 \(f\) 也是中心幂等元。理想 \(kGe\) 以 \(e,se\) 为基，乘法由 \((se)^2=e\) 给出，所以它同构于 \(kC_2\)，是二维局部块。
+\end{example}
+另一块是矩阵代数。取二维表示
+\[
+R=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+有 \(R^3=S^2=I\)、\(SRS=R^{-1}\)，且 \(I+R+R^2=0\)，所以 \(e\) 作用为零，\(f\) 作用为恒等。矩阵 \(I,R,S,RS\) 线性无关：比较一个线性组合的四个条目即可依次令四个系数为零。因而 \(kGf\to M_2(k)\) 满射；来源维数为四，故同构。于是恰有两个简单模，分别为平凡模 \(S_1\) 和上述二维模 \(S_2\)。后者已经投射，前者的覆盖为 \(kGe\)，因此
+\[
+C_{kS_3}=\begin{pmatrix}2&0\\0&1\end{pmatrix}.
+\]
+这里 \(p\mid|S_3|\)，却仍有一个半单矩阵块。模特征使整个群代数不半单，并不要求每个块都非半单。

@@ -1,30 +1,93 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 4.1 双陪集
-% 纲要位置：计划纲要.md，第 3168 行。
+% 纲要位置：工作记录/计划纲要.md，第 3819 行。
+% 纲要细目（写作范围）：
+% * 双陪集分解
+% * 诱导后限制的几何分块
+% * 小群的实际计算
+
 
 \section{双陪集}
 \label{b5:sec:0401}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 双陪集分解
-% * 诱导后限制的几何分块
-% * 小群的实际计算
-%
+把一个 \(H\)-表示诱导到 \(G\)，再只观察子群 \(K\) 的作用时，原来由 \(G/H\) 标记的各个向量空间并不会任意混合。哪些空间能够互相到达，取决于 \(K\) 在陪集集上的轨道。双陪集正是这些轨道的另一种写法。
 
 \subsection{双陪集分解}
 \label{b5:subsec:0401:01}
 
-待撰写。
+\begin{definition}\label{b5:def:double-coset}
+设 \(G\) 为有限群，\(H,K\leq G\)，\(x\in G\)。集合
+\[
+KxH=\{kxh:k\in K,\ h\in H\}
+\]
+称为由 \(x\) 确定的 \term[shuangpeiji]{双陪集}[double coset]。所有这些集合组成的集合记为 \(K\backslash G/H\)。这个记号表示一个商集，一般没有商群结构。
+\end{definition}
+\symidx{\(K\backslash G/H\)：双陪集集}
+
+关系 \(y=kxh\) 是等价关系：单位元给出自反性，等式 \(x=k^{-1}yh^{-1}\) 给出对称性，两次这样的表达式相接给出传递性。因此，不同双陪集互不相交，它们的并为 \(G\)。
+
+\begin{proposition}\label{b5:prop:double-coset-orbits}
+设 \(G\) 为有限群，\(H,K\leq G\)，\(x\in G\)。在左陪集集 \(G/H\) 上令 \(K\) 左乘作用。包含 \(xH\) 的轨道为 \(KxH/H\)，其稳定子群为
+\[
+L_x=K\cap xHx^{-1}.
+\]
+映射 \(kL_x\mapsto kxH\) 给出 \(K\)-集合的同构
+\[
+K/L_x\longrightarrow KxH/H.
+\]
+特别地，
+\begin{equation}\label{b5:eq:double-coset-size}
+|KxH|=\frac{|K|\,|H|}{|K\cap xHx^{-1}|}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+元素 \(k\in K\) 固定 \(xH\)，当且仅当 \(x^{-1}kx\in H\)，即 \(k\in L_x\)。而 \(k_1xH=k_2xH\) 当且仅当 \(k_2^{-1}k_1\in L_x\)，所以所给映射良定义、单射，并由轨道的定义而满射。它与左乘作用相容。轨道含有 \([K:L_x]\) 个左 \(H\)-陪集，每个陪集含有 \(|H|\) 个元素，得到公式。
+\end{proof}
+
+于是，选取双陪集代表元，就是在 \(K\) 作用于 \(G/H\) 的每个轨道中选一个点。即使 \(H=K\)，交集也仍须写成 \(H\cap xHx^{-1}\)，不能把共轭后的子群忽略。
 
 \subsection{诱导后限制的几何分块}
 \label{b5:subsec:0401:02}
 
-待撰写。
+设 \(k\) 为任意域，\(W\) 为有限维左 \(k[H]\)-模。诱导表示采用
+\[
+\operatorname{Ind}_H^G W=k[G]\otimes_{k[H]}W.
+\]
+选取左陪集代表元 \(t\) 后，它作为向量空间等于 \(\bigoplus_{tH\in G/H}t\otimes W\)。若 \(a\in K\)，则 \(a\) 把 \(t\otimes W\) 送到 \(atH\) 所对应的空间。因此，每一个 \(K\)-轨道内的全部空间之和都是 \(K\)-不变子空间。
+
+\begin{proposition}\label{b5:prop:double-coset-blocks}
+设 \(G\) 为有限群，\(H,K\leq G\)，\(k\) 为域，\(W\) 为有限维左 \(k[H]\)-模。对每个双陪集 \(D=KxH\)，令 \(k[D]\) 为以 \(D\) 为基的子空间。它具有左 \(k[K]\)、右 \(k[H]\) 作用，且有左 \(k[K]\)-模直和分解
+\[
+\operatorname{Res}_K^G\operatorname{Ind}_H^G W
+=\bigoplus_{D\in K\backslash G/H}k[D]\otimes_{k[H]}W.
+\]
+其中 \(D=KxH\) 所对应的分量的维数为
+\[
+[K:K\cap xHx^{-1}]\dim_k W.
+\]
+\end{proposition}
+\begin{proof}
+群元素基按互不相交的双陪集分组，得到
+\(k[G]=\bigoplus_D k[D]\)。左右作用都保持各个 \(D\)，故这是双模的直和。对右 \(k[H]\)-模作张量积，直和的包含与投影仍互为分裂，得到所述直和。
+
+每个 \(D\) 是 \([K:K\cap xHx^{-1}]\) 个左 \(H\)-陪集之并。选取这些陪集的代表元后，\(k[D]\) 是同样秩的自由右 \(k[H]\)-模；张量积因而是同样多个 \(W\) 的直和。
+\end{proof}
+
+这个分块不要求特征不整除群阶。它来自群元素基的划分，与表示是否完全可约无关；下节将在每一块内重新识别一个诱导表示。
 
 \subsection{小群的双陪集计算}
 \label{b5:subsec:0401:03}
 
-待撰写。
+先取 \(G=S_3\)、\(H=K=\Bigl\langle(12)\Bigr\rangle\)。左陪集 \(gH\) 可由点 \(g(3)\) 标记，\(H\) 在三点集上的轨道为 \(\{3\}\) 与 \(\{1,2\}\)。因此双陪集代表元可取 \(1\) 和 \(x=(13)\)。对应的交集分别为 \(H\) 和
+\[
+H\cap xHx^{-1}=\Bigl\langle(12)\Bigr\rangle\cap\Bigl\langle(23)\Bigr\rangle=\{1\}.
+\]
+两个双陪集的大小为 \(2\) 与 \(4\)，恰好覆盖 \(S_3\)。若 \(W=k\) 是平凡表示，则三维置换表示限制到 \(H\) 后分成一个固定点的平凡表示，以及两点自由轨道的正则表示。
+
+\ProseParagraphBreak
+
+再取 \(G=S_4\)，让 \(H=K=S_{\{1,2,3\}}\) 固定 \(4\)。\(G/H\) 同样可识别为四点集，轨道为 \(\{4\}\) 与 \(\{1,2,3\}\)。代表元取 \(1\) 和 \(x=(34)\)，后者的交集为固定 \(3,4\) 的二阶子群 \(\Bigl\langle(12)\Bigr\rangle\)。所以双陪集大小为 \(6\) 与 \(18\)，诱导平凡表示的两块维数为 \(1\) 与 \(3\)。
+
+\ProseParagraphBreak
+
+这些计算提供了一种实际方法：先寻找容易理解的陪集作用，再算轨道和稳定子群。直接枚举 \(kxh\) 往往会重复产生同一个元素，而轨道方法同时给出分块数、代表元和每块大小。

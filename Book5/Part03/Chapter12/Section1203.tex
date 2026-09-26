@@ -1,30 +1,91 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.3 根与结构
-% 纲要位置：计划纲要.md，第 3476 行。
+% 纲要位置：工作记录/计划纲要.md，第 4127 行。
 
 \section{根与结构}
 \label{b5:sec:1203}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 可解根与幂零根
 % * 根的特征性
 % * 商去可解根后的半单对象
 %
 
+可解性和幂零性也可以用来研究李代数的理想。我们将证明最大可解理想和最大幂零理想都存在，并研究相应的商。本节的“根”指 radical，与后面 Cartan 子代数上的根泛函不同。
+
 \subsection{可解根与幂零根}
 \label{b5:subsec:1203:01}
 
-待撰写。
+\begin{proposition}\label{b5:prop:lie-radicals-exist}
+有限维复李代数 \(\mathfrak g\) 有唯一的最大可解理想 \(\mathfrak r\)，也有唯一的最大幂零理想 \(\mathfrak n\)，并且 \(\mathfrak n\subseteq\mathfrak r\)。
+\end{proposition}
+\begin{proof}
+若 \(I,J\) 都是可解理想，则
+\((I+J)/I\cong J/(I\cap J)\) 可解。\cref{b5:prop:lie-solvable-extension}因而说明 \(I+J\) 可解。有限维性保证全部可解理想的和已经是其中有限多个的和，故这个和就是最大可解理想。
+
+若 \(I\) 是幂零理想，\(x\in I\)，则 \(\operatorname{ad}x\) 首先把 \(\mathfrak g\) 送入 \(I\)，此后的迭代沿 \(I\) 的下降中心列继续下降。因此 \(\operatorname{ad}_{\mathfrak g}x\) 幂零。现在令 \(I,J\) 都幂零；它们可解，故 \(I+J\) 可解。对 \(I+J\) 在 \(\mathfrak g\) 上的伴随表示应用\cref{b5:thm:lie-triangularization}。在同一组上三角基下，来自 \(I\) 或 \(J\) 的矩阵由于幂零而对角元全为零，它们的和也严格上三角。于是每个 \(x\in I+J\) 的伴随算子幂零，\cref{b5:thm:engel}说明 \(I+J\) 幂零。再次利用有限维性取有限和，便得到最大幂零理想。幂零蕴含可解，所以它包含于 \(\mathfrak r\)。
+\end{proof}
+
+\begin{definition}\label{b5:def:lie-radicals}
+有限维复李代数 \(\mathfrak g\) 的最大可解理想称为它的\term[kejie-gen]{可解根}[solvable radical]，记作 \(\operatorname{rad}\mathfrak g\)；最大幂零理想称为它的\term[mi-ling-gen]{幂零根}[nilradical]，记作 \(\operatorname{nilrad}\mathfrak g\)。
+\symidx{\(\operatorname{rad}\mathfrak g\)}
+\symidx{\(\operatorname{nilrad}\mathfrak g\)}
+\end{definition}
+
+\begin{example}\label{b5:exm:radical-upper-triangular}
+设 \(\mathfrak b_n\) 是复上三角矩阵李代数，\(\mathfrak n_n\) 是严格上三角矩阵理想。则
+\[
+\operatorname{rad}\mathfrak b_n=\mathfrak b_n,\qquad
+\operatorname{nilrad}\mathfrak b_n=\mathbb CI+\mathfrak n_n.
+\]
+第一个等式由 \([\mathfrak b_n,\mathfrak b_n]\subseteq\mathfrak n_n\) 和后者幂零得到。第二个等式右端确实幂零。若一个幂零理想含有对角元为 \(a_1,\ldots,a_n\) 的矩阵 \(x\)，则 \(\operatorname{ad}_{\mathfrak b_n}x\) 必幂零；在按对角线上方距离排列的基下，它在 \(E_{ij}\) 位置的对角元为 \(a_i-a_j\)。所以所有 \(a_i\) 相等，\(x\in\mathbb CI+\mathfrak n_n\)。
+\end{example}
+
+标量矩阵本身并不幂零，却属于这里的幂零根。幂零理想指它作为李代数的下降中心列终止，不能误解成它在某个给定矩阵实现中只含幂零矩阵。
 
 \subsection{根的特征性}
 \label{b5:subsec:1203:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:lie-radicals-characteristic}
+设 \(\mathfrak g\) 是有限维复李代数。其可解根与幂零根均被每个李代数自同构保持，也被每个导子保持。
+\end{proposition}
+\begin{proof}
+自同构把可解理想送到可解理想，把幂零理想送到幂零理想。最大性给出包含关系，对逆自同构再用一次便得相等。
+
+对导子 \(D\)，考虑有限维复空间上的矩阵指数
+\(e^{tD}=\sum_{m\ge0}t^mD^m/m!\)。矩阵级数绝对收敛；反复使用导子公式得到
+\[
+D^m[x,y]=\sum_{j=0}^{m}\binom mj[D^jx,D^{m-j}y],
+\]
+从而 \(e^{tD}[x,y]=[e^{tD}x,e^{tD}y]\)，其逆为 \(e^{-tD}\)。因此 \(e^{tD}\) 保持这两个根。若 \(R\) 表示其中任意一个，商映射 \(q:\mathfrak g\rightarrow\mathfrak g/R\) 对每个 \(x\in R\) 满足 \(q(e^{tD}x)=0\)。比较这个收敛幂级数的一次项，得到 \(q(Dx)=0\)，即 \(D(R)\subseteq R\)。
+\end{proof}
+
+通常把被所有自同构保持的理想称为\term[tezheng-lixiang]{特征理想}[characteristic ideal]。某些李代数文献直接用“被所有导子保持”作为该词的定义；上面的结果同时满足这两种要求，因此这里不会出现约定差异。
+
+\begin{proposition}\label{b5:prop:radical-commutator-nilpotent}
+设 \(\mathfrak g\) 是有限维复李代数，\(\mathfrak r=\operatorname{rad}\mathfrak g\)，\(\mathfrak n=\operatorname{nilrad}\mathfrak g\)。则
+\[
+[\mathfrak g,\mathfrak r]\subseteq\mathfrak n\subseteq\mathfrak r.
+\]
+\end{proposition}
+\begin{proof}
+对 \(\mathfrak r\) 在 \(V=\mathfrak g\) 上的伴随表示使用\cref{b5:thm:lie-common-eigenvector}，得到非零公共特征空间 \(V_\lambda\)。由于 \(\mathfrak r\) 是 \(\mathfrak g\) 的理想，\cref{b5:lem:ideal-weight-stable}说明 \(V_\lambda\) 被 \(\mathfrak g\) 保持，且 \(\lambda\Bigl([\mathfrak g,\mathfrak r]\Bigr)=0\)。对商 \(V/V_\lambda\) 重复这个过程，得到有限的 \(\mathfrak g\)-子模滤过，使 \(\mathfrak r\) 在每个相邻商上按某个线性泛函作标量作用，而 \([\mathfrak g,\mathfrak r]\) 在每个相邻商上作用为零。
+
+所以每个 \(x\in[\mathfrak g,\mathfrak r]\) 的伴随算子沿此滤过严格下降，因而幂零。Jacobi 恒等式说明 \([\mathfrak g,\mathfrak r]\) 是理想，再用\cref{b5:thm:engel}及幂零根的最大性即可。
+\end{proof}
 
 \subsection{可解根的商与半单性}
 \label{b5:subsec:1203:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:radical-quotient-semisimple}
+设 \(\mathfrak g\) 是有限维复李代数，\(\mathfrak r=\operatorname{rad}\mathfrak g\)。则 \(\mathfrak g/\mathfrak r\) 半单。更一般地，对任意可解理想 \(I\)，有
+\[
+\operatorname{rad}(\mathfrak g/I)=\mathfrak r/I.
+\]
+\end{proposition}
+\begin{proof}
+因 \(I\subseteq\mathfrak r\)，右端是商中的可解理想。商中的任意可解理想 \(J/I\) 的逆像 \(J\) 是 \(\mathfrak g\) 的理想，且它是可解李代数 \(J/I\) 对可解理想 \(I\) 的扩张。由\cref{b5:prop:lie-solvable-extension}，\(J\) 可解，所以 \(J\subseteq\mathfrak r\)。这就证明等式。取 \(I=\mathfrak r\)，商中没有非零可解理想，正是半单性的定义。
+\end{proof}
+
+这条命题只构造了半单商，并未在 \(\mathfrak g\) 内构造同构于该商的子代数。向量空间上的补总能选择，但它未必对李括号封闭。下一节讨论的 Levi 分解正是解决这个额外问题。

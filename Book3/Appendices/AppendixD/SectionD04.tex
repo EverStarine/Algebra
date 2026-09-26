@@ -1,36 +1,186 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.4 形式纤维、卓越性与逼近
-% 纲要位置：计划纲要.md，第 2346 行。
 
 \section{形式纤维、卓越性与逼近}
 \label{b3:sec:D04}
 
-% TODO: 按以下纲要要点撰写本节。
+一组相容的形式近似不一定就是原环中的精确解，完备化的平坦性也不保证其各条纤维正则。本节在明确的底环假设下讨论这些差别，并区分有限阶逼近与实际收敛。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 完备化映射的形式纤维与卓越性的用途
 % * 只在适当卓越 Hensel 局部环的假设下介绍 Artin 逼近的代表性版本
 % * 逼近意味着模高次极大理想的一致，不是任意形式解本身收敛或代数化
 % * 与附录 C 的奇点理论结合阅读，不把全部消解理论作为代数学共同基础
 %
+% #### D.4.1 完备化的形式纤维与卓越性
+% #### D.4.2 卓越 Hensel 局部环上的 Artin 逼近
+% #### D.4.3 有限阶逼近、收敛性与代数化
+% #### D.4.4 奇点与消解理论导读
+
 
 \subsection{完备化的形式纤维与卓越性}
 \label{b3:subsec:D04:01}
 
-待撰写。
+忠实平坦性保证完备化能够检测理想与有限模的关系，但并不说明它的每条纤维都正则。后一个问题涉及完备化在不同素点上新增加的元素。只检查闭点的剩余域，不能回答这个问题。
+
+\begin{definition}\label{b3:def:formal-fiber}
+设 \((A,\mathfrak m)\) 为 Noether 局部环，\(\widehat A\) 为其 \(\mathfrak m\)-进完备化。对 \(\mathfrak p\in\operatorname{Spec}A\)，环
+\[
+\widehat A\otimes_A\kappa(\mathfrak p)
+\]
+称为 \(A\to\widehat A\) 在 \(\mathfrak p\) 处的\term[formalfiber]{形式纤维}[formal fiber]，其中
+\(\kappa(\mathfrak p)=\operatorname{Frac}(A/\mathfrak p)\) 是该素点的剩余域。
+\end{definition}
+
+闭点处的形式纤维总是
+\(\widehat A/\mathfrak m\widehat A\simeq A/\mathfrak m\)；其他素点的形式纤维不能由这一个域代替。例如
+\(A=k[x]_{(x)}\) 在零素理想处的形式纤维为 \(k((x))\)，这是 \(k(x)\)-代数；附录 C 的\secref{b3:sec:C01}逐项计算了这两条纤维。若 \(A\) 本身已完备，则完备化映射为恒等，每条形式纤维才都只是相应的 \(\kappa(\mathfrak p)\)。
+
+\begin{definition}\label{b3:def:excellent-ring}
+设 \(A\) 为交换 Noether 环。
+\begin{enumerate}
+\item 若对每对素理想 \(\mathfrak p\subseteq\mathfrak q\)，连接二者的饱和素理想链都有相同长度，则称 \(A\) 为悬链环；饱和表示相邻两项之间不能再插入素理想。若每个有限型 \(A\)-代数都为悬链环，则称 \(A\) 具有普适链性质。
+\item 设 \(F\) 为域。一个 Noether \(F\)-代数 \(B\)，若对每个有限域扩张 \(F'/F\)，环 \(B\otimes_FF'\) 都正则，则称 \(B\) 在 \(F\) 上几何正则。
+\item 若对每个 \(\mathfrak p\in\operatorname{Spec}A\)，映射
+\[
+A_{\mathfrak p}\longrightarrow\widehat{A_{\mathfrak p}}
+\]
+的每条形式纤维在相应剩余域上都几何正则，则称 \(A\) 为 \(G\) 环。
+\item 若对每个有限型 \(A\)-代数 \(B\)，集合
+\(\operatorname{Reg}(B)=\{\mathfrak q:B_{\mathfrak q}\text{ 正则}\}\)
+在 \(\operatorname{Spec}B\) 中开，则称 \(A\) 满足 \(J\)-2 条件。
+\end{enumerate}
+若 \(A\) 同时具有普适链性质、\(G\) 环性质及 \(J\)-2 条件，则称它为\term[excellentring]{卓越环}[excellent ring]。
+\end{definition}
+
+这里悬链环对应 catenary ring，只表示素链长度条件，不表示所有理想线性排序。几何正则要求允许有限的不可分域扩张，不能只检查可分扩张；一个域作为自身上的代数当然几何正则，但作为另一个底域上的代数就需要重新检查。第18章与第23章的不可分例子正说明底域不可省略。
+
+\ProseParagraphBreak
+卓越性的三个条件分别控制维数链、完备化纤维和正则点的邻域。下面列出所用的存在例子与稳定性质，并说明三个条件分别怎样验证。
+
+\begin{theorem}\label{b3:thm:excellent-basic-classes}
+完备 Noether 局部环是卓越环。若 \(A\) 卓越，则任意有限型 \(A\)-代数及其任意局部化也卓越；特别地，商环卓越。因而域上有限型代数及其局部化都是卓越环。
+\end{theorem}
+\begin{proofsketch}
+对完备局部环 \(A\)，Cohen 结构定理给出完备正则局部环 \(S\) 到 \(A\) 的满射。正则局部环是 Cohen--Macaulay 环；参数序列的维数公式使 \(S\) 普适悬链，而普适链性质传给商环，得到第一个条件。
+
+验证 \(G\) 环条件不能只看恒等映射 \(A\to\widehat A=A\)，因为定义还涉及 \(A\) 的每个局部化。先商去纤维对应的素理想；商仍完备，且此时为整环，因而满足 Cohen 有限正则子环定理在混合特征时要求的整环假设。取完备正则局部子环 \(S\subseteq A\)，使 \(A\) 在 \(S\) 上有限，记 \(K=\operatorname{Frac}S\)、\(L=\operatorname{Frac}A\)，则 \(L/K\) 有限。局部化、有限代数的半局部完备化及取直积分量，使所考察的泛形式纤维成为
+\[
+\bigl(\widehat{S_{\mathfrak q}}\otimes_{S_{\mathfrak q}}K\bigr)\otimes_KL
+\]
+的一个直积分量。于是只须证明 \(S_{\mathfrak q}\) 的泛形式纤维在 \(K\) 上几何正则；这个性质在有限域基变换及直积分量下保持。特征零时，正则性与有限可分扩张已足够；特征 \(p\) 时，在系数域与变量上逐次比较 \(p\) 次幂子域，利用微分模的单射判据，证明这些纤维在有限不可分扩域后也正则。这一 \(p\)-基计算及有限子环归约详见松村英之\cite[Theorems 29.4 and 32.3, pp. 225--226, 257--258]{Matsumura1989CommutativeRingTheory}，此处省略其中的微分模图表。
+
+对半局部 Noether \(G\) 环，有限型代数的正则点开放性由泛点附近的正则判据及 Noether 归纳得到：先在各不可约分量的泛点附近取得相应正则开集，再对其闭补集作归纳。所需的是该判据与几何正则形式纤维的比较引理，不能把任意可构造集直接当作开集。这个比较引理给出 \(J\)-2 条件。
+
+最后，有限型扩张的普适链性质由定义及多项式环的维数公式保持；\(J\)-2 条件对有限型扩张由复合有限型映射立即保持，对局部化则先把有限展示的系数与分母下降到有限个分母的局部化。\(G\) 环性质对商与局部化来自相应形式纤维的识别；对多项式环，需要比较其局部完备化与底环形式纤维，并使用几何正则映射在复合与基变换下的稳定性。这里省略这一多项式环比较引理及上述正则开集引理的技术证明；两者正是一般稳定性论证的主要部分，见\cite[\S32, pp. 259--260]{Matsumura1989CommutativeRingTheory}及该处所指的完整证明。任意有限型代数是多项式环的商，因而结论随之得到。域是零维完备局部环，最后一项是前两项的应用。
+\end{proofsketch}
 
 \subsection{卓越 Hensel 局部环上的 Artin 逼近}
 \label{b3:subsec:D04:02}
 
-待撰写。
+形式方程往往可以逐阶求解。若每一阶都能相容地继续，便得到完备化中的一个解；但这个解未必属于原环。逼近问题要求较少：给定一个有限阶数，能否在原环中找到一个准确满足方程的解，而且与这个形式解同余到该阶？
+
+\begin{theorem}[Artin 逼近的代数情形]\label{b3:thm:artin-approximation-algebraic}
+设 \(k\) 为域，\(R\) 为有限型 \(k\)-代数，\(\mathfrak p\subset R\) 为素理想，\(r,s\ge1\)。令 \((A,\mathfrak m)\) 为局部环 \(R_{\mathfrak p}\) 的 Hensel 化，\(\widehat A=\varprojlim_N A/\mathfrak m^N\) 为其 \(\mathfrak m\)-进完备化。
+设
+\[
+F_1,\ldots,F_s\in A[Y_1,\ldots,Y_r],
+\qquad
+\widehat y\in\widehat A^{\,r},
+\qquad F_i(\widehat y)=0\quad(1\le i\le s).
+\]
+则对每个整数 \(N\ge1\)，存在 \(y^{(N)}\in A^r\)，使
+\[
+F_i(y^{(N)})=0\quad(1\le i\le s),
+\qquad
+y^{(N)}-\widehat y\in\mathfrak m^N\widehat A^{\,r}.
+\]
+\end{theorem}
+
+\begin{proofsketch}
+把 \(F(\widehat y)=0\) 写成有限型代数 \(A[Y]/(F)\to\widehat A\) 的同态。一般 \(A\) 可以有零因子或幂零元；先写成一个多项式局部环的 Hensel 化 \(B\) 的商 \(A=B/J\)。将系数与形式解提升到 \(B\) 及 \(\widehat B\)，若 \(J=(a_1,\ldots,a_t)\)，则增加未知量 \(Z_{ij}\)，把提升后 \(F_i(\widehat y)\in J\widehat B\) 写成准确方程
+\(\widetilde F_i(Y)-\sum_j a_jZ_{ij}=0\)。在 \(B\) 中逼近这组扩大方程，再商去 \(J\)，便返回原问题。完备化及 Hensel 化与商的相容性使这一步适用于非约化环，而没有在 \(A\) 中作不合法的约去。
+
+在随后归约的局部整环系统中，仍以 \(r,s\) 记变量数及方程数。原证明利用形式映射的关系理想及可分性，化到泛光滑情形，选出 \(G=(G_1,\ldots,G_h)\)，其中 \(h\le\min(r,s)\)，及一个 \(h\times h\) Jacobian 子式 \(\delta\)，使 \(\delta(\widehat y)\ne0\)。另外保留一个在形式解上非零的乘子 \(t\)，使其乘剩余关系都落在 \((G)\) 中；在这个整环模型里，充分近的解仍满足 \(t(y)\ne0\)，故 \(G(y)=0\) 能推出全部原关系。域为不完美域时，所需泛光滑性还须通过可分性归约验证。
+
+随后对基底参数的数目归纳：在一个适当变量上对 \(\delta(\widehat y)^2\) 作 Weierstrass 预备及除法，把各未知级数分成次数有界的余式与商。余式条件是一组少一个参数的有限多项式方程，归纳逼近这些系数后，得到 \(a\in A^r\)，既与 \(\widehat y\) 同余到指定阶，又满足
+\[
+G(a)\in\delta(a)^2\mathfrak m^N A^h.
+\]
+这里的 \(A\) 与 \(\mathfrak m\) 暂指归约后的整环及其极大理想。取得这种整除条件，而不仅是极大理想阶数很高，正是除法归约的作用。关系理想的泛光滑归约、余式方程的构造及归纳相容性在这里省略，详见 Artin\cite[Section 5, Lemmas (5.6), (5.9)--(5.12), pp. 42--50]{Artin1969AlgebraicApproximation}；其中 (5.12) 给出所需的整除归纳。
+
+说明最后的准确修正。对所选的 \(h\) 个未知量记 \(G\) 的 Jacobian 方阵为 \(J_G\)，\(\delta=\det J_G\)、\(J_G^{\mathrm{adj}}\) 为伴随矩阵。固定其余变量，代入
+\(Y=a+\delta(a)J_G(a)^{\mathrm{adj}}U\)，其中这项修正只作用于所选 \(h\) 个坐标。由于 \(J_GJ_G^{\mathrm{adj}}=\delta I_h\)，Taylor 展开把 \(G(Y)=0\) 化为
+\[
+\delta(a)^2\bigl(e+U+Q(U)\bigr)=0,
+\qquad e\in\mathfrak m^N A^h,
+\]
+其中 \(Q\) 的各项关于 \(U\) 的次数至少二。直接解更强的方程 \(e+U+Q(U)=0\)，其在 \(U=0\) 处的剩余 Jacobian 为 \(I_h\)。Hensel 性给出 \(U\in\mathfrak m^NA^h\)，于是修正后的 \(y\) 准确满足 \(G(y)=0\)，并仍与 \(\widehat y\) 同余到第 \(N\) 阶。在上述整环模型中用保留的非零乘子 \(t\) 推出全部关系，再经过商环归约返回原 \(A\)，即得到原文\cite[Theorem (1.10), p. 26]{Artin1969AlgebraicApproximation}的域上情形。
+\end{proofsketch}
+
+这里的底环明确限定为域上有限型局部代数的 Hensel 化。全部卓越 Hensel 局部环上的版本还需要更一般的光滑化理论，不能仅凭以上原定理的证明便取消这一范围限制。
+
+\ProseParagraphBreak
+有两个量词必须保留。首先，\(y^{(N)}\) 对原方程是准确解，而非仅使误差属于 \(\mathfrak m^N\)。其次，\(N\) 改变时，允许选择不同的解；结论没有说存在一个 \(y\in A^r\) 与 \(\widehat y\) 在所有阶上同时相同。后一个要求在分离环中会直接迫使 \(y=\widehat y\)，强得多。
+
+\begin{proposition}\label{b3:prop:linear-formal-approximation}
+设 \((A,\mathfrak m)\) 为 Noether 局部环，\(\widehat A=\varprojlim_N A/\mathfrak m^N\) 为其 \(\mathfrak m\)-进完备化，
+\(M\in\operatorname{Mat}_{s\times r}(A)\)、\(b\in A^s\)。若给定 \(\widehat y\in\widehat A^r\) 满足
+\(M\widehat y=b\)，则对每个 \(N\ge1\)，存在准确解 \(y^{(N)}\in A^r\)，且
+\(y^{(N)}-\widehat y\in\mathfrak m^N\widehat A^r\)。
+\end{proposition}
+\begin{proof}
+取 \(a\in A^r\) 代表 \(\widehat y\) 模 \(\mathfrak m^N\) 的剩余类。令
+\(L=M(\mathfrak m^NA^r)\subseteq A^s\)，这是有限模。完备化平坦且与有限模张量相容，所以
+\[
+L\widehat A=M(\mathfrak m^N\widehat A^r).
+\]
+误差 \(b-Ma=M(\widehat y-a)\) 属于这个子模，同时属于 \(A^s\)。由忠实平坦性，或有限模 \(A^s/L\) 到其完备化的单射性，可得 \(b-Ma\in L\)。故存在 \(c\in\mathfrak m^NA^r\)，使 \(Mc=b-Ma\)。取 \(y^{(N)}=a+c\)，便是所求准确解。
+\end{proof}
+
+线性情形只用有限模及完备化，不要求 Hensel 性。一般多项式方程中的变量乘积使误差不再由一个固定模映射控制；不能把以上证明直接套到非线性情形，也不能据此取消 Artin 定理对底环的假设。
 
 \subsection{有限阶逼近、收敛性与代数化}
 \label{b3:subsec:D04:03}
 
-待撰写。
+在 \(k[[x]]\) 中，同余模 \((x)^N\) 表示前 \(N\) 个系数相同。它没有给剩余系数的大小任何限制，也没有断言一个任意形式关系能由多项式关系生成。
+
+\begin{example}\label{b3:exm:approximation-does-not-converge}
+在 \(\mathbb C[[x]]\) 中取
+\(h(x)=\sum_{j\ge1}j!x^j\)，令
+\(\widehat y=(h^2,h)\)，则它准确满足 \(Y-Z^2=0\)。对每个 \(N\)，取多项式
+\(h_N=\sum_{1\le j<N}j!x^j\)，便有准确的多项式解
+\[
+y^{(N)}=(h_N^2,h_N)
+\equiv(h^2,h)\pmod{x^N}.
+\]
+这些准确解逼近一个发散形式解。不存在一个固定的收敛解与它在所有阶上相同，因为第二坐标的系数将被逐个确定为 \(j!\)。
+\end{example}
+
+代数化还需要说明保留什么结构。如果只问一个抽象完备环是否同构于某个代数局部环的完备化，形式坐标变换可以参与同构；若要求保留嵌入、指定函数、映射或标记，则必须把这些额外数据同时表示出来。\cref{b3:exm:formal-graph-not-analytic-equation}中的发散图像，恰好说明抽象环与指定嵌入可以有不同答案。
+
+\ProseParagraphBreak
+因此，有限阶数据最适合用来回答一个已经证明由有限阶决定的问题。例如已知一个商被 \((x)^N\) 零化时，该商的全部长度可由有限截断求出，见附录 F 的\secref{b3:sec:F04}；没有这个零化条件时，截断长度只是一个阶段性的量。逼近定理也不能把尚未证明的有限决定性当作附带结论。
 
 \subsection{奇点与消解理论导读}
 \label{b3:subsec:D04:04}
 
-待撰写。
+结构定理使一个局部环成为正则环境中的方程商；标准基帮助计算其初始关系；形式纤维和逼近则比较不同局部对象。这些方法都能用于奇点，但它们本身不等于一个一般奇点消解定理。
+
+\ProseParagraphBreak
+最简单的平面曲线已经显示为什么要更换环境。对尖点
+\(y^2=x^3\)，在原点外取新的比值坐标 \(v=y/x\)，代入 \(y=xv\) 得
+\[
+y^2-x^3=x^2(v^2-x).
+\]
+方程 \(v^2-x=0\) 定义光滑曲线，以 \(v\) 为参数，原坐标变成
+\[
+x=v^2,\qquad y=v^3.
+\]
+这与正规化的参数完全一致。保留全部乘积方程会额外留下由 \(x^2\) 定义的部分；取原点外曲线在新坐标图中的闭包，才得到严格变换 \(v^2-x=0\)。代数上，这是把总变换理想对 \(x\) 作饱和后收缩。
+
+\ProseParagraphBreak
+这一个坐标图是原点吹起的常见图。另一图取 \(x=yw\)，约去总变换中的 \(y^2\) 后得到 \(1-yw^3=0\)，在 \(y=0\) 上没有点，所以它不会增加尖点上方的新分支。两个图的相容关系解释了比值坐标如何合起来；若要把它作为一般几何构造，还须建立图的粘合、射影性及适当性等性质。本附录仅以这些明确方程计算这个例子，不以它代替一般吹起理论的证明。
+
+\ProseParagraphBreak
+对于更高维对象，正规化通常不能消除全部奇点，局部图中的参数计算也不足以保证一种操作能在有限步后结束。一般消解理论要控制所选中心、异常部分和维数递降，并对特征及几何对象作准确限制。它所解决的是把奇异空间改造成正则空间的问题；自由消解则是在同一个底环上用自由模和正合复形描述模。二者都可参与奇点研究，却是不同的构造。

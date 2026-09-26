@@ -1,32 +1,122 @@
 % !TeX root = ../../Book5.tex
-% 纲要标题：### 22.4 商与几何
-% 纲要位置：计划纲要.md，第 3786 行。
-
-\section{商与几何}
+% 纲要标题：### 22.4 生成元、关系与 Gröbner 计算
+% 纲要位置：工作记录/计划纲要.md，第 4472 行。
+% * 在已证次数界内通过平均和线性代数搜索齐次生成元，证明生成性后再处理关系
+% * 用消去计算核；未证明候选元生成整个不变环时，所得关系只描述其生成的子代数
+% * Hilbert 级数核验必须先有保持次数的满射，不由两个级数相等直接断言环同构
+% * 完整处理特征不为二时同时变号的不变环 \(k[x^2,xy,y^2]\cong k[u,v,w]/(uw-v^2)\)，保持生成元权二分次
+% #### 22.4.1 齐次生成元的搜索与完备性
+% #### 22.4.2 用消去求生成元之间的关系
+% #### 22.4.3 用 Hilbert 级数核验展示
+% #### 22.4.4 循环作用的完整算例
+\section{生成元、关系与 Gröbner 计算}
 \label{b5:sec:2204}
 
-% TODO: 按以下纲要要点撰写本节。
+一个候选不变量很容易检验；困难在于证明没有遗漏其他生成元，以及没有遗漏生成元之间的关系。这两种完备性需要不同的理由。次数界解决第一项，消去和分次维数可以解决第二项。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 仿射商的环论构造
-% * 轨道与商点不总一一对应
-% * 几何不变量理论的讨论范围
-%
-% ---
-%
-
-\subsection{仿射商的环论构造}
+\subsection{齐次生成元的搜索与完备性}
 \label{b5:subsec:2204:01}
 
-待撰写。
+设 \(G\) 已由有限个矩阵给出，并已列出其全部元素，在可有效进行四则运算的特征零域 \(k\) 上作用于 \(S=k[x_1,\ldots,x_n]\)。以下是一种有限的计算方法。
+\begin{algorithmsteps}
+{特征零的精确可计算域 \(k\)、有限群 \(G\) 的全部作用矩阵，以及 \(S=k[x_1,\ldots,x_n]\)。}
+{\(S^G\) 的有限齐次代数生成集。}
+\State 对每个 \(1\le d\le |G|\)，列出全部次数为 \(d\) 的单项式，计算其 Reynolds 平均。
+\State 把所得多项式按单项式坐标写成列向量，经消元取出 \(S_d^G\) 的一组基。
+\State 逐次处理各 \(d\)。把先前保留的生成元的所有次数为 \(d\) 的乘积展开，取其线性生成空间；仅保留本次基中补足该空间所需的元素。
+\end{algorithmsteps}
+步骤一、二求得整个 \(S_d^G\)，因为投影把一个生成集送到像的生成集。步骤三仅删除已经属于先前生成子代数的元，不改变最终生成的代数。\cref{b5:thm:noether-degree-bound}保证在次数 \(|G|\) 后停止时已经生成 \(S^G\)。零平均必须删去，但不能只因两个候选次数相同就认为它们冗余。
 
-\subsection{轨道与商点的关系}
+\ProseParagraphBreak
+此法以已知的有限群及精确系数运算为输入，输出一个有限齐次生成集；它不是关于任意给定矩阵群是否有限的判定算法。即使群很小，单项式空间也可能很大，故这里的终止性不应读成复杂度保证。
+
+\subsection{用消去求生成元之间的关系}
 \label{b5:subsec:2204:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:invariant-elimination-presentation}
+设 \(k\) 为域，\(f_1,\ldots,f_r\in k[x_1,\ldots,x_n]\)，定义
+\[
+\phi:k[u_1,\ldots,u_r]\longrightarrow k[x_1,\ldots,x_n],
+\qquad u_i\longmapsto f_i.
+\]
+在大多项式环 \(k[x_1,\ldots,x_n,u_1,\ldots,u_r]\) 中令
+\[
+J=(u_1-f_1,\ldots,u_r-f_r).
+\]
+则 \(\ker\phi=J\cap k[u_1,\ldots,u_r]\)。若 \(\mathcal G\) 是 \(J\) 在消去 \(x\) 变量的单项式序下的 Gröbner 基，则
+\(\mathcal G\cap k[u_1,\ldots,u_r]\) 是这个核的 Gröbner 基。
+\end{proposition}
+\begin{proof}
+代入 \(u_i=f_i(x)\) 定义从大环到 \(k[x]\) 的满射，其核为 \(J\)：按各 \(u_i-f_i\) 逐次除法，任意多项式模 \(J\) 化为其代入所得的多项式。把这张映射限制在 \(k[u]\) 就是 \(\phi\)，所以核为所述交。
 
-\subsection{几何不变量理论简介}
+消去序的条件是每个含 \(x\) 的单项式都大于所有只含 \(u\) 的单项式。若 \(h\in J\cap k[u]\) 非零，其首项被某个 \(g\in\mathcal G\) 的首项整除。于是 \(g\) 的首项只含 \(u\)，消去序又迫使 \(g\) 的所有项只含 \(u\)。故交集中的基元已经控制核的全部首项，这正是 Gröbner 基的定义。
+\end{proof}
+
+因而求关系的步骤是：引入独立变量 \(u_i\)，生成 \(J\)，在消去序下计算 Gröbner 基，然后保留不含 \(x\) 的基元。若 \(f_i\) 已证明生成 \(k[V]^G\)，得到的商环才是不变环；否则它只展示子代数 \(k[f_1,\ldots,f_r]\)。构造 \(J\) 本身不会证明候选生成元充分。
+
+\subsection{用 Hilbert 级数核验展示}
 \label{b5:subsec:2204:03}
 
-待撰写。
+\begin{lemma}\label{b5:lem:hilbert-surjection-test}
+设 \(k\) 为域，\(A,B\) 为每个齐次分量都有限维的非负分次 \(k\) 代数，\(\psi:A\to B\) 为保持次数的满射，\(H_A,H_B\) 为相应 Hilbert 级数。若 \(H_A(t)=H_B(t)\)，则 \(\psi\) 是同构。
+\end{lemma}
+\begin{proof}
+逐次取核得到
+\[
+0\longrightarrow(\ker\psi)_d\longrightarrow A_d\longrightarrow B_d\longrightarrow0.
+\]
+维数相等使每个核分量为零，而分次核是这些分量的直和，故整个核为零。
+\end{proof}
+
+例如 \(u_i\) 的次数为 \(a_i>0\)，齐次非零多项式 \(F\in k[u_1,\ldots,u_r]\) 的次数为 \(b\)。多项式环为整环，乘 \(F\) 的映射单射，所以
+\[
+H_{k[u]/(F)}(t)=\frac{1-t^b}{\prod_i(1-t^{a_i})}.
+\]
+这来自次数平移的短正合列，而不是从“一个关系”凭直觉减去一项。多个关系只有在另行建立正则序列等条件后，才可逐项作同样的乘法。
+
+\subsection{循环作用的完整算例}
+\label{b5:subsec:2204:04}
+
+\begin{proposition}\label{b5:prop:sign-invariant-presentation}
+设 \(k\) 为特征不为二的域，二阶循环群 \(C_2\) 的非单位元在 \(k[x,y]\) 上把 \(x,y\) 分别变为 \(-x,-y\)。则存在分次同构
+\[
+k[u,v,w]/(uw-v^2)\ \simeq\ k[x,y]^{C_2},
+\qquad
+(u,v,w)\longmapsto(x^2,xy,y^2),
+\]
+其中 \(x,y\) 的次数为一，\(u,v,w\) 的次数均为二。
+\end{proposition}
+\begin{proof}
+\cref{b5:exm:invariant-sign-action}已按单项式的指数奇偶证明满射。关系 \(uw-v^2\) 显然落入核。模此关系，每个多项式都可化为
+\[
+A(u,w)+vB(u,w).
+\]
+其像的第一部分只含 \(x,y\) 指数均偶的单项式，第二部分只含指数均奇的单项式。这两组互不相交，各组内不同 \(u^aw^b\) 也给出不同单项式，故若像为零，所有系数为零。于是没有其他关系。
+\end{proof}
+
+在消去计算中，同一个核由首项为 \(v^2\) 的单元素 Gröbner 基 \(\{v^2-uw\}\) 控制，标准单项式正是上述两组。它们给出
+\[
+H(t)=\frac{1+t^2}{(1-t^2)^2}.
+\]
+在复数域上，这也与\cref{b5:exm:molien-sign-plane}相符。两种核验使用的资料不同：单项式法直接证明线性无关，Molien 法则在已有满射后比较维数。
+
+\ProseParagraphBreak
+这个例子还能推广。设 \(k\) 含本原 \(m\) 次单位根，且特征不整除 \(m\)，令生成元在坐标环上作用为
+\[
+x\longmapsto\zeta x,\qquad y\longmapsto\zeta^{-1}y.
+\]
+不变条件是 \(m\mid(a-b)\)。从 \(x^ay^b\) 先提出 \((xy)^{\min(a,b)}\)，余下是 \(x^m\) 或 \(y^m\) 的幂，因而
+\begin{equation}\label{b5:eq:cyclic-surface-presentation}
+k[x,y]^{C_m}\simeq k[u,v,w]/(uv-w^m),
+\quad
+(u,v,w)=(x^m,y^m,xy).
+\end{equation}
+为验证全部关系，将含 \(uv\) 的项用 \(w^m\) 消去，留下
+\[
+w^c,\qquad u^aw^c\ (a\ge1),\qquad v^bw^c\ (b\ge1).
+\]
+代入后的指数差分别为零、正的 \(m\) 倍、负的 \(m\) 倍，且每类内指数唯一决定原单项式，所以这些像线性无关。分次为 \(\deg u=\deg v=m,\deg w=2\)，于是级数为
+\[
+\frac{1-t^{2m}}{(1-t^m)^2(1-t^2)}.
+\]
+当 \(m=2\) 时，只是前三个生成元的名称与上例有所调换。

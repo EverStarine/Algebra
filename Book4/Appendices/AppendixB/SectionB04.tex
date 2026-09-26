@@ -1,10 +1,123 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 B 的第 4 条要点整理。
+% 纲要标题：### B.4 模型范畴与稳定无穷范畴
+% 纲要位置：工作记录/计划纲要.md，第 3593 行。
+% 纲要细目（写作范围）：
+% #### B.4.1 模型结构与导出函子
+% #### B.4.2 稳定无穷范畴与同伦相干性
+% ---
 
 \section{模型范畴与稳定无穷范畴}
 \label{b4:sec:B04}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 模型范畴和稳定 ∞-范畴仅作为后续方向
+导出范畴把拟同构变成同构；具体消解则为计算保留了可操作的代表。模型范畴把这两方面组织成统一公理。若还希望保留态射之间的同伦及其高阶相容性，就需要比普通同伦范畴更丰富的结构。这里通过复形说明两种语言各自增加了什么。
 
-待撰写。
+\subsection{模型结构与导出函子}
+\label{b4:subsec:B04:01}
+
+\begin{definition}\label{b4:def:B-model-category}
+设 \(\mathcal M\) 为有全部小极限和小余极限的范畴，指定三类态射，分别称为弱等价、余纤维化和纤维化。若它们满足：
+\begin{enumerate}
+\item 弱等价满足二取三性质；三类态射均对同构和收缩封闭。
+\item 余纤维化对同时为弱等价的纤维化有左提升性质；同时为弱等价的余纤维化对全部纤维化有左提升性质。
+\item 每个态射可函子性地分解为“余纤维化后接平凡纤维化”，也可分解为“平凡余纤维化后接纤维化”。
+\end{enumerate}
+则称这一指定为\term[moxingjiegou]{模型结构}[model structure]。这里“平凡”表示同时为弱等价；左提升性质是指每个以这两条态射为左边和右边的交换方块都有对角填充。带此结构的范畴称为\term[moxingfanchou]{模型范畴}[model category]。
+\end{definition}
+
+这是采用函子性分解的通常版本，见 Weibel\cite[Chapter V, Definition 10.4]{Weibel2013KBook}。从始对象到 \(X\) 为余纤维化时，称 \(X\) 余纤维；从 \(X\) 到终对象为纤维化时，称 \(X\) 纤维。两种分解分别产生余纤维替换 \(QX\rightarrow X\) 与纤维替换 \(X\rightarrow RX\)。同伦范畴 \(\operatorname{Ho}(\mathcal M)\) 则通过反演弱等价得到。
+
+\begin{example}\label{b4:exm:B-field-complex-model}
+设 \(k\) 为域。在全部 \(k\)-向量空间上链复形组成的范畴 \(\operatorname{Ch}(k)\) 上，可取拟同构为弱等价、逐次单射为余纤维化、逐次满射为纤维化。这给出模型结构，且每个对象同时余纤维、纤维。
+\end{example}
+\begin{proof}
+范畴的极限、余极限逐次存在；二取三由上同调给出，收缩封闭性由单射、满射及同构的收缩性质给出。下面核验其余两项。
+
+域上的无同调复形都可缩：逐次选择余圈的补空间，得到 \(X^n=Z^n\oplus Z^{n+1}\) 及微分 \((z,w)\mapsto(w,0)\)。它是两项恒等复形的直和，也是在每个次数仅有两项贡献的同一族的直积。两项恒等复形在 \(\operatorname{Ch}(k)\) 中既投射又内射：从它出发的复形映射由一个次数上的线性映射决定，映入它的复形映射也由一个次数上的线性映射决定，而向量空间范畴中的 Hom 正合。因此无同调复形在复形范畴中也既投射又内射。
+
+若满射 \(p:E\rightarrow F\) 为拟同构，其核 \(K\) 无同调而内射，所以 \(E\simeq K\oplus F\)。对给定的提升问题，指向 \(F\) 的分量已经确定，指向 \(K\) 的分量可沿左边的逐次单射延拓，因为 \(K\) 在复形范畴内内射。这证明第一种提升。若左边的单射为拟同构，其余核无同调而投射，短正合列分裂；在这个余核上沿右边满射提升，便得到另一种提升。
+
+最后，记 \(C(X)=\operatorname{Cone}(1_X)\)，它可缩，并有逐次单射 \(j_X:X\rightarrow C(X)\)。任意复形映射 \(f:X\rightarrow Y\) 有分解
+\[
+X\xrightarrow{(f,j_X)}Y\oplus C(X)\xrightarrow{\mathrm{pr}_Y}Y,
+\]
+第一箭头逐次单射，第二箭头为逐次满射拟同构。又 \(C(Y)[-1]\) 有逐次满射 \(q_Y:C(Y)[-1]\rightarrow Y\)，在锥坐标上取第二分量。于是还有
+\[
+X\longrightarrow X\oplus C(Y)[-1]
+\xrightarrow{(f,q_Y)}Y,
+\]
+第一箭头为标准包含，是逐次单射拟同构，第二箭头逐次满射。这些锥构造对交换方块函子性地作用，所以分解满足要求。最后，\(0\rightarrow X\) 总是逐次单射，\(X\rightarrow0\) 总是逐次满射。
+\end{proof}
+
+这个例子的简便性来自底域条件。一般环上的无同调复形未必可缩，不能仍把所有逐次单射、满射原样作为同一套模型结构。投射消解与内射消解的选择正是在此重新发挥作用。
+
+\ProseParagraphBreak
+设 \(\mathcal M,\mathcal N\) 为模型范畴，\(L:\mathcal M\rightleftarrows\mathcal N:U\) 为伴随对。若左伴随保持余纤维化及平凡余纤维化，则称其为\term[Quillenbansui]{Quillen 伴随}[Quillen adjunction]。模型范畴的一般定理给出同伦范畴上的导出伴随，取余纤维替换 \(X^{\mathrm{cof}}\) 与纤维替换 \(Y^{\mathrm{fib}}\) 后写成
+\[
+\mathbf L L(X)=L(X^{\mathrm{cof}}),\qquad
+\mathbf R U(Y)=U(Y^{\mathrm{fib}}).
+\]
+这概括了“先选择适当消解再施行函子”的做法。
+\begin{proofsketch}
+先说明 \(L\) 把余纤维对象之间的弱等价送到弱等价。对这样的 \(f:X\to Y\)，把 \((f,1_Y):X\amalg Y\to Y\) 分解为余纤维化 \(j:X\amalg Y\to Z\) 后接平凡纤维化 \(p:Z\to Y\)。两项包含后所得 \(j_X,j_Y\) 都是余纤维化；由 \(pj_X=f\)、\(pj_Y=1_Y\) 和二取三性质，它们也都是弱等价。故 \(L(j_X),L(j_Y)\) 为弱等价。又 \(L(p)L(j_Y)=1\)，二取三先给出 \(L(p)\) 为弱等价，再给出 \(L(f)\) 为弱等价。对偶论证说明 \(U\) 保持纤维对象之间的弱等价。
+
+若 \(QX\to X\)、\(Q'X\to X\) 是两个余纤维替换，提升性质给出它们之间的比较，比较仍为弱等价；因此施行 \(L\) 后在同伦范畴中同构。选择函子性替换使对象公式同时定义态射；其对原弱等价的保持由上一步得到。右导出的论证对偶。
+
+取余纤维 \(X\) 和纤维 \(Y\)。普通伴随给出 \(\mathcal N(LX,Y)\cong\mathcal M(X,UY)\)。把一个柱对象施行 \(L\)，由左伴随保持余积、余纤维化和刚证的弱等价，仍得到 \(LX\) 的柱对象。把一个路径对象施行 \(U\)，由右伴随保持积、纤维化及纤维对象间弱等价，仍得到 \(UY\) 的路径对象。于是此双射同时保持两个方向的同伦关系，下降为
+\[
+ \operatorname{Ho}(\mathcal N)(\mathbf LL(X),Y)
+ \cong\operatorname{Ho}(\mathcal M)(X,\mathbf RU(Y)).
+\]
+这里使用余纤维对象到纤维对象的同伦类计算同伦范畴态射；其依据是把对象同时替换为余纤维、纤维对象，提升公理使此类对象间的弱等价有同伦逆，故局部化不会再增加新的态射。概要省略一般模型范畴中左同伦与右同伦一致性的逐项提升图。上面的域上复形模型中，这些比较就是已经计算的链同伦。
+\end{proofsketch}
+
+\subsection{稳定无穷范畴与同伦相干性}
+\label{b4:subsec:B04:02}
+
+本卷的 DG 范畴为每对复形指定一个总 Hom 复形。由\cref{b4:prop:dg-hom-complex}，其零次上同调给出普通同伦态射，其他次数则给出移位态射。只留下同伦态射并不会删掉三角范畴中连接映射的同伦类，却会丢掉具体同伦以及构造连接映射时的高阶相干数据。
+
+\ProseParagraphBreak
+无穷范畴的一种理解是同时保留态射、态射之间的可逆同伦，以及这些同伦之间的高阶相容性。精确模型可以采用满足内角填充条件的单纯集，称为拟范畴；这里不展开整套单纯模型，而在已给定无穷范畴的前提下说明稳定条件。相关语言及模型比较见 Blumberg、Gepner、Tabuada 的《A universal characterization of higher algebraic K-theory》\cite[Section 2.2, pp. 747--750]{BlumbergGepnerTabuada2013UniversalKTheory}。
+
+\begin{definition}\label{b4:def:B-stable-infinity}
+设 \(\mathcal C\) 为无穷范畴。若它具有零对象、全部有限极限与有限余极限，并且其中一个方块为推出方块当且仅当它为拉回方块，则称 \(\mathcal C\) 为稳定高阶范畴，也称稳定无穷范畴。\termidx[wendingwuqiongfanchou]{稳定无穷范畴}这里的极限与余极限均在无穷范畴的意义下理解，其泛性质比较的是映射空间的等价。
+\end{definition}
+
+这个条件使同伦纤维与同伦余纤维只差一次移位。稳定无穷范畴的同伦范畴具有三角结构，好三角来自余纤维序列，参见\cite[Definition 2.12 and the following paragraph, p. 749]{BlumbergGepnerTabuada2013UniversalKTheory}。
+\begin{proofsketch}
+定义 \(\Sigma X=0\amalg_X0\)、\(\Omega X=0\times_X0\)。同一方块既为拉回又为推出，使 \(\Omega\Sigma X\simeq X\)、\(\Sigma\Omega X\simeq X\)，故移位是等价。映射空间因此可以反复写成循环空间，其连通分支具有交换群结构；有限积与有限余积由同一双笛卡儿方块识别为双积。于是同伦范畴为加性范畴。
+
+对 \(f:X\to Y\) 取余纤维 \(C_f=Y\amalg_X0\)，得到
+\(X\to Y\to C_f\to\Sigma X\)。恒等映射的余纤维为零，零映射也有余纤维，因而满足完成三角的公理。将这个推出方块同时看作拉回，可以把余纤维序列改写为纤维序列并旋转；改变循环方向给出旋转中的负号。一个在同伦范畴中交换的方块可以选取实现其交换性的同伦，再用推出的泛性质补出余纤维之间的态射，这给出三角态射公理。
+
+对可复合的 \(X\xrightarrow fY\xrightarrow gZ\)，推出的粘合律给出
+\[
+ C_f\longrightarrow C_{gf}\longrightarrow C_g
+ \longrightarrow\Sigma C_f,
+ \qquad
+ C_{gf}\amalg_{C_f}0\simeq Z\amalg_Y0=C_g.
+\]
+把它与 \(f,g,gf\) 各自的余纤维方块组合，就是八面体图。各面同时来自同一推出图，故所需复合相容。这里省略无穷范畴模型中推出粘合与高阶同伦相容性的技术验证；对复形的具体模型，\secref{b4:sec:1602}已经用锥矩阵验证同一构造与负号。这一概要从稳定结构导出三角公理，没有断言一个给定三角范畴会自动具有唯一的稳定增强。
+\end{proofsketch}
+
+复形给出最贴近本书的模型。这里固定域 \(k\)，考虑 \(k\) 向量空间的复形。由其 DG 结构构造相应稳定无穷范畴后，映射空间在零映射处的同伦群满足
+\[
+\pi_i\operatorname{Map}(X,Y)
+\simeq H^{-i}\operatorname{Hom}_k^\bullet(X,Y)
+\simeq H^{-i}\mathbf R\operatorname{Hom}_k(X,Y),
+\qquad i\ge0.
+\]
+在 \(i=0\) 时，这就是导出范畴中的态射群。第二个同构使用底域条件：由\cref{b4:exm:B-field-complex-model}，无同调复形可缩，普通 Hom 已计算导出 Hom。一般环上必须先选择适当的导出 DG 模型，不能直接对普通 Hom 使用同一公式。
+\begin{proofsketch}
+令 \(H=\operatorname{Hom}_k^\bullet(X,Y)\)。先取非正次的典范截断，再改成非负次链复形：\(A_n=H^{-n}\) 对 \(n>0\)，\(A_0=\ker(H^0\to H^1)\)。将它单纯化时，第 \(m\) 层取
+\[
+ (\Gamma A)_m=\bigoplus_{[m]\twoheadrightarrow[r]}A_r.
+\]
+面映射与退化映射由有限有序集映射的满射、单射分解及 \(A\) 的微分给出。除去退化分量以后，正规化复形重新得到 \(A\)；其余分量配成可缩项。所以该单纯交换群的同伦群就是 \(H_i(A)=H^{-i}(H)\)。零分支的描述正是余圈模余边。
+
+DG 神经把这一单纯化与态射复合的高阶相容性组合成映射空间，其取正规化后的上述复形不变，因而给出所列公式。概要省略面映射恒等式和 DG 神经映射空间与此单纯化模型的比较，不省略截断和次数方向；这些是应用公式时必需的条件。底域情形的 Hom 与导出 Hom 已在前面识别。
+\end{proofsketch}
+
+例如取 \(X=k\)、\(Y=k[1]\)，总 Hom 仅在 \(-1\) 次为 \(k\)，故映射空间连通而有 \(\pi_1=k\)。普通导出范畴中从 \(k\) 到 \(k[1]\) 只有零态射，却不能据此说相应映射空间没有更高信息。
+
+\ProseParagraphBreak
+高阶 \(K\) 理论需要组织大量对象、等价与正合序列之间的相容性，因此稳定无穷范畴为它提供了统一的对象范围。本文止于上述定义与复形例子；完整的增强构造、谱值 \(K\) 理论及其泛性质属于进一步阅读。前面已经证明的 Euler 同构与矩阵 \(K_1\) 计算不依赖这些更高结构。

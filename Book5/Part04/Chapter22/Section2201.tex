@@ -1,30 +1,74 @@
 % !TeX root = ../../Book5.tex
-% 纲要标题：### 22.1 有限群不变量
-% 纲要位置：计划纲要.md，第 3767 行。
-
-\section{有限群不变量}
+% 纲要标题：### 22.1 群作用与不变多项式
+% 纲要位置：工作记录/计划纲要.md，第 4433 行。
+% * 由 \(k[V]=\operatorname{Sym}(V^*)\) 定义多项式环上的作用，说明逆元、分次及有限域上形式多项式与点集函数的区别
+% * 以代数闭域上的几何轨道表述有限群的分离结论；用明确算例开始，不将一般无限群的轨道结论混入
+% * 群阶可逆时完整证明 Reynolds 投影及其不变子环线性性，说明它一般不保持乘法
+% #### 22.1.1 线性作用、函数上的作用与不变子环
+% #### 22.1.2 有限群的轨道与不变量分离
+% #### 22.1.3 平均法与 Reynolds 算子
+\section{群作用与不变多项式}
 \label{b5:sec:2201}
 
-% TODO: 按以下纲要要点撰写本节。
+矩阵的元素会随基改变，特征多项式却保持不变。一个多项式的根可以重新编号，根的初等对称式却仍是原来的系数。不变量理论研究哪些多项式在给定作用下保持不变，以及这些多项式能辨认多少对象。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 多项式环上的有限群作用
-% * 不变子环和轨道分离
-% * 特征不整除群阶时的 Reynolds 算子
-%
-
-\subsection{多项式环上的有限群作用}
+\subsection{线性作用、函数上的作用与不变子环}
 \label{b5:subsec:2201:01}
 
-待撰写。
+\begin{definition}\label{b5:def:invariant-ring-revisited}
+设 \(k\) 为域，\(V\) 为有限维 \(k\) 向量空间，群 \(G\) 通过线性自同构作用在 \(V\) 上。在 \(k[V]=\operatorname{Sym}(V^*)\) 上定义
+\[
+(g\cdot f)(v)=f(g^{-1}v).
+\]
+此处等式由线性代入解释为形式多项式恒等式。满足 \(g\cdot f=f\) 对所有 \(g\in G\) 成立的多项式组成子代数
+\[
+k[V]^G=\Bigl\{\,f\in k[V]\mid g\cdot f=f\text{ 对所有 }g\in G\,\Bigr\},
+\]
+称为作用的\term[bubian-huan]{不变环}[invariant ring]，其中的元素称为多项式不变量。
+\end{definition}
 
-\subsection{不变子环和轨道分离}
+逆元保证 \(g\cdot(h\cdot f)=(gh)\cdot f\)。先在 \(V^*\) 上取对偶作用，再乘法延拓，就得到同一定义。它保持全次数；若 \(S_d=\operatorname{Sym}^d(V^*)\)，则 \(k[V]^G=\bigoplus_{d\ge0}S_d^G\)。有限域上的形式多项式不能等同于点集函数，例如非零多项式 \(x^q-x\) 在 \(\mathbb F_q\) 每一点取零。因此本章的不变性始终指代数中的等式。
+
+\begin{example}\label{b5:exm:invariant-sign-action}
+设 \(\operatorname{char}k\ne2\)，阶二群由 \(s\) 生成，在 \(k^2\) 上同时变号。则 \(s\cdot x=-x,\ s\cdot y=-y\)，单项式 \(x^ay^b\) 不变当且仅当 \(a+b\) 为偶数。若两指数均偶，它是 \(x^2,y^2\) 的乘积；若均奇，先提出 \(xy\)。故
+\[
+k[x,y]^{\langle s\rangle}=k[x^2,xy,y^2].
+\]
+生成元满足 \((xy)^2=x^2y^2\)。找到生成元之后，还须求出它们之间的全部关系。
+\end{example}
+
+\subsection{有限群的轨道与不变量分离}
 \label{b5:subsec:2201:02}
 
-待撰写。
+同一轨道上的不变量值必然相同。有限群情形的逆命题不需要除以群阶，但要在几何点上陈述。
 
-\subsection{特征不整除群阶时的 Reynolds 算子}
+\begin{proposition}\label{b5:prop:finite-invariants-separate}
+设 \(k\) 为代数闭域，有限群 \(G\) 通过代数自同构作用在仿射代数集 \(X\) 上。若 \(x,y\in X(k)\) 不在同一轨道，则存在 \(F\in k[X]^G\) 满足 \(F(x)=0,\ F(y)=1\)。
+\end{proposition}
+\begin{proof}
+两个轨道是互不相交的有限点集。不同点的极大理想两两互素，中国剩余定理给出 \(f\in k[X]\)，使它在 \(Gx\) 上取零，在 \(Gy\) 上取一。令 \(F=\prod_{g\in G}g\cdot f\)。群作用只置换乘积因子，所以 \(F\) 不变；在 \(x\) 处每个因子为零，在 \(y\) 处每个因子为一。
+\end{proof}
+
+一般域上的几何轨道要扩到代数闭包后考察。一般无限群也没有上述结论：\(k^\times\) 在直线上按数乘作用时，零点与非零点属于不同轨道，却只有常数不变量。
+
+\subsection{平均法与 Reynolds 算子}
 \label{b5:subsec:2201:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:invariant-reynolds}
+设 \(k\) 为域，有限群 \(G\) 通过 \(k\) 代数自同构作用在交换含幺 \(k\) 代数 \(A\) 上，\(A^G\) 为其不变子代数，且 \(|G|\) 在 \(k\) 中可逆。则
+\[
+\mathcal R:A\longrightarrow A^G,\qquad
+\mathcal R(f)=\frac1{|G|}\sum_{g\in G}g\cdot f
+\]
+是 \(A^G\) 线性投影，即 \(\mathcal R|_{A^G}=1\)，且
+\(\mathcal R(af)=a\mathcal R(f)\) 对 \(a\in A^G\) 成立。若作用保持分次，则 \(\mathcal R\) 保持次数。此映射称为\term[Reynolds-suanzi]{Reynolds 算子}[Reynolds operator]。
+\end{proposition}
+\begin{proof}
+作用于求和式的群元素只重排指标，所以像落在 \(A^G\)。不变元的各求和项相同，平均后仍为原元。对不变的 \(a\)，每项 \(g\cdot(af)=a(g\cdot f)\)，提出 \(a\) 即得线性性。保次数则由各求和项直接得到。
+\end{proof}
+
+这个投影通常不保持乘法。变号作用下 \(\mathcal R(x)=0\)，但 \(\mathcal R(x^2)=x^2\)。其主要用处是处理系数：若 \(f=\sum_i a_if_i\)，而 \(f,f_i\) 都不变，则
+\[
+f=\sum_i\mathcal R(a_i)f_i.
+\]
+这使一个带任意系数的等式转化为带不变系数的等式。

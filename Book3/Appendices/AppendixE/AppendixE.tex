@@ -1,18 +1,130 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 附录 E　微分代数与微分消去
-% 纲要位置：计划纲要.md，第 2353 行。
 
 \chapter{微分代数与微分消去}
 \label{b3:app:E}
 
-% TODO: 按纲要撰写本附录，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % > 将 v1.1 的微分代数两章及原进阶附录合为简短介绍。默认特征零，先取一个导子；多个导子时注明两两交换。只要求域、理想、局部化和多项式基础，交换代数正文不依赖这些内容。非线性算法的完整证明和实现转专题教材；既有详细规划保留在 v1.1。资料依据见修订说明 [D1]–[D2]。
-%
+
+\BookChapterNumber{b3:app:E}
+
+\begin{chapterabstract}
+微分代数把导子纳入代数结构，使方程及其导数能够统一参加消去。本附录建立微分环、微分多项式与微分理想的基本运算，解释根微分理想的有限性为何不同于普通 Noether 性。通过退化分支和隐藏变量的例子说明特征集及 Rosenfeld--Gröbner 方法的任务，最后介绍线性微分模与 Picard--Vessiot 扩张。主要初等构造在此证明，Ritt--Raudenbush 有限性与 Rosenfeld--Gröbner 分解给出证明概要，微分闭域理论只介绍基本对象。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 给一个环指定导子，并在商环、分式域与微分多项式环上检查相容性。
+\item 区分普通代数次数、微分阶及两种超越次数。
+\item 在微分消去中记录初式、分离子与非零条件，保留必要的退化分支。
+\item 从线性微分系统导出常数矩阵作用，并辨认其与完整微分 Galois 理论的差别。
+\end{itemize}
+\end{learninggoals}
+
+所需基础为域、理想、多项式与局部化，Kähler 微分的比较用到本卷第14章。默认一个导子、特征零；多个导子时要求两两交换。普通常微分方程的解析存在定理不作为预备知识，因为这里的定义与多数算例可以在形式代数中完成。Hubert 的正式文章 \textit{Notes on Triangular Sets and Triangulation-Decomposition Algorithms II: Differential Systems} 的 Sections 2--3 对应基本对象与特征集\cite[Sections 2--3]{Hubert2003DifferentialSystems}；完整 Rosenfeld--Gröbner 输出规格见 Boulier 等的 Section 6.2\cite[Section 6.2, Theorem 60]{BoulierLazardOllivierPetitot2009DifferentialIdeals}。
+
+% 本附录初等论证给出证明，有限性与算法长证明给出概要及出处。
 
 \input{Appendices/AppendixE/SectionE01}
 \input{Appendices/AppendixE/SectionE02}
 \input{Appendices/AppendixE/SectionE03}
 \input{Appendices/AppendixE/SectionE04}
+
+
+\begin{chaptersummary}
+指定导子改变了允许的理想与映射：求值必须同时规定全部导数的像，商环必须由微分理想形成。微分多项式环虽然有无穷多个普通变量，根微分理想仍有 Ritt--Raudenbush 有限性；其特征集证明先稳定非零饱和分支，再按低秩退化分支归纳。Rosenfeld--Gröbner 方法还须分别控制待约化方程、相容对、初式和分离子，有限性本身不能替代这些检查。
+
+\ProseParagraphBreak
+计算的代表任务是在保留解集的前提下消去隐藏变量。非线性情形需要三角分支和饱和；线性情形则由微分模与基本解矩阵组织。两者都属于代数理论，解析解的收敛、定义域与奇点延拓还须另有论证。Kähler 微分、普通导子和 DG 微分之间的区别，也应在进入更深理论后继续保留。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b3:ex:E-derivation-constants}
+在 \(K(t)\) 上设 \(\operatorname{char}K=0\)、\(\delta|_K=0,\delta t=1\)。证明常数域恰为 \(K\)。
+\end{exercise}
+\begin{solution}
+设非零既约分式 \(p/q\) 的导数为零，则 \(p'q=pq'\)。由 \(\gcd(p,q)=1\)，知 \(p\mid p'\)。若 \(p\) 非常数，特征零给出 \(\deg p'<\deg p\) 且 \(p'\ne0\)，矛盾，所以 \(p\) 为非零常数。继而 \(q'=0\)，故 \(q\) 也为常数。零元无需另证。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-polynomial-differential-ideals}
+证明 \(K[t]\) 在上述导子下只有零理想和全环两个微分理想。
+\end{exercise}
+\begin{solution}
+若微分理想含非零多项式，取次数最小者 \(p\)。若次数正，则 \(p'\) 非零且次数更小，也在理想中，矛盾。因此理想含非零常数，为全环。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-characteristic-p-warning}
+在 \(\mathbb F_p(t)\) 上取 \(\delta t=1\)，说明上一常数域结论为何失效；并在 \(\mathbb F_p[t]\) 中给出根理想未必保持微分性的例子。
+\end{exercise}
+\begin{solution}
+\(\delta(t^p)=pt^{p-1}=0\)，所以常数域至少含 \(\mathbb F_p(t^p)\)，大于 \(\mathbb F_p\)。理想 \((t^p)\) 对导子稳定，但根理想为 \((t)\)，而 \(\delta t=1\notin(t)\)。这也指出正文证明中 \(n!\) 可逆的作用。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-differential-polynomial-map}
+计算 \(K\{y\}/[y'-y]\) 的底层环，并说明它不是只含常数的微分环。
+\end{exercise}
+\begin{solution}
+所有关系是 \(y^{(j+1)}-y^{(j)}\)，故各高阶变量都等于 \(y\)，商的底层环为 \(K[y]\)。令 \(\delta y=y\) 可定义逆向微分同态，验证没有额外关系。除非 \(y=0\)，生成元的导数非零，所以它并非零导子结构。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-root-differential-ideal}
+在特征零微分域上证明 \(\sqrt{[y^2]}=[y]\)。
+\end{exercise}
+\begin{solution}
+\([y]\) 由全部 \(y^{(j)}\) 生成，其商为 \(K\)，所以是根微分理想并包含 \([y^2]\)。反之 \(y^2\in[y^2]\)，故 \(y\in\sqrt{[y^2]}\)；正文引理保证后者是微分理想，从而包含 \([y]\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-initial-separant}
+对 \(P=y(y'')^3+(y')^2-1\)，使用 \(y<y'<y''<\cdots\)，求微分阶、导变量、初式和分离子，并找出 \(\delta P\) 中最高导数的系数。
+\end{exercise}
+\begin{solution}
+微分阶为二，导变量为 \(y''\)，初式为 \(y\)，分离子为 \(3y(y'')^2\)。求导得
+\[
+\delta P=y'(y'')^3+3y(y'')^2y^{(3)}+2y'y'',
+\]
+所以最高导数 \(y^{(3)}\) 的系数正是分离子。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-division-loses-solution}
+在微分域中分析 \(yy'=0\)，指出直接约去 \(y\) 的逻辑问题，并说明最终解集是什么。
+\end{exercise}
+\begin{solution}
+域无零因子，故 \(y=0\) 或 \(y'=0\)。第一种也是第二种的解，最终解集为全部常数。直接约去 \(y\) 仅在 \(y\ne0\) 分支合法；虽然本例遗漏的零解最后也满足 \(y'=0\)，仍应通过原方程确认，不能据此省略一般分支检查。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-linear-elimination}
+证明系统 \(u'=v,\ v'=-u\) 等价于 \(u''+u=0\) 连同 \(v=u'\)。再证明 \(u^2+v^2\) 为常数。
+\end{exercise}
+\begin{solution}
+第一式求导并用第二式得到 \(u''=-u\)；反过来定义 \(v=u'\) 即满足原系统。再算 \(\delta(u^2+v^2)=2uv+2v(-u)=0\)。此常数不必属于最初的底域，取决于所用微分扩域的常数域。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-riccati-pole}
+设 \(y\ne0\) 满足 \(y'=y^2\)，基域含 \(t\) 且 \(t'=1\)。证明 \(-1/y-t\) 为常数，并解释零解为何需另列。
+\end{exercise}
+\begin{solution}
+\(\delta(-1/y)=y'/y^2=1\)，故 \(c=-1/y-t\) 为常数，解写成 \(y=-1/(t+c)\)。计算使用 \(y^{-1}\)，所以仅覆盖非零解。\(y=0\) 直接满足原方程，必须另列。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-module-basis-change}
+对一维系统 \(y'=ay\)，令 \(y=pz\)，\(p\in K^\times\)。求新系数，并说明何时能变成 \(z'=0\)。
+\end{exercise}
+\begin{solution}
+\(p'z+pz'=apz\)，所以 \(z'=(a-p'/p)z\)。当且仅当存在 \(p\in K^\times\) 满足 \(p'/p=a\) 时可把系数消去。这是微分域中一个方程的可解性问题，不能仅凭 \(a\) 是标量就宣布系统平凡。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-constant-solution-space}
+设 \(L/K\) 常数域同为 \(C\)，\(Y\in\operatorname{GL}_n(L)\) 满足 \(Y'=AY\)。证明 \(L^n\) 内该系统的全部解为 \(Yc\)，\(c\in C^n\)。
+\end{exercise}
+\begin{solution}
+对任一解 \(v\)，计算 \((Y^{-1}v)'=-Y^{-1}Av+Y^{-1}Av=0\)，故 \(Y^{-1}v\in C^n\)。反方向求导 \(Yc\) 即验证。可逆性保证 \(c\) 唯一，故解空间作为 \(C\) 向量空间维数为 \(n\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:E-commuting-derivations}
+在 \(K[x,y]\) 上取 \(\delta_1=\partial/\partial x\)、\(\delta_2=x\partial/\partial y\)。证明二者不交换，并说明为何不能直接套用本附录的多导子基定理。
+\end{exercise}
+\begin{solution}
+\(\delta_1\delta_2(y)=\delta_1(x)=1\)，而 \(\delta_2\delta_1(y)=0\)。所以混合导数不能只用多重指标 \((a,b)\) 表示而忽略次序。Ritt--Raudenbush 定理在正文明确假定有限个两两交换导子，此例不符合假设；这里并未因此断言所有非交换导子的有限性结果都失败。
+\end{solution}

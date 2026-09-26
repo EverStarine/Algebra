@@ -6,6 +6,7 @@
 % * 有限维商代数的维数、重数与约化性；不能把向量空间维数一概当作不同几何点数
 % * FGLM 换序的动机及零维假设；具体算法转附录 B
 % * 三角形式与有理单变量表示简介；额外假设和退化分支逐项说明
+% * 乘法矩阵的共同特征值与约化性在正文证明；完整求解算例和非约化对照
 % ---
 
 
@@ -51,6 +52,23 @@ T_y=\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix},
 \]
 因此 \(x^2=y\)、\(x^3=1\) 都可以直接从矩阵乘法读出。Sturmfels 在\cite[Section 2.3, pp. 17--19]{Sturmfels2002PolynomialEquations}中进一步讨论了乘法矩阵与方程求解的联系。
 
+\begin{theorem}[乘法矩阵与共同特征值]\label{b3:thm:multiplication-joint-eigenvalues}
+设 \(k\) 为代数闭域，\(I\subsetneq k[x_1,\ldots,x_n]\)，且 \(A=k[x_1,\ldots,x_n]/I\) 的 \(k\) 维数为有限正整数 \(D\)。选定 \(A\) 的一组 \(k\) 基，记由 \(\overline{x_i}\) 乘法给出的矩阵为 \(T_i\)（\(1\le i\le n\)）。点 \(a=(a_1,\ldots,a_n)\in k^n\) 是 \(I\) 的零点，当且仅当存在 \(0\ne v\in k^D\)，使
+\[
+T_i v=a_i v\qquad(1\le i\le n).
+\]
+此外，这些矩阵能同时对角化，当且仅当 \(A\) 约化。
+\end{theorem}
+\begin{proof}
+若有这样的 \(v\)，任取 \(f\in I\)，乘法表示给出 \(f(T_1,\ldots,T_n)=0\)，所以 \(f(a)v=0\)。因 \(v\ne0\)，有 \(f(a)=0\)，故 \(a\) 是零点。
+
+反过来，取零点 \(a\) 对应的极大理想 \(\mathfrak m_a\)。由\cref{b3:thm:artin-decomposition}，\(A\) 是各局部 Artin 因子的直积。在因子 \(A_{\mathfrak m_a}\) 中，极大理想 \(\mathfrak n\) 幂零；若 \(\mathfrak n=0\)，取 \(v=1\)，否则在最后一个非零幂 \(\mathfrak n^s\) 中取非零 \(v\)。两种情形都有 \(\mathfrak n v=0\)。因 \(x_i-a_i\in\mathfrak n\)，得到 \(x_iv=a_iv\)。将它放在这个因子中，其余因子取零，就得到 \(A\) 中的共同特征向量。
+
+若 \(A\) 约化，局部因子的极大理想既幂零又只能为零。其剩余域为 \(k\)，因为它是代数闭域的有限扩张。因此 \(A\cong k^D\)，各因子的单位向量给出全部乘法矩阵的共同对角基。反之，若坐标乘法矩阵同时对角化，则每个 \(T_b\) 都是它们的多项式，也在同一基下对角化。若 \(b\) 幂零，\(T_b\) 是幂零对角矩阵，故为零；再用 \(m_b(1)=b\) 得 \(b=0\)。
+\end{proof}
+
+上述结论可对照\cite[Theorem 2.6 and Corollary 2.7, pp. 17--18]{Sturmfels2002PolynomialEquations}。同一个非零向量必须同时满足全部特征方程；分别列出各矩阵的特征值，再任意拼成坐标，会加入本来不存在的零点。
+
 \subsection{商代数的维数、重数与约化性}
 \label{b3:subsec:0805:02}
 
@@ -90,7 +108,7 @@ A\simeq\prod_{i=1}^r A_{\mathfrak m_i},
 例如旧序 \(x>y\) 的字典序给出基 \(\{x-y^2,y^3-1\}\)。改用 \(y>x\) 后，在旧商空间中 \(1,x,x^2\) 依次对应 \(1,y^2,y\)，因而独立；随后 \(x^3=1\)、\(y=x^2\) 给出新基 \(\{y-x^2,x^3-1\}\)。这次换序只须三维空间中的计算，不需要从原生成元重新完成所有 \(S\)-多项式约化。
 
 \ProseParagraphBreak
-零维条件提供的是有限的 \(D\) 和有限个 \(D\times D\) 乘法矩阵。对 \(k[x,y]/(y)\simeq k[x]\)，单项式 \(1,x,x^2,\ldots\) 永远线性无关，不能沿用这一有限维计算框架。正维理想仍有有限 Gröbner 基，但那是另一种有限性。
+零维条件提供的是有限的 \(D\) 和有限个 \(D\times D\) 乘法矩阵。对 \(k[x,y]/(y)\simeq k[x]\)，单项式 \(1,x,x^2,\ldots\) 永远线性无关，不能用有限维乘法矩阵表示这个商环。正维理想仍有有限 Gröbner 基，但那是另一种有限性。
 
 \subsection{三角形式、有理单变量表示与退化分支}
 \label{b3:subsec:0805:04}
@@ -102,7 +120,10 @@ A\simeq k[T]/\Bigl(p(T)\Bigr),\qquad x_i=q_i(T).
 这是一种三角描述：先解一个一元方程，再恢复全部坐标。它需要 \(A\) 是单生成代数，不能仅从有限维性推出。
 
 \begin{proposition}\label{b3:prop:finite-reduced-shape}
-设 \(k\) 为代数闭域，\(I\subsetneq k[x_1,\ldots,x_n]\) 是根理想，且商代数维数为 \(D<\infty\)。存在一个线性形式 \(t=\sum c_ix_i\)，在所有零点上取值两两不同。对任意这样的 \(t\)，存在无重根的首一 \(D\) 次多项式 \(p(T)\) 及次数小于 \(D\) 的 \(q_i(T)\)，使上述同构成立。
+设 \(k\) 为代数闭域，\(R=k[x_1,\ldots,x_n]\)，\(I\subsetneq R\) 是根理想，且 \(A=R/I\) 的 \(k\) 维数为有限正整数 \(D\)。存在一个线性形式 \(t=\sum_{i=1}^n c_ix_i\)，在 \(I\) 的所有零点上取值两两不同。对任意这样的 \(t\)，存在无重根的首一 \(D\) 次多项式 \(p(T)\) 及次数小于 \(D\) 的 \(q_i(T)\)，使
+\[
+A\simeq k[T]/(p(T)),\qquad \overline{x_i}\longleftrightarrow q_i(T),\quad \bar t\longleftrightarrow T.
+\]
 \end{proposition}
 \begin{proof}
 由式\eqref{b3:eq:zero-dimensional-length}及约化性，\(A\simeq k^D\)，各因子对应点 \(P_1,\ldots,P_D\)。对每对不同点，等式 \(\sum c_i(P_{ji}-P_{hi})=0\) 定义系数空间中的一个真超平面。无限域上的有限个真超平面不能覆盖整个空间：这些非零线性多项式之积非零，而非零多项式不在无限域的全部点上消失，后一事实对变量数归纳即可。故可以选取避开这些超平面的 \(c\)。
@@ -114,3 +135,44 @@ A\simeq k[T]/\Bigl(p(T)\Bigr),\qquad x_i=q_i(T).
 
 \ProseParagraphBreak
 最后列出两种不能忽略的情形。有限域上的线性形式未必分离全部有理点，例如 \(\mathbb F_2^2\) 的四个点不可能通过一个 \(\mathbb F_2\) 值的函数取得四个不同值。含幂零元的代数也未必单生成：\(k[x,y]/(x,y)^2\) 维数为三，每个元素都形如 \(c+n\)、\(n^2=0\)，其生成的子代数最多二维。一般零维计算因此要允许域扩张、多个三角分支或更一般的有限代数表示；不能把一个漂亮的单变量形式当作无条件存在的输出。
+
+\subsection{从乘法矩阵恢复解与重数}
+\label{b3:subsec:0805:05}
+
+现在把上述步骤用于一个完整方程组。工作系数域取 \(\mathbb Q\)，要求在 \(\overline{\mathbb Q}\) 中求出
+\[
+x-y^2=0,\qquad y^3-y=0.
+\]
+在字典序 \(x\succ y\) 下，两个首单项式为 \(x,y^3\)，互素；其唯一的 S 多项式约化为零，故原生成组就是 Gröbner 基。标准单项式为 \(1,y,y^2\)，从而商代数维数为三。用关系 \(y^3=y\) 按列计算乘法，得到
+\[
+T_y=\begin{pmatrix}0&0&0\\1&0&1\\0&1&0\end{pmatrix},
+\qquad
+T_x=T_y^2=\begin{pmatrix}0&0&0\\0&1&0\\1&0&1\end{pmatrix}.
+\]
+\(T_y\) 的特征多项式为 \(T(T-1)(T+1)\)，三个根不同。分别取特征向量
+\[
+v_0=(1,0,-1)^{\mathsf T},\quad
+v_1=(0,1,1)^{\mathsf T},\quad
+v_{-1}=(0,1,-1)^{\mathsf T}.
+\]
+它们在 \(T_x\) 下的特征值依次为 \(0,1,1\)。由\cref{b3:thm:multiplication-joint-eigenvalues}，全部零点正是
+\[
+(0,0),\quad(1,1),\quad(1,-1).
+\]
+各点代回两个方程都为零；共同对角化又证明商代数约化，所以这三个点的重数均为一。若只把 \(T_x\) 的特征值零与 \(T_y\) 的特征值一拼接，所得 \((0,1)\) 就不能通过代回检查。
+
+\ProseParagraphBreak
+把第二个方程改为 \(y^2(y-1)=0\)，标准单项式仍是 \(1,y,y^2\)，但这次
+\[
+T_y=\begin{pmatrix}0&0&0\\1&0&0\\0&1&1\end{pmatrix},
+\qquad \det(TI-T_y)=T^2(T-1).
+\]
+由 \(x=y^2\)，不同零点只有 \((0,0)\) 与 \((1,1)\)。要解释重数，使用互素因子给出的中国剩余分解
+\[
+\mathbb Q[y]/\bigl(y^2(y-1)\bigr)
+\cong \mathbb Q[y]/(y^2)\times\mathbb Q[y]/(y-1).
+\]
+两因子的维数分别为二与一，因此这两个点的重数分别为二与一。\(y^2-y\) 在商中非零而平方为零，正说明第一个因子还保存了单个点所看不见的幂零结构。
+
+\ProseParagraphBreak
+这两次计算使用相同的三维线性空间，但答案包含不同的信息。乘法矩阵用于恢复相容的坐标，局部因子用于解释重数；最后的代回和维数比较各有作用。对于不能精确写出根的实例，可以保留一元多项式及坐标多项式作为精确答案；实根的计数与隔离见\appref{b3:app:G}。

@@ -1,30 +1,100 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### E.2 有限性与微分代数几何的基本概念
-% 纲要位置：计划纲要.md，第 2363 行。
 
 \section{有限性与微分代数几何的基本概念}
 \label{b3:sec:E02}
 
-% TODO: 按以下纲要要点撰写本节。
+微分多项式环含有无限多个导数变量，普通 Noether 性因而失效。特征零下，根微分理想仍有有限性与分解定理；这些结论约束的是保持求导的理想，不能直接套用到任意普通理想。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 普通环的 Noether 性与 Ritt–Raudenbush 根微分理想升链条件不同；注明特征零、有限多个交换导子和有限多个微分不定元
 % * 微分代数集、Kolchin 拓扑与微分超越次数；明确工作微分域和所取扩域
 % * 用一组低阶方程说明代数关系、微分关系与常数域变化；代数相容性不替代解析存在、收敛和初值唯一性
 %
+% #### E.2.1 Noether 性与 Ritt–Raudenbush 升链条件
+% #### E.2.2 微分代数集、Kolchin 拓扑与微分超越次数
+% #### E.2.3 低阶微分方程、常数域与解析解
+
+
+% 正文已按纲要写入；有限性与算法长证明给出概要及出处。
 
 \subsection{Noether 性与 Ritt–Raudenbush 升链条件}
 \label{b3:subsec:E02:01}
 
-待撰写。
+虽然每个微分多项式只用有限多个变量，整个环 \(K\{y\}\) 却不是 Noether 环：普通理想形成严格升链
+\[
+(y)\subsetneq(y,y')\subsetneq(y,y',y'')\subsetneq\cdots.
+\]
+它们一般不是微分理想。例如 \(y'\notin(y)\)。由一个集合 \(F\) 生成的最小微分理想记为 \([F]\)，具体就是所有 \(\delta^jf\)（\(f\in F,j\ge0\)）生成的普通理想。
+
+\begin{lemma}\label{b3:lem:differential-radical}
+设 \(A\) 为含 \(\mathbb Q\) 的微分环，\(I\) 为微分理想。则普通根理想 \(\sqrt I\) 也是微分理想。
+\end{lemma}
+\begin{proof}
+导子下降到 \(A/I\)，故只须证明导子保持幂零元。若 \(a^n=0\)，反复用 Leibniz 法则展开 \(\delta^n(a^n)=0\)。其中对每个因子恰求导一次的项为 \(n!(\delta a)^n\)，其他项至少有一个因子未经求导，因此属于 \((a)\)。因 \(n!\) 可逆，得 \((\delta a)^n\in(a)\)，再取 \(n\) 次幂得到 \((\delta a)^{n^2}=0\)。
+\end{proof}
+
+\begin{theorem}[Ritt--Raudenbush 定理]\label{b3:thm:ritt-raudenbush}
+设 \(K\) 为特征零微分域，指定有限个两两交换的导子，并取有限个微分不定元。则微分多项式环的根微分理想满足升链条件。等价地，每个根微分理想均形如 \(\sqrt{[f_1,\ldots,f_r]}\)，其中 \(r\) 有限。
+\end{theorem}
+
+\begin{proofsketch}
+固定一个与各导子相容的导数排序。\secref{b3:sec:E03}定义互约化集及特征集：按导变量及其次数从小到大比较，同一前缀时较长列表为较小秩。Dickson 引理保证互约化集有限，且这些列表的秩不存在无限严格下降；微分伪约化又给出
+\(hP-r\in[\mathcal A]\)，其中 \(r\) 对 \(\mathcal A\) 约化，\(h\) 为初式与分离子的幂乘积。这里省略列表秩的良基性与伪约化的完整归纳，构造及证明见\cite[Sections 3.1--3.3]{Hubert2003DifferentialSystems}。
+
+设 \(J_1\subseteq J_2\subseteq\cdots\) 为根微分理想链，\(J=\bigcup_iJ_i\)。若 \(J=0\) 或 \(J\) 为全环，结论立即成立。否则取 \(J\) 的一个特征集 \(\mathcal A\)。它有限，故包含在某个 \(J_{i_0}\) 中；对 \(i\ge i_0\)，其最小秩性质使它同时成为 \(J_i\) 的特征集。记 \(h_1,\ldots,h_t\) 为 \(\mathcal A\) 的初式与分离子，\(H=\prod_jh_j\)。每个 \(P\in J_i\) 的约化余式也属于 \(J_i\)，若非零便会产生更小秩的互约化集，故余式为零。于是
+\[
+J_i:H^\infty=[\mathcal A]:H^\infty\qquad(i\ge i_0),
+\]
+非零分支已经稳定。
+
+根微分理想满足分支恒等式
+\[
+J_i=(J_i:H^\infty)\cap
+\bigcap_{j=1}^t\sqrt{[J_i,h_j]}.
+\]
+它可由极小素理想检查：特征零时，根微分理想的极小素理想仍受各导子保持，局部化到该极小素点所得约化零维环是域，便可核验这一性质；每个这样的素理想或者不含 \(H\)，或者含某个 \(h_j\)。相应的饱和与添入方程分支恰好覆盖这两种情况。
+
+各非零 \(h_j\) 都对 \(\mathcal A\) 约化且秩较低；将它添入理想后，特征集秩严格降低，或直接得到全环。因此对特征集秩作良基归纳，各链 \(\sqrt{[J_i,h_j]}\) 都稳定。分支只有有限个，结合已经稳定的饱和部分，原链也稳定。这是特征集证明的主要归纳步骤；准确结论见\cite[Section 2.2, Theorem 2.4]{Hubert2003DifferentialSystems}。
+
+最后，升链条件使逐次选取新根微分生成元的过程终止。反之，对链的并取有限个根微分生成元，它们已同时落在某一项中，该项以后便不再增长。于是两种表述等价。
+\end{proofsketch}
+
+结论只针对根微分理想，不能改写成整个微分多项式环是 Noether 环；特征零还用于分离子非零及根理想受导子保持。
 
 \subsection{微分代数集、Kolchin 拓扑与微分超越次数}
 \label{b3:subsec:E02:02}
 
-待撰写。
+在一个微分扩域 \(L\supseteq K\) 中，对 \(F\subseteq K\{y_1,\ldots,y_n\}\) 定义
+\[
+V_L(F)=\{a\in L^n:P(a)=0\text{ 对所有 }P\in F\}.
+\]
+这些集合称为\term{微分代数集}[differential algebraic set]。任意交由合并方程定义，有限并由两组方程的所有两两乘积定义，因为 \(L\) 是域；故它们构成某个拓扑的闭集，这就是\term{Kolchin 拓扑}[Kolchin topology]。
+
+\ProseParagraphBreak
+\(V_L(F)=V_L(\sqrt{[F]})\)，因为微分求值保持导子，而域无非零幂零元。逆向恢复理想时，需要充分多的解；任意给定的 \(L\) 未必有这种性质。例如在 \(K=\mathbb C\) 上指定零导子，方程 \(y'=1\) 在 \(K\) 内无解，却在 \(\mathbb C(t)\) 中有解 \(t\)。不能把“在当前底域没有解”误当成微分理想为全环。
+
+\begin{definition}\label{b3:def:differential-transcendence}
+设 \((L,\delta)/(K,\delta)\) 为带同一导子的微分域扩张，\((a_i)_{i\in I}\) 为 \(L\) 中的元素族。若全部 \(\delta^ja_i\)（\(i\in I,j\ge0\)）在 \(K\) 上代数独立，则称该族\term{微分代数独立}[differentially algebraically independent]。\(L/K\) 的\term{微分超越次数}[differential transcendence degree]定义为这类元素族的基数的上确界。
+\end{definition}
+
+这与普通超越次数不同。在带 \(\delta t=1\) 的 \(K(t)\) 中，\(t\) 满足 \(t'-1=0\)，故微分超越次数为零，普通超越次数却为一。另一方面，\(K\langle y\rangle\) 中各 \(y^{(j)}\) 都独立，它有一个微分超越生成元，但普通超越次数无限。基的交换性质与一般维数理论需要进一步论证；本附录的算例均直接从生成元的关系判断。
 
 \subsection{低阶微分方程、常数域与解析解}
 \label{b3:subsec:E02:03}
 
-待撰写。
+微分方程中的“常数”首先指导子为零的元素。对 \(y'=0\)，解集正是所在扩域的常数域；换一个常数更大的扩域就会出现更多解。对 \(y'=y\)，若 \(u,v\) 是两个非零解，则
+\[
+\delta(u/v)=\frac{u'v-uv'}{v^2}=0,
+\]
+所以它们相差一个非零常数倍。这个结论纯属域中的运算，无须先定义指数函数。
+
+\begin{example}\label{b3:exm:formal-riccati}
+令 \(K\) 为特征零域，\(K[[t]]\) 上取逐项导子。对给定 \(a\in K\)，方程 \(y'=y^2,y(0)=a\) 有唯一形式幂级数解
+\[
+y=\frac{a}{1-at}=\sum_{n\ge0}a^{n+1}t^n.
+\]
+确实，若 \(y=\sum_nc_nt^n\)，系数比较给出 \((n+1)c_{n+1}=\sum_{i=0}^nc_ic_{n-i}\)，由 \(c_0=a\) 递归唯一决定全部系数；所写几何级数直接满足等式。
+\end{example}
+
+当 \(K=\mathbb C\) 时，上例还在足够小邻域内收敛；这是该具体几何级数的性质。一般形式解的收敛、实区间上的存在时长、经过奇点的延拓，都属于额外的解析问题。微分代数能证明一个方程由其他方程推出，却不会仅凭理想运算自动提供这些解析结论。

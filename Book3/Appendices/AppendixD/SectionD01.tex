@@ -1,36 +1,163 @@
 % !TeX root = ../../Book3.tex
-% 纲要标题：### D.1 局部对象的比较
-% 纲要位置：计划纲要.md，第 2325 行。
+% 纲要标题：### D.1 局部环与幂级数环的比较
 
-\section{局部对象的比较}
+\section{局部环与幂级数环的比较}
 \label{b3:sec:D01}
 
-% TODO: 按以下纲要要点撰写本节。
+相同的有限阶展开可以来自不同的环，允许的无限过程也随之不同。比较局部方程时，应先确定所用环及其间的同态，再问形式解、代数解或收敛解能否互相转换。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 代数局部环、Hensel 局部环、完备局部环与复收敛幂级数环
 % * Hensel 化和完备化的泛性质不同；Hensel 性不意味着完备
 % * 代数幂级数与形式幂级数的比较；解析语境须另加收敛条件
 % * 用实际环同态而不是只凭“函数芽”的直觉说明包含与比较关系
 %
+% #### D.1.1 代数、Hensel、完备与解析局部环
+% #### D.1.2 Hensel 化与完备化的泛性质
+% #### D.1.3 代数、形式与收敛幂级数
+% #### D.1.4 局部对象间的环同态与比较关系
+
 
 \subsection{代数、Hensel、完备与解析局部环}
 \label{b3:subsec:D01:01}
 
-待撰写。
+一个多项式在原点附近可以作为有理函数、形式级数或收敛级数来研究。它们共享许多有限阶计算，却允许不同的无限过程。为使这种差别有明确含义，先固定系数域和所使用的环。
+
+\begin{definition}\label{b3:def:algebraic-analytic-local-model}
+设 \(k\) 为域，\(n\ge1\)，\(I\subseteq k[x_1,\ldots,x_n]\) 为理想，\(\mathfrak p\) 为商环 \(k[x_1,\ldots,x_n]/I\) 的素理想。有限型 \(k\)-代数在 \(\mathfrak p\) 处的局部化
+\[
+A=(k[x_1,\ldots,x_n]/I)_{\mathfrak p}
+\]
+称为一个代数局部环。对 \(k=\mathbb C\)，记
+\[
+\mathbb C\{x_1,\ldots,x_n\}
+=\left\{\sum_\alpha c_\alpha x^\alpha:
+\text{存在 }r>0\text{ 使 }\sum_\alpha|c_\alpha|r^{|\alpha|}<\infty\right\}.
+\]
+称它为\term[convergentpowerseriesring]{收敛幂级数环}[convergent power series ring]；它的有限生成理想的商称为这里所讨论的解析局部环。
+\end{definition}
+
+收敛级数的和、积仍在一个较小的多圆盘上绝对收敛，因此上述集合是环。常数项非零的级数在原点附近不为零，其倒数仍有收敛展开；常数项为零者不能可逆。故 \(\mathbb C\{x\}\) 是局部环，极大理想为 \((x_1,\ldots,x_n)\)，剩余域为 \(\mathbb C\)。它描述的是原点处的全纯函数芽，而不是在一个预先固定的大区域上都收敛的函数。
+
+\ProseParagraphBreak
+形式幂级数环 \(k[[x_1,\ldots,x_n]]\) 不要求系数满足任何大小限制。它的完备性是 \((x_1,\ldots,x_n)\)-进完备性，表达每个次数的系数最终确定；这与复变量函数在某个圆盘内收敛是不同的要求。
+
+\begin{theorem}[收敛幂级数环的基本性质]\label{b3:thm:convergent-series-local-properties}
+设 \(n\ge1\)。环 \(\mathbb C\{x_1,\ldots,x_n\}\) 是维数 \(n\) 的 Noether 正则 Hensel 局部环，其极大理想进完备化为
+\(\mathbb C[[x_1,\ldots,x_n]]\)。
+\end{theorem}
+
+\begin{proof}
+记 \(R_n=\mathbb C\{x_1,\ldots,x_n\}\)，并补充 \(R_0=\mathbb C\)。局部性及极大理想 \(\mathfrak m=(x_1,\ldots,x_n)\) 已在上文说明。\cref{b3:thm:analytic-weierstrass}的范数证明只用收敛级数运算，因而可先调用它，再按 \(n\) 归纳证明 Noether 性。
+
+设 \(0\ne I\subseteq R_n\)，取 \(0\ne f\in I\)。若 \(f\) 是单位则结论显然；否则取其最低非零齐次部分，并选择该齐次式不为零的向量作为最后一条坐标轴。一个可逆线性换元后，\(f(0,\ldots,0,T)\) 有有限正阶数 \(d\)。收敛除法说明 \(R_n/(f)\) 由 \(1,T,\ldots,T^{d-1}\) 在 \(R_{n-1}\) 上生成。归纳假设使这个有限模为 Noether 模，故其子模 \(I/(f)\) 有限生成。把这些生成元提升到 \(I\)，再加入 \(f\)，便得到 \(I\) 的有限生成集。
+
+理想链 \((0)\subsetneq(x_1)\subsetneq\cdots\subsetneq(x_1,\ldots,x_n)\) 中各项为素理想，因为相应商是少变量的收敛级数整环；故 \(\dim R_n\ge n\)。极大理想由 \(n\) 元生成，Krull 高度定理给出反向不等式。一次项的比较又给出 \(\dim_{\mathbb C}\mathfrak m/\mathfrak m^2=n\)，所以 \(R_n\) 正则。
+
+为验证 Hensel 性，设一个首一 \(R_n[T]\) 多项式在剩余域中分成互素首一因子 \(g_0h_0\)。把两个待提升因子的低次系数作为未知量，令其乘积的系数等于原多项式的系数。线性化是映射
+\((a,b)\mapsto ah_0+g_0b\)，其中 \(\deg a<\deg g_0\)、\(\deg b<\deg h_0\)。互素性使它单射，两边维数相同，故为同构。复解析隐函数定理于是给出原点附近的收敛系数，准确解出因式分解方程。这验证了 Hensel 因子提升条件。
+
+最后，模 \(\mathfrak m^r\) 时任意级数等于其有限截断。次数至少 \(r\) 的收敛级数可按有限多个 \(r\) 次单项式分组，每一组除去对应单项式后仍收敛。因此
+\(R_n/\mathfrak m^r\simeq\mathbb C[x]/(x)^r\)，取逆极限便得到 \(\widehat R_n=\mathbb C[[x]]\)。
+\end{proof}
+
+这些性质与永田雅宜\cite[(45.5), pp. 193--194]{Nagata1975LocalRings}的结论一致；Hensel 性的论证明确使用了复解析隐函数定理。
 
 \subsection{Hensel 化与完备化的泛性质}
 \label{b3:subsec:D01:02}
 
-待撰写。
+第23章已经定义 Hensel 环并证明完备局部环具有 Hensel 性。其存在性定理给出一个局部同态
+\(A\to A^{\mathrm h}\)，使任何从 \(A\) 到 Hensel 局部环的局部同态都唯一经过 \(A^{\mathrm h}\)。这里要求延拓的是代数方程的单根或互素因式；没有要求补入所有相容的极限。
+
+\begin{proposition}\label{b3:prop:completion-continuous-universal}
+设 \((A,\mathfrak m)\) 为局部环，\((B,\mathfrak n)\) 为 \(\mathfrak n\)-进完备分离的局部环。每个局部同态 \(u:A\to B\) 唯一延拓为一个连续同态
+\(\widehat u:\widehat A\to B\)，其中 \(\widehat A=\varprojlim A/\mathfrak m^r\) 采用逆极限拓扑，\(B\) 采用 \(\mathfrak n\)-进拓扑。
+\end{proposition}
+\begin{proof}
+局部性给出 \(u(\mathfrak m^r)\subseteq\mathfrak n^r\)，因而得到相容的同态
+\(A/\mathfrak m^r\to B/\mathfrak n^r\)。取逆极限，并利用 \(B\simeq\varprojlim B/\mathfrak n^r\)，得到延拓。其连续性由相同的商映射可知。若有两个连续延拓，对任意 \(\widehat a\in\widehat A\) 取来自 \(A\) 的相容近似；两个像是同一列像的极限，分离性使它们相等。
+\end{proof}
+
+这个命题中的“连续”与“完备分离”是结论的一部分条件。Hensel 化的泛性质则针对 Hensel 局部目标，不需要目标完备。对 Noether 局部环，二者给出相容映射
+\[
+A\longrightarrow A^{\mathrm h}\longrightarrow\widehat A,
+\qquad
+\widehat{A^{\mathrm h}}\simeq\widehat A;
+\]
+后一个同构来自各阶商的相同，见\cref{b3:thm:henselization-existence}。
+
+\begin{example}\label{b3:exm:hensel-finite-jets}
+取 \(A=\mathbb Q[x]_{(x)}\)。方程 \(Y^2-Y-x=0\) 的剩余单根 \(0\) 在 \(A^{\mathrm h}\) 中给出一个根
+\(-x+x^2-2x^3+5x^4-\cdots\)。它不属于 \(\mathbb Q(x)\)，因为否则判别式 \(1+4x\) 是有理函数的平方，而它在 \(x=-1/4\) 处的零点阶数为一。另一方面，\(A^{\mathrm h}\) 的元素在 \(\mathbb Q(x)\) 上代数，故这个环可数；\(\mathbb Q[[x]]\) 不可数。因此 Hensel 化仍严格小于完备化。相同的有限阶商并没有确定这些环中实际存在多少无限级数。
+\end{example}
 
 \subsection{代数、形式与收敛幂级数}
 \label{b3:subsec:D01:03}
 
-待撰写。
+\begin{definition}\label{b3:def:algebraic-power-series}
+设 \(k\) 为域，\(n\ge1\)。若 \(f\in k[[x_1,\ldots,x_n]]\) 在有理函数域 \(k(x_1,\ldots,x_n)\) 上代数，则称 \(f\) 为\term[algebraicpowerseries]{代数幂级数}[algebraic power series]。所有这样的级数组成的环记为 \(k\langle x_1,\ldots,x_n\rangle\)。
+\end{definition}
+
+这确实是环：有限多个代数元素生成有限域扩张，它们的和、积仍代数。定义要求一个多项式关系，而不是要求系数只取代数数。例如 \(c+x\)，\(c\in\mathbb C\)，在 \(\mathbb C(x)\) 上当然代数，不论 \(c\) 是否在 \(\mathbb Q\) 上代数。
+
+\begin{example}\label{b3:exm:three-power-series}
+在复系数情形，满足 \(u^2=1+x\)、\(u(0)=1\) 的级数是代数幂级数，并在原点附近收敛；其展开从
+\(1+\frac12x-\frac18x^2+\cdots\) 开始。它不是有理函数，因为 \(1+x\) 的简单零点妨碍它成为有理函数的平方。
+
+\ProseParagraphBreak
+级数 \(e^x=\sum_{r\ge0}x^r/r!\) 收敛，却不在 \(\mathbb C(x)\) 上代数。若存在关系
+\(\sum_{j=0}^d p_j(x)e^{jx}=0\)，取最大 \(d\) 使 \(p_d\ne0\)，则作为整函数此关系处处成立。在实轴上除以 \(e^{dx}\) 并令 \(x\to+\infty\)，右侧低次指数项趋于零，迫使非零多项式 \(p_d(x)\) 趋于零，矛盾。这里使用的是复幂级数的恒等定理，以及指数快于多项式增长的初等分析事实。
+
+\ProseParagraphBreak
+级数 \(\sum_{r\ge0}r!x^r\) 是形式级数，在任意 \(x\ne0\) 处其项都不趋于零，所以没有正的收敛半径。它说明形式环中的元素不能自动当作解析函数芽。
+\end{example}
+
+\begin{proposition}\label{b3:prop:algebraic-series-converge}
+设 \(n\ge1\)，\(f\in\mathbb C[[x_1,\ldots,x_n]]\) 在 \(\mathbb C(x_1,\ldots,x_n)\) 上代数。则 \(f\in\mathbb C\{x_1,\ldots,x_n\}\)。
+\end{proposition}
+\begin{proofsketch}
+置 \(R=\mathbb C\{x\}\)、\(\widehat R=\mathbb C[[x]]\)、\(K=\operatorname{Frac}R\)。所用解析正规化引理是：\(R\) 在有限分式域扩张中的整闭包为有限 \(R\) 模，而且其每个正规局部分量的完备化仍为整环。这由收敛 Weierstrass 除法、有限映射的正规化以及解析不可约性得到；这里省略这些技术步骤，依据为永田雅宜\cite[(44.3), (45.1) and (45.6), pp. 189--190, 194]{Nagata1975LocalRings}。
+
+由于 \(f\) 在 \(K\) 上代数，可以选择 \(0\ne c\in R\)，使 \(cf\) 在 \(R\) 上整。令 \(B\) 为 \(R\) 在 \(K(f)\) 中的整闭包。\(\widehat R\) 正规，故 \(B\) 的元素在嵌入 \(K(f)\subseteq\operatorname{Frac}\widehat R\) 下实际落入 \(\widehat R\)。由 \(R\) 的 Hensel 性，有限代数 \(B\) 分解为局部因子的直积；选择映到局部环 \(\widehat R\) 的那个因子，记为 \(B_0\)。它是正规局部整环。
+
+由上述引理，\(\widehat{B_0}=B_0\otimes_R\widehat R\) 是整环。乘法给出满射 \(\widehat{B_0}\to\widehat R\)，且在 \(\widehat R\) 上为恒等。其核与 \(\widehat R\) 的交为零；对 \(\widehat R\) 的非零元局部化后，源成为有限维整域，因而是域，核只能为零。于是该满射是同构，比较有限模的泛秩得 \([K(f):K]=1\)，所以 \(f\in K\)。
+
+最后 \(K\cap\widehat R=R\)：若 \(f=a/b\in\widehat R\)，其中 \(a,b\in R\)、\(b\ne0\)，完备化的忠实平坦性给出 \(b\widehat R\cap R=bR\)，从而 \(a\in bR\)。故 \(f\in R\)。这个论证把收敛性归结为有限解析正规化及其局部分量的不可约性，而不是仅凭形式方程直接断言收敛。
+\end{proofsketch}
+
+因此上一例的发散级数也不是代数幂级数。
 
 \subsection{局部对象间的环同态与比较关系}
 \label{b3:subsec:D01:04}
 
-待撰写。
+在原点处，有实际的单射
+\[
+\mathbb C[x]_{(x)}
+\longrightarrow\mathbb C\langle x\rangle
+\longrightarrow\mathbb C\{x\}
+\longrightarrow\mathbb C[[x]].
+\]
+第一箭头把分母常数项非零的有理函数展开成 Taylor 级数，第二箭头使用\cref{b3:prop:algebraic-series-converge}，第三箭头忘掉收敛条件。上一小节的三个例子依次说明这些包含在一变量情形均可严格。
+
+\ProseParagraphBreak
+还有一个不同来源的比较。因为 \(\mathbb C\{x\}\) Hensel，局部映射
+\(\mathbb C[x]_{(x)}\to\mathbb C\{x\}\) 唯一延拓到 Hensel 化。复合到形式环后，正是 Hensel 化到其完备化的映射；Noether 局部环的 Krull 交定理保证后者单射。因此
+\[
+\bigl(\mathbb C[x]_{(x)}\bigr)^{\mathrm h}
+\longrightarrow\mathbb C\{x\}
+\longrightarrow\mathbb C[[x]]
+\]
+也是一列单射。这一论证只使用泛性质和分离性；本附录不需要进一步识别第一项与全部代数幂级数的关系。
+
+\begin{proposition}\label{b3:prop:analytic-formal-quotient-comparison}
+设 \(n\ge1\)，\(R=\mathbb C\{x_1,\ldots,x_n\}\)，\(I\subseteq R\) 为理想。则
+\[
+R/I\longrightarrow\mathbb C[[x_1,\ldots,x_n]]/I\mathbb C[[x_1,\ldots,x_n]]
+\]
+是忠实平坦的单射，右端为左端的极大理想进完备化。
+\end{proposition}
+\begin{proof}
+\(R\) 是 Noether 局部环，故 \(R/I\) 也是。完备化与有限生成理想的商相容，给出所列右端；Noether 局部环的完备化忠实平坦，且由 Krull 交定理单射。
+\end{proof}
+
+因此，对同一个解析方程组，形式计算确实是在一个明确的忠实平坦扩张中进行。然而反方向仍有新的问题：形式环中的任意理想，未必来自给定解析环中的方程。环的包含、同一个理想的延拓，以及新出现的形式理想，必须分开讨论。

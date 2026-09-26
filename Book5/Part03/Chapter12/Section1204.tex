@@ -1,12 +1,10 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.4* Levi 分解
-% 纲要位置：计划纲要.md，第 3482 行。
+% 纲要位置：工作记录/计划纲要.md，第 4133 行。
 
 \OptionalSection{Levi 分解}{b5:sec:1204}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 半单子代数与可解根的半直积分解
 % * Levi 分解的结论及共轭性范围
@@ -15,17 +13,110 @@
 % ---
 %
 
+本节说明一般有限维复李代数怎样由可解部分和半单部分组合而成。Levi 定理及一般共轭性先作前瞻陈述；其完整证明安排在\secref{b5:sec:2003}，使用半单表示论及李代数上同调中的消失定理。后面的 Killing 型、根系与最高权理论均不以这里尚未证明的分解为前提。
+
 \subsection{半单子代数与可解根的半直积分解}
 \label{b5:subsec:1204:01}
 
-待撰写。
+\begin{definition}\label{b5:def:levi-subalgebra}
+设 \(\mathfrak g\) 是有限维复李代数，\(\mathfrak r=\operatorname{rad}\mathfrak g\)。若子代数 \(\mathfrak s\subseteq\mathfrak g\) 满足
+\[
+\mathfrak g=\mathfrak r\oplus\mathfrak s
+\quad\text{作为向量空间},
+\]
+则 \(\mathfrak s\) 称为一个\term[Levi-zidaishu]{Levi 子代数}[Levi subalgebra]。此时商映射限制为
+\(\mathfrak s\cong\mathfrak g/\mathfrak r\)，所以 \(\mathfrak s\) 自动半单。
+\end{definition}
+
+写元素为 \((a,x)\in\mathfrak r\oplus\mathfrak s\)，括号为
+\[
+\Bigl[(a,x),(b,y)\Bigr]
+=\Bigl([a,b]+[x,b]-[y,a],[x,y]\Bigr).
+\]
+这里 \(\mathfrak s\) 通过导子作用于 \(\mathfrak r\)，一般并不与它交换。这样的分解写成
+\(\mathfrak g=\mathfrak r\rtimes\mathfrak s\)，称为\term[Levi-fenjie]{Levi 分解}[Levi decomposition]。
+
+\begin{example}\label{b5:exm:affine-levi}
+设 \(n\ge2\)。仿射矩阵李代数
+\[
+\mathfrak a_n=
+\left\{\,
+\begin{pmatrix}A&v\\0&0\end{pmatrix}
+\ \middle|\ A\in\mathfrak{gl}_n(\mathbb C),\
+v\in\mathbb C^n
+\,\right\}
+\]
+有一个候选可解理想，由 \(A=tI\) 的矩阵组成；它是
+\(\mathbb C^n\rtimes\mathbb C I\)。候选补为 \(v=0\)、\(\operatorname{tr}A=0\) 的子代数 \(\mathfrak{sl}_n\)。在\cref{b5:prop:classical-simple}证明 \(\mathfrak{sl}_n\) 简单后，商的半单性说明候选理想确为可解根，从而这里确为 Levi 分解。这个例子中的存在性来自明确的矩阵构造，不需要一般存在定理。
+\end{example}
 
 \subsection{Levi 分解与共轭性范围}
 \label{b5:subsec:1204:02}
 
-待撰写。
+一般结论称为\term[Levi-Malcev-dingli]{Levi--Malcev 定理}[Levi--Malcev theorem]。
+
+\begin{theorem}[Levi--Malcev 定理，前瞻陈述]\label{b5:thm:levi-malcev-preview}
+设 \(\mathfrak g\) 是有限维复李代数，\(\mathfrak r=\operatorname{rad}\mathfrak g\)。则 \(\mathfrak g\) 存在 Levi 子代数。任意两个 Levi 子代数都可由形如
+\(\exp(\operatorname{ad}z)\)、\(z\in[\mathfrak g,\mathfrak r]\)
+的内自同构的有限乘积互相变换。
+\end{theorem}
+
+这里准确限定了所用的共轭变换。\cref{b5:prop:radical-commutator-nilpotent}说明
+\([\mathfrak g,\mathfrak r]\subseteq\operatorname{nilrad}\mathfrak g\)，所以每个这样的 \(\operatorname{ad}z\) 都幂零，指数实际是有限多项式。有限乘积这一表述足以说明 Levi 子代数在内部变换下的唯一性；它不是说两个补作为子空间必定相等，也不是说任意向量空间补都能变成子代数。
+
+\ProseParagraphBreak
+
+本节不证明上述一般存在性及一般共轭性。下面只把交换核时的障碍和修正写出，使读者知道后续理论必须解决什么；不能把这个特殊计算当作一般定理的证明。
 
 \subsection{Levi 分解的上同调证明}
 \label{b5:subsec:1204:03}
 
-待撰写。
+\begin{proposition}[交换核扩张的障碍]\label{b5:prop:levi-abelian-obstruction}
+设
+\[
+0\longrightarrow M\longrightarrow\mathfrak e
+\overset{\pi}{\longrightarrow}\mathfrak s\longrightarrow0
+\]
+是有限维复李代数的正合列，且 \([M,M]=0\)。取线性截面 \(s:\mathfrak s\rightarrow\mathfrak e\)，定义
+\[
+x\cdot m=\Bigl[s(x),m\Bigr],\qquad
+c(x,y)=\Bigl[s(x),s(y)\Bigr]-s\Bigl([x,y]\Bigr).
+\]
+则前式给出与截面无关的 \(\mathfrak s\)-模结构，后式取值于 \(M\)，并满足
+\[
+\begin{aligned}
+0={}&x\cdot c(y,z)-y\cdot c(x,z)+z\cdot c(x,y)\\
+&-c\Bigl([x,y],z\Bigr)+c\Bigl([x,z],y\Bigr)-c\Bigl([y,z],x\Bigr).
+\end{aligned}
+\]
+截面 \(s\) 是李同态当且仅当 \(c=0\)。若改用 \(s'=s+b\)，其中 \(b:\mathfrak s\rightarrow M\) 线性，则
+\[
+c'(x,y)=c(x,y)+x\cdot b(y)-y\cdot b(x)-b\Bigl([x,y]\Bigr).
+\]
+\end{proposition}
+\begin{proof}
+两截面的差取值于 \(M\)，而 \(M\) 交换，故作用不随截面改变。Jacobi 恒等式给出
+\[
+x\cdot(y\cdot m)-y\cdot(x\cdot m)
+=\biggl[\Bigl[s(x),s(y)\Bigr],m\biggr]=\biggl[s\Bigl([x,y]\Bigr),m\biggr]=[x,y]\cdot m;
+\]
+差项 \(c(x,y)\in M\) 与 \(m\) 的括号为零。于是确有模结构。
+
+把 \(\Bigl[s(x),s(y)\Bigr]=s\Bigl([x,y]\Bigr)+c(x,y)\) 代入三个提升元素的 Jacobi 恒等式。取值在 \(s(\mathfrak s)\) 的三项由 \(\mathfrak s\) 的 Jacobi 恒等式相消；剩余六项按反对称性整理，恰为陈述中的等式。最后直接展开
+\(\Bigl[s(x)+b(x),s(y)+b(y)\Bigr]-(s+b)\Bigl([x,y]\Bigr)\)，并用 \([M,M]=0\)，便得截面变换公式。
+\end{proof}
+
+这个三变量恒等式说 \(c\) 是李代数上同调的 \(2\)-余圈，改换截面加上的是一个 \(2\)-余边。\cref{b5:thm:whitehead-second}将证明：有限维复半单 \(\mathfrak s\) 与有限维 \(\mathfrak s\)-模 \(M\) 满足
+\(H^2(\mathfrak s,M)=0\)。取得这一消失结论后，就能选 \(b\) 把 \(c\) 消去，得到交换核扩张的分裂。一般存在性还需沿可解根中的交换理想逐步归纳，完整论证见\cref{b5:thm:levi-malcev}的存在性证明；当前的交换核计算只是其中一步。
+
+\ProseParagraphBreak
+
+共轭性对应另一个低阶问题。已分裂的交换核扩张中，两个补可写成 \(x\mapsto s(x)\) 与 \(x\mapsto s(x)+b(x)\)。后者封闭为子代数的条件是
+\[
+b\Bigl([x,y]\Bigr)=x\cdot b(y)-y\cdot b(x).
+\]
+\cref{b5:thm:whitehead-first}中的 \(H^1(\mathfrak s,M)=0\) 会给出 \(b(x)=x\cdot m\)。由于 \((\operatorname{ad}m)^2=0\)，有
+\[
+\exp(-\operatorname{ad}m)s(x)=s(x)+x\cdot m.
+\]
+因此这个特殊情形中的共轭变换可以直接看见。一般可解核的共轭性在\cref{b5:thm:levi-malcev}中沿同一个交换理想归纳证明；那里还说明如何将共轭元选在 \([\mathfrak g,\mathfrak r]\) 内，不能只凭当前的一次修正推出一般结论。

@@ -1,36 +1,185 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### D.1 从微分模到 D-模
-% 纲要位置：计划纲要.md，第 3821 行。
-
-\section{从微分模到 D-模}
-\label{b5:sec:D01}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4648 行。
 % * Weyl 代数模、微分算子环及线性方程组
 % * 代数微分算子、滤过与伴随分次的符号思想
 % * 特征零光滑代数簇上的 D-模与特征簇；明确与线性方程组的联系
 % * holonomic D-模的定义和代表例子；holonomic 保留原文，不译作 holomorphic（全纯）；也不是第三卷微分代数的同义词
-%
+% #### D.1.1 Weyl 代数模与线性方程组
+% #### D.1.2 微分算子、滤过与伴随分次
+% #### D.1.3 光滑代数簇上的 D-模与特征簇
+% #### D.1.4 holonomic D-模与术语辨析
+\section{从微分模到 D-模}
+\label{b5:sec:D01}
+
+线性方程 \(P(y)=0\) 中，未知量所在的函数空间可以改变，算子之间的代数关系却可以预先记录下来。D-模把这些关系组成一个模，再通过模同态求解。以下先在仿射直线上计算，随后说明在光滑簇上需要添加哪些几何结构。
 
 \subsection{Weyl 代数模与线性方程组}
 \label{b5:subsec:D01:01}
 
-待撰写。
+设 \(k\) 为特征零域。在 \(k[x]\) 上，把乘以 \(x\) 的算子仍记为 \(x\)，把求导算子记为 \(\partial\)。Leibniz 法则给出
+\[
+ \partial x-x\partial=1.
+\]
+这些算子生成的 \(k\) 代数为一阶 \term[Weyl-daishu]{Weyl 代数}[Weyl algebra] \(A_1(k)\)。它的每个元素唯一写为
+\(\sum_{j=0}^m a_j(x)\partial^j\)。存在性来自交换关系不断把 \(x\) 移到左边。若这种表达为零算子，取最大 \(m\)，对该算子反复与乘法算子 \(x\) 取交换子 \(m\) 次，便得乘法算子 \(m!a_m(x)\) 为零，从而 \(a_m=0\)，归纳得所有系数为零。这也证明抽象生成关系没有额外隐藏关系。
+
+\begin{proposition}\label{b5:prop:D-solution-module}
+设 \(k\) 为特征零域，\(D=A_1(k)\)，\(P\in D\)，\(V\) 为左 \(D\) 模。则
+\[
+ \operatorname{Hom}_D(D/DP,V)\longrightarrow\{v\in V:Pv=0\},
+ \qquad f\longmapsto f(1+DP)
+\]
+是 \(k\) 线性同构。
+\end{proposition}
+\begin{proof}
+左模同态由 \(1+DP\) 的像决定，而 \(P(1+DP)=0\)，故其像必须被 \(P\) 零化。反过来，对满足 \(Pv=0\) 的 \(v\)，令
+\(f(Q+DP)=Qv\)。若两个代表元相差 \(RP\)，其作用差为 \(R(Pv)=0\)，所以此式良定义且为左模同态。两个构造互逆。
+\end{proof}
+
+对方程组 \(\sum_jP_{ij}y_j=0\)，取自由左模 \(D^r\) 的基 \(e_1,\ldots,e_r\)，再模去由关系 \(\sum_jP_{ij}e_j\) 生成的左子模。同样的论证把该商模到 \(V\) 的同态，识别为 \(V^r\) 中的解。因而系数作用在左边，关系也必须按左模生成，不能随意交换微分算子的次序。
+
+\ProseParagraphBreak
+例如 \(D/D\partial\) 的多项式解是常数，\(D/D(\partial-1)\) 的多项式解为零；第二个模本身却非零，在解析函数中还有 \(e^x\) 这样的解。方程模是否为零与某一函数空间里是否有非零解，是不同问题。
 
 \subsection{微分算子、滤过与伴随分次}
 \label{b5:subsec:D01:02}
 
-待撰写。
+\begin{definition}\label{b5:def:D-operator-order}
+设 \(k\) 为特征零域，\(R\) 为交换含幺 \(k\) 代数。在 \(\operatorname{End}_k(R)\) 中递归规定 \(F_{-1}=0\)，并令
+\[
+ F_m=\Bigl\{P:[P,a]\in F_{m-1}\text{ 对所有 }a\in R\Bigr\}\qquad(m\ge0),
+\]
+其中 \(P\in\operatorname{End}_k(R)\)，\(a\) 表示乘以 \(a\) 的算子，\([P,a]=Pa-aP\)。\(\mathcal D(R)=\bigcup_{m\ge0}F_m\) 的元素称为 \(R\) 上的
+\term[daishu-weifen-suanzi]{代数微分算子}[algebraic differential operator]，最小的相应 \(m\) 称为其阶。
+\end{definition}
+
+\(F_0=\operatorname{End}_R(R)=R\)，所以零阶算子就是乘法。恒等式
+\([PQ,a]=P[Q,a]+[P,a]Q\) 归纳给出 \(F_mF_n\subset F_{m+n}\)。在 \(R=k[x]\) 中，归纳还给出
+\[
+ F_m=\sum_{j=0}^m k[x]\partial^j.
+\]
+事实上，若 \([P,x]=\sum_{j<m}b_j(x)\partial^j\)，令
+\(Q=\sum_{j<m}b_j(x)\partial^{j+1}/(j+1)\)，则
+\([P-Q,x]=0\)。因此 \(P-Q\) 与一切多项式乘法交换，必为乘法算子。这证明 \(\mathcal D\Bigl(k[x]\Bigr)=A_1(k)\)。
+
+\ProseParagraphBreak
+这个阶滤过把 \(x\) 放在零阶，把 \(\partial\) 放在一阶。其伴随分次环为
+\[
+ \operatorname{gr}_F D\simeq k[x,\xi],
+\]
+其中 \(\xi\) 是 \(\partial\) 的一阶符号；对
+\(P=a_m(x)\partial^m+\cdots\)、\(a_m\ne0\)，主符号是 \(a_m(x)\xi^m\)。因为交换子降低阶，原来的非交换关系在伴随分次环中变为交换关系。
+\ProseParagraphBreak
+还有常用于增长估计的 Bernstein 滤过，把 \(x,\partial\) 都放在一次。它同样产生多项式分次环，但滤过不相同。例如 \(\partial-x\) 的阶主符号为 \(\xi\)，Bernstein 主符号却为 \(\xi-x\)。以下几何特征簇始终用阶滤过；不能因两个分次环抽象同构就把两个主符号混用。两种滤过的区别亦见 \cite[Section 3.2, pp. 88--90]{HottaTakeuchiTanisaki2008DModules}。
 
 \subsection{光滑代数簇上的 D-模与特征簇}
 \label{b5:subsec:D01:03}
 
-待撰写。
+设 \(X\) 为光滑复代数簇，\(\mathcal O_X\) 为正则函数层。对开集上的正则函数使用定义~\ref{b5:def:D-operator-order}，并按限制映射粘合，得到微分算子层 \(\mathcal D_X\)。在局部坐标 \(x_1,\ldots,x_n\) 中，它由函数及 \(\partial_1,\ldots,\partial_n\) 生成，满足
+\[
+ [\partial_i,a]=\frac{\partial a}{\partial x_i},\qquad
+ [\partial_i,\partial_j]=0.
+\]
+这些局部坐标允许取为 étale 坐标。上述生成关系以及
+\(\operatorname{gr}\mathcal D_X\simeq\operatorname{Sym}_{\mathcal O_X}\mathcal T_X\)
+可由以下符号计算得到；右侧是余切丛 \(T^*X\) 上沿纤维的多项式函数。
+\begin{proofsketch}
+先在多项式环中反复与各个 \(x_i\) 取交换子。若 \(P\) 阶数至多 \(m\)，任取 \(|\alpha|=m\)，相应的 \(m\) 重交换子是乘以某个函数的零阶算子。除以 \(\alpha!\) 便提取出 \(P\) 的最高项系数 \(a_\alpha\)。减去
+\(\sum_{|\alpha|=m}a_\alpha\partial^\alpha\) 后，所有最高阶交换子为零，阶数降到 \(m-1\)；归纳得到正规表达。最高系数的提取也证明表达唯一，所以伴随分次环是 \(\mathcal O_X[\xi_1,\ldots,\xi_n]\)。
+
+光滑簇的局部 étale 坐标中，微分算子和主符号具有同样的描述：对角线理想的商
+\(\mathcal O_{X\times X}/I_\Delta^{m+1}\) 描述 \(m\) 阶主部，微分算子是它对第一因子的线性对偶；étale 坐标的主部由坐标差的次数至多 \(m\) 的单项式自由生成。这是从多项式情形推广到光滑情形所用的局部事实。换坐标时一次符号按切向量变换，各阶符号按其对称幂变换，故局部识别粘合成所示对称代数同构。这里省略主部的 étale 基变换验证；详见\cite[Section 1.1, Proposition 1.1.3, pp. 15--17]{HottaTakeuchiTanisaki2008DModules}。
+\end{proofsketch}
+
+\begin{definition}\label{b5:def:D-good-characteristic}
+设 \(X\) 为光滑复代数簇，\(\mathcal O_X\) 为正则函数层，\(\mathcal D_X\) 为 \(\mathcal O_X\) 上的代数微分算子层，\(F_i\mathcal D_X\) 为阶数不超过 \(i\) 的算子层（\(i<0\) 时取零）。\(\mathcal D_X\) 的左模层称为左 D-模；若它局部有限展示，则称为相干 D-模。设 \(M\) 为相干左 D-模，\((F_jM)_{j\in\mathbb Z}\) 为递增、穷尽、局部下有界的滤过。若各 \(F_jM\) 为相干 \(\mathcal O_X\) 模，
+\(F_i\mathcal D_XF_jM\subset F_{i+j}M\)，且
+\(\operatorname{gr}_F M\) 在 \(\operatorname{gr}\mathcal D_X\) 上局部有限生成，则称为
+\term[liang-lvguo]{良滤过}[good filtration]。
+通过 \(\operatorname{gr}\mathcal D_X\simeq\operatorname{Sym}_{\mathcal O_X}\mathcal T_X\)，其中 \(\mathcal T_X\) 为切向量层，将 \(\operatorname{gr}_F M\) 视为余切丛 \(T^*X\) 上的相干层。其支撑集称为 \(M\) 的
+\term[tezheng-cu]{特征簇}[characteristic variety]，记为 \(\operatorname{Ch}(M)\)。
+\end{definition}
+
+\begin{proposition}[良滤过与特征簇]\label{b5:prop:D-good-filtration-invariance}
+设 \(X\) 为光滑复代数簇，\(\mathcal D_X\) 为代数微分算子层，\(M\) 为相干左 \(\mathcal D_X\) 模。它局部具有关于阶滤过的良滤过，以其伴随分次模在 \(T^*X\) 上的支撑定义的特征簇 \(\operatorname{Ch}(M)\) 不依赖良滤过的选择。对相干左 \(\mathcal D_X\) 模的短正合列
+\(0\to M'\to M\to M''\to0\)，有
+\(\operatorname{Ch}(M)=\operatorname{Ch}(M')\cup\operatorname{Ch}(M'')\)。
+\end{proposition}
+\begin{proof}
+局部取有限个 \(\mathcal D_X\) 生成元 \(u_i\)，指定它们的整数滤过次数 \(d_i\)，令
+\(F_jM=\sum_iF_{j-d_i}\mathcal D_Xu_i\)。每项在 \(\mathcal O_X\) 上相干，分次模由这些元的符号生成，故为良滤过。
+
+两个良滤过 \(F,G\) 的有限个分次生成元提升到模中，分别在另一滤过的有限次数出现。因此可取 \(c\ge0\)，使
+\(F_jM\subseteq G_{j+c}M\)、\(G_jM\subseteq F_{j+c}M\) 对所有 \(j\) 成立。设次数 \(m\) 的齐次符号 \(a\) 零化 \(\operatorname{gr}_FM\)，取它的算子提升 \(P\)，则
+\(PF_jM\subseteq F_{j+m-1}M\)。对 \(N>2c\)，得到
+\[
+ P^NG_jM\subseteq F_{j+c+Nm-N}M
+          \subseteq G_{j+Nm+2c-N}M
+          \subseteq G_{j+Nm-1}M.
+\]
+所以 \(a^N\) 零化 \(\operatorname{gr}_GM\)。交换 \(F,G\) 后得到反向包含，故两分次模的零化理想有相同根理想，支撑相同。
+
+最后，在 \(M'\) 上取 \(M\) 的交滤过，在 \(M''\) 上取商滤过，得到分次短正合列。分次环局部为 Noether 多项式环，所以分次子模和商模都有限生成，各滤过项也相干；这些仍为良滤过。交换环上短正合列的支撑是两端支撑的并，故得到结论。参见\cite[Theorems 2.1.3 and 2.2.1, pp. 58--59]{HottaTakeuchiTanisaki2008DModules}。
+\end{proof}
+
+这里相干性是对 \(\mathcal D_X\) 而言，不要求 \(M\) 在 \(\mathcal O_X\) 上有限生成。
+
+\begin{proposition}\label{b5:prop:D-principal-characteristic}
+设 \(X=\mathbb A^1_{\mathbb C}\)，\(D=A_1(\mathbb C)\) 取阶滤过，\(\xi\) 为 \(\partial\) 的一阶符号。设非零算子 \(P=a_m(x)\partial^m+\cdots\in D\)，其中 \(m\ge0\)、\(a_m\in\mathbb C[x]\setminus\{0\}\)。对左商模 \(M=D/DP\) 的商滤过，有
+\[
+ \operatorname{gr}M\simeq\mathbb C[x,\xi]/\Bigl(a_m(x)\xi^m\Bigr),
+ \qquad
+ \operatorname{Ch}(M)=V\Bigl(a_m(x)\xi^m\Bigr).
+\]
+\end{proposition}
+\begin{proof}
+主符号的乘积满足 \(\sigma(QP)=\sigma(Q)\sigma(P)\)：最高阶系数的乘积非零，故阶相加。左理想 \(DP\) 的每个元素就是某个 \(QP\)，所以其分次理想恰由 \(\sigma(P)=a_m(x)\xi^m\) 生成。商滤过的分次模于是为所写商环，它的支撑为该理想的零点集。
+\end{proof}
+
+例如 \(D/D\partial\) 的特征簇是零截面 \(\xi=0\)，\(D/Dx\) 的特征簇是点 \(x=0\) 上的整条余切纤维。后一模非零：在 \(\mathbb C[z]\) 上令 \(\partial\) 乘以 \(z\)、\(x=-\mathrm{d}/\mathrm{d}z\)，可验证 \(\partial x-x\partial=1\)，且向量 \(1\) 被 \(x\) 零化。这给出了该商模的具体模型。
 
 \subsection{holonomic D-模与术语辨析}
 \label{b5:subsec:D01:04}
 
-待撰写。
+特征簇越小，方程的约束通常越强。不过约束不能任意增加而仍保留非零相干模。
+
+\begin{theorem}[Bernstein 不等式]\label{b5:thm:D-bernstein}
+设 \(n\ge0\)，\(X\) 为纯 \(n\) 维光滑复代数簇，\(\mathcal D_X\) 为代数微分算子层，\(M\ne0\) 为相干左 \(\mathcal D_X\) 模，\(\operatorname{Ch}(M)\subseteq T^*X\) 为其关于阶滤过的特征簇。则
+\(\dim\operatorname{Ch}(M)\ge n\)。
+\end{theorem}
+
+\begin{proofsketch}
+按 \(n=\dim X\) 归纳。若特征簇的某个分量在 \(X\) 中投影稠密，该分量的维数已经至少为 \(n\)。否则，模的支撑是一个真闭子集；取其光滑部分附近的一个开集，可将支撑包含在光滑超曲面 \(S=\{x_1=0\}\) 中。取相容局部坐标和法向算子 \(\partial_1\)。支撑条件意味着每个模元素都被某个 \(x_1\) 的幂零化。
+
+令 \(N=\ker(x_1:M\to M)\)。它是非零 \(\mathcal D_S\) 模。Weyl 关系给出一个有限求和的投影
+\[
+ p(m)=\sum_{j\ge0}\frac{\partial_1^j x_1^jm}{j!}\in N,
+ \qquad
+ m=\sum_{j\ge0}\frac{(-1)^j}{j!}\partial_1^j p(x_1^jm).
+\]
+第一式确实被 \(x_1\) 零化，因为相邻项用
+\(x_1\partial_1^j=\partial_1^jx_1-j\partial_1^{j-1}\) 相消；第二式是同一有限 Taylor 消去。不同 \(\partial_1^jN\) 之间的线性无关性由反复作用 \(x_1\) 检验。因此局部有
+\(M\simeq\mathbb C[\partial_1]\otimes N\)，其中法向坐标 \(x_1\) 按 \(-\mathrm{d}/\mathrm{d}\partial_1\) 作用。
+
+这一分解还说明 \(N\) 在 \(\mathcal D_S\) 上相干：把有限个 \(\mathcal D_X\) 生成元及其有限个 \(x_1\) 次幂作上述投影，便得到有限个切向生成元。给 \(N\) 取良滤过，法向 \(\partial_1\) 各增加一阶，所得分次模局部为
+\(\mathbb C[\xi_1]\otimes\operatorname{gr}N\)，而 \(x_1\) 作用为零。这说明
+\(\dim\operatorname{Ch}(M)=\dim\operatorname{Ch}(N)+1\)。归纳假设给出后者至少为 \((n-1)+1=n\)。维数零时结论直接成立，归纳完成。
+
+这里省略了局部 étale 坐标中该分解的层化及相干生成元的整理；它们是超曲面支撑的 Kashiwara 等价的局部证明。上述法向分次计算及支撑归纳见\cite[Corollary 2.3.2 and Lemma 2.3.5, pp. 62--64]{HottaTakeuchiTanisaki2008DModules}。本证明只需总维数的下界，没有借此断言特征簇的全部辛几何性质。
+\end{proofsketch}
+
+设 \(X\) 为纯 \(n\) 维光滑复代数簇，\(\mathcal D_X\) 为代数微分算子层。零左 \(\mathcal D_X\) 模，以及满足 \(\dim\operatorname{Ch}(M)=n=\dim X\) 的非零相干左 \(\mathcal D_X\) 模，称为
+\term[holonomic-D-mo]{holonomic D-模}[holonomic D-module]。
+因此\cref{b5:prop:D-principal-characteristic}中，凡商模非零且 \(P\ne0\)，其特征簇在平面里是一条曲线，所得模便是 holonomic；反之自由模 \(D\) 的特征簇是整个二维余切丛，故不是 holonomic。
+
+\ProseParagraphBreak
+有限秩向量丛上的平坦联络给出另一类例子。在局部基中，把 \(\partial_i\) 作用写成 \(\nabla_i=\partial_i+B_i\)，Leibniz 法则处理它与函数的关系，而
+\[
+ [\nabla_i,\nabla_j]=0
+ \quad\Longleftrightarrow\quad
+ \partial_iB_j-\partial_jB_i+[B_i,B_j]=0
+\]
+保证各偏导作用满足 D-模关系。这就是平坦性。取 \(F_jM=M\) 对 \(j\ge0\)、\(F_jM=0\) 对 \(j<0\)，便得良滤过，其正次符号全部作用为零，特征簇为零截面，所以非零联络是 holonomic。一般 holonomic 模却未必是向量丛上的联络，\(D/Dx\) 就说明了点支撑的可能性。
+\ProseParagraphBreak
+英文 holonomic 表示这里的特征簇维数条件，holomorphic 则表示复解析意义的“全纯”，二者不能互译。D-模与第三卷的微分代数也有不同的研究对象：前者研究线性微分算子作用及其模，后者还允许非线性微分多项式关系；两者的联系须在具体对象上讨论。

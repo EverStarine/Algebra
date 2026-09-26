@@ -1,32 +1,170 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 3.4 函子关系
-% 纲要位置：计划纲要.md，第 3158 行。
+% 纲要位置：工作记录/计划纲要.md，第 3809 行。
+% 纲要细目（写作范围）：
+% * 诱导的传递性
+% * 张量恒等式
+% * 有限群情形诱导与余诱导的关系
+% ---
+
 
 \section{函子关系}
 \label{b5:sec:0304}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 诱导的传递性
-% * 张量恒等式
-% * 有限群情形诱导与余诱导的关系
-%
-% ---
-%
+诱导常常要和另一项构造接连使用：沿子群链诱导两次，把一个表示先张量再诱导，或研究映入诱导空间的同态。只比较维数不足以处理这些问题。本节分别写出相容于群作用的映射与逆映射；所有代数同构仍在任意域上成立。
 
 \subsection{诱导的传递性}
 \label{b5:subsec:0304:01}
 
-待撰写。
+\begin{theorem}[诱导的传递性]\label{b5:thm:induction-transitivity}
+设 \(k\) 为域，\(K\le H\le G\) 为有限群的子群链，\(U\) 为左 \(k[K]\)-模。存在自然的左 \(k[G]\)-模同构
+\[
+ \operatorname{Ind}_H^G\Bigl(\operatorname{Ind}_K^H U\Bigr)
+ \cong \operatorname{Ind}_K^G U,
+ \qquad
+ a\otimes(b\otimes u)\longmapsto ab\otimes u
+ \quad(a\in k[G],\ b\in k[H],\ u\in U).
+\]
+\end{theorem}
+\begin{proof}
+映射对 \(a,b,u\) 多线性。内层的关系 \(bc\otimes u=b\otimes cu\)，\(c\in k[K]\)，在目标中成为 \(abc\otimes u=ab\otimes cu\)。外层的关系 \(ah\otimes(b\otimes u)=a\otimes(hb\otimes u)\)，\(h\in k[H]\)，在目标中两边都等于 \(ahb\otimes u\)。所以映射良定义，且与 \(G\) 的左乘作用交换。
+
+逆映射为 \(c\otimes u\mapsto c\otimes(1\otimes u)\)。对 \(d\in k[K]\)，有
+\[
+ cd\otimes(1\otimes u)
+ =c\otimes(d\otimes u)
+ =c\otimes(1\otimes du),
+\]
+故它也保持张量关系。一个方向的复合显然为恒等；另一个方向使用
+\(ab\otimes(1\otimes u)=a\otimes(b\otimes u)\)，同样恢复原元。对 \(K\)-同态 \(U\rightarrow U'\)，两条映射仅把最后一个分量送到其像，因此同构自然。
+\end{proof}
+
+选择 \(G/H\) 的左陪集代表 \(T\) 及 \(H/K\) 的左陪集代表 \(S\)，则 \(\{ts:t\in T,s\in S\}\) 是 \(G/K\) 的左陪集代表集。上述同构把 \(t\otimes(s\otimes u)\) 送到 \(ts\otimes u\)，因而也明确说明了两层陪集坐标与一层坐标如何对应。其维数等式就是 \([G:H][H:K]=[G:K]\)，但同构还保留了全部群作用。
 
 \subsection{张量恒等式}
 \label{b5:subsec:0304:02}
 
-待撰写。
+若 \(V_1,V_2\) 为同一群的表示，域上张量积使用对角作用 \(g(v_1\otimes v_2)=gv_1\otimes gv_2\)。下面需要把这个作用与诱导张量积中的平衡关系分开。
+
+\begin{theorem}[张量恒等式]\label{b5:thm:tensor-identity}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)，\(W\) 为左 \(k[H]\)-模，\(V\) 为左 \(k[G]\)-模。以下同构对两个表示自然：
+\begin{equation}\label{b5:eq:tensor-identity}
+ \operatorname{Ind}_H^G\Bigl(W\otimes_k\operatorname{Res}_H^G V\Bigr)
+ \cong (\operatorname{Ind}_H^G W)\otimes_k V.
+\end{equation}
+它在 \(g\in G\) 的纯张量上由
+\[
+ g\otimes(w\otimes v)\longmapsto(g\otimes w)\otimes gv
+\]
+给出；右边使用 \(G\) 的对角作用。
+\end{theorem}
+\begin{proof}
+群元素是 \(k[G]\) 的基，所以给定公式可先按 \(g\) 线性延伸。对 \(h\in H\)，它在 \(gh\otimes(w\otimes v)\) 处的值为
+\[
+ (gh\otimes w)\otimes ghv=(g\otimes hw)\otimes g(hv),
+\]
+这正是在 \(g\otimes(hw\otimes hv)\) 处的值，故保持 \(k[H]\) 上的平衡关系。对 \(x\in G\)，将 \(g\) 换成 \(xg\) 后的像为 \((xg\otimes w)\otimes xgv\)，等于原像受到 \(x\) 的对角作用，故它是 \(G\)-同态。
+
+逆映射在群元素上为
+\[
+ (g\otimes w)\otimes v\longmapsto g\otimes(w\otimes g^{-1}v).
+\]
+其良定义需要检查 \(gh\otimes w=g\otimes hw\)。从前者出发，像为
+\[
+ gh\otimes(w\otimes h^{-1}g^{-1}v)
+ =g\otimes(hw\otimes g^{-1}v),
+\]
+与从后者出发相同。两种复合分别消去 \(g^{-1}g\) 与 \(gg^{-1}\)，故为恒等。\(H\)-同态与 \(G\)-同态均与对应的作用交换，所以逐个代入这两条公式也验证了两变量自然性。
+\end{proof}
+
+这里的名称为\term[zhanglianghengdengshi]{张量恒等式}[tensor identity]，也常按其用途称投影公式。复数域的特征标取值满足张量积对应逐点相乘，故\eqref{b5:eq:tensor-identity}给出
+\[
+ \operatorname{Ind}_H^G\Bigl(\psi\cdot\operatorname{Res}_H^G\chi\Bigr)
+ =(\operatorname{Ind}_H^G\psi)\cdot\chi.
+\]
+这个等式对任意复类函数 \(\psi,\chi\) 也成立：在\eqref{b5:eq:induced-character-all}中，\(\chi(x^{-1}gx)=\chi(g)\)，可直接将该因子提出求和。
+
+\ProseParagraphBreak
+例如令 \(H=\{1\}\)、\(W=k\)，可得 \(k[G]\otimes_k V\) 上的对角作用同构于 \(\dim_k V\) 个正则表示的直和（\(V\) 有限维时）。这不是半单性结论；\cref{b5:thm:tensor-identity}中的显式映射说明，即使 \(\operatorname{char}k\) 整除 \(|G|\)，该同构仍然成立。
 
 \subsection{有限群情形诱导与余诱导的关系}
 \label{b5:subsec:0304:03}
 
-待撰写。
+诱导描述从一个构造空间出发的同态。若要描述映入一个构造空间的同态，自然出现的是 Hom 空间。
+
+\begin{definition}\label{b5:def:coinduction}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)，\(W\) 为左 \(k[H]\)-模。把 \(k[G]\) 以左乘看成左 \(k[H]\)-模，定义
+\[
+ \operatorname{Coind}_H^G W
+ \coloneqq\operatorname{Hom}_{k[H]}\Bigl(k[G],W\Bigr),
+ \qquad (gf)(a)=f(ag).
+\]
+这里 \(g\in G\)、\(f\in\operatorname{Hom}_{k[H]}(k[G],W)\)、\(a\in k[G]\)。所得左 \(k[G]\)-模称为 \(W\) 的\term[yuyoudaobiaoshi]{余诱导表示}[coinduced representation]。
+\end{definition}
+\symidx{\(\operatorname{Coind}_H^G\)：从 \(H\) 到 \(G\) 的余诱导}
+
+该作用保持左 \(H\)-线性，因为 \(f(hag)=hf(ag)\)；它满足
+\(\Bigl(g_1(g_2f)\Bigr)(a)=f(ag_1g_2)=\Bigl((g_1g_2)f\Bigr)(a)\)。等价地，余诱导空间由函数 \(f:G\rightarrow W\) 组成，满足
+\begin{equation}\label{b5:eq:coinduced-functions}
+ f(hx)=hf(x),\qquad (gf)(x)=f(xg).
+\end{equation}
+函数在群元素上的取值唯一线性延拓到群代数。这时使用的是右陪集 \(H\backslash G\)；它与前面的左陪集模型不可混用。
+
+\begin{proposition}\label{b5:prop:coinduction-adjunction}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)，\(V\) 为左 \(k[G]\)-模，\(W\) 为左 \(k[H]\)-模。存在自然同构
+\[
+ \operatorname{Hom}_{k[G]}(V,\operatorname{Coind}_H^G W)
+ \cong\operatorname{Hom}_{k[H]}(\operatorname{Res}_H^G V,W).
+\]
+其正向映射为 \(F\mapsto\Bigl(v\mapsto F(v)(1)\Bigr)\)，逆映射把 \(u\) 送到 \(F_u(v)(x)=u(xv)\)。
+\end{proposition}
+\begin{proof}
+若 \(F\) 为 \(G\)-同态，则
+\(F(hv)(1)=\Bigl(hF(v)\Bigr)(1)=F(v)(h)=hF(v)(1)\)，故取值于 \(1\) 得到 \(H\)-同态。反之，\(F_u(v)(hx)=u(hxv)=hu(xv)\)，所以 \(F_u(v)\) 满足\eqref{b5:eq:coinduced-functions}；并且
+\(F_u(gv)(x)=u(xgv)=\Bigl(gF_u(v)\Bigr)(x)\)，故 \(F_u\) 为 \(G\)-同态。
+
+在 \(1\) 处求值恢复 \(u(v)\)；反向恢复 \(F\) 则使用
+\(F(xv)(1)=\Bigl(xF(v)\Bigr)(1)=F(v)(x)\)。前复合 \(G\)-同态与后复合 \(H\)-同态均可直接移入取值公式，因此该对应对两个变量自然。
+\end{proof}
+
+\begin{theorem}\label{b5:thm:induction-coinduction}
+设 \(k\) 为任意域，\(G\) 为有限群，\(H\le G\)。对每个左 \(k[H]\)-模 \(W\)，存在自然的 \(k[G]\)-模同构
+\[
+ \operatorname{Ind}_H^G W\cong\operatorname{Coind}_H^G W.
+\]
+这一同构不要求 \(|G|\) 或 \(|H|\) 在 \(k\) 中可逆。
+\end{theorem}
+\begin{proof}
+定义 \(p_H:k[G]\rightarrow k[H]\)，保留群代数元素在 \(H\) 上的系数，删去其余项。对 \(h_1,h_2\in H\)，有
+\(p_H(h_1ah_2)=h_1p_H(a)h_2\)，因为左右乘 \(H\) 中元素均保持 \(H\) 及其补集。令
+\[
+ \Theta(a\otimes w)(x)=p_H(xa)w\qquad(x\in G).
+\]
+\(\Theta(a\otimes w)(hx)=hp_H(xa)w\)，故其值确在余诱导空间中。又
+\(p_H(xah)w=p_H(xa)hw\)，所以它保持张量关系。\(G\) 等变性则来自
+\[
+ \Theta(ga\otimes w)(x)=p_H(xga)w
+ =\Bigl(g\Theta(a\otimes w)\Bigr)(x).
+\]
+
+选择左陪集代表 \(T\)。其逆元组成右陪集代表集 \(T^{-1}\)。对 \(s,t\in T\)，\(s^{-1}t\in H\) 当且仅当 \(s=t\)，所以
+\[
+ \Theta(t\otimes w)(s^{-1})=
+ \begin{cases}w,&s=t,\\0,&s\ne t.\end{cases}
+\]
+一个满足\eqref{b5:eq:coinduced-functions}的函数由它在 \(T^{-1}\) 上的值唯一确定。因此 \(\Theta\) 的逆为
+\[
+ f\longmapsto\sum_{t\in T}t\otimes f(t^{-1}).
+\]
+这条和式有限；它在 \(T^{-1}\) 上逐个恢复函数值，因而恢复整个函数。\(\Theta\) 的定义本身不依赖 \(T\)，故逆映射也不依赖所选代表。对 \(H\)-同态 \(W\rightarrow W'\)，保留系数再作用与先送到 \(W'\) 的结果相同，证明自然性。整个构造没有任何除法。
+\end{proof}
+
+由\cref{b5:prop:coinduction-adjunction}及\cref{b5:thm:induction-coinduction}，有限群情形还得到
+\begin{equation}\label{b5:eq:frobenius-right-hom}
+ \operatorname{Hom}_{k[G]}(V,\operatorname{Ind}_H^G W)
+ \cong\operatorname{Hom}_{k[H]}(\operatorname{Res}_H^G V,W).
+\end{equation}
+因此诱导既是限制的左伴随，也是其右伴随；两个方向的 Hom 公式各有自己的具体映射，并非把箭头任意倒转所得。
+
+\ProseParagraphBreak
+Etingof 等人的 Definition 5.8.1 直接使用\eqref{b5:eq:coinduced-functions}作为诱导模型，其 Theorem 5.10.1 因而首先给出右侧伴随公式\cite[Sections 5.8, 5.10, pp. 105--109]{EtingofEtAl2011RepresentationTheory}。\cref{b5:thm:induction-coinduction}说明了两种叙述的对应。这里有限指数的作用在逆映射的有限求和中已经清楚出现；对无限指数子群，任意函数与有限支集函数通常给出不同对象，不能不加条件地沿用这个同构。

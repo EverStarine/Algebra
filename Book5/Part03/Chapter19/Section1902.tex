@@ -1,36 +1,163 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 19.2 Casimir 作用与 Freudenthal 递推
-% 纲要位置：计划纲要.md，第 3672 行。
-
-\section{Casimir 作用与 Freudenthal 递推}
-\label{b5:sec:1902}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4323 行。
 % * 由 Killing 型的对偶基构造 Casimir 元，计算其在最高权模上的标量作用；所需包络代数和完全可约性已在前章建立
 % * 按根方向的 \(\mathfrak{sl}_2\) 模分解计算权空间上的迹，证明 Freudenthal 权重数递推
 % * 说明最高权初值、支配序和有限支集如何控制递推；所用内积、根长与 \(\rho\) 的归一化固定不变
 % * 本节建立随后 Weyl 分母、形式算子和特征标公式证明所需的代数恒等式，同时提供第19.5节权重数计算的方法；证明方法参考 [V13-7]
-%
+
+\section{Casimir 作用与 Freudenthal 递推}
+\label{b5:sec:1902}
+
+Casimir 元的中心性已经用来分裂表示。本节进一步计算它在每个权空间上的迹。最高权给出一个全模通用的标量，而各权空间又把同一个算子拆成根方向的升降作用；比较两种计算，就得到权重数的递推关系。
 
 \subsection{Casimir 元与最高权模上的标量作用}
 \label{b5:subsec:1902:01}
 
-待撰写。
+对 \(\alpha\in\Phi\)，令 \(t_\alpha\in\mathfrak h\) 由
+\(B(t_\alpha,h)=\alpha(h)\) 决定。于是
+\[
+\alpha(t_\beta)=(\alpha,\beta),\qquad
+h_\alpha=\frac{2t_\alpha}{(\alpha,\alpha)}.
+\]
+对每个正根选取 \(e_\alpha\in\mathfrak g_\alpha\)、\(f_\alpha\in\mathfrak g_{-\alpha}\)，使
+\(B(e_\alpha,f_\alpha)=1\)。Killing 不变性给出
+\[
+[e_\alpha,f_\alpha]=t_\alpha.
+\]
+注意这一对 \(e_\alpha,f_\alpha\) 尚不是标准 \(\mathfrak{sl}_2\) 的升降算子；标准三元组为
+\[
+E_\alpha=e_\alpha,\qquad
+F_\alpha=\frac{2f_\alpha}{(\alpha,\alpha)},\qquad h_\alpha.
+\]
+这个缩放将在迹计算中保留。
+
+\begin{proposition}\label{b5:prop:casimir-highest-scalar}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)。以 \((\, ,\,)\) 表示 Killing 型在 \(\mathfrak h^*\) 上诱导的双线性型，记 \(\|\nu\|^2=(\nu,\nu)\)。设 \(\lambda\in\mathfrak h^*\)，\(V\ne0\) 为相对于这份选择的复最高权 \(\mathfrak g\) 模，最高权为 \(\lambda\)，允许无限维。其 Killing Casimir 元在 \(V\) 上作用为标量
+\begin{equation}\label{b5:eq:casimir-highest-scalar}
+c_\lambda=(\lambda,\lambda+2\rho)
+=\|\lambda+\rho\|^2-\|\rho\|^2.
+\end{equation}
+这里范数平方表示由 Killing 诱导型给出的二次式；仅在根实空间上把它解释为正定范数。
+\end{proposition}
+\begin{proof}
+取 \(\mathfrak h\) 的 Killing 对偶基 \(h_a,h^a\)，连同正、负根对偶向量，得到
+\begin{align}
+C
+&=\sum_a h_a h^a+\sum_{\alpha>0}
+(e_\alpha f_\alpha+f_\alpha e_\alpha)\notag\\
+&=\sum_a h_a h^a+2\sum_{\alpha>0}f_\alpha e_\alpha+2t_\rho.
+\label{b5:eq:casimir-root-expansion}
+\end{align}
+对最高权向量 \(v\)，全部 \(e_\alpha v=0\)，Cartan 部分作用为
+\(\sum_a\lambda(h_a)\lambda(h^a)=(\lambda,\lambda)\)，而
+\(2t_\rho\) 作用为 \(2(\lambda,\rho)\)。所以 \(Cv=c_\lambda v\)。
+由\cref{b5:prop:casimir-central}，\(C\) 与 \(U(\mathfrak g)\) 交换，而 \(v\) 生成 \(V\)，故该标量作用在整个模上成立。
+\end{proof}
 
 \subsection{根方向分解与 Freudenthal 递推}
 \label{b5:subsec:1902:02}
 
-待撰写。
+\begin{lemma}\label{b5:lem:root-trace-recurrence}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，选择相应根系的一组正根 \(\Phi^+\)，以 \(P\) 表示权格。设 \(V\) 为有限维复 \(\mathfrak g\) 模，\(\alpha\in\Phi^+\)，\(B\) 为 Killing 型，\((\, ,\,)\) 为其在 \(\mathfrak h^*\) 上诱导的型。选根向量 \(e_\alpha\in\mathfrak g_\alpha\)、\(f_\alpha\in\mathfrak g_{-\alpha}\)，使 \(B(e_\alpha,f_\alpha)=1\)，令 \(m_V(\nu)=\dim_{\mathbb C}V_\nu\)。则对任意 \(\mu\in P\)，有
+\[
+\operatorname{tr}\Bigl(f_\alpha e_\alpha\mid V_\mu\Bigr)
+=\sum_{j\ge1}(\mu+j\alpha,\alpha)m_V(\mu+j\alpha).
+\]
+右侧只有有限个非零项。
+\end{lemma}
+\begin{proof}
+令左侧为 \(T(\mu)\)。映射 \(e_\alpha:V_\mu\to V_{\mu+\alpha}\) 与
+\(f_\alpha:V_{\mu+\alpha}\to V_\mu\) 是有限维空间间的线性映射，故两种复合的迹相等。使用
+\(e_\alpha f_\alpha=f_\alpha e_\alpha+t_\alpha\)，得到
+\[
+T(\mu)=T(\mu+\alpha)+(\mu+\alpha,\alpha)m_V(\mu+\alpha).
+\]
+权集有限，所以沿 \(+\alpha\) 迭代到权空间为零时停止，得到所需和式。
+
+这也可从根方向的 \(\mathfrak{sl}_2\) 分解理解。将 \(V\) 限制到
+\(E_\alpha,F_\alpha,h_\alpha\) 张成的三维代数，并同时按与它交换的
+\(\ker\alpha\subseteq\mathfrak h\) 分解。每条最高 \(h_\alpha\) 权为 \(r\) 的链中，
+\[
+F_\alpha E_\alpha(F_\alpha^qv)
+=q(r-q+1)F_\alpha^qv.
+\]
+所以本节的 \(f_\alpha e_\alpha\) 在该位置的特征值是
+\((\alpha,\alpha)q(r-q+1)/2\)。相邻位置相减，正好得到上式中的
+\((\mu+\alpha,\alpha)\)。这说明递推系数来自升降算子的归一化，而不是把每条根都当成同样长度。
+\end{proof}
+
+\begin{theorem}[Freudenthal 递推]\label{b5:thm:freudenthal}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根。令 \(P\) 为权格、\(P^+\) 为支配整权集，\(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)，\((\, ,\,)\) 为 Killing 型在 \(\mathfrak h^*\) 上诱导的型，记 \(\|\nu\|^2=(\nu,\nu)\)。设 \(\lambda\in P^+\)，\(L(\lambda)\) 为相应有限维简单最高权模，
+\(m_\lambda(\mu)=\dim_{\mathbb C}L(\lambda)_\mu\)。对任意 \(\mu\in P\)，有
+\begin{equation}\label{b5:eq:freudenthal}
+\Bigl(\|\lambda+\rho\|^2-\|\mu+\rho\|^2\Bigr)m_\lambda(\mu)
+=2\sum_{\alpha>0}\sum_{j\ge1}
+(\mu+j\alpha,\alpha)m_\lambda(\mu+j\alpha).
+\end{equation}
+初值为 \(m_\lambda(\lambda)=1\)，权集外的重数为零。
+\end{theorem}
+\begin{proof}
+在\eqref{b5:eq:casimir-root-expansion}的 \(\mu\) 权空间上取迹。左端为
+\(c_\lambda m_\lambda(\mu)\)，Cartan 与 \(2t_\rho\) 两项贡献
+\((\mu,\mu+2\rho)m_\lambda(\mu)\)。其余根方向的迹由
+\cref{b5:lem:root-trace-recurrence}给出。移项后，标量差等于
+\[
+c_\lambda-(\mu,\mu+2\rho)
+=\|\lambda+\rho\|^2-\|\mu+\rho\|^2,
+\]
+得到公式。即使 \(V_\mu=0\)，迹计算仍成立，所以该恒等式对所有 \(\mu\in P\) 有效。
+\end{proof}
 
 \subsection{递推初值、支配序与归一化}
 \label{b5:subsec:1902:03}
 
-待撰写。
+在最高权处，\eqref{b5:eq:freudenthal}两边都为零，故它自身不能确定初值；必须另用最高权线一维。计算较低权时，也不能不检查分母便直接相除。
+
+\begin{proposition}\label{b5:prop:freudenthal-denominator}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi^+\) 为相应根系的一组正根，\(P^+\) 为相应支配整权集，\(\rho=\frac12\sum_{\alpha\in\Phi^+}\alpha\)。以内积 \((\, ,\,)\) 表示 Killing 型诱导的根实空间上的正定型，记 \(\|\nu\|^2=(\nu,\nu)\)，按相应简单根使用权偏序。设 \(\lambda\in P^+\)，\(L(\lambda)\) 为相应有限维简单最高权模，\(\mu\ne\lambda\) 为其实际权。则
+\[
+\|\lambda+\rho\|^2-\|\mu+\rho\|^2>0.
+\]
+若只枚举支配整权，则对每个 \(\mu\in P^+\)、\(\mu<\lambda\)，同样有此严格不等式，无论 \(\mu\) 是否实际出现。
+\end{proposition}
+\begin{proof}
+先令 \(\nu\) 为 \(\mu\) 的支配轨道代表。Weyl 对称性使 \(\nu\) 仍为权，所以
+\(\nu\le\lambda\)。两者都支配，因而
+\[
+\|\lambda\|^2-\|\mu\|^2
+=\|\lambda\|^2-\|\nu\|^2
+=(\lambda-\nu,\lambda+\nu)\ge0.
+\]
+最后一个不等式来自 \(\lambda-\nu\in Q_+\) 与
+\((\alpha_i,\lambda+\nu)\ge0\)。而 \(\lambda-\mu\in Q_+\setminus\{0\}\)，
+\((\rho,\alpha_i)>0\)，故
+\[
+\|\lambda+\rho\|^2-\|\mu+\rho\|^2
+=\|\lambda\|^2-\|\mu\|^2+2(\rho,\lambda-\mu)>0.
+\]
+若 \(\mu\) 本来就是支配整权且 \(\mu<\lambda\)，上述证明取 \(\nu=\mu\) 即可，不需要实际权假设。
+\end{proof}
+
+因此可以按以下有限过程计算：先枚举
+\(\mu\in P^+\cap(\lambda-Q_+)\)，用上一章的 \(\rho^\vee\) 界保证只有有限多个；按 \(\lambda-\mu\) 的高度递增计算。右侧的 \(\mu+j\alpha\) 若不支配，先反射到支配代表。由支配代表大于或等于其轨道内各权，这个代表的高度更靠近最高权，故其重数已知。超出候选范围时取零。最后把算出的重数沿 Weyl 轨道展开。
+
+\ProseParagraphBreak
+例如 \(\mathfrak{sl}_2\) 的 Killing 归一化给出 \((\omega,\omega)=1/8\)，
+\(\lambda=m\omega\)、\(\rho=\omega\)。最高权 Casimir 标量为
+\(m(m+2)/8\)，与\eqref{b5:eq:sl2-killing-casimir}一致。若把标准
+\(\mathfrak{sl}_2\) 算子 \(h^2+2h+4fe\) 的标量直接代入本节，就会差一个八倍因子。
 
 \subsection{特征标的代数恒等式与权重数计算}
 \label{b5:subsec:1902:04}
 
-待撰写。
+取 \(\mathfrak{sl}_3\) 的伴随模，最高权为
+\(\theta=\alpha_1+\alpha_2=\rho\)。六个非零根权的重数为一。设共同根长平方为 \(a\)，则
+\(c_\theta=(\theta,3\theta)=3a\)。在 \(\mu=0\) 处，Freudenthal 递推右侧只有三条正根的 \(j=1\) 项，故
+\[
+3a\,m_\theta(0)=2(3a),\qquad m_\theta(0)=2.
+\]
+在本书 Killing 归一化中 \(a=1/3\)，因而伴随 Casimir 标量为一。计算同时验证了根长、Casimir 和零权重数三个量之间的相容性。
+
+\ProseParagraphBreak
+下一节将把\eqref{b5:eq:freudenthal}的所有权空间等式合并成一个形式微分算子等式。这个等式既保留了可逐权计算的内容，也能与 Weyl 分母相乘后化为简单的二阶特征方程。它是排除特征标公式中额外项所需的代数依据。

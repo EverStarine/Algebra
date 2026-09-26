@@ -1,30 +1,118 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 13.2 Cartan 判据
-% 纲要位置：计划纲要.md，第 3498 行。
+% 纲要位置：工作记录/计划纲要.md，第 4149 行。
 
 \section{Cartan 判据}
 \label{b5:sec:1302}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 可解性的迹判据
 % * 半单性的非退化判据
 % * 与 Engel 定理的关系
 %
 
+迹型给出的二次条件足以判别可解性。不过，复数特征值的平方可能相消，不能从 \(\operatorname{tr}(x^2)=0\) 直接推出 \(x=0\)。证明中将另构造一个算子，把所用的迹写成特征值绝对值平方之和。
+
 \subsection{可解性的迹判据}
 \label{b5:subsec:1302:01}
 
-待撰写。
+\begin{lemma}[谱插值]\label{b5:lem:cartan-spectral-interpolation}
+设 \(V\) 为有限维复向量空间，\(x\in\operatorname{End}_{\mathbb C}(V)\)，\(V_\lambda\) 表示 \(x\) 对应于特征值 \(\lambda\) 的广义特征空间。按这些空间写 \(x=S+N\)，其中 \(S\) 在 \(V_\lambda\) 上为 \(\lambda I\)，\(N\) 幂零。令 \(S^\#\) 在 \(V_\lambda\) 上为 \(\overline\lambda I\)。则存在复多项式 \(p\)，满足 \(p(0)=0\)，并且
+\[
+\operatorname{ad}S^\#=p(\operatorname{ad}x)
+\quad\text{在 }\operatorname{End}_{\mathbb C}(V)\text{ 上}.
+\]
+\end{lemma}
+\begin{proof}
+在 \(\operatorname{Hom}(V_\mu,V_\lambda)\) 上，
+\(\operatorname{ad}x=(\lambda-\mu)I+\operatorname{ad}N\)，其中后项幂零；而 \(\operatorname{ad}S^\#\) 是标量 \(\overline{\lambda-\mu}\)。取一个对所有这些子空间都足够大的整数 \(r\)。对有限多个不同的差值 \(\delta=\lambda-\mu\)，多项式中国剩余定理给出
+\[
+p(t)\equiv\overline\delta\pmod{(t-\delta)^r}.
+\]
+当 \(\delta=0\) 时，这要求 \(p(t)\equiv0\pmod{t^r}\)，特别有 \(p(0)=0\)。代入每个子空间上的算子即可；这些 Hom 空间的直和就是全部自同态空间。
+\end{proof}
+
+\term[Cartan-kejie-panju]{Cartan 可解性判据}[Cartan's solvability criterion]如下。
+
+\begin{theorem}[Cartan 可解性判据]\label{b5:thm:cartan-solvability}
+设 \(L\subseteq\mathfrak{gl}(V)\) 是有限维复向量空间 \(V\) 上的李子代数。则 \(L\) 可解，当且仅当
+\[
+\operatorname{tr}(xy)=0
+\quad\Bigl(x\in[L,L],\ y\in L\Bigr).
+\]
+因而有限维复李代数 \(\mathfrak g\) 可解，当且仅当
+\(\kappa_{\mathfrak g}\Bigl([\mathfrak g,\mathfrak g],\mathfrak g\Bigr)=0\)。
+\end{theorem}
+\begin{proof}
+若 \(L\) 可解，\cref{b5:prop:solvable-derived-nilpotent}已经证明迹条件。
+
+反之，固定 \(x\in[L,L]\)，采用\cref{b5:lem:cartan-spectral-interpolation}的 \(S^\#\)。因为 \(\operatorname{ad}x\) 把 \(L\) 送入理想 \([L,L]\)，而 \(p\) 没有常数项，所以
+\[
+[S^\#,L]=p(\operatorname{ad}x)(L)\subseteq[L,L].
+\]
+把 \(x\) 写成有限和 \(\sum_j[a_j,b_j]\)，其中 \(a_j,b_j\in L\)。迹的循环性和假设给出
+\[
+\operatorname{tr}(S^\#x)
+=\sum_j\operatorname{tr}\Bigl([S^\#,a_j]b_j\Bigr)=0.
+\]
+另一方面，在 \(x\) 的 Jordan 基下，
+\[
+\operatorname{tr}(S^\#x)
+=\sum_\lambda(\dim V_\lambda)|\lambda|^2.
+\]
+每一项均非负，故每个特征值都为零，\(x\) 幂零。于是 \([L,L]\) 中的每个矩阵都是幂零算子。\cref{b5:thm:engel-common-zero}使其同时严格上三角化，故它是幂零李代数，特别可解；所以 \(L\) 可解。
+
+最后，对抽象李代数取 \(L=\operatorname{ad}\mathfrak g\)，矩阵迹条件正好是陈述中的 Killing 型条件。若该条件成立，已经证明 \(L\) 可解，而
+\(\mathfrak g/Z(\mathfrak g)\cong L\)。中心交换，由\cref{b5:prop:lie-solvable-extension}，\(\mathfrak g\) 可解。逆向对伴随表示使用已证的必要性。
+\end{proof}
 
 \subsection{半单性的非退化判据}
 \label{b5:subsec:1302:02}
 
-待撰写。
+\term[Cartan-bandan-panju]{Cartan 半单性判据}[Cartan's semisimplicity criterion]给出一个更简洁的检验。
+
+\begin{theorem}[Killing 型的非退化判据]\label{b5:thm:killing-semisimple}
+有限维复李代数 \(\mathfrak g\) 半单，当且仅当其 Killing 型非退化。
+\end{theorem}
+\begin{proof}
+设 \(\mathfrak g\) 半单，令 \(R=\mathfrak g^\perp\) 为 Killing 型的根。\cref{b5:prop:invariant-trace-form}说明 \(R\) 是理想。\cref{b5:lem:killing-restriction-ideal}给出 \(\kappa_R=\kappa_{\mathfrak g}|_{R\times R}=0\)，故\cref{b5:thm:cartan-solvability}说明 \(R\) 可解。半单性迫使 \(R=0\)。
+
+反之，设 Killing 型非退化。若有非零可解理想 \(I\)，其导出列的最后一个非零项 \(A\) 是非零交换理想：各导出项均为 \(\mathfrak g\) 的理想，且 \([A,A]=0\)。对 \(a\in A\)、\(x\in\mathfrak g\)，算子 \(T=\operatorname{ad}a\operatorname{ad}x\) 把 \(\mathfrak g\) 送入 \(A\)，又把 \(A\) 送到零，所以 \(T^2=0\)。于是 \(\kappa_{\mathfrak g}(a,x)=\operatorname{tr}T=0\)。这使 \(A\) 包含于型的根，与非退化性矛盾。因此不存在非零可解理想。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:simple-killing-forms}
+非零有限维复简单李代数 \(\mathfrak g\) 的对称不变双线性型均为 Killing 型的标量倍数，且 Killing 型非退化。
+\end{corollary}
+\begin{proof}
+简单李代数半单，所以\cref{b5:thm:killing-semisimple}保证 Killing 型非退化；再用\cref{b5:prop:simple-invariant-form-unique}。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:faithful-trace-nondegenerate}
+设 \(\mathfrak g\) 是有限维复半单李代数，\(\rho:\mathfrak g\rightarrow\mathfrak{gl}(V)\) 是忠实有限维表示。则 \(\beta_\rho(x,y)=\operatorname{tr}\Bigl(\rho(x)\rho(y)\Bigr)\) 非退化。
+\end{proposition}
+\begin{proof}
+型的根 \(R\) 是理想，且 \(\operatorname{tr}\Bigl(\rho(x)\rho(y)\Bigr)=0\) 对全部 \(x,y\in R\) 成立。对矩阵代数 \(\rho(R)\) 用\cref{b5:thm:cartan-solvability}，得 \(\rho(R)\) 可解。忠实性给出 \(R\cong\rho(R)\)，故 \(R\) 是可解理想，只能为零。
+\end{proof}
 
 \subsection{与 Engel 定理的关系}
 \label{b5:subsec:1302:03}
 
-待撰写。
+证明的顺序值得区分。Engel 定理先由共同零向量识别幂零性；Lie 定理随后给出可解表示的上三角形；Cartan 判据再通过谱插值把迹条件还原为 Engel 定理的假设。半单性判据用的是这条已经建立的证明链，并未调用半单李代数表示的完全可约性。
+
+\begin{example}\label{b5:exm:killing-affine-two}
+设 \(\mathfrak g=\mathbb Ch+\mathbb Ce\)，\([h,e]=e\)。相对于 \(h,e\)，
+\[
+\operatorname{ad}h=\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\qquad
+\operatorname{ad}e=\begin{pmatrix}0&0\\-1&0\end{pmatrix},
+\qquad
+[\kappa]_{h,e}=\begin{pmatrix}1&0\\0&0\end{pmatrix}.
+\]
+它可解而 Killing 型不恒为零；正确条件是
+\(\kappa\Bigl([\mathfrak g,\mathfrak g],\mathfrak g\Bigr)=0\)，这里
+\([\mathfrak g,\mathfrak g]=\mathbb Ce\) 恰好等于型的根。
+\end{example}
+
+特征零假设同样不可漏写。以特征 \(3\) 的域为例，
+\(\mathfrak{sl}_2\) 仍简单：\(\operatorname{ad}h\) 在 \(e,h,f\) 上的三个特征值互不相同，任意非零理想可投影出一个基向量，再用三条标准括号得到全部基。但若特征为 \(2\)，这些步骤与 Killing 型公式都会退化，\(\mathfrak{sl}_2\) 不再半单。因此本章判据的适用范围始终是有限维复李代数，不能只看相同的矩阵记号就推广。

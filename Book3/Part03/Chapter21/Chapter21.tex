@@ -16,6 +16,7 @@
 \item 证明多项式环的整体维数等于变量数，并说明分次有限模为何有有限自由消解。
 \item 由 Betti 数据计算 Hilbert 级数，辨认交错和不能保留的消解信息。
 \item 运用模 Gröbner 基、Schreyer 关系和单位项消去，实际构造并验证小规模消解。
+\item 在选读的样条计算中，把分片多项式的拼接条件写成矩阵，求出全部解及次数受限的维数。
 \end{itemize}
 \end{learninggoals}
 
@@ -29,12 +30,13 @@
 \input{Part03/Chapter21/Section2103}
 \input{Part03/Chapter21/Section2104}
 \input{Part03/Chapter21/Section2105}
+\input{Part03/Chapter21/Section2106}
 
 \begin{chaptersummary}
 自由消解逐层记录生成元之间的关系。分次极小性使微分在剩余域上变为零，因而各层各次的自由秩恰为 Tor 的分次维数。Hilbert 合冲定理进一步说明，在 \(n\) 个变量的多项式环上，有限分次模的极小自由消解不会超过 \(n\) 层。
 
 \ProseParagraphBreak
-计算时，模项序与 Schreyer 构造给出全部核关系，单位微分项则指出可以删去的可缩部分。正确的记录既要有微分相乘为零的等式，也要有像等于核的依据。Hilbert 级数能由各层次数的交错和恢复，但无法反过来决定 Betti 表；初始理想的单项式计数也必须与原理想的消解信息分开。
+计算时，模项序与 Schreyer 构造给出全部核关系，单位微分项则指出可以删去的可缩部分。正确的记录既要有微分相乘为零的等式，也要有像等于核的依据。Hilbert 级数能由各层次数的交错和恢复，但无法反过来决定 Betti 表；初始理想的单项式计数也必须与原理想的消解信息分开。选读的样条实例把光滑拼接化为整除关系，进一步说明核、合冲模和次数计数怎样共同回答一个具体问题。
 \end{chaptersummary}
 
 \BookExercises
@@ -162,10 +164,10 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-unit-homotopy}
-对两项复形 \(0\rightarrow S(-a)\xrightarrow{c}S(-a)\rightarrow0\)、\(c\in k^\times\)，写出恒等映射与零映射之间的链同伦。解释为什么它可以从消解中删去。
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(a\in\mathbb Z\)、\(c\in k^\times\)。对两项复形 \(0\rightarrow S(-a)\xrightarrow{c}S(-a)\rightarrow0\)，写出恒等映射与零映射之间的链同伦。解释为什么它可以从消解中删去。
 \end{exercise}
 \begin{solution}
-令从低次项到高次项的同伦映射为乘 \(c^{-1}\)，其余同伦分量为零。则两项上分别有 \(dh=1\)、\(hd=1\)，故 \(dh+hd\) 为恒等。这个复形可缩，特别正合；若它是某消解的直和项，去掉后各同调不变。仅在微分矩阵里看见一个非零常数还须先作相容换基，才能保证它确实构成直和项。
+令从低次项到高次项的同伦映射为乘 \(c^{-1}\)，其余同伦分量为零。则两项上分别有 \(\mathrm{d}h=1\)、\(h\mathrm{d}=1\)，故 \(\mathrm{d}h+h\mathrm{d}\) 为恒等。这个复形可缩，特别正合；若它是某消解的直和项，去掉后各同调不变。仅在微分矩阵里看见一个非零常数还须先作相容换基，才能保证它确实构成直和项。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-tor-socle}
@@ -187,15 +189,35 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-kernel-certificate}
-设多项式矩阵 \(F,G,U,V,T\) 满足 \(G=FU\)、\(F=GV\)，且 \(T\) 的列生成 \(\ker G\)。说明为什么只给出 \(UT\) 的列未必生成 \(\ker F\)，并给出一个具体例子。
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\)，\(F,G,U,V,T\) 为尺寸相容的 \(S\) 系数矩阵，满足 \(G=FU\)、\(F=GV\)，且 \(T\) 的列生成 \(\ker G\)。说明为什么只给出 \(UT\) 的列未必生成 \(\ker F\)，并给出一个具体例子。
 \end{exercise}
 \begin{solution}
 遗漏了改换生成组本身产生的关系 \(1-UV\)。例如取 \(F=(x\ x)\)、\(G=(x)\)，\(U=\binom10\)、\(V=(1\ 1)\)。因 \(S=k[x]\) 为整环，\(\ker G=0\)，故 \(UT\) 没有列。但 \(\ker F\) 由 \((-1,1)\) 生成，恰来自 \(1-UV=\left(\begin{smallmatrix}0&-1\\0&1\end{smallmatrix}\right)\) 的第二列。只验证两个像相同，不能忽略生成组之间的额外核。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-top-degree-bound}
-设 \(M\ne0\) 是 \(S=k[x_1,\ldots,x_n]\) 上有限分次模，且 \(M_j=0\) 对所有 \(j>b\) 成立。证明 \(\beta_{i,j}(M)=0\) 当 \(j>b+i\)。
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(M\ne0\) 为有限生成分次 \(S\) 模，\(b\in\mathbb Z\)。若 \(M_j=0\) 对所有 \(j>b\) 成立，证明 \(\beta_{i,j}(M)=0\) 当 \(j>b+i\)。
 \end{exercise}
 \begin{solution}
 以 \(M\) 为系数的变量 Koszul 复形第 \(i\) 项是 \(M(-i)^{\binom ni}\)，其次数 \(j\) 部分为若干 \(M_{j-i}\) 的直和。当 \(j>b+i\) 时该项为零，同调对应次数也为零；再由 Tor 与 Betti 数的等式得到结论。该上界来自各项本身为零，不需要预先求出微分的秩。
+\end{solution}
+
+
+\begin{exercise}\label{b3:ex:21-polynomial-inhomogeneous}
+在 \(S=k[x,y]\) 上求 \(x^2u+xyv=x^3\) 的全部多项式解，并说明把右端改为 \(x\) 时为何无解。
+\end{exercise}
+\begin{solution}
+整环中约去 \(x\)，得到 \(xu+yv=x^2\)。特解为 \((x,0)\)，核由 \((y,-x)\) 生成，故全部解为 \(u=x+yh,v=-xh\)，\(h\in S\)。右端为 \(x\) 时约去 \(x\) 得 \(xu+yv=1\)，在原点求值即矛盾。若工作环改为 \(S_x\)，则 \((u,v)=(x^{-1},0)\) 是后一方程的解；这再次说明解集依赖工作环。
+\end{solution}
+
+\begin{optionalexercise}\label{b3:ex:21-spline-strips}
+用直线 \(x=0\) 与 \(x=1\) 将平面分成三条闭区域，要求分片多项式作 \(C^r\) 拼接，\(r\ge0\)。求全部解的唯一参数表示，以及每片全次数不超过 \(d\) 时的维数。
+\end{optionalexercise}
+\begin{solution}
+置 \(s=r+1\)，按从左到右排列分片。由\cref{b3:prop:spline-divisibility}，全部解唯一写成
+\[
+(p_1,p_2,p_3)=\bigl(p,\ p+x^sa,\ p+x^sa+(x-1)^sb\bigr),
+\qquad p,a,b\in\mathbb R[x,y].
+\]
+两条直线不相交，因此没有内部顶点的额外拼接问题。若三个分片次数均不超过 \(d\)，由逐次作差可知 \(\deg p\le d\)、\(\deg a,\deg b\le d-s\)；反向这些限制显然足够。于是维数为 \(N(d)+2N(d-s)\)，其中 \(N(j)=\binom{j+2}{2}\) 对 \(j\ge0\)，负指标时为零。这里关系含常数，使用的是次数滤过；不能未经说明就把 \((x-1)^s\) 当成齐次元。
 \end{solution}

@@ -1,13 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 16.4 根系公理
-% 纲要位置：计划纲要.md，第 3597 行。
+% 纲要位置：工作记录/计划纲要.md，第 4248 行。
 
 \section{根系公理}
 \label{b5:sec:1604}
 
-% TODO: 按以下纲要要点撰写本节。
+根空间计算已经给出有限性、反射与整数系数。还需把这些复线性资料放进一个实正定空间，才能把根系作为独立的几何对象研究。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * 有限约化结晶根系
 % * 正根与简单根
@@ -19,14 +21,124 @@
 \subsection{有限约化结晶根系}
 \label{b5:subsec:1604:01}
 
-待撰写。
+\begin{definition}\label{b5:def:finite-root-system}
+设 \(E\) 为有限维实内积空间，内积记为 \((\ ,\ )\)，\(\Phi\subseteq E\setminus\{0\}\) 为有限子集。若 \(\Phi\) 满足下列条件：
+\begin{enumerate}
+\item \(\Phi\) 生成 \(E\)；
+\item 对每个 \(\alpha\in\Phi\)，有 \(\Phi\cap\mathbb R\alpha=\{\alpha,-\alpha\}\)；
+\item 正交反射 \(s_\alpha(v)=v-2(v,\alpha)\alpha/(\alpha,\alpha)\) 保持 \(\Phi\)；
+\item 对所有 \(\alpha,\beta\in\Phi\)，数 \(2(\beta,\alpha)/(\alpha,\alpha)\) 为整数。
+\end{enumerate}
+则称 \(\Phi\) 为一个\term{有限约化结晶根系}[finite reduced crystallographic root system]。最后两项分别是反射条件和结晶条件。本书未另加限定时，“根系”采用这个版本。
+\end{definition}
+
+\begin{theorem}\label{b5:thm:root-system}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\subseteq\mathfrak g\) 为 Cartan 子代数，\(\Phi\subseteq\mathfrak h^*\) 为相应根集合。Killing 型在 \(\mathfrak h^*\) 上诱导的对偶型在
+\(E=\operatorname{span}_{\mathbb R}\Phi\) 上为正定实内积，且 \(\Phi\subseteq E\) 为有限约化结晶根系。实维数 \(\dim_{\mathbb R}E\) 等于 \(\dim_{\mathbb C}\mathfrak h\)。
+\end{theorem}
+\begin{proof}
+令 \(\mathfrak h_{\mathbb R}=\operatorname{span}_{\mathbb R}\{h_\alpha\mid\alpha\in\Phi\}\)。根反射的整数性说明，每个根在这个实空间上的值都是实数。根分解及一维性给出
+\begin{equation}\label{b5:eq:killing-cartan-root-sum}
+B(h,k)=\sum_{\alpha\in\Phi}\alpha(h)\alpha(k)
+\qquad(h,k\in\mathfrak h).
+\end{equation}
+因此对非零 \(h\in\mathfrak h_{\mathbb R}\)，有
+\(B(h,h)=\sum_\alpha\alpha(h)^2>0\)；严格不等式使用了根分离 \(\mathfrak h\) 中的点。
+由于 \(t_\alpha\) 在复数上生成 \(\mathfrak h\)，同样的事实也适用于 \(h_\alpha\)。
+而实正定性排除
+\(\mathfrak h_{\mathbb R}\cap i\mathfrak h_{\mathbb R}\ne0\)，所以
+\(\mathfrak h=\mathfrak h_{\mathbb R}\oplus i\mathfrak h_{\mathbb R}\)。
+在这个实形式上对偶化正定型，即得 \(E\) 的实正定型及维数结论。
+
+有限性和生成性来自\cref{b5:thm:root-decomposition}，约化性来自\cref{b5:thm:root-sl2}，反射条件及结晶条件来自\cref{b5:prop:root-reflection}。因而四条公理均成立。
+\end{proof}
+
+后文画根图时常把一个不可约分支整体缩放，使图上的短根或长根具有方便的长度。这只是同一根系的相似图形。本卷表示论中的 \((\lambda,\mu)\) 始终采用上述 Killing 对偶型，不因坐标图的缩放而改变 Casimir 算子的常数。
 
 \subsection{正根与简单根}
 \label{b5:subsec:1604:02}
 
-待撰写。
+设 \(\Phi\subseteq E\) 为根系。选取 \(v\in E\)，使 \((v,\alpha)\ne0\) 对所有根成立，定义
+\(\Phi^+=\Bigl\{\,\alpha\in\Phi\mid(v,\alpha)>0\,\Bigr\}\)。
+其中不能写成两个正根之和的根称为简单根，全部简单根组成 \(\Delta\)。
+这些用语与\secref{b5:sec:1001}中 ADE 整数格的定义相容；这里不以该选读章为前提。
+
+\begin{theorem}[简单根基]\label{b5:thm:simple-roots}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(E\) 为实内积空间。选取 \(v\in E\)，使 \((v,\alpha)\ne0\) 对所有 \(\alpha\in\Phi\) 成立，令 \(\Phi^+=\{\alpha\in\Phi\mid(v,\alpha)>0\}\)。把不能写成两个正根之和的正根组成的集合记为 \(\Delta\)。则简单根集合
+\(\Delta=\{\alpha_1,\ldots,\alpha_r\}\) 是 \(E\) 的一组基。每个根在这组基下的系数都是整数，并且或者全非负，或者全非正。不同简单根的内积非正。若 \(\beta\in\Phi^+\setminus\Delta\)，则存在简单根 \(\alpha_i\)，使 \(\beta-\alpha_i\) 为正根。
+\end{theorem}
+\begin{proof}
+先证一个小事实：若不成比例的根 \(\alpha,\beta\) 满足 \((\alpha,\beta)>0\)，则 \(\alpha-\beta\) 为根。两个正整数
+\[
+m=\frac{2(\beta,\alpha)}{(\alpha,\alpha)},\qquad
+n=\frac{2(\alpha,\beta)}{(\beta,\beta)}
+\]
+的乘积为 \(4\cos^2\theta<4\)，所以至少有一个等于 \(1\)。
+相应反射把一个根送到两根之差，必要时取负号即可。
+若两个不同简单根内积为正，它们之差为根；按此差的正负，其中一个简单根便是两个正根之和，矛盾。
+
+任意非简单正根可以分解为两个正根。反复分解必终止，因为每次子项的 \((v,\cdot)\) 值严格减小，而正根集合有限。因此每个正根都是简单根的非负整数和。
+为证线性无关，将一个实线性关系的正、负系数分到两边，得到
+\(u=\sum_{i\in I}a_i\alpha_i=\sum_{j\in J}b_j\alpha_j\)，其中 \(I,J\) 不交，系数均正。
+于是 \((u,u)=\sum_{i,j}a_i b_j(\alpha_i,\alpha_j)\leq0\)，迫使 \(u=0\)；
+但与 \(v\) 配对又说明任一非空正组合都不为零。故关系只能平凡。
+生成性及负根取负号给出基和符号结论。
+
+最后写 \(\beta=\sum n_i\alpha_i\)。因为
+\((\beta,\beta)=\sum n_i(\beta,\alpha_i)>0\)，某个 \(n_i>0\) 满足
+\((\beta,\alpha_i)>0\)。若 \(\beta\) 非简单，它不与 \(\alpha_i\) 成比例；前述小事实给出 \(\beta-\alpha_i\in\Phi\)，其系数非负，故为正根。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:simple-reflection-positive}
+设 \(\Phi\subseteq E\) 为有限约化结晶根系，\(\Phi^+\) 为所选正根集合，\(\Delta=\{\alpha_1,\ldots,\alpha_r\}\) 为相应简单根基。记 \(s_i=s_{\alpha_i}\) 为根 \(\alpha_i\) 对应的正交反射。则每个 \(s_i\) 置换
+\(\Phi^+\setminus\{\alpha_i\}\)，并把 \(\alpha_i\) 送到 \(-\alpha_i\)。
+每个正根都可用简单反射依次降低高度，最终变成简单根。
+\end{proposition}
+\begin{proof}
+反射 \(s_i\) 只改变简单根展开中的第 \(i\) 个系数。若正根不同于 \(\alpha_i\)，约化性使它至少有一个其他正系数，反射后不可能全部系数非正，故仍为正根。
+对非简单正根 \(\beta=\sum n_j\alpha_j\)，上一定理的证明给出
+\((\beta,\alpha_i)>0\)。此时
+\(s_i\beta=\beta-\beta(h_{\alpha_i})\alpha_i\)
+仍正，且高度 \(\sum n_j\) 减去一个正整数。反复进行必停在简单根。
+\end{proof}
 
 \subsection{由李代数结构得到根系数据}
 \label{b5:subsec:1604:03}
 
-待撰写。
+现在回到有限维复半单李代数。固定简单根后，令
+\[
+\mathfrak n^+=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_\alpha,
+\qquad
+\mathfrak n^-=\bigoplus_{\alpha\in\Phi^+}\mathfrak g_{-\alpha}.
+\]
+二者对括号封闭，并因高度逐次增加而幂零。于是根分解成为
+\begin{equation}\label{b5:eq:triangular-decomposition}
+\mathfrak g=\mathfrak n^-\oplus\mathfrak h\oplus\mathfrak n^+.
+\end{equation}
+这称为\term{三角分解}[triangular decomposition]。它是向量空间直和；其中各项不是 \(\mathfrak g\) 的理想。
+
+\begin{proposition}\label{b5:prop:root-bracket-generation}
+设 \(\mathfrak g\) 为有限维复半单李代数，\(\mathfrak h\subseteq\mathfrak g\) 为 Cartan 子代数，\(\Phi^+\) 为所选正根集合，记 \(\mathfrak n^\pm\) 为正、负根空间之和。固定相应简单根
+\(\alpha_1,\ldots,\alpha_r\)。在各简单根的标准三元组中记
+\(e_i=E_{\alpha_i}\)、\(f_i=F_{\alpha_i}\)、\(h_i=h_{\alpha_i}\)。
+则 \(h_1,\ldots,h_r\) 是 \(\mathfrak h\) 的基；
+\(\mathfrak n^+\) 由 \(e_1,\ldots,e_r\) 生成，
+\(\mathfrak n^-\) 由 \(f_1,\ldots,f_r\) 生成。
+\end{proposition}
+\begin{proof}
+简单根为对偶空间的基，故其 Killing 对偶向量 \(t_{\alpha_i}\) 为 \(\mathfrak h\) 的基；逐个乘非零常数得到 \(h_i\)。
+对非简单正根 \(\beta\)，\cref{b5:thm:simple-roots}给出
+\(\beta-\alpha_i\in\Phi^+\)；由\cref{b5:thm:root-string}，
+\[
+[\mathfrak g_{\alpha_i},\mathfrak g_{\beta-\alpha_i}]
+=\mathfrak g_\beta.
+\]
+按高度归纳，全部正根空间都由简单根向量的迭代括号生成。负根同样处理。
+\end{proof}
+
+在 \(\mathfrak{sl}_n\) 中可取
+\(\alpha_i=\varepsilon_i-\varepsilon_{i+1}\)，正根为
+\(\alpha_i+\cdots+\alpha_{j-1}\)（\(i<j\)）。
+此时 \(\mathfrak n^+\)、\(\mathfrak n^-\) 分别是严格上三角、严格下三角矩阵；
+等式 \([E_{ij},E_{jk}]=E_{ik}\) 具体表现了上面的高度归纳。
+根系记录权、相邻根空间的关系和简单生成元，但还没有自动给出整个李代数的展示。后者将在\secref{b5:sec:1704}证明。

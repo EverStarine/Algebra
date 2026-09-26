@@ -1,14 +1,84 @@
 % !TeX root = ../../Book3.tex
-% 标题依据：计划纲要.md，附录 C 第 4 条要点。
+% 纲要标题：### C.4 交理论、乘数理想与高阶局部对偶
 
 \section{交理论、乘数理想与高阶局部对偶}
 \label{b3:sec:C04}
 
-% TODO: 按以下纲要要点撰写本节，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * 交理论、乘数理想及更高阶局部对偶的阅读建议
 %
+% <!-- 短节：不设小节 -->
 
-待撰写。
+
+% 正文以具体模型说明专题；长证明给出概要并指明技术细节的出处。
+
+两条平面曲线在一点相遇时，仅记录这个点不够：横截与相切应有不同的交数。局部商环的长度提供最直接的模型。\cref{b3:def:plane-local-intersection-number}给出复平面曲线的定义；这里同样设 \(k\) 为域，\(S=k[[x,y]]\)，曲线由 \(f,g\) 定义，并假定 \(S/(f,g)\) 为有限长度模；在这个平面模型中，把
+\[
+i_0(f,g)=\ell_S(S/(f,g))
+\]
+称为原点处的\term{局部交数}[local intersection multiplicity]。
+
+\begin{example}\label{b3:exm:plane-contact-multiplicity}
+对 \(f=y\)、\(g=y-x^m\)，其中 \(m\ge1\)，有
+\[
+S/(f,g)\cong k[[x]]/(x^m),\qquad i_0(f,g)=m.
+\]
+模的滤过由 \(1,x,\ldots,x^{m-1}\) 给出 \(m\) 个长度一因子。另一方面，用 \(0\to S\xrightarrow{y}S\to S/(y)\to0\) 与 \(S/(y-x^m)\) 张量，乘 \(y\) 化为 \(k[[x]]\) 上乘 \(x^m\)，是单射。因此
+\[
+\operatorname{Tor}_1^S(S/(y),S/(y-x^m))=0,
+\]
+而零次张量积的长度为 \(m\)。这把交数与本卷的自由消解计算联系起来。
+\end{example}
+
+若改为两次同一条曲线 \(y=0\)，零次张量积与一次 Tor 都同构于 \(k[[x]]\)，不再具有有限长度。此时不能写下两个无限长度的形式差来定义交数。一般交理论使用循环、等价关系及更系统的 Tor 交替和，需要额外的有限性和维数假设；本节只证明以上有限长度模型。
+
+\ProseParagraphBreak
+另一类奇点不变量来自函数沿除子的消失阶。为说明乘数理想，先固定光滑复代数簇 \(X\)、非零理想层 \(\mathfrak a\) 和有理数 \(c>0\)。选取一个\term{对数消解}[log resolution] \(\mu:Y\to X\)：它是光滑簇之间的固有双有理态射，使 \(\mathfrak a\mathcal O_Y=\mathcal O_Y(-F)\)，且有效除子 \(F\) 与例外除子的支集具有简单正规交叉，即局部由若干坐标超平面的并给出。\(\mathcal O_Y(D)\) 表示局部允许的有理函数层，沿每个素除子的极点阶不超过 \(D\) 的相应系数。相对典范除子 \(K_{Y/X}\) 由 Jacobian 行列式记录顶次微分形式的变化。于是定义\term{乘数理想}[multiplier ideal]
+\[
+\mathcal J(\mathfrak a^c)
+=\mu_*\mathcal O_Y\bigl(K_{Y/X}-\lfloor cF\rfloor\bigr),
+\]
+其中下取整逐除子系数进行。它首先是在 \(Y\) 上规定函数应消失多少阶，再把这些条件收回 \(X\)。定义见\cite[Lecture 1, Definition 1.3]{Lazarsfeld2010ShortCourse}；下面补充这一选择的存在性与独立性。
+
+\begin{theorem}\label{b3:thm:log-resolution-multiplier-independence}
+设 \(X\) 为光滑不可约复代数簇，\(\mathfrak a\subseteq\mathcal O_X\) 为非零凝聚理想层，\(c>0\) 为有理数。\(\mathfrak a\) 有对数消解，且
+\(\mu_*\mathcal O_Y(K_{Y/X}-\lfloor cF\rfloor)\) 不依赖所选对数消解 \(\mu\)。
+\end{theorem}
+\begin{proofsketch}
+存在性用特征零的理想主理想化构造。起始数据是 \((X,\mathfrak a)\) 及空的例外除子集合。局部先记录理想的阶数，沿最大阶数处取最大接触超曲面，再把相应系数理想限制到它上面；递归这一操作，并记录历次例外除子的单项式因子，得到有限长的局部不变量。其值上半连续，每一阶分母由此前数据限制；经适当的例外除子标记，最大值层是光滑且与已有例外除子正规交叉的中心。
+
+沿这个中心吹起，除去总变换中已经确定的例外单项式因子，得到弱变换。局部变换公式使不变量与辅助单项式指数的有序组合严格下降。可取值集合的下降稳定性与 \(X\) 的拟紧性保证有限步后弱变换成为单位理想；总变换因而只剩一个正规交叉的例外单项式，亦即 \(\mathfrak a\mathcal O_Y=\mathcal O_Y(-F)\)。各次吹起的光滑中心保持 \(Y\) 光滑，复合态射固有且双有理，给出所需对数消解。这里省略最大接触、系数理想变换、不变量的粘合及下降稳定性的技术证明；其关键性质和主理想化结论见\cite[Remark 1.8, Theorems 1.10 and 1.14, Remark 1.18]{BierstoneMilman1997CanonicalResolution}。特征零用于最大接触与系数理想的微分构造。
+
+先说明所定义的推前层确实为 \(\mathcal O_X\) 的子层。设 \(u\) 为它的一个有理截面。在 \(X\) 任一素除子的泛点附近，固有双有理态射 \(\mu\) 为同构，相对典范除子的系数为零；相应截面条件给出
+\(\operatorname{ord}_D(u)\ge\lfloor c\operatorname{ord}_D(\mathfrak a)\rfloor\ge0\)。所以 \(u\) 在 \(X\) 的所有余维一处无极点。光滑 \(X\) 正规，其正则函数环为这些高度一赋值环的交，故 \(u\) 是正则函数。
+
+独立性现在可用局部可积性来验证。设 \(f_1,\ldots,f_r\) 为 \(\mathfrak a\) 的局部生成元。对于一个正则函数 \(u\)，考虑
+\[
+\frac{|u|^2}{(|f_1|^2+\cdots+|f_r|^2)^c}
+\]
+是否在各点附近可积。更换有限生成集只把分母乘上局部上下有正界的因子，故该条件不变。在任一对数消解的坐标图中，\(f_j\circ\mu\) 的共同因子是 \(z_1^{a_1}\cdots z_l^{a_l}\)，剩余因子共同生成单位理想；Jacobian 的消失阶 \(b_i\) 正是 \(K_{Y/X}\) 的系数。换元后，被积式相当于
+\( |u\circ\mu|^2\prod_i|z_i|^{2(b_i-ca_i)}\)。
+
+一变量积分 \(\int_0^\varepsilon r^{2t+1}\,\mathrm{d}r\) 有限当且仅当 \(t>-1\)。逐变量应用，得到可积性恰好要求
+\[
+\operatorname{ord}_{z_i=0}(u\circ\mu)
+\ge\lfloor ca_i\rfloor-b_i\qquad\text{对所有 }i.
+\]
+这正是 \(u\) 属于所写推前理想的条件。于是每种消解都刻画同一个可积性条件，所得理想相同。这里省略固有换元在各局部图之间的组织及代数理想与其解析扩张的比较；对凝聚理想，后一个比较也可经相同完备化的忠实平坦性收缩。解析与代数构造的对应及变换公式见\cite[Lecture 1, Propositions 1.6 and 1.8, Lemma 1.9]{Lazarsfeld2010ShortCourse}。
+\end{proofsketch}
+
+\begin{example}\label{b3:exm:snc-multiplier-ideal}
+在 \(X=\mathbb A_{\mathbb C}^n\) 上，设 \(\mathfrak a=(x_1^{a_1}\cdots x_r^{a_r})\)，\(a_i\ge1\)。坐标超平面已为简单正规交叉，恒等映射就是对数消解，且相对典范除子为零，故
+\[
+\mathcal J(\mathfrak a^c)
+=\bigl(x_1^{\lfloor ca_1\rfloor}\cdots x_r^{\lfloor ca_r\rfloor}\bigr).
+\]
+例如 \(\mathfrak a=(x^2y^3)\)、\(c=1/2\) 时得到 \((xy)\)。这个公式针对一个单项式生成的主理想，不能直接把一个多生成元单项式理想中的各指数分别取整；后者需要考虑整体指数集合。
+\end{example}
+
+最后回到\chapref{b3:ch:22}的局部对偶。给定 \(n\) 维完备正则局部环 \(S\) 与有限商 \(R=S/I\)，\cref{b3:thm:regular-local-duality}已经给出
+\[
+D_S\bigl(H_{\mathfrak m}^i(R)\bigr)
+\cong\operatorname{Ext}_S^{n-i}(R,S).
+\]
+若 \(R\) 为维数 \(d\) 的 CM 环，右侧仅在 \(n-d\) 次非零，典范模便足以承载信息。非 CM 时可能有多个非零次数；\cref{b3:def:regular-cover-dual-complex}用整个对偶复形把它们保存下来。这说明更高阶局部对偶首先要解决什么问题：不能用一个模抹去低次局部上同调，而要让不同次数及其联系同时参与对偶。这里仍限定有给定正则局部覆盖，不把一般对偶复形的存在性当作已经证明。

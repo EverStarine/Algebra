@@ -1,30 +1,100 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 11.3 表示与模
-% 纲要位置：计划纲要.md，第 3448 行。
+% 纲要位置：工作记录/计划纲要.md，第 4099 行。
 
 \section{表示与模}
 \label{b5:sec:1103}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 李代数的线性作用
 % * 对偶和张量表示
 % * 不变子空间及完全可约性的提问
 %
 
+李代数的表示仍然由线性算子组成，但相容条件针对的是括号。一个元素无需作用为可逆算子，也没有“先求群元素的逆”的步骤。对偶与张量作用中的符号应从这个条件重新推导，不能照搬群表示的公式。
+
 \subsection{李代数的线性作用}
 \label{b5:subsec:1103:01}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-representation}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(V\) 为 \(k\) 向量空间。一个 \(k\) 线性映射
+\(\rho:\mathfrak g\to\mathfrak{gl}(V)\)
+若满足
+\[
+\rho\Bigl([x,y]\Bigr)=\rho(x)\rho(y)-\rho(y)\rho(x)
+\quad(x,y\in\mathfrak g),
+\]
+就称为 \(\mathfrak g\) 在 \(V\) 上的\term[Li-daishu-biaoshi]{表示}[representation of a Lie algebra]，也称 \(V\) 为左 \(\mathfrak g\) 模。简记 \(xv=\rho(x)v\)；此时相容条件为
+\[
+[x,y]v=x(yv)-y(xv).
+\]
+\end{definition}
+表示同态是与全部 \(\rho(x)\) 交换的线性映射；两个表示同构要求这样的同态可逆。子表示是被全部作用算子保持的子空间，商表示由商空间上的诱导算子给出。若 \(\rho\) 单射，称表示忠实；若全部作用为零，称表示平凡。
+\ProseParagraphBreak
+\cref{b5:prop:adjoint-representation}给出了伴随表示。矩阵李代数作为 \(\mathfrak{gl}_n(k)\) 的子代数时，还在 \(k^n\) 上有自然表示。另一个简单例子是一维模：它由线性泛函 \(\lambda:\mathfrak g\to k\) 决定，作用为 \(xv=\lambda(x)v\)。表示条件恰好要求
+\(\lambda\Bigl([\mathfrak g,\mathfrak g]\Bigr)=0\)，因为一维算子彼此交换。故一维模与交换化商 \(\mathfrak g/[\mathfrak g,\mathfrak g]\) 上的线性泛函对应。
+\begin{proposition}\label{b5:prop:lie-invariant-subquotients}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(V,W\) 为左 \(\mathfrak g\) 模，\(f:V\to W\) 为表示同态。则核、像与余核均自然为左 \(\mathfrak g\) 模；一列左 \(\mathfrak g\) 模正合，当且仅当底层 \(k\) 向量空间列正合。
+\end{proposition}
+\begin{proof}
+若 \(f(v)=0\)，则 \(f(xv)=xf(v)=0\)，故核不变。若 \(w=f(v)\)，则 \(xw=f(xv)\) 仍在像中。于是商上的作用不依赖代表，且表示等式从原空间下降。核、像和商都没有改变相应的向量空间运算，所以正合性也按底层空间检验。
+\end{proof}
 
 \subsection{对偶表示与张量表示}
 \label{b5:subsec:1103:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:lie-dual-tensor-hom}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(\rho_V,\rho_W\) 分别为它在 \(k\) 向量空间 \(V,W\) 上的表示。对 \(x\in\mathfrak g\)、\(v\in V\)、\(w\in W\)、\(\varphi\in V^*=\operatorname{Hom}_k(V,k)\) 及 \(T\in\operatorname{Hom}_k(V,W)\)，下列公式分别给出 \(V^*\)、\(V\otimes_k W\) 与 \(\operatorname{Hom}_k(V,W)\) 上的表示；其中 \(xv=\rho_V(x)v\)、\(xw=\rho_W(x)w\)：
+\[
+\begin{aligned}
+(x\varphi)(v)&=-\varphi(xv),\\
+x(v\otimes w)&=xv\otimes w+v\otimes xw,\\
+xT&=\rho_W(x)T-T\rho_V(x).
+\end{aligned}
+\]
+若 \(V\) 有限维，则自然同构 \(V^*\otimes W\cong\operatorname{Hom}_k(V,W)\) 与这些作用相容。
+\end{proposition}
+\begin{proof}
+在对偶上，先后作用 \(x,y\) 给出
+\((xy\varphi)(v)=\varphi(yxv)\)，故
+\(\Bigl([x,y]\varphi\Bigr)(v)=-\varphi\Bigl([x,y]v\Bigr)\)，正好是所需关系。在张量积上，算子为
+\(\rho_V(x)\otimes I+I\otimes\rho_W(x)\)；
+两个不同因子上的算子交换，计算交换子只留下两个因子的表示关系。对 Hom 展开两次作用，混合项相消，同样得到
+\(\rho_W\Bigl([x,y]\Bigr)T-T\rho_V\Bigl([x,y]\Bigr)\)。
+最后把 \(\varphi\otimes w\) 送到 \(v\mapsto\varphi(v)w\)，代入公式得到
+\[
+x\Bigl(\varphi(v)w\Bigr)-\varphi(xv)w
+=\varphi(v)xw-\varphi(xv)w,
+\]
+这正是对偶与张量作用的像。有限维线性代数给出该映射为同构。
+\end{proof}
+尤其
+\[
+\operatorname{Hom}_{\mathfrak g}(V,W)
+=\operatorname{Hom}_k(V,W)^{\mathfrak g},
+\qquad
+U^{\mathfrak g}=\{\,u\in U\mid xu=0\text{ 对所有 }x\in\mathfrak g\,\}.
+\]
+这里“不变”表示被所有李代数作用零化，与群表示中被所有群元素固定的说法不同。
+\ProseParagraphBreak
+在 \(V^{\otimes m}\) 上，\(x\) 的作用是分别在各因子作用后相加。它保持交换两个因子所得的关系子空间，也保持外代数的交替关系：对 \(v\otimes v\) 的作用是
+\(xv\otimes v+v\otimes xv\)，而这个元素属于由平方张量生成的理想。因此对称幂、外幂及整个对称代数和外代数都得到诱导作用。在多项式代数上，这个作用满足 Leibniz 规则，是导子，而不是代数自同构。
 
 \subsection{不变子空间与完全可约性}
 \label{b5:subsec:1103:03}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-simple-semisimple-module}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(V\) 为左 \(\mathfrak g\) 模。若 \(V\ne0\) 且没有非零真子表示，就称 \(V\) 为不可约表示；若 \(V\) 是不可约子表示的直和，就称为完全可约表示。若 \(V\ne0\) 且不能分成两个非零子表示的直和，则称为不可分解表示。有限维不可约表示必不可分解，逆命题一般不成立。
+\end{definition}
+例如二维可解李代数 \([h,e]=e\) 可在 \(k^2\) 上作用为
+\[
+\rho(h)=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+\rho(e)=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+\]
+两矩阵的交换子等于 \(\rho(e)\)，所以确为表示。第一坐标轴不变，但任何补直线均含第二坐标非零的向量，而 \(\rho(e)\) 将它送到非零第一坐标向量，因而没有不变补。这个表示可约却不可分解。
+\ProseParagraphBreak
+Schur 引理对李代数表示仍成立：同态的核与像是子表示，所以不可约之间的非零同态可逆。若基域代数闭且表示有限维，自同态取一个特征值后减去相应标量，就由同一论证得到它原本就是标量。但要从自同态只有标量反推不可约，仍须有额外条件；上一例的两个作用矩阵的公共中心化子就只有标量，却不完全可约。
+\ProseParagraphBreak
+我们因此不能把有限群的 Maschke 定理直接搬来。本编将证明：半单复李代数的有限维表示完全可约，可解复李代数的有限维不可约表示却只能一维。前一结论需要 Killing 型与 Casimir 方法，后一结论来自同时三角化；两者的假设与证明均不同。

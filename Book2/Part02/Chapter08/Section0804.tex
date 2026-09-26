@@ -1,5 +1,8 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 8.4 张量运算与表示
+% 本轮补充的纲要细目：
+% * 由对偶空间的对称代数定义形式多项式上的群作用，写清逆向作用、不变环及有限域上与点集函数的区别
+% * 以反射及单项式权计算不变环，不将逐次不动空间的计算自动视为全部生成关系已知
 
 \section{张量运算与表示}
 \label{b2:sec:0804}
@@ -19,11 +22,12 @@
 \label{b2:subsec:0804:01}
 
 \begin{definition}\label{b2:def:linear-representation}
-群 \(G\) 在 \(k\) 向量空间 \(V\) 上的\term[xianxing-biaoshi]{线性表示}[linear representation]是群同态
+设 \(k\) 为域，\(G\) 为群，\(V\) 为 \(k\) 向量空间。如果给定群同态
 \[
-\rho_V:G\longrightarrow\operatorname{GL}_k(V).
+\rho_V:G\longrightarrow\operatorname{GL}_k(V),
 \]
-常把 \(\rho_V(g)v\) 写成 \(gv\)。两个表示之间的同态是线性映射 \(f:V\rightarrow W\)，满足 \(f(gv)=g f(v)\)；也称等变线性映射，全部这类映射组成空间 \(\operatorname{Hom}_G(V,W)\)。
+就称 \(\rho_V\) 为 \(G\) 在 \(V\) 上的\term[xianxing-biaoshi]{线性表示}[linear representation]。
+常把 \(\rho_V(g)v\) 写成 \(gv\)。若 \(V,W\) 均为 \(G\) 的 \(k\) 线性表示，\(k\) 线性映射 \(f:V\rightarrow W\) 满足 \(f(gv)=g f(v)\) 对每个 \(g\in G\)、\(v\in V\) 成立，则称 \(f\) 为表示同态或等变线性映射；全部这类映射组成空间 \(\operatorname{Hom}_G(V,W)\)。
 \end{definition}
 \symidx{\(\operatorname{Hom}_G(V,W)\)：表示之间的等变线性映射空间}
 \symidx{\(\rho_V(g)\)：群元素在表示空间上的线性作用}
@@ -31,7 +35,7 @@
 群作用公理在这里具体为 \(1v=v\)、\((gh)v=g(hv)\)，并要求每个 \(g\) 的作用可逆且线性。定义没有要求表示忠实，也没有要求群有限。例如无穷循环群由一个生成元 \(g\) 生成，在 \(\mathbb Q^2\) 上可以规定 \(g\) 的作用矩阵为 \(\operatorname{diag}(2,1/2)\)，再由整数次幂定义全部群元素的作用。
 
 \begin{proposition}\label{b2:prop:tensor-dual-symmetric-representations}
-给定 \(G\) 的表示 \(V,W\)，以下公式分别定义 \(V^*\)、\(V\otimes_kW\) 及 \(\operatorname{Sym}_k^d(V)\) 上的表示：
+设 \(k\) 为域，\(G\) 为群，\(V,W\) 为 \(G\) 的 \(k\) 线性表示，\(d\ge0\)。以下公式分别定义 \(V^*\)、\(V\otimes_kW\) 及 \(\operatorname{Sym}_k^d(V)\) 上的表示：
 \[
 \begin{aligned}
 (g\lambda)(v)&=\lambda(g^{-1}v),\\
@@ -57,13 +61,13 @@ g(v_1\cdots v_d)&=(gv_1)\cdots(gv_d).
 若 \(g\) 在有限维 \(V\) 的基 \(e_1,\ldots,e_r\) 上对角作用，\(ge_i=a_i e_i\)，则它在对偶基上的特征值为 \(a_i^{-1}\)，在张量基 \(e_{i_1}\otimes\cdots\otimes e_{i_d}\) 上的特征值为 \(a_{i_1}\cdots a_{i_d}\)，在对称基 \(e_1^{b_1}\cdots e_r^{b_r}\) 上的特征值为 \(a_1^{b_1}\cdots a_r^{b_r}\)。这里各 \(a_i\ne0\)，因为群元素作用可逆。
 
 \begin{proposition}\label{b2:prop:hom-as-tensor-representation}
-若 \(V\) 有限维，\(W\) 任意，则
+设 \(k\) 为域，\(V\) 为有限维 \(k\) 向量空间，\(W\) 为任意 \(k\) 向量空间，则
 \[
 \Theta:V^*\otimes_kW\longrightarrow\operatorname{Hom}_k(V,W),
 \qquad
 \lambda\otimes w\longmapsto\Bigl(v\mapsto\lambda(v)w\Bigr)
 \]
-是自然线性同构。若两空间均带 \(G\) 作用，则它是表示同构，其中右端的作用为
+是自然线性同构。若群 \(G\) 在 \(V,W\) 上均有 \(k\) 线性表示，则它是 \(G\) 表示同构，其中右端的作用为
 \[
 (gA)(v)=g\Bigl(A(g^{-1}v)\Bigr).
 \]
@@ -88,11 +92,11 @@ g(v_1\cdots v_d)&=(gv_1)\cdots(gv_d).
 \label{b2:subsec:0804:02}
 
 \begin{definition}\label{b2:def:invariant-vector}
-表示 \(V\) 中满足 \(gv=v\) 对每个 \(g\in G\) 成立的向量，称为 \(G\) 的\term[bubian-xiangliang]{不变向量}[invariant vector]。全部不变向量组成的子空间记为
+设 \(k\) 为域，\(G\) 为群，\(V\) 为 \(G\) 的 \(k\) 线性表示。若 \(v\in V\) 满足 \(gv=v\) 对每个 \(g\in G\) 成立，就称 \(v\) 为 \(G\) 的\term[bubian-xiangliang]{不变向量}[invariant vector]。全部不变向量组成的子空间记为
 \[
 V^G=\{\,v\in V\mid gv=v\text{ 对每个 }g\in G\,\}.
 \]
-一般满足 \(gU\subseteq U\) 的子空间 \(U\) 称为 \(G\) 不变子空间，也称稳定子空间；这只要求作用保留整个子空间，不能因此断言其中每个向量都被逐点固定。
+若子空间 \(U\subseteq V\) 满足 \(gU\subseteq U\) 对每个 \(g\in G\) 成立，就称 \(U\) 为 \(G\) 不变子空间，也称稳定子空间；这只要求作用保留整个子空间，不能因此断言其中每个向量都被逐点固定。
 \end{definition}
 \symidx{\(V^G\)：群作用下逐点不变的向量空间}
 
@@ -117,11 +121,47 @@ V^G=\{\,v\in V\mid gv=v\text{ 对每个 }g\in G\,\}.
 因为四个纯基张量的特征值依次为 \(4,1,1,1/4\)。其中的对称部分是一维空间
 \(\mathbb Q(e\otimes f+f\otimes e)\)。二次对称幂的 \(G\) 不变部分则为 \(\mathbb Q ef\)，两者由平均同构对应；该对应确实使用了二的可逆性。
 
+\begin{definition}\label{b2:def:polynomial-invariant-ring}
+设 \(k\) 为域，\(V\) 为有限维 \(k\) 向量空间。称对称代数
+\[
+k[V]\coloneqq\operatorname{Sym}_k(V^*)
+\]
+为 \(V\) 上的多项式代数。若群 \(G\) 线性作用于 \(V\)，就在生成元 \(\lambda\in V^*\) 上规定 \(g\lambda=\lambda\circ g^{-1}\)，并按代数同态延拓，得到 \(G\) 在 \(k[V]\) 上的作用。被所有群元素固定的多项式称为\term[bubian-duoxiangshi]{不变多项式}[invariant polynomial]；它们组成的子代数
+\[
+k[V]^G=\{\,f\in k[V]\mid gf=f\text{ 对每个 }g\in G\,\}
+\]
+称为这一作用的\term[bubian-huan]{不变环}[invariant ring]。
+\end{definition}
+\symidx{\(k[V]=\operatorname{Sym}_k(V^*)\)：向量空间上的多项式代数}
+
+\cref{b2:prop:tensor-dual-symmetric-representations}保证这个延拓满足群乘法，并保持每个齐次分量。在一组基及其对偶坐标 \(x_1,\ldots,x_n\) 下，\(k[V]=k[x_1,\ldots,x_n]\)。把多项式在 \(v\in V\) 处求值，便有
+\[
+(gf)(v)=f(g^{-1}v).
+\]
+这里必须使用逆元；否则代入会反转群乘法的顺序。又因作用由代数自同构给出，不变多项式的和与积仍不变，单位元也不变，所以定义中的集合确为子代数。
+
+\ProseParagraphBreak
+在无限域上，不同多项式给出不同的点集函数：一元非零多项式的根数不超过次数，再对变量数归纳，即知在 \(k^n\) 上处处为零的多项式只能为零。在有限域上则不然。例如 \(k=\mathbb F_q\)、\(V=k\) 时，\(x^q-x\) 是非零多项式，却在每个点上取零。因此这里的 \(k[V]\) 始终指形式多项式代数；不变性要求代数中的等式，而不能一概只检查有限个点上的取值。对称代数应取 \(V^*\) 而不是 \(V\)，也是因为线性多项式本来就是向量上的线性函数。
+
+\begin{example}\label{b2:exm:reflection-polynomial-invariants}
+设 \(\operatorname{char}k\ne2\)，群 \(C_2=\{1,s\}\) 在 \(V=k^2\) 上由 \(s(a,b)=(-a,b)\) 作用。则
+\[
+k[V]^{C_2}=k[x^2,y],\qquad
+\Bigl(\operatorname{Sym}^2_k(V^*)\Bigr)^{C_2}
+=kx^2\oplus ky^2.
+\]
+\end{example}
+\begin{proof}
+由于 \(s^{-1}=s\)，对偶坐标满足 \(sx=-x,sy=y\)。将 \(f=\sum_{i,j}c_{ij}x^iy^j\) 代入 \(sf=f\)，逐个比较单项式系数，得到奇数 \(i\) 对应的 \(2c_{ij}=0\)，故这些系数全零。剩下的单项式都是 \((x^2)^r y^j\)，反过来这些单项式也都不变。次数二时只剩 \(x^2,y^2\)。这个系数比较适用于有限域，无需用点集函数的相等代替多项式相等。
+\end{proof}
+
+逐次求不动空间，只得到不变环的各个向量空间分量；要说明整个环如何由有限多个元素生成，还须研究这些分量之间的乘法。第五卷第22章将把这一问题与 Hilbert 级数、生成关系及商联系起来。
+
 \subsection{张量表示与 Schur–Weyl 理论}
 \label{b2:subsec:0804:03}
 
 \begin{proposition}\label{b2:prop:commuting-tensor-actions}
-在 \(V^{\otimes d}\) 上，一般线性群的对角作用 \(g\mapsto g^{\otimes d}\) 与 \(S_d\) 的位置置换作用相交换：
+设 \(k\) 为域，\(V\) 为 \(k\) 向量空间，\(d\ge1\)。在 \(V^{\otimes d}\) 上，\(\operatorname{GL}_k(V)\) 的对角作用 \(g\mapsto g^{\otimes d}\) 与 \(S_d\) 的位置置换作用 \(\sigma\mapsto P_\sigma\) 相交换：
 \[
 g^{\otimes d}P_\sigma=P_\sigma g^{\otimes d}.
 \]
@@ -135,7 +175,7 @@ gv_{\sigma^{-1}(1)}\otimes\cdots\otimes gv_{\sigma^{-1}(d)}.
 纯张量生成全空间，所以两算子相等。若 \(t\) 对所有置换不变，则 \(P_\sigma g^{\otimes d}t=g^{\otimes d}t\)；若一个关系为 \(t-P_\sigma t\)，其像为 \(g^{\otimes d}t-P_\sigma g^{\otimes d}t\)，仍是关系。于是两个稳定性结论分别成立。
 \end{proof}
 
-这已经说明两种对称性可以同时研究，但“作用交换”并不等于“每一种作用已经给出了另一种作用的全部对称算子”。为写清后一问题，若 \(\mathcal A\) 为 \(\operatorname{End}_k(E)\) 的子代数，记
+这已经说明两种对称性可以同时研究，但“作用交换”并不等于“每一种作用已经给出了另一种作用的全部对称算子”。为写清后一问题，设 \(k\) 为域，\(E\) 为 \(k\) 向量空间。若 \(\mathcal A\) 为 \(\operatorname{End}_k(E)\) 的子代数，记
 \[
 \operatorname{End}_{\mathcal A}(E)
 =\Bigl\{\,u\in\operatorname{End}_k(E)\mid ua=au\text{ 对每个 }a\in\mathcal A\,\Bigr\},
@@ -143,7 +183,7 @@ gv_{\sigma^{-1}(1)}\otimes\cdots\otimes gv_{\sigma^{-1}(d)}.
 称为该作用的\term[zhongxinhua-zi]{中心化子}[centralizer]。它是子代数，因为恒等、和、积都继续与 \(\mathcal A\) 交换。
 
 \begin{claim}[Schur–Weyl 对偶]\label{b2:claim:schur-weyl-preview}
-设 \(V\) 为有限维复向量空间，\(d\ge1\)。在 \(E=V^{\otimes d}\) 上，令 \(\mathcal A\) 为位置置换算子 \(P_\sigma\) 的复线性生成空间，\(\mathcal B\) 为算子 \(g^{\otimes d}\)、\(g\in\operatorname{GL}(V)\) 的复线性生成空间。则
+设 \(V\) 为有限维复向量空间，\(d\ge1\)。在 \(E=V^{\otimes d}\) 上，令 \(\mathcal A\) 为位置置换算子 \(P_\sigma\) 的复线性生成空间，\(\mathcal B\) 为算子 \(g^{\otimes d}\)、\(g\in\operatorname{GL}(V)\) 的复线性生成空间。此时
 \[
 \mathcal A=\operatorname{End}_{\mathcal B}(E),\qquad
 \mathcal B=\operatorname{End}_{\mathcal A}(E).

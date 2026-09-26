@@ -1,10 +1,179 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 C 的第 2 条要点整理。
+% 纲要标题：### C.2 连续群上同调与局部域
+% 纲要位置：工作记录/计划纲要.md，第 3613 行。
+% 纲要细目（写作范围）：
+% #### C.2.1 一次上同调与连续交叉同态
+% #### C.2.2 投射循环群的计算
+% #### C.2.3 Galois 上同调与局部域算例
+
 
 \section{连续群上同调与局部域}
 \label{b4:sec:C02}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 连续群上同调与局部域
+连续上同调在低次已有具体含义：零次是固定元素，一次衡量连续交叉同态偏离主交叉同态的程度。先在投射循环群上计算，再把同样的公式用于 Galois 群，可以看清哪些结论只靠有限商，哪些结论还需要域的算术结构。
 
-待撰写。
+\subsection{一次上同调与连续交叉同态}
+\label{b4:subsec:C02:01}
+
+\begin{proposition}\label{b4:prop:C-continuous-h1}
+设 \(G\) 为投射有限群，\(M\) 为离散连续 \(G\)-模。则 \(H^0_{\mathrm{cts}}(G,M)=M^G\)，且
+\[
+ H^1_{\mathrm{cts}}(G,M)
+ =\frac{\Bigl\{\,f:G\rightarrow M\text{ 连续}:f(gh)=f(g)+gf(h)\,\Bigr\}}
+ {\{\,g\mapsto gm-m:m\in M\,\}}.
+\]
+特别地，若作用平凡，则 \(H^1_{\mathrm{cts}}(G,M)=\operatorname{Hom}_{\mathrm{cts}}(G,M)\)，其中同态的目标使用加法。
+\end{proposition}
+\begin{proof}
+零次余圈条件是 \(gm-m=0\)。一次余圈条件由微分给出
+\(gf(h)-f(gh)+f(g)=0\)，零次余边正是 \(g\mapsto gm-m\)。作用平凡时余圈条件成为加法同态条件，全部一次余边为零。
+\end{proof}
+
+分子中的映射称为连续交叉同态；本卷\secref{b4:sec:1102}已给出其离散版本。连续条件在这里不能省略。例如，对平凡作用的离散 \(\mathbb Z\)，紧性使连续同态的像为有限子群，而 \(\mathbb Z\) 没有非零有限子群，所以任意投射有限群都满足 \(H^1_{\mathrm{cts}}(G,\mathbb Z)=0\)。
+
+\ProseParagraphBreak
+若系数用乘法写作 \(A\)，公式相应变为 \(f(gh)=f(g)\,g\Bigl(f(h)\Bigr)\)，主交叉同态为 \(g\mapsto g(a)/a\)。这只是记法改变；下一小节之后的 Galois 系数 \((K^s)^\times\) 将采用乘法记号。
+
+\subsection{投射循环群的计算}
+\label{b4:subsec:C02:02}
+
+\begin{proposition}\label{b4:prop:C-procyclic-h1}
+设 \(p\) 为素数。令 \(\sigma=1\) 表示加法群 \(\widehat{\vphantom{Z}\mathbb Z}\) 或 \(\mathbb Z_p\) 的拓扑生成元，并用 \(\sigma m\) 表示它对系数的作用，系数群均取离散拓扑。
+\begin{enumerate}
+\item 若 \(M\) 为有限离散连续 \(\widehat{\vphantom{Z}\mathbb Z}\)-模，则评价 \(f\mapsto f(\sigma)\) 诱导
+\[
+ H^1_{\mathrm{cts}}(\widehat{\vphantom{Z}\mathbb Z},M)
+ \cong M/(\sigma-1)M.
+\]
+\item 若 \(M\) 为有限 \(p\)-主交换群，并有连续 \(\mathbb Z_p\) 作用，则同样有
+\(H^1_{\mathrm{cts}}(\mathbb Z_p,M)\cong M/(\sigma-1)M\)。
+\item 若 \(M\) 有限、\(|M|\) 与 \(p\) 互素，并有连续 \(\mathbb Z_p\) 作用，则 \(H^1_{\mathrm{cts}}(\mathbb Z_p,M)=0\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+余圈条件迫使 \(f(\sigma^r)=\sum_{i=0}^{r-1}\sigma^if(\sigma)\) 对 \(r>0\) 成立；逆元的值由 \(f(g^{-1})=-g^{-1}f(g)\) 决定。整数子群稠密，连续映射到 Hausdorff 离散空间由其在稠密子群上的值唯一决定，所以评价单射。
+
+对第一项，令作用通过阶为 \(d\) 的循环商，取零化 \(M\) 的正整数 \(e\)。给定任意 \(a\in M\)，阶为 \(de\) 的循环群上的交叉同态可以用 \(f(\sigma)=a\) 定义，因为
+\[
+ \sum_{i=0}^{de-1}\sigma^ia
+ =e\sum_{i=0}^{d-1}\sigma^ia=0.
+\]
+该等式正好保证绕循环一周后的关系成立；拉回到 \(\widehat{\vphantom{Z}\mathbb Z}\) 得到连续余圈。在第二项中，可取 \(d,e\) 都为 \(p\) 的幂，故相同构造经 \(\mathbb Z_p\) 的有限循环商完成。两种情形的主余圈在 \(\sigma\) 处取值恰为 \((\sigma-1)m\)，给出商空间公式。
+
+第三项中，由\eqref{b4:eq:C-finite-quotient-cohomology}，一次余圈在某个有限循环 \(p\)-商 \(Q\) 上表示。令 \(S=\sum_{t\in Q}f(t)\)。对 \(g\in Q\)，按 \(gt\) 重编号得到 \(S=|Q|f(g)+gS\)。由于乘 \(|Q|\) 是 \(M\) 的自同构，可令 \(m=-S/|Q|\)，便得 \(f(g)=gm-m\)。所以所有类都为零。
+\end{proof}
+
+特别地，在平凡作用下，有限交换群 \(A\) 满足
+\[
+ H^1_{\mathrm{cts}}(\widehat{\vphantom{Z}\mathbb Z},A)\cong A,
+ \qquad
+ H^1_{\mathrm{cts}}(\mathbb Z_p,A)\cong A[p^\infty],
+\]
+其中 \(A[p^\infty]\) 是所有 \(p\)-幂阶元素组成的 \(p\)-主分量。第二式也可直接由连续同态的像必须为循环 \(p\)-群得到。
+
+\begin{proposition}\label{b4:prop:C-procyclic-h2}
+设 \(p\) 为素数，\(A\) 为有限交换群，赋予离散拓扑及所考察群的平凡作用。则
+\[
+ H^2_{\mathrm{cts}}(\widehat{\vphantom{Z}\mathbb Z},A)=0,
+ \qquad H^2_{\mathrm{cts}}(\mathbb Z_p,A)=0.
+\]
+\end{proposition}
+\begin{proof}
+由\cref{b4:thm:cyclic-group-cohomology}，有限循环群 \(C_n\) 的平凡系数公式为 \(H^2(C_n,A)=A/nA\)。依据\cref{b4:thm:group-extensions-h2}，也可用中心扩张核验这一公式及其过渡映射：在 \(0\rightarrow A\rightarrow E\rightarrow C_n\rightarrow1\) 中，选生成元的提升 \(x\)，扩张由 \(x^n=a\in A\) 决定；把提升换成 \(bx\) 将 \(a\) 改成 \(a+nb\)。因为 \(A\) 居中而商群循环，\(A\) 与 \(x\) 生成整个 \(E\)，所以没有其他关系参数。
+
+沿 \(C_{mn}\rightarrow C_n\) 拉回扩张后，新生成元提升的 \(mn\) 次幂为 \(ma\)，因此膨胀是
+\[
+ A/nA\longrightarrow A/(mn)A,\qquad [a]\longmapsto[ma].
+\]
+若 \(G=\widehat{\vphantom{Z}\mathbb Z}\)，取 \(m\) 为 \(A\) 的指数，每个类都在更后阶段变成零；\eqref{b4:eq:C-finite-quotient-cohomology}便给出所需消失。对 \(\mathbb Z_p\)，先分解有限群 \(A\) 的主分量。与 \(p\) 互素的部分已经满足 \(A/p^rA=0\)；\(p\)-主部分则可取 \(m\) 为足够大的 \(p\) 次幂以零化它。故同样消失。
+\end{proof}
+
+这里特意算了膨胀映射。各有限商的二次上同调通常不为零，例如 \(H^2(C_{p^r},\mathbb F_p)=\mathbb F_p\)，却在通向下一个 \(p\)-倍阶段时被送到零。非零有限阶段与零余极限完全相容。上述结论只涉及有限系数；不能据此把二次上同调对全部离散系数都宣布为零。
+
+\subsection{Galois 上同调与局部域算例}
+\label{b4:subsec:C02:03}
+
+对域 \(K\) 及可分闭包 \(K^s\)，记 \(G_K=\operatorname{Gal}(K^s/K)\)。其开正规子群对应有限 Galois 子扩张。离散连续 \(G_K\)-模的上同调称为 \(K\) 的\term[Galoisshangtongdiao]{Galois 上同调}[Galois cohomology]，简记 \(H^n(K,M)\)。这里仍是连续理论。
+
+\begin{theorem}[Hilbert 第九十定理]\label{b4:thm:C-hilbert90}
+设 \(K\) 为域，\(K^s\) 为可分闭包，\(G_K=\operatorname{Gal}(K^s/K)\) 取 Krull 拓扑。则
+\[
+ H^1_{\mathrm{cts}}\Bigl(G_K,(K^s)^\times\Bigr)=0.
+\]
+其中乘法群 \((K^s)^\times\) 取离散拓扑和自然 Galois 作用。
+\end{theorem}
+\begin{proof}
+先设 \(L/K\) 为有限 Galois 扩张，群为 \(\Gamma\)，乘法一次余圈记作 \((c_\sigma)\)，满足 \(c_{\sigma\tau}=c_\sigma\sigma(c_\tau)\)。不同域自同构作为 \(L\)-值函数线性无关：若有项数最少的非零关系 \(\sum_i a_i\sigma_i=0\)，取 \(x\) 使 \(\sigma_1(x)\ne\sigma_r(x)\)，比较该关系在 \(xy\) 处的值与在 \(y\) 处的值乘 \(\sigma_r(x)\)，得到项数更少但非零的关系，矛盾；单项关系显然不可能。
+
+因此可取 \(a\in L\)，使 \(b=\sum_{\sigma\in\Gamma}c_\sigma\sigma(a)\ne0\)。余圈公式及重编号给出
+\[
+ \tau(b)=\sum_{\sigma}\tau(c_\sigma)\tau\sigma(a)
+ =c_\tau^{-1}\sum_\sigma c_{\tau\sigma}\tau\sigma(a)
+ =c_\tau^{-1}b.
+\]
+令 \(d=b^{-1}\)，则 \(c_\tau=\tau(d)/d\)，所以余圈为主余圈。
+
+一般连续余圈由\eqref{b4:eq:C-finite-quotient-cohomology}来自某个 \(G_K/U\) 与系数 \(\Bigl((K^s)^\times\Bigr)^U=L^\times\)，其中 \(L=(K^s)^U\) 为有限 Galois 扩张。有限情形使每个这样的类为零，故余极限也为零。
+\end{proof}
+
+这是 Hilbert 第九十定理的乘法形式，连续版本及其有限层证明见 Weibel\cite[Hilbert's Theorem 90 6.11.16, pp. 213--214]{Weibel1994HomologicalAlgebra}。若正整数 \(n\) 在 \(K\) 中可逆（即特征为零，或正特征 \(p\) 不整除 \(n\)），\(K^s\) 中每个非零元素都有 \(n\) 次根，因而有离散连续模的 Kummer 正合列
+\[
+ 1\longrightarrow\mu_n\longrightarrow(K^s)^\times
+ \xrightarrow{\;n\;}(K^s)^\times\longrightarrow1.
+\]
+由\cref{b4:prop:C-cochains-exact}的长正合列及\cref{b4:thm:C-hilbert90}，得到
+\begin{equation}\label{b4:eq:C-kummer}
+ H^1(K,\mu_n)\cong K^\times/(K^\times)^n.
+\end{equation}
+连接映射把 \(a\in K^\times\) 送到 \(g\mapsto g(b)/b\)，其中 \(b^n=a\)。换一个根只改变主余圈。系数 \(\mu_n\) 通常具有非平凡 Galois 作用，只有 \(K\) 已含全部 \(n\) 次单位根时，才可选根把它识别为平凡的 \(\mathbb Z/n\)-模。Kummer 列的这种系数区别也见 Weibel\cite[Chapter III, Sketch 6.10 and Example 6.10.1, pp. 241--242]{Weibel2013KBook}。
+
+\begin{proposition}\label{b4:prop:C-kummer-local}
+设 \(K=\mathbb F_q((t))\)，\(q\) 是素数 \(p\) 的幂，\(n\ge1\) 且 \(p\nmid n\)，\(\mu_n\) 为 \(K\) 的可分闭包中 \(n\) 次单位根组成的离散连续 Galois 模。则作为交换群，
+\[
+ H^1(K,\mu_n)\cong
+ \mathbb Z/n\mathbb Z\oplus\mathbb Z/\gcd(n,q-1)\mathbb Z.
+\]
+\end{proposition}
+\begin{proof}
+每个非零 Laurent 级数唯一写成 \(t^r a u\)，其中 \(r\in\mathbb Z\)、\(a\in\mathbb F_q^\times\)、\(u\in1+t\mathbb F_q[[t]]\)。在最后这个主单位群中，\(n\) 次幂映射为双射：要求
+\((1+b_1t+b_2t^2+\cdots)^n=1+c_1t+c_2t^2+\cdots\)，第 \(r\) 次系数是 \(nb_r\) 加上只含 \(b_1,\ldots,b_{r-1}\) 的多项式。由于 \(n\) 在 \(\mathbb F_q\) 中可逆，每步唯一确定 \(b_r\)。因此幂商只留下 \(t^\mathbb Z\) 的 \(\mathbb Z/n\) 及有限循环群 \(\mathbb F_q^\times\) 的 \(n\) 次幂商，后者阶为 \(\gcd(n,q-1)\)。应用\eqref{b4:eq:C-kummer}即得结论。
+\end{proof}
+
+\(\mathbb F_q((t))\) 是非 Archimedes 局部域的一个基本模型：它对离散赋值完备，剩余域有限。上面的一次上同调使用了显式幂级数计算；二次上同调则与中心单代数的分裂有关。
+\begin{theorem}[局部域的 Brauer 不变量]\label{b4:thm:C-local-brauer-invariant}
+设 \(p\) 为素数，\(K\) 为 \(\mathbb Q_p\) 的有限扩张，\(K^s\) 为可分闭包，\(G_K=\operatorname{Gal}(K^s/K)\) 取 Krull 拓扑，\((K^s)^\times\) 取离散拓扑及自然 Galois 作用。则存在群同构
+\[
+ \operatorname{inv}_K:\operatorname{Br}(K)
+ \cong H^2_{\mathrm{cts}}\Bigl(G_K,(K^s)^\times\Bigr)
+ \xrightarrow{\sim}\mathbb Q/\mathbb Z.
+\]
+取归一化赋值 \(v_K\)。若 \(n\ge1\)，\(L/K\) 为次数 \(n\) 的非分歧扩张，\(\sigma\) 为算术 Frobenius，\(a\in K^\times\)，则循环代数 \((L/K,\sigma,a)\) 的不变量为 \(v_K(a)/n+\mathbb Z\)。
+\end{theorem}
+\begin{proofsketch}
+第二卷第18.4节用交叉积证明有限 Galois 分裂扩张上的 Brauer 类与乘法二次上同调对应。每个中心单代数都有有限可分分裂域，把它扩为 Galois 扩张，再取这些有限层的余极限，便得到 \(\operatorname{Br}(K)\cong H^2_{\mathrm{cts}}(G_K,(K^s)^\times)\)。
+
+局部域论证的关键是：每个中心除代数 \(D/K\) 都被某个有限非分歧扩张分裂。设 \(\dim_KD=n^2\)，对非零 \(x\in D\) 定义
+\[
+ \nu(x)=\frac1n v_K(\operatorname{Nrd}(x)),\qquad \nu(0)=+\infty.
+\]
+在每个交换子域 \(K(x)\) 上，约化范数是该域范数的相应整数次幂，故 \(\nu\) 限制为完备赋值的唯一延拓。对 \(x,y\ne0\)，在交换域 \(K(x^{-1}y)\) 中使用 \(\nu(1+x^{-1}y)\ge\min(0,\nu(x^{-1}y))\)，再加 \(\nu(x)\)，得到三角不等式。约化范数的乘法性给出 \(\nu(xy)=\nu(x)+\nu(y)\)。由此得到 \(D\) 的赋值整环，且其拓扑是有限维 \(K\) 向量空间的通常拓扑。
+
+若 \(n>1\)，\(D\) 必含一个非平凡非分歧交换子域。否则，每个 \(K(b)\subseteq D\) 的剩余域都只能等于 \(K\) 的剩余域：若不相等，剩余域扩张可分，Hensel 提升便在 \(K(b)\) 内给出所需非分歧子域。取 \(\pi\in D\) 的赋值为 \(\nu(D^\times)\) 的最小正值。任意整元素 \(b\) 可逐次写成
+\[
+ b=a_0+\pi a_1+\cdots+\pi^{N-1}a_{N-1}+\pi^Nb_N,
+ \qquad a_i\in\mathcal O_K,\quad \nu(b_N)\ge0.
+\]
+余项趋于零，故 \(b\) 属于 \(K(\pi)\) 的闭包。有限维子空间 \(K(\pi)\) 已闭；再乘适当的 \(\pi\) 幂，把 \(D\) 中任意元素变成整元素，便会推出 \(D=K(\pi)\)，与中心为 \(K\)、\(n>1\) 矛盾。
+
+现在对 \(n\) 归纳。取上述非分歧子域 \(K'/K\)，令 \(D'\) 为其中心化子。中心化子定理使 \(D'\) 是中心为 \(K'\) 的除代数，次数为 \(n/[K':K]<n\)。归纳给出 \(D'\) 中非分歧极大子域 \(L/K'\)；于是 \(L/K\) 仍非分歧，且 \([L:K]=n\)，是 \(D\) 的极大子域。极大子域分裂 \(D\)，证明关键步骤。这一直接证明见 Serre\cite[Chapter XII, Section 2, Proposition 1, Lemma 1 and Proposition 2, pp. 182--184]{Serre1979LocalFields}；有限交换域的赋值延拓及有限维范数拓扑见同书 Chapter II, Section 2。
+
+设 \(L/K\) 为次数 \(n\) 的非分歧扩张。它的剩余域扩张为有限域扩张。剩余域的乘法范数满射，主单位群的逐层范数则由剩余域的迹给出；该迹满射。逐次修正单位，并用完备性取极限，得到
+\(N_{L/K}(\mathcal O_L^\times)=\mathcal O_K^\times\)。另一方面，归一化赋值满足 \(v_K(N_{L/K}(x))=nv_L(x)\)。因此
+\[
+ K^\times/N_{L/K}(L^\times)\xrightarrow{\sim}\mathbb Z/n\mathbb Z,
+ \qquad [a]\longmapsto v_K(a)\bmod n.
+\]
+循环群二次上同调公式和交叉积识别使左边等于 \(\operatorname{Br}(L/K)\)。
+
+若把非分歧扩张的次数从 \(n\) 增到 \(mn\)，膨胀在赋值部分把 \([r]\) 送到 \([mr]\)。所以 \([r]\mapsto r/n+\mathbb Z\) 与有限层之间的映射相容。对全部正整数取余极限，得到 \(\mathbb Q/\mathbb Z\)；前述非分歧分裂保证没有遗漏任何 Brauer 类。循环代数的计算同时给出所列归一化。上同调与局部结构的关系可对照 Weibel\cite[Sections 6.11.17--6.11.19, pp. 214--215]{Weibel1994HomologicalAlgebra}；这项计算还需要除代数的局部结构，不能仅由一次 Kummer 公式推出。
+\end{proofsketch}

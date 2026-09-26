@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 11.4 结构问题
-% 纲要位置：计划纲要.md，第 3454 行。
+% 纲要位置：工作记录/计划纲要.md，第 4105 行。
 
 \section{结构问题}
 \label{b5:sec:1104}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 可解、幂零及半单的定义
 % * 交换子代数与导出列
@@ -16,17 +15,95 @@
 % ---
 %
 
+最初的结构问题，是反复取括号以后会发生什么。导出列让两边同时来自上一步，下降中心列则始终允许一边来自整个代数。二者给出的有限终止条件不同；弄清这种区别，才能准确使用下一章的三角化定理。
+
 \subsection{可解、幂零与半单李代数}
 \label{b5:subsec:1104:01}
 
-待撰写。
+\begin{definition}\label{b5:def:lie-solvable-nilpotent}
+设 \(\mathfrak g\) 为域 \(k\) 上李代数。定义导出列
+\[
+\mathfrak g^{(0)}=\mathfrak g,\qquad
+\mathfrak g^{(r+1)}=\Bigl[\mathfrak g^{(r)},\mathfrak g^{(r)}\Bigr],
+\]
+以及下降中心列
+\[
+\gamma_1(\mathfrak g)=\mathfrak g,\qquad
+\gamma_{r+1}(\mathfrak g)=\Bigl[\mathfrak g,\gamma_r(\mathfrak g)\Bigr].
+\]
+若存在整数 \(r\ge0\) 使 \(\mathfrak g^{(r)}=0\)，称 \(\mathfrak g\) \term[kejie-Li-daishu]{可解}[solvable]；若存在整数 \(c\ge0\) 使 \(\gamma_{c+1}(\mathfrak g)=0\)，称它\term[miling-Li-daishu]{幂零}[nilpotent]。对非零幂零代数，最小的这种 \(c\) 称为幂零类。
+\end{definition}
+\begin{definition}\label{b5:def:lie-semisimple-simple}
+设 \(\mathfrak g\) 为域 \(k\) 上有限维李代数。若它没有非零可解理想，就称为\term[bandan-Li-daishu]{半单李代数}[semisimple Lie algebra]。若它非交换且只有零与自身两个理想，就称为\term[dan-Li-daishu]{单李代数}[simple Lie algebra]。
+\end{definition}
+这里把非交换性写入“单”的定义，因而一维交换李代数不称为单李代数。半单代数最终能否分解为单理想之和，还需要证明；在定义中先使用理想条件，避免把后面的分解定理预先假定下来。
+\ProseParagraphBreak
+三维 Heisenberg 代数满足
+\(\gamma_2=kz,\gamma_3=0\)，所以幂零类为二。二维代数 \([h,e]=e\) 则满足
+\[
+\mathfrak g^{(1)}=ke,\quad \mathfrak g^{(2)}=0,\qquad
+\gamma_r(\mathfrak g)=ke\quad(r\ge2).
+\]
+它可解但不幂零。这里两个一维的理想和商都是交换的，已经说明幂零性不能像可解性一样在任意扩张下保持。
 
 \subsection{交换子代数与导出列}
 \label{b5:subsec:1104:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:lie-derived-ideal}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数。\([\mathfrak g,\mathfrak g]\) 是理想，商
+\(\mathfrak g/[\mathfrak g,\mathfrak g]\)
+交换；从 \(\mathfrak g\) 到任意交换李代数的同态都唯一通过这个商分解。
+\end{proposition}
+\begin{proof}
+Jacobi 的导子形式说明
+\(\Bigl[z,[x,y]\Bigr]=\Bigl[[z,x],y\Bigr]+\Bigl[x,[z,y]\Bigr]\)
+仍在括号的线性生成空间中，所以它为理想。商中全部括号为零。到交换代数的同态把每个括号送到零，核包含该理想，商映射的泛性质即给出唯一分解。
+\end{proof}
+\begin{proposition}\label{b5:prop:lie-series-properties}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，记 \(\mathfrak g^{(r)}\) 为导出列的第 \(r\) 项，\(\gamma_r(\mathfrak g)\) 为下降中心列的第 \(r\) 项。两列的每一项都是理想；对整数 \(r,s\ge1\)，有
+\[
+\Bigl[\gamma_r(\mathfrak g),\gamma_s(\mathfrak g)\Bigr]
+\subseteq\gamma_{r+s}(\mathfrak g),\qquad
+\mathfrak g^{(r)}\subseteq\gamma_{2^r}(\mathfrak g).
+\]
+特别地，幂零蕴涵可解。子代数与商分别继承可解性及幂零性。
+\end{proposition}
+\begin{proof}
+若 \(I,J\) 为理想，Jacobi 恒等式使 \([I,J]\) 仍为理想；若 \(I\) 只是导出列中的理想，也有 \(\Bigl[\mathfrak g,[I,I]\Bigr]\subseteq[I,I]\)。逐步应用便得理想性。对第一个包含关系按 \(r\) 归纳，\(r=1\) 是定义；由 Jacobi，
+\[
+\Bigl[[\mathfrak g,\gamma_r],\gamma_s\Bigr]
+\subseteq\Bigl[\mathfrak g,[\gamma_r,\gamma_s]\Bigr]
++\Bigl[\gamma_r,[\mathfrak g,\gamma_s]\Bigr]
+\subseteq\gamma_{r+s+1}.
+\]
+第二项使用同一归纳假设对所有 \(s\) 成立。随后按导出次数归纳：
+若 \(\mathfrak g^{(r)}\subseteq\gamma_{2^r}\)，两个这样的项取括号便落在 \(\gamma_{2^{r+1}}\)。若下降中心列终止，导出列因此也终止。
+子代数的两种列逐项包含于原代数对应的列；满同态则将两种列逐项映满商中的相应列。故终止性质在这两种操作下保持。
+\end{proof}
+\begin{proposition}\label{b5:prop:lie-solvable-extension}
+设 \(\mathfrak g\) 为域 \(k\) 上的李代数，\(\mathfrak a\) 为其理想。若 \(\mathfrak a\) 与 \(\mathfrak g/\mathfrak a\) 都可解，则 \(\mathfrak g\) 可解。若 \(\mathfrak a\subseteq Z(\mathfrak g)\)，且 \(\mathfrak g/\mathfrak a\) 幂零，则 \(\mathfrak g\) 幂零。
+\end{proposition}
+\begin{proof}
+若商的第 \(r\) 个导出项为零，则 \(\mathfrak g^{(r)}\subseteq\mathfrak a\)。再取 \(s\) 次导出，落入 \(\mathfrak a^{(s)}\)，最终为零。对第二个结论，若商的第 \(c+1\) 个下降中心项为零，则
+\(\gamma_{c+1}(\mathfrak g)\subseteq\mathfrak a\subseteq Z(\mathfrak g)\)，从而 \(\gamma_{c+2}(\mathfrak g)=0\)。
+\end{proof}
+\begin{proposition}\label{b5:prop:lie-simple-perfect}
+设 \(\mathfrak g\) 为域 \(k\) 上的非交换有限维单李代数。则
+\([\mathfrak g,\mathfrak g]=\mathfrak g\)、\(Z(\mathfrak g)=0\)，且 \(\mathfrak g\) 半单。域 \(k\) 上任意有限维半单李代数的中心也为零。
+\end{proposition}
+\begin{proof}
+导出代数为非零理想，所以等于整个 \(\mathfrak g\)。其导出列不终止，故 \(\mathfrak g\) 不可解；唯一可能的非零理想因此不是可解理想。中心为理想，若等于整个代数便使代数交换，所以只能为零。一般半单代数的中心是交换理想，同样必须为零。
+\end{proof}
 
 \subsection{复数域与正特征的区别}
 \label{b5:subsec:1104:03}
 
-待撰写。
+本编关于半单结构与有限维表示的核心定理以复数域为环境。特征零使某些整数系数可以相消，代数闭性使特征值存在；两种条件有不同用途。
+\ProseParagraphBreak
+例如在特征 \(p>0\) 时，\(\mathfrak{sl}_p(k)\) 包含非零标量矩阵 \(I_p\)，因为 \(\operatorname{tr}I_p=p=0\)。它张成一个中心交换理想，所以这个李代数不满足本节的半单定义。尤其在特征二的 \(\mathfrak{sl}_2(k)\) 中，取
+\[
+e=E_{12},\qquad f=E_{21},\qquad h=I_2,
+\]
+便有 \([e,f]=h\)、\([h,e]=[h,f]=0\)。它成为三维 Heisenberg 代数，而不是后面要研究的复 \(\mathfrak{sl}_2\)。
+\ProseParagraphBreak
+还要区分“代数幂零”与“在某个表示中每个算子幂零”。一个一维交换李代数本身幂零，却可让它的基向量在一维表示上作用为一，得到非幂零算子。Engel 定理将要求给定表示中的每个作用算子幂零；应用于伴随表示以后，才能得到李代数自身的幂零性判据。下一章会把这个转换写清楚。

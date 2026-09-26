@@ -1,30 +1,120 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 3.2 Frobenius 互反律
-% 纲要位置：计划纲要.md，第 3146 行。
+% 纲要位置：工作记录/计划纲要.md，第 3797 行。
+% 纲要细目（写作范围）：
+% * Hom 空间伴随
+% * 特征标内积形式
+% * 重数计算
+
 
 \section{Frobenius 互反律}
 \label{b5:sec:0302}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * Hom 空间伴随
-% * 特征标内积形式
-% * 重数计算
-%
+诱导空间虽然比原空间大，但从它出发的等变映射不需要逐个指定陪集上的取值。只要知道 \(1\otimes W\) 上的取值，整个映射就由 \(G\) 等变性确定。本节把这件事写成一个自然同构；转到复数域后，它又把诱导表示的分解重数变为子群上的计算。
 
 \subsection{Hom 空间伴随}
 \label{b5:subsec:0302:01}
 
-待撰写。
+\begin{theorem}[Frobenius 互反律]\label{b5:thm:frobenius-reciprocity}
+设 \(k\) 为域，\(G\) 为有限群，\(H\le G\)，\(W\) 为左 \(k[H]\)-模，\(V\) 为左 \(k[G]\)-模。存在对 \(W,V\) 自然的 \(k\)-线性同构
+\begin{equation}\label{b5:eq:frobenius-hom}
+ \operatorname{Hom}_{k[G]}(\operatorname{Ind}_H^G W,V)
+ \cong
+ \operatorname{Hom}_{k[H]}(W,\operatorname{Res}_H^G V).
+\end{equation}
+它把 \(F\) 送到 \(w\mapsto F(1\otimes w)\)；逆映射把 \(u\) 送到 \(a\otimes w\mapsto a u(w)\)。
+\end{theorem}
+\begin{proof}
+若 \(F\) 为 \(G\)-同态，则对 \(h\in H\)，
+\[
+ F(1\otimes hw)=F(h\otimes w)=hF(1\otimes w),
+\]
+所以其限制确为 \(H\)-同态。反之，若 \(u\) 为 \(H\)-同态，则双线性映射 \((a,w)\mapsto au(w)\) 满足
+\[
+ ab u(w)=a u(bw)\qquad\Bigl(b\in k[H]\Bigr),
+\]
+故通过张量积；所得 \(F_u\) 与左乘 \(G\) 的作用交换。
+
+从 \(u\) 出发再限制，得到 \(F_u(1\otimes w)=u(w)\)。从 \(F\) 出发再延伸，则
+\(aF(1\otimes w)=F(a\otimes w)\)，恢复 \(F\)。因此两映射互逆。记正向同构为 \(\Phi\)。若 \(\alpha:W'\rightarrow W\) 为 \(H\)-同态、\(\beta:V\rightarrow V'\) 为 \(G\)-同态，则
+\[
+ \Phi\Bigl(\beta\circ F\circ\operatorname{Ind}\alpha\Bigr)
+ =\beta\circ\Phi(F)\circ\alpha.
+\]
+确实，两边在 \(w'\) 处的取值都是 \(\beta F\Bigl(1\otimes\alpha(w')\Bigr)\)。这说明同构分别与 \(W\) 变量中的前复合及 \(V\) 变量中的后复合相容，即具有两变量自然性。
+\end{proof}
+
+上述结果称为\term[Frobenius-hufanlv]{Frobenius 互反律}[Frobenius reciprocity]。用伴随的语言，诱导是限制的左伴随；这里无需预先掌握伴随理论，因为\eqref{b5:eq:frobenius-hom}及其两条具体公式已经给出全部含义。
+
+\ProseParagraphBreak
+其中有两种值得记住的映射。取 \(V=\operatorname{Ind}_H^G W\)，恒等映射对应于 \(H\)-同态 \(w\mapsto1\otimes w\)。取 \(W=\operatorname{Res}_H^G V\)，恒等映射则对应于 \(G\)-同态
+\[
+ k[G]\otimes_{k[H]}V\longrightarrow V,
+ \qquad g\otimes v\longmapsto gv.
+\]
+后一映射总是满射，因为每个 \(v\) 都是 \(1\otimes v\) 的像；但它通常不是同构，维数已经能看出这一点。
 
 \subsection{特征标内积形式}
 \label{b5:subsec:0302:02}
 
-待撰写。
+现在把基域改为 \(\mathbb C\)，并假定表示有限维。沿用\cref{b5:thm:character-hom-inner-product}的约定：类函数内积对第一变量共轭线性，即
+\[
+ \langle\alpha,\beta\rangle_G
+ =\frac1{|G|}\sum_{g\in G}\overline{\alpha(g)}\,\beta(g),
+ \qquad
+ \langle\chi_U,\chi_V\rangle_G
+ =\dim_{\mathbb C}\operatorname{Hom}_{\mathbb C[G]}(U,V).
+\]
+限制表示的特征标是函数的限制；把 \(\operatorname{Ind}_H^G W\) 的特征标简记为 \(\operatorname{Ind}_H^G\chi_W\)。下一节将给出只用 \(\chi_W\) 的函数值计算它的公式。
+
+\begin{corollary}\label{b5:cor:frobenius-character}
+设 \(G\) 为有限群，\(H\le G\)，\(W\) 为有限维复 \(H\)-表示，\(V\) 为有限维复 \(G\)-表示。则
+\begin{equation}\label{b5:eq:frobenius-character}
+ \langle\operatorname{Ind}_H^G\chi_W,\chi_V\rangle_G
+ =\langle\chi_W,\operatorname{Res}_H^G\chi_V\rangle_H.
+\end{equation}
+同时有交换两个变量后的等式
+\(\langle\chi_V,\operatorname{Ind}_H^G\chi_W\rangle_G
+=\langle\operatorname{Res}_H^G\chi_V,\chi_W\rangle_H\)。
+\end{corollary}
+\begin{proof}
+\cref{b5:thm:character-hom-inner-product}把第一条等式两边分别化为\eqref{b5:eq:frobenius-hom}两侧的 Hom 空间维数，而\cref{b5:thm:frobenius-reciprocity}给出其同构。第二条等式由第一条取复共轭得到；不能在未说明内积约定时直接调换参数。
+\end{proof}
 
 \subsection{重数计算}
 \label{b5:subsec:0302:03}
 
-待撰写。
+若 \(U\) 为不可约复 \(G\)-表示，则由 Maschke 定理及 Schur 引理，它在 \(\operatorname{Ind}_H^G W\) 中的重数等于
+\begin{equation}\label{b5:eq:induction-multiplicity}
+ [\operatorname{Ind}_H^G W:U]
+ =\langle\chi_W,\operatorname{Res}_H^G\chi_U\rangle_H.
+\end{equation}
+方括号在此表示直和分解中的重数。若 \(W\) 也不可约，右边就是 \(W\) 在 \(\operatorname{Res}_H^G U\) 中的重数。诱导与限制因此不是互逆操作，却共享同一张重数表的两个方向。
+
+\begin{example}\label{b5:exm:s3-transposition-induction}
+取 \(G=S_3\)、\(H=\Bigl\langle(12)\Bigr\rangle\)，在复数域上计算。设 \(\mathbf1\)、\(\varepsilon\) 分别为 \(G\) 的平凡表示与符号表示，\(U\) 为自然置换表示 \(\mathbb C^3\) 中坐标和为零的二维子空间。其特征标在单位元、换位、三轮换上的值依次为 \(2,0,-1\)：置换矩阵的迹等于固定坐标数，再减去常向量子空间上的迹 \(1\) 即得。于是
+\[
+ \langle\chi_U,\chi_U\rangle_G
+ =\frac{4+3\cdot0+2\cdot1}{6}=1,
+\]
+故由\cref{b5:cor:character-irreducibility}，\(U\) 不可约。又
+\(1^2+1^2+2^2=6\)，由\cref{b5:thm:regular-decomposition}，这三个表示穷尽 \(S_3\) 的不可约表示。
+
+\ProseParagraphBreak
+记 \(H\) 的非平凡一维表示为 \(\eta\)。限制到 \(H\) 后，\(\mathbf1\)、\(\varepsilon\)、\(U\) 分别成为 \(\mathbf1\)、\(\eta\)、\(\mathbf1\oplus\eta\)。对 \(U\)，这是因为换位的平方为 \(1\)，在复数域上可对角化，且迹为 \(0\)，两个特征值只能各为 \(1,-1\) 一次。\eqref{b5:eq:induction-multiplicity}于是给出
+\[
+ \operatorname{Ind}_H^G\mathbf1\cong\mathbf1\oplus U,
+ \qquad
+ \operatorname{Ind}_H^G\eta\cong\varepsilon\oplus U.
+\]
+两边维数均为 \(3\)，也与\eqref{b5:eq:induction-dimension}一致。
+\end{example}
+
+还有一个常用的特殊情形。若 \(W=\mathbf1_H\)，则
+\[
+ [\operatorname{Ind}_H^G\mathbf1_H:U]
+ =\dim_{\mathbb C} U^H,
+ \qquad
+ U^H=\{\,u\in U:hu=u\text{ 对所有 }h\in H\,\}.
+\]
+因为从平凡表示到 \(\operatorname{Res}_H^G U\) 的同态完全由一个 \(H\)-不变向量决定。这一公式把置换表示中的重数与子群固定向量联系起来，并不要求先列出整张特征标表。

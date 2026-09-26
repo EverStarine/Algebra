@@ -1,16 +1,209 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第2章　特征标与正交关系
-% 纲要位置：计划纲要.md，第 3110 行。
+% 纲要位置：工作记录/计划纲要.md，第 3761 行。
+
 
 \chapter{特征标与正交关系}
 \label{b5:ch:02}
 \BookChapterNumber{b5:ch:02}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+特征标把一个表示的矩阵作用压缩为共轭类上的迹函数。本章从交织空间的平均投影证明矩阵系数及特征标正交关系，建立不可约特征标的完备性，并据此分解正则表示与复群代数。循环群、二面体群、四元数群及几个小对称群的特征标表将逐一构造；最后说明表能够判断哪些结构，又遗漏哪些信息。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 计算直和、张量、对偶和外平方的特征标，始终核对工作域。
+\item 用内积计算 Hom 空间维数与分解重数，理解列正交所需的完备性。
+\item 从特征标构造中心幂等元，并解释群代数的矩阵块。
+\item 实际建立小群的特征标表，区分数值约束、存在性和群同构问题。
+\end{itemize}
+\end{learninggoals}
+
+本章只讨论有限维复表示。上一章的 Maschke 定理和 Schur 引理是主要工具；所需内积及共轭约定在本章固定。表格应从具体表示和正交计算得出，而不能把一组满足部分数值关系的行直接宣布为已经存在的表示。
+
+\ProseParagraphBreak
+Etingof 等人的《Introduction to Representation Theory》\cite[Sections 4.5--4.8, pp. 66--73]{EtingofEtAl2011RepresentationTheory}提供正交关系、酉表示、矩阵系数与小群特征标表的集中叙述。本章内积采用第一变量共轭线性；不同文献把共轭放在另一变量时，Hom 公式中的次序要相应转换。
 
 \input{Part01/Chapter02/Section0201}
 \input{Part01/Chapter02/Section0202}
 \input{Part01/Chapter02/Section0203}
 \input{Part01/Chapter02/Section0204}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+迹与群的共轭作用相容，所以特征标落在类函数空间中。平均交织算子给出正交性，中心群代数元素的作用再证明完备性。不可约特征标因此构成一组可用于计算的基，分解重数就是内积，列的范数则给出中心化子阶。
+
+\ProseParagraphBreak
+正则表示中每个不可约的重数等于它的次数，这既给出平方和，也给出复群代数的矩阵分解。中心幂等元把数值信息重新变成作用在任意表示上的投影；同一个群可以用共轭类和或用不可约类型组织它的中心。
+
+\ProseParagraphBreak
+制作特征标表时，需要计算共轭类大小，证明候选表示不可约，并核对它们是否穷尽全部不可约类型。特征标表能判断复表示同构，却不能单独确定群同构；下一章将从子群构造表示，为得到新的特征标提供比直接猜表更系统的方法。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:02-trace-bound}
+设有限群的 \(d>0\) 维复表示特征标为 \(\chi\)。证明 \(|\chi(g)|\le d\)，且等号成立当且仅当 \(\rho(g)\) 为标量。注意这与 \(\chi(g)=d\) 的核判据不同。
+\end{exercise}
+\begin{solution}
+特征值 \(\lambda_i\) 均在单位圆上，三角不等式给出界。若和的模为 \(d\)，令其辐角为 \(\theta\)，则 \(\sum_i\operatorname{Re}(e^{-\mathrm i\theta}\lambda_i)=d\)，各项至多一，故各项均为一。于是全部特征值相同；\(\rho(g)\) 可对角化，故为标量。反向标量的模必为一，所以等号成立。只有这个标量是一时，才有 \(\chi(g)=d\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-s3-tensor}
+令 \(V\) 为 \(S_3\) 的二维不可约复表示。分解 \(V\otimes V\)、\(\Lambda^2V\) 和 \(\operatorname{Sym}^2V\)。
+\end{exercise}
+\begin{solution}
+在单位元、换位、三轮换三列，\(\chi_V=(2,0,-1)\)，所以张量特征标为 \((4,0,1)\)。与三条不可约行取内积，重数均为一，故
+\[
+V\otimes V\simeq1\oplus\mathrm{sgn}\oplus V.
+\]
+外平方为行列式表示。二维标准表示的行列式等于三点置换表示的行列式，因为删去的平凡直和项行列式为一，所以为符号表示。于是 \(\operatorname{Sym}^2V\simeq1\oplus V\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-s4-tensor}
+令 \(W\) 为 \(S_4\) 的三维标准复表示，\(\psi\) 为经 \(S_4/V_4\simeq S_3\) 拉回的二维不可约表示。分解 \(W\otimes W\)。
+\end{exercise}
+\begin{solution}
+按正文五列顺序，张量特征标为 \((9,1,1,0,1)\)。它等于 \(1+\chi_W+\chi_W\mathrm{sgn}+\psi\)，逐列相加可核验。因此
+\[
+W\otimes W\simeq1\oplus W\oplus(W\otimes\mathrm{sgn})\oplus\psi.
+\]
+各项次数相加为九；同构由特征标判据给出，不只是维数比较。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-a4-tensor}
+令 \(\theta\) 为 \(A_4\) 的三维不可约特征标，\(\lambda\) 为非平凡一维特征标。求 \(\theta\lambda\) 和 \(\theta^2\) 的不可约展开。
+\end{exercise}
+\begin{solution}
+\(\theta\) 在两个三轮换类为零，另两列 \(\lambda=1\)，所以 \(\theta\lambda=\theta\)。由 \(\omega+\omega^2=-1\)，逐列有
+\[
+\theta^2=1+\lambda+\lambda^2+2\theta.
+\]
+在单位元与双换位处右端分别为九与一，在三轮换处为零，恰为左端。系数为实际分解重数。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-s4-restriction}
+将 \(S_4\) 的五个不可约复表示限制到 \(A_4\)，求其分解。
+\end{exercise}
+\begin{solution}
+平凡和符号表示都限制为平凡表示。两个三维表示在偶置换上取值相同，都限制为 \(\theta\)。二维表示的限制在 \(A_4\) 四列为 \((2,2,-1,-1)\)，正好是 \(\lambda+\lambda^2\)。这些等式结合特征标同构判据给出全部分解。限制可以使不同的不可约表示合并，也可以使一个不可约表示分裂。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-s3-central-projectors}
+在 \(\mathbb C[S_3]\) 中，记 \(c=(123)\)。写出平凡、符号和二维表示的三个中心幂等元，说明二维投影为什么不含换位项。
+\end{exercise}
+\begin{solution}
+令 \(T\) 为三个换位的群代数和。由\eqref{b5:eq:central-idempotent}，
+\[
+e_1=\tfrac16(1+T+c+c^2),\quad
+e_{\rm sgn}=\tfrac16(1-T+c+c^2),\quad
+e_V=\tfrac13(2-c-c^2).
+\]
+它们和为一。二维特征标在换位处为零，所以投影中不出现那些基向量。把 \(e_V\) 作用于三点置换表示时，像为系数和为零的平面，核为常数直线。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-cyclic-fourier}
+对 \(C_m=\langle r\rangle\) 及本原 \(m\) 次单位根 \(\zeta\)，证明
+\[
+e_j=\frac1m\sum_{a=0}^{m-1}\zeta^{-ja}r^a
+\]
+满足 \(re_j=\zeta^j e_j\)、\(e_je_\ell=\delta_{j\ell}e_j\)，并求 \(r^a\) 关于这些元素的展开。
+\end{exercise}
+\begin{solution}
+将求和指标平移一位，得到第一式。继而 \(e_je_\ell=m^{-1}\sum_a\zeta^{-ja}\zeta^{\ell a}e_\ell=\delta_{j\ell}e_\ell\)，其中用有限等比求和。又 \(\sum_je_j=1\)，乘以 \(r^a\) 得
+\[
+r^a=\sum_{j=0}^{m-1}\zeta^{ja}e_j.
+\]
+这些公式是群代数基与不可约分量坐标之间的有限 Fourier 变换。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-matrix-units}
+在不可约酉矩阵表示 \(\rho_i\) 中定义
+\[
+u^{(i)}_{ab}=\frac{d_i}{|G|}\sum_g\rho_i(g^{-1})_{ba}g.
+\]
+证明它在第 \(i\) 个矩阵块中的像是矩阵单位 \(E_{ab}\)，在其他块为零，并求这些元素的乘法。
+\end{exercise}
+\begin{solution}
+第 \(j\) 个像的 \(u,v\) 条目为 \(d_i|G|^{-1}\sum_g\overline{\rho_i(g)_{ab}}\rho_j(g)_{uv}\)。由矩阵系数正交，结果为 \(\delta_{ij}\delta_{ua}\delta_{vb}\)。群代数作用同态是单射，故矩阵单位的乘法在原代数中成立：
+\[
+u^{(i)}_{ab}u^{(j)}_{cd}=\delta_{ij}\delta_{bc}u^{(i)}_{ad},
+\qquad e_i=\sum_a u^{(i)}_{aa}.
+\]
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-kernels-intersection}
+证明有限群全部不可约复表示的核之交为单位子群。由此说明任意有限群都有忠实完全可约复表示。
+\end{exercise}
+\begin{solution}
+若 \(g\) 落在全部核中，它在全部不可约上恒等，因而在正则表示上恒等。正则作用忠实，所以 \(g=1\)。有限个不可约表示各取一份的直和，其核恰为这些核之交，故给出忠实完全可约表示；也可以直接取正则表示。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-center-from-table}
+设 \(\chi_i\) 遍历有限群 \(G\) 的不可约复特征标。证明 \(g\in Z(G)\) 当且仅当 \(|\chi_i(g)|=\chi_i(1)\) 对每个 \(i\) 成立。
+\end{exercise}
+\begin{solution}
+中心元素在每个不可约上为标量，故满足模长条件。反向由\cref{b5:ex:02-trace-bound}，模长等式使各 \(\rho_i(g)\) 为标量矩阵。它们与所有 \(\rho_i(h)\) 交换；借群代数矩阵分解的单射性，得到 \(gh=hg\) 对全部 \(h\) 成立，所以 \(g\) 在中心。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-same-table-symmetric-square}
+对 \(D_8\) 与 \(Q_8\) 的二维不可约复表示，分别求对称平方中平凡表示的重数，解释为什么两群普通特征标表相同却仍得到不同答案。
+\end{exercise}
+\begin{solution}
+按\cref{b5:tab:d8-q8}的列顺序，原特征标均为 \((2,-2,0,0,0)\)。在 \(D_8\) 中，旋转类平方为 \(r^2\)，两反射类平方为一；因此对称平方特征标为 \((3,3,-1,1,1)\)，平均为一。在 \(Q_8\) 中，三个非中心类平方均为 \(-1\)，故对称平方特征标为 \((3,3,-1,-1,-1)\)，平均为零。平方类映射不同，而它不是这张普通数值表自身包含的数据。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-d10-tensors}
+对 \(D_{10}\)，记反射符号一维表示为 \(\varepsilon\)，二维不可约为 \(V_1,V_2\)，其旋转特征标分别为 \(\zeta^a+\zeta^{-a}\)、\(\zeta^{2a}+\zeta^{-2a}\)。分解 \(V_1^{\otimes2}\) 和 \(V_1\otimes V_2\)。
+\end{exercise}
+\begin{solution}
+在旋转上，第一乘积为 \(\zeta^{2a}+\zeta^{-2a}+2\)，在反射上为零；常数旋转值二、反射值零恰是 \(1+\varepsilon\)，故 \(V_1^{\otimes2}\simeq V_2\oplus1\oplus\varepsilon\)。第二乘积在旋转上为 \(\zeta^{3a}+\zeta^{-3a}+\zeta^a+\zeta^{-a}\)，因模五有 \(3\equiv-2\)，等于 \(\chi_2+\chi_1\)，反射上也相等。因此 \(V_1\otimes V_2\simeq V_1\oplus V_2\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-s4-two-subsets}
+求 \(S_4\) 作用于四元素集合全部二元子集的置换表示的不可约分解。
+\end{exercise}
+\begin{solution}
+固定二元子集的个数在五个共轭类上分别为 \(6,2,2,0,0\)：换位和双换位都固定其对应的两块二元集合，三轮换和四轮换没有固定二元子集。该行等于 \(1+\chi_W+\psi\)，所以置换表示为 \(1\oplus W\oplus V_\psi\)。维数为六，三个重数均为一。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-integral-values-not-character}
+在 \(S_3\) 的三列上给类函数 \(f=(1,0,1)\)。证明它处处取非负整数值，却不是实际复表示的特征标，也不是虚特征标。
+\end{exercise}
+\begin{solution}
+计算得 \(\langle1,f\rangle=\langle\mathrm{sgn},f\rangle=1/2\)，而与二维行的内积为零。因此 \(f=\frac12(1+\mathrm{sgn})\)。实际特征标的不可约系数须为非负整数，虚特征标须为整数；两个条件均不满足。函数取值的整数性不能代替基下系数的整数性。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-product-groups}
+设 \(G,H\) 为有限群。证明 \(G\times H\) 的全部不可约复表示为外张量 \(V_i\boxtimes W_j\)，其中 \((g,h)\) 作用为 \(\rho_i(g)\otimes\sigma_j(h)\)。
+\end{exercise}
+\begin{solution}
+外张量特征标为 \(\chi_i(g)\psi_j(h)\)。内积的有限双和分离成两因子，故这些行两两正交且范数一，从而不可约并互不同构。其次
+\[
+\sum_{i,j}(\dim V_i\dim W_j)^2
+=\Bigl(\sum_i(\dim V_i)^2\Bigr)
+\Bigl(\sum_j(\dim W_j)^2\Bigr)=|G||H|.
+\]
+平方和判据说明没有遗漏。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-nonfaithful-irreds}
+写出 \(C_2\times C_2\) 的全部不可约复表示，证明没有一个忠实，但其中两个不同的非平凡表示的直和忠实。
+\end{exercise}
+\begin{solution}
+设生成元为 \(a,b\)。四个不可约由 \((a,b)\mapsto(\epsilon,\delta)\)、\(\epsilon,\delta\in\{\pm1\}\) 给出。平凡表示的核为全群，三个非平凡表示的核分别为三个二阶子群，均不忠实。任意两个不同的二阶子群交为单位群，所以对应两个非平凡表示的直和核为一，因而忠实。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-q8-two-dimensional-block}
+在 \(\mathbb C[Q_8]\) 中用 \(z\) 表示群元素 \(-1\) 对应的基向量。证明 \(e=(1-z)/2\) 是二维不可约表示对应的中心幂等元，并写出该块的一组基。
+\end{exercise}
+\begin{solution}
+四个一维表示在 \(z\) 处均为一，二维表示在 \(z\) 处为 \(-I\)。所以 \(e\) 在前四者上为零，在二维表示上为一，正是所求投影。块由 \(e,e\mathbf i,e\mathbf j,e\mathbf k\) 生成，它们展开后分别支撑在互不相交的四对 \(\{g,zg\}\) 上，故线性无关。块维数四，与 \(M_2(\mathbb C)\) 的维数相同；注意公式中的标量负号与基向量 \(z\) 是不同对象。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:02-ordered-pairs-s3}
+求 \(S_3\) 在互不相同的有序字母对上的置换表示分解，并以不动空间维数核对轨道数。
+\end{exercise}
+\begin{solution}
+六个有序对上作用传递，固定某一有序对的群元素只能同时固定两个字母，从而为单位。因此这是正则作用。也可逐项计算特征标为 \((6,0,0)\)，分解为 \(1+\mathrm{sgn}+2\chi_V\)。平凡表示重数为一，不动空间一维，和只有一个轨道相符。
+\end{solution}

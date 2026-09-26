@@ -1,30 +1,72 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 9.1 箭图与路径代数
-% 纲要位置：计划纲要.md，第 3360 行。
+% 纲要位置：工作记录/计划纲要.md，第 4011 行。
 
 \section{箭图与路径代数}
 \label{b5:sec:0901}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 顶点、箭和有向路径
 % * 路径代数及幂等元
 % * 有关系箭图与有限维性
 %
 
+一个线性算子可以看成一个向量空间上的一支箭；两个线性映射若首尾相接，还可以讨论它们的复合。箭图把这些信息分开记录：顶点说明有哪些空间，箭说明哪些空间之间给了映射。先只保留箭与路径，就能构造一个代数，随后再把线性映射赋给它。
+
 \subsection{顶点、箭和有向路径}
 \label{b5:subsec:0901:01}
 
-待撰写。
+\begin{definition}\label{b5:def:quiver}
+设 \(Q_0,Q_1\) 为有限集合，\(s,t:Q_1\to Q_0\) 为两个映射。由这些数据组成的有向图 \(Q=(Q_0,Q_1,s,t)\) 称为一个有限\term[jiantu]{箭图}[quiver]；\(Q_0\) 的元素称为顶点，\(Q_1\) 的元素称为箭。箭 \(a\) 从 \(s(a)\) 指向 \(t(a)\)，记为 \(a:s(a)\to t(a)\)。允许重箭以及起点等于终点的圈。
+\end{definition}
+箭图不要求同一对顶点间至多一支箭。两支不同的箭以后可以表示两个完全无关的线性映射；把它们合并，会改变所研究的对象。这里允许圈，但“无环箭图”将专指没有正长度有向闭路径的箭图，并非仅仅没有一支箭构成的圈。
+\begin{definition}\label{b5:def:quiver-path}
+设 \(Q=(Q_0,Q_1,s,t)\) 为有限箭图，\(s,t\) 分别给出箭的起点、终点，\(r\ge1\) 为整数。若箭 \(a_1,\ldots,a_r\in Q_1\) 满足 \(t(a_\nu)=s(a_{\nu+1})\) 对 \(1\le\nu<r\) 成立，则依次经过这些箭的序列称为长度 \(r\) 的\term[youxiang-lujing]{有向路径}[oriented path]，记作 \(a_r\cdots a_1\)。它从 \(s(a_1)\) 指向 \(t(a_r)\)。每个顶点 \(i\in Q_0\) 另有一条长度零的路径 \(e_i\)，其起点与终点都是 \(i\)。
+\end{definition}
+例如在 \(1\xrightarrow{a}2\xrightarrow{b}3\) 中，长度二的路径记为 \(ba\)。这个记法与线性映射的复合一致：先作 \(a\)，再作 \(b\)。相反，\(ab\) 在这个箭图中不能首尾相接。无向图是一条线并不规定唯一的箭图；\(1\to2\leftarrow3\) 的两支箭就不能组成长度二的路径。
 
 \subsection{路径代数及幂等元}
 \label{b5:subsec:0901:02}
 
-待撰写。
+\begin{definition}\label{b5:def:path-algebra}
+设 \(k\) 为域，\(Q\) 为非空有限箭图。以 \(Q\) 的全部有向路径为 \(k\) 基，取只有有限多个非零系数的线性组合。对基路径 \(p:i\to j\)、\(q:\ell\to m\)，规定 \(qp\) 在 \(j=\ell\) 时为先走 \(p\) 再走 \(q\) 的拼接路径，在 \(j\ne\ell\) 时为零；再按 \(k\) 双线性延拓乘法。所得代数记为 \(kQ\)，称为 \(Q\) 的\term[lujing-daishu]{路径代数}[path algebra]。
+\end{definition}
+\symidx{\(kQ\)：箭图的路径代数}
+拼接满足结合律。对三条路径，如果相邻的两处都能接合，两种括号给出同一条箭序列；如果某处不能接合，两种乘法都为零。逐项展开便得到任意元素的结合律。长度零路径满足
+\[
+1=\sum_{i\in Q_0}e_i,\qquad e_ie_j=\delta_{ij}e_i,\qquad
+a=e_{t(a)}a e_{s(a)}.
+\]
+尤其 \(e_j(kQ)e_i\) 以全部从 \(i\) 到 \(j\) 的路径为基。任意正长度路径是箭的乘积，所以这些幂等元和箭生成 \(kQ\)。给它们指定到另一个代数中的像，只要满足上式的顶点关系，就唯一决定一个代数同态：每条路径的像只能是各箭像的乘积，而上述关系保证不可拼接的乘积被送到零。
+\begin{proposition}\label{b5:prop:finite-path-algebra}
+设 \(k\) 为域，\(Q\) 为非空有限箭图。代数 \(kQ\) 有限维，当且仅当 \(Q\) 没有正长度有向闭路径。
+\end{proposition}
+\begin{proof}
+若有正长度闭路径 \(c\)，则 \(e_i,c,c^2,\ldots\) 是长度不同的基路径，线性无关，所以代数无限维。反过来，若没有闭路径，任何路径都不能重复经过一个顶点，否则两次经过之间就是闭路径。因此路径长度至多为 \(|Q_0|-1\)。每个长度的箭序列只有有限多个，所以全部路径有限。
+\end{proof}
+在 \(1\to2\to3\) 中，基为 \(e_1,e_2,e_3,a,b,ba\)，维数六；在 \(1\to2\leftarrow3\) 中，基只含三个顶点和两支箭，维数五。两个箭图的无向图相同，路径代数却不相同。若只有一个顶点和一个圈 \(a\)，则 \(kQ\cong k[t]\)；有两个圈时，则得到两个不定元的自由结合代数，两个圈的乘法一般不交换。
 
 \subsection{有关系箭图与有限维性}
 \label{b5:subsec:0901:03}
 
-待撰写。
+\begin{definition}\label{b5:def:admissible-quiver-relations}
+设 \(k\) 为域，\(Q\) 为非空有限箭图。由全部箭生成的双边理想记为 \(\mathfrak a\)，称为\term[jian-lixiang]{箭理想}[arrow ideal]。它以正长度路径为基，\(\mathfrak a^r\) 以长度至少 \(r\) 的路径为基。若双边理想 \(I\) 满足
+\[
+\mathfrak a^N\subseteq I\subseteq\mathfrak a^2
+\quad\text{对某个整数 }N\ge2,
+\]
+就称 \(I\) 为\term[rongxu-guanxi-lixiang]{容许关系理想}[admissible ideal]，称 \((Q,I)\) 为有关系箭图，并研究商代数 \(kQ/I\)。
+\end{definition}
+一个关系可以是具有相同起点和终点的若干路径的线性组合。一般元素也可按 \(e_j I e_i\) 拆成这种形式。商中要求每个关系为零；例如在 \(1\xrightarrow{a}2\xrightarrow{b}3\) 中加入 \(ba=0\)，以后对应的两个线性映射就须满足复合为零。
+\begin{proposition}\label{b5:prop:bound-quiver-radical}
+设 \(k\) 为域，\(Q\) 为非空有限箭图，\(\mathfrak a\subseteq kQ\) 为由全部箭生成的双边理想，\(I\subseteq kQ\) 为双边理想，且对某个整数 \(N\ge2\) 有 \(\mathfrak a^N\subseteq I\subseteq\mathfrak a^2\)。令 \(A=kQ/I\)。则 \(A\) 有限维，其 Jacobson 根为
+\[
+J(A)=\mathfrak a/I,\qquad A/J(A)\cong\prod_{i\in Q_0}k.
+\]
+\end{proposition}
+\begin{proof}
+所有长度至少 \(N\) 的路径在商中为零，所以有限多个较短路径的像生成 \(A\)。理想 \(\mathfrak a/I\) 幂零；幂零双边理想包含在 Jacobson 根中，因为对其元素 \(x\) 和任意 \(a\in A\)，\(1-ax\) 有有限几何级数给出的逆。模掉这个理想，只剩互相正交的顶点幂等元，商为 \(\prod_i k\)，其根为零。因此 \(J(A)\) 也包含于 \(\mathfrak a/I\)，得到等式。
+\end{proof}
+容许条件既使长路径消失，又不对顶点与箭的第一层施加线性关系。有限维性本身不保证一个给定关系理想容许。例如一个圈的关系 \(a^2-a=0\) 给出二维商，但关系含有一次项；这个商同构于 \(k\times k\)，它的根为零，圈的像却不是零。本章最后将从有限维代数的根重新选择箭图与容许关系，而不是把任意展示都当成这种形式。

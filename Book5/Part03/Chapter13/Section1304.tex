@@ -1,13 +1,11 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 13.4 经典例子
-% 纲要位置：计划纲要.md，第 3510 行。
+% 纲要位置：工作记录/计划纲要.md，第 4161 行。
 
 \section{经典例子}
 \label{b5:sec:1304}
 
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * sl_n、so_n 与 sp_2n
 % * 维数、中心与简单性的范围
@@ -16,17 +14,155 @@
 % ---
 %
 
+经典矩阵李代数把上述判据变成可以直接计算的例子。这里给出维数、中心和简单性的证明，不等待根系分类完成后再反过来使用分类。后面的根系将解释这些计算为什么分成四个系列。
+
 \subsection{\texorpdfstring{\(\mathfrak{sl}_n\)、\(\mathfrak{so}_n\) 与 \(\mathfrak{sp}_{2n}\)}{sln、son 与 sp2n}}
 \label{b5:subsec:1304:01}
 
-待撰写。
+对复向量空间，非退化对称型可选基写成单位矩阵，非退化交错型可写成标准辛矩阵。因此采用下列矩阵实现：
+\[
+\begin{aligned}
+\mathfrak{sl}_n(\mathbb C)&=\Bigl\{\,X\in M_n(\mathbb C)\mid\operatorname{tr}X=0\,\Bigr\},\\
+\mathfrak{so}_n(\mathbb C)&=\Bigl\{\,X\in M_n(\mathbb C)\mid X^{\mathsf T}+X=0\,\Bigr\},\\
+\mathfrak{sp}_{2n}(\mathbb C)&=\Bigl\{\,X\in M_{2n}(\mathbb C)\mid
+X^{\mathsf T}J+JX=0\,\Bigr\},\qquad
+J=\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix}.
+\end{aligned}
+\]
+换用另一个非退化型，只会得到由换基共轭而同构的李代数。
+
+\begin{proposition}\label{b5:prop:classical-dimensions}
+对整数 \(n\ge1\)，复经典李代数 \(\mathfrak{sl}_n(\mathbb C)\)、\(\mathfrak{so}_n(\mathbb C)\)、\(\mathfrak{sp}_{2n}(\mathbb C)\) 的维数为
+\[
+\dim\mathfrak{sl}_n=n^2-1,\qquad
+\dim\mathfrak{so}_n=\frac{n(n-1)}2,\qquad
+\dim\mathfrak{sp}_{2n}=n(2n+1).
+\]
+相对于标准辛型，\(\mathfrak{sp}_{2n}(\mathbb C)\) 恰好由如下分块矩阵构成，其中 \(A,B,C\in M_n(\mathbb C)\)：
+\[
+X=\begin{pmatrix}A&B\\C&-A^{\mathsf T}\end{pmatrix},
+\qquad B=B^{\mathsf T},\quad C=C^{\mathsf T}.
+\]
+\end{proposition}
+\begin{proof}
+迹零是 \(M_n\) 上一个非零线性条件，所以第一式成立。反对称矩阵的对角元为零，每对 \(i<j\) 留一个自由参数，得到第二式。把四个矩阵块代入 \(X^{\mathsf T}J+JX=0\)，便得陈述中的块条件；自由参数数目为
+\(n^2+2\cdot n(n+1)/2=n(2n+1)\)。
+\end{proof}
 
 \subsection{维数、中心与简单性的范围}
 \label{b5:subsec:1304:02}
 
-待撰写。
+\begin{lemma}[提取共同权分量]\label{b5:lem:classical-weight-projection}
+设复向量空间 \(W\) 上的有限族算子 \(H_1,\ldots,H_r\) 交换且可同时对角化。若子空间 \(U\subseteq W\) 被它们保持，则每个 \(u\in U\) 的各个共同特征空间分量仍属于 \(U\)。
+\end{lemma}
+\begin{proof}
+共同特征值元组只有有限多个。可选系数 \(c_i\)，使不同元组在
+\(H=\sum_i c_iH_i\) 下具有不同特征值：需要排除的只是有限多个真超平面。对每个特征值 \(\lambda\)，Lagrange 插值多项式
+\[
+P_\lambda(t)=\prod_{\mu\ne\lambda}\frac{t-\mu}{\lambda-\mu}
+\]
+给出相应投影 \(P_\lambda(H)\)。子空间 \(U\) 被 \(H\) 及其多项式保持，故被这些投影保持。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:classical-simple}
+在复数域上，\(\mathfrak{sl}_n\) 对 \(n\ge2\) 简单，
+\(\mathfrak{sp}_{2n}\) 对 \(n\ge1\) 简单，
+\(\mathfrak{so}_n\) 对 \(n=3\) 或 \(n\ge5\) 简单。因此这些范围内的中心均为零。
+\end{proposition}
+\begin{proof}
+\emph{特殊线性情形。}
+令 \(\mathfrak h\) 为迹零对角矩阵空间。对 \(H=\operatorname{diag}(t_1,\ldots,t_n)\)，有
+\[
+[H,E_{ij}]=(t_i-t_j)E_{ij}.
+\]
+这些非零权彼此不同，零权空间为 \(\mathfrak h\)。给定非零理想 \(I\)，\cref{b5:lem:classical-weight-projection}说明：若 \(I\) 的元素有非零非对角分量，则某个 \(E_{ij}\in I\)；否则 \(I\) 含有非零迹零对角矩阵 \(H\)，其对角元不能全相等，故 \([H,E_{ij}]\ne0\) 也使 \(E_{ij}\in I\)。
+
+由 \([E_{ij},E_{ji}]=E_{ii}-E_{jj}\) 得到 \(H_{ij}\in I\)。再与 \(E_{ji}\) 括号便得 \(E_{ji}\in I\)。对 \(k\ne i,j\)，与 \(H_{ij}\) 括号先给出 \(E_{ik},E_{ki},E_{jk},E_{kj}\in I\)；随后
+\([E_{ki},E_{i\ell}]=E_{k\ell}\) 给出其余非对角单位。全部迹零对角矩阵由 \([E_{ij},E_{ji}]\) 生成，所以 \(I=\mathfrak{sl}_n\)。当 \(n=2\) 时没有额外的 \(k\)，前三个矩阵已经构成一组基。
+
+\emph{辛情形。}
+用 \(\bar i=n+i\) 表示后半部指标，记
+\[
+\begin{aligned}
+H_i&=E_{ii}-E_{\bar i\bar i},&
+A_{ij}&=E_{ij}-E_{\bar j\bar i}\quad(i\ne j),\\
+B_{ii}&=E_{i\bar i},&
+C_{ii}&=E_{\bar i i},\\
+B_{ij}&=E_{i\bar j}+E_{j\bar i},&
+C_{ij}&=E_{\bar i j}+E_{\bar j i}\quad(i<j).
+\end{aligned}
+\]
+这些矩阵构成一组基。相对于 \(H=\sum_i t_iH_i\) 的伴随作用，它们的权分别是
+\(0,t_i-t_j,2t_i,-2t_i,t_i+t_j,-t_i-t_j\)，所有非零权空间均为一维。若非零理想 \(I\) 没有对角分量，投影引理先给出其中一个非零权向量。它与相反权向量的括号分别为
+\[
+[A_{ij},A_{ji}]=H_i-H_j,\quad
+[B_{ij},C_{ij}]=H_i+H_j,\quad
+[B_{ii},C_{ii}]=H_i,
+\]
+所以无论如何，\(I\) 总含有一个非零对角元 \(H=\sum_i t_iH_i\)。
+
+选择 \(t_i\ne0\)，由 \([H,B_{ii}]=2t_iB_{ii}\)、
+\([H,C_{ii}]=-2t_iC_{ii}\) 得 \(B_{ii},C_{ii},H_i\in I\)。
+对 \(j\ne i\)，与 \(H_i\) 括号得到 \(A_{ij},A_{ji}\in I\)，再得到 \(H_i-H_j\)，故所有 \(H_j\) 均在 \(I\) 中。每个非零权至少在某个 \(H_j\) 上非零，与这个 \(H_j\) 括号便把相应基向量收入 \(I\)。所以 \(I=\mathfrak{sp}_{2n}\)。
+
+\emph{正交情形。}
+记 \(F_{ij}=E_{ij}-E_{ji}\)，其中 \(i<j\)。考虑有限群
+\[
+D=\Bigl\{\,\operatorname{diag}(\varepsilon_1,\ldots,\varepsilon_n)
+\mid\varepsilon_i=\pm1,\ \prod_i\varepsilon_i=1\,\Bigr\}.
+\]
+共轭作用将 \(F_{ij}\) 乘以 \(\varepsilon_i\varepsilon_j\)。每个 \(D\) 的元素都是若干“同时翻转两个坐标符号”的矩阵之积，后者等于 \(\exp(\pi F_{ij})\)。一个李理想被 \(\operatorname{ad}F_{ij}\) 保持，因而被其指数保持；恒等式
+\[
+\exp(\operatorname{ad}A)(X)=e^AXe^{-A}
+\]
+可由左右乘算子的交换性及指数级数相乘得到。因此任何理想都被 \(D\) 共轭保持。
+
+对 \(n=3\) 或 \(n\ge5\)，不同二元集合 \(\{i,j\}\) 给出不同特征标 \(\varepsilon_i\varepsilon_j\)。事实上，两个这样的特征标相同，只可能是两集合相同，或它们的对称差为全部指标；后一个可能性恰好发生于 \(n=4\) 的互补二元集合。若 \(X=\sum_{i<j}x_{ij}F_{ij}\)，则平均算子给出
+\[
+\frac1{|D|}\sum_{d=\operatorname{diag}(\varepsilon)\in D}
+\varepsilon_i\varepsilon_j\,dXd^{-1}=x_{ij}F_{ij}.
+\]
+不相同的两个特征标相乘为非平凡特征标，其和为零：取它取值为 \(-1\) 的群元素平移求和即可。于是某个非零 \(x_{ij}\) 保证理想含有 \(F_{ij}\)。再用
+\[
+[F_{ij},F_{jk}]=F_{ik}\quad(i,j,k\text{ 互异})
+\]
+以及反对称记号 \(F_{ji}=-F_{ij}\)，先得到涉及 \(i\) 或 \(j\) 的全部基向量，再得到其余的 \(F_{k\ell}\)。所以非零理想等于 \(\mathfrak{so}_n\)。三类代数均非交换；其中心作为交换理想只能为零。
+\end{proof}
+
+上述正交李代数的证明在 \(n=4\) 时不能分离互补二元集合；下面将看到，\(\mathfrak{so}_4\) 恰好分解为两个简单理想，中心仍为零。\(\mathfrak{so}_2\) 是一维交换代数，中心是自身；\(\mathfrak{so}_1=\mathfrak{sl}_1=0\)。
 
 \subsection{小秩同构与例外情形}
 \label{b5:subsec:1304:03}
 
-待撰写。
+\begin{proposition}[小维数同构]\label{b5:prop:classical-low-rank-isomorphisms}
+复数域上有李代数同构
+\[
+\mathfrak{sp}_2\cong\mathfrak{sl}_2\cong\mathfrak{so}_3,\qquad
+\mathfrak{so}_4\cong\mathfrak{sl}_2\oplus\mathfrak{sl}_2,
+\qquad
+\mathfrak{sp}_4\cong\mathfrak{so}_5,\qquad
+\mathfrak{sl}_4\cong\mathfrak{so}_6.
+\]
+\end{proposition}
+\begin{proof}
+二维辛矩阵的块条件恰好是迹零，故 \(\mathfrak{sp}_2=\mathfrak{sl}_2\) 在标准基下直接相等。\(\mathfrak{sl}_2\) 的伴随表示保持非退化对称 Killing 型；其核是零中心。因此它给出单射
+\(\mathfrak{sl}_2\rightarrow\mathfrak{so}(\mathfrak{sl}_2,\kappa)\)，两边维数均为 \(3\)，便得到与 \(\mathfrak{so}_3\) 的同构。
+
+设 \(U,W\) 都是带非退化交错型的二维复空间。两个交错型的张量积是 \(U\otimes W\) 上的非退化对称型，且
+\[
+(A,B)\longmapsto A\otimes I+I\otimes B
+\]
+把 \(\mathfrak{sl}(U)\oplus\mathfrak{sl}(W)\) 映入相应的四维正交代数。若像为零，对第二因子取部分迹得 \(2A=0\)，对第一因子取部分迹得 \(2B=0\)，所以映射单射。两边维数为 \(6\)，故得到 \(\mathfrak{so}_4\) 的分解。
+
+在四维复空间 \(V\) 上选定非零体积元 \(\operatorname{vol}\in\bigwedge^4V\)，以
+\[
+B(u,v)\operatorname{vol}=u\wedge v,\qquad u,v\in\bigwedge\nolimits^2V
+\]
+定义六维空间上的对称型。互补指标的楔积基两两配对，说明它非退化。迹零算子在最高外幂上作用为零，所以 \(\mathfrak{sl}(V)\) 保持 \(B\)。这个表示非零，例如
+\(\operatorname{diag}(1,0,-1,0)\) 在 \(e_1\wedge e_2\) 上非零。由\cref{b5:prop:classical-simple}，简单代数 \(\mathfrak{sl}_4\) 的非零表示核为零，故得到单射 \(\mathfrak{sl}_4\rightarrow\mathfrak{so}_6\)。两边均为 \(15\) 维，因而同构。
+
+最后令四维 \(V\) 带辛型，并取辛基 \(e_1,e_2,f_1,f_2\)。在上述六维空间中，逆辛型对应的二向量
+\(\Omega=e_1\wedge f_1+e_2\wedge f_2\) 被 \(\mathfrak{sp}_4\) 零化。这个事实也可直接把辛矩阵块代入外幂作用检验。因 \(\Omega\wedge\Omega\ne0\)，直线 \(\mathbb C\Omega\) 对 \(B\) 非退化，其正交补 \(W=\Omega^\perp\) 是五维非退化不变子空间。作用于 \(W\) 的表示非零：\(e_1\wedge e_2\in W\)，而 \(H_1\) 在其上作用为 \(1\)。辛代数的简单性使这表示单射；源与 \(\mathfrak{so}(W,B|_W)\) 均为 \(10\) 维，所以得到最后一个同构。
+\end{proof}
+
+这些同构是李代数层面的同构。相应矩阵群还可能相差有限中心或覆盖，不能把本命题直接改写成同名群的同构。后续讨论自旋群和代数群时，会进一步区分这两种结论。

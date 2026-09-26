@@ -22,7 +22,7 @@
 本章使用\chapref{b1:ch:10}建立的整环、单位、理想、商环及多项式次数性质；Gauss 整数和非 Euclid 的例子还用到复数的共轭与模。非 Euclid 主理想整环的小节可以暂时跳过。\(\mathbb Z[x]\) 的非主性在本章直接证明，唯一分解性则明确留待下一章的多项式定理，不作为本章证明的前置条件。
 
 \ProseParagraphBreak
-整除、主理想与唯一分解，可结合 Dummit 与 Foote 的《Abstract Algebra》\cite[Sections 8.1--8.3]{DummitFoote2003}学习。需要逐步计算最大公因子、模逆和分解时，可读 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapter 4, Section 16.9]{Shoup2008NumberTheoryAlgebra}；这些内容也便于比较整数运算与多项式运算中 Euclid 方法的共同之处。
+整除、主理想与唯一分解，可结合 Dummit 与 Foote 的《Abstract Algebra》\cite[Sections 8.1--8.3]{DummitFoote2003}学习。整数的 Euclid 算法、扩展算法与模逆可读 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Sections 4.1--4.3]{Shoup2008NumberTheoryAlgebra}；域上一元多项式的 Euclid 算法、模逆及中国剩余计算见同书\cite[Sections 17.3--17.4]{Shoup2008NumberTheoryAlgebra}。唯一分解整环、Euclid 整环与主理想整环的结构性讨论见该书\cite[Section 16.9.1]{Shoup2008NumberTheoryAlgebra}。
 
 \input{Part02/Chapter11/Section1101}
 \input{Part02/Chapter11/Section1102}
@@ -39,7 +39,7 @@
 \BookExercises
 
 \begin{exercise}\label{b1:ex:11-gaussian-gcd}
-在 \(\mathbb Z[i]\) 中求 \(a=7+5i\)、\(b=3+i\) 的一个最大公因子及 Bézout 系数，并列出它们的公因子相伴类。
+在 \(\mathbb Z[i]\) 中求 \(a=7+5i\)、\(b=3+i\) 的一个最大公因子及 Bézout 系数，并列出它们的公因子相伴类。求 \(a,b\) 的一个最小公倍数，并计算理想 \((a)+(b)\) 与 \((a)\cap(b)\)。
 \end{exercise}
 \begin{solution}
 选择商 \(3+i\)，有
@@ -52,6 +52,12 @@ b=(-2+i)(-1-i).
 1+i=-a+(3+i)b.
 \]
 范数 \(N(1+i)=2\) 为整数素数，若 \(1+i\) 分解，两因子范数的积为 \(2\)，必有一个范数为 \(1\)，即为单位。所以 \(1+i\) 不可约。公因子恰为 \(d\) 的因子，只有单位类和 \(1+i\) 的相伴类，分别以 \(1,1+i\) 为代表。
+
+由\cref{b1:prop:ufd-gcd-lcm}，可取最小公倍数
+\[
+m=\frac{ab}{d}=19+3i.
+\]
+前述 Bézout 关系给出 \((a)+(b)=(d)=(1+i)\)。理想 \((a)\cap(b)\) 中的元素恰为 \(a,b\) 的公倍数；最小公倍数的整除刻画因而给出 \((a)\cap(b)=(m)=(19+3i)\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:11-diophantine}
@@ -69,6 +75,33 @@ u=8+11t,\qquad v=-10-14t,\qquad t\in\mathbb Z.
 反向代入可检验每个 \(t\) 均给出解。右端为 \(30\) 时无解，因为左端必被 \(18\) 整除，而 \(18\nmid30\)。
 \end{solution}
 
+\begin{exercise}\label{b1:ex:11-polynomial-euclid}
+在 \(\mathbb F_2[x]\) 中，求
+\[
+f=x^4+x^3+x^2+1,\qquad g=x^3+1
+\]
+的首一最大公因子，并求 \(u,v\in\mathbb F_2[x]\)，使该最大公因子等于 \(uf+vg\)。须列出各次带余除法。
+\end{exercise}
+\begin{solution}
+在特征 \(2\) 中，加法与减法相同。按\cref{b1:prop:field-poly-division}消去首项，得到
+\[
+\begin{aligned}
+f&=(x+1)g+(x^2+x),\\
+g&=(x+1)(x^2+x)+(x+1),\\
+x^2+x&=x(x+1).
+\end{aligned}
+\]
+非零余数的次数依次为 \(2,1\)，最后余数为零。由\cref{b1:prop:euclidean-algorithm}，首一最大公因子为 \(d=x+1\)。回代为
+\[
+\begin{aligned}
+d&=g+(x+1)(x^2+x)\\
+&=g+(x+1)\Bigl(f+(x+1)g\Bigr)\\
+&=(x+1)f+x^2g.
+\end{aligned}
+\]
+最后一步使用 \(1+(x+1)^2=x^2\)，这是当前基域特征为 \(2\) 的结果。因此可取 \(u=x+1\)、\(v=x^2\)；把这些系数误作有理数系数时，不能保留相同的运算步骤。
+\end{solution}
+
 \begin{exercise}\label{b1:ex:11-gaussian-rational-prime}
 设整数素数 \(p\equiv3\pmod4\)。证明 \(p\) 在 \(\mathbb Z[i]\) 中仍为素元，并解释为什么同一论证不能用于 \(p=2\)。
 \end{exercise}
@@ -84,12 +117,12 @@ u=8+11t,\qquad v=-10-14t,\qquad t\in\mathbb Z.
 \begin{solution}
 若 \(bc-1\in(a)\)，则存在 \(t\in R\) 使 \(1=bc+at\)。任何公因子都整除 \(1\)，所以 \(a,b\) 互素。反过来，\cref{b1:prop:pid-bezout}使互素条件给出 \(1=ua+vb\)，故 \(v+(a)\) 是 \(b+(a)\) 的逆元。
 
-对 Gauss 整数，\(3\) 不可约：非平凡分解只能要求两个因子范数均为 \(3\)，但两平方和不能模 \(4\) 等于 \(3\)。再由\cref{b1:prop:pid-irreducible-prime}及\cref{b1:prop:prime-max-quotient}，\((3)\) 极大，商为域。每个剩余类唯一以 \(u+vi\)、\(u,v\in\{0,1,2\}\) 表示，因为相差 \(3\) 的倍数等价于实部与虚部系数分别相差 \(3\) 的倍数，故商有九个元素。最后
+由前题在 \(p=3\) 时的结论，\(3\) 是 \(\mathbb Z[i]\) 中的素元，因此 \((3)\) 为极大理想，商为域。这里 \(N(3)=9\)，可见在 Gauss 整数中，范数为整数素数只是证明不可约的充分条件，不是必要条件。每个剩余类唯一以 \(u+vi\)、\(u,v\in\{0,1,2\}\) 表示，因为相差 \(3\) 的倍数等价于实部与虚部系数分别相差 \(3\) 的倍数，故商有九个元素。最后
 \((1+i)(-1+i)=-2\equiv1\pmod3\)，所求逆元为 \(-1+i+(3)\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:11-squarefree-quotient}
-设 \(R\) 为主理想整环，\(a=u p_1^{e_1}\cdots p_t^{e_t}\) 为非零非单位，其中 \(p_j\) 两两不相伴，\(e_j\geq1\)。证明以下条件等价：商环 \(R/(a)\) 中，每当 \(z^n=0\)、\(n\geq1\)，都有 \(z=0\)；所有指数 \(e_j\) 都等于 \(1\)。
+设 \(R\) 为主理想整环，非零非单位元 \(a\) 的不可约分解为 \(a=u p_1^{e_1}\cdots p_t^{e_t}\)，其中 \(u\in R^\times\)，各 \(p_j\) 为两两不相伴的不可约元，\(e_j\geq1\)。证明以下条件等价：商环 \(R/(a)\) 中，每当 \(z^n=0\)、\(n\geq1\)，都有 \(z=0\)；所有指数 \(e_j\) 都等于 \(1\)。
 \end{exercise}
 \begin{solution}
 若全部 \(e_j=1\)，且 \(b^n\in(a)\)，则每个 \(p_j\mid b^n\)。\cref{b1:prop:pid-irreducible-prime}给出 \(p_j\) 的素性，反复用于 \(b^n=b\cdot b^{n-1}\)，得到 \(p_j\mid b\)。唯一分解使各个不同相伴类的因子同时出现于 \(b\)，于是 \(a\mid b\)，即 \(z=b+(a)=0\)。
@@ -127,33 +160,6 @@ b=\prod_{j=1}^{t}p_j^{\lceil e_j/2\rceil}.
 t^6=(t^2)^3=(t^3)^2
 \]
 给出长度不同的两种不可约分解，所以 \(A\) 不是唯一分解整环。另一方面，\cref{b1:prop:field-poly-division}给出 \(F[t]\) 为 Euclid 整环，再由\cref{b1:thm:euclidean-pid}与\cref{b1:thm:pid-ufd}得它是唯一分解整环。这说明唯一分解性不能任意传给子环。
-\end{solution}
-
-\begin{exercise}\label{b1:ex:11-polynomial-euclid}
-在 \(\mathbb F_2[x]\) 中，求
-\[
-f=x^4+x^3+x^2+1,\qquad g=x^3+1
-\]
-的首一最大公因子，并求 \(u,v\in\mathbb F_2[x]\)，使该最大公因子等于 \(uf+vg\)。须列出各次带余除法。
-\end{exercise}
-\begin{solution}
-在特征 \(2\) 中，加法与减法相同。按\cref{b1:prop:field-poly-division}消去首项，得到
-\[
-\begin{aligned}
-f&=(x+1)g+(x^2+x),\\
-g&=(x+1)(x^2+x)+(x+1),\\
-x^2+x&=x(x+1).
-\end{aligned}
-\]
-非零余数的次数依次为 \(2,1\)，最后余数为零。由\cref{b1:prop:euclidean-algorithm}，首一最大公因子为 \(d=x+1\)。回代为
-\[
-\begin{aligned}
-d&=g+(x+1)(x^2+x)\\
-&=g+(x+1)\Bigl(f+(x+1)g\Bigr)\\
-&=(x+1)f+x^2g.
-\end{aligned}
-\]
-最后一步使用 \(1+(x+1)^2=x^2\)，这是当前基域特征为 \(2\) 的结果。因此可取 \(u=x+1\)、\(v=x^2\)；把这些系数误作有理数系数时，不能保留相同的运算步骤。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:11-pid-quotient-ideals}
@@ -207,7 +213,7 @@ I=(4,2x,x^2).
 \end{solution}
 
 \begin{exercise}\label{b1:ex:11-factorization-nonexistence}
-设 \(F\) 为域。令 \(A\) 由形式有限和 \(\sum_q a_qT^q\) 组成，其中 \(a_q\in F\)，指数 \(q\) 取形如 \(m/2^n\) 的非负数，\(m,n\in\mathbb N\)。两个形式和相等指每个指数的系数相等；加法逐项进行，乘法由 \(T^qT^r=T^{q+r}\) 及分配律规定。证明 \(A\) 是整环，且 \(T\) 不能分解为有限个不可约元的乘积。由此区分分解不存在与分解不唯一两种失败。
+设 \(F\) 为域。令 \(A\) 由形式有限和 \(\sum_q a_qT^q\) 组成，其中 \(a_q\in F\)，指数 \(q\) 取形如 \(m/2^n\) 的非负数，\(m,n\in\mathbb Z_{\geq0}\)。两个形式和相等指每个指数的系数相等；加法逐项进行，乘法由 \(T^qT^r=T^{q+r}\) 及分配律规定。证明 \(A\) 是整环，且 \(T\) 不能分解为有限个不可约元的乘积。再证明 \(A\) 的每个有限生成理想都是主理想，并说明为何 \(A\) 仍不是主理想整环。由此区分分解不存在与分解不唯一两种失败。
 \end{exercise}
 \begin{solution}
 任意有限多个这样的形式和，其涉及的指数都可取共同分母 \(2^n\)；以 \(U=T^{1/2^n}\) 表示时，它们就是通常的 \(F[U]\) 中的多项式。运算结果仍属 \(A\)，加法、乘法的环公理可在这个共同多项式环中验证。因此 \(A\) 是交换含幺环。
@@ -227,11 +233,13 @@ d(fg)=d(f)+d(g),\qquad v(fg)=v(f)+v(g).
 \[
 cT^q=(cT^{q/2})T^{q/2}
 \]
-总是两个非单位的乘积，因为 \(q/2\) 仍是允许的正指数。所以 \(T\) 没有不可约因子，更不可能有有限不可约分解。与\cref{b1:prop:sqrt-minus-five-factorization}中 \(6\) 有两种不等价不可约分解相比，本例失败的是分解存在性。
+总是两个非单位的乘积，因为 \(q/2\) 仍是允许的正指数。所以 \(T\) 没有不可约因子，更不可能有有限不可约分解。
+
+有限多个元素 \(f_1,\ldots,f_r\in A\) 同属于某个 \(F[U]\)，其中 \(U=T^{1/2^n}\)。由于 \(F[U]\) 是主理想整环，存在 \(d\in F[U]\) 使 \((f_1,\ldots,f_r)F[U]=dF[U]\)。于是每个 \(f_j\) 都是 \(d\) 在 \(A\) 中的倍数，而 \(d\) 是 \(f_1,\ldots,f_r\) 在 \(F[U]\) 中的线性组合，也属于它们在 \(A\) 中生成的理想。因此 \((f_1,\ldots,f_r)A=dA\)；零理想也由 \(0\) 生成。然而 \(T\) 没有不可约分解，\cref{b1:thm:pid-ufd}说明 \(A\) 不可能是主理想整环。具体地，\((T)\subsetneq(T^{1/2})\subsetneq(T^{1/4})\subsetneq\cdots\) 是一条不稳定的理想升链：右边的生成元有更小的正指数，不能属于左边的理想。与\cref{b1:prop:sqrt-minus-five-factorization}中 \(6\) 有两种不等价不可约分解相比，本例失败的是分解存在性。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:11-ideal-splitting-three}
-在 \(R=\mathbb Z[s]\)、\(s^2=-5\) 中，令 \(J=(3,1+s)\)、\(K=(3,1-s)\)。证明 \(J,K\) 是不同的非主极大理想，且 \(JK=(3)\)。解释这与元素 \(3\) 不可约为何不矛盾。
+在 \(R=\mathbb Z[s]\)、\(s^2=-5\) 中，令 \(I=(2,1+s)\)、\(J=(3,1+s)\)、\(K=(3,1-s)\)。证明 \(J,K\) 是不同的非主极大理想，且 \(JK=(3)\)。再验证 \(IJ=(1+s)\)、\(IK=(1-s)\)，并用这些等式解释 \(6=2\cdot3=(1+s)(1-s)\) 所对应的理想分解。说明这与元素 \(3\) 不可约为何不矛盾。
 \end{exercise}
 \begin{solution}
 映射 \(R\rightarrow\mathbb F_3\)、\(a+bs\mapsto\overline{a-b}\) 保持乘法，因为 \((-1)^2=-5\) 在模 \(3\) 下成立。它满射，核为 \(J\)：若 \(3\mid a-b\)，则
@@ -245,4 +253,10 @@ cT^q=(cT^{q/2})T^{q/2}
 9,\quad3(1+s),\quad3(1-s),\quad(1+s)(1-s)=6
 \]
 生成。它们都被 \(3\) 整除，且 \(3=9-6\in JK\)，因此 \(JK=(3)\)。这里分解的是主理想 \((3)\)，而因子 \(J,K\) 本身非主，不能选取它们的单个生成元来得到元素 \(3\) 的分解，所以不违反 \(3\) 的不可约性。
+
+理想 \(IJ\) 由 \(6,2(1+s),3(1+s),(1+s)^2\) 生成，均为 \(1+s\) 的倍数；又因 \(1+s=3(1+s)-2(1+s)\in IJ\)，有 \(IJ=(1+s)\)。由 \((1+s)-(1-s)=2s\in(2)\) 可得 \(I=(2,1-s)\)。因此 \(IK\) 由 \(6,2(1-s),3(1-s),(1-s)^2\) 生成，均为 \(1-s\) 的倍数；又有 \(1-s=3(1-s)-2(1-s)\in IK\)，故 \(IK=(1-s)\)。结合本节已证的 \(I^2=(2)\) 与这里的 \(JK=(3)\)，两种元素分解都给出同一个理想等式：
+\[
+(6)=(2)(3)=I^2JK=(IJ)(IK)=(1+s)(1-s).
+\]
+末项表示主理想 \((1+s)\) 与 \((1-s)\) 的乘积。这些等式只核对当前例子，并未证明一般理想分解的存在性或唯一性。
 \end{solution}

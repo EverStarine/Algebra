@@ -1,10 +1,22 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.2 Hilbert 函数
+% 本轮补充的纲要细目：
+% * 按原多项式次数计算同时变号不变环的权二分次 Hilbert 级数，用乘以齐次非零因子的正合列与单项式计数互相核验
+% * 证明各次有限维的分次代数之间若有保持次数的满射且 Hilbert 级数相同，则该满射为同构；给出无映射时结论失效的反例
+% #### 11.2.1 分次片的维数与长度
+% #### 11.2.2 Hilbert 级数的有理性
+% #### 11.2.3 Hilbert 级数与增长
+% #### 11.2.4 从初始理想计算 Hilbert 数据
+% #### 11.2.5 不变环的分次与展示核验
+% #### 11.2.6 有限点集上的求值码
 % 纲要位置：工作记录/计划纲要.md，第 2142 行。
 % 纲要细目（写作范围）：
 % * 分次片的维数或长度
 % * Hilbert 级数的有理性
 % * 从级数读取增长
+% * 用初始单项式理想和包含排除实际计算 Hilbert 数据
+% * 同时变号不变环的加权 Hilbert 级数与分次展示核验
+% * 有限点集上的求值码、次数滤过与维数计数；低次数 Reed–Muller 实例
 
 \section{Hilbert 函数}
 \label{b3:sec:1102}
@@ -88,3 +100,142 @@ H_{A/(x^2,xy)}(t)=\frac1{1-t}+t.
 
 \ProseParagraphBreak
 正权分次的一般情况不能直接声称最终是单个多项式。例如 \(k[x]\)、\(\deg x=2\) 的级数为 \(1/(1-t^2)\)，函数在偶数处为一、奇数处为零。每个同余类可分别呈现多项式行为，但这不是下一节标准分次结论中的同一个多项式。
+
+\subsection{从初始理想计算 Hilbert 数据}
+\label{b3:subsec:1102:04}
+
+Hilbert 级数的有理性还可以变成实际的计数方法。齐次理想的 Gröbner 基把每个分次片的基列成标准单项式，计算由此只涉及哪些单项式被排除。
+
+\begin{proposition}\label{b3:prop:hilbert-initial-count}
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(I\subseteq S\) 为齐次理想，并固定全局单项式序。则 \(S/I\) 与 \(S/\operatorname{in}(I)\) 有相同的 Hilbert 函数。若 \(\operatorname{in}(I)=(m_1,\ldots,m_s)\)，则
+\[
+H_{S/I}(t)=\frac{\displaystyle\sum_{J\subseteq\{1,\ldots,s\}}
+(-1)^{|J|}t^{\deg\operatorname{lcm}(m_j:j\in J)}}{(1-t)^n},
+\]
+空集的最小公倍式约定为一。
+\end{proposition}
+\begin{proof}
+从有限齐次生成组开始作 Buchberger 算法，可得到由齐次多项式组成的 Gröbner 基：S 多项式与每一步非零余式仍齐次。对齐次多项式作除法时，每个乘积保持原次数。因此次数为 \(d\) 的标准单项式的剩余类构成 \((S/I)_d\) 的基，独立性由\cref{b3:prop:standard-basis-finite}中不依赖有限维假设的首项论证得到。
+
+对每个 \(j\)，被 \(m_j\) 整除的单项式集合的计数级数为 \(t^{\deg m_j}/(1-t)^n\)。若同时被若干 \(m_j\) 整除，就等价于被它们的最小公倍式整除。对每个次数中的有限集合应用包含排除，再把各次等式组成形式级数，便得到所示公式。
+\end{proof}
+
+例如在 \(S=k[x,y,z]\) 中取 \(I=(x^2,xy+y^2)\)，按字典序 \(x\succ y\succ z\) 计算。恒等式
+\[
+y^3=(y-x)(xy+y^2)+yx^2
+\]
+表明须补入 \(y^3\)。三对 S 多项式中，第一对依次用 \(xy+y^2\)、\(y^3\) 约化为零，另外两对分别为零或 \(y^4\)，也有零余式。因此 \(x^2,xy+y^2,y^3\) 构成 Gröbner 基，其初始理想为 \((x^2,xy,y^3)\)。标准单项式恰为
+\[
+z^j,\quad xz^j,\quad yz^j,\quad y^2z^j\qquad(j\ge0).
+\]
+所以
+\[
+H_{S/I}(t)=\frac{1+2t+t^2}{1-t},\qquad
+h_{S/I}(d)=\begin{cases}1,&d=0,\\3,&d=1,\\4,&d\ge2.\end{cases}
+\]
+下一节的维数与重数定理将说明：分母的一阶极点给出维数一，分子在一处的值给出重数四。这里先通过逐项计数得到函数，随后才解释这些数的几何意义。
+
+\subsection{不变环的分次与展示核验}
+\label{b3:subsec:1102:invariant-hilbert}
+
+在\cref{b3:prop:sign-invariant-presentation}中，生成性和关系理想都已由单项式证明。现在保留原多项式的全次数，用 Hilbert 级数重新观察这个环。次数的选择不可略去：\(x^2,xy,y^2\) 的次数都是二，所以对应的三变量多项式环应取权二分次。
+
+\begin{example}\label{b3:exm:sign-invariant-hilbert}
+设 \(k\) 为特征不为二的域，\(B=k[x,y]^{C_2}\)，其中非单位元把 \(x,y\) 同时变号。给 \(k[x,y]\) 取 \(\deg x=\deg y=1\)，并令 \(B_n=B\cap k[x,y]_n\)。则
+\begin{equation}\label{b3:eq:sign-invariant-hilbert}
+H_B(t)=\frac{1-t^4}{(1-t^2)^3}
+=\frac{1+t^2}{(1-t^2)^2},
+\qquad
+\dim_k B_n=
+\begin{cases}
+n+1,&n\ge0\text{ 为偶数},\\
+0,&n\ge0\text{ 为奇数}.
+\end{cases}
+\end{equation}
+\end{example}
+\begin{proof}
+该作用保持次数，不变多项式的每个齐次部分仍不变，所以所定义的 \(B_n\) 给出分次。由\cref{b3:prop:sign-invariant-presentation}，令 \(S=k[u,v,w]\)、\(\deg u=\deg v=\deg w=2\)，便有分次同构
+\[
+B\cong S/(q),\qquad q=uw-v^2,\qquad \deg q=4.
+\]
+\(S\) 是整环且 \(q\ne0\)，因此乘以 \(q\) 在 \(S\) 上单射，得到保持次数的短正合列
+\[
+0\longrightarrow S(-4)\xrightarrow{\ q\ }S
+\longrightarrow B\longrightarrow0.
+\]
+每个变量的幂贡献级数 \(1/(1-t^2)\)，故 \(H_S(t)=(1-t^2)^{-3}\)。由逐次维数可加和\eqref{b3:eq:hilbert-shift}，便得
+\[
+H_B(t)=H_S(t)-t^4H_S(t)=\frac{1-t^4}{(1-t^2)^3}.
+\]
+这里使用的是 \(q\) 在取商前的 \(S\) 上为非零因子；不能仅从“有一条齐次关系”便省略单射性检查。
+
+另一方面，偶数次 \(2m\) 的全部 \(2m+1\) 个单项式都固定，奇数次没有非零不变元。于是也可直接计算
+\[
+H_B(t)=\sum_{m\ge0}(2m+1)t^{2m}
+=\frac{2t^2}{(1-t^2)^2}+\frac1{1-t^2}
+=\frac{1+t^2}{(1-t^2)^2}.
+\]
+中间等式可逐项乘以 \((1-t^2)^2\) 核验，完全是形式级数恒等式。这同时给出所述 Hilbert 函数。
+\end{proof}
+
+若另定义 \(\widetilde B_m=B_{2m}\)，便是把原次数二改记为次数一，得到标准分次环及级数
+\[
+H_{\widetilde B}(z)=\frac{1+z}{(1-z)^2},
+\qquad H_B(t)=H_{\widetilde B}(t^2).
+\]
+两者使用同一个环的乘法，却记录不同的次数。直接把 \(u,v,w\) 视为次数一而仍声称计算的是 \(B_n\)，会把所有非零分次片移到错误的位置。
+
+\ProseParagraphBreak
+在上述算例中，第二次计数只是核对已经证明的同构。实际计算时，它也能用来证明尚待核验的展示，但必须先有一个保持次数的满射。
+
+\begin{proposition}\label{b3:prop:hilbert-surjection-isomorphism}
+设 \(k\) 为域，\(R=\bigoplus_{n\ge0}R_n\)、\(A=\bigoplus_{n\ge0}A_n\) 为各分次片有限维的分次 \(k\) 代数，\(\psi:R\to A\) 为保持次数的 \(k\) 代数满同态。若 \(H_R(t)=H_A(t)\)，则 \(\psi\) 是同构。
+\end{proposition}
+\begin{proof}
+设 \(K=\ker\psi\)。因为 \(\psi\) 保持次数，\(K\) 是齐次理想。任取 \(a\in A_n\) 并取其原像 \(r=\sum_jr_j\)，比较 \(\psi(r)\) 的各次分量可知 \(\psi(r_n)=a\)，所以每个 \(\psi_n:R_n\to A_n\) 都满射。逐次取核得
+\[
+0\longrightarrow K_n\longrightarrow R_n
+\xrightarrow{\ \psi_n\ }A_n\longrightarrow0.
+\]
+级数相同意味着 \(\dim_kR_n=\dim_kA_n\)，故 \(K_n=0\) 对每个 \(n\) 成立。因 \(K=\bigoplus_nK_n\)，核为零。
+\end{proof}
+
+例如在同时变号作用中，若已证明 \(x^2,xy,y^2\) 生成不变环，并验证 \(uw-v^2\) 是关系，就得到 \(S/(uw-v^2)\to B\) 的分次满射。取商前乘以 \(uw-v^2\) 的正合列计算其源的级数，独立的偶数次单项式计数计算其目标的级数；两者相等后，\cref{b3:prop:hilbert-surjection-isomorphism}便给出核恰为这一条关系的另一证明。若尚未证明候选元生成目标，或未说明映射保持所用分次，单独写出两个相同的有理函数还不能得到这个结论。
+
+\subsection{有限点集上的求值码}
+\label{b3:subsec:1102:05}
+
+有限域上的多项式求值把次数计数用于编码。第一卷附录B用一元多项式建立 Reed--Solomon 码；现在允许多个变量。需要注意，仿射点的消失理想通常不齐次，所以首先使用全次数滤过。
+
+\begin{definition}\label{b3:def:evaluation-code-finite-set}
+设 \(k=\mathbb F_q\)，\(X=\{P_1,\ldots,P_N\}\subseteq k^n\) 为非空有限点集，\(d\ge0\)。记 \(S_{\le d}\subset k[x_1,\ldots,x_n]\) 为全次数不超过 \(d\) 的多项式空间。线性映射
+\[
+\operatorname{ev}_{X,d}:S_{\le d}\longrightarrow k^N,
+\qquad f\longmapsto\bigl(f(P_1),\ldots,f(P_N)\bigr)
+\]
+的像称为 \(X\) 上次数界为 \(d\) 的\term[qiuzhi-ma]{求值码}[evaluation code]，记为 \(C_X(d)\)。
+\end{definition}
+
+\begin{proposition}\label{b3:prop:evaluation-code-hilbert}
+设 \(k=\mathbb F_q\)，\(S=k[x_1,\ldots,x_n]\)，\(X\subseteq k^n\) 是非空有限点集，\(I(X)\subseteq S\) 为其消失理想，\(d\ge0\) 为整数，\(C_X(d)\) 为全次数不超过 \(d\) 的多项式在 \(X\) 上的求值码。固定先比较全次数的全局单项式序，则 \(\dim_k C_X(d)\) 等于相对于 \(I(X)\) 的全次数不超过 \(d\) 的标准单项式数。该数也是商代数 \(S/I(X)\) 的全次数滤过第 \(d\) 项的维数。
+\end{proposition}
+\begin{proof}
+求值映射的核正是 \(I(X)\cap S_{\le d}\)，所以像同构于 \(S_{\le d}/(I(X)\cap S_{\le d})\)。因所用次序先比较全次数，每次 Gröbner 除法都不会增大多项式的全次数。故该商由次数不超过 \(d\) 的标准单项式生成；它们的独立性仍由首项判据给出。最后一个等式就是商滤过的定义。
+\end{proof}
+
+对整个点集 \(X=\mathbb F_q^n\)，其消失理想为
+\[
+I(X)=(x_1^q-x_1,\ldots,x_n^q-x_n).
+\]
+右边的生成元在每一点消失，且其首单项式两两互素，构成 Gröbner 基。若一个余式在所有点上为零，则它关于每个变量的次数都小于 \(q\)。把其他变量固定后用一元根数界，再对变量数归纳，便知余式为零，这证明反向包含。因此求值码的维数为
+\[
+\#\{\,(a_1,\ldots,a_n)\mid 0\le a_i<q,\ a_1+\cdots+a_n\le d\,\}.
+\]
+这里的计数级数可写为 \((1+t+\cdots+t^{q-1})^n/(1-t)\)；分母的额外因子表示按次数累计，而不是把仿射坐标代数误作标准分次环。这类码称为\term[Reed-Muller-ma]{Reed--Muller 码}[Reed--Muller code]；本节采用整个仿射空间和全次数上界的约定。
+
+\ProseParagraphBreak
+取 \(q=2,n=2,d=1\)，按 \((0,0),(1,0),(0,1),(1,1)\) 排列求值点。基 \(1,x,y\) 给出生成矩阵
+\[
+G=\begin{pmatrix}1&1&1&1\\0&1&0&1\\0&0&1&1\end{pmatrix}.
+\]
+其秩为三，故码有八个码字。非恒定仿射线性函数的零点恰为两点：非零线性函数 \(\mathbb F_2^2\to\mathbb F_2\) 满射，每个纤维有两点。常数一的重量为四，所以最小距离为二。这是一个 \([4,3,2]\) 码，能够检测一个错误，却不能唯一纠正任意一个错误。计算 Hilbert 数据在这里直接求出了可传递信息的维数，距离则还需要另作零点计数。

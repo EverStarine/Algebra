@@ -1,10 +1,109 @@
 % !TeX root = ../../Book5.tex
-% 节标题由计划纲要.md 中附录 A 的第 3 条要点整理。
-
+% 纲要标题：### A.3 代数组合中的计数方法
+% 纲要位置：工作记录/计划纲要.md，第 4555 行。
+% #### A.3.1 轨道计数与带权循环指标
+% #### A.3.2 分拆与逆序数的生成函数
+% #### A.3.3 有限域子空间与 Gaussian 二项式
 \section{代数组合中的计数方法}
 \label{b5:sec:A03}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 代数结合组合的计数方法
+用表示或生成函数描述一个集合后，计数往往可以通过取迹、取系数或比较基来完成。使用这些方法时，须说明每个代数项所代表的对象。下面分别讨论对称性、长度和有限域上的子空间。
 
-待撰写。
+\subsection{轨道计数与带权循环指标}
+\label{b5:subsec:A03:01}
+
+\begin{proposition}\label{b5:prop:weighted-orbit-count}
+设有限群 \(G\) 作用于有限集 \(X\)，记 \(X/G\) 为轨道集、\(X^g=\{x\in X:gx=x\}\) 为 \(g\in G\) 的不动点集，则
+\[
+|X/G|=\frac1{|G|}\sum_{g\in G}|X^g|.
+\]
+若每个 \(x\in X\) 另带一个在轨道上恒定的有理多项式环中的单项式权重 \(m(x)\)，记其在轨道 \(O\) 上的共同值为 \(m(O)\)，则轨道的权重和为
+\[
+\sum_{O\in X/G}m(O)
+=\frac1{|G|}\sum_{g\in G}\sum_{x\in X^g}m(x).
+\]
+\end{proposition}
+\begin{proof}
+固定一个轨道 \(O\)。右端双和中该轨道的贡献是
+\[
+\frac1{|G|}\sum_{x\in O}|G_x|m(O).
+\]
+轨道稳定子群公式使每项 \(|G_x|=|G|/|O|\)，故贡献恰为 \(m(O)\)。逐个轨道相加就得到带权式；令全部权重为一得到第一式。
+\end{proof}
+
+设 \(G\le S_n\) 置换 \(n\) 个位置，用 \(r\) 种颜色染色，并用 \(z_i\) 记录颜色 \(i\) 出现次数。若 \(g\) 有 \(m_j(g)\) 个长度 \(j\) 的轮换，固定染色必须在每个轮换上同色，因此轨道重量生成函数为
+\begin{equation}\label{b5:eq:polya-cycle-index}
+\frac1{|G|}\sum_{g\in G}
+\prod_{j\ge1}(z_1^j+\cdots+z_r^j)^{m_j(g)}.
+\end{equation}
+这就是\term[xunhuan-zhibiao]{循环指标}[cycle index]在染色问题中的替换规则，它适用于染色轨道大小不相同的情形。
+
+\ProseParagraphBreak
+例如四个位置只允许旋转、使用红蓝两色时，四个旋转的循环型为 \(1^4,4,2^2,4\)。所以计数多项式为
+\[
+\frac14\Bigl((a+b)^4+(a^2+b^2)^2+2(a^4+b^4)\Bigr)
+=a^4+a^3b+2a^2b^2+ab^3+b^4.
+\]
+共有六类，两红两蓝有两类，分别是同色相邻与红蓝交替。若还允许翻转或全体颜色交换，作用群就改变了，必须重新计算。
+
+\subsection{分拆与逆序数的生成函数}
+\label{b5:subsec:A03:02}
+
+整数分拆可以按每个部分的出现次数计数。每个正整数 \(j\) 可出现 \(0,1,\ldots\) 次，所以形式级数恒等式为
+\[
+\sum_{n\ge0}p(n)t^n=\prod_{j\ge1}(1-t^j)^{-1}.
+\]
+固定 \(t^n\) 时只有 \(j\le n\) 的因子有贡献，故右端在形式意义下良定。将只出现零或一次的选择编码为 \(1+t^j\)，又得到
+\[
+\prod_{j\ge1}(1+t^j)
+=\prod_{j\ge1}\frac{1-t^{2j}}{1-t^j}
+=\prod_{\substack{j\ge1\\j\ \mathrm{odd}}}(1-t^j)^{-1}.
+\]
+因此不同部分的分拆与全部部分为奇数的分拆等数。这是逐次形式消去，不能解读为任意数值 \(t\) 下都可重排的无穷乘积。
+
+\begin{proposition}\label{b5:prop:permutation-length-enumerator}
+设 \(n\) 为非负整数，\(q\) 为形式变量，\(\ell(w)\) 为 \(w\in S_n\) 关于邻位换位的长度。则在 \(\mathbb Z[q]\) 中有
+\[
+\sum_{w\in S_n}q^{\ell(w)}
+=\prod_{j=1}^n(1+q+\cdots+q^{j-1}).
+\]
+\end{proposition}
+\begin{proof}
+由\cref{b5:prop:permutation-length-inversions}，长度等于逆序数。在一个 \(S_{n-1}\) 置换中插入最大数字 \(n\)。若它右边有 \(r\) 个数字，就新增恰 \(r\) 个逆序，而 \(r\) 唯一遍历 \(0,\ldots,n-1\)。因此长度多项式递推为前一级乘 \(1+q+\cdots+q^{n-1}\)。从 \(n=1\) 的初值一开始便得到公式。
+\end{proof}
+
+在 \(q=1\) 处恢复 \(n!\)，在 \(q=-1\) 处（\(n\ge2\)）得到零，表示奇、偶置换等数。最高次数为 \(n(n-1)/2\)，最高项系数一，正对应唯一的最长置换。这个多项式记录了各长度的置换数，后面还会出现在旗空间的计数中。
+
+\subsection{有限域子空间与 Gaussian 二项式}
+\label{b5:subsec:A03:03}
+
+\begin{proposition}\label{b5:prop:gaussian-subspace-count}
+设 \(q\) 为素数幂，\(n,r\) 为满足 \(0\le r\le n\) 的整数，\(\mathbb F_q\) 为 \(q\) 元有限域。向量空间 \(\mathbb F_q^n\) 中 \(r\) 维 \(\mathbb F_q\) 子空间的数目为
+\[
+{n\brack r}_q
+=\frac{(q^n-1)(q^n-q)\cdots(q^n-q^{r-1})}
+{(q^r-1)(q^r-q)\cdots(q^r-q^{r-1})}
+=\prod_{i=1}^r\frac{1-q^{n-r+i}}{1-q^i}.
+\]
+取空乘积为一。
+\end{proposition}
+\begin{proof}
+有序线性无关 \(r\) 元组可逐个选择：第 \(i+1\) 个向量不得落在前 \(i\) 个生成的 \(q^i\) 元子空间中，所以共有分子的数目。每个固定 \(r\) 维子空间的有序基数为分母，且每个独立元组唯一确定其生成子空间。相除得到第一式；提出相应的 \(q^i\) 并调整指标得到第二式。
+\end{proof}
+
+尽管最后写成有理表达式，它实际是关于 \(q\) 的整系数多项式。固定超平面 \(H=\mathbb F_q^{n-1}\)，将 \(r\) 维子空间分成包含于 \(H\) 和不包含于 \(H\) 两类。后一类的交 \(U=W\cap H\) 维数为 \(r-1\)。在 \(V/U\) 中，\(W/U\) 是不落在超平面 \(H/U\) 中的一条直线；把最后一坐标归一为一，其数目是 \(q^{n-r}\)。于是
+\begin{equation}\label{b5:eq:gaussian-recursion}
+{n\brack r}_q={n-1\brack r}_q
++q^{n-r}{n-1\brack r-1}_q.
+\end{equation}
+边界值为一，越界值为零，归纳便给出整系数多项式性。令形式参数 \(q=1\) 时递推变成普通二项式递推，故其值为 \(\binom nr\)；这不是声称存在一个单元素的域。
+
+\ProseParagraphBreak
+完整旗
+\(0=V_0\subset V_1\subset\cdots\subset V_n=\mathbb F_q^n\)、
+\(\dim V_i=i\)，可先选一条直线，再在商空间中选完整旗。因此旗的数目为
+\[
+\prod_{j=1}^n\frac{q^j-1}{q-1}
+=\prod_{j=1}^n(1+q+\cdots+q^{j-1}).
+\]
+它与置换长度多项式相同，提示了长度与旗几何之间的联系；两边在此均有独立的计数证明。

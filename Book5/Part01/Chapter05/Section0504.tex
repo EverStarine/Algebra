@@ -1,42 +1,204 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 5.4 初等子群检测与 Brauer 整诱导的证明
-% 纲要位置：计划纲要.md，第 3223 行。
-
-\section{初等子群检测与 Brauer 整诱导的证明}
-\label{b5:sec:0504}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3874 行。
+% 纲要细目（写作范围）：
 % * 把诱导像组织为复表示环中的加法子群，利用限制、诱导与张量恒等式控制其环论行为
 % * 建立初等子群上的限制检测与整性引理，分素数处理局部化后的整数系数问题，再由有限生成交换群的局部检测回到整数系数
 % * 分别完成“存在某个整数倍的诱导表达”与“无需整体分母的整诱导表达”，指出第二步是超出 Artin 有理诱导的实质
 % * 解释初等群上的表示如何进一步化为从适当子群一维表示的诱导；逐项说明所用子群仍处于允许的初等范围
 % * 用小群的虚特征标表达说明整数系数可以为负，不把虚表示恒等式误解为实际表示的直接和分解
-%
+
+\section{初等子群检测与 Brauer 整诱导的证明}
+\label{b5:sec:0504}
+
+Artin 定理已经给出有限指数的子格。现在必须证明这个指数没有任何素因子。我们逐个素数 \(p\) 只允许分母与 \(p\) 互素，再证明 \(p\)-初等子群的诱导已经生成整个表示环。论证中所需的交换环知识将在使用处给出证明。
 
 \subsection{诱导像与复表示环}
 \label{b5:subsec:0504:01}
 
-待撰写。
+固定有限群 \(G\) 与素数 \(p\)，记 \(\mathcal E_p(G)\) 为全部 \(p\)-初等子群，并令
+\[
+I_p(G)=\sum_{E\in\mathcal E_p(G)}\operatorname{Ind}_E^G R(E).
+\]
+由\cref{b5:prop:induction-ideal}，这是 \(R(G)\) 的理想。每个循环子群都是 \(p\)-初等群，因此\cref{b5:cor:artin-finite-index}给出
+\begin{equation}\label{b5:eq:artin-elementary-finite-index}
+I_{\mathrm{cyc}}(G)\subset I_p(G)\subset R(G),
+\qquad \Bigl[R(G):I_p(G)\Bigr]<\infty.
+\end{equation}
+还需排除这个有限指数中的素因子 \(p\)。
+
+\ProseParagraphBreak
+记 \(\mathbb Z_{(p)}=\{a/b\in\mathbb Q:p\nmid b\}\)。对加法群 \(M\)，记 \(M_{(p)}=\mathbb Z_{(p)}\otimes_{\mathbb Z}M\)，可将元素写成 \(x/s\)，其中 \(p\nmid s\)；判据 \(x/1=0\) 等价于存在这样的 \(s\) 使 \(sx=0\)。我们将证明
+\[
+I_p(G)_{(p)}=R(G)_{(p)}.
+\]
+这并不要求单独固定一个 \(p\) 就能在整数上生成 \(R(G)\)；它只说明最终的障碍不含 \(p\) 部分。
 
 \subsection{限制检测、局部化与整性引理}
 \label{b5:subsec:0504:02}
 
-待撰写。
+需要先把表示环的极大理想解释为模素数的特征标值检测。以下引理特意保留一般交换环的表述，证明却只用有限生成元与行列式。
+
+\begin{lemma}[有限扩张中的极大理想提升]\label{b5:lem:finite-extension-maximal-lift}
+设 \(A\subset B\) 为含同一单位的交换环，且 \(B\) 为有限生成 \(A\)-模。对每个极大理想 \(\mathfrak m\subset A\)，存在极大理想 \(\mathfrak n\subset B\) 使 \(\mathfrak n\cap A=\mathfrak m\)。
+\end{lemma}
+\begin{proof}
+令 \(S=A\setminus\mathfrak m\)。分式环 \(A_{\mathfrak m}=S^{-1}A\) 的非单位恰组成理想 \(\mathfrak mA_{\mathfrak m}\)，且 \(A_{\mathfrak m}\subset S^{-1}B\) 仍为单射。因此 \(S^{-1}B\ne0\)，并为有限生成 \(A_{\mathfrak m}\)-模。
+
+若 \(\mathfrak mB=B\)，则有限模 \(M=S^{-1}B\) 满足 \(\mathfrak mA_{\mathfrak m}M=M\)。取模生成元 \(u_1,\ldots,u_r\)，写成 \(u_j=\sum_i c_{ij}u_i\)，其中全部 \(c_{ij}\in\mathfrak mA_{\mathfrak m}\)。伴随矩阵恒等式说明 \(\det\Bigl(I-(c_{ij})\Bigr)\) 零化 \(M\)。这个行列式模 \(\mathfrak mA_{\mathfrak m}\) 为 \(1\)，故为单位，迫使 \(M=0\)，矛盾。因此 \(\mathfrak mB\ne B\)。取包含它的极大理想 \(\mathfrak n\)。其收缩是包含 \(\mathfrak m\) 的真理想，只能等于 \(\mathfrak m\)。
+\end{proof}
+
+存在极大理想只需通常的链并与 Zorn 引理：真理想的链之并仍不含 \(1\)。在本节中 \(B/\mathfrak mB\) 还是域 \(A/\mathfrak m\) 上的有限维非零代数，也可直接从真理想的维数中取最大者。
+
+\begin{lemma}[极大理想的评价描述]\label{b5:lem:representation-maximal-evaluation}
+设 \(G\) 为有限群，\(m\) 为其指数，\(\zeta_m=e^{2\pi\mathrm i/m}\)，\(O=\mathbb Z[\zeta_m]\)，\(p\) 为素数，\(R(G)\) 为复表示环。下标 \((p)\) 表示反演所有与 \(p\) 互素整数的局部化。对 \(R(G)_{(p)}\) 的每个极大理想 \(\mathfrak m\)，存在 \(g\in G\) 及 \(O_{(p)}\) 的极大理想 \(\mathfrak q\)，使剩余域 \(O_{(p)}/\mathfrak q\) 的特征为 \(p\)，且
+\[
+\mathfrak m=\Bigl\{\,\alpha\in R(G)_{(p)}:\alpha(g)\in\mathfrak q\,\Bigr\}.
+\]
+\end{lemma}
+\begin{proof}
+设共轭类数为 \(r\)。在每个共轭类代表处取值给出单射环同态
+\[
+R(G)_{(p)}\longrightarrow B=O_{(p)}^r.
+\]
+单射性来自特征标作为类函数的相等判据；由\cref{b5:prop:character-values-integral}评价确实落在此环中。\(O\) 为有限生成 \(\mathbb Z\)-模，所以 \(B\) 为有限生成 \(\mathbb Z_{(p)}\)-模，从而也是有限生成 \(R(G)_{(p)}\)-模。\cref{b5:lem:finite-extension-maximal-lift}把 \(\mathfrak m\) 提升为 \(B\) 的极大理想。
+
+有限直积的极大理想只在一个分量上取极大理想：各分量的单位幂等元在域商中只能取 \(0\) 或 \(1\)，它们的和是 \(1\)，且彼此乘积为零，因此恰有一个取 \(1\)。这便给出某个代表 \(g\) 及 \(O_{(p)}\) 的极大理想 \(\mathfrak q\)。
+
+最后，域 \(O_{(p)}/\mathfrak q\) 对 \(\mathbb Z_{(p)}\) 的像是整的，整性由\cref{b5:lem:finite-module-integrality}给出。若域 \(L\) 整于子整环 \(D\)，则 \(D\) 本身是域：对 \(0\ne a\in D\)，把 \(a^{-1}\in L\) 的首一整方程乘以适当的 \(a\) 的幂，就得到 \(a^{-1}\in D\)。因此 \(\mathfrak q\cap\mathbb Z_{(p)}\) 为极大理想，只能是 \(p\mathbb Z_{(p)}\)。剩余域的特征遂为 \(p\)。
+\end{proof}
+
+群元素 \(g\) 有唯一分解 \(g=su=us\)，其中 \(s,u\) 均为 \(g\) 的幂，\(|s|\) 与 \(p\) 互素，\(|u|\) 为 \(p\) 的幂。这由循环群 \(\langle g\rangle\) 的阶的互素分解得到。这样的 \(s\) 称为 \(g\) 的 \(p\)-正则部分；阶与 \(p\) 互素的元素称为\term[pzhengzeyuansu]{\(p\)-正则元素}[\(p\)-regular element]。
+
+\begin{lemma}\label{b5:lem:character-p-regular-reduction}
+设 \(G\) 为有限群，\(p\) 为素数，\(m\) 为 \(G\) 的指数，\(\zeta_m=e^{2\pi\mathrm i/m}\)，\(O=\mathbb Z[\zeta_m]\)，\(R(G)\) 为复表示环，下标 \((p)\) 表示反演所有与 \(p\) 互素整数的局部化。设 \(\mathfrak q\subset O_{(p)}\) 为剩余特征是 \(p\) 的极大理想。若 \(g\in G\) 有分解 \(g=su=us\)，其中 \(s,u\) 均为 \(g\) 的幂、\(|s|\) 与 \(p\) 互素、\(|u|\) 为 \(p\) 的幂，则每个 \(\alpha\in R(G)_{(p)}\) 均满足
+\[
+\alpha(g)\equiv\alpha(s)\pmod{\mathfrak q}.
+\]
+\end{lemma}
+\begin{proof}
+对实际表示，交换且可对角化的矩阵 \(\rho(s),\rho(u)\) 可同时对角化：先按 \(\rho(s)\) 的特征空间分解，再在每个被 \(\rho(u)\) 保持的空间内对角化。共同特征向量上的特征值分别记作 \(\xi,\eta\)，其中 \(\eta^{p^a}=1\)。在特征 \(p\) 的剩余域中，\(T^{p^a}-1=(T-1)^{p^a}\)，故 \(\eta\equiv1\)。于是 \(\xi\eta\equiv\xi\)，求迹即得结论。再取整数线性组合并除以与 \(p\) 互素的分母，便覆盖全部 \(\alpha\)。
+\end{proof}
 
 \subsection{从有理诱导到整系数诱导}
 \label{b5:subsec:0504:03}
 
-待撰写。
+\begin{theorem}[逐素数的整诱导]\label{b5:thm:brauer-local-induction}
+设 \(G\) 为有限群，\(p\) 为素数，\(R(G)\) 为复表示环，令 \(I_p(G)=\sum_{E\le G,\ E\text{ 为 }p\text{-初等}}\operatorname{Ind}_E^G R(E)\)。下标 \((p)\) 表示反演所有与 \(p\) 互素整数的局部化，则
+\[
+I_p(G)_{(p)}=R(G)_{(p)}.
+\]
+因此有限指数 \(\Bigl[R(G):I_p(G)\Bigr]\) 与 \(p\) 互素。
+\end{theorem}
+\begin{proof}
+若理想 \(I_p(G)_{(p)}\) 为真理想，则它包含在某个极大理想 \(\mathfrak m\) 中。由\cref{b5:lem:representation-maximal-evaluation}及\cref{b5:lem:character-p-regular-reduction}，存在 \(p\)-正则元素 \(s\) 及剩余特征为 \(p\) 的 \(\mathfrak q\subset O_{(p)}\)，使
+\[
+\alpha\in\mathfrak m\quad\Longleftrightarrow\quad
+\alpha(s)\equiv0\pmod{\mathfrak q}.
+\]
+我们构造一个 \(p\)-初等诱导，使其在 \(s\) 处不满足此同余。
+
+令 \(C=\langle s\rangle\)，在中心化子 \(C_G(s)\) 中取 Sylow \(p\)-子群 \(P\)。由于 \(C\) 在该中心化子内居中，且 \(|C|\) 与 \(|P|\) 互素，
+\[
+E=CP=C\times P
+\]
+为 \(p\)-初等子群；整数 \(d=\Bigl[C_G(s):E\Bigr]\) 与 \(p\) 互素。对 \(C\) 的一维特征标 \(\lambda\)，将其延拓为 \(E\) 上在 \(P\) 处平凡的特征标 \(\widetilde\lambda\)。诱导公式\cref{b5:thm:induced-character}给出
+\begin{equation}\label{b5:eq:elementary-induction-evaluation}
+\Bigl(\operatorname{Ind}_E^G\widetilde\lambda\Bigr)(s)
+=d\sum_{t\in s^G\cap C}\lambda(t).
+\end{equation}
+详细地说，\(E\) 中与 \(s\) 共轭的元素阶与 \(p\) 互素，故其 \(P\) 分量为 \(1\)，恰落在 \(C\) 内。对每个固定的 \(t\in s^G\cap C\)，满足 \(x^{-1}sx=t\) 的 \(x\in G\) 有 \(|C_G(s)|\) 个，除以 \(|E|\) 即得上式。
+
+集合 \(T=s^G\cap C\) 非空。若对所有 \(\lambda\in\operatorname{Irr}(C)\)，和 \(S_\lambda=\sum_{t\in T}\lambda(t)\) 都属于 \(\mathfrak q\)，取 \(t_0\in T\)，利用循环群的有限几何级数可得
+\[
+\sum_{\lambda\in\operatorname{Irr}(C)}
+S_\lambda\lambda(t_0)^{-1}
+=\sum_{t\in T}\sum_{\lambda\in\operatorname{Irr}(C)}
+\lambda(tt_0^{-1})
+=|C|.
+\]
+左侧模 \(\mathfrak q\) 为零，右侧却因 \(p\nmid|C|\) 非零，矛盾。故至少一个 \(S_\lambda\notin\mathfrak q\)。整数 \(d\) 模 \(\mathfrak q\) 也非零，于是\eqref{b5:eq:elementary-induction-evaluation}不属于 \(\mathfrak q\)。这与该诱导属于 \(I_p(G)_{(p)}\subset\mathfrak m\) 矛盾，故理想等于全环。
+
+由\eqref{b5:eq:artin-elementary-finite-index}，商 \(R(G)/I_p(G)\) 有限。若其阶被 \(p\) 整除，它含有阶为 \(p\) 的元素，而这样的元素不会在仅反演与 \(p\) 互素整数后消失。这与刚证的局部化商为零矛盾，故指数与 \(p\) 互素。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:brauer-integral-image}
+设 \(G\) 为有限群，\(I(G)\) 为全部初等子群的复表示环诱导像之和。则 \(I(G)=R(G)\)。
+\end{proposition}
+\begin{proof}
+\(I(G)\) 包含循环诱导，由\cref{b5:cor:artin-finite-index}，加法商群 \(A=R(G)/I(G)\) 有限。对每个素数 \(p\)，它又是 \(R(G)/I_p(G)\) 的商，而\cref{b5:thm:brauer-local-induction}说明后者阶与 \(p\) 互素。故 \(|A|\) 与每个素数互素，只能等于 \(1\)，于是 \(A=0\)。
+\end{proof}
+
+这里先用 Artin 得到有限指数，再逐素数排除指数，正是从“某个整数倍可诱导”到“本身可整诱导”的差别。
+
+\begin{corollary}[初等子群上的虚特征标判据]\label{b5:cor:brauer-character-criterion}
+设 \(G\) 为有限群，\(f:G\rightarrow\mathbb C\) 为类函数。则 \(f\in R(G)\)，当且仅当对每个初等子群 \(E\le G\)，限制 \(f|_E\) 属于 \(R(E)\)。
+\end{corollary}
+\begin{proof}
+正向来自实际表示的限制及可加性。反向中，\cref{b5:prop:brauer-integral-image}把每个不可约 \(\chi\) 写成 \(\sum_j n_j\operatorname{Ind}_{E_j}^G\theta_j\)，其中 \(n_j\in\mathbb Z\)、\(\theta_j\in R(E_j)\)。于是
+\[
+\langle\chi,f\rangle_G
+=\sum_j n_j\langle\theta_j,f|_{E_j}\rangle_{E_j}\in\mathbb Z.
+\]
+这里使用 Frobenius 互反及两个虚特征标的内积为整数。以不可约特征标为正交规范基展开 \(f\)，所有系数均为整数，故 \(f\in R(G)\)。
+\end{proof}
 
 \subsection{初等群表示与一维表示的诱导}
 \label{b5:subsec:0504:04}
 
-待撰写。
+下面用普通复表示论把定理化为一维特征标的诱导。
+\begin{theorem}\label{b5:thm:p-group-monomial}
+设 \(p\) 为素数，\(P\) 为有限 \(p\)-群。\(P\) 的每个复不可约特征标 \(\theta\) 都可写成 \(\operatorname{Ind}_Q^P\mu\)，其中 \(Q\le P\)，\(\mu\) 为 \(Q\) 的一维复特征标。
+\end{theorem}
+\begin{proof}
+按 \(|P|\) 归纳。若表示有非平凡核 \(N\)，它来自较小 \(p\)-群 \(P/N\) 的不可约表示。由归纳假设，这个表示等于某个 \(\overline Q\le P/N\) 的一维特征标 \(\overline\mu\) 的诱导。取原像 \(Q\le P\)，令 \(\mu(q)=\overline\mu(qN)\)。映射
+\[
+\mathbb C[P]\otimes_{\mathbb C[Q]}\mathbb C_\mu
+\longrightarrow
+\mathbb C[P/N]\otimes_{\mathbb C[\overline Q]}\mathbb C_{\overline\mu},
+\qquad g\otimes z\longmapsto(gN)\otimes z
+\]
+与张量平衡关系相容，因为 \(\mu(q)=\overline\mu(qN)\)，并与 \(P\) 作用相容。陪集双射 \(P/Q\simeq(P/N)/\overline Q\) 说明它把一组陪集基双射到另一组，故为同构。于是原表示为 \(\operatorname{Ind}_Q^P\mu\)。
+
+以下设表示 \(\rho\) 忠实。若 \(P\) 交换，由\cref{b5:cor:schur-algebraically-closed}，全部 \(\rho(g)\) 为标量，不可约性迫使维数为 \(1\)；这也包含归纳起点 \(P=1\)。
+
+设 \(P\) 非交换。非平凡有限 \(p\)-群中心非平凡，因为类方程中非中心共轭类的大小均被 \(p\) 整除，故中心的阶亦被 \(p\) 整除。将此结论用于非平凡 \(p\)-群 \(P/Z(P)\)，选取 \(xZ(P)\ne1\) 位于其中心。子群
+\(A=\Bigl\langle Z(P),x\Bigr\rangle\)
+交换且正规：对任意 \(g\in P\)，有 \(gxg^{-1}\in xZ(P)\)。又因 \(x\notin Z(P)\)，\(A\) 不包含于 \(Z(P)\)。
+
+把 \(\rho|_A\) 分解成一维权空间。若只出现一个特征标，则 \(A\) 作用为标量；忠实性会使 \(A\subset Z(P)\)，矛盾。故至少出现两个权。取其中一个 \(\lambda\)，其惯性群 \(J=I_P(\lambda)\) 为真子群；这是因为\cref{b5:thm:clifford-restriction}断言不可约表示中的所有权构成一个 \(P\)-轨道。由\cref{b5:thm:clifford-correspondence}，相应权空间给出不可约 \(J\)-表示 \(U\)，且 \(\rho\simeq\operatorname{Ind}_J^P U\)。对较小的 \(p\)-群 \(J\) 应用归纳假设，得 \(U\simeq\operatorname{Ind}_Q^J\mu\)。\cref{b5:thm:induction-transitivity}遂给出 \(\rho\simeq\operatorname{Ind}_Q^P\mu\)。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:elementary-monomial}
+有限初等群 \(E\) 的每个复不可约特征标都是其某个初等子群的一维复特征标的诱导。
+\end{proposition}
+\begin{proof}
+写 \(E=P\times C\)。在不可约表示中，中心子群 \(C\) 作用为某个一维特征标 \(\lambda\)，而限制到 \(P\) 是不可约表示 \(\theta\)：若有真 \(P\)-不变子空间，标量的 \(C\)-作用也保持它，与 \(E\)-不可约性矛盾。由\cref{b5:thm:p-group-monomial}，\(\theta=\operatorname{Ind}_Q^P\mu\)。取 \(P/Q\) 的陪集基，便有
+\[
+\theta\otimes\lambda
+=\operatorname{Ind}_{Q\times C}^{P\times C}(\mu\otimes\lambda).
+\]
+其中 \(Q\times C\) 仍是 \(p\)-初等群，且 \(\mu\otimes\lambda\) 是它的一维特征标，得到所需表达。
+\end{proof}
+
+\begin{proof}[\cref{b5:thm:brauer-induction}的证明]
+由\cref{b5:prop:brauer-integral-image}，任意 \(\alpha\in R(G)\) 是初等子群虚特征标诱导的整数线性组合；把这些虚特征标展开为不可约特征标的整数线性组合，便得到定理的第一项结论。对每个不可约初等子群特征标应用\cref{b5:prop:elementary-monomial}，将其写成同一初等群内某个初等子群的一维诱导。最后用\cref{b5:thm:induction-transitivity}把两次诱导合成一次，即得全部系数仍为整数的一维表述。
+\end{proof}
 
 \subsection{负系数与虚特征标的例子}
 \label{b5:subsec:0504:05}
 
-待撰写。
+取 \(G=S_3\)，其不可约特征标为 \(1,\varepsilon,\chi\)，次数分别为 \(1,1,2\)。设 \(C_2=\Bigl\langle(12)\Bigr\rangle\)，\(C_3=\Bigl\langle(123)\Bigr\rangle\)，取 \(C_3\) 的非平凡一维特征标 \(\lambda\)。由限制及 Frobenius 互反，
+\[
+\operatorname{Ind}_{C_2}^{S_3}1=1+\chi,\qquad
+\operatorname{Ind}_{C_3}^{S_3}\lambda=\chi.
+\]
+第一式也可从三点置换表示中分离常数向量得到；第二式在三类上的值依次为 \(2,0,-1\)。所以
+\begin{equation}\label{b5:eq:s3-brauer-negative}
+1=\operatorname{Ind}_{C_2}^{S_3}1
+-\operatorname{Ind}_{C_3}^{S_3}\lambda.
+\end{equation}
+两个子群都循环，因而都是允许的初等子群。此式移项后表示一个三维实际表示同构于一维平凡表示与一个二维表示的直和；负号没有制造负维数的表示空间。
+
+\ProseParagraphBreak
+\(S_3\) 自身不是初等群，所有初等子群都是真子群，故每个一维诱导的次数至少为 \(2\)。因此 \(1\) 不可能是这些诱导的非负整数线性组合。这也说明负系数不是上述公式偶然写得不巧，而是整诱导定理必须允许的现象。

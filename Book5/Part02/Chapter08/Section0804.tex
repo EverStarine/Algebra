@@ -1,13 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 8.4 模表示理论补充
-% 纲要位置：计划纲要.md，第 3350 行。
+% 纲要位置：工作记录/计划纲要.md，第 4001 行。
 
 \section{模表示理论补充}
 \label{b5:sec:0804}
 
-% TODO: 按以下纲要要点撰写本节。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 %
 % * 本章不同于第5章 Brauer 诱导理论
 % * 缺陷群和块论的学习地图
@@ -16,17 +15,74 @@
 % ---
 %
 
+本章的几个计算已经说明，特征零表示、模表示和投射模之间有联系，却不能彼此替换。本节用约化与诱导的相容性说明第一种联系，再用一个能够直接计算的截断映射说明块的缺陷群。更深的块分类只列清楚问题与所需理论，不作为本编其余章节的前提。
+
 \subsection{模表示与 Brauer 诱导理论的区别}
 \label{b5:subsec:0804:01}
 
-待撰写。
+\chapref{b5:ch:05}的 Brauer 诱导定理在特征零表示环中，把普通特征标写成由某些子群的一维特征标诱导而来的整数线性组合。本章的 Brauer 特征标则在特征 \(p\) 中先取表示，再把 \(p\)-正则特征值提升到特征零；分解矩阵记录整格约化的合成因子。两种理论处理不同的构造，不能因为都冠以 Brauer 之名就将其结论互换。
+\begin{proposition}\label{b5:prop:reduction-induction}
+设 \(G\) 为有限群，\(H\le G\)，\(p\) 为素数，并给定对 \(G,H\) 都分裂的 \(p\)-模系统 \((K,\mathcal O,k)\)。记 \(d_G:R_K(G)\to G_0(kG)\)、\(d_H:R_K(H)\to G_0(kH)\) 为分解映射，其中表示群及 Grothendieck 群都取有限维左模。它们与限制、诱导相容：
+\[
+d_G\operatorname{Ind}_H^G
+=\operatorname{Ind}_H^Gd_H,\qquad
+d_H\operatorname{Res}_H^G
+=\operatorname{Res}_H^Gd_G.
+\]
+右侧的诱导、限制作用于由短正合列定义的 \(G_0\) 群。
+\end{proposition}
+\begin{proof}
+限制一个稳定满格仍是稳定满格，其约化显然与限制交换。若 \(L\) 是 \(KH\) 模 \(V\) 中的满格，则
+\(\mathcal OG\otimes_{\mathcal OH}L\)
+是 \(\operatorname{Ind}_H^G V\) 中的稳定满格：按左陪集代表，\(\mathcal OG\) 是有限自由右 \(\mathcal OH\) 模，这个张量是若干份 \(L\) 的直和，且扩到 \(K\) 后得到所需诱导模。模 \(\pi\) 后自然同构于
+\(kG\otimes_{kH}(L/\pi L)\)。
+诱导因右侧自由性保持正合列，限制也保持正合列，所以二者确实诱导 \(G_0\) 上的映射。结合格选择无关性得到公式。
+\end{proof}
+因此可以先诱导再约化，也可以先约化再诱导，得到相同的合成因子信息。但这并不把任意模表示恢复为完全可约表示；\(G_0\) 本来就已经忘掉了非分裂扩张的区别。
 
 \subsection{缺陷群与块论简介}
 \label{b5:subsec:0804:02}
 
-待撰写。
+\begin{proposition}\label{b5:prop:brauer-truncation}
+设 \(G\) 为有限群，\(p\) 为素数，\(k\) 为特征 \(p\) 的域，\(P\le G\) 为 \(p\)-子群，\(C_G(P)\) 为其中心化子。令 \(P\) 以共轭作用于 \(kG\)，并记固定子代数为 \((kG)^P\)。映射
+\[
+\operatorname{Br}_P^G:(kG)^P\longrightarrow kC_G(P),\qquad
+\sum_{g\in G}a_gg\longmapsto\sum_{g\in C_G(P)}a_gg
+\]
+是保持单位的 \(k\) 代数同态，称为此处的\term[Brauer-yingshe]{Brauer 映射}[Brauer map]。
+\end{proposition}
+\begin{proof}
+加法、标量与单位的保持直接来自定义。取两个 \(P\) 共轭不变的元素 \(x=\sum a_gg\)、\(y=\sum b_hh\)，固定 \(z\in C_G(P)\)。乘积中 \(z\) 的系数为
+\[
+\sum_{gh=z}a_gb_h.
+\]
+\(P\) 同时共轭二元组 \((g,h)\)，保持条件 \(gh=z\)，且每个轨道内的系数乘积相同。非平凡轨道的大小是正的 \(p\) 次幂，在 \(k\) 中贡献为零。剩余的固定二元组恰好满足 \(g,h\in C_G(P)\)，其总贡献就是 \(\operatorname{Br}_P^G(x)\operatorname{Br}_P^G(y)\) 的 \(z\) 系数。逐个 \(z\) 比较即得乘法性。
+\end{proof}
+\begin{definition}\label{b5:def:block-defect-group}
+设 \(G\) 为有限群，\(p\) 为素数，\(k\) 为特征 \(p\) 的域，\(b\) 为 \(kG\) 的块幂等元，对 \(p\)-子群 \(D\le G\)，记 \(\operatorname{Br}_D^G:(kG)^D\to kC_G(D)\) 为保留中心化子上系数的 Brauer 映射。若 \(D\) 满足 \(\operatorname{Br}_D^G(b)\ne0\)，并且在满足这一条件的 \(p\)-子群中按包含关系极大，就称 \(D\) 为块 \(kGb\) 的一个\term[quexian-qun]{缺陷群}[defect group]。
+\end{definition}
+由于 \(\operatorname{Br}_{1}^G(b)=b\ne0\)，且 \(G\) 有限，这样的极大子群存在。其进一步的共轭与结构性质属于块论；这里采用支集截断的描述以便计算。这个描述及其与一般定义的关系，可参阅\cite[Corollaries 12.5.4--12.5.5]{Webb2016FiniteGroupRepresentations}。
+\ProseParagraphBreak
+对\cref{b5:exm:s3-two-blocks}中的 \(S_3\) 与特征二，取 \(P=\langle s\rangle\)。中心化子 \(C_G(P)=P\)，故
+\[
+\operatorname{Br}_P^G(1+r+r^2)=1,\qquad
+\operatorname{Br}_P^G(r+r^2)=0.
+\]
+三个非平凡 \(2\) 子群均为这些共轭子群，因此二维局部块的缺陷群为一个 Sylow \(2\) 子群，四维矩阵块的缺陷群为平凡群。后者称为缺陷零块。在任意有限 \(p\) 群上，唯一块的幂等元为一，而对整个群的截断仍为一，所以其缺陷群就是整个群。
 
 \subsection{特征零与正特征下的表示分类}
 \label{b5:subsec:0804:03}
 
-待撰写。
+不可约 Brauer 特征标分类的是简单模，并由加法性确定任意模的合成因子。对于扩张信息，它有明确局限：循环 \(p\) 群上，\(M_d\) 与 \(k^{\oplus d}\) 的 Brauer 特征标都只在单位元处取整数 \(d\)，但前者不可分解，后者在 \(d>1\) 时可分解。分解矩阵同样保留约化后的合成因子，不指定某个整格约化的全部模结构。
+\ProseParagraphBreak
+有限群在正特征中甚至可以有无限多个不可分解表示。这里给一个不用分类定理的例子。设 \(k\) 是特征二的无限域，\(G=C_2\times C_2=\langle x,y\rangle\)，并在 \(k^2\) 上取
+\[
+N=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+\rho_\lambda(x)=I+N,\qquad \rho_\lambda(y)=I+\lambda N
+\quad(\lambda\in k).
+\]
+因为 \(N^2=0\)，两个矩阵交换且平方都为一，故给出表示。其自同态必须与 \(N\) 交换，恰为 \(aI+bN\)，组成局部环，所以每个表示不可分解。若两个参数的表示同构，同构矩阵 \(T\) 与 \(N\) 交换，再由
+\(T(\lambda N)=\mu NT\)
+得到 \((\lambda-\mu)NT=0\)。\(T\) 可逆且 \(N\ne0\)，故 \(\lambda=\mu\)。于是得到一个参数化的无限族。
+\ProseParagraphBreak
+这个例子解释了为何后续会研究投射覆盖、块、相对投射性和稳定范畴，而不只寻找另一张有限的特征标表。一般缺陷群如何控制块、何时只有有限多种不可分解模，以及不同块之间的等价，都是进一步的问题。本编接下来改从箭图研究有限维代数；那里的表示可以在任意特征上定义，所用的无环性、关系和代数闭性条件仍须逐项写明。

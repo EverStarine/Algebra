@@ -1,32 +1,95 @@
 % !TeX root = ../../Book5.tex
-% 纲要标题：### E.4 表示论观点与进一步阅读
-% 纲要位置：计划纲要.md，第 3859 行。
-
-\section{表示论观点与进一步阅读}
-\label{b5:sec:E04}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要标题：### E.4 张量结构与解空间上的表示
+% 纲要位置：工作记录/计划纲要.md，第 4719 行。
 % * 微分模的张量不变量与 Tannaka 重构思想；参数化理论转第三卷附录 E.4
 % * 形式局部分类、单值群、Stokes 数据和 Riemann–Hilbert 方法转附录 D 及分析／几何教材
-% * 完整 Picard–Vessiot 存在性证明、可计算 Galois 群和更高阶算法可另立微分 Galois 专著，学习有限群或李代数表示论不需要这些内容
-%
+% * Picard–Vessiot 存在唯一性在 E.2 证明；可计算 Galois 群和更高阶算法可继续阅读专著
+% #### E.4.1 张量不变量与 Tannaka 重构
+% #### E.4.2 形式局部分类与解析方法
+% #### E.4.3 行列式方程与群的限制
 % ---
-%
+\section{张量结构与解空间上的表示}
+\label{b5:sec:E04}
+
+微分 Galois 群在原方程解空间上的作用，可以延伸到张量积、交替积和商空间。方程已有的配对和张量关系也会约束群。以下先讨论张量不变量，再比较改变基域对微分 Galois 群的影响。
 
 \subsection{张量不变量与 Tannaka 重构}
 \label{b5:subsec:E04:01}
 
-待撰写。
+设 \(K\) 的特征为零，常数域 \(C\) 代数闭，\(M\) 为有限维微分模，\(L/K\) 为其系统的 PV 域。记 \(\langle M\rangle_\otimes\) 为由 \(M\) 和平凡微分模 \(K\)，经有限直和、张量积、对偶、子模及商模得到的微分模所成的满子范畴。对其中的对象 \(N\)，取
+\[
+ \omega(N)=\ker\bigl(\nabla:L\otimes_KN\longrightarrow L\otimes_KN\bigr).
+\]
+它是 \(C\) 向量空间。微分自同构 \(\sigma\) 只作用于 \(L\) 因子，因与导子交换而保持水平截面；于是 \(\omega(N)\) 得到 \(G=\operatorname{Gal}_\delta(L/K)\) 的表示。张量积上的作用和通常的表示张量积相符。
+
+\begin{theorem}[PV 理论的张量表述]\label{b5:thm:E-tannaka}
+设 \((K,\delta)\) 为特征零微分域，其常数域 \(C=\ker\delta\) 代数闭；\((M,\nabla_M)\) 为 \(K\) 上的有限维微分模，\(L/K\) 为其线性系统的 PV 扩张，\(G=\operatorname{Gal}_\delta(L/K)\)。令 \(\langle M\rangle_\otimes\) 为有限维微分 \(K\) 模范畴中，由 \(M\) 及平凡微分模 \((K,\delta)\) 经有限直和、张量积、对偶及子商生成的满子范畴。对其中的对象 \((N,\nabla_N)\)，在 \(L\otimes_KN\) 上取延拓联络 \(\nabla(\ell\otimes v)=\delta(\ell)\otimes v+\ell\otimes\nabla_N(v)\)，并令
+\(\omega(N)=\ker\nabla\)。则 \(\omega\) 将 \(\langle M\rangle_\otimes\) 等价地映到 \(C\) 上线性代数群 \(G\) 的有限维有理表示范畴。它保持张量积，并且是忠实、正合的；每个 \(N\) 都满足
+\(\dim_C\omega(N)=\dim_KN\)。对任意交换 \(C\) 代数 \(S\)，有自然同构 \(G(S)\simeq\operatorname{Aut}^\otimes(S\otimes_C\omega)\)，因而 \(G\) 可由这一范畴连同函子 \(\omega\) 恢复。
+\end{theorem}
+
+\begin{proof}
+\(L\otimes_KM\) 由基本解矩阵给出水平基，因而是平凡微分模。直和、张量与对偶显然保持这一性质，子商也保持：在水平基下，设 \(W\subset L^r\) 是对逐系数求导稳定的子空间，取它唯一的行最简形基。每个基向量求导后主元位置全为零；它又属于 \(W\)，只能为零，所以所有非主元系数均在 \(C\) 中。于是 \(W\) 有水平基，商也有水平基。由此，对所有 \(N\in\langle M\rangle_\otimes\)，自然映射
+\[
+ L\otimes_C\omega(N)\longrightarrow L\otimes_KN
+\]
+是同构，给出维数等式及张量相容性。微分模同态在水平基下是常数矩阵；对短正合列取这些矩阵，秩在 \(C\) 与 \(L\) 上相同，所以取水平截面保持满射，也保持正合性。张量 \(L\) 是忠实的，故 \(\omega\) 忠实。
+
+若 \(T:\omega(N_1)\to\omega(N_2)\) 与 \(G\) 作用交换，把它用上述同构延伸为 \(L\) 线性映射。这个映射在原来的 \(K\) 基下的矩阵系数被 \(G\) 固定，由\cref{b5:thm:E-galois-correspondence}属于 \(K\)，故下降成微分模同态。反向取水平截面即可，证明满忠实。
+
+还要说明全部有理表示都能得到。记 \(V=\omega(M)\)，它是 \(G\) 的忠实表示。\(C[G]\) 由 \(V\) 的矩阵坐标及逆行列式生成，因而每个有限维、平移稳定的坐标函数空间都是有限个 \(V,V^*\) 的张量幂的子商。任意有限维有理表示 \(U\) 用各坐标泛函的矩阵系数嵌入有限份 \(C[G]\)：在群单位元处求值便说明这个嵌入单射，有限个系数又落在一个有限维坐标函数空间中。因此 \(U\) 是这些张量幂直和的子商。
+
+将相应的 \(G\) 不变子空间在 \(L\) 上张成，得到张量微分模基变换中的子空间。它对导子稳定，也对群的半线性作用稳定。在原 \(K\) 基下作行最简化，唯一性使每个矩阵系数被 \(G\) 固定，故均属于 \(K\)。这个子空间于是下降为微分子模，商同样下降。这样每个 \(U\) 都由某个 \(N\) 得到，证明范畴等价。
+
+最后，张量自同构由它在 \(V\) 上的矩阵 \(g\) 决定，并须保持各个张量构造中的子空间与关系。取定义闭群 \(G\subset\operatorname{GL}(V)\) 的理想 \(I\)，在矩阵坐标和逆行列式的多项式环中，选择一个有限维、\(\operatorname{GL}(V)\) 平移稳定的空间 \(E\)，使 \(I\cap E\) 生成 \(I\)。这样的 \(E\) 可按有限个生成元的次数及逆行列式的最高幂选取，它是有限张量构造的子商。\(I\cap E\) 是 \(G\) 不变子空间，所以张量自同构必须保持它，进而保持 \(I\)。右平移保持 \(G\) 的定义理想，且单位元属于 \(G\)，于是 \(g\in G\)。反过来每个 \(g\in G\) 都给出张量自同构。对任意交换 \(C\) 代数延伸同样的有限关系，便得到群函子的恢复，即\term[Tannaka-chonggou]{Tannaka 重构}[Tannaka reconstruction]。有关 PV 范畴的表述见\cite[Theorem 1.5.2, pp. 40--41]{Singer2009DifferentialGalois}及\cite[Section 2.4]{VanDerPutSinger2003GaloisTheory}。
+\end{proof}
+
+正合性依赖于这些微分模被同一 PV 域平凡化；在一般微分域中，取水平截面只有左正合性，不能仅由“取一个算子的核”推出上述结论。
+
+\ProseParagraphBreak
+对具体张量，群的限制常可直接核验。例如系统 \(Y'=AY\) 上若存在可逆矩阵 \(B\in M_n(K)\)，满足
+\begin{equation}\label{b5:eq:E-horizontal-pairing}
+ B'+A^{\mathsf T}B+BA=0,
+\end{equation}
+则对基本解矩阵 \(Z\) 求导给出 \((Z^{\mathsf T}BZ)'=0\)。故
+\(Q=Z^{\mathsf T}BZ\in M_n(C)\) 可逆。任意 \(\sigma(Z)=ZC_\sigma\) 都满足
+\[
+ C_\sigma^{\mathsf T}QC_\sigma=Q,
+\]
+因为 \(\sigma\) 固定 \(B\) 和 \(Q\)。当 \(B\) 对称或交替时，这分别把群限制在相应正交群或辛群内。这只证明包含关系；若还有别的张量关系，实际群可能更小。\cref{b5:thm:E-tannaka}说明为什么必须同时考虑所有这些构造。
 
 \subsection{形式局部分类与解析方法}
 \label{b5:subsec:E04:02}
 
-待撰写。
+一个方程的群依赖于所选基域。例~\ref{b5:exm:E-exponential}中 \(y'=y\) 在 \(\mathbb C(x)\) 上的群是 \(\mathbb G_m\)，但把基域扩大为 \(\mathbb C((x))\) 后，
+\[
+ t_0=\sum_{m\ge0}\frac{x^m}{m!}
+\]
+已是该域中的可逆基本解。形式求导给出 \(t_0'=t_0\)，而 Laurent 级数的导数为零恰好意味着它是常数。因此这个局部形式基域上的 PV 扩张就是基域自身，群平凡。全局的代数关系和一个普通点附近的形式关系不能混为一谈。
 
-\subsection{Picard–Vessiot 理论的专题选读}
+\ProseParagraphBreak
+对 \(u'=1/x\) 则不同：\(\mathbb C((x))\) 中任何元素的导数仍没有 \(x^{-1}\) 项，故不能在基域内找到 \(u\)。取形式超越元 \(u\) 并规定 \(u'=1/x\)，例~\ref{b5:exm:E-logarithm}中的证明仍成立：其中只用了基域常数为 \(\mathbb C\) 及“导数留数为零”，这两个性质对 Laurent 级数同样成立。因此局部形式群仍是加法群。若改在穿孔圆盘的通用覆盖上解释解析解，一次绕原点的延拓又把 \(\log x\) 变成 \(\log x+2\pi i\)，给出群中的一个具体元素。
+\ProseParagraphBreak
+这两例区分了有理系数、形式局部和解析延拓三种问题。非正则奇点还需要扇形渐近解和 Stokes 数据，具体说明见\appref{b5:app:D}。只有形式级数而没有解析收敛或渐近条件时，尚不能谈论这种延拓。
+
+\subsection{行列式方程与群的限制}
 \label{b5:subsec:E04:03}
 
-待撰写。
+\begin{proposition}[行列式方程]\label{b5:prop:E-wronskian}
+设 \((K,\delta)\) 为特征零微分域，常数域 \(C=\ker\delta\) 代数闭，\(n\ge1\)，\(A\in M_n(K)\)，\(L/K\) 为系统 \(\delta(Y)=AY\) 的 PV 扩张，\(Z\in\operatorname{GL}_n(L)\) 为基本解矩阵，撇号表示 \(\delta\)。则
+\[
+ (\det Z)'=\operatorname{tr}(A)\det Z.
+\]
+若 \(\operatorname{tr}(A)=f'/f\) 对某个 \(f\in K^\times\) 成立，则
+\(\det Z=cf\)、\(c\in C^\times\)，且对每个 \(\sigma\in G=\operatorname{Gal}_\delta(L/K)\)，由 \(\sigma(Z)=ZC_\sigma\) 定义的群矩阵 \(C_\sigma\) 都有行列式 \(1\)。
+\end{proposition}
+\begin{proof}
+按行列式的多线性逐列求导，得到
+\((\det Z)'=\operatorname{tr}(Z^{-1}Z')\det Z\)。代入 \(Z'=AZ\) 并利用矩阵迹在共轭下不变，便得第一式。在附加假设下，商 \(\det Z/f\) 的导数为零；无新常数给出该商为 \(c\in C^\times\)。自同构固定 \(cf\)，故对 \(\sigma(Z)=ZC_\sigma\) 取行列式得到 \(\det C_\sigma=1\)。
+\end{proof}
+
+特别地，\(y''=r(x)y\) 的一阶系统矩阵为
+\(\bigl(\begin{smallmatrix}0&1\\r&0\end{smallmatrix}\bigr)\)，迹为零，所以微分 Galois 群包含在 \(\operatorname{SL}_2(C)\) 中。这给出上一节二阶算法所研究的群范围。这个包含关系可能为真包含：例如 \(y''=y\) 的基本解可以在指数型 PV 域中取为 \(t,t^{-1}\)，其群仅为对角子群。
+
+\ProseParagraphBreak
+配对和行列式是可实际计算的张量不变量；它们给出群的上界，而找全解之间的代数关系才能确定群。多参数理论还要加入与主导子交换的其他导子，所得群一般由微分多项式方程刻画，已不属于本附录的普通线性代数群情形。相关概念放在第三卷附录 E.4；有效群计算和高阶算法可继续阅读 \cite[Sections 1.3--1.5]{Singer2009DifferentialGalois}，本卷不以这些专题作为表示论正文的前提。

@@ -1,15 +1,212 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第21章*　Hopf 代数与仿射代数群
-% 纲要位置：计划纲要.md，第 3737 行。
+% 纲要位置：工作记录/计划纲要.md，第 4389 行。
 
 \OptionalChapter{Hopf 代数与仿射代数群}{b5:ch:21}
 \BookChapterNumber{b5:ch:21}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章把张量积、对偶与群乘法写成 Hopf 代数的结构映射。群代数、包络代数和坐标环给出三种不同来源的例子；余模则将有理表示与矩阵系数联系起来。随后讨论环面权分解、微分表示和正特征群概形的区别，最后用型、伴随对合及四元数解释古典群的分裂与非分裂模型。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 在具体生成元上核验余乘法、余单位和对极，并构造张量与对偶作用。
+\item 区分群代数和坐标代数、模与余模、基域点与所有交换代数上的点。
+\item 从余模证明有理表示的局部有限性、环面权分解及仿射群的线性实现。
+\item 说明仅由微分表示无法恢复哪些整数与正特征信息，比较等距、相似和对合自同构群。
+\end{itemize}
+\end{learninggoals}
+
+本章使用张量积、代数同态和第三卷的仿射坐标环语言；群概形只按可表示函子及坐标方程介绍，不要求预先学习全部概形论。包络代数例子调用第15章，四元数例子则把所需乘法与范数公式重新列出。
+
+\ProseParagraphBreak
+Hopf 代数的结构及对偶可参阅\cite[Sections 5.2--5.3]{EtingofEtAl2015TensorCategories}。该书的 Hopf 定义要求对极可逆，本章采用更一般的定义并在使用对偶时说明实际所需条件；所讨论的群代数、包络代数和交换坐标代数不受这一区别影响。
 
 \input{Part04/Chapter21/Section2101}
 \input{Part04/Chapter21/Section2102}
 \input{Part04/Chapter21/Section2103}
 \input{Part04/Chapter21/Section2104}
+\input{Part04/Chapter21/Section2105}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+余乘法规定张量积的作用，余单位规定平凡对象，对极使对偶和求逆成为可能。群代数中的元素按对角方式作用，包络代数中的李代数生成元按 Leibniz 方式作用；坐标代数则以反向的函数拉回描述群乘法。
+
+\ProseParagraphBreak
+有理表示等同于坐标余模，有限生成坐标环可由有限维矩阵系数恢复。环面表示按整数权分解，而微分只记录这些字符在单位处的一阶变化；正特征的 Frobenius 和非约化核说明一阶变化可能遗漏更多信息。
+
+\ProseParagraphBreak
+型的等距群是相似群的乘子核，保持伴随对合的内自同构则还要模去中心标量。四元数群在复化后成为熟悉的矩阵群，但其实际底域上的点仍可大不相同。这些区别是下一章讨论不变量与商时需要保留的对象条件。
+\end{chaptersummary}
+
+\BookExercises
+\begin{optionalexercise}\label{b5:ex:21:01}
+设 \((H,\Delta,\varepsilon,S)\) 为域 \(k\) 上的 Hopf 代数，证明 \(\varepsilon\Bigl(S(h)\Bigr)=\varepsilon(h)\)。提示：在 \(\operatorname{Hom}_k(H,k)\) 的卷积中比较余单位及其逆。
+\end{optionalexercise}
+\begin{solution}
+对极等式应用 \(\varepsilon\)，得到 \((\varepsilon S)*\varepsilon=\varepsilon=\varepsilon*(\varepsilon S)\)，而余单位公理说明 \(\varepsilon\) 本来就是这个卷积代数的单位。单位的逆仍为单位，故 \(\varepsilon S=\varepsilon\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:02}
+在 \(k[t]\) 上取 \(\Delta(t)=t\otimes1+1\otimes t\)。计算 \(\Delta(t^n)\)，并说明特征 \(p\) 时 \(t^p\) 仍为本原元。特征零时全部本原多项式有哪些？
+\end{optionalexercise}
+\begin{solution}
+余乘法是代数同态，故 \(\Delta(t^n)=\sum_{j=0}^n\binom njt^j\otimes t^{n-j}\)。特征 \(p\) 下中间二项式系数为零，得到本原性。特征零时若非零本原多项式最高次为 \(d>1\)，其余乘法中 \(t^{d-1}\otimes t\) 系数为首项系数乘 \(d\)，非零，矛盾；常数本原要求 \(c=2c\)，所以为零。全部本原元恰为 \(kt\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:03}
+设 \(G\) 为群。在 \(kG\) 中求满足 \(\Delta(u)=u\otimes u\)、\(\varepsilon(u)=1\) 的全部元素，称这类元素为类群元。
+\end{optionalexercise}
+\begin{solution}
+写 \(u=\sum a_gg\)。左侧仅有 \(g\otimes g\)，而右侧不同 \(g,h\) 的系数为 \(a_ga_h\)。域中不能有两个非零系数，因此只有一个 \(a_g\ne0\)。比较对角系数得 \(a_g=a_g^2\)，余单位又要求它为一。故类群元恰好是群基 \(G\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:04}
+设 \(G=C_2\)，在特征二中比较 \(kG\) 与 \(k^G\) 的底层代数、类群元及幂零性。
+\end{optionalexercise}
+\begin{solution}
+前者同构于 \(k[u]/(u^2)\)，其中 \(u=s-1\)，有非零幂零元；后者为 \(k\times k\)，约化。前者类群元为 \(1,s\)。后者的类群元是函数 \(f(gh)=f(g)f(h)\)、\(f(1)=1\)，即字符 \(G\to k^\times\)；其 \(f(s)^2=1\) 在特征二只有 \(f(s)=1\)，所以只有常数一。两者不能因向量空间维数相同而认同。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:05}
+在 \(U\Bigl(\mathfrak{sl}_2(\mathbb C)\Bigr)\) 的 Hopf 结构下，求 \(\Omega=h^2+2h+4fe=8C\) 的余乘法，其中 \(C\) 为本书按 Killing 型归一化的 Casimir 元。
+\end{optionalexercise}
+\begin{solution}
+用生成元本原性展开得
+\[
+\Delta(\Omega)=\Omega\otimes1+1\otimes\Omega
++2h\otimes h+4f\otimes e+4e\otimes f.
+\]
+交叉项来自平方 \(h^2\) 与乘积 \(fe\)。因此 Casimir 中央并不意味着它是本原元；它在张量积上的特征值不能只把两因子特征值直接相加。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:06}
+设 \(G\) 有限，给出 \(k^G\) 上左模与 \(G\)-分次空间的对应，并解释其张量乘法。
+\end{optionalexercise}
+\begin{solution}
+点函数 \(\delta_g\) 是完整正交幂等元，因此 \(V=\bigoplus_gV_g\)、\(V_g=\delta_gV\)。反过来按各分次片投影定义作用。由 \(\Delta\delta_g=\sum_{ab=g}\delta_a\otimes\delta_b\)，张量积的 \(g\) 片是 \(\bigoplus_{ab=g}V_a\otimes W_b\)。若群非交换，交换张量因子一般不保持这个分次。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:07}
+验证矩阵余代数的公式 \(\Delta(c_{ij})=\sum_\ell c_{i\ell}\otimes c_{\ell j}\)、\(\varepsilon(c_{ij})=\delta_{ij}\)。求其线性对偶代数。
+\end{optionalexercise}
+\begin{solution}
+两次余乘法均为 \(\sum_{\ell,r}c_{ir}\otimes c_{r\ell}\otimes c_{\ell j}\)，重命名指标即一致；余单位直接只留下一个求和项。若对偶基为 \(e^{ij}\)，卷积满足 \(e^{ij}e^{rs}=\delta_{jr}e^{is}\)，所以对偶代数为矩阵代数。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:08}
+在 \(\mathbb G_a\) 的正则余模 \(k[t]\) 中，求包含 \(t^d\) 的一个有限维子余模。特征零时证明最小这样的子余模为次数不超过 \(d\) 的多项式空间。
+\end{optionalexercise}
+\begin{solution}
+二项式公式说明 \(W_d=\operatorname{span}\{1,t,\ldots,t^d\}\) 稳定。特征零时 \(\Delta(t^d)\) 的第二因子各次系数非零且独立，用相应系数泛函作用便得到每个 \(t^j\)，故任一含 \(t^d\) 的子余模都含 \(W_d\)。正特征下有些系数会消失，最小性可能改变。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:09}
+给出 \(\mathbb G_m^2\) 在二维空间上的权 \((1,0),(0,1)\) 作用，计算对偶、二次对称幂和外平方的权。
+\end{optionalexercise}
+\begin{solution}
+对偶的两个权为 \((-1,0)\)、\((0,-1)\)，因为字符取逆。对称平方中，基与权的对应为
+\[
+v_1^2:\ (2,0),\qquad
+v_1v_2:\ (1,1),\qquad
+v_2^2:\ (0,2).
+\]
+外平方 \(v_1\wedge v_2\) 的权为 \((1,1)\)。这些结论直接由字符乘法得到，在任意特征均成立。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:10}
+证明 \(\mathbb G_m\to\mathbb G_m\) 的群概形态射恰为 \(t\mapsto t^n\)、\(n\in\mathbb Z\)。
+\end{optionalexercise}
+\begin{solution}
+坐标同态由可逆 Laurent 多项式的像 \(u\) 决定，Hopf 条件要求其为类群元。写有限 Laurent 和，比较 \(\Delta(u)\) 与 \(u\otimes u\)，如群代数的系数论证可知 \(u=t^n\)。反向每个这样的公式显然满足全部结构等式。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:11}
+在特征零域上，证明代数群同态 \(\mathbb G_a\to\mathbb G_m\) 必为平凡，而 \(\mathbb G_a\to\mathbb G_a\) 恰为 \(t\mapsto ct\)。
+\end{optionalexercise}
+\begin{solution}
+前者对应把 \(k[u,u^{-1}]\) 映到 \(k[t]\)，但 \(k[t]\) 的单位只有非零常数，单位点条件使该常数为一。后者的坐标像必须本原，前题已证全部本原多项式为 \(ct\)，反向加法性显然。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:12}
+设 \(k\) 特征为零，给 \(\mathbb G_a\) 一个三维有理表示，微分为单个三阶幂零 Jordan 块 \(N\)。写出表示矩阵并求不动空间。
+\end{optionalexercise}
+\begin{solution}
+以 \(N=\begin{psmallmatrix}0&1&0\\0&0&1\\0&0&0\end{psmallmatrix}\)，有
+\[
+\rho(t)=\begin{pmatrix}1&t&t^2/2\\0&1&t\\0&0&1\end{pmatrix}.
+\]
+一个向量被所有参数固定，当且仅当各个 \(t\) 次系数作用为零，等价于 \(Nv=0\)。因此不动空间是第一坐标轴，维数一。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:13}
+在特征 \(p\) 中，比较平凡的一维 \(\mathbb G_m\) 表示与字符 \(t^p\) 的表示：其微分与有理群表示是否相同？
+\end{optionalexercise}
+\begin{solution}
+平凡字符的微分为零，\(t^p\) 的导数也为零，所以两个 Lie 代数表示相同。但坐标 Laurent 多项式 \(1\) 与 \(t^p\) 不同，故群概形表示不同；在代数闭域的点上也可选 \(t^p\ne1\)。微分在这里不忠实。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:14}
+设 \(k\) 代数闭且特征为 \(p\)。计算 \(\alpha_p(k)\)、\(\alpha_p\Bigl(k[\epsilon]/(\epsilon^2)\Bigr)\)，并与平凡群概形比较。
+\end{optionalexercise}
+\begin{solution}
+域中 \(a^p=0\) 只可能 \(a=0\)，所以第一点群平凡。双数环中 \(a+b\epsilon\) 的 \(p\) 次幂为 \(a^p\)，故全部 \(b\epsilon\) 都给点，组成与 \((k,+)\) 同构的群。平凡群概形在任何代数上只有一个点，所以两者不同。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:15}
+设 \(A=k[\operatorname{GL}_n]\)。证明约束 \(\det X=1\) 生成 Hopf 理想，并求其单位处线性化。
+\end{optionalexercise}
+\begin{solution}
+\(\Delta(\det X-1)=(\det X-1)\otimes\det X+1\otimes(\det X-1)\)，余单位为零，对极将它送为 \(-(\det X)^{-1}(\det X-1)\)。故为Hopf理想。模 \(\epsilon^2\) 有 \(\det(I+\epsilon Y)=1+\epsilon\operatorname{tr}Y\)，线性化条件为迹零，在任意特征成立。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:16}
+求 \(U_3\) 的中心和交换子子群，并说明它与加法群三重直积不同。
+\end{optionalexercise}
+\begin{solution}
+按正文坐标，交换子为 \((0,0,ab'-a'b)\)。若与全部 \((a',b',c')\) 交换，必须 \(a=b=0\)，故中心是全部 \((0,0,c)\)。取 \(a=1,b'=c,a'=b=0\) 可实现每个中心元，所以交换子子群等于中心。该群非交换，而三个加法群直积交换。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:17}
+对实型 \(b\) 的矩阵 \(H=\operatorname{diag}(1,-1)\)，求相似乘子的像，并给出乘子为 \(-1\) 的矩阵。
+\end{optionalexercise}
+\begin{solution}
+交换坐标的 \(P=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\) 满足 \(P^{\mathsf T}HP=-H\)。正乘子由实标量 \(\sqrt c I\) 实现，负乘子由 \(\sqrt{-c}P\) 实现，故像为全部 \(\mathbb R^\times\)。正定型只能有正乘子，所以型的选择影响实际像。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:18}
+设 \(b\) 为非退化型，\(a\in K^\times\)。证明标量矩阵 \(aI\) 总给相似变换，但其在端同态代数上的内自同构恒等。由此区分三个群。
+\end{optionalexercise}
+\begin{solution}
+有 \((aI)^*H(aI)=\bar aaH\)，所以乘子为 \(\bar aa\)。标量与每个矩阵交换，故内自同构恒等。只有 \(\bar aa=1\) 时它等距；相似群包含更多标量，而对合代数自同构群已经把这些标量全都商掉。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:19}
+证明实点映射 \(\operatorname{SL}_2(\mathbb R)\to\operatorname{PGL}_2(\mathbb R)\) 的像恰为正行列式射影类，核为 \(\{\pm I\}\)。
+\end{optionalexercise}
+\begin{solution}
+标量缩放把行列式乘实平方，所以像必有正号。若 \(\det A>0\)，则 \((\det A)^{-1/2}A\) 行列式一，给原射影类的原像。核是标量 \(aI\) 且 \(a^2=1\)，正为两个元。负行列式类没有原像。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:20}
+在 \(\mathbb H\) 中令 \(q=(1+i+j+k)/2\)。计算共轭在基 \(i,j,k\) 上的矩阵，以及该矩阵的行列式。
+\end{optionalexercise}
+\begin{solution}
+四元数范数为一，所以 \(q^{-1}=(1-i-j-k)/2\)。使用 \(ij=k\)、\(jk=i\)、\(ki=j\) 及反向乘积变号，逐项相乘得到
+\(qiq^{-1}=j,qjq^{-1}=k,qkq^{-1}=i\)。
+矩阵为 \(\begin{psmallmatrix}0&0&1\\1&0&0\\0&1&0\end{psmallmatrix}\)，是三轮换矩阵，行列式一。它固定 \(i+j+k\)，在其正交平面上是三分之一整周的旋转；\(q\) 与 \(-q\) 仍给相同作用。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:21}
+对 \(n\ge2,m\ge0\)，证明自然 \(\operatorname{SL}_n(\mathbb C)\) 表示 \(\operatorname{Sym}^m(\mathbb C^n)\) 能通过中心商 \(\operatorname{PGL}_n(\mathbb C)\)，当且仅当 \(n\mid m\)；并在 \(n=2\) 时把条件写成字符格条件。
+\end{optionalexercise}
+\begin{solution}
+\(\operatorname{SL}_n\) 的中心由 \(\zeta I\)、\(\zeta^n=1\) 组成，在每个纯 \(m\) 次张量及其对称商上按 \(\zeta^m\) 作用。由于复数域有本原 \(n\) 次单位根，中心作用平凡恰当 \(n\mid m\)。任意复可逆矩阵都可乘以标量使行列式为一，故这个中心商正是 \(\operatorname{PGL}_n(\mathbb C)\)，核平凡作用便允许下降。对 \(n=2\)，环面最高权为 \(m\lambda\)，下降要求它属于根格 \(2\mathbb Z\lambda\)，即 \(m\) 偶数。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:21:22}
+取一个交换Hopf代数 \(A\)。证明每个 \(R\) 点的逆由 \(gS\) 给出时，还满足 \((gh)^{-1}=h^{-1}g^{-1}\)，并解释为何不能据此认为 \(G(R)\) 交换。
+\end{optionalexercise}
+\begin{solution}
+Hopf对极给卷积逆，任意结合群中双边逆唯一，故 \((gh)^{-1}=h^{-1}g^{-1}\)。\(A\) 交换保证卷积结果仍是代数同态，却不保证其余乘法余交换。以 \(A=k[\operatorname{GL}_2]\) 为例，点群仍为通常的非交换矩阵群。
+\end{solution}

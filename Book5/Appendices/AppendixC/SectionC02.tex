@@ -1,10 +1,124 @@
 % !TeX root = ../../Book5.tex
+% 纲要标题：### C.2 紧李群与 Peter–Weyl 理论
+% 纲要位置：工作记录/计划纲要.md，第 4621 行。
+% #### C.2.1 Haar 测度与有限维平均
+% #### C.2.2 Peter--Weyl 定理的准确含义
+% #### C.2.3 圆群与低维矩阵系数
 % 节标题由计划纲要.md 中附录 C 的第 2 条要点整理。
 
 \section{紧李群与 Peter–Weyl 理论}
 \label{b5:sec:C02}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要范围：
 % * 紧李群、Peter–Weyl 理论所需的分析前提
 
-待撰写。
+有限群的平均可以推广到紧群，但有限求和必须改成测度积分。平均后仍能证明有限维完全可约性；若要描述整个函数空间，还需要 Hilbert 空间的完备性以及矩阵系数的稠密性。
+
+\subsection{Haar 测度与有限维平均}
+\label{b5:subsec:C02:01}
+
+设 \(K\) 为紧实李群。它具有唯一归一化的左右不变正则 Borel 测度 \(\mathrm{d}g\)，满足 \(\int_K1\,\mathrm{d}g=1\)，称为\term[Haar-cedu]{Haar 测度}[Haar measure]。下列构造说明紧李群情形为何可以从流形积分得到它；相关论述见\cite[Section 4.6, Theorem 4.36]{Kirillov2008LieGroups}。
+\begin{proof}
+在单位元切空间上取一个正定内积，按左平移延伸成左不变 Riemann 度量。其体积密度无需选择定向，给出左不变的正则 Borel 测度；紧性保证总体积有限且非零。右平移后的密度仍左不变，而左不变密度由单位元处的值唯一决定，故每个右平移只乘以一个正实数。这个倍数构成 \(K\to\mathbb R_{>0}\) 的连续群同态。其像紧；取对数后，实数加法群的紧子群只有零，故倍数恒为一。除以总体积便得到左右不变的概率测度 \(\mathrm{d}g\)。
+
+若 \(\mathrm{d}\nu\) 是另一左不变概率测度，对任意连续函数 \(f\)，用 Fubini 定理分别按两种次序积分
+\(\int_K\int_K f(xy)\,\mathrm{d}g(x)\,\mathrm{d}\nu(y)\)。先对 \(x\) 积分，右不变性给出 \(\int f\,\mathrm{d}g\)；先对 \(y\) 积分，左不变性给出 \(\int f\,\mathrm{d}\nu\)。两者相等，正则测度由连续函数积分唯一确定，所以 \(\mathrm{d}\nu=\mathrm{d}g\)。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:compact-unitarization}
+设 \(K\) 为紧实李群，\(V\) 为有限维复向量空间，\(\pi:K\to\operatorname{GL}_{\mathbb C}(V)\) 为连续群表示。则 \(V\) 有 \(K\) 不变的正定 Hermitian 内积，因而这个表示完全可约。
+\end{proposition}
+\begin{proof}
+取任意正定内积 \(\langle-,-\rangle_0\)，第一变量共轭线性。定义
+\[
+\langle v,w\rangle_K
+=\int_K\Bigl\langle\pi(g)v,\pi(g)w\Bigr\rangle_0\,\mathrm{d}g.
+\]
+积分对两变量保持所需线性性质。若 \(v\ne0\)，被积函数连续且处处为正，故积分为正。右不变性使 \(\Bigl\langle\pi(k)v,\pi(k)w\Bigr\rangle_K=\langle v,w\rangle_K\)。任意不变子空间的正交补仍不变：若 \(w\perp U\)，则 \(\Bigl\langle\pi(k)w,u\Bigr\rangle_K=\Bigl\langle w,\pi(k)^{-1}u\Bigr\rangle_K=0\)。按维数归纳即可分成简单模直和。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:compact-matrix-orthogonality}
+设 \(K\) 为紧实李群，\(\mathrm{d}g\) 为总测度为一的 Haar 测度，\(\pi,\sigma\) 为 \(K\) 的有限维不可约连续复酉表示，均取正交规范基。若它们不同构，则任意矩阵系数满足
+\(\int_K\overline{\pi_{ij}(g)}\sigma_{ab}(g)\,\mathrm{d}g=0\)。对于同一个 \(d\) 维不可约表示，
+\[
+\int_K\overline{\pi_{ij}(g)}\pi_{ab}(g)\,\mathrm{d}g
+=\frac{\delta_{ia}\delta_{jb}}d.
+\]
+\end{proposition}
+\begin{proof}
+对线性映射 \(T:V_\pi\to V_\sigma\) 作平均
+\(A(T)=\int_K\sigma(g)T\pi(g)^{-1}\,\mathrm{d}g\)。左不变性说明 \(A(T)\) 是交织算子。因此不同构时由 Schur 引理为零；同一不可约表示时为标量，取迹得到 \(A(T)=\operatorname{tr}(T)I/d\)。
+
+取矩阵单位 \(T=E_{ai}\)。平均矩阵的 \((b,j)\) 项为
+\(\int_K\sigma_{ba}(g)\overline{\pi_{ji}(g)}\,\mathrm{d}g\)。不同构时它为零；同一表示时等于 \(\delta_{ai}\delta_{bj}/d\)。重新排列四个指标即为陈述。
+\end{proof}
+
+\subsection{Peter--Weyl 定理的准确含义}
+\label{b5:subsec:C02:02}
+
+在 \(L^2(K,\mathrm{d}g)\) 中使用内积
+\(\langle f,h\rangle=\int_K\overline{f(g)}h(g)\,\mathrm{d}g\)。每个不可约表示取一组正交规范基，令其维数为 \(d_\pi\)。上面的正交关系说明
+\(\sqrt{d_\pi}\,\pi_{ij}\) 是一个正交规范族，但正交性本身不能证明它张成整个空间。
+
+\begin{theorem}[Peter--Weyl]\label{b5:thm:peter-weyl}
+设 \(K\) 为紧实李群，\(\mathrm{d}g\) 为总测度为一的 Haar 测度，\(\widehat K\) 为全部有限维不可约连续复表示的一套同构类代表。为每个代表 \(\pi:K\to U(V_\pi)\) 选定不变正定 Hermitian 内积及正交规范基，令 \(d_\pi=\dim_{\mathbb C}V_\pi\)、\(\pi_{ij}\) 为相应矩阵系数。则 \(\{\sqrt{d_\pi}\,\pi_{ij}\}_{\pi,i,j}\) 在以 \(\langle f,h\rangle=\int_K\overline{f(g)}h(g)\,\mathrm{d}g\) 配内积的 \(L^2(K,\mathrm{d}g)\) 中完备。等价地，令 \((a,b)\in K\times K\) 在函数上以 \(((a,b)F)(g)=F(a^{-1}gb)\) 作用，在 \(V_\pi^*\otimes_{\mathbb C}V_\pi\) 上以对偶表示和原表示分别作用，则有酉 \(K\times K\) 表示同构
+\[
+L^2(K,\mathrm{d}g)\cong\widehat{\bigoplus}_{\pi\in\widehat K}V_\pi^*\otimes_{\mathbb C}V_\pi,
+\]
+其中第 \(\pi\) 项由 \(V_\pi\) 及其对偶上的内积诱导的张量积内积按 \(1/d_\pi\) 缩放，映射为
+\(\ell\otimes v\mapsto\biggl(g\mapsto\ell\Bigl(\pi(g)v\Bigr)\biggr)\)。帽号表示 Hilbert 直和。
+\end{theorem}
+
+\begin{proof}
+取一族连续、非负的函数 \(h_\varepsilon\)，其积分为一，支撑逐渐缩到单位元，并满足
+\(h_\varepsilon(g^{-1})=h_\varepsilon(g)\)。这样的函数可由单位元附近的连续凸起函数与其逆映像相加再归一化得到。定义
+\[
+ (T_\varepsilon f)(x)=\int_Kh_\varepsilon(y^{-1}x)f(y)\,dy.
+\]
+连续核在紧空间上平方可积，所以 \(T_\varepsilon\) 是紧算子；核的对称性又使它自伴。变量代换说明它与所有左平移 \(L_af(x)=f(a^{-1}x)\) 交换。它的每个非零特征值的特征空间因此有限维且左平移不变。
+
+这些特征空间的向量有连续代表，因为
+\(f=\lambda^{-1}T_\varepsilon f\)，而连续核把 \(L^2\) 函数送到连续函数。设 \(E\) 为其中一个空间，左平移在 \(E\) 上给出有限维酉表示。对 \(f\in E\)，有
+\(f(x)=(L_{x^{-1}}f)(1)\)，故 \(f\) 是这个表示的对偶表示的矩阵系数的线性组合。由\cref{b5:prop:compact-unitarization}，该表示分解成不可约表示，所以 \(E\) 包含在不可约矩阵系数的生成空间中。
+
+现在设 \(f\) 与全部这样的矩阵系数正交。紧自伴算子的谱定理说明它与 \(T_\varepsilon\) 的全部非零特征空间正交，因而 \(T_\varepsilon f=0\)。另一方面，支撑缩小与连续函数的一致连续性给出
+\(T_\varepsilon f\to f\)：先对连续 \(f\) 得到一致收敛，再用连续函数在 \(L^2\) 中稠密以及 \(\|T_\varepsilon\|\le1\) 推广到所有 \(f\in L^2\)。于是 \(f=0\)，证明正交规范族完备。
+
+矩阵系数映射在每个不可约分量上的内积由\cref{b5:prop:compact-matrix-orthogonality}给出，故缩放因子为 \(1/d_\pi\)；不同分量正交，完备性使它延伸成所述 Hilbert 直和的酉同构。左右作用取
+\((a,b)F(g)=F(a^{-1}gb)\)，在张量端分别对应对偶表示与原表示，因而同构与 \(K\times K\) 作用相容。证明用到的分析基础是紧自伴算子的谱定理和连续函数的 \(L^2\) 稠密性；参见\cite[Section 4.7, Theorems 4.47 and 4.49]{Kirillov2008LieGroups}。
+\end{proof}
+
+代数直和只允许有限多个不可约分量，Hilbert 直和则允许平方可和的无限分量，两者不是同一个函数空间。
+
+\ProseParagraphBreak
+若 \(a^\pi_{ij}=\langle\sqrt{d_\pi}\pi_{ij},f\rangle\)，则
+\[
+f=\sum_{\pi,i,j}a^\pi_{ij}\sqrt{d_\pi}\pi_{ij},
+\qquad
+\|f\|_2^2=\sum_{\pi,i,j}|a^\pi_{ij}|^2.
+\]
+第一式按 \(L^2\) 范数理解，第二式是 Parseval 等式。它们并不保证每个点上的 Fourier 级数都收敛，也不保证任意枚举方式的一致收敛。
+
+\subsection{圆群与低维矩阵系数}
+\label{b5:subsec:C02:03}
+
+圆群的归一化 Haar 测度为 \(\mathrm{d}\theta/(2\pi)\)。它的不可约表示是一维的：群交换，所有表示矩阵彼此交换，而在不可约表示中 Schur 引理迫使它们为标量。\cref{b5:exm:circle-integration}给出的下降条件于是将它们编号为
+\(\chi_n(e^{i\theta})=e^{in\theta}\)、\(n\in\mathbb Z\)。
+直接积分得到
+\[
+\frac1{2\pi}\int_0^{2\pi}e^{-im\theta}e^{in\theta}\,\mathrm{d}\theta
+=\delta_{mn}.
+\]
+例如 \(f(e^{i\theta})=2+e^{i\theta}-3e^{-2i\theta}\) 的平方范数为 \(4+1+9=14\)。Peter--Weyl 的额外结论是这些指数在整个 \(L^2(S^1)\) 中完备，而不只是相互正交。
+
+\ProseParagraphBreak
+再取 \(SU(2)\) 的自然表示。用上一节的矩阵坐标，它的四个系数为 \(a,b,-\overline b,\overline a\)。由\cref{b5:prop:compact-matrix-orthogonality}，每个系数平方范数为 \(1/2\)，不同矩阵位置的系数相互正交。自然表示的特征标为 \(a+\overline a\)，因此其范数为一。
+
+\ProseParagraphBreak
+在极大环面 \(\operatorname{diag}(e^{i\theta},e^{-i\theta})\) 上，\(L_m\) 的特征标为
+\[
+\chi_m(\theta)=\sum_{j=0}^m e^{i(m-2j)\theta}
+=\frac{\sin\Bigl((m+1)\theta\Bigr)}{\sin\theta}
+\quad(\sin\theta\ne0).
+\]
+最后一式由几何级数相减得到，端点值应由前面的有限和连续延拓。例如 \(\chi_m(0)=m+1\)、\(\chi_m(\pi)=(-1)^m(m+1)\)。不能把环面上的均匀积分直接当作 \(SU(2)\) 上的类函数积分；从群积分化到环面积分还需要相应的 Jacobian 因子。本附录的正交性始终使用群上的 Haar 测度。

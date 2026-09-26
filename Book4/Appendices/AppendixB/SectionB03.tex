@@ -1,10 +1,183 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 B 的第 3 条要点整理。
+% 纲要标题：### B.3 高阶代数 K 理论
+% 纲要位置：工作记录/计划纲要.md，第 3585 行。
+% 纲要细目（写作范围）：
+% #### B.3.1 稳定一般线性群与一阶 K 群
+% #### B.3.2 Q 构造与高阶 K 群
+% #### B.3.3 局部化与高阶信息
 
 \section{高阶代数 K 理论}
 \label{b4:sec:B03}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 高阶代数 K 理论的问题意识
+\(K_0\) 将对象按可加关系组合，却没有直接保留对象的自同构。矩阵可逆变换提供了最初的高阶信息。再向上，关系之间的相容性需要用空间及其同伦群组织；这一节先把 \(K_1\) 算清，再说明一般 \(K_n\) 所依赖的准确构造。
 
-待撰写。
+\subsection{稳定一般线性群与一阶 K 群}
+\label{b4:subsec:B03:01}
+
+\begin{definition}\label{b4:def:B-k1}
+设 \(R\) 为含幺环。通过 \(A\mapsto\operatorname{diag}(A,1)\) 把 \(\operatorname{GL}_n(R)\) 包含进 \(\operatorname{GL}_{n+1}(R)\)，所得并记为 \(\operatorname{GL}(R)\)，称为稳定一般线性群。其交换化
+\[
+K_1(R)\coloneqq
+\operatorname{GL}(R)/\Bigl[\operatorname{GL}(R),\operatorname{GL}(R)\Bigr]
+\]
+称为 \(R\) 的\term[yijiedaishuKqun]{一阶代数 \(K\) 群}[algebraic \(K_1\)-group]。
+\end{definition}
+\symidx{\(K_1(R)\)：环的一阶代数 K 群}
+
+交换子约定为 \([g,h]=ghg^{-1}h^{-1}\)。稳定化允许在矩阵右下角添加恒等块；它不等同于把固定大小矩阵的行列式忘掉。定义可对照 Weibel\cite[Chapter III, Definition 1.1]{Weibel2013KBook}。
+
+\begin{lemma}[稳定初等矩阵与交换子]\label{b4:lem:B-whitehead}
+设 \(R\) 为含幺环，\(E(R)\) 为全部初等矩阵
+\(e_{ij}(a)=I+aE_{ij}\)、\(i\ne j\)、\(a\in R\)
+在 \(\operatorname{GL}(R)\) 中生成的子群。则
+\[
+E(R)=\Bigl[\operatorname{GL}(R),\operatorname{GL}(R)\Bigr].
+\]
+\end{lemma}
+\begin{proof}
+稳定化后总可选第三个指标 \(k\)。矩阵单位乘法给出
+\(\Bigl[e_{ik}(a),e_{kj}(1)\Bigr]=e_{ij}(a)\)，故每个初等矩阵属于交换子群。
+
+反向中，先对任意 \(g\in\operatorname{GL}_n(R)\) 写出块矩阵分解
+\[
+w(g)=
+\begin{pmatrix}I&g\\0&I\end{pmatrix}
+\begin{pmatrix}I&0\\-g^{-1}&I\end{pmatrix}
+\begin{pmatrix}I&g\\0&I\end{pmatrix}
+=
+\begin{pmatrix}0&g\\-g^{-1}&0\end{pmatrix}.
+\]
+两个形如上三角或下三角的块幺矩阵都是通常初等矩阵的乘积：在一个非对角块中的各矩阵单位两两乘积为零，逐个加入其系数即可。因此
+\(D(g)=w(g)w(-I)=\operatorname{diag}(g,g^{-1})\)
+属于 \(E(R)\)。对同样大小的 \(g,h\)，有
+\[
+D(g)D(h)D\Bigl((hg)^{-1}\Bigr)
+=\operatorname{diag}\Bigl([g,h],I\Bigr).
+\]
+右下块为 \(g^{-1}h^{-1}hg=I\)，左上块为 \(ghg^{-1}h^{-1}\)。故每个交换子稳定后属于 \(E(R)\)，得到反向包含。
+\end{proof}
+
+这个证明给出 \(K_1(R)=\operatorname{GL}(R)/E(R)\)，并同时证明 \(E(R)\) 正规。无需事先断言每个固定大小的 \(E_n(R)\) 都在 \(\operatorname{GL}_n(R)\) 中正规；后一个断言对一般环并不成立。
+
+\begin{theorem}\label{b4:thm:B-k1-field-integers}
+对任意域 \(k\)，行列式诱导同构 \(K_1(k)\simeq k^\times\)。对整数环，有 \(K_1(\mathbb Z)\simeq\{1,-1\}\)。
+\end{theorem}
+\begin{proof}
+行列式在稳定化下不变，且初等矩阵行列式为 \(1\)，故给出满同态 \(K_1(R)\rightarrow R^\times\)，其中 \(R=k\) 或 \(\mathbb Z\)。只需证明行列式为 \(1\) 的矩阵属于 \(E(R)\)。
+
+域上可用行加法和带符号的行交换进行消元。带符号的交换矩阵
+\(\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)=w(1)\)
+已由前一引理写成初等乘积。消元先得到非零对角元的上三角矩阵，再用行加法清除非对角项，得到行列式为 \(1\) 的对角矩阵。每个块 \(\operatorname{diag}(u,u^{-1})=D(u)\) 为初等乘积，因此任意乘积为 \(1\) 的对角元也可相继消去。
+
+整数情形中，行列式为 \(1\) 使第一列元素的最大公因数为 \(1\)。两行间的带余除法与带符号交换，就是 Euclid 算法，可把这一列化为 \((1,0,\ldots,0)^t\)；若先得到 \(-1\)，用 \(D(-1)\) 同时改变两行符号。然后用列加法清掉第一行剩余元素。余下方块仍为行列式 \(1\) 的整数矩阵，按大小归纳得到恒等矩阵。列加法也是右乘初等矩阵，故原矩阵仍在 \(E(\mathbb Z)\) 中。大小为 \(1\) 的情形直接成立；需要两行时可先稳定化一次。两种情形的行列式核均为初等子群，结合\cref{b4:lem:B-whitehead}完成证明。
+\end{proof}
+
+域上的 \(K_1(k)=k^\times\) 保留了乘法群的信息，而 \(K_0(k)=\mathbb Z\) 只反映维数。一般交换环还可能有非零的行列式核
+\(\operatorname{SK}_1(R)=\ker\Bigl(K_1(R)\rightarrow R^\times\Bigr)\)，所以不能把域上的公式无条件推广。非零核的例子见 Weibel\cite[Chapter III, Example 1.5.4, p. 185]{Weibel2013KBook}。
+
+\subsection{Q 构造与高阶 K 群}
+\label{b4:subsec:B03:02}
+
+设 \(\mathcal E\) 为小正合范畴。Quillen 的 \(Q\) 构造保留对象，却以某种子商数据作为态射。
+\begin{definition}\label{b4:def:B-q-construction}
+设 \(\mathcal E\) 为小正合范畴。构造范畴 \(Q\mathcal E\)，其对象与 \(\mathcal E\) 相同，从 \(A\) 到 \(B\) 的态射为图式
+\[
+A\xleftarrow{p}M\xrightarrow{i}B
+\]
+的同构类，其中 \(p\) 为可容许满态射，\(i\) 为可容许单态射。中间对象的同构必须使两端映射均相容。与 \(B\xleftarrow{q}N\xrightarrow{j}C\) 的复合由拉回 \(M\times_BN\) 给出：
+\[
+A\longleftarrow M\times_BN\longrightarrow C.
+\]
+恒等态射由两条恒等映射 \(A\leftarrow A\to A\) 表示。这个构造称为 Quillen 的 \(Q\) 构造。
+\end{definition}
+
+正合公理保证这个拉回存在，投影到 \(M\) 为可容许满态射。另取 \(i:M\rightarrow B\) 的可容许余核 \(B\rightarrow D\)，则复合 \(N\xrightarrow{q}B\rightarrow D\) 仍为可容许满态射。其核正是 \(M\times_BN\rightarrow N\)：一个到 \(N\) 的态射在复合到 \(D\) 后为零，当且仅当其到 \(B\) 的像经由 \(M\)，再由拉回泛性质得到唯一分解。因此该投影为可容许单态射，两端复合仍属所定类型。重复拉回的泛性质给出典范同构，通过中间对象同构类取商后，复合严格结合。恒等态射由 \(A\leftarrow A\rightarrow A\) 两个恒等映射表示。
+
+\ProseParagraphBreak
+范畴的神经 \(N\mathcal C\) 把可复合的 \(n\) 个态射作为 \(n\)-单形；删去端点或复合相邻态射给出面映射，插入恒等给出退化映射。其几何实现记为 \(B\mathcal C\)。这个空间同时反映对象、态射及复合的相容关系。本节假定读者熟悉同伦群等代数拓扑基础，不在附录中重述这些理论。
+
+\begin{definition}\label{b4:def:B-higher-k}
+设 \(\mathcal E\) 为小正合范畴，以零对象作为 \(BQ\mathcal E\) 的基点。对 \(n\ge0\)，定义
+\[
+K_n(\mathcal E)=\pi_{n+1}(BQ\mathcal E,0).
+\]
+对本质小范畴先选取小骨架；等价范畴的神经同伦等价保证此选择不影响所得群。对含幺环 \(R\)，以 \(R\text{-}\mathrm{proj}\) 表示有限生成投射左 \(R\)-模范畴，取分裂正合结构，并定义 \(K_n(R)=K_n(R\text{-}\mathrm{proj})\)。
+\end{definition}
+
+这些定义与前文的低阶定义相容：
+\(\pi_1(BQ\mathcal E)\simeq K_0(\mathcal E)\)，且环上的 \(K_1\) 同构于稳定一般线性群的交换化。由此，前一小节的矩阵计算也给出了本节定义的 \(K_1\)。比较结果见 Weibel\cite[Chapter IV, Proposition 6.2; Section 7]{Weibel2013KBook}。
+\begin{proofsketch}
+范畴神经的一个单形就是一串可复合态射，因此其基本群可以用边和二单形的复合关系计算。对每个 \(A\)，有两条从 \(0\) 到 \(A\) 的 \(Q\)-态射，分别由 \(0\leftarrow0\to A\) 和 \(0\leftarrow A\xrightarrow{1}A\) 表示。以前一族边为连接各顶点的树，后一条边再接前一条边的反向路径构成环路，记其类为 \([A]\)。每个可容许短正合列 \(0\to A\to B\to C\to0\) 给出关系 \([B]=[A]+[C]\)。反过来，每条边都表示一个可容许子商；若由 \(A\leftarrow M\to B\) 表示，其相对于上述树的环路类由 \(\ker(M\to A)\) 的类给出。特别地，\(0\leftarrow0\to B\) 是树边，给出零类；\(0\leftarrow B\xrightarrow{1}B\) 给出 \([B]\)。拉回计算说明，复合两条边时相应核的类相加。二单形关系进一步给出可容许短正合列的加法关系；从全部子商关系归约到这些关系的图式追踪见所引低阶比较的证明。直和的两个次序同构，使生成元彼此交换，得到第一项。
+
+对 \(\mathcal E=R\text{-}\mathrm{proj}\)，全部正合列分裂。令 \(\mathcal S\) 为投射模及同构组成的范畴，以直和为运算；再用短正合列组成辅助范畴，按末项投影到 \(Q\mathcal E\)。在两边同时添加一个直和因子，并把此操作形式地变为可逆，可以比较它的纤维与 \(\mathcal S\) 的群完成。拉回短正合列给出纤维之间的比较；分裂性使这些比较为同伦等价。因此群完成空间与 \(\Omega BQ\mathcal E\) 同伦等价。这一步的范畴定义与纤维比较见\cite[Chapter IV, Definitions 7.3--7.5; Proposition 7.6; Theorem 7.8]{Weibel2013KBook}，这里省略神经实现与群完成的技术验证。
+
+每个有限生成投射模都有补模，添加补模后成为有限自由模。因此群完成的零分支可以用稳定矩阵描述，它是 \(B\operatorname{GL}(R)^+\)。这里的加号构造杀掉初等子群 \(E(R)\)，并保持同调；\cref{b4:lem:B-whitehead}给出 \(E(R)=[\operatorname{GL}(R),\operatorname{GL}(R)]\)。故
+\[
+ \pi_2(BQ\mathcal E)=\pi_1\bigl(\Omega BQ\mathcal E\bigr)
+ \cong\operatorname{GL}(R)/E(R)=K_1(R).
+\]
+群完成与加号构造的比较略去空间层面的证明，具体比较见\cite[Chapter IV, Theorem 7.1 and Corollary 7.2]{Weibel2013KBook}；它是上述代数计算与高阶定义之间所需的技术步骤。
+\end{proofsketch}
+
+已经可以看出为何从 \(\pi_1\) 开始编号。\(BQ\mathcal E\) 是连通的，因为每个对象都有从零对象来的 \(Q\)-态射；单取连通分支不能恢复对象的可加群。另一方面，从 \(0\) 到 \(A\) 不只有一个 \(Q\)-态射：每个可容许子对象 \(M\subset A\) 都给出 \(0\leftarrow M\rightarrow A\)。由不同路径得到的环路，正是低阶可加关系的拓扑来源。
+
+\subsection{局部化与高阶信息}
+\label{b4:subsec:B03:03}
+
+高阶 \(K\) 群使零阶的可加关系延伸为长正合列。以下给出一个有明确适用范围的代表性结果。
+
+\begin{theorem}[Quillen 局部化]\label{b4:thm:B-quillen-localization}
+设 \(\mathcal A\) 为小交换范畴，\(\mathcal B\subset\mathcal A\) 为 Serre 子范畴，即对子对象、商对象与扩张封闭的全子范畴。则包含与 Serre 商函子给出长正合列，其中中间段的 \(n\ge1\)：
+\[
+\begin{aligned}
+\cdots&\longrightarrow K_{n+1}(\mathcal A/\mathcal B)
+ \xrightarrow{\partial}K_n(\mathcal B)
+ \longrightarrow K_n(\mathcal A)\\
+&\longrightarrow K_n(\mathcal A/\mathcal B)
+ \xrightarrow{\partial}K_{n-1}(\mathcal B)\longrightarrow\cdots\\
+&\longrightarrow K_0(\mathcal B)\longrightarrow K_0(\mathcal A)
+ \longrightarrow K_0(\mathcal A/\mathcal B)\longrightarrow0.
+\end{aligned}
+\]
+本质小情形通过小骨架作同样解释。
+\end{theorem}
+\begin{proofsketch}
+写 \(q:\mathcal A\to\mathcal A/\mathcal B\)，考虑
+\(Qq:Q\mathcal A\to Q(\mathcal A/\mathcal B)\)。对商范畴的对象 \(L\)，令 \(\mathcal D_L\) 的对象为 \(A\in\mathcal A\) 连同 \(Q(\mathcal A/\mathcal B)\) 中的态射 \(L\to q(A)\)。这是计算该函子同伦纤维的逗号范畴。其全子范畴 \(\mathcal F_L\) 只保留所给态射为同构的对象。
+
+商范畴中的子商可以由原范畴中的层 \(A_1\subseteq A_2\subseteq A\) 表示。两个表示通过对子对象取交与和得到共同细化；Serre 条件保证核、余核及这些修正仍属于 \(\mathcal B\)。固定一个子商表示后，所有细化所成的范畴是滤过的，因而其神经可缩。Quillen 的定理 A 遂给出 \(B\mathcal F_L\simeq B\mathcal D_L\)。当 \(L=0\) 时，\(q(A)\cong0\) 恰好等价于 \(A\in\mathcal B\)，故
+\[
+ B\mathcal D_0\simeq B\mathcal F_0\simeq BQ\mathcal B.
+\]
+
+还须证明商范畴中的态射引起 \(\mathcal D_L\) 之间的同伦等价。为此，对 \(N\in\mathcal A\) 考察所有在商范畴中成为同构的映射 \(A\to N\)。先取像，便把它化成满射；核属于 \(\mathcal B\)。将核作可容许扩张并用拉回、推出改变表示，可以比较这个辅助范畴与 \(Q\mathcal B\)。所有像 \(N'\subseteq N\)、\(N/N'\in\mathcal B\) 有共同细化，因而取不同的像不改变其同伦型。由此得到所需的换基同伦等价。
+
+Quillen 的定理 B 现在识别出同伦纤维列
+\[
+ BQ\mathcal B\longrightarrow BQ\mathcal A
+ \longrightarrow BQ(\mathcal A/\mathcal B).
+\]
+对它取同伦群，并使用 \(K_n=\pi_{n+1}BQ\)，便得到所列长正合列；最后一项的满射也可由商范畴的对象来自 \(\mathcal A\) 及 Grothendieck 关系直接看出。概要省略定理 A、B 的拓扑证明和上述辅助范畴的全部自然变换；前者见\cite[Chapter IV, Theorems 3.7--3.8]{Weibel2013KBook}，后者按\cite[Chapter V, Theorem 5.1, Claims 5.1.2--5.1.7]{Weibel2013KBook}逐项验证。
+\end{proofsketch}
+
+令 \(\mathcal A\) 为有限生成交换群，\(\mathcal B\) 为有限交换群。张量 \(\mathbb Q\) 杀掉且仅杀掉有限群，Serre 商等价于有限维 \(\mathbb Q\)-向量空间范畴。态射上，这个识别来自清除分母：有理线性映射在某个有限指数子群上成为整数线性映射，而有限指数的变化在商范畴中成为同构。对有限交换群，各 \(p\)-主分量的长度给出
+\[
+K_0(\mathcal B)\simeq\bigoplus_{p\ {\rm prime}}\mathbb Z,
+\]
+其中生成元为 \([\mathbb Z/p]\)。在 \(K_0(\mathcal A)\) 中，短正合列
+\(0\rightarrow\mathbb Z\xrightarrow{p}\mathbb Z\rightarrow\mathbb Z/p\rightarrow0\)
+使这些生成元全为零。有限生成交换群的结构定理因而给出
+\(K_0(\mathcal A)\simeq\mathbb Z\)，由秩识别。
+
+\ProseParagraphBreak
+局部化的连接映射在此成为素数赋值
+\[
+\mathbb Q^\times\longrightarrow\bigoplus_p\mathbb Z,
+\qquad a\longmapsto\bigl(v_p(a)\bigr)_p.
+\]
+按把正整数 \(p\) 的像取为 \([\mathbb Z/p]\) 的符号约定，这与一般连接映射一致；该约定及单元素局部化的计算见 Weibel\cite[Chapter V, Application 6.1 and Example 6.1.2]{Weibel2013KBook}。仅从算术也能直接验证
+\[
+1\longrightarrow\{1,-1\}\longrightarrow\mathbb Q^\times
+\longrightarrow\bigoplus_p\mathbb Z\longrightarrow0
+\]
+正合：素因子分解给出核与满射性。这说明在零阶可加关系中消失的有限群类，会作为高一阶连接映射的值重新出现。

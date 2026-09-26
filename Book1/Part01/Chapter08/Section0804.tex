@@ -1,24 +1,25 @@
 % !TeX root = ../../Book1.tex
-% 纲要标题：### 8.4* 自由群的进一步性质
-% 纲要位置：计划纲要.md，第 348 行。
+% 纲要标题：### 8.4* 自由群的子群与图方法
+% 纲要位置：计划纲要.md，第 353 行。
 
-\OptionalSection{自由群的进一步性质}{b1:sec:0804}
+\OptionalSection{自由群的子群与图方法}{b1:sec:0804}
 
 自由群中的子群未必能靠删去几个原有基元素得到；它甚至可能需要比母群更多的自由生成元。本节把子群的字解释为陪集图中的闭路径，用一棵生成树选出新的自由基。所需的图论事实会在证明中说明，不预设拓扑空间或基本群的知识。有限指数时，基的个数可由边数与顶点数算出；节末再讨论这些构造能够解决哪些字的判定问题。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * Nielsen–Schreier 定理的图论证明方法
-% * 子群秩与 Schreier 公式的有限指数情形
-% * 字问题与几何群论简介
+% * 图的闭路径群与生成树
+% * Schreier 图与子群自由性
+% * 有限指数子群与 Schreier 秩公式
+% * 字问题与 Cayley 图初步
 %
 % ---
 %
 
-\subsection{Nielsen–Schreier 定理的图论证明}
+\subsection{图的闭路径群与生成树}
 \label{b1:subsec:0804:01}
 
-\term[nielsen-schreier-dingli]{Nielsen--Schreier 定理}[Nielsen--Schreier theorem]断言自由群的子群仍是自由群。证明先处理一个组合问题：在连通图中，怎样用少量选定的闭路径表达所有闭路径，并辨认其中的关系？
+为研究自由群的子群，先处理一个组合问题：在连通图中，怎样用一族选定的闭路径表达所有闭路径，并辨认其中的关系？
 
 \paragraph*{图、路径与往返等价}
 本节的图 \(\Gamma\) 由顶点和连接顶点的几何边组成，并约定至少有一个顶点。允许两个顶点之间有多条边，也允许边的两端是同一个顶点，这样的边称为环。每条几何边有两个相反方向 \(e,\bar e\)，即使是环也区分方向，并规定 \(\overline{\bar e}=e\)。子图选取部分顶点和几何边，且每条所选边的两个端点都须保留。
@@ -62,15 +63,20 @@
 \ProseParagraphBreak
 一般无限图的存在性证明使用通常的选择公理。考虑包含全部顶点、没有圈的子图，按边集包含排序；只有顶点而没有边的子图说明这个偏序集非空。每条链的并仍没有圈：若并中有圈，圈只用有限条边，链中必有一个子图已包含全部这些边，矛盾。因此链的并是同一偏序集中的上界，\cref{b1:thm:A-zorn}给出一个极大的无圈子图。若它不连通，原图中连接两个连通分支的路径必有一条跨分支边；加进这条边仍不产生圈，却严格增大该子图，矛盾。所以极大子图连通，是生成树。只讨论有限图的例子时，可直接使用上一段的逐步构造。
 
-\paragraph*{Schreier 图与子群识别}
+\subsection{Schreier 图与子群自由性}
+\label{b1:subsec:0804:schreier-subgroup-freeness}
+
 现在把自由群的字解释为路径。对自由群的子群 \(H\)，图的顶点记录右陪集，字母记录从一个陪集到另一个陪集的移动；从顶点 \(H\) 出发并回到 \(H\) 的字恰好给出 \(H\) 中的元素。
+
+\ProseParagraphBreak
+\term[nielsen-schreier-dingli]{Nielsen--Schreier 定理}[Nielsen--Schreier theorem]断言自由群的每个子群仍是自由群。生成树先把 Schreier 图的闭路径群写成自由群，路径标签再把这个闭路径群识别为原来的子群。
 
 \begin{theorem}[Nielsen--Schreier]\label{b1:thm:nielsen-schreier}
 设 \(F\) 为自由群，\(H\leq F\)。则 \(H\) 也是自由群。
 \end{theorem}
 
 \begin{proof}
-设 \(H\le F(S)\)。构造以右陪集 \(Hg\) 为顶点的\term[schreier-peiji-tu]{Schreier 陪集图}[Schreier coset graph]：对每个顶点 \(Hg\) 和 \(s\in S\)，画一条指定正向为
+设 \(H\le F(S)\)。构造以右陪集 \(Hg\) 为顶点的\term[schreier-peiji-tu]{Schreier 陪集图}[Schreier coset graph] \(\Gamma_H\)：对每个顶点 \(Hg\) 和 \(s\in S\)，画一条指定正向为
 \[
 Hg\xrightarrow{s}Hgs
 \]
@@ -82,11 +88,19 @@ Hgs^{-1}\xrightarrow{s}Hg
 \]
 的反向。因而对每个正字母或负字母，每个顶点都恰有一条相应出边。选择右陪集，是为了使从左至右读取字母与右乘相容：从 \(Hg\) 依次读取 \(a_1,\ldots,a_m\) 后，终点为 \(Hga_1\cdots a_m\)。特别地，任意字从 \(H\) 出发都确定唯一的带标签路径，任意顶点 \(Hg\) 都可这样到达，所以图连通。
 
-以 \(H\) 为根。闭路径的标签乘积属于 \(H\)；往返变换只插入或删除互逆标签，不改变该乘积。因此标签给出同态 \(\pi_1(\Gamma,H)\rightarrow H\)。每个 \(h\in H\) 的字都有回到根的路径，故此同态满射。
+以 \(H\) 为根。闭路径的标签乘积属于 \(H\)；往返变换只插入或删除互逆标签，不改变该乘积。因此标签乘积给出同态 \(\lambda_H:\pi_1(\Gamma_H,H)\rightarrow H\)。每个 \(h\in H\) 的字都有回到根的路径，故 \(\lambda_H\) 满射。
 
-若闭路径的标签在自由群中为单位，\cref{b1:lem:unique-reduced-word}说明其唯一约化字为空；该引理的约化算法只删除相邻逆字母，因此可以逐次把这个标签字消为空字。图中每个顶点都有唯一的给定字母出边，所以路径上相邻逆字母必沿同一条几何边往返：第一条边的反向已经是从中间顶点出发、具有所需逆标签的唯一边。字的每次消去因此对应路径的一次往返消去，最终路径也消为空路径，故同态单射。
+若闭路径的标签在自由群中为单位，\cref{b1:lem:unique-reduced-word}说明其唯一约化字为空；该引理的约化算法只删除相邻逆字母，因此可以逐次把这个标签字消为空字。图中每个顶点都有唯一的给定字母出边，所以路径上相邻逆字母必沿同一条几何边往返：第一条边的反向已经是从中间顶点出发、具有所需逆标签的唯一边。字的每次消去因此对应路径的一次往返消去，最终路径也消为空路径，故 \(\lambda_H\) 单射。于是得到标签同构
+\begin{equation}\label{b1:eq:schreier-label-isomorphism}
+\lambda_H:\pi_1(\Gamma_H,H)\xrightarrow{\sim}H.
+\end{equation}
 
-选一棵生成树，\cref{b1:lem:graph-loop-free}便给出 \(\pi_1(\Gamma,H)\) 以非树边对应的闭路径为自由基；经刚证明的同构 \(\pi_1(\Gamma,H)\to H\)，得到 \(H\cong F(E_0)\)。若树路径 \(p_v\) 的标签字为 \(t_v\)，基元素可显式写为
+选一棵生成树，\cref{b1:lem:graph-loop-free}给出第一个同构，式\eqref{b1:eq:schreier-label-isomorphism}给出第二个同构：
+\[
+F(E_0)\xrightarrow[\text{生成树}]{\sim}
+\pi_1(\Gamma_H,H)\xrightarrow[\text{标签}]{\lambda_H}H.
+\]
+前一个同构证明闭路径群自由，后一个同构把它识别为所研究的子群。若树路径 \(p_v\) 的标签字为 \(t_v\)，基元素可显式写为
 \begin{equation}\label{b1:eq:schreier-basis}
 t_v s\,t_w^{-1}.
 \end{equation}
@@ -97,9 +111,16 @@ Ht_vs=Ht_w\quad\Longrightarrow\quad t_vs\,t_w^{-1}\in H.
 这既验证了基元素属于 \(H\)，也确定了公式中两个树代表的次序。
 \end{proof}
 
-子群中的字关系在图中对应往返消去。选取生成树以后，树内闭路径本来就与空路径等价；利用这些等价关系，任意闭路径可以写成非树边所给基环路的乘积。这个过程只改变路径类的表达方式，没有给 \(H\) 添加新的关系。不同生成树可以给出不同的自由基，但上述互逆映射始终描述同一个子群。
+这个证明说明，一旦完整的 Schreier 图 \(\Gamma_H\) 和一棵生成树已经给出，就可由非树边读出自由基；它并不自动给出从任意子群描述计算全部陪集图的算法。事实上，识别两个顶点需要判定
+\[
+Hg=Hk\quad\Longleftrightarrow\quad gk^{-1}\in H,
+\]
+这涉及子群成员判定，并不等同于判断自由群元素 \(gk^{-1}\) 是否为单位。能够直接画出图的具体例子，另外使用了可计算的同态或陪集模型。
 
-\subsection{有限指数子群与 Schreier 公式}
+\ProseParagraphBreak
+子群中的字关系在图中对应往返消去。选取生成树以后，树内闭路径本来就与空路径等价；利用这些等价关系，任意闭路径可以写成非树边所给基环路的乘积。这个过程只改变路径类的表达方式，没有给 \(H\) 添加新的关系。不同生成树可以给出不同的自由基，但标签同构\eqref{b1:eq:schreier-label-isomorphism}始终描述同一个子群。
+
+\subsection{有限指数子群与 Schreier 秩公式}
 \label{b1:subsec:0804:02}
 
 \term[schreier-zhi-gongshi]{Schreier 秩公式}[Schreier rank formula]把有限指数子群的自由基个数化为图的边数与顶点数之差。
@@ -112,7 +133,7 @@ Ht_vs=Ht_w\quad\Longrightarrow\quad t_vs\,t_w^{-1}\in H.
 \end{theorem}
 
 \begin{proof}
-Schreier 图有 \(d\) 个顶点，每个顶点对于每个基字母恰有一条正向边，故共有 \(dr\) 条几何边；反向边不重复计数。一棵含全部顶点的树有 \(d-1\) 条边。这一计数可对有限树逐次删去末端顶点归纳得到。非树边数于是为 \(dr-(d-1)\)。根据\cref{b1:thm:nielsen-schreier}证明中的构造，每条非树边由\eqref{b1:eq:schreier-basis}对应一个自由基元素；再由\cref{b1:prop:free-rank-invariant}，这一基的大小就是 \(H\) 的秩。\(r=0\) 时只能有 \(d=1\)，公式仍成立。
+Schreier 图有 \(d\) 个顶点，每个顶点对于每个基字母恰有一条正向边，故共有 \(dr\) 条几何边；反向边不重复计数。用前面的有限生成树构造选取 \(T\)：从一个根顶点开始，每一步同时添加一条边和一个尚未加入的新顶点；到达全部 \(d\) 个顶点时，恰好添加了 \(d-1\) 条边。因此 \(T\) 有 \(d-1\) 条几何边，非树边数为 \(dr-(d-1)\)。根据\cref{b1:thm:nielsen-schreier}证明中的构造，每条非树边由\eqref{b1:eq:schreier-basis}对应一个自由基元素；再由\cref{b1:prop:free-rank-invariant}，这一基的大小就是 \(H\) 的秩。\(r=0\) 时只能有 \(d=1\)，公式仍成立。
 \end{proof}
 
 例如 \(F_2=F\bigl(\{a,b\}\bigr)\) 到加法群 \(C_2\) 的同态 \(a\mapsto1,b\mapsto0\) 是满射，核 \(H\) 的指数为二。\cref{b1:fig:schreier-index-two}有两个顶点 \(H,Ha\)：读入 \(a\) 改变陪集，读入 \(b\) 保持陪集。选从 \(H\) 到 \(Ha\) 的那条正向 \(a\) 边为生成树，其树代表为
@@ -161,10 +182,10 @@ a^2,\qquad b,\qquad aba^{-1}.
 \]
 公式也给出 \(\operatorname{rank}H=3\)。它表明非交换自由群子群的秩可以大于母群的秩，不能用向量空间子空间的维数直觉判断。
 
-\subsection{字问题与几何群论}
+\subsection{字问题与 Cayley 图初步}
 \label{b1:subsec:0804:03}
 
-给定群的有限生成集及相应展示，\term[zi-wenti]{字问题}[word problem]要求判定输入字是否表示单位。这里有限的是生成集，关系集未必有限。对自由群，\cref{b1:lem:unique-reduced-word}给出的算法读入每个字母时至多进栈或出栈一次，而所得约化字为空恰好表示原字为单位，因而在通常按字母计费的模型下，可用与字长成正比的步骤判定。
+给定群的有限生成集及相应展示，\term[zi-wenti]{字问题}[word problem]要求判定输入字是否表示单位。这里有限的是生成集，关系集未必有限。\cref{b1:def:free-group-construction}对任意集合 \(S\) 都给出集合论意义下的自由群，并不要求 \(S\) 具有可计算编码；若要把字的约化实现为算法，则每个输入字母必须有有限编码，还须能有效比较两个字母是否互逆。对固定的有限字母表，这些操作可视为常数时间。此时\cref{b1:lem:unique-reduced-word}给出的算法读入每个字母时至多进栈或出栈一次，而所得约化字为空恰好表示原字为单位，因而在通常按字母计费的模型下，可用与字长成正比的步骤判定。
 
 \ProseParagraphBreak
 对二面体群，\cref{b1:prop:dihedral-presentation}的证明把字整理为唯一的 \(r^is^\varepsilon\)，其中 \(0\le i<n\)、\(\varepsilon\in\{0,1\}\)，故只须检查两指数是否均为零。四面体旋转群则可依\cref{b1:eg:tetrahedral-presentation}的具体十二元素展示，先读入各字母对应的置换再逐次相乘；最终置换是否恒等即可判定原字是否为单位。
@@ -176,7 +197,22 @@ a^2,\qquad b,\qquad aba^{-1}.
 这并不妨碍在集合意义上选取唯一代表。对有限个生成字母及其形式逆字母固定一个次序；在一个群元素的全部代表字中，先选长度最短的，再在同长的有限个字中选字典序最小的，就唯一确定了一个代表。然而，要算出这个代表，还须判断哪些候选字表示同一元素，以上选择规则本身没有提供这种判定方法。
 
 \ProseParagraphBreak
-把关系字及其共轭反复插入、删除，可以验证字之间的某些等式；尚未找到变换过程，不能据此断定两个字不相等。即使关系集有限，可以逐步搜索这类变换，也不能仅凭这一点保证对每个输入字都能在有限步内判定是否为单位。本节的算法结论只针对已经给出有效判定方法的具体情形。
+设 \(P=\langle S\mid R\rangle\)，并取 \(w\in F(S)\)。正规闭包的有限乘积描述给出精确的等价条件：
+\[
+\begin{aligned}
+w=1\text{ 在 }P\text{ 中}
+\quad\Longleftrightarrow\quad
+&w=\prod_{i=1}^{m}u_i r_i^{\varepsilon_i}u_i^{-1}
+  \text{ 在 }F(S)\text{ 中成立},\\
+&\text{其中 }m\ge0,\quad
+  u_i\in F(S),\quad r_i\in R,\quad
+  \varepsilon_i\in\{1,-1\}.
+\end{aligned}
+\]
+这里 \(m=0\) 时右边为空乘积。因而每个真等式都有一个只含有限多个共轭关系字的证明证书。
 
 \ProseParagraphBreak
-设 \(F(S)\) 为以 \(S\) 为基的自由群。在 \(H=\{1\}\) 时，\cref{b1:thm:nielsen-schreier}证明中构造的 Schreier 图称为 \(F(S)\) 关于 \(S\) 的\term[cayley-tu]{Cayley 图}[Cayley graph]：顶点为群元素，边记录右乘生成元。自由群的 Cayley 图是一棵树：图连通，而若有非空无往返闭路径，其标签由每个顶点的唯一字母出边性质构成非空约化字；闭路径又要求标签表示单位，这与\cref{b1:lem:unique-reduced-word}矛盾。给每条边长度一以后，从单位到一个元素的距离恰为其约化字长。于是代数乘法给出的字与图上的路径长度发生联系，这构成几何群论研究的一个基本出发点。更多关于自由群、展示与组合方法的材料可参阅 Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter III, 2--4, pp. 115--124]{LyndonSchupp2001}。
+若 \(S,R\) 都有限，就可按包括因子个数在内的总编码长度递增，枚举所有这样的有限乘积，并用自由约化检验它是否等于输入字 \(w\)。当 \(w\) 确实表示单位时，完备枚举最终会找到一个证书并终止；当 \(w\) 不表示单位时，搜索却可能永远继续。缺少的不是肯定情形的有限证书，而是对否定情形也保证终止的判定方法。本节的算法结论只针对已经给出有效编码和判定步骤的具体情形。
+
+\ProseParagraphBreak
+设 \(F(S)\) 为以 \(S\) 为基的自由群。在 \(H=\{1\}\) 时，\cref{b1:thm:nielsen-schreier}证明中构造的 Schreier 图称为 \(F(S)\) 关于 \(S\) 的\term[cayley-tu]{Cayley 图}[Cayley graph]：顶点为群元素，边记录右乘生成元。自由群的 Cayley 图是一棵树：图连通，而若有非空无往返闭路径，其标签由每个顶点的唯一字母出边性质构成非空约化字；闭路径又要求标签表示单位，这与\cref{b1:lem:unique-reduced-word}矛盾。给每条边长度一以后，从单位到一个元素的距离恰为其约化字长。于是代数乘法给出的字与图上的路径长度发生联系，这构成几何群论研究的一个基本出发点。继续学习复形、覆盖映射与 Cayley 复形，可读 Lyndon 与 Schupp 的《Combinatorial Group Theory》第 III 章第 2--4 节\cite[Chapter III, \S\S~2--4, pp. 115--124]{LyndonSchupp2001}；若要直接对照自由积，可参阅该书第 IV 章第 1 节\cite[Chapter IV, \S~1]{LyndonSchupp2001}。

@@ -22,7 +22,7 @@
 \[
 \delta:R\setminus\{0\}\longrightarrow\mathbb N
 \]
-使任意 \(a,b\in R\)、\(b\ne0\) 都可写成 \(a=bq+r\)，其中 \(q,r\in R\)，并且 \(r=0\) 或 \(\delta(r)<\delta(b)\)，则称 \(R\) 为\term[euclid-zhenghuan]{Euclid 整环}[Euclidean domain]，\(\delta\) 称为 Euclid 函数。
+使任意 \(a,b\in R\)、\(b\ne0\) 都可写成 \(a=bq+r\)，其中 \(q,r\in R\)，并且 \(r=0\) 或 \(\delta(r)<\delta(b)\)，则称 \(R\) 为\term[euclid-zhenghuan]{Euclid 整环}[Euclidean domain]，称 \(\delta\) 为\term[euclid-hanshu]{Euclid 函数}[Euclidean function]。
 \end{definition}
 
 本书不额外要求 \(\delta(a)\leq\delta(ab)\)。有些文献把这个条件并入定义；此处的除法条件已经足以支持以下全部证明。商和余数通常不唯一，Euclid 函数也未必唯一；对带余除法的存在性证明，还须另行判断是否给出了可执行的求商步骤。
@@ -48,23 +48,14 @@ r_{j-1}=q_jr_j+r_{j+1},
 非负整数 \(\delta(r_1),\delta(r_2),\ldots\) 不可能无限严格下降，所以某一步得到 \(r_{m+1}=0\)、\(r_m\ne0\)。等式表明，一个元素同时整除 \(r_{j-1},r_j\)，当且仅当它同时整除 \(r_j,r_{j+1}\)：两个方向分别使用减法和加法。因此每一对相邻余数的公因子集合相同，最终等于 \(r_m,0\) 的公因子集合，故 \(d=r_m\) 为所求最大公因子。
 
 为明确回代，令 \((u_0,v_0)=(1,0)\)、\((u_1,v_1)=(0,1)\)，并递推
-\[
+\begin{equation}\label{b1:eq:extended-euclid-recurrence}
 u_{j+1}=u_{j-1}-q_ju_j,\qquad
 v_{j+1}=v_{j-1}-q_jv_j.
-\]
+\end{equation}
 由 \(r_0=u_0a+v_0b\)、\(r_1=u_1a+v_1b\) 开始归纳，除法等式给出每个 \(r_j=u_ja+v_jb\)。取 \(j=m\) 即得所求关系。
 \end{proof}
 
-设 \(R\) 为 Euclid 整环，\(a,b\in R\) 不全为零，且 Euclid 算法给出的商和余数满足 \(r_{j-1}=q_jr_j+r_{j+1}\)。从
-\[
-(u_0,v_0)=(1,0),\qquad (u_1,v_1)=(0,1)
-\]
-开始，同时递推
-\[
-u_{j+1}=u_{j-1}-q_ju_j,\qquad
-v_{j+1}=v_{j-1}-q_jv_j,
-\]
-以求得最后非零余数 \(d=ua+vb\)，这个过程称为\term[kuozhan-euclid-suanfa]{扩展 Euclid 算法}[extended Euclidean algorithm]。若已知一个求商余的具体程序，它就给出了以 \(a,b\) 为输入、以 \(d,u,v\) 为输出的有限计算。
+设 \(R\) 为 Euclid 整环，\(a,b\in R\) 不全为零。在求余数的同时按\eqref{b1:eq:extended-euclid-recurrence}更新两组系数，称为\term[kuozhan-euclid-suanfa]{扩展 Euclid 算法}[extended Euclidean algorithm]。计算过程中始终有 \(r_j=u_ja+v_jb\)，所以求得最后非零余数时，也同时得到 \(d=ua+vb\)，无需事后重新回代。若已知一个求商余的具体程序，它就给出了以 \(a,b\) 为输入、以 \(d,u,v\) 为输出的有限计算。
 
 \subsection{整数环及一元多项式环}
 \label{b1:subsec:1102:02}
@@ -121,6 +112,12 @@ N(a+bi)\coloneqq a^2+b^2.
 \]
 由 \(N(z)=z\overline z\) 得 \(N(zw)=N(z)N(w)\)，非零元素的范数为正整数。一个元素是单位当且仅当范数为 \(1\)：必要性由逆元与范数的乘法性得到；充分性由 \(z\overline z=1\) 得到。因此单位恰为 \(\pm1,\pm i\)。
 \symidx{\(\mathbb Z[i]\)：Gauss 整数环}
+
+若 \(\alpha\mid\beta\)，则 \(N(\alpha)\mid N(\beta)\)；反向推断一般不成立。即使范数相同，两个元素也未必相伴。例如 \(N(2+i)=N(2-i)=5\)，但
+\[
+\frac{2-i}{2+i}=\frac{3-4i}{5}\notin\mathbb Z[i],
+\]
+所以 \(2+i\nmid2-i\)，二者也不相伴。范数为整数素数足以证明一个 Gauss 整数不可约，却不是必要条件。例如 \(3\) 在 \(\mathbb Z[i]\) 中不可约（见\cref{b1:ex:11-gaussian-rational-prime}），但 \(N(3)=9\)。
 
 \begin{proposition}\label{b1:prop:gaussian-euclidean}
 设

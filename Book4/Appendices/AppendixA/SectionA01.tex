@@ -1,10 +1,99 @@
 % !TeX root = ../../Book4.tex
-% 节标题由计划纲要.md 中附录 A 的第 1 条要点整理。
+% 纲要标题：### A.1 单子与余单子
+% 纲要位置：工作记录/计划纲要.md，第 3531 行。
+% 纲要细目（写作范围）：
+% #### A.1.1 单子的单位与乘法
+% #### A.1.2 余单子与伴随所给的构造
+% #### A.1.3 幂等单子与反射子范畴
+
 
 \section{单子与余单子}
 \label{b4:sec:A01}
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-% * 单子与余单子
+一个自由对象的元素往往是形式表达式。把表达式再放进同一种形式构造，会出现两层括号；单子的乘法负责把它们合并，单位则把原对象放进形式构造。正文已从伴随得到这种结构，本节先把所用等式写全，再说明它何时只是一种反射。
 
-待撰写。
+\subsection{单子的单位与乘法}
+\label{b4:subsec:A01:01}
+
+沿用\cref{b4:def:monad}，范畴 \(\mathcal C\) 上的单子为自函子 \(T\) 及自然变换
+\(\eta:1_{\mathcal C}\Rightarrow T\)、\(\mu:T^2\Rightarrow T\)，满足
+\begin{equation}\label{b4:eq:A-monad-laws}
+\mu_XT(\mu_X)=\mu_X\mu_{TX},\qquad
+\mu_XT(\eta_X)=1_{TX}=\mu_X\eta_{TX}.
+\end{equation}
+这里及本附录中，态射乘积按从右到左的顺序复合。例如第一式的两边都从 \(T^3X\) 到 \(TX\)，第二式的两边都从 \(TX\) 到自身。
+
+\ProseParagraphBreak
+
+在集合范畴上，令 \(TX\) 为由 \(X\) 中元素组成的全部有限有序表，包括空表。单位把 \(x\) 送到单元素表 \([x]\)，乘法把一个“表的表”按顺序连接。把三层表连接为一层时，先连接内层或先连接外层结果相同；加入单元素表不改变内容。这逐项验证了\eqref{b4:eq:A-monad-laws}。这里的表保留次序，不能把它擅自换成无序的有限集合。
+
+\begin{example}\label{b4:exm:A-extension-scalars-monad}
+设 \(R\to S\) 为含幺环同态，在左 \(R\)-模范畴上令
+\[
+T(M)=S\otimes_RM,\qquad
+\eta_M(m)=1\otimes m,\qquad
+\mu_M(s\otimes t\otimes m)=st\otimes m.
+\]
+其中 \(S\otimes_RM\) 通过 \(R\to S\) 保留左 \(R\)-作用，\(S\) 的右 \(R\)-作用也由该同态给出。张量积的平衡关系使 \(\mu_M\) 良定义，环乘法的结合律给出单子结合律，\(S\) 的单位元给出两条单位律。因此这是一个单子，不要求 \(R,S\) 交换或 \(S\) 在 \(R\) 上平坦。
+\end{example}
+
+\subsection{余单子与伴随所给的构造}
+\label{b4:subsec:A01:02}
+
+余单子反转上面的箭头。\cref{b4:def:comonad}中的数据为
+\(Q:\mathcal D\to\mathcal D\)、\(\varepsilon:Q\Rightarrow1_{\mathcal D}\)、
+\(\delta:Q\Rightarrow Q^2\)，条件为
+\[
+Q(\delta_Y)\delta_Y=\delta_{QY}\delta_Y,\qquad
+Q(\varepsilon_Y)\delta_Y=1_{QY}=\varepsilon_{QY}\delta_Y.
+\]
+乘法把两层归并，余乘法则把一层放进两层，而且两种继续展开的方法必须一致。
+
+\ProseParagraphBreak
+
+若 \(F:\mathcal C\to\mathcal D\) 与 \(U:\mathcal D\to\mathcal C\) 满足 \(F\dashv U\)，其单位、余单位为 \(\eta,\varepsilon\)，则
+\[
+T=UF,\quad \mu_X=U(\varepsilon_{FX}),\qquad
+Q=FU,\quad \delta_Y=F(\eta_{UY}).
+\]
+\cref{b4:prop:adjunction-monad}已通过自然性及三角恒等式证明第一组数据是单子；在对偶范畴中应用同一个证明，就得到第二组余单子。本附录固定以 \(U\) 表示右伴随，避免把原对象与构造出的代数遗忘函子混淆。
+
+\begin{definition}\label{b4:def:A-comonad-coalgebra}
+设 \(\mathcal D\) 为范畴，\((Q,\varepsilon,\delta)\) 为其上的余单子，\(Y\in\mathcal D\)，\(c:Y\to QY\) 为态射。若满足
+\[
+\varepsilon_Yc=1_Y,\qquad \delta_Yc=Q(c)c,
+\]
+则称 \((Y,c)\) 为 \(Q\) 上的\term[yudanzi-shang-yudaishu]{余代数}[coalgebra for a comonad]。对两个余代数 \((Y,c)\)、\((Y',c')\)，若 \(\mathcal D\) 中的态射 \(f:Y\to Y'\) 满足 \(Q(f)c=c'f\)，则称 \(f\) 为它们之间的余代数同态。这些对象与同态组成的范畴记为 \(\mathcal D_Q\)。
+\end{definition}
+
+例如，固定集合 \(A\)，对余单子 \(QX=A\times X\)，余单位为第二投影，余乘法为 \((a,x)\mapsto\Bigl(a,(a,x)\Bigr)\)。其余代数恰好是一个带映射 \(r:X\to A\) 的集合：条件迫使 \(c(x)=\Bigl(r(x),x\Bigr)\)，而第二条公理随后自动成立。同态就是保持到 \(A\) 的映射的函数，所以 \(\mathbf{Set}_Q\) 是切片范畴 \(\mathbf{Set}/A\)。
+
+\subsection{幂等单子与反射子范畴}
+\label{b4:subsec:A01:03}
+
+\begin{definition}\label{b4:def:A-idempotent-monad}
+设 \((T,\eta,\mu)\) 为范畴 \(\mathcal C\) 上的单子。如果每个乘法态射 \(\mu_X:T^2X\to TX\) 都为同构，则称这个单子\term[mideng-danzi]{幂等}[idempotent monad]。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:A-idempotent-reflection}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的幂等单子。令 \(\mathcal C_{\mathrm{fix}}\) 为满足 \(\eta_Y:Y\to TY\) 可逆的对象 \(Y\in\mathcal C\) 所成的全子范畴。则对每个 \(X\in\mathcal C\)，\(TX\) 都在其中，且对 \(Y\in\mathcal C_{\mathrm{fix}}\)，预复合 \(\eta_X\) 给出自然双射
+\[
+\operatorname{Hom}_{\mathcal C}(TX,Y)
+\longrightarrow\operatorname{Hom}_{\mathcal C}(X,Y).
+\]
+因此 \(T:\mathcal C\to\mathcal C_{\mathrm{fix}}\) 是包含函子的左伴随。
+\end{proposition}
+\begin{proof}
+两条单位律及 \(\mu_X\) 可逆给出
+\(T(\eta_X)=\eta_{TX}=\mu_X^{-1}\)，所以 \(TX\) 属于所述子范畴。
+给定 \(f:X\to Y\)，候选延拓为 \(\overline f=\eta_Y^{-1}T(f)\)。由 \(\eta\) 的自然性，\(\overline f\eta_X=f\)。
+
+若 \(h:TX\to Y\) 满足 \(h\eta_X=f\)，则
+\[
+\eta_Yh=T(h)\eta_{TX}
+=T(h)T(\eta_X)=T(f),
+\]
+从而 \(h=\overline f\)。逆公式由函子及自然变换的复合组成，故对 \(X,Y\) 自然。
+\end{proof}
+
+全子范畴的包含函子若有左伴随，该子范畴称为\term[fanshe-zifanchou]{反射子范畴}[reflective subcategory]。例如交换化 \(G\mapsto G/[G,G]\) 再作用一次不再改变对象；\cref{b4:exm:abelianization-adjunction}的伴随因而给出幂等单子，其固定对象正是交换群。一般单子却不幂等：自由幺半群中的一个表，通常有许多不同的分段方式，它们在乘法下都连接成同一个表。

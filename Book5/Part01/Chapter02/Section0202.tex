@@ -1,30 +1,113 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 2.2 正交关系
-% 纲要位置：计划纲要.md，第 3118 行。
+% 纲要位置：工作记录/计划纲要.md，第 3769 行。
+% 纲要细目（写作范围）：
+% * 矩阵系数正交关系
+% * 行正交与列正交
+% * 不可约特征标构成类函数空间的基
+
 
 \section{正交关系}
 \label{b5:sec:0202}
 
-% TODO: 按以下纲要要点撰写本节。
+正交关系来自对线性映射取平均。平均后得到交织算子，Schur 引理迫使它在不同不可约表示之间为零，在相同表示上为标量。选取矩阵单位就把这个结论变成矩阵条目及特征标的求和公式。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 矩阵系数正交关系
-% * 行正交与列正交
-% * 不可约特征标构成类函数空间的基
-%
 
 \subsection{矩阵系数正交关系}
 \label{b5:subsec:0202:01}
 
-待撰写。
+\begin{theorem}[矩阵系数正交]\label{b5:thm:matrix-coefficient-orthogonality}
+设 \(G\) 为有限群，\(\rho\) 与 \(\sigma\) 为 \(G\) 的不可约有限维复表示，均在不变内积的标准正交基下写成酉矩阵。若它们不同构，则对相应范围内的矩阵指标 \(i,a,j,b\) 有
+\[
+\frac1{|G|}\sum_g\sigma(g)_{ia}\overline{\rho(g)_{jb}}=0.
+\]
+若采用同一个 \(d\) 维表示及同一组基，则
+\[
+\frac1{|G|}\sum_g\rho(g)_{ia}\overline{\rho(g)_{jb}}
+=\frac1d\delta_{ij}\delta_{ab}.
+\]
+\end{theorem}
+\begin{proof}
+对 \(T:V_\rho\to V_\sigma\) 定义
+\[
+P(T)=\frac1{|G|}\sum_g\sigma(g)T\rho(g^{-1}).
+\]
+重排求和表明它是交织算子。不同构时由 Schur 引理为零；相同表示时为标量矩阵 \(cI\)，取迹给出 \(cd=\operatorname{tr}T\)，故 \(c=\operatorname{tr}T/d\)。取 \(T\) 为第 \(a,b\) 项为一的矩阵单位。平均式的 \(i,j\) 条目为所列求和，因为酉性使 \(\rho(g^{-1})_{bj}=\overline{\rho(g)_{jb}}\)；右边是 \(\delta_{ab}\delta_{ij}/d\)，得到两式。
+\end{proof}
+
+这还说明同一不可约表示的 \(d^2\) 个矩阵系数线性无关：它们互相正交，且每个范数平方为 \(1/d>0\)。矩阵系数一般不是类函数，只有取对角元之和才得到特征标。
 
 \subsection{行正交与列正交}
 \label{b5:subsec:0202:02}
 
-待撰写。
+\begin{theorem}\label{b5:thm:character-hom-inner-product}
+设 \(G\) 为有限群，\(V,W\) 为有限维复表示。则
+\[
+\langle\chi_V,\chi_W\rangle_G
+=\dim_{\mathbb C}\operatorname{Hom}_G(V,W).
+\]
+特别地，不可约特征标两两正交且范数为一。
+\end{theorem}
+\begin{proof}
+在 \(\operatorname{Hom}_{\mathbb C}(V,W)\) 上，对共轭作用 \(T\mapsto\rho_W(g)T\rho_V(g^{-1})\) 取平均。平均算子 \(P\) 为投影，像恰为不动空间 \(\operatorname{Hom}_G(V,W)\)，所以 \(\operatorname{tr}P\) 等于该空间维数。由\cref{b5:prop:hom-tensor-invariants}及张量迹公式，该作用在 \(g\) 处的迹为
+\(\chi_W(g)\chi_V(g^{-1})=\overline{\chi_V(g)}\chi_W(g)\)。
+对 \(g\) 求平均即得等式。不可约时，再用\cref{b5:lem:schur}和\cref{b5:cor:schur-algebraically-closed}，同构时 Hom 维数为一，不同构时为零。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:character-irreducibility}
+设 \(G\) 为有限群，\(V\) 为 \(G\) 的有限维复表示，\(S_i\) 为两两不同构的不可约复表示、\(m_i\) 为非负整数。若 \(V\) 的不可约分解为 \(\bigoplus_i S_i^{\oplus m_i}\)，则
+\[
+\langle\chi_{S_i},\chi_V\rangle_G=m_i,\qquad
+\langle\chi_V,\chi_V\rangle_G=\sum_i m_i^2.
+\]
+因此非零 \(V\) 不可约当且仅当后一数为一；两个复表示同构当且仅当特征标相同。
+\end{corollary}
+\begin{proof}
+Maschke 定理保证存在分解；迹在直和上相加，所以 \(\chi_V=\sum_i m_i\chi_{S_i}\)。逐项用刚证的正交关系即可得到公式。重数唯一确定分解的同构类型，而 \(\sum_i m_i^2=1\) 恰好表示只有一个重数为一，其他为零。
+\end{proof}
+
+这些是特征标表的行正交关系。列正交还需要知道不可约特征标已经填满类函数空间，不能仅从一组正交向量直接假定它们是基。
 
 \subsection{不可约特征标与类函数空间的基}
 \label{b5:subsec:0202:03}
 
-待撰写。
+\begin{theorem}\label{b5:thm:irreducible-character-basis}
+设 \(G\) 为有限群。其全部不可约复特征标组成复类函数空间 \(\operatorname{CF}(G)\) 关于特征标内积 \(\langle\ ,\ \rangle_G\) 的标准正交基。因而不可约复表示的同构类型数等于共轭类数。
+\end{theorem}
+\begin{proof}
+由\cref{b5:lem:irreducibles-in-regular}，不可约类型只有有限个；正交性已经给出线性无关。若类函数 \(f\) 与全部不可约特征标正交，令
+\[
+z_f=\sum_{g\in G}f(g^{-1})g\in\mathbb C[G].
+\]
+因系数为类函数，\(z_f\) 位于群代数中心。它在任一不可约 \(S_i\) 上由 Schur 引理作用为 \(a_iI\)，而
+\[
+(\dim S_i)a_i=\sum_g f(g^{-1})\chi_i(g)
+=|G|\langle\chi_i,f\rangle_G=0.
+\]
+故在每个不可约上作用为零。正则表示是这些不可约的直和，所以 \(z_f\) 在正则表示上也为零；作用于单位基向量得到 \(z_f=0\)，于是所有系数 \(f(g^{-1})=0\)。所以正交补为零，给定正交组确为整个类函数空间的基。
+\end{proof}
+
+\begin{theorem}[列正交]\label{b5:thm:row-column-orthogonality}
+设 \(G\) 为有限群，全部不可约复特征标为 \(\chi_1,\ldots,\chi_r\)。对 \(g,h\in G\)，有
+\[
+\sum_{i=1}^r\chi_i(g)\overline{\chi_i(h)}
+=
+\begin{cases}
+|C_G(g)|,&g,h\text{ 共轭},\\
+0,&g,h\text{ 不共轭}.
+\end{cases}
+\]
+\end{theorem}
+\begin{proof}
+取各共轭类代表 \(g_j\)，令类大小 \(c_j=|G|/|C_G(g_j)|\)。由行正交，方阵
+\[
+U_{ij}=\sqrt{c_j/|G|}\,\chi_i(g_j)
+\]
+满足 \(U\overline U^{\mathsf T}=I\)。方阵的右逆也为左逆，故 \(\overline U^{\mathsf T}U=I\)，写出各项再取复共轭即得不同代表的公式。同一共轭类的取值相同，因此推广到任意 \(g,h\)。
+\end{proof}
+
+行正交计算表示重数，列正交计算中心化子阶。单位元的一列特别给出
+\[
+\sum_i\chi_i(1)^2=|G|.
+\]
+这一平方和也可以从正则表示的具体分解得到，下一节将保留那个更有结构的信息。

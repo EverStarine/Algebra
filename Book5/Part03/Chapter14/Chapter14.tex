@@ -1,16 +1,414 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第14章　sl_2 及其表示
-% 纲要位置：计划纲要.md，第 3518 行。
+% 纲要位置：工作记录/计划纲要.md，第 4169 行。
 
 \chapter{\texorpdfstring{\(\mathfrak{sl}_2\)}{sl₂} 及其表示}
 \label{b5:ch:14}
 \BookChapterNumber{b5:ch:14}
 
-% TODO: 撰写本章摘要、学习目标与章导读。
+\begin{chapterabstract}
+本章从三个标准生成元的交换关系出发，建立 \(\mathfrak{sl}_2(\mathbb C)\) 的有限维表示理论。升降公式给出每个非负整数最高权对应的不可约模；一个显式 Casimir 算子再把不同类型分开，并帮助证明同一类型的扩张也分裂，由此独立得到完全可约性。随后用权重数计算 Clebsch--Gordan 分解，讨论不变双线性型、Casimir 投影及矩阵中的三元组构造，为根弦和一般最高权理论准备具体工具。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 熟练使用三个交换关系，推导升降公式并识别有限权链。
+\item 能在标准基及齐次多项式模型之间换算，确定最高权、维数和不变配对。
+\item 理解完全可约性的独立证明，特别是不能预先假定权算子已经对角化。
+\item 能由权重数或 Casimir 谱恢复不可约重数，计算张量积及其对称、交替部分。
+\item 能从幂零矩阵的 Jordan 链构造三元组，并说明该构造的适用范围。
+\end{itemize}
+预备知识为 Lie 代数表示、有限维线性代数、广义特征空间分解及张量积。
+本章不依赖一般半单 Lie 代数的根系或 Weyl 完全可约定理。
+\end{learninggoals}
+
+最小的非交换半单 Lie 代数已经包含表示论的许多基本现象。一个向量沿下降方向产生整条权链，链上系数由交换关系决定；有限维性则迫使链的端点具有整数位置。先把这个例子证明清楚，随后在较大代数中找到同样的三元组时，就能直接使用这里的计算。
 
 \input{Part03/Chapter14/Section1401}
 \input{Part03/Chapter14/Section1402}
 \input{Part03/Chapter14/Section1403}
 \input{Part03/Chapter14/Section1404}
 
-% TODO: 撰写本章小结、习题与逐题详解。
+\begin{chaptersummary}
+\(\mathfrak{sl}_2\) 的每个有限维不可约复表示由一个非负整数 \(m\) 决定，其权为
+\(m,m-2,\ldots,-m\)，维数为 \(m+1\)。同一个模既可用升降链描述，也可实现为二元齐次多项式。显式不变型说明每个不可约模自对偶，并区分了对称型与交替型。
+
+\ProseParagraphBreak
+
+不可约表示的分类之后，还须证明完全可约性。Casimir 算子先把不同最高权的广义特征分量分开；在相同最高权的扩张中，升降公式使最高向量的提升仍是普通特征向量，从而构造补模。由此才得到权算子的可对角化及权的整数性。
+
+\ProseParagraphBreak
+
+完全可约性使权重数成为有效的计算资料，Clebsch--Gordan 分解及 Casimir 多项式投影都是它的应用。限制到三元组以后，任何有限维表示都分成这些权链；这将解释一般根系中的整数、连续根弦和反射。矩阵三元组的构造则提醒我们，存在于全矩阵代数中的补充算子未必自动属于事先指定的真子代数。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b5:ex:14-three-matrices}
+在 \(\mathbb C^3\) 的基 \(v_0,v_1,v_2\) 下，取
+\[
+H=\operatorname{diag}(2,0,-2),\quad
+F=\begin{pmatrix}0&0&0\\1&0&0\\0&1&0\end{pmatrix},\quad
+E=\begin{pmatrix}0&2&0\\0&0&2\\0&0&0\end{pmatrix}.
+\]
+验证三条交换关系，并给出到二次齐次多项式模型的显式同构。
+\end{exercise}
+\begin{solution}
+由矩阵作用，\(Hv_i=(2-2i)v_i\)、\(Fv_i=v_{i+1}\)、
+\(Ev_i=i(3-i)v_{i-1}\)，逐基代入得
+\([H,E]=2E,[H,F]=-2F,[E,F]=H\)。
+取 \(v_0\mapsto x^2,v_1\mapsto2xy,v_2\mapsto2y^2\)，则
+\(y\partial_x\) 顺次送前一基向量到后一基向量，
+\(x\partial_y\) 的两项系数均为 \(2\)，故与全部三个算子交织。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-weight-multiplicities}
+一个有限维复 \(\mathfrak{sl}_2\) 模的非零权空间只有
+\[
+\dim V_{\pm4}=1,\qquad
+\dim V_{\pm2}=3,\qquad
+\dim V_0=4.
+\]
+求它的不可约分解、维数及 \(\ker e\) 的维数。
+\end{exercise}
+\begin{solution}
+用 \([V:L_m]=\dim V_m-\dim V_{m+2}\)，得到
+\[
+V\cong L_4\oplus L_2^{\oplus2}\oplus L_0.
+\]
+维数为 \(5+2\cdot3+1=12\)，也等于全部权重数之和。
+每个不可约直和项中 \(\ker e\) 由一个最高向量张成，所以
+\(\dim\ker e=1+2+1=4\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-impossible-weights}
+判断是否存在有限维复 \(\mathfrak{sl}_2\) 模，其 \(h\) 特征值仅为
+\(2,-2\)，各重数为 \(1\)。再给出一个全部权重数关于零对称、但仍不可能出现的四维候选谱。
+\end{exercise}
+\begin{solution}
+第一种谱若存在，最高权 \(2\) 迫使出现一个 \(L_2\)，而 \(L_2\) 含有零权，矛盾。
+四维例子可取 \(4,1,-1,-4\)，各重数为 \(1\)。
+最高权 \(4\) 迫使出现五维模 \(L_4\)，已超过总维数；同时还缺少权 \(2,0,-2\)。
+因此对称性只是必要条件，不能代替连续权链及非负重数条件。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-tensor-highest}
+在模型基下，显式找出 \(L_2\otimes L_1\) 中最高权为 \(3\) 和 \(1\) 的向量，并写出最高权 \(1\) 子模的两项权链。
+\end{exercise}
+\begin{solution}
+记两因子的基为 \(v_0,v_1,v_2\) 及 \(w_0,w_1\)。
+\(v_0\otimes w_0\) 被 \(e\) 零化，权为 \(3\)。
+在权 \(1\) 空间中，
+\[
+u=v_1\otimes w_0-2v_0\otimes w_1
+\]
+满足 \(eu=2v_0\otimes w_0-2v_0\otimes w_0=0\)。
+再有
+\[
+fu=v_2\otimes w_0-v_1\otimes w_1,\qquad f^2u=0.
+\]
+所以这两项生成 \(L_1\)，其余由最高权 \(3\) 向量生成 \(L_3\)；
+两者最高权不同，且维数和为 \(4+2=6\)，故得到整个张量积。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-tensor-invariant}
+在 \(L_2\otimes L_2\) 中构造非零不变向量，并找出最高权 \(2\) 的向量。判断它们在交换两因子的映射下分别具有何种符号。
+\end{exercise}
+\begin{solution}
+不变向量可取
+\[
+u=v_0\otimes v_2-v_1\otimes v_1+v_2\otimes v_0.
+\]
+其权为零；\(e\) 作用后两种权 \(2\) 张量的系数分别为 \(2-2=0\)，
+\(f\) 作用后的两种系数也互相抵消，所以 \(u\) 不变。
+最高权 \(2\) 向量可取
+\(w=v_1\otimes v_0-v_0\otimes v_1\)，其 \(e\) 像为零。
+交换两因子固定 \(u\)，把 \(w\) 送到 \(-w\)。
+因此 \(L_0\) 在对称部分，\(L_2\) 在交替部分。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-symmetric-exterior}
+对 \(m\geq0\)，证明
+\[
+\operatorname{Sym}^2L_m\cong
+\bigoplus_{0\leq j\leq\lfloor m/2\rfloor}L_{2m-4j},
+\qquad
+\bigwedge^2L_m\cong
+\bigoplus_{0\leq j\leq\lfloor(m-1)/2\rfloor}L_{2m-2-4j},
+\]
+其中空和为零。
+\end{exercise}
+\begin{solution}
+Clebsch--Gordan 分解给出各出现一次的 \(L_{2m-2a}\)，\(0\leq a\leq m\)。
+交换因子的映射 \(\tau\) 与作用交换，所以在每个不可约直和项上为标量 \(\pm1\)。
+其最高向量形如
+\(u_a=\sum_{i=0}^a c_i v_i\otimes v_{a-i}\)。
+条件 \(eu_a=0\) 给出
+\[
+c_{i+1}(i+1)(m-i)
++c_i(a-i)(m-a+i+1)=0.
+\]
+取 \(c_0\ne0\)，所有系数由递推确定且非零；把比值相乘，分子与分母的连续乘积相消，得 \(c_a=(-1)^a c_0\)。
+\(\tau u_a\) 的首项系数为 \(c_a\)，故 \(\tau\) 在该项上的标量为 \((-1)^a\)。
+偶数 \(a\) 留在对称平方，奇数 \(a\) 留在外平方，重写指标即得两式。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-small-exterior}
+求 \(\operatorname{Sym}^2L_3\)、\(\bigwedge^2L_3\) 及
+\(\bigwedge^3L_3\) 的不可约分解。
+\end{exercise}
+\begin{solution}
+前两项由上一题得到 \(L_6\oplus L_2\) 和 \(L_4\oplus L_0\)。
+\(L_3\) 的权为 \(3,1,-1,-3\)，三重外积的四个权分别为
+\(3,1,-1,-3\)，各一次。由完全可约性及最高权逐项相减，
+\(\bigwedge^3L_3\cong L_3\)。
+维数分别为 \(10,6,4\)，与对称、外幂的线性代数维数相符。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-endomorphism-module}
+对自然共轭作用
+\((x\cdot T)(v)=xT(v)-T(xv)\)，求
+\(\operatorname{End}(L_m)\) 的不可约分解，并指出其迹零子模。
+\end{exercise}
+\begin{solution}
+有 \(\operatorname{End}(L_m)\cong L_m\otimes L_m^*\cong L_m\otimes L_m\)，故
+\[
+\operatorname{End}(L_m)\cong L_{2m}\oplus L_{2m-2}\oplus\cdots\oplus L_0.
+\]
+唯一的平凡直和项由恒等算子张成。迹是到平凡模的同态，在所有非平凡简单模上为零，而恒等算子的迹为 \(m+1\ne0\)。
+所以迹零子模恰为除 \(L_0\) 外的全部项；\(m=0\) 时它为零。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-hom-invariants}
+求 \(\operatorname{Hom}(L_m,L_n)\) 在上述 Hom 作用下的不变子空间，并说明
+\(L_m\otimes L_n\) 中平凡模出现的条件与重数。
+\end{exercise}
+\begin{solution}
+不变条件为 \(xT=Tx\) 对全部 \(x\) 成立，即 \(T\) 为模同态。
+不同最高权的不可约模之间同态为零，同一不可约模的自同态为标量，所以维数为
+\(\delta_{mn}\)。再用 \(L_m^*\cong L_m\)，这也等于张量积中平凡模的重数。
+因此恰在 \(m=n\) 时出现一次。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-faithfulness}
+设 \(V\) 为有限维复 \(\mathfrak{sl}_2\) 模。证明其表示忠实，当且仅当它含有至少一个非平凡不可约直和项。
+\end{exercise}
+\begin{solution}
+若全部直和项都是 \(L_0\)，作用为零，不忠实。
+若某个 \(L_m\) 满足 \(m>0\)，则 \(h\) 在其最高向量上按非零标量 \(m\) 作用，所以表示非零。
+其核为 \(\mathfrak{sl}_2\) 的理想，而这个 Lie 代数是单的，非零表示的核只能为零。
+这里的忠实性是 Lie 代数表示的性质，不直接回答某个 Lie 群表示的核。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-jordan-blocks}
+设幂零算子 \(E\) 的 Jordan 块大小为 \(4,2,1\)。
+依正文方法构造三元组后，列出 \(H\) 的全部特征值，求
+\(\operatorname{rank}E\) 及 \(\operatorname{rank}E^2\)。
+\end{exercise}
+\begin{solution}
+三条 Jordan 链分别成为 \(L_3,L_1,L_0\)，故
+\(H\) 的权为 \(3,1,-1,-3;1,-1;0\)。
+大小为 \(a\) 的幂零块的 \(k\) 次幂秩为 \(\max(a-k,0)\)，因此
+\(\operatorname{rank}E=3+1=4\)，
+\(\operatorname{rank}E^2=2\)。
+总维数为 \(7\)，每条权链的权和为零。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-jordan-tensor-sum}
+设 \(J_a,J_b\) 为大小分别为 \(a,b\geq1\) 的幂零单 Jordan 块。
+证明
+\(J_a\otimes I_b+I_a\otimes J_b\)
+的 Jordan 块大小依次为
+\[
+a+b-1,\ a+b-3,\ldots,\lvert a-b\rvert+1.
+\]
+\end{exercise}
+\begin{solution}
+把两个 Jordan 块分别补成 \(L_{a-1},L_{b-1}\) 上的上升算子。
+张量积中的上升算子正是题中的矩阵和。
+Clebsch--Gordan 分解给出
+\[
+L_{a-1}\otimes L_{b-1}
+=\bigoplus_{j=0}^{\min(a,b)-1}L_{a+b-2-2j}.
+\]
+每个 \(L_s\) 上的上升算子只有一个大小为 \(s+1\) 的 Jordan 块，因为沿整条权链的非端点系数均非零。于是得到所列块大小。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-jordan-ranks}
+对上一题的 \(a=3,b=4\)，求矩阵和的核维数、秩以及平方的秩。
+若把第一个加数乘以任意非零复数 \(c\)，答案是否改变？
+\end{exercise}
+\begin{solution}
+Jordan 块大小为 \(6,4,2\)，故核维数为 \(3\)，秩为
+\(5+3+1=9\)，平方的秩为 \(4+2+0=6\)。
+\(cJ_3\) 与 \(J_3\) 通过对 Jordan 链逐级缩放同构，因此
+\(cJ_3\otimes I+I\otimes J_4\) 与原矩阵和共轭，答案不变。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-casimir-projections}
+设 \(V\) 的不可约类型只有 \(L_0,L_2,L_3\)，每类均出现。
+用 \(C=h^2+2h+4fe\) 显式写出三个等型投影，并说明投影的迹给出什么。
+\end{exercise}
+\begin{solution}
+三个特征值为 \(0,8,15\)，所以
+\[
+P_0=\frac{(C-8I)(C-15I)}{120},\quad
+P_2=-\frac{C(C-15I)}{56},\quad
+P_3=\frac{C(C-8I)}{105}.
+\]
+它们在各个特征值上的取值为相应的零或一，故互相正交、和为恒等。
+投影的迹等于像的维数；把三个投影的迹分别除以 \(1,3,4\)，便得到三个类型的重数。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-tensor-casimir}
+证明张量积上的 Casimir 算子为
+\[
+C_{V\otimes W}=C_V\otimes I+I\otimes C_W
++2h\otimes h+4(f\otimes e+e\otimes f).
+\]
+对 \(L_1\otimes L_1\)，证明它等于 \(4(I+\tau)\)，其中 \(\tau\) 交换两因子。
+\end{exercise}
+\begin{solution}
+将 \(h\) 换成 \(h\otimes I+I\otimes h\)，
+\(e,f\) 作同样替换，展开 \(h^2+2h+4fe\) 即得公式。
+在 \(L_1\otimes L_1=L_2\oplus L_0\) 上，Casimir 分别为 \(8,0\)，
+而 \(\tau\) 在对称部分 \(L_2\) 为 \(1\)，在交替部分 \(L_0\) 为 \(-1\)。
+两算子在整个直和分解上作用一致，所以相等。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-polynomial-pairing}
+在全次数为 \(m\) 的二元齐次多项式模型中，把不变双线性型归一为
+\(B(x^m,y^m)=1\)。求
+\(B(x^{m-i}y^i,x^iy^{m-i})\)，并说明其他单项式何时可有非零配对。
+\end{exercise}
+\begin{solution}
+\(h\) 不变性迫使两个权之和为零，所以只有指数 \(i,j\) 满足 \(i+j=m\) 时可能非零。
+由 \(v_i=m!x^{m-i}y^i/(m-i)!\) 及正文的
+\(B(v_i,v_{m-i})=(-1)^i\)，转换到单项式后再按首末配对归一，得到
+\[
+B(x^{m-i}y^i,x^iy^{m-i})
+=\frac{(-1)^i}{\binom mi}.
+\]
+直接代入 \(f=y\partial_x\) 也得到相邻系数递推
+\((m-i)B_{i+1}+(i+1)B_i=0\)，与这个答案相同。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-orthogonal-symplectic}
+利用 \(L_2,L_3\) 上的不变型，分别构造
+\(\mathfrak{sl}_2\to\mathfrak{so}_3\) 和
+\(\mathfrak{sl}_2\to\mathfrak{sp}_4\) 的单射，并判断其中哪个是同构。
+\end{exercise}
+\begin{solution}
+\(L_2\) 上的非退化型对称，\(L_3\) 上的非退化型交替。
+不变性
+\(B(xv,w)+B(v,xw)=0\)
+说明作用矩阵分别落在保持该型的正交、辛 Lie 代数中。
+两个表示均非平凡，由单性可知同态都单射。
+\(\dim\mathfrak{so}_3=3=\dim\mathfrak{sl}_2\)，故第一个为同构；
+\(\dim\mathfrak{sp}_4=10\)，故第二个是严格包含。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-polynomial-contraction}
+设 \(m,n\geq1\)。对次数为 \(m,n\) 的齐次多项式 \(P,Q\)，定义
+\[
+\Omega(P,Q)=\frac{\partial P}{\partial x}\frac{\partial Q}{\partial y}
+-\frac{\partial P}{\partial y}\frac{\partial Q}{\partial x}.
+\]
+证明它诱导满的 \(\mathfrak{sl}_2\) 同态
+\(L_m\otimes L_n\to L_{m+n-2}\)，并描述其核的不可约类型。
+\end{exercise}
+\begin{solution}
+输出的全次数为 \(m+n-2\)。对 \(h=x\partial_x-y\partial_y\)，两项都各有一个降低权的偏导数和一个升高权的偏导数，所以
+\(h\Omega(P,Q)=\Omega(hP,Q)+\Omega(P,hQ)\)。
+对 \(e=x\partial_y\)，利用
+\([e,\partial_x]=-\partial_y,[e,\partial_y]=0\)，额外的两个
+\(\partial_yP\,\partial_yQ\) 项符号相反而抵消，得到同样的导子相容式。
+对 \(f=y\partial_x\)，交换 \(x,y\) 后同理成立。
+又 \(\Omega(x^m,y^n)=mnx^{m-1}y^{n-1}\ne0\)，所以像是目标不可约模中的非零子模，即为整个目标。
+Clebsch--Gordan 分解中目标类型只出现一次，因此核为除
+\(L_{m+n-2}\) 以外的全部直和项。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-trace-form}
+在 \(L_m\) 中计算 \(\operatorname{tr}(h^2)\) 和
+\(\operatorname{tr}(ef)\)，并求迹型
+\(B_m(x,y)=\operatorname{tr}_{L_m}(xy)\)
+与 \(\mathfrak{sl}_2\) 的 Killing 型之间的比例。
+\end{exercise}
+\begin{solution}
+权求和给出
+\[
+\operatorname{tr}(h^2)
+=\sum_{i=0}^m(m-2i)^2
+=\frac{m(m+1)(m+2)}3.
+\]
+而 \(efv_i=(i+1)(m-i)v_i\)，故
+\(\operatorname{tr}(ef)=m(m+1)(m+2)/6\)。
+其余基本配对除 \(fe\) 外均为零；与
+\(\kappa(h,h)=8,\kappa(e,f)=4\) 比较，得到
+\[
+B_m=\frac{m(m+1)(m+2)}{24}\,\kappa.
+\]
+\(m=0\) 时两项计算都为零，符合平凡表示。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-principal-sl3}
+在 \(\mathfrak{sl}_3\) 中取
+\[
+E=E_{12}+E_{23},\qquad
+F=2E_{21}+2E_{32},\qquad
+H=\operatorname{diag}(2,0,-2).
+\]
+验证它们构成三元组；把 \(\mathfrak{sl}_3\) 限制为这个三元组的伴随模，
+求不可约分解和 \(E\) 在 \(\mathfrak{sl}_3\) 中的中心化子。
+\end{exercise}
+\begin{solution}
+基本矩阵括号给出三条标准关系。自然三维模为 \(L_2\)，故
+\(\operatorname{End}(\mathbb C^3)=L_4\oplus L_2\oplus L_0\)；
+去掉标量矩阵，得到
+\(\mathfrak{sl}_3=L_4\oplus L_2\)。
+也可直接看见两个最高向量：\(E_{13}\) 权为 \(4\)，而 \(E\) 权为 \(2\)，它们都与 \(E\) 交换。
+每个不可约直和项的上升算子核一维，所以中心化子为
+\(\mathbb CE+\mathbb CE_{13}\)，维数为 \(2\)。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-tensor-invariant-count}
+求自然二维模 \(L_1\) 的 \(n\) 次张量幂中平凡模的重数。
+\end{exercise}
+\begin{solution}
+若 \(n\) 为奇数，全部权都是奇数，没有零权，所以平凡模重数为零。
+若 \(n=2r\)，权 \(0\) 的重数为 \(\binom{2r}{r}\)，权 \(2\) 的重数为
+\(\binom{2r}{r-1}\)。两者相减便得到
+\[
+[L_1^{\otimes2r}:L_0]
+=\binom{2r}{r}-\binom{2r}{r-1}
+=\frac1{r+1}\binom{2r}{r}.
+\]
+公式也涵盖 \(r=0\)，零次张量幂为一维平凡模。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-string-hypotheses}
+构造一个可约的有限维复 \(\mathfrak{sl}_2\) 模，使每个权空间都一维。
+再构造一个全部权同奇偶、但仍可约的例子。说明单链判据中两个假设各有什么作用。
+\end{exercise}
+\begin{solution}
+\(L_2\oplus L_1\) 的权为 \(2,1,0,-1,-2\)，各重数为 \(1\)，但它分成两个非零子模；其权不在同一集合 \(d+2\mathbb Z\) 中。
+\(L_2\oplus L_0\) 的权全为偶数，但零权空间二维，也可约。
+同奇偶使两个不可约直和项必在权 \(0\) 或权 \(1\) 相遇；
+一维性再排除这种相遇，两者须共同使用。
+\end{solution}
+
+\begin{exercise}\label{b5:ex:14-nilpotent-ranks-determine-module}
+设 \(V,W\) 为有限维复 \(\mathfrak{sl}_2\) 模，且对所有整数 \(j\geq0\) 有
+\(\operatorname{rank}(e^j|_V)=\operatorname{rank}(e^j|_W)\)。
+证明 \(V\cong W\)，并给出从这些秩恢复各不可约重数的公式。
+\end{exercise}
+\begin{solution}
+在 \(L_m\) 上，\(e\) 为大小 \(m+1\) 的单 Jordan 块。
+令 \(r_j=\operatorname{rank}e^j\)，则 \(r_{j-1}-r_j\) 等于大小至少为 \(j\) 的 Jordan 块数。
+所以大小恰为 \(m+1\) 的块数，即 \(L_m\) 的重数，为
+\[
+r_m-2r_{m+1}+r_{m+2}.
+\]
+所有这些二阶差分由题设相同，故两个模的不可约重数逐一相同。
+\end{solution}

@@ -1,14 +1,56 @@
 % !TeX root = ../../Book3.tex
-% 标题依据：计划纲要.md，附录 C 第 2 条要点。
+% 纲要标题：### C.2 Frobenius 方法与正特征奇点
 
 \section{Frobenius 方法与正特征奇点}
 \label{b3:sec:C02}
 
-% TODO: 按以下纲要要点撰写本节，并明确所需基础及哪些结论予以证明。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要细目（与计划纲要同步）：
 % * Frobenius 方法和正特征奇点
 %
+% <!-- 短节：不设小节 -->
 
-待撰写。
+
+% 正文以具体模型说明专题；长证明给出概要并指明技术细节的出处。
+
+在特征 \(p>0\) 中，二项式系数的消失使 \(F:R\to R,r\mapsto r^p\) 成为环同态，称为\term{Frobenius 同态}[Frobenius homomorphism]。它把所有元素的幂次同时放大，却保留加法。这让正特征中的奇点研究可以把“取幂”转成模论问题。
+
+\begin{definition}\label{b3:def:frobenius-pushforward}
+设 \(R\) 为特征 \(p>0\) 的交换环，\(e\ge1\) 为整数，\(q=p^e\)。记 \(F_*^eR\) 为加法群仍等于 \(R\)、标量作用改为
+\[
+a\cdot F_*^e r=F_*^e(a^q r)
+\]
+的 \(R\) 模，并记 \(F_*R=F_*^1R\)。若 \(F_*R\) 为有限 \(R\) 模，则称 \(R\) 为 \term[finiteF]{F-有限环}[F-finite ring]。若 \(R\) 线性映射 \(R\to F_*R,a\mapsto F_*a^p\) 有 \(R\) 线性左逆，则称 \(R\) 为\term{Frobenius 分裂}[Frobenius split]环。
+\end{definition}
+
+标量作用的改变是必要的：普通映射 \(r\mapsto r^p\) 一般不是通常 \(R\) 模之间的线性映射。现在它成为线性的，才可以问平坦、有限或分裂。
+
+\begin{proposition}\label{b3:prop:polynomial-frobenius-free}
+设 \(k\) 为特征 \(p>0\) 的完美域，\(R=k[x_1,\ldots,x_n]\)，\(e\ge1\) 为整数，\(q=p^e\)。则 \(F_*^eR\) 为秩 \(q^n\) 的自由 \(R\) 模，一组基为
+\[
+F_*^e(x_1^{a_1}\cdots x_n^{a_n}),\qquad0\le a_i<q.
+\]
+特别地，\(R\) 的 Frobenius 同态平坦，且 \(R\) 为 F-有限并 Frobenius 分裂。
+\end{proposition}
+\begin{proof}
+每个指数向量唯一写为 \(qb+a\)，其中各 \(a_i\) 在给定范围内；每个系数在完美域中又有唯一的 \(q\) 次根。因此每个多项式唯一写成 \(\sum_a f_a(x)^qx^a\)。这正是关于所列基的唯一线性表示，故该模自由。对于 \(e=1\)，把 \(F_*1\) 的系数取出、其余基向量送到零，得到线性映射 \(F_*R\to R\)，它在 \(F_*f^p\) 上的值为 \(f\)，即所需左逆。
+\end{proof}
+
+\begin{example}[分裂不等于正则]\label{b3:exm:node-frobenius-split}
+设 \(k\) 完美，\(R=k[x,y]/(xy)\)。每个元素唯一写为一个常数加只含正次 \(x\) 的多项式与只含正次 \(y\) 的多项式。定义 \(\varphi:F_*R\to R\)：指数可被 \(p\) 整除的单项式保留并把指数除以 \(p\)、系数取 \(p\) 次根，其余单项式送到零。按上述唯一表示检查 \(\varphi(a\cdot F_*r)=a\varphi(F_*r)\)，只需检查标量为系数、\(x\)、\(y\) 的情形；交叉乘积因 \(xy=0\) 同时为零。且 \(\varphi(F_*a^p)=a\)，故该环 Frobenius 分裂。但原点局部环维数一，而 \(\mathfrak m/\mathfrak m^2\) 维数二，所以不正则。
+\end{example}
+
+这一例子还可直接检测 Frobenius 不平坦。若 \(N=F_*R\) 平坦，对映射 \(R\xrightarrow{x}R\) 张量，应有
+\[
+\ker(x:N\to N)=(0:_Rx)N=yN.
+\]
+而 \(F_*y\) 被 \(x\) 零化，因为 \(x\cdot F_*y=F_*(x^py)=0\)；它却不在 \(yN=F_*(y^pR)\) 中。于是 Frobenius 虽分裂却不平坦。两种性质不能混为一种正则性判断。
+
+\ProseParagraphBreak
+对理想 \(I\subseteq R\)，记 \(I^{[q]}=(a^q:a\in I)\)，并定义\term{Frobenius 闭包}[Frobenius closure]
+\[
+I^F=\{r\in R:r^{p^e}\in I^{[p^e]}\text{ 对某个 }e\ge0\}.
+\]
+它是包含 \(I\) 的理想：对两个见证取足够大的共同 \(e\)，用 Frobenius 保持加法与乘法验证。若 Frobenius 分裂，反复使用分裂映射，便从 \(r^q\in I^{[q]}\) 得 \(r\in I\)，所以所有理想满足 \(I^F=I\)。这提供另一种用理想观察正特征奇点的方法。
+
+\ProseParagraphBreak
+更精细的正特征奇点理论还研究所有模上的纯性、局部上同调上的 Frobenius 作用及紧闭包。它们分别施加不同的有限性与非零条件。本节已经证明的只有上述具体自由性、分裂、非平坦性与理想闭包结论；没有把其中任一条件当作所有奇点分类的充分判据。

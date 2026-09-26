@@ -1,30 +1,152 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### E.3 算例与可解性
-% 纲要位置：计划纲要.md，第 3853 行。
-
-\section{算例与可解性}
-\label{b5:sec:E03}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 4707 行。
 % * 在 \(\mathbb C(x)\) 上比较指数型、对数型和根式型例子；非齐次方程需要转为齐次系统
 % * 用解的代数关系核验乘法群、加法群或有限循环群；不只凭函数名称判断
 % * 标准 PV 假设下的 Liouvillian 可解性与群单位连通分支的可解性；Kovacic 算法只作为二阶方程专题出口
-%
+% #### E.3.1 指数型、对数型与根式型方程
+% #### E.3.2 解的代数关系与 Galois 群
+% #### E.3.3 Liouvillian 可解性与 Kovacic 算法
+\section{算例与可解性}
+\label{b5:sec:E03}
+
+下面都在 \((K,\delta)=\Bigl(\mathbb C(x),\mathrm{d}/\mathrm{d}x\Bigr)\) 上讨论。先用形式变量规定导子，再证明没有新常数，这样不必预先选择复对数的分支，也不把函数名称当作代数独立性的证明。
 
 \subsection{指数型、对数型与根式型方程}
 \label{b5:subsec:E03:01}
 
-待撰写。
+我们需要两个有理函数事实。非零 \(r\in\mathbb C(x)\) 在无穷远处满足 \(r'/r=O(1/x)\)，故其对数导数不可能是非零常数。另一方面，\(r'\) 在有限点的 Laurent 展开没有 \((x-a)^{-1}\) 项：该项只能来自常数项的导数，而它为零。因此 \(r'=1/x\) 没有有理解。
+
+\begin{example}[指数型扩张]\label{b5:exm:E-exponential}
+设 \((K,\delta)=(\mathbb C(x),\mathrm d/\mathrm dx)\)，取在 \(K\) 上超越的元 \(t\)，规定 \(\delta(t)=t\)。则 \(L=K(t)\) 是 \(y'=y\) 的 PV 扩张，微分 Galois 群为 \(\mathbb G_m(\mathbb C)=\mathbb C^\times\)，作用为 \(t\mapsto ct\)。
+\end{example}
+\begin{proof}
+导子先由 Leibniz 法则延拓到 \(K[t]\)，再按商法则延拓到 \(K(t)\)。每个 \(f\in K(t)\) 在 \(t=0\) 有唯一形式 Laurent 展开
+\[
+ f=\sum_{j\ge j_0}a_j(x)t^j\in K((t)).
+\]
+这来自分母提出最低次幂后对常数项非零的幂级数求逆，因而展开映射是单射。若 \(f'=0\)，比较系数得 \(a_j'+ja_j=0\)。当 \(j\ne0\) 且 \(a_j\ne0\) 时，这要求 \(a_j'/a_j=-j\)，与无穷远处的计算矛盾；而 \(a_0'=0\) 给出 \(a_0\in\mathbb C\)。故 \(C_L=\mathbb C\)。
+
+一阶基本解 \(t\) 生成 \(L\)，所以\cref{b5:thm:E-pv-existence}的反向陈述给出 PV 环 \(K[t,t^{-1}]\)。若 \(\sigma\) 是微分自同构，则 \(\Bigl(\sigma(t)/t\Bigr)'=0\)，故 \(\sigma(t)=ct\)。反过来，\(t\) 的超越性保证每个非零常数伸缩都给出域自同构，且与导子交换。
+\end{proof}
+
+\begin{example}[对数型扩张]\label{b5:exm:E-logarithm}
+设 \((K,\delta)=(\mathbb C(x),\mathrm d/\mathrm dx)\)，取在 \(K\) 上超越的元 \(u\)，规定 \(\delta(u)=1/x\)。则 \(L=K(u)\) 是齐次系统
+\[
+ Y'=\begin{pmatrix}0&1/x\\0&0\end{pmatrix}Y
+\]
+的 PV 扩张，群为 \(\mathbb G_a(\mathbb C)=(\mathbb C,+)\)，作用为 \(u\mapsto u+c\)。
+\end{example}
+\begin{proof}
+把非零 \(f\in K(u)\) 在 \(u=\infty\) 展开为
+\(f=\sum_{j\le d}a_j(x)u^j\)，其中 \(a_d\ne0\)。若 \(f'=0\)，最高次项给出 \(a_d'=0\)，故 \(a_d\in\mathbb C^\times\)；再比较 \(u^{d-1}\) 项得到
+\[
+ a_{d-1}'=-d\,a_d/x.
+\]
+有理函数导数在 \(0\) 的留数为零，故 \(d=0\)。此时 \(a_0\) 为常数；若 \(f-a_0\ne0\)，它仍是常数元，却有严格负的最高次数，重复论证又要求该次数为零，矛盾。因此 \(C_L=\mathbb C\)。
+
+基本解矩阵可以取
+\[
+ Z=\begin{pmatrix}1&u\\0&1\end{pmatrix}.
+\]
+它的行列式为 \(1\)，系数生成 \(L\)，所以由\cref{b5:thm:E-pv-existence}得到 PV 环 \(K[u]\)。自同构满足 \(\Bigl(\sigma(u)-u\Bigr)'=0\)，必为常数平移；\(u\) 的超越性保证每个这样的平移均可实行。在基本解矩阵上，群元素为 \(\bigl(\begin{smallmatrix}1&c\\0&1\end{smallmatrix}\bigr)\)。
+\end{proof}
+
+原式 \(u'=1/x\) 是非齐次标量方程。增加满足 \(v'=0\) 的坐标，并写 \(u'=v/x\)，才得到 PV 定义要求的齐次系统；取 \(v=1\) 恢复原式。
+
+\begin{example}[根式型扩张]\label{b5:exm:E-radical}
+设 \((K,\delta)=(\mathbb C(x),\mathrm d/\mathrm dx)\)，\(n\ge2\)，令 \(t^n=x\)，并将导子延拓到 \(L=K(t)=\mathbb C(t)\)。则 \(L/K\) 是 \(y'=y/(nx)\) 的 PV 扩张，群为 \(\mu_n(\mathbb C)\)，作用为 \(t\mapsto\zeta t\)、\(\zeta^n=1\)。
+\end{example}
+\begin{proof}
+\(T^n-x\) 对素元 \(x\in\mathbb C[x]\) 满足 Eisenstein 条件，所以在 \(K[T]\) 中不可约，\([L:K]=n\)。求导关系得
+\[
+ t'=\frac{1}{nt^{n-1}}=\frac{t}{nx}.
+\]
+在 \(\mathbb C(t)\) 中，导子为 \((nt^{n-1})^{-1}\mathrm{d}/\mathrm{d}t\)，其核为 \(\mathbb C\)，因为特征零有理函数的通常导数为零当且仅当函数为常数。于是 \(t\) 是生成无新常数扩张的基本解，可用\cref{b5:thm:E-pv-existence}。
+
+自同构必须保持 \(t^n=x\)，故 \(\sigma(t)=\zeta t\)。反之，每个 \(n\) 次单位根均给出固定 \(x\) 的自同构，导子公式表明它与求导交换。因此群恰为所述有限循环群。
+\end{proof}
 
 \subsection{解的代数关系与 Galois 群}
 \label{b5:subsec:E03:02}
 
-待撰写。
+基本解矩阵的常数变换必须保持其代数关系。在例~\ref{b5:exm:E-radical}中，\(t^n=x\) 把伸缩限制为 \(c^n=1\)；在例~\ref{b5:exm:E-exponential}中，没有这种关系，全部非零伸缩便都存在。
+
+\ProseParagraphBreak
+对系统 \(Y'=\operatorname{diag}(1,2)Y\)，沿用 \(t'=t\)，可取
+\[
+ Z=\operatorname{diag}(t,t^2).
+\]
+第二个非零对角元是第一个的平方，所以群不是两个独立乘法群，而是
+\[
+ \Bigl\{\operatorname{diag}(c,c^2):c\in\mathbb C^\times\Bigr\}.
+\]
+这里也能核验全部关系：从 \(K[T_1^{\pm1},T_2^{\pm1}]\) 代入 \((t,t^2)\) 的核恰为 \((T_2-T_1^2)\)，因为商环就是 \(K[T_1,T_1^{-1}]\)，而 \(t\) 超越。
+
+\begin{proposition}\label{b5:prop:E-exponential-fixed-field}
+设 \((K,\delta)=(\mathbb C(x),\mathrm d/\mathrm dx)\)，\(t\) 在 \(K\) 上超越且 \(\delta(t)=t\)，\(L=K(t)\)。其微分 Galois 群 \(\mathbb C^\times\) 以 \(t\mapsto ct\) 作用。对每个 \(n\ge1\)，子群 \(\mu_n=\{c\in\mathbb C^\times:c^n=1\}\) 的不动域为 \(K(t^n)\)，整个 \(\mathbb C^\times\) 的不动域为 \(K\)。
+\end{proposition}
+\begin{proof}
+\(1,t,\ldots,t^{n-1}\) 是 \(K(t^n)\) 上的基：以超越元 \(s=t^n\) 对 \(T^n-s\) 用 Eisenstein 判别即可。取本原 \(n\) 次单位根 \(\zeta\)，若 \(\sum_{j=0}^{n-1}b_jt^j\) 被 \(t\mapsto\zeta t\) 固定，比较基系数便得 \(b_j=0\) 对 \(j>0\) 成立。
+
+若 \(f\) 被全部伸缩固定，在 \(t=0\) 的 Laurent 展开中便有 \(a_jc^j=a_j\) 对所有 \(c\ne0\) 成立。对 \(j\ne0\) 可取 \(c^j\ne1\)，故只留下常数项，\(f\in K\)。
+\end{proof}
+
+由于 \((t^n)'=nt^n\)，\(K(t^n)\) 对导子稳定，确实是\cref{b5:thm:E-galois-correspondence}所要求的中间微分域。
 
 \subsection{Liouvillian 可解性与 Kovacic 算法}
 \label{b5:subsec:E03:03}
 
-待撰写。
+\begin{definition}\label{b5:def:E-liouvillian}
+设 \((K,\delta)\) 为特征零微分域。给定有限微分域塔
+\[
+ K=K_0\subset K_1\subset\cdots\subset K_r,\qquad K_{i+1}=K_i(a_i)\quad(0\le i<r),
+\]
+若每步满足下列条件之一：\(a_i\) 在 \(K_i\) 上代数、\(\delta(a_i)\in K_i\)、或 \(a_i\ne0\) 且 \(\delta(a_i)/a_i\in K_i\)，则称为
+\term[Liouvillian-ta]{Liouvillian 塔}[Liouvillian tower]。
+在常数域 \(C=\ker\delta\) 代数闭的情形，对 \(n\ge1\)、\(A\in M_n(K)\)，设 \(L/K\) 为系统 \(\delta(Y)=AY\) 的 PV 扩张。若存在 \(L\) 到这样的塔顶的微分 \(K\) 嵌入，则称该系统
+\term[Liouvillian-kejie]{Liouvillian 可解}[Liouvillian solvable]。
+\end{definition}
+
+后两类步骤分别对应积分和积分的指数。第一类允许一般代数扩张，并不要求由根式组成；这解释了下面为何只出现单位连通分支。
+
+\begin{theorem}[Liouvillian 可解性准则]\label{b5:thm:E-liouvillian-criterion}
+设 \((K,\delta)\) 为特征零微分域，常数域 \(C=\ker\delta\) 代数闭，\(n\ge1\)，\(A\in M_n(K)\)，\(L/K\) 为系统 \(\delta(Y)=AY\) 的 PV 扩张，\(G=\operatorname{Gal}_\delta(L/K)\)。该系统 Liouvillian 可解，当且仅当 \(C\) 上线性代数群 \(G\) 的单位连通分支 \(G^\circ\) 可解。
+\end{theorem}
+
+\begin{proofsketch}
+先设 \(G^\circ\) 可解。由\cref{b5:thm:E-galois-correspondence}，\(F=L^{G^\circ}\) 是 \(K\) 的有限代数扩张。可解连通线性代数群在代数闭特征零域上的有限维表示有不变完全旗：对其可解李代数使用 Lie 三角化，再注意完全旗的稳定子群包含整个连通群。正文\cref{b5:thm:lie-triangularization}的证明同样适用于这里的代数闭特征零常数域。
+
+在原 PV 域 \(L\) 中选取适配这条旗的基本解列。前 \(j\) 列所张成的 \(L\)-子空间在群作用下稳定，将其作行最简化后，唯一的规范矩阵也在群作用下不变，系数便落在 \(L^{G^\circ}=F\)。这些子空间因此下降为 \(F\) 上的微分子模旗。选取适配旗的 \(F\) 基，令换基矩阵为 \(B\in\operatorname{GL}_n(F)\)，就使
+\[
+ T=B^{-1}Z,\qquad
+ \widetilde A=B^{-1}AB-B^{-1}\delta(B),\qquad
+ \delta(T)=\widetilde A T
+\]
+中的 \(T\) 与 \(\widetilde A\) 都为上三角矩阵。
+
+现在完全在 \(L\) 内构造塔。先加入各个非零对角元 \(t_i=T_{ii}\)，它们满足 \(\delta(t_i)/t_i=\widetilde A_{ii}\in F\)，是定义中允许的指数步骤。随后逐列处理 \(T_{ij}\)，在第 \(j\) 列中按 \(i=j-1,j-2,\ldots,1\) 的次序进行。变常数公式给出
+\[
+ \delta(T_{ij}/t_i)
+ =\frac1{t_i}\sum_{k=i+1}^j\widetilde A_{ik}T_{kj}.
+\]
+右侧只涉及此前已经加入的元素，所以加入 \(T_{ij}/t_i\) 是一个原函数步骤。这样取得 \(T\) 的全部条目，而 \(L=F(T_{ij})\)，塔顶就是原来的 \(L\)。每层均为 \(L\) 的微分子域，其常数自然仍为 \(C\)；这避免了在另一扩张中形式加入指数和原函数后，尚须另证与原 PV 域对应的问题。
+
+反向的关键是从一个 Liouvillian 塔中下降出微分模的不变直线。其具体方法是逐步取最后一个超越生成元的 Laurent 展开的最高项。若 \(t'=a\) 且向量解以 \(t^r v\) 为首项，首项比较给出较低域中的向量解；若 \(t'/t=a\)，首项比较给出
+\(v'=Av-ra v\)，所以 \(v\) 所生成的直线对微分模结构稳定。若已知的是一个稳定直线而非水平向量，同样比较
+\(v'-Av=bv\) 的最高项；右端 \(b\) 的次数不能超过零，故仍得到较低域中的稳定直线。代数步骤则在代数闭包中作 Puiseux 展开，允许 \(r\) 为有理数，首项系数落在较低域的某个有限代数扩张中。
+
+对塔长度归纳，这种首项论证给出 \(K\) 的某个有限代数扩张上的稳定直线；再对商微分模重复，便得到一个有限代数扩张 \(K'\) 上的完全旗。原系统的全部解在塔顶存在，保证每一步的商仍有足够的 Liouvillian 解。代数基域扩张只把微分 Galois 群换成有限指数闭子群，单位连通分支不变；它保持这条完全旗，所以是上三角群的子群，因而可解。
+
+以上省略的实质步骤是 Puiseux 展开对导子的延拓、首项下降引理在任意代数步骤后的归纳，以及基域扩张与群单位分支的比较；这里不能把整个塔直接当作一个 PV 扩张。塔长度归纳及稳定直线的详细论证见\cite[Section 1.5, Theorem 1.43 and Proposition 1.45]{VanDerPutSinger2003GaloisTheory}，准则的陈述与定义见\cite[Definition 1.5.6 and Theorem 1.5.7, pp. 43--44]{Singer2009DifferentialGalois}。
+\end{proofsketch}
+
+\ProseParagraphBreak
+乘法群、加法群均可解，有限群的单位连通分支平凡，所以三个算例都符合准则。即使有限微分 Galois 群本身不可解，相应代数解仍属于允许的代数步骤；把条件误写成“\(G\) 可解”会排除这些情形。另外，“存在一个非零 Liouvillian 解”弱于整个系统可解，本定理说的是足够组成基本解矩阵的全部解。
+\ProseParagraphBreak
+对二阶方程 \(y''=r(x)y\)、\(r\in\mathbb C(x)\)，非零解的对数导数 \(v=y'/y\) 满足 Riccati 方程
+\[
+ v'+v^2=r.
+\]
+若找到有理 \(v\)，则 \(y=\exp\int v\,dx\) 是 Liouvillian 解，另一解可通过降阶得到。Kovacic 算法还处理适当代数扩域中的候选对数导数，以判定此类二阶方程的 Liouvillian 可解性；实行算法要求常数域中的必要代数运算可以有效进行。其有限分类与次数界见
+\cite[Section 1.5, pp. 49--51]{Singer2009DifferentialGalois}。这里没有给出完整算法，尤其不能因找不到有理 \(v\) 就断言不可解。

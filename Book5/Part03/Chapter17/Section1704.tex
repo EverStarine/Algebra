@@ -1,12 +1,14 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 17.4* 从根系到李代数
-% 纲要位置：计划纲要.md，第 3625 行。
+% 纲要位置：工作记录/计划纲要.md，第 4276 行。
 
 \OptionalSection{从根系到李代数}{b5:sec:1704}
 
-% TODO: 按以下纲要要点撰写本节。
+本节为选读证明。有限根系的分类已经完成，下面补足由根系恢复复半单李代数的构造；后续对一个已经给定的半单李代数研究表示时，不必把这个存在性构造当作前提。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点已在下文展开。
+
+% 纲要细目（保留原定写作范围）：
 %
 % * Serre 关系与呈示
 % * 复半单李代数分类的存在和唯一性问题
@@ -18,14 +20,167 @@
 \subsection{Serre 关系与呈示}
 \label{b5:subsec:1704:01}
 
-待撰写。
+根系分类给出有限的图表，却还留下两个代数问题：每个图是否来自一个李代数；同一个图是否只能来自一个同构类型。本节同时解决二者。证明只使用已建立的根系、自由代数及根 \(\mathfrak{sl}_2\) 计算，不借用下一章的最高权分类。生成关系、自由字模型及局部幂零反射的证明方法可对照\cite[Sections 18.1--18.4, pp. 96--101]{Humphreys1972LieAlgebras}。
+
+\begin{definition}\label{b5:def:serre-algebra}
+设 \(A=(a_{ij})\in M_r(\mathbb Z)\) 是有限约化结晶根系的 Cartan 矩阵，行对应余根。取复自由李代数的生成元
+\(e_i,f_i,h_i\)（\(1\leq i\leq r\)），并加上下列关系：
+\begin{equation}\label{b5:eq:serre-relations}
+\begin{aligned}
+[h_i,h_j]&=0,&
+[h_i,e_j]&=a_{ij}e_j,&
+[h_i,f_j]&=-a_{ij}f_j,\\
+[e_i,f_j]&=\delta_{ij}h_i,&
+(\operatorname{ad}e_i)^{1-a_{ij}}e_j&=0,&
+(\operatorname{ad}f_i)^{1-a_{ij}}f_j&=0\quad(i\ne j).
+\end{aligned}
+\end{equation}
+由自由李代数模去这些关系生成的理想所得的李代数记为
+\(\mathfrak g(A)\)。这组关系称为\term{Serre 关系}[Serre relations]，给出 \(\mathfrak g(A)\) 的生成元与关系展示。
+\end{definition}
+
+自由李代数可以不借助存在性定理而直接构造：对生成元的所有有限带括号字取自由向量空间，把反对称性和 Jacobi 恒等式生成的理想模掉；每个到某个李代数的生成元映射唯一延拓为同态。这一泛性质保证上述商的含义明确。
+
+\ProseParagraphBreak
+
+给出生成元和关系之后，还须证明所得代数非零，并证明 \(h_i\) 线性无关。下面构造一个允许任意复参数的具体作用来证明这两点。
+
+\begin{lemma}\label{b5:lem:serre-triangular-noncollapse}
+设 \(\Phi\) 为有限约化结晶根系，\(\{\alpha_1,\ldots,\alpha_r\}\) 为简单根基，\(A\in M_r(\mathbb Z)\) 为相应有限型 Cartan 矩阵。记 \(\mathfrak g(A)\) 为由复生成元 \(e_i,f_i,h_i\) 及 Serre 关系\eqref{b5:eq:serre-relations}定义的李代数。令 \(\mathfrak n^\pm\) 为
+\(\mathfrak g(A)\) 中由 \(e_i\)、\(f_i\) 分别生成的子代数，令
+\(\mathfrak h=\sum_i\mathbb Ch_i\)。则
+\[
+\mathfrak g(A)=\mathfrak n^-\oplus\mathfrak h\oplus\mathfrak n^+,
+\]
+且 \(h_1,\ldots,h_r\) 线性无关。按照
+\(\deg e_i=\alpha_i,\deg f_i=-\alpha_i,\deg h_i=0\)，这个代数有根格分次；
+非零次数只能是简单根的全非负组合或全非正组合。
+\end{lemma}
+\begin{proof}
+先在自由结合代数 \(T=\mathbb C\langle f_1,\ldots,f_r\rangle\) 上构造算子。
+给定任意参数 \(\lambda_1,\ldots,\lambda_r\)，令 \(F_i\) 为左乘 \(f_i\)；
+对次数为 \(-\beta=-\sum_jn_j\alpha_j\) 的字 \(u\)，令
+\[
+H_i u=\left(\lambda_i-\sum_jn_ja_{ij}\right)u.
+\]
+再按字长递归规定
+\[
+E_i1=0,\qquad E_i(f_j u)=f_jE_i u+\delta_{ij}H_i u.
+\]
+由此直接得到
+\([H_i,H_j]=0\)、\([H_i,F_j]=-a_{ij}F_j\)、
+\([H_i,E_j]=a_{ij}E_j\)、\([E_i,F_j]=\delta_{ij}H_i\)。
+例如第三式可在 \(1\) 上验证后，把两边作用于 \(f_k u\)，利用递归式把差化为相同关系在较短字 \(u\) 上的差。
+
+令 \(J\) 为由
+\(S_{ij}=(\operatorname{ad}f_i)^{1-a_{ij}}f_j\)（\(i\ne j\)）
+生成的双边理想。它是齐次的，故被各 \(H_k\) 保持，也被左乘保持。
+还须验证各 \(E_k\) 保持它。对 \(m=1-a_{ij}\)，交换子法则及上面的四组关系给出
+\[
+\Bigl[E_i,(\operatorname{ad}F_i)^mF_j\Bigr]
+=m(-a_{ij}-m+1)(\operatorname{ad}F_i)^{m-1}F_j=0.
+\]
+当 \(k\ne i,j\) 时交换子为零；当 \(k=j\) 时，结果为
+\((\operatorname{ad}F_i)^mH_j\)，也为零：
+若 \(m\geq2\)，第二次括号已经消失；若 \(m=1\)，则 \(a_{ij}=a_{ji}=0\)。
+因此 \(E_k(S_{ij}u)=S_{ij}E_ku\)。在左侧再逐个添 \(f_l\)，递归式说明新产生的 \(H_k\) 项仍在齐次理想 \(J\) 中。故 \(E_kJ\subseteq J\)。
+
+这些算子于是降到非零空间 \(T/J\) 上；它非零是因为 \(J\) 由正次数齐次元生成，不含 \(1\)。
+负 Serre 关系按构造成立。正 Serre 算子
+\(R_{ij}=(\operatorname{ad}E_i)^{1-a_{ij}}E_j\)
+与每个 \(F_k\) 交换：交换前一段的 \(E,F\) 并把 \(H\) 改成 \(-H\)，所得同一个系数恰为零。又因 \(E_i1=0\)，有 \(R_{ij}1=0\)，故与全部左乘交换后，\(R_{ij}\) 在每个字上都为零。
+所以这确实是 \(\mathfrak g(A)\) 的作用。
+若 \(\sum c_i h_i=0\)，作用在 \(1\) 上得到
+\(\sum c_i\lambda_i=0\) 对所有复参数成立，故每个 \(c_i=0\)。
+
+最后证明三角跨度。由 Jacobi 恒等式及
+\([e_i,f_j]=\delta_{ij}h_i\)，有
+\([e_i,\mathfrak n^-]\subseteq\mathfrak n^-+\mathfrak h\)：
+对负字长度归纳，括号经过一个 \(f_j\) 后或者留下较短负字，或者成为 \(h_i\)，后者再与其余负字作括号仍回到 \(\mathfrak n^-\)。
+同理 \([f_i,\mathfrak n^+]\subseteq\mathfrak n^++\mathfrak h\)。
+继续对正字长度归纳，得到
+\([\mathfrak n^+,\mathfrak n^-]\subseteq
+\mathfrak n^-+\mathfrak h+\mathfrak n^+\)。
+故该和是含全部生成元的子代数，等于 \(\mathfrak g(A)\)。
+所有关系齐次，所以根格分次下降到商；正次数、零次数、负次数互不相交，和因此为直和。次数为 \(\alpha_i\) 的空间至多一维，由 \(e_i\) 张成；负简单次数同理。
+\end{proof}
 
 \subsection{复半单李代数的存在性与唯一性}
 \label{b5:subsec:1704:02}
 
-待撰写。
+\begin{theorem}[Serre 展示]\label{b5:thm:serre-presentation}
+设 \(\Phi\) 为秩 \(r\) 的有限约化结晶根系，\(A\in M_r(\mathbb Z)\) 为相应简单根基下的 Cartan 矩阵。记 \(\mathfrak g(A)\) 为复生成元 \(e_i,f_i,h_i\)（\(1\le i\le r\)）及 Serre 关系
+\eqref{b5:eq:serre-relations}定义的李代数。则 \(\mathfrak g(A)\) 是有限维复半单李代数，
+\(\mathfrak h=\bigoplus_i\mathbb Ch_i\) 是其 Cartan 子代数，其根系与 \(\Phi\) 同构，并且
+\[
+\dim\mathfrak g(A)=r+|\Phi|.
+\]
+任意具有根系 \(\Phi\) 的有限维复半单李代数，都同构于 \(\mathfrak g(A)\)。
+\end{theorem}
+\begin{proof}
+先证有限维，不能把它当作展示的当然结果。导子
+\(\operatorname{ad}e_i,\operatorname{ad}f_i\) 在每个生成元上局部幂零：
+对同号生成元是 Serre 关系，对异号生成元和 \(h_j\) 则由前三组关系直接算出。
+若导子在两个元素上分别由某次幂零化，二项式法则说明它也在二者的括号上由某次幂零化；因此它们在整个 \(\mathfrak g(A)\) 上局部幂零。
+于是
+\[
+T_i=\exp(\operatorname{ad}e_i)
+\exp(-\operatorname{ad}f_i)
+\exp(\operatorname{ad}e_i)
+\]
+逐元素由有限和定义，是自同构。标准三元组计算给出
+\(T_i(h_j)=h_j-a_{ji}h_i\)；所以 \(T_i\) 把次数为 \(\beta\) 的空间同构地送到次数为 \(s_i\beta\) 的空间。这里 \(A\) 可逆，根格的次数由全部 \(h_j\) 特征值唯一确定。
+
+若正次数 \(\beta=\sum n_i\alpha_i\ne0\) 的空间非零，则
+\((\beta,\beta)=\sum n_i(\beta,\alpha_i)>0\)，可选 \(i\) 使
+\(\beta(h_i)=2(\beta,\alpha_i)/(\alpha_i,\alpha_i)>0\)。
+若 \(\beta\) 有其他非零系数，\(s_i\beta\) 仍有这些正系数；三角分次排除了混合正负系数，故 \(s_i\beta\) 全非负，而高度严格减少。
+若 \(\beta\) 只支持在 \(i\)，则对应正字只能由 \(e_i\) 自己组成；一个元素与自己作括号为零，所以只能有 \(\beta=\alpha_i\)。
+迭代降高度，得每个非零次数都可由简单反射变成简单根或其负根。
+因此所有次数都属于有限集合 \(W\Delta=\Phi\)，每个次数空间至多一维。
+这已经证明 \(\dim\mathfrak g(A)\leq r+|\Phi|\)。
+
+由上一引理 \(h_i\ne0\)，而 \([e_i,f_i]=h_i\)，所以 \(e_i,f_i\ne0\)。
+再用 \(T_i\)，全部 \(\Phi\) 次数空间都非零，维数恰为一；
+于是维数等式成立。各 \(\operatorname{ad}h_i\) 在这个有限分次上同时对角化，零权空间恰为 \(\mathfrak h\)，故 \(\mathfrak h\) 自中心化。
+
+接着证明半单性。在 \(\mathfrak h\) 上，Killing 型为
+\[
+B_A(h,k)=\sum_{\alpha\in\Phi}\alpha(h)\alpha(k).
+\]
+对实线性生成空间 \(\sum_i\mathbb Rh_i\)，它正定，因为 Cartan 矩阵可逆、根分离点。因此 \(B_A|_{\mathfrak h}\) 非退化。
+每个根次数经某个 \(T_i\) 乘积移到简单根次数，相应三元组也由自同构搬过去。对简单三元组，不变性给出
+\[
+2B_A(e_i,f_i)=B_A(h_i,h_i)\ne0.
+\]
+所以每对相反根空间的配对都非退化。不同且不相反的权空间互相正交，故整个 \(B_A\) 非退化。\cref{b5:thm:killing-semisimple}遂给出半单性；自中心化的环面 \(\mathfrak h\) 极大，正是 Cartan 子代数。
+
+最后设 \(\mathfrak g\) 为具有根系 \(\Phi\) 的复半单李代数。
+在简单根空间中选择标准三元组 \(e_i,f_i,h_i\)。
+不同简单根之差不是根，给出 \([e_i,f_j]=0\)（\(i\ne j\)）；
+根弦定理说明
+\((\operatorname{ad}e_i)^{1-a_{ij}}e_j=0\)，负根同理。
+其余关系由三元组和权直接成立。因此得到
+\(\mathfrak g(A)\to\mathfrak g\) 的同态。
+\cref{b5:prop:root-bracket-generation}说明像含有 \(\mathfrak h\) 及全部根空间，所以满射。
+两边均有维数 \(r+|\Phi|\)，故核为零，这便证明唯一性。
+\end{proof}
 
 \subsection{根系分类与李代数呈示}
 \label{b5:subsec:1704:03}
 
-待撰写。
+\secref{b5:sec:1703}以正定性确定可能的 Dynkin 图，并逐一构造相应根系。
+本节的 Serre 展示进一步构造李括号，证明每个有限型 Cartan 矩阵都对应一个半单李代数，其维数为秩与根数之和，而且同图的复半单李代数彼此同构。
+
+\ProseParagraphBreak
+
+由\cref{b5:prop:root-components-simple-ideals}，连通图对应简单李代数。
+因此复简单李代数分成四个经典族和五个例外型。例外型的维数由根数加秩得到：
+\[
+\begin{gathered}
+\dim E_6=78,\qquad \dim E_7=133,\qquad \dim E_8=248,\\
+\dim F_4=52,\qquad \dim G_2=14.
+\end{gathered}
+\]
+这里的 \(E_6\) 等符号在语境明确时兼指根系型或相应简单李代数；
+写维数时指后者。分类按复李代数同构进行，不能据此把不同的实形式、不同中心的 Lie 群或正特征李代数也视为同一个分类问题。

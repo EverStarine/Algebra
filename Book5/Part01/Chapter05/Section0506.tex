@@ -1,38 +1,78 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 5.6 群论应用与三种 Burnside 定理的比较
-% 纲要位置：计划纲要.md，第 3239 行。
-
-\section{群论应用与三种 Burnside 定理的比较}
-\label{b5:sec:0506}
-
-% TODO: 按以下纲要要点撰写本节。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
+% 纲要位置：工作记录/计划纲要.md，第 3890 行。
+% 纲要细目（写作范围）：
 % * Burnside 的 p^a q^b 阶群可解性定理
 % * 与第二卷 Burnside 矩阵代数定理的区别
 % * 结构结论如何由特征标约束推出
 % * 本节运用第5.5节已经证明的 \(p^aq^b\) 阶群可解性定理，整理群论推论及适用范围；将其与轨道计数引理、矩阵代数定理逐项比较
-%
 % ---
-%
+
+\section{群论应用与三种 Burnside 定理的比较}
+\label{b5:sec:0506}
+
+可解性是一个结构结论，尚未给出具体群的分类。使用它时，通常再取极小或极大正规子群，把群拆成较简单的扩张。与此同时，特征标方法还可以研究置换作用和矩阵代数；应当分清每次得到了什么。
 
 \subsection{\texorpdfstring{\(p^aq^b\) 阶群可解性定理的应用}{paqb 阶群可解性定理的应用}}
 \label{b5:subsec:0506:01}
 
-待撰写。
+\begin{corollary}\label{b5:cor:two-prime-composition}
+设 \(p,q\) 为素数，\(a,b\ge0\) 为整数，\(G\) 为阶大于 \(1\) 且 \(|G|=p^a q^b\) 的有限群。则 \(G\) 有素数阶循环商群，并且其每个单合成因子都是阶为 \(p\) 或 \(q\) 的循环群。特别地，有限非交换单群的阶至少含三个不同素因子。
+\end{corollary}
+\begin{proof}
+由\cref{b5:thm:burnside-solvability}，\(G\) 可解。取极大真正规子群 \(N\)，则 \(G/N\) 为非平凡单群，并由\cref{b5:lem:solvable-extensions}仍可解。非平凡单可解群必须交换：其导出群若为自身，导出列不会终止；否则单性使导出群为 \(1\)。有限交换单群为素数阶循环群，阶又整除 \(|G|\)，故只能为 \(p\) 或 \(q\)。对子群的简单商同样应用此论证，即得全部合成因子结论。最后一项是\cref{b5:thm:burnside-solvability}的直接逆否应用。
+\end{proof}
+
+这并不使扩张自动分裂，也不能由合成因子的清单恢复乘法。例如 \(C_4\) 与 \(C_2\times C_2\) 都有两个 \(C_2\) 合成因子，却不同构。表示论给出的限制常要与具体正规子群及共轭作用一起使用。
 
 \subsection{与 Burnside 矩阵代数定理的比较}
 \label{b5:subsec:0506:02}
 
-待撰写。
+为便于对照，给出矩阵版本及一个有限维证明；它不参加上一节的可解性论证。
+\begin{theorem}[Burnside 矩阵代数定理]\label{b5:thm:burnside-matrix-algebra}
+设 \(k\) 为代数闭域，\(V\ne0\) 为有限维 \(k\)-向量空间，\(A\subset\operatorname{End}_k(V)\) 为含恒等映射的 \(k\)-子代数。若 \(V\) 没有非零真 \(A\)-不变子空间，则 \(A=\operatorname{End}_k(V)\)。
+\end{theorem}
+\term[Burnsidejuzhendaishu]{Burnside 矩阵代数定理}[Burnside's matrix algebra theorem]的假设中没有有限群，也没有两个素因子。
+\begin{proof}
+首先，每个与 \(A\) 交换的自同态 \(T\) 都是标量。由于 \(k\) 代数闭，\(T\) 有特征值 \(\lambda\)，非零子空间 \(\ker(T-\lambda I)\) 为 \(A\)-不变，故等于 \(V\)。
+
+需要一个简单模的初等事实。把 \(V^r\) 写成坐标简单 \(A\)-模的直和。对任意子模 \(W\)，从这些坐标模中取一个最大的子集，使其直和 \(U\) 满足 \(U\cap W=0\)。若 \(U+W\ne V^r\)，便有一个坐标简单模 \(S\) 不包含于 \(U+W\)；由简单性，\(S\cap(U+W)=0\)，所以可以把 \(S\) 加入所选子集而仍与 \(W\) 零交，矛盾。故 \(V^r=W\oplus U\)。特别地，若 \(W\ne V^r\)，投影到 \(U\) 中一个坐标简单模给出非零 \(A\)-线性映射 \(V^r\rightarrow V\)，且零化 \(W\)。
+
+现取 \(V\) 的基 \(v_1,\ldots,v_d\)，考察
+\[
+M=\Bigl\{(av_1,\ldots,av_d):a\in A\Bigr\}\subset V^d.
+\]
+它是 \(A\)-子模。若 \(M\ne V^d\)，前一事实给出零化 \(M\) 的非零 \(A\)-线性映射 \(\ell:V^d\rightarrow V\)。它在每个坐标上由第一段为标量，故
+\(\ell(w_1,\ldots,w_d)=\sum_i c_iw_i\)，其中 \(c_i\) 不全为零。对 \(a=I\) 即得 \(\sum_i c_i v_i=0\)，与基的线性无关性矛盾。因此 \(M=V^d\)。任意指定各 \(v_i\) 的像都能由某个 \(a\in A\) 实现，故 \(A\) 是全部自同态代数。
+\end{proof}
+
+对复不可约有限群表示 \(\rho\)，代数 \(A=\operatorname{span}_{\mathbb C}\rho(G)\) 满足上述条件，所以群矩阵的线性生成空间就是全部矩阵代数。这并不声称群像 \(\rho(G)\) 等于全部可逆矩阵，更不推出 \(G\) 可解。若底域不是代数闭域，结论可能失败：\(\mathbb C\) 通过实线性乘法作用在 \(\mathbb R^2\) 上不可约，但所得二维实子代数不等于四维的 \(M_2(\mathbb R)\)。
 
 \subsection{由特征标约束推出群结构}
 \label{b5:subsec:0506:03}
 
-待撰写。
+\begin{proposition}\label{b5:prop:minimal-normal-solvable}
+设 \(G\) 为有限可解群，\(N\triangleleft G\) 为非平凡极小正规子群。则存在素数 \(\ell\) 与正整数 \(r\)，使 \(N\simeq C_\ell^r\)。若另有素数 \(p,q\) 及非负整数 \(a,b\) 满足 \(|G|=p^a q^b\)，则 \(\ell\) 为 \(p\) 或 \(q\)。
+\end{proposition}
+\begin{proof}
+由\cref{b5:lem:solvable-extensions}，\(N\) 可解。其导出群 \(N'\) 是 \(N\) 的特征子群，因而在 \(G\) 中正规。极小性说明 \(N'=1\) 或 \(N'=N\)；后一情形使非平凡的 \(N\) 的导出列永不终止，故 \(N\) 交换。选一个整除 \(|N|\) 的素数 \(\ell\)。有限交换群中所有 \(\ell\)-幂阶元素组成非平凡特征子群，极小性使其等于 \(N\)，所以 \(N\) 为交换 \(\ell\)-群。其子群 \(N[\ell]=\{x:x^\ell=1\}\) 同样非平凡且特征，故等于 \(N\)。用群乘法作加法、用整数次幂作 \(\mathbb F_\ell\) 的标量作用，\(N\) 成为有限维 \(\mathbb F_\ell\)-向量空间，因而 \(N\simeq C_\ell^r\)。最后由阶的整除性得到 \(\ell\in\{p,q\}\)。
+\end{proof}
+
+从小共轭类到正规子群的联系也有显式构造。\cref{b5:prop:prime-power-class-normal-subgroup}中的
+\(N=\langle xy^{-1}:x,y\in K\rangle\)
+只由共轭类 \(K\) 决定；它在找到的不可约表示下全被送到恒等矩阵。以 \(S_3\) 的三元换位类为例，其大小为 \(3\)，两个不同换位的商是三循环，所构造的 \(N\) 正是 \(A_3\)。因此证明不只是排除单性，有时还直接指出一个有用的正规子群。
 
 \subsection{群论推论、适用范围与同名定理}
 \label{b5:subsec:0506:04}
 
-待撰写。
+轨道计数公式也可完全放在特征标语言中。若有限群 \(G\) 作用在有限集合 \(X\) 上，置换特征标为 \(\pi_X(g)=|X^g|\)。不变向量在各轨道上系数恒定，因此其维数为轨道数；也可直接计算
+\[
+\dim\mathbb C[X]^G
+=\langle1_G,\pi_X\rangle_G
+=\frac1{|G|}\sum_{g\in G}|X^g|.
+\]
+从双重计数看，每个轨道的贡献是
+\(\sum_{x\in\mathcal O}|G_x|=|\mathcal O|\cdot|G_x|=|G|\)，同样得到公式。
+
+\ProseParagraphBreak
+三种结论于是各有明确用途：轨道计数求不变向量的维数或轨道数；矩阵代数定理识别不可约作用所张成的全部代数；\(p^a q^b\) 定理由类和整性推出群的可解性。前两者对 \(A_5\) 一样适用，但 \(|A_5|=60=2^2\cdot3\cdot5\) 已超出第三者的两个素因子假设。对阶含三个以上素因子的群，仅凭本章定理既不能断言可解，也不能断言不可解。
