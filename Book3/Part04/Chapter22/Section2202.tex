@@ -5,7 +5,9 @@
 \section{Matlis 对偶、典范模与局部对偶}
 \label{b3:sec:2202}
 
-局部上同调通常不是有限模，普通线性对偶不能直接把它变回有限数据。内射包络与 Matlis 对偶提供合适的对偶；给定完备正则局部覆盖后，典范模把局部对偶公式写成单个有限模上的 Ext。
+局部上同调通常不是有限模；以环本身为值的 Hom 对偶甚至可能检测不到非零元素。内射包络与 Matlis 对偶提供合适的对偶；给定完备正则局部覆盖后，典范模把局部对偶公式写成单个有限模上的 Ext。
+
+这里先把所需的对偶公式作为目标展示，再建立内射包络和 Matlis 对偶、正式定义典范模并证明公式。证明从给定的满射 \(S\twoheadrightarrow R\) 出发，其中 \(S\) 是交换完备 Noether 正则局部环；一般交换完备 Noether 局部环如何取得这种覆盖，另由\appref{b3:app:D}的 Cohen 结构定理处理。
 
 % 纲要内容：
 %
@@ -18,14 +20,18 @@
 % * 证明所需正则局部覆盖作为该版本的显式假设；一般完备局部环的覆盖存在性在附录 D 的 Cohen 结构定理中注明证明或引用，不暗用未建立的结构定理
 %
 
-\subsection{典范模的定义与存在条件}
+\subsection{环值对偶的不足与典范模的目标}
 \label{b3:subsec:2202:01}
 
-有限维向量空间的对偶仍然有限维，取两次对偶就回到原空间。局部上同调则常常不是有限模。例如对离散赋值环 \(A=k[[t]]\)，由两项 Čech 复形得到
+先看离散赋值环 \(A=k[\![t]\!]\)。由两项 Čech 复形得到
 \[
-H^1_{(t)}(A)=k((t))/k[[t]].
+H^1_{(t)}(A)=k((t))/k[\![t]\!].
 \]
-右端含有任意高的负幂，不能由有限个元素生成。因此，要把局部上同调与有限模联系起来，首先需要一种不同于 \(\operatorname{Hom}_A(-,A)\) 的对偶。
+右端含有任意高的负幂，不能由有限个元素生成。普通的环值对偶在此为零。事实上，令 \(K=k((t))\)，则
+\[
+ \operatorname{Hom}_A(K/A,A)=0.
+\]
+这是因为每个 \(K/A\) 中的元素都被 \(t\) 的某个幂零化，而 \(A\) 没有非零的 \(t\)-挠元。因此以 \(A\) 为值的对偶无法检测这个非零模，需要改变取值对象。
 
 \ProseParagraphBreak
 这个对偶的取值对象将是剩余域的内射包络。它既能接受子模上同态的延拓，又能检测任意非零元素；在完备 Noether 局部环上，它把有限模与 Artin 模互相转换。典范模正是通过这一对偶，把环自身的最高次局部上同调表示成一个有限模。为了让定义中的对象都有明确含义，本节先说明问题及适用范围，在\subsecref{b3:subsec:2202:04}建立内射包络和对偶，再于\cref{b3:def:canonical-module-regular-quotient}给出正式定义。
@@ -37,10 +43,10 @@ H^1_{(t)}(A)=k((t))/k[[t]].
 \]
 右端能够用 \(R\) 的有限自由 \(S\) 消解计算，因而先给出了一个实际可构造的有限模。它为什么具有对偶性质，以及为什么余维 \(n-d\) 恰好出现，都将在证明中由局部上同调的消失区间解释。
 
-\subsection{完备局部环上的局部对偶}
+\subsection{离散赋值环算例与局部对偶的目标}
 \label{b3:subsec:2202:02}
 
-先把上述离散赋值环的例子算得更具体。令 \(A=k[[t]]\)、\(K=k((t))\)、\(E=K/A\)。第二卷第7.2节的 Baer 判据说明 \(E\) 是内射 \(A\) 模：任意非零理想为 \(t^rA\)，若 \(f(t^r)=a+A\)，则取 \(g(1)=t^{-r}a+A\)，就得到延拓 \(g:A\rightarrow E\)。零理想的映射用零映射延拓。
+先把上述离散赋值环的例子算得更具体。令 \(A=k[\![t]\!]\)、\(K=k((t))\)、\(E=K/A\)。第二卷第7.2节的 Baer 判据说明 \(E\) 是内射 \(A\) 模：任意非零理想为 \(t^rA\)，若 \(f(t^r)=a+A\)，则取 \(g(1)=t^{-r}a+A\)，就得到延拓 \(g:A\rightarrow E\)。零理想的映射用零映射延拓。
 
 \ProseParagraphBreak
 \(E\) 中每个非零元素都能乘以某个 \(t\) 的幂，得到非零的 \(t^{-1}\) 项。因此子模 \(kt^{-1}\cong k\) 与 \(E\) 的任意非零子模相交非零。这说明内射性没有加入与剩余域毫无关系的直和因子；这正是下文“内射包络”中包络条件的含义。
@@ -59,7 +65,7 @@ H^i_{\mathfrak m}(M)
 \]
 其中 \(R\) 满足前一小节给出的假设，\(M\) 是有限 \(R\) 模。这一式子目前只是待证明的目标；其完整陈述和证明在\cref{b3:thm:canonical-module-local-duality}。
 
-\subsection{典范模的存在性问题}
+\subsection{目标公式的适用条件}
 \label{b3:subsec:2202:03}
 
 上面的目标包含三种不同的条件。Noether 性保证有限模具有有限生成的关系，并使内射包络的元素能用极大理想的幂控制。完备性使取两次对偶后的环仍是原环；若环不完备，首先出现的是它的完备化。Cohen–Macaulay 性则把环自身的局部上同调集中在唯一的次数 \(d\)，使这些对偶公式都可以用一个模 \(\omega_R\) 表示。
@@ -68,7 +74,7 @@ H^i_{\mathfrak m}(M)
 这些条件不能由“局部环”三个字替代。一般非 Cohen–Macaulay 环可能同时有几个非零局部上同调模，不能把上述公式中的 \(\omega_R\) 原样用于所有次数。即使某个环具有典范模，也不表示它的全部对偶信息已经集中在该模上。\subsecref{b3:subsec:2202:06}将给出一个含有嵌入点的幂级数商环，直接检验这种失败。
 
 \ProseParagraphBreak
-此外，\(S\twoheadrightarrow R\) 是本节存在性定理的假设，不是从符号 \(R\) 自动取得的构造。Cohen 结构定理能够提供更一般的完备正则局部覆盖，但它另有证明责任；本节末尾会明确说明使用该定理时增加了什么依据。
+满射 \(S\twoheadrightarrow R\) 是这里给定的数据。若只给出一个交换完备 Noether 局部环 \(R\)，可用 Cohen 结构定理构造这样的正则局部覆盖；相应的系数域与系数环构造见\appref{b3:app:D}，本节末尾将说明如何应用。
 
 \subsection{内射包络、Matlis 对偶与有限模和 Artin 模}
 \label{b3:subsec:2202:04}
@@ -181,7 +187,7 @@ D_R(\delta_A)\circ\delta_{D_R(A)}
 因为 \(D_R(A)\) 有限，\(\delta_{D_R(A)}\) 已是同构，故 \(D_R(\delta_A)\) 同构。\(D_R\) 正合且检测非零模，遂使 \(\delta_A\) 的核和余核均为零。评价的自然性说明这些同构与一切模同态相容，给出所述反变等价。
 \end{proof}
 
-Artin 性与有限长度仍须区分。例如 \(k((t))/k[[t]]\) 是上述定理中的 Artin 模，但它包含严格上升的子模链 \(t^{-1}A/A\subsetneq t^{-2}A/A\subsetneq\cdots\)，并非有限长度模。Matlis 对偶中的两个类别恰好允许这种差别。
+Artin 性与有限长度仍须区分。例如 \(k((t))/k[\![t]\!]\) 是上述定理中的 Artin 模，但它包含严格上升的子模链 \(t^{-1}A/A\subsetneq t^{-2}A/A\subsetneq\cdots\)，并非有限长度模。Matlis 对偶中的两个类别恰好允许这种差别。
 
 \subsection{Cohen–Macaulay 商环的典范模}
 \label{b3:subsec:2202:05}
@@ -254,7 +260,7 @@ H^i_{\mathfrak n}(N)
 \[
 E\otimes_SP_j
 \cong\operatorname{Hom}_S\bigl(\operatorname{Hom}_S(P_j,S),E\bigr),
-\quad e\otimes p\longmapsto[\lambda\mapsto\lambda(p)e].
+\quad e\otimes p\longmapsto[\lambda\mapsto\lambda(p)\cdot e].
 \]
 此同构与微分相容。\(D_S\) 正合，故右侧复形的同调为 \(D_S(\operatorname{Ext}_S^{n-i}(N,S))\)，得到第一个同构。Ext 模有限，Matlis 对偶定理使其对偶为 Artin 模；再取一次对偶并使用有限模的评价同构，得到第二个同构。
 \end{proof}
@@ -362,12 +368,12 @@ D_R\bigl(H^i_{\mathfrak m}(M)\bigr)
 在 \(d-i\ge0\) 时成立；若 \(d-i<0\)，左端也由引理的低次消失为零。再用\cref{b3:thm:regular-local-duality}，以及已验证的 \(D_S(M)=D_R(M)\)、\(H^i_{\mathfrak n}(M)=H^i_{\mathfrak m}(M)\)，得到两行公式。Artin 性来自正则局部对偶；当 \(i<0\) 时，局部上同调为零，第二行给出最后的 Ext 消失。
 \end{proof}
 
-上式称为\term[jubu-duiou]{局部对偶}[local duality]。它允许用有限模的消解研究通常不有限生成的局部上同调，但没有把后者断言为有限模。例如在 \(k[[t]]\) 上，\(\omega_R\cong R\)，公式的最高次仍然是 \(H^1_{(t)}(R)\cong E_R(k)\)，与节首计算一致。
+上式称为\term[jubu-duiou]{局部对偶}[local duality]。它允许用有限模的消解研究通常不有限生成的局部上同调，但没有把后者断言为有限模。例如在 \(k[\![t]\!]\) 上，\(\omega_R\cong R\)，公式的最高次仍然是 \(H^1_{(t)}(R)\cong E_R(k)\)，与节首计算一致。
 
 \ProseParagraphBreak
 最后用\subsecref{b3:subsec:2201:03}的例子检验 CM 假设的作用。取域 \(k\) 及
 \[
-S=k[[x,y]],\qquad R=S/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
+S=k[\![x,y]\!],\qquad R=S/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
 \]
 此前已算得
 \[
@@ -384,7 +390,7 @@ S=k[[x,y]],\qquad R=S/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
 \subsection{正则局部覆盖与 Cohen 结构定理}
 \label{b3:subsec:2202:07}
 
-本节所有存在性及局部对偶证明都从给定满射 \(S\twoheadrightarrow R\) 开始。对显式幂级数商环，这份数据已经在题目中；例如 \(k[[x_1,\ldots,x_n]]/I\) 的环境环就是所需的完备正则局部环。混合特征时也可以从给定完备离散赋值环 \(V\) 上的幂级数环 \(V[[x_1,\ldots,x_r]]\) 开始，而不把系数环误写成域。
+本节所有存在性及局部对偶证明都从给定满射 \(S\twoheadrightarrow R\) 开始。对显式幂级数商环，这份数据已经在题目中；例如 \(k[\![x_1,\ldots,x_n]\!]/I\) 的环境环就是所需的完备正则局部环。混合特征时也可以从给定完备离散赋值环 \(V\) 上的幂级数环 \(V[\![x_1,\ldots,x_r]\!]\) 开始，而不把系数环误写成域。
 
 \ProseParagraphBreak
 对一个未给出展示的交换完备 Noether 局部环，附录\cref{b3:thm:coefficient-field-existence,b3:thm:equicharacteristic-power-series-cover,b3:thm:mixed-characteristic-coefficient-ring}给出所需 Cohen 覆盖。等特征时先取系数域，再按极大理想阶数展开，得到幂级数环满射；混合特征时以 Cohen 环替代系数域，同样逐阶选择剩余系数并取完备极限，得到其上幂级数环的满射。两种环境环均完备正则局部。相应结构定理还可对照松村英之\cite[\S 29, Theorems 29.3--29.4, pp. 225--226]{Matsumura1989CommutativeRingTheory}。

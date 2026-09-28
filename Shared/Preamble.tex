@@ -160,19 +160,20 @@
 \widowpenalty=10000
 \displaywidowpenalty=10000
 
-\setlist[itemize]{leftmargin=2.2em,itemsep=.35ex,topsep=.6ex}
-\setlist[enumerate]{leftmargin=2.5em,itemsep=.35ex,topsep=.6ex,
+% 固定列表内部段距，避免 flushbottom 将默认的弹性 \parsep 拉大到超过正文段距。
+\setlist[itemize]{leftmargin=2.2em,itemsep=.35ex,parsep=0pt,topsep=.6ex}
+\setlist[enumerate]{leftmargin=2.5em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
   font=\normalfont\upshape}
 \setlist[enumerate,1]{label=\arabic*.,ref=\arabic*}
 \setlist[enumerate,2]{label=\arabic*),ref=\arabic*}
 \setlist[enumerate,3]{label=\alph*),ref=\alph*}
-\setlist[description]{leftmargin=2.5em,labelindent=0pt,itemsep=.35ex,topsep=.6ex}
+\setlist[description]{leftmargin=2.5em,labelindent=0pt,itemsep=.35ex,parsep=0pt,topsep=.6ex}
 
 % “下列命题等价”专用列表；普通罗列仍使用 enumerate。
 \newlist{equivalences}{enumerate}{2}
-\setlist[equivalences,1]{leftmargin=2.8em,itemsep=.35ex,topsep=.6ex,
+\setlist[equivalences,1]{leftmargin=2.8em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
   label=\Roman*.,ref=\Roman*,font=\normalfont\upshape}
-\setlist[equivalences,2]{leftmargin=2.8em,itemsep=.35ex,topsep=.6ex,
+\setlist[equivalences,2]{leftmargin=2.8em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
   label=\roman*),ref=\roman*,font=\normalfont\upshape}
 
 \pagestyle{fancy}
@@ -302,16 +303,63 @@
 \newtheorem{remark}[remark]{注记}
 \aliascntresetthe{remark}
 \renewcommand{\proofname}{证明}
-% 保留 amsthm 的证明间距与终止符。标题（证明／解／证明概要）的中文用楷体，
+% 仅在证明紧接定理类陈述时收紧间距，并按陈述结尾是否为行间公式调整。
+% 证明标题（证明／解／证明概要）的中文用楷体，
 % 西文保持正体；正文不施加楷体，仍为默认宋体。不能退回 \itshape。
+\newif\ifAlgebraDirectProof
+\newif\ifAlgebraCoupledProof
+\newif\ifAlgebraStatementEndsInDisplay
+\newskip\AlgebraProofTrailingSkip
+% 行间公式结束后，TeX 留下空的水平列表；在定理环境结束前辨认这一状态。
+% 证明跟在公式之后时不再减去定理尾距，否则公式下方会比上方更紧。
+\newcommand{\AlgebraRecordStatementTail}{%
+  \ifhmode
+    \ifnum\lastnodetype=-1\relax
+      \global\AlgebraStatementEndsInDisplaytrue
+    \else
+      \global\AlgebraStatementEndsInDisplayfalse
+    \fi
+  \else
+    \global\AlgebraStatementEndsInDisplayfalse
+  \fi
+}
+\AddToHook{para/begin}{\global\AlgebraDirectProoffalse\global\AlgebraStatementEndsInDisplayfalse}
+\AddToHook{env/theorem/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/lemma/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/proposition/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/corollary/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/claim/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/exercise/end}{\AlgebraRecordStatementTail}
+\AddToHook{env/theorem/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/lemma/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/proposition/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/corollary/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/claim/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/exercise/after}{\global\AlgebraDirectProoftrue}
+\AddToHook{env/figure/before}{\global\AlgebraDirectProoffalse}
+\AddToHook{env/table/before}{\global\AlgebraDirectProoffalse}
 \makeatletter
 \renewenvironment{proof}[1][\proofname]{\par
   \pushQED{\qed}%
   \normalfont \topsep6\p@\@plus6\p@\relax
+  \AlgebraCoupledProoffalse
+  \ifAlgebraDirectProof
+    \AlgebraCoupledProoftrue
+    \AlgebraProofTrailingSkip=\topsep
+    \advance\AlgebraProofTrailingSkip by \partopsep
+    \ifAlgebraStatementEndsInDisplay\else
+      \kern-5\p@% 只在陈述以普通文字结尾时抵消部分尾距。
+    \fi
+    \topsep2\p@\partopsep\z@\relax
+  \fi
+  \global\AlgebraDirectProoffalse
+  \global\AlgebraStatementEndsInDisplayfalse
   \trivlist
   \item[\hskip\labelsep\upshape\kaishu #1\@addpunct{.}]\ignorespaces
 }{%
-  \popQED\endtrivlist\@endpefalse
+  \popQED
+  \ifAlgebraCoupledProof\@topsepadd\AlgebraProofTrailingSkip\fi
+  \endtrivlist\@endpefalse
 }
 \makeatother
 \newenvironment{solution}
@@ -377,13 +425,11 @@
   \null
   \clearpage
 }
-% 各编的“本编导读”是星号章（不计编号、不入目录编号）。ctex 的 \@schapter
-% 调用 \CTEX@makeanchor@schapter，该宏在 ctex 中只有调用而无定义，展开为空，
-% 故星号章不产生 PDF 书签。此处显式补一个章级（第 1 层）书签，使“本编导读”
-% 与各章并列挂在所属编之下。
+% 各编的“本编导读”是无编号章，在总目录和 PDF 书签中与所属编的各章并列。
+% addcontentsline 同时建立目录项和书签，不再另加同名 pdfbookmark。
 \NewDocumentCommand{\BookPartGuide}{O{本编导读}}{%
   \chapter*{#1}%
-  \pdfbookmark[1]{#1}{AlgebraPartGuide@\thepage}%
+  \addcontentsline{toc}{chapter}{#1}%
 }
 
 % “附录”单独排无编号编题页，使用与正文编名相同的字号、字体和颜色。
@@ -454,6 +500,19 @@
 \algrenewcommand\algorithmicrequire{\textbf{输入：}}
 \algrenewcommand\algorithmicensure{\textbf{输出：}}
 \numberwithin{algorithm}{chapter}
+% 完整中文编号进入题注、各自目录和引用；附录自动使用字母章号。
+% 内部 \nobreakspace 与 cleveref 默认的定理引用一致；引用整串置于同一链接，
+% 链接后的中文间距由下方 \cref 包装补齐。
+\renewcommand{\thealgorithm}{算法\nobreakspace\thechapter-\arabic{algorithm}}
+\renewcommand{\thefigure}{图\nobreakspace\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{表\nobreakspace\thechapter-\arabic{table}}
+\renewcommand{\figurename}{}
+\renewcommand{\tablename}{}
+\makeatletter
+\renewcommand{\fnum@figure}{\thefigure}
+\renewcommand{\fnum@table}{\thetable}
+\renewcommand{\fnum@algorithm}{\thealgorithm}
+\makeatother
 \NewDocumentEnvironment{algorithmsteps}{mm}
   {\begin{algorithmic}[1]\Require #1\Ensure #2}
   {\end{algorithmic}}
@@ -504,14 +563,22 @@
 \makeindex[name=chinese,title=中文索引,columns=2,intoc,options=-q]
 \makeindex[name=foreign,title=外文索引,columns=2,intoc,options=-q]
 \makeindex[name=symbols,title=符号索引,columns=2,intoc,options=-q]
-% 索引采用稍小字号与自然栏底，避免少量词条被挤到单独一页。
-\indexsetup{othercode={\small\raggedcolumns}}
+% 索引采用稍小字号与自然栏底，字母分组间距随字号调整。
+\indexsetup{othercode={\small\raggedcolumns
+  \renewcommand{\indexspace}{\par\addvspace{0.4\baselineskip}}}}
 
 % 有条目时读入 makeindex 生成的真实索引；尚无条目时仍保留书后结构与目录入口。
 % 一键脚本会在 .idx 为空时删除旧 .ind，故这里不会误排上一次构建的陈旧索引。
 \NewDocumentCommand{\PrintBookIndex}{m m}{%
   \IfFileExists{#1.ind}{%
-    \printindex[#1]%
+    % 双栏输出可能丢失页眉标记；在索引范围内直接绑定标题并完成分页。
+    \cleardoublepage
+    \begingroup
+      \fancyhead[LE]{\small\color{AlgebraGray}\thepage\quad #2}%
+      \fancyhead[RO]{\small\color{AlgebraGray}#2\quad\thepage}%
+      \printindex[#1]%
+      \clearpage
+    \endgroup
   }{%
     \chapter*{#2}%
     \addcontentsline{toc}{chapter}{#2}%
@@ -573,13 +640,19 @@
 \crefname{remark}{注记}{注记}
 \crefname{exercise}{习题}{习题}
 \crefname{equation}{式}{式}
-\crefname{figure}{图}{图}
-\crefname{table}{表}{表}
-\crefname{algorithm}{算法}{算法}
+\crefname{figure}{}{}
+\crefname{table}{}{}
+\crefname{algorithm}{}{}
+\crefformat{figure}{#2#1#3}
+\Crefformat{figure}{#2#1#3}
+\crefformat{table}{#2#1#3}
+\Crefformat{table}{#2#1#3}
+\crefformat{algorithm}{#2#1#3}
+\Crefformat{algorithm}{#2#1#3}
 
-% cleveref 会在自己的分组中排出“定义3.1.5”一类完整链接；分组结束后，
-% xeCJK 无法再从末端识别出西文数字，因而不会在紧随其后的汉字前插入
-% 与“义”和“3”之间相同的 \CJKecglue。这里只在下一个源码记号确为
+% cleveref 会在自己的分组中排出“定义 3.1.5”一类完整链接，类别名与编号之间
+% 使用 \nobreakspace。分组结束后，xeCJK 无法再从末端识别出西文数字，
+% 因而不会在紧随其后的汉字前插入 \CJKecglue。这里只在下一个源码记号确为
 % CJK 正文字时补回同一种间距；空格、控制序列以及中英文标点均不处理，
 % 从而不在“定义3.1.5，”或“定义3.1.5.”前制造额外空白。
 \NewCommandCopy{\AlgebraOriginalCref}{\cref}
@@ -649,16 +722,44 @@
   \tableofcontents
 }
 
-% 某卷首次出现表格后，在总目录之后生成表目录；无表格的卷不调用本命令。
-\newcommand{\MakeBookListOfTables}{%
-  \cleardoublepage
-  \bookmarksetup{startatroot}%
-  \pdfbookmark[0]{表目录}{AlgebraListOfTables}%
+% 图、表、算法目录不进入总目录，也不建立 PDF 书签；各自页面使用原有章级标题。
+% 只另起一页而不补单双页。
+\makeatletter
+\newcommand{\AlgebraListStart}{%
+  \clearpage
+}
+% 各列表命令自带 \chapter*，局部消除其中的再次换页，保留原有标题与列表排版。
+\newcommand{\AlgebraListOnCurrentPage}[1]{%
   \begingroup
-    \renewcommand{\listtablename}{表目录}%
-    \listoftables
+    \let\clearpage\relax
+    \let\cleardoublepage\relax
+    #1%
   \endgroup
 }
+\newcommand{\MakeBookListOfFigures}{%
+  \AlgebraListStart
+  \AlgebraListOnCurrentPage{\listoffigures}%
+}
+\newcommand{\MakeBookListOfTables}{%
+  \begingroup
+    \renewcommand{\listtablename}{表目录}%
+    \AlgebraListStart
+    \AlgebraListOnCurrentPage{\listoftables}%
+  \endgroup
+}
+\newcommand{\MakeBookListOfAlgorithms}{%
+  \begingroup
+    \AlgebraListStart
+    % float.sty 在 listof 内重设编号栏；在标题回调中再加宽它。
+    \let\AlgebraOriginalFloatListHead\float@listhead
+    \renewcommand{\float@listhead}[1]{%
+      \renewcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{5em}}%
+      \AlgebraOriginalFloatListHead{##1}%
+    }%
+    \AlgebraListOnCurrentPage{\listofalgorithms}%
+  \endgroup
+}
+\makeatother
 
 % 无编号章（序言、目录、编导读、后记、参考文献、索引等）同样写入页眉标记，
 % 使后续偶数页页眉显示该单元标题。置于 hyperref 之后，保证保留 hyperref 的章锚点。

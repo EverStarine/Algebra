@@ -22,7 +22,7 @@
 本章使用有限扩张的基与塔式公式、分裂域的存在唯一性，以及特征 \(p\) 下的幂映射。乘法群循环性的主要引理已在\cref{b1:lem:finite-multiplicative-cyclic}证明，本章直接引用这一结论；子域分类与自同构计数都不需要预先建立 Galois 对应。迹和范数在末节只作具体计算上的预告，统一定义与一般性质由下一章承担。
 
 \ProseParagraphBreak
-有限域的存在、子域、共轭元以及迹和范数，可与 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapters 19--20]{Shoup2008NumberTheoryAlgebra}对照；后一章进一步讨论不可约多项式的构造与分解算法。Roman 的《Field Theory》\cite[Chapter 9; Section 10.1]{Roman2006FieldTheory}则可供从域扩张的角度继续学习。
+有限域的存在、子域、共轭元以及迹和范数，可与 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapter 19]{Shoup2008NumberTheoryAlgebra}对照；多项式的平方自由分解见该书\cite[Section 20.3]{Shoup2008NumberTheoryAlgebra}。求值码中带错误的多项式插值见该书\cite[Section 17.5.2]{Shoup2008NumberTheoryAlgebra}。Roman 的《Field Theory》\cite[Chapter 9; Section 10.1]{Roman2006FieldTheory}则可供从域扩张的角度继续学习。
 
 \input{Part03/Chapter17/Section1701}
 \input{Part03/Chapter17/Section1702}
@@ -30,7 +30,7 @@
 \input{Part03/Chapter17/Section1704}
 
 \begin{chaptersummary}
-有限域可以同时从三种角度描述：它是 \(x^q-x\) 的根域，是一个有限维向量空间，也是不可约多项式的商域。Frobenius 把这些角度连接起来：其轨道给出最小多项式，其不动元辨认子域，其幂列出全部基域自同构。乘法本原元提供枚举非零元素的方法，但域生成元未必是乘法群生成元。不可约多项式的次数分组和 Möbius 计数，以及由根数界得到的求值码，均依赖这些可以明确检验的结构。
+若 \(q=p^r\)，其中 \(p\) 为素数、\(r\ge1\)，则 \(\mathbb F_q\) 是 \(x^q-x\) 在 \(\mathbb F_p\) 上的分裂域；作为 \(\mathbb F_p\) 向量空间，其维数为 \(r\)；选取一个 \(\mathbb F_p[x]\) 中的 \(r\) 次不可约多项式，还可以将它表示为相应的商域。Frobenius 把这些描述连接起来：其轨道给出最小多项式，其不动元辨认子域，其幂列出全部基域自同构。乘法本原元提供枚举非零元素的方法，但域生成元未必是乘法群生成元。不可约多项式的次数分组和 Möbius 计数，以及由根数界得到的求值码，均依赖这些可以明确检验的结构。
 \end{chaptersummary}
 
 \BookExercises
@@ -53,7 +53,12 @@
 判断 \(\mathbb F_{16}\) 能否嵌入 \(\mathbb F_{64}\)。再求保持 \(\mathbb F_2\) 的嵌入 \(\mathbb F_8\rightarrow\mathbb F_{64}\) 有多少个。
 \end{exercise}
 \begin{solution}
-前者不可能，因为像将是次数为四的子域，但四不整除六。后者的像必须是唯一八元子域；选定一个到该子域的同构后，任意其他同构与它之差由 \(\mathbb F_8/\mathbb F_2\) 的一个自同构给出。\cref{b1:thm:finite-field-automorphisms}说明自同构恰有三个，分别为零、一、二次迭代的平方映射，所以所求嵌入有三个。
+前者不可能，因为像将是次数为四的子域，但四不整除六。记 \(E\subseteq\mathbb F_{64}\) 为唯一的八元子域，并固定一个保持 \(\mathbb F_2\) 的同构 \(\iota:\mathbb F_8\xrightarrow{\sim}E\)。任意另一个保持 \(\mathbb F_2\) 的嵌入 \(j:\mathbb F_8\rightarrow\mathbb F_{64}\) 都以 \(E\) 为像，因此
+\[
+\theta=\iota^{-1}\circ j\in\operatorname{Aut}_{\mathbb F_2}(\mathbb F_8),
+\qquad j=\iota\circ\theta.
+\]
+由\cref{b1:thm:finite-field-automorphisms}，\(\theta\) 只能是恒等、平方映射 \(F:a\mapsto a^2\) 或 \(F^2\)。故全部嵌入为 \(\iota,\iota\circ F,\iota\circ F^2\)，共三个；像子域唯一不意味着到该子域的嵌入唯一。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-subfield-lattice}
@@ -85,10 +90,17 @@
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-explicit-sixteen}
-证明 \(f=t^4+t+1\) 在 \(\mathbb F_2\) 上不可约。在 \(F=\mathbb F_2[t]/(f)\) 中令 \(\alpha=\bar t\)，计算 \(\alpha^{-1}\) 和 \((\alpha^2+1)^2\)。
+证明 \(f=t^4+t+1\) 在 \(\mathbb F_2\) 上不可约。在 \(F=\mathbb F_2[t]/(f)\) 中令 \(\alpha=\bar t\)，计算 \(\alpha^{-1}\) 和 \((\alpha^2+1)^2\)。再令 \(\beta=\alpha^2+\alpha\)、\(E=\mathbb F_2(\beta)\)。证明 \(E\) 是 \(F\) 中的四元子域，比较平方映射与四次幂映射在 \(E\) 上的作用，并求 \(\alpha\) 在 \(E\) 上的最小多项式。
 \end{exercise}
 \begin{solution}
 零、一都不是根，所以若可约，只能是两个不可约二次因子的乘积。\(\mathbb F_2\) 上唯一首一不可约二次多项式为 \(t^2+t+1\)：一个无根的首一二次式常数项必须为一，再检查一次项系数即可。设其根为 \(u\)，有 \(u^4=u\)，从而 \(f(u)=1\ne0\)，排除了该因子。因此 \(f\) 不可约。在商域中 \(\alpha^4=\alpha+1\)，所以 \(\alpha(\alpha^3+1)=1\)，逆为 \(\alpha^3+1\)；又 \((\alpha^2+1)^2=\alpha^4+1=\alpha\)。
+
+由 \(\alpha^4=\alpha+1\) 得 \(\beta=\alpha^5\)，并有 \(\beta^2=\alpha^4+\alpha^2=\beta+1\)。因此 \(\beta^2+\beta+1=0\)。多项式 \(X^2+X+1\) 在 \(\mathbb F_2\) 中无根，所以 \(\beta\notin\mathbb F_2\)，\(E\) 恰有四个元素。平方映射把 \(\beta\) 送到 \(\beta+1\)，并不逐点固定 \(E\)；四次幂映射则固定 \(E\) 的每个元素，并将 \(\alpha\) 送到 \(\alpha^4=\alpha+1\)。
+
+由于 \([F:E]=2\)，且 \(\alpha\notin E\)，\(\alpha\) 在 \(E\) 上的最小多项式为
+\[
+m_{\alpha,E}(X)=(X-\alpha)(X-\alpha^4)=X^2+X+\beta.
+\]
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-minimal-shift}
@@ -102,14 +114,14 @@
 设首一 \(f\in\mathbb F_q[x]\) 的次数为 \(n>1\)。证明它不可约当且仅当 \(f\mid x^{q^n}-x\)，并且对每个整除 \(n\) 的素数 \(\ell\)，有 \(\gcd(f,x^{q^{n/\ell}}-x)=1\)。
 \end{exercise}
 \begin{solution}
-若不可约，\cref{b1:prop:finite-field-factorization}立即给出整除关系，且次数 \(n\) 不整除较小的 \(n/\ell\)，所以各最大公因式为一。反之，首项整除关系使 \(f\) 无重因子，并使其每个不可约因子次数 \(d\) 整除 \(n\)。若 \(d<n\)，取 \(n/d\) 的一个素因子 \(\ell\)，则 \(d\mid n/\ell\)，该因子将整除相应最大公因式，矛盾。因此每个因子次数都等于 \(n\)，由 \(\deg f=n\) 知只有一个因子。
+若不可约，\cref{b1:prop:finite-field-factorization}立即给出整除关系，且次数 \(n\) 不整除较小的 \(n/\ell\)，所以各最大公因式为一。反之，第一个条件 \(f\mid x^{q^n}-x\) 使 \(f\) 无重因子，并使其每个不可约因子次数 \(d\) 整除 \(n\)。若 \(d<n\)，取 \(n/d\) 的一个素因子 \(\ell\)，则 \(d\mid n/\ell\)，该因子将整除相应最大公因式，矛盾。因此每个因子次数都等于 \(n\)，由 \(\deg f=n\) 知只有一个因子。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-inseparable-factor}
 分解 \(x^6+x^2+1\in\mathbb F_2[x]\)，并确定其在分裂域中各根的重数。
 \end{exercise}
 \begin{solution}
-形式导数为零，且特征二下 \(x^6+x^2+1=(x^3+x+1)^2\)。内层三次式在零、一处都不为零，故不可约。其导数为 \(x^2+1=(x+1)^2\)，而它在一处不为零，所以与导数互素，有三个不同的根。原多项式在分裂域中这三个根的重数各为二。
+形式导数为零，且特征二下 \(x^6+x^2+1=(x^3+x+1)^2\)。内层三次式在零、一处都不为零，故不可约。其导数为 \(x^2+1=(x+1)^2\)，而 \(x^3+x+1\) 在 \(x=1\) 处取值为一，所以与导数互素，有三个不同的根。原多项式在分裂域中这三个根的重数各为二。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-orbit-sum-product}
@@ -130,5 +142,15 @@
 在 \(\mathbb F_q\) 中选 \(n\) 个互异点，\(1\leq k\leq n\leq q\)。以次数小于 \(k\) 的多项式在这些点的取值组成求值码。证明不同编码向量之间最少恰有 \(n-k+1\) 个坐标不同，并说明至多能唯一纠正多少处错误。
 \end{exercise}
 \begin{solution}
-两个不同多项式的差次数至多为 \(k-1\)，所以至多在 \(k-1\) 个所选点为零，给出距离至少 \(n-k+1\)。取其中 \(k-1\) 个点，令多项式为对应一次因子的乘积；当 \(k=1\) 时取常数一。它与零多项式的取值恰在 \(n-k+1\) 处不同，所以下界能达到。若错误数 \(e\) 满足 \(2e<n-k+1\)，两个候选编码向量不可能同时与收到的向量相差至多 \(e\) 处，否则两者距离至多 \(2e\)。因此可以唯一纠正至多 \(\lfloor(n-k)/2\rfloor\) 处错误；达到最小距离的一对编码向量也说明不能统一保证更大的错误数。
+两个不同多项式的差次数至多为 \(k-1\)，所以至多在 \(k-1\) 个所选点为零，给出距离至少 \(n-k+1\)。取其中 \(k-1\) 个点，令多项式为对应一次因子的乘积；当 \(k=1\) 时取常数一。它与零多项式的取值恰在 \(n-k+1\) 处不同，所以下界能达到。
+
+记 \(d(v,w)\) 为向量 \(v,w\) 的不同坐标个数，最小距离为 \(\delta=n-k+1\)。若错误数 \(e\) 满足 \(2e<\delta\)，两个候选编码向量不可能同时与收到的向量相差至多 \(e\) 处，否则两者距离至多 \(2e\)。因此可以唯一纠正至多 \(\lfloor(n-k)/2\rfloor\) 处错误。
+
+为证明不能统一保证再多纠正一处，取相距恰为 \(\delta\) 的编码向量 \(c,c'\)。在它们不同的 \(\delta\) 个坐标中，选出 \(\lfloor\delta/2\rfloor\) 个，让接收向量 \(y\) 取 \(c'\) 的值；其余坐标取 \(c\) 的值。于是
+\[
+d(y,c)=\lfloor\delta/2\rfloor,\qquad
+d(y,c')=\lceil\delta/2\rceil
+=\lfloor(n-k)/2\rfloor+1.
+\]
+若允许后一数目的错误，同一个 \(y\) 就可能由 \(c\) 或 \(c'\) 发送，无法保证唯一纠错。例如在 \(\mathbb F_5\) 上取求值点 \(0,1,2,3,4\) 及 \(k=2\)，零多项式与 \(x\) 给出 \(c=(0,0,0,0,0)\)、\(c'=(0,1,2,3,4)\)。接收向量 \(y=(0,1,2,0,0)\) 与两者均相差两处。
 \end{solution}

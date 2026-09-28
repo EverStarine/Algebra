@@ -41,10 +41,10 @@ f(x)=\prod_{i=1}^{k-1}(x-a_i).
 \]
 当 \(k=1\) 时乘积取一。这个多项式恰在前 \(k-1\) 个取值点为零，其码字重量为 \(n-k+1\)，从而取得等号。
 
-最后对任意最小距离为 \(d\) 的线性码，删去固定的 \(d-1\) 个坐标。所得映射在 \(C\) 上单射，否则两个不同码字只在被删去的位置不同，距离至多为 \(d-1\)。所以 \(q^k=|C|\leq q^{n-d+1}\)，即 \(d\leq n-k+1\)。
+最后设 \(D\subseteq\mathbb F_q^n\) 是任意非零 \([n,k,d]\) 线性码，删去固定的 \(d-1\) 个坐标。所得映射在 \(D\) 上单射，否则两个不同码字只在被删去的位置不同，距离至多为 \(d-1\)。所以 \(q^k=|D|\leq q^{n-d+1}\)，即 \(d\leq n-k+1\)。
 \end{proof}
 
-设 \(\mathbb F_q\) 为有限域，\(n,k,d\) 为正整数，\(C\subseteq\mathbb F_q^n\) 为非零 \([n,k,d]\) 线性码。不等式 \(d\leq n-k+1\) 称为\term[Singleton-jie]{Singleton 界}[Singleton bound]；若 \(d=n-k+1\)，则称 \(C\) 为\term[zuidajuli-kefen-ma]{最大距离可分码}[maximum distance separable code]，简称 MDS 码。这里的“最大”是在固定长度和维数的比较中而言，并不意味着其他编码需求也同时最优。
+设 \(\mathbb F_q\) 为有限域，\(n,k,d\) 为正整数，\(C\subseteq\mathbb F_q^n\) 为非零 \([n,k,d]\) 线性码。不等式 \(d\leq n-k+1\) 称为\term[Singleton-jie]{Singleton 界}[Singleton bound]；若 \(d=n-k+1\)，则称 \(C\) 为\term[zuidajuli-kefen-ma]{最大距离可分码}[maximum distance separable code]，简称 MDS 码。这里的“最大”是在固定长度和维数的比较中而言，并不意味着其他编码需求也同时最优。“可分”在此是编码术语，与第十六章讨论的多项式或域扩张的可分性无关。
 
 \ProseParagraphBreak
 以系数行向量 \((u_0,\ldots,u_{k-1})\) 表示 \(f=\sum_j u_jx^j\)，一个生成矩阵为
@@ -69,12 +69,14 @@ f(x)=\sum_{i\in I}y_i\prod_{\substack{j\in I\\j\ne i}}
 \subsection{插值与单错误纠正}
 \label{b1:subsec:B03:02}
 
-设 \(n\geq k+2\)，收到 \(y=(y_1,\ldots,y_n)\)，且已知至多一个坐标有误。若错误发生在点 \(a_j\)，多项式 \(E=x-a_j\) 在该点为零，在其余点则有 \(y_i=f(a_i)\)。因此 \(Q=Ef\) 满足
+\begin{samepage}
+设 \(n\geq k+2\)，信息多项式 \(f\in\mathbb F_q[x]\) 满足 \(\deg f<k\)，收到 \(y=(y_1,\ldots,y_n)\)，且已知它与 \(f\) 的取值码字至多有一个坐标不同。若错误发生在取值点 \(a_j\)，取首一一次多项式 \(E=x-a_j\)，称为本算法的\term[cuowei-duoxiangshi]{错误定位多项式}[error locator polynomial]。它在错误位置为零，其余位置满足 \(y_i=f(a_i)\)。令 \(Q=Ef\)，则
 \begin{equation}\label{b1:eq:B-single-error-system}
-Q(a_i)=y_iE(a_i)\quad(1\leq i\leq n),\qquad
+Q(a_i)=y_i\cdot E(a_i)\quad(1\leq i\leq n),\qquad
 E=x+e_0,\quad \deg Q\leq k.
 \end{equation}
-\(E\) 在错误位置为零，称为这个单错误算法中的\term[cuowei-duoxiangshi]{错误定位多项式}[error locator polynomial]。把 \(Q=q_0+q_1x+\cdots+q_kx^k\) 代入后，\eqref{b1:eq:B-single-error-system}是关于 \(q_0,\ldots,q_k,e_0\) 的线性方程组；已知量 \(y_i\) 只是系数，并未产生未知量之间的乘积。
+实际求解时错误位置尚未知晓，故把 \(e_0\) 及 \(Q=q_0+q_1x+\cdots+q_kx^k\) 的系数视为未知量。\eqref{b1:eq:B-single-error-system}于是成为关于 \(q_0,\ldots,q_k,e_0\) 的线性方程组；已知量 \(y_i\) 只是系数，并未产生未知量之间的乘积。
+\end{samepage}
 
 \ProseParagraphBreak
 每一行的形式为
@@ -90,7 +92,7 @@ E=x+e_0,\qquad \deg Q\leq k
 \]
 的线性方程组
 \[
-Q(a_i)=y_iE(a_i)\qquad(1\leq i\leq n)
+Q(a_i)=y_i\cdot E(a_i)\qquad(1\leq i\leq n)
 \]
 有解，而且每个解都满足 \(Q=Ef\)。因此先解该线性方程组，再作多项式除法 \(f=Q/E\)，即可纠正至多一个错误。
 \end{proposition}
@@ -101,7 +103,7 @@ Q(a_i)=y_iE(a_i)\qquad(1\leq i\leq n)
 对方程组的任意解 \((E,Q)\)，至少 \(n-1\) 个正确位置满足 \((Q-Ef)(a_i)=0\)。但 \(\deg(Q-Ef)\leq k\)，而 \(n-1\geq k+1\)。由\cref{b1:prop:factor-root}，它只能是零多项式。因此 \(Q=Ef\)，且 \(E\) 首一一次，非零，整环中的除法商唯一。这证明了从任意解都恢复同一个 \(f\)。
 \end{proof}
 
-这一步是多项式整除，不是在各个取值点除以 \(E(a_i)\)；后者恰会在错误位置遇到零分母。如果不能事先保证错误数，算法还须检查 \(E\mid Q\)、所得商的次数小于 \(k\)，以及重新编码后与 \(y\) 相差至多一个坐标。只求出一个线性方程组的解，不足以证明传输符合预设条件。
+这一步是多项式整除，不能改成在各个取值点除以 \(E(a_i)\)：错误位置上的分母为零。若没有错误数的先验保证，方程组无解时须拒绝输出；有解时还须检查 \(E\mid Q\)、所得商的次数小于 \(k\)，以及重新编码后的码字与 \(y\) 相差至多一个坐标。不符合任一条件也须拒绝输出。这些核验能够确认收到的向量与输出码字相距至多一；由\cref{b1:thm:B-rs-parameters}，这一距离范围内的候选码字唯一。要认定它就是实际发送码字，仍须依赖传输错误数至多为一的先验保证。
 
 \ProseParagraphBreak
 例如在 \(\mathbb F_7\) 上取 \(a_i=0,1,2,3,4\)、\(k=3\)。信息多项式 \(f=1+2x+3x^2\) 编成 \((1,6,3,6,1)\)。若收到 \(y=(1,6,4,6,1)\)，解方程组可得

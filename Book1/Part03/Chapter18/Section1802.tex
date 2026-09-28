@@ -9,7 +9,7 @@
 %
 % * 乘法线性算子的迹与行列式
 % * 有限扩张中的域迹与域范数
-% * 可分情形的共轭元公式
+% * 共轭元公式与不可分重数
 %
 
 有限扩张 \(L/K\) 中的元素可以通过“乘以这个元素”的线性变换来观察。这个办法不需要扩张可分，也不需要预先列出共轭根。先用矩阵定义迹与范数，再说明共轭公式成立时根应怎样计数。
@@ -56,35 +56,54 @@ m_a:L\longrightarrow L,\qquad x\longmapsto ax
 f(t)=t^d+c_{d-1}t^{d-1}+\cdots+c_0,
 \qquad r=[L:K(a)].
 \]
-在 \(1,a,\ldots,a^{d-1}\) 这组基下，\(m_a\) 将前 \(d-1\) 个基向量依次移向后一个，将末项送到 \(-c_0-\cdots-c_{d-1}a^{d-1}\)。相应友矩阵的特征多项式为 \(f\)：沿 \(tI-m_a\) 的末列展开，系数依次为 \(c_0,c_1t,\ldots,c_{d-1}t^{d-1},t^d\)。再取 \(L\) 的一组 \(K(a)\) 基，便得到 \(r\) 个这样的对角块。因此
+令 \(E=K(a)\)。先把乘法算子限制为 \(m_a|_E:E\rightarrow E\)。在 \(E/K\) 的基 \(1,a,\ldots,a^{d-1}\) 下，这个限制算子将前 \(d-1\) 个基向量依次移向后一个，将末项送到 \(-c_0-\cdots-c_{d-1}a^{d-1}\)，矩阵因而是 \(f\) 的友矩阵 \(C_f\)。沿 \(tI-C_f\) 的末列展开并整理，得到 \(\det(tI-C_f)=t^d+c_{d-1}t^{d-1}+\cdots+c_0=f(t)\)。
+
+\ProseParagraphBreak
+
+再取 \(L/E\) 的一组基 \(v_1,\ldots,v_r\)。由塔式公式的基构造，
+\[
+v_1,av_1,\ldots,a^{d-1}v_1;\quad\ldots;\quad
+v_r,av_r,\ldots,a^{d-1}v_r
+\]
+是 \(L/K\) 的一组基。每个子空间 \(Ev_j\) 都被 \(m_a:L\rightarrow L\) 保持，并且在所列基下具有同一个矩阵 \(C_f\)。因此，整个乘法矩阵为 \(\operatorname{diag}(C_f,\ldots,C_f)\)，共有 \(r\) 个块，从而
 \begin{equation}\label{b1:eq:trace-norm-minimal-polynomial}
 \chi_{a,L/K}(t)=f(t)^r,\qquad
 \operatorname{Tr}_{L/K}(a)=-r c_{d-1},\qquad
 \operatorname{N}_{L/K}(a)=(-1)^{dr}c_0^r.
 \end{equation}
-例如 \(L=\mathbb Q(\sqrt d)\)、\(d\) 非平方，乘以 \(a+b\sqrt d\) 的矩阵为
+例如取非平方的 \(D\in\mathbb Q\)，令 \(L=\mathbb Q(\sqrt D)\)，并取 \(a,b\in\mathbb Q\)。乘以 \(a+b\sqrt D\) 的矩阵为
 \[
-\begin{pmatrix}a&bd\\ b&a\end{pmatrix},
+\begin{pmatrix}a&bD\\ b&a\end{pmatrix},
 \]
-所以迹为 \(2a\)，范数为 \(a^2-db^2\)。当 \(d<0\) 时，这个范数与复共轭有关，但一般域范数并不是分析学意义的非负长度。
+所以迹为 \(2a\)，范数为 \(a^2-Db^2\)。当 \(D<0\) 时，这个范数与复共轭有关，但一般域范数并不是分析学意义的非负长度。
 
-\subsection{可分情形的共轭元公式}
+\subsection{共轭元公式与不可分重数}
 \label{b1:subsec:1802:03}
 
 \begin{theorem}\label{b1:thm:trace-norm-embeddings}
-设 \(L/K\) 为有限域扩张，\(\Omega\) 为包含 \(L\) 的 \(K\) 的代数闭包，\(\sigma_1,\ldots,\sigma_s\) 是全部不同的 \(K\) 嵌入 \(L\rightarrow\Omega\)。记 \(e=[L:K]/s\)。则对每个 \(a\in L\) 都有
+设 \(L/K\) 为有限域扩张，\(\Omega\) 为包含 \(L\) 的 \(K\) 的代数闭包，\(\sigma_1,\ldots,\sigma_s\) 是全部不同的 \(K\) 嵌入 \(L\rightarrow\Omega\)。记 \(e=[L:K]_{\mathrm i}=[L:K]/s\) 为不可分次数。则对每个 \(a\in L\) 都有
 \begin{align*}
-\chi_{a,L/K}(t)&=\prod_{i=1}^s\Bigl(t-\sigma_i(a)\Bigr)^e,\\
+\chi_{a,L/K}(t)&=\prod_{i=1}^s\bigl(t-\sigma_i(a)\bigr)^e,\\
 \operatorname{Tr}_{L/K}(a)&=e\sum_{i=1}^s\sigma_i(a),&
 \operatorname{N}_{L/K}(a)&=\prod_{i=1}^s\sigma_i(a)^e.
 \end{align*}
 特别地，扩张可分时 \(e=1\)，迹是全部嵌入像的和，范数是其积。
 \end{theorem}
 \begin{proof}
-令 \(E=K(a)\)，\(d=[E:K]\)。\(a\) 的最小多项式有 \(d_s=[E:K]_{\mathrm s}\) 个不同根；\cref{b1:prop:inseparable-polynomial-shape}说明正特征下各根重数相同，特征零下各根重数为一，所以统一为 \(d/d_s\)。每个 \(K\) 嵌入 \(E\rightarrow\Omega\) 都能延拓到 \(L\)，且延拓的个数恰为 \(r_s=[L:E]_{\mathrm s}\)，这是\cref{b1:thm:separable-degree-tower}证明中的嵌入计数。因此 \(s=d_s r_s\)，而 \(\sigma_i(a)\) 中每个不同根出现 \(r_s\) 次。令 \(r=[L:E]\)，则
+令 \(E=K(a)\)、\(f=m_{a,K}\)、\(d=[E:K]\)。最小多项式 \(f\) 有 \(d_s=[E:K]_{\mathrm s}\) 个不同根；\cref{b1:prop:inseparable-polynomial-shape}说明正特征下各根重数相同，特征零下各根重数为一，所以统一为 \(d/d_s\)。每个 \(K\) 嵌入 \(E\rightarrow\Omega\) 都能延拓到 \(L\)，且延拓的个数恰为 \(r_s=[L:E]_{\mathrm s}\)，这是\cref{b1:thm:separable-degree-tower}证明中的嵌入计数。因此 \(s=d_s r_s\)，而 \(\sigma_i(a)\) 中每个不同根出现 \(r_s\) 次。令 \(r=[L:E]\)，则
 \[
 e r_s=\frac{dr}{d_s r_s}r_s=\frac d{d_s}r.
 \]
 右端恰是 \(f(t)^r\) 中每个不同根的重数。由\eqref{b1:eq:trace-norm-minimal-polynomial}，这就证明特征多项式公式。比较 \(t^{[L:K]-1}\) 的系数与常数项，分别得到迹和范数的公式。
 \end{proof}
-在不可分扩张中，省去重数会给出错误答案。例如特征 \(p\) 下，\(L=\mathbb F_p(u)\)、\(K=\mathbb F_p(u^p)\) 为 \(p\) 次纯不可分扩张，只有一个 \(K\) 嵌入；实际迹恒为零，\(\operatorname{N}_{L/K}(u)=u^p\)，并非将那个唯一嵌入直接作为迹或范数。
+公式中的重复有两个来源，即不同嵌入在指定元素上取同一值，以及每个嵌入像还要按不可分次数 \(e\) 计重。即使扩张可分，第一种重复也可能出现。取 \(L=\mathbb Q(\sqrt2,\sqrt3)\)、\(K=\mathbb Q\)、\(a=\sqrt2\)。分别为 \(\sqrt2\) 和 \(\sqrt3\) 选择正负像，得到四个不同的 \(K\) 嵌入；它们在 \(a\) 上的取值为 \(\sqrt2,\sqrt2,-\sqrt2,-\sqrt2\)。此时 \(e=1\)，但 \(\chi_{a,L/K}(t)=(t^2-2)^2\)。因此，求迹或范数时仍须保留不同嵌入带来的重复取值。
+
+\ProseParagraphBreak
+
+另一种重复来自不可分次数。设 \(p\) 为素数，取在 \(\mathbb F_p\) 上超越的元素 \(u\)，并令 \(L=\mathbb F_p(u)\)、\(K=\mathbb F_p(u^p)\)。由\eqref{b1:eq:rational-power-degree}知 \([L:K]=p\)；每个 \(x\in L\) 都满足 \(x^p\in K\)，故这是纯不可分扩张，只有一个 \(K\) 嵌入，而 \(e=p\)。于是
+\[
+\chi_{u,L/K}(t)=(t-u)^p=t^p-u^p,\qquad
+\operatorname{Tr}_{L/K}(u)=pu=0,\qquad
+\operatorname{N}_{L/K}(u)=u^p.
+\]
+事实上，这个扩张中每个元素的迹都是零。唯一嵌入的像若不按 \(e\) 计重，就无法得到这些结果。

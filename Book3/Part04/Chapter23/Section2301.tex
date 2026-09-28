@@ -32,7 +32,7 @@
 a_{j+1}=a_j-\frac{f(a_j)}{f'(a_j)}.
 \]
 每次修正都在 \(\mathfrak m\) 中，故所有 \(a_j\) 具有相同的剩余类，\(f'(a_j)\) 始终可逆。多项式恒等式
-\(f(u+v)=f(u)+f'(u)v+v^2h(u,v)\) 给出：若 \(f(a_j)\in\mathfrak m^{2^j}\)，则
+\(f(u+v)=f(u)+f'(u)\cdot v+v^2\cdot h(u,v)\) 给出：若 \(f(a_j)\in\mathfrak m^{2^j}\)，则
 \[
 a_{j+1}-a_j\in\mathfrak m^{2^j},\qquad
 f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
@@ -45,6 +45,23 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 \]
 其中 \(c\in R\)。括号内的元素模 \(\mathfrak m\) 等于 \(\bar f'(\bar a)\)，所以是单位，因而 \(a=b\)。这个唯一性论证本身不需要完备性。
 \end{proof}
+
+定理的递推式也能计算指定精度的根。为明确每一步都可在有限时间内完成，以下取整数系数和 \(p\) 进精度；输出是模 \(p^N\) 的剩余类，而不是在有限步内写出整个 \(p\) 进整数。
+
+\begin{algorithm}[htbp]
+\caption{Hensel 单根有限精度提升}
+\label{b3:alg:hensel-root-finite-precision}
+\begin{algorithmsteps}{素数 \(p\)、\(f\in\mathbb Z[T]\)、正整数 \(N\)，以及 \(a_1\in\{0,\ldots,p-1\}\)，满足 \(f(a_1)\equiv0\pmod p\)、\(f'(a_1)\not\equiv0\pmod p\)。}{唯一的 \(a_N\in\mathbb Z/p^N\mathbb Z\)，满足 \(f(a_N)=0\) 且 \(a_N\equiv a_1\pmod p\)。}
+\State 置 \(a=a_1\)、\(m=1\)。
+\While{\(m<N\)}
+\State 置 \(t=\min\{2m,N\}\)，用扩展 Euclid 算法求 \(u\equiv f'(a)^{-1}\pmod{p^t}\)。
+\State 计算 \(a\equiv a-f(a)u\pmod{p^t}\)，取任一整数代表，并置 \(m=t\)。
+\EndWhile
+\State \Return \(a\bmod p^N\)。
+\end{algorithmsteps}
+\end{algorithm}
+
+\cref{b3:alg:hensel-root-finite-precision}的每轮满足 \(f(a)\equiv0\pmod{p^m}\) 且 \(a\equiv a_1\pmod p\)；导数始终与 \(p\) 互素，所以模 \(p^t\) 的逆元可用整数 Euclid 运算求出。上面证明中的误差平方估计表明更新后 \(f(a)\equiv0\pmod{p^t}\)。精度指数每轮加倍，最后一轮可截在 \(N\)，故至多经过 \(\lceil\log_2N\rceil\) 轮。输出的唯一性由定理的单根结论给出。
 
 \begin{example}\label{b3:exm:hensel-root-five-adic}
 在 \(\mathbb Z_5\) 中，\(T^2+1\) 的约化根 \(2\) 是单根。故恰有一个根同余于 \(2\pmod5\)。写作 \(2+5c\)，模 \(25\) 的方程为 \(5+20c\equiv0\)，得 \(c\equiv1\pmod5\)，所以这个根模 \(25\) 等于 \(7\)。从约化根 \(3\) 得到另一个根，它是前一个的负数。这里是在指定剩余类内唯一，并不是说多项式在环中只能有一个根。
@@ -89,7 +106,23 @@ f-g_nh_n\equiv h_nu_n+g_nv_n\pmod{\mathfrak m^{n+1}R[T]}.
 由同一个 \(L\) 的单射性，两差的系数都在 \(\mathfrak m^{n+1}\) 中。归纳并使用分离性可得 \(g'=g,h'=h\)。
 \end{proof}
 
-上述证明采用逐次修正系数的方法；同样的因式提升可参阅松村英之的《Commutative Ring Theory》\cite[Theorem 8.3, p. 58]{Matsumura1989CommutativeRingTheory}。单根情形的 Newton 修正每次至少使误差的理想次幂加倍，而这里逐阶求解一个固定的线性方程组；两者都依靠一次近似处的可逆性。
+上述证明在整数系数、指定 \(p\) 进精度时也给出有限算法。初始的模 \(p\) 互素分解须作为输入；求得高精度因子后，并不能据此省去模 \(p\) 因式分解这一步。
+
+\begin{algorithm}[htbp]
+\caption{Hensel 互素因式有限精度提升}
+\label{b3:alg:hensel-factor-finite-precision}
+\begin{algorithmsteps}{素数 \(p\)、正整数 \(N\)、首一 \(f\in\mathbb Z[T]\)，及首一互素的非常数多项式 \(\bar g,\bar h\in\mathbb F_p[T]\)，满足 \(f\bmod p=\bar g\bar h\)。}{唯一的首一 \(g_N,h_N\in(\mathbb Z/p^N\mathbb Z)[T]\)，其次数及模 \(p\) 约化分别与 \(\bar g,\bar h\) 相同，且 \(f\equiv g_Nh_N\pmod{p^N}\)。}
+\State 记 \(r=\deg\bar g\)、\(s=\deg\bar h\)，任取相应次数的首一整数系数提升 \(g,h\)。
+\For{\(m=1,\ldots,N-1\)}
+\State 按系数计算 \(E=(f-gh)/p^m\bmod p\in\mathbb F_p[T]_{<r+s}\)。
+\State 在 \(\mathbb F_p\) 上解线性方程 \(\bar h u+\bar g v=E\)，其中 \(\deg u<r\)、\(\deg v<s\)。
+\State 任取 \(u,v\) 的整数系数提升 \(\tilde u,\tilde v\)，置 \(g\gets g+p^m\tilde u\)、\(h\gets h+p^m\tilde v\)，再将系数约化模 \(p^{m+1}\)。
+\EndFor
+\State \Return \(g\bmod p^N,\ h\bmod p^N\)。
+\end{algorithmsteps}
+\end{algorithm}
+
+\cref{b3:alg:hensel-factor-finite-precision}每轮解的是证明中同一个可逆的 \(r+s\) 阶线性方程组；交叉修正项含 \(p^{2m}\)，所以新误差至少提高到模 \(p^{m+1}\) 为零。\(N=1\) 时无需循环，直接返回输入因子的模 \(p\) 约化。同样的因式提升可参阅松村英之的《Commutative Ring Theory》\cite[Theorem 8.3, p. 58]{Matsumura1989CommutativeRingTheory}。单根情形的 Newton 修正每次至少使误差的理想次幂加倍，而这里逐阶求解固定的线性方程组；两者都依靠一次近似处的可逆性。
 
 \ProseParagraphBreak
 互素条件不能省略。例如 \(T^2-5\) 在 \(\mathbb Z_5\) 中约化为 \(T\cdot T\)，但若有根 \(a\)，则 \(2v_5(a)=1\)，不可能成立。因此这个约化分解不能提升为两个首一一次因子。完备性保证误差修正的极限存在，却不能代替求解修正方程所需的可逆条件。
@@ -128,7 +161,6 @@ Noether 性还需要理想的控制。平展邻域的细化定理说，\(R^{\mat
 \(c\in(b_1,\ldots,b_s)\widehat R\cap R'=(b_1,\ldots,b_s)R'\)，故 \(c\in J\)。因此每个有限生成理想都等于其完备化扩张的收缩。任一有限生成理想升链在 Noether 环 \(\widehat R\) 中扩张后稳定，收缩后原升链也稳定；这等价于 \(R^{\mathrm h}\) Noether。这里省略平展邻域范畴的细化及有限邻域构造的技术证明，其余有限性步骤已展开；整体构造及泛性质见\cite[\S43, (43.3), (43.5), (43.8)--(43.10), pp. 180--183]{Nagata1975LocalRings}。后面的光滑与平展证明不以本定理为前提。
 \end{proofsketch}
 
-\ProseParagraphBreak
 对 Noether 局部环，由 \(\widehat R\) 的 Hensel 性及泛性质，得到相容的局部同态
 \[
 R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
@@ -136,14 +168,14 @@ R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
 前者只需解决 Hensel 提升问题，后者还允许任意阶的相容极限。不能仅凭两环有相同的各阶商，就断言两环相同；还必须检查它们自身是否完备。
 
 \begin{example}\label{b3:exm:henselization-not-completion}
-令 \(R=\mathbb Q[t]_{(t)}\)，则 \(\widehat R=\mathbb Q[[t]]\)。多项式 \(F(X)=X^2-X-t\) 模 \(t\) 有单根 \(0\)，但在 \(\mathbb Q(t)\) 中没有根：若有根，则 \(1+4t\) 是有理函数的平方；然而它在 \(t=-1/4\) 处的零点阶数为一，平方的零点阶数必为偶数。因此 \(R\) 不是 Hensel 环。
+令 \(R=\mathbb Q[t]_{(t)}\)，则 \(\widehat R=\mathbb Q[\![t]\!]\)。多项式 \(F(X)=X^2-X-t\) 模 \(t\) 有单根 \(0\)，但在 \(\mathbb Q(t)\) 中没有根：若有根，则 \(1+4t\) 是有理函数的平方；然而它在 \(t=-1/4\) 处的零点阶数为一，平方的零点阶数必为偶数。因此 \(R\) 不是 Hensel 环。
 
 \ProseParagraphBreak
 在 Hensel 化中，这个根存在；它在完备化中的展开以
 \[
 -t+t^2-2t^3+5t^4+\cdots
 \]
-开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)，所以 \(R^{\mathrm h}\) 是可数集；\(\mathbb Q[[t]]\) 却不可数，因为它包含所有系数只取 \(0,1\) 的无穷序列。因此
+开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)，所以 \(R^{\mathrm h}\) 是可数集；\(\mathbb Q[\![t]\!]\) 却不可数，因为它包含所有系数只取 \(0,1\) 的无穷序列。因此
 \[
 R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
 \]

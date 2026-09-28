@@ -160,7 +160,11 @@ foreach ($node in $nodes) {
     }
     if ($node.Kind -in @('Chapter','Section')) {
         $expected = if ($node.Optional) { '\Optional' + $node.Kind + '{' } else { '\' + $node.Kind.ToLowerInvariant() + '{' }
-        if (-not $text.Contains($expected)) { $failures.Add("Optional marker or heading command mismatch: $($node.Path)") }
+        $chapterWithShortTitle = $node.Kind -eq 'Chapter' -and -not $node.Optional -and
+            $text -match '(?m)^\\chapter\[[^\r\n]*\]\{'
+        if (-not $text.Contains($expected) -and -not $chapterWithShortTitle) {
+            $failures.Add("Optional marker or heading command mismatch: $($node.Path)")
+        }
     }
     foreach ($note in $node.Notes) {
         if ($note.Trim() -and -not $text.Contains('% ' + $note)) {

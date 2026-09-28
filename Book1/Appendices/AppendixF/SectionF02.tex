@@ -25,11 +25,7 @@
 \label{b1:subsec:F02:01}
 
 \begin{definition}\label{b1:def:F-monomial-ideal}
-设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)。若理想 \(J\subseteq R\) 能由一族单项式生成，即
-\[
-J=(x^\alpha\mid\alpha\in A)
-\]
-对某个 \(A\subseteq\mathbb N^n\) 成立，则称 \(J\) 为\term[danxiangshi-lixiang]{单项式理想}[monomial ideal]。允许 \(A=\varnothing\)，此时 \(J=0\)。
+设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)，\(J\subseteq R\) 为理想。若存在 \(A\subseteq\mathbb N^n\)，使 \(J=(x^\alpha\mid\alpha\in A)\)，则称 \(J\) 为\term[danxiangshi-lixiang]{单项式理想}[monomial ideal]。允许 \(A=\varnothing\)，此时 \(J=0\)。
 \end{definition}
 
 例如 \((x^2,xy,y^3)\subseteq k[x,y]\) 是单项式理想，而单个多项式 \(x-y\) 生成的理想不是：若它是单项式理想，下面的判据会使 \(x\) 和 \(y\) 都属于该理想，但把 \(y=x\) 代入 \(x=h(x,y)(x-y)\) 就会得到不成立的多项式等式 \(x=0\)。
@@ -45,11 +41,48 @@ f=\sum_{j=1}^m h_jx^{\alpha^{(j)}}.
 展开每个 \(h_j\)，右边出现的每个单项式都被对应的 \(x^{\alpha^{(j)}}\) 整除。合并同类项可能消去一些单项式，却不会引入从未出现过的单项式。因此 \(f\) 的每个单项式都被至少一个生成元整除。反过来，若 \(f\) 的每个单项式都如此，逐项选一个整除它的生成元，就把该项写成这个生成元的单项式倍数再乘一个系数。由于 \(f\) 只有有限项，把这些等式相加即得 \(f\in J\)。对 \(f=x^\beta\) 应用同一结论，便得到单项式的判据。
 \end{proof}
 
-这也说明单项式理想的成员判定不依赖单项式序。例如对 \(J=(x^2,xy,y^3)\)，\(x^4y+x y^2-y^5\) 的每一项都被列出的某个生成元整除，所以它在 \(J\) 中；\(x+y^2\) 的两项都不满足这一要求，故不在 \(J\) 中。对于单项式理想，不存在通过不同项相消而“意外产生”一个不被任何生成元整除的单项式的情况。
+这也说明单项式理想的成员判定不依赖单项式序。例如对 \(J=(x^2,xy,y^3)\)，\(x^4y+xy^2-y^5\) 的每一项都被列出的某个生成元整除，所以它在 \(J\) 中；\(x+y^2\) 的两项都不满足这一要求，故不在 \(J\) 中。对于单项式理想，不存在通过不同项相消而“意外产生”一个不被任何生成元整除的单项式的情况。
 
+\ProseParagraphBreak
+\cref{b1:fig:F-monomial-staircase}把这个例子中的整除关系画成指数阶梯：着色部分由三个生成元对应的点向右、向上延伸，其余四个指数点对应 \(1,x,y,y^2\)。这些不属于 \(J\) 的单项式将在\secref{b1:sec:F05}称为标准单项式。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.83cm,y=0.83cm,>=stealth]
+  \fill[color=AlgebraBlue!12]
+    (1.5,-0.35)--(5.4,-0.35)--(5.4,4.4)--(-0.35,4.4)
+    --(-0.35,2.5)--(0.5,2.5)--(0.5,0.5)--(1.5,0.5)--cycle;
+  \draw[step=1,color=AlgebraGray!35] (0,0) grid (5,4);
+  \draw[->,color=AlgebraGray] (-0.35,0)--(5.65,0)
+    node[right] {\(a\)（\(x\) 的指数）};
+  \draw[->,color=AlgebraGray] (0,-0.35)--(0,4.65)
+    node[above] {\(b\)（\(y\) 的指数）};
+  \foreach \a in {0,...,5}{
+    \foreach \b in {0,...,4}{
+      \fill[color=AlgebraGray] (\a,\b) circle (1.1pt);
+    }
+  }
+  \foreach \a/\b in {0/0,1/0,0/1,0/2}{
+    \fill[white] (\a,\b) circle (3.2pt);
+    \draw[thick] (\a,\b) circle (3.2pt);
+  }
+  \foreach \a/\b in {2/0,1/1,0/3}{
+    \node[rectangle,fill=AlgebraBlue,inner sep=0pt,minimum size=4pt]
+      at (\a,\b) {};
+  }
+  \foreach \a in {1,...,5}{\node[below,font=\scriptsize] at (\a,-0.1) {\a};}
+  \foreach \b in {1,...,4}{\node[left,font=\scriptsize] at (-0.1,\b) {\b};}
+  \node[below left,font=\scriptsize] at (0,0) {0};
+\end{tikzpicture}
+\caption[单项式理想的指数阶梯]{\(J=(x^2,xy,y^3)\) 的指数阶梯，图中只画出有限范围。方块表示生成元的指数 \((2,0),(1,1),(0,3)\)；着色区域中的整数点对应 \(J\) 的单项式，空心圆对应 \(1,x,y,y^2\)。图中是单项式的指数点，并非由 \(J\) 给出的方程组的解点。}
+\label{b1:fig:F-monomial-staircase}
+\end{figure}
+
+\begin{samepage}
 \begin{lemma}[单项式生成组的有限性]\label{b1:lem:F-monomial-finite}
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\)。任一由 \(R\) 中单项式组成的集合 \(M\) 都有有限子集 \(M_0\subseteq M\)，使每个 \(u\in M\) 都被 \(M_0\) 中的某个单项式整除。因此单项式理想可以由有限多个单项式生成，而且可以从任何给定的单项式生成族中选取这些生成元。空集合取 \(M_0=\varnothing\)。
 \end{lemma}
+\end{samepage}
 \begin{proof}
 令 \(J=(M)\)。域只有零理想和单位理想，因而是 Noether 环。由\cref{b1:thm:hilbert-basis}，有限元多项式环 \(R=k[x_1,\ldots,x_n]\) 的每个理想有限生成，故有 \(J=(f_1,\ldots,f_t)\)。每个 \(f_i\) 都是 \(M\) 中有限多个单项式的多项式系数组合；把这有限多次出现的单项式收集起来，得到有限集 \(M_0\subseteq M\)，并有
 \[
@@ -72,7 +105,7 @@ f=\sum_{j=1}^m h_jx^{\alpha^{(j)}}.
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想。令
 \[
 \operatorname{in}_{\prec}(I)
-\coloneqq\Bigl(\operatorname{LM}(f)\mid f\in I,\ f\ne0\Bigr)
+\coloneqq\bigl(\operatorname{LM}(f)\mid f\in I,\ f\ne0\bigr)
 \]
 称 \(\operatorname{in}_{\prec}(I)\) 为 \(I\) 关于 \(\prec\) 的\term[shouxiang-lixiang]{首项理想}[initial ideal]。它是由 \(I\) 中所有非零多项式的首单项式生成的单项式理想。若 \(I=0\)，规定 \(\operatorname{in}_{\prec}(I)=0\)。
 \end{definition}
@@ -81,14 +114,16 @@ f=\sum_{j=1}^m h_jx^{\alpha^{(j)}}.
 
 因为每个非零系数在 \(k\) 中可逆，用所有首项 \(\operatorname{LT}(f)\) 生成也得到同一理想。因此“首项理想”的名称与这里使用首单项式的写法相容。这个定义依赖整个理想及所选次序，不依赖写下理想时采用了哪一组生成元。
 
+\begin{samepage}
 \begin{definition}\label{b1:def:F-groebner-basis}
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想，\(G=\{g_1,\ldots,g_s\}\) 为 \(I\) 中有限个非零多项式组成的集合。若
 \begin{equation}\label{b1:eq:F-groebner-definition}
 \operatorname{in}_{\prec}(I)
-=\Bigl(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)\Bigr),
+=\bigl(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)\bigr),
 \end{equation}
 则称 \(G\) 为 \(I\) 关于 \(\prec\) 的一组\term[Groebner-ji]{Gröbner 基}[Gröbner basis]。零理想采用空集为 Gröbner 基。
 \end{definition}
+\end{samepage}
 
 由\cref{b1:prop:F-monomial-membership}，\eqref{b1:eq:F-groebner-definition}等价于：对每个非零 \(f\in I\)，总有 \(g_i\in G\) 使 \(\operatorname{LM}(g_i)\mid\operatorname{LM}(f)\)。右边生成的单项式理想本来就包含于左边，所以只须保证每个理想成员的首单项式都被覆盖。这个定义暂时没有另行要求 \(G\) 生成 \(I\)；下面会证明生成性由所列条件推出。名称中的“基”也不表示这些多项式在线性代数意义下线性无关，更不表示每个理想成员的多项式系数表示唯一。
 
@@ -101,7 +136,7 @@ f=\sum_{j=1}^m h_jx^{\alpha^{(j)}}.
 \begin{proof}
 若 \(I=0\)，取空基即可。设 \(I\ne0\)，把\cref{b1:lem:F-monomial-finite}用于
 \[
-M=\Bigl\{\operatorname{LM}(f)\mid f\in I,\ f\ne0\Bigr\}.
+M=\bigl\{\operatorname{LM}(f)\mid f\in I,\ f\ne0\bigr\}.
 \]
 可从中选出有限个单项式生成整个 \((M)\)。按 \(M\) 的定义，为每个被选出的单项式取一个给出它的 \(g_i\in I\)。所得有限集 \(G=\{g_1,\ldots,g_s\}\) 满足\eqref{b1:eq:F-groebner-definition}，故为 Gröbner 基。
 

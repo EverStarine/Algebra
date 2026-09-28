@@ -9,7 +9,7 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 次正规列、合成列及细化
+% * 次正规列、合成列、有限群合成列的存在性及细化
 % * Schreier 细化定理
 % * Jordan–Hölder 定理
 %
@@ -33,7 +33,7 @@ G=G_0\ge G_1\ge\cdots\ge G_r=1,
 换言之，次正规列只要求 \(G_{i+1}\trianglelefteq G_i\)，正规列则要求每一项都在 \(G\) 中正规。链中允许相邻项相等，它们贡献平凡因子。有些文献把本书的次正规列也称为正规列。这里区分二者，是因为“在前一项中正规”不推出“在整个群中正规”。本节的细化只要求保留相邻正规性；即使原列是正规列，一般细化后也只保证得到次正规列，插入项是否在 \(G\) 中正规必须另行验证。例如，\(S_4\trianglerighteq V_4\trianglerighteq1\) 是正规列，但插入一个二阶子群后得到
 \[
 S_4\trianglerighteq V_4\trianglerighteq
-\Bigl\langle(12)(34)\Bigr\rangle\trianglerighteq1
+\bigl\langle(12)(34)\bigr\rangle\trianglerighteq1
 \]
 的细化；它只是次正规列，因为中间的二阶子群不在 \(S_4\) 中正规。
 
@@ -48,7 +48,14 @@ G=G_0>G_1>\cdots>G_r=1
 严格包含保证各商群非平凡，所以定义也可以简述为“所有因子都是单群的严格次正规列”。\cref{b1:thm:subgroup-correspondence}把含 \(G_{i+1}\) 的 \(G_i\) 的正规子群与 \(G_i/G_{i+1}\) 的正规子群对应起来。因此，因子单性排除了在 \(G_i\) 之下插入真正规中间项的可能；合成列恰是不能再插入不同子群的严格次正规列。
 
 \ProseParagraphBreak
-每个非平凡有限群都存在合成列：选一个极大真正规子群，再对它重复；对应定理保证每步所得因子是单群，子群的阶严格下降又保证过程终止。无限群未必如此。若 \(\mathbb Z\) 有合成列，则\cref{b1:lem:integer-subgroups}说明其最后一个非平凡项必形如 \(m\mathbb Z\)，其中 \(m\ge1\)；但它还含有非零真正规子群 \(2m\mathbb Z\)，所以不是单群，不能以一个合成因子接到 \(1\)。
+\begin{proposition}[有限群的合成列存在性]\label{b1:prop:finite-composition-series}
+每个有限群都有合成列；平凡群取长度为零的合成列。
+\end{proposition}
+\begin{proof}
+对群的阶归纳。平凡群的结论由定义给出。若有限群 \(G\ne1\)，则 \(1\) 是它的真正规子群，而 \(G\) 只有有限多个子群，故可取一个极大真正规子群 \(N\)。由\cref{b1:thm:subgroup-correspondence}，\(G/N\) 是单群。归纳假设给出 \(N\) 的合成列，在其前面接上 \(G>N\)，便得到 \(G\) 的合成列。
+\end{proof}
+
+无限群未必有合成列。若 \(\mathbb Z\) 有合成列，则\cref{b1:lem:integer-subgroups}说明其最后一个非平凡项必形如 \(m\mathbb Z\)，其中 \(m\ge1\)；但它还含有非零真正规子群 \(2m\mathbb Z\)，所以不是单群，不能以一个合成因子接到 \(1\)。
 
 \ProseParagraphBreak
 设同一群有两条次正规列。如果删去平凡因子后，可以把两列的因子一一配对，使每对同构，则将这两条列称为\term[dengjia-lie]{等价列}[equivalent series]；配对不要求保留原有次序。例如 \(C_6\) 可以先取二阶子群，也可以先取三阶子群，两次所得因子分别是 \(C_3,C_2\) 与 \(C_2,C_3\)。
@@ -56,6 +63,9 @@ G=G_0>G_1>\cdots>G_r=1
 \subsection{Schreier 细化定理}
 \label{b1:subsec:0701:02}
 
+\secref{b1:sec:0702}用导出列判断可解性，\secref{b1:sec:0704}据此证明对称群的相关结论；两节的可解性证明均不调用 Schreier 细化。不同合成列的因子为何与选择无关，则由下面的蝴蝶引理、细化定理和\subsecref{b1:subsec:0701:03}的 Jordan--Hölder 定理回答。
+
+\ProseParagraphBreak
 比较两条列时，应把一条列中的子群逐个与另一条列相交，再乘回原来较低的一项。使这些商群成对同构的工具是\term[hudie-yinli]{蝴蝶引理}[butterfly lemma]，也称 Zassenhaus 引理。下面两个商群的表达式虽不相同，但都由共同的交 \(A\cap B\) 产生；证明将找出这个交在两边被商去的同一个子群。
 
 \begin{lemma}[Zassenhaus]\label{b1:lem:butterfly}
@@ -74,13 +84,20 @@ G=G_0>G_1>\cdots>G_r=1
 \[
 D=(A'\cap B)(A\cap B').
 \]
-对 \(c\in C\)，由 \(A'\trianglelefteq A\)、\(B'\trianglelefteq B\) 可知，共轭均保持 \(A'\cap B\) 和 \(A\cap B'\)。这两个子群因而正规于 \(C\)；它们的乘积是子群（用正规性把相邻因子换序），且仍被全部 \(C\) 的共轭保持，故 \(D\trianglelefteq C\)。
+对 \(c\in C\)，由 \(A'\trianglelefteq A\)、\(B'\trianglelefteq B\) 可知，共轭均保持 \(A'\cap B\) 和 \(A\cap B'\)。这两个子群因而正规于 \(C\)；利用正规性，可以把两者乘积中的元素重新写成相反的因子顺序（所取的因子元素可能改变），所以它们的乘积是子群，且仍被全部 \(C\) 的共轭保持，故 \(D\trianglelefteq C\)。
 
-现在考察左侧商群。记 \(K=A'C\)、\(L=A'(A\cap B')\)。由\cref{b1:thm:second-isomorphism}，因为 \(A'\trianglelefteq A\)，这两个乘积都是子群。令 \(q:A\to A/A'\) 为商映射，则 \(q(K)=q(C)\)、\(q(L)=q(A\cap B')\)。后者正规于前者：任意 \(q(c)\) 的共轭都由 \(c\in C\) 对正规子群 \(A\cap B'\) 的共轭得到。具体地，若 \(k\in K,\ell\in L\)，则 \(q(k\ell k^{-1})\in q(L)\)。又因 \(\ker(q|_K)=A'\subseteq L\)，有 \(q^{-1}\Bigl(q(L)\Bigr)\cap K=L\)，故 \(k\ell k^{-1}\in L\)。这证明 \(L\trianglelefteq K\)，左侧的商群确有定义。
+现在考察左侧商群。记 \(K=A'C\)、\(L=A'(A\cap B')\)。由\cref{b1:thm:second-isomorphism}，因为 \(A'\trianglelefteq A\)，这两个乘积都是子群。令 \(q:A\to A/A'\) 为商映射，则 \(q(K)=q(C)\)、\(q(L)=q(A\cap B')\)。后者正规于前者：任意 \(q(c)\) 的共轭都由 \(c\in C\) 对正规子群 \(A\cap B'\) 的共轭得到。具体地，若 \(k\in K,\ell\in L\)，则 \(q(k\ell k^{-1})\in q(L)\)。又因 \(\ker(q|_K)=A'\subseteq L\)，有 \(q^{-1}\bigl(q(L)\bigr)\cap K=L\)，故 \(k\ell k^{-1}\in L\)。这证明 \(L\trianglelefteq K\)，左侧的商群确有定义。
 
 包含映射 \(C\to K\) 后接商映射给出同态 \(c\mapsto cL\)。它满射，因为 \(K=A'C\) 且 \(A'\subseteq L\)，每个 \(K/L\) 中的陪集都有来自 \(C\) 的代表。其核为 \(C\cap L=D\)：若 \(c=a'b'\in C\)，其中 \(a'\in A'\)、\(b'\in A\cap B'\)，则 \(a'=c(b')^{-1}\in A'\cap B\)，所以 \(c\in D\)；反向包含由两个因子均包含在 \(C\cap L\) 中得到。\cref{b1:thm:first-isomorphism}于是给出 \(K/L\cong C/D\)。
 
-最后交换 \((A,A')\) 与 \((B,B')\)，对右侧作同样处理。上述论证同时证明其分母正规于分子，所得满同态的核为 \((A\cap B')(A'\cap B)\)；两个因子都正规于 \(C\)，故这个乘积仍为 \(D\)。对相应满同态再次应用第一同构定理，右侧商群也同构于 \(C/D\)。
+最后交换 \((A,A')\) 与 \((B,B')\)，对右侧作同样处理。上述论证同时证明其分母正规于分子，所得满同态的核为 \((A\cap B')(A'\cap B)\)；两个因子都正规于 \(C\)，故这个乘积仍为 \(D\)。把左右两个满同态分别记为 \(\varphi_A\) 与 \(\varphi_B\)，则它们的定义域与核可合在一图中：
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+& C \arrow[dl, two heads, "\substack{\varphi_A\\\ker=D}"'] \arrow[dr, two heads, "\substack{\varphi_B\\\ker=D}"] & \\
+\dfrac{A'C}{A'(A\cap B')} && \dfrac{B'C}{B'(B\cap A')}
+\end{tikzcd}
+\]
+对两个满同态分别应用第一同构定理，左右两个商群都同构于 \(C/D\)。
 \end{proof}
 
 \begin{theorem}[Schreier]\label{b1:thm:schreier-refinement}
@@ -119,11 +136,20 @@ H_j=H_{j0}\trianglerighteq H_{j1}\trianglerighteq\cdots
 \trianglerighteq H_{jr}=H_{j+1}.
 \]
 
-对每个 \(0\le i<r\)、\(0\le j<s\)，这次引理应用还给出一对同构因子
+对每个 \(0\le i<r\)、\(0\le j<s\)，这次引理应用还给出一对同构因子。记
 \[
-G_{ij}/G_{i,j+1}\cong H_{ji}/H_{j,i+1}.
+F_{ij}=G_{ij}/G_{i,j+1}\cong H_{ji}/H_{j,i+1}.
 \]
-第一条细化先固定 \(i\)，依次增加 \(j\)，再按 \(i=0,\ldots,r-1\) 的顺序连接各段；第二条细化先固定 \(j\)，依次增加 \(i\)，再按 \(j=0,\ldots,s-1\) 的顺序连接各段。把两者放在共同的 \((i,j)\) 网格上看，这正是沿两个不同方向读取；每个格子 \((i,j)\) 由上式配对一组同构因子。因此两条细化等价，重复项产生的平凡因子删去即可。
+这些因子可按指标排成网格：
+\[
+\begin{array}{c|ccc}
+ & j=0 & \cdots & j=s-1\\ \hline
+i=0 & F_{0,0} & \cdots & F_{0,s-1}\\
+\vdots & \vdots & \ddots & \vdots\\
+i=r-1 & F_{r-1,0} & \cdots & F_{r-1,s-1}
+\end{array}
+\]
+第一条细化按行读取：先固定 \(i\)，使 \(j\) 依次增加，再进入下一行；第二条细化按列读取：先固定 \(j\)，使 \(i\) 依次增加，再进入下一列。每个格子只配对一组同构的商群，不表示 \(G_{ij}\) 与 \(H_{ji}\) 相同。因此两条细化等价，重复项产生的平凡因子删去即可。
 \end{proof}
 
 这就是\term[schreier-xihua-dingli]{Schreier 细化定理}[Schreier refinement theorem]。它比较的是商群，而不是断言两条细化中的子群相同。事实上，\(C_2\times C_2\) 中任取一个二阶子群都给出合成列，三种选择的中间子群互不相同。
@@ -160,6 +186,6 @@ G&>\langle g^3\rangle>\langle g^6\rangle>1.
 以 \(S_4\) 为例，链
 \[
 S_4\trianglerighteq A_4\trianglerighteq V_4
-\trianglerighteq\Bigl\langle(12)(34)\Bigr\rangle\trianglerighteq1
+\trianglerighteq\bigl\langle(12)(34)\bigr\rangle\trianglerighteq1
 \]
 给出因子 \(C_2,C_3,C_2,C_2\)，故是合成列。因子阶的乘积为 \(24\)，与 \(S_4\) 的阶相符。以后遇到一个有限群的候选合成列时，可以先用阶数乘积排查计算错误，再逐项检查正规性和单性；阶数一致本身并不能代替后两项检查。

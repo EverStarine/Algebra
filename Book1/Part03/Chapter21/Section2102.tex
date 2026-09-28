@@ -34,7 +34,7 @@ K=K_0\subseteq K_1\subseteq\cdots\subseteq K_r,
 设 \(K\) 的特征为零，\(E/K\) 为有限扩张。若 \(E/K\) 的正规闭包的 Galois 群是可解群，则称 \(E/K\) 为\term[kejie-kuozhang]{可解扩张}[solvable extension]。
 \end{definition}
 
-可解扩张未必本身是一条根式塔的末端；正确的结论是它能嵌在一条根式塔中。对已正规且可分的扩张，定义就是要求其自身的 Galois 群可解。
+可解性由正规闭包的 Galois 群决定，而一座根式塔要求每层实际由开方生成。两者的联系将在下面的判据中证明。若 \(E/K\) 已经是有限 Galois 扩张，定义中的群就是 \(\operatorname{Gal}(E/K)\)。
 
 \subsection{根式塔的正规可解包络}
 \label{b1:subsec:2102:02}
@@ -45,7 +45,7 @@ K=K_0\subseteq K_1\subseteq\cdots\subseteq K_r,
 特征零域 \(K\) 上的任意有限根式塔，都包含在一个有限 Galois 扩张 \(M/K\) 中，使 \(\operatorname{Gal}(M/K)\) 可解。
 \end{lemma}
 \begin{proof}
-设塔为 \(K_i=K_{i-1}(\alpha_i)\)，\(\alpha_i^{m_i}=a_i\neq0\)，取全部 \(m_i\) 的公倍数 \(m\)。先令 \(M_0=K(\mu_m)\)。它是 \(X^m-1\) 的分裂域，Galois 群把一个本原单位根送到其互素次幂，因而嵌入交换群 \((\mathbb Z/m\mathbb Z)^\times\)，所以可解。
+若塔中所有域都等于 \(K\)，取 \(M=K\) 即可。以下设塔有非平凡的步骤，略去已经属于前一层的生成元，并记 \(K_i=K_{i-1}(\alpha_i)\)，\(\alpha_i^{m_i}=a_i\neq0\)。取全部 \(m_i\) 的公倍数 \(m\)，先令 \(M_0=K(\mu_m)\)。它是 \(X^m-1\) 的分裂域，Galois 群把一个本原单位根送到其互素次幂，因而嵌入交换群 \((\mathbb Z/m\mathbb Z)^\times\)，所以可解。
 
 归纳设 \(M_{i-1}/K\) 为有限 Galois 扩张，包含 \(K_{i-1}\)，且群可解。令 \(M_i\) 为 \(M_{i-1}\) 上全部多项式
 \[
@@ -57,9 +57,9 @@ X^{m_i}-\tau(a_i),\qquad\tau\in\operatorname{Gal}(M_{i-1}/K),
 \[
 \operatorname{Gal}(M_i/M_{i-1})\longrightarrow
 \prod_{\tau}\mu_{m_i},\qquad
-\rho\longmapsto\Bigl(\rho(\beta_\tau)/\beta_\tau\Bigr)_\tau
+\rho\longmapsto\bigl(\rho(\beta_\tau)/\beta_\tau\bigr)_\tau
 \]
-是单同态，其同态性及单射性与\cref{b1:prop:single-radical-cyclic}中的计算相同：根的比值在被固定的单位根群中，而固定全部生成根就固定全域。因此核群是交换群。限制映射由\cref{b1:thm:galois-quotient}给出正合列
+是单同态，其同态性及单射性与\cref{b1:prop:single-radical-cyclic}中的计算相同：根的比值在被固定的单位根群中，而固定全部生成根就固定全域。因此相对 Galois 群 \(\operatorname{Gal}(M_i/M_{i-1})\) 是交换群；它在下面的限制映射正合列中充当核。由\cref{b1:thm:galois-quotient}，该正合列为
 \[
 1\longrightarrow\operatorname{Gal}(M_i/M_{i-1})
 \longrightarrow\operatorname{Gal}(M_i/K)
@@ -98,13 +98,32 @@ E_i=E_{i-1}(\gamma_i),\qquad \gamma_i^{\ell_i}\in E_{i-1}.
 把开头的 \(K\subseteq F\) 接上这些步骤，便得到包含 \(L\) 全部元素、从而包含 \(f\) 全部根的根式塔。
 \end{proof}
 
+\begin{corollary}\label{b1:cor:irreducible-one-radical-root}
+设 \(K\) 为特征零域，\(f\in K[X]\) 为不可约多项式。若 \(f\) 的一个根属于某条从 \(K\) 出发的根式塔的末端，则 \(f\) 根式可解。
+\end{corollary}
+\begin{proof}
+由\cref{b1:lem:radical-normal-envelope}，可将该根式塔置于有限 Galois 扩张 \(M/K\) 中，且 \(\operatorname{Gal}(M/K)\) 可解。不可约多项式 \(f\) 在 \(M\) 中有根，而 \(M/K\) 正规，故 \(f\) 在 \(M\) 中完全分裂。其分裂域 \(L\) 是 \(M\) 的中间域，\(\operatorname{Gal}(L/K)\) 是 \(\operatorname{Gal}(M/K)\) 的商群，也可解。由\cref{b1:thm:radical-solvability}，\(f\) 根式可解。
+\end{proof}
+
+反向蕴含从根式可解的定义直接得到。因此，对特征零域上的不可约多项式，一个根能否用根式表示与全部根能否用根式表示是同一个存在性问题。
+
+可解扩张不一定自身是根式扩张。取本原七次单位根 \(\zeta_7=e^{2\pi i/7}\)，并令
+\[
+E=\mathbb Q(\zeta_7+\zeta_7^{-1})\subseteq\mathbb R.
+\]
+由\cref{b1:thm:cyclotomic-galois-group}，\(\operatorname{Gal}(\mathbb Q(\zeta_7)/\mathbb Q)\cong(\mathbb Z/7\mathbb Z)^\times\cong C_6\)，其中 \(3\bmod7\) 的阶为 \(6\)。复共轭的不动域是 \(E\)，所以 \(\operatorname{Gal}(E/\mathbb Q)\cong C_3\)；特别地，\(E/\mathbb Q\) 是可解扩张。
+
+然而，若 \(0\neq\beta\in E\)，且对某个整数 \(m\geq2\) 有 \(\beta^m\in\mathbb Q\)，则对任意 \(\sigma\in\operatorname{Gal}(E/\mathbb Q)\)，比值 \(\sigma(\beta)/\beta\) 是实数域 \(E\) 中的 \(m\) 次单位根，因而属于 \(\{1,-1\}\subseteq\mathbb Q\)。这些比值构成从三阶群 \(\operatorname{Gal}(E/\mathbb Q)\) 到 \(\{1,-1\}\) 的群同态，只能恒为 \(1\)。故 \(\beta\in\mathbb Q\)。
+
+若某条根式塔从 \(\mathbb Q\) 出发而以 \(E\) 为末端，则各层都在 \(E\) 内，第一步非平凡扩张须由这样的 \(\beta\in E\setminus\mathbb Q\) 生成，矛盾。另一方面，\(\zeta_7+\zeta_7^{-1}\) 的最小多项式以 \(E\) 为分裂域；由\cref{b1:thm:radical-solvability}，\(E\) 包含于某条根式塔的末端。
+
 \subsection{特征条件与可分性}
 \label{b1:subsec:2102:03}
 
 特征零保证每个不可约多项式可分，并允许所取根式指数作为非零域元素使用。\(f\) 本身可以含重因子；删去重数既不改变分裂域，也不改变根式可解性。因此定理并不另要求 \(f\) 的各因子互异。
 
 \ProseParagraphBreak
-在特征 \(p\) 中，若只允许指数与 \(p\) 互素的根式，\cref{b1:lem:radical-normal-envelope}的证明仍能构造可解的正规包络。但循环 \(p\) 次扩张由 \(X^p-X-a\) 产生，不能调用\cref{b1:thm:kummer-cyclic}把这一步变为 \(p\) 次开方。另一方面，\(X^p-a\) 的根给出纯不可分扩张，其自同构群可能为平凡群，却不能用有限 Galois 对应来分析。正特征下需要把 Kummer 步骤、Artin--Schreier 步骤和纯不可分步骤分别处理。
+在特征 \(p\) 中，若只允许指数与 \(p\) 互素的根式，\cref{b1:lem:radical-normal-envelope}的证明仍能构造可解的正规包络。但循环 \(p\) 次扩张由 \(X^p-X-a\) 产生，不能调用\cref{b1:thm:kummer-cyclic}把这一步变为 \(p\) 次开方。另一方面，\(X^p-a\) 的根给出纯不可分扩张；纯不可分扩张的每个元素在基域上的共轭只有自身，所以其基域自同构群必为平凡群。当扩张非平凡时，它不是有限 Galois 扩张，不能用有限 Galois 对应来分析。正特征下需要把 Kummer 步骤、Artin--Schreier 步骤和纯不可分步骤分别处理。
 
 \ProseParagraphBreak
 可解群的次正规列仍能指导正特征下的构造：若某个素数阶因子等于特征，使用\cref{b1:thm:artin-schreier-classification}。得到的是允许 Kummer 和 Artin--Schreier 两类步骤的扩张塔，与只允许开方的根式塔应当区分。

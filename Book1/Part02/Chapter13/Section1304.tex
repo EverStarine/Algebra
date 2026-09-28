@@ -40,7 +40,7 @@ ta\in I\text{ 对某个 }t\in S.
 \end{equation}
 \item 对 \(S^{-1}R\) 的每个理想 \(J\)，先收缩再扩张仍得到 \(J\)：
 \[
-S^{-1}\Bigl(\iota^{-1}(J)\Bigr)=J.
+S^{-1}\bigl(\iota^{-1}(J)\bigr)=J.
 \]
 \item \(S^{-1}I\) 为真理想当且仅当 \(I\cap S=\varnothing\)。
 \end{enumerate}
@@ -72,7 +72,21 @@ S^{-1}\Bigl(\iota^{-1}(J)\Bigr)=J.
 由\cref{b1:thm:hilbert-basis}，Noether 环上有限个不定元的多项式环及其商环，在局部化后仍是 Noether 环。局部环的定义本身不附加 Noether 条件；这里的有限性来自原环。
 
 \ProseParagraphBreak
-“与 \(S\) 不相交”只保证扩张仍为真理想，不保证扩张后可以恢复原理想。例如 \(R=\mathbb Z\)、\(S=\{\,2^n\mid n\geq0\,\}\)、\(I=6\mathbb Z\) 时，\(I\cap S=\varnothing\)，但其饱和为 \(3\mathbb Z\)：若 \(2^na\) 被 \(6\) 整除，则 \(3\mid a\)；若 \(3\mid a\)，则 \(2a\in6\mathbb Z\)。所以在 \(\mathbb Z[1/2]\) 中，\((6)=(3)\)，原先含有的因子 \(2\) 已经成为单位。
+\begin{samepage}
+“与 \(S\) 不相交”只保证扩张仍为真理想，不保证扩张后可以恢复原理想。取 \(S=\{\,2^n\mid n\geq0\,\}\)、\(A=S^{-1}\mathbb Z=\mathbb Z[1/2]\)，并以 \(\iota:\mathbb Z\hookrightarrow A\) 表示自然嵌入。对下列三个与 \(S\) 不相交的理想，像集、扩张及收缩分别为
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+原理想 \(I\) & 像集 \(\iota(I)\) & 扩张 \(IA\) & 收缩 \(\iota^{-1}(IA)\) \\
+\midrule
+\(3\mathbb Z\) & \(3\mathbb Z\) & \(3A\) & \(3\mathbb Z\) \\
+\(6\mathbb Z\) & \(6\mathbb Z\) & \(3A\) & \(3\mathbb Z\) \\
+\(12\mathbb Z\) & \(12\mathbb Z\) & \(3A\) & \(3\mathbb Z\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{samepage}
+第二列把整数视为 \(A\) 的元素。例如 \(6\in\iota(6\mathbb Z)\)，但 \(\dfrac12\cdot6=3\notin\iota(6\mathbb Z)\)，所以像集不是 \(A\) 的理想。三个原理想扩张后都等于 \(3A\)，收缩后也都等于 \(3\mathbb Z\)：在 \(A\) 中，因子 \(2\) 已成为单位。
 
 \ProseParagraphBreak
 用\cref{b1:def:ideal-quotient}的理想商记号，\(I:s=\{\,a\in R\mid sa\in I\,\}\)，因而\eqref{b1:eq:localized-ideal-contraction}也可写成
@@ -113,7 +127,7 @@ S^{-1}\Bigl(\iota^{-1}(J)\Bigr)=J.
 \subsection{单元素饱和与有限步稳定}
 \label{b1:subsec:1304:04}
 
-把分母限制为同一个元素的各次幂，就能用理想商逐步计算相应的饱和。
+把分母限制为同一个元素的各次幂，饱和便可写成逐次理想商的并。
 
 \begin{definition}\label{b1:def:element-saturation}
 设 \(I\) 为交换含幺环 \(R\) 的理想，\(f\in R\)。定义
@@ -150,11 +164,15 @@ I=I:f^0\subseteq I:f\subseteq I:f^2\subseteq\cdots.
 若 \(R\) 为 Noether 环，\cref{b1:prop:noetherian-acc}说明这条理想升链从某个 \(N\) 起稳定。它的并集因此等于 \(I:f^N\)，即得\eqref{b1:eq:element-saturation-stable}。
 \end{proof}
 
-\eqref{b1:eq:element-saturation-contraction}不要求 Noether 性；只有最后的有限步稳定性使用了这一假设。若在实际计算中已经得到 \(I:f^N=I:f^{N+1}\)，则由\cref{b1:prop:ideal-quotient-identities}的逐次理想商公式
+\begin{samepage}
+\eqref{b1:eq:element-saturation-contraction}不要求 Noether 性；只有最后的有限步稳定性使用了这一假设。一旦得到 \(I:f^N=I:f^{N+1}\)，以后各项也都相等。依据是\cref{b1:prop:ideal-quotient-identities}的逐次理想商公式
 \[
-\bigl(I:f^n\bigr):f=I:f^{n+1}
+\bigl(I:f^n\bigr):f=I:f^{n+1}.
 \]
-可知以后各项也都相等：对相邻两项的等式再取一次关于 \(f\) 的理想商，便得到下一对相邻项相等，然后归纳即可。
+对相邻两项的等式再取一次关于 \(f\) 的理想商，便得到下一对相邻项相等，归纳即可。
+\end{samepage}
+
+要把这个过程用作算法，还须能够计算理想商，并判定相邻两项是否相等；Noether 性保证有限步后稳定，但不单独提供这些计算方法。\cref{b1:ex:13-14}还说明，在固定的多项式环及固定的 \(f\) 下，稳定下标也没有适用于所有理想的统一上界。
 
 \ProseParagraphBreak
 两个极端情形也与定义相容。若 \(f\) 已是单位，\(f^na\in I\) 就能乘以 \(f^{-n}\) 得到 \(a\in I\)，因此 \(I:f^\infty=I\)。若 \(f\) 幂零，某个 \(f^n=0\) 把每个元素都送入 \(I\)，所以 \(I:f^\infty=R\)；这也对应于 \(R_f\) 为零环的情形。
@@ -164,7 +182,7 @@ I=I:f^0\subseteq I:f\subseteq I:f^2\subseteq\cdots.
 \[
 I:x=(x,y),\qquad I:x^2=R,\qquad I:x^\infty=R.
 \]
-可见只取一次理想商与取饱和确实可能不同。另一方面，\(xy\in I\) 给出 \((x)\subseteq I:y^\infty\)。若 \(y^ng\in I\subseteq(x)\)，令 \(x=0\) 得 \(y^ng(0,y)=0\)；由于 \(k[y]\) 是整环，\(g(0,y)=0\)，即 \(g\) 的每个非零单项式都含 \(x\)，所以 \(g\in(x)\)。故
+可见只取一次理想商与取饱和确实可能不同。另一方面，\(xy\in I\) 给出 \((x)\subseteq I:y^\infty\)。若 \(y^ng\in I\subseteq(x)\)，令 \(x=0\) 得 \(y^n\cdot g(0,y)=0\)；由于 \(k[y]\) 是整环，\(g(0,y)=0\)，即 \(g\) 的每个非零单项式都含 \(x\)，所以 \(g\in(x)\)。故
 \[
 I:y^\infty=(x).
 \]
@@ -210,6 +228,15 @@ K=I:a=\{\,r\in R\mid ra\in I\,\}.
 取 \(I=(0)\) 即得元素为零的判据；把 \(a\) 换成两个元素之差，得到相等的判据。若两个理想在所有 \(R_{\mathfrak m}\) 中的扩张相等，则对第一个理想的任意元素应用刚证明的成员判据，知它属于第二个理想；交换二者后得到反向包含，故两个理想相等。
 \end{proof}
 
+回到前面的计算，设 \(k\) 为域，\(R=k[x,y]\)、\(I=(x^2,xy)\)、\(a=x\)，并令 \(\mathfrak m_0=(x,y)\)。由 \(I:x=\mathfrak m_0\) 可知 \(x\notin I\)。若 \(x/1\in IR_{\mathfrak m_0}\)，成员判据给出某个 \(s\notin\mathfrak m_0\) 使 \(sx\in I\)；这又意味着 \(s\in I:x=\mathfrak m_0\)，矛盾。对任意极大理想 \(\mathfrak m\ne\mathfrak m_0\)，必有 \(x\notin\mathfrak m\) 或 \(y\notin\mathfrak m\)。在前一种情形中，\(x^2/1\) 可逆，故 \(IR_{\mathfrak m}=R_{\mathfrak m}\)；在后一种情形中，\(xy\in I\) 且 \(y/1\) 可逆，故 \(x/1\in IR_{\mathfrak m}\)。因此
+\[
+x/1\notin IR_{\mathfrak m}
+\quad\Longleftrightarrow\quad
+\mathfrak m=\mathfrak m_0.
+\]
+这个成员条件只在 \(\mathfrak m_0\) 处失败；证明中使用的理想商 \(I:a\) 在此恰好找到了检出失败的位置。
+
+\ProseParagraphBreak
 在上述判据中，必须检查元素在局部环里的像；再取剩余域可能丢失信息。设 \(k\) 为域，\(R=k[t]/(t^2)\)，以 \(\varepsilon\) 表示 \(t\) 在商环中的像，并令 \(\mathfrak m=(\varepsilon)\)。这是 \(R\) 的唯一极大理想，且其外的元素均为单位，故 \(R_{\mathfrak m}\cong R\)。映射链
 \[
 R\longrightarrow R_{\mathfrak m}
@@ -224,7 +251,4 @@ R\longrightarrow R_{\mathfrak m}
 单位在环同态下仍是单位，故必要性成立。若每个 \(a/1\) 都是单位，则 \(1/1\) 属于由 \(a/1\) 生成的理想，即 \((a)R_{\mathfrak m}\)。对\cref{b1:prop:local-detection}取 \(I=(a)\)、待检测元素为 \(1\)，便得到 \(1\in(a)\)。于是 \(ab=1\) 对某个 \(b\in R\) 成立，故 \(a\) 是单位。
 \end{proof}
 
-这些判据并不声称任意局部数据都能拼成全局对象，也不允许只在一个任意选定的极大理想处检查。其证明的关键是：若全局条件失败，就用一个真理想记录失败的原因，再找包含它的极大理想，使失败在相应局部化中仍然可见。例如整数 \(6\) 在 \(\mathbb Z_{(5)}\) 中是单位，却在 \(\mathbb Z_{(2)}\) 中不是单位，所以一次局部检查不足以判断它在 \(\mathbb Z\) 中的可逆性。
-
-\ProseParagraphBreak
 第三卷第2章将把分母作用推广到模，并在建立模的局部化后研究更一般的局部—整体判据。本章的零判据和理想成员判据将推广到模；相应的定义与证明在第三卷给出。

@@ -28,7 +28,7 @@
 \end{definition}
 
 \symidx{\(\operatorname{Hom}_{\mathcal C}(X,Y)\)：范畴中的态射集合}
-省略复合符号时，\(gf\) 总表示先做 \(f\)、后做 \(g\)。恒等态射唯一，因为两个候选 \(e,e'\) 满足 \(e=e e'=e'\)；逆态射也唯一，因为两个逆 \(g,h\) 满足 \(g=g\Bigl(fh\Bigr)=(gf)h=h\)。态射不必是集合之间的函数；定义只要求上述复合法则。
+省略复合符号时，\(gf\) 总表示先做 \(f\)、后做 \(g\)。恒等态射唯一，因为两个候选 \(e,e'\) 满足 \(e=e e'=e'\)；逆态射也唯一，因为两个逆 \(g,h\) 满足 \(g=g(fh)=(gf)h=h\)。态射不必是集合之间的函数；定义只要求上述复合法则。
 
 \ProseParagraphBreak
 集合及全部函数构成 \(\mathbf{Set}\)，群及群同态构成 \(\mathbf{Grp}\)，交换群及群同态构成 \(\mathbf{Ab}\)。环及保单位元的环同态构成 \(\mathbf{Ring}\)；本书允许零环，因而从任意环到零环有唯一环同态。固定环 \(R\)，左 \(R\) 模及 \(R\) 线性映射构成 \(R\text{-}\mathbf{Mod}\)，右模范畴写作 \(\mathbf{Mod}\text{-}R\)。它们的复合来自函数复合，结合律和恒等律随之成立。在群、环和模的这些范畴中，同构正是已有的代数同构。
@@ -54,6 +54,17 @@ F(\operatorname{id}_X)=\operatorname{id}_{F(X)},\qquad F(gf)=F(g)F(f).
 \]
 就称 \(F\) 为从 \(\mathcal C\) 到 \(\mathcal D\) 的\term[hanzi]{函子}[functor]，也称\term[xiebian-hanzi]{协变函子}[covariant functor]。若赋值改为 \(F(f):F(Y)\rightarrow F(X)\)，并满足 \(F(\operatorname{id}_X)=\operatorname{id}_{F(X)}\)、\(F(gf)=F(f)F(g)\)，就称 \(F\) 为\term[fanbian-hanzi]{反变函子}[contravariant functor]。
 \end{definition}
+
+对可复合的 \(f:X\to Y\)、\(g:Y\to Z\)，协变和反变函子分别把复合关系写成左、右两个交换三角形。右图同时反转了箭头方向和复合次序。
+\[
+\begin{tikzcd}[column sep=2em]
+F(X)\arrow[r,"F(f)"]\arrow[rr,bend right=25,"F(gf)"']&F(Y)\arrow[r,"F(g)"]&F(Z)
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=2em]
+F(X)&F(Y)\arrow[l,"F(f)"']&F(Z)\arrow[l,"F(g)"']\arrow[ll,bend left=25,"F(gf)"]
+\end{tikzcd}
+\]
 
 \begin{definition}\label{b2:def:opposite-category}
 设 \(\mathcal C\) 是范畴。取与 \(\mathcal C\) 相同的对象，令
@@ -92,18 +103,18 @@ F(a):F(X)\longrightarrow F(Y),\qquad e_x\longmapsto e_{a(x)}.
 设 \(R\) 是环，\(X\) 是集合，\(M\) 是左 \(R\) 模。记 \(F(X)=R^{(X)}\)，其指定基为 \((e_x)_{x\in X}\)；记 \(U(M)\) 为 \(M\) 的底集合。限制到指定基给出双射
 \begin{equation}\label{b2:eq:free-forgetful-bijection}
 \begin{aligned}
-\Phi_{X,M}:\operatorname{Hom}_R\Bigl(F(X),M\Bigr)
-&\longrightarrow\operatorname{Hom}_{\mathbf{Set}}\Bigl(X,U(M)\Bigr),\\
-h&\longmapsto\Bigl(x\mapsto h(e_x)\Bigr).
+\Phi_{X,M}:\operatorname{Hom}_R\bigl(F(X),M\bigr)
+&\longrightarrow\operatorname{Hom}_{\mathbf{Set}}\bigl(X,U(M)\bigr),\\
+h&\longmapsto\bigl(x\mapsto h(e_x)\bigr).
 \end{aligned}
 \end{equation}
 若 \(X'\) 是集合、\(M'\) 是左 \(R\) 模、\(a:X'\rightarrow X\) 为函数、\(b:M\rightarrow M'\) 为模同态，则对任意 \(h\in\operatorname{Hom}_R(F(X),M)\)，
 \[
-\Phi_{X',M'}\Bigl(bhF(a)\Bigr)=U(b)\,\Phi_{X,M}(h)\,a.
+\Phi_{X',M'}\bigl(bhF(a)\bigr)=U(b)\,\Phi_{X,M}(h)\,a.
 \]
 \end{proposition}
 \begin{proof}
-给定函数 \(v:X\rightarrow U(M)\)，\cref{b2:thm:free-module-universal}说明存在唯一同态将每个 \(e_x\) 送到 \(v(x)\)，这证明双射性。对 \(x'\in X'\)，上式左端的值为 \(b\biggl(h\Bigl(e_{a(x')}\Bigr)\biggr)\)，右端也是同一个元素，故相等。
+给定函数 \(v:X\rightarrow U(M)\)，\cref{b2:thm:free-module-universal}说明存在唯一同态将每个 \(e_x\) 送到 \(v(x)\)，这证明双射性。对 \(x'\in X'\)，上式左端的值为 \(b\Bigl(h\bigl(e_{a(x')}\bigr)\Bigr)\)，右端也是同一个元素，故相等。
 \end{proof}
 
 该相容式说明，这一双射在改变生成元集合和目标模时都保持一致。下一节把这种“一族映射同时与所有态射相容”的条件称为自然性；张量积与 Hom 的对应也将满足同类条件。

@@ -12,17 +12,17 @@
 
 \begin{learninggoals}
 \begin{itemize}
-\item 用最小多项式构造单扩张，求一组基，并用塔式公式计算次数。
+\item 用最小多项式辨认单扩张，从不可约多项式构造含根的扩张，并用塔式公式计算次数。
 \item 区分有限、有限生成与代数扩张，说明有限个代数元为何生成有限扩张。
 \item 使用交换引理解释超越次数为何与超越基的选择无关。
 \item 从具体函数域的生成元和关系中辨认独立参数及有限代数部分。
 \end{itemize}
 \end{learninggoals}
 
-本章需要域上多项式的带余除法、不可约性、分式域，以及线性代数中的基和维数。\cref{b1:prop:field-poly-division}及\cref{b1:thm:gauss-descent}提供主要的多项式工具。一般超越基的存在性使用 Zorn 引理；只处理有限生成扩张时，可先掌握有限次选取与交换的论证。代数闭包的存在将在下一章另行构造，本章不以它作为隐含前提。
+本章需要域上多项式的带余除法、不可约性、分式域，以及线性代数中的基和维数。\cref{b1:prop:field-poly-division}及\cref{b1:thm:gauss-descent}提供主要的多项式工具。一般超越基的存在性使用 Zorn 引理，有限生成扩张中的参数选择则只用有限次选取与交换。代数闭包的存在将在下一章另行构造，本章不以它作为隐含前提。
 
 \ProseParagraphBreak
-以有限 Galois 理论为学习目标时，可先完成\secref{b1:sec:1401}和\secref{b1:sec:1402}，再读下一章。\secref{b1:sec:1403}和\secref{b1:sec:1404}的超越基、超越次数与函数域可暂缓；以后研究独立参数的一般方程或代数几何时，再回来学习这些内容。
+有限 Galois 理论主要依赖\secref{b1:sec:1401}和\secref{b1:sec:1402}的代数扩张与次数计算。\secref{b1:sec:1403}和\secref{b1:sec:1404}的超越基、超越次数与函数域不属于下一章的前提；它们用于后续独立参数的一般方程与代数几何问题。
 
 \ProseParagraphBreak
 域扩张与代数独立性的另一种组织方式，可见 Roman 的《Field Theory》\cite[Chapter 2; Sections 4.2--4.3]{Roman2006FieldTheory}。若要补习这里使用的基、维数与线性映射，可读席南华的《基础代数》第二卷\cite[第1--2章]{Xi2018BasicAlgebraII}。对函数域的几何意义感兴趣的读者，还可在读完本章后参阅 Shafarevich 的《Basic Algebraic Geometry》第一卷\cite[Chapter 1, Sections 1.3, 3.1--3.3]{Shafarevich2013BasicAGI}，了解有理函数与函数域的关系；这属于进一步的代数几何学习。
@@ -36,7 +36,10 @@
 最小多项式把单个代数元的全部多项式关系压缩成一个首一不可约多项式，其次数等于相应单扩张的维数。域扩张塔中的基可以逐层相乘，得到次数的乘法公式。有限个代数元总落在有限扩张中，因此代数元对域运算封闭，代数性也沿扩张塔传递；无限代数扩张则可看作有限中间扩张的有向并。
 
 \ProseParagraphBreak
-超越基保留相互独立的参数，使剩余扩张变为代数扩张。交换引理与有限支集计数保证其基数不随选择改变。有限生成扩张因此分成纯超越部分和有限代数部分，但这种分层不提供唯一的参数选择。函数域中的例子也表明，相同超越次数的域之间仍可能有不同的有限扩张次数。
+超越基保留相互独立的参数，使剩余扩张变为代数扩张。交换引理与有限支集计数保证其基数不随选择改变。有限生成扩张因此分成纯超越部分和有限代数部分；超越次数由原扩张决定，剩余有限次数却可能随参数的选择而改变。
+
+\ProseParagraphBreak
+本章主要研究加入给定元素后的次数与代数性。下一章转向同时容纳一个多项式全部根的扩张，讨论这种扩张的构造及其同构意义下的唯一性。
 \end{chaptersummary}
 
 \BookExercises
@@ -56,10 +59,21 @@
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-3}
-证明 \(\Bigl[\mathbb Q(\sqrt2,\sqrt5):\mathbb Q\Bigr]=4\)，给出一组基，并求 \(\sqrt2+\sqrt5\) 的最小多项式。
+证明 \(\left[\mathbb Q(\sqrt2,\sqrt5):\mathbb Q\right]=4\)，并给出一组基。对每个 \(c\in\mathbb Q\)，求 \(\theta_c=\sqrt2+c\sqrt5\) 的最小多项式，并判断它何时生成整个 \(\mathbb Q(\sqrt2,\sqrt5)\)。
 \end{exercise}
 \begin{solution}
-若 \(\sqrt5=a+b\sqrt2\)、\(a,b\in\mathbb Q\)，平方后比较 \(1,\sqrt2\) 的系数得 \(2ab=0\)、\(a^2+2b^2=5\)。\(b=0\) 将使 \(5\) 为有理平方，\(a=0\) 将使 \(5/2\) 为有理平方，二者均由素因数指数的奇偶性排除。所以 \(\sqrt5\notin\mathbb Q(\sqrt2)\)，二次塔的总次数为四，乘积基为 \(1,\sqrt2,\sqrt5,\sqrt{10}\)。设 \(z=\sqrt2+\sqrt5\)，则 \(3z^{-1}=\sqrt5-\sqrt2\)，故两个平方根均属于 \(\mathbb Q(z)\)。于是 \(z\) 的次数为四。平方两次所得 \(z^4-14z^2+9=0\) 是首一四次关系，必为最小多项式。
+若 \(\sqrt5=a+b\sqrt2\)、\(a,b\in\mathbb Q\)，平方后比较 \(1,\sqrt2\) 的系数得 \(2ab=0\)、\(a^2+2b^2=5\)。\(b=0\) 将使 \(5\) 为有理平方，\(a=0\) 将使 \(5/2\) 为有理平方，二者均由素因数指数的奇偶性排除。所以 \(\sqrt5\notin\mathbb Q(\sqrt2)\)，二次塔的总次数为四，乘积基为 \(1,\sqrt2,\sqrt5,\sqrt{10}\)。
+
+对任意 \(c\in\mathbb Q\)，令 \(\theta_c=\sqrt2+c\sqrt5\)。由 \(\theta_c^2=2+5c^2+2c\sqrt{10}\) 消去 \(\sqrt{10}\)，得到首一关系
+\[
+P_c(\theta_c)=0,\qquad
+P_c(X)=X^4-(4+10c^2)X^2+(2-5c^2)^2.
+\]
+当 \(c=0\) 时，\(P_0(X)=(X^2-2)^2\)，而 \(\theta_0=\sqrt2\) 的最小多项式是 \(X^2-2\)，它只生成二次子域。若 \(c\neq0\)，则 \(2-5c^2\neq0\)，因为 \(2/5\) 不是有理数的平方。由
+\[
+\theta_c(\sqrt2-c\sqrt5)=2-5c^2
+\]
+可知 \(\sqrt2-c\sqrt5=(2-5c^2)\theta_c^{-1}\in\mathbb Q(\theta_c)\)。将它与 \(\theta_c\) 相加、相减，再除以非零的 \(2\) 与 \(2c\)，便分别得到 \(\sqrt2\) 和 \(\sqrt5\)。故 \(\mathbb Q(\theta_c)=\mathbb Q(\sqrt2,\sqrt5)\)，其次数为四；\(P_c\) 是 \(\theta_c\) 的首一四次关系，因而是最小多项式。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-4}
@@ -70,12 +84,12 @@
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-5}
-设 \([L:K]=n\)，\(f\in K[x]\) 不可约且次数 \(d\) 与 \(n\) 互素。若 \(d>1\)，证明 \(f\) 在 \(L\) 中没有根。说明结论是否保证 \(f\) 在 \(L[x]\) 中不可约。
+设 \([L:K]=n<\infty\)，\(f\in K[x]\) 不可约且次数 \(d\) 与 \(n\) 互素。若 \(d>1\)，证明 \(f\) 在 \(L\) 中没有根；进一步判断：在上述次数互素的假设下，\(f\) 是否仍在 \(L[x]\) 中不可约？
 \end{exercise}
 \begin{solution}
-若 \(a\in L\) 是根，则其最小多项式为 \(f\) 的首一化，故 \(\Bigl[K(a):K\Bigr]=d\)。塔式公式迫使 \(d\mid n\)，与互素且 \(d>1\) 矛盾。事实上这里还能保证不可约。为此在包含 \(L\) 的扩张中取 \(f\) 的一个根 \(a\)，令 \(m=\Bigl[L(a):L\Bigr]\leq d\)。塔式公式给出
+若 \(a\in L\) 是根，则其最小多项式为 \(f\) 的首一化，故 \(\bigl[K(a):K\bigr]=d\)。塔式公式迫使 \(d\mid n\)，与互素且 \(d>1\) 矛盾。事实上这里还能保证不可约。为此在包含 \(L\) 的扩张中取 \(f\) 的一个根 \(a\)，令 \(m=\bigl[L(a):L\bigr]\leq d\)。塔式公式给出
 \[
-mn=\Bigl[L(a):K\Bigr]=\Bigl[L(a):K(a)\Bigr]\,d.
+mn=\bigl[L(a):K\bigr]=\bigl[L(a):K(a)\bigr]\,d.
 \]
 所以 \(d\mid mn\)，结合 \(\gcd(d,n)=1\) 得 \(d\mid m\)。于是 \(m=d\)，\(a\) 在 \(L\) 上的最小多项式仍有次数 \(d\)，只能等于 \(f\) 的首一化，故 \(f\) 仍不可约。这里添根可直接在 \(L[x]\) 中选 \(f\) 的一个不可约因子并取商域；不需要预先构造代数闭包。
 \end{solution}
@@ -88,10 +102,16 @@ mn=\Bigl[L(a):K\Bigr]=\Bigl[L(a):K(a)\Bigr]\,d.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-7}
-设 \(K\subseteq E\subseteq L\)，\(E/K\) 代数。证明 \(a\in L\) 在 \(E\) 上代数当且仅当它在 \(K\) 上代数，并说明 \(\operatorname{trdeg}_K L=\operatorname{trdeg}_E L\)。
+设 \(K\subseteq E\subseteq L\)，且 \(E/K\) 为代数扩张。
+\begin{enumerate}
+\item 仅用代数性的传递性证明：对 \(a\in L\)，它在 \(E\) 上代数当且仅当在 \(K\) 上代数。
+\item 利用超越次数的塔式公式证明 \(\operatorname{trdeg}_K L=\operatorname{trdeg}_E L\)。
+\end{enumerate}
 \end{exercise}
 \begin{solution}
-在 \(K\) 上代数的方程也可视为 \(E\) 系数方程。反过来，若 \(a\) 在 \(E\) 上代数，则 \(E(a)/E\) 代数，结合 \(E/K\) 代数，由\cref{b1:thm:algebraic-tower}知 \(a\) 在 \(K\) 上代数。超越次数等式由\eqref{b1:eq:transcendence-tower}和 \(\operatorname{trdeg}_K E=0\) 得到。
+1.\ 在 \(K\) 上代数的方程也可视为 \(E\) 系数方程。反过来，若 \(a\) 在 \(E\) 上代数，则 \(E(a)/E\) 代数，结合 \(E/K\) 代数，由\cref{b1:thm:algebraic-tower}知 \(a\) 在 \(K\) 上代数。
+
+2.\ \(E/K\) 为代数扩张，故 \(\operatorname{trdeg}_K E=0\)。将此代入\eqref{b1:eq:transcendence-tower}，得到 \(\operatorname{trdeg}_K L=\operatorname{trdeg}_E L\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-8}
@@ -102,7 +122,7 @@ mn=\Bigl[L(a):K\Bigr]=\Bigl[L(a):K(a)\Bigr]\,d.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-9}
-设 \(x,y\) 在 \(k\) 上代数独立，令 \(s=x+y,t=xy\)。证明 \(s,t\) 代数独立，并证明 \(\Bigl[k(x,y):k(s,t)\Bigr]=2\)。
+设 \(x,y\) 在 \(k\) 上代数独立，令 \(s=x+y,t=xy\)。证明 \(s,t\) 代数独立，并证明 \(\bigl[k(x,y):k(s,t)\bigr]=2\)。
 \end{exercise}
 \begin{solution}
 \(x,y\) 都是 \(X^2-sX+t\) 的根，且 \(y=s-x\)，故总次数至多为二。如果 \(s,t\) 相关，从两元素中可抽出的超越基至多有一个；\(k(x,y)/k(s,t)\) 代数于是迫使其超越次数至多为一，与 \(x,y\) 独立矛盾。因此 \(s,t\) 独立。交换变量 \(x,y\) 给出 \(k(x,y)\) 的非恒等自同构，它固定 \(s,t\) 而不固定 \(x\)，所以 \(x\notin k(s,t)\)。次数不能为一，故恰为二。这一论证也适用于特征二。
@@ -112,7 +132,7 @@ mn=\Bigl[L(a):K\Bigr]=\Bigl[L(a):K(a)\Bigr]\,d.
 设 \(t\) 在 \(k\) 上超越，\(r\in k(t)\setminus k\)。证明 \(t\) 在 \(k(r)\) 上代数，进而证明 \(k(t)\) 中在 \(k\) 上代数的元素恰为 \(k\)。
 \end{exercise}
 \begin{solution}
-写 \(r=A(t)/B(t)\)，其中 \(B\neq0\)。多项式 \(A(X)-rB(X)\in k(r)[X]\) 非零：若其系数全为零，取 \(B\) 的非零系数 \(b_i\) 就会得到 \(r=a_i/b_i\in k\)，矛盾。它以 \(t\) 为根，故 \(t\) 在 \(k(r)\) 上代数。若 \(r\) 还在 \(k\) 上代数，代数性的塔传递性会迫使 \(t\) 在 \(k\) 上代数，矛盾。所以一切非常数有理函数都超越，题目结论成立。
+写 \(r=A(t)/B(t)\)，其中 \(B\neq0\)。多项式 \(A(X)-r\cdot B(X)\in k(r)[X]\) 非零：若其系数全为零，取 \(B\) 的非零系数 \(b_i\) 就会得到 \(r=a_i/b_i\in k\)，矛盾。它以 \(t\) 为根，故 \(t\) 在 \(k(r)\) 上代数。若 \(r\) 还在 \(k\) 上代数，代数性的塔传递性会迫使 \(t\) 在 \(k\) 上代数，矛盾。所以一切非常数有理函数都超越，题目结论成立。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-11}
@@ -123,7 +143,7 @@ mn=\Bigl[L(a):K\Bigr]=\Bigl[L(a):K(a)\Bigr]\,d.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:14-12}
-设 \(T=\{t_1,t_2,\ldots\}\) 在 \(k\) 上代数独立。证明 \(k(T)=\bigcup_{n\geq1}k(t_1,\ldots,t_n)\) 不是 \(k\) 上有限生成的扩张。
+设 \(T\) 是 \(k\) 上可数无限的代数独立集合，并将其不重复地枚举为 \(T=\{t_1,t_2,\ldots\}\)。证明 \(k(T)=\bigcup_{n\geq1}k(t_1,\ldots,t_n)\) 不是 \(k\) 上有限生成的扩张。
 \end{exercise}
 \begin{solution}
 每个有理表达式只使用有限多个变量，故所给并等于 \(k(T)\)。若该域由有限多个元素生成，把这些元素的表达式所涉及变量合并，便有某个 \(N\) 使全部生成元都在 \(k(t_1,\ldots,t_N)\) 中，于是整个域都包含于该子域。但 \(t_{N+1}\) 在此子域上超越，特别地不在其中，矛盾。

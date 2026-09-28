@@ -8,7 +8,7 @@
 交换群中的生成关系可以写成整数线性关系，自由交换群则对应没有非平凡关系的情形。本章统一用加法记群运算，以 \(0\) 表示单位元，以 \(mx\) 表示元素 \(x\) 的整数倍。本节从每个元素的唯一整数坐标出发讨论基，再证明子群仍自由。虽然这与向量空间很相似，整数不能任意相除，子群的基也未必能扩充为母群的基。
 
 \ProseParagraphBreak
-上一章选读部分的\cref{b1:thm:nielsen-schreier}说明自由群的子群仍自由，但子群的秩可以增大：\cref{b1:thm:schreier-rank}给出 \(F_2\) 的指数二子群有秩三。本节的整数坐标方法则将证明，\(\mathbb Z^n\) 的子群有一组至多 \(n\) 个元素的基。两种自由对象都有子群自由性，秩的限制却不同；本章的有限矩阵方法依靠的是后一种限制。
+\cref{b1:thm:nielsen-schreier}说明自由群的子群仍自由，但子群的秩可以增大：\cref{b1:thm:schreier-rank}给出 \(F_2\) 的指数二子群有秩三。本节的整数坐标方法则将证明，\(\mathbb Z^n\) 的子群有一组至多 \(n\) 个元素的基。两种自由对象都有子群自由性，秩的限制却不同；本章的有限矩阵方法依靠的是后一种限制。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -64,7 +64,7 @@ n_i\ne0\text{ 的指标只有有限个}\bigr\}.
 \end{proposition}
 
 \begin{proof}
-定义 \(\widetilde f(\sum n_i e_i)=\sum n_i f(i)\)。表示的唯一性保证良定义；和只有有限项，交换性保证加法相容。生成元的像已经指定，所以这样的同态唯一。
+定义 \(\widetilde f(\sum n_i e_i)=\sum n_i\cdot f(i)\)。表示的唯一性保证良定义；和只有有限项，交换性保证加法相容。生成元的像已经指定，所以这样的同态唯一。
 \end{proof}
 
 这与自由群的泛性质相似，区别在于目标限为交换群。比如从 \(\mathbb Z^2\) 到群 \(G\) 指定两个基向量的像 \(x,y\)，必须要求 \(xy=yx\)；从 \(F_2\) 出发则没有这个要求。
@@ -103,6 +103,37 @@ H=K\oplus\mathbb Zh.
 H=\bigl\{(u,v)\in\mathbb Z^2\mid u+v\equiv0\pmod3\bigr\}
 \]
 在第二坐标的投影为 \(\mathbb Z\)，可选 \(h=(-1,1)\)；核为 \(3\mathbb Z\times\{0\}\)。所以 \((3,0),(-1,1)\) 是 \(H\) 的一组基。
+
+\ProseParagraphBreak
+同态 \(\sigma:\mathbb Z^2\to C_3\)、\((u,v)\mapsto[u+v]_3\) 是满射，且核为 \(H\)，故 \(\mathbb Z^2/H\cong C_3\)。\cref{b1:fig:integer-lattice-mod3}用三种点形区分 \(\sigma\) 的三个纤维：\(H\) 与母群都有两元素的基，但只占三个陪集中的一个。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.75,>=stealth]
+\draw[gray!45,->] (-3.45,0)--(3.55,0) node[right] {\(u\)};
+\draw[gray!45,->] (0,-2.45)--(0,2.5) node[above] {\(v\)};
+\foreach \xx in {-3,...,3}{
+  \foreach \yy in {-2,...,2}{
+    \pgfmathtruncatemacro{\residue}{mod(\xx+\yy+6,3)}
+    \ifnum\residue=0
+      \fill (\xx,\yy) circle (2pt);
+    \else
+      \ifnum\residue=1
+        \draw[thick] (\xx,\yy) circle (2pt);
+      \else
+        \node[inner sep=0pt] at (\xx,\yy) {\(\times\)};
+      \fi
+    \fi
+  }
+}
+\draw[->,very thick,color=AlgebraBlue] (0,0)--(3,0);
+\draw[->,very thick,color=AlgebraBlue] (0,0)--(-1,1);
+\node[above right] at (3,0) {\((3,0)\)};
+\node[above left] at (-1,1) {\((-1,1)\)};
+\end{tikzpicture}
+\caption[整数格中模三的三个陪集]{实心点、空心点、叉号分别表示 \(u+v\) 模 \(3\) 余 \(0,1,2\)。箭头标出 \(H\) 的基向量。}
+\label{b1:fig:integer-lattice-mod3}
+\end{figure}
 
 \subsection{有限秩及其不变性}
 \label{b1:subsec:0901:03}

@@ -68,6 +68,31 @@ s_\lambda(x_1,\ldots,x_N)=\sum_T x^T,
 反过来，从 \(Q\) 中找到最大数字 \(n\) 所在的外角，在 \(P\) 中从同一外角作逆插入，得到数字 \(w_n\)，并删去 \(Q\) 的这格。递减重复，得到 \(w_{n-1},\ldots,w_1\)。每个数字恰从原来填有 \(1,\ldots,n\) 的 \(P\) 中移出一次，所以输出是一个置换。引理的逐步互逆性说明两个整体过程互逆。
 \end{proof}
 
+\Cref{b5:alg:robinson-schensted}把这两个互逆过程写成可逐格执行的步骤。正向新增的格由记录表保存，逆向按记录数字从大到小删除外角。
+
+\begin{algorithm}[htbp]
+\caption{Robinson--Schensted 行插入与逆插入}
+\label{b5:alg:robinson-schensted}
+\begin{algorithmsteps}{置换 \(w\in S_n\)，或一对同形状、各填 \(1,\ldots,n\) 的标准 Young 表 \((P,Q)\)。}{输入为置换时输出对应的表对 \((P,Q)\)；输入为表对时输出置换 \(w\)。}
+\If{输入为置换 \(w\)}
+\State 置 \(P,Q\) 为空表。
+\For{\(i=1,\ldots,n\)}
+\State 从首行起把 \(w_i\) 插入 \(P\)：在每行替换第一个更大的数，把被替换数送往下一行；若没有更大的数，就在该行末添格并停止。记新增格为 \(c_i\)。
+\State 在 \(Q\) 的同一格 \(c_i\) 填入 \(i\)。
+\EndFor
+\State 输出 \((P,Q)\)。
+\Else
+\For{\(i=n,n-1,\ldots,1\)}
+\State 找到 \(Q\) 中数字 \(i\) 所在的外角，记其行为 \(r\)，并删去该格；从 \(P\) 的同一格取出数字 \(b\) 并删格。
+\State 依次经过第 \(r-1,\ldots,1\) 行：找本行最右边小于 \(b\) 的数 \(a\)，用 \(b\) 替换它，再令 \(b\leftarrow a\)。最后置 \(w_i=b\)。
+\EndFor
+\State 输出 \(w\)。
+\EndIf
+\end{algorithmsteps}
+\end{algorithm}
+
+每次正向插入至多新建一行，逆向每步都向上一行移动，因此两种操作均在有限步终止；其互逆性由前述引理保证。
+
 例如 \(w=312\) 的插入过程先得到单格 \(3\)，再把 \(1\) 插入并弹出 \(3\)，最后将 \(2\) 附到第一行。于是
 \[
 P=\begin{array}{cc}1&2\\3&\end{array},

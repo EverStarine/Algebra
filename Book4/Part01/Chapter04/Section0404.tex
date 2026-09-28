@@ -25,6 +25,13 @@
 设 \(\mathcal A\) 是交换范畴。满态射 \(e:E\to Y\) 沿任意态射 \(t:T\to Y\) 的拉回 \(u:E\times_YT\to T\) 仍是满态射。对偶地，单态射沿推出仍为单态射。
 \end{lemma}
 \begin{proof}
+令 \(P=E\times_YT\)，先把拉回的结构态射写成交换方块：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+P\arrow[r]\arrow[d,"u"']&E\arrow[d,two heads,"e"]\\
+T\arrow[r,"t"']&Y
+\end{tikzcd}
+\]
 纤维积的结构态射 \(k:P\to E\oplus T\) 是 \((e,-t):E\oplus T\to Y\) 的核。记 \(p_E,p_T\) 为投影，则 \(u=p_Tk\)。行态射 \((e,-t)\) 满，因为若 \(h(e,-t)=0\)，则 \(he=0\)，继而 \(h=0\)。它因而是 \(k\) 的余核。
 
 若 \(c:T\to Q\) 满足 \(cu=0\)，则 \((0,c)k=0\)，所以存在 \(h:Y\to Q\) 满足 \(h(e,-t)=(0,c)\)。第一分量给出 \(he=0\)，故 \(h=0\)，第二分量随即给出 \(c=0\)。这证明 \(u\) 满。把证明用于反范畴即得推出结论。
@@ -52,10 +59,9 @@
 设 \(\mathcal A\) 是交换范畴，且下图交换，两行正合：
 \[
 \begin{tikzcd}[column sep=large]
-A\arrow[r,"i"]\arrow[d,"\alpha"']&B\arrow[r,"p"]\arrow[d,"\beta"]&C\arrow[r]\arrow[d,"\gamma"]&0\\
-A'\arrow[r,"j"']&B'\arrow[r,"q"']&C'&
+&A\arrow[r,"i"]\arrow[d,"\alpha"']&B\arrow[r,"p"]\arrow[d,"\beta"]&C\arrow[r]\arrow[d,"\gamma"]&0\\
+0\arrow[r]&A'\arrow[r,"j"']&B'\arrow[r,"q"']&C'&
 \end{tikzcd}
-\qquad(j\text{ 单}).
 \]
 则有典范的\term[lianjie-tongtai]{连接同态}[connecting homomorphism]
 \(\delta:\ker\gamma\to\operatorname{coker}\alpha\)，使
@@ -73,6 +79,17 @@ A'\arrow[r,"j"']&B'\arrow[r,"q"']&C'&
 q\beta v=\gamma pv=\gamma ku=0.
 \]
 由于 \(j\) 是 \(q\) 的核，存在唯一 \(h:E\to A'\)，使 \(jh=\beta v\)。我们要使 \(rh\) 沿 \(u\) 下降。
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+E\arrow[r,"v"]\arrow[d,two heads,"u"']&B\arrow[d,two heads,"p"]\\
+K\arrow[r,hook,"k"']&C
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=large,row sep=large]
+E\arrow[r,dashed,"h"]\arrow[d,"v"']&A'\arrow[d,hook,"j"]\\
+B\arrow[r,"\beta"']&B'
+\end{tikzcd}
+\]
 
 设 \(s:D\to E\) 是 \(u\) 的核，则 \(pvs=kus=0\)。上排正合，故 \(vs\) 在某个满态射 \(w:D'\to D\) 后写成 \(i a\)。于是
 \[
@@ -80,6 +97,13 @@ jhsw=\beta vsw=\beta i a=j\alpha a,
 \]
 由 \(j\) 单得到 \(hsw=\alpha a\)，继而 \(rhsw=0\)。\(w\) 满给出 \(rhs=0\)。又因 \(u\) 是其核的余核，存在唯一 \(\delta:K\to Q\)，使 \(\delta u=rh\)。这给出了真正的态射，而非依赖提升选择的记号。其计算规则是：先把 \(c\in\ker\gamma\) 在满态射后提升成 \(b\)，再唯一解出 \(j a'=\beta b\)，最后取 \(r a'\)。下面所有广义元素等式均在所需的共同满态射后进行，并由\cref{b4:lem:generalized-element-calculus}判断正合性。
 
+下降所得的 \(\delta\) 是使下图交换的唯一态射：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+E\arrow[r,"rh"]\arrow[d,two heads,"u"']&Q=\operatorname{coker}\alpha\\
+K=\ker\gamma\arrow[ur,dashed,"\delta"']&
+\end{tikzcd}
+\]
 在 \(\ker\beta\) 处，若 \(\beta b=0\)、\(pb=0\)，则局部有 \(b=i a\)，且 \(j\alpha a=\beta b=0\)，故 \(\alpha a=0\)。反向来自 \(pi=0\)。
 
 在 \(\ker\gamma\) 处，若 \(c=pb\) 且 \(\beta b=0\)，计算规则给出 \(\delta c=0\)。反过来，若 \(\gamma c=0\)、\(\delta c=0\)，先局部提升 \(c=pb\)，并令 \(j a'=\beta b\)。条件 \(r a'=0\) 使 \(a'\) 局部写成 \(\alpha a\)。于是 \(b-i a\) 被 \(\beta\) 消去，且 \(p(b-i a)=c\)，得到所需原像。
@@ -119,7 +143,10 @@ f_2(y-a_1w)=b_1z-b_1f_1w=0.
 \begin{proposition}\label{b4:prop:snake-naturality}
 设 \(\mathcal A\) 为交换范畴。考虑两张交换图，第一张的水平序列为 \(A\xrightarrow{i}B\xrightarrow{p}C\to0\) 与 \(A'\xrightarrow{j}B'\xrightarrow{q}C'\)，竖直态射为 \(\alpha:A\to A'\)、\(\beta:B\to B'\)、\(\gamma:C\to C'\)；第二张以波浪号表示相应的对象和态射。两张图的水平序列均正合，且 \(j,\widetilde j\) 均为单态射。设两图之间给定与全部水平、竖直态射交换的六个态射，并记相应的蛇引理连接态射为 \(\delta:\ker\gamma\to\operatorname{coker}\alpha\)、\(\widetilde\delta:\ker\widetilde\gamma\to\operatorname{coker}\widetilde\alpha\)。图之间的态射在核与余核上诱导的 \(s:\ker\gamma\to\ker\widetilde\gamma\) 与 \(t:\operatorname{coker}\alpha\to\operatorname{coker}\widetilde\alpha\) 满足
 \[
-t\delta=\widetilde\delta s.
+\begin{tikzcd}[column sep=large,row sep=large]
+\ker\gamma\arrow[r,"\delta"]\arrow[d,"s"']&\operatorname{coker}\alpha\arrow[d,"t"]\\
+\ker\widetilde\gamma\arrow[r,"\widetilde\delta"']&\operatorname{coker}\widetilde\alpha
+\end{tikzcd}
 \]
 它们与其余核、余核态射一起，构成蛇引理两条序列之间的态射。
 \end{proposition}

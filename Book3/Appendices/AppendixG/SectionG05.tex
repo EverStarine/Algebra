@@ -64,6 +64,33 @@ t&p_0&p_1&p_2&p_3&p_4&V(t)\\\hline
 分割一个区间 \((a,b)\) 时，在其中间三分之一内依次试取有理数，选到一个满足 \(p(c)\ne0\) 的数 \(c\)，再分为 \((a,c)\)、\((c,b)\)。非零多项式只有有限个根，故选点总会结束；所有区间端点也始终不是根。每次分割后子区间长度至多为原来的 \(2/3\)。若至少有两个不同实根，它们之间存在最小正间距；区间长度小于该间距后不可能仍含多根，所以全部分割在有限步内结束。只有零个或一个实根时，第一次计数便已结束。最终保留的区间两两不交，各含一根，且涵盖全部实根。算法遇到有理根时可以将其单列，但并不需要为此删除因子或更换正在计数的多项式。
 \end{proof}
 
+上述证明给出了实际隔离步骤；\cref{b3:alg:sturm-real-root-isolation}把输入、输出和分割规则集中列出。这里计算的是互异实根，每个输出区间只含一个根。
+
+\begin{algorithm}[htbp]
+\caption{Sturm 实根隔离}
+\label{b3:alg:sturm-real-root-isolation}
+\begin{algorithmsteps}{以有理系数精确给出的非零多项式 \(p\in\mathbb Q[x]\)。}{两两不交的有理开区间表，每个区间恰含 \(p\) 的一个实根，且涵盖全部互异实根。}
+\If{\(p\) 为常数}
+\State 输出空表并结束。
+\EndIf
+\State 令 \(q=p/\gcd(p,p')\) 并化为首一多项式；由 \(q,q'\) 逐次取带负号余式，得到 Sturm 序列及变号数 \(V(t)\)。
+\State 写 \(q=x^d+\sum_{i<d}a_ix^i\)，取整数 \(B>1+\max_{i<d}|a_i|\)；置待处理表为 \(\{(-B,B)\}\)，输出表为空。
+\While{待处理表非空}
+\State 取出区间 \((a,b)\)，计算 \(N=V(a)-V(b)\)。
+\If{\(N=1\)}
+\State 把 \((a,b)\) 加入输出表。
+\EndIf
+\If{\(N>1\)}
+\State 对 \(j=1,\ldots,d+1\) 依次检查 \(c_j=a+(b-a)\bigl(1/3+j/(3(d+2))\bigr)\)，取首个满足 \(q(c_j)\ne0\) 的数 \(c\)。
+\State 把 \((a,c)\)、\((c,b)\) 加入待处理表。
+\EndIf
+\EndWhile
+\State 输出区间表。
+\end{algorithmsteps}
+\end{algorithm}
+
+这些 \(d+1\) 个选点都在区间的中间三分之一内，其中至多 \(d\) 个是 \(q\) 的根；区间分割的有限终止性已在上一命题的证明中给出。
+
 精确实代数系数也可用相应的域运算及序比较处理，但必须提供这些操作的有效表示。任意实数只给若干小数位时，无法据此保证重根判断和终止性。高维 CAD 反复需要一维隔离，却还增加参数退化分析；不能把上述一维终止性当作完整 CAD 正确性证明。
 
 \subsection{Gram 矩阵、半正定规划与精确代数证书}
@@ -102,7 +129,6 @@ Q=\begin{pmatrix}1&0&0\\0&1&-1\\0&-1&1\end{pmatrix}.
 \ProseParagraphBreak
 平方和的对偶计算引出\term{矩问题}[moment problem]。给定实数族 \((y_\alpha)_{\alpha\in\mathbb N^n}\)，先定义线性泛函 \(L(x^\alpha)=y_\alpha\)，再问是否存在支于 \(K\) 的正测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\)。必要条件 \(L(q^2)\ge0\) 等价于所有有限矩矩阵 \((y_{\alpha+\beta})\) 半正定；若支集还满足 \(g_i\ge0\)，则须有 \(L(g_iq^2)\ge0\)。这些条件显然必要，但仅检查一张有限矩阵不能自动产生测度。
 
-\ProseParagraphBreak
 \begin{theorem}[Archimedean 二次模的矩表示]\label{b3:thm:archimedean-moment-representation}
 设 \(g_1,\ldots,g_s\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x:g_i(x)\ge0\text{ 对所有 }i\}\)，且存在 \(N>0\) 使 \(N-\sum_i x_i^2\in M(g)\)。若实线性泛函 \(L:\mathbb R[x]\to\mathbb R\) 满足 \(L(1)=1\) 与 \(L(M(g))\subseteq[0,\infty)\)，则存在支于 \(K\) 的 Borel 概率测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\) 对每个多项式 \(p\) 成立。
 \end{theorem}

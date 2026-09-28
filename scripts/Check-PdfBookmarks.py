@@ -33,6 +33,8 @@ for number in range(1, 6):
     if len(appendices) != appendix_count:
         failures.append(f"Book{number}: numbered appendices {len(appendices)}/{appendix_count}")
     for level, title in entries:
+        if title in {"插图", "图目录", "表目录", "算法目录"}:
+            failures.append(f"Book{number}: unwanted list bookmark {title!r}")
         if level == 2 and title != "\u4e60\u9898":
             if not re.match(r"^(?:\d+|[A-Z])\.\d+\*?(?:\s|$)", title):
                 failures.append(f"Book{number}: section bookmark {title!r}")

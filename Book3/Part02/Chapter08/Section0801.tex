@@ -86,18 +86,35 @@ f=\sum_iq_ig_i+r+h.
 每步加入的乘积 \(ug_i\) 的首单项式等于当时 \(\operatorname{LM}(h)\)，因而不超过初始 \(\operatorname{LM}(f)\)。对同一个 \(i\) 把这些乘子相加，也不会产生更大的项；移入余式的项同样受这个界限制。这证明最后的首项界。\(f=0\) 时全部输出为零；空除数组时逐项移入余式，输出 \(r=f\)。
 \end{proof}
 
-除法因此同时产生余式和一个理想成员的线性组合表示。但是，非零余式目前只说明这次除法没有化为零，尚不能断言 \(f\notin(G)\)。要使这种逆向判断成立，必须对生成组增加条件。
+\begin{algorithm}[htbp]
+\caption{有序多元除法}
+\label{b3:alg:ordered-multivariate-division}
+\begin{algorithmsteps}{可精确计算且可判零的域 \(k\)、可有效比较的全局单项式序，以及 \(f\in k[x_1,\ldots,x_n]\) 和有限有序非零多项式组 \(G=(g_1,\ldots,g_s)\)。}{多项式 \(q_1,\ldots,q_s,r\)，满足 \(f=\sum_iq_ig_i+r\)，且 \(r\) 的每个单项式都不被任何 \(\operatorname{LM}(g_i)\) 整除。}
+\State 置 \(h\gets f\)、\(r\gets0\)，并对每个 \(i\) 置 \(q_i\gets0\)。
+\While{\(h\ne0\)}
+\State 查找最小的 \(i\)，使 \(\operatorname{LM}(g_i)\mid\operatorname{LM}(h)\)。
+\If{找到这样的 \(i\)}
+\State 置 \(u\gets\operatorname{LT}(h)/\operatorname{LT}(g_i)\)，\(q_i\gets q_i+u\)，\(h\gets h-ug_i\)。
+\Else
+\State 置 \(r\gets r+\operatorname{LT}(h)\)，\(h\gets h-\operatorname{LT}(h)\)。
+\EndIf
+\EndWhile
+\State \Return \((q_1,\ldots,q_s,r)\)。
+\end{algorithmsteps}
+\end{algorithm}
+
+\cref{b3:alg:ordered-multivariate-division}同时产生余式和一个理想成员的线性组合表示。但是，非零余式目前只说明这次除法没有化为零，尚不能断言 \(f\notin(G)\)。要使这种逆向判断成立，必须对生成组增加条件。
 
 \begin{definition}\label{b3:def:groebner-basis}
 设 \(k\) 为域，\(R=k[x_1,\ldots,x_n]\)，并固定全局单项式序 \(\prec\)。理想 \(I\subseteq R\) 的\term[shouxiang-lixiang]{首项理想}[initial ideal]为
 \[
 \operatorname{in}_{\prec}(I)
-=\Bigl(\operatorname{LM}(f)\mid 0\ne f\in I\Bigr).
+=\bigl(\operatorname{LM}(f)\mid 0\ne f\in I\bigr).
 \]
 给定有限组 \(G\subseteq I\setminus\{0\}\)。如果
 \[
 \operatorname{in}_{\prec}(I)
-=\Bigl(\operatorname{LM}(g)\mid g\in G\Bigr),
+=\bigl(\operatorname{LM}(g)\mid g\in G\bigr),
 \]
 则称 \(G\) 为 \(I\) 的 \term[Groebner-ji]{Gröbner 基}[Gröbner basis]。不属于 \(\operatorname{in}_{\prec}(I)\) 的单项式称为\term[biaozhun-danxiangshi]{标准单项式}[standard monomial]。
 \end{definition}

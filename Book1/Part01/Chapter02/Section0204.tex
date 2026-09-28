@@ -9,7 +9,7 @@
 %
 % * 第一、第二、第三同构定理
 % * 子群对应定理
-% * 同构定理的比较与综合计算
+% * 同构定理的比较与使用步骤
 %
 % ---
 %
@@ -32,16 +32,16 @@ g\ker f\longmapsto f(g)
 是同构。
 \end{theorem}
 
-第一同构定理中的映射可排列成下面的交换图，其中 \(q:G\rightarrow G/\ker f\) 是商映射。图中两条从 \(G\) 到 \(\operatorname{im}f\) 的路径给出同一个映射；诱导同构 \(\overline f\) 由等式 \(\overline f q=f\) 唯一确定。
+令 \(f_{\operatorname{im}}:G\rightarrow\operatorname{im}f\) 为 \(f\) 限制目标后得到的满同态，\(\iota:\operatorname{im}f\hookrightarrow K\) 为包含映射。第一同构定理中的映射可排列成下面的交换图，其中 \(q:G\rightarrow G/\ker f\) 是商映射。图中两条从 \(G\) 到 \(\operatorname{im}f\) 的路径给出同一个映射，即 \(\overline f q=f_{\operatorname{im}}\)；原同态则满足 \(f=\iota\circ\overline f\circ q\)。
 \[
 \begin{tikzcd}
-G \arrow[r,"f"] \arrow[d,"q"'] & \operatorname{im}f \\
+G \arrow[r,"f_{\operatorname{im}}"] \arrow[d,"q"'] & \operatorname{im}f \\
 G/\ker f \arrow[ur,"\overline f"',"\cong"] &
 \end{tikzcd}
 \]
 
 \begin{proof}
-由\cref{b1:prop:normal-basic-examples}，\(\ker f\trianglelefteq G\)。把 \(f\) 的目标限制为子群 \(\operatorname{im}f\)，核仍为 \(\ker f\)。在\cref{b1:thm:quotient-universal}中取 \(N=\ker f\)，其核包含条件成立，故 \(g\ker f\mapsto f(g)\) 良定义且为同态。它按像的定义为满射；若 \(f(g)=f(h)\)，则 \(h^{-1}g\in\ker f\)，故
+由\cref{b1:prop:normal-basic-examples}，\(\ker f\trianglelefteq G\)。同态 \(f_{\operatorname{im}}\) 的核仍为 \(\ker f\)。在\cref{b1:thm:quotient-universal}中取 \(N=\ker f\)，其核包含条件成立，故 \(g\ker f\mapsto f(g)\) 良定义且为同态。它按像的定义为满射；若 \(f(g)=f(h)\)，则 \(h^{-1}g\in\ker f\)，故
 \(g\ker f=h\ker f\)，得到单射。群同态也是幺半群同态，故\cref{b1:prop:monoid-maps}保证其双射逆映射也为同态，因此它是同构。
 \end{proof}
 
@@ -81,6 +81,20 @@ h(H\cap N)\longmapsto hN
 \]
 而 \((hn)^{-1}=n^{-1}h^{-1}=h^{-1}(hn^{-1}h^{-1})\in HN\)，故是子群。\(N\) 在 \(HN\) 中仍正规。把商映射限制到 \(H\)，得同态 \(h\mapsto hN\)，其核是 \(H\cap N\)，像是 \(HN/N\)，因为 \(hnN=hN\)。由\cref{b1:prop:normal-basic-examples}，这个限制同态的核 \(H\cap N\) 正规于 \(H\)；再对该同态应用\cref{b1:thm:first-isomorphism}，便得所述同构及其元素公式。
 \end{proof}
+
+这四个子群的包含关系如下。图中标有 \(\trianglelefteq\) 的两条边表示正规包含，另外两条边只表示子群包含；这两条正规包含保证第二同构定理中的两个商群有定义。
+\[
+\begin{tikzcd}[column sep=4em,row sep=2.5em]
+& HN & \\
+H \arrow[ur,hook] && N \arrow[ul,hook,"\trianglelefteq"'] \\
+& H\cap N \arrow[ul,hook,"\trianglelefteq"'] \arrow[ur,hook] &
+\end{tikzcd}
+\]
+由限制同态 \(h\mapsto hN\) 得到的同构具体为
+\[
+H/(H\cap N)\xrightarrow{\sim}HN/N,
+\qquad h(H\cap N)\longmapsto hN.
+\]
 
 一个可以逐项核对的例子是加法群 \(G=\mathbb Z\)，取 \(H=4\mathbb Z\)、\(N=6\mathbb Z\)。有
 \(H\cap N=12\mathbb Z\)，且 \(H+N=2\mathbb Z\)：任意和都是偶数，而 \(6-4=2\) 生成全部偶数。将模 \(6\) 的自然映射限制到子群 \(4\mathbb Z\)，得到
@@ -142,20 +156,33 @@ H\longmapsto H/N=q(H),\qquad U\longmapsto q^{-1}(U)
 \end{theorem}
 
 \begin{proof}
-\textbf{对应的构造。}
 把\cref{b1:prop:kernel-fibers}用于限制同态 \(q|_H\)，可知 \(q(H)\) 是子群。同态下子群的原像含单位元，并对 \(ab^{-1}\) 封闭，故由\cref{b1:prop:subgroup-test}也是子群。原像必含 \(\ker q=N\)。若 \(H\supseteq N\)，则
 \(q^{-1}\bigl(q(H)\bigr)=H\)：确实，\(q(g)=q(h)\) 蕴含 \(h^{-1}g\in N\subseteq H\)，从而 \(g\in H\)。另一方面，\(q\) 满射给出
 \(q\bigl(q^{-1}(U)\bigr)=U\)。这证明互逆；包含保持由像与原像的基本性质得到。
 
-\textbf{正规性的对应。}
 若 \(H\) 正规，则任意商群元素 \(gN\) 对 \(H/N\) 的共轭仍落在其中。反之，若 \(H/N\) 正规，则对 \(h\in H,g\in G\)，有
 \(q(ghg^{-1})\in H/N\)，取原像得 \(ghg^{-1}\in H\)，故 \(H\) 正规。
 
-\textbf{指数。}
 映射 \(hK\mapsto(hN)(K/N)\) 由\cref{b1:prop:coset-equivalence}良定义：左边的相等条件为 \(h_2^{-1}h_1\in K\)，右边的相等条件为 \(q(h_2^{-1}h_1)\in q(K)\)；因 \(q^{-1}\bigl(q(K)\bigr)=K\)，二者等价。每个右边的左陪集都有这种代表，故该映射为陪集集合间的双射，指数相等。
 \end{proof}
 
 指数公式不要求 \(K\trianglelefteq H\)，也不要求 \(G,H,K\) 有限。它比较两个左陪集集合的基数，不把 \(H/K\) 当作商群，也不涉及无限基数的除法。
+
+\ProseParagraphBreak
+对任意子群 \(H\leq G\)，即使 \(H\) 不含 \(N\)，也有
+\[
+q^{-1}\bigl(q(H)\bigr)=HN.
+\]
+事实上，对任意 \(g\in G\)，
+\[
+\begin{aligned}
+g\in q^{-1}\bigl(q(H)\bigr)
+&\Longleftrightarrow \text{存在 }h\in H\text{ 使 }q(g)=q(h)\\
+&\Longleftrightarrow \text{存在 }h\in H\text{ 使 }h^{-1}g\in N\\
+&\Longleftrightarrow g\in HN.
+\end{aligned}
+\]
+因而 \(q(H)=HN/N\cong H/(H\cap N)\)，其中同构由\cref{b1:thm:second-isomorphism}给出。恰在 \(N\subseteq H\) 时才有 \(HN=H\)，这说明对应定理为何只以包含 \(N\) 的子群为对象。
 
 \ProseParagraphBreak
 例如要找 \(\mathbb Z/12\mathbb Z\) 中由 \([4]\) 生成的子群，先在 \(\mathbb Z\) 中取包含 \(12\mathbb Z\) 与 \(4\) 的子群 \(4\mathbb Z\)。它的像是 \(\bigl\{[0],[4],[8]\bigr\}\)，指数为 \([\mathbb Z:4\mathbb Z]=4\)。若原子群不含核，例如 \(5\mathbb Z\)，其像的原像会变大：模 \(12\) 时 \([5]\) 生成全部余数，所以原像是 \(\mathbb Z\)，不是 \(5\mathbb Z\)。
@@ -185,18 +212,20 @@ q^{-1}\biggl(\Bigl\langle\bigcup_{i\in I}U_i\Bigr\rangle\biggr)
 \[
 \begin{aligned}
 q(H_1\cap H_2)&=q(H_1)\cap q(H_2),\\
-q\Bigl(\bigl\langle H_1\cup H_2\bigr\rangle\Bigr)
+q\bigl(\langle H_1\cup H_2\rangle\bigr)
 &=\bigl\langle q(H_1)\cup q(H_2)\bigr\rangle.
 \end{aligned}
 \]
 第一式中包含核的条件很具体：若 \(q(h_1)=q(h_2)\)，其中 \(h_i\in H_i\)，则 \(h_2^{-1}h_1\in N\subseteq H_2\)，故 \(h_1\in H_2\)。所以这个公共的像能由 \(H_1\cap H_2\) 中的同一个元素取得。任意映射的直接像并不自动保持交；这里用到了两子群都包含核。
 
-\subsection{同构定理的比较与综合计算}
+\subsection{同构定理的比较与使用步骤}
 \label{b1:subsec:0204:03}
 
-三条同构定理都由第一同构定理的“商去核”思想得到，但出发同态不同。下表集中列出实际需要计算的映射与核。
-\begin{center}
+第一同构定理给出“商去核后得到像”的基本原则；第二、第三同构定理分别把它用于限制同态和诱导同态。\cref{b1:tab:isomorphism-comparison}列出各自的映射、核与结论。
+\begin{table}[htbp]
+\centering
 \small
+\caption{同构定理的适用条件与诱导映射}\label{b1:tab:isomorphism-comparison}
 \begin{tabularx}{\linewidth}{@{}p{0.17\linewidth}p{0.32\linewidth}p{0.16\linewidth}X@{}}
 \toprule
 所用定理 & 出发同态 & 核 & 所得同构 \\
@@ -206,6 +235,8 @@ q\Bigl(\bigl\langle H_1\cup H_2\bigr\rangle\Bigr)
 第三同构定理 & 诱导满同态 \(G/N\to G/K\) & \(K/N\) & \((G/N)/(K/N)\cong G/K\) \\
 \bottomrule
 \end{tabularx}
-\end{center}
+\par\smallskip
+\raggedright\textbf{适用条件：}第一同构定理要求 \(f:G\rightarrow K\) 为群同态；第二同构定理要求 \(H\leq G\)、\(N\trianglelefteq G\)；第三同构定理要求 \(N\leq K\leq G\)，且 \(N,K\trianglelefteq G\)。
+\end{table}
 
-每个同构都由表中的指定同态唯一诱导；只看到两个抽象群同构，并不能断言同构映射唯一。章末综合题将把对应定理与三种同构放在同一个有限群中逐项计算。
+每个同构都由表中的指定同态唯一诱导；只看到两个抽象群同构，并不能断言同构映射唯一。使用时先检查条件，再写出同态并求核与像。\cref{b1:ex:02-quotient-correspondence-calculation}把对应定理与三种同构放在同一个有限群中逐项计算。
