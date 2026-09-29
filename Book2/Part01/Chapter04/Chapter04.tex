@@ -18,7 +18,15 @@
 \end{itemize}
 \end{learninggoals}
 
-本章需要第二章的模同态、商模、挠子模与直和，以及第三章的自由模和展示。矩阵均采用列向量约定。\secref{b2:sec:0401}建立 Smith 形的存在性，\secref{b2:sec:0402}紧接着证明不变因子的唯一性并说明精确计算；\secref{b2:sec:0403}补足从有限生成到有限展示的依据，建立模本身的分类。线性算子的分类也以这些证明为基础，只须再将 \(R\) 取为 \(k[t]\)。正合列与蛇引理不参与本章分类定理的证明。
+设一个交换群由 \(e_1,e_2\) 生成，并满足 \(2e_1=0\)、\(e_1+3e_2=0\)。第二条关系让 \(e_1=-3e_2\)，代入第一条便得 \(6e_2=0\)；这个群因而可由一个六阶生成元描述。消去一个生成元在这里很容易，关系较多时却需要系统地改变生成元与关系的坐标，而且要确保每次改变都能逆转。Smith 标准形把这种消去过程变成整除链，并使所得数据不依赖起初写下的关系矩阵。
+
+\ProseParagraphBreak
+
+这里决定结果的不是生成元的名字，而是关系之间允许的可逆运算。把关系排成矩阵以后，行、列的可逆变换分别改变关系与生成元的写法；两种操作都不改变所展示的模。在整数环和域上的一元多项式环中，带余除法使这一过程能够持续至整除链。我们还须证明链上的数据确由原模决定，才能把计算提升为分类。
+
+\ProseParagraphBreak
+
+本章需要第二章的模同态、商模、挠子模与直和，以及第三章的自由模和展示。矩阵均采用列向量约定。\secref{b2:sec:0401}建立 Smith 形的存在性，\secref{b2:sec:0402}紧接着证明不变因子的唯一性并说明精确计算；\secref{b2:sec:0403}补足从有限生成到有限展示的依据，建立模本身的分类。线性算子的分类也以这些证明为基础，只须再将 \(R\) 取为 \(k[t]\)。
 
 \ProseParagraphBreak
 主理想整环模的分类可参阅 Roman 的《Advanced Linear Algebra》\cite[Chapter 6, Theorems 6.13, 6.16]{Roman2008AdvancedLinearAlgebra}；其有理标准形见\cite[Chapter 7, Theorem 7.16]{Roman2008AdvancedLinearAlgebra}，Jordan 形见\cite[Chapter 8, Theorem 8.6, pp. 190--192]{Roman2008AdvancedLinearAlgebra}。该书的 Jordan 块采用下次对角线为一的约定，本书采用上次对角线为一，两者通过逆排链基互相转换。
@@ -155,16 +163,24 @@ M\cong R/(p^2)\oplus R/(p^2)\oplus R/(p^3)\oplus R/(p^5).
 \end{solution}
 
 \begin{exercise}\label{b2:ex:04-minimal-generators}
-设 \(M\cong R^f\oplus R/(d_1)\oplus\cdots\oplus R/(d_s)\)，其中 \(R\) 为主理想整环，非零非单位 \(d_1\mid\cdots\mid d_s\)。证明 \(M\) 的生成元最少个数为 \(f+s\)。
+设 \(R\) 为主理想整环，且
+\[
+M\cong R^f\oplus\bigoplus_{j=1}^t R/(a_j),
+\]
+其中 \(f,t\ge0\)，各 \(a_j\) 非零且非单位，但不要求它们构成整除链。对不可约元 \(p\)，记 \(n_p=\#\{\,j:p\mid a_j\,\}\)；若 \(R\) 是域，约定 \(\max_p n_p=0\)。证明
+\[
+\mu_R(M)=f+\max_p n_p.
+\]
+用 \(\mathbb Z/2\mathbb Z\oplus\mathbb Z/3\mathbb Z\) 说明循环商的个数未必等于最少生成元数。
 \end{exercise}
 \begin{solution}
-从每个自由或循环分量取一个标准生成元，给出 \(f+s\) 个生成元。若 \(s>0\)，取 \(d_1\) 的不可约因子 \(p\)，则 \(p\) 整除全部 \(d_i\)。每个 \(R/(d_i)\) 模去 \(p\) 倍后得到 \(R/(p)\)，因此
+对每个不可约元 \(p\)，原分解给出
 \[
-M/pM\cong (R/(p))^{f+s}.
+M/pM\cong(R/(p))^{f+n_p}.
 \]
-任意 \(M\) 的生成集都映成这个向量空间的生成集，其大小至少为 \(f+s\)。
+因此 \(\mu_R(M)\ge f+n_p\)。另一方面，把每个 \(a_j\) 分解为不可约元幂，再按\cref{b2:thm:pid-elementary-divisors}将不同素元的分量重新合并，可得整除链上的非单位不变因子 \(d_1\mid\cdots\mid d_s\)。在这一分解中，\(n_p\) 等于被 \(p\) 整除的不变因子个数。若 \(s>0\)，\(d_1\) 非单位，有某个不可约元 \(p\mid d_1\)，由整除链可知此时 \(n_p=s\)；其余 \(n_p\le s\)。故 \(s=\max_p n_p\)，由\cref{b2:cor:pid-minimal-generators}得到所求等式。
 
-若 \(s=0\)，则 \(M=R^f\)。取 \(R\) 的一个极大理想 \(\mathfrak m\)；\(R\) 为域时可取零理想，否则可取任一不可约元生成的理想。模去 \(\mathfrak m\) 后得到维数为 \(f\) 的 \(R/\mathfrak m\) 向量空间，同样说明至少需要 \(f\) 个生成元。\(M=0\) 时空集达到最少数零。
+若 \(s=0\)，则 \(t=0\)、\(M=R^f\)，公式仍由该推论成立；这里 \(\max_p n_p=0\)，无论 \(R\) 是否为域。最后，\(2\) 与 \(3\) 互素，中国剩余定理给出 \(\mathbb Z/2\mathbb Z\oplus\mathbb Z/3\mathbb Z\cong\mathbb Z/6\mathbb Z\)，因此两个循环商只需一个生成元。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:04-hom-cyclic-pid}
@@ -258,10 +274,10 @@ B=J_3(0)\oplus J_2(0)\oplus J_2(0).
 \]
 可是由\cref{b2:prop:jordan-kernel-dimensions}，
 \[
-\dim\ker A^2=2+2+1=5,\qquad
-\dim\ker B^2=2+2+2=6.
+\dim\ker(A^2)=2+2+1=5,\qquad
+\dim\ker(B^2)=2+2+2=6.
 \]
-若 \(B=P^{-1}AP\)，则 \(\ker B^2=P^{-1}(\ker A^2)\)，两核的维数必相同，矛盾。因此 \(A,B\) 不相似。
+若 \(B=P^{-1}AP\)，则 \(\ker(B^2)=P^{-1}(\ker(A^2))\)，两核的维数必相同，矛盾。因此 \(A,B\) 不相似。
 
 这里全部初等因子都是 \(t\) 的幂，按整除顺序排列就得到不变因子。\(A\) 的不变因子为 \(t,t^3,t^3\)，\(B\) 的不变因子为 \(t^2,t^2,t^3\)。这也说明，即使再给定矩阵的秩，特征多项式与最小多项式仍不足以确定相似类。
 \end{solution}
@@ -271,15 +287,15 @@ B=J_3(0)\oplus J_2(0)\oplus J_2(0).
 设 \(\operatorname{char}k\ne2\)，\(V\) 是 \(10\) 维 \(k\) 向量空间，\(T\in\operatorname{End}_k(V)\) 满足
 \[
 \begin{aligned}
-\bigl(\dim\ker(T-I)^r\bigr)_{r=1}^4&=(2,4,5,6),\\
-\bigl(\dim\ker(T+I)^r\bigr)_{r=1}^3&=(2,3,4).
+\bigl(\dim\ker\bigl((T-I_V)^r\bigr)\bigr)_{r=1}^4&=(2,4,5,6),\\
+\bigl(\dim\ker\bigl((T+I_V)^r\bigr)\bigr)_{r=1}^3&=(2,3,4).
 \end{aligned}
 \]
 先证明 \(T\) 的特征多项式在 \(k\) 上分裂，再求 Jordan 标准形、特征多项式、最小多项式及不变因子。最后求 \((T^2-I)^2\) 的秩。
 \end{exercise}
 
 \begin{solution}
-令 \(U=\ker(T-I)^4\)、\(W=\ker(T+I)^3\)。由于 \(\operatorname{char}k\ne2\)，多项式 \((t-1)^4\) 与 \((t+1)^3\) 互素，可取 \(a,b\in k[t]\) 使
+令 \(U=\ker\bigl((T-I_V)^4\bigr)\)、\(W=\ker\bigl((T+I_V)^3\bigr)\)。由于 \(\operatorname{char}k\ne2\)，多项式 \((t-1)^4\) 与 \((t+1)^3\) 互素，可取 \(a,b\in k[t]\) 使
 \[
 a(t)(t-1)^4+b(t)(t+1)^3=1.
 \]
@@ -410,9 +426,9 @@ q(t)=t^3-u^3=(t-u)^3,\qquad q(t)^2=(t-u)^6.
 \[
 \frac{((t-u)^j)}{((t-u)^6)},\qquad 0\le j\le6,
 \]
-它们的 \(L\) 维数为 \(6-j\)。因此 \(0,1,\ldots,6\) 都是不变子空间的维数，并且每个维数仍只有一个。若记 \(N=A-uI_6\)，这些子空间也可写成 \(\ker N^r\)，其中 \(0\le r\le6\)；在单个六阶 Jordan 块中，\(\dim_L\ker N^r=r\)。
+它们的 \(L\) 维数为 \(6-j\)。因此 \(0,1,\ldots,6\) 都是不变子空间的维数，并且每个维数仍只有一个。若记 \(N=A-uI_6\)，这些子空间也可写成 \(\ker(N^r)\)，其中 \(0\le r\le6\)；在单个六阶 Jordan 块中，\(\dim_L\ker(N^r)=r\)。
 
 最后，设 \(U\) 的 \(k\) 基为 \(v_1,\ldots,v_d\)。以这些向量为列的矩阵有一个非零的 \(d\) 阶子式，这个子式进入 \(L\) 后仍非零，所以这些向量在 \(L\) 上仍线性无关。因此 \(L\) 线性生成空间的维数仍为 \(d\)。又因每个 \(Av_j\) 是这些基向量的 \(k\) 线性组合，该线性生成空间是 \(A\) 不变的。
 
-故由原域扩张得到的不变子空间恰有维数 \(0,3,6\) 的三个。中间一个由 \((q)/(q^2)\) 得到，在扩张域的循环模中为 \(((t-u)^3)/((t-u)^6)\)，也就是 \(\ker N^3=\operatorname{im}N^3\)。维数为 \(1,2,4,5\) 的不变子空间则是扩域后才出现的。
+故由原域扩张得到的不变子空间恰有维数 \(0,3,6\) 的三个。中间一个由 \((q)/(q^2)\) 得到，在扩张域的循环模中为 \(((t-u)^3)/((t-u)^6)\)，也就是 \(\ker(N^3)=\operatorname{im}(N^3)\)。维数为 \(1,2,4,5\) 的不变子空间则是扩域后才出现的。
 \end{solution}

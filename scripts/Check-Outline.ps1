@@ -172,15 +172,14 @@ foreach ($node in $nodes) {
         }
     }
     if ($node.Kind -in @('Section', 'AppendixSection')) {
-        $shortAppendixSection = $node.Kind -eq 'AppendixSection' -and
-            $node.Notes.Contains('<!-- 短节：不设小节 -->')
+        $shortSection = $node.Notes.Contains('<!-- 短节：不设小节 -->')
         $subheadings = @([regex]::Matches($text, '(?m)^\\(?:subsection|OptionalSubsection)\{([^\r\n]+)\}') |
             ForEach-Object { $_.Groups[1].Value })
-        if (-not $shortAppendixSection -and $subheadings.Count -eq 0) {
+        if (-not $shortSection -and $subheadings.Count -eq 0) {
             $failures.Add("Missing subsection headings under $($node.Path).")
         }
-        if ($shortAppendixSection -and $subheadings.Count -ne 0) {
-            $failures.Add("A short appendix section has unplanned subsections: $($node.Path).")
+        if ($shortSection -and $subheadings.Count -ne 0) {
+            $failures.Add("A short section has unplanned subsections: $($node.Path).")
         }
         $plannedSubheadings = @($node.Notes | Where-Object { $_ -match '^#### [A-Z]\.\d+\.\d+\s+(.+)$' } |
             ForEach-Object { [regex]::Match($_, '^#### [A-Z]\.\d+\.\d+\s+(.+)$').Groups[1].Value })

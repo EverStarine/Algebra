@@ -1,8 +1,8 @@
 % !TeX root = ../../Book2.tex
-% 纲要标题：### 17.2 中心化子定理
+% 纲要标题：### 17.2 中心化子、子域与分裂域
 % 纲要位置：计划纲要.md，第 1313 行。
 
-\section{中心化子定理}
+\section{中心化子、子域与分裂域}
 \label{b2:sec:1702}
 
 一个单子代数 \(B\subseteq A\) 的中心化子记录与它交换的另一部分乘法。维数公式将精确说明这两部分各占多大；但只有 \(B\) 的中心也是 \(k\) 时，二者才直接张量成整个 \(A\)。本节通过简单模及其重数证明这些结论，子代数中心的扩张 \(Z(B)/k\) 可以不可分。
@@ -12,6 +12,7 @@
 % * 中心化子的维数关系
 % * 双中心化子定理
 % * 子域与最大交换子代数
+% * 可分最大子域与有限 Galois 分裂域
 %
 
 \subsection{中心化子的维数关系}
@@ -55,7 +56,7 @@ C\cong\operatorname{End}_E(A).
 \dim_kB\,\dim_kA=r^2d,\qquad
 \dim_kA=mrd,\qquad\dim_kC=m^2d.
 \]
-这三式给出 \(\dim_kB\,\dim_kC=\dim_kA\)。现在 \(C\) 已证明为简单子代数，可以把刚建立的维数公式再用于 \(C\subseteq A\)，得到
+这三式给出 \(\dim_kB\,\dim_kC=\dim_kA\)。至此已独立证明：对任意满足定理假设的简单子代数，其中心化子简单，且有上述维数公式；双中心化子和中心的识别尚未用到。现在 \(C\) 也是 \(A\) 的简单含幺子代数，将这个已证的中间结论用于 \(C\subseteq A\)，得到
 \(\dim_k C_A(C)=\dim_kA/\dim_kC=\dim_kB\)。而 \(B\subseteq C_A(C)\) 由交换性定义直接成立，有限维与等维使二者相等。最后
 \[
 Z(C)=C\cap C_A(C)=C\cap B=Z(B)=L,
@@ -81,7 +82,7 @@ B\otimes_LC_A(B)\cong C_A(L).
 \begin{proof}
 两个因子的元素互相交换，所以乘法公式保持张量关系与代数乘法。若 \(L=k\)，来源由\cref{b2:thm:csa-tensor-product}为单代数；映射保持单位元，故核不能为全代数，只能为零。中心化子维数公式说明来源与目标同维，于是满射。
 
-一般情形中，\(B,C_A(B)\) 都是中心单 \(L\) 代数，故它们在 \(L\) 上的张量积单，乘法仍单射，且其像包含于 \(C_A(L)\)。由中心化子定理对域 \(L\) 的应用，\(\dim_k C_A(L)=\dim_kA/[L:k]\)。张量积来源的 \(k\) 维数为
+一般情形中，\(B,C_A(B)\) 都是中心单 \(L\) 代数，故它们在 \(L\) 上的张量积单，乘法仍单射，且其像包含于 \(C_A(L)\)。这里仍以 \(k\) 为底域，将简单 \(k\) 子代数 \(L\subseteq A\) 代入中心化子定理，得到 \(\dim_k C_A(L)=\dim_kA/[L:k]\)。张量积来源的 \(k\) 维数为
 \(\dim_kB\,\dim_kC_A(B)/[L:k]\)，也等于这个数，因此像就是全部 \(C_A(L)\)。
 \end{proof}
 
@@ -90,10 +91,38 @@ B\otimes_LC_A(B)\cong C_A(L).
 \ProseParagraphBreak
 双中心化子等式还说明，简单子代数可由它在 \(A\) 中的全部交换关系恢复。若删除简单性，这一性质可能失败：第十一章的上三角代数 \(T_2(k)\subseteq M_2(k)\) 的中心化子为 \(kI\)，再取一次得到整个 \(M_2(k)\)，并非原上三角代数。
 
+这些关系可以在 \(A\) 内按包含画成两支：
+\[
+\begin{tikzcd}[column sep=2.2em,row sep=1.5em]
+& & B \arrow[dr,hook] & & \\
+k \arrow[r,hook] & L=Z(B)=Z(C) \arrow[ur,hook] \arrow[dr,hook]
+& & C_A(L) \arrow[r,hook] & A\\
+& & C=C_A(B) \arrow[ur,hook] & &
+\end{tikzcd}
+\]
+两支相乘得到 \(B\otimes_LC\cong C_A(L)\)，而 \(C_A(C)=B\)、\(\dim_kA=\dim_kB\,\dim_kC\)。当 \(L=k\) 时，图中的 \(C_A(L)\) 才是整个 \(A\)。
+
 \subsection{子域与最大交换子代数}
 \label{b2:subsec:1702:03}
 
-一个子域 \(L\subseteq A\) 若不再包含于更大的 \(k\) 子域，称为按包含关系极大的子域，通常称\term[zuida-ziyu]{最大子域}[maximal subfield]。一个交换含幺子代数若不再包含于更大的交换含幺子代数，则称为\term[zuida-jiaohuan-zidaishu]{最大交换子代数}[maximal commutative subalgebra]。前者只在域中比较，后者还允许含零因子或幂零元的交换代数，因此不能混用。
+设 \(A\) 为中心单 \(k\) 代数。若含 \(k\) 的子域 \(L\subseteq A\) 不包含于更大的 \(k\) 子域，称 \(L\) 为\term[baohan-jida-ziyu]{包含极大子域}[inclusion-maximal subfield]。若一个含幺交换子代数不包含于更大的含幺交换子代数，则称它为\term[zuida-jiaohuan-zidaishu]{最大交换子代数}[maximal commutative subalgebra]。前者只在域中比较，后者也允许零因子或幂零元。文献中的 maximal subfield 还可能专指满足 \([L:k]=\deg A\) 的子域；本书在一般中心单代数中分别写明这两个条件，只在除代数语境把包含极大子域简称\term[zuida-ziyu]{最大子域}[maximal subfield]。
+
+\cref{b2:tab:csa-subfield-conditions}按对象所在位置列出容易混淆的条件。最后一行的 \(K\) 只须是 \(k\) 的扩域，可以完全不嵌入 \(A\)。
+\begin{table}[htbp]
+\centering
+\caption{中心单代数中的子域、交换子代数与分裂域}\label{b2:tab:csa-subfield-conditions}
+\begin{tabularx}{\linewidth}{@{}p{0.31\linewidth}X@{}}
+\toprule
+对象 & 条件 \\
+\midrule
+包含极大子域 \(L\subseteq A\) & 不包含于 \(A\) 中更大的含 \(k\) 子域。\\
+最大交换子代数 \(E\subseteq A\) & 不包含于 \(A\) 中更大的含幺交换 \(k\) 子代数。\\
+自中心化子域 \(L\subseteq A\) & \(C_A(L)=L\)。\\
+次数达到 \(\deg A=n\) 的子域 \(L\subseteq A\) & \([L:k]=n\)。\\
+分裂域 \(K/k\) & \(A_K\cong M_n(K)\)；不要求 \(K\subseteq A\)。\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \begin{proposition}\label{b2:prop:csa-self-centralizing-field}
 设 \(k\) 为域，\(A\) 为中心单 \(k\) 代数，\(n=\deg A\)，\(L\subseteq A\) 为含 \(k\) 的子域，则以下条件等价：
@@ -109,7 +138,7 @@ L\text{ 是 }A\text{ 的最大交换子代数}.
 若 \(C_A(L)=L\)，任何包含 \(L\) 的交换子代数都包含于该中心化子，因此只能是 \(L\)。反过来，若 \(c\in C_A(L)\)，则 \(L[c]\) 是包含 \(L\) 的交换子代数，最大交换性使 \(c\in L\)。最后，若环境为除代数 \(D\)，则 \(L[c]\) 是有限维交换整环，因而为域：非零元的乘法单射，有限维使其满射，从而有逆。最大子域的性质就迫使 \(L[c]=L\)，也得到中心化子等于 \(L\)。
 \end{proof}
 
-在矩阵代数中，单独的“最大子域”条件不够。例如 \(M_2(\mathbb C)\) 中每个有限维的 \(\mathbb C\) 子域都等于 \(\mathbb C\)，所以标量域按子域包含已经极大，却不是最大交换子代数。对角代数 \(\mathbb C\times\mathbb C\) 是最大交换子代数，但不是域；\(\mathbb C[N]\)、\(N=\begin{pmatrix}0&1\\0&0\end{pmatrix}\)，也是最大交换子代数，因为与 \(N\) 交换的矩阵恰为 \(aI+bN\)，而它含有非零幂零元。
+在矩阵代数中，包含极大不保证次数达到 \(\deg A\)。例如 \(M_2(\mathbb C)\) 中每个有限维的 \(\mathbb C\) 子域都等于 \(\mathbb C\)，所以标量域是包含极大子域，却不是最大交换子代数，也只有次数一。对角代数 \(\mathbb C\times\mathbb C\) 是最大交换子代数，但不是域；\(\mathbb C[N]\)、\(N=\begin{pmatrix}0&1\\0&0\end{pmatrix}\)，也是最大交换子代数，因为与 \(N\) 交换的矩阵恰为 \(aI+bN\)，而它含有非零幂零元。
 
 \begin{proposition}\label{b2:prop:maximal-field-splits-csa}
 设 \(k\) 为域，\(A\) 为中心单 \(k\) 代数，\(L\subseteq A\) 为含 \(k\) 的子域。若 \([L:k]=\deg A=n\)，则 \(L\) 分裂 \(A\)。特别地，每个有限维中心除 \(k\) 代数的最大子域都是它的分裂域。
@@ -122,6 +151,9 @@ L\otimes_kA\longrightarrow\operatorname{End}_L(A),
 \]
 是 \(L\) 代数同态；右 \(L\) 线性用到 \(L\) 内元素交换，乘法相容性由结合律与相同交换性给出。目标中的 \(A\) 始终是原来的右 \(L\) 空间。来源由\cref{b2:thm:csa-base-change}为单代数，所以保持单位元的映射单射。两侧的 \(L\) 维数均为 \(n^2\)，故为同构，目标为 \(M_n(L)\)。除代数的最大子域由\cref{b2:prop:csa-self-centralizing-field}满足 \([L:k]=\deg A\)，所以也适用。
 \end{proof}
+
+\subsection{可分最大子域与有限 Galois 分裂域}
+\label{b2:subsec:1702:04}
 
 有限维除代数确有最大子域：子域维数是有界正整数，取具有最大维数的一个即可。不过，这样得到的子域未必可分。为得到有限 Galois 分裂域，下面另作一次可分元素的选择。
 
@@ -138,7 +170,7 @@ L\otimes_kA\longrightarrow\operatorname{End}_L(A),
 U_{n-1}\oplus U_n\longrightarrow U_{2n-1},
 \qquad(u,v)\longmapsto u f_H+v f_H'.
 \]
-在单项式基下取其行列式 \(\Delta(H)\)。矩阵条目来自 \(f_H\) 及其导数的系数，所以 \(\Delta(H)\) 是 \(H\) 条目的多项式。
+在单项式基下取其行列式 \(\Delta(H)\)。这是首一多项式 \(f_H\) 与 \(f_H'\) 的结式 \(\operatorname{Res}(f_H,f_H')\) 的一种归一化，也可视为判别式；更换这些空间的固定基只会使行列式乘以一个非零常数。矩阵条目来自 \(f_H\) 及其导数的系数，所以 \(\Delta(H)\) 是 \(H\) 条目的多项式。
 
 该行列式非零当且仅当 \(f_H,f_H'\) 互素。如果互素且 \(u f_H+v f_H'=0\)，则 \(f_H\mid v\)，但 \(\deg v<n\)，故 \(v=0\)，继而 \(u=0\)，映射单射而可逆。若有正次数公因子 \(h\)，则 \((u,v)=(f_H'/h,-f_H/h)\) 是符合次数限制的非零核向量，所以行列式为零。互素又等价于 \(f_H\) 没有重根：根 \(\lambda\) 同时使 \(f_H,f_H'\) 为零，恰好是它在因式分解中出现至少两次。
 
@@ -151,7 +183,7 @@ P(X_1,\ldots,X_{n^2})=\Delta\left(\sum_iX_iE_i\right)
 
 即使 \(P\) 的系数在 \(\Omega\) 中，它也不能在无限子域 \(k\) 的全部点上消失。证明可对变量数归纳：一元非零多项式只有有限多个根；多元时先将它按最后一个变量展开，选一个非零系数多项式，用归纳假设为前面的变量取 \(k\) 中的值，使该系数非零，再用一元结论选最后一个值。因此可取 \(c_i\in k\) 使 \(P(c_1,\ldots,c_{n^2})\ne0\)。相应的 \(a=\sum_i c_ie_i\in D\) 在分裂矩阵模型中有 \(n\) 个互异特征值。任意零化矩阵的多项式必须在这 \(n\) 个特征值处为零，故次数至少为 \(n\)；其 \(n\) 次特征多项式又由\cref{b2:thm:exterior-cayley-hamilton}零化该矩阵。因此矩阵最小多项式就是这个没有重根的特征多项式。
 
-\(a\) 在 \(k\) 上的最小多项式也有次数 \(n\)。这是因为每个有限列表 \(1,a,\ldots,a^j\) 的线性关系由其在固定基下的坐标矩阵给出；秩由最大的非零子式确定，将 \(k\) 扩张到 \(\Omega\) 不会改变任何子式是否为零，故第一次出现线性依赖的次数不变。\(k\) 上的首一最小多项式在扩张后仍零化矩阵，且次数等于扩张后的最小次数，所以就是该矩阵的首一最小多项式。因此它在 \(\Omega\) 中也没有重根，即在 \(k\) 上可分。这个论证没有预先假设分裂矩阵的特征多项式系数已经下沉到 \(k\)。
+\(a\) 在 \(k\) 上的最小多项式也正是上述矩阵的最小多项式。事实上，对左乘算子 \(L_a:D\to D\)，有 \(p(L_a)=0\) 当且仅当 \(p(a)=0\)：必要性只需将算子作用于 \(1\)。\cref{b2:prop:scalar-extension-invariant-factors}说明 \(L_a\) 扩张到 \(\Omega\) 后最小多项式原样不变；在 \(D_\Omega\cong M_n(\Omega)\) 上，这个扩张算子就是矩阵 \(H\) 的左乘，其最小多项式又等于 \(H\) 的最小多项式。因此 \(a\) 的首一最小多项式次数为 \(n\)，且在 \(\Omega\) 中无重根，所以这个最小多项式可分。这里没有预先假定 \(H\) 的特征多项式系数属于 \(k\)。
 
 \(D\) 为除环，使交换子代数 \(k[a]\) 是有限维整环，因而为域。于是 \(L=k[a]\) 是次数 \(n\) 的可分子域，由\cref{b2:prop:csa-self-centralizing-field}及\cref{b2:prop:maximal-field-splits-csa}，它是最大子域并分裂 \(D\)。最后把 \(a\) 送到其最小多项式在 \(\Omega\) 中的一个根，将 \(L\) 嵌入 \(\Omega\)，并取该多项式在 \(\Omega\) 中的分裂域 \(F\)。第一卷命题15.1.2保证其有限性；它由这个可分多项式的全部根生成，按该卷定义19.1.1后的分裂域刻画，是有限 Galois 扩张，并且含有所选的 \(L\) 的像。继续扩张分裂矩阵环仍为矩阵环，所以 \(F\) 也分裂原来的 \(A\)。
 \end{proof}

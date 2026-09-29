@@ -8,7 +8,7 @@
 \BookChapterNumber{b5:ch:01}
 
 \begin{chapterabstract}
-表示把群元素变成可逆线性变换，群代数则把同一作用写成模结构。本章从置换、循环群及张量构造认识这些对象，以平均投影证明 Maschke 定理，并给出模特征下的反例。Schur 引理随后确定不可约表示之间的同态，区分代数闭域与一般域，建立等型分解及重数的唯一性。
+本章从有限群的线性作用建立表示与群代数模，研究不变子空间、完全可约性和不可约表示的同态，并说明底域特征为何影响分解。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -21,6 +21,13 @@
 \end{itemize}
 \end{learninggoals}
 
+设 \(k\) 为域，让二元群的非单位元在 \(k^2\) 上交换两个坐标，它的矩阵是
+\[
+S=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+在复数域上，向量 \((1,1)\) 与 \((1,-1)\) 分别张成 \(S\) 的两个不变直线，整个空间是它们的直和；若 \(k\) 的特征为 \(2\)，这两条直线重合，原来的拆法失效。同一个群与同一个矩阵形式，因底域改变而有不同的分解行为。要理解何时能把一个表示拆成不可约的部分，先要把群的作用写成线性变换，再考察不变子空间是否总有不变补空间。
+
+\ProseParagraphBreak
 本章以群、商群和有限维线性代数为基础。模、张量及外代数只使用其基本构造，所需的群作用公式均在正文中给出。具体矩阵表示及其不变子空间会使可约性与完全可约性的差别直接显现。
 
 \ProseParagraphBreak
@@ -65,10 +72,10 @@ T=\begin{pmatrix}a&b\\a&-b\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b5:ex:01-regular-hom}
-设 \(G\) 为有限群，\(k\) 为域，\(V\) 为有限维表示。证明评价 \(T\mapsto T(1)\) 给出 \(\operatorname{Hom}_G\bigl(k[G],V\bigr)\simeq V\)。不假设群阶可逆。
+设 \(G\) 为有限群，\(k\) 为域，\(V\) 为有限维表示。证明在 \(1\) 处求值的映射 \(T\mapsto T(1)\) 给出 \(\operatorname{Hom}_G\bigl(k[G],V\bigr)\simeq V\)。不假设群阶可逆。
 \end{exercise}
 \begin{solution}
-交织条件给出 \(T(g)=gT(1)\)，再由线性性得到 \(T(a)=a\cdot T(1)\)，所以该评价单射。给定 \(v\in V\)，公式 \(a\mapsto av\) 定义左模同态，评价为 \(v\)，故满射。两构造都是线性的，且对 \(V\) 的表示同态相容。
+交织条件给出 \(T(g)=gT(1)\)，再由线性性得到 \(T(a)=a\cdot T(1)\)，所以该求值映射是单射。给定 \(v\in V\)，公式 \(a\mapsto av\) 定义左模同态，在 \(1\) 处取值为 \(v\)，故满射。两构造都是线性的，且对 \(V\) 的表示同态相容。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:01-faithful-linear}
@@ -103,14 +110,14 @@ T=\begin{pmatrix}a&b\\a&-b\end{pmatrix}.
 证明有限维表示的自然映射 \(V\to V^{**}\)、\(v\mapsto\bigl(\varphi\mapsto\varphi(v)\bigr)\)，是表示同构。说明对偶作用中的逆元如何保证等变性。
 \end{exercise}
 \begin{solution}
-有限维线性代数使评价映射双射。对 \(g\in G\)，双对偶中 \(g\) 作用于评价泛函的值为 \((g^{-1}\varphi)(v)=\varphi(gv)\)，正好是 \(gv\) 的评价。若在第一次对偶中漏掉逆元，复合的作用次序就不再是左群作用，此计算也无法保持给定的等变关系。
+有限维线性代数使求值映射双射。对 \(g\in G\)，双对偶中 \(g\) 作用于求值泛函的值为 \((g^{-1}\varphi)(v)=\varphi(gv)\)，正好是 \(gv\) 对应的求值泛函。若在第一次对偶中漏掉逆元，复合的作用次序就不再是左群作用，此计算也无法保持给定的等变关系。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:01-coevaluation}
-设 \(V\) 为 \(d\) 维表示。证明 \(\sum_i v_i\otimes\varphi_i\in V\otimes V^*\) 与所选对偶基无关且为不动向量；评价 \(v\otimes\varphi\mapsto\varphi(v)\) 将它送到什么？当 \(\operatorname{char}k\mid d\) 时，这一复合为什么不能给出平凡表示的分裂？
+设 \(V\) 为 \(d\) 维表示。证明 \(\sum_i v_i\otimes\varphi_i\in V\otimes V^*\) 与所选对偶基无关且为不动向量；求值映射 \(v\otimes\varphi\mapsto\varphi(v)\) 将它送到什么？当 \(\operatorname{char}k\mid d\) 时，这一复合为什么不能给出平凡表示的分裂？
 \end{exercise}
 \begin{solution}
-在\cref{b5:prop:hom-tensor-invariants}的自然识别下，这个张量对应恒等算子，因此与基无关且不动。评价等于算子的迹，所以值为 \(d\cdot1_k\)。若该值为零，则从 \(k\) 送入这个不动向量、再评价回 \(k\) 的复合为零，不能是恒等映射。这里仅否定这对具体映射构成分裂，不排除使用其他映射得到补空间。
+在\cref{b5:prop:hom-tensor-invariants}的自然识别下，这个张量对应恒等算子，因此与基无关且不动。求值映射在该张量上的值等于对应算子的迹，即 \(d\cdot1_k\)。若该值为零，则从 \(k\) 送入这个不动向量、再经求值映射回到 \(k\) 的复合为零，不能是恒等映射。这里仅否定这对具体映射构成分裂，不排除使用其他映射得到补空间。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:01-exterior-dual}

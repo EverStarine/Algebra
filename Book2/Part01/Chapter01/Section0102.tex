@@ -6,13 +6,14 @@
 \label{b2:sec:0102}
 
 % 纲要内容：
-% * 代数对偶及双对偶
-% * 对偶映射与有限维自然同构
-% * 无限维情形不能直接照搬的结论
+% * 代数对偶、对偶基与泛函延拓
+% * 配对、求值映射与零化子
+% * 对偶映射与双对偶自然性
+% * 有限维结论与无限维反例
 
 一个向量可以用坐标描述，也可以用一族线性函数的取值来辨认。例如，在 \(k^n\) 中分别读取各个坐标，就足以确定向量；一个齐次线性方程组的解空间，则由若干线性函数的共同零点给出。对偶空间把这些线性函数本身看成向量，使关于向量和方程的两种描述可以相互比较。本节的基域始终为 \(k\)，不在向量空间上附加拓扑，因而这里的对偶包含全部线性函数。
 
-\subsection{代数对偶与双对偶}
+\subsection{代数对偶、对偶基与泛函延拓}
 \label{b2:subsec:0102:01}
 
 \begin{definition}\label{b2:def:algebraic-dual}
@@ -87,15 +88,20 @@ V^*\coloneqq\operatorname{Hom}_k(V,k)
 
 延拓一般不唯一：只要 \(U\ne V\)，就可以改变补充基向量上的取值。分离结论则说明，线性泛函足以检测一个向量是否属于指定的子空间；这个事实不限于有限维，只是一般情形的证明使用了基扩充。
 
+\subsection{配对、求值映射与零化子}
+\label{b2:subsec:0102:04}
+
+泛函分离让人可以用线性方程检验向量。更一般地，两个向量空间之间的配对同时给出两侧向量的线性检验；须先分清固定哪一侧，以及所得泛函属于哪个对偶空间。
+
 \begin{definition}\label{b2:def:linear-pairing}
-设 \(V,W\) 是域 \(k\) 上的向量空间。若映射 \(b:V\times W\to k\) 对每个变量分别线性，即对任意 \(a,c\in k\)、\(v,v_1,v_2\in V\) 和 \(w,w_1,w_2\in W\) 满足
+设 \(V,W\) 是域 \(k\) 上的向量空间，\(b:V\times W\to k\) 是映射。若对任意 \(a,c\in k\)、\(v,v_1,v_2\in V\) 和 \(w,w_1,w_2\in W\)，下列等式均成立：
 \[
 \begin{aligned}
 b(av_1+cv_2,w)&=a\cdot b(v_1,w)+c\cdot b(v_2,w),\\
-b(v,aw_1+cw_2)&=a\cdot b(v,w_1)+c\cdot b(v,w_2),
+b(v,aw_1+cw_2)&=a\cdot b(v,w_1)+c\cdot b(v,w_2).
 \end{aligned}
 \]
-就称 \(b\) 为一个\term[peidui]{配对}[pairing]，也称双线性配对。若只有 \(v=0\) 才满足 \(b(v,w)=0\) 对所有 \(w\in W\) 成立，就称 \(b\) 左非退化；若只有 \(w=0\) 才满足 \(b(v,w)=0\) 对所有 \(v\in V\) 成立，就称 \(b\) 右非退化。两者都成立时称 \(b\) 为\term[fei-tuihua-peidui]{非退化配对}[nondegenerate pairing]。
+这样的 \(b\) 对每个变量分别线性，称为一个\term[peidui]{配对}[pairing]，也称双线性配对。若只有 \(v=0\) 才满足 \(b(v,w)=0\) 对所有 \(w\in W\) 成立，就称 \(b\) 左非退化；若只有 \(w=0\) 才满足 \(b(v,w)=0\) 对所有 \(v\in V\) 成立，就称 \(b\) 右非退化。两者都成立时称 \(b\) 为\term[fei-tuihua-peidui]{非退化配对}[nondegenerate pairing]。
 \end{definition}
 
 例如 \(k^n\times k^n\) 上的 \(b(x,y)=\sum_i x_iy_i\) 非退化，因为用标准基向量作第二个变量，可以逐一读取 \(x\) 的坐标，交换两个变量也是如此。这在任意特征下都成立，并不要求 \(b(x,x)\ne0\) 对每个非零 \(x\) 成立。相反，在 \(k^2\) 上只取 \(b(x,y)=x_1y_1\)，就会漏掉第二个坐标，两侧都退化。\(k^n\) 上的配对也不包含复共轭；当 \(k=\mathbb C\) 时，应将双线性与通常内积中的共轭线性区分开。
@@ -109,25 +115,25 @@ W\longrightarrow V^*,\quad w\longmapsto b(-,w).
 \]
 其中 \(b(v,-)\) 表示把第一个变量固定为 \(v\) 后得到的泛函。左非退化恰好说明第一个映射单射，右非退化恰好说明第二个映射单射。因此，非退化性说的是能否通过配对区分两侧的向量。
 
-\begin{proposition}[评价配对]\label{b2:prop:evaluation-injective}
+\begin{proposition}[求值配对]\label{b2:prop:evaluation-injective}
 对任意 \(k\) 向量空间 \(V\)，配对
 \[
 V\times V^*\longrightarrow k,\qquad(v,\lambda)\longmapsto\lambda(v)
 \]
-非退化。它给出的\term[pingjia-yingshe]{评价映射}[evaluation map]
+非退化。它给出的\term[qiuzhi-yingshe]{求值映射}[evaluation map]
 \[
 j_V:V\longrightarrow V^{**},\qquad j_V(v)(\lambda)=\lambda(v)
 \]
 是单射线性映射。
 \end{proposition}
-\symidx{\(j_V\)：从向量空间到双对偶的评价映射}
+\symidx{\(j_V\)：从向量空间到双对偶的求值映射}
 
 \begin{proof}
 固定 \(v\) 时，\((a\lambda+c\mu)(v)=a\cdot\lambda(v)+c\cdot\mu(v)\)，所以 \(j_V(v)\) 确实属于 \(V^{**}\)。固定 \(\lambda\) 时，由 \(\lambda\) 的线性得到 \(j_V(av+cw)=a\cdot j_V(v)+c\cdot j_V(w)\)。若 \(v\ne0\)，在\cref{b2:lem:functional-extension}中取 \(U=0\)，可得 \(\lambda(v)=1\)，所以 \(j_V(v)\ne0\)，并且配对左非退化。一个非零泛函按定义必在某个向量上非零，因此配对也右非退化。
 \end{proof}
 
 \begin{definition}\label{b2:def:vector-annihilator}
-设 \(V\) 是域 \(k\) 上的向量空间，\(U\subseteq V\)，\(E\subseteq V^*\)。定义它们关于评价配对 \((v,\lambda)\mapsto\lambda(v)\) 的\term[linghuazi]{零化子}[annihilator]（也称湮灭子）为
+设 \(V\) 是域 \(k\) 上的向量空间，\(U\subseteq V\)，\(E\subseteq V^*\)。定义它们关于求值配对 \((v,\lambda)\mapsto\lambda(v)\) 的\term[linghuazi]{零化子}[annihilator]（也称湮灭子）为
 \[
 \begin{aligned}
 U^\circ&\coloneqq\{\lambda\in V^*\mid \lambda(u)=0\text{ 对所有 }u\in U\},\\
@@ -148,7 +154,7 @@ U^\circ=k\varepsilon_2+k\varepsilon_3,
 \]
 向量生成的空间越大，在它上面恒为零的泛函越少。因此 \(U_1\subseteq U_2\) 蕴含 \(U_2^\circ\subseteq U_1^\circ\)；另一侧同样反转包含关系。
 
-\subsection{对偶映射与有限维自然同构}
+\subsection{对偶映射与双对偶自然性}
 \label{b2:subsec:0102:02}
 
 给定线性映射 \(f:V\to W\)，一个 \(W\) 上的线性方程可以拉回为 \(V\) 上的线性方程：把原方程中的变量换成 \(f(v)\) 即可。这个简单的代入改变了映射方向。
@@ -216,12 +222,12 @@ A^{\mathsf T}=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix}.
 \(W\) 上的泛函 \((s,t)\mapsto as+bt\) 拉回后是 \(ax+by+(a+b)z\)，与转置矩阵的计算一致。这一说明也解释了为什么复合取对偶会逆序：矩阵转置满足 \((BA)^{\mathsf T}=A^{\mathsf T}B^{\mathsf T}\)。
 
 \begin{theorem}[有限维双对偶同构]\label{b2:thm:double-dual}
-设 \(V,W\) 是域 \(k\) 上的向量空间，\(j_V:V\to V^{**}\) 与 \(j_W:W\to W^{**}\) 是评价映射。若 \(V\) 有限维，则 \(j_V\) 是同构。对任意线性映射 \(f:V\to W\)，不论维数是否有限，总有
+设 \(V,W\) 是域 \(k\) 上的向量空间，\(j_V:V\to V^{**}\) 与 \(j_W:W\to W^{**}\) 是求值映射。若 \(V\) 有限维，则 \(j_V\) 是同构。对任意线性映射 \(f:V\to W\)，不论维数是否有限，总有
 \begin{equation}\label{b2:eq:double-dual-natural}
 j_W\circ f=f^{**}\circ j_V,
 \qquad f^{**}\coloneqq(f^*)^*.
 \end{equation}
-因此，有限维空间与其双对偶的上述同构既不依赖基，又与所有线性映射相容。
+特别地，当 \(V,W\) 都有限维时，两条求值映射都是不依赖基的同构，并与 \(f\) 相容。
 \end{theorem}
 
 \begin{proof}
@@ -248,7 +254,19 @@ F(\lambda)=\sum_{i=1}^n\lambda(e_i)F(\varepsilon_i)=\lambda(v)=j_V(v)(\lambda).
 两个 \(W^*\) 上的泛函在每个 \(\lambda\) 处取值相同，即得\eqref{b2:eq:double-dual-natural}。
 \end{proof}
 
-这里的“自然”具体指\eqref{b2:eq:double-dual-natural}：可以先把向量经 \(f\) 送到 \(W\)，再取评价泛函；也可以先取评价泛函，再施加 \(f^{**}\)，结果相同。\chapref{b2:ch:05}将给这种相容性统一的名称；眼下只需掌握这个等式。与此不同，给有限维空间选择一组基，再把各基向量送到相应的对偶基，虽然也得到 \(V\cong V^*\)，却使用了额外选择。\(V\) 与 \(V^{**}\) 之间有已经指定的评价映射，不应与后一种依赖基的同构混为一谈。
+式\eqref{b2:eq:double-dual-natural}也可以写成交换方图：
+\[
+\begin{tikzcd}[column sep=3.5em,row sep=2.5em]
+V\arrow[r,"f"]\arrow[d,"j_V"']&W\arrow[d,"j_W"]\\
+V^{**}\arrow[r,"f^{**}"']&W^{**}
+\end{tikzcd}
+\]
+方图在任意维数下交换：可以先把向量经 \(f\) 送到 \(W\)，再取求值泛函；也可以先取求值泛函，再施加 \(f^{**}\)。只有进一步假设 \(V,W\) 都有限维，才能把两条竖直箭头都看作同构。\chapref{b2:ch:05}将给这种相容性统一的名称。与此不同，给有限维空间选择一组基，再把各基向量送到相应的对偶基，虽然也得到 \(V\cong V^*\)，却使用了额外选择。\(V\) 与 \(V^{**}\) 之间有已经指定的求值映射，不应与后一种依赖基的同构混为一谈。
+
+\subsection{有限维结论与无限维反例}
+\label{b2:subsec:0102:03}
+
+有限维时，求值映射的满射性使对偶空间中的方程也能由原空间中的向量完全检验。先由此计算零化子的维数，再看无限维时哪些结论仍成立。
 
 \begin{corollary}[有限维零化子的维数]\label{b2:cor:annihilator-dimension}
 设 \(V\) 是域 \(k\) 上的 \(n\) 维向量空间，\(U\subseteq V\)、\(E\subseteq V^*\) 为子空间，则
@@ -280,11 +298,9 @@ F(\lambda)=\sum_{i=1}^n\lambda(e_i)F(\varepsilon_i)=\lambda(v)=j_V(v)(\lambda).
 因此一个矩阵与其转置的秩相等。这里先描述零化子，再数维数；并没有事先把行秩等于列秩作为依据。
 
 \ProseParagraphBreak
-上述结论还说明，两个有限维空间之间的非退化配对会给出 \(V\cong W^*\) 与 \(W\cong V^*\)。事实上，非退化性给出的两个单射蕴含 \(\dim V\le\dim W\) 及 \(\dim W\le\dim V\)，故两侧同维，这两个单射都是同构。无限维时，仅有两个单射不足以使这两个特定映射满射；评价配对很快就会给出反例。
+上述结论还说明，两个有限维空间之间的非退化配对会给出 \(V\cong W^*\) 与 \(W\cong V^*\)。事实上，非退化性给出的两个单射蕴含 \(\dim V\le\dim W\) 及 \(\dim W\le\dim V\)，故两侧同维，这两个单射都是同构。无限维时，仅有两个单射不足以使这两个特定映射满射；求值配对很快就会给出反例。
 
-\subsection{无限维空间的对偶}
-\label{b2:subsec:0102:03}
-
+\ProseParagraphBreak
 有限维时，对偶基能够表达每个泛函；无限维时，基向量仍决定泛函，却不再保证泛函是有限多个坐标泛函的线性组合。区别可以从直和与直积的定义直接看出。
 
 \ProseParagraphBreak
@@ -330,8 +346,8 @@ k^{\mathbb N}=\prod_{i\ge1}k.
 取 \(a_i=1\) 对所有 \(i\) 成立，就得到坐标和泛函
 \(\lambda_a(x)=\sum_i x_i\)。它不能是有限多个坐标泛函 \(\varepsilon_i(x)=x_i\) 的线性组合：假如只用了指标集合 \(J\) 中的坐标，取 \(m\notin J\)，便会在 \(e_m\) 上得到零，但 \(\lambda_a(e_m)=1\)。所以 \(\varepsilon_i\) 虽然线性无关，却不是 \(V^*\) 的基；将其称为“无限对偶基”而沿用有限维中的基展开，会造成错误。
 
-\begin{example}[双对偶中不是评价的泛函]\label{b2:ex:infinite-double-dual}
-设 \(V=k^{(\mathbb N)}\)。评价映射 \(j_V:V\to V^{**}\) 不是满射。
+\begin{example}[双对偶中不来自求值的泛函]\label{b2:ex:infinite-double-dual}
+设 \(V=k^{(\mathbb N)}\)。求值映射 \(j_V:V\to V^{**}\) 不是满射。
 \end{example}
 
 \begin{proof}
@@ -349,7 +365,23 @@ v_i=\varepsilon_i(v)=j_V(v)(\varepsilon_i)=F(\varepsilon_i)=0
 对所有 \(i\) 成立。因此 \(v=0\)，这又会给出 \(F(\mathbf1)=0\)，与构造矛盾。
 \end{proof}
 
-这个反例在任意基域上有效。延拓 \(F\) 的存在使用基扩充，并没有给出一种从任意数列通过有限次坐标运算计算 \(F\) 的公式。我们只需它在 \(D\) 上为零、在 \(\mathbf1\) 处为一，就足以证明它不可能是某个有限支集向量的评价。非退化评价配对仍然存在，但它给出的映射 \(V\to V^{**}\) 不满，故有限维非退化配对所带来的同构不能照搬到这里。
+这个反例在任意基域上有效。延拓 \(F\) 的存在使用基扩充，并没有给出一种从任意数列通过有限次坐标运算计算 \(F\) 的公式。我们只需它在 \(D\) 上为零、在 \(\mathbf1\) 处为一，就足以证明它不可能来自某个有限支集向量的求值。非退化求值配对仍然存在，但它给出的映射 \(V\to V^{**}\) 不满，故有限维非退化配对所带来的同构不能照搬到这里。
 
 \ProseParagraphBreak
 零化子的两侧也因此出现差别。在这个例子中，令 \(E\subseteq V^*\) 为所有坐标泛函的线性生成空间，即上面的 \(D\)。坐标能够分辨 \(V\) 中的向量，所以 \({}^\circ E=0\)，进而 \(({}^\circ E)^\circ=V^*\)；然而 \(E\ne V^*\)。相比之下，\cref{b2:cor:annihilator-dimension}中由泛函分离证明的 \({}^\circ(U^\circ)=U\) 对 \(V\) 的任意子空间仍然成立。区分这两个等式，比把所有对偶结论一概限制在有限维更准确。
+
+\begin{table}[htbp]
+\centering
+\caption{有限维与任意维的对偶结论}\label{b2:tab:dual-dimension-comparison}
+\begin{tabularx}{\linewidth}{@{}p{0.42\linewidth}XX@{}}
+\toprule
+性质 & 有限维 & 任意维 \\
+\midrule
+求值映射 \(j_V:V\to V^{**}\) & 同构 & 总单射；不一定满射 \\
+坐标泛函 \((\varepsilon_i)\) & 构成 \(V^*\) 的基 & 无限维时不生成 \(V^*\) \\
+\({}^\circ(U^\circ)=U\) & 成立 & 对每个子空间 \(U\le V\) 成立 \\
+\(({}^\circ E)^\circ=E\) & 成立 & 对子空间 \(E\le V^*\) 可能失效 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\cref{b2:tab:dual-dimension-comparison}中唯一对任意维数仍总成立的双零化子等式，以泛函延拓与分离为依据；反向等式在上面的 \(E=D\) 例子中失效。无限维时，求值映射始终单射却未必满射，坐标泛函则不能线性生成整个对偶空间。

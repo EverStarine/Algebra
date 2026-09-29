@@ -1,11 +1,11 @@
 % !TeX root = ../../Book2.tex
-% 纲要标题：### 6.4 正合性与例子
+% 纲要标题：### 6.4 正合性、局部化与标量扩张
 % 纲要位置：计划纲要.md，第 998 行。
 
-\section{正合性与例子}
+\section{正合性、局部化与标量扩张}
 \label{b2:sec:0604}
 
-张量积善于处理生成元和关系：把原来的生成元张量化，再把原来的关系张量化，就得到新的对象。这使它保留余核与满射，却不保证保留单射。下面先把这一说法证明为右正合性，再用商模、局部化与域扩张说明它在计算中怎样使用。
+给模添上一组关系，等于取一个商模。张量积会把这些关系送到新的模中，因而商模仍可通过张量计算；但它可能使原来非零的元素变成零，从而破坏单射。两种现象分别解释张量积为何右正合、为何未必正合。局部化与基域扩张也是改变标量的过程，本节还将用张量积描述它们。
 
 % 纲要要点（供目录核对）：
 %
@@ -34,6 +34,18 @@
 若以 \(n+k\) 代替 \(n\)，像之差为 \(m\otimes k+H=0\)，所以不依赖代表元。双可加性继承自原张量积，而 \(mr\otimes n=m\otimes rn\) 给出平衡性。故此式诱导反向同态。两复合在各自的纯张量或纯张量剩余类上为恒等，所以互逆。
 \end{proof}
 
+\begin{definition}\label{b2:def:right-exact-functor}
+设 \(\mathcal C,\mathcal D\) 是两个模范畴，\(F:\mathcal C\to\mathcal D\) 是协变加性函子，即 \(F(f+g)=F(f)+F(g)\)。如果 \(\mathcal C\) 中每个正合列
+\[
+A\longrightarrow B\longrightarrow C\longrightarrow0
+\]
+在 \(F\) 下仍给出正合列
+\[
+F(A)\longrightarrow F(B)\longrightarrow F(C)\longrightarrow0,
+\]
+就称 \(F\) 为\term[youzhenghe-hanzi]{右正合函子}[right exact functor]。这里的模范畴可以分别是不同环的左模或右模范畴。
+\end{definition}
+
 \begin{theorem}[张量积的右正合性]\label{b2:thm:tensor-right-exact}
 设 \(R\) 是含幺环，\(M\) 为幺性右 \(R\) 模，幺性左 \(R\) 模序列
 \[
@@ -45,7 +57,15 @@ M\otimes_RN'\xrightarrow{\operatorname{id}\otimes f}
 M\otimes_RN\xrightarrow{\operatorname{id}\otimes g}
 M\otimes_RN''\longrightarrow0
 \]
-正合。固定左模而对右模的正合列作张量，也有相同结论。若有关模还带与 \(R\) 作用相容的外侧作用，且原正合列的同态保留变化因子所带的外侧作用，则诱导序列也是相应模范畴中的正合列。
+正合。对任意幺性左 \(R\) 模 \(L\)，若幺性右 \(R\) 模序列 \(Q'\xrightarrow{u}Q\xrightarrow{v}Q''\to0\) 正合，则
+\[
+Q'\otimes_RL\xrightarrow{u\otimes\operatorname{id}_L}
+Q\otimes_RL\xrightarrow{v\otimes\operatorname{id}_L}
+Q''\otimes_RL\longrightarrow0
+\]
+也正合。因此 \(M\otimes_R-:R\text{-}\mathbf{Mod}\to\mathbf{Ab}\) 和 \(-\otimes_RL:\mathbf{Mod}\text{-}R\to\mathbf{Ab}\) 都是右正合函子。
+
+若 \(M\) 还是 \((S,R)\)-双模，第一个张量序列在左 \(S\) 模范畴中正合；若 \(N',N,N''\) 是 \((R,T)\)-双模且 \(f,g\) 保留右 \(T\) 作用，它在右 \(T\) 模范畴中正合。两种条件同时成立时，它在 \((S,T)\)-双模范畴中正合。对第二个张量序列，若 \(L\) 是 \((R,T)\)-双模，则它在右 \(T\) 模范畴中正合；若 \(Q',Q,Q''\) 是 \((S,R)\)-双模且 \(u,v\) 保留左 \(S\) 作用，则它在左 \(S\) 模范畴中正合；两种条件同时成立时，它在 \((S,T)\)-双模范畴中正合。
 \end{theorem}
 \begin{proof}
 令 \(K=\operatorname{im}f=\ker g\)。由于 \(g\) 满射，\cref{b2:thm:module-first-isomorphism}给出 \(N/K\cong N''\)。\cref{b2:lem:tensor-cokernel}说明 \(\operatorname{id}\otimes g\) 的核恰为所有 \(m\otimes k\)、\(k\in K\) 生成的子群。对每个这样的 \(k\)，存在 \(n'\in N'\) 使 \(f(n')=k\)，故
@@ -54,7 +74,7 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 \]
 反过来，\(\operatorname{id}\otimes f\) 的每个纯张量像均为这种形式，于是其像恰为上述核。又因 \(g\) 满射，每个 \(m\otimes n''\) 都有原像 \(m\otimes n\)，纯张量生成目标，所以 \(\operatorname{id}\otimes g\) 满射。
 
-第一变量的结论可将已证结论用于 \(R^{\mathrm{op}}\)，再用已证明的交换因子同构 \eqref{b2:eq:tensor-opposite-swap}转换回来：它将 \(M'\otimes_RN\to M\otimes_RN\) 对应于 \(N\otimes_{R^{\mathrm{op}}}M'\to N\otimes_{R^{\mathrm{op}}}M\)，因此第二变量的结论给出原来第一变量的正合性。在所述外侧作用条件下，原同态的相容性使诱导张量同态也保留这些作用；模的核与像在底交换群上计算，故得到相应模范畴中的正合列。
+第一变量的结论可将已证结论用于 \(R^{\mathrm{op}}\)，再用已证明的交换因子同构 \eqref{b2:eq:tensor-opposite-swap}转换回来：它将 \(Q'\otimes_RL\to Q\otimes_RL\) 对应于 \(L\otimes_{R^{\mathrm{op}}}Q'\to L\otimes_{R^{\mathrm{op}}}Q\)，因此第二变量的结论给出原来第一变量的正合性。\cref{b2:prop:tensor-maps}已说明这两个张量函子保持同态的加法。外侧作用分别由 \(s(q\otimes n)=(sq)\otimes n\) 与 \((q\otimes n)t=q\otimes(nt)\) 给出；相应线性条件保证张量后的箭头保留作用。模的核与像在底交换群上计算，故上述序列在所述模范畴中正合。
 \end{proof}
 
 “右正合”中的“右”指序列末端以零结束，不指右模。定理没有断言 \(\operatorname{id}\otimes f\) 单射，即使原来的 \(f\) 已经单射。
@@ -113,22 +133,19 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 \ProseParagraphBreak
 非分裂时，单射是否保留取决于用来张量的模。下一章的平坦模就是把“对所有单射都保留单射”作为条件。本节的 \(\mathbb Z/n\mathbb Z\) 展示了该条件并非自动满足，不能用“张量积类似向量空间的乘积”代替核的实际计算。
 
-\subsection{局部化、商模与基域扩张}
+\subsection{局部化与基域扩张}
 \label{b2:subsec:0604:03}
 
-商模公式已经说明张量可以消去关系。局部化则允许指定的标量成为可逆元；以下只讨论交换环，以便左右标量无须再作区分。
+商模公式通过让理想中的元素作用为零来改变标量。局部化则让指定的标量成为可逆元；以下只讨论交换环，此时无须区分标量从左还是从右作用。
 
 \ProseParagraphBreak
-设 \(R\) 交换，\(\Sigma\subseteq R\) 含 \(1\) 且乘法封闭，\(N\) 为 \(R\) 模。在 \(N\times\Sigma\) 上规定
+\begin{definition}\label{b2:def:localized-module}
+设 \(R\) 是交换环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是 \(R\) 模。在 \(N\times\Sigma\) 上规定关系
 \[
 (n,s)\sim(n',s')\quad\Longleftrightarrow\quad
 \text{存在 }u\in\Sigma\text{ 使 }u(s'n-sn')=0.
 \]
-反身性与对称性直接成立。若 \(u(tn-sn')=0\)、\(v(wn'-tn'')=0\)，则把第一式乘 \(vw\)，第二式乘 \(us\) 后相加，得到
-\(uvt(wn-sn'')=0\)。因 \(uvt\in\Sigma\)，传递性成立。将等价类记为 \(n/s\)，全体等价类记为 \(\Sigma^{-1}N\)。
-
-\begin{definition}\label{b2:def:localized-module}
-设 \(R\) 是交换环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是 \(R\) 模。把 \(N\times\Sigma\) 中满足“存在 \(u\in\Sigma\) 使 \(u(s'n-sn')=0\)”的两对 \((n,s),(n',s')\) 视为等价，记等价类为 \(n/s\)。在全体等价类上定义以下加法与环局部化 \(\Sigma^{-1}R\) 的标量作用：
+将 \((n,s)\) 的等价类记为 \(n/s\)。在全体等价类上定义以下加法与环局部化 \(\Sigma^{-1}R\) 的标量作用：
 \[
 \frac ns+\frac{n'}t=\frac{tn+sn'}{st},\qquad
 \frac av\frac ns=\frac{an}{vs}.
@@ -136,6 +153,9 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 所得 \(\Sigma^{-1}R\) 模称为 \(N\) 在 \(\Sigma\) 处的\term[mojubu-hua]{局部化}[localization of a module] \(\Sigma^{-1}N\)。其中 \(\Sigma^{-1}R\) 是第一卷定理13.2.2所构造的交换环局部化。
 \end{definition}
 \symidx{\(\Sigma^{-1}N\)：模 \(N\) 的局部化}
+
+先验证关系确实是等价关系。反身性与对称性直接成立。若 \(u(tn-sn')=0\)、\(v(wn'-tn'')=0\)，则把第一式乘 \(vw\)，第二式乘 \(us\) 后相加，得到
+\(uvt(wn-sn'')=0\)。因 \(uvt\in\Sigma\)，传递性成立。
 
 这些运算不依赖代表元。例如，若 \(u(s'n-sn_1)=0\)、\(v(t'n'-tn_1')=0\)，则两种加法结果的交叉相乘之差为
 \[
@@ -178,7 +198,7 @@ v'a(s'n-sn_1)+s(v'a-va')n_1,
 例如，\(\Sigma=\{1,p,p^2,\ldots\}\subseteq\mathbb Z\) 时，\(\Sigma^{-1}\mathbb Z=\mathbb Z[1/p]\)。若 \(N=\mathbb Z/p^a\mathbb Z\)，每个元素被 \(p^a\) 零化，由\eqref{b2:eq:localization-zero}可知局部化为零。若 \(\gcd(p,n)=1\)，乘以 \(p\) 已经是 \(\mathbb Z/n\mathbb Z\) 的自同构，分式 \(\bar a/p^j\) 对应 \(p^{-j}\bar a\)，所以此时局部化仍为 \(\mathbb Z/n\mathbb Z\)。取所有非零整数作分母，则得到 \(\mathbb Q\otimes_{\mathbb Z}N\)；它会消去 \(N\) 中的挠元素。
 
 \ProseParagraphBreak
-现在取域扩张 \(k\subseteq K\) 与 \(k\) 向量空间 \(V\)。\(K\otimes_kV\) 是 \(K\) 向量空间，称为 \(V\) 的\term[jiyukuozhang]{基域扩张}[extension of the ground field]。若 \((v_i)_{i\in I}\) 是 \(V\) 的基，则
+局部化把环 \(R\) 换成 \(\Sigma^{-1}R\)。另一种标量变换是把域 \(k\) 扩张到更大的域 \(K\)。取域扩张 \(k\subseteq K\) 与 \(k\) 向量空间 \(V\)，则 \(K\otimes_kV\) 是 \(K\) 向量空间，称为 \(V\) 的\term[jiyukuozhang]{基域扩张}[extension of the ground field]。若 \((v_i)_{i\in I}\) 是 \(V\) 的基，则
 \[
 (1\otimes v_i)_{i\in I}
 \]

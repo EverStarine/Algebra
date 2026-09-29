@@ -5,7 +5,7 @@
 \section{向量空间与映射}
 \label{b2:sec:0101}
 
-矩阵记录一个线性映射在选定坐标下的作用。换一组坐标，矩阵会改变，映射的核和像却仍是原来的子空间。本节先把向量空间和映射作为研究对象，再说明基如何提供坐标。有限维部分所用的证明只涉及有限线性组合；任意维部分则明确说明基的存在所需的选择原理。
+给定线性映射 \(f:V\to W\)，两个向量何时被它送到同一点？把 \(\ker f\) 中的向量视为零后，为什么所得商空间 \(V/\ker f\) 恰好同构于 \(\operatorname{im}f\)？本节从向量空间的基和商空间出发回答这些问题，并说明补空间虽可用来选取商类的代表，却依赖选择。有限维部分的证明只涉及有限线性组合；任意维部分则明确说明基的存在所需的选择原理。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
@@ -20,12 +20,12 @@
 本章的 \(k\) 总表示交换域，\(0\ne1\)；向量空间中的标量默认写在左侧。
 
 \begin{definition}\label{b2:def:vector-space}
-设 \(k\) 是域，\((V,+)\) 是交换群，并给定标量乘法 \(k\times V\to V\)。如果任意 \(a,b\in k\) 和 \(u,v\in V\) 都满足
+设 \(k\) 是域，\((V,+)\) 是交换群，并给定标量乘法 \(k\times V\to V\)。若对任意 \(a,b\in k\) 及 \(u,v\in V\)，下列等式均成立：
 \[
 a(u+v)=au+av,\qquad (a+b)v=av+bv,\qquad
 (ab)v=a(bv),\qquad 1v=v.
 \]
-就称 \(V\) 为 \(k\) 上的\term[xiangliang-kongjian]{向量空间}[vector space]。若子集 \(U\subseteq V\) 包含 \(0\)，且对加法与标量乘法封闭，就称 \(U\) 为 \(V\) 的\term[zi-kongjian]{子空间}[subspace]。
+满足这些条件的 \(V\) 称为 \(k\) 上的\term[xiangliang-kongjian]{向量空间}[vector space]。包含 \(0\) 且对加法与标量乘法封闭的子集 \(U\subseteq V\)，称为 \(V\) 的\term[zi-kongjian]{子空间}[subspace]。
 \end{definition}
 
 标量的零和向量的零均写作 \(0\)，由所在等式区分。公理给出 \(0v=0\)、\(a0=0\) 及 \((-1)v=-v\)；例如 \(0v=(0+0)v=0v+0v\)，在加法群中消去 \(0v\) 即得第一式。子空间因而也对取负封闭。零空间 \(\{0\}\) 是向量空间，其基将在下面约定为空集。
@@ -40,7 +40,7 @@ k^{(I)}=\{(a_i)_{i\in I}\in k^I\mid a_i\ne0\text{ 的指标只有有限个}\}.
 \symidx{\(k^I,k^{(I)}\)：全部标量族及有限支集标量族}
 
 \begin{definition}\label{b2:def:linear-span-basis}
-设 \(V\) 是 \(k\) 向量空间，\(S\subseteq V\)。\(S\) 中向量的全部有限线性组合构成\term[xianxing-shengcheng-kongjian]{线性生成空间}[linear span] \(\operatorname{span}_kS\)；约定空和为 \(0\)。线性生成空间也称线性闭包。\termidx[xianxing-bibao]{线性闭包}若 \(\operatorname{span}_kS=V\)，就称 \(S\) 生成 \(V\)。给定指标集 \(I\) 上的向量族 \((v_i)_{i\in I}\)，如果每个有限关系
+设 \(V\) 是 \(k\) 向量空间，\(S\subseteq V\)。\(S\) 中向量的全部有限线性组合构成\term[xianxing-shengcheng-kongjian]{线性生成空间}[linear span] \(\operatorname{span}_kS\)；约定空和为 \(0\)。线性生成空间也称线性包络。\footnote{“线性生成空间”见黎景辉等《高等线性代数学》\cite[定义 1.13, p. 4]{LiBaiZhou2014AdvancedLinearAlgebra}；“线性包络”见席南华《基础代数》第二卷\cite[§1.2, p. 5]{Xi2018BasicAlgebraII}。}\termidx[xianxing-baoluo]{线性包络}若 \(\operatorname{span}_kS=V\)，就称 \(S\) 生成 \(V\)。给定指标集 \(I\) 上的向量族 \((v_i)_{i\in I}\)，如果每个有限关系
 \[
 \sum_{i\in F}a_iv_i=0\quad(F\subseteq I\text{ 有限})
 \]
@@ -69,7 +69,7 @@ k^{(I)}=\{(a_i)_{i\in I}\in k^I\mid a_i\ne0\text{ 的指标只有有限个}\}.
 \begin{proof}
 先看有限生成情形。由\cref{b2:lem:finite-exchange}，给定无关集不可能有超过 \(|S|\) 个元素，否则取出 \(|S|+1\) 个就得到矛盾。将 \(S\) 的元素依次加入：已在当前线性生成空间中的跳过，不在其中的加入。后一操作保持无关性，因为一个非平凡新关系若含新向量的非零系数，就会把它写进原来的线性生成空间。有限步后得到含原无关集、且线性生成空间包含 \(S\) 的基。
 
-任意维情形采用第一卷命题 A.1.6（基的扩充）。该命题用 Zorn 引理考察包含给定无关集的全部无关子集：链的并仍无关，因为每个关系只涉及有限多个向量；极大无关集若不生成全空间，还能加入线性生成空间以外的向量，矛盾。这里沿用第一卷已经采用的选择公理，不把无限扩充理解为一个必会在有限步停止的算法。
+任意维情形采用第一卷附录A中的基扩充命题。该命题用 Zorn 引理\footnote{佐恩（Max August Zorn，1906-1993），德国裔美国数学家，提出与选择公理等价的极大原则，并研究非结合代数。}考察包含给定无关集的全部无关子集：链的并仍无关，因为每个关系只涉及有限多个向量；极大无关集若不生成全空间，还能加入线性生成空间以外的向量，矛盾。这里沿用第一卷已经采用的选择公理，不把无限扩充理解为一个必会在有限步停止的算法。
 \end{proof}
 
 \begin{theorem}[维数不变性]\label{b2:thm:vector-dimension}
@@ -78,10 +78,10 @@ k^{(I)}=\{(a_i)_{i\in I}\in k^I\mid a_i\ne0\text{ 的指标只有有限个}\}.
 \begin{proof}
 若一组基 \(B\) 有限，\cref{b2:lem:finite-exchange}说明另一组基 \(C\) 至多有 \(|B|\) 个元素，反过来又有 \(|B|\le|C|\)，故大小相同。
 
-若两组基都无限，把每个 \(c\in C\) 写为 \(B\) 的有限线性组合。这些支集的并覆盖 \(B\)：否则一个从未出现的 \(b\in B\) 就不能由 \(C\) 生成。第一卷命题 A.1.12 的有限支集计数说明，由 \(|C|\) 个有限集合组成的并至多有基数 \(|C|\)，所以 \(|B|\le|C|\)。交换两组基得到反向不等式，再由第一卷命题 A.1.11（Cantor--Bernstein）得到等势。
+若两组基都无限，把每个 \(c\in C\) 写为 \(B\) 的有限线性组合。这些支集的并覆盖 \(B\)：否则一个从未出现的 \(b\in B\) 就不能由 \(C\) 生成。第一卷附录A中的有限支集计数命题说明，由 \(|C|\) 个有限集合组成的并至多有基数 \(|C|\)，所以 \(|B|\le|C|\)。交换两组基得到反向不等式，再由第一卷附录A中的 Cantor--Bernstein 定理\footnote{康托尔（Georg Cantor，1845-1918），德国数学家，创立集合论并研究无限基数。伯恩施坦（Felix Bernstein，1878-1956），德国数学家，在集合论中证明了这一等势判据。}得到等势。
 \end{proof}
 
-无限维维数的比较使用上述集合论结果；本章后面的有限维算子理论不需要无限基数运算。尤其不能把有限维等式中的减法照搬过去：一个无限维空间与其真子空间可能有相同维数。
+无限维维数的比较使用上述集合论结果。尤其不能把有限维等式中的减法照搬过去：一个无限维空间与其真子空间可能有相同维数。
 
 \begin{definition}\label{b2:def:quotient-vector-space}
 设 \(V\) 是 \(k\) 向量空间，\(U\le V\) 是子空间。对 \(v,w\in V\) 和 \(a\in k\)，在加法商群 \(V/U\) 上定义
@@ -128,6 +128,14 @@ f\left(\sum_{i\in F}a_ie_i\right)=\sum_{i\in F}a_iw_i.
 
 \begin{proposition}[商空间的映射性质]\label{b2:prop:quotient-linear-universal}
 设 \(U\le V\) 是域 \(k\) 上的向量空间 \(V\) 的子空间，\(f:V\to W\) 是 \(k\) 线性映射，\(q:V\to V/U\) 是商映射。存在满足 \(\bar f q=f\) 的线性映射 \(\bar f:V/U\to W\)，当且仅当 \(U\subseteq\ker f\)。存在时它唯一，且 \(\bar f(v+U)=f(v)\)。
+
+条件 \(U\subseteq\ker f\) 保证下图存在唯一的虚线箭头，且两条从 \(V\) 到 \(W\) 的路径相同：
+\[
+\begin{tikzcd}[column sep=3.5em,row sep=2.5em]
+V\arrow[r,"f"]\arrow[d,"q"']&W\\
+V/U\arrow[ur,dashed,"\bar f"']&
+\end{tikzcd}
+\]
 \end{proposition}
 \begin{proof}
 若 \(\bar f q=f\)，对 \(u\in U\) 有 \(f(u)=\bar f(0)=0\)。反过来，若 \(U\subseteq\ker f\)，则 \(v-v'\in U\) 蕴含 \(f(v)=f(v')\)，所给公式与代表元无关。线性性由商空间运算及 \(f\) 的线性性得到。每个陪集都在 \(q\) 的像中，所以条件 \(\bar f q=f\) 已决定全部取值。
@@ -137,7 +145,7 @@ f\left(\sum_{i\in F}a_ie_i\right)=\sum_{i\in F}a_iw_i.
 设 \(f:V\to W\) 是域 \(k\) 上的向量空间之间的线性映射。映射 \(v+\ker f\mapsto f(v)\) 给出 \(k\) 线性同构 \(V/\ker f\cong\operatorname{im}f\)。
 \end{proposition}
 \begin{proof}
-将\cref{b2:prop:quotient-linear-universal}用于 \(U=\ker f\)，得到以像为值域的线性满射。若 \(f(v)=0\)，则 \(v+\ker f=0\)，所以它的核为零，进而单射。
+将\cref{b2:prop:quotient-linear-universal}用于 \(U=\ker f\)，得到以 \(\operatorname{im}f\) 为陪域的线性满射。若 \(f(v)=0\)，则 \(v+\ker f=0\)，所以它的核为零，进而单射。
 \end{proof}
 
 \begin{theorem}[秩与核的维数]\label{b2:thm:rank-nullity}
@@ -153,7 +161,7 @@ f\left(\sum_{i\in F}a_ie_i\right)=\sum_{i\in F}a_iw_i.
 这个等式通常称为\term[zhi-lingdu-dingli]{秩--零度定理}[rank--nullity theorem]，其中零度指核的维数。
 
 \ProseParagraphBreak
-有限维空间的自映射 \(f:V\to V\) 因而单射当且仅当满射：核维数为零恰好等价于像维数等于 \(\dim V\)。在 \(k[t]\) 上，这个结论会失败。乘以 \(t\) 的映射单射而不满；映射 \(1\mapsto0,t^i\mapsto t^{i-1}\ (i\ge1)\) 满射而不单。不能对无限维维数等式作有限整数式的消去。
+有限维向量空间的线性自映射 \(f:V\to V\) 因而单射当且仅当满射：核维数为零恰好等价于像维数等于 \(\dim V\)。在 \(k[t]\) 上，这个结论会失败。乘以 \(t\) 的线性映射单射而不满；由 \(1\mapsto0,t^i\mapsto t^{i-1}\ (i\ge1)\) 逐基向量定义的线性映射满射而不单。不能对无限维维数等式作有限整数式的消去。
 
 \ProseParagraphBreak
 作为有限计算，令 \(f:k^3\to k^2\) 为 \(f(x,y,z)=(x+y,y+z)\)。核由 \((-1,1,-1)\) 生成，而 \(f(e_1)=(1,0),f(e_3)=(0,1)\)，所以秩为二。\(ke_1+ke_3\) 是核的一个补空间，\(f\) 在其上的限制是到 \(k^2\) 的同构。这既给出 \(3=1+2\)，也具体展示了商去核以后映射为何变成同构。

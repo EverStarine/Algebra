@@ -7,23 +7,31 @@
 \BookChapterNumber{b3:ch:21}
 
 \begin{chapterabstract}
-本章把有限生成分次模写成有限自由消解，证明 Hilbert 合冲定理，并用分次 Betti 数记录各层不可删减的生成元。随后建立全局模项序和 Schreyer 构造，把 Gröbner 基计算扩展到全部关系的计算；最后说明如何消去单位微分项，以及为何矩阵乘积为零、Hilbert 级数相等都不能单独证明一个候选消解正确。
+本章用分次自由消解逐层记录模的生成元及其关系。Hilbert 合冲定理保证多项式环上的有限生成分次模存在有限自由消解，分次 Betti 数给出各层的最少生成元及次数；模项序与 Schreyer 构造用于计算，候选消解仍须单独核验正合性。
 \end{chapterabstract}
 
 \begin{learninggoals}
 \begin{itemize}
 \item 从生成元和关系逐层构造分次自由消解，分清同调次数与内次数。
-\item 证明多项式环的整体维数等于变量数，并说明分次有限模为何有有限自由消解。
+\item 证明多项式环的整体维数等于变量数，并说明分次有限生成模为何有有限自由消解。
 \item 由 Betti 数据计算 Hilbert 级数，辨认交错和不能保留的消解信息。
 \item 运用模 Gröbner 基、Schreyer 关系和单位项消去，实际构造并验证小规模消解。
 \item 在样条计算中，把分片多项式的拼接条件写成矩阵，求出全部解及次数受限的维数。
 \end{itemize}
 \end{learninggoals}
 
+设 \(S=k[x,y]\)，把 \(k=S/(x,y)\) 看作 \(S\) 模。自然满射 \(S\to k\) 的核由 \(x,y\) 生成，于是有 \(S^2\to S\) 将两个基向量分别送往 \(x,y\)。但这两个生成元又有关系 \(-y\cdot x+x\cdot y=0\)，可用 \(S\to S^2\)、\(1\mapsto(-y,x)\) 记录。因而得到一条有限自由消解，而不只是一个生成元列表。
+
+\ProseParagraphBreak
+
+更复杂的模可能不断出现“关系之间的关系”。若能证明多项式环上的过程必在有限步后停止，还要进一步辨认每步最少需要几个、各处于什么次数。另一方面，实际给出矩阵之后，连续两个矩阵的乘积为零只说明它是复形，并不能保证所有关系都已经找到。计算自由消解因此同时有终止、极小性和正合性三项任务。
+
+\ProseParagraphBreak
+
 本章需要\chapref{b3:ch:08}的 Gröbner 基、\chapref{b3:ch:11}的分次模，以及\chapref{b3:ch:15}的 Koszul 复形。投射消解、Tor 和比较映射沿用本编前面的约定；链复形的同调次数向下降，分次模的内次数由矩阵的齐次性保存。先用整体维数证明终止长度，再给计算方法，是为了把“存在一个有限消解”与“如何算出并核验它”分别说明。
 
 \ProseParagraphBreak
-分次极小消解与局部极小消解使用相近的思想，但有限生成分次模的次数下界替代了局部环条件。局部版本及其 Tor 解释可参阅松村英之的《Commutative Ring Theory》\cite[\S 19, Lemma 1, pp. 153--154]{Matsumura1989CommutativeRingTheory}，并与\chapref{b3:ch:17}对照。全局模项序与 Schreyer 构造在本章直接建立，不依赖局部标准基。
+分次极小消解与局部极小消解使用相近的思想，但有限生成分次模的次数下界替代了局部环条件。局部版本及其 Tor 解释可参阅松村英之的《Commutative Ring Theory》\cite[\S 19, Lemma 1, pp. 153--154]{Matsumura1989CommutativeRingTheory}，并与\chapref{b3:ch:17}对照。全局模项序与 Schreyer 构造在本章建立。
 
 \input{Part03/Chapter21/Section2101}
 \input{Part03/Chapter21/Section2102}
@@ -33,7 +41,7 @@
 \input{Part03/Chapter21/Section2106}
 
 \begin{chaptersummary}
-自由消解逐层记录生成元之间的关系。分次极小性使微分在剩余域上变为零，因而各层各次的自由秩恰为 Tor 的分次维数。Hilbert 合冲定理进一步说明，在 \(n\) 个变量的多项式环上，有限分次模的极小自由消解不会超过 \(n\) 层。
+自由消解逐层记录生成元之间的关系。分次极小性使微分在剩余域上变为零，因而各层各次的自由秩恰为 Tor 的分次维数。Hilbert 合冲定理进一步说明，在 \(n\) 个变量的多项式环上，有限生成分次模的极小自由消解不会超过 \(n\) 层。
 
 \ProseParagraphBreak
 计算时，模项序与 Schreyer 构造给出全部核关系，单位微分项则指出可以删去的可缩部分。正确的记录既要有微分相乘为零的等式，也要有像等于核的依据。Hilbert 级数能由各层次数的交错和恢复，但无法反过来决定 Betti 表；初始理想的单项式计数也必须与原理想的消解信息分开。样条实例把光滑拼接化为整除关系，进一步说明核、合冲模和次数计数怎样共同回答一个具体问题。
@@ -119,7 +127,7 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-rank-euler}
-设 \(M\) 是多项式环 \(S=k[x_1,\ldots,x_n]\) 上有限分次模，\(K=\operatorname{Frac}(S)\)。证明
+设 \(M\) 是多项式环 \(S=k[x_1,\ldots,x_n]\) 上的有限生成分次模，\(K=\operatorname{Frac}(S)\)。证明
 \(\dim_K(M\otimes_SK)=\sum_i(-1)^i\beta_i(M)\)。据此给出挠模的 Betti 数必须满足的一项等式。
 \end{exercise}
 \begin{solution}

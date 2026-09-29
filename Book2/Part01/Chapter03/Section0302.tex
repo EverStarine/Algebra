@@ -21,14 +21,16 @@
 \[
 \pi:R^{(I)}\longrightarrow M,\qquad e_i\longmapsto m_i.
 \]
-它的核 \(K\) 包含全部有限关系：向量 \(\sum_i a_i e_i\) 在 \(K\) 中，恰好意味着 \(\sum_i a_i m_i=0\)。称 \(K\) 为这组生成元的\term[guanximo]{关系模}[module of relations]。关系模依赖所选生成元；不能不注明选择就把它当作 \(M\) 的固有子模。
+它的核 \(K\) 恰由这组生成元满足的全部有限关系组成：向量 \(\sum_i a_i e_i\) 在 \(K\) 中，恰好意味着 \(\sum_i a_i m_i=0\)。称 \(K\) 为这组生成元的\term[guanximo]{关系模}[module of relations]。关系模依赖所选生成元；不能不注明选择就把它当作 \(M\) 的固有子模。
 
 \begin{definition}\label{b2:def:module-presentation}
-设 \(R\) 是环，\(M\) 是左 \(R\) 模，\(I,J\) 是指标集。取自由模 \(R^{(I)}\) 的标准基 \((e_i)_{i\in I}\) 和满同态 \(\pi:R^{(I)}\to M\)；记关系模 \(K=\ker\pi\)，并选取 \(K\) 的生成族 \((\rho_j)_{j\in J}\)。令 \(d:R^{(J)}\to R^{(I)}\) 将第 \(j\) 个标准基向量送到 \(\rho_j\)。满足
+设 \(R\) 是环，\(M\) 是左 \(R\) 模，\(I,J\) 是指标集。取自由模 \(R^{(I)}\) 的标准基 \((e_i)_{i\in I}\) 和满同态 \(\pi:R^{(I)}\to M\)；记关系模 \(K=\ker\pi\)，并选取 \(K\) 的生成族 \((\rho_j)_{j\in J}\)。令 \(d:R^{(J)}\to R^{(I)}\) 将第 \(j\) 个标准基向量送到 \(\rho_j\)。于是 \(\pi\) 满射且 \(\operatorname{im}d=\ker\pi\)，得到正合列
 \[
-\pi\text{ 满射},\qquad \operatorname{im}d=\ker\pi
+\begin{tikzcd}[column sep=3.2em]
+R^{(J)} \arrow[r,"d"] & R^{(I)} \arrow[r,"\pi"] & M \arrow[r] & 0
+\end{tikzcd}\,.
 \]
-的两个映射 \(R^{(J)}\xrightarrow{d}R^{(I)}\xrightarrow{\pi}M\)，称为 \(M\) 的一个\term[mo-zhanshi]{展示}[presentation]，也称呈示。\termidx[chengshi]{呈示}称 \(e_i\) 为展示生成元的符号，\(\pi(e_i)\) 是 \(M\) 中的生成元，\(\rho_j=0\) 为展示关系。若
+其中 \(R^{(I)}\) 记录形式生成元，\(\operatorname{im}d\) 是关系模，\(M\) 是取商后得到的模。我们称这组映射为 \(M\) 的一个\term[mo-zhanshi]{展示}[presentation]，也称呈示。\footnote{“展示”一译见李文威《代数学方法》第一卷\cite[第 4.8 节“群展示”]{Li2018AlgebraMethodsI}；“呈示”一译见周健译《代数几何学原理》第四卷第三部分\cite[第 4 章第 8.5 节“有限呈示模层”]{GrothendieckZhou2024EGAIV3}。本书对由生成元与关系给出的结构统一使用“展示”。}\termidx[chengshi]{呈示}称 \(e_i\) 为展示生成元的符号，\(\pi(e_i)\) 是 \(M\) 中的生成元，\(\rho_j=0\) 为展示关系。若
 \(\rho_j=\sum_i a_{ji}e_i\)，也将这个展示写成
 \[
 M=\langle e_i\ (i\in I)\mid \textstyle\sum_i a_{ji}e_i=0\ (j\in J)\rangle_R.
@@ -69,7 +71,7 @@ R^{(I)}/\operatorname{im}d\ \cong\ M.
 u:R^n\longrightarrow R^s,\qquad v:R^s\longrightarrow R^n,
 \quad qu=p,\quad pv=q.
 \]
-令 \(K=\ker p\)。\(v(L)\subseteq K\)，且
+两个提升一般不是互逆映射。\(v(L)\) 记录旧展示关系在新自由模中的像，而 \((\operatorname{id}-vu)(R^n)\) 记录从新生成元经 \(u\) 写成旧生成元、再经 \(v\) 返回时的差；这两类元素将生成新的关系模。令 \(K=\ker p\)。\(v(L)\subseteq K\)，且
 \(p(\operatorname{id}-vu)=p-qu=0\)，所以
 \((\operatorname{id}-vu)(R^n)\subseteq K\)。对 \(x\in K\)，\(u(x)\in L\)，并且
 \[
@@ -88,14 +90,28 @@ x=vu(x)+(\operatorname{id}-vu)(x).
 \subsection{关系矩阵与余核}
 \label{b2:subsec:0302:03}
 
-有限展示可以用矩阵记录，但非交换环上的标量次序需要先固定。对于左自由模，暂将系数写成行向量。若 \(d:R^m\to R^n\) 满足
+有限展示可以用矩阵记录，但非交换环上的标量次序需要先固定。设 \(R\) 是环，\(d:R^m\to R^n\) 是左 \(R\) 模同态。对于左自由模，暂将系数写成行向量。若
 \[
-d(e_j)=\sum_{i=1}^n a_{ji}f_i,
+d(e_j)=\sum_{i=1}^n b_{ji}f_i,
 \]
-则由左线性，\(d(\sum_j r_je_j)=\sum_{j,i}(r_ja_{ji})f_i\)。因此以 \(m\times n\) 矩阵 \(A=(a_{ji})\) 记录时，坐标公式为 \(\mathbf r\mapsto\mathbf r A\)。每行是一条关系的系数；矩阵乘在右侧，才与左标量作用相容。
+则由左线性，\(d(\sum_j r_je_j)=\sum_{j,i}(r_jb_{ji})f_i\)。因此以 \(m\times n\) 矩阵 \(B=(b_{ji})\) 记录时，坐标公式为 \(\mathbf r\mapsto\mathbf r B\)。每行是一条关系的系数；矩阵乘在右侧，才与左标量作用相容。
 
 \ProseParagraphBreak
-本卷的 Smith 标准形用于交换环。届时采用熟悉的列向量约定：将关系向量排列成列，得到一个 \(n\times m\) 矩阵 \(A\)，其映射是 \(\mathbf x\mapsto A\mathbf x\)。交换性使 \(a_{ij}x_j=x_ja_{ij}\)，两种记法相容。以下关于列矩阵的公式均假设 \(R\) 交换，不把这个公式原样用到一般左模上。
+本卷的 Smith 标准形用于交换环，届时改用列向量，把每条关系写成矩阵 \(A\) 的一列。同一个映射 \(d:R^m\to R^n\) 在两种约定下的记录如下。
+
+\begin{table}[htbp]
+\centering
+\caption{展示映射的行、列矩阵约定}\label{b2:tab:presentation-matrix-conventions}
+\begin{tabularx}{\linewidth}{@{}p{0.19\linewidth}p{0.25\linewidth}p{0.23\linewidth}X@{}}
+\toprule
+适用情形 & 输入坐标与映射 & 关系矩阵 & 一条关系的位置 \\
+\midrule
+任意环上的左模 & 行向量 \(\mathbf r\mapsto\mathbf r B\) & \(B\in M_{m\times n}(R)\) & 一行 \\
+交换环上的左模 & 列向量 \(\mathbf x\mapsto A\mathbf x\) & \(A\in M_{n\times m}(R)\) & 一列 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+对于同一组基，\cref{b2:tab:presentation-matrix-conventions}中的 \(A=B^{\mathsf T}\)。交换性使 \(b_{ji}r_j=r_jb_{ji}\)，所以两种坐标公式描述同一映射。以下关于列矩阵的公式均假设 \(R\) 交换，不能原样用于一般左模。
 
 \begin{proposition}\label{b2:prop:presentation-matrix}
 设 \(R\) 是交换环，\(A\in M_{n\times m}(R)\)，并采用列向量约定。以 \(A\) 的列为关系向量展示的左 \(R\) 模，是同态 \(A:R^m\to R^n\) 的余核：
