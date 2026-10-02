@@ -1,93 +1,99 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 6.1 链同伦
-% 纲要位置：计划纲要.md，第 2593 行。
+% 纲要标题：### 6.1 复形
+% 纲要标签：b4:sec:0501
+% 纲要位置：计划纲要.md，第 3218 行。
 
-\section{链同伦}
-\label{b4:sec:0601}
+\section{复形}
+\label{b4:sec:0501}
 
-同调看不见的复形映射未必都能用同伦消去。先研究可显式写成微分交换子的差别，便能区分零伦、可缩与仅仅正合。
+相邻映射的复合为零，只保证像包含在核中。同调把两者的差额组织成逐次数的不变量，链与上链的编号则须先固定转换规则。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 同伦定义与同调不变性
-% * 零伦映射及可缩复形
-% * 正合复形未必可缩
+% * 链复形与上链复形
+% * 圈（cycle）、边界（boundary）及同调
+% * 指标转换与次数平移约定
 %
 
-\subsection{同伦与同调不变性}
-\label{b4:subsec:0601:01}
+\subsection{链复形与上链复形}
+\label{b4:subsec:0501:01}
 
-两个复形映射可能逐项不同，却在同调上完全相同。最容易控制的一类差别是能够写成“先作微分再作某个降次映射，加上先降次再作微分”。这类差别在余圈上自动变成余边。
+知道两个相邻映射的复合为零，便知道前一个映射的像落在后一个映射的核中；但像未必填满这个核。同调正是用来记录这一差额的。本章先把这样的三项计算按所有次数排列，再研究它们怎样随映射和短正合列变化。
 
-\begin{definition}\label{b4:def:chain-homotopy}
-设 \(\mathcal A\) 是加性范畴，\(C,D\) 为 \(\mathcal A\) 中的上链复形，\(f,g:C\to D\) 是复形映射。若有态射族 \(h^n:C^n\to D^{n-1}\)（\(n\in\mathbb Z\)），使
-\[
-f^n-g^n=\mathrm{d}_D^{n-1}h^n+h^{n+1}\mathrm{d}_C^n
-\quad(n\in\mathbb Z),
-\]
-则称 \(f\) 与 \(g\) \term[lian-tonglun]{链同伦}[chain homotopic]，记为 \(f\simeq g\)，并称 \(h\) 为一个链同伦。链指标中同一个公式写为 \(f_n-g_n=\partial_{D,n+1}h_n+h_{n-1}\partial_{C,n}\)，其中 \(h_n:C_n\to D_{n+1}\)。
+\begin{definition}\label{b4:def:cochain-complex}
+设 \(\mathcal A\) 是交换范畴。给定对象 \(C^n\) 及态射 \(\mathrm{d}_C^n:C^n\to C^{n+1}\)（\(n\in\mathbb Z\)），若每个 \(n\) 都满足 \(\mathrm{d}_C^{n+1}\mathrm{d}_C^n=0\)，则称 \(C=(C^n,\mathrm{d}_C^n)\) 为 \(\mathcal A\) 中的\term[shanglian-fuxing]{上链复形}[cochain complex]，\(\mathrm{d}_C^n\) 称为微分。类似地，对象 \(C_n\) 及态射 \(\partial_n:C_n\to C_{n-1}\) 满足 \(\partial_{n-1}\partial_n=0\) 时，组成\term[lian-fuxing]{链复形}[chain complex]。
 \end{definition}
 
-上链指标下同伦降一次，链指标下升一次，两者都与微分方向相反。相反方向使 \(\mathrm{d}h\) 与 \(h\mathrm{d}\) 恢复零次态射。这里保留“链同伦”这一通用名称，不因为指标升次而另换概念。
+链与上链的差别在指标方向：链微分降一次，上链微分升一次。它们的核、像和正合性问题相同。为统一后面的 Hom 复形、移位和映射锥，本编主要用上链指标；讨论消解或 Tor 时也会使用链指标，并明确作转换。
 
-\begin{proposition}\label{b4:prop:homotopy-cohomology}
-设 \(\mathcal A\) 是交换范畴，\(C,D\) 为其中的上链复形，\(f,g:C\to D\) 为同伦的复形映射。则对每个 \(n\in\mathbb Z\)，有 \(H^n(f)=H^n(g)\)。在任意两个固定复形之间，同伦是复形映射的等价关系，且与加法、左右复合相容。
-\end{proposition}
-\begin{proof}
-把同伦公式限制到 \(Z^n(C)\) 上，含 \(h\mathrm{d}_C\) 的项为零，剩余项通过 \(\operatorname{im}\mathrm{d}_D^{n-1}=B^n(D)\) 分解，故取商后 \(H^n(f-g)=0\)。在模中就是 \(f(z)-g(z)=\mathrm{d}_Dh(z)\)。
+\begin{example}\label{b4:exm:two-term-complex}
+在左 \(R\)-模范畴中，任一同态 \(u:M\to N\) 都给出仅在次数 \(0,1\) 非零的复形 \(M\xrightarrow{u}N\)。它是复形，因为其余微分均为零；不要求 \(u^2=0\)，一般甚至没有定义这个复合。相反，若每个次数均放同一模 \(M\)，并在每一步都用同一自同态 \(a\)，便确实需要 \(a^2=0\)。例如 \(R=k[\varepsilon]/(\varepsilon^2)\) 上反复乘 \(\varepsilon\) 给出复形。
+\end{example}
 
-零同伦、\(-h\) 及同伦之和分别给出自反、对称和传递性。若 \(u:C'\to C\)、\(v:D\to D'\) 为复形映射，则
-\[
-v(f-g)u=\mathrm{d}_{D'}(vhu)+(vhu)\mathrm{d}_{C'};
-\]
-这证明复合相容性。两个差的同伦相加给出加法相容性。
-\end{proof}
-
-因此可以把同伦的映射视为同一个态射，得到\term[tonglun-fanchou]{同伦范畴}[homotopy category] \(K(\mathcal A)\)。对象仍是复形，态射则是复形映射的同伦类。\symidx{\(K(\mathcal A)\)：复形的同伦范畴}若 \(C,D\) 是左 \(R\)-模复形，由 Hom 微分在次数 \(-1\) 的公式可见
-\[
-\operatorname{Hom}_{K(R\text{-}\mathbf{Mod})}(C,D)
-=H^0\operatorname{Hom}_R^\bullet(C,D),
-\]
-因为零次余圈是复形映射，而零次余边恰好是 \(\mathrm{d}h+h\mathrm{d}\)。
-
-\subsection{零伦映射及可缩复形}
-\label{b4:subsec:0601:02}
-
-\begin{definition}\label{b4:def:contractible-complex}
-设 \(\mathcal A\) 为加性范畴，\(C,D\) 为其中的上链复形，\(f:C\to D\) 为复形映射。若 \(f\) 与零映射同伦，则称 \(f\) 为\term[linglun-yingshe]{零伦映射}[null-homotopic map]。若 \(1_C\simeq0\)，则称 \(C\) 为\term[kesuo-fuxing]{可缩复形}[contractible complex]；满足 \(1_{C^n}=\mathrm{d}_C^{n-1}h^n+h^{n+1}\mathrm{d}_C^n\) 的态射族 \(h^n:C^n\to C^{n-1}\)（\(n\in\mathbb Z\)）称为收缩同伦。若存在复形映射 \(g:D\to C\)，使 \(gf\simeq1_C\)、\(fg\simeq1_D\)，则称 \(f\) 为\term[tonglun-dengjia]{同伦等价}[homotopy equivalence]。
+\begin{definition}\label{b4:def:bounded-complex}
+设 \(C\) 是交换范畴中的上链复形。若存在整数 \(a\)，使 \(n<a\) 时 \(C^n=0\)，则称 \(C\) 下有界；若存在 \(b\)，使 \(n>b\) 时 \(C^n=0\)，则称其上有界；同时满足二者时称其\term[youjie-fuxing]{有界复形}[bounded complex]。对象 \(M\) 放在次数零、其余项为零所得复形记为 \(M[0]\)。
 \end{definition}
 
-可缩复形在交换范畴中必零调，因为恒等同态在同调上等于零。反向所缺的条件不是某个新的数值，而是各次数的短正合列能否分裂。
+\subsection{圈、边界与同调}
+\label{b4:subsec:0501:02}
 
-\begin{proposition}\label{b4:prop:contractible-split-exact}
-设 \(C\) 是交换范畴中的复形。它可缩，当且仅当它零调，且每条短正合列
+\begin{definition}\label{b4:def:cohomology}
+设 \(C\) 是交换范畴 \(\mathcal A\) 中的上链复形。记
 \[
-0\longrightarrow Z^n(C)\longrightarrow C^n
-\xrightarrow{\mathrm{d}_C^n} Z^{n+1}(C)\longrightarrow0
+Z^n(C)\coloneqq\ker \mathrm{d}_C^n,\qquad
+B^n(C)\coloneqq\operatorname{im}\mathrm{d}_C^{n-1}.
 \]
-均分裂；这里在零调假设下把微分的值域限制到全部 \(Z^{n+1}(C)\)。
-\end{proposition}
-\begin{proof}
-若 \(1_C=\mathrm{d}h+h\mathrm{d}\)，则已知 \(C\) 零调。限制到 \(Z^{n+1}(C)\)，得到 \(\mathrm{d}_C^nh^{n+1}=1\)，其中右端理解为其在 \(C^{n+1}\) 中的嵌入。因此 \(h^{n+1}\) 限制后是 \(C^n\to Z^{n+1}(C)\) 的截面。
+由 \(\mathrm{d}_C^n\mathrm{d}_C^{n-1}=0\)，像嵌入唯一地通过 \(Z^n(C)\) 分解。因此可以定义
+\[
+H^n(C)\coloneqq\operatorname{coker}\bigl(B^n(C)\longrightarrow Z^n(C)\bigr).
+\]
+它称为次数 \(n\in\mathbb Z\) 的\term[shangtongdiao]{上同调对象}[cohomology object]。当 \(R\) 为含幺环、\(C\) 为幺性左 \(R\) 模复形时，\(Z^n(C)\) 的元素称\term[yuquan]{余圈}[cocycle]，\(B^n(C)\) 的元素称\term[yubian]{余边}[coboundary]，且 \(H^n(C)=Z^n(C)/B^n(C)\)。对 \(\mathcal A\) 中的链复形 \((C_n,\partial_n)\)，相应定义 \(Z_n(C)=\ker\partial_n\)、\(B_n(C)=\operatorname{im}\partial_{n+1}\)，余核 \(H_n(C)\coloneqq\operatorname{coker}\bigl(B_n(C)\longrightarrow Z_n(C)\bigr)\) 称为次数 \(n\) 的\term[tongdiao]{同调对象}[homology object]；对模链复形，\(Z_n(C)\) 与 \(B_n(C)\) 的元素分别称\term[quan]{圈}[cycle]与\term[bianjie]{边界}[boundary]。
+\end{definition}
+\symidx{\(Z^n(C),B^n(C),H^n(C)\)：余圈、余边与上同调对象}
 
-反过来，选各短列的截面，得到 \(C^n\cong Z^n(C)\oplus Z^{n+1}(C)\)，且微分为 \(\mathrm{d}(z,w)=(w,0)\)。定义 \(h^n(z,w)=(0,z)\in Z^{n-1}(C)\oplus Z^n(C)\)，则 \(\mathrm{d}h(z,w)=(z,0)\)、\(h\mathrm{d}(z,w)=(0,w)\)，相加等于恒等。双积矩阵公式使此计算在一般交换范畴中也成立。
-\end{proof}
+两个余圈代表同一上同调类，恰好表示它们之差是余边。同调并不记住每个余圈，而是把能够由前一步微分产生的改变忽略掉。在一般交换范畴中，“除以”严格指上述余核，不能预先假定对象带有元素。
 
-例如在相邻两次放同一对象 \(M\)，微分为 \(1_M\)，得到可缩复形。它的两个非零项可以很大，同调却为零；可缩所说的“消去”是通过显式同伦实现的，并不是逐项零对象。
+\begin{definition}\label{b4:def:acyclic-complex}
+设 \(C\) 是交换范畴中的复形。若所有次数的同调对象均为零，则称 \(C\) 为\term[lingtiao-fuxing]{零调复形}[acyclic complex]，也称正合复形；这等价于每一项的像等于下一微分的核。
+\end{definition}
 
-\subsection{正合复形的非可缩例子}
-\label{b4:subsec:0601:03}
-
-\begin{example}\label{b4:exm:acyclic-not-contractible}
-把交换群短正合列 \(0\to\mathbb Z\xrightarrow{2}\mathbb Z\to\mathbb Z/2\to0\) 放在次数 \(0,1,2\)，便得到零调复形。若它可缩，次数二的同伦公式将要求商映射 \(\mathbb Z\to\mathbb Z/2\) 有一个截面。但任何 \(\mathbb Z/2\to\mathbb Z\) 都为零，因此不存在截面，复形不可缩。
+\begin{example}\label{b4:exm:integer-three-complex}
+取交换群复形
+\[
+C^0=\mathbb Z\xrightarrow{\ \mathrm{d}^0\ }C^1=\mathbb Z^2
+\xrightarrow{\ \mathrm{d}^1\ }C^2=\mathbb Z,
+\qquad \mathrm{d}^0(a)=(2a,0),\quad \mathrm{d}^1(x,y)=3y.
+\]
+复合为零，且
+\[
+H^0(C)=0,\qquad H^1(C)=\mathbb Z/2,\qquad H^2(C)=\mathbb Z/3.
+\]
+中间的核由 \((1,0)\) 生成，前一步只得到其偶数倍；末项没有下一步限制，却须除去 \(3\mathbb Z\)。这两个商分别记录不同次数的非正合性。
 \end{example}
 
-\begin{example}\label{b4:exm:acyclic-free-periodic}
-令 \(R=\mathbb Z/4\)，在每个整数次数取自由模 \(R\)，微分均为乘 \(2\)。因为核与像同为 \(2R\)，复形正合。每个 \(R\)-线性 \(h^n:R\to R\) 都是乘某个 \(a_n\in R\)。若有收缩同伦，便须
-\[
-1=2a_n+2a_{n+1}\quad\text{在 }R\text{ 中成立},
-\]
-右端是偶数剩余类，矛盾。这说明即使各项自由，无界正合复形也未必可缩。
-\end{example}
+\subsection{指标转换与次数平移约定}
+\label{b4:subsec:0501:03}
 
-这两个例子分别显示非分裂和无界时可能发生什么。后面比较投射消解时，将从一个有限端开始逐次提升同伦；不能在没有起点的无界复形上直接照搬同一归纳。
+把链复形改记为上链复形时，本书取
+\[
+C^n=C_{-n},\qquad \mathrm{d}_C^n=\partial_{-n},\qquad H^n(C)=H_{-n}(C).
+\]
+这里没有额外的负号；负号出现在下面的移位中。
+
+\begin{definition}\label{b4:def:complex-shift}
+设 \(C\) 是交换范畴中的上链复形，\(r\in\mathbb Z\)。规定
+\[
+C[r]^n=C^{n+r},\qquad \mathrm{d}_{C[r]}^n=(-1)^r \mathrm{d}_C^{n+r},
+\]
+所得复形称为 \(C\) 的 \(r\) 次\term[yiwei]{移位}[shift]。对复形之间的零次态射，移位只改指标，不增加符号。
+\end{definition}
+\symidx{\(C[r]\)：复形的移位，\(C[r]^n=C^{n+r}\)}
+
+微分平方仍为零，因为两次乘上的符号相乘为一。核与像不因微分乘 \(-1\) 改变，所以
+\[
+H^n(C[r])=H^{n+r}(C),\qquad (C[r])[s]=C[r+s].
+\]
+例如 \(M[0][1]\) 的唯一非零项在次数 \(-1\)，不是次数 \(1\)。若沿用链记号，同一约定写成 \((C[r])_n=C_{n-r}\)、\(\partial_{C[r]}=(-1)^r\partial_C\)。阅读采用相反移位记号的文献时，须同时转换次数和微分。
+
+\ProseParagraphBreak
+移位的负号使复形能够相容地组成映射锥，并使同伦在移位后仍满足同一形式的公式。此处先固定约定，\secref{b4:sec:0602}将通过微分平方和连接同态的计算说明它的作用。

@@ -1,19 +1,19 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.3 Weierstrass 方法与局部计算
+% 纲要位置：工作记录/计划纲要.md:2924
 
 \section{Weierstrass 方法与局部计算}
 \label{b3:sec:D03}
 
 级数除法的目标是把无限项压到一个次数有界的余式中，而不是逐项计算到某个截断阶数便停止。形式情形靠理想进完备性，收敛情形还要控制系数的范数；两种停止依据须分别证明。
 
-% 纲要细目（与计划纲要同步）：
-% * 形式及收敛情形的 Weierstrass 除法和预备定理，分别写出系数环与正规性假设
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 形式及收敛情形的 Weierstrass 除法和预备定理，分别写出系数环与T-正规性假设；比较两种完备性与误差修正
 % * 与附录 F 的 Hironaka 型标准基、初始指数和局部有限映射的联系
 % * 低维曲线分支、切锥和交数计算简介；Newton 滤过作为进一步方法
 % * 形式解、收敛解和代数解的区分；不能把形式除法中的级数自动视为收敛
-%
 % #### D.3.1 形式与收敛情形的 Weierstrass 除法和预备定理
-% #### D.3.2 Hironaka 型标准基、初始指数与局部有限映射
+% #### D.3.2 Weierstrass 有限映射与 Hironaka 型标准基的联系
 % #### D.3.3 曲线分支、切锥、交数与 Newton 滤过
 % #### D.3.4 形式解、收敛解与代数解
 
@@ -25,7 +25,7 @@
 
 \begin{definition}\label{b3:def:distinguished-series}
 设 \((A,\mathfrak m)\) 为局部环，\(k=A/\mathfrak m\)，\(f\in A[\![T]\!]\)。若其像
-\(\overline f\in k[\![T]\!]\) 恰有阶数 \(d\)，则称 \(f\) 关于 \(T\) 为 \(d\) 阶正规级数。若多项式形如
+\(\overline f\in k[\![T]\!]\) 恰有阶数 \(d\)，则称 \(f\) 为关于 \(T\) 的 \(d\) 阶正规级数（\(T\)-regular of order \(d\)），也简称 \(T\)-正规级数。若多项式形如
 \[
 W=T^d+a_{d-1}T^{d-1}+\cdots+a_0,\qquad a_i\in\mathfrak m,
 \]
@@ -115,6 +115,53 @@ q_0=\sum_{j\ge0}E^jQ_0(h),\qquad r=R_0(h-bq_0)
 
 永田雅宜\cite[(45.3), pp. 191--193]{Nagata1975LocalRings}用系数估计建立收敛除法；这里将同一控制写成收缩算子的形式。
 
+\begin{corollary}[收敛幂级数环的基本性质]\label{b3:cor:analytic-series-local-properties}
+设 \(n\ge1\)。环 \(\mathbb C\{x_1,\ldots,x_n\}\) 是维数 \(n\) 的 Noether 正则 Hensel 局部环，极大理想为 \((x_1,\ldots,x_n)\)，其极大理想进完备化为 \(\mathbb C[\![x_1,\ldots,x_n]\!]\)。
+\end{corollary}
+\begin{proof}
+记 \(R_n=\mathbb C\{x_1,\ldots,x_n\}\)，并补充 \(R_0=\mathbb C\)。常数项非零的收敛级数可逆，故 \(R_n\) 是极大理想 \(\mathfrak m=(x_1,\ldots,x_n)\) 的局部环。用刚证明的收敛 Weierstrass 除法按 \(n\) 归纳证明 Noether 性。
+
+设 \(0\ne I\subseteq R_n\)，取 \(0\ne f\in I\)。若 \(f\) 是单位则结论显然；否则取其最低非零齐次部分，并选择该齐次式不为零的向量作为最后一条坐标轴。一个可逆线性换元后，\(f(0,\ldots,0,T)\) 有有限正阶数 \(d\)。收敛除法说明 \(R_n/(f)\) 由 \(1,T,\ldots,T^{d-1}\) 在 \(R_{n-1}\) 上生成。归纳假设使这个有限生成模为 Noether 模，故其子模 \(I/(f)\) 有限生成。把这些生成元提升到 \(I\)，再加入 \(f\)，便得到 \(I\) 的有限生成集。
+
+理想链 \((0)\subsetneq(x_1)\subsetneq\cdots\subsetneq(x_1,\ldots,x_n)\) 中各项为素理想，因为相应商是少变量的收敛级数整环；故 \(\dim R_n\ge n\)。极大理想由 \(n\) 元生成，Krull 高度定理给出反向不等式。一次项的比较又给出 \(\dim_{\mathbb C}\mathfrak m/\mathfrak m^2=n\)，所以 \(R_n\) 正则。
+
+为验证 Hensel 性，设一个首一 \(R_n[T]\) 多项式在剩余域中分成互素首一因子 \(g_0h_0\)。把两个待提升因子的低次系数作为未知量，令其乘积的系数等于原多项式的系数。线性化是映射
+\((a,b)\mapsto ah_0+g_0b\)，其中 \(\deg a<\deg g_0\)、\(\deg b<\deg h_0\)。互素性使它单射，两边维数相同，故为同构。复解析隐函数定理于是给出原点附近的收敛系数，准确解出因式分解方程。这验证了 Hensel 因子提升条件。
+
+最后，模 \(\mathfrak m^r\) 时任意级数等于其有限截断。次数至少 \(r\) 的收敛级数可按有限多个 \(r\) 次单项式分组，每一组除去对应单项式后仍收敛。因此
+\(R_n/\mathfrak m^r\simeq\mathbb C[x]/(x)^r\)，取逆极限便得到 \(\widehat R_n=\mathbb C[\![x]\!]\)。
+\end{proof}
+
+这些性质亦见永田雅宜\cite[(45.5), pp. 193--194]{Nagata1975LocalRings}；其中 Hensel 性使用复解析隐函数定理。下面给出\cref{b3:prop:algebraic-series-converge}的证明概要。
+
+\begin{proofsketch}
+设 \(n\ge1\)，\(f\in\mathbb C[\![x_1,\ldots,x_n]\!]\) 在 \(\mathbb C(x_1,\ldots,x_n)\) 上代数。
+置 \(R=\mathbb C\{x_1,\ldots,x_n\}\)、\(\mathfrak m=(x_1,\ldots,x_n)R\)、\(\widehat R=\mathbb C[\![x_1,\ldots,x_n]\!]\) 及 \(K=\operatorname{Frac}R\)。由\cref{b3:cor:analytic-series-local-properties}，\(R\) 是 Noether 正则 Hensel 局部环，且所列 \(\widehat R\) 是其 \(\mathfrak m\)-进完备化。还需要两个解析结论：\(R\) 在任意有限分式域扩张中的整闭包是有限 \(R\)-模；每个有限 \(R\)-代数若是整环，则其局部环完备化仍为整环。这分别是解析正规化的有限性与解析不可约性。永田雅宜\cite[(45.6), p. 194; (45.1) and the definition of Weierstrass rings, p. 190]{Nagata1975LocalRings}给出这些结论：复数域是完美域，故有限于 \(R\) 的环是其所定义的 Weierstrass 环，正规化有限性包含在该定义的整闭包有限性条件中，而 (45.1) 给出整环商的解析不可约性。这些技术结论的证明在这里省略。
+
+由于 \(f\) 在 \(K\) 上代数，可以取 \(0\ne c\in R\)，使 \(cf\) 在 \(R\) 上整。令 \(L=K(f)\)，令 \(B\) 为 \(R\) 在域 \(L\) 中的整闭包。它是有限 \(R\)-模，并且是整环。\(R\) 的 Hensel 性使有限 \(R\)-代数分解为有限个局部环的直积\cite[(43.15), p. 185]{Nagata1975LocalRings}；\(B\) 没有非平凡幂等元，所以只有一个局部因子。记其唯一极大理想为 \(\mathfrak n\)。\(\widehat R\) 是正则局部环，因而正规；于是嵌入 \(L\subseteq\operatorname{Frac}\widehat R\) 把 \(B\) 映入 \(\widehat R\)。
+
+因为 \(B\) 是有限 \(R\)-模，有限模完备化定理给出
+\[
+\varprojlim_r B/\mathfrak m^rB\simeq B\otimes_R\widehat R.
+\]
+又因 \(B/\mathfrak mB\) 是有限维局部 \(\mathbb C\)-代数，其极大理想 \(\mathfrak n/\mathfrak mB\) 幂零，故存在 \(s\ge1\) 使 \(\mathfrak n^s\subseteq\mathfrak mB\subseteq\mathfrak n\)。两种理想进拓扑相同，所以这个逆极限也是 \(B\) 的 \(\mathfrak n\)-进完备化 \(\widehat B\)。上述解析不可约性结论于是保证 \(\widehat B=B\otimes_R\widehat R\) 是整环。
+
+乘法给出满射 \(\varphi:\widehat B\to\widehat R\)，\(b\otimes a\mapsto ba\)，并在子环 \(\widehat R\) 上为恒等。这里 \(\widehat R\to\widehat B\) 单射，是因为 \(R\to B\) 单射且 \(\widehat R\) 在 \(R\) 上平坦。令 \(F=\operatorname{Frac}\widehat R\)。对 \(\widehat R\) 的非零元局部化后，\(\widehat B\otimes_{\widehat R}F\) 是有限维 \(F\)-整环，因而是域；\(\varphi\) 所诱导的映射到 \(F\) 为保幺同态，故其核为零。\(\widehat B\) 本身是整环，局部化单射，所以原来的 \(\varphi\) 也单射。于是 \(\widehat B\simeq\widehat R\)。由于 \(B\otimes_R K=L\)，比较 \(F\)-维数得 \([L:K]=1\)，从而 \(f\in K\)。
+
+最后 \(K\cap\widehat R=R\)：若 \(f=a/b\in\widehat R\)，其中 \(a,b\in R\)、\(b\ne0\)，完备化的忠实平坦性给出 \(b\widehat R\cap R=bR\)，从而 \(a\in bR\)。因此 \(f\in R\)。
+\end{proofsketch}
+
+解析环与形式环的商比较，即\cref{b3:prop:analytic-formal-quotient-comparison}，现在也可由完备化定理证明。
+
+\begin{proof}
+设 \(n\ge1\)，\(R=\mathbb C\{x_1,\ldots,x_n\}\)，\(I\subsetneq R\) 为理想。由\cref{b3:cor:analytic-series-local-properties}，\(R\) 是 Noether 局部环，极大理想为 \(\mathfrak m=(x_1,\ldots,x_n)R\)，且 \(\widehat R=\mathbb C[\![x_1,\ldots,x_n]\!]\)。于是 \(R/I\) 仍是 Noether 局部环，极大理想为 \(\mathfrak m/I\)。由\cref{b3:prop:completion-ideal-contraction}，
+\[
+\widehat{R/I}\simeq\widehat R/I\widehat R,
+\qquad I\widehat R\cap R=I.
+\]
+前一等式识别所列目标为 \(R/I\) 的极大理想进完备化，后一等式说明自然同态单射。\cref{b3:thm:completion-flat}用于 Noether 局部环 \(R/I\)，又给出这个同态的忠实平坦性。
+\end{proof}
+
 \begin{example}\label{b3:exm:weierstrass-cusp-division}
 在 \(k[\![x]\!][\![y]\!]\) 中，\(f=y^2-x^3\) 是关于 \(y\) 的二次Weierstrass 多项式。每个级数模 \(f\) 唯一写成
 \(a(x)+b(x)\cdot y\)。例如
@@ -124,7 +171,25 @@ y^5+x^2y^2\equiv x^6y+x^5\pmod{y^2-x^3}.
 这里余式关于 \(y\) 的次数小于二，关于 \(x\) 则可以有无穷多项；“次数有界”必须说明是哪个变量。
 \end{example}
 
-\subsection{Hironaka 型标准基、初始指数与局部有限映射}
+两种除法都把任意级数化为有界次数的余式，但所用完备性和收敛估计不同，见\cref{b3:tab:D-weierstrass-comparison}。形式证明控制系数理想的阶数，解析证明还控制系数的实际大小。
+
+\begin{table}[htbp]
+\centering
+\caption{形式与收敛 Weierstrass 除法的比较}
+\label{b3:tab:D-weierstrass-comparison}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & 形式情形 & 收敛情形 \\
+\midrule
+系数环境 & 完备 Noether 局部环 \((A,\mathfrak m)\) & 复收敛幂级数环 \(\mathbb C\{x'\}\) \\
+完备对象 & \(A[\![T]\!]\) 的 \(\mathfrak m\)-进拓扑 & 足够小多圆盘上的加权绝对系数范数 \\
+修正机制 & 每次提高系数的 \(\mathfrak m\)-阶 & 误差算子的范数小于一 \\
+商与余式 & 商为形式级数；余式属于 \(A[T]_{<d}\) & 商实际收敛；余式属于 \(\mathbb C\{x'\}[T]_{<d}\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Weierstrass 有限映射与 Hironaka 型标准基的联系}
 \label{b3:subsec:D03:02}
 
 \begin{proposition}\label{b3:prop:weierstrass-finite-free}

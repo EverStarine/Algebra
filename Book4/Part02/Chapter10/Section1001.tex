@@ -1,99 +1,214 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 10.1 同调维数
-% 纲要位置：计划纲要.md，第 2713 行。
+% 纲要标题：### 10.1 Yoneda 扩张
+% 纲要标签：b4:sec:0901
+% 纲要位置：计划纲要.md，第 2685 行。
 
-\section{同调维数}
-\label{b4:sec:1001}
+\section{Yoneda 扩张}
+\label{b4:sec:0901}
 
-给消解添加可缩项会增加它的表面长度，却不改变原模。最短消解长度及导出群的消失，提供衡量模与底环同调复杂程度的两种等价方法。
+扩张不仅包含中间模，还包含核与商的指定映射。把扩张粘接起来得到的乘积，需要与消解中提升复形映射的乘积一致。
 
 % 纲要内容：
 %
-% * 投射、内射及平坦维数
-% * 整体维数
-% * 有限维数与消失判据
+% * Ext^1 与短正合扩张
+% * 高阶扩张及等价
+% * Yoneda 乘积与消解乘积的一致性
 %
 
-\subsection{投射、内射及平坦维数}
-\label{b4:subsec:1001:01}
+\subsection{\texorpdfstring{\(\operatorname{Ext}^1\) 与短正合扩张}{Ext1 与短正合扩张}}
+\label{b4:subsec:0901:01}
 
-一个模可以有许多不同的消解，也可以在任意消解中加入可缩的两项复形，使表面长度增加。要量度模本身的复杂程度，必须取所有允许的消解中最短的长度。
+给定左 \(R\)-模 \(M,N\)，\(\operatorname{Ext}_R^1(M,N)\) 既可由消解计算，也能描述把 \(N\) 放在核位置、把 \(M\) 放在商位置的所有短正合列。这里分类的数据包括两端的指定映射；仅知道中间模的同构类型还不够。
 
-\begin{definition}\label{b4:def:homological-dimensions}
-设 \(R\) 为含幺环，\(M\ne0\) 为幺性左 \(R\) 模。对非负整数 \(n\)，考虑正合列
+\begin{definition}\label{b4:def:yoneda-extension}
+设 \(R\) 为环，\(M,N\) 为左 \(R\)-模。短正合列
 \[
- 0\longrightarrow P_n\longrightarrow\cdots\longrightarrow P_0
- \longrightarrow M\longrightarrow0
+ \xi:\quad 0\longrightarrow N\xrightarrow{i}E\xrightarrow{p}M\longrightarrow0
 \]
-若每个 \(P_i\)（\(0\le i\le n\)）投射，则在这类列中取最小长度 \(n\)，称为 \(M\) 的\term[toushe-weishu]{投射维数}[projective dimension]，记为 \(\operatorname{pd}_RM\)。把投射模换为平坦左 \(R\) 模，得到\term[pingtan-weishu]{平坦维数}[flat dimension] \(\operatorname{fd}_RM\)。若改用正合列
-\[
- 0\longrightarrow M\longrightarrow I^0\longrightarrow\cdots\longrightarrow I^n\longrightarrow0
-\]
-且每个 \(I^j\) 内射，则最小长度称为\term[neishe-weishu]{内射维数}[injective dimension]，记为 \(\operatorname{id}_RM\)。没有有限长度消解时，对应维数为 \(\infty\)；对零模三者均约定为 \(-\infty\)。右模的维数定义在 \(R^{\mathrm{op}}\) 上。
+称为 \(M\) 被 \(N\) 的一个\term[kuozhang]{扩张}[extension]。给定另一个扩张 \(\xi':0\to N\xrightarrow{i'}E'\xrightarrow{p'}M\to0\)。若存在 \(R\) 模同态 \(f:E\to E'\)，满足 \(fi=i'\)、\(p'f=p\)，则称两扩张等价。这里两端的映射固定为恒等映射；短五引理保证 \(f\) 自动为同构。
 \end{definition}
 
-非零模的投射、内射、平坦维数为零，分别等价于它本身投射、内射、平坦。因为投射模平坦，总有 \(\operatorname{fd}_RM\le\operatorname{pd}_RM\)，但这不表示两种维数相同。例如 \(\mathbb Q\) 是平坦 \(\mathbb Z\)-模，却不是投射模：若它投射，就为某个自由交换群的直和因子，因而自由；非零自由交换群不可能是可除群。由主理想整环上的长度一自由消解，\(\operatorname{pd}_{\mathbb Z}\mathbb Q=1\)。
-
-\ProseParagraphBreak
-同一个交换群改变底环后也会改变维数。\(\mathbb Z/p\) 作为 \(\mathbb F_p\)-模投射维数为零，作为整数模的投射维数为一，而作为 \(\mathbb Z/p^2\)-模有无限投射维数。最后一项将由消失判据和周期消解验证，不能从群的大小判断。
-
-\subsection{整体维数}
-\label{b4:subsec:1001:02}
-
-\begin{definition}\label{b4:def:global-dimension}
-设 \(R\) 为非零环。所有左 \(R\)-模投射维数的上确界
-\[
- \operatorname{l.gl.dim}R=\sup\{\,\operatorname{pd}_RM:M\text{ 为左 }R\text{-模}\,\}
-\]
-称为 \(R\) 的\term[zuozhengtiweishu]{左整体维数}[left global dimension]。右整体维数定义为 \(\operatorname{r.gl.dim}R=\operatorname{l.gl.dim}R^{\mathrm{op}}\)。交换环时记为 \(\operatorname{gl.dim}R\)。
-\end{definition}
-
-域及除环的所有模都有基，故相应整体维数为零。非交换环的左、右整体维数不能不加说明地混写。这里的上确界也包括无限生成模；只讨论有限生成模时，得到的是另一个受限制的问题。
-
-\ProseParagraphBreak
-整体维数为零当且仅当每个短正合左模列分裂。事实上，每个模投射意味着每个满射都有截面；反过来，若所有短正合列分裂，那么任意到该模的自由满射分裂，使该模成为自由模的直和因子。第二卷第十三章的半单模结构理论进一步把这种性质与半单环联系起来；本章只使用上述直接判别。
-
-\subsection{有限维数与消失判据}
-\label{b4:subsec:1001:03}
-
-\begin{theorem}\label{b4:thm:dimension-vanishing}
-设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\) 模，\(d\ge0\) 为整数。有以下等价条件：
-\begin{enumerate}
-\item \(\operatorname{pd}_RM\le d\)，当且仅当对每个左 \(R\)-模 \(N\) 有 \(\operatorname{Ext}_R^{d+1}(M,N)=0\)；这又等价于所有 \(i>d\) 的这些 Ext 群为零。
-\item \(\operatorname{id}_RM\le d\)，当且仅当对每个左 \(R\)-模 \(N\) 有 \(\operatorname{Ext}_R^{d+1}(N,M)=0\)；这又等价于所有 \(i>d\) 的这些 Ext 群为零。
-\item \(\operatorname{fd}_RM\le d\)，当且仅当对每个右 \(R\)-模 \(T\) 有 \(\operatorname{Tor}_{d+1}^R(T,M)=0\)；这又等价于所有 \(i>d\) 的这些 Tor 群为零。
-\end{enumerate}
+\begin{theorem}\label{b4:thm:ext1-extensions}
+设 \(R\) 为含幺环，\(M,N\) 为幺性左 \(R\) 模。\(M\) 被 \(N\) 的短正合扩张的等价类与 \(\operatorname{Ext}_R^1(M,N)\) 自然一一对应，分裂扩张对应零元。
 \end{theorem}
 \begin{proof}
-投射情形，有限投射消解直接计算出高次 Ext 为零。反过来，取任意投射消解，令第 \(d\) 个合冲模为 \(K_d\)，\(d=0\) 时令 \(K_0=M\)。由\cref{b4:prop:iterated-dimension-shift}，当 \(d>0\) 时
-\(\operatorname{Ext}_R^1(K_d,N)\simeq\operatorname{Ext}_R^{d+1}(M,N)\)。因此\cref{b4:thm:ext-projective-injective}使 \(K_d\) 投射；以它作为最左一项截短，就得到长度 \(d\) 的消解。\(d=0\) 直接用同一投射判据。
+选定正合列 \(0\to K\xrightarrow{j}P\to M\to0\)，其中 \(P\) 投射。由\cref{b4:thm:ext-long-exact}，
+\[
+ \operatorname{Ext}_R^1(M,N)
+ =\operatorname{Hom}_R(K,N)\big/\{\,a j:a\in\operatorname{Hom}_R(P,N)\,\}.
+\]
+对扩张 \(\xi\)，提升 \(P\to M\) 为 \(t:P\to E\)。因为 \(ptj=0\)，唯一存在 \(u:K\to N\) 使 \(iu=tj\)。换成另一提升 \(t'\)，差 \(t'-t\) 经 \(N\) 分解，故 \(u'-u\) 是某个 \(P\to N\) 的限制；扩张等价也不改变此余类。
 
-内射情形，取内射消解的第 \(d\) 个余核 \(L^d\)，由内射方向的平移得到 \(\operatorname{Ext}_R^1(N,L^d)\simeq\operatorname{Ext}_R^{d+1}(N,M)\)。消失使 \(L^d\) 内射，因而截短为长度 \(d\) 的内射消解。有限内射消解同样给出全部更高次的消失。
+反过来，对 \(u:K\to N\) 作推出
+\[
+ E_u=(N\oplus P)/\{\,(u(k),-j(k)):k\in K\,\}.
+\]
+由 \(n\mapsto[(n,0)]\) 及 \([(n,p)]\mapsto\bar p\) 得到扩张。第一个映射单射，因为 \(j\) 单射；第二个映射的核由 \(\bar p=0\) 即 \(p=j(k)\) 算出，恰好是 \(N\) 的像。如果 \(u-v=a j\)，映射 \([(n,p)]\mapsto[(n+a(p),p)]\) 给出 \(E_u\to E_v\) 的扩张同构。对原来的 \(\xi\)，映射 \([(n,p)]\mapsto i(n)+t(p)\) 给出 \(E_u\to E\) 的扩张同构。因此两个构造互逆。
 
-平坦情形，平坦模与任意右模的正次数 Tor 均为零，见\cref{b4:thm:tor-flat-criterion}及平衡计算。把长度 \(d\) 的平坦消解拆成短正合列，\cref{b4:thm:tor-long-exact}逐次平移，得到高于 \(d\) 次的 Tor 消失。反过来，可先取一个自由消解；其第 \(d\) 个合冲模 \(K_d\) 满足
-\(\operatorname{Tor}_1^R(T,K_d)\simeq\operatorname{Tor}_{d+1}^R(T,M)=0\)。平坦判据使 \(K_d\) 平坦，截短即得有限平坦消解。三个证明也说明只要指定的一个次数对所有测试模消失，全部更高次数就自动消失。
+\(u\) 可延拓至 \(P\) 当且仅当可把 \(t\) 改成在 \(K\) 上为零的提升；后者恰好下降为 \(M\to E\) 的截面。这证明零元判据。对 \(N\to N'\) 作推出相当于把 \(u\) 后复合，对 \(M'\to M\) 作拉回相当于提升该映射到投射消解后预复合，故对应自然。
 \end{proof}
 
-\begin{corollary}\label{b4:cor:global-dimension-ext}
-设 \(R\) 为非零环。左整体维数也等于所有左 \(R\)-模内射维数的上确界，并且等于
+扩张类的加法也有直接构造。对两个扩张先取直和，再沿对角映射 \(M\to M\oplus M\) 拉回，最后沿加法 \(N\oplus N\to N\) 推出。所得扩张称为\term[baerhe]{Baer 和}[Baer sum]。\footnote{拜尔（Reinhold Baer，1902-1979），德裔数学家，研究群的扩张、可解群和幂零群。}具体说，中间模是
 \[
- \sup\{\,n\ge0:\operatorname{Ext}_R^n(M,N)\ne0
-       \text{ 对某些左 }R\text{-模 }M,N\,\}.
+ (E\times_M E')/\{\,(i(n),-i'(n)):n\in N\,\}.
 \]
-\end{corollary}
+
+\begin{proposition}\label{b4:prop:baer-addition}
+对于环 \(R\) 上的左模 \(M,N\)，Baer 和在扩张等价类上给出交换群结构；\cref{b4:thm:ext1-extensions}的对应是群同构。
+\end{proposition}
 \begin{proof}
-对每个有限 \(d\)，所有左模的投射维数不超过 \(d\)，等价于所有双变量的 \(\operatorname{Ext}^{d+1}\) 为零；由内射判据，这又等价于所有左模的内射维数不超过 \(d\)。若没有有限上界，则任意 \(d\) 都有某一双变量的 \(\operatorname{Ext}^{d+1}\) 非零。\(R\ne0\) 保证 \(\operatorname{Hom}_R(R,R)\ne0\)，涵盖维数零情形。
+从同一个 \(P\to M\) 分别提升到 \(E,E'\)，其合并提升到纤维积；再作推出后，在 \(K\) 上诱导的映射就是 \(u+u'\)。因而 Baer 和对应 \(\operatorname{Ext}^1\) 中的加法。这个等式同时证明构造不依赖代表元、结合律和交换律；分裂扩张为零，沿 \(-1_N\) 推出得到负元。
 \end{proof}
 
-因此非域主理想整环 \(R\) 的整体维数恰为一：\cref{b4:thm:pid-free-submodule}给出所有模长度至多一的自由消解；取非零非单位 \(a\)，则 \(\operatorname{Ext}_R^1(R/(a),R)=R/(a)\ne0\)，给出下界。
+例如，对素数 \(p\)，\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z/p)=\mathbb Z/p\)。非零类的中间群都同构于 \(\mathbb Z/p^2\)，但指定的核嵌入可以不同，所以这些扩张仍有 \(p-1\) 个不同的非零类。这个区别在用扩张恢复结构时不能省略。
 
-\begin{example}\label{b4:exm:infinite-dimension-dual-numbers}
-设 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)。模 \(k=R/(\varepsilon)\) 的自由消解为
+\subsection{高阶扩张及等价}
+\label{b4:subsec:0901:02}
+
+\begin{definition}\label{b4:def:higher-yoneda-extension}
+设 \(R\) 为含幺环，\(M,N\) 为幺性左 \(R\) 模，\(n\ge1\) 为整数。给定左 \(R\) 模正合列
 \[
- \cdots\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R
- \xrightarrow{\varepsilon}R\longrightarrow k\longrightarrow0.
+ \xi:\quad 0\longrightarrow N\longrightarrow E_{n-1}\longrightarrow\cdots
+ \longrightarrow E_0\longrightarrow M\longrightarrow0
 \]
-对它施加 \(\operatorname{Hom}_R(-,k)\) 或 \(-\otimes_R k\)，全部微分都为零，故每个非负次数的 Ext、Tor 都是 \(k\)。于是 \(\operatorname{pd}_Rk=\operatorname{id}_Rk=\operatorname{fd}_Rk=\infty\)，且 \(\operatorname{gl.dim}R=\infty\)。
-\end{example}
+称为一个 \(n\) 阶扩张。两个这样的扩张之间，两端为恒等映射的链映射称为扩张态射。由扩张态射生成的等价关系称为 \term[yonedakuozhang]{Yoneda 扩张}[Yoneda extension]的等价关系：允许有限串扩张态射，箭头方向可以交替。这些扩张的等价类族暂记为 \(\operatorname{YExt}_R^n(M,N)\)；下面的定理将证明它可由一个集合参数化。
+\end{definition}
 
-维数与消失条件的系统对应可参阅 Weibel\cite[Section 4.1, pd Lemma 4.1.6, id Lemma 4.1.8, fd Lemma 4.1.10]{Weibel1994HomologicalAlgebra}。注意这些判据对测试模的量词是“所有”，并非只检验一个随手选取的模。
+当 \(n>1\) 时，中间各项的映射不必可逆。因此不能把等价关系写成“存在中间项的同构”，也不能只允许一个固定方向的扩张态射。下面同时说明这些类确实构成集合，并给出计算它们的方法。
+
+\begin{theorem}\label{b4:thm:yoneda-ext-comparison}
+设 \(R\) 为含幺环，\(M,N\) 为幺性左 \(R\) 模，\(n\ge1\) 为整数。扩张等价类可组成集合，并有对 \(M\) 反变、对 \(N\) 协变的自然双射
+\[
+ \operatorname{YExt}_R^n(M,N)\simeq\operatorname{Ext}_R^n(M,N).
+\]
+沿 \(M\) 的对角映射拉回、沿 \(N\) 的加法映射推出所定义的高阶 Baer 和，对应右侧的加法。
+\end{theorem}
+\begin{proof}
+固定投射消解 \(P_\bullet\to M\)，令 \(\Omega^nM=\ker(P_{n-1}\to P_{n-2})\)，其中 \(P_{-1}=M\)。\cref{b4:thm:dimension-shift-basic,b4:prop:iterated-dimension-shift}的平移公式及第一步正合列给出
+\[
+ \operatorname{Ext}_R^n(M,N)
+ \simeq\operatorname{Hom}_R(\Omega^nM,N)
+ /\operatorname{res}\operatorname{Hom}_R(P_{n-1},N).
+\]
+也可直接从消解读出此式：余圈 \(P_n\to N\) 在 \(\ker(P_n\to\Omega^nM)\) 上为零，故经 \(\Omega^nM\) 分解；余边恰好来自 \(P_{n-1}\to N\)。这里沿用\chapref{b4:ch:08}消解计算中的微分 \(f\mapsto f \mathrm{d}\)。
+
+给定 \(n\) 阶扩张，依次利用 \(P_i\) 的投射性构造交换的提升 \(t_i:P_i\to E_i\)，\(0\le i<n\)。最后 \(t_{n-1}|_{\Omega^nM}\) 落在 \(N\) 中，得到 \(u:\Omega^nM\to N\)。说明其余类与提升无关：对两套提升 \(t,s\)，从最低次数起构造 \(h_i:P_i\to E_{i+1}\)，使
+\[
+ t_i-s_i=\mathrm{d}_Eh_i+h_{i-1}\mathrm{d}_P\qquad(0\le i<n-1),\qquad h_{-1}=0.
+\]
+每一步待提升的差在前一个微分下为零，故落在下一个微分的像中，投射性允许提升。于是 \(t_{n-1}-s_{n-1}-h_{n-2}\mathrm{d}_P\) 落在 \(N\) 中，给出 \(a:P_{n-1}\to N\)；限制到 \(\Omega^nM\) 后得到 \(u_t-u_s=a|_{\Omega^nM}\)。\(n=1\) 时直接用 \(t_0-s_0\) 即可。扩张态射把一套提升变成另一扩张的提升，因而整个箭头串都保持该余类。
+
+对任意 \(u:\Omega^nM\to N\)，把截短消解
+\[
+ 0\longrightarrow\Omega^nM\longrightarrow P_{n-1}\longrightarrow\cdots
+ \longrightarrow P_0\longrightarrow M\longrightarrow0
+\]
+的最左端沿 \(u\) 推出。新项是
+\(E_{n-1}(u)=(N\oplus P_{n-1})/\{(u(x),-x)\}\)，其余项保持 \(P_i\)。与一阶情形相同，核及像的计算证明新列正合。若 \(u-v=a|_{\Omega^nM}\)，在新项上用 \([(z,p)]\mapsto[(z+a(p),p)]\)，在其他项上用恒等映射，就得到两个新扩张的同构。
+
+从任意原扩张取出的 \(u\) 又给出这个推出扩张到原扩张的态射：最左新项用 \([(z,p)]\mapsto i(z)+t_{n-1}(p)\)，其他项用 \(t_i\)。因此原扩张与所构造的扩张等价，两个方向互逆。特别地，每个扩张类都有一个由 \(u\in\operatorname{Hom}_R(\Omega^nM,N)\) 得到的代表；这个 Hom 集的上述商集便给出全部扩张类的集合参数化。
+
+接着核对两变量的作用。若 \(v:N\to N'\)，沿 \(v\) 推出扩张，并把原来的提升复合到推出列中，最左端诱导的映射变成 \(vu:\Omega^nM\to N'\)。它对应消解余圈的后复合，故与 \(\operatorname{Ext}_R^n(M,v)\) 相容。
+
+若 \(f:M'\to M\)，取投射消解 \(P'_\bullet\to M'\)，由\cref{b4:thm:resolution-comparison}选取提升 \(f\) 的比较映射 \(c:P'_\bullet\to P_\bullet\)。记
+\[
+ c_\Omega=c_{n-1}|_{\Omega^nM'}:\Omega^nM'\longrightarrow\Omega^nM.
+\]
+沿 \(f\) 拉回扩张时，在最低次数用到纤维积的提升，在其余次数用原提升与 \(c_i\) 的复合，便得到最左端映射 \(u c_\Omega\)。若余圈 \(b:P_n\to N\) 经 \(\Omega^nM\) 分解为 \(u\)，则
+\[
+ b c_n=u\,\mathrm{d}_{P,n}c_n
+       =u c_{n-1}\mathrm{d}_{P',n};
+\]
+所以这个商类恰是 \(\operatorname{Ext}_R^n(f,N)\) 所给的类。若换另一比较提升 \(c'\)，由\cref{b4:prop:comparison-homotopy-unique}，存在同伦 \(h_i:P'_i\to P_{i+1}\)，使
+\[
+ c_i-c'_i=\mathrm{d}_{P,i+1}h_i+h_{i-1}\mathrm{d}_{P',i},\qquad h_{-1}=0.
+\]
+在 \(\Omega^nM'\) 上第二项为零，因此
+\[
+ u c_\Omega-u c'_\Omega
+ =\left.(u\,\mathrm{d}_{P,n}h_{n-1})\right|_{\Omega^nM'}.
+\]
+右侧是一个 \(P'_{n-1}\to N\) 同态的限制，故不改变商类。这既证明拉回的自然性，也说明用于实现它的比较提升不影响结果。
+
+最后把换消解与换扩张提升区分开来。若 \(P'_\bullet\) 也是 \(M\) 的投射消解，上面的构造取 \(f=1_M\)，就把两种商描述按 \([u]\mapsto[u c_\Omega]\) 比较。取反向比较后，两种复合分别与相应的恒等映射同伦，所以诱导互逆的同构；余圈等式也表明这正是\chapref{b4:ch:08}用于识别两种 Ext 计算的比较同构。因而不同消解给出的识别在该同构下相容。前面固定消解时已经证明换扩张中的提升、沿扩张态射改变代表均不改变商类，这里消去的则是投射消解本身的选择。
+
+对扩张 \(\xi,\xi'\)，先逐项取直和 \(\xi\oplus\xi'\)，得到右端为 \(M\oplus M\)、左端为 \(N\oplus N\) 的列；再在右端沿 \(\Delta_M:M\to M\oplus M\) 拉回，最后在左端沿 \(+_N:N\oplus N\to N\) 推出。也就是
+\[
+ \xi+\xi'=(+_N)_*\Delta_M^*(\xi\oplus\xi').
+\]
+分别取 \(P_\bullet\) 到两列的提升，再用逐项对角映射 \(P_\bullet\to P_\bullet\oplus P_\bullet\) 提升到拉回列。在最左端，所得映射是 \((u,u'):\Omega^nM\to N\oplus N\)；推出后成为 \(+_N(u,u')=u+u'\)。所以 Baer 和对应商集中的加法。特别地，它不依赖代表扩张，并由此给出与 Ext 相同的交换群结构。
+\end{proof}
+
+对 \(n=0\)，约定 \(\operatorname{YExt}_R^0(M,N)=\operatorname{Hom}_R(M,N)\)。在没有足够投射或内射对象的一般交换范畴中，仍可讨论扩张及其箭头串；本节已证的与导出函子的比较则是在模范畴中进行的。
+
+\subsection{Yoneda 乘积与消解乘积}
+\label{b4:subsec:0901:03}
+
+若一列以 \(N\) 为商，另一列以 \(N\) 为核，就能把它们首尾连接。这一操作给出 Ext 群之间并非来自普通数乘的乘法。
+
+\begin{definition}\label{b4:def:yoneda-product}
+设 \(R\) 为含幺环，\(L,N,M\) 为幺性左 \(R\) 模，\(m,n\ge1\) 为整数。对 \(\alpha\in\operatorname{YExt}_R^m(N,L)\)、\(\beta\in\operatorname{YExt}_R^n(M,N)\)，把代表扩张在共同的 \(N\) 处拼接，删除两处 \(N\)，以原来的满射到 \(N\) 与从 \(N\) 出发的单射之复合作为中间箭头。所得 \((m+n)\) 阶扩张类记为 \(\alpha\beta\)，称为\term[yonedachengji]{Yoneda 乘积}[Yoneda product]。约定 \(\operatorname{YExt}_R^0(X,Y)=\operatorname{Hom}_R(X,Y)\)：左因子为零次同态 \(N\to L\) 时沿该同态推出，右因子为零次同态 \(M\to N\) 时沿该同态拉回；两个因子均为零次时取同态复合。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:yoneda-resolution-product}
+设 \(R\) 为含幺环，\(L,N,M\) 为幺性左 \(R\) 模。Yoneda 乘积良定义、双加性且结合，并在 Yoneda 扩张与 Ext 的自然对应下等于下述消解乘积。取投射消解 \(P_\bullet\to M\)、\(Q_\bullet\to N\)，以 \(\varepsilon_Q:Q_0\to N\) 表示增广，设 \(m,n\ge0\) 为整数。若 \(b:P_n\to N\)、\(a:Q_m\to L\) 分别是 \(\operatorname{Hom}_R(P_\bullet,N)\)、\(\operatorname{Hom}_R(Q_\bullet,L)\) 中的余圈，把 \(b\) 逐次提升为
+\[
+ t_i:P_{n+i}\longrightarrow Q_i,\qquad
+ \varepsilon_Qt_0=b,\qquad \mathrm{d}_Qt_i=t_{i-1}\mathrm{d}_P\quad(i\ge1),
+\]
+则乘积由余圈 \(a t_m:P_{n+m}\to L\) 代表。
+\end{proposition}
+\begin{proof}
+拼接在共同项处正合，因为像和核都由被删除的 \(N\) 描述。若一个因子沿某个扩张态射改变，把该态射与另一列的恒等映射拼接，仍得到扩张态射。因此拼接保持等价关系的每个生成关系，也就保持由正向或反向扩张态射组成的任意有限箭头串。零次因子的拉回或推出也把扩张态射送到扩张态射，故这些情形同样良定义。三个正次数因子依次拼接不改变项及其复合箭头。零次因子位于外端时，拉回或推出的泛性质使两种顺序相容；它位于中间时，拉回的投影与推出的结构映射给出两种拼接列之间的扩张态射。连续的零次因子则由同态复合的结合律处理。因而乘积结合。
+
+对于消解公式，\(b \mathrm{d}_P=0\) 保证 \(t_0\mathrm{d}_P\) 落在 \(\ker\varepsilon_Q\)，可用 \(P_{n+1}\) 的投射性提升至 \(Q_1\)。以后每步同样先用 \(\mathrm{d}_P^2=0\) 核对落在核中，再提升。\(a t_m \mathrm{d}_P=a \mathrm{d}_Qt_{m+1}=0\)，故所得是余圈。
+
+对 \(m,n\ge1\)，用\cref{b4:thm:yoneda-ext-comparison}的推出构造代表 \(\alpha,\beta\)。设 \(a,b\) 经合冲模的分解分别为
+\[
+ \bar a:\Omega^mN\to L,\qquad \bar b:\Omega^nM\to N,
+\]
+记最左新项为
+\[
+\begin{aligned}
+ A&=(L\oplus Q_{m-1})/\{(\bar a(x),-x):x\in\Omega^mN\},\\
+ B&=(N\oplus P_{n-1})/\{(\bar b(y),-y):y\in\Omega^nM\}.
+\end{aligned}
+\]
+以 \(i_\alpha:L\to A\)、\(i_\beta:N\to B\) 表示单射，以 \(j_\alpha:Q_{m-1}\to A\)、\(j_\beta:P_{n-1}\to B\) 表示 \(q\mapsto[(0,q)]\) 型的映射。拼接处的相容性就是下面的方块：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+ P_n \ar[r,"\mathrm{d}_{P,n}"] \ar[d,"t_0"']
+   & P_{n-1} \ar[d,"j_\beta"] \\
+ Q_0 \ar[r,"i_\beta\varepsilon_Q"'] & B.
+\end{tikzcd}
+\]
+它交换，因为 \(j_\beta\mathrm{d}_{P,n}=i_\beta b=i_\beta\varepsilon_Qt_0\)。因此从 \(P_0\) 到 \(P_{n-2}\) 的恒等映射、\(P_{n-1}\to B\) 的 \(j_\beta\)，以及
+\[
+ P_{n+i}\xrightarrow{t_i}Q_i\quad(0\le i<m-1),\qquad
+ P_{n+m-1}\xrightarrow{j_\alpha t_{m-1}}A
+\]
+组成到拼接列的逐项提升；当 \(m=1\) 或 \(n=1\) 时，相应的指标区间为空。若 \(m=1\)，拼接箭头 \(A\to B\) 由 \(i_\beta\varepsilon_Q:Q_0\to B\) 及 \(L\to B\) 的零映射在推出上诱导，所以上面的方块仍给出所需相容性。
+
+最左端的指标可从下面两层交换方块直接读出：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+ P_{n+m} \ar[r,"\mathrm{d}_{P,n+m}"] \ar[d,"t_m"']
+   & P_{n+m-1} \ar[d,"t_{m-1}"] \\
+ Q_m \ar[r,"\mathrm{d}_{Q,m}"] \ar[d,"a"']
+   & Q_{m-1} \ar[d,"j_\alpha"] \\
+ L \ar[r,"i_\alpha"'] & A.
+\end{tikzcd}
+\]
+下方方块交换，是因为推出关系给出 \(j_\alpha\mathrm{d}_{Q,m}=i_\alpha a\)。于是
+\[
+ j_\alpha t_{m-1}\mathrm{d}_{P,n+m}=i_\alpha a t_m.
+\]
+由于 \(\operatorname{im}\mathrm{d}_{P,n+m}=\Omega^{n+m}M\) 且 \(i_\alpha\) 单射，拼接列在最左端诱导的映射正是余圈 \(a t_m\) 经 \(\Omega^{n+m}M\) 的分解。因此拼接扩张对应所陈述的消解乘积。该对应也证明换 \(t_i\)、换余圈代表或换消解均不改变所得 Ext 类。
+
+固定 \(b\) 的提升时，\((a+a')t_m=a t_m+a't_m\)；固定 \(a\) 时，两套 \(b,b'\) 的提升之和提升 \(b+b'\)。因此乘积双加性。若 \(m=0\)，写 \(a=h\varepsilon_Q\)，其中 \(h:N\to L\)，则 \(a t_0=h b\)，正是沿 \(h\) 推出的后复合。若 \(n=0\)，写 \(b=f\varepsilon_P\)，其中 \(f:M\to N\)，则 \(t_i\) 是提升 \(f\) 的比较映射，\(a t_m\) 正是自然性中沿 \(f\) 拉回的余圈。两个次数均为零时，这又化为同态复合。
+\end{proof}
+
+于是 \(\bigoplus_{n\ge0}\operatorname{Ext}_R^n(M,M)\) 成为带单位的分次环，单位是 \(1_M\)。这里没有一般的分次交换性断言：次数零部分已经可能是非交换环 \(\operatorname{End}_R(M)\)。例如 \(M=k^2\) 时，这一部分是矩阵环 \(M_2(k)\)。
+
+\ProseParagraphBreak
+消解乘积的计算采用 \(\delta f=f \mathrm{d}\) 的次数约定。若改用\cref{b4:def:hom-complex}中内部 Hom 的微分，则须同时使用\chapref{b4:ch:05}的移位符号及每度的重标识，不能只改一个微分的符号而保留全部提升公式。Ext 扩张的基本对应和 Baer 和可参阅 Weibel\cite[Theorem 3.4.3, Definition 3.4.4, Corollary 3.4.5]{Weibel1994HomologicalAlgebra}；高阶扩张的进一步讨论见该书\cite[Vista 3.4.6]{Weibel1994HomologicalAlgebra}。

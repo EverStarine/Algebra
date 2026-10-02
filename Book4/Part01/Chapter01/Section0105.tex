@@ -1,0 +1,112 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 1.5 范畴代数与图表表示
+% 纲要细目（写作范围）：
+% ---
+% #### 1.5.1 复合的线性化与范畴代数
+% #### 1.5.2 图表与左模的对应
+% #### 1.5.3 群、路径与偏序的例子
+
+\section{范畴代数与图表表示}
+\label{b4:sec:0105}
+
+给出两个 \(k\)-模 \(V_0,V_1\) 及一个线性映射 \(u:V_0\to V_1\)，便得到最简单的模图表。把它们合成 \(V_0\oplus V_1\) 后，两份空间由两个投影区分，而 \(u\) 可以看成一个只在 \(V_0\) 上作用的算子。这三个算子之间的关系，已经记录了原来的图表。对一般的有限对象范畴，也可以把全部态射的复合写成一个代数的乘法，使图表成为这个代数上的一个模。
+
+\subsection{复合的线性化与范畴代数}
+\label{b4:subsec:0105:01}
+
+\begin{definition}\label{b4:def:category-algebra}
+设 \(k\) 为含幺交换环，\(\mathcal C\) 为有有限个对象的小范畴。以 \(\mathcal C\) 的全部态射为基构造自由 \(k\)-模，并在基元素上规定
+\[
+gf=\begin{cases}
+g\circ f,&f:X\to Y,\ g:Y\to Z,\\
+0,&f,g\text{ 不能依此次序复合}.
+\end{cases}
+\]
+把乘法双线性地延拓到整个模，所得 \(k\)-代数称为 \(\mathcal C\) 的\term[fanchou-daishu]{范畴代数}[category algebra]，记为 \(k\mathcal C\)。这里每个元素只含有限多个态射的线性组合；并不要求 \(\mathcal C\) 只有有限多个态射。
+\end{definition}
+
+\begin{proposition}\label{b4:prop:category-algebra-unit}
+设 \(k\) 为含幺交换环，\(\mathcal C\) 为有限对象的小范畴。上述乘法使 \(k\mathcal C\) 成为结合含幺代数，其单位为
+\[
+1=\sum_{X\in\operatorname{Ob}\mathcal C}e_X,
+\qquad e_X=1_X.
+\]
+各 \(e_X\) 两两正交且幂等。
+\end{proposition}
+\begin{proof}
+对三个基态射 \(f,g,h\)，若它们依次可复合，则 \(h(gf)=(hg)f\) 正是范畴中的结合律。若它们不能依次复合，设 \(gf\) 有定义而 \(h(gf)\) 为零，则 \(h\) 的源不是 \(g\) 的目标，因而 \(hg=0\)；另一种缺少相邻复合的情形同样使两边都为零。双线性延拓遂给出全部元素的结合律。
+
+若 \(f:X\to Y\)，则 \(e_Yf=f=fe_X\)，而其余对象的恒等态射在相应一侧与 \(f\) 相乘均为零。因此所示有限和在两侧都是单位。恒等态射的复合还给出 \(e_X^2=e_X\) 及 \(e_Ye_X=0\)（\(X\ne Y\)）。若范畴为空，所得代数为零代数，单位为 \(0\)。
+\end{proof}
+
+有限对象条件用在单位的构造上。若对象无限，则形式和 \(\sum_Xe_X\) 不属于这个只允许有限支集的自由模，不能把它当作代数中的一个元素。另一方面，只有一个对象的群或幺半群，即使有无限多个态射，也仍然给出含幺范畴代数。
+
+\subsection{图表与左模的对应}
+\label{b4:subsec:0105:02}
+
+一个协变函子 \(F:\mathcal C\to k\text{-}\mathbf{Mod}\) 给每个对象 \(X\) 配置一个 \(k\)-模 \(F(X)\)，给每个态射 \(f:X\to Y\) 配置一个线性映射 \(F(f):F(X)\to F(Y)\)，并使这些映射服从 \(\mathcal C\) 的复合关系。这样的函子就是一个以 \(\mathcal C\) 为形状的模图表。图表之间的自然变换则是一族与所有图表箭头相容的线性映射。
+
+\begin{theorem}\label{b4:thm:category-algebra-representations}
+设 \(k\) 为含幺交换环，\(\mathcal C\) 为有有限个对象的小范畴。以自然变换为态射的函子范畴与含幺左模范畴之间有等价
+\[
+\operatorname{Fun}(\mathcal C,k\text{-}\mathbf{Mod})
+\simeq k\mathcal C\text{-}\mathbf{Mod}.
+\]
+这个等价把 \(F\) 送到 \(\bigoplus_XF(X)\)，把左 \(k\mathcal C\)-模 \(M\) 送到图表 \(X\mapsto e_XM\)。
+\end{theorem}
+\begin{proof}
+对函子 \(F\)，令 \(M_F=\bigoplus_XF(X)\)。基态射 \(f:X\to Y\) 在 \(X\) 分量上按 \(F(f)\) 作用，所得向量放入 \(Y\) 分量；在其余分量上作用为零。线性延拓定义整个 \(k\mathcal C\) 的作用。若 \(g\) 与 \(f\) 可复合，函子公理给出 \(g(fv)=(gf)v\)；若不可复合，\(fv\) 所在的分量被 \(g\) 送到零。因此作用满足结合律，\(\sum_Xe_X\) 则在各分量上为恒等，故这是含幺左模。
+
+给定自然变换 \(\alpha:F\Rightarrow G\)，映射 \(\bigoplus_X\alpha_X:M_F\to M_G\) 为 \(k\mathcal C\)-线性，因为对每个 \(f:X\to Y\)，自然性恰是
+\[
+\alpha_YF(f)=G(f)\alpha_X.
+\]
+直和映射保持恒等与复合，于是得到一个从图表到左模的函子。
+
+反过来，设 \(M\) 为含幺左 \(k\mathcal C\)-模。正交幂等元给出
+\[
+M=\bigoplus_Xe_XM.
+\]
+事实上，\(m=\sum_Xe_Xm\)；若 \(\sum_Xm_X=0\) 且 \(m_X\in e_XM\)，乘以 \(e_Y\) 就得到 \(m_Y=0\)。对 \(f:X\to Y\)，定义
+\[
+F_M(f):e_XM\longrightarrow e_YM,
+\qquad m\longmapsto fm.
+\]
+等式 \(e_Yf=f=fe_X\) 保证值落在指定分量，代数的乘法保证复合相容，\(e_X\) 在 \(e_XM\) 上是恒等。这给出协变函子。模同态 \(h:M\to N\) 满足 \(h(e_Xm)=e_Xh(m)\)，所以可限制到各分量，并与上述箭头相容；因而得到一个反方向的函子。
+
+从 \(F\) 出发再取分量，得到的 \(e_XM_F\) 就是原来的 \(F(X)\)，其箭头与自然变换也相同。从 \(M\) 出发再取直和，则求和映射
+\[
+\bigoplus_Xe_XM\longrightarrow M,
+\qquad (m_X)_X\longmapsto\sum_Xm_X
+\]
+是模同构，其逆为 \(m\mapsto(e_Xm)_X\)。这两种识别都与原来的态射相容，故给出拟逆及所需自然同构。
+\end{proof}
+
+这里采用左模，是因为态射 \(f:X\to Y\) 应把 \(X\) 分量送入 \(Y\) 分量，而乘法 \(gf\) 表示先作 \(f\) 再作 \(g\)。这一对应的有限对象形式可对照 Webb 的范畴代数构造\cite[Section 2, Proposition 2.1]{Webb2007CategoryRepresentations}。
+
+\subsection{群、路径与偏序的例子}
+\label{b4:subsec:0105:03}
+
+把群 \(G\) 看成单对象范畴 \(\mathcal BG\)，便有 \(k\mathcal BG=kG\)：基为群元素，乘法为群乘法。因此，群在 \(k\)-模上的线性表示就是 \(\mathcal BG\) 形状的模图表。自然变换的唯一分量与每个群元素的作用相容，正是表示之间的同态。这里没有要求 \(G\) 有限。
+
+\ProseParagraphBreak
+再取一个有有限多个顶点的有向图 \(Q\)。以顶点为对象，以有向路径为态射，空路径为恒等，路径的连接为复合，得到自由路径范畴 \(\mathcal P(Q)\)。其范畴代数称为\term[lujing-daishu]{路径代数}[path algebra]，记为 \(kQ\)。从 \(\mathcal P(Q)\) 到 \(k\text{-}\mathbf{Mod}\) 的函子由各顶点的模和各箭头的线性映射唯一决定：任意路径的映射是沿路径依次复合，空路径映成恒等。因而 \(kQ\)-模等价于这个有向图的线性表示。图若有有向环，路径通常有无限多个，但顶点仍有限，所以路径代数仍有单位。
+
+\ProseParagraphBreak
+对于单箭头 \(0\xrightarrow{a}1\)，基只有 \(e_0,e_1,a\)。对应
+\[
+e_0\longmapsto E_{11},\qquad
+e_1\longmapsto E_{22},\qquad
+a\longmapsto E_{21}
+\]
+把路径代数识别为 \(2\times2\) 下三角矩阵代数。这里 \(E_{ij}\) 表示第 \(i\) 行第 \(j\) 列为 \(1\)、其余为零的矩阵。左模中的两个幂等分量给出 \(V_0,V_1\)，而 \(a\) 给出 \(u:V_0\to V_1\)，恢复节首的图表。只有一个顶点与一个环的路径代数则是 \(k[t]\)，一个左模就是一个 \(k\)-模连同一个指定自同态。
+
+\ProseParagraphBreak
+设 \(P\) 为有限偏序集，把它视为偏序范畴。对 \(x\le y\)，记唯一态射为 \(a_{xy}:x\to y\)。于是 \(kP\) 的基由全部这样的区间指标给出，并满足
+\[
+a_{yz}a_{xy}=a_{xz},
+\]
+其余不能复合的基元素乘积为零。把偏序线性排列，使 \(x<y\) 时 \(x\) 排在 \(y\) 前，映射 \(a_{xy}\mapsto E_{yx}\) 把 \(kP\) 写成一个下三角矩阵子代数。这是有限偏序集的\term[guanlian-daishu]{关联代数}[incidence algebra]的一种复合约定：矩阵的列指标为源、行指标为目标。若采用把区间 \((x,y)\) 放在第 \(x\) 行、第 \(y\) 列的通常卷积约定，则对应的是此处代数的相反代数。
+
+\ProseParagraphBreak
+偏序图表与自由路径图表之间还有实质区别。在菱形偏序 \(0<1<3\)、\(0<2<3\) 中，从 \(0\) 到 \(3\) 只有一个态射，故两条复合路径必须给出相同线性映射；在只有这四条箭头的自由路径范畴中，两条路径是不同态射，没有这一等式。相应地，前者的范畴代数是后者的路径代数模去“两条路径之差”所得的商。这样，范畴中的复合关系既能约束图表，也能写成代数中的关系。

@@ -1,30 +1,32 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 16.2 Ext 刻画
-% 纲要位置：计划纲要.md，第 2001 行。
+% 纲要位置：计划纲要.md，第 2466 行。
 
 \section{Ext 刻画}
 \label{b3:sec:1602}
 
-深度也能从剩余域与模之间首次非零的 Ext 次数读出。下面从自由消解构造 Ext，证明短正合列与正则元素换环所需的计算性质，再将正则序列的长度转成这些次数。Ext 的一般理论安排在第四卷第5—8章；这里的证明只用到所列的复形计算。
+一个正则元素在模上作用为单射，却把剩余域零化。把这两种作用放进 Hom 的消解计算，短正合列便使首次非零的上同调次数改变一。正则序列的长度因此有另一种表达：从剩余域到模的 Ext 首次非零次数。局部化时，剩余域随素理想改变，还需要把这种计算与支集维数联系起来。
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
+% * Ext 的两变量长正合列、零化作用、有限性与局部化
 % * 以剩余域的 Ext 检测深度
 % * 与正则序列定义的等价
-% * 局部化及有限生成假设
+% * Ischebeck 消失、关联素理想维数界与深度的局部化估计
+% * 正则序列、Koszul 同调与 Ext 的深度刻画对照
 %
 
 \subsection{剩余域的 Ext 与深度检测}
 \label{b3:subsec:1602:01}
 
 \begin{definition}\label{b3:def:ext-minimum-background}
-设 \(R\) 为交换环，\(N,M\) 为 \(R\) 模，选自由消解 \(P_\bullet\rightarrow N\rightarrow0\)，其微分记为 \(\mathrm{d}_i:P_i\to P_{i-1}\)（\(i\ge1\)）。取上链复形
+设 \(R\) 为交换环，\(N,M\) 为 \(R\) 模，选自由消解 \(P_\bullet\rightarrow N\rightarrow0\)，其微分记为 \(\mathrm{d}_i:P_i\rightarrow P_{i-1}\)（\(i\ge1\)）。取上链复形
 \[
-C^i=\operatorname{Hom}_R(P_i,M),\qquad
+C^i=\operatorname{Hom}_R(P_i,M)\quad(i\ge0),\qquad
 \delta^i(f)=f\circ \mathrm{d}_{i+1}.
 \]
-因 \(\mathrm{d}_i\mathrm{d}_{i+1}=0\)，有 \(\delta^{i+1}\delta^i=0\)。定义
+令 \(C^i=0\) 对 \(i<0\) 成立，\(\delta^{-1}=0\)。因 \(\mathrm{d}_i\mathrm{d}_{i+1}=0\)，有 \(\delta^{i+1}\delta^i=0\)。定义
 \[
 \operatorname{Ext}_R^i(N,M)=H^i(C^\bullet)
 =\ker\delta^i/\operatorname{im}\delta^{i-1}\quad(i\ge0),
@@ -33,35 +35,69 @@ C^i=\operatorname{Hom}_R(P_i,M),\qquad
 \end{definition}
 \symidx{\(\operatorname{Ext}_R^i(N,M)\)：Ext 模}
 
-自由消解可从一个自由模到 \(N\) 的满射开始，反复对其核选自由满射得到。不同选择之间的比较映射与链同伦按\subsecref{b3:subsec:1504:03}所述逐级构造；施加 \(\operatorname{Hom}_R(-,M)\) 后，同伦仍给出相同的上同调映射。因此 Ext 不依赖选择，且次数零自然同构于 \(\operatorname{Hom}_R(N,M)\)。
+由\cref{b3:lem:free-resolution-existence}，每个模都有自由消解。\cref{b3:lem:free-resolution-comparison}给出不同消解之间的比较映射及其链同伦唯一性；施加 \(\operatorname{Hom}_R(-,M)\) 后，同伦仍给出相同的上同调映射。因此 Ext 不依赖选择，且次数零自然同构于 \(\operatorname{Hom}_R(N,M)\)。同态 \(N'\rightarrow N\) 提升为消解的链映射后，经 Hom 反向诱导 Ext 映射；同态 \(M\rightarrow M'\) 则经后复合正向诱导映射。比较引理使这些映射与选择无关，并保持恒等映射及复合，所以 Ext 在第一变量反变、第二变量协变。
 
-\begin{lemma}\label{b3:lem:ext-basic-properties}
+\begin{lemma}[Ext 的长正合列与零化作用]\label{b3:lem:ext-basic-properties}
 设 \(R\) 为交换环，\(N,M\) 为 \(R\) 模。
 \begin{enumerate}
 \item 短正合列在 Ext 的第二变量给出协变长正合列，在第一变量给出反变长正合列。
-\item 若 \(a\in R\) 满足 \(aN=0\)，则 \(a\operatorname{Ext}_R^i(N,M)=0\) 对所有 \(i\ge0\) 成立。
-\item 若 \(R\) Noether 且 \(N,M\) 有限，则每个 \(\operatorname{Ext}_R^i(N,M)\) 有限，并且任意乘法集 \(S\) 都给出
-\[
-S^{-1}\operatorname{Ext}_R^i(N,M)
-\cong\operatorname{Ext}_{S^{-1}R}^i(S^{-1}N,S^{-1}M).
-\]
+\item 若 \(a\in R\) 满足 \(aN=0\) 或 \(aM=0\)，则 \(a\operatorname{Ext}_R^i(N,M)=0\) 对所有 \(i\ge0\) 成立。
 \end{enumerate}
 \end{lemma}
 \begin{proof}
 第二变量的短正合列经每个 \(\operatorname{Hom}_R(P_i,-)\) 仍正合，因为自由模的映射可对基逐个提升。于是得到短正合的上链复形。其连接映射这样构造：提升商复形中的一个圈，取其微分，结果落在子复形中且为圈；改变提升或原圈代表只改变一个边界。这也给出正合性：连接类为零恰好表示可以修正提升使其成为圈，其他两处分别对应圈来自子复形和边界能够提升。
 
-第一变量的短正合列记为 \(0\rightarrow N'\rightarrow N\rightarrow N''\rightarrow0\)。给两端选自由消解 \(P',P''\)。在次数零，把 \(P''_0\) 到 \(N''\) 的映射提升到 \(N\)，合上 \(P'_0\rightarrow N'\) 得 \(P'_0\oplus P''_0\rightarrow N\) 满射。其核与两端核也成短正合列：一个投到 \(N''\) 的关系可先提升到中间，误差属于 \(N'\)，再从 \(P'_0\) 提升并扣去。逐次对这些核重复此构造，得到中间的自由消解 \(P\)，以及逐项分裂的短正合列 \(0\rightarrow P'\rightarrow P\rightarrow P''\rightarrow0\)。施加 \(\operatorname{Hom}_R(-,M)\) 后仍逐项正合，前段圈提升过程便给出反变长正合列。
+第一变量的短正合列记为 \(0\rightarrow N'\rightarrow N\rightarrow N''\rightarrow0\)，给两端选自由消解 \(P',P''\)。令 \(Z'_{-1}=N'\)、\(Z_{-1}=N\)、\(Z''_{-1}=N''\)。递归构造 \(P\) 时，假设已有
+\[
+0\longrightarrow Z'_{i-1}\xrightarrow{j}Z_{i-1}
+\xrightarrow{q}Z''_{i-1}\longrightarrow0.
+\]
+两端消解给出满射 \(\rho'_i:P'_i\rightarrow Z'_{i-1}\)、\(\rho''_i:P''_i\rightarrow Z''_{i-1}\)，记其核为 \(Z'_i,Z''_i\)。因 \(P''_i\) 自由，可取提升 \(\ell_i:P''_i\rightarrow Z_{i-1}\)，使 \(q\ell_i=\rho''_i\)。定义
+\[
+P_i=P'_i\oplus P''_i,\qquad
+\rho_i(u,v)=j\rho'_i(u)+\ell_i(v).
+\]
+它为满射：先从 \(P''_i\) 提升 \(qz\)，余下的差属于 \(jZ'_{i-1}\)，再从 \(P'_i\) 提升该差。令 \(Z_i=\ker\rho_i\)。包含第一分量与投影第二分量使
+\[
+0\longrightarrow Z'_i\longrightarrow Z_i\longrightarrow Z''_i\longrightarrow0
+\]
+正合。尤其，对 \(v\in Z''_i\)，\(\ell_i(v)\) 落在 \(jZ'_{i-1}\) 中，可取 \(u\) 使 \(j\rho'_i(u)=-\ell_i(v)\)，故 \((u,v)\in Z_i\) 提升 \(v\)；投影的核恰是 \(Z'_i\)。继续递归，取 \(\rho_0\) 为增广映射，并在 \(i\ge1\) 时把 \(\rho_i\) 与 \(Z_{i-1}\hookrightarrow P_{i-1}\) 复合，得到中间的自由消解 \(P\)。其包含与投影保持微分，组成逐项分裂的短正合消解
+\[
+0\longrightarrow P'\longrightarrow P\longrightarrow P''\longrightarrow0,
+\qquad P_i=P'_i\oplus P''_i.
+\]
+于是每个次数有分裂短正合列
+\[
+0\longrightarrow\operatorname{Hom}_R(P''_i,M)
+\longrightarrow\operatorname{Hom}_R(P_i,M)
+\longrightarrow\operatorname{Hom}_R(P'_i,M)\longrightarrow0.
+\]
+前段圈提升的构造就给出第一变量的反变长正合列。这一逐项分裂的消解构造称为马蹄构造；连接映射与比较映射相容，因而所得长正合列自然。
 
-若 \(aN=0\)，则 \(a\operatorname{id}_{P_\bullet}\) 与零映射都提升 \(N\) 上的零映射，故链同伦。可具体从次数零开始：\(aP_0\) 落在 \(\ker(P_0\rightarrow N)=\operatorname{im}\mathrm{d}_1\)，自由性给出提升 \(h_0\)；在次数 \(i\)，差 \(a\operatorname{id}-h_{i-1}\mathrm{d}_i\) 的微分为零，再提升到 \(P_{i+1}\)，得到 \(a\operatorname{id}=\mathrm{d}h+h\mathrm{d}\)。施加 Hom 后乘法 \(a\) 在上同调上为零。
+若 \(aN=0\)，则 \(a\operatorname{id}_{P_\bullet}\) 与零映射都提升 \(N\) 上的零同态。\cref{b3:lem:free-resolution-comparison}给出链同伦 \(a\operatorname{id}=\mathrm{d}h+h\mathrm{d}\)。施加 Hom 后，乘法 \(a\) 在上同调上为零。若 \(aM=0\)，Hom 复形各项上的乘法 \(a\) 已经为零。
+\end{proof}
 
-最后，在 Noether 有限情形，可以在每一步选有限秩自由模，因为上一核有限生成。Hom 复形各项有限，所以上同调有限。有限自由模给出 \(S^{-1}\operatorname{Hom}_R(P_i,M)\cong\operatorname{Hom}_{S^{-1}R}(S^{-1}P_i,S^{-1}M)\)，局部化又保持核、像和正合消解，逐次取上同调即得最后的同构。
+\begin{proposition}[有限生成的 Ext 与局部化]\label{b3:prop:finite-ext-localization}
+设 \(R\) 为交换 Noether 环，\(N,M\) 为有限生成的 \(R\) 模，\(i\ge0\) 为整数。则 \(\operatorname{Ext}_R^i(N,M)\) 是有限生成的 \(R\) 模，并且任意乘法集 \(S\subseteq R\) 都给出自然同构
+\[
+S^{-1}\operatorname{Ext}_R^i(N,M)
+\cong\operatorname{Ext}_{S^{-1}R}^i(S^{-1}N,S^{-1}M).
+\]
+\end{proposition}
+\begin{proof}
+因 \(N\) 有限生成，可先选有限秩自由模到 \(N\) 的满射。每个核都由 Noether 性有限生成，所以可以逐次选有限秩自由模满射，得到各项均为有限秩的自由消解 \(P\)。每个 \(\operatorname{Hom}_R(P_i,M)\) 是有限生成模，其核和像也有限生成，故上同调有限生成。对有限秩自由模有
+\[
+S^{-1}\operatorname{Hom}_R(P_i,M)
+\cong\operatorname{Hom}_{S^{-1}R}(S^{-1}P_i,S^{-1}M),
+\]
+且这些同构保持微分。局部化又保持消解的正合性、核及像，因此取上同调得到所述自然同构。
 \end{proof}
 
 \subsection{Ext 刻画与正则序列定义的等价性}
 \label{b3:subsec:1602:02}
 
 \begin{theorem}\label{b3:thm:depth-ext}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。则
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\ne0\) 为有限生成的 \(R\) 模。则
 \[
 \operatorname{depth}_RM
 =\inf\{\,i\ge0\mid\operatorname{Ext}_R^i(k,M)\ne0\,\}.
@@ -86,10 +122,10 @@ S^{-1}\operatorname{Ext}_R^i(N,M)
 
 例如在 \(R=k[X,Y]_{(X,Y)}\) 上，用 \(X,Y\) 的 Koszul 消解计算 \(\operatorname{Ext}_R^i(k,R)\)。对偶复形的两个矩阵是 \(\binom XY\) 与 \((-Y\ \ X)\)，其前两处上同调为零，最后的余核为 \(k\)。所以深度为二。在 \(R=k[\varepsilon]/(\varepsilon^2)\) 上，映射 \(k\rightarrow R\)、\(1\mapsto\varepsilon\) 已在次数零非零，故深度为零，不必先构造整个无限消解。
 
-\subsection{局部化与有限生成假设}
+\subsection{Ischebeck 消失与深度的局部化估计}
 \label{b3:subsec:1602:03}
 
-局部化 Ext 的公式不能把闭点的剩余域直接变成其他素理想处的剩余域。若 \(\mathfrak p\subsetneq\mathfrak m\)，则 \(k_{\mathfrak p}=0\)，而 \(\kappa(\mathfrak p)\) 非零。比较两个地方的深度，需要额外的维数估计。
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)。局部化 Ext 的公式不能把闭点的剩余域直接变成其他素理想处的剩余域。若 \(\mathfrak p\subsetneq\mathfrak m\)，则 \(k_{\mathfrak p}=0\)，而 \(\kappa(\mathfrak p)\) 非零。比较两个地方的深度，需要额外的维数估计。Ischebeck 的消失定理把第一变量的支集维数与第二变量的深度联系起来。\footnote{弗里德里希·格哈特·伊舍贝克（Friedrich Gerhart Ischebeck，1940--2022），德国数学家，主要研究交换代数和同调代数，著有《Einladung zur Zahlentheorie》。}
 
 \begin{lemma}\label{b3:lem:ischebeck-vanishing}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M,N\ne0\) 为有限生成的 \(R\) 模，\(t=\operatorname{depth}_RM\)、\(s=\dim_RN\)。则
@@ -98,14 +134,33 @@ S^{-1}\operatorname{Ext}_R^i(N,M)
 \]
 \end{lemma}
 \begin{proof}
-对 \(s\) 归纳。\(s=0\) 时，\(N\) 的支集只有极大理想，故 \(N\) 有有限长度：其零化子之根为 \(\mathfrak m\)，某个 \(\mathfrak m\) 的幂零化 \(N\)，相邻幂滤过的商是有限维 \(k\) 空间。以 \(k\) 为因子的组成列和第一变量长正合列，把结论归结为\cref{b3:thm:depth-ext}。
+对 \(s\) 归纳，先说明如何归约到素循环模。任一非零有限生成模都有有限素因子滤过：在非零商中选一个关联素理想，便得到同构于 \(R/\mathfrak q\) 的子模，再在余下的商中重复；相应的子模严格升链由 Noether 性终止。将所得滤过记为
+\[
+0=N_\ell\subset N_{\ell-1}\subset\cdots\subset N_0=N,
+\qquad N_j/N_{j+1}\cong R/\mathfrak q_j.
+\]
+各因子的支集包含于 \(\operatorname{Supp}N\)，所以 \(\dim(R/\mathfrak q_j)\le s\)。若对某个次数 \(i\) 所有因子的 Ext 都为零，从 \(N_\ell=0\) 开始对滤过长度归纳。短正合列
+\(0\rightarrow N_{j+1}\rightarrow N_j\rightarrow R/\mathfrak q_j\rightarrow0\)
+的第一变量长正合列给出
+\[
+\operatorname{Ext}_R^i(R/\mathfrak q_j,M)
+\longrightarrow\operatorname{Ext}_R^i(N_j,M)
+\longrightarrow\operatorname{Ext}_R^i(N_{j+1},M).
+\]
+外两项为零便使中项为零，逐层推出 \(\operatorname{Ext}_R^i(N,M)=0\)。因此，只需对 \(N=R/\mathfrak q\) 证明指定范围内的消失。
 
-一般有限生成模有有限素因子滤过。为说明所用形式，先在非零商中选一个关联素理想，就得到一个同构于 \(R/\mathfrak q\) 的子模；在其商中重复。所得子模严格升链由 Noether 性终止。各因子的支集包含于原模支集。借助长正合列，只须对 \(N=R/\mathfrak q\) 证明；若其维数小于 \(s\)，用归纳假设。否则选 \(x\in\mathfrak m\setminus\mathfrak q\)，有
+当 \(s=0\) 时，各因子的素理想只能为 \(\mathfrak m\)，因子就是 \(k\)。\cref{b3:thm:depth-ext}给出各因子的 Ext 在 \(i<t\) 时为零，前段长度归纳完成基例。设 \(s>0\)。若 \(\dim(R/\mathfrak q)<s\)，由维数归纳假设得到消失；其消失范围至少包含 \(i<t-s\)。剩下 \(\dim(R/\mathfrak q)=s\) 的情形。选 \(x\in\mathfrak m\setminus\mathfrak q\)，则乘法 \(x\) 在 \(R/\mathfrak q\) 上单射，有
 \[
 0\longrightarrow R/\mathfrak q\xrightarrow{x}R/\mathfrak q
 \longrightarrow R/(\mathfrak q,x)\longrightarrow0.
 \]
-由\cref{b3:prop:regular-quotient-dimension}，末项维数为 \(s-1\)。归纳假设使其 Ext 在次数小于 \(t-s+1\) 时为零，因此对 \(i<t-s\)，乘法 \(x\) 在 \(\operatorname{Ext}_R^i(R/\mathfrak q,M)\) 上满射。该 Ext 模有限生成且 \(x\in\mathfrak m\)，Nakayama 引理说明它为零。
+由\cref{b3:prop:regular-quotient-dimension}，末项维数为 \(s-1\)。归纳假设使其 Ext 在次数小于 \(t-s+1\) 时为零。对 \(0\le i<t-s\)，第一变量长正合列中有
+\[
+\operatorname{Ext}_R^i(R/\mathfrak q,M)
+\xrightarrow{x}\operatorname{Ext}_R^i(R/\mathfrak q,M)
+\longrightarrow\operatorname{Ext}_R^{i+1}(R/(\mathfrak q,x),M)=0.
+\]
+因此乘法 \(x\) 为满射。\cref{b3:prop:finite-ext-localization}说明该 Ext 模有限生成；因 \(x\in\mathfrak m\)，Nakayama 引理使其为零。再按素因子滤过的长度归纳，便得到原模 \(N\) 的结论。
 \end{proof}
 
 \begin{corollary}\label{b3:cor:associated-depth-bound}
@@ -127,12 +182,36 @@ S^{-1}\operatorname{Ext}_R^i(N,M)
 \]
 \end{theorem}
 \begin{proof}
-在 \(\mathfrak p\) 中连续选取 \(M\) 正则元素，直至不能延长，记所得序列长度为 \(r\)，末端商为 \(L\)。升链条件保证过程终止。\(\mathfrak p\) 中所有元素都是 \(L\) 的零因子，因此由有限素理想回避，存在 \(\mathfrak q\in\operatorname{Ass}_RL\)，使 \(\mathfrak p\subseteq\mathfrak q\)。\cref{b3:cor:regular-quotient-depth}和\cref{b3:cor:associated-depth-bound}给出
+在 \(\mathfrak p\) 中连续选取 \(M\) 正则元素，直至不能延长，记所得序列长度为 \(r\)，末端商为 \(L\)。每加进一个正则元素，子模 \((x_1,\ldots,x_j)M\) 严格增大，所以 \(M\) 的 Noether 性保证过程终止。\(\mathfrak p\) 中所有元素都是 \(L\) 的零因子；而 \(\operatorname{Ass}_RL\) 有限，故由有限素理想回避，存在 \(\mathfrak q\in\operatorname{Ass}_RL\)，使 \(\mathfrak p\subseteq\mathfrak q\)。\cref{b3:cor:regular-quotient-depth}和\cref{b3:cor:associated-depth-bound}给出
 \[
 \operatorname{depth}_RM=r+\operatorname{depth}_RL
 \le r+\dim(R/\mathfrak q)\le r+\dim(R/\mathfrak p).
 \]
-原序列局部化后仍逐次单射，而且所有元素都在 \(\mathfrak pR_{\mathfrak p}\) 中。\(M_{\mathfrak p}\ne0\) 且有限，Nakayama 引理保证每个商非零，所以这是一个长度 \(r\) 的 \(M_{\mathfrak p}\) 正则序列。于是 \(r\le\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}\)，代入便得结论。
+原序列局部化后仍逐次单射，而且所有元素都在 \(\mathfrak pR_{\mathfrak p}\) 中。\(M_{\mathfrak p}\ne0\) 且有限生成，Nakayama 引理保证每个商非零，所以这是一个长度 \(r\) 的 \(M_{\mathfrak p}\) 正则序列。于是 \(r\le\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}\)，代入便得结论。
 \end{proof}
 
-有限性在这里至少用于有限关联素理想、Nakayama 引理和有限 Ext 模。一个简单的警示是离散赋值环 \(R\) 的分式域 \(K\)：均匀参数在 \(K\) 上既单射又满射，因而其商为零。对这样不有限生成的模，不能把局部环上有限生成模的正则序列和深度公式不加说明地照搬。
+有限生成条件使关联素理想集及 Ext 模受 Noether 性控制，也使 Nakayama 引理适用。例如，设 \(R\) 为离散赋值环，\(\pi\) 为其统一化元，\(K\) 为分式域。乘法 \(\pi\) 在 \(K\) 上既单射又满射，因而 \(K/\pi K=0\)；它不满足正则序列的末端非零条件。
+
+\ProseParagraphBreak
+\cref{b3:thm:maximal-regular-length,b3:thm:depth-ext}将正则序列的长度与两种同调计算联系起来，\cref{b3:cor:depth-zero-socle}给出深度零的等价条件。这些刻画集中列于\cref{b3:tab:depth-characterizations}。
+
+\begin{center}
+\begin{minipage}{\textwidth}
+\makeatletter
+\def\@captype{table}
+\makeatother
+\centering
+\caption[深度的三种刻画]{深度的三种刻画。设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(k=R/\mathfrak m\)，\(y=(y_1,\ldots,y_e)\) 为 \(\mathfrak m\) 的任意有限生成组。前三行给出同一个数值，末行列出该数值为零时的等价条件。}
+\label{b3:tab:depth-characterizations}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+刻画 & 数值或条件\\
+\midrule
+正则序列 & \(\mathfrak m\) 中任一极大 \(M\) 正则序列的长度\\
+Koszul 同调 & \(e-\max\{\,i\mid H_i(y;M)\ne0\,\}\)\\
+Ext & \(\min\{\,i\ge0\mid\operatorname{Ext}_R^i(k,M)\ne0\,\}\)\\
+深度零 & \(\mathfrak m\in\operatorname{Ass}_RM\ \Longleftrightarrow\ \operatorname{Soc}_RM\ne0\)\\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}

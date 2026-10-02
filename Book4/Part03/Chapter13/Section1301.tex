@@ -1,93 +1,153 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 13.1 余极限的正合性
-% 纲要位置：计划纲要.md，第 2799 行。
+% 纲要标题：### 13.1 包络代数方法
+% 纲要标签：b4:sec:1201
+% 纲要位置：计划纲要.md，第 2771 行。
 
-\section{余极限的正合性}
-\label{b4:sec:1301}
+\section{包络代数方法}
+\label{b4:sec:1201}
 
-滤过余极限中的有限组等式可以移到共同阶段核验，因此它保持模的短正合列。一般余极限与无限积没有同一套元素判据，正合性需要分别检查。
+代数乘法同时产生左、右两个作用，包络代数将它们写成一个模结构。Hochschild 理论由此既能用消解定义，也能写成显式的张量链和多线性余链。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 模范畴中的滤过余极限
-% * 一般余极限并非都正合
-% * 积与直和的正合性依赖所在范畴
+% * 双模与包络代数
+% * Hochschild 同调和上同调
+% * bar 消解
 %
 
-\subsection{模范畴中的滤过余极限}
-\label{b4:subsec:1301:01}
+\subsection{双模与包络代数}
+\label{b4:subsec:1201:01}
 
-滤过余极限允许把有限次运算放到同一个阶段进行，而逆极限要求一整族元素同时相容。这两种条件的差别，决定了它们的正合性质。本章在模范畴中讨论这些问题；若换成其他交换范畴，还须重新检查所用的无限积是否正合。
+一个代数的乘法同时允许从左、从右乘元素。若要用模的消解研究乘法，就应把这两种作用放在同一个模范畴内。本章始终以域 \(k\) 为底域，代数均为非零的结合含幺 \(k\) 代数，代数同态保持单位；张量积未标底环时均在 \(k\) 上进行。代数不必交换，也不必有限维。
+
+\begin{definition}\label{b4:def:enveloping-algebra}
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数。其反代数 \(A^{\mathrm{op}}\) 有相同的向量空间，而乘法次序反转。代数
+\[
+A^e=A\otimes_k A^{\mathrm{op}},\qquad
+(a\otimes b^{\mathrm{op}})(c\otimes d^{\mathrm{op}})
+=ac\otimes(db)^{\mathrm{op}}
+\]
+称为 \(A\) 的\term[baoluo-daishu]{包络代数}[enveloping algebra]。
+一个 \(k\) 向量空间 \(M\) 若带有含幺左、右 \(A\) 模作用，满足 \((am)b=a(mb)\)，且两侧的 \(k\) 作用都是原有标量乘法，便称为 \(A\) 双模。它对应的左 \(A^e\) 模作用为
+\[
+(a\otimes b^{\mathrm{op}})m=amb.
+\]
+\end{definition}
+
+这确实给出模作用，因为复合两次作用得到 \(acmdb\)，与包络代数的乘法相符。反过来，限制到 \(A\otimes1\) 和 \(1\otimes A^{\mathrm{op}}\) 就恢复左右作用。因两个子代数彼此交换，两种作用相容。因此双模及双模同态组成的范畴就是左 \(A^e\) 模范畴。
 
 \ProseParagraphBreak
-\cref{b4:prop:filtered-colimits-exact}已证明：对小滤过范畴上的模图表，逐对象的短正合列在取余极限后仍正合。证明的关键是\cref{b4:prop:filtered-module-elements}的单阶段判据：一个元素在余极限中为零，当且仅当它在某个更后阶段已经变成零。下面将此结果用于复形，而不重作余极限的构造。
-
-\begin{proposition}\label{b4:prop:filtered-colimits-cohomology}
-设 \(R\) 为环，\(\mathcal I\) 为小滤过范畴，\(C_i\) 为左 \(R\)-模上链复形组成的图表。则对每个整数 \(q\)，有自然同构
+张量积计算还需要右模。对同一个双模 \(M\)，另记 \(M^{\mathrm r}\) 为右 \(A^e\) 模，其作用规定为
 \[
-\varinjlim_{i\in\mathcal I}H^q(C_i)
-\simeq H^q\bigl(\varinjlim_{i\in\mathcal I}C_i\bigr).
+m\cdot(a\otimes b^{\mathrm{op}})=bma.
 \]
-右侧余极限逐次数形成，不要求复形有界。
-\end{proposition}
-\begin{proof}
-把复形的微分拆成短正合列
+先作用 \(a\otimes b^{\mathrm{op}}\)，再作用 \(c\otimes d^{\mathrm{op}}\)，所得为 \(dbmac\)，与乘积 \(ac\otimes(db)^{\mathrm{op}}\) 的作用一致。上标 \(\mathrm r\) 只提醒这里更换了作用方向，并未更换底层向量空间。
+
+\subsection{Hochschild 同调和上同调}
+\label{b4:subsec:1201:02}
+
+\begin{definition}\label{b4:def:hochschild-derived}
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(M\) 为 \(A\) 双模，\(n\ge0\)。记 \(A^e=A\otimes_kA^{\mathrm{op}}\)，把 \(A\) 本身看作左 \(A^e\) 模，并以 \(m\cdot(a\otimes b^{\mathrm{op}})=bma\) 将 \(M\) 看作右 \(A^e\) 模 \(M^{\mathrm r}\)。定义
 \[
-0\to Z^q(C_i)\to C_i^q\to B^{q+1}(C_i)\to0,\qquad
-0\to B^q(C_i)\to Z^q(C_i)\to H^q(C_i)\to0.
+\operatorname{HH}_n(A,M)=\operatorname{Tor}^{A^e}_n(M^{\mathrm r},A),
+\qquad
+\operatorname{HH}^n(A,M)=\operatorname{Ext}_{A^e}^n(A,M).
 \]
-余极限保持这两列正合，也保持 \(B^{q+1}(C_i)\to C_i^{q+1}\) 的单射性。因此取余极限后的圈与边界分别是原圈与边界的余极限，它们之商正是 \(\varinjlim H^q(C_i)\)。所有识别使用自然包含及商映射，故自然。每次仅涉及两个相邻微分，与是否有界无关。
-\end{proof}
+它们分别称为带系数 \(M\) 的 \term[hochschild-tongdiao]{Hochschild 同调}[Hochschild homology]和 \term[hochschild-shangtongdiao]{Hochschild 上同调}[Hochschild cohomology]。当 \(M=A\) 时简记为 \(\operatorname{HH}_n(A)\)、\(\operatorname{HH}^n(A)\)。
+\symidx{\(\operatorname{HH}_n(A,M),\operatorname{HH}^n(A,M)\)：Hochschild 同调与上同调}
+\end{definition}
 
-例如，一个复形写成递增子复形的并时，任一同调类可以在某个阶段表示；若它最终变成边界，也在某个阶段已经变成边界。这不是关于极限的形式类比，而是有限代表元判据的实际结果。
-
-\subsection{一般余极限的非正合性}
-\label{b4:subsec:1301:02}
-
-一般余极限是常值图表函子的左伴随，所以保持余核，因而右正合；要同时保持核，指标范畴的条件就有作用。
-
-\begin{example}\label{b4:exm:parallel-colimit-not-exact}
-令 \(\mathcal I\) 只有对象 \(0,1\) 及两支不同箭头 \(s,t:0\to1\)。交换群图表 \(X\) 的余极限是 \(\operatorname{coker}(X(s)-X(t))\)。定义三个图表
-\[
-\begin{array}{c|cc|cc}
- &X(0)&X(1)&X(s)&X(t)\\\hline
-A&0&\mathbb Z&0&0\\
-B&\mathbb Z&\mathbb Z&\times2&0\\
-C&\mathbb Z&0&0&0
-\end{array}
-\]
-在对象 \(0\) 处取 \(0\to0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\)，在对象 \(1\) 处取 \(0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\to0\)，得到图表短正合列 \(0\to A\to B\to C\to0\)。它的余极限列为
-\[
-\mathbb Z\longrightarrow\mathbb Z/2\longrightarrow0.
-\]
-首箭头不是单射。表中的两个平行箭头不能被任何更后箭头合并；这个指标范畴不滤过。
-\end{example}
-
-这个例子的关系 \(2\mathbb Z\) 来自图表的箭头。逐对象检查单射，并不能阻止余极限在目标中额外施加这些关系。因而“每个阶段正合”只有结合正确的指标条件，才足以推出余极限正合。
-
-\subsection{积与直和的正合性条件}
-\label{b4:subsec:1301:03}
-
-对左 \(R\)-模，任意一族短正合列取直和仍正合：一项元素只有有限支集，可以在这有限多个位置选取原像。取直积也仍正合，但满射性的证明需要对全部坐标同时选原像，使用集合论选择。核与像的其余核对均逐坐标进行。
-
-\begin{proposition}\label{b4:prop:products-cohomology}
-设 \(R\) 为环，\((C_j)_{j\in J}\) 为集合指标的左 \(R\)-模上链复形族。则对每个整数 \(q\)，有自然同构
-\[
-H^q\bigl(\prod_j C_j\bigr)\simeq\prod_jH^q(C_j),\qquad
-H^q\bigl(\bigoplus_j C_j\bigr)\simeq\bigoplus_jH^q(C_j).
-\]
-\end{proposition}
-\begin{proof}
-积复形的圈逐坐标给出。对一族边界，每个坐标选一个微分原像，就得到积中的原像，所以积的边界也是边界的积。对 \(0\to B^q\to Z^q\to H^q\to0\) 取积并使用满射性，便得到第一式。直和时只需在有限个非零坐标上选择，完全相同的核、像、商计算给出第二式。
-\end{proof}
-
-在一般交换范畴中，存在积与积正合是两个不同要求。若范畴有小余积且余积保持短正合列，通常称其满足 \(\mathrm{AB4}\)；若有小积且积保持短正合列，称其满足 \(\mathrm{AB4}^*\)。若小滤过余极限存在且正合，则称其满足 \(\mathrm{AB5}\)。这些名称描述附加性质，不是交换范畴定义的组成部分。
-
-\begin{example}\label{b4:exm:torsion-category-product}
-所有挠交换群及其同态组成交换范畴 \(\mathcal T\)：核、余核和有限双积仍是挠群。该范畴内一族群的积，是通常直积的挠子群，因为从任何挠群发出的同态必然落入这个子群。
+零次已能看出两种不同的问题。一个双模同态 \(A\to M\) 由 \(1\) 的像 \(m\) 决定，而左右线性要求 \(am=ma\)。另一方面，\(M^{\mathrm r}\otimes_{A^e}A\) 把左右乘法产生的差消去。这两种零次函子的高次导出，分别测量它们没有保持正合的部分。
 
 \ProseParagraphBreak
-固定素数 \(p\)，对每个 \(n\ge1\) 取满射 \(\mathbb Z/p^n\to\mathbb Z/p\)。目标在 \(\mathcal T\) 中的积等于通常直积，其中 \((1,1,\ldots)\) 的阶为 \(p\)。它若有原像，原像的第 \(n\) 个坐标必须是模 \(p\) 等于 \(1\) 的元素，阶恰为 \(p^n\)。该元组没有有限阶，因而不属于源在 \(\mathcal T\) 中的积。这说明 \(\mathcal T\) 的积不保持满射。
-\end{example}
+这里把底环限制为域具有实际作用：稍后 bar 消解的各项都将是 \(A^e\) 自由模。在一般交换底环上，同一个 bar 复形未必绝对投射，不能不加条件地把它计算的相对理论等同于上述 Ext、Tor。这个区别可参看 Weibel\cite[Lemma 9.1.3, Corollary 9.1.5]{Weibel1994HomologicalAlgebra}。
 
-后面乘积差映射的证明明确限定在模范畴中。更广版本至少需要相应的积正合性；不能仅凭“也是交换范畴”便移用。
+\subsection{bar 消解}
+\label{b4:subsec:1201:03}
+
+我们需要一个直接由乘法写出的消解，而不只是任意选择自由满射。对 \(n\ge0\)，令
+\[
+B_n(A)=A^{\otimes(n+2)},\qquad
+\mathrm{d}_n(a_0\otimes\cdots\otimes a_{n+1})
+=\sum_{i=0}^{n}(-1)^i
+a_0\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_{n+1},
+\]
+其中 \(\mathrm{d}_n\) 在 \(n\ge1\) 时使用；增广 \(\varepsilon:B_0(A)\to A\) 为乘法。左右 \(A\) 作用分别放在最外面的两个因子上。
+
+\begin{proposition}\label{b4:prop:algebra-bar-resolution}
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(A^e=A\otimes_kA^{\mathrm{op}}\)。令 \(B_n(A)=A^{\otimes_k(n+2)}\)，其中左右 \(A\) 作用分别在最外侧因子上，微分为相邻因子相乘的交错和，增广 \(B_0(A)\to A\) 为乘法。所得增广链复形 \(B_\bullet(A)\to A\) 是左 \(A^e\) 模的自由消解，称为 \(A\) 的双模 bar 消解。
+\end{proposition}
+\begin{proof}
+两次合并不相邻因子时，两种次序得到同一张量而符号相反；合并三个连续因子时，结合律使两项相等而符号相反。因此 \(\mathrm{d}^2=0\)，增广与微分也相容。
+
+各项有左 \(A^e\) 模同构
+\[
+A^e\otimes_k A^{\otimes n}\longrightarrow B_n(A),\qquad
+(a\otimes b^{\mathrm{op}})\otimes(x_1\otimes\cdots\otimes x_n)
+\longmapsto a\otimes x_1\otimes\cdots\otimes x_n\otimes b.
+\]
+为中间向量空间选一组 \(k\) 基，便得到一组 \(A^e\) 基。
+
+在底层向量空间上定义
+\[
+s_{-1}(a)=1\otimes a,\qquad
+s_n(a_0\otimes\cdots\otimes a_{n+1})
+=1\otimes a_0\otimes\cdots\otimes a_{n+1}.
+\]
+\(\mathrm{d}_{n+1}s_n\) 的首项是原张量；其余合并项与 \(s_{n-1}\mathrm{d}_n\) 逐项抵消，所以 \(\mathrm{d}s+s\mathrm{d}=1\)，增广处为 \(\varepsilon s_{-1}=1\)。故底层向量空间复形正合，也即双模复形正合。这里的 \(s_n\) 通常不是双模同态；它只负责证明正合性。各项的 \(A^e\) 自由性则负责保证投射性，两者合起来才说明这是可用于计算 Ext、Tor 的投射消解，并不要求 \(A\) 本身是投射双模。
+\end{proof}
+
+施加 Hom 得到上链复形
+\[
+C^n(A,M)=\operatorname{Hom}_k(A^{\otimes n},M),\qquad C^0(A,M)=M,
+\]
+因为双模同态由其在 \(1\otimes a_1\otimes\cdots\otimes a_n\otimes1\) 上的值决定。微分写成
+\begin{equation}\label{b4:eq:hochschild-coboundary}
+\begin{aligned}
+(\delta f)(a_1,\ldots,a_{n+1})
+={}&a_1\cdot f(a_2,\ldots,a_{n+1})\\
+&+\sum_{i=1}^{n}(-1)^i
+ f(a_1,\ldots,a_i a_{i+1},\ldots,a_{n+1})\\
+&+(-1)^{n+1}f(a_1,\ldots,a_n)\cdot a_{n+1}.
+\end{aligned}
+\end{equation}
+它计算 \(\operatorname{HH}^n(A,M)\)。这里采用消解上通常的预合成微分，与\cref{b4:def:ext}一致；它不同于把消解当上链复形后直接使用内部 Hom 所带的逐次符号。
+
+\ProseParagraphBreak
+作张量时，先将最外面的两个因子写成包络代数的作用：
+\[
+a_0\otimes\cdots\otimes a_{n+1}
+=(a_0\otimes a_{n+1}^{\mathrm{op}})
+\cdot(1\otimes a_1\otimes\cdots\otimes a_n\otimes1).
+\]
+由张量积的平衡关系和 \(M^{\mathrm r}\) 的右作用，便有
+\[
+\begin{aligned}
+m\otimes_{A^e}(a_0\otimes\cdots\otimes a_{n+1})
+&=(a_{n+1}ma_0)\otimes_{A^e}
+(1\otimes a_1\otimes\cdots\otimes a_n\otimes1).
+\end{aligned}
+\]
+因此得到同构
+\[
+\begin{aligned}
+M^{\mathrm r}\otimes_{A^e}B_n(A)&\longrightarrow M\otimes_k A^{\otimes n},\\
+m\otimes_{A^e}(a_0\otimes\cdots\otimes a_{n+1})
+&\longmapsto a_{n+1}ma_0\otimes a_1\otimes\cdots\otimes a_n.
+\end{aligned}
+\]
+其逆把 \(m\otimes a_1\otimes\cdots\otimes a_n\) 送到
+\(m\otimes_{A^e}(1\otimes a_1\otimes\cdots\otimes a_n\otimes1)\)。任取 \(c\otimes d^{\mathrm{op}}\in A^e\)，平衡关系两端在此识别下的系数同为 \(a_{n+1}dmca_0\)，所以该映射良定义。
+
+\ProseParagraphBreak
+将 bar 微分施加于 \(1\otimes a_1\otimes\cdots\otimes a_n\otimes1\)，首项把 \(a_1\) 移到最左侧，经上述识别成为 \(ma_1\)；末项把 \(a_n\) 移到最右侧，因而成为 \(a_nm\)。于是 \(C_n(A,M)=M\otimes_k A^{\otimes n}\) 上的微分为
+\begin{equation}\label{b4:eq:hochschild-boundary}
+\begin{aligned}
+b(m\otimes a_1\otimes\cdots\otimes a_n)
+={}&ma_1\otimes a_2\otimes\cdots\otimes a_n\\
+&+\sum_{i=1}^{n-1}(-1)^i
+m\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_n\\
+&+(-1)^n a_n m\otimes a_1\otimes\cdots\otimes a_{n-1}.
+\end{aligned}
+\end{equation}
+它计算 \(\operatorname{HH}_n(A,M)\)。特别地，\(b(m\otimes a)=ma-am\)；最后一项的次序正由右 \(A^e\) 作用决定。

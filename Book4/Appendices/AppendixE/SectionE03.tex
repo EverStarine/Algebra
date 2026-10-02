@@ -1,0 +1,172 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### E.3 空间、群作用与 Grothendieck topos
+% 纲要细目（写作范围）：
+% ---
+% #### E.3.1 空间上的指数层与开集分类子
+% #### E.3.2 群作用与 Grothendieck topos
+% #### E.3.3 交换群值层与内射对象
+
+\section{空间、群作用与 Grothendieck topos}
+\label{b4:sec:E03}
+
+预层范畴已经把函数和子对象都组织成了对象。加入层公理以后，局部相容性会改变其中的公式，却保留同样的泛性质。先在拓扑空间上把这件事算清楚，再比较群作用及一般位点。
+
+\subsection{空间上的指数层与开集分类子}
+\label{b4:subsec:E03:01}
+
+\begin{proposition}\label{b4:prop:space-sheaf-topos}
+设 \(X\) 为拓扑空间。集合值层范畴 \(\operatorname{Sh}_{\mathbf{Set}}(X)\) 是初等 topos。对层 \(F,G\)，指数层和子对象分类子分别为
+\[
+ (G^F)(U)=\operatorname{Hom}_{\operatorname{Sh}_{\mathbf{Set}}(U)}(F|_U,G|_U),
+ \qquad
+ \Omega(U)=\{\,V\subseteq U\mid V\text{ 开}\,\}.
+\]
+\(\Omega\) 的限制为 \(V\mapsto V\cap W\)，\(\mathrm{true}_U(*)=U\)。
+\end{proposition}
+\begin{proof}
+终层、二元积和等化子逐开集构造后仍满足唯一拼接，故有限极限存在。对覆盖 \(U=\bigcup_iU_i\)，相容的局部层态射 \(F|_{U_i}\to G|_{U_i}\) 可逐截面拼接：对 \(s\in F(W)\)，先在 \(W\cap U_i\) 上求像，再用 \(G\) 的层公理拼成 \(W\) 上的截面。这些像与限制相容，且唯一。因此所给 \(G^F\) 是层。
+
+求值在开集 \(U\) 上送 \((\theta,s)\) 到 \(\theta_U(s)\)。对层态射 \(b:H\times F\to G\)，\(z\in H(U)\) 决定局部态射
+\[
+ F(W)\longrightarrow G(W),\qquad
+ s\longmapsto b_W(z|_W,s)\quad(W\subseteq U).
+\]
+这给出 \(H\to G^F\)，与求值构造互逆，所以为指数对象。
+
+相容的局部开集由并集唯一拼接，故 \(\Omega\) 也是层。对子层 \(A\subseteq F\)，令
+\[
+ \chi_U(s)=\bigcup\{\,V\subseteq U\mid V\text{ 开且 }s|_V\in A(V)\,\}.
+\]
+这些局部截面都是 \(s\) 的限制，因而相容；\(A\) 的层公理使 \(s\) 在这整个并上属于 \(A\)。所以 \(\chi_U(s)\) 是使该限制属于 \(A\) 的最大开集。它与交 \(W\) 的限制相容，且等于 \(U\) 当且仅当 \(s\in A(U)\)，给出分类方块。若另一特征映射 \(\psi\) 也分类 \(A\)，则
+\(W\subseteq\psi_U(s)\) 当且仅当 \(s|_W\in A(W)\)，故它必等于上述并集。这同时证明唯一性。
+\end{proof}
+
+\(\Omega(X)\) 是 \(X\) 的所有开集，不只是 \(\varnothing,X\)。在这个范畴中，“一个截面属于子层”可以在某个开区域成立。开集的补集未必开，因而这种子对象结构不总与普通集合的布尔代数相同。这里不需要另设逻辑公理，就能从局部限制看见差别。
+
+\subsection{群作用与 Grothendieck topos}
+\label{b4:subsec:E03:02}
+
+\begin{example}\label{b4:exm:group-set-topos}
+设 \(G\) 为群。左 \(G\)-集范畴的积为对角作用，指数对象的底集合为全部函数 \(X\to Y\)，作用为
+\[
+ (g\cdot f)(x)=g\cdot f(g^{-1}\cdot x).
+\]
+求值 \(Y^X\times X\to Y\) 等变；普通柯里化将等变映射 \(Z\times X\to Y\) 对应为等变映射 \(Z\to Y^X\)，直接核验上述公式即可。子对象是稳定子集，其特征函数到平凡作用的 \(\{0,1\}\) 等变，且唯一。因此该范畴为初等 topos。与预层的描述相比，群中每个箭头可逆，所以一个筛只有空或最大两种，恰好得到这两个真假值。
+\end{example}
+
+\begin{definition}\label{b4:def:grothendieck-topos}
+设 \(\mathcal E\) 为局部小范畴。若存在小位点 \((\mathcal C,J)\)，使
+\[
+ \mathcal E\simeq\operatorname{Sh}_{\mathbf{Set}}(\mathcal C,J),
+\]
+则称 \(\mathcal E\) 为\term[Grothendieck-topos]{Grothendieck topos}[Grothendieck topos]。
+\end{definition}
+
+\begin{theorem}\label{b4:thm:site-topos}
+设 \((\mathcal C,J)\) 为小位点。其集合值层范畴是初等 topos；因而每个 Grothendieck topos 都是初等 topos。
+\end{theorem}
+\begin{proofsketch}
+记 \(\mathcal S=\operatorname{Sh}_{\mathbf{Set}}(\mathcal C,J)\)，\(i:\mathcal S\to\widehat{\mathcal C}\) 为包含函子。一般位点的层化函子 \(a:\widehat{\mathcal C}\to\mathcal S\) 满足 \(a\dashv i\)，并保持有限极限。其构造先以覆盖筛上的相容族定义 \(F^+\)，两族在共同覆盖细化上相同便视为等价，再作一次得到层 \(F^{++}\)。极限中的有限个相容条件可以在同一覆盖细化上核验，从而得到有限极限保持性。两次加号构造及这一步的细节见\cite[Chapter III, Section 5]{MacLaneMoerdijk1992Sheaves}。层的有限极限也可直接逐对象计算。
+
+对层 \(F,G\)，先按\cref{b4:prop:presheaf-exponential}定义预层
+\[
+ E(U)\coloneqq\operatorname{Nat}(h_U\times iF,iG),
+\]
+限制沿 \(r:V\to U\) 由前复合 \(h_r\times1_{iF}\) 给出。一般位点上的 \(h_U\) 未必是层。由层化伴随、\(a\) 保持积及 \(a(iF)\cong F\)，有
+\[
+ E(U)\cong\operatorname{Hom}_{\mathcal S}(a(h_U)\times F,G).
+\]
+对任意层 \(H\)，同一伴随与 Yoneda 引理还给出
+\[
+ \operatorname{Hom}_{\mathcal S}(a(h_U),H)
+ \cong\operatorname{Nat}(h_U,iH)\cong H(U).
+\]
+
+为核验 \(E\) 是层，取 \(R\in J(U)\) 及相容族 \(\theta_f\in E(V)\)，其中 \(f:V\to U\) 遍历 \(R\)。对每个 \(k:W\to V\)，相容性是
+\(\theta_{f\circ k}=\theta_f\circ(h_k\times1_{iF})\)。对任意 \(g:V\to U\) 和 \(x\in F(V)\)，在覆盖筛 \(g^*R\) 上定义
+\[
+ y_k=(\theta_{g\circ k})_W(1_W,F(k)x)
+ \quad(k:W\to V\text{ 属于 }g^*R).
+\]
+对 \(\ell:Z\to W\)，\(\theta_{g\circ k}\) 的自然性与上述相容性给出 \(G(\ell)y_k=y_{k\circ\ell}\)。因此 \(G\) 的层公理将这些截面唯一拼成 \(y\in G(V)\)，令 \(\theta_V(g,x)=y\)。沿 \(r:V'\to V\) 限制时，所用覆盖为 \(r^*(g^*R)=(g\circ r)^*R\)，局部值与同一公式相同；拼接的唯一性便给出 \(\theta\) 的自然性。当 \(g\in R\) 时，\(1_V\in g^*R\)，故
+\(\theta_V(g,x)=(\theta_g)_V(1_V,x)\)；结合族的相容性，得到 \(E(f)\theta=\theta_f\)。任何另一拼接在每个 \(g^*R\) 上都具有相同的 \(y_k\)，由 \(G\) 的局部唯一性必等于 \(\theta\)。所以 \(E\) 是层。
+
+现在对任意层 \(H\)，包含函子的全忠实性、预层指数的泛性质及层的积逐对象计算给出
+\[
+ \operatorname{Hom}_{\mathcal S}(H,E)
+ \cong\operatorname{Nat}(iH\times iF,iG)
+ \cong\operatorname{Hom}_{\mathcal S}(H\times F,G).
+\]
+这些双射关于 \(H\) 自然，求值由预层求值限制而来，故 \(E\) 是层范畴中的指数对象。
+
+分类子取 \(\Omega(U)\) 为 \(U\) 上所有 \(J\)-闭筛组成的集合：筛 \(S\) 满足，对每个 \(f:V\to U\)，若 \(f^*S\in J(V)\)，则 \(f\in S\)。拉回保持这个条件，因为 \(h^*(f^*S)\) 覆盖时，\(S\) 的闭性给出 \(f\circ h\in S\)，即 \(h\in f^*S\)。因而筛的拉回定义预层 \(\Omega\)。
+
+取 \(R\in J(U)\) 及相容族 \(S_f\in\Omega(V)\)，其中 \(f:V\to U\) 属于 \(R\)，相容性为 \(h^*S_f=S_{f\circ h}\)（\(h:W\to V\)）。先令
+\[
+ T=\{\,f:V\to U\mid f\in R,\ 1_V\in S_f\,\},
+ \qquad
+ S=\{\,g:V\to U\mid g^*T\in J(V)\,\}.
+\]
+若 \(f\in T\)，则 \(S_f\) 含恒等态射，因而是最大筛；于是 \(1_W\in h^*S_f=S_{f\circ h}\)，故 \(f\circ h\in T\)。这证明 \(T\) 对前复合封闭。对 \(f\in R\)，由相容性逐项得到
+\[
+ k\in f^*T
+ \ \Longleftrightarrow\ 1_W\in S_{f\circ k}=k^*S_f
+ \ \Longleftrightarrow\ k\in S_f
+ \quad(k:W\to V),
+\]
+所以 \(f^*T=S_f\)。覆盖的拉回稳定性使 \(S\) 也对前复合封闭。若 \(q:V\to U\) 满足 \(q^*S\) 覆盖，则对其中每个 \(k\)，\(k^*(q^*T)=(q\circ k)^*T\) 都覆盖；拓扑的传递公理推出 \(q^*T\) 覆盖，故 \(q\in S\)。因此 \(S\) 是 \(J\)-闭筛。再对 \(f\in R\) 及 \(k:W\to V\)，有
+\[
+ k\in f^*S
+ \ \Longleftrightarrow\ k^*(f^*T)=k^*S_f\in J(W)
+ \ \Longleftrightarrow\ k\in S_f,
+\]
+最后一步使用 \(S_f\) 的闭性，以及筛含 \(k\) 时其沿 \(k\) 的拉回为最大筛。因此 \(f^*S=S_f\)，得到所需拼接。
+
+若另一 \(J\)-闭筛 \(S'\) 也恢复该族，则 \(T\subseteq S'\)。对 \(g:V\to U\)，若 \(g\in S'\)，相容族的恢复给出 \(g^*T=g^*R\)，所以 \(g^*T\) 覆盖；反之，若 \(g^*T\) 覆盖，则 \(T\subseteq S'\) 使 \(g^*S'\) 覆盖，\(S'\) 的闭性给出 \(g\in S'\)。故 \(S'=S\)，证明 \(\Omega\) 的层条件。
+
+取 \(\mathrm{true}_U(*)\) 为最大筛。上面的 \(\operatorname{Hom}_{\mathcal S}(a(h_U),H)\cong H(U)\) 说明单态射可逐对象识别为子层包含。对子层 \(A\subseteq F\)，令
+\[
+ \chi_U(x)=\{\,f:V\to U\mid F(f)x\in A(V)\,\}.
+\]
+若 \(f^*\chi_U(x)\) 覆盖，则局部限制在 \(A\) 中相容；由 \(A\) 的拼接与 \(F\) 的局部唯一性得到 \(F(f)x\in A(V)\)。所以 \(\chi_U(x)\) 是 \(J\)-闭筛。\(\chi\) 的自然性、其拉回恢复 \(A\) 及其唯一性，与\cref{b4:thm:presheaf-topos}中逐态射的核验相同，故 \(\Omega\) 是子对象分类子。这里省略的仍是一般筛上的两次加号构造及层化保持有限极限的技术细节；有关层化、指数和分类子的完整论证见\cite[Chapter III, Sections 4--7; Chapter IV, Section 2]{MacLaneMoerdijk1992Sheaves}。
+\end{proofsketch}
+
+初等 topos 的定义只规定有限极限、指数与分类子，不要求任意小余极限。例如有限集合范畴是初等 topos，却不是 Grothendieck topos：后者具有任意小余积，而前者没有可数个单元素集合的余积。由此可以区分两种名称的实际条件。
+
+\subsection{交换群值层与内射对象}
+\label{b4:subsec:E03:03}
+
+集合值层可以带有内部的交换群结构：给出自然的加法 \(F\times F\to F\)、零截面及逆元，并逐开集满足群公理。它等价于通常的交换群值层。因此\secref{b4:sec:C03}采用的 \(\operatorname{Sh}(X)\) 是 \(\operatorname{Sh}_{\mathbf{Set}}(X)\) 中的交换群对象范畴，而不是这个 topos 本身。后者有函数对象与分类子，前者则有加法、核、余核与导出截面函子；各自的构造有不同用途。
+
+\begin{theorem}\label{b4:thm:grothendieck-enough-injectives}
+设 \(\mathcal A\) 为局部小交换范畴，具有小余积，滤过余极限存在且正合，并有生成元 \(U\)。则每个对象 \(M\) 都可单射到一个内射对象。
+\end{theorem}
+这就是\subsecref{b4:subsec:grothendieck-category}中 Grothendieck 范畴的内射存在性定理。原始论证见\cite[Théorème 1.10.1, pp. 135--137]{Grothendieck1957TohokuI}。
+\begin{proofsketch}
+生成元首先把子对象控制为集合。对任意对象 \(B\)，不同子对象 \(N\subseteq B\) 对应不同的子集 \(\operatorname{Hom}(U,N)\subseteq\operatorname{Hom}(U,B)\)，因为来自 \(U\) 的映射的像生成 \(N\)。因此 \(\operatorname{Sub}(B)\) 是集合；若 \(N\subseteq U\)，其子对象也都是 \(U\) 的子对象，故
+\[
+ |\operatorname{Sub}(N)|\le |\operatorname{Sub}(U)|.
+\]
+对每个 \(N\subseteq U\) 及态射 \(N\to M\)，取一份包含 \(N\to U\)。这些数据组成集合，可以将其直和沿所有 \(N\to M\) 给出的映射推出。直和包含是有限子直和的滤过余极限，因而由 AB5 仍为单态射。推出得到单态射 \(M\to M_1\)，使原有的每个 \(N\to M\) 都延到 \(U\to M_1\)。
+
+选一个极限序数 \(\lambda\)，其共尾数满足
+\[
+ \operatorname{cf}(\lambda)>|\operatorname{Sub}(U)|.
+\]
+从 \(M_0=M\) 重复上述推出构造，在每个极限阶段取滤过余极限，得到连续单态射链 \((M_\alpha)_{\alpha\le\lambda}\)。AB5 保证各阶段到后继阶段及最终对象 \(I=M_\lambda\) 的映射仍单。
+
+给定 \(N\subseteq U\) 及 \(f:N\to I\)，沿包含 \(\iota_\alpha:M_\alpha\to I\) 拉回，令 \(N_\alpha=f^{-1}(M_\alpha)\subseteq N\)。这些拉回也可写成
+\[
+ N_\alpha\cong\ker\bigl(N\oplus M_\alpha
+ \xrightarrow{(f,-\iota_\alpha)}I\bigr).
+\]
+AB5 使取核与该滤过余极限相容，所得核为 \(\ker(N\oplus I\xrightarrow{(f,-1)}I)\cong N\)，因此
+\[
+ N=\bigcup_{\alpha<\lambda}N_\alpha.
+\]
+这个递增链只取 \(|\operatorname{Sub}(N)|\) 个可能的值。各个不同子对象首次出现的阶段组成大小小于 \(\operatorname{cf}(\lambda)\) 的集合，其上确界小于 \(\lambda\)；此后链已经稳定，故在某个 \(\alpha<\lambda\) 有 \(N_\alpha=N\)。这正表示 \(f\) 经 \(M_\alpha\) 因子化。由于 \(\lambda\) 为极限序数，\(\alpha+1<\lambda\)，下一次推出便将该态射延到 \(U\to M_{\alpha+1}\to I\)。
+
+最后使用生成元版本的 Baer 判据：若 \(N\subseteq U\) 发出的每个态射都可延到 \(U\)，对象便内射。其理由是对任意 \(A\subseteq B\) 上的态射取极大延拓；\(\operatorname{Sub}(B)\) 是集合，局部小性又使全部延拓组成集合，而滤过余极限正合使延拓的链有上界。若延拓的定义域尚未达到 \(B\)，生成元提供一个像不包含于该定义域的 \(U\to B\)，拉回得到 \(N\subseteq U\)，再经推出扩张，矛盾。于是 \(I\) 内射。这里给出了统一阶段界的机制；超限递归及生成元判据的原始论证见所引原文。
+\end{proofsketch}
+
+模范畴中可以直接构造内射模；拓扑空间上的交换群值层也在\cref{b4:prop:C-sheaf-injectives}中通过茎得到内射嵌入。这个一般定理说明，内射消解的可用性还可以由范畴的正合余极限与生成元保证，而不必依赖每一类对象的元素模型。

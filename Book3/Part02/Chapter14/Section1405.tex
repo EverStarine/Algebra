@@ -1,0 +1,176 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### 14.5 形式光滑、非分歧与平展
+% 纲要位置：工作记录/计划纲要.md，第 2405 行。
+% 纲要细目（写作范围）：
+% * 平方零提升的存在性、至多唯一性与存在唯一性
+% * 六种无穷小性质的条件对照；非分歧采用有限型，光滑和平展采用有限展示
+% * 微分模消失与形式非分歧的等价
+% * 标准平展的 Newton 修正与 Jacobian 子式可逆时的光滑提升
+% * 形式及普通性质的任意基变换；有限域扩张平展与可分性的等价
+% * 一般有限展示形式平展的等价刻画及光滑蕴含平坦在第23章证明
+% ---
+
+\section{形式光滑、非分歧与平展}
+\label{b3:sec:1405}
+
+导子比较的是两个同态之间的一阶差别；给定商环中的一个同态，能否把它提升到扩张环中，却是另一个问题。有限域扩张的微分计算还显示，环本身是域也不保证它相对于基域具有良好的提升性质。本节将存在性与唯一性分别表述，再用导数可逆的方程构造提升，并解释有限性和平坦性在光滑、非分歧及平展条件中的作用。
+
+\subsection{平方零提升与基本概念}
+\label{b3:subsec:1405:01}
+\label{b3:subsec:1404:02}
+
+平方零扩张已经把导子解释为同态的一阶变化。现在还要问：商环中的一个同态，是否来自扩张环中的同态？若 \(B=A[X_1,\ldots,X_n]/(f_1,\ldots,f_s)\)，任取变量像的代表后，各 \(f_j\) 的值都落在被商去的理想中。导子控制不同修正之间的差，但关系中的误差未必能够消掉。因此，提升的存在性和唯一性是两个需要分别考虑的问题。
+
+\begin{definition}\label{b3:def:formal-infinitesimal-properties}
+设 \(A\to B\) 为交换环同态。对任意交换 \(A\) 代数 \(C\)、满足 \(J^2=0\) 的理想 \(J\subseteq C\)，以及 \(A\) 代数同态 \(u:B\to C/J\)，考虑使下式复合等于 \(u\) 的 \(A\) 代数同态 \(\widetilde u\)：
+\[
+B\xrightarrow{\widetilde u}C\longrightarrow C/J.
+\]
+若每组这样的数据都有提升，则称 \(A\to B\) \term[xingshi-guanghua]{形式光滑}[formally smooth]；若每组数据至多有一个提升，则称其\term[xingshi-feifenqi]{形式非分歧}[formally unramified]；若每组数据恰有一个提升，则称其\term[xingshi-pingzhan]{形式平展}[formally étale]。
+\end{definition}
+
+“至多一个”允许没有提升，“至少一个”允许有多个，必须分开判断。只用平方零理想已足以检验任意幂零理想：若 \(J^N=0\)，可沿 \(C/J\)、\(C/J^2\)、\ldots、\(C/J^N=C\) 逐次提升，因为 \(J^i/J^{i+1}\) 的平方为零；存在性、唯一性分别逐次传递。
+
+\ProseParagraphBreak
+例如设 \(k\) 为域，取
+\[
+B=k[z]/(z^2),\qquad C=k[\varepsilon]/(\varepsilon^3),
+\qquad J=(\varepsilon^2).
+\]
+在 \(C/J\) 中，\(z\mapsto\varepsilon\) 保持关系，因而给出 \(k\) 代数同态。若它能够提升，则 \(z\) 的像必为 \(\varepsilon+a\varepsilon^2\)，其中 \(a\in k\)。但在 \(C\) 中
+\[
+(\varepsilon+a\varepsilon^2)^2=\varepsilon^2\ne0,
+\]
+无论怎样选 \(a\)，误差都不能消去。因此 \(B\) 在 \(k\) 上不形式光滑。若去掉关系，改用 \(k[z]\)，同样的近似同态却有全部 \(z\mapsto\varepsilon+a\varepsilon^2\) 这些提升；自由变量使提升存在，也留下不唯一的变化方向。
+
+\begin{definition}\label{b3:def:finite-presentation-infinitesimal-properties}
+设 \(A\to B\) 为交换环同态。若存在有限个 \(b_1,\ldots,b_n\in B\)，使 \(B=A[b_1,\ldots,b_n]\)，则称 \(B\) 为有限型 \(A\) 代数。若 \(B\) 还能写成
+\(A[X_1,\ldots,X_n]/(f_1,\ldots,f_s)\)，其中 \(n,s\) 为非负整数，则称 \(B\) 为有限展示 \(A\) 代数（也称有限呈示 \(A\) 代数）。对同态 \(A\to B\)，分别作如下定义：若 \(B\) 有限展示且该同态形式光滑，则称其\term[guanghua]{光滑}[smooth]；若 \(B\) 有限型且 \(\Omega_{B/A}=0\)，则称其\term[feifenqi]{非分歧}[unramified]；若 \(B\) 有限展示、作为 \(A\) 模平坦且 \(\Omega_{B/A}=0\)，则称其\term[pingzhan]{平展}[étale]。
+\end{definition}
+
+非分歧只要求有限型；光滑和平展的定义则要求有限展示。由下文的\cref{b3:thm:formally-unramified-differentials}，非分歧也等价于有限型且形式非分歧。\cref{b3:thm:etale-equivalent-characterizations}将证明有限展示且形式平展等价于平展，\cref{b3:thm:smooth-flat}将证明光滑蕴含平坦。六种性质的条件列于\cref{b3:tab:infinitesimal-properties}。
+
+\begin{center}
+\begin{minipage}{\textwidth}
+\makeatletter
+\def\@captype{table}
+\makeatother
+\centering
+\caption[无穷小提升性质的条件]{无穷小提升性质的条件。固定交换环同态 \(A\to B\)；提升栏对任意交换 \(A\) 代数 \(C\)、平方零理想 \(J\subseteq C\) 及 \(A\) 代数同态 \(B\to C/J\) 而言。平展行的提升刻画及光滑的平坦性由第23章的相应定理给出。}
+\label{b3:tab:infinitesimal-properties}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+性质 & 平方零提升 & 有限性条件 & 平坦性的地位\\
+\midrule
+形式光滑 & 至少一个 & 不要求有限性 & 定义不要求\\
+形式非分歧 & 至多一个 & 不要求有限性 & 定义不要求\\
+形式平展 & 恰好一个 & 不要求有限性 & 定义不要求\\
+光滑 & 至少一个 & 有限展示 & 可由定理推出\\
+非分歧 & 至多一个 & 有限型 & 不要求\\
+平展 & 恰好一个 & 有限展示 & 定义要求\\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\ProseParagraphBreak
+例如多项式代数 \(A[X_1,\ldots,X_n]\) 光滑：把每个 \(u(X_i)\) 任意提升到 \(C\)，即可唯一按这些已选的像延拓为代数同态。若 \(n>0\)，选择本身通常不唯一，所以不能据此称形式非分歧。局部化 \(A_f\) 则形式平展：\(f\) 在 \(C/J\) 中的像为单位时，它在 \(C\) 中也是单位；若 \(ab=1+j\)、\(j^2=0\)，则 \(b(1-j)\) 就是 \(a\) 的逆。局部化的泛性质因而给出唯一提升。再用 \(A_f=A[T]/(fT-1)\)、局部化平坦性及 \(\Omega_{A_f/A}=0\)，也可直接核验其平展性。
+
+\subsection{微分模消失与提升唯一性}
+\label{b3:subsec:1405:02}
+\label{b3:subsec:1404:03}
+
+\begin{theorem}\label{b3:thm:formally-unramified-differentials}
+设 \(A\to B\) 为任意交换环同态，不加有限性条件。该映射形式非分歧，当且仅当 \(\Omega_{B/A}=0\)。
+\end{theorem}
+\begin{proof}
+设 \(J^2=0\)，且 \(v,w:B\to C\) 为同一个 \(u:B\to C/J\) 的两个提升。差 \(D=v-w\) 取值于 \(J\)。由于 \(J^2=0\)，\(u\) 使 \(J\) 成为一个 \(B\) 模：取 \(u(b)\) 的任意提升乘 \(J\)，结果不依赖选择。展开
+\[
+v(b)v(c)-w(b)w(c)
+=w(b)D(c)+w(c)D(b)+D(b)D(c)
+\]
+可见最后一项为零，故 \(D\) 是 \(A\) 导子。如果 \(\Omega_{B/A}=0\)，微分模泛性质使 \(D=0\)，两个提升相同。
+
+反向在平方零扩张 \(C=B\oplus\Omega_{B/A}\) 中比较
+\(b\mapsto(b,0)\) 与 \(b\mapsto(b,\mathrm{d}b)\)。\cref{b3:prop:derivation-square-zero}说明两者都是恒等同态 \(B\to B\) 的提升。形式非分歧使它们相同，故所有 \(\mathrm{d}b=0\)。这些元素生成 \(\Omega_{B/A}\)，所以该模为零。
+\end{proof}
+
+这项等价也解释了微分模的作用：它的消失控制两个已存在的提升之间的差；提升的存在性与平坦性仍须分别检验。
+
+\begin{example}\label{b3:exm:unramified-not-etale}
+设 \(k\) 为域，取商映射 \(A=k[t]\to B=k=A/(t)\)。任意 \(A\) 导子 \(B\to M\) 都为零，因为 \(B\) 的每个元素都来自基环，因此 \(\Omega_{B/A}=0\)，且该映射有限展示、形式非分歧。但它不平坦：单射 \(A\xrightarrow{t}A\) 张量到 \(B\) 后变成非零模 \(B\) 上的零映射。
+
+\ProseParagraphBreak
+它也不是形式光滑。把 \(C=k[t]/(t^2)\) 看成 \(A\) 代数，令 \(J=(t)/(t^2)\)。恒等映射 \(B=k\to C/J=k\) 不可能提升为 \(A\) 代数映射 \(B\to C\)，因为 \(t\) 在 \(B\) 中为零，在 \(C\) 中却非零。故它是非分歧而非平展的具体例子。
+\end{example}
+
+\subsection{标准平展与 Jacobian 光滑代数}
+\label{b3:subsec:1405:03}
+\label{b3:subsec:1404:04}
+
+微分判据说明非分歧控制提升的唯一性。要得到提升，还需消去关系中的误差；标准平展代数中，导数可逆使这一步成为一次线性修正。
+
+\begin{proposition}\label{b3:prop:standard-etale-lift}
+设 \(A\) 为交换环，\(f\in A[T]\) 为正次数首一多项式，令
+\(B=\bigl(A[T]/(f)\bigr)_g\)，其中 \(g\) 是商环中的一个元素，\(t\) 为 \(T\) 的像。若 \(f'(t)\) 在 \(B\) 中可逆，则 \(A\to B\) 平展，并且形式平展。
+\end{proposition}
+\begin{proof}
+商环由首一除法具有有限 \(A\) 基 \(1,t,\ldots,t^{\deg f-1}\)，因而平坦；再局部化仍对 \(A\) 平坦，由\cref{b3:prop:flat-base-change-transitivity}成立。添加一个生成元及关系 \(gU-1\) 表明 \(B\) 有限展示，而
+\(\Omega_{B/A}=B\,\mathrm{d}t/\bigl(f'(t)\mathrm{d}t\bigr)=0\)。所以映射平展。
+
+直接检查提升。设 \(J^2=0\)，给定 \(u:B\to C/J\)。取 \(x\in C\) 提升 \(u(t)\)，则 \(f(x)\in J\)，且 \(f'(x)\) 为单位，因为它模 \(J\) 后为单位。作一次 Newton 修正\footnote{牛顿（Isaac Newton，1643-1727），英国数学家及物理学家，创立微积分并提出经典力学定律。}，令
+\[
+x'=x-f'(x)^{-1}f(x).
+\]
+平方零条件使 Taylor 展开\footnote{泰勒（Brook Taylor，1685-1731），英国数学家，以函数的级数展开研究微积分。}恰好为
+\(f(x')=f(x)+f'(x)(x'-x)=0\)。选取代表 \(g\) 的多项式 \(G\in A[T]\)。因为 \(G(x')\) 模 \(J\) 为单位，它本身为单位；而 \(f(x')=0\) 保证这个值不依赖代表的选择。于是 \(T\mapsto x'\) 唯一延拓为 \(B\to C\)。若另一根 \(x''\) 给出同一模 \(J\) 的像，则
+\(0=f(x'')-f(x')=f'(x')(x''-x')\)，故 \(x''=x'\)。由生成元及局部化泛性质，整个提升唯一。
+\end{proof}
+
+这种一元计算通常称为标准平展代数的基本情形。条件必须在实际局部化的环内检查。例如
+\(A=k[s]\)、\(B=A[t]/(t^2-s)\) 总是秩二自由，但微分模为 \(\bigl(B/(2t)\bigr)\,\mathrm{d}t\)。若 \(\operatorname{char}k\ne2\)，倒置 \(t\) 后导数为单位，得到平展映射；在 \(t=0\) 处导数不能相除。若 \(\operatorname{char}k=2\)，导数处处为零，非零的局部化也不满足这个非分歧条件。
+
+光滑的类似计算允许自由方向：只要选出足够多的变量消去关系误差，其余变量的像仍可自由选择。
+
+\begin{proposition}\label{b3:prop:jacobian-smooth-lifting}
+设 \(A\) 为交换环，\(1\le r\le n\) 为整数，\(f_1,\ldots,f_r\in A[X_1,\ldots,X_n]\)，\(g\) 为商环 \(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\) 的元素，记
+\[
+B=\bigl(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\bigr)_g.
+\]
+若 Jacobian 矩阵 \(\bigl(\partial f_i/\partial X_j\bigr)\) 的某个 \(r\times r\) 子式在 \(B\) 中可逆，则 \(A\to B\) 光滑。
+\end{proposition}
+\begin{proof}
+重新排列变量，可设前 \(r\) 列的子式可逆。给定交换 \(A\) 代数 \(C\)、平方零理想 \(J\subseteq C\) 及 \(A\) 代数同态 \(u:B\to C/J\)，先任取所有变量像的提升 \(x_j\in C\)。误差向量 \(\bigl(f_i(x)\bigr)_{i=1}^r\) 的各分量落入 \(J\)。所选子式在 \(C/J\) 中为单位，因而在 \(C\) 中仍为单位。保持后 \(n-r\) 个变量不变，用可逆的 \(r\times r\) 子矩阵解线性方程
+\[
+\left(\dfrac{\partial f_i}{\partial X_j}(x)\right)_{1\le i,j\le r}
+\begin{pmatrix}h_1\\ \vdots\\h_r\end{pmatrix}
+=-\begin{pmatrix}f_1(x)\\ \vdots\\f_r(x)\end{pmatrix}.
+\]
+所得 \(h_j\) 都属于 \(J\)。平方零条件给出准确的一阶等式
+\[
+\begin{aligned}
+&f_i(x_1+h_1,\ldots,x_r+h_r,x_{r+1},\ldots,x_n)\\
+&\qquad=f_i(x)+\sum_{j=1}^r
+  \dfrac{\partial f_i}{\partial X_j}(x)h_j=0.
+\end{aligned}
+\]
+因为 \(J^2=0\)，展开中含有至少两个 \(h_j\) 的项全部为零；最后一个等式正是所解的线性方程。\(g\) 的值模 \(J\) 后仍为单位，故修正后的值也可逆。于是修正后的变量像满足全部关系，并允许 \(g\) 的逆元，从而给出提升 \(B\to C\)。这证明 \(A\to B\) 形式光滑；添加一个生成元及关系 \(gU-1\) 可知 \(B\) 有限展示，故该同态光滑。
+\end{proof}
+
+\subsection{基变换与有限域扩张}
+\label{b3:subsec:1405:04}
+
+平方零提升的条件也能直接随基环扩张传递。设 \(A\to B\) 为交换环同态，\(A'\) 为交换 \(A\) 代数，记 \(B'=A'\otimes_AB\)。对任意 \(A'\) 代数 \(C\) 及平方零理想 \(J\)，映射 \(B'\to C/J\) 等价于一个 \(A\) 代数映射 \(B\to C/J\)。它的每个提升 \(B\to C\)，与固定的结构映射 \(A'\to C\) 在 \(A\) 上相同，故由张量积的泛性质唯一合成 \(B'\to C\)；反过来，限制到 \(B\) 还原该提升。因此两边的提升集合一一对应，存在性和至多唯一性分别保持。有限型、有限展示及平坦性也保持基变换，所以光滑、非分歧和平展都保持任意基变换。
+
+\begin{corollary}\label{b3:cor:finite-field-extension-etale}
+设 \(L/K\) 为有限域扩张。则 \(K\to L\) 非分歧，当且仅当它平展，也当且仅当 \(L/K\) 可分；此时 \(K\to L\) 还形式平展。
+\end{corollary}
+\begin{proof}
+向量空间自由，故 \(L\) 作为 \(K\) 模平坦。有限扩张也是有限展示 \(K\) 代数：选有限组代数生成元，得到多项式环到 \(L\) 的满射，关系理想由 Hilbert 基定理有限生成。于是非分歧和平展都等价于 \(\Omega_{L/K}=0\)，再用\cref{b3:thm:finite-field-differentials-separable}得到可分性判据。若扩张可分，本原元定理给出 \(L=K(\alpha)\)；其最小多项式的导数在 \(L\) 中可逆，\cref{b3:prop:standard-etale-lift}便给出形式平展性。
+\end{proof}
+
+可分扩张的提升性质也可对照松村英之的《Commutative Ring Theory》\cite[\S25, Theorem 25.3, pp. 195--196]{Matsumura1989CommutativeRingTheory}。纯不可分扩张则可能使提升连存在性都失去。设 \(p\) 为素数，\(k=\mathbb F_p(s)\)，其中 \(s\) 为超越元；取 \(L=k[u]/(u^p-s)\)。置 \(f=T^p-s\)、\(C=k[T]/(f^2)\)、\(J=(f)/(f^2)\)。有 \(J^2=0\)、\(C/J=L\)。若恒等同态 \(L\to C/J\) 有提升，\(u\) 的像必为 \(T+h\)、\(h\in J\)。但
+\[
+(T+h)^p-s=T^p-s+h^p=f\ne0\quad\text{在 }C\text{ 中},
+\]
+因为 \(p\ge2\) 使 \(h^p=0\)，而 \(f\notin(f^2)\)。这与 \(u^p=s\) 矛盾，所以 \(k\to L\) 不形式光滑。

@@ -25,17 +25,7 @@
 使任意 \(a,b\in R\)、\(b\ne0\) 都可写成 \(a=bq+r\)，其中 \(q,r\in R\)，并且 \(r=0\) 或 \(\delta(r)<\delta(b)\)，则称 \(R\) 为\term[euclid-zhenghuan]{Euclid 整环}[Euclidean domain]，称 \(\delta\) 为\term[euclid-hanshu]{Euclid 函数}[Euclidean function]。
 \end{definition}
 
-本书不额外要求 \(\delta(a)\leq\delta(ab)\)（\(a,b\ne0\)）。有些文献把这个乘法单调性并入定义。两种约定对函数的要求不同，但得到的 Euclid 整环类相同。事实上，给定满足上述除法条件的 \(\delta\)，可对每个 \(a\in R\setminus\{0\}\) 定义
-\[
-\widetilde\delta(a)\coloneqq\min_{c\in R\setminus\{0\}}\delta(ac).
-\]
-由于 \(R\) 是整环，取最小值的集合是非空的非负整数集合。若 \(a,b\ne0\)，\(ab\) 的每个非零倍数也是 \(a\) 的非零倍数，故
-\(\widetilde\delta(a)\leq\widetilde\delta(ab)\)。又设 \(a\in R\)、\(b\in R\setminus\{0\}\)，取 \(c\ne0\) 使 \(\delta(bc)=\widetilde\delta(b)\)。用 \(\delta\) 作带余除法，得到
-\[
-a=(bc)q+r=b(cq)+r,
-\qquad r=0\ \text{或}\ \delta(r)<\delta(bc).
-\]
-当 \(r\ne0\) 时，在最小值的定义中取乘子 \(1\)，可知 \(\widetilde\delta(r)\leq\delta(r)<\widetilde\delta(b)\)。因此 \(\widetilde\delta\) 同时满足除法条件与乘法单调性\cite[Theorem 2.1]{ConradRemarksEuclideanDomains}。商和余数通常不唯一，Euclid 函数也未必唯一；对带余除法的存在性证明，还须另行判断是否给出了可执行的求商步骤。
+这一定义只断言符合下降条件的 \(q,r\) 存在，并未给出求出它们的程序。实际运行辗转相除法，还须能有效完成环运算，并能求出这样的商和余数。商和余数通常不唯一，Euclid 函数也未必唯一；本书也不额外要求 \(\delta(a)\leq\delta(ab)\)（\(a,b\ne0\)）。
 
 \ProseParagraphBreak
 设 \(R\) 为带 Euclid 函数 \(\delta\) 的 Euclid 整环，\(a,b\in R\) 不全为零。从 \(a,b\) 出发，不断以上一次非零余数作除数，直到余数为零；每次所得非零余数的 \(\delta\) 值都严格下降。这个过程称为\term[euclid-suanfa]{Euclid 算法}[Euclidean algorithm]，也称辗转相除法。
@@ -50,9 +40,20 @@ a=(bc)q+r=b(cq)+r,
 r_{j-1}=q_jr_j+r_{j+1},
 \qquad r_{j+1}=0\ \text{或}\ \delta(r_{j+1})<\delta(r_j).
 \]
-非负整数 \(\delta(r_1),\delta(r_2),\ldots\) 不可能无限严格下降，所以某一步得到 \(r_{m+1}=0\)、\(r_m\ne0\)。等式表明，一个元素同时整除 \(r_{j-1},r_j\)，当且仅当它同时整除 \(r_j,r_{j+1}\)：两个方向分别使用减法和加法。因此每一对相邻余数的公因子集合相同，最终等于 \(r_m,0\) 的公因子集合，故 \(d=r_m\) 为所求最大公因子。
+非负整数 \(\delta(r_1),\delta(r_2),\ldots\) 不可能无限严格下降，所以某一步得到 \(r_{m+1}=0\)、\(r_m\ne0\)。这是算法终止的理由。另一方面，对每个 \(c\in R\)，除法等式给出
+\[
+\bigl(c\mid r_{j-1}\text{ 且 }c\mid r_j\bigr)
+\quad\Longleftrightarrow\quad
+\bigl(c\mid r_j\text{ 且 }c\mid r_{j+1}\bigr).
+\]
+正向使用 \(r_{j+1}=r_{j-1}-q_jr_j\)，反向使用 \(r_{j-1}=q_jr_j+r_{j+1}\)。因此每一对相邻余数的公因子集合不变，最终等于 \(r_m,0\) 的公因子集合。这是算法正确的理由：\(d=r_m\) 整除最后两项，因而整除 \(a,b\)；每个公因子又整除 \(r_m=d\)，所以 \(d\) 为所求最大公因子。
 
-为明确回代，令 \((u_0,v_0)=(1,0)\)、\((u_1,v_1)=(0,1)\)，并递推
+为明确回代，先看第一次更新：
+\[
+r_2=r_0-q_1r_1
+=(1-q_1\cdot0)a+(0-q_1\cdot1)b.
+\]
+余数相减时，它们在 \(a,b\) 前的系数也按同样方式相减。于是令 \((u_0,v_0)=(1,0)\)、\((u_1,v_1)=(0,1)\)，并递推
 \begin{equation}\label{b1:eq:extended-euclid-recurrence}
 u_{j+1}=u_{j-1}-q_ju_j,\qquad
 v_{j+1}=v_{j-1}-q_jv_j.
@@ -75,6 +76,19 @@ v_{j+1}=v_{j-1}-q_jv_j.
 \State \Return \(d=r_{j-1},\ u=u_{j-1},\ v=v_{j-1}\)。
 \end{algorithmsteps}
 \end{algorithm}
+
+上面的下降过程只用到了除法条件。有些文献还要求 Euclid 函数满足乘法单调性 \(\delta(a)\leq\delta(ab)\)（\(a,b\ne0\)）。这个附加要求不会缩小 Euclid 整环的范围：给定满足本书定义的 \(\delta\)，可在 \(a\) 的所有非零倍数中取最小值，定义
+\[
+\widetilde\delta(a)\coloneqq\min_{c\in R\setminus\{0\}}\delta(ac)
+\qquad(a\ne0).
+\]
+由于 \(R\) 是整环，取最小值的集合是非空的非负整数集合。若 \(a,b\ne0\)，\(ab\) 的每个非零倍数也是 \(a\) 的非零倍数，故
+\(\widetilde\delta(a)\leq\widetilde\delta(ab)\)。又设 \(a\in R\)、\(b\in R\setminus\{0\}\)，取 \(c\ne0\) 使 \(\delta(bc)=\widetilde\delta(b)\)。用 \(\delta\) 作带余除法，得到
+\[
+a=(bc)q+r=b(cq)+r,
+\qquad r=0\ \text{或}\ \delta(r)<\delta(bc).
+\]
+当 \(r\ne0\) 时，在最小值的定义中取乘子 \(1\)，可知 \(\widetilde\delta(r)\leq\delta(r)<\widetilde\delta(b)\)。因此 \(\widetilde\delta\) 同时满足除法条件与乘法单调性\cite[Theorem 2.1]{ConradRemarksEuclideanDomains}。反向包含由定义直接得到，所以两种约定得到同一类环。
 
 \subsection{整数环及一元多项式环}
 \label{b1:subsec:1102:02}
@@ -105,6 +119,9 @@ v_{j+1}=v_{j-1}-q_jv_j.
 \end{equation}
 这里不仅算出最大公因子，也获得了以后解线性同余式所需的整数系数。
 
+\ProseParagraphBreak
+在域上的多项式环中，余数的“变小”改由次数衡量。要降低被除式的次数，只需先消掉最高次项，再对剩下的多项式重复这一步。设被除式和除式的次数为 \(n\geq m\)，首项系数为 \(a,b\)：乘子 \(x^{n-m}\) 对齐次数，\(ab^{-1}\) 对齐首项系数，因此应从被除式中减去 \(ab^{-1}x^{n-m}\) 倍的除式。
+
 \begin{proposition}[多项式带余除法]\label{b1:prop:field-poly-division}
 设 \(F\) 为域，\(f,g\in F[x]\)，且 \(g\ne0\)。存在唯一的 \(q,r\in F[x]\)，使
 \[
@@ -124,7 +141,11 @@ f_1=f-ab^{-1}x^{n-m}g
 \(g(q-q')=r'-r\)。若 \(q-q'\ne0\)，由\cref{b1:prop:polynomial-degree}，非零多项式的次数相加，使左端次数至少为 \(\deg g\)，而右端为零或次数小于 \(\deg g\)，矛盾。因此 \(q=q'\)，再得 \(r=r'\)。
 \end{proof}
 
-域假设在首项系数 \(b\) 的求逆处使用。例如在 \(\mathbb Z[x]\) 中，\(x\) 无法除以常数 \(2\) 得到次数小于 \(0\) 的余数：这种余数只能为零，而 \(x\notin2\mathbb Z[x]\)。这不否认某些特殊除数可做除法，例如首一多项式的首项系数就是单位。
+域假设在首项系数 \(b\) 的求逆处使用。例如在 \(\mathbb Z[x]\) 中，若要求
+\[
+x=2q+r,\qquad r=0\ \text{或}\ \deg r<\deg2=0,
+\]
+则非零多项式的次数均非负，第二种情形不可能发生，故必须 \(r=0\)。这就要求 \(x\in2\mathbb Z[x]\)，但一次项系数 \(1\) 不是 \(2\) 的倍数，所以无法如此带余除法。这不否认某些特殊除数可做除法，例如首一多项式的首项系数就是单位。
 
 \ProseParagraphBreak
 在 \(\mathbb Q[x]\) 中取 \(f=x^3-2x+1\)、\(g=x^2-1\)。逐项相减得到
@@ -153,6 +174,29 @@ N(a+bi)\coloneqq a^2+b^2.
 \]
 所以 \(2+i\nmid2-i\)，二者也不相伴。范数为整数素数足以证明一个 Gauss 整数不可约，却不是必要条件。例如 \(3\) 在 \(\mathbb Z[i]\) 中不可约（见\cref{b1:ex:11-gaussian-rational-prime}），但 \(N(3)=9\)。
 
+\ProseParagraphBreak
+范数还可用来保证余数下降。把 \(\mathbb Z[i]\) 看作复平面的整数格点，每个复数 \(z=s+ti\) 都能逐坐标选出最近的整数 \(m,n\)。所得 \(q=m+ni\) 周围的闭正方形边长为 \(1\)，在其中有
+\[
+\lvert z-q\rvert^2=(s-m)^2+(t-n)^2\leq\tfrac12<1.
+\]
+作带余除法时取 \(z=\alpha/\beta\)，其中 \(\alpha,\beta\in\mathbb Z[i]\)、\(\beta\ne0\)。下图把 \(q\) 平移到原点，阴影正方形的每条边到 \(q\) 的距离为 \(1/2\)。在边界上可能有多个最近格点，任取一个即可。
+\begin{center}
+\begin{tikzpicture}[x=2cm,y=2cm,>=stealth]
+\fill[blue!8] (-0.5,-0.5) rectangle (0.5,0.5);
+\draw[step=1,gray!40,very thin] (-1,-1) grid (1,1);
+\draw[blue!60!black] (-0.5,-0.5) rectangle (0.5,0.5);
+\foreach \u in {-1,0,1} {
+  \foreach \v in {-1,0,1} {\fill[gray!70] (\u,\v) circle (1.1pt);}
+}
+\draw[dashed,gray] (0,0) -- (0.32,0) -- (0.32,0.24);
+\draw[blue!60!black] (0,0) -- (0.32,0.24);
+\fill (0,0) circle (1.5pt) node[below left] {\(q=m+ni\)};
+\fill[blue!60!black] (0.32,0.24) circle (1.5pt) node[above right] {\(z=\alpha/\beta\)};
+\draw[<->] (0,-0.7) -- (0.5,-0.7) node[midway,below] {\(1/2\)};
+\draw[<->] (-0.7,0) -- (-0.7,0.5) node[midway,left] {\(1/2\)};
+\end{tikzpicture}
+\end{center}
+
 \begin{proposition}\label{b1:prop:gaussian-euclidean}
 设
 \[
@@ -172,3 +216,18 @@ N(r)=N(\beta)\bigl((s-m)^2+(t-n)^2\bigr)
 \end{proof}
 
 例如 \(5=(2-i)(2+i)\)，所以 \(2+i\) 整除 \(5\)。又 \(N(2+i)=5\) 为整数素数，任何分解 \(2+i=\alpha\beta\) 都使两个非负整数范数的积为 \(5\)，其中一个必为 \(1\)；故 \(2+i\) 不可约。在 \(\mathbb Z\) 中不可约的 \(5\)，进入 \(\mathbb Z[i]\) 后已经分裂。这提示我们：讨论不可约性之前，工作环必须说清楚。
+
+\ProseParagraphBreak
+这里同一个范数承担了三种不同的职责：
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+所要判断的性质 & 范数所给的条件 \\
+\midrule
+单位 & \(z\in\mathbb Z[i]^\times\ \Longleftrightarrow\ N(z)=1\) \\
+不可约性 & \(N(z)\text{ 为整数素数}\ \Longrightarrow\ z\text{ 不可约}\) \\
+Euclid 除法 & 取最近格点，使 \(N(r)\leq\tfrac12N(\beta)<N(\beta)\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+第一行是等价判据，第二行只是充分条件；不可约元 \(3\) 的范数为 \(9\)，说明不能把第二行倒过来。第三行则比较余数与除数，负责保证辗转相除过程的下降。

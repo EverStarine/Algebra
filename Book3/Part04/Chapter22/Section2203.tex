@@ -1,24 +1,23 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 22.3 Gorenstein 环
-% 纲要位置：计划纲要.md，第 2204 行。
+% 纲要位置：计划纲要.md，第 2685 行。
 
 \section{Gorenstein 环}
 \label{b3:sec:2203}
 
-环自身的有限内射消解，比所有模具有有限自由消解的要求宽松。一般 Bass 判别把这种有限性转为 Cohen–Macaulay 性与顶次 Ext 的一维条件，完全交则可由 Koszul 对偶满足这一条件。
+环自身具有有限长度的内射消解，比每个有限生成模都具有有限长度、各项有限秩的自由消解这一要求宽松。一般 Bass 判别把这种有限性转为 Cohen–Macaulay 性与顶次 Ext 的一维条件，完全交则可由 Koszul 对偶满足这一条件。
 
 
-% 纲要内容：
-%
-% * Noether 局部环的有限自内射维数
-% * 与 Cohen–Macaulay 性的联系
-% * 完全交蕴含 Gorenstein 的适当版本
-%
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 内射维数的理想与素理想检验、正则元换环、素点间的 Ext 消失传播
+% * Bass 判别：有限自内射维数、CM 类型一与剩余域 Ext 的集中性；正则元逆向提升中的两个相邻 Ext 次数
+% * Gorenstein 性的完备化与局部化；给定完备正则局部满射表示下，典范模同构于环的充分条件
+% * 完全交的 Koszul 自对偶，以及正则、完全交、Gorenstein、CM 的蕴含关系
 
 \subsection{Noether 局部环的有限自内射维数}
 \label{b3:subsec:2203:01}
 
-正则局部环用有限自由消解控制所有模；Gorenstein 性则问环本身能否有有限的内射消解。两种要求的方向不同。特别是，剩余域有无限自由消解，并不排除环作为自身的模内射。
+正则局部环上的每个有限生成模都有有限长度、各项有限秩的自由消解；Gorenstein 性则问环本身能否有有限长度的内射消解。两种要求的方向不同。特别是，剩余域有无限自由消解，并不排除环作为自身的模内射。
 
 \begin{definition}\label{b3:def:injective-dimension-gorenstein}
 设 \(R\) 为交换环，\(N\ne0\) 为 \(R\) 模。若存在正合列
@@ -34,7 +33,7 @@
 \[
 0\longrightarrow R\longrightarrow K\longrightarrow K/R\longrightarrow0.
 \]
-两个右端模都可除，由主理想整环上的 Baer 判据都内射；而 \(R\) 不是内射，因为均匀参数的倒数不在 \(R\) 中。因此 \(\operatorname{id}_RR=1\)。这里仍是用一个有限长度的消解描述一个一维环，却不能要求消解各项有限生成。
+两个右端模都可除，由主理想整环上的 Baer 判据都内射。取统一化元 \(\pi\)，理想 \(\pi R\) 上的同态 \(\pi r\mapsto r\) 不能延拓到 \(R\)：若延拓在 \(1\) 处的值为 \(b\in R\)，则必须有 \(\pi b=1\)，与 \(\pi\) 不是单位矛盾。因此 \(R\) 不是内射，\(\operatorname{id}_RR=1\)。这里仍是用一个有限长度的消解描述一个一维环，却不能要求消解各项有限生成。
 
 \begin{lemma}\label{b3:lem:injective-dimension-test}
 设 \(R\) 为交换环，\(N\ne0\) 为 \(R\) 模，\(s\ge0\)。下列两条件等价：
@@ -56,7 +55,106 @@
 \subsection{Gorenstein 性与 Cohen–Macaulay 性}
 \label{b3:subsec:2203:02}
 
-有限自内射维数不仅给出一项同调界，还强迫环达到 Cohen--Macaulay 深度。下面的判别不要求环完备，也不要求事先给定正则局部覆盖。证明采用素点间的 Ext 比较与正则元素换环，可对照松村英之\cite[\S 18, Lemmas 1--4 and Theorem 18.1, pp. 139--144]{Matsumura1989CommutativeRingTheory}。
+有限自内射维数不仅给出一项同调界，还强迫环达到 Cohen--Macaulay 深度。素理想检验、正则元换环和素点间的 Ext 比较，把这一条件与环的维数联系起来。下面三个引理及判别定理的证明可对照松村英之\cite[\S 18, Lemmas 1--4 and Theorem 18.1, pp. 139--144]{Matsumura1989CommutativeRingTheory}。
+
+\begin{lemma}[内射维数的素理想检验]\label{b3:lem:injective-dimension-prime-test}
+设 \(R\) 为交换 Noether 环，\(N\ne0\) 为 \(R\) 模，\(s\ge0\)。则
+\[
+\operatorname{id}_RN\le s
+\quad\Longleftrightarrow\quad
+\operatorname{Ext}_R^{s+1}(R/\mathfrak p,N)=0
+\quad\text{对每个 }\mathfrak p\in\operatorname{Spec}R\text{ 成立}.
+\]
+\end{lemma}
+\begin{proof}
+有限内射消解使高于 \(s\) 次的 Ext 全部为零。反过来，设右侧条件成立。对任一有限生成的 \(R\) 模 \(L\)，\cref{b3:thm:associated-finite}给出有限滤过
+\[
+0=L_0\subsetneq L_1\subsetneq\cdots\subsetneq L_v=L,
+\qquad L_i/L_{i-1}\cong R/\mathfrak p_i.
+\]
+对 \(0\rightarrow L_{i-1}\rightarrow L_i\rightarrow R/\mathfrak p_i\rightarrow0\) 取第一变量的 Ext 长正合列，相关片段为
+\[
+\operatorname{Ext}_R^{s+1}(R/\mathfrak p_i,N)
+\longrightarrow\operatorname{Ext}_R^{s+1}(L_i,N)
+\longrightarrow\operatorname{Ext}_R^{s+1}(L_{i-1},N).
+\]
+从 \(L_0=0\) 归纳，得到 \(\operatorname{Ext}_R^{s+1}(L,N)=0\)。特别取 \(L=R/J\)，其中 \(J\) 为任意理想，再用\cref{b3:lem:injective-dimension-test}即得结论。
+\end{proof}
+
+\begin{lemma}[正则元换环]\label{b3:lem:regular-element-ext-change}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(x\in\mathfrak m\) 为 \(R\) 上的非零因子，\(\overline R=R/xR\)。对任意 \(\overline R\) 模 \(N\) 及整数 \(j\ge0\)，有自然同构
+\[
+\operatorname{Hom}_R(N,R)=0,\qquad
+\operatorname{Ext}_R^{j+1}(N,R)
+\cong\operatorname{Ext}_{\overline R}^j(N,\overline R).
+\]
+\end{lemma}
+\begin{proof}
+若 \(f:N\rightarrow R\) 为 \(R\) 线性映射，则 \(xf(n)=f(xn)=0\)。\(x\) 在 \(R\) 上为非零因子，故 \(f=0\)。又因 \(xN=0\)，\cref{b3:lem:ext-basic-properties}说明 \(x\) 零化全部 \(\operatorname{Ext}_R^q(N,R)\)。对
+\(0\rightarrow R\xrightarrow{x}R\rightarrow\overline R\rightarrow0\)
+取第二变量长正合列，得到自然同构
+\[
+\operatorname{Hom}_{\overline R}(N,\overline R)
+=\operatorname{Hom}_R(N,\overline R)
+\cong\operatorname{Ext}_R^1(N,R).
+\]
+
+令 \(T^j(N)=\operatorname{Ext}_R^{j+1}(N,R)\)。上述 Hom 消失使 \(T^j\) 对 \(\overline R\) 模的短正合列给出从 \(T^0\) 开始的长正合列。每个自由 \(\overline R\) 模 \(P=\overline R^{(I)}\) 都有二项自由 \(R\) 消解
+\[
+0\longrightarrow R^{(I)}\xrightarrow{x}R^{(I)}\longrightarrow P\longrightarrow0,
+\]
+所以 \(T^j(P)=0\) 对 \(j\ge1\) 成立。取自由满射 \(P\rightarrow N\)，核为 \(K\)。由相应长正合列，
+\[
+T^1(N)=\operatorname{coker}\bigl(T^0(P)\longrightarrow T^0(K)\bigr)
+\cong\operatorname{Ext}_{\overline R}^1(N,\overline R).
+\]
+当 \(j\ge2\) 时，同一长正合列给出 \(T^j(N)\cong T^{j-1}(K)\)，而自由 \(\overline R\) 消解也给出
+\(\operatorname{Ext}_{\overline R}^j(N,\overline R)\cong\operatorname{Ext}_{\overline R}^{j-1}(K,\overline R)\)。逐次对合冲模作同样处理，便得到各次同构；它们由长正合列的连接映射诱导，故关于 \(N\) 自然。
+\end{proof}
+
+\begin{lemma}[素点间的 Ext 消失]\label{b3:lem:bass-ext-localization}
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(\mathfrak p\in\operatorname{Spec}R\)，\(t=\dim(R/\mathfrak p)\)，\(j\ge0\)。则
+\[
+\operatorname{Ext}_R^{j+t}(k,M)=0
+\quad\Longrightarrow\quad
+\operatorname{Ext}_{R_{\mathfrak p}}^j
+\bigl(\kappa(\mathfrak p),M_{\mathfrak p}\bigr)=0.
+\]
+\end{lemma}
+\begin{proof}
+先设 \(t=1\)。取 \(a\in\mathfrak m\setminus\mathfrak p\)。一维局部整环 \(R/\mathfrak p\) 的非零素理想只能是其极大理想，所以
+\(\sqrt{(\mathfrak p,a)}=\mathfrak m\)，模 \(C=R/(\mathfrak p,a)\) 有限长。它的合成因子全为 \(k\)，对合成列的各个短正合列反复使用 Ext 长正合列，假设给出 \(\operatorname{Ext}_R^{j+1}(C,M)=0\)。现在使用短正合列
+\[
+0\longrightarrow R/\mathfrak p\xrightarrow{a}R/\mathfrak p
+\longrightarrow C\longrightarrow0.
+\]
+若令 \(L=\operatorname{Ext}_R^j(R/\mathfrak p,M)\)，相关的长正合片段为
+\[
+L\xrightarrow{a}L\longrightarrow\operatorname{Ext}_R^{j+1}(C,M)=0.
+\]
+由\cref{b3:prop:finite-ext-localization}，\(L\) 有限生成。乘 \(a\) 满射及 \(a\in\mathfrak m\) 使 Nakayama 引理给出 \(L=0\)。同一命题又给出
+\[
+L_{\mathfrak p}\cong
+\operatorname{Ext}_{R_{\mathfrak p}}^j
+\bigl((R/\mathfrak p)_{\mathfrak p},M_{\mathfrak p}\bigr)
+=\operatorname{Ext}_{R_{\mathfrak p}}^j
+\bigl(\kappa(\mathfrak p),M_{\mathfrak p}\bigr),
+\]
+证明了一维情形。
+
+一般 \(t>0\) 时，取长度为 \(t\) 的素理想链
+\[
+\mathfrak p=\mathfrak p_0\subsetneq\mathfrak p_1
+\subsetneq\cdots\subsetneq\mathfrak p_t=\mathfrak m.
+\]
+链的相邻两项之间没有其他素理想，否则可以加长这条链。因此
+\(\dim(R_{\mathfrak p_i}/\mathfrak p_{i-1}R_{\mathfrak p_i})=1\)。从 \(i=t\) 向下应用已证的一维情形：若
+\[
+\operatorname{Ext}_{R_{\mathfrak p_i}}^{j+i}
+\bigl(\kappa(\mathfrak p_i),M_{\mathfrak p_i}\bigr)=0,
+\]
+就在局部环 \(R_{\mathfrak p_i}\) 中，以素理想 \(\mathfrak p_{i-1}R_{\mathfrak p_i}\) 和次数 \(j+i-1\) 得到下一步的消失。逐级局部化后，所得环和模分别是 \(R_{\mathfrak p_{i-1}}\) 与 \(M_{\mathfrak p_{i-1}}\)。最终到达 \(i=0\)，便得到所需结论。\(t=0\) 时 \(\mathfrak p=\mathfrak m\)，结论就是原假设。
+\end{proof}
 
 \begin{theorem}[Gorenstein 环的判别]\label{b3:thm:gorenstein-bass-criterion}
 设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(d=\dim R\)。下列条件等价：
@@ -64,50 +162,76 @@
 \item \(R\) 为 Gorenstein 环；
 \item \(R\) 为 Cohen--Macaulay 环，且
 \(\dim_k\operatorname{Ext}_R^d(k,R)=1\)；
-\item \(\operatorname{Ext}_R^i(k,R)=0\) 对 \(i\ne d\) 成立，且
+\item \(\operatorname{Ext}_R^i(k,R)=0\) 对所有 \(i\ge0\)、\(i\ne d\) 成立，且
 \(\operatorname{Ext}_R^d(k,R)\cong k\)。
 \end{equivalences}
 这些条件成立时，\(\operatorname{id}_RR=d\)。
 \end{theorem}
 \begin{proof}
-先说明三个计算事实。第一，\cref{b3:lem:injective-dimension-test}中的理想可只取素理想：每个有限生成模有有限素循环滤过，长正合列把素循环商上的 Ext 消失传到任意有限生成模，特别是各个 \(R/J\)。
-
-第二，若 \(x\in\mathfrak m\) 是 \(R\) 非零因子，令 \(\overline R=R/xR\)。对每个 \(\overline R\) 模 \(N\)，有
+设条件1成立，记 \(r=\operatorname{id}_RR<\infty\)。取一条长度为 \(d\) 的素理想链，其首项 \(\mathfrak p\) 必为极小素理想，且 \(\dim(R/\mathfrak p)=d\)。零维局部环 \(R_{\mathfrak p}\) 为非零 Artin 环，因而有非零基座，即
 \[
-\operatorname{Hom}_R(N,R)=0,\qquad
-\operatorname{Ext}_R^{j+1}(N,R)
-\cong\operatorname{Ext}_{\overline R}^{j}(N,\overline R)
-\quad(j\ge0).
+\operatorname{Hom}_{R_{\mathfrak p}}\bigl(\kappa(\mathfrak p),R_{\mathfrak p}\bigr)\ne0.
 \]
-确实，二项自由消解 \(0\to R\xrightarrow{x}R\to\overline R\to0\) 给出
-\(\operatorname{Ext}_R^q(\overline R,R)\) 只在 \(q=1\) 为 \(\overline R\)。把 \(N\) 的自由 \(\overline R\) 消解与 \(R\) 的内射消解组成 Hom 双复形，按\cref{b3:lem:canonical-change-of-rings}证明中的单行消去，便得上述换环同构；每个总次数只有有限项，不涉及无限乘积。
+\cref{b3:lem:bass-ext-localization}取 \(M=R\)、\(j=0\)，其逆否命题给出 \(\operatorname{Ext}_R^d(k,R)\ne0\)，所以 \(r\ge d\)。
 
-第三，对有限生成的 \(R\) 模 \(M\)、素理想 \(\mathfrak p\) 及 \(t=\dim R/\mathfrak p\)，有
+若 \(r>0\)，还有 \(\operatorname{Ext}_R^r(k,R)\ne0\)。否则，\(r\) 的最小性与\cref{b3:lem:injective-dimension-prime-test}给出某个 \(\mathfrak p\) 使
+\(L=\operatorname{Ext}_R^r(R/\mathfrak p,R)\ne0\)。这个 \(\mathfrak p\) 不是 \(\mathfrak m\)，故可取 \(a\in\mathfrak m\setminus\mathfrak p\)。由
+\(0\rightarrow R/\mathfrak p\xrightarrow{a}R/\mathfrak p\rightarrow R/(\mathfrak p,a)\rightarrow0\)
+和内射维数为 \(r\)，得到正合片段
 \[
-\operatorname{Ext}_R^{j+t}(k,M)=0
-\ \Longrightarrow\
-\operatorname{Ext}_{R_{\mathfrak p}}^j
-  (\kappa(\mathfrak p),M_{\mathfrak p})=0.
+L\xrightarrow{a}L\longrightarrow
+\operatorname{Ext}_R^{r+1}\bigl(R/(\mathfrak p,a),R\bigr)=0.
 \]
-先设 \(t=1\)，取 \(a\in\mathfrak m\setminus\mathfrak p\)。模 \(R/(\mathfrak p,a)\) 有有限长度，故给定的 \((j+1)\) 次消失也对它成立。由
-\(0\to R/\mathfrak p\xrightarrow{a}R/\mathfrak p\to R/(\mathfrak p,a)\to0\)，乘以 \(a\) 在有限生成模 \(\operatorname{Ext}_R^j(R/\mathfrak p,M)\) 上满射；Nakayama 引理使该模为零，局部化即得断言。一般 \(t\) 时，取长度为 \(t\) 的最长素理想链，从 \(\mathfrak m\) 到 \(\mathfrak p\) 逐个作这一步；每个相邻商的局部维数为一，Ext 与有限生成模的局部化相容。
+\(L\) 有限生成，Nakayama 引理便使 \(L=0\)，矛盾。
 
-现在设 \(r=\operatorname{id}_RR<\infty\)。取满足 \(\dim R/\mathfrak p=d\) 的极小素理想，则零维局部环 \(R_{\mathfrak p}\) 有非零基座。第三个事实的逆否命题给出 \(\operatorname{Ext}_R^d(k,R)\ne0\)，所以 \(r\ge d\)。若 \(r>0\)，则 \(\operatorname{Ext}_R^r(k,R)\ne0\)：第一事实给出某个 \(\mathfrak p\) 使 \(\operatorname{Ext}_R^r(R/\mathfrak p,R)\ne0\)；若 \(\mathfrak p\ne\mathfrak m\)，取 \(a\in\mathfrak m\setminus\mathfrak p\)，同一短正合列及 \((r+1)\) 次 Ext 消失会使乘以 \(a\) 满射，再由 Nakayama 引理得到矛盾。
+此时 \(\mathfrak m\notin\operatorname{Ass}R\)。否则有单射 \(k\rightarrow R\)，记这个单射的余核为 \(C\)，则 \(\operatorname{Ext}_R^{r+1}(C,R)=0\)。第一变量长正合列中的片段
+\[
+0=\operatorname{Ext}_R^r(R,R)
+\longrightarrow\operatorname{Ext}_R^r(k,R)
+\longrightarrow\operatorname{Ext}_R^{r+1}(C,R)=0
+\]
+与上一段的非零结论矛盾。有限个关联素理想均严格包含于 \(\mathfrak m\)，故由有限素理想回避及\cref{b3:thm:associated-zero-divisors}，可选 \(x\in\mathfrak m\) 为非零因子。令 \(\overline R=R/xR\)。\cref{b3:lem:regular-element-ext-change}使每个素循环 \(\overline R\) 模的 \(r\) 次 Ext 都为零，而
+\[
+\operatorname{Ext}_{\overline R}^{r-1}(k,\overline R)
+\cong\operatorname{Ext}_R^r(k,R)\ne0.
+\]
+由\cref{b3:lem:injective-dimension-prime-test}，\(\operatorname{id}_{\overline R}\overline R=r-1\)。对 \(r\) 归纳：\(r=0\) 时 \(d=0\)，所以 \(R\) 为 CM 环；\(r>0\) 时归纳假设使 \(\overline R\) 为 CM 环，维数与内射维数均为 \(r-1\)。\cref{b3:cor:regular-quotient-depth,b3:prop:regular-quotient-dimension}说明取非零因子商后，深度和维数都减一，故 \(R\) 为 CM 环且 \(r=d\)。
 
-此时 \(\mathfrak m\notin\operatorname{Ass}R\)。否则有单射 \(k\to R\)，其余核的 \((r+1)\) 次 Ext 为零，迫使
-\(0=\operatorname{Ext}_R^r(R,R)\to\operatorname{Ext}_R^r(k,R)\) 满射，矛盾。因此可选 \(x\in\mathfrak m\) 为非零因子。第二事实和第一事实使 \(\operatorname{id}_{\overline R}\overline R=r-1\)：上界由全部素循环商的换环同构得到，下界由 \(\operatorname{Ext}_R^r(k,R)\ne0\) 得到。对 \(r\) 归纳，\(r=0\) 时已有 \(d=0\)，得到 \(R\) 为 CM 环且 \(r=d\)。
+同一归纳还给出条件3。零维且自内射时，取单射 \(\iota:k\rightarrow R\)。内射性使限制映射
+\(\operatorname{Hom}_R(R,R)\rightarrow\operatorname{Hom}_R(k,R)\)
+满射。\(R\) 的每个自同态都是乘以某个元素，故后者由 \(\iota\) 生成；它被 \(\mathfrak m\) 零化且非零，所以同构于 \(k\)，正次 Ext 则全为零。正维时，\(\operatorname{Hom}_R(k,R)=0\)，其余各次由\cref{b3:lem:regular-element-ext-change}下降到 \(\overline R\)。这证明条件1推出条件3。条件3结合\cref{b3:thm:depth-ext}给出 \(\operatorname{depth}R=d\)，所以推出条件2。
 
-归纳还给出条件3。零维且自内射时，任取单射 \(k\to R\)，内射性使 \(\operatorname{Hom}_R(R,R)\to\operatorname{Hom}_R(k,R)\) 满射。后者由该单射生成且被 \(\mathfrak m\) 零化，故同构于 \(k\)，正次 Ext 全为零。正维时，\(\operatorname{Hom}_R(k,R)=0\)，其余各次由第二事实下降到 \(\overline R\)。这证明条件1推出条件3；条件3结合深度的 Ext 刻画显然推出条件2。
-
-最后设条件2成立。取参数正则序列 \(x_1,\ldots,x_d\)，令 \(T=R/(x_1,\ldots,x_d)\)。反复换环得到
-\(\operatorname{Soc}(T)\cong\operatorname{Ext}_R^d(k,R)\cong k\)。Artin 局部环中每个非零理想都与基座非零相交：对该理想反复乘以极大理想，取最后一个非零幂次即可。将基座同构 \(\operatorname{Soc}(T)\to k\subseteq E_T(k)\) 延拓到 \(T\to E_T(k)\)，本质性使其为单射；由\cref{b3:lem:matlis-finite-length}，
+设条件2成立。由\cref{b3:thm:cm-parameters}取参数正则序列 \(x_1,\ldots,x_d\)，令 \(T=R/(x_1,\ldots,x_d)\)。反复换环得到
+\[
+\operatorname{Soc}(T)\cong\operatorname{Ext}_R^d(k,R)\cong k.
+\]
+Artin 局部环中每个非零理想都与基座非零相交：对该理想反复乘以极大理想，取最后一个非零幂次即可。利用 \(E_T(k)\) 的内射性，把基座同构 \(\operatorname{Soc}(T)\rightarrow k\subseteq E_T(k)\) 延拓到 \(T\rightarrow E_T(k)\)。若其核非零，便须与基座相交，与原同构的单射性矛盾。因此该延拓为单射。由\cref{b3:lem:matlis-finite-length}，
 \(\ell_T E_T(k)=\ell_T D_T(T)=\ell_T T\)，故它是同构，\(T\) 自内射。
 
-沿正则序列逐项返回。若 \(\operatorname{id}_{\overline R}\overline R\le s\)，则对含 \(x\) 的素理想，换环给出 \((s+2)\) 次 Ext 消失；对不含 \(x\) 的素理想，模 \(R/(\mathfrak p,x)\) 被 \(x\) 零化，短正合列使乘以 \(x\) 在 \(\operatorname{Ext}_R^{s+2}(R/\mathfrak p,R)\) 上满射，Nakayama 引理再次使其为零。第一事实于是给出 \(\operatorname{id}_RR\le s+1\)。从 \(T\) 返回 \(R\) 得 \(\operatorname{id}_RR\le d\)，而顶次 Ext 非零给出等号，完成证明。
+沿正则序列逐项返回。设 \(x\in\mathfrak m\) 为非零因子，\(\overline R=R/xR\)，且 \(\operatorname{id}_{\overline R}\overline R\le s\)。若素理想 \(\mathfrak p\) 含有 \(x\)，则\cref{b3:lem:regular-element-ext-change}直接给出
+\[
+\operatorname{Ext}_R^{s+2}(R/\mathfrak p,R)
+\cong\operatorname{Ext}_{\overline R}^{s+1}(R/\mathfrak p,\overline R)=0.
+\]
+若 \(x\notin\mathfrak p\)，令 \(C=R/(\mathfrak p,x)\)。这是一个 \(\overline R\) 模，换环同构给出相邻两阶消失：
+\[
+\begin{aligned}
+\operatorname{Ext}_R^{s+2}(C,R)
+&\cong\operatorname{Ext}_{\overline R}^{s+1}(C,\overline R)=0,\\
+\operatorname{Ext}_R^{s+3}(C,R)
+&\cong\operatorname{Ext}_{\overline R}^{s+2}(C,\overline R)=0.
+\end{aligned}
+\]
+对 \(0\rightarrow R/\mathfrak p\xrightarrow{x}R/\mathfrak p\rightarrow C\rightarrow0\) 取长正合列，若记
+\(L=\operatorname{Ext}_R^{s+2}(R/\mathfrak p,R)\)，则上面两项正是片段
+\[
+0\longrightarrow L\xrightarrow{x}L\longrightarrow0
+\]
+的两个端项。\(L\) 有限生成，乘 \(x\) 满射，故 Nakayama 引理使 \(L=0\)。这样全部素理想上的 \((s+2)\) 次 Ext 都为零，\cref{b3:lem:injective-dimension-prime-test}便给出 \(\operatorname{id}_RR\le s+1\)。从自内射的 \(T\) 逐次返回 \(R\)，得到 \(\operatorname{id}_RR\le d\)；而 \(\operatorname{Ext}_R^d(k,R)\ne0\) 给出等号，完成证明。
 \end{proof}
 
-对一个 \(d\) 维 CM 局部环 \(R\)，整数
-\(\dim_k\operatorname{Ext}_R^d(k,R)\) 称为它的\term[CohenMacaulayleixing]{Cohen–Macaulay 类型}[Cohen--Macaulay type]。深度的 Ext 刻画保证这个整数为正。判别定理说明 Gorenstein 环恰是类型为一的 CM 环；只有“CM”仍不足够。零维环的类型就是其基座的维数，所以 \(k[x,y]/(x,y)^2\) 是 CM 环但不是 Gorenstein 环。
+设 \((R,\mathfrak m,k)\) 为 \(d\) 维交换 Noether CM 局部环。整数
+\(\dim_k\operatorname{Ext}_R^d(k,R)\) 称为它的\term[CohenMacaulayleixing]{Cohen–Macaulay 类型}[Cohen--Macaulay type]。深度的 Ext 刻画保证这个整数为正。判别定理说明 Gorenstein 环恰是类型为一的 CM 环；只有“CM”仍不足够。零维环的类型就是其基座的维数。譬如对域 \(k\)，环 \(k[x,y]/(x,y)^2\) 的基座由 \(x,y\) 的像组成二维空间，故是 CM 环但不是 Gorenstein 环。
 
 \begin{proposition}\label{b3:prop:gorenstein-completion-localization}
 设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环。则 \(R\) 为 Gorenstein 环当且仅当其 \(\mathfrak m\)-进完备化 \(\widehat R\) 为 Gorenstein 环。若 \(R\) 为 Gorenstein 环，则每个 \(R_{\mathfrak p}\)、\(\mathfrak p\in\operatorname{Spec}R\)，也为 Gorenstein 环。
@@ -128,14 +252,14 @@
 原内射性使 \(\operatorname{Hom}_R(R,E)\to\operatorname{Hom}_R(J,E)\) 满射，局部化后仍满射，再用 Baer 判据即可。把 \(R\) 的有限内射消解逐项局部化，就得到 \(R_{\mathfrak p}\) 的有限内射消解。
 \end{proof}
 
-在给定正则覆盖的情形，典范模提供另一种直接的充分条件，并说明自内射维数为何能由局部对偶控制。
+若环已经写成完备正则局部环的商，典范模提供另一种直接的充分条件，并说明自内射维数为何能由局部对偶控制。
 
 \begin{proposition}\label{b3:prop:canonical-free-gorenstein}
 设 \((S,\mathfrak n)\) 为 \(n\) 维交换 Noether 完备正则局部环，\(I\subsetneq S\) 为理想，\(R=S/I\) 为 \(d\) 维 Cohen--Macaulay 环，典范模为
 \(\omega_R=\operatorname{Ext}_S^{n-d}(R,S)\)。若 \(\omega_R\cong R\) 为 \(R\) 模，则 \(R\) 为 Gorenstein 环。
 \end{proposition}
 \begin{proof}
-对每个理想 \(J\subseteq R\)，模 \(R/J\) 有限。\cref{b3:thm:canonical-module-local-duality}给出
+对每个理想 \(J\subseteq R\)，模 \(R/J\) 有限生成。\cref{b3:thm:canonical-module-local-duality}给出
 \[
 \operatorname{Ext}_R^{d+1}(R/J,\omega_R)
 \cong D_R\bigl(H_{\mathfrak m}^{-1}(R/J)\bigr)=0.
@@ -144,6 +268,28 @@
 \end{proof}
 
 此处典范模同构是一个 \(R\) 模同构，通常没有指定的自然选择。把典范模选成 \(R\) 也不等于对每个有限生成模使用普通线性对偶 \(\operatorname{Hom}_R(-,R)\)：局部对偶中的次数 \(d-i\) 和 Matlis 对偶仍然不可省略。
+
+\begin{table}[htbp]
+\centering
+\caption[Gorenstein 判据的适用范围]{Gorenstein 判据的适用范围。\((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(d=\dim R\)。}
+\label{b3:tab:gorenstein-criteria}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.50\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+条件 & 适用范围与结论\\
+\midrule
+\(\operatorname{id}_RR<\infty\)
+& 对任意这样的局部环，等价于 Gorenstein 性；内射维数必为 \(d\)\\
+\(R\) 为 CM 环，且 \(\dim_k\operatorname{Ext}_R^d(k,R)=1\)
+& 对任意这样的局部环，等价于 Gorenstein 性\\
+\(\operatorname{Ext}_R^i(k,R)=0\) 对 \(i\ne d\) 成立，且 \(\operatorname{Ext}_R^d(k,R)\cong k\)
+& 对任意这样的局部环，等价于 Gorenstein 性\\
+\(R\) 为 CM 环，且 \(\omega_R\cong R\)
+& 当给定 \(R=S/I\)，其中 \(S\) 为 \(n\) 维完备正则局部环、\(\omega_R=\operatorname{Ext}_S^{n-d}(R,S)\) 时，此条件推出 Gorenstein 性\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\cref{b3:tab:gorenstein-criteria}的前三行给出不要求完备的等价判据，末行把典范模同构与给定满射表示下的局部对偶联系起来。完全交的 Koszul 消解正好可以直接检验末行中的同构。
 
 \subsection{完全交的 Gorenstein 性}
 \label{b3:subsec:2203:03}
@@ -189,4 +335,4 @@ R,&j=c,\\
 \(\widehat R=S/(f_1,\ldots,f_c)\) 的表示，其中 \(S\) 完备正则局部，\(f_1,\ldots,f_c\) 为正则序列。前一命题使 \(\omega_{\widehat R}\cong\widehat R\)，再由\cref{b3:prop:canonical-free-gorenstein}得 \(\widehat R\) 为 Gorenstein 环。\cref{b3:prop:gorenstein-completion-localization}把此性质下降到 \(R\)。链中的第一项由\cref{b3:thm:complete-intersection-cm}证明中的空正则序列论证成立，最后一项来自\cref{b3:thm:gorenstein-bass-criterion}。
 \end{proof}
 
-完全交的定义已给出 \(\widehat R\) 的正则局部覆盖及其正则序列关系，所以此处可直接计算典范模。对一般交换完备 Noether 局部环，覆盖的存在性由\appref{b3:app:D}的 Cohen 结构定理保证，但其关系未必由正则序列生成。对于给定的正则局部环 \(S\) 及非零非单位 \(f\)，商 \(S/(f)\) 是超曲面，因而也是 Gorenstein 环；它是否正则仍须另外判断。
+完全交的定义已给出 \(\widehat R\) 的完备正则局部环满射表示及其正则序列关系，所以此处可直接计算典范模。对一般交换完备 Noether 局部环，这种满射表示的存在性由\appref{b3:app:D}的 Cohen 结构定理保证，但其关系未必由正则序列生成。对于给定的正则局部环 \(S\) 及非零非单位 \(f\)，商 \(S/(f)\) 是超曲面，因而也是 Gorenstein 环；它是否正则仍须另外判断。

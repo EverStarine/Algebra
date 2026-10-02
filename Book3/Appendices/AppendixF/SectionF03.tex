@@ -7,37 +7,88 @@
 形式级数的计算要说明每个固定次数的系数为何最终稳定，才能从有限步骤得到一个无限恒等式。最低次齐次关系进一步决定切锥，但只保留一个首单项式会丢失同次数中的其他项。
 
 % 纲要细目（与计划纲要同步）：
-% * Hironaka 型标准基和形式除法的基本语言；形式收敛不等于有限步算法终止，收敛幂级数另需分析假设
-% * \(\operatorname{gr}_{\mathfrak m}(R/I)\cong\operatorname{gr}_{\mathfrak m}R/\operatorname{in}_{\mathfrak m}(I)\) 与切锥；区别初始齐次形式和首单项式
+% * 局部次数序下的形式除法：有限步骤恒等式、系数稳定与极大理想进极限；由有限首单项式生成元推出理想生成
+% * \(\operatorname{gr}_{\mathfrak m}(R/I)\cong\operatorname{gr}_{\mathfrak m}R/\operatorname{in}_{\mathfrak m}(I)\) 与切锥；证明局部次数标准基生成初始齐次理想，区别初始形式和首单项式
 % * 以尖点 \(y^2-x^3=0\) 和零维加厚点展示切锥与重数；初始理想不能只靠任意生成元的最低次项得到
 %
-% #### F.3.1 Hironaka 型标准基、形式除法与收敛性
+% #### F.3.1 Hironaka 型标准基、形式除法与 \texorpdfstring{\(\mathfrak m\)}{m}-进收敛
 % #### F.3.2 伴随分次环、初始齐次理想与切锥
 % #### F.3.3 尖点、加厚点与重数计算
 
-
-\subsection{Hironaka 型标准基、形式除法与收敛性}
+\subsection{Hironaka 型标准基、形式除法与 \texorpdfstring{\(\mathfrak m\)}{m}-进收敛}
 \label{b3:subsec:F03:01}
 
-设 \(A=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)\)。本小节固定局部次数序：总次数较低的单项式较大，同次用固定的乘法相容次序比较。非零级数虽有无限项，但有最低非零次数，且该次只有有限个单项式，因此仍有首项。
+设 \(k\) 为域，\(n\ge1\)，\(A=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)\)。本小节固定局部次数序：总次数较低的单项式较大，同次用固定的乘法相容次序比较。非零级数虽有无限项，但有最低非零次数，且该次只有有限个单项式，因此仍有首项。记非零 \(h\in A\) 的最低非零次数为 \(\operatorname{ord}(h)\)，并约定 \(\operatorname{ord}(0)=\infty\)。
 
 \begin{theorem}[形式除法]\label{b3:thm:F-formal-division}
-设 \(k\) 为域，\(A=k[\![x_1,\ldots,x_n]\!]\)，固定先把低总次数放在前面、同次再以乘法相容次序比较的局部次数序，并给定非零级数 \(g_1,\ldots,g_s\)。每个 \(f\in A\) 都有表示
+设 \(k\) 为域，\(n,s\ge1\)，\(A=k[\![x_1,\ldots,x_n]\!]\)，固定先把低总次数放在前面、同次再以乘法相容次序比较的局部次数序，并给定非零级数 \(g_1,\ldots,g_s\)。每个 \(f\in A\) 都有表示
 \[
 f=\sum_{i=1}^s q_i g_i+r,\qquad q_i,r\in A,
 \]
 使 \(r\) 中每个出现的单项式都不被任何 \(\operatorname{LM}(g_i)\) 整除。规定每次使用首项可整除的最小下标，并把不可约项移入余项，即确定一种这样的表示。
 \end{theorem}
 \begin{proof}
-若当前首单项式被某个 \(\operatorname{LM}(g_i)\) 整除，就用相应的单项式倍数消去首项，并把这个单项式系数记入 \(q_i\)；否则把该项移到 \(r\)。每次操作后，新待处理首项严格变小，即次数变高，或同次中更靠后。同一次数只有有限项，故只有有限次操作会处理给定次数以下的项。
+从 \(q_i^{(0)}=0\)、\(r^{(0)}=0\)、\(h^{(0)}=f\) 开始。在第 \(N\) 步，若 \(h^{(N)}\ne0\) 且其首单项式被某个 \(\operatorname{LM}(g_i)\) 整除，选择这样的最小下标 \(i\)，取带系数单项式 \(a\)，使 \(\operatorname{LT}(a g_i)=\operatorname{LT}(h^{(N)})\)。令 \(q_i^{(N+1)}=q_i^{(N)}+a\)，并令 \(h^{(N+1)}=h^{(N)}-a g_i\)。若没有可用的除式，就令
+\[
+r^{(N+1)}=r^{(N)}+\operatorname{LT}(h^{(N)}),\qquad
+h^{(N+1)}=h^{(N)}-\operatorname{LT}(h^{(N)}).
+\]
+其余部分和保持不变。各步的 \(q_i^{(N)}\)、\(r^{(N)}\) 均为多项式，且都有恒等式
+\[
+f=\sum_{i=1}^s q_i^{(N)}g_i+r^{(N)}+h^{(N)}.
+\]
+若 \(h^{(N)}=0\)，以后保持所有部分和不变。
 
-因此每个 \(q_i\) 和 \(r\) 的任意给定次数系数最终稳定：对 \(q_i\) 的次数至多 \(d\) 的新增项，只会在处理次数至多 \(d+\operatorname{ord}(g_i)\) 时出现。逐次累积得到形式级数 \(q_i,r\)。未处理余项的阶趋于无穷，故在完备的 \(\mathfrak m\)-进拓扑中趋于零，极限给出所述等式。移入 \(r\) 的每个单项式都不可约，证明余项条件。若过程提前结束，同样等式是有限计算的结果。
+每次操作都消去当前首项；乘法相容性保证 \(a g_i\) 的其余项严格小于该首项。因此，只要待处理项非零，其首单项式就严格下降：次数升高，或在同次中变小。对任意整数 \(d\ge0\)，次数不超过 \(d\) 的单项式只有有限个，故有限步以后不再处理这些单项式。这说明
+\[
+\operatorname{ord}(h^{(N)})\longrightarrow\infty,
+\qquad h^{(N)}\longrightarrow0
+\quad\text{于 }\mathfrak m\text{-进拓扑中}.
+\]
+
+移入余项的单项式次数等于当前待处理首项的次数。加入 \(q_i^{(N)}\) 的单项式次数则为
+\[
+\operatorname{ord}(h^{(N)})-\operatorname{ord}(g_i).
+\]
+所以，对于任意给定的 \(d\)，\(r^{(N)}\) 和每个 \(q_i^{(N)}\) 中次数不超过 \(d\) 的系数都最终稳定。它们是 \(\mathfrak m\)-进 Cauchy 列；由 \(A\) 的完备性，存在 \(q_i,r\in A\)，使
+\[
+q_i^{(N)}\longrightarrow q_i,\qquad
+r^{(N)}\longrightarrow r.
+\]
+乘法在 \(\mathfrak m\)-进拓扑中连续，例如
+\((q_i^{(N)}-q_i)g_i\in\mathfrak m^d\) 只要
+\(q_i^{(N)}-q_i\in\mathfrak m^d\)。由于除式只有有限个，对每一步的恒等式取极限，便得 \(f=\sum_iq_i g_i+r\)。移入 \(r^{(N)}\) 的项都不被任何 \(\operatorname{LM}(g_i)\) 整除，系数稳定后，\(r\) 也满足这一条件。
 \end{proof}
 
-对 \(J\subset A\)，用所有非零元素的首项生成多项式环中的单项式理想 \(L(J)\)。Dickson 引理允许选择有限 \(g_1,\ldots,g_s\in J\)，使它们的首项生成 \(L(J)\)。形式除法给出的余项仍在 \(J\) 中；若非零，其首项又必须属于 \(L(J)\)，矛盾。因此这些 \(g_i\) 生成 \(J\)，形成形式幂级数环的标准基。这里的推理只使用有限个 \(q_i g_i\)，并不需要把“无限多个理想元素的和仍属于理想”作为未经说明的步骤。
+这种表示由约化策略和除式的排列共同决定，更换它们可能同时改变商与余项。例如，在 \(k[\![x,y]\!]\) 中采用同次时 \(x>y\) 的局部次数序，令 \(g_1=x-y\)、\(g_2=x-y^2\)。对 \(f=x\)，先使用 \(g_1\) 或先使用 \(g_2\)，分别得到
+\[
+x=g_1+y,\qquad x=g_2+y^2.
+\]
+两个余项都满足定理中的单项式条件。
 
 \ProseParagraphBreak
-这种标准基和形式除法常归入 Hironaka 型方法。名称并不额外提供解析收敛性：本节的收敛仅指每个次数以下的系数最终不再变化。即使全部输入为复收敛幂级数，也不能只凭以上形式证明断言所得商与余项在某邻域收敛。解析除法须另有估计和相应的定理；形式级数、代数级数及收敛级数的比较见\appref{b3:app:D}。
+对形式幂级数环 \(A\) 的理想 \(J\)，记
+\[
+L(J)=(\operatorname{LM}(f):0\ne f\in J)
+\subset k[x_1,\ldots,x_n].
+\]
+首单项式的有限控制也能给出 \(J\) 的有限生成性。
+
+\begin{proposition}\label{b3:prop:F-formal-standard-basis}
+设 \(k\) 为域，\(n,s\ge1\)，\(A=k[\![x_1,\ldots,x_n]\!]\)，并固定局部次数序。若 \(J\subset A\) 为理想，非零元素 \(g_1,\ldots,g_s\in J\) 满足
+\[
+L(J)=(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)),
+\]
+则 \(J=(g_1,\ldots,g_s)A\)。特别地，每个形式幂级数理想都有有限标准基。
+\end{proposition}
+\begin{proof}
+对任意 \(f\in J\)，由\cref{b3:thm:F-formal-division}得到
+\(f=\sum_iq_i g_i+r\)。每个 \(q_i\) 都是 \(A\) 的元素，且除式个数 \(s\) 有限，故 \(\sum_iq_i g_i\in J\)，从而 \(r\in J\)。若 \(r\ne0\)，其首单项式属于 \(L(J)\)，于是被某个 \(\operatorname{LM}(g_i)\) 整除，与余项条件矛盾。因此 \(r=0\)，即 \(f\in(g_1,\ldots,g_s)A\)。反向包含由 \(g_i\in J\) 得到。
+
+若 \(J\ne0\)，Dickson 引理保证 \(L(J)\) 可由有限个 \(J\) 中元素的首单项式生成。对相应元素应用以上结论，就得到有限标准基。零理想则以空列为标准基。
+\end{proof}
+
+这种标准基和形式除法属于 Hironaka 型方法在形式幂级数环与局部次数序下的情形。形式除法的一般代数形式见\cite[Section 2, Theorem 2.1]{Aschenbrenner2005ReductionStandardBases}；完整的支撑分区条件还能控制商与余项的唯一性，见同文献 Proposition 2.13。这里的 \(\mathfrak m\)-进收敛表示每个固定次数以下的系数最终稳定；商与余项在复数邻域中的解析收敛还需相应的估计和除法定理。形式级数、代数级数及收敛级数的比较见\appref{b3:app:D}。
 
 \subsection{伴随分次环、初始齐次理想与切锥}
 \label{b3:subsec:F03:02}
@@ -66,12 +117,31 @@ f=\sum_{i=1}^s q_i g_i+r,\qquad q_i,r\in A,
 在 \(R=k[x]_{(x)}\) 或 \(k[\![x]\!]\) 中，\(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\)。由上述商分次环定义的仿射概形称为原局部对象的切锥；它保留最低阶关系，也保留其中的幂零结构。例如 \(f=x^2+y^2+x^3\) 的初始形式为 \(X^2+Y^2\)，而其首单项式还取决于同次如何排序。
 
 \ProseParagraphBreak
-计算可以先用局部次数序找标准基，再对所得基取初始齐次形式。下面说明这一步为何足够。若 \(G\) 是 \(I\) 的标准基，对 \(I\) 中阶为 \(d\) 的元素只消去次数 \(d\) 的首项：这些项有限，且消去后不会出现低于 \(d\) 的项。直到所有次数 \(d\) 的项消失，所记等式恰把原初始形式表示成各 \(\operatorname{in}_{\mathfrak m}(g)\) 的齐次组合。因此
+计算可以用局部次数序找标准基，再对所得基取初始齐次形式。次数优先的约定保证，这些形式能够给出全部切锥关系。
+
+\begin{proposition}\label{b3:prop:F-standard-basis-initial-ideal}
+设 \(k\) 为域，\(n\ge1\)，\(R=k[x_1,\ldots,x_n]_{(x_1,\ldots,x_n)}\) 或 \(R=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)R\)。固定先比较低总次数的局部次数序，并设 \(G=(g_1,\ldots,g_s)\) 是真理想 \(I\subset R\) 的标准基，其中 \(g_i\ne0\)。在 \(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\) 中，有
 \[
 \operatorname{in}_{\mathfrak m}(I)
-=(\operatorname{in}_{\mathfrak m}(g):g\in G).
+=(\operatorname{in}_{\mathfrak m}(g_1),\ldots,
+\operatorname{in}_{\mathfrak m}(g_s)).
 \]
-如果起初仅有任意生成组，消去过程中可能产生新的最低次关系，便不能直接使用这个等式。
+\end{proposition}
+\begin{proof}
+由于 \(g_i\in I\)，右边包含于左边。为证另一包含，取 \(0\ne f\in I\)，令 \(d=\operatorname{ord}(f)\)。只要当前剩余元素 \(h\in I\) 仍为 \(d\) 阶，其首单项式就被某个 \(\operatorname{LM}(g_i)\) 整除。取带系数单项式 \(a\)，使 \(\operatorname{LT}(a g_i)=\operatorname{LT}(h)\)，并以 \(h-a g_i\) 替代 \(h\)。此时 \(\deg a+\operatorname{ord}(g_i)=d\)，所以不会产生次数低于 \(d\) 的项；次数 \(d\) 中的首单项式则严格变小。
+
+次数 \(d\) 的单项式只有有限个，故有限次操作以后剩余元素属于 \(\mathfrak m^{d+1}\)。将各次使用的单项式系数按除式归并为 \(a_i\)，便得到
+\[
+f-\sum_i a_i g_i\in\mathfrak m^{d+1},
+\qquad
+\operatorname{in}_{\mathfrak m}(f)
+=\sum_i a_i(X_1,\ldots,X_n)
+       \operatorname{in}_{\mathfrak m}(g_i).
+\]
+这里每个非零 \(a_i\) 都是次数 \(d-\operatorname{ord}(g_i)\) 的齐次多项式。因此 \(I\) 的任意初始形式都属于右边的齐次理想，得到等式。
+\end{proof}
+
+任意生成组未必满足标准基的首单项式条件；消去最低次项时可能产生新的最低次关系，因此不能直接把原生成元的初始形式当作切锥理想的生成组。
 
 \subsection{尖点、加厚点与重数计算}
 \label{b3:subsec:F03:03}
@@ -121,7 +191,15 @@ I=(x^2-y^3,xy,y^4)R.
 \operatorname{gr}_{\mathfrak m}(R/I)
 \cong k[X,Y]/(X^2,XY,Y^4).
 \]
-右边满射到左边，二者同为五维，故这个满射确为同构。于是 \(G\) 同时也是局部次数序的标准基，局部长度为 \(5\)，切锥理想必须包含由消去得到的额外关系 \(Y^4\)。
+右边满射到左边，二者同为五维，故这个满射确为同构，并且
+\[
+\operatorname{in}_{\mathfrak m}(I)=(X^2,XY,Y^4).
+\]
+这个初始齐次理想是单项式理想，所以任意 \(0\ne f\in I\) 的最低次齐次形式中，每个出现的单项式都被 \(X^2,XY,Y^4\) 之一整除。局部次数序的首单项式正是从这一最低次形式中选取的首单项式，因而
+\[
+L_{>}(I)=(x^2,xy,y^4).
+\]
+结合 \(G\) 已生成 \(I\)，可知它也是局部次数序的标准基。局部长度为 \(5\)，切锥理想包含由消去得到的额外关系 \(Y^4\)。
 \end{example}
 
 这次计算中，“原方程的生成组”“足以控制全部首项的标准基”“分次商的标准单项式”都有明确的用途。先验证理想等式，再计算有限基及滤过，避免了用未经检查的最低次项去猜维数。

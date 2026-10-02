@@ -28,10 +28,30 @@
 反过来，假定分解存在且不可约元都为素元。\cref{b1:thm:pid-ufd}证明唯一性的后一段，在已有两种分解后只用了不可约元的素性、整环的非零消去律及单位的基本性质，并未再用理想主性。因此同一因子配对论证适用于此，得到因子个数相同且对应因子相伴，正是\cref{b1:def:ufd}的唯一性。
 \end{proof}
 
-这个判别不能省略分解存在的条件。证明唯一性时以“取一个不可约分解”起步，只在确知每个非零非单位都能如此分解时才有意义。\cref{b1:thm:pid-ufd}为主理想整环补足存在性时，用到的是理想升链最终稳定。
+这个判别的两个条件承担不同的任务，如\cref{b1:tab:ufd-two-conditions}所示。先保证不可约分解存在，再用素性比较任意两种已经存在的分解，才能得到唯一分解。
+\begin{table}[H]
+\centering
+\caption{唯一分解判别中的两项条件}
+\label{b1:tab:ufd-two-conditions}
+\begin{tabularx}{\textwidth}{@{}XX@{}}
+\toprule
+分解存在性 & 保障唯一性的素性 \\
+\midrule
+每个非零非单位都能分解成有限个不可约元的乘积。 & 每个不可约元都是素元，因而两种不可约分解中的因子能够逐个配对。 \\
+这保证可以开始取一个不可约分解。 & 这保证已存在的分解在重排和相伴意义下唯一。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+不能仅由“每个不可约元都是素元”断言分解存在。章末\cref{b1:ex:11-factorization-nonexistence}将给出每个不可约元都是素元、但某个非零非单位不能作不可约分解的整环。\cref{b1:thm:pid-ufd}为主理想整环补足存在性时，用到的是理想升链最终稳定。
+
+\ProseParagraphBreak
 
 设 \(a,b\) 为整环 \(R\) 的非零元素。如果 \(m\in R\) 同时被 \(a,b\) 整除，并且 \(m\) 整除 \(a,b\) 的每个公倍数，就称 \(m\) 为 \(a,b\) 的\term[zuixiaogongbeishu]{最小公倍数}[least common multiple]，记为 \(\operatorname{lcm}(a,b)\)。最小公倍数只在相伴意义下确定。
 \symidx{\(\operatorname{lcm}(a,b)\)：最小公倍数}
+
+\ProseParagraphBreak
+
+这里的“最小”仍按整除关系而言：对每个公倍数 \(c\)，要求的是 \(m\mid c\)，不比较元素的数值大小。这个定义也适用于 \(\mathbb Z[i]\) 等没有自然大小次序的整环。
 
 \begin{proposition}[唯一分解整环中的最大公因子与最小公倍数]\label{b1:prop:ufd-gcd-lcm}
 设 \(R\) 为唯一分解整环，\(a,b\in R\) 非零。则 \(a,b\) 有最大公因子与最小公倍数。把它们分解中涉及的不同不可约相伴类各选一个代表 \(p_1,\ldots,p_t\)，其中 \(t\geq0\) 为整数，并写成
@@ -49,6 +69,33 @@ m=\prod_{j=1}^{t}p_j^{\max(\alpha_j,\beta_j)}.
 唯一分解说明，对于非零元素 \(r,s\)，条件 \(r\mid s\) 等价于 \(r\) 中每个不可约因子的指数不超过它在 \(s\) 中的指数：必要性由 \(s=rc\) 及分解唯一性得到，充分性由指数相减构造商得到。因此公因子中各指数的上界是两个指数的较小者，公倍数中各指数的下界是两个指数的较大者，分别给出所列 \(d,m\)。公倍数为 \(0\) 时，\(m\mid0\) 也成立。
 \end{proof}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.65cm,y=0.7cm]
+\node[anchor=east] at (-0.3,3) {\(a\)};
+\node[anchor=east] at (-0.3,2) {\(b\)};
+\node[anchor=east] at (-0.3,1) {\(\gcd(a,b)\)};
+\node[anchor=east] at (-0.3,0) {\(\operatorname{lcm}(a,b)\)};
+\foreach \k in {0,...,4} {
+  \draw[fill=blue!15] (\k,2.7) rectangle +(1,0.6);
+  \draw[fill=blue!15] (\k,-0.3) rectangle +(1,0.6);
+}
+\foreach \k in {0,...,2} {
+  \draw[fill=green!15] (\k,1.7) rectangle +(1,0.6);
+  \draw[fill=green!15] (\k,0.7) rectangle +(1,0.6);
+}
+\node[anchor=west] at (5.3,3) {\(\alpha_j=5\)};
+\node[anchor=west] at (5.3,2) {\(\beta_j=3\)};
+\node[anchor=west] at (5.3,1) {\(\min(5,3)=3\)};
+\node[anchor=west] at (5.3,0) {\(\max(5,3)=5\)};
+\end{tikzpicture}
+\caption[不可约因子的指数取最小值与最大值]{不可约因子的指数取最小值与最大值。固定一个不可约因子 \(p_j\)，以 \(\alpha_j=5\)、\(\beta_j=3\) 为例，每格表示一个 \(p_j\) 因子。}
+\label{b1:fig:ufd-exponent-min-max}
+\end{figure}
+\cref{b1:fig:ufd-exponent-min-max}表示逐个相伴类比较指数：公因子的指数不能超过较短的一条，公倍数的指数必须达到较长的一条。因此最大公因子取最小值，最小公倍数取最大值。
+
+\ProseParagraphBreak
+
 对上一命题选出的 \(d,m\)，乘积 \(dm\) 与 \(ab\) 相伴；适当调整单位后可令二者相等。零元素的情况另定为 \(\gcd(a,0)\) 与 \(a\) 相伴、\(\operatorname{lcm}(a,0)=0\)。
 
 \ProseParagraphBreak
@@ -60,7 +107,7 @@ m=\prod_{j=1}^{t}p_j^{\max(\alpha_j,\beta_j)}.
 \cref{b1:prop:integer-poly-nonprincipal}已经说明：\(\mathbb Z[x]\) 的理想 \((2,x)\) 不为主理想。这里的障碍是 \(2,x\) 虽然没有共同的不可约因子，却不能用多项式系数的线性组合得到 \(1\)。
 
 \ProseParagraphBreak
-另一方面，\(\mathbb Z[x]\) 确实是唯一分解整环。下一章的\cref{b1:thm:polynomial-ufd}将证明：若 \(R\) 是唯一分解整环，则 \(R[x]\) 也是；取本章已证的 \(R=\mathbb Z\) 即得。与已经完成证明的 \(\mathbb Z[\omega]\) 一起，这两个例子说明三个条件之间是严格蕴含：
+另一方面，下一章的\cref{b1:thm:polynomial-ufd}将证明：若 \(R\) 是唯一分解整环，则 \(R[x]\) 也是；取本章已证的 \(R=\mathbb Z\)，便得到 \(\mathbb Z[x]\) 的唯一分解性。结合这个将在下一章证明的结果，以及本章已经完成证明的 \(\mathbb Z[\omega]\) 例子，就会说明下面两个蕴含都严格：
 \[
 \text{Euclid 整环}\ \Longrightarrow\
 \text{主理想整环}\ \Longrightarrow\
@@ -72,7 +119,16 @@ m=\prod_{j=1}^{t}p_j^{\max(\alpha_j,\beta_j)}.
 在 \(\mathbb Z[x]\) 中，逐项模 \(2\) 的商映射给出 \(\mathbb Z[x]/(2)\cong\mathbb F_2[x]\)。右边是整环而不是域，所以 \(2\) 是素元，\((2)\) 却不是极大理想；事实上 \((2)\subsetneq(2,x)\subsetneq\mathbb Z[x]\)。下一章\cref{b1:thm:polynomial-ufd}还将证明 \(\mathbb Z[x]\) 是唯一分解整环；因而这一例子也表明，不可约元都是素元并不能保证每个非零素理想都极大。
 
 \ProseParagraphBreak
-在唯一分解整环中，对非零 \(a,b\)，公倍数恰为最小公倍数的倍数，因此 \((a)\cap(b)=(m)\) 仍是主理想；而和 \((a)+(b)\) 未必为主理想。最大公因子刻画公因子之间的整除关系，却未必能表示为原来两个元素的线性组合。将“有最大公因子”与“能写 Bézout 关系”分开，能避免把主理想整环的结论错误推广到全部唯一分解整环。
+在唯一分解整环 \(R\) 中，取非零 \(a,b\)，并令 \(m\) 为它们的一个最小公倍数。对任意 \(c\in R\)，有
+\[
+\begin{aligned}
+c\in(a)\cap(b)
+&\iff a\mid c\text{ 且 }b\mid c\\
+&\iff m\mid c\\
+&\iff c\in(m).
+\end{aligned}
+\]
+因此 \((a)\cap(b)=(m)\) 仍是主理想；而和 \((a)+(b)\) 未必为主理想，\(\mathbb Z[x]\) 中的 \((2)+(x)\) 就是一个反例。最大公因子刻画公因子之间的整除关系，却未必能表示为原来两个元素的线性组合。将“有最大公因子”与“能写 Bézout 关系”分开，能避免把主理想整环的结论错误推广到全部唯一分解整环。
 
 \subsection{非唯一分解与理想分解}
 \label{b1:subsec:1104:03}
@@ -81,7 +137,7 @@ m=\prod_{j=1}^{t}p_j^{\max(\alpha_j,\beta_j)}.
 \[
 N(a+bs)=a^2+5b^2
 \]
-是乘法相容的非负整数，单位恰为 \(\pm1\)。不存在范数为 \(2\) 或 \(3\) 的元素：若 \(b\ne0\)，范数至少为 \(5\)；若 \(b=0\)，整数平方又不可能等于 \(2,3\)。
+是乘法相容的非负整数，非零元素的范数为正。若 \(u\) 为单位，则 \(N(u)N(u^{-1})=1\)，故 \(N(u)=1\)；而 \(a^2+5b^2=1\) 只能给出 \(b=0,a=\pm1\)，这两个元素也确实可逆。因此单位恰为 \(\pm1\)，每个非零非单位的范数都是至少为 \(2\) 的整数。不存在范数为 \(2\) 或 \(3\) 的元素：若 \(b\ne0\)，范数至少为 \(5\)；若 \(b=0\)，整数平方又不可能等于 \(2,3\)。
 
 \begin{proposition}\label{b1:prop:sqrt-minus-five-factorization}
 令 \(s=\sqrt{-5}\)，并令 \(R=\mathbb Z[s]\subseteq\mathbb C\)。则等式
@@ -91,18 +147,33 @@ N(a+bs)=a^2+5b^2
 给出两种不等价的不可约分解。因此 \(R\) 不是唯一分解整环，且不可约元 \(2\) 不是素元。
 \end{proposition}
 \begin{proof}
-元素 \(2,3,1+s,1-s\) 的范数依次为 \(4,9,6,6\)。若 \(2\) 分解成两个非单位，两因子的范数只能为 \(2,2\)，但范数 \(2\) 不存在，故 \(2\) 不可约。对 \(3\)，唯一的非平凡范数分解为 \(3\cdot3\)，同样不可能。对 \(1\pm s\)，非平凡范数分解只能为 \(2\cdot3\)，也不可能。因此四个因子都不可约。
+任何非零元素的非平凡分解都有两个非零非单位因子，它们的范数都至少为 \(2\)。元素 \(2,3,1+s,1-s\) 的范数依次为 \(4,9,6,6\)。若 \(2\) 分解成两个非单位，两因子的范数只能为 \(2,2\)，但范数 \(2\) 不存在，故 \(2\) 不可约。对 \(3\)，唯一的非平凡范数分解为 \(3\cdot3\)，同样不可能。对 \(1\pm s\)，非平凡范数分解只能为 \(2\cdot3\)，也不可能。因此四个因子都不可约。
 
-单位的范数为 \(1\)，相伴元素范数相同，所以范数为 \(4\) 的 \(2\) 不可能与范数为 \(6\) 的任一 \(1\pm s\) 相伴。两种分解因而不等价。此外，\(2\mid(1+s)(1-s)=6\)，却不整除任一 \(1\pm s\)，因为它们的整数常数项为奇数。故 \(2\) 不满足素性。
+单位的范数为 \(1\)，相伴元素范数相同，所以范数为 \(4\) 的 \(2\) 不可能与范数为 \(6\) 的任一 \(1\pm s\) 相伴。两种分解因而不等价。此外，\(2\mid(1+s)(1-s)=6\)。但若 \(1\pm s=2(a+bs)\)，其中 \(a,b\in\mathbb Z\)，唯一的系数表示迫使
+\[
+1=2a,\qquad \pm1=2b,
+\]
+这在整数中不可能。因此 \(2\) 不整除任一 \(1\pm s\)，故它不满足素性。
 \end{proof}
 
-元素分解失效以后，可以尝试让理想承担因子的作用。本例的
+元素 \(2\) 不可约却不素，说明 \(2\mid(1+s)(1-s)\) 的整除信息不能分配给任一元素因子。可以进一步问：主理想 \((2)\) 是否能通过非主理想因子的乘积记录这种关系？本例的
 \[
 I=(2,1+s)
 \]
-不是主理想，却满足 \(I^2=(2)\)。先看非主性。映射
-\(R\rightarrow\mathbb F_2\)、\(a+bs\mapsto\overline{a+b}\)
-保持乘法，因为 \(s^2=-5\) 在模 \(2\) 下对应 \(1^2=1\)；它把 \(I\) 送到零而把 \(1\) 送到 \(1\)，故 \(I\ne R\)。若 \(I=(d)\)，则 \(d\mid2\)。由 \(2\) 不可约，\(d\) 或为单位，或与 \(2\) 相伴；前者与 \(I\ne R\) 矛盾，后者又使 \(1+s\in(2)\)，也矛盾。
+不是主理想，却满足 \(I^2=(2)\)。先考察映射
+\[
+\varphi:R\longrightarrow\mathbb F_2,\qquad
+a+bs\longmapsto\overline{a+b}.
+\]
+它保持加法和单位；乘法相容性来自关系 \(s^2=-5\) 在模 \(2\) 下对应 \(1^2=1\)。常数映到全部剩余类，故 \(\varphi\) 满射。生成元 \(2,1+s\) 都映到零，所以 \(I\subseteq\ker\varphi\)。反过来，若 \(a+bs\in\ker\varphi\)，则 \(a+b\) 为偶数，\(a-b=(a+b)-2b\) 也为偶数，于是
+\[
+a+bs=b(1+s)+(a-b)\in I.
+\]
+因此 \(\ker\varphi=I\)，由\cref{b1:thm:ring-first-iso}有 \(R/I\cong\mathbb F_2\)。\cref{b1:prop:prime-max-quotient}说明 \(I\) 是极大理想，因而也是素理想，特别地 \(I\ne R\)。
+
+\ProseParagraphBreak
+
+再证 \(I\) 非主。若 \(I=(d)\)，则 \(2\in I\) 给出 \(2=dc\)。由 \(2\) 不可约，\(d\) 或为单位，或 \(c\) 为单位而使 \(d\) 与 \(2\) 相伴。前者与 \(I\ne R\) 矛盾，后者给出 \(I=(2)\)，从而使 \(1+s\in(2)\)，与刚才的系数比较矛盾。因为 \(1+s\in I\) 而 \(1+s\notin(2)\)，还有 \((2)\subsetneq I\subsetneq R\)；这里的非主理想因子在集合包含上比 \((2)\) 大。
 
 \ProseParagraphBreak
 再算理想平方。\(I^2\) 由
@@ -113,9 +184,32 @@ I=(2,1+s)
 \[
 2=(2+2s)-(-4+2s)-4\in I^2
 \]
-得到，所以 \(I^2=(2)\)。元素 \(2\) 不可约，但它生成的理想仍有这样的真分解。\cref{b1:ex:11-ideal-splitting-three}将继续核对 \(J=(3,1+s)\)、\(K=(3,1-s)\) 满足 \(JK=(3)\)、\(IJ=(1+s)\)、\(IK=(1-s)\)。于是原来的两种元素分解在理想层面汇合为
+得到，所以 \(I^2=(2)\)。这分解的是理想 \((2)\)。如果 \((2)=(a)(b)\) 是两个真主理想的乘积，那么 \((2)=(ab)\)，由\cref{b1:prop:associate-ideals}就有 \(2=uab\)，其中 \(u\) 为单位；将单位并入 \(a\)，便得到 \(2\) 的非平凡元素分解。但本例的 \(I\) 不是主理想，不能为它选取单个生成元，因而 \((2)=I^2\) 并未给出这样的元素分解，也不违反 \(2\) 的不可约性。
+
+\ProseParagraphBreak
+
+\cref{b1:ex:11-ideal-splitting-three}将继续核对 \(J=(3,1+s)\)、\(K=(3,1-s)\) 满足 \(JK=(3)\)、\(IJ=(1+s)\)、\(IK=(1-s)\)。\cref{b1:tab:element-ideal-factorizations}把元素和它们生成的主理想分开列出。
+\begin{table}[H]
+\centering
+\caption{元素及其生成的主理想}
+\label{b1:tab:element-ideal-factorizations}
+\begin{tabular}{@{}ll@{}}
+\toprule
+元素 & 它生成的主理想及其分解 \\
+\midrule
+\(2\) & \((2)=I^2\) \\
+\(3\) & \((3)=JK\) \\
+\(1+s\) & \((1+s)=IJ\) \\
+\(1-s\) & \((1-s)=IK\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+原来的两种元素分解在理想层面汇合为
 \[
-(6)=(2)\cdot(3)=I^2JK=(IJ)(IK)
-=\bigl((1+s)R\bigr)\cdot\bigl((1-s)R\bigr).
+\begin{aligned}
+(6)&=(2)\cdot(3)=I^2JK,\\
+(6)&=\bigl((1+s)R\bigr)\cdot\bigl((1-s)R\bigr)
+=(IJ)(IK)=I^2JK.
+\end{aligned}
 \]
-最后一项明确写出两个主理想的乘积，以区别于前面的元素等式 \(6=(1+s)(1-s)\)。这些等式只核对当前例子；要得到一般的理想分解定理，还须对环施加适当条件。这是后续数论与交换代数需要研究的问题。
+第二行明确写出两个主理想的乘积，以区别于前面的元素等式 \(6=(1+s)(1-s)\)。这些等式只核对当前例子；要得到一般的理想分解定理，还须对环施加适当条件。这是后续数论与交换代数需要研究的问题。

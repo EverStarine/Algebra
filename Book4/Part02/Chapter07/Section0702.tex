@@ -1,63 +1,134 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 7.2 比较定理
-% 纲要位置：计划纲要.md，第 2628 行。
+% 纲要标题：### 7.2 映射锥
+% 纲要标签：b4:sec:0602
+% 纲要位置：计划纲要.md，第 3252 行。
 
-\section{比较定理}
-\label{b4:sec:0702}
+\section{映射锥}
+\label{b4:sec:0602}
 
-不同消解应当给出同一个不变量，但它们之间最初没有指定映射。投射提升或内射延拓产生比较映射，同伦唯一性再消除这些选择的影响。
-
+一个复形映射也可以成为新复形的微分组成部分。映射锥将它的核与余核信息集中到上同调长正合列中，柱构造则把相关比较写成具体映射。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 态射的提升
-% * 提升在链同伦意义下唯一
-% * 消解选择不影响后续不变量
+% * 锥与柱的显式构造
+% * 锥的上同调长正合列
+% * 移位和锥的符号检验
 %
 
-\subsection{态射的提升}
-\label{b4:subsec:0702:01}
+\subsection{锥与柱的显式构造}
+\label{b4:subsec:0602:01}
 
-\begin{theorem}[比较定理]\label{b4:thm:resolution-comparison}
-设 \(\mathcal A\) 是交换范畴，\(P_\bullet\to M\) 是投射消解，\(Q_\bullet\to N\) 是任意非负增广正合复形。每个态射 \(f:M\to N\) 都提升为增广链映射 \(f_\bullet:P_\bullet\to Q_\bullet\)。若 \(N\to I^\bullet\) 是内射消解，\(M\to J^\bullet\) 是任意非负增广正合上链复形，则 \(f\) 延拓为 \(J^\bullet\to I^\bullet\)。
-\end{theorem}
-\begin{proof}
-先提升 \(f\varepsilon_P:P_0\to N\) 沿满态射 \(Q_0\to N\)，得到 \(f_0\)。假定已构造到 \(f_n\)，且链映射等式成立。复合 \(f_n\mathrm{d}_{P,n+1}\) 被 \(\mathrm{d}_{Q,n}\) 零化；当 \(n=0\) 时，此处 \(\mathrm{d}_{Q,0}\) 指增广。因此它分解到 \(K_n=\ker \mathrm{d}_{Q,n}\)。正合性使 \(Q_{n+1}\to K_n\) 满，而 \(P_{n+1}\) 投射，故可以提升得到 \(f_{n+1}\)。这恰使 \(\mathrm{d}_{Q,n+1}f_{n+1}=f_n\mathrm{d}_{P,n+1}\)。归纳完成所有次数。
+上同调长正合列从短正合列出发，而许多问题最初只有一个映射 \(f:C\to D\)。映射锥把这个映射本身放进一个新复形，使其上同调同时比较 \(C\)、\(D\) 的上同调及 \(H(f)\)。
 
-内射版本把以上构造用于反范畴：核换成余核，投射提升换成内射延拓。在通常箭头方向下，先把 \(M\to N\to I^0\) 沿 \(M\hookrightarrow J^0\) 延拓，再对商对象归纳；得到的正是所要求的上链映射。
-\end{proof}
+\begin{definition}\label{b4:def:mapping-cone}
+设 \(f:C\to D\) 是加性范畴中的上链复形映射。规定
+\[
+\operatorname{Cone}(f)^n=D^n\oplus C^{n+1},\qquad
+ \mathrm{d}_{\operatorname{Cone}(f)}^n=
+ \begin{pmatrix}\mathrm{d}_D^n&f^{n+1}\\0&-\mathrm{d}_C^{n+1}\end{pmatrix}.
+\]
+所得复形称为 \(f\) 的\term[yingshe-zhui]{映射锥}[mapping cone]。在模中写作 \(\mathrm{d}(y,x)=(\mathrm{d}_Dy+f(x),-\mathrm{d}_Cx)\)。
+\end{definition}
+\symidx{\(\operatorname{Cone}(f)\)：复形映射的映射锥}
 
-目标复形 \(Q_\bullet\) 不必由投射对象组成；证明只使用其正合性。这一点在比较投射消解与其他正合模型时很有用。类似地，内射版本要求目标内射，不要求源复形内射。
+矩阵平方的非对角项为 \(\mathrm{d}_Df-f\mathrm{d}_C=0\)，对角项为两个微分的平方，因此确为复形。若把右下角的负号删去，非对角项通常会变成 \(\mathrm{d}_Df+f\mathrm{d}_C\)，不能保证为零。
 
-\subsection{提升的链同伦唯一性}
-\label{b4:subsec:0702:02}
+\begin{definition}\label{b4:def:mapping-cylinder}
+设 \(f:C\to D\) 是加性范畴中的上链复形映射。规定
+\[
+\operatorname{Cyl}(f)^n=D^n\oplus C^n\oplus C^{n+1},
+\qquad
+ \mathrm{d}(y,c,a)=(\mathrm{d}_Dy+f(a),\ \mathrm{d}_Cc-a,\ -\mathrm{d}_Ca).
+\]
+所得复形称为 \(f\) 的\term[yingshe-zhu]{映射柱}[mapping cylinder]。元组公式在一般加性范畴中表示相应双积矩阵。
+\end{definition}
 
-\begin{proposition}\label{b4:prop:comparison-homotopy-unique}
-设 \(\mathcal A\) 为交换范畴，\(P_\bullet\to M\) 为投射消解，\(Q_\bullet\to N\) 为非负增广正合链复形。对同一态射 \(f:M\to N\)，任意两个增广链映射提升 \(u,v:P_\bullet\to Q_\bullet\) 链同伦。对偶地，若 \(N\to I^\bullet\) 为内射消解、\(M\to J^\bullet\) 为非负增广正合上链复形，则 \(f\) 的任意两个复形映射延拓 \(J^\bullet\to I^\bullet\) 也链同伦。
+\begin{proposition}\label{b4:prop:cylinder-factorization}
+设 \(\mathcal A\) 为加性范畴，\(C,D\) 为其中的上链复形，\(f:C\to D\) 为复形映射。令 \(j:C\to\operatorname{Cyl}(f)\)、\(r:\operatorname{Cyl}(f)\to D\)、\(s:D\to\operatorname{Cyl}(f)\) 的逐次公式为
+\[
+j(c)=(0,c,0),\qquad r(y,c,a)=y+f(c),\qquad s(y)=(y,0,0).
+\]
+则 \(rj=f\)、\(rs=1_D\)，\(r,s\) 互为同伦逆。\(j:C\to\operatorname{Cyl}(f)\) 逐次为分裂单态射，且 \(q^n(y,c,a)=(y,a)\) 给出 \(j\) 的余核复形 \(\operatorname{Cone}(f)\)。在交换范畴中因而有逐次分裂短正合列
+\[
+0\longrightarrow C\xrightarrow{j}\operatorname{Cyl}(f)
+\xrightarrow{q}\operatorname{Cone}(f)\longrightarrow0.
+\]
 \end{proposition}
 \begin{proof}
-写 \(h=u-v\)，逐次构造 \(s_n:P_n\to Q_{n+1}\)，使
+将微分公式再用一次，三个分量分别为 \(\mathrm{d}_D^2y+\mathrm{d}_Df(a)-f\mathrm{d}_C(a)\)、\(\mathrm{d}_C^2c-\mathrm{d}_Ca+\mathrm{d}_Ca\)、\(\mathrm{d}_C^2a\)，均为零。由 \(f\) 与微分交换，\(j,r,s\) 都是复形映射；两个复合等式直接成立。
+
+定义降次态射 \(h(y,c,a)=(0,0,-c)\)。则
 \[
-h_n=\mathrm{d}_{Q,n+1}s_n+s_{n-1}\mathrm{d}_{P,n},\qquad s_{-1}=0.
+\mathrm{d}h(y,c,a)=(-f(c),c,\mathrm{d}_Cc),\qquad
+h\mathrm{d}(y,c,a)=(0,0,-\mathrm{d}_Cc+a),
 \]
-因 \(u,v\) 提升同一态射，\(h_0\) 在增广后为零，故可沿 \(Q_1\to\ker\varepsilon_Q\) 提升为 \(s_0\)。若已构造到 \(s_{n-1}\)，计算
+相加得 \((-f(c),c,a)=(1-sr)(y,c,a)\)。因此 \(sr\simeq1\)。
+
+逐次投影到第一、第三个双积分量得到 \(q\)，其目标上的微分为 \((\mathrm{d}_Dy+f(a),-\mathrm{d}_Ca)\)，正是映射锥的微分，且 \(qj=0\)。若复形映射 \(u:\operatorname{Cyl}(f)\to E\) 满足 \(uj=0\)，则双积泛性质给出唯一的态射族 \(v^n:\operatorname{Cone}(f)^n\to E^n\)，使 \(u^n=v^nq^n\)。由于每个 \(q^n\) 都是分裂满态射，等式
 \[
-\mathrm{d}_Q(h_n-s_{n-1}\mathrm{d}_P)
-=h_{n-1}\mathrm{d}_P-(h_{n-1}-s_{n-2}\mathrm{d}_P)\mathrm{d}_P=0.
+\begin{aligned}
+\bigl(\mathrm{d}_E^nv^n-v^{n+1}\mathrm{d}_{\operatorname{Cone}(f)}^n\bigr)q^n
+&=\mathrm{d}_E^nu^n-u^{n+1}\mathrm{d}_{\operatorname{Cyl}(f)}^n\\
+&=0
+\end{aligned}
 \]
-正合性及 \(P_n\) 的投射性给出 \(s_n\)，满足所需等式。内射情形在反范畴作同一归纳。
+推出 \(v\) 是复形映射。因此 \(q\) 满足 \(j\) 的余核泛性质。
 \end{proof}
 
-同伦唯一性并不表示提升本身唯一。例如令 \(M=N=\mathbb Z/2\mathbb Z\)，源与目标都取 \(\mathbb Z\xrightarrow2\mathbb Z\) 的两项消解。恒等映射有每一项都乘奇数 \(1+2t\) 的提升。它与逐项恒等之差由 \(s_0=\times t\) 给出同伦，所有这些提升在模 \(2\) 后都相同。
+这里逐次分裂是指每个次数上的短正合列分裂，不要求截面与微分交换，因而不表示它在复形范畴中分裂。例如 \(q^n\) 的逐次截面 \((y,a)\mapsto(y,0,a)\) 通常不是复形映射：映射柱的微分会在中间分量产生 \(-a\)。
 
-\subsection{消解选择与不变量}
-\label{b4:subsec:0702:03}
+\subsection{锥的上同调长正合列}
+\label{b4:subsec:0602:02}
 
-\begin{corollary}\label{b4:cor:resolutions-homotopy-equivalent}
-设 \(\mathcal A\) 是交换范畴，\(M\in\mathcal A\)。\(M\) 的任意两个投射消解之间存在提升 \(1_M\) 的同伦等价，且这样的等价在同伦意义下唯一。\(M\) 的任意两个内射消解满足对偶结论。对任意加性范畴 \(\mathcal B\) 及加性函子 \(F:\mathcal A\to\mathcal B\)，逐次应用 \(F\) 后，这些同伦等价仍为同伦等价。
-\end{corollary}
+\begin{proposition}\label{b4:prop:cone-long-exact}
+设 \(\mathcal A\) 是交换范畴，\(C,D\) 为其中的上链复形，\(f:C\to D\) 是复形映射。嵌入 \(y\mapsto(y,0)\) 与投影 \((y,x)\mapsto x\) 给出逐次分裂短正合列
+\[
+0\longrightarrow D\longrightarrow\operatorname{Cone}(f)
+\longrightarrow C[1]\longrightarrow0.
+\]
+其连接态射在 \(H^n(C[1])=H^{n+1}(C)\) 的识别下就是 \(H^{n+1}(f)\)。因此有自然上同调长正合列
+\[
+\cdots\to H^n(C)\xrightarrow{H^n(f)}H^n(D)
+\to H^n\operatorname{Cone}(f)\to H^{n+1}(C)
+\xrightarrow{H^{n+1}(f)}H^{n+1}(D)\to\cdots.
+\]
+\end{proposition}
 \begin{proof}
-给两个消解 \(P,Q\) 分别取提升恒等的映射 \(u:P\to Q\)、\(v:Q\to P\)。复合 \(vu\) 与 \(1_P\) 提升同一恒等态射，故由\cref{b4:prop:comparison-homotopy-unique}同伦；\(uv\) 同理。加性函子保持同伦等式 \(u-v=\mathrm{d}s+s\mathrm{d}\) 中的加法和复合，因此保持这一结论。
+微分矩阵表明嵌入与投影均为复形映射，前者为后者的核，后者为前者的余核；这些泛性质由逐次双积分解得到。投影的逐次截面 \(x\mapsto(0,x)\) 不必为复形映射，因为其微分还产生 \(f(x)\) 分量。对余圈子对象 \(Z^{n+1}(C)\) 使用这一截面，再作锥微分，得到进入 \(D^{n+1}\) 的态射 \(f^{n+1}|_{Z^{n+1}(C)}\)。由\cref{b4:prop:connecting-map-construction}，它在上同调上诱导的正是连接态射 \(H^{n+1}(f)\)。在模中，这一计算就是 \([x]\mapsto[f(x)]\)。应用\cref{b4:thm:cohomology-long-exact}便得全部正合性。
 \end{proof}
 
-由\cref{b4:prop:homotopy-cohomology}，函子作用后所取的同调对象不依赖消解选择，比较同构还满足传递律：经第三个消解得到的复合与直接比较提升同一态射，因而同伦。这比“某两次计算恰好同构”强；它使每个态射都诱导确定的同调态射，并使恒等与复合受到保持。
+\begin{example}\label{b4:exm:cone-single-map}
+把左 \(R\)-模 \(M,N\) 放在次数零，同态 \(u:M\to N\) 的锥只有次数 \(-1,0\) 非零，恰为 \(M\xrightarrow{u}N\)。所以
+\[
+H^{-1}\operatorname{Cone}(u)=\ker u,\qquad
+H^0\operatorname{Cone}(u)=\operatorname{coker}u.
+\]
+例如 \(\mathbb Z\xrightarrow{m}\mathbb Z\) 的锥在 \(m\ne0\) 时只剩零次上同调 \(\mathbb Z/m\)。一个锥能够同时容纳核与余核，这是它在上同调计算中有用的最简单表现。
+\end{example}
+
+\subsection{移位和锥的符号检验}
+\label{b4:subsec:0602:03}
+
+锥的不同符号约定可以彼此同构，但必须明确写出比较映射。例如有些文献把 \(C^{n+1}\) 放在前面，并在 \(f\) 前加负号；这时交换两个分量并改变其中一个分量的符号，才能与本书定义比较。
+
+\begin{proposition}\label{b4:prop:cone-sign-compatibility}
+设 \(\mathcal A\) 为加性范畴，\(C,D\) 为其中的上链复形，\(f,g:C\to D\) 为复形映射。以下元组公式表示相应双积上的态射矩阵。
+\begin{enumerate}
+\item 若态射族 \(h^n:C^n\to D^{n-1}\) 满足 \(f-g=\mathrm{d}_Dh+h\mathrm{d}_C\)，则次数 \(n\) 上的公式 \((y,x)\mapsto(y+h^{n+1}(x),x)\) 给出 \(\operatorname{Cone}(f)\cong\operatorname{Cone}(g)\)。
+\item 对整数 \(r\)，映射 \((y,x)\mapsto(y,(-1)^r x)\) 给出 \(\operatorname{Cone}(f[r])\cong\operatorname{Cone}(f)[r]\)。
+\item \(\operatorname{Cone}(1_C)\) 可缩，收缩同伦为 \((y,x)\mapsto(0,y)\)。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+第一项的映射与微分交换等价于
+\[
+\mathrm{d}_Dy+\mathrm{d}_Dh(x)+g(x)=\mathrm{d}_Dy+f(x)-h(\mathrm{d}_Cx),
+\]
+这恰为同伦公式；逆映射把 \(h\) 换成 \(-h\)。第二项中源的微分矩阵为
+\[
+\begin{pmatrix}(-1)^r\mathrm{d}_D&f\\0&-(-1)^r\mathrm{d}_C\end{pmatrix},
+\]
+目标的微分矩阵为 \((-1)^r\begin{pmatrix}\mathrm{d}_D&f\\0&-\mathrm{d}_C\end{pmatrix}\)。用 \(\operatorname{diag}(1,(-1)^r)\) 作比较，两个复合相等。第三项令 \(h(y,x)=(0,y)\)，则 \(\mathrm{d}h(y,x)=(y,-\mathrm{d}y)\)、\(h\mathrm{d}(y,x)=(0,\mathrm{d}y+x)\)，其和为 \((y,x)\)。
+\end{proof}
+
+移位后的同伦也须改符号：若 \(h\) 是 \(f\simeq g\) 的同伦，则 \(h_r^n=(-1)^r h^{n+r}\) 是 \(f[r]\simeq g[r]\) 的同伦。这从两边微分均乘 \((-1)^r\) 直接得出。只移动指标而不处理这个符号，会把 \(f-g\) 错写成其负值。

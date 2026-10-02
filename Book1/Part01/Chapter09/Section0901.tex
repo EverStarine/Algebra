@@ -40,6 +40,9 @@ n_b=0\quad\text{对每个 }b\in B_0,
 则称 \(B\) 为\term[zhengshu-xianxing-wuguan]{整数线性无关集}[linear independence over the integers]。因此，\(B\) 是一组基，当且仅当它生成 \(A\) 且在整数上线性无关：生成性给出有限整数和的存在性，两种表示相减后应用无关性，便得到所有坐标相同；反过来，零元素的唯一表示保证无关性。
 
 \ProseParagraphBreak
+在域上的 \(n\) 维向量空间中，\(n\) 个线性无关向量自动生成整个空间，求坐标时可以除以非零标量。整数格没有这样的除法：\((2,0),(0,1)\) 在整数上线性无关，却只生成 \(\mathbb Z^2\) 中第一坐标为偶数的子群。要把 \((1,0)\) 写成它们的线性组合，第一系数必须为 \(\dfrac12\)，不是整数。所以在整数格中，即使无关向量的个数等于坐标数，也仍须单独检查生成性。
+
+\ProseParagraphBreak
 对任意集合 \(I\)，令
 \[
 \mathbb Z^{(I)}
@@ -67,16 +70,25 @@ n_i\ne0\text{ 的指标只有有限个}\bigr\}.
 定义 \(\widetilde f(\sum n_i e_i)=\sum n_i\cdot f(i)\)。表示的唯一性保证良定义；和只有有限项，交换性保证加法相容。生成元的像已经指定，所以这样的同态唯一。
 \end{proof}
 
-这与自由群的泛性质相似，区别在于目标限为交换群。比如从 \(\mathbb Z^2\) 到群 \(G\) 指定两个基向量的像 \(x,y\)，必须要求 \(xy=yx\)；从 \(F_2\) 出发则没有这个要求。
+这与自由群的泛性质相似，区别在于目标限为交换群。若目标是用乘法记号的一般群 \(G\)，指定 \(e_1\mapsto x\)、\(e_2\mapsto y\) 能延拓为 \(\mathbb Z^2\to G\) 的同态，当且仅当 \(xy=yx\)。必要性来自 \(e_1+e_2=e_2+e_1\)：同态必须把这个等式送到 \(xy=yx\)。反过来，若 \(x,y\) 交换，就可定义
+\[
+\varphi(me_1+ne_2)=x^my^n\qquad(m,n\in\mathbb Z).
+\]
+所有 \(x\) 的幂都与所有 \(y\) 的幂交换，所以
+\[
+\varphi\bigl((m+r)e_1+(n+s)e_2\bigr)
+=x^{m+r}y^{n+s}=x^my^n x^ry^s,
+\]
+这正是同态条件。两个基元素的像又决定所有整数倍和的像，故延拓唯一。生成元决定唯一性，生成元之间的关系限制存在性；从 \(F_2\) 出发时没有这条交换关系。
 
 \ProseParagraphBreak
 在 \(\mathbb Z^2\) 中，\((1,0),(1,1)\) 构成一组基，因为
-\((u,v)=(u-v)(1,0)+v(1,1)\)，系数唯一。而 \((2,0),(0,1)\) 虽然整数线性无关，却只生成第一坐标为偶数的子群。整数格的“无关”与“生成”必须分别检查，不能把实向量空间中的一组基自动当作整数格的基。
+\((u,v)=(u-v)(1,0)+v(1,1)\)，且这两个整数系数唯一。这里从任意整数坐标出发得到的仍是整数系数，同时验证了生成性与无关性。
 
 \subsection{整数格的子群}
 \label{b1:subsec:0901:02}
 
-下面先证明自由交换群的有限秩子群仍自由。证明每次取一个整数坐标，先确定该坐标为零的子群，再判断是否需要添加一个新基元素，因而只需对坐标数作普通归纳。
+下面先证明自由交换群的有限秩子群仍自由。对 \(H\leq\mathbb Z^n\)，投影到末坐标，把问题分成两部分：末坐标为零的元素组成子群 \(K\)，可以放入 \(\mathbb Z^{n-1}\) 中处理；其余元素的末坐标若不全为零，就有一个最小正值 \(d\)，选出末坐标为 \(d\) 的 \(h\) 来补上这一方向。这样只需在 \(K\) 的基后添加至多一个元素，适合对坐标数作普通归纳。
 
 \begin{theorem}[有限秩自由交换群的子群]\label{b1:thm:finite-rank-free-abelian-subgroup}
 设 \(n\geq0\) 为整数，\(H\leq\mathbb Z^n\)。则 \(H\) 是自由交换群，且有一组至多 \(n\) 个元素的基。
@@ -90,26 +102,34 @@ K=H\cap\bigl(\mathbb Z^{n-1}\times\{0\}\bigr)
 \]
 与 \(\mathbb Z^{n-1}\) 的一个子群自然同构，所以由归纳假设有一组至多 \(n-1\) 个元素的基。若 \(d=0\)，则 \(H=K\)，已经得到结论。
 
-若 \(d>0\)，由投影像为 \(d\mathbb Z\)，可选 \(h\in H\) 的末坐标为 \(d\)。任意 \(x\in H\) 的末坐标为某个 \(md\)，于是 \(x-mh\in K\)，故 \(H=K+\mathbb Zh\)。
-而 \(mh\in K\) 迫使 \(md=0\)，进而 \(m=0\)，所以两子群的交为零，且 \(h\) 有无限阶。因此
+若 \(d>0\)，由投影像为 \(d\mathbb Z\)，可选 \(h\in H\) 的末坐标为 \(d\)。任意 \(x\in H\) 的末坐标为某个 \(md\)，于是 \(x-mh\in K\)，得到表示 \(x=k+mh\)，其中 \(k\in K\)。这给出了分解的存在性，即 \(H=K+\mathbb Zh\)。
+若还有 \(x=k'+m'h\)，则 \((m-m')h=k'-k\in K\)。取末坐标得 \((m-m')d=0\)，因 \(d>0\)，必有 \(m=m'\)，进而 \(k=k'\)。这给出了唯一性，也说明 \(K\cap\mathbb Zh=0\) 且 \(h\) 有无限阶。因此
 \[
 H=K\oplus\mathbb Zh.
 \]
 在 \(K\) 的基后加上 \(h\)，每个元素都得到唯一的整数坐标，基元素总数至多为 \(n\)。
 \end{proof}
 
-证明并未断言子群的基总能扩充为母群的基。子群 \(2\mathbb Z\le\mathbb Z\) 的基为 \(2\)，却不能成为 \(\mathbb Z\) 的基的一部分；商群在这里出现了二阶挠元。作为可以逐步核对的二维例子，
+证明并未断言子群的基总能扩充为母群的基。若能够扩充，新增基元素生成的子群 \(C\) 就使母群分解为 \(H\oplus C\)，商群同构于自由交换群 \(C\)。自由交换群没有非零有限阶元素，因为整数倍等于零会迫使每个整数坐标为零。子群 \(2\mathbb Z\le\mathbb Z\) 的基为 \(2\)，而商群 \(\mathbb Z/2\mathbb Z\) 有非零二阶元素，这正是该基不能扩充的障碍。章末\cref{b1:ex:09-free-quotient-splitting}将证明：对 \(\mathbb Z^n\) 的子群，基能扩充、是直和因子、商群无挠这三个条件等价。
+
+\ProseParagraphBreak
+作为可以逐步核对的二维例子，
 \[
 H=\bigl\{(u,v)\in\mathbb Z^2\mid u+v\equiv0\pmod3\bigr\}
 \]
 在第二坐标的投影为 \(\mathbb Z\)，可选 \(h=(-1,1)\)；核为 \(3\mathbb Z\times\{0\}\)。所以 \((3,0),(-1,1)\) 是 \(H\) 的一组基。
 
 \ProseParagraphBreak
-同态 \(\sigma:\mathbb Z^2\to C_3\)、\((u,v)\mapsto[u+v]_3\) 是满射，且核为 \(H\)，故 \(\mathbb Z^2/H\cong C_3\)。\cref{b1:fig:integer-lattice-mod3}用三种点形区分 \(\sigma\) 的三个纤维：\(H\) 与母群都有两元素的基，但只占三个陪集中的一个。
+同态 \(\sigma:\mathbb Z^2\to C_3\)、\((u,v)\mapsto[u+v]_3\) 是满射，且核为 \(H\)，故 \(\mathbb Z^2/H\cong C_3\)。\cref{b1:fig:integer-lattice-mod3}用三种点形区分 \(\sigma\) 的三个纤维：\(H\) 与母群都有两元素的基，但只占三个陪集中的一个。图中两个基向量张成的基本平行四边形面积为
+\[
+\left|\det\begin{pmatrix}3&-1\\0&1\end{pmatrix}\right|=3,
+\]
+恰等于指数 \([\mathbb Z^2:H]=3\)。\cref{b1:prop:lattice-index}将证明满秩子格的指数等于其基矩阵行列式的绝对值。
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[scale=0.75,>=stealth]
+\fill[AlgebraBlue!12] (0,0)--(3,0)--(2,1)--(-1,1)--cycle;
 \draw[gray!45,->] (-3.45,0)--(3.55,0) node[right] {\(u\)};
 \draw[gray!45,->] (0,-2.45)--(0,2.5) node[above] {\(v\)};
 \foreach \xx in {-3,...,3}{
@@ -126,19 +146,20 @@ H=\bigl\{(u,v)\in\mathbb Z^2\mid u+v\equiv0\pmod3\bigr\}
     \fi
   }
 }
+\draw[color=AlgebraBlue,dashed,thick] (3,0)--(2,1)--(-1,1);
 \draw[->,very thick,color=AlgebraBlue] (0,0)--(3,0);
 \draw[->,very thick,color=AlgebraBlue] (0,0)--(-1,1);
 \node[above right] at (3,0) {\((3,0)\)};
 \node[above left] at (-1,1) {\((-1,1)\)};
 \end{tikzpicture}
-\caption[整数格中模三的三个陪集]{实心点、空心点、叉号分别表示 \(u+v\) 模 \(3\) 余 \(0,1,2\)。箭头标出 \(H\) 的基向量。}
+\caption[整数格中模三的三个陪集]{实心点、空心点、叉号分别表示 \(u+v\) 模 \(3\) 余 \(0,1,2\)。箭头标出 \(H\) 的基向量，阴影平行四边形的面积为 \(3\)。}
 \label{b1:fig:integer-lattice-mod3}
 \end{figure}
 
 \subsection{有限秩及其不变性}
 \label{b1:subsec:0901:03}
 
-基的个数必须与选择无关，才可用来比较群。
+基的个数必须与选择无关，才可用来比较群。证明这一点时，需要把坐标个数转成群本身可见的数量。对 \(\mathbb Z^n\) 的每个坐标取模 \(2\)，每个位置只剩 \(0,1\) 两种选择，便得到 \(C_2^n\)。对一般具有有限基的自由交换群，同样的过程就是取商 \(A/2A\)；其元素数将记录基的个数。
 
 \begin{proposition}[有限秩不变性]\label{b1:prop:finite-rank-free-abelian}
 若自由交换群 \(A\) 有一组有限基，则它的每组基都有限，且元素个数相同。这个共同的元素个数称为\term[ziyou-jiaohuan-qun-de-zhi]{自由交换群的秩}[rank of a free abelian group]。
@@ -154,15 +175,15 @@ H=\bigl\{(u,v)\in\mathbb Z^2\mid u+v\equiv0\pmod3\bigr\}
 在有限秩自由交换群中，一个整数线性无关集合生成的子群以它为基，因此\cref{b1:thm:finite-rank-free-abelian-subgroup}与上述秩不变性说明，其元素数不超过母群的秩。即使达到相同的秩，也不保证生成母群。例如前面的指数三子群与 \(\mathbb Z^2\) 都有秩二，但并不相等。
 
 \ProseParagraphBreak
-这里的秩计算整数基的大小，不能由实向量空间的维数直接判断。加法群 \(\mathbb Q\) 虽嵌在 \(\mathbb R\) 中，却没有理由仅凭这一点就有一组大小为一的整数基；下一节会直接证明，它没有任何自由交换群的基。
+这里的秩计算整数基的大小。加法群 \(\mathbb Q\) 是一维实向量空间 \(\mathbb R\) 中的加法子群，但这不意味着它是秩一的自由交换群：母空间允许实数作为标量，而 \(\mathbb Q\) 的整数生成只允许整数系数，二者所说的生成与无关不是同一件事。下一节会直接证明，\(\mathbb Q\) 没有任何自由交换群的基。
 
 \ProseParagraphBreak
-若交换群 \(A\) 由 \(a_1,\ldots,a_n\) 生成，\cref{b1:prop:free-abelian-universal}给出满同态 \(\pi:\mathbb Z^n\to A\)，其中 \(\pi(e_i)=a_i\)。由\cref{b1:thm:finite-rank-free-abelian-subgroup}，其核有至多 \(n\) 个元素的自由基；由\cref{b1:thm:first-isomorphism}，\(A\cong\mathbb Z^n/\ker\pi\)。因此关系确实可以选为有限多个整数向量。这是后面使用有限整数矩阵进行分类的依据；有限生成的关系并非一开始就应当默认为已知。
+有限生成只要求有有限多个生成元，并未把关系也有限写入定义。若交换群 \(A\) 由 \(a_1,\ldots,a_n\) 生成，\cref{b1:prop:free-abelian-universal}给出满同态 \(\pi:\mathbb Z^n\to A\)，其中 \(\pi(e_i)=a_i\)。由\cref{b1:thm:finite-rank-free-abelian-subgroup}，其核有至多 \(n\) 个元素的自由基；由\cref{b1:thm:first-isomorphism}，\(A\cong\mathbb Z^n/\ker\pi\)。因此全部关系确实可以由有限多个整数向量生成。这是后面使用有限整数矩阵进行分类的依据，来自整数格的子群定理；它不是对任意有限生成群都自动成立的事实。
 
 \subsection{无限秩的子群与秩}
 \label{b1:subsec:0901:04}
 
-本小节把前面的两个结果推广到任意秩。子群基沿良序逐次构造；无限秩的不变性则靠比较两组基的基数。
+本小节把前面的两个结果推广到任意秩。对子群构造基时，需要把母群的基良序，按后继步骤与极限步骤作超限归纳；比较无限基的大小时，需要有限支集的无限基数计数以及 Cantor--Bernstein 定理。这些具体结果见\subsecref{b1:subsec:A01:03}和\subsecref{b1:subsec:A01:05}，其中良序原理和无限基数计数采用选择公理。本章有限生成交换群的结构定理只需要前面已经证明的有限秩子群定理及有限秩不变性。
 
 \begin{theorem}[自由交换群的子群]\label{b1:thm:free-abelian-subgroup}
 设 \(F\) 为自由交换群，\(H\leq F\)。则 \(H\) 仍是自由交换群。特别地，若 \(n\geq0\) 为整数且 \(K\leq\mathbb Z^n\)，则 \(K\) 有一组至多 \(n\) 个元素的基。
@@ -179,7 +200,7 @@ H_{\alpha+1}=H_\alpha\oplus\mathbb Zh_\alpha.
 \]
 若 \(d_\alpha=0\)，两项相等，不添加基元素。
 
-在非零极限指标 \(\lambda\) 处，每个元素的有限支集都落在某个 \(\alpha<\lambda\) 之前，所以
+在非零极限指标 \(\lambda\) 处，取 \(x\in H_\lambda\)。若 \(x\ne0\)，其有限支集的指标有最大者 \(\beta<\lambda\)；因为 \(\lambda\) 是极限序数，\(\beta+1<\lambda\)，所以 \(x\in F_{\beta+1}\)，进而 \(x\in H_{\beta+1}\)。零元素已在 \(H_0\) 中，反向包含又由各初始段的包含关系得到。因此
 \[
 H_\lambda=\bigcup_{\alpha<\lambda}H_\alpha.
 \]

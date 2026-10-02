@@ -1,103 +1,132 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 10.3 零调对象
-% 纲要位置：计划纲要.md，第 2725 行。
+% 纲要标题：### 10.3 万有系数定理
+% 纲要标签：b4:sec:0903
+% 纲要位置：计划纲要.md，第 2697 行。
 
-\section{零调对象}
-\label{b4:sec:1003}
+\section{万有系数定理}
+\label{b4:sec:0903}
 
-计算一个指定函子时，消解项不必全部内射，但必须对该函子没有正次导出贡献。仅有原列正合并不足够，逐项的零调条件还需证明。
+改变系数可能使原来的单射失效，因此同调与系数张量之间会多出 Tor 项。主理想整环上圈与边界自由，使这个差额形成自然的短正合列。
 
 % 纲要内容：
 %
-% * 相对于函子的零调性
-% * 使用零调消解计算导出函子
-% * 不能随意用任意正合复形替代消解
+% * 主理想整环上的万有系数短正合列
+% * 自然短正合列与非典范分裂
+% * 系数变换的计算
 %
 
-\subsection{相对于函子的零调性}
-\label{b4:subsec:1003:01}
+\subsection{主理想整环上的万有系数短正合列}
+\label{b4:subsec:0903:01}
 
-内射消解对每个左正合函子都可用，但有时它的各项过大，实际计算并不方便。若只计算一个指定函子 \(F\)，可以使用对这个函子没有高次导出贡献的对象。
+主理想整环上，自由模的子模仍自由，即使自由模的秩无限也成立，见\cref{b4:thm:pid-free-submodule}。因此自由链复形的圈和边界都是自由模。这个事实既使 Tor 项可由长度一的消解算出，也保证下面的短正合列能够分裂。
 
-\begin{definition}\label{b4:def:functor-acyclic}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够多内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子。若对象 \(Q\in\mathcal A\) 满足 \(R^iF(Q)=0\) 对所有整数 \(i>0\) 成立，则称 \(Q\) 为 \(F\)-\term[lingtiao-duixiang]{零调对象}[acyclic object]，也称 \(F\)-无上同调对象\termidx[wushangtongdiaoduixiang]{无上同调对象}。给定 \(\mathcal A\) 中的对象 \(M\) 及非负增广上链复形
+\begin{theorem}[同调的万有系数定理]\label{b4:thm:uct-homology}
+设 \(R\) 为主理想整环，\(C\) 为自由 \(R\)-模链复形，\(A\) 为 \(R\)-模。对每个整数 \(n\)，有短正合列
 \[
- 0\longrightarrow M\longrightarrow A^0\longrightarrow A^1\longrightarrow\cdots
+ 0\longrightarrow H_n(C)\otimes_R A
+ \xrightarrow{\kappa}H_n(C\otimes_R A)
+ \xrightarrow{\rho}\operatorname{Tor}_1^R(H_{n-1}(C),A)
+ \longrightarrow0.
 \]
-若此序列正合，且每个 \(A^j\)（\(j\ge0\)）都为 \(F\)-零调对象，则称为 \(M\) 的 \(F\)-\term[lingtiao-xiaojie]{零调消解}[acyclic resolution]。
-\end{definition}
-
-这里的零调性依赖 \(F\)，只要求正次数的导出函子消失，不要求 \(F(Q)=0\)。\cref{b4:def:acyclic-complex}中的零调复形则要求所有次数的同调对象为零。零调消解要求各项对 \(F\) 零调，去掉增广项后的复形仍满足 \(H^0(A^\bullet)\cong M\)。
-
-\ProseParagraphBreak
-内射对象对每个左正合加性函子都是零调对象；对于固定的函子，零调对象却未必内射。例如 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 时，\(\mathbb Z/3\) 是 \(F\)-零调对象，因为一次 Ext 等于 \((\mathbb Z/3)/2(\mathbb Z/3)=0\)，更高次因整数整体维数为一而消失；但 \(\mathbb Z/3\) 不是可除群，因而不是内射交换群。
-
-\begin{proposition}\label{b4:prop:acyclic-closure}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子，且 \(0\to A\to B\to C\to0\) 为 \(\mathcal A\) 中的短正合列。若 \(A,C\) 都 \(F\)-零调，则 \(B\) 也如此；若 \(A,B\) 都 \(F\)-零调，则 \(C\) 也如此。若 \(B,C\) 都 \(F\)-零调，则 \(A\) 零调当且仅当 \(F(B)\to F(C)\) 为满态射。
-\end{proposition}
-\begin{proof}
-前两项分别由长正合列中的
-\(R^iF(A)\to R^iF(B)\to R^iF(C)\) 及
-\(R^iF(B)\to R^iF(C)\to R^{i+1}F(A)\) 得到。最后一种情形有 \(R^iF(A)=0\) 对 \(i\ge2\)，而列首给出 \(R^1F(A)=\operatorname{coker}(F(B)\to F(C))\)，于是得到所需充要条件。
-\end{proof}
-
-\subsection{零调消解与导出函子的计算}
-\label{b4:subsec:1003:02}
-
-\begin{theorem}\label{b4:thm:acyclic-resolution}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子。若 \(0\to M\to A^0\to A^1\to\cdots\) 是 \(F\)-零调消解，则对每个 \(n\ge0\)，有典范同构
-\[
- R^nF(M)\simeq H^n(F(A^\bullet)).
-\]
-此同构对增广消解之间的态射自然。
+此列对自由链复形之间的链映射 \(C\to C'\) 和系数模同态 \(A\to A'\) 都协变自然。它分裂，但一般没有关于 \(C\) 自然的分裂。
 \end{theorem}
 \begin{proof}
-令 \(K^0=M\)，把正合消解拆成
+令 \(Z_n=\ker \mathrm{d}_n\)、\(B_n=\operatorname{im}\mathrm{d}_{n+1}\)。由于 \(B_{n-1}\) 自由，序列 \(0\to Z_n\to C_n\to B_{n-1}\to0\) 分裂。张量后仍是短正合列，并拼成复形的短正合列，其中外侧复形的微分为零。其同调长正合列在所需位置给出
 \[
- 0\longrightarrow K^j\longrightarrow A^j\longrightarrow K^{j+1}\longrightarrow0
- \qquad(j\ge0).
+ B_n\otimes A\longrightarrow Z_n\otimes A\longrightarrow H_n(C\otimes A)
+ \longrightarrow B_{n-1}\otimes A\longrightarrow Z_{n-1}\otimes A.
 \]
-长正合列和 \(A^j\) 的零调性给出
-\[
-\begin{gathered}
- 0\to F(K^j)\to F(A^j)\to F(K^{j+1})\to R^1F(K^j)\to0,\\
- R^iF(K^{j+1})\simeq R^{i+1}F(K^j)\qquad(i\ge1).
-\end{gathered}
-\]
-由于 \(F\) 左正合，\(F(K^j)\to F(A^j)\) 单射，而 \(F(A^j)\to F(A^{j+1})\) 通过 \(F(K^{j+1})\) 分解。因此 \(F(A^\bullet)\) 在次数 \(n\) 的圈对象为 \(F(K^n)\)。当 \(n\ge1\) 时，同调就是
-\[
- \operatorname{coker}\bigl(F(A^{n-1})\to F(K^n)\bigr)
- \simeq R^1F(K^{n-1})\simeq R^nF(M).
-\]
-次数零则由左正合性直接等于 \(F(M)\)。这些同构只使用给定的正合列和连接同态，未选分裂，因而对消解态射自然。
+末箭头是包含 \(B_{n-1}\hookrightarrow Z_{n-1}\) 张量 \(A\)，这是由连接同态对提升的微分直接算出的。前一箭头的余核是 \(H_n(C)\otimes A\)；后一箭头的核由自由消解 \(0\to B_{n-1}\to Z_{n-1}\to H_{n-1}(C)\to0\) 识别为所写的 Tor 群。所有映射在选分裂之前已经定义，所以序列自然。
 
-为说明这里的“典范”也与最初采用内射消解的定义一致，取 \(M\to I^\bullet\)。内射性把 \(M\to I^0\) 延拓到 \(A^0\)，随后在每一步先经 \(K^{j+1}\) 分解，再延拓到 \(A^{j+1}\)，得到增广链映射 \(f^\bullet:A^\bullet\to I^\bullet\)：
+固定次数 \(n\)，选取投影 \(p_n:C_n\to Z_n\)，并记商映射为 \(q_n:Z_n\to H_n(C)\)。在 \(C\otimes A\) 的 \(n\) 次圈上定义
 \[
-\begin{tikzcd}[column sep=2.2em,row sep=large]
-0\arrow[r]&M\arrow[r]\arrow[d,equal]&A^0\arrow[r]\arrow[d,"f^0"]&A^1\arrow[r]\arrow[d,"f^1"]&\cdots\\
-0\arrow[r]&M\arrow[r]&I^0\arrow[r]&I^1\arrow[r]&\cdots
-\end{tikzcd}
+ [x]\longmapsto(q_n\otimes1_A)(p_n\otimes1_A)(x).
 \]
-这里的比较映射通过延拓选取，并非逐项唯一。两种选择的差，用同样的逐次延拓构造链同伦，所以施加加性函子后诱导同一个同调映射。上面的短正合列在该映射下构成交换图，连接同态自然性说明其诱导映射正是已经构造的同构。因此不同零调消解都通过给定的 \(R^nF(M)\) 典范比较，而不要求它们之间任意方向都有链映射。
+若 \(x\) 改变一个边界 \((\mathrm{d}_{n+1}\otimes1_A)(y)\)，由于 \(p_n\) 在 \(Z_n\) 上是恒等映射，而 \(\mathrm{d}_{n+1}\) 的像在 \(B_n\subseteq Z_n\) 中，这个差经 \(q_n\otimes1_A\) 映为零。因此公式在同调上良定义；它与 \(\kappa\) 的复合是恒等映射，故给出分裂。
+
+这里的投影只在固定次数上使用。即使逐次选取 \(p_n\)，它们一般也不构成从 \(C\) 到零微分复形 \(Z\) 的链映射：\(p_{n-1}\mathrm{d}_n=\mathrm{d}_n\)，而链映射条件要求这个复合为零。上述分裂依赖补模的选择；下一小节给出无法随链复形自然选取分裂的例子。
 \end{proof}
 
-对有足够投射对象的交换范畴及右正合加性函子，取相反范畴就得到左导出版本：若 \(Q_\bullet\to M\) 正合，且 \(L_iF(Q_j)=0\) 对所有 \(i>0,j\ge0\) 成立，则 \(L_nF(M)\simeq H_n(F(Q_\bullet))\)。次数反转把刚才每个核改成余核，每个内射延拓改成投射提升，正合列和同构全部反向，因而证明不需要新增假设。特别地，平坦消解能够计算张量积的左导出函子 Tor；它不必逐项投射。
-
-\subsection{正合复形作为消解的条件}
-\label{b4:subsec:1003:03}
-
-应用定理时要分别检查三件事：增广列确实正合，各项对指定函子零调，以及消解从次数零沿一个方向展开。前两项负责连接同态的平移，最后一项使每个固定次数只需有限次平移。一个无界正合复形没有这种起点，不能直接套用定理。
-
-\begin{example}\label{b4:exm:arbitrary-resolution-fails}
-取 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 和 \(M=\mathbb Z/2\)。正合列
+\begin{theorem}[上同调的万有系数定理]\label{b4:thm:uct-cohomology}
+设 \(R\) 为主理想整环，\(C\) 为自由 \(R\)-模链复形，\(A\) 为 \(R\)-模。令上链复形 \(\operatorname{Hom}_R(C,A)^n=\operatorname{Hom}_R(C_n,A)\)，微分为 \(f\mapsto f\circ\mathrm{d}_{C,n+1}\)。则对每个整数 \(n\)，有短正合列
 \[
- 0\longrightarrow M\longrightarrow M\oplus\mathbb Z
- \longrightarrow\mathbb Z\longrightarrow0
+ 0\longrightarrow\operatorname{Ext}_R^1(H_{n-1}(C),A)
+ \longrightarrow H^n(\operatorname{Hom}_R(C,A))
+ \xrightarrow{r}\operatorname{Hom}_R(H_n(C),A)\longrightarrow0.
 \]
-用自然包含和投影，确实是一个长度一的右消解。但施加 \(F\) 后，非增广上链复形为 \(\mathbb Z/2\to0\)，一次上同调为零，而 \(R^1F(M)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。失败是因为 \(M\oplus\mathbb Z\) 不是 \(F\)-零调对象；原列正合不足以保证导出计算正确。
-\end{example}
+此列对自由链复形之间的链映射 \(C\to C'\) 反变自然，对系数模同态 \(A\to A'\) 协变自然；前者在中间项诱导从 \(H^n(\operatorname{Hom}_R(C',A))\) 到 \(H^n(\operatorname{Hom}_R(C,A))\) 的映射。此列分裂，但一般没有关于 \(C\) 自然的分裂。
+\end{theorem}
+\begin{proof}
+余圈 \(f:C_n\to A\) 零化 \(B_n\)，所以限制到 \(Z_n\) 后经 \(H_n(C)\) 分解；余边的限制为零，这定义了 \(r\)。由于 \(Z_n\) 在 \(C_n\) 中为直和因子，任意 \(H_n(C)\to A\) 都能先拉回 \(Z_n\) 再延拓至 \(C_n\)，故 \(r\) 满射。
 
-另一方面，\(0\to\mathbb Z\to\mathbb Q\to\mathbb Q/\mathbb Z\to0\) 是内射消解，取同一 \(F\) 后得到 \(0\to\mathbb Z/2\)（次数 \(0,1\)），正确算出 \(R^1F(\mathbb Z)=\mathbb Z/2\)。两种计算的差别在于各项对 \(F\) 的性质，而非消解中箭头的数目。
+\(r([f])=0\) 恰好表示 \(f|_{Z_n}=0\)，因而 \(f=t \mathrm{d}_n\)，其中 \(t:B_{n-1}\to A\)。这样的 \(f\) 是余边，当且仅当 \(t\) 能延拓至 \(C_{n-1}\)。因为 \(Z_{n-1}\) 也是直和因子，这又等价于 \(t\) 能延拓至 \(Z_{n-1}\)。于是
+\[
+ \ker r=\operatorname{Hom}_R(B_{n-1},A)/
+ \operatorname{res}\operatorname{Hom}_R(Z_{n-1},A)
+ =\operatorname{Ext}_R^1(H_{n-1}(C),A).
+\]
+链映射保持圈与边界，系数同态则与上述限制、分解及取商相容，故这个核的识别给出所述自然性。
+
+选定投影 \(p_n:C_n\to Z_n\)，并记 \(q_n:Z_n\to H_n(C)\) 为商映射。对 \(\phi:H_n(C)\to A\)，取 \(n\) 次余链 \(\phi q_np_n\)。由于 \(p_n\) 在 \(Z_n\) 上是恒等映射，且 \(q_n\) 零化 \(B_n=\mathrm{d}_{n+1}(C_{n+1})\)，有
+\[
+ (\phi q_np_n)\mathrm{d}_{n+1}=0.
+\]
+所以它是余圈；限制到 \(Z_n\) 后为 \(\phi q_n\)，从而 \(\phi\mapsto[\phi q_np_n]\) 是 \(r\) 的右逆。这里构造的是固定次数上的余圈代表，无须把投影 \(p_n\) 本身视为链映射。
+\end{proof}
+
+上述 Hom 计算与\cref{b4:def:hom-complex}的内部 Hom 仅差每度的符号重标识，所得上同调相同。两个版本可与 Weibel\cite[Universal Coefficient Theorem for Homology 3.6.2, Universal Coefficient Theorem for Cohomology 3.6.5]{Weibel1994HomologicalAlgebra}对照；该书把同调版本先写在自由交换群上，本节使用同一证明得到主理想整环版本。
+
+\subsection{自然短正合列与非典范分裂}
+\label{b4:subsec:0903:02}
+
+“自然短正合列”是指链映射 \(C\to C'\) 及系数同态 \(A\to A'\) 诱导整个正合列的交换图：同调版本对两变量都协变，上同调版本对 \(C\) 反变、对 \(A\) 协变。它不意味着左右两项在中间项中都已选定。自然的是第一项的像及第二项的商，而直接把中间项写成直和还要作额外选择。
+
+\begin{example}\label{b4:exm:uct-no-natural-splitting}
+下面固定系数 \(A=\mathbb F_2\)，说明分裂不能对链复形变量 \(C\) 自然。在 \(\mathbb Z\) 上取 \(C_1=\mathbb Za\oplus\mathbb Zb\)、\(C_0=\mathbb Zc\)，\(\mathrm{d}(a)=2c\)、\(\mathrm{d}(b)=0\)，其余项为零。链自同构
+\[
+ f_1(a)=a+b,\quad f_1(b)=b,\quad f_0(c)=c
+\]
+在 \(H_1(C)=\mathbb Zb\) 及 \(H_0(C)=\mathbb Z/2\) 上都诱导恒等映射，而在
+\(H_1(C\otimes A)=A\bar a\oplus A\bar b\) 上是非平凡剪切。同调万有系数列左项是 \(A\bar b\)，商由 \(\bar a\) 表示。任何商的截面都把 \(1\) 送到 \(\bar a+\lambda\bar b\)，但 \(f\) 把它改成 \(\bar a+(\lambda+1)\bar b\)。所以没有与全部链映射相容的截面。
 
 \ProseParagraphBreak
-零调对象及消解计算可参阅 Weibel\cite[F-Acyclic Objects 2.4.3, Exercise 2.4.3, Section 2.5]{Weibel1994HomologicalAlgebra}。该书在左导出部分提出此类对象，并以维数平移给出练习；本节把当前所需的右导出版本作为正文定理证明。
+上同调版本也由同一例子说明。在 \(H^1(\operatorname{Hom}(C,A))\) 中，左端 Ext 项由 \(a^*\) 生成，右端 Hom 项由 \(b^*\) 表示。\(f^*(a^*)=a^*\)、\(f^*(b^*)=a^*+b^*\)，再一次排除了自然截面。
+\end{example}
+
+这个反例没有排除固定 \(C\) 后对系数变量的自然性。事实上，一旦固定各次数上的投影 \(p_n:C_n\to Z_n\)，前述两种分裂公式都与系数同态 \(A\to A'\) 相容。
+
+\ProseParagraphBreak
+如果 \(A\) 平坦，同调公式的 Tor 项消失，\(\kappa\) 就是自然同构；如果 \(H_{n-1}(C)\) 自由，两个版本的附加项都消失。这两种简化来自明确的消失条件，不需要选择分裂。
+
+\subsection{系数变换的计算}
+\label{b4:subsec:0903:03}
+
+设 \(C\) 是有限秩自由整数链复形。若已由 Smith 标准形\footnote{史密斯（Henry John Stephen Smith，1826-1883），爱尔兰数学家，研究二次型、初等因子与数论。}算得
+\[
+ H_n(C)\simeq\mathbb Z^{r_n}\oplus\bigoplus_j\mathbb Z/d_{n,j},
+ \qquad d_{n,j}>1,
+\]
+则改变系数不必重新化简整个张量复形。对 \(A=\mathbb Z/m\)，令 \(g_{n,j}=\gcd(d_{n,j},m)\)。长度一的循环模消解给出
+\[
+ (\mathbb Z/d)\otimes\mathbb Z/m\simeq\mathbb Z/\gcd(d,m),\qquad
+ \operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/d,\mathbb Z/m)
+ \simeq\mathbb Z/\gcd(d,m).
+\]
+因此同调的同构类型是
+\[
+ H_n(C\otimes\mathbb Z/m)\simeq
+ (\mathbb Z/m)^{r_n}\oplus\bigoplus_j\mathbb Z/g_{n,j}
+ \oplus\bigoplus_j\mathbb Z/g_{n-1,j}.
+\]
+这个式子确定模的同构类型，并未指定内部直和因子。
+
+\begin{example}\label{b4:exm:uct-integer-computation}
+取 \(C_2=\mathbb Z\)、\(C_1=\mathbb Z^2\)、\(C_0=\mathbb Z\)，
+\[
+ \mathrm{d}_2(t)=(0,6t),\qquad \mathrm{d}_1(x,y)=4x.
+\]
+有 \(H_2(C)=0\)、\(H_1(C)=\mathbb Z/6\)、\(H_0(C)=\mathbb Z/4\)。取 \(A=\mathbb Z/2\)，两个微分都变成零，故新的同调依次为 \(A,A^2,A\)（次数 \(2,1,0\)）。在次数 \(1\)，其中一份 \(A\) 来自 \(H_1(C)\otimes A\)，另一份来自 \(\operatorname{Tor}_1(H_0(C),A)\)；次数 \(2\) 完全来自 \(\operatorname{Tor}_1(H_1(C),A)\)。
+
+\ProseParagraphBreak
+取上同调的整数系数，则 \(H^0(\operatorname{Hom}(C,\mathbb Z))=0\)、\(H^1=\mathbb Z/4\)、\(H^2=\mathbb Z/6\)。这些群都来自相邻次数的 Ext 项；直接对两个微分作转置也得到同样结果。因而“对偶以后只需对同调取 Hom”会漏去本例全部的非零上同调。
+\end{example}

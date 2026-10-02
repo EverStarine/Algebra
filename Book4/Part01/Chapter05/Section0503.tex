@@ -1,0 +1,173 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 5.3 求值、余求值与可对偶对象
+% 纲要标签：b4:sec:monoidal-duals
+% 纲要细目（写作范围）：
+% #### 5.3.1 左右对偶与蛇形恒等式
+% #### 5.3.2 对偶产生的伴随
+% #### 5.3.3 可对偶模与有限生成投射性
+
+\section{求值、余求值与可对偶对象}
+\label{b4:sec:monoidal-duals}
+
+有限维向量空间的恒等映射可以写成 \(v\mapsto\sum_i e_i^*(v)e_i\)。这个公式同时用了向量与泛函：先把有限个配对 \(e_i\otimes e_i^*\) 放在一起，再对输入向量求值，就恢复原向量。求值映射本身对无限维空间也存在；真正依赖有限性的，是能否用一个张量记录足够多的配对并恢复恒等映射。
+
+\subsection{左右对偶与蛇形恒等式}
+\label{b4:subsec:monoidal-left-right-duals}
+
+\begin{definition}\label{b4:def:monoidal-dual}
+设 \(\mathcal C\) 为幺半范畴，单位为 \(I\)，\(X,D\) 为其对象。给定态射
+\[
+e:D\otimes X\longrightarrow I,
+\qquad b:I\longrightarrow X\otimes D.
+\]
+若下列两条复合都是恒等态射，则称 \((D,e,b)\) 为 \(X\) 的\term[zuo-duiou]{左对偶}[left dual]，常记 \(D=X^*\)：
+\begin{equation}\label{b4:eq:monoidal-left-snakes}
+\begin{aligned}
+\rho_X\circ(1_X\otimes e)\circ\alpha_{X,D,X}
+\circ(b\otimes1_X)\circ\lambda_X^{-1}&=1_X,\\
+\lambda_D\circ(e\otimes1_D)\circ\alpha_{D,X,D}^{-1}
+\circ(1_D\otimes b)\circ\rho_D^{-1}&=1_D.
+\end{aligned}
+\end{equation}
+态射 \(e,b\) 分别称为求值与\term[yuqiuzhi]{余求值}[coevaluation]，上述条件称为蛇形恒等式。
+
+若给定 \(e':X\otimes E\to I\)、\(b':I\to E\otimes X\)，且复合
+\[
+\begin{gathered}
+\lambda_X\circ(e'\otimes1_X)\circ\alpha_{X,E,X}^{-1}
+\circ(1_X\otimes b')\circ\rho_X^{-1},\\
+\rho_E\circ(1_E\otimes e')\circ\alpha_{E,X,E}
+\circ(b'\otimes1_E)\circ\lambda_E^{-1}
+\end{gathered}
+\]
+分别为 \(1_X,1_E\)，则称 \((E,e',b')\) 为 \(X\) 的\term[you-duiou]{右对偶}[right dual]。若 \(X\) 同时有左对偶和右对偶，就称 \(X\) 为可对偶对象；若每个对象都可对偶，就称 \(\mathcal C\) 为\term[gangxing-fanchou]{刚性幺半范畴}[rigid monoidal category]。
+\end{definition}
+
+两个方向不能在一般幺半范畴中混用。左对偶的求值把 \(D\) 放在 \(X\) 左边，余求值却把它放在右边。\(D\) 是 \(X\) 的左对偶时，同一组态射使 \(X\) 成为 \(D\) 的右对偶；这还没有说明 \(X\) 自己有右对偶。在对称幺半范畴中，交换因子可以把两种方向互换。本节的侧别约定与\cite[Definitions 2.10.1--2.10.2, p. 40]{EtingofEtAl2015TensorCategories}一致。
+
+\subsection{对偶产生的伴随}
+\label{b4:subsec:monoidal-dual-adjunction}
+
+余求值把一个空出的因子放进张量，求值再把它消去。这两个操作能将映射从张量的一侧转到另一侧。
+
+\begin{proposition}\label{b4:prop:monoidal-dual-adjunction}
+设 \(\mathcal C\) 为局部小幺半范畴，\((D,e,b)\) 为对象 \(X\) 的左对偶。对任意对象 \(A,B\)，有自然双射
+\begin{equation}\label{b4:eq:monoidal-dual-adjunction}
+\operatorname{Hom}_{\mathcal C}(A\otimes X,B)
+\cong\operatorname{Hom}_{\mathcal C}(A,B\otimes D).
+\end{equation}
+因此 \(-\otimes D\) 是 \(-\otimes X\) 的右伴随。若 \(\mathcal C\) 还闭，则有自然同构 \([X,B]\cong B\otimes D\)。
+\end{proposition}
+\begin{proof}
+双射及候选逆分别定义为
+\[
+\begin{aligned}
+\Phi(f)&=(f\otimes1_D)\circ\alpha_{A,X,D}^{-1}
+\circ(1_A\otimes b)\circ\rho_A^{-1},\\
+\Psi(g)&=\rho_B\circ(1_B\otimes e)\circ\alpha_{B,D,X}
+\circ(g\otimes1_X).
+\end{aligned}
+\]
+这两式的定义域和陪域分别为 \(A\to B\otimes D\)、\(A\otimes X\to B\)。记\eqref{b4:eq:monoidal-left-snakes}的两条复合为 \(s_X,s_D\)。将 \(\Phi(f)\) 代入 \(\Psi\)，先用结合约束的自然性把 \(f\) 移到求值之后，再用五边形把四个因子的括号统一，三角等式删去单位约束，得到
+\[
+\Psi\Phi(f)=f\circ(1_A\otimes s_X)=f.
+\]
+这里剩下的三个因子按次序为 \(X,D,X\)，插入的是 \(b\)，消去的是 \(e\)，所以所用的是第一条蛇形恒等式。另一个复合按同样的自然性与五边形整理，剩下 \(D,X,D\)，因而
+\[
+\Phi\Psi(g)=(1_B\otimes s_D)\circ g=g.
+\]
+两式均只用了定义中的相容等式，证明互逆。
+
+对 \(a:A'\to A\)、\(v:B\to B'\)，双函子性及约束自然性直接给出
+\[
+\Phi\bigl(v\circ f\circ(a\otimes1_X)\bigr)
+=(v\otimes1_D)\circ\Phi(f)\circ a.
+\]
+这就是双射关于 \(A,B\) 的自然性。若还给内部 Hom，则 \([X,B]\) 与 \(B\otimes D\) 表示同一个函子 \(A\mapsto\operatorname{Hom}_{\mathcal C}(A\otimes X,B)\)，由可表对象唯一性得到所述自然同构。
+\end{proof}
+
+\begin{corollary}\label{b4:cor:monoidal-dual-unique}
+设 \(\mathcal C\) 为局部小幺半范畴，\((D,e,b)\)、\((D',e',b')\) 都是 \(X\) 的左对偶。存在唯一同构 \(t:D\to D'\)，满足
+\[
+e'\circ(t\otimes1_X)=e,
+\qquad (1_X\otimes t)\circ b=b'.
+\]
+右对偶也满足相应的唯一性。
+\end{corollary}
+\begin{proof}
+在\cref{b4:prop:monoidal-dual-adjunction}中取 \(B=I\)，再用单位同构，得到关于 \(A\) 自然的双射
+\[
+\operatorname{Hom}_{\mathcal C}(A,D)
+\cong\operatorname{Hom}_{\mathcal C}(A\otimes X,I).
+\]
+所以 \(D,D'\) 连同求值表示同一个函子，存在保持求值的唯一同构 \(t\)。把 \((1_X\otimes t)\circ b\) 代入 \(D'\) 所给的伴随逆，其像由第一条蛇形恒等式为 \(\lambda_X:I\otimes X\to X\)，与 \(b'\) 的像相同。伴随双射的单射性给出第二个等式。右对偶的证明使用相反的张量次序，完全得到同样的可表性和唯一性。
+\end{proof}
+
+这也说明，在闭范畴中存在 \([X,I]\) 还不够保证 \(X\) 可对偶。可对偶要求更强的事实：所有 \([X,B]\) 都由同一个对偶对象张量 \(B\) 得到。
+
+\subsection{可对偶模与有限生成投射性}
+\label{b4:subsec:monoidal-projective-duals}
+
+在模范畴中，一项张量总是有限个纯张量的和。因此余求值若存在，会自动给出有限个生成元与有限个坐标泛函。
+
+\begin{theorem}[可对偶模的判据]\label{b4:thm:dualizable-projective-modules}
+设 \(R\) 为交换含幺环，\(P\) 为左 \(R\) 模。在对称幺半范畴 \((R\text{-}\mathbf{Mod},\otimes_R,R)\) 中，\(P\) 有左对偶，当且仅当它有限生成且投射；这也等价于 \(P\) 可对偶。此时可取对偶
+\[
+P^\vee=\operatorname{Hom}_R(P,R),
+\qquad e(\varphi\otimes p)=\varphi(p).
+\]
+若 \(p_1,\ldots,p_r\in P\)、\(\varphi_1,\ldots,\varphi_r\in P^\vee\) 满足
+\begin{equation}\label{b4:eq:monoidal-finite-dual-basis}
+p=\sum_{i=1}^r\varphi_i(p)p_i\qquad(p\in P),
+\end{equation}
+则余求值由 \(b(1)=\sum_i p_i\otimes\varphi_i\) 给出。右对偶的求值与余求值交换相应因子的次序。
+\end{theorem}
+\begin{proof}
+先设左对偶为 \((D,e,b)\)。将 \(b(1)\in P\otimes_RD\) 写成有限和 \(\sum_i p_i\otimes d_i\)，令 \(\varphi_i(p)=e(d_i\otimes p)\)。求值线性说明 \(\varphi_i\in P^\vee\)。第一条蛇形恒等式逐元素成为\eqref{b4:eq:monoidal-finite-dual-basis}，因此 \(p_i\) 生成 \(P\)。定义
+\[
+q:R^r\longrightarrow P,\quad(a_i)\longmapsto\sum_i a_ip_i,
+\qquad j:P\longrightarrow R^r,\quad p\longmapsto(\varphi_i(p))_i.
+\]
+有 \(qj=1_P\)。于是 \(P\) 是有限秩自由模的直和因子，故投射。这里也可直接验证提升性质：给满射 \(M\to N\) 及 \(P\to N\)，先与 \(q\) 复合并提升 \(R^r\) 的各基向量，再与 \(j\) 复合，就得到原映射的提升。
+
+第二条蛇形恒等式还给出 \(d=\sum_i e(d\otimes p_i)d_i\)。所以映射
+\[
+\begin{aligned}
+D&\longrightarrow P^\vee,&d&\longmapsto(p\longmapsto e(d\otimes p)),\\
+P^\vee&\longrightarrow D,&\varphi&\longmapsto\sum_i\varphi(p_i)d_i
+\end{aligned}
+\]
+互逆：一个方向用第二条蛇形恒等式，另一个方向在 \(p\) 上取值后用\eqref{b4:eq:monoidal-finite-dual-basis}。这识别了对偶及其求值。
+
+反过来，设 \(P\) 有限生成且投射。选有限秩自由满射 \(q:R^r\to P\)。投射性给出截面 \(j:P\to R^r\)。令 \(p_i=q(e_i)\)，\(\varphi_i\) 为 \(j\) 的第 \(i\) 坐标，便有\eqref{b4:eq:monoidal-finite-dual-basis}。上述求值保持平衡关系，余求值由其在 \(1\) 上的值唯一给出。第一条蛇形恒等式就是对偶基公式；第二条作用于 \(\varphi\in P^\vee\) 时成为
+\[
+\sum_i\varphi(p_i)\varphi_i=\varphi,
+\]
+因为两边在任意 \(p\) 上取值都等于 \(\varphi(p)\)。故得到左对偶。将求值、余求值中的两个因子互换，右对偶的两条蛇形恒等式也分别成为这两个已证公式，所以 \(P\) 可对偶。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:projective-dual-internal-hom}
+设 \(R\) 为交换含幺环，\(P\) 为有限生成投射 \(R\) 模，\(Y\) 为任意 \(R\) 模。自然映射
+\[
+\Theta_Y:Y\otimes_RP^\vee\longrightarrow\operatorname{Hom}_R(P,Y),
+\qquad y\otimes\varphi\longmapsto(p\longmapsto\varphi(p)y)
+\]
+为同构。特别地，余求值的张量 \(b(1)\) 是 \(\Theta_P^{-1}(1_P)\)，不依赖对偶基的选择。
+\end{proposition}
+\begin{proof}
+公式双线性且平衡。选满足\eqref{b4:eq:monoidal-finite-dual-basis}的一组数据，定义逆候选
+\(f\mapsto\sum_i f(p_i)\otimes\varphi_i\)。先施行该候选再施行 \(\Theta_Y\)，在 \(p\) 上得到 \(\sum_i\varphi_i(p)f(p_i)=f(p)\)。另一个复合在 \(y\otimes\varphi\) 上得到
+\[
+\sum_i\varphi(p_i)y\otimes\varphi_i
+=y\otimes\sum_i\varphi(p_i)\varphi_i=y\otimes\varphi.
+\]
+故两式互逆。\(\Theta_Y\) 本身未使用所选数据，所以其逆唯一，并且与 \(Y\) 中的同态相容。取 \(Y=P\) 即得最后的独立性结论。
+\end{proof}
+
+\begin{example}\label{b4:exm:dualizable-vector-spaces}
+设 \(k\) 为域。向量空间可对偶，当且仅当有限维。对基 \(e_1,\ldots,e_r\) 及对偶基 \(e_1^*,\ldots,e_r^*\)，余求值为 \(1\mapsto\sum_i e_i\otimes e_i^*\)。无限维空间虽有代数对偶与求值，却没有满足蛇形恒等式的余求值：任何候选张量只涉及有限多个向量，第一条蛇形等式便迫使这些向量生成整个空间。因而全部向量空间的张量范畴闭但不刚性，有限维向量空间的张量范畴则刚性。
+\end{example}
+
+\begin{example}\label{b4:exm:torsion-no-dual}
+在交换群范畴中，\(P=\mathbb Z/2\mathbb Z\) 不可对偶。事实上，每个 \(P\to\mathbb Z\) 的同态都为零：其像被 \(2\) 零化，而 \(\mathbb Z\) 无非零的这类元素。若存在左对偶 \(D\)，对固定 \(d\)，求值 \(p\mapsto e(d\otimes p)\) 因而为零，故整个求值为零。第一条蛇形复合只能为零，不可能为非零对象 \(P\) 的恒等映射。
+\end{example}

@@ -20,10 +20,9 @@
 研究向量空间时，线性映射不仅用来判断两个空间是否同构，还用来构造核、商空间、对偶和张量积。换成群或模，映射的具体定义改变了，恒等映射与映射复合却仍满足同样的规律。范畴先保留这些规律；此后讨论的泛性质只依赖对象之间允许哪些映射，以及这些映射怎样复合。
 
 \begin{definition}\label{b4:def:category}
-一组数据 \(\mathcal C\) 包含一个对象类 \(\operatorname{Ob}\mathcal C\)，每对对象 \(X,Y\) 之间的一个态射类
-\(\mathcal C(X,Y)=\operatorname{Hom}_{\mathcal C}(X,Y)\)，每个对象的恒等态射 \(1_X\in\mathcal C(X,X)\)，以及复合
+一组数据 \(\mathcal C\) 包含一个对象类 \(\operatorname{Ob}\mathcal C\)，以及每对对象 \(X,Y\) 之间的一个态射类，记为 \(\operatorname{Hom}_{\mathcal C}(X,Y)\)，也可以记为 \(\operatorname{Mor}_{\mathcal C}(X,Y)\)。每个对象还带有恒等态射 \(1_X\in\operatorname{Hom}_{\mathcal C}(X,X)\)，并给定复合
 \[
-\mathcal C(Y,Z)\times\mathcal C(X,Y)\longrightarrow\mathcal C(X,Z),
+\operatorname{Hom}_{\mathcal C}(Y,Z)\times\operatorname{Hom}_{\mathcal C}(X,Y)\longrightarrow\operatorname{Hom}_{\mathcal C}(X,Z),
 \qquad (g,f)\longmapsto g\circ f.
 \]
 每个态射带有指定的起点和终点。若复合满足
@@ -31,8 +30,10 @@
 h\circ(g\circ f)=(h\circ g)\circ f,\qquad
 1_Y\circ f=f=f\circ1_X
 \]
-对所有可复合态射成立，则称这些数据组成一个\term[fanchou]{范畴}[category]。若每个 \(\mathcal C(X,Y)\) 都是集合，称 \(\mathcal C\) 为\term[jubuxiaofanchou]{局部小范畴}[locally small category]。
+对所有可复合态射成立，则称这些数据组成一个\term[fanchou]{范畴}[category]。若每个 \(\operatorname{Hom}_{\mathcal C}(X,Y)\) 都是集合，称 \(\mathcal C\) 为\term[jubuxiaofanchou]{局部小范畴}[locally small category]。
 \end{definition}
+\symidx{\(\operatorname{Hom}_{\mathcal C}(X,Y)\)：范畴中的态射类}
+\symidx{\(\operatorname{Mor}_{\mathcal C}(X,Y)\)：范畴中的态射类的别称记号}
 
 复合 \(gf\) 始终表示先作 \(f\)、再作 \(g\)。结合律只在各箭头首尾相接时使用；它不允许复合两个终点、起点不匹配的态射。本卷以后所说的范畴默认局部小，涉及更大范围时另作说明。空的对象类也允许，它给出空范畴。
 
@@ -69,7 +70,7 @@ h\circ(g\circ f)=(h\circ g)\circ f,\qquad
 设 \(R\) 为含幺环，\(f:M\rightarrow N\) 为幺性左 \(R\) 模同态。在 \(R\text{-}\mathbf{Mod}\) 中，\(f\) 为单态射当且仅当它作为函数单射；\(f\) 为满态射当且仅当它作为函数满射。因此在这个范畴中，同时为单态射与满态射的态射就是同构。
 \end{proposition}
 \begin{proof}
-单射或满射函数分别具有相应的消去性质，所以两个正向例子成立。若 \(f\) 不是单射，取 \(0\ne m\in\ker f\)。映射
+单射或满射函数分别具有相应的消去性质，所以两个充分性方向成立。若 \(f\) 不是单射，取 \(0\ne m\in\ker f\)。映射
 \(a:R\rightarrow M\)、\(a(r)=rm\)，与零映射不同，却满足 \(fa=0\)，所以 \(f\) 不是单态射。
 
 若 \(f\) 不是满射，则商模 \(Q=N/f(M)\ne0\)。商映射
@@ -91,7 +92,7 @@ a(m/n)=a(m)\,a(n)^{-1}
 
 \begin{example}\label{b4:ex:one-object-category}
 设 \(M\) 为含单位元 \(1\) 的幺半群。只取一个对象 \(*\)，规定
-\(\mathcal BM(*,*)=M\)，并令 \(b\circ a=ba\)，就得到单对象范畴 \(\mathcal BM\)。反过来，一个局部小单对象范畴的全部自态射，在复合下组成幺半群。同构态射恰好对应幺半群的可逆元；当 \(M=G\) 为群时，每个箭头都可逆。
+\(\operatorname{Hom}_{\mathcal BM}(*,*)=M\)，并令 \(b\circ a=ba\)，就得到单对象范畴 \(\mathcal BM\)。反过来，一个局部小单对象范畴的全部自态射，在复合下组成幺半群。同构态射恰好对应幺半群的可逆元；当 \(M=G\) 为群时，每个箭头都可逆。
 \end{example}
 
 这三个例子展示了相同公理的不同用法：模范畴保留所有线性映射，偏序范畴记录何时存在一个比较，单对象范畴则把整个乘法放进自态射集合中。后文的函子必须分别尊重线性映射的复合、次序关系或幺半群乘法。
@@ -106,7 +107,7 @@ a(m/n)=a(m)\,a(n)^{-1}
 “局部小”只控制每一对对象之间的态射，“小”还控制对象总数。偏序集和幺半群构成的小范畴满足后一条件；全部集合、全部群或全部 \(R\) 模组成的范畴通常只局部小。若试图把所有集合收进一个集合，便会遇到集合论悖论，所以不能省略这项区别。
 
 \ProseParagraphBreak
-本卷使用通常的集合与类语言，并允许集合指标的选择公理。写 \(\mathbf{Set}\) 时是指所讨论范围中的集合范畴，不把它的对象类当作一个可任意取幂集的集合。形成函子范畴 \([\mathcal C,\mathcal D]\) 时，通常要求源范畴 \(\mathcal C\) 小、目标 \(\mathcal D\) 局部小；这样两函子之间的自然变换构成集合，具体证明见\subsecref{b4:subsec:0103:02}。
+本卷使用通常的集合与类语言，并允许集合指标的选择公理。写 \(\mathbf{Set}\) 时是指所讨论范围中的集合范畴，不把它的对象类当作一个可任意取幂集的集合。形成函子范畴 \(\operatorname{Fun}(\mathcal C,\mathcal D)\) 时，通常要求源范畴 \(\mathcal C\) 小、目标 \(\mathcal D\) 局部小；这样两函子之间的自然变换构成集合，具体证明见\cref{b4:prop:functor-category-locally-small}。
 
 \ProseParagraphBreak
 另一个需要大小约定的地方是“为每个对象选一个同构代表”。若要选择的对象组成集合，通常的选择公理可以使用；真类指标的选择并不自动由此得到。涉及大范畴等价时，本卷会给出具体的拟逆，或把所需代表及同构作为已选数据。若采用固定宇宙的写法，也必须在更大的工作范围中进行这些集合选择；这是一种大小安排，不能代替对选择步骤的说明。

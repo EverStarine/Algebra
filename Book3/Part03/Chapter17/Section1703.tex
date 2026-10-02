@@ -1,37 +1,38 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 17.3 Auslander–Buchsbaum 公式
-% 纲要位置：计划纲要.md，第 2036 行。
+% 纲要位置：计划纲要.md，第 2504 行。
 
 \section{Auslander–Buchsbaum 公式}
 \label{b3:sec:1703}
 
-有限自由消解的终点是自由模，因而具有底环的深度。逐次比较消解中的短正合列，可以把这一终点的深度变化累计为 Auslander–Buchsbaum 公式；有限投射维数是该计算的前提。
+在有限长度、各项均为有限秩自由模的极小消解中，末端非零合冲模是自由模，因而具有底环的深度。逐次比较消解中的短正合列，可以把这一终点与原模的深度联系起来，得到 Auslander–Buchsbaum 公式。
 
-% 纲要内容：
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * Noether 局部环及非零有限生成模的假设
 % * 有限投射维数条件
-% * 公式 pd(M)+depth(M)=depth(R) 的证明
+% * 合并定理与证明思路；投射维数为一时用极小矩阵的 Ext 零作用，高次归纳调用深度引理
+% * 公式 pd(M)+depth(M)=depth(R) 及有限投射维数下的合冲递推
 %
 
-\subsection{Noether 局部环与非零有限生成模的假设}
+\subsection{定理与证明思路}
 \label{b3:subsec:1703:01}
+\label{b3:subsec:1703:02}
 
 深度问“能连续除去多少个非零因子”，投射维数问“自由消解需要多少步”。这两种计数一般没有相加公式；只有消解确实终止，末端自由项才能把两者联系起来。
 
 \begin{theorem}[Auslander–Buchsbaum]\label{b3:thm:auslander-buchsbaum}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，且 \(\operatorname{pd}_RM<\infty\)。则
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\ne0\) 为有限生成的 \(R\) 模，且 \(\operatorname{pd}_RM<\infty\)。则
 \begin{equation}\label{b3:eq:auslander-buchsbaum}
 \operatorname{pd}_RM+\operatorname{depth}_RM=\operatorname{depth}R.
 \end{equation}
 \end{theorem}
 
-这称为\term[auslander-buchsbaum-gongshi]{Auslander–Buchsbaum 公式}[Auslander--Buchsbaum formula]。下面先解释有限性条件，再给出证明。局部性使极小微分的系数同时属于一个极大理想；有限生成使 Nakayama 引理和有限极小消解的项可以使用；\(M\ne0\) 则保证深度是有限整数。证明的方法可对照\cite[Theorem 19.1, p. 155]{Matsumura1989CommutativeRingTheory}。
+这称为\term[auslander-buchsbaum-gongshi]{Auslander–Buchsbaum 公式}[Auslander--Buchsbaum formula]。局部性使极小微分的系数同时属于一个极大理想；Noether 性与有限生成使各合冲模都有有限的极小生成组，而有限投射维数保证消解终止；\(M\ne0\) 则保证深度是有限整数。证明的方法可对照\cite[Theorem 19.1, p. 155]{Matsumura1989CommutativeRingTheory}。
 
-\subsection{有限投射维数条件}
-\label{b3:subsec:1703:02}
+\ProseParagraphBreak
 
-若 \(M\) 本身是非零有限自由模，它和 \(R\) 具有同样的正则序列，所以公式立即成立。若 \(M\) 只有一层非零关系，极小消解为
+若 \(M\) 本身是非零有限自由模，它和 \(R\) 具有同样的正则序列，所以公式立即成立。若 \(\operatorname{pd}_RM=1\)，极小消解为
 \[
 0\longrightarrow F_1\xrightarrow{u}F_0\longrightarrow M\longrightarrow0.
 \]
@@ -44,9 +45,9 @@
 \label{b3:subsec:1703:03}
 
 \begin{proof}[\cref{b3:thm:auslander-buchsbaum}的证明]
-记 \(r=\operatorname{pd}_RM\)、\(t=\operatorname{depth}R\)，对 \(r\) 归纳。\(r=0\) 时局部有限投射模自由，结论已说明。
+记 \(r=\operatorname{pd}_RM\)、\(t=\operatorname{depth}R\)，对 \(r\) 归纳。\(r=0\) 时，\(M\) 为非零有限生成投射模，因而平坦；由\cref{b3:lem:finite-flat-local-free}，它在局部环上自由，故与 \(R\) 具有同样深度。
 
-设 \(r=1\)，取上一小节的极小消解，其中 \(F_1\ne0\)。记自由秩为 \(b_1,b_0\)。应用 \(\operatorname{Hom}_R(k,-)\) 的长正合列。由\cref{b3:lem:ext-basic-properties}，映射
+设 \(r=1\)，取上一小节的极小消解，其中 \(F_1\ne0\)。应用 \(\operatorname{Hom}_R(k,-)\) 的长正合列。由\cref{b3:lem:ext-basic-properties}，映射
 \[
 \operatorname{Ext}_R^i(k,F_1)\longrightarrow\operatorname{Ext}_R^i(k,F_0)
 \]
@@ -60,12 +61,26 @@
 \cref{b3:thm:depth-ext}给出 \(\operatorname{depth}M=t-1\)。
 
 若 \(r\ge2\)，取极小满射的核 \(0\to K\to F_0\to M\to0\)。由\cref{b3:prop:pd-minimal-length}，\(K\ne0\) 且投射维数为 \(r-1\)。归纳得
-\(s\coloneqq\operatorname{depth}K=t-r+1<t\)。若 \(s=0\)，则 \(K\to F_0\) 的单射在 \(\operatorname{Hom}_R(k,-)\) 下给出非零模到零模的单射，矛盾。因此 \(s\ge1\)。在同一长正合列中，次数小于 \(s-1\) 的 \(\operatorname{Ext}_R^i(k,M)\) 为零，而
+\(s\coloneqq\operatorname{depth}K=t-r+1<t=\operatorname{depth}F_0\)。若 \(s=0\)，则 \(K\to F_0\) 的单射在 \(\operatorname{Hom}_R(k,-)\) 下给出非零模到零模的单射，矛盾。因此 \(s\ge1\)。现在对该短正合列应用\cref{b3:thm:depth-lemma}的第二条附加等式，得到
 \[
-\operatorname{Ext}_R^{s-1}(k,M)
-\cong\operatorname{Ext}_R^s(k,K)\ne0,
+\operatorname{depth}M=\operatorname{depth}K-1=s-1=t-r.
 \]
-因为 \(F_0\) 的深度 \(t>s\)。于是 \(\operatorname{depth}M=s-1=t-r\)，归纳完成。
+归纳完成。
 \end{proof}
 
-证明同时给出 \(\operatorname{pd}_RM\le\operatorname{depth}R\)。这不是对所有有限生成模的无条件上界，而是对已经知道投射维数有限的模的上界。
+把证明中的递推放回整个极小消解，可以看出每一步如何联系两种计数。设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(r=\operatorname{pd}_RM<\infty\)、\(t=\operatorname{depth}R\)，并取 \(M\) 的极小自由消解。在其中令 \(\Omega^0M=M\)、\(\Omega^{j+1}M=\ker(F_j\to\Omega^jM)\)，则
+\[
+\begin{gathered}
+0\longrightarrow\Omega^{j+1}M\longrightarrow F_j
+\longrightarrow\Omega^jM\longrightarrow0
+\qquad(0\le j<r),\\[2pt]
+\operatorname{pd}_R\Omega^{j+1}M
+=\operatorname{pd}_R\Omega^jM-1,
+\qquad
+\operatorname{depth}_R\Omega^{j+1}M
+=\operatorname{depth}_R\Omega^jM+1,\\[2pt]
+\Omega^rM\cong F_r\ne0,
+\qquad \operatorname{depth}_R\Omega^rM=t.
+\end{gathered}
+\]
+第一行中的范围也适用于第二行：在到达非零有限自由模之前，投射维数每次减少一，深度每次增加一；末端的深度等于 \(t\)，因而起点深度为 \(t-r\)。这也给出非零有限生成模在投射维数有限时的上界 \(\operatorname{pd}_RM\le\operatorname{depth}R\)。

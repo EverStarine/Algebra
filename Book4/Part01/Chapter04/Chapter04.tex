@@ -1,6 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：## 第4章　加性范畴、交换范畴与正合性
-% 纲要位置：计划纲要.md，第 2533 行。
+% 纲要位置：计划纲要.md，第 3186 行。
 
 \chapter{加性范畴、交换范畴与正合性}
 \label{b4:ch:04}
@@ -13,7 +13,7 @@
 \begin{learninggoals}
 \begin{itemize}
 \item 用双积的结构态射写出矩阵公式，辨别加性、核余核存在性与交换范畴条件。
-\item 构造像与余像之间的典范态射，解释模范畴和小范畴上的函子范畴为何是交换范畴。
+\item 构造像与余像之间的典范态射，解释模范畴，以及以小范畴为指标、取值于交换范畴的函子范畴为何仍是交换范畴。
 \item 从保持核与余核判定左、右正合性，说明 Hom 与张量积的不同表现。
 \item 用满态射后的提升完成图追踪，构造蛇引理的连接同态并验证自然性。
 \end{itemize}
@@ -78,7 +78,12 @@ U\begin{pmatrix}1&0\\0&0\end{pmatrix}U^{-1}
 对域 \(k\)，令 \(F(V)=V\otimes_k V\)、\(F(f)=f\otimes f\)。证明这是保持零对象的函子，但不是加性函子；说明仅检查零对象为什么不够。
 \end{exercise}
 \begin{solution}
-恒等态射和复合的保持来自纯张量公式，且 \(0\otimes0=0\)。在 \(V=k^2\) 上令 \(p_1,p_2\) 为两个坐标投影，则 \(p_1+p_2=1_V\)。\(F(p_1+p_2)\) 固定 \(e_1\otimes e_2\)，而 \((F(p_1)+F(p_2))(e_1\otimes e_2)=0\)。此纯张量非零，故两态射不同，与 \(k\) 的特征无关。保持零对象没有控制混合项。
+恒等态射和复合的保持来自纯张量公式，且 \(0\otimes0=0\)。取 \(V=k^2\) 及其标准基 \(e_1,e_2\)。令 \(p_1,p_2:V\to V\) 为到两个坐标子空间的投影自同态，其矩阵为
+\[
+p_1=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+p_2=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad p_1+p_2=1_V.
+\]
+\(F(p_1+p_2)\) 固定 \(e_1\otimes e_2\)，而 \((F(p_1)+F(p_2))(e_1\otimes e_2)=0\)。此纯张量非零，故两态射不同，与 \(k\) 的特征无关。保持零对象没有控制混合项。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:04-arrow-nonsplit}
@@ -143,17 +148,34 @@ U\begin{pmatrix}1&0\\0&0\end{pmatrix}U^{-1}
 \end{solution}
 
 \begin{exercise}\label{b4:ex:04-short-five}
-设交换范畴中两条短正合列之间给定交换图。如果左右两个竖直态射是同构，证明中间一个也是同构；若左右两个都单，或都满，分别能得到什么结论？
+设交换范畴中有下列交换图，两行均短正合：
+\[
+\begin{tikzcd}[column sep=large]
+0\arrow[r]&A\arrow[r,"i"]\arrow[d,"\alpha"']&B\arrow[r,"p"]\arrow[d,"\beta"]&C\arrow[r]\arrow[d,"\gamma"]&0\\
+0\arrow[r]&A'\arrow[r,"j"']&B'\arrow[r,"q"']&C'\arrow[r]&0.
+\end{tikzcd}
+\]
+用广义元素及满态射后的提升，证明：若 \(\alpha,\gamma\) 都单，则 \(\beta\) 单；若 \(\alpha,\gamma\) 都满，则 \(\beta\) 满。由此推出左右两个竖直态射均为同构时，中间一个也为同构。
 \end{exercise}
 \begin{solution}
-两端都是同构时，在两条短正合列的零对象处补出五项图，\cref{b4:thm:five-lemma}给出结论。若两端都单，则蛇引理前部为 \(0\to0\to\ker\beta\to0\)，故 \(\ker\beta=0\)，中间态射单。若两端都满，则尾部为 \(0\to\operatorname{coker}\beta\to0\to0\)，故中间态射满。
+先设 \(\alpha,\gamma\) 都单。对任意 \(x:T\to B\)，若 \(\beta x=0\)，则 \(\gamma px=q\beta x=0\)，故 \(px=0\)。因为 \(i\) 是 \(p\) 的核，存在 \(a:T\to A\)，使 \(x=ia\)。于是 \(j\alpha a=\beta ia=0\)。由 \(j\) 和 \(\alpha\) 的单性得到 \(a=0\)，因而 \(x=0\)。对两个态射之差应用此结论，便知 \(\beta\) 单。
+
+再设 \(\alpha,\gamma\) 都满。给定 \(y:T\to B'\)，先沿 \(\gamma\) 提升 \(qy\)，再沿 \(p\) 提升所得态射。按\cref{b4:lem:generalized-element-calculus}及其后的共同定义域约定，继续预合成满态射并沿用原符号，便有 \(c:T'\to C\)、\(b:T'\to B\) 满足 \(\gamma c=qy\)、\(pb=c\)。因此 \(q(y-\beta b)=0\)，由 \(j=\ker q\)，存在 \(a':T'\to A'\) 使 \(ja'=y-\beta b\)。再沿满态射 \(\alpha\) 提升，并把先前态射一同预合成到新的定义域，得到 \(a\) 满足 \(\alpha a=a'\)。于是
+\[
+\beta(b+ia)=\beta b+j\alpha a=y.
+\]
+每个 \(y\) 都在满态射后通过 \(\beta\) 提升，故由同一引理，\(\beta\) 满。当两端均为同构时，\(\beta\) 既单又满，在交换范畴中因而也是同构。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:04-pushout-extension}
 在交换范畴中，设 \(0\to A\xrightarrow iB\xrightarrow pC\to0\) 短正合，\(f:A\to A'\) 任意。构造推出 \(B'\)，并证明有短正合列 \(0\to A'\to B'\to C\to0\)。
 \end{exercise}
 \begin{solution}
-取 \(B'=\operatorname{coker}((i,-f):A\to B\oplus A')\)，记余核为 \(v\)，并令 \(j(a')=v(0,a')\)。推出泛性质由余核泛性质给出，\cref{b4:lem:epi-pullback}的对偶表明 \(j\) 单。\((p,0)\) 消去 \((i,-f)\)，故下降为 \(p':B'\to C\)。它满，因为 \(p'v\) 在 \(B\) 分量上是满态射 \(p\)。
+取 \(B'=\operatorname{coker}((i,-f):A\to B\oplus A')\)，记余核态射为 \(v:B\oplus A'\to B'\)，双积的包含为 \(\iota_B:B\to B\oplus A'\)、\(\iota_{A'}:A'\to B\oplus A'\)，并令 \(j=v\iota_{A'}\)。推出泛性质由余核泛性质给出，\cref{b4:lem:epi-pullback}的对偶表明 \(j\) 单。\((p,0)\) 消去 \((i,-f)\)，故下降为 \(p':B'\to C\)，满足
+\[
+p'v=(p,0):B\oplus A'\longrightarrow C.
+\]
+由于 \((p,0)\iota_B=p\) 满，\((p,0)\) 也满；再由 \(p'v\) 满可知 \(p'\) 满。
 
 若 \(h:B'\to T\) 消去 \(j\)，则 \(hv\) 的 \(A'\) 分量为零，它在 \(B\) 上的分量消去 \(i\)，故唯一地通过 \(p\)。由 \(v\) 满，这等价于 \(h\) 唯一通过 \(p'\)。因此 \(p'\) 是 \(j\) 的余核；\(j\) 单又是其余核的核，所给列短正合。
 \end{solution}

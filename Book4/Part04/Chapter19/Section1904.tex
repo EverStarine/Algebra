@@ -1,124 +1,119 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 19.4 扭对与 Happel–Reiten–Smalø 倾斜
-% 纲要位置：计划纲要.md，第 2999 行。
+% 纲要标题：### 19.4* 无界情形
+% 纲要标签：b4:sec:1804
+% 纲要位置：计划纲要.md，第 2971 行。
 
-\section{扭对与 Happel–Reiten–Smalø 倾斜}
-\label{b4:sec:1904}
+\OptionalSection{无界情形}{b4:sec:1804}
 
-把心中的一类对象移到相邻次数，需要与每个对象的分解相容。扭对提供这种分解，使倾斜后的对象仍组成具有核、余核和扩张的交换范畴。
-
+无界复形没有可供逐度归纳的起点，逐项投射或内射便不再自动足够。K-投射、K-内射与 K-平坦直接要求复形正确处理零调复形，并支持无界替换。\subsecref{b4:subsec:2002:03}中任意余积的构造和紧对象的反向刻画则以这里的半自由替换及其 K-投射性质为前提。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 在交换范畴 \(\mathcal A\) 中定义扭对 \((\mathcal T,\mathcal F)\)：\(\operatorname{Hom}(\mathcal T,\mathcal F)=0\)，每个对象有扭部分与无扭商组成的短正合列
-% * 在 \(D^b(\mathcal A)\) 中由标准截断和扭分解构造倾斜后的两个子范畴，逐项证明正交性与截断三角公理
-% * 固定本书方向：新心由仅在 \(-1,0\) 次有上同调、且 \(H^{-1}\in\mathcal F\)、\(H^0\in\mathcal T\) 的对象组成，即 \(\langle\mathcal F[1],\mathcal T\rangle\)
-% * 利用第19.3节已证的心的交换范畴结构解释新心的核、余核和扩张；区分扭对倾斜与第20章倾斜对象的不同数据
-% * 新的心不自动给出与原交换范畴的导出等价；须分别核对导出等价所需条件
+% * K-内射、K-投射与 K-平坦
+% * 无界消解的必要修正
+% * 不把有界证明直接无条件推广
+%
+% ---
 %
 
-\subsection{扭对与扭分解}
-\label{b4:subsec:1904:01}
+\subsection{K-内射、K-投射与 K-平坦}
+\label{b4:subsec:1804:01}
 
-标准心把每个模或交换范畴对象放在零次。若某一类对象适合放在相邻次数，问题便成为：怎样移动这一类而仍保留核、余核和短正合列？扭分解提供了与任意对象都相容的分类方法。
+有上界投射复形和有下界内射复形之所以有效，关键不是每一项的名称，而是整个复形对正合复形的作用。无界时应直接把这种作用列为条件。
 
-\begin{definition}\label{b4:def:torsion-pair}
-设 \(\mathcal A\) 为交换范畴，\(\mathcal T,\mathcal F\) 为在同构下封闭的全子范畴。若 \(\operatorname{Hom}_{\mathcal A}(T,F)=0\) 对 \(T\in\mathcal T,F\in\mathcal F\) 成立，且每个 \(M\in\mathcal A\) 都有短正合列
-\[
- 0\longrightarrow tM\longrightarrow M\longrightarrow fM\longrightarrow0,
- \qquad tM\in\mathcal T,\quad fM\in\mathcal F,
-\]
-则称 \((\mathcal T,\mathcal F)\) 为 \(\mathcal A\) 中的\term[niudui]{扭对}[torsion pair]，此列称为扭分解。这里的扭与无扭是对这对子范畴的命名，不默认它们由某个环的非零元是否零化元素来定义。
+\begin{definition}\label{b4:def:k-resolutions}
+设 \(R\) 为环，以下均为上链复形。
+\begin{enumerate}
+\item 左 \(R\)-模复形 \(P\) 若对每个正合左 \(R\)-模复形 \(A\)，都有 \(\operatorname{Hom}_R^\bullet(P,A)\) 正合，则称 \(P\) 为\term[K-toushe]{K-投射复形}[K-projective complex]。
+\item 左 \(R\)-模复形 \(I\) 若对每个正合左 \(R\)-模复形 \(A\)，都有 \(\operatorname{Hom}_R^\bullet(A,I)\) 正合，则称 \(I\) 为\term[K-neishe]{K-内射复形}[K-injective complex]。
+\item 左 \(R\)-模复形 \(F\) 若对每个正合右 \(R\)-模复形 \(A\)，直和总复形 \(A\otimes_RF\) 都正合，则称 \(F\) 为\term[K-pingtan]{K-平坦复形}[K-flat complex]。右模版本交换两个侧别。
+\end{enumerate}
 \end{definition}
 
-\begin{proposition}\label{b4:prop:torsion-pair-properties}
-设 \(\mathcal A\) 为交换范畴，\((\mathcal T,\mathcal F)\) 为 \(\mathcal A\) 中的扭对。每个对象 \(M\in\mathcal A\) 的扭分解唯一到保持 \(M\) 的唯一同构，并且对 \(M\) 函子性变化；\(\mathcal T={}^\perp\mathcal F\)、\(\mathcal F=\mathcal T^\perp\)，正交均在 \(\mathcal A\) 中取 Hom。此外，\(\mathcal T\) 对商及扩张封闭，\(\mathcal F\) 对子对象及扩张封闭。
-\end{proposition}
-\begin{proof}
-对任意 \(T\in\mathcal T\)，映射 \(T\to M\to fM\) 为零，所以唯一经 \(tM\) 分解；这使 \(tM\to M\) 成为所有此类映射的泛对象。对 \(M\to F\)、\(F\in\mathcal F\)，映射在 \(tM\) 上为零，所以唯一经 \(fM\) 分解。这证明唯一性与函子性。若 \(M\) 与所有 \(F\) 正交，则其满射 \(M\to fM\) 为零，故 \(fM=0\) 且 \(M\in\mathcal T\)；另一侧对偶。商封闭性由 \(\operatorname{Hom}(Q,F)\to\operatorname{Hom}(T,F)\) 单射得到，子对象封闭性对偶。若两个端点都属于同一正交类，短正合列的 Hom 正合性使中间项也属于该类，故有扩张封闭性。
-\end{proof}
+前两项分别等价于所有 \(P\to A[n]\)、\(A\to I[n]\) 都零同伦，因为 Hom 复形的同调正是这些同伦类。由映射锥判据，这也等价于相应 Hom 函子把拟同构送到拟同构；K-平坦性则等价于张量函子具有这个性质。
 
-交换群中的挠群与无挠群给出一个扭对：\(tM\) 是所有有限阶元素组成的子群，\(M/tM\) 无挠，因为 \(n\bar x=0\) 意味着 \(nx\) 有限阶，进而 \(x\) 有限阶。下一节的扭对则由线性映射的两个端点定义，与整数挠元没有关系。
+\ProseParagraphBreak
+\cref{b4:thm:bounded-projective-model}的提升论证说明，有上界的逐项投射复形是 K-投射的；其对偶说明有下界的逐项内射复形是 K-内射的。\cref{b4:lem:bounded-flat-tensor-preserves}说明有上界的逐项平坦复形是 K-平坦的。最后一个结论允许另一个变量无界，原因在于直和总化与滤过余极限的正合性，而不是对角线自动有限。
 
-\subsection{扭对倾斜的构造与公理}
-\label{b4:subsec:1904:02}
+\begin{example}\label{b4:exm:unbounded-free-not-k-projective}
+仍取 \(R=k[\varepsilon]/(\varepsilon^2)\)，令 \(E^n=R\) 对每个整数 \(n\)，所有微分均为乘 \(\varepsilon\)。\(E\) 正合且每项自由，但不是 K-投射：若 \(1_E\) 零同伦，则每度存在乘某元素 \(a_n\) 的同伦，使
+\(1=\varepsilon a_n+a_{n+1}\varepsilon\)，右侧属于 \((\varepsilon)\)，矛盾。因此 \(\operatorname{Hom}_R(E,E)\) 的零次同调非零。
 
-\begin{theorem}\label{b4:thm:hrs-tilt}
-设 \(\mathcal A\) 为交换范畴，\((\mathcal T,\mathcal F)\) 是其中的扭对。在 \(D^b(\mathcal A)\) 中令
-\begin{align*}
- \mathcal D_t^{\le0}&=\{X:H^i(X)=0\ (i>0),\ H^0(X)\in\mathcal T\},\\
- \mathcal D_t^{\ge0}&=\{X:H^i(X)=0\ (i<-1),\ H^{-1}(X)\in\mathcal F\}.
-\end{align*}
-则 \((\mathcal D_t^{\le0},\mathcal D_t^{\ge0})\) 是有界 t-结构。这个构造称为\term[hrsqingxie]{Happel--Reiten--Smalø 倾斜}[Happel--Reiten--Smalø tilt]，简称 HRS 倾斜。\footnote{哈佩尔（Dieter Happel，1953-2012），德国数学家，研究代数表示论与导出范畴；赖滕（Idun Reiten，1942-2025）和斯莫勒（Sverre Olaf Smalø，1951-）为挪威数学家，研究有限维代数的表示与倾斜理论。}
-\end{theorem}
-\begin{proof}
-先检查移位条件。若 \(X\in\mathcal D_t^{\le0}\)，则 \(X[1]\) 的正次上同调与零次上同调均为零，所以仍在此类；若 \(Y\in\mathcal D_t^{\ge0}\)，则 \(Y[-1]\) 在低于零次的上同调为零，故仍在此类。
+\ProseParagraphBreak
+它也不是 K-平坦。取\cref{b4:exm:dual-numbers-derived-base-change}中的自由替换 \(P\to k\)。若 \(E\) 是 K-平坦，则
+\(E\otimes_RP\to E\otimes_Rk\) 为拟同构。\(P\) 本身有上界且平坦，所以 \(P\otimes_RE\) 正合；交换因子的分次符号给出 \(E\otimes_RP\) 正合。但 \(E\otimes_Rk\) 每度为 \(k\)、微分为零，不正合，矛盾。
 
-新结构的 \(\mathcal D_t^{\ge1}=\mathcal D_t^{\ge0}[-1]\) 由满足 \(H^i(Y)=0\ (i<0)\)、\(H^0(Y)\in\mathcal F\) 的对象组成。若 \(X\in\mathcal D_t^{\le0}\)、\(Y\in\mathcal D_t^{\ge1}\)，标准截断的伴随首先把任意 \(X\to Y\) 唯一分解为 \(X\to H^0(X)\to Y\)，再把后一个映射唯一分解为 \(H^0(X)\to H^0(Y)\to Y\)。中间映射从 \(\mathcal T\) 到 \(\mathcal F\)，所以为零。这证明新正交性。
-
-为构造新截断，给定 \(X\)，记 \(A=\tau^{\le0}X\)、\(T=tH^0(X)\)、\(F=fH^0(X)\)。取复合 \(A\to H^0(X)\to F\)，完成为三角
-\[
- U\longrightarrow A\longrightarrow F\longrightarrow U[1].
-\]
-普通上同调长正合列表明 \(H^i(U)=H^i(X)\) 当 \(i<0\)，\(H^0(U)=T\)，\(H^i(U)=0\) 当 \(i>0\)；这里用到了 \(H^0(X)\to F\) 是满射。故 \(U\in\mathcal D_t^{\le0}\)。把 \(U\to A\to X\) 的复合完成为三角 \(U\to X\to V\)，八面体公理另给出三角
-\[
- F\longrightarrow V\longrightarrow\tau^{\ge1}X\longrightarrow F[1].
-\]
-由它得 \(H^i(V)=0\) 当 \(i<0\)，且 \(H^0(V)=F\)，所以 \(V\in\mathcal D_t^{\ge1}\)。分解公理因此成立。
-
-最后有包含关系 \(D^{\le-1}\subseteq\mathcal D_t^{\le0}\subseteq D^{\le0}\) 及 \(D^{\ge0}\subseteq\mathcal D_t^{\ge0}\subseteq D^{\ge-1}\)。标准 t-结构在有界导出范畴中有界，故新结构也有界。
-\end{proof}
-
-\subsection{倾斜方向与新心的上同调条件}
-\label{b4:subsec:1904:03}
-
-\begin{corollary}\label{b4:cor:hrs-heart-description}
-设 \(\mathcal A\) 为交换范畴，\((\mathcal T,\mathcal F)\) 为扭对，\(\mathcal B\subseteq D^b(\mathcal A)\) 为\cref{b4:thm:hrs-tilt}给出的新心。则 \(\mathcal B\) 由恰好满足
-\[
- H^i(E)=0\quad(i\ne-1,0),\qquad
- H^{-1}(E)\in\mathcal F,\quad H^0(E)\in\mathcal T
-\]
-的对象组成。每个 \(E\in\mathcal B\) 都有新心中的短正合列
-\[
- 0\longrightarrow H^{-1}(E)[1]\longrightarrow E
- \longrightarrow H^0(E)\longrightarrow0.
-\]
-因此常记 \(\mathcal B=\langle\mathcal F[1],\mathcal T\rangle\)，尖括号在这里表示按上述次序取扩张。
-\end{corollary}
-\begin{proof}
-两个新子范畴的交给出列出的上同调条件。标准截断三角为 \(H^{-1}(E)[1]\to E\to H^0(E)\to H^{-1}(E)[2]\)，三项都在新心中，由\cref{b4:prop:heart-exact-triangles}即成短正合列。反之，以 \(F[1]\)、\(T\) 为两端的任何三角扩张都在新心中，因为心对扩张封闭。
-\end{proof}
-
-这里移动的是 \(\mathcal F\)：它的对象由零次移到 \(-1\) 次。文献也常采用反向约定，得到 \(\langle\mathcal F,\mathcal T[-1]\rangle=\mathcal B[-1]\)。比较结论时须先换算方向，不能只看“倾斜心”这一名称。
-
-\subsection{新心的核、余核与扩张}
-\label{b4:subsec:1904:04}
-
-新心已经是交换范畴；它的核与余核由\cref{b4:thm:heart-abelian}计算，但那里要采用新的 \(H_t^i\)。普通上同调 \(H^i\) 只用来说明新心的对象是什么，并不直接给出新心中每个态射的核与余核。
-
-\begin{example}\label{b4:exm:hrs-integer-multiplication}
-取 \(\mathcal A=\mathbb Z\text{-}\mathrm{Mod}\)，扭对为挠群与无挠群，\(p\) 为素数。对象 \(\mathbb Z[1]\) 位于新心。普通模上的单射 \(p:\mathbb Z\to\mathbb Z\)，在新心中成为满态射
-\[
- p:\mathbb Z[1]\longrightarrow\mathbb Z[1],\qquad
- \ker_{\mathcal B}p=\mathbb Z/p,
-\]
-并给出短正合列
-\[
- 0\longrightarrow\mathbb Z/p\longrightarrow\mathbb Z[1]
- \xrightarrow{p}\mathbb Z[1]\longrightarrow0.
-\]
-事实上，标准短正合列 \(0\to\mathbb Z\xrightarrow{p}\mathbb Z\to\mathbb Z/p\to0\) 的三角旋转后，前三项就是这三个新心对象；必要时把一个结构映射改乘 \(-1\)，即与旋转符号一致。由\cref{b4:prop:heart-exact-triangles}得到所述短列。
+\ProseParagraphBreak
+这个例子的每项甚至内射。取线性泛函 \(\lambda:R\to k\)，\(\lambda(a+b\varepsilon)=b\)。映射
+\(R\to\operatorname{Hom}_k(R,k)\)、\(r\mapsto(s\mapsto\lambda(sr))\)
+是 \(R\)-模同构：双线性型在基 \(1,\varepsilon\) 下的矩阵为 \(\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\)。又有
+\(\operatorname{Hom}_R(M,\operatorname{Hom}_k(R,k))\simeq\operatorname{Hom}_k(M,k)\)，右侧在向量空间短正合列上正合，故 \(R\) 内射。尽管如此，\(E\) 不是 K-内射，因为 \(E\) 正合而 \(\operatorname{Hom}_R(E,E)\) 不正合。
 \end{example}
 
-\((\mathcal F[1],\mathcal T)\) 本身还是新心中的扭对。其分解由\cref{b4:cor:hrs-heart-description}给出，正交性来自 \(\operatorname{Hom}(F[1],T)=\operatorname{Hom}(F,T[-1])=0\)。这一事实说明新心并非没有原扭分解的痕迹；变化的是两类对象所在的次数，以及它们之间的正合列。
+\subsection{无界消解的修正}
+\label{b4:subsec:1804:02}
 
-\subsection{倾斜心为什么不自动给出导出等价}
-\label{b4:subsec:1904:05}
+在模范畴中，任意无界复形仍可得到足够好的替换，但须按复形的全部循环关系构造。下面在模范畴中构造这样的替换。
 
-HRS 倾斜的数据是一整个交换范畴中的两类对象及其扭分解。\chapref{b4:ch:20}讨论的倾斜对象则是一项对象及其自扩张消失、生成等条件。两种构造有关联，却不能仅凭名称相同便认作同一个定义。
+\begin{definition}\label{b4:def:semifree-complex}
+设 \(R\) 为环，\(P\) 是左 \(R\)-模复形。若存在子复形滤过
+\[
+0=P_{-1}\subseteq P_0\subseteq P_1\subseteq\cdots,
+\qquad P=\bigcup_{s\ge0}P_s,
+\]
+使每个包含在分次模意义下分裂，每个商 \(P_s/P_{s-1}\) 是若干移位 \(R[n]\) 的直和且微分为零，则称此 \(P\) 连同滤过为\term[banziyou-fuxing]{半自由复形}[semi-free complex]。等价地，每一层可添一批齐次自由生成元，新生成元的微分只涉及更早层的生成元。
+\end{definition}
+
+\begin{theorem}\label{b4:thm:semifree-resolution}
+设 \(R\) 为环，\(X\) 为任意左 \(R\)-模上链复形。存在半自由复形 \(P\) 及拟同构 \(P\to X\)。每个半自由复形都是 K-投射且 K-平坦的；这里不要求 \(X\) 或 \(P\) 有任何次数界。
+\end{theorem}
+\begin{proof}
+先对 \(X\) 每个次数的每个余圈 \(z\in Z^nX\)，添一个次数 \(n\) 的自由生成元 \(e_z\)，令其微分为零，映到 \(z\)。这些余圈由集合 \(\coprod_{n\in\mathbb Z}Z^nX\) 索引，所得 \(P_0\to X\) 在同调上满射。
+
+假定已构造 \(f_s:P_s\to X\)。对每对数据
+\[
+z\in Z^nP_s,\qquad x\in X^{n-1},\qquad f_s(z)=\mathrm{d}_Xx,
+\]
+添一个次数 \(n-1\) 的自由生成元 \(e_{z,x}\)；本层全部数据是集合 \(\coprod_{n\in\mathbb Z}(Z^nP_s\times X^{n-1})\) 的子集。规定
+\(\mathrm{d} e_{z,x}=z\)、\(f_{s+1}(e_{z,x})=x\)。因为 \(\mathrm{d}z=0\) 且 \(f_s(z)=\mathrm{d}x\)，复形条件与映射条件同时成立。这定义 \(P_{s+1}\)，其分次模是 \(P_s\) 与所添自由模的直和，商微分为零。取并得到半自由复形 \(P\) 及映射 \(f:P\to X\)。
+
+每个 \(X\) 的同调类在 \(P_0\) 已有余圈代表，因而 \(H(f)\) 满。若 \(z\in Z^nP\) 映成 \(X\) 中的边界，则 \(z\) 只含有限个生成元，属于某个 \(P_s\)；选定 \(x\) 使 \(f(z)=\mathrm{d}x\)，下一层就添入 \(e_{z,x}\) 使 \(z\) 成为边界。因此 \(H(f)\) 单，\(f\) 是拟同构。
+
+为证 K-投射，设 \(A\) 正合，\(g:P\to A\) 是复形映射。逐层构造次数 \(-1\) 的映射 \(h\)，使 \(g=\mathrm{d}h+h\mathrm{d}\)。若 \(h\) 已在旧层定义，对次数 \(n\) 的新生成元 \(e\)，\(\mathrm{d}e\) 属于旧层，而且
+\[
+\mathrm{d}_A\bigl(g(e)-h(\mathrm{d}e)\bigr)=g(\mathrm{d}e)-\mathrm{d}_Ah(\mathrm{d}e)=0,
+\]
+后一等式用旧层上的同伦公式及 \(\mathrm{d}^2e=0\)。由 \(A\) 正合，每个 \(g(e)-h(\mathrm{d}e)\) 都有原像。按\subsecref{b4:subsec:0101:03}的集合指标选择约定，可为本层全部新生成元同时选取 \(h(e)\in A^{n-1}\)，使其微分为 \(g(e)-h(\mathrm{d}e)\)。自由性允许线性延拓到本层。逐层取并即得全局同伦。把 \(A\) 换成任意移位，得到所有 Hom 同调消失。
+
+为证 K-平坦，设 \(A\) 是正合右模复形。每个商
+\(A\otimes_R(P_s/P_{s-1})\) 是 \(A\) 的移位直和，所以正合。滤过包含逐次分裂，张量后保持短正合列，归纳得 \(A\otimes_RP_s\) 正合。最后由滤过余极限的正合性，\(A\otimes_RP\) 正合。
+\end{proof}
+
+这里的归纳不是沿复形次数开始，而是沿添加生成元的层次开始。即使次数向两边无限延伸，每个新生成元的微分只依赖已经处理的部分，所以构造同伦仍有起点。
+
+\subsection{有界论证向无界情形推广的条件}
+\label{b4:subsec:1804:03}
+
+\begin{proposition}\label{b4:prop:k-resolution-comparison}
+设 \(R\) 为环，简记左 \(R\)-模的同伦范畴和导出范畴为 \(K(R)=K(R\text{-}\mathbf{Mod})\)、\(D(R)=D(R\text{-}\mathbf{Mod})\)。若 \(P\) 为 K-投射左 \(R\)-模上链复形，则对任意左 \(R\)-模上链复形 \(Y\)，有
+\[
+\operatorname{Hom}_{K(R)}(P,Y)\simeq\operatorname{Hom}_{D(R)}(P,Y).
+\]
+若 \(I\) 为 K-内射左 \(R\)-模上链复形，则对任意左 \(R\)-模上链复形 \(X\)，有对偶同构
+\(\operatorname{Hom}_{K(R)}(X,I)\simeq\operatorname{Hom}_{D(R)}(X,I)\)。
+\end{proposition}
+\begin{proof}
+设 \(s:Y'\to Y\) 为拟同构。\(\operatorname{Cone}(s)\) 正合，K-投射性及 Hom 的锥长正合列说明
+\(\operatorname{Hom}_{K(R)}(P,Y')\to\operatorname{Hom}_{K(R)}(P,Y)\)
+是同构。因此从 \(P\) 出发的同伦态射函子已经把所有分母变成同构。
+
+更具体地，导出态射的屋顶 \(P\xleftarrow{s}U\xrightarrow{a}Y\) 中，\(s\) 对 \(\operatorname{Hom}_{K(R)}(P,-)\) 给出同构，故唯一有 \(t:P\to U\) 使 \(st=1_P\) 在同伦范畴中成立。由拟同构的二取三性质，\(t\) 也是拟同构。因此原屋顶与 \(P\xleftarrow{1_P}P\xrightarrow{at}Y\) 以 \(P\) 为共同细化对象，细化映射分别为 \(t:P\to U\) 与 \(1_P:P\to P\)：左侧由 \(st=1_P\) 交换，右侧由 \(a\circ t=at\) 交换。故原屋顶由普通态射 \(at\) 表示。若两个这样的态射在导出范畴中相等，分式等价关系给出一个共同分母；对该分母同样施加上述 Hom 同构，便得它们已在同伦范畴中相等。对偶证明使用反向屋顶及 \(\operatorname{Hom}_{K(R)}(-,I)\)。
+\end{proof}
+
+右 \(R\)-模等同于左 \(R^{\mathrm{op}}\)-模，所以\cref{b4:def:semifree-complex,b4:thm:semifree-resolution}应用于反环 \(R^{\mathrm{op}}\) 时，给出右半自由复形及其替换；滤过商是移位右正则模 \(R_R[n]\) 的直和。给定任意无界右 \(R\)-模复形 \(X\) 与左 \(R\)-模复形 \(Y\)，分别取右半自由替换 \(P\to X\) 与左半自由替换 \(Q\to Y\)。直和总复形 \(P\otimes_RQ\) 表示 \(X\otimes_R^{\mathbf L}Y\)。K-平坦性使 \(P\otimes_RY\) 或 \(X\otimes_RQ\) 也能计算同一导出对象，K-投射比较保证态射和不同替换之间的相容性。
 
 \ProseParagraphBreak
-尤其是，在 \(D^b(\mathcal A)\) 中得到新心 \(\mathcal B\)，并不已经得到 \(D^b(\mathcal B)\simeq D^b(\mathcal A)\)。若存在与心的包含相容的三角等价，它对 \(X,Y\in\mathcal B\) 必须给出每个次数的同构 \(\operatorname{Hom}_{D^b(\mathcal B)}(X,Y[n])\simeq\operatorname{Hom}_{D^b(\mathcal A)}(X,Y[n])\)。当新心有足够投射或内射对象时，左边可用其中的消解计算为 Ext。一次扩张与环境态射的对应已由\cref{b4:prop:heart-ext1}保证，高阶的一致性却需要另作证明。
+对任意无界左 \(R\)-模复形 \(X,Y\)，导出 Hom 可在第一变量用左半自由替换 \(P\to X\)，定义 \(\mathbf R\operatorname{Hom}_R(X,Y)=\operatorname{Hom}_R^\bullet(P,Y)\)，其中 Hom 仍取各次数的直积。无界替换的作用来自 K-投射、K-平坦性质，直和总化的对角线上可以有无限多个非零项。
 
 \ProseParagraphBreak
-下一节直接计算一个两顶点范畴：新心为半单范畴，故心内二次 Ext 为零，而环境的某个二次移位 Hom 为 \(k\)。这将排除任何与该包含相容的导出等价。一般倾斜等价还需要额外条件。
+对一般交换范畴，未必有自由生成元，也未必有所需的无限直和或精确余极限。若要用 K-内射复形构造无界 \(RF\)，必须另证每个对象有相应替换，并检查 \(F\) 在这些替换间保持拟同构；仅有“足够内射对象”并不自动提供这里使用的整个复形性质。可比较 Weibel\cite[Generalized Existence Theorem 10.5.9]{Weibel1994HomologicalAlgebra}所列出的替换与零调性条件；有界性有限制时，前面各节已经给出了可直接使用的构造。

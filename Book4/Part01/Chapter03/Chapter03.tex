@@ -1,13 +1,13 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：## 第3章　可表函子、Yoneda 引理与伴随
-% 纲要位置：计划纲要.md，第 2505 行。
+% 纲要位置：计划纲要.md，第 3157 行。
 
 \chapter{可表函子、Yoneda 引理与伴随}
 \label{b4:ch:03}
 \BookChapterNumber{b4:ch:03}
 
 \begin{chapterabstract}
-本章以可表函子和 Yoneda 引理刻画对象与自然变换，建立伴随的 Hom 双射、单位与余单位两种表述，并证明伴随的保持性质；自由模与张量积提供具体例子。
+本章以可表函子和 Yoneda 引理刻画对象与自然变换，建立伴随的 Hom 双射、单位与余单位两种表述，并证明左伴随保持余极限、右伴随保持极限。自由模与张量积提供具体例子，最后从伴随构造单子和余单子。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -20,7 +20,7 @@
 \end{itemize}
 \end{learninggoals}
 
-设 \(R\) 为环，\(M\) 为左 \(R\)-模。给出 \(R\rightarrow M\) 的模同态，只需说出 \(1\in R\) 的像：若此像为 \(m\)，同态必将 \(r\) 送到 \(rm\)。于是 \(M\) 的元素可以通过从同一个对象 \(R\) 出发的态射来辨认。若 \(N\) 是另一个左 \(R\)-模，而 \(f:M\rightarrow N\) 是模同态，映射 \(m\mapsto f(m)\) 又恰好对应同态 \(R\rightarrow M\xrightarrow{f}N\) 的复合。这里值得追问的，不只是某两个集合之间碰巧有双射，而是这些双射能否随着目标对象变化而保持相容。本章从这个问题进入可表性、Yoneda 引理与伴随。
+设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\)-模。给出 \(R\rightarrow M\) 的模同态，只需说出 \(1\in R\) 的像：若此像为 \(m\)，同态必将 \(r\) 送到 \(rm\)。于是 \(M\) 的元素可以通过从同一个对象 \(R\) 出发的态射来辨认。若 \(N\) 是另一个幺性左 \(R\)-模，而 \(f:M\rightarrow N\) 是模同态，映射 \(m\mapsto f(m)\) 又恰好对应同态 \(R\rightarrow M\xrightarrow{f}N\) 的复合。这里值得追问的，不只是某两个集合之间碰巧有双射，而是这些双射能否随着目标对象变化而保持相容。本章从这个问题进入可表性、Yoneda 引理与伴随。
 
 \ProseParagraphBreak
 本章使用\chapref{b4:ch:01}的函子、自然变换及全忠实性，以及\chapref{b4:ch:02}的极限、余极限。模论例子调用第二卷第3.1节的自由模泛性质、第6.1节的张量积构造和第6.3节的 Hom–张量伴随；这些构造已在第二卷证明，本章研究它们所共有的范畴性质。交换化的例子另用群的交换子和商群。
@@ -59,10 +59,21 @@
 \end{solution}
 
 \begin{exercise}\label{b4:ex:03-units-nilpotents}
-在含幺交换环及保幺同态的范畴中，证明可逆元函子 \(A\mapsto A^\times\) 与函子 \(A\mapsto\{a\in A:a^n=0\}\)（固定 \(n\ge1\)）都可表。分别写出表示对象及泛元素，并解释为何第二个函子的定义必须固定 \(n\)。
+在允许零环的含幺交换环及保幺同态的范畴中，证明可逆元函子 \(A\mapsto A^\times\) 与函子 \(A\mapsto\{a\in A:a^n=0\}\)（固定 \(n\ge1\)）都可表，态射作用均为环同态的限制。分别写出表示对象及泛元素。再令
+\[
+\operatorname{Nil}(A)=\{a\in A:\text{存在整数 }r\ge1\text{，使 }a^r=0\},
+\]
+并以同样方式定义态射作用。证明全部幂零元函子 \(\operatorname{Nil}\) 不可表。
 \end{exercise}
 \begin{solution}
-可逆元函子由 \(\mathbb Z[t,t^{-1}]\) 表示，泛元素为 \(t\)：给定可逆元 \(a\)，唯一同态为 \(t\mapsto a,t^{-1}\mapsto a^{-1}\)。关系 \(tt^{-1}=1\) 保证每个同态确实给出可逆元。第二个函子由 \(\mathbb Z[t]/(t^n)\) 表示，泛元素为 \(\bar t\)，因为指定 \(t\mapsto a\) 能通过商环当且仅当 \(a^n=0\)。两种对应均与环同态后复合相容。若把 \(n\) 去掉而只要求某个幂为零，得到的是所有幂零元的函子，不能由上面任一固定商环表示；例如 \(\mathbb Z[t]/(t^{n+1})\) 中 \(\bar t\) 幂零却不满足 \(\bar t^n=0\)。本题不据此断言后一函子绝不可能有别的表示。
+可逆元函子由 \(\mathbb Z[t,t^{-1}]\) 表示，泛元素为 \(t\)：给定可逆元 \(a\)，唯一同态为 \(t\mapsto a,t^{-1}\mapsto a^{-1}\)。关系 \(tt^{-1}=1\) 保证每个同态确实给出可逆元。第二个函子由 \(\mathbb Z[t]/(t^n)\) 表示，泛元素为 \(\bar t\)，因为指定 \(t\mapsto a\) 能通过商环当且仅当 \(a^n=0\)。两种对应均与环同态后复合相容。
+
+环同态保持幂零性，所以 \(\operatorname{Nil}\) 确实是函子。由\cref{b4:prop:representables-preserve-limits}，若它可表，就必须保持所有小积。取一个域 \(k\)，令 \(A_r=k[t]/(t^r)\)（\(r\ge1\)），记 \(\bar t_r\) 为 \(t\) 在 \(A_r\) 中的像。每个 \(\bar t_r\) 都幂零，故 \((\bar t_r)_r\) 属于 \(\prod_{r\ge1}\operatorname{Nil}(A_r)\)。然而对任意固定整数 \(q\ge1\)，只要 \(r>q\)，就有 \(\bar t_r^{\,q}\ne0\)。因此这个元组在积环 \(\prod_{r\ge1}A_r\) 中不幂零，投影诱导的比较映射
+\[
+\operatorname{Nil}\!\left(\prod_{r\ge1}A_r\right)
+\longrightarrow\prod_{r\ge1}\operatorname{Nil}(A_r)
+\]
+不为满射。这与保持积矛盾，所以 \(\operatorname{Nil}\) 不可表。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:03-constant-representable}
@@ -94,10 +105,12 @@ A\longmapsto A,\qquad A\longmapsto X\setminus A,
 \end{solution}
 
 \begin{exercise}\label{b4:ex:03-center-natural-endomorphisms}
-设 \(R\) 为含幺环。证明恒等函子 \(1_{R\text{-}\mathbf{Mod}}\) 的自然自变换与环中心 \(Z(R)\) 一一对应；若把分量只要求为底集合映射，自然自变换则由全部 \(R\) 参数化。
+设 \(R\) 为含幺环，\(\mathcal M=R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模范畴，\(U:\mathcal M\rightarrow\mathbf{Set}\) 为忘却函子。证明 \(\operatorname{Nat}(1_{\mathcal M},1_{\mathcal M})\) 与环中心 \(Z(R)\) 一一对应；再证明 \(\operatorname{Nat}(U,U)\) 作为集合与 \(R\) 一一对应。
 \end{exercise}
 \begin{solution}
-设 \(t\) 的分量首先只是集合映射，对模同态自然。令 \(a=t_R(1)\)。对左线性映射 \(f_m:R\rightarrow M\)、\(r\mapsto rm\)，自然性给出 \(t_M(m)=f_m(a)=am\)。反之固定 \(a\in R\) 的左乘与所有左模同态交换，故给出底集合函子的自然自变换。若还要求 \(t_R\) 左 \(R\) 线性，则对 \(r\in R\)，一方面 \(t_R(r)=ar\)，另一方面 \(t_R(r)=rt_R(1)=ra\)，所以 \(a\in Z(R)\)。中心元素的左乘在每个左模上确实左线性，给出逆对应。这里自然性与分量的线性是两个不同条件。
+先计算忘却函子的自然自变换。设 \(\alpha:U\Rightarrow U\)，令 \(a=\alpha_R(1)\)。对左线性映射 \(f_m:R\rightarrow M\)、\(r\mapsto rm\)，自然性给出 \(\alpha_M(m)=f_m(a)=am\)。反之，固定 \(a\in R\) 后，对任意模同态 \(f:M\rightarrow N\)，都有 \(f(am)=af(m)\)，故左乘 \(a\) 的集合映射组成 \(U\) 的自然自变换。取 \(M=R,m=1\) 恢复参数 \(a\)，所以对应唯一。
+
+恒等函子 \(1_{\mathcal M}\) 的自然自变换还要求每个分量为 \(R\) 模同态。其底集合映射由上面的计算写成左乘 \(a\)；在 \(R\) 上，线性性要求 \(ar=ra\) 对所有 \(r\in R\) 成立，即 \(a\in Z(R)\)。反之，中心元素的左乘在每个左模上确实左线性，所以恰给出 \(1_{\mathcal M}\) 的全部自然自变换。自然性与分量的线性在这里是两个不同条件。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:03-adjoint-unique}

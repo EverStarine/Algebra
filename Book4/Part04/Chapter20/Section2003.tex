@@ -1,189 +1,168 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 20.3 倾斜对象
-% 纲要位置：计划纲要.md，第 3039 行。
+% 纲要标题：### 20.3 心
+% 纲要标签：b4:sec:1903
+% 纲要位置：计划纲要.md，第 2993 行。
 
-\section{倾斜对象}
-\label{b4:sec:2003}
+\section{心}
+\label{b4:sec:1903}
 
-用复形代替正则模时，既要能够生成全部完美对象，又要消去非零移位的自身态射。三顶点例子的自同态计算将这两个条件落实，并产生新的导出等价。
+心中的对象集中在同一上同调位置，态射的锥却占据相邻位置。这两个位置提供核与余核，正交性再保证余像与像一致。
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 消失条件与生成条件
-% * 经典有限维代数例子
-% * 导出 Morita 理论的基本版本
+% * 心是交换范畴
+% * 短正合列与三角的关系
+% * 标准心与原交换范畴
 %
 
-\subsection{消失条件与生成条件}
-\label{b4:subsec:2003:01}
+\subsection{心是交换范畴}
+\label{b4:subsec:1903:01}
 
-第二卷定理16.3.3已经证明，普通 Morita 理论用有限生成投射生成元代替正则模。导出范畴允许把替代对象选成复形。假如希望一个三角等价把环 \(B\) 的正则模送到 \(R\) 上的完美复形 \(T\)，并在完美对象上给出等价，那么正则模的两项性质也须由 \(T\) 保留：\(B\) 与自身非零移位之间没有态射，而每个完美 \(B\)-复形都能由 \(B\) 经过有限次移位、锥和取直和项构造。因此需要
+在心中，一切对象都位于同一个上同调次数；但两个对象之间态射的锥通常占据相邻两次。这正好提供核与余核所需的两个对象。困难在于还要证明余像等于像，不能只造出两个候选对象便结束。
+
+\begin{theorem}\label{b4:thm:heart-abelian}
+设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴，\(\mathcal H=\mathcal D^{\le0}\cap\mathcal D^{\ge0}\) 为其心。则 \(\mathcal H\) 是交换范畴。若 \(f:X\to Y\) 是心中态射，完成为好三角
 \[
- \operatorname{Hom}(T,T[n])=0\quad(n\ne0),\qquad
- \operatorname{thick}(T)=\operatorname{Perf}(R).
+ X\xrightarrow{f}Y\longrightarrow C\longrightarrow X[1],
 \]
-前者使自同态信息集中在零次，后者保证用 \(T\) 能恢复全部完美对象。如果高次自身态射仍然存在，就须保留完整的 DG 自同态代数。
-
-\ProseParagraphBreak
-两个简单例子说明这两项要求各有什么作用。若 \(R=k\times k\)，直和项 \(T=k\times0\) 没有非零高次自身态射，但由它构造的对象都被 \((0,1)\) 零化，因而无法得到 \(0\times k\)。若 \(R=k\)，\(T=k\oplus k[1]\) 包含 \(k\) 作为直和项，所以生成全部完美复形；但从 \(T\) 的 \(k[1]\) 分量到 \(T[1]\) 的 \(k[1]\) 分量可取恒等映射，故 \(\operatorname{Hom}(T,T[1])\ne0\)。
-
-\begin{definition}\label{b4:def:tilting-complex}
-设 \(k\) 为域，\(R\) 为含幺结合 \(k\)-代数。若 \(T\in\operatorname{Perf}(R)\) 满足
+则心中的核、余核分别为
 \[
- \operatorname{Hom}_{D(R\text{-}\mathrm{Mod})}(T,T[n])=0
- \quad(n\ne0),\qquad
- \operatorname{thick}(T)=\operatorname{Perf}(R),
+ \ker_{\mathcal H}f=H_t^{-1}(C),\qquad
+ \operatorname{coker}_{\mathcal H}f=H_t^0(C).
 \]
-称 \(T\) 为 \(R\) 上的\term[qingxiefuxing]{倾斜复形}[tilting complex]，也称所给三角范畴中的倾斜对象。这里使用的是包括正负所有非零次数的消失条件。
-\end{definition}
-
-\(R\) 本身是倾斜复形：其自身高次态射为零，厚生成条件由\cref{b4:thm:perfect-compact-thick}给出。倾斜复形推广的正是正则模的这两项性质。
-
-\ProseParagraphBreak
-这里的倾斜对象与\chapref{b4:ch:19}的扭对倾斜使用不同数据。后者从一个心及其中的扭对构造另一个心；本节则要求一个完美对象具有自身态射消失和厚生成性质。构造出新心并不自动产生这样的对象，更不自动给出两个模导出范畴之间的等价。
-
-\begin{proposition}\label{b4:prop:tilting-module-criterion}
-设 \(k\) 为域，\(R\) 为 \(k\)-代数，\(T\) 为左 \(R\)-模。假设 \(T\) 有有限长有限生成投射消解，\(\operatorname{Ext}^n_R(T,T)=0\) 对所有 \(n>0\) 成立，并且存在正合列
-\[
- 0\longrightarrow R\longrightarrow T_0\longrightarrow T_1
- \longrightarrow\cdots\longrightarrow T_m\longrightarrow0,
-\]
-其中每个 \(T_i\) 是某个有限直和 \(T^{r_i}\) 的直和项。则 \(T\) 集中在零次是倾斜复形。
-\end{proposition}
-\begin{proof}
-有限投射消解给出完美性。对 \(n>0\)，自身导出态射由\cref{b4:thm:derived-ext-identification}识别为所给 Ext 群；对 \(n<0\)，取位于非正次数的投射消解 \(P\to T\)，则 \(\underline{\operatorname{Hom}}_R(P,T)\) 没有负次项，故负次态射为零。
-
-把所给长正合列按像分成短正合列。从末项起逆向使用相应好三角，可知 \(R\in\operatorname{thick}(T)\)。由\cref{b4:thm:perfect-compact-thick}，\(\operatorname{Perf}(R)=\operatorname{thick}(R)\subseteq\operatorname{thick}(T)\)。反向包含由完美子范畴的厚性和 \(T\) 完美得到。
-\end{proof}
-
-\subsection{经典有限维代数例子}
-\label{b4:subsec:2003:02}
-
-下面用三个向量空间及两个线性映射计算一个倾斜对象，暂不需要第五卷的一般箭图表示论。设 \(k\) 为域，\(R\) 是箭图 \(1\to2\to3\) 的路径代数：以三条长度零的路径、两条箭头及它们的复合为 \(k\)-基，乘法按可接续路径复合，不可接续时取零。具体记箭头为 \(\alpha:1\to2\)、\(\beta:2\to3\)，约定 \(\alpha=e_2\alpha e_1\)、\(\beta=e_3\beta e_2\)，所以 \(\beta\alpha\) 是从一到三的路径。有限维左 \(R\)-模等价于图式 \(V_1\to V_2\to V_3\)；三个顶点幂等元给出三个分量，箭头作用给出两个线性映射。模同态是使这两个方块交换的三元线性映射。
-
-\ProseParagraphBreak
-写出三个投射模以及中间顶点的简单模：
-\[
-\begin{aligned}
- P_1&=(k\xrightarrow{1}k\xrightarrow{1}k),&
- P_2&=(0\longrightarrow k\xrightarrow{1}k),\\
- P_3&=(0\longrightarrow0\longrightarrow k),&
- S_2&=(0\longrightarrow k\longrightarrow0).
-\end{aligned}
-\]
-这里 \(P_i=Re_i\)，并且 \(\operatorname{Hom}_R(P_i,V)\cong V_i\)：态射由顶点 \(i\) 处的向量决定，其余分量由箭头推出。因此它们确为投射模，且 \(R=P_1\oplus P_2\oplus P_3\)。
-
-\begin{example}\label{b4:exm:a3-tilting-object}
-在上述路径代数 \(R\) 上，令 \(T=P_1\oplus P_2\oplus S_2\)。则 \(T\) 是倾斜复形，而
-\[
- B=\operatorname{End}_R(T)^{\mathrm{op}}
-\]
-同构于路径代数 \(k(1\to2\leftarrow3)\)。
-\end{example}
-\begin{proof}
-有短正合列
-\begin{equation}\label{b4:eq:a3-simple-resolution}
- 0\longrightarrow P_3\xrightarrow{i}P_2
- \xrightarrow{q}S_2\longrightarrow0.
-\end{equation}
-所以 \(T\) 有长度至多一的有限投射消解。对任意表示 \(V\)，这份消解给出
-\[
- \operatorname{Ext}^1_R(S_2,V)
- =\operatorname{coker}(V_2\longrightarrow V_3),
- \qquad \operatorname{Ext}^{n}_R(S_2,V)=0\quad(n\ge2).
-\]
-对 \(V=P_1,P_2,S_2\)，\(V_2\to V_3\) 都满；因此 \(\operatorname{Ext}^n_R(T,T)=0\) 对所有 \(n>0\) 成立。负次态射为零同样由非正次投射消解计算。\eqref{b4:eq:a3-simple-resolution}的三角把 \(P_3\) 从 \(P_2,S_2\) 构造出来，故 \(R\in\operatorname{thick}(T)\)，由完美性即得厚生成。
-
-自同态的计算也可以逐项完成。三个直和项的自同态环均为 \(k\)。不同项之间仅有
-\[
- \operatorname{Hom}_R(P_2,P_1)=k j,
- \qquad \operatorname{Hom}_R(P_2,S_2)=k q
-\]
-非零：从 \(P_1\) 出发的态射由目标顶点一的分量决定，故另外两项为零；从 \(S_2\) 到 \(P_1\) 或 \(P_2\) 的态射则由第二条箭头的交换条件迫为零。相对于 \(T\) 的三个直和项，自同态代数因此为
-\[
- E=\left\{\left.
- \begin{pmatrix}a&b&0\\0&c&0\\0&d&e\end{pmatrix}
- \ \right|\ a,b,c,d,e\in k\right\}.
-\]
-其中两条非恒等箭头从第二个直和项发出，彼此不能复合。取反代数后，两条箭头都指向第二个顶点，正好得到 \(B=k(1\to2\leftarrow3)\)。
-\end{proof}
-
-这个例子不是普通 Morita 等价换了一种写法。\(R\) 的三个不可分解投射模的合成长度为 \(3,2,1\)；\(B\) 的三个不可分解投射模分别支持在 \(1\to2\)、顶点二、\(3\to2\)，合成长度为 \(2,1,2\)。这些类型已经穷尽：两代数模去箭头生成的幂零理想均为 \(k^3\)，三个顶点给出全部简单模，第二卷定理15.3.10的简单模与不可分解投射模对应给出所述清单。模范畴等价保持简单对象、投射性、不可分解性和合成列，因而保持这组长度；两组数不同，所以两者的模范畴不等价。下一小节的定理却会给出其导出范畴的等价。
-
-\subsection{导出 Morita 理论的基本版本}
-\label{b4:subsec:2003:03}
-
-令 \(T\) 为倾斜复形，选择有界有限生成投射模型 \(P\)，并令
-\[
- E=\underline{\operatorname{End}}_R(P),\qquad
- B=\operatorname{End}_{D(R\text{-}\mathrm{Mod})}(T)^{\mathrm{op}}.
-\]
-倾斜条件恰好说 \(H^n(E)=0\) 对 \(n\ne0\) 成立，而 \(H^0(E)=B^{\mathrm{op}}\)。这一步把一个涉及所有移位的条件变为自同态 DG 代数的上同调消失。
-
-\begin{proposition}\label{b4:prop:dg-degree-zero-formality}
-设 \(k\) 为交换环，\(E\) 为 \(k\) 上的 DG 代数，且 \(H^n(E)=0\) 对所有 \(n\ne0\) 成立。令
-\[
- (\tau_{\le0}E)^n=
- \begin{cases}
- E^n,&n<0,\\
- \ker(\mathrm{d}:E^0\to E^1),&n=0,\\
- 0,&n>0.
- \end{cases}
-\]
-原微分和乘法使 \(\tau_{\le0}E\) 成为 DG 子代数，而且包含映射与零次取商给出 DG 代数拟同构
-\[
- E\ \longleftarrow\ \tau_{\le0}E\ \longrightarrow\ H^0(E).
-\]
-\end{proposition}
-\begin{proof}
-非正次数在乘法下封闭；两零次余圈之积仍为余圈。来自 \(E^{-1}\) 的微分落在零次余圈中，故这是子复形。到 \(H^0(E)\) 的映射在负次取零，在零次把余圈取模余边。负次元素的乘积不会产生正次或零次项；两个零次余圈的乘法与取商相容，所以它是代数映射。包含映射在非正次上同调上为同构，而 \(E\) 正次上同调为零；取商映射在零次为同构，两边其他次数上同调均为零。因此两映射都是拟同构。
-\end{proof}
-
-注意这里得到的是通过第三个 DG 代数连接的两个拟同构，未必有直接代数映射 \(H^0(E)\to E\)。任选每个同伦类的复形映射代表，通常不能同时保持乘法。正是这一点阻止了把普通 Morita 理论中的论证逐字照搬。
-
-\begin{theorem}[导出 Morita 定理的倾斜版本]\label{b4:thm:derived-morita-tilting}
-设 \(k\) 为域，\(R\) 为含幺结合 \(k\)-代数，\(T\in\operatorname{Perf}(R)\) 为倾斜复形，并令
-\[
- B=\operatorname{End}_{D(R\text{-}\mathrm{Mod})}(T)^{\mathrm{op}}.
-\]
-则存在 \(R\)-\(B\) 双模复形 \(X\)，作为左 \(R\)-模复形时在导出范畴中同构于 \(T\)，使
-\[
- X\otimes_B^{\mathbf L}-:
- D(B\text{-}\mathrm{Mod})\ \longrightarrow\ D(R\text{-}\mathrm{Mod})
-\]
-成为 \(k\)-线性三角等价，且把 \(B\) 送到 \(T\)。此等价限制为 \(\operatorname{Perf}(B)\simeq\operatorname{Perf}(R)\)。
+这两个对象及其核、余核映射由泛性质唯一确定，不依赖锥的选择。
 \end{theorem}
-
-这一定理是\term[daochuMoritalilun]{导出 Morita 定理}[derived Morita theorem]的倾斜版本。下面通过 DG 自同态代数说明双模及等价的构造；所用文献主要采用右模，本节使用左模，因此自同态代数取反。
-
-\begin{proofsketch}
-取 \(T\) 的有界有限生成投射模型 \(P\)，记
-\(C=\underline{\operatorname{End}}_R(P)^{\mathrm{op}}\)。这里反代数按分次符号理解：若 \(e\) 是次数 \(a\) 的自同态，右作用定义为
-\(p\cdot e^{\mathrm{op}}=(-1)^{a|p|}e(p)\)，与带符号的反乘法相容。于是 \(P\) 是严格的左 \(R\)、右 DG \(C\) 双模，不必先为 \(B\) 的同伦类选择乘法相容的代表。
-
-对 DG \(C\) 模使用半自由消解，可以构造伴随
+\begin{proof}
+心是满的加性子范畴，因为\cref{b4:prop:t-orthogonals-extensions}保证有限直和仍在心中。旋转三角 \(Y\to C\to X[1]\) 表明 \(C\in\mathcal D^{\ge-1}\cap\mathcal D^{\le0}\)。令
 \[
- F=P\otimes_C^{\mathbf L}-:D(C)\rightleftarrows
- D(R\text{-}\mathrm{Mod}):U=\mathbf R\operatorname{Hom}_R(P,-).
+ K=(\tau^{\le-1}C)[-1],\qquad Q=\tau^{\ge0}C.
 \]
-因为 \(P\) 有界且逐项有限生成投射，\(U\) 可用普通 Hom 复形计算，并保持任意直和；\(F\) 也保持直和。伴随单位在自由 DG 模 \(C\) 上是自同态复形的恒等比较，故为同构。单位为同构的对象组成一个对三角和任意直和封闭的子范畴。半自由消解把每个 DG 模写成自由移位的逐层锥及望远镜，所以该子范畴等于整个 \(D(C)\)，即 \(F\) 全忠实。
+两者都在心中，有截断三角 \(K[1]\to C\to Q\to K[2]\)。其与原三角给出 \(K\to X\) 及 \(Y\to Q\)。
 
-伴随余单位在 \(P=F(C)\) 上也为同构；其同构对象同样对三角和直和封闭。倾斜条件使 \(R\in\operatorname{thick}(P)\)，而普通环的半自由消解说明从 \(R\) 出发再允许任意直和和三角便得到全部 \(D(R\text{-}\mathrm{Mod})\)。因此余单位处处为同构，\(F\) 是等价。这里厚生成不仅保证有限对象能够恢复，也使所有无界对象处于等价的本质像中。
-
-自身态射消失使 \(H^{\ne0}(C)=0\)、\(H^0(C)=B\)。由\cref{b4:prop:dg-degree-zero-formality}，令 \(A=\tau_{\le0}C\)，便有 DG 代数拟同构
+对心中任意 \(T\)，在原三角上取 \(\operatorname{Hom}(T,-)\)，得到
 \[
- C\longleftarrow A\longrightarrow B.
+ 0\longrightarrow\operatorname{Hom}(T,C[-1])
+ \longrightarrow\operatorname{Hom}(T,X)
+ \longrightarrow\operatorname{Hom}(T,Y),
 \]
-每条拟同构都诱导导出模范畴的等价：在自由模上，延标量与限制标量的伴随单位是这条拟同构；再用半自由消解及直和、三角封闭性推广到全部对象。合成上述等价，便得到 \(D(B)\simeq D(R)\)。
+首项前的 \(\operatorname{Hom}(T,Y[-1])\) 为零。截断三角及 \(Q[-1],Q[-2]\) 的正次数条件又给出 \(\operatorname{Hom}(T,K)\simeq\operatorname{Hom}(T,C[-1])\)。所以 \(K\to X\) 是核。对偶地，\(\operatorname{Hom}(Q,T)\simeq\operatorname{Hom}(C,T)\)，而 \(\operatorname{Hom}(X[1],T)=0\)，因此 \(Y\to Q\) 是余核。
 
-严格双模也由这一步得到。把 \(P\) 限制为 \(R\)-\(A\) 双模，取它在 DG 代数 \(R\otimes_kA^{\mathrm{op}}\) 上的半自由替换 \(Q\to P\)，并令
+还须核对余像与像。对复合 \(Y\to C\to Q\) 应用八面体公理，取该复合的锥为 \(I[1]\)，得到相容的两个好三角
 \[
- X=Q\otimes_A B.
+ K\longrightarrow X\longrightarrow I\longrightarrow K[1],
+ \qquad
+ I\longrightarrow Y\longrightarrow Q\longrightarrow I[1],
 \]
-域上 \(R\) 的底向量空间自由，所以这个替换限制为右 \(A\) 模时 K-平坦。\(A\to B\) 拟同构因而给出 \(Q\simeq X\)，故 \(X\simeq P\simeq T\) 作为左 \(R\) 模成立。导出张量的结合律把合成等价识别为 \(X\otimes_B^{\mathbf L}-\)。它把 \(B\) 送到 \(T\)，从而把 \(\operatorname{thick}(B)\) 送到 \(\operatorname{thick}(T)\)；\cref{b4:thm:perfect-compact-thick}给出完美子范畴上的限制。
+其中 \(X\to I\to Y\) 的复合就是 \(f\)。第一三角使 \(I\in\mathcal D^{\le0}\)，第二三角使 \(I\in\mathcal D^{\ge0}\)，故 \(I\) 在心中。在第一三角上向任意心对象取 Hom，\(\operatorname{Hom}(K[1],T)=0\) 表明 \(X\to I\) 是 \(K\to X\) 的余核。在第二三角上从心对象取 Hom，\(\operatorname{Hom}(T,Q[-1])=0\) 表明 \(I\to Y\) 是 \(Y\to Q\) 的核。于是 \(I\) 同时给出余像与像，且它们间的典范态射是同构。这验证了交换范畴的全部条件。
+\end{proof}
 
-本概要省略了 DG 半自由消解的逐次添加生成元、双模替换的比较及导出伴随的链级相容性。消解与双模张量分别见\cite[Sections 3.1 and 6.1--6.3]{Keller1994DerivingDG}，紧生成下的等价判据及倾斜实现见\cite[Sections 4.2, 8.2 and 9.1--9.2]{Keller1994DerivingDG}；普通代数的同一定理见\cite[Section 4, Theorem (Rickard)]{Keller1998AbelianDerived}。这些构造把同伦意义的自同态作用换成严格双模作用，不能用逐项任取代表代替。
-\end{proofsketch}
+上述八面体只用于比较两个实际构造出的三角：一边先去掉 \(f\) 的核，另一边先去掉它的余核。它所产生的共同对象 \(I\) 才使两种做法一致。原始证明可对照\cite[Proposition 1.2.4; Théorème 1.3.6]{BBD1982FaisceauxPervers}。
 
-把定理用于\cref{b4:exm:a3-tilting-object}，便得到 \(k(1\to2\to3)\) 与 \(k(1\to2\leftarrow3)\) 的导出等价。虽然它们的模范畴不同，允许使用复形后，原来的投射生成元可以由 \(P_1\oplus P_2\oplus S_2\) 代替；\eqref{b4:eq:a3-simple-resolution}正是恢复缺少的投射模 \(P_3\) 的计算。
+\begin{theorem}\label{b4:thm:t-cohomology-exact}
+设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴，心为 \(\mathcal H=\mathcal D^{\le0}\cap\mathcal D^{\ge0}\)，\(H_t^n(X)=(\tau^{\ge n}\tau^{\le n}X)[n]\)。函子 \(H_t^0:\mathcal D\to\mathcal H\) 是上同调函子：每个好三角 \(X\to Y\to Z\xrightarrow{w}X[1]\) 诱导自然长正合列
+\[
+ \cdots\longrightarrow H_t^n(X)\longrightarrow H_t^n(Y)
+ \longrightarrow H_t^n(Z)\xrightarrow{H_t^n(w)}H_t^{n+1}(X)
+ \longrightarrow\cdots.
+\]
+\end{theorem}
+\begin{proof}
+只须证明 \(H_t^0(X)\to H_t^0(Y)\to H_t^0(Z)\) 正合，再平移并旋转三角。
+
+先设三项都在 \(\mathcal D^{\le0}\)。对 \(T\in\mathcal H\)，伴随给出 \(\operatorname{Hom}(U,T)=\operatorname{Hom}(H_t^0(U),T)\)，其中 \(U=X,Y,Z\)。Hom 长正合列因 \(\operatorname{Hom}(X[1],T)=0\) 而给出
+\[
+ 0\longrightarrow\operatorname{Hom}(H_t^0Z,T)
+ \longrightarrow\operatorname{Hom}(H_t^0Y,T)
+ \longrightarrow\operatorname{Hom}(H_t^0X,T).
+\]
+这正是余核泛性质，所以 \(H_t^0X\to H_t^0Y\to H_t^0Z\to0\) 正合。
+
+再设仅有 \(X\in\mathcal D^{\le0}\)。对 \(T\in\mathcal D^{\ge1}\)，正交性使 \(\operatorname{Hom}(Z,T)\to\operatorname{Hom}(Y,T)\) 同构。因此 \(\tau^{\ge1}Y\to\tau^{\ge1}Z\) 是同构。把 \(Y\to Z\to\tau^{\ge1}Z\) 代入八面体公理，其余两锥分别是截断的低次部分的移位，得到好三角
+\[
+ X\longrightarrow\tau^{\le0}Y\longrightarrow\tau^{\le0}Z\longrightarrow X[1].
+\]
+应用前一情形得到 \(H_t^0X\to H_t^0Y\to H_t^0Z\to0\) 正合。
+
+再证另一端的正合性。若三项都在 \(\mathcal D^{\ge0}\)，对 \(T\in\mathcal H\)，截断伴随给出
+\(\operatorname{Hom}(T,U)\simeq\operatorname{Hom}(T,H_t^0U)\)，其中 \(U=X,Y,Z\)。又 \(Z[-1]\in\mathcal D^{\ge1}\)，故 \(\operatorname{Hom}(T,Z[-1])=0\)。Hom 长正合列于是给出
+\[
+0\longrightarrow\operatorname{Hom}(T,H_t^0X)
+\longrightarrow\operatorname{Hom}(T,H_t^0Y)
+\longrightarrow\operatorname{Hom}(T,H_t^0Z).
+\]
+这正是核泛性质，所以 \(0\to H_t^0X\to H_t^0Y\to H_t^0Z\) 正合。
+
+若仅有 \(Z\in\mathcal D^{\ge0}\)，则对 \(T\in\mathcal D^{\le-1}\)，Hom 长正合列与正交性给出
+\(\operatorname{Hom}(T,X)\xrightarrow{\sim}\operatorname{Hom}(T,Y)\)：相邻两项是 \(\operatorname{Hom}(T,Z[-1])\) 和 \(\operatorname{Hom}(T,Z)\)，均为零。因此 \(\tau^{\le-1}X\to\tau^{\le-1}Y\) 是同构。令 \(L=\tau^{\le-1}X\)，把复合 \(L\to X\to Y\) 代入八面体公理。前两个锥分别为 \(\tau^{\ge0}X\) 和 \(Z\)，复合的锥由上述低次截断同构识别为 \(\tau^{\ge0}Y\)，所以得到好三角
+\[
+\tau^{\ge0}X\longrightarrow\tau^{\ge0}Y
+\longrightarrow Z\longrightarrow(\tau^{\ge0}X)[1].
+\]
+其三项都在 \(\mathcal D^{\ge0}\)，且截掉负次部分不改变零次上同调。前一情形便给出 \(0\to H_t^0X\to H_t^0Y\to H_t^0Z\) 正合。
+
+一般情形下，令 \(A=\tau^{\le0}X\)、\(B=\tau^{\ge1}X\)。对 \(A\to X\to Y\) 应用八面体，得到三角 \(A\to Y\to U\) 与 \(U\to Z\to B[1]\)。第一三角给出 \(H_t^0X\to H_t^0Y\to H_t^0U\to0\) 正合；因 \(B[1]\in\mathcal D^{\ge0}\)，第二三角给出单态射 \(H_t^0U\to H_t^0Z\)。复合后正是所需的三项正合性。连接映射及其自然性来自原三角的态射，因而各次正合列可接成所述长列。
+\end{proof}
+
+\subsection{短正合列与三角的关系}
+\label{b4:subsec:1903:02}
+
+\begin{proposition}\label{b4:prop:heart-exact-triangles}
+设 \(\mathcal H\) 为三角范畴 \(\mathcal D\) 中一个 t-结构的心。心中的列 \(0\to A\xrightarrow{i}E\xrightarrow{p}B\to0\) 短正合，当且仅当存在 \(\delta:B\to A[1]\) 使 \(A\xrightarrow{i}E\xrightarrow{p}B\xrightarrow{\delta}A[1]\) 为好三角。
+\end{proposition}
+\begin{proof}
+若三角存在，\cref{b4:thm:t-cohomology-exact}的长正合列因三项都在心中而成为所述短列。反过来，将 \(i\) 完成为三角 \(A\to E\to C\)。\cref{b4:thm:heart-abelian}给出 \(H_t^{-1}(C)=\ker i=0\) 和 \(H_t^0(C)=\operatorname{coker}i=B\)。又 \(C\in\mathcal D^{[-1,0]}\)，故其截断三角直接给出 \(C\simeq B\)，并把原来的余核映射识别为 \(p\)。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:heart-ext1}
+设 \(\mathcal D\) 为局部小三角范畴，\(\mathcal H\) 为 \(\mathcal D\) 上一个 t-结构的心，\(A,B\in\mathcal H\)。心中的一次 Yoneda 扩张与环境中的移位态射自然对应：
+\[
+ \operatorname{YExt}_{\mathcal H}^1(B,A)
+       \simeq\operatorname{Hom}_{\mathcal D}(B,A[1]).
+\]
+左边采用短正合列的等价类与 Baer 和；若心有足够内射或投射对象，它就是通常的一次 Ext。
+\end{proposition}
+\begin{proof}
+短正合列对应前一命题中的连接映射。先证连接映射由短列唯一确定。若同一短列有两个好三角结构，其连接映射为 \(\delta_1,\delta_2:B\to A[1]\)，则对前两项取 \(1_A,1_E\)，(TR3) 给出第三项 \(c:B\to B\)，满足
+\[
+cp=p,\qquad \delta_2c=\delta_1.
+\]
+\(c\) 是心中的态射，而 \(p\) 是心中的满态射，所以第一式迫使 \(c=1_B\)，第二式便给出 \(\delta_1=\delta_2\)。若两个短列等价，对 \(A\) 取恒等、对中间项取该等价同构，仍用 (TR3) 和源短列的满态射 \(p\) 得到第三项为 \(1_B\)。因此连接映射在扩张等价类上良定义。
+
+反之，给定 \(\delta:B\to A[1]\)，将它完成为好三角并逆旋转两次，得到 \(A\to E\to B\xrightarrow{\delta}A[1]\)。心对扩张封闭，故 \(E\in\mathcal H\)，前一命题给出短正合列。若两个三角的连接映射同为 \(\delta\)，将它们各旋转两次，写成
+\[
+B\xrightarrow{\delta}A[1]\xrightarrow{-i_j[1]}E_j[1]
+\xrightarrow{-p_j[1]}B[1],\qquad j=1,2.
+\]
+对前两项取 \(1_B,1_{A[1]}\)，(TR3) 补出 \(h:E_1[1]\to E_2[1]\)。由\cref{b4:lem:pretriangle-hom}，三角态射的两个分量同构就使第三个分量同构；该结论正是对 Hom 长正合列应用五引理所得。因此 \(h\) 为同构。把三角态射旋转回来，得到 \(h[-1]:E_1\to E_2\)，满足
+\[
+h[-1]i_1=i_2,\qquad p_2h[-1]=p_1.
+\]
+它在两端 \(A,B\) 上保持恒等，故两个扩张等价。两种操作由此互逆。
+
+对端点的态射取推出或拉回，三角态射的最后方块表明连接映射相应地作后复合或前复合。直和扩张对应连接映射的直和。Baer 和先沿 \(B\to B\oplus B\) 拉回，再沿 \(A\oplus A\to A\) 推出，因此对应于两个连接映射相加。这也证明群结构及对两端的自然性。
+\end{proof}
+
+这里把扩张送到三角的连接箭头 \(\delta\)，与\secref{b4:sec:1704}经内射消解识别一次 Ext 的约定一致。用其他符号约定书写锥时，仍须同时核对连接箭头与消解中的余圈代表。
+
+\ProseParagraphBreak
+高阶扩张可以把一次扩张拼接成链，再把连接态射移位后复合，从而得到到 \(\operatorname{Hom}_{\mathcal D}(B,A[n])\) 的比较映射；它在扩张态射下不变，因为每个方块的连接态射自然。一次的双射不能直接推广为每个 \(n\) 的双射。\secref{b4:sec:1905}将给出二次比较失效的具体例子。
+
+\subsection{标准心与原交换范畴}
+\label{b4:subsec:1903:03}
+
+\begin{proposition}\label{b4:prop:standard-heart-equivalence}
+设 \(\mathcal A\) 为交换范畴。把对象视为集中于零次的复形，得到 \(\mathcal A\) 到 \(D(\mathcal A)\) 标准心的正合等价。
+\end{proposition}
+\begin{proof}
+若 \(X\) 只有 \(H^0\) 可能非零，截断给出拟同构屋顶 \(X\leftarrow\tau^{\le0}X\to H^0(X)[0]\)，所以该函子本质满。对 \(A,B\in\mathcal A\)，用屋顶 \(A\leftarrow Z\to B\) 表示导出态射；先以 \(\tau^{\le0}Z\) 细化，它到 \(A,B\) 的映射都经 \(H^0(Z)[0]\) 分解，且 \(H^0(Z)\to A\) 是同构。因此态射唯一来自 \(A\to B\)。唯一性也可直接对该屋顶取 \(H^0\) 看出。这证明全忠实。最后，原范畴的短正合列给出好三角，再由\cref{b4:prop:heart-exact-triangles}成为心中短正合列，所以等价正合。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:nondegenerate-cohomology-conservative}
+设 \(\mathcal D\) 为带非退化 t-结构的三角范畴，\(H_t^n\) 为该 t-结构的上同调函子。若对象 \(X\in\mathcal D\) 满足 \(H_t^n(X)=0\) 对所有整数 \(n\) 成立，则 \(X=0\)；若态射 \(f:X\to Y\) 在所有 \(H_t^n\) 上诱导同构，则 \(f\) 是同构。
+\end{proposition}
+\begin{proof}
+先设 \(X\in\mathcal D^{\le0}\)。相邻截断三角和各次上同调的消失依次使 \(X\in\mathcal D^{\le-1},\mathcal D^{\le-2},\ldots\)，故非退化性给出 \(X=0\)。对 \(X\in\mathcal D^{\ge1}\) 对偶成立。一般 \(X\) 的 \(\tau^{\le0}X\) 与 \(\tau^{\ge1}X\) 仍有所有上同调为零，分别用前两种情形即可。若 \(f\) 诱导全部上同调同构，其锥由长正合列知全部上同调为零，因而锥为零，\(f\) 为同构。
+\end{proof}
+
+“检测同构”不等于“用所有上同调恢复每个态射”。例如非零的 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z)\) 给出非零导出态射 \(\mathbb Z/2\to\mathbb Z[1]\)，但它在每一个相同次数的普通上同调之间都诱导零映射。

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 24.3 Proj 构造
-% 纲要位置：计划纲要.md，第 2263 行。
+% 纲要位置：计划纲要.md，第 2748 行。
 
 \section{Proj 构造}
 \label{b3:sec:2403}
@@ -8,12 +8,11 @@
 齐次坐标表示一个方向，局部图中的函数因此必须由相同次数的齐次元相除得到。取局部化环的零次部分实现这一要求，扭曲层则记录不同次数之间的转换。
 
 
-% 纲要要点（供目录核对）：
-%
-% * 齐次素理想
-% * 标准开集与射影空间
-% * 分次模和射影几何的联系
-%
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 齐次素理想、齐次局部化及次数零部分的素理想对应
+% * 标准开集与射影空间；闭子概形及有限生成标准分次下的饱和化
+% * 分次模与扭曲层；射影直线两图的坐标、过渡函数与全局截面
+% * Spec 与 Proj 的局部化、理想和全局截面区别
 
 \subsection{齐次素理想}
 \label{b3:subsec:2403:01}
@@ -33,7 +32,7 @@ S_+\not\subseteq\mathfrak p\,\}.
 零理想与单位理想分别给全空间和空集；理想和及乘积分别对应闭集的任意交和有限并，证明与素谱相同。各 \(D_+(f)\) 构成开集基，且 \(D_+(f)\cap D_+(g)=D_+(fg)\)。排除 \(S_+\) 的条件恰好保证每个点至少属于其中一个基本开集。
 
 \ProseParagraphBreak
-在 \(k[x_0,\ldots,x_r]\) 的标准分次下，非零向量 \(a=(a_0,\ldots,a_r)\in k^{r+1}\) 给出齐次素理想
+设 \(k\) 为域。在 \(k[x_0,\ldots,x_r]\) 的标准分次下，非零向量 \(a=(a_0,\ldots,a_r)\in k^{r+1}\) 给出齐次素理想
 \[
 \ker\bigl(k[x_0,\ldots,x_r]\longrightarrow k[t],\
 x_i\longmapsto a_it\bigr).
@@ -43,31 +42,56 @@ x_i\longmapsto a_it\bigr).
 \subsection{标准开集与射影空间}
 \label{b3:subsec:2403:02}
 
+在倒置正次数齐次元之后，任一齐次元的适当幂都能乘以被倒置元素的整数次幂而成为零次元。这使零次部分足以确定齐次素理想，也解释了仿射图为何使用零次局部化。
+
+\begin{lemma}[齐次素理想的零次对应]\label{b3:lem:proj-homogeneous-prime-correspondence}
+设 \(S=\bigoplus_{n\ge0}S_n\) 为交换含幺正分次环，\(f\in S_d\)、\(d>0\) 为齐次元。记 \(F=S_f\)、\(B=F_0\)。则
+\[
+\mathfrak p\longmapsto(\mathfrak pS_f)_0
+\]
+给出 \(S\) 中不含 \(f\) 的齐次素理想与 \(B\) 的素理想之间的双射。
+\end{lemma}
+\begin{proof}
+局部化把 \(S\) 中不含 \(f\) 的齐次素理想与 \(F\) 的齐次素理想对应；\(F\) 具有 \(\mathbb Z\) 分次，且 \(f\) 是次数 \(d\) 的单位。对 \(\mathfrak q\in\operatorname{Spec}B\)，零次元素的局部化和取商仍保持分次，所以在 \(B\) 中收缩为 \(\mathfrak q\) 的齐次素理想，与
+\[
+C=F\otimes_B\kappa(\mathfrak q)\cong F_{B\setminus\mathfrak q}/\mathfrak qF_{B\setminus\mathfrak q}
+\]
+的齐次素理想对应。这里只需证明 \(C\) 恰有一个齐次素理想。其零次部分为域 \(\kappa(\mathfrak q)\)，而 \(f\) 仍为次数 \(d\) 的单位。
+
+若 \(c\in C_e\) 齐次，则 \(c^df^{-e}\in C_0\)。若这个零次元非零，它是单位，从而 \(c\) 也是单位；若为零，则 \(c^d=0\)。因此每个齐次元或者可逆，或者幂零。令 \(J\) 为齐次幂零元生成的理想。我们有
+\[
+J=\sqrt{(0)},
+\]
+即 \(C\) 的幂零根。确实，\(J\subseteq\sqrt{(0)}\)；反过来，若 \(z\) 幂零，则 \(z\) 的最高非零齐次分量也幂零，因为 \(z^N\) 的最高次分量是该分量的 \(N\) 次幂。减去这个分量后仍为幂零元；对有限个齐次分量逐次重复，便得到 \(z\in J\)。这个论证不要求环 Noether。
+
+\(J\) 是齐次理想，且 \(J\cap C_0=0\)，所以 \(C/J\ne0\)。在 \(C/J\) 中，每个非零齐次元都是单位：这样的分量可取齐次代表，而不在 \(J\) 中的齐次元不能幂零，故可逆。于是两个非零元素的最高非零齐次分量之积非零，商环是整环。因而 \(J\) 是素理想。任何齐次素理想都包含幂零根，又不能包含齐次单位；上述二择性遂迫使它等于 \(J\)。将 \(J\) 沿剩余域映射和局部化收缩，就得到唯一的、在 \(B\) 中收缩为 \(\mathfrak q\) 的齐次素理想。
+\end{proof}
+
 \begin{theorem}\label{b3:thm:proj-affine-charts}
 设 \(S\) 为交换正分次环，\(f\in S_d\)、\(d>0\) 为齐次元，记 \(S_{(f)}=(S_f)_0\)。则
 \[
 D_+(f)\cong\operatorname{Spec}S_{(f)}.
 \]
-这些仿射结构在交集上相容，因而唯一确定 \(\operatorname{Proj}S\) 的概形结构。这里 \(S_{(f)}\) 由分式 \(a/f^m\)、\(a\in S_{md}\) 组成，绝不能用整个 \(S_f\) 代替它。
+这些仿射结构在交集上相容，因而唯一确定 \(\operatorname{Proj}S\) 的概形结构。这里 \(S_{(f)}\) 由分式 \(a/f^m\)、\(a\in S_{md}\) 组成，分子与分母的次数相同。
 \end{theorem}
 \begin{proof}
-从 \(\mathfrak p\in D_+(f)\) 取 \((\mathfrak pS_f)_0\) 得 \(S_{(f)}\) 的素理想。说明逆向的存在唯一性时，令 \(B=(S_f)_0\)，取 \(\mathfrak q\in\operatorname{Spec}B\)，考察分次环
+由\cref{b3:lem:proj-homogeneous-prime-correspondence}，映射
 \[
-C=S_f\otimes_B\kappa(\mathfrak q).
+\mathfrak p\longmapsto(\mathfrak pS_f)_0
 \]
-它的零次部分为 \(\kappa(\mathfrak q)\)，且 \(f\) 仍是次数 \(d\) 的单位。任一齐次元 \(c\in C_e\) 满足 \(c^df^{-e}\in C_0\)。若此元素非零，则 \(c\) 可逆；若为零，则 \(c\) 幂零。因此所有齐次非单位均幂零，它们生成的齐次理想 \(J\) 是幂零元所成的理想。商 \(C/J\) 中每个非零齐次元可逆，故它是整环：两个非零元素的最高非零齐次分量之积非零。因此 \(J\) 是素理想，也是唯一的齐次素理想。沿局部化及剩余域映射收缩 \(J\)，得到唯一避开 \(f\)、且在 \(B\) 中收缩为 \(\mathfrak q\) 的齐次素理想。
+给出 \(D_+(f)\) 与 \(\operatorname{Spec}S_{(f)}\) 的双射。若 \(g\in S_e\)、\(e>0\) 齐次，则 \(g\notin\mathfrak p\) 等价于 \(g^d/f^e\notin(\mathfrak pS_f)_0\)。于是 \(D_+(f)\) 中的基本开集 \(D_+(fg)\) 对应 \(S_{(f)}\) 的基本开集 \(D(g^d/f^e)\)。这些集合也给出右侧的开集基：对任意 \(a/f^m\in S_{(f)}\)，若 \(m>0\)，相应的 \(a^d/f^{md}\) 正是 \((a/f^m)^d\)，二者定义同一个基本开集；若 \(m=0\)，可把 \(a\) 改写为 \((af)/f\)。因此得到同胚。
 
-这建立了双射。若 \(g\in S_e\)，则在此对应下，\(g\notin\mathfrak p\) 等价于 \(g^d/f^e\notin\mathfrak q\)。于是基本开集 \(D_+(fg)\) 对应 \(B\) 的基本开集 \(D(g^d/f^e)\)，得到同胚。
-
-在该交集上，局部化环满足
+在交集上，局部化环满足
 \[
-(S_{(f)})_{g^d/f^e}\cong (S_{fg})_0.
+(S_{(f)})_{g^d/f^e}\cong(S_{fg})_0.
 \]
-确实，在 \(S_f\) 中把 \(g^d/f^e\) 变成单位等价于把 \(g\) 变成单位；被倒置的元素次数为零，取零次部分与这次局部化交换。同样从 \(g\) 一侧得到相同环。三重交集上的映射均为分式的限制，所以满足黏合条件。上一节的概形黏合构造给出结构层，且在所有仿射块上的指定限制决定其唯一性。
+确实，在 \(S_f\) 中把 \(g^d/f^e\) 变成单位等价于把 \(g\) 变成单位；被倒置的元素次数为零，取零次部分与这次局部化交换。同样从 \(g\) 一侧得到相同环。三重交集上的映射都是分式的限制，故满足黏合条件。上一节的概形黏合构造给出结构层，而它在这些仿射块上的指定限制决定其唯一性。
 \end{proof}
 
+Proj 的一般构造可对照\cite[Chapter II, Proposition 2.5, pp. 76--77]{Hartshorne1977}。
+
 \begin{definition}\label{b3:def:projective-space}
-设 \(A\) 为交换环，\(r\ge0\)，多项式环 \(A[x_0,\ldots,x_r]\) 中各变量次数为一。概形
+设 \(A\) 为交换环，\(r\ge0\) 为整数，多项式环 \(A[x_0,\ldots,x_r]\) 中各变量次数为一。概形
 \[
 \mathbb P_A^r=\operatorname{Proj}A[x_0,\ldots,x_r]
 \]
@@ -84,7 +108,28 @@ A[x_0/x_i,\ldots,\widehat{x_i/x_i},\ldots,x_r/x_i]
 
 \ProseParagraphBreak
 若 \(I\subseteq S\) 为齐次理想，则 \(\operatorname{Proj}(S/I)\) 在每张图上由
-\((S_f)_0\rightarrow((S/I)_f)_0\) 给出商环，因此是 \(\operatorname{Proj}S\) 的闭子概形。齐次方程由此不仅规定闭点的零集，也规定其上的商结构。Proj 的一般构造可对照\cite[Chapter II, Proposition 2.5, pp. 77--78]{Hartshorne1977}。
+\((S_f)_0\rightarrow((S/I)_f)_0\) 给出商环，因此是 \(\operatorname{Proj}S\) 的闭子概形。齐次方程由此不仅规定闭点的零集，也规定其上的商结构。与仿射闭子概形不同，同一个射影闭子概形可能由不同的齐次理想给出：被无关理想 \(S_+\) 的某个幂零化的分次部分，在每张 \(D_+(f)\) 上都会消失。在有限生成的标准分次下，这个差异可由饱和化精确描述。
+
+\begin{proposition}[射影闭子概形与饱和化]\label{b3:prop:proj-saturation-standard}
+设 \(S\) 为交换含幺正分次环，由有限个次数一元素 \(x_0,\ldots,x_r\) 作为 \(S_0\) 代数生成，并记 \(S_+=(x_0,\ldots,x_r)\)。对齐次理想 \(I\subseteq S\)，定义其 \(S_+\)-饱和化为
+\[
+I^{\mathrm{sat}}=I:S_+^\infty
+=\bigcup_{N\ge0}\{\,a\in S:S_+^Na\subseteq I\,\}.
+\]
+则 \(I\) 与 \(I^{\mathrm{sat}}\) 给出 \(\operatorname{Proj}S\) 内同一个闭子概形。两个齐次理想 \(I,J\) 给出其中同一个闭子概形，当且仅当 \(I^{\mathrm{sat}}=J^{\mathrm{sat}}\)。
+\end{proposition}
+\begin{proof}
+先对任意齐次理想 \(I\) 说明
+\[
+I^{\mathrm{sat}}
+=\bigcap_{i=0}^r(I:x_i^\infty).
+\]
+左侧的元素显然属于右侧。若 \(a\) 属于右侧，分别取正整数 \(N_i\)，使 \(x_i^{N_i}a\in I\)。取 \(N>\sum_i(N_i-1)\)，则每个由 \(x_0,\ldots,x_r\) 组成的 \(N\) 次乘积都含某个 \(x_i^{N_i}\)，所以 \(S_+^Na\subseteq I\)。这证明反向包含，也说明饱和化恰由各 \(I_{x_i}\) 的收缩确定。
+
+若 \(a\in I^{\mathrm{sat}}\)，则在每个 \(S_{x_i}\) 中有 \(a\in I_{x_i}\)，因而 \((I^{\mathrm{sat}})_{x_i}=I_{x_i}\)。取零次部分后，两理想在每张图上给出相同的商环，故给出同一个闭子概形。
+
+若 \(I,J\) 给出同一个闭子概形，则每张图中的局部理想 \((I_{x_i})_0\) 与 \((J_{x_i})_0\) 相同。对齐次元 \(a\in I_e\)，次数一条件使 \(a/x_i^e\) 属于 \((I_{x_i})_0\)，于是 \(a\in J_{x_i}\)。对所有齐次分量应用此论证，得到 \(I_{x_i}\subseteq J_{x_i}\)；交换两理想可得相等。由刚才的收缩公式，\(I^{\mathrm{sat}}=J^{\mathrm{sat}}\)。反向由二者均与自己的饱和化给出相同闭子概形立即得到。
+\end{proof}
 
 \subsection{分次模与射影几何}
 \label{b3:subsec:2403:03}
@@ -112,11 +157,46 @@ A[x_0/x_i,\ldots,\widehat{x_i/x_i},\ldots,x_r/x_i]
 这些同构在交集上都由乘法给出，所以黏合。取 \(M=S(a)\) 得最后一式。
 \end{proof}
 
-在 \(\mathbb P_k^1\) 上，令 \(t=x_1/x_0\)，两张图中的生成元 \(e_0=x_0^n\)、\(e_1=x_1^n\) 满足 \(e_1=t^ne_0\)。全局截面因而对应
-\[
-a(t)=t^n\cdot b(t^{-1}),\qquad a\in k[t],\quad b\in k[t^{-1}].
-\]
-当 \(n\ge0\) 时，这正是次数不超过 \(n\) 的多项式，维数为 \(n+1\)；当 \(n<0\) 时只有零截面。特别地，\(\mathcal O(-1)\) 在每点局部自由，却没有非零全局截面，故不可能同构于结构层。两张仿射图已经显示局部平凡与全局平凡的区别；下一节的 Čech 比较还将用于计算 \(H^1(\mathbb P_k^1,\mathcal O(n))\)。
+设 \(k\) 为域，\(n\in\mathbb Z\)。在 \(\mathbb P_k^1\) 上，令 \(t=x_1/x_0\)、\(u=x_0/x_1\)。\cref{b3:tab:projective-line-twist-charts}列出 \(\mathcal O(n)\) 在两张仿射图中的局部基，及它们在交集上的关系。
+
+\begin{table}[htbp]
+\centering
+\caption{射影直线的两图与扭曲层局部基}
+\label{b3:tab:projective-line-twist-charts}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+开集 & 坐标环 & \(\mathcal O(n)\) 的局部基与过渡 \\
+\midrule
+\(U_0=D_+(x_0)\) & \(k[t]\) & \(e_0=x_0^n\) \\
+\(U_1=D_+(x_1)\) & \(k[u]\)，\(u=t^{-1}\) & \(e_1=x_1^n\) \\
+\(U_0\cap U_1\) & \(k[t,t^{-1}]\) & \(e_1=t^ne_0\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+以交集上的 \(e_0\) 为基，局部截面 \(a(t)e_0\) 与 \(b(t^{-1})e_1\) 的相容条件是 \(a(t)=t^n b(t^{-1})\)。因此全局截面是下列映射的核：
+\begin{equation}\label{b3:eq:projective-line-twist-cech-map}
+\begin{aligned}
+\delta_n:k[t]\oplus k[t^{-1}]&\longrightarrow k[t,t^{-1}],\\
+(a,b)&\longmapsto a-t^n b.
+\end{aligned}
+\end{equation}
+当 \(n\ge0\) 时，\(a\) 正是次数不超过 \(n\) 的多项式，截面空间的维数为 \(n+1\)；当 \(n<0\) 时只有零截面。特别地，\(\mathcal O(-1)\) 在每点局部自由，却没有非零全局截面，故不可能同构于结构层。两张仿射图已经显示局部平凡与全局平凡的区别；层上同调还将解释同一映射 \(\delta_n\) 的余核。
 
 \ProseParagraphBreak
-与仿射情形不同，\(M\mapsto\widetilde M\) 在 Proj 上不能由不带次数的全局截面反演。例如 \(S/S_+\) 在每个 \(D_+(f)\) 上局部化为零，故其伴随层为零，尽管这个分次模本身不为零。有限生成分次模的高次部分、全部扭曲截面与局部上同调之间有更细的关系；在使用这类对应前必须补入相应的有限性与分次假设。扭曲层的局部计算见\cite[Chapter II, Propositions 5.11--5.12, pp. 116--117]{Hartshorne1977}。
+与仿射情形不同，\(M\mapsto\widetilde M\) 在 Proj 上不能由不带次数的全局截面反演。例如 \(S/S_+\) 在每个 \(D_+(f)\) 上局部化为零，故其伴随层为零；当 \(S_0\ne0\) 时，这个分次模本身却不为零。\cref{b3:tab:spec-proj-sheaf-comparison}把这种信息损失与局部零次运算、闭子概形的饱和化放在一起比较；仿射列中的 \(M\) 是 \(A\) 模，射影列中的 \(M\) 是分次 \(S\) 模。扭曲层的局部计算见\cite[Chapter II, Propositions 5.11--5.12, pp. 116--117]{Hartshorne1977}。
+
+\begin{table}[htbp]
+\centering
+\caption[Spec 与 Proj 的模层比较]{Spec 与 Proj 的模层比较。射影列中关于理想的结论假设 \(S\) 为有限生成标准分次 \(S_0\) 代数。}
+\label{b3:tab:spec-proj-sheaf-comparison}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+比较对象 & \(\operatorname{Spec}A\) & \(\operatorname{Proj}S\) \\
+\midrule
+基本开集上的模 & \(M_f\) & \((M_f)_0\) \\
+闭子概形的理想 & 确定原理想 \(I\subseteq A\) & 确定 \(I^{\mathrm{sat}}\)，未必确定 \(I\) \\
+全局截面 & \(\Gamma(\operatorname{Spec}A,\widetilde M)\cong M\) & 一般不能恢复 \(M\)；\(S/S_+\) 对应零层 \\
+\bottomrule
+\end{tabularx}
+\end{table}

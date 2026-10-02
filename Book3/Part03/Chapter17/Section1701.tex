@@ -1,15 +1,16 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 17.1 局部极小自由消解
-% 纲要位置：计划纲要.md，第 2023 行。
+% 纲要位置：计划纲要.md，第 2490 行。
 
 \section{局部极小自由消解}
 \label{b3:sec:1701}
 
-局部环上的自由消解可以删去多余的生成元与关系，直到所有微分矩阵的项都落在极大理想中。约化到剩余域后，这些微分同时变成零，各阶自由秩便成为模自身的不变量。
+自由消解中的一个单位系数把相邻两项的两个基向量配成一对，可以通过换基把这一对单独拆出。极小自由消解排除这样的配对，要求所有正次微分的矩阵元素都落在局部环的极大理想中。约化到剩余域后，微分同时变成零，各阶自由秩便能从模的同调中读取。
 
-% 纲要内容：
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 极小生成元与极小微分
+% * 单位系数消去及有限长度、各项有限秩消解的可缩直和分解
 % * 剩余域张量后的简化
 % * Betti 数及终止性
 %
@@ -17,50 +18,91 @@
 \subsection{极小生成元与极小微分}
 \label{b3:subsec:1701:01}
 
-给有限生成模写一个自由满射并不困难；困难在于分清哪些生成元确有必要，以及关系的关系会不会一直出现。局部环的剩余域把这两个问题变成向量空间问题。下文的有限性都指有限生成，消解采用降次链复形记号。
+给有限生成模写一个自由满射并不困难；困难在于分清哪些生成元确有必要，以及关系的关系会不会一直出现。局部环的剩余域把这两个问题变成向量空间问题。本节的自由消解各项均为有限秩自由模，但不预设消解长度有限，仍采用降次链复形记号。
 
 \begin{definition}\label{b3:def:minimal-free-resolution}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模。若增广正合复形
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\) 为有限生成的 \(R\) 模。若增广正合复形
 \[
 \cdots\longrightarrow F_2\xrightarrow{\mathrm{d}_2}F_1
 \xrightarrow{\mathrm{d}_1}F_0\xrightarrow{\epsilon}M\longrightarrow0
 \]
-中每个 \(F_i\) 有限自由，且 \(\mathrm{d}_i(F_i)\subseteq\mathfrak mF_{i-1}\) 对 \(i\ge1\) 成立，则称它为 \(M\) 的\term[jixiao-ziyou-xiaojie]{极小自由消解}[minimal free resolution]。
+中每个 \(F_i\) 为有限秩自由模，且 \(\mathrm{d}_i(F_i)\subseteq\mathfrak mF_{i-1}\) 对 \(i\ge1\) 成立，则称它为 \(M\) 的\term[jixiao-ziyou-xiaojie]{极小自由消解}[minimal free resolution]。
 \end{definition}
 
-正合性与 \(\mathrm{d}_1(F_1)\subseteq\mathfrak mF_0\) 说明 \(F_0/\mathfrak mF_0\to M/\mathfrak mM\) 为同构。因此极小性也包括零次项没有多余生成元。矩阵表示下，条件就是所有正次微分的矩阵元素都属于 \(\mathfrak m\)。
+正合性与 \(\mathrm{d}_1(F_1)\subseteq\mathfrak mF_0\) 说明增广映射诱导同构
+\[
+F_0/\mathfrak mF_0\xrightarrow{\sim}M/\mathfrak mM.
+\]
+因此极小性也包括零次项没有多余生成元。矩阵表示下，条件就是所有正次微分的矩阵元素都属于 \(\mathfrak m\)。
 
-\begin{proposition}\label{b3:prop:minimal-resolution-existence}
-交换 Noether 局部环上的每个有限生成模都有极小自由消解。其每个自由项都是相应核的极小自由满射。
+\ProseParagraphBreak
+设 \(R\) 为交换环。若一个 \(R\) 模链复形的恒等链映射与零映射链同伦，则称它为\term[kesuo-fuxing]{可缩复形}[contractible complex]。相邻两次的恒等映射 \(R\xrightarrow{1}R\) 是最简单的例子；下面的命题说明它怎样从含单位系数的微分中出现。
+
+\begin{proposition}[单位系数的消去]\label{b3:prop:unit-cancellation}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(M\) 为有限生成的 \(R\) 模，\(F_\bullet\to M\) 为各项均为有限秩自由模的自由消解。若某个整数 \(j\ge1\) 的微分 \(\mathrm{d}_j:F_j\to F_{j-1}\) 的矩阵含单位系数，则通过换基有增广复形的直和分解
+\[
+F_\bullet\cong G_\bullet\oplus\mathbb D(j),\qquad
+\mathbb D(j):\quad0\longrightarrow R\xrightarrow{1}R\longrightarrow0,
+\]
+其中 \(\mathbb D(j)\) 的两个非零项位于次数 \(j,j-1\)，增广为零，它为可缩复形；\(G_\bullet\to M\) 仍为各项均为有限秩自由模的自由消解。由此，\(F_\bullet\) 极小等价于 \(F_\bullet\otimes_Rk\) 的全部正次微分为零，也等价于不能拆出任何 \(\mathbb D(j)\) 这样的非零直和项。
 \end{proposition}
 \begin{proof}
-取 \(M/\mathfrak mM\) 的一组 \(k\) 基并提升到 \(M\)。由\cref{b3:cor:local-generators}，提升构成极小生成组，给出 \(F_0\to M\)。核 \(K_1\) 有限，因为 \(R\) Noether。对 \(K_1\) 重复这一过程，得到 \(F_1\to K_1\)，再合成到 \(F_0\)。
+把单位系数交换到矩阵左上角，乘以其逆将它化为 \(1\)，再用可逆行、列变换清除同行、同列的其他系数，得到 \(\operatorname{diag}(1,D)\)。因此可选分解
+\[
+\begin{aligned}
+F_j&=Ru\oplus F'_j,& F_{j-1}&=Rv\oplus F'_{j-1},\\
+\mathrm{d}_j(u)&=v,& \mathrm{d}_j(F'_j)&\subseteq F'_{j-1}.
+\end{aligned}
+\]
+由 \(\mathrm{d}_j\mathrm{d}_{j+1}=0\)，\(\mathrm{d}_{j+1}\) 的像在 \(u\) 方向的坐标必须为零。若 \(j>1\)，\(\mathrm{d}_{j-1}\mathrm{d}_j=0\) 给出 \(\mathrm{d}_{j-1}(v)=0\)；若 \(j=1\)，则由 \(\epsilon\mathrm{d}_1=0\) 得到 \(\epsilon(v)=0\)。所以 \(Ru\xrightarrow{1}Rv\) 与其余各项分离，给出所述直和分解。取 \(h_{j-1}(v)=u\)，其余同伦分量为零，便有 \(\mathrm{d}h+h\mathrm{d}=\operatorname{id}_{\mathbb D(j)}\)。此两项复形正合，因此余下的增广复形 \(G_\bullet\to M\) 也正合。
 
-一般地令 \(K_0=M\)，依次取极小满射 \(F_i\to K_i\)，核为 \(K_{i+1}\)。极小生成性使 \(K_{i+1}\subseteq\mathfrak mF_i\)：一个核元素模 \(\mathfrak m\) 后正是所选基的一个线性关系，故所有系数为零。把这些短正合列接起来就得到所需消解。若某个核为零，以后全取零项。
+张量剩余域后微分为零，恰好表示原微分的全部矩阵系数属于 \(\mathfrak m\)。局部环中 \(\mathfrak m\) 之外的元素都是单位，所以不极小时可以作上述消去；极小时则在任何基下都不能出现单位系数，也不能有这样的两项直和因子。
 \end{proof}
 
-例如在 \(R=k[x,y]_{(x,y)}\) 上，模 \(R/(x,y)\) 有极小消解
+\begin{corollary}\label{b3:cor:finite-resolution-splitting}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模。给定 \(M\) 的有限长度、各项均为有限秩自由模的自由消解 \(F_\bullet\to M\)，可经有限次单位系数消去得到
+\[
+F_\bullet\cong F_\bullet^{\min}\oplus
+\bigoplus_{\nu=1}^s\mathbb D(j_\nu),
+\]
+其中 \(F_\bullet^{\min}\to M\) 是极小自由消解，\(s\) 为非负整数，每个 \(\mathbb D(j_\nu)\) 是在次数 \(j_\nu,j_\nu-1\) 放置 \(R\xrightarrow{1}R\) 的两项复形。
+\end{corollary}
+\begin{proof}
+原消解只有有限多个非零项，各项秩又有限，故总自由秩为有限整数。每次应用\cref{b3:prop:unit-cancellation}使总自由秩减少二，所以只需有限次消去。停止后所有正次微分均没有单位系数，即其系数全在 \(\mathfrak m\) 中，余下的消解正是极小自由消解。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:minimal-resolution-existence}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(M\) 为有限生成的 \(R\) 模。则 \(M\) 有极小自由消解。它可通过依次选取满射 \(F_i\to K_i\) 构造，其中 \(K_0=M\)、\(K_{i+1}=\ker(F_i\to K_i)\)，且每个 \(F_i/\mathfrak mF_i\to K_i/\mathfrak mK_i\) 都是 \(k\) 线性同构。
+\end{proposition}
+\begin{proof}
+取 \(M/\mathfrak mM\) 的一组 \(k\) 基并提升到 \(M\)。由\cref{b3:cor:local-generators}，提升构成极小生成组，给出 \(F_0\to M\)。因 \(R\) Noether 且 \(F_0\) 有限生成，核 \(K_1\) 也有限生成。对 \(K_1\) 重复这一过程，得到 \(F_1\to K_1\)，再合成到 \(F_0\)。
+
+一般地令 \(K_0=M\)，依次取按 \(K_i/\mathfrak mK_i\) 的一组基提升所得的极小满射 \(\pi_i:F_i\to K_i\)，核为 \(K_{i+1}\)。所选基给出同构
+\[
+\overline{\pi_i}:F_i/\mathfrak mF_i\xrightarrow{\sim}K_i/\mathfrak mK_i.
+\]
+若 \(z\in K_{i+1}\)，则 \(\pi_i(z)=0\)，故 \(\overline{\pi_i}(z+\mathfrak mF_i)=0\)；由上式的单射性得 \(z\in\mathfrak mF_i\)。因此 \(K_{i+1}\subseteq\mathfrak mF_i\)，接起这些短正合列后，每个正次微分的像都属于下一项的 \(\mathfrak m\) 倍，得到所需极小消解。若某个核为零，以后全取零项。
+\end{proof}
+
+例如，设 \(k\) 为域，在 \(R=k[x,y]_{(x,y)}\) 上，模 \(R/(x,y)\) 有极小消解
 \[
 0\longrightarrow R\xrightarrow{\binom{-y}{x}}R^2
 \xrightarrow{(x\quad y)}R\longrightarrow k\longrightarrow0.
 \]
-这也是已证的二元正则序列 Koszul 消解。若在任何相邻次数额外直加 \(R\xrightarrow{1}R\)，仍得到一个自由消解，却失去极小性。
+这也是已证的二元正则序列 Koszul 消解。在任何相邻的非负次数额外直加 \(R\xrightarrow{1}R\)，仍得到一个自由消解。这种加入可缩直和项的操作与\cref{b3:prop:unit-cancellation}中的消去互为逆过程。
 
 \subsection{剩余域张量后的简化}
 \label{b3:subsec:1701:02}
 
-本章所需的 Tor、Ext 来自自由消解。具体地，取 \(M\) 的自由消解 \(F_\bullet\)，约定
+设 \(R\) 为交换环，\(M,N\) 为 \(R\) 模。本章所需的 Tor、Ext 来自自由消解。具体地，取 \(M\) 的自由消解 \(F_\bullet\)，约定
 \[
 \operatorname{Tor}_i^R(M,N)=H_i(F_\bullet\otimes_RN),\qquad
 \operatorname{Ext}_R^i(M,N)=H^i\operatorname{Hom}_R(F_\bullet,N).
 \]
-第四卷第5—8章将系统建立消解、比较映射和长正合列；第8.5节安排一般的维数平移。本卷已在前两章补入当前所需的最小背景，下面只回顾计算约定。
-
-\ProseParagraphBreak
-\cref{b3:lem:ext-basic-properties}和\cref{b3:lem:tor-basic-properties}已证明选择无关性、长正合列以及 Tor 的平衡计算。本节使用它们把一般消解的同调改写为极小消解的各项；两消解之间的比较映射唯一到链同伦，见\subsecref{b3:subsec:1504:03}中的逐级提升。
+由\cref{b3:lem:free-resolution-comparison}，消解之间的比较映射唯一到链同伦，故以上同调不依赖消解的选择。\cref{b3:lem:ext-basic-properties,b3:lem:tor-basic-properties}给出长正合列及 Tor 的平衡计算。对于极小消解，微分的像落在极大理想乘以相应自由模之中；取剩余域系数后，微分全部变为零，同调因而直接由消解各项得到。
 
 \begin{proposition}\label{b3:prop:minimal-resolution-betti}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(F_\bullet\to M\) 为其极小自由消解。则对 \(i\ge0\)，
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(M\) 为有限生成的 \(R\) 模，\(F_\bullet\to M\) 为其极小自由消解。则对每个整数 \(i\ge0\)，
 \[
 \operatorname{Tor}_i^R(M,k)\cong F_i\otimes_Rk,
 \qquad
@@ -70,14 +112,20 @@
 \end{proposition}
 \begin{proof}
 微分矩阵的元素在 \(\mathfrak m\) 中，张量 \(k\) 或映入 \(k\) 后全部成为零，所以同调就是相应项本身。
-对两个极小消解取双向比较映射，复合与恒等之间的同伦满足 \(fg-1=\mathrm{d}h+h\mathrm{d}\)。模掉 \(\mathfrak m\) 后右边为零，故各次比较映射互逆。两边有限自由秩相等，每个比较矩阵的行列式模 \(\mathfrak m\) 非零，因而是单位。各次映射本身可逆，构成复形同构。
+设 \(F_\bullet,F'_\bullet\) 为两个极小消解。由\cref{b3:lem:free-resolution-comparison}，取提升 \(M\) 的恒等映射的双向比较映射 \(f:F_\bullet\to F'_\bullet\)、\(g:F'_\bullet\to F_\bullet\)。两方向的复合各自与恒等链同伦；模掉 \(\mathfrak m\) 后，微分为零，同伦公式的右边也为零。因此
+\[
+\bar g_i\bar f_i=\operatorname{id}_{F_i/\mathfrak mF_i},
+\qquad
+\bar f_i\bar g_i=\operatorname{id}_{F'_i/\mathfrak mF'_i}.
+\]
+所以 \(\bar f_i:F_i/\mathfrak mF_i\to F'_i/\mathfrak mF'_i\) 是 \(k\) 线性同构，两边的自由秩相等。若共同秩为零，\(f_i\) 已是零模之间的同构；否则选基后 \(f_i\) 是方阵，且 \(\det(\bar f_i)\ne0\)，于是 \(\det(f_i)\notin\mathfrak m\)。局部环中极大理想之外的元素为单位，伴随矩阵公式因而给出 \(f_i\) 的逆。各次 \(f_i\) 可逆，且与微分和增广相容，构成增广复形同构。
 \end{proof}
 
 \subsection{Betti 数与消解终止性}
 \label{b3:subsec:1701:03}
 
 \begin{definition}\label{b3:def:local-betti-numbers}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(i\ge0\) 为整数。整数
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(M\) 为有限生成的 \(R\) 模，\(i\ge0\) 为整数。整数
 \(\beta_i^R(M)\coloneqq\dim_k\operatorname{Tor}_i^R(M,k)\)
 称为 \(M\) 的第 \(i\) 个\term[betti-shu]{Betti 数}[Betti number]。
 \end{definition}
@@ -85,13 +133,13 @@
 \(\beta_0\) 是最少生成元数，\(\beta_1\) 是极小展示中的最少关系数。更高的数统计关系之间的关系。它们依赖底环：同一个剩余域 \(k\) 作为 \(k\) 模只有 \(\beta_0=1\)，作为 \(k[x,y]_{(x,y)}\) 模则有 \((\beta_0,\beta_1,\beta_2)=(1,2,1)\)。
 
 \begin{corollary}\label{b3:cor:betti-gap-termination}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(i\ge0\) 为整数。若 \(\beta_i^R(M)=0\)，则 \(M\) 的极小自由消解从第 \(i\) 项起全部为零。\(i=0\) 时，这一条件等价于 \(M=0\)。
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(M\) 为有限生成的 \(R\) 模，\(i\ge0\) 为整数。若 \(\beta_i^R(M)=0\)，则 \(M\) 的极小自由消解从第 \(i\) 项起全部为零。\(i=0\) 时，这一条件等价于 \(M=0\)。
 \end{corollary}
 \begin{proof}
 \cref{b3:prop:minimal-resolution-betti}给出 \(F_i=0\)。若 \(i>0\)，极小满射 \(F_i\to K_i\) 使 \(K_i=0\)，后续所有核和极小自由项也为零。\(i=0\) 时满射 \(F_0\to M\) 直接给出 \(M=0\)。
 \end{proof}
 
-作为对照，令 \(R=k[\epsilon]/(\epsilon^2)\)。其剩余域具有消解
+作为对照，设 \(k\) 为域，令 \(R=k[\epsilon]/(\epsilon^2)\)。其剩余域具有消解
 \[
 \cdots\xrightarrow{\epsilon}R\xrightarrow{\epsilon}R
 \xrightarrow{\epsilon}R\longrightarrow k\longrightarrow0.

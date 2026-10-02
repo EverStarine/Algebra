@@ -1,6 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 4.1 加性范畴
-% 纲要位置：计划纲要.md，第 2535 行。
+% 纲要位置：计划纲要.md，第 3188 行。
+% * 分裂幂等元及其意义；Karoubi 包络及有限生成投射模
 
 \section{加性范畴}
 \label{b4:sec:0401}
@@ -11,7 +12,6 @@
 %
 % * Hom 群结构与双积
 % * 零对象、核与余核
-% * 分裂幂等元及其意义
 %
 
 \subsection{Hom 群结构与双积}
@@ -92,3 +92,99 @@ pi=1_Y,\quad qj=1_Z,\quad pj=0,\quad qi=0.
 \end{proof}
 
 例如，在全部左 \(R\)-模中，幂等矩阵的像和核都是模，因而上述分解总存在。在有限秩自由左 \(R\)-模组成的范畴中，其像可能只是投射模，并非自由模。若 \(R=k\times k\)，则 \(R\to R\)、\(r\mapsto(1,0)r\) 是幂等态射，像为 \(k\times0\)；它不可能同构于 \(R^n\)，因为乘以 \((0,1)\) 后，前者为零，后者为 \(k^n\)。这个幂等态射不能在有限秩自由模范畴内分裂。这说明讨论分裂时必须指定所在范畴，而不能只检查矩阵满足 \(E^2=E\)。
+
+\ProseParagraphBreak
+缺少幂等态射的像时，可以把这个像作为一个新对象正式加入。原对象及其幂等态射已经说明了这个新对象应有的恒等态射，以及它与其他新对象之间哪些态射能够保留下来。这就是 Karoubi 包络的构造。\footnote{卡鲁比（Max Karoubi，1938-），法国数学家，主要研究代数 \(K\) 理论与拓扑 \(K\) 理论。}
+
+\begin{definition}\label{b4:def:karoubi-envelope}
+设 \(\mathcal C\) 为局部小范畴。若 \(\mathcal C\) 的每个幂等态射都分裂，则称 \(\mathcal C\) 为\term[mideng-wanbei]{幂等完备}[idempotent complete]的范畴。构造范畴 \(\operatorname{Kar}(\mathcal C)\)：对象为二元组 \((X,e)\)，其中 \(X\in\mathcal C\)、\(e:X\to X\) 且 \(e^2=e\)；从 \((X,e)\) 到 \((Y,d)\) 的态射为满足
+\[
+f=dfe
+\]
+的 \(\mathcal C\)-态射 \(f:X\to Y\)。复合沿用 \(\mathcal C\) 的复合，\((X,e)\) 的恒等态射为 \(e\)。这个范畴称为 \(\mathcal C\) 的\term[karoubi-baoluo]{Karoubi 包络}[Karoubi envelope]，也称幂等完备化。
+\end{definition}
+
+条件 \(f=dfe\) 等价于 \(df=f=fe\)。若再有 \(g=cgd\)，则 \(gf=c(gf)e\)，所以复合仍在指定的态射集中；上述两个等式也保证 \(e,d\) 分别在复合两端起恒等作用。由此定义确实给出范畴，而不只是对象与态射的列表。
+
+\begin{proposition}\label{b4:prop:karoubi-splitting}
+设 \(\mathcal C\) 为局部小范畴。函子
+\[
+J:\mathcal C\longrightarrow\operatorname{Kar}(\mathcal C),
+\qquad X\longmapsto(X,1_X),\quad f\longmapsto f
+\]
+全忠实，且 \(\operatorname{Kar}(\mathcal C)\) 幂等完备。若 \(\mathcal C\) 加性，则其 Karoubi 包络也加性，且 \(J\) 为加性函子。
+\end{proposition}
+\begin{proof}
+在 \((X,1_X)\) 与 \((Y,1_Y)\) 之间，态射条件不加任何限制，故 \(J\) 在 Hom 集上为恒等双射。
+
+若 \(h\) 是 \((X,e)\) 上的幂等态射，则 \(h^2=h\) 且 \(eh=h=he\)。因此 \((X,h)\) 是一个对象，两条都由 \(h\) 给出的态射
+\[
+(X,h)\xrightarrow{h}(X,e)\xrightarrow{h}(X,h)
+\]
+的复合在 \((X,h)\) 上为恒等 \(h\)，反向复合则为 \((X,e)\) 上原来的 \(h\)。这就分裂了任意幂等态射。
+
+若 \(\mathcal C\) 加性，条件 \(f=dfe\) 对加法封闭，故这些 Hom 集是原态射群的子群，复合仍双线性。零对象及双积分别由 \((0,1_0)\) 和 \((X\oplus Y,e\oplus d)\) 给出；把原双积的包含、投影限制到相应幂等分量，便满足双积公式。\(J\) 保持这些群运算与双积。
+\end{proof}
+
+\begin{theorem}\label{b4:thm:karoubi-universal-property}
+设 \(\mathcal C\) 为小范畴，\(\mathcal D\) 为局部小、幂等完备的范畴，并为 \(\mathcal D\) 中每个幂等态射指定一个分裂，恒等态射的分裂取其自身。沿 \(J:\mathcal C\to\operatorname{Kar}(\mathcal C)\) 的限制给出等价
+\[
+J^*:\operatorname{Fun}(\operatorname{Kar}(\mathcal C),\mathcal D)
+\longrightarrow\operatorname{Fun}(\mathcal C,\mathcal D).
+\]
+换言之，\(\mathcal C\) 上的函子可以延伸到其 Karoubi 包络，自然变换也唯一地延伸。
+\end{theorem}
+\begin{proof}
+给定 \(F:\mathcal C\to\mathcal D\)。记 \(F(e)\) 的指定分裂为
+\[
+Y_{F,e}\xrightarrow{i_{F,e}}F(X)
+\xrightarrow{p_{F,e}}Y_{F,e},
+\qquad p_{F,e}i_{F,e}=1,\quad i_{F,e}p_{F,e}=F(e).
+\]
+定义 \(\overline F(X,e)=Y_{F,e}\)，对 \(f:(X,e)\to(Y,d)\) 定义
+\[
+\overline F(f)=p_{F,d}F(f)i_{F,e}.
+\]
+它把恒等 \(e\) 送到恒等。复合中插入 \(i_{F,d}p_{F,d}=F(d)\)，再用 \(gd=g\)、\(df=f\)，便得 \(\overline F(g)\overline F(f)=\overline F(gf)\)。恒等分裂的约定保证 \(\overline FJ=F\)。
+
+若 \(\alpha:F\Rightarrow G\)，定义
+\[
+\overline\alpha_{(X,e)}
+=p_{G,e}\alpha_Xi_{F,e}.
+\]
+\(\alpha_XF(e)=G(e)\alpha_X\) 保证它与分裂相容；在自然性方块中插入这两个幂等元，再用 \(\alpha_YF(f)=G(f)\alpha_X\)，就得到 \(\overline G(f)\overline\alpha_{(X,e)}=\overline\alpha_{(Y,d)}\overline F(f)\)。同一公式保持变换的恒等与复合，所以 \(F\mapsto\overline F\) 是限制函子的一个反方向函子。
+
+还须说明为什么没有额外的自然变换。每个 \(E=(X,e)\) 都有收缩图
+\[
+E\xrightarrow{s_E}JX\xrightarrow{r_E}E,
+\qquad r_Es_E=1_E,\quad s_Er_E=J(e),
+\]
+其中两条底层态射都为 \(e\)。给定 \(H,K:\operatorname{Kar}(\mathcal C)\to\mathcal D\) 及 \(\alpha:HJ\Rightarrow KJ\)，其延伸只能是
+\[
+\beta_E=K(r_E)\alpha_XH(s_E).
+\]
+这是因为自然性与 \(r_Es_E=1_E\) 已经迫使该等式成立。对 \(f:E\to E'\)，恒等式 \(f=r_{E'}J(f)s_E\) 及 \(\alpha\) 的自然性也表明这些 \(\beta_E\) 确实自然。因此限制全忠实。
+
+最后，\(\overline{HJ}(E)\) 与 \(H(E)\) 都分裂 \(H(J(e))\)。若前一分裂记为 \(i_e,p_e\)，则
+\[
+H(r_E)i_e:\overline{HJ}(E)\to H(E),
+\qquad p_eH(s_E):H(E)\to\overline{HJ}(E)
+\]
+互逆，且由刚证明的延伸唯一性组成自然同构。于是 \(F\mapsto\overline F\) 是 \(J^*\) 的拟逆。
+\end{proof}
+
+指定分裂是延伸函子所需的数据；例如模范畴可以直接取幂等同态的像。若目标范畴小，则通常选择公理足以同时选定全部分裂。加性范畴中的构造及其泛性质可对照 Bühler\cite[Section 6, Proposition 6.10, Corollary 6.11 and Example 6.12]{Buehler2010ExactCategories}。
+
+\begin{proposition}\label{b4:prop:karoubi-free-projective}
+设 \(R\) 为含幺环，\(\mathcal F_R\) 为以 \(R^n\)（\(n\ge0\)）为对象、以全部左 \(R\)-模同态为态射的范畴。映射
+\[
+\operatorname{Kar}(\mathcal F_R)\longrightarrow R\text{-}\mathbf{Mod},
+\qquad (R^n,e)\longmapsto e(R^n)
+\]
+为全忠实函子，其对象像的同构类型恰为全部有限生成投射左 \(R\)-模。在为这些投射模指定有限自由模中的直和分解后，它给出与有限生成投射模范畴的等价。
+\end{proposition}
+\begin{proof}
+幂等同态给出 \(R^n=e(R^n)\oplus(1-e)(R^n)\)，故其像是有限生成投射模。满足 \(f=dfe\) 的同态限制为 \(e(R^n)\to d(R^m)\)。反过来，给定这个像之间的同态 \(u\)，先用 \(e\) 投影、再作 \(u\)、最后包含入 \(R^m\)，便得到唯一满足 \(f=dfe\) 的 \(f\)。所以函子全忠实。
+
+若 \(P\) 有限生成投射，则存在满同态 \(p:R^n\to P\)，投射性给出截面 \(i:P\to R^n\)。于是 \(e=ip\) 幂等，且 \(p:e(R^n)\to P\) 与 \(i\) 互逆。指定各 \(p,i\) 后，把 \(P\) 送到 \((R^n,ip)\)，把 \(u:P\to Q\) 送到 \(i_Qu p_P\)，就得到上述像函子的拟逆。
+\end{proof}

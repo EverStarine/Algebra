@@ -1,143 +1,154 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 9.1 Yoneda 扩张
-% 纲要位置：计划纲要.md，第 2685 行。
+% 纲要标题：### 9.1 导出函子
+% 纲要标签：b4:sec:0801
+% 纲要位置：计划纲要.md，第 2650 行。
 
-\section{Yoneda 扩张}
-\label{b4:sec:0901}
+\section{导出函子}
+\label{b4:sec:0801}
 
-扩张不仅包含中间模，还包含核与商的指定映射。把扩张粘接起来得到的乘积，需要与消解中提升复形映射的乘积一致。
+左正合或右正合函子丢失的信息，可以在施加函子后的消解同调中读出。比较定理保证所得对象不依赖消解的选择，并给出它们在态射上的作用；马蹄引理给出连接态射和长正合列；消去性进一步说明这套导出函子具有怎样的泛性质。
 
-% 纲要内容：
+
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * Ext^1 与短正合扩张
-% * 高阶扩张及等价
-% * Yoneda 乘积与消解乘积的一致性
+% * 左、右导出及次数约定
+% * δ-函子与泛性质
+% * 消去性与泛 δ-函子
 %
 
-\subsection{\texorpdfstring{\(\operatorname{Ext}^1\) 与短正合扩张}{Ext1 与短正合扩张}}
-\label{b4:subsec:0901:01}
+\subsection{左、右导出及次数约定}
+\label{b4:subsec:0801:01}
 
-给定左 \(R\)-模 \(M,N\)，\(\operatorname{Ext}_R^1(M,N)\) 既可由消解计算，也能描述把 \(N\) 放在核位置、把 \(M\) 放在商位置的所有短正合列。这里分类的数据包括两端的指定映射；仅知道中间模的同构类型还不够。
-
-\begin{definition}\label{b4:def:yoneda-extension}
-设 \(R\) 为环，\(M,N\) 为左 \(R\)-模。短正合列
-\[
- \xi:\quad 0\longrightarrow N\xrightarrow{i}E\xrightarrow{p}M\longrightarrow0
-\]
-称为 \(M\) 被 \(N\) 的一个\term[kuozhang]{扩张}[extension]。给定另一个扩张 \(\xi':0\to N\xrightarrow{i'}E'\xrightarrow{p'}M\to0\)。若存在 \(R\) 模同态 \(f:E\to E'\)，满足 \(fi=i'\)、\(p'f=p\)，则称两扩张等价。这里两端的映射固定为恒等映射；短五引理保证 \(f\) 自动为同构。
-\end{definition}
-
-\begin{theorem}\label{b4:thm:ext1-extensions}
-设 \(R\) 为含幺环，\(M,N\) 为幺性左 \(R\) 模。\(M\) 被 \(N\) 的短正合扩张的等价类与 \(\operatorname{Ext}_R^1(M,N)\) 自然一一对应，分裂扩张对应零元。
-\end{theorem}
-\begin{proof}
-选定正合列 \(0\to K\xrightarrow{j}P\to M\to0\)，其中 \(P\) 投射。由\cref{b4:thm:ext-long-exact}，
-\[
- \operatorname{Ext}_R^1(M,N)
- =\operatorname{Hom}_R(K,N)\big/\{\,a j:a\in\operatorname{Hom}_R(P,N)\,\}.
-\]
-对扩张 \(\xi\)，提升 \(P\to M\) 为 \(t:P\to E\)。因为 \(ptj=0\)，唯一存在 \(u:K\to N\) 使 \(iu=tj\)。换成另一提升 \(t'\)，差 \(t'-t\) 经 \(N\) 分解，故 \(u'-u\) 是某个 \(P\to N\) 的限制；扩张等价也不改变此余类。
-
-反过来，对 \(u:K\to N\) 作推出
-\[
- E_u=(N\oplus P)/\{\,(u(k),-j(k)):k\in K\,\}.
-\]
-由 \(n\mapsto[(n,0)]\) 及 \([(n,p)]\mapsto\bar p\) 得到扩张。第一个映射单射，因为 \(j\) 单射；第二个映射的核由 \(\bar p=0\) 即 \(p=j(k)\) 算出，恰好是 \(N\) 的像。如果 \(u-v=a j\)，映射 \([(n,p)]\mapsto[(n+a(p),p)]\) 给出 \(E_u\to E_v\) 的扩张同构。对原来的 \(\xi\)，映射 \([(n,p)]\mapsto i(n)+t(p)\) 给出 \(E_u\to E\) 的扩张同构。因此两个构造互逆。
-
-\(u\) 可延拓至 \(P\) 当且仅当可把 \(t\) 改成在 \(K\) 上为零的提升；后者恰好下降为 \(M\to E\) 的截面。这证明零元判据。对 \(N\to N'\) 作推出相当于把 \(u\) 后复合，对 \(M'\to M\) 作拉回相当于提升该映射到投射消解后预复合，故对应自然。
-\end{proof}
-
-扩张类的加法也有直接构造。对两个扩张先取直和，再沿对角映射 \(M\to M\oplus M\) 拉回，最后沿加法 \(N\oplus N\to N\) 推出。所得扩张称为\term[baerhe]{Baer 和}[Baer sum]。\footnote{拜尔（Reinhold Baer，1902-1979），德裔数学家，研究群的扩张、可解群和幂零群。}具体说，中间模是
-\[
- (E\times_M E')/\{\,(i(n),-i'(n)):n\in N\,\}.
-\]
-
-\begin{proposition}\label{b4:prop:baer-addition}
-对于环 \(R\) 上的左模 \(M,N\)，Baer 和在扩张等价类上给出交换群结构；\cref{b4:thm:ext1-extensions}的对应是群同构。
-\end{proposition}
-\begin{proof}
-从同一个 \(P\to M\) 分别提升到 \(E,E'\)，其合并提升到纤维积；再作推出后，在 \(K\) 上诱导的映射就是 \(u+u'\)。因而 Baer 和对应 \(\operatorname{Ext}^1\) 中的加法。这个等式同时证明构造不依赖代表元、结合律和交换律；分裂扩张为零，沿 \(-1_N\) 推出得到负元。
-\end{proof}
-
-例如，对素数 \(p\)，\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z/p)=\mathbb Z/p\)。非零类的中间群都同构于 \(\mathbb Z/p^2\)，但指定的核嵌入可以不同，所以这些扩张仍有 \(p-1\) 个不同的非零类。这个区别在用扩张恢复结构时不能省略。
-
-\subsection{高阶扩张及等价}
-\label{b4:subsec:0901:02}
-
-\begin{definition}\label{b4:def:higher-yoneda-extension}
-设 \(R\) 为含幺环，\(M,N\) 为幺性左 \(R\) 模，\(n\ge1\) 为整数。给定左 \(R\) 模正合列
-\[
- \xi:\quad 0\longrightarrow N\longrightarrow E_{n-1}\longrightarrow\cdots
- \longrightarrow E_0\longrightarrow M\longrightarrow0
-\]
-称为一个 \(n\) 阶扩张。两个这样的扩张之间，两端为恒等映射的链映射称为扩张态射。由扩张态射生成的等价关系称为 \term[yonedakuozhang]{Yoneda 扩张}[Yoneda extension]的等价关系：允许有限串扩张态射，箭头方向可以交替。等价类集合记为 \(\operatorname{YExt}_R^n(M,N)\)。
-\end{definition}
-
-当 \(n>1\) 时，中间各项的映射不必可逆。因此不能把等价关系写成“存在中间项的同构”，也不能只允许一个固定方向的扩张态射。下面同时说明这些类确实构成集合，并给出计算它们的方法。
-
-\begin{theorem}\label{b4:thm:yoneda-ext-comparison}
-设 \(R\) 为环，\(M,N\) 为左 \(R\)-模，\(n\ge1\)。有自然双射
-\[
- \operatorname{YExt}_R^n(M,N)\simeq\operatorname{Ext}_R^n(M,N).
-\]
-沿 \(M\) 的对角映射拉回、沿 \(N\) 的加法映射推出所定义的高阶 Baer 和，对应右侧的加法。
-\end{theorem}
-\begin{proof}
-固定投射消解 \(P_\bullet\to M\)，令 \(\Omega^nM=\ker(P_{n-1}\to P_{n-2})\)，其中 \(P_{-1}=M\)。\cref{b4:thm:dimension-shift-basic,b4:prop:iterated-dimension-shift}的平移公式及第一步正合列给出
-\[
- \operatorname{Ext}_R^n(M,N)
- \simeq\operatorname{Hom}_R(\Omega^nM,N)
- /\operatorname{res}\operatorname{Hom}_R(P_{n-1},N).
-\]
-也可直接从消解读出此式：余圈 \(P_n\to N\) 在 \(\ker(P_n\to\Omega^nM)\) 上为零，故经 \(\Omega^nM\) 分解；余边恰好来自 \(P_{n-1}\to N\)。这里沿用第八章消解计算中的微分 \(f\mapsto f \mathrm{d}\)。
-
-给定 \(n\) 阶扩张，依次利用 \(P_i\) 的投射性构造交换的提升 \(t_i:P_i\to E_i\)，\(0\le i<n\)。最后 \(t_{n-1}|_{\Omega^nM}\) 落在 \(N\) 中，得到 \(u:\Omega^nM\to N\)。说明其余类与提升无关：对两套提升 \(t,s\)，从最低次数起构造 \(h_i:P_i\to E_{i+1}\)，使
-\[
- t_i-s_i=\mathrm{d}_Eh_i+h_{i-1}\mathrm{d}_P\qquad(0\le i<n-1),\qquad h_{-1}=0.
-\]
-每一步待提升的差在前一个微分下为零，故落在下一个微分的像中，投射性允许提升。于是 \(t_{n-1}-s_{n-1}-h_{n-2}\mathrm{d}_P\) 落在 \(N\) 中，给出 \(a:P_{n-1}\to N\)；限制到 \(\Omega^nM\) 后得到 \(u_t-u_s=a|_{\Omega^nM}\)。\(n=1\) 时直接用 \(t_0-s_0\) 即可。扩张态射把一套提升变成另一扩张的提升，因而整个箭头串都保持该余类。
-
-对任意 \(u:\Omega^nM\to N\)，把截短消解
-\[
- 0\longrightarrow\Omega^nM\longrightarrow P_{n-1}\longrightarrow\cdots
- \longrightarrow P_0\longrightarrow M\longrightarrow0
-\]
-的最左端沿 \(u\) 推出。新项是
-\(E_{n-1}(u)=(N\oplus P_{n-1})/\{(u(x),-x)\}\)，其余项保持 \(P_i\)。与一阶情形相同，核及像的计算证明新列正合。若 \(u-v=a|_{\Omega^nM}\)，在新项上用 \([(z,p)]\mapsto[(z+a(p),p)]\)，在其他项上用恒等映射，就得到两个新扩张的同构。
-
-从任意原扩张取出的 \(u\) 又给出这个推出扩张到原扩张的态射：最左新项用 \([(z,p)]\mapsto i(z)+t_{n-1}(p)\)，其他项用 \(t_i\)。因此原扩张与所构造的扩张等价，两个方向互逆。换消解时使用\cref{b4:thm:resolution-comparison}；比较映射与其同伦保持上述余类，故识别不依赖消解，且对两变量自然。最后，把两套提升先直和，再拉回和推出，其末端映射成为 \(u+v\)，证明加法相容。
-\end{proof}
-
-对 \(n=0\)，约定 \(\operatorname{YExt}_R^0(M,N)=\operatorname{Hom}_R(M,N)\)。在没有足够投射或内射对象的一般交换范畴中，仍可讨论扩张及其箭头串；本节已证的与导出函子的比较则是在模范畴中进行的。
-
-\subsection{Yoneda 乘积与消解乘积}
-\label{b4:subsec:0901:03}
-
-若一列以 \(N\) 为商，另一列以 \(N\) 为核，就能把它们首尾连接。这一操作给出 Ext 群之间并非来自普通数乘的乘法。
-
-\begin{definition}\label{b4:def:yoneda-product}
-设 \(R\) 为含幺环，\(L,N,M\) 为幺性左 \(R\) 模，\(m,n\ge1\) 为整数。对 \(\alpha\in\operatorname{YExt}_R^m(N,L)\)、\(\beta\in\operatorname{YExt}_R^n(M,N)\)，把代表扩张在共同的 \(N\) 处拼接，删除两处 \(N\)，以原来的满射到 \(N\) 与从 \(N\) 出发的单射之复合作为中间箭头。所得 \((m+n)\) 阶扩张类记为 \(\alpha\beta\)，称为\term[yonedachengji]{Yoneda 乘积}[Yoneda product]。约定 \(\operatorname{YExt}_R^0(X,Y)=\operatorname{Hom}_R(X,Y)\)：左因子为零次同态 \(N\to L\) 时沿该同态推出，右因子为零次同态 \(M\to N\) 时沿该同态拉回；两个因子均为零次时取同态复合。
-\end{definition}
-
-\begin{proposition}\label{b4:prop:yoneda-resolution-product}
-设 \(R\) 为含幺环，\(L,N,M\) 为幺性左 \(R\) 模。Yoneda 乘积良定义、双加性且结合，并在 Yoneda 扩张与 Ext 的自然对应下等于下述消解乘积。取投射消解 \(P_\bullet\to M\)、\(Q_\bullet\to N\)，以 \(\varepsilon_Q:Q_0\to N\) 表示增广，设 \(m,n\ge0\) 为整数。若 \(b:P_n\to N\)、\(a:Q_m\to L\) 分别是 \(\operatorname{Hom}_R(P_\bullet,N)\)、\(\operatorname{Hom}_R(Q_\bullet,L)\) 中的余圈，把 \(b\) 逐次提升为
-\[
- t_i:P_{n+i}\longrightarrow Q_i,\qquad
- \varepsilon_Qt_0=b,\qquad \mathrm{d}_Qt_i=t_{i-1}\mathrm{d}_P\quad(i\ge1),
-\]
-则乘积由余圈 \(a t_m:P_{n+m}\to L\) 代表。
-\end{proposition}
-\begin{proof}
-拼接在共同项处正合，因为像和核都由被删除的 \(N\) 描述；对任一因子的扩张态射拼接恒等映射，仍是扩张态射，所以它保持定义中的等价关系。依次拼接三列不改变列中的项和复合箭头，故结合。
-
-对于消解公式，\(b \mathrm{d}_P=0\) 保证 \(t_0\mathrm{d}_P\) 落在 \(\ker\varepsilon_Q\)，可用 \(P_{n+1}\) 的投射性提升至 \(Q_1\)。以后每步同样先用 \(\mathrm{d}_P^2=0\) 核对落在核中，再提升。\(a t_m \mathrm{d}_P=a \mathrm{d}_Qt_{m+1}=0\)，故所得是余圈。
-
-现在用\cref{b4:thm:yoneda-ext-comparison}的推出代表 \(\alpha,\beta\)。把 \(P_0,\ldots,P_{n-1}\) 提升到 \(\beta\) 的部分后，末端映射是 \(b\) 经 \(\Omega^nM\) 的分解；进入 \(\alpha\) 的部分时，逐项提升正由 \(t_0,t_1,\ldots\) 给出。到达最左端 \(L\) 的映射就是 \(a t_m\) 经 \(\Omega^{n+m}M\) 的分解。因而拼接扩张对应给定公式；前一定理也保证换提升、换余圈代表或换消解均不改变结果。
-
-固定 \(b\) 的提升时，\((a+a')t_m=a t_m+a't_m\)；固定 \(a\) 时，两套 \(b,b'\) 的提升之和提升 \(b+b'\)。因此乘积双加性。零次乘积由同态预复合、后复合描述，与拉回、推出相同。
-\end{proof}
-
-于是 \(\bigoplus_{n\ge0}\operatorname{Ext}_R^n(M,M)\) 成为带单位的分次环，单位是 \(1_M\)。这里没有一般的分次交换性断言：次数零部分已经可能是非交换环 \(\operatorname{End}_R(M)\)。例如 \(M=k^2\) 时，这一部分是矩阵环 \(M_2(k)\)。
+一个左正合函子已经正确保留了核，却可能把满态射变成非满态射。内射消解把这种失败放入一个复形，正次数上同调便记录原函子没有保留的信息。投射消解对于右正合函子起相反方向的作用。
 
 \ProseParagraphBreak
-消解乘积的计算采用 \(\delta f=f \mathrm{d}\) 的次数约定。若改用\cref{b4:def:hom-complex}中内部 Hom 的微分，则须同时使用第五章的移位符号及每度的重标识，不能只改一个微分的符号而保留全部提升公式。Ext 扩张的基本对应和 Baer 和可参阅 Weibel\cite[Theorem 3.4.3, Definition 3.4.4, Corollary 3.4.5]{Weibel1994HomologicalAlgebra}；高阶扩张的进一步讨论见该书\cite[Vista 3.4.6]{Weibel1994HomologicalAlgebra}。
+例如，固定整数 \(n\ge2\)，对交换群取左正合函子 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n,-)\)。\cref{b4:exm:integer-injective-resolution}已经给出内射消解
+\[
+ 0\longrightarrow\mathbb Z\longrightarrow\mathbb Q
+ \longrightarrow\mathbb Q/\mathbb Z\longrightarrow0.
+\]
+施加 \(F\) 后，\(F(\mathbb Q)=0\)，而 \(F(\mathbb Q/\mathbb Z)\) 是 \(\mathbb Q/\mathbb Z\) 中被 \(n\) 零化的子群，即 \((\tfrac1n\mathbb Z)/\mathbb Z\cong\mathbb Z/n\)。所得复形为 \(0\to\mathbb Z/n\)，位于零次和一次。因此原函子在 \(\mathbb Z\) 上取值为零，消解却在一次留下 \(\mathbb Z/n\)。这正是 \(\mathbb Q\to\mathbb Q/\mathbb Z\) 经过 \(F\) 后失去满射性的部分；下面将这种计算定义为导出函子。
+
+\begin{definition}\label{b4:def:derived-functors}
+设 \(\mathcal A,\mathcal B\) 是交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子。若 \(\mathcal A\) 有足够多内射对象，对每个对象 \(A\in\mathcal A\) 选内射消解 \(A\to I_A^\bullet\)，定义
+\[
+R^nF(A)\coloneqq H^n(F(I_A^\bullet)),\qquad n\ge0,
+\]
+称为 \(F\) 的第 \(n\) 个\term[youdaochuhanzi]{右导出函子}[right derived functor]。若 \(\mathcal A\) 有足够多投射对象，对每个对象 \(A\in\mathcal A\) 选投射消解 \(P^A_\bullet\to A\)，定义
+\[
+L_nF(A)\coloneqq H_n(F(P^A_\bullet)),\qquad n\ge0,
+\]
+称为第 \(n\) 个\term[zuodaochuhanzi]{左导出函子}[left derived functor]。对态射 \(f:A\to A'\)，选择延拓或提升 \(f\) 的消解比较映射，逐次应用 \(F\) 后取相应次数的同调，所得态射分别定义 \(R^nF(f)\) 或 \(L_nF(f)\)。
+\end{definition}
+
+由\cref{b4:prop:comparison-homotopy-unique,b4:cor:resolutions-homotopy-equivalent}，提升同一个态射的比较映射同伦，因而诱导相同的同调态射；恒等和复合也由比较映射的恒等和复合诱导。于是上述定义给出函子，更换消解只引起满足传递律的自然同构。它们还是加性函子：若 \(f,g:A\to A'\) 分别由比较映射 \(\widetilde f,\widetilde g\) 提升，则 \(\widetilde f+\widetilde g\) 提升 \(f+g\)。由于 \(F\) 加性，取同调后有
+\[
+R^nF(f+g)=R^nF(f)+R^nF(g),\qquad
+L_nF(f+g)=L_nF(f)+L_nF(g).
+\]
+若把投射消解写成 \(P^{-n}=P_n\)，则 \(L_nF(A)=H^{-n}(F(P^\bullet))\)。下标 \(n\) 是非负同调次数，不是把右导出函子也改放到负次数。
+
+\begin{proposition}\label{b4:prop:derived-degree-zero}
+设 \(\mathcal A,\mathcal B\) 是交换范畴。若 \(\mathcal A\) 有足够多内射对象且 \(F:\mathcal A\to\mathcal B\) 加性、左正合，则有自然同构 \(R^0F\cong F\)，且内射对象 \(I\) 满足 \(R^nF(I)=0\) 对 \(n>0\)。若有足够多投射对象且 \(F\) 加性、右正合，则 \(L_0F\cong F\)，且投射对象的正次数左导出函子消失。
+\end{proposition}
+\begin{proof}
+由 \(0\to A\to I^0\to I^1\) 正合及左正合性，\(F(A)\) 就是 \(F(I^0)\to F(I^1)\) 的核，即零次上同调；构造与态射相容。内射对象可取自身集中于零次的内射消解，故正次消失。投射情形用 \(P_1\to P_0\to A\to0\) 的余核及零次链消解。
+\end{proof}
+
+\cref{b4:tab:derived-conventions}集中列出两种导出的消解与次数约定，其中左、右正合性保证零次导出与原函子相同。表中的连接态射对应短正合列 \(0\to A\to B\to C\to0\)：右导出的连接升一次，适用于 \(n\ge0\)；左导出的连接降一次，适用于 \(n\ge1\)。模范畴中的 Ext 属于右导出，Tor 属于左导出；Ext 的第一变量反变，还需在相应长正合列中反转对象的顺序。
+
+\input{Tables/DerivedFunctorConventions}
+
+\cref{b4:prop:horseshoe-functor-sequence}给出短正合列的导出长正合列。下一小节把这项性质与消解的具体选取分开表述。
+
+\subsection{\texorpdfstring{\(\delta\)-函子与泛性质}{\AlgebraPdfDelta-函子与泛性质}}
+\label{b4:subsec:0801:02}
+
+\begin{definition}\label{b4:def:delta-functor}
+设 \(\mathcal A,\mathcal B\) 是交换范畴。一族加性函子 \(T^n:\mathcal A\to\mathcal B\)，\(n\ge0\)，若对每个短正合列 \(0\to A\to B\to C\to0\) 配有态射 \(\delta^n:T^n(C)\to T^{n+1}(A)\)，使
+\[
+0\longrightarrow T^0(A)\longrightarrow T^0(B)\longrightarrow T^0(C)
+\xrightarrow{\delta^0}T^1(A)\longrightarrow\cdots
+\]
+正合，且连接态射对短正合列之间的态射自然，就称 \(T^\bullet\) 连同这些连接态射为\term[delta-hanzi]{上同调 \(\delta\)-函子}[cohomological delta functor]。若 \(T^\bullet,U^\bullet:\mathcal A\to\mathcal B\) 均为此类函子，且逐次自然变换 \(a^n:T^n\to U^n\) 与每个连接态射交换，则称 \(a^\bullet\) 为它们之间的态射。
+\end{definition}
+
+对短正合列 \(0\to A\to B\to C\to0\)，\(\delta\)-函子态射 \(a^\bullet:T^\bullet\to U^\bullet\) 所要求的相容性就是下列方块交换：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+T^n(C)\arrow[r,"\delta_T^n"]\arrow[d,"a_C^n"']&T^{n+1}(A)\arrow[d,"a_A^{n+1}"]\\
+U^n(C)\arrow[r,"\delta_U^n"']&U^{n+1}(A)
+\end{tikzcd}
+\]
+同调版本由 \(T_n\) 和连接态射 \(T_n(C)\to T_{n-1}(A)\) 组成，长正合列在右端以 \(T_0(C)\to0\) 结束。右导出函子组成上同调 \(\delta\)-函子，左导出函子组成同调 \(\delta\)-函子。
+
+\begin{definition}\label{b4:def:universal-delta-functor}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若对任意上同调 \(\delta\)-函子 \(U^\bullet:\mathcal A\to\mathcal B\)，每个自然变换 \(T^0\to U^0\) 都唯一延拓为 \(\delta\)-函子态射 \(T^\bullet\to U^\bullet\)，则称 \(T^\bullet\) 为\term[fan-delta-hanzi]{泛上同调 \(\delta\)-函子}[universal cohomological delta functor]。对同调 \(\delta\)-函子 \(T_\bullet:\mathcal A\to\mathcal B\)，若对任意同调 \(\delta\)-函子 \(U_\bullet:\mathcal A\to\mathcal B\)，每个 \(U_0\to T_0\) 都唯一延拓为 \(\delta\)-函子态射 \(U_\bullet\to T_\bullet\)，则称 \(T_\bullet\) 具有同调泛性。
+\end{definition}
+
+这里方向不能省略。右导出函子从自身的零次项出发控制到其他理论的映射；左导出函子接收其他理论到自身零次项的映射。它们分别由余核式和核式的归纳构造产生。相同零次函子的两个泛 \(\delta\)-函子必自然同构：双向延拓零次恒等，再用唯一性证明两个复合都是恒等。
+
+\subsection{\texorpdfstring{消去性与泛 \(\delta\)-函子}{消去性与泛 \AlgebraPdfDelta-函子}}
+\label{b4:subsec:0801:03}
+
+\begin{definition}\label{b4:def:effaceable}
+设 \(T:\mathcal A\to\mathcal B\) 是交换范畴间的加性函子。若每个对象 \(A\) 都有单态射 \(j:A\to E\) 使 \(T(j)=0\)，则称 \(T\) \term[xiaoqvxing]{可消去}[effaceable]。若每个对象 \(A\) 都有满态射 \(P\to A\) 使其在 \(T\) 下为零，则称 \(T\) 可对偶消去。
+\end{definition}
+
+消去的是一个诱导态射，不一定要求 \(T(E)=0\)。导出函子的消去性更强：嵌入内射对象便使其正次取值本身为零。
+
+\begin{theorem}[消去性与泛性]\label{b4:thm:derived-universal}
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若每个 \(T^n\)、\(n>0\)，均可消去，则它是泛上同调 \(\delta\)-函子。对偶地，正次均可对偶消去的同调 \(\delta\)-函子具有同调泛性。特别地，对加性函子 \(F:\mathcal A\to\mathcal B\)，若 \(\mathcal A\) 有足够多内射对象且 \(F\) 左正合，则 \(R^\bullet F\) 具有上同调泛性；若 \(\mathcal A\) 有足够多投射对象且 \(F\) 右正合，则 \(L_\bullet F\) 具有同调泛性。
+\end{theorem}
+\begin{proof}
+给定 \(a^0:T^0\to U^0\)。归纳假定次数小于 \(n\) 的自然变换已定义，并与已有连接态射相容。对 \(A\) 取单态射 \(j:A\to E\)，使 \(T^n(j)=0\)，记 \(Q=E/A\)。正合性给出满态射
+\[
+\delta_T:T^{n-1}(Q)\longrightarrow T^n(A),
+\qquad \ker\delta_T=\operatorname{im}\bigl(T^{n-1}(E)\to T^{n-1}(Q)\bigr).
+\]
+复合 \(\delta_Ua_Q^{n-1}\) 在这个核上为零：由低次自然性，其在 \(T^{n-1}(E)\) 上的值等于先用 \(a_E^{n-1}\)，再沿 \(U\) 的相邻两个态射复合，而后者为零。因此它唯一下降为
+\[
+a_A^n:T^n(A)\longrightarrow U^n(A),
+\qquad a_A^n\delta_T=\delta_Ua_Q^{n-1}.
+\]
+这里 \(\delta_T\) 是满态射，所以等式唯一决定 \(a_A^n\)；任何与连接态射相容的延拓都必须取此值。
+
+检验选择独立性。若另选 \(j':A\to E'\)，则 \(j''=(j,j'):A\to E\oplus E'\) 仍单，且被 \(T^n\) 零化。记 \(Q''=\operatorname{coker}j''\)。向 \(E\) 的投影 \(\pi_E\) 诱导下图，其中两行短正合：
+\[
+\begin{tikzcd}[column sep=small,row sep=large]
+0\arrow[r]&A\arrow[r,"j''"]\arrow[d,"1_A"']
+&E\oplus E'\arrow[r]\arrow[d,"\pi_E"]
+&Q''\arrow[r]\arrow[d,"\bar\pi_E"]&0\\
+0\arrow[r]&A\arrow[r,"j"']&E\arrow[r]&Q\arrow[r]&0.
+\end{tikzcd}
+\]
+向 \(E'\) 的投影给出同样的比较图。用下标 \(j,j''\) 区分两种选择所得的候选态射。低次自然性及连接态射的自然性给出
+\[
+a_{A,j}^n\delta_T''=\delta_U''a_{Q''}^{n-1}
+=a_{A,j''}^n\delta_T''.
+\]
+上行的 \(\delta_T''\) 为满态射，故 \(a_{A,j}^n=a_{A,j''}^n\)。对另一投影重复此论证，得到 \(a_{A,j'}^n=a_{A,j''}^n\)，从而构造不依赖选择。
+
+检验对任意 \(f:A\to B\) 的自然性。选分别消去 \(T^n(A),T^n(B)\) 的 \(j_A:A\to E_A\)、\(j_B:B\to E_B\)。用 \(j_f=(j_A,j_B\circ f):A\to E_A\oplus E_B\) 作为 \(A\) 的选择，记 \(Q_f=\operatorname{coker}j_f\)、\(Q_B=\operatorname{coker}j_B\)。向 \(E_B\) 的投影诱导
+\[
+\begin{tikzcd}[column sep=small,row sep=large]
+0\arrow[r]&A\arrow[r,"j_f"]\arrow[d,"f"']
+&E_A\oplus E_B\arrow[r]\arrow[d,"\pi_B"]
+&Q_f\arrow[r]\arrow[d,"\bar f"]&0\\
+0\arrow[r]&B\arrow[r,"j_B"']&E_B\arrow[r]&Q_B\arrow[r]&0.
+\end{tikzcd}
+\]
+已证的选择独立性允许用上行定义 \(a_A^n\)。将低次自然性与连接态射的自然性用于此图，两种复合满足
+\[
+\bigl(U^n(f)a_A^n\bigr)\delta_{T,f}
+=\delta_{U,B}a_{Q_B}^{n-1}T^{n-1}(\bar f)
+=\bigl(a_B^nT^n(f)\bigr)\delta_{T,f}.
+\]
+消去满态射 \(\delta_{T,f}\)，即得 \(U^n(f)a_A^n=a_B^nT^n(f)\)。
+
+最后检验与任意 \(0\to A\xrightarrow{i}B\to C\to0\) 的连接态射相容。选择 \(j:B\to E\) 消去 \(T^n(B)\)，则 \(ji:A\to E\) 消去 \(T^n(A)\)。原短正合列映入 \(0\to A\to E\to E/A\to0\)，其中左端为恒等。定义式已保证后一列的相容；把它与 \(C\to E/A\) 的低次自然性复合，就得到原列的相容。归纳完成存在、自然性及唯一性。
+
+把论证同时用于 \(\mathcal A^{\mathrm{op}}\) 与 \(\mathcal B^{\mathrm{op}}\)，单态射变满态射，余核下降变核分解，自然变换的方向也反转，遂得同调版本。最后，\cref{b4:prop:derived-degree-zero}使内射嵌入、投射满射消去所有正次导出函子，故可应用已证判据。
+\end{proof}
+
+这一泛性质确定的不仅是各个同调对象，也包括所有态射和连接态射。以后从另一种消解或另一种构造得到同一理论时，可以用零次的自然同构来识别整套长正合列。

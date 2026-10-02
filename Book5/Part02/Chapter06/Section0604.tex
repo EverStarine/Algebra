@@ -7,7 +7,7 @@
 % * 调用第6.3节已建立的 Garnir 关系及标准基，在本节依次完成不可约性、非同构性与完备性；不使用尚未证明的钩长公式或 Frobenius 特征映射
 % * 用 Specht 模上的不变配对与子模定理证明特征零不可约性，明确正特征下哪一步失效
 % * 用支配序和 Young 子群分析不同分拆的非同构性；不把参数个数相等当作非同构性的证明
-% * 在不可约性和非同构性建立后，结合共轭类个数与半单群代数完成分类完备性；钩长公式不作为这一步的未证前提
+% * 在不可约性和非同构性建立后，结合共轭类个数与半单群代数完成分类完备性；处理空分拆，并用整数标准基把有理数上的作用同态扩张到任意特征零域
 % * 分类之后分别讨论 Young 对称化子的归一化与幂等元、正特征中的配对退化与可约性、Young 置换模分解的支配三角性及维数平方和的核验，使标题区分新构造、反例、推论与事后检验
 \section{不可约分类}
 \label{b5:sec:0604}
@@ -97,7 +97,7 @@ b_t\cdot\varphi(e_t)=\varphi(b_te_t)=|C_t|\cdot\varphi(e_t)\ne0.
 设 \(k\) 为特征零域，\(n\geq0\) 为整数。全部 Specht 模 \(S_k^\lambda\)，其中 \(\lambda\vdash n\)，是互不同构的绝对不可约左 \(k[S_n]\)-模，并穷尽所有不可约有限维左 \(k[S_n]\)-模。
 \end{theorem}
 \begin{proof}
-不可约性和非同构性已经分别由\cref{b5:prop:specht-char-zero-simple}及\cref{b5:prop:specht-dominance}证明。先取 \(k=\mathbb C\)。\cref{b5:prop:symmetric-conjugacy-partitions}说明共轭类数等于分拆数，而\cref{b5:thm:irreducible-character-basis}说明不可约复表示的类型数等于共轭类数。我们已经为每个分拆构造出互不同构的不可约表示，因此没有其他复不可约类型。
+当 \(n=0\) 时，\(S_0\) 是平凡群，唯一的空分拆对应 Specht 模 \(k\)，结论成立。以下设 \(n\geq1\)。不可约性和非同构性已经分别由\cref{b5:prop:specht-char-zero-simple}及\cref{b5:prop:specht-dominance}证明。先取 \(k=\mathbb C\)。\cref{b5:prop:symmetric-conjugacy-partitions}说明共轭类数等于分拆数，而\cref{b5:thm:irreducible-character-basis}说明不可约复表示的类型数等于共轭类数。我们已经为每个分拆构造出互不同构的不可约表示，因此没有其他复不可约类型。
 
 为把完备性推广到任意特征零域，不能直接使用只对复表示证明的类函数论。改用整数标准基写出所有表示矩阵，得到一个在有理数上定义的代数同态
 \[
@@ -105,6 +105,14 @@ b_t\cdot\varphi(e_t)=\varphi(b_te_t)=|C_t|\cdot\varphi(e_t)\ne0.
 \prod_{\lambda\vdash n}
 \operatorname{End}_{\mathbb Q}(S_{\mathbb Q}^\lambda).
 \]
+对任意特征零域 \(k\)，标准基定理给出
+\[
+k\otimes_{\mathbb Q}S_{\mathbb Q}^\lambda
+\xrightarrow{\ \sim\ }S_k^\lambda,
+\qquad a\otimes e_t\longmapsto ae_t.
+\]
+两边的群作用矩阵都由同一组整数矩阵得到，故此同构等变。在这些基下，\(\operatorname{End}_{\mathbb Q}(S_{\mathbb Q}^\lambda)\) 的矩阵单位基也扩张为 \(\operatorname{End}_k(S_k^\lambda)\) 的基。因此 \(k\) 上的作用同态 \(\Phi_k\) 正是 \(k\otimes_{\mathbb Q}\Phi_{\mathbb Q}\)，其矩阵由 \(\Phi_{\mathbb Q}\) 的矩阵逐项扩张系数得到。
+
 扩张到复数后，此映射单射：若群代数元素在所有不可约上作用为零，Maschke 定理使它在正则表示上也作用为零；作用于单位元即知该元素为零。由\cref{b5:thm:row-column-orthogonality}在单位共轭类处得到的维数平方和，目标维数为
 \(\sum_\lambda(f^\lambda)^2=n!\)，所以这个单射还是同构。
 
@@ -112,8 +120,12 @@ b_t\cdot\varphi(e_t)=\varphi(b_te_t)=|C_t|\cdot\varphi(e_t)\ne0.
 \begin{equation}\label{b5:eq:symmetric-split-algebra}
 k[S_n]\cong\prod_{\lambda\vdash n}M_{f^\lambda}(k).
 \end{equation}
-一个不可约模只能由这组正交中心幂等元中的一个非零作用，所以只属于一个矩阵块。矩阵代数 \(M_d(k)\) 的不可约模只有列向量模：取非零 \(E_{ii}v\)，映射
-\(k^d\rightarrow V\)、第 \(j\) 个基向量映到 \(E_{ji}v\)，由矩阵单位关系是非零模同态；列向量模简单，其像在不可约 \(V\) 中必为全体。这证明\eqref{b5:eq:symmetric-split-algebra}所列的 Specht 模也穷尽 \(k\) 上全部类型。
+一个不可约模只能由这组正交中心幂等元中的一个非零作用，所以只属于一个矩阵块。设 \(V\) 是矩阵代数 \(M_d(k)\) 的不可约模。取 \(0\ne v\in V\)，由 \(1=\sum_iE_{ii}\) 可选 \(i\) 使 \(E_{ii}v\ne0\)。记 \(e_1,\ldots,e_d\) 为 \(k^d\) 的标准列向量基，定义
+\[
+\psi:k^d\longrightarrow V,
+\qquad e_j\longmapsto E_{ji}v.
+\]
+矩阵单位关系 \(E_{ab}E_{ji}=\delta_{bj}E_{ai}\) 说明 \(\psi\) 是模同态，而 \(\psi(e_i)=E_{ii}v\ne0\)。列向量模 \(k^d\) 简单，所以这个非零同态的核为零；其像是不可约模 \(V\) 的非零子模，故等于 \(V\)。于是 \(\psi\) 为同构。这证明\eqref{b5:eq:symmetric-split-algebra}所列的 Specht 模也穷尽 \(k\) 上全部类型。
 \end{proof}
 
 这里先证明“每个都是不可约”及“彼此不同”，最后才计数。没有前两项，参数个数与共轭类个数相等并不能证明分类。

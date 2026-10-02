@@ -1,92 +1,129 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 10.4 复合函子的导出
-% 纲要位置：计划纲要.md，第 2731 行。
+% 纲要标题：### 10.4 Künneth 公式
+% 纲要标签：b4:sec:0904
+% 纲要位置：计划纲要.md，第 2703 行。
 
-\section{复合函子的导出}
-\label{b4:sec:1004}
+\section{Künneth 公式}
+\label{b4:sec:0904}
 
-把内射消解先送入一个函子以后，其像未必适合计算另一个函子。检查内射像的零调性，才能分清直接复合导出与需要谱序列的情形。
+张量两个复形的同调，由各自同调的张量积及一次 Tor 共同控制。域上 Tor 消失，而主理想整环上即使短正合列分裂，分裂也通常没有自然选择。
 
 % 纲要内容：
 %
-% * 函子作用于内射对象后的条件
-% * 复合导出的障碍
-% * Grothendieck 谱序列的假设预告
+% * 域和主理想整环的基本版本
+% * Tor 项及成立假设
+% * 与第三卷 Koszul 计算的联系
 %
 % ---
 %
 
-\subsection{内射对象在函子下的像}
-\label{b4:subsec:1004:01}
+\subsection{域和主理想整环的基本版本}
+\label{b4:subsec:0904:01}
 
-取一个内射消解后，先作用 \(F\) 再作用 \(G\)，看似能够计算复合函子。但 \(F(I)\) 不一定内射，也不一定对 \(G\) 零调。这一步是复合导出问题中必须单独检查的对象条件。
-
-\begin{proposition}\label{b4:prop:right-adjoint-injectives}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(U:\mathcal A\to\mathcal B\) 是加性函子，具有正合左伴随 \(V:\mathcal B\to\mathcal A\)。则 \(U\) 把内射对象送到内射对象。
-\end{proposition}
-\begin{proof}
-设 \(I\) 为 \(\mathcal A\) 的内射对象，给定 \(\mathcal B\) 中单态射 \(X\to Y\)。正合性使 \(V(X)\to V(Y)\) 单射，所以每个 \(V(X)\to I\) 延拓至 \(V(Y)\)。利用伴随同构
-\(\operatorname{Hom}_{\mathcal B}(-,U(I))\simeq\operatorname{Hom}_{\mathcal A}(V(-),I)\)，这恰好表示每个 \(X\to U(I)\) 都可延拓到 \(Y\)，故 \(U(I)\) 内射。
-\end{proof}
-
-例如，对环同态 \(R\to S\)，限制标量 \(S\text{-}\mathbf{Mod}\to R\text{-}\mathbf{Mod}\) 的左伴随是 \(S\otimes_R-\)。若 \(S\) 作为右 \(R\)-模平坦，限制标量就保持内射对象。没有平坦性时这个结论可能失败：\(\mathbb Z/2\) 作为 \(\mathbb F_2\)-模内射，作为整数模却不内射。
-
-\begin{theorem}\label{b4:thm:derived-composite-exact-first}
-设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A,\mathcal B\) 有足够多内射对象。设 \(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 为加性函子，\(F\) 正合，\(G\) 左正合，且每个内射对象 \(I\in\mathcal A\) 的像 \(F(I)\) 都对 \(G\) 零调。则对每个对象 \(M\in\mathcal A\) 及整数 \(n\ge0\)，有自然同构
+\begin{theorem}[Künneth 公式]\label{b4:thm:kunneth-pid}
+设 \(R\) 为主理想整环，\(C,D\) 为下有界的自由 \(R\)-模链复形。对每个整数 \(n\)，有对 \(C,D\) 的链映射自然的短正合列
 \[
- R^n(GF)(M)\simeq R^nG(F(M)).
+\begin{split}
+0\longrightarrow&\ \bigoplus_{p+q=n}H_p(C)\otimes_R H_q(D)
+ \xrightarrow{\kappa_n}H_n(C\otimes_R D)\\
+ \longrightarrow&\ \bigoplus_{p+q=n-1}\operatorname{Tor}_1^R(H_p(C),H_q(D))
+ \longrightarrow0.
+\end{split}
 \]
+此列非典范地分裂。特别地，若 \(R=k\) 为域，则 \(\kappa_n\) 是自然同构。
 \end{theorem}
 \begin{proof}
-取 \(M\to I^\bullet\) 的内射消解。\(F\) 正合使 \(F(M)\to F(I^\bullet)\) 仍为正合消解，像的条件使它成为 \(G\)-零调消解。由\cref{b4:thm:acyclic-resolution}，其经 \(G\) 后的同调是 \(R^nG(F(M))\)；同一复形 \(GF(I^\bullet)\) 按定义又计算 \(R^n(GF)(M)\)。消解比较映射给出对 \(M\) 的自然性。
+把 \(Z_p=Z_p(C)\) 放在次数 \(p\)，组成零微分复形 \(Z\)；把 \(B_{p-1}=B_{p-1}(C)\) 放在次数 \(p\)，组成零微分复形 \(B'\)。短正合列 \(0\to Z\to C\to B'\to0\) 逐项分裂，因此与 \(D\) 张量后仍是短正合列。\(Z_p,B_p\) 都自由，由\cref{b4:prop:flat-coefficients-homology}，两侧复形的同调分别是
+\[
+ \bigoplus_{p+q=n}Z_p\otimes H_q(D),\qquad
+ \bigoplus_{p+q=n}B_{p-1}\otimes H_q(D).
+\]
+在同调长正合列中，连接同态在每一项上由包含 \(B_{p-1}\hookrightarrow Z_{p-1}\) 张量 \(H_q(D)\) 给出。具体地，把边界元素提升到 \(C_p\)，再作总微分，来自 \(D\) 的一项对圈代表为零，剩下的就是该包含。这些包含张量映射的余核与核，由自由消解
+\(0\to B_p\to Z_p\to H_p(C)\to0\) 分别识别为张量积及 \(\operatorname{Tor}_1\)，从而得到所写自然正合列。
+
+还须证明分裂。记 \(i_p:B_p\hookrightarrow Z_p\) 为包含。因为 \(B_{p-1}\) 自由，可以为满射 \(\mathrm d_p:C_p\to B_{p-1}\) 选取截面 \(s_{p-1}:B_{p-1}\to C_p\)。于是
+\[
+ Z_p\oplus B_{p-1}\xrightarrow{\ \sim\ }C_p,
+ \qquad (z,b)\longmapsto z+s_{p-1}(b).
+\]
+在这些坐标下，\(\mathrm d_p(z,b)=(i_{p-1}(b),0)\in Z_{p-1}\oplus B_{p-2}\)。因此 \(C\) 同构于两项复形的直和
+\[
+ C\simeq\bigoplus_p E(p),\qquad
+ E(p):\quad B_p\xrightarrow{i_p}Z_p
+ \quad(\text{次数 }p+1,p),
+\]
+其中 \(E(p)\) 的其余项为零。对 \(D\) 同样选取截面，得到
+\[
+ D\simeq\bigoplus_q F(q),\qquad
+ F(q):\quad B_q(D)\hookrightarrow Z_q(D)
+ \quad(\text{次数 }q+1,q),
+\]
+其中 \(F(q)\) 的其余项为零，且同调仅可能在次数 \(q\) 非零，其值为 \(H_q(D)\)。于是张量复形分解为 \(E(p)\otimes_R F(q)\) 的直和；下有界性保证每个总次数只涉及有限多个非零的 \((p,q)\)。
+
+把 \(H_q(D)\) 看成只在次数 \(q\) 非零的复形。商映射 \(Z_q(D)\to H_q(D)\) 给出拟同构 \(F(q)\to H_q(D)\)。因为 \(E(p)\) 有界且自由，\cref{b4:prop:bounded-flat-tensor}说明
+\[
+ E(p)\otimes_R F(q)\longrightarrow E(p)\otimes_R H_q(D)
+\]
+也是拟同构。右侧是 \(B_p\otimes_R H_q(D)\to Z_p\otimes_R H_q(D)\)，放在次数 \(p+q+1,p+q\)。由 \(H_p(C)\) 的长度一自由消解，它在这两个次数的同调分别为 \(\operatorname{Tor}_1^R(H_p(C),H_q(D))\) 与 \(H_p(C)\otimes_R H_q(D)\)。因此在总次数 \(n\)，张量积部分来自 \(p+q=n\)，Tor 部分来自 \(p+q=n-1\)，得到直和分解。圈的张量代表元表明，前一部分恰是 \(\kappa_n\) 的像，后一部分通过自然正合列的商映射同构到其右端，因而给出一个分裂。
+
+自然性来自前半段的圈模、边界模及同调长正合列：链映射保持这些结构，所以 \(\kappa_n\) 和右端商映射都是自然的。后半段所选截面却一般不与链映射相容，故所得直和分解没有自然选择。这与万有系数定理中自然短正合列和所选分裂的区别相同。
+
+域上所有模平坦，Tor 项为零，故最后的结论成立。
 \end{proof}
 
-\subsection{复合导出的障碍}
-\label{b4:subsec:1004:02}
+更一般的 Künneth 公式见 Weibel\cite[Theorem 3.6.3]{Weibel1994HomologicalAlgebra}：只要求一个复形的各项及边界模平坦，另一个复形可以任意，也不要求两者下有界。本节采用下有界自由复形这一较强的充分条件，使每条总次数对角线有限，并可直接沿用\cref{b4:prop:bounded-flat-tensor}的总化论证；下有界性并非 Künneth 公式本身的必要条件。
 
-若 \(F\) 只有左正合性，\(F(I^\bullet)\) 的正次上同调正是 \(R^qF(M)\)，一般不是 \(F(M)\) 的消解。即使其各项都对 \(G\) 零调，也不能在上一个证明中删去 \(F\) 正合这一条件。
+\subsection{Tor 项及成立假设}
+\label{b4:subsec:0904:02}
 
-\begin{example}\label{b4:exm:composite-first-not-exact}
-取素数 \(p\)，令
+\begin{example}\label{b4:exm:kunneth-two-cyclic}
+设 \(m,n\) 为正整数，在 \(\mathbb Z\) 上分别取两项自由消解 \(C=(\mathbb Z\xrightarrow{m}\mathbb Z)\)、\(D=(\mathbb Z\xrightarrow{n}\mathbb Z)\)，次数均为 \(1,0\)。张量总复形是
 \[
- F:\mathbf{Ab}\longrightarrow\mathbb F_p\text{-}\mathbf{Mod},\quad F(A)=A[p],
- \qquad G:\mathbb F_p\text{-}\mathbf{Mod}\longrightarrow\mathbf{Ab}
+ 0\longrightarrow\mathbb Z\xrightarrow{\binom{-n}{m}}
+ \mathbb Z^2\xrightarrow{(m\ \ n)}\mathbb Z\longrightarrow0.
 \]
-分别为 \(p\)-挠子群函子及忘却函子。\(F\) 左正合，\(G\) 正合。因为中间范畴是向量空间范畴，所有 \(F(I)\) 都对 \(G\) 零调。然而取 \(M=\mathbb Z\)，有
+令 \(g=\gcd(m,n)\)。第一个映射单射；第二个映射的像为 \(g\mathbb Z\)，核由 \((n/g,-m/g)\) 生成，而第一个映射的像是该核的 \(g\) 倍。因此
 \[
- R^1(GF)(\mathbb Z)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z)
- =\mathbb Z/p,\qquad R^1G(F(\mathbb Z))=0.
+ H_0(C\otimes D)=\mathbb Z/g,\qquad H_1(C\otimes D)=\mathbb Z/g,
+ \qquad H_2(C\otimes D)=0.
 \]
-非零项来自先作用 \(F\) 时产生的一次导出，而不是来自 \(G\) 的导出。
+第二个非零群是 Tor 项；只取两个消解原有同调的张量积，会漏掉它。
 \end{example}
 
-\begin{proposition}\label{b4:prop:derived-composite-exact-second}
-设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A\) 有足够多内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子，\(G:\mathcal B\to\mathcal C\) 为正合加性函子。则对每个对象 \(M\in\mathcal A\)，有
-\[
- R^n(GF)(M)\simeq G(R^nF(M))\qquad(n\ge0)
-\]
-自然成立。
-\end{proposition}
-\begin{proof}
-取 \(M\to I^\bullet\)。正合函子保持核、像及商对象，故
-\(H^n(GF(I^\bullet))\simeq G(H^n(F(I^\bullet)))\)。两端按导出函子定义就是所写对象；识别使用核与余核的自然态射，故自然。
-\end{proof}
-
-这两个结果处理的是不同的简化情形：前函子正合时，只剩后函子的导出；后函子正合时，它直接作用于前函子的导出。两者都只有左正合性时，两类高次信息必须同时保留。
-
-\subsection{Grothendieck 谱序列的假设}
-\label{b4:subsec:1004:03}
-
-设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，前两者有足够内射对象，\(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 均为左正合加性函子。关键附加条件是
-\[
- R^pG(F(I))=0\qquad(p>0,\ I\text{ 为 }\mathcal A\text{ 的内射对象}).
-\]
-第十五章第15.3节将用双复形建立在这些条件下的 Grothendieck 谱序列，其第二页和目标分别为
-\[
- E_2^{p,q}=R^pG(R^qF(M))
- \quad\Longrightarrow\quad R^{p+q}(GF)(M),\qquad p,q\ge0.
-\]
-这个箭头表示目标带有有限滤过，极限页描述其相邻商；它不直接给出各个 \(E_2\) 项的直和分解。谱序列的微分、收敛及滤过要在第十四章建立以后才有完整意义。
+定理中的自由性假设不能直接删去。仍取主理想整环 \(R=\mathbb Z\)，让 \(C,D\) 都是集中在次数零的 \(\mathbb Z/2\)。此时普通张量复形仅在次数零非零，但 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。若无条件套用上面的短正合列，在次数一会错误地要求零模满射到 \(\mathbb Z/2\)。这里应先取平坦消解再张量；普通张量复形本身没有包含该高阶信息。
 
 \ProseParagraphBreak
-若 \(F\) 正合，只有 \(q=0\) 行可能非零；若 \(G\) 正合，只有 \(p=0\) 列可能非零。这与前两小节的公式相符。一般情形中，先对 \(F(I^\bullet)\) 作进一步消解，再比较两个取同调次序；内射像的零调条件保证其中一个次序确实计算 \(R^*(GF)\)，而不是另一个没有识别的对象。谱序列及其低阶正合列的证明见第十五章。
+主定理中的下有界性保证每条总次数对角线只有有限个非零项，因而上述有限对角总化工具适用。在一般环上，若要用无界复形替换张量积中的某个因子，还须检验它是否保持拟同构；逐项自由本身不能保证这一点，见\cref{b4:exm:unbounded-flat-tensor}。该反例的底环不是主理想整环，不能据此认定主定理中的下有界性是必要条件。
+
+\subsection{与第三卷 Koszul 计算的联系}
+\label{b4:subsec:0904:03}
+
+第三卷第十五章的 Koszul 复形，可以看成两项复形的张量积。对交换环 \(R\) 中元素 \(x\)，写
+\[
+ K(x):\quad 0\longrightarrow R\xrightarrow{x}R\longrightarrow0
+ \qquad(\text{次数 }1,0).
+\]
+多个元素的 Koszul 复形由 \(K(x_1)\otimes_R\cdots\otimes_R K(x_r)\) 给出。各因子次数一生成元的交换引入负号，这与外代数描述中的符号相同。第三卷命题15.2.2已经证明该张量识别，第15.3节证明正则序列时的正合性；这里说明换系数后如何读出新的同调。
+
+\begin{proposition}\label{b4:prop:koszul-adjoin-element}
+设 \(R\) 为交换含幺环，\(C\) 为 \(R\) 模链复形，\(x\in R\)。记 \(K(x)\) 为仅在次数 \(1,0\) 非零的链复形 \(R\xrightarrow{x}R\)，微分为乘 \(x\)。对每个整数 \(n\)，有自然短正合列
+\[
+ 0\longrightarrow H_n(C)/xH_n(C)
+ \longrightarrow H_n(C\otimes_R K(x))
+ \longrightarrow\{\,z\in H_{n-1}(C):xz=0\,\}
+ \longrightarrow0.
+\]
+这里不要求 \(R\) 为主理想整环，也不保证分裂。
+\end{proposition}
+\begin{proof}
+张量复形在次数 \(n\) 是 \(C_n\oplus C_{n-1}\)，其微分为
+\(\mathrm{d}(a,b)=(\mathrm{d}_Ca+(-1)^{n-1}xb,\mathrm{d}_Cb)\)。取包含 \(a\mapsto(a,0)\) 及投影 \(q_n(a,b)=(-1)^{n-1}b\)，便得到短正合列
+\(0\to C\to C\otimes K(x)\xrightarrow{q}C[1]\to0\)，其中链记号下 \(C[1]_n=C_{n-1}\)、\(\mathrm{d}_{C[1]}=-\mathrm{d}_C\)。等式 \(q_{n-1}\mathrm{d}=-\mathrm{d}_Cq_n\) 直接保证投影是链映射。对于 \(C_{n-1}\) 中的圈 \(z\)，提升为 \((0,(-1)^{n-1}z)\)，微分是 \((xz,0)\)，故连接同态就是乘 \(x\)。因此同调长正合列的相关部分是
+\[
+ H_n(C)\xrightarrow{x}H_n(C)\longrightarrow H_n(C\otimes K(x))
+ \longrightarrow H_{n-1}(C)\xrightarrow{x}H_{n-1}(C).
+\]
+取中间部分的核与余核即得结论。
+\end{proof}
+
+例如在 \(R=k[x]\) 上取两个相同元素 \(x,x\)。第一个复形 \(K(x)\) 只有 \(H_0=k\)，而 \(x\) 在该同调上作用为零，故 \(K(x,x)\) 的 \(H_0,H_1\) 都是 \(k\)。次数一的具体圈是 \(e_1-e_2\)，其倍数 \(x(e_1-e_2)\) 是次数二的边界（依生成元次序差一个负号）。这说明第二个 \(x\) 不是 \(R/(x)\) 上的非零因子，故重复元素不能形成正则序列。

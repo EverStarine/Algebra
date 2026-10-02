@@ -1,6 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 3.2 Yoneda 引理
-% 纲要位置：计划纲要.md，第 2513 行。
+% 纲要位置：计划纲要.md，第 3165 行。
 
 \section{Yoneda 引理}
 \label{b4:sec:0302}
@@ -11,9 +11,9 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * Yoneda 嵌入
+% * Yoneda 嵌入；小范畴中的全忠实函子与局部小范畴的 Hom 双射
 % * 引理的证明及自然性
-% * 用态射探测对象的方法
+% * 用 Hom 函子探测对象与态射
 %
 
 \subsection{Yoneda 嵌入}
@@ -26,14 +26,14 @@ h_a:h_A\Longrightarrow h_B,
 \]
 自然性来自 \(a\circ(f\circ u)=(a\circ f)\circ u\)，其中 \(u:X'\rightarrow X\)。又有 \(h_{1_A}=1_{h_A}\) 及 \(h_{ba}=h_b\circ h_a\)。当 \(\mathcal C\) 小时，因此得到函子
 \[
-\mathsf y:\mathcal C\longrightarrow[\mathcal C^{\mathrm{op}},\mathbf{Set}],
+\mathsf y:\mathcal C\longrightarrow\operatorname{Fun}(\mathcal C^{\mathrm{op}},\mathbf{Set}),
 \qquad A\longmapsto h_A,\quad a\longmapsto h_a.
 \]
 它称为\term[yoneda-qianru]{Yoneda 嵌入}[Yoneda embedding]。名称中的“嵌入”将在下面证明为全忠实性；一般不能把它理解成对象集合上的字面包含。
 \symidx{\(\mathsf y\)：Yoneda 嵌入}
 
 \ProseParagraphBreak
-若 \(\mathcal C\) 仅局部小，下文只按分量处理 \(h_A\) 以及涉及它的自然变换，不预设整个集合值函子范畴都在\chapref{b4:ch:01}的大小范围内。引理将证明，以 \(h_A\) 为源、\(F\) 为目标的自然变换由集合 \(F(A)\) 参数化。因此只考虑可表函子之间的变换时，每个 Hom 族仍为集合；此时“Yoneda 嵌入全忠实”具体指下文给出的 Hom 集双射。
+若 \(\mathcal C\) 仅局部小，下文按分量处理 \(h_A\) 以及涉及它的自然变换，不预设整个集合值函子范畴都在\chapref{b4:ch:01}的大小范围内。引理将证明，以 \(h_A\) 为源、\(F\) 为目标的自然变换由集合 \(F(A)\) 参数化，因而可表函子之间的自然变换构成集合。对于仅局部小的范畴，本书所说的“Yoneda 全忠实性”指下文给出的 Hom 集与自然变换集合之间的双射。
 
 \ProseParagraphBreak
 在集合范畴，\(h_A(X)\) 是所有 \(X\) 指标的 \(A\) 中元素族；改变指标的映射 \(X'\rightarrow X\)，就是把元素族拉回。一个映射 \(a:A\rightarrow B\) 对每个族逐项应用 \(a\)，于是自动产生相容的族变换。对于一般范畴，态射 \(X\rightarrow A\) 取代了元素族。关键问题是：每一种对所有 \(X\) 都相容的变换，是否都这样得到？
@@ -41,7 +41,7 @@ h_a:h_A\Longrightarrow h_B,
 \subsection{Yoneda 引理的证明与自然性}
 \label{b4:subsec:0302:02}
 
-记 \(\operatorname{Nat}(H,F)\) 为函子 \(H\) 到 \(F\) 的自然变换族。\term[yoneda-yinli]{Yoneda 引理}[Yoneda lemma]说明，以可表函子为源时，只需计算一个分量中的一个值。
+对源、目标相同的两个函子 \(H,F\)，记 \(\operatorname{Nat}(H,F)\) 为从 \(H\) 到 \(F\) 的自然变换类。\term[yoneda-yinli]{Yoneda 引理}[Yoneda lemma]说明，以可表函子为源时，这个类是集合，而且只需计算一个分量中的一个值。
 
 \begin{theorem}[Yoneda 引理]\label{b4:thm:yoneda}
 设 \(\mathcal C\) 为局部小范畴，\(F:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\) 为函子，\(A\in\mathcal C\)，记 \(h_A=\operatorname{Hom}_{\mathcal C}(-,A)\)。求值映射
@@ -49,7 +49,7 @@ h_a:h_A\Longrightarrow h_B,
 \Phi_{A,F}:\operatorname{Nat}(h_A,F)\longrightarrow F(A),
 \qquad \alpha\longmapsto\alpha_A(1_A)
 \]
-是双射。其逆把 \(u\in F(A)\) 送到自然变换 \(\alpha^u\)，其中
+是双射，因而自然变换类 \(\operatorname{Nat}(h_A,F)\) 是集合。其逆把 \(u\in F(A)\) 送到自然变换 \(\alpha^u\)，其中
 \[
 \alpha^u_X(f)=F(f)(u)\qquad(f:X\rightarrow A).
 \]
@@ -80,7 +80,7 @@ h_A(A)\arrow[r,"\alpha_A"]\arrow[d,"h_A(f)"']&F(A)\arrow[d,"F(f)"]\\
 h_A(X)\arrow[r,"\alpha_X"']&F(X).
 \end{tikzcd}
 \]
-这说明从 \(\alpha_A(1_A)\) 按所给公式重建的自然变换就是 \(\alpha\)，故两个映射互逆。
+这说明从 \(\alpha_A(1_A)\) 按所给公式重建的自然变换就是 \(\alpha\)，故两个映射互逆。所有自然变换恰为由 \(u\in F(A)\) 构造出的 \(\alpha^u\)，所以它们构成一个由集合 \(F(A)\) 参数化的集合。
 
 现在检查两个参数的自然性。对 \(a:A\rightarrow B\) 及 \(\alpha:h_B\Rightarrow F\)，有
 \[
@@ -103,20 +103,25 @@ h_A(X)\arrow[r,"\alpha_X"']&F(X).
 \operatorname{Hom}_{\mathcal C}(A,B)\longrightarrow\operatorname{Nat}(h_A,h_B),
 \qquad a\longmapsto h_a
 \]
-是双射，故 Yoneda 嵌入为全忠实函子。若 \(h_A\) 与 \(h_B\) 自然同构，则 \(A\cong B\)。
+是双射。若 \(\mathcal C\) 进一步为小范畴，则 Yoneda 嵌入
+\[
+\mathsf y:\mathcal C\longrightarrow\operatorname{Fun}(\mathcal C^{\mathrm{op}},\mathbf{Set}),
+\qquad A\longmapsto h_A,\quad a\longmapsto h_a
+\]
+为全忠实函子。对于局部小范畴 \(\mathcal C\)，若 \(h_A\) 与 \(h_B\) 自然同构，则 \(A\cong B\)。
 \end{corollary}
 \begin{proof}
-在 Yoneda 引理中取 \(F=h_B\)，右边为 \(h_B(A)=\operatorname{Hom}_{\mathcal C}(A,B)\)，逆对应正是后复合。因此态射映射为双射。若自然同构 \(\alpha:h_A\xrightarrow{\sim}h_B\) 及其逆分别来自 \(a:A\rightarrow B\)、\(b:B\rightarrow A\)，则
+在 Yoneda 引理中取 \(F=h_B\)，右边为 \(h_B(A)=\operatorname{Hom}_{\mathcal C}(A,B)\)，逆对应正是后复合。因此态射映射为双射。当 \(\mathcal C\) 小时，函子 \(\mathsf y\) 由这些映射给出，因而全且忠实。若自然同构 \(\alpha:h_A\xrightarrow{\sim}h_B\) 及其逆分别来自 \(a:A\rightarrow B\)、\(b:B\rightarrow A\)，则
 \[
 h_{ba}=\alpha^{-1}\alpha=1_{h_A}=h_{1_A},\qquad
 h_{ab}=1_{h_B}=h_{1_B}.
 \]
-忠实性给出 \(ba=1_A\)、\(ab=1_B\)，故 \(a\) 是同构。
+上面双射的单射性给出 \(ba=1_A\)、\(ab=1_B\)，故 \(a\) 是同构。
 \end{proof}
 
 这一嵌入的标准表述可参阅 Weibel《An Introduction to Homological Algebra》\cite[Example A.3.4]{Weibel1994HomologicalAlgebra}。对于协变 Hom 函子，方向相反：\(\operatorname{Nat}(h^A,h^B)\cong\operatorname{Hom}_{\mathcal C}(B,A)\)。实际使用时先写清固定的是源还是目标，便能避免把变换对应的态射反向。
 
-\subsection{用态射探测对象}
+\subsection{用 Hom 函子探测对象与态射}
 \label{b4:subsec:0302:03}
 
 \begin{proposition}\label{b4:prop:hom-detects-morphisms}

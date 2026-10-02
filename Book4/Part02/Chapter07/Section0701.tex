@@ -1,89 +1,104 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 7.1 消解的构造
-% 纲要位置：计划纲要.md，第 2622 行。
+% 纲要标题：### 7.1 链同伦
+% 纲要标签：b4:sec:0601
+% 纲要位置：计划纲要.md，第 3246 行。
 
-\section{消解的构造}
-\label{b4:sec:0701}
+\section{链同伦}
+\label{b4:sec:0601}
 
-生成元给出自由满射，关系组成其核；继续为核取生成元，便得到消解。投射与内射两个方向的构造都依赖范畴中相应对象是否足够多。
-
+同调看不见的复形映射未必都能用同伦消去。先研究可显式写成微分交换子的差别，便能区分零伦、可缩与仅仅正合。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 模的自由及投射消解
-% * 内射消解
-% * 足够多投射或内射对象的假设
+% * 同伦定义与同调不变性
+% * 零伦映射及可缩复形
+% * 正合复形未必可缩
 %
 
-\subsection{模的自由及投射消解}
-\label{b4:subsec:0701:01}
+\subsection{同伦与同调不变性}
+\label{b4:subsec:0601:01}
 
-一个模的生成元给出自由满射，生成元之间的关系则成为这个满射的核。若核还不是容易处理的模，就继续为核选择生成元。消解把这项重复操作写成一个正合复形；它所保留的不是某一组最优生成元，而是所有关系都被逐层记录这一事实。
+两个复形映射可能逐项不同，却在同调上完全相同。最容易控制的一类差别是能够写成“先作微分再作某个降次映射，加上先降次再作微分”。这类差别在余圈上自动变成余边。
 
-\begin{definition}\label{b4:def:projective-resolution}
-设 \(\mathcal A\) 是交换范畴，\(P\) 为其对象。若对每个满态射 \(e:X\to Y\) 及态射 \(f:P\to Y\)，都存在态射 \(\widetilde f:P\to X\)，使 \(e\widetilde f=f\)，则称 \(P\) 为\term[tousheduixiang]{投射对象}[projective object]。给定对象 \(M\in\mathcal A\) 及增广链复形
+\begin{definition}\label{b4:def:chain-homotopy}
+设 \(\mathcal A\) 是加性范畴，\(C,D\) 为 \(\mathcal A\) 中的上链复形，\(f,g:C\to D\) 是复形映射。若有态射族 \(h^n:C^n\to D^{n-1}\)（\(n\in\mathbb Z\)），使
 \[
-\cdots\longrightarrow P_2\xrightarrow{\mathrm{d}_2}P_1
-\xrightarrow{\mathrm{d}_1}P_0\xrightarrow{\varepsilon}M\longrightarrow0
+f^n-g^n=\mathrm{d}_D^{n-1}h^n+h^{n+1}\mathrm{d}_C^n
+\quad(n\in\mathbb Z),
 \]
-若此序列正合，且每个 \(P_n\)（\(n\ge0\)）都投射，则称它为 \(M\) 的\term[toushexiaojie]{投射消解}[projective resolution]。若 \(R\) 为含幺环、\(\mathcal A=R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模范畴，且各 \(P_n\) 自由，则称为\term[ziyouxiaojie]{自由消解}[free resolution]。
+则称 \(f\) 与 \(g\) \term[lian-tonglun]{链同伦}[chain homotopic]，记为 \(f\simeq g\)，并称 \(h\) 为一个链同伦。链指标中同一个公式写为 \(f_n-g_n=\partial_{D,n+1}h_n+h_{n-1}\partial_{C,n}\)，其中 \(h_n:C_n\to D_{n+1}\)。
 \end{definition}
 
-增广项 \(M\) 不属于非负次数的复形 \(P_\bullet\)。去掉它后，\(H_0(P_\bullet)\cong M\)、\(H_n(P_\bullet)=0\) 对 \(n>0\) 成立。写成上链复形时约定 \(P^{-n}=P_n\)，所以投射消解位于非正次数；它的增广给出到集中于零次的 \(M\) 的拟同构。
+上链指标下同伦降一次，链指标下升一次，两者都与微分方向相反。相反方向使 \(\mathrm{d}h\) 与 \(h\mathrm{d}\) 恢复零次态射。这里保留“链同伦”这一通用名称，不因为指标升次而另换概念。
 
-\begin{proposition}\label{b4:prop:free-resolution-exists}
-设 \(R\) 是含幺环。每个左 \(R\) 模都有自由消解，因而也有投射消解。每个右 \(R\) 模也有相应的右模消解。
+\begin{proposition}\label{b4:prop:homotopy-cohomology}
+设 \(\mathcal A\) 是交换范畴，\(C,D\) 为其中的上链复形，\(f,g:C\to D\) 为同伦的复形映射。则对每个 \(n\in\mathbb Z\)，有 \(H^n(f)=H^n(g)\)。在任意两个固定复形之间，同伦是复形映射的等价关系，且与加法、左右复合相容。
 \end{proposition}
 \begin{proof}
-令 \(K_0=M\)。以 \(K_0\) 的底集合为基取自由模 \(P_0\)，把基向量 \([m]\) 送到 \(m\)，得到满射 \(p_0:P_0\to K_0\)。归纳地令 \(K_{n+1}=\ker p_n\)，取以 \(K_{n+1}\) 为基的自由模 \(P_{n+1}\) 及满射 \(p_{n+1}:P_{n+1}\to K_{n+1}\)。把后者与 \(K_{n+1}\hookrightarrow P_n\) 复合定义 \(\mathrm{d}_{n+1}\)。于是 \(\operatorname{im}\mathrm{d}_{n+1}=K_{n+1}=\ker \mathrm{d}_n\)，其中 \(\mathrm{d}_0\) 表示增广。自由模的基像可以沿满射逐一提升，因此各项投射。对反环 \(R^{\mathrm{op}}\) 使用同一构造便得到右模版本。
+把同伦公式限制到 \(Z^n(C)\) 上，含 \(h\mathrm{d}_C\) 的项为零，剩余项通过 \(\operatorname{im}\mathrm{d}_D^{n-1}=B^n(D)\) 分解，故取商后 \(H^n(f-g)=0\)。在模中就是 \(f(z)-g(z)=\mathrm{d}_Dh(z)\)。
+
+零同伦、\(-h\) 及同伦之和分别给出自反、对称和传递性。若 \(u:C'\to C\)、\(v:D\to D'\) 为复形映射，则
+\[
+v(f-g)u=\mathrm{d}_{D'}(vhu)+(vhu)\mathrm{d}_{C'};
+\]
+这证明复合相容性。两个差的同伦相加给出加法相容性。
 \end{proof}
 
-这个构造通常很大。对 \(\mathbb Z/m\mathbb Z\)，其中 \(m>1\)，较合适的消解是 \(0\to\mathbb Z\xrightarrow{\times m}\mathbb Z\to\mathbb Z/m\mathbb Z\to0\)。对 \(R=k[\epsilon]/(\epsilon^2)\) 上的 \(k=R/(\epsilon)\)，则有无限消解
+因此可以把同伦的映射视为同一个态射，得到\term[tonglun-fanchou]{同伦范畴}[homotopy category] \(K(\mathcal A)\)。对象仍是复形，态射则是复形映射的同伦类。\symidx{\(K(\mathcal A)\)：复形的同伦范畴}若 \(C,D\) 是左 \(R\)-模复形，由 Hom 微分在次数 \(-1\) 的公式可见
 \[
-\cdots\xrightarrow{\epsilon}R\xrightarrow{\epsilon}R
-\xrightarrow{\epsilon}R\longrightarrow k\longrightarrow0.
+\operatorname{Hom}_{K(R\text{-}\mathbf{Mod})}(C,D)
+=H^0\operatorname{Hom}_R^\bullet(C,D),
 \]
-每次乘 \(\epsilon\) 的核和像都为 \((\epsilon)\)。有限生成并不保证这一过程在有限步内停止。
+因为零次余圈是复形映射，而零次余边恰好是 \(\mathrm{d}h+h\mathrm{d}\)。
 
-\subsection{内射消解}
-\label{b4:subsec:0701:02}
+\subsection{零伦映射及可缩复形}
+\label{b4:subsec:0601:02}
 
-\begin{definition}\label{b4:def:injective-resolution}
-设 \(\mathcal A\) 是交换范畴，\(I\) 为其对象。若对每个单态射 \(e:X\to Y\) 及态射 \(f:X\to I\)，都存在态射 \(\widetilde f:Y\to I\)，使 \(\widetilde f e=f\)，则称 \(I\) 为\term[neisheduixiang]{内射对象}[injective object]。给定对象 \(N\in\mathcal A\) 及增广上链复形
-\[
-0\longrightarrow N\xrightarrow{\eta}I^0\xrightarrow{\mathrm{d}^0}I^1
-\xrightarrow{\mathrm{d}^1}I^2\longrightarrow\cdots
-\]
-若此序列正合且各 \(I^n\)（\(n\ge0\)）内射，则称它为 \(N\) 的\term[neishexiaojie]{内射消解}[injective resolution]。
+\begin{definition}\label{b4:def:contractible-complex}
+设 \(\mathcal A\) 为加性范畴，\(C,D\) 为其中的上链复形，\(f:C\to D\) 为复形映射。若 \(f\) 与零映射同伦，则称 \(f\) 为\term[linglun-yingshe]{零伦映射}[null-homotopic map]。若 \(1_C\simeq0\)，则称 \(C\) 为\term[kesuo-fuxing]{可缩复形}[contractible complex]；满足 \(1_{C^n}=\mathrm{d}_C^{n-1}h^n+h^{n+1}\mathrm{d}_C^n\) 的态射族 \(h^n:C^n\to C^{n-1}\)（\(n\in\mathbb Z\)）称为收缩同伦。若存在复形映射 \(g:D\to C\)，使 \(gf\simeq1_C\)、\(fg\simeq1_D\)，则称 \(f\) 为\term[tonglun-dengjia]{同伦等价}[homotopy equivalence]。
 \end{definition}
 
-这里 \(I^\bullet\) 位于非负上链次数，\(H^0(I^\bullet)\cong N\)，正次数上同调为零。构造方法与投射情形方向相反：先嵌入 \(N\hookrightarrow I^0\)，再把商对象 \(I^0/N\) 嵌入 \(I^1\)，继续处理新的商对象。
+可缩复形在交换范畴中必零调，因为恒等同态在同调上等于零。反向所缺的条件不是某个新的数值，而是各次数的短正合列能否分裂。
 
-\ProseParagraphBreak
-对任意含幺环 \(R\)，第二卷定理7.2.8已经证明每个左 \(R\) 模都能嵌入内射模。该定理使用
+\begin{proposition}\label{b4:prop:contractible-split-exact}
+设 \(\mathcal A\) 是交换范畴，\(C\) 为其中的上链复形。它可缩，当且仅当它零调，且对每个 \(n\in\mathbb Z\)，短正合列
 \[
-J=\operatorname{Hom}_{\mathbb Z}(R,\mathbb Q/\mathbb Z),
-\qquad (rf)(s)=f(sr),
+0\longrightarrow Z^n(C)\xrightarrow{z_C^n}C^n
+\xrightarrow{\widetilde{\mathrm{d}}_C^n} Z^{n+1}(C)\longrightarrow0
 \]
-以及所有加法群同态 \(\chi:N\to\mathbb Q/\mathbb Z\) 给出的嵌入 \(n\mapsto\bigl(s\mapsto\chi(sn)\bigr)_\chi\)。其中 \(\mathbb Q/\mathbb Z\) 的内射性、对非零元素的分离性及内射模积的内射性均已在那里证明。本章反复把此已证结果用于商模，便得到任意左模的内射消解；右模应用于反环。
+均分裂；其中 \(z_C^n:Z^n(C)\to C^n\) 为核态射，\(\widetilde{\mathrm{d}}_C^n\) 由 \(\mathrm{d}_C^n=z_C^{n+1}\widetilde{\mathrm{d}}_C^n\) 定义，并在零调假设下为满态射。
+\end{proposition}
+\begin{proof}
+若 \(1_C=\mathrm{d}h+h\mathrm{d}\)，则已知 \(C\) 零调。把次数 \(n+1\) 的同伦公式右复合 \(z_C^{n+1}\)，由 \(\mathrm{d}_C^{n+1}z_C^{n+1}=0\) 得
+\[
+z_C^{n+1}=\mathrm{d}_C^nh^{n+1}z_C^{n+1}
+=z_C^{n+1}\widetilde{\mathrm{d}}_C^nh^{n+1}z_C^{n+1}.
+\]
+消去单态射 \(z_C^{n+1}\)，得到
+\[
+\widetilde{\mathrm{d}}_C^n\bigl(h^{n+1}z_C^{n+1}\bigr)
+=1_{Z^{n+1}(C)}.
+\]
+所以 \(h^{n+1}z_C^{n+1}:Z^{n+1}(C)\to C^n\) 是 \(\widetilde{\mathrm{d}}_C^n\) 的截面。
 
-\begin{example}\label{b4:exm:integer-injective-resolution}
-作为 \(\mathbb Z\) 模，\(\mathbb Z\) 有内射消解
-\[
-0\longrightarrow\mathbb Z\longrightarrow\mathbb Q
-\longrightarrow\mathbb Q/\mathbb Z\longrightarrow0.
-\]
-正合性由商群定义给出，两项内射性由第二卷定理7.2.5的可除群判据给出。它与 \(\mathbb Z\) 自身的长度零投射消解不同：两种消解分别适合把 \(\mathbb Z\) 放在 Hom 的第二变量和第一变量。
+反过来，选各短列的截面，得到 \(C^n\cong Z^n(C)\oplus Z^{n+1}(C)\)，且微分为 \(\mathrm{d}(z,w)=(w,0)\)。定义 \(h^n(z,w)=(0,z)\in Z^{n-1}(C)\oplus Z^n(C)\)，则 \(\mathrm{d}h(z,w)=(z,0)\)、\(h\mathrm{d}(z,w)=(0,w)\)，相加等于恒等。双积矩阵公式使此计算在一般交换范畴中也成立。
+\end{proof}
+
+例如在相邻两次放同一对象 \(M\)，微分为 \(1_M\)，得到可缩复形。它的两个非零项可以很大，同调却为零；可缩所说的“消去”是通过显式同伦实现的，并不是逐项零对象。
+
+\subsection{正合复形的非可缩例子}
+\label{b4:subsec:0601:03}
+
+\begin{example}\label{b4:exm:acyclic-not-contractible}
+把交换群短正合列 \(0\to\mathbb Z\xrightarrow{2}\mathbb Z\to\mathbb Z/2\to0\) 放在次数 \(0,1,2\)，便得到零调复形。若它可缩，次数二的同伦公式将要求商映射 \(\mathbb Z\to\mathbb Z/2\) 有一个截面。但任何 \(\mathbb Z/2\to\mathbb Z\) 都为零，因此不存在截面，复形不可缩。
 \end{example}
 
-\subsection{足够多投射或内射对象的假设}
-\label{b4:subsec:0701:03}
+\begin{example}\label{b4:exm:acyclic-free-periodic}
+令 \(R=\mathbb Z/4\)，在每个整数次数取自由模 \(R\)，微分均为乘 \(2\)。因为核与像同为 \(2R\)，复形正合。每个 \(R\)-线性 \(h^n:R\to R\) 都是乘某个 \(a_n\in R\)。若有收缩同伦，便须
+\[
+1=2a_n+2a_{n+1}\quad\text{在 }R\text{ 中成立},
+\]
+右端是偶数剩余类，矛盾。这说明即使各项自由，无界正合复形也未必可缩。
+\end{example}
 
-\begin{definition}\label{b4:def:enough-projectives-injectives}
-设 \(\mathcal A\) 是交换范畴。若每个对象都是某个投射对象的商对象，就说 \(\mathcal A\) 有\term[zugouduo-tousheduixiang]{足够多投射对象}[enough projectives]；若每个对象都能嵌入某个内射对象，就说它有\term[zugouduo-neisheduixiang]{足够多内射对象}[enough injectives]。
-\end{definition}
-
-在前一条件下，对核反复选择投射满态射，就得到投射消解；在后一条件下，对余核反复选择内射单态射，就得到内射消解。这是\cref{b4:prop:free-resolution-exists}的范畴形式，正合性仍由每一步的核或余核保证。选择消解只要求这些对象存在，不要求选择具有函子性。
-
-\ProseParagraphBreak
-交换范畴本身的公理没有包括这两项条件。例如有限交换群组成交换范畴，却没有非零投射对象。事实上，若非零有限交换群 \(P\) 投射，取其循环直和分解中的一个非零 \(p\) 幂阶循环直和因子 \(\mathbb Z/p^a\mathbb Z\)。投射对象的直和因子投射，因为先与投影复合提升，再限制到该因子。可是满射 \(\mathbb Z/p^{a+1}\mathbb Z\to\mathbb Z/p^a\mathbb Z\) 没有截面：原像 \(1+pt\) 的阶为 \(p^{a+1}\)，不能作为阶整除 \(p^a\) 的元素的像。因此上述直和因子不投射，矛盾。故不能把模范畴的存在性结论无条件搬到它的交换子范畴。
+这两个例子分别显示非分裂和无界时可能发生什么。后面比较投射消解时，将从一个有限端开始逐次提升同伦；不能在没有起点的无界复形上直接照搬同一归纳。

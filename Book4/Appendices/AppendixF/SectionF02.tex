@@ -1,0 +1,131 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### F.2 双范畴与张量积
+% 纲要标签：b4:sec:F02
+% 纲要细目（写作范围）：
+% #### F.2.1 结合与单位约束
+% #### F.2.2 环、双模与幺半范畴
+
+\section{双范畴与张量积}
+\label{b4:sec:F02}
+
+双模可以把两个环联系起来，并用张量积连续复合。不过，\((P\otimes_C N)\otimes_B M\) 与 \(P\otimes_C(N\otimes_B M)\) 在通常的构造中是两个对象，联系它们的是指定的自然同构。要把这种复合纳入二维的范畴结构，就应把结合与单位同构也列为数据，并规定改括号的不同过程相容。这与\secref{b4:sec:monoidal-structure}中的幺半结构有相同的要求。
+
+\subsection{结合与单位约束}
+\label{b4:subsec:F02:01}
+
+\begin{definition}\label{b4:def:F-bicategory}
+给定一个对象类，对每对对象 \(X,Y\) 给定一个局部小范畴 \(\operatorname{Hom}_{\mathcal B}(X,Y)\)。其对象记作 \(f:X\rightarrow Y\)，称为 1态射；其态射记作 \(\alpha:f\Rightarrow f'\)，称为 2态射。以 \(\beta\cdot\alpha\) 表示这些范畴中的复合，以 \(1_f\) 表示恒等 2态射。再给定以下数据：
+\begin{enumerate}
+\item 对任意 \(X,Y,Z\)，有复合函子
+\[
+\operatorname{Hom}_{\mathcal B}(Y,Z)\times
+\operatorname{Hom}_{\mathcal B}(X,Y)
+\longrightarrow\operatorname{Hom}_{\mathcal B}(X,Z),
+\]
+它在对象与态射上的值分别记为 \(g*f\) 与 \(\beta*\alpha\)，次序均为先右后左。
+\item 对每个 \(X\)，给定单位 1态射 \(1_X\in\operatorname{Hom}_{\mathcal B}(X,X)\)。
+\item 对依次可复合的 \(f:X\rightarrow Y\)、\(g:Y\rightarrow Z\)、\(h:Z\rightarrow W\)，给定关于各变量自然的可逆 2态射
+\[
+\begin{aligned}
+a_{h,g,f}&:(h*g)*f\Longrightarrow h*(g*f),\\
+\ell_f&:1_Y*f\Longrightarrow f,
+\qquad r_f:f*1_X\Longrightarrow f.
+\end{aligned}
+\]
+\end{enumerate}
+若对任意依次可复合的四个 1态射 \(f,g,h,k\)，满足五边形等式
+\begin{equation}\label{b4:eq:F-bicategory-pentagon}
+\begin{aligned}
+a_{k,h,g*f}\cdot a_{k*h,g,f}
+={}&(1_k*a_{h,g,f})\cdot a_{k,h*g,f}
+\cdot(a_{k,h,g}*1_f),
+\end{aligned}
+\end{equation}
+且对 \(f:X\rightarrow Y\)、\(g:Y\rightarrow Z\)，满足三角等式
+\begin{equation}\label{b4:eq:F-bicategory-triangle}
+(1_g*\ell_f)\cdot a_{g,1_Y,f}=r_g*1_f,
+\end{equation}
+则称这些数据为一个\term[shuang-fanchou]{双范畴}[bicategory]。\(a\) 称为结合约束，\(\ell,r\) 称为单位约束。
+\end{definition}
+
+五边形的两边都是从 \(((k*h)*g)*f\) 到 \(k*(h*(g*f))\) 的 2态射。三角等式比较删除中间单位的两种方法：
+\[
+\begin{tikzcd}[column sep=large]
+(g*1_Y)*f\ar[rr,"a_{g,1_Y,f}"]\ar[dr,"r_g*1_f"']
+&&g*(1_Y*f)\ar[dl,"1_g*\ell_f"]\\
+&g*f&
+\end{tikzcd}
+\]
+图中箭头均为 \(\operatorname{Hom}_{\mathcal B}(X,Z)\) 中的态射，也就是双范畴的 2态射。约束的自然性还要求改括号与 2态射相容。例如，对 \(\alpha:f\Rightarrow f'\)、\(\beta:g\Rightarrow g'\)、\(\gamma:h\Rightarrow h'\)，有
+\[
+a_{h',g',f'}\cdot((\gamma*\beta)*\alpha)
+=(\gamma*(\beta*\alpha))\cdot a_{h,g,f}.
+\]
+复合是函子，因而 2态射的交换律仍成立；各 Hom 范畴中的垂直复合也严格结合。若结合与单位约束全为恒等 2态射，就得到\cref{b4:def:F-strict-two-category}的严格 2范畴。用范畴、配对函子与相容同构组织这种结构的动机，可对照\cite[Introduction, p. 1]{Benabou1967Bicategories}。
+
+\subsection{环、双模与幺半范畴}
+\label{b4:subsec:F02:02}
+
+第二卷第6.1--6.2节构造了平衡张量积及其剩余作用。这里把不同环之间的双模放在同一个结构中。规定从 \(A\) 到 \(B\) 的 1态射为左 \(B\)、右 \(A\) 双模，这使它作用于左 \(A\) 模时得到左 \(B\) 模：\(M\otimes_A-\) 的方向与 \(M:A\rightarrow B\) 一致。
+
+\begin{proposition}\label{b4:prop:F-bimodule-bicategory}
+以含幺环为对象，以幺性 \((B,A)\) 双模为 \(\operatorname{Hom}_{\mathbf{Bimod}}(A,B)\) 的对象，以保持左右作用的群同态为其态射。对 \({}_BM_A:A\rightarrow B\)、\({}_CN_B:B\rightarrow C\)，令
+\[
+N*M=N\otimes_B M,
+\qquad c(n\otimes m)a=(cn)\otimes(ma),
+\]
+并对双模同态 \(\phi:M\rightarrow M'\)、\(\psi:N\rightarrow N'\)，令
+\[
+(\psi*\phi)(n\otimes m)=\psi(n)\otimes\phi(m).
+\]
+取单位 1态射为 \({}_AA_A\)。对 \({}_DP_C:C\rightarrow D\)，结合与单位约束由
+\[
+\begin{aligned}
+a_{P,N,M}&:(P\otimes_C N)\otimes_B M
+\longrightarrow P\otimes_C(N\otimes_B M),\\
+&(p\otimes n)\otimes m\longmapsto p\otimes(n\otimes m),\\
+\ell_M&:B\otimes_B M\longrightarrow M,
+\qquad b\otimes m\longmapsto bm,\\
+r_M&:M\otimes_A A\longrightarrow M,
+\qquad m\otimes a\longmapsto ma
+\end{aligned}
+\]
+给出。这些数据组成双范畴 \(\mathbf{Bimod}\)。
+\end{proposition}
+\begin{proof}
+双模作用彼此相容，所以外侧的 \(C,A\) 作用保留平衡关系 \(nb\otimes m=n\otimes bm\)，得到所列 \((C,A)\) 双模结构。对同态，平衡关系的两边分别送到
+\[
+\psi(nb)\otimes\phi(m)
+=\psi(n)b\otimes\phi(m)
+=\psi(n)\otimes b\phi(m)
+=\psi(n)\otimes\phi(bm).
+\]
+因此 \(\psi*\phi\) 良定义，且保持外侧作用。在纯张量上，先后施行两对同态等于张量各自的复合，恒等同态的张量也为恒等；纯张量生成张量积，故这给出复合函子。
+
+结合公式对 \(C\) 与 \(B\) 的平衡关系分别由
+\[
+\begin{aligned}
+pc\otimes(n\otimes m)&=p\otimes(cn\otimes m),\\
+p\otimes(nb\otimes m)&=p\otimes(n\otimes bm)
+\end{aligned}
+\]
+保持。反向公式 \(p\otimes(n\otimes m)\mapsto(p\otimes n)\otimes m\) 同样保持这两类关系，故由张量积泛性质得到互逆的群同态。它们保留左 \(D\)、右 \(A\) 作用，所以为双模同构。对 \(M,N,P\) 分别施行同态 \(\phi,\psi,\chi\) 时，两种次序都把 \((p\otimes n)\otimes m\) 送到 \(\chi(p)\otimes(\psi(n)\otimes\phi(m))\)，给出自然性。
+
+单位公式由模作用给出，平衡关系使其良定义。逆公式分别为 \(m\mapsto1_B\otimes m\)、\(m\mapsto m\otimes1_A\)；例如 \(1_B\otimes bm=b\otimes m\)、\(ma\otimes1_A=m\otimes a\)，所以两次复合为恒等，并保留双模作用。同态保持作用，故这两项约束也自然。
+
+再取 \({}_EQ_D:D\rightarrow E\)。五边形的两条路径都把
+\[
+((q\otimes_D p)\otimes_C n)\otimes_B m
+\longmapsto q\otimes_D(p\otimes_C(n\otimes_B m)).
+\]
+三角形的两条路径在 \((n\otimes b)\otimes m\) 上分别给出 \(nb\otimes m\) 与 \(n\otimes bm\)，由 \(B\) 平衡关系相等。多重纯张量生成相应双模，因而这两项相容条件都是同态等式。
+\end{proof}
+
+在通常的张量积构造中，结合约束是上述双模同构，而非恒等映射；单位约束也需要删去张量中的环因子。因此这组具体数据给出双范畴。固定一个环 \(A\) 后，\(A\)-\(A\) 双模在 \(\otimes_A\) 下的幺半结构正是其中单对象的情形。
+
+\begin{proposition}\label{b4:prop:F-one-object-bicategory}
+设双范畴 \(\mathcal B\) 只有一个对象 \(O\)。范畴 \(\operatorname{Hom}_{\mathcal B}(O,O)\) 取 \(X\otimes Y=X*Y\)、单位对象 \(1_O\)，以及结合、单位约束 \(a,\ell,r\)，便成为幺半范畴。反过来，每个局部小幺半范畴 \((\mathcal C,\otimes,I,\alpha,\lambda,\rho)\) 都确定一个单对象双范畴：唯一的 Hom 范畴为 \(\mathcal C\)，复合函子为 \(\otimes\)，单位 1态射为 \(I\)，约束为 \(\alpha,\lambda,\rho\)。这两种构造逐项恢复原有结构数据，只须重新命名双范畴的唯一对象。
+\end{proposition}
+\begin{proof}
+单对象时，所有 1态射均可复合，因而复合函子就是同一范畴上的双函子。五边形与三角等式分别变成\eqref{b4:eq:monoidal-pentagon}与\eqref{b4:eq:monoidal-triangle}，约束的自然性也不变。反向把幺半范畴的对象看成 1态射、态射看成 2态射，便得到完全相同的数据与公理。
+\end{proof}

@@ -26,6 +26,14 @@
 \]
 能否在陪集集合上良定义。为此，换取同一输入陪集的代表元时，输出必须不变。
 
+\ProseParagraphBreak
+暂将子群记为 \(N\leq G\)。在 \(aN,bN\) 中分别换取代表 \(a'=an,b'=bm\)，其中 \(n,m\in N\)，乘积就成为 \(anbm\)。要使它仍落在 \(abN\) 中，需要把夹在 \(a,b\) 之间的 \(n\) 移到 \(b\) 右侧。利用
+\[
+nb=b(b^{-1}nb),\qquad
+a'b'=anbm=ab(b^{-1}nb)m,
+\]
+便可重新写成 \(ab\) 后面乘一个元素。此时需要 \(b^{-1}nb\in N\)，才能保证最后两个因子的积仍在 \(N\) 中。让 \(b\) 遍历 \(G\)、\(n\) 遍历 \(N\)，便得到任意共轭都应保持这个子群的要求。
+
 \begin{definition}\label{b1:def:normal-subgroup}
 设 \(G\) 为群，\(N\leq G\)。如果对每个 \(g\in G\) 都有 \(gNg^{-1}=N\)，则将 \(N\) 称为 \(G\) 的\term[zhenggui-ziqun]{正规子群}[normal subgroup]，记为 \(N\trianglelefteq G\)。这里 \(gNg^{-1}\) 表示所有 \(gng^{-1}\ (n\in N)\) 的集合；映射 \(n\mapsto gng^{-1}\) 称为由 \(g\) 给出的\term[gonge]{共轭}[conjugation]。
 \end{definition}
@@ -37,8 +45,11 @@
 \end{proposition}
 
 \begin{proof}
-等号自然给出包含。若所有共轭都满足包含，把 \(g\) 换成 \(g^{-1}\) 得
-\(g^{-1}Ng\subseteq N\)，两侧再共轭便得 \(N\subseteq gNg^{-1}\)，故等号成立。等式 \(gNg^{-1}=N\) 两边右乘 \(g\)，恰为 \(gN=Ng\)，反向亦然。
+等号自然给出包含。若所有共轭都满足包含，把 \(g\) 换成 \(g^{-1}\) 得 \(g^{-1}Ng\subseteq N\)。将这个包含式两侧同时左乘 \(g\)、右乘 \(g^{-1}\)，就是把其中每个元素 \(x\) 变为 \(gxg^{-1}\)，包含关系仍然成立。因此
+\[
+N=g(g^{-1}Ng)g^{-1}\subseteq gNg^{-1}.
+\]
+逐元素地说，对任意 \(n\in N\)，已知 \(g^{-1}ng\in N\)，所以 \(n=g(g^{-1}ng)g^{-1}\in gNg^{-1}\)。这与原来的 \(gNg^{-1}\subseteq N\) 合起来给出等号。等式 \(gNg^{-1}=N\) 两边右乘 \(g\)，恰为 \(gN=Ng\)；反过来，将 \(gN=Ng\) 两边右乘 \(g^{-1}\) 就恢复共轭等式。
 \end{proof}
 
 \begin{proposition}[正规子群的基本例子]\label{b1:prop:normal-basic-examples}
@@ -64,11 +75,11 @@ a'b'=anbm=ab(b^{-1}nb)m.
 正规性保证最后两个因子之积属于 \(N\)，故 \(a'b'N=abN\)，证明良定义。结合律由 \((ab)c=a(bc)\) 下降，单位和逆元由
 \(1a=a1=a\)、\(aa^{-1}=a^{-1}a=1\) 下降。商映射保持乘法且满射；\(q(g)=N\) 当且仅当 \(g\in N\)。
 
-反过来，假设候选运算 \(\star\) 良定义。对任意 \(n\in N\)、\(g\in G\)，由于 \(nN=1N\)，有
+反过来，假设候选运算 \(\star\) 良定义。它必须对所有代表元更换都给出相同结果，因此为了推出必要条件，可以特别只更换第一项的代表：对任意 \(n\in N\)、\(g\in G\)，由于 \(nN=1N\)，有
 \[
 (ng)N=(nN)\star(gN)=(1N)\star(gN)=gN.
 \]
-\cref{b1:prop:coset-equivalence}的陪集相等判据给出 \(g^{-1}ng\in N\)。因此对每个 \(g\in G\) 都有 \(g^{-1}Ng\subseteq N\)；再用\cref{b1:prop:normal-criteria}即得 \(N\) 正规。
+\cref{b1:prop:coset-equivalence}的陪集相等判据给出 \(g^{-1}ng\in N\)。这个特别选择已经迫使任意 \(n,g\) 满足所需的共轭条件，即对每个 \(g\in G\) 都有 \(g^{-1}Ng\subseteq N\)；再用\cref{b1:prop:normal-criteria}即得 \(N\) 正规。
 \end{proof}
 
 正规时，陪集的集合乘积确实等于上述单个陪集：
@@ -103,7 +114,8 @@ aN & aN & N
 \begin{corollary}[群的同余关系与正规子群]\label{b1:cor:group-congruences}
 设 \(G\) 为群。\(G\) 上与乘法相容的等价关系，恰好由正规子群给出。具体地，若 \(\sim\) 是\cref{b1:def:congruence}意义下的同余关系，令 \(N=[1_G]\)，则 \(N\trianglelefteq G\)，且
 \[
-a\sim b\quad\Longleftrightarrow\quad b^{-1}a\in N
+a\sim b\quad\Longleftrightarrow\quad b^{-1}a\in N,
+\qquad [a]_{\sim}=aN
 \]
 对所有 \(a,b\in G\) 成立。反过来，每个正规子群 \(N\) 都按此公式确定一个同余关系，其单位元所在的类为 \(N\)。
 \end{corollary}
@@ -111,15 +123,24 @@ a\sim b\quad\Longleftrightarrow\quad b^{-1}a\in N
 \begin{proof}
 由自反性，\(1\in N\)。若 \(n,m\in N\)，则 \(n\sim1\)、\(m\sim1\)，乘法相容性给出 \(nm\sim1\)，所以 \(nm\in N\)。在 \(n\sim1\) 两侧左乘 \(n^{-1}\)，得 \(1\sim n^{-1}\)，再用对称性知 \(n^{-1}\in N\)。因此 \(N\) 是子群。对任意 \(g\in G\)，在 \(n\sim1\) 两侧分别左乘 \(g\)、右乘 \(g^{-1}\)，得 \(gng^{-1}\sim1\)；由\cref{b1:prop:normal-criteria}，\(N\) 正规。
 
-左乘 \(b^{-1}\) 把 \(a\sim b\) 变为 \(b^{-1}a\sim1\)，左乘 \(b\) 又能恢复原关系，故得到所述等价式。反过来，若 \(N\) 正规，\cref{b1:thm:quotient-group}给出商同态 \(q:G\rightarrow G/N\)。关系 \(q(a)=q(b)\) 是等价关系，并由同态性质与乘法相容；\cref{b1:prop:coset-equivalence}说明它正由所给公式描述。令 \(b=1\)，可知单位元所在的类恰为 \(N\)。
+左乘 \(b^{-1}\) 把 \(a\sim b\) 变为 \(b^{-1}a\sim1\)，左乘 \(b\) 又能恢复原关系，故得到所述等价式。于是对任意 \(x\in G\)，
+\[
+x\in[a]_{\sim}\quad\Longleftrightarrow\quad
+a^{-1}x\in N\quad\Longleftrightarrow\quad x\in aN,
+\]
+从而 \([a]_{\sim}=aN\)。反过来，若 \(N\) 正规，\cref{b1:thm:quotient-group}给出商同态 \(q:G\rightarrow G/N\)。关系 \(q(a)=q(b)\) 是等价关系，并由同态性质与乘法相容；\cref{b1:prop:coset-equivalence}说明它正由所给公式描述。令 \(b=1\)，可知单位元所在的类恰为 \(N\)。
 \end{proof}
 
-因此，第一章的同余关系方法在群中可以用正规子群完整表达：单位元所在的一个类，已经决定其余所有类。
+因此，第一章的同余关系方法在群中可以用正规子群完整表达：确定单位元所在的类 \([1]=N\) 后，其余各类就是 \([a]=aN\)，不必再分别指定它们。
 
 \subsection{商群的泛性质}
 \label{b1:subsec:0203:02}
 
-商群把 \(N\) 的每个元素变为单位元。每个将 \(N\) 送到单位元的群同态，都唯一通过商映射分解；这个映射性质由下一定理说明。
+设 \(N\trianglelefteq G\)。商映射 \(q:G\rightarrow G/N\) 已经把每个 \(n\in N\) 与单位元视为相同。如果同态 \(f:G\rightarrow K\) 要经过这个商，那么 \(f\) 也必须看不出这些区别，即对每个 \(n\in N\) 都有 \(f(n)=1_K\)。这正是
+\[
+N\subseteq\ker f.
+\]
+包含的方向表示：\(q\) 已经忘掉的信息，\(f\) 不能再需要；\(f\) 还可以合并更多元素，所以它的核允许比 \(N\) 更大。下一定理说明，这个条件也足以给出唯一的分解。
 
 \begin{theorem}[商群的泛性质]\label{b1:thm:quotient-universal}
 设 \(G,K\) 为群，\(N\trianglelefteq G\)，\(q:G\rightarrow G/N\) 为商映射。对于群同态 \(f:G\rightarrow K\)，存在群同态 \(\overline f:G/N\rightarrow K\) 满足 \(\overline f q=f\)，当且仅当 \(N\subseteq\ker f\)。存在时，\(\overline f\) 唯一，且由 \(\overline f(gN)=f(g)\) 给出。
@@ -146,6 +167,20 @@ G\arrow[r,"q"]\arrow[dr,"f"']&G/N\arrow[d,dashed,"\exists!\,\overline f"]\\
 \operatorname{im}\overline f=\operatorname{im}f,\qquad
 \ker\overline f=\{gN\mid g\in\ker f\}=(\ker f)/N.
 \]
+事实上，每个商群元素都可写为 \(gN\)，而 \(\overline f(gN)=f(g)\)，所以
+\[
+\operatorname{im}\overline f
+=\{\,\overline f(gN)\mid g\in G\,\}
+=\{\,f(g)\mid g\in G\,\}=\operatorname{im}f.
+\]
+同一取值公式还给出
+\[
+gN\in\ker\overline f\quad\Longleftrightarrow\quad
+f(g)=1_K\quad\Longleftrightarrow\quad g\in\ker f.
+\]
+因而核恰由 \(\ker f\) 中元素的 \(N\)-陪集组成。这里 \(N\subseteq\ker f\)，且 \(N\) 在 \(G\) 中正规，所以它在子群 \(\ker f\) 中也正规；这些陪集确实组成商群 \((\ker f)/N\)。
+
+\ProseParagraphBreak
 若 \(f\) 满射，\(\overline f\) 也满射，但它仍未必单射。因此应区分“商掉一个被核包含的正规子群”与“恰好商掉整个核”。下一节的第一同构定理使用后者，正是为了使诱导映射没有剩余的非平凡核。
 
 \subsection{单群概念与简单例子}
@@ -155,6 +190,14 @@ G\arrow[r,"q"]\arrow[dr,"f"']&G/N\arrow[d,dashed,"\exists!\,\overline f"]\\
 设 \(G\) 为非平凡群。如果 \(G\) 仅有 \(\{1_G\}\) 和 \(G\) 两个正规子群，则将 \(G\) 称为\term[danqun]{单群}[simple group]。
 \end{definition}
 
+对正规子群 \(N\trianglelefteq G\)，两个端点给出 \(G/\{1\}\) 和 \(G/G\)：前者的商映射是同构，后者是只有单位元的群。这里所说的“非平凡真商群”，指由 \(\{1\}\ne N\ne G\) 给出的商 \(G/N\)。此时商映射的核非平凡，故它不单射；同时 \(N\ne G\)，商群又不平凡。因此对非平凡群 \(G\) 有
+\[
+G\text{ 是单群}\quad\Longleftrightarrow\quad
+G\text{ 没有非平凡真商群}.
+\]
+这里的“真”由指定商映射的非平凡核来判断，不以 \(G/N\) 是否与 \(G\) 抽象同构来定义。
+
+\ProseParagraphBreak
 单群可以有许多真子群，定义排除的只是真正介于单位子群与整个群之间的正规子群。由\cref{b1:prop:normal-basic-examples}的核正规性，一个从单群出发的同态要么为平凡同态，要么为单射：若核为全群则像只有单位元，若核为单位子群，则\cref{b1:prop:kernel-fibers}保证单射。因此单群的每个同态像要么平凡，要么同构于原群；后一情形只需将同态的目标限制为实际像，便得到双射同态。
 
 \begin{proposition}\label{b1:prop:abelian-simple}

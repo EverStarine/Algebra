@@ -1,0 +1,91 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### E.2 子对象分类子与初等 topos
+% 纲要细目（写作范围）：
+% #### E.2.1 特征映射与子对象分类子
+% #### E.2.2 预层范畴的指数对象
+% #### E.2.3 筛所给出的分类子
+
+\section{子对象分类子与初等 topos}
+\label{b4:sec:E02}
+
+一个子集 \(A\subseteq X\) 可以用特征函数 \(X\to\{0,1\}\) 表达。对于预层，一个截面可能在限制后才落入子预层，单个真假值便不足以记录全部信息。分类子将这种“在哪些限制下成立”也存为一个对象。
+
+\subsection{特征映射与子对象分类子}
+\label{b4:subsec:E02:01}
+
+\begin{definition}\label{b4:def:subobject-classifier}
+设 \(\mathcal E\) 为具有有限极限的局部小范畴，终对象记为 \(1\)。给定对象 \(\Omega\) 及态射 \(\mathrm{true}:1\to\Omega\)。若对每个单态射 \(m:A\to X\)，存在唯一态射 \(\chi_m:X\to\Omega\)，使下图为拉回方块，则称 \((\Omega,\mathrm{true})\) 为\term[ziduixiang-fenleizi]{子对象分类子}[subobject classifier]：
+\[
+\begin{tikzcd}
+A\arrow[r]\arrow[d,"m"']&1\arrow[d,"\mathrm{true}"]\\
+X\arrow[r,"\chi_m"']&\Omega.
+\end{tikzcd}
+\]
+\(\chi_m\) 称为该子对象的特征映射。
+\end{definition}
+
+集合中的分类子为 \(\Omega=\{0,1\}\)，\(\mathrm{true}(*)=1\)。拉回就是 \(\chi_m^{-1}(1)\)，因而唯一的特征映射在 \(A\) 上取 \(1\)，其余地方取 \(0\)。单态射 \(A\to X\) 与它的像包含代表同一子对象，不需要先把 \(A\) 字面写成子集。
+
+\begin{definition}\label{b4:def:elementary-topos}
+设 \(\mathcal E\) 为局部小范畴。若它具有有限极限、是\cref{b4:def:cartesian-closed}所述的笛卡尔闭范畴，并具有子对象分类子，则称它为\term[chudeng-topos]{初等 topos}[elementary topos]。
+\end{definition}
+
+指数对象 \(G^F\) 表示“从 \(F\) 到 \(G\) 的函数”；分类子则表示“\(X\) 的一个子对象”。两者都用可表性表达，但不是同一种对象。定义与基本例子见\cite[Chapter IV, Section 1]{MacLaneMoerdijk1992Sheaves}。
+
+\subsection{预层范畴的指数对象}
+\label{b4:subsec:E02:02}
+
+\begin{proposition}\label{b4:prop:presheaf-exponential}
+设 \(\mathcal C\) 为小范畴，\(\widehat{\mathcal C}=\operatorname{Fun}(\mathcal C^{\mathrm{op}},\mathbf{Set})\)。对预层 \(F,G\)，令
+\[
+ (G^F)(U)=\operatorname{Nat}(h_U\times F,G).
+\]
+沿 \(a:V\to U\) 的限制由前复合 \(h_a\times1_F\) 给出。这定义一个预层，且为 \(\widehat{\mathcal C}\) 中的指数对象。因此预层范畴笛卡尔闭。
+\end{proposition}
+\begin{proof}
+\(h_a\) 保持恒等与复合，前复合也如此，故确实得到预层。对 \(\theta\in(G^F)(U)\)、\(x\in F(U)\)，定义
+\[
+ \operatorname{ev}_U(\theta,x)=\theta_U(1_U,x).
+\]
+\(\theta\) 的自然性给出
+\(G(a)\theta_U(1_U,x)=\theta_V(a,F(a)x)\)，这正是求值映射与限制相容的等式。
+
+若 \(b:H\times F\to G\) 为自然变换，对 \(z\in H(U)\) 定义
+\[
+ \widetilde b_U(z)_V(f,x)=b_V(H(f)z,x)
+ \quad(f:V\to U,\ x\in F(V)).
+\]
+\(b\) 的自然性使右边成为 \(h_U\times F\to G\) 的自然变换，也使 \(\widetilde b:H\to G^F\) 自然。求值后在 \((z,x)\) 上恢复 \(b_U(z,x)\)。反过来，若先给 \(c:H\to G^F\)，令 \(b=\operatorname{ev}\circ(c\times1_F)\)，则 \(c\) 与 \(c_U(z)\) 的自然性分别给出
+\[
+ \widetilde b_U(z)_V(f,x)
+ =c_V(H(f)z)_V(1_V,x)
+ =c_U(z)_V(f,x).
+\]
+两个构造互逆，并与 \(H\) 的态射相容，所以给出指数泛性质。
+\end{proof}
+
+\(G^F\) 通常不是逐对象函数集 \(G(U)^{F(U)}\)。它必须保存全部限制的相容性；公式中的 \(h_U\) 正是把这些条件一起纳入的工具。该构造见\cite[Chapter I, Section 6]{MacLaneMoerdijk1992Sheaves}。
+
+\subsection{筛所给出的分类子}
+\label{b4:subsec:E02:03}
+
+\begin{theorem}\label{b4:thm:presheaf-topos}
+设 \(\mathcal C\) 为小范畴。令 \(\Omega(U)\) 为 \(U\) 上所有筛组成的集合，限制沿态射取筛的拉回，\(\mathrm{true}_U(*)\) 为最大筛。则 \(\Omega\) 是预层范畴 \(\widehat{\mathcal C}\) 的子对象分类子，故 \(\widehat{\mathcal C}\) 是初等 topos。
+\end{theorem}
+\begin{proof}
+筛的拉回满足 \(1_U^*S=S\) 与 \((a\circ b)^*S=b^*(a^*S)\)，故 \(\Omega\) 是预层。预层的有限极限逐对象计算；尤其单态射可识别为逐对象的子集包含。给定子预层 \(A\subseteq F\)，定义
+\[
+ \chi_U(x)=\{\,f:V\to U\mid F(f)x\in A(V)\,\}.
+\]
+\(A\) 对限制封闭，所以这确实是筛。\(\chi_V(F(a)x)=a^*\chi_U(x)\) 逐项成立，故 \(\chi\) 自然。\(\chi_U(x)\) 为最大筛，当且仅当 \(1_U\) 属于该筛，也就是 \(x\in A(U)\)。逐对象拉回便恢复 \(A\)。
+
+若 \(\psi:F\to\Omega\) 也有这一拉回性质，则对每个 \(f:V\to U\)，
+\[
+ f\in\psi_U(x)
+ \ \Longleftrightarrow\ f^*\psi_U(x)\text{ 为最大筛}
+ \ \Longleftrightarrow\ F(f)x\in A(V).
+\]
+第一步使用筛对前复合封闭：\(f\) 属于筛恰好表示其拉回含 \(1_V\)。第二步使用 \(\psi\) 的自然性及拉回性质。因此 \(\psi=\chi\)。结合\cref{b4:prop:presheaf-exponential}即得结论。
+\end{proof}
+
+对于两个对象和一支非恒等箭头 \(a:V\to U\) 的范畴，\(U\) 上有三个筛：空筛、只含 \(a\) 的筛、最大筛。中间一个筛表达“在 \(U\) 上尚未成立，但限制到 \(V\) 后成立”。这说明为什么预层的真假值不必只有两个。

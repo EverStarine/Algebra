@@ -1,98 +1,126 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 19.2 抽象 t-结构
-% 纲要位置：计划纲要.md，第 2987 行。
+% 纲要标题：### 19.2 导出张量积
+% 纲要标签：b4:sec:1802
+% 纲要位置：计划纲要.md，第 2958 行。
 
-\section{抽象 t-结构}
-\label{b4:sec:1902}
+\section{导出张量积}
+\label{b4:sec:1802}
 
-截断的核心数据是两类对象之间的正交性和每个对象的分解三角。将这些条件抽象出来，就能在未指定复形代表的三角范畴中恢复上同调函子。
-
+普通张量积可能在更换拟同构模型以后改变同调。平坦或投射替换修正这一问题，并使张量积的结合律、单位同构及 Tor 计算相互一致。有上界平坦复形的论证使用\cref{b4:prop:filtered-colimits-cohomology}中滤过余极限与同调交换的性质。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 两个子范畴及正交、分解公理
-% * 有界性与非退化性
-% * 由截断恢复上同调函子
+% * 平坦或投射替换
+% * 结合律与适当的单位同构
+% * Tor 作为导出张量的同调
 %
 
-\subsection{t-结构的正交与分解公理}
-\label{b4:subsec:1902:01}
+\subsection{平坦替换与投射替换}
+\label{b4:subsec:1802:01}
 
-标准截断的存在不必靠复形的每一项描述。上节的两类对象、它们之间的态射零性，以及把任意对象分为两部分的三角，已经足以决定截断函子。
+普通张量积不能保持所有拟同构。例如整数模复形 \(\mathbb Z\xrightarrow{2}\mathbb Z\)（次数 \(-1,0\)）拟同构于 \(\mathbb Z/2\)，但与 \(\mathbb Z/2\) 张量后前者多出一次负次数同调。为了让张量积在导出范畴中有意义，需要能保存拟同构的替换。
 
-\begin{definition}\label{b4:def:t-structure}
-设 \(\mathcal D\) 为三角范畴。取包含零对象且在同构下封闭的两个全子范畴 \(\mathcal D^{\le0},\mathcal D^{\ge0}\)，并记 \(\mathcal D^{\le n}=\mathcal D^{\le0}[-n]\)、\(\mathcal D^{\ge n}=\mathcal D^{\ge0}[-n]\)。若满足
-\begin{enumerate}
-\item \(\mathcal D^{\le0}[1]\subseteq\mathcal D^{\le0}\)，\(\mathcal D^{\ge0}[-1]\subseteq\mathcal D^{\ge0}\)；
-\item \(\operatorname{Hom}(U,V)=0\)，其中 \(U\in\mathcal D^{\le0}\)、\(V\in\mathcal D^{\ge1}\)；
-\item 每个 \(X\in\mathcal D\) 都能放入好三角 \(U\to X\to V\to U[1]\)，其中 \(U\in\mathcal D^{\le0}\)、\(V\in\mathcal D^{\ge1}\)，
-\end{enumerate}
-则称这对子范畴为 \(\mathcal D\) 上的一个\term[tjiegou]{t-结构}[t-structure]。记 \(\mathcal D^{[a,b]}=\mathcal D^{\ge a}\cap\mathcal D^{\le b}\)，其中 \(a,b\in\mathbb Z\)。交 \(\mathcal H=\mathcal D^{\le0}\cap\mathcal D^{\ge0}\) 称为它的\term[xin]{心}[heart]。
-\end{definition}
+\begin{lemma}\label{b4:lem:bounded-flat-tensor-preserves}
+设 \(R\) 为环，\(P\) 为逐项平坦且有上界的右 \(R\)-模复形，\(A\) 为任意正合的左 \(R\)-模复形。采用直和总化时，\(P\otimes_RA\) 正合。因此 \(P\otimes_R-\) 保持任意复形之间的拟同构。交换左右侧别后也成立。
+\end{lemma}
+\begin{proof}
+若 \(P\) 只有一项，平坦性说明张量保留 \(A\) 的各个核像短列，所以结果正合。若 \(P\) 有有限个非零项，按最高非零项逐次剥去，所得复形短列逐次分裂；张量后仍是短正合列，用同调长正合列归纳，得到正合性。
 
-例如，设 \(k\) 为域，\(\mathcal D=D^b(\mathbf{Vect}_k^{\mathrm{fd}})\)。标准 t-结构的心由集中在零次的有限维向量空间组成。把两个标准子范畴同时平移为 \((\mathcal D^{\le1},\mathcal D^{\ge1})\)，仍得到 t-结构，其心由 \(V[-1]\) 组成；这些对象的标准上同调只在一次非零。于是同一个 \(k[-1]\) 在标准心之外，却在平移后的心中。这说明“哪些对象作为零次对象”取决于 t-结构的选择，而三角范畴本身并未改变。
+一般情形取粗截断 \(P_{\ge m}\)，即低于 \(m\) 的项换成零。它是 \(P\) 的子复形，且因有上界而只有有限个非零项。随着 \(m\) 向负方向移动，\(P\) 是这些子复形的滤过余极限。张量与直和总化都与此余极限交换，而模范畴的滤过余极限正合并与同调交换，见\cref{b4:prop:filtered-colimits-cohomology}。因此 \(P\otimes_RA\) 正合。
 
-\begin{theorem}\label{b4:thm:t-truncation-adjunction}
-设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴，\(n\in\mathbb Z\)，并以 \([-n]\) 平移定义 \(\mathcal D^{\le n},\mathcal D^{\ge n}\)。包含 \(\mathcal D^{\le n}\to\mathcal D\) 有右伴随 \(\tau^{\le n}\)，包含 \(\mathcal D^{\ge n+1}\to\mathcal D\) 有左伴随 \(\tau^{\ge n+1}\)。每个对象 \(X\in\mathcal D\) 有截断三角
+若 \(u:A\to B\) 是拟同构，其锥正合。张量锥与张量映射的锥自然同构：在 \(P^p\otimes A[1]\) 分量乘 \((-1)^p\)，恰好把张量微分改成锥的微分。于是张量后的锥正合，得到后一结论。
+\end{proof}
+
+\begin{theorem}\label{b4:thm:derived-tensor}
+设 \(R\) 是环。对有上界的右 \(R\)-模复形 \(X\) 和有上界的左 \(R\)-模复形 \(Y\)，选择逐项投射的有上界替换 \(p:P\to X\)、\(q:Q\to Y\)。公式
 \[
- \tau^{\le n}X\longrightarrow X\longrightarrow\tau^{\ge n+1}X
- \longrightarrow(\tau^{\le n}X)[1],
+X\otimes_R^{\mathbf L}Y\coloneqq P\otimes_RQ
 \]
-它在保持中间对象及两端次数条件的意义下唯一到唯一同构，并对 \(X\) 的态射函子性地变化。
+定义双函子
+\[
+-\otimes_R^{\mathbf L}-:
+D^-(\operatorname{Mod}\text{-}R)\times D^-(R\text{-}\operatorname{Mod})
+\longrightarrow D^-(\mathbf{Ab}).
+\]
+它称为\term[daochu-zhangliangji]{导出张量积}[derived tensor product]。也可以只替换一个变量，使用 \(P\otimes_RY\) 或 \(X\otimes_RQ\)。若 \(P'\to X\) 或 \(Q'\to Y\) 是有上界的逐项平坦替换，则 \(P'\otimes_RY\) 或 \(X\otimes_RQ'\) 分别典范同构于这个双函子的值；同时使用两侧的平坦替换也得到同一导出对象。
 \end{theorem}
 \begin{proof}
-平移后只须处理 \(n=0\)。取分解公理中的三角 \(U\to X\to V\)。对 \(T\in\mathcal D^{\le0}\)，Hom 长正合列在 \(\operatorname{Hom}(T,U)\to\operatorname{Hom}(T,X)\) 两旁的项为 \(\operatorname{Hom}(T,V[-1])\) 与 \(\operatorname{Hom}(T,V)\)。它们为零，因为 \(V[-1]\in\mathcal D^{\ge2}\subseteq\mathcal D^{\ge1}\)。所以该映射是同构，给出右伴随的泛性质。对 \(W\in\mathcal D^{\ge1}\)，在 \(\operatorname{Hom}(V,W)\to\operatorname{Hom}(X,W)\) 两旁出现 \(\operatorname{Hom}(U[1],W)\)、\(\operatorname{Hom}(U,W)\)，也都为零；这给出左伴随。
+上一引理分别应用于 \(P\) 和 \(Q\)，说明自然映射
+\[
+P\otimes_RY\longleftarrow P\otimes_RQ\longrightarrow X\otimes_RQ
+\]
+都是拟同构。投射模型中的态射由同伦类表示，张量积保持同伦，所以先在两个投射同伦范畴上得到双函子，再由两侧的投射模型等价下降到所写导出范畴。
 
-泛性质唯一确定两端对象及其结构映射。给定 \(X\to X'\)，两端态射分别由伴随唯一确定；三角公理将前两项的交换方块补成三角态射，而所补的第三项必须等于左伴随所给的态射。对固定两端和中间项，若有两个可能的三角结构，三角公理给出保持前两项的同构；第三项同构与恒等的差经 \(U[1]\) 分解，而 \(\operatorname{Hom}(U[1],V)=0\)，所以也是恒等。由唯一性，恒等与复合均被保持。
+若 \(p':P'\to X\) 是有上界逐项平坦替换，由\cref{b4:thm:bounded-projective-model}证明中的比较结论，存在唯一的同伦类 \(t:P\to P'\)，使 \(p't=p\) 于同伦范畴中。由于 \(p,p'\) 都是拟同构，\(t\) 也是拟同构。于是
+\[
+P\otimes_RQ
+\xrightarrow{\,t\otimes1_Q\,}P'\otimes_RQ
+\xrightarrow{\,1_{P'}\otimes q\,}P'\otimes_RY
+\]
+的两条箭头都是拟同构：第一条使用 \(Q\) 的平坦性及引理的左右对偶，第二条使用 \(P'\) 的平坦性。张量保持同伦，所以这个合成不依赖 \(t\) 的代表元。若更换 \(P\) 或 \(Q\)，投射模型的比较同伦类分别满足与 \(p\) 或 \(q\) 的相容等式；\(t\) 的唯一性使上述合成与模型间的比较交换。因此它给出 \(P'\otimes_RY\) 与已定义双函子值的典范同构。交换左右侧别得到第二变量的结论，再依次替换两侧即可同时使用 \(P',Q'\)。双函子在态射上的作用始终由投射模型定义。两变量有上界使每个总次数只涉及有限条对角项，且输出仍有上界。
 \end{proof}
+\symidx{\(X\otimes_R^{\mathbf L}Y\)：导出张量积}
 
-\begin{proposition}\label{b4:prop:t-orthogonals-extensions}
-设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴，\(n\in\mathbb Z\)。则 \(\mathcal D^{\le n}\) 恰是 \(\mathcal D^{\ge n+1}\) 的左正交类，\(\mathcal D^{\ge n+1}\) 恰是 \(\mathcal D^{\le n}\) 的右正交类。二者均对好三角中的扩张、有限直和及直和因子封闭。
+对于非交换环，上式一般只给交换群复形；不能在结果上无说明添一个左 \(R\)-模结构。若 \(X\) 还带与右 \(R\)-作用交换的左 \(S\)-作用，可以固定 \(X\)，仅用左 \(R\)-模投射复形 \(Q\) 替换 \(Y\)，使 \(X\otimes_RQ\) 保留左 \(S\)-作用；若改为替换 \(X\)，就应说明替换如何保留该作用。只在底层右模上任取消解，不能保证附加作用仍逐项存在。模的有上界导出张量积可对照 Weibel\cite[Definition 10.6.1, Lemma 10.6.2, Theorem 10.6.3]{Weibel1994HomologicalAlgebra}。
+
+\subsection{结合律与单位同构}
+\label{b4:subsec:1802:02}
+
+\begin{proposition}\label{b4:prop:derived-tensor-associativity}
+设 \(R\) 为交换环，\(X,Y,Z\in D^-(R\text{-}\operatorname{Mod})\)。导出张量积有自然同构
+\[
+(X\otimes_R^{\mathbf L}Y)\otimes_R^{\mathbf L}Z
+\simeq X\otimes_R^{\mathbf L}(Y\otimes_R^{\mathbf L}Z),
+\qquad
+R\otimes_R^{\mathbf L}X\simeq X\simeq X\otimes_R^{\mathbf L}R.
+\]
+还有对称同构 \(X\otimes_R^{\mathbf L}Y\simeq Y\otimes_R^{\mathbf L}X\)。若 \(P,Q\) 分别是 \(X,Y\) 的有上界逐项平坦替换，它在齐次元上由 \(x\otimes y\mapsto(-1)^{pq}y\otimes x\) 表示，其中 \(x\in P^p\)、\(y\in Q^q\)。
 \end{proposition}
 \begin{proof}
-若 \(\operatorname{Hom}(T,X)=0\) 对所有 \(T\in\mathcal D^{\le n}\) 成立，伴随同构使 \(\operatorname{Hom}(\tau^{\le n}X,\tau^{\le n}X)=0\)，故 \(\tau^{\le n}X=0\)，截断三角给出 \(X\simeq\tau^{\ge n+1}X\)。反向是正交公理。左正交刻画对偶可得。对任意好三角 \(X\to Y\to Z\)，若 \(X,Z\) 都与指定的一类对象正交，Hom 长正合列表明 \(Y\) 也正交。有限直和与直和因子的正交性则由 Hom 的加性得到。
+取有上界逐项投射替换 \(P,Q,U\)。交换环上两个投射模的张量积仍投射：把二者写成自由模的直和项，其张量就是自由模张量的直和项。每条总次数对角线有限，故 \(P\otimes_RQ\) 及 \(Q\otimes_RU\) 均逐项投射、有上界，可以直接用来计算下一次导出张量。
+
+两边都由三重张量总复形表示，齐次纯张量的微分为
+\[
+\mathrm{d}(p\otimes q\otimes u)=\mathrm{d}p\otimes q\otimes u
++(-1)^{|p|}p\otimes \mathrm{d}q\otimes u
++(-1)^{|p|+|q|}p\otimes q\otimes \mathrm{d}u.
+\]
+普通张量的结合映射保持此公式，给出复形同构；对四个因子，所有结合映射都只改变括号，所以它们的不同复合相同。\(R[0]\) 本身投射，通常的单位映射逐项给出单位同构。交换两个因子的公式中，微分越过次数 \(p\) 或 \(q\) 时产生的符号正好补偿 \((-1)^{pq}\) 的改变，直接代入便得到复形映射；两次交换的符号是 \((-1)^{2pq}=1\)，故为同构。这些复形映射与投射模型中的比较态射相容，故在导出范畴中仍自然。
 \end{proof}
 
-\subsection{有界性与非退化性}
-\label{b4:subsec:1902:02}
+单位结论不需要交换性：对任意环 \(R\)，右模复形 \(X\) 满足 \(X\otimes_R^{\mathbf L}R\simeq X\)，左模复形 \(Y\) 满足 \(R\otimes_R^{\mathbf L}Y\simeq Y\)，此处 \(R\) 带通常的 \((R,R)\)-双模结构。非交换环上的多重张量也有结合映射，但每两个相邻因子必须具有匹配的左右作用，并须核对保留这些作用的替换；上面的交换环命题没有免除这些要求。
 
-\begin{definition}\label{b4:def:bounded-nondegenerate-t}
-设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴。若每个对象 \(X\in\mathcal D\) 都属于某个 \(\mathcal D^{\ge a}\cap\mathcal D^{\le b}\)，其中整数 \(a,b\) 可以依赖 \(X\)，则称该 t-结构\term[youjietjiegou]{有界}[bounded]。若
+\subsection{Tor 与导出张量的同调}
+\label{b4:subsec:1802:03}
+
+\begin{corollary}\label{b4:cor:tor-derived-tensor}
+设 \(R\) 为环，\(M\) 为右 \(R\)-模，\(N\) 为左 \(R\)-模，二者视作零次复形。则对每个 \(n\ge0\)，有自然同构
 \[
- \bigcap_n\mathcal D^{\le n}=0,\qquad
- \bigcap_n\mathcal D^{\ge n}=0,
+H^{-n}(M\otimes_R^{\mathbf L}N)\simeq\operatorname{Tor}_n^R(M,N),
 \]
-则称它\term[feituihuatjiegou]{非退化}[nondegenerate]。这里等于零表示交中只有零对象的同构类。
-\end{definition}
-
-有界性蕴含非退化性。例如若 \(X\) 属于所有 \(\mathcal D^{\le n}\)，又因有界性属于某个 \(\mathcal D^{\ge a}\)，则 \(X\in\mathcal D^{\le a-1}\cap\mathcal D^{\ge a}\)，正交性迫使 \(1_X=0\)。另一侧相同。标准 t-结构在 \(D^b(\mathcal A)\) 上有界，在一般 \(D(\mathcal A)\) 上未必有界，却仍非退化：所有上同调为零的复形在导出范畴中就是零对象。
-
-\ProseParagraphBreak
-非退化性是一项实质条件。对任意非零三角范畴 \(\mathcal D\)，取 \((\mathcal D,0)\) 也满足 t-结构公理，分解三角为 \(X\xrightarrow{1}X\to0\)。它的心为零，不能从心看见原范畴的非零对象。
-
-\subsection{由截断恢复上同调函子}
-\label{b4:subsec:1902:03}
-
-\begin{proposition}\label{b4:prop:t-truncation-commute}
-设 \(\mathcal D\) 为带 t-结构 \((\mathcal D^{\le0},\mathcal D^{\ge0})\) 的三角范畴，\(a,b\in\mathbb Z\) 且 \(a\le b\)。两种截断函子的复合 \(\tau^{\ge a}\tau^{\le b}\) 与 \(\tau^{\le b}\tau^{\ge a}\) 自然同构，所得对象属于 \(\mathcal D^{\ge a}\cap\mathcal D^{\le b}\)。
-\end{proposition}
+而正次数同调为零。特别地，零次同调为 \(M\otimes_RN\)。
+\end{corollary}
 \begin{proof}
-令 \(A=\tau^{\le a-1}X\)、\(B=\tau^{\le b}X\)。右伴随泛性质唯一给出 \(A\to B\to X\)。八面体公理为此复合给出两个好三角
-\[
- A\longrightarrow B\longrightarrow Y\longrightarrow A[1],
- \qquad
- Y\longrightarrow\tau^{\ge a}X\longrightarrow\tau^{\ge b+1}X\longrightarrow Y[1].
-\]
-同侧截断的伴随泛性质表明 \(\tau^{\le a-1}B\simeq A\)，故第一三角是 \(B\) 在 \(a-1\) 处的截断，\(Y\in\mathcal D^{\ge a}\)。同时 \(B,A[1]\in\mathcal D^{\le b}\)，由扩张封闭性得 \(Y\in\mathcal D^{\le b}\)。于是第二三角是 \(\tau^{\ge a}X\) 在 \(b\) 处的截断。两个识别及其对态射的自然性均由截断唯一性得到。
+把 \(M\) 的投射链消解 \(P_\bullet\to M\) 重编号为 \(P^{-n}=P_n\)，并只替换第一变量。张量复形在 \(-n\) 次的同调正是\cref{b4:thm:tor-balanced}所计算的 \(\operatorname{Tor}_n\)。其复形没有正次数项，零次同调由张量的右正合性识别。
 \end{proof}
 
-现在可以在未指定复形各项的情况下定义
+例如，设 \(R\) 为交换环，\(a\in R\) 不是零因子。\(R/(a)\) 由 \(R\xrightarrow{a}R\) 的两项自由复形替换，因此对任意 \(R\)-模 \(N\)，
 \[
- H_t^n(X)\coloneqq\bigl(\tau^{\ge n}\tau^{\le n}X\bigr)[n]
-                 =H_t^0(X[n])\in\mathcal H.
+R/(a)\otimes_R^{\mathbf L}N\simeq
+\bigl(N\xrightarrow{a}N\bigr),\qquad
+H^{-1}=\{\,n\in N\mid an=0\,\},\quad H^0=N/aN.
 \]
-这称为关于给定 t-结构的\term[tshangtongdiao]{上同调对象}[cohomology object]。下标 \(t\) 用来区别随后出现的新心；标准情形可省去。上述定义先给出取值于加性心的函子；心的交换性和三角诱导的长正合列将在下一节证明。
-\symidx{\(H_t^n\)：给定 t-结构的上同调函子}
+若 \(a\) 同时零化 \(N\)，微分为零，故在导出范畴中这是 \(N\oplus N[1]\)。若 \(a\) 在 \(N\) 上仍为非零因子，则负次同调消失，此时才可用普通张量积代替。\(a\) 在 \(R\) 上不是零因子的条件保证所用两项自由复形确为消解。
 
 \ProseParagraphBreak
-相邻截断之间有好三角 \(\tau^{\le n-1}X\to\tau^{\le n}X\to H_t^n(X)[-n]\to\)，这是前一证明取 \(a=b=n\) 的情形。有界对象因此能由有限多个上同调对象逐次扩张得到。每一层的连接映射仍是重建对象所需的数据。抽象截断与交换关系的原始表述见\cite[Propositions 1.3.3, 1.3.5]{BBD1982FaisceauxPervers}。
+把这个公式用于两条直线，便能看出负次同调记录了什么。设 \(k\) 为域，\(R=k[x,y]\)，并取 \(M=R/(x)\)。若 \(N=R/(y)=k[x]\)，则乘 \(x\) 单射，因而
+\[
+ H^{-1}(M\otimes_R^{\mathbf L}N)=0,\qquad
+ H^0(M\otimes_R^{\mathbf L}N)=k.
+\]
+两条坐标轴的方程彼此独立，普通张量积已经给出它们的交点。若改取 \(N=M=k[y]\)，则乘 \(x\) 为零，故
+\[
+ M\otimes_R^{\mathbf L}M\simeq M\oplus M[1],\qquad
+ H^{-1}=M,
+\]
+而普通张量积只有 \(H^0=M\)。这一次两个模使用同一条方程，新增的负次同调保留了方程重复所产生的关系。导出张量积既记录共同的商，也记录形成这个商时关系之间的依赖。

@@ -1,0 +1,166 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：## 第5章　幺半范畴、闭结构与对偶
+% 纲要标签：b4:ch:monoidal
+
+\chapter{幺半范畴、闭结构与对偶}
+\label{b4:ch:monoidal}
+\BookChapterNumber{b4:ch:monoidal}
+
+\begin{chapterabstract}
+本章以张量积的结合与单位同构建立幺半范畴，说明闭结构如何将带参数的映射表示为内部 Hom，研究求值与余求值的蛇形恒等式，并证明交换环模可对偶恰好等价于有限生成投射性。最后用代数对象和富集范畴统一乘法、模作用与带加法的态射复合。
+\end{chapterabstract}
+
+\begin{learninggoals}
+\begin{itemize}
+\item 写出张量的结合、单位与交换约束，核验五边形、三角形和六边形等式的两条路径。
+\item 用求值和柯里化建立内部 Hom 的泛性质，区分内部 Hom 对象与外部态射集合。
+\item 构造有限生成投射模的求值与余求值，解释蛇形恒等式怎样产生有限对偶基。
+\item 将普通代数、模作用和单子写成相应幺半范畴中的代数结构，辨认预加性范畴的富集数据。
+\end{itemize}
+\end{learninggoals}
+
+给两个向量空间作张量积，可以把双线性映射变成线性映射。加入第三个空间以后，括号有两种摆法；若再将各空间换成同构的空间，改括号与施行同构又有两种先后次序。此前的泛性质保证这些操作相容。把参与其中的同构和等式单独写出来，就能看出：不只有向量空间，集合的积、模的张量积、函子的复合，都具有类似的结合与单位问题。
+
+\ProseParagraphBreak
+
+另一个问题来自线性映射本身。固定一个空间 \(X\)，给出 \(A\otimes X\to Y\) 的映射，等价于对每个参数 \(a\) 给一个 \(X\to Y\) 的映射。这些映射能否作为同一范畴中的对象继续参与运算？有限维空间还有更特殊的现象：恒等映射可以由有限个向量与泛函的配对恢复，因此 Hom 空间可以用对偶与张量直接表示。无限维空间和有挠元的模会使其中某些步骤失败。闭结构与可对偶性分别回答这两个问题，所需条件并不相同。
+
+\ProseParagraphBreak
+
+本章使用前三章的函子、自然变换、泛性质与伴随，以第二卷第3.1节的自由模、第6.1--6.2节的张量积及第7.1节的投射模为具体基础。结合与单位约束的定义采用 Etingof 等人的《Tensor Categories》中的传统版本\cite[Definition 2.2.8, p. 25]{EtingofEtAl2015TensorCategories}；对偶及其伴随公式可对照\cite[Section 2.10, pp. 40--43, especially Proposition 2.10.8]{EtingofEtAl2015TensorCategories}。该书还研究带额外有限性与正合性条件的张量范畴，本章仅在所需位置提出这些条件。
+
+\input{Part01/Chapter05/Section0501}
+\input{Part01/Chapter05/Section0502}
+\input{Part01/Chapter05/Section0503}
+\input{Part01/Chapter05/Section0504}
+
+\begin{chaptersummary}
+幺半结构不只规定一种对象运算，还指定结合与单位同构，并要求不同操作路径相容。辫状结构进一步规定因子的交换方式；对称结构要求交换两次恢复原映射。集合的积与交换环模的张量都闭，但它们的单位、内部 Hom 以及可对偶对象并不相同。
+
+\ProseParagraphBreak
+
+可对偶性用求值和余求值恢复恒等态射，因此使内部 Hom 化为与固定对偶对象的张量。交换环模中的余求值只能使用有限个纯张量，这一有限性恰好产生有限生成投射模的对偶基。代数对象把乘法与单位写成相容态射，模对象将同一条件用于作用；富集则让 Hom 本身保留群、向量空间或其他对象结构，复合也在这一结构中进行。
+\end{chaptersummary}
+
+\BookExercises
+
+\begin{exercise}\label{b4:ex:monoidal-extension-scalars}
+设 \(R\to S\) 为交换含幺环同态。证明标量扩张函子 \(F(M)=S\otimes_RM\) 带有强幺半结构，其中比较映射为
+\[
+\begin{gathered}
+(S\otimes_RM)\otimes_S(S\otimes_RN)\longrightarrow S\otimes_R(M\otimes_RN),
+\\
+(s\otimes m)\otimes(t\otimes n)\longmapsto st\otimes(m\otimes n).
+\end{gathered}
+\]
+写出逆映射与单位比较，验证它们保持结合、单位与交换约束。
+\end{exercise}
+\begin{solution}
+两个内层的 \(R\) 平衡关系都由结构同态保持；外层将 \(S\) 系数从一个因子移到另一个因子的平衡关系，则由 \(st\) 不变保持。因此比较映射良定义并为 \(S\) 线性。逆为
+\[
+s\otimes(m\otimes n)\longmapsto(s\otimes m)\otimes(1\otimes n).
+\]
+把 \(rm\otimes n\) 换成 \(m\otimes rn\)，其像由内层及外层平衡关系相等，故逆也良定义。一个复合直接恢复 \(s\otimes(m\otimes n)\)；另一个复合将 \((st\otimes m)\otimes(1\otimes n)\) 化为 \((s\otimes m)\otimes(t\otimes n)\)。单位比较为 \(S\to S\otimes_RR\)、\(s\mapsto s\otimes1\)，逆为 \(s\otimes r\mapsto s r\)，其中 \(r\) 通过结构同态作用。
+
+结合的两条路径在三个纯张量上都把三个 \(S\) 系数相乘，并按同样次序留下 \(m,n,p\)。单位的两条路径都使单位因子系数作用在另一因子上。交换的两条路径分别留下 \(n\otimes m\) 并乘 \(st=ts\)。因此各相容等式在纯张量上成立；纯张量生成相应模，故得到所需强幺半结构，且它尊重对称结构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:direct-sum-not-closed}
+设 \(R\) 为环，固定左 \(R\) 模 \(M\)。证明函子 \(-\oplus M\) 有右伴随，当且仅当 \(M=0\)。据此判断以直接和为幺半运算的模范畴是否闭。
+\end{exercise}
+\begin{solution}
+若有右伴随 \(G\)，则对任意 \(N\)，取伴随的源为零模，得到
+\[
+\operatorname{Hom}_R(M,N)
+\cong\operatorname{Hom}_R(0,G(N)).
+\]
+右边只有零同态，故左边也只能有一个同态。取 \(N=M\) 得到 \(1_M=0\)，因此 \(M=0\)。反过来，\(-\oplus0\) 自然同构于恒等函子，以恒等函子作右伴随即可。只要模范畴存在非零对象，其直接和幺半结构就不闭；对零环的只有零模的范畴则闭。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:cartesian-dualizable-sets}
+证明在集合范畴的笛卡尔积幺半结构中，一个集合有左对偶，当且仅当它是单点集。空集是否例外？
+\end{exercise}
+\begin{solution}
+若 \(D\) 是 \(X\) 的左对偶，余求值 \(\{*\}\to X\times D\) 指定一对 \((x_0,d_0)\)，所以两集合非空。求值 \(D\times X\to\{*\}\) 唯一。第一条蛇形复合把每个 \(x\) 都送到 \(x_0\)，而它须为恒等，故 \(X=\{x_0\}\)。第二条同样迫使 \(D=\{d_0\}\)。反过来，两个单点集之间的唯一映射给出求值和余求值，两个蛇形复合均为恒等。空集没有余求值，因为其与任意集合的积为空，所以不是例外。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:dual-of-tensor-modules}
+设 \(R\) 为交换含幺环，\(P,Q\) 为有限生成投射 \(R\) 模。证明 \(P\otimes_RQ\) 可对偶，并将其对偶识别为 \(Q^\vee\otimes_RP^\vee\)。写出求值及余求值，不仅给出存在性。
+\end{exercise}
+\begin{solution}
+选对偶基 \((p_i,\varphi_i)\)、\((q_j,\psi_j)\)。求值定义为
+\[
+(\psi\otimes\varphi)\otimes(p\otimes q)\longmapsto\varphi(p)\psi(q),
+\]
+余求值把 \(1\) 送到 \(\sum_{i,j}(p_i\otimes q_j)\otimes(\psi_j\otimes\varphi_i)\)。各式 \(R\) 多线性且保持平衡关系，故良定义。第一个蛇形复合在 \(p\otimes q\) 上为
+\[
+\sum_{i,j}\varphi_i(p)\psi_j(q)(p_i\otimes q_j)
+=\left(\sum_i\varphi_i(p)p_i\right)\otimes
+\left(\sum_j\psi_j(q)q_j\right)=p\otimes q.
+\]
+第二个在 \(\psi\otimes\varphi\) 上成为
+\(\sum_{i,j}\varphi(p_i)\psi(q_j)\psi_j\otimes\varphi_i=\psi\otimes\varphi\)。故给出左对偶，交换因子也给出右对偶。由对偶唯一性及\cref{b4:thm:dualizable-projective-modules}，它识别为 \(\operatorname{Hom}_R(P\otimes_RQ,R)\)，并同时证明张量积有限生成投射。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:dual-morphism-compatibility}
+设 \(R\) 为交换含幺环，\(P,Q\) 为有限生成投射 \(R\) 模，\(f:P\to Q\)。令 \(f^\vee:Q^\vee\to P^\vee\)、\(\psi\mapsto\psi\circ f\)。证明对偶反转复合，并验证余求值的相容公式
+\[
+(f\otimes1_{P^\vee})\circ b_P
+=(1_Q\otimes f^\vee)\circ b_Q:R\longrightarrow Q\otimes_RP^\vee.
+\]
+\end{exercise}
+\begin{solution}
+对 \(g:Q\to T\) 及 \(\chi\in T^\vee\)，有 \((gf)^\vee(\chi)=\chi\circ g\circ f=f^\vee g^\vee(\chi)\)，而恒等的对偶仍为恒等，所以得到反变函子。相容公式左边在 \(1\) 处的张量为 \(\sum_i f(p_i)\otimes\varphi_i\)，经\cref{b4:prop:projective-dual-internal-hom}的同构映为 \(f\)。右边为 \(\sum_jq_j\otimes(\psi_j\circ f)\)，其对应同态在 \(p\) 上的值为 \(\sum_j\psi_j(f(p))q_j=f(p)\)，也对应 \(f\)。同构的单射性给出两张量相等，故整个映射相等。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:dualizable-trace-cyclicity}
+设 \(R\) 为交换含幺环，\(P\) 为有限生成投射 \(R\) 模。对 \(h\in\operatorname{End}_R(P)\)，用求值、交换与余求值定义
+\[
+\operatorname{tr}_P(h)=
+\bigl(e_P\circ c_{P,P^\vee}\circ(h\otimes1_{P^\vee})\circ b_P\bigr)(1)\in R.
+\]
+写出对偶基公式，并证明对有限生成投射 \(P,Q\) 及 \(f:P\to Q\)、\(g:Q\to P\)，有 \(\operatorname{tr}_P(gf)=\operatorname{tr}_Q(fg)\)。当 \(P=R^r\) 时与矩阵迹比较。
+\end{exercise}
+\begin{solution}
+沿各映射计算得 \(\operatorname{tr}_P(h)=\sum_i\varphi_i(h(p_i))\)。余求值及其余态射均已确定，不依赖对偶基，故这一公式也不依赖选择。对 \(Q\) 选对偶基 \((q_j,\psi_j)\)，则
+\[
+\begin{aligned}
+\operatorname{tr}_P(gf)
+&=\sum_{i,j}\psi_j(f(p_i))\varphi_i(g(q_j))\\
+&=\sum_j\psi_j\left(f\left(\sum_i\varphi_i(g(q_j))p_i\right)\right)
+=\sum_j\psi_j(fg(q_j))=\operatorname{tr}_Q(fg).
+\end{aligned}
+\]
+将标量顺序交换用了 \(R\) 交换。对 \(R^r\) 取标准基及坐标泛函，公式就是矩阵的对角元之和，恒等映射的迹为 \(r\cdot1_R\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:graded-odd-squares}
+设 \(k\) 为特征不为 \(2\) 的域，\(A\) 为符号对称结构下的 \(\mathbb Z\) 分次交换代数对象。证明每个奇次数齐次元素的平方为零。特征为 \(2\) 时构造反例。
+\end{exercise}
+\begin{solution}
+若 \(a\) 的次数 \(m\) 为奇数，则 \(a^2=(-1)^{m^2}a^2=-a^2\)，故 \(2a^2=0\)。特征不为 \(2\) 时 \(2\) 可逆，因此 \(a^2=0\)。特征为 \(2\) 时取多项式代数 \(k[x]\)，赋予 \(\deg x=1\)。符号 \(-1=1\)，所以普通交换乘法满足分次交换条件，却有 \(x^2\ne0\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:one-object-enrichment}
+证明只有一个对象的 Ab 富集范畴等价于给定一个含幺环；只有一个对象的 \(k\)-向量空间富集范畴等价于给定一个含幺结合 \(k\) 代数。富集范畴的结合律是否迫使环交换？
+\end{exercise}
+\begin{solution}
+设唯一对象为 \(*\)，其 Hom 对象为 \(H\)。在 Ab 中，复合 \(H\otimes_{\mathbb Z}H\to H\) 等价于双可加乘法，单位 \(\mathbb Z\to H\) 指定元素 \(1\)。富集的结合与单位公理就是环的结合与单位律，双可加性给出左右分配律。反过来，任意含幺环都给出这些数据，故互相恢复。在向量空间中将双可加换成 \(k\) 双线性、单位域换成 \(k\)，便得到含幺结合 \(k\) 代数。公理只要求结合，不要求交换；例如矩阵环 \(M_2(k)\) 给出只有一个对象的富集范畴，而 \(E_{12}E_{21}=E_{11}\ne E_{22}=E_{21}E_{12}\)。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:direct-sum-algebra-objects}
+设 \(R\) 为环。在以 \(\oplus\) 为幺半运算、零模为单位的左 \(R\) 模范畴中，分类代数对象。对给定代数对象 \(A\)，证明左模对象等价于给定一个左 \(R\) 模 \(M\) 和同态 \(t:A\to M\)。
+\end{exercise}
+\begin{solution}
+单位 \(0\to A\) 唯一。乘法 \(m:A\oplus A\to A\) 由在两个直和分量上的限制决定，而左右单位公理要求两个限制都是 \(1_A\)。因此唯一可能的乘法为 \(m(a,b)=a+b\)，它满足结合律。每个 \(R\) 模恰好有这一种代数对象结构，每个模同态都保持它。
+
+作用 \(a:A\oplus M\to M\) 的单位公理要求在 \(M\) 分量上为恒等，故它唯一写成 \(a(x,v)=t(x)+v\)。任意 \(R\) 线性 \(t\) 都满足结合公理，因为两边在 \((x,y,v)\) 上分别为 \(t(x+y)+v\)、\(t(x)+t(y)+v\)。于是给定左模对象等价于给定这样的 \(t\)，其同态 \(f:M\to N\) 的条件为 \(f t_M=t_N\)。这与张量幺半结构下的普通代数和普通模不同。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:representation-duals}
+设 \(G\) 为群，\(k\) 为域，\(V\) 为有限维 \(k\) 向量空间，给定表示 \(\rho:G\to\operatorname{GL}_k(V)\)。在 \(V^*\) 上定义 \((g\varphi)(v)=\varphi(g^{-1}v)\)。证明这给出表示，并且通常的求值与余求值对 \(G\) 等变，其中 \(k\) 取平凡作用、张量取对角作用。是否需要 \(G\) 有限或 \(\operatorname{char}k\) 不整除群阶？
+\end{exercise}
+\begin{solution}
+有 \(1\varphi=\varphi\)，且
+\((g(h\varphi))(v)=\varphi(h^{-1}g^{-1}v)=((gh)\varphi)(v)\)，故为表示。求值满足 \((g\varphi)(gv)=\varphi(v)\)，所以等变。余求值张量 \(\sum_i e_i\otimes e_i^*\) 在典范同构 \(V\otimes_kV^*\cong\operatorname{End}_k(V)\) 下对应 \(1_V\)。对角作用下，\(v\otimes\varphi\) 对应的算子变为 \(w\mapsto\varphi(g^{-1}w)gv\)，正是原算子的 \(\rho(g)\) 共轭。因此恒等算子固定，余求值张量也固定，给出等变映射 \(k\to V\otimes_kV^*\)。蛇形等式已在底向量空间中成立，也就在表示之间成立。整个论证只需要有限维及群元素可逆，不需要 \(G\) 有限，也不需要群阶在域中可逆。
+\end{solution}

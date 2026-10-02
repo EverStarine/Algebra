@@ -1,0 +1,248 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### E.4 平展位点与平展 topos
+% 纲要细目（写作范围）：
+% #### E.4.1 平展覆盖与层
+% #### E.4.2 域上的平展层与 Galois 作用
+% ---
+
+\section{平展位点与平展 topos}
+\label{b4:sec:E04}
+
+在 \(\operatorname{Spec}\mathbb R\) 上，方程 \(T^2+1=0\) 不能通过缩小开集得到解，却能在平展态射 \(\operatorname{Spec}\mathbb C\rightarrow\operatorname{Spec}\mathbb R\) 后得到解。这样的局部变化仍有交叠与拼接，只是交叠须用纤维积表示。第三卷第24.4节已将环的平展性推广到概形态射，并证明它保持于复合与基变换；这里用这些态射构造位点，再将\subsecref{b4:subsec:C04:02}的域上计算放到层范畴中。
+
+\subsection{平展覆盖与层}
+\label{b4:subsec:E04:01}
+
+先固定一个含概形 \(X\) 的集合大小的概形框架：其中的概形及全部态射组成小范畴，并且开子概形、纤维积及框架中概形上的有限型概形可在其中选取同构代表。为比较不同框架，先对 \(X\) 的每个仿射开集 \(W=\operatorname{Spec}A\)，从有限展示平展 \(A\) 代数的各同构类中选取代表 \(B\)，保留结构态射 \(\operatorname{Spec}B\rightarrow W\rightarrow X\)。这些局部模型只有集合多个：\(X\) 的仿射开集构成集合，而有限组生成元与关系所给的 \(A\) 代数只有集合多个展示。要求所选框架含每个局部模型的一个 \(X\)-同构代表；继续加入所需的开集、有限型概形与纤维积，仍可在一个足够大的集合中完成这些选择。以下构造都在这个框架内进行，取同构代表时同时保留结构态射。
+
+\begin{definition}\label{b4:def:small-etale-site}
+设 \(X\) 为概形，在上述集合框架中取范畴 \(\mathcal C_X\)：其对象为平展概形态射 \(p_U:U\rightarrow X\)，从 \(U\) 到 \(V\) 的态射为满足 \(p_V\circ f=p_U\) 的概形态射 \(f:U\rightarrow V\)。对对象 \(U\)，若一族态射 \((u_i:U_i\rightarrow U)_{i\in I}\) 中每个 \(u_i\) 平展，且
+\[
+ U=\bigcup_{i\in I}u_i(U_i),
+\]
+则称其为 \(U\) 的\term[pingzhan-fugai]{平展覆盖}[étale covering]。规定一个筛覆盖 \(U\)，当且仅当它包含一族这样的覆盖态射，所得位点记为 \(X_{\acute{e}t}\)，称为 \(X\) 的\term[xiao-pingzhan-weidian]{小平展位点}[small étale site]。
+\end{definition}
+
+名称中的“小”是相对于允许一般 \(X\)-概形作为对象的大平展位点而言的；对象的结构态射须平展。范畴在集合意义下为小，是由前面的框架选择保证的。任意大的不交并并不必全都属于这个已选范畴。另一方面，每个平展对象都可由映入 \(X\) 的仿射开集的仿射平展模型覆盖，这些模型来自有限展示，已经可以在框架内选到。
+
+\begin{proposition}\label{b4:prop:etale-covering-topology}
+设 \(X\) 为概形，\(\mathcal C_X\) 为\cref{b4:def:small-etale-site}中的小范畴。平展覆盖满足恒等覆盖、复合覆盖和基变换覆盖条件；定义中的覆盖筛给出\cref{b4:def:grothendieck-site}的 Grothendieck 拓扑。
+\end{proposition}
+\begin{proof}
+恒等态射平展且满射。若 \((U_i\rightarrow U)\) 覆盖 \(U\)，各 \((U_{ij}\rightarrow U_i)\) 又覆盖 \(U_i\)，则复合态射平展，其像的并仍为 \(U\)。
+
+对任意 \(f:V\rightarrow U\)，基变换 \(V\times_UU_i\rightarrow V\) 平展，源也平展于 \(X\)，故仍是 \(\mathcal C_X\) 中的对象。它们的像覆盖 \(V\)：对 \(v\in V\)，取 \(u_i\in U_i\) 映到 \(f(v)=u\)；非零环
+\[
+ \kappa(v)\otimes_{\kappa(u)}\kappa(u_i)
+\]
+有素理想，给出纤维积中映到 \(v\) 的点。这里张量积非零，是因为两个因子都是 \(\kappa(u)\) 上的非零向量空间。
+
+最大筛含恒等覆盖。若筛含 \((u_i)\)，它沿 \(f\) 的拉回便含刚构造的基变换覆盖。最后，设 \(S\) 覆盖 \(U\)，而筛 \(R\) 对每个 \(s\in S\) 的拉回都覆盖。选 \(S\) 中一族覆盖 \((u_i)\)，再在各 \(u_i^*R\) 中选覆盖 \((v_{ij})\)。复合 \((u_i\circ v_{ij})\) 覆盖 \(U\)，且全属于 \(R\)，故 \(R\) 覆盖。这正是三条筛公理。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:etale-sheaf-equalizer}
+设 \(X\) 为概形，\(F:\mathcal C_X^{\mathrm{op}}\rightarrow\mathbf{Set}\) 为预层。则 \(F\) 是 \(X_{\acute{e}t}\) 上的层，当且仅当对每个平展覆盖 \((U_i\rightarrow U)\)，下列图是等化子图：
+\begin{equation}\label{b4:eq:etale-sheaf-equalizer}
+ F(U)\longrightarrow\prod_iF(U_i)
+ \mathrel{\substack{\longrightarrow\\[-0.6ex]\longrightarrow}}
+ \prod_{i,j}F(U_i\times_UU_j).
+\end{equation}
+右侧两箭头分别由两投影的限制给出。
+\end{proposition}
+\begin{proof}
+设 \(S\) 为这族覆盖生成的筛。一个相容族 \(x_i\in F(U_i)\) 对每个分解 \(f=u_i\circ g:V\rightarrow U\) 给出 \(F(g)(x_i)\)。若还有 \(f=u_j\circ h\)，则 \((g,h)\) 给出到 \(U_i\times_UU_j\) 的态射，等化子中的相容条件保证两值相同。这些值与进一步限制相容，因而给出 \(S\rightarrow F\) 的自然变换。反过来，取该变换在各 \(u_i\) 上的值，便恢复相容族。于是\eqref{b4:eq:etale-sheaf-equalizer}恰是生成筛上的层条件。
+
+若任意覆盖族都满足这一条件，给定任意覆盖筛 \(R\) 上的相容族，可先选 \(R\) 中一族覆盖，将其值唯一拼成 \(x\in F(U)\)。对任意 \(f:V\rightarrow U\) 属于 \(R\)，沿拉回覆盖检验，\(F(f)(x)\) 与原相容族在 \(f\) 上的值相同；等化子的单射性使它们在 \(V\) 上相同。故 \(x\) 恢复全部相容族，并且唯一。反方向由生成筛是覆盖筛立即得到。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:etale-affine-basis}
+设 \(X\) 为概形。在 \(X_{\acute{e}t}\) 中只取仿射源的对象，并以仿射对象组成的联合满射平展族为覆盖，所得位点的层范畴与 \(X_{\acute{e}t}\) 的层范畴等价。
+\end{proposition}
+\begin{proof}
+每个对象 \(U\) 有仿射开覆盖 \((U_\lambda)\)。给定仿射子位点上的层 \(F\)，定义 \(U\) 上的截面为 \(x_\lambda\in F(U_\lambda)\) 组成的相容族；相容是指在每个 \(U_\lambda\cap U_\mu\) 的仿射开覆盖上，两者限制相同。两组仿射开覆盖的交可以再作仿射开覆盖，仿射对象上的层公理使相容族沿细化的映射为双射。因此定义与所选开覆盖无关。
+
+态射的拉回在仿射开集的原像上再取仿射开覆盖即可定义，细化无关性保证复合律。对任意平展覆盖，其在这些仿射开集上的基变换可再被仿射开集覆盖；局部层公理先在这些仿射对象上拼接，再拼接到 \(U\)，证明所构造的预层是层。限制后恢复 \(F\)，而原位点上的层由其仿射开覆盖上的值唯一恢复；层态射也由这些限制唯一恢复。这给出互逆的函子。
+
+还可用同一拼接论证比较两个允许的集合框架。记节首选取的局部模型组成的小范畴为 \(\mathcal B_X\)，其态射取全部 \(X\)-态射，覆盖仍为联合满射平展族。每个框架中的模型代表经 \(X\)-同构与 \(\mathcal B_X\) 对应；共轭这些同构给出态射的对应，并保持覆盖，因为同构不改变态射像的并。
+
+对任意平展对象 \(U\rightarrow X\)，先将 \(U\) 按 \(X\) 的仿射开集 \(W\) 的原像覆盖，再在各原像中取仿射开覆盖。所得仿射对象平展于 \(W\)，其坐标代数有限展示，故都与 \(\mathcal B_X\) 中的模型 \(X\)-同构。两个这样的覆盖的交叠，以及沿任意态射拉回所得的对象，都能再按同样方式被这些局部模型覆盖。因此刚才的相容族、细化与拉回构造可全部在 \(\mathcal B_X\) 上进行，并从它恢复每个框架中的层及层态射。两项限制函子
+\[
+ \operatorname{Sh}_{\mathbf{Set}}(\mathcal C_X,J)
+ \longrightarrow\operatorname{Sh}_{\mathbf{Set}}(\mathcal B_X)
+\]
+遂分别为等价，给出两个框架所得层范畴的自然等价；改变代表或所选覆盖，只改变恢复函子的自然同构。这里共同的是一组覆盖每个对象的局部模型，并非全部仿射源对象的同构类型：仿射源对象的像未必落在 \(X\) 的一个仿射开集中。
+\end{proof}
+
+两个仿射对象在非仿射对象上的纤维积未必仿射。使用仿射基时，\eqref{b4:eq:etale-sheaf-equalizer}中的相容性便须在这个纤维积的仿射开覆盖上检验，而不能把它直接当作仿射基中的一个对象。
+
+\begin{definition}\label{b4:def:etale-topos}
+设 \(X\) 为概形。小平展位点的集合值层范畴
+\[
+ \operatorname{Sh}_{\mathbf{Set}}(X_{\acute{e}t})
+\]
+称为 \(X\) 的\term[pingzhan-topos]{平展 topos}[étale topos]。其交换群对象组成的范畴记为 \(\operatorname{Sh}_{\mathbf{Ab}}(X_{\acute{e}t})\)；对象等价地是取值于交换群并满足\eqref{b4:eq:etale-sheaf-equalizer}的预层。
+\end{definition}
+
+由\cref{b4:thm:site-topos}，集合值平展层构成 Grothendieck topos，具有有限极限、指数对象及子对象分类子。交换群平展层则有加法与正合列；对其取全局截面的导出函子，需要内射消解。两种范畴的联系由\subsecref{b4:subsec:E03:03}中的内部交换群结构给出。
+
+\begin{proposition}\label{b4:prop:abelian-site-sheaves-grothendieck}
+设 \((\mathcal C,J)\) 为小位点。交换群值层范畴 \(\operatorname{Sh}_{\mathbf{Ab}}(\mathcal C,J)\) 是 Grothendieck 范畴，因而有足够多内射对象。
+\end{proposition}
+\begin{proofsketch}
+在\cref{b4:thm:site-topos}的两次加号构造中，相容族逐项相加，得到加法层化函子 \(a\)。它是交换群值层包含到预层范畴的左伴随，并保持有限极限。因此它保持核；作为加性左伴随又保持余核，故正合。层的核逐对象计算，余核为逐对象余核的层化，由此得到交换范畴。
+
+任意小余极限都是先在预层中逐对象取余极限，再层化。交换群的滤过余极限与核交换，而层的核也逐对象计算；再用正合层化，便知层范畴的滤过余极限保持核。余极限作为左伴随保持余核，因此这些滤过余极限正合。对可表预层 \(h_U=\operatorname{Hom}_{\mathcal C}(-,U)\)，记 \(\mathbb Z[h_U]\) 为逐对象在这个集合上取自由交换群的预层。伴随与 Yoneda 引理给出
+\[
+ \operatorname{Hom}\bigl(a\mathbb Z[h_U],F\bigr)\cong F(U).
+\]
+由于 \(\mathcal C\) 小，可取层的余积 \(G=\bigoplus_{U\in\mathcal C}a\mathbb Z[h_U]\)。若两个层态射不同，它们在某个 \(F(U)\) 的元素上不同，相应的 \(a\mathbb Z[h_U]\rightarrow F\) 检测这个差别；令其余直和项映为零，就得到检测差别的 \(G\rightarrow F\)。故 \(G\) 是生成元。这里使用的层化伴随与有限极限保持性，正是\cref{b4:thm:site-topos}中给出的层化概要；其余各项核验说明可以应用\cref{b4:thm:grothendieck-enough-injectives}。
+\end{proofsketch}
+
+在 \(X_{\acute{e}t}\) 中，\(X\rightarrow X\) 是终对象。对交换群平展层 \(F\)，全局截面函子 \(\Gamma(X,F)=F(X)\) 左正合，因而定义
+\[
+ H^n_{\acute{e}t}(X,F)=R^n\Gamma(X,-)(F)
+ \qquad(n\ge0).
+\]
+这给出\secref{b4:sec:C04}所用平展上同调的位点定义。
+
+\subsection{域上的平展层与 Galois 作用}
+\label{b4:subsec:E04:02}
+
+\begin{definition}\label{b4:def:finite-etale-object}
+设 \(X\) 为概形，\(p:U\rightarrow X\) 为平展态射。若对每个仿射开集 \(\operatorname{Spec}A\subseteq X\)，原像都为仿射概形 \(\operatorname{Spec}B\)，且 \(B\) 作为 \(A\) 模有限生成，则称 \(p\) 为有限平展态射，\(U\) 为有限平展 \(X\)-对象。
+\end{definition}
+
+一般平展对象不能只用有限平展对象代替。例如取域 \(k\)，令 \(X=\operatorname{Spec}k[t]\)、\(U=D(t)\)。开浸入 \(U\rightarrow X\) 平展；但若非空有限平展 \(V\rightarrow X\) 能经过 \(U\) 分解，写 \(V=\operatorname{Spec}B\)，则 \(B\) 是非零有限平坦 \(k[t]\) 代数。它作为主理想整环上的有限生成无挠模为正秩自由模，故 \(B/tB\ne0\)；分解到 \(D(t)\) 却要求 \(t\) 在 \(B\) 中可逆，矛盾。在域上，所需的有限性由下面的论证产生。
+
+\begin{lemma}\label{b4:lem:etale-over-field-components}
+设 \(K\) 为域，\(U\rightarrow\operatorname{Spec}K\) 为平展概形态射。则存在一族有限可分域扩张 \((L_\lambda/K)_{\lambda\in\Lambda}\)，使
+\[
+ U\cong\coprod_{\lambda\in\Lambda}\operatorname{Spec}L_\lambda.
+\]
+反过来，这样的不交并平展于 \(K\)。特别地，仿射平展 \(K\)-概形对应有限个有限可分域的直积。
+\end{lemma}
+\begin{proof}
+先设 \(B\) 为平展 \(K\) 代数；零代数对应空对象，以下设 \(B\ne0\)。它有限展示，且 \(\Omega_{B/K}=0\)，也可由第三卷第23.3节的标准平展模型刻画。取代数闭包 \(\overline K\)，令 \(C=B\otimes_K\overline K\)。基变换使 \(C\) 仍有限展示且 \(\Omega_{C/\overline K}=0\)。由第三卷第6.2节的弱零点定理，每个极大理想 \(\mathfrak m\) 的剩余域为 \(\overline K\)。第三卷第14.3节的有理点余切空间同构给出
+\[
+ \mathfrak mC_{\mathfrak m}/(\mathfrak mC_{\mathfrak m})^2
+ \cong\overline K\otimes_C\Omega_{C/\overline K}=0.
+\]
+\(C_{\mathfrak m}\) 是 Noether 局部环，Nakayama 引理使其极大理想为零，所以它是域。每个素理想包含于某个极大理想；局部化中的素理想对应说明这两者必相等。幂零元在每个极大理想处局部化后也为零，故本身为零。因此 \(C\) 约化且零维，由第三卷第3.3节的 Noether 零维环定理，\(C\) 是有限个 \(\overline K\) 的直积。
+
+\(B\rightarrow C\) 单射，故 \(B\) 约化。\(K\) 上线性无关的元素在扩域后仍线性无关，而 \(C\) 是有限维 \(\overline K\) 向量空间，所以 \(B\) 是有限维 \(K\) 代数。约化 Artin 环的分解使 \(B\) 为有限个有限扩张域的直积。微分模在各因子上仍为零，第三卷第14.4--14.5节的有限域扩张判据说明每个因子可分。
+
+对一般 \(U\)，平展定义给每一点一个上述仿射平展邻域。这个邻域是有限个域的谱的不交并，因而每一点本身就是开子概形，且其环为相应的有限可分域。将全部这些单点开子概形取不交并即恢复 \(U\)。反方向逐分量由有限可分域扩张平展的判据得到。若 \(U\) 仿射，它准紧，其单点开覆盖必有有限子覆盖，故只有有限个分量。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:field-finite-etale-basis}
+设 \(K\) 为域。有限平展 \(K\)-概形在 \((\operatorname{Spec}K)_{\acute{e}t}\) 中构成覆盖基：每个对象都有来自这些对象的覆盖。取其同构代表组成小范畴 \(\mathrm{F\acute Et}(K)\)，覆盖仍为联合满射族，则限制给出集合值层范畴的等价。这个等价也适用于交换群值层。
+\end{proposition}
+\begin{proof}
+前一引理的分量 \(U_\lambda=\operatorname{Spec}L_\lambda\) 就给出所需覆盖。有限平展对象的纤维积仍有限平展：平展性保持基变换与复合，其坐标代数的张量积仍有限维。有限可分域扩张可由多项式的根表示，只有集合多个同构类型，故其有限直积也可选小范畴中的代表。
+
+给定有限平展基上的层 \(F\)，对任意 \(U=\coprod_\lambda U_\lambda\) 定义
+\[
+ \widetilde F(U)=\prod_\lambda F(U_\lambda).
+\]
+对态射 \(f:V\rightarrow U\)，每个分量 \(V_\mu\) 映到唯一 \(U_{\lambda(\mu)}\)；沿这个分量态射限制相应坐标，定义 \(\widetilde F(f)\)。分量态射的复合律保证这是预层。基中的有限不交并由分量覆盖，分量间交为空，且空覆盖给出 \(F(\varnothing)\) 是单元素集合；故 \(\widetilde F\) 限制后自然恢复 \(F\)。
+
+设 \((V_i\rightarrow U)\) 为平展覆盖，并给定相容的截面。固定一个 \(U_\lambda\)，选 \(V_i\) 中一个映到它的分量 \(W\)。\(W\rightarrow U_\lambda\) 是非空有限可分扩张给出的覆盖。该分量截面在 \(W\times_{U_\lambda}W\) 上相容，由 \(F\) 的层公理唯一下降到 \(x_\lambda\in F(U_\lambda)\)。对另一个映到 \(U_\lambda\) 的分量 \(W'\)，两项在 \(W\times_{U_\lambda}W'\) 上相同；这个纤维积覆盖 \(W'\)，故层的单射性使 \(x_\lambda\) 的限制恢复 \(W'\) 上的截面。所有 \(x_\lambda\) 因而唯一拼成 \(\widetilde F(U)\) 的元素，证明层条件。
+
+原位点上的任意层也由分量开覆盖给出 \(F(U)\cong\prod_\lambda F(U_\lambda)\)，所以扩展唯一，层态射逐分量恢复。这证明等价。取值于交换群时，同一构造逐项保留加法，空对象取零群，论证不变。
+\end{proof}
+
+固定可分闭包 \(K^s\)，记 \(G_K=\operatorname{Gal}(K^s/K)\)。\subsecref{b4:subsec:C04:02}已经将有限平展 \(K\)-概形 \(U\) 对应到有限连续 \(G_K\)-集
+\[
+ T(U)=\operatorname{Hom}_K(\operatorname{Spec}K^s,U),
+\]
+在 \(U=\operatorname{Spec}B\) 时，几何点就是 \(K\)-代数同态 \(t:B\rightarrow K^s\)，作用为 \(g\cdot t=g\circ t\)。该小节通过 \(G_K\)-等变函数 \(T(U)\rightarrow K^s\) 恢复 \(B\)，并以函数的拉回恢复代数同态；与 \(\operatorname{Spec}\) 的反变方向相抵，得到自然双射
+\[
+ \operatorname{Hom}_K(U,V)
+ \cong\operatorname{Hom}_{G_K}(T(U),T(V)),
+ \qquad f\longmapsto T(f),
+\]
+其中 \(T(f)(t)=f\circ t\)。任意有限连续 \(G_K\)-集是有限个 \(G_K/H\) 的不交并，开子群 \(H\) 对应有限可分域 \((K^s)^H\)，所以这一全忠实函子也是本质满的。它将覆盖对应到联合满射。
+
+\ProseParagraphBreak
+对任意离散连续 \(G_K\)-集 \(M\)，在有限平展基上定义
+\[
+\begin{aligned}
+ F_M(U)&=\operatorname{Hom}_{G_K}(T(U),M),\\
+ F_M(f)(h)&=h\circ T(f)\qquad(f:V\rightarrow U).
+\end{aligned}
+\]
+联合满射覆盖上的相容等变函数唯一拼接，故 \(F_M\) 是层，再由\cref{b4:prop:field-finite-etale-basis}扩展到整个小平展位点。这里 \(M\) 可以无限，连续性要求每个元素的稳定子群开。
+
+\ProseParagraphBreak
+反过来，给定集合值平展层 \(F\)，简记 \(F(L)=F(\operatorname{Spec}L)\)，沿 \(K^s/K\) 中的有限 Galois 子扩张取
+\[
+ M_F=\varinjlim_{L/K\ {\rm finite\ Galois}}F(L).
+\]
+沿域包含的过渡映射为拉回；相应概形态射是覆盖，故层的分离性使这些映射单射。对 \(g\in G_K\)，在 \(F(L)\) 上令 \(g\) 通过代数自同构 \(g|_L\) 的拉回 \(F(\operatorname{Spec}(g|_L))\) 作用。\(\operatorname{Spec}\) 与 \(F\) 的两次反变使 \(g\cdot(h\cdot s)=(gh)\cdot s\)，得到左作用；域自同构与包含相容，故这些作用也与过渡映射相容。每个来自 \(F(L)\) 的元素被 \(G_L=\operatorname{Gal}(K^s/L)\) 固定，所以 \(M_F\) 是离散连续 \(G_K\)-集。
+
+\ProseParagraphBreak
+对有限平展 \(U=\operatorname{Spec}B\)，构造
+\[
+ \theta_U:F(U)\longrightarrow
+ \operatorname{Hom}_{G_K}(T(U),M_F).
+\]
+若 \(s\in F(U)\)、\(t:B\rightarrow K^s\)，取有限 Galois 子扩张 \(L/K\) 包含 \(t(B)\)，将 \(s\) 沿 \(\operatorname{Spec}L\rightarrow U\) 拉回，所得截面在余极限中的类就是 \(\theta_U(s)(t)\)。增大 \(L\) 不改变这个类；拉回复合律还给出
+\[
+ \theta_U(s)(g\cdot t)=g\cdot\theta_U(s)(t).
+\]
+因此这确实是按几何点取茎得到的等变函数。
+
+\ProseParagraphBreak
+选有限 Galois \(L/K\) 使 \(U\) 在 \(L\) 上分裂，则
+\(U\times_K\operatorname{Spec}L\cong\coprod_{t\in T(U)}\operatorname{Spec}L\) 覆盖 \(U\)。若两个截面经 \(\theta_U\) 得到同一函数，它们在每个上述分量上的拉回在 \(M_F\) 中相同。由 \(F(L)\rightarrow M_F\) 单射，这些拉回已经相同，再由层的分离性得到原截面相同，故 \(\theta_U\) 单射。
+
+\ProseParagraphBreak
+给定等变函数 \(h:T(U)\rightarrow M_F\)，由于 \(T(U)\) 有限，可增大分裂域 \(L\)，使所有 \(h(t)\) 都由 \(x_t\in F(L)\) 表示。\(F(L)\rightarrow M_F\) 单射和 \(h\) 的等变性给出
+\[
+ x_{\sigma\cdot t}=\sigma\cdot x_t
+ \qquad(\sigma\in\operatorname{Gal}(L/K)).
+\]
+按 \(a\otimes b\mapsto(a\sigma(b))_\sigma\) 识别 \(L\otimes_KL\cong\prod_{\sigma\in\operatorname{Gal}(L/K)}L\)，分裂覆盖的交叠在 \((t,\sigma)\) 分量上的两投影给出 \(x_t\) 与 \(\sigma\cdot x_{\sigma^{-1}\cdot t}\)，上述等式使它们相同。层公理使 \((x_t)_t\) 唯一下降为 \(s\in F(U)\)，且 \(\theta_U(s)=h\)。这证明满射，因而 \(\theta_U\) 为双射。
+
+\ProseParagraphBreak
+这项双射与全部限制相容。对任意有限平展对象间的态射 \(f:V\rightarrow U\)，拉回的复合律给出
+\[
+ \theta_V\bigl(F(f)(s)\bigr)(t)
+ =\theta_U(s)\bigl(T(f)(t)\bigr)
+ \qquad(t\in T(V)).
+\]
+故 \(\theta:F\xrightarrow{\sim}F_{M_F}\) 在有限平展基上是层的自然同构，再由基的恢复等价扩展为整个小平展位点上的自然同构。
+
+\ProseParagraphBreak
+层态射 \(\eta:F\rightarrow F'\) 在各 \(F(L)\) 上给出相容映射，取余极限得到等变映射 \(M_F\rightarrow M_{F'}\)。反过来，等变映射 \(a:M\rightarrow M'\) 通过 \(h\mapsto a\circ h\) 给出层态射 \(F_M\rightarrow F_{M'}\)。取茎的定义使 \(\theta\) 与 \(\eta\) 相容，因此这两个态射构造相互恢复。从 \(M\) 出发时，在单位嵌入 \(L\hookrightarrow K^s\) 处求值给出
+\[
+ F_M(\operatorname{Spec}L)\cong M^{G_L},
+ \qquad
+ M_{F_M}\cong\varinjlim_L M^{G_L}=M.
+\]
+最后的等式成立，因为每个元素的开稳定子群包含某个 \(G_L\)；该同构与等变映射相容。它和 \(\theta\) 给出两复合函子的自然同构，证明集合值平展层范畴与离散连续 \(G_K\)-集范畴等价。
+
+\ProseParagraphBreak
+终对象 \(\operatorname{Spec}K\) 对应单元素的平凡 \(G_K\)-集，故 \(\Gamma(\operatorname{Spec}K,F_M)=M^{G_K}\)。对交换群对象，所得等价是 C.4.2 的交换群平展层与离散连续 \(G_K\)-模的正合等价；全局截面对应不变量，导出后便得到\eqref{b4:eq:C-etale-field}。有限的是作为覆盖基的几何对象，层的截面与相应的 \(G_K\)-模均不要求有限。
+
+\begin{example}\label{b4:exm:real-etale-topos}
+取 \(X=\operatorname{Spec}\mathbb R\)。其 Zariski 底空间只有一个点，集合值 Zariski 层范畴等价于 \(\mathbf{Set}\)。可分闭包为 \(\mathbb C\)，绝对 Galois 群为 \(C_2=\{1,\sigma\}\)，其中 \(\sigma\) 是复共轭；平展 topos 则等价于带有 \(C_2\) 作用的集合范畴，有限群上的这些离散作用都连续。
+
+例如令 \(M=\{+,-\}\)，\(\sigma\) 交换两个元素。对应的层满足
+\[
+ F_M(\operatorname{Spec}\mathbb C)\cong M,
+ \qquad F_M(X)=M^{C_2}=\varnothing.
+\]
+局部截面存在，却没有不变的整体截面。用
+\[
+ \mathbb C\otimes_{\mathbb R}\mathbb C\xrightarrow{\sim}
+ \mathbb C\times\mathbb C,\qquad
+ a\otimes b\longmapsto(ab,a\overline b)
+\]
+识别交叠后，层条件中的两箭头为 \(m\mapsto(m,m)\) 和 \(m\mapsto(m,\sigma m)\)，等化子正是固定点集。对离散 \(C_2\)-模 \(A\)，\eqref{b4:eq:C-etale-field}则给出每个次数的识别
+\[
+ H^n_{\acute{e}t}(\operatorname{Spec}\mathbb R,F_A)
+ \cong H^n(C_2,A)\qquad(n\ge0).
+\]
+集合值层的作用与固定点描述因而也决定了交换群层所用的系数范畴及导出截面计算。
+\end{example}

@@ -1,115 +1,150 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 18.4* 无界情形
-% 纲要位置：计划纲要.md，第 2971 行。
+% 纲要标题：### 18.4 消解模型
+% 纲要标签：b4:sec:1704
+% 纲要位置：计划纲要.md，第 2941 行。
 
-\OptionalSection{无界情形}{b4:sec:1804}
+\section{消解模型}
+\label{b4:sec:1704}
 
-无界复形没有可供逐度归纳的起点，逐项投射或内射便不再自动足够。K-投射、K-内射与 K-平坦直接要求复形正确处理零调复形，并支持无界替换。\subsecref{b4:subsec:2002:03}中任意余积的构造和紧对象的反向刻画则以这里的半自由替换及其 K-投射性质为前提。
+有上界投射复形到零调复形的映射，以及零调复形到有下界内射复形的映射，都在同伦范畴中为零。这个消失性质使导出态射可以回到同伦类计算，并把 Ext 识别为移位 Hom。为建立单向有界模型，下面使用\cref{b4:thm:ce-resolution}的消解存在性与比较，以及\cref{b4:cor:double-complex-comparison}。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+
+% 纲要内容（保留纲要核验项目）：
 %
-% * K-内射、K-投射与 K-平坦
-% * 无界消解的必要修正
-% * 不把有界证明直接无条件推广
+% * 在足够多投射对象的情形，用有界上方的投射复形处理 \(D^-\)；在足够多内射对象的情形，用有界下方的内射复形处理 \(D^+\)
+% * 导出范畴中计算态射
+% * Ext 与导出 Hom 的一致性
+% * \(D^b\) 中的对象一般仍可能需要向一端无限延伸的投射或内射消解；不能无条件把 \(D^b\) 等同于有界投射复形的同伦范畴
 %
 % ---
 %
 
-\subsection{K-内射、K-投射与 K-平坦}
-\label{b4:subsec:1804:01}
+\subsection{有界方向下的投射与内射复形}
+\label{b4:subsec:1704:01}
 
-有上界投射复形和有下界内射复形之所以有效，关键不是每一项的名称，而是整个复形对正合复形的作用。无界时应直接把这种作用列为条件。
+\begin{lemma}\label{b4:lem:bounded-resolution-nullhomotopy}
+设 \(\mathcal A\) 为局部小交换范畴，\(A\) 为任意零调复形。若 \(P\) 是逐项投射的有上界复形，则每个复形映射 \(P\to A\) 零伦；若 \(I\) 是逐项内射的有下界复形，则每个复形映射 \(A\to I\) 零伦。这里对 \(A\) 没有有界性要求。
+\end{lemma}
+\begin{proof}
+设 \(P^n=0\) 对 \(n>N\) 成立，\(f:P\to A\)。从 \(h^{N+1}=0\) 向下构造 \(h^n:P^n\to A^{n-1}\)。已构造高次数部分时，令 \(r^n=f^n-h^{n+1}\mathrm{d}_P^n\)。由高一度的同伦等式及 \(f\) 与微分相容，得 \(\mathrm{d}_A^nr^n=0\)。因为 \(A\) 正合，\(A^{n-1}\to Z^n(A)\) 满；\(P^n\) 投射使 \(r^n\) 提升为 \(h^n\)。于是 \(f^n=\mathrm{d}_A^{n-1}h^n+h^{n+1}\mathrm{d}_P^n\)。对每个固定次数只需有限次从 \(N\) 下降，所以构造定义了全部同伦。
 
-\begin{definition}\label{b4:def:k-resolutions}
-设 \(R\) 为环，以下均为上链复形。
-\begin{enumerate}
-\item 左 \(R\)-模复形 \(P\) 若对每个正合左 \(R\)-模复形 \(A\)，都有 \(\operatorname{Hom}_R^\bullet(P,A)\) 正合，则称 \(P\) 为\term[K-toushe]{K-投射复形}[K-projective complex]。
-\item 左 \(R\)-模复形 \(I\) 若对每个正合左 \(R\)-模复形 \(A\)，都有 \(\operatorname{Hom}_R^\bullet(A,I)\) 正合，则称 \(I\) 为\term[K-neishe]{K-内射复形}[K-injective complex]。
-\item 左 \(R\)-模复形 \(F\) 若对每个正合右 \(R\)-模复形 \(A\)，直和总复形 \(A\otimes_RF\) 都正合，则称 \(F\) 为\term[K-pingtan]{K-平坦复形}[K-flat complex]。右模版本交换两个侧别。
-\end{enumerate}
-\end{definition}
+内射情形把范畴改为 \(\mathcal A^{\mathrm{op}}\)，把次数反向：有下界内射复形变成有上界投射复形，正合性保留。前一构造便逐度向上延拓同伦，回到 \(\mathcal A\) 后得到第二个结论。
+\end{proof}
 
-前两项分别等价于所有 \(P\to A[n]\)、\(A\to I[n]\) 都零同伦，因为 Hom 复形的同调正是这些同伦类。由映射锥判据，这也等价于相应 Hom 函子把拟同构送到拟同构；K-平坦性则等价于张量函子具有这个性质。
-
-\ProseParagraphBreak
-\cref{b4:thm:bounded-projective-model}的提升论证说明，有上界的逐项投射复形是 K-投射的；其对偶说明有下界的逐项内射复形是 K-内射的。\cref{b4:lem:bounded-flat-tensor-preserves}说明有上界的逐项平坦复形是 K-平坦的。最后一个结论允许另一个变量无界，原因在于直和总化与滤过余极限的正合性，而不是对角线自动有限。
-
-\begin{example}\label{b4:exm:unbounded-free-not-k-projective}
-仍取 \(R=k[\varepsilon]/(\varepsilon^2)\)，令 \(E^n=R\) 对每个整数 \(n\)，所有微分均为乘 \(\varepsilon\)。\(E\) 正合且每项自由，但不是 K-投射：若 \(1_E\) 零同伦，则每度存在乘某元素 \(a_n\) 的同伦，使
-\(1=\varepsilon a_n+a_{n+1}\varepsilon\)，右侧属于 \((\varepsilon)\)，矛盾。因此 \(\operatorname{Hom}_R(E,E)\) 的零次同调非零。
-
-\ProseParagraphBreak
-它也不是 K-平坦。取\cref{b4:exm:dual-numbers-derived-base-change}中的自由替换 \(P\to k\)。若 \(E\) 是 K-平坦，则
-\(E\otimes_RP\to E\otimes_Rk\) 为拟同构。\(P\) 本身有上界且平坦，所以 \(P\otimes_RE\) 正合；交换因子的分次符号给出 \(E\otimes_RP\) 正合。但 \(E\otimes_Rk\) 每度为 \(k\)、微分为零，不正合，矛盾。
-
-\ProseParagraphBreak
-这个例子的每项甚至内射。取线性泛函 \(\lambda:R\to k\)，\(\lambda(a+b\varepsilon)=b\)。映射
-\(R\to\operatorname{Hom}_k(R,k)\)、\(r\mapsto(s\mapsto\lambda(sr))\)
-是 \(R\)-模同构：双线性型在基 \(1,\varepsilon\) 下的矩阵为 \(\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\)。又有
-\(\operatorname{Hom}_R(M,\operatorname{Hom}_k(R,k))\simeq\operatorname{Hom}_k(M,k)\)，右侧在向量空间短正合列上正合，故 \(R\) 内射。尽管如此，\(E\) 不是 K-内射，因为 \(E\) 正合而 \(\operatorname{Hom}_R(E,E)\) 不正合。
-\end{example}
-
-\subsection{无界消解的修正}
-\label{b4:subsec:1804:02}
-
-在模范畴中，任意无界复形仍可得到足够好的替换，但须按复形的全部循环关系构造。下面在模范畴中构造这样的替换。
-
-\begin{definition}\label{b4:def:semifree-complex}
-设 \(R\) 为环，\(P\) 是左 \(R\)-模复形。若存在子复形滤过
-\[
-0=P_{-1}\subseteq P_0\subseteq P_1\subseteq\cdots,
-\qquad P=\bigcup_{s\ge0}P_s,
-\]
-使每个包含在分次模意义下分裂，每个商 \(P_s/P_{s-1}\) 是若干移位 \(R[n]\) 的直和且微分为零，则称此 \(P\) 连同滤过为\term[banziyou-fuxing]{半自由复形}[semi-free complex]。等价地，每一层可添一批齐次自由生成元，新生成元的微分只涉及更早层的生成元。
-\end{definition}
-
-\begin{theorem}\label{b4:thm:semifree-resolution}
-设 \(R\) 为环，\(X\) 为任意左 \(R\)-模上链复形。存在半自由复形 \(P\) 及拟同构 \(P\to X\)。每个半自由复形都是 K-投射且 K-平坦的；这里不要求 \(X\) 或 \(P\) 有任何次数界。
+\begin{theorem}\label{b4:thm:bounded-projective-model}
+设 \(\mathcal A\) 为有足够投射对象的局部小交换范畴，\(\mathcal P\) 为其投射对象满子范畴。每个有上界复形 \(X\) 都有拟同构 \(P\to X\)，其中 \(P\in K^-(\mathcal P)\)，且自然函子
+\(K^-(\mathcal P)\to D^-(\mathcal A)\) 是三角等价。
+\end{theorem}
+\begin{theorem}\label{b4:thm:bounded-injective-model}
+设 \(\mathcal A\) 为有足够内射对象的局部小交换范畴，\(\mathcal I\) 为其内射对象满子范畴。每个有下界复形 \(X\) 都有拟同构 \(X\to I\)，其中 \(I\in K^+(\mathcal I)\)，且自然函子
+\(K^+(\mathcal I)\to D^+(\mathcal A)\) 是三角等价。
 \end{theorem}
 \begin{proof}
-先对 \(X\) 每个次数的每个余圈 \(z\in Z^nX\)，添一个次数 \(n\) 的自由生成元 \(e_z\)，令其微分为零，映到 \(z\)。所得 \(P_0\to X\) 在同调上满射。
+先证内射模型的存在。对有下界 \(X\)，应用\cref{b4:thm:ce-resolution}已经构造并比较的 Cartan--Eilenberg 内射消解，取总复形 \(I\)。若 \(X^p=0\) 对 \(p<m\) 成立，双复形可取在 \(p\ge m,q\ge0\)，所以每个总次数只含有限多个项。有限直和内射，故 \(I\) 逐项内射且有下界。增广 \(X\to I\) 是拟同构，由逐列消解的正合性与\cref{b4:cor:double-complex-comparison}得到；有限对角线使这里不涉及无限总化。投射模型则把同一构造在反范畴中对次数反向应用：所得双复形位于 \(p\le N,q\le0\)，每条对角线仍有限，给出逐项投射的 \(P\to X\)。
 
-假定已构造 \(f_s:P_s\to X\)。对每对数据
+直接在有界方向的屋顶范畴中证明全忠实性。记 \(K^-=K^-(\mathcal A)\)，以 \(Q^-:K^-\to D^-(\mathcal A)\) 表示局部化函子，令 \(P\in K^-(\mathcal P)\)。对 \(K^-\) 中的拟同构 \(s:U\to V\)，其锥及各平移零调，故由\cref{b4:lem:bounded-resolution-nullhomotopy}及三角的 Hom 正合列，
 \[
-z\in Z^nP_s,\qquad x\in X^{n-1},\qquad f_s(z)=\mathrm{d}_Xx,
+ s_*:\operatorname{Hom}_{K^-}(P,U)
+ \xrightarrow{\sim}\operatorname{Hom}_{K^-}(P,V).
 \]
-添一个次数 \(n-1\) 的自由生成元 \(e_{z,x}\)，规定
-\(\mathrm{d} e_{z,x}=z\)、\(f_{s+1}(e_{z,x})=x\)。因为 \(\mathrm{d}z=0\) 且 \(f_s(z)=\mathrm{d}x\)，复形条件与映射条件同时成立。这定义 \(P_{s+1}\)，其分次模是 \(P_s\) 与所添自由模的直和，商微分为零。取并得到半自由复形 \(P\) 及映射 \(f:P\to X\)。
-
-每个 \(X\) 的同调类在 \(P_0\) 已有余圈代表，因而 \(H(f)\) 满。若 \(z\in Z^nP\) 映成 \(X\) 中的边界，则 \(z\) 只含有限个生成元，属于某个 \(P_s\)；选定 \(x\) 使 \(f(z)=\mathrm{d}x\)，下一层就添入 \(e_{z,x}\) 使 \(z\) 成为边界。因此 \(H(f)\) 单，\(f\) 是拟同构。
-
-为证 K-投射，设 \(A\) 正合，\(g:P\to A\) 是复形映射。逐层构造次数 \(-1\) 的映射 \(h\)，使 \(g=\mathrm{d}h+h\mathrm{d}\)。若 \(h\) 已在旧层定义，对次数 \(n\) 的新生成元 \(e\)，\(\mathrm{d}e\) 属于旧层，而且
+给定 \(D^-(\mathcal A)\) 中的屋顶 \(P\xleftarrow{s}U\xrightarrow{f}Y\)，取唯一的同伦类 \(a:P\to U\)，使 \(sa=1_P\)。局部化后 \(Q^-(a)=Q^-(s)^{-1}\)，所以屋顶等于 \(Q^-(fa)\)。若 \(Q^-(g)=0\)，屋顶相等判据给出拟同构 \(t:V\to P\)，使 \(gt=0\)；取 \(b:P\to V\) 满足 \(tb=1_P\)，便得 \(g=gtb=0\)。因此对每个有上界 \(Y\)，
 \[
-\mathrm{d}_A\bigl(g(e)-h(\mathrm{d}e)\bigr)=g(\mathrm{d}e)-\mathrm{d}_Ah(\mathrm{d}e)=0,
+ \operatorname{Hom}_{K^-}(P,Y)
+ \xrightarrow{\sim}\operatorname{Hom}_{D^-(\mathcal A)}(P,Y).
 \]
-后一等式用旧层上的同伦公式及 \(\mathrm{d}^2e=0\)。由 \(A\) 正合，可选 \(h(e)\in A^{n-1}\) 使其微分为 \(g(e)-h(\mathrm{d}e)\)。自由性允许同时线性延拓到本层。逐层取并即得全局同伦。把 \(A\) 换成任意移位，得到所有 Hom 同调消失。
 
-为证 K-平坦，设 \(A\) 是正合右模复形。每个商
-\(A\otimes_R(P_s/P_{s-1})\) 是 \(A\) 的移位直和，所以正合。滤过包含逐次分裂，张量后保持短正合列，归纳得 \(A\otimes_RP_s\) 正合。最后由滤过余极限的正合性，\(A\otimes_RP\) 正合。
+内射情形记 \(K^+=K^+(\mathcal A)\)，以 \(Q^+:K^+\to D^+(\mathcal A)\) 表示局部化函子，令 \(I\in K^+(\mathcal I)\)。同一引理的内射部分与反变 Hom 正合列说明，对每个 \(K^+\) 中的拟同构 \(s:U\to V\)，
+\[
+ s^*:\operatorname{Hom}_{K^+}(V,I)
+ \xrightarrow{\sim}\operatorname{Hom}_{K^+}(U,I).
+\]
+对分母在右的屋顶 \(X\xrightarrow{f}U\xleftarrow{s}I\)，取 \(a:U\to I\) 满足 \(as=1_I\)，屋顶便由 \(af\) 表示。若 \(Q^+(g)=0\)，右屋顶的相等判据给出拟同构 \(t:I\to V\)，使 \(tg=0\)；取 \(b:V\to I\) 满足 \(bt=1_I\)，得 \(g=btg=0\)。因此对每个有下界 \(X\)，
+\[
+ \operatorname{Hom}_{K^+}(X,I)
+ \xrightarrow{\sim}\operatorname{Hom}_{D^+(\mathcal A)}(X,I).
+\]
+把 \(Y\) 也取为投射模型、把 \(X\) 也取为内射模型，即得两个模型函子的全忠实性；已证的拟同构提供本质满性。由于 \(\mathcal A\) 局部小，复形映射组成集合，取同伦类后仍为集合，故上述模型也说明 \(D^-(\mathcal A)\)、\(D^+(\mathcal A)\) 在原来的集合范围内局部小。
+
+有限直和保持投射性和内射性，所以模型范畴均对平移和映射锥封闭。上述自然函子正是局部化函子 \(Q^-\)、\(Q^+\) 在模型满子范畴上的限制，与平移相容，并把每个标准锥三角送到相应有界导出范畴的好三角。因此所得等价是三角等价。
 \end{proof}
 
-这里的归纳不是沿复形次数开始，而是沿添加生成元的层次开始。即使次数向两边无限延伸，每个新生成元的微分只依赖已经处理的部分，所以构造同伦仍有起点。
+\subsection{导出范畴中态射的计算}
+\label{b4:subsec:1704:02}
 
-\subsection{有界论证向无界情形推广的条件}
-\label{b4:subsec:1804:03}
-
-\begin{proposition}\label{b4:prop:k-resolution-comparison}
-设 \(R\) 为环，简记左 \(R\)-模的同伦范畴和导出范畴为 \(K(R)=K(R\text{-}\mathbf{Mod})\)、\(D(R)=D(R\text{-}\mathbf{Mod})\)。若 \(P\) 为 K-投射左 \(R\)-模上链复形，则对任意左 \(R\)-模上链复形 \(Y\)，有
+\begin{proposition}\label{b4:prop:resolution-computes-derived-hom}
+设 \(\mathcal A\) 为局部小交换范畴，并对局部化采用\subsecref{b4:subsec:1701:03}的大小约定，简记 \(K=K(\mathcal A)\)、\(D=D(\mathcal A)\)。若 \(\mathcal A\) 中的上链复形 \(P\) 逐项投射且有上界，\(I\) 逐项内射且有下界，则对任意 \(\mathcal A\) 中的上链复形 \(X,Y\)，自然映射
 \[
-\operatorname{Hom}_{K(R)}(P,Y)\simeq\operatorname{Hom}_{D(R)}(P,Y).
+ \operatorname{Hom}_{K}(P,Y)\xrightarrow{\sim}\operatorname{Hom}_{D}(P,Y),
+ \qquad
+ \operatorname{Hom}_{K}(X,I)\xrightarrow{\sim}\operatorname{Hom}_{D}(X,I)
 \]
-若 \(I\) 为 K-内射左 \(R\)-模上链复形，则对任意左 \(R\)-模上链复形 \(X\)，有对偶同构
-\(\operatorname{Hom}_{K(R)}(X,I)\simeq\operatorname{Hom}_{D(R)}(X,I)\)。
+为双射。这里不要求 \(Y\) 有上界或 \(X\) 有下界。
 \end{proposition}
 \begin{proof}
-设 \(s:Y'\to Y\) 为拟同构。\(\operatorname{Cone}(s)\) 正合，K-投射性及 Hom 的锥长正合列说明
-\(\operatorname{Hom}_{K(R)}(P,Y')\to\operatorname{Hom}_{K(R)}(P,Y)\)
-是同构。因此从 \(P\) 出发的同伦态射函子已经把所有分母变成同构。
+若 \(s:U\to V\) 是拟同构，其锥及各平移零调。前一引理给出
+\[
+ \operatorname{Hom}_K(P,\operatorname{Cone}(s)[n])=0\qquad(n\in\mathbb Z).
+\]
+三角的 Hom 正合列因而说明 \(s_*:\operatorname{Hom}_K(P,U)\to\operatorname{Hom}_K(P,V)\) 为同构。
 
-更具体地，导出态射的屋顶 \(P\xleftarrow{s}U\xrightarrow{a}Y\) 中，\(s\) 对 \(\operatorname{Hom}_{K(R)}(P,-)\) 给出同构，故唯一有 \(t:P\to U\) 使 \(st=1_P\) 在同伦范畴中成立。屋顶由 \(at\) 表示。若两个这样的态射在导出范畴中相等，分式等价关系给出一个共同分母；对该分母同样施加上述 Hom 同构，便得它们已在同伦范畴中相等。对偶证明使用反向屋顶及 \(\operatorname{Hom}_{K(R)}(-,I)\)。
+给定屋顶 \(P\xleftarrow{s}U\xrightarrow{f}Y\)，取唯一的同伦类 \(a:P\to U\)，使 \(sa=1_P\)。局部化后 \(Q(a)=Q(s)^{-1}\)，所以该屋顶等于 \(Q(fa)\)，证明满射。若 \(Q(g)=0\)，则由屋顶判据存在拟同构 \(t:V\to P\)，使 \(gt=0\)。同样取 \(b:P\to V\) 满足 \(tb=1\)，得 \(g=gtb=0\)，证明单射。
+
+对内射版本，使用反变 Hom 正合列、引理第二项及分母在右的屋顶。于是 \(s^*:\operatorname{Hom}_K(V,I)\to\operatorname{Hom}_K(U,I)\) 为同构；完全相同的代表与消去论证给出第二个双射。
 \end{proof}
 
-结合\cref{b4:thm:semifree-resolution}，任意环的模范畴上可以在无界范围定义导出张量积：对两个变量取半自由替换，再用直和总化。K-平坦性使只替换一边也能计算，K-投射比较保证态射和不同替换之间的相容性。导出 Hom 则可在第一变量用半自由替换 \(P\to X\)，定义 \(\mathbf R\operatorname{Hom}_R(X,Y)=\operatorname{Hom}_R^\bullet(P,Y)\)，其中 Hom 仍取各次数的直积。这给出任意无界模复形上的计算，而不是把有限对角线的论证直接照搬。
+若同时有 \(P\to X\) 和 \(Y\to I\)，便可任选
+\[
+ \operatorname{Hom}_D(X,Y)
+ \cong\operatorname{Hom}_K(P,Y)
+ \cong\operatorname{Hom}_K(P,I)
+ \cong\operatorname{Hom}_K(X,I)
+\]
+来计算。中间比较来自自然的拟同构及上命题，故不同消解不会产生互不相关的答案。
+
+\subsection{Ext 与导出 Hom 的一致性}
+\label{b4:subsec:1704:03}
+
+\begin{theorem}\label{b4:thm:derived-ext-identification}
+设 \(R\) 为含幺环，\(M,N\) 为左 \(R\)-模，视为次数零复形。则对 \(n\ge0\) 有自然同构
+\[
+ \operatorname{Ext}_R^n(M,N)\cong
+ \operatorname{Hom}_{D(R\text{-}\mathbf{Mod})}(M,N[n]).
+\]
+对 \(n<0\)，右端为零；\(n=0\) 时该同构是通常的 Hom 识别。若 \(\mathcal A\) 是有足够内射对象的局部小交换范畴，\(M,N\in\mathcal A\)，则在固定的集合大小约定下也有 \(\operatorname{Ext}_{\mathcal A}^n(M,N)\cong\operatorname{Hom}_{D(\mathcal A)}(M,N[n])\)，其中 Ext 用右导出函子定义，负次数的右端同样为零。
+\end{theorem}
+\begin{proof}
+取 \(N\to I\) 的非负次数内射消解。\(I[n]\) 仍逐项内射且有下界，所以前一命题及 Hom 复形公式给出
+\[
+ \operatorname{Hom}_D(M,N[n])\cong\operatorname{Hom}_K(M,I[n])
+ \cong H^n\operatorname{Hom}^{\bullet}(M,I)
+ =\operatorname{Ext}^n_R(M,N).
+\]
+因为 \(M\) 仅在零次非零，此处的 Hom 微分就是后复合 \(\mathrm{d}_I\)，与\chapref{b4:ch:08}内射定义一致。负次数的 Hom 复形项为零，所以所得群为零。比较映射唯一到同伦，故同构对两个变量自然。
+
+也可以取 \(P\to M\) 的非正次数投射消解，得到 \(H^n\operatorname{Hom}^{\bullet}(P,N)\)。须注意\chapref{b4:ch:08}投射计算采用 \(\delta f=f\mathrm{d}_P\)，而内部 Hom 在次数 \(n\) 的微分为 \((-1)^{n+1}f\mathrm{d}_P\)。每个次数乘 \((-1)^{n(n+1)/2}\) 给出前者到后者的复形同构。连同\chapref{b4:ch:08}的平衡比较，即与上面的内射识别相容；不能只换微分而保留所有余圈代表的符号。
+\end{proof}
+
+因此 \(\operatorname{Hom}_D(\mathbb Z/m,\mathbb Z[1])\cong\mathbb Z/m\)，而 \(\operatorname{Hom}_D(\mathbb Z/m,\mathbb Z)=0\)。前一群记录扩张，后一群只记录普通同态。按照\chapref{b4:ch:09}用第一变量的内射连接同态识别扩张类的约定，一次 Yoneda 扩张对应其好三角的最后箭头 \(\delta\)。
 
 \ProseParagraphBreak
-对一般交换范畴，未必有自由生成元，也未必有所需的无限直和或精确余极限。若要用 K-内射复形构造无界 \(RF\)，必须另证每个对象有相应替换，并检查 \(F\) 在这些替换间保持拟同构；仅有“足够内射对象”并不自动提供这里使用的整个复形性质。可比较 Weibel\cite[Generalized Existence Theorem 10.5.9]{Weibel1994HomologicalAlgebra}所列出的替换与零调性条件；有界性有限制时，前面各节已经给出了可直接使用的构造。
+可以直接核对这一符号。给定 \(0\to N\xrightarrow{i}E\xrightarrow{q}M\to0\)，取内射消解 \(j:N\to I\)，并延拓为 \(a:E\to I^0\)。由于 \(\mathrm{d}_Ia\) 消去 \(N\)，它唯一下降为余圈 \(f:M\to I^1\)，满足 \(fq=\mathrm{d}_Ia\)；这就是\chapref{b4:ch:09}的内射连接类。在 \(\operatorname{Cone}(i)\to I[1]\) 上，\(j[1]p_i-fr\) 的零伦取 \(h^0=a\)：次数负一的等式是 \(ai=j\)，次数零的等式是 \(-\mathrm{d}_Ia=-fq\)。所以 \(Q(j[1])\delta=Q(f)\)。若改用无符号投射余圈，必须连同前述每度重标识和平衡比较一起换算，不能据次数一的重标识孤立地改变这个扩张对应。
+
+\subsection{有界导出对象与单向无界消解}
+\label{b4:subsec:1704:04}
+
+有界导出对象未必有有界投射代表。取域 \(k\) 及交换环 \(R=k[\varepsilon]/(\varepsilon^2)\)，令 \(k=R/(\varepsilon)\)。复形
+\[
+ \cdots\xrightarrow{\varepsilon}R\xrightarrow{\varepsilon}R
+ \xrightarrow{\varepsilon}R\longrightarrow k\longrightarrow0
+\]
+是自由消解，因为 \(\ker(\varepsilon:R\to R)=\varepsilon R\)。施加 \(\operatorname{Hom}_R(-,k)\) 后所有微分为零，故
+\[
+ \operatorname{Ext}_R^n(k,k)\cong k\qquad(n\ge0).
+\]
+若 \(k\) 在导出范畴中同构于一个有界投射复形 \(Q\)，则前面的态射计算给出 \(\operatorname{Ext}_R^n(k,k)\cong\operatorname{Hom}_K(Q,k[n])\)。当 \(n\) 足够大时，\(k[n]\) 的唯一非零项已移到 \(Q\) 的范围以外，后者为零，矛盾。
+
+\ProseParagraphBreak
+所以 \(k\in D^b(R\text{-}\mathbf{Mod})\)，但不能用 \(K^b(R\text{-}\mathbf{Proj})\) 中的对象代表。与此相对，\(\mathbb Z/m\) 有长度一的自由消解，可以由有界投射复形代表。是否允许这样的有限模型，与环和模的同调维数有关；\chapref{b4:ch:20}将把有限生成投射项构成的有限模型称为完美复形。
+
+\ProseParagraphBreak
+本章的结论不包括“逐项投射的任意无界复形都能计算导出态射”。向下构造零伦时必须有起始次数；没有这个起点，逐次投射性本身不能启动归纳。无界情形所需的更强条件在\secref{b4:sec:1804}介绍。

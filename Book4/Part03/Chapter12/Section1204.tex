@@ -1,196 +1,213 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 12.4 实例与形变障碍
-% 纲要位置：计划纲要.md，第 2789 行。
+% 纲要标题：### 12.4 杯积、群扩张与连续上同调
+% 纲要标签：b4:sec:1104
+% 纲要位置：计划纲要.md，第 2761 行。
 
-\section{实例与形变障碍}
-\label{b4:sec:1204}
+\section{杯积、群扩张与连续上同调}
+\label{b4:sec:1104}
 
-矩阵代数、光滑交换代数及一个平方零代数展示三种不同的 Hochschild 计算。前两种分别利用模范畴等价和对角的 Koszul 消解，最后一种直接检验形变障碍。
+群上同调不仅给出各次交换群，还能反映系数的乘法、群的扩张以及群的拓扑。系数之间的配对诱导杯积，使不同次数的上同调类相乘。若 \(N\trianglelefteq G\)，取 \(G\) 不变量可以分成先取 \(N\) 不变量、再取 \(G/N\) 不变量两步；相应的高次关系需要比较复合函子的导出。对于无限 Galois 群，有限子扩张又赋予群自然的拓扑，余链须满足连续性，才能保留这一拓扑所记录的信息。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 矩阵代数与 Morita 不变性
-% * 光滑交换代数的比较方向
-% * 不把一阶可形变误判为一定可延拓至所有阶
+% * 杯积及上同调环
+% * 群扩张的谱序列预告
+% * 投射有限群使用连续余链而非直接照搬离散理论
 %
 % ---
 %
 
-\subsection{矩阵代数与 Morita 不变性}
-\label{b4:subsec:1204:01}
+\subsection{杯积及上同调环}
+\label{b4:subsec:1104:01}
 
-矩阵代数的乘法看起来比标量代数复杂，但模范畴之间的等价会保留相应的同调信息。下面直接用矩阵单位证明本章需要的 Morita 不变性\footnote{\OriginalHanName{森田紀一}（假名：もりた きいち，罗马音：Kiiti Morita，1915-1995），日本数学家，建立以模范畴等价为核心的森田理论。}，不把它当作未经解释的计算捷径。
+到目前为止，各次上同调只是一族交换群。若系数之间可以相乘，余链也能相乘，这会把不同次数联系起来。先写出公式，再检验为什么乘积能下降到上同调。
 
-\begin{theorem}\label{b4:thm:hh-matrix-morita}
-设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(r\ge1\)，\(B=M_r(A)\)。对任意 \(A\) 双模 \(N\)，令 \(M_r(N)\) 带有左右矩阵乘法作用。则对所有 \(n\ge0\)，有自然同构
+\begin{definition}\label{b4:def:group-cup-product}
+设 \(k\) 是交换环，\(G\) 是群，\(M,N\) 是左 \(kG\) 模，\(M\otimes_kN\) 取对角作用。对 \(p,q\ge0\) 及 \(f\in C^p(G,M)\)、\(h\in C^q(G,N)\)，规定
 \[
-\operatorname{HH}_n(B,M_r(N))\cong\operatorname{HH}_n(A,N),\qquad
-\operatorname{HH}^n(B,M_r(N))\cong\operatorname{HH}^n(A,N).
+(f\smile h)(g_1,\ldots,g_{p+q})
+=f(g_1,\ldots,g_p)\otimes
+(g_1\cdots g_p)h(g_{p+1},\ldots,g_{p+q}).
 \]
-\end{theorem}
-\begin{proof}
-记 \(E_{ij}\) 为矩阵单位，\(e=E_{11}\)，并识别 \(eBe=A\)。双模函子
-\[
-F(M)=eMe,\qquad G(N)=M_r(N)
-\]
-互为等价。具体地，\(FG(N)=N\)，而
-\[
-M\longrightarrow M_r(eMe),\qquad
-m\longmapsto(E_{1i}mE_{j1})_{i,j}
-\]
-的逆将 \((n_{ij})\) 送到 \(\sum_{i,j}E_{i1}n_{ij}E_{1j}\)。矩阵单位等式 \(E_{ij}E_{uv}=\delta_{ju}E_{iv}\) 验证两次复合为恒等，且这些映射保持双模作用。两个函子均正合：\(eMe\) 是由幂等线性算子截出的直和因子，\(M_r(-)\) 是有限直和。它们也保持投射对象，因为一个提升问题经逆等价转移后仍是满射的提升问题。
-
-对 \(B\) 取投射双模消解 \(P_\bullet\to B\)。施加 \(F\) 后得到 \(A\) 的投射双模消解，而且等价的满忠实性给出复形同构
-\[
-\operatorname{Hom}_{B^e}(P_\bullet,M)
-\cong\operatorname{Hom}_{A^e}(F(P_\bullet),F(M)).
-\]
-取上同调便证明上同调断言。
-
-对同调，先考察右正合函子 \(Q_B(M)=M/[B,M]\)。有自然同构
-\[
-Q_B(M)\longrightarrow Q_A(eMe),\qquad
-[m]\longmapsto\left[\sum_iE_{1i}mE_{i1}\right].
-\]
-其良定义可直接检验。将 \(1=\sum_jE_{j1}E_{1j}\) 插入 \(b\) 与 \(m\) 之间，得到
-\[
-E_{1i}bmE_{i1}=\sum_j(E_{1i}bE_{j1})(E_{1j}mE_{i1}).
-\]
-在目标交换子商中交换这两个因子的先后，再交换求和指标 \(i,j\)，就得到 \(\sum_iE_{1i}mbE_{i1}\)。逆映射由角部的包含 \(eMe\subseteq M\) 给出。在 \(Q_B(M)\) 中，关系
-\[
-E_{ii}m-E_{1i}mE_{i1}=[E_{i1},E_{1i}m]
-\]
-说明逆向复合是恒等；正向复合在 \(eMe\) 上也显然为恒等。
-
-由\cref{b4:prop:hochschild-low-degrees}和\cref{b4:thm:tor-balanced}，\(\operatorname{HH}_n(B,M)\) 是 \(Q_B\) 关于双模变量 \(M\) 的左导出函子。这里 \(M\mapsto M^{\mathrm r}\) 是左右 \(B^e\) 模之间的精确等价，因而可在 \(M\) 的双模投射消解上计算。\(F\) 正合且保持投射，将同一个消解送到 \(F(M)\) 的投射消解；上面的零次自然同构逐项给出同调同构。取 \(M=M_r(N)\) 即得结论。
-\end{proof}
-
-一般的 \(k\) 线性 Morita 等价由互逆的张量双模实现，同样保持相应系数的 Hochschild 群。矩阵情形的具体等价与\cite[Proposition 9.5.2, Corollary 9.5.3]{Weibel1994HomologicalAlgebra}一致；下面说明一般情形的零次比较为何也能导出。
-
-\begin{proofsketch}
-设 \({}_AP_B\)、\({}_BQ_A\) 实现第二卷定理16.3.3的 Morita 等价，取相容的双模同构
-\(P\otimes_BQ\cong A\)、\(Q\otimes_AP\cong B\)，分别把配对写作 \(\langle p,q\rangle_A\) 与 \(\langle q,p\rangle_B\)。双模函子
-\[
- F(N)=Q\otimes_AN\otimes_AP
-\]
-及其逆是正合等价，送 \(A\) 到 \(B\)，并保持投射对象。因此对 \(A\) 的双模投射消解施加 \(F\)，再用等价的 Hom 双射，得到
-\(\operatorname{HH}^n(A,N)\cong\operatorname{HH}^n(B,F(N))\)。
-
-同调端的零次比较为
-\[
- F(N)/[B,F(N)]\longrightarrow N/[A,N],\qquad
- [q\otimes n\otimes p]\longmapsto
- [n\langle p,q\rangle_A].
-\]
-张量平衡关系在右边分别变成等式或交换子关系；\(B\) 交换子关系由
-\(\langle pb,q\rangle_A=\langle p,bq\rangle_A\) 消去。取有限表达
-\(1_A=\sum_i\langle p_i,q_i\rangle_A\)，逆映射送 \([n]\) 到
-\(\sum_i[q_i\otimes n\otimes p_i]\)。一向复合直接为恒等，另一向使用 Morita 配对的相容式
-\[
- \langle p,q\rangle_Ap_i=p\langle q,p_i\rangle_B,
- \qquad
- \langle q,p_i\rangle_Bq_i=q\langle p_i,q_i\rangle_A,
-\]
-以及交换子商中允许把右侧的 \(B\) 因子移到左侧，便恢复 \([q\otimes n\otimes p]\)。这也使逆与所选单位表达无关。
-
-最后在系数双模 \(N\) 的投射消解上逐项应用零次自然同构，得到
-\(\operatorname{HH}_n(A,N)\cong\operatorname{HH}_n(B,F(N))\)。所用依据是本章已经建立的 Hochschild 群与双模 Ext、Tor 的识别，以及\cref{b4:thm:tor-balanced}；省略的是把等价的单位、余单位写成上述相容配对的标准 Morita 构造。完整同调比较也见\cite[Theorem 9.5.6, pp. 328--329]{Weibel1994HomologicalAlgebra}，该处用双复形比较实现相同的系数变换。
-\end{proofsketch}
-
-\begin{example}\label{b4:exm:matrix-hochschild-vanishing}
-对任意域 \(k\) 和 \(r\ge1\)，\(k^e=k\)，所以
-\[
-\begin{gathered}
-\operatorname{HH}_0(M_r(k))=k,\qquad
-\operatorname{HH}^0(M_r(k))=k,\\
-\operatorname{HH}_n(M_r(k))=\operatorname{HH}^n(M_r(k))=0\quad(n>0).
-\end{gathered}
-\]
-零次同调的同构是普通迹在交换子商上诱导的映射，其逆送 \(c\) 到 \([cE_{11}]\)，不需要除以 \(r\)。即使特征整除 \(r\)，\([I_r]\) 的迹为零，也不妨碍整个同调空间是一维。由\cref{b4:prop:hochschild-low-degrees}，矩阵代数的导子都是内导子；由\cref{b4:thm:hh2-deformation-classification}，其一阶形变均等价于平凡形变。
-\end{example}
-
-\subsection{光滑交换代数的 Hochschild 同调}
-\label{b4:subsec:1204:02}
-
-\(\operatorname{HH}_1(A)=\Omega_{A/k}\) 提示：在合适的交换代数上，高次同调应当与微分的外幂有关。先看一个可以只用已学消解算完的情形。
-
-\begin{proposition}\label{b4:prop:polynomial-hochschild}
-设 \(A=k[x_1,\ldots,x_d]\)，其中 \(k\) 为域，\(d\ge0\)。对每个 \(n\ge0\)，作为 \(A\) 模有
-\[
-\operatorname{HH}_n(A)\cong\bigwedge_A^n A^d,
-\qquad
-\operatorname{HH}^n(A)\cong\bigwedge_A^n (A^d)^*.
-\]
-在同调端可把标准基与 \(\mathrm{d}x_1,\ldots,\mathrm{d}x_d\) 对应；两者在 \(n>d\) 时都为零。
-\end{proposition}
-\begin{proof}
-包络代数为 \(S=k[x_1,\ldots,x_d,y_1,\ldots,y_d]\)，\(A\) 是商 \(S/(x_1-y_1,\ldots,x_d-y_d)\)。依次令 \(x_i=y_i\) 后仍为多项式环，所以下一个 \(x_j-y_j\) 不为零因子。这是正则列，由\cref{b4:prop:koszul-resolution}，相应 Koszul 复形是 \(A\) 的有限自由 \(S\) 模消解。与 \(A\) 张量或取 \(\operatorname{Hom}_S(-,A)\) 后，每个 \(x_i-y_i\) 的作用为零，微分全部消失。各项分别为 \(\bigwedge_A^n A^d\) 及其对偶。有限自由模的楔积基将后者识别为 \(\bigwedge_A^n(A^d)^*\)。微分模的基 \(\mathrm{d}x_i\) 则由多项式逐变量求导的泛性质得到。
-\end{proof}
-
-要推广到一般交换代数，需要区分光滑与仅仅没有明显奇异方程。下面给出比较定理所需的精确条件。
-
-\begin{definition}\label{b4:def:smooth-algebra-hh}
-设 \(k\) 为域，\(A\) 为有限展示的交换含幺 \(k\) 代数。若对每个交换含幺 \(k\) 代数 \(E\)、每个平方零理想 \(J\subseteq E\) 及每个 \(k\) 代数同态 \(A\to E/J\)，都存在提升 \(A\to E\)，则称 \(A\) 在 \(k\) 上\term[guanghua-daishu]{光滑}[smooth]。平方零指 \(J^2=0\)，提升不要求唯一。
+空乘积取 \(1\)。这称为余链的\term[beiji]{杯积}[cup product]。若 \(P\) 也是左 \(kG\) 模，并给定 \(G\) 等变的 \(k\) 线性配对 \(M\otimes_kN\to P\)，便可将右侧再映到 \(P\)。
 \end{definition}
 
-多项式代数满足此条件，因为分别提升各生成元的像即可。这里要求 \(E\) 交换；它不等同于对所有非交换扩张的提升性质，也不蕴含 \(\operatorname{HH}^2(A)=0\)。例如两个变量的多项式代数在\cref{b4:prop:polynomial-hochschild}中有非零二次上同调。
-
-\ProseParagraphBreak
-以下 Hochschild--Kostant--Rosenberg 定理\footnote{科斯坦特（Bertram Kostant，1928-2017），美国数学家，研究李群与表示论；罗森伯格（Alex F. T. W. Rosenberg，1926-2007），德裔美国数学家，研究环论和同调代数。霍赫希尔德已见本卷前注。}给出证明概要。Weibel\cite[Theorem 9.4.7]{Weibel1994HomologicalAlgebra}给出更一般的本质有限型版本；这里仅陈述有限展示的情形。
-
-\begin{theorem}[Hochschild--Kostant--Rosenberg 定理]\label{b4:thm:hkr-external}
-设 \(k\) 为域，\(A\) 为在 \(k\) 上光滑的有限展示交换代数。则有自然 \(A\) 模同构
+\begin{proposition}\label{b4:prop:group-cup-leibniz}
+设 \(k\) 为交换环，\(G\) 为群，\(M,N\) 为左 \(kG\) 模，\(p,q\ge0\)，\(f\in C^p(G,M)\)、\(h\in C^q(G,N)\)。对\cref{b4:def:group-cup-product}的杯积，有
 \[
-\bigwedge_A^n\Omega_{A/k}\longrightarrow\operatorname{HH}_n(A)
-\qquad(n\ge0).
+\delta(f\smile h)=\delta f\smile h+(-1)^p f\smile\delta h.
 \]
-它把 \(a_0\,\mathrm{d}a_1\wedge\cdots\wedge \mathrm{d}a_n\) 送到
+因而杯积诱导自然的双线性映射
 \[
-\left[\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
-a_0\otimes a_{\sigma(1)}\otimes\cdots\otimes a_{\sigma(n)}\right].
+H^p(G,M)\otimes_kH^q(G,N)
+\longrightarrow H^{p+q}(G,M\otimes_kN).
+\]
+\end{proposition}
+\begin{proof}
+把非齐次公式改写成齐次公式，乘积就是
+\[
+(F\smile H)(g_0,\ldots,g_{p+q})
+=F(g_0,\ldots,g_p)\otimes H(g_p,\ldots,g_{p+q}).
+\]
+展开其微分。在 \(\delta F\smile H\) 中，删除位置 \(0,\ldots,p\) 的项与总微分对应；在 \((-1)^pF\smile\delta H\) 中，删除后半段位置 \(1,\ldots,q+1\) 的项与总微分对应。余下两项都是
+\(F(g_0,\ldots,g_p)\otimes H(g_{p+1},\ldots,g_{p+q+1})\)，
+系数分别为 \((-1)^{p+1}\) 与 \((-1)^p\)，恰好抵消。故恒等式成立，包括 \(p=0\) 或 \(q=0\) 的情形。
+
+若两因子均为余圈，乘积也为余圈。若第一因子为 \(\delta u\)、第二因子为余圈，则乘积等于 \(\delta(u\smile h)\)；交换两因子的角色得到相同结论并带相应符号。因此乘积对余边取商后良定义。函数限制与系数配对显然保持所列公式，所以自然。
+\end{proof}
+
+\begin{theorem}[群上同调环]\label{b4:thm:group-cohomology-ring}
+设 \(G\) 是群，\(k\) 是取平凡 \(G\) 作用的交换环。杯积与 \(k\) 的乘法使
+\(H^*(G,k)=\bigoplus_{n\ge0}H^n(G,k)\)
+成为有单位元的结合分次 \(k\) 代数。它分次交换：若 \(x\in H^p(G,k)\)、\(y\in H^q(G,k)\)，则
+\[
+x\smile y=(-1)^{pq}y\smile x.
 \]
 \end{theorem}
+\begin{proof}
+余链公式中，三因子相乘按同样次序分割群元素串，\(k\) 的乘法结合，故杯积结合。零次常值 \(1\) 是单位元。分次交换性在余链上未必直接成立，需要用一次消解比较。
 
-\begin{proofsketch}
-写 \(A^e=A\otimes_kA\)，以乘法映射 \(A^e\to A\) 的核 \(J\) 定义对角理想。Hochschild 同调的包络代数解释给出 \(\operatorname{HH}_n(A)=\operatorname{Tor}^{A^e}_n(A,A)\)，而 \(J/J^2\cong\Omega_{A/k}\)，同构把 \(a\otimes1-1\otimes a\) 送到 \(\mathrm{d}a\)。光滑性保证对角嵌入局部为正则嵌入；因此在每个有关的局部环中，\(J\) 由正则列生成，且其长度等于 \(\Omega_{A/k}\) 的局部秩。
-
-用这条正则列的 Koszul 复形消解 \(A\)，再与 \(A\) 张量。正则列在商 \(A=A^e/J\) 上作用为零，所以张量后的微分全部为零，第 \(n\) 项为 \(\bigwedge_A^n(J/J^2)\)。这与前面多项式代数的计算是同一机制。换一组正则生成元时，Koszul 复形的比较映射在一次项上正是 \(J/J^2\) 的换基，故这些局部同构相容并粘合为全局同构。
-
-还须确认这个同构正是定理所写的反对称链映射，而不只是某个抽象同构。在多项式坐标的 Koszul 与 Hochschild bar 复形比较中，\(\mathrm{d}a_1\wedge\cdots\wedge \mathrm{d}a_n\) 对应各张量因子的带符号置换和；光滑代数的局部标准光滑坐标使此计算在各点保持。这里省略正则对角的局部坐标证明及两个消解之间逐次链映射的构造，详见\cite[Theorem 9.4.7, pp. 322--323]{Weibel1994HomologicalAlgebra}。这一比较不需除以 \(n!\)，所以适用于任意特征。
-\end{proofsketch}
-
-该同构不要求特征零。若另有 \(\operatorname{char}k=0\)，逆映射由下式给出：
+取齐次 bar 消解 \(B_\bullet=B_\bullet(k,G)\)。在总张量复形上使用微分
+\(\mathrm{d}(b\otimes c)=\mathrm{d}b\otimes c+(-1)^{\deg b}b\otimes \mathrm{d}c\)。
+映射
 \[
-[a_0\otimes\cdots\otimes a_n]\longmapsto
-\frac{1}{n!}a_0\,\mathrm{d}a_1\wedge\cdots\wedge \mathrm{d}a_n.
+\Delta(g_0,\ldots,g_n)
+=\sum_{i=0}^n(g_0,\ldots,g_i)\otimes(g_i,\ldots,g_n)
 \]
-正特征下不能直接沿用含 \(1/n!\) 的公式。上面的多项式计算可以逐次检验同调的大小。上述结论比较的是同调群；整个上链复形的乘法与括号的相容性还需另行讨论。
+与微分交换：删除分割点左侧或右侧的项分别对应 \(\mathrm{d}\Delta\) 中两个微分，分割点两侧剩余的相邻项符号相反而抵消。这与上一命题的 Leibniz 计算相同。\(\Delta\) 提升了平凡模上的恒等映射 \(k\to k\otimes_k k\cong k\)。
 
-\subsection{一阶形变的高阶延拓障碍}
-\label{b4:subsec:1204:03}
-
-\cref{b4:exm:dual-numbers-first-deformation}的一阶形变确能继续延拓：\(k[\![t]\!][x]/(x^2-t)\) 以 \(1,x\) 为自由基，结合性来自多项式商。但下面的同样小的代数已经有不能通过第二阶的形变。
-
-\begin{example}\label{b4:exm:obstructed-deformation}
-设 \(k\) 为任意域，\(A=k\oplus kx\oplus ky\)，其中 \(V=kx\oplus ky\) 满足 \(V^2=0\)，\(1\) 为单位。定义归一化二次上链 \(\phi\)，在 \(V\times V\) 上规定
+对角作用下，每项 \(B_i\otimes_kB_j\) 都是自由 \(kG\) 模，因为同时左乘在两组元组上自由作用。底层 \(k\) 复形 \(B_\bullet\) 通过 bar 收缩与 \(k[0]\) 同伦等价，张量保持这个同伦，所以总张量复形也增广到 \(k\)，且是自由消解。带符号的翻转
 \[
-\phi(x,x)=y,\qquad \phi(y,x)=y,\qquad
-\phi(x,y)=\phi(y,y)=0.
+\tau(b\otimes c)=(-1)^{ij}c\otimes b
+\quad(b\in B_i,\ c\in B_j)
 \]
-当三个自变量属于 \(V\) 时，\(\delta\phi\) 的左右作用项因 \(V^2=0\) 消失，内部项也因相邻乘积为零而消失；某个自变量为 \(1\) 时，归一化使其余两项抵消。由三线性，\(\delta\phi=0\)。故 \(a*b=ab+t\cdot\phi(a,b)\) 确是一阶形变。
+与微分交换，并在增广处是恒等。因此 \(\Delta\) 与 \(\tau\Delta\) 是提升同一映射的消解比较映射，由\cref{b4:prop:comparison-homotopy-unique}链同伦。
+
+取代表 \(x,y\) 的余圈并在对应的两个张量次数上求值，\(\Delta\) 给出 \(x\smile y\)，\(\tau\Delta\) 给出 \((-1)^{pq}y\smile x\)。链同伦经余圈求值后成为余边，故两者的上同调类相等。
+\end{proof}
+
+特别地，奇数次元素 \(x\) 满足 \(2x^2=0\)，但在特征二时不能据此断言 \(x^2=0\)。这一区别会在循环群的模二上同调中实际出现。群上同调环的另一种组织方式可见 Weibel\cite[Section 6.7.1, Theorem 6.7.11, Lemma 6.7.12]{Weibel1994HomologicalAlgebra}。
+
+\subsection{群扩张的谱序列}
+\label{b4:subsec:1104:02}
+
+一条群扩张 \(1\to N\to G\to Q\to1\) 给出分步求不变量的方法：先取 \(N\) 不变量，再取商群 \(Q\) 不变量。高次理论也应反映这两个步骤，但一般不能只把两个导出函子简单复合。为此，需要弄清 \(H^q(N,M)\) 怎样接受 \(Q\) 作用，以及取 \(N\) 不变量是否保留计算第二步所需的内射性。这两项性质将群扩张的问题联系到\secref{b4:sec:1004}的复合导出。
+
+\begin{proposition}\label{b4:prop:normal-subgroup-invariants}
+设 \(G\) 是群，\(N\trianglelefteq G\)，\(Q=G/N\)，\(M\) 是左 \(\mathbb ZG\) 模。则 \(M^N\) 自然是左 \(\mathbb ZQ\) 模，且
+\[
+(M^N)^Q=M^G.
+\]
+函子 \(F:M\mapsto M^N\) 从 \(G\) 模到 \(Q\) 模，是正合的沿 \(G\to Q\) 限制标量函子的右伴随，因而保持内射对象。一个 \(G\) 内射模限制到 \(N\) 后也内射，所以
+\[
+R^qF(M)\cong H^q(N,M)
+\]
+带有自然的 \(Q\) 模结构。该作用与余链上的共轭作用诱导的商群作用一致。
+\end{proposition}
+\begin{proof}
+若 \(m\in M^N\)，则对 \(n\in N\) 有 \(n(gm)=g(g^{-1}ng)m=gm\)，所以 \(M^N\) 在 \(G\) 下稳定，且 \(N\) 在其中平凡作用。再次取 \(Q\) 不变量恰为取全部 \(G\) 不变量。
+
+把 \(Q\) 模 \(A\) 沿商映射看成 \(G\) 模，记为 \(\operatorname{Inf}A\)。从它到 \(M\) 的 \(G\) 线性映射的像必落在 \(M^N\)，故
+\[
+\operatorname{Hom}_G(\operatorname{Inf}A,M)
+\cong\operatorname{Hom}_Q(A,M^N).
+\]
+由于 \(\operatorname{Inf}\) 不改变底层交换群而正合，\cref{b4:prop:right-adjoint-injectives}说明 \(F\) 保持内射。另一方面，诱导 \(\mathbb ZG\otimes_{\mathbb ZN}-\) 正合，因为 \(\mathbb ZG\) 作为右 \(\mathbb ZN\) 模自由；它的右伴随是限制。因此同一命题说明 \(G\) 内射模限制到 \(N\) 后仍内射。
+
+取 \(G\) 内射消解 \(M\to I^\bullet\)，于是 \((I^\bullet)^N\) 在每项都是 \(Q\) 模，其上同调既计算 \(R^qF(M)\)，又计算通常的 \(H^q(N,M)\)。另一方面，在齐次余链复形上先定义一个 \(G\) 作用；取上同调以后，这个作用才通过 \(Q\) 分解。具体地，对齐次余链 \(\varphi\) 写
+\[
+(g\varphi)(n_0,\ldots,n_q)
+=g\,\varphi(g^{-1}n_0g,\ldots,g^{-1}n_qg).
+\]
+正规性保证各共轭元素仍在 \(N\) 中，这一作用与删除坐标的微分交换。若 \(g=a\in N\)，由齐次等变性，上式等于 \(\varphi(n_0a,\ldots,n_qa)\)。bar 复形上的同时右乘 \(a\) 是 \(N\) 线性链映射，并提升增广恒等，因此由\cref{b4:prop:comparison-homotopy-unique}与恒等链映射同伦。对余圈求值后，两者的差是余边，所以 \(N\) 在上同调上平凡作用；余链上的作用本身不必平凡。
+
+最后比较这两种构造所得的作用。记齐次 bar 消解为 \(B_\bullet(N)=B_\bullet(\mathbb Z,N)\)，组成第一象限双复形
+\[
+K^{i,j}=\operatorname{Hom}_{\mathbb ZN}(B_i(N),I^j)
+\qquad(i,j\ge0).
+\]
+原横微分由预合成 bar 微分给出，原纵微分由后合成内射消解的微分给出；在第 \(i\) 列的纵微分前乘 \((-1)^i\)，便得到反交换的横纵微分。每个 \(I^j\) 限制到 \(N\) 后内射，每个 \(B_i(N)\) 是自由 \(\mathbb ZN\) 模，因此沿这两个方向分别有
+\[
+H_{\mathrm{bar}}^i(K^{\bullet,j})=
+\begin{cases}
+(I^j)^N,&i=0,\\
+0,&i>0,
+\end{cases}
+\qquad
+H_I^j(K^{i,\bullet})=
+\begin{cases}
+\operatorname{Hom}_{\mathbb ZN}(B_i(N),M),&j=0,\\
+0,&j>0.
+\end{cases}
+\]
+bar 增广 \(B_0(N)\to\mathbb Z\) 把 \((I^j)^N\) 嵌入 \(K^{0,j}\) 的横向余圈；内射消解的增广 \(M\to I^0\) 把 \(C^i(N,M)\) 嵌入 \(K^{i,0}\) 的纵向余圈。于是得到两个复形映射
+\[
+(I^\bullet)^N\longrightarrow\operatorname{Tot}(K)
+\longleftarrow C^\bullet(N,M).
+\]
+前一个比较逐横行是拟同构，后一个比较逐纵列是拟同构。总次数 \(n\) 的对角线仅有 \(n+1\) 项，由\cref{b4:cor:double-complex-comparison}，两者在总复形上也都是拟同构。
+
+令 \(g\in G\) 对 \(B_i(N)\) 逐坐标共轭，并对 \(I^j\) 按原模作用；在 \(K^{i,j}\) 上仍用上面的共轭余链公式。bar 增广在共轭下不变，\(M\to I^0\) 及消解微分都是 \(G\) 线性的，所以两个比较映射均 \(G\) 等变。它们在上同调上诱导的同构便是 \(G\) 等变同构。左边 \(N\) 已逐项平凡作用，右边 \(N\) 的作用在上同调上平凡，因此这也是所求的 \(Q\) 模同构。
+\end{proof}
+
+在\secref{b4:sec:1504}中，这个复合函子将产生
+\[
+E_2^{p,q}=H^p\bigl(Q,H^q(N,M)\bigr)
+\Longrightarrow H^{p+q}(G,M).
+\]
+这里的箭头表示目标群有滤过，其各层由谱序列的稳定项给出，并不表示右侧等于左侧各项的直和。相应的标准陈述见\cite[Lyndon/Hochschild-Serre Spectral Sequence 6.8.2]{Weibel1994HomologicalAlgebra}。
+
+\subsection{投射有限群的连续余链}
+\label{b4:subsec:1104:03}
+
+无限 Galois 群的有限子扩张带来拓扑，系数也必须与这套拓扑相容。第一卷第22.2节已经建立了 Krull 拓扑\footnote{克鲁尔（Wolfgang Krull，1899-1971），德国数学家，建立局部环和维数理论的多项基本结果。}及其紧性；特别是定理22.2.5证明了相应 Galois 群的紧 Hausdorff 性\footnote{豪斯多夫（Felix Hausdorff，1868-1942），德国数学家，奠定一般拓扑学和集合论的若干基础。}。这里所需的\term[toushe-youxian-qun]{投射有限群}[profinite group]，是有限离散群的投射极限，赋予有限群直积的子空间拓扑。第一卷引理22.2.4说明该直积紧；相容条件定义闭子集，故投射极限也紧且 Hausdorff。坐标投影核的有限交组成单位元的邻域基，它们都是开正规子群；群运算逐坐标连续。
+
+\begin{definition}\label{b4:def:continuous-group-cochains}
+设 \(G\) 是投射有限群。一个交换群 \(M\) 配有 \(G\) 作用，并且把 \(M\) 赋予离散拓扑后作用映射 \(G\times M\to M\) 连续，就称 \(M\) 为离散连续 \(G\) 模。等价地，每个元素 \(m\) 的稳定子群在 \(G\) 中是开的。令
+\[
+C_{\mathrm{cts}}^n(G,M)=\{\,f:G^n\to M\mid f\text{ 连续}\,\},
+\qquad C_{\mathrm{cts}}^0(G,M)=M.
+\]
+采用\eqref{b4:eq:group-cochain-differential}的微分，定义
+\[
+H_{\mathrm{cts}}^n(G,M)=H^n\bigl(C_{\mathrm{cts}}^\bullet(G,M)\bigr),
+\]
+称为\term[lianxu-qunshangtongdiao]{连续群上同调}[continuous group cohomology]。
+\end{definition}
+
+这一连续余链定义与离散连续 \(G\) 模范畴中不变量函子的右导出定义一致；\cref{b4:thm:C-continuous-derived}给出内射对象的构造及两者的自然同构。Weibel 先以不变量函子的右导出定义连续群上同调，再证明连续余链及有限商公式计算它\cite[Profinite Cohomology 6.11.11, Theorem 6.11.13]{Weibel1994HomologicalAlgebra}。
 
 \ProseParagraphBreak
-然而
-\[
-(\phi\circ\phi)(x,x,x)
-=\phi(y,x)-\phi(x,y)=y\ne0.
-\]
-对任意二次上链 \(\psi\)，交换性和 \(x^2=0\) 给出
-\[
-(\delta\psi)(x,x,x)
-=x\cdot\psi(x,x)-\psi(x,x)\cdot x=0.
-\]
-因此 \(\phi\circ\phi\) 不可能是余边，\eqref{b4:eq:second-deformation-obstruction}无解。这个一阶形变在任何特征下都不能延拓至模 \(t^3\)。
-\end{example}
+定义中的等价性来自离散点的原像：连续作用使轨道映射的纤维为开集；反之，开稳定子群保证每个点附近的作用值固定。各项群运算与作用连续，所以微分仍给连续函数，且 \(\delta^2=0\) 从同一代数恒等式得到。
 
-此例还说明，障碍不只是一句存在性警告。给出乘法表后，先计算\(2\)-余圈，再在一个特定三元组上计算障碍，最后证明所有余边在该三元组上的值都为零，就足以判定无法延拓。其余未选的二阶系数不能改变这一结论。
+\begin{proposition}\label{b4:prop:continuous-finite-quotients}
+设 \(G\) 是投射有限群，\(M\) 是离散连续 \(G\) 模。让 \(U\) 遍历开正规子群，并以反向包含排序，则
+\[
+C_{\mathrm{cts}}^\bullet(G,M)
+\cong\varinjlim_U C^\bullet(G/U,M^U),\qquad
+H_{\mathrm{cts}}^n(G,M)
+\cong\varinjlim_U H^n(G/U,M^U).
+\]
+余链的过渡映射是沿有限商映射的拉回并包含系数，均为单射；经这些膨胀嵌入，可以把余链复形的余极限识别为连续余链复形内所有有限商余链的并。
+\end{proposition}
+\begin{proof}
+设 \(n>0\)。连续函数 \(f:G^n\to M\) 从紧空间映到离散空间，因此像有限且局部常值。对每一点选取使 \(f\) 常值的乘积邻域，并把各坐标邻域缩成开正规子群的陪集。由紧性，有限多个这样的乘积邻域已经覆盖 \(G^n\)，记为
+\[
+O_a=g_{a,1}V_{a,1}\times\cdots\times g_{a,n}V_{a,n}
+\qquad(1\le a\le r).
+\]
+令 \(U_0=\bigcap_{a,i}V_{a,i}\)，这是开正规子群。对任意 \((g_1,\ldots,g_n)\)，选一个包含它的 \(O_a\)。若各 \(u_i\in U_0\)，则 \(g_iu_i\) 与 \(g_i\) 仍在同一个 \(g_{a,i}V_{a,i}\) 中，故
+\[
+f(g_1u_1,\ldots,g_nu_n)=f(g_1,\ldots,g_n).
+\]
+于是 \(f\) 通过 \((G/U_0)^n\) 因子化。
+
+再让 \(U_1\) 同时固定有限像中的全部元素。每个稳定子群都是开子群，在紧群中有有限指数；其有限多个共轭的交是开正规子群，故这样的 \(U_1\) 存在。取 \(U=U_0\cap U_1\)，则 \(f\) 来自 \(C^n(G/U,M^U)\)。反向，有限商上的任意此类函数拉回后连续。次数零时每个 \(m\) 同样被某个开正规子群固定。公式与微分相容，所以得到复形的滤过余极限。由\cref{b4:prop:filtered-colimits-exact}，交换群的滤过余极限与核、像及商相容，取上同调即可。
+\end{proof}
+
+例如 \(G=\mathbb Z_p=\varprojlim_r\mathbb Z/p^r\)，系数 \(\mathbb F_p\) 取平凡作用。一次连续余圈就是连续加法同态。每个这样的同态都零化 \(p\mathbb Z_p\)，所以由模 \(p\) 商唯一决定，得到
+\(H_{\mathrm{cts}}^1(\mathbb Z_p,\mathbb F_p)=\mathbb F_p\)。
+这项计算是在连续映射中进行的，不能据此把任意抽象群余链都视为连续余链。
+
+\ProseParagraphBreak
+上述导出识别在离散连续 \(G\) 模范畴内进行。这个范畴与全部抽象 \(\mathbb ZG\) 模的范畴不同；若用 Ext 表示，必须标明所在范畴。更具体的投射循环群计算见\cref{b4:prop:C-procyclic-h1}和\cref{b4:prop:C-procyclic-h2}，其中保留了有限系数和膨胀映射的条件。系数若带有非离散拓扑，例如 \(p\)-进系数模，还需要另行规定连续上同调的范畴与极限条件，不能直接套用本节结论。

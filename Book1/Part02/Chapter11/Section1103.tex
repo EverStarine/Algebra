@@ -23,6 +23,9 @@ Euclid 算法提供了求最大公因子的方法，但它还有一个不依赖�
 
 定义包含零理想 \((0)\) 和单位理想 \((1)\)。域只有这两个理想，因而是主理想整环；“整环”这一要求不能删去后仍沿用同一个概念。
 
+\ProseParagraphBreak
+要从 Euclid 除法得到理想主性，可以把除法用在理想内部：选定一个非零元素 \(d\) 后，任何不被 \(d\) 整除的理想元素都会产生一个非零余数，而这个余数仍在理想中。因此，若 \(d\) 的 Euclid 值已经最小，就不能再有这样的元素，\(d\) 必须整除整个理想。
+
 \begin{theorem}\label{b1:thm:euclidean-pid}
 设 \(R\) 为 Euclid 整环，则 \(R\) 是主理想整环。
 \end{theorem}
@@ -50,13 +53,25 @@ Euclid 算法提供了求最大公因子的方法，但它还有一个不依赖�
 若 \(P\ne(0)\) 是素理想，写 \(P=(p)\)。因 \(P\) 非零且真，\(p\) 非零非单位；同一判别说明 \(p\) 为素元，再由\cref{b1:prop:prime-implies-irreducible}得它不可约。刚才的论证便说明 \(P\) 极大。
 \end{proof}
 
-主理想整环使\subsecref{b1:subsec:1101:03}所说的“在真主理想中极大”提升为“在全部真理想中极大”；此处用到的正是每个理想都为主理想。
+\subsecref{b1:subsec:1101:03}已把不可约性解释为“在真主理想中极大”。主理想整环中每个理想都为主理想，所以这一极大性涵盖了全部真理想。上述证明中的推理可写为
+\[
+p\text{ 不可约}
+\quad\Longrightarrow\quad
+(p)\text{ 为极大理想}
+\quad\Longrightarrow\quad
+(p)\text{ 为素理想}
+\quad\Longrightarrow\quad
+p\text{ 为素元}.
+\]
+“每个非零素理想都是极大理想”中的非零条件也有作用。在整环中，\((0)\) 总是素理想；但在主理想整环 \(\mathbb Z\) 中，有 \((0)\subsetneq(2)\subsetneq\mathbb Z\)，所以 \((0)\) 不是极大理想。
 
 \ProseParagraphBreak
 例如对域 \(F\)，\cref{b1:prop:field-poly-division}与\cref{b1:thm:euclidean-pid}给出 \(F[x]\) 是主理想整环。若 \(p(x)\) 不可约，商 \(F[x]/(p)\) 因而是域。这个结论会在构造方程根所在的域时发挥作用；它所依赖的是理想极大性，不是预先知道根的存在。
 
 \subsection{主理想整环的唯一分解性}
 \label{b1:subsec:1103:02}
+
+理想主性还将保证元素的不可约分解存在且唯一。这里先定义唯一分解整环，以陈述主理想整环的这一结构性质；\secref{b1:sec:1104}将脱离主理想性，单独研究唯一分解本身及其判别。
 
 \begin{definition}\label{b1:def:ufd}
 设 \(R\) 是交换整环。若每个非零非单位都能写成有限个不可约元的乘积，并且同一非零非单位 \(a\in R\) 的任意两种表达式
@@ -68,13 +83,18 @@ a=u p_1\cdots p_m=v q_1\cdots q_n
 
 单位允许看成空乘积再乘一个单位；零不属于分解定理的对象。唯一性既不固定因子的次序，也不固定各因子相伴类中的代表。因此 \(6=2\cdot3=(-2)(-3)\) 并不是两种不同的素因数分解。
 
+\ProseParagraphBreak
+一般理想的并未必是理想，甚至未必对加法封闭。例如 \(2\mathbb Z\cup3\mathbb Z\) 包含 \(2,3\)，却不包含 \(2+3=5\)。理想升链的并有所不同：属于不同项的两个元素总能一起放入其中较大的一项，这使理想的封闭条件得以保留。
+
 \begin{lemma}\label{b1:lem:pid-ascending-chain}
 设 \(R\) 为主理想整环。则 \(R\) 的每条理想升链
 \(I_1\subseteq I_2\subseteq\cdots\) 都从某项开始恒定。
 \end{lemma}
 \begin{proof}
-令 \(I=\bigcup_{j\geq1}I_j\)。两个属于 \(I\) 的元素同时落在某个较大的 \(I_j\)，故它们的差仍在 \(I\)；任一元素乘环中元素也留在原 \(I_j\)。因此 \(I\) 是理想，写成 \((d)\)。生成元 \(d\) 属于某个 \(I_m\)，所以 \(I=(d)\subseteq I_m\subseteq I\)，从而 \(I_m=I\)，所有 \(j\geq m\) 也满足 \(I_j=I\)。
+令 \(I=\bigcup_{j\geq1}I_j\)。若 \(x\in I_r,y\in I_s\)，升链条件使两者都属于 \(I_{\max(r,s)}\)，故 \(x-y\) 仍在 \(I\)；任一元素乘环中元素也留在原来所属的 \(I_j\)。因此 \(I\) 是理想，写成 \((d)\)。生成元 \(d\) 属于某个 \(I_m\)，所以 \(I=(d)\subseteq I_m\subseteq I\)，从而 \(I_m=I\)，所有 \(j\geq m\) 也满足 \(I_j=I\)。
 \end{proof}
+
+分解元素与扩大主理想正好方向相反。若非零元素满足 \(a_1=a_2d_1\)，且 \(d_1\) 非单位，则 \((a_1)\subsetneq(a_2)\)。因此，若一个元素总能继续作非平凡分解，就会产生严格上升的主理想链。下面用升链终止来排除无限继续分解的情形，再用不可约元的素性比较两种分解。
 
 \begin{theorem}\label{b1:thm:pid-ufd}
 设 \(R\) 为主理想整环，则 \(R\) 是唯一分解整环。
@@ -86,11 +106,18 @@ a=u p_1\cdots p_m=v q_1\cdots q_n
 再证唯一性。设 \(u p_1\cdots p_m=v q_1\cdots q_n\)。由\cref{b1:prop:pid-irreducible-prime}，不可约元 \(p_1\) 是素元；它不整除单位 \(v\)，对乘积逐次应用素性，必整除某个 \(q_j\)。不可约性使 \(q_j=p_1w\)，其中 \(w\) 为单位。把这个因子移至首位，消去非零的 \(p_1\)，得到两个较短分解的等式，单位因子相应并入 \(v\)。如此归纳，配对因子都相伴。若一边先用尽而另一边仍有不可约因子，就会使若干非单位之积成为单位；但乘积有逆元时，每个因子也有逆元，矛盾。因此两边同时用尽，\(m=n\)，唯一性得证。
 \end{proof}
 
+这一证明的两部分使用不同的条件：
+\[
+\begin{array}{c@{\qquad}c}
+\text{分解存在性}&\text{分解唯一性}\\
+\text{理想升链终止}&\text{不可约元都是素元}
+\end{array}
+\]
 由此前的具体 Euclid 函数，\(\mathbb Z\)、\(F[x]\) 和 \(\mathbb Z[i]\) 均为唯一分解整环。不过，主性证明中的最小值选择只断言某个生成元存在；若没有可执行的除法步骤，它本身还不是计算该生成元的算法。
 
 \OptionalSubsection{非 Euclid 的主理想整环}{b1:subsec:1103:03}
 
-本小节用一个具体环说明“Euclid 整环 \(\Rightarrow\) 主理想整环”的逆命题不成立。它说明 Euclid 性与主理想性并不等价。主理想整环的唯一分解性已在上一小节证明。设
+要说明“Euclid 整环 \(\Rightarrow\) 主理想整环”的逆命题不成立，需要对同一个环完成两件事：先证明每个理想都是主理想，再排除所有可能的 Euclid 函数。前一部分将利用格点估计构造允许倍乘的较弱余数；后一部分则从任意 Euclid 函数推出一个不可能的有限商环。设
 \[
 \omega=\frac{1+\sqrt{-19}}2,\qquad
 R=\mathbb Z[\omega]\subseteq\mathbb C.
@@ -101,14 +128,18 @@ N(a+b\omega)=\lvert a+b\omega\rvert^2
 =a^2+ab+5b^2
 =\Bigl(a+\frac b2\Bigr)^2+\frac{19b^2}4.
 \]
-范数是非负整数且乘法相容。由最后一个表达式，范数等于 \(1\) 时只能有 \(b=0,a=\pm1\)，因此 \(R\) 的单位恰为 \(\pm1\)。
+范数是非负整数且乘法相容，非零元素的范数是正整数。若 \(u\) 是单位，则 \(N(u)N(u^{-1})=N(1)=1\)，所以 \(N(u)=1\)。由最后一个表达式，范数等于 \(1\) 时只能有 \(b=0,a=\pm1\)，而 \(\pm1\) 确实可逆，因此 \(R\) 的单位恰为 \(\pm1\)。
 
 \ProseParagraphBreak
-下面的引理用于证明理想的主性。设非零理想 \(I\) 中的非零元素 \(\beta\) 具有最小范数。若 \(\alpha\in I\) 不被 \(\beta\) 整除，不必寻找普通余数 \(\alpha-d\beta\)；只要找到 \(c,d\in R\)，使
+比较下面两种余数要求，其中 \(\beta\ne0\)。左边是以范数为度量的普通带余除法，右边只针对 \(\alpha\notin(\beta)\)：
 \[
-0<N(c\alpha-d\beta)<N(\beta),
+\begin{array}{c@{\qquad}c}
+\text{普通带余除法}&\text{允许倍乘的较弱条件}\\
+\alpha=d\beta+r&c\alpha=d\beta+r\\
+r=0\ \text{或}\ N(r)<N(\beta)&0<N(r)<N(\beta)
+\end{array}
 \]
-便会与 \(\beta\) 的选择矛盾，因为 \(c\alpha-d\beta\in I\)。令 \(z=\alpha/\beta\notin R\)，所需不等式就化为 \(0<\lvert cz-d\rvert^2<1\)。乘数 \(c\) 带来的自由正是以下格点估计的用处；下界严格大于零也不可省略。
+右边的乘数 \(c\in R\) 可以依赖于 \(\alpha/\beta\)，所以所得 \(r\) 是 \(c\alpha\) 的余数，而不是 \(\alpha\) 的余数。这一条件不提供普通带余除法，却足以证明理想主性：若非零理想 \(I\) 中的 \(\beta\) 具有最小正范数，而 \(\alpha\in I\setminus(\beta)\)，则 \(r=c\alpha-d\beta\) 仍在 \(I\) 中，其正范数严格更小，产生矛盾。令 \(z=\alpha/\beta\notin R\)，右边的不等式就化为 \(0<\lvert cz-d\rvert^2<1\)。下面的格点引理构造这样的 \(c,d\)，并保证余数非零。
 
 \begin{lemma}\label{b1:lem:nineteen-small-combination}
 令
@@ -119,12 +150,12 @@ N(a+b\omega)=\lvert a+b\omega\rvert^2
 \(0<\lvert cz-d\rvert^2<1\)。
 \end{lemma}
 \begin{proof}
-先将 \(z\) 移入一个基本矩形：减去 \(R\) 中的一个元素，使所得 \(z_0=x+yi\) 满足
+由 \(R=\mathbb Z+\mathbb Z\omega\) 及 \(\operatorname{Im}\omega=\sqrt{19}/2\)，减去适当整数倍的 \(\omega\) 可以把虚部移入一个长度为 \(\sqrt{19}/2\)、以零为中心的区间；再减去整数，把实部移入长度为 \(1\)、以零为中心的区间。因此可取 \(\rho\in R\)，使调整后的 \(z_0=z-\rho=x+yi\) 落入基本矩形
 \[
 \lvert x\rvert\leq\frac12,\qquad
 \lvert y\rvert\leq\frac{\sqrt{19}}4.
 \]
-具体做法是先减去适当整数倍的 \(\omega\)，把虚部移入所给区间，再减整数调整实部。若 \(\lvert z_0\rvert<1\)，则 \(z_0\ne0\)，已经得到结论。
+由于 \(z\notin R\)，调整后的 \(z_0\) 仍不在 \(R\) 中，否则 \(z=z_0+\rho\in R\)。特别地 \(z_0\ne0\)。若 \(\lvert z_0\rvert<1\)，取 \(c=1,d=\rho\)，就有 \(0<\lvert cz-d\rvert^2=\lvert z_0\rvert^2<1\)，已经得到结论。
 
 \cref{b1:fig:nineteen-lattice}中矩形与单位圆之间的上下两片区域，正是基本矩形内仍须处理 \(\lvert z_0\rvert\geq1\) 的点。图中取 \(z_0=\omega/2\)：从 \(z_0\) 到 \(\omega\) 是倍乘，从 \(\omega\) 回到原点才是减去格点 \(\omega\)。
 
@@ -162,10 +193,12 @@ N(a+b\omega)=\lvert a+b\omega\rvert^2
 \leq\frac{\sqrt{19}}2-\sqrt3<\frac12,
 \qquad \lvert w\rvert^2<\frac12<1.
 \]
-其中严格不等式可由 \(\sqrt{19}<22/5\)、\(\sqrt3>17/10\) 核对。若 \(w\ne0\)，取乘数 \(2\) 即得。
+其中严格不等式可由 \(\sqrt{19}<22/5\)、\(\sqrt3>17/10\) 核对。若 \(w\ne0\)，取 \(c=2,d=d_0+2\rho\)，便有 \(cz-d=2z_0-d_0=w\)，即得结论。
 
-最后处理 \(w=0\)。此时虽然 \(\lvert w\rvert<1\)，却尚未得到所需的非零理想元素，不能用零去反驳最小范数。令 \(\alpha=2z_0\in R\)；由于 \(z_0\notin R\)，\(\alpha\notin2R\)。按两个整数系数的奇偶性，\(\alpha\) 模 \(2R\) 分别可能为 \(1,\omega,1+\omega\)。它们模 \(2R\) 的逆元分别为 \(1,1+\omega,\omega\)，因为
-\(\omega(1+\omega)=2\omega-5\equiv1\pmod{2R}\)。故可取 \(c\in R\) 使 \(c\alpha=1+2d_1\)，于是 \(cz_0-d_1=1/2\)，其模平方为 \(1/4\)。最后把从 \(z\) 减去的格点吸收到 \(d\) 中，就得到原命题。
+最后处理 \(w=0\)。此时倍乘 \(c=2\) 恰好把 \(z_0\) 送到格点，所得余数是零，不能用它反驳最小正范数。我们改换乘数 \(c\)，目标是制造余数 \(1/2\)，从而同时保证余数非零与模平方小于 \(1\)。令 \(\alpha=2z_0\in R\)；由于 \(z_0\notin R\)，\(\alpha\notin2R\)。
+
+按 \(a+b\omega\) 的两个整数系数的奇偶性，商环 \(R/2R\) 恰有四个剩余类，分别由 \(0,1,\omega,1+\omega\) 代表。三个非零类的逆元分别由 \(1,1+\omega,\omega\) 代表，因为
+\(\omega(1+\omega)=2\omega-5\equiv1\pmod{2R}\)。这说明 \(R/2R\) 是四元素域；当前所需的正是非零类可逆。\(\alpha\) 的类非零，故可取 \(c\in R\) 及 \(d_1\in R\)，使 \(c\alpha=1+2d_1\)。于是 \(cz_0-d_1=1/2\)，其模平方为 \(1/4\)。取 \(d=d_1+c\rho\)，便有 \(cz-d=cz_0-d_1=1/2\)，就得到原命题。
 
 例如 \(z_0=\omega/2\) 位于图中的上方阴影区域，因为 \(\lvert z_0\rvert^2=5/4>1\)，但 \(2z_0-\omega=0\)。这时可直接取 \(c=1+\omega\)、\(d_1=\omega-3\)；由 \(\omega^2=\omega-5\) 得
 \[
@@ -185,12 +218,25 @@ N(a+b\omega)=\lvert a+b\omega\rvert^2
 \]
 与最小性矛盾。所以 \(I=(\beta)\)，零理想也为主理想，得证主性。
 
-假设存在 Euclid 函数 \(\delta\)。在所有非零非单位中取 \(b\)，使 \(\delta(b)\) 最小。对任意 \(a\) 作除法 \(a=qb+r\)；若 \(r\ne0\)，则 \(\delta(r)<\delta(b)\)，最小性使 \(r\) 只能是单位，即 \(1\) 或 \(-1\)。因此 \(R/(b)\) 至多有 \(0,1,-1\) 三个剩余类。由于 \(b\) 非单位，此商非零，故它恰有 \(2\) 或 \(3\) 个元素。含幺非零环若有素数 \(p\) 个元素，由\cref{b1:thm:lagrange}，非零元素 \(1\) 在其加法群中的阶只能为 \(p\)。故 \(1\) 生成该加法群，映射 \(\mathbb Z/p\mathbb Z\rightarrow R/(b)\) 是同构。
+现在排除任意 Euclid 函数。由于 \(N(2)=4\ne1\)，\(2\) 是非零非单位，因此所有非零非单位组成的集合非空。假设存在 Euclid 函数 \(\delta\)，可在这个集合中取 \(b\)，使 \(\delta(b)\) 最小。对任意 \(a\in R\) 作除法 \(a=qb+r\)；若 \(r\ne0\)，则 \(\delta(r)<\delta(b)\)。最小性使 \(r\) 不可能是非单位，因而只能是单位，即 \(1\) 或 \(-1\)。
+
+因此每个模 \((b)\) 的剩余类都由 \(0,1,-1\) 之一代表，\(R/(b)\) 至多有三个元素。另一方面，\(b\) 非单位意味着 \(1\notin(b)\)，所以商环中的 \(1\ne0\)，至少有两个元素。合起来得到
+\[
+2\leq\lvert R/(b)\rvert\leq3.
+\]
+故它的大小只能为 \(2\) 或 \(3\)。
+
+令 \(S=R/(b)\)，并令 \(p=\lvert S\rvert\in\{2,3\}\)。由\cref{b1:thm:lagrange}，\(1_S\ne0_S\) 在加法群中的阶是 \(p\)，所以 \(1_S\) 生成整个加法群。映射
+\[
+\mathbb Z/p\mathbb Z\longrightarrow S,\qquad
+[n]\longmapsto n1_S
+\]
+于是良定义且为双射；它保持加法、乘法和单位，其中乘法相容性来自 \((m1_S)(n1_S)=(mn)1_S\)。因此它是含幺环同构，即 \(S\cong\mathbb F_p\)。
 
 然而 \(\omega\) 的像必须满足 \(t^2-t+5=0\)。模 \(2\) 时，\(t=0,1\) 的值都是 \(1\)；模 \(3\) 时，\(t=0,1,2\) 的值依次为 \(2,2,1\)。两种商中都不可能有这样的元素，矛盾。故不存在 \(\delta\)。
 \end{proof}
 
-这个证明不能被误读为“范数不是 Euclid 函数，所以环不是 Euclid 整环”。后一个结论需要排除所有可能的 Euclid 函数，证明的第二段正是为此而作。第一段使用的乘数 \(c\) 足以证明理想主性，却不符合普通带余除法的要求。
+范数本身不能作 Euclid 函数，还不足以推出环不是 Euclid 整环；必须排除所有可能的 Euclid 函数。上述证明的后半部分正是通过有限商环的必要条件完成这一点。主性证明使用的乘数 \(c\) 则足以产生理想中的更小元素，却不提供对原元素的普通带余除法。
 
 \ProseParagraphBreak
 关于这个例子，可参见 Keith Conrad 的讲义\cite[Theorems 5.18, 5.22]{ConradRemarksEuclideanDomains}：定理 5.18 提炼了非域 Euclid 整环中某个非单位模下每个剩余类可由零或单位代表的必要条件；定理 5.22 讨论本小节的二次环，其中主理想性只给出证明提纲，可与此处的格点引理作方法对照。

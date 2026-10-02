@@ -9,7 +9,7 @@
 \label{b4:app:A}
 
 \begin{chapterabstract}
-本附录研究伴随产生的单子与其代数、比较函子和单子性判据，并以模下降检验恢复对象的条件；最后证明解集条件与极限保持如何保证伴随存在。
+本附录研究伴随产生的单子与其代数、比较函子和单子性判据，并以模下降检验恢复对象的条件。解集条件与极限保持给出伴随存在的判据；Kleisli 范畴\footnote{克莱斯利（Heinrich Kleisli，1930-2011），瑞士数学家，主要研究代数拓扑与范畴论。}与 Lawvere 代数理论\footnote{劳维尔（Francis William Lawvere，1937-2023），美国数学家，主要以范畴语言研究代数理论和数学基础。}则分别把形式替换和有限变量运算组织成范畴。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -18,6 +18,8 @@
 \item 区分比较函子的存在、保守性和单子性，逐项核验分裂余等化子条件。
 \item 用余单子写出模下降数据，并从相容元素构造恢复模。
 \item 把可表性与伴随存在性化为始对象问题，辨认极限假设和大小假设的不同作用。
+\item 计算 Kleisli 复合，构造其伴随，并把它的态射识别为自由代数之间的同态。
+\item 用有限积记录运算项的代入，从群和模的代数理论恢复模型及其同态。
 \end{itemize}
 预备知识为局部小范畴、自然变换、伴随、等化子与余等化子，以及模的张量积和正合性。关于范畴大小，所有“小”均相对于固定的集合范围；不对真类大小的对象族任意取积。
 \end{learninggoals}
@@ -28,12 +30,13 @@
 正文中的伴随经常来自已经知道的自由对象。这里还要追问两件事：伴随产生的单子是否保存了另一范畴的全部信息，以及在尚未构造自由对象时，哪些条件能保证它存在。前一个问题由单子性判据处理，后一个问题由伴随函子定理处理。下降则提供一个具体用途：从扩张后的模及其相容数据恢复原模。伴随数据的基本定义可对照 Weibel 的叙述\cite[A.6.1; Theorem A.6.2, pp. 429--431]{Weibel1994HomologicalAlgebra}。
 
 \ProseParagraphBreak
-\chapref{b4:ch:03}的伴随与单子为本附录提供基础。\secref{b4:sec:A01}和\secref{b4:sec:A02}建立单子代数与自由代数；\secref{b4:sec:A03}进一步考察原范畴能否从伴随恢复，并讨论比较函子、单子性判据与模下降。\secref{b4:sec:A04}另从可表性追问伴随何时存在，需要同时检查极限条件与解集条件。
+\chapref{b4:ch:03}的伴随与单子为本附录提供基础。单子代数与自由代数使“归并”成为可以求值的结构；比较函子与单子性判据进一步检验原来的范畴能否从这一结构恢复，模下降给出具体的恢复计算。可表性又把伴随存在的问题化为始对象问题，需要同时检查极限条件与解集条件。最后，把形式表达式之间的替换视为态射，就得到 Kleisli 范畴；仅记录有限变量及其运算项，还能用有限积描述群、模等代数结构。
 
 \input{Appendices/AppendixA/SectionA01}
 \input{Appendices/AppendixA/SectionA02}
 \input{Appendices/AppendixA/SectionA03}
 \input{Appendices/AppendixA/SectionA04}
+\input{Appendices/AppendixA/SectionA05}
 
 \begin{chaptersummary}
 单子代数把形式运算变成求值，单位和结合律保证求值与归并相容。每个单子都有自由代数与遗忘伴随；原来的伴随能否由它恢复，则取决于比较函子是否为等价。Barr–Beck 判据把这个问题归结为反映同构以及正确处理遗忘后分裂的余等化子。
@@ -41,6 +44,9 @@
 \ProseParagraphBreak
 
 模的限制标量总具有单子性，不需要平坦性；忠实平坦下降则讨论扩张标量的余单子，平坦性保证等化子保留，忠实性保证原对象与态射没有被丢失。可表性和伴随存在性又有不同的困难：极限组织相容条件，解集把候选对象限制为集合大小，始对象的泛性质最终保证存在唯一性。
+
+\ProseParagraphBreak
+Kleisli 态射把一个对象送入另一个对象的形式表达式中，单子乘法定义替换的复合；它与自由单子代数之间的同态完全对应。Lawvere 理论进一步以有限积记录有限变量、投影、运算项与代入，保持积的集合模型给出运算的实际求值。群词与形式线性组合分别恢复群与左模，同时也恢复它们的同态。
 \end{chaptersummary}
 
 \BookExercises
@@ -89,7 +95,31 @@ Q(\varepsilon_Yf)c
 在交换群范畴上考虑单子 \(T(A)=\mathbb Q\otimes_{\mathbb Z}A\)。证明它幂等，并证明其代数范畴等价于 \(\mathbb Q\)-向量空间范畴。描述其固定对象在交换群语言中的性质。
 \end{exercise}
 \begin{solution}
-乘法为 \(q\otimes r\otimes a\mapsto qr\otimes a\)，逆为 \(q\otimes a\mapsto q\otimes1\otimes a\)。要看另一复合为恒等，可先将有理系数通分；两边乘以公共分母后都是整数张量的平衡关系，而公共分母在有理向量空间中可逆。因此乘法为同构。
+单子乘法及其候选逆为
+\[
+\begin{aligned}
+\mu_A\bigl(r\otimes(q\otimes a)\bigr)&=rq\otimes a,\\
+\nu_A(q\otimes a)&=q\otimes(1\otimes a).
+\end{aligned}
+\]
+定义 \(\nu_A\) 的映射对 \(q,a\) 双加性，且对每个整数 \(n\) 满足
+\[
+(nq)\otimes(1\otimes a)
+=q\otimes\bigl(1\otimes(na)\bigr),
+\]
+故由张量积的泛性质诱导良定义同态。直接代入得 \(\mu_A\nu_A=1\)。
+
+在 \(W=\mathbb Q\otimes_{\mathbb Z}(\mathbb Q\otimes_{\mathbb Z}A)\) 上，乘以任一非零整数 \(n\) 都可逆，其逆由第一个 \(\mathbb Q\) 因子乘以 \(1/n\) 诱导。把 \(q\) 写成 \(m/n\)，其中 \(m,n\) 为整数且 \(n\ne0\)，整数平衡关系给出
+\[
+\begin{aligned}
+n\bigl(r\otimes(q\otimes a)\bigr)
+&=r\otimes\bigl((nq)\otimes a\bigr)\\
+&=mr\otimes(1\otimes a)
+=n\bigl(rq\otimes(1\otimes a)\bigr).
+\end{aligned}
+\]
+消去这个可逆同态，得到
+\(r\otimes(q\otimes a)=rq\otimes(1\otimes a)\)，所以 \(\nu_A\mu_A=1\)。因此乘法为同构，单子幂等。
 
 由\cref{b4:prop:A-restriction-scalars-monadic}，代数结构正是延伸原来整数作用的 \(\mathbb Q\)-作用。其底层交换群中，乘每个非零整数都是双射。反过来，若这些乘法均双射，则定义 \((a/b)x\) 为唯一满足 \(by=ax\) 的 \(y\)，通分与唯一性给出有理标量作用，故固定对象就是唯一可除交换群。幂等性说明这一作用一旦存在便唯一。
 \end{solution}
@@ -281,4 +311,58 @@ B=R[x_{ij},t]/\left(t\det X-1\right).
 
 如果 \(J\) 有左伴随，则 \(J\) 本身是右伴随，应保持全部存在的积。取 \(T_n=\mathbb Z/2^n\mathbb Z\)。在 \(\mathbf{TorAb}\) 中，其积为
 \(t(\prod_nT_n)\)：来自挠群的任意相容映射族在全积中的像仍为挠元素，故满足所需泛性质。但 \(\prod_nT_n\) 中的元素 \((\bar1)_n\) 有无限阶，所以这个挠子群不是全积。包含函子不保持该积，矛盾，故没有左伴随。把挠元取出来是余反射，而不能据此猜测一个反方向的“最大挠商”具有同样泛性质。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-kleisli-partial-functions}
+取集合范畴上的单子 \(TX=X\amalg\{*\}\)，单位与乘法如\cref{b4:ex:A-pointed-monad}。把其 Kleisli 范畴识别为集合与部分函数的范畴，写出复合，并证明其中的同构恰好为处处有定义的双射。
+\end{exercise}
+\begin{solution}
+函数 \(f:X\to Y\amalg\{*\}\) 等价于指定子集 \(D_f\subseteq X\) 及函数 \(D_f\to Y\)：把取值为 \(*\) 的点理解为未定义。若 \(g:Y\to Z\amalg\{*\}\)，则 \(g\star f\) 在 \(x\) 处有定义，当且仅当 \(x\in D_f\) 且 \(f(x)\in D_g\)，这时其值为 \(g(f(x))\)。两种未定义情形均由单子乘法合并成 \(*\)。单位把每个点送到自身，正是处处有定义的恒等函数。
+
+若 \(g\star f=1_X\)，则 \(f\) 在每个 \(x\) 处都必须有定义；若又 \(f\star g=1_Y\)，则 \(g\) 也处处有定义。这两个复合等式于是成为普通函数的互逆条件，故 \(f\) 是双射。反向，处处有定义的双射及其逆自然给出 Kleisli 同构。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-kleisli-free-monoid-automorphisms}
+在有限表单子的 Kleisli 范畴中，令 \(X=\{x_1,\ldots,x_n\}\)。证明 \(X\) 的自同构都来自字母的置换。等价地，证明有限生成自由幺半群的自同构必须把自由生成元置换起来。
+\end{exercise}
+\begin{solution}
+Kleisli 自同构等价于自由幺半群 \(X^*\) 的自同构 \(\alpha\)，设逆为 \(\beta\)。当 \(n=0\) 时只有平凡幺半群，结论成立。若 \(n>0\)，则 \(\alpha(x_i)\) 不可能为空词，否则 \(\beta\alpha(x_i)\) 也为空，不等于 \(x_i\)。同理，每个 \(\beta(x_j)\) 都非空。
+
+设 \(\alpha(x_i)\) 有 \(r\) 个字母。替换每个字母为非空的 \(\beta\) 像以后，词长至少为 \(r\)，而 \(\beta\alpha(x_i)=x_i\) 的词长为 \(1\)。故 \(r=1\)，每个生成元被送到一个生成元。单射性使这些像互不相同，有限性使它们穷尽全部生成元，所以给出一个置换。反过来，任意字母置换逐字延伸为自由幺半群自同构，其逆由逆置换给出。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-kleisli-module-matrices}
+设 \(R\) 为含幺环，\(T\) 为集合上的自由左 \(R\)-模单子。限制其 Kleisli 范畴到有限集合 \(\{1,\ldots,n\}\)。若 \(f:n\to Tm\) 写为
+\[
+f(i)=\sum_{j=1}^m a_{ij}e_j,
+\]
+把它记为 \(n\times m\) 矩阵 \(A=(a_{ij})\)。求 Kleisli 复合的矩阵，并解释这一有限对象子范畴与有限秩自由左 \(R\)-模范畴的关系。
+\end{exercise}
+\begin{solution}
+对 \(g:m\to T\ell\)，写 \(g(j)=\sum_qb_{jq}e_q\)，矩阵为 \(B\)。单子乘法展开形式线性组合，故
+\[
+(g\star f)(i)
+=\sum_{j,q}a_{ij}b_{jq}e_q.
+\]
+所以复合的矩阵为 \(AB\)，而恒等的矩阵为 \(I_n\)。系数次序为 \(a_{ij}b_{jq}\)，在非交换环上也不能交换。
+
+把 \(n\) 送到自由左模 \(R^n\)，把 \(f\) 延伸为左线性映射 \(\overline f:R^n\to R^m\)。若按行写系数 \((r_1,\ldots,r_n)\)，则输出系数为 \((r_1,\ldots,r_n)A\)；这与左线性完全相容。每个自由模同态由各基向量的像唯一决定，恰给出一个 Kleisli 态射，故得到全忠实函子，其对象为所有标准有限自由模。这就是\cref{b4:prop:A-kleisli-free-algebras}在自由模单子中的具体形式。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-lawvere-commutative-monoids}
+以 \(\mathbb N^n\) 为具有指定基的自由交换幺半群，构造它们组成的范畴的相反范畴 \(\mathcal L_{\mathrm{CMon}}\)。写出其态射的矩阵表示，证明它是 Lawvere 理论，且其集合模型范畴等价于交换幺半群范畴。
+\end{exercise}
+\begin{solution}
+同态 \(\mathbb N^m\to\mathbb N^n\) 由 \(m\) 个基元素的像决定。把这些像的系数排列为 \(m\times n\) 矩阵 \(A\)，便得到理论中的态射 \(n\to m\)，其第 \(j\) 项为 \(\sum_i a_{ji}x_i\)。若随后态射 \(m\to r\) 的矩阵为 \(B\)，代入给出 \(BA\)。\(\mathbb N^{n+m}\) 是 \(\mathbb N^n,\mathbb N^m\) 的余积：到任一交换幺半群的同态只需分别指定两组基的像。因此相反范畴中 \(n+m\) 是积，而 \(0\) 为终对象，得到 Lawvere 理论。
+
+模型中的零项 \(0\to1\) 与加法项 \((x_1+x_2):2\to1\) 给出一个零元和二元加法。形式和的结合、交换与零元等式使底集合成为交换幺半群。任何系数项的求值都被迫等于相应的重复加法。反过来，在交换幺半群中按重复加法求值每个非负整数系数项，代入等式由分配展开成立，故给出模型。保持这些项的函数正是保持零和加法的幺半群同态；积识别把两种构造互相恢复，于是得到所述等价。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:A-lawvere-abelian-groups}
+对群的 Lawvere 理论，在群词之外再要求 \(x_1x_2=x_2x_1\)，即把各自由群 \(F_n\) 换成其交换化 \(\mathbb Z^n\)。证明所得理论的态射为整数矩阵，其模型恰为交换群，并解释这条关系对模型态射的要求。
+\end{exercise}
+\begin{solution}
+交换化后的每个 \(n\) 变量群词唯一写为 \(x_1^{a_1}\cdots x_n^{a_n}\)，其中 \(a_i\in\mathbb Z\)。同态 \(\mathbb Z^m\to\mathbb Z^n\) 由基元素的像决定，所以理论中的 \(n\to m\) 由 \(m\times n\) 整数矩阵给出；代入对应矩阵乘法。有限自由交换群的直和是余积，故相反范畴仍有指定有限积。
+
+群理论的模型已经有群结构，新等式要求任意两个元素可交换。因此模型是交换群，各整数系数项按整数倍与加法求值。反向，任意交换群都满足这些等式，并由 \(\sum_i a_ix_i\) 给出保持积的模型。模型自然变换保持加法、零与负元，正是交换群同态；增加交换关系约束了对象的乘法，没有增加群同态之外的新态射数据。
 \end{solution}

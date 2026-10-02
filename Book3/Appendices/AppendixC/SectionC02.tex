@@ -1,21 +1,22 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### C.2 Frobenius 方法与正特征奇点
+% 纲要位置：工作记录/计划纲要.md:2873
 
 \section{Frobenius 方法与正特征奇点}
 \label{b3:sec:C02}
 
-% 纲要细目（与计划纲要同步）：
-% * Frobenius 方法和正特征奇点
-%
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * Frobenius 模结构、完美域多项式环的自由基及节点的不平坦算例
+% * 迭代分裂映射证明所有理想Frobenius闭；引用Kunz定理说明正则性与Frobenius平坦性的联系
 % <!-- 短节：不设小节 -->
 
 
 % 正文以具体模型说明专题；长证明给出概要并指明技术细节的出处。
 
-在特征 \(p>0\) 中，二项式系数的消失使 \(F:R\to R,r\mapsto r^p\) 成为环同态，称为\term{Frobenius 同态}[Frobenius homomorphism]。它把所有元素的幂次同时放大，却保留加法。这让正特征中的奇点研究可以把“取幂”转成模论问题。
+设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环。二项式系数的消失使 \(F:R\to R,r\mapsto r^p\) 成为环同态，称为\term{Frobenius 同态}[Frobenius homomorphism]。它把所有元素的幂次同时放大，却保留加法。这让正特征中的奇点研究可以把“取幂”转成模论问题。
 
 \begin{definition}\label{b3:def:frobenius-pushforward}
-设 \(R\) 为特征 \(p>0\) 的交换环，\(e\ge1\) 为整数，\(q=p^e\)。记 \(F_*^eR\) 为加法群仍等于 \(R\)、标量作用改为
+设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环，\(e\ge1\) 为整数，\(q=p^e\)。记 \(F_*^eR\) 为加法群仍等于 \(R\)、标量作用改为
 \[
 a\cdot F_*^e r=F_*^e(a^q r)
 \]
@@ -35,8 +36,20 @@ F_*^e(x_1^{a_1}\cdots x_n^{a_n}),\qquad0\le a_i<q.
 每个指数向量唯一写为 \(qb+a\)，其中各 \(a_i\) 在给定范围内；每个系数在完美域中又有唯一的 \(q\) 次根。因此每个多项式唯一写成 \(\sum_a f_a(x)^q\cdot x^a\)。这正是关于所列基的唯一线性表示，故该模自由。对于 \(e=1\)，把 \(F_*1\) 的系数取出、其余基向量送到零，得到线性映射 \(F_*R\to R\)，它在 \(F_*f^p\) 上的值为 \(f\)，即所需左逆。
 \end{proof}
 
+Frobenius 的平坦性实际能够刻画任意正特征 Noether 环的正则性；上述多项式环的自由性是一个可直接计算的例子。这一判据称为\term[Kunz-dingli]{Kunz 定理}[Kunz's theorem]。\footnote{昆茨（Ernst Kunz，1933-2021），德国数学家，研究交换代数与代数几何，引入 Hilbert--Kunz 重数。}原始出处见\cite{Kunz1969RegularLocalRings}。
+
+\begin{claim}[Kunz]\label{b3:claim:C-kunz}
+设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换 Noether 环。则 \(R\) 是正则环，当且仅当 Frobenius 同态
+\[
+F:R\longrightarrow R,\qquad r\longmapsto r^p
+\]
+平坦，亦即 \(F_*R\) 是平坦 \(R\) 模。
+\end{claim}
+
+这一判据的证明可先归约到局部环，再把 Frobenius 平坦性给出的长度等式与 Hilbert--Samuel 函数的增长次数比较，从而得到极大理想的最少生成元数等于环的维数。
+
 \begin{example}[分裂不等于正则]\label{b3:exm:node-frobenius-split}
-设 \(k\) 完美，\(R=k[x,y]/(xy)\)。每个元素唯一写为一个常数加只含正次 \(x\) 的多项式与只含正次 \(y\) 的多项式。定义 \(\varphi:F_*R\to R\)：指数可被 \(p\) 整除的单项式保留并把指数除以 \(p\)、系数取 \(p\) 次根，其余单项式送到零。按上述唯一表示检查 \(\varphi(a\cdot F_*r)=a\cdot\varphi(F_*r)\)，只需检查标量为系数、\(x\)、\(y\) 的情形；交叉乘积因 \(xy=0\) 同时为零。且 \(\varphi(F_*a^p)=a\)，故该环 Frobenius 分裂。但原点局部环维数一，而 \(\mathfrak m/\mathfrak m^2\) 维数二，所以不正则。
+设 \(k\) 为特征 \(p>0\) 的完美域，\(R=k[x,y]/(xy)\)。每个元素唯一写为一个常数加只含正次 \(x\) 的多项式与只含正次 \(y\) 的多项式。定义 \(\varphi:F_*R\to R\)：指数可被 \(p\) 整除的单项式保留并把指数除以 \(p\)、系数取 \(p\) 次根，其余单项式送到零。按上述唯一表示检查 \(\varphi(a\cdot F_*r)=a\cdot\varphi(F_*r)\)，只需检查标量为系数、\(x\)、\(y\) 的情形；交叉乘积因 \(xy=0\) 同时为零。且 \(\varphi(F_*a^p)=a\)，故该环 Frobenius 分裂。但原点局部环维数一，而 \(\mathfrak m/\mathfrak m^2\) 维数二，所以不正则。
 \end{example}
 
 这一例子还可直接检测 Frobenius 不平坦。若 \(N=F_*R\) 平坦，对映射 \(R\xrightarrow{x}R\) 张量，应有
@@ -50,7 +63,46 @@ F_*^e(x_1^{a_1}\cdots x_n^{a_n}),\qquad0\le a_i<q.
 \[
 I^F=\{r\in R:r^{p^e}\in I^{[p^e]}\text{ 对某个 }e\ge0\}.
 \]
-它是包含 \(I\) 的理想：对两个见证取足够大的共同 \(e\)，用 Frobenius 保持加法与乘法验证。若 Frobenius 分裂，反复使用分裂映射，便从 \(r^q\in I^{[q]}\) 得 \(r\in I\)，所以所有理想满足 \(I^F=I\)。这提供另一种用理想观察正特征奇点的方法。
+它是包含 \(I\) 的理想：对两个见证取足够大的共同 \(e\)，用 Frobenius 保持加法与乘法验证。分裂映射则能够把这些取幂后的理想关系还原到原环。
+
+\begin{proposition}\label{b3:prop:C-split-frobenius-closure}
+设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环。如果 \(R\) 为 Frobenius 分裂环，则每个理想 \(I\subseteq R\) 都满足 \(I^F=I\)。
+\end{proposition}
+\begin{proof}
+取 \(R\) 线性分裂映射 \(\varphi:F_*R\to R\)，即
+\[
+\varphi(F_*r^p)=r\qquad(r\in R).
+\]
+置 \(\varphi_1=\varphi\)，并归纳定义
+\[
+\varphi_{e+1}=\varphi\circ F_*\varphi_e:
+F_*^{e+1}R\longrightarrow R.
+\]
+这里 \(F_*\varphi_e:F_*^{e+1}R\to F_*R\) 是同一加法映射在两端限制标量后所得的映射，即
+\[
+F_*^{e+1}t\longmapsto
+F_*\bigl(\varphi_e(F_*^e t)\bigr).
+\]
+它仍为 \(R\) 线性映射，因为两端的标量作用都多复合了一次 Frobenius。若 \(\varphi_e(F_*^e r^{p^e})=r\)，则
+\[
+\varphi_{e+1}(F_*^{e+1}r^{p^{e+1}})
+=\varphi\bigl(F_*\varphi_e(F_*^e(r^p)^{p^e})\bigr)
+=\varphi(F_*r^p)=r.
+\]
+故每个 \(\varphi_e\) 都分裂第 \(e\) 次 Frobenius。
+
+若 \(r\in I^F\)，则当见证为 \(e=0\) 时已有 \(r\in I\)；否则取 \(q=p^e\)，将 \(r^q\in I^{[q]}\) 写成有限和
+\[
+r^q=\sum_{i=1}^s a_i^q b_i,
+\qquad a_i\in I,\quad b_i\in R.
+\]
+由 \(\varphi_e\) 的 \(R\) 线性性得到
+\[
+r=\varphi_e(F_*^e r^q)
+=\sum_{i=1}^s a_i\,\varphi_e(F_*^e b_i)\in I.
+\]
+因此 \(I^F\subseteq I\)，与反向包含合起来即得结论。
+\end{proof}
 
 \ProseParagraphBreak
-更精细的正特征奇点理论还研究所有模上的纯性、局部上同调上的 Frobenius 作用及紧闭包。它们分别施加不同的有限性与非零条件。本节已经证明的只有上述具体自由性、分裂、非平坦性与理想闭包结论；没有把其中任一条件当作所有奇点分类的充分判据。
+更精细的正特征奇点理论还研究所有模上的纯性、局部上同调上的 Frobenius 作用及紧闭包。它们分别施加不同的有限性与非零条件。

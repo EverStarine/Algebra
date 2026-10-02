@@ -1,0 +1,200 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### A.5 Kleisli 范畴与代数理论
+% 纲要细目（写作范围）：
+% ---
+% #### A.5.1 Kleisli 态射与替换的复合
+% #### A.5.2 Kleisli 伴随与自由代数
+% #### A.5.3 有限积与代数理论的模型
+
+\section{Kleisli 范畴与代数理论}
+\label{b4:sec:A05}
+
+把每个字母替换成一个字，便得到自由幺半群之间的同态。若再把新字母替换成字，复合时必须把内层的字展开、连接，而不是把它们当成不能拆开的新字母。单子的单位与乘法恰好提供这种替换的恒等与复合。与把表达式送到实际值的单子代数相比，这里研究的是表达式到表达式的映射；随后还可以只保留有限多个变量，把运算及其恒等式组织成一个带有限积的范畴。
+
+\subsection{Kleisli 态射与替换的复合}
+\label{b4:subsec:A05:01}
+
+\begin{definition}\label{b4:def:A-kleisli-category}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子。令 \(\mathcal C_T\) 的对象与 \(\mathcal C\) 相同，并规定
+\[
+\operatorname{Hom}_{\mathcal C_T}(X,Y)
+=\operatorname{Hom}_{\mathcal C}(X,TY).
+\]
+对 \(f:X\to TY\)、\(g:Y\to TZ\)，规定复合及恒等为
+\[
+g\star f=\mu_Z\circ T(g)\circ f,
+\qquad 1_X^{\mathcal C_T}=\eta_X.
+\]
+所得范畴称为 \(T\) 的\term[kleisli-fanchou]{Kleisli 范畴}[Kleisli category]。
+\end{definition}
+
+同一个 \(f\) 在 \(\mathcal C_T\) 中的目标是 \(Y\)，在 \(\mathcal C\) 中的目标却是 \(TY\)。复合的中间步骤为
+\[
+X\xrightarrow{f}TY\xrightarrow{T(g)}T^2Z
+\xrightarrow{\mu_Z}TZ.
+\]
+例如有限表单子中，\(f\) 给每个 \(x\) 一个由 \(Y\) 中元素组成的表，\(T(g)\) 把每项换成一个表，\(\mu_Z\) 再把这些表连接起来。
+
+\begin{proposition}\label{b4:prop:A-kleisli-laws}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子。上述复合满足结合律，两端的 \(\eta\) 为恒等态射，因而 \(\mathcal C_T\) 是局部小范畴。
+\end{proposition}
+\begin{proof}
+给定 \(f:X\to TY\)、\(g:Y\to TZ\)、\(h:Z\to TW\)。乘法关于 \(h\) 的自然性给出
+\(T(h)\mu_Z=\mu_{TW}T^2(h)\)，再用单子的结合律，得到
+\[
+\begin{aligned}
+h\star(g\star f)
+&=\mu_WT(h)\mu_ZT(g)f\\
+&=\mu_W\mu_{TW}T^2(h)T(g)f\\
+&=\mu_WT(\mu_W)T^2(h)T(g)f\\
+&=\mu_WT\bigl(\mu_WT(h)g\bigr)f
+=(h\star g)\star f.
+\end{aligned}
+\]
+对恒等态射，单位律给出
+\[
+\eta_Y\star f=\mu_YT(\eta_Y)f=f.
+\]
+单位的自然性 \(T(f)\eta_X=\eta_{TY}f\) 以及另一条单位律则给出
+\[
+f\star\eta_X=\mu_YT(f)\eta_X
+=\mu_Y\eta_{TY}f=f.
+\]
+每个 Hom 集都是 \(\mathcal C\) 中的一个 Hom 集，因此局部小。
+\end{proof}
+
+\subsection{Kleisli 伴随与自由代数}
+\label{b4:subsec:A05:02}
+
+普通态射 \(u:X\to Y\) 可以先映入 \(TY\)，于是成为 Kleisli 态射。反方向则把一个替换 \(f:X\to TY\) 延伸到全部形式表达式 \(TX\)：先逐项替换，再用单子乘法归并。
+
+\begin{theorem}\label{b4:thm:A-kleisli-adjunction}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子。函子 \(J_T:\mathcal C\to\mathcal C_T\)、\(V_T:\mathcal C_T\to\mathcal C\) 由以下公式定义：
+\[
+\begin{aligned}
+J_T(X)&=X,&J_T(u)&=\eta_Yu\quad(u:X\to Y),\\
+V_T(X)&=TX,&V_T(f)&=\mu_YT(f)\quad(f:X\to TY).
+\end{aligned}
+\]
+有 \(J_T\dashv V_T\)，且该伴随产生的单子为原来的 \((T,\eta,\mu)\)。
+\end{theorem}
+\begin{proof}
+对 \(u:X\to Y\)、\(v:Y\to Z\)，单位的自然性和单位律给出
+\[
+(\eta_Zv)\star(\eta_Yu)
+=\mu_ZT(\eta_Z)T(v)\eta_Yu
+=\eta_Zvu.
+\]
+又 \(J_T(1_X)=\eta_X\)，所以 \(J_T\) 为函子。\(V_T\) 把恒等 \(\eta_X\) 送到 \(1_{TX}\)。对 Kleisli 态射 \(f:X\to TY\)、\(g:Y\to TZ\)，有
+\[
+\begin{aligned}
+V_T(g)V_T(f)
+&=\mu_ZT(g)\mu_YT(f)\\
+&=\mu_Z\mu_{TZ}T^2(g)T(f)\\
+&=\mu_ZT(\mu_Z)T^2(g)T(f)
+=V_T(g\star f),
+\end{aligned}
+\]
+故 \(V_T\) 也为函子。
+
+根据 Hom 集的定义，双射
+\[
+\operatorname{Hom}_{\mathcal C_T}(J_TX,Y)
+=\operatorname{Hom}_{\mathcal C}(X,TY)
+=\operatorname{Hom}_{\mathcal C}(X,V_TY)
+\]
+就是恒等映射。它对 \(X\) 自然：在 Kleisli 一侧预复合 \(J_T(u)\)，经单位自然性及单位律化为普通的预复合 \(u\)。它对 \(Y\) 也自然：后复合 Kleisli 态射 \(g\)，恰是后复合普通态射 \(V_T(g)=\mu T(g)\)。因此双射给出伴随。
+
+单位在 \(X\) 处为 \(\eta_X\)。余单位在 Kleisli 对象 \(Y\) 处是 \(J_TV_TY\to Y\) 的态射，它在 \(\mathcal C\) 中由 \(1_{TY}:TY\to TY\) 表示。于是 \(V_TJ_T=T\)，而伴随的乘法 \(V_T(\varepsilon_{J_TX})\) 为 \(\mu_XT(1_{TX})=\mu_X\)，恢复原单子。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:A-kleisli-free-algebras}
+设 \((T,\eta,\mu)\) 为局部小范畴 \(\mathcal C\) 上的单子，\(\mathcal C^T\) 为 Eilenberg–Moore 范畴。公式
+\[
+H:\mathcal C_T\longrightarrow\mathcal C^T,
+\qquad H(X)=(TX,\mu_X),\quad H(f)=\mu_YT(f)
+\]
+给出全忠实函子，其对象像为全部自由 \(T\)-代数。在各自由代数上指定一个自由生成对象后，它给出 \(\mathcal C_T\) 与自由代数所成全子范畴之间的等价。
+\end{proposition}
+\begin{proof}
+由\cref{b4:thm:A-em-adjunction}，\(\mu_YT(f)\) 是从 \((TX,\mu_X)\) 到 \((TY,\mu_Y)\) 的代数同态。上一证明已经验证恒等与复合相容，所以 \(H\) 为函子。自由代数的伴随双射为
+\[
+\operatorname{Hom}_{\mathcal C^T}(H(X),H(Y))
+\cong\operatorname{Hom}_{\mathcal C}(X,TY),
+\]
+右侧正是 Kleisli 态射集，逆双射为 \(f\mapsto\mu_YT(f)\)。因此 \(H\) 全忠实。它的对象正是 \((TX,\mu_X)\)，所以像中包含所有自由代数；指定各自由生成对象后，用上述 Hom 双射恢复态射便得到拟逆。
+\end{proof}
+
+对有限表单子，\(\mathbf{Set}_T\) 的态射 \(X\to Y\) 给每个 \(X\) 字母指定一个 \(Y\) 字。上述函子把它延伸成自由幺半群之间的同态。单子代数范畴却包含任意幺半群，而不只包含自由幺半群。因此，Kleisli 范畴描述自由对象之间的替换，Eilenberg–Moore 范畴描述允许求值的全部代数；二者的对象范围不同。相关的单子与伴随构造可对照 Mac Lane\cite[Chapter VI]{MacLane1998Categories}。
+
+\subsection{有限积与代数理论的模型}
+\label{b4:subsec:A05:03}
+
+一个有 \(n\) 个变量的群词，可以在任意群中给出一个 \(n\) 元运算。把一组词代入另一组词，就是运算的复合；把各变量分别取出，就是投影。只考虑这些词和代入，仍能保留群运算的全部恒等式，而不必预先指定一个群。Lawvere 的代数理论用有限积把这一结构表达为范畴。
+
+\begin{definition}\label{b4:def:A-lawvere-theory}
+设 \(\mathcal L\) 为小范畴，其对象标为非负整数 \(0,1,2,\ldots\)。若指定对象 \(1\)，并为每个 \(n\) 指定把 \(n\) 表示为 \(1\) 的 \(n\) 次积的投影
+\[
+\pi_i^n:n\longrightarrow1\quad(1\le i\le n),
+\]
+其中 \(0\) 为终对象，\(\pi_1^1=1_1\)，则称这组数据为单类型的\term[lawvere-daishu-lilun]{Lawvere 代数理论}[Lawvere algebraic theory]。这里“单类型”表示每个模型只有一种底集合。一个保持有限积的函子 \(M:\mathcal L\to\mathbf{Set}\) 称为该理论的模型。模型以自然变换为态射，组成范畴 \(\operatorname{Mod}(\mathcal L)\)。
+\end{definition}
+
+各 \(n\) 都是 \(1\) 的有限次积，故 \(n+m\) 以分块投影成为 \(n,m\) 的积，\(\mathcal L\) 确有全部有限积。一个态射 \(a:n\to1\) 表示一个有 \(n\) 个变量的运算项；\(0\to1\) 表示常数项。任意 \(f:n\to m\) 由其分量 \(\pi_j^mf:n\to1\) 唯一决定，因而是一组 \(m\) 个运算项。若 \(g:m\to r\)，则 \(gf\) 的分量是把 \(f\) 的各项代入 \(g\) 的各项。两个项在 \(\mathcal L\) 中相等，就要求它们在每个模型中取相同值；关系由态射的等式表达。
+
+\begin{proposition}\label{b4:prop:A-lawvere-model-operations}
+设 \(\mathcal L\) 为单类型 Lawvere 理论，\(M\) 为其集合模型，并令 \(S=M(1)\)。积投影给出典范双射 \(M(n)\cong S^n\)，其中 \(S^0\) 为单元素集合。因此 \(M\) 的数据等价于为每个 \(a:n\to1\) 指定函数 \(a_S:S^n\to S\)，使投影成为坐标投影，并使项的复合成为函数的代入。模型的自然变换恰好对应保持全部这些运算的函数。
+\end{proposition}
+\begin{proof}
+保持积给出典范双射
+\[
+\kappa_n:M(n)\xrightarrow{\sim}S^n,
+\qquad z\longmapsto\bigl(M(\pi_i^n)(z)\bigr)_i.
+\]
+用它运输 \(M(a)\) 得到 \(a_S=M(a)\kappa_n^{-1}\)。函子公理保证投影与代入等式。
+
+反过来，设给定这样的运算。定义 \(M(n)=S^n\)；对 \(f:n\to m\)，定义
+\[
+M(f)(x)=\bigl((\pi_j^mf)_S(x)\bigr)_{j=1}^m.
+\]
+当 \(m=0\) 时取唯一函数。投影公理使 \(M(1_n)\) 为恒等，代入公理使 \(M(gf)=M(g)M(f)\)。分块坐标还保证它保持有限积，故确实给出模型。
+
+若 \(\alpha:M\Rightarrow N\)，对投影的自然性迫使 \(\kappa_n^N\alpha_n(\kappa_n^M)^{-1}=(\alpha_1)^n\)。对每个 \(a:n\to1\) 的自然性遂等价于
+\[
+\alpha_1\bigl(a_S(x_1,\ldots,x_n)\bigr)
+=a_{N(1)}\bigl(\alpha_1(x_1),\ldots,\alpha_1(x_n)\bigr).
+\]
+反过来，保持全部运算的函数按各次幂定义分量，上述等式使它对每个分量项、从而对任意态射自然。于是对象与态射的两种描述都互相恢复。
+\end{proof}
+
+以群为例，令 \(F_n\) 为具有指定自由生成元 \(x_1,\ldots,x_n\) 的自由群，\(F_0\) 为平凡群。取这些自由群及全部群同态组成的范畴的相反范畴 \(\mathcal L_{\mathrm{Grp}}\)，即
+\[
+\operatorname{Hom}_{\mathcal L_{\mathrm{Grp}}}(n,m)
+=\operatorname{Hom}_{\mathbf{Grp}}(F_m,F_n).
+\]
+一个这样的同态由 \(m\) 个 \(n\) 变量群词决定。自由群的泛性质给出 \(F_{n+m}=F_n*F_m\)，所以在相反范畴中 \(n+m\) 是积；\(F_0\) 是始对象，所以 \(0\) 是终对象。这是一项 Lawvere 理论。
+
+\ProseParagraphBreak
+在其模型的底集合 \(S\) 上，词 \(x_1x_2:2\to1\)、\(x_1^{-1}:1\to1\) 与空词 \(0\to1\) 分别定义乘法、逆元与单位。自由群中的词等式给出结合律及单位、逆元等式，故 \(S\) 是群。反过来，任意群 \(G\) 都能按各群词的求值定义模型 \(M_G(n)=G^n\)，代入与求值相容。一般模型中的每个词也由这三个基本运算计算，因而与从所得群构造的模型通过 \(\kappa_n\) 自然同构。保持这三个运算的函数恰为群同态，遂得到
+\[
+\operatorname{Mod}(\mathcal L_{\mathrm{Grp}})\simeq\mathbf{Grp}.
+\]
+
+对含幺环 \(R\)，同样取有限秩自由左 \(R\)-模范畴的相反范畴 \(\mathcal L_R\)，规定
+\[
+\operatorname{Hom}_{\mathcal L_R}(n,m)
+=\operatorname{Hom}_R(R^m,R^n).
+\]
+有限直和在模范畴中是余积，所以相反范畴中的 \(n+m\) 是积。态射 \(n\to1\) 由 \(1\) 的像 \(\sum_i r_ie_i\in R^n\) 决定，表示形式线性项 \(\sum_i r_ix_i\)。代入时，外层系数在左侧乘内层系数：
+\[
+\sum_j s_j\left(\sum_i r_{ji}x_i\right)
+=\sum_i\left(\sum_j s_jr_{ji}\right)x_i.
+\]
+这一次序来自自由左模同态的复合，不能在非交换环上交换系数。
+
+\ProseParagraphBreak
+模型由零项、加法项、负元项及各 \(rx_1\) 定义底集合上的左 \(R\)-模结构。形式线性项的等式给出交换群公理、分配律与 \(r(sx)=(rs)x\)、\(1x=x\)。反向，一个左 \(R\)-模按有限线性组合求值，便给出模型；保持所有项的函数恰为左模同态。因此
+\[
+\operatorname{Mod}(\mathcal L_R)\simeq R\text{-}\mathbf{Mod}.
+\]
+群与模的例子说明了为何有限积必不可少：同一个变量可以被重复使用，也可以被遗漏，多元运算可以同时接受这些变量；投影及其积的泛性质把这些替换组织成态射。Lawvere 以这种方式研究代数理论的函子语义\cite[pp. 869--870]{Lawvere1963FunctorialSemantics}。

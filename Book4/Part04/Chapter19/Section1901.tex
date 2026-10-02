@@ -1,78 +1,193 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 19.1 标准截断
-% 纲要位置：计划纲要.md，第 2981 行。
+% 纲要标题：### 19.1 全导出函子
+% 纲要标签：b4:sec:1801
+% 纲要位置：计划纲要.md，第 2952 行。
 
-\section{标准截断}
-\label{b4:sec:1901}
+\section{全导出函子}
+\label{b4:sec:1801}
 
-截去复形的一端会改变截口处的核或像。典范截断修正端点项，既保留指定范围的上同调，又将原对象放入一个截断三角。
-
+一个加性函子不一定保持拟同构，因而不能直接作用于导出态射。先选择能被它正确处理的复形模型，才能把导出群、自然变换与复合一起提升到导出范畴。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 朴素截断与典范截断
-% * 标准 t-结构
-% * 截断三角
+% * RF 和 LF 的构造及假设
+% * 对象级导出函子与复形级导出的关系
+% * 复合与自然变换
 %
 
-\subsection{朴素截断与典范截断}
-\label{b4:subsec:1901:01}
+\subsection{\texorpdfstring{\(RF\) 与 \(LF\) 的构造条件}{RF 与 LF 的构造条件}}
+\label{b4:subsec:1801:01}
 
-把复形截成两段，首先遇到的问题是截口的微分。直接删掉高次项会扩大最后一项的圈；直接删掉低次项则会丢掉原来进入第一项的边界。这两种操作适合描述复形的项，却不能原样保留指定次数的上同调。
+对一个左正合函子逐次取导出，得到一列函子；但连接同态、自然变换及它们的复合仍需另外追踪。导出范畴允许保留产生这些群的整个复形。困难是原来的加性函子不一定保持拟同构，因而不能直接作用于分式表示。
 
-\begin{definition}\label{b4:def:standard-truncations}
-设 \(C\) 为交换范畴 \(\mathcal A\) 中的上链复形，\(n\in\mathbb Z\)。保留次数 \(i\le n\) 的原项与原微分、把其余项置零，所得复形记为 \(\sigma^{\le n}C\)；相应地定义 \(\sigma^{\ge n}C\)。这些构造称为\term[pusujianduan]{朴素截断}[brutal truncation]。把截口改为
+\begin{definition}\label{b4:def:total-derived-functor}
+设 \(\mathcal A,\mathcal B\) 是局部小交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子，并固定导出范畴的集合大小约定。记 \(q_{\mathcal A}:K^+(\mathcal A)\to D^+(\mathcal A)\)、\(q_{\mathcal B}:K^+(\mathcal B)\to D^+(\mathcal B)\) 为局部化函子。三角函子
+\(RF:D^+(\mathcal A)\to D^+(\mathcal B)\) 连同自然变换
 \[
- (\tau^{\le n}C)^i=
- \begin{cases}C^i&i<n,\\ \ker \mathrm{d}^n&i=n,\\0&i>n,\end{cases}
- \qquad
- (\tau^{\ge n}C)^i=
- \begin{cases}0&i<n,\\ \operatorname{coker}\mathrm{d}^{n-1}&i=n,\\C^i&i>n,\end{cases}
+\eta:q_{\mathcal B}F\longrightarrow RFq_{\mathcal A}
 \]
-并采用原微分诱导的映射，得到\term[dianfanjianduan]{典范截断}[canonical truncation]，也称好截断。它们分别带有自然链映射 \(\tau^{\le n}C\to C\) 和 \(C\to\tau^{\ge n}C\)。
-\symidx{\(\tau^{\le n},\tau^{\ge n}\)：典范截断函子}
-\end{definition}
+若满足下列泛性质，就称为 \(F\) 的\term[quan-you-daochu-hanzi]{全右导出函子}[total right derived functor]：对每个三角函子 \(T:D^+(\mathcal A)\to D^+(\mathcal B)\) 及自然变换 \(\xi:q_{\mathcal B}F\to Tq_{\mathcal A}\)，唯一存在自然变换 \(\theta:RF\to T\)，使 \(\xi=(\theta q_{\mathcal A})\eta\)。这里 \(F\) 在复形和同伦类上逐项作用。
 
-在截口直接计算核与像可知，\(H^i(\tau^{\le n}C)=H^i(C)\) 当 \(i\le n\)，其余次数为零；\(\tau^{\ge n}\) 保留的则是 \(i\ge n\) 的上同调。因此典范截断保持拟同构，依\cref{b4:def:derived-category}的局部化泛性质给出导出范畴上的函子。这里可以先在复形范畴中构造；链同伦映射在局部化后相同，不必要求它们的截断仍由原来同一个链同伦实现。
+对三角函子 \(LF:D^-(\mathcal A)\to D^-(\mathcal B)\)，将 \(q_{\mathcal A},q_{\mathcal B}\) 改为相应有上界范畴的局部化函子，并把自然变换方向改为
+\(\epsilon:LFq_{\mathcal A}\to q_{\mathcal B}F\)。若对每个三角函子 \(T:D^-(\mathcal A)\to D^-(\mathcal B)\)，每个自然变换 \(Tq_{\mathcal A}\to q_{\mathcal B}F\) 都唯一经 \(T\to LF\) 分解，则称 \(LF\) 连同 \(\epsilon\) 为\term[quan-zuo-daochu-hanzi]{全左导出函子}[total left derived functor]。
+\end{definition}
+\symidx{\(RF,LF\)：全右导出函子与全左导出函子}
+
+定义中的两个自然变换方向不同。内射替换给出 \(X\to I_X\)，投射替换给出 \(P_X\to X\)，这正是方向差异的来源；它们并不是对称地从原复形指向两个导出对象。
+
+\begin{theorem}\label{b4:thm:total-derived-functors}
+设 \(\mathcal A,\mathcal B\) 是局部小交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子，并在固定的集合大小约定下取导出范畴。
+若 \(\mathcal A\) 有足够内射对象，则全右导出函子 \(RF:D^+(\mathcal A)\to D^+(\mathcal B)\) 存在，并对每个有下界上链复形 \(X\) 由
+\[
+RF(q_{\mathcal A}X)\cong q_{\mathcal B}F(I_X),\qquad X\xrightarrow{\simeq}I_X,
+\]
+计算，其中 \(I_X\) 是逐项内射的有下界复形。若 \(\mathcal A\) 有足够投射对象，则全左导出函子 \(LF:D^-(\mathcal A)\to D^-(\mathcal B)\) 存在，并对每个有上界上链复形 \(X\) 由
+\[
+LF(q_{\mathcal A}X)\cong q_{\mathcal B}F(P_X),\qquad P_X\xrightarrow{\simeq}X,
+\]
+计算，其中 \(P_X\) 是逐项投射的有上界复形。结果及其比较映射在导出范畴中不依赖替换的选择。
+\end{theorem}
+\begin{proof}
+记 \(\mathcal I=K^+(\operatorname{Inj}\mathcal A)\)，以
+\(j:\mathcal I\to K^+(\mathcal A)\) 表示包含函子。
+\cref{b4:thm:bounded-injective-model}说明
+\(E=q_{\mathcal A}j:\mathcal I\to D^+(\mathcal A)\) 是三角等价。选择三角准逆
+\(U:D^+(\mathcal A)\to\mathcal I\)，并将等价的自然同构取为伴随等价 \(U\dashv E\) 的单位与余单位：
+\[
+\rho:1_{D^+(\mathcal A)}\xrightarrow{\sim}EU,
+\qquad
+\kappa:UE\xrightarrow{\sim}1_{\mathcal I}.
+\]
+它们满足 \(E(\kappa_I)\rho_{E(I)}=1_{E(I)}\) 及
+\(\kappa_{U(D)}U(\rho_D)=1_{U(D)}\)。定义
+\(RF=q_{\mathcal B}FjU\)。加性函子保持有限双积、移位及锥的微分矩阵，所以逐项 \(F\) 是三角函子，所得复合也保持好三角。
+
+对 \(X\in K^+(\mathcal A)\)，记 \(I_X=jU(q_{\mathcal A}X)\)。上一模型定理证明中的双射
+\[
+\operatorname{Hom}_{K^+(\mathcal A)}(X,I_X)
+\xrightarrow{\sim}
+\operatorname{Hom}_{D^+(\mathcal A)}(q_{\mathcal A}X,E U(q_{\mathcal A}X))
+\]
+将 \(\rho_{q_{\mathcal A}X}\) 唯一提升为同伦类 \(i_X:X\to I_X\)。因为其局部化是同构，\(i_X\) 的复形映射代表是拟同构。\(\rho\) 的自然性及上述双射的单射性，使 \(i\) 成为同伦范畴上的自然变换，故
+\(\eta_X=q_{\mathcal B}F(i_X)\) 给出所需比较。
+
+给定 \(T,\xi\)，对导出对象 \(D\in D^+(\mathcal A)\) 直接定义
+\[
+\theta_D=(T(\rho_D))^{-1}\xi_{jU(D)}:
+RF(D)\longrightarrow T(D).
+\]
+这里 \(\xi_{jU(D)}\) 的目标是 \(T(EU(D))\)；它与 \(T(\rho_D)\) 的逆可以复合。\(\xi\) 与 \(\rho\) 的自然性说明 \(\theta\) 自然，而
+\[
+\theta_{q_{\mathcal A}X}\eta_X
+=(T(\rho_{q_{\mathcal A}X}))^{-1}
+T(q_{\mathcal A}i_X)\xi_X=\xi_X.
+\]
+为证唯一性，注意 \(i_{jI}=j(\kappa_I^{-1})\)，这是第一条三角恒等式与提升唯一性的结果。第二条三角恒等式因而给出
+\[
+RF(\rho_D)=q_{\mathcal B}Fj(U(\rho_D))
+=q_{\mathcal B}Fj(\kappa_{U(D)}^{-1})
+=\eta_{jU(D)}.
+\]
+若 \(\theta'\) 也满足分解等式，则沿 \(\rho_D\) 的自然性及在 \(jU(D)\) 上的分解等式得到
+\(T(\rho_D)\theta'_D=\theta'_{EU(D)}\eta_{jU(D)}=\xi_{jU(D)}\)，所以 \(\theta'_D=\theta_D\)。
+
+左导出采用投射模型。记
+\(\mathcal P=K^-(\operatorname{Proj}\mathcal A)\)，令
+\(j^-:\mathcal P\to K^-(\mathcal A)\) 为包含，
+\(E^-=q_{\mathcal A}j^-\)。由\cref{b4:thm:bounded-projective-model}选择三角准逆
+\(V:D^-(\mathcal A)\to\mathcal P\)，以及伴随等价 \(E^-\dashv V\) 的单位、余单位
+\[
+\nu:1_{\mathcal P}\xrightarrow{\sim}VE^-,
+\qquad \lambda:E^-V\xrightarrow{\sim}1_{D^-(\mathcal A)}.
+\]
+投射模型的 Hom 双射将 \(\lambda_{q_{\mathcal A}X}\) 唯一提升为自然的同伦类
+\(p_X:j^-V(q_{\mathcal A}X)\to X\)。定义
+\(LF=q_{\mathcal B}Fj^-V\)、\(\epsilon_X=q_{\mathcal B}F(p_X)\)。对
+\(\xi:Tq_{\mathcal A}\to q_{\mathcal B}F\)，所需变换在导出对象 \(D\) 上为
+\[
+\theta_D=\xi_{j^-V(D)}(T(\lambda_D))^{-1}:
+T(D)\longrightarrow LF(D).
+\]
+自然性及 \(\epsilon_X\theta_{q_{\mathcal A}X}=\xi_X\) 由相同的自然性方块得到。三角恒等式给出
+\(LF(\lambda_D)=\epsilon_{j^-V(D)}\)，所以任何另一分解也必须满足
+\(\theta_D T(\lambda_D)=\xi_{j^-V(D)}\)，这证明唯一性。
+
+任意另一内射或投射替换都经模型的 Hom 双射得到与给定替换相容的唯一同伦比较；它在局部化后为同构，因模型等价全忠实而是同伦等价。逐项 \(F\) 保持同伦等价，故这些替换计算的对象典范同构于上述函子的值。泛性质也使不同模型选择所得函子连同比较变换唯一自然同构。
+\end{proof}
+
+这里构造存在只需加性，不要求左正合或右正合。正合性将用于把零次同调重新识别为 \(F\) 本身。以上泛性质及构造可对照 Weibel\cite[Definition 10.5.1, Existence Theorem 10.5.6]{Weibel1994HomologicalAlgebra}。
+
+\subsection{对象级导出与复形级导出}
+\label{b4:subsec:1801:02}
+
+把对象 \(A\in\mathcal A\) 看作零次复形，替换 \(A\to I^\bullet\) 就是通常的内射消解。因此，当 \(F\) 左正合且 \(\mathcal A\) 有足够内射对象时，
+\[
+H^n(RF(A))\simeq R^nF(A)\quad(n\ge0),\qquad
+H^n(RF(A))=0\quad(n<0).
+\]
+尤其 \(H^0(RF(A))=F(A)\)。右正合函子在有足够投射对象时给出
+\(H^{-n}(LF(A))=L_nF(A)\)。负号来自本书始终使用升次微分，而通常的投射消解用非负链次数编号。
 
 \ProseParagraphBreak
-例如 \(C=(\mathbb Z\xrightarrow{2}\mathbb Z)\) 位于次数 \(-1,0\)。朴素截断 \(\sigma^{\ge0}C=\mathbb Z[0]\)，而典范截断 \(\tau^{\ge0}C=(\mathbb Z/2)[0]\)。前者忘记了进入零次项的边界，后者才保留 \(H^0(C)\)。
+对一般复形 \(X\)，\(RF(X)\) 保留了超上同调的全部次数：\(H^n(RF(X))\) 就是\secref{b4:sec:1502}所构造的 \(\mathbb H^n(F,X)\)。两种计算选择同一内射复形后相同，因而不需重新建立一套连接态射。它通常不能由 \(R^nF(H^0X)\) 代替；即使 \(F\) 是恒等函子，\(RF(X)=X\) 仍保留每个 \(H^nX\)。
 
-\subsection{标准 t-结构}
-\label{b4:subsec:1901:02}
+下文沿用\cref{b4:def:functor-acyclic}的“\(F\)-零调对象”：当 \(F\) 左正合时，它只要求 \(R^jF(Q)=0\) 对 \(j>0\) 成立；“无上同调对象”是同一性质的别称。它与整个复形的零调性是两个不同条件。
 
-\begin{definition}\label{b4:def:standard-t-halves}
-设 \(\mathcal A\) 为交换范畴，\(D(\mathcal A)\) 为其导出范畴，\(n\in\mathbb Z\)。令
-\[
- D^{\le n}(\mathcal A)=\{X:H^i(X)=0\ (i>n)\},\qquad
- D^{\ge n}(\mathcal A)=\{X:H^i(X)=0\ (i<n)\}
-\]
-表示由相应对象组成的全子范畴。它们也分别由同构于次数不超过 \(n\)、次数不低于 \(n\) 的复形的对象组成。\((D^{\le0},D^{\ge0})\) 称为\term[biaozhuntjiegou]{标准 t-结构}[standard t-structure]；下一节将抽取它满足的公理。
-\symidx{\(D^{\le n},D^{\ge n}\)：标准上同调次数条件}
-\end{definition}
-
-\begin{proposition}\label{b4:prop:standard-truncation-orthogonality}
-设 \(\mathcal A\) 为局部小交换范畴，\(n\in\mathbb Z\)。若 \(X\in D^{\le n}(\mathcal A)\)、\(Y\in D^{\ge n+1}(\mathcal A)\)，则 \(\operatorname{Hom}_{D(\mathcal A)}(X,Y)=0\)。
+\begin{proposition}\label{b4:prop:total-derived-acyclic-complex}
+设 \(F:\mathcal A\to\mathcal B\) 是局部小交换范畴间的加性左正合函子，\(\mathcal A\) 有足够内射对象。若 \(X\) 是 \(\mathcal A\) 中的有下界上链复形，且每项均满足
+\(R^jF(X^n)=0\) 对所有 \(j>0\) 成立，则自然映射 \(F(X)\to RF(X)\) 是拟同构。若 \(F\) 为加性右正合函子，\(\mathcal A\) 有足够投射对象，\(X\) 为 \(\mathcal A\) 中有上界的上链复形，并且 \(L_jF(X^n)=0\) 对所有 \(n\in\mathbb Z\)、\(j>0\) 成立，则对偶的自然映射 \(LF(X)\to F(X)\) 是拟同构。
 \end{proposition}
 \begin{proof}
-以典范截断把 \(X,Y\) 分别换成项集中在 \(i\le n\)、\(i\ge n+1\) 的复形。用屋顶 \(X\xleftarrow{s}Z\xrightarrow{f}Y\) 表示任意导出态射。因为 \(s\) 为拟同构且 \(X\) 的高次上同调为零，\(\tau^{\le n}Z\to Z\) 也是拟同构。用它细化屋顶后，向 \(Y\) 的链映射逐项为零：源、靶没有共同的非零次数。因此原态射为零。
+先设 \(E\) 是有下界的正合复形，每项为 \(F\)-零调对象。记 \(Z^n=\ker \mathrm{d}_E^n\)。从低于所有非零项的次数开始，\(Z^n=0\)。短正合列
+\(0\to Z^n\to E^n\to Z^{n+1}\to0\)
+及导出长正合列归纳给出 \(Z^{n+1}\) 也是 \(F\)-零调对象，并给出
+\(0\to FZ^n\to FE^n\to FZ^{n+1}\to0\) 正合。因此 \(F(E)\) 正合。
+
+取 \(X\to I\) 的有下界内射替换，其锥正合、有下界，且每项是内射对象与某个 \(X^n\) 的有限直和，故逐项 \(F\)-零调。上段说明 \(F(\operatorname{Cone}(X\to I))\) 正合。加性保证此复形是 \(\operatorname{Cone}(FX\to FI)\)，锥判据得到拟同构。对偶情形从最高次数向下归纳。
 \end{proof}
 
-这个零性要求源在低次、靶在高次。反向一般不为零：把零次对象 \(M\) 移位为 \(M[1]\)，它位于 \(-1\) 次，而 \(\operatorname{Hom}(N,M[1])\) 可以记录一次扩张。这里的次数判断始终使用 \(C[1]^i=C^{i+1}\)。
+上一个证明说明了有下界假设的实际用途：它给余圈对象的归纳提供起点。逐项对 \(F\) 零调是对象性质，整个复形经 \(F\) 后仍正合是另一个性质；无界时不能仅凭前者推出后者。
 
-\subsection{截断三角}
-\label{b4:subsec:1901:03}
+\subsection{复合与自然变换}
+\label{b4:subsec:1801:03}
 
-\begin{proposition}\label{b4:prop:standard-truncation-triangle}
-设 \(C\) 为交换范畴 \(\mathcal A\) 中的复形。对每个整数 \(n\)，导出范畴中有自然的好三角
+若 \(\alpha:F\to G\) 是两个加性函子间的自然变换，在同一个内射替换上逐项取 \(\alpha_{I_X}\)，便得到
+\(R\alpha:RF\to RG\)。比较态射使它自然，且
+\(R(\beta\alpha)=(R\beta)(R\alpha)\)、\(R(1_F)=1_{RF}\)。左导出使用同一个投射替换，也有相同结论。因而自然变换不是在每个导出群上重新猜测，而是先在复形层面构造。
+
+\begin{theorem}\label{b4:thm:total-derived-composition}
+设 \(\mathcal A,\mathcal B,\mathcal C\) 是局部小交换范畴，\(\mathcal A,\mathcal B\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 为加性左正合函子。总有自然比较
 \[
- \tau^{\le n}C\longrightarrow C\longrightarrow
- \tau^{\ge n+1}C\longrightarrow(\tau^{\le n}C)[1].
+R(GF)\longrightarrow RG\circ RF
+\quad\text{在 }D^+(\mathcal A)\text{ 上}.
 \]
-两端分别属于 \(D^{\le n}\) 和 \(D^{\ge n+1}\)。
-\end{proposition}
+若 \(F\) 把内射对象送到 \(G\)-零调对象，则这个比较是自然同构。
+\end{theorem}
 \begin{proof}
-取逐项短正合列 \(0\to\tau^{\le n}C\to C\to Q\to0\)。商复形 \(Q\) 在 \(n\) 次为 \(\operatorname{im}\mathrm{d}^n\)，在较高次数与 \(C\) 相同，较低次数为零。从 \(Q\) 到 \(\tau^{\ge n+1}C\) 的映射在 \(n\) 次为零，在 \(n+1\) 次取商，在更高次数为恒等。它的核是两项恒等复形 \(\operatorname{im}\mathrm{d}^n\to\operatorname{im}\mathrm{d}^n\)，所以是拟同构。由\cref{b4:prop:derived-short-exact-triangle}得到的三角，把 \(Q\) 换成这一同构对象即得结论。所有映射来自核、商及原链映射，故对 \(C\) 自然。
+取 \(X\to I\)，再取 \(F(I)\to J\) 的有下界内射替换。\(R(GF)(X)\) 由 \(GF(I)\) 表示，\(RG(RF(X))\) 由 \(G(J)\) 表示，比较就是
+\(G(F(I))\to G(J)\)。同伦比较保证选择独立与自然性；等价地，它由全右导出的泛性质作用于两次比较变换的复合产生。
+
+若每个 \(F(I^n)\) 都 \(G\)-零调，则\cref{b4:prop:total-derived-acyclic-complex}应用于有下界复形 \(F(I)\)，说明上述比较是拟同构。这也给出两种复合方式之间的自然同构。
 \end{proof}
 
-三角的第三箭头不应省去。若 \(C\) 只在 \(n,n+1\) 两次有上同调，该箭头仍可能阻止它分裂为两个上同调对象的直和。截断提供逐层分析的方法，并未断言上同调完全决定复形的导出同构类型。标准截断与下面的抽象构造可对照 Beilinson、Bernstein、Deligne 的《Faisceaux pervers》\cite[Exemples 1.3.2; Proposition 1.3.3]{BBD1982FaisceauxPervers}。
+若 \(F\) 把内射对象送到 \(G\)-零调对象，则对一般
+\(X\in D^+(\mathcal A)\)，将\cref{b4:thm:hypercohomology-spectral-sequences}的第二套谱序列应用于 \(RF(X)\) 的有下界复形模型，得到自然的强收敛谱序列
+\[
+E_2^{p,q}=R^pG\bigl(H^q(RF(X))\bigr)
+\Longrightarrow H^{p+q}\bigl(R(GF)(X)\bigr).
+\]
+这里 \(p\ge0\)，\(q\) 有下界，所以每个总次数的滤过仍有限。若特别取
+\(X=A[0]\)，其中 \(A\in\mathcal A\)，则
+\(H^q(RF(A[0]))=R^qF(A)\) 对 \(q\ge0\) 成立，负次数为零。于是恢复\cref{b4:thm:grothendieck-spectral-sequence}的第一象限谱序列
+\[
+E_2^{p,q}=R^pG(R^qF(A))
+\Longrightarrow R^{p+q}(GF)(A).
+\]
+它提供目标的滤过及其逐层商，而不自动给出直和分解
+\[
+R^n(GF)(A)\cong\bigoplus_{p+q=n}R^pG(R^qF(A)).
+\]
+全导出复合的比较与零调性条件见 Weibel\cite[Composition Theorem 10.8.2, Corollary 10.8.3]{Weibel1994HomologicalAlgebra}。
+
+\ProseParagraphBreak
+对右正合函子及投射替换有对偶版本：若 \(F\) 把投射对象送到 \(G\)-零调对象，则 \(L(GF)\simeq LG\circ LF\)；一般比较的方向为 \(LG\circ LF\to L(GF)\)。如果不检查零调性，就没有理由让比较成为同构。

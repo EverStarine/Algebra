@@ -1,116 +1,103 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 9.3 万有系数定理
-% 纲要位置：计划纲要.md，第 2697 行。
+% 纲要标题：### 9.3 Tor
+% 纲要标签：b4:sec:0803
+% 纲要位置：计划纲要.md，第 2662 行。
 
-\section{万有系数定理}
-\label{b4:sec:0903}
+\section{Tor}
+\label{b4:sec:0803}
 
-改变系数可能使原来的单射失效，因此同调与系数张量之间会多出 Tor 项。主理想整环上圈与边界自由，使这个差额形成自然的短正合列。
+张量积的两个模必须取相反的侧别，任一变量的投射消解都应得到同一组 Tor。总复形的比较同时解释平衡性和短正合列中的连接映射。
 
-% 纲要内容：
+
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 主理想整环上的标准形式
-% * 自然短正合列与非典范分裂
-% * 系数变换的计算
+% * 张量积的左导出函子
+% * 平衡性
+% * Tor 长正合列及具体计算
 %
 
-\subsection{主理想整环上的标准形式}
-\label{b4:subsec:0903:01}
+\subsection{张量积的左导出函子}
+\label{b4:subsec:0803:01}
 
-主理想整环上，自由模的子模仍自由，即使自由模的秩无限也成立，见\cref{b4:thm:pid-free-submodule}。因此自由链复形的圈和边界都是自由模。这个事实既使 Tor 项可由长度一的消解算出，也保证下面的短正合列能够分裂。
-
-\begin{theorem}[同调的万有系数定理]\label{b4:thm:uct-homology}
-设 \(R\) 为主理想整环，\(C\) 为自由 \(R\)-模链复形，\(A\) 为 \(R\)-模。对每个整数 \(n\)，有关于 \(C,A\) 自然的短正合列
+\begin{definition}\label{b4:def:tor}
+设 \(R\) 是含幺环，\(M\) 是右 \(R\) 模，\(N\) 是左 \(R\) 模。对 \(M\) 取右模投射消解 \(P_\bullet\to M\)，定义交换群
 \[
- 0\longrightarrow H_n(C)\otimes_R A
- \xrightarrow{\kappa}H_n(C\otimes_R A)
- \xrightarrow{\rho}\operatorname{Tor}_1^R(H_{n-1}(C),A)
- \longrightarrow0.
+\operatorname{Tor}_n^R(M,N)\coloneqq H_n(P_\bullet\otimes_R N),\qquad n\ge0.
 \]
-此列分裂，但一般没有关于 \(C\) 自然的分裂。
+这就是右正合函子 \(-\otimes_R N\) 的左导出函子。
+\end{definition}
+\symidx{\(\operatorname{Tor}_n^R(M,N)\)：Tor 群}
+
+零次自然同构于 \(M\otimes_R N\)。左右侧别不可交换省略；只有在交换环上，左右模有自然识别，张量交换映射才进一步给出 Tor 的对称性。一般环上下一小节所说的平衡性，是可以在两个变量中的任意一个取消解，而不是把两个变量颠倒。
+
+\subsection{平衡性}
+\label{b4:subsec:0803:02}
+
+\begin{theorem}[Tor 的平衡性]\label{b4:thm:tor-balanced}
+设 \(R\) 是含幺环，\(M\) 是幺性右 \(R\) 模，\(N\) 是幺性左 \(R\) 模。若 \(Q_\bullet\to N\) 是左 \(R\) 模投射消解，则对每个整数 \(n\ge0\)，有对两个变量自然的同构
+\[
+\operatorname{Tor}_n^R(M,N)\cong H_n(M\otimes_RQ_\bullet).
+\]
+因而可以在任意一侧取投射消解计算 Tor。
 \end{theorem}
 \begin{proof}
-令 \(Z_n=\ker \mathrm{d}_n\)、\(B_n=\operatorname{im}\mathrm{d}_{n+1}\)。由于 \(B_{n-1}\) 自由，序列 \(0\to Z_n\to C_n\to B_{n-1}\to0\) 分裂。张量后仍是短正合列，并拼成复形的短正合列，其中外侧复形的微分为零。其同调长正合列在所需位置给出
+取右模投射消解 \(P_\bullet\to M\)，令 \(D_{p,q}=P_p\otimes_RQ_q\)，\(p,q\ge0\)，以
 \[
- B_n\otimes A\longrightarrow Z_n\otimes A\longrightarrow H_n(C\otimes A)
- \longrightarrow B_{n-1}\otimes A\longrightarrow Z_{n-1}\otimes A.
+\mathrm{d}_h=\mathrm{d}_P\otimes1,\qquad \mathrm{d}_v=(-1)^p1\otimes \mathrm{d}_Q
 \]
-末箭头是包含 \(B_{n-1}\hookrightarrow Z_{n-1}\) 张量 \(A\)，这是由连接同态对提升的微分直接算出的。前一箭头的余核是 \(H_n(C)\otimes A\)；后一箭头的核由自由消解 \(0\to B_{n-1}\to Z_{n-1}\to H_{n-1}(C)\to0\) 识别为所写的 Tor 群。所有映射在选分裂之前已经定义，所以序列自然。
+为微分。它们反交换，所以总链微分平方为零。第二卷定理7.3.4证明了投射左模平坦；将同一结论用于反环，便知投射右模也平坦。固定 \(p\) 时，\(P_p\) 是投射右 \(R\) 模，因而 \(P_p\otimes_R-\) 在左模范畴上正合；竖列只在零次有同调 \(P_p\otimes_RN\)。固定 \(q\) 时，\(Q_q\) 是投射左 \(R\) 模，因而 \(-\otimes_RQ_q\) 在右模范畴上正合；横行只在零次有同调 \(M\otimes_RQ_q\)。两种正合性也都可从自由模张量是直和、投射模是自由模的直和因子直接看出。
 
-选取 \(C_n\to Z_n\) 的投影，其在张量后的圈上仍是恒等于 \(Z_n\otimes A\) 的投影，又把边界保留在 \(Z_n\otimes A\) 中。商去边界，得到 \(H_n(C\otimes A)\to H_n(C)\otimes A\) 的左逆，从而分裂。这个投影依赖补模的选择；下一小节给出无法作自然选择的例子。
+总复形向这两个边缘复形的增广映射均为拟同构，由\cref{b4:cor:double-complex-comparison}的链版本得出。每条总次数对角线只有 \(n+1\) 个可能非零项，消元过程有限，不存在无限和问题。取同调并组合两同构即得结论。比较映射与增广交换，比较选择同伦，故所得同构对两变量自然；对马蹄消解组成的图使用长正合列的自然性，亦得与连接态射相容。
 \end{proof}
 
-\begin{theorem}[上同调的万有系数定理]\label{b4:thm:uct-cohomology}
-设 \(R\) 为主理想整环，\(C\) 为自由 \(R\) 模链复形，\(A\) 为 \(R\) 模。令上链复形 \(\operatorname{Hom}_R(C,A)^n=\operatorname{Hom}_R(C_n,A)\)，微分为 \(f\mapsto f\mathrm{d}_{C,n+1}\)。则对每个整数 \(n\)，有自然的短正合列
+若 \(R\) 交换，可由 \(nr=rn\) 把左模看作右模，由 \(rx=xr\) 把右模看作左模；同样识别消解中的各项。这时交换两因子的映射才有如下张量积类型，并且满足平衡关系：
 \[
- 0\longrightarrow\operatorname{Ext}_R^1(H_{n-1}(C),A)
- \longrightarrow H^n(\operatorname{Hom}_R(C,A))
- \xrightarrow{r}\operatorname{Hom}_R(H_n(C),A)\longrightarrow0.
+\tau_{p,q}:P_p\otimes_RQ_q\longrightarrow Q_q\otimes_RP_p,
+\qquad x\otimes y\longmapsto(-1)^{pq}y\otimes x.
 \]
-此列分裂，一般不具有关于 \(C\) 自然的分裂。
+这些 \(\tau_{p,q}\) 合为保持总次数的映射 \(\tau\)。在交换后以 \(Q_q\) 为第一因子的总复形中，微分为 \(\mathrm{d}'=\mathrm{d}_Q\otimes1+(-1)^q1\otimes\mathrm{d}_P\)。对 \(x\in P_p\)、\(y\in Q_q\)，有
+\[
+\begin{aligned}
+\mathrm{d}'\tau(x\otimes y)
+&=(-1)^{pq}\mathrm{d}_Qy\otimes x
++(-1)^{pq+q}y\otimes\mathrm{d}_Px\\
+&=\tau\mathrm{d}(x\otimes y),
+\end{aligned}
+\]
+其中后一项的系数相等是因为 \((p-1)q\) 与 \(pq+q\) 相差 \(2q\)。因此 \(\tau\) 给出总复形同构，取同调并用平衡性，得到对两变量自然的同构 \(\operatorname{Tor}_n^R(M,N)\cong\operatorname{Tor}_n^R(N,M)\)。一般非交换环上，上述左右模识别与交换映射都没有这样的定义，平衡性仍只表示可在任一变量取消解。
+
+\subsection{Tor 长正合列及具体计算}
+\label{b4:subsec:0803:03}
+
+\begin{theorem}\label{b4:thm:tor-long-exact}
+设 \(R\) 是含幺环，\(M\) 是右 \(R\) 模，\(N\) 是左 \(R\) 模。右模短正合列 \(0\to M'\to M\to M''\to0\) 给出
+\[
+\begin{aligned}
+\cdots&\longrightarrow\operatorname{Tor}_1^R(M,N)
+\longrightarrow\operatorname{Tor}_1^R(M'',N)
+\longrightarrow M'\otimes_RN\\
+&\longrightarrow M\otimes_RN\longrightarrow M''\otimes_RN\longrightarrow0,
+\end{aligned}
+\]
+其中一般连接态射为 \(\operatorname{Tor}_n^R(M'',N)\to\operatorname{Tor}_{n-1}^R(M',N)\)（\(n\ge1\)）。左 \(R\) 模短正合列 \(0\to N'\to N\to N''\to0\) 同样给出连接态射 \(\operatorname{Tor}_n^R(M,N'')\to\operatorname{Tor}_{n-1}^R(M,N')\)（\(n\ge1\)）的自然长正合列。
 \end{theorem}
 \begin{proof}
-余圈 \(f:C_n\to A\) 零化 \(B_n\)，所以限制到 \(Z_n\) 后经 \(H_n(C)\) 分解；余边的限制为零，这定义了 \(r\)。由于 \(Z_n\) 在 \(C_n\) 中为直和因子，任意 \(H_n(C)\to A\) 都能先拉回 \(Z_n\) 再延拓至 \(C_n\)，故 \(r\) 满射。
-
-\(r([f])=0\) 恰好表示 \(f|_{Z_n}=0\)，因而 \(f=t \mathrm{d}_n\)，其中 \(t:B_{n-1}\to A\)。这样的 \(f\) 是余边，当且仅当 \(t\) 能延拓至 \(C_{n-1}\)。因为 \(Z_{n-1}\) 也是直和因子，这又等价于 \(t\) 能延拓至 \(Z_{n-1}\)。于是
-\[
- \ker r=\operatorname{Hom}_R(B_{n-1},A)/
- \operatorname{res}\operatorname{Hom}_R(Z_{n-1},A)
- =\operatorname{Ext}_R^1(H_{n-1}(C),A).
-\]
-这个核的识别不使用选择，故序列自然。选定投影 \(C_n\to Z_n\) 后，把 \(H_n(C)\to A\) 与该投影及 \(Z_n\to H_n(C)\) 复合，得到 \(r\) 的右逆，证明分裂。
+在第一变量取马蹄消解，逐次分裂性保证张量后仍短正合，再取同调长正合列。第二变量可用平衡性改在该侧取马蹄消解，或固定右侧投射消解并用各 \(P_n\) 平坦。两种构造由\cref{b4:thm:tor-balanced}相容。
 \end{proof}
 
-上述 Hom 计算与\cref{b4:def:hom-complex}的内部 Hom 仅差每度的符号重标识，所得上同调相同。两个版本可与 Weibel\cite[Universal Coefficient Theorem for Homology 3.6.2, Universal Coefficient Theorem for Cohomology 3.6.5]{Weibel1994HomologicalAlgebra}对照；该书把同调版本先写在自由交换群上，本节使用同一证明得到主理想整环版本。
-
-\subsection{自然短正合列与非典范分裂}
-\label{b4:subsec:0903:02}
-
-“自然短正合列”是指链映射 \(C\to C'\) 及系数同态 \(A\to A'\) 诱导整个正合列的交换图；它不意味着左右两项在中间项中都已选定。自然的是第一项的像及第二项的商，而直接把中间项写成直和还要作额外选择。
-
-\begin{example}\label{b4:exm:uct-no-natural-splitting}
-在 \(\mathbb Z\) 上取 \(C_1=\mathbb Za\oplus\mathbb Zb\)、\(C_0=\mathbb Zc\)，\(\mathrm{d}(a)=2c\)、\(\mathrm{d}(b)=0\)，其余项为零。取系数 \(A=\mathbb F_2\)。链自同构
+\begin{example}\label{b4:exm:tor-cyclic}
+若 \(R\) 是主理想整环，\(a\ne0\)，\(N\) 是 \(R\) 模，则两项消解给出
 \[
- f_1(a)=a+b,\quad f_1(b)=b,\quad f_0(c)=c
+\operatorname{Tor}_0^R(R/(a),N)=N/aN,
+\qquad \operatorname{Tor}_1^R(R/(a),N)=\{\,n\in N\mid an=0\,\},
 \]
-在 \(H_1(C)=\mathbb Zb\) 及 \(H_0(C)=\mathbb Z/2\) 上都诱导恒等映射，而在
-\(H_1(C\otimes A)=A\bar a\oplus A\bar b\) 上是非平凡剪切。同调万有系数列左项是 \(A\bar b\)，商由 \(\bar a\) 表示。任何商的截面都把 \(1\) 送到 \(\bar a+\lambda\bar b\)，但 \(f\) 把它改成 \(\bar a+(\lambda+1)\bar b\)。所以没有与全部链映射相容的截面。
-
-\ProseParagraphBreak
-上同调版本也由同一例子说明。在 \(H^1(\operatorname{Hom}(C,A))\) 中，左端 Ext 项由 \(a^*\) 生成，右端 Hom 项由 \(b^*\) 表示。\(f^*(a^*)=a^*\)、\(f^*(b^*)=a^*+b^*\)，再一次排除了自然截面。
+且高次为零。对 \(R=\mathbb Z\)、\(N=\mathbb Z/n\)、\(a=m>0\)，一次 Tor 同构于 \(\mathbb Z/\gcd(m,n)\mathbb Z\)。这一次它来自乘 \(m\) 的核，而 Ext 的一次项来自余核；虽然有限循环群算例给出同构的群，两项没有因此成为同一构造。
 \end{example}
 
-如果 \(A\) 平坦，同调公式的 Tor 项消失，\(\kappa\) 就是自然同构；如果 \(H_{n-1}(C)\) 自由，两个版本的附加项都消失。这两种简化来自明确的消失条件，不需要选择分裂。
-
-\subsection{系数变换的计算}
-\label{b4:subsec:0903:03}
-
-设 \(C\) 是有限秩自由整数链复形。若已由 Smith 标准形\footnote{史密斯（Henry John Stephen Smith，1826-1883），爱尔兰数学家，研究二次型、初等因子与数论。}算得
+令 \(R=k[x,y]\)、\(k=R/(x,y)\)。将\cref{b4:prop:koszul-resolution}中的两变量消解与 \(k\) 张量，所有微分为零，于是
 \[
- H_n(C)\simeq\mathbb Z^{r_n}\oplus\bigoplus_j\mathbb Z/d_{n,j},
- \qquad d_{n,j}>1,
+\operatorname{Tor}_0^R(k,k)\cong k,\qquad
+\operatorname{Tor}_1^R(k,k)\cong k^2,\qquad
+\operatorname{Tor}_2^R(k,k)\cong k,
 \]
-则改变系数不必重新化简整个张量复形。对 \(A=\mathbb Z/m\)，令 \(g_{n,j}=\gcd(d_{n,j},m)\)。长度一的循环模消解给出
-\[
- (\mathbb Z/d)\otimes\mathbb Z/m\simeq\mathbb Z/\gcd(d,m),\qquad
- \operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/d,\mathbb Z/m)
- \simeq\mathbb Z/\gcd(d,m).
-\]
-因此同调的同构类型是
-\[
- H_n(C\otimes\mathbb Z/m)\simeq
- (\mathbb Z/m)^{r_n}\oplus\bigoplus_j\mathbb Z/g_{n,j}
- \oplus\bigoplus_j\mathbb Z/g_{n-1,j}.
-\]
-这个式子确定模的同构类型，并未指定内部直和因子。
-
-\begin{example}\label{b4:exm:uct-integer-computation}
-取 \(C_2=\mathbb Z\)、\(C_1=\mathbb Z^2\)、\(C_0=\mathbb Z\)，
-\[
- \mathrm{d}_2(t)=(0,6t),\qquad \mathrm{d}_1(x,y)=4x.
-\]
-有 \(H_2(C)=0\)、\(H_1(C)=\mathbb Z/6\)、\(H_0(C)=\mathbb Z/4\)。取 \(A=\mathbb Z/2\)，两个微分都变成零，故新的同调依次为 \(A,A^2,A\)（次数 \(2,1,0\)）。在次数 \(1\)，其中一份 \(A\) 来自 \(H_1(C)\otimes A\)，另一份来自 \(\operatorname{Tor}_1(H_0(C),A)\)；次数 \(2\) 完全来自 \(\operatorname{Tor}_1(H_1(C),A)\)。
-
-\ProseParagraphBreak
-取上同调的整数系数，则 \(H^0(\operatorname{Hom}(C,\mathbb Z))=0\)、\(H^1=\mathbb Z/4\)、\(H^2=\mathbb Z/6\)。这些群都来自相邻次数的 Ext 项；直接对两个微分作转置也得到同样结果。因而“对偶以后只需对同调取 Hom”会漏去本例全部的非零上同调。
-\end{example}
+更高次为零。Tor 不仅看到商模的生成元，也看到生成关系之间的关系。

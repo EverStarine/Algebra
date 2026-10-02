@@ -1,91 +1,143 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 13.2 逆极限的左正合性
-% 纲要位置：计划纲要.md，第 2805 行。
+% 纲要标题：### 13.2 低阶 Hochschild 同调、上同调与形变
+% 纲要标签：b4:sec:1202
+% 纲要位置：计划纲要.md，第 2777 行。
 
-\section{逆极限的左正合性}
-\label{b4:sec:1302}
+\section{低阶 Hochschild 同调、上同调与形变}
+\label{b4:sec:1202}
 
-逆极限中的满射要求为一个元素选择整族相容原像，各层分别满射仍可能做不到。可数逆向塔的例子将这个障碍与图表范畴中的内射方法联系起来。
+零次与一次 Hochschild 群记录中心、交换子商及导子；二次群则记录乘法的一阶改变。把结合律展开到一次项，才能确定这些形变何时等价。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 不保持满射的具体系统
-% * 相容条件的障碍
-% * 逆系统范畴中的内射方法
+% * 中心、导子与内导子
+% * 一阶乘法形变
+% * HH^2 的分类意义及等价关系
 %
 
-\subsection{逆极限不保持满射的例子}
-\label{b4:subsec:1302:01}
+\subsection{中心、导子与内导子}
+\label{b4:subsec:1202:01}
 
-本章的\term[keshu-nixiangta]{可数逆向塔}[countable inverse tower]采用指标 \(n=0,1,\ldots\)，写为
+\begin{proposition}\label{b4:prop:hochschild-low-degrees}
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(M\) 为 \(A\) 双模。令 \([A,M]\) 为所有 \(am-ma\)、\(a\in A\)、\(m\in M\) 的 \(k\) 线性张成空间，则
 \[
-M_0\xleftarrow{u_0}M_1\xleftarrow{u_1}M_2\xleftarrow{}\cdots.
+\operatorname{HH}_0(A,M)=M/[A,M],\qquad
+\operatorname{HH}^0(A,M)=\{\,m\in M\mid am=ma\text{ 对所有 }a\in A\,\}.
 \]
-塔态射与所有过渡映射交换，短正合列逐层判断；这是\cref{b4:prop:module-functor-abelian}给出的交换范畴。逆极限为相容元组组成的子模
+此外，令 \(\operatorname{Der}_k(A,M)\) 为满足
+\(D(ab)=aD(b)+D(a)b\) 的 \(k\) 线性映射组成的空间，令
+\(\operatorname{Inn}_k(A,M)\) 为形如 \(a\mapsto am-ma\) 的映射组成的子空间，则
 \[
-\varprojlim M_n=\{\,(x_n)\in\prod_{n\ge0}M_n:x_n=u_nx_{n+1}\text{ 对所有 }n\,\}.
+\operatorname{HH}^1(A,M)
+=\operatorname{Der}_k(A,M)/\operatorname{Inn}_k(A,M).
 \]
-\cref{b4:thm:finite-limits-exactness}或直接逐坐标检验说明逆极限左正合。
+这里的映射分别称为\term[daozi]{导子}[derivation]和\term[neidaozi]{内导子}[inner derivation]。
+\end{proposition}
+\begin{proof}
+零次同调由 \(b(m\otimes a)=ma-am\) 得到；零次上同调是 \(\delta m:a\mapsto am-ma\) 的核。由\eqref{b4:eq:hochschild-coboundary}，\(\delta D=0\) 等价于导子恒等式，而一次边界正是内导子。将这两个空间取商即得最后一个等式。
+\end{proof}
+
+取 \(M=A\)，零次上同调就是中心 \(Z(A)\)。注意 \([A,A]\) 在同调公式中只是交换子的线性张成，通常不是理想，因此 \(\operatorname{HH}_0(A)\) 首先是向量空间商，不能径直把它当作交换化代数。
+
+\begin{example}\label{b4:exm:polynomial-derivations}
+设 \(A=k[x]\)，系数双模为 \(A\) 本身。任一导子由 \(D(x)=f(x)\) 唯一决定：Leibniz 公式归纳给出 \(D(x^r)=rx^{r-1}f(x)\)，故 \(D=f(x)\,\mathrm{d}/\mathrm{d}x\)。反过来，该公式定义导子。因 \(A\) 交换，内导子全为零，故 \(\operatorname{HH}^1(A)=A\,\mathrm{d}/\mathrm{d}x\)。此结论在任意特征成立；正特征下 \(D(x^p)=0\) 并不意味着 \(D=0\)。
+\end{example}
+
+一次同调在交换情形也有熟悉的解释。对交换 \(k\) 代数 \(A\)，用符号 \(\mathrm{d}a\) 生成 \(A\) 模，并施加 \(k\) 线性关系及
+\(\mathrm{d}(ab)=a\,\mathrm{d}b+b\,\mathrm{d}a\)，所得模记为 \(\Omega_{A/k}\)，称为 \term[kahler-weifen-mo]{Kähler 微分模}[module of Kähler differentials]。这一定义直接使 \(k\) 导子 \(A\to N\) 与 \(A\) 线性映射 \(\Omega_{A/k}\to N\) 一一对应。
+
+\begin{proposition}\label{b4:prop:hh1-differentials}
+设 \(k\) 为域，\(A\) 为交换含幺 \(k\) 代数。映射 \(a\otimes b\mapsto a\,\mathrm{d}b\) 诱导自然同构
+\(\operatorname{HH}_1(A)\cong\Omega_{A/k}\)。
+\end{proposition}
+\begin{proof}
+交换性使一次微分为零。二次边界是
+\(ab\otimes c-a\otimes bc+ca\otimes b\)，其像因 Leibniz 关系为零。反向映射把 \(\mathrm{d}b\) 送到 \([1\otimes b]\)，并按 \(A\) 线性延拓。\([1\otimes1]=0\) 来自 \(b(1\otimes1\otimes1)=1\otimes1\)，所以它零化常数；二次边界恰好给出 Leibniz 关系。两映射在生成元上互逆。
+\end{proof}
+
+\subsection{一阶乘法形变}
+\label{b4:subsec:1202:02}
+
+保留一个向量空间，只允许乘法发生很小的变化，最简单的做法是引入满足 \(t^2=0\) 的参数。参数二次项全部消失以后，结合律成为关于未知映射的线性方程。
+
+\begin{definition}\label{b4:def:first-order-deformation}
+设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数，\(D=k[t]/(t^2)\)。在自由 \(D\) 模 \(A\otimes_kD\) 上给定 \(D\) 双线性乘法 \(*\)。若此乘法结合、单位是原来的 \(1\)，且模 \(t\) 还原为 \(A\) 的原乘法，则称 \(*\) 为 \(A\) 的一个\term[yijie-xingbian]{一阶形变}[first-order deformation]。这里始终固定底层模及其模 \(t\) 与 \(A\) 的识别。
+\end{definition}
+
+\(D\) 双线性与还原条件说明乘法唯一写成
+\[
+a*b=ab+t\cdot\phi(a,b),\qquad \phi\in C^2(A,A).
+\]
+一般元素的乘积随之为
+\((a+tu)*(b+tv)=ab+t(av+ub+\phi(a,b))\)。这不是另添的选择，而是由双线性强制得到的公式。
+
+\begin{proposition}\label{b4:prop:first-order-cocycles}
+设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数，\(\phi:A\otimes_kA\to A\) 为 \(k\) 线性映射。在 \(A\otimes_k k[t]/(t^2)\) 上以双线性延拓定义乘法 \(a*b=ab+t\cdot\phi(a,b)\)。它给出单位保持为 \(1\) 的一阶形变，当且仅当
+\[
+\delta\phi=0,\qquad \phi(1,a)=\phi(a,1)=0\quad(a\in A).
+\]
+后两个条件称为 \(\phi\) 的归一化条件。
+\end{proposition}
+\begin{proof}
+比较 \((a*b)*c\) 和 \(a*(b*c)\) 的一次系数，得到
+\[
+\phi(ab,c)+\phi(a,b)\cdot c=a\cdot\phi(b,c)+\phi(a,bc),
+\]
+正是 \(\delta\phi=0\)。常数项因原乘法结合而相等，更高项因 \(t^2=0\) 消失。单位条件则等价于 \(1*a=a*1=a\)，即所列两个等式。
+\end{proof}
+
+上述形变允许新的乘法不交换，即使 \(A\) 原本交换。若还要求形变交换，就必须再加 \(\phi(a,b)=\phi(b,a)\)；不能把所有 Hochschild 二次类都解释为交换代数的形变。
+
+\subsection{\texorpdfstring{\(\operatorname{HH}^2\) 与形变的分类}{HH2 与形变的分类}}
+\label{b4:subsec:1202:03}
+
+一个看起来非零的一次改动，有时只是把原来的元素换了一套坐标。因而分类之前必须说清允许怎样更换坐标。
+
+\begin{definition}\label{b4:def:deformation-equivalence}
+设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数，\(D=k[t]/(t^2)\)，\(*_\phi,*_\psi\) 是 \(A\) 的一阶形变。若存在保持单位的 \(D\) 线性代数同构
+\[
+T:(A\otimes_kD,*_\phi)\longrightarrow(A\otimes_kD,*_\psi),
+\qquad T\bmod t=1_A,
+\]
+则称两个形变等价。这样的映射唯一写成 \(T=1+t h\)，其中 \(h:A\to A\) 为 \(k\) 线性映射且 \(h(1)=0\)；其逆为 \(1-th\)。
+\end{definition}
+
+\begin{theorem}\label{b4:thm:hh2-deformation-classification}
+设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数。保持单位的一阶形变在\cref{b4:def:deformation-equivalence}的等价关系下，与 \(\operatorname{HH}^2(A)\) 典范一一对应。零类对应原乘法的平凡形变。
+\end{theorem}
+\begin{proof}
+展开 \(T(a*_\phi b)=T(a)*_\psi T(b)\)，一次系数满足
+\[
+\phi(a,b)+h(ab)=\psi(a,b)+a\cdot h(b)+h(a)\cdot b.
+\]
+故等价恰好要求 \(\phi-\psi=\delta h\)，并且 \(h(1)=0\)。
+
+还需证明归一化并未丢失二次上同调类。给定任意\(2\)-余圈 \(\phi\)，在 \(\delta\phi=0\) 中先后代入 \((1,a,b)\)、\((a,1,b)\)，得
+\[
+\phi(1,a)=ca,\qquad \phi(a,1)=ac,\qquad c=\phi(1,1).
+\]
+因 \(k\) 是域且 \(1\ne0\)，可选线性映射 \(h:A\to A\) 使 \(h(1)=c\)。于是 \(\phi-\delta h\) 归一化，并代表同一上同调类。若两个归一化余圈之差为 \(\delta h\)，在 \((1,1)\) 上求值便得 \(h(1)=0\)，恰好符合允许的坐标变换。因而余圈、上同调类和形变等价类之间的对应既满又单。
+\end{proof}
+
+这一定理分类的是带固定还原识别的形变。若允许 \(T\bmod t\) 是 \(A\) 的任意自同构，还要进一步考虑 \(\operatorname{Aut}_k(A)\) 对 \(\operatorname{HH}^2(A)\) 的作用。
 
 \ProseParagraphBreak
-\cref{b4:exm:inverse-limit-not-exact}已用整数的相容剩余类说明逆极限不保持满射。这里将它写成可用于导出计算的形式。固定素数 \(p\)，取
+更一般的系数双模也有二次上同调的解释。设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数，\(M\) 为指定的 \(A\) 双模。考虑含幺 \(k\) 代数的平方零扩张
 \[
-0\to p^{n+1}\mathbb Z\to\mathbb Z\to\mathbb Z/p^{n+1}\to0.
+0\longrightarrow M\xrightarrow{i}E\xrightarrow{q}A\longrightarrow0,
+\qquad i(M)^2=0,
 \]
-三座塔的过渡映射分别是包含、恒等和约化。极限为
+其中固定核、商与 \(M,A\) 的识别，并要求 \(E\) 的乘法在核上诱导指定的双模作用：若 \(q(e)=a\)，则 \(e\,i(m)=i(am)\)、\(i(m)e=i(ma)\)。平方零条件使这些作用与提升 \(e\) 的选择无关。两个扩张等价，是指存在保持这两端识别的代数同构。
+
+\ProseParagraphBreak
+因 \(k\) 是域，\(q\) 有满足 \(s(1)=1\) 的 \(k\) 线性截面 \(s:A\to E\)。用 \(s(a)+i(m)\) 把底层向量空间识别为 \(A\oplus M\)，乘法成为
 \[
-0\longrightarrow0\longrightarrow\mathbb Z\longrightarrow\mathbb Z_p,
-\qquad \mathbb Z_p=\varprojlim_n\mathbb Z/p^{n+1}.
+(a,m)(b,n)=(ab,\,an+mb+\phi(a,b)),
+\qquad i(\phi(a,b))=s(a)s(b)-s(ab).
 \]
-取 \(1-p^2\) 在每个商环中的逆元，得到相容元组；若它来自整数 \(a\)，则 \((1-p^2)a-1\) 被所有 \(p^{n+1}\) 整除，只能为零，但 \((1-p^2)a=1\) 在整数中无解。故末箭头不是满射。下一节将把其余核 \(\mathbb Z_p/\mathbb Z\) 识别为一个一次导出极限。
+结合律恰好给出 \(\delta\phi=0\)，单位条件给出 \(\phi(1,a)=\phi(a,1)=0\)。反过来，每个这样的归一化 \(2\)-余圈都用此公式给出一个扩张。将截面改成 \(s+i\circ h\)，其中 \(h(1)=0\)，便把 \(\phi\) 改成 \(\phi+\delta h\)。与形变分类证明相同的归一化计算适用于系数 \(M\)，故这些扩张的等价类与 \(\operatorname{HH}^2(A,M)\) 典范一一对应。零类对应分裂扩张 \(A\oplus M\)。这个一般系数版本亦见 Weibel\cite[Classification Theorem 9.3.1]{Weibel1994HomologicalAlgebra}。
 
-\subsection{相容条件的障碍}
-\label{b4:subsec:1302:02}
-
-对塔短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{v}C\to0\)，取相容元组 \(c=(c_n)\in\varprojlim C_n\)。每个 \(c_n\) 都能提升到 \(b_n\in B_n\)，但这批提升不一定相容。因为 \(c_n-u_n^Cc_{n+1}=0\)，存在唯一 \(a_n\in A_n\) 使
-\[
-i_n(a_n)=b_n-u_n^Bb_{n+1}.
-\]
-若把提升改成 \(b_n+i_n(x_n)\)，则 \(a_n\) 改成 \(a_n+x_n-u_n^Ax_{n+1}\)。因此真正的障碍不是某个单独的 \(a_n\)，而是整族 \((a_n)\) 在“相容性差值”模中的余类。
-
-\begin{proposition}\label{b4:prop:compatible-lift-obstruction}
-设 \(R\) 为环，\(0\to A\xrightarrow{i}B\xrightarrow{v}C\to0\) 是左 \(R\)-模可数逆向塔的短正合列，三座塔的过渡映射分别记为 \(u_n^A,u_n^B,u_n^C\)。定义
-\[
-\Delta_A:\prod_nA_n\longrightarrow\prod_nA_n,
-\qquad (x_n)\longmapsto(x_n-u_n^Ax_{n+1}).
-\]
-对 \(c=(c_n)\in\varprojlim C_n\)，逐层选取 \(v_n(b_n)=c_n\)，并以 \(i_n(a_n)=b_n-u_n^Bb_{n+1}\) 定义 \(a_n\)。公式 \(\partial(c)=[(a_n)]\) 给出自然同态
-\(\partial:\varprojlim C_n\to\operatorname{coker}\Delta_A\)。它的核恰为 \(\varprojlim B_n\to\varprojlim C_n\) 的像。
-\end{proposition}
-\begin{proof}
-改变提升所产生的差属于 \(\operatorname{im}\Delta_A\)，故余类与选择无关。两族提升相加仍为和的提升，标量相乘同理，所以得到模同态。若 \((a_n)=\Delta_A(x_n)\)，则 \(b_n-i_n(x_n)\) 已经相容，给出极限中的提升；反过来，若相容提升存在，与最初提升的差提供这样的 \((x_n)\)。对塔短正合列之间的态射，先提升再映过去是一种允许的提升，由选择无关性便得到自然性。
-\end{proof}
-
-这个描述也说明为什么需要对整座塔取导出函子。只在每一层作一次核与余核，尚未处理无限多个相容性等式。
-
-\subsection{逆系统范畴中的内射方法}
-\label{b4:subsec:1302:03}
-
-为定义导出极限，必须先知道图表范畴有足够多内射对象。逐层嵌入内射模还不够：嵌入之间需要与图表箭头相容。下面的伴随构造同时解决这两件事。
-
-\begin{proposition}\label{b4:prop:diagram-enough-injectives}
-设 \(R\) 为环，\(\mathcal I\) 为小范畴。左 \(R\)-模值图表范畴 \([\mathcal I,R\text{-}\mathbf{Mod}]\) 有足够多内射对象。对可数逆向塔，可以把任意塔单射地映入一个逐层过渡映射均为满射的内射塔。
-\end{proposition}
-\begin{proof}
-固定 \(j\in\mathcal I\)。求值函子 \(X\mapsto X_j\) 正合，其右伴随把模 \(E\) 送到图表
-\[
-(J_jE)_i=\prod_{\alpha:i\to j}E.
-\]
-箭头 \(\beta:i\to i'\) 把坐标族送到以 \(\alpha':i'\to j\) 为指标的族，其值取原族的 \(\alpha'\beta\) 坐标。这个公式保持恒等与复合。伴随同构是
-\[
-\operatorname{Hom}(X,J_jE)\simeq\operatorname{Hom}_R(X_j,E).
-\]
-正向映射在 \(j\) 处取 \(1_j\) 坐标；反向把 \(f:X_j\to E\) 送到坐标 \(fX(\alpha)\)。自然性证明二者互逆。求值正合，所以\cref{b4:prop:right-adjoint-injectives}使 \(J_jE\) 在 \(E\) 内射时内射。
-
-为每个 \(j\) 选内射嵌入 \(X_j\to E_j\)。伴随给出
-\(X\to\prod_jJ_jE_j\)，它在对象 \(i\) 的 \(j=i,\alpha=1_i\) 坐标是原嵌入，所以逐对象单射。内射对象的积仍内射：给定单态射后的延拓问题，逐坐标利用内射性选择延拓，再合并成积中的态射。这证明足够多内射对象的存在。
-
-对于塔，\((J_jE)_n\) 在 \(n\ge j\) 时是 \(E\)，在 \(n<j\) 时是零；前一范围内的箭头为恒等。因此所构造内射塔的第 \(n\) 层为 \(\prod_{j=0}^nE_j\)，过渡映射是删除最后一个坐标的投影，确实满射。
-\end{proof}
-
-右伴随保持内射的判据来自上一编，而不是待证明的逆极限理论。这使导出极限的定义具有独立的消解基础。
+\begin{example}\label{b4:exm:dual-numbers-first-deformation}
+设 \(\operatorname{char}k\ne2\)，\(A=k[x]/(x^2)\)。归一化二次上链只需指定 \(\phi(x,x)=u+vx\)，且它自动为余圈：唯一需检验的三元组是 \((x,x,x)\)，在此 \(\delta\phi=x\cdot\phi(x,x)-\phi(x,x)\cdot x=0\)。归一化一上链满足 \(h(1)=0\)，而
+\(\delta h(x,x)=2x\cdot h(x)\) 遍历 \(kx\)。所以 \(\operatorname{HH}^2(A)\cong k\)，可由 \(\phi(x,x)=1\) 代表。对应乘法为 \(x*x=t\)，即 \(D[x]/(x^2-t)\)，其 \(D\) 基仍为 \(1,x\)。
+\end{example}

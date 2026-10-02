@@ -1,92 +1,134 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 9.2 张量与同调
-% 纲要位置：计划纲要.md，第 2691 行。
+% 纲要标题：### 9.2 Ext
+% 纲要标签：b4:sec:0802
+% 纲要位置：计划纲要.md，第 2656 行。
 
-\section{张量与同调}
-\label{b4:sec:0902}
+\section{Ext}
+\label{b4:sec:0802}
 
-两个复形逐项张量以后，微分的符号决定混合项能否相消。平坦性和有界性又决定替换某个复形时是否保留同调，二者承担不同的作用。
+Hom 的两个变量具有相反的箭头方向，分别用投射或内射消解得到的计算必须比较。平衡性使两种模型计算同一组 Ext，并保留两变量的连接态射。
 
-% 纲要内容：
+
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 张量复形的微分
-% * 平坦性和有界性的作用
-% * 何时可把同调移过张量积
+% * Hom 的右导出函子
+% * 反变与协变变量
+% * Ext 长正合列及具体计算
 %
 
-\subsection{张量复形的微分}
-\label{b4:subsec:0902:01}
+\subsection{Hom 的右导出函子}
+\label{b4:subsec:0802:01}
 
-本节及后两节用链下标书写同调公式：\(C_n=C^{-n}\)，微分为 \(\mathrm{d}:C_n\to C_{n-1}\)。这只是第五章上链约定的重新编号。对张量积，\((-1)^{-n}=(-1)^n\)，所以符号规则保持不变。
+\begin{definition}\label{b4:def:ext}
+设 \(R\) 是含幺环，\(M,N\) 是左 \(R\) 模。对 \(N\) 取内射消解 \(N\to I^\bullet\)，定义交换群
+\[
+\operatorname{Ext}_R^n(M,N)\coloneqq
+H^n\bigl(\operatorname{Hom}_R(M,I^\bullet)\bigr),\qquad n\ge0.
+\]
+这就是左正合函子 \(\operatorname{Hom}_R(M,-)\) 的右导出函子。
+\end{definition}
+\symidx{\(\operatorname{Ext}_R^n(M,N)\)：Ext 群}
+
+零次是 \(\operatorname{Hom}_R(M,N)\)。在一般非交换环上，Ext 首先是交换群，不自动是左 \(R\) 模；若 \(R\) 交换，标量乘法与所有微分相容，便得到自然的 \(R\) 模结构。下标的环也不能略去，例如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z/2)\) 与 \(\operatorname{Ext}_{\mathbb F_2}^1(\mathbb F_2,\mathbb F_2)\) 不同。
 
 \ProseParagraphBreak
-对于右 \(R\)-模链复形 \(C\) 与左 \(R\)-模链复形 \(D\)，\cref{b4:def:tensor-complex}的张量复形在次数 \(n\) 为
-\[
- (C\otimes_R D)_n=\bigoplus_{p+q=n}C_p\otimes_R D_q,
- \qquad \mathrm{d}(c\otimes e)=\mathrm{d}_Cc\otimes e+(-1)^pc\otimes \mathrm{d}_De.
-\]
-这里一般只得到交换群复形；若 \(R\) 交换，才有自然的 \(R\)-模结构。\cref{b4:def:tensor-complex}已经核验两个混合项相消，因此 \(\mathrm{d}^2=0\)。直和意味着一个元素只涉及有限多个 \((p,q)\)，不能无说明改成乘积。
+固定 \(N\) 时，\(\operatorname{Hom}_R(-,N)\) 是从左模反范畴到交换群的左正合函子。左模的投射对象正是反范畴的内射对象，所以投射消解也能给出一套右导出函子。两套计算是否一致，需要证明，不能由名字相同得出。
 
-\begin{proposition}\label{b4:prop:tensor-homology-map}
-设 \(R\) 为含幺环，\(C\) 为幺性右 \(R\) 模链复形，\(D\) 为幺性左 \(R\) 模链复形。对每个整数 \(n\)，圈的张量积诱导自然同态
+\subsection{反变与协变变量}
+\label{b4:subsec:0802:02}
+
+为了方便表示上同调类，以下把投射消解 \(P_\bullet\to M\) 送入 Hom 时，采用无符号的微分 \(\delta(f)=f\mathrm{d}_P\)。这与\cref{b4:def:hom-complex}的约定可以相互转换：若把 \(P_n\) 放在上链次数 \(-n\)，把 \(N\) 放在零次，则内部 Hom 的微分是 \(\delta_{\mathrm{Hom}}(f)=(-1)^{n+1}f\mathrm{d}_P\)；在次数 \(n\) 乘 \((-1)^{n(n+1)/2}\)，便得到从内部 Hom 复形到这里的无符号复形的同构。本节以后均采用后一种计算约定。
+
+\begin{theorem}[Ext 的平衡性]\label{b4:thm:ext-balanced}
+设 \(R\) 是含幺环，\(M,N\) 是幺性左 \(R\) 模，\(P_\bullet\to M\) 为投射消解，\(N\to I^\bullet\) 为内射消解。对整数 \(n\ge0\) 取
 \[
- \kappa_n:\bigoplus_{p+q=n}H_p(C)\otimes_R H_q(D)
- \longrightarrow H_n(C\otimes_R D),\qquad
- [c]\otimes[e]\longmapsto[c\otimes e].
+\operatorname{Hom}_R(P_\bullet,N)^n=\operatorname{Hom}_R(P_n,N),
+\qquad \delta^n(f)=f\,\mathrm{d}_{P,n+1}.
 \]
-\end{proposition}
+则有自然同构
+\[
+H^n\bigl(\operatorname{Hom}_R(P_\bullet,N)\bigr)
+\cong\operatorname{Ext}_R^n(M,N).
+\]
+它对 \(M\) 反变，对 \(N\) 协变，并与两变量的连接态射相容。
+\end{theorem}
 \begin{proof}
-若 \(c,e\) 都是圈，则微分公式说明 \(c\otimes e\) 是圈。把 \(c\) 换成 \(c+\mathrm{d}_Cu\)，差为 \(\mathrm{d}(u\otimes e)\)；把 \(e\) 换成 \(e+\mathrm{d}_Dv\)，差为 \((-1)^p \mathrm{d}(c\otimes v)\)。所以对同调类良定义。双加性和 \(R\)-平衡性来自张量积，故诱导所写同态。链映射保持这些代表元公式，给出自然性。
+令 \(D^{p,q}=\operatorname{Hom}_R(P_p,I^q)\)，其中 \(p,q\ge0\)，定义
+\[
+\mathrm{d}_h(f)=f \mathrm{d}_P,\qquad \mathrm{d}_v(f)=(-1)^p \mathrm{d}_I f.
+\]
+两次水平或竖直微分为零；一水平一竖直的两种复合相差一个负号，故 \(\mathrm{d}_h \mathrm{d}_v+\mathrm{d}_v\mathrm{d}_h=0\)。总次数为 \(p+q\)，每条对角线有限，因而总复形只用有限直和。
+
+固定 \(p\)，\(P_p\) 的投射性使 \(\operatorname{Hom}_R(P_p,-)\) 正合，所以竖列只在 \(q=0\) 有上同调 \(\operatorname{Hom}_R(P_p,N)\)。固定 \(q\)，\(I^q\) 的内射性使 \(\operatorname{Hom}_R(-,I^q)\) 正合，所以横行只在 \(p=0\) 有上同调 \(\operatorname{Hom}_R(M,I^q)\)。增广分别给出两条复形映射
+\[
+\operatorname{Hom}_R(P_\bullet,N)\longrightarrow\operatorname{Tot}D,
+\qquad
+\operatorname{Hom}_R(M,I^\bullet)\longrightarrow\operatorname{Tot}D.
+\]
+在第一条的 \(q=0\) 边，竖直微分为零；在第二条的 \(p=0\) 边，水平微分为零。因此它们确实与总微分相容。\cref{b4:cor:double-complex-comparison}分别沿竖列和横行说明这两条映射都是拟同构。该结果通过逐个消去有限对角线上的分量证明。
+
+投射、内射比较映射使上述两条映射对 \(M,N\) 自然；不同选择同伦，故同调态射确定。连接态射的相容性分别在两个变量中核对。给定第一变量的短正合列 \(0\to A\to B\to C\to0\)，取投射马蹄消解
+\[
+0\longrightarrow P_{A,\bullet}\longrightarrow P_{B,\bullet}
+\longrightarrow P_{C,\bullet}\longrightarrow0,
+\]
+它在每个次数分裂。固定 \(N\) 的内射消解，对 \(X=A,B,C\) 令 \(T_X=\operatorname{Tot}\operatorname{Hom}_R(P_{X,\bullet},I^\bullet)\)。Hom 的第一变量反变，因此得到的短正合列方向是
+\[
+0\longrightarrow T_C\longrightarrow T_B\longrightarrow T_A\longrightarrow0.
+\]
+两侧边缘复形也分别组成 \(C,B,A\) 顺序的短正合列：投射计算一侧用马蹄消解的逐次分裂性，内射计算一侧用各 \(I^q\) 的内射性。边缘到总复形的增广映射给出短正合列之间的交换图。由\cref{b4:thm:cohomology-long-exact}的自然性，两种计算中的连接态射
+\[
+\operatorname{Ext}_R^n(A,N)\longrightarrow\operatorname{Ext}_R^{n+1}(C,N)
+\]
+在平衡同构下相互对应。
+
+给定第二变量的短正合列 \(0\to N'\to N\to N''\to0\)，取逐次分裂的内射马蹄消解 \(0\to I_{N'}^\bullet\to I_N^\bullet\to I_{N''}^\bullet\to0\)。固定 \(M\) 的投射消解，令 \(T_V=\operatorname{Tot}\operatorname{Hom}_R(P_\bullet,I_V^\bullet)\)，其中 \(V=N',N,N''\)。这次 Hom 保持箭头方向，得到
+\[
+0\longrightarrow T_{N'}\longrightarrow T_N\longrightarrow T_{N''}\longrightarrow0.
+\]
+投射计算一侧的边缘短正合列使用各 \(P_p\) 的投射性，内射计算一侧则使用马蹄消解的逐次分裂性。增广仍给出短正合列之间的交换图，故连接态射
+\[
+\operatorname{Ext}_R^n(M,N'')\longrightarrow\operatorname{Ext}_R^{n+1}(M,N')
+\]
+也与平衡同构相容。
 \end{proof}
 
-这个映射始终存在，但不总是同构。即使两个复形都逐项自由，同调中也可能产生一个由 Tor 描述的新部分；\secref{b4:sec:0904}将准确计算这一部分。
+给定 \(u:M'\to M\)，其投射消解提升经预合成给出 \(u^*:\operatorname{Ext}_R^n(M,N)\to\operatorname{Ext}_R^n(M',N)\)；给定 \(v:N\to N'\)，后合成给出 \(v_*\)。预合成与后合成交换，所以 Ext 是两个变量的函子，而非仅对每个固定模分别定义的一组交换群。
 
-\subsection{平坦性与有界性}
-\label{b4:subsec:0902:02}
+\subsection{Ext 长正合列及具体计算}
+\label{b4:subsec:0802:03}
 
-\begin{proposition}\label{b4:prop:bounded-flat-tensor}
-设 \(R\) 为含幺环，\(C\) 是由平坦右 \(R\) 模组成的链复形，\(D,E\) 是左 \(R\) 模链复形。假设存在整数 \(a,b\)，使 \(p<a\) 时 \(C_p=0\)，\(q<b\) 时 \(D_q=E_q=0\)。若 \(f:D\to E\) 是拟同构，则
-\(1_C\otimes f:C\otimes_R D\to C\otimes_R E\) 是拟同构。
-\end{proposition}
+\begin{theorem}\label{b4:thm:ext-long-exact}
+设 \(R\) 是含幺环。左 \(R\) 模短正合列 \(0\to A\to B\to C\to0\) 对任意左模 \(N\) 给出自然长正合列
+\[
+\begin{aligned}
+0&\longrightarrow\operatorname{Hom}_R(C,N)\longrightarrow\operatorname{Hom}_R(B,N)
+\longrightarrow\operatorname{Hom}_R(A,N)\\
+&\longrightarrow\operatorname{Ext}_R^1(C,N)\longrightarrow\operatorname{Ext}_R^1(B,N)
+\longrightarrow\operatorname{Ext}_R^1(A,N)\longrightarrow\cdots.
+\end{aligned}
+\]
+对任意左模 \(M\)，左模短正合列 \(0\to N'\to N\to N''\to0\) 给出自然长正合列
+\[
+\begin{aligned}
+0&\longrightarrow\operatorname{Hom}_R(M,N')\longrightarrow\operatorname{Hom}_R(M,N)
+\longrightarrow\operatorname{Hom}_R(M,N'')\\
+&\longrightarrow\operatorname{Ext}_R^1(M,N')\longrightarrow\operatorname{Ext}_R^1(M,N)
+\longrightarrow\operatorname{Ext}_R^1(M,N'')\longrightarrow\cdots.
+\end{aligned}
+\]
+\end{theorem}
 \begin{proof}
-先设下有界复形 \(A\) 正合。对每个 \(p\)，平坦性保证 \(C_p\otimes_R A\) 正合。双复形 \(C_p\otimes_R A_q\) 的每条对角线只有有限多个非零项，因为两个方向都有共同的下界。于是\cref{b4:lem:bounded-double-complex}给出 \(C\otimes_R A\) 正合。对一般 \(f\)，其映射锥下有界且正合。张量后与 \(1_C\otimes f\) 的映射锥同构：在锥的移位分量 \(C_p\otimes D_{q-1}\) 上乘 \((-1)^p\)，在非移位分量上取恒等映射即可核对微分。故后一个锥正合，由\cref{b4:prop:cone-quasi-isomorphism}得到结论。
+第一列取 \(N\) 的内射消解，逐次施加反变正合函子 \(\operatorname{Hom}_R(-,I^q)\)，得到 \(0\to\operatorname{Hom}(C,I)\to\operatorname{Hom}(B,I)\to\operatorname{Hom}(A,I)\to0\)，再取同调长正合列。第二列取 \(M\) 的投射消解，对给定序列逐次施加正合函子 \(\operatorname{Hom}_R(P_p,-)\)，取长正合列，再用\cref{b4:thm:ext-balanced}识别各项。增广在零次给出通常 Hom 映射，连接态射与选择独立且自然。
 \end{proof}
 
-平坦性用于保持各列的正合性，有界性用于从各列正合推出总复形正合。后一条件也有更广的替代条件，但不能直接删去。
-
-\begin{example}\label{b4:exm:unbounded-flat-tensor}
-设 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)。在所有整数次数上取 \(C_n=R\)，每个微分都是乘 \(\varepsilon\)。由于 \(\ker(\varepsilon)=(\varepsilon)=\operatorname{im}(\varepsilon)\)，复形 \(C\) 正合且逐项自由。然而
+\begin{example}\label{b4:exm:ext-cyclic}
+设 \(R\) 是主理想整环，\(0\ne a\in R\)，\(N\) 是 \(R\) 模。把 \(R/(a)\) 的两项消解送入 Hom，得到 \(N\xrightarrow{a}N\)，故
 \[
- C\otimes_R k=(\cdots\longrightarrow k\xrightarrow{0}k\xrightarrow{0}k\longrightarrow\cdots)
+\operatorname{Ext}_R^0(R/(a),N)=\{\,n\in N\mid an=0\,\},
+\qquad\operatorname{Ext}_R^1(R/(a),N)=N/aN,
 \]
-在每次都有同调 \(k\)。这个计算先说明，正合且逐项平坦的复形与任意模换系数后未必正合；这里的圈模 \((\varepsilon)\) 并不平坦。
-
-\ProseParagraphBreak
-还能用它检验固定张量因子的有界条件。令 \(P\to k\) 为 \(k\) 的非负次数自由消解，各项为 \(R\)、微分乘 \(\varepsilon\)。每个有限上截短 \(P_{\le r}\) 是子复形，\(C\otimes P_{\le r}\) 由有限多个正合复形 \(C\otimes R\) 总化得到，故正合。它们的滤过余极限是 \(C\otimes P\)，由\cref{b4:prop:filtered-colimits-exact}仍正合。然而 \(C\otimes k\) 的每次同调都是 \(k\)，所以固定的无界自由因子 \(C\) 并不保持下有界拟同构 \(P\to k\)。
+二次及以上为零。特别地，\(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n)\mathbb Z\)，其中 \(m,n>0\)。若改取 \(N=\mathbb Q\)，乘 \(m\) 为同构，零次及正次均为零；这与 \(\mathbb Q\) 内射一致。
 \end{example}
 
-\subsection{同调与张量积的交换条件}
-\label{b4:subsec:0902:03}
-
-\begin{proposition}\label{b4:prop:flat-coefficients-homology}
-设 \(R\) 为环，\(C\) 为任意右 \(R\)-模链复形，\(F\) 为平坦左 \(R\)-模。对每个整数 \(n\)，有自然同构
-\[
- H_n(C)\otimes_R F\simeq H_n(C\otimes_R F).
-\]
-\end{proposition}
-\begin{proof}
-写 \(Z_n=\ker \mathrm{d}_n\)、\(B_n=\operatorname{im}\mathrm{d}_{n+1}\)。把两列
-\[
- 0\longrightarrow Z_n\longrightarrow C_n\longrightarrow B_{n-1}\longrightarrow0,
- \qquad
- 0\longrightarrow B_n\longrightarrow Z_n\longrightarrow H_n(C)\longrightarrow0
-\]
-与 \(F\) 张量，它们仍正合。同时 \(B_{n-1}\otimes F\to C_{n-1}\otimes F\) 仍为单射。因此新复形的圈、边界分别为 \(Z_n\otimes F\)、\(B_n\otimes F\)，其商就是 \(H_n(C)\otimes F\)。识别由圈代表元给出，因而自然。
-\end{proof}
-
-若 \(F\) 不平坦，第一列在左端可能不再正合，张量后出现新的圈；这些圈是不能把“先取同调”和“先换系数”直接交换的原因。例如在整数链复形
-\[
- C:\quad 0\longrightarrow\mathbb Z\xrightarrow{\,2\,}\mathbb Z\longrightarrow0
- \qquad(\text{次数 }1,0)
-\]
-中，\(H_1(C)=0\)，但 \(H_1(C\otimes\mathbb Z/2)=\mathbb Z/2\)。它将成为万有系数定理中的 \(\operatorname{Tor}_1^{\mathbb Z}(H_0(C),\mathbb Z/2)\)。
+在 \(R=k[\epsilon]/(\epsilon^2)\) 上，对\secref{b4:sec:0701}给出的 \(k\) 的周期消解施加 \(\operatorname{Hom}_R(-,k)\)，所有微分为零。因此 \(\operatorname{Ext}_R^n(k,k)\cong k\) 对每个 \(n\ge0\) 成立。相同的底层向量空间，在底环为 \(k\) 时正次 Ext 全为零；记录底环是计算的一部分。

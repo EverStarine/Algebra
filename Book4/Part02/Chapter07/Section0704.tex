@@ -1,91 +1,132 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 7.4 特殊消解
-% 纲要位置：计划纲要.md，第 2640 行。
+% 纲要标题：### 7.4 双复形的预备
+% 纲要标签：b4:sec:0604
+% 纲要位置：计划纲要.md，第 3264 行。
 
-\section{特殊消解}
-\label{b4:sec:0704}
+\section{双复形的预备}
+\label{b4:sec:0604}
 
-消解的长度与形式会随底环改变：主理想整环给出短自由消解，正则列给出 Koszul 消解，群或代数乘法给出 bar 消解。每种公式都需要独立检查其正合性。
-
+映射锥把拟同构的判定化为一个复形的正合性。若分别为张量积的两个变量选取消解，两个次数会同时出现；比较这些消解时，知道每列的上同调相同，还须说明合成后的复形是否也有相同的上同调。下面沿每条对角线合并两个次数，并用映射锥把逐列比较归结为有限消元。对角线上有无限多项时，消元可能需要无限步，直和与直积也可能给出不同的上同调。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 主理想整环模的短消解
-% * Koszul 消解简介
-% * 群代数和代数的 bar 消解预告
+% * 横、纵微分的反交换约定
+% * 直和总复形与直积总复形
+% * 无界情形的差异暂不隐去
+% * 在后续谱序列所用反交换约定下取总微分 \(\mathrm{d}=\mathrm{d}_h+\mathrm{d}_v\)；若从交换方格起步，明确在哪个方向加入 \((-1)^p\) 符号后再总化
 %
 % ---
 %
 
-\subsection{主理想整环模的短消解}
-\label{b4:subsec:0704:01}
+\subsection{横纵微分的反交换约定}
+\label{b4:subsec:0604:01}
 
-第二卷定理4.3.1证明了主理想整环上有限秩自由模的子模自由。为了处理并非有限生成的模，需要把同一思路延伸到任意基集合。
+给两个复形作张量积时，横向应用第一个复形的微分，纵向应用第二个复形的微分。若直接把两个微分相加，平方里还会出现交叉项；反交换条件恰好使这两项抵消。
 
-\begin{theorem}\label{b4:thm:pid-free-submodule}
-设 \(R\) 是主理想整环，\(F\) 是任意秩自由 \(R\) 模。每个子模 \(N\subseteq F\) 都自由。因此每个 \(R\) 模 \(M\) 都有长度至多为一的自由消解 \(0\to F_1\to F_0\to M\to0\)。
-\end{theorem}
-\begin{proof}
-用选择公理良序排列 \(F\) 的一组基，写成 \((e_\alpha)_{\alpha<\kappa}\)。令 \(F_\beta\) 由 \(\alpha<\beta\) 的基向量生成，\(N_\beta=N\cap F_\beta\)。坐标投影使 \(N_{\alpha+1}/N_\alpha\) 同构于 \(R\) 的一个理想。若它非零，取其生成元 \(a_\alpha\)，并在 \(N_{\alpha+1}\) 选一个 \(e_\alpha\) 坐标为 \(a_\alpha\) 的元素 \(x_\alpha\)。任意 \(y\in N_{\alpha+1}\) 的该坐标是 \(ra_\alpha\)，所以 \(y-rx_\alpha\in N_\alpha\)；而 \(rx_\alpha\in N_\alpha\) 蕴含 \(ra_\alpha=0\)，由整环性得 \(r=0\)。因此 \(N_{\alpha+1}=N_\alpha\oplus Rx_\alpha\)。若该理想为零，则 \(N_{\alpha+1}=N_\alpha\)。
-
-极限序数 \(\lambda\) 处有 \(N_\lambda=\bigcup_{\beta<\lambda}N_\beta\)，因为每个向量只含有限个非零坐标。超限归纳遂表明全部选出的 \(x_\alpha\) 构成 \(N\) 的基：生成性由上述分解给出，任一有限关系则由最大下标的非零坐标逐次消去。最后取自由满射 \(F_0\to M\)，其核自由，即得短消解。
-\end{proof}
-
-有限生成 \(M\) 时可先取有限秩 \(F_0\)，并由有限秩版本得到有限秩 \(F_1\)。若 \(M=R/(a)\)、\(a\ne0\)，其短消解就是乘 \(a\) 的映射；整环假设在这里保证该映射单射。
-
-\subsection{Koszul 消解简介}
-\label{b4:subsec:0704:02}
-
-对一个元素 \(x\in R\)，两项复形 \(K(x)=(0\to R\xrightarrow{x}R\to0)\) 可以是消解，也可以不是。其零次同调为 \(R/(x)\)，一次同调为 \(\{\,r\in R\mid xr=0\,\}\)。因此正合性准确地要求 \(x\) 不是零因子。
-
-\begin{definition}\label{b4:def:koszul-preview}
-设 \(R\) 是交换含幺环，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in R\)。取自由 \(R\) 模 \(R^r\) 的基 \(e_1,\ldots,e_r\)，令 \(K_n=\bigwedge^nR^r\)（\(0\le n\le r\)），其余次数取零，并用 \(R\) 线性延拓定义微分
+\begin{definition}\label{b4:def:double-complex}
+设 \(\mathcal A\) 是加性范畴。给定 \(\mathcal A\) 中的对象 \(E^{p,q}\)（\(p,q\in\mathbb Z\)）及态射
 \[
-\mathrm{d}(e_{i_1}\wedge\cdots\wedge e_{i_n})
-=\sum_{j=1}^n(-1)^{j-1}x_{i_j}
- e_{i_1}\wedge\cdots\widehat{e_{i_j}}\cdots\wedge e_{i_n}.
+\mathrm{d}_h:E^{p,q}\to E^{p+1,q},\qquad
+ \mathrm{d}_v:E^{p,q}\to E^{p,q+1},
 \]
-所得链复形记为 \(K_\bullet(x_1,\ldots,x_r;R)\)，称为\term[koszul-fuxing]{Koszul 复形}[Koszul complex]。
+若每个位置都满足 \(\mathrm{d}_h^2=\mathrm{d}_v^2=0\) 且 \(\mathrm{d}_h\mathrm{d}_v+\mathrm{d}_v\mathrm{d}_h=0\)，则称 \(E\) 为\term[shuang-fuxing]{双复形}[double complex]。这里两个方向的方格反交换。对 \(\mathcal A\) 中的双复形 \(E,F\)，若态射族 \(u^{p,q}:E^{p,q}\to F^{p,q}\) 分别与两个方向的微分交换，则称其为双复形映射。
 \end{definition}
 
-删去两个基向量的两种次序符号相反，且 \(x_ix_j=x_jx_i\)，所以 \(\mathrm{d}^2=0\)。外幂及楔积的定义与基已在第二卷第九章建立。第三卷定理15.3.2已把正则列的 Koszul 消解作为交换代数中的主要结果处理；下面给出基于本卷同调长正合列的第二证明，只证明消解所需的方向，不在这里重做第三卷的深度理论。
+例如右 \(R\)-模复形 \(C\) 与左 \(R\)-模复形 \(D\) 给出
+\[
+E^{p,q}=C^p\otimes_R D^q,\qquad
+ \mathrm{d}_h=\mathrm{d}_C\otimes1,\qquad \mathrm{d}_v=(-1)^p(1\otimes \mathrm{d}_D).
+\]
+先横后纵时，纵向符号变为 \((-1)^{p+1}\)；先纵后横时仍为 \((-1)^p\)，所以两次复合之和为零。这个例子会在 Tor 的两个变量比较中使用。
 
-\begin{proposition}\label{b4:prop:koszul-resolution}
-设 \(R\) 是交换含幺环，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in R\)。假设 \((x_1,\ldots,x_r)\ne R\)，且对每个 \(1\le i\le r\)，乘 \(x_i\) 在 \(R/(x_1,\ldots,x_{i-1})\) 上单射。则 \(R\) 上的 Koszul 复形 \(K_\bullet(x_1,\ldots,x_r;R)\) 连同零次增广 \(R\to R/(x_1,\ldots,x_r)\) 是 \(R/(x_1,\ldots,x_r)\) 的有限自由消解。
-\end{proposition}
+\ProseParagraphBreak
+若最初给出的横纵微分 \(\partial_h,\partial_v\) 满足交换关系 \(\partial_h\partial_v=\partial_v\partial_h\)，则取 \(\mathrm{d}_h=\partial_h\)、\(\mathrm{d}_v|_{E^{p,q}}=(-1)^p\partial_v\) 才得到本书意义下的双复形。后文总化时不再另添一次相同的符号。
+
+\subsection{直和总复形与直积总复形}
+\label{b4:subsec:0604:02}
+
+\begin{definition}\label{b4:def:total-complex}
+设 \(E\) 是交换范畴 \(\mathcal A\) 中的双复形。若相应的可数余积或积存在，对每个 \(n\in\mathbb Z\) 分别规定
+\[
+\operatorname{Tot}_{\oplus}(E)^n=\bigoplus_{p+q=n}E^{p,q},\qquad
+\operatorname{Tot}_{\Pi}(E)^n=\prod_{p+q=n}E^{p,q},
+\qquad \mathrm{d}=\mathrm{d}_h+\mathrm{d}_v.
+\]
+所得复形分别称为 \(E\) 的\term[zhihe-zongfuxing]{直和总复形}[direct-sum total complex]与\term[zhiji-zongfuxing]{直积总复形}[product total complex]。若每条对角线 \(p+q=n\) 仅有有限个非零对象，则二者都是有限双积，典范相同，简记为 \(\operatorname{Tot}(E)\)。
+\end{definition}
+\symidx{\(\operatorname{Tot}_{\oplus},\operatorname{Tot}_{\Pi}\)：直和与直积总复形}
+
+直和中每个输入分量至多产生两个输出分量；直积中每个输出分量也只依赖两个输入分量，因此公式都定义了态射。反交换关系给出 \(\mathrm{d}^2=\mathrm{d}_h^2+\mathrm{d}_h\mathrm{d}_v+\mathrm{d}_v\mathrm{d}_h+\mathrm{d}_v^2=0\)。一般交换范畴未必有无限直和或直积；当每条对角线有限时，有限双积已经足够。例如支持在 \(p\ge a,q\ge b\) 或支持在 \(p\le a,q\le b\) 的双复形均满足此条件。
+
+\begin{lemma}[有限对角双复形的消元]\label{b4:lem:bounded-double-complex}
+设 \(\mathcal A\) 是交换范畴，\(E\) 是其中的双复形，并且对每个 \(n\in\mathbb Z\)，对角线 \(p+q=n\) 仅有有限个非零项。若每个纵列 \((E^{p,\bullet},\mathrm{d}_v)\) 正合，则 \(\operatorname{Tot}(E)\) 正合。若改为每个横行 \((E^{\bullet,q},\mathrm{d}_h)\) 正合，同一结论成立。
+\end{lemma}
 \begin{proof}
-\(r=0\) 时取集中于零次的 \(R\)，结论成立。对正整数 \(r\) 归纳。\(r=1\) 就是前面的两项计算。设 \(K'=K_\bullet(x_1,\ldots,x_{r-1};R)\)。按含不含 \(e_r\) 分解楔积，每次 \(K_n=K'_n\oplus(K'_{n-1}\wedge e_r)\)，且
+先用模的元组记号写出有限消元过程。固定总次数 \(n\)，设 \(z=(z_p)\) 为余圈，其中 \(z_p\in E^{p,n-p}\)。从最小的可能非零横指标 \(p\) 开始。该位置的总余圈等式为 \(\mathrm{d}_vz_p+\mathrm{d}_hz_{p-1}=0\)，而较小分量已为零，所以 \(\mathrm{d}_vz_p=0\)。纵列正合，故可取 \(y_p\in E^{p,n-p-1}\) 使 \(\mathrm{d}_vy_p=z_p\)。从 \(z\) 减去 \(\mathrm{d}y_p\)，第 \(p\) 个分量消失，至多改变第 \(p+1\) 个分量。
+
+继续沿横指标增加的方向操作。只有总次数 \(n\) 和 \(n-1\) 两条对角线中的位置会被使用，它们的非零位置并集有限，所以过程在有限步后停止。若某一步所需的 \(E^{p,n-p-1}\) 为零，纵列正合已迫使当前余圈分量为零，无须选择。最终 \(z=\mathrm{d}(\sum_p y_p)\)，所以每个余圈是余边。
+
+在一般交换范畴中，从任意满足 \(\mathrm dz=0\) 的态射 \(z:T\to\operatorname{Tot}(E)^n\) 开始。纵列正合，使纵微分诱导的态射 \(E^{p,n-p-1}\to Z^{n-p}(E^{p,\bullet})\) 为满态射，因而可用\cref{b4:lem:generalized-element-calculus}在满态射后提升 \(z_p\) 到 \(y_p\)。每进行一步提升，都把 \(z\) 与先前选出的全部 \(y_p\) 一同预合成到新的测试对象上，并仍用原符号表示。步骤有限，这些满态射的复合仍是一个满态射 \(e:T'\to T\)；最终所得 \(y:T'\to\operatorname{Tot}(E)^{n-1}\) 满足
 \[
-\mathrm{d}(a+b\wedge e_r)=\mathrm{d}'a+(-1)^{n-1}x_rb+(\mathrm{d}'b)\wedge e_r.
+\mathrm dy=ze.
 \]
-故有短正合复形列，左端为 \(K'\)，商复形在次数 \(n\) 为 \(K'_{n-1}\)，微分为 \(\mathrm{d}'\)。其连接态射在同调上是乘 \(x_r\)，差至多为显式的符号 \((-1)^{n-1}\)。归纳假设使 \(K'\) 只在零次有同调。因此长正合列给出 \(H_n(K)=0\) 对 \(n\ge2\)，并给出
-\[
-0\longrightarrow H_1(K)\longrightarrow R/(x_1,\ldots,x_{r-1})
-\xrightarrow{x_r}R/(x_1,\ldots,x_{r-1})
-\longrightarrow H_0(K)\longrightarrow0.
-\]
-假设使中间映射单射，故一次同调也消失，零次同调为所需商环。
+该引理的正合性判据于是证明总复形正合。横纵互换仍满足反交换关系，对角有限性不变，故得到横行版本。
 \end{proof}
 
-例如 \(k[x,y]\) 上的 \(k=R/(x,y)\) 有消解
+\begin{corollary}\label{b4:cor:double-complex-comparison}
+设 \(\mathcal A\) 是交换范畴，\(u:E\to F\) 是其中的双复形映射，且 \(E,F\) 的每条对角线 \(p+q=n\) 均只有有限个非零项。若 \(u\) 在每个纵列上是拟同构，则 \(\operatorname{Tot}(u)\) 是拟同构。逐横行拟同构也有同样结论。
+\end{corollary}
+\begin{proof}
+对每个纵列取映射锥，组成双复形
 \[
-0\longrightarrow R\xrightarrow{c\mapsto(-yc,xc)}R^2
-\xrightarrow{(a,b)\mapsto xa+yb}R\longrightarrow k\longrightarrow0.
+G^{p,q}=F^{p,q}\oplus E^{p,q+1},\quad
+ \mathrm{d}_v^G=\begin{pmatrix}\mathrm{d}_v^F&u\\0&-\mathrm{d}_v^E\end{pmatrix},\quad
+ \mathrm{d}_h^G=\begin{pmatrix}\mathrm{d}_h^F&0\\0&-\mathrm{d}_h^E\end{pmatrix}.
 \]
-它在下一章计算 Tor 时会产生一次和二次的不消失项。
+两个微分的反交换来自原反交换关系及 \(\mathrm{d}_h^Fu=u\mathrm{d}_h^E\)；新双复形仍逐对角有限。每个纵列是拟同构的锥，由\cref{b4:prop:cone-quasi-isomorphism}正合。上一引理使 \(\operatorname{Tot}(G)\) 正合，而其微分矩阵正是 \(\operatorname{Cone}(\operatorname{Tot}(u))\) 的矩阵。再次用锥判据即可。横行版本交换两个指标进行同一构造。
+\end{proof}
 
-\subsection{群代数与代数的 bar 消解}
-\label{b4:subsec:0704:03}
+\subsection{无界总复形的差异}
+\label{b4:subsec:0604:03}
 
-群环和一般代数的自然模往往没有短消解，却有一种由“插入一个符号”控制正合性的自由消解。这里介绍其形式；后面群上同调与 Hochschild 上同调的章节将说明它为何适合相应问题。
+每条对角线有限是上一个证明真正使用的条件；总次数固定，并不自动使一次消元只走有限步。下面的例子同时说明两种无限总化为什么不同。
 
-\begin{example}\label{b4:exm:homogeneous-bar}
-设 \(G\) 是群，\(k\) 是交换环。令 \(B_n\) 为以 \((g_0,\ldots,g_n)\in G^{n+1}\) 为基的自由 \(k\) 模，并让 \(G\) 同时左乘所有坐标。它是自由左 \(kG\) 模：每个轨道唯一含有首坐标为 \(1\) 的元组。令
+\begin{example}\label{b4:exm:sum-product-total-difference}
+设 \(k\) 是域。对每个整数 \(p\ge0\)，在 \((p,-p)\) 放一维空间 \(k e_p\)，在 \((p,1-p)\) 放 \(k f_p\)，其中 \(e_p,f_p\) 为所选基向量，其余位置为零。定义
 \[
-\mathrm{d}(g_0,\ldots,g_n)=\sum_{i=0}^n(-1)^i(g_0,\ldots,\widehat{g_i},\ldots,g_n),
-\qquad\varepsilon(g_0)=1.
+\mathrm{d}_v(e_p)=f_p,\qquad \mathrm{d}_h(e_p)=-f_{p+1},\qquad
+ \mathrm{d}_v(f_p)=\mathrm{d}_h(f_p)=0.
 \]
-两次删除的项成对抵消，故 \(\mathrm{d}^2=0\)。在底层 \(k\) 模上令 \(s_n(g_0,\ldots,g_n)=(1,g_0,\ldots,g_n)\)、\(s_{-1}(1)=(1)\)，则 \(\mathrm{d}s+s\mathrm{d}=1\)，因为删除新插入的首项给出原元组，其余项与 \(s\mathrm{d}\) 抵消。因此增广复形正合，是平凡左 \(kG\) 模 \(k\) 的自由消解。\(s\) 通常不具 \(G\) 等变性；这不妨碍正合，却不证明它作为 \(kG\) 复形可缩。
+每个非零纵列都是同构 \(k e_p\to k f_p\)，因而正合；两个微分的所有二次复合为零，故满足反交换条件。总复形只有次数零和一。用各一维分量的基向量 \(e_p,f_p\) 表示坐标，两种总微分均写成
+\[
+(\alpha_0,\alpha_1,\alpha_2,\ldots)\longmapsto
+(\alpha_0,\alpha_1-\alpha_0,\alpha_2-\alpha_1,\ldots).
+\]
+直积情形中，对任意目标坐标序列 \((\beta_p)\)，唯一的原像由 \(\alpha_p=\sum_{i=0}^p\beta_i\) 给出，所以微分是同构，总复形正合。
+
+\ProseParagraphBreak
+直和情形中，每个序列须有有限支集。微分仍单，但像恰好是坐标总和为零的有限支集序列：像的坐标和通过相邻相消为零；反过来，若 \(\sum_i\beta_i=0\)，上述部分和 \(\alpha_p\) 最终为零，确实属于直和。坐标求和映射到 \(k\) 是满射，其核正是微分的像，因此
+\[
+H^0\operatorname{Tot}_{\oplus}(E)=0,\qquad
+H^1\operatorname{Tot}_{\oplus}(E)\cong k,
+\]
+而直积总复形的上同调全零。一个纵列处处正合的双复形，在直和总化后仍可能出现非零上同调。
 \end{example}
 
-代数的 bar 构造把元组换成张量串。例如域 \(k\) 上含幺代数 \(A\) 的各项 \(A^{\otimes_k(n+2)}\)，以首尾因子承担 \(A\) 双模作用，微分交错地乘合相邻因子，增广为 \(A\otimes_k A\to A\) 的乘法。在左端插入 \(1\) 给出底层向量空间的同样收缩。每项作为 \(A\otimes_k A^{\mathrm{op}}\) 模自由，因为中间张量因子有 \(k\) 基。双模约定、归一化及由此得到的上同调计算见第12章。
+解差分方程得到的部分和未必有有限支集。例如次数一的基向量 \(f_0\) 在直积中有原像 \((1,1,1,\ldots)\)，在直和中却没有原像。逐列消元所需的无限多个分量因此未必能组成直和总复形中的一个元素。
+
+\subsection{总微分与总化的符号}
+\label{b4:subsec:0604:04}
+
+为便于后续计算，把两种起点区别如下。若横纵微分已经反交换，总微分就是 \(\mathrm{d}_h+\mathrm{d}_v\)；若原方格交换，则应先把纵微分改为 \((-1)^p\partial_v\)，总微分才是 \(\partial_h+(-1)^p\partial_v\)。这两句话描述同一个构造，不能把后一个符号重复施加到前一种约定上。
+
+\begin{example}\label{b4:exm:double-square-sign}
+设 \(R\) 交换，\(a,b\in R\)。在四个位置 \((0,0),(1,0),(0,1),(1,1)\) 都放 \(R\)，原横箭头均为乘 \(a\)，原纵箭头均为乘 \(b\)。它们交换。把第 \(p\) 列的纵箭头乘 \((-1)^p\)，并把总次数一按 \((1,0),(0,1)\) 排列，总复形成为
+\[
+R\xrightarrow{t\mapsto(at,bt)}R^2
+\xrightarrow{(u,v)\mapsto-bu+av}R.
+\]
+复合为 \(-bat+abt=0\)。若漏掉负号，复合一般为 \(2abt\)，所以仅知道原方格交换不足以直接相加。该复形是两个两项复形的张量总化，也是后面两元 Koszul 计算中会反复遇到的形式。
+\end{example}
+
+当两套消解形成的双复形逐对角有限时，逐列拟同构的映射锥也逐对角有限，有限消元便把每列的正合性传到总复形，从而得到总复形的拟同构。无限对角线上的比较则还取决于总化方式，以及所需的原像能否组成该总复形中的态射。

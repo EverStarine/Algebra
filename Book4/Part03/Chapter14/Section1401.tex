@@ -1,74 +1,151 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 14.1 滤过与伴随分次
-% 纲要位置：计划纲要.md，第 2827 行。
+% 纲要标题：### 14.1 余极限的正合性
+% 纲要标签：b4:sec:1301
+% * 生成元与 Grothendieck 范畴；模范畴及挠交换群的例子
+% 纲要位置：计划纲要.md，第 2799 行。
 
-\section{滤过与伴随分次}
-\label{b4:sec:1401}
+\section{余极限的正合性}
+\label{b4:sec:1301}
 
-滤过先把复形分成较简单的层，再保留微分在层间移动的信息。递增与递减编号会改变后面公式的方向，有界、穷尽与分离条件也必须分别说明。
+滤过余极限中的有限组等式可以移到共同阶段核验，因此它保持模的短正合列。一般余极限与无限积没有同一套元素判据，正合性需要分别检查。
 
-% 纲要内容：
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 递增、递减滤过
-% * 有界、穷尽和分离条件
-% * 首先固定指标方向
+% * 模范畴中的滤过余极限
+% * 一般余极限并非都正合
+% * 积与直和的正合性依赖所在范畴
 %
 
-\subsection{递增滤过与递减滤过}
-\label{b4:subsec:1401:01}
+\subsection{模范畴中的滤过余极限}
+\label{b4:subsec:1301:01}
 
-把一个复杂复形分成几层，往往比直接求核再求商容易。例如双复形的总次数固定以后，可以先保留横指标较大的那些项。微分可能把一层送到更深的一层；若暂时忽略这种移动，便得到一组较简单的复形。谱序列记录随后怎样把这些层间信息逐步补回来。
-
-\begin{definition}\label{b4:def:filtered-complex}
-设 \(C\) 为含幺环 \(R\) 上左模的上链复形。对每个整数 \(p\)，给定子复形 \(F^pC\subseteq C\)，若
-\[
- F^{p+1}C\subseteq F^pC,
-\]
-则称 \((C,F)\) 为带\term[dijian-lvguo]{递减滤过}[decreasing filtration]的复形。其\term[bansui-fenci]{伴随分次}[associated graded object]为复形族
-\[
- \operatorname{gr}_F^pC=F^pC/F^{p+1}C.
-\]
-若改用 \(F_pC\subseteq F_{p+1}C\)，则得到递增滤过。滤过映射 \(f:(C,F)\to(D,F)\) 是满足 \(f(F^pC)\subseteq F^pD\) 的复形映射。
-\end{definition}
-
-用 \(F^pC=F_{-p}C\) 可以互换递增、递减记号，但微分的指标也必须相应改变。本章固定递减约定。若 \(D^{a,b}\) 是第一象限双复形，令
-\[
- F^p\operatorname{Tot}(D)^n=\bigoplus_{a\ge p}D^{a,n-a}.
-\]
-纵微分保持 \(a\)，横微分增大 \(a\)，所以总微分保持这个子对象。伴随分次只剩第 \(p\) 列，最先显现的是纵向上同调。
-
-章首四项双复形的中间列 \(kb\xrightarrow{1}kc\) 正合，左右两列各留下一个类。按列取上同调看到的这两个类仍不足以给出总上同调；横向微分怎样穿过已经正合的中间列，正是后续页要记录的信息。
-
-\subsection{有界、穷尽与分离条件}
-\label{b4:subsec:1401:02}
-
-\begin{definition}\label{b4:def:finite-filtration}
-设 \(R\) 为环，\((C,F)\) 是左 \(R\)-模的递减滤过上链复形。若对每个总次数 \(n\) 都有 \(\bigcup_pF^pC^n=C^n\)，则称滤过穷尽；若对每个 \(n\) 都有 \(\bigcap_pF^pC^n=0\)，则称滤过分离。若对每个 \(n\) 存在整数 \(a_n<b_n\)，使 \(F^{a_n}C^n=C^n\)、\(F^{b_n}C^n=0\)，则称滤过逐度有限。若 \(a_n,b_n\) 可独立于 \(n\) 选取，则称滤过一致有界。
-\end{definition}
-
-逐度有限蕴含穷尽和分离，但不要求复形只有有限多个次数。第一象限双复形的列滤过在总次数 \(n\ge0\) 满足 \(F^0=C^n\)、\(F^{n+1}=0\)，就是本书最常用的逐度有限情形。
+滤过余极限允许把有限次运算放到同一个阶段进行，而逆极限要求一整族元素同时相容。这两种条件的差别，决定了它们的正合性质。本章在模范畴中讨论这些问题；若换成其他交换范畴，还须重新检查所用的无限积是否正合。
 
 \ProseParagraphBreak
-穷尽和分离本身不保证有限计算。例如 \(C^0=\mathbb Z\)、其他次数为零，取 \(F^pC^0=2^p\mathbb Z\)（\(p\ge0\)）、\(F^pC^0=\mathbb Z\)（\(p<0\)），便得到穷尽、分离但不逐度有限的滤过。商群 \(C^0/F^pC^0\) 的相容系统还包含并非来自某个整数的元素。因此讨论无限滤过时，是否需要完备化是实质问题；本章的主要收敛定理采用逐度有限条件，不把这些差别省去。
+\cref{b4:prop:filtered-colimits-exact}已证明：对小滤过范畴上的模图表，逐对象的短正合列在取余极限后仍正合。证明的关键是\cref{b4:prop:filtered-module-elements}的单阶段判据：一个元素在余极限中为零，当且仅当它在某个更后阶段已经变成零。这一正合性还使滤过余极限与复形的上同调交换。
 
-\subsection{滤过的指标方向}
-\label{b4:subsec:1401:03}
-
-总次数写作 \(n=p+q\)，其中 \(p\) 是滤过次数，\(q\) 只是补足总次数的第二指标。一个 \(x\in F^pC^{p+q}\) 若满足 \(\mathrm{d}x\in F^{p+r}C^{p+q+1}\)，便表示它的微分直到相隔 \(r\) 层才可能被看见。于是第 \(r\) 次出现的微分必须具有方向
+\begin{proposition}\label{b4:prop:filtered-colimits-cohomology}
+设 \(R\) 为环，\(\mathcal I\) 为小滤过范畴，\(C_i\) 为左 \(R\)-模上链复形组成的图表。则对每个整数 \(q\)，有自然同构
 \[
- \mathrm{d}_r:E_r^{p,q}\longrightarrow E_r^{p+r,q-r+1}.
+\varinjlim_{i\in\mathcal I}H^q(C_i)
+\simeq H^q\bigl(\varinjlim_{i\in\mathcal I}C_i\bigr).
 \]
-它使总次数增加一；在第零页竖直向上，在第一页水平向右，第二页向右两格、向下一格。
-
-\begin{definition}\label{b4:def:spectral-sequence}
-设 \(R\) 为含幺环。给定双分次左 \(R\)-模 \(E_r^{p,q}\)，其中 \(r\ge0\)、\(p,q\in\mathbb Z\)，以及 \(R\) 线性映射 \(\mathrm{d}_r:E_r^{p,q}\to E_r^{p+r,q-r+1}\)。若这些映射及指定同构满足
+右侧余极限逐次数形成，不要求复形有界。
+\end{proposition}
+\begin{proof}
+把复形的微分拆成短正合列
 \[
- \mathrm{d}_r^2=0,\qquad E_{r+1}^{p,q}\simeq
- \frac{\ker(\mathrm{d}_r:E_r^{p,q}\to E_r^{p+r,q-r+1})}
- {\operatorname{im}(\mathrm{d}_r:E_r^{p-r,q+r-1}\to E_r^{p,q})}
+0\to Z^q(C_i)\to C_i^q\to B^{q+1}(C_i)\to0,\qquad
+0\to B^q(C_i)\to Z^q(C_i)\to H^q(C_i)\to0.
 \]
-则称这些数据构成从第零页开始的上同调型\term[pu-xulie]{谱序列}[spectral sequence]。也可从某个较晚页开始给出这些数据。谱序列态射在各页保持双次数、与微分及指定同构相容。
+余极限保持这两列正合，也保持 \(B^{q+1}(C_i)\to C_i^{q+1}\) 的单射性。因此取余极限后的圈与边界分别是原圈与边界的余极限，它们之商正是 \(\varinjlim H^q(C_i)\)。所有识别使用自然包含及商映射，故自然。每次仅涉及两个相邻微分，与是否有界无关。
+\end{proof}
+
+例如，一个复形写成递增子复形的并时，任一同调类可以在某个阶段表示；若它最终变成边界，也在某个阶段已经变成边界。这不是关于极限的形式类比，而是有限代表元判据的实际结果。
+
+\subsection{一般余极限的非正合性}
+\label{b4:subsec:1301:02}
+
+设 \(R\) 为环，\(\mathcal I\) 为小范畴。模图表上的余极限函子
+\[
+\varinjlim_{\mathcal I}:
+\operatorname{Fun}(\mathcal I,R\text{-}\mathbf{Mod})
+\longrightarrow R\text{-}\mathbf{Mod}
+\]
+是加性的。事实上，若 \(\alpha,\beta:X\to Y\) 为图表态射，\(\iota_i^X,\iota_i^Y\) 为各阶段到余极限的典范映射，则
+\[
+\begin{aligned}
+\bigl(\varinjlim(\alpha+\beta)\bigr)\iota_i^X
+&=\iota_i^Y(\alpha_i+\beta_i)\\
+&=\bigl(\varinjlim\alpha+\varinjlim\beta\bigr)\iota_i^X.
+\end{aligned}
+\]
+各 \(X_i\) 的像生成余极限，故 \(\varinjlim(\alpha+\beta)=\varinjlim\alpha+\varinjlim\beta\)。余极限又是常值图表函子的左伴随，因此保持余核，结合加性便得右正合。要同时保持核，指标范畴的条件就有作用。
+
+\begin{example}\label{b4:exm:parallel-colimit-not-exact}
+令 \(\mathcal I\) 只有对象 \(0,1\) 及两支不同箭头 \(s,t:0\to1\)。交换群图表 \(X\) 的余极限是 \(\operatorname{coker}(X(s)-X(t))\)。定义三个图表
+\[
+\begin{array}{c|cc|cc}
+ &X(0)&X(1)&X(s)&X(t)\\\hline
+A&0&\mathbb Z&0&0\\
+B&\mathbb Z&\mathbb Z&\times2&0\\
+C&\mathbb Z&0&0&0
+\end{array}
+\]
+在对象 \(0\) 处取 \(0\to0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\)，在对象 \(1\) 处取 \(0\to\mathbb Z\xrightarrow{1}\mathbb Z\to0\to0\)，得到图表短正合列 \(0\to A\to B\to C\to0\)。它的余极限列为
+\[
+\mathbb Z\longrightarrow\mathbb Z/2\longrightarrow0.
+\]
+首箭头不是单射。表中的两个平行箭头不能被任何更后箭头合并；这个指标范畴不滤过。
+\end{example}
+
+这个例子的关系 \(2\mathbb Z\) 来自图表的箭头。逐对象检查单射，并不能阻止余极限在目标中额外施加这些关系。因而“每个阶段正合”只有结合正确的指标条件，才足以推出余极限正合。
+
+\subsection{积与直和的正合性条件}
+\label{b4:subsec:1301:03}
+
+对左 \(R\)-模，任意一族短正合列取直和仍正合：一项元素只有有限支集，可以在这有限多个位置选取原像。取直积也仍正合，但满射性的证明需要对全部坐标同时选原像，使用集合论选择。核与像的其余核对均逐坐标进行。
+
+\begin{proposition}\label{b4:prop:products-cohomology}
+设 \(R\) 为环，\((C_j)_{j\in J}\) 为集合指标的左 \(R\)-模上链复形族。则对每个整数 \(q\)，有自然同构
+\[
+H^q\bigl(\prod_j C_j\bigr)\simeq\prod_jH^q(C_j),\qquad
+H^q\bigl(\bigoplus_j C_j\bigr)\simeq\bigoplus_jH^q(C_j).
+\]
+\end{proposition}
+\begin{proof}
+积复形的圈逐坐标给出。对一族边界，每个坐标选一个微分原像，就得到积中的原像，所以积的边界也是边界的积。对 \(0\to B^q\to Z^q\to H^q\to0\) 取积并使用满射性，便得到第一式。直和时只需在有限个非零坐标上选择，完全相同的核、像、商计算给出第二式。
+\end{proof}
+
+在一般交换范畴中，存在积与积正合是两个不同要求。若范畴有小余积且余积保持短正合列，通常称其满足 \(\mathrm{AB4}\)；若有小积且积保持短正合列，称其满足 \(\mathrm{AB4}^*\)。若范畴有小余积，且小滤过余极限存在并正合，则称其满足 \(\mathrm{AB5}\)。这些名称描述附加性质，不是交换范畴定义的组成部分。
+
+\begin{example}\label{b4:exm:torsion-category-product}
+所有挠交换群及其同态组成交换范畴 \(\mathcal T\)：核、余核和有限双积仍是挠群。该范畴内一族群的积，是通常直积的挠子群，因为从任何挠群发出的同态必然落入这个子群。
+
+\ProseParagraphBreak
+固定素数 \(p\)，对每个 \(n\ge1\) 取满射 \(\mathbb Z/p^n\to\mathbb Z/p\)。目标在 \(\mathcal T\) 中的积等于通常直积，其中 \((1,1,\ldots)\) 的阶为 \(p\)。它若有原像，原像的第 \(n\) 个坐标必须是模 \(p\) 等于 \(1\) 的元素，阶恰为 \(p^n\)。该元组没有有限阶，因而不属于源在 \(\mathcal T\) 中的积。这说明 \(\mathcal T\) 的积不保持满射。
+\end{example}
+
+后面乘积差映射的证明明确限定在模范畴中。更广版本至少需要相应的积正合性；不能仅凭“也是交换范畴”便移用。
+
+\subsection{生成元与 Grothendieck 范畴}
+\label{b4:subsec:grothendieck-category}
+
+模的一个非零同态总能在某个元素上被发现；这个元素又对应从正则模 \(R\) 发出的同态。在没有元素模型的交换范畴中，可以用一个对象承担同样的探测作用。
+
+\begin{definition}\label{b4:def:abelian-generator}
+设 \(\mathcal A\) 为局部小交换范畴，\(U\in\mathcal A\)。若函子
+\(\operatorname{Hom}_{\mathcal A}(U,-)\) 忠实，即任意不同态射 \(f,g:X\to Y\) 都有某个 \(u:U\to X\) 使 \(fu\ne gu\)，则称 \(U\) 为 \(\mathcal A\) 的一个\term[shengchengyuan-fanchou]{生成元}[generator]。
 \end{definition}
-\symidx{\(E_r^{p,q},\mathrm{d}_r\)：谱序列的页与微分}
 
-这个定义描述的是一列反复取上同调的对象，尚未指定它计算什么。目标及其滤过必须另外给出；不能只凭写出 \(E_2\) 就宣称已经算出某个上同调群。下面从实际滤过复形构造全部各页，再证明它们与原复形上同调的关系。一般交换范畴中的构造以子对象的交、像和商代替元素集合；证明中的有限提升可依\cref{b4:lem:generalized-element-calculus}解释，故逐度有限的结论也适用于交换范畴。
+\begin{proposition}\label{b4:prop:generator-epimorphism}
+设局部小交换范畴 \(\mathcal A\) 有小余积。对象 \(U\) 是生成元，当且仅当对每个 \(X\)，由全部态射 \(u:U\to X\) 给出的典范态射
+\[
+ e_X:\bigoplus_{u\in\operatorname{Hom}_{\mathcal A}(U,X)}U\longrightarrow X
+\]
+为满态射。
+\end{proposition}
+\begin{proof}
+若 \(U\) 为生成元而 \(e_X\) 的余核 \(q:X\to Q\) 非零，则有 \(u:U\to X\) 使 \(qu\ne0\)，与 \(qe_X=0\) 矛盾。反之，若 \(f\ne g\)，则 \((f-g)e_X\ne0\)，否则 \(e_X\) 满使 \(f=g\)。所以至少一个分量满足 \(fu\ne gu\)，给出忠实性。
+\end{proof}
+
+\begin{definition}\label{b4:def:grothendieck-category}
+设 \(\mathcal A\) 为局部小交换范畴，具有小余积，满足 \(\mathrm{AB5}\)，并有生成元。此时称 \(\mathcal A\) 为\term[Grothendieck-fanchou]{Grothendieck 范畴}[Grothendieck category]。
+\end{definition}
+
+小余积和余等化子还给出全部小余极限。\(\mathrm{AB5}\) 的要求是其中的滤过余极限保持短正合列；生成元则把所有对象和态射的探测归到一个固定对象。这两个条件有不同作用。
+
+\begin{example}\label{b4:exm:module-grothendieck}
+对任意环 \(R\)，左模范畴 \(R\text{-}\mathbf{Mod}\) 是 Grothendieck 范畴。小余积是直和，滤过余极限正合性由\cref{b4:prop:filtered-colimits-exact}给出。正则左模 \(R\) 为生成元，因为
+\(\operatorname{Hom}_R(R,M)\cong M\)，同态 \(f\) 在右侧的作用就是 \(m\mapsto f(m)\)。
+\end{example}
+
+\begin{example}\label{b4:exm:torsion-grothendieck}
+挠交换群范畴 \(\mathcal T\) 也是 Grothendieck 范畴。其直和和滤过余极限与交换群中的构造相同，仍为挠群，故滤过余极限正合。对象
+\[
+ U=\bigoplus_{n\ge1}\mathbb Z/n\mathbb Z
+\]
+是生成元：若 \(f(x)\ne g(x)\)，取 \(nx=0\)，从第 \(n\) 个分量送 \(1\) 到 \(x\) 的映射便能分辨 \(f,g\)。但\cref{b4:exm:torsion-category-product}已经说明其积不正合。因此 Grothendieck 范畴不必满足 \(\mathrm{AB4}^*\)。
+\end{example}
+
+Grothendieck 范畴中的每个对象都能嵌入内射对象。\cref{b4:thm:grothendieck-enough-injectives}给出这一存在性定理及证明概要。模范畴已有具体的内射构造；交换群值层也将有逐茎的构造。一般定理把这些例子共有的正合性与生成元条件提取出来，但本章对逆极限的具体计算仍使用此前明确说明的积正合性。

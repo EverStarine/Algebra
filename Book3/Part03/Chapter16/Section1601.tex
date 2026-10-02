@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 16.1 深度
-% 纲要位置：计划纲要.md，第 1995 行。
+% 纲要位置：计划纲要.md，第 2460 行。
 
 \section{深度}
 \label{b3:sec:1601}
@@ -11,7 +11,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 极大正则序列长度
-% * 深度的有限性与存在性
+% * 深度的有限性与存在性、基座及深度零判据
 % * 深度不超过维数
 %
 
@@ -31,7 +31,11 @@ e-\max\{\,i\mid H_i(y_1,\ldots,y_e;M)\ne0\,\}.
 \begin{proof}
 每添加一个正则元素，已选元素生成的理想严格增大：若新元素在原理想中，它在非零的逐次商上作用为零，不可能单射。Noether 环的理想升链条件保证这个过程在有限步停止。
 
-先看非零有限生成模 \(N\) 上的空序列何时已经极大。此时 \(\mathfrak m\) 中每个元素都是 \(N\) 的零因子。由\cref{b3:thm:associated-zero-divisors}及\cref{b3:lem:finite-prime-avoidance}，\(\mathfrak m\) 包含于某个 \(\mathfrak p\in\operatorname{Ass}_RN\)，于是 \(\mathfrak p=\mathfrak m\)。存在 \(n\ne0\) 满足 \(\mathfrak mn=0\)。因此 Koszul 最高同调
+先看非零有限生成模 \(N\) 上的空序列何时已经极大。此时 \(\mathfrak m\) 中每个元素都是 \(N\) 的零因子。由\cref{b3:thm:associated-zero-divisors}，
+\[
+\mathfrak m\subseteq\bigcup_{\mathfrak p\in\operatorname{Ass}_RN}\mathfrak p.
+\]
+因 \(R\) Noether 且 \(N\) 有限生成，\(\operatorname{Ass}_RN\) 是有限集，故\cref{b3:lem:finite-prime-avoidance}适用，给出 \(\mathfrak m\) 包含于某个 \(\mathfrak p\in\operatorname{Ass}_RN\)。局部环中每个素理想都包含于 \(\mathfrak m\)，于是 \(\mathfrak p=\mathfrak m\)。存在 \(n\ne0\) 满足 \(\mathfrak mn=0\)。因此 Koszul 最高同调
 \[
 H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 \]
@@ -42,7 +46,11 @@ H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 0\longrightarrow H_i(y;N)\longrightarrow H_i(y;N/xN)
 \longrightarrow H_{i-1}(y;N)\longrightarrow0
 \]
-正合。于是 \(q(N/xN)=q(N)+1\)。若极大正则序列长为 \(t\)，连续应用这个等式，在末端商处得到 \(e=q(M)+t\)。右端除 \(t\) 外不依赖所选序列，故所有长度相同。
+正合。令 \(q=q(N)\)，则 \(H_{q+1}(y;N)=0\)、\(H_q(y;N)\ne0\)。取 \(i=q+1\)，上列给出
+\[
+H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
+\]
+当 \(i>q+1\) 时，短正合列的两端均为零，中间项也为零。因此新的最高非零同调次数恰为 \(q+1\)，即 \(q(N/xN)=q(N)+1\)。若极大正则序列长为 \(t\)，连续应用这个等式，在末端商处得到 \(e=q(M)+t\)。右端除 \(t\) 外不依赖所选序列，故所有长度相同。
 \end{proof}
 
 \subsection{深度的存在性与有限性}
@@ -56,7 +64,7 @@ H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 定义的选择无关性由\cref{b3:thm:maximal-regular-length}保证，也说明非零有限生成模的深度是有限非负整数。固定极大理想的有限生成组后，它不超过生成元数。零模取无穷大的约定只用于公式，不把零模解释为可以在本章定义下具有任意长正则序列的对象。
 
 \begin{corollary}\label{b3:cor:depth-zero-socle}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。以下条件等价：
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\ne0\) 为有限生成的 \(R\) 模。以下条件等价：
 \begin{equivalences}
 \item \(\operatorname{depth}_RM=0\)；
 \item \(\mathfrak m\in\operatorname{Ass}_RM\)；
@@ -66,6 +74,28 @@ H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 \begin{proof}
 前两个条件的等价已在\cref{b3:thm:maximal-regular-length}的证明中得到。一个同态 \(k\rightarrow M\) 由 \(1\) 的像决定，该像恰为被 \(\mathfrak m\) 零化的元素；非零时其零化子等于 \(\mathfrak m\)，故后两个条件等价。
 \end{proof}
+
+深度零判据中的非零同态 \(k\to M\) 在 \(M\) 中给出一个简单子模。把模中的所有简单子模合在一起，就得到下面的子模。
+
+\begin{definition}\label{b3:def:socle}
+设 \((R,\mathfrak m)\) 为交换局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\) 为 \(R\) 模。\(M\) 中全部简单子模之和称为 \(M\) 的\term[jizuo]{基座}[socle]，记为 \(\operatorname{Soc}_RM\)。在此局部环情形，有
+\[
+\operatorname{Soc}_RM=(0:_M\mathfrak m)
+=\{\,u\in M\mid au=0\text{ 对所有 }a\in\mathfrak m\,\}.
+\]
+\end{definition}
+\symidx{\(\operatorname{Soc}_RM\)：模的基座}
+
+每个简单 \(R\) 模都同构于 \(k\)，因此被 \(\mathfrak m\) 零化；反过来，若 \(u\ne0\) 且 \(\mathfrak mu=0\)，则 \(Ru\cong k\) 是简单子模，证明了定义中两种描述相同。求值映射
+\[
+\operatorname{Hom}_R(k,M)\longrightarrow\operatorname{Soc}_RM,
+\qquad f\longmapsto f(1+\mathfrak m)
+\]
+是 \(k\) 线性同构，其逆把 \(u\) 送到同态 \(a+\mathfrak m\mapsto au\)。所以当 \(R\) 还是 Noether 环、\(M\ne0\) 且有限生成时，\cref{b3:cor:depth-zero-socle}给出
+\[
+\operatorname{depth}_RM=0\quad\Longleftrightarrow\quad
+\operatorname{Soc}_RM\ne0.
+\]
 
 \begin{corollary}\label{b3:cor:regular-quotient-depth}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(x\in\mathfrak m\) 在 \(M\) 上为非零因子。则

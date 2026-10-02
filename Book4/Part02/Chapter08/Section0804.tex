@@ -1,62 +1,117 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 8.4 正合性的障碍
-% 纲要位置：计划纲要.md，第 2668 行。
+% 纲要标题：### 8.4 特殊消解
+% 纲要标签：b4:sec:0704
+% 纲要位置：计划纲要.md，第 3293 行。
 
-\section{正合性的障碍}
-\label{b4:sec:0804}
+\section{特殊消解}
+\label{b4:sec:0704}
 
-一次 Ext 或 Tor 的消失能检测投射性、内射性或平坦性，但测试对象必须遍历相应的全部模。整数模与多项式理想的例子可以把正合性的失败具体算出来。
+消解的长度与形式会随底环改变：主理想整环给出短自由消解，正则列给出 Koszul 消解，群或代数乘法给出 bar 消解。每种公式都需要独立检查其正合性。
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * Ext 检验投射性和内射性
-% * Tor 检验平坦性
-% * 回到第二卷反例解释失败机制
+% * 主理想整环模的短消解
+% * Koszul 消解简介
+% * 群代数和代数的 bar 消解预告
+%
+% ---
 %
 
-\subsection{Ext 与投射性、内射性}
-\label{b4:subsec:0804:01}
+\subsection{主理想整环模的短消解}
+\label{b4:subsec:0704:01}
 
-\begin{theorem}\label{b4:thm:ext-projective-injective}
-设 \(R\) 是含幺环，\(P,I\) 是左 \(R\) 模。下列判据成立：
-\begin{enumerate}
-\item \(P\) 投射，当且仅当对所有左模 \(N\)，\(\operatorname{Ext}_R^1(P,N)=0\)；这也等价于所有正次 \(\operatorname{Ext}_R^n(P,N)\) 消失。
-\item \(I\) 内射，当且仅当对所有左模 \(M\)，\(\operatorname{Ext}_R^1(M,I)=0\)；这也等价于所有正次 \(\operatorname{Ext}_R^n(M,I)\) 消失。
-\end{enumerate}
+第二卷定理4.3.1证明了主理想整环上有限秩自由模的子模自由。有限基的证明可以逐个加入基向量，在每一步用一个主理想描述新增加的部分。任意基集合也能按良序逐个处理；到没有直接前驱的极限阶段，取此前各步的并。自由模中的向量只有有限个非零坐标，因此这种取并不会遗漏元素，也不会引入无限线性组合。
+
+\begin{theorem}\label{b4:thm:pid-free-submodule}
+设 \(R\) 是主理想整环，\(F\) 是任意秩自由 \(R\) 模。每个子模 \(N\subseteq F\) 都自由。因此每个 \(R\) 模 \(M\) 都有长度至多为一的自由消解 \(0\to F_1\to F_0\to M\to0\)。
 \end{theorem}
 \begin{proof}
-投射或内射时用集中于零次的相应消解，正次 Ext 消失。反过来，若 \(\operatorname{Ext}_R^1(P,-)=0\)，对任意满射 \(B\to C\) 及其核 \(A\)，第二变量长正合列使 \(\operatorname{Hom}_R(P,B)\to\operatorname{Hom}_R(P,C)\) 满，这恰为投射提升性质。若 \(\operatorname{Ext}_R^1(-,I)=0\)，对任意单射 \(A\to B\) 及其余核 \(C\)，第一变量长正合列使 \(\operatorname{Hom}_R(B,I)\to\operatorname{Hom}_R(A,I)\) 满，这恰为内射延拓性质。
+用选择公理良序排列 \(F\) 的一组基，写成 \((e_\alpha)_{\alpha<\kappa}\)。令 \(F_\beta\) 由 \(\alpha<\beta\) 的基向量生成，\(N_\beta=N\cap F_\beta\)。坐标投影使 \(N_{\alpha+1}/N_\alpha\) 同构于 \(R\) 的一个理想。若它非零，取其生成元 \(a_\alpha\)，并在 \(N_{\alpha+1}\) 选一个 \(e_\alpha\) 坐标为 \(a_\alpha\) 的元素 \(x_\alpha\)。任意 \(y\in N_{\alpha+1}\) 的该坐标是 \(ra_\alpha\)，所以 \(y-rx_\alpha\in N_\alpha\)；而 \(rx_\alpha\in N_\alpha\) 蕴含 \(ra_\alpha=0\)，由整环性得 \(r=0\)。因此 \(N_{\alpha+1}=N_\alpha\oplus Rx_\alpha\)。若该理想为零，则 \(N_{\alpha+1}=N_\alpha\)。
+
+极限序数 \(\lambda\) 处有 \(N_\lambda=\bigcup_{\beta<\lambda}N_\beta\)，因为每个向量只含有限个非零坐标。超限归纳遂表明全部选出的 \(x_\alpha\) 构成 \(N\) 的基：生成性由上述分解给出，任一有限关系则由最大下标的非零坐标逐次消去。最后取自由满射 \(F_0\to M\)，其核自由，即得短消解。
 \end{proof}
 
-“对所有模”的量词有实质作用。例如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Q)=0\)，并不能推出 \(\mathbb Z/2\) 投射；这里消失是第二变量内射造成的。又如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z,\mathbb Z)=0\)，不能推出第二个 \(\mathbb Z\) 内射，因为第一个 \(\mathbb Z\) 已投射。
+有限生成 \(M\) 时可先取有限秩 \(F_0\)，并由有限秩版本得到有限秩 \(F_1\)。若 \(M=R/(a)\)、\(a\ne0\)，其短消解就是乘 \(a\) 的映射；整环假设在这里保证该映射单射。
 
-\subsection{Tor 与平坦性}
-\label{b4:subsec:0804:02}
+\subsection{Koszul 消解简介}
+\label{b4:subsec:0704:02}
 
-\begin{theorem}\label{b4:thm:tor-flat-criterion}
-设 \(R\) 是含幺环，\(N\) 是左 \(R\) 模。下列条件等价：\(N\) 平坦；对每个右 \(R\) 模 \(M\)，\(\operatorname{Tor}_1^R(M,N)=0\)；对每个右模 \(M\) 及每个 \(n>0\)，\(\operatorname{Tor}_n^R(M,N)=0\)。右模的判据以相反侧的左模作测试。
-\end{theorem}
+对一个元素 \(x\in R\)，两项复形 \(K(x)=(0\to R\xrightarrow{x}R\to0)\) 可以是消解，也可以不是。其零次同调为 \(R/(x)\)，一次同调为 \(\{\,r\in R\mid xr=0\,\}\)。因此正合性准确地要求 \(x\) 不是零因子。
+
+\begin{definition}\label{b4:def:koszul-preview}
+设 \(R\) 是交换含幺环，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in R\)。取自由 \(R\) 模 \(R^r\) 的基 \(e_1,\ldots,e_r\)，令 \(K_n=\bigwedge^nR^r\)（\(0\le n\le r\)），其余次数取零，并用 \(R\) 线性延拓定义微分
+\[
+\mathrm{d}(e_{i_1}\wedge\cdots\wedge e_{i_n})
+=\sum_{j=1}^n(-1)^{j-1}x_{i_j}
+ e_{i_1}\wedge\cdots\widehat{e_{i_j}}\cdots\wedge e_{i_n}.
+\]
+所得链复形记为 \(K_\bullet(x_1,\ldots,x_r;R)\)，称为\term[koszul-fuxing]{Koszul 复形}[Koszul complex]。
+\end{definition}
+
+删去两个基向量的两种次序符号相反，且 \(x_ix_j=x_jx_i\)，所以 \(\mathrm{d}^2=0\)。外幂及楔积的定义与基已在第二卷第九章建立。第三卷定理15.3.2证明了正则序列给出 Koszul 消解；下面利用同调长正合列给出第二证明，考察每增加一个元素时同调如何变化。
+
+\begin{proposition}\label{b4:prop:koszul-resolution}
+设 \(R\) 是交换含幺环，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in R\)。假设 \((x_1,\ldots,x_r)\ne R\)，且对每个 \(1\le i\le r\)，乘 \(x_i\) 在 \(R/(x_1,\ldots,x_{i-1})\) 上单射，即按第三卷定义15.1.1，\(x_1,\ldots,x_r\) 是一个 \(R\) 正则序列。则 \(R\) 上的 Koszul 复形 \(K_\bullet(x_1,\ldots,x_r;R)\) 连同零次增广 \(R\to R/(x_1,\ldots,x_r)\) 是 \(R/(x_1,\ldots,x_r)\) 的有限自由消解。
+\end{proposition}
 \begin{proof}
-若 \(N\) 平坦，\(-\otimes_RN\) 正合，故右模投射消解在张量后仍在正次数正合；于是所有正次 Tor 为零。全消失当然蕴含一次消失。若一次均消失，对任意右模单射 \(A\to B\)，令 \(C=B/A\)。长正合列的片段
+\(r=0\) 时取集中于零次的 \(R\)，结论成立。对正整数 \(r\) 归纳。\(r=1\) 就是前面的两项计算。设 \(K'=K_\bullet(x_1,\ldots,x_{r-1};R)\)。按含不含 \(e_r\) 分解楔积，每个次数都有 \(K_n=K'_n\oplus(K'_{n-1}\wedge e_r)\)，且
 \[
-\operatorname{Tor}_1^R(C,N)\longrightarrow A\otimes_RN
-\longrightarrow B\otimes_RN
+\mathrm{d}(a+b\wedge e_r)=\mathrm{d}'a+(-1)^{n-1}x_rb+(\mathrm{d}'b)\wedge e_r.
 \]
-表明后一个箭头单射。张量积本已右正合，所以它现在正合，即 \(N\) 平坦。反环给出右模版本。
+令 \(Q_n=K'_{n-1}\)、\(\mathrm{d}_{Q,n}=\mathrm{d}'_{n-1}\)，以
+\[
+\iota_n(a)=a,\qquad q_n(a+b\wedge e_r)=b
+\]
+定义包含与投影。上述微分公式给出
+\(\mathrm{d}\iota=\iota\mathrm{d}'\) 及
+\(q_{n-1}\mathrm{d}=\mathrm{d}_{Q,n}q_n\)，因此它们组成短正合复形列
+\[
+0\longrightarrow K'_\bullet\xrightarrow{\iota}K_\bullet
+\xrightarrow{q}Q_\bullet\longrightarrow0.
+\]
+对 \(n\ge1\)，\(Q_n\) 中的圈 \(b\in K'_{n-1}\) 满足 \(\mathrm{d}'b=0\)。在 \(K_n\) 中以 \(b\wedge e_r\) 提升它，则
+\[
+\mathrm{d}(b\wedge e_r)=(-1)^{n-1}x_rb.
+\]
+故连接同态在识别 \(H_n(Q)=H_{n-1}(K')\) 后为
+\[
+\delta_n:H_{n-1}(K')\longrightarrow H_{n-1}(K'),
+\qquad [b]\longmapsto(-1)^{n-1}[x_rb].
+\]
+归纳假设使 \(K'\) 只在零次有同调。因此长正合列给出 \(H_n(K)=0\) 对 \(n\ge2\)，并在 \(n=1\) 处给出
+\[
+0\longrightarrow H_1(K)\longrightarrow R/(x_1,\ldots,x_{r-1})
+\xrightarrow{x_r}R/(x_1,\ldots,x_{r-1})
+\longrightarrow H_0(K)\longrightarrow0.
+\]
+假设使中间映射单射，故一次同调也消失，零次同调为所需商环。
 \end{proof}
 
-不必为了判定平坦性计算所有高次 Tor；一次已经足够。相反，只对某一个模计算一次 Tor，通常只能发现反例，不能得出整体平坦性。
-
-\subsection{非正合性的模论反例}
-\label{b4:subsec:0804:03}
-
-把 \(0\to\mathbb Z\xrightarrow{\times m}\mathbb Z\to\mathbb Z/m\to0\) 与 \(\mathbb Z/m\)、\(m>1\)，作张量，前一个乘 \(m\) 的映射变为零。长正合列现在告诉我们，丢失的单射性恰由 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/m,\mathbb Z/m)\cong\mathbb Z/m\) 映入第一个张量项。对同一列施加 \(\operatorname{Hom}_{\mathbb Z}(-,\mathbb Z)\)，乘 \(m\) 的映射不是满射；其余核正是 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z)\cong\mathbb Z/m\)。第二卷中出现的两种正合性失败由此有了可复用的计量方式。
-
-\ProseParagraphBreak
-再取 \(R=k[x,y]\) 的理想 \(\mathfrak m=(x,y)\)。短正合列 \(0\to\mathfrak m\to R\to k\to0\) 与上一节算出的二次 Tor 给出
+例如，设 \(k\) 为域，令 \(R=k[x,y]\)，则 \(k=R/(x,y)\) 有消解
 \[
-\operatorname{Tor}_1^R(\mathfrak m,k)\cong
-\operatorname{Tor}_2^R(k,k)\cong k.
+0\longrightarrow R\xrightarrow{c\mapsto(-yc,xc)}R^2
+\xrightarrow{(a,b)\mapsto xa+yb}R\longrightarrow k\longrightarrow0.
 \]
-故 \(\mathfrak m\) 不平坦，尽管它是整环中的无挠子模。这具体说明主理想整环上的无挠平坦结论不能直接推广到任意整环。这里用的是第一变量的长正合列及 \(R\) 的投射性；下一节把这种移位系统写出。
+把此消解与 \(k\) 在 \(R\) 上张量后，\(x,y\) 在 \(k\) 上的作用均为零，因此张量后的微分全为零。下一章将由此计算出
+\[
+\operatorname{Tor}_1^R(k,k)\cong k^2,
+\qquad \operatorname{Tor}_2^R(k,k)\cong k.
+\]
+这些非零同调来自张量后的复形；原来的 Koszul 消解在正次数仍然正合。
+
+\subsection{群代数与代数的 bar 消解}
+\label{b4:subsec:0704:03}
+
+群环和一般代数的自然模往往没有短消解，却有一种由“插入一个符号”控制正合性的自由消解。这里介绍其形式；后面群上同调与 Hochschild 上同调的章节将说明它为何适合相应问题。
+
+\begin{example}\label{b4:exm:homogeneous-bar}
+设 \(G\) 是群，\(k\) 是交换环。令 \(B_n\) 为以 \((g_0,\ldots,g_n)\in G^{n+1}\) 为基的自由 \(k\) 模，并让 \(G\) 同时左乘所有坐标。它是自由左 \(kG\) 模：每个轨道唯一含有首坐标为 \(1\) 的元组。令
+\[
+\mathrm{d}(g_0,\ldots,g_n)=\sum_{i=0}^n(-1)^i(g_0,\ldots,\widehat{g_i},\ldots,g_n),
+\qquad\varepsilon(g_0)=1.
+\]
+两次删除的项成对抵消，故 \(\mathrm{d}^2=0\)。在底层 \(k\) 模上令 \(s_n(g_0,\ldots,g_n)=(1,g_0,\ldots,g_n)\)、\(s_{-1}(1)=(1)\)，则 \(\mathrm{d}s+s\mathrm{d}=1\)，因为删除新插入的首项给出原元组，其余项与 \(s\mathrm{d}\) 抵消。因此底层增广 \(k\) 模复形正合。所有微分与增广都是 \(kG\) 线性的，而它们的核、像在遗忘 \(G\) 作用后仍是同一底层子模，所以也得到 \(kG\) 模的正合列。这便是平凡左 \(kG\) 模 \(k\) 的自由消解。收缩 \(s\) 通常不具 \(G\) 等变性，因而不能据此断言该增广复形在 \(kG\) 模范畴中可缩。
+\end{example}
+
+代数的 bar 构造把元组换成张量串。例如域 \(k\) 上含幺代数 \(A\) 的各项 \(A^{\otimes_k(n+2)}\)，以首尾因子承担 \(A\) 双模作用，微分交错地乘合相邻因子，增广为 \(A\otimes_k A\to A\) 的乘法。在左端插入 \(1\) 给出底层向量空间的同样收缩。每项作为 \(A\otimes_k A^{\mathrm{op}}\) 模自由，因为中间张量因子有 \(k\) 基。双模约定、归一化及由此得到的上同调计算见\chapref{b4:ch:12}。

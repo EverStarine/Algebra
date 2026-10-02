@@ -3,25 +3,26 @@
 
 \chapter{局部标准基、幂级数与切锥计算}
 \label{b3:app:F}
+\BookChapterNumber{b3:app:F}
 
 % 纲要细目（与计划纲要同步）：
 % > 所需基础是第2、8、11、13章的局部化、全局 Gröbner 基、滤过与完备化。正文中的维数、深度和局部环结构不以本附录为前提；局部计算专题读者可在完备化后插读。
 
 
 \begin{chapterabstract}
-本附录研究局部单项式序、弱正规形及形式除法，说明单位乘子如何使局部约化具有可核验的有限表达。初始齐次理想与伴随分次环用于计算切锥、局部长度及 Jacobian 商的长度。
+局部首项约化可能不断产生更高次项。Mora 弱正规形的单位乘子与暂存余项机制解释了如何得到有限证书，本附录通过算例核验这一机制，并证明局部次数序下的形式除法。初始齐次理想与伴随分次环用于切锥和 Hilbert--Samuel 数据，标准基及截断证书还用于 Jacobian 商等有限长度计算。
 \end{chapterabstract}
 
 \begin{learninggoals}
 \begin{itemize}
 \item 区分全局序、局部序、混合序以及它们所确定的工作环。
-\item 用有限等式和单位条件验证弱正规形，并用无限约化的例子区分形式收敛与有限步终止。
+\item 用有限等式和单位条件验证弱正规形证书，并区分 Mora 方法的基本机制、有限步终止与形式收敛。
 \item 从全部初始关系计算切锥，辨认任意生成元的最低次项可能遗漏的关系。
 \item 给出有限长度和重数计算所需的截断依据，用生成元变换和核关系验证局部模计算。
 \end{itemize}
 \end{learninggoals}
 
-在原点的局部环中，\(1-x\) 是单位，所以 \(x\) 与 \(x-x^2=x(1-x)\) 生成同一个理想。但若按全局多项式的方式用 \(x-x^2\) 反复约化 \(x\)，先余 \(x^2\)，再余 \(x^3\)，如此继续而不会停。这不是理想成员资格失效，而是所用的约化过程没有利用局部单位。
+在原点的局部环中，\(1-x\) 是单位，所以 \(x\) 与 \(x-x^2=x(1-x)\) 生成同一个理想。若按局部序把低次项 \(x\) 作为首项，却仍照搬全局除法中逐次消去首项的做法，用 \(x-x^2\) 反复约化 \(x\)，便先余 \(x^2\)，再余 \(x^3\)，如此继续而不会停。这不是理想成员资格失效，而是所用的约化过程没有利用局部单位。
 
 \ProseParagraphBreak
 
@@ -32,7 +33,22 @@
 本附录需要\chapref{b3:ch:02}的局部化、\chapref{b3:ch:08}的全局 Gröbner 基、\chapref{b3:ch:11}的滤过与 Hilbert--Samuel 理论，以及\chapref{b3:ch:13}的完备化。最后讨论自由消解时调用\chapref{b3:ch:21}。前三节的具体计算以完备化为止。
 
 \ProseParagraphBreak
-Cox、Little 与 O'Shea 的《Using Algebraic Geometry》把局部计算与零点重数、奇点不变量联系起来，见\cite[Chapter 4, pp. 130--131]{CoxLittleOShea1998UsingAG}。这里采用同样的问题背景，给出可直接核验的代数实例。这里用 Mora 方法解释单位乘子、暂存余项和有限表示的原理；一般算法的终止还需另作论证。形式除法及本附录用于长度和切锥的结论在下文证明。
+记 \(x=(x_1,\ldots,x_n)\)，\(k\) 为域。\cref{b3:tab:F-computational-settings}比较三种工作环中计算的完成方式；其中成员证书对应余式为零的情形。多项式系数的有限表示、局部单位的倒置与形式级数的逐阶极限提供了不同的核验依据。
+
+\begin{table}[htbp]
+\centering
+\caption{全局、局部与形式计算的完成方式}
+\label{b3:tab:F-computational-settings}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.17\textwidth}>{\raggedright\arraybackslash}p{.20\textwidth}>{\raggedright\arraybackslash}p{.25\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+工作环 & 方法 & 完成方式 & 成员证书 \\
+\midrule
+\(k[x]\) & 全局 Gröbner 基与约化 & 有限步停止 & \(f=\sum_i a_i g_i\)，\(a_i\in k[x]\) \\
+\(k[x]_{(x)}\) & 局部标准基与 Mora 约化 & 带单位乘子的有限等式 & \(uf=\sum_i a_i g_i\)，\(u(0)\ne0\)，\(u,a_i\in k[x]\) \\
+\(k[\![x]\!]\) & 局部次数序的形式除法 & 各有限阶系数最终稳定 & \(f=\sum_i q_i g_i\)，\(q_i\in k[\![x]\!]\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \input{Appendices/AppendixF/SectionF01}
 \input{Appendices/AppendixF/SectionF02}
@@ -40,7 +56,7 @@ Cox、Little 与 O'Shea 的《Using Algebraic Geometry》把局部计算与零�
 \input{Appendices/AppendixF/SectionF04}
 
 \begin{chaptersummary}
-局部序把低阶项放在前面，却失去全局除法所用的良序终止条件。弱正规形允许单位乘子，因而能够把某些无限约化压缩成有限等式；形式除法则以每个次数的系数最终稳定为依据，得到幂级数意义下的商与余项。两者都需要说明各自的工作环。
+局部序把低阶项放在前面，却失去全局除法所用的良序终止条件。弱正规形证书允许单位乘子，本附录的算例把无限约化改写成带单位的有限等式；一般 Mora 方法还须控制首项与约化元的选择。形式除法则以每个次数的系数最终稳定为依据，得到幂级数意义下的商与余项。两者都需要说明各自的工作环。
 
 \ProseParagraphBreak
 切锥由理想中全部元素的初始齐次形式决定。标准基提供足够的初始关系，单项式计数继而给出 Hilbert 数据。有限截断只有附带理想幂包含关系，才能决定完整局部长度。模和消解的计算继续遵守同一要求：单位消去、生成元更换及核关系都要留下能够验证的等式。
@@ -89,14 +105,14 @@ y^j-x^{2j}=(y-x^2)\sum_{r=0}^{j-1}y^{j-1-r}x^{2r}
 对 \(R=k[x,y]_{(x,y)}\)、\(I=(x^2-y^3,xy-y^4)\)，写出 \(y^4\in I\) 的带单位证书，并求 \(R/I\) 的基、极大理想幂和 Hilbert 级数。
 \end{exercise}
 \begin{solution}
-证书为 \((x-1)y^4=y(x^2-y^3)-x(xy-y^4)\)，其中 \(x-1\) 是单位。于是 \(I=(x^2-y^3,xy,y^4)\)。对应全局字典序 Gröbner 基给出基 \(1,x,y,y^2,y^3\)，且商为局部环。其极大理想平方为 \((y^2,y^3)\)，立方为 \((y^3)\)，四次幂为零。因此伴随分次环的级数为 \(1+2t+t^2+t^3\)，局部长度为五。
+证书为 \((x-1)y^4=y(x^2-y^3)-x(xy-y^4)\)，其中 \(x-1\) 是单位。于是 \(I=(x^2-y^3,xy,y^4)R\)。令 \(J=(x^2-y^3,xy,y^4)\subset k[x,y]\)。这三个多项式关于 \(x>y\) 的字典序构成 \(J\) 的全局 Gröbner 基，给出 \(k[x,y]/J\) 的基 \(1,x,y,y^2,y^3\)。商中 \(x,y\) 均幂零，唯一极大理想是 \((x,y)/J\)，所以在 \((x,y)\) 处局部化不改变这个商，上述五个元素也给出 \(R/I\) 的基。其极大理想平方为 \((y^2,y^3)\)，立方为 \((y^3)\)，四次幂为零。因此伴随分次环的级数为 \(1+2t+t^2+t^3\)，局部长度为五。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-tangent-node}
 设 \(\operatorname{char}k\ne2\)。比较原点处 \(y^2-x^3=0\) 与 \(y^2-x^2-x^3=0\) 的切锥，并计算各自 Hilbert--Samuel 重数。
 \end{exercise}
 \begin{solution}
-两条超曲面的初始齐次关系分别为 \(Y^2\) 和 \(Y^2-X^2=(Y-X)(Y+X)\)。前者是二重直线，后者是两条不同直线。两个二次齐次主理想商的 Hilbert 级数均为 \((1-t^2)/(1-t)^2=(1+t)/(1-t)\)，故累积函数为 \(2q+1\)，重数均为二。重数相同不意味着切锥具有相同的不可约分支结构。
+两条超曲面的初始齐次关系分别为 \(Y^2\) 和 \(Y^2-X^2=(Y-X)(Y+X)\)。前者是二重直线，后者是两条不同直线。两个二次齐次主理想商的 Hilbert 级数均为 \((1-t^2)/(1-t)^2=(1+t)/(1-t)\)，故累积函数为 \(2q+1\)，重数均为二。重数相同不意味着切锥具有相同的不可约分量结构。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-length-rectangle}
@@ -118,7 +134,7 @@ y^j-x^{2j}=(y-x^2)\sum_{r=0}^{j-1}y^{j-1-r}x^{2r}
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-jacobian}
-设 \(k\) 特征零，\(f=x^3+y^4\in k[\![x,y]\!]\)。求 \(R/(\partial_xf,\partial_yf)\) 和 \(R/(f,\partial_xf,\partial_yf)\) 的长度。
+设 \(k\) 为特征零的域，\(R=k[\![x,y]\!]\)，\(f=x^3+y^4\in R\)。求 \(R/(\partial_xf,\partial_yf)\) 和 \(R/(f,\partial_xf,\partial_yf)\) 的长度。
 \end{exercise}
 \begin{solution}
 偏导数理想为 \((3x^2,4y^3)=(x^2,y^3)\)。商基为 \(x^iy^j\)，其中 \(i=0,1\)、\(j=0,1,2\)，所以长为六。\(f=x(x^2)+y(y^3)\) 已在偏导数理想中，加入 \(f\) 不改变商，第二个长度也为六。整个计算使用 \(3,4\) 可逆，故特征零假设在这里确有作用。

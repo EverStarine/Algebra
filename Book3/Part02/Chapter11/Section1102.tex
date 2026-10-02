@@ -1,6 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.2 Hilbert 函数
-% 本轮补充的纲要细目：
+% 纲要位置：工作记录/计划纲要.md，第 2243 行。
+% 纲要细目（写作范围）：
+% * 分次片的维数或长度
+% * Hilbert 级数的有理性
+% * 从级数读取增长
+% * 用初始单项式理想和包含排除实际计算 Hilbert 数据
 % * 按原多项式次数计算同时变号不变环的权二分次 Hilbert 级数，用乘以齐次非零因子的正合列与单项式计数互相核验
 % * 证明各次有限维的分次代数之间若有保持次数的满射且 Hilbert 级数相同，则该满射为同构；给出无映射时结论失效的反例
 % #### 11.2.1 分次片的维数与长度
@@ -8,15 +13,6 @@
 % #### 11.2.3 Hilbert 级数与增长
 % #### 11.2.4 从初始理想计算 Hilbert 数据
 % #### 11.2.5 不变环的分次与展示核验
-% #### 11.2.6 有限点集上的求值码
-% 纲要位置：工作记录/计划纲要.md，第 2142 行。
-% 纲要细目（写作范围）：
-% * 分次片的维数或长度
-% * Hilbert 级数的有理性
-% * 从级数读取增长
-% * 用初始单项式理想和包含排除实际计算 Hilbert 数据
-% * 同时变号不变环的加权 Hilbert 级数与分次展示核验
-% * 有限点集上的求值码、次数滤过与维数计数；低次数 Reed–Muller 实例
 
 \section{Hilbert 函数}
 \label{b3:sec:1102}
@@ -26,10 +22,15 @@
 \subsection{分次片的维数与长度}
 \label{b3:subsec:1102:01}
 
-本节设 \(A=A_0[x_1,\ldots,x_r]\) 为正分次环，\(A_0\) 为 Artin 环，\(d_i=\deg x_i>0\)，\(M\) 为有限生成分次 \(A\) 模。由\cref{b3:prop:graded-noetherian}，\(A\) 是 Noether 环；各 \(M_n\) 是有限生成的 \(A_0\) 模，故长度有限。
+本节设 \(A\) 为交换正分次环，\(A_0\) 为 Artin 环，\(A\) 由有限个齐次元素 \(x_1,\ldots,x_r\) 作为 \(A_0\) 代数生成，\(d_i=\deg x_i>0\)，\(M\) 为有限生成分次 \(A\) 模。记号 \(A=A_0[x_1,\ldots,x_r]\) 表示这些元素生成了 \(A\)，允许它们满足关系。给不定元 \(X_i\) 赋次数 \(d_i\)，就有分次满同态
+\[
+A_0[X_1,\ldots,X_r]\twoheadrightarrow A,
+\qquad X_i\longmapsto x_i.
+\]
+由\cref{b3:prop:graded-noetherian}，\(A\) 是 Noether 环；各 \(M_n\) 是有限生成的 \(A_0\) 模，故长度有限。
 
 \begin{definition}\label{b3:def:hilbert-function-series}
-设 \(A=A_0[x_1,\ldots,x_r]\) 为交换正分次环，\(A_0\) 为 Artin 环，各 \(x_i\) 的次数为正整数，\(M\) 为有限生成分次 \(A\) 模。\(M\) 的\term[hilbert-hanshu]{Hilbert 函数}[Hilbert function]及\term[hilbert-jishu]{Hilbert 级数}[Hilbert series]分别为
+设 \(A=\bigoplus_{n\ge0}A_n\) 为交换正分次环，\(A_0\) 为 Artin 环，\(A=A_0[x_1,\ldots,x_r]\)，其中 \(x_i\) 为正次数齐次代数生成元，不要求代数独立。设 \(M\) 为有限生成分次 \(A\) 模。\(M\) 的\term[hilbert-hanshu]{Hilbert 函数}[Hilbert function]及\term[hilbert-jishu]{Hilbert 级数}[Hilbert series]分别为
 \[
 h_M(n)=\ell_{A_0}(M_n),\qquad
 H_M(t)=\sum_{n\in\mathbb Z}h_M(n)\cdot t^n\in\mathbb Z((t)).
@@ -45,7 +46,7 @@ H_{M(a)}(t)=t^{-a}\cdot H_M(t).
 
 例如 \(k[x_1,\ldots,x_r]\) 取标准分次时，次数 \(n\) 的单项式数为 \(\binom{n+r-1}{r-1}\)、\(r\ge1\)，所以
 \[
-H_{k[x_1,\ldots,x_r]}(t)=\frac1{(1-t)^r}.
+H_{k[x_1,\ldots,x_r]}(t)=\dfrac1{(1-t)^r}.
 \]
 这也可直接把每个变量的几何级数相乘得到。若底环为任意 Artin 环 \(A_0\)，同一自由单项式基使分子乘上 \(\ell_{A_0}(A_0)\)。
 
@@ -55,9 +56,9 @@ H_{k[x_1,\ldots,x_r]}(t)=\frac1{(1-t)^r}.
 下面的\term[hilbert-serre-dingli]{Hilbert–Serre 定理}[Hilbert--Serre theorem]把有限生成条件转化为级数分母的有限形式。
 
 \begin{theorem}[Hilbert–Serre]\label{b3:thm:hilbert-serre}
-设 \(A=A_0[x_1,\ldots,x_r]\) 为交换正分次环，\(A_0\) 为 Artin 环，\(\deg x_i=d_i>0\)，\(M\) 为有限生成分次 \(A\) 模。则存在整系数 Laurent 多项式 \(Q(t)\)，使
+设 \(A=\bigoplus_{n\ge0}A_n\) 为交换正分次环，\(A_0\) 为 Artin 环，\(A=A_0[x_1,\ldots,x_r]\)，其中 \(x_i\) 为次数 \(d_i>0\) 的齐次代数生成元，不要求代数独立。设 \(M\) 为有限生成分次 \(A\) 模。则存在整系数 Laurent 多项式 \(Q(t)\)，使
 \[
-H_M(t)=\frac{Q(t)}{\prod_{i=1}^r(1-t^{d_i})}.
+H_M(t)=\dfrac{Q(t)}{\prod_{i=1}^r(1-t^{d_i})}.
 \]
 若 \(M_n=0\) 对 \(n<0\) 成立，则可取 \(Q(t)\in\mathbb Z[t]\)。
 \end{theorem}
@@ -69,7 +70,7 @@ H_M(t)=\frac{Q(t)}{\prod_{i=1}^r(1-t^{d_i})}.
 0\longrightarrow K(-d)\longrightarrow M(-d)
 \xrightarrow{\ x_r\ }M\longrightarrow L\longrightarrow0.
 \]
-\(K,L\) 都有限生成，并且被 \(x_r\) 零化，故可视为由前 \(r-1\) 个元素生成的代数上的有限生成分次模。逐片长度可加与\eqref{b3:eq:hilbert-shift}给出
+由 \(A\) 的 Noether 性，\(K,L\) 都有限生成；它们被 \(x_r\) 零化，因而是商代数 \(A/(x_r)\) 上的有限生成分次模。这个商代数由前 \(r-1\) 个生成元的像作为 \(A_0\) 代数生成。逐片长度可加与\eqref{b3:eq:hilbert-shift}给出
 \begin{equation}\label{b3:eq:hilbert-induction}
 (1-t^d)H_M(t)=H_L(t)-t^d\cdot H_K(t).
 \end{equation}
@@ -83,18 +84,18 @@ H_M(t)=\frac{Q(t)}{\prod_{i=1}^r(1-t^{d_i})}.
 
 标准分次时，分母全由 \(1-t\) 构成。把公共因子约去，可写
 \[
-H_M(t)=\frac{Q(t)}{(1-t)^d},\qquad Q(1)\ne0
+H_M(t)=\dfrac{Q(t)}{(1-t)^d},\qquad Q(1)\ne0
 \]
 或 \(d=0\)、\(H_M\) 本身为 Laurent 多项式。对于非零模，\(d\) 是在 \(t=1\) 处的极点阶数，约定没有极点时 \(d=0\)。下一节将证明它恰等于模支集的维数。
 
 \ProseParagraphBreak
 例如对 \(A=k[x,y]\)、\(M=A/(x^2)\)，乘 \(x^2\) 在 \(A\) 上单射，故
 \[
-H_M(t)=\frac{1-t^2}{(1-t)^2}=\frac{1+t}{1-t}.
+H_M(t)=\dfrac{1-t^2}{(1-t)^2}=\dfrac{1+t}{1-t}.
 \]
 所以 \(h_M(0)=1\)，而 \(h_M(n)=2\) 对 \(n\ge1\) 成立。若改取 \(A/(x^2,xy)\)，标准单项式为 \(1,x,y,y^2,\ldots\)，因而
 \[
-H_{A/(x^2,xy)}(t)=\frac1{1-t}+t.
+H_{A/(x^2,xy)}(t)=\dfrac1{1-t}+t.
 \]
 额外的嵌入部分只改变有限多个低次值，却不改变最终的常数一。
 
@@ -109,7 +110,7 @@ Hilbert 级数的有理性还可以变成实际的计数方法。齐次理想的
 \begin{proposition}\label{b3:prop:hilbert-initial-count}
 设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(I\subseteq S\) 为齐次理想，并固定全局单项式序。则 \(S/I\) 与 \(S/\operatorname{in}(I)\) 有相同的 Hilbert 函数。若 \(\operatorname{in}(I)=(m_1,\ldots,m_s)\)，则
 \[
-H_{S/I}(t)=\frac{\displaystyle\sum_{J\subseteq\{1,\ldots,s\}}
+H_{S/I}(t)=\dfrac{\displaystyle\sum_{J\subseteq\{1,\ldots,s\}}
 (-1)^{|J|}t^{\deg\operatorname{lcm}(m_j:j\in J)}}{(1-t)^n},
 \]
 空集的最小公倍式约定为一。
@@ -130,7 +131,7 @@ z^j,\quad xz^j,\quad yz^j,\quad y^2z^j\qquad(j\ge0).
 \]
 所以
 \[
-H_{S/I}(t)=\frac{1+2t+t^2}{1-t},\qquad
+H_{S/I}(t)=\dfrac{1+2t+t^2}{1-t},\qquad
 h_{S/I}(d)=\begin{cases}1,&d=0,\\3,&d=1,\\4,&d\ge2.\end{cases}
 \]
 下一节的维数与重数定理将说明：分母的一阶极点给出维数一，分子在一处的值给出重数四。这里先通过逐项计数得到函数，随后才解释这些数的几何意义。
@@ -143,8 +144,8 @@ h_{S/I}(d)=\begin{cases}1,&d=0,\\3,&d=1,\\4,&d\ge2.\end{cases}
 \begin{example}\label{b3:exm:sign-invariant-hilbert}
 设 \(k\) 为特征不为二的域，\(B=k[x,y]^{C_2}\)，其中非单位元把 \(x,y\) 同时变号。给 \(k[x,y]\) 取 \(\deg x=\deg y=1\)，并令 \(B_n=B\cap k[x,y]_n\)。则
 \begin{equation}\label{b3:eq:sign-invariant-hilbert}
-H_B(t)=\frac{1-t^4}{(1-t^2)^3}
-=\frac{1+t^2}{(1-t^2)^2},
+H_B(t)=\dfrac{1-t^4}{(1-t^2)^3}
+=\dfrac{1+t^2}{(1-t^2)^2},
 \qquad
 \dim_k B_n=
 \begin{cases}
@@ -165,22 +166,22 @@ B\cong S/(q),\qquad q=uw-v^2,\qquad \deg q=4.
 \]
 每个变量的幂贡献级数 \(1/(1-t^2)\)，故 \(H_S(t)=(1-t^2)^{-3}\)。由逐次维数可加和\eqref{b3:eq:hilbert-shift}，便得
 \[
-H_B(t)=H_S(t)-t^4\cdot H_S(t)=\frac{1-t^4}{(1-t^2)^3}.
+H_B(t)=H_S(t)-t^4\cdot H_S(t)=\dfrac{1-t^4}{(1-t^2)^3}.
 \]
 这里使用的是 \(q\) 在取商前的 \(S\) 上为非零因子；不能仅从“有一条齐次关系”便省略单射性检查。
 
 另一方面，偶数次 \(2m\) 的全部 \(2m+1\) 个单项式都固定，奇数次没有非零不变元。于是也可直接计算
 \[
 H_B(t)=\sum_{m\ge0}(2m+1)t^{2m}
-=\frac{2t^2}{(1-t^2)^2}+\frac1{1-t^2}
-=\frac{1+t^2}{(1-t^2)^2}.
+=\dfrac{2t^2}{(1-t^2)^2}+\dfrac1{1-t^2}
+=\dfrac{1+t^2}{(1-t^2)^2}.
 \]
 中间等式可逐项乘以 \((1-t^2)^2\) 核验，完全是形式级数恒等式。这同时给出所述 Hilbert 函数。
 \end{proof}
 
 若另定义 \(\widetilde B_m=B_{2m}\)，便是把原次数二改记为次数一，得到标准分次环及级数
 \[
-H_{\widetilde B}(z)=\frac{1+z}{(1-z)^2},
+H_{\widetilde B}(z)=\dfrac{1+z}{(1-z)^2},
 \qquad H_B(t)=H_{\widetilde B}(t^2).
 \]
 两者使用同一个环的乘法，却记录不同的次数。直接把 \(u,v,w\) 视为次数一而仍声称计算的是 \(B_n\)，会把所有非零分次片移到错误的位置。
@@ -201,41 +202,3 @@ H_{\widetilde B}(z)=\frac{1+z}{(1-z)^2},
 \end{proof}
 
 例如在同时变号作用中，若已证明 \(x^2,xy,y^2\) 生成不变环，并验证 \(uw-v^2\) 是关系，就得到 \(S/(uw-v^2)\to B\) 的分次满射。取商前乘以 \(uw-v^2\) 的正合列计算其源的级数，独立的偶数次单项式计数计算其目标的级数；两者相等后，\cref{b3:prop:hilbert-surjection-isomorphism}便给出核恰为这一条关系的另一证明。若尚未证明候选元生成目标，或未说明映射保持所用分次，单独写出两个相同的有理函数还不能得到这个结论。
-
-\subsection{有限点集上的求值码}
-\label{b3:subsec:1102:05}
-
-有限域上的多项式求值把次数计数用于编码。第一卷附录B用一元多项式建立 Reed--Solomon 码\footnote{里德（Irving Stoy Reed，1923-2012），美国数学家及工程师，研究纠错码。所罗门（Gustave Solomon，1930-1996），美国数学家及工程师，与 Reed 合作提出代数纠错码。}；现在允许多个变量。需要注意，仿射点的消失理想通常不齐次，所以首先使用全次数滤过。
-
-\begin{definition}\label{b3:def:evaluation-code-finite-set}
-设 \(k=\mathbb F_q\)，\(X=\{P_1,\ldots,P_N\}\subseteq k^n\) 为非空有限点集，\(d\ge0\)。记 \(S_{\le d}\subset k[x_1,\ldots,x_n]\) 为全次数不超过 \(d\) 的多项式空间。线性映射
-\[
-\operatorname{ev}_{X,d}:S_{\le d}\longrightarrow k^N,
-\qquad f\longmapsto\bigl(f(P_1),\ldots,f(P_N)\bigr)
-\]
-的像称为 \(X\) 上次数界为 \(d\) 的\term[qiuzhi-ma]{求值码}[evaluation code]，记为 \(C_X(d)\)。
-\end{definition}
-
-\begin{proposition}\label{b3:prop:evaluation-code-hilbert}
-设 \(k=\mathbb F_q\)，\(S=k[x_1,\ldots,x_n]\)，\(X\subseteq k^n\) 是非空有限点集，\(I(X)\subseteq S\) 为其消失理想，\(d\ge0\) 为整数，\(C_X(d)\) 为全次数不超过 \(d\) 的多项式在 \(X\) 上的求值码。固定先比较全次数的全局单项式序，则 \(\dim_k C_X(d)\) 等于相对于 \(I(X)\) 的全次数不超过 \(d\) 的标准单项式数。该数也是商代数 \(S/I(X)\) 的全次数滤过第 \(d\) 项的维数。
-\end{proposition}
-\begin{proof}
-求值映射的核正是 \(I(X)\cap S_{\le d}\)，所以像同构于 \(S_{\le d}/(I(X)\cap S_{\le d})\)。因所用次序先比较全次数，每次 Gröbner 除法都不会增大多项式的全次数。故该商由次数不超过 \(d\) 的标准单项式生成；它们的独立性仍由首项判据给出。最后一个等式就是商滤过的定义。
-\end{proof}
-
-对整个点集 \(X=\mathbb F_q^n\)，其消失理想为
-\[
-I(X)=(x_1^q-x_1,\ldots,x_n^q-x_n).
-\]
-右边的生成元在每一点消失，且其首单项式两两互素，构成 Gröbner 基。若一个余式在所有点上为零，则它关于每个变量的次数都小于 \(q\)。把其他变量固定后用一元根数界，再对变量数归纳，便知余式为零，这证明反向包含。因此求值码的维数为
-\[
-\#\{\,(a_1,\ldots,a_n)\mid 0\le a_i<q,\ a_1+\cdots+a_n\le d\,\}.
-\]
-这里的计数级数可写为 \((1+t+\cdots+t^{q-1})^n/(1-t)\)；分母的额外因子表示按次数累计，而不是把仿射坐标代数误作标准分次环。这类码称为\term[Reed-Muller-ma]{Reed--Muller 码}[Reed--Muller code]；\footnote{穆勒（David Eugene Muller，1924-2008），美国数学家及计算机科学家，研究编码与自动机；Reed 已在本卷前文介绍。}本节采用整个仿射空间和全次数上界的约定。
-
-\ProseParagraphBreak
-取 \(q=2,n=2,d=1\)，按 \((0,0),(1,0),(0,1),(1,1)\) 排列求值点。基 \(1,x,y\) 给出生成矩阵
-\[
-G=\begin{pmatrix}1&1&1&1\\0&1&0&1\\0&0&1&1\end{pmatrix}.
-\]
-其秩为三，故码有八个码字。非恒定仿射线性函数的零点恰为两点：非零线性函数 \(\mathbb F_2^2\to\mathbb F_2\) 满射，每个纤维有两点。常数一的重量为四，所以最小距离为二。这是一个 \([4,3,2]\) 码，能够检测一个错误，却不能唯一纠正任意一个错误。计算 Hilbert 数据在这里直接求出了可传递信息的维数，距离则还需要另作零点计数。

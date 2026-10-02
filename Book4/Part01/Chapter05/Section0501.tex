@@ -1,0 +1,146 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 5.1 幺半结构与张量的相容性
+% 纲要标签：b4:sec:monoidal-structure
+% 纲要细目（写作范围）：
+% #### 5.1.1 结合约束与单位约束
+% #### 5.1.2 模、集合与幺半函子
+% #### 5.1.3 辫状结构与对称结构
+
+\section{幺半结构与张量的相容性}
+\label{b4:sec:monoidal-structure}
+
+三个模的张量积可以写成 \((M\otimes N)\otimes P\)，也可以写成 \(M\otimes(N\otimes P)\)。两者的元素构造不同，却有把 \((m\otimes n)\otimes p\) 送到 \(m\otimes(n\otimes p)\) 的典范同构。四个模出现时，改括号已有数条途径；若它们给出不同映射，省略括号就会隐藏真正的歧义。幺半结构把这些改括号与插入单位的映射列为数据，并规定它们必须满足的相容等式。
+
+\subsection{结合约束与单位约束}
+\label{b4:subsec:monoidal-constraints}
+
+\begin{definition}\label{b4:def:monoidal-category}
+设 \(\mathcal C\) 为范畴，给定双函子 \(\otimes:\mathcal C\times\mathcal C\to\mathcal C\)、对象 \(I\)，以及关于所列对象自然的同构
+\[
+\alpha_{X,Y,Z}:(X\otimes Y)\otimes Z\longrightarrow X\otimes(Y\otimes Z),
+\qquad
+\lambda_X:I\otimes X\longrightarrow X,
+\qquad
+\rho_X:X\otimes I\longrightarrow X.
+\]
+若对任意对象 \(W,X,Y,Z\)，有五边形等式
+\begin{equation}\label{b4:eq:monoidal-pentagon}
+\begin{aligned}
+\alpha_{W,X,Y\otimes Z}\circ\alpha_{W\otimes X,Y,Z}
+={}&(1_W\otimes\alpha_{X,Y,Z})\circ\alpha_{W,X\otimes Y,Z}
+\circ(\alpha_{W,X,Y}\otimes1_Z),
+\end{aligned}
+\end{equation}
+且对任意 \(X,Y\)，有三角等式
+\begin{equation}\label{b4:eq:monoidal-triangle}
+(1_X\otimes\lambda_Y)\circ\alpha_{X,I,Y}
+=\rho_X\otimes1_Y,
+\end{equation}
+则称这组数据为一个\term[yaoban-fanchou]{幺半范畴}[monoidal category]。\(I\) 称为单位对象，\(\alpha\) 称为结合约束，\(\lambda,\rho\) 称为单位约束。若这些约束都是恒等态射，就称幺半范畴为严格的。
+\end{definition}
+
+五边形等式的两边都从 \(((W\otimes X)\otimes Y)\otimes Z\) 到 \(W\otimes(X\otimes(Y\otimes Z))\)：左边改括号两次，右边改三次。它规定的是映射相等，并非只说两端对象同构。三角等式比较两种删除中间单位的方法：先改括号再删 \(I\)，或直接删 \(I\)。下面的图显示后一要求。
+\[
+\begin{tikzcd}[column sep=large]
+(X\otimes I)\otimes Y \ar[rr,"\alpha_{X,I,Y}"] \ar[dr,"\rho_X\otimes1_Y"']
+&&X\otimes(I\otimes Y)\ar[dl,"1_X\otimes\lambda_Y"]\\
+&X\otimes Y&
+\end{tikzcd}
+\]
+自然性还有另一项职责。例如，对 \(f:X\to X'\)、\(g:Y\to Y'\)、\(h:Z\to Z'\)，它要求
+\[
+\alpha_{X',Y',Z'}\circ((f\otimes g)\otimes h)
+=(f\otimes(g\otimes h))\circ\alpha_{X,Y,Z}.
+\]
+因此先施行同态再改括号，与先改括号再施行同态，结果相同。
+
+\subsection{模、集合与幺半函子}
+\label{b4:subsec:monoidal-examples-functors}
+
+第二卷第6.1--6.2节已经构造张量积及其结合、单位同构。把这些同构放在一起，可以直接检验上述公理。
+
+\begin{proposition}\label{b4:prop:monoidal-modules-sets}
+设 \(R\) 为交换含幺环。左 \(R\) 模范畴在 \(\otimes_R\) 下为幺半范畴，单位对象为 \(R\)，其约束由
+\[
+\begin{aligned}
+\alpha((m\otimes n)\otimes p)&=m\otimes(n\otimes p),\\
+\lambda(r\otimes m)&=rm,\qquad \rho(m\otimes r)=rm
+\end{aligned}
+\]
+给出。集合范畴在笛卡尔积 \(\times\) 下为幺半范畴，单位对象为单点集，约束是相应的有序对重排。
+\end{proposition}
+\begin{proof}
+对模，交换性使每个左 \(R\) 模同时成为右 \(R\) 模，规定 \(mr=rm\)。纯张量公式保持各处平衡关系。例如
+\((rm\otimes n)\otimes p\) 与 \((m\otimes rn)\otimes p\) 的像相同；第二处平衡关系也由 \(m\otimes(rn\otimes p)=m\otimes(n\otimes rp)\) 保持。由张量积泛性质得到 \(\alpha\)，反向重括号公式给出其逆。单位同构的逆分别为 \(m\mapsto1\otimes m\)、\(m\mapsto m\otimes1\)。这些公式均为 \(R\) 线性，并与模同态相容，故约束自然。
+
+五边形的两条路径都把 \(((w\otimes x)\otimes y)\otimes z\) 送到 \(w\otimes(x\otimes(y\otimes z))\)。三角形的两条路径分别把 \((m\otimes r)\otimes n\) 送到 \(m\otimes rn\) 与 \(rm\otimes n\)，由平衡关系相等。纯张量生成各张量积，故相等不只在所列元素上成立，而是态射相等。
+
+对集合，约束及逆由 \(((x,y),z)\leftrightarrow(x,(y,z))\) 和 \((*,x)\leftrightarrow x\leftrightarrow(x,*)\) 给出。四元组的两种重括号得到同一四个坐标，删除单点集也不改变其余坐标，故五边形、三角形及自然性逐坐标成立。
+\end{proof}
+
+模范畴的单位不能擅自换成底集合的单点集；它必须是模对象，而且 \(R\otimes_RM\cong M\)。在交换群范畴中，张量的单位因而是 \(\mathbb Z\)，并不是零群。另一方面，直接和 \(\oplus\) 也给出幺半结构，却以零模为单位。这两种幺半结构包含不同的数据。
+
+\ProseParagraphBreak
+
+若 \(R\) 不交换，一般左 \(R\) 模没有与左作用相容的典范右 \(R\) 作用，因而 \(M\otimes_RN\) 不能对任意两个左模直接定义。此时可以改用 \(R\)-\(R\) 双模范畴：张量积仍是 \(R\)-\(R\) 双模，单位为 \(R\)。结合与单位公式的核验相同，但通常没有交换两个因子的典范同构。
+
+\begin{definition}\label{b4:def:strong-monoidal-functor}
+设 \(\mathcal C,\mathcal D\) 为幺半范畴，单位分别为 \(I_{\mathcal C},I_{\mathcal D}\)。给定函子 \(F:\mathcal C\to\mathcal D\)、自然同构
+\[
+F_{2;X,Y}:FX\otimes FY\longrightarrow F(X\otimes Y),
+\qquad F_0:I_{\mathcal D}\longrightarrow F(I_{\mathcal C}).
+\]
+若满足
+\[
+\begin{gathered}
+F(\alpha_{X,Y,Z})\circ F_{2;X\otimes Y,Z}\circ(F_{2;X,Y}\otimes1_{FZ})\\
+=F_{2;X,Y\otimes Z}\circ(1_{FX}\otimes F_{2;Y,Z})
+\circ\alpha_{FX,FY,FZ},\\
+F(\lambda_X)\circ F_{2;I_{\mathcal C},X}\circ(F_0\otimes1_{FX})
+=\lambda_{FX},\\
+F(\rho_X)\circ F_{2;X,I_{\mathcal C}}\circ(1_{FX}\otimes F_0)
+=\rho_{FX},
+\end{gathered}
+\]
+则称 \((F,F_2,F_0)\) 为\term[qiang-yaoban-hanzi]{强幺半函子}[strong monoidal functor]。
+\end{definition}
+
+第一式要求 \(F\) 尊重改括号的方式；后两式要求它尊重单位。这里只要求函子带有这些比较态射，不能从 \(FX\otimes FY\) 与 \(F(X\otimes Y)\) 逐对象同构推断它具有幺半结构。上述定义采用的结合与单位约束可对照\cite[Definition 2.2.8, p. 25; Section 2.4, pp. 30--32]{EtingofEtAl2015TensorCategories}。
+
+\subsection{辫状结构与对称结构}
+\label{b4:subsec:monoidal-braiding}
+
+改括号保留因子的次序。交换两个因子是另一项结构；对某些代数的表示，普通交换映射甚至可能不保持代数的作用。
+
+\begin{definition}\label{b4:def:braided-symmetric-category}
+设 \(\mathcal C\) 为幺半范畴。若自然同构 \(c_{X,Y}:X\otimes Y\to Y\otimes X\) 对任意 \(X,Y,Z\) 满足
+\begin{equation}\label{b4:eq:monoidal-hexagons}
+\begin{aligned}
+c_{X,Y\otimes Z}
+={}&\alpha_{Y,Z,X}^{-1}\circ(1_Y\otimes c_{X,Z})\circ\alpha_{Y,X,Z}
+\\
+&\quad\circ(c_{X,Y}\otimes1_Z)\circ\alpha_{X,Y,Z}^{-1},\\
+c_{X\otimes Y,Z}
+={}&\alpha_{Z,X,Y}\circ(c_{X,Z}\otimes1_Y)\circ\alpha_{X,Z,Y}^{-1}
+\\
+&\quad\circ(1_X\otimes c_{Y,Z})\circ\alpha_{X,Y,Z},
+\end{aligned}
+\end{equation}
+则称 \(c\) 为辫状结构，\((\mathcal C,c)\) 为\term[bianzhuang-yaoban-fanchou]{辫状幺半范畴}[braided monoidal category]。这两式称为六边形等式。若还满足 \(c_{Y,X}\circ c_{X,Y}=1_{X\otimes Y}\)，则称其为\term[duichen-yaoban-fanchou]{对称幺半范畴}[symmetric monoidal category]。
+\end{definition}
+
+第一条六边形等式说：把 \(X\) 跨过整体 \(Y\otimes Z\)，等于依次跨过 \(Y\) 与 \(Z\)；第二条说明如何把整体 \(X\otimes Y\) 跨过 \(Z\)。公式中的结合约束使每一步都有确定的定义域和陪域。这一版本见\cite[Definition 8.1.1, p. 195]{EtingofEtAl2015TensorCategories}。
+
+\begin{example}\label{b4:exm:symmetric-module-tensor}
+交换含幺环 \(R\) 的模范畴取 \(c(m\otimes n)=n\otimes m\)。因为 \(rn\otimes m=n\otimes rm\)，该公式保持平衡关系。它自然，且交换两次恢复原纯张量。第一条六边形等式的两边都把 \(m\otimes(n\otimes p)\) 送到 \((n\otimes p)\otimes m\)；第二条的两边都把 \((m\otimes n)\otimes p\) 送到 \(p\otimes(m\otimes n)\)。纯张量生成各定义域，故两条等式均作为态射等式成立。这给出对称结构。集合的笛卡尔积用交换坐标给出同样的例子。
+\end{example}
+
+\begin{example}\label{b4:exm:graded-braiding}
+设 \(k\) 为域，\(q\in k^\times\)。在 \(\mathbb Z\) 分次向量空间范畴中，令
+\[
+(V\otimes W)_d=\bigoplus_{m+n=d}V_m\otimes_kW_n,
+\qquad c(v_m\otimes w_n)=q^{mn}w_n\otimes v_m,
+\]
+态射取保持次数的线性映射，单位 \(k\) 集中在零次。该映射的逆在 \(W_n\otimes V_m\) 上乘 \(q^{-mn}\)。它自然；两条六边形分别化为
+\(q^{m(n+r)}=q^{mn}q^{mr}\)、\(q^{(m+n)r}=q^{mr}q^{nr}\)，故给出辫状结构。交换两次乘 \(q^{2mn}\)，所以这一结构对所有分次向量空间对称，当且仅当 \(q^2=1\)。特别地，\(q=-1\) 给出符号 \((-1)^{mn}\)。这里尚没有微分；符号先由次数本身决定。
+\end{example}

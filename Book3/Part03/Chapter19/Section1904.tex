@@ -1,18 +1,19 @@
 % !TeX root = ../../Book3.tex
-% 纲要标题：### 19.4 超曲面、嵌入分支与重数
-% 纲要位置：计划纲要.md，第 2106 行。
+% 纲要标题：### 19.4 超曲面、嵌入分量与重数
+% 纲要位置：计划纲要.md，第 2575 行。
 
-\section{超曲面、嵌入分支与重数}
+\section{超曲面、嵌入分量与重数}
 \label{b3:sec:1904}
 
 一个超曲面可以约化或非约化、正规或不正规，却仍然是 Cohen–Macaulay 环。将这些例子与具有嵌入关联素理想的商环比较，可以区分零因子、奇点与深度不足各自造成的现象。
 
 
-% 纲要内容：
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 超曲面与零维局部环
-% * 非 Cohen–Macaulay 的嵌入分支例子
-% * 参数、重数与几何交的联系
+% * 非 CM 的嵌入分量例子；用素理想回避直接证明一维约化 Noether 局部环为 CM 环
+% * 参数逐项取幂与参数理想整体取幂的区别；证明正则序列的伴随分次模为多项式模
+% * CM 参数理想的精确累计长度公式与重数等于参数商长度；非 CM 情形的对照算例
 %
 % ---
 %
@@ -23,7 +24,7 @@
 设 \((S,\mathfrak n)\) 为交换 Noether 正则局部环，\(0\ne f\in\mathfrak n\)。商 \(S/(f)\) 称为这里的\term[chaoqumianhuan]{超曲面环}[hypersurface ring]。因为 \(S\) 为整环，\(f\) 是非零因子，所以超曲面环是完全交环，深度和维数都等于 \(\dim S-1\)。是否约化、是否正规、是否正则，则取决于方程的进一步性质。
 
 \ProseParagraphBreak
-在 \(S=k[\![x,y]\!]\) 中，\(S/(y^2-x^3)\)、\(S/(xy)\) 和 \(S/(x^2)\) 都是一维 CM 环。第一个在代数上有单个尖点分支，第二个有两个相交分支，第三个含非零幂零元。CM 性要求存在参数非零因子，没有把这些不同现象合并为一种光滑性。
+设 \(k\) 为域。在 \(S=k[\![x,y]\!]\) 中，\(S/(y^2-x^3)\)、\(S/(xy)\) 和 \(S/(x^2)\) 都是一维 CM 环。第一个在代数上有单个尖点分支，第二个有两个相交分支，第三个含非零幂零元。CM 性要求存在参数非零因子，没有把这些不同现象合并为一种光滑性。
 
 \begin{proposition}\label{b3:prop:zero-dimensional-cm}
 每个零维交换 Noether 局部环及其非零有限生成模都是 CM 的。
@@ -34,21 +35,26 @@
 
 零维时 CM 性没有额外限制，完全交性却仍有限制；上一节的基座计算就是一种有效区分。
 
-\subsection{非 Cohen–Macaulay 的嵌入分支}
+\subsection{非 Cohen–Macaulay 的嵌入分量}
 \label{b3:subsec:1904:02}
 
-令
+设 \(k\) 为域，令
 \[
 A=k[x,y]_{(x,y)}/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
 \]
 其根理想为 \((x)\)，故 \(\dim A=1\)。又 \(\bar x\ne0\) 且
-\(\mathfrak m\bar x=0\)，于是 \(\mathfrak m\in\operatorname{Ass}_AA\) 且 \(\operatorname{depth}A=0\)。这里既有一条一维分支，也有集中在原点的零化关系。它不是只有“图形上看起来多了一个点”这么简单：乘法 \(\bar y\) 的核恰好暴露了这个额外部分。
+\(\mathfrak m\bar x=0\)，于是 \(\mathfrak m\in\operatorname{Ass}_AA\) 且 \(\operatorname{depth}A=0\)。这里既有一个一维不可约分量，也有集中在原点的零化关系。它不是只有“图形上看起来多了一个点”这么简单：乘法 \(\bar y\) 的核恰好暴露了这个额外部分。
 
 \ProseParagraphBreak
 \(\bar y\) 是参数，因为 \(A/(\bar y)\cong k[x]/(x^2)\) 长度为二；但它不是非零因子。若用一般参数 \(\bar y+a\bar x\)，仍有 \((\bar y+a\bar x)\bar x=0\)。所以换一个参数并不能修复深度不足，参数系判据要求的正则性确实失败。
 
 \ProseParagraphBreak
-一维约化 Noether 局部环则为 CM 环。其零因子是极小素理想的并：由零理想为这些素理想的交可见，避开所有极小素理想的乘法是单射；反向可由关联素理想判据得到。有限素理想回避使极大理想中存在这样的元素，深度至少为一；维数上界再给出深度等于一。到了二维，“约化”只能保证第一个非零因子，不能保证第二个。
+一维约化交换 Noether 局部环 \((R,\mathfrak m)\) 则必为 CM 环。它只有有限个极小素理想，且这些理想都严格包含于 \(\mathfrak m\)。由素理想回避，可取
+\[
+x\in\mathfrak m\setminus
+\bigcup_{\mathfrak p\in\operatorname{Min}R}\mathfrak p.
+\]
+若 \(xy=0\)，则在每个整环 \(R/\mathfrak p\) 中，\(x\) 的像非零，故 \(y\in\mathfrak p\)。于是 \(y\) 属于所有极小素理想的交，即 \(\sqrt{(0)}\)；约化性使这个交为零。因此 \(x\) 是非零因子，深度至少为一，再由维数上界得到深度等于一。到了二维，“约化”只能保证第一个非零因子，不能保证第二个。
 
 \subsection{参数、重数与几何交}
 \label{b3:subsec:1904:03}
@@ -56,7 +62,7 @@ A=k[x,y]_{(x,y)}/(x^2,xy),\qquad\mathfrak m=(\bar x,\bar y).
 参数理想给出的有限长度保留了相交时的重数信息。一个最直接、又不需要一般相交理论的计算如下。
 
 \begin{proposition}\label{b3:prop:cm-parameter-powers-length}
-设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为维数 \(d\) 的有限生成 CM 模，\(x_1,\ldots,x_d\) 为参数系。对正整数 \(a_1,\ldots,a_d\)，有
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为维数 \(d\) 的有限生成 CM \(R\) 模，\(x_1,\ldots,x_d\in\mathfrak m\) 为 \(M\) 的参数系。对正整数 \(a_1,\ldots,a_d\)，有
 \[
 \ell_R\bigl(M/(x_1^{a_1},\ldots,x_d^{a_d})M\bigr)
 =a_1\cdots a_d\,\ell_R\bigl(M/(x_1,\ldots,x_d)M\bigr).
@@ -74,10 +80,80 @@ N/x_1N\longrightarrow x_1^jN/x_1^{j+1}N.
 \(x^iy^j\ (0\le i<a,\ 0\le j<b)\) 为基，长度为 \(ab\)。它的支集只有原点，但商代数记住了两条带重数坐标轴相交的程度。
 
 \ProseParagraphBreak
-一维时还能直接把长度与 Hilbert–Samuel 重数比较。若 \(M\) 为一维 CM 模，\(t\) 为参数，则上述滤过给出
-\(\ell(M/t^{n+1}M)=(n+1)\ell(M/tM)\)，故
-\(e_{(t)}(M)=\ell(M/tM)\)。例如尖点环
-\(R=k[\![x,y]\!]/(y^2-x^3)\) 中，\(x\) 为非零因子，\(R/(x)\cong k[y]/(y^2)\)，因而 \(e_{(x)}(R)=2\)。
+当参数个数大于一时，各参数分别取幂通常不同于整个参数理想取幂。例如对域 \(k\)，在 \(k[\![x,y]\!]\) 中有
+\[
+(x^2,y^2)\subsetneq(x,y)^2,
+\]
+右边还包含 \(xy\)。因此前述长度公式不能直接代入 Hilbert–Samuel 累计函数；后者计算的是 \(M/\mathfrak q^{n+1}M\)，其中 \(\mathfrak q=(x_1,\ldots,x_d)\)。为计算这个商，需要同时控制所有总次数相同的参数单项式。
+
+\begin{lemma}[正则序列的伴随分次模]\label{b3:lem:regular-sequence-associated-graded}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in\mathfrak m\) 为 \(M\) 正则序列，\(\mathfrak q=(x_1,\ldots,x_r)\)。在 \(\operatorname{gr}_{\mathfrak q}(M)=\bigoplus_{n\ge0}\mathfrak q^nM/\mathfrak q^{n+1}M\) 上，让 \(R/\mathfrak q\) 按原来的标量乘法作用，让 \(X_i\) 按乘 \(x_i\) 所诱导的次数一映射作用。则规范的分次 \((R/\mathfrak q)[X_1,\ldots,X_r]\) 模映射
+\[
+\Phi:(M/\mathfrak qM)[X_1,\ldots,X_r]
+\longrightarrow\operatorname{gr}_{\mathfrak q}(M),
+\qquad
+\bar mX^\alpha\longmapsto x^\alpha m+\mathfrak q^{|\alpha|+1}M
+\]
+为同构。这里 \(\alpha=(\alpha_1,\ldots,\alpha_r)\in\mathbb N^r\)，\(|\alpha|=\sum_i\alpha_i\)，\(x^\alpha=\prod_i x_i^{\alpha_i}\)；左边是以 \(M/\mathfrak qM\) 为系数的多项式模，各 \(X_i\) 的次数为一。
+\end{lemma}
+\begin{proof}
+\(\mathfrak q^nM\) 由所有 \(|\alpha|=n\) 的 \(x^\alpha m\) 生成，所以 \(\Phi\) 良定义且满射。对序列长度 \(r\) 归纳证明其单射性；\(r=0\) 时映射只在次数零为恒等映射，其余次数均为零。
+
+令 \(J=(x_1,\ldots,x_{r-1})\)。归纳假设给出
+\[
+\operatorname{gr}_J(M)\cong(M/JM)[X_1,\ldots,X_{r-1}].
+\]
+由于 \(x_r\) 在 \(M/JM\) 上为非零因子，它在每层 \(J^sM/J^{s+1}M\) 上的乘法也单射。因此，对 \(s\) 归纳可得
+\[
+(J^sM:_Mx_r)=J^sM\qquad(s\ge0).
+\]
+具体地，若 \(x_rm\in J^sM\) 且 \(s\ge1\)，先由前一步得 \(m\in J^{s-1}M\)，再由第 \(s-1\) 层的乘法单射得 \(m\in J^sM\)。
+
+为证所需单射，先证明：若以 \(M\) 为系数的齐次多项式 \(F(X)\) 满足 \(F(x)=0\)，则各系数属于 \(\mathfrak qM\)。固定 \(r\)，对 \(F\) 的次数 \(n\) 归纳。\(n=0\) 时唯一系数就是零。若 \(n\ge1\)，写
+\[
+F(X)=G(X_1,\ldots,X_{r-1})+X_rH(X),
+\]
+其中 \(G\) 齐次次数为 \(n\)，\(H\) 齐次次数为 \(n-1\)。由
+\(x_rH(x)=-G(x_1,\ldots,x_{r-1})\in J^nM\)
+及上述冒号等式，得 \(H(x)\in J^nM\)。于是可取以 \(M\) 为系数、齐次次数为 \(n\) 的多项式 \(h(X_1,\ldots,X_{r-1})\)，使
+\[
+H(x)=h(x_1,\ldots,x_{r-1}).
+\]
+把 \(h\) 写成 \(\sum_{i<r}X_ih_i\)，每个 \(h_i\) 齐次次数为 \(n-1\)。当 \(r=1\) 时 \(J^nM=0\)，可取 \(h=0\)，该和为空。多项式
+\(H-\sum_{i<r}x_ih_i\) 的次数为 \(n-1\)，且在 \(x\) 处取值为零；按次数归纳，其系数都在 \(\mathfrak qM\) 中。因此 \(H\) 的系数也在 \(\mathfrak qM\) 中。另一方面，\(G+x_rh\) 在 \(x_1,\ldots,x_{r-1}\) 处取值为零；按序列长度归纳，其系数属于 \(JM\)。这又给出 \(G\) 的各系数属于 \(JM+x_rM=\mathfrak qM\)，从而完成双归纳。
+
+最后，若齐次次数为 \(n\) 的 \(F\) 满足 \(F(x)\in\mathfrak q^{n+1}M\)，取齐次次数为 \(n+1\) 的 \(P\)，使 \(P(x)=F(x)\)，并写 \(P=\sum_iX_iP_i\)。则 \(F-\sum_ix_iP_i\) 齐次次数为 \(n\)，在 \(x\) 处取值为零，且与 \(F\) 的系数逐项模 \(\mathfrak qM\) 相同。因此 \(F\) 的系数都在 \(\mathfrak qM\) 中，\(\Phi\) 单射。
+\end{proof}
+
+\begin{theorem}[CM 模的参数理想重数]\label{b3:thm:cm-parameter-multiplicity}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为维数 \(d\) 的有限生成 CM \(R\) 模，\(x_1,\ldots,x_d\in\mathfrak m\) 为 \(M\) 的参数系，\(\mathfrak q=(x_1,\ldots,x_d)\)。令 \(B=R/\operatorname{Ann}_RM\)，并用 \(\mathfrak q\) 在 \(B\) 中的像计算 Hilbert–Samuel 重数，记为 \(e_{\mathfrak q}(M)\)。则对每个整数 \(n\ge0\)，有
+\[
+\ell_R(M/\mathfrak q^{n+1}M)
+=\binom{n+d}{d}\,\ell_R(M/\mathfrak qM),
+\qquad
+e_{\mathfrak q}(M)=\ell_R(M/\mathfrak qM).
+\]
+当 \(d=0\) 时参数系为空，\(\mathfrak q=0\)，两式中的长度与重数均为 \(\ell_R(M)\)。
+\end{theorem}
+\begin{proof}
+参数系保证 \(\mathfrak q\) 的像为 \(B\) 的极大理想准素理想，故\cref{b3:thm:hilbert-samuel}适用。\(R\) 与 \(B\) 给出相同的子模和长度。由\cref{b3:thm:cm-parameters}，参数系为 \(M\) 正则序列，所以上述引理给出
+\[
+\operatorname{gr}_{\mathfrak q}(M)
+\cong(M/\mathfrak qM)[X_1,\ldots,X_d].
+\]
+若 \(d>0\)，次数为 \(j\) 的参数单项式有 \(\binom{j+d-1}{d-1}\) 个，故
+\[
+\ell_R(\mathfrak q^jM/\mathfrak q^{j+1}M)
+=\binom{j+d-1}{d-1}\,\ell_R(M/\mathfrak qM).
+\]
+沿 \(M/\mathfrak q^{n+1}M\) 的理想幂滤过相加，利用
+\(\sum_{j=0}^n\binom{j+d-1}{d-1}=\binom{n+d}{d}\)，得到累计长度公式。其最高次项为
+\(\ell_R(M/\mathfrak qM)n^d/d!\)，与 Hilbert–Samuel 重数的归一化比较即得重数公式。若 \(d=0\)，\(M\) 本身具有有限长度，而 \(\mathfrak q=0\)，累计长度恒为 \(\ell_R(M)\)，同样得到结论。
+\end{proof}
+
+正则序列给出多项式型伴随分次模的证明可对照\cite[Theorem 16.2, pp. 125--126]{Matsumura1989CommutativeRingTheory}；环的参数理想重数判据见同书\cite[Theorem 17.11, p. 138]{Matsumura1989CommutativeRingTheory}。
+
+一维时，累计长度公式就是 \(\ell_R(M/t^{n+1}M)=(n+1)\ell_R(M/tM)\)。例如对域 \(k\)，在尖点环 \(R=k[\![x,y]\!]/(y^2-x^3)\) 中，\(x\) 为非零因子，\(R/(x)\cong k[y]/(y^2)\)，因而 \(e_{(x)}(R)=2\)。
 
 \ProseParagraphBreak
 上一小节的非 CM 环 \(A\) 则有

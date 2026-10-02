@@ -1,17 +1,17 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 18.5 正则点、切空间与光滑性
-% 纲要位置：计划纲要.md，第 2078 行。
+% 纲要位置：计划纲要.md，第 2547 行。
 
 \section{正则点、切空间与光滑性}
 \label{b3:sec:1805}
 
 几何中的点由相应局部环描述，正则性比较该环的维数与一阶参数数目。相对光滑性还依赖基域；在不完美域上，即使环自身正则，改变基域后也可能出现幂零元。
 
-% 纲要内容：
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 正则点与切空间维数
-% * 正则和基域上的光滑并非无条件相同
-% * 非完美域上的区分例子
+% * 对照环论正则性、基域上的光滑性与几何正则性；有限型代数的光滑与几何正则比较引用 Stacks Project Lemma 33.12.6
+% * 以纯不可分域扩张说明正则不必几何正则；第23章证明完美基域上正则与光滑的逐点比较
 %
 % ---
 %
@@ -28,7 +28,7 @@
 在 \(k\) 有理闭点，第二个数也是 Zariski 切空间的维数，见\cref{b3:prop:tangent-cotangent-rational}。
 
 \begin{proposition}\label{b3:prop:regular-hypersurface-rational-point}
-设 \(k\) 为域，\(0\ne f\in k[X_1,\ldots,X_n]\)，且 \(a\in k^n\) 满足 \(f(a)=0\)。则超曲面 \(f=0\) 在 \(a\) 处的局部环正则，当且仅当至少一个 \(\partial f/\partial X_i(a)\ne0\)。
+设 \(k\) 为域，\(n\ge1\) 为整数，\(0\ne f\in k[X_1,\ldots,X_n]\)，且 \(a\in k^n\) 满足 \(f(a)=0\)。则超曲面 \(f=0\) 在 \(a\) 处的局部环正则，当且仅当至少一个 \(\partial f/\partial X_i(a)\ne0\)。
 \end{proposition}
 \begin{proof}
 令 \(S=k[X_1,\ldots,X_n]_{(X_1-a_1,\ldots,X_n-a_n)}\)，其极大理想记为 \(\mathfrak n\)。\(S\) 正则且为整环，\(f\) 是非零因子，因此 \(S/(f)\) 的维数为 \(n-1\)。其极大理想模平方为
@@ -43,7 +43,39 @@
 正则性是环自身的性质。光滑性则是基环到该环的同态的性质，\cref{b3:def:finite-presentation-infinitesimal-properties}用有限展示及平方零提升的存在性定义它。两者所问的问题不同，因此谈论光滑时必须注明基域或基环。
 
 \ProseParagraphBreak
-在前一命题的有理点处，如果某个偏导数不为零，可在一个主开邻域上使它可逆。对平方零提升问题，先任意提升各坐标，再用该偏导数的逆修正一个坐标，消掉方程值。这正是\secref{b3:sec:1404}的 Jacobian 线性修正，因而该主开邻域对 \(k\) 光滑。更一般的光滑性与几何正则性的等价判据在\chapref{b3:ch:23}建立。
+在前一命题的有理点处，如果某个偏导数不为零，可在一个主开邻域上使它可逆。对平方零提升问题，先任意提升各坐标，再用该偏导数的逆修正一个坐标，消掉方程值。这正是\secref{b3:sec:1405}的 Jacobian 线性修正，因而该主开邻域对 \(k\) 光滑。要把这种比较推广到任意点，还须考察扩张基域以后的正则性。
+
+\begin{definition}\label{b3:def:geometrically-regular-algebra}
+设 \(k\) 为域，\(A\) 为有限型交换 \(k\) 代数。若对每个域扩张 \(L/k\)，\(A\otimes_kL\) 都是正则环，则称 \(A\) 在 \(k\) 上\term[jihezhengze]{几何正则}[geometrically regular]。
+\end{definition}
+
+有限型性保证这些基变换后的环仍 Noether。几何正则性不仅要求原环正则，还要求这一性质在扩张基域后保留。三个条件的区别列于\cref{b3:tab:regular-smooth-geometric}。
+
+\begin{center}
+\begin{minipage}{\textwidth}
+\makeatletter
+\def\@captype{table}
+\makeatother
+\centering
+\caption[正则、光滑与几何正则]{正则、光滑与几何正则。设 \(k\) 为域，\(A\) 为有限型交换 \(k\) 代数；第一行的条件对每个 \(\mathfrak p\in\operatorname{Spec}A\) 检验，\(\mathfrak m_{\mathfrak p}=\mathfrak pA_{\mathfrak p}\)，\(\kappa(\mathfrak p)\) 为其剩余域。}
+\label{b3:tab:regular-smooth-geometric}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.23\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+性质 & 检验内容\\
+\midrule
+\(A\) 正则 & 每个局部环满足
+\(\dim A_{\mathfrak p}=\dim_{\kappa(\mathfrak p)}\mathfrak m_{\mathfrak p}/\mathfrak m_{\mathfrak p}^2\)；条件只涉及 \(A\) 自身。\\
+\(A\) 在 \(k\) 上光滑 & \(A\) 有限展示，且从 \(A\) 到交换 \(k\) 代数的平方零商的同态总能提升；条件涉及给定的 \(k\) 代数结构。\\
+\(A\) 在 \(k\) 上几何正则 & 对每个域扩张 \(L/k\)，\(A\otimes_kL\) 的所有局部环仍正则；条件检验扩张基域后的结构。\\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\begin{claim}[光滑性与几何正则性]\label{b3:claim:smooth-geometrically-regular}
+设 \(k\) 为域，\(A\) 为有限型交换 \(k\) 代数。则 \(A\) 在 \(k\) 上光滑，当且仅当它在 \(k\) 上几何正则。
+\end{claim}
+这一比较的标准证明见 Stacks Project, Lemma 33.12.6（\url{https://stacks.math.columbia.edu/tag/038X}）。在完美基域上，有限型代数的正则性本身就足以判定光滑性；\cref{b3:thm:perfect-field-regular-smooth}将逐点证明这一结论。下面的例子说明，不完美基域上不能省去基变换的检验。
 
 \ProseParagraphBreak
 已经得到的有理点判据不能直接照搬到剩余域不可分的点。\eqref{b3:eq:cotangent-residue-sequence}中的剩余域微分项此时可能非零，\(\Omega_{A/k}\) 的纤维不再只记录极大理想的一次部分。下面把这一差别转化为基域扩张后的局部环计算。
@@ -51,7 +83,7 @@
 \subsection{非完美域上的区分例子}
 \label{b3:subsec:1805:03}
 
-取 \(k=\mathbb F_p(s)\)、\(K=k[u]/(u^p-s)\)。\cref{b3:exm:inseparable-tangent}已经说明，\(K\) 是域，\(\Omega_{K/k}\cong K\,\mathrm{d}u\ne0\)；\secref{b3:sec:1404}又以 \(k[T]/((T^p-s)^2)\) 中的平方零理想给出了不能提升的恒等映射。因此 \(K\) 是零维正则局部环，却不是光滑 \(k\) 代数。
+设 \(p\) 为素数，\(s\) 为不定元，取 \(k=\mathbb F_p(s)\)、\(K=k[u]/(u^p-s)\)。\cref{b3:exm:inseparable-tangent}已经说明，\(K\) 是域，\(\Omega_{K/k}\cong K\,\mathrm{d}u\ne0\)；\secref{b3:sec:1405}又以 \(k[T]/((T^p-s)^2)\) 中的平方零理想给出了不能提升的恒等映射。因此 \(K\) 是零维正则局部环，却不是光滑 \(k\) 代数。
 
 \ProseParagraphBreak
 现在把基域扩张到 \(K\)。有显式同构
@@ -59,7 +91,7 @@
 K\otimes_kK\cong K[T]/(T^p-s)
 \cong K[v]/(v^p),\qquad v=T-u.
 \]
-最后一个环的唯一素理想为 \((v)\)，所以维数为零；而 \((v)/(v^2)\) 在 \(K\) 上维数为一，所以它不正则。这里环 \(K\) 自身完全没有零因子，基变换却产生幂零元。这说明“正则局部环”不包含相对于任意给定基域的可分性信息。
+最后一个环的唯一素理想为 \((v)\)，所以维数为零；而 \((v)/(v^2)\) 在 \(K\) 上维数为一，所以它不正则。因此 \(K\) 在 \(k\) 上也不几何正则。这里环 \(K\) 自身完全没有零因子，基变换却产生幂零元。这说明“正则局部环”不包含相对于任意给定基域的可分性信息。
 
 \ProseParagraphBreak
 相反，\(k[x_1,\ldots,x_d]\) 扩张任何基域后仍是多项式环，坐标原点的局部环仍正则；它的平方零提升只需提升各坐标像。把这两类例子并列，可以看出环论正则性与相对光滑性在常见坐标例子中一致，却需要附加条件才可一般地等同。

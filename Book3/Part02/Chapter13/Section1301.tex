@@ -1,11 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.1 理想进滤过
-% 纲要位置：工作记录/计划纲要.md，第 2210 行。
+% 纲要位置：工作记录/计划纲要.md，第 2337 行。
 % 纲要细目（写作范围）：
 % * I 进拓扑与分离性
 % * 模滤过和伴随分次
+% * 相容余类族与滤过完备化；稳定滤过和理想幂滤过之间的自然同构
 % * Rees 环与有限生成
-
 
 \section{理想进滤过}
 \label{b3:sec:1301}
@@ -28,7 +28,7 @@ x+I^nM\qquad(x\in M,\ n\ge0)
 由于 \(I^{n+1}M\subseteq I^nM\)，这些集合确实给出拓扑。加法与取负连续；\(R\) 自身的 \(I\) 进拓扑还使乘法连续，因为 \(I^n\) 是理想。两个点在每个商 \(M/I^nM\) 中都相同，当且仅当它们的差属于 \(\bigcap_nI^nM\)。因此分离性恰好表示各阶商能够区分不同元素，也等价于此拓扑为 Hausdorff 拓扑。
 
 \ProseParagraphBreak
-在 \(k[x]\) 中，\((x)\) 进收敛表示每个固定次数的系数最终不再改变。例如 \(1+x+\cdots+x^j\) 是 Cauchy 序列，却在 \(k[x]\) 内没有极限。这说明分离性与极限是否存在是两个条件。另取 \(R=k\times k\)、\(I=k\times0\)，则 \(I^n=I\) 对所有 \(n\ge1\) 成立，拓扑不分离；第二个坐标以外的信息已经在第一个商中被永久遗失。
+设 \(k\) 为域。在 \(k[x]\) 中，\((x)\) 进收敛表示每个固定次数的系数最终不再改变。例如 \(1+x+\cdots+x^j\) 是 Cauchy 序列，却在 \(k[x]\) 内没有极限。这说明分离性与极限是否存在是两个条件。另取 \(R=k\times k\)、\(I=k\times0\)，则 \(I^n=I\) 对所有 \(n\ge1\) 成立，拓扑不分离；第二个坐标以外的信息已经在第一个商中被永久遗失。
 
 \begin{proposition}\label{b3:prop:adic-closure}
 设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模，并在 \(M\) 上取 \(I\) 进拓扑。子模 \(N\subseteq M\) 的闭包为
@@ -56,19 +56,54 @@ x+I^nM\qquad(x\in M,\ n\ge0)
 
 良定义需要同时检查两个代表元：若 \(a\in I^r\)、\(x\in F^nM\)，更换 \(a\) 增加的项属于 \(I^{r+1}F^nM\subseteq F^{n+r+1}M\)，更换 \(x\) 增加的项也属于此子模。\cref{b3:def:associated-graded-adic}中的滤过 \(F^nM=I^nM\) 是从第一步就稳定的特例。
 
+\begin{definition}\label{b3:def:filtered-completion}
+设 \(R\) 为交换环、\(M\) 为 \(R\) 模，\(M=F^0M\supseteq F^1M\supseteq\cdots\) 为下降滤过。对 \(n\ge1\)，记 \(q^F_n:M/F^{n+1}M\rightarrow M/F^nM\) 为自然商映射。该滤过的相容余类族组成 \(R\) 模
+\[
+\widehat M_F\coloneqq
+\left\{\,(x_n)_{n\ge1}\in\prod_{n\ge1}M/F^nM
+\mid q^F_n(x_{n+1})=x_n\text{ 对所有 }n\ge1\,\right\},
+\]
+加法和标量作用逐坐标进行。这个相容余类模也记为
+\(\varprojlim_{n\ge1}M/F^nM\)。对理想 \(I\subseteq R\) 的幂滤过 \(F^nM=I^nM\)，将它记为 \(\widehat M_I\)。自然映射 \(M\rightarrow\widehat M_F\) 把 \(x\) 送到 \((x+F^nM)_n\)。
+\end{definition}
+
 \begin{proposition}\label{b3:prop:stable-filtration-equivalent}
 设 \(R\) 为交换环、\(I\subseteq R\) 为理想、\(M\) 为 \(R\) 模，\(F^nM\) 为从次数 \(c\ge0\) 起稳定的 \(I\) 滤过。则对 \(n\ge c\) 有
 \[
 F^nM=I^{n-c}F^cM,\qquad
 I^nM\subseteq F^nM\subseteq I^{n-c}M.
 \]
-因而 \(F^nM\) 与 \(I^nM\) 定义同一拓扑，也给出同一个相容余类的极限对象。
+因而 \(F^nM\) 与 \(I^nM\) 定义同一拓扑，恒等映射 \(M\rightarrow M\) 还诱导自然同构
+\[
+\widehat M_I=\varprojlim_{n\ge1}M/I^nM
+\xrightarrow{\ \sim\ }\varprojlim_{n\ge1}M/F^nM=\widehat M_F,
+\]
+它与从 \(M\) 到两个相容余类模的自然映射相容。
 \end{proposition}
 \begin{proof}
-第一个等式由稳定性归纳得到。由 \(F^0M=M\) 及 \(IF^nM\subseteq F^{n+1}M\)，归纳得左侧包含；右侧包含由第一个等式得到。每个滤过中的邻域都含有另一滤过的某个邻域，因此拓扑相同。相容余类系统可以先投到较粗的商，再用上述包含取回任意给定精度的余类；相容性保证选择更细精度时答案不变。这两个转换互逆。
+第一个等式由稳定性归纳得到。由 \(F^0M=M\) 及 \(IF^nM\subseteq F^{n+1}M\)，归纳得 \(I^nM\subseteq F^nM\) 对所有 \(n\ge0\) 成立；右侧包含由第一个等式得到。每个滤过中的邻域都含有另一滤过的某个邻域，因此拓扑相同。
+
+对每个 \(n\ge1\)，包含 \(I^nM\subseteq F^nM\) 及 \(F^{n+c}M\subseteq I^nM\) 给出自然商映射
+\[
+\alpha_n:M/I^nM\longrightarrow M/F^nM,
+\qquad
+\beta_n:M/F^{n+c}M\longrightarrow M/I^nM.
+\]
+它们与各自的过渡商映射交换，所以逐坐标定义
+\[
+\Phi:\widehat M_I\longrightarrow\widehat M_F,
+\quad (x_n)_n\longmapsto\bigl(\alpha_n(x_n)\bigr)_n,
+\]
+\[
+\Psi:\widehat M_F\longrightarrow\widehat M_I,
+\quad (y_n)_n\longmapsto\bigl(\beta_n(y_{n+c})\bigr)_n
+\]
+确实得到相容余类族。复合 \(\beta_n\alpha_{n+c}\) 是从 \(M/I^{n+c}M\) 到 \(M/I^nM\) 的过渡商映射，故 \((\Psi\Phi(x))_n=x_n\)。复合 \(\alpha_n\beta_n\) 是从 \(M/F^{n+c}M\) 到 \(M/F^nM\) 的过渡商映射，故 \((\Phi\Psi(y))_n=y_n\)。因此两映射互逆。
+
+若将 \(c\) 增大，相容性保证 \(\Psi\) 的每个坐标不变。这些商映射都由 \(M\) 的恒等映射诱导，故所得到的同构与自然余类映射相容，也与保持滤过的模同态相容。
 \end{proof}
 
-伴随分次保存各阶新增的信息，但未必恢复原环。例如 \(\mathbb Z/p^2\mathbb Z\) 与 \(\mathbb F_p[t]/(t^2)\) 的极大理想进伴随分次环都为 \(\mathbb F_p[T]/(T^2)\)，原环的特征却分别为 \(p^2\) 与 \(p\)。后面将把全部商及它们之间的映射一起保存，而不只保存相邻两层的差。
+伴随分次保存各阶新增的信息，但未必恢复原环。设 \(p\) 为素数，则 \(\mathbb Z/p^2\mathbb Z\) 与 \(\mathbb F_p[t]/(t^2)\) 的极大理想进伴随分次环都为 \(\mathbb F_p[T]/(T^2)\)，原环的特征却分别为 \(p^2\) 与 \(p\)。相容余类族把全部商及它们之间的映射一起保存，而不只保存相邻两层的差。
 
 \subsection{Rees 环与有限生成}
 \label{b3:subsec:1301:03}

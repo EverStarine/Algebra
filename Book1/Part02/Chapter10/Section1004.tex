@@ -22,6 +22,16 @@
 设 \(R\) 为交换环，\(I,J\) 为 \(R\) 的理想。若 \(I+J=R\)，则称 \(I,J\) 为\term[husu-lixiang]{互素理想}[comaximal ideals]。这等价于存在 \(a\in I,b\in J\) 使 \(a+b=1\)。
 \end{definition}
 
+这是整数 Bézout 条件的理想形式。对正整数 \(m,n\)，有
+\[
+m\mathbb Z+n\mathbb Z=\mathbb Z
+\quad\Longleftrightarrow\quad
+\exists u,v\in\mathbb Z:\ um+vn=1
+\quad\Longleftrightarrow\quad
+\gcd(m,n)=1.
+\]
+一般理想中的 \(a,b\) 分别替代整数倍 \(um,vn\)，等式 \(a+b=1\) 仍表达两个理想一起生成整个环。
+
 \begin{lemma}\label{b1:lem:comaximal-product}
 设 \(I,J\) 为交换环 \(R\) 的互素理想，则 \(I\cap J=IJ\)。更一般地，若 \(r\) 为正整数，且 \(R\) 的理想 \(I_1,\ldots,I_r\) 两两互素，则
 \(\bigcap_{i=1}^r I_i=\prod_{i=1}^r I_i\)。
@@ -29,7 +39,11 @@
 \begin{proof}
 \cref{b1:prop:ideal-containments}已给出 \(IJ\subseteq I\cap J\)。若 \(x\in I\cap J\)，取 \(a+b=1\)、\(a\in I,b\in J\)，则 \(x=xa+xb\in IJ\)，这里交换性把 \(xa\) 写成 \(ax\)。
 
-对多个理想，取 \(a_j\in I_j,b_j\in I_r\) 使 \(a_j+b_j=1\)，其中 \(j<r\)。乘积 \(a_1\cdots a_{r-1}\) 属于 \(I_1\cdots I_{r-1}\)，且模 \(I_r\) 同余于 \(1\)。所以 \(I_r+I_1\cdots I_{r-1}=R\)。从 \(r=2\) 起归纳，将两理想结论用于这个乘积理想与 \(I_r\)，即可得到有限情形。
+\(r=1\) 时结论是恒等式。对 \(r\ge2\) 个理想，归纳的关键是先证明前 \(r-1\) 个理想的乘积仍与 \(I_r\) 互素，即
+\[
+I_1\cdots I_{r-1}+I_r=R.
+\]
+为此，对每个 \(j<r\)，取 \(a_j\in I_j,b_j\in I_r\) 使 \(a_j+b_j=1\)。各 \(a_j\) 模 \(I_r\) 都同余于 \(1\)，所以乘积 \(a_1\cdots a_{r-1}\) 属于 \(I_1\cdots I_{r-1}\)，且模 \(I_r\) 同余于 \(1\)。因此 \(1-a_1\cdots a_{r-1}\in I_r\)，得到所需的互素条件。从两理想的结论起归纳，将它用于这个乘积理想与 \(I_r\)，即可得到有限情形。
 \end{proof}
 \term[zhongguo-shengyu-dingli]{中国剩余定理}[Chinese remainder theorem]把这一等式与一个满同态结合起来。
 
@@ -46,7 +60,7 @@ R/\Bigl(\prod_{i=1}^rI_i\Bigr)\cong\prod_{i=1}^rR/I_i.
 反过来，若 \(\Phi\) 满射，则这些理想必两两互素。
 \end{theorem}
 \begin{proof}
-逐坐标考察可知 \(\Phi\) 保持运算与单位，其核恰为全部 \(I_i\) 的交。对每个 \(i\ne j\)，取 \(u_{ij}\in I_i,v_{ij}\in I_j\) 使 \(u_{ij}+v_{ij}=1\)，并令
+逐坐标考察可知 \(\Phi\) 保持运算与单位，其核恰为全部 \(I_i\) 的交。为证明满射，先构造各个坐标的选择器 \(e_i\)：要求它在第 \(i\) 个商环坐标取 \(1\)，在其余坐标取 \(0\)，就像直积中的标准坐标元素。对每个 \(i\ne j\)，取 \(u_{ij}\in I_i,v_{ij}\in I_j\) 使 \(u_{ij}+v_{ij}=1\)，并令
 \[
 e_i=\prod_{j\ne i}v_{ij}.
 \]
@@ -54,12 +68,12 @@ e_i=\prod_{j\ne i}v_{ij}.
 
 反过来，若 \(\Phi\) 满射，对 \(i\ne j\) 选择一个原像 \(a\)，使 \(a\equiv1\pmod{I_i}\)、\(a\equiv0\pmod{I_j}\)。则 \(1=(1-a)+a\in I_i+I_j\)，故两理想互素。
 \end{proof}
-有限性使构造中的求和和乘积都在环内有意义。若把定理中的有限族改为无限族，即使理想仍两两互素，满射性也可能失效。例如考虑同余方程组
+有限性使构造中的求和和乘积都在环内有意义。若把定理中的有限族改为无限族，即使理想仍两两互素，也可能每个有限子系统都有解，而整个无限系统没有共同解。失败的是到无限直积的全局满射性。下面的同余方程组说明这个区别：
 \[
 x\equiv0\pmod2,\qquad
 x\equiv1\pmod p\quad\text{对每个奇素数 }p.
 \]
-其中任意有限多个同余式都由中国剩余定理保证有解。若整数 \(x\) 满足全部同余式，则每个奇素数都整除 \(x-1\)；非零整数只有有限多个素因子，故 \(x-1=0\)。这又与 \(x\equiv0\pmod2\) 矛盾。
+对每个有限素数集 \(F\)，中国剩余定理都给出一个整数 \(x_F\)，满足 \(F\) 中对应的全部同余式。这不推出存在一个整数 \(x\)，对所有素数同时满足所列同余式：前者允许解随 \(F\) 改变，后者要求一个共同解。若这样的 \(x\) 存在，则每个奇素数都整除 \(x-1\)；非零整数只有有限多个素因子，故 \(x-1=0\)。这又与 \(x\equiv0\pmod2\) 矛盾。因此这组余数在无限直积中没有共同原像。
 
 \subsection{整数同余方程}
 \label{b1:subsec:1004:02}
@@ -80,7 +94,17 @@ x\equiv a\pmod m,\qquad x\equiv b\pmod n
 有整数解，当且仅当 \(a\equiv b\pmod d\)。有解时，全部解为模 \(\operatorname{lcm}(m,n)\) 的一个剩余类。
 \end{proposition}
 \begin{proof}
-若有解，\(d\) 同时整除 \(x-a,x-b\)，所以整除 \(a-b\)。反过来，写 \(x=a+mt\)，所求条件成为 \(mt\equiv b-a\pmod n\)。若 \(d\mid b-a\)，约去 \(d\) 后，\(m/d\) 与 \(n/d\) 互素，Bézout 等式使 \(m/d\) 在模 \(n/d\) 下可逆，因而存在 \(t\)。两个解之差必须同时被 \(m,n\) 整除，恰好被它们的最小公倍数整除，且加上这个公倍数保持两个同余式，故得到全部解。
+若有解，\(d\) 同时整除 \(x-a,x-b\)，所以整除 \(a-b\)。反过来，写 \(x=a+mt\)，所求条件成为 \(mt\equiv b-a\pmod n\)。若 \(d\mid b-a\)，取整数 \(c\) 使 \(b-a=dc\)。于是
+\[
+mt\equiv dc\pmod n
+\quad\Longleftrightarrow\quad
+\frac md\,t\equiv c\pmod{n/d}.
+\]
+这个等价是把整数等式 \(mt-dc=nq\) 的两边除以 \(d\)。因为
+\[
+\gcd\left(\frac md,\frac nd\right)=1,
+\]
+可取 Bézout 系数 \(u,v\in\mathbb Z\) 使 \(u\cdot\dfrac md+v\cdot\dfrac nd=1\)。因此 \(u\) 是 \(\dfrac md\) 在模 \(\dfrac nd\) 下的逆元，取 \(t=uc\) 便满足所需同余式，再令 \(x=a+mt\) 就得到解。两个解之差必须同时被 \(m,n\) 整除，恰好被它们的最小公倍数整除，且加上这个公倍数保持两个同余式，故得到全部解。
 \end{proof}
 若 \(n=p_1^{a_1}\cdots p_r^{a_r}\) 为整数的素数幂分解，则
 \[
@@ -93,6 +117,15 @@ x\equiv a\pmod m,\qquad x\equiv b\pmod n
 \begin{definition}\label{b1:def:idempotent}
 设 \(R\) 为环，\(e\in R\)。若 \(e^2=e\)，则称 \(e\) 为\term[midengyuan]{幂等元}[idempotent element]。若一族幂等元 \((e_i)_{i\in I}\) 对任意不同指标 \(i,j\in I\) 都满足 \(e_ie_j=e_je_i=0\)，则称这族幂等元两两正交。
 \end{definition}
+
+幂等元通过乘法给出投影。对任意环 \(R\) 及其中的幂等元 \(e\)，左乘 \(e\) 是加法群自同态
+\[
+p_e:R\longrightarrow R,\qquad a\longmapsto ea,
+\]
+并满足 \(p_e(p_e(a))=e^2a=ea=p_e(a)\)，即 \(p_e^2=p_e\)。因此它是加法群的投影；有限个两两正交且和为 \(1\) 的幂等元，相应给出一组互补的加法群投影。
+
+\ProseParagraphBreak
+在交换环中，这个投影的像 \(eR\) 自身构成环，单位是 \(e\)，因为 \(e(ea)=(ea)e=ea\)。把目标改写为 \(eR\) 后，映射 \(a\mapsto ea\) 把 \(1_R\) 送到 \(e=1_{eR}\)，从而保持单位。当 \(e\ne1_R\) 时，包含映射 \(eR\hookrightarrow R\) 不保持单位，因而不是本书约定下的环同态，也不是本书约定下的子环嵌入。下面的分解把各 \(e_iR\) 视为具有自己单位的环。
 
 \begin{proposition}\label{b1:prop:idempotent-product}
 设 \(r\geq1\) 为整数。若交换环 \(R\) 有两两正交的幂等元 \(e_1,\ldots,e_r\)，且 \(\sum_i e_i=1\)，则
@@ -111,23 +144,43 @@ e_i=(0,\ldots,0,1_{R_i},0,\ldots,0),
 \begin{proof}
 \(e_iR\) 对加法及乘法封闭，\(e_i(e_ia)=e_ia\)，故以 \(e_i\) 为单位。映射保持乘法，因为 \((e_ia)(e_ib)=e_iab\)，并把 \(1\) 送到各分量的单位。若每个 \(e_ia=0\)，则 \(a=\sum_i e_ia=0\)，所以单射。给定 \(x_i\in e_iR\)，令 \(a=\sum_i x_i\)；由正交性，\(e_ia=x_i\)，故满射。逆映射就是各分量求和。有限直积中，第 \(i\) 坐标为单位而其余为零的元素显然满足幂等、正交及和为单位的条件。
 \end{proof}
-当 \(e_i\ne1_R\) 时，包含映射 \(e_iR\hookrightarrow R\) 不保持单位，因而不是本书约定下的环同态，也不是本书约定下的子环嵌入；\(e_iR\) 在上述分解中以 \(e_i\) 为单位独立成环。
 
-\ProseParagraphBreak
 这些幂等元也直接给出中国剩余定理中的理想。对每个 \(i\)，映射
 \[
 p_i:R\longrightarrow e_iR,\qquad a\longmapsto e_i a
 \]
 是满环同态，并且 \(p_i(1_R)=e_i=1_{e_iR}\)，所以保持单位。若 \(e_i a=0\)，则 \(a=(1-e_i)a\)；反过来，\(e_i(1-e_i)=0\)。因此
 \[
-J_i:=\ker p_i=(1-e_i)R,
+J_i\coloneqq\ker p_i=(1-e_i)R,
 \qquad e_iR\cong R/J_i.
 \]
+每个 \(a\in R\) 都分解为 \(a=e_ia+(1-e_i)a\)。若 \(x\in e_iR\cap(1-e_i)R\)，则前一种表示给出 \(e_ix=x\)，后一种表示给出 \(e_ix=0\)，所以 \(x=0\)。因此，作为加法群有
+\[
+R=e_iR\oplus(1-e_i)R=e_iR\oplus J_i.
+\]
+投影 \(p_i\) 保留第一分量，消去第二分量；商去 \(J_i\) 后只留下 \(e_iR\)，这正是上述第一同构定理的含义。
+
+\ProseParagraphBreak
 对于 \(i\ne j\)，由 \(1=(1-e_i)+e_i\) 和 \(e_i=(1-e_j)e_i\in J_j\) 可知 \(J_i+J_j=R\)。若 \(a\in\bigcap_iJ_i\)，则每个 \(e_i a=0\)，于是 \(a=\sum_i e_i a=0\)。故 \(\bigcap_iJ_i=0\)，再由\cref{b1:thm:crt}得到
 \[
 R\cong\prod_{i=1}^rR/J_i\cong\prod_{i=1}^r e_iR.
 \]
-这个同构在第 \(i\) 个坐标上的映射就是 \(p_i\)。反过来，从两两互素的理想出发时，\cref{b1:thm:crt}证明中构造的元素 \(e_i\) 未必在原环中幂等，但它们在商环 \(R/\bigcap I_i\) 中的像就是这些坐标幂等元。例如 \(R=\mathbb Z/12\mathbb Z\cong\mathbb Z/3\mathbb Z\times\mathbb Z/4\mathbb Z\) 中，\([4]\) 与 \([9]\) 分别对应 \((1,0)\)、\((0,1)\)：它们的平方各等于自身，乘积为零，和为 \([1]\)。\cref{b1:tab:crt-idempotent-components}列出了相应的分量与投影核。
+这个同构在第 \(i\) 个坐标上的映射就是 \(p_i\)。反过来，从两两互素的理想 \(I_1,\ldots,I_r\) 出发，令 \(K=\bigcap_j I_j\)。\cref{b1:thm:crt}证明中构造的元素 \(e_i\) 在各商环坐标取 \(0\) 或 \(1\)，所以对每个 \(j\)，有 \(e_i^2-e_i\equiv0\pmod{I_j}\)。当 \(i\ne k\) 时，每个坐标中 \(e_i,e_k\) 至少有一个为零；而每个坐标中 \(\sum_i e_i\) 恰为 \(1\)。因此
+\[
+e_i^2-e_i\in K,\qquad
+e_ie_k\in K\quad(i\ne k),\qquad
+1-\sum_i e_i\in K.
+\]
+这不要求原环中的 \(e_i\) 幂等，而是在商环 \(R/K\) 中，令 \(\bar e_i=e_i+K\)，便得到
+\[
+\bar e_i^2=\bar e_i,\qquad
+\bar e_i\bar e_k=0\quad(i\ne k),\qquad
+\sum_i\bar e_i=1_{R/K}.
+\]
+这些正是商环中两两正交且和为单位的坐标幂等元。
+
+\ProseParagraphBreak
+例如 \(R=\mathbb Z/12\mathbb Z\cong\mathbb Z/3\mathbb Z\times\mathbb Z/4\mathbb Z\) 中，\([4]\) 与 \([9]\) 分别对应 \((1,0)\)、\((0,1)\)：它们的平方各等于自身，乘积为零，和为 \([1]\)。\cref{b1:tab:crt-idempotent-components}列出了相应的分量与投影核。
 
 \begin{table}[htbp]
 \centering
@@ -146,7 +199,17 @@ R\cong\prod_{i=1}^rR/J_i\cong\prod_{i=1}^r e_iR.
 \(e_iR\) 是保留下来的分量，\(J_i=(1-e_i)R\) 则是第 \(i\) 个投影消去的部分；表中两者不是同一个理想，而 \(R/J_i\cong e_iR\)。
 
 \ProseParagraphBreak
-整环中 \(e^2=e\) 等价于 \(e(e-1)=0\)，所以只有 \(0,1\) 两个幂等元，不能分成两个非零环的直积。反方向不成立：\(\mathbb Z/4\mathbb Z\) 含零因子，却只有 \([0],[1]\) 两个幂等元。一般非交换环要作上述直积分解，还应要求幂等元与所有元素交换，即为中心幂等元。这样证明中的 \((e_ia)(e_ib)=e_iab\) 才成立。设 \(k\) 为域。在 \(M_2(k)\) 中取 \(e=E_{11}\)、\(f=E_{22}\)，则 \(e^2=e\)、\(f^2=f\)、\(ef=fe=0\) 且 \(e+f=I_2\)，但 \(eE_{12}=E_{12}\ne E_{12}e=0\)。候选坐标映射 \(p(A)=eA\) 也不保持乘法：
+整环中 \(e^2=e\) 等价于 \(e(e-1)=0\)，所以只有 \(0,1\) 两个幂等元，不能分成两个非零环的直积。反方向不成立：\(\mathbb Z/4\mathbb Z\) 含零因子，却只有 \([0],[1]\) 两个幂等元。
+
+\ProseParagraphBreak
+一般非交换环要作上述直积分解，还应要求幂等元与所有元素交换，即为中心幂等元。障碍在乘法相容性：对 \(a,b\in R\)，\((ea)(eb)=eaeb\)，仅由 \(e^2=e\) 不能跨过中间的 \(a\) 合并两个 \(e\)。若 \(e\) 在中心，便可使用 \(ae=ea\)，得到
+\[
+(ea)(eb)=e(ae)b=e(ea)b=e^2ab=eab.
+\]
+这个计算说明中心幂等元给出的坐标映射保持乘法；中心性也使 \(e\) 在 \(eR\) 中从左右两边都作为单位。
+
+\ProseParagraphBreak
+设 \(k\) 为域。在 \(M_2(k)\) 中取 \(e=E_{11}\)、\(f=E_{22}\)，则 \(e^2=e\)、\(f^2=f\)、\(ef=fe=0\) 且 \(e+f=I_2\)，但 \(eE_{12}=E_{12}\ne E_{12}e=0\)。候选坐标映射 \(p(A)=eA\) 不保持乘法：
 \[
 p(E_{12}E_{21})=E_{11},\qquad
 p(E_{12})p(E_{21})=E_{12}\cdot0=0.

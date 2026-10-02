@@ -3,8 +3,8 @@
 % 纲要位置：工作记录/计划纲要.md，第 3769 行。
 % 纲要细目（写作范围）：
 % * 矩阵系数正交关系
-% * 行正交与列正交
-% * 不可约特征标构成类函数空间的基
+% * 特征标内积与行正交
+% * 不可约特征标构成类函数空间的基与列正交
 
 
 \section{正交关系}
@@ -16,12 +16,14 @@
 \subsection{矩阵系数正交关系}
 \label{b5:subsec:0202:01}
 
+选定表示 \(\rho\) 的基后，每个矩阵条目给出函数 \(g\mapsto\rho(g)_{ia}\)，称为 \(\rho\) 的矩阵系数。它属于全函数空间 \(\mathbb C^G\)，以下使用\eqref{b5:eq:character-inner-product}在该空间上定义的内积。
+
 \begin{theorem}[矩阵系数正交]\label{b5:thm:matrix-coefficient-orthogonality}
-设 \(G\) 为有限群，\(\rho\) 与 \(\sigma\) 为 \(G\) 的不可约有限维复表示，均在不变内积的标准正交基下写成酉矩阵。若它们不同构，则对相应范围内的矩阵指标 \(i,a,j,b\) 有
+设 \(G\) 为有限群，\(\rho\) 与 \(\sigma\) 为 \(G\) 的不可约有限维复表示，维数分别为 \(d_\rho,d_\sigma\)。在各自的不变 Hermitian 内积下选定正交归一基，将两表示写成酉矩阵。若它们不同构，则对 \(1\le i,a\le d_\sigma\)、\(1\le j,b\le d_\rho\) 有
 \[
 \frac1{|G|}\sum_g\sigma(g)_{ia}\overline{\rho(g)_{jb}}=0.
 \]
-若采用同一个 \(d\) 维表示及同一组基，则
+若 \(\rho=\sigma\) 是同一个 \(d\) 维不可约表示，并对两者采用同一组正交归一基，则对 \(1\le i,a,j,b\le d\) 有
 \[
 \frac1{|G|}\sum_g\rho(g)_{ia}\overline{\rho(g)_{jb}}
 =\frac1d\delta_{ij}\delta_{ab}.
@@ -32,12 +34,20 @@
 \[
 P(T)=\frac1{|G|}\sum_g\sigma(g)T\rho(g^{-1}).
 \]
-重排求和表明它是交织算子。不同构时由 Schur 引理为零；相同表示时为标量矩阵 \(cI\)，取迹给出 \(cd=\operatorname{tr}T\)，故 \(c=\operatorname{tr}T/d\)。取 \(T\) 为第 \(a,b\) 项为一的矩阵单位。平均式的 \(i,j\) 条目为所列求和，因为酉性使 \(\rho(g^{-1})_{bj}=\overline{\rho(g)_{jb}}\)；右边是 \(\delta_{ab}\delta_{ij}/d\)，得到两式。
+重排求和表明 \(P(T)\) 是从 \(V_\rho\) 到 \(V_\sigma\) 的交织算子。两表示不同构时，由 Schur 引理得 \(P(T)=0\)。当 \(\rho=\sigma\) 且采用同一组基时，\(P(T)\) 为标量矩阵 \(cI\)。取迹给出 \(cd=\operatorname{tr}T\)，故 \(c=\operatorname{tr}T/d\)。
+
+取矩阵单位 \(T=E_{ab}:V_\rho\to V_\sigma\)，即把 \(V_\rho\) 的第 \(b\) 个基向量送到 \(V_\sigma\) 的第 \(a\) 个基向量，其余基向量送到零。平均式的 \(i,j\) 条目为
+\[
+P(E_{ab})_{ij}
+=\frac1{|G|}\sum_g\sigma(g)_{ia}\rho(g^{-1})_{bj}
+=\frac1{|G|}\sum_g\sigma(g)_{ia}\overline{\rho(g)_{jb}},
+\]
+最后一步使用 \(\rho\) 的酉性。不同构时该条目为零；同一表示、同一组基时，\(\operatorname{tr}E_{ab}=\delta_{ab}\)，该条目为 \(\delta_{ab}\delta_{ij}/d\)，得到两式。
 \end{proof}
 
 这还说明同一不可约表示的 \(d^2\) 个矩阵系数线性无关：它们互相正交，且每个范数平方为 \(1/d>0\)。矩阵系数一般不是类函数，只有取对角元之和才得到特征标。
 
-\subsection{行正交与列正交}
+\subsection{特征标内积与行正交}
 \label{b5:subsec:0202:02}
 
 \begin{theorem}\label{b5:thm:character-hom-inner-product}
@@ -99,11 +109,26 @@ z_f=\sum_{g\in G}f(g^{-1})g\in\mathbb C[G].
 \]
 \end{theorem}
 \begin{proof}
-取各共轭类代表 \(g_j\)，令类大小 \(c_j=|G|/|C_G(g_j)|\)。由行正交，方阵
+取各共轭类代表 \(g_1,\ldots,g_r\)，令类大小 \(c_j=|G|/|C_G(g_j)|\)。上一基定理保证不可约特征标数等于共轭类数，所以
 \[
-U_{ij}=\sqrt{c_j/|G|}\,\chi_i(g_j)
+U_{ij}=\sqrt{\frac{c_j}{|G|}}\,\chi_i(g_j)
 \]
-满足 \(U\overline U^{\mathsf T}=I\)。方阵的右逆也为左逆，故 \(\overline U^{\mathsf T}U=I\)，写出各项再取复共轭即得不同代表的公式。同一共轭类的取值相同，因此推广到任意 \(g,h\)。
+定义一个方阵。行正交给出 \(U\overline U^{\mathsf T}=I\)。方阵的右逆也为左逆，故 \(\overline U^{\mathsf T}U=I\)。写出其第 \(j,k\) 个条目，得到
+\[
+\delta_{jk}
+=\frac{\sqrt{c_jc_k}}{|G|}
+\sum_{i=1}^r\overline{\chi_i(g_j)}\chi_i(g_k).
+\]
+当 \(j=k\) 时，这给出
+\[
+\sum_{i=1}^r|\chi_i(g_j)|^2
+=\frac{|G|}{c_j}=|C_G(g_j)|.
+\]
+当 \(j\ne k\) 时，前面的实系数为正，故求和为零；对该零等式取复共轭，得到
+\[
+\sum_{i=1}^r\chi_i(g_j)\overline{\chi_i(g_k)}=0.
+\]
+特征标取值与中心化子阶都在共轭类上不变，因此这两式推广到任意 \(g,h\) 就是所述结论。
 \end{proof}
 
 行正交计算表示重数，列正交计算中心化子阶。单位元的一列特别给出

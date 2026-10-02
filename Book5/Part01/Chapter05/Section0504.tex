@@ -11,10 +11,10 @@
 \section{初等子群检测与 Brauer 整诱导的证明}
 \label{b5:sec:0504}
 
-Artin 定理已经给出有限指数的子格。现在必须证明这个指数没有任何素因子。我们逐个素数 \(p\) 只允许分母与 \(p\) 互素，再证明 \(p\)-初等子群的诱导已经生成整个表示环。论证中所需的交换环知识将在使用处给出证明。
+Artin 定理已经给出有限指数的子格。现在必须证明这个指数没有任何素因子。对每个素数 \(p\)，我们反演所有与 \(p\) 互素的整数，证明 \(p\)-初等子群的诱导在这个局部化以后生成整个表示环，从而排除指数中的素因子 \(p\)。论证中所需的交换环知识将在使用处给出证明。
 
 \ProseParagraphBreak
-证明可以分四步读：先用张量恒等式说明诱导像是理想；再把局部化后表示环的极大理想写成模 \(p\) 的特征标值检测，并将检测元素约化为 \(p\)-正则部分；随后在相应中心化子中构造 \(p\)-初等子群，排除诱导理想落入任何极大理想；最后对每个素数重复这一步，从有限指数回到整系数等式。前两步准备检测工具，第三步消去固定素数的障碍，最后一步才排除全部分母。
+张量恒等式说明诱导像是理想。为了证明它在 \(p\)-局部化后等于全环，我们把局部化表示环 \(R(G)_{(p)}\) 的极大理想写成模 \(p\) 的特征标值检测，并将检测元素约化为 \(p\)-正则部分。在相应中心化子中构造 \(p\)-初等子群，就能找到不落入该极大理想的诱导特征标。对每个素数重复这一论证，才得到整系数等式。
 
 \subsection{诱导像与复表示环}
 \label{b5:subsec:0504:01}
@@ -40,7 +40,7 @@ I_p(G)_{(p)}=R(G)_{(p)}.
 \subsection{限制检测、局部化与整性引理}
 \label{b5:subsec:0504:02}
 
-需要先把表示环的极大理想解释为模素数的特征标值检测。以下引理特意保留一般交换环的表述，证明却只用有限生成元与行列式。
+需要先把 \(p\)-局部化表示环 \(R(G)_{(p)}\) 的极大理想解释为模 \(p\) 的特征标值检测。为此，先证明有限交换环扩张中的极大理想提升引理。
 
 \begin{lemma}[有限扩张中的极大理想提升]\label{b5:lem:finite-extension-maximal-lift}
 设 \(A\subset B\) 为含同一单位的交换环，且 \(B\) 为有限生成 \(A\)-模。对每个极大理想 \(\mathfrak m\subset A\)，存在极大理想 \(\mathfrak n\subset B\) 使 \(\mathfrak n\cap A=\mathfrak m\)。
@@ -64,7 +64,7 @@ I_p(G)_{(p)}=R(G)_{(p)}.
 \[
 R(G)_{(p)}\longrightarrow B=O_{(p)}^r.
 \]
-单射性来自特征标作为类函数的相等判据；由\cref{b5:prop:character-values-integral}，各分量的特征标值都属于 \(O_{(p)}\)，故这确实是到 \(B\) 的求值映射。\(O\) 为有限生成 \(\mathbb Z\)-模，所以 \(B\) 为有限生成 \(\mathbb Z_{(p)}\)-模，从而也是有限生成 \(R(G)_{(p)}\)-模。\cref{b5:lem:finite-extension-maximal-lift}把 \(\mathfrak m\) 提升为 \(B\) 的极大理想。
+单射性来自特征标作为类函数的相等判据；由\cref{b5:prop:character-values-integral}，各分量的特征标值都属于 \(O_{(p)}\)，故这确实是到 \(B\) 的求值映射。\(O\) 为有限生成 \(\mathbb Z\)-模，所以 \(B\) 为有限生成 \(\mathbb Z_{(p)}\)-模。在这个嵌入下，\(\mathbb Z_{(p)}\) 通过 \(a\mapsto a\,1_G\) 嵌入 \(R(G)_{(p)}\)，其在 \(B\) 中的像是对角标量 \((a,\ldots,a)\)。因此一组 \(\mathbb Z_{(p)}\)-模生成元也生成 \(B\) 作为 \(R(G)_{(p)}\)-模。\cref{b5:lem:finite-extension-maximal-lift}遂把 \(\mathfrak m\) 提升为 \(B\) 的极大理想。
 
 有限直积的极大理想只在一个分量上取极大理想：各分量的单位幂等元在域商中只能取 \(0\) 或 \(1\)，它们的和是 \(1\)，且彼此乘积为零，因此恰有一个取 \(1\)。这便给出某个代表 \(g\) 及 \(O_{(p)}\) 的极大理想 \(\mathfrak q\)。
 
@@ -169,7 +169,14 @@ S_\lambda\cdot\lambda(t_0)^{-1}
 \(A=\bigl\langle Z(P),x\bigr\rangle\)
 交换且正规：对任意 \(g\in P\)，有 \(gxg^{-1}\in xZ(P)\)。又因 \(x\notin Z(P)\)，\(A\) 不包含于 \(Z(P)\)。
 
-把 \(\rho|_A\) 分解成一维权空间。若只出现一个特征标，则 \(A\) 作用为标量；忠实性会使 \(A\subset Z(P)\)，矛盾。故至少出现两个权。取其中一个 \(\lambda\)，其惯性群 \(J=I_P(\lambda)\) 为真子群；这是因为\cref{b5:thm:clifford-restriction}断言不可约表示中的所有权构成一个 \(P\)-轨道。由\cref{b5:thm:clifford-correspondence}，相应权空间给出不可约 \(J\)-表示 \(U\)，且 \(\rho\simeq\operatorname{Ind}_J^P U\)。对较小的 \(p\)-群 \(J\) 应用归纳假设，得 \(U\simeq\operatorname{Ind}_Q^J\mu\)。\cref{b5:thm:induction-transitivity}遂给出 \(\rho\simeq\operatorname{Ind}_Q^P\mu\)。
+把 \(\rho|_A\) 分解成一维权空间。若只出现一个特征标，则每个 \(a\in A\) 都作用为标量 \(\rho(a)=\lambda(a)I\)。对任意 \(g\in P\)，于是有
+\[
+\rho([a,g])
+=\rho(a)\rho(g)\rho(a)^{-1}\rho(g)^{-1}=I.
+\]
+忠实性给出 \([a,g]=1\)，故 \(A\subseteq Z(P)\)，矛盾。因此至少出现两个权。
+
+取其中一个 \(\lambda\)，其惯性群 \(J=I_P(\lambda)\) 为真子群；这是因为\cref{b5:thm:clifford-restriction}断言不可约表示中的所有权构成一个 \(P\)-轨道。由\cref{b5:thm:clifford-correspondence}，相应权空间给出不可约 \(J\)-表示 \(U\)，且 \(\rho\simeq\operatorname{Ind}_J^P U\)。对较小的 \(p\)-群 \(J\) 应用归纳假设，得 \(U\simeq\operatorname{Ind}_Q^J\mu\)。\cref{b5:thm:induction-transitivity}遂给出 \(\rho\simeq\operatorname{Ind}_Q^P\mu\)。
 \end{proof}
 
 \begin{proposition}\label{b5:prop:elementary-monomial}

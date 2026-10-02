@@ -3,11 +3,10 @@
 
 \chapter{微分代数与微分消去}
 \label{b3:app:E}
+\BookChapterNumber{b3:app:E}
 
 % 纲要细目（与计划纲要同步）：
-% > 本附录简要介绍微分代数。默认特征零，先取一个导子；多个导子时注明两两交换。所需基础是域、理想、局部化和多项式；交换代数正文不依赖本附录。非线性算法的完整证明和实现留给专题教材。
-
-\BookChapterNumber{b3:app:E}
+% > 本附录简要介绍微分代数。主体采用特征零单导子微分域；多交换导子基定理另外注明来源与范围。所需基础是域、理想、局部化和多项式；交换代数正文不依赖本附录。非线性算法的完整证明和实现留给专题教材。
 
 \begin{chapterabstract}
 本附录建立导子、微分多项式与微分理想的基本运算，比较根微分理想的有限性和普通 Noether 性。特征集与 Rosenfeld--Gröbner 方法处理消去中的非零及退化分支；线性微分模与 Picard--Vessiot 扩张则给出另一类结构问题。较深的有限性与分解结果只给证明概要。
@@ -17,7 +16,7 @@
 \begin{itemize}
 \item 给一个环指定导子，并在商环、分式域与微分多项式环上检查相容性。
 \item 区分普通代数次数、微分阶及两种超越次数。
-\item 在微分消去中记录初式、分离子与非零条件，保留必要的退化分支。
+\item 在微分消去中保存乘子证书，记录初式、分离子与非零条件，核验退化分支。
 \item 从线性微分系统导出常数矩阵作用，并辨认其与完整微分 Galois 理论的差别。
 \end{itemize}
 \end{learninggoals}
@@ -30,7 +29,7 @@
 
 \ProseParagraphBreak
 
-所需基础为域、理想、多项式与局部化，Kähler 微分的比较用到本卷第14章。默认一个导子、特征零；多个导子时要求两两交换。普通常微分方程的解析存在定理不作为预备知识，因为这里的定义与多数算例可以在形式代数中完成。Hubert 的正式文章 \textit{Notes on Triangular Sets and Triangulation-Decomposition Algorithms II: Differential Systems} 的 Sections 2--3 对应基本对象与特征集\cite[Sections 2--3]{Hubert2003DifferentialSystems}；完整 Rosenfeld--Gröbner 输出规格见 Boulier 等的 Section 6.2\cite[Section 6.2, Theorem 60]{BoulierLazardOllivierPetitot2009DifferentialIdeals}。
+所需基础为域、理想、多项式与局部化，Kähler 微分的比较用到本卷第14章。本附录的特征集与算法说明采用一个导子、特征零；多个两两交换导子的基定理另行注明来源。普通常微分方程的解析存在定理不作为预备知识，因为这里的定义与多数算例可以在形式代数中完成。Hubert 的正式文章 \textit{Notes on Triangular Sets and Triangulation-Decomposition Algorithms II: Differential Systems} 的 Sections 2--3 对应基本对象与特征集\cite[Sections 2--3]{Hubert2003DifferentialSystems}；完整 Rosenfeld--Gröbner 输出规格见 Boulier 等的 Section 6.2\cite[Section 6.2, Theorem 60]{BoulierLazardOllivierPetitot2009DifferentialIdeals}。
 
 % 本附录初等论证给出证明，有限性与算法长证明给出概要及出处。
 
@@ -57,7 +56,7 @@
 \end{solution}
 
 \begin{exercise}\label{b3:ex:E-polynomial-differential-ideals}
-证明 \(K[t]\) 在上述导子下只有零理想和全环两个微分理想。
+设 \(K\) 为特征零域，在 \(K[t]\) 上指定 \(\delta|_K=0\)、\(\delta t=1\)。证明该环只有零理想和全环两个微分理想。
 \end{exercise}
 \begin{solution}
 若微分理想含非零多项式，取次数最小者 \(p\)。若次数正，则 \(p'\) 非零且次数更小，也在理想中，矛盾。因此理想含非零常数，为全环。
@@ -95,6 +94,27 @@
 所以最高导数 \(y^{(3)}\) 的系数正是分离子。
 \end{solution}
 
+\begin{exercise}\label{b3:ex:E-branch-certificate}
+设 \((K,\delta)\) 为特征零微分域，在 \(K\{y,z\}\) 中取
+\[
+P=yz-y',\qquad Q=z'-z^2.
+\]
+用 \(P\) 及其导数消去 \(Q\) 中的 \(z'\)，写出 \(hQ-r\in[P]\) 的明确恒等式，其中 \(h\) 为 \(y\) 的幂、\(r\in K\{y\}\)。分别列出 \(y\ne0\) 与 \(y=0\) 两个分支，证明它们在任意微分域扩张中恰好覆盖原系统的全部解。
+\end{exercise}
+\begin{solution}
+取 \(h=y^2\)、\(r=yy''-2(y')^2\)。直接展开得
+\[
+y^2Q-r=y\delta P-(yz+2y')P\in[P].
+\]
+这是消去过程中保留的乘子证书；\(r=0\) 是原系统的微分后果。
+
+在 \(y\ne0\) 的分支，\(P=0\) 给出 \(z=y'/y\)。此时
+\[
+Q=\delta(y'/y)-(y'/y)^2=\frac{yy''-2(y')^2}{y^2},
+\]
+所以该分支等价于 \(y\ne0\)、\(r=0\) 和 \(z=y'/y\)。在 \(y=0\) 的分支，所有 \(y\) 的导数都为零，\(P=0\) 自动成立，但仍须保留 \(Q=0\)，即 \(z'=z^2\)。这两个分支互不相交，每个原解恰属于其中一个；反向代入也分别验证两条原方程。只留下 \(r=0\) 会在 \(y=0\) 时错误地允许任意 \(z\)。
+\end{solution}
+
 \begin{exercise}\label{b3:ex:E-division-loses-solution}
 在微分域中分析 \(yy'=0\)，指出直接约去 \(y\) 的逻辑问题，并说明最终解集是什么。
 \end{exercise}
@@ -130,9 +150,40 @@
 对任一解 \(v\)，计算 \((Y^{-1}v)'=-Y^{-1}Av+Y^{-1}Av=0\)，故 \(Y^{-1}v\in C^n\)。反方向求导 \(Yc\) 即验证。可逆性保证 \(c\) 唯一，故解空间作为 \(C\) 向量空间维数为 \(n\)。
 \end{solution}
 
+\begin{exercise}\label{b3:ex:E-pv-exponential-group}
+在 \(K=\mathbb C(t)\) 上取 \(\delta|_{\mathbb C}=0\)、\(\delta t=1\)。于形式 Laurent 级数域 \(\mathbb C((t))\) 中记
+\[
+u=\exp(t)=\sum_{j\ge0}\frac{t^j}{j!},\qquad L=K(u).
+\]
+证明 \(u\) 在 \(K\) 上超越，\(L/K\) 是 \(y'=y\) 的 Picard--Vessiot 扩张，并计算它的微分 Galois 群。
+\end{exercise}
+\begin{solution}
+逐项求导给出 \(u'=u\)，且 \(u(0)=1\)，故 \(u\ne0\)。若 \(u\) 在 \(K\) 上代数，取其首一最小多项式
+\[
+X^n+\sum_{i<n}a_i(t)X^i,\qquad n\ge1.
+\]
+\(u\ne0\) 使 \(a_0\ne0\)。对在 \(u\) 处的等式求导，再减去原等式的 \(n\) 倍，得到次数小于 \(n\) 的关系
+\[
+\sum_{i<n}\bigl(a_i'+(i-n)a_i\bigr)u^i=0.
+\]
+最小性迫使全部系数为零，特别有 \(a_0'=na_0\)。写 \(a_0=p/q\)，其中 \(p,q\in\mathbb C[t]\) 均非零，则
+\[
+p'q-pq'=npq.
+\]
+左边次数至多为 \(\deg p+\deg q-1\)，右边次数为 \(\deg p+\deg q\)，矛盾。
+
+\(\mathbb C((t))\) 上逐项导子保持 Laurent 级数；若其导数为零，则所有非零次数的系数都为零。因此其常数域恰为 \(\mathbb C\)，子域 \(L\) 的常数域也恰为 \(\mathbb C\)。结合 \(u'=u\) 与 \(L=K(u)\)，这验证了 Picard--Vessiot 扩张的全部条件。
+
+由\cref{b3:prop:pv-constant-matrices}，每个微分自同构都满足 \(\sigma(u)=cu\)，其中 \(c\in\mathbb C^\times\)。反过来，\(u\) 的超越性使任意代换 \(t\mapsto t\)、\(u\mapsto cu\) 定义 \(L\) 的 \(K\) 自同构；它在域生成元上与导子交换，故在整个 \(L\) 上交换。于是
+\[
+\operatorname{Gal}_{\delta}(L/K)\cong\mathbb C^\times
+=\mathbb G_m(\mathbb C).
+\]
+\end{solution}
+
 \begin{exercise}\label{b3:ex:E-commuting-derivations}
 在 \(K[x,y]\) 上取 \(\delta_1=\partial/\partial x\)、\(\delta_2=x\partial/\partial y\)。证明二者不交换，并说明为何不能直接套用本附录的多导子基定理。
 \end{exercise}
 \begin{solution}
-\(\delta_1\delta_2(y)=\delta_1(x)=1\)，而 \(\delta_2\delta_1(y)=0\)。所以混合导数不能只用多重指标 \((a,b)\) 表示而忽略次序。Ritt--Raudenbush 定理在正文明确假定有限个两两交换导子，此例不符合假设；这里并未因此断言所有非交换导子的有限性结果都失败。
+\(\delta_1\delta_2(y)=\delta_1(x)=1\)，而 \(\delta_2\delta_1(y)=0\)。所以混合导数不能只用多重指标 \((a,b)\) 表示而忽略次序。正文陈述的是单导子 Ritt--Raudenbush 定理；所提到的多导子一般形式要求导子两两交换。此例不符合后一假设，混合导数还须按实际复合次序记录。
 \end{solution}

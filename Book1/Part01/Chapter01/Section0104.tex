@@ -22,6 +22,8 @@
 \begin{remark}[泛性质的含义]\label{b1:def:universal-property}
 本章出现的\term[fan-xingzhi]{泛性质}[universal property]，都是通过从所构造对象出发的同态，刻画该对象及其指定的结构映射。对每个允许的目标对象及满足规定条件的给定映射，泛性质要求存在唯一满足指定复合等式的同态。例如，\cref{b1:thm:free-monoid}把字母映射延拓到自由幺半群上，\cref{b1:thm:monoid-quotient}把同类同值的同态分解到商幺半群上。两种情形规定的目标、给定映射和复合等式各不相同。
 
+以自由幺半群为例，有限字的定义告诉我们 \(X^*\) 的元素怎样写、乘法怎样计算；泛性质则告诉我们，给定任意目标幺半群 \(M\) 和字母取值 \(u:X\rightarrow M\) 后，从 \(X^*\) 到 \(M\) 的同态怎样被唯一确定。这种对全部目标的映射描述还足以识别对象：如果另一对幺半群与指定字母映射具有相同性质，它与 \(X^*\) 之间必有唯一保持字母取值的同构。\cref{b1:thm:universal-uniqueness}将证明这一点。
+
 \subsecref{b1:subsec:0103:04}还给出\cref{b1:prop:group-completion-universal}，可把交换消去幺半群的同态沿 \(j\) 延拓到形式差上。
 \end{remark}
 
@@ -57,7 +59,27 @@
 这个命题只保证唯一性，不保证任意指定生成元的像都能形成同态。例如上例中，若想把 \(2\) 送到 \(1\in\mathbb N\)、把 \(3\) 送到 \(1\in\mathbb N\)，则 \(6\) 按两种表达式应同时送到 \(3\) 与 \(2\)，产生矛盾。生成关系正是延拓必须遵守的限制。
 
 \ProseParagraphBreak
-具体地，对任意 \(S\subseteq M\)，把包含映射 \(S\hookrightarrow M\) 按\cref{b1:thm:free-monoid}延拓为求值同态 \(\operatorname{ev}:S^*\rightarrow M\)。它的像正是 \(\langle S\rangle_{\mathrm{mon}}\)，所以 \(S\) 生成 \(M\) 当且仅当 \(\operatorname{ev}\) 满射。此时 \(v\sim w\) 当且仅当 \(\operatorname{ev}(v)=\operatorname{ev}(w)\) 定义了同余关系：求值同态对左右拼接均保持等式。由\cref{b1:thm:monoid-quotient}，\([w]\mapsto\operatorname{ev}(w)\) 是从 \(S^*/{\sim}\) 到 \(M\) 的同态；它因同值关系的定义而单射，因生成性而满射，故为同构。这样，由生成集描述的每个幺半群都可写成自由幺半群的商；下面的关系判据则说明指定字母像何时能通过这个商。
+具体地，对任意 \(S\subseteq M\)，先把 \(S\) 中的元素只看作字母，形成自由幺半群 \(S^*\)。它记录的是生成元的有限表达式，尚未把在 \(M\) 中取值相同的表达式合并。把包含映射 \(S\hookrightarrow M\) 按\cref{b1:thm:free-monoid}延拓，得到求值同态
+\[
+\operatorname{ev}:S^*\longrightarrow M,\qquad
+s_1\cdots s_r\longmapsto s_1\cdots s_r.
+\]
+左端是字，右端是 \(M\) 中的乘积，空字取值为 \(1_M\)。它的像正是 \(\langle S\rangle_{\mathrm{mon}}\)，所以 \(S\) 生成 \(M\) 当且仅当 \(\operatorname{ev}\) 满射。
+
+\ProseParagraphBreak
+现在用求值判断哪些表达式应当合并，规定
+\[
+v\sim w\quad\Longleftrightarrow\quad
+\operatorname{ev}(v)=\operatorname{ev}(w).
+\]
+同态对左右拼接均保持等式，故这是同余关系。例如在加法幺半群 \(\langle2,3\rangle_{\mathrm{mon}}\) 中，字 \(\mathtt{222}\) 与 \(\mathtt{33}\) 是两个不同表达式，但求值后都得到 \(6\)，因此在商中属于同一个类。\(S^*\) 记录怎样写表达式，同余关系记录哪些表达式表示同一个元素。
+
+\ProseParagraphBreak
+若 \(S\) 生成 \(M\)，由\cref{b1:thm:monoid-quotient}，求值下降为同态
+\[
+S^*/{\sim}\longrightarrow M,\qquad [w]\longmapsto\operatorname{ev}(w).
+\]
+它因同值关系的定义而单射，因生成性而满射，故为同构。这样，由生成集描述的每个幺半群都可写成自由幺半群的商；下面的关系判据则说明指定字母像何时能通过这个商。
 
 \subsection{生成关系与映射的存在性}
 \label{b1:subsec:0104:02}
@@ -76,21 +98,35 @@
 反过来，设 \(h:X^*/{\equiv_R}\rightarrow M\) 为同态，并令 \(u=h\circ q\circ\iota\)。同态 \(hq\) 在字母上的取值就是 \(u\)，由\cref{b1:thm:free-monoid}的唯一性，\(hq=\widehat u\)。若 \((v,w)\in R\)，则 \(q(v)=q(w)\)，故 \(\widehat u(v)=\widehat u(w)\)。从 \(h\) 得到的下降映射仍为 \(h\)，从 \(u\) 得到的字母映射也仍为 \(u\)，所以对应互逆。
 \end{proof}
 
-若 \((v,w)\in R\)，则对任意字 \(p,q\in X^*\)，同余关系与拼接相容，故
+最小同余把给定的字对 \(R\) 扩充为一套允许取商的关系。自反性补入每个字与自身的关系，对称性补入反向关系，传递性合并连续的等价步骤；拼接相容性还要求这些关系在较长字的内部也成立。具体地，若 \((v,w)\in R\)，则对任意字 \(p,q\in X^*\)，有
 \[
 pvq\equiv_R pwq.
 \]
-这允许在长字中替换一个出现的子字；对称性允许反向替换，传递性允许连续进行有限次替换。由这些替换能够推出同余，但这里没有给出对任意展示判定两个字是否同余的算法。
+这允许在长字中替换一个出现的子字。例如取 \(X=\{a,b,c\}\)、\(R=\{(ab,ba),(bc,cb)\}\)，便有
+\[
+abbc\equiv_R babc\equiv_R bacb.
+\]
+第一步把开头的 \(ab\) 换成 \(ba\)，第二步把末尾的 \(bc\) 换成 \(cb\)。原始关系只写出两对字，但在这些关系两侧添加前后的字，再连续替换，就得到新的等价字对。
+
+\ProseParagraphBreak
+事实上，两字属于同一个 \(\equiv_R\) 类，当且仅当它们能由有限次这种正向或反向替换连接。为证明这个刻画，把“存在有限替换链”作为一个关系：零步链保证自反性，反转链保证对称性，接合两条链保证传递性；给链上每个字加上相同的前后字，仍是一条替换链，所以它也与拼接相容。这个同余包含 \(R\)，故包含最小同余 \(\equiv_R\)；另一方面，每次替换都在 \(\equiv_R\) 中成立，有限链也在其中成立。因此两种关系相同。这是关于替换链存在性的刻画，尚未给出对任意关系集判定两字是否同余的算法。
 
 \ProseParagraphBreak
 例如在 \(\{a\}^*\) 中施加 \(a^2=a\)。对 \(n\geq2\)，有
 \[
 a^n=a^{n-2}a^2\equiv_R a^{n-1}\equiv_R\cdots\equiv_R a.
 \]
-因此商至多有 \([\varepsilon]\) 与 \([a]\) 两个等价类。把 \(a\) 映到通常乘法幺半群 \(\{0,1\}\) 中的 \(0\)，关系在目标中成立，故由\cref{b1:prop:monoid-generators-relations}得到商上的同态。空字的像为 \(1\)，非空字的像为 \(0\)，因此 \([\varepsilon]\neq[a]\)。这个同态就是商到 \(\{0,1\}\) 的同构。向任意幺半群 \(M\) 指定商上的同态，相当于在 \(M\) 中挑选一个满足 \(m^2=m\) 的元素。
+因此商至多有 \([\varepsilon]\) 与 \([a]\) 两个等价类。把 \(a\) 映到通常乘法幺半群 \(\{0,1\}\) 中的 \(0\)，关系在目标中成立，故由\cref{b1:prop:monoid-generators-relations}得到商上的同态。空字的像为 \(1\)，非空字的像为 \(0\)，因此 \([\varepsilon]\neq[a]\)。这个同态就是商到 \(\{0,1\}\) 的同构。这里用到一种区分商类的方法：找一个尊重全部指定关系的字母赋值，使两个类的像不同。它能下降为商上的同态，而相同的商类在任何同态下都必须同值，所以像不同便证明类不同。向任意幺半群 \(M\) 指定这个商上的同态，相当于在 \(M\) 中挑选一个满足 \(m^2=m\) 的元素。
 
 \ProseParagraphBreak
-现在回到 \(\langle2,3\rangle_{\mathrm{mon}}\subseteq(\mathbb N,+)\)。设 \(u:\langle2,3\rangle_{\mathrm{mon}}\rightarrow(\mathbb N,+)\) 是幺半群同态，记 \(p=u(2)\)、\(q=u(3)\)。由 \(6=2+2+2=3+3\) 得 \(3p=2q\)。因此 \(p\) 为偶数；写 \(p=2k\) 并代回，可得 \(q=3k\)，其中 \(k\in\mathbb N\)。反过来，对每个 \(k\in\mathbb N\)，公式 \(u(m)=km\) 定义了这样的同态，且在 \(2,3\) 上分别取值 \(2k,3k\)。因此正是这些指定能够延拓，前面把两个生成元都送到 \(1\) 的指定则不能延拓。
+现在回到 \(\langle2,3\rangle_{\mathrm{mon}}\subseteq(\mathbb N,+)\)。设 \(u:\langle2,3\rangle_{\mathrm{mon}}\rightarrow(\mathbb N,+)\) 是幺半群同态，记 \(p=u(2)\)、\(q=u(3)\)。由 \(6=2+2+2=3+3\) 得 \(3p=2q\)。因此 \(p\) 为偶数；写 \(p=2k\) 并代回，可得 \(q=3k\)，其中 \(k\in\mathbb N\)。这是一条关系给出的必要条件，还须证明每个这样的指定确实能延拓。
+
+\ProseParagraphBreak
+充分性可直接在整个幺半群上构造。对每个 \(k\in\mathbb N\)，令 \(u(m)=km\)，则
+\[
+u(0)=0,\qquad u(m+n)=k(m+n)=km+kn=u(m)+u(n).
+\]
+所以它是所需同态，且在 \(2,3\) 上分别取值 \(2k,3k\)。这一步直接验证了整个映射，因而无需预先断言 \(2+2+2=3+3\) 生成了全部关系；唯一性再由\cref{b1:prop:maps-on-generators}保证。因此正是这些指定能够延拓，前面把两个生成元都送到 \(1\) 的指定则不能延拓。
 
 \subsection{存在性、唯一性与典范同构的区别}
 \label{b1:subsec:0104:03}
@@ -102,13 +138,19 @@ a^n=a^{n-2}a^2\equiv_R a^{n-1}\equiv_R\cdots\equiv_R a.
 \end{theorem}
 
 \begin{proof}
-由 \(F\) 的泛性质，\(i'\) 唯一延拓为同态 \(\alpha:F\rightarrow F'\)；由 \(F'\) 的泛性质，\(i\) 唯一延拓为同态 \(\beta:F'\rightarrow F\)。有
-\((\beta\alpha)i=i\)，而恒等同态也满足 \(\operatorname{id}_F\circ i=i\)。唯一性因此给出
-\(\beta\alpha=\operatorname{id}_F\)。交换两个对象得到
-\(\alpha\beta=\operatorname{id}_{F'}\)，所以 \(\alpha\) 是同构。任何满足指定等式的同构首先是延拓 \(i'\) 的同态，故只能是 \(\alpha\)。
+先把 \(F\) 的泛性质中的目标取为 \(M=F'\)，给定字母映射取为 \(u=i'\)，得到唯一同态 \(\alpha:F\rightarrow F'\)，满足 \(\alpha i=i'\)。同样把 \(F'\) 的目标取为 \(M=F\)，给定映射取为 \(u=i\)，得到唯一同态 \(\beta:F'\rightarrow F\)，满足 \(\beta i'=i\)。因此
+\[
+(\beta\alpha)i=\beta(\alpha i)=\beta i'=i.
+\]
+
+此时再用 \(F\) 自己的泛性质，目标也取 \(M=F\)，给定字母映射取 \(u=i:X\rightarrow F\)。这个映射只有一个从 \(F\) 到 \(F\) 的同态延拓。恒等同态满足 \(\operatorname{id}_F\circ i=i\)，上式说明 \(\beta\alpha\) 也满足同一等式；它们都是同一个字母映射的延拓，故
+\[
+\beta\alpha=\operatorname{id}_F.
+\]
+对 \(F'\) 取目标 \(F'\) 和给定映射 \(i'\)，同样有 \((\alpha\beta)i'=i'\)，唯一性给出 \(\alpha\beta=\operatorname{id}_{F'}\)。所以 \(\alpha\) 是同构。任何满足指定等式的同构首先是延拓 \(i'\) 的同态，故只能是 \(\alpha\)。
 \end{proof}
 
-这个唯一同构称为由给定资料确定的\term[dianfan-tonggou]{典范同构}[canonical isomorphism]。它不意味着 \(F\) 与 \(F'\) 是同一个集合，也不意味着任意同构都唯一。例如两个字母的自由幺半群有交换两字母的自同构，即它到自身的同构；只有要求分别保持指定字母时，允许的自同构才只剩恒等映射。
+这个唯一同构称为由给定资料确定的\term[dianfan-tonggou]{典范同构}[canonical isomorphism]。它比较的是带指定字母映射的两对资料 \((F,i)\)、\((F',i')\)，唯一性包含条件 \(\alpha i=i'\)。只给出两个幺半群 \(F,F'\)，并不要求所有同构都相同；典范同构也不意味着它们是同一个集合。例如令 \(F=\{a,b\}^*\)，\(i\) 为字母嵌入。交换两个字母给出自同构 \(\tau\)，但 \(\tau(i(a))=b\ne a=i(a)\)，所以它不保持指定映射 \(i\)。对于 \((F,i)\) 到自身的比较，只有恒等同构保持 \(i\)，它才是上述泛性质确定的典范同构。
 
 \ProseParagraphBreak
 群化的唯一性也可用\subsecref{b1:subsec:0103:04}的构造说明。固定一个交换消去幺半群 \(M\)。设 \(K,K'\) 都是每个元素可逆的交换幺半群，\(j:M\rightarrow K\)、\(j':M\rightarrow K'\) 为幺半群同态。若两者都满足\cref{b1:prop:group-completion-universal}的映射性质，便可互相取作目标，分别得到 \(\alpha:K\rightarrow K'\) 与 \(\beta:K'\rightarrow K\)，满足 \(\alpha j=j'\)、\(\beta j'=j\)。于是 \(\beta\alpha\) 和恒等映射都沿 \(j\) 延拓 \(j\)，由唯一性得 \(\beta\alpha=\operatorname{id}_K\)；反向复合同样为恒等。这样得到的同构保持指定的原对象映射，其唯一性也正相对于这些资料而言。

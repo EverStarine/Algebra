@@ -7,16 +7,15 @@
 实零点会随系数的符号变化，仅有多项式等式不足以描述参数条件。把等式与不等式一起保存在半代数集合中，消去变量后仍可得到有限的符号描述。
 
 % 纲要细目（与计划纲要同步）：
+%
 % * 实闭域上由多项式等式与不等式及有限布尔运算定义的集合；半代数映射
-% * Tarski–Seidenberg 投影定理与实闭域量词消去，说明它们为何超出普通 Zariski 消去
-% * 手算一元或二元投影例子；完整柱状代数分解算法不放入正文
+% * 以迹形式计数与符号组合恢复证明 Tarski–Seidenberg 投影定理；使用各阶导数判定根间区间的符号，说明它与普通 Zariski 消去的区别
+% * 手算一元或二元投影例子，以圆弧投影图显示端点条件；完整柱状代数分解算法不放入正文
 %
 % #### G.1.1 半代数集合与半代数映射
 % #### G.1.2 Tarski–Seidenberg 投影定理与量词消去
 % #### G.1.3 低维投影算例与柱状代数分解
-
-
-% 正文按纲要完成；所列定理给出证明或证明概要。
+%
 
 \subsection{半代数集合与半代数映射}
 \label{b3:subsec:G01:01}
@@ -32,10 +31,57 @@
 \subsection{Tarski–Seidenberg 投影定理与量词消去}
 \label{b3:subsec:G01:02}
 
-塔尔斯基\footnote{塔尔斯基（Alfred Tarski，1901-1983），波兰裔美国逻辑学家与数学家，建立形式语言的真理论，并研究实闭域的量词消去。}与塞登伯格\footnote{塞登伯格（Abraham Seidenberg，1916-1988），美国数学家，研究交换代数与代数几何，并推进半代数集合的投影理论。}的投影定理保证消去变量后仍可用有限个多项式符号条件描述所得集合。
+Tarski 的量词消去理论\footnote{塔尔斯基（Alfred Tarski，1901-1983），波兰裔美国逻辑学家与数学家，建立形式语言的真理论，并研究实闭域的量词消去。}与 Seidenberg 的投影理论\footnote{赛登伯格（Abraham Seidenberg，1916-1988），美国数学家，研究交换代数与代数几何，并推进半代数集合的投影理论。}说明：消去变量后，所得集合仍可用有限个多项式符号条件描述。证明的关键是把根上的符号变成矩阵的惯性指数，再从这些数据恢复各个区间上的符号。
+
+\begin{lemma}[迹形式的符号计数]\label{b3:lem:G-trace-sign-count}
+设 \(R\) 为实闭域，\(P\in R[T]\) 为次数 \(d\ge1\) 的首一平方自由多项式，\(B=R[T]/(P)\)，\(q\in R[T]\)。在 \(B\) 上定义对称双线性型
+\[
+H_q(u,v)=\operatorname{Tr}_{B/R}(quv).
+\]
+若 \(\operatorname{signature}(H_q)\) 表示其正惯性指数减负惯性指数，则
+\[
+\operatorname{signature}(H_q)
+=\sum_{P(a)=0,\ a\in R}\operatorname{sign}q(a).
+\]
+\end{lemma}
+\begin{proof}
+实闭域上的不可约多项式只有一次与二次两类。由平方自由性和中国剩余定理，\(B\) 分解成若干 \(R\) 与 \(R(\mathrm i)\) 的直积，其中 \(\mathrm i^2=-1\)，不同分量在迹形式下相互正交。在实根 \(a\) 对应的分量中，形式为 \(q(a)uv\)，对符号差的贡献恰为 \(\operatorname{sign}q(a)\)。在一个非实共轭对对应的分量中，写 \(q=\alpha+\beta\mathrm i\)，则基 \(1,\mathrm i\) 上的矩阵为
+\[
+2\begin{pmatrix}\alpha&-\beta\\-\beta&-\alpha\end{pmatrix}.
+\]
+若 \(q\ne0\)，其行列式为 \(-4(\alpha^2+\beta^2)<0\)，故有一正一负；若 \(q=0\)，矩阵为零。非实分量的贡献总为零，把各分量相加即得公式。
+\end{proof}
+
+同类迹形式公式见\cite[Section 2.4, Theorem 2.8]{Sturmfels2002PolynomialEquations}。一个直接的算例是 \(P(T)=T^2-a\)，其中 \(a\in R\setminus\{0\}\)；此时 \(P\) 平方自由。在基 \(1,T\) 上，
+\[
+H_1=\begin{pmatrix}2&0\\0&2a\end{pmatrix},\qquad
+\operatorname{signature}(H_1)=
+\begin{cases}2,&a>0,\\0,&a<0.\end{cases}
+\]
+两种惯性指数分别检测出两个实根与没有实根。\(a=0\) 时有重根，应先取平方自由部分 \(T\)，再使用引理。
+
+\begin{lemma}[根上符号元组的恢复]\label{b3:lem:G-sign-tuple-recovery}
+设 \(R\) 为实闭域，\(P\in R[T]\) 为次数 \(d\ge1\) 的首一平方自由多项式，\(b\ge1\)，\(q_1,\ldots,q_b\in R[T]\)。约定 \(0^0=1\)。对 \(e=(e_1,\ldots,e_b)\in\{0,1,2\}^b\)，记
+\[
+Q_e=\sum_{P(a)=0,\ a\in R}\operatorname{sign}
+\left(\prod_{j=1}^b q_j(a)^{e_j}\right).
+\]
+这些 \(Q_e\) 唯一确定每个符号元组 \(\sigma\in\{-1,0,1\}^b\) 在 \(P\) 的实根中出现的次数 \(N_\sigma\)。
+\end{lemma}
+\begin{proof}
+约定 \(0^0=1\)。按根上的符号元组分组，得到
+\[
+Q_e=\sum_\sigma N_\sigma\prod_{j=1}^b\sigma_j^{e_j}.
+\]
+一个符号坐标的系数矩阵是 \(1,s,s^2\) 在 \(s=-1,0,1\) 上的取值矩阵
+\[
+\begin{pmatrix}1&1&1\\-1&0&1\\1&0&1\end{pmatrix},
+\]
+其行列式为 \(2\ne0\)。全部坐标的系数矩阵是这些矩阵的张量积，因而也可逆。解此有限线性方程组便得到各 \(N_\sigma\)。
+\end{proof}
 
 \begin{theorem}[Tarski--Seidenberg 投影定理]\label{b3:thm:real-projection}
-设 \(R\) 为实闭域，\(S\subseteq R^{n+m}\) 为半代数集合。坐标投影 \(\pi:R^{n+m}\to R^n\) 的像 \(\pi(S)\) 仍为半代数集合。
+设 \(R\) 为实闭域，\(m,n\) 为非负整数，\(S\subseteq R^{n+m}\) 为半代数集合。坐标投影 \(\pi:R^{n+m}\to R^n\) 的像 \(\pi(S)\) 仍为半代数集合。
 \end{theorem}
 
 \begin{proof}
@@ -47,30 +93,27 @@ p_1(x,T),\ldots,p_l(x,T).
 
 先按各 \(p_i\) 的 \(T\) 次数分支，次数由系数的零与非零条件确定；恒零多项式单独处理。用 Euclid 算法从其余 \(p_i\) 的乘积取得首一平方自由部分 \(P\)。每次除法按当前首项系数是否为零分支，次数下降保证只有有限步、有限个分支；各分支上 \(P\) 的系数是参数的有理函数，所用分母已限定非零。若 \(P=1\)，所有 \(p_i\) 在整条直线上符号恒定，直接由首项系数判定。以下设 \(\deg P=d>0\)。
 
-令 \(B=R[T]/(P)\)。对于任意 \(q\in R[T]\)，在基 \(1,T,\ldots,T^{d-1}\) 上计算迹二次型
-\[
-H_q(u,v)=\operatorname{Tr}_{B/R}(quv).
-\]
-它的矩阵只用 \(P,q\) 的系数作有限次域运算。实闭域上，平方自由代数 \(B\) 分解成若干 \(R\) 与 \(R(\mathrm i)\) 的直积。在实根 \(a\) 对应的分量中，二次型为 \(q(a)\cdot u^2\)，符号差为 \(\operatorname{sign}q(a)\)；在非实共轭对对应的分量中，非零迹形式有一正一负，\(q\) 为零时形式也为零。因此
-\[
-\operatorname{signature}(H_q)
-=\sum_{P(a)=0,\ a\in R}\operatorname{sign}q(a).
-\]
-这里符号差指正惯性指数减负惯性指数。对称矩阵可按非零对角元作合同消元；若全部对角元为零但某个非对角元非零，就取对应的二阶块作为枢轴。按枢轴的零与符号分支，有限步可算出惯性指数。所以迹形式的符号差由有限多个参数有理函数的符号决定，而分母非零时这些仍能写成多项式符号条件。迹形式的这一根计数原理也见\cite[Section 2.4, Theorem 2.8]{Sturmfels2002PolynomialEquations}。
+令 \(B=R[T]/(P)\)。在基 \(1,T,\ldots,T^{d-1}\) 上，\cref{b3:lem:G-trace-sign-count}中的矩阵 \(H_q\) 只用 \(P,q\) 的系数作有限次域运算即可得到。对称矩阵可按非零对角元作合同消元；若全部对角元为零但某个非对角元非零，就取对应的二阶块作为枢轴，该块有一正一负。按枢轴的零与符号分支，有限步可算出惯性指数。因此 \(H_q\) 的符号差由有限多个参数有理函数的符号决定；分母已限定非零，这些条件仍可写成多项式符号条件。
 
-把所有 \(p_i\) 及其 \(T\) 导数列为 \(q_1,\ldots,q_b\)。对每个 \(e\in\{0,1,2\}^b\)，计算 \(H_{\prod_jq_j^{e_j}}\) 的符号差。若 \(N_\sigma\) 表示这些 \(q_j\) 在 \(P\) 的实根上取符号元组 \(\sigma\in\{-1,0,1\}^b\) 的根数，则这些差给出有限线性方程
+在当前次数分支上，把各个非零 \(p_i\) 的所有阶 \(T\) 导数列入有限族
 \[
-Q_e=\sum_\sigma N_\sigma\prod_j\sigma_j^{e_j},
-\qquad 0^0=1.
+\mathcal Q=\left\{\frac{\partial^r p_i}{\partial T^r}:
+p_i\not\equiv0,\ 0\le r\le\deg_Tp_i\right\}
+=\{q_1,\ldots,q_b\}.
 \]
-一变量的系数矩阵是 \(1,s,s^2\) 在 \(s=-1,0,1\) 上的取值矩阵，行列式非零；多变量矩阵是它们的张量积，故也可逆。于是知道各 \(Q_e\) 就能确定每个 \(N_\sigma\)，从而判定哪些根上的符号元组实际出现。
+恒零多项式的符号恒为零。对每个 \(e\in\{0,1,2\}^b\)，用迹形式计算 \(\prod_jq_j^{e_j}\) 在 \(P\) 的实根上的符号和 \(Q_e\)。\cref{b3:lem:G-sign-tuple-recovery}给出每个符号元组的出现次数 \(N_\sigma\)，从而判定哪些根上的符号元组实际出现。
 
-这些数据也确定各根之间开区间上的符号元组。在一个根 \(a\) 的右边，\(p_i\) 的符号由其在 \(a\) 处首个非零导数的符号给出；这个符号在到下一根之前不变。最左边区间的符号由 \((-1)^{\deg p_i}\) 乘首项系数的符号给出。有限实根之间均有元素，实闭域的多项式介值性质保证开区间内没有未计入的变号。因此根上的元组、各根右侧的元组与最左侧元组已经穷尽所有 \(T\) 的可能性，无须先求出根的位置。
+这些数据还确定根间开区间的符号。设 \(a\) 为 \(P\) 的一个实根，\(p_i\not\equiv0\)，并取首个满足 \(p_i^{(r)}(a)\ne0\) 的阶数 \(r\ge0\)。Taylor 恒等式给出
+\[
+p_i(a+h)=h^r\left(\frac{p_i^{(r)}(a)}{r!}
++\sum_{j>r}\frac{p_i^{(j)}(a)}{j!}h^{j-r}\right).
+\]
+括号中多项式在 \(h=0\) 的值非零，故在充分小的正 \(h\) 上符号不变。又因 \(r!>0\)、\(h^r>0\)，根右侧的符号正是 \(\operatorname{sign}p_i^{(r)}(a)\)。这正是必须保留所有阶导数的原因。直到下一个根之前没有任何 \(p_i\) 的零点，多项式介值性质保证该符号不再变化。最左侧区间的符号由 \((-1)^{\deg_Tp_i}\) 乘首项系数的符号给出。不同实根之间均有元素，所以根上的元组、各根右侧的元组与最左侧元组穷尽了所有 \(T\) 的可能性，无须先求出根的位置。
 
 检查这些有限元组是否满足原布尔公式，就判定了 \(\exists T\)。前述所有分支均由有限个参数多项式的零、正、负条件给出；合并满足条件的分支，得到投影的半代数描述。反复消去 \(m\) 个变量即得结论。
 \end{proof}
 
-投影性质的概述见\cite[Chapter 2, p.~23]{BochnakCosteRoy1998RealAG}。条件
+半代数投影与映射的进一步讨论见\cite[Section 2.2]{BochnakCosteRoy1998RealAG}。条件
 \[
 \exists y_1,\ldots,y_m\quad \Phi(x,y)
 \]
@@ -90,6 +133,16 @@ S=\{(x,y):y^2+x^2=1,\ y\ge x\}
 在 \(x\) 轴上的投影为 \(\{-1\le x\le0\}\cup\{0\le x,\ 2x^2\le1\}\)。事实上，圆上有点首先要求 \(-1\le x\le1\)。若 \(x\le0\)，取非负根 \(y=\sqrt{1-x^2}\) 即可；若 \(x>0\)，可取的最大 \(y\) 为该非负根，故存在满足条件的 \(y\) 当且仅当 \(1-x^2\ge x^2\)。这一计算明确使用了实闭域中非负元有平方根，而非仅使用复数域上的消去。
 \end{example}
 
+\begin{figure}[htbp]
+\centering
+\input{Figures/AppendixGProjection}
+\caption{圆弧及其在横轴上的投影}
+\label{b3:fig:G-circle-projection}
+\end{figure}
+
+在实数域上的\cref{b3:fig:G-circle-projection}中，直线 \(y=x\) 截出满足条件的圆弧；把圆弧沿竖直方向投影，得到区间 \([-1,1/\sqrt2]\)。投影的右端点由不等式 \(2x^2\le1\) 确定，仅保留圆的消去理想便无法看出这一端点。
+
+\ProseParagraphBreak
 \term{柱状代数分解}[cylindrical algebraic decomposition, CAD] 把实空间分成有限个半代数胞腔，使指定多项式在每个胞腔上符号不变，并使各胞腔向低维坐标空间的投影相同或不相交。在二维，先把 \(x\) 轴按若干关键根分成点与区间；在各区间上排列 \(y\) 方向的根图像，再取图像之间的带状区域。这正是“柱状”的含义，并非说各胞腔都是直积。
 
 \ProseParagraphBreak

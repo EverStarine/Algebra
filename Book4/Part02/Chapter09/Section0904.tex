@@ -1,110 +1,63 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 9.4 Künneth 公式
-% 纲要位置：计划纲要.md，第 2703 行。
+% 纲要标题：### 9.4 一次 Ext、Tor 与正合性判据
+% 纲要标签：b4:sec:0804
+% 纲要位置：计划纲要.md，第 2668 行。
 
-\section{Künneth 公式}
-\label{b4:sec:0904}
+\section{一次 Ext、Tor 与正合性判据}
+\label{b4:sec:0804}
 
-张量两个复形的同调，由各自同调的张量积及一次 Tor 共同控制。域上 Tor 消失，而主理想整环上即使短正合列分裂，分裂也通常没有自然选择。
+一次 Ext 或 Tor 的消失能检测投射性、内射性或平坦性，但测试对象必须遍历相应的全部模。整数模与多项式理想的例子可以把正合性的失败具体算出来。
 
-% 纲要内容：
+
+% 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 域和主理想整环的基本版本
-% * Tor 项及成立假设
-% * 与第三卷 Koszul 计算的联系
-%
-% ---
+% * Ext 检验投射性和内射性
+% * Tor 检验平坦性
+% * 回到第二卷反例解释失败机制
 %
 
-\subsection{域和主理想整环的基本版本}
-\label{b4:subsec:0904:01}
+\subsection{Ext 与投射性、内射性}
+\label{b4:subsec:0804:01}
 
-\begin{theorem}[Künneth 公式]\label{b4:thm:kunneth-pid}
-设 \(R\) 为主理想整环，\(C,D\) 为下有界的自由 \(R\)-模链复形。对每个整数 \(n\)，有自然的短正合列
-\[
-\begin{split}
-0\longrightarrow&\ \bigoplus_{p+q=n}H_p(C)\otimes_R H_q(D)
- \xrightarrow{\kappa_n}H_n(C\otimes_R D)\\
- \longrightarrow&\ \bigoplus_{p+q=n-1}\operatorname{Tor}_1^R(H_p(C),H_q(D))
- \longrightarrow0.
-\end{split}
-\]
-此列非典范地分裂。特别地，若 \(R=k\) 为域，则 \(\kappa_n\) 是自然同构。
+\begin{theorem}\label{b4:thm:ext-projective-injective}
+设 \(R\) 是含幺环，\(P,I\) 是左 \(R\) 模。下列判据成立：
+\begin{enumerate}
+\item \(P\) 投射，当且仅当对所有左模 \(N\)，\(\operatorname{Ext}_R^1(P,N)=0\)；这也等价于所有正次 \(\operatorname{Ext}_R^n(P,N)\) 消失。
+\item \(I\) 内射，当且仅当对所有左模 \(M\)，\(\operatorname{Ext}_R^1(M,I)=0\)；这也等价于所有正次 \(\operatorname{Ext}_R^n(M,I)\) 消失。
+\end{enumerate}
 \end{theorem}
 \begin{proof}
-把 \(Z_p=Z_p(C)\) 放在次数 \(p\)，组成零微分复形 \(Z\)；把 \(B_{p-1}=B_{p-1}(C)\) 放在次数 \(p\)，组成零微分复形 \(B'\)。短正合列 \(0\to Z\to C\to B'\to0\) 逐项分裂，因此与 \(D\) 张量后仍是短正合列。\(Z_p,B_p\) 都自由，由\cref{b4:prop:flat-coefficients-homology}，两侧复形的同调分别是
-\[
- \bigoplus_{p+q=n}Z_p\otimes H_q(D),\qquad
- \bigoplus_{p+q=n}B_{p-1}\otimes H_q(D).
-\]
-在同调长正合列中，连接同态在每一项上由包含 \(B_{p-1}\hookrightarrow Z_{p-1}\) 张量 \(H_q(D)\) 给出。具体地，把边界元素提升到 \(C_p\)，再作总微分，来自 \(D\) 的一项对圈代表为零，剩下的就是该包含。其余核与核由自由消解
-\(0\to B_p\to Z_p\to H_p(C)\to0\) 分别识别为张量积及 \(\operatorname{Tor}_1\)，从而得到所写自然正合列。
-
-还须证明分裂。为每个 \(p\) 选取 \(C_p\simeq Z_p\oplus B_{p-1}\)，便把 \(C\) 同构为两项复形
-\[
- E(p):\quad B_p\longrightarrow Z_p
- \quad(\text{次数 }p+1,p)
-\]
-的直和。同样把 \(D\) 分成 \(F(q)\)，其中 \(F(q)\) 是 \(H_q(D)\) 的长度一自由消解平移至次数 \(q\)。于是张量复形分解为 \(E(p)\otimes F(q)\) 的直和；每个总次数只涉及有限多个 \((p,q)\)。
-
-去掉平移后，\(E(p)\otimes F(q)\to E(p)\otimes H_q(D)\) 是拟同构，由\cref{b4:prop:bounded-flat-tensor}适用，因为 \(E(p)\) 有界且自由。右侧只有次数 \(0,1\) 的同调，分别为 \(H_p(C)\otimes H_q(D)\) 与 \(\operatorname{Tor}_1^R(H_p(C),H_q(D))\)。在总次数 \(n\)，前者来自 \(p+q=n\)，后者来自 \(p+q=n-1\)，故给出直和分解，而且其张量积部分正是 \(\kappa_n\) 的像。因此自然短正合列分裂；所选的圈模补空间解释了分裂的非典范性。
-
-域上所有模平坦，Tor 项为零，故最后的结论成立。
+投射或内射时用集中于零次的相应消解，正次 Ext 消失。反过来，若 \(\operatorname{Ext}_R^1(P,-)=0\)，对任意满射 \(B\to C\) 及其核 \(A\)，第二变量长正合列使 \(\operatorname{Hom}_R(P,B)\to\operatorname{Hom}_R(P,C)\) 满，这恰为投射提升性质。若 \(\operatorname{Ext}_R^1(-,I)=0\)，对任意单射 \(A\to B\) 及其余核 \(C\)，第一变量长正合列使 \(\operatorname{Hom}_R(B,I)\to\operatorname{Hom}_R(A,I)\) 满，这恰为内射延拓性质。
 \end{proof}
 
-Weibel 给出更一般的平坦条件版本，见\cite[Theorem 3.6.3]{Weibel1994HomologicalAlgebra}；本节选择主理想整环上的自由版本，以便同时得到可直接计算的分裂结论。
+“对所有模”的量词有实质作用。例如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Q)=0\)，并不能推出 \(\mathbb Z/2\) 投射；这里消失是第二变量内射造成的。又如 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z,\mathbb Z)=0\)，不能推出第二个 \(\mathbb Z\) 内射，因为第一个 \(\mathbb Z\) 已投射。
 
-\subsection{Tor 项及成立假设}
-\label{b4:subsec:0904:02}
+\subsection{Tor 与平坦性}
+\label{b4:subsec:0804:02}
 
-\begin{example}\label{b4:exm:kunneth-two-cyclic}
-设 \(m,n\) 为正整数，在 \(\mathbb Z\) 上分别取两项自由消解 \(C=(\mathbb Z\xrightarrow{m}\mathbb Z)\)、\(D=(\mathbb Z\xrightarrow{n}\mathbb Z)\)，次数均为 \(1,0\)。张量总复形是
+\begin{theorem}\label{b4:thm:tor-flat-criterion}
+设 \(R\) 是含幺环，\(N\) 是左 \(R\) 模。下列条件等价：\(N\) 平坦；对每个右 \(R\) 模 \(M\)，\(\operatorname{Tor}_1^R(M,N)=0\)；对每个右模 \(M\) 及每个 \(n>0\)，\(\operatorname{Tor}_n^R(M,N)=0\)。右模的判据以相反侧的左模作测试。
+\end{theorem}
+\begin{proof}
+若 \(N\) 平坦，\(-\otimes_RN\) 正合，故右模投射消解在张量后仍在正次数正合；于是所有正次 Tor 为零。全消失当然蕴含一次消失。若一次均消失，对任意右模单射 \(A\to B\)，令 \(C=B/A\)。长正合列的片段
 \[
- 0\longrightarrow\mathbb Z\xrightarrow{\binom{-n}{m}}
- \mathbb Z^2\xrightarrow{(m\ \ n)}\mathbb Z\longrightarrow0.
+\operatorname{Tor}_1^R(C,N)\longrightarrow A\otimes_RN
+\longrightarrow B\otimes_RN
 \]
-令 \(g=\gcd(m,n)\)。第一个映射单射；第二个映射的像为 \(g\mathbb Z\)，核由 \((n/g,-m/g)\) 生成，而第一个映射的像是该核的 \(g\) 倍。因此
-\[
- H_0(C\otimes D)=\mathbb Z/g,\qquad H_1(C\otimes D)=\mathbb Z/g,
- \qquad H_2(C\otimes D)=0.
-\]
-第二个非零群是 Tor 项；只取两个消解原有同调的张量积，会漏掉它。
-\end{example}
+表明后一个箭头单射。张量积本已右正合，所以它现在正合，即 \(N\) 平坦。反环给出右模版本。
+\end{proof}
 
-定理中的自由性假设不能直接删去。仍取主理想整环 \(R=\mathbb Z\)，让 \(C,D\) 都是集中在次数零的 \(\mathbb Z/2\)。此时普通张量复形仅在次数零非零，但 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。若无条件套用上面的短正合列，在次数一会错误地要求零模满射到 \(\mathbb Z/2\)。这里应先取平坦消解再张量；普通张量复形本身没有包含该高阶信息。
+不必为了判定平坦性计算所有高次 Tor；一次已经足够。相反，只对某一个模计算一次 Tor，通常只能发现反例，不能得出整体平坦性。
+
+\subsection{非正合性的模论反例}
+\label{b4:subsec:0804:03}
+
+把 \(0\to\mathbb Z\xrightarrow{\times m}\mathbb Z\to\mathbb Z/m\to0\) 与 \(\mathbb Z/m\)、\(m>1\)，作张量，前一个乘 \(m\) 的映射变为零。长正合列现在告诉我们，丢失的单射性恰由 \(\operatorname{Tor}_1^{\mathbb Z}(\mathbb Z/m,\mathbb Z/m)\cong\mathbb Z/m\) 映入第一个张量项。对同一列施加 \(\operatorname{Hom}_{\mathbb Z}(-,\mathbb Z)\)，乘 \(m\) 的映射不是满射；其余核正是 \(\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z)\cong\mathbb Z/m\)。第二卷中出现的两种正合性失败由此有了可复用的计量方式。
 
 \ProseParagraphBreak
-主定理采用两复形下有界的假设，足以保证所用总化及分解没有无限对角线的问题。若需要处理无界复形，应先说明采用哪种总化、哪一因子具有保持拟同构的性质；逐项自由这一条件本身不能替代该说明，见\cref{b4:exm:unbounded-flat-tensor}。
-
-\subsection{与第三卷 Koszul 计算的联系}
-\label{b4:subsec:0904:03}
-
-第三卷第十五章的 Koszul 复形，可以看成两项复形的张量积。对交换环 \(R\) 中元素 \(x\)，写
+再取域 \(k\) 上的多项式环 \(R=k[x,y]\) 及其理想 \(\mathfrak m=(x,y)\)。因为 \(R\) 交换，以下将这些模同时视为右 \(R\)-模。短正合列 \(0\to\mathfrak m\to R\to k\to0\) 与上一节算出的二次 Tor 给出
 \[
- K(x):\quad 0\longrightarrow R\xrightarrow{x}R\longrightarrow0
- \qquad(\text{次数 }1,0).
+\operatorname{Tor}_1^R(\mathfrak m,k)\cong
+\operatorname{Tor}_2^R(k,k)\cong k.
 \]
-多个元素的 Koszul 复形由 \(K(x_1)\otimes_R\cdots\otimes_R K(x_r)\) 给出。各因子次数一生成元的交换引入负号，这与外代数描述中的符号相同。第三卷命题15.2.2已经证明该张量识别，第15.3节证明正则序列时的正合性；这里说明换系数后如何读出新的同调。
-
-\begin{proposition}\label{b4:prop:koszul-adjoin-element}
-设 \(R\) 为交换含幺环，\(C\) 为 \(R\) 模链复形，\(x\in R\)。记 \(K(x)\) 为仅在次数 \(1,0\) 非零的链复形 \(R\xrightarrow{x}R\)，微分为乘 \(x\)。对每个整数 \(n\)，有自然短正合列
-\[
- 0\longrightarrow H_n(C)/xH_n(C)
- \longrightarrow H_n(C\otimes_R K(x))
- \longrightarrow\{\,z\in H_{n-1}(C):xz=0\,\}
- \longrightarrow0.
-\]
-这里不要求 \(R\) 为主理想整环，也不保证分裂。
-\end{proposition}
-\begin{proof}
-张量复形在次数 \(n\) 是 \(C_n\oplus C_{n-1}\)，其微分为
-\(\mathrm{d}(a,b)=(\mathrm{d}_Ca+(-1)^{n-1}xb,\mathrm{d}_Cb)\)。取包含 \(a\mapsto(a,0)\) 及投影 \(q_n(a,b)=(-1)^{n-1}b\)，便得到短正合列
-\(0\to C\to C\otimes K(x)\xrightarrow{q}C[1]\to0\)，其中链记号下 \(C[1]_n=C_{n-1}\)、\(\mathrm{d}_{C[1]}=-\mathrm{d}_C\)。等式 \(q_{n-1}\mathrm{d}=-\mathrm{d}_Cq_n\) 直接保证投影是链映射。对于 \(C_{n-1}\) 中的圈 \(z\)，提升为 \((0,(-1)^{n-1}z)\)，微分是 \((xz,0)\)，故连接同态就是乘 \(x\)。因此同调长正合列的相关部分是
-\[
- H_n(C)\xrightarrow{x}H_n(C)\longrightarrow H_n(C\otimes K(x))
- \longrightarrow H_{n-1}(C)\xrightarrow{x}H_{n-1}(C).
-\]
-取中间部分的核与余核即得结论。
-\end{proof}
-
-例如在 \(R=k[x]\) 上取两个相同元素 \(x,x\)。第一个复形 \(K(x)\) 只有 \(H_0=k\)，而 \(x\) 在该同调上作用为零，故 \(K(x,x)\) 的 \(H_0,H_1\) 都是 \(k\)。次数一的具体圈是 \(e_1-e_2\)，其倍数 \(x(e_1-e_2)\) 是次数二的边界（依生成元次序差一个负号）。这说明第二个 \(x\) 不是 \(R/(x)\) 上的非零因子，故重复元素不能形成正则序列。
+故 \(\mathfrak m\) 不平坦，尽管它是整环中的无挠子模。这具体说明主理想整环上的无挠平坦结论不能直接推广到任意整环。这里用的是第一变量的长正合列及 \(R\) 的投射性；下一节把这种移位系统写出。

@@ -1,0 +1,187 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### 24.5 层上同调与 Čech 计算
+% 纲要位置：计划纲要.md，第 2762 行。
+
+\section{层上同调与 Čech 计算}
+\label{b3:sec:2405}
+
+令 \(k\) 为域，在射影直线 \(\mathbb P_k^1\) 的第一张标准图上取坐标 \(t=x_1/x_0\)。扭曲层 \(\mathcal O(-2)\) 在两张图上都自由，但在交集上，\(t^{-1}\) 不能写成 \(k[t]\) 中的多项式与 \(t^{-2}k[t^{-1}]\) 中元素之差。这种差别来自局部截面之间的相容条件。层上同调用复形记录这些黏合障碍，而具有仿射交集的开覆盖能把它们化为具体的核与余核计算。
+
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 全局截面的非右正合性、内射层消解及上同调长正合列
+% * flasque 层及其消解；Noether 仿射拟凝聚层消失的证明概要与所省略的层论步骤
+% * 有限仿射覆盖的所有非空有限交仿射时，Čech 与层上同调的双复形比较；分离性是保证交集条件的充分条件
+% * 射影直线扭曲层的零次与一次上同调；同一微分的核与余核对照
+% * 双原点直线的交集仍仿射，比较可用；区分黏合、分离、固有及全局截面恢复的条件
+% * 局部计算与全局性质的联系，以及进一步代数几何的具体参考位置
+% ---
+
+\subsection{全局截面与层上同调}
+\label{b3:subsec:2404:02}
+
+层公理解决相容截面的黏合，却不保证局部存在的原像能够选得相容。全局截面函子保持核，但可能把层的满射变成不满射；层上同调记录这种差别。
+
+\begin{definition}\label{b3:def:sheaf-cohomology}
+设 \(X\) 为拓扑空间，\(\mathcal F\) 为交换群层。取层范畴中的内射消解 \(0\rightarrow\mathcal F\rightarrow\mathcal I^\bullet\)，定义
+\[
+H^i(X,\mathcal F)=H^i\bigl(\Gamma(X,\mathcal I^\bullet)\bigr).
+\]
+这些群称为 \(\mathcal F\) 的\term[ceng-shangtongdiao]{层上同调}[sheaf cohomology]；特别地 \(H^0(X,\mathcal F)=\Gamma(X,\mathcal F)\)。
+\end{definition}
+
+上述层范畴有足够多内射对象。具体地，在每点 \(x\) 取茎的单射 \(\mathcal F_x\to E_x\)，其中 \(E_x\) 是内射交换群，记 \(i_x:\{x\}\to X\)。伴随公式
+\[
+\operatorname{Hom}_X(\mathcal G,i_{x*}E_x)
+\cong\operatorname{Hom}_{\mathbb Z}(\mathcal G_x,E_x)
+\]
+及取茎的正合性使 \(i_{x*}E_x\) 内射。它们的乘积也内射，因为向乘积映射等价于逐项映射，逐项延拓可同时完成。自然映射 \(\mathcal F\to\prod_xi_{x*}E_x\) 为单射：一个非零芽在对应的 \(x\) 分量中仍非零。逐次对余核重复，就得到内射消解；比较映射及其同伦按内射延拓逐次构造，故定义不依赖消解。与环模层的比较见\cite[Chapter III, Proposition 2.2, Corollary 2.3 and Proposition 2.6, pp. 207--208]{Hartshorne1977}。
+
+\ProseParagraphBreak
+短正合列 \(0\rightarrow\mathcal F'\rightarrow\mathcal F\rightarrow\mathcal F''\rightarrow0\) 诱导自然的长正合列
+\[
+0\rightarrow H^0(X,\mathcal F')\rightarrow H^0(X,\mathcal F)
+\rightarrow H^0(X,\mathcal F'')\xrightarrow{\delta}
+H^1(X,\mathcal F')\rightarrow H^1(X,\mathcal F)\rightarrow\cdots.
+\]
+构造与\secref{b3:sec:2201}中的导出函子相同：先把两端嵌入内射对象，再取直和为中间项，逐次对余核重复，得到逐项分裂的内射消解短正合列。取全局截面仍逐项分裂，随后用复形的连接同态即得上述序列。尤其 \(\delta\) 把局部可提升、全局未必可提升的截面送到它的障碍类。
+
+\ProseParagraphBreak
+若一个交换群层从较大开集到较小开集的限制总是满射，就称它为 flasque 层。内射层是 flasque 层，flasque 层没有正次上同调，因而任意 flasque 消解都可用于计算层上同调；这些层论性质见\cite[Chapter III, Lemma 2.4, Proposition 2.5 and Remark 2.5.1, pp. 207--208]{Hartshorne1977}。
+
+\ProseParagraphBreak
+下面的仿射消失定理采用 Hartshorne 的 Noether 仿射版本\cite[Chapter III, Theorem 3.5, p. 215]{Hartshorne1977}。概要说明如何把模消解变成 flasque 层消解；所省略的是一般层论中的截面延拓论证，以及支集上的截面与挠子模之间的识别。
+
+\begin{theorem}[仿射拟凝聚层的上同调消失]\label{b3:thm:affine-quasicoherent-vanishing}
+设 \(A\) 为 Noether 交换环，\(M\) 为 \(A\) 模，\(X=\operatorname{Spec}A\)。则对每个整数 \(i>0\)，有
+\[
+H^i(X,\widetilde M)=0.
+\]
+\end{theorem}
+\begin{proofsketch}
+flasque 层的消失可由内射消解说明：内射层是 flasque 层，因为在开集上的截面等价于从该开集上常值整数层的零延拓到它的映射，开集包含给出零延拓层的单射，内射性使映射延拓。若短正合列的核为 flasque 层，商层的局部截面可在全开集提升：将两个局部提升在交集上的差延拓到一个开集，扣去后便可黏合，再对开覆盖归纳。用 Zorn 引理处理无限覆盖，可得到全局提升。因而 flasque 层嵌入内射层后的余核仍 flasque，逐次取余核使全局截面消解正合，证明消失。
+
+对于内射 \(A\) 模 \(E\)，\(\widetilde E\) 是 flasque 层。这一结论见\cite[Chapter III, Proposition 3.4, pp. 214--215]{Hartshorne1977}。对闭集 \(Y=\overline{\operatorname{Supp}\widetilde E}\) 作 Noether 归纳。给开集 \(U\) 上的截面 \(s\)，选 \(D(f)\subseteq U\) 且与 \(Y\) 相交。由\cref{b3:lem:injective-cech-acyclic}，\(E\to E_f\) 满射，所以 \(s|_{D(f)}\) 来自某个全局截面 \(t\)。差 \(s-t|_U\) 支集包含在 \(V(f)\)，正是 \(\widetilde{\Gamma_{(f)}E}\) 在 \(U\) 上的截面；这一识别用有限基本开覆盖把各处分母及零化幂次取成共同上界。该挠子模由同一引理内射，其支集闭包包含在严格较小的 \(Y\cap V(f)\) 中，归纳使差也能全局延拓。于是 \(s\) 能全局延拓，证明限制满射；\(U\cap Y=\varnothing\) 时截面为零，无须选择 \(f\)。
+
+现在取 \(M\) 的内射模消解。伴随层函子由局部化正合，得到 \(\widetilde M\) 的 flasque 消解。取全局截面后回到原模消解，因而正次上同调为零。
+\end{proofsketch}
+
+\subsection{仿射交集与 Čech 比较}
+\label{b3:subsec:2405:cech-comparison}
+
+开覆盖给出的是一个具体的截面复形；要使它计算层上同调，需要各重叠开集不再留下正次上同调。仿射交集上的拟凝聚层消失正好提供这个条件。
+
+\ProseParagraphBreak
+对开覆盖 \(\mathfrak U=(U_i)\)，把各重叠上的截面组成复形
+\[
+\check C^p(\mathfrak U,\mathcal F)
+=\prod_{i_0<\cdots<i_p}\mathcal F(U_{i_0}\cap\cdots\cap U_{i_p}),
+\qquad
+(\delta s)_{i_0\cdots i_{p+1}}
+=\sum_{\nu=0}^{p+1}(-1)^\nu
+s_{i_0\cdots\widehat{i_\nu}\cdots i_{p+1}}|.
+\]
+末尾的限制取到共同交集。删除两指标的两种次序符号相反，故 \(\delta^2=0\)。其零次核就是全局截面，但高次同调不对任意覆盖自动等于刚定义的 \(H^i\)。
+
+\ProseParagraphBreak
+Hartshorne 的分离情形见\cite[Chapter III, Theorem 4.5, p. 222]{Hartshorne1977}。下面只要求给定覆盖的有限交仿射；分离性是保证这一条件成立的一种充分条件。
+
+\begin{theorem}[仿射开覆盖的 Čech 比较]\label{b3:thm:affine-cech-comparison}
+设 \(X\) 为 Noether 概形，\(\mathcal F\) 为 \(X\) 上的拟凝聚层，\(\mathfrak U=(U_i)_{i=1}^m\) 为有限仿射开覆盖，并假设每个非空有限交集 \(U_{i_0}\cap\cdots\cap U_{i_p}\) 都仿射。则对每个整数 \(q\ge0\)，有自然同构
+\[
+\check H^q(\mathfrak U,\mathcal F)\cong H^q(X,\mathcal F).
+\]
+特别地，若 \(X\) 还分离，则任意有限仿射开覆盖都满足上述交集条件。
+\end{theorem}
+\begin{proof}
+先说明 flasque 性如何使 Čech 方向正合。对任意交换群层 \(\mathcal G\)，记 \(U_{i_0\cdots i_p}=U_{i_0}\cap\cdots\cap U_{i_p}\)，并令 \(j_{i_0\cdots i_p}:U_{i_0\cdots i_p}\hookrightarrow X\) 为开嵌入。将 Čech 复形层化，得到
+\[
+\mathscr C^p(\mathfrak U,\mathcal G)
+=\prod_{i_0<\cdots<i_p}
+ j_{i_0\cdots i_p*}(\mathcal G|_{U_{i_0\cdots i_p}}).
+\]
+增广层复形 \(0\to\mathcal G\to\mathscr C^0\to\mathscr C^1\to\cdots\) 正合。在一个点 \(x\) 的茎上，选含 \(x\) 的 \(U_a\)，并把邻域缩小到 \(U_a\) 内。对交替余链在指标前插入 \(a\) 得到次数减一映射 \(h\)，重复指标的分量取零；交替符号直接给出 \(\delta h+h\delta=1\)。这证明茎上的正合性，故也证明层复形正合。
+
+若 \(\mathcal G\) flasque，则它在任意开集上的限制仍 flasque。各个 \(\mathscr C^p\) 也 flasque：开嵌入的直像在开集 \(V\) 上取 \(\mathcal G(V\cap U_{i_0\cdots i_p})\)，限制满射性逐个因子保持，有限乘积亦保持。因此这个层复形是 flasque 消解，取全局截面后计算 \(H^p(X,\mathcal G)\)。而 \(\mathcal G\) 没有正次上同调，所以增广截面复形
+\[
+0\to\Gamma(X,\mathcal G)\to
+\check C^0(\mathfrak U,\mathcal G)\to
+\check C^1(\mathfrak U,\mathcal G)\to\cdots
+\]
+正合。这一层化论证也见\cite[Chapter III, Lemma 4.2 and Proposition 4.3, pp. 220--221]{Hartshorne1977}。
+
+取交换群层范畴中的内射消解 \(\mathcal F\to\mathcal I^\bullet\)，组成第一象限双复形
+\[
+D^{p,q}=\check C^p(\mathfrak U,\mathcal I^q),
+\qquad d_{\mathrm{Tot}}=\delta+(-1)^p d_{\mathcal I}.
+\]
+各 \(\mathcal I^q\) 是 flasque 层，刚证的增广正合性使每一行的上同调只在 \(p=0\) 剩下 \(\Gamma(X,\mathcal I^q)\)。
+
+对另一方向，限制层消解到任意 \(U_{i_0\cdots i_p}\) 后仍正合，因为可逐茎检验；限制后的各 \(\mathcal I^q\) 仍 flasque。因此
+\[
+\Gamma(U_{i_0\cdots i_p},\mathcal I^\bullet)
+\]
+通过这个 flasque 消解计算 \(H^q(U_{i_0\cdots i_p},\mathcal F|_{U_{i_0\cdots i_p}})\)。非空交集仿射且 Noether，\(\mathcal F\) 的限制拟凝聚，故由\cref{b3:thm:affine-quasicoherent-vanishing}，这些群在 \(q>0\) 时为零。空交集的截面复形为零。于是每一列的上同调只在 \(q=0\) 剩下相应交集上的 \(\mathcal F\) 截面。
+
+这两种增广给出自然的复形映射
+\[
+\begin{tikzcd}[column sep=large]
+\Gamma(X,\mathcal I^\bullet)
+ \arrow[r,"\text{限制}"]
+&\operatorname{Tot}D
+&\check C^\bullet(\mathfrak U,\mathcal F)
+ \arrow[l,"\text{消解增广}"']
+\end{tikzcd}
+\]
+它们都诱导上同调同构。计算与\cref{b3:thm:cech-local-cohomology}的双复形论证相同：在固定总次数中，从最外侧分量开始，利用相应行或列的正合性把它写成微分的像，扣去这一边界后依次消去其余分量，最后只留下边上的复形；边界的识别使用同一个过程。这里只有 \(0\le p<m\)，每个总次数中均只有有限个分量，所以过程有限。两边分别计算层上同调与 Čech 上同调，由此得到所述同构。消解比较映射及其同伦都传到这个双复形，故同构不依赖消解选择，且关于 \(\mathcal F\) 自然。
+
+最后验证分离性给出的充分条件。若 \(U,V\subseteq X\) 仿射，则 \(U\cap V\) 由分离对角在 \(U\times_{\operatorname{Spec}\mathbb Z}V\) 中给出闭子概形，后者仿射，故交集仿射。对交集个数归纳，所有非空有限交集均仿射。
+\end{proof}
+
+这一证明把真正需要的条件留在交集上。例如双原点直线的两张仿射图交于 \(\operatorname{Spec}k[t,t^{-1}]\)，所以这一覆盖也能计算拟凝聚层的层上同调，尽管整个概形不分离。
+
+\begin{proposition}\label{b3:prop:projective-line-cohomology}
+设 \(k\) 为域，\(n\in\mathbb Z\)。在 \(X=\mathbb P_k^1\) 上，
+\[
+\dim_kH^0(X,\mathcal O_X(n))=\max\{n+1,0\},\qquad
+\dim_kH^1(X,\mathcal O_X(n))=\max\{-n-1,0\},
+\]
+且 \(H^i(X,\mathcal O_X(n))=0\) 对 \(i\ge2\) 成立。
+\end{proposition}
+\begin{proof}
+用\cref{b3:tab:projective-line-twist-charts}中的两张标准图及生成元 \(e_1=t^ne_0\)，Čech 复形只有两项，其微分可采用\eqref{b3:eq:projective-line-twist-cech-map}中的 \(\delta_n\)。改变整个微分的符号不影响核与余核。核已在\secref{b3:sec:2403}算出：\(n\ge0\) 时由 \(1,t,\ldots,t^n\) 参数化，\(n<0\) 时为零。余核为
+\[
+\frac{k[t,t^{-1}]}{k[t]+t^nk[t^{-1}]}.
+\]
+分母包含指数 \(j\ge0\) 以及 \(j\le n\) 的全部单项式。留下的基恰为 \(t^j\)、\(n<j<0\)，故维数是 \(\max\{-n-1,0\}\)。没有更高的 Čech 项；射影直线是 Noether 概形，两张标准图及其交集均仿射，故\cref{b3:thm:affine-cech-comparison}说明所得即为层上同调。
+\end{proof}
+
+例如 \(H^1(\mathbb P_k^1,\mathcal O(-2))\) 由 \(t^{-1}\) 表示。它说明交集上存在不能写成两张图中截面之差的元素，这是一项真正的黏合障碍，而非仅仅引入了新的函子符号。
+
+\ProseParagraphBreak
+同一个微分 \(\delta_n\) 的核与余核给出两种互补的信息：前者是可以黏合的局部截面，后者是交集上不能由局部截面之差消去的类。\cref{b3:tab:projective-line-cohomology}把刚才的计算并列写出，表中系数层均为 \(\mathbb P_k^1\) 上的 \(\mathcal O(n)\)。
+
+\begin{table}[htbp]
+\centering
+\caption{射影直线扭曲层的上同调}
+\label{b3:tab:projective-line-cohomology}
+\begin{tabularx}{\linewidth}{@{}lXc@{}}
+\toprule
+上同调 & 复形描述与代表元 & \(k\) 维数 \\
+\midrule
+\(H^0\) & \(\ker\delta_n\)；\(n\ge0\) 时以 \(1,t,\ldots,t^n\) 表示基，\(n<0\) 时为零 & \(\max\{n+1,0\}\) \\
+\(H^1\) & \(\operatorname{coker}\delta_n\)；基由余类 \(t^j\)、\(n<j<0\) 给出 & \(\max\{-n-1,0\}\) \\
+\(H^i\)、\(i\ge2\) & 两张开集的 Čech 复形没有更高次项 & \(0\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{局部计算与全局性质}
+\label{b3:subsec:2404:03}
+
+至此，环、模、分次环与几何对象之间已有三种可实际使用的对应：仿射概形由环及其局部化决定，仿射拟凝聚层由模决定，射影概形则把分次数据放在次数零的局部图中。第三种对应会忘掉某些分次模信息，因此不能把仿射模层等价直接搬到 Proj。
+
+\ProseParagraphBreak
+本卷的代数方法也由此获得几何解释。模在素点的局部化变成层的茎，Fitting 理想描述纤维维数发生变化的闭条件；正则局部环描述点的局部结构，光滑性还要比较基域或基概形。局部上同调研究指定闭支集附近的截面障碍，与本节不带支集的层上同调有关，但不能仅因二者使用 Čech 复形便把它们的次数和对象混同。具体联系需要同时写明开集、闭支集和所用增广复形。
+
+\ProseParagraphBreak
+Hartshorne 的《Algebraic Geometry》将这些构造作了系统展开：Chapter II, §§1--3 建立层、概形及纤维积；§4 研究分离与固有态射；§5 系统整理拟凝聚层和扭曲层；§7 把线性系与射影态射联系起来\cite[Chapter II, \S\S 1--5 and \S 7]{Hartshorne1977}。本章已经展开基本构造，但射影嵌入的系统判据、凝聚上同调的有限性以及一般基变换定理仍须另行学习。

@@ -7,18 +7,19 @@
 近似数值可以帮助寻找实根或平方和表示，最终核验仍要依靠精确的符号与矩阵数据。根计数给出隔离区间的证明，Gram 矩阵则把平方和问题转为带半正定条件的有限线性关系。
 
 % 纲要细目（与计划纲要同步）：
+%
 % * Sturm 序列、实根隔离和柱状代数分解的任务；有效算法注明精确系数与比较运算的输入条件
-% * 平方和的 Gram 矩阵、半正定规划与矩问题仅作简要介绍，区别浮点近似和精确代数证书
-% * 半代数拓扑、Nash 几何、o-minimal 几何及完整矩问题转相应专题；不要求在学习交换代数时掌握这些领域的完整理论
+% * 平方和的 Gram 矩阵、半正定规划与精确代数证书；区别浮点近似和精确计算
+% * 简介半代数拓扑与 Nash 几何，定义实数域上的 o-minimal 结构；完整专题理论另见专著
+% * 在 Archimedean 二次模下推导正泛函的矩表示，明确 Stone–Weierstrass 与 Riesz 两个分析输入，并用平方根逼近证明连续延拓的正性
 %
 % #### G.5.1 Sturm 序列、实根隔离与柱状代数分解
 % #### G.5.2 Gram 矩阵、半正定规划与精确代数证书
-% #### G.5.3 半代数拓扑、Nash 几何、o-minimal 几何与矩问题
+% #### G.5.3 半代数拓扑、Nash 几何与 o-minimal 结构
+% #### G.5.4 矩问题与正泛函
 %
 % ---
-
-
-% 正文按纲要完成；所列定理给出证明或证明概要。
+%
 
 \subsection{Sturm 序列、实根隔离与柱状代数分解}
 \label{b3:subsec:G05:01}
@@ -118,24 +119,36 @@ Q=\begin{pmatrix}1&0&0\\0&1&-1\\0&-1&1\end{pmatrix}.
 
 对于求最小值问题，找到 \(f-\lambda\) 的约束平方和证书即可证明 \(\lambda\) 是下界；找到一个可行点达到它才完成最优性证明。若 \(M(g)\) 满足 Archimedean 条件、\(K\ne\varnothing\)，则每个 \(\lambda<\min_Kf\) 都有 Putinar 证书。由于每份证书只含有限次数，逐步提高允许次数得到的最优下界收敛到真正最小值。这一推论没有声称某个预先固定次数就能达到最优值。
 
-\subsection{半代数拓扑、Nash 几何、o-minimal 几何与矩问题}
+\subsection{半代数拓扑、Nash 几何与 o-minimal 结构}
 \label{b3:subsec:G05:03}
 
 半代数集合也有欧氏拓扑。在 \(\mathbb R\) 上，开半代数集上的光滑半代数函数称为\term{Nash 函数}[Nash function]；\footnote{纳什（John Forbes Nash Jr.，1928-2015），美国数学家，研究博弈论、微分几何及实代数流形。}例如 \(\sqrt{1+x^2}\) 是 Nash 函数，其图像由 \(y^2=1+x^2,y>0\) 刻画。定义与光滑代数几何的关系可读\cite[Appendix B, Definitions B.2.3--B.2.4]{Mangolte2020RealAlgebraicVarieties}。它兼有代数约束与微分性质，不能把任意光滑函数都归入此类。
 
 \ProseParagraphBreak
-半代数集合在直线上是有限个点与区间的并：组成其定义的有限多个非零多项式只有有限多个实根，在这些根之间每个多项式符号固定。\term{o-minimal 结构}[o-minimal structure]把这种一维有限性作为公理：在有序域各有限次幂上指定含代数集合、对布尔运算、直积和投影封闭的集合族，并要求一维集合都是有限个点与区间的并。Tarski--Seidenberg 定理保证半代数集合构成一个例子。更广结构、分层与拓扑不变量的理论不在此展开。
+半代数集合在直线上是有限个点与区间的并：组成其定义的有限多个非零多项式只有有限多个实根，在这些根之间每个多项式符号固定。o-minimal 结构保留这种一维有限性，同时允许更广的函数与集合。
 
-\ProseParagraphBreak
-平方和的对偶计算引出\term{矩问题}[moment problem]。给定实数族 \((y_\alpha)_{\alpha\in\mathbb N^n}\)，先定义线性泛函 \(L(x^\alpha)=y_\alpha\)，再问是否存在支于 \(K\) 的正测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\)。必要条件 \(L(q^2)\ge0\) 等价于所有有限矩矩阵 \((y_{\alpha+\beta})\) 半正定；若支集还满足 \(g_i\ge0\)，则须有 \(L(g_iq^2)\ge0\)。这些条件显然必要，但仅检查一张有限矩阵不能自动产生测度。
+\begin{definition}\label{b3:def:real-o-minimal-structure}
+设 \(\mathcal S=(\mathcal S_n)_{n\ge1}\)，其中每个 \(\mathcal S_n\) 是 \(\mathbb R^n\) 的某些子集组成的集合族。假设 \(\mathcal S_n\) 包含所有实代数集合，且对有限并、有限交和相对于 \(\mathbb R^n\) 的补集封闭；各集合族还对直积、坐标置换和坐标投影封闭，并且次序关系 \(\{(x,y)\in\mathbb R^2:x<y\}\) 属于 \(\mathcal S_2\)。如果 \(\mathcal S_1\) 恰由有限个点与开区间的有限并组成，就称 \(\mathcal S\) 为实有序域的一个\term{o-minimal 结构}[o-minimal structure]。这里开区间允许无界端点，有限并允许为空；\(\mathcal S_n\) 中的集合称为该结构中的可定义集合。
+\end{definition}
+
+实半代数集合满足上述闭包性质，投影的封闭性由 Tarski--Seidenberg 定理给出，因此构成一个 o-minimal 结构。这个定义还保证各个实点与有序域的加法、乘法图像可定义。更广的例子则需要证明其一维可定义集合仍满足同样的有限性条件。
+
+\subsection{矩问题与正泛函}
+\label{b3:subsec:G05:moment}
+
+平方和的对偶计算引出\term{矩问题}[moment problem]。给定闭集 \(K\subseteq\mathbb R^n\) 与实数族 \((y_\alpha)_{\alpha\in\mathbb N^n}\)，先在 \(\mathbb R[x_1,\ldots,x_n]\) 上按 \(L(x^\alpha)=y_\alpha\) 定义实线性泛函，再问是否存在支于 \(K\) 的正测度 \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\)。必要条件 \(L(q^2)\ge0\) 等价于所有有限矩矩阵 \((y_{\alpha+\beta})\) 半正定；若支集还满足多项式约束 \(g_i\ge0\)，则须有 \(L(g_iq^2)\ge0\)。这些条件显然必要，但仅检查一张有限矩阵不能自动产生测度。
 
 \begin{theorem}[Archimedean 二次模的矩表示]\label{b3:thm:archimedean-moment-representation}
-设 \(g_1,\ldots,g_s\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x:g_i(x)\ge0\text{ 对所有 }i\}\)，且存在 \(N>0\) 使 \(N-\sum_i x_i^2\in M(g)\)。若实线性泛函 \(L:\mathbb R[x]\to\mathbb R\) 满足 \(L(1)=1\) 与 \(L(M(g))\subseteq[0,\infty)\)，则存在支于 \(K\) 的 Borel 概率测度\footnote{博雷尔（Émile Borel，1871-1956），法国数学家，建立测度理论的重要基础，并研究概率论。} \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\) 对每个多项式 \(p\) 成立。
+设 \(n\ge1\)，\(g_1,\ldots,g_s\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x\in\mathbb R^n:g_i(x)\ge0\text{ 对所有 }i\}\)，记 \(M(g)\) 为这些多项式生成的二次模。假设存在 \(N>0\) 使 \(N-\sum_i x_i^2\in M(g)\)。若实线性泛函 \(L:\mathbb R[x_1,\ldots,x_n]\to\mathbb R\) 满足 \(L(1)=1\) 与 \(L(M(g))\subseteq[0,\infty)\)，则存在支于 \(K\) 的 Borel 概率测度\footnote{博雷尔（Émile Borel，1871-1956），法国数学家，建立测度理论的重要基础，并研究概率论。} \(\mu\)，使 \(L(p)=\int_Kp\,\mathrm{d}\mu\) 对每个多项式 \(p\in\mathbb R[x_1,\ldots,x_n]\) 成立。
 \end{theorem}
 \begin{proofsketch}
-先由\cref{b3:thm:compact-positivity-certificates}的 Putinar 部分得出：若 \(p\ge0\) 于 \(K\)，则对每个 \(\varepsilon>0\)，\(p+\varepsilon\in M(g)\)，故 \(L(p)+\varepsilon\ge0\)，令 \(\varepsilon\to0\) 得 \(L(p)\ge0\)。\(K\) 不能为空，否则 \(-1\) 也严格正于空集，正性定理给出 \(-1\in M(g)\)，与 \(L(1)=1\) 矛盾。
+球约束说明 \(K\) 闭且有界，因此紧。\(K\) 不能为空，否则 \(-1\) 也严格正于空集，\cref{b3:thm:compact-positivity-certificates}的 Putinar 部分给出 \(-1\in M(g)\)，与 \(L(1)=1\) 矛盾。同一定理还给出：若 \(p\ge0\) 于 \(K\)，则对每个 \(\varepsilon>0\)，\(p+\varepsilon\in M(g)\)，故 \(L(p)+\varepsilon\ge0\)，令 \(\varepsilon\to0\) 得 \(L(p)\ge0\)。
 
-若 \(p\) 在 \(K\) 上为零，分别用于 \(p\) 与 \(-p\) 得 \(L(p)=0\)，所以 \(L\) 下降为 \(K\) 上多项式函数的线性泛函。由 \(\|p\|_K\pm p\ge0\)，有 \(|L(p)|\le\|p\|_K\)。多项式含常数并分离 \(K\) 的点；Stone--Weierstrass 定理使它们在 \(C(K,\mathbb R)\) 中一致稠密。这个界给出 \(L\) 的唯一连续延拓，非负连续函数用多项式一致逼近后仍有非负像。
+若 \(p\) 在 \(K\) 上为零，分别用于 \(p\) 与 \(-p\) 得 \(L(p)=0\)，所以 \(L\) 下降为 \(K\) 上多项式函数的线性泛函。由 \(\|p\|_K\pm p\ge0\)，有 \(|L(p)|\le\|p\|_K\)。多项式含常数并分离 \(K\) 的点；Stone--Weierstrass 定理使它们在 \(C(K,\mathbb R)\) 中一致稠密。这个界给出 \(L\) 的唯一连续延拓 \(\bar L:C(K,\mathbb R)\to\mathbb R\)。若 \(h\in C(K,\mathbb R)\) 非负，则 \(\sqrt h\) 连续，可取多项式 \(q_j\) 在 \(K\) 上一致逼近 \(\sqrt h\)。于是 \(q_j^2\) 一致逼近 \(h\)，并且每个 \(q_j^2\) 都属于 \(M(g)\)，故
+\[
+\bar L(h)=\lim_{j\to\infty}L(q_j^2)\ge0.
+\]
+因此这个连续延拓仍为正泛函。
 
 最后，紧 Hausdorff 空间上的 Riesz 正泛函表示定理把这个连续正泛函写成对正 Borel 测度的积分；\(L(1)=1\) 使其总质量为一。这里省略 Stone--Weierstrass 与 Riesz 两个分析定理的证明，保留它们的具体适用条件；从 Putinar 证书到矩表示的上述推导见\cite[Section 1, Theorem 2; Section 3, proof of Theorem 2]{Schweighofer2005Optimization}。
 \end{proofsketch}

@@ -1,0 +1,120 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 11.2 截短消解与同调维数估计
+% 纲要标签：b4:sec:1002
+% 纲要位置：计划纲要.md，第 2719 行。
+
+\section{截短消解与同调维数估计}
+\label{b4:sec:1002}
+
+高次导出群是否消失，可以转化为消解末端的合冲模是否投射。这个判据既判断消解能否终止，也说明局部化以后投射维数需要怎样核对。
+
+% 纲要内容：
+%
+% * 截短消解及合冲模
+% * 短正合列中的同调维数不等式
+% * 第三卷局部投射维数所需的最低平移版本已在第9.5节证明；本节作一般化整理
+% * 局部投射维数的讨论作为交换代数应用，可在学习第三卷后回读；不参与前两小节的证明
+%
+
+\subsection{截短消解及合冲模}
+\label{b4:subsec:1002:01}
+
+\chapref{b4:ch:08}已经证明一步维数平移：短正合列中的投射或内射对象使长正合列的相邻高次项同构。本节用它确定消解何时真正能够终止，而不再重复连接同态的构造。
+
+\begin{proposition}\label{b4:prop:truncation-dimension}
+设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\) 模，\(d\ge1\) 为整数。给定左 \(R\) 模正合列
+\[
+ 0\longrightarrow K_d\longrightarrow P_{d-1}\longrightarrow\cdots
+ \longrightarrow P_0\longrightarrow M\longrightarrow0,
+\]
+其中各 \(P_i\) 投射。则 \(\operatorname{pd}_RM\le d\) 当且仅当 \(K_d\) 投射。若 \(0\to M\to I^0\to\cdots\to I^{d-1}\to L^d\to0\) 正合且各 \(I^i\) 内射，则 \(\operatorname{id}_RM\le d\) 当且仅当 \(L^d\) 内射。若第一列的 \(P_i\) 仅要求平坦，则 \(\operatorname{fd}_RM\le d\) 当且仅当 \(K_d\) 平坦。
+\end{proposition}
+\begin{proof}
+若末端对象具有所需性质，给定列本身就是相应长度的消解。反向分别利用
+\[
+ \operatorname{Ext}_R^1(K_d,N)\simeq\operatorname{Ext}_R^{d+1}(M,N),\qquad
+ \operatorname{Ext}_R^1(N,L^d)\simeq\operatorname{Ext}_R^{d+1}(N,M),
+\]
+以及 \(\operatorname{Tor}_1^R(T,K_d)\simeq\operatorname{Tor}_{d+1}^R(T,M)\)。投射和内射的式子是\cref{b4:prop:iterated-dimension-shift}；平坦版本对各短正合列用 Tor 长正合列，并用平坦项高次 Tor 为零。右侧由\cref{b4:thm:dimension-vanishing}消失，左侧的次数一判据给出所需性质。
+\end{proof}
+
+因此某个 \(d\) 步合冲模投射时，任何投射消解的 \(d\) 步合冲模都投射。这些合冲模不必同构，但加入投射直和项后同构，即稳定同构。具体地，两个投射消解的第一步给出短正合列 \(0\to K_1\to P_0\to M\to0\) 与 \(0\to K'_1\to P'_0\to M\to0\)，由\cref{b4:lem:schanuel}有
+\[
+ K_1\oplus P'_0\cong K'_1\oplus P_0.
+\]
+更高阶时，把前一步已加入的投射项用恒等映射补入下一步的投射满射，再对具有同构余核的两个短正合列应用同一引理。如此归纳可得投射模 \(Q,Q'\)，使 \(K_d\oplus Q\cong K'_d\oplus Q'\)。同调维数检测的是这些合冲模何时投射，并不要求它们作为模相互同构。
+
+\subsection{短正合列中的同调维数不等式}
+\label{b4:subsec:1002:02}
+
+\begin{proposition}\label{b4:prop:dimension-short-exact}
+设 \(R\) 为含幺环，\(0\to A\to B\to C\to0\) 为幺性左 \(R\) 模短正合列。以下所有维数均在 \(R\) 上计算。投射维数满足
+\[
+\begin{aligned}
+ \operatorname{pd}B&\le\max\{\operatorname{pd}A,\operatorname{pd}C\},\\
+ \operatorname{pd}A&\le\max\{\operatorname{pd}B,\operatorname{pd}C-1\},\\
+ \operatorname{pd}C&\le\max\{\operatorname{pd}B,\operatorname{pd}A+1\}.
+\end{aligned}
+\]
+平坦维数满足相同的三式。内射维数满足
+\[
+\begin{aligned}
+ \operatorname{id}B&\le\max\{\operatorname{id}A,\operatorname{id}C\},\\
+ \operatorname{id}A&\le\max\{\operatorname{id}B,\operatorname{id}C+1\},\\
+ \operatorname{id}C&\le\max\{\operatorname{id}B,\operatorname{id}A-1\}.
+\end{aligned}
+\]
+这里维数取值及 \(\pm\infty\) 的运算遵循\cref{b4:def:homological-dimensions}中的约定。
+\end{proposition}
+\begin{proof}
+固定左模 \(N\)。Ext 的第一变量长正合列包含
+\[
+ \operatorname{Ext}^i(C,N)\to\operatorname{Ext}^i(B,N)\to\operatorname{Ext}^i(A,N)
+ \to\operatorname{Ext}^{i+1}(C,N).
+\]
+第一式由两端的消失得到中间的消失；第二式用 \(\operatorname{Ext}^i(B,N)\) 及 \(\operatorname{Ext}^{i+1}(C,N)\)；第三式把次数改成 \(i-1,i\)，使用 \(\operatorname{Ext}^{i-1}(A,N)\) 及 \(\operatorname{Ext}^i(B,N)\)。对每个大于相应上界的正整数次数，这些群均为零，再用\cref{b4:thm:dimension-vanishing}。若上界为负，则只能来自零对象或 \(B=0\) 的平凡短列，结论直接成立。
+
+平坦情形固定右模 \(T\)，用 \(\operatorname{Tor}_i(T,-)\) 的长正合列中三种相邻位置得到相同上界。内射情形改用第二变量长正合列
+\(\operatorname{Ext}^i(N,A)\to\operatorname{Ext}^i(N,B)\to\operatorname{Ext}^i(N,C)\to\operatorname{Ext}^{i+1}(N,A)\)，逐一取相邻项，得到所写三式。
+\end{proof}
+
+这些不等式也给出精确的一步下降。例如 \(0\to K\to P\to M\to0\) 中 \(P\) 投射，若 \(\operatorname{pd}M=d\ge1\) 有限，则 \(P\ne0\)，故 \(\operatorname{pd}P=0\)。第二个投射维数不等式给出
+\[
+ \operatorname{pd}K\le\max\{\operatorname{pd}P,\operatorname{pd}M-1\}
+ =\max\{0,d-1\}=d-1.
+\]
+第三个投射维数不等式则给出
+\[
+ d=\operatorname{pd}M\le\max\{\operatorname{pd}P,\operatorname{pd}K+1\}
+ =\max\{0,\operatorname{pd}K+1\}.
+\]
+因 \(d\ge1\)，后一式迫使 \(\operatorname{pd}K\ge d-1\)，从而 \(\operatorname{pd}K=d-1\)。若 \(d=0\)，短列分裂，\(K\) 投射或为零；不能强行套用数值 \(d-1=-1\)。
+
+\subsection{交换代数应用：局部投射维数}
+\label{b4:subsec:1002:03}
+
+一般环上的消失判据需要对所有测试模作检验。对交换 Noether 局部环上的有限生成模，极小自由消解的微分在剩余域上全部变为零，使每一项是否消失都能由剩余域系数的 Tor 群检验。局部性与有限生成条件在这里把测试对象缩减为一个剩余域。
+
+\ProseParagraphBreak
+第三卷命题17.1.4已经在交换 Noether 局部环上构造有限生成模的极小自由消解，并证明其微分矩阵的元素都在极大理想中。定理17.2.3据此建立局部投射维数判据。这里用本节的一般理论解释其中“某一步消失就能截短”的依据。
+
+\ProseParagraphBreak
+具体地，设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\)-模，\(F_\bullet\to M\) 为极小自由消解。第三卷命题17.1.5的极小消解与 Betti 数\footnote{贝蒂（Enrico Betti，1823-1892），意大利数学家，研究代数与拓扑。}结论给出
+\[
+ \operatorname{Tor}_i^R(k,M)\simeq k\otimes_R F_i,\qquad
+ \operatorname{Ext}_R^i(M,k)\simeq\operatorname{Hom}_R(F_i,k).
+\]
+理由是两个复形的微分都变为零。因此对每个整数 \(i\ge0\)，这里模 \(M\) 的第 \(i\) 个 Betti 数为
+\[
+ \beta_i^R(M)=\operatorname{rank}_R F_i
+ =\dim_k\operatorname{Tor}_i^R(k,M).
+\]
+有限性使 Nakayama 引理适用，所以 \(k\otimes F_i=0\) 就是 \(F_i=0\)，此后极小消解终止。结合本节的截短判据，投射维数等于这些 Tor 非零次数的上确界。
+
+\ProseParagraphBreak
+例如在 \(R=k[x,y]_{(x,y)}\) 上，剩余域的 Koszul 消解为
+\[
+ 0\longrightarrow R\xrightarrow{\binom{-y}{x}}R^2
+ \xrightarrow{(x\ \ y)}R\longrightarrow k\longrightarrow0.
+\]
+它极小，故 \(\operatorname{Tor}_2^R(k,k)=k\ne0\)，同时长度二给出高次消失，从而 \(\operatorname{pd}_Rk=2\)。相反，\cref{b4:exm:infinite-dimension-dual-numbers}的每一步都保留一个自由项，有限生成并不意味着有限投射维数。在有限投射维数情形，第三卷第17.3节的 Auslander--Buchsbaum 公式\footnote{奥斯兰德（Maurice Auslander，1926-1994），美国数学家，研究同调代数与表示论；布赫斯鲍姆（David Alvin Buchsbaum，1929-2021），美国数学家，研究同调代数及交换代数中的自由消解。}进一步将投射维数与模和底环的深度联系起来。

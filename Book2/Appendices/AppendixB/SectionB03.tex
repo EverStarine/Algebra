@@ -4,7 +4,6 @@
 % * 证明相似型对应共轭的伴随对合，解释中央标量倍为何不改变伴随运算
 % * 在右四元数模的明确约定下计算 Hermitian 型及伴随对合，保留标量的次序
 % * 用 Goldman 元与极大右理想证明第一类对合的存在性判据
-% 纲要位置：工作记录/计划纲要.md，第 1617 行。
 
 % 纲要要点（供目录核对）：
 % * 带对合的中心单代数
@@ -49,12 +48,12 @@ X^{\mathsf T}=iE_{21},\qquad
 设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数，\(\sigma\) 为 \(A\) 上的对合。若 \(\sigma\) 为第二类，记 \(k=K^{\sigma|_K}\)，则 \([K:k]=2\)。若 \(\sigma\) 为第一类，则它给出 \(K\) 代数同构 \(A\cong A^{\mathrm{op}}\)，从而 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
 \end{proposition}
 \begin{proof}
-第二类时取 \(t\in K\) 使 \(\tau(t)\ne t\)，令 \(u=t-\tau(t)\)，则 \(u\ne0\)、\(\tau(u)=-u\)。对每个 \(x\in K\)，有唯一分解
+第二类时记 \(\tau=\sigma|_K\)，取 \(t\in K\) 使 \(\tau(t)\ne t\)，令 \(u=t-\tau(t)\)，则 \(u\ne0\)、\(\tau(u)=-u\)。对每个 \(x\in K\)，有唯一分解
 \[
 x=\frac{x+\tau(x)}2+
-u\frac{x-\tau(x)}{2u}.
+u\,\frac{x-\tau(x)}{2u}.
 \]
-右侧两个系数均被 \(\tau\) 固定，所以 \(K=k\oplus ku\)。其中 \(u\notin k\)，因为 \(2u\ne0\)。故扩张次数为二。
+右侧第一项与第二项中 \(u\) 的系数均被 \(\tau\) 固定，所以 \(K=k\oplus ku\)。其中 \(u\notin k\)，因为 \(2u\ne0\)。故扩张次数为二。
 
 第一类时，对合反转乘法，恰好是到反代数的 \(K\) 代数同构。\cref{b2:thm:brauer-group}说明反代数代表 Brauer 群中的负元，故 \([A]=-[A]\)。
 \end{proof}
@@ -63,25 +62,49 @@ u\frac{x-\tau(x)}{2u}.
 设 \(K\) 为特征不为二的域，\(A\) 为有限维中心单 \(K\) 代数。则 \(A\) 存在第一类对合，当且仅当 \(2[A]=0\) 于 \(\operatorname{Br}(K)\)。
 \end{theorem}
 \begin{proof}
-必要性由上一个命题得到。证明充分性时，先写 \(A\cong M_r(D)\)，其中 \(D\) 为中心除代数，令 \(d=\dim_KD\)。\(2[A]=0\) 使 \(D\otimes_KD\) 分裂，故它同构于 \(M_d(K)\)。若 \(D=K\)，转置已经给出所需对合。以下设 \(\deg D=n>1\)，因而 \(d=n^2\)。
+必要性由上一个命题得到。证明充分性时，先写 \(A\cong M_r(D)\)，其中 \(D\) 为中心除代数，并令
+\[
+n=\deg D,\qquad N=n^2=\dim_KD.
+\]
+若 \(n=1\)，则 \(D=K\)，转置已经给出所需对合。以下设 \(n>1\)。因为 \([D]=[A]\)，条件 \(2[A]=0\) 使次数为 \(N\) 的中心单代数
+\[
+B=D\otimes_KD
+\]
+分裂，所以 \(B\cong M_N(K)\)。下面依次构造 Goldman 元、选取极大右理想，再由投影得到对合。
 
-构造一个能交换两张量因子的元素。\cref{b2:thm:csa-enveloping-isomorphism}的同构 \(D\otimes_KD^{\mathrm{op}}\cong\operatorname{End}_K(D)\) 遗忘乘法后，给出向量空间同构
+\textbf{构造 Goldman 元。}\cref{b2:thm:csa-enveloping-isomorphism}的同构 \(D\otimes_KD^{\mathrm{op}}\cong\operatorname{End}_K(D)\) 遗忘乘法后，给出向量空间同构
 \[
 \operatorname{Sand}:D\otimes_KD\longrightarrow\operatorname{End}_K(D),
 \qquad \operatorname{Sand}(a\otimes b)(x)=axb.
 \]
-令 \(g\) 为线性映射 \(x\mapsto\operatorname{Trd}_D(x)1\) 在此同构下的原像。约化迹与标量扩张相容；在分裂域上，\(D\) 变成 \(M_n\)，直接用矩阵单位计算得
+令 \(g\) 为线性映射 \(x\mapsto\operatorname{Trd}_D(x)1\) 在此同构下的原像。取 \(D\) 的分裂域 \(L/K\)，将 \(D_L\) 识别为 \(M_n(L)=\operatorname{End}_L(L^n)\)。约化迹与标量扩张相容，而矩阵单位满足
 \[
-g=\sum_{i,j}E_{ij}\otimes E_{ji},\qquad
-g^2=1,\qquad g(a\otimes b)=(b\otimes a)g.
+\sum_{i,j}E_{ij}XE_{ji}=\operatorname{tr}(X)I_n
+\qquad\bigl(X\in M_n(L)\bigr).
 \]
-这些等式在分裂域成立，故由标量扩张的单射性在 \(K\) 上成立。上述元素称为 Goldman 元。\footnote{戈德曼（Oscar Goldman，1925-1986），美国数学家，与奥斯兰德共同将 Brauer 群的理论推广到交换环。}它在分裂后的自然张量空间上交换两因子，固定非零向量 \(v\otimes v\)，所以 \(1-g\) 不可逆。
+因此 \(g\) 扩域后的元素为 \(g_L=\sum_{i,j}E_{ij}\otimes E_{ji}\)。在 \(L^n\otimes_LL^n\) 上，它把 \(v\otimes w\) 送到 \(w\otimes v\)，从而
+\[
+g_L^2=1,\qquad
+g_L(a\otimes b)=(b\otimes a)g_L
+\qquad(a,b\in D_L).
+\]
+由标量扩张的单射性，在 \(B\) 中也有
+\[
+g^2=1,\qquad g(a\otimes b)=(b\otimes a)g
+\qquad(a,b\in D).
+\]
+上述元素称为 Goldman 元。\footnote{戈德曼（Oscar Goldman，1925-1986），美国数学家，与奥斯兰德共同将 Brauer 群的理论推广到交换环。}对非零 \(v\in L^n\)，元素 \(g_L\) 固定非零向量 \(v\otimes v\)，所以 \(1-g_L\) 作为线性算子有非零核。若 \(1-g\) 在 \(B\) 中可逆，扩张标量后 \(1-g_L\) 仍可逆，与此矛盾。故 \(1-g\) 在 \(B\) 中不可逆。
 
-在 \(B=D\otimes_KD\cong M_d(K)\) 中，真右理想 \((1-g)B\) 包含于一个极大右理想 \(I\)。矩阵代数的简单右模维数为 \(d\)，故 \(\dim_KI=d^2-d\)。而 \(1\otimes D\) 的每个非零元素在 \(B\) 中可逆，不能属于真右理想。因此
+\textbf{选取极大右理想。}在 \(B\cong M_N(K)\) 中，\((1-g)B\) 是真右理想，选取包含它的极大右理想 \(I\)。商 \(B/I\) 是简单右模，\(M_N(K)\) 的简单右模维数为 \(N\)，故
 \[
-I\cap(1\otimes D)=0,\qquad B=I\oplus(1\otimes D).
+\dim_KI=N^2-N.
 \]
-对每个 \(a\in D\)，定义唯一的 \(\sigma(a)\in D\)，使 \(a\otimes1-1\otimes\sigma(a)\in I\)。投影的线性给出 \(\sigma\) 的 \(K\) 线性，且 \(\sigma(1)=1\)。因为 \(I\) 为右理想，
+另一方面，\(1\otimes D\) 的每个非零元素在 \(B\) 中可逆，不能属于真右理想。因此 \(I\cap(1\otimes D)=0\)。再用 \(\dim_K(1\otimes D)=N\) 比较维数，得到
+\[
+B=I\oplus(1\otimes D).
+\]
+
+\textbf{由投影构造对合。}对每个 \(a\in D\)，定义唯一的 \(\sigma(a)\in D\)，使 \(a\otimes1-1\otimes\sigma(a)\in I\)。投影的线性给出 \(\sigma\) 的 \(K\) 线性，且 \(\sigma(1)=1\)。因为 \(I\) 为右理想，
 \[
 \begin{aligned}
 ab\otimes1-1\otimes\sigma(b)\sigma(a)
@@ -91,10 +114,10 @@ ab\otimes1-1\otimes\sigma(b)\sigma(a)
 \]
 唯一性遂给出 \(\sigma(ab)=\sigma(b)\sigma(a)\)。它的核为真双边理想，除代数的单性使核为零；有限维数进一步使它双射。
 
-最后核对平方。将 \(a\otimes1-1\otimes\sigma(a)\in I\) 右乘 \(g\)，使用 Goldman 恒等式，得到 \(g(1\otimes a-\sigma(a)\otimes1)\in I\)。又因 \(1-g\in I\)，任意 \(z\in B\) 都有 \(gz-z\in I\)，所以 \(1\otimes a-\sigma(a)\otimes1\in I\)。与定义应用于 \(\sigma(a)\) 的等式相加，得 \(1\otimes(a-\sigma^2(a))\in I\cap(1\otimes D)=0\)。故 \(\sigma^2=1\)，它是 \(D\) 的第一类对合。在 \(M_r(D)\) 上逐项施加 \(\sigma\) 后转置，即得到 \(A\) 上的第一类对合。
+最后核对平方。将 \(a\otimes1-1\otimes\sigma(a)\in I\) 右乘 \(g\)，使用 Goldman 恒等式，得到 \(g(1\otimes a-\sigma(a)\otimes1)\in I\)。又因 \(1-g\in I\)，任意 \(z\in B\) 都有 \((1-g)z\in I\)，所以 \(1\otimes a-\sigma(a)\otimes1\in I\)。与定义应用于 \(\sigma(a)\) 的等式相加，得 \(1\otimes(a-\sigma^2(a))\in I\cap(1\otimes D)=0\)。故 \(\sigma^2=1\)，它是 \(D\) 的第一类对合。在 \(M_r(D)\) 上逐项施加 \(\sigma\) 后转置，即得到 \(A\) 上的第一类对合。
 \end{proof}
 
-Albert 判据\footnote{阿尔伯特（Abraham Adrian Albert，1905-1972），美国数学家，研究结合代数与非结合代数，著有《结合代数》。}的这个证明采用 Goldman 元和除代数代表，见\cite[Theorem (3.1); Proposition (3.6); Theorem (3.8); Remark (3.11), pp. 31--36]{KnusMerkurjevRostTignol1998Involutions}。判据限制的是 Brauer 类的周期，并非说除代数的次数至多为二；\cref{b2:exm:period-two-index-four}已有周期二、指数四的例子。
+Albert 判据的充分性证明在除代数上用 Goldman 元与极大右理想构造对合。\footnote{阿尔伯特（Abraham Adrian Albert，1905-1972），美国数学家，研究结合代数与非结合代数，著有《结合代数》。上述证明采用《The Book of Involutions》的 Remark (3.11) 中的构造；判据、Goldman 元性质和投影计算分别见同书 Theorem (3.1)、Proposition (3.6) 和 Theorem (3.8)\cite[Theorem (3.1), p. 31; Proposition (3.6), pp. 32--33; Theorem (3.8), pp. 34--35; Remark (3.11), p. 36]{KnusMerkurjevRostTignol1998Involutions}。}判据限制的是 Brauer 类的周期，并非说除代数的次数至多为二；\cref{b2:exm:period-two-index-four}已有周期二、指数四的例子。
 
 \subsection{矩阵代数上的伴随对合}
 \label{b2:subsec:B03:02}
@@ -113,7 +136,11 @@ b(Xv,w)=b\bigl(v,\sigma_B(X)w\bigr)
 \[
 \sigma^2(X)=(B^{-1}B^{\mathsf T})X(B^{-1}B^{\mathsf T})^{-1}.
 \]
-它恒等，当且仅当 \(B^{-1}B^{\mathsf T}\) 属于矩阵代数的中心，即 \(B^{\mathsf T}=\lambda B\)。再转置一次得 \(\lambda^2=1\)，所以 \(\lambda=\pm1\)。两个矩阵给出相同对合，当且仅当它们的比与全部矩阵交换，也就相差标量。若 \(B^{\mathsf T}=-B\)，因特征不为二，它对应交替型；\cref{b2:thm:alternating-form-normal}说明非退化交替型的维数必为偶数。
+它恒等，当且仅当 \(B^{-1}B^{\mathsf T}\) 属于矩阵代数的中心，即 \(B^{\mathsf T}=\lambda B\)。再转置一次得 \(\lambda^2=1\)，所以 \(\lambda=\pm1\)。若可逆矩阵 \(B,B'\) 给出相同对合，则对全部 \(X\) 有
+\[
+X^{\mathsf T}B'B^{-1}=B'B^{-1}X^{\mathsf T}.
+\]
+由于 \(X^{\mathsf T}\) 取遍全部矩阵，\(B'B^{-1}\in K^\times I_n\)，即 \(B'=cB\) 对某个 \(c\in K^\times\) 成立；反过来，乘以这样的标量显然不改变伴随公式。若 \(B^{\mathsf T}=-B\)，因特征不为二，它对应交替型；\cref{b2:thm:alternating-form-normal}说明非退化交替型的维数必为偶数。
 \end{proof}
 
 对称型产生的对合称为\term[zhengjiao-duihe]{正交对合}[orthogonal involution]，交替型产生的称为\term[xin-duihe]{辛对合}[symplectic involution]。这些名称也用于未分裂的中心单代数：由\cref{b2:cor:csa-algebraic-closure-splits}，在代数闭包 \(\Omega\) 上有 \(A\otimes_K\Omega\cong M_n(\Omega)\)；第一类对合延伸为 \(\sigma\otimes\operatorname{id}_\Omega\)，再看它属于哪种类型。这个定义不依赖分裂同构，因为由内自同构改变分裂同构只会改变型的基。
@@ -143,13 +170,30 @@ b(Xv,w)=b\bigl(v,\sigma_B(X)w\bigr)
 \begin{proof}
 令 \(X^*=\overline X^{\mathsf T}\)。给定对合与 \(*\) 的复合在中心上为恒等，因此是 \(K\) 代数自同构。再由\cref{b2:thm:skolem-noether}，可写 \(\sigma(X)=B^{-1}X^*B\)。平方为恒等迫使 \(B^*=\lambda B\)，而再取 \(*\) 得 \(\lambda\bar\lambda=1\)。
 
-需要找 \(a\ne0\) 满足 \(a/\bar a=\lambda\)。若 \(\lambda\ne-1\)，取 \(a=1+\lambda\)；由 \(\bar\lambda=\lambda^{-1}\) 立即得到所需等式。若 \(\lambda=-1\)，取\cref{b2:prop:B-involution-center}证明中的非零 \(u\)，满足 \(\bar u=-u\)，并令 \(a=u\)。于是 \(H=aB\) 满足 \(H^*=\bar a\lambda B=aB=H\)，而乘以标量不改变 \(\sigma_B\)。最后直接代入，得到 \(h(Xv,w)=h\bigl(v,\sigma_H(X)w\bigr)\)。
+现在需要找 \(a\in K^\times\) 满足 \(a/\bar a=\lambda\)。条件 \(\lambda\bar\lambda=1\) 即 \(N_{K/k}(\lambda)=1\)，所以这正是第一卷第20.2节 Hilbert 第 90 定理的乘法形式在二次扩张中的情形。这里直接构造所需的元素：若 \(\lambda\ne-1\)，取 \(a=1+\lambda\)；由 \(\bar\lambda=\lambda^{-1}\) 立即得到所需等式。若 \(\lambda=-1\)，取\cref{b2:prop:B-involution-center}证明中的非零 \(u\)，满足 \(\bar u=-u\)，并令 \(a=u\)。于是 \(H=aB\) 满足 \(H^*=\bar a\lambda B=aB=H\)，而乘以标量不改变 \(\sigma_B\)。最后直接代入，得到 \(h(Xv,w)=h\bigl(v,\sigma_H(X)w\bigr)\)。
 \end{proof}
 
-第二类对合也称为\term[you-duihe]{酉对合}[unitary involution]。它没有要求 Hermitian 型正定；例如 \(H=\operatorname{diag}(1,-1)\) 也定义一个对合。正定性、范数及完备性属于\appref{b2:app:D}讨论算子代数时另加的结构。
+第二类对合也称为\term[you-duihe]{酉对合}[unitary involution]。第一类与第二类由中心上的作用区分，正交与辛则是第一类内部的两种型；特征不为二时，它们的层级关系及分裂模型如\cref{b2:tab:B-involution-kinds}所示。
+
+\begin{table}[htbp]
+\centering
+\caption{对合的类别、型与分裂模型}
+\label{b2:tab:B-involution-kinds}
+\begin{tabular}{lcccl}
+\toprule
+类别 & 中心上的作用 & 型 & 型矩阵的条件 & 分裂伴随公式 \\
+\midrule
+第一类 & 恒等 & 正交 & \(B^{\mathsf T}=B\) & \(B^{-1}X^{\mathsf T}B\) \\
+第一类 & 恒等 & 辛 & \(B^{\mathsf T}=-B\) & \(B^{-1}X^{\mathsf T}B\) \\
+第二类 & 非恒等共轭 & 酉 & \(\overline H^{\mathsf T}=H\) & \(H^{-1}\overline X^{\mathsf T}H\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+酉对合不要求 Hermitian 型正定；例如 \(H=\operatorname{diag}(1,-1)\) 也定义一个对合。正定性、范数及完备性属于\appref{b2:app:D}讨论算子代数时另加的结构。
 
 \begin{proposition}\label{b2:prop:B-similar-forms-adjoint}
-设 \(K\) 为特征不为二的域，配有一个允许恒等的对合 \(a\mapsto\bar a\)，固定域为 \(F\)。记 \(X^*=\overline X^{\mathsf T}\)，固定 \(\varepsilon\in\{1,-1\}\)，并设 \(H,H'\in\operatorname{GL}_n(K)\) 满足 \(H^*=\varepsilon H\)、\(H'^*=\varepsilon H'\)。则伴随对合 \(\sigma_H(X)=H^{-1}X^*H\) 与 \(\sigma_{H'}\) 相同，当且仅当 \(H'=cH\) 对某个 \(c\in F^\times\) 成立。更一般地，若
+设 \(K\) 为特征不为二的域，配有一个允许恒等的对合 \(a\mapsto\bar a\)，固定域为 \(F\)。记 \(X^*=\overline X^{\mathsf T}\)，固定 \(\varepsilon\in\{1,-1\}\)，并设整数 \(n\ge1\) 及矩阵 \(H,H'\in\operatorname{GL}_n(K)\) 满足 \(H^*=\varepsilon H\)、\(H'^*=\varepsilon H'\)。则伴随对合 \(\sigma_H(X)=H^{-1}X^*H\) 与 \(\sigma_{H'}\) 相同，当且仅当 \(H'=cH\) 对某个 \(c\in F^\times\) 成立。更一般地，若
 \[
 H'=cP^*HP,\qquad c\in F^\times,\quad P\in\operatorname{GL}_n(K),
 \]

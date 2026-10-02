@@ -3,6 +3,7 @@
 % 纲要位置：工作记录/计划纲要.md，第 3973 行。
 % * Schur 函子
 % * Pieri 规则及低阶 Littlewood–Richardson 例子
+% * Littlewood–Richardson 诱导分解先在有理数上确定重数，再扩张到任意特征零域；一般线性群分解用迹多项式与 Schur 基的线性无关性比较
 % * 与第二卷对称幂、外幂的统一
 % ---
 \section{张量分解}
@@ -29,7 +30,7 @@ Schur--Weyl 对偶给每个分拆配置了一个重数空间。改变向量空�
 因为 \(f^{\otimes n}\) 与因子置换相容，上述复合仍为 \(S_n\) 同态。恒等映射和复合也被保持，所以确实得到函子。选定基时，其作用由 \(f\) 的矩阵条目的 \(n\) 次齐次多项式给出；通常它不是关于 \(f\) 的线性运算。例如 \(\operatorname{Sym}^2(f+g)\) 中有交叉项，不能写成两个平方的和。
 
 \ProseParagraphBreak
-这个定义中的空间就是上一节的 \(L_\lambda(V)\)。因此它在非零时是不可约的一般线性群表示，特征标为 \(s_\lambda\)，且 \(\ell(\lambda)>\dim V\) 时为零。在不同维数下使用同一分拆，不需要重新定义构造。
+这个定义中的空间就是上一节的 \(L_\lambda(V)\)。因此它在非零时是不可约的一般线性群表示，其迹函数由 Schur 多项式 \(s_\lambda\) 给出：把群元素在代数闭包中的特征值代入即可求迹。分拆的行数超过 \(\dim V\) 时，这个空间为零。在不同维数下使用同一分拆，不需要重新定义构造。
 
 \begin{definition}\label{b5:def:lr-coefficient}
 设 \(a,b\) 为非负整数，\(\lambda\vdash a\)、\(\mu\vdash b\)。在有理系数对称函数代数 \(\Lambda_{\mathbb Q}\) 中，用 Schur 基展开乘积：
@@ -55,9 +56,26 @@ s_\lambda s_\mu=\sum_{\nu\vdash a+b}c_{\lambda\mu}^{\nu}s_\nu.
 \end{equation}
 \end{proposition}
 \begin{proof}
-第一式由诱导乘积公式及 Specht--Schur 对应得到；其系数是半单表示的实际分解重数，所以是非负整数。
+若 \(a+b=0\)，则 \(\lambda,\mu\) 都是空分拆，唯一的乘积系数为一，两式两边均为 \(k\)。以下设 \(a+b>0\)。先在复数域上，由诱导乘积公式及 Specht--Schur 对应得到第一式；其系数是实际分解重数，所以是非负整数。令
+\[
+I_{\mathbb Q}=\operatorname{Ind}_{S_a\times S_b}^{S_{a+b}}
+\bigl(S_{\mathbb Q}^\lambda\boxtimes S_{\mathbb Q}^\mu\bigr).
+\]
+由\eqref{b5:eq:symmetric-split-algebra}，\(\mathbb Q[S_{a+b}]\) 是分裂半单代数，故
+\[
+I_{\mathbb Q}\cong\bigoplus_{\nu\vdash a+b}
+(S_{\mathbb Q}^\nu)^{\oplus m_\nu},
+\qquad m_\nu\in\mathbb Z_{\geq0}.
+\]
+整数标准基给出 \(k\otimes_{\mathbb Q}S_{\mathbb Q}^\eta\cong S_k^\eta\)。在群代数张量模型中结合张量积，又得到诱导与扩张标量相容的同构
+\[
+k\otimes_{\mathbb Q}I_{\mathbb Q}
+\cong\operatorname{Ind}_{S_a\times S_b}^{S_{a+b}}
+\bigl(S_k^\lambda\boxtimes S_k^\mu\bigr).
+\]
+先取 \(k=\mathbb C\)。各个 \(S_{\mathbb Q}^\nu\) 复化后仍是互不同构的简单模，比较复数域上的分解即得 \(m_\nu=c_{\lambda\mu}^{\nu}\)。再取任意特征零域 \(k\)，上述同构给出第一式。
 
-每个非零 \(\mathbb S_\lambda(V)\) 可选为 \(V^{\otimes a}\) 中一个一般线性群直和项，\(\mathbb S_\mu(V)\) 同样可选为 \(V^{\otimes b}\) 的直和项。张量所得是 \(V^{\otimes(a+b)}\) 的直和项，故由 Schur--Weyl 对偶完全可约，全部不可约项都形如右侧。对角矩阵上的特征标为 \(s_\lambda(x)s_\mu(x)\)。有限变量 Schur 多项式中，行数不超过 \(\dim V\) 的部分线性无关，所以其展开系数只能为 \(c_{\lambda\mu}^{\nu}\)。在任意特征零域上，这个比较仍在分裂半单的有理系数模型及其扩张上成立；也可以把迹视为对角元素的多项式，利用域无限逐项比较系数。
+对第二式，若 \(V=0\)，两边都是零。以下设 \(V\ne0\)。每个非零 \(\mathbb S_\lambda(V)\) 可选为 \(V^{\otimes a}\) 中一个一般线性群直和项，\(\mathbb S_\mu(V)\) 同样可选为 \(V^{\otimes b}\) 的直和项；次数零的因子为 \(k\)。张量所得是 \(V^{\otimes(a+b)}\) 的直和项，故由 Schur--Weyl 对偶完全可约，全部不可约项都形如右侧。取 \(V\) 的基，对角矩阵上的迹由多项式 \(s_\lambda(x)s_\mu(x)\) 给出。行数不超过 \(\dim V\) 的 Schur 多项式线性无关，而特征零域无限，对所有非零对角元素成立的迹等式就是多项式恒等式。因此各个不可约项的重数只能为 \(c_{\lambda\mu}^{\nu}\)，得到第二式。
 \end{proof}
 
 上述论证解释了分解系数的表示意义，一般 Littlewood--Richardson 表格规则尚需另作证明。下面证明最常用的单行、单列情形，再计算一个出现重数二的例子。
@@ -82,7 +100,7 @@ s_\lambda e_r&=\sum_{\mu/\lambda\text{ 为大小 }r\text{ 的竖条}}s_\mu.
 每项的系数均为一。
 \end{theorem}
 \begin{proof}
-取 \(N\ge|\lambda|+r\)，令 \(\alpha=\lambda+\delta_N\)。先证横条公式。交错多项式 \(a_\alpha h_r\) 可唯一写成严格递减非负指数列 \(\beta\) 对应的 \(a_\beta\) 的线性组合。其系数等于单项式 \(x^\beta\) 的系数。由于 \(h_r\) 中每个次数 \(r\) 的单项式系数都是一，该系数为
+取 \(N\ge|\lambda|+r\)，令 \(\alpha=\lambda+\delta_N\)。先证横条公式。由\cref{b5:thm:jacobi-trudi}证明中按单项式轨道得到的交错多项式基，\(a_\alpha h_r\) 可唯一写成严格递减非负指数列 \(\beta\) 对应的 \(a_\beta\) 的线性组合。\(a_\beta\) 中单项式 \(x^\beta\) 的系数为一，而其他基元素中该系数为零，所以展开系数正是 \(a_\alpha h_r\) 中 \(x^\beta\) 的系数。由于 \(h_r\) 中每个次数 \(r\) 的单项式系数都是一，该系数为
 \[
 \sum_{\sigma\in S_N}\operatorname{sgn}(\sigma)
 \prod_{i=1}^N\mathbf1_{\bigl\{\beta_i\ge\alpha_{\sigma(i)}\bigr\}}

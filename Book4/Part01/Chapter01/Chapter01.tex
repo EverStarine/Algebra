@@ -7,7 +7,7 @@
 \BookChapterNumber{b4:ch:01}
 
 \begin{chapterabstract}
-本章从群、偏序与模等例子建立范畴、函子和自然变换，讨论自然同构与依赖选择的对象同构有何区别，并证明范畴等价的判据及若干新范畴的构造。
+本章从群、偏序与模等例子建立范畴、函子和自然变换，讨论自然同构与依赖选择的对象同构有何区别，并证明范畴等价的判据及若干新范畴的构造。将态射的复合线性化以后，有限对象的模图表还可以统一写成范畴代数上的左模。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -18,13 +18,14 @@
 \item 区分全、忠实和本质满，在说明选择条件后构造拟逆。
 \item 使用函子、切片与逗号范畴记录图表及指定映射。
 \item 辨认已有模同构中的自然部分与依赖选择的部分。
+\item 构造范畴代数，并在模图表与范畴代数的左模之间恢复对象和态射。
 \end{itemize}
 \end{learninggoals}
 
-一个群可以看成只有一个对象的范畴：群元素是这个对象到自身的箭头，箭头的复合就是群乘法。换成幺半群，图景仍成立，只是箭头不必可逆；换成偏序集，则每对对象之间至多有一支箭头。这些例子中的对象相差很大，恒等箭头与复合律却遵守同一套规则。我们先从这样的计算抽出范畴的定义，再问：当对象和箭头一起随某种构造改变时，怎样判定两种构造彼此相容？这将引出函子以及函子之间的自然变换。
+有限生成交换群都可以分解为挠子群与一个自由群的直和。例如，\(\mathbb Z\oplus\mathbb Z/3\mathbb Z\) 的挠子群是 \(0\oplus\mathbb Z/3\mathbb Z\)，而 \(\mathbb Z\oplus0\) 是一个自由补群。但是，分别给每个群选定补群之后，群同态是否会把所选补群送入另一个群的所选补群？能否让所有选择都与群同态相容？分类定理本身没有回答这个问题。为研究这种相容性，我们要同时考虑对象、对象之间的映射，以及构造对这些映射的作用；范畴、函子和自然变换将把这些要求写成可以核验的等式。
 
 \ProseParagraphBreak
-本章从范畴定义开始。主要例子需要集合与映射、群同态、环和模的基本知识。第二卷第5章曾围绕模论介绍最低限度的范畴语言；本章把大小条件、自然变换的复合和新范畴的构造展开，供本卷独立使用。最后一节回顾第二卷第1.2节的双对偶、第6.2节的张量同构及第4.3节的 PID 模结构定理，只调用其中已经建立的具体结论。
+主要例子需要集合与映射、群同态、环和模的基本知识。第二卷第5章曾围绕模论介绍最低限度的范畴语言；本章进一步讨论大小条件、自然变换的复合和新范畴的构造。关于自然同构的讨论通过第二卷第1.2节的双对偶、第6.2节的张量同构及第4.3节的 PID 模结构，比较具体同构对映射的相容性，并回答开头的分裂问题。范畴代数则把一个模图表的多个分量合成一个模，使态射的复合成为代数乘法。
 
 \ProseParagraphBreak
 参考阅读可从 Weibel\cite[Sections A.1--A.3, pp. 417--424]{Weibel1994HomologicalAlgebra}开始：A.1 给出范畴与大小的基本例子，A.2 讨论函子及代表选择，A.3 介绍自然变换、等价与函子范畴。本章对等价判据给出完整证明，并把一般大范畴中所需的选择数据单独写入陈述。
@@ -33,6 +34,7 @@
 \input{Part01/Chapter01/Section0102}
 \input{Part01/Chapter01/Section0103}
 \input{Part01/Chapter01/Section0104}
+\input{Part01/Chapter01/Section0105}
 
 \begin{chaptersummary}
 范畴保留对象之间的态射及复合，不要求每个对象都有预先指定的底集合。单态射和满态射因此用消去性质定义；在模范畴中它们分别对应单射和满射，在环范畴中则不能照搬后一解释。
@@ -44,7 +46,10 @@
 全忠实性控制 Hom 集，本质满控制对象的同构类型。选择代表及同构以后，这些条件给出拟逆；小范畴中的选择由通常选择公理承担，大范畴则须明确指定相应数据。切片与逗号范畴把附加映射纳入对象，为后续泛性质提供统一的叙述方式。
 
 \ProseParagraphBreak
-自然性不等于唯一性，也不禁止一切选择。它总是相对于两个确定函子而言。模的挠子模及无挠商对同态自然，但把每个模分裂成这两部分通常不能自然进行；分类对象与比较映射因而是不同任务。
+自然性不等于唯一性，也不禁止一切选择。它总是相对于两个确定函子而言。对整环上的模，挠子模及无挠商的构造对模同态自然。在主理想整环上的有限生成情形，相应短正合列分裂，但分裂的存在不保证能够自然地选择分裂；有限生成交换群已经给出了这种失败的例子。分类对象与比较映射因而是不同任务。
+
+\ProseParagraphBreak
+对于有限对象的小范畴，恒等态射形成范畴代数的一组正交幂等元。图表的直和给出左模，幂等分量又把左模拆回原图表；自然变换对应模同态。群代数、路径代数与有限偏序集的关联代数都是这种构造的实例，而路径之间的关系对应代数中的关系。
 \end{chaptersummary}
 
 \BookExercises
@@ -64,7 +69,7 @@
 \end{solution}
 
 \begin{exercise}\label{b4:ex:01-group-functors-intertwiners}
-设 \(G,H\) 为群。把函子 \(\mathcal BG\rightarrow\mathcal BH\) 与群同态对应。若函子由 \(\rho,\sigma:G\rightarrow H\) 给出，描述全部自然变换 \(\rho\Rightarrow\sigma\)，并判断何时二者自然同构。
+设 \(G,H\) 为群。把函子 \(\mathcal BG\rightarrow\mathcal BH\) 与群同态对应。若函子由 \(\rho,\sigma:G\rightarrow H\) 给出，描述全部自然变换 \(\rho\Rightarrow\sigma\)，并判断何时二者自然同构。若 \(G\) 由子集 \(T\) 生成，证明只需对 \(g\in T\) 检验自然性；再用一个例子说明，在任意子集上检验通常不够。
 \end{exercise}
 \begin{solution}
 对象映射没有选择，态射映射保持复合与恒等，恰好是保单位的乘法同态，也就是群同态。自然变换只有一个分量 \(h\in H\)，对每个 \(g\in G\) 的自然性是
@@ -72,6 +77,8 @@
 \sigma(g)h=h\rho(g).
 \]
 因此它等价于 \(\sigma(g)=h\rho(g)h^{-1}\) 对所有 \(g\) 成立。因为 \(H\) 中每个元素可逆，每个自然变换都是自然同构；存在自然同构恰好表示两个同态在 \(H\) 中共轭。自变换的分量构成 \(\rho(G)\) 在 \(H\) 中的中心化子群。
+
+映射 \(g\mapsto h\rho(g)h^{-1}\) 与 \(\sigma\) 都是群同态。在生成元上相等便在其逆元及有限乘积上相等，故只需检验 \(T\)。若只在任意子集上检验，则取 \(G=(\mathbb Z/2\mathbb Z)^2\)、\(H=\mathbb Z/2\mathbb Z\)，令 \(\rho,\sigma\) 为两个坐标投影。它们在对角子群上相等，却不在整个 \(G\) 上相等。由于 \(H\) 交换，共轭不改变同态，所以不存在自然同构。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:01-powerset-variance}
@@ -127,7 +134,7 @@ A[n]\longrightarrow A/nA.
 \eta:F_0\Rightarrow F_1,\quad\theta:F_1\Rightarrow F_2,\quad
 \alpha:H_0\Rightarrow H_1,\quad\beta:H_1\Rightarrow H_2.
 \]
-证明横向与逐分量复合满足
+证明水平复合与垂直复合满足
 \((\beta\alpha)*(\theta\eta)=(\beta*\theta)(\alpha*\eta)\)。
 \end{exercise}
 \begin{solution}
@@ -180,7 +187,7 @@ HFGKZ\xrightarrow{H(\varepsilon_{KZ})}HKZ
 \end{solution}
 
 \begin{exercise}\label{b4:ex:01-arrow-poset-count}
-令 \([2]\) 为链 \(0<1<2\) 对应的范畴。描述函子范畴 \([[1],[2]]\)，列出其对象，并计算全部态射的数目。
+令 \([2]\) 为链 \(0<1<2\) 对应的范畴。描述函子范畴 \(\operatorname{Fun}([1],[2])\)，列出其对象，并计算全部态射的数目。
 \end{exercise}
 \begin{solution}
 对象为有序对 \((i,j)\)，其中 \(0\le i\le j\le2\)，共六个：
@@ -211,7 +218,7 @@ HFGKZ\xrightarrow{H(\varepsilon_{KZ})}HKZ
 \end{solution}
 
 \begin{exercise}\label{b4:ex:01-comma-tautological-map}
-对逗号范畴 \((S\downarrow T)\) 的投影
+设 \(S:\mathcal A\to\mathcal C\)、\(T:\mathcal B\to\mathcal C\) 为函子。对逗号范畴 \((S\downarrow T)\) 的投影
 \(P:(S\downarrow T)\rightarrow\mathcal A\)、
 \(Q:(S\downarrow T)\rightarrow\mathcal B\)，证明对象中的第三分量给出自然变换 \(SP\Rightarrow TQ\)。说明在箭头范畴中这族分量是什么。
 \end{exercise}
@@ -263,8 +270,8 @@ HFGKZ\xrightarrow{H(\varepsilon_{KZ})}HKZ
 \end{solution}
 
 \begin{exercise}\label{b4:ex:01-two-coordinate-functors}
-对一族有限维 \(k\) 空间，分别固定两组坐标同构
-\(\theta_V:V\rightarrow k^{\dim V}\)、\(\psi_V:V\rightarrow k^{\dim V}\)，并据此定义两个坐标函子 \(F_\theta,F_\psi\)。写出它们之间的自然同构，计算每个线性映射的两个矩阵之间的关系。
+设 \(k\) 为域，\(\mathcal V\) 为有限维 \(k\)-向量空间范畴的一个小全子范畴。对每个 \(V\in\mathcal V\)，分别固定两组坐标同构
+\(\theta_V:V\rightarrow k^{\dim V}\)、\(\psi_V:V\rightarrow k^{\dim V}\)。定义函子 \(F_\theta,F_\psi:\mathcal V\to\mathbf{Vect}_k^{\mathrm{fd}}\)：两者均把 \(V\) 送到 \(k^{\dim V}\)，并分别把 \(f:V\to W\) 送到 \(\theta_Wf\theta_V^{-1}\) 与 \(\psi_Wf\psi_V^{-1}\)。写出它们之间的自然同构，计算每个线性映射的两个矩阵之间的关系。
 \end{exercise}
 \begin{solution}
 取 \(P_V=\psi_V\theta_V^{-1}\)。对 \(f:V\rightarrow W\)，有
@@ -274,4 +281,52 @@ F_\psi(f)=\psi_Wf\psi_V^{-1}
 \]
 因此 \(F_\psi(f)P_V=P_WF_\theta(f)\)，正是
 \(P:F_\theta\Rightarrow F_\psi\) 的自然性。每个 \(P_V\) 可逆，故为自然同构。若 \(V=W\) 且只考察一个算子，等式退化为熟悉的相似变换；一般映射的两端空间不同，应保留两个不同的换基矩阵。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-chain-category-algebra}
+设 \(k\) 为域，\(P=\{0<1<2\}\) 为三元素全序集。把 \(kP\) 具体识别为矩阵代数，说明一个左 \(kP\)-模为何等价于两个可复合线性映射 \(V_0\xrightarrow{u}V_1\xrightarrow{v}V_2\)。写出模同态对应的三个线性映射及其条件。
+\end{exercise}
+\begin{solution}
+基态射为 \(e_0,e_1,e_2,a_{01},a_{12},a_{02}\)。映射 \(e_i\mapsto E_{i+1,i+1}\)、\(a_{ij}\mapsto E_{j+1,i+1}\) 给出到全部 \(3\times3\) 下三角矩阵的基双射，且 \(E_{32}E_{21}=E_{31}\) 对应 \(a_{12}a_{01}=a_{02}\)，其余乘积也与复合规则相同，故是代数同构。
+
+左模 \(M\) 分解为 \(V_i=e_iM\)。\(a_{01}\)、\(a_{12}\) 分别给出 \(u,v\)，\(a_{02}\) 的作用被乘法关系迫使等于 \(vu\)；没有额外数据。反向，把这三个空间直和，并按 \(u,v,vu\) 定义各基态射的作用，就得到左模。
+
+模同态必须保留幂等分量，故由 \(h_i:V_i\to W_i\) 给出。若目标箭头为 \(u',v'\)，其线性条件为 \(h_1u=u'h_0\)、\(h_2v=v'h_1\)。它们自动推出 \(h_2vu=v'u'h_0\)，恰好是整张图表的自然性条件。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-parallel-arrows-algebra}
+设 \(k\) 为域，\(Q\) 只有两个顶点 \(0,1\) 和两条箭头 \(a,b:0\to1\)。描述 \(kQ\) 的基与乘法。对 \(V_0=V_1=k\) 的图表，按两个箭头的标量 \((s,t)\in k^2\) 分类其同构类型。
+\end{exercise}
+\begin{solution}
+基为 \(e_0,e_1,a,b\)，单位为 \(e_0+e_1\)。非零的含箭头乘积只有 \(e_1a=a=ae_0\)、\(e_1b=b=be_0\)，任意两个箭头相乘均为零。尤其没有把 \(a,b\) 识别的关系。
+
+两图表 \((s,t)\)、\((s',t')\) 同构，等价于存在两个非零标量 \(c_0,c_1\) 使 \(c_1s=s'c_0\)、\(c_1t=t'c_0\)，即 \((s',t')=c(s,t)\)，其中 \(c=c_1/c_0\in k^\times\)。所以零对单独成一类，非零对按共同的非零标量倍分类。每个非零类或者有唯一形如 \((1,t)\) 的代表，或者是 \((0,1)\) 的类。两个箭头之间的比例因此保留了只看顶点维数无法看到的数据。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-diamond-incidence-relation}
+设 \(k\) 为域，\(Q\) 的四个顶点与四条箭头为
+\[
+0\xrightarrow{a}1\xrightarrow{b}3,
+\qquad0\xrightarrow{c}2\xrightarrow{d}3.
+\]
+令 \(P\) 为相应菱形偏序集。证明 \(kP\cong kQ/(ba-dc)\)，其中分母表示所示元素生成的双边理想；分别计算两代数的维数，并描述该关系对图表的要求。
+\end{exercise}
+\begin{solution}
+\(kQ\) 的基包括四条空路径、四条长度一的路径和两条长度二的路径 \(ba,dc\)，没有更长路径，故维数为 \(10\)。在偏序范畴中四条箭头的像如原图，而 \(ba,dc\) 都映成唯一的 \(0\to3\) 态射。这给出满代数同态 \(kQ\to kP\)。\(P\) 中除四个恒等与四条相邻态射外，还有一个 \(0\to3\)，故维数为 \(9\)。上述映射的核是 \(k(ba-dc)\)；这个一维子空间是双边理想，因为除两端恒等态射外，没有可与这两条最长路径复合的非恒等路径。因此核恰为所列双边理想。
+
+若四条箭头的线性映射仍记为 \(a,b,c,d\)，商代数模要求 \(ba=dc\)，即两条从 \(V_0\) 到 \(V_3\) 的复合相等。自由路径图表不要求这一等式，偏序图表则必须满足它。
+\end{solution}
+
+\begin{exercise}\label{b4:ex:01-involution-characteristic-two}
+设 \(k\) 为特征 \(2\) 的域，\(C_2=\{1,g\}\) 为二阶循环群。证明 \(kC_2\cong k[t]/(t^2)\)，并分类其二维左模的同构类型。
+\end{exercise}
+\begin{solution}
+在群代数中令 \(t=g-1\)，则 \(t^2=g^2-2g+1=0\)。\(1,t\) 是基，故所给商环映射为代数同构。一个二维左模就是一个二维向量空间 \(V\) 连同 \(N:V\to V\)，满足 \(N^2=0\)；\(g\) 作用为 \(1+N\)。
+
+若 \(N=0\)，则任取基后 \(g\) 的矩阵为单位矩阵。若 \(N\ne0\)，选 \(v\) 使 \(u=Nv\ne0\)。\(Nu=0\)，而 \(u,v\) 线性无关：否则 \(v\) 为 \(u\) 的倍数会导致 \(Nv=0\)。它们因而组成基，在此基下
+\[
+N=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+\qquad g=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+\]
+这两种类型因 \(N\) 的秩不同而不同构，又已涵盖全部可能，所以二维左模恰有这两个同构类型。
 \end{solution}

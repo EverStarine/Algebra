@@ -20,7 +20,7 @@
 \subsection{左陪集、右陪集与等价关系}
 \label{b1:subsec:0202:01}
 
-子群 \(H\) 的元素可以理解为一组已经允许的操作。固定 \(g\) 后，先做 \(H\) 中的某个操作，再做 \(g\)，所得元素组成 \(gH\)。这个集合不一定含单位元，因而通常不是子群；它却与 \(H\) 一样大，是计数中合适的基本块。
+在以变换复合为乘法的群中，可以把子群 \(H\) 的元素理解为一组已经允许的变换。固定 \(g\) 后，先做 \(H\) 中的某个变换，再做 \(g\)，所得变换组成 \(gH\)。在一般群中，\(gH\) 直接由乘积 \(gh\)（\(h\in H\)）组成。它不一定含单位元，因而通常不是子群；却与 \(H\) 一样大，是计数中合适的基本块。
 
 \begin{definition}\label{b1:def:coset-index}
 设 \(G\) 为群，\(H\leq G\)，\(g\in G\)。将集合 \(gH=\{gh\mid h\in H\}\) 称为 \(H\) 的\term[zuo-peiji]{左陪集}[left coset]，将 \(Hg=\{hg\mid h\in H\}\) 称为 \(H\) 的\term[you-peiji]{右陪集}[right coset]。左陪集的集合记为 \(G/H\)，其元素个数称为 \(H\) 在 \(G\) 中的\term[zhishu]{指数}[index]，记为 \([G:H]\)。此处 \(G/H\) 只是集合，尚未赋予群运算。
@@ -28,6 +28,13 @@
 
 \symidx{\(G/H\)：左陪集集合，正规时为商群}
 \symidx{\([G:H]\)：子群的指数}
+
+按左陪集的定义，\(a\in bH\) 就是说存在 \(h\in H\)，使 \(a=bh\)。两边左乘 \(b^{-1}\)，得到
+\[
+a=bh\quad(h\in H)
+\quad\Longleftrightarrow\quad b^{-1}a=h\in H.
+\]
+因此，\(b^{-1}a\in H\) 表示 \(a\) 可以由 \(b\) 右乘一个 \(H\) 中的元素得到。下面证明，这种关系的等价类恰好就是左陪集。
 
 \begin{proposition}\label{b1:prop:coset-equivalence}
 设 \(G\) 为群，\(H\leq G\)。\(H\) 的左陪集构成 \(G\) 的划分，且对任意 \(a,b\in G\)，
@@ -39,7 +46,20 @@ aH=bH\quad\Longleftrightarrow\quad b^{-1}a\in H.
 
 \begin{proof}
 关系 \(a\sim b\Longleftrightarrow b^{-1}a\in H\) 自反；取逆证明对称性；若 \(b^{-1}a,c^{-1}b\in H\)，则
-\(c^{-1}a=(c^{-1}b)(b^{-1}a)\in H\)，故传递。\(b\) 的等价类正是 \(bH\)，由\cref{b1:prop:partition-equivalence}，这些类划分 \(G\)，且 \(aH=bH\) 等价于 \(a\sim b\)，得到等式判据。映射 \(h\mapsto gh\) 为 \(H\rightarrow gH\) 的双射，其逆为左乘 \(g^{-1}\)。最后，取逆把整个集合 \(gH\) 送到 \(Hg^{-1}\)，并且再取逆恢复原陪集，因此建立左右陪集之间的双射。
+\(c^{-1}a=(c^{-1}b)(b^{-1}a)\in H\)，故传递。\(b\) 的等价类正是 \(bH\)，由\cref{b1:prop:partition-equivalence}，这些类划分 \(G\)，且 \(aH=bH\) 等价于 \(a\sim b\)，得到等式判据。映射 \(h\mapsto gh\) 为 \(H\rightarrow gH\) 的双射，其逆为左乘 \(g^{-1}\)。
+
+最后，对一个左陪集中的每个元素取逆，得到
+\[
+\{\,x^{-1}\mid x\in gH\,\}
+=\{\,h^{-1}g^{-1}\mid h\in H\,\}=Hg^{-1}.
+\]
+这给出的是两个陪集集合之间的映射
+\[
+\{\,gH\mid g\in G\,\}\longrightarrow
+\{\,Hg\mid g\in G\,\},\qquad
+gH\longmapsto Hg^{-1}.
+\]
+相等的左陪集作为集合取逆后仍相等，所以这个映射不依赖代表元 \(g\) 的选择。对右陪集再逐元素取逆，就恢复原来的左陪集，故它是双射，左右陪集的总数相同。
 \end{proof}
 
 左右陪集的数量相同不意味着每个 \(gH\) 都等于 \(Hg\)。例如在三点置换群中，令 \(a\) 交换 \(1,2\)，令 \(b\) 交换 \(2,3\)，取 \(H=\{1,a\}\)。则 \(bH=\{b,ba\}\)、\(Hb=\{b,ab\}\)，而 \(ba\ne ab\)。二者都含 \(b\)，却不相同；“有交则相等”的结论只能用于同一方向的陪集族。下一节将继续在这个群中检验陪集运算，并比较两种不同的子群。
@@ -82,10 +102,15 @@ aH=bH\quad\Longleftrightarrow\quad b^{-1}a\in H.
 \end{corollary}
 
 \begin{proof}
-把\cref{b1:thm:lagrange}用于子群 \(\langle g\rangle\leq G\)，得 \(\operatorname{ord}(g)\mid\lvert G\rvert\)；再由\eqref{b1:eq:element-order-divisibility}得 \(g^{\lvert G\rvert}=1\)。若群阶为素数 \(p\)，非单位元的阶大于 \(1\) 且整除 \(p\)，只能为 \(p\)，故其循环子群就是整个群。
+把\cref{b1:thm:lagrange}用于子群 \(\langle g\rangle\leq G\)，得 \(\operatorname{ord}(g)\bigm\vert\lvert G\rvert\)；再由\eqref{b1:eq:element-order-divisibility}得 \(g^{\lvert G\rvert}=1\)。若群阶为素数 \(p\)，非单位元的阶大于 \(1\) 且整除 \(p\)，只能为 \(p\)，故其循环子群就是整个群。
 \end{proof}
 
-例如一个阶为 \(15\) 的群不可能含阶为 \(4\) 的元素。但这个定理不能反向使用：\(d\) 整除群阶，并不自动给出阶为 \(d\) 的元素，甚至不自动给出阶为 \(d\) 的子群。两个二元素群的逐坐标乘法群有四个元素，而每个非单位元的平方都是单位元，所以没有阶为 \(4\) 的元素。关于子群阶的反例需要更多结构：下一章的\cref{b1:prop:alternating-three-cycles}将证明，四点交错群 \(A_4\) 的阶为 \(12\)，却没有阶为 \(6\) 的子群。
+例如一个阶为 \(15\) 的群不可能含阶为 \(4\) 的元素。但这个定理不能反向使用：\(d\) 整除群阶，并不自动给出阶为 \(d\) 的元素，甚至不自动给出阶为 \(d\) 的子群。考虑集合
+\[
+V=\{(1,1),(1,-1),(-1,1),(-1,-1)\},
+\qquad (a,b)(c,d)=(ac,bd).
+\]
+两个 \(\pm1\) 相乘仍为 \(\pm1\)，所以 \(V\) 对这个乘法封闭。结合律从实数乘法继承，单位元为 \((1,1)\)；每个元素的平方都是 \((1,1)\)，因而每个元素都以自身为逆元，\(V\) 是四元素群。它的三个非单位元都有阶 \(2\)，所以没有阶为 \(4\) 的元素。关于子群阶的反例需要更多结构：下一章的\cref{b1:prop:alternating-three-cycles}将证明，四点交错群 \(A_4\) 的阶为 \(12\)，却没有阶为 \(6\) 的子群。
 
 \ProseParagraphBreak
 指数也可逐层计数，而且不要求三个群本身有限。
@@ -97,7 +122,9 @@ aH=bH\quad\Longleftrightarrow\quad b^{-1}a\in H.
 \end{proposition}
 
 \begin{proof}
-取 \(G\) 关于 \(H\) 的左陪集代表 \(g_i\)，再取 \(H\) 关于 \(K\) 的代表 \(h_j\)。任意 \(g\in G\) 先写成 \(g_i h\)，再把 \(h\in H\) 写成 \(h_jk\)，故 \(g_ih_jK\) 遍历全部 \(K\) 的左陪集。若 \(g_ih_jK=g_{i'}h_{j'}K\)，则其中的元素同时属于 \(g_iH\) 与 \(g_{i'}H\)。由\cref{b1:prop:coset-equivalence}，两 \(H\) 陪集相同，故 \(i=i'\)。左乘 \(g_i^{-1}\) 后有 \(h_jK=h_{j'}K\)，再得 \(j=j'\)。这些陪集因而互不重复，数目为两级代表数之积。
+记 \(m=[G:H]\)、\(n=[H:K]\)。先把 \(G\) 分成 \(m\) 个 \(H\) 的左陪集，再将 \(H\) 中的 \(n\) 个 \(K\) 的左陪集平移到每一块中，就得到 \(m\) 行、每行 \(n\) 块的两级划分。下面用代表元核对这些块覆盖全部 \(G\)，并且互不重复。
+
+取 \(G\) 关于 \(H\) 的左陪集代表 \(g_1,\ldots,g_m\)，再取 \(H\) 关于 \(K\) 的代表 \(h_1,\ldots,h_n\)。任意 \(g\in G\) 先写成 \(g_i h\)，再把 \(h\in H\) 写成 \(h_jk\)，故 \(g_ih_jK\) 遍历全部 \(K\) 的左陪集。若 \(g_ih_jK=g_{i'}h_{j'}K\)，则其中的元素同时属于 \(g_iH\) 与 \(g_{i'}H\)。由\cref{b1:prop:coset-equivalence}，两 \(H\) 陪集相同，故 \(i=i'\)。左乘 \(g_i^{-1}\) 后有 \(h_jK=h_{j'}K\)，再得 \(j=j'\)。这些陪集因而互不重复，总数为 \(mn\)。
 \end{proof}
 
 \subsection{群同态的核与像}
@@ -122,7 +149,7 @@ aH=bH\quad\Longleftrightarrow\quad b^{-1}a\in H.
 \(f(g)f(g^{-1})=1\) 给出 \(f(g^{-1})=f(g)^{-1}\)。所以它也是上一章意义下的幺半群同态。由\cref{b1:prop:generated-subgroup-words}，若 \(S\) 生成 \(G\)，每个群元素都是 \(S\) 中元素及其逆元的有限乘积；同态保持乘法和取逆，因此由它在 \(S\) 上的取值唯一决定。
 
 \ProseParagraphBreak
-设 \(G,K\) 为群，\(f:G\rightarrow K\) 为群同态。如果 \(f(g)=1_K\) 对每个 \(g\in G\) 都成立，则将 \(f\) 称为\term[pingfan-tongtai]{平凡同态}[trivial homomorphism]。如果 \(f\) 是单射或满射，则分别将它简称为\term[dan-tongtai]{单同态}[monomorphism]或\term[man-tongtai]{满同态}[epimorphism]。
+设 \(G,K\) 为群，\(f:G\rightarrow K\) 为群同态。如果 \(f(g)=1_K\) 对每个 \(g\in G\) 都成立，则将 \(f\) 称为\term[pingfan-tongtai]{平凡同态}[trivial homomorphism]。在本章的群同态语境中，如果 \(f\) 是单射或满射，则分别将它称为\term[dan-tongtai]{单同态}[monomorphism]或\term[man-tongtai]{满同态}[epimorphism]。这两个名称均按底集合映射的单射、满射性质使用，英文译名也限于这里的群论用法。
 
 \begin{proposition}\label{b1:prop:kernel-fibers}
 设 \(f:G\rightarrow K\) 为群同态。则 \(\ker f\leq G\)，\(\operatorname{im}f\leq K\)。若 \(g\in G\) 且 \(y=f(g)\)，则
@@ -139,6 +166,9 @@ f^{-1}\bigl(\{y\}\bigr)=g\ker f=(\ker f)g.
 \(f(x)=f(g)\) 等价于 \(f(g^{-1}x)=1\)，也等价于 \(f(xg^{-1})=1\)，分别给出两个陪集描述。核平凡时，若 \(f(x)=f(g)\)，则 \(g^{-1}x\in\ker f=\{1\}\)，所以 \(x=g\)，映射单射；反向取单位元的纤维即得。有限情形中，实际像的每个点恰对应一个核陪集，故 \([G:\ker f]=\lvert\operatorname{im}f\rvert\)。把\cref{b1:thm:lagrange}用于 \(\ker f\leq G\)，即得乘积公式。
 \end{proof}
 
+一般子群 \(H\) 未必满足 \(gH=Hg\)；核的所有左右陪集却自动相等。这种特殊性质将在\secref{b1:sec:0203}与正规性联系起来，说明同态的核为何是正规子群的典型来源。
+
+\ProseParagraphBreak
 固定整数 \(n\geq1\)。将模 \(n\) 的整数同余类集合记为 \(\mathbb Z/n\mathbb Z\)。整数同余与加法相容，所以
 \[
 [a]_n+[b]_n=[a+b]_n
@@ -146,28 +176,21 @@ f^{-1}\bigl(\{y\}\bigr)=g\ker f=(\ker f)g.
 良定义；结合律从整数加法继承，单位元为 \([0]_n\)，\([a]_n\) 的逆元为 \([-a]_n\)，故这是交换群。作为整数子集，\([a]_n=a+n\mathbb Z\) 也是子群 \(n\mathbb Z\) 的左陪集。自然映射 \(f:\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\)、\(a\mapsto[a]_n\) 是满同态，核为 \(n\mathbb Z\)，每个纤维是整数同余类 \(a+n\mathbb Z\)。
 
 \ProseParagraphBreak
-另固定整数 \(d\geq1\)，令 \(G\) 为全部 \(d\) 阶可逆实矩阵组成的群，\(\mathbb R^\times\) 为非零实数的乘法群。由 \(\det(AB)=\det(A)\det(B)\)，行列式给出同态
+另固定整数 \(d\geq1\)，令 \(G\) 为全部 \(d\) 阶可逆实矩阵组成的群，\(\mathbb R^\times\) 为非零实数的乘法群。线性代数中的行列式乘法公式给出 \(\det(AB)=\det(A)\det(B)\)。特别地，\(A\) 可逆时有
+\[
+\det A\det A^{-1}=\det I_d=1,
+\]
+所以 \(\det A\ne0\)，行列式的值确在 \(\mathbb R^\times\) 中；乘法公式又恰好说明行列式保持群乘法。因此它给出同态
 \[
 \det:G\longrightarrow\mathbb R^\times.
 \]
-其核由行列式等于 \(1\) 的矩阵组成。对任意 \(t\ne0\)，对角矩阵 \(\operatorname{diag}(t,1,\ldots,1)\) 的行列式为 \(t\)，所以该同态满射。这里把行列式及其列置换符号规则作为线性代数先修知识，以下回顾乘法公式；下一章才会从群论角度正式建立置换的符号同态。
-
-\begin{proof}[行列式乘法公式的回顾]
-设 \(d\geq1\) 为整数，\(A,B\) 为两个 \(d\) 阶实矩阵。记 \(A_j\) 为 \(A\) 的第 \(j\) 列，\(B=(b_{ij})\)。由行列式对各列的线性性，
+其核记为 \(\mathrm{SL}_d(\mathbb R)\)，即
 \[
-\det(AB)=\sum_{i_1,\ldots,i_d=1}^d
-b_{i_1,1}\cdots b_{i_d,d}\det(A_{i_1},\ldots,A_{i_d}).
+\ker(\det)=\mathrm{SL}_d(\mathbb R)
+\coloneqq\{\,A\in G\mid\det A=1\,\}.
 \]
-指标重复时，行列式因有相同的两列而为零。其余指标恰由 \(\sigma\in S_d\) 给出；记排列公式中置换 \(\sigma\) 的符号为 \(\operatorname{sgn}(\sigma)\)。使用线性代数中的列置换符号规则与排列公式，得到
+由\cref{b1:prop:kernel-fibers}，它是 \(G\) 的子群。对任意 \(t\in\mathbb R^\times\)，对角矩阵 \(\operatorname{diag}(t,1,\ldots,1)\) 可逆，并且行列式为 \(t\)，所以
 \[
-\begin{aligned}
-\det(AB)
-&=\sum_{\sigma\in S_d}b_{\sigma(1),1}\cdots b_{\sigma(d),d}
-  \det(A_{\sigma(1)},\ldots,A_{\sigma(d)})\\
-&=\det A\sum_{\sigma\in S_d}\operatorname{sgn}(\sigma)
-  b_{\sigma(1),1}\cdots b_{\sigma(d),d}
-=\det A\cdot \det B.
-\end{aligned}
+\operatorname{im}(\det)=\mathbb R^\times.
 \]
-特别地，\(A\) 可逆时与 \(A^{-1}\) 相乘，给出 \(\det A\det A^{-1}=\det I=1\)，故像确在 \(\mathbb R^\times\) 中。对角矩阵的排列公式只有选取全部对角元的一项非零，其行列式就是对角元之积。
-\end{proof}
+核中的矩阵乘在任意可逆矩阵上都不会改变行列式，像则说明任意非零实数都能成为某个可逆矩阵的行列式。

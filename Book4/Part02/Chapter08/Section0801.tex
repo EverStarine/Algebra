@@ -1,115 +1,90 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 8.1 导出函子
-% 纲要位置：计划纲要.md，第 2650 行。
+% 纲要标题：### 8.1 消解的构造
+% 纲要标签：b4:sec:0701
+% 纲要位置：计划纲要.md，第 3275 行。
 
-\section{导出函子}
-\label{b4:sec:0801}
+\section{消解的构造}
+\label{b4:sec:0701}
 
-左正合或右正合函子丢失的信息，可以在施加函子后的消解同调中读出。连接态射及消去性保证这些群组成与消解选择无关的导出理论。
+生成元给出自由满射，关系组成其核；继续为核取生成元，便得到消解。投射与内射两个方向的构造都依赖范畴中相应对象是否足够多。
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 左、右导出及次数约定
-% * δ-函子与泛性质
-% * 消去性及消解独立性
+% * 模的自由及投射消解
+% * 内射消解
+% * 足够多投射或内射对象的假设
 %
 
-\subsection{左、右导出及次数约定}
-\label{b4:subsec:0801:01}
+\subsection{模的自由及投射消解}
+\label{b4:subsec:0701:01}
 
-一个左正合函子已经正确保留了核，却可能把满态射变成非满态射。内射消解把这种失败放入一个复形，正次数上同调便记录原函子没有保留的信息。投射消解对于右正合函子起相反方向的作用。
+一个模的生成元给出自由满射，生成元之间的关系则成为这个满射的核。若核还不是容易处理的模，就继续为核选择生成元。消解把这项重复操作写成一个正合复形；它所保留的不是某一组最优生成元，而是所有关系都被逐层记录这一事实。
 
-\ProseParagraphBreak
-例如，固定整数 \(n\ge2\)，对交换群取左正合函子 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n,-)\)。\cref{b4:exm:integer-injective-resolution}已经给出内射消解
+\begin{definition}\label{b4:def:projective-resolution}
+设 \(\mathcal A\) 是交换范畴，\(P\) 为其对象。若对每个满态射 \(e:X\to Y\) 及态射 \(f:P\to Y\)，都存在态射 \(\widetilde f:P\to X\)，使 \(e\widetilde f=f\)，则称 \(P\) 为\term[tousheduixiang]{投射对象}[projective object]。给定对象 \(M\in\mathcal A\) 及增广链复形
 \[
- 0\longrightarrow\mathbb Z\longrightarrow\mathbb Q
- \longrightarrow\mathbb Q/\mathbb Z\longrightarrow0.
+\cdots\longrightarrow P_2\xrightarrow{\mathrm{d}_2}P_1
+\xrightarrow{\mathrm{d}_1}P_0\xrightarrow{\varepsilon}M\longrightarrow0
 \]
-施加 \(F\) 后，\(F(\mathbb Q)=0\)，而 \(F(\mathbb Q/\mathbb Z)\) 是 \(\mathbb Q/\mathbb Z\) 中被 \(n\) 零化的子群，即 \((\tfrac1n\mathbb Z)/\mathbb Z\cong\mathbb Z/n\)。所得复形为 \(0\to\mathbb Z/n\)，位于零次和一次。因此原函子在 \(\mathbb Z\) 上取值为零，消解却在一次留下 \(\mathbb Z/n\)。这正是 \(\mathbb Q\to\mathbb Q/\mathbb Z\) 经过 \(F\) 后失去满射性的部分；下面将这种计算定义为导出函子。
-
-\begin{definition}\label{b4:def:derived-functors}
-设 \(\mathcal A,\mathcal B\) 是交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子。若 \(\mathcal A\) 有足够多内射对象，对每个对象 \(A\in\mathcal A\) 选内射消解 \(A\to I_A^\bullet\)，定义
-\[
-R^nF(A)\coloneqq H^n(F(I_A^\bullet)),\qquad n\ge0,
-\]
-称为 \(F\) 的第 \(n\) 个\term[youdaochuhanzi]{右导出函子}[right derived functor]。若 \(\mathcal A\) 有足够多投射对象，对每个对象 \(A\in\mathcal A\) 选投射消解 \(P^A_\bullet\to A\)，定义
-\[
-L_nF(A)\coloneqq H_n(F(P^A_\bullet)),\qquad n\ge0,
-\]
-称为第 \(n\) 个\term[zuodaochuhanzi]{左导出函子}[left derived functor]。对态射 \(f:A\to A'\)，选择延拓或提升 \(f\) 的消解比较映射，逐次应用 \(F\) 后取相应次数的同调，所得态射分别定义 \(R^nF(f)\) 或 \(L_nF(f)\)。
+若此序列正合，且每个 \(P_n\)（\(n\ge0\)）都投射，则称它为 \(M\) 的\term[toushexiaojie]{投射消解}[projective resolution]。若 \(R\) 为含幺环、\(\mathcal A=R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模范畴，且各 \(P_n\) 自由，则称为\term[ziyouxiaojie]{自由消解}[free resolution]。
 \end{definition}
 
-对态射使用比较映射并取同调。\cref{b4:cor:resolutions-homotopy-equivalent}保证这一做法是函子，且更换消解只引起满足传递律的自然同构。若把投射消解写成 \(P^{-n}=P_n\)，则 \(L_nF(A)=H^{-n}(F(P^\bullet))\)。下标 \(n\) 是非负同调次数，不是把右导出函子也改放到负次数。
+增广项 \(M\) 不属于非负次数的复形 \(P_\bullet\)。去掉它后，\(H_0(P_\bullet)\cong M\)、\(H_n(P_\bullet)=0\) 对 \(n>0\) 成立。写成上链复形时约定 \(P^{-n}=P_n\)，所以投射消解位于非正次数；它的增广给出到集中于零次的 \(M\) 的拟同构。
 
-\begin{proposition}\label{b4:prop:derived-degree-zero}
-设 \(\mathcal A,\mathcal B\) 是交换范畴。若 \(\mathcal A\) 有足够多内射对象且 \(F:\mathcal A\to\mathcal B\) 加性、左正合，则有自然同构 \(R^0F\cong F\)，且内射对象 \(I\) 满足 \(R^nF(I)=0\) 对 \(n>0\)。若有足够多投射对象且 \(F\) 加性、右正合，则 \(L_0F\cong F\)，且投射对象的正次数左导出函子消失。
+\begin{proposition}\label{b4:prop:free-resolution-exists}
+设 \(R\) 是含幺环。每个左 \(R\) 模都有自由消解，因而也有投射消解。每个右 \(R\) 模也有相应的右模消解。
 \end{proposition}
 \begin{proof}
-由 \(0\to A\to I^0\to I^1\) 正合及左正合性，\(F(A)\) 就是 \(F(I^0)\to F(I^1)\) 的核，即零次上同调；构造与态射相容。内射对象可取自身集中于零次的内射消解，故正次消失。投射情形用 \(P_1\to P_0\to A\to0\) 的余核及零次链消解。
+令 \(K_0=M\)。以 \(K_0\) 的底集合为基取自由模 \(P_0\)，把基向量 \([m]\) 送到 \(m\)，得到满射 \(p_0:P_0\to K_0\)。归纳地令 \(K_{n+1}=\ker p_n\)，取以 \(K_{n+1}\) 为基的自由模 \(P_{n+1}\) 及满射 \(p_{n+1}:P_{n+1}\to K_{n+1}\)。把后者与 \(K_{n+1}\hookrightarrow P_n\) 复合定义 \(\mathrm{d}_{n+1}\)。于是 \(\operatorname{im}\mathrm{d}_{n+1}=K_{n+1}=\ker \mathrm{d}_n\)，其中 \(\mathrm{d}_0\) 表示增广。按本卷的集合指标选择约定，沿满射为每个基元的像选取一个原像，再由自由模的泛性质延拓，就得到所需提升。因此各项投射。对反环 \(R^{\mathrm{op}}\) 使用同一构造便得到右模版本。
 \end{proof}
 
-\cref{b4:prop:horseshoe-functor-sequence}给出短正合列的导出长正合列。下一小节把这项性质与消解的具体选取分开表述。
-
-\subsection{\texorpdfstring{\(\delta\)-函子与泛性质}{\AlgebraPdfDelta-函子与泛性质}}
-\label{b4:subsec:0801:02}
-
-\begin{definition}\label{b4:def:delta-functor}
-设 \(\mathcal A,\mathcal B\) 是交换范畴。一族加性函子 \(T^n:\mathcal A\to\mathcal B\)，\(n\ge0\)，若对每个短正合列 \(0\to A\to B\to C\to0\) 配有态射 \(\delta^n:T^n(C)\to T^{n+1}(A)\)，使
+这个构造通常很大。对 \(\mathbb Z/m\mathbb Z\)，其中 \(m>1\)，较合适的消解是 \(0\to\mathbb Z\xrightarrow{\times m}\mathbb Z\to\mathbb Z/m\mathbb Z\to0\)。对 \(R=k[\epsilon]/(\epsilon^2)\) 上的 \(k=R/(\epsilon)\)，则有无限消解
 \[
-0\longrightarrow T^0(A)\longrightarrow T^0(B)\longrightarrow T^0(C)
-\xrightarrow{\delta^0}T^1(A)\longrightarrow\cdots
+\cdots\xrightarrow{\epsilon}R\xrightarrow{\epsilon}R
+\xrightarrow{\epsilon}R\longrightarrow k\longrightarrow0.
 \]
-正合，且连接态射对短正合列之间的态射自然，就称 \(T^\bullet\) 连同这些连接态射为\term[delta-hanzi]{上同调 \(\delta\)-函子}[cohomological delta functor]。若 \(T^\bullet,U^\bullet:\mathcal A\to\mathcal B\) 均为此类函子，且逐次自然变换 \(a^n:T^n\to U^n\) 与每个连接态射交换，则称 \(a^\bullet\) 为它们之间的态射。
+每次乘 \(\epsilon\) 的核和像都为 \((\epsilon)\)。有限生成并不保证这一过程在有限步内停止。
+
+\subsection{内射消解}
+\label{b4:subsec:0701:02}
+
+\begin{definition}\label{b4:def:injective-resolution}
+设 \(\mathcal A\) 是交换范畴，\(I\) 为其对象。若对每个单态射 \(e:X\to Y\) 及态射 \(f:X\to I\)，都存在态射 \(\widetilde f:Y\to I\)，使 \(\widetilde f e=f\)，则称 \(I\) 为\term[neisheduixiang]{内射对象}[injective object]。给定对象 \(N\in\mathcal A\) 及增广上链复形
+\[
+0\longrightarrow N\xrightarrow{\eta}I^0\xrightarrow{\mathrm{d}^0}I^1
+\xrightarrow{\mathrm{d}^1}I^2\longrightarrow\cdots
+\]
+若此序列正合且各 \(I^n\)（\(n\ge0\)）内射，则称它为 \(N\) 的\term[neishexiaojie]{内射消解}[injective resolution]。
 \end{definition}
 
-对短正合列 \(0\to A\to B\to C\to0\)，\(\delta\)-函子态射 \(a^\bullet:T^\bullet\to U^\bullet\) 所要求的相容性就是下列方块交换：
-\[
-\begin{tikzcd}[column sep=large,row sep=large]
-T^n(C)\arrow[r,"\delta_T^n"]\arrow[d,"a_C^n"']&T^{n+1}(A)\arrow[d,"a_A^{n+1}"]\\
-U^n(C)\arrow[r,"\delta_U^n"']&U^{n+1}(A)
-\end{tikzcd}
-\]
-同调版本由 \(T_n\) 和连接态射 \(T_n(C)\to T_{n-1}(A)\) 组成，长正合列在右端以 \(T_0(C)\to0\) 结束。右导出函子组成上同调 \(\delta\)-函子，左导出函子组成同调 \(\delta\)-函子。
+这里 \(I^\bullet\) 位于非负上链次数，\(H^0(I^\bullet)\cong N\)，正次数上同调为零。构造方法与投射情形方向相反：先嵌入 \(N\hookrightarrow I^0\)，再把商对象 \(I^0/N\) 嵌入 \(I^1\)，继续处理新的商对象。
 
-\begin{definition}\label{b4:def:universal-delta-functor}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若对任意上同调 \(\delta\)-函子 \(U^\bullet:\mathcal A\to\mathcal B\)，每个自然变换 \(T^0\to U^0\) 都唯一延拓为 \(\delta\)-函子态射 \(T^\bullet\to U^\bullet\)，则称 \(T^\bullet\) 为\term[fan-delta-hanzi]{泛上同调 \(\delta\)-函子}[universal cohomological delta functor]。对同调 \(\delta\)-函子 \(T_\bullet:\mathcal A\to\mathcal B\)，若对任意同调 \(\delta\)-函子 \(U_\bullet:\mathcal A\to\mathcal B\)，每个 \(U_0\to T_0\) 都唯一延拓为 \(\delta\)-函子态射 \(U_\bullet\to T_\bullet\)，则称 \(T_\bullet\) 具有同调泛性。
+\ProseParagraphBreak
+对任意含幺环 \(R\)，第二卷定理7.2.8已经证明每个左 \(R\) 模都能嵌入内射模。该定理使用
+\[
+J=\operatorname{Hom}_{\mathbb Z}(R,\mathbb Q/\mathbb Z),
+\qquad (rf)(s)=f(sr),
+\]
+以及所有加法群同态 \(\chi:N\to\mathbb Q/\mathbb Z\) 给出的嵌入 \(n\mapsto\bigl(s\mapsto\chi(sn)\bigr)_\chi\)。其中 \(\mathbb Q/\mathbb Z\) 的内射性、对非零元素的分离性及内射模积的内射性均已在那里证明。本章反复把此已证结果用于商模，便得到任意左模的内射消解；右模应用于反环。
+
+\begin{example}\label{b4:exm:integer-injective-resolution}
+作为 \(\mathbb Z\) 模，\(\mathbb Z\) 有内射消解
+\[
+0\longrightarrow\mathbb Z\longrightarrow\mathbb Q
+\longrightarrow\mathbb Q/\mathbb Z\longrightarrow0.
+\]
+正合性由商群定义给出，两项内射性由第二卷定理7.2.5的可除群判据给出。它与 \(\mathbb Z\) 自身的长度零投射消解不同：两种消解分别适合把 \(\mathbb Z\) 放在 Hom 的第二变量和第一变量。
+\end{example}
+
+\subsection{足够多投射或内射对象的假设}
+\label{b4:subsec:0701:03}
+
+\begin{definition}\label{b4:def:enough-projectives-injectives}
+设 \(\mathcal A\) 是交换范畴。若每个对象都是某个投射对象的商对象，就说 \(\mathcal A\) 有\term[zugouduo-tousheduixiang]{足够多投射对象}[enough projectives]；若每个对象都能嵌入某个内射对象，就说它有\term[zugouduo-neisheduixiang]{足够多内射对象}[enough injectives]。
 \end{definition}
 
-这里方向不能省略。右导出函子从自身的零次项出发控制到其他理论的映射；左导出函子接收其他理论到自身零次项的映射。它们分别由余核式和核式的归纳构造产生。相同零次函子的两个泛 \(\delta\)-函子必自然同构：双向延拓零次恒等，再用唯一性证明两个复合都是恒等。
+在前一条件下，对核反复选择投射满态射，就得到投射消解；在后一条件下，对余核反复选择内射单态射，就得到内射消解。这是\cref{b4:prop:free-resolution-exists}的范畴形式，正合性仍由每一步的核或余核保证。选择消解只要求这些对象存在，不要求选择具有函子性。
 
-\subsection{消去性及消解独立性}
-\label{b4:subsec:0801:03}
-
-\begin{definition}\label{b4:def:effaceable}
-设 \(T:\mathcal A\to\mathcal B\) 是交换范畴间的加性函子。若每个对象 \(A\) 都有单态射 \(j:A\to E\) 使 \(T(j)=0\)，则称 \(T\) \term[xiaoqvxing]{可消去}[effaceable]。若每个对象 \(A\) 都有满态射 \(P\to A\) 使其在 \(T\) 下为零，则称 \(T\) 可对偶消去。
-\end{definition}
-
-消去的是一个诱导态射，不一定要求 \(T(E)=0\)。导出函子的消去性更强：嵌入内射对象便使其正次取值本身为零。
-
-\begin{theorem}[消去性与泛性]\label{b4:thm:derived-universal}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若每个 \(T^n\)、\(n>0\)，均可消去，则它是泛上同调 \(\delta\)-函子。对偶地，正次均可对偶消去的同调 \(\delta\)-函子具有同调泛性。特别地，对加性函子 \(F:\mathcal A\to\mathcal B\)，若 \(\mathcal A\) 有足够多内射对象且 \(F\) 左正合，则 \(R^\bullet F\) 具有上同调泛性；若 \(\mathcal A\) 有足够多投射对象且 \(F\) 右正合，则 \(L_\bullet F\) 具有同调泛性。
-\end{theorem}
-\begin{proof}
-给定 \(a^0:T^0\to U^0\)。归纳假定次数小于 \(n\) 的自然变换已定义，并与已有连接态射相容。对 \(A\) 取单态射 \(j:A\to E\)，使 \(T^n(j)=0\)，记 \(Q=E/A\)。正合性给出满态射
-\[
-\delta_T:T^{n-1}(Q)\longrightarrow T^n(A),
-\qquad \ker\delta_T=\operatorname{im}\bigl(T^{n-1}(E)\to T^{n-1}(Q)\bigr).
-\]
-复合 \(\delta_Ua_Q^{n-1}\) 在这个核上为零：由低次自然性，其在 \(T^{n-1}(E)\) 上的值等于先用 \(a_E^{n-1}\)，再沿 \(U\) 的相邻两个态射复合，而后者为零。因此它唯一下降为
-\[
-a_A^n:T^n(A)\longrightarrow U^n(A),
-\qquad a_A^n\delta_T=\delta_Ua_Q^{n-1}.
-\]
-这给出存在性，并且任何与连接态射相容的延拓都必须取此值。
-
-检验选择独立性。若另选 \(j':A\to E'\)，则 \((j,j'):A\to E\oplus E'\) 仍单，且被 \(T^n\) 零化。向两因子的投影给出以 \(1_A\) 为左端的短正合列态射。低次自然性及 \(\delta\) 的自然性表明由直和选择得到的值与另两个值相同；可以消去源端的满态射 \(\delta_T\)，故没有额外选择。
-
-检验对任意 \(f:A\to B\) 的自然性。选分别消去 \(T^n(A),T^n(B)\) 的 \(j_A:A\to E_A\)、\(j_B:B\to E_B\)。用 \((j_A,j_Bf):A\to E_A\oplus E_B\) 作为 \(A\) 的选择，并向 \(E_B\) 投影。这样得到与 \(f\) 相容的短正合列态射。对上面定义式应用低次自然性与连接态射的自然性，再消去 \(\delta_T\)，即得 \(U^n(f)a_A^n=a_B^nT^n(f)\)。
-
-最后检验与任意 \(0\to A\xrightarrow{i}B\to C\to0\) 的连接态射相容。选择 \(j:B\to E\) 消去 \(T^n(B)\)，则 \(ji:A\to E\) 消去 \(T^n(A)\)。原短正合列映入 \(0\to A\to E\to E/A\to0\)，其中左端为恒等。定义式已保证后一列的相容；把它与 \(C\to E/A\) 的低次自然性复合，就得到原列的相容。归纳完成存在、自然性及唯一性。
-
-把论证同时用于 \(\mathcal A^{\mathrm{op}}\) 与 \(\mathcal B^{\mathrm{op}}\)，单态射变满态射，余核下降变核分解，自然变换的方向也反转，遂得同调版本。最后，\cref{b4:prop:derived-degree-zero}使内射嵌入、投射满射消去所有正次导出函子，故可应用已证判据。
-\end{proof}
-
-这一泛性质确定的不仅是各个同调对象，也包括所有态射和连接态射。以后从另一种消解或另一种构造得到同一理论时，可以用零次的自然同构来识别整套长正合列。
+\ProseParagraphBreak
+交换范畴本身的公理没有包括这两项条件。例如有限交换群组成交换范畴，却没有非零投射对象。事实上，若非零有限交换群 \(P\) 投射，取其循环直和分解中的一个非零直和因子 \(\mathbb Z/p^a\mathbb Z\)，其中 \(p\) 为素数、\(a\ge1\)。投射对象的直和因子投射，因为先与投影复合提升，再限制到该因子。可是满射 \(\mathbb Z/p^{a+1}\mathbb Z\to\mathbb Z/p^a\mathbb Z\) 没有截面：\(\bar1\) 的任一原像都可写成 \(1+p^at\pmod{p^{a+1}}\)，它不被 \(p\) 整除，故在加法群中的阶为 \(p^{a+1}\)；截面却必须把 \(\bar1\) 送到阶整除 \(p^a\) 的元素。因此上述直和因子不投射，矛盾。故不能把模范畴的存在性结论无条件搬到它的交换子范畴。

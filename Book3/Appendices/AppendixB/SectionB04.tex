@@ -1,17 +1,17 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### B.4 模与自由消解的计算
+% 纲要位置：工作记录/计划纲要.md:2853
 
 \section{模与自由消解的计算}
 \label{b3:sec:B04}
 
 关系矩阵随生成元的更换而改变，计算记录必须保存这些更换的双向表示。尤其在消解中，相邻矩阵乘积为零只给出像包含于核，核的生成证书才证明正合性。
 
-% 纲要细目（与计划纲要同步）：
-% * Schreyer 构造、局部和分次自由消解及 Betti 表
-% * 局部计算统一转附录 F；本节只说明数据、工作环、项序与计算证书的记录规范
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 调用第21章的 Schreyer 构造与分次极小化，以证书对照表区分全部核、复形、正合性与 Betti 数
+% * 局部标准基方法归附录 F；本节证明局部成员与原环中乘性集倍数证书的等价性
 % * SINGULAR 等精确代数系统可作实验载体；工作环、项序与局部化信息必须记录
 % * 多项式与局部环中的同一输入可能有不同的理想成员答案，应提供对照实例
-%
 % #### B.4.1 Schreyer 构造、自由消解与 Betti 表
 % #### B.4.2 局部计算中的项序与结果验证
 % #### B.4.3 计算机代数系统中的环与局部化
@@ -21,26 +21,20 @@
 \subsection{Schreyer 构造、自由消解与 Betti 表}
 \label{b3:subsec:B04:01}
 
-本节使用\chapref{b3:ch:21}的全局模项序、Schreyer 合冲构造以及分次极小化，重点说明怎样把新生成组中的核关系还原为原生成组中的核关系。
-
-\ProseParagraphBreak
-设 \(S=k[x_1,\ldots,x_n]\)，输入矩阵 \(F\in S^{r\times s}\) 的列生成子模 \(N\subset S^r\)。计算得到模 Gröbner 基矩阵 \(G\in S^{r\times t}\) 时，同时保存
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\)，输入矩阵 \(F\in S^{r\times s}\) 的列生成子模 \(N\subset S^r\)。计算模 Gröbner 基矩阵 \(G\in S^{r\times t}\) 时，保存双向表示
 \[
 G=FU,\qquad F=GV,
 \quad U\in S^{s\times t},\quad V\in S^{t\times s}.
 \]
-若 \(T\) 的列生成 \(\ker G\)，那么\cref{b3:alg:polynomial-matrix-kernel}给出的原核生成矩阵为
+由\cref{b3:thm:schreyer-syzygies}求出生成 \(\ker G\) 的矩阵 \(T\) 后，\cref{b3:alg:polynomial-matrix-kernel}将原核还原为
 \[
-\bigl[\,UT\ \ I_s-UV\,\bigr].
+\ker F=\operatorname{im}K,\qquad
+K=\bigl[\,UT\ \ I_s-UV\,\bigr].
 \]
-这里第二块不能随意删去：它记录原生成组与新生成组之间多余的表示。确实，若 \(Fa=0\)，则 \(Va\in\ker G\)，写成 \(Va=Tb\) 后，
-\[
-a=UTb+(I_s-UV)a.
-\]
-所以每个原关系都由这两类列生成。
+第二块记录原生成组与新生成组之间多余的表示；它可能含有第一块没有给出的关系。
 
 \begin{example}\label{b3:exm:B-generator-change}
-在 \(S=k[x,y]\) 中取 \(F=(x,y,x+y)\)，改用 \(G=(x,y)\)。可取
+设 \(k\) 为域，在 \(S=k[x,y]\) 中取 \(F=(x,y,x+y)\)，改用 \(G=(x,y)\)。可取
 \[
 U=\begin{pmatrix}1&0\\0&1\\0&0\end{pmatrix},
 \quad
@@ -54,7 +48,27 @@ V=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},
 生成。第二个关系来自被删掉的冗余生成元，单算新基的合冲而不记录变换，就会漏掉它。
 \end{example}
 
-逐层重复求核得到自由消解；分次情况下，\cref{b3:thm:hilbert-syzygy}给出有限长度的依据。\cref{b3:prop:graded-cancellation}说明如何消去单位矩阵项，同时更新相邻微分。Betti 表只应在这些可缩部分消去之后，按各层和内次数读出。生成元列数不是自动等于 Betti 数，乘积为零也不是自动等于消解正合。
+同样的记录要逐层保存。\cref{b3:tab:B-resolution-certificates}列出各项结论所需的数据，其中 \(C_\bullet\xrightarrow{\varepsilon}M\) 是有限秩自由模的增广序列，\(d_i:C_i\rightarrow C_{i-1}\)；讨论分次极小性与 Betti 数时，\(S\) 取标准分次，\(M\) 有限生成，各映射齐次且次数为零。
+
+\begin{table}[htbp]
+\centering
+\caption{合冲、消解与 Betti 数的计算证书}
+\label{b3:tab:B-resolution-certificates}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+所需结论 & 必须保存或核验的数据 \\
+\midrule
+生成子模相等 & \(G=FU\) 与 \(F=GV\) 的精确矩阵等式 \\
+全部核已求出 & 已验证的模 Gröbner 基 \(G\)、Schreyer 合冲矩阵 \(T\) 及两向变换 \(U,V\)；由还原公式得到全部核生成矩阵 \(K\)，不只检查 \(FK=0\) \\
+序列为复形 & 各层 \(d_i d_{i+1}=0\)，且 \(\varepsilon d_1=0\) \\
+复形为消解 & \(\varepsilon\) 满射、\(\ker\varepsilon=\operatorname{im}d_1\)，以及每一层的全部核与下一层像相等；有限左端还须核验最左侧微分单射 \\
+分次消解极小 & 已验证正合的消解，其微分项全在 \(\mathfrak m=(x_1,\ldots,x_n)\) 中；消去单位项时须同时更新相邻矩阵 \\
+Betti 数 & 记录极小消解中 \(S(-j)\) 在 \(C_i\) 中的重数 \(\beta_{i,j}\)，它等于 \(\dim_k\operatorname{Tor}^S_i(M,k)_j\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\cref{b3:thm:hilbert-syzygy}给出有限生成分次模具有有限长度自由消解的依据，\cref{b3:prop:graded-cancellation}给出单位项消去的具体步骤；极小消解与 Tor 的关系见\eqref{b3:eq:graded-betti-tor}。这些结论使求核与极小化各有明确的核验目标。
 
 \subsection{局部计算中的项序与结果验证}
 \label{b3:subsec:B04:02}
@@ -62,11 +76,21 @@ V=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},
 全局模项序的首项约化以良序为终止依据。局部序允许 \(1>x>x^2>\cdots\)，会改变可逆元素，也会改变约化方法。因此从多项式环改为局部计算时，不能仅把排序参数换掉，再沿用原来的除法终止证明。
 
 \ProseParagraphBreak
-\appref{b3:app:F}将定义局部标准基和弱正规形。这里先说明证书的形式：在指定局部化 \(R=U^{-1}S\) 中证明 \(f\) 属于输入子模，可以给出
+\appref{b3:app:F}将定义局部标准基和弱正规形。局部成员关系可以完全写成原环中的有限等式。
+
+\begin{proposition}[局部成员证书]\label{b3:prop:B-local-membership-certificate}
+设 \(S\) 为交换环，\(U\subset S\) 为不含零的乘性集，\(R=U^{-1}S\)。给定 \(F\in S^{r\times s}\) 与 \(f\in S^r\)，则
 \[
-u f=Fa,\qquad u\in U,\quad a\in S^s.
+\dfrac{f}{1}\in\operatorname{im}(U^{-1}F:R^s\longrightarrow R^r)
+\quad\Longleftrightarrow\quad
+\text{存在 }u\in U,\ a\in S^s\text{，使 }uf=Fa.
 \]
-它明确指出使用了哪个单位。验证时，先检查多项式矩阵等式，再核验 \(u\) 满足乘性集条件。若 \(U=S\setminus(x_1,\ldots,x_n)\)，后一个条件就是 \(u(0)\ne0\)。
+\end{proposition}
+\begin{proof}
+若 \(uf=Fa\)，在 \(R\) 中除以 \(u\) 即得成员表示。反过来，若 \(f/1\) 属于像，将表示中有限多个分母通分，可写成 \(f/1=Fb/v\)，其中 \(v\in U\)、\(b\in S^s\)。局部化中的相等意味着存在 \(w\in U\) 使 \(w(vf-Fb)=0\)。取 \(u=wv\)、\(a=wb\)，便有 \(uf=Fa\)。此处乘上 \(w\) 的步骤也涵盖 \(S\) 有零因子的情形。
+\end{proof}
+
+因此验证成员证书时，先检查原环中的矩阵等式，再核验 \(u\) 属于指定乘性集。在 \(S=k[x_1,\ldots,x_n]\)、\(U=S\setminus(x_1,\ldots,x_n)\) 的原点局部化中，后一个条件就是 \(u(0)\ne0\)。
 
 \ProseParagraphBreak
 非成员证明需要一个已验证的局部标准基及适用的正规形定理。仅有一次未约化为零的尝试不能作数，因为约化方法可能不完整。若输出为局部自由消解，每层仍要说明全部核的生成，并在作单位消去后再次检查相邻微分。局部极小性由极大理想中的微分项判断，而不是由多项式总次数或文件中列数的变化判断。
@@ -92,7 +116,7 @@ SINGULAR 等精确计算系统可以承载这些实验，但报告不应以某�
 \label{b3:subsec:B04:04}
 
 \begin{example}\label{b3:exm:B-local-membership}
-设 \(S=k[x]\)，\(I=(x-x^2)\)。在 \(S\) 中，\(x\notin I\)：若 \(x=(x-x^2)h\)，整环中约去 \(x\) 得 \(1=(1-x)h\)，与 \(1-x\) 非单位矛盾。但在原点局部环 \(S_{(x)}\) 中，
+设 \(k\) 为域，\(S=k[x]\)，\(I=(x-x^2)\)。在 \(S\) 中，\(x\notin I\)：若 \(x=(x-x^2)h\)，整环中约去 \(x\) 得 \(1=(1-x)h\)，与 \(1-x\) 非单位矛盾。但在原点局部环 \(S_{(x)}\) 中，
 \[
 x=(1-x)^{-1}(x-x^2),
 \]

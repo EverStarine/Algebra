@@ -1,115 +1,240 @@
 % !TeX root = ../../Book4.tex
-% 纲要标题：### 13.4 Mittag–Leffler 条件
-% 纲要位置：计划纲要.md，第 2817 行。
+% 纲要标题：### 13.4 典型计算、Morita 不变性与 HKR
+% 纲要标签：b4:sec:1204
+% 纲要位置：计划纲要.md，第 2789 行。
 
-\section{Mittag–Leffler 条件}
-\label{b4:sec:1304}
+\section{典型计算、Morita 不变性与 HKR}
+\label{b4:sec:1204}
 
-各层的稳定像条件允许逐层选择相容原像，即使原过渡映射并不满射。它消去可数塔的一次导出障碍，也解释完备化与 Milnor 型正合列中的附加项。
+矩阵代数、光滑交换代数及一个平方零代数展示三种不同的 Hochschild 计算。前两种分别利用模范畴等价和对角的 Koszul 消解，最后一种直接检验形变障碍。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 稳定像条件
-% * 可数塔下 lim^1 的消失判据
-% * 完备化及 Milnor 型正合列的适当版本
+% * 矩阵代数与 Morita 不变性
+% * 光滑交换代数的比较方向
+% * 不把一阶可形变误判为一定可延拓至所有阶
 %
 % ---
 %
 
-\subsection{稳定像条件}
-\label{b4:subsec:1304:01}
+\subsection{矩阵代数与 Morita 不变性}
+\label{b4:subsec:1204:01}
 
-过渡满射能使逐层提升继续进行，但它并非唯一有用的条件。即使某些元素始终不能从下一层提升，只要后来各层在当前层的像最终稳定，也足以排除一次导出障碍。
+矩阵代数的乘法看起来比标量代数复杂，但模范畴之间的等价会保留相应的同调信息。下面用矩阵单位写出这一等价，并从零次交换子商的比较得到 Hochschild 同调的 Morita 不变性\footnote{\OriginalHanName{森田紀一}（假名：もりた きいち，罗马音：Kiiti Morita，1915-1995），日本数学家，建立以模范畴等价为核心的森田理论。}。
 
-\begin{definition}\label{b4:def:mittag-leffler-tower}
-设 \(R\) 为环，\(M=(M_n,u_n)\) 为左 \(R\)-模可数塔，\(u_{n,m}:M_m\to M_n\) 表示复合过渡映射，\(u_{n,n}=1\)。若对每个 \(n\)，存在 \(m_0\ge n\)，使
+\begin{theorem}\label{b4:thm:hh-matrix-morita}
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(r\ge1\)，\(B=M_r(A)\)。对任意 \(A\) 双模 \(N\)，令 \(M_r(N)\) 带有左右矩阵乘法作用。则对所有 \(n\ge0\)，有自然同构
 \[
-\operatorname{im}u_{n,m}=\operatorname{im}u_{n,m_0}
-\qquad(m\ge m_0),
+\operatorname{HH}_n(B,M_r(N))\cong\operatorname{HH}_n(A,N),\qquad
+\operatorname{HH}^n(B,M_r(N))\cong\operatorname{HH}^n(A,N).
 \]
-则称该塔满足\term[mittag-leffler-tiaojian]{Mittag–Leffler 条件}[Mittag--Leffler condition]，简称 ML 条件。
+\end{theorem}
+\begin{proof}
+记 \(E_{ij}\) 为矩阵单位，\(e=E_{11}\)，并识别 \(eBe=A\)。双模函子
+\[
+F(M)=eMe,\qquad G(N)=M_r(N)
+\]
+互为等价。具体地，\(FG(N)=N\)，而
+\[
+M\longrightarrow M_r(eMe),\qquad
+m\longmapsto(E_{1i}mE_{j1})_{i,j}
+\]
+的逆将 \((n_{ij})\) 送到 \(\sum_{i,j}E_{i1}n_{ij}E_{1j}\)。矩阵单位等式 \(E_{ij}E_{uv}=\delta_{ju}E_{iv}\) 验证两次复合为恒等，且这些映射保持双模作用。两个函子均正合：\(eMe\) 是由幂等线性算子截出的直和因子，\(M_r(-)\) 是有限直和。它们也保持投射对象，因为一个提升问题经逆等价转移后仍是满射的提升问题。
+
+对 \(B\) 取投射双模消解 \(P_\bullet\to B\)。施加 \(F\) 后得到 \(A\) 的投射双模消解，而且等价的满忠实性给出复形同构
+\[
+\operatorname{Hom}_{B^e}(P_\bullet,M)
+\cong\operatorname{Hom}_{A^e}(F(P_\bullet),F(M)).
+\]
+取上同调便证明上同调断言。
+
+对同调，先考察右正合函子 \(Q_B(M)=M/[B,M]\)。它与张量函子的联系由以下互逆映射给出：
+\[
+\begin{aligned}
+M^{\mathrm r}\otimes_{B^e}B&\longrightarrow Q_B(M),
+&m\otimes b&\longmapsto[bm],\\
+Q_B(M)&\longrightarrow M^{\mathrm r}\otimes_{B^e}B,
+&[m]&\longmapsto m\otimes1.
+\end{aligned}
+\]
+第一式满足平衡关系：对 \(a,b,c\in B\)，\((cma)\otimes b=m\otimes abc\)，而交换子商中 \([bcma]=[abcm]\)。第二式消去交换子，因为
+\[
+\begin{aligned}
+bm\otimes1
+&=m\cdot(1\otimes b^{\mathrm{op}})\otimes1
+=m\otimes b,\\
+mb\otimes1
+&=m\cdot(b\otimes1)\otimes1
+=m\otimes b.
+\end{aligned}
+\]
+此外 \(bm\otimes1=m\otimes b\) 验证两次复合为恒等。因此 \(Q_B(M)\cong M^{\mathrm r}\otimes_{B^e}B\)。从双模到右 \(B^e\) 模的函子 \(M\mapsto M^{\mathrm r}\) 是正合等价，保持投射对象，所以在系数双模 \(M\) 的投射消解上计算，并用\cref{b4:thm:tor-balanced}，得到
+\[
+L_nQ_B(M)
+\cong\operatorname{Tor}^{B^e}_n(M^{\mathrm r},B)
+=\operatorname{HH}_n(B,M).
+\]
+
+现在比较两个交换子商。矩阵单位给出自然同构
+\[
+Q_B(M)\longrightarrow Q_A(eMe),\qquad
+[m]\longmapsto\left[\sum_iE_{1i}mE_{i1}\right].
+\]
+其良定义可直接检验。将 \(1=\sum_jE_{j1}E_{1j}\) 插入 \(b\) 与 \(m\) 之间，得到
+\[
+E_{1i}bmE_{i1}=\sum_j(E_{1i}bE_{j1})(E_{1j}mE_{i1}).
+\]
+在目标交换子商中交换这两个因子的先后，再交换求和指标 \(i,j\)，就得到 \(\sum_iE_{1i}mbE_{i1}\)。逆映射由角部的包含 \(eMe\subseteq M\) 给出。在 \(Q_B(M)\) 中，关系
+\[
+E_{ii}m-E_{1i}mE_{i1}=[E_{i1},E_{1i}m]
+\]
+说明逆向复合是恒等；正向复合在 \(eMe\) 上也显然为恒等。
+
+所得零次比较就是 \(Q_B\cong Q_A\circ F\)。\(F\) 正合且保持投射，将 \(M\) 的双模投射消解送到 \(F(M)\) 的投射消解；逐项应用零次自然同构，再取同调，便有
+\[
+\operatorname{HH}_n(B,M)
+\cong L_nQ_B(M)
+\cong L_nQ_A(F(M))
+\cong\operatorname{HH}_n(A,F(M)).
+\]
+取 \(M=M_r(N)\) 即得结论。
+\end{proof}
+
+一般的 \(k\) 线性 Morita 等价由互逆的张量双模实现，同样保持相应系数的 Hochschild 群。矩阵情形的具体等价与\cite[Proposition 9.5.2, Corollary 9.5.3]{Weibel1994HomologicalAlgebra}一致；下面说明一般情形的零次比较为何也能导出。
+
+\begin{proofsketch}
+设 \({}_AP_B\)、\({}_BQ_A\) 实现第二卷定理16.3.3及推论16.3.4的 Morita 等价，取相容的双模同构
+\(P\otimes_BQ\cong A\)、\(Q\otimes_AP\cong B\)，分别把配对写作 \(\langle p,q\rangle_A\) 与 \(\langle q,p\rangle_B\)。双模函子
+\[
+ F(N)=Q\otimes_AN\otimes_AP
+\]
+及其逆是正合等价，送 \(A\) 到 \(B\)，并保持投射对象。因此对 \(A\) 的双模投射消解施加 \(F\)，再用等价的 Hom 双射，得到
+\(\operatorname{HH}^n(A,N)\cong\operatorname{HH}^n(B,F(N))\)。
+
+同调端的零次比较为
+\[
+ F(N)/[B,F(N)]\longrightarrow N/[A,N],\qquad
+ [q\otimes n\otimes p]\longmapsto
+ [n\langle p,q\rangle_A].
+\]
+张量平衡关系在右边分别变成等式或交换子关系；\(B\) 交换子关系由
+\(\langle pb,q\rangle_A=\langle p,bq\rangle_A\) 消去。取有限表达
+\(1_A=\sum_i\langle p_i,q_i\rangle_A\)，逆映射送 \([n]\) 到
+\(\sum_i[q_i\otimes n\otimes p_i]\)。一向复合直接为恒等，另一向使用 Morita 配对的相容式
+\[
+ \langle p,q\rangle_Ap_i=p\langle q,p_i\rangle_B,
+ \qquad
+ \langle q,p_i\rangle_Bq_i=q\langle p_i,q_i\rangle_A,
+\]
+以及交换子商中允许把右侧的 \(B\) 因子移到左侧，便恢复 \([q\otimes n\otimes p]\)。这也使逆与所选单位表达无关。
+
+上述张量识别对任意结合代数都成立，因而
+\[
+L_nQ_A(N)\cong\operatorname{HH}_n(A,N),
+\qquad
+L_nQ_B(F(N))\cong\operatorname{HH}_n(B,F(N)).
+\]
+在 \(N\) 的双模投射消解上逐项应用 \(Q_B\circ F\cong Q_A\)，再利用 \(F\) 正合且保持投射，就得到两端 Hochschild 同调的同构。这里省略的是把等价的单位、余单位写成上述相容配对的标准 Morita 构造。完整同调比较也见\cite[Theorem 9.5.6, pp. 328--329]{Weibel1994HomologicalAlgebra}，该处用双复形比较实现相同的系数变换。
+\end{proofsketch}
+
+\begin{example}\label{b4:exm:matrix-hochschild-vanishing}
+对任意域 \(k\) 和 \(r\ge1\)，\(k^e=k\)，所以
+\[
+\begin{gathered}
+\operatorname{HH}_0(M_r(k))=k,\qquad
+\operatorname{HH}^0(M_r(k))=k,\\
+\operatorname{HH}_n(M_r(k))=\operatorname{HH}^n(M_r(k))=0\quad(n>0).
+\end{gathered}
+\]
+零次同调的同构是普通迹在交换子商上诱导的映射，其逆送 \(c\) 到 \([cE_{11}]\)，不需要除以 \(r\)。即使特征整除 \(r\)，\([I_r]\) 的迹为零，也不妨碍整个同调空间是一维。由\cref{b4:prop:hochschild-low-degrees}，矩阵代数的导子都是内导子；由\cref{b4:thm:hh2-deformation-classification}，其一阶形变均等价于平凡形变。
+\end{example}
+
+\subsection{光滑交换代数的 Hochschild 同调}
+\label{b4:subsec:1204:02}
+
+\(\operatorname{HH}_1(A)=\Omega_{A/k}\) 提示：在合适的交换代数上，高次同调应当与微分的外幂有关。先看一个可以只用已学消解算完的情形。
+
+\begin{proposition}\label{b4:prop:polynomial-hochschild}
+设 \(A=k[x_1,\ldots,x_d]\)，其中 \(k\) 为域，\(d\ge0\)。对每个 \(n\ge0\)，作为 \(A\) 模有
+\[
+\operatorname{HH}_n(A)\cong\bigwedge_A^n A^d,
+\qquad
+\operatorname{HH}^n(A)\cong
+\bigwedge_A^n\operatorname{Hom}_A(A^d,A).
+\]
+在同调端可把标准基与 \(\mathrm{d}x_1,\ldots,\mathrm{d}x_d\) 对应；两者在 \(n>d\) 时都为零。
+\end{proposition}
+\begin{proof}
+包络代数为 \(S=k[x_1,\ldots,x_d,y_1,\ldots,y_d]\)，\(A\) 是商 \(S/(x_1-y_1,\ldots,x_d-y_d)\)。依次令 \(x_i=y_i\) 后仍为多项式环，所以下一个 \(x_j-y_j\) 不为零因子。这是正则列，由\cref{b4:prop:koszul-resolution}，相应 Koszul 复形是 \(A\) 的有限自由 \(S\) 模消解。与 \(A\) 张量或取 \(\operatorname{Hom}_S(-,A)\) 后，每个 \(x_i-y_i\) 的作用为零，微分全部消失。各项分别为 \(\bigwedge_A^n A^d\) 及其 \(A\) 线性对偶。有限自由模的楔积基将后者识别为 \(\bigwedge_A^n\operatorname{Hom}_A(A^d,A)\)。微分模的基 \(\mathrm{d}x_i\) 则由多项式逐变量求导的泛性质得到。
+\end{proof}
+
+要推广到一般交换代数，需要区分光滑与仅仅没有明显奇异方程。下面给出比较定理所需的精确条件。
+
+\begin{definition}\label{b4:def:smooth-algebra-hh}
+设 \(k\) 为域，\(A\) 为有限展示的交换含幺 \(k\) 代数。若对每个交换含幺 \(k\) 代数 \(E\)、每个平方零理想 \(J\subseteq E\) 及每个 \(k\) 代数同态 \(A\to E/J\)，都存在提升 \(A\to E\)，则称 \(A\) 在 \(k\) 上\term[guanghua-daishu]{光滑}[smooth]。平方零指 \(J^2=0\)，提升不要求唯一。
 \end{definition}
 
-过渡满射塔满足此条件。每层为 Artin 模的塔也满足，因为固定层中的像形成递降子模列；有限交换群塔、有限维向量空间塔都是例子。这里要求每个固定层的像最终稳定，并不要求所有层共用一个稳定指标。
+这个约定与第三卷定义14.5.1、14.5.2相同：平方零提升的存在性称为形式光滑，有限展示加形式光滑称为光滑。在形变问题中，用提升性质表述光滑，能够直接看出方程中的误差是否可消去。
 
-\begin{lemma}\label{b4:lem:stable-image-tower}
-设 \(R\) 为环，\(M=(M_n,u_n)\) 为满足 ML 条件的左 \(R\)-模可数逆向塔，以 \(S_n\subseteq M_n\) 记 \(M_m\to M_n\) 在 \(m\) 足够大时的稳定像。则 \(S=(S_n)\) 是过渡满射的子塔；商塔 \(Q_n=M_n/S_n\) 满足：对每个 \(n\)，所有足够远的过渡 \(Q_m\to Q_n\) 均为零。
-\end{lemma}
-\begin{proof}
-取同时超过第 \(n\) 和 \(n+1\) 层稳定指标的 \(m\)。\(M_m\to M_n\) 经过 \(M_{n+1}\)，所以 \(u_n(S_{n+1})\subseteq S_n\)。任意 \(s\in S_n\) 都可从这同一个 \(M_m\) 提升，其在 \(M_{n+1}\) 的像属于 \(S_{n+1}\)，故限制映射满。最后，足够远的 \(M_m\to M_n\) 的像正是 \(S_n\)，模掉它以后映射为零。
-\end{proof}
+\ProseParagraphBreak
+多项式代数满足此条件，因为分别提升各生成元的像即可。这里要求 \(E\) 交换；它不等同于对所有非交换扩张的提升性质，也不蕴含 \(\operatorname{HH}^2(A)=0\)。例如两个变量的多项式代数在\cref{b4:prop:polynomial-hochschild}中有非零二次上同调。
 
-\subsection{\texorpdfstring{可数塔的 \(\varprojlim{}^1\) 消失判据}{可数塔的 lim1 消失判据}}
-\label{b4:subsec:1304:02}
+\ProseParagraphBreak
+以下 Hochschild--Kostant--Rosenberg 定理\footnote{科斯坦特（Bertram Kostant，1928-2017），美国数学家，研究李群与表示论；罗森伯格（Alex F. T. W. Rosenberg，1926-2007），德裔美国数学家，研究环论和同调代数。}给出证明概要。Weibel\cite[Theorem 9.4.7]{Weibel1994HomologicalAlgebra}给出更一般的本质有限型版本；这里仅陈述有限展示的情形。
 
-\begin{theorem}\label{b4:thm:mittag-leffler-vanishing}
-设 \(R\) 为环，\(M\) 为满足 ML 条件的左 \(R\)-模可数塔。则
-\(\varprojlim{}^1M_n=0\)。因此，对左 \(R\)-模可数逆向塔的短正合列 \(0\to A\to B\to C\to0\)，若 \(A\) 满足 ML 条件，取逆极限后仍为短正合列。
+\begin{theorem}[Hochschild--Kostant--Rosenberg 定理]\label{b4:thm:hkr-external}
+设 \(k\) 为域，\(A\) 为在 \(k\) 上光滑的有限展示交换代数。则有自然 \(A\) 模同构
+\[
+\bigwedge_A^n\Omega_{A/k}\longrightarrow\operatorname{HH}_n(A)
+\qquad(n\ge0).
+\]
+它把 \(a_0\,\mathrm{d}a_1\wedge\cdots\wedge \mathrm{d}a_n\) 送到
+\[
+\left[\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+a_0\otimes a_{\sigma(1)}\otimes\cdots\otimes a_{\sigma(n)}\right].
+\]
 \end{theorem}
-\begin{proof}
-先处理每层的足够远过渡均为零的塔 \(Q\)。对任意 \(y\in\prod Q_n\)，令
-\[
-x_n=\sum_{m\ge n}u_{n,m}y_m.
-\]
-固定 \(n\) 时只有有限多个非零项，所以这是模中的有限和。相邻两式相减得到 \(x_n-u_nx_{n+1}=y_n\)，故 \(\Delta_Q\) 满，\(\varprojlim{}^1Q_n=0\)。
 
-对一般 ML 塔用\cref{b4:lem:stable-image-tower}分成 \(0\to S\to M\to Q\to0\)。\(S\) 的过渡满射，\(Q\) 满足刚证明的条件，所以两者的一次导出极限为零。\cref{b4:thm:countable-derived-limit}的六项正合列于是给出 \(\varprojlim{}^1M_n=0\)。末项结论再次应用同一六项正合列。
-\end{proof}
+\begin{proofsketch}
+写 \(A^e=A\otimes_kA\)，以乘法映射 \(A^e\to A\) 的核 \(J\) 定义对角理想。Hochschild 同调的包络代数解释给出 \(\operatorname{HH}_n(A)=\operatorname{Tor}^{A^e}_n(A,A)\)，而 \(J/J^2\cong\Omega_{A/k}\)，同构把 \(a\otimes1-1\otimes a\) 送到 \(\mathrm{d}a\)。这里使用光滑代数的一项几何结果：光滑有限型态射的对角是正则嵌入。具体地，在对角上的每个点，\(J\) 在相应的局部环中由正则列生成，其长度等于 \(\Omega_{A/k}\) 的局部秩。这一结果从平方零提升条件到局部正则列的证明，可参看 Weibel\cite[Proposition 9.4.6 and proof of Theorem 9.4.7, pp. 322--323]{Weibel1994HomologicalAlgebra}。
 
-ML 是一个便于检查的充分条件，本书不把它称为所有塔上的充要条件。例如取每层为 \(\mathbb Z_p\)、过渡为乘 \(p\) 的塔，固定层的像 \(p^m\mathbb Z_p\) 严格递降，故不满足 ML；但对任意 \((y_n)\) 可定义
+用这条正则列的 Koszul 复形消解 \(A\)，再与 \(A\) 张量。正则列在商 \(A=A^e/J\) 上作用为零，所以张量后的微分全部为零，第 \(n\) 项为 \(\bigwedge_A^n(J/J^2)\)。这与前面多项式代数的计算是同一机制。换一组正则生成元时，Koszul 复形的比较映射在一次项上正是 \(J/J^2\) 的换基，故这些局部同构相容并粘合为全局同构。
+
+还须确认这个同构就是定理所写的反对称映射。Koszul 计算将局部的 Tor 代数识别为一次项 \(J/J^2\) 的外代数；用 bar 消解计算同一 Tor 外积时，乘法由带符号的 shuffle 给出。因此一次类 \([1\otimes a_i]\) 的乘积，正是各张量因子的带符号置换和，与定理的公式一致。两个消解对 Tor 外积的比较见\cite[Application 8.7.12, Example 8.7.13, pp. 291--292; Corollary 9.4.4 and proof of Theorem 9.4.7, pp. 322--323]{Weibel1994HomologicalAlgebra}。概要中省略的是正则对角的局部证明及 Koszul、bar 外积比较的链映射构造；这两个输入共同保证局部同构粘合后得到所写的自然映射。这一比较不需除以 \(n!\)，所以适用于任意特征。
+\end{proofsketch}
+
+该同构不要求特征零。若另有 \(\operatorname{char}k=0\)，逆映射由下式给出：
 \[
-x_n=\sum_{j\ge0}p^j y_{n+j}\in\mathbb Z_p.
+[a_0\otimes\cdots\otimes a_n]\longmapsto
+\dfrac{1}{n!}a_0\,\mathrm{d}a_1\wedge\cdots\wedge \mathrm{d}a_n.
 \]
-此式的意义是：模 \(p^r\) 时只取前 \(r\) 项，它们随 \(r\) 相容，因而由逆极限定义一个元素。于是 \(x_n-px_{n+1}=y_n\)，\(\Delta\) 仍满。严格递降可由 \(p^m\) 模 \(p^{m+1}\) 非零检验；这里无需使用分析意义的级数收敛。
+正特征下不能直接沿用含 \(1/n!\) 的公式。上面的多项式计算可以逐次检验同调的大小。上述结论比较的是同调群；整个上链复形的乘法与括号的相容性还需另行讨论。
+
+\subsection{一阶形变的高阶延拓障碍}
+\label{b4:subsec:1204:03}
+
+\cref{b4:exm:dual-numbers-first-deformation}的一阶形变确能继续延拓：\(k[\![t]\!][x]/(x^2-t)\) 以 \(1,x\) 为自由基，结合性来自多项式商。但下面的同样小的代数已经有不能通过第二阶的形变。
+
+\begin{example}\label{b4:exm:obstructed-deformation}
+设 \(k\) 为任意域，\(A=k\oplus kx\oplus ky\)，其中 \(V=kx\oplus ky\) 满足 \(V^2=0\)，\(1\) 为单位。定义归一化二次上链 \(\phi\)，在 \(V\times V\) 上规定
+\[
+\phi(x,x)=y,\qquad \phi(y,x)=y,\qquad
+\phi(x,y)=\phi(y,y)=0.
+\]
+当三个自变量属于 \(V\) 时，\(\delta\phi\) 的左右作用项因 \(V^2=0\) 消失，内部项也因相邻乘积为零而消失；某个自变量为 \(1\) 时，归一化使其余两项抵消。由三线性，\(\delta\phi=0\)。故 \(a*b=ab+t\cdot\phi(a,b)\) 确是一阶形变。
 
 \ProseParagraphBreak
-可数塔的乘积计算、稳定像方法及条件范围可分别对照 Weibel\cite[Definition 3.5.1, Corollary 3.5.4, Definition 3.5.6, Proposition 3.5.7]{Weibel1994HomologicalAlgebra}。
-
-\subsection{完备化与 Milnor 型正合列}
-\label{b4:subsec:1304:03}
-
-先看完备化。设 \(R\) 交换、\(I\) 为理想，\(0\to A\to B\to C\to0\) 为模短正合列。每层有
+然而
 \[
-0\to A/(A\cap I^nB)\to B/I^nB\to C/I^nC\to0\qquad(n\ge1).
+(\phi\circ\phi)(x,x,x)
+=\phi(y,x)-\phi(x,y)=y\ne0.
 \]
-左塔的过渡满射，故由\cref{b4:thm:mittag-leffler-vanishing}，其极限列仍正合。此时左端是 \(A\) 关于诱导滤过的完备化，还不能无条件换成 \(\widehat A=\varprojlim A/I^nA\)。
-
-\ProseParagraphBreak
-若 \(R\) Noether 且 \(B\) 有限生成，第三卷定理13.2.1的 Artin–Rees 引理给出某个 \(c\)，使
+对任意二次上链 \(\psi\)，交换性和 \(x^2=0\) 给出
 \[
-I^nA\subseteq A\cap I^nB\subseteq I^{n-c}A\qquad(n\ge c).
+(\delta\psi)(x,x,x)
+=x\cdot\psi(x,x)-\psi(x,x)\cdot x=0.
 \]
-两个滤过相互包含足够深的一层，诱导的极限映射互逆。因此得到 \(0\to\widehat A\to\widehat B\to\widehat C\to0\)。第三卷定理13.3.5已独立证明这一完备化正合性；这里解释它所用的相容提升为何没有一次导出障碍。Noether 与有限生成假设用于比较两种滤过，而不是用于“过渡满射塔的极限保持这条短正合列”。
-
-\ProseParagraphBreak
-对复形组成的逆系统，一次导出还记录了“先取上同调”与“先取逆极限”之间的差别。下面的短正合列称为\term[milnor-zhenghelie]{Milnor 正合列}[Milnor exact sequence]。
-
-\begin{theorem}[Milnor 型正合列]\label{b4:thm:milnor-exact-sequence}
-设 \(R\) 为环，\((C_n)_{n\ge0}\) 为左 \(R\)-模上链复形的逆向塔。假定对每个次数 \(j\)，模塔 \((C_n^j)_n\) 满足 ML 条件。则对每个整数 \(q\)，有自然短正合列
-\[
-0\longrightarrow\varprojlim{}^1 H^{q-1}(C_n)
-\longrightarrow H^q(\varprojlim C_n)
-\longrightarrow\varprojlim H^q(C_n)\longrightarrow0.
-\]
-若同调塔 \((H^{q-1}(C_n))_n\) 也满足 ML 条件，右侧比较映射是同构。
-\end{theorem}
-\begin{proof}
-逐次数使用\cref{b4:thm:countable-derived-limit}及\cref{b4:thm:mittag-leffler-vanishing}，得到复形的短正合列
-\[
-0\longrightarrow\varprojlim C_n\longrightarrow\prod_n C_n
-\xrightarrow{\Delta}\prod_n C_n\longrightarrow0.
-\]
-其同调长正合列中，两个积的同调由\cref{b4:prop:products-cohomology}识别为同调群的积，诱导态射也是对应的乘积差映射。因此 \(H^q(\varprojlim C_n)\) 左边的余核为 \(\varprojlim{}^1H^{q-1}(C_n)\)，右边的核为 \(\varprojlim H^q(C_n)\)。截取长正合列即得结论。原短列及其同调连接态射都自然，故所获短列自然；最后再用 ML 消失定理。
-\end{proof}
-
-这里有两种不同的 ML 条件：各次数模的条件保证计算复形正确，同调模的条件进一步使修正项消失。它们不能互相替代。这个上链版本可与 Weibel\cite[Theorem 3.5.8, Variant]{Weibel1994HomologicalAlgebra}对照；链版本的修正项则在 \(q+1\) 次。
-
-\begin{example}\label{b4:exm:milnor-nonzero-correction}
-令 \(C_n\) 是次数 \(0,1\) 的复形 \(\mathbb Z\to\mathbb Z/p^{n+1}\)，微分为商映射；过渡为恒等与约化。各次塔都过渡满射，但 \(H^0(C_n)=p^{n+1}\mathbb Z\)、\(H^1(C_n)=0\)。极限复形为 \(\mathbb Z\to\mathbb Z_p\)，所以
-\[
-H^1(\varprojlim C_n)=\mathbb Z_p/\mathbb Z
-=\varprojlim{}^1H^0(C_n),
-\qquad \varprojlim H^1(C_n)=0.
-\]
-这里新增的一次同调完全来自相容性障碍，而不是任何有限层的一次同调。
+因此 \(\phi\circ\phi\) 不可能是余边，\eqref{b4:eq:second-deformation-obstruction}无解。这个一阶形变在任何特征下都不能延拓至模 \(t^3\)。
 \end{example}
+
+此例还说明，障碍不只是一句存在性警告。给出乘法表后，先计算\(2\)-余圈，再在一个特定三元组上计算障碍，最后证明所有余边在该三元组上的值都为零，就足以判定无法延拓。其余未选的二阶系数不能改变这一结论。

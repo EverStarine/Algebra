@@ -152,6 +152,12 @@ foreach ($node in $nodes) {
     $file = Join-Path $ProjectRoot $node.Path
     if (-not [IO.File]::Exists($file)) { $failures.Add("Missing file: $($node.Path)"); continue }
     $text = [IO.File]::ReadAllText($file, [Text.Encoding]::UTF8)
+    # The printed chapter order can change while a previously cited label stays stable.
+    # An explicit record binds this outline node to the original semantic identity.
+    if ($node.Kind -in @('Chapter', 'Section') -and
+        $text -match '(?m)^% 纲要标签：([^\r\n]+)$') {
+        $node.Label = $Matches[1].Trim()
+    }
     if (-not $text.Contains('% 纲要标题：' + $node.RawHeading)) {
         $failures.Add("Missing or changed outline title record: $($node.Path)")
     }

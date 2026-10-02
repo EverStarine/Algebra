@@ -1,0 +1,232 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 16.2 超同调谱序列
+% 纲要标签：b4:sec:1502
+% 纲要位置：计划纲要.md，第 2869 行。
+
+\section{超同调谱序列}
+\label{b4:sec:1502}
+
+对复形逐项取内射消解，还必须使原微分的提升严格满足平方为零。Cartan--Eilenberg 消解同时照顾项、圈、边界和同调，才能支持超上同调计算。前两小节给出消解的定义、存在性与比较证明，也是\secref{b4:sec:1704}建立有界消解模型所需的部分；本节末的超上同调谱序列另以\chapref{b4:ch:14}为基础。
+
+% 纲要内容：
+%
+% * 复形上的函子
+% * 消解双复形
+% * 由对象同调通向总同调
+%
+
+\subsection{复形上的函子}
+\label{b4:subsec:1502:01}
+
+设 \(F:\mathcal A\to\mathcal B\) 是交换范畴间的加性左正合函子，\(\mathcal A\) 有足够内射对象。对单个对象，取内射消解后作用 \(F\) 已定义 \(R^nF\)。对复形 \(C^\bullet\)，仅逐项独立取内射消解还不够：原来的微分也必须提升，并且要保持平方为零。逐项随意选择提升只能保证平方链同伦于零，未必得到真正的双复形。
+
+\ProseParagraphBreak
+解决方法是同时消解项、余圈、余边和上同调，使每行的核与像受同一构造控制。以下只处理有下界的上链复形。先在原微分次数记为 \(a\)、消解次数记为 \(b\) 的交换方格中构造，最后按 \(\mathrm{d}_v=(-1)^a\partial_v\)、\(\mathrm{d}_h=\partial_h\) 转成反交换方格。
+
+\begin{definition}\label{b4:def:ce-resolution}
+设 \(\mathcal A\) 是有足够内射对象的交换范畴，\(C\) 是其中的有下界上链复形。给定带增广 \(C^a\to I^{a,0}\) 的交换双复形 \((I^{a,b},\partial_h,\partial_v)\)，其中 \(b\ge0\)。若对每个 \(a\)，以下四个增广纵列都是内射消解：
+\[
+ C^a\to I^{a,\bullet},\quad
+ B^a(C)\to B_h^a(I^{\bullet,\bullet}),\quad
+ Z^a(C)\to Z_h^a(I^{\bullet,\bullet}),\quad
+ H^a(C)\to H_h^a(I^{\bullet,\bullet}).
+\]
+并且 \(C\) 在某个次数以下为零时，\(I\) 也在该横次数以下为零，则称 \(I\) 为 \(C\) 的\term[ce-xiaojie]{Cartan--Eilenberg 消解}[Cartan--Eilenberg resolution]。这里 \(B_h,Z_h,H_h\) 分别按横微分取余边、余圈和上同调。
+\end{definition}
+
+之所以要求这些纵列的各项都内射，是为了使每一横行中的
+\[
+ 0\to B_h^a\to Z_h^a\to H_h^a\to0,
+ \qquad 0\to Z_h^a\to I^{a,b}\to B_h^{a+1}\to0
+\]
+都分裂。这样任意加性函子都保持它们的正合性，横向上同调与 \(F\) 才能交换。
+
+\subsection{消解双复形}
+\label{b4:subsec:1502:02}
+
+\begin{lemma}\label{b4:lem:ce-injective-rows}
+设 \(\mathcal A\) 是有足够内射对象的交换范畴。每个 \(\mathcal A\) 中的有下界上链复形 \(C\) 都能嵌入一个有相同下界的复形 \(J\)，使 \(J^a,B^a(J),Z^a(J),H^a(J)\) 均内射，且 \(C\to J\) 在项、余边及上同调上均为单态射。任意满足这些内射性条件的有下界复形 \(J\) 都有如下延拓性质：若有下界复形映射 \(X\to Y\) 在项、余边及上同调上均为单态射，则每个复形映射 \(X\to J\) 都能延拓为 \(Y\to J\)。
+\end{lemma}
+\begin{proof}
+记 \(q_C^a:C^a\twoheadrightarrow C^a/B^a(C)\) 为商态射，\(\beta_C^a:C^a\twoheadrightarrow B^{a+1}(C)\) 为微分的像分解中的满态射。余圈包含诱导单态射
+\(H^a(C)\hookrightarrow C^a/B^a(C)\)。选择单态射
+\(u^a:B^a(C)\hookrightarrow U^a\)、\(v^a:H^a(C)\hookrightarrow V^a\)，其中 \(U^a,V^a\) 内射；对象为零时取零。由内射性，分别将它们延拓为
+\[
+\alpha^a:C^a\longrightarrow U^a,\qquad
+\eta^a:C^a/B^a(C)\longrightarrow V^a.
+\]
+令
+\[
+J^a=U^a\oplus V^a\oplus U^{a+1},\qquad
+\mathrm{d}_J^a=
+\begin{pmatrix}
+0&0&1_{U^{a+1}}\\0&0&0\\0&0&0
+\end{pmatrix}.
+\]
+矩阵表示有限双积之间的态射，其靶为 \(J^{a+1}\)。由此
+\(B^a(J)=U^a\)、\(Z^a(J)=U^a\oplus V^a\)、\(H^a(J)=V^a\)，均内射。以双积的三个投影规定态射
+\[
+j^a=\begin{pmatrix}
+\alpha^a\\ \eta^a q_C^a\\ u^{a+1}\beta_C^a
+\end{pmatrix}:C^a\longrightarrow J^a.
+\]
+由于 \(\alpha^{a+1}\mathrm{d}_C^a=u^{a+1}\beta_C^a\)、
+\(q_C^{a+1}\mathrm{d}_C^a=0\) 和
+\(\beta_C^{a+1}\mathrm{d}_C^a=0\)，直接比较三个投影就有
+\(j^{a+1}\mathrm{d}_C^a=\mathrm{d}_J^a j^a\)。
+
+为证明 \(j^a\) 单，取其核 \(\kappa:K\hookrightarrow C^a\)。第三个投影给出 \(u^{a+1}\beta_C^a\kappa=0\)，由 \(u^{a+1}\) 单得到 \(\mathrm{d}_C^a\kappa=0\)，故 \(\kappa\) 经 \(Z^a(C)\) 因子化。将这一因子投影到 \(H^a(C)\)，第二个投影及 \(v^a\) 的单射性使该投影为零，因此 \(\kappa\) 又经 \(B^a(C)\) 因子化。最后第一个投影在 \(B^a(C)\) 上就是单态射 \(u^a\)，所以该因子为零，\(K=0\)。\(j\) 在余边和上同调上诱导的态射分别是 \(u^a,v^a\)，故也单。若 \(C^a=0\) 对 \(a<m\) 成立，则还有 \(B^m(C)=0\)；因而 \(U^m=0\)，连同较低次数所取的零对象，保证 \(J^{m-1}=0\)，并使 \(J\) 有相同下界。
+
+下面证明延拓性质。设 \(i:X\hookrightarrow Y\) 满足题设。令
+\(P=X^a\times_{Y^a}B^a(Y)\)，并记其到 \(X^a\) 的投影为 \(p\)。链映射关系给出
+\(i^{a+1}\mathrm{d}_X^ap=0\)；\(i^{a+1}\) 单使 \(p\) 经 \(Z^a(X)\) 因子化。该因子在 \(H^a(Y)\) 中的像为零，而 \(H^a(i)\) 单，故它在 \(H^a(X)\) 中也为零，进一步经 \(B^a(X)\) 因子化。反过来，\(i\) 把 \(B^a(X)\) 映入 \(B^a(Y)\)，所以这两个因子给出 \(P\simeq B^a(X)\) 作为 \(X^a\) 的子对象。核与余核的因子化因而给出
+\[
+\ker\bigl(X^a/B^a(X)\longrightarrow Y^a/B^a(Y)\bigr)
+\simeq P/B^a(X)=0.
+\]
+这证明所需商态射是单态射。
+
+对于任意满足引理内射性条件的 \(J\)，两条短正合列
+\[
+\begin{gathered}
+0\longrightarrow B^a(J)\longrightarrow Z^a(J)
+\longrightarrow H^a(J)\longrightarrow0,\\
+0\longrightarrow Z^a(J)\longrightarrow J^a
+\longrightarrow B^{a+1}(J)\longrightarrow0.
+\end{gathered}
+\]
+因左端内射而分裂。选择分裂就得到
+\[
+J^a\simeq B^a(J)\oplus H^a(J)\oplus B^{a+1}(J),
+\]
+且在这些坐标下，微分仍是刚才的标准矩阵：它投影到 \(B^{a+1}(J)\)，再通过下一次的余边包含映入 \(J^{a+1}\)。因此只需对这种标准式证明延拓。
+
+记 \(U^a=B^a(J)\)、\(V^a=H^a(J)\)。复形态射 \(f:X\to J\) 的中间投影杀掉 \(B^a(X)\)，故因子化为 \(X^a/B^a(X)\to V^a\)；其第三个投影由链映射关系等于 \(f_U^{a+1}\mathrm{d}_X^a\)，其中 \(f_U^a:X^a\to U^a\) 是第一个投影。利用 \(U^a,V^a\) 的内射性，沿 \(X^a\hookrightarrow Y^a\) 及刚证明的商单态射延拓前两个投影，分别记为 \(g_U^a\) 和 \(g_V^a\)。再定义
+\[
+g^a=\begin{pmatrix}
+g_U^a\\g_V^a q_Y^a\\g_U^{a+1}\mathrm{d}_Y^a
+\end{pmatrix}:Y^a\longrightarrow J^a.
+\]
+第三投影的规定与中间投影杀掉余边的性质保证
+\(g^{a+1}\mathrm{d}_Y^a=\mathrm{d}_J^ag^a\)。三个投影在 \(X^a\) 上都恢复 \(f^a\)，故 \(g\) 就是所需延拓。
+\end{proof}
+
+\begin{theorem}\label{b4:thm:ce-resolution}
+设 \(\mathcal A\) 是有足够内射对象的交换范畴。每个 \(\mathcal A\) 中的有下界上链复形都有 Cartan--Eilenberg 消解。对任意两个这样的复形 \(C,D\) 及其消解，复形映射 \(C\to D\) 可提升为消解之间的交换双复形映射；两种提升诱导的总复形映射，在作用任意到交换范畴的加性函子后仍链同伦。因此总化后的上同调，以及\cref{b4:thm:hypercohomology-spectral-sequences}中两套谱序列从第二页起的自然识别，都不依赖消解选择。
+\end{theorem}
+\begin{proof}
+先考察复形短正合列 \(0\to X\xrightarrow{i}Y\to K\to0\)，假设 \(H^a(i)\) 对每个 \(a\) 都单。由\cref{b4:thm:cohomology-long-exact}，所有连接态射
+\(\delta^a:H^a(K)\to H^{a+1}(X)\) 为零，因而有上同调短正合列。将次数 \(a,a+1\) 的项短正合列及其微分组成交换图，蛇引理给出余圈列的连接态射
+\(Z^a(K)\to X^{a+1}/B^{a+1}(X)\)。复形关系 \(\mathrm d^2=0\) 使其像落在 \(H^{a+1}(X)\) 这一子对象中；它在 \(B^a(K)\) 上为零，所以下降后正是上同调长正合列的 \(\delta^a\)。于是该态射因子化为
+\[
+Z^a(K)\twoheadrightarrow H^a(K)
+\xrightarrow{\delta^a}H^{a+1}(X)
+\hookrightarrow X^{a+1}/B^{a+1}(X),
+\]
+故为零。这证明 \(Z^a(Y)\to Z^a(K)\) 满，并得到余圈短正合列。
+
+再对 \(X,Y\) 的两条短正合列
+\(0\to Z^a(-)\to(-)^a\to B^{a+1}(-)\to0\)
+使用蛇引理。项上的单射使余边映射也单，而刚证明的余圈正合性将两个余核分别识别为 \(Z^a(K)\) 与 \(K^a\)。蛇引理因此给出
+\[
+0\longrightarrow Z^a(K)\longrightarrow K^a
+\longrightarrow\operatorname{coker}\bigl(B^{a+1}(X)\to B^{a+1}(Y)\bigr)
+\longrightarrow0.
+\]
+与 \(B^{a+1}(K)=\operatorname{coker}(Z^a(K)\hookrightarrow K^a)\) 比较，便得到余边短正合列。至此，取余复形同时保持了项、余圈、余边和上同调四类短正合列。
+
+令 \(K_0=C\)。逐次用上一引理选择 \(K_b\hookrightarrow I^{\bullet,b}\)，并令
+\(K_{b+1}=\operatorname{coker}(K_b\hookrightarrow I^{\bullet,b})\)。刚才的结论在每一步给出
+\[
+\begin{aligned}
+0&\longrightarrow K_b^a\longrightarrow I^{a,b}
+\longrightarrow K_{b+1}^a\longrightarrow0,\\
+0&\longrightarrow B^a(K_b)\longrightarrow B_h^a(I^{\bullet,b})
+\longrightarrow B^a(K_{b+1})\longrightarrow0,\\
+0&\longrightarrow Z^a(K_b)\longrightarrow Z_h^a(I^{\bullet,b})
+\longrightarrow Z^a(K_{b+1})\longrightarrow0,\\
+0&\longrightarrow H^a(K_b)\longrightarrow H_h^a(I^{\bullet,b})
+\longrightarrow H^a(K_{b+1})\longrightarrow0.
+\end{aligned}
+\]
+纵微分是复形态射
+\(\partial_v^b:I^{\bullet,b}\twoheadrightarrow K_{b+1}\hookrightarrow I^{\bullet,b+1}\)，故与横微分交换，且相邻复合为零。四类短正合列说明各增广纵列均正合，而其中的每项由引理内射，正是定义所需的四类内射消解。若 \(C\) 在 \(a<m\) 为零，上一引理的下界构造使所有 \(I^{\bullet,b},K_b\) 保留该下界。
+
+任意 Cartan--Eilenberg 消解也具有刚才的逐行余核结构。在次数零，定义使增广在四类对象上都单；取余复形后，刚才的分析将其四类对象识别为相应余核。四类纵列的正合性又使这些余核单射到下一行，归纳得到相同的四类短正合列。因此以下比较适用于任意选定的消解。
+
+给定 \(f:C\to D\)，先沿 \(C\hookrightarrow I_C^{\bullet,0}\)，把
+\(C\to D\to I_D^{\bullet,0}\) 延拓为一个横向复形态射。它诱导第一余复形之间的态射；再沿 \(K_{C,1}\hookrightarrow I_C^{\bullet,1}\)，将
+\(K_{C,1}\to K_{D,1}\to I_D^{\bullet,1}\) 延拓。每一步的嵌入在项、余边和上同调上都单，目标横行满足引理的内射性条件，故可以逐次延拓。余核的泛性质保证相邻延拓与纵微分交换，得到所需交换双复形映射。
+
+为证明同伦唯一性，设两种提升为 \(f^b,g^b:I_C^{\bullet,b}\to I_D^{\bullet,b}\)，并记其差为 \(e^b\)。约定负消解次数的行及微分为零，取 \(s^0=0\)，归纳构造横向复形态射
+\(s^b:I_C^{\bullet,b}\to I_D^{\bullet,b-1}\)。次数零的差杀掉增广 \(C\)，故经 \(K_{C,1}\) 因子化；沿 \(K_{C,1}\hookrightarrow I_C^{\bullet,1}\) 延拓后得到 \(s^1\)，使
+\(e^0=s^1\partial_{v,C}^0\)。
+
+若已在次数 \(b-1\) 得到
+\[
+e^{b-1}=\partial_{v,D}^{b-2}s^{b-1}
++s^b\partial_{v,C}^{b-1},
+\]
+令 \(h^b=e^b-\partial_{v,D}^{b-1}s^b\)。两个提升均与纵微分交换，故
+\[
+\begin{aligned}
+h^b\partial_{v,C}^{b-1}
+&=\partial_{v,D}^{b-1}e^{b-1}
+-\partial_{v,D}^{b-1}s^b\partial_{v,C}^{b-1}\\
+&=\partial_{v,D}^{b-1}\partial_{v,D}^{b-2}s^{b-1}=0.
+\end{aligned}
+\]
+于是 \(h^b\) 杀掉 \(\operatorname{im}\partial_{v,C}^{b-1}=K_{C,b}\)，经余复形 \(K_{C,b+1}\) 因子化。沿
+\(K_{C,b+1}\hookrightarrow I_C^{\bullet,b+1}\) 延拓为 \(s^{b+1}\)，便有
+\[
+e^b=\partial_{v,D}^{b-1}s^b+s^{b+1}\partial_{v,C}^b.
+\]
+这给出了全部纵同伦等式。
+
+反交换化后，在双次数 \((a,b)\) 定义总同伦
+\(S^{a,b}=(-1)^as^{a,b}\)。纵向两项给出
+\(\partial_vs+s\partial_v\)，横向两项则为
+\((-1)^a(\partial_hs-s\partial_h)=0\)，因为每个 \(s^b\) 都是横向复形态射。因此
+\(f-g=\mathrm d_DS+S\mathrm d_C\)。总次数只有有限项，加性函子保持这些等式与有限双积，故作用任意加性函子后仍得到总链同伦。
+
+对恒等复形取两个方向的比较映射，它们的复合与恒等总映射链同伦，因而给出与选择无关的总上同调。先取纵上同调时，纵同伦使两种提升在第一页诱导同一映射；先取横上同调时，各 \(s^b\) 诱导第一页纵复形的链同伦，所以第二页映射相同。以后各页由取同调确定。比较映射的复合性质同样由同伦唯一性保证，故第二页起的识别均自然。
+\end{proof}
+
+上面的显式嵌入是在复形层面使用内射性；它避免了逐个消解各项后还要修补 \(\mathrm{d}^2=0\) 的问题。消解本身通常很大，实际计算只会使用其横行分裂和四类纵列的消解性质。
+
+\subsection{对象同调与总同调}
+\label{b4:subsec:1502:03}
+
+\begin{definition}\label{b4:def:hypercohomology}
+设 \(F:\mathcal A\to\mathcal B\) 为交换范畴间加性左正合函子，\(\mathcal A\) 有足够内射对象，\(C\) 为 \(\mathcal A\) 中的有下界上链复形。取其 Cartan--Eilenberg 消解 \((I^{a,b},\partial_h,\partial_v)\)，以 \(\mathrm d_h=\partial_h\)、\(\mathrm d_v=(-1)^a\partial_v\) 反交换化。对 \(n\in\mathbb Z\)，定义
+\[
+ \mathbb H^n(F,C)=H^n\operatorname{Tot}(F(I)).
+\]
+这些对象称为 \(F\) 在 \(C\) 上的\term[chaoshangtongdiao]{超上同调}[hypercohomology]，也记作右超导出函子 \(\mathbb R^nF(C)\)。总化每次只有有限项，且上一比较定理保证选择独立及对复形映射的自然性。
+\end{definition}
+
+\begin{theorem}\label{b4:thm:hypercohomology-spectral-sequences}
+设 \(F:\mathcal A\to\mathcal B\) 为交换范畴间的加性左正合函子，\(\mathcal A\) 有足够内射对象，\(C\) 为 \(\mathcal A\) 中的有下界上链复形。则有两套自然的强收敛谱序列
+\[
+ {}^{\mathrm I}E_2^{p,q}=H^p(R^qF(C^\bullet))
+ \Longrightarrow\mathbb H^{p+q}(F,C),
+\]
+\[
+ {}^{\mathrm {II}}E_2^{p,q}=R^pF(H^q(C))
+ \Longrightarrow\mathbb H^{p+q}(F,C).
+\]
+若 \(C\) 的每项都 \(F\)-零调，则 \(\mathbb H^n(F,C)\cong H^n(F(C))\) 对每个 \(n\in\mathbb Z\) 成立。对 \(\mathcal A\) 中的有下界上链复形 \(D\)，每个拟同构 \(C\to D\) 都诱导超上同调同构。
+\end{theorem}
+\begin{proof}
+对 \(F(I)\) 使用\cref{b4:thm:double-complex-spectral-sequences}。纵列是 \(C^a\) 的内射消解，故纵向先取上同调给出 \(R^bF(C^a)\)，再横向取上同调得到第一套第二页。纵微分只是通常消解微分乘常数 \((-1)^a\)，其核与像不变，故可直接用同一子商识别上同调。若改用逐项乘 \((-1)^{ab}\) 的复形同构作识别，则横微分相应多出 \((-1)^b\)；沿该横行再次作相同的符号调整便恢复通常微分，所得上同调相同。
+
+横向先取上同调时，每行的余边、余圈和上同调均内射，两个基本短正合列分裂，所以加性 \(F\) 保持它们。这给出典范同构
+\[
+ H_h^a(F(I^{\bullet,b}))\simeq F(H_h^a(I^{\bullet,b})).
+\]
+而 \(H^a(C)\to H_h^a(I^{\bullet,\bullet})\) 是内射消解，再取纵上同调便得到 \(R^bF(H^a(C))\)，交换两个指标即为第二式。其纵符号同样通过逐次乘 \((-1)^{ab}\) 识别，不改变结果。下界保证两种滤过逐度有限，故均强收敛。
+
+若各 \(C^a\) 都零调，第一套谱序列只剩 \(q=0\) 一行。把横次数的下界平移至零后，单行退化的边缘同态给出 \(H^n(F(C))\cong\mathbb H^n(F,C)\)。若 \(C\to D\) 拟同构，第二套谱序列在第二页的各位置均为同构。两套消解的横次数各有下界，纵次数非负，因此每个固定总次数仅有有限多个双次数位置；相应滤过逐度有限且两边均强收敛。于是可从这一有限页应用\cref{b4:cor:spectral-comparison-finite}，得到目标的上同调同构。
+\end{proof}
+
+特别地，把对象 \(M\) 放在次数零时，\(\mathbb H^n(F,M[0])=R^nF(M)\)；若整个 \(C\) 正合，第二套第二页为零，超上同调全部消失。这与直接对一个正合复形作用左正合函子可能产生上同调的事实不同。所做的进一步消解正是为了校正这一点。内射上链版本的标准叙述见 Weibel\cite[Cohomology Variant 5.7.9]{Weibel1994HomologicalAlgebra}；相应投射链版本及其存在性、比较和同伦见同书\cite[Definition 5.7.1, Lemma 5.7.2, Exercises 5.7.2--5.7.3]{Weibel1994HomologicalAlgebra}。

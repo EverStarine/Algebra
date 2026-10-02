@@ -3,14 +3,13 @@
 
 \chapter{实代数与半代数几何}
 \label{b3:app:G}
+\BookChapterNumber{b3:app:G}
 
 % 纲要细目（与计划纲要同步）：
 % > 以第一卷附录 E 的有序域、实闭域为基础，结合本卷理想、坐标环和消去。范围是基本语言、代表性定理和小型证书，不展开完整实代数几何、模型论或优化理论。
 
-\BookChapterNumber{b3:app:G}
-
 \begin{chapterabstract}
-实零点问题既需要理想，也需要多项式的符号。本附录从半代数投影出发，说明实根理想为何不同于普通根理想，继而比较非负性、多项式平方和与有理函数平方和。投影定理用迹形式判定一元符号，实零点定理与有理函数平方和则由有序域和证书推导。Sturm 序列给出精确实根计数和隔离；\footnote{斯图姆（Jacques Charles François Sturm，1803-1855），瑞士裔法国数学家，建立多项式实根计数定理，并研究微分方程的特征值问题。}Gram 矩阵把二次型方法用于正性证书。\footnote{格拉姆（Jørgen Pedersen Gram，1850-1916），丹麦数学家与精算师，研究向量内积和正交化，相关矩阵及正交化过程以其名命名。}紧集正性与矩表示给出构造概要，并注明所需分析工具。
+实零点问题既需要理想，也需要多项式的符号。本附录从半代数投影出发，说明实根理想为何不同于普通根理想，继而比较非负性、多项式平方和与有理函数平方和。投影定理用迹形式判定一元符号，实零点定理与有理函数平方和则由有序域和证书推导。Sturm 序列给出精确实根计数和隔离；\footnote{施图姆（Jacques Charles François Sturm，1803-1855），瑞士裔法国数学家，建立多项式实根计数定理，并研究微分方程的特征值问题。}Gram 矩阵把二次型方法用于正性证书。\footnote{格拉姆（Jørgen Pedersen Gram，1850-1916），丹麦数学家与精算师，研究向量内积和正交化，相关矩阵及正交化过程以其名命名。}紧集正性与矩表示给出构造概要，并注明所需分析工具。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -30,7 +29,17 @@
 
 \ProseParagraphBreak
 
-所需基础为第一卷附录 E 的有序域和实闭域、第二卷第10.2节的实二次型，以及本卷第8章的 Gröbner 基与消去。紧集正性的概要另用一致估计，矩表示的概要还用 Stone--Weierstrass 定理\footnote{斯通（Marshall Harvey Stone，1903-1989），美国数学家，研究泛函分析与布尔代数，推广了 Weierstrass 的一致逼近定理。}与 Riesz 表示定理\footnote{里斯（Riesz Frigyes，1880-1956），匈牙利数学家，泛函分析的奠基者之一，研究连续线性泛函的表示。}。前四节逐步讨论半代数集合、实根理想及正性证书，其中实零点定理调用的不可行性证书在第四节独立证明；最后一节的 Sturm 算法侧重实根计算，只需前述半代数集合的基本概念。Sturmfels《Solving Systems of Polynomial Equations》的 Section 1.3 与 Chapter 7 分别对应实根计算和平方和方法\cite[Section 1.3; Chapter 7]{Sturmfels2002PolynomialEquations}。
+所需基础为第一卷附录 E 的有序域和实闭域、第二卷第10.2节的实二次型，以及本卷第8章的 Gröbner 基与消去。量词消去把实闭扩域中的解带回原实闭域，由此得到不可行性证书与有理函数平方和表示；实零点定理再用局部化把不可行性证书转成实根理想中的等式。\cref{b3:fig:G-proof-dependencies}列出这些结论之间的证明关系。
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/AppendixGDependencies}
+\caption{实代数结果之间的证明关系}
+\label{b3:fig:G-proof-dependencies}
+\end{figure}
+
+\ProseParagraphBreak
+紧集正性的概要另用一致估计与 P\'olya 的系数引理；从正性证书得到矩表示，还需 Stone--Weierstrass 的一致逼近定理\footnote{斯通（Marshall Harvey Stone，1903-1989），美国数学家，研究泛函分析与布尔代数，推广了 Weierstrass 的一致逼近定理。}与 Riesz 的正泛函表示定理\footnote{里斯（Riesz Frigyes，1880-1956），匈牙利数学家，泛函分析的奠基者之一，研究连续线性泛函的表示。}。Sturmfels《Solving Systems of Polynomial Equations》的 Section 1.3 与 Chapter 7 分别讨论实根计算和平方和方法\cite[Section 1.3; Chapter 7]{Sturmfels2002PolynomialEquations}。
 
 % 本附录深结果的证明状态分别在正文标明。
 
@@ -58,10 +67,21 @@
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-parametric-quadratic}
-消去量词 \(\exists y\,(y^2+ay+b=0)\)，并消去 \(\forall y\,(y^2+ay+b>0)\)。
+设 \(R\) 为实闭域，\(a,b\in R\)。消去量词 \(\exists y\in R\,(y^2+ay+b=0)\)，并消去 \(\forall y\in R\,(y^2+ay+b>0)\)。
 \end{exercise}
 \begin{solution}
 配方为 \((y+a/2)^2+b-a^2/4\)。第一个条件等价于 \(a^2-4b\ge0\)，第二个等价于 \(4b-a^2>0\)：必要性在 \(y=-a/2\) 检验，充分性由平方非负。实闭性用于第一式的平方根存在。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:G-trace-cubic}
+设 \(R\) 为实闭域，\(b\in R\setminus\{0\}\)，\(P(T)=T^3-bT\)，\(B=R[T]/(P)\)。在基 \(1,T,T^2\) 上计算迹形式 \(H_1(u,v)=\operatorname{Tr}_{B/R}(uv)\) 的矩阵，用其符号差求 \(P\) 的实根数。\(b=0\) 时应怎样先处理 \(P\)？
+\end{exercise}
+\begin{solution}
+由 \(T^3=bT\)，各次幂的迹依次为 \(3,0,2b,0,2b^2\)，所以
+\[
+H_1=\begin{pmatrix}3&0&2b\\0&2b&0\\2b&0&2b^2\end{pmatrix}.
+\]
+第一、第三坐标上的二阶块首个主子式为 \(3>0\)，行列式为 \(2b^2>0\)，故贡献两个正惯性指数。第二坐标的系数为 \(2b\)。当 \(b>0\) 时符号差为三；当 \(b<0\) 时为一。\(b\ne0\) 保证 \(P\) 平方自由，由迹形式计数引理，实根数分别为三与一。若 \(b=0\)，先把 \(T^3\) 换成平方自由部分 \(T\)，其迹矩阵为 \((1)\)，于是不同实根只有一个。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-real-radical-powers}
@@ -108,6 +128,15 @@
 \end{exercise}
 \begin{solution}
 直接相加得 \(n-\sum_i x_i^2=\sum_i g_i\in M(g)\)。每个系数一都是平方，故这是精确证书；相应的可行集是闭立方体。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:G-module-preordering-product}
+在 \(\mathbb R[x,y]\) 中取约束 \(g_1=x\)、\(g_2=y\)。分别写出二次模 \(M(g_1,g_2)\) 与预序 \(T(g_1,g_2)\) 的一般元素，证明 \(xy\in T(g_1,g_2)\)，但 \(xy\notin M(g_1,g_2)\)。
+\end{exercise}
+\begin{solution}
+二次模中的元素形如 \(\sigma_0+x\sigma_1+y\sigma_2\)，预序中的元素形如 \(\sigma_0+x\sigma_1+y\sigma_2+xy\sigma_{12}\)，各 \(\sigma\) 都是多项式平方和。取 \(\sigma_{12}=1\)、其余为零，便得 \(xy\in T(g_1,g_2)\)。
+
+若 \(xy=\sum_jp_j^2+x\sum_jq_j^2+y\sum_jr_j^2\)，代入原点得到每个 \(p_j\) 的常数项为零。再比较一次项：\(x\)、\(y\) 的系数分别为 \(\sum_jq_j(0,0)^2\)、\(\sum_jr_j(0,0)^2\)，都必须为零，故各 \(q_j,r_j\) 的常数项也为零。因此后两组项的次数至少为三。二次齐次部分只能是 \(\sum_j(a_jx+b_jy)^2\)。它的 \(x^2\)、\(y^2\) 系数都为零，迫使全部 \(a_j,b_j\) 为零，却又需要 \(xy\) 系数为一，矛盾。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-strict-positivity-warning}
@@ -169,4 +198,29 @@ Q=\begin{pmatrix}1&0&0&0\\0&1&0&1\\0&0&0&0\\0&1&0&1\end{pmatrix}.
 \begin{pmatrix}1&0&1\\0&1&0\\1&0&1\end{pmatrix}.
 \]
 对系数向量 \((a,b,c)\)，其二次型为 \((a+c)^2+b^2\ge0\)，也等于 \(\int(a+bx+cx^2)^2\,\mathrm{d}\mu\)。这里测度已经给出，所以必要条件的验证不涉及一般矩表示存在性。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:G-localizing-matrix}
+给定实数 \(a,b\)，在次数不超过四的实多项式空间上定义线性泛函 \(L\)，使
+\[
+L(1)=1,\quad L(x)=L(x^3)=0,\quad L(x^2)=a,\quad L(x^4)=b.
+\]
+求由 \(L(q^2)\ge0\)（\(\deg q\le2\)）和 \(L((1-x^2)q^2)\ge0\)（\(\deg q\le1\)）得到的矩阵条件。哪些 \(a,b\) 可由支于 \([-1,1]\) 的概率测度实现这些矩？
+\end{exercise}
+\begin{solution}
+两个矩阵分别为
+\[
+M_2=\begin{pmatrix}1&0&a\\0&a&0\\a&0&b\end{pmatrix},\qquad
+M_{1-x^2}=\begin{pmatrix}1-a&0\\0&a-b\end{pmatrix}.
+\]
+第一个矩阵半正定当且仅当 \(a\ge0\)、\(b\ge a^2\)；第二个半正定当且仅当 \(a\le1\)、\(b\le a\)。任何所求测度都满足这两种积分正性，所以必要条件是
+\[
+0\le a\le1,\qquad a^2\le b\le a.
+\]
+这些条件在本题中也充分。若 \(a=0\)，则 \(b=0\)，取 \(\mu=\delta_0\)。若 \(a>0\)，则 \(b>0\)，令
+\[
+t=\sqrt{\dfrac ba},\qquad w=\dfrac{a^2}{b},\qquad
+\mu=(1-w)\delta_0+\dfrac w2\delta_{-t}+\dfrac w2\delta_t.
+\]
+由参数界，\(0<t\le1\)、\(0<w\le1\)，故这是支于 \([-1,1]\) 的概率测度。对称性使奇数次矩为零，而 \(wt^2=a\)、\(wt^4=b\)，正好给出所需的二次和四次矩。
 \end{solution}

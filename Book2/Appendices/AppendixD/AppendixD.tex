@@ -3,13 +3,13 @@
 % 纲要位置：工作记录/计划纲要.md，第 1669 行。
 
 % 纲要要点（供目录核对）：
-% > 本附录简要介绍代数与泛函分析的联系，聚焦自伴算子代数，即 \(C^*\)-代数与 von Neumann 代数。另需具备的基础知识为 Banach/Hilbert 空间、有界算子、算子范数及必要拓扑；完整谱论和表示理论由分析学或专门算子代数教材承担。
+% > 本附录联系代数与泛函分析，介绍 \(C^*\)-代数、GNS 表示及 von Neumann 代数。分析学输入包括 Banach/Hilbert 空间、复 Banach 代数谱论、Hahn--Banach 延拓和紧乘积定理；张量范数极值定理另调用纯态与不可约表示等工具。简要介绍因子的投影类型，不展开完整分类。
 
 \chapter{算子代数：对合、拓扑与表示}
 \label{b2:app:D}
 
 \begin{chapterabstract}
-在复代数上加入对合、范数与完备性以后，模表示的问题转为 Hilbert 空间上的有界表示问题。本附录由矩阵、连续函数和紧算子引入这些结构，说明交换 Gelfand 对偶的含义，构造态的 GNS 表示，并证明含幺自伴算子代数的双交换子定理。整数群和矩阵张量积提供可计算的比较对象，帮助区分代数有限和、范数完备化与弱算子闭包。
+在复代数上加入对合、范数与完备性以后，模表示的问题转为 Hilbert 空间上的有界表示问题。本附录由矩阵、连续函数和紧算子引入这些结构，说明交换 Gelfand 对偶的含义，构造态的 GNS 表示，并证明含幺自伴算子代数的双交换子定理。投影的等价与有限性给出因子的 I、II、III 型；整数群和矩阵张量积则提供可计算的比较对象，帮助区分代数有限和、范数完备化与弱算子闭包。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -17,7 +17,7 @@
 \item 核对对合、范数、完备性及单位元各自的作用，区分有界表示与 Weyl 代数的代数作用。
 \item 理解 Gelfand 变换证明中的谱、紧性与逼近步骤，并在有限集合和正规矩阵上计算函数演算。
 \item 从正泛函构造内积商空间，证明左作用有界并完成 GNS 表示。
-\item 区分三种算子收敛，掌握有限次放大在双交换子证明中的用途。
+\item 区分三种算子收敛，掌握有限次放大在双交换子证明中的用途，并用投影判据区分 I、II、III 型因子。
 \item 比较全群、约化群与群 von Neumann 代数，以及代数张量积与其完备化。
 \end{itemize}
 \end{learninggoals}
@@ -30,13 +30,19 @@
 
 \ProseParagraphBreak
 
-本附录需要 Banach 与 Hilbert 空间、有界算子及伴随、闭子空间正交投影、完备化和基本拓扑。圆周例子另用 Fourier--Plancherel 定理\footnote{傅里叶（Joseph Fourier，1768-1830），法国数学家及物理学家，建立傅里叶级数理论，研究热传导。普朗歇雷尔（Michel Plancherel，1885-1967），瑞士数学家，证明傅里叶变换的等距定理。}与 Stone--Weierstrass 定理\footnote{斯通（Marshall Harvey Stone，1903-1989），美国数学家，研究算子理论与函数逼近。魏尔斯特拉斯（Karl Theodor Wilhelm Weierstrass，1815-1897），德国数学家，奠定严格的实分析基础，并证明多项式逼近定理。}。矩阵与有限集合的例子只涉及初等计算，其余部分则实质地使用上述分析学基础。内积沿用本卷 Hermitian 型的约定：第一变量共轭线性、第二变量线性。
+本附录使用 Banach 与 Hilbert 空间、有界算子及伴随、闭子空间的正交投影、完备化和紧 Hausdorff 空间的基础。谱与态的论证还要用 Liouville 定理\footnote{刘维尔（Joseph Liouville，1809-1882），法国数学家，研究分析、数论与微分方程。}、Hahn--Banach 保范延拓定理\footnote{哈恩（Hans Hahn，1879-1934），奥地利数学家，研究泛函分析与集合论。}及紧空间的乘积定理。谱半径公式与解析谱映射在\secref{b2:sec:D02}中准确陈述，证明所需的复变积分参见所引谱论文献。函数逼近使用 Stone--Weierstrass 定理\footnote{斯通（Marshall Harvey Stone，1903-1989），美国数学家，研究算子理论与函数逼近。魏尔斯特拉斯（Karl Theodor Wilhelm Weierstrass，1815-1897），德国数学家，奠定严格的实分析基础，并证明多项式逼近定理。}；圆周例子另用 Fourier--Plancherel 定理\footnote{傅里叶（Joseph Fourier，1768-1830），法国数学家及物理学家，建立傅里叶级数理论，研究热传导。普朗歇雷尔（Michel Plancherel，1885-1967），瑞士数学家，证明傅里叶变换的等距定理。}。内积沿用本卷 Hermitian 型的约定：第一变量共轭线性、第二变量线性。
 
 \ProseParagraphBreak
-一般交换 Gelfand 定理给出证明概要，略去复变谱论的积分推导；在此基础上证明连续函数演算、抽象正性、达到范数的态、GNS 构造、含幺与非含幺的忠实表示，以及双交换子定理。张量范数的证明概要另说明纯态延拓与最小性的关系。进一步阅读采用 Blackadar 的《Operator Algebras》\cite[\nopp I.9.1; II.2; II.6.4; II.9; II.10.2]{Blackadar2006OperatorAlgebras}，所引节号及结果编号依据作者公开的校订本；正式专著与作者校订稿的版本信息分别记录于书目与资料目录。
+从这些分析结果出发，连续函数演算使谱上的非负函数变成代数中的正元素；态由此给出内积，GNS 构造再将左乘变成有界算子。另一组问题从算子收敛出发，研究交换关系如何确定弱闭包。两组论证的主要依赖见\cref{b2:fig:operator-dependencies}。张量范数的极值定理还需纯态与不可约表示、态空间的弱星紧性、紧凸集的极点与分离，以及非含幺代数的近似单位；\secref{b2:sec:D05}引用该定理，并说明含幺情形的最大性。
 
-\ProseParagraphBreak
-本附录从代数进入分析学。前文的模和代数表示只要求代数运算相容；这里还须检查算子有界性，并区分范数闭包与强、弱算子闭包。
+\begin{figure}[htbp]
+\centering
+\input{Figures/AppendixDDependencies}
+\caption[算子代数的主要依赖]{算子代数的主要依赖。箭头表示论证所用的结构或结果；张量范数极值还需要图中另列的分析学输入。}
+\label{b2:fig:operator-dependencies}
+\end{figure}
+
+进一步阅读可用 Blackadar 的专著《Operator Algebras》\cite{Blackadar2006OperatorAlgebras}。本附录的具体编号依据作者的 2017 年校订本\cite[\nopp I.9.1; II.2; II.6.4; II.9; III.1]{Blackadar2017OperatorAlgebrasCorrected}。
 
 \input{Appendices/AppendixD/SectionD01}
 \input{Appendices/AppendixD/SectionD02}
@@ -48,7 +54,7 @@
 \(C^*\) 恒等式把代数平方与算子大小联系起来，谱论使 \(x^*x\) 的非负性成为可证明的性质。Hahn--Banach 延拓构造达到范数的态，并由单位元处的取值核对正性。GNS 的商空间消除零长度向量，左作用的不等式保证完备化后仍是有界表示；全部态的直和随后得到忠实表示。
 
 \ProseParagraphBreak
-双交换子定理说明，含幺自伴算子代数的全部交换关系决定其强、弱算子闭包。证明必须同时处理有限多个向量，不能只给每个向量分别选择一个逼近算子。范数闭包通常更小，故 \(C^*\)-代数与 von Neumann 代数保留的信息不同。
+双交换子定理说明，含幺自伴算子代数的全部交换关系决定其强、弱算子闭包。证明必须同时处理有限多个向量，不能只给每个向量分别选择一个逼近算子。范数闭包通常更小，故 \(C^*\)-代数与 von Neumann 代数保留的信息不同。因子的类型进一步取决于代数内部投影的等价关系：有无极小投影、有无非零有限投影，将 I、II、III 型区分开来；有限性并不等于所表示子空间的有限维性。
 
 \ProseParagraphBreak
 整数群把这种差异具体化为 Laurent 多项式、圆周连续函数与本质有界函数。张量积也先有代数构造，后有范数选择与完备化。它们与本卷模论和中心单结构相连，但不能由纯代数泛性质独自决定全部拓扑结论。

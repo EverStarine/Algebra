@@ -1,14 +1,24 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### A.2 数域整数环、判别式与理想分解
+% 纲要位置：工作记录/计划纲要.md:2785
 
 \section{数域整数环、判别式与理想分解}
 \label{b3:sec:A02}
 
-% 纲要细目（与计划纲要同步）：
-% * 数域整数环、判别式与理想分解的例题
-%
-% <!-- 短节：不设小节 -->
+% 纲要内容（仅作写作计划，尚非教材正文）：
+% * 复用第10章的理想唯一分解，说明局部指数及有限商环
+% * 整基、域判别式、子环指数平方公式与二次数域整数环
+% * 理想范数的乘法性、剩余次数与分歧指数；Dedekind--Kummer 的指数互素条件及局部长度证明
+% * 惰性、分歧与完全分裂的区别；判别式检测分歧
+% #### A.2.1 理想唯一分解
+% #### A.2.2 整基与判别式
+% #### A.2.3 素数分解与 Dedekind--Kummer 定理
+% #### A.2.4 判别式与分歧
 
+在 \(\mathbb Q(\sqrt5)\) 的整数环中，有理素数 \(2\) 仍生成一个素理想，\(5\) 生成的理想却是一个素理想的平方，而 \(11\) 生成的理想分成两个不同的素理想。要区别这些情形，单看整数的因子分解已不够：必须计算素理想的幂指数以及相应剩余域的大小。整数环的一组整基让这些局部数据能够与整个数域的次数相比较，判别式则检测哪些素数出现重复的素理想因子。
+
+\subsection{理想唯一分解}
+\label{b3:subsec:A02:01}
 
 \begin{theorem}\label{b3:thm:integer-ideal-factorization}
 设 \(K\) 为数域，\(\mathcal O_K\) 为其代数整数环，\(R=\mathcal O_K\)。每个非零真理想 \(I\subset R\) 唯一写成
@@ -26,15 +36,17 @@ IR_{\mathfrak p_i}=(\mathfrak p_iR_{\mathfrak p_i})^{a_i}
 唯一确定。第10章已经证明，这些局部等式通过局部检测给出所列全局唯一分解。
 \end{proof}
 
-一般等价条件可查松村英之\cite[Theorem 11.6, pp. 82--84]{Matsumura1989CommutativeRingTheory}。此处使用第10章建立的理论，接下来计算它在数域中的具体数据。
+一般等价条件可查 Matsumura 的分解定理\cite[Theorem 11.6, pp. 82--84]{Matsumura1989CommutativeRingTheory}。在数域整数环中，商环还是有限集合，因此理想分解也能给出可计算的整数。
+
+\subsection{整基与判别式}
+\label{b3:subsec:A02:02}
 
 \begin{definition}\label{b3:def:integer-discriminant-norm}
-设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为 \(K\) 的代数整数环。若 \(\omega_1,\ldots,\omega_n\) 是 \(\mathcal O_K\) 的一组 \(\mathbb Z\)-基，则称之为一组\term[integralbasis]{整基}[integral basis]。整数
+设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为 \(K\) 的代数整数环。若 \(\omega_1,\ldots,\omega_n\) 是 \(\mathcal O_K\) 的一组 \(\mathbb Z\)-基，则称之为一组\term[integralbasis]{整基}[integral basis]。由这组整基定义的整数
 \[
 d_K=\det\bigl(\operatorname{Tr}_{K/\mathbb Q}(\omega_i\omega_j)\bigr)
 \]
-称为 \(K\) 的判别式。对非零理想 \(I\subseteq\mathcal O_K\)，记
-\(N(I)=|\mathcal O_K/I|\)，称为 \(I\) 的\term[idealnorm]{理想范数}[ideal norm]。
+称为 \(K\) 的判别式。
 \end{definition}
 
 两组整基之间的变换矩阵行列式为 \(\pm1\)，迹矩阵的行列式乘以该行列式的平方，所以 \(d_K\) 与整基无关。更一般地，若子环 \(S\subseteq\mathcal O_K\) 也是秩 \(n\) 的整数格，则
@@ -58,7 +70,7 @@ d,&d\equiv1\pmod4,\\
 4d,&d\equiv2,3\pmod4.
 \end{cases}
 \]
-为证明整数环公式，写一个整元素为 \(r+s\sqrt d\)。迹和范数给出
+为证明整数环公式，写一个整元素为 \(r+s\sqrt d\)，其中 \(r,s\in\mathbb Q\)。迹和范数给出
 \(a=2r\in\mathbb Z\) 以及 \(r^2-ds^2\in\mathbb Z\)。令 \(b=2s\in\mathbb Q\)，则 \(db^2\in\mathbb Z\)。若 \(b=u/v\) 为既约分数，便有 \(v^2\mid d\)，平方自由性迫使 \(v=1\)。于是
 \[
 a,b\in\mathbb Z,\qquad a^2-db^2\equiv0\pmod4.
@@ -66,28 +78,62 @@ a,b\in\mathbb Z,\qquad a^2-db^2\equiv0\pmod4.
 若 \(d\equiv2,3\pmod4\)，\(b\) 不可能为奇数，进而 \(a,b\) 都为偶数；若 \(d\equiv1\pmod4\)，条件等价于 \(a,b\) 同奇偶。反过来，这些条件使迹、范数均为整数，所以相应元素满足首一二次整系数方程。最后在所列整基中直接计算迹矩阵，即得判别式。
 \end{example}
 
+\subsection{素数分解与 Dedekind--Kummer 定理}
+\label{b3:subsec:A02:03}
+
+\begin{definition}\label{b3:def:integer-ideal-norm}
+设 \(K\) 为数域，\(\mathcal O_K\) 为其代数整数环，\(I\subseteq\mathcal O_K\) 为非零理想。有限商环 \(\mathcal O_K/I\) 的基数
+\[
+N(I)=|\mathcal O_K/I|
+\]
+称为 \(I\) 的\term[idealnorm]{理想范数}[ideal norm]。其中 \(N(\mathcal O_K)=1\)。
+\end{definition}
+
 \begin{proposition}\label{b3:prop:prime-decomposition-degree}
 设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(p\) 为有理素数，并写
 \[
-p\mathcal O_K=\prod_{i=1}^r\mathfrak p_i^{e_i}.
+p\mathcal O_K=\prod_{i=1}^r\mathfrak p_i^{e_i},
 \]
-则 \(\mathcal O_K/\mathfrak p_i\) 是某个 \(\mathbb F_{p^{f_i}}\)，且
+其中 \(\mathfrak p_i\) 为互不相同的非零素理想，\(e_i\) 为正整数。则存在正整数 \(f_i\)，使 \(\mathcal O_K/\mathfrak p_i\cong\mathbb F_{p^{f_i}}\)，且对每个非负整数 \(a\)，有
 \[
 \sum_{i=1}^r e_if_i=n,\qquad
 N(\mathfrak p_i^a)=p^{af_i}.
 \]
-称 \(e_i\) 为分歧指数，\(f_i\) 为剩余次数；若某个 \(e_i>1\)，则称 \(p\) 在 \(K\) 中分歧。
+称 \(e_i\) 为 \(\mathfrak p_i\) 在 \(p\) 上方的分歧指数，称 \(f_i\) 为其剩余次数。
 \end{proposition}
 \begin{proof}
-每个剩余域是有限的 \(\mathbb F_p\)-扩张。对于固定的 \(\mathfrak p_i\)，模
-\(\mathfrak p_i^j/\mathfrak p_i^{j+1}\) 在其余极大理想处为零，在 \(\mathfrak p_i\) 处则由 DVR 的一个参数的 \(j\) 次幂生成，故它是剩余域上的一维空间。这给出范数公式。不同极大理想的幂两两互素，中国剩余定理及 \(R/pR\) 的 \(\mathbb F_p\)-维数 \(n\) 给出
+记 \(R=\mathcal O_K\)。每个剩余域 \(R/\mathfrak p_i\) 都是有限商环 \(R/pR\) 的商，因而是某个有限 \(\mathbb F_p\)-扩张。固定 \(i\)，对每个非负整数 \(j\)，令
+\[
+V_j=\mathfrak p_i^j/\mathfrak p_i^{j+1}.
+\]
+由于 \(\mathfrak p_iV_j=0\)，\(V_j\) 本来就是 \(R/\mathfrak p_i\)-向量空间。任意 \(s\notin\mathfrak p_i\) 在剩余域中可逆，因此局部化映射 \(V_j\rightarrow(V_j)_{\mathfrak p_i}\) 是同构。若 \(\pi_i\) 为 DVR \(R_{\mathfrak p_i}\) 的统一化元，则
+\[
+(V_j)_{\mathfrak p_i}
+\cong\pi_i^jR_{\mathfrak p_i}/\pi_i^{j+1}R_{\mathfrak p_i}
+\cong R_{\mathfrak p_i}/\mathfrak p_iR_{\mathfrak p_i}
+\cong R/\mathfrak p_i.
+\]
+所以 \(V_j\) 的剩余域维数为一，基数为 \(p^{f_i}\)。对 \(R/\mathfrak p_i^a\) 使用由理想幂给出的有限滤过，逐层计算基数，得到 \(N(\mathfrak p_i^a)=p^{af_i}\)；\(a=0\) 时公式也成立。不同极大理想的幂两两互素，中国剩余定理及 \(R/pR\) 的 \(\mathbb F_p\)-维数 \(n\) 给出
 \[
 p^n=|R/pR|=\prod_i|R/\mathfrak p_i^{e_i}|=p^{\sum_i e_if_i}.
 \]
 \end{proof}
 
-\begin{proposition}\label{b3:prop:monogenic-prime-factorization}
-设 \(K=\mathbb Q(\theta)\)，\(\theta\) 为整元素，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(f\in\mathbb Z[T]\) 为 \(\theta\) 的最小多项式。设素数 \(p\) 不整除 \([\mathcal O_K:\mathbb Z[\theta]]\)，并在 \(\mathbb F_p[T]\) 中分解
+同样由中国剩余定理，若非零理想 \(I=\prod_i\mathfrak p_i^{a_i}\)，则 \(N(I)=\prod_iN(\mathfrak p_i)^{a_i}\)。理想相乘使各素理想指数相加，因此 \(N(IJ)=N(I)N(J)\)。
+
+\begin{definition}\label{b3:def:numberfield-prime-splitting}
+设 \(K/\mathbb Q\) 的次数为 \(n\)，\(\mathcal O_K\) 为其代数整数环，\(p\) 为有理素数，并写
+\[
+p\mathcal O_K=\prod_{i=1}^r\mathfrak p_i^{e_i},\qquad
+f_i=[\mathcal O_K/\mathfrak p_i:\mathbb F_p],
+\]
+其中各 \(\mathfrak p_i\) 互不相同。若某个 \(e_i>1\)，则称 \(p\) 在 \(K\) 中\term[fenqi]{分歧}[ramified]；若所有 \(e_i=1\)，则称其未分歧。若 \(r=1\) 且 \(e_1=1\)（此时 \(f_1=n\)），则称 \(p\) 在 \(K\) 中\term[duoxing]{惰性}[inert]。若 \(r=n\) 且所有 \(e_i=f_i=1\)，则称 \(p\) 在 \(K\) 中完全分裂。
+\end{definition}
+
+要计算上述指数和剩余次数，可以将整数环的关系式模 \(p\) 约化。若一个整元素 \(\theta\) 生成的子环 \(\mathbb Z[\theta]\) 在 \(\mathcal O_K\) 中的指数不被 \(p\) 整除，这次约化就不会丢失整数环模 \(p\) 的信息。下面的 Dedekind--Kummer 定理把多项式的因子分解转化为素理想分解。\footnote{库默（Ernst Eduard Kummer，1810-1893），德国数学家，创立理想数理论，并利用它研究 Fermat 方程。}
+
+\begin{proposition}[Dedekind--Kummer]\label{b3:prop:monogenic-prime-factorization}
+设 \(K=\mathbb Q(\theta)\)，\(\theta\) 为整元素，\(\mathcal O_K\) 为 \(K\) 的代数整数环，\(f\in\mathbb Z[T]\) 为 \(\theta\) 的首一最小多项式。设素数 \(p\) 不整除 \([\mathcal O_K:\mathbb Z[\theta]]\)，并在 \(\mathbb F_p[T]\) 中分解
 \[
 \overline f=\prod_{i=1}^r g_i^{e_i},
 \]
@@ -103,21 +149,35 @@ p\mathcal O_K=\prod_{i=1}^r
 \[
 R/pR\simeq S/pS\simeq\mathbb F_p[T]/(\overline f).
 \]
-右端的极大理想对应各 \(g_i\)，剩余域次数为 \(\deg g_i\)，故素理想正如所列。中国剩余定理把右端分成 \(\mathbb F_p[T]/(g_i^{e_i})\)；其在唯一极大理想处的合成长度为 \(e_i\)。另一方面，若 \(pR\) 在 \(\mathfrak p_i\) 处的赋值为 \(a_i\)，则 DVR 商 \(R_{\mathfrak p_i}/pR_{\mathfrak p_i}\) 的长度为 \(a_i\)。比较得 \(a_i=e_i\)。
+右端的极大理想对应各 \(g_i\)，剩余域次数为 \(\deg g_i\)，故 \(R\) 中位于 \(p\) 上方的素理想恰为 \(\mathfrak p_i=(p,\widetilde g_i(\theta))\)。在相应极大理想处局部化时，其余 \(g_j\) 都变为单位，因此有局部环同构
+\[
+(R/pR)_{\mathfrak p_i}
+\cong R_{\mathfrak p_i}/pR_{\mathfrak p_i}
+\cong\mathbb F_p[T]_{(g_i)}/(g_i^{e_i}).
+\]
+由理想唯一分解，存在正整数 \(a_i\)，使
+\[
+pR_{\mathfrak p_i}
+=(\mathfrak p_iR_{\mathfrak p_i})^{a_i}.
+\]
+DVR 商 \(R_{\mathfrak p_i}/pR_{\mathfrak p_i}\) 按其极大理想的幂滤过，有 \(a_i\) 个非零层，各层均为其剩余域上的一维空间，所以合成长度为 \(a_i\)。右端按 \(g_i\) 的幂滤过，有 \(e_i\) 个非零层，各层均同构于 \(\mathbb F_p[T]/(g_i)\)，所以合成长度为 \(e_i\)。局部环同构保持合成长度，故 \(a_i=e_i\)，得到所述分解。
 \end{proof}
 
 \begin{example}\label{b3:exm:quadratic-five-splitting}
 在 \(K=\mathbb Q(\sqrt5)\) 中取 \(\omega=(1+\sqrt5)/2\)，则
-\(\mathcal O_K=\mathbb Z[\omega]\)，最小多项式为 \(T^2-T-1\)。模 \(2\) 不可约，故 \(2\mathcal O_K\) 本身为素理想，剩余域为 \(\mathbb F_4\)。模 \(5\) 等于 \((T-3)^2\)，故
+\(\mathcal O_K=\mathbb Z[\omega]\)，最小多项式为 \(T^2-T-1\)。模 \(2\) 不可约，故 \(2\mathcal O_K\) 本身为素理想，剩余域为 \(\mathbb F_4\)，其分歧指数为 \(1\)、剩余次数为 \(2\)，所以 \(2\) 惰性。模 \(5\) 等于 \((T-3)^2\)，故
 \[
-5\mathcal O_K=(5,\omega-3)^2.
+5\mathcal O_K=(5,\omega-3)^2,
 \]
-模 \(11\) 的两个根为 \(4,8\)，所以
+这里分歧指数为 \(2\)、剩余次数为 \(1\)。模 \(11\) 的两个根为 \(4,8\)，所以
 \[
-11\mathcal O_K=(11,\omega-4)(11,\omega-8).
+11\mathcal O_K=(11,\omega-4)(11,\omega-8),
 \]
-三个素数分别展示不分裂、分歧和完全分裂。若改用 \(\mathbb Z[\sqrt5]\)，它的指数为 \(2\)、判别式为 \(20\)；模 \(2\) 的重因子不能用于以上判据，因为指数条件恰好在这里失败。
+两个素理想的分歧指数和剩余次数都为 \(1\)，所以 \(11\) 完全分裂。三个素数分别展示惰性、分歧和完全分裂。若改用 \(\mathbb Z[\sqrt5]\)，它的指数为 \(2\)、判别式为 \(20\)；模 \(2\) 的重因子不能用于以上判据，因为指数条件恰好在这里失败。
 \end{example}
+
+\subsection{判别式与分歧}
+\label{b3:subsec:A02:04}
 
 \begin{proposition}\label{b3:prop:discriminant-ramification}
 设 \(K\) 为数域，\(d_K\) 为其整数环 \(\mathcal O_K\) 的判别式，\(p\) 为有理素数。则 \(p\) 在 \(K\) 中分歧，当且仅当 \(p\mid d_K\)。

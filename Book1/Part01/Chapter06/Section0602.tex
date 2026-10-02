@@ -19,7 +19,15 @@
 \subsection{自同构作用与外半直积}
 \label{b1:subsec:0602:01}
 
-设想把元素写成“\(N\) 中的部分在左、\(H\) 中的部分在右”。相乘时，要把第二个元素的 \(N\) 部分移过第一个元素的 \(H\) 部分；由 \(H\) 所给出的自同构便出现在这个位置。
+设想在一个群 \(G\) 中，\(N\) 是正规子群，\(H\) 是子群，每个元素都能唯一写成 \(nh\)，其中 \(n\in N\)、\(h\in H\)。相乘时，要把第二个元素的 \(N\) 部分移过第一个元素的 \(H\) 部分。插入 \(h^{-1}h=1\)，得到
+\[
+(nh)(n'h')=n(hn'h^{-1})hh'.
+\]
+正规性使 \(hn'h^{-1}\) 仍在 \(N\) 中；把这个共轭作用记为 \(\alpha_h(n')\)，乘积的坐标就必须是
+\[
+(n,h)(n',h')=\bigl(n\cdot\alpha_h(n'),hh'\bigr).
+\]
+下面反过来，只给定两个群和一个自同构作用，用这一公式构造群。
 
 \begin{definition}\label{b1:def:semidirect-product}
 设 \(N,H\) 为群，给定群同态 \(\alpha:H\rightarrow\operatorname{Aut}(N)\)，并记 \(\alpha_h=\alpha(h)\)。也就是说，每个 \(\alpha_h:N\rightarrow N\) 是自同构，且 \(\alpha_1=\operatorname{id}_N\)、\(\alpha_{hh'}=\alpha_h\circ\alpha_{h'}\)。在集合 \(N\times H\) 上规定乘法
@@ -39,18 +47,33 @@ n\cdot\alpha_h(n')\alpha_{hh'}(n''),
 n\cdot\alpha_h\bigl(n'\cdot\alpha_{h'}(n'')\bigr)
 =n\cdot\alpha_h(n')(\alpha_h\alpha_{h'})(n''),
 \]
-两者相等，使用了 \(\alpha_h\) 保持乘法和 \(\alpha_{hh'}=\alpha_h\alpha_{h'}\)；第二坐标的结合律来自 \(H\)。单位是 \((1,1)\)，逆元公式为
+两者相等，使用了 \(\alpha_h\) 保持乘法和 \(\alpha_{hh'}=\alpha_h\alpha_{h'}\)；第二坐标的结合律来自 \(H\)。由 \(\alpha_1=\operatorname{id}_N\) 及 \(\alpha_h(1)=1\)，\((1,1)\) 是单位。求 \((n,h)\) 的右逆时，第二坐标必须是 \(h^{-1}\)，而第一坐标 \(x\) 须满足
+\[
+(n,h)(x,h^{-1})=(1,1)
+\quad\Longleftrightarrow\quad
+n\cdot\alpha_h(x)=1.
+\]
+因此 \(\alpha_h(x)=n^{-1}\)，即 \(x=\alpha_h^{-1}(n^{-1})\)。因为 \(\alpha\) 是群同态，
+\[
+\alpha_h\alpha_{h^{-1}}=\alpha_{h^{-1}}\alpha_h
+=\alpha_1=\operatorname{id}_N,
+\]
+所以 \(\alpha_h^{-1}=\alpha_{h^{-1}}\)，得到
 \[
 (n,h)^{-1}=\bigl(\alpha_{h^{-1}}(n^{-1}),h^{-1}\bigr),
 \]
-代入左右乘积均得到 \((1,1)\)。
+这里把逆自同构写成 \(\alpha_{h^{-1}}\)，用到的是 \(\alpha\) 保持乘法，而不只是每个 \(\alpha_h\) 都为自同构。上述元素也为左逆，因为
+\[
+\bigl(\alpha_{h^{-1}}(n^{-1}),h^{-1}\bigr)(n,h)
+=\bigl(\alpha_{h^{-1}}(n^{-1})\alpha_{h^{-1}}(n),1\bigr)
+=(1,1).
+\]
 
-\ProseParagraphBreak
 嵌入 \(n\mapsto(n,1)\)、\(h\mapsto(1,h)\) 把 \(N,H\) 识别为子群；投影 \((n,h)\mapsto h\) 是满同态，核为 \(N\times\{1\}\)，故这个副本的 \(N\) 正规。两种嵌入满足
 \begin{equation}\label{b1:eq:semidirect-conjugation}
 (1,h)(n,1)(1,h)^{-1}=\bigl(\alpha_h(n),1\bigr).
 \end{equation}
-此外，每个元素唯一写为 \((n,1)(1,h)\)。这些关系也给出半直积的泛性质。
+此外，每个元素唯一写为 \((n,1)(1,h)\)，所以一个同态在这两个坐标子群上的限制已经决定它在全群上的值。给定到同一个群 \(K\) 的同态 \(u:N\rightarrow K\) 和 \(v:H\rightarrow K\)，除了各自保持因子内部的乘法，还必须保留\eqref{b1:eq:semidirect-conjugation}中的共轭关系。这正是下面映射性质里的相容条件；证明将说明，它也是存在所需同态的充分条件。
 
 \begin{proposition}[半直积的映射性质]\label{b1:prop:semidirect-universal}
 设 \(N,H,K\) 为群，\(\alpha:H\rightarrow\operatorname{Aut}(N)\) 为群同态，并由此构造半直积 \(N\rtimes_\alpha H\)。给定群同态 \(u:N\rightarrow K\)、\(v:H\rightarrow K\)，存在群同态
@@ -92,15 +115,26 @@ u(n)v(h)u(n')v(h')
 \begin{proof}
 正规性保证 \(\alpha_h\) 取值于 \(N\)，其逆为 \(\alpha_{h^{-1}}\)，且共轭保持乘法；\(\alpha_{hh'}=\alpha_h\alpha_{h'}\) 由直接计算成立。
 
-现在
+条件 \(NH=G\) 保证每个 \(g\in G\) 至少有一种表达 \(g=nh\)，所以 \((n,h)\mapsto nh\) 满射。条件 \(N\cap H=\{1_G\}\) 则保证坐标唯一：若 \(nh=n'h'\)，则
 \[
-(nh)(n'h')=n(hn'h^{-1})hh'=n\cdot\alpha_h(n')hh',
+n'^{-1}n=h'h^{-1}\in N\cap H=\{1_G\},
 \]
-所以映射为同态。\(NH=G\) 给出满射；若 \(nh=n'h'\)，则
-\(n'^{-1}n=h'h^{-1}\in N\cap H\)，故 \(n=n'\)、\(h=h'\)，映射单射。
+故 \(n=n'\)、\(h=h'\)，映射单射。
+
+最后计算乘法：
+\[
+(nh)(n'h')=n(hn'h^{-1})hh'=n\cdot\alpha_h(n')hh'.
+\]
+因此这个双射也保持半直积乘法，是群同构。
 \end{proof}
 
-设 \(G\) 为群，\(N\trianglelefteq G\)、\(H\leq G\)。如果 \(N\cap H=\{1_G\}\) 且 \(NH=G\)，则将 \(G\) 称为 \(N,H\) 的\term[nei-banzhiji]{内半直积}[internal semidirect product]，并将 \(H\) 称为 \(N\) 的一个\term[buqun]{补群}[complement]。直积是作用平凡的半直积：当 \(\alpha_h(n)=n\) 时，乘法恢复为逐坐标乘法。反过来，若此内分解中的 \(H\) 也正规，则满足\cref{b1:prop:internal-direct-product}的全部条件；该命题证明中的计算给出 \(hnh^{-1}n^{-1}\in N\cap H=\{1\}\)，故 \(\alpha_h(n)=n\)，作用便平凡。
+设 \(G\) 为群，\(N\trianglelefteq G\)、\(H\leq G\)。如果 \(N\cap H=\{1_G\}\) 且 \(NH=G\)，则将 \(G\) 称为 \(N,H\) 的\term[nei-banzhiji]{内半直积}[internal semidirect product]，并将 \(H\) 称为 \(N\) 的一个\term[buqun]{补群}[complement]。这一分解不仅说 \(N,H\) 生成 \(G\)，还为每个元素给出唯一的 \(N\)-坐标与 \(H\)-坐标。
+
+\ProseParagraphBreak
+补群是一种附加选择。仅有 \(N\trianglelefteq G\) 并不保证补群存在，即使存在也未必唯一；下面仿射群的例子将展示不同的补群。补群的存在与下一节定义的扩张分裂相联系，\cref{b1:thm:split-extension-semidirect}将给出精确的等价条件。
+
+\ProseParagraphBreak
+直积是作用平凡的半直积：当 \(\alpha_h(n)=n\) 时，乘法恢复为逐坐标乘法。反过来，若此内分解中的 \(H\) 也正规，则满足\cref{b1:prop:internal-direct-product}的全部条件；该命题证明中的计算给出 \(hnh^{-1}n^{-1}\in N\cap H=\{1\}\)，故 \(\alpha_h(n)=n\)，作用便平凡。
 
 \ProseParagraphBreak
 外半直积从群和作用制造新群，内半直积则在一个既有群中验证能否如此分解。符号 \(N\rtimes H\) 仅省略了已经说明的作用，不表示同一对抽象群只有一种半直积；例如 \(C_3\) 与 \(C_2\) 的平凡作用给出 \(C_6\)，取逆作用给出 \(S_3\)。
@@ -130,7 +164,20 @@ x\longmapsto aa'x+(b+ab').
 \Biggl\{\begin{pmatrix}a&b\\0&1\end{pmatrix}
 \ \Bigg|\ a\neq0,\ b\in\mathbb R\Biggr\}.
 \]
-平移是正规子群，固定原点的伸缩给出一个补群。换一个原点会换一个补群，但整个仿射群并不因此改变。
+平移组成正规子群 \(T=\{\,(b,1)\mid b\in\mathbb R\,\}\)，固定 \(0\) 的伸缩组成子群 \(L_0=\{\,(0,a)\mid a\in\mathbb R^\times\,\}\)。由 \((b,a)=(b,1)(0,a)\) 及 \(T\cap L_0=\{(0,1)\}\)，\(L_0\) 是 \(T\) 的一个补群。
+
+\ProseParagraphBreak
+若把原点改为 \(c\in\mathbb R\)，相应的伸缩为
+\[
+f_{a,c}(x)=a(x-c)+c=ax+(1-a)c,
+\qquad a\in\mathbb R^\times.
+\]
+记这些变换组成的集合为 \(L_c\)，并令 \(\tau_c(x)=x+c\)、\(f_a(x)=ax\)。直接计算得
+\[
+(\tau_c\circ f_a\circ\tau_c^{-1})(x)=a(x-c)+c,
+\qquad L_c=\tau_c L_0\tau_c^{-1}.
+\]
+由于 \(\tau_c\in T\) 且 \(T\) 正规，共轭把 \(T\) 保持为自身，因而也把补群 \(L_0\) 变成补群 \(L_c\)。不同的 \(c\) 给出不同的补群：\(L_c\) 中斜率为 \(-1\) 的变换是 \(x\mapsto-x+2c\)，它确定了 \(c\)。所以换原点改变的是补群的选择，而整个仿射群保持不变。
 
 \ProseParagraphBreak
 \cref{b1:thm:groups-order-pq}中的乘法现在可写成
