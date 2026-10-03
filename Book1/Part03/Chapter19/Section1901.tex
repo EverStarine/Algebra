@@ -9,7 +9,7 @@
 %
 % * 正规且可分的有限扩张
 % * 自同构群与不动域
-% * Artin 不动域定理
+% * Artin 不动域定理；展开最少非零坐标、归一化与系数下降，并在映射空间中解释独立性给出的维数估计
 % * 调用第18.1节已证的域嵌入线性独立性；先完成有限自同构群 \(G\) 作用下 \([L:L^G]=|G|\) 的证明，再进入 Galois 对应
 % * 乘法特征与域嵌入独立性的主要证明统一放在第18.1节；本节专门承担 Artin 不动域定理，说明线性独立性在扩张次数估计中的作用
 %
@@ -22,15 +22,22 @@
 \begin{definition}\label{b1:def:finite-galois-extension}
 设 \(L/K\) 为有限域扩张。如果 \(L/K\) 同时可分且正规，即每个元素在 \(K\) 上的最小多项式没有重根，并且每个在 \(L\) 中有根的 \(K\) 上不可约多项式都在 \(L\) 中分裂，则称 \(L/K\) 为\term[Galois-kuozhang]{Galois 扩张}[Galois extension]。
 \end{definition}
-可分多项式的分裂域提供这类有限扩张。反过来，有限扩张可由有限多个元素生成；若它正规且可分，取这些生成元的最小多项式的乘积，其互异不可约因子的乘积是可分多项式，并且其分裂域正是 \(L\)。所以有限 Galois 扩张也可以等价地描述为可分多项式的分裂域。
+这两个条件分别处理嵌入的数量与像的位置。可分性使最小多项式的根互不相同，保证到代数闭包的不同 \(K\) 嵌入数达到扩张次数；正规性则保证这些嵌入把整个 \(L\) 映到自身。因此两者结合，才把足够多的共轭根选择变成 \(L\) 的自同构。
 
 \ProseParagraphBreak
-\(\mathbb Q(\sqrt2)/\mathbb Q\) 为 Galois 扩张，而 \(\mathbb Q(\sqrt[3]2)/\mathbb Q\) 可分但不正规，因为后者为实域，未包含 \(x^3-2\) 的两个非实根。正特征下，正规性也不能替代可分性：若 \(u\) 在 \(\mathbb F_p\) 上超越，则 \(\mathbb F_p(u)/\mathbb F_p(u^p)\) 是次数为 \(p\) 的纯不可分扩张。它正规却不可分，因而不是 Galois 扩张。
+可分多项式 \(f\in K[x]\) 的分裂域在 \(K\) 上有限，由\cref{b1:prop:splitting-field-exists}得到；它由 \(f\) 的根生成，这些根的最小多项式都是 \(f\) 的因子，因而均可分。\cref{b1:thm:separable-embeddings}保证整个扩张可分，而\cref{b1:thm:normal-embedding-criterion}保证分裂域正规，故它为有限 Galois 扩张。反过来，设 \(L/K\) 有限、正规且可分，取有限生成元 \(L=K(a_1,\ldots,a_r)\)。每个 \(m_{a_i,K}\) 都可分；将这些首一不可约多项式中相同者只保留一次，所得乘积 \(f\) 仍可分，因为两个不同的首一不可约多项式不能有共同根。正规性又保证它们的全部根都属于 \(L\)。这些根生成的域因此包含于 \(L\)，同时包含各 \(a_i\)，也就包含 \(K(a_1,\ldots,a_r)=L\)。所以 \(L\) 恰为 \(f\) 的分裂域。这证明了有限 Galois 扩张也可以等价地描述为可分多项式的分裂域。
+
+\ProseParagraphBreak
+\(\mathbb Q(\sqrt2)/\mathbb Q\) 为 Galois 扩张，而 \(\mathbb Q(\sqrt[3]2)/\mathbb Q\) 可分但不正规，因为后者为实域，未包含 \(x^3-2\) 的两个非实根。正特征下，正规性也不能替代可分性：若 \(u\) 在 \(\mathbb F_p\) 上超越，取 \(L=\mathbb F_p(u)\)、\(K=\mathbb F_p(u^p)\)，则 \([L:K]=p\)，且 \(u\) 的最小多项式在 \(L[X]\) 中分解为
+\[
+X^p-u^p=(X-u)^p.
+\]
+它的系数属于 \(K\)，全部根已在 \(L\)，并由这些根生成 \(L\)，所以 \(L\) 是它的分裂域，扩张正规。但这 \(p\) 个根全部重合，\(u\) 不可分，故这个扩张不是 Galois 扩张。
 
 \subsection{自同构群与不动域}
 \label{b1:subsec:1901:02}
 
-设 \(L/K\) 为域扩张。保持 \(K\) 中每个元素不变的全部 \(L\) 自同构，在复合下组成群 \(\operatorname{Aut}_K(L)\)。如果 \(L/K\) 是 Galois 扩张，则把这个群记为 \(\operatorname{Gal}(L/K)\)，称为扩张 \(L/K\) 的\term[Galois-qun]{Galois 群}[Galois group]。
+设 \(L/K\) 为域扩张。保持 \(K\) 中每个元素不变的全部 \(L\) 自同构，在复合下组成群 \(\operatorname{Aut}_K(L)\)。这个群对任意扩张都有定义。如果 \(L/K\) 是 Galois 扩张，则把它记为 \(\operatorname{Gal}(L/K)\)，称为扩张 \(L/K\) 的\term[Galois-qun]{Galois 群}[Galois group]。本书在未满足 Galois 条件时仍使用 \(\operatorname{Aut}_K(L)\) 这一记号；这并不表示该扩张没有自同构群。
 \symidx{\(\operatorname{Aut}_K(L)\)：保持基域 \(K\) 的 \(L\) 自同构群}
 \symidx{\(\operatorname{Gal}(L/K)\)：Galois 扩张的自同构群}
 
@@ -53,7 +60,7 @@ L^H=\bigl\{\,a\in L\mid \sigma(a)=a\text{ 对每个 }\sigma\in H\,\bigr\}
 \subsection{Artin 不动域定理}
 \label{b1:subsec:1901:03}
 
-以下是\term[Artin-budongyu-dingli]{Artin 不动域定理}[Artin fixed field theorem]。这里首先给定自同构群，并不预先假设对不动域的扩张有限。
+前面从有限扩张 \(L/K\) 出发研究它的自同构；以下\term[Artin-budongyu-dingli]{Artin 不动域定理}[Artin fixed field theorem]反过来，先给域 \(L\) 的有限自同构群 \(G\)，再取 \(K=L^G\)。这里没有预先假设 \(L/K\) 有限：群 \(G\) 的有限性将迫使这个不动域扩张成为有限 Galois 扩张，其次数恰为 \(|G|\)。
 \begin{theorem}[Artin]\label{b1:thm:artin-fixed-field}
 设 \(G\) 是域 \(L\) 的一个有限自同构群，\(K=L^G\)。则 \(L/K\) 是有限 Galois 扩张，并且
 \[
@@ -61,16 +68,47 @@ L^H=\bigl\{\,a\in L\mid \sigma(a)=a\text{ 对每个 }\sigma\in H\,\bigr\}
 \]
 \end{theorem}
 \begin{proof}
-记 \(G=\{\sigma_1,\ldots,\sigma_n\}\)。先证明任意 \(n+1\) 个元素 \(x_1,\ldots,x_{n+1}\in L\) 在 \(K\) 上线性相关。考察以下由 \(n\) 个方程、\(n+1\) 个未知量组成的 \(L\) 系数齐次线性方程组。由于未知量多于方程，它有非零解：
+记 \(G=\{\sigma_1,\ldots,\sigma_n\}\)。次数等式包含两个方向：我们要用线性方程控制 \([L:K]\leq n\)，再用嵌入独立性得到 \(n\leq[L:K]\)。上界的含义是，任意 \(n+1\) 个元素 \(x_1,\ldots,x_{n+1}\in L\) 都在 \(K\) 上线性相关。考察以 \(L\) 为系数域、以 \(c_1,\ldots,c_{n+1}\in L\) 为未知量的齐次方程组：
 \[
-\sum_{j=1}^{n+1}\sigma_i(x_j)c_j=0\qquad(1\leq i\leq n)
+\sum_{j=1}^{n+1}\sigma_i(x_j)c_j=0\qquad(1\leq i\leq n).
 \]
-从全部非零解中取非零坐标数最少者，重新编号并除以最后一个非零坐标，可设 \(c_r=1\)，且 \(c_j=0\) 对 \(j>r\) 成立。对任意 \(\tau\in G\)，将 \(\tau\) 作用到全部方程；由于 \(\tau\sigma_i\) 仍遍历 \(G\)，向量 \(\bigl(\tau(c_j)\bigr)_j\) 也是解。两解之差在第 \(r\) 个坐标及 \(r\) 后均为零。若差非零，其非零坐标比原解更少，矛盾。所以每个 \(c_j\) 被全部 \(\tau\) 固定，即 \(c_j\in K\)。取恒等自同构对应的方程，便得到所需的非平凡 \(K\) 线性关系。于是 \([L:K]\leq n\)，特别扩张有限。
+因为只有 \(n\) 个方程，却有 \(n+1\) 个未知量，存在非零的 \(L\) 解。但这些系数暂时未必在 \(K\) 中，还不能用它得到所需的 \(K\) 线性关系。为了使系数下降到不动域，从全部非零解中取非零坐标数最少者，重新编号，使它的非零坐标恰为前 \(r\) 个。再把整个解除以 \(c_r\)，仍得一个解，并可设 \(c_r=1\)。这个归一化使任何 \(\tau\in G\) 都固定该坐标。
 
-记 \(d=[L:K]\)。所有 \(K\) 线性映射 \(L\rightarrow L\) 构成一个 \(L\) 向量空间：选定 \(K\) 基以后，映射由 \(d\) 个基向量的像任意决定，所以该空间的 \(L\) 维数为 \(d\)。\cref{b1:cor:embedding-independence}说明 \(n\) 个不同的 \(\sigma_i\) 在这个空间中线性无关。因此 \(n\leq d\)，结合前一步得到 \(d=n\)。
+将 \(\tau\) 作用到全部方程，得到
+\[
+\sum_{j=1}^{n+1}(\tau\sigma_i)(x_j)\tau(c_j)=0
+\qquad(1\leq i\leq n).
+\]
+左乘映射 \(\sigma\mapsto\tau\sigma\) 是 \(G\) 的一个排列，逆映射为左乘 \(\tau^{-1}\)；所以上式仅把原来各方程重新排列，向量 \(\bigl(\tau(c_j)\bigr)_j\) 也是原方程组的解。两解之差在第 \(r\) 个坐标为 \(\tau(1)-1=0\)，在 \(r\) 后也均为零。若差非零，它至多有 \(r-1\) 个非零坐标，违背原解的最小选择。因此
+\[
+\tau(c_j)=c_j\quad(\tau\in G),\qquad c_j\in L^G=K.
+\]
+取恒等自同构对应的方程，就有 \(\sum_j x_jc_j=0\)，而 \(c_r=1\) 保证这个 \(K\) 系数关系非平凡。任意 \(n+1\) 个元素都如此，故 \([L:K]\leq n\)，特别地，扩张有限。
 
-对任意 \(a\in L\)，把轨道中的互异元素记作 \(a_1,\ldots,a_s\)。多项式 \(\prod_j(t-a_j)\) 被 \(G\) 固定其每个系数，所以属于 \(K[t]\)，且在 \(L\) 中分裂、没有重根。\(a\) 的最小多项式整除它，也就可分并在 \(L\) 中分裂。因此 \(L/K\) 正规且可分。最后由\cref{b1:prop:galois-automorphism-count}，其全部自同构只有 \(n\) 个，已经包含的 \(G\) 就是全群。
+记 \(d=[L:K]\)，并把所有 \(K\) 线性映射 \(L\rightarrow L\) 组成的空间记为 \(\mathcal V\)。其加法与 \(L\) 标量乘法都是逐点定义的，特别是
+\[
+(\lambda f)(x)=\lambda f(x)\qquad(\lambda\in L,\ f\in\mathcal V).
+\]
+乘上 \(\lambda\) 后仍是 \(K\) 线性映射，因为 \(L\) 的乘法交换。若 \(b_1,\ldots,b_d\) 是 \(L/K\) 的一组基，一个 \(K\) 线性映射 \(f\) 完全由 \(f(b_1),\ldots,f(b_d)\in L\) 决定，而且任意指定这 \(d\) 个像都给出唯一的 \(K\) 线性映射。因此求值映射
+\[
+\mathcal V\longrightarrow L^d,\qquad
+f\longmapsto\bigl(f(b_1),\ldots,f(b_d)\bigr)
+\]
+是 \(L\) 线性同构，故 \(\dim_L\mathcal V=d\)。每个 \(\sigma_i\) 固定 \(K\)，所以属于 \(\mathcal V\)。\cref{b1:cor:embedding-independence}在此说明：若 \(\sum_i\lambda_i\cdot\sigma_i(x)=0\) 对所有 \(x\in L\) 成立，其中 \(\lambda_i\in L\)，则全部 \(\lambda_i=0\)。因此这 \(n\) 个不同自同构是 \(d\) 维 \(L\) 向量空间中的线性无关向量，得到 \(n\leq d\)。结合上界，\(d=n\)。
+
+对任意 \(a\in L\)，把 \(G\) 轨道中的互异元素记作 \(a_1,\ldots,a_s\)，并构造轨道多项式
+\[
+P_a(t)=\prod_{j=1}^s(t-a_j).
+\]
+任何 \(\tau\in G\) 都把轨道映到自身且映满，所以只会排列这些根。\(P_a\) 的系数由它们的初等对称式给出，因而被每个 \(\tau\) 固定，属于 \(L^G=K\)。又因为只将互异轨道元素各取一次，\(P_a\) 没有重根，并已在 \(L[t]\) 中分裂。恒等自同构保证 \(a\) 在轨道中，因此 \(P_a(a)=0\)，\(a\) 的最小多项式整除 \(P_a\)，也就可分并在 \(L\) 中分裂。任意 \(a\) 均如此，说明 \(L/K\) 正规且可分。最后由\cref{b1:prop:galois-automorphism-count}，其全部 \(K\) 自同构只有 \(n\) 个；已经包含的 \(G\) 也有 \(n\) 个元素，所以它就是全群。
 \end{proof}
+
+若给定的是一个抽象有限群 \(\Gamma\) 对 \(L\) 的作用，作用同态为 \(\rho:\Gamma\rightarrow\operatorname{Aut}(L)\)，则共同不动元只取决于像群 \(\rho(\Gamma)\)。上面的定理应用于这个实际自同构群，给出
+\[
+[L:L^{\rho(\Gamma)}]=|\rho(\Gamma)|
+=\frac{|\Gamma|}{|\ker\rho|}.
+\]
+最后一个等号是群同态的第一同构定理。只有作用忠实、\(\ker\rho=1\) 时，才能直接以抽象群 \(\Gamma\) 的阶作为扩张次数；这正是前面群作用通过核的商群给出忠实作用的原则。
 
 \subsection{不动域扩张次数的计算}
 \label{b1:subsec:1901:04}
@@ -94,4 +132,4 @@ L^H=\bigl\{\,a\in L\mid \sigma(a)=a\text{ 对每个 }\sigma\in H\,\bigr\}
 若 \(L/K\) 为 Galois 扩张，结论由\cref{b1:prop:galois-automorphism-count}给出。反过来，令 \(H=\operatorname{Aut}_K(L)\)。假设 \(|H|=[L:K]\)，则\cref{b1:thm:artin-fixed-field}给出 \([L:L^H]=|H|=[L:K]\)。由于 \(K\subseteq L^H\)，塔式公式说明 \(L^H=K\)。该定理还保证 \(L/L^H\) 正规且可分，故 \(L/K\) 为 Galois 扩张。
 \end{proof}
 
-\cref{b1:thm:artin-fixed-field}中的两个次数估计有不同来源。线性方程加最短支集论证，把 \(L\) 系数的关系下降为不动域系数的关系，给出上界；嵌入独立性则保证自同构不可能多于维数，给出下界。不能只从每个元素至多有 \(|G|\) 个共轭，便省去上界证明，因为有限次单扩张的次数有统一上界，尚须证明整个扩张的次数也满足这一上界。
+\cref{b1:thm:artin-fixed-field}中的两个次数估计有不同来源。线性方程加最短支集论证，把 \(L\) 系数的关系下降为不动域系数的关系，给出上界；嵌入独立性则保证自同构不可能多于维数，给出下界。轨道多项式至多有 \(|G|\) 个根，能说明每个单独的 \(K(a)/K\) 次数至多为 \(|G|\)。但在尚未证明 \(L\) 由一个元素生成时，这只控制各个单扩张，不能直接控制整个 \(L/K\) 的维数。线性方程法处理的是任意 \(|G|+1\) 个元素之间的关系，因而直接控制整个空间，不需要先知道扩张单生成。

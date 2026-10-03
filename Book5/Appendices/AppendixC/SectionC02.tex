@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### C.2 紧 Lie 群与 Peter–Weyl 理论
-% 纲要位置：工作记录/计划纲要.md，第 4621 行。
+% 纲要位置：工作记录/计划纲要.md，第 4881 行。
 % #### C.2.1 Haar 测度与有限维平均
 % #### C.2.2 Peter--Weyl 定理的准确含义
 % #### C.2.3 圆群与低维矩阵系数
@@ -69,23 +69,46 @@ L^2(K,\mathrm{d}g)\cong\widehat{\bigoplus}_{\pi\in\widehat K}V_\pi^*\otimes_{\ma
 \(\ell\otimes v\mapsto\Bigl(g\mapsto\ell\bigl(\pi(g)v\bigr)\Bigr)\)。帽号表示 Hilbert 直和。
 \end{theorem}
 
+矩阵系数映射的双群作用及内积性质可对照\cite[Section 4.7, Theorem 4.47]{Kirillov2008LieGroups}，Hilbert 完备性的陈述见同书\cite[Theorem 4.49]{Kirillov2008LieGroups}。
+
 \begin{proof}
+证明使用平方可积核的积分算子紧性、紧自伴算子的谱定理，以及连续函数在 \(L^2\) 中的稠密性。
+
 取一族连续、非负的函数 \(h_\varepsilon\)，其积分为一，支撑逐渐缩到单位元，并满足
 \(h_\varepsilon(g^{-1})=h_\varepsilon(g)\)。这样的函数可由单位元附近的连续凸起函数与其逆映像相加再归一化得到。定义
 \[
- (T_\varepsilon f)(x)=\int_Kh_\varepsilon(y^{-1}x)f(y)\,dy.
+ (T_\varepsilon f)(x)=\int_Kh_\varepsilon(y^{-1}x)f(y)\,\mathrm{d}g(y).
 \]
+令 \(z=y^{-1}x\)，则 \(y=xz^{-1}\)。Haar 测度在反演和左右平移下不变，所以
+\[
+ (T_\varepsilon f)(x)=\int_Kh_\varepsilon(z)f(xz^{-1})\,\mathrm{d}g(z).
+\]
+对概率测度 \(h_\varepsilon(z)\,\mathrm{d}g(z)\) 使用 Cauchy--Schwarz 不等式，再由 Fubini 定理及右不变性得到
+\[
+\begin{aligned}
+ \|T_\varepsilon f\|_2^2
+ &\le\int_K\int_Kh_\varepsilon(z)|f(xz^{-1})|^2\,\mathrm{d}g(z)\,\mathrm{d}g(x)\\
+ &=\int_Kh_\varepsilon(z)\|f\|_2^2\,\mathrm{d}g(z)=\|f\|_2^2.
+\end{aligned}
+\]
+因此 \(\|T_\varepsilon\|\le1\)。
+
 连续核在紧空间上平方可积，所以 \(T_\varepsilon\) 是紧算子；核的对称性又使它自伴。变量代换说明它与所有左平移 \(L_af(x)=f(a^{-1}x)\) 交换。它的每个非零特征值的特征空间因此有限维且左平移不变。
 
 这些特征空间的向量有连续代表，因为
-\(f=\lambda^{-1}T_\varepsilon f\)，而连续核把 \(L^2\) 函数送到连续函数。设 \(E\) 为其中一个空间，左平移在 \(E\) 上给出有限维酉表示。对 \(f\in E\)，有
-\(f(x)=(L_{x^{-1}}f)(1)\)，故 \(f\) 是这个表示的对偶表示的矩阵系数的线性组合。由\cref{b5:prop:compact-unitarization}，该表示分解成不可约表示，所以 \(E\) 包含在不可约矩阵系数的生成空间中。
+\(f=\lambda^{-1}T_\varepsilon f\)，而连续核把 \(L^2\) 函数送到连续函数。设 \(E\) 为其中一个空间，左平移在 \(E\) 上给出有限维酉表示 \(\pi_E(x)=L_x|_E\)；其连续性来自连续函数的平移在一致范数下连续。令 \(\ell\in E^*\) 为单位元处的求值泛函，即 \(\ell(u)=u(1)\)。对偶表示满足
+\[
+ (\pi_E^*(x)\ell)(f)
+ =\ell\bigl(\pi_E(x^{-1})f\bigr)
+ =(L_{x^{-1}}f)(1)=f(x).
+\]
+因此 \(f\) 是 \(\pi_E^*\) 的一个矩阵系数。由\cref{b5:prop:compact-unitarization}，这个连续对偶表示分解成不可约表示，所以 \(E\) 包含在不可约矩阵系数的生成空间中。
 
 现在设 \(f\) 与全部这样的矩阵系数正交。紧自伴算子的谱定理说明它与 \(T_\varepsilon\) 的全部非零特征空间正交，因而 \(T_\varepsilon f=0\)。另一方面，支撑缩小与连续函数的一致连续性给出
 \(T_\varepsilon f\to f\)：先对连续 \(f\) 得到一致收敛，再用连续函数在 \(L^2\) 中稠密以及 \(\|T_\varepsilon\|\le1\) 推广到所有 \(f\in L^2\)。于是 \(f=0\)，证明正交规范族完备。
 
 矩阵系数映射在每个不可约分量上的内积由\cref{b5:prop:compact-matrix-orthogonality}给出，故缩放因子为 \(1/d_\pi\)；不同分量正交，完备性使它延伸成所述 Hilbert 直和的酉同构。左右作用取
-\((a,b)F(g)=F(a^{-1}gb)\)，在张量端分别对应对偶表示与原表示，因而同构与 \(K\times K\) 作用相容。证明用到的分析基础是紧自伴算子的谱定理和连续函数的 \(L^2\) 稠密性；参见\cite[Section 4.7, Theorems 4.47 and 4.49]{Kirillov2008LieGroups}。
+\((a,b)F(g)=F(a^{-1}gb)\)，在张量端分别对应对偶表示与原表示，因而同构与 \(K\times K\) 作用相容。
 \end{proof}
 
 代数直和只允许有限多个不可约分量，Hilbert 直和则允许平方可和的无限分量，两者不是同一个函数空间。

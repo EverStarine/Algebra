@@ -1,9 +1,9 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 B　量子群、簇代数与范畴化
-% 纲要位置：工作记录/计划纲要.md，第 4570 行。
+% 纲要位置：工作记录/计划纲要.md，第 4830 行。
 % * 量子群作为 Hopf 代数的例子
-% * 簇代数的变异及小秩例子
-% * 表示论中的范畴化思想
+% * 簇变异、A2 编号周期与 Laurent 现象证明概要；以两步路径解释矩阵修正项，写清四簇配置和两条较短路径所在的 Laurent 环
+% * Grothendieck 群、正合关系与分次 Euler 类
 % * 简介不代替相应专题课程的完整理论
 \chapter{量子群、簇代数与范畴化}
 \label{b5:app:B}
@@ -14,7 +14,7 @@
 \begin{itemize}
 \item 核验量子包络代数的关系与Hopf公式，判断普通张量翻转为何可能不等变。
 \item 计算二阶簇变量，区分单个算例的Laurent性与一般定理。
-\item 比较分裂Grothendieck群和短正合Grothendieck群，并用张量函子解释乘法。
+\item 比较分裂 Grothendieck 群与按短正合列关系定义的 Grothendieck 群，并用张量函子解释乘法。
 \item 在单位根、参数退化及点代入中检查原有证明的假设。
 \end{itemize}
 \end{learninggoals}
@@ -48,14 +48,14 @@
 写出 \(m=2\) 量子模型的 \(E,F,K\) 矩阵，并指出使正文不可约性证明成立的系数条件。
 \end{exercise}
 \begin{solution}
-依基 \(v_0,v_1,v_2\)，有 \(K=\operatorname{diag}(q^2,1,q^{-2})\)，\(F\) 在次对角线两个位置为一，\(E\) 在上对角线两个位置均为 \([2]_q\)，其余为零。正文方法要求三个 \(K\) 特征值互异且 \([2]_q\ne0\)。一般参数满足这些条件；若 \(q^2=-1\)，则 \([2]_q=0\)，而首尾权也相同，方法失效。
+依基 \(v_0,v_1,v_2\)，有 \(K=\operatorname{diag}(q^2,1,q^{-2})\)，\(F\) 在次对角线两个位置为一，\(E\) 在上对角线两个位置均为 \([2]_q\)，其余为零。正文方法要求三个 \(K\) 特征值互异且 \([2]_q\ne0\)。若 \(q\) 不是单位根，就满足这些条件；若 \(q^2=-1\)，则 \([2]_q=0\)，首尾向量的 \(K\) 特征值也相同，但其整数权仍分别为 \(2,-2\)，故原方法失效。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:B:03}
-在两个二维量子模型的张量积中，求一个被 \(E,F\) 零化且被 \(K\) 固定的非零向量。
+设 \(k\) 为特征零域，\(q\in k^\times\)、\(q^2\ne1\)，\(V\) 为正文中 \(m=1\) 的二维 \(U_q(\mathfrak{sl}_2)\) 模型。在 \(V\otimes_k V\) 中，求一个被 \(E,F\) 零化且被 \(K\) 固定的非零向量。
 \end{exercise}
 \begin{solution}
-令 \(w=v_0\otimes v_1-q^{-1}v_1\otimes v_0\)。两项权都是一，故 \(Kw=w\)。余乘法给 \(Ew=(1-q^{-1}q)v_0\otimes v_0=0\)。又 \(F(v_0\otimes v_1)=v_1\otimes v_1\)，\(F(v_1\otimes v_0)=qv_1\otimes v_1\)，所以 \(Fw=0\)。因此 \(w\) 张成一个平凡子模。
+令 \(w=v_0\otimes v_1-q^{-1}v_1\otimes v_0\)。两项的整数权均为 \(1+(-1)=0\)，由 \(\Delta(K)=K\otimes K\)，其 \(K\) 特征值均为 \(q^0=1\)，故 \(Kw=w\)。余乘法给 \(Ew=(1-q^{-1}q)v_0\otimes v_0=0\)。又 \(F(v_0\otimes v_1)=v_1\otimes v_1\)，\(F(v_1\otimes v_0)=qv_1\otimes v_1\)，所以 \(Fw=0\)。因此 \(w\) 张成一个平凡子模。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:B:04}
@@ -90,10 +90,19 @@ B'=\begin{pmatrix}0&-1&1\\1&0&-1\\-1&1&0\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b5:ex:B:07}
-对正文的 \(A_2\) 五个变量验证恒等式 \(z_1z_3-z_2=1\)、\(z_2z_4-z_3=1\)、\(z_3z_5-z_4=1\)，并解释为什么这没有直接给出全部代数关系的生成理想。
+设 \(k\) 为特征零域，\(x,y\) 在 \(k\) 上代数独立，\(z_1,\ldots,z_5\in k(x,y)\) 为正文 \(A_2\) 例子的五个簇变量。定义 \(k\) 代数同态
+\[
+\phi:k[Z_1,\ldots,Z_5]\longrightarrow k(x,y),\qquad Z_i\longmapsto z_i.
+\]
+验证恒等式 \(z_1z_3-z_2=1\)、\(z_2z_4-z_3=1\)、\(z_3z_5-z_4=1\)，并说明对应的三条多项式关系是否生成 \(\ker\phi\)。
 \end{exercise}
 \begin{solution}
-将五个有理式代入，前两式即递推；第三式分子为 \((1+x)(1+y)-(1+x+y)=xy\)，除以 \(xy\) 为一。因此这些多项式属于相应参数映射的核。要说明它们生成全部核，仍须消去或证明商到目标的单射，不能从发现三条关系直接断定完整展示。
+将五个有理式代入，前两式即递推；第三式分子为 \((1+x)(1+y)-(1+x+y)=xy\)，除以 \(xy\) 为一。因此
+\[
+I=(Z_1Z_3-Z_2-1,\ Z_2Z_4-Z_3-1,\ Z_3Z_5-Z_4-1)
+\subseteq\ker\phi.
+\]
+但另有 \(z_1z_4-z_5=1\)，故 \(Z_1Z_4-Z_5-1\in\ker\phi\)。在点 \((0,-1,0,-1,0)\) 处，\(I\) 的三个生成元均取零，而这个新关系取 \(-1\)，所以它不属于 \(I\)。因此这三条关系没有生成整个核。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:B:08}
@@ -125,7 +134,7 @@ B'=\begin{pmatrix}0&-1&1\\1&0&-1\\-1&1&0\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b5:ex:B:12}
-令 \(C^\bullet\) 为两项分次复形，\(C^0=k\oplus k\langle1\rangle\)、\(C^1=k\langle1\rangle\)，其中 \(k\langle1\rangle\) 表示集中在内部次数一的一维空间。若微分在次数一上为恒等，求其Euler类与上同调分次。
+令 \(C^\bullet\) 为微分内部次数为零的两项分次复形，\(C^0=k\oplus k\langle1\rangle\)、\(C^1=k\langle1\rangle\)，其中 \(k\langle1\rangle\) 表示集中在内部次数一的一维空间。若微分在次数一上为恒等，求其Euler类与上同调分次。
 \end{exercise}
 \begin{solution}
 Euler类为 \((1+v)-v=1\)。微分把唯一内部次数一部分同构送到后一项，所以 \(H^0\cong k\) 在内部次数零，\(H^1=0\)。若把整个复形移一位，Euler类变成 \(-1\)，而若只把内部次数平移一位，则变成 \(v\)。

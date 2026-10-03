@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 21.1 分圆多项式
-% 纲要位置：计划纲要.md，第 705 行。
+% 纲要位置：计划纲要.md，第 738 行。
 
 \section{分圆多项式}
 \label{b1:sec:2101}
@@ -11,7 +11,7 @@
 %
 % * 单位根与分圆多项式
 % * 分圆多项式的不可约性
-% * 分圆域及其 Galois 群
+% * 分圆域及其 Galois 群；一般特征零基域上的单位根扩张只嵌入相应单位群
 %
 
 \subsection{单位根与分圆多项式}
@@ -28,11 +28,14 @@
 \end{definition}
 \symidx{\(\Phi_n(X)\)：第 \(n\) 个分圆多项式}
 
-每个 \(n\) 次单位根的阶是 \(n\) 的唯一一个正因子，因此
+若改取另一个本原单位根 \(\zeta_n'=\zeta_n^b\)，则 \(\gcd(b,n)=1\)。在单位群 \((\mathbb Z/n\mathbb Z)^\times\) 中，乘以 \(b\) 是一个置换，所以 \((\zeta_n')^a=\zeta_n^{ba}\) 仍遍历同一组本原根。这就证明了定义中的乘积不依赖 \(\zeta_n\) 的选择。
+
+\ProseParagraphBreak
+在特征零中，\(X^n-1\) 与导数 \(nX^{n-1}\) 互素，所以它的 \(n\) 个根彼此不同。每个根的乘法阶又是 \(n\) 的唯一一个正因子，按阶分组便把全部根不重不漏地分到各个 \(\Phi_d\) 中。因此
 \begin{equation}\label{b1:eq:cyclotomic-factorization}
 X^n-1=\prod_{d\mid n}\Phi_d(X).
 \end{equation}
-这还给出 \(\Phi_n\in\mathbb Z[X]\)。对 \(n\) 归纳，\(\Phi_1=X-1\)；若真因子对应的多项式均已知为首一整系数多项式，则用它们的乘积去除 \(X^n-1\)。首一除法的商、余式仍在 \(\mathbb Z[X]\) 中，而\eqref{b1:eq:cyclotomic-factorization}说明在 \(\mathbb C[X]\) 中余式为零、商为 \(\Phi_n\)，故结论成立。
+这还给出 \(\Phi_n\in\mathbb Z[X]\)。对 \(n\) 归纳，\(\Phi_1=X-1\)；若真因子对应的多项式均已知为首一整系数多项式，则用它们的乘积去除 \(X^n-1\)。除式首一，每次消去最高项时只须减去除式的一个整系数单项式倍数，无须除以非单位的首项系数，所以商、余式仍在 \(\mathbb Z[X]\) 中。而\eqref{b1:eq:cyclotomic-factorization}说明在 \(\mathbb C[X]\) 中余式为零、商为 \(\Phi_n\)；除法的唯一性便给出结论。
 
 \ProseParagraphBreak
 例如 \(\Phi_2=X+1\)、\(\Phi_3=X^2+X+1\)、\(\Phi_4=X^2+1\)、\(\Phi_6=X^2-X+1\)。对素数 \(p\)，有 \(\Phi_p=1+X+\cdots+X^{p-1}\)。不过，整系数性本身不能说明不可约；下一小节需要另外论证所有本原根互为有理数域上的共轭。
@@ -40,21 +43,31 @@ X^n-1=\prod_{d\mid n}\Phi_d(X).
 \subsection{分圆多项式的不可约性}
 \label{b1:subsec:2101:02}
 
+要证明 \(\Phi_n\) 不可约，只须证明一个本原根的最小多项式已经包含全部本原根。我们将证明，它的根取任意不整除 \(n\) 的素数次幂后，仍是同一个最小多项式的根；将互素指数分解成素因子，就能从 \(\zeta_n\) 逐次到达每个 \(\zeta_n^a\)。
+
 \begin{theorem}\label{b1:thm:cyclotomic-irreducible}
 设 \(n\geq1\) 为整数，\(\zeta_n\in\mathbb C\) 为本原 \(n\) 次单位根。则第 \(n\) 个分圆多项式 \(\Phi_n(X)\) 在 \(\mathbb Q[X]\) 中不可约。因此 \(\bigl[\mathbb Q(\zeta_n):\mathbb Q\bigr]=\varphi(n)\)。
 \end{theorem}
 \begin{proof}
 设 \(f\) 为 \(\zeta_n\) 在 \(\mathbb Q\) 上的首一最小多项式。它是首一整系数多项式 \(\Phi_n\) 的因子，由\cref{b1:thm:gauss-descent}，可写 \(\Phi_n=fg\)，其中 \(f,g\in\mathbb Z[X]\) 都首一。
 
-先证明：若 \(\alpha\) 是 \(f\) 的根，\(q\) 为不整除 \(n\) 的素数，则 \(\alpha^q\) 仍为 \(f\) 的根。否则 \(\alpha^q\) 是 \(\Phi_n\) 的根而不是 \(f\) 的根，所以是 \(g\) 的根；从 \(g(\alpha^q)=0\) 得 \(f(X)\mid g(X^q)\) 于 \(\mathbb Q[X]\)。首一除法又说明商在 \(\mathbb Z[X]\) 中。
+设 \(\alpha\) 是 \(f\) 的根，\(q\) 为不整除 \(n\) 的素数。由 \(f\mid\Phi_n\)，\(\alpha\) 的乘法阶为 \(n\)。又因 \(\gcd(q,n)=1\)，\cref{b1:prop:power-order}给出
+\[
+\operatorname{ord}(\alpha^q)=\frac{n}{\gcd(n,q)}=n,
+\]
+故 \(\alpha^q\) 仍是 \(\Phi_n\) 的根。若它不是 \(f\) 的根，由 \(\Phi_n=fg\) 就有 \(g(\alpha^q)=0\)。\(f\) 不可约且零化 \(\alpha\)，所以它也是 \(\alpha\) 的首一最小多项式，从而 \(f(X)\mid g(X^q)\) 于 \(\mathbb Q[X]\)。首一除法又说明这个整除关系的商在 \(\mathbb Z[X]\) 中。
 
-把这个整系数整除关系模 \(q\) 约化，并以横线表示所得多项式。特征 \(q\) 的二项式公式给出
+把这个整系数整除关系模 \(q\) 约化，并以横线表示所得多项式。特征 \(q\) 的二项式公式以及 \(c^q=c\) 对 \(c\in\mathbb F_q\) 的成立给出
 \[
 \bar f(X)\mid\bar g(X^q)=\bar g(X)^q.
 \]
-\(\bar f\) 首一且次数为正，故有一个不可约因子 \(h\)。整除关系迫使 \(h\mid\bar g\)，因而 \(h^2\mid\bar f\bar g=\overline{\Phi_n}\)，进而 \(h^2\mid X^n-1\) 于 \(\mathbb F_q[X]\)。但是 \(q\nmid n\)，所以 \(X^n-1\) 与导数 \(nX^{n-1}\) 互素，不可能有重不可约因子，矛盾。
+\(f\) 首一，故约化不会降低次数，\(\bar f\) 仍有正次数，可取它的一个不可约因子 \(h\)。域上的一元多项式环 \(\mathbb F_q[X]\) 是唯一分解整环，\cref{b1:prop:ufd-prime}说明其中的不可约元是素元。因此 \(h\mid\bar g^q\) 迫使 \(h\mid\bar g\)。于是 \(h\) 同时整除 \(\bar f\) 和 \(\bar g\)，给出 \(h^2\mid\bar f\bar g=\overline{\Phi_n}\)。再把\eqref{b1:eq:cyclotomic-factorization}模 \(q\) 约化，得到 \(h^2\mid X^n-1\)。但 \(q\nmid n\)，所以导数 \(nX^{n-1}\) 的系数 \(n\) 非零，而 \(X\) 不整除 \(X^n-1\)；两多项式互素，不可能有重不可约因子，矛盾。这证明了 \(\alpha^q\) 仍为 \(f\) 的根。
 
-任意与 \(n\) 互素的正整数 \(a\) 都是若干不整除 \(n\) 的素数的乘积。反复应用刚证的断言，得到 \(\zeta_n^a\) 是 \(f\) 的根。因此 \(f\) 含有全部 \(\varphi(n)\) 个本原根；而 \(f\mid\Phi_n\)，只能有 \(f=\Phi_n\)。次数结论来自\cref{b1:prop:minimal-polynomial-degree}。
+任意与 \(n\) 互素的正整数 \(a>1\) 可写成 \(a=q_1\cdots q_s\)，其中每个素数 \(q_j\) 都不整除 \(n\)。从已知的根 \(\zeta_n\) 出发，刚证的结论依次说明
+\[
+\zeta_n^{q_1},\quad \zeta_n^{q_1q_2},\quad\ldots,\quad\zeta_n^{q_1\cdots q_s}=\zeta_n^a
+\]
+都是 \(f\) 的根；\(a=1\) 时无需这一步。因此 \(f\) 含有全部 \(\varphi(n)\) 个互异的本原根，而它又整除同为首一的 \(\Phi_n\)，只能有 \(f=\Phi_n\)。次数结论来自\cref{b1:prop:minimal-polynomial-degree}。
 \end{proof}
 
 \subsection{分圆域及其 Galois 群}
@@ -69,11 +82,48 @@ X^n-1=\prod_{d\mid n}\Phi_d(X).
 \]
 \end{theorem}
 \begin{proof}
-全部 \(n\) 次单位根都是 \(\zeta_n\) 的幂，故域正规；特征为零保证可分。自同构保持元素乘法阶，因此必须把 \(\zeta_n\) 送到某个本原根 \(\zeta_n^a\)，这给出到单位群的单射。由\cref{b1:thm:cyclotomic-irreducible}，两端阶均为 \(\varphi(n)\)，故满射。复合在生成元上的作用是 \(\zeta_n\mapsto\zeta_n^{ab}\)，所以这是群同构。
+全部 \(n\) 次单位根都是 \(\zeta_n\) 的幂，所以 \(\mathbb Q(\zeta_n)\) 正是 \(X^n-1\) 的分裂域。它有限且正规，特征零又保证可分，因而为有限 Galois 扩张。自同构保持元素乘法阶，所以每个自同构 \(\sigma\) 都满足 \(\sigma(\zeta_n)=\zeta_n^a\)，其中 \(\gcd(a,n)=1\)。剩余类 \(a\bmod n\) 唯一，而且自同构由生成元 \(\zeta_n\) 的像决定，于是得到单射
+\[
+\operatorname{Gal}\bigl(\mathbb Q(\zeta_n)/\mathbb Q\bigr)
+\longrightarrow(\mathbb Z/n\mathbb Z)^\times.
+\]
+若 \(\sigma(\zeta_n)=\zeta_n^a\)、\(\tau(\zeta_n)=\zeta_n^b\)，则 \((\sigma\tau)(\zeta_n)=\zeta_n^{ab}\)，故这也是群同态。由\cref{b1:prop:galois-automorphism-count,b1:thm:cyclotomic-irreducible}，源群的阶为
+\[
+\left|\operatorname{Gal}\bigl(\mathbb Q(\zeta_n)/\mathbb Q\bigr)\right|
+=[\mathbb Q(\zeta_n):\mathbb Q]=\varphi(n).
+\]
+目标单位群的阶按 \(\varphi(n)\) 的定义也为 \(\varphi(n)\)，所以单射必为满射，得到所述同构。
 \end{proof}
 
-例如 \(\mathbb Q(\zeta_5)/\mathbb Q\) 的群为 \(C_4\)，而 \(\mathbb Q(\zeta_8)/\mathbb Q\) 的群为 \(C_2\times C_2\)，不能把所有分圆扩张都称为循环扩张。复共轭总对应于剩余类 \(-1\)；当 \(n\geq3\) 时，其固定域为 \(\mathbb Q(\zeta_n+\zeta_n^{-1})\)。确实，后一个域由实数生成，且 \(\zeta_n\) 满足
+例如 \(\mathbb Q(\zeta_5)/\mathbb Q\) 的群为 \(C_4\)，而 \(\mathbb Q(\zeta_8)/\mathbb Q\) 的群为 \(C_2\times C_2\)，不能把所有分圆扩张都称为循环扩张。“循环扩张”要求 Galois 群循环；\(\mathbb Q(\zeta_8)\) 虽由一个元素生成，却不满足这个要求。
+
+\ProseParagraphBreak
+复共轭 \(c\) 总对应于剩余类 \(-1\)。设 \(n\geq3\)，记 \(t=\zeta_n+\zeta_n^{-1}\)，则 \(c(t)=t\)，所以
+\[
+\mathbb Q(t)\subseteq\mathbb Q(\zeta_n)^{\langle c\rangle}.
+\]
+同时 \(\mathbb Q(t)\subseteq\mathbb R\)，而 \(\zeta_n\) 非实，并满足
 \[
 X^2-(\zeta_n+\zeta_n^{-1})X+1=0;
 \]
-\(\zeta_n\) 本身非实，因此这一步的次数恰为 \(2\)，与共轭子群的固定域次数相同。
+故 \([\mathbb Q(\zeta_n):\mathbb Q(t)]=2\)。子群 \(\langle c\rangle\) 的阶也为 \(2\)，由\eqref{b1:eq:galois-degree-index}，它的不动域同样满足 \([\mathbb Q(\zeta_n):\mathbb Q(\zeta_n)^{\langle c\rangle}]=2\)。结合上述包含关系和塔式公式，得到这两个中间域相等。
+
+\ProseParagraphBreak
+把基域 \(\mathbb Q\) 换成任意特征零域 \(K\) 后，自同构还须固定 \(K\) 中的其他元素，因而不能再保证每个互素幂次都能作为 \(\zeta_n\) 的像。不过，确定生成元像的办法仍给出到单位群的单同态，所以 Galois 群仍然交换。
+
+\begin{proposition}\label{b1:prop:cyclotomic-general-base}
+设 \(K\) 为特征零域，\(\Omega\) 为 \(K\) 的代数闭包，\(n\geq1\) 为整数，\(\mu_n\subseteq\Omega\) 为全部 \(n\) 次单位根。选取一个本原 \(n\) 次单位根 \(\zeta_n\in\Omega\)，并令 \(L=K(\mu_n)=K(\zeta_n)\)。则 \(L/K\) 为有限 Galois 扩张，映射
+\[
+\operatorname{Gal}(L/K)\longrightarrow(\mathbb Z/n\mathbb Z)^\times,
+\qquad\sigma\longmapsto a\bmod n\quad
+\bigl(\sigma(\zeta_n)=\zeta_n^a\bigr)
+\]
+是单同态。因此 \(\operatorname{Gal}(L/K)\) 是交换群，且 \([L:K]\) 整除 \(\varphi(n)\)。
+\end{proposition}
+\begin{proof}
+特征零保证 \(X^n-1\) 有 \(n\) 个互异的根，它们组成乘法群 \(\mu_n\)。由\cref{b1:lem:finite-multiplicative-cyclic}，该群循环，存在所述的本原单位根，且全部根都是 \(\zeta_n\) 的幂。因此 \(L=K(\zeta_n)\) 是 \(X^n-1\) 的分裂域，为有限 Galois 扩张。
+
+每个 \(\sigma\in\operatorname{Gal}(L/K)\) 保持 \(\zeta_n\) 的乘法阶，所以 \(\sigma(\zeta_n)=\zeta_n^a\)，其中 \(a\bmod n\) 是一个唯一确定的可逆剩余类。生成元的像决定自同构，故所列映射单射；复合对应指数相乘，故它是同态。其像是交换群 \((\mathbb Z/n\mathbb Z)^\times\) 的子群，因而交换，且阶整除 \(\varphi(n)\)。再由有限 Galois 扩张的群阶等于次数，得到次数的整除结论。
+\end{proof}
+
+这个单射在一般基域上不必满射。例如 \(K\) 本来就包含 \(\mu_n\) 时，\(L=K\)，Galois 群平凡；\(n\geq3\) 时，单位群却并不平凡。

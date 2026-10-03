@@ -7,12 +7,12 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 乘法线性算子的迹与行列式
-% * 有限扩张中的域迹与域范数
-% * 共轭元公式与不可分重数
+% * 乘法线性算子的迹与行列式；写出幂基下的友矩阵并展开其特征多项式
+% * 有限扩张中的域迹与域范数；用乘积基解释扩大环境扩张后相同块的重复，以及迹、范数一般不保持的运算
+% * 共轭元公式与不可分重数；区分不同嵌入在同一元素上重复取值和不可分根重数
 %
 
-有限扩张 \(L/K\) 中的元素可以通过“乘以这个元素”的线性变换来观察。这个办法不需要扩张可分，也不需要预先列出共轭根。先用矩阵定义迹与范数，再说明共轭公式成立时根应怎样计数。
+有限扩张 \(L/K\) 中的元素 \(a\) 未必属于基域 \(K\)，但它天然给出“乘以 \(a\)”的 \(K\) 线性变换。有限维线性代数已经为每个线性变换提供了迹与行列式这两个基无关的 \(K\) 值，因此可以由 \(a\) 的乘法作用取得基域中的量。这个办法不需要扩张可分，也不需要预先列出共轭根；共轭元求和与求积的公式将从乘法矩阵的特征多项式中得到。
 
 \subsection{乘法线性算子的迹与行列式}
 \label{b1:subsec:1802:01}
@@ -21,7 +21,13 @@
 \[
 m_a:L\longrightarrow L,\qquad x\longmapsto ax
 \]
-是 \(K\) 线性的。选定 \(K\) 基以后，它由一个 \(n\) 阶矩阵表示；换基使矩阵相似，所以矩阵迹、行列式和特征多项式与基的选择无关。矩阵迹在相似变换下不变可由 \(\operatorname{tr}(AB)=\operatorname{tr}(BA)\) 得到，后一个等式只须交换有限求和的指标；行列式的不变性来自乘法公式。
+是 \(K\) 线性的，因为 \(a(cx+dy)=c(ax)+d(ay)\) 对 \(c,d\in K\)、\(x,y\in L\) 成立。选定 \(K\) 基以后，它由一个 \(n\) 阶矩阵 \(A\) 表示。若另一组基的向量在原基下的坐标列组成可逆矩阵 \(P\)，同一算子在新基下的矩阵就是 \(A'=P^{-1}AP\)，于是
+\[
+\operatorname{tr}(A')=\operatorname{tr}(A),\qquad
+\det A'=\det A,\qquad
+\det(tI-A')=\det(tI-A).
+\]
+这里迹的等式来自 \(\operatorname{tr}(AB)=\operatorname{tr}(BA)\)，后一个恒等式只须交换有限求和的指标；两个行列式等式都来自乘法公式。因此这些量与基的选择无关。
 
 \begin{definition}\label{b1:def:field-trace-norm}
 设 \(L/K\) 为有限域扩张，\(a\in L\)。令 \(m_a:L\rightarrow L\) 为 \(K\) 线性映射 \(x\mapsto ax\)。把
@@ -34,7 +40,7 @@ m_a:L\longrightarrow L,\qquad x\longmapsto ax
 \symidx{\(\operatorname{Tr}_{L/K}\)：有限扩张的域迹}
 \symidx{\(\operatorname{N}_{L/K}\)：有限扩张的域范数}
 \symidx{\(\chi_{a,L/K}(t)\)：乘以 \(a\) 的特征多项式}
-这些量的定义都包含整个扩张 \(L/K\)。它们不是只依赖元素最小多项式的绝对数值。
+这些量依赖整个环境扩张 \(L/K\)，而不只依赖 \(a\) 在 \(K\) 上的最小多项式。同一个元素 \(a\) 处于不同的有限扩张中，乘法算子作用的向量空间会改变，迹、范数和乘法特征多项式也可能随之改变。
 
 \subsection{有限扩张中的域迹与域范数}
 \label{b1:subsec:1802:02}
@@ -51,26 +57,75 @@ m_a:L\longrightarrow L,\qquad x\longmapsto ax
 \begin{proof}
 等式 \(m_{a+b}=m_a+m_b\)、\(m_{ca}=c m_a\) 和迹的线性给出第一项。又有 \(m_{ab}=m_am_b\)，行列式的乘法公式给出范数的乘法性。若 \(a\ne0\)，映射 \(m_a\) 的逆为 \(m_{a^{-1}}\)，所以其行列式非零；若 \(a=0\)，零矩阵的行列式为零。基域元素对应标量矩阵 \(cI_n\)，给出最后两式。
 \end{proof}
+因此，域迹是加法群同态，且保持 \(K\) 标量乘法；域范数限制为乘法群同态 \(L^\times\rightarrow K^\times\)。它们一般并不保持另一种运算。例如在 \(\mathbb C/\mathbb R\) 中，乘以 \(\mathrm i\) 在基 \(1,\mathrm i\) 下的矩阵为 \(\begin{pmatrix}0&-1\\1&0\end{pmatrix}\)，所以 \(\operatorname{Tr}_{\mathbb C/\mathbb R}(\mathrm i)=0\)，但 \(\operatorname{Tr}_{\mathbb C/\mathbb R}(\mathrm i^2)=\operatorname{Tr}_{\mathbb C/\mathbb R}(-1)=-2\)。又有 \(\operatorname{N}_{\mathbb C/\mathbb R}(1+1)=4\)，而 \(\operatorname{N}_{\mathbb C/\mathbb R}(1)+\operatorname{N}_{\mathbb C/\mathbb R}(1)=2\)，故迹未必保持乘法，范数未必保持加法。
+
+\ProseParagraphBreak
+
+若 \(\operatorname{char}K=p>0\) 且 \(p\mid n\)，则 \(\operatorname{Tr}_{L/K}(c)=nc=0\) 对所有 \(c\in K\) 成立。这只说明迹在基域上取零值；是否在整个 \(L\) 上恒为零，还须另作判断。
+
+\ProseParagraphBreak
+
 设 \(a\) 在 \(K\) 上的首一最小多项式为
 \[
 f(t)=t^d+c_{d-1}t^{d-1}+\cdots+c_0,
 \qquad r=[L:K(a)].
 \]
-令 \(E=K(a)\)。先把乘法算子限制为 \(m_a|_E:E\rightarrow E\)。在 \(E/K\) 的基 \(1,a,\ldots,a^{d-1}\) 下，这个限制算子将前 \(d-1\) 个基向量依次移向后一个，将末项送到 \(-c_0-\cdots-c_{d-1}a^{d-1}\)，矩阵因而是 \(f\) 的友矩阵 \(C_f\)。沿 \(tI-C_f\) 的末列展开并整理，得到 \(\det(tI-C_f)=t^d+c_{d-1}t^{d-1}+\cdots+c_0=f(t)\)。
+令 \(E=K(a)\)。要把最小多项式与乘法特征多项式联系起来，可以在 \(E\) 上计算一次乘法矩阵，再看这个矩阵在 \(L\) 中重复多少次。因为 \(1,a,\ldots,a^{d-1}\) 是 \(E/K\) 的基，\(m_a|_E\) 将前 \(d-1\) 个基向量依次移向后一个，而
+\[
+m_a(a^{d-1})=a^d=-c_0-c_1a-\cdots-c_{d-1}a^{d-1}.
+\]
+以每个基向量的像的坐标为一列，得到 \(f\) 的友矩阵
+\[
+C_f=\begin{pmatrix}
+0&0&\cdots&0&-c_0\\
+1&0&\cdots&0&-c_1\\
+0&1&\cdots&0&-c_2\\
+\vdots&&\ddots&&\vdots\\
+0&0&\cdots&1&-c_{d-1}
+\end{pmatrix}.
+\]
+当 \(d=1\) 时，\(C_f=(-c_0)\)，故 \(\det(tI-C_f)=t+c_0=f(t)\)。当 \(d\geq2\) 时，\(tI-C_f\) 的前 \(d-1\) 列只有主对角线上的 \(t\) 和其下方的 \(-1\) 非零，末列依次为 \(c_0,\ldots,c_{d-2},t+c_{d-1}\)。删去第 \(j\) 行与末列所得子式的行列式为 \(t^{j-1}(-1)^{d-j}\)：前 \(j-1\) 个对角因子为 \(t\)，其余 \(d-j\) 个为 \(-1\)。乘上余子式符号 \((-1)^{j+d}\) 后，得到 \(t^{j-1}\)。因此沿末列展开有
+\[
+\det(tI-C_f)
+=\sum_{j=1}^{d-1}c_{j-1}t^{j-1}
+ +(t+c_{d-1})t^{d-1}=f(t).
+\]
 
 \ProseParagraphBreak
 
-再取 \(L/E\) 的一组基 \(v_1,\ldots,v_r\)。由塔式公式的基构造，
+再取 \(L/E\) 的一组基 \(v_1,\ldots,v_r\)。\cref{b1:thm:tower-law}的证明把一组 \(E/K\) 基与一组 \(L/E\) 基的所有乘积作为 \(L/K\) 的基，所以
 \[
 v_1,av_1,\ldots,a^{d-1}v_1;\quad\ldots;\quad
 v_r,av_r,\ldots,a^{d-1}v_r
 \]
-是 \(L/K\) 的一组基。每个子空间 \(Ev_j\) 都被 \(m_a:L\rightarrow L\) 保持，并且在所列基下具有同一个矩阵 \(C_f\)。因此，整个乘法矩阵为 \(\operatorname{diag}(C_f,\ldots,C_f)\)，共有 \(r\) 个块，从而
+是 \(L/K\) 的一组基。这些向量生成 \(L\)，因为每个 \(L\) 中元素先能按 \(v_j\) 作 \(E\) 线性展开，再把各系数按 \(1,a,\ldots,a^{d-1}\) 展开。若这些乘积的 \(K\) 线性组合为零，先由 \(v_j\) 的 \(E\) 线性无关性得到各个 \(E\) 系数为零，再由幂基的 \(K\) 线性无关性得到原系数全部为零。
+
+\ProseParagraphBreak
+
+每个子空间 \(Ev_j\) 都被 \(m_a\) 保持。在所列基下，\(m_a(a^iv_j)=a^{i+1}v_j\)，末项同样由 \(a^d=-c_0-\cdots-c_{d-1}a^{d-1}\) 约回去，所以每一块的矩阵都是 \(C_f\)。整个乘法矩阵因而为 \(\operatorname{diag}(C_f,\ldots,C_f)\)，共有 \(r\) 个块。这也说明三个次数的关系：
+\[
+\deg f=d,\qquad [L:K]=dr,\qquad
+\deg\chi_{a,L/K}=dr.
+\]
+对任意 \(n\) 阶矩阵 \(A\)，我们采用的特征多项式约定给出
+\[
+\det(tI-A)=t^n-(\operatorname{tr}A)t^{n-1}+\cdots+(-1)^n\det A.
+\]
+块对角矩阵的特征多项式为各块特征多项式之积，再比较次高项与常数项，就得到
 \begin{equation}\label{b1:eq:trace-norm-minimal-polynomial}
 \chi_{a,L/K}(t)=f(t)^r,\qquad
 \operatorname{Tr}_{L/K}(a)=-r c_{d-1},\qquad
 \operatorname{N}_{L/K}(a)=(-1)^{dr}c_0^r.
 \end{equation}
+例如，\(a=\sqrt2\) 在 \(E=\mathbb Q(\sqrt2)\) 与 \(L=\mathbb Q(\sqrt2,\sqrt3)\) 中有同一个 \(\mathbb Q\) 上的最小多项式 \(t^2-2\)。\([L:E]=2\)，所以
+\[
+\chi_{a,E/\mathbb Q}(t)=t^2-2,\qquad
+\chi_{a,L/\mathbb Q}(t)=(t^2-2)^2,
+\]
+而 \(\operatorname{N}_{E/\mathbb Q}(a)=-2\)、\(\operatorname{N}_{L/\mathbb Q}(a)=4\)。这里环境扩张的改变使同一个乘法矩阵重复了两次。
+
+\ProseParagraphBreak
+
 例如取非平方的 \(D\in\mathbb Q\)，令 \(L=\mathbb Q(\sqrt D)\)，并取 \(a,b\in\mathbb Q\)。乘以 \(a+b\sqrt D\) 的矩阵为
 \[
 \begin{pmatrix}a&bD\\ b&a\end{pmatrix},
@@ -79,6 +134,8 @@ v_r,av_r,\ldots,a^{d-1}v_r
 
 \subsection{共轭元公式与不可分重数}
 \label{b1:subsec:1802:03}
+
+不同的 \(K\) 嵌入在某个指定元素 \(a\) 上可能取相同的值，因为它们在 \(K(a)\) 上的限制可能相同。因此，下面公式按全部不同的嵌入列出因子，\(\sigma_1(a),\ldots,\sigma_s(a)\) 未必两两不同；不能把它们当成一份不重复的共轭根列表。
 
 \begin{theorem}\label{b1:thm:trace-norm-embeddings}
 设 \(L/K\) 为有限域扩张，\(\Omega\) 为包含 \(L\) 的 \(K\) 的代数闭包，\(\sigma_1,\ldots,\sigma_s\) 是全部不同的 \(K\) 嵌入 \(L\rightarrow\Omega\)。记 \(e=[L:K]_{\mathrm i}=[L:K]/s\) 为不可分次数。则对每个 \(a\in L\) 都有
@@ -90,11 +147,19 @@ v_r,av_r,\ldots,a^{d-1}v_r
 特别地，扩张可分时 \(e=1\)，迹是全部嵌入像的和，范数是其积。
 \end{theorem}
 \begin{proof}
-令 \(E=K(a)\)、\(f=m_{a,K}\)、\(d=[E:K]\)。最小多项式 \(f\) 有 \(d_s=[E:K]_{\mathrm s}\) 个不同根；\cref{b1:prop:inseparable-polynomial-shape}说明正特征下各根重数相同，特征零下各根重数为一，所以统一为 \(d/d_s\)。每个 \(K\) 嵌入 \(E\rightarrow\Omega\) 都能延拓到 \(L\)，且延拓的个数恰为 \(r_s=[L:E]_{\mathrm s}\)，这是\cref{b1:thm:separable-degree-tower}证明中的嵌入计数。因此 \(s=d_s r_s\)，而 \(\sigma_i(a)\) 中每个不同根出现 \(r_s\) 次。令 \(r=[L:E]\)，则
+令 \(E=K(a)\)、\(f=m_{a,K}\)、\(d=[E:K]\) 与 \(r=[L:E]\)。要证明两个首一多项式相同，只须核对它们有哪些不同根，以及每个根的总重数。最小多项式 \(f\) 有 \(d_s=[E:K]_{\mathrm s}\) 个不同根；\cref{b1:prop:inseparable-polynomial-shape}说明正特征下各根重数相同，特征零下各根重数为一，所以统一为 \(d/d_s\)。由\eqref{b1:eq:trace-norm-minimal-polynomial}，\(\chi_{a,L/K}=f^r\)，其中每个不同根的总重数因而为 \((d/d_s)r\)。
+
+另一方面，\(E=K(a)\) 的每个 \(K\) 嵌入恰由 \(a\) 的一个不同共轭根确定。\cref{b1:thm:separable-degree-tower}的证明把 \(L\) 的嵌入按其在 \(E\) 上的限制分组，并证明每一组都恰有 \(r_s=[L:E]_{\mathrm s}\) 个延拓。因此 \(s=d_s r_s\)，而全部 \(\sigma_i(a)\) 中每个不同根都出现 \(r_s\) 次。定理中的乘积还把每个因子取 \(e\) 次方，所以这个根在其中的总重数是 \(e r_s\)。由 \(e=[L:K]/s\) 得
 \[
 e r_s=\frac{dr}{d_s r_s}r_s=\frac d{d_s}r.
 \]
-右端恰是 \(f(t)^r\) 中每个不同根的重数。由\eqref{b1:eq:trace-norm-minimal-polynomial}，这就证明特征多项式公式。比较 \(t^{[L:K]-1}\) 的系数与常数项，分别得到迹和范数的公式。
+等式两端分别是嵌入乘积与 \(f(t)^r\) 中同一个根的总重数，故两个首一多项式相同。若把其全部根按重数列成 \(\lambda_1,\ldots,\lambda_{[L:K]}\)，则
+\[
+\prod_j(t-\lambda_j)
+=t^{[L:K]}-\Bigl(\sum_j\lambda_j\Bigr)t^{[L:K]-1}
++\cdots+(-1)^{[L:K]}\prod_j\lambda_j.
+\]
+与乘法特征多项式的次高项和常数项比较，迹等于这些根的和，范数等于这些根的积，便得到所述公式。
 \end{proof}
 公式中的重复有两个来源，即不同嵌入在指定元素上取同一值，以及每个嵌入像还要按不可分次数 \(e\) 计重。即使扩张可分，第一种重复也可能出现。取 \(L=\mathbb Q(\sqrt2,\sqrt3)\)、\(K=\mathbb Q\)、\(a=\sqrt2\)。分别为 \(\sqrt2\) 和 \(\sqrt3\) 选择正负像，得到四个不同的 \(K\) 嵌入；它们在 \(a\) 上的取值为 \(\sqrt2,\sqrt2,-\sqrt2,-\sqrt2\)。此时 \(e=1\)，但 \(\chi_{a,L/K}(t)=(t^2-2)^2\)。因此，求迹或范数时仍须保留不同嵌入带来的重复取值。
 
@@ -106,4 +171,4 @@ e r_s=\frac{dr}{d_s r_s}r_s=\frac d{d_s}r.
 \operatorname{Tr}_{L/K}(u)=pu=0,\qquad
 \operatorname{N}_{L/K}(u)=u^p.
 \]
-事实上，这个扩张中每个元素的迹都是零。唯一嵌入的像若不按 \(e\) 计重，就无法得到这些结果。
+事实上，这个扩张中每个元素的迹都是零。唯一嵌入的像若不按 \(e\) 计重，就无法得到这些结果。前一个例子中，最小多项式本身没有重根，重复来自多个嵌入在 \(a\) 上取值相同；本例只有一个嵌入，重复却来自不可分性导致的根重数。二者都影响乘法特征多项式，但原因不同。

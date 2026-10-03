@@ -9,7 +9,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 多项式的分裂域构造
-% * 嵌入延拓与分裂域的唯一性
+% * 嵌入延拓与分裂域的唯一性；系数变换与根的像须保持已有关系
 % * 具体低次多项式的分裂域
 %
 
@@ -25,6 +25,7 @@ f=a\prod_{i=1}^n(x-\alpha_i),\qquad L=K(\alpha_1,\ldots,\alpha_n),
 \]
 则称 \(L\) 为 \(f\) 在 \(K\) 上的\term[fenlie-yu]{分裂域}[splitting field]。非零常数多项式的分裂域约定为 \(K\)。
 \end{definition}
+第一个条件要求全部根都已进入 \(L\)，第二个条件要求 \(L\) 恰由这些根生成。例如 \(X^2-2\) 在 \(\mathbb C\) 中分裂，但 \(\mathbb C\) 不是它在 \(\mathbb Q\) 上的分裂域；两个根只生成 \(\mathbb Q(\sqrt2)\)。根按重数列出，重复列出一个根并不改变生成的域。
 
 \begin{proposition}\label{b1:prop:splitting-field-exists}
 设 \(K\) 为域。每个非零多项式 \(f\in K[x]\) 都有分裂域，且分裂域为 \(K\) 的有限扩张。若 \(\deg f=n\geq1\)，则该扩张的次数至多为 \(n!\)。
@@ -32,12 +33,14 @@ f=a\prod_{i=1}^n(x-\alpha_i),\qquad L=K(\alpha_1,\ldots,\alpha_n),
 \begin{proof}
 若 \(f\) 非常数，取一个不可约因子 \(q\)。域 \(K_1=K[x]/(q)\) 包含元素 \(\alpha_1=x+(q)\)，它满足 \(q(\alpha_1)=0\)，从而也是 \(f\) 的根。这里商环为域可由多项式 Bézout 关系直接验证：非零剩余类的代表元与 \(q\) 互素，故有逆元。由因式定理，在 \(K_1[x]\) 中写 \(f=(x-\alpha_1)f_1\)。
 
-在 \(K_1\) 上重复此构造，为次数 \(n-1\) 的 \(f_1\) 添入一个根；如此至多 \(n\) 步，所得域由全部这些根生成，且 \(f\) 分裂。每步次数分别至多为 \(n,n-1,\ldots,1\)，由\cref{b1:thm:tower-law}知总次数至多为 \(n!\)。即使出现重根也不影响构造，某些步骤只是次数为一的扩张。
+在 \(K_1\) 上重复此构造，为次数 \(n-1\) 的 \(f_1\) 添入一个根。每除去一个一次因子，剩余多项式的次数就减少一，所以至多 \(n\) 步便得到由全部这些根生成、使 \(f\) 分裂的域。每步所选不可约因子的次数不超过当时剩余多项式的次数，故各步扩张次数分别至多为 \(n,n-1,\ldots,1\)。由\cref{b1:thm:tower-law}知总次数至多为 \(n!\)。若某个根已经在当前域内，就可继续除去相应的一次因子而不扩大域；重根只需按其重数继续除去，不要求反复添入同一个元素。
 \end{proof}
 这是一个存在性构造。实际计算不必机械地逐根相添；根之间已知的关系常能显著减少步骤，也能把 \(n!\) 这个粗上界缩小。
 
 \subsection{嵌入延拓与分裂域的唯一性}
 \label{b1:subsec:1501:02}
+
+若将基域元素按 \(\sigma\) 变换，那么关系 \(m(\alpha)=0\) 的系数也随之变换。因此 \(\alpha\) 的像必须满足 \(\sigma(m)(\beta)=0\)，不能仅凭 \(m(\beta)=0\) 选择它。下面的引理说明，这一条件也足以得到单扩张上的延拓。
 
 \begin{lemma}\label{b1:lem:simple-embedding-extension}
 设 \(L/K\) 为域扩张，\(\alpha\in L\) 在 \(K\) 上代数，最小多项式为 \(m\in K[x]\)。设 \(\sigma:K\rightarrow K'\) 为域同构，\(\Omega/K'\) 为域扩张，并记 \(\sigma(m)\in K'[x]\) 为对 \(m\) 的系数施行 \(\sigma\) 所得的多项式。若预先选定 \(\sigma(m)\) 在 \(\Omega\) 中的一个根 \(\beta\)，则存在唯一的域嵌入 \(\widetilde\sigma_\beta:K(\alpha)\rightarrow\Omega\)，使
@@ -51,7 +54,7 @@ f=a\prod_{i=1}^n(x-\alpha_i),\qquad L=K(\alpha_1,\ldots,\alpha_n),
 \[
 \widetilde\sigma_\beta:\sum_i a_i\alpha^i\longmapsto\sum_i\sigma(a_i)\beta^i.
 \]
-这一定义不依赖多项式表达式，因为 \(\alpha\) 的多项式关系全是 \(m\) 的倍式，变换后均在 \(\beta\) 处为零。它保持加法、乘法和单位，并在域之间单射；其像为 \(K'(\beta)\)。每个元素都是 \(\alpha\) 的多项式，故在已选定 \(\beta\) 后，延拓只能是 \(\widetilde\sigma_\beta\)。
+若两个多项式表达式在 \(\alpha\) 处相等，其差 \(h\in K[x]\) 属于代入映射的核 \((m)\)，即 \(h=qm\)。变换系数后有 \(\sigma(h)=\sigma(q)\sigma(m)\)，在 \(\beta\) 处仍为零，所以像与表达式的选择无关。该映射保持加法、乘法和单位，并在域之间单射；其像为 \(K'(\beta)\)。每个元素都是 \(\alpha\) 的多项式，故在已选定 \(\beta\) 后，延拓只能是 \(\widetilde\sigma_\beta\)。
 \end{proof}
 
 例如取 \(K=\mathbb Q(\sqrt2)\)、\(\alpha=\sqrt[4]2>0\)，并在 \(\mathbb C\) 中计算。由\cref{b1:thm:eisenstein}，\(X^4-2\) 在 \(\mathbb Q\) 上不可约，故 \([\mathbb Q(\alpha):\mathbb Q]=4\)。又有 \(\sqrt2=\alpha^2\)，塔式公式给出 \([K(\alpha):K]=2\)，所以 \(\alpha\) 在 \(K\) 上的最小多项式为
@@ -63,13 +66,16 @@ m=X^2-\sqrt2.
 \sigma(m)=X^2+\sqrt2,
 \qquad \sigma(m)\text{ 的根为 }\pm i\alpha.
 \]
-因此 \(\sigma\) 到 \(K(\alpha)\) 的两个嵌入延拓必须分别把 \(\alpha\) 送到 \(i\alpha\) 与 \(-i\alpha\)。若送到 \(\pm\alpha\)，平方仍为 \(\sqrt2\)，就不满足系数已经变换后的关系。这里原域 \(K(\alpha)\) 位于实数域中，像域却含有非实元素；嵌入到代数闭域不要求它成为原实数域到自身的自同构。
+因此 \(\sigma\) 从 \(K(\alpha)\) 到 \(\mathbb C\) 的两个嵌入延拓必须分别把 \(\alpha\) 送到 \(i\alpha\) 与 \(-i\alpha\)。若送到 \(\pm\alpha\)，平方仍为 \(\sqrt2\)，就不满足系数已经变换后的关系。这里定义域为实域 \(K(\alpha)=\mathbb Q(\alpha)\)，目标域为 \(\mathbb C\)，两个延拓的像域均为 \(K(i\alpha)\)，含有非实元素。嵌入的定义域、目标域与像域是不同的对象。
+
+\ProseParagraphBreak
+即使基域保持不变，也不能独立指定各生成元的共轭根。例如 \(\alpha\) 与 \(b=\alpha^2\) 在 \(\mathbb Q\) 上分别满足 \(X^4-2\) 与 \(X^2-2\)。若一个 \(\mathbb Q\) 同态固定 \(\alpha\)，便必须把 \(b\) 送到 \(\alpha^2=b\)，不能另选 \(-b\)。逐次延拓时要使用当前中间域上的最小多项式：在 \(\mathbb Q(\alpha)\) 上，\(b\) 的最小多项式已是 \(X-\alpha^2\)，没有另选符号的自由。
 
 \begin{proposition}\label{b1:prop:splitting-field-unique}
-设 \(f\in K[x]\) 为非零多项式，\(L/K\) 是 \(f\) 的分裂域，\(\sigma:K\rightarrow K'\) 是域同构，而 \(L'/K'\) 是 \(\sigma(f)\) 的分裂域。则 \(\sigma\) 可以延拓为域同构 \(L\rightarrow L'\)。特别地，同一多项式的两个分裂域在保持基域的同构意义下唯一。
+设 \(f\in K[x]\) 为非零多项式，\(L/K\) 是 \(f\) 的分裂域，\(\sigma:K\rightarrow K'\) 是域同构，而 \(L'/K'\) 是 \(\sigma(f)\) 的分裂域。则 \(\sigma\) 可以延拓为域同构 \(L\rightarrow L'\)。特别地，同一多项式的两个分裂域在保持基域的同构意义下唯一，但这样的同构映射未必唯一。
 \end{proposition}
 \begin{proof}
-把 \(L\) 写成 \(K(\alpha_1,\ldots,\alpha_r)\)，其中所列元素是 \(f\) 的全部不同根。假设已在 \(E=K(\alpha_1,\ldots,\alpha_{i-1})\) 上构造嵌入 \(\tau:E\rightarrow L'\)。\(\alpha_i\) 在 \(E\) 上的最小多项式整除 \(f\)，所以 \(\tau(m_{\alpha_i,E})\) 整除 \(\sigma(f)\)，后者在 \(L'\) 中分裂。于是前者在 \(L'\) 中有根，由\cref{b1:lem:simple-embedding-extension}可把 \(\tau\) 延拓到 \(E(\alpha_i)\)。有限次延拓给出嵌入 \(L\rightarrow L'\)。
+先逐根延拓基域同构以取得嵌入，再利用目标域恰由全部根生成来证明它满射。把 \(L\) 写成 \(K(\alpha_1,\ldots,\alpha_r)\)，其中所列元素是 \(f\) 的全部不同根。假设已在 \(E=K(\alpha_1,\ldots,\alpha_{i-1})\) 上构造嵌入 \(\tau:E\rightarrow L'\)。因为 \(f(\alpha_i)=0\)，\cref{b1:prop:minimal-polynomial-degree}说明 \(\alpha_i\) 在 \(E\) 上的最小多项式整除 \(f\)。所以 \(\tau(m_{\alpha_i,E})\) 整除 \(\sigma(f)\)，后者在 \(L'\) 中分裂。于是前者在 \(L'\) 中有根，由\cref{b1:lem:simple-embedding-extension}可把 \(\tau\) 延拓到 \(E(\alpha_i)\)。有限次延拓给出嵌入 \(L\rightarrow L'\)。
 
 在 \(L[x]\) 中，\(f\) 的一次分解经此嵌入变为 \(\sigma(f)\) 的一次分解。因此 \(\sigma(f)\) 的全部根都在像域中，像域又包含 \(K'\)。\(L'\) 由这些根生成，故像恰为 \(L'\)，嵌入为同构。
 \end{proof}
@@ -89,4 +95,7 @@ m=X^2-\sqrt2.
 &=2\cdot3=6.
 \end{aligned}
 \end{equation}
-根 \(a\) 生成的三次扩张并未包含另外两个根；分裂域把它们一起纳入，才为后续置换全部根提供合适的域。
+根 \(a\) 生成的三次扩张并未包含另外两个根；分裂域把它们一起纳入，才为后续置换全部根提供合适的域。添一个根的次数由它的最小多项式控制，分裂域的次数还反映其余根需要补充多少代数信息。
+
+\ProseParagraphBreak
+由单扩张嵌入引理，\(a\mapsto a\zeta\) 给出 \(\mathbb Q(a)\) 到 \(\mathbb C\) 的 \(\mathbb Q\) 嵌入，其像为 \(\mathbb Q(a\zeta)\)。这个像含有非实元素，而 \(\mathbb Q(a)\) 是实域，所以两个子域不同，尽管它们保持 \(\mathbb Q\) 地同构。同构描述代数结构相同，并不意味着在共同环境中占据同一个子域。

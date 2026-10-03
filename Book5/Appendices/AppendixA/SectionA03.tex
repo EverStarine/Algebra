@@ -78,25 +78,44 @@
 \label{b5:subsec:A03:03}
 
 \begin{proposition}\label{b5:prop:gaussian-subspace-count}
-设 \(q\) 为素数幂，\(n,r\) 为满足 \(0\le r\le n\) 的整数，\(\mathbb F_q\) 为 \(q\) 元有限域。向量空间 \(\mathbb F_q^n\) 中 \(r\) 维 \(\mathbb F_q\) 子空间的数目为
+设 \(n,r\) 为满足 \(0\le r\le n\) 的整数，\(Q\) 为形式变量。在 \(\mathbb Q(Q)\) 中定义
+\[
+{n\brack r}_Q=\prod_{i=1}^r\frac{1-Q^{n-r+i}}{1-Q^i},
+\]
+取空乘积为一。则 \({n\brack r}_Q\in\mathbb Z[Q]\)。对任意素数幂 \(q\)，记 \(\mathbb F_q\) 为 \(q\) 元有限域，\({n\brack r}_q\) 为此多项式在 \(Q=q\) 处的值；它等于 \(\mathbb F_q^n\) 中 \(r\) 维子空间的数目，并且
 \[
 {n\brack r}_q
 =\frac{(q^n-1)(q^n-q)\cdots(q^n-q^{r-1})}
-{(q^r-1)(q^r-q)\cdots(q^r-q^{r-1})}
-=\prod_{i=1}^r\frac{1-q^{n-r+i}}{1-q^i}.
+{(q^r-1)(q^r-q)\cdots(q^r-q^{r-1})}.
 \]
-取空乘积为一。
 \end{proposition}
 \begin{proof}
-有序线性无关 \(r\) 元组可逐个选择：第 \(i+1\) 个向量不得落在前 \(i\) 个生成的 \(q^i\) 元子空间中，所以共有分子的数目。每个固定 \(r\) 维子空间的有序基数为分母，且每个独立元组唯一确定其生成子空间。相除得到第一式；提出相应的 \(q^i\) 并调整指标得到第二式。
+先固定素数幂 \(q\)，将 \(\mathbb F_q^n\) 中 \(r\) 维子空间的数目记为 \(N_{n,r}(q)\)。有序线性无关 \(r\) 元组可逐个选择：第 \(i+1\) 个向量不得落在前 \(i\) 个生成的 \(q^i\) 元子空间中，所以共有上述分子的数目。每个固定 \(r\) 维子空间的有序基数为分母，且每个独立元组唯一确定其生成子空间。相除后，提出相应的 \(q^i\) 并调整指标，得到
+\[
+N_{n,r}(q)=\prod_{i=1}^r\frac{1-q^{n-r+i}}{1-q^i}.
+\]
+当 \(1\le r\le n-1\) 时，固定超平面 \(H=\mathbb F_q^{n-1}\subset V=\mathbb F_q^n\)，将 \(r\) 维子空间分成包含于 \(H\) 和不包含于 \(H\) 两类。后一类的交 \(U=W\cap H\) 维数为 \(r-1\)。对每个固定的 \(U\)，\(W/U\) 是 \(V/U\) 中不落在超平面 \(H/U\) 中的一条直线；把最后一坐标归一为一，这样的直线共有 \(q^{n-r}\) 条。于是
+\[
+N_{n,r}(q)=N_{n-1,r}(q)+q^{n-r}N_{n-1,r-1}(q).
+\]
+零子空间和整个空间各有一个，故 \(N_{n,0}(q)=N_{n,n}(q)=1\)。用相同的边界值 \(F_{n,0}(Q)=F_{n,n}(Q)=1\) 及递推
+\[
+F_{n,r}(Q)=F_{n-1,r}(Q)+Q^{n-r}F_{n-1,r-1}(Q)
+\qquad(1\le r\le n-1)
+\]
+逐级定义 \(F_{n,r}(Q)\)。归纳得到 \(F_{n,r}(Q)\in\mathbb Z[Q]\)，且对每个素数幂 \(q\) 都有 \(F_{n,r}(q)=N_{n,r}(q)\)。将有理函数 \({n\brack r}_Q-F_{n,r}(Q)\) 通分，其分子是一个有理系数多项式。分母在所有素数幂 \(q>1\) 处均不为零，而分子在这些无限多个值处均为零，故分子恒为零。这就证明 \({n\brack r}_Q=F_{n,r}(Q)\)，以及形式多项式递推
+\begin{equation}\label{b5:eq:gaussian-recursion}
+{n\brack r}_Q={n-1\brack r}_Q
++Q^{n-r}{n-1\brack r-1}_Q
+\qquad(1\le r\le n-1).
+\end{equation}
 \end{proof}
 
-尽管最后写成有理表达式，它实际是关于 \(q\) 的整系数多项式。固定超平面 \(H=\mathbb F_q^{n-1}\)，将 \(r\) 维子空间分成包含于 \(H\) 和不包含于 \(H\) 两类。后一类的交 \(U=W\cap H\) 维数为 \(r-1\)。在 \(V/U\) 中，\(W/U\) 是不落在超平面 \(H/U\) 中的一条直线；把最后一坐标归一为一，其数目是 \(q^{n-r}\)。于是
-\begin{equation}\label{b5:eq:gaussian-recursion}
-{n\brack r}_q={n-1\brack r}_q
-+q^{n-r}{n-1\brack r-1}_q.
-\end{equation}
-边界值为一，越界值为零，归纳便给出整系数多项式性。令形式参数 \(q=1\) 时递推变成普通二项式递推，故其值为 \(\binom nr\)；这不是声称存在一个单元素的域。
+在多项式中代入 \(Q=1\)，递推变成普通二项式递推，边界值也相同，因此
+\[
+\left.{n\brack r}_Q\right|_{Q=1}=\binom nr.
+\]
+这里是在形式多项式中求值，没有引入单元素的域。
 
 \ProseParagraphBreak
 完整旗

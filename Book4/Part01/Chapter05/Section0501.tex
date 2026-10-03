@@ -39,7 +39,18 @@
 则称这组数据为一个\term[yaoban-fanchou]{幺半范畴}[monoidal category]。\(I\) 称为单位对象，\(\alpha\) 称为结合约束，\(\lambda,\rho\) 称为单位约束。若这些约束都是恒等态射，就称幺半范畴为严格的。
 \end{definition}
 
-五边形等式的两边都从 \(((W\otimes X)\otimes Y)\otimes Z\) 到 \(W\otimes(X\otimes(Y\otimes Z))\)：左边改括号两次，右边改三次。它规定的是映射相等，并非只说两端对象同构。三角等式比较两种删除中间单位的方法：先改括号再删 \(I\)，或直接删 \(I\)。下面的图显示后一要求。
+五边形等式的两边都从 \(((W\otimes X)\otimes Y)\otimes Z\) 到 \(W\otimes(X\otimes(Y\otimes Z))\)：左边改括号两次，右边改三次。把五种括号方式放在同一图中，就能逐步读出每个结合约束。以下两类图仅在对象名称中略写 \(XY=X\otimes Y\)，保留全部括号；箭头标记仍写出张量积。
+\[
+\begin{tikzcd}[column sep=1.5em,row sep=3em]
+&((WX)Y)Z
+\arrow[dl,"\alpha_{W,X,Y}\otimes1_Z"']
+\arrow[dr,"\alpha_{W\otimes X,Y,Z}"]&\\
+(W(XY))Z\arrow[d,"\alpha_{W,X\otimes Y,Z}"']&&
+(WX)(YZ)\arrow[d,"\alpha_{W,X,Y\otimes Z}"]\\
+W((XY)Z)\arrow[rr,"1_W\otimes\alpha_{X,Y,Z}"']&&W(X(YZ))
+\end{tikzcd}
+\]
+两条有向路径必须给出同一个态射，并非只说两端对象同构。三角等式比较两种删除中间单位的方法：先改括号再删 \(I\)，或直接删 \(I\)。下面的图显示后一要求。
 \[
 \begin{tikzcd}[column sep=large]
 (X\otimes I)\otimes Y \ar[rr,"\alpha_{X,I,Y}"] \ar[dr,"\rho_X\otimes1_Y"']
@@ -130,6 +141,27 @@ c_{X\otimes Y,Z}
 \end{definition}
 
 第一条六边形等式说：把 \(X\) 跨过整体 \(Y\otimes Z\)，等于依次跨过 \(Y\) 与 \(Z\)；第二条说明如何把整体 \(X\otimes Y\) 跨过 \(Z\)。公式中的结合约束使每一步都有确定的定义域和陪域。这一版本见\cite[Definition 8.1.1, p. 195]{EtingofEtAl2015TensorCategories}。
+\[
+\begin{tikzcd}[column sep=5em,row sep=3em]
+X(YZ)\arrow[r,"c_{X,Y\otimes Z}"]
+\arrow[d,"\alpha_{X,Y,Z}^{-1}"']&(YZ)X\\
+(XY)Z\arrow[d,"c_{X,Y}\otimes1_Z"']&
+Y(ZX)\arrow[u,"\alpha_{Y,Z,X}^{-1}"']\\
+(YX)Z\arrow[r,"\alpha_{Y,X,Z}"']&
+Y(XZ)\arrow[u,"1_Y\otimes c_{X,Z}"']
+\end{tikzcd}
+\]
+这里先用 \(\alpha^{-1}\) 把 \(X\) 与 \(Y\) 放入同一对括号，交换这两个因子；再用 \(\alpha\) 让 \(X\) 与 \(Z\) 配对，最后用 \(\alpha^{-1}\) 恢复目标的括号。因此逆结合约束由所需的括号方向决定。第二条等式具有同样的六条边：
+\[
+\begin{tikzcd}[column sep=5em,row sep=3em]
+(XY)Z\arrow[r,"c_{X\otimes Y,Z}"]
+\arrow[d,"\alpha_{X,Y,Z}"']&Z(XY)\\
+X(YZ)\arrow[d,"1_X\otimes c_{Y,Z}"']&
+(ZX)Y\arrow[u,"\alpha_{Z,X,Y}"']\\
+X(ZY)\arrow[r,"\alpha_{X,Z,Y}^{-1}"']&
+(XZ)Y\arrow[u,"c_{X,Z}\otimes1_Y"']
+\end{tikzcd}
+\]
 
 \begin{example}\label{b4:exm:symmetric-module-tensor}
 交换含幺环 \(R\) 的模范畴取 \(c(m\otimes n)=n\otimes m\)。因为 \(rn\otimes m=n\otimes rm\)，该公式保持平衡关系。它自然，且交换两次恢复原纯张量。第一条六边形等式的两边都把 \(m\otimes(n\otimes p)\) 送到 \((n\otimes p)\otimes m\)；第二条的两边都把 \((m\otimes n)\otimes p\) 送到 \(p\otimes(m\otimes n)\)。纯张量生成各定义域，故两条等式均作为态射等式成立。这给出对称结构。集合的笛卡尔积用交换坐标给出同样的例子。

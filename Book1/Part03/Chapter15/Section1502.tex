@@ -8,12 +8,12 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 代数闭包的存在
+% * 代数闭包的存在；有限多条根关系的相容性与递增并域
 % * 一般嵌入延拓与代数闭包在基域同构意义下的唯一性
 % * 选择原理在证明中的位置
 %
 
-一个分裂域只处理指定多项式。若要在同一个域中讨论基域上的所有代数方程，可先构造代数扩张，使基域上的每个非常数多项式至少有一个根。下文采用可数次迭代，并利用多项式只含有限多个系数这一事实，直接验证所得域也能处理新系数的方程。
+一个分裂域只处理指定多项式。若要在同一个域中讨论基域上的所有代数方程，可先构造代数扩张，使 \(K[x]\) 中的每个非常数多项式至少有一个根。但得到新域 \(F_1\) 后，\(F_1[x]\) 中还可能出现系数不全属于 \(K\) 的多项式，刚才的构造并未为这些方程安排根。因此对新域继续添根，得到递增的域列 \(F_0=K\subseteq F_1\subseteq F_2\subseteq\cdots\)。利用每个多项式只有有限多个系数，可以证明这些域的并处理了其中全部的多项式方程。
 
 \subsection{代数闭包的存在性}
 \label{b1:subsec:1502:01}
@@ -23,22 +23,34 @@
 \end{definition}
 \symidx{\(\overline K\)：\(K\) 的一个代数闭包}
 
+要使域 \(F\) 上的每个非常数多项式都有根，可以为每个首一非常数多项式 \(f\) 设置一个形式符号 \(X_f\)，再在多项式环中施加关系 \(f(X_f)=0\)。若这些关系在一个非零商环中同时成立，\(X_f\) 的像便成为 \(f\) 的根。下面还要使这个商环成为域，并保证所得扩张代数。
+
 \begin{lemma}\label{b1:lem:adjoin-all-roots}
 对任意域 \(F\)，存在代数扩张 \(F'/F\)，使 \(F[x]\) 中每个非常数多项式在 \(F'\) 中至少有一个根。
 \end{lemma}
 \begin{proof}
-为每个首一非常数多项式 \(f\in F[x]\) 设置一个不定元 \(X_f\)，令 \(R=F[X_f\mid f]\)。每个环元素只涉及有限多个不定元。令 \(I\) 为全部 \(f(X_f)\) 生成的理想。我们先证 \(I\neq R\)。否则，表达式 \(1=\sum_{i=1}^r h_i\cdot f_i(X_{f_i})\) 只涉及有限多个多项式及变量。逐次为 \(f_1,\ldots,f_r\) 添入根，得到某个扩张域 \(E/F\)；把相应 \(X_{f_i}\) 送到所选根，其余变量送到零，就得到 \(R\rightarrow E\) 的同态。上述等式在其下变为 \(1=0\)，矛盾。
+为每个首一非常数多项式 \(f\in F[x]\) 设置一个不定元 \(X_f\)，令 \(R=F[X_f\mid f]\)。每个环元素只涉及有限多个不定元。令 \(I\) 为全部 \(f(X_f)\) 生成的理想；在 \(R/I\) 中，这些关系便同时成立。
 
-由\cref{b1:prop:maximal-ideal-exists}，真理想 \(I\) 包含于一个极大理想 \(\mathfrak m\)。令 \(F'=R/\mathfrak m\)，则它是域；\(F\cap\mathfrak m=0\)，因为非零常数可逆，所以 \(F\) 嵌入 \(F'\)。每个 \(X_f\) 的像被 \(f\) 零化。\(F'\) 作为环由这些像生成，每个元素只用其中有限多个，因而由\cref{b1:lem:finite-algebraic-generators}及\cref{b1:lem:finite-dimensional-algebraic}知它在 \(F\) 上代数。
+我们先证 \(I\neq R\)。关键是任何有限多个这样的关系都能在某个扩域中同时实现。如果 \(1\in I\)，按生成理想的定义，就有有限表达式
+\[
+1=\sum_{i=1}^r h_i f_i(X_{f_i}),\qquad h_i\in R,
+\]
+其中可将重复的 \(f_i\) 合并。由\cref{b1:prop:splitting-field-exists}逐次为 \(f_1,\ldots,f_r\) 添入根，得到某个扩张域 \(E/F\)，在其中同时选定 \(f_i\) 的根 \(a_i\)。把 \(X_{f_i}\) 送到 \(a_i\)，其余不定元送到零，就得到保持 \(F\) 的环同态 \(R\rightarrow E\)。余变量取零只是为了给整个多项式环定义同态，并不要求这次赋值满足它们各自对应的添根关系；上式只需所列的有限条关系成立。上式的右边映为零，左边仍为一，矛盾。因此有限子系统的相容性排除了 \(1\in I\)。
+
+由\cref{b1:prop:maximal-ideal-exists}，真理想 \(I\) 包含于一个极大理想 \(\mathfrak m\)。令 \(F'=R/\mathfrak m\)，则它是域；\(F\cap\mathfrak m=0\)，因为非零常数可逆，所以 \(F\) 嵌入 \(F'\)。记 \(X_f\) 的像为 \(\overline X_f\)，则 \(f(\overline X_f)=0\)，所以每个 \(\overline X_f\) 都在 \(F\) 上代数。任意 \(a\in F'\) 都是有限多个 \(\overline X_{f_1},\ldots,\overline X_{f_s}\) 的多项式表达，因而属于
+\[
+F(\overline X_{f_1},\ldots,\overline X_{f_s}).
+\]
+由\cref{b1:lem:finite-algebraic-generators}，这个中间域在 \(F\) 上有限，再由\cref{b1:lem:finite-dimensional-algebraic}知 \(a\) 在 \(F\) 上代数。因此 \(F'/F\) 是代数扩张。任意非常数多项式除以首项系数便成为首一多项式，根不改变，故所有非常数多项式都有根。
 \end{proof}
 
 \begin{theorem}\label{b1:thm:algebraic-closure}
 每个域 \(K\) 都存在代数闭包。
 \end{theorem}
 \begin{proof}
-从 \(F_0=K\) 出发，反复应用\cref{b1:lem:adjoin-all-roots}构造代数扩张 \(F_{n+1}/F_n\)，使 \(F_n\) 上每个非常数多项式在 \(F_{n+1}\) 中有根。将各步嵌入认同为包含，令 \(\Omega=\bigcup_{n\geq0}F_n\)。递增域的并为域；每个 \(F_n/K\) 由\cref{b1:thm:algebraic-tower}代数，因此 \(\Omega/K\) 代数。
+从 \(F_0=K\) 出发，反复应用\cref{b1:lem:adjoin-all-roots}构造代数扩张 \(F_{n+1}/F_n\)，使 \(F_n\) 上每个非常数多项式在 \(F_{n+1}\) 中有根。将各步嵌入认同为包含，令 \(\Omega=\bigcup_{n\geq0}F_n\)。任意两个元素都落在某个共同的 \(F_n\) 中，其差、积以及非零元素的逆仍在该域内，因此 \(\Omega\) 是域。反复应用\cref{b1:thm:algebraic-tower}可知每个 \(F_n/K\) 代数。任意 \(a\in\Omega\) 属于某个 \(F_n\)，所以在 \(K\) 上代数；这证明了 \(\Omega/K\) 代数。
 
-若 \(g\in\Omega[x]\) 非常数，其有限多个系数全落在某个 \(F_n\) 中，所以 \(g\) 在 \(F_{n+1}\subseteq\Omega\) 有根。故 \(\Omega\) 代数闭，满足代数闭包的两项要求。
+若 \(g=\sum_{i=0}^d c_ix^i\in\Omega[x]\) 非常数，每个系数 \(c_i\) 属于某个 \(F_{n_i}\)。系数只有有限多个，取 \(n=\max\{n_0,\ldots,n_d\}\)，并利用域列递增，就有所有 \(c_i\in F_n\)。所以 \(g\in F_n[x]\)，在 \(F_{n+1}\subseteq\Omega\) 中有根。故 \(\Omega\) 代数闭，满足代数闭包的两项要求。
 \end{proof}
 这项构造不要求基域可数。每一步同时为该域的全部多项式安排不定元；迭代后的有限系数论证直接证明并域代数闭，不需要先判定第一步所得域是否已代数闭。“可数次迭代”也不意味着所得代数闭包是可数集。
 
@@ -49,18 +61,31 @@
 设 \(L/K\) 为任意代数扩张，\(\Omega\) 为代数闭域，\(\sigma:K\rightarrow\Omega\) 为域嵌入。则存在嵌入 \(\widetilde\sigma:L\rightarrow\Omega\) 延拓 \(\sigma\)。
 \end{theorem}
 \begin{proof}
-令 \(\mathcal P\) 为所有 \((E,\tau)\) 组成的集合，其中 \(E\) 是 \(L/K\) 的中间域，\(\tau:E\hookrightarrow\Omega\) 是满足 \(\tau|_K=\sigma\) 的域嵌入。规定 \((E,\tau)\le(E',\tau')\) 当且仅当 \(E\subseteq E'\) 且 \(\tau'|_E=\tau\)。初始对 \((K,\sigma)\) 使 \(\mathcal P\) 非空；一条非空链的定义域之并是域，链上相容映射之并是嵌入，因而给出上界；空链以 \((K,\sigma)\) 为上界。Zorn 引理（\cref{b1:thm:A-zorn}）给出极大对 \((E,\tau)\)。
+只要一个部分嵌入的定义域还没有覆盖 \(L\)，就尝试再添入一个元素并延拓。Zorn 引理给出极大部分嵌入，而代数性将保证其定义域不能遗漏任何元素。
 
-若 \(E\neq L\)，取 \(a\in L\setminus E\)。它在 \(E\) 上代数，其最小多项式经 \(\tau\) 变为 \(\tau(E)\) 上的不可约多项式。\(\Omega\) 代数闭，故该多项式在 \(\Omega\) 中有根。\cref{b1:lem:simple-embedding-extension}便把 \(\tau\) 延拓到 \(E(a)\)，与极大性矛盾。所以 \(E=L\)，得到所需延拓。
+令 \(\mathcal P\) 为所有 \((E,\tau)\) 组成的集合，其中 \(E\) 是 \(L/K\) 的中间域，\(\tau:E\hookrightarrow\Omega\) 是满足 \(\tau|_K=\sigma\) 的域嵌入。规定 \((E,\tau)\le(E',\tau')\) 当且仅当 \(E\subseteq E'\) 且 \(\tau'|_E=\tau\)。初始对 \((K,\sigma)\) 使 \(\mathcal P\) 非空。
+
+对一条非空链 \(\mathcal C\)，将其定义域取并，得到中间域 \(E_{\mathcal C}\)。链中任意两个定义域按包含关系可比，较大域上的映射限制到较小域后就是原映射，所以两个映射在重叠处绝不冲突。于是可定义 \(\tau_{\mathcal C}(a)=\tau(a)\)，其中任选一个包含 \(a\) 的链成员 \((E,\tau)\)，所得值与选择无关。任意有限多个元素都可放进同一个链成员的定义域，在那里验证 \(\tau_{\mathcal C}\) 保持域运算并且单射，就知它是延拓 \(\sigma\) 的嵌入。故 \((E_{\mathcal C},\tau_{\mathcal C})\) 给出上界；空链以 \((K,\sigma)\) 为上界。Zorn 引理（\cref{b1:thm:A-zorn}）给出极大对 \((E,\tau)\)。
+
+若 \(E\neq L\)，取 \(a\in L\setminus E\)。因为 \(L/K\) 代数，\(a\) 满足某个非零的 \(K\) 系数多项式方程。\(K\subseteq E\)，所以同一个方程也是非零的 \(E\) 系数方程，\(a\) 因而在 \(E\) 上代数。其最小多项式经系数同构 \(\tau:E\rightarrow\tau(E)\) 变为 \(\tau(E)\) 上的不可约多项式。\(\Omega\) 代数闭，故该多项式在 \(\Omega\) 中有根。\cref{b1:lem:simple-embedding-extension}便把 \(\tau\) 延拓到 \(E(a)\)，与极大性矛盾。所以 \(E=L\)，得到所需延拓。
 \end{proof}
 
 \begin{proposition}\label{b1:prop:algebraic-closure-unique}
 若 \(\Omega/K\)、\(\Omega'/K\) 都是代数闭包，则存在保持 \(K\) 的同构 \(\Omega\rightarrow\Omega'\)。
 \end{proposition}
 \begin{proof}
-对代数扩张 \(\Omega/K\) 和嵌入 \(K\hookrightarrow\Omega'\) 应用\cref{b1:thm:embedding-extension}，得到嵌入 \(\tau:\Omega\rightarrow\Omega'\)。它的像 \(\tau(\Omega)\) 是代数闭域：像域上的多项式拉回 \(\Omega\) 后有根，再映过去即得根。
+对代数扩张 \(\Omega/K\) 和嵌入 \(K\hookrightarrow\Omega'\) 应用\cref{b1:thm:embedding-extension}，得到保持 \(K\) 的嵌入 \(\tau:\Omega\rightarrow\Omega'\)。为了证明像域 \(\tau(\Omega)\) 代数闭，任取其中的非常数多项式
+\[
+g(x)=\sum_{i=0}^d\tau(a_i)x^i,
+\qquad a_i\in\Omega,
+\]
+将系数拉回，得到 \(g^\tau(x)=\sum_{i=0}^d a_ix^i\in\Omega[x]\)。因 \(\tau\) 单射，这个多项式仍非常数。\(\Omega\) 代数闭，故有 \(c\in\Omega\) 使 \(g^\tau(c)=0\)。映回去便有
+\[
+g(\tau(c))=\tau\bigl(g^\tau(c)\bigr)=0,
+\]
+所以 \(g\) 在像域中有根。
 
-任意 \(b\in\Omega'\) 在 \(K\) 上代数，故也在 \(\tau(\Omega)\) 上代数。其在像域上的不可约最小多项式只能为一次，因为像域代数闭。于是 \(b\in\tau(\Omega)\)，所以 \(\tau\) 满射。这里利用了“代数闭域没有非平凡代数扩张”，而非错误地认为无限集上的单射自动为满射。
+任意 \(b\in\Omega'\) 在 \(K\) 上代数。由于 \(\tau\) 保持 \(K\)，有 \(K\subseteq\tau(\Omega)\)；原来零化 \(b\) 的非零 \(K\) 系数多项式仍是非零的 \(\tau(\Omega)\) 系数多项式，所以扩大基域以后 \(b\) 仍代数。其在像域上的不可约最小多项式只能为一次，因为像域代数闭。于是 \(b\in\tau(\Omega)\)，所以 \(\tau\) 满射。这里利用了“代数闭域没有非平凡代数扩张”，而非错误地认为无限集上的单射自动为满射。
 \end{proof}
 同构通常并不唯一；选择不同共轭根会给出不同延拓。后文写“固定一个代数闭包”时，是选定共同环境，后续的嵌入与根都在这个选定的域中讨论。
 

@@ -9,7 +9,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 代数独立与超越基
-% * 交换引理及超越次数的不变性
+% * 交换引理及超越次数的不变性；有限次替换与有限支集计数
 % * 有限生成扩张与纯超越扩张
 % * 超越次数的塔式公式
 %
@@ -26,24 +26,52 @@
 设 \(L/K\) 为域扩张，\(T\subseteq L\)。如果对任意整数 \(r\geq1\)、任意互异的 \(t_1,\ldots,t_r\in T\) 以及任意 \(f\in K[X_1,\ldots,X_r]\)，等式 \(f(t_1,\ldots,t_r)=0\) 都蕴含 \(f=0\)，则称 \(T\) 在 \(K\) 上\term[daishu-duli]{代数独立}[algebraic independence]。如果 \(T\) 在 \(K\) 上代数独立，并且 \(L/K(T)\) 是代数扩张，则称 \(T\) 为 \(L/K\) 的\term[chaoyue-ji]{超越基}[transcendence basis]。空集视为代数独立，并约定 \(K(\varnothing)=K\)。
 \end{definition}
 
+对有限集合 \(T=\{t_1,\ldots,t_r\}\)，代数独立等价于代入同态
+\[
+\operatorname{ev}_T:K[X_1,\ldots,X_r]\longrightarrow L,
+\qquad f\longmapsto f(t_1,\ldots,t_r)
+\]
+单射。它的核收集这些元素的全部多项式关系；核为零，就表示没有非零关系。这与单个超越元的代入同态单射是同一个判据。对无限集合，则要求每个有限子集的代入同态都单射。
+
+\ProseParagraphBreak
+前面的 \(t,t^2\) 都分别超越，却由非零多项式 \(Y-X^2\) 联系起来。因此，每个元素分别没有单变量关系，远不足以保证它们之间没有多变量关系；代数独立考察的正是后一种条件。
+
 \begin{lemma}\label{b1:lem:independence-adjoining}
 设 \(L/K\) 为域扩张，\(T\subseteq L\) 在 \(K\) 上代数独立，且 \(a\in L\setminus T\)。则 \(T\cup\{a\}\) 在 \(K\) 上代数独立，当且仅当 \(a\) 在 \(K(T)\) 上超越。因此，\(L/K\) 的超越基恰是 \(L\) 中按包含关系极大的 \(K\) 上代数独立子集。
 \end{lemma}
 \begin{proof}
-\(K(T)\) 是由 \(T\) 中有限多个元素的多项式比组成的域。若 \(a\) 满足 \(K(T)\) 系数的多项式方程，清除有限多个分母，就得到 \(a\) 与 \(T\) 中有限多个元素之间的非零多项式关系；多项式仍非零，是因为 \(T\) 代数独立。反过来，把一个这样的关系按 \(a\) 的幂收集，至少一个系数是 \(T\) 中元素的非零多项式值，因而非零；这便给出 \(a\) 在 \(K(T)\) 上的代数方程。极大性的等价刻画随即得到。
+\(K(T)\) 的每个元素都是 \(T\) 中有限多个元素的多项式比。若 \(a\) 在 \(K(T)\) 上代数，取一个非零方程 \(\sum_{i=0}^n c_i a^i=0\)。其有限多个系数可以同时写成
+\[
+c_i=\frac{P_i(\mathbf t)}{Q_i(\mathbf t)},
+\qquad \mathbf t=(t_1,\ldots,t_r),\quad t_j\in T,
+\quad Q_i(\mathbf t)\ne0,
+\]
+其中 \(P_i,Q_i\in K[X_1,\ldots,X_r]\)，所选 \(t_1,\ldots,t_r\) 互异；若不需要 \(T\) 中的元素，可取 \(r=0\)。乘以公共分母 \(\prod_i Q_i(\mathbf t)\)，得到
+\[
+\sum_{i=0}^n R_i(\mathbf t)a^i=0,
+\qquad R_i=P_i\prod_{j\ne i}Q_j.
+\]
+至少一个 \(c_i\ne0\)，故相应的 \(P_i\ne0\)；各 \(Q_j\) 也非零，所以这个 \(R_i\) 是非零多项式。\(T\) 的代数独立性保证 \(R_i(\mathbf t)\ne0\)。因此 \(\sum_i R_i(\mathbf X)Y^i\) 是 \(a\) 与有限多个 \(t_j\) 之间的非零多项式关系。
+
+反过来，把 \(T\cup\{a\}\) 的一个非零关系按 \(a\) 的幂收集。至少一个系数是 \(T\) 中元素的非零多项式值；由代数独立性，这个值非零，便得到 \(a\) 在 \(K(T)\) 上的代数方程。因而不能再添入独立元素，恰好等价于 \(L\) 中每个元素都在 \(K(T)\) 上代数，得到超越基的极大性刻画。
 \end{proof}
 
-对于有限生成扩张，可以直接选择超越基。若 \(L=K(s_1,\ldots,s_n)\)，依次检查这些生成元；只在 \(s_i\) 对已选元素生成的域仍超越时，才把它选入集合 \(T\)。由\cref{b1:lem:independence-adjoining}，\(T\) 始终代数独立。每个未选入的 \(s_i\) 在当时的参数域上代数，因而在最终的 \(K(T)\) 上仍代数；由\cref{b1:lem:finite-algebraic-generators}，它们有限个生成的扩张 \(L/K(T)\) 也代数，所以 \(T\) 是 \(L/K\) 的超越基。一般扩张未必有有限生成集可供逐项检查，下面的存在定理因而采用 Zorn 引理。
+这里的“极大”是按包含关系而言：若 \(T\subseteq T'\subseteq L\) 且 \(T'\) 仍代数独立，就必须有 \(T'=T\)。它还不是关于基数大小的结论；不同超越基具有相同基数，将在交换引理之后证明。
+
+\ProseParagraphBreak
+对于有限生成扩张，可以直接选择超越基。若 \(L=K(s_1,\ldots,s_n)\)，依次检查这些生成元；只在 \(s_i\) 对已选元素生成的域仍超越时，才把它选入集合 \(T\)。由\cref{b1:lem:independence-adjoining}，\(T\) 始终代数独立。每个未选入的 \(s_i\) 在当时的参数域上代数；这个方程在更大的最终参数域 \(K(T)\) 上仍是非零方程，所以它以后也不会重新成为超越元。由\cref{b1:lem:finite-algebraic-generators}，未选入的有限多个元素生成的扩张 \(L/K(T)\) 也代数，所以 \(T\) 是 \(L/K\) 的超越基。一般扩张未必有有限生成集可供逐项检查，下面的存在定理因而采用 Zorn 引理。
 
 \begin{theorem}\label{b1:thm:transcendence-basis}
 每个域扩张 \(L/K\) 都有超越基。更一般地，任意在 \(K\) 上代数独立的子集 \(A\subseteq L\) 都可扩充成 \(L/K\) 的超越基。
 \end{theorem}
 \begin{proof}
-考虑包含 \(A\) 的代数独立子集，按包含排序。它包含 \(A\)，因而非空。任一非空链的并仍代数独立：一个多项式关系只涉及有限多个元素，它们已经同属链中的某一个成员。这个并仍包含 \(A\)，故是该链的上界；空链则以 \(A\) 为上界。于是 Zorn 引理（\cref{b1:thm:A-zorn}）给出极大元 \(T\)。由\cref{b1:lem:independence-adjoining}，每个不在 \(T\) 中的元素都在 \(K(T)\) 上代数；\(T\) 中元素本来就在该域中，所以 \(L/K(T)\) 代数。
+考虑包含 \(A\) 的代数独立子集，按包含排序。它包含 \(A\)，因而非空。任一非空链的并仍代数独立：一个多项式关系只涉及有限多个元素 \(t_1,\ldots,t_r\)，各 \(t_i\) 分别属于链中的某个成员 \(T_i\)。链按包含关系全序，故这有限多个 \(T_i\) 中有一个最大的成员，它同时含有全部 \(t_i\)。用该成员的代数独立性，就排除了非零关系。这个并仍包含 \(A\)，故是该链的上界；空链则以 \(A\) 为上界。于是 Zorn 引理（\cref{b1:thm:A-zorn}）给出极大元 \(T\)。由\cref{b1:lem:independence-adjoining}，每个不在 \(T\) 中的元素都在 \(K(T)\) 上代数；\(T\) 中元素本来就在该域中，所以 \(L/K(T)\) 代数。
 \end{proof}
 
 \subsection{交换引理及超越次数的不变性}
 \label{b1:subsec:1403:02}
+
+先看一个替换参数的模型。设 \(y\) 在域 \(F\) 上超越，并令 \(x=y^2\)。则 \(x\) 也超越，否则零化 \(x\) 的多项式代入 \(y^2\) 就会给出 \(y\) 的非零关系；但 \(y\) 在 \(F(x)\) 上代数，因为 \(y^2-x=0\)。用 \(x\) 替代 \(y\) 作为参数以后，\(y\) 只留下代数信息。下面的引理说明，这种反向控制并不限于平方关系。
 
 \begin{lemma}[交换引理]\label{b1:lem:transcendence-exchange}
 设 \(L/F\) 为域扩张，\(x,y\in L\)。若 \(x\) 在 \(F(y)\) 上代数而在 \(F\) 上超越，则 \(y\) 在 \(F(x)\) 上代数。
@@ -57,9 +85,16 @@
 设 \(L/K\) 为域扩张，\(b_1,\ldots,b_m\in L\)。若 \(L/K(b_1,\ldots,b_m)\) 代数，则 \(L\) 中任意在 \(K\) 上代数独立的子集至多含 \(m\) 个元素。这里不要求 \(b_1,\ldots,b_m\) 本身代数独立。
 \end{lemma}
 \begin{proof}
-反设 \(a_1,\ldots,a_{m+1}\in L\) 在 \(K\) 上代数独立。设已选取其中的 \(a_1,\ldots,a_r\)，令 \(F=K(a_1,\ldots,a_r)\)，并以 \(D\) 表示尚未替换的 \(b_i\) 构成的集合。归纳假设是 \(\lvert D\rvert\leq m-r\) 且 \(L/E\) 代数，其中 \(E=F(D)\)；\(r=0\) 时这正是题设。令 \(a=a_{r+1}\)。它在 \(F\) 上超越，却在 \(E\) 上代数，因此 \(D\) 非空。在 \(D\) 中取一个包含极小的非空子集 \(C\)，使 \(a\) 在 \(F(C)\) 上代数。任取 \(b\in C\)，若删去 \(b\) 后 \(a\) 仍代数，就与 \(C\) 的极小性矛盾。因此 \(a\) 在 \(F\bigl(C\setminus\{b\}\bigr)\) 上仍超越；这正是交换引理所需的假设。
+反设 \(a_1,\ldots,a_{m+1}\in L\) 在 \(K\) 上代数独立。归纳时，设已用 \(a_1,\ldots,a_r\) 替换了 \(r\) 个旧参数，并保持
+\[
+L/K(a_1,\ldots,a_r,D)\text{ 代数},
+\qquad \lvert D\rvert\leq m-r,
+\]
+其中 \(D\) 是尚未替换的旧参数集合。\(r=0\) 时取 \(D=\{b_1,\ldots,b_m\}\)，这正是题设。下一步的目标，是加入 \(a_{r+1}\)，同时从 \(D\) 中删去一个元素。
 
-对底域 \(F\bigl(C\setminus\{b\}\bigr)\) 应用\cref{b1:lem:transcendence-exchange}，得 \(b\) 在 \(F\bigl(C\setminus\{b\},a\bigr)\) 上代数。令
+令 \(F=K(a_1,\ldots,a_r)\)、\(E=F(D)\)、\(a=a_{r+1}\)。\(a\) 在 \(F\) 上超越，却在 \(E\) 上代数，因此 \(D\) 非空。由于 \(D\) 有限，在使 \(a\) 于 \(F(C)\) 上代数的子集 \(C\subseteq D\) 中，可以直接选取基数最小的一个；它非空，并且按包含关系极小。任取 \(b\in C\)，若删去 \(b\) 后 \(a\) 仍代数，就与最小性矛盾。因此 \(a\) 在 \(F\bigl(C\setminus\{b\}\bigr)\) 上超越；这正是交换引理所需的假设。
+
+对底域 \(F\bigl(C\setminus\{b\}\bigr)\) 应用\cref{b1:lem:transcendence-exchange}，得 \(b\) 在 \(F\bigl(C\setminus\{b\},a\bigr)\) 上代数。这说明加入 \(a\) 以后，旧的 \(b\) 已受其余参数代数地控制，可以从参数列表中删去。为检验删去后仍保持归纳条件，令
 \[
 E'=F\bigl(D\setminus\{b\},a\bigr),\qquad
 M=F(D,a)=E(a)=E'(b).
@@ -72,7 +107,13 @@ M=F(D,a)=E(a)=E'(b).
 E \arrow[ur, hook, "\text{代数}"] && E' \arrow[ul, hook, "\text{代数}"']
 \end{tikzcd}
 \]
-沿右侧的 \(E'\subseteq M\subseteq L\) 应用\cref{b1:thm:algebraic-tower}，得到 \(L/E'\) 代数。这样便用 \(a\) 替换了 \(b\)，同时保持了归纳所需的代数性。每次替换使 \(D\) 少一个元素，故至多 \(m\) 次后它为空。此时 \(L/F\) 代数，但 \(a_{r+1}\) 在 \(F\) 上超越，矛盾。
+沿右侧的 \(E'\subseteq M\subseteq L\) 应用\cref{b1:thm:algebraic-tower}，得到 \(L/E'\) 代数。这样便用 \(a\) 替换了 \(b\)，同时保持了归纳所需的代数性；新的剩余集合 \(D\setminus\{b\}\) 至多有 \(m-(r+1)\) 个元素。
+
+若在某个 \(r<m\) 时 \(D\) 已空，归纳条件已使 \(L/K(a_1,\ldots,a_r)\) 代数，与 \(a_{r+1}\) 在这个域上超越矛盾。否则可以一直替换到 \(r=m\)，此时 \(D=\varnothing\)，并有
+\[
+L/K(a_1,\ldots,a_m)\text{ 代数}.
+\]
+但 \(a_1,\ldots,a_{m+1}\) 代数独立，所以 \(a_{m+1}\) 在 \(K(a_1,\ldots,a_m)\) 上超越，再次矛盾。两种情形都排除了所设的 \(m+1\) 个独立元素。
 \end{proof}
 
 \begin{theorem}\label{b1:thm:transcendence-cardinality}
@@ -81,13 +122,26 @@ E \arrow[ur, hook, "\text{代数}"] && E' \arrow[ul, hook, "\text{代数}"']
 \begin{proof}
 设 \(A,B\) 为超越基。若其中一个有限，不妨设 \(B\) 有限。\cref{b1:lem:finite-transcendence-bound}给出 \(\lvert A\rvert\leq\lvert B\rvert\)，于是 \(A\) 也有限；交换二者再用该引理即得等号。
 
-现在设二者均无限。每个 \(a\in A\) 在 \(K(B)\) 上代数，其一个代数方程只使用 \(B\) 中有限多个元素的有理函数，故可选有限子集 \(B_a\subseteq B\)，使 \(a\) 在 \(K(B_a)\) 上代数。对任意有限集 \(C\subseteq B\)，令
+有限生成扩张的超越基是有限集，其基数比较已由上段完成。对于两个无限超越基，则需要有限支集的计数。现在设二者均无限。每个 \(a\in A\) 在 \(K(B)\) 上代数，其一个代数方程只使用 \(B\) 中有限多个元素的有理函数，故可选有限子集 \(B_a\subseteq B\)，使 \(a\) 在 \(K(B_a)\) 上代数。对任意有限集 \(C\subseteq B\)，令
 \[
 A_C=\{\,a\in A\mid B_a=C\,\},\qquad M_C=K(C)(A_C).
 \]
 \(A_C\) 的每个元素都在 \(K(C)\) 上代数；由\cref{b1:prop:algebraic-elements-subfield}，\(M_C/K(C)\) 也代数。把\cref{b1:lem:finite-transcendence-bound}用于 \(M_C/K\)，以 \(C\) 为至多 \(\lvert C\rvert\) 个参数，便得到 \(\lvert A_C\rvert\leq\lvert C\rvert\)，因为 \(A_C\subseteq A\) 仍在 \(K\) 上代数独立。
 
-由\cref{b1:prop:finite-support-cardinality}，无限集 \(B\) 的有限子集总数为 \(\lvert B\rvert\)，而每个 \(A_C\) 都有限。因此对应 \(a\mapsto B_a\) 给出 \(\lvert A\rvert\leq\lvert B\rvert\)。交换 \(A,B\) 得反向不等式，再由\cref{b1:prop:cantor-bernstein}得到等号。为各 \(a\) 同时选取有限支集 \(B_a\)，以及这里的无限基数计数，均采用\cref{b1:def:A-choice}中的选择公理；它与选取超越基时使用的选择原则一致。
+记 \([B]^{<\omega}\) 为 \(B\) 的全部有限子集组成的集合。选定各个 \(B_a\) 后，上述集合 \(A_C\) 两两不交，并覆盖 \(A\)：
+\[
+A=\bigsqcup_{C\in[B]^{<\omega}}A_C,
+\qquad \lvert A_C\rvert\leq\lvert C\rvert<\aleph_0.
+\]
+一个有限支集可以对应多个 \(a\)，所以应对这些纤维分别计数。由\cref{b1:prop:finite-support-cardinality}，\(B\) 无限时 \(\lvert[B]^{<\omega}\rvert=\lvert B\rvert\)，故
+\[
+\lvert A\rvert
+=\sum_{C\in[B]^{<\omega}}\lvert A_C\rvert
+\leq\lvert[B]^{<\omega}\rvert\cdot\aleph_0
+=\lvert B\rvert\cdot\aleph_0
+=\lvert B\rvert.
+\]
+交换 \(A,B\) 得反向不等式，再由\cref{b1:prop:cantor-bernstein}得到等号。为各 \(a\) 同时选取有限支集 \(B_a\)，以及这里的无限基数计数，均采用\cref{b1:def:A-choice}中的选择公理；它与选取超越基时使用的选择原则一致。
 \end{proof}
 \symidx{\(\operatorname{trdeg}_K L\)：扩张的超越次数}
 最后一段不能仅用有限次交换代替：无限基的大小是基数问题，有限个参数的局部估计必须结合有限支集的计数，才能得到所需结论。
@@ -98,7 +152,7 @@ A_C=\{\,a\in A\mid B_a=C\,\},\qquad M_C=K(C)(A_C).
 \begin{definition}\label{b1:def:purely-transcendental}
 设 \(L/K\) 为域扩张。如果存在 \(K\) 上代数独立的子集 \(T\subseteq L\)，使 \(L=K(T)\)，则称 \(L/K\) 为\term[chun-chaoyue-kuozhang]{纯超越扩张}[purely transcendental extension]。
 \end{definition}
-对有限集 \(T=\{t_1,\ldots,t_r\}\)，代入给出 \(K(T)\cong K(X_1,\ldots,X_r)\)。一般超越扩张未必纯超越；超越基只保证以参数域 \(K(T)\) 为新基域后，\(L/K(T)\) 是代数扩张。
+对有限集 \(T=\{t_1,\ldots,t_r\}\)，代入给出 \(K(T)\cong K(X_1,\ldots,X_r)\)。每个扩张都有超越基 \(T\)，但这只保证 \(L/K(T)\) 代数；纯超越还要求 \(L=K(T)\)。因此超越基抽出了独立参数，其上仍可能留有非平凡的代数扩张。
 
 \begin{proposition}\label{b1:prop:finitely-generated-field-structure}
 设 \(L/K\) 为有限生成域扩张。则存在有限超越基 \(T\subseteq L\)，使 \(L/K(T)\) 有限。因而每个有限生成扩张都可以分成一个有限参数的纯超越扩张和其后的有限代数扩张。
@@ -106,6 +160,11 @@ A_C=\{\,a\in A\mid B_a=C\,\},\qquad M_C=K(C)(A_C).
 \begin{proof}
 从有限生成集 \(S\) 中按上文的方法逐个选取，得到超越基 \(T\subseteq S\)。每个 \(s\in S\setminus T\) 在 \(K(T)\) 上代数；\(S\setminus T\) 有限，故\cref{b1:lem:finite-algebraic-generators}说明 \(L=K(T)\bigl(S\setminus T\bigr)\) 在 \(K(T)\) 上有限。
 \end{proof}
+
+从生成元中逐个选择所得的 \(T\) 依赖检查顺序，并非由扩张唯一确定。例如取 \(K\) 上的超越元 \(t\)，则 \(L=K(t)\) 也可写成 \(K(t,t^2)\)：先检查 \(t\) 会选出 \(\{t\}\)，先检查 \(t^2\) 则选出 \(\{t^2\}\)。后一情形中 \(t\) 满足 \(X^2-t^2=0\)，因而不再选入。不随选择改变的是 \(\lvert T\rvert=\operatorname{trdeg}_K L\)。
+
+\ProseParagraphBreak
+有限代数扩张的坐标数沿塔相乘，因为两层基要两两相乘；独立参数则把两组超越基合并，所以超越次数沿塔相加。下面用超越基证明这个加法公式，并检验合并后仍无新的多项式关系。
 
 \begin{proposition}[超越次数的塔式公式]\label{b1:prop:transcendence-tower}
 设 \(K\subseteq E\subseteq L\) 为域扩张塔。则下式中的加法为基数加法：
@@ -116,15 +175,13 @@ A_C=\{\,a\in A\mid B_a=C\,\},\qquad M_C=K(C)(A_C).
 \begin{proof}
 取 \(E/K\) 的超越基 \(T\) 及 \(L/E\) 的超越基 \(U\)。\(T\subseteq E\)，而 \(U\) 的任何元素都不属于 \(E\)，否则它在 \(E\) 上代数；故 \(T\cap U=\varnothing\)。
 
-先证 \(T\cup U\) 在 \(K\) 上代数独立。只涉及 \(T\) 或只涉及 \(U\) 的关系已由各自的独立性排除。一般关系涉及有限多个 \(t_1,\ldots,t_r\in T\) 及 \(u_1,\ldots,u_s\in U\)，按 \(u_j\) 的单项式收集后可写成
+先证 \(T\cup U\) 在 \(K\) 上代数独立。任取一个有限多项式关系，它涉及 \(t_1,\ldots,t_r\in T\) 及 \(u_1,\ldots,u_s\in U\)，按 \(u_j\) 的单项式收集后可写成
 \[
 \sum_{\beta}P_\beta(t_1,\ldots,t_r)
 u_1^{\beta_1}\cdots u_s^{\beta_s}=0,
 \qquad P_\beta\in K[X_1,\ldots,X_r],
 \]
-其中 \(\beta\in\mathbb Z_{\geq0}^s\)，只有有限多个 \(P_\beta\) 非零。各系数 \(P_\beta(t_1,\ldots,t_r)\) 属于 \(E\)；由 \(U\) 在 \(E\) 上代数独立，它们全为零。再由 \(T\) 在 \(K\) 上代数独立，每个 \(P_\beta\) 都是零多项式，故原关系只能是零关系。
+其中 \(\beta\in\mathbb Z_{\geq0}^s\)，只有有限多个 \(P_\beta\) 非零。若关系只用到一组参数，就取 \(r=0\) 或 \(s=0\)，并把空乘积视为 \(1\)；同一收集过程仍适用。各系数 \(P_\beta(t_1,\ldots,t_r)\) 属于 \(E\)；由 \(U\) 在 \(E\) 上代数独立，它们全为零。再由 \(T\) 在 \(K\) 上代数独立，每个 \(P_\beta\) 都是零多项式，故原关系只能是零关系。
 
-又因 \(T\) 是 \(E/K\) 的超越基，\(E/K(T)\) 代数。\(E\) 中每个元素在更大的 \(K(T,U)\) 上仍代数，所以 \(E(U)=K(T,U)(E)\) 在 \(K(T,U)\) 上代数。\(L/E(U)\) 也因 \(U\) 是 \(L/E\) 的超越基而代数；由\cref{b1:thm:algebraic-tower}，\(L/K(T,U)\) 代数。因此 \(T\cup U\) 是 \(L/K\) 的超越基。由于 \(T\cap U=\varnothing\)，其基数为 \(\lvert T\rvert+\lvert U\rvert\)，即得所述等式。
+又因 \(T\) 是 \(E/K\) 的超越基，\(E/K(T)\) 代数。每个 \(e\in E\) 的非零 \(K(T)\) 系数方程，在更大的 \(K(T,U)\) 上仍有效。因此，由全部这些代数元生成的 \(E(U)=K(T,U)(E)\)，依\cref{b1:prop:algebraic-elements-subfield}是 \(K(T,U)\) 的代数扩张。\(L/E(U)\) 也因 \(U\) 是 \(L/E\) 的超越基而代数；由\cref{b1:thm:algebraic-tower}，\(L/K(T,U)\) 代数。因此 \(T\cup U\) 是 \(L/K\) 的超越基。由于 \(T\cap U=\varnothing\)，其基数为 \(\lvert T\rvert+\lvert U\rvert\)，即得所述等式。
 \end{proof}
-
-有限代数扩张的次数沿塔相乘；超越次数沿塔按基数相加。

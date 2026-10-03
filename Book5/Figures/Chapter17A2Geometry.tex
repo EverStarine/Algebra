@@ -1,0 +1,48 @@
+% !TeX root = ../Book5.tex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=2.7cm,y=2.7cm,every node/.style={font=\small}]
+  \fill[yellow!12] (0,0)--(0:1.18) arc[start angle=0,end angle=120,radius=1.18]--cycle;
+  \fill[AlgebraBlue!12] (0,0)--(30:1.18) arc[start angle=30,end angle=90,radius=1.18]--cycle;
+  \foreach \m in {-3,...,3} {
+    \foreach \n in {-3,...,3} {
+      \pgfmathsetmacro{\px}{\m/2}
+      \pgfmathsetmacro{\py}{sqrt(3)*(\m/6+\n/3)}
+      \pgfmathtruncatemacro{\inside}{(\px*\px+\py*\py<2.35)?1:0}
+      \ifnum\inside=1
+        \fill[gray!45] (\px,\py) circle[radius=.6pt];
+        \pgfmathtruncatemacro{\rootpoint}{mod(\m+2*\n,3)}
+        \ifnum\rootpoint=0
+          \fill[black] (\px,\py) circle[radius=1.1pt];
+        \fi
+      \fi
+    }
+  }
+  \foreach \angle in {30,90,150} {
+    \draw[dashed,gray] (\angle:1.60)--(\angle+180:1.60);
+  }
+  \foreach \angle/\name in {0/\alpha_1,60/{\alpha_1+\alpha_2},120/\alpha_2,
+      180/{-\alpha_1},240/{-\alpha_1-\alpha_2},300/{-\alpha_2}} {
+    \draw[->,line width=.7pt] (0,0)--(\angle:1);
+    \node[fill=white,inner sep=1pt] at (\angle:1.17) {\(\name\)};
+  }
+  \draw[->,AlgebraBlue,line width=.9pt] (0,0)--(.5,.288675);
+  \draw[->,AlgebraBlue,line width=.9pt] (0,0)--(0,.577350);
+  \node[anchor=north west,text=AlgebraBlue] at (.5,.288675) {\(\omega_1\)};
+  \node[anchor=east,text=AlgebraBlue] at (0,.577350) {\(\omega_2\)};
+  \node[anchor=north east] at (0,0) {\(0\)};
+  \foreach \angle in {60,120,180} {
+    \draw[->,AlgebraBlue,line width=.7pt]
+      (\angle:1.48) arc[start angle=\angle,end angle=\angle+55,radius=1.48];
+  }
+  \node at (60:1.73) {\(C\)};
+  \node at (120:1.73) {\(s_1C\)};
+  \node at (180:1.85) {\(s_1s_2C\)};
+  \node at (240:1.75) {\(s_1s_2s_1C=-C\)};
+\end{tikzpicture}
+\caption[\(A_2\) 的室与两种格]{\(A_2\) 的六根、三条墙及室链。
+淡黄色扇形是正简单根实锥，蓝色扇形是基本室；二者的边界不同。
+灰点表示权格，黑点表示根格。\(\omega_1\) 位于垂直于 \(\alpha_2\) 的墙上，故被 \(s_2\) 固定。
+外侧箭头给出到相反室的三步最短室链。}
+\label{b5:fig:a2-chambers-lattices}
+\end{figure}

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 22.3 拓扑 Galois 对应
-% 纲要位置：计划纲要.md，第 748 行。
+% 纲要位置：计划纲要.md，第 783 行。
 
 \section{拓扑 Galois 对应}
 \label{b1:sec:2203}
@@ -9,9 +9,9 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 中间域与闭子群的对应
-% * 闭性不可删除的例子
-% * 有限子扩张、开子群与正规子群
+% * 中间域与闭子群的对应；闭性把群中不属于子群的元素在某个有限商中分离，继而使用有限 Galois 对应
+% * 闭性不可删除的例子；用相容的非整数 Frobenius 指数区分稠密子群与整体群，解释逐层可模仿与实际属于子群的量词差别
+% * 有限子扩张、开子群与正规子群；非正规情形的指数公式使用陪集集合，闭且有限指数才保证开性
 %
 
 \subsection{中间域与闭子群的对应}
@@ -22,6 +22,16 @@ L^H=\{\,a\in L\mid\sigma(a)=a\text{ 对每个 }\sigma\in H\,\}.
 \]
 不动元素对加减乘及非零取逆封闭，故构成中间域。域扩大时固定它的自同构减少，子群扩大时不动域缩小。
 
+\ProseParagraphBreak
+对任意子群 \(H\)，总有 \(H\subseteq\operatorname{Gal}(L/L^H)\)：\(H\) 中的每个元素都逐点固定 \(L^H\)。有限 Galois 理论保证这里取等号，而在无限情形中，不动域只能记录每个有限层上出现过哪些作用，不能辨别这些作用是否由同一个 \(H\) 中的元素同时实现。
+
+\ProseParagraphBreak
+子集 \(H\) 的闭包 \(\overline H\) 是包含它的全部闭集之交；一个点属于闭包，当且仅当它的每个开邻域都与 \(H\) 相交。后一个刻画来自取开补集。子群的闭包仍为子群：若 \(x,y\) 的每个有限层邻域都遇到 \(H\)，则可取 \(h,k\in H\) 在同一有限层上分别与 \(x,y\) 相同，\(hk^{-1}\) 就在该层上与 \(xy^{-1}\) 相同，故 \(xy^{-1}\in\overline H\)。无限情形中的恢复公式是
+\[
+\operatorname{Gal}(L/L^H)=\overline H,
+\]
+其证明见下文\cref{b1:cor:fixed-field-closure}。因此，只有闭子群才能由自己的不动域完整恢复。
+
 \begin{theorem}[无限 Galois 对应]\label{b1:thm:infinite-galois-correspondence}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。映射
 \[
@@ -31,17 +41,25 @@ H\longmapsto L^H
 给出全部中间域与 \(G\) 的全部闭子群之间的反向一一对应。
 \end{theorem}
 \begin{proof}
-先证明 \(G_E\) 闭。对每个 \(a\in E\)，选含 \(a\) 的有限 Galois 层 \(N\)。固定 \(a\) 的自同构，是有限群 \(G_N\) 中固定该元素的那些自同构的原像，因此是有限个 \(U_N\) 陪集的并，既开又闭。\(G_E\) 是对全部 \(a\in E\) 取这些闭子集的交，故闭。
+先证明 \(G_E\) 闭。对每个 \(a\in E\)，选含 \(a\) 的有限 Galois 层 \(N\)，并在有限群 \(G_N\) 中取稳定子群
+\[
+H_a=\{\,g\in G_N\mid g(a)=a\,\}.
+\]
+\(G\) 中固定 \(a\) 的全部自同构恰为 \(\pi_N^{-1}(H_a)\)。有限离散群中的 \(H_a\) 既开又闭，限制映射 \(\pi_N\) 连续，所以这个原像既开又闭；它也就是那些对应于 \(H_a\) 的 \(U_N\) 陪集的并。\(G_E\) 是对全部 \(a\in E\) 取这些闭子集的交，故闭。
 
-接着证明 \(L^{G_E}=E\)。包含 \(E\subseteq L^{G_E}\) 由定义成立。若 \(a\in L\setminus E\)，则 \(a\) 在 \(E\) 上的最小多项式次数大于一。它整除 \(a\) 在 \(K\) 上的最小多项式，故可分，并由 \(L/K\) 的正规性在 \(L\) 中分裂。取另一个根 \(b\ne a\)，代入最小多项式给出 \(E(a)\rightarrow L\) 的 \(E\)-嵌入 \(a\mapsto b\)。由\cref{b1:thm:embedding-extension}延拓到 \(L\)。此延拓固定 \(K\)，由正规嵌入判据其像等于 \(L\)，所以属于 \(G_E\)，却不固定 \(a\)。这说明不动域中不可能多出这样的 \(a\)。同一论证也表明，对任何中间域 \(E\)，\(L/E\) 仍正规且可分。
+接着证明 \(L^{G_E}=E\)。先注意 \(L/E\) 仍为 Galois 扩张，不要求 \(E/K\) 有限。对任意 \(a\in L\)，它在 \(E\) 上的最小多项式整除在 \(K\) 上的最小多项式；后者由 \(L/K\) 的可分性没有重根，并由正规性在 \(L\) 中完全分裂。其因子也没有重根且在 \(L\) 中完全分裂，所以 \(L/E\) 可分且正规。
 
-最后取闭子群 \(H\)。显然 \(H\subseteq\operatorname{Gal}(L/L^H)\)。若 \(\sigma\notin H\)，开集 \(G\setminus H\) 含 \(\sigma\)，故有有限 Galois 层 \(N\)，使 \(\sigma U_N\cap H=\varnothing\)。于是 \(\pi_N(\sigma)\notin H_N\coloneqq\pi_N(H)\)。对有限 Galois 扩张 \(N/K\) 应用\cref{b1:thm:finite-galois-correspondence}，有 \(H_N=\operatorname{Gal}(N/N^{H_N})\)。因此存在 \(a\in N^{H_N}\) 不被 \(\pi_N(\sigma)\) 固定。每个 \(h\in H\) 在 \(N\) 上的限制属于 \(H_N\)，所以 \(a\in L^H\)，而 \(\sigma(a)\ne a\)。故 \(\sigma\notin\operatorname{Gal}(L/L^H)\)，得到反向包含。两个操作于是互逆。
+包含 \(E\subseteq L^{G_E}\) 由定义成立。若 \(a\in L\setminus E\)，则 \(a\) 在 \(E\) 上的最小多项式次数大于一；它又可分，所以至少有两个不同的根。由刚说明的正规性，可在 \(L\) 中取另一个根 \(b\ne a\)。代入最小多项式给出 \(E(a)\rightarrow L\) 的 \(E\)-嵌入 \(a\mapsto b\)，由\cref{b1:thm:embedding-extension}延拓到 \(L\) 在代数闭包中的嵌入。此延拓固定 \(E\)，由 \(L/E\) 的正规性及\cref{b1:thm:normal-embedding-criterion}，其像等于 \(L\)，所以属于 \(G_E\)，却不固定 \(a\)。这说明不动域中不可能多出这样的 \(a\)。
+
+最后取闭子群 \(H\)。显然 \(H\subseteq\operatorname{Gal}(L/L^H)\)。若 \(\sigma\notin H\)，闭性使 \(G\setminus H\) 成为含 \(\sigma\) 的开集，故有有限 Galois 层 \(N\)，使 \(\sigma U_N\subseteq G\setminus H\)。这正是闭性提供的有限层分离：若 \(\pi_N(\sigma)\in H_N\coloneqq\pi_N(H)\)，便有某个 \(h\in H\) 与 \(\sigma\) 在 \(N\) 上相同，即 \(h\in\sigma U_N\)，与上述包含矛盾。因此 \(\pi_N(\sigma)\notin H_N\)。
+
+对有限 Galois 扩张 \(N/K\) 应用\cref{b1:thm:finite-galois-correspondence}，有 \(H_N=\operatorname{Gal}(N/N^{H_N})\)。若 \(\pi_N(\sigma)\) 逐点固定 \(N^{H_N}\)，它就应属于 \(H_N\)；所以至少存在一个 \(a\in N^{H_N}\) 被它移动。每个 \(h\in H\) 在 \(N\) 上的限制属于 \(H_N\)，所以 \(a\in L^H\)，而 \(\sigma(a)\ne a\)。故 \(\sigma\notin\operatorname{Gal}(L/L^H)\)，得到反向包含。两个操作于是互逆。
 \end{proof}
 闭性在最后一段有明确用途：它使一个不在 \(H\) 中的自同构能够在某个有限商里与 \(H\) 区分开。没有闭性时，这种有限层分离可能失败。
 
 \subsection{闭性条件与反例}
 \label{b1:subsec:2203:02}
-子集 \(H\) 的闭包 \(\overline H\) 是包含它的全部闭集之交；一个点属于闭包，当且仅当它的每个开邻域都与 \(H\) 相交。后一个刻画来自取开补集。子群的闭包仍为子群：若 \(x,y\) 的每个有限层邻域都遇到 \(H\)，则可取 \(h,k\in H\) 在同一有限层上分别与 \(x,y\) 相同，\(hk^{-1}\) 就在该层上与 \(xy^{-1}\) 相同，故 \(xy^{-1}\in\overline H\)。
+不动域不能区分具有相同有限层信息的子群。下面的推论把这种信息损失准确地写成取闭包的操作。
 
 \begin{corollary}\label{b1:cor:fixed-field-closure}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。对任意子群 \(H\leq G\)，记 \(\overline H\) 为 \(H\) 在 \(G\) 中的闭包。则
@@ -56,11 +74,11 @@ L^H=L^{\overline H},\qquad
 下面给出两个不同子群具有相同不动域的例子。取 \(L=\overline{\mathbb F}_q\)、\(K=\mathbb F_q\)，并令 \(F(a)=a^q\)。\cref{b1:thm:finite-field-subfields}及\cref{b1:thm:finite-field-automorphisms}说明有限层为 \(\mathbb F_{q^n}\)，其 Galois 群由 \(F\) 的限制生成，阶为 \(n\)。于是循环子群 \(H=\langle F\rangle\) 在每个有限商中都有满像，故每个基本开陪集都与 \(H\) 相交，即 \(H\) 稠密。
 
 \ProseParagraphBreak
-这个循环子群却不等于整个 \(G\)。将 \(n\) 写为 \(n=2^r m\)、\(m\) 为奇数，用中国剩余定理选唯一剩余类 \(e_n\pmod n\)，使
+这个循环子群却不等于整个 \(G\)。要得到一个不属于 \(H\) 的自同构，我们让它在所有 \(2\) 的幂次层上都像 \(F^0\)，在所有奇数次数层上都像 \(F^1\)。任何固定的普通整数指数都不可能同时满足这两类条件，但每个有限层内可以用中国剩余定理兼顾它们。将 \(n\) 写为 \(n=2^r m\)、\(m\) 为奇数，选唯一剩余类 \(e_n\pmod n\)，使
 \[
 e_n\equiv0\pmod{2^r},\qquad e_n\equiv1\pmod m.
 \]
-若 \(d\mid n\)，\(e_n\) 模 \(d\) 后满足定义 \(e_d\) 的同一组条件，所以 \(e_n\equiv e_d\pmod d\)。因此有限层上的 \(F^{e_n}\) 相容，\cref{b1:prop:galois-compatible-family}给出一个整体自同构 \(\sigma\)。若它等于某个整数幂 \(F^a\)，则对所有 \(r\) 都有 \(a\equiv0\pmod{2^r}\)，迫使整数 \(a=0\)；但 \(e_3\equiv1\pmod3\)，又排除了 \(a=0\)。故 \(H\ne G\)。
+若 \(d\mid n\)，写 \(d=2^s m'\)，则 \(s\le r\)、\(m'\mid m\)。因此 \(e_n\) 模 \(d\) 后仍在模 \(2^s\) 下为零、模 \(m'\) 下为一，满足定义 \(e_d\) 的同一组条件，所以 \(e_n\equiv e_d\pmod d\)。有限层上的 \(F^{e_n}\) 于是相容，\cref{b1:prop:galois-compatible-family}给出一个整体自同构 \(\sigma\)。若它等于某个整数幂 \(F^a\)，则对所有 \(r\) 都有 \(a\equiv0\pmod{2^r}\)，迫使整数 \(a=0\)；但 \(e_3\equiv1\pmod3\)，又排除了 \(a=0\)。故 \(H\ne G\)。
 
 \ProseParagraphBreak
 这里有限层上的一致与整体一致有不同的量词顺序。前者是
@@ -71,13 +89,15 @@ e_n\equiv0\pmod{2^r},\qquad e_n\equiv1\pmod m.
 \[
 \exists h\in H\ \forall N:\quad h|_N=\sigma|_N,
 \]
-其中 \(N\) 遍历有限 Galois 子扩张。对 \(N=\mathbb F_{q^n}\)，可以选 \(e_n\) 的一个整数代表，再取 \(h_N=F^{e_n}\)；这个整数代表允许随 \(n\) 改变。相容性保证这些有限层的作用能拼成 \(\sigma\)，但它只要求各指数在约化后相等，并不产生一个同时代表全部 \(e_n\) 的普通整数。稠密性表达第一种逐层的模仿；属于循环子群才表达第二种由一个固定整数幂实现的作用。
+其中 \(N\) 遍历有限 Galois 子扩张。第一式当且仅当 \(\sigma\in\overline H\)：每个基本邻域都遇到 \(H\)。第二式则当且仅当 \(\sigma\in H\)，因为一个 \(h\) 若在全部有限层上与 \(\sigma\) 相同，就在这些层的并 \(L\) 上与它相同。对 \(N=\mathbb F_{q^n}\)，可以选 \(e_n\) 的一个整数代表，再取 \(h_N=F^{e_n}\)；这个整数代表允许随 \(n\) 改变。相容性保证这些有限层的作用能拼成 \(\sigma\)，但它只要求各指数在约化后相等，并不产生一个同时代表全部 \(e_n\) 的普通整数。稠密性表达第一种逐层的模仿；属于循环子群才表达第二种由一个固定整数幂实现的作用。
 
 \ProseParagraphBreak
 \(F\) 固定的元素满足 \(x^q=x\)，恰为 \(\mathbb F_q\)。所以真子群 \(H\) 与整个 \(G\) 的不动域都是 \(\mathbb F_q\)，说明闭性不能从无限 Galois 对应中删除。
 
 \subsection{有限子扩张、开子群与正规子群}
 \label{b1:subsec:2203:03}
+固定一个有限生成的中间域，只须在某个装得下它的有限 Galois 层上固定相应元素。反过来，若固定这个中间域的条件已经由一个有限层决定，那么它也必须完全落在那个有限层内。开子群正好表达这种只需一个有限层的信息。
+
 \begin{proposition}\label{b1:prop:finite-open-correspondence}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。对中间域 \(K\subseteq E\subseteq L\)，记 \(G_E=\operatorname{Gal}(L/E)\)。则 \([E:K]<\infty\) 当且仅当 \(G_E\) 是 \(G\) 的开子群；此时
 \[
@@ -85,12 +105,19 @@ e_n\equiv0\pmod{2^r},\qquad e_n\equiv1\pmod m.
 \]
 \end{proposition}
 \begin{proof}
-若 \(E/K\) 有限，取有限个域生成元并包含在有限 Galois 层 \(N\) 中，则 \(U_N\subseteq G_E\)，所以 \(G_E\) 开。反过来，若 \(G_E\) 开，\cref{b1:thm:krull-compact}给出 \(U_N\subseteq G_E\)。取不动域并用\cref{b1:thm:infinite-galois-correspondence}，得 \(E\subseteq L^{U_N}=N\)，故扩张有限。
+若 \(E/K\) 有限，取有限个域生成元并包含在有限 Galois 层 \(N\) 中，则固定 \(N\) 必固定 \(E\)，即 \(U_N\subseteq G_E\)。\(G_E\) 是这些开陪集的并，所以开。反过来，若 \(G_E\) 开，由\cref{b1:thm:krull-compact}中的邻域基可取 \(U_N\subseteq G_E\)。取不动域并用\cref{b1:thm:infinite-galois-correspondence}，得 \(E=L^{G_E}\subseteq L^{U_N}=N\)，故扩张有限。
 
 选择这样的 \(N\)，限制映射给出陪集集合之间的双射
-\(G/G_E\rightarrow G_N/\operatorname{Gal}(N/E)\)：满射来自限制的满射性，两个限制落在同一陪集当且仅当两个原自同构之商固定 \(E\)，所以单射。有限 Galois 对应给出右端的大小为 \([E:K]\)，完成次数公式。
+\(G/G_E\rightarrow G_N/\operatorname{Gal}(N/E)\)：满射来自限制的满射性，两个限制落在同一陪集当且仅当两个原自同构之商固定 \(E\)，所以单射。这里两边只是陪集集合；\(E/K\) 不正规时，相应子群未必正规，不能把它们当作商群。有限 Galois 对应仍给出
+\[
+[G_N:\operatorname{Gal}(N/E)]=[E:K],
+\]
+即右端陪集的个数，完成次数公式。
 \end{proof}
-任意开子群都指数有限。反向若再假设子群闭，则其有限多个陪集都闭，补集也闭，因而子群开。对中间域所对应的子群，\cref{b1:thm:infinite-galois-correspondence}保证闭性，所以有限指数与开性等价。
+任意开子群的开陪集覆盖紧群 \(G\)，紧性给出有限子覆盖，故它的指数有限。反过来，若子群 \(H\) 闭且指数有限，左平移是同胚，所以它的每个陪集都闭；\(G\setminus H\) 又是有限多个其他陪集的并，因而闭，故 \(H\) 开。这里用到了闭性，单有有限指数还不能得出开性。对中间域所对应的子群，\cref{b1:thm:infinite-galois-correspondence}保证闭性，所以有限指数与开性等价。
+
+\ProseParagraphBreak
+在有限 Galois 群中，离散拓扑使每个子群自动闭，正规子群直接对应正规中间扩张。无限情形中，闭性保证能从不动域恢复原子群，正规性则控制这个中间域是否被整个 \(G\) 集合保持；两项条件各有作用。
 
 \begin{theorem}\label{b1:thm:infinite-galois-quotient}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。设 \(H\leq G\) 为闭子群，并令 \(E=L^H\)。则 \(H\) 正规当且仅当 \(E/K\) 正规；在这两个等价条件成立时，\(E/K\) 为 Galois 扩张，限制映射诱导群同构
@@ -99,13 +126,13 @@ G/H\cong\operatorname{Gal}(E/K).
 \]
 \end{theorem}
 \begin{proof}
-若 \(E/K\) 正规，任何 \(\sigma\in G\) 都保持 \(E\)，故限制给出同态 \(G\rightarrow\operatorname{Gal}(E/K)\)，核为 \(G_E=H\)，所以 \(H\) 正规。任取目标群中的自同构，由\cref{b1:thm:embedding-extension}延拓到 \(L\) 的嵌入，再用 \(L/K\) 正规性得到 \(L\) 的自同构，证明限制满射。群的第一同构定理给出所列同构。
+若 \(E/K\) 正规，任何 \(\sigma\in G\) 都保持 \(E\)，故限制给出同态 \(G\rightarrow\operatorname{Gal}(E/K)\)。由于 \(H\) 闭，无限 Galois 对应给出 \(G_E=H\)，它正是限制映射的核，所以 \(H\) 正规。任取目标群中的自同构，由\cref{b1:thm:embedding-extension}延拓到 \(L\) 的嵌入，再用 \(L/K\) 正规性得到 \(L\) 的自同构，证明限制满射。群的第一同构定理给出所列同构。
 
 反过来，若 \(H\) 正规，对 \(a\in E,h\in H,\sigma\in G\)，有
 \[
 h\bigl(\sigma(a)\bigr)
 =\sigma\bigl((\sigma^{-1}h\sigma)(a)\bigr)=\sigma(a),
 \]
-因为 \(\sigma^{-1}h\sigma\in H\)。所以 \(\sigma(E)\subseteq E\)，再用 \(\sigma^{-1}\) 得到相等。任意 \(K\)-嵌入 \(E\rightarrow\overline L\) 可延拓到 \(L\)，延拓属于 \(G\)，因此将 \(E\) 映为自身。\cref{b1:thm:normal-embedding-criterion}说明 \(E/K\) 正规；可分性则从 \(L/K\) 继承。
+因为 \(\sigma^{-1}h\sigma\in H\)。这个等式说明 \(\sigma(a)\) 被 \(H\) 逐点固定，因而仍属于 \(E\)；它并没有说 \(\sigma(a)=a\)。所以 \(\sigma(E)\subseteq E\)，再用 \(\sigma^{-1}\) 得到相等，即 \(G\) 集合保持 \(E\)，而 \(H\) 逐点固定 \(E\)。任意 \(K\)-嵌入 \(E\rightarrow\overline L\) 可延拓到 \(L\)，由 \(L/K\) 的正规性，延拓属于 \(G\)，因此将 \(E\) 映为自身。\cref{b1:thm:normal-embedding-criterion}说明 \(E/K\) 正规；可分性则从 \(L/K\) 继承。
 \end{proof}
 这个同构还保持自然拓扑。为了把商拓扑的含义与有限商检测放在一起，我们将在\subsecref{b1:subsec:2205:04}给出其拓扑方面的证明；本小节已完成群与域的代数对应。

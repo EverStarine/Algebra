@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 20.4 Artin–Schreier 理论
-% 纲要位置：计划纲要.md，第 695 行。
+% 纲要位置：计划纲要.md，第 728 行。
 
 \section{Artin–Schreier 理论}
 \label{b1:sec:2004}
@@ -9,9 +9,9 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 特征 p 中的方程 X^p−X−a
-% * p 次循环扩张的分类
-% * 与 Kummer 理论的平行及差别
+% * 特征 p 中的方程 X^p−X−a；素域线性、根的平移与不可约二分
+% * p 次循环扩张的构造与参数直线分类；用有理函数次数解释无穷远极点
+% * 与 Kummer 理论的平行及差别；区分纯不可分开方与可分循环步骤
 %
 % ---
 %
@@ -20,25 +20,47 @@
 \label{b1:subsec:2004:01}
 
 \begin{definition}\label{b1:def:artin-schreier-map}
-设 \(K\) 为特征 \(p>0\) 的域。定义\term[Artin-Schreier-yingshe]{Artin--Schreier 映射}[Artin--Schreier map]
+设 \(K\) 为特征 \(p>0\) 的域。映射
 \[
-\wp:K\longrightarrow K,\qquad b\longmapsto b^p-b.
+\wp:K\longrightarrow K,\qquad b\longmapsto b^p-b
 \]
-给定 \(a\in K\)，把方程 \(X^p-X-a=0\) 称为相应的\term[Artin-Schreier-fangcheng]{Artin--Schreier 方程}[Artin--Schreier equation]。
+称为\term[Artin-Schreier-yingshe]{Artin--Schreier 映射}[Artin--Schreier map]。给定 \(a\in K\)，把方程 \(X^p-X-a=0\) 称为相应的\term[Artin-Schreier-fangcheng]{Artin--Schreier 方程}[Artin--Schreier equation]。
 \end{definition}
 \symidx{\(\wp(b)=b^p-b\)：Artin--Schreier 映射}
 
-二项式公式说明 \(\wp\) 是 \(\mathbb F_p\) 线性映射，核为 \(\mathbb F_p\)。这里 \(\wp(K)\) 是加法子群；商空间 \(K/\wp(K)\) 不应理解成商域。
+在特征 \(p\) 中，二项式公式给出 \((u+v)^p=u^p+v^p\)。又因 \(c^p=c\) 对每个 \(c\in\mathbb F_p\) 成立，有
+\[
+\wp(u+v)=\wp(u)+\wp(v),\qquad
+\wp(cu)=c^pu^p-cu=c\wp(u).
+\]
+这证明了 \(\wp\) 的 \(\mathbb F_p\) 线性性。
+
+\ProseParagraphBreak
+素域 \(\mathbb F_p\) 的 \(p\) 个元素都是 \(X^p-X\) 的根；这个多项式的次数为 \(p\)，在任何扩域中都没有其他根。因此 \(\wp(b)=0\) 当且仅当 \(b\in\mathbb F_p\)，即 \(\ker\wp=\mathbb F_p\)。若 \(K\neq\mathbb F_p\)，取 \(d\in K\setminus\mathbb F_p\)，则 \(\wp(d\cdot1)=d^p-d\neq0=d\wp(1)\)，所以它并不是 \(K\) 线性映射。像 \(\wp(K)\) 是 \(K\) 的加法群中的 \(\mathbb F_p\) 线性子空间，所以 \(K/\wp(K)\) 是 \(\mathbb F_p\) 向量空间。后文的一维子空间正是按这个线性结构理解的；这里没有对乘法取商，也不把它看成商域。
 
 \begin{proposition}\label{b1:prop:artin-schreier-polynomial}
-设 \(K\) 为特征 \(p>0\) 的域，\(a\in K\)。则 \(X^p-X-a\) 要么在 \(K\) 上完全分裂，要么在 \(K[X]\) 中不可约。前者当且仅当 \(a\in\wp(K)\)；在后一种情形，该多项式的任一根 \(\alpha\) 都生成 \(p\) 次循环扩张 \(K(\alpha)/K\)，其全部 \(K\) 自同构为 \(\alpha\mapsto\alpha+c\)，其中 \(c\in\mathbb F_p\)。
+设 \(K\) 为特征 \(p>0\) 的域，\(a\in K\)，记 \(\wp(K)=\{b^p-b\mid b\in K\}\)。则 \(X^p-X-a\) 要么在 \(K\) 上完全分裂，要么在 \(K[X]\) 中不可约。前者当且仅当 \(a\in\wp(K)\)；在后一种情形，该多项式的任一根 \(\alpha\) 都生成 \(p\) 次循环扩张 \(K(\alpha)/K\)，其全部 \(K\) 自同构为 \(\alpha\mapsto\alpha+c\)，其中 \(c\in\mathbb F_p\)。
 \end{proposition}
 \begin{proof}
-若 \(\alpha\) 为一个根，则 \(\alpha+c\)、\(c\in\mathbb F_p\)，给出 \(p\) 个不同的根。这些就是全部根，所以 \(L=K(\alpha)\) 是分裂域；导数 \(-1\) 保证其可分。对任意 \(\sigma\in\operatorname{Gal}(L/K)\)，差 \(\sigma(\alpha)-\alpha\) 属于 \(\mathbb F_p\)，且
+若 \(\alpha,\beta\) 都是 \(X^p-X-a\) 的根，则
 \[
-\sigma\longmapsto\sigma(\alpha)-\alpha
+(\beta-\alpha)^p-(\beta-\alpha)
+=(\beta^p-\beta)-(\alpha^p-\alpha)=0.
 \]
-是到 \((\mathbb F_p,+)\) 的单同态。目标群阶为素数，因此 Galois 群只有阶 \(1\) 或 \(p\) 两种可能。阶为 \(1\) 时 \(\alpha\in K\)，等价于 \(a=\wp(\alpha)\)；阶为 \(p\) 时最小多项式次数为 \(p\)，就是给定多项式。
+由 \(X^p-X\) 的根的描述，\(\beta-\alpha\in\mathbb F_p\)。反过来，每个 \(\alpha+c\)、\(c\in\mathbb F_p\)，都满足原方程。因此全部根恰为这 \(p\) 个不同的元素。它们都在 \(L=K(\alpha)\) 中，所以 \(L\) 是该多项式的分裂域；导数为 \(-1\)，又保证它没有重根。由可分多项式的分裂域判据，\(L/K\) 是有限 Galois 扩张，故\cref{b1:prop:galois-automorphism-count}给出 \(|\operatorname{Gal}(L/K)|=[L:K]\)。
+
+对 \(\sigma\in\operatorname{Gal}(L/K)\)，令 \(c_\sigma=\sigma(\alpha)-\alpha\)。因为 \(\sigma(\alpha)\) 也是原方程的根，所以 \(c_\sigma\in\mathbb F_p\)。每个 \(K\) 自同构都固定素域，故
+\[
+\begin{aligned}
+c_{\sigma\tau}
+&=\sigma\tau(\alpha)-\alpha\\
+&=\sigma\bigl(\tau(\alpha)-\alpha\bigr)+\sigma(\alpha)-\alpha\\
+&=c_\tau+c_\sigma.
+\end{aligned}
+\]
+这说明 \(\sigma\mapsto c_\sigma\) 是到 \((\mathbb F_p,+)\) 的群同态。若 \(c_\sigma=0\)，则 \(\sigma\) 固定生成元 \(\alpha\)，因而是恒等映射，所以这个同态是单射。目标群阶为素数，只有平凡子群和整个群，于是 \([L:K]\) 只能为 \(1\) 或 \(p\)。
+
+次数为 \(1\) 时 \(\alpha\in K\)，所有根都在 \(K\) 中，且 \(a=\wp(\alpha)\)。反过来，若 \(a=\wp(b)\)、\(b\in K\)，全部根就是 \(b+c\)、\(c\in\mathbb F_p\)，故多项式完全分裂。次数为 \(p\) 时，\(\alpha\) 的最小多项式次数为 \(p\)，且整除首一 \(p\) 次多项式 \(X^p-X-a\)，因而二者相等，给定多项式不可约。此时上述单同态的像是整个 \((\mathbb F_p,+)\)，所以 Galois 群为循环群，并且每个平移 \(\alpha\mapsto\alpha+c\) 都对应一个 \(K\) 自同构。
 \end{proof}
 
 \subsection{素数次循环扩张的分类}
@@ -47,7 +69,7 @@
 \term[Artin-Schreier-dingli]{Artin--Schreier 定理}[Artin--Schreier theorem]说明上一小节的方程穷尽了特征 \(p\) 中的循环 \(p\) 次扩张，并给出避免重复的参数空间。
 
 \begin{theorem}[Artin--Schreier]\label{b1:thm:artin-schreier-classification}
-设 \(K\) 为特征 \(p>0\) 的域，并固定 \(K\) 的代数闭包 \(\overline K\)。每个包含于 \(\overline K\) 的 \(p\) 次循环扩张 \(L/K\) 都形如
+设 \(K\) 为特征 \(p>0\) 的域，并固定 \(K\) 的代数闭包 \(\overline K\)，记 \(\wp(b)=b^p-b\)（\(b\in K\)）。每个包含于 \(\overline K\) 的 \(p\) 次循环扩张 \(L/K\) 都形如
 \[
 L=K(\alpha),\qquad\alpha^p-\alpha=a\in K\setminus\wp(K).
 \]
@@ -57,22 +79,47 @@ a'=ca+\wp(b)\qquad\text{对某个 }c\in\mathbb F_p^\times,\ b\in K.
 \]
 \end{theorem}
 
-设 \(\sigma\) 是 \(p\) 次循环扩张 \(L/K\) 的生成自同构。要反向找到这种方程，可先设法选 \(\alpha\) 使 \(\sigma(\alpha)=\alpha+1\)；这样 \(\alpha^p-\alpha\) 会被 \(\sigma\) 固定。在这个特征 \(p\) 的扩张中，\(-1\) 的迹为零，加法形式的 Hilbert 第 90 定理因而能给出所需的 \(\alpha\)。
+在\cref{b1:thm:kummer-cyclic}的构造中，为得到 \(\sigma(\alpha)=\zeta\alpha\)，把 \(\dfrac{\alpha}{\sigma(\alpha)}=\zeta^{-1}\) 交给乘法形式的 Hilbert 第 90 定理。这里设 \(\sigma\) 是 \(p\) 次循环扩张 \(L/K\) 的生成自同构，改为要求 \(\sigma(\alpha)=\alpha+1\)，也就是 \(\alpha-\sigma(\alpha)=-1\)。这样 \(\alpha^p-\alpha\) 会被 \(\sigma\) 固定，而 \(-1\) 的迹为零，加法形式的 Hilbert 第 90 定理便能给出所需的 \(\alpha\)。
 
 \begin{proof}
-设 \(L/K\) 是 \(p\) 次循环扩张，生成自同构为 \(\sigma\)。由于 \(\operatorname{Tr}_{L/K}(-1)=-p\cdot1_K=0\)，\cref{b1:thm:hilbert90-additive}给出 \(\alpha\in L\) 满足 \(\alpha-\sigma(\alpha)=-1\)，即 \(\sigma(\alpha)=\alpha+1\)。于是 \(\alpha^p-\alpha\) 被 \(\sigma\) 固定，属于 \(K\)，而 \(\alpha\notin K\)。上一命题给出 \(K(\alpha)=L\) 及参数不属于 \(\wp(K)\)。
+设 \(L/K\) 是 \(p\) 次循环扩张，生成自同构为 \(\sigma\)。由于扩张次数和基域特征都为 \(p\)，有 \(\operatorname{Tr}_{L/K}(-1)=-p\cdot1_K=0\)。\cref{b1:thm:hilbert90-additive}不要求扩张次数在 \(K\) 中可逆，其证明没有除以 \(p\)，所以这里仍可应用。它给出 \(\alpha\in L\) 满足 \(\alpha-\sigma(\alpha)=-1\)，即 \(\sigma(\alpha)=\alpha+1\)。于是
+\[
+\sigma(\alpha^p-\alpha)
+=(\alpha+1)^p-(\alpha+1)
+=\alpha^p+1-\alpha-1
+=\alpha^p-\alpha.
+\]
+因为 \(\sigma\) 生成整个 Galois 群，这个元素属于固定域 \(K\)，记为 \(a\)。又因 \(\sigma(\alpha)\neq\alpha\)，有 \(\alpha\notin K\)。\cref{b1:prop:artin-schreier-polynomial}因而给出 \(a\notin\wp(K)\) 和 \([K(\alpha):K]=p\)。结合 \(K(\alpha)\subseteq L\) 及 \([L:K]=p\)，得到 \(K(\alpha)=L\)。
 
-若 \(a'=ca+\wp(b)\)，令 \(\gamma=c\alpha+b\)，则 \(\gamma^p-\gamma=a'\)，且 \(c\neq0\) 保证 \(K(\gamma)=K(\alpha)\)。根 \(\beta\) 与 \(\gamma\) 相差 \(\mathbb F_p\) 中的元素，所以 \(K(\beta)=K(\gamma)=K(\alpha)\)。反过来，若 \(K(\alpha)=K(\beta)=L\)，选取满足 \(\sigma(\alpha)=\alpha+1\) 的生成元。因 \(\beta^p-\beta\in K\)，有 \(\sigma(\beta)-\beta=c\in\mathbb F_p\)。若 \(c=0\)，则 \(\beta\in K\)，矛盾，故 \(c\neq0\)。于是 \(\beta-c\alpha\) 被 \(\sigma\) 固定，等于某个 \(b\in K\)。取 \(\wp\) 得 \(a'=ca+\wp(b)\)。
+若 \(a'=ca+\wp(b)\)，其中 \(c\in\mathbb F_p^\times\)、\(b\in K\)，令 \(\gamma=c\alpha+b\)。由 \(c^p=c\) 得
+\[
+\gamma^p-\gamma=c(\alpha^p-\alpha)+(b^p-b)=a'.
+\]
+又因 \(\alpha=c^{-1}(\gamma-b)\)，有 \(K(\gamma)=K(\alpha)\)。两根 \(\beta,\gamma\) 相差 \(\mathbb F_p\) 中的元素，所以 \(K(\beta)=K(\gamma)=K(\alpha)\)。
 
-参数变换正是把非零向量的代表改为同一直线上的另一非零向量，因此得到一维子空间的分类，而不是整个商空间中非零元素的逐一分类。
+反过来，设 \(K(\alpha)=K(\beta)=L\)。由\cref{b1:prop:artin-schreier-polynomial}，映射 \(\operatorname{Gal}(L/K)\to(\mathbb F_p,+)\)、\(\tau\mapsto\tau(\alpha)-\alpha\) 是同构。因此可选取 \(\sigma\) 使 \(\sigma(\alpha)=\alpha+1\)；它对应非零元素 \(1\)，故是 Galois 群的生成元。因为 \(a'\in K\)，有
+\[
+\sigma(\beta)^p-\sigma(\beta)=\sigma(\beta^p-\beta)=a'.
+\]
+这说明 \(\beta\) 与 \(\sigma(\beta)\) 是同一个 Artin--Schreier 方程的根，于是 \(\sigma(\beta)-\beta=c\in\mathbb F_p\)。若 \(c=0\)，则 \(\beta\) 被生成元 \(\sigma\) 固定，从而 \(\beta\in K\)，与 \(a'\notin\wp(K)\) 矛盾。因此 \(c\neq0\)，且
+\[
+\sigma(\beta-c\alpha)=\beta+c-c(\alpha+1)=\beta-c\alpha.
+\]
+故 \(\beta-c\alpha\) 等于某个 \(b\in K\)。代入 \(\beta=c\alpha+b\) 就得到 \(a'=ca+\wp(b)\)。
+
+在商空间 \(K/\wp(K)\) 中，这个参数条件等价于 \([a']=c[a]\)，其中 \(c\in\mathbb F_p^\times\)。因此同一个扩张对应同一个一维子空间中的所有非零向量，而 \(\wp(b)\) 只改变向量的代表。每个非零类 \([a]\) 又由前一命题给出一个 \(p\) 次循环扩张，所以上述等价条件恰好给出所述的一一对应。
 \end{proof}
 
-例如在 \(K=\mathbb F_p(t)\) 中，\(X^p-X-t\) 不可约。若 \(t=b^p-b\)，考察有理函数 \(b\) 在无穷远处的极点阶：当 \(b\) 有极点且阶为 \(m>0\) 时，\(b^p-b\) 的极点阶为 \(pm\)，因为两个被减项的阶不同，不会相消；若 \(b\) 无极点，差也无极点。但 \(t\) 的极点阶为 \(1\)，两种情况都不可能。这里有理函数 \(u(t)/v(t)\) 在无穷远处的极点阶就是 \(\max(\deg u-\deg v,0)\)。
+例如在 \(K=\mathbb F_p(t)\) 中，\(X^p-X-t\) 不可约。由\cref{b1:prop:artin-schreier-polynomial}，只需证明 \(t\notin\wp(K)\)。若 \(b=0\)，显然 \(b^p-b\neq t\)；否则把 \(b\) 写成既约分式 \(\dfrac{u(t)}{v(t)}\)，其中 \(u,v\in\mathbb F_p[t]\) 都非零，令 \(m=\deg u-\deg v\)。此时
+\[
+b^p-b=\frac{u^p-uv^{p-1}}{v^p}.
+\]
+若 \(m>0\)，则 \(p\deg u>\deg u+(p-1)\deg v\)，所以分子的两项最高次项不会相消，分子次数为 \(p\deg u\)，分母次数为 \(p\deg v\)，次数差为 \(pm\)。约去公因子会使分子、分母次数减少同一个数，不改变这个差；而 \(t\) 的次数差为 \(1\)，不可能等于 \(pm\)。若 \(m\le0\)，分子次数不超过分母次数，或者分子为零，也不可能表示 \(t\)。这就证明了所需结论。通常把非零有理函数 \(\dfrac{u(t)}{v(t)}\) 的 \(\max(\deg u-\deg v,0)\) 称为它在无穷远处的极点阶；上述计算也说明，\(b\) 有正极点阶 \(m\) 时，\(b^p-b\) 的极点阶恰为 \(pm\)。
 
 \subsection{与 Kummer 理论的比较}
 \label{b1:subsec:2004:03}
 
-设 \(\ell\) 为不同于 \(p\) 的素数，且 \(K\) 包含全部 \(\ell\) 次单位根。Kummer 理论用乘法商群 \(K^\times/K^{\times\ell}\)，方程为 \(X^\ell-a\)，自同构把根乘以单位根。在特征 \(p\) 中，Artin--Schreier 理论用加法商空间 \(K/\wp(K)\)，方程为 \(X^p-X-a\)，自同构把根加上素域元素。两者的非平凡素数次循环扩张都由相应商空间的一维子空间分类。
+设 \(\ell\) 为不同于 \(p\) 的素数，且 \(K\) 包含全部 \(\ell\) 次单位根。Kummer 理论使用乘法商群 \(K^\times/K^{\times\ell}\)，把它看成 \(\mathbb F_\ell\) 向量空间时，标量作用由取幂给出。方程为 \(X^\ell-a\)，根之间相差 \(\mu_\ell\) 中的乘法因子；选取本原 \(\ell\) 次单位根 \(\zeta\)，生成自同构可写为 \(\sigma(\alpha)=\zeta\alpha\)，其构造来自乘法形式的 Hilbert 第 90 定理。在特征 \(p\) 中，Artin--Schreier 理论使用加法商空间 \(K/\wp(K)\)，它按通常的加法与素域标量作用成为 \(\mathbb F_p\) 向量空间。方程为 \(X^p-X-a\)，根之间相差一个加法常数 \(c\in\mathbb F_p\)，生成自同构可写为 \(\sigma(\alpha)=\alpha+1\)，其构造来自加法形式的 Hilbert 第 90 定理。前者用 \(\dfrac{b}{\sigma(b)}\) 描述范数为一的元素，后者用 \(b-\sigma(b)\) 描述迹为零的元素；两者的非平凡素数次循环扩张都由相应商空间的一维子空间分类。
 
 \ProseParagraphBreak
 这也解释了为什么不能把特征零的根式可解性判据原样搬到正特征：特征 \(p\) 中的可分循环 \(p\) 次步骤由 Artin--Schreier 方程描述，\(p\) 次开方却是纯不可分步骤。二者的次数可以相同，自同构行为则完全不同。下一章先在特征零下给出根式可解性的完整等价定理。

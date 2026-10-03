@@ -9,38 +9,47 @@
 %
 % * 中间域与子群的反向对应
 % * 次数、指数与群阶
-% * 正规子群、正规子扩张与商群
+% * 正规子群、正规子扩张与商群；区分逐点固定与整体保持，展开限制映射的定义、核与满射性
 % * 紧接对应定理，以 \(X^3-2\) 的分裂域枚举全部子群、不动域、次数、正规性和包含关系
 %
 
-现在固定有限 Galois 扩张 \(L/K\)，记 \(G=\operatorname{Gal}(L/K)\)。给定中间域 \(E\)，考察逐点固定 \(E\) 的自同构所组成的子群 \(\operatorname{Gal}(L/E)\)；给定子群，则取其共同不动元。两个构造反转包含关系；要证明它们互逆，还须使用不动域定理中的精确次数。
+现在固定有限 Galois 扩张 \(L/K\)，记 \(G=\operatorname{Gal}(L/K)\)。给定中间域 \(E\)，考察逐点固定 \(E\) 的自同构所组成的子群 \(\operatorname{Aut}_E(L)\)；给定子群，则取其共同不动元。两个构造反转包含关系；要证明它们互逆，还须使用不动域定理中的精确次数。
 
 \subsection{中间域与子群的反向对应}
 \label{b1:subsec:1902:01}
 
-下述对应称为\term[Galois-duiying]{Galois 对应}[Galois correspondence]。
+对任意中间域 \(E\) 与子群 \(H\leq G\)，这两个构造首先给出容易验证的包含关系：
+\[
+E\subseteq L^{\operatorname{Aut}_E(L)},\qquad
+H\subseteq\operatorname{Aut}_{L^H}(L).
+\]
+第一式是因为逐点固定 \(E\) 的自同构必然固定 \(E\) 中的每个元素；第二式是因为 \(H\) 中的每个自同构都固定 \(L^H\)。所要证明的是两个包含都为等号，从而从一个域或子群出发，作完这两个构造便能回到原对象。下述对应称为\term[Galois-duiying]{Galois 对应}[Galois correspondence]。
 \begin{theorem}\label{b1:thm:finite-galois-correspondence}
-有限 Galois 扩张 \(L/K\) 的中间域与 \(G=\operatorname{Gal}(L/K)\) 的子群，通过
+设 \(L/K\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)。对任意中间域 \(E\)，扩张 \(L/E\) 都是 Galois 扩张。\(L/K\) 的中间域与 \(G\) 的子群，通过
 \[
 E\longmapsto\operatorname{Gal}(L/E),\qquad H\longmapsto L^H
 \]
-建立互逆的、反转包含关系的一一对应。对任意中间域 \(E\)，扩张 \(L/E\) 都是 Galois 扩张。
+建立互逆的、反转包含关系的一一对应。
 \end{theorem}
 \begin{proof}
-先说明最后一句。每个元素在 \(E\) 上的最小多项式整除它在 \(K\) 上的最小多项式，故可分；任意 \(E\) 嵌入也是 \(K\) 嵌入，所以由\cref{b1:thm:normal-embedding-criterion}，它保持 \(L\)，故 \(L/E\) 正规。于是 \(H=\operatorname{Gal}(L/E)\) 满足 \(|H|=[L:E]\)。不动域定理给出 \([L:L^H]=|H|\)，结合 \(E\subseteq L^H\) 以及塔式公式，得到 \(E=L^H\)。
+给定 \(a\in L\)，把 \(m_{a,K}\) 看作 \(E[x]\) 中的多项式，它仍零化 \(a\)，所以 \(m_{a,E}\mid m_{a,K}\) 在 \(E[x]\) 中成立。\(m_{a,K}\) 没有重根，其因子 \(m_{a,E}\) 也没有重根，故 \(L/E\) 可分。固定一个包含 \(L\) 的 \(K\) 的代数闭包 \(\Omega\)；任意 \(E\) 嵌入 \(L\rightarrow\Omega\) 也是 \(K\) 嵌入，所以由\cref{b1:thm:normal-embedding-criterion}，它将 \(L\) 映到自身，故 \(L/E\) 正规。于是 \(L/E\) 为有限 Galois 扩张，其自同构群可记为 \(H=\operatorname{Gal}(L/E)\)，并满足 \(|H|=[L:E]\)。不动域定理给出 \([L:L^H]=|H|\)，而 \(E\subseteq L^H\)。由塔式公式，
+\[
+[L:E]=[L:L^H][L^H:E]=[L:E][L^H:E],
+\]
+因此 \([L^H:E]=1\)，即 \(E=L^H\)。
 
-反向给定任意 \(H\leq G\)，\cref{b1:thm:artin-fixed-field}直接给出 \(\operatorname{Gal}(L/L^H)=H\)。这证明两个构造互逆。若 \(E_1\subseteq E_2\)，固定较大域的条件更强，所以 \(\operatorname{Gal}(L/E_2)\subseteq\operatorname{Gal}(L/E_1)\)；子群越大，不动域越小。故对应反转包含。
+反向给定任意 \(H\leq G\)，\cref{b1:thm:artin-fixed-field}直接给出 \(\operatorname{Gal}(L/L^H)=H\)。这证明两个构造互逆。若 \(E_1\subseteq E_2\)，逐点固定较大域的条件更强，所以 \(\operatorname{Gal}(L/E_2)\subseteq\operatorname{Gal}(L/E_1)\)。若 \(H_1\subseteq H_2\)，成为 \(H_2\) 的共同不动元需要被更多自同构固定，所以 \(L^{H_2}\subseteq L^{H_1}\)。故对应反转包含。
 \end{proof}
-不能把最后一句反过来读成每个 \(E/K\) 都正规。例如三次多项式的非正规根域可以作为其 Galois 分裂域的中间域。
+这里的两层扩张并不对称：\(L/E\) 总是 Galois 扩张，而 \(E/K\) 虽然总可分，却未必正规。例如，\(L=\mathbb Q(\sqrt[3]2,\zeta)\) 为 \(X^3-2\) 的 Galois 分裂域，其中 \(\zeta\) 是本原三次单位根；其中间域 \(E=\mathbb Q(\sqrt[3]2)\) 是实域，未包含该不可约多项式的非实根，所以 \(E/\mathbb Q\) 不正规。
 
 \subsection{次数、指数与群阶}
 \label{b1:subsec:1902:02}
 
-对对应的 \(E=L^H\)，不动域定理和塔式公式分别给出
+对对应的 \(E=L^H\)，上层扩张的自同构群是 \(H=\operatorname{Gal}(L/E)\)，所以 \([L:E]=|H|\)。总次数为 \([L:K]=|G|\)，再用塔式公式相除，得到下层次数 \([E:K]=|G|/|H|=[G:H]\)。因此
 \begin{equation}\label{b1:eq:galois-degree-index}
 [L:E]=|H|,\qquad [E:K]=[G:H].
 \end{equation}
-若 \(E_1\subseteq E_2\) 对应 \(H_1\supseteq H_2\)，则 \([E_2:E_1]=[H_1:H_2]\)。这一等式计算的是群的指数，不要求相应子群正规。
+若 \(E_1\subseteq E_2\) 对应 \(H_1\supseteq H_2\)，则 \([E_2:E_1]=[L:E_1]/[L:E_2]=|H_1|/|H_2|=[H_1:H_2]\)。这里 \(|H|\) 是逐点固定群的阶，\([G:H]\) 是它在总群中的指数，分别对应上层与下层次数。指数只计算陪集数，不要求相应子群正规，也不意味着存在商群。
 
 \ProseParagraphBreak
 例如 \(L=\mathbb F_{q^6}\)、\(K=\mathbb F_q\) 时，\cref{b1:thm:finite-field-automorphisms}给出 \(G=\langle\sigma\rangle\cong C_6\)。指数为 \(d\) 的子群 \(\langle\sigma^d\rangle\) 对应 \(\mathbb F_{q^d}\)，其中 \(d\mid6\)。这与\cref{b1:thm:finite-field-subfields}的直接计算一致。
@@ -55,25 +64,44 @@ E\longmapsto\operatorname{Gal}(L/E),\qquad H\longmapsto L^H
 \]
 \end{theorem}
 \begin{proof}
-对任意 \(\sigma\in G\)，直接检验得到
+对任意 \(\sigma\in G\)，有
 \[
 \sigma(E)=L^{\sigma H\sigma^{-1}}.
 \]
-事实上，若 \(x\in E\)，则 \(\sigma h\sigma^{-1}\) 固定 \(\sigma(x)\)；反向对 \(\sigma^{-1}\) 作同样检验。若 \(H\) 正规，则每个 \(\sigma\) 都保持 \(E\)。任意 \(E\) 的 \(K\) 嵌入能由\cref{b1:thm:embedding-extension}延拓到 \(L\) 的 \(K\) 嵌入，而 \(L/K\) 正规使此延拓属于 \(G\)。它保持 \(E\)，所以嵌入判据说明 \(E/K\) 正规；\(E/K\) 的可分性来自 \(L/K\)，于是为 Galois 扩张。
+事实上，若 \(x\in E=L^H\)，则对每个 \(h\in H\) 有
+\[
+(\sigma h\sigma^{-1})(\sigma(x))=\sigma(h(x))=\sigma(x),
+\]
+所以 \(\sigma(E)\subseteq L^{\sigma H\sigma^{-1}}\)。反过来，若 \(y\) 被 \(\sigma H\sigma^{-1}\) 中的每个元素固定，则
+\[
+h(\sigma^{-1}(y))=\sigma^{-1}\bigl((\sigma h\sigma^{-1})(y)\bigr)
+=\sigma^{-1}(y)\qquad(h\in H),
+\]
+故 \(\sigma^{-1}(y)\in E\)，即 \(y\in\sigma(E)\)，得到等号。若 \(H\) 正规，则
+\[
+\sigma(E)=L^{\sigma H\sigma^{-1}}=L^H=E\qquad(\sigma\in G).
+\]
+任取 \(K\) 嵌入 \(\tau:E\rightarrow\Omega\)，其中 \(\Omega\) 为包含 \(L\) 的代数闭包。由\cref{b1:thm:embedding-extension}，\(\tau\) 能延拓为 \(\widetilde\tau:L\rightarrow\Omega\)；\(L/K\) 正规给出 \(\widetilde\tau(L)=L\)，所以 \(\widetilde\tau\in G\)。它将 \(E\) 保持为集合，故 \(\tau(E)=E\)。由嵌入判据，\(E/K\) 正规；它的可分性来自 \(L/K\)，于是 \(E/K\) 为 Galois 扩张。
 
-若 \(E/K\) 正规，每个 \(\sigma\in G\) 都保持 \(E\)，从而 \(L^{\sigma H\sigma^{-1}}=E=L^H\)。Galois 对应的单射性给出 \(\sigma H\sigma^{-1}=H\)，所以 \(H\) 正规。此时限制映射 \(G\rightarrow\operatorname{Gal}(E/K)\) 的核是恰好固定 \(E\) 的 \(H\)；任意目标自同构均能延拓到 \(L\)，故映射满射。\cref{b1:thm:first-isomorphism}遂把商群 \(G/H\) 同构到这个实际像。
+若 \(E/K\) 正规，每个 \(\sigma\in G\) 都将 \(E\) 保持为集合，从而 \(L^{\sigma H\sigma^{-1}}=E=L^H\)。Galois 对应的单射性给出 \(\sigma H\sigma^{-1}=H\)，所以 \(H\) 正规。此时限制给出同态
+\[
+\operatorname{res}:G\longrightarrow\operatorname{Gal}(E/K),\qquad
+\sigma\longmapsto\sigma|_E,
+\]
+其核为逐点固定 \(E\) 的群 \(\operatorname{Gal}(L/E)=H\)。任取 \(\tau\in\operatorname{Gal}(E/K)\)，把它看作嵌入 \(E\rightarrow\Omega\)，再延拓为 \(\widetilde\tau:L\rightarrow\Omega\)。由于 \(L/K\) 正规，\(\widetilde\tau(L)=L\)，故 \(\widetilde\tau\in G\)，且 \(\operatorname{res}(\widetilde\tau)=\tau\)。因此限制映射满射。\cref{b1:thm:first-isomorphism}遂把商群 \(G/H\) 同构到 \(\operatorname{Gal}(E/K)\)。
 \end{proof}
-正规性确保限制后仍是 \(E\) 到自身的映射；若 \(E/K\) 不正规，某些 \(\sigma\) 会把它送到另一个共轭子域，不能对整个 \(G\) 定义到 \(\operatorname{Aut}_K(E)\) 的限制同态。
+正规性确保限制后仍是 \(E\) 到自身的映射；若 \(E/K\) 不正规，某些 \(\sigma\in G\) 会把它送到另一个共轭子域。此时 \(\sigma|_E:E\rightarrow\sigma(E)\) 仍是 \(K\) 同构，但其像不是 \(E\)，所以不能把整个 \(G\) 通过限制映到 \(\operatorname{Aut}_K(E)\)。
 
 \ProseParagraphBreak
 对上述 \(E=L^H\)，逐点固定 \(E\) 与将 \(E\) 保持为集合是不同的条件。记 \(N_G(H)=\{\,\sigma\in G\mid\sigma H\sigma^{-1}=H\,\}\) 为 \(H\) 在 \(G\) 中的正规化子。Galois 对应及证明中的共轭公式分别给出
 \[
+\begin{aligned}
 \{\,\sigma\in G\mid\sigma|_E=\operatorname{id}_E\,\}
-=\operatorname{Gal}(L/E)=H,
-\qquad
-\{\,\sigma\in G\mid\sigma(E)=E\,\}=N_G(H).
+&=\operatorname{Gal}(L/E)=H,\\
+\{\,\sigma\in G\mid\sigma(E)=E\,\}&=N_G(H).
+\end{aligned}
 \]
-恰是 \(N_G(H)\) 中的自同构才能限制成 \(E\) 的 \(K\) 自同构；\cref{b1:ex:19-normalizer-automorphisms}将用它计算 \(\operatorname{Aut}_K(E)\)。
+逐点固定决定了限制映射的核，而保持为集合决定了限制映射可以在哪个子群上定义。总有 \(H\leq N_G(H)\)，两者却可能不相等；恰是 \(N_G(H)\) 中的自同构才能限制成 \(E\) 的 \(K\) 自同构。\cref{b1:prop:subfield-normalizer-automorphisms}将由此得到 \(\operatorname{Aut}_K(E)\cong N_G(H)/H\)。
 
 \subsection{中间域的枚举}
 \label{b1:subsec:1904:01}
@@ -84,7 +112,7 @@ E\longmapsto\operatorname{Gal}(L/E),\qquad H\longmapsto L^H
 令 \(a=\sqrt[3]2\in\mathbb R\)，\(\zeta\) 为本原三次单位根，并置 \(L=\mathbb Q(a,\zeta)\)。则 \([L:\mathbb Q]=6\)，且 \(G=\operatorname{Gal}(L/\mathbb Q)\cong S_3\)。除 \(\mathbb Q\) 与 \(L\) 外，全部中间域为唯一的二次域 \(\mathbb Q(\zeta)\) 和三个互异的三次域 \(\mathbb Q(\zeta^j a)\)、\(j=0,1,2\)。前者在 \(\mathbb Q\) 上正规，后三者均不正规。
 \end{proposition}
 \begin{proof}
-由\cref{b1:thm:eisenstein}，\(X^3-2\) 在 \(\mathbb Q\) 上不可约，故 \([\mathbb Q(a):\mathbb Q]=3\)。域 \(\mathbb Q(a)\) 包含于 \(\mathbb R\)，而 \(\zeta\) 非实且满足 \(X^2+X+1=0\)，所以 \([L:\mathbb Q(a)]=2\)。这是一个特征零多项式的分裂域，因而为六次 Galois 扩张。群 \(G\) 忠实置换三个根 \(a,\zeta a,\zeta^2a\)，由阶数知它给出全部 \(S_3\)。
+由\cref{b1:thm:eisenstein}，\(X^3-2\) 在 \(\mathbb Q\) 上不可约，故 \([\mathbb Q(a):\mathbb Q]=3\)。域 \(\mathbb Q(a)\) 包含于 \(\mathbb R\)，而 \(\zeta\) 非实且满足 \(X^2+X+1=0\)，所以 \([L:\mathbb Q(a)]=2\)。这是一个特征零多项式的分裂域，因而为六次 Galois 扩张。群 \(G\) 置换三个根 \(a,\zeta a,\zeta^2a\)；固定这三个根的自同构固定由它们生成的整个 \(L\)，所以该作用给出单射 \(G\hookrightarrow S_3\)。由于 \(|G|=[L:\mathbb Q]=6=|S_3|\)，这个单射也是满射，故 \(G\cong S_3\)。
 
 记循环置换三个根的自同构为 \(s\)，复共轭为 \(t\)，则
 \[
@@ -93,11 +121,17 @@ t(a)=a,\quad t(\zeta)=\zeta^{-1}.
 \]
 它们满足 \(s^3=t^2=1\)、\(tst=s^{-1}\)，且生成 \(G\)。\(G\) 的全部子群为 \(G\)、\(\langle s\rangle\)、\(\langle s^{2j}t\rangle\)（\(j=0,1,2\)）及 \(1\)：真非平凡子群只能有二阶或三阶，分别由三个换位或一个三循环生成。
 
-自同构 \(s\) 固定 \(\zeta\)，而 \(s^{2j}t\) 固定 \(\zeta^j a\)。由\eqref{b1:eq:galois-degree-index}，这两个子群的不动域在 \(\mathbb Q\) 上分别有次数二与三；\(\mathbb Q(\zeta)\) 与 \(\mathbb Q(\zeta^j a)\) 也分别有这些次数，故相应包含必为相等。对应的三个二阶子群互异，所以三个三次域也互异。子群 \(\langle s\rangle\) 正规，三个二阶子群彼此共轭而不正规，\cref{b1:thm:galois-quotient}遂给出各中间域的正规性。
+自同构 \(s\) 固定 \(\zeta\)。对 \(j=0,1,2\)，先作 \(t\)，再作 \(s^{2j}\)，得到
+\[
+s^{2j}t(\zeta^j a)=s^{2j}(\zeta^{-j}a)
+=\zeta^{-j}\zeta^{2j}a=\zeta^j a,
+\]
+所以 \(s^{2j}t\) 固定 \(\zeta^j a\)。由\eqref{b1:eq:galois-degree-index}，\(\langle s\rangle\) 与 \(\langle s^{2j}t\rangle\) 的不动域在 \(\mathbb Q\) 上分别有次数二与三；\(\mathbb Q(\zeta)\) 与 \(\mathbb Q(\zeta^j a)\) 也分别有这些次数，故相应包含必为相等。对应的三个二阶子群互异，所以三个三次域也互异。对其中一对还可以直接检验：若 \(\mathbb Q(a)=\mathbb Q(\zeta a)\)，则 \(\zeta=(\zeta a)/a\) 也在实域 \(\mathbb Q(a)\) 中，矛盾。子群 \(\langle s\rangle\) 正规，三个二阶子群彼此共轭而不正规，\cref{b1:thm:galois-quotient}遂给出各中间域的正规性。
 \end{proof}
 
 例如取 \(E=\mathbb Q(\zeta)\)。全部六个 \(G\) 中的自同构都将 \(E\) 保持为集合，但只有 \(\langle s\rangle\) 的三个元素逐点固定 \(E\)；复共轭 \(t\) 把 \(\zeta\) 送到 \(\zeta^{-1}\)，所以不逐点固定它。
 
+\ProseParagraphBreak
 \cref{b1:tab:cubic-galois-correspondence}集中列出上述对应。对每一行都有 \([E:\mathbb Q]=[G:H]\)、\([L:E]=|H|\)；最后一列同时说明 \(H\) 是否为 \(G\) 的正规子群，因为这里的全部扩张均可分。
 \begin{table}[htbp]
 \centering

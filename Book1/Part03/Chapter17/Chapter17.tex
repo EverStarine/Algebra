@@ -19,14 +19,14 @@
 \end{itemize}
 \end{learninggoals}
 
-在 \(\mathbb F_2[t]/(t^2+t+1)\) 中，记 \(t\) 的剩余类为 \(\alpha\)，则 \(\alpha^2=\alpha+1\)。所有元素都能写成 \(0,1,\alpha,1+\alpha\)，并且 \(\alpha^3=1\)。从一个不可约多项式可以造出四元素域；反过来，若有另一个四元素域，它是否只能是同一个域的另一种写法？考察每个元素满足的方程 \(X^4-X=0\)，便能把构造、唯一性和自同构联系起来。一般素数幂阶有限域也由这一思路控制。
+在 \(\mathbb F_2[t]/(t^2+t+1)\) 中，记 \(t\) 的剩余类为 \(\alpha\)，则 \(\alpha^2+\alpha+1=0\)。由于特征为二，\(-\alpha=\alpha\)、\(-1=1\)，这给出 \(\alpha^2=\alpha+1\)。所有元素都能写成 \(0,1,\alpha,1+\alpha\)，并且 \(\alpha^3=1\)。从一个不可约多项式可以造出四元素域；反过来，若有另一个四元素域，它是否只能是同一个域的另一种写法？考察每个元素满足的方程 \(X^4-X=0\)，便能把构造、唯一性和自同构联系起来。一般素数幂阶有限域也由这一思路控制。
 
 \ProseParagraphBreak
 
-本章使用有限扩张的基与塔式公式、分裂域的存在唯一性，以及特征 \(p\) 下的幂映射。乘法群循环性的主要引理已在\cref{b1:lem:finite-multiplicative-cyclic}证明。末节计算有限域扩张的迹和范数；统一定义与一般性质见下一章。
+本章使用有限扩张的基与塔式公式、分裂域的存在唯一性，以及特征 \(p\) 下的幂映射。乘法群循环性的主要引理已在\cref{b1:lem:finite-multiplicative-cyclic}证明。末节计算 Frobenius 轨道元素的和与积，并比较它们与全部嵌入像的和与积；下一章将从线性代数定义域的迹和范数，再解释这些计算。
 
 \ProseParagraphBreak
-有限域的存在、子域、共轭元以及迹和范数，可与 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapter 19]{Shoup2008NumberTheoryAlgebra}对照；多项式的平方自由分解见该书\cite[Section 20.3]{Shoup2008NumberTheoryAlgebra}。求值码中带错误的多项式插值见该书\cite[Section 17.5.2]{Shoup2008NumberTheoryAlgebra}。Roman 的《Field Theory》\cite[Chapter 9; Section 10.1]{Roman2006FieldTheory}则可供从域扩张的角度继续学习。
+有限域的存在、子域、共轭元以及迹和范数，可与 Shoup 的《A Computational Introduction to Number Theory and Algebra》\cite[Chapter 19]{Shoup2008NumberTheoryAlgebra}对照；多项式的无重因子分解见该书\cite[Section 20.3]{Shoup2008NumberTheoryAlgebra}。求值码中带错误的多项式插值见该书\cite[Section 17.5.2]{Shoup2008NumberTheoryAlgebra}。Roman 的《Field Theory》\cite[Chapter 9; Section 10.1]{Roman2006FieldTheory}则可供从域扩张的角度继续学习。
 
 \input{Part03/Chapter17/Section1701}
 \input{Part03/Chapter17/Section1702}
@@ -43,7 +43,7 @@
 设 \(F\) 为十六元域。确定它的特征、作为素域上向量空间的维数以及全部可能的子域大小。说明 \(\mathbb Z/16\mathbb Z\) 为何不能作为 \(F\) 的另一种表示。
 \end{exercise}
 \begin{solution}
-由素数幂的唯一分解，\(16=2^4\)，故特征为二，维数为四。\cref{b1:thm:finite-field-subfields}说明子域对应四的正因子，大小为二、四、十六。\(\mathbb Z/16\mathbb Z\) 中 \(\bar2\ne0\)、\(\bar8\ne0\)，但 \(\bar2\bar8=0\)，存在零因子；其特征又为十六，均与域的条件不合。
+由素数幂的唯一分解，\(16=2^4\)，故特征为二，维数为四。\cref{b1:thm:finite-field-subfields}说明子域对应四的正因子，大小为二、四、十六。\(\mathbb Z/16\mathbb Z\) 中 \(\bar2\ne0\)、\(\bar8\ne0\)，但 \(\bar2\bar8=0\)，所以它含有非零零因子，不能是域。也可只看特征：它的特征为十六，而域的正特征必须是素数。这两条理由各自都足以排除它是十六元域的另一种表示。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-four-field}
@@ -76,32 +76,40 @@
 设 \(\sigma(a)=a^q\) 作用在 \(\mathbb F_{q^n}\) 上。对正整数 \(r\)，直接证明 \(\sigma^r\) 的不动元构成 \(\mathbb F_{q^{\gcd(n,r)}}\)。
 \end{exercise}
 \begin{solution}
-令 \(d=\gcd(n,r)\)，取整数 \(u,v\) 使 \(d=un+vr\)。若 \(\sigma^r(a)=a\)，则 \(\sigma^n(a)=a\) 也成立；由于 \(\sigma\) 可逆，其整数幂都可使用，故 \(\sigma^d(a)=\sigma^{un+vr}(a)=a\)。反过来 \(d\mid r\)，被 \(\sigma^d\) 固定的元素必被 \(\sigma^r\) 固定。两者不动集相同，而前者正为 \(x^{q^d}-x\) 的根集，即所述子域。
+令 \(d=\gcd(n,r)\)，取整数 \(u,v\) 使 \(d=un+vr\)。这些系数可能为负，但 \(\sigma\) 是自同构，负幂就是逆自同构的正幂，因而所有整数幂都有意义。若 \(\sigma^r(a)=a\)，则 \(\sigma^n(a)=a\) 也成立；被一个自同构固定的元素也被其逆固定，故 \(\sigma^d(a)=\sigma^{un+vr}(a)=a\)。反过来 \(d\mid r\)，被 \(\sigma^d\) 固定的元素必被 \(\sigma^r\) 固定。两者不动集相同，而前者正为 \(x^{q^d}-x\) 的根集，即所述子域。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-generators}
-取 \(\mathbb F_{16}^\times\) 的生成元 \(g\)。求本原元的个数，并说明 \(g^3\) 是否为乘法本原元、是否生成扩张 \(\mathbb F_{16}/\mathbb F_2\)。
+取 \(\mathbb F_{64}^\times\) 的生成元 \(g\)。对 \(0\leq a<63\)，分别给出 \(g^a\) 生成域扩张 \(\mathbb F_{64}/\mathbb F_2\) 和生成乘法群的充要条件，计算这两类元素各有多少个。再按乘法阶分类并计数那些生成整个域却不生成乘法群的元素。
 \end{exercise}
 \begin{solution}
-乘法群阶为十五，本原元个数为 \(\varphi(15)=8\)。\(g^3\) 的阶为五，所以不是乘法本原元。但真子域只有 \(\mathbb F_2\) 和 \(\mathbb F_4\)，其乘法群阶分别为一和三，都不能含有五阶元。因此 \(g^3\) 不在任何真子域中，仍生成整个域扩张。
+\(\mathbb F_{64}\) 的真子域为 \(\mathbb F_2,\mathbb F_4,\mathbb F_8\)，其中 \(\mathbb F_2\) 已包含于后两个域。\(\mathbb F_8^\times\) 是 \(63\) 阶循环群中唯一的七阶子群，即 \(\langle g^9\rangle\)；\(\mathbb F_4^\times=\langle g^{21}\rangle\)。因此
+\[
+\mathbb F_2(g^a)=\mathbb F_{64}
+\quad\Longleftrightarrow\quad
+9\nmid a\ \text{且}\ 21\nmid a.
+\]
+在模 \(63\) 的剩余类中，九的倍数有七个，二十一的倍数有三个，二者公共的倍数只有零，故域生成元有 \(63-7-3+1=54\) 个。零也在真子域中，不是域生成元，所以这已经穷尽了全部元素。
+
+\(g^a\) 生成乘法群当且仅当 \(\gcd(a,63)=1\)，这样的元素有 \(\varphi(63)=36\) 个。乘法阶只能是 \(1,3,7,9,21,63\)；阶为 \(1,3,7\) 的元素分别落在上述真子域中。因此生成域却不生成乘法群的元素，恰为阶九或二十一的元素，个数为 \(\varphi(9)+\varphi(21)=6+12=18\)，也等于 \(54-36\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-irreducible-counts}
 求 \(\mathbb F_3\) 上首一二、三、四次不可约多项式的个数。再求 \(\mathbb F_{q^6}\) 中对 \(\mathbb F_q\) 恰为六次的元素个数。
 \end{exercise}
 \begin{solution}
-由\eqref{b1:eq:finite-field-irreducible-count}，依次为 \((9-3)/2=3\)、\((27-3)/3=8\)、\((81-9)/4=18\)。六次域中次数小于六的元素恰在 \(\mathbb F_{q^2}\cup\mathbb F_{q^3}\) 中，两域交为 \(\mathbb F_q\)。故六次元素有 \(q^6-q^2-q^3+q\) 个，亦等于 \(6N_q(6)\)。后一等式体现每个六次不可约多项式有六个互异根。
+由\eqref{b1:eq:finite-field-irreducible-count}，依次为 \((9-3)/2=3\)、\((27-3)/3=8\)、\((81-9)/4=18\)。对任意 \(a\in\mathbb F_{q^6}\)，塔式公式说明 \([\mathbb F_q(a):\mathbb F_q]\) 整除六，所以次数只能为 \(1,2,3,6\)。前三种元素恰落在 \(\mathbb F_{q^2}\cup\mathbb F_{q^3}\) 中，两域交为 \(\mathbb F_q\)。故六次元素有 \(q^6-q^2-q^3+q\) 个，亦等于 \(6N_q(6)\)。有限域完美，每个六次不可约多项式都有六个互异根，给出后一等式。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-explicit-sixteen}
 证明 \(f=t^4+t+1\) 在 \(\mathbb F_2\) 上不可约。在 \(F=\mathbb F_2[t]/(f)\) 中令 \(\alpha=\bar t\)，计算 \(\alpha^{-1}\) 和 \((\alpha^2+1)^2\)。再令 \(\beta=\alpha^2+\alpha\)、\(E=\mathbb F_2(\beta)\)。证明 \(E\) 是 \(F\) 中的四元子域，比较平方映射与四次幂映射在 \(E\) 上的作用，并求 \(\alpha\) 在 \(E\) 上的最小多项式。
 \end{exercise}
 \begin{solution}
-零、一都不是根，所以若可约，只能是两个不可约二次因子的乘积。\(\mathbb F_2\) 上唯一首一不可约二次多项式为 \(t^2+t+1\)：一个无根的首一二次式常数项必须为一，再检查一次项系数即可。设其根为 \(u\)，有 \(u^4=u\)，从而 \(f(u)=1\ne0\)，排除了该因子。因此 \(f\) 不可约。在商域中 \(\alpha^4=\alpha+1\)，所以 \(\alpha(\alpha^3+1)=1\)，逆为 \(\alpha^3+1\)；又 \((\alpha^2+1)^2=\alpha^4+1=\alpha\)。
+零、一都不是根，排除了一次不可约因子。若这个四次式可约，它的不可约因子次数都至少为二，次数之和为四，因而只能分成两个二次不可约因子。\(\mathbb F_2\) 上唯一首一不可约二次多项式为 \(t^2+t+1\)：一个无根的首一二次式常数项必须为一，再检查一次项系数即可。设其根为 \(u\)，有 \(u^4=u\)，从而 \(f(u)=1\ne0\)，排除了该因子。因此 \(f\) 不可约。在商域中 \(\alpha^4=\alpha+1\)，所以 \(\alpha(\alpha^3+1)=1\)，逆为 \(\alpha^3+1\)；又 \((\alpha^2+1)^2=\alpha^4+1=\alpha\)。
 
 由 \(\alpha^4=\alpha+1\) 得 \(\beta=\alpha^5\)，并有 \(\beta^2=\alpha^4+\alpha^2=\beta+1\)。因此 \(\beta^2+\beta+1=0\)。多项式 \(X^2+X+1\) 在 \(\mathbb F_2\) 中无根，所以 \(\beta\notin\mathbb F_2\)，\(E\) 恰有四个元素。平方映射把 \(\beta\) 送到 \(\beta+1\)，并不逐点固定 \(E\)；四次幂映射则固定 \(E\) 的每个元素，并将 \(\alpha\) 送到 \(\alpha^4=\alpha+1\)。
 
-由于 \([F:E]=2\)，且 \(\alpha\notin E\)，\(\alpha\) 在 \(E\) 上的最小多项式为
+四次幂映射是固定 \(E\) 的自同构，将 \(\alpha\) 送到不同的元素 \(\alpha^4=\alpha+1\)，所以这两个元素都是 \(\alpha\) 的 \(E\)-共轭。由于 \([F:E]=2\)，且 \(F=E(\alpha)\)，\(\alpha\) 在 \(E\) 上的最小多项式次数为二；这两个根已经给出全部共轭，故
 \[
 m_{\alpha,E}(X)=(X-\alpha)(X-\alpha^4)=X^2+X+\beta.
 \]
@@ -115,10 +123,27 @@ m_{\alpha,E}(X)=(X-\alpha)(X-\alpha^4)=X^2+X+\beta.
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-irreducibility-test}
-设首一 \(f\in\mathbb F_q[x]\) 的次数为 \(n>1\)。证明它不可约当且仅当 \(f\mid x^{q^n}-x\)，并且对每个整除 \(n\) 的素数 \(\ell\)，有 \(\gcd(f,x^{q^{n/\ell}}-x)=1\)。
+在 \(\mathbb F_2[x]\) 中，令
+\[
+f=x^6+x+1,\qquad g=x^6+x^5+x^4+x^3+x^2+x+1.
+\]
+用反复平方与\cref{b1:prop:finite-field-irreducibility-test}判定二者是否不可约。解释为什么只验证整除 \(x^{64}-x\) 不能代替完整检验，并分解其中的可约多项式。
 \end{exercise}
 \begin{solution}
-若不可约，\cref{b1:prop:finite-field-factorization}立即给出整除关系，且次数 \(n\) 不整除较小的 \(n/\ell\)，所以各最大公因式为一。反之，第一个条件 \(f\mid x^{q^n}-x\) 使 \(f\) 无重因子，并使其每个不可约因子次数 \(d\) 整除 \(n\)。若 \(d<n\)，取 \(n/d\) 的一个素因子 \(\ell\)，则 \(d\mid n/\ell\)，该因子将整除相应最大公因式，矛盾。因此每个因子次数都等于 \(n\)，由 \(\deg f=n\) 知只有一个因子。
+六的不同素因子为二和三，所以除 \(x^{64}-x\) 外，只需检验与 \(x^8-x\)、\(x^4-x\) 的最大公因式。模 \(f\) 由 \(x^6=x+1\) 反复平方，得到
+\[
+x^8\equiv x^3+x^2,\qquad
+x^{16}\equiv x^4+x+1,\qquad
+x^{32}\equiv x^3+1,\qquad
+x^{64}\equiv x.
+\]
+因此 \(f\mid x^{64}-x\)。又 \(x^8-x\) 的余式为 \(x^3+x^2+x=x(x^2+x+1)\)，而 \(x^4-x=x(x+1)(x^2+x+1)\)。\(f(0)=f(1)=1\)，且 \(f\) 除以 \(x^2+x+1\) 的余式为 \(x\)，所以这两个最大公因式都为一，\(f\) 不可约。
+
+对 \(g\)，有 \((x+1)g=x^7+1\)，故模 \(g\) 有 \(x^8\equiv x\)。再平方三次得到 \(x^{64}\equiv x\)，所以 \(g\) 也满足第一个整除条件。但 \(g\mid x^8-x\)，相应最大公因式就是 \(g\)，它未通过完整检验。事实上
+\[
+g=(x^3+x+1)(x^3+x^2+1),
+\]
+两个三次因子在零、一处都不为零，故都不可约。第一个整除条件只保证因子无重复且各自次数整除六，并不排除它由两个三次因子组成。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-inseparable-factor}
@@ -139,21 +164,23 @@ m_{\alpha,E}(X)=(X-\alpha)(X-\alpha^4)=X^2+X+\beta.
 将 \(x^9-x\) 在 \(\mathbb F_3[x]\) 中分解为首一不可约因子的乘积。
 \end{exercise}
 \begin{solution}
-一次因子为 \(x,x-1,x+1\)。首一不可约二次式恰有三个，分别为 \(x^2+1,x^2+x+2,x^2+2x+2\)，在零、一、负一处逐一代入都非零，故都不可约。\cref{b1:prop:finite-field-factorization}说明 \(x^9-x\) 恰为所有次数整除二的首一不可约式各一次的乘积。因此所求分解为上述六个因子的乘积，其总次数为九。
+一次因子为 \(x,x-1,x+1\)。首一不可约二次式恰有三个，分别为 \(x^2+1,x^2+x+2,x^2+2x+2\)，在零、一、负一处逐一代入都非零，故都不可约。\cref{b1:prop:finite-field-factorization}说明 \(x^9-x\) 恰为所有次数整除二的首一不可约式各一次的乘积。因此所求分解含三个一次因子和三个不可约二次因子，共六个不可约因子，总次数为 \(3\cdot1+3\cdot2=9\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:17-evaluation-distance}
 在 \(\mathbb F_q\) 中选 \(n\) 个互异点，\(1\leq k\leq n\leq q\)。以次数小于 \(k\) 的多项式在这些点的取值组成求值码。证明不同编码向量之间最少恰有 \(n-k+1\) 个坐标不同，并说明至多能唯一纠正多少处错误。
 \end{exercise}
 \begin{solution}
-两个不同多项式的差次数至多为 \(k-1\)，所以至多在 \(k-1\) 个所选点为零，给出距离至少 \(n-k+1\)。取其中 \(k-1\) 个点，令多项式为对应一次因子的乘积；当 \(k=1\) 时取常数一。它与零多项式的取值恰在 \(n-k+1\) 处不同，所以下界能达到。
+两个不同多项式的差非零且次数至多为 \(k-1\)，所以至多在 \(k-1\) 个所选点为零。故任何两个不同码字之间的距离都至少为 \(n-k+1\)，这给出了最小距离的下界。
 
-记 \(d(v,w)\) 为向量 \(v,w\) 的不同坐标个数，最小距离为 \(\delta=n-k+1\)。若错误数 \(e\) 满足 \(2e<\delta\)，两个候选编码向量不可能同时与收到的向量相差至多 \(e\) 处，否则两者距离至多 \(2e\)。因此可以唯一纠正至多 \(\lfloor(n-k)/2\rfloor\) 处错误。
+为证明下界能够达到，把求值点记为 \(a_1,\ldots,a_n\)，取 \(h(x)=\prod_{i=1}^{k-1}(x-a_i)\)；当 \(k=1\) 时取常数一。所选点互异，所以 \(h\) 恰在前 \(k-1\) 个点为零，与零多项式的取值恰在 \(n-k+1\) 处不同。因此最小距离确为 \(n-k+1\)。
+
+用正文的 Hamming 距离 \(d_H\) 计数不同坐标，最小距离为 \(\delta=n-k+1\)。若错误数 \(e\) 满足 \(2e<\delta\)，两个候选编码向量不可能同时与收到的向量相差至多 \(e\) 处，否则两者距离至多 \(2e\)。因此可以唯一纠正至多 \(\lfloor(n-k)/2\rfloor\) 处错误。
 
 为证明不能统一保证再多纠正一处，取相距恰为 \(\delta\) 的编码向量 \(c,c'\)。在它们不同的 \(\delta\) 个坐标中，选出 \(\lfloor\delta/2\rfloor\) 个，让接收向量 \(y\) 取 \(c'\) 的值；其余坐标取 \(c\) 的值。于是
 \[
-d(y,c)=\lfloor\delta/2\rfloor,\qquad
-d(y,c')=\lceil\delta/2\rceil
+d_H(y,c)=\lfloor\delta/2\rfloor,\qquad
+d_H(y,c')=\lceil\delta/2\rceil
 =\lfloor(n-k)/2\rfloor+1.
 \]
 若允许后一数目的错误，同一个 \(y\) 就可能由 \(c\) 或 \(c'\) 发送，无法保证唯一纠错。例如在 \(\mathbb F_5\) 上取求值点 \(0,1,2,3,4\) 及 \(k=2\)，零多项式与 \(x\) 给出 \(c=(0,0,0,0,0)\)、\(c'=(0,1,2,3,4)\)。接收向量 \(y=(0,1,2,0,0)\) 与两者均相差两处。

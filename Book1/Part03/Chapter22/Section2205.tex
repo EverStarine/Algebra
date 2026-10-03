@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 22.5 有限层检测、闭包与连续性
-% 纲要位置：计划纲要.md，第 760 行。
+% 纲要位置：计划纲要.md，第 795 行。
 
 \section{有限层检测、闭包与连续性}
 \label{b1:sec:2205}
@@ -11,9 +11,8 @@
 %
 % * 闭子群由其在各有限 Galois 商中的像确定；写出子群闭包的有限商检测公式
 % * 以有限域的 Frobenius 生成的稠密循环子群比较 \(\mathbb Z\) 与 \(\widehat{\mathbb Z}\)，说明具有同一不动域的子群为何必须取闭包
-% * 连续到有限离散群的同态具有开核；有限层上的表示与相容的连续表示
-% * 无限 Galois 对应中的商群结论要求闭正规子群；说明与第四卷连续上同调的联系，不调用其定理
-%
+% * 连续到有限离散群的同态具有开核；区分系数精度与域的有限层，证明进整数矩阵群及相容表示的逆极限构造
+% * 无限 Galois 对应中的商群结论要求闭正规子群；证明抽象商同构与商拓扑相容，以稠密真子群的不可分辨商解释闭性；说明与第四卷连续上同调的联系，不调用其定理
 % ---
 %
 
@@ -28,9 +27,15 @@
 其中 \(\overline H\) 表示 \(H\) 在 \(G\) 中的闭包。所以两个闭子群相等，当且仅当它们在每个有限 Galois 商中的像相等。
 \end{proposition}
 \begin{proof}
-点 \(\sigma\) 属于 \(\overline H\)，当且仅当每个基本开邻域 \(\sigma U_N\) 与 \(H\) 相交。相交意味着有 \(h\in H\) 满足 \(\pi_N(h)=\pi_N(\sigma)\)，这等价于 \(\sigma\in\pi_N^{-1}\bigl(\pi_N(H)\bigr)\)，也等价于 \(\sigma\in HU_N\)。逐个 \(N\) 求交得到公式。若两个闭子群的有限像相同，两者分别等于公式中的同一个交；反向由取像直接成立。
+点 \(\sigma\) 属于 \(\overline H\)，当且仅当每个基本开邻域 \(\sigma U_N\) 与 \(H\) 相交。相交意味着有 \(h_N\in H\) 满足 \(\pi_N(h_N)=\pi_N(\sigma)\)，因此
+\[
+\sigma\in\overline H
+\iff \forall N\in\mathcal N\ \exists h_N\in H:\quad
+h_N|_N=\sigma|_N.
+\]
+这给出公式中的第一个交。若 \(\pi_N(\sigma)\in\pi_N(H)\)，取 \(h\in H\) 使 \(\pi_N(\sigma)=\pi_N(h)\)，则 \(h^{-1}\sigma\in U_N\)，即 \(\sigma\in HU_N\)。反过来，\(\sigma=hu\)、\(h\in H,u\in U_N\) 时，有 \(\pi_N(\sigma)=\pi_N(h)\)，所以 \(\pi_N^{-1}(\pi_N(H))=HU_N\)，得到第二个交。若两个闭子群的有限像相同，两者分别等于公式中的同一个交；反向由取像直接成立。
 \end{proof}
-把这个公式与\cref{b1:cor:fixed-field-closure}合用，得到一个完整的辨别准则：任意两个子群具有相同不动域，当且仅当它们的闭包相同，也当且仅当它们在全部有限商中的像相同。对子群本身而言，有限信息只确定它的闭包。
+这正是\subsecref{b1:subsec:2203:02}中 \(\forall N\exists h_N\) 的量词顺序，各层使用的 \(h_N\) 可以不同；属于 \(H\) 本身则要求存在一个 \(h\in H\) 同时与 \(\sigma\) 在全部层上一致。有限离散群中的 \(\pi_N(H)\) 闭，所以 \(\pi_N^{-1}(\pi_N(H))\) 是包含 \(H\) 的闭集，也包含 \(\overline H\)。因此 \(\pi_N(\overline H)=\pi_N(H)\)，取闭包不会增加有限层中的像。把公式与\cref{b1:cor:fixed-field-closure}合用，得到一个完整的辨别准则：任意两个子群具有相同不动域，当且仅当它们的闭包相同，也当且仅当它们在全部有限商中的像相同。对子群本身而言，有限信息只确定它的闭包。
 
 \subsection{Frobenius 的幂、闭包与有限子域}
 \label{b1:subsec:2205:02}
@@ -42,7 +47,7 @@
 d\widehat{\vphantom{Z}\mathbb Z}
 =\ker\left(\widehat{\vphantom{Z}\mathbb Z}\longrightarrow\mathbb Z/d\mathbb Z\right).
 \end{equation}
-一个方向由乘 \(d\) 直接得到。反过来，设相容族 \(a\) 在模 \(d\) 下为零。对每个 \(n\)，选择 \(a_{dn}\) 的一个被 \(d\) 整除的整数代表，除以 \(d\) 后取模 \(n\)，记为 \(b_n\)。改变代表只改变 \(n\) 的倍数，故定义不变；原族的相容性说明 \((b_n)_n\) 相容，并满足 \(db=a\)。这证明另一方向。
+一个方向由乘 \(d\) 直接得到。反过来，设相容族 \(a\) 在模 \(d\) 下为零。相容性给出 \(a_{dn}\) 模 \(d\) 后等于 \(a_d=0\)，所以它的整数代表 \(c_n\) 必被 \(d\) 整除。令 \(b_n\) 为 \(\dfrac{c_n}{d}\) 模 \(n\) 的剩余类。改变代表只会给 \(c_n\) 加上 \(dn\) 的倍数，除以 \(d\) 后只增加 \(n\) 的倍数，故 \(b_n\) 定义不变。若 \(u\mid v\)，原族的相容性给出 \(c_v\equiv c_u\pmod{du}\)，除以 \(d\) 得到 \(b_v\equiv b_u\pmod u\)，所以 \((b_n)_n\) 相容。最后，\(db_n\) 是 \(c_n\) 模 \(n\) 的像，也就是 \(a_{dn}\) 模 \(n\) 的像 \(a_n\)，故 \(db=a\)。这证明另一方向。
 
 \ProseParagraphBreak
 \(\langle F^d\rangle\) 在第 \(n\) 个商 \(\mathbb Z/n\mathbb Z\) 中的像为
@@ -53,7 +58,8 @@ d(\mathbb Z/n\mathbb Z)=\{[dk]_n:k\in\mathbb Z\}
 这些有限像也正是 \(d\widehat{\vphantom{Z}\mathbb Z}\) 的有限像；后者由\eqref{b1:eq:profinite-multiple-kernel}知是闭子群。因此\eqref{b1:eq:closure-finite-quotients}给出
 \(\overline{\langle F^d\rangle}=d\widehat{\vphantom{Z}\mathbb Z}\)。它恰为固定 \(\mathbb F_{q^d}\) 的自同构组成的子群，所以 \(\langle F^d\rangle\) 与其闭包的不动域同为 \(\mathbb F_{q^d}\)。
 
-下表比较这几个子群的拓扑性质与不动域，其中 \(d\geq2\)，\(\mathbb Z\) 表示整数在 \(\widehat{\vphantom{Z}\mathbb Z}\) 中的自然像。\(d\widehat{\vphantom{Z}\mathbb Z}\) 由\eqref{b1:eq:profinite-multiple-kernel}知既闭又开；\(\mathbb Z\) 稠密而非全群，因而不闭，也不可能开。零子群闭；若它开，紧群 \(\widehat{\vphantom{Z}\mathbb Z}\) 就成为有限离散空间，与它无限相矛盾。特别地，\(\mathbb Z\) 与全群虽不相等，却有同一个不动域。
+\ProseParagraphBreak
+下表比较这几个子群的拓扑性质与不动域，其中 \(d\geq2\)，\(\mathbb Z\) 表示整数在 \(\widehat{\vphantom{Z}\mathbb Z}\) 中的自然像。开与闭并不互斥：全群以及 \(d\widehat{\vphantom{Z}\mathbb Z}\) 都既闭又开，后者是到有限离散群 \(\mathbb Z/d\mathbb Z\) 的连续投影的核。\(\mathbb Z\) 稠密而非全群，因而不闭；开子群总是闭子群，因为其余开陪集的并是它的补集，所以 \(\mathbb Z\) 也不可能开。零子群闭；若它开，平移便使每个单点都开，紧群 \(\widehat{\vphantom{Z}\mathbb Z}\) 就成为有限离散空间，与它无限相矛盾。稠密性只说明闭包等于全群，并不要求子群本身等于全群。特别地，\(\mathbb Z\) 与全群虽不相等，却有同一个不动域。
 \begin{center}
 \begin{tabular}{@{}lccc@{}}
 \multicolumn{4}{c}{Frobenius 子群的闭性、开性与不动域}\\
@@ -75,7 +81,7 @@ d(\mathbb Z/n\mathbb Z)=\{[dk]_n:k\in\mathbb Z\}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。对每个有限 Galois 子扩张 \(N/K\)，记 \(G_N=\operatorname{Gal}(N/K)\)，\(\pi_N:G\rightarrow G_N\) 为限制映射。再设 \(D\) 为有限离散群，\(\rho:G\rightarrow D\) 为群同态。以下条件等价：\(\rho\) 连续；\(\ker\rho\) 开；存在某个这样的 \(N\) 及同态 \(\rho_N:G_N\rightarrow D\)，使 \(\rho=\rho_N\pi_N\)。
 \end{proposition}
 \begin{proof}
-连续性使单点 \(\{1\}\) 的原像开。若核开，取 \(U_N\subseteq\ker\rho\)，规定 \(\rho_N(\sigma|_N)=\rho(\sigma)\)。两个提升之商在 \(U_N\) 中，故像相同；限制满射保证公式在全部 \(G_N\) 上有定义，并保持群乘法。反过来，有限层投影连续，有限离散集合之间的任意映射连续，所以经过有限商的同态连续。
+连续性使单点 \(\{1\}\) 的原像开。若核开，取 \(U_N\subseteq\ker\rho\)。这意味着 \(\rho\) 只需要知道自同构在 \(N\) 上的作用：若 \(\sigma|_N=\tau|_N\)，则 \(\tau^{-1}\sigma\in U_N\subseteq\ker\rho\)，所以 \(\rho(\sigma)=\rho(\tau)\)。据此规定 \(\rho_N(\sigma|_N)=\rho(\sigma)\)，结果与提升的选择无关；限制满射保证公式在全部 \(G_N\) 上有定义，并保持群乘法。反过来，有限层投影连续，有限离散集合之间的任意映射连续，所以经过有限商的同态连续。
 \end{proof}
 有限层不一定唯一。若某表示经过 \(G_N\)，也经过任何包含 \(N\) 的更大有限 Galois 层；应比较其限制相容性，而不是把选择层的不同误当作表示不同。
 
@@ -84,12 +90,12 @@ d(\mathbb Z/n\mathbb Z)=\{[dk]_n:k\in\mathbb Z\}
 \[
 \varprojlim_r\operatorname{GL}_d(\mathbb Z/\ell^r\mathbb Z).
 \]
-相容矩阵逐项给出 \(\mathbb Z_\ell\) 中的矩阵，有限层的逆矩阵也相容，从而给出整体逆矩阵。两侧拓扑均由模 \(\ell^r\) 的坐标条件生成，故这一识别还是同胚。具体地，若
+相容矩阵族 \((A_r)_r\) 逐项给出 \(A\in M_d(\mathbb Z_\ell)\)。若 \(s\ge r\)，将 \(A_sA_s^{-1}=A_s^{-1}A_s=I\) 模 \(\ell^r\) 约化，说明 \(A_s^{-1}\) 的约化是 \(A_r\) 的逆；逆矩阵唯一，所以它等于 \(A_r^{-1}\)。因此 \((A_r^{-1})_r\) 也相容，逐项给出矩阵 \(B\)，而 \(AB\)、\(BA\) 在每个有限坐标下都为 \(I\)，故 \(AB=BA=I\)。这证明整体矩阵确实可逆。两侧拓扑均由模 \(\ell^r\) 的坐标条件生成，故这一识别还是同胚。具体地，若
 \[
 V_r=\ker\!\left(\operatorname{GL}_d(\mathbb Z_\ell)
 \longrightarrow\operatorname{GL}_d(\mathbb Z/\ell^r\mathbb Z)\right),
 \]
-则 \(AV_r\)（\(r\geq1\)）构成矩阵 \(A\in\operatorname{GL}_d(\mathbb Z_\ell)\) 的邻域基。若 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\) 取 Krull 拓扑，且 \(\rho_r:G\rightarrow\operatorname{GL}_d(\mathbb Z/\ell^r\mathbb Z)\) 均连续、模约化后相容，就得到唯一同态 \(\rho:G\rightarrow\operatorname{GL}_d(\mathbb Z_\ell)\)。目标的基本开集只限制有限个坐标，其原像为有限多个开集的交，故 \(\rho\) 连续；反向将连续的 \(\rho\) 与各坐标投影复合即可。每个 \(\rho_r\) 都可由\cref{b1:prop:finite-continuous-hom}经过某个有限 Galois 商 \(\operatorname{Gal}(N_r/K)\)。这里 \(r\) 记录矩阵系数的精度，\(N_r\) 记录决定这一级表示的域扩张，两者是不同的层次；随着 \(r\) 增大，所需的 \(N_r\) 也可以增大。逐个精度能经过有限商，并不要求存在一个固定有限层同时决定全部精度，因而整体 \(\rho\) 不必有开核或有限像。
+则 \(AV_r\)（\(r\geq1\)）构成矩阵 \(A\in\operatorname{GL}_d(\mathbb Z_\ell)\) 的邻域基。若 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\) 取 Krull 拓扑，且 \(\rho_r:G\rightarrow\operatorname{GL}_d(\mathbb Z/\ell^r\mathbb Z)\) 均连续、模约化后相容，就得到唯一同态 \(\rho:G\rightarrow\operatorname{GL}_d(\mathbb Z_\ell)\)。目标的基本开集只限制有限个坐标，其原像为有限多个开集的交，故 \(\rho\) 连续；反向将连续的 \(\rho\) 与各坐标投影复合即可。每个 \(\rho_r\) 都可由\cref{b1:prop:finite-continuous-hom}经过某个有限 Galois 商 \(\operatorname{Gal}(N_r/K)\)。这里 \(r\) 记录矩阵系数的精度，\(N_r\) 记录决定这一级表示的域扩张，两者是不同的层次；随着 \(r\) 增大，所需的 \(N_r\) 也可以增大。所知的是对每个 \(r\) 都存在相应的 \(N_r\)，不能据此断言存在一个 \(N\) 同时适用于全部 \(r\)。因而整体 \(\rho\) 不必有开核或有限像。
 
 \ProseParagraphBreak
 以有限域为例，由\cref{b1:thm:finite-field-absolute-galois}，可以把 \(G_{\mathbb F_q}\) 识别为加法群 \(\widehat{\vphantom{Z}\mathbb Z}\)。对相容族 \(a=(a_n)_n\)，只取素数幂模数的坐标，得到
@@ -101,22 +107,25 @@ a_\ell=(a_{\ell^r})_{r\geq1}\in\mathbb Z_\ell.
 \rho(a)=\begin{pmatrix}1&a_\ell\\0&1\end{pmatrix}
 \in\operatorname{GL}_2(\mathbb Z_\ell).
 \]
-矩阵乘法将右上角相加，故这是群同态。其模 \(\ell^r\) 约化只依赖 \(a_{\ell^r}\)，因此连续，并经过有限 Galois 层 \(N_r=\mathbb F_{q^{\ell^r}}\)；全部约化相容，所以 \(\rho\) 连续。普通整数 \(k\) 的像是 \(\begin{psmallmatrix}1&k\\0&1\end{psmallmatrix}\)，不同整数在 \(\mathbb Z_\ell\) 中仍不同，故整体像无限。若所有约化都经过同一个有限商，那么两元素在该商中相等时，其矩阵在每个模 \(\ell^r\) 下都相等，从而整体矩阵相等；这会使 \(\rho\) 本身经过该有限商，像也有限，矛盾。因此这一例中没有统一的有限层。其核也不开：若核开，紧性使其陪集只有有限个，而这些陪集与表示的像一一对应，又会迫使像有限。
+矩阵乘法将右上角相加，故这是群同态。其模 \(\ell^r\) 约化只依赖 \(a_{\ell^r}\)，右上角有 \(\ell^r\) 种可能，所以这一级的像是有限群；它连续，并经过有限 Galois 层 \(N_r=\mathbb F_{q^{\ell^r}}\)。全部约化相容，所以 \(\rho\) 连续。普通整数 \(k\) 的像是 \(\begin{psmallmatrix}1&k\\0&1\end{psmallmatrix}\)；若两个整数在 \(\mathbb Z_\ell\) 中相同，它们的差便被每个 \(\ell^r\) 整除，只能为零。因此这些整数给出无穷多个不同的整体矩阵，整体像无限。若所有约化都经过同一个有限商，那么两元素在该商中相等时，其矩阵在每个模 \(\ell^r\) 下都相等，从而整体矩阵相等；这会使 \(\rho\) 本身经过该有限商，像也有限，矛盾。因此这一例中没有统一的有限层。其核也不开：若核开，紧性使其陪集只有有限个，而这些陪集与表示的像一一对应，又会迫使像有限。
 
 \subsection{闭正规子群与 Galois 商群}
 \label{b1:subsec:2205:04}
-设 \(G\) 为拓扑群，\(H\trianglelefteq G\) 为正规子群，\(q:G\rightarrow G/H\) 为自然映射。在抽象商群 \(G/H\) 上定义\term[shang-tuopu]{商拓扑}[quotient topology]：集合 \(V\subseteq G/H\) 开，当且仅当 \(q^{-1}(V)\) 在 \(G\) 中开。本节应用时，\(G=\operatorname{Gal}(L/K)\)，\(H\) 还是闭子群，并令 \(E=L^H\)。
+设 \(G\) 为拓扑群，\(H\trianglelefteq G\) 为正规子群，\(q:G\rightarrow G/H\) 为自然映射。在抽象商群 \(G/H\) 上定义\term[shang-tuopu]{商拓扑}[quotient topology]：集合 \(V\subseteq G/H\) 开，当且仅当 \(q^{-1}(V)\) 在 \(G\) 中开。这个定义使 \(q\) 自动连续；任何使 \(q\) 连续的拓扑，其开集都必须满足上述原像条件，因此商拓扑是使 \(q\) 连续的最细拓扑。本节应用时，\(G=\operatorname{Gal}(L/K)\)，\(H\) 还是闭子群，并令 \(E=L^H\)。
+
+\ProseParagraphBreak
+\cref{b1:thm:infinite-galois-quotient}已给出抽象群同构 \(G/H\cong\operatorname{Gal}(E/K)\)。有限群的 Krull 拓扑都是离散的，但无限群的同构还须保持有限层所规定的开集，才能同时表达群运算和有限层上的观察方式。
 
 \begin{proposition}\label{b1:prop:galois-quotient-homeomorphism}
 设 \(L/K\) 为代数 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，并在 \(G\) 上赋予 Krull 拓扑。设 \(H\leq G\) 为闭正规子群，\(E=L^H\)。在 \(G/H\) 上赋予商拓扑，在 \(\operatorname{Gal}(E/K)\) 上赋予 Krull 拓扑。则限制映射诱导的群同构
 \(G/H\rightarrow\operatorname{Gal}(E/K)\) 是拓扑群同构。
 \end{proposition}
 \begin{proof}
-先看限制同态 \(r:G\rightarrow\operatorname{Gal}(E/K)\)。目标中一个基本邻域规定某个有限 Galois 子扩张 \(F/K\)、\(F\subseteq E\) 上的作用，其原像在 \(G\) 中也是同样规定 \(F\) 上作用的基本开集，所以 \(r\) 连续。写成 \(r=\bar r q\)，由商拓扑定义可知诱导双射 \(\bar r\) 连续。
+由\cref{b1:thm:infinite-galois-quotient}，\(E/K\) 为 Galois 扩张，限制同态 \(r:G\rightarrow\operatorname{Gal}(E/K)\) 满射且核为 \(H\)，所以诱导群同构 \(\bar r:G/H\rightarrow\operatorname{Gal}(E/K)\)。目标中一个基本邻域规定某个有限 Galois 子扩张 \(F/K\)、\(F\subseteq E\) 上的作用，其原像在 \(G\) 中也是同样规定 \(F\) 上作用的基本开集，所以 \(r\) 连续。写成 \(r=\bar r q\)，则目标开集 \(V\) 满足 \(q^{-1}(\bar r^{-1}(V))=r^{-1}(V)\) 开，由商拓扑定义可知 \(\bar r^{-1}(V)\) 开，故 \(\bar r\) 连续。
 
 若 \(C\subseteq G/H\) 闭，则 \(q^{-1}(C)\) 是紧群 \(G\) 的闭子集，因而紧。由\cref{b1:prop:compact-maps}，其连续像 \(r\bigl(q^{-1}(C)\bigr)=\bar r(C)\) 在 Hausdorff 群 \(\operatorname{Gal}(E/K)\) 中紧，故闭。因此 \(\bar r\) 还是闭映射，逆映射连续，所列同构为同胚。
 \end{proof}
-若 \(H\) 是非闭正规子群，\(G/H\) 的商拓扑就不可能是 Hausdorff：否则单位元单点 \(\{H\}\) 闭，由商映射 \(q\) 的连续性，\(H=q^{-1}(\{H\})\) 也闭，矛盾。以 \(G=\widehat{\vphantom{Z}\mathbb Z}\)、\(H=\mathbb Z\) 的稠密像为例，商群非平凡，商拓扑却只有空集和全空间两个开集。事实上，若商中有非空开集，其原像 \(V\) 是非空开集且满足 \(V+H=V\)。对任意 \(g\in G\)，开集 \(g-V\) 与稠密的 \(H\) 相交，于是 \(g\in V+H=V\)，故 \(V=G\)。
+上述同胚也说明，闭正规子群给出的商 \(G/H\) 是 Hausdorff 空间。闭性不可删除：若 \(H\) 是非闭正规子群，\(G/H\) 的商拓扑就不可能是 Hausdorff，否则单位元单点 \(\{H\}\) 闭，由商映射 \(q\) 的连续性，\(H=q^{-1}(\{H\})\) 也闭，矛盾。以 \(G=\widehat{\vphantom{Z}\mathbb Z}\)、\(H=\mathbb Z\) 的稠密像为例，商群非平凡，商拓扑却只有空集和全空间两个开集。事实上，若商中有非空开集，其原像 \(V\) 是非空开集且满足 \(V+H=V\)。对任意 \(g\in G\)，开集 \(g-V\) 与稠密的 \(H\) 相交，于是 \(g\in V+H=V\)，故 \(V=G\)。这个商没有把不同陪集变成同一个群元素：它们仍然不同，只是任何非空开集都包含全部陪集，拓扑无法用开集区分它们。
 
 \ProseParagraphBreak
 无限 Galois 对应将中间域与闭子群配对，有限中间扩张对应开子群，正规中间扩张对应闭正规子群；相应中间扩张的 Galois 群是原群对该闭正规子群的拓扑商群。更进一步的连续群上同调和算术表示，还需指定系数对象及相应的连续性条件。

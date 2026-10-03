@@ -1,17 +1,17 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 22.4 典型绝对 Galois 群
-% 纲要位置：计划纲要.md，第 754 行。
+% 纲要位置：计划纲要.md，第 789 行。
 
 \section{典型绝对 Galois 群}
 \label{b1:sec:2204}
 
-绝对 Galois 群汇集了基域全部有限可分扩张的自同构信息，但一般很难完整描述。有限域给出可显式写成逆极限的模型，实数域给出有限模型。它们也说明，同一个抽象群上的拓扑不是装饰：连续到有限群的映射必须能由某个有限层决定。
+绝对 Galois 群汇集了基域全部有限可分扩张的信息，但一般很难完整描述。这里有限 Galois 扩张与一般有限可分扩张所对应的群论对象有所不同：有限 Galois 扩张 \(N/K\) 给出有限商群 \(G_K/\operatorname{Gal}(K^{\mathrm{sep}}/N)\cong\operatorname{Gal}(N/K)\)；一般有限可分扩张 \(E/K\) 对应开子群 \(\operatorname{Gal}(K^{\mathrm{sep}}/E)\)，它未必正规，因而未必给出商群。若要用有限商群记录 \(E\)，可先取它的有限正规闭包。上述区别来自\cref{b1:prop:finite-open-correspondence,b1:thm:infinite-galois-quotient}。有限域给出可显式写成逆极限的模型，实数域给出有限模型。它们也说明，连续到有限群的映射必须能由某个有限层决定。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 有限域的绝对 Galois 群
+% * 有限域的绝对 Galois 群；区分全部模数的投射有限整数与单一素数的进整数，以及拓扑生成与抽象生成
 % * 实数域与实闭域的联系
-% * 连续表示与离散集上的连续作用；说明连续群上同调的后续位置
+% * 连续表示与离散集上的连续作用；正式证明到有限离散群的连续同态由整数 1 的像唯一决定，再解释任意可逆矩阵均可指定为 Frobenius 的像；说明连续群上同调的后续位置
 %
 
 \subsection{有限域的绝对 Galois 群}
@@ -34,13 +34,19 @@
 其中 \(F(x)=x^q\)。整数 \(1\) 对应 Frobenius 自同构。
 \end{theorem}
 \begin{proof}
-有限域完美，其可分闭包就是代数闭包。每个代数元 \(a\in\overline{\mathbb F}_q\) 都生成有限扩张 \(\mathbb F_q(a)/\mathbb F_q\)，而\cref{b1:thm:finite-field-subfields}保证 \(\overline{\mathbb F}_q\) 中包含指定基域 \(\mathbb F_q\) 的有限子域恰为 \(\mathbb F_{q^n}\)，包含关系对应 \(n\mid m\)。由\cref{b1:thm:finite-field-automorphisms}，第 \(n\) 层的自同构群是阶 \(n\) 的循环群，以 \(F\) 的限制为生成元。把它与加法群 \(\mathbb Z/n\mathbb Z\) 识别以后，限制就是剩余类约化。\cref{b1:prop:galois-compatible-family}遂给出群同构。两侧的基本开集都只规定有限多个坐标，而各坐标识别是离散空间的同胚，因此这个群同构及其逆都连续。
+有限域完美，其可分闭包就是代数闭包。每个代数元 \(a\in\overline{\mathbb F}_q\) 都生成有限扩张 \(\mathbb F_q(a)/\mathbb F_q\)；若其次数为 \(n\)，这个域便有 \(q^n\) 个元素，因此是当前闭包中由 \(X^{q^n}-X\) 的全部根组成的唯一子域 \(\mathbb F_{q^n}\)。由\cref{b1:thm:finite-field-subfields}，这些有限子域的包含关系对应 \(n\mid m\)。故它们已经覆盖整个代数闭包，并给出全部有限 Galois 层。
+
+由\cref{b1:thm:finite-field-automorphisms}，第 \(n\) 层的自同构群是阶 \(n\) 的循环群，以 \(F\) 的限制为生成元。把它与加法群 \(\mathbb Z/n\mathbb Z\) 识别以后，\(F^a\) 从第 \(m\) 层限制到第 \(n\) 层，只需把指数 \(a\) 模 \(n\) 约化。因此\cref{b1:prop:galois-compatible-family}给出所述群同构。在逆极限一侧，规定第 \(n\) 个坐标的剩余类，对应于在 Galois 群一侧规定向 \(\mathbb F_{q^n}\) 的限制；有限多个坐标条件又可合并到一个共同倍数所对应的坐标。这两类条件分别构成两侧拓扑的邻域基，故该群同构及其逆都连续。
 \end{proof}
-整数到 \(\widehat{\vphantom{Z}\mathbb Z}\) 的自然映射为 \(a\mapsto(a\bmod n)_n\)，它单射，因为被所有正整数整除的整数只能为零。其像稠密：有限多个模数的条件可由一个共同倍数的坐标统一规定，再选该剩余类的一个整数代表。\subsecref{b1:subsec:2203:02}中构造的 \((e_n)_n\) 表明这个像不等于全部投射有限整数。因此 \(F\) 在拓扑意义下生成整个群，却不在抽象群意义下生成整个群。
+整数到 \(\widehat{\vphantom{Z}\mathbb Z}\) 的自然映射为 \(a\mapsto(a\bmod n)_n\)，它单射，因为被所有正整数整除的整数只能为零。其像稠密：有限多个模数的条件可由一个共同倍数的坐标统一规定，再选该剩余类的一个整数代表。\subsecref{b1:subsec:2203:02}中构造的 \((e_n)_n\) 表明这个像不等于全部投射有限整数。因此整数幂组成的普通循环子群 \(\langle F\rangle=\{F^a:a\in\mathbb Z\}\cong\mathbb Z\) 是真子群，却满足
+\[
+\overline{\langle F\rangle}=G_{\mathbb F_q}.
+\]
+称 \(F\) 为拓扑生成元，是说它的整数幂稠密，而不是说每个群元素都是某个整数幂。
 
 \ProseParagraphBreak
-给定素数 \(p\)，只保留模数为 \(p^r\) 的坐标便得到环
-\(\mathbb Z_p=\varprojlim_r\mathbb Z/p^r\mathbb Z\)。这个由相容剩余类组成的环称为 \(p\) 进整数环。以后讨论 \(p\) 进表示时，正是这些模 \(p^r\) 的有限信息决定连续性。
+\(\widehat{\vphantom{Z}\mathbb Z}\) 同时记录所有正整数模数的相容信息。给定素数 \(p\)，改为只记录模数为 \(p^r\) 的坐标，所得环
+\(\mathbb Z_p=\varprojlim_r\mathbb Z/p^r\mathbb Z\) 称为 \(p\) 进整数环；从 \(\widehat{\vphantom{Z}\mathbb Z}\) 到 \(\mathbb Z_p\) 的自然映射就是舍去其余坐标。两种逆极限所保留的有限信息不同。以后讨论 \(p\) 进表示时，正是这些模 \(p^r\) 的有限信息决定连续性。
 \symidx{\(\mathbb Z_p\)：\(p\) 进整数环}
 
 \subsection{实数域与实闭域}
@@ -49,7 +55,9 @@
 实数域的绝对 Galois 群为 \(G_{\mathbb R}=\operatorname{Gal}(\mathbb C/\mathbb R)\cong C_2\)，其中非单位元为复共轭；其 Krull 拓扑为离散拓扑。
 \end{proposition}
 \begin{proof}
-由 \(\mathbb C=\mathbb R(i)\)、\(i^2=-1\)，以及 \(X^2+1\) 在 \(\mathbb R\) 上不可约，得 \([\mathbb C:\mathbb R]=2\)。它是该可分多项式的分裂域，且由\cref{b1:thm:fundamental-theorem-algebra}已经代数闭；该定理的证明见\secref{b1:sec:E02}。特征零保证可分，故 \(\mathbb C\) 为 \(\mathbb R\) 的可分闭包。自同构必须把 \(i\) 送到 \(i\) 或 \(-i\)，两种选择分别给出恒等与复共轭，所以群为 \(C_2\)。整个闭包已经是有限 Galois 层，单位子群开，因此拓扑离散。
+由 \(\mathbb C=\mathbb R(i)\)、\(i^2=-1\)，以及 \(X^2+1\) 在 \(\mathbb R\) 上不可约，得 \([\mathbb C:\mathbb R]=2\)，所以 \(\mathbb C/\mathbb R\) 是代数扩张。\cref{b1:thm:fundamental-theorem-algebra}又保证 \(\mathbb C\) 代数闭，故它确为 \(\mathbb R\) 的一个代数闭包；该定理的证明见\secref{b1:sec:E02}。特征零保证所有代数元可分，所以这个代数闭包也是可分闭包。
+
+\(\mathbb C\) 是 \(X^2+1\) 的分裂域。自同构必须把 \(i\) 送到 \(i\) 或 \(-i\)，两种选择分别给出恒等与复共轭，所以群为 \(C_2\)。整个闭包已经是有限 Galois 层，因而 \(\operatorname{Gal}(\mathbb C/\mathbb C)=\{1\}\) 是基本开子群；它的每个陪集都是单点开集，故拓扑离散。
 \end{proof}
 这个例子的代数闭性来自实闭域刻画与实分析的中间值定理；自同构群及其拓扑则由二次扩张直接算出。
 
@@ -65,14 +73,36 @@
 \]
 在目标群 \(\operatorname{GL}_d(k)\) 取离散拓扑时连续，则称 \(\rho\) 为 \(G_K\) 在 \(k^d\) 上的 \(d\) 维\term[lianxu-biaoshi]{连续表示}[continuous representation]。这里 \(\operatorname{GL}_d(k)\) 表示可逆矩阵群，\(\rho\) 规定群元素在线性空间 \(k^d\) 上怎样作用。
 \end{definition}
-有限目标意味着每个连续表示仅依赖某个有限 Galois 商；精确判别将在\cref{b1:prop:finite-continuous-hom}中给出。对有限域的绝对 Galois 群，这类表示尤其具体：给定任一 \(A\in\operatorname{GL}_d(k)\)，它有有限阶 \(m\)，先投影 \(\widehat{\vphantom{Z}\mathbb Z}\rightarrow\mathbb Z/m\mathbb Z\)，再令 \(a\mapsto A^a\)，就得到以 \(A\) 为 Frobenius 像的连续表示。
+连续性使 \(\rho^{-1}(\{I_d\})\) 成为单位元的开邻域，所以它包含某个 \(U_N=\operatorname{Gal}(K^{\mathrm{sep}}/N)\)，其中 \(N/K\) 是有限 Galois 扩张。这意味着两个自同构只要在 \(N\) 上限制相同，它们作用在 \(k^d\) 上的矩阵就相同：每个连续表示的全部作用信息已经由某个有限 Galois 商决定。这个判别及其逆命题将在\cref{b1:prop:finite-continuous-hom}中完整证明。对于有限域，Frobenius 的一个像就能确定这样的表示，但这里还需要连续性。
+
+\begin{proposition}\label{b1:prop:profinite-integer-finite-hom}
+设 \(D\) 为赋予离散拓扑的有限群，并令 \(\widehat{\vphantom{Z}\mathbb Z}=\varprojlim_{n\geq1}\mathbb Z/n\mathbb Z\) 按整除关系及自然约化构成，赋予逆极限拓扑。把 \(\widehat{\vphantom{Z}\mathbb Z}\) 看成加法群，并用 \(1\) 表示整数 \(1\) 的自然像。则连续群同态
+\[
+\rho:\widehat{\vphantom{Z}\mathbb Z}\longrightarrow D
+\]
+通过 \(\rho\mapsto\rho(1)\) 与 \(D\) 的元素建立一一对应。若 \(d\in D\) 的阶为 \(m\)，对应同态可先约化到 \(\mathbb Z/m\mathbb Z\)，再令 \(\bar a\mapsto d^a\)。
+\end{proposition}
+\begin{proof}
+给定 \(d\in D\)，它的阶 \(m\) 有限。因为 \(d^m=1_D\)，映射 \(\mathbb Z/m\mathbb Z\rightarrow D\)、\(\bar a\mapsto d^a\) 定义良好且为群同态。把它与第 \(m\) 个坐标投影复合，便得到所需同态。坐标投影连续，有限离散群之间的映射也连续，所以这个复合同态连续。
+
+若两个连续同态 \(\rho,\eta\) 在 \(1\) 上取值相同，则由同态性，它们在所有整数的自然像上取值相同。这个整数子群稠密，而等值集合
+\[
+\{x:\rho(x)=\eta(x)\}
+=\bigcup_{c\in D}\bigl(\rho^{-1}(\{c\})\cap\eta^{-1}(\{c\})\bigr)
+\]
+是闭集：目标离散，单点闭，两映射连续，并且这里是有限个闭集的并。等值集合包含稠密子群，故为整个 \(\widehat{\vphantom{Z}\mathbb Z}\)，这就证明唯一性。
+\end{proof}
+这里的唯一性来自整数子群的稠密性与同态的连续性，不能用“\(1\) 生成整个抽象群”来解释。由\cref{b1:thm:finite-field-absolute-galois}，对任一 \(A\in\operatorname{GL}_d(k)\)，恰有一个连续表示 \(\rho:G_{\mathbb F_q}\rightarrow\operatorname{GL}_d(k)\) 满足 \(\rho(F)=A\)；它经过模 \(\operatorname{ord}(A)\) 的有限循环商。这是有限域绝对 Galois 群的特殊性质，一般绝对 Galois 群的元素及其关系会限制可指定的矩阵像。
 
 \ProseParagraphBreak
 例如设 \(\ell\) 为素数，取系数域 \(k=\mathbb F_\ell\)。矩阵
 \[
 A=\begin{pmatrix}1&1\\0&1\end{pmatrix}
 \]
-满足 \(A^r=\begin{psmallmatrix}1&r\\0&1\end{psmallmatrix}\)，因此其阶为 \(\ell\)。由此得到经过 \(\mathbb Z/\ell\mathbb Z\) 的非平凡二维表示。对每个整数 \(r\)，\(\operatorname{tr}(A^r)=2\cdot1_k\)，与二维平凡表示在相同群元素上的迹相等；两表示却不同构，因为生成元在其中分别作用为 \(A\) 与单位矩阵。可见，表示的系数域 \(k\) 的特征会影响迹函数所能辨认的表示。
+满足 \(A^r=\begin{psmallmatrix}1&r\\0&1\end{psmallmatrix}\)，因此其阶为 \(\ell\)。令 Frobenius 元 \(F\) 的像为 \(A\)，便得到经过 \(\mathbb Z/\ell\mathbb Z\) 的非平凡二维连续表示。每个群元素的像都是某个 \(A^r\)，其迹均为 \(2\cdot1_k\)，与二维平凡表示的迹相等；两表示却不同构，因为 \(F\) 在其中分别作用为 \(A\) 与单位矩阵，而 \(A\ne I_2\) 不可能与 \(I_2\) 共轭。
+
+\ProseParagraphBreak
+这个表示中，由第一个标准基向量张成的直线是平凡子表示，商空间上的作用也平凡，但整个表示不是两个平凡表示的直和。迹只给出这两个一维作用的迹之和，不能辨认它们在这里怎样组合成二维作用。系数域的特征 \(\ell\) 正好整除有限像群的阶 \(\ell\)，这一例说明在这种特征下，迹函数可能无法区分不同构的表示。
 
 \ProseParagraphBreak
 设拓扑群 \(G_K\) 作用在离散集合 \(M\) 上。如果作用映射 \(G_K\times M\rightarrow M\) 连续，则称这个作用连续。在 \(M\) 离散时，这等价于每个元素的稳定子群开：连续性在 \((1,m)\) 附近给出一个固定 \(m\) 的开邻域；反向则在每个 \((g,m)\) 用稳定子群的陪集构造保持作用值的开邻域。第四卷附录C将定义连续离散模的群上同调，并介绍相应的上链与系数条件；本章的拓扑群知识是学习这些内容的基础。

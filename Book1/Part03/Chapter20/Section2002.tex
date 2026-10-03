@@ -1,17 +1,17 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 20.2 Hilbert 第 90 定理
-% 纲要位置：计划纲要.md，第 682 行。
+% 纲要位置：计划纲要.md，第 714 行。
 
 \section{Hilbert 第 90 定理}
 \label{b1:sec:2002}
 
-上一节的相消计算给出了范数为一、迹为零的充分条件。\term[Hilbert-di90-dingli]{Hilbert 第 90 定理}[Hilbert's Theorem 90]说明这些条件也是必要的。以下固定有限循环扩张 \(L/K\)，并记 \(\operatorname{Gal}(L/K)=\langle\sigma\rangle\)、\([L:K]=n\)。
+上一节的相消计算说明，比值 \(b/\sigma(b)\) 一定范数为一，差 \(b-\sigma(b)\) 一定迹为零。\term[Hilbert-di90-dingli]{Hilbert 第 90 定理}[Hilbert's Theorem 90]证明反向也成立，把范数核与迹核中的全部元素分别表示成这样的比值与差。以下固定有限循环扩张 \(L/K\)，并记 \(\operatorname{Gal}(L/K)=\langle\sigma\rangle\)、\([L:K]=n\)。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 循环扩张的乘法形式及证明
-% * 加法形式
-% * 第四卷第一群上同调的重新解释
+% * 循环扩张的乘法形式及加权算子构造；循环子群对应的相对范数条件与总范数反例
+% * 加法形式；利用固定域、非零迹与维数比较识别像和核
+% * 第四卷第一群上同调的重新解释；本节完整论证限于循环 Galois 群
 %
 
 \subsection{Hilbert 第 90 定理的乘法形式}
@@ -25,7 +25,7 @@ a=\frac{b}{\sigma(b)}.
 如果 \(b\) 是一个解，则全部解恰为 \(cb\)，其中 \(c\in K^\times\)。
 \end{theorem}
 
-为求解 \(a\sigma(b)=b\)，可尝试把 \(b\) 写成各 \(\sigma^i(c)\) 的加权和，并把首项权重取为 \(A_0=1\)。若使等式对每个 \(c\in L\) 成立，逐项配对得到递推 \(A_{i+1}=a\sigma(A_i)\)；递推至第 \(n\) 项时要求 \(A_n=A_0\)，恰是 \(N_{L/K}(a)=1\)。
+为求解 \(a\sigma(b)=b\)，可以先构造一个映射 \(T\)，使每个 \(T(c)\) 都满足 \(a\sigma(T(c))=T(c)\)，再证明其中至少有一个值非零。尝试把 \(T(c)\) 写成各 \(\sigma^i(c)\) 的加权和，并把首项权重取为 \(A_0=1\)。对这个和施行 \(a\sigma\)，第 \(i\) 项变为 \(a\sigma(A_i)\sigma^{i+1}(c)\)，所以让它与下一项配对就要求 \(A_{i+1}=a\sigma(A_i)\)。递推给出 \(A_1=a\)、\(A_2=a\sigma(a)\)，一般地给出前 \(i\) 个共轭的乘积。到了第 \(n\) 项，\(\sigma^n(c)=c\) 回到第零项，因此还要使 \(A_n=A_0=1\)；而 \(A_n=N_{L/K}(a)\)，这正是范数为一的假设。
 
 \begin{proof}
 由\eqref{b1:eq:cyclic-trace-norm}的相消计算，右边蕴含左边。现在设 \(N_{L/K}(a)=1\)，令
@@ -37,27 +37,56 @@ A_0=1,\qquad A_i=a\cdot\sigma(a)\cdots\sigma^{i-1}(a)\quad(1\leq i\leq n).
 T:L\longrightarrow L,\qquad
 T(c)=\sum_{i=0}^{n-1}A_i\cdot\sigma^i(c).
 \]
-\cref{b1:cor:embedding-independence}说明不同嵌入 \(1,\sigma,\ldots,\sigma^{n-1}\) 作为 \(L\) 值函数线性无关。由于 \(A_0=1\)，这个映射不恒为零。选取 \(c\) 使 \(b=T(c)\neq0\)，便有
+\cref{b1:cor:embedding-independence}说明不同嵌入 \(1,\sigma,\ldots,\sigma^{n-1}\) 作为 \(L\to L\) 的函数，在 \(L\) 上线性无关。如果 \(T(c)=0\) 对每个 \(c\) 都成立，就会得到系数为 \(A_0,\ldots,A_{n-1}\) 的函数线性关系，迫使所有 \(A_i=0\)，与 \(A_0=1\) 矛盾。因此可以选取 \(c\) 使 \(b=T(c)\neq0\)，此时
 \[
-a\cdot\sigma(b)=\sum_{i=0}^{n-1}A_{i+1}\cdot\sigma^{i+1}(c)
-=\sum_{i=1}^{n-1}A_i\cdot\sigma^i(c)+c=b.
+\begin{aligned}
+a\cdot\sigma(b)
+&=\sum_{i=0}^{n-1}a\cdot\sigma(A_i)\cdot\sigma^{i+1}(c)\\
+&=\sum_{j=1}^{n}A_j\cdot\sigma^j(c)\\
+&=\sum_{j=1}^{n-1}A_j\cdot\sigma^j(c)+A_n\cdot\sigma^n(c)=b.
+\end{aligned}
 \]
-因此 \(a=b/\sigma(b)\)。若 \(b'\) 也是解，则 \(\sigma(b'/b)=b'/b\)，故 \(b'/b\in L^{\langle\sigma\rangle}=K^\times\)；反之，乘以 \(K^\times\) 中的元素仍为解。
+最后一项为 \(A_n\cdot\sigma^n(c)=c\)，恰好恢复 \(T(c)\) 中的第零项。因为 \(b\ne0\) 且 \(\sigma\) 是自同构，\(\sigma(b)\ne0\)，故 \(a=b/\sigma(b)\)。若 \(b'\) 也是解，则 \(\sigma(b'/b)=b'/b\)。这里 \(\sigma\) 生成整个 \(\operatorname{Gal}(L/K)\)，所以 \(L^{\langle\sigma\rangle}=K\)，得到 \(b'/b\in K^\times\)。这正是比值映射的核 \(\ker\delta_\times=K^\times\) 对全部原像的描述；反之，乘以 \(K^\times\) 中的元素仍为解。
 \end{proof}
 
-对 \(\mathbb C/\mathbb R\)，若 \(a\bar a=1\) 且 \(a\neq-1\)，可直接取 \(b=1+a\)，因为 \(a\bar b=a+1=b\)。若 \(a=-1\)，这一选择成为零，应改取 \(b=i\)。证明中要求 \(T(c)\neq0\) 正是为了处理这种退化，不能随意把辅助元素固定为 \(1\)。
+对 \(\mathbb C/\mathbb R\)，上述映射为 \(T(c)=c+a\bar c\)。若 \(a\bar a=1\) 且 \(a\neq-1\)，取 \(c=1\) 得 \(b=T(1)=1+a\ne0\)，并有 \(a\bar b=a(1+\bar a)=a+1=b\)。若 \(a=-1\)，这一选择成为零；此时 \(T(i)=2i\ne0\)，也可直接取 \(b=i\)，因为 \(-\bar i=i\)。一个预先选定的 \(c\) 可能给出零值，Artin 独立性保证的是总能选择某个 \(c\) 使 \(T(c)\ne0\)。
+
+\begin{corollary}\label{b1:cor:hilbert90-cyclic-subgroup}
+设 \(L/K\) 为有限 Galois 扩张，\(\sigma\in\operatorname{Gal}(L/K)\) 的阶为 \(d\)，并令 \(E=L^{\langle\sigma\rangle}\)。对于 \(a\in L^\times\)，存在 \(b\in L^\times\) 使 \(a=b/\sigma(b)\)，当且仅当
+\[
+N_{L/E}(a)=\prod_{i=0}^{d-1}\sigma^i(a)=1.
+\]
+若 \(b\) 是一个解，则全部解恰为 \(cb\)，其中 \(c\in E^\times\)。
+\end{corollary}
+\begin{proof}
+\cref{b1:thm:finite-galois-correspondence}给出 \(L/E\) 为有限 Galois 扩张，且 \(\operatorname{Gal}(L/E)=\langle\sigma\rangle\)。所以 \(L/E\) 是 \(d\) 次循环扩张；对它应用\cref{b1:thm:hilbert90-multiplicative}，就得到相对范数条件及全部解的描述。
+\end{proof}
+这里必须对 \(\sigma\) 的不动域取范数，单有 \(N_{L/K}(a)=1\) 可能不足。例如取 \(L=\mathbb Q(\sqrt2,\sqrt3)\)，令 \(\sigma\) 固定 \(\sqrt3\) 而把 \(\sqrt2\) 变号，则 \(\sigma\) 的阶为二，不动域为 \(E=\mathbb Q(\sqrt3)\)。元素
+\[
+a=\frac{2+\sqrt3}{2-\sqrt3}=7+4\sqrt3
+\]
+在 \(E/\mathbb Q\) 中范数为一，而 \(\sigma(a)=a\)，故 \(N_{L/E}(a)=a^2\ne1\)。由范数的塔式公式，\(N_{L/\mathbb Q}(a)=N_{E/\mathbb Q}(a^2)=1\)，但上面的推论说明它不能写成 \(b/\sigma(b)\)。这里 \(\sigma\) 只生成总 Galois 群的一个二阶子群；乘法定理针对的是整个 \(L/E\) 的循环群。
 
 \subsection{Hilbert 第 90 定理的加法形式}
 \label{b1:subsec:2002:02}
+
+加法差映射与迹都是 \(K\) 线性映射，因此可以通过比较像与核的维数来求解。乘法群 \(L^\times\) 没有这里所用的 \(K\) 向量空间结构，上面的乘法证明才需要构造加权和，并保证得到的解非零。
 
 \begin{theorem}[Hilbert 第 90 定理，加法形式]\label{b1:thm:hilbert90-additive}
 设 \(L/K\) 为 \(n\) 次循环扩张，并选取生成元 \(\sigma\in\operatorname{Gal}(L/K)\)。对 \(a\in L\)，有 \(\operatorname{Tr}_{L/K}(a)=0\) 当且仅当存在 \(b\in L\) 使 \(a=b-\sigma(b)\)。若 \(b\) 是一个解，则全部解组成陪集 \(b+K\)。
 \end{theorem}
 \begin{proof}
-令 \(D:L\rightarrow L\) 为 \(K\) 线性映射 \(D(b)=b-\sigma(b)\)。其核为固定域 \(K\)，所以像的 \(K\) 维数为 \(n-1\)。另一方面，迹映射是不同嵌入之和；由\cref{b1:cor:embedding-independence}，这不是零映射。它的目标空间 \(K\) 是一维的，因此满射，核的维数也为 \(n-1\)。上一节已算出 \(\operatorname{Tr}_{L/K}\circ D=0\)，故 \(\operatorname{im}D\subseteq\ker\operatorname{Tr}_{L/K}\)。维数相等使这个包含成为等号。两个原像之差属于 \(\ker D=K\)，也就给出最后的断言。
+令 \(D=\delta_+:L\rightarrow L\)，即 \(D(b)=b-\sigma(b)\)。由于 \(\sigma\) 固定 \(K\)，这是 \(K\) 线性映射。其核由 \(b=\sigma(b)\) 的元素组成；\(\sigma\) 生成整个 Galois 群，所以 \(\ker D=L^{\langle\sigma\rangle}=K\)。核在 \(K\) 上的维数为一，由秩与零度公式，\(\dim_K\operatorname{im}D=n-1\)。
+
+另一方面，迹作为 \(L\) 值函数为 \(1+\sigma+\cdots+\sigma^{n-1}\)。如果它恒为零，就成为这些不同嵌入之间系数全为一的非平凡 \(L\) 线性关系，与\cref{b1:cor:embedding-independence}矛盾。因此迹映射非零，它的像是目标空间 \(K\) 的一个非零 \(K\) 子空间；由于 \(\dim_KK=1\)，这个像只能是整个 \(K\)。再次使用秩与零度公式，\(\dim_K\ker\operatorname{Tr}_{L/K}=n-1\)。上一节的相消计算给出 \(\operatorname{Tr}_{L/K}\circ D=0\)，故 \(\operatorname{im}D\subseteq\ker\operatorname{Tr}_{L/K}\)。两个子空间维数相等，包含便为等号，得到所需的解。两个原像之差属于 \(\ker D=K\)，故一个解 \(b\) 的全部同类解恰为加法陪集 \(b+K\)。
 \end{proof}
 
-即使 \(\operatorname{char}K=p\) 且 \(p\mid n\)，迹仍然满射。此时 \(\operatorname{Tr}_{L/K}(1)=n\cdot1_K=0\) 只说明 \(1\) 落入迹的核，不能推出迹映射为零。这个区别在构造 Artin--Schreier 生成元时十分关键。
+两个定理因此都把相消计算中的包含加强为像与核相等：
+\[
+\operatorname{im}\delta_\times=\ker N_{L/K},\qquad
+\operatorname{im}\delta_+=\ker\operatorname{Tr}_{L/K}.
+\]
+这也是下文用余圈与余边解释它们的依据。加法证明还说明，即使 \(\operatorname{char}K=p\) 且 \(p\mid n\)，迹仍然满射。此时 \(\operatorname{Tr}_{L/K}(1)=n\cdot1_K=0\) 只说明 \(1\) 落入迹的核，不能推出迹映射为零。这个区别在构造 Artin--Schreier 生成元时十分关键。
 
 \subsection{第一群上同调的解释}
 \label{b1:subsec:2002:03}
@@ -69,9 +98,17 @@ a\cdot\sigma(b)=\sum_{i=0}^{n-1}A_{i+1}\cdot\sigma^{i+1}(c)
 \[
 c_{gh}=c_g\cdot g(c_h)\qquad(g,h\in G)
 \]
-则称它为乘法一次余圈。如果存在 \(b\in L^\times\)，使 \(c_g=b/g(b)\) 对每个 \(g\in G\) 都成立，则称这族元素为一次余边。当 \(G=\langle\sigma\rangle\)、\(|G|=n\) 时，余圈由 \(a=c_\sigma\) 决定：
+则称它为乘法一次余圈。这里的 \(g(c_h)\) 来自 \(G\) 对 \(L^\times\) 的作用；普通群同态要求的是 \(c_{gh}=c_gc_h\)，一般没有这个作用项，二者不能混同。如果存在 \(b\in L^\times\)，使 \(c_g=b/g(b)\) 对每个 \(g\in G\) 都成立，则称这族元素为一次余边。取 \(g=h=1\) 得 \(c_1=c_1^2\)，因为 \(c_1\ne0\)，所以 \(c_1=1\)。当 \(G=\langle\sigma\rangle\)、\(|G|=n\) 时，令 \(a=c_\sigma\)，余圈条件首先给出
+\[
+c_{\sigma^2}=a\sigma(a),\qquad
+c_{\sigma^3}=a\sigma(a)\sigma^2(a),
+\]
+再递推得到
 \[
 c_{\sigma^j}=a\cdot\sigma(a)\cdots\sigma^{j-1}(a)
 \qquad(1\le j\le n).
 \]
-由于 \(\sigma^n=1\)，递推到 \(j=n\) 时必须有 \(N_{L/K}(a)=c_{\sigma^n}=1\)；反过来，这一条件也保证递推式与群关系相容。\cref{b1:thm:hilbert90-multiplicative}因而说明，在上述循环 Galois 群情形，每个乘法一次余圈都是一次余边。加法情形将上式改为 \(c_{gh}=c_g+g(c_h)\)，余边改为 \(b-g(b)\)；与 \(\sigma^n=1\) 相容的条件正是 \(\operatorname{Tr}_{L/K}(c_\sigma)=0\)。\cref{b1:thm:hilbert90-additive}同样说明，在此循环群情形，每个加法一次余圈都是一次余边。第四卷第十二章第 12.2 节将把一次余圈模一次余边所成的商组织成群，并重新解释这里的结论；本章的证明只使用域论。
+由于 \(\sigma^n=1\)，递推到 \(j=n\) 时必须有 \(N_{L/K}(a)=c_{\sigma^n}=c_1=1\)。反过来，若 \(N_{L/K}(a)=1\)，可将右端的乘积写到任意非负整数 \(j\)，其中 \(j=0\) 时取空积一。指数增加 \(n\) 后，新增的 \(n\) 个因子的乘积为 \(\sigma^j(N_{L/K}(a))=1\)，所以值不变；将两段乘积相接，又得到 \(c_{\sigma^{r+s}}=c_{\sigma^r}\sigma^r(c_{\sigma^s})\)。因此递推既与指数模 \(n\) 相容，也确实满足余圈关系。\cref{b1:thm:hilbert90-multiplicative}说明，对此循环群每个乘法一次余圈都是一次余边。
+
+\ProseParagraphBreak
+加法情形的条件为 \(c_{gh}=c_g+g(c_h)\)，余边为 \(b-g(b)\)；这里也带有群作用项，一般不是普通加法群同态。循环群中的递推给出 \(c_{\sigma^j}=\sum_{i=0}^{j-1}\sigma^i(c_\sigma)\)，与 \(\sigma^n=1\)、\(c_1=0\) 相容的条件正是 \(\operatorname{Tr}_{L/K}(c_\sigma)=0\)。\cref{b1:thm:hilbert90-additive}同样说明，对此循环群每个加法一次余圈都是一次余边。这里从一个 \(c_\sigma\) 恢复整族元素的论证用了 \(G=\langle\sigma\rangle\)；对一般有限 Galois 群，须另行处理全部群关系。第四卷第十二章第 12.2 节将把一次余圈模一次余边所成的商组织成群，并讨论一般有限群的情形。

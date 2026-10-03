@@ -10,7 +10,7 @@
 %
 % * 特征零的域与有限域
 % * Frobenius 映射的判据
-% * 不完美函数域的例子
+% * 不完美函数域的例子；一般完美闭包、最小性与反复 p 次根的逐层构造
 %
 
 不可分性在正特征中可能出现，却并非每个正特征域都会出现。对特征为素数 \(p\) 的域，决定性的区别是域中的每个元素能否在原域内开 \(p\) 次方。有限域的有限性恰好保证这一点；有理函数域则提供反例。
@@ -19,50 +19,88 @@
 \label{b1:subsec:1603:01}
 
 \begin{definition}\label{b1:def:perfect-field}
-设 \(K\) 为域。如果 \(K[x]\) 中每个不可约多项式都可分，则称 \(K\) 为\term[wanmei-yu]{完美域}[perfect field]。等价地，\(K\) 的每个代数扩张都可分。
+设 \(K\) 为域。如果对每个不可约多项式 \(f\in K[x]\)，\(f\) 都可分，则称 \(K\) 为\term[wanmei-yu]{完美域}[perfect field]。等价地，对每个代数域扩张 \(L/K\)，\(L/K\) 都可分。
 \end{definition}
-等价性可直接检查：若所有不可约多项式可分，每个代数元的最小多项式就可分；反过来，把任一首一不可约多项式的根添入，所得代数扩张可分便迫使该最小多项式可分。由\cref{b1:prop:irreducible-separable-derivative}，特征零的域全都完美。因此 \(\mathbb Q,\mathbb R,\mathbb C\) 及它们的任意扩张域都是完美域。
+第一种说法逐个检查 \(K\) 系数不可约多项式，第二种说法则量化所有代数扩张，包括无限代数扩张。二者通过最小多项式联系起来：若所有不可约多项式可分，任一代数扩张 \(L/K\) 中每个元素 \(a\) 的最小多项式 \(m_{a,K}\) 就可分，所以整个扩张可分。反过来，对任一首一不可约多项式 \(f\in K[x]\)，在代数闭包中添入一个根 \(a\)，便得到代数扩张 \(K(a)/K\)；它可分就使 \(m_{a,K}=f\) 可分。任意不可约多项式与其首一化相伴，故也可分。由\cref{b1:prop:irreducible-separable-derivative}，特征零的域全都完美。因此 \(\mathbb Q,\mathbb R,\mathbb C\) 及它们的任意扩张域都是完美域。
 
 \ProseParagraphBreak
-设 \(K\) 为特征 \(p>0\) 的域。二项式系数 \(\binom pi\) 对 \(0<i<p\) 均被 \(p\) 整除，故 \((a+b)^p=a^p+b^p\)。于是映射
+设 \(K\) 为特征 \(p>0\) 的域。二项式系数 \(\binom pi\) 对 \(0<i<p\) 均被 \(p\) 整除，故 \((a+b)^p=a^p+b^p\)；又有 \((ab)^p=a^pb^p\) 和 \(1^p=1\)。因此映射
 \[
 F_K:K\longrightarrow K,\qquad a\longmapsto a^p
 \]
-是保持单位的域同态，称为域 \(K\) 的\term[frobenius-yingshe]{Frobenius 映射}[Frobenius map]。它单射，因为 \(a^p=b^p\) 蕴含 \((a-b)^p=0\)，从而 \(a=b\)。若 \(K\) 有限，单射必满射；下面的判据遂说明有限域都是完美域。
+同时保持加法、乘法和单位，是域同态，称为域 \(K\) 的\term[frobenius-yingshe]{Frobenius 映射}[Frobenius map]。它单射，因为 \(a^p=b^p\) 蕴含 \((a-b)^p=0\)，而域是整环，没有非零幂零元，故 \(a-b=0\)。若 \(K\) 有限，单射必满射；下面的判据遂说明有限域都是完美域。
 \symidx{\(F_K\)：特征 \(p\) 域上的 Frobenius 映射}
 
 \subsection{Frobenius 映射的判据}
 \label{b1:subsec:1603:02}
 
 \begin{proposition}\label{b1:prop:perfect-frobenius}
-特征 \(p>0\) 的域 \(K\) 完美，当且仅当其 Frobenius 映射满射，即每个 \(c\in K\) 都是 \(K\) 中元素的 \(p\) 次幂。
+设 \(K\) 为特征 \(p>0\) 的域，\(F_K:a\mapsto a^p\) 为其 Frobenius 映射。则 \(K\) 完美，当且仅当 \(F_K\) 满射，即每个 \(c\in K\) 都是 \(K\) 中元素的 \(p\) 次幂。
 \end{proposition}
 \begin{proof}
-先设 Frobenius 满射。若不可约多项式 \(f\) 不可分，\cref{b1:prop:irreducible-separable-derivative}给出 \(f'=0\)，故 \(f=\sum_i a_ix^{pi}\)。为每个系数取 \(b_i\in K\) 使 \(b_i^p=a_i\)，便有 \(f=(\sum_i b_ix^i)^p\)，与不可约性矛盾。故 \(K\) 完美。
+先设 Frobenius 满射。关键是：导数为零使多项式只含 \(p\) 的倍数次幂，满射性又使这些项的系数都能开 \(p\) 次方，两者合在一起便使整个多项式成为一个 \(p\) 次幂。具体地，若不可约多项式 \(f\) 不可分，\cref{b1:prop:irreducible-separable-derivative}给出 \(f'=0\)，故 \(f=\sum_i a_ix^{pi}\)。为每个系数取 \(b_i\in K\) 使 \(b_i^p=a_i\)，便有
+\[
+f=\left(\sum_i b_ix^i\right)^p.
+\]
+因为 \(f\) 非常数，括号中的多项式也非常数；\(p\ge2\)，所以右边给出两个非常数因子的乘积，与不可约性矛盾。故 \(K\) 完美。
 
-反过来，若 Frobenius 不满射，取 \(c\in K\) 不是 \(p\) 次幂，在代数闭包中取 \(a^p=c\)。由\cref{b1:prop:purely-inseparable-criteria}，\(a\) 的最小多项式只有一个不同根；它整除 \(x^p-c\)，其次数为一或 \(p\)。一次将迫使 \(a\in K\)，与 \(c\) 的选择矛盾。因此 \(x^p-c\) 本身不可约且不可分，\(K\) 不完美。
+反过来，若 Frobenius 不满射，取 \(c\in K\) 不是 \(p\) 次幂，在代数闭包中取 \(a^p=c\)。由于 \(a^p\in K\)，\(a\) 纯不可分；由\cref{b1:prop:purely-inseparable-criteria}，其最小多项式 \(m_{a,K}\) 形如 \(x^{p^r}-d\)，其中 \(r\ge0\)、\(d\in K\)。另一方面，\(m_{a,K}\) 整除零化 \(a\) 的多项式 \(x^p-c\)，故
+\[
+\deg m_{a,K}=p^r\le p.
+\]
+所以 \(r\) 只能为零或一，次数只能为一或 \(p\)。若为一次，则 \(a\in K\)，使 \(c=a^p\) 成为 \(K\) 中的 \(p\) 次幂，与选择矛盾。因此次数为 \(p\)，而 \(m_{a,K}\) 与 \(x^p-c\) 都首一且前者整除后者，必有 \(m_{a,K}=x^p-c\)。这个多项式不可约，又因 \(x^p-c=(x-a)^p\) 而不可分，故 \(K\) 不完美。
 \end{proof}
-结合上一小节 Frobenius 在有限集上的单射性，可得所有有限域完美。
+若 \(K\) 是有限域，其 Frobenius 映射是有限集合 \(K\) 到自身的单射，故必为满射；由\cref{b1:prop:perfect-frobenius}，\(K\) 完美。这里的有限性正用于把已经证明的单射性变成开 \(p\) 次方所需的满射性。
 
 \begin{corollary}\label{b1:cor:algebraic-perfect-extension}
-完美域的任意代数扩张仍是完美域。
+设 \(K\) 为完美域，\(E/K\) 为代数扩张，不要求有限。则 \(E\) 仍是完美域。
 \end{corollary}
 \begin{proof}
-设 \(E/K\) 代数，\(K\) 完美。给定 \(E\) 上任意不可约多项式，添入它的一个根 \(a\)，则 \(E(a)/K\) 由\cref{b1:thm:algebraic-tower}代数，所以 \(a\) 在 \(K\) 上可分。扩大系数域到 \(E\) 后，最小多项式仍无重根，故所给不可约多项式可分。
+给定任意不可约多项式 \(f\in E[x]\)，在 \(E\) 的代数闭包中添入它的一个根 \(a\)。因 \(E/K\) 与 \(E(a)/E\) 都代数，\cref{b1:thm:algebraic-tower}给出 \(E(a)/K\) 代数。\(K\) 完美，故 \(a\) 在 \(K\) 上可分，即 \(m_{a,K}\) 无重根。把它视为 \(E\) 系数多项式后仍零化 \(a\)，所以 \(m_{a,E}\mid m_{a,K}\)，从而 \(m_{a,E}\) 也无重根。最后，\(f\) 是 \(a\) 在 \(E\) 上的不可约零化多项式，故与 \(m_{a,E}\) 相伴；首一化后两者相同。因此 \(f\) 可分，证明 \(E\) 完美。
+\end{proof}
+
+当 \(K\) 不完美时，可以在代数闭包中反复加入缺失的 \(p\) 次根。Frobenius 的单射性使这些根没有选择上的歧义；把所有这样的元素收齐，便得到包含 \(K\) 的最小完美子域。
+
+\begin{proposition}\label{b1:prop:perfect-closure}
+设 \(K\) 为特征 \(p>0\) 的域，固定 \(K\) 的代数闭包 \(\Omega\)，令
+\[
+K^{\mathrm{perf}}=\{\,a\in\Omega\mid
+\exists r\in\mathbb Z_{\ge0},\ a^{p^r}\in K\,\}.
+\]
+则 \(K^{\mathrm{perf}}\) 是 \(\Omega\) 中包含 \(K\) 的最小完美子域，且 \(K^{\mathrm{perf}}/K\) 是纯不可分代数扩张。这个子域称为 \(K\) 在 \(\Omega\) 中的\term[wanmei-bibao]{完美闭包}[perfect closure]。
+\end{proposition}
+\begin{proof}
+取 \(r=0\) 可见 \(K\subseteq K^{\mathrm{perf}}\)。给定 \(a,b\in K^{\mathrm{perf}}\)，把各自的指数提高到同一个 \(r\)，便有 \(a^{p^r},b^{p^r}\in K\)。利用 Frobenius 的加法与乘法相容性，得到
+\[
+(a-b)^{p^r}=a^{p^r}-b^{p^r}\in K,
+\qquad (ab)^{p^r}=a^{p^r}b^{p^r}\in K.
+\]
+若 \(a\ne0\)，还有 \((a^{-1})^{p^r}=(a^{p^r})^{-1}\in K\)。因此这个集合是子域。每个 \(a\) 满足某个 \(a^{p^r}=c\in K\)，因而被 \(x^{p^r}-c\) 零化，故它在 \(K\) 上代数且纯不可分。
+
+对任意 \(a\in K^{\mathrm{perf}}\)，在 \(\Omega\) 中取 \(b^p=a\)。若 \(a^{p^r}\in K\)，则 \(b^{p^{r+1}}\in K\)，所以 \(b\in K^{\mathrm{perf}}\)。这说明 Frobenius 在该子域上满射，由\cref{b1:prop:perfect-frobenius}，它完美。
+
+最后，设 \(M\) 是 \(\Omega\) 中包含 \(K\) 的完美子域。给定 \(a\in K^{\mathrm{perf}}\)，取 \(a^{p^r}=c\in K\)。在 \(M\) 中反复利用 Frobenius 满射，可找到 \(d\in M\) 使 \(d^{p^r}=c\)。在 \(\Omega\) 中，\((a-d)^{p^r}=0\) 迫使 \(a=d\)，故 \(a\in M\)。于是 \(K^{\mathrm{perf}}\subseteq M\)，证明最小性。
 \end{proof}
 
 \subsection{不完美函数域的例子}
 \label{b1:subsec:1603:03}
 
-设 \(p\) 为素数，\(t\) 在 \(\mathbb F_p\) 上超越，取 \(K=\mathbb F_p(t)\)。任取 \(A,B\in\mathbb F_p[x]\) 且 \(B\neq0\)。Frobenius 将 \(A(t)/B(t)\) 送到 \(A(t^p)/B(t^p)\)，因为系数在 \(\mathbb F_p\) 中。故 Frobenius 的像恰为 \(\mathbb F_p(t^p)\)，反向包含可由任意有理函数代入 \(t^p\) 得到。由\eqref{b1:eq:rational-power-degree}，
+设 \(p\) 为素数，\(t\) 在 \(\mathbb F_p\) 上超越，取 \(K=\mathbb F_p(t)\)。以 \(K^p=\{\,a^p\mid a\in K\,\}\) 记 Frobenius 的像；一般的特征 \(p\) 域完美，当且仅当 \(K^p=K\)。任取 \(A,B\in\mathbb F_p[x]\) 且 \(B\neq0\)，Frobenius 将 \(A(t)/B(t)\) 送到 \(A(t^p)/B(t^p)\)，因为系数在 \(\mathbb F_p\) 中。反过来，每个 \(A(t^p)/B(t^p)\) 都是 \(A(t)/B(t)\) 的 \(p\) 次幂，故
+\[
+K^p=\mathbb F_p(t^p).
+\]
+由\eqref{b1:eq:rational-power-degree}，
 \[
 \bigl[\mathbb F_p(t):\mathbb F_p(t^p)\bigr]=p,
 \]
-所以像严格小于原域，\(K\) 不完美。直接观察也能看出 \(t\) 没有 \(p\) 次根：有理函数的 \(p\) 次幂中，素因子 \(t\) 的指数必被 \(p\) 整除，而 \(t\) 的指数为一。
+所以 \(K^p\subsetneq K\)，\(K\) 不完美。直接观察也能看出 \(t\) 没有 \(p\) 次根：有理函数的 \(p\) 次幂中，素因子 \(t\) 的指数必被 \(p\) 整除，而 \(t\) 的指数为一。
 
 \ProseParagraphBreak
-这说明“完美域的代数扩张仍完美”不能删去“代数”：\(\mathbb F_p\) 完美，但纯超越扩张 \(\mathbb F_p(t)\) 不完美。另一方面，固定 \(K\) 的一个代数闭包 \(\Omega\)。对每个 \(n\ge0\)，在 \(\Omega\) 中取 \(t\) 的唯一 \(p^n\) 次根 \(t^{1/p^n}\)，并令
+这说明“完美域的代数扩张仍完美”不能删去“代数”：\(\mathbb F_p\) 完美，但纯超越扩张 \(\mathbb F_p(t)\) 不完美。这个函数域的完美闭包还可逐层写出。固定 \(K\) 的代数闭包 \(\Omega\)，对每个 \(n\ge0\)，在其中取 \(t\) 的唯一 \(p^n\) 次根 \(t^{1/p^n}\)，则
 \[
 K^{\mathrm{perf}}=\bigcup_{n\geq0}\mathbb F_p(t^{1/p^n})\subseteq\Omega.
 \]
-这些域逐层包含，因为 \((t^{1/p^{n+1}})^p=t^{1/p^n}\)。若 \(z=A(t^{1/p^n})/B(t^{1/p^n})\) 属于第 \(n\) 层，其中 \(A,B\in\mathbb F_p[x]\)、\(B\neq0\)，则 \(A(t^{1/p^{n+1}})/B(t^{1/p^{n+1}})\) 属于下一层，且其 \(p\) 次幂为 \(z\)。所以 Frobenius 在并域上满射，\(K^{\mathrm{perf}}\) 是完美域。同时 \(z^{p^n}\in K\)，故 \(K^{\mathrm{perf}}/K\) 是纯不可分代数扩张。这是通过增加纯不可分元素消除缺失根的一个具体构造。
+这些域逐层包含，因为 \((t^{1/p^{n+1}})^p=t^{1/p^n}\)。为核对这个等式，任取第 \(n\) 层的元素 \(z=A(t^{1/p^n})/B(t^{1/p^n})\)，其中 \(A,B\in\mathbb F_p[x]\)、\(B\neq0\)，便有 \(z^{p^n}=A(t)/B(t)\in K\)，故右侧并域包含在完美闭包中。反过来，若 \(a^{p^n}=A(t)/B(t)\in K\)，那么第 \(n\) 层中的 \(A(t^{1/p^n})/B(t^{1/p^n})\) 是它的 \(p^n\) 次根；由根的唯一性，这个元素就是 \(a\)。因此并域也包含整个完美闭包。\cref{b1:prop:perfect-closure}已说明这个并域完美且对 \(K\) 纯不可分。它补齐的是反复开 \(p\) 次方得到的根：任一层中元素的 \(p\) 次根在下一层中，再迭代便得到它的所有 \(p^r\) 次根。
+
+\ProseParagraphBreak
+这样的完美域仍未必代数闭。例如取素数 \(\ell\ne p\)。\(x^\ell-t\) 在 \(\mathbb F_p[t]\) 上对素元 \(t\) 满足 Eisenstein 判据，故在 \(K[x]\) 中不可约；其导数为 \(\ell x^{\ell-1}\ne0\)，所以可分。若它的某个根 \(a\) 属于 \(K^{\mathrm{perf}}\)，则 \(a\) 必在某一层 \(K_n=\mathbb F_p(t^{1/p^n})\) 中。\(t^{1/p^n}\) 仍在 \(\mathbb F_p\) 上超越，应用\eqref{b1:eq:rational-power-degree}得到 \([K_n:K]=p^n\)，而不可约性给出 \([K(a):K]=\ell\)。塔式公式会迫使 \(\ell\mid p^n\)，与 \(\ell\ne p\) 矛盾。因此这个可分多项式的根并未被加入；完美性要求代数扩张可分，不要求每个代数多项式都已在域内分裂。

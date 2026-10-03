@@ -1,10 +1,10 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### D.2 代数、形式与解析解
-% 纲要位置：工作记录/计划纲要.md，第 4663 行。
+% 纲要位置：工作记录/计划纲要.md，第 4923 行。
 % * 有理函数域上的基本解矩阵、无新常数与微分自同构群就地说明；PV 存在性与 Galois 对应在附录 E 建立
 % * 形式局部方程的系数递推与解析单值现象
-% * 正则奇点、非正则奇点和 Stokes 数据所需的额外分析准备
-% * Riemann–Hilbert 对应的适用对象与条件，并给出联络及导出版本的证明概要
+% * 正则奇点、非正则奇点和 Stokes 数据所需的额外分析准备；区分积分路径所在的复平面与解变量的衰减扇形
+% * Riemann–Hilbert 对应的适用对象与条件，并给出联络及导出版本的证明概要；用常数方程模与点支撑模说明支撑维数和 de Rham 次数的配合
 % * 与分析学、代数几何和几何表示论的联系，不把全部解析理论压入本卷
 % #### D.2.1 有理函数域与形式局部方程
 % #### D.2.2 奇点与 Stokes 数据的分析前提
@@ -38,6 +38,7 @@
 
 该命题给出形式解的存在唯一性，级数的收敛性还须另证。当 \(A\) 在圆盘内解析时，解析常微分方程的存在唯一性给出收敛解，并与上述形式解相符。穿孔圆盘中，解可以沿闭路延拓；若延拓后的基本解矩阵为 \(ZM\)，则 \(M\in\operatorname{GL}_n(\mathbb C)\)，因为 \((Z^{-1}\widetilde Z)'=0\)。这就是
 \term[danzhi-juzhen]{单值矩阵}[monodromy matrix]，换基本解矩阵只改变其共轭类。
+
 \ProseParagraphBreak
 例如 \(y'=\lambda y/z\) 在通用覆盖上有解 \(z^\lambda=\exp(\lambda\log z)\)，一次正向绕原点后乘以 \(e^{2\pi i\lambda}\)。这个数描述局部解析延拓；它并不单独描述所有非正则奇点的渐近行为。
 
@@ -88,7 +89,11 @@ Z=I+N\log z=\begin{pmatrix}1&\log z\\0&1\end{pmatrix}.
 比较常数项得 \(a_0=0\)，比较一次项得 \(a_1=1\)，随后递推
 \(a_m=(m-1)a_{m-1}\)，得到所写级数。相邻系数比为 \(m\)，故正的收敛半径不可能存在。
 
-取从 \(0\) 沿正实轴趋向无穷、但从上方或下方绕开 \(t=1\) 的固定路径 \(\gamma_+,\gamma_-\)，在 \(\operatorname{Re}(1/x)>0\) 且靠近正实方向的扇形中定义
+先固定从 \(0\) 沿正实轴趋向无穷、但从上方或下方绕开 \(t=1\) 的路径 \(\gamma_+,\gamma_-\)。例如可用以 \(1\) 为中心、半径 \(0<\rho<1/2\) 的上下半圆绕行；两条路径都落在某个 \(|\arg t|\le\eta<\pi/2\) 的区域内。取 \(0<\varepsilon<\pi/2-\eta\) 并固定 \(r_0>0\)，在
+\[
+ 0<|x|<r_0,\qquad |\arg x|\le\pi/2-\eta-\varepsilon
+\]
+这一闭扇形中定义
 \[
  y_\pm(x)=\int_{\gamma_\pm}\frac{e^{-t/x}}{1-t}\,\mathrm{d}t.
 \]
@@ -98,9 +103,28 @@ Z=I+N\log z=\begin{pmatrix}1&\log z\\0&1\end{pmatrix}.
 \]
 其中最后的积分由原函数 \(-xe^{-t/x}\) 算出。
 
-在原点附近把 \(1/(1-t)\) 展开为有限几何和；每个 \(t^j\) 的 Laplace 积分为 \(j!x^{j+1}\)。截断余项含因子 \(t^N\)，在任意较小闭扇形中缩放 \(t=xs\) 可界为 \(O(|x|^{N+1})\)；路径远离 \(0\) 的部分则指数衰减。因此两解都有 \(\widehat y\) 作为渐近展开。两条路径之差绕极点一周，留数定理给出两积分相差
+在这些固定路径上，统一有
+\[
+ \operatorname{Re}(t/x)
+ \ge (\sin\varepsilon)\frac{|t|}{|x|}.
+\]
+取 \(0<\delta<1-\rho\)。路径上 \(|t|\ge\delta\) 的部分远离极点，有限绕行段和无穷射线的积分因而都为 \(O(e^{-c/|x|})\)，其中 \(c>0\) 可固定，估计对闭扇形中的 \(x\) 一致。对 \(N\ge1\) 和 \(0\le t\le\delta\)，使用
+\[
+ \frac1{1-t}=\sum_{j=0}^{N-1}t^j+\frac{t^N}{1-t}.
+\]
+余项积分的绝对值不超过
+\[
+ \frac1{1-\delta}\int_0^\delta t^N
+   e^{-(\sin\varepsilon)t/|x|}\,\mathrm{d}t
+ \le \frac{N!}{1-\delta}
+       \left(\frac{|x|}{\sin\varepsilon}\right)^{N+1}.
+\]
+各单项式沿完整路径的 Laplace 积分由分部积分给出 \(j!x^{j+1}\)，而从 \(\delta\) 起的尾项仍指数衰减。因此两解都有 \(\widehat y\) 作为渐近展开。两条路径之差绕极点一周，留数定理给出两积分相差
 \(\pm2\pi i e^{-1/x}\)，符号随路径方向约定。这也与齐次方程 \(x^2h'-h=0\) 的解相符。
 \end{proof}
+
+\cref{b5:fig:D-stokes-planes}把这两套几何分开：\(t\) 是积分变量，路径须绕过 \(t=1\)；\(x\) 是解的自变量，扇形限制则保证积分尾部衰减与渐近估计一致。
+\input{Figures/AppendixDStokesPlanes}
 
 这个例子展示了 \term[Stokes-xianxiang]{Stokes 现象}[Stokes phenomenon]所涉及的信息\footnote{斯托克斯（George Gabriel Stokes，1819-1903），爱尔兰数学家、物理学家，研究流体力学、光学和渐近级数。}：同一发散形式展开可以对应不同扇形上的解析解，重叠处的差别未被任何有限阶幂级数近似记录。一般线性齐次系统的 Stokes 矩阵需要指定扇形、形式正规形及相容的渐近归一化；例中的非齐次方程可添一个常数坐标后齐次化。相应解析条件和局部 Galois 群关系参阅
 \cite[Section 1.4, pp. 35--38]{Singer2009DifferentialGalois}，所引节号与页码依作者公开稿。形式微分域上的方程还需补充相应的解析条件，才能讨论这些数据。
@@ -111,30 +135,66 @@ Z=I+N\log z=\begin{pmatrix}1&\log z\\0&1\end{pmatrix}.
 在没有奇点的复流形上，平坦全纯联络的水平截面局部组成有限维常数层，即局部系统。若 \(X\) 连通并选基点，沿路径的解析延拓给出 \(\pi_1(X)\) 的有限维表示。反向则把通用覆盖上的平凡向量丛按该表示粘合，得到平坦向量丛；这说明局部系统为何是线性微分方程的自然拓扑对象。
 
 \begin{theorem}[正则联络的 Riemann--Hilbert 对应]\label{b5:thm:D-rh-connections}
-设 \(X\) 为光滑复代数簇，\(X^{\mathrm{an}}\) 为其解析化。\(X\) 上有限秩代数向量丛的正则可积联络组成的范畴，通过解析化和取水平截面，与 \(X^{\mathrm{an}}\) 上的有限秩复局部系统范畴等价。这里正则性要求在光滑完备紧化的简单正规交叉边界上局部存在对数联络格，以控制无穷远处的奇点。
+设 \(X\) 为光滑复代数簇，\(X^{\mathrm{an}}\) 为其解析化。\(X\) 上有限秩代数向量丛的正则可积联络组成的范畴，通过解析化和取水平截面，与 \(X^{\mathrm{an}}\) 上的有限秩复局部系统范畴等价。这里正则性是指：存在一个光滑完备紧化 \(X\hookrightarrow\overline X\)，使边界为简单正规交叉除子，且联络在边界附近局部存在对数联络格。该条件与紧化的选择无关，等价于在每个这样的紧化上满足同一条件。
 \end{theorem}
 
 \begin{proofsketch}
 平坦解析联络与局部系统之间的对应已由节首的路径延拓和粘合构造给出；所需的新步骤是得到代数联络，以及证明解析同态也是代数的。
 
-取 \(X\) 的光滑完备紧化 \(\overline X\)，经消解奇点使边界 \(D\) 成为简单正规交叉除子。给定局部系统，在边界附近的穿孔坐标图中，各坐标环路的单值矩阵 \(M_i\) 彼此交换。选择特征值实部落在固定长度一的半开区间中的对数 \(A_i\)，使
+先设 \(X\) 为准射影簇，取光滑射影紧化 \(\overline X\)，经消解奇点使边界 \(D\) 成为简单正规交叉除子。给定局部系统，在边界附近的穿孔坐标图中，各坐标环路的单值矩阵 \(M_i\) 彼此交换。选择特征值实部落在固定长度一的半开区间中的对数 \(A_i\)，使
 \(e^{2\pi i A_i}=M_i\)；这些对数可取为 \(M_i\) 的函数，故仍彼此交换。局部模型
 \[
  \nabla=\mathrm{d}-\sum_i A_i\frac{\mathrm{d}z_i}{z_i},\qquad
  Z=\prod_i z_i^{A_i}
 \]
-具有指定单值群，并给出至多对数极点的联络格。固定残数代表的选择使这些格在坐标交上相容，从而粘合成 \(\overline X^{\mathrm{an}}\) 上的对数联络。GAGA 将这一相干解析格及其对数联络代数化，限制到 \(X\) 就得到所需正则代数联络。
+具有指定单值群，并给出至多对数极点的联络格。固定残数代表的选择使这些格在坐标交上相容，从而粘合成 \(\overline X^{\mathrm{an}}\) 上的对数联络 \((\widetilde E,\widetilde\nabla)\)。
+
+联络满足 Leibniz 法则，须先转写成 \(\mathcal O\) 线性数据才能应用 GAGA。对向量丛 \(E\)，把普通一阶 jet 序列沿 \(\Omega^1\hookrightarrow\Omega^1(\log D)\) 推出，得到对数 jet 序列
+\[
+ 0\longrightarrow\Omega^1_{\overline X}(\log D)\otimes E
+ \xrightarrow{\iota}J^1_{\log D}(E)
+ \longrightarrow E\longrightarrow0.
+\]
+其典范 \(\mathbb C\) 线性映射 \(j^1:E\to J^1_{\log D}(E)\) 满足
+\(j^1(as)=a j^1(s)+\iota(\mathrm{d}a\otimes s)\)。于是对数联络 \(\nabla\) 等价于 \(\mathcal O\) 线性分裂
+\[
+ \sigma=j^1-\iota\nabla:E\longrightarrow J^1_{\log D}(E).
+\]
+先由 GAGA 将 \(\widetilde E\) 代数化为 \(E\)，再将解析分裂 \(\widetilde\sigma\) 代数化为上述分裂；jet 序列与解析化相容，便得到代数对数联络 \(\nabla\)。延拓联络到一形式上，规定
+\[
+ \nabla^1(\omega\otimes s)
+ =\mathrm{d}\omega\otimes s-\omega\wedge\nabla s.
+\]
+曲率 \(\nabla^1\nabla:E\to\Omega^2_{\overline X}(\log D)\otimes E\) 是 \(\mathcal O\) 线性映射，其解析化为零；GAGA 的忠实性保证它本身为零。因此代数化保留平坦性，限制到 \(X\) 得到所需正则代数联络。
 
 对两个正则联络之间的水平解析同态，局部基本解的增长至多是有限次幂乘对数幂；其逆矩阵也满足同类估计。因此同态矩阵在边界附近只有有限阶增长。逐坐标用 Laurent 展开和 Cauchy 系数估计，有限阶增长的单值全纯函数只有有限阶极点，所以该同态亚纯延伸到 \(\overline X\)。选一个足够大的极点界后，又由 GAGA 得到代数同态。于是函子满忠实；忠实性也可从解析化或水平局部基直接看出。
 
-这里省略光滑正规交叉紧化的存在、对数格的唯一粘合及 GAGA 的证明；前两步保证在无穷远也满足正则性，第三步把解析构造变成代数对象。具体的对数格及代数化论证见\cite[Sections 5.2--5.3, Theorem 5.3.8 and Corollary 5.3.10, pp. 155--158]{HottaTakeuchiTanisaki2008DModules}。这给出\term[Riemann-Hilbert-duiying]{Riemann--Hilbert 对应}[Riemann--Hilbert correspondence]的联络版本。
+对一般光滑 \(X\)，在有限仿射开覆盖上进行上述构造；交集仍准射影，其上的水平解析同构由刚证明的满忠实性代数化，余圈等式由忠实性保留，所得联络因而在 \(X\) 上粘合。正则性也可由沿光滑代数曲线拉回的判据核验；紧化条件的选择独立性见\cite[Proposition 5.3.6 and Theorem 5.3.7, pp. 154--155]{HottaTakeuchiTanisaki2008DModules}。
+
+这里省略光滑正规交叉紧化的存在、对数格的唯一粘合及 GAGA 的证明。对数格的构造与唯一性见\cite[Theorem 5.2.17, pp. 145--147]{HottaTakeuchiTanisaki2008DModules}；代数化及联络对应见\cite[Theorem 5.3.8, Corollary 5.3.10 and Lemma 5.3.12, pp. 155--159]{HottaTakeuchiTanisaki2008DModules}，其中 Lemma 5.3.12 用一阶主部实现上述 \(\mathcal O\) 线性改写。这给出\term[Riemann-Hilbert-duiying]{Riemann--Hilbert 对应}[Riemann--Hilbert correspondence]的联络版本。
 \end{proofsketch}
 
 无穷远条件不可省略。例如在 \(X=\mathbb A^1_\mathbb C\) 上，\(y'=y\) 与 \(y'=0\) 都只有平凡单值群；其解析联络由乘以 \(e^x\) 联系。但 \(e^x\) 不是正则可逆函数，也不是有理函数，所以它们在代数联络范畴中不同构。在 \(z=1/x\) 坐标下，前一方程为 \(\mathrm{d}y/\mathrm{d}z=-y/z^2\)，由上一小节的秩一判别可知它在无穷远非正则；这正是定理排除的情形。
+
 \ProseParagraphBreak
 若允许奇点处的支撑和延拓，局部系统已不够，需要构造性层复形。
 \begin{theorem}[导出 Riemann--Hilbert 对应]\label{b5:thm:D-rh-derived}
-设 \(X\) 为纯 \(n\) 维光滑复代数簇，\(\mathcal D_X\) 为代数微分算子层，\(X^{\mathrm{an}}\) 为其解析化。解析化后的 de Rham 复形\footnote{德拉姆（Georges de Rham，1903-1990），瑞士数学家，研究微分拓扑与代数拓扑，建立了微分形式上同调与拓扑上同调的联系。}整体移位 \([n]\)，得到函子 \(\operatorname{DR}\)，它给出范畴等价
+设 \(X\) 为纯 \(n\) 维光滑复代数簇，\(\mathcal D_X\) 为代数微分算子层，\(X^{\mathrm{an}}\) 为其解析化。记 \(\Omega^p=\Omega^p_{X^{\mathrm{an}}}\)，以下张量积取在 \(\mathcal O_{X^{\mathrm{an}}}\) 上。对左 \(\mathcal D_X\) 模 \(M\)，采用 de Rham 复形\footnote{德拉姆（Georges de Rham，1903-1990），瑞士数学家，研究微分拓扑与代数拓扑，建立了微分形式上同调与拓扑上同调的联系。}的约定
+\[
+ \operatorname{DR}_X(M)
+ =\left[
+ M^{\mathrm{an}}\longrightarrow
+ \Omega^1\otimes M^{\mathrm{an}}
+ \longrightarrow\cdots\longrightarrow
+ \Omega^n\otimes M^{\mathrm{an}}
+ \right][n],
+\]
+未移位的各项位于次数 \(0,\ldots,n\)；按上链约定 \((C[n])^j=C^{j+n}\)，移位后位于 \(-n,\ldots,0\)。局部微分由左模作用给出的联络 \(\nabla m=\sum_i\mathrm{d}z_i\otimes\partial_i m\) 决定：在 \(p\) 形式上为
+\[
+ \mathrm{d}_{\nabla}(\omega\otimes m)
+ =\mathrm{d}\omega\otimes m+(-1)^p\omega\wedge\nabla m.
+\]
+对有界左模复形 \(M^\bullet\)，先对 \(\Omega^p\otimes M^{q,\mathrm{an}}\) 作总次数 \(p+q\) 的总化，总微分为 \(\mathrm{d}_{\nabla}+(-1)^p\mathrm{d}_{M}\)，再移位 \([n]\)；具体的 de Rham 复形见\cite[Section 4.2, pp. 103--105]{HottaTakeuchiTanisaki2008DModules}。这一函子给出范畴等价
 \[
  \operatorname{DR}:D^b_{\mathrm{rh}}(\mathcal D_X)
  \ \simeq\ D^b_c(X^{\mathrm{an}},\mathbb C).
@@ -156,6 +216,20 @@ Z=I+N\log z=\begin{pmatrix}1&\log z\\0&1\end{pmatrix}.
 这里省略正规 holonomic 模在这些操作下的保持性、de Rham 与各操作相容的比较，以及导出 Hom 同构的自然性检查；这些是一般对应的大部分技术内容。相关证明及自然性问题见\cite[Sections 7.1--7.2, Theorems 7.2.2 and 7.2.5, Remark 7.2.3, pp. 174--177]{HottaTakeuchiTanisaki2008DModules}。在纯 \(n\) 维光滑层上，一个联络的 de Rham 复形是相应局部系统移位 \([n]\)，支撑较小时用该层自身的维数；这正给出反常层的支撑与余支撑条件，说明维数移位不可省略。一般非正则模不满足前述增长比较，因而不属于这个对应。
 \end{proofsketch}
 
+在一维情形，可以直接看见为何单个 D-模的像也需要是复形。对 \(X=\mathbb A^1_{\mathbb C}\)，解析 Poincaré 引理说明
+\[
+\operatorname{DR}(\mathcal O_X)
+=[\mathcal O_{X^{\mathrm{an}}}\xrightarrow{\,\mathrm{d}\,}
+\Omega^1_{X^{\mathrm{an}}}][1]
+\simeq\mathbb C_{X^{\mathrm{an}}}[1].
+\]
+未移位的复形只有零次上同调常数层，移位后它位于次数 \(-1\)。另一方面，对 \(M=\mathcal D_X/\mathcal D_Xx\)，上一节的法向模型为 \(\mathbb C[\partial]\)，其 de Rham 微分是乘以 \(\partial\)。这个算子单射，余核由常数项生成，且在 \(x\ne0\) 处整个模为零，故
+\[
+\operatorname{DR}(\mathcal D_X/\mathcal D_Xx)
+\simeq\mathbb C_{\{0\}}[0].
+\]
+两个普通 D-模的支撑维数分别为一与零，而像的非零上同调分别位于 \(-1\) 与 \(0\)。反常层的支撑条件要求 \(\dim\operatorname{Supp}\mathcal H^j\le-j\)，对其 Verdier 对偶还须满足同样条件；这两个模型恰展示了维数与次数的配合。若只用集中在同一次数的普通层，就不能同时包含这两种对象。
+
 \subsection{与分析学、几何表示论的联系}
 \label{b5:subsec:D02:04}
 
@@ -176,6 +250,7 @@ Z=I+N\log z=\begin{pmatrix}1&\log z\\0&1\end{pmatrix}.
  \mathbb C[x,x^{-1}]\xrightarrow{\mathrm{d}/\mathrm{d}x}\mathbb C[x,x^{-1}].
 \]
 核仍为 \(\mathbb C\)，余核却是一维，由 \(x^{-1}\) 的类生成：除 \(x^{-1}\) 外，每个 Laurent 单项式都有 Laurent 原函数。这个余核记录原函数无法在穿孔直线全局选取的障碍，与沿圈积分 \(\int \mathrm{d}x/x=2\pi i\) 相呼应。此处算的是全局代数模的导出 Hom；局部解析求导仍满射，所以不能把这项全局上同调误称为每个点的局部解障碍。
+
 \ProseParagraphBreak
 几何表示论还把 Lie 代数的包络代数模与旗簇上的适当扭曲 D-模联系起来。局部化定理需要指定中心特征、参数与正则性条件。本附录介绍了微分算子、特征簇和层复形等所需概念；局部化与表示分类的系统理论可参阅
 \cite[Chapter 11]{HottaTakeuchiTanisaki2008DModules}。

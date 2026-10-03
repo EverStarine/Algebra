@@ -8,7 +8,7 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 不可约多项式次数与有限域扩张
-% * 不可约多项式的计数公式
+% * 不可约多项式的计数公式；从递归计数到除数关系上的 Möbius 反演
 % * 有限域的显式表示
 %
 
@@ -17,7 +17,13 @@
 \subsection{不可约多项式次数与有限域扩张}
 \label{b1:subsec:1703:01}
 
-设 \(q\) 为素数幂，\(f\in\mathbb F_q[x]\) 为首一不可约多项式，\(\deg f=d\geq1\)。令 \(A=\mathbb F_q[x]/(f)\)，记 \(\bar x\) 为 \(x\) 的剩余类。\(A\) 以 \(1,\bar x,\ldots,\bar x^{d-1}\) 为 \(\mathbb F_q\) 基，故有 \(q^d\) 个元素。每个元素都满足 \(a^{q^d}=a\)，所以 \(A\) 是 \(X^{q^d}-X\) 在 \(\mathbb F_q\) 上的分裂域。在已选定的包含关系 \(\mathbb F_q\subseteq\mathbb F_{q^d}\) 下，后者也是该多项式在 \(\mathbb F_q\) 上的分裂域。由\cref{b1:prop:splitting-field-unique}，存在固定 \(\mathbb F_q\) 的同构 \(\varphi:A\xrightarrow{\sim}\mathbb F_{q^d}\)。于是 \(f(\varphi(\bar x))=\varphi(f(\bar x))=0\)，即 \(f\) 在指定的 \(\mathbb F_{q^d}\) 中有根。
+设 \(q\) 为素数幂，\(f\in\mathbb F_q[x]\) 为首一不可约多项式，\(\deg f=d\geq1\)。令 \(A=\mathbb F_q[x]/(f)\)，记 \(\bar x\) 为 \(x\) 的剩余类。不可约性使 \(A\) 成为域；由\cref{b1:prop:minimal-polynomial-degree}，\(1,\bar x,\ldots,\bar x^{d-1}\) 是它的一组 \(\mathbb F_q\) 基，故 \(A\) 有 \(q^d\) 个元素。其乘法群的阶为 \(q^d-1\)，由\cref{b1:thm:lagrange}，每个非零元素满足 \(a^{q^d-1}=1\)，连同零便得到对所有 \(a\in A\) 都有 \(a^{q^d}=a\)。这样 \(X^{q^d}-X\) 已在 \(A\) 中找到 \(q^d\) 个不同的根，达到其次数；它的全部根就是 \(A\) 的全部元素，当然生成 \(A\)。所以 \(A\) 是这个多项式在 \(\mathbb F_q\) 上的分裂域。
+
+\ProseParagraphBreak
+在已选定的包含关系 \(\mathbb F_q\subseteq\mathbb F_{q^d}\) 下，后者也是 \(X^{q^d}-X\) 在 \(\mathbb F_q\) 上的分裂域。由\cref{b1:prop:splitting-field-unique}，存在固定 \(\mathbb F_q\) 的同构 \(\varphi:A\xrightarrow{\sim}\mathbb F_{q^d}\)。于是 \(f(\varphi(\bar x))=\varphi(f(\bar x))=0\)，即 \(f\) 在指定的 \(\mathbb F_{q^d}\) 中有根。
+
+\ProseParagraphBreak
+若 \(\alpha\) 是 \(f\) 在固定代数闭包中的一个根，则 \(f=m_{\alpha,\mathbb F_q}\)，所以 \(d=[\mathbb F_q(\alpha):\mathbb F_q]\)。给定正整数 \(n\)，根 \(\alpha\) 是否属于 \(\mathbb F_{q^n}\)，就是问它生成的 \(q^d\) 元子域是否包含于这个 \(q^n\) 元域中；\cref{b1:thm:finite-field-subfields}把这个问题化为 \(d\mid n\)。而 \(\alpha\in\mathbb F_{q^n}\) 又等价于 \(\alpha^{q^n}-\alpha=0\)，即它的最小多项式 \(f\) 整除 \(x^{q^n}-x\)。
 
 \begin{proposition}\label{b1:prop:finite-field-factorization}
 设 \(q\) 为素数幂，\(n\geq1\) 为整数。首一不可约多项式 \(f\in\mathbb F_q[x]\) 整除 \(x^{q^n}-x\)，当且仅当 \(\deg f\mid n\)。从而
@@ -27,30 +33,37 @@ x^{q^n}-x=\prod_{d\mid n}\ \prod_{\substack{f\text{ 首一不可约}\\\deg f=d}}
 其中每个因子只出现一次。
 \end{proposition}
 \begin{proof}
-设 \(\alpha\) 为 \(f\) 的根，\(d=\deg f\)。若 \(f\mid x^{q^n}-x\)，则 \(\alpha\in\mathbb F_{q^n}\)，其生成的 \(q^d\) 元子域由\cref{b1:thm:finite-field-subfields}满足 \(d\mid n\)。若 \(d\mid n\)，则 \(\alpha\in\mathbb F_{q^d}\subseteq\mathbb F_{q^n}\)，所以 \(\alpha^{q^n}=\alpha\)，其最小多项式 \(f\) 必整除 \(x^{q^n}-x\)。最后这个多项式的导数为 \(-1\)，所以没有重复的不可约因子，首一性确定了乘积前的常数。
+在 \(\mathbb F_q\) 的固定代数闭包中取 \(f\) 的一个根 \(\alpha\)，令 \(d=\deg f\)。若 \(f\mid x^{q^n}-x\)，则 \(\alpha\in\mathbb F_{q^n}\)，其生成的 \(q^d\) 元子域由\cref{b1:thm:finite-field-subfields}满足 \(d\mid n\)。若 \(d\mid n\)，则 \(\alpha\in\mathbb F_q(\alpha)=\mathbb F_{q^d}\subseteq\mathbb F_{q^n}\)，所以 \(\alpha^{q^n}=\alpha\)，其最小多项式 \(f\) 必整除 \(x^{q^n}-x\)。最后，这个多项式的导数为 \(-1\)，所以没有重复的不可约因子。它及所选的每个不可约因子都首一，故乘积前的常数只能为一，得到\eqref{b1:eq:finite-field-polynomial-product}。
 \end{proof}
 
 \subsection{不可约多项式的计数公式}
 \label{b1:subsec:1703:02}
 
-记 \(N_q(d)\) 为 \(\mathbb F_q\) 上首一 \(d\) 次不可约多项式的个数。比较\eqref{b1:eq:finite-field-polynomial-product}两端次数，得到
+对正整数 \(d\)，记 \(N_q(d)\) 为 \(\mathbb F_q\) 上首一 \(d\) 次不可约多项式的个数。比较\eqref{b1:eq:finite-field-polynomial-product}两端次数，得到
 \[
 q^n=\sum_{d\mid n}d\cdot N_q(d).
 \]
 \symidx{\(N_q(d)\)：有限域上首一 \(d\) 次不可约多项式的个数}
-先看 \(n=6\) 时怎样直接数根。在 \(\mathbb F_{q^6}\) 中，元素 \(a\) 对 \(\mathbb F_q\) 的次数是子域 \(\mathbb F_q(a)\) 的次数，因而必为六的除数。由\cref{b1:thm:finite-field-subfields}，次数小于六的元素恰好组成
+把 \(d=n\) 的一项单独取出，便得到递归式
+\[
+N_q(n)=\frac1n\left(q^n-\sum_{\substack{d\mid n\\d<n}}d\cdot N_q(d)\right).
+\]
+因此从 \(N_q(1)=q\) 开始，只要已知较小次数的计数，就能逐次求出 \(N_q(n)\)。下面的 Möbius 反演会把这个递归式改写成一个只含 \(q,n\) 的闭式。
+
+\ProseParagraphBreak
+先看 \(n=6\) 时怎样直接数根。在 \(\mathbb F_{q^6}\) 中，元素 \(a\) 对 \(\mathbb F_q\) 的次数是子域 \(\mathbb F_q(a)\) 的次数，因而必为六的除数，只能是 \(1,2,3,6\)。次数为一的元素在 \(\mathbb F_q\) 中，次数为二或三的元素分别在 \(\mathbb F_{q^2}\) 或 \(\mathbb F_{q^3}\) 中。因此，由\cref{b1:thm:finite-field-subfields}，次数小于六的元素恰好组成
 \[
 \mathbb F_{q^2}\cup\mathbb F_{q^3},
 \qquad \mathbb F_{q^2}\cap\mathbb F_{q^3}=\mathbb F_q.
 \]
-从全部 \(q^6\) 个元素中删去这两个子域时，交集被删了两次，须加回一次。因此次数恰为六的元素共有 \(q^6-q^2-q^3+q\) 个。每个首一六次不可约多项式在 \(\mathbb F_{q^6}\) 中有六个不同的根，而不同的不可约多项式没有公共根，故
+从全部 \(q^6\) 个元素中删去这两个子域时，交集被删了两次，须加回一次。因此次数恰为六的元素共有 \(q^6-q^2-q^3+q\) 个。有限域上的 Frobenius 映射单射即满射，故由\cref{b1:prop:perfect-frobenius}，\(\mathbb F_q\) 完美，每个不可约多项式都可分；又由\cref{b1:prop:finite-field-factorization}，每个首一六次不可约多项式在 \(\mathbb F_{q^6}\) 中分裂，因而贡献六个不同的根。不同的不可约多项式没有公共根，因为一个根只有一个首一最小多项式，故
 \[
 N_q(6)=\frac{q^6-q^3-q^2+q}{6}.
 \]
 交替的加减修正了子域的重叠，除以六则把根的个数换成了不可约多项式的个数。
 
 \ProseParagraphBreak
-对一般的 \(n\)，用正整数上的\term[Mobius-hanshu]{Möbius 函数}[Möbius function]记录除数求和中相应的重叠修正：\footnote{默比乌斯（August Ferdinand Möbius，1790-1868），德国数学家、天文学家，提出 Möbius 反演公式，也研究拓扑中的单侧曲面。}\(\mu(1)=1\)；若正整数含有素数的平方因子，令 \(\mu(m)=0\)；若它为 \(r\) 个不同素数的乘积，令 \(\mu(m)=(-1)^r\)。
+对一般的 \(n\)，次数等式把“次数恰为 \(d\)”的元素数 \(d\cdot N_q(d)\)，沿 \(d\mid n\) 累加为 \(q^n\)。要从这类累积计数恢复单个次数的计数，可以在除数关系上作反演。正整数上的\term[Mobius-hanshu]{Möbius 函数}[Möbius function]给出反演所需的系数：\footnote{默比乌斯（August Ferdinand Möbius，1790-1868），德国数学家、天文学家，提出 Möbius 反演公式，也研究拓扑中的单侧曲面。}\(\mu(1)=1\)；若正整数含有素数的平方因子，令 \(\mu(m)=0\)；若它为 \(r\) 个不同素数的乘积，令 \(\mu(m)=(-1)^r\)。
 \symidx{\(\mu(m)\)：Möbius 函数}
 选择不同素因子的子集给出
 \[
@@ -61,13 +74,23 @@ N_q(6)=\frac{q^6-q^3-q^2+q}{6}.
 \begin{equation}\label{b1:eq:finite-field-irreducible-count}
 N_q(n)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d}.
 \end{equation}
-证明只须代入先前的次数等式并交换有限求和：
+对每个 \(d\mid n\)，先前的次数等式给出
 \[
-\sum_{d\mid n}\mu(d)q^{n/d}
-=\sum_{e\mid n}e\cdot N_q(e)\sum_{d\mid n/e}\mu(d)
-=n\cdot N_q(n).
+q^{n/d}=\sum_{e\mid n/d}e\cdot N_q(e).
 \]
-例如 \(N_2(2)=1\)、\(N_2(3)=2\)、\(N_2(4)=3\)。每个正次数实际上都有不可约多项式：取 \(\mathbb F_{q^n}^\times\) 的一个生成元 \(g\)，便有 \(\mathbb F_q(g)=\mathbb F_{q^n}\)，所以其最小多项式的次数恰为 \(n\)。
+代入后，求和的指标对 \((d,e)\) 满足 \(de\mid n\)。固定 \(e\) 时，允许的 \(d\) 恰好是 \(n/e\) 的除数，故交换有限求和得到
+\[
+\begin{aligned}
+\sum_{d\mid n}\mu(d)q^{n/d}
+&=\sum_{\substack{d,e\ge1\\de\mid n}}\mu(d)e\cdot N_q(e)\\
+&=\sum_{e\mid n}e\cdot N_q(e)\sum_{d\mid n/e}\mu(d)\\
+&=n\cdot N_q(n).
+\end{aligned}
+\]
+最后一步中，内层和仅在 \(n/e=1\)，即 \(e=n\) 时为一，其余项全为零。例如 \(N_2(2)=1\)、\(N_2(3)=2\)、\(N_2(4)=3\)。
+
+\ProseParagraphBreak
+每个正次数实际上都有不可约多项式。由\cref{b1:cor:finite-field-cyclic}，可取 \(\mathbb F_{q^n}^\times\) 的一个生成元 \(g\)。子域 \(\mathbb F_q(g)\) 包含 \(g\) 的所有整数幂，也就包含 \(\mathbb F_{q^n}\) 的全部非零元素；再加上零，便有 \(\mathbb F_q(g)=\mathbb F_{q^n}\)。所以由\cref{b1:prop:minimal-polynomial-degree}，\(g\) 的最小多项式次数恰为 \(n\)。
 
 \subsection{有限域的显式表示}
 \label{b1:subsec:1703:03}
@@ -75,7 +98,10 @@ N_q(n)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d}.
 要在计算机或纸面上进行运算，须选择一个具体的不可约多项式 \(f\)，并把域写成 \(\mathbb F_q[t]/(f)\)。元素用次数小于 \(\deg f\) 的多项式表示；加法逐系数进行，乘法先相乘再除以 \(f\) 取余。对非零代表 \(a(t)\)，有 \(\gcd(a,f)=1\)，扩展 Euclid 算法给出 \(ua+vf=1\)，所以 \(u\) 的剩余类为其逆元。
 
 \ProseParagraphBreak
-例如 \(f=t^3+t+1\) 在 \(\mathbb F_2\) 上没有根，三次多项式若可约必有一次因子，故它不可约。令 \(\alpha=\bar t\)，则
+若 \(f,g\in\mathbb F_q[t]\) 是不同的首一 \(d\) 次不可约多项式，它们给出的商域都作为 \(\mathbb F_q\) 扩张域同构于 \(\mathbb F_{q^d}\)。但两个商域中名为 \(\bar t\) 的元素分别满足 \(f(\bar t)=0\) 和 \(g(\bar t)=0\)，不能把它们直接对应；需要选定具体同构，才能在两种表示之间转换坐标。
+
+\ProseParagraphBreak
+例如 \(f=t^3+t+1\) 在 \(\mathbb F_2\) 上没有根，三次多项式若可约必有一次因子，故它不可约。令 \(\alpha=\bar t\)。这里特征为二，减号与加号相同，故 \(\alpha^3+\alpha+1=0\) 给出 \(\alpha^3=\alpha+1\)，于是
 \[
 \mathbb F_8=\{\,a+b\alpha+c\alpha^2\mid a,b,c\in\mathbb F_2\,\},
 \qquad \alpha^3=\alpha+1.

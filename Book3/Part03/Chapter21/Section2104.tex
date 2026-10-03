@@ -83,7 +83,33 @@ s_{ij}=\frac{L_{ij}}{c_im_i}\epsilon_i
 任取 \(0\ne u=\sum a_i\epsilon_i\in\ker\phi\)。设其最大 Schreyer 单项式来自 \(a_j\epsilon_j\)，并记 \(T=\operatorname{LM}(a_jg_j)\)。等式 \(\sum a_ig_i=0\) 要求 \(T\) 处至少另有一个相同首项，否则最高项不可能抵消；这些首项中的下标均不大于 \(j\)，故存在 \(i<j\) 使 \(\operatorname{LM}(a_ig_i)=T\)。于是 \(L_{ij}\) 整除 \(T\) 的标量部分，\(\operatorname{LM}(s_{ij})\) 整除 \(\operatorname{LM}(u)\)。这正是核的 Gröbner 基条件。再用向量除法可把每个核元素写成这些 \(s_{ij}\) 的组合。
 \end{proof}
 
+修正项在非单项式例子中可以直接算出。在 \(S=k[x,y]\) 中取字典序 \(x\succ y\)，令 \(g_1=x-y^2,g_2=y^3-1\)。这是 Gröbner 基，其非零 \(S\)-多项式的除法为
+\[
+y^3g_1-xg_2=x-y^5=g_1-y^2g_2.
+\]
+先用 \(g_1\) 消去 \(x\)，剩下 \(-y^2g_2\)，再用 \(g_2\) 消为零。因此 \(h_{121}=1,h_{122}=-y^2\)，得到关系
+\[
+s_{12}=y^3\epsilon_1-x\epsilon_2-\epsilon_1+y^2\epsilon_2
+=(y^3-1)\epsilon_1-(x-y^2)\epsilon_2.
+\]
+只写最初两个抵消首项的项，会留下 \(x-y^5\)，并不是关系；除法中的修正项正是把它补成核元素。
+
+\ProseParagraphBreak
 若起初给的生成组尚非 Gröbner 基，把它们排成矩阵 \(F\in\operatorname{Mat}_{r\times s}(S)\)，计算像模的 Gröbner 基矩阵 \(G\in\operatorname{Mat}_{r\times t}(S)\)，同时保存 \(U\in\operatorname{Mat}_{s\times t}(S)\)、\(V\in\operatorname{Mat}_{t\times s}(S)\)，使 \(G=FU\)、\(F=GV\)。设矩阵 \(T\) 的列生成 \(\ker G\)，则 \(\ker F\) 由矩阵 \(UT\) 和 \(1_s-UV\) 的列生成。确实，这些列都被 \(F\) 送到零；若 \(Fa=0\)，则 \(GVa=0\)，写 \(Va=Tb\)，有 \(a=UTb+(1_s-UV)a\)。这一步使算法返回原生成元的关系，而不只是改换生成元以后的关系。
+
+\ProseParagraphBreak
+例如仍取 \(x\succ y\)，令
+\[
+F=(x\ \ y-x\ \ x+y),\qquad G=(x\ \ y),\qquad
+U=\begin{pmatrix}1&1\\0&1\\0&0\end{pmatrix},\quad
+V=\begin{pmatrix}1&-1&1\\0&1&1\end{pmatrix}.
+\]
+原生成组的首项只生成 \((x)\)，而像为 \((x,y)\)，所以它不是 Gröbner 基；\(G\) 是。直接相乘可核对 \(G=FU,F=GV\)。取 \(T=(y,-x)^{\mathsf T}\)，则
+\[
+UT=\begin{pmatrix}y-x\\-x\\0\end{pmatrix},\qquad
+1_3-UV=\begin{pmatrix}0&0&-2\\0&0&-1\\0&0&1\end{pmatrix}.
+\]
+后一个矩阵的第三列给出关系 \(-2x-(y-x)+(x+y)=0\)。它的第三坐标为一，而 \(UT\) 的所有倍数第三坐标都为零，因此只取 \(UT\) 会确实漏掉原生成组的关系。
 
 \subsection{具体理想的消解计算与验证}
 \label{b3:subsec:2104:03}

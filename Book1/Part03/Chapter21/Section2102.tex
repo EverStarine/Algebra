@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### 21.2 根式可解性
-% 纲要位置：计划纲要.md，第 711 行。
+% 纲要位置：计划纲要.md，第 744 行。
 
 \section{根式可解性}
 \label{b1:sec:2102}
@@ -28,18 +28,22 @@ K=K_0\subseteq K_1\subseteq\cdots\subseteq K_r,
 其中每个 \(m_i\geq2\) 都是整数。如果各步都满足所列条件，则称这座塔为\term[genshi-ta]{根式塔}[radical tower]，并称末端扩张 \(K_r/K\) 为\term[genshi-kuozhang]{根式扩张}[radical extension]。给定多项式 \(f\in K[X]\)，如果存在一座从 \(K\) 出发的根式塔，其末端域包含 \(f\) 在一个代数闭包中的全部根，则称 \(f\) \term[genshi-kejie]{根式可解}[solvable by radicals]。
 \end{definition}
 
-\(\alpha_i=0\) 或本已属于 \(K_{i-1}\) 的步骤可以删去。开方的指数可以是合数；把指数逐次按素因子分拆，会得到另一条只取素数次方根的塔。这里并不要求每一步正规，也不要求 \(K_r\) 恰好等于分裂域。例如 \(\mathbb Q(\sqrt[3]{2})\) 是根式扩张，但还没有包含 \(X^3-2\) 的全部根；再加入 \(\zeta_3\) 即可。
+\(\alpha_i=0\) 或本已属于 \(K_{i-1}\) 的步骤可以删去。开方的指数可以是合数，但能够分拆：若 \(\alpha^{rs}=a\in F\)，其中 \(r,s\geq2\)，令 \(\beta=\alpha^r\)，则 \(\beta^s=a\) 且 \(\alpha^r=\beta\)。于是原来一步 \(F\subseteq F(\alpha)\) 可以改成
+\[
+F\subseteq F(\beta)\subseteq F(\alpha),
+\]
+分别取 \(s\) 次方根和 \(r\) 次方根。继续分解指数，就得到一条只取素数次方根、末端域相同的塔。这里并不要求每一步正规，也不要求 \(K_r\) 恰好等于分裂域。例如 \(\mathbb Q(\sqrt[3]{2})\) 是根式扩张，但还没有包含 \(X^3-2\) 的全部根；再加入 \(\zeta_3\) 即可。
 
 \begin{definition}\label{b1:def:solvable-extension}
 设 \(K\) 的特征为零，\(E/K\) 为有限扩张。若 \(E/K\) 的正规闭包的 Galois 群是可解群，则称 \(E/K\) 为\term[kejie-kuozhang]{可解扩张}[solvable extension]。
 \end{definition}
 
-可解性由正规闭包的 Galois 群决定，而一座根式塔要求每层实际由开方生成。两者的联系将在下面的判据中证明。若 \(E/K\) 已经是有限 Galois 扩张，定义中的群就是 \(\operatorname{Gal}(E/K)\)。
+根式扩张要求这个具体的域 \(E\) 本身能作为一座根式塔的末端；可解扩张只要求它的正规闭包具有可解的 Galois 群。若 \(E/K\) 已经是有限 Galois 扩张，后一个定义中的群就是 \(\operatorname{Gal}(E/K)\)。下面的判据将说明，可解性保证 \(E\) 能包含在某座根式塔的末端域中，而这个末端域可以严格大于 \(E\)。稍后的实三次分圆子域正是 \(E/K\) 可解而 \(E/K\) 本身不是根式扩张的例子。
 
 \subsection{根式塔的正规可解包络}
 \label{b1:subsec:2102:02}
 
-根式塔的各层未必正规。为了从根式表示求出一个可解的 Galois 群，需要在加入每个根式时，把它在基域上所有共轭的根同时加入。单位根保证同一多项式的根只相差一个已知因子。
+根式塔的各层未必正规。单位根保证同一个二项式的根只相差一个已知因子，但补齐各层原方程的根还不够：基域上的共轭变换也会移动方程的系数。因此，要把根式塔放进一个 Galois 扩张，在加入每个根式时还须同时补入共轭方程的根。
 
 \ProseParagraphBreak
 例如令 \(\alpha=\sqrt{1+\sqrt2}>0\)。根式塔
@@ -56,27 +60,47 @@ X^2-(1-\sqrt2)=0.
 特征零域 \(K\) 上的任意有限根式塔，都包含在一个有限 Galois 扩张 \(M/K\) 中，使 \(\operatorname{Gal}(M/K)\) 可解。
 \end{lemma}
 \begin{proof}
-若塔中所有域都等于 \(K\)，取 \(M=K\) 即可。以下设塔有非平凡的步骤，略去已经属于前一层的生成元，并记 \(K_i=K_{i-1}(\alpha_i)\)，\(\alpha_i^{m_i}=a_i\neq0\)。取全部 \(m_i\) 的公倍数 \(m\)，先令 \(M_0=K(\mu_m)\)。它是 \(X^m-1\) 的分裂域，Galois 群把一个本原单位根送到其互素次幂，因而嵌入交换群 \((\mathbb Z/m\mathbb Z)^\times\)，所以可解。
+若塔中所有域都等于 \(K\)，取 \(M=K\) 即可。以下略去平凡步骤，记 \(K_i=K_{i-1}(\alpha_i)\)、\(\alpha_i^{m_i}=a_i\neq0\)，并固定一个包含末端域的 \(K\) 的代数闭包 \(\Omega\)。我们将在 \(\Omega\) 中逐层构造 \(M_i\)，使 \(K_i\subseteq M_i\)，而 \(M_i/K\) 始终是群可解的有限 Galois 扩张。
+
+取全部 \(m_i\) 的公倍数 \(m\)，先令 \(M_0=K(\mu_m)\)。由\cref{b1:prop:cyclotomic-general-base}，它是 \(X^m-1\) 的有限 Galois 分裂域，其 Galois 群嵌入交换群 \((\mathbb Z/m\mathbb Z)^\times\)。所以这个群本身交换，特别地可解。
 
 归纳设 \(M_{i-1}/K\) 为有限 Galois 扩张，包含 \(K_{i-1}\)，且群可解。令 \(M_i\) 为 \(M_{i-1}\) 上全部多项式
 \[
 X^{m_i}-\tau(a_i),\qquad\tau\in\operatorname{Gal}(M_{i-1}/K),
 \]
-的共同分裂域，选择其中的根使 \(\alpha_i\in M_i\)。这给出有限扩张。每个 \(K\) 嵌入在 \(M_{i-1}\) 上限制为某个自同构，并置换所列多项式及其根，所以保持 \(M_i\)；由\cref{b1:thm:normal-embedding-criterion}，\(M_i/K\) 正规，特征零保证可分。
+在 \(\Omega\) 中的共同分裂域。这族多项式只有有限多个，每一个又只有有限多个代数根，故 \(M_i/M_{i-1}\) 有限，从而 \(M_i/K\) 有限。取 \(\tau=1\) 时的方程，其根 \(\alpha_i\) 必在共同分裂域中，所以 \(K_i\subseteq M_i\)。让 \(\tau\) 遍历的目的，正是把前例中随 \(\sqrt2\mapsto-\sqrt2\) 出现的新方程一并加入。
 
-对每个所列多项式选一个根 \(\beta_\tau\)。因为 \(M_{i-1}\) 含 \(\mu_{m_i}\)，各 \(\beta_\tau\) 已生成分裂域。于是
+任取一个 \(K\) 嵌入 \(\iota:M_i\rightarrow\Omega\)。因 \(M_{i-1}/K\) 正规，它在 \(M_{i-1}\) 上的限制为某个 \(\sigma\in\operatorname{Gal}(M_{i-1}/K)\)。若 \(\beta\) 是 \(X^{m_i}-\tau(a_i)\) 的根，则
+\[
+\iota(\beta)^{m_i}=\iota\bigl(\tau(a_i)\bigr)=(\sigma\tau)(a_i).
+\]
+因此 \(\iota\) 将这个方程的根集映到指标为 \(\sigma\tau\) 的方程的根集。因 \(\tau(a_i)\neq0\) 且特征为零，两个根集均有 \(m_i\) 个元素，嵌入又是单射，所以该映射是双射；左乘 \(\sigma\) 同时置换全部指标。于是 \(\iota\) 把这些根和 \(M_{i-1}\) 生成的域 \(M_i\) 映到自身且映满。由\cref{b1:thm:normal-embedding-criterion}，\(M_i/K\) 正规；特征零保证可分，故它是有限 Galois 扩张。
+
+对每个所列多项式选一个根 \(\beta_\tau\)。因为 \(m_i\mid m\)，且 \(M_0\subseteq M_{i-1}\)，有 \(\mu_{m_i}\subseteq\mu_m\subseteq M_{i-1}\)。每个方程的全部根因而为 \(\zeta\beta_\tau\)，其中 \(\zeta\in\mu_{m_i}\)，所以
+\[
+M_i=M_{i-1}\bigl(\beta_\tau\mid\tau\in\operatorname{Gal}(M_{i-1}/K)\bigr).
+\]
+对 \(\rho\in\operatorname{Gal}(M_i/M_{i-1})\)，因 \(\rho\) 固定 \(\tau(a_i)\)，比值 \(\rho(\beta_\tau)/\beta_\tau\) 属于 \(\mu_{m_i}\)。由此得到映射
 \[
 \operatorname{Gal}(M_i/M_{i-1})\longrightarrow
 \prod_{\tau}\mu_{m_i},\qquad
 \rho\longmapsto\bigl(\rho(\beta_\tau)/\beta_\tau\bigr)_\tau
 \]
-是单同态，其同态性及单射性与\cref{b1:prop:single-radical-cyclic}中的计算相同：根的比值在被固定的单位根群中，而固定全部生成根就固定全域。因此相对 Galois 群 \(\operatorname{Gal}(M_i/M_{i-1})\) 是交换群；它在下面的限制映射正合列中充当核。由\cref{b1:thm:galois-quotient}，该正合列为
+它与\cref{b1:prop:single-radical-cyclic}中的比值映射相同。具体地，\(\rho\) 固定 \(M_{i-1}\)，故固定全部单位根；对另一个相对自同构 \(\eta\)，有
+\[
+\frac{\rho\eta(\beta_\tau)}{\beta_\tau}
+=\rho\Bigl(\frac{\eta(\beta_\tau)}{\beta_\tau}\Bigr)
+\frac{\rho(\beta_\tau)}{\beta_\tau}
+=\frac{\eta(\beta_\tau)}{\beta_\tau}
+\frac{\rho(\beta_\tau)}{\beta_\tau}.
+\]
+目标群交换，上式便是逐坐标的同态公式。若全部比值为 \(1\)，\(\rho\) 固定全部生成根，也就固定整个 \(M_i\)，故这个同态单射。单位根的直积是交换群，其子群也交换，所以 \(\operatorname{Gal}(M_i/M_{i-1})\) 实际上是交换群。由于 \(M_{i-1}/K\) 已是 Galois 扩张，\cref{b1:thm:galois-quotient}给出限制映射的正合列
 \[
 1\longrightarrow\operatorname{Gal}(M_i/M_{i-1})
 \longrightarrow\operatorname{Gal}(M_i/K)
 \longrightarrow\operatorname{Gal}(M_{i-1}/K)\longrightarrow1.
 \]
-核可解、商可解，\cref{b1:thm:solvable-closure}保证中间群可解。归纳到末端即得所需 \(M\)。
+其核是刚证明交换的相对 Galois 群，商是归纳中已知可解的 \(\operatorname{Gal}(M_{i-1}/K)\)。由\cref{b1:thm:solvable-closure}，\(\operatorname{Gal}(M_i/K)\) 可解。这就保持了构造中所需的全部条件；取 \(M=M_r\)，它包含根式塔的末端域，因而得到结论。
 \end{proof}
 
 \subsection{根式可解性与可解群}
@@ -86,31 +110,36 @@ X^{m_i}-\tau(a_i),\qquad\tau\in\operatorname{Gal}(M_{i-1}/K),
 设 \(K\) 的特征为零，\(f\in K[X]\) 非常数，\(L\) 为其分裂域。则 \(f\) 根式可解当且仅当 \(\operatorname{Gal}(L/K)\) 是可解群。
 \end{theorem}
 
-必要性使用刚建立的正规可解包络，把根式塔置于可解 Galois 扩张之内。充分性则从可解群出发，先加入必要的单位根，再把素数阶循环商逐层转为开方。
+由根式塔推出群可解，所用的是正规可解包络及分裂域群作为商群的性质；由群可解构造根式塔，所用的则是素数阶循环因子和 Kummer 定理。后一方向须先加入单位根，才能把循环扩张转成开方。
 
 \begin{proof}
-先设 \(f\) 的全部根包含在某条根式塔中。由\cref{b1:lem:radical-normal-envelope}，该塔包含于有限 Galois 扩张 \(M/K\)，其群可解。于是 \(L\subseteq M\)。由于 \(L/K\) 也是 Galois 扩张，限制同态满射到 \(\operatorname{Gal}(L/K)\)，核为 \(\operatorname{Gal}(M/L)\)。可解群的商仍可解，故所需必要性成立。
+先设 \(f\) 的全部根包含在某条根式塔中。由\cref{b1:lem:radical-normal-envelope}，该塔包含于有限 Galois 扩张 \(M/K\)，其群可解。\(L\) 由 \(f\) 的全部根在 \(K\) 上生成，故 \(L\subseteq M\)。又因 \(L/K\) 是特征零域上多项式的分裂域，它也为有限 Galois 扩张。对 \(M/K\) 的中间域 \(L\) 应用\cref{b1:thm:galois-quotient}，\(\operatorname{Gal}(M/L)\) 正规于 \(\operatorname{Gal}(M/K)\)，限制同态满射到 \(\operatorname{Gal}(L/K)\)，且
+\[
+\operatorname{Gal}(L/K)\cong
+\operatorname{Gal}(M/K)/\operatorname{Gal}(M/L).
+\]
+由\cref{b1:thm:solvable-closure}，这个商群可解，得到必要性。
 
-反过来，设 \(G=\operatorname{Gal}(L/K)\) 可解。取 \(m=|G|\)，令 \(F=K(\mu_m)\)、\(E=LF\)。若 \(m=1\)，已有 \(L=K\)，无须开方；以下设 \(m>1\)。域 \(F\) 本身由 \(1\) 的一个 \(m\) 次方根生成，所以 \(F/K\) 是根式扩张。\(E/F\) 是 \(f\) 在 \(F\) 上的分裂域，有限且 Galois。限制到 \(L\) 给出
+反过来，设 \(G=\operatorname{Gal}(L/K)\) 可解。取 \(m=|G|\)。若 \(m=1\)，由 \([L:K]=|G|\) 已有 \(L=K\)，无须开方。以下设 \(m>1\)，选取本原 \(m\) 次单位根 \(\zeta_m\)，令 \(F=K(\mu_m)=K(\zeta_m)\)、\(E=LF\)。因为 \(\zeta_m^m=1\in K\)，这一个特定的 \(m\) 次方根就给出根式扩张 \(F/K\)。\(E/F\) 是 \(f\) 在 \(F\) 上的分裂域，有限且 Galois。对任意 \(\sigma\in\operatorname{Gal}(E/F)\)，因 \(K\subseteq F\)，\(\sigma|_L\) 是一个 \(K\) 嵌入；\(L/K\) 的正规性又保证 \(\sigma(L)=L\)，所以限制给出同态
 \[
 \operatorname{Gal}(E/F)\hookrightarrow\operatorname{Gal}(L/K),
 \]
-因为固定 \(F\) 又固定 \(L\) 就固定合成域。因此 \(H=\operatorname{Gal}(E/F)\) 可解，且其阶整除 \(m\)。
+如果 \(\sigma\) 的限制为恒等，它既固定 \(L\) 又固定 \(F\)，便固定这两个域生成的 \(E=LF\)，所以核平凡。由这个单同态及\cref{b1:thm:solvable-closure}，\(H=\operatorname{Gal}(E/F)\) 可解，且其阶整除 \(m\)。
 
-有限可解群有素数阶循环因子的次正规列。为说明所需版本，先由\cref{b1:prop:derived-quotient}取交换因子的导出列，再在每个有限交换因子中逐次取极大真子群。所得商既交换又单，由\cref{b1:prop:abelian-simple}必为素数阶循环群；在原群中取这些子群的原像就完成细化。故可写
+由\cref{b1:cor:solvable-composition-factors}，有限可解群 \(H\) 有素数阶循环因子的次正规列。其产生过程是：先由\cref{b1:prop:derived-quotient}取交换因子的导出列，再在每个非平凡有限交换因子中取极大真子群，并对阶较小的子群继续做同样的选择。交换群的子群都正规，极大性使所得商为单群；由\cref{b1:prop:abelian-simple}，每个商都是素数阶循环群。通过商映射取这些子群的原像，就把导出列细化为
 \[
 H=H_0\trianglerighteq H_1\trianglerighteq\cdots\trianglerighteq H_s=1,
 \qquad H_{i-1}/H_i\cong C_{\ell_i}.
 \]
-有限 Galois 对应给出反向域塔 \(F=E_0\subseteq E_1\subseteq\cdots\subseteq E_s=E\)，其中 \(E_i=E^{H_i}\)。为确定第 \(i\) 步的群，要在新的基域 \(E_{i-1}\) 上应用对应：扩张 \(E/E_{i-1}\) 仍是有限 Galois 扩张，且
+\cref{b1:thm:finite-galois-correspondence}给出反向域塔 \(F=E_0\subseteq E_1\subseteq\cdots\subseteq E_s=E\)，其中 \(E_i=E^{H_i}\)。相邻的包含 \(H_i\subseteq H_{i-1}\) 因而对应 \(E_{i-1}=E^{H_{i-1}}\subseteq E^{H_i}=E_i\)。为确定这一步的 Galois 群，把基域换成 \(E_{i-1}\)：\(E/E_{i-1}\) 仍是有限 Galois 扩张，且
 \[
 \operatorname{Gal}(E/E_{i-1})=H_{i-1}.
 \]
-在这个群中，\(H_i\trianglelefteq H_{i-1}\)，其不动域为 \(E_i\)，所以商群定理给出
+在这个群中，\(H_i\trianglelefteq H_{i-1}\)，其不动域为 \(E_i\)，所以\cref{b1:thm:galois-quotient}给出 \(E_i/E_{i-1}\) 为 Galois 扩张，且
 \[
 \operatorname{Gal}(E_i/E_{i-1})\cong H_{i-1}/H_i\cong C_{\ell_i}.
 \]
-这里所需的正规性是每一相邻步骤中的正规性，并不要求 \(H_i\) 正规于整个 \(H\)。由于 \(\ell_i\mid m\)，域 \(F\) 及所有 \(E_{i-1}\) 都含 \(\mu_{\ell_i}\)。\cref{b1:thm:kummer-cyclic}遂给出
+这里所需的正规性是 \(H_i\trianglelefteq H_{i-1}\)，并不要求 \(H_i\trianglelefteq H\)：每一步 \(E_i/E_{i-1}\) 都是循环 Galois 扩张，而 \(E_i/F\) 可以不正规。素数 \(\ell_i\) 整除 \(|H|\)，\(|H|\) 又整除 \(m\)，故 \(\ell_i\mid m\)。因此 \(F\) 及所有 \(E_{i-1}\) 都含 \(\mu_{\ell_i}\)，特征零又使 \(\ell_i\) 在这些域中非零。对每一步应用\cref{b1:thm:kummer-cyclic}，得到
 \[
 E_i=E_{i-1}(\gamma_i),\qquad \gamma_i^{\ell_i}\in E_{i-1}.
 \]
@@ -121,20 +150,23 @@ E_i=E_{i-1}(\gamma_i),\qquad \gamma_i^{\ell_i}\in E_{i-1}.
 设 \(K\) 为特征零域，\(f\in K[X]\) 为不可约多项式。若 \(f\) 的一个根属于某条从 \(K\) 出发的根式塔的末端，则 \(f\) 根式可解。
 \end{corollary}
 \begin{proof}
-由\cref{b1:lem:radical-normal-envelope}，可将该根式塔置于有限 Galois 扩张 \(M/K\) 中，且 \(\operatorname{Gal}(M/K)\) 可解。不可约多项式 \(f\) 在 \(M\) 中有根，而 \(M/K\) 正规，故 \(f\) 在 \(M\) 中完全分裂。其分裂域 \(L\) 是 \(M\) 的中间域，\(\operatorname{Gal}(L/K)\) 是 \(\operatorname{Gal}(M/K)\) 的商群，也可解。由\cref{b1:thm:radical-solvability}，\(f\) 根式可解。
+由\cref{b1:lem:radical-normal-envelope}，可将该根式塔置于有限 Galois 扩张 \(M/K\) 中，且 \(\operatorname{Gal}(M/K)\) 可解。由于 \(f\) 不可约，它与所给根的最小多项式只相差一个非零常数因子。\(M/K\) 正规，故这个最小多项式的全部共轭根都在 \(M\) 中，即 \(f\) 在 \(M\) 中完全分裂。其分裂域 \(L\) 是 \(M\) 的中间域；由\cref{b1:thm:galois-quotient}，\(\operatorname{Gal}(L/K)\) 是 \(\operatorname{Gal}(M/K)\) 的商群，也可解。再由\cref{b1:thm:radical-solvability}，\(f\) 根式可解。
 \end{proof}
 
-反向蕴含从根式可解的定义直接得到。因此，对特征零域上的不可约多项式，一个根能否用根式表示与全部根能否用根式表示是同一个存在性问题。
+反向蕴含从根式可解的定义直接得到。因此，对特征零域上的不可约多项式，一个根能否用根式表示与全部根能否用根式表示是同一个存在性问题。不可约条件不能删去：若 \(f\) 可约，已知的一个根只约束它所属的那个不可约因子，不能据此判断其余因子的根式可解性。
 
+\ProseParagraphBreak
 可解扩张不一定自身是根式扩张。取本原七次单位根 \(\zeta_7=e^{2\pi i/7}\)，并令
 \[
 E=\mathbb Q(\zeta_7+\zeta_7^{-1})\subseteq\mathbb R.
 \]
-由\cref{b1:thm:cyclotomic-galois-group}，\(\operatorname{Gal}(\mathbb Q(\zeta_7)/\mathbb Q)\cong(\mathbb Z/7\mathbb Z)^\times\cong C_6\)，其中 \(3\bmod7\) 的阶为 \(6\)。复共轭的不动域是 \(E\)，所以 \(\operatorname{Gal}(E/\mathbb Q)\cong C_3\)；特别地，\(E/\mathbb Q\) 是可解扩张。
+由\cref{b1:thm:cyclotomic-galois-group}，\(\operatorname{Gal}(\mathbb Q(\zeta_7)/\mathbb Q)\cong(\mathbb Z/7\mathbb Z)^\times\cong C_6\)，其中 \(3\bmod7\) 的阶为 \(6\)。复共轭的不动域是 \(E\)，它生成的二阶子群正规于 \(C_6\)，所以\cref{b1:thm:galois-quotient}给出 \(E/\mathbb Q\) 为 Galois 扩张，且 \(\operatorname{Gal}(E/\mathbb Q)\cong C_3\)。因此 \(E/\mathbb Q\) 是可解扩张，但以下论证将说明：开方若始终限制在这个实域 \(E\) 内，就不能生成 \(E\)。
 
-然而，若 \(0\neq\beta\in E\)，且对某个整数 \(m\geq2\) 有 \(\beta^m\in\mathbb Q\)，则对任意 \(\sigma\in\operatorname{Gal}(E/\mathbb Q)\)，比值 \(\sigma(\beta)/\beta\) 是实数域 \(E\) 中的 \(m\) 次单位根，因而属于 \(\{1,-1\}\subseteq\mathbb Q\)。这些比值构成从三阶群 \(\operatorname{Gal}(E/\mathbb Q)\) 到 \(\{1,-1\}\) 的群同态，只能恒为 \(1\)。故 \(\beta\in\mathbb Q\)。
+\ProseParagraphBreak
+若 \(0\neq\beta\in E\)，且对某个整数 \(m\geq2\) 有 \(\beta^m\in\mathbb Q\)，则对任意 \(\sigma\in\operatorname{Gal}(E/\mathbb Q)\)，比值 \(\sigma(\beta)/\beta\) 是实数域 \(E\) 中的 \(m\) 次单位根，因而属于 \(\{1,-1\}\subseteq\mathbb Q\)。这些比值被每个自同构固定，所以与前面根式扩张中的比值计算一样，\(\sigma\mapsto\sigma(\beta)/\beta\) 是到 \(\{1,-1\}\) 的群同态。它的像的阶必须同时整除 \(3\) 和 \(2\)，故只能为平凡群。这说明全部自同构都固定 \(\beta\)，由 Galois 对应得到 \(\beta\in\mathbb Q\)。
 
-若某条根式塔从 \(\mathbb Q\) 出发而以 \(E\) 为末端，则各层都在 \(E\) 内，第一步非平凡扩张须由这样的 \(\beta\in E\setminus\mathbb Q\) 生成，矛盾。另一方面，\(\zeta_7+\zeta_7^{-1}\) 的最小多项式以 \(E\) 为分裂域；由\cref{b1:thm:radical-solvability}，\(E\) 包含于某条根式塔的末端。
+\ProseParagraphBreak
+若某条根式塔从 \(\mathbb Q\) 出发而以 \(E\) 为末端，则各层都在 \(E\) 内，第一步非平凡扩张须由这样的 \(\beta\in E\setminus\mathbb Q\) 生成，矛盾。所以 \(E/\mathbb Q\) 本身不是根式扩张。另一方面，\(\zeta_7+\zeta_7^{-1}\) 生成 \(E\)，而 \(E/\mathbb Q\) 正规，故它的最小多项式的全部根都在 \(E\) 内，并生成 \(E\)。这个多项式的分裂域便是 \(E\)，由\cref{b1:thm:radical-solvability}，它根式可解。因此 \(E\) 仍包含于某条从 \(\mathbb Q\) 出发的根式塔的末端，只是那个末端域必须严格大于 \(E\)。
 
 \subsection{特征条件与可分性}
 \label{b1:subsec:2102:03}

@@ -7,8 +7,9 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 合成域与交域
-% * 同构类型与嵌入位置的区别
+% * 合成域与交域；解释一侧 Galois 假设、限制映射及反向的群运算，说明非正规扩张的次数公式可能失败
+% * 同构类型与嵌入位置的区别；展开同构延拓与共轭子群的对应
+% * 在正文证明正规化子商群给出中间域自同构群，并解释嵌入数、共轭子域数与自同构数的关系；相应习题改为四次分裂域的具体计算
 %
 % ---
 %
@@ -18,8 +19,10 @@
 \subsection{合成域与交域}
 \label{b1:subsec:1904:02}
 
+在一个共同环境域中，两个子域 \(L,E\) 的合成域 \(LE\) 指包含 \(L\cup E\) 的最小子域。若 \(L/K\) 是一个可分多项式的分裂域，换基域到 \(E\) 后，把同一批根加入 \(E\) 得到的就是 \(LE\)。因此，要使 \(LE/E\) 成为 Galois 扩张，只需在 \(L/K\) 这一侧具有正规性与可分性，并不要求 \(E/K\) 也 Galois。
+
 \begin{proposition}\label{b1:prop:galois-compositum}
-在共同代数闭包内，设 \(L/K\) 是有限 Galois 扩张，\(E/K\) 是有限扩张，并记 \(D=L\cap E\)。则 \(LE/E\) 为 Galois 扩张，限制映射给出同构
+在 \(K\) 的一个共同代数闭包内，设 \(L/K\) 是有限 Galois 扩张，\(E/K\) 是有限扩张，令 \(LE\) 为由 \(L\cup E\) 生成的子域，并记 \(D=L\cap E\)。则 \(LE/E\) 为 Galois 扩张，限制映射给出同构
 \[
 \operatorname{Gal}(LE/E)\cong\operatorname{Gal}(L/D).
 \]
@@ -30,28 +33,91 @@
 \]
 \end{proposition}
 \begin{proof}
-把 \(L\) 写为某个可分 \(K\) 多项式的分裂域。添加其根到 \(E\) 后得到的正是 \(LE\)，所以 \(LE/E\) 是可分多项式的分裂域，为 Galois 扩张。其自同构限制到 \(L\) 后仍保持 \(L\)，这是 \(L/K\) 的正规性；若限制是恒等，它又固定 \(E\)，便固定 \(LE\)，所以限制映射单射。记像为 \(H\leq\operatorname{Gal}(L/K)\)。
+把 \(L\) 写为某个可分 \(K\) 多项式 \(f\) 的分裂域。把 \(f\) 看作 \(E[x]\) 中的多项式，它仍没有重根；添加其全部根到 \(E\) 后得到的正是 \(LE\)，所以 \(LE/E\) 为有限 Galois 扩张。若 \(\sigma\in\operatorname{Gal}(LE/E)\)，则它固定 \(E\)，因而也固定 \(K\subseteq E\)。其限制 \(\sigma|_L:L\rightarrow LE\) 是一个 \(K\) 嵌入，\(L/K\) 的正规性给出 \(\sigma(L)=L\)，所以才有同态
+\[
+\operatorname{res}:\operatorname{Gal}(LE/E)\longrightarrow\operatorname{Gal}(L/K),
+\qquad \sigma\longmapsto\sigma|_L.
+\]
+若限制是恒等，\(\sigma\) 就逐点固定 \(L\cup E\)。由于 \(LE\) 由这两个域生成，它也逐点固定整个 \(LE\)，故 \(\sigma=1\)。因此限制映射单射，记像为 \(H\leq\operatorname{Gal}(L/K)\)。
 
-元素 \(a\in L\) 被 \(H\) 固定，当且仅当它被 \(\operatorname{Gal}(LE/E)\) 的全部元素固定。后者在 \(LE\) 中的不动域为 \(E\)，所以 \(L^H=L\cap E=D\)。在 \(L/K\) 的 Galois 对应中，这迫使 \(H=\operatorname{Gal}(L/D)\)，因而限制映射满到所述子群。对两边取群阶，并使用 Galois 扩张的次数公式与塔式公式，得到两项次数等式。
+对 \(a\in L\)，因为 \(H\) 是限制映射的像，它被 \(H\) 固定当且仅当它被 \(\operatorname{Gal}(LE/E)\) 的全部元素固定。这个群在 \(LE\) 中的不动域为 \(E\)，所以
+\[
+L^H=L\cap(LE)^{\operatorname{Gal}(LE/E)}=L\cap E=D.
+\]
+在 \(L/K\) 的 Galois 对应中，这迫使 \(H=\operatorname{Gal}(L/D)\)，因而限制映射满到所述子群。两边都是 Galois 扩张的群，取阶便有 \([LE:E]=[L:D]\)。再用塔式公式，
+\[
+[LE:K]=[LE:E][E:K]
+=\frac{[L:K]}{[D:K]}[E:K],
+\]
+得到第二项次数等式。
 \end{proof}
 若 \(E_1,E_2\) 都是一个有限 Galois 扩张 \(M/K\) 的中间域，对应子群 \(H_1,H_2\)，则
 \[
 \operatorname{Gal}(M/E_1E_2)=H_1\cap H_2,\qquad
 \operatorname{Gal}(M/E_1\cap E_2)=\langle H_1,H_2\rangle.
 \]
-第一式因为固定合成域恰等于同时固定两个域；第二式因为生成子群的不动元恰为两个不动域的交，再应用对应的互逆性即可。
+第一式是因为逐点固定由 \(E_1\cup E_2\) 生成的较大域，等价于同时逐点固定 \(E_1\) 与 \(E_2\)，所以要取两个固定群的交。另一方面，被生成子群 \(\langle H_1,H_2\rangle\) 固定，等价于同时被 \(H_1\) 与 \(H_2\) 固定，因此
+\[
+M^{\langle H_1,H_2\rangle}=M^{H_1}\cap M^{H_2}=E_1\cap E_2.
+\]
+再用 Galois 对应的互逆性，得到第二式。合成域是包含两域的最小中间域，交域是包含于两域的最大中间域；反转包含关系后，它们分别对应子群的交与包含两群的最小子群。
 
 \ProseParagraphBreak
 取\cref{b1:fig:cubic-intermediate-fields}中的 \(E_1=\mathbb Q(a)\)、\(E_2=\mathbb Q(\zeta a)\)，并沿用\cref{b1:prop:cubic-splitting-field-correspondence}的记号 \(L,G,s,t\)。它们对应 \(H_1=\langle t\rangle\)、\(H_2=\langle s^2t\rangle\)。这两个二阶子群的交为 \(1\)，且两个不同的换位生成 \(G\cong S_3\)，故上述公式给出
 \[
 E_1E_2=L,\qquad E_1\cap E_2=\mathbb Q.
 \]
-前一等式也可由 \(a\) 与 \(\zeta a\) 的比得到 \(\zeta\) 而直接看出。因此 \([E_1E_2:\mathbb Q]=6\)，并非 \([E_1:\mathbb Q][E_2:\mathbb Q]=9\)：两个域都不正规时，交域为基域不能保证次数相乘。此处 \(H_1H_2\) 作为集合只有四个元素，依 Lagrange 定理不是 \(G\) 的子群；交域公式中必须使用生成子群 \(\langle H_1,H_2\rangle\)。
+前一等式也可由 \(a\) 与 \(\zeta a\) 的比得到 \(\zeta\) 而直接看出。因此 \([E_1E_2:\mathbb Q]=6\)，并非 \([E_1:\mathbb Q][E_2:\mathbb Q]=9\)：两个域都不正规时，交域为基域不能保证次数相乘。此处
+\[
+H_1H_2=\{1,t,s^2t,ts^2t\}=\{1,t,s^2t,s\}
+\]
+只有四个元素，依 Lagrange 定理不是六阶群 \(G\) 的子群；而 \(\langle H_1,H_2\rangle\) 还包含任意长的有限乘积，恰为 \(G\)。所以交域公式不能把生成子群替换为乘积集合。若其中一群正规，则在取积或取逆时，可以用正规性把另一群的元素移过它的元素，所得仍在乘积集合中，故乘积集合是子群。此时它包含两群，且每个元素都是两群元素的乘积，所以等于生成子群。
 
 \subsection{同构类型与嵌入位置}
 \label{b1:subsec:1904:03}
 
-域的同构类型与它在某个环境域中的位置是两回事。\(\mathbb Q(a)\) 和 \(\mathbb Q(\zeta a)\) 都同构于 \(\mathbb Q[x]/(x^3-2)\)，存在保持 \(\mathbb Q\) 并把 \(a\) 送到 \(\zeta a\) 的同构，但它们是分裂域中的不同子域。
+对两个实际子域 \(E_1,E_2\subseteq L\)，要求 \(E_1=E_2\) 是比较其中的元素；要求 \(E_1\cong_K E_2\) 则只要求存在固定 \(K\) 的域同构，允许它们在 \(L\) 中的位置不同。例如，\(\mathbb Q(a)\) 和 \(\mathbb Q(\zeta a)\) 都同构于 \(\mathbb Q[x]/(x^3-2)\)，存在保持 \(\mathbb Q\) 并把 \(a\) 送到 \(\zeta a\) 的同构，但它们是分裂域中的不同子域。
 
 \ProseParagraphBreak
-在有限 Galois 扩张 \(L/K\) 中，记 \(G=\operatorname{Gal}(L/K)\)。若两个中间域 \(E_1,E_2\) 在 \(K\) 上同构，把这一同构视为到代数闭包的嵌入，再由\cref{b1:thm:embedding-extension}延拓到 \(L\)；正规性使延拓属于 \(G\)。因此两个中间域在 \(K\) 上同构，当且仅当它们由某个 \(\sigma\in G\) 互相送到；其对应子群也就互为共轭。Galois 对应枚举的是实际子域，而按同构类型分类则须再把共轭子群归为一类。
+在有限 Galois 扩张 \(L/K\) 中，记 \(G=\operatorname{Gal}(L/K)\)。还有第三个问题：是否存在 \(\sigma\in G\) 使 \(\sigma(E_1)=E_2\)？若有，限制 \(\sigma|_{E_1}:E_1\rightarrow E_2\) 就是 \(K\) 同构。反过来，给定 \(K\) 同构 \(\varphi:E_1\overset{\sim}{\longrightarrow}E_2\)，把 \(E_2\) 包含到一个含 \(L\) 的代数闭包 \(\Omega\) 中，便可将 \(\varphi\) 看作 \(K\) 嵌入 \(E_1\rightarrow\Omega\)。由\cref{b1:thm:embedding-extension}，它能延拓为 \(\widetilde\varphi:L\rightarrow\Omega\)。\(L/K\) 的正规性给出 \(\widetilde\varphi(L)=L\)，所以 \(\widetilde\varphi\in G\)，且 \(\widetilde\varphi(E_1)=E_2\)。因此在这个有限 Galois 环境中，\(K\) 同构与被 \(G\) 中元素互相送到等价，子域相等则是更强的要求。
+
+\ProseParagraphBreak
+若 \(H_i=\operatorname{Gal}(L/E_i)\)，由 \(\sigma(E_1)=E_2\) 及\cref{b1:thm:galois-quotient}证明中的共轭公式，
+\[
+E_2=\sigma(L^{H_1})=L^{\sigma H_1\sigma^{-1}},\qquad
+H_2=\sigma H_1\sigma^{-1}.
+\]
+反过来，共轭子群的共同不动域也由 \(\sigma\) 互相送到。Galois 对应枚举的是实际子域，而按 \(K\) 同构类型分类则须再把共轭子群归为一类。
+
+\begin{proposition}\label{b1:prop:subfield-normalizer-automorphisms}
+设 \(L/K\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，\(H\leq G\)，\(E=L^H\)，并记
+\[
+N_G(H)=\{\,\sigma\in G\mid\sigma H\sigma^{-1}=H\,\}.
+\]
+则限制映射给出
+\[
+\operatorname{Aut}_K(E)\cong N_G(H)/H.
+\]
+域 \(L\) 中与 \(E\) 在 \(K\) 上同构的不同中间域共有 \([G:N_G(H)]\) 个，而且
+\[
+[E:K]=[G:N_G(H)]\,|\operatorname{Aut}_K(E)|.
+\]
+\end{proposition}
+\begin{proof}
+由\cref{b1:thm:galois-quotient}证明中的公式 \(\sigma(E)=L^{\sigma H\sigma^{-1}}\) 及 Galois 对应的单射性，\(\sigma(E)=E\) 当且仅当 \(\sigma\in N_G(H)\)。因此限制给出群同态
+\[
+\operatorname{res}:N_G(H)\longrightarrow\operatorname{Aut}_K(E),\qquad
+\sigma\longmapsto\sigma|_E,
+\]
+核为逐点固定 \(E\) 的群 \(\operatorname{Gal}(L/E)=H\)；由正规化子的定义，\(H\) 在 \(N_G(H)\) 中正规。任取 \(\tau\in\operatorname{Aut}_K(E)\)，将它看作到一个含 \(L\) 的代数闭包 \(\Omega\) 的 \(K\) 嵌入，由\cref{b1:thm:embedding-extension}延拓为 \(\widetilde\tau:L\rightarrow\Omega\)。由于 \(L/K\) 正规，\(\widetilde\tau(L)=L\)，故 \(\widetilde\tau\in G\)。它在 \(E\) 上等于 \(\tau\)，所以 \(\widetilde\tau(E)=E\)，即属于 \(N_G(H)\)。限制映射因而满射，第一同构定理给出所述商群同构。
+
+\(G\) 作用在 \(L\) 的中间域集合上，作用为 \(E'\mapsto\sigma(E')\)。由前面的同构延拓论证，与 \(E\) 在 \(K\) 上同构的域恰为这个作用下 \(E\) 的轨道；将 \(E\) 保持为集合的稳定子群恰为 \(N_G(H)\)。\cref{b1:thm:orbit-stabilizer}给出不同域的数目 \([G:N_G(H)]\)。最后，由 Galois 对应与指数乘法公式，
+\[
+[E:K]=[G:H]=[G:N_G(H)]\,[N_G(H):H]
+=[G:N_G(H)]\,|\operatorname{Aut}_K(E)|.
+\]
+\end{proof}
+这个次数等式也可以直接按嵌入来理解。中间扩张 \(E/K\) 可分，所以它到代数闭包的不同 \(K\) 嵌入共有 \([E:K]\) 个。每个嵌入都延拓到 \(L\)，由正规性，其像是 \(L\) 内与 \(E\) 同构的某个子域。固定其中一个像域 \(E'\) 并选一个 \(K\) 同构 \(\varphi:E\rightarrow E'\) 后，全部以 \(E'\) 为像的嵌入恰为 \(\varphi\circ\tau\)，其中 \(\tau\in\operatorname{Aut}_K(E)\)。因此嵌入总数等于共轭副本的数目乘以每个副本内的同构数。自同构要求像仍为原来的 \(E\)，一般嵌入则可以把它送到另一个副本。
+
+\ProseParagraphBreak
+在\cref{b1:prop:cubic-splitting-field-correspondence}的三次分裂域中，对 \(E=\mathbb Q(a)\)，对应 \(H=\langle t\rangle\)。正规化 \(H\) 的元素须在共轭下固定它唯一的非单位元 \(t\)；在 \(S_3\) 中，与这个换位交换的元素只有 \(1,t\)，所以 \(N_G(H)=H\)。于是 \(E\) 有三个不同的共轭子域，却只有恒等 \(\mathbb Q\) 自同构，次数公式为 \(3=3\cdot1\)。对 \(E=\mathbb Q(\zeta)\)，对应的三阶子群 \(H=\langle s\rangle\) 正规，故 \(N_G(H)=G\)。这个二次域是同一环境中唯一的同构副本，但有两个 \(\mathbb Q\) 自同构，次数公式为 \(2=1\cdot2\)。两种情形都具有次数那么多的嵌入，只是嵌入是否保持同一子域不同。
