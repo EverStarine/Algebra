@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### D.2 逆 Galois 问题与典型构造
-% 纲要位置：计划纲要.md，第 898 行。
+% 纲要位置：计划纲要.md，第 934 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### D.2.1 固定基域与允许改变基域
 % #### D.2.2 分圆域、二次根式与三次方程
@@ -18,17 +18,35 @@
 给定域 \(K\) 和有限群 \(G\)。是否存在有限 Galois 扩张 \(L/K\)，使 \(\operatorname{Gal}(L/K)\cong G\)，这个存在性问题称为关于 \(K,G\) 的\term[ni-galois-wenti]{逆 Galois 问题}[inverse Galois problem]。经典问题固定 \(K=\mathbb Q\)，并允许 \(G\) 遍历有限群。
 \end{definition}
 
-若 \(K=\mathbb F_q\)，\cref{b1:thm:finite-field-automorphisms}说明所有有限扩张的群均为循环群，而 \(\mathbb F_{q^n}/\mathbb F_q\) 实现每个 \(C_n\)。因此非循环群不可能在这一基域上实现。若允许连基域一起选择，情况容易得多。
+经典问题在一般情形下仍未解决。下文的几个小群构造分别给出肯定的实例，并不是一个已经解决全部有限群的定理的特例。基域的选择还会直接限制可能的群：若 \(K=\mathbb F_q\)，\cref{b1:thm:finite-field-automorphisms}说明所有有限扩张的群均为循环群，而 \(\mathbb F_{q^n}/\mathbb F_q\) 实现每个 \(C_n\)。因此非循环群不可能在这一基域上实现。
+
+\ProseParagraphBreak
+若允许连基域一起选择，就只须对每个有限群 \(G\) 找到某些 \(K\) 和 \(L/K\) 来实现它；经典问题则要求对每个 \(G\) 都找到 \(L/\mathbb Q\)。前者的量词是 \(\forall G\,\exists K\,\exists L/K\)，后者的基域固定为 \(\mathbb Q\)，不能随 \(G\) 调整。下面的构造解决前者。
 
 \begin{proposition}\label{b1:prop:finite-group-realization}
 对任意域 \(k\) 和有限群 \(G\)，存在含 \(k\) 的域 \(K\) 及有限 Galois 扩张 \(L/K\)，其 Galois 群同构于 \(G\)。
 \end{proposition}
 
 \begin{proof}
-取独立变量 \(x_g\)、\(g\in G\)，令 \(L=k(x_g\mid g\in G)\)。对 \(h\in G\)，规定 \(\sigma_h(x_g)=x_{hg}\)，并固定 \(k\)。变量的置换给出有理函数域自同构，且 \(\sigma_h\sigma_j=\sigma_{hj}\)。若 \(h\neq1\)，则 \(\sigma_h(x_1)=x_h\neq x_1\)，故作用忠实。取 \(K=L^G\)，由\cref{b1:thm:artin-fixed-field}，\(L/K\) 为次数 \(|G|\) 的 Galois 扩张，且 \(\operatorname{Gal}(L/K)=\{\sigma_h\mid h\in G\}\cong G\)。
+取独立变量 \(x_g\)、\(g\in G\)，令 \(L=k(x_g\mid g\in G)\)。对 \(h\in G\)，规定 \(\sigma_h(x_g)=x_{hg}\)，并固定 \(k\)。这里对变量标号的置换就是\cref{b1:thm:cayley}中的左正则作用：把左乘置换变成有理函数域自同构。复合满足 \(\sigma_h\sigma_j=\sigma_{hj}\)；若 \(h\neq1\)，则 \(\sigma_h(x_1)=x_h\neq x_1\)，故作用忠实。
+
+记这些自同构组成的有限群为 \(H\)，取 \(K=L^H\)。\cref{b1:thm:artin-fixed-field}将有限自同构群与其不动域联系起来，给出 \(L/K\) 为次数 \(|H|=|G|\) 的 Galois 扩张，而且 \(\operatorname{Gal}(L/K)=H\)。因此已经构造的忠实作用就是全部固定 \(K\) 的自同构，不会另有额外的自同构扩大所求群。
 \end{proof}
 
-证明中的 \(K\) 是随 \(G\) 改变的不动域，不能把它改写成 \(\mathbb Q\)。经典逆问题的困难正包括如何在预定基域上保留所需的群；上述构造没有解决基域预先指定的情形。
+证明中的 \(K\) 是随 \(G\) 改变的不动域，即使取 \(k=\mathbb Q\)，它也不能直接改写成 \(\mathbb Q\)。一般不动域 \(k(x_g\mid g\in G)^G\) 是否为 \(k\) 上的纯超越扩张，本身也是需要研究的问题；不能从整个有理函数域是纯超越的，就断言其中的不动域也有同样性质。下面交换两个变量的例子确实得到一个有理函数不动域，但将参数代入基域元素以后，群仍可能改变。
+
+\begin{proposition}\label{b1:prop:D-specialization-changes-group}
+设 \(k\) 为域，\(x,y\) 为 \(k\) 上两个代数独立的元素，\(L=k(x,y)\)，且 \(C_2\) 的非恒等元交换 \(x,y\)。记 \(s=x+y\)、\(p=xy\)，则 \(s,p\) 在 \(k\) 上代数独立，\(L^{C_2}=k(s,p)\)，而 \(L/k(s,p)\) 是二次 Galois 扩张。多项式 \(T^2-sT+p\in k(s,p)[T]\) 的分裂域为 \(L\)，Galois 群为 \(C_2\)。当 \(k=\mathbb Q\) 时，将参数分别代为 \((s,p)=(0,-1)\) 和 \((0,-2)\)，所得多项式在 \(\mathbb Q\) 上的分裂域群分别为平凡群和 \(C_2\)。
+\end{proposition}
+\begin{proof}
+交换自同构 \(\tau\) 固定 \(s,p\)，所以 \(k(s,p)\subseteq L^{C_2}\)。另一方面，\(x,y\) 都是 \(T^2-sT+p\) 的根，且 \(y=s-x\)，故 \(L=k(s,p)(x)\)，从而 \([L:k(s,p)]\leq2\)。\(\tau\) 非恒等，\cref{b1:thm:artin-fixed-field}给出 \([L:L^{C_2}]=2\)。塔式公式迫使 \([L:k(s,p)]=2\) 及 \(L^{C_2}=k(s,p)\)。因此该二次多项式不可约，其两个根 \(x,y\) 互异，分裂域恰为 \(L\)。这一论证也适用于特征二。
+
+由 \(x,y\) 代数独立，\(\operatorname{trdeg}_k L=2\)；而 \(L/k(s,p)\) 是代数扩张，\cref{b1:prop:transcendence-tower}给出 \(\operatorname{trdeg}_k k(s,p)=2\)。依\cref{b1:prop:finitely-generated-field-structure}，可以从 \(\{s,p\}\) 中选出超越基；其基数为二，故必须选入两者，所以 \(s,p\) 代数独立。
+
+取 \(k=\mathbb Q\)。代入 \((s,p)=(0,-1)\) 得 \(T^2-1\)，它已在 \(\mathbb Q\) 中分裂，故分裂域的群平凡；代入 \((0,-2)\) 得 \(T^2-2\)，它不可约，分裂域 \(\mathbb Q(\sqrt2)\) 的群为 \(C_2\)。两个多项式都无重根，群的差异来自不可约性与分裂域次数的变化。
+\end{proof}
+
+因此，允许改变基域的实现与固定 \(\mathbb Q\) 的实现是不同的存在性问题；即使已经得到有理函数基域上的实现，任意专化也不保证保留其 Galois 群。这里的专化是将多项式的参数代为具体数值，并不是将整个有理函数域映入 \(\mathbb Q\)：例如 \(s\) 代为零时，\(1/s\) 就无法代入。
 
 \subsection{分圆域、二次根式与三次方程}
 \label{b1:subsec:D02:02}
@@ -44,11 +62,11 @@
 \end{proposition}
 
 \begin{proof}
-\cref{b1:thm:cyclotomic-galois-group}给出 \(\mathbb Q(\zeta_7)/\mathbb Q\) 的群为 \((\mathbb Z/7\mathbb Z)^\times\)。剩余类 \(3\) 的幂依次为 \(3,2,6,4,5,1\)，所以该群为 \(C_6\)。复共轭生成二阶子群，其不动域恰为 \(\mathbb Q(\zeta_7+\zeta_7^{-1})\)：\(\zeta_7\) 在这个实域上满足二次方程而不属于它，故次数恰为二。二阶子群正规，\cref{b1:thm:galois-quotient}给出不动域在 \(\mathbb Q\) 上的群为 \(C_6/C_2\cong C_3\)。
+要实现 \(C_3\)，可以从已知的较大分圆群取正规商。\cref{b1:thm:cyclotomic-galois-group}给出 \(\mathbb Q(\zeta_7)/\mathbb Q\) 的群为 \((\mathbb Z/7\mathbb Z)^\times\)。剩余类 \(3\) 的幂依次为 \(3,2,6,4,5,1\)，所以该群为 \(C_6\)。记 \(s=\zeta_7+\zeta_7^{-1}\in\mathbb R\)，复共轭 \(\tau\) 固定 \(s\)，因而 \(\mathbb Q(s)\subseteq\mathbb Q(\zeta_7)^{\langle\tau\rangle}\)。\(\zeta_7\) 满足 \(X^2-sX+1=0\)，又不属于实域 \(\mathbb Q(s)\)，故 \([\mathbb Q(\zeta_7):\mathbb Q(s)]=2\)。复共轭的不动域也有指数二，两域遂相等。二阶子群在 \(C_6\) 中正规，\cref{b1:thm:galois-quotient}给出不动域在 \(\mathbb Q\) 上的群为 \(C_6/C_2\cong C_3\)。
 
-令 \(E=\mathbb Q(\sqrt2,\sqrt3)\)。有理数的平方中每个素数的指数均为偶数，故 \(2,3,6\) 都不是有理数的平方。若 \(\sqrt3=a+b\sqrt2\)，其中 \(a,b\in\mathbb Q\)，平方后比较 \(1,\sqrt2\) 的系数可得 \(ab=0\) 及 \(a^2+2b^2=3\)。若 \(b=0\)，则 \(3=a^2\)；若 \(a=0\)，则 \(6=(2b)^2\)，均矛盾。因此 \([E:\mathbb Q]=4\)。又因 \(E\) 是可分多项式 \((X^2-2)(X^2-3)\) 在 \(\mathbb Q\) 上的分裂域，它是 Galois 扩张。其每个 \(\mathbb Q\)-自同构分别把 \(\sqrt2,\sqrt3\) 送到各自的正负号根，从而给出 \(\operatorname{Gal}(E/\mathbb Q)\) 到 \(C_2\times C_2\) 的单射。两群的阶均为四，故此单射是同构，两个根号确实可以独立变号。\cref{b1:thm:kummer-correspondence}也可从平方类的角度解释这一结果。
+要实现 \(C_2\times C_2\)，可以使两个二次扩张的次数在合成后相乘。令 \(E=\mathbb Q(\sqrt2,\sqrt3)\)。有理数的平方中每个素数的指数均为偶数，故 \(2,3,6\) 都不是有理数的平方。若 \(\sqrt3=a+b\sqrt2\)，其中 \(a,b\in\mathbb Q\)，平方后比较 \(1,\sqrt2\) 的系数可得 \(ab=0\) 及 \(a^2+2b^2=3\)。若 \(b=0\)，则 \(3=a^2\)；若 \(a=0\)，则 \(6=(2b)^2\)，均矛盾。因此 \([E:\mathbb Q]=4\)。又因 \(E\) 是可分多项式 \((X^2-2)(X^2-3)\) 在 \(\mathbb Q\) 上的分裂域，它是 Galois 扩张。其每个 \(\mathbb Q\)-自同构分别把 \(\sqrt2,\sqrt3\) 送到各自的正负号根，从而给出 \(\operatorname{Gal}(E/\mathbb Q)\) 到 \(C_2\times C_2\) 的单射。两群的阶均为四，故此单射是同构，四种符号组合全部由自同构实现。这里独立变号是次数计算与单射共同推出的结论，而不是仅凭生成元各自有两个候选像就能断定。\cref{b1:thm:kummer-correspondence}也可从平方类的角度解释这一结果。
 
-最后，\(X^3-2\) 对素数 \(2\) 满足\cref{b1:thm:eisenstein}，故实根 \(a=\sqrt[3]2\) 的次数为三。非实的 \(\zeta_3\) 不在实域 \(\mathbb Q(a)\) 内，加入它使次数再乘二。所得域包含三个互异根 \(a,\zeta_3a,\zeta_3^2a\)，是可分分裂域。自同构在根上给出到 \(S_3\) 的单射，而群阶等于扩张次数六，因此像为整个 \(S_3\)。
+要实现 \(S_3\)，可以取一个尚未包含全部根的三次根域，再补入其他共轭根。\(X^3-2\) 对素数 \(2\) 满足\cref{b1:thm:eisenstein}，故实根 \(a=\sqrt[3]2\) 的次数为三。非实的 \(\zeta_3\) 不在实域 \(\mathbb Q(a)\) 内，加入它使次数再乘二。所得域包含三个互异根 \(a,\zeta_3a,\zeta_3^2a\)，是可分分裂域。自同构在根上给出到 \(S_3\) 的单射，而群阶等于扩张次数六，因此像为整个 \(S_3\)。
 \end{proof}
 
 第一个构造还可以直接写成三次方程。令 \(s=\zeta_7+\zeta_7^{-1}\)，则
@@ -60,7 +78,12 @@
 \[
 s^3+s^2-2s-1=0.
 \]
-上面的证明已给出 \([\mathbb Q(s):\mathbb Q]=3\)，所以这个三次多项式不可约。三个根分别为 \(\zeta_7^j+\zeta_7^{-j}\)、\(j=1,2,3\)，后两者已经表示成 \(s\) 的多项式，故全在 \(\mathbb Q(s)\) 内。因此它的分裂域群为 \(C_3\)。相比之下，\(X^3-2\) 的分裂域群为 \(S_3\)；同为不可约三次方程，其 Galois 群仍可能不同。
+上面的证明已给出 \([\mathbb Q(s):\mathbb Q]=3\)，所以这个三次多项式不可约。三个根分别为 \(\zeta_7^j+\zeta_7^{-j}\)、\(j=1,2,3\)，后两者已经表示成 \(s\) 的多项式，故全在 \(\mathbb Q(s)\) 内。因此它的分裂域群为 \(C_3\)。相比之下，\(X^3-2\) 的分裂域群为 \(S_3\)；同为不可约三次方程，其 Galois 群仍可能不同。\cref{b1:prop:discriminant-alternating-group}给出另一种区分：可分不可约三次式的群是 \(C_3\) 还是 \(S_3\)，取决于判别式是否为基域中的平方。这里
+\[
+\operatorname{disc}(X^3+X^2-2X-1)=49,\qquad
+\operatorname{disc}(X^3-2)=-108,
+\]
+前者是有理数的平方，后者不是，与上述域构造所得的两个群相符。
 
 \ProseParagraphBreak
 第一个例子对已知的较大群取正规商，第二个例子利用平方类的独立性，第三个例子则由扩张次数确定根的置换群。这些是可独立核验的构造方法。更一般的实现问题还涉及带参数的方程、专化及分歧控制；本附录不把这些深层步骤当成从上述例子自然得到的推论。

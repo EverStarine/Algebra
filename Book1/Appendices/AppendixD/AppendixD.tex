@@ -1,11 +1,11 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 附录 D　域论与方程专题简介
-% 纲要位置：计划纲要.md，第 883 行。
+% 纲要位置：计划纲要.md，第 919 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % * 实闭域初步移至本卷附录 E；实代数与半代数几何进一步转第三卷附录 G
-% * 赋值扩张与局部域初步
-% * 逆 Galois 问题的概念和典型构造
-% * 微分 Galois 理论与经典 Galois 理论的比较；对象介绍见第三卷附录 E、线性理论见第五卷附录 E，详细理论留给专题教材
+% * 离散赋值及其尺度、局部域的两个模型、单根 Hensel 提升与 Laurent 纯幂扩张的完整证明
+% * 固定基域与可变基域的逆 Galois 问题、小群构造及参数专化改变群的例子
+% * 基本解的常数坐标、微分自同构的矩阵表示及两个一阶方程算例；对象介绍见第三卷附录 E、线性理论见第五卷附录 E，详细理论留给专题教材
 % END APPENDIX OUTLINE SYNC
 
 \chapter{域论与方程专题简介}
@@ -25,11 +25,11 @@
 
 \end{learninggoals}
 
-方程 \(X^2=2\) 在模 \(7\) 下有根 \(3\)，但 \(3^2-2=7\)，还不是模 \(49\) 的根。尝试把它改成 \(3+7c\)，代入后只需解一个模 \(7\) 的一次同余，便得到模 \(49\) 的根 \(10\)。这样的逐层修正自然引出 \(7\) 进数和完备性。域论还有两个方向从不同处改变问题：可以先指定一个群，反问它能否作为某个方程的 Galois 群；也可以给域增加求导运算，只允许保持导数关系的自同构。三个专题各有自己的对象，却都在检验“解”与“对称”随所保留的结构怎样变化。
+方程 \(X^2=2\) 在模 \(7\) 下有根 \(3\)，但 \(3^2-2=7\)，还不是模 \(49\) 的根。尝试把它改成 \(3+7c\)，代入后只需解一个模 \(7\) 的一次同余，便得到模 \(49\) 的根 \(10\)。这样的逐层修正自然引出 \(7\) 进数和完备性：赋值 \(v(x-y)\) 记录两个元素的同余精度，保持赋值的映射也就保持这种精度。若从给定的群出发寻找 Galois 扩张，还要说明它是否能够在预先指定的基域 \(K\) 上实现；允许选择基域与固定 \(K\) 是不同的存在性问题。给域增加求导运算后，又要求允许的自同构 \(\sigma\) 满足 \(\sigma\partial=\partial\sigma\)。三个专题各自增加了要保留的数据或约束，因而必须分别说明哪些映射仍被允许、哪些信息能够由它们辨认。
 
 \ProseParagraphBreak
 
-本附录使用多项式除法、分裂域、有限 Galois 对应和分圆域。三个专题分别从赋值、指定基域和带导子的域出发，彼此没有证明上的先修关系。完备性在第一节按赋值定义；微分方程一节只用形式求导和矩阵乘法。赋值部分限于两个局部域模型、单根提升和一个分歧扩张模型；微分部分限于基本解矩阵、自同构的常数矩阵表示及具体算例。一般局部类域论与微分 Galois 对应属于后续专题。有序域、实闭域及实根计数集中放在\appref{b1:app:E}，进一步的实代数与半代数几何转第三卷附录 G。
+本附录使用多项式除法、分裂域、有限 Galois 对应和分圆域。赋值专题从相容同余和完备性出发，逆 Galois 专题使用不动域及有限 Galois 对应，微分专题使用形式求导和矩阵乘法。它们分别讨论不同问题，各节可独立阅读。完备性在第一节按赋值定义。赋值部分限于两个局部域模型、单根提升和一个分歧扩张模型；微分部分限于基本解矩阵、自同构的常数矩阵表示及具体算例。一般局部类域论与微分 Galois 对应属于后续专题。有序域、实闭域及实根计数集中放在\appref{b1:app:E}，进一步的实代数与半代数几何转第三卷附录 G。
 
 \ProseParagraphBreak
 赋值与完备化可参阅 Lang 的《Algebra》\cite[Chapter XII, \S\S 1--2, 4--7]{Lang2002}。完备局部环及 Hensel 方法见 Nagata 的《Local Rings》\cite[Chapter II; Chapter VII, 43--44]{Nagata1975LocalRings}和 Eisenbud 的《Commutative Algebra: with a View Toward Algebraic Geometry》\cite[Sections 7.1--7.3, 7.5]{Eisenbud1995CommutativeAlgebra}。逆 Galois 问题中的刚性方法见 Malle 与 Matzat 的《Inverse Galois Theory》\cite[The Rigidity Method, pp. 1--90]{MalleMatzat2018InverseGalois}；它不作为本附录小群构造的先修。微分 Galois 理论的导子、线性系统和基本对应见 Singer 的综述\cite[Sections 1.2--1.3]{Singer2009DifferentialGalois}，系统论述见 van der Put 与 Singer 的专著\cite[Chapter 1, Sections 1.1--1.4]{VanDerPutSinger2003GaloisTheory}；微分模、解析延拓及算法需要更多准备。
@@ -37,9 +37,9 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 实闭域初步移至本卷附录 E；实代数与半代数几何进一步转第三卷附录 G
-% * 赋值扩张与局部域初步
-% * 逆 Galois 问题的概念和典型构造
-% * 微分 Galois 理论与经典 Galois 理论的比较；对象介绍见第三卷附录 E、线性理论见第五卷附录 E，详细理论留给专题教材
+% * 离散赋值及其尺度、局部域的两个模型、单根 Hensel 提升与 Laurent 纯幂扩张的完整证明
+% * 固定基域与可变基域的逆 Galois 问题、小群构造及参数专化改变群的例子
+% * 基本解的常数坐标、微分自同构的矩阵表示及两个一阶方程算例；对象介绍见第三卷附录 E、线性理论见第五卷附录 E，详细理论留给专题教材
 %
 
 \input{Appendices/AppendixD/SectionD01}
@@ -70,19 +70,27 @@
 \begin{solution}
 令第一步为 \(3+7c\)。模 \(49\) 的方程化为 \(1+6c=0\bmod7\)，故可取 \(c=1\)，得到 \(10\)。下一步取 \(10+49d\)，条件为 \(2+20d=0\bmod7\)，可取 \(d=2\)，得到 \(108\)；确有 \(108^2-2=34\cdot343\)。导数在初始根处为 \(6\)，是单位，\cref{b1:thm:hensel-simple}保证这些相容近似决定唯一的该剩余类内的根。
 
-若 \(x^2=3\)，则 \(2v_7(x)=0\)，所以 \(x\) 为 \(7\) 进整数单位，其模 \(7\) 的平方应为 \(3\)。但模 \(7\) 的平方只有 \(0,1,2,4\)，故无根。
+若 \(x^2=3\)，先由 \(2v_7(x)=v_7(3)=0\) 得 \(v_7(x)=0\)，所以 \(x\) 必须落在 \(7\) 进整数的单位层，才可将等式约化到剩余域；其模 \(7\) 的平方应为 \(3\)。但模 \(7\) 的平方只有 \(0,1,2,4\)，故无根。
 \end{solution}
 
+% 原纯幂扩张的幂基证明已移入正文；补换为中间域与对应子群的计算。
 \begin{exercise}\label{b1:ex:D-laurent-extension}
-设 \(k\) 为域，\(e\in\mathbb Z_{\geq1}\)。将 \(k((t))\) 通过逐项代入
-\[
-\sum_{j\geq N}a_jt^j\longmapsto\sum_{j\geq N}a_ju^{ej}
-\]
-嵌入 \(k((u))\)。证明 \(1,u,\ldots,u^{e-1}\) 是扩张的一组基，说明赋值的归一化如何改变。若 \(\operatorname{char}k\nmid e\) 且 \(k\) 含全部 \(e\) 次单位根，求其 Galois 群。
+设 \(k\) 为特征不等于 \(2,3\) 且含全部六次单位根的域。将 \(K=k((t))\) 通过 \(t=u^6\) 嵌入 \(L=k((u))\)，并取中间域 \(E=k((u^2))\)、\(F=k((u^3))\)。求 \([L:K],[E:K],[F:K]\)，说明各域归一化赋值的限制关系，并求 \(\operatorname{Gal}(L/K)\)、与 \(E,F\) 对应的子群以及 \(E\cap F\)、\(EF\)。这里 \(EF\) 表示两中间域在 \(L\) 内的合域。
 \end{exercise}
 
 \begin{solution}
-因为 \(e\geq1\)，代入后的指数有下界。将 Laurent 级数的幂指数按模 \(e\) 的剩余类分组，唯一写成 \(\sum_{r=0}^{e-1}u^r\cdot f_r(u^e)\)，其中 \(f_r\in k((t))\)。唯一性来自不同剩余类的幂不能相消，所以这些元素既生成又线性无关。归一化赋值满足 \(v_u(t)=e\)，因而延拓 \(v_t\) 的是 \(w=v_u/e\)；仅当 \(e>1\) 时，新的根才改变原值群在归一化赋值下的嵌入。在附加假设下，\(X^e-t\) 可分，全部根为 \(\zeta u\)，都在此扩张内；映射 \(u\mapsto\zeta u\) 给出全部 \(e\) 个自同构，群为循环群 \(\mu_e\)。若 \(\operatorname{char}k=p>0\) 且 \(p\mid e\)，则 \(X^e-t\) 的形式导数恒为零，不能沿用这一可分性论证。
+将\cref{b1:prop:D-laurent-power-extension}分别用于 \(t=u^6\)、\(t=(u^2)^3\)、\(t=(u^3)^2\)，得到三个次数依次为 \(6,3,2\)。这些域的归一化赋值分别令自己的参数取值一，因此
+\[
+\begin{gathered}
+v_u|_K=6v_t,\qquad v_u|_E=2v_{u^2},\qquad v_u|_F=3v_{u^3},\\
+v_{u^2}|_K=3v_t,\qquad v_{u^3}|_K=2v_t.
+\end{gathered}
+\]
+这些等式比较的是各域单独归一化后的尺度；若要使 \(L\) 上的赋值限制回 \(K\) 恰为 \(v_t\)，须改用 \(v_u/6\)。剩余域则均为 \(k\)。
+
+由六个幂基元素的分组表达式知 \(L=K(u)\)，且 \(X^6-t\) 是 \(u\) 在 \(K\) 上的最小多项式。它可分，六个根 \(\zeta u\) 都在 \(L\) 中，所以 \(L/K\) 为 Galois 扩张。替换 \(u\mapsto\zeta u\) 在 Laurent 级数中逐项将 \(u^j\) 的系数乘以 \(\zeta^j\)，定义固定 \(K\) 的自同构，逆替换对应 \(\zeta^{-1}\)。复合对应单位根乘法，故群同构于 \(\mu_6\)。\cref{b1:lem:finite-multiplicative-cyclic}说明域的有限乘法子群为循环群，且此处 \(X^6-1\) 有六个互异根，所以 \(\mu_6\cong C_6\)。
+
+取本原六次单位根 \(\zeta\)，以 \(\tau(u)=\zeta u\) 生成这个群。同样由分组表达式有 \(E=K(u^2)\)、\(F=K(u^3)\)。\(\tau^j\) 固定 \(u^2\) 当且仅当 \(3\mid j\)，固定 \(u^3\) 当且仅当 \(2\mid j\)，因此与 \(E,F\) 对应的子群分别为 \(\langle\tau^3\rangle\)、\(\langle\tau^2\rangle\)。两子群生成全群且交为单位群，\cref{b1:thm:finite-galois-correspondence}的反序性给出 \(E\cap F=K\)、\(EF=L\)。合域的后一等式也可直接核验：\(u=u^3/u^2\in EF\)，而 \(L=K(u)\)。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:D-cyclic-quartic}
@@ -90,17 +98,18 @@
 \end{exercise}
 
 \begin{solution}
-取 \(L=\mathbb Q(\zeta_5)\)。\cref{b1:thm:cyclotomic-galois-group}把群识别为由 \(2\bmod5\) 生成的四阶循环群。它唯一的二阶子群由复共轭生成，故\cref{b1:thm:finite-galois-correspondence}说明唯一二次域为 \(\mathbb Q(\zeta_5+\zeta_5^{-1})\)。记 \(s=\zeta_5+\zeta_5^{-1}\)，由 \(1+\zeta_5+\cdots+\zeta_5^4=0\) 得 \(s^2+s-1=0\)，所以此域就是 \(\mathbb Q(\sqrt5)\)。
+取 \(L=\mathbb Q(\zeta_5)\)。\cref{b1:thm:cyclotomic-galois-group}把群识别为由 \(2\bmod5\) 生成的四阶循环群。循环群的每个因子阶只对应一个子群，故这个四阶群有唯一的指数二子群，由复共轭生成。\cref{b1:thm:finite-galois-correspondence}把指数二子群与二次中间域对应，因此唯一二次域为 \(\mathbb Q(\zeta_5+\zeta_5^{-1})\)。记 \(s=\zeta_5+\zeta_5^{-1}\)，由 \(1+\zeta_5+\cdots+\zeta_5^4=0\) 得 \(s^2+s-1=0\)，所以此域就是 \(\mathbb Q(\sqrt5)\)。唯一性来自循环群的子群结构；群为 \(C_2\times C_2\) 的四次 Galois 扩张则有三个二次中间域。
 \end{solution}
 
+% 原交换不动域及两次专化例子已移入正文命题，保留标签并补换任务。
 \begin{exercise}\label{b1:ex:D-variable-base}
-设 \(k\) 为域、\(G\) 为有限群。令 \(G\) 按\cref{b1:prop:finite-group-realization}的方式左乘置换 \(k(x_g\mid g\in G)\) 的独立变量，并逐点固定系数域 \(k\)。说明为什么所得构造不能直接解决 \(\mathbb Q\) 上的逆 Galois 问题；当 \(G=C_2\) 时，求交换两个变量 \(x,y\) 的不动域，记 \(s=x+y\)、\(p=xy\)。再取 \(k=\mathbb Q\)，对参数方程 \(T^2-sT+p\) 分别代入 \((s,p)=(0,-1)\) 和 \((0,-2)\)，比较两次得到的 Galois 群。
+设 \(a,b\in\mathbb Q\)，且 \(\Delta=a^2-4b\ne0\)。求 \(T^2-aT+b\) 在 \(\mathbb Q\) 上的分裂域及 Galois 群，并分别计算 \((a,b)=(3,2),(1,-1),(0,-5)\) 三种情形。说明不同参数是否必给出不同分裂域，以及参数方程在 \(\mathbb Q(s,p)\) 上的群为 \(C_2\)，是否足以保证上述每次专化也有群 \(C_2\)。
 \end{exercise}
 
 \begin{solution}
-\cref{b1:prop:finite-group-realization}的基域是依赖 \(G\) 的不动域，既未指定为 \(\mathbb Q\)，也未证明为某个有理函数域。对交换 \(x,y\) 的作用，令 \(s=x+y\)、\(p=xy\)。两者不动，而 \(x\) 满足 \(T^2-sT+p=0\)，且 \(y=s-x\)，故整个域在 \(k(s,p)\) 上次数至多二。交换作用非恒等，\cref{b1:thm:artin-fixed-field}给出对不动域的次数恰为二。由塔式公式，\(k(x,y)^{C_2}=k(s,p)\)。
+由于 \(\Delta\ne0\)，两个根为 \((a+\sqrt\Delta)/2\) 和 \((a-\sqrt\Delta)/2\)，互不相同。两根的差给出 \(\sqrt\Delta\)，所以分裂域恰为 \(\mathbb Q(\sqrt\Delta)\)。若 \(\Delta\) 是有理数平方，两个根都在 \(\mathbb Q\) 中，分裂域群平凡；否则 \(X^2-\Delta\) 不可约，交换两根的自同构生成群 \(C_2\)。
 
-当 \(k=\mathbb Q\) 时，代入 \((s,p)=(0,-1)\) 得 \(T^2-1\)，它在 \(\mathbb Q\) 中分裂，分裂域的 Galois 群平凡；代入 \((0,-2)\) 得 \(T^2-2\)，它在 \(\mathbb Q\) 上不可约，分裂域的 Galois 群为 \(C_2\)。两个多项式均无重根，群的变化来自不可约性和扩张次数的变化。参数代入后必须重新核对这些条件；不动域的计算本身不是任意专化保持原群的定理。
+第一组参数给出 \(T^2-3T+2=(T-1)(T-2)\)，分裂域为 \(\mathbb Q\)。第二组参数的判别式是 \(5\)，第三组的判别式是 \(20\)；后两者的分裂域都为 \(\mathbb Q(\sqrt5)\)，群都为 \(C_2\)，因为 \(\sqrt{20}=2\sqrt5\)。这说明不同参数能够给出同一个分裂域，而专化后的群也可能与参数域上的群不同。\cref{b1:prop:D-specialization-changes-group}中的不动域构造与任意专化保留群的要求是两件事；当前判别式计算正是在每个指定的 \(\mathbb Q\) 上重新核对分裂域。
 \end{solution}
 
 \begin{exercise}\label{b1:ex:D-differential-power}
@@ -108,7 +117,7 @@
 \end{exercise}
 
 \begin{solution}
-在有理函数域 \(C(u)\) 上，导子为 \((nu^{n-1})^{-1}\mathrm{d}/\mathrm{d}u\)，乘子非零，所以常数与通常形式求导相同。若互素多项式 \(P,Q\) 满足 \((P/Q)'=0\)，则 \(P'Q=PQ'\)。由互素性 \(P\mid P'\)，特征零及次数比较迫使 \(P\) 为常数或零；非零情形同样迫使 \(Q\) 为常数。因此常数域恰为 \(C\)。\(X^n-t\) 对 \(C[t]\) 的素元 \(t\) 满足\cref{b1:thm:eisenstein}，且全部根 \(\zeta u\) 在 \(L\) 中。全部 \(K\) 自同构为 \(u\mapsto\zeta u\)，\(\zeta\in\mu_n\)；直接代入导子公式说明它们都与 \(\partial\) 交换。所以微分群为 \(\mu_n\cong C_n\)，并且 \(L\) 是方程 \(y'=y/(nt)\) 的 Picard--Vessiot 扩张。
+在有理函数域 \(C(u)\) 上，导子为 \((nu^{n-1})^{-1}\mathrm{d}/\mathrm{d}u\)，乘子非零，所以常数与通常形式求导相同。若互素多项式 \(P,Q\) 满足 \((P/Q)'=0\)，则 \(P'Q=PQ'\)。由互素性 \(P\mid P'\)，特征零及次数比较迫使 \(P\) 为常数或零；非零情形同样迫使 \(Q\) 为常数。因此常数域恰为 \(C\)。在多项式环 \(C[t][X]\) 中，\(t\) 是系数环 \(C[t]\) 的素元。\(X^n-t\) 的首项系数不被 \(t\) 整除，其余系数都被 \(t\) 整除，常数项却不被 \(t^2\) 整除。\cref{b1:thm:eisenstein}及 Gauss 引理因此给出它在分式域 \(C(t)[X]\) 中不可约，故 \([C(u):C(t)]=n\)。全部根 \(\zeta u\) 都在 \(L\) 中。全部 \(K\) 自同构为 \(u\mapsto\zeta u\)，\(\zeta\in\mu_n\)；由于 \(\zeta\in C\) 是常数且 \(t\) 被固定，有 \(\partial(\zeta u)=\zeta u/(nt)=\sigma(\partial u)\)。在生成元上的相容性经加法、乘法与商法则延伸到整个域，说明这些自同构都与 \(\partial\) 交换。所以微分群为 \(\mu_n\cong C_n\)，并且 \(L\) 是方程 \(y'=y/(nt)\) 的 Picard--Vessiot 扩张。
 \end{solution}
 
 \begin{optionalexercise}\label{b1:ex:D-exponential-series}
@@ -128,9 +137,9 @@ K=C(t),\qquad y=\sum_{m\geq0}\dfrac{t^{2m}}{2^m m!}\in C[\![t]\!],\qquad L=K(y).
 \[
 \sum_{i=0}^{r-1}\bigl(a_i'-(r-i)ta_i\bigr)y^i=0.
 \]
-最小性迫使各系数为零，特别是 \(a_0'=rt a_0\)。把 \(a_0\) 写为非零多项式之比 \(P/Q\)，便有 \(P'Q-PQ'=rtPQ\)。左边若非零，次数严格小于 \(\deg P+\deg Q\)，右边次数为 \(\deg P+\deg Q+1\)，矛盾。因此 \(y\) 超越于 \(K\)。
+最小性迫使各系数为零，特别是 \(a_0'=rt a_0\)。把 \(a_0\) 写为非零多项式之比 \(P/Q\)，便有 \(P'Q-PQ'=rtPQ\)。右边非零，因为特征为零且 \(r>0\)，所以左边也必须非零；但左边次数严格小于 \(\deg P+\deg Q\)，右边次数为 \(\deg P+\deg Q+1\)，矛盾。因此 \(y\) 超越于 \(K\)。
 
 在特征零下，Laurent 级数 \(\sum_{j\geq N}c_jt^j\) 的形式导数为零，当且仅当所有 \(j\neq0\) 的系数 \(c_j\) 为零。因此 \(C((t))\) 的常数域是 \(C\)，介于 \(C\) 与 \(C((t))\) 之间的 \(L\) 也有 \(C_L=C\)。
 
-由于 \(L=K(y)\) 且 \(C_L=C\)，扩张 \(L/K\) 是方程 \(y'=ty\) 的 Picard--Vessiot 扩张。若 \(\sigma\in\operatorname{Gal}_{\partial}(L/K)\)，则 \(\partial\sigma(y)=t\sigma(y)\)，故商法则给出 \(\partial(\sigma(y)/y)=0\)，从而 \(\sigma(y)=cy\)，其中 \(c\in C^\times\)。反过来，\(y\) 的超越性保证每个替换 \(y\mapsto cy\) 都给出固定 \(K\) 的域自同构；它在生成元上与 \(\partial\) 交换，所以微分 Galois 群同构于 \(C^\times\)。同样由超越性，\(\tau(y)=y+1\) 也定义固定 \(K\) 的域自同构，但 \(\partial\tau(y)=ty\)、\(\tau\partial(y)=t(y+1)\)，两者相差非零元素 \(t\)，故它不是微分自同构。
+由于 \(L=K(y)\) 且 \(C_L=C\)，扩张 \(L/K\) 是方程 \(y'=ty\) 的 Picard--Vessiot 扩张。若 \(\sigma\in\operatorname{Gal}_{\partial}(L/K)\)，则 \(\partial\sigma(y)=t\sigma(y)\)，故商法则给出 \(\partial(\sigma(y)/y)=0\)，从而 \(\sigma(y)=cy\)，其中 \(c\in C^\times\)。反过来，\(y\) 的超越性保证每个替换 \(y\mapsto cy\) 都给出固定 \(K\) 的域自同构；它在生成元上与 \(\partial\) 交换，所以微分 Galois 群同构于 \(C^\times\)。同样由超越性，在有理函数表达式中将 \(y\) 换成 \(y+1\) 也定义固定 \(K\) 的域自同构 \(\tau\)，其逆替换为 \(y\mapsto y-1\)。不过 \(\partial\tau(y)=ty\)、\(\tau\partial(y)=t(y+1)\)，两者相差非零元素 \(t\)，故它不是微分自同构。微分 Galois 群要求额外保持导子，在这个例子中确为普通 \(K\)-域自同构群的真子群。
 \end{solution}

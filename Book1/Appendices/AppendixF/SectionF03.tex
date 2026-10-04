@@ -1,6 +1,6 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### F.3 Buchberger 判据与算法
-% 纲要位置：工作记录/计划纲要.md，第 995 行。
+% 纲要位置：工作记录/计划纲要.md，第 1024 行。
 
 % 纲要要点（供目录核对）：
 % #### F.3.1 S 多项式与首项抵消
@@ -24,7 +24,7 @@ Gröbner 基的定义要求控制理想中所有非零多项式的首项，不�
 \subsection{S 多项式与首项抵消}
 \label{b1:subsec:F03:01}
 
-先看非零多项式 \(f,g\)。为了消去它们的最高项，需要先把两个首单项式乘到同一个单项式；最小公倍式恰好给出所需的最小公共倍数。此外，还必须除去各自的首项系数，才能让两个被减的项具有相同系数。
+先看非零多项式 \(f,g\)。这里 \(\operatorname{LM}(f)\) 只记录首单项式，\(\operatorname{LC}(f)\) 记录其非零系数，而首项是两者的乘积 \(\operatorname{LT}(f)\)。为了消去两个最高项，需要先把两个首单项式乘到同一个单项式；最小公倍式恰好给出所需的最小公共倍数。此外，还必须除去各自的首项系数，才能让两个被减的项具有相同系数。
 
 \begin{definition}\label{b1:def:F-s-polynomial}
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备一个单项式序，\(f,g\in R\) 均非零。记
@@ -41,7 +41,7 @@ S(f,g)=
 \end{definition}
 \symidx{\(S(f,g)\)：两个多项式的 S 多项式}
 
-等式右侧两项的首项都是 \(L\)，所以 \(S(f,g)=0\)，或者 \(\operatorname{LM}\bigl(S(f,g)\bigr)\prec L\)。例如在 \(\mathbb Q[x,y]\) 中取字典序 \(x\succ y\)，对
+式中的 \(L/\operatorname{LM}(f)\) 把首单项式移到 \(L\)，而 \(1/\operatorname{LC}(f)\) 把首项系数归一为 \(1\)；对 \(g\) 也作同样的两项调整。于是右侧两项的首项都恰好是 \(L\)，相减后 \(S(f,g)=0\)，或者 \(\operatorname{LM}\bigl(S(f,g)\bigr)\prec L\)。例如在 \(\mathbb Q[x,y]\) 中取字典序 \(x\succ y\)，对
 \[
 g_1=xy-1,\qquad g_2=y^2-1,
 \]
@@ -57,7 +57,12 @@ S(g_1,g_2)=y(xy-1)-x(y^2-1)=x-y.
 a_1h_1+a_2h_2+a_3h_3
 =a_1(h_1-h_3)+a_2(h_2-h_3).
 \]
-三个最高项同时抵消，就被改写成两次成对抵消。在下面的证明中，\(h_j\) 是先首一化、再乘以单项式而使首项对齐的生成元；每个差因而是相应 \(S\) 多项式的单项式倍数。还须控制这些差如何由生成元表示，使替换后的每项首单项式都严格小于 \(M\)，才能得到与所选最小性矛盾的新表示。证明中逐步保留的正是这个首项界。
+三个最高项同时抵消，就被改写成两次成对抵消。任意有限项的情形也如此：若所有 \(h_\nu\) 的首项均为 \(M\)，且 \(\sum_{\nu=1}^t a_\nu=0\)，固定最后一项作比较，就有
+\[
+\sum_{\nu=1}^t a_\nu h_\nu
+=\sum_{\nu=1}^{t-1}a_\nu(h_\nu-h_t).
+\]
+在下面的证明中，\(h_\nu\) 是先首一化、再乘以单项式而使首项对齐的生成元；每个差因而是相应 \(S\) 多项式的单项式倍数。因此成对检查足以控制任意有限多个最高项的抵消。实际检验只须算出每个 \(S\) 多项式的余式是否为零；证明判据时，还要保留除法给出的表示及其首项界。只有替换后的每项首单项式都严格小于 \(M\)，这次改写才能减小整个表示中的最大首单项式。这就是以下第三个条件的作用。
 
 \begin{theorem}[Buchberger 判据]\label{b1:thm:F-buchberger-criterion}
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(G=(g_1,\ldots,g_s)\) 是 \(R\) 中非零多项式组成的有限有序组，并令 \(I=(g_1,\ldots,g_s)\)。下列条件等价：
@@ -65,7 +70,7 @@ a_1h_1+a_2h_2+a_3h_3
 \item\label{b1:item:F-buchberger-gb} \(G\) 是 \(I\) 关于 \(\prec\) 的 Gröbner 基；
 \item\label{b1:item:F-buchberger-remainder} 对每个 \(i<j\)，将 \(S(g_i,g_j)\) 按此有序组作多元除法，所得余式为零；
 \item\label{b1:item:F-buchberger-bound} 对每个 \(i<j\)，记
-\(L_{ij}=\operatorname{lcm}\bigl(\operatorname{LM}(g_i),\operatorname{LM}(g_j)\bigr)\)，存在表示
+\(L_{ij}=\operatorname{lcm}\bigl(\operatorname{LM}(g_i),\operatorname{LM}(g_j)\bigr)\)，存在 \(h_{ij1},\ldots,h_{ijs}\in R\)，使
 \begin{equation}\label{b1:eq:F-s-bounded-representation}
 S(g_i,g_j)=\sum_{\ell=1}^s h_{ij\ell}g_\ell,
 \qquad
@@ -97,7 +102,7 @@ f=\sum_{\nu=1}^t a_\nu m_\nu\widetilde g_{i_\nu},
 \[
 M=\max_\nu\bigl\{m_\nu\operatorname{LM}(g_{i_\nu})\bigr\}.
 \]
-所有可能的 \(M\) 构成非空单项式集合；由 \(\prec\) 的良序性，可以在全部表示中选取 \(M\) 最小的一种。这里与\secref{b1:sec:1801}的最短关系法同样以极小性制造矛盾；那里极小化关系的非零项数，此处极小化表示中的最大首单项式 \(M\)。相加不能产生大于各被加式首单项式的项，所以 \(\operatorname{LM}(f)\preceq M\)。如果取等号，任取达到 \(M\) 的一项，便有 \(\operatorname{LM}(g_{i_\nu})\mid\operatorname{LM}(f)\)，结论已经成立。
+所有可能的 \(M\) 构成非空单项式集合；由 \(\prec\) 的良序性，可以在全部表示中选取 \(M\) 最小的一种。比较的只是表示中最大的首单项式，不要求项数最少。相加不能产生大于各被加式首单项式的项，所以 \(\operatorname{LM}(f)\preceq M\)。我们要证明最小的 \(M\) 必须等于 \(\operatorname{LM}(f)\)：若两者不等，最高的 \(M\) 层就发生了抵消，把这一层改写成更小的项，便会得到最大首单项式更小的表示。如果已经取等号，任取达到 \(M\) 的一项，便有 \(\operatorname{LM}(g_{i_\nu})\mid\operatorname{LM}(f)\)，结论成立。
 
 若 \(\operatorname{LM}(f)\prec M\)，令
 \(J=\bigl\{\nu\mid m_\nu\operatorname{LM}(g_{i_\nu})=M\bigr\}\)。由于 \(\widetilde g_i\) 首一，\(M\) 的系数抵消正是 \(\sum_{\nu\in J}a_\nu=0\)。固定 \(\nu_0\in J\)，得到
@@ -129,7 +134,7 @@ m_\nu\widetilde g_{i_\nu}
 \subsection{逐步补充生成元的算法}
 \label{b1:subsec:F03:02}
 
-若某个 \(S\) 多项式留下非零余式，这个余式仍在原理想中，而它的首单项式尚未被已有生成元控制。把它加入生成组，恰好补充一条有用的新关系。新关系又会产生新的多项式对，所以不能只检查最初的那些对；应保存一个尚未处理的对的集合，直到其中没有元素。
+若某个 \(S\) 多项式留下非零余式，这个余式仍在原理想中，而它的首单项式尚未被已有生成元控制。把它加入生成组，恰好补充一条有用的新关系。新关系又会产生新的多项式对，所以不能只检查最初的那些对；应保存一个尚未处理的对的集合 \(P\)。每轮开始时，\(P\) 中恰好是当前生成组中尚未经本算法处理并记录有界表示的多项式对。加入 \(g_{s+1}\) 后，只新增涉及它的 \((1,s+1),\ldots,(s,s+1)\)。早先处理过的对已有满足\eqref{b1:eq:F-s-bounded-representation}的表示；只要原有生成元仍保留，这份等式及其首项界就继续成立，所以旧对不必重新放回 \(P\)。
 
 \ProseParagraphBreak
 \cref{b1:alg:F-buchberger}给出\term[Buchberger-suanfa]{Buchberger 算法}[Buchberger algorithm]的基本形式。系数域须支持精确的四则运算与零判定；有理数域和素域满足这一要求。算法不在中途删除生成元，因而各个下标始终保留原有含义。
@@ -163,6 +168,12 @@ S(g_i,g_j)=\sum_{\ell=1}^s q_\ell g_\ell+r.
 \end{equation}
 左侧属于当前生成组所生成的理想，因而 \(r\) 也属于它。添加 \(r/\operatorname{LC}(r)\) 不改变所生成的理想，所以算法始终生成 \(I\)。
 
+同时，每轮处理都为所取的多项式对留下有界表示。令
+\[
+L_{ij}=\operatorname{lcm}\bigl(\operatorname{LM}(g_i),\operatorname{LM}(g_j)\bigr).
+\]
+若 \(S(g_i,g_j)=0\)，它已有全零的表示。否则，多元除法的首项界说明\eqref{b1:eq:F-buchberger-step}中每个非零 \(q_\ell g_\ell\)，以及可能非零的 \(r\)，其首单项式均不大于 \(\operatorname{LM}\bigl(S(g_i,g_j)\bigr)\)，因而严格小于 \(L_{ij}\)。如果 \(r=0\)，这直接给出\eqref{b1:eq:F-s-bounded-representation}；如果 \(r\ne0\)，把最后一项写成 \(\operatorname{LC}(r)g_{s+1}\)，也给出同样的表示。算法保留全部已有生成元，所以这份表示在以后的每一步仍然成立。于是早先处理过的对始终满足判据的第三个条件；每轮开始时，\(P\) 只需保存尚未处理的对。
+
 若 \(r\ne0\)，\cref{b1:thm:F-division}说明 \(r\) 的任何单项式都不能被当前的 \(\operatorname{LM}(g_\ell)\) 整除。由\cref{b1:prop:F-monomial-membership}，\(\operatorname{LM}(r)\) 不在它们生成的单项式理想内。故每添加一次非零余式，就有严格包含
 \[
 \bigl(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)\bigr)
@@ -172,12 +183,10 @@ S(g_i,g_j)=\sum_{\ell=1}^s q_\ell g_\ell+r.
 \]
 由\cref{b1:thm:hilbert-basis}，\(R\) 是 Noether 环；再由\cref{b1:prop:noetherian-acc}，其中不可能存在无限严格上升的理想链。因此非零余式只会添加有限次。每次只引入有限个新的对，而每轮处理一个对且不将它重复放回，故全部对也在有限轮内处理完毕。每一轮的多元除法本身由\cref{b1:thm:F-division}保证终止，所以整个算法终止。
 
-还须说明，早先处理过的对不会因生成组扩大而失去作用。处理 \((i,j)\) 时，若 \(S(g_i,g_j)=0\)，它已有全零的表示。否则，多元除法的首项界说明\eqref{b1:eq:F-buchberger-step}中每个非零 \(q_\ell g_\ell\)，以及可能非零的 \(r\)，其首单项式均不大于 \(\operatorname{LM}\bigl(S(g_i,g_j)\bigr)\)，因而严格小于 \(L_{ij}\)。如果 \(r=0\)，这直接给出\eqref{b1:eq:F-s-bounded-representation}；如果 \(r\ne0\)，把最后一项写成 \(\operatorname{LC}(r)g_{s+1}\)，也给出同样的表示。算法保留全部已有生成元，所以这份表示在以后的每一步仍然成立。
-
 结束时每对输出生成元都已处理，因而全部满足\cref{b1:thm:F-buchberger-criterion}的\itemref{b1:item:F-buchberger-bound}。该判据说明输出确实是 \(I\) 的 Gröbner 基。若输入全为零，算法直接返回空组，也符合零理想的约定。
 \end{proof}
 
-终止性只排除了无限计算，并没有给出实用的运行时间上界。变量个数、次数、系数域和单项式序都会影响中间多项式的大小。初学时宜先把每一步的理想等式保存下来；它既便于查错，也能在最终判定 \(f\in I\) 时回代出 \(f\) 关于原生成元的表示。
+升链条件只排除了无限次添加非零余式，没有给出会添加多少次、中间次数会升到多高或系数会增长多少的实用上界。变量个数、次数、系数域和单项式序都会影响这些计算量，所以算法虽能终止，实际计算仍可能很昂贵。初学时宜先把每一步的理想等式保存下来；它既便于查错，也能在最终判定 \(f\in I\) 时回代出 \(f\) 关于原生成元的表示。
 
 \ProseParagraphBreak
 继续计算\eqref{b1:eq:F-first-s-polynomial}中的例子。\(x-y\) 相对于 \((g_1,g_2)\) 已不能继续约化，所以添入
@@ -223,7 +232,7 @@ xy^2=h_1+xh_2+y.
 设 \(k\) 为域，\(n\geq1\) 为整数，\(R=k[x_1,\ldots,x_n]\) 配备单项式序 \(\prec\)，\(I\subseteq R\) 为理想，\(G\subseteq I\setminus\{0\}\) 为有限 Gröbner 基。若每个 \(g\in G\) 都首一，且对任意不同的 \(g,h\in G\)，\(g\) 中的任何单项式都不能被 \(\operatorname{LM}(h)\) 整除，则称 \(G\) 为 \(I\) 关于 \(\prec\) 的\term[yuehua-Groebner-ji]{约化 Gröbner 基}[reduced Gröbner basis]。零理想的约化 Gröbner 基约定为空集。
 \end{definition}
 
-这个条件同时约束首项和其余项。它要求不同首单项式之间不能互相整除；也要求每个多项式的尾项都不能再用其他生成元的首项约化。仅将首项系数化成一，并不足以得到约化基。例如在字典序 \(x\succ y\) 下，\(\{x-y,y^2-1,xy-1\}\) 首一且为 Gröbner 基，但 \(xy-1\) 的首单项式仍被 \(x-y\) 的首单项式整除。
+这个条件同时约束首项和其余项。不同首单项式之间不能互相整除，说明首单项式生成组中没有可删除的冗余；每个多项式的尾项都不能再用其他生成元的首项约化，说明留下的多项式也已完成消项。这两个要求分别对应删除首项冗余和约化尾项。仅将首项系数化成一，并不足以得到约化基。例如在字典序 \(x\succ y\) 下，\(\{x-y,y^2-1,xy-1\}\) 首一且为 Gröbner 基，但 \(xy-1\) 的首单项式仍被 \(x-y\) 的首单项式整除。
 
 还有只需约化尾项的情形。在 \(\mathbb Q[x,y]\) 中仍取字典序 \(x\succ y\)，令
 \[
@@ -243,7 +252,7 @@ S(x-y^2,y^2-2)=2x-y^4=2(x-y^2)-y^2(y^2-2),
 \end{theorem}
 
 \begin{proof}
-先证存在性。零理想使用空集，以下设 \(I\ne0\)。由\cref{b1:thm:F-groebner-existence}取一个有限 Gröbner 基。只要某个生成元的首单项式被另一个的首单项式整除，就删去前者；首单项式相同时也只保留其中一个。每次删除后，保留首单项式生成的理想不变，仍为 \(\operatorname{in}_\prec(I)\)，所以保留下来的多项式仍组成 \(I\) 的 Gröbner 基。由于生成元有限，这一步终止。再将每个保留生成元首一化，记为 \(g_1,\ldots,g_t\)，并记 \(m_i=\operatorname{LM}(g_i)\)。这些 \(m_i\) 两两互不整除。
+先证存在性。零理想使用空集，以下设 \(I\ne0\)。由\cref{b1:thm:F-groebner-existence}取一个有限 Gröbner 基。只要某个生成元的首单项式被另一个的首单项式整除，就删去前者；首单项式相同时也只保留其中一个。每次删除后，保留首单项式生成的理想不变，仍为 \(\operatorname{in}_\prec(I)\)，而保留的多项式仍都在 \(I\) 中，因此它们满足 Gröbner 基的定义。再由\cref{b1:thm:F-groebner-existence}中任一 Gröbner 基都生成原理想的结论，才得到删除后仍生成 \(I\)。这一步依赖原来的生成组已经是 Gröbner 基，不能用于任意生成组：例如在 \(k[x]\) 中，\(x\) 与 \(x+1\) 的首单项式相同，但 \((x,x+1)=k[x]\)，因为 \((x+1)-x=1\)，而删去 \(x+1\) 只剩真理想 \((x)\)。由于生成元有限，删除过程终止。再将每个保留生成元首一化，记为 \(g_1,\ldots,g_t\)，并记 \(m_i=\operatorname{LM}(g_i)\)。这些 \(m_i\) 两两互不整除。
 
 对每个 \(i\)，把尾项多项式 \(g_i-m_i\) 除以 \(g_1,\ldots,g_{i-1},g_{i+1},\ldots,g_t\)，记余式为 \(r_i\)，并令
 \[
@@ -257,7 +266,7 @@ h_i=m_i+r_i.
 \[
 \operatorname{LM}(g')\mid\operatorname{LM}(h)\mid\operatorname{LM}(g).
 \]
-\(G\) 内部互不整除，迫使 \(g'=g\)，所以三个首单项式相等。交换 \(G,H\) 的角色，得到它们具有完全相同的一组首单项式。每个首单项式在各组内恰好出现一次，因此可以按首单项式将两组一一配对。
+\(G\) 内部互不整除，迫使 \(g'=g\)，所以三个首单项式相等。交换 \(G,H\) 的角色，得到它们具有完全相同的一组首单项式。这证明了同一个单项式理想的两两互不整除的单项式生成组必然相同；并非只比较两组生成元的个数。每个首单项式在各组内恰好出现一次，因此可以按首单项式将两组一一配对。
 
 取配对的 \(g,h\)，其首单项式同为 \(m\)。两者均首一，所以 \(g-h\) 的最高项抵消；它剩下的每个可能非零单项式都来自 \(g\) 或 \(h\) 的尾项。约化性排除了这些尾项被其他首单项式整除，而它们严格小于 \(m\)，也不能被 \(m\) 整除。因此 \(g-h\) 中没有单项式属于 \(\operatorname{in}_\prec(I)\)。但 \(g-h\in I\)，若它非零，其首单项式按定义必须属于 \(\operatorname{in}_\prec(I)\)，矛盾。故 \(g=h\)，所有配对元素均相同，从而 \(G=H\)。
 \end{proof}
@@ -282,4 +291,4 @@ y^2-1&=(x+y)(y-x)+(x^2-1).
 x^2(y-x)-y(x^2-1)
 =y-x^3=(y-x)-x(x^2-1).
 \]
-按两个生成元依次除去后余式为零，所以由\cref{b1:thm:F-buchberger-criterion}得到 Gröbner 基；其尾项均不能再用另一生成元的首项约化，故也是约化基。改变次序并未改变原理想，但改变了哪些项应当保留为余式。这种选择在消去指定变量时尤其有用。
+按两个生成元依次除去后余式为零，所以由\cref{b1:thm:F-buchberger-criterion}得到 Gröbner 基；其尾项均不能再用另一生成元的首项约化，故也是约化基。在前一种次序下，首项理想为 \((x,y^2)\)，正规余式只能含 \(1,y\)，因而每个商类唯一表示为 \(a+by+I\)；在后一种次序下，首项理想为 \((y,x^2)\)，则唯一表示为 \(a+bx+I\)，其中 \(a,b\in\mathbb Q\)。改变次序为同一个商环选取了不同的正规代表元；此例中 \(x-y\in I\)，故两个坐标中的 \(x+I\) 与 \(y+I\) 又恰好是同一个商类。这种选择在消去指定变量时尤其有用。
