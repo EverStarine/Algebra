@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.4 有限性在变换下的行为
-% 纲要位置：工作记录/计划纲要.md，第 1897 行。
+% 纲要位置：工作记录/计划纲要.md，第 1997 行。
 % 纲要细目（写作范围）：
 % * 商、局部化和有限代数
-% * Noether 性并非任意子环继承
-% * 有限性假设的常见误用
+% * Noether 性并非任意子环继承；用理想商的无限维数检测非有限生成性
+% * 有限性假设的常见误用；茎与基本开邻域、Artin 模与有限生成模的区别
 % ---
 
 \section{有限性在变换下的行为}
@@ -19,7 +19,11 @@
 设 \(R\) 为交换含幺环，\(I\subseteq R\) 为理想，\(S\subseteq R\) 为含一的乘法集。若 \(R\) 为 Noether 环，则 \(R/I\) 与 \(S^{-1}R\) 仍为 Noether 环；若 \(R\) 为 Artin 环，则二者仍为 Artin 环。对任意 \(R\) 模 \(M\)，若 \(M\) 有限生成或有限展示，则 \(S^{-1}M\) 作为 \(S^{-1}R\) 模仍分别满足相应条件。
 \end{proposition}
 \begin{proof}
-商环的理想链取逆像，严格包含仍严格，故两种链条件都传给商。局部化环中每个理想都是其收缩的扩张，见\cref{b3:prop:ideal-localization-saturation}。因此一条严格理想链收缩后仍严格；原环的相应链条件排除了无限严格升链或降链。
+商环的理想链取逆像，严格包含仍严格，故两种链条件都传给商。局部化环中每个理想都是其收缩的扩张，见\cref{b3:prop:ideal-localization-saturation}。若两个局部化理想 \(J_1,J_2\) 有相同收缩，则
+\[
+J_1=S^{-1}(J_1^c)=S^{-1}(J_2^c)=J_2.
+\]
+所以局部化环中一条严格理想链收缩后仍严格；原环的相应链条件排除了无限严格升链或降链。
 
 模的生成元取分式 \(m_i/1\) 就生成局部化模。对有限展示
 \(R^a\rightarrow R^b\rightarrow M\rightarrow0\)，使用\cref{b3:thm:localization-exact}，得到
@@ -63,13 +67,12 @@ A=k+xk[x,y]
 等号右侧表示常数项之外的每个单项式都至少含一个 \(x\)；它对乘法封闭，并且与 \(B\) 具有相同的单位元。环 \(B\) 由 Hilbert 基定理是 Noether 环，\(A\) 却不是。
 
 \ProseParagraphBreak
-为此令 \(I=xk[x,y]\)，它是 \(A\) 的理想，\(A/I\cong k\)，而
-\(I^2=x^2k[x,y]\)。于是
+为检测这个子环的理想是否有限生成，取 \(A\) 的理想 \(I=xk[x,y]\)，则 \(A/I\cong k\)、\(I^2=x^2k[x,y]\)。考虑 \(I/I^2\) 是因为 \(I\) 对这个商模作用为零，\(A\) 的作用因而经过 \(A/I\cong k\)，把理想的生成问题转成向量空间的生成问题。若 \(I\) 由 \(r\) 个元素作为 \(A\) 理想生成，它们的剩余类就生成这个 \(k\) 向量空间，从而 \(\dim_k(I/I^2)\le r\)。然而，按单项式展开有
 \[
 I/I^2
 =\bigoplus_{j\ge0}k\cdot(xy^j+I^2)
 \]
-为无限维 \(k\) 向量空间。如果 \(I\) 由有限个元素作为 \(A\) 理想生成，模掉 \(I^2\) 后，这些元素的剩余类就会在 \(A/I=k\) 上生成 \(I/I^2\)，与无限维性矛盾。故 \(I\) 不有限生成，\(A\) 不是 Noether 环。
+为无限维 \(k\) 向量空间。故 \(I\) 不有限生成，\(A\) 不是 Noether 环。这里与 \(\mathfrak m/\mathfrak m^2\) 测量局部环极大理想生成元数的想法相同：乘积项取商后，系数作用降到剩余域，剩下的是线性问题。
 
 \ProseParagraphBreak
 这个例子也显示问题所在：在较大的环 \(B\) 中，\(I\) 由一个元素 \(x\) 生成，因为可以任意乘以 \(y\)；在 \(A\) 中没有这个乘子。取子环虽然减少了元素，却也减少了生成理想时允许使用的系数，可能使有限生成性失败。
@@ -77,27 +80,27 @@ I/I^2
 \subsection{有限性假设的适用范围}
 \label{b3:subsec:0304:03}
 
-有限个生成元只描述模本身，并不保证它的所有子模也能如此描述。设 \(k\) 为域，环 \(k[x_1,x_2,\ldots]\) 作为自身的模由 \(1\) 生成，其理想 \((x_1,x_2,\ldots)\) 却不有限生成：任意有限组候选生成元只涉及有限多个变量，令这些变量全为零后，它们生成的理想也映为零，而其余变量的像非零。在 Noether 底环上，\cref{b3:prop:noether-finite-modules}保证有限生成模的每个子模都有限生成。
+有限个生成元只描述模本身，并不保证它的所有子模也能如此描述。例如域 \(k\) 上的环 \(k[x_1,x_2,\ldots]\) 作为自身的模由 \(1\) 生成，其变量理想 \((x_1,x_2,\ldots)\) 却不有限生成，已在\subsecref{b3:subsec:0301:01}证明。在 Noether 底环上，\cref{b3:prop:noether-finite-modules}保证有限生成模的每个子模都有限生成。
 
 \ProseParagraphBreak
 即使每个点处都能找到有限组生成元，也未必已经得到有限的全局描述。\subsecref{b3:subsec:0204:03}中的
 \(\bigoplus_p\mathbb Z/p\mathbb Z\) 在每个素理想处都有限生成，但全局不是有限生成模。\cref{b3:prop:principal-cover-finiteness}及\cref{b3:prop:finite-presentation-open-cover}要求的是一组基本开邻域上的有限数据；仅检查各个茎不足以自动得到这些邻域。
 
 \ProseParagraphBreak
-环的 Noether 性也有相同的区别。\secref{b3:sec:0102}中的无限域直积 \(R=\prod_{n\ge1}k\) 满足：每个元素 \(a\) 都可写成 \(a=a^2b\)。若 \(a\in\mathfrak p\)，则 \(1-ab\notin\mathfrak p\)，而 \(a(1-ab)=0\)，所以 \(a/1=0\) 于 \(R_{\mathfrak p}\)。于是 \(\mathfrak pR_{\mathfrak p}=0\)，每个局部环 \(R_{\mathfrak p}\) 都是域。然而，令 \(e_n\) 为第 \(n\) 个坐标为一、其余坐标为零的元素，理想 \(Re_1+\cdots+Re_n\) 组成严格升链，故 \(R\) 不是 Noether 环。各点处的 Noether 性也不能代替基本开邻域上的条件。
+环的 Noether 性也有相同的区别。\secref{b3:sec:0102}中的无限域直积 \(R=\prod_{n\ge1}k\) 满足：每个元素 \(a\) 都可写成 \(a=a^2b\)。任取 \(R\) 的素理想 \(\mathfrak p\)，若 \(a\in\mathfrak p\)，则 \(ab\in\mathfrak p\) 使 \(1-ab\notin\mathfrak p\)，而 \(a(1-ab)=0\)，所以 \(a/1=0\) 于 \(R_{\mathfrak p}\)。于是 \(\mathfrak pR_{\mathfrak p}=0\)，每个局部环 \(R_{\mathfrak p}\) 都是域。这一论证适用于任意素理想，不要求它是某个坐标投影的核；也没有把无限直积的全部素理想分类为坐标核。然而，令 \(e_n\) 为第 \(n\) 个坐标为一、其余坐标为零的元素，理想 \(Re_1+\cdots+Re_n\) 组成严格升链，故 \(R\) 不是 Noether 环。各点处的 Noether 性也不能代替基本开邻域上的条件。
 
 \ProseParagraphBreak
 降链条件也不能一般地保证模有限生成。设 \(p\) 为素数，考虑整数模
 \[
 C_{p^\infty}=\mathbb Z[1/p]/\mathbb Z
 \]
-记 \(C_n=\langle p^{-n}+\mathbb Z\rangle\)（\(n\ge0\)），则 \(C_0=0\)，\(C_n\) 是阶为 \(p^n\) 的循环群，且
+要证明它是 Artin 模而非有限生成模，可以先证明每个真子模都是有限循环群；这样任何降链一旦离开全模，就进入有限群并终止。记 \(C_n=\langle p^{-n}+\mathbb Z\rangle\)（\(n\ge0\)），则 \(C_0=0\)，\(C_n\) 是有 \(p^n\) 个元素的循环群，且
 \[
 C_0\subsetneq C_1\subsetneq C_2\subsetneq\cdots,
 \qquad C_{p^\infty}=\bigcup_{n\ge0}C_n.
 \]
-任意阶为 \(p^n\) 的元素都能写成 \(a/p^n+\mathbb Z\)，其中 \(p\nmid a\)。取整数 \(u,v\) 使 \(ua+vp^n=1\)，就有
-\(u(a/p^n+\mathbb Z)=p^{-n}+\mathbb Z\)，所以该元素恰好生成 \(C_n\)。此外，被 \(p^n\) 零化的元素恰为 \(C_n\) 的元素。故任意阶为 \(p^n\) 的子群都包含于 \(C_n\)，比较元素个数可知它等于 \(C_n\)：每一阶的子群只有一个。
+任意元素的阶若为 \(p^n\)，都能写成 \(a/p^n+\mathbb Z\)，其中 \(p\nmid a\)。取整数 \(u,v\) 使 \(ua+vp^n=1\)，就有
+\(u(a/p^n+\mathbb Z)=p^{-n}+\mathbb Z\)，所以该元素恰好生成 \(C_n\)。此外，被 \(p^n\) 零化的元素恰为 \(C_n\) 的元素。
 
 \ProseParagraphBreak
 现在设 \(H\) 为子模。若 \(H\) 中元素的阶无界，则对每个 \(n\) 都能取到阶为 \(p^r\)、\(r\ge n\) 的元素；它生成 \(C_r\)，因而 \(C_n\subseteq H\)，于是 \(H=C_{p^\infty}\)。若阶有界，则 \(H\subseteq C_n\) 对某个 \(n\) 成立。在有限群 \(H\) 中选阶最大的元素，设其阶为 \(p^r\)，则它生成 \(C_r\)，而 \(H\) 中其余元素都被 \(p^r\) 零化，所以 \(H=C_r\)。这就证明真子模恰为各个有限循环群 \(C_r\)。任何子模降链一旦离开全模便进入有限群，此后稳定，故 \(C_{p^\infty}\) 是 Artin 模；任意有限组元素都落在某个 \(C_n\) 中，不能生成全模，故它不是有限生成模。

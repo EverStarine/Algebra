@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.2 理想与局部化
-% 纲要位置：工作记录/计划纲要.md，第 1850 行。
+% 纲要位置：工作记录/计划纲要.md，第 1949 行。
 % 纲要细目（写作范围）：
-% * 扩张、收缩和饱和
+% * 扩张、收缩和饱和；有向并与单元素饱和的几何实例
 % * 局部化后的素理想对应
-% * 剩余域与纤维
+% * 剩余域与纤维；局部模和剩余向量空间、空纤维及非约化纤维
 
 \section{理想与局部化}
 \label{b3:sec:0202}
@@ -14,7 +14,7 @@
 \subsection{扩张、收缩与饱和}
 \label{b3:subsec:0202:01}
 
-设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集。对理想 \(I\subseteq R\)，扩张理想 \(I(S^{-1}R)\) 正好由 \(a/s\)、\(a\in I\)、\(s\in S\) 组成，记为 \(S^{-1}I\)。这是因为这些分式对加法及任意环分式的乘法封闭，而且每个 \(a/s=(a/1)(1/s)\)。对 \(S^{-1}R\) 的理想 \(J\)，其收缩是 \(J^c=\{r\in R:r/1\in J\}\)。
+设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集，\(I\) 为 \(R\) 的理想。由\cref{b3:thm:localization-exact}，包含映射 \(I\hookrightarrow R\) 局部化后仍为单射，因而可把模的局部化 \(S^{-1}I\) 识别为 \(S^{-1}R\) 中由分式 \(a/s\)、\(a\in I\)、\(s\in S\) 组成的子模。这些分式也对乘以任意环分式封闭，而且每个 \(a/s=(a/1)(1/s)\)，所以其像正是扩张理想 \(I(S^{-1}R)\)。以下用 \(S^{-1}I\) 同时表示这个扩张理想。对 \(S^{-1}R\) 的理想 \(J\)，其收缩是 \(J^c=\{r\in R:r/1\in J\}\)。
 
 \begin{definition}\label{b3:def:multiplicative-saturation}
 设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集，\(I\) 为 \(R\) 的理想。对 \(s\in R\)，记 \((I:s)=\{\,r\in R\mid sr\in I\,\}\)。\(I\) 关于 \(S\) 的\term[chengfaji-baohe]{饱和}[saturation with respect to a multiplicative set]为
@@ -27,6 +27,12 @@
 \end{definition}
 \symidx{\(\operatorname{Sat}_S(I)\)：理想关于乘法集的饱和}
 
+理想的任意并一般不是理想，但这里的并具有额外的相容性。对 \(s,t\in S\)，有
+\[
+(I:s)\subseteq(I:st),\qquad (I:t)\subseteq(I:st).
+\]
+因为 \(st\in S\)，任意两个成员都包含于这族理想中的同一个成员，即这族理想在包含关系下有向。因此并中的任意两个元素可以在同一理想内相加，每个元素乘以 \(R\) 的任意标量也仍在并中，故 \(\operatorname{Sat}_S(I)\) 确实是理想。
+
 \begin{proposition}\label{b3:prop:ideal-localization-saturation}
 设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集，\(I\) 为 \(R\) 的理想，\(J\) 为 \(S^{-1}R\) 的理想。记 \(S^{-1}I\) 为扩张理想，\(J^c=\{r\in R:r/1\in J\}\) 为收缩理想。则
 \[
@@ -35,7 +41,7 @@
 因此 \(S^{-1}R\) 的理想与 \(R\) 中关于 \(S\) 饱和的理想一一对应。此外，\(S^{-1}I=S^{-1}R\) 当且仅当 \(I\cap S\ne\varnothing\)。
 \end{proposition}
 \begin{proof}
-若 \(r/1=a/s\)、\(a\in I\)，则存在 \(u\in S\) 使 \(u(sr-a)=0\)，所以 \((us)r=ua\in I\)。反过来，若 \(sr\in I\)，则 \(r/1=(sr)/s\in S^{-1}I\)。这证明第一个等式，也证明所定义的饱和是理想。
+若 \(r/1=a/s\)、\(a\in I\)，则存在 \(u\in S\) 使 \(u(sr-a)=0\)，所以 \((us)r=ua\in I\)。反过来，若 \(sr\in I\)，则 \(r/1=(sr)/s\in S^{-1}I\)。这证明第一个等式。
 
 对 \(a/s\in J\)，有 \(a/1=(s/1)(a/s)\in J\)，因而 \(a\in J^c\)；反向包含由 \(J\) 是理想得到。两个等式还表明扩张收缩在饱和理想上互逆。最后，\(1\in(S^{-1}I)^c\) 等价于存在 \(s\in S\) 属于 \(I\)，这就是单位理想的判据。
 \end{proof}
@@ -45,6 +51,9 @@
 \operatorname{Sat}_S(I)=(y),\qquad I R_x=(y)R_x.
 \]
 确实，\(x(y)\subseteq I\) 给出一个包含；若 \(x^n f\in(xy)\)，在整环 \(k[x,y]/(y)=k[x]\) 中约去非零的 \(x^n\)，便得 \(f\in(y)\)。同一个 \(I\) 在 \(x,y\) 都可逆的环中扩张成单位理想。
+
+\ProseParagraphBreak
+在这个例子中，\(V(xy)=V(x)\cup V(y)\)。把 \(x\) 变成单位相当于限制到 \(D(x)\)，其中不再有 \(V(x)\) 上的点，剩下的是 \(V(y)\cap D(x)\)。这个集合包含 \(V(y)\) 的一般点 \((y)\)，因为 \(x\notin(y)\)；所以它在原谱中的闭包正是 \(V(y)\)。所算出的饱和理想 \((y)\) 是根理想，恰好对应这个闭包。
 
 \ProseParagraphBreak
 若 \(S\) 由单个 \(f\in R\) 的幂组成，则 \(\operatorname{Sat}_S(I)=I:f^\infty=\bigcup_{n\ge0}(I:f^n)\)。它与关于多生成元理想 \(J\) 的 \(I:J^\infty\) 不同：后者要求 \(J^n r\subseteq I\)，即该幂理想的每个元素都满足条件；乘法集的饱和只要求存在一个分母。理想商与饱和的系统计算将在\chapref{b3:ch:08}继续讨论。
@@ -88,6 +97,14 @@
 
 剩余域的同构可从分式直接看出：模掉 \(\mathfrak p\) 后，\(R\setminus\mathfrak p\) 的像恰是整环 \(R/\mathfrak p\) 的全部非零元素。两个张量描述则依次使用\cref{b3:prop:localization-tensor}及商模的张量公式。
 
+\ProseParagraphBreak
+局部模 \(M_{\mathfrak p}\) 只把 \(R\setminus\mathfrak p\) 中的标量变成单位；剩余向量空间还进一步模掉 \(\mathfrak pM_{\mathfrak p}\)，因此两者保留的信息不同。例如设 \(k\) 为域，取 \(R=k[t]_{(t)}\)、\(\mathfrak p=(t)R\)、\(M=R/(t^2)\)。\(R\setminus\mathfrak p\) 中的元素已经是单位，故
+\[
+M_{\mathfrak p}\cong R/(t^2),\qquad
+M\otimes_R\kappa(\mathfrak p)\cong M\otimes_R k\cong k.
+\]
+在局部模中，\(t\) 的商类 \(\bar t\) 非零，却满足 \(t\bar t=0\)；在剩余向量空间中，\(\bar t\otimes1=\bar1\otimes(t\cdot1)=0\)。所以取纤维会丢掉这个局部模中仍然可见的非零元素。
+
 \begin{proposition}\label{b3:prop:fibre-spectrum}
 设 \(R,A\) 为交换含幺环，\(\varphi:R\to A\) 为保单位环同态，\(\mathfrak p\) 为 \(R\) 的素理想。纤维代数 \(A\otimes_R\kappa(\mathfrak p)\) 的素理想自然对应于 \(A\) 中满足 \(\varphi^{-1}(\mathfrak q)=\mathfrak p\) 的素理想 \(\mathfrak q\)。
 \end{proposition}
@@ -101,7 +118,16 @@ S^{-1}A\coloneqq\varphi(S)^{-1}A.
 A\otimes_R\kappa(\mathfrak p)
 \cong S^{-1}A/\mathfrak pS^{-1}A.
 \]
-商环的素理想对应于 \(S^{-1}A\) 中包含 \(\mathfrak pS^{-1}A\) 的素理想；局部化对应又把它们识别为 \(A\) 中包含 \(\varphi(\mathfrak p)\) 且与 \(\varphi(S)\) 不交的素理想。这两个条件分别给出 \(\mathfrak p\subseteq\varphi^{-1}(\mathfrak q)\) 及反向包含，故恰好是所述等式。
+商环的素理想对应于 \(S^{-1}A\) 中包含 \(\mathfrak pS^{-1}A\) 的素理想；局部化对应又把它们识别为 \(A\) 中包含 \(\varphi(\mathfrak p)\) 且与 \(\varphi(S)\) 不交的素理想。这两个条件给出两边的包含：
+\[
+\begin{aligned}
+\varphi(\mathfrak p)\subseteq\mathfrak q
+&\ \Longrightarrow\ \mathfrak p\subseteq\varphi^{-1}(\mathfrak q),\\
+\varphi(R\setminus\mathfrak p)\cap\mathfrak q=\varnothing
+&\ \Longrightarrow\ \varphi^{-1}(\mathfrak q)\subseteq\mathfrak p.
+\end{aligned}
+\]
+第二个方向是因为：若 \(r\in\varphi^{-1}(\mathfrak q)\) 却不属于 \(\mathfrak p\)，则 \(r\in S\)，于是 \(\varphi(r)\) 同时属于 \(\varphi(S)\) 和 \(\mathfrak q\)，矛盾。反过来，若 \(\varphi^{-1}(\mathfrak q)=\mathfrak p\)，则上述两个条件都成立。因此它们合起来恰好是所述等式。
 \end{proof}
 
 \begin{figure}[htbp]
@@ -120,4 +146,7 @@ A\otimes_R\kappa(\mathfrak p)
 \cref{b3:fig:spectrum-fibre}中的 \(\iota\) 由 \(a\mapsto a\otimes1\) 诱导。上面的命题说明，它的像恰为 \(\{\,\mathfrak q\in\operatorname{Spec}A\mid\varphi^{-1}(\mathfrak q)=\mathfrak p\,\}\)，也就是 \(\varphi^*\) 在 \(\mathfrak p\) 上的集合论纤维；这解释了纤维代数的名称。
 
 \ProseParagraphBreak
-例如，设 \(k\) 为域，\(\varphi:k[t]\rightarrow k[x]\) 为满足 \(\varphi(t)=x^2\) 的 \(k\) 代数同态。对 \(a\in k\)，\(\varphi\) 在 \((t-a)\) 处的纤维代数为 \(k[x]/(x^2-a)\)。当 \(a=0\) 时，其中 \(x\) 的像非零却平方为零；即使素谱只有一个点，纤维代数仍保存这项幂零信息。当 \(a\ne0\)、\(\operatorname{char}k\ne2\) 且 \(a=b^2\)、\(b\in k\) 时，中国剩余定理给出 \(k[x]/(x^2-a)\cong k\times k\)。若 \(a\) 在 \(k\) 中没有平方根，商环则为二次域扩张。纤维的点与剩余域都依赖基域。
+纤维也可能为空。例如 \(\mathbb Z\hookrightarrow\mathbb Q\) 在 \((2)\) 处的纤维代数为 \(\mathbb Q\otimes_{\mathbb Z}\mathbb F_2\)。它的单位元满足 \(1\otimes\bar1=(1/2)\otimes2\bar1=0\)，所以纤维代数是零环，素谱为空。
+
+\ProseParagraphBreak
+例如，设 \(k\) 为域，\(\varphi:k[t]\rightarrow k[x]\) 为满足 \(\varphi(t)=x^2\) 的 \(k\) 代数同态。对 \(a\in k\)，\(\varphi\) 在 \((t-a)\) 处的纤维代数为 \(k[x]/(x^2-a)\)。当 \(a=0\) 时，其中 \(x\) 的像非零却平方为零；素谱只有一个点，其剩余域为 \(k\)，但纤维代数仍保存这项幂零信息。当 \(a=b^2\ne0\)、\(b\in k\) 且 \(\operatorname{char}k\ne2\) 时，\(x-b\) 与 \(x+b\) 互素，中国剩余定理给出 \(k[x]/(x^2-a)\cong k\times k\)，有两个点，剩余域都是 \(k\)。若 \(\operatorname{char}k=2\) 且 \(a=b^2\ne0\)，则 \(x^2-a=(x-b)^2\)；令 \(\varepsilon\) 为 \(x-b\) 的商类，纤维代数同构于 \(k[\varepsilon]/(\varepsilon^2)\)。这仍只有一个剩余域为 \(k\) 的点，且 \(\varepsilon\ne0\) 是幂零元，即一个非约化双重点。若 \(a\) 在 \(k\) 中没有平方根，则 \(x^2-a\) 不可约，纤维代数是二次域扩张，只有一个点，其剩余域就是该二次扩张，而且没有非零幂零元。这些情形说明，点数、点的剩余域和纤维代数的约化性是三种不同的信息；同样只有一个点，既可能有幂零元，也可能是域。

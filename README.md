@@ -30,7 +30,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Book 1
 
 将 `1` 改为其他卷号即可构建对应卷；省略 `-Book 1` 则构建五卷。
 
-结构检查分别使用 `scripts/Check-Outline.ps1` 和 `scripts/Check-TextStructure.ps1`。已编译 PDF 的书签检查使用 `scripts/Check-PdfBookmarks.py`，需使用安装了 `pypdf` 的 Python。正式源码与工具均不依赖旧的 `tmp/` 内容；该目录中的构建文件由脚本重新生成。
+结构检查分别使用 `scripts/Check-Outline.ps1` 和 `scripts/Check-TextStructure.ps1`。跨卷文本引用可在相邻源码注释中登记稳定目标，例如 `% 跨卷引用目标：b1:thm:hilbert90-additive（20.2.3）。`；编译目标卷后运行 `scripts/Check-CrossVolumeRefs.py`，核对已登记引用的结果类型及当前编号。此检查只覆盖已登记项，结论是否适用于调用处仍须对照证明核验。已编译 PDF 的书签检查使用 `scripts/Check-PdfBookmarks.py`，需使用安装了 `pypdf` 的 Python。正式源码与工具均不依赖旧的 `tmp/` 内容；该目录中的构建文件由脚本重新生成。
 
 ## 版权声明
 

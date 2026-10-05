@@ -1,7 +1,7 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：## 第9章　Krull 维数与高度定理
-% 纲要位置：工作记录/计划纲要.md，第 2077 行。
-
+% 纲要位置：工作记录/计划纲要.md，第 2200 行。
+% 纲要细目（写作范围）：
 
 \chapter{Krull 维数与高度定理}
 \label{b3:ch:09}
@@ -48,11 +48,23 @@
 \BookExercises
 
 \begin{exercise}\label{b3:ex:09-product-dimension}
-设 \(k\) 为域，\(p\) 为素数。计算 \(\mathbb Z\times k[x,y]\) 的维数，以及素理想
-\((p)\times k[x,y]\)、\(\mathbb Z\times(x)\) 的高度和相应商环的维数。
+设 \(k\) 为域。对任意整数 \(d\ge2\) 和 \(0\le h\le d-2\)，构造一个 Noether \(k\) 代数 \(R\) 及其素理想 \(\mathfrak p\)，使
+\[
+\dim R=d,\qquad \operatorname{ht}\mathfrak p=h,\qquad
+\dim(R/\mathfrak p)=1.
+\]
+由此说明高度与商环维数之和可以比全环维数小任意给定的正整数。
 \end{exercise}
 \begin{solution}
-直积维数为 \(\max\{1,2\}=2\)。第一素理想来自 \(\mathbb Z\) 中的 \((p)\)，高度为一，商环为 \(\mathbb F_p\)，维数零。第二个来自 \(k[x,y]\) 中的 \((x)\)，它在非零主理想上极小，故高度一；商环为 \(k[y]\)，维数一。第一项显示高度与商维数的和可以严格小于全环维数。
+取
+\[
+C=k[x_1,\ldots,x_h,t],\qquad B=k[y_1,\ldots,y_d],\qquad
+R=C\times B,\qquad \mathfrak p=(x_1,\ldots,x_h)C\times B.
+\]
+两个多项式环都 Noether，故其有限直积也 Noether。由\cref{b3:thm:polynomial-dimension}和直积维数公式，
+\(\dim R=\max\{h+1,d\}=d\)。商环 \(R/\mathfrak p\cong k[t]\)，所以 \(\mathfrak p\) 素且商维数为一。
+直积中的素链只留在同一个因子内，故 \(\operatorname{ht}_R\mathfrak p\) 等于 \((x_1,\ldots,x_h)\) 在 \(C\) 中的高度。逐个加入 \(x_i\) 得到长度 \(h\) 的素链，而高度定理给出反向上界，因而该高度恰为 \(h\)；\(h=0\) 时这个理想是整环 \(C\) 的零理想，高度为零。
+差值为 \(d-h-1\)。给定正整数 \(g\)，取 \(h=0,d=g+1\)，便得到差值 \(g\)。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:09-reduced-dimension}
@@ -128,9 +140,8 @@
 解释这为何不与 \(\dim A_{(0)}=0\) 冲突。
 \end{exercise}
 \begin{solution}
-\(A_f=A[f^{-1}]\) 仍是有限型整代数，且具有相同分式域，故两者超越次数和维数相等。
-零素理想处的局部化同时逆转所有非零元素，一般不能由有限个逆元生成，因而不一定还是有限型 \(k\) 代数。
-例如 \(k[t]_{(0)}=k(t)\) 不是有限型 \(k\) 代数。
+只倒置 \(f\) 可写为 \(A_f\cong A[u]/(fu-1)\)，所以 \(A_f\) 仍是有限型整 \(k\) 代数。它与 \(A\) 具有相同分式域，由\cref{b3:thm:affine-dimension}得到两者维数相等。
+零素理想处的局部化则倒置全部非零元素，得到 \(A_{(0)}=\operatorname{Frac}(A)\)。若 \(\dim A>0\)，这个域不可能是有限型 \(k\) 代数：否则由 Zariski 引理\cref{b3:lem:zariski}，它在 \(k\) 上有限代数，从而超越次数为零，与 \(\dim A>0\) 矛盾。因而不能对它继续使用有限型整代数的维数公式。例如 \(k[t]_{(0)}=k(t)\) 的环维数为零，超越次数却为一。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:09-monomial-curve-dimension}
@@ -155,18 +166,29 @@
 设 \(k\) 为域，\(A=k[x,y]\)，\(B=k[x,y,z]/(z^2-xy)\)。证明 \(A\) 自然嵌入 \(B\)，且 \(B\) 是整环。计算 \(B\) 在素理想 \((x,z)\) 和 \((x,y,z)\) 处的局部维数，并说明高度比较为什么需要把素链的末项固定。
 \end{exercise}
 \begin{solution}
-关于 \(z\) 的首一关系使 \(B\) 作为 \(A\) 模自由，基为 \(1,z\)，因而 \(A\rightarrow B\) 单射且有限。多项式 \(z^2-xy\) 对 \(k[x,y]\) 中的素元 \(x\) 满足 Eisenstein 判据\footnote{艾森斯坦（Ferdinand Gotthold Max Eisenstein，1823-1852），德国数学家，研究数论与椭圆函数。}：常数项被 \(x\) 整除但不被 \(x^2\) 整除，其余非首项系数也被 \(x\) 整除。因此它不可约，唯一分解环中的不可约元为素元，故 \(B\) 是整环。
+关于 \(z\) 的首一关系允许带余除法，每个商类都唯一写成 \(a+bz\)，其中 \(a,b\in A\)。因此 \(B\cong A\oplus Az\) 作为 \(A\) 模，常数商类使 \(A\rightarrow B\) 单射；\(B\) 又是有限生成 \(A\) 模，故该包含为有限整扩张。
+
+整环性另由关系的不可约性得到。多项式 \(z^2-xy\) 对 \(k[x,y]\) 中的素元 \(x\) 满足 Eisenstein 判据\footnote{艾森斯坦（Ferdinand Gotthold Max Eisenstein，1823-1852），德国数学家，研究数论与椭圆函数。}：常数项被 \(x\) 整除但不被 \(x^2\) 整除，其余非首项系数也被 \(x\) 整除。因此它不可约，唯一分解环 \(k[x,y,z]\) 中的不可约元为素元，故商环 \(B\) 是整环。
 两理想的商环分别为 \(k[y]\) 和 \(k\)，所以确为素理想；收缩到 \(A\) 后分别是 \((x)\) 和 \((x,y)\)。基环 \(A\) 为整闭整环，\cref{b3:cor:integral-height-normal-base}使两处高度分别等于一和二，这也就是所求局部维数。
 Going-up 从已选的底端素理想向上构造链，末项未必是这两个指定素理想之一；Going-down 则能从指定末项向下提升。这解释了所用高度比较中整闭基环的作用。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:09-parameter-zero-divisor}
-设 \(k\) 为域，\(R=\bigl(k[x,y]/(x^2,xy)\bigr)_{(x,y)}\)。计算 Krull 维数、嵌入维数，并找一个同时为零因子的参数。
+设 \(k\) 为域，\(n\ge2\) 为整数，\(R=\bigl(k[x,y]/(x^2,xy^n)\bigr)_{(x,y)}\)。计算 \(R\) 的 Krull 维数、嵌入维数及 \(\operatorname{Ann}_R(y)\)。再对 \(a,b\in k\)，判定 \(ax+by\) 何时构成参数，并证明满足条件的这些参数全是零因子。
 \end{exercise}
 \begin{solution}
-幂零根为 \((x)\)，约化局部环为 \(k[y]_{(y)}\)，故维数一。
-关系中没有一次项，\(x,y\) 的像构成 \(\mathfrak m/\mathfrak m^2\) 的基，嵌入维数二。
-模掉 \(y\) 得 \(k[x]/(x^2)\)，所以 \(y\) 是参数；同时 \(yx=0\) 且 \(x\ne0\)，故它是零因子。参数系无需由非零因子组成。
+商环中的每个元素唯一写成 \(f(y)+xg(y)\)，其中 \(f\in k[y]\)，\(g\in k[y]/(y^n)\)。局部化后相应地有
+\[
+R=k[y]_{(y)}\oplus x\bigl(k[y]/(y^n)\bigr)
+\]
+作为 \(k[y]_{(y)}\) 模的分解：常数项非零的分母在第二项上也可逆，而第二项的平方为零。幂零根因此为 \((x)\)，约化局部环为 \(k[y]_{(y)}\)，故 \(\dim R=1\)。原关系都没有一次项，\(x,y\) 的像在 \(\mathfrak m/\mathfrak m^2\) 中构成一组基，故 \(\operatorname{edim}R=2\)。
+
+若 \(y(f+xg)=0\)，上面的直和分解使 \(yf=0\) 及 \(yg=0\) 在各自的项中成立。第一项是整环，故 \(f=0\)；第二项中 \(yg=0\) 当且仅当 \(g\in k y^{n-1}\)。所以
+\[
+\operatorname{Ann}_R(y)=(xy^{n-1}),\qquad xy^{n-1}\ne0.
+\]
+元素 \(ax+by\) 在约化环中的像是 \(by\)。若 \(b=0\)，该元素幂零，生成理想的根为 \((x)\)，不等于 \(\mathfrak m\)。若 \(b\ne0\)，商环中可令 \(y=-ab^{-1}x\)，得到 \(R/(ax+by)\cong k[x]/(x^2)\)，其维数为零，所以该元素是参数。此时
+\((ax+by)xy^{n-1}=ax^2y^{n-1}+bxy^n=0\)，被零化的 \(xy^{n-1}\) 非零，故这个参数是零因子。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:09-parameter-powers}
@@ -213,7 +235,7 @@ Artin 环 Noether 且零维。正则性等价于 \(\mathfrak m/\mathfrak m^2=0\)
 证明存在 \(x_1,\ldots,x_d\in\mathfrak m\) 使 \(M/(x_1,\ldots,x_d)M\) 具有有限长度，并证明用 \(\mathfrak m\) 中少于 \(d\) 个元素不能做到这一点。
 \end{exercise}
 \begin{solution}
-置 \(A=R/\operatorname{Ann}_R M\)，则 \(\dim A=d\)。对 \(A\) 取参数系并提升，得到理想
+由\cref{b3:thm:support-finite}，\(\operatorname{Supp}_R M=V(\operatorname{Ann}_R M)\)，所以 \(A=R/\operatorname{Ann}_R M\) 的素谱恰好记录 \(M\) 的支集，且 \(\dim A=d\)。对 \(A\) 取参数系，相当于在这个支集上选出足够多的方程。将参数提升到 \(R\)，得到理想
 \(I=(x_1,\ldots,x_d)\)。有限生成模的支集及局部 Nakayama 引理说明
 \[
 \operatorname{Supp}(M/IM)=\operatorname{Supp}(M)\cap V(I).
@@ -224,15 +246,7 @@ Artin 环 Noether 且零维。正则性等价于 \(\mathfrak m/\mathfrak m^2=0\)
 \[
 \sqrt{\operatorname{Ann}_R Q}=\mathfrak m.
 \]
-Noether 性保证 \(\mathfrak m\) 有有限生成组 \(t_1,\ldots,t_s\)。对每个 \(j\)，取 \(N_j\ge1\) 使 \(t_j^{N_j}\in\operatorname{Ann}_R Q\)，再令 \(N=1+\sum_{j=1}^s(N_j-1)\)。\(\mathfrak m^N\) 的每个生成单项式都含有某个 \(t_j^{N_j}\)，因此
-\[
-\mathfrak m^N\subseteq\operatorname{Ann}_R Q,\qquad \mathfrak m^NQ=0.
-\]
-\(\mathfrak m=0\) 时取空生成组，\(N=1\) 也满足要求。于是有限滤过
-\[
-Q\supseteq\mathfrak mQ\supseteq\cdots\supseteq\mathfrak m^NQ=0
-\]
-的各层 \(\mathfrak m^iQ/\mathfrak m^{i+1}Q\) 都是有限生成的 \(R\) 模，并被 \(\mathfrak m\) 零化，因而是有限维 \(\kappa=R/\mathfrak m\) 向量空间。各层均有有限长度，所以 \(Q\) 有有限长度。
+这意味着 \(S=R/\operatorname{Ann}_R Q\) 是只有一个素理想的 Noether 环，故由\cref{b3:thm:noether-dimension-zero}为 Artin 环。现在 \(Q\) 是有限生成的 \(S\) 模，\cref{b3:thm:artin-finite-length}给出其有限长度。这里调用的证明正是利用幂零极大理想的有限滤过：\(\mathfrak m^NQ=0\) 对某个 \(N\) 成立，且各商层 \(\mathfrak m^iQ/\mathfrak m^{i+1}Q\) 是有限维剩余域向量空间。\(R\) 与 \(S\) 在 \(Q\) 上有相同的子模，因此这也是它作为 \(R\) 模的长度。
 
 反之，若 \(J=(y_1,\ldots,y_r)\subseteq\mathfrak m\) 使 \(M/JM\) 有有限长度，Nakayama 引理保证这个商非零。其支集因此为 \(\{\mathfrak m\}\)。由上述支集等式，\(J\) 在 \(A\) 中的像的根是 \(\mathfrak m A\)；高度定理给出 \(d=\dim A\le r\)，所以少于 \(d\) 个元素不能做到这一点。
 \end{solution}

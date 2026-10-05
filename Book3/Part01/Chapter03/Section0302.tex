@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.2 Nakayama 引理
-% 纲要位置：工作记录/计划纲要.md，第 1885 行。
+% 纲要位置：工作记录/计划纲要.md，第 1985 行。
 % 纲要细目（写作范围）：
-% * 行列式技巧
+% * 行列式技巧；生成元组上的矩阵关系及标量作用的像
 % * Jacobson 根版本与局部环版本
-% * 极小生成元及剩余向量空间
+% * 极小生成元及剩余向量空间；区别极小、最少与自由基
 
 \section{Nakayama 引理}
 \label{b3:sec:0302}
@@ -13,6 +13,13 @@
 
 \subsection{行列式技巧}
 \label{b3:subsec:0302:01}
+
+考虑有限生成 \(R\) 模 \(M\) 满足 \(M=IM\) 的情形，其中 \(R\) 为交换含幺环、\(I\) 为理想。选取生成元 \(m_1,\ldots,m_n\)，每个生成元都能写成 \(m_i=\sum_j a_{ij}m_j\)、\(a_{ij}\in I\)。把这些关系合在一起，就有
+\[
+(I_n-A)\begin{pmatrix}m_1\\ \vdots\\m_n\end{pmatrix}=0,
+\qquad A=(a_{ij}).
+\]
+于是可以利用伴随矩阵恒等式，寻找同时零化全部生成元的一个环元素，而不再分别处理这些关系。对于满足 \(u(M)\subseteq IM\) 的一般自同态，同一个方法也能产生零化多项式。
 
 \begin{theorem}[行列式技巧]\label{b3:thm:determinant-trick}
 设 \(R\) 为交换含幺环，\(M\) 为由 \(n\ge1\) 个元素生成的 \(R\) 模，\(I\subseteq R\) 为理想，
@@ -24,27 +31,25 @@ P(T)=T^n+c_1T^{n-1}+\cdots+c_n,\qquad c_i\in I^i,
 \end{theorem}
 \begin{proof}
 选生成元 \(m_1,\ldots,m_n\)，写
-\(u(m_i)=\sum_j a_{ij}m_j\)、\(a_{ij}\in I\)。在自同态环
-\(\operatorname{End}_R(M)\) 中，标量作用与 \(u\) 交换，所以它们生成一个交换子环 \(R[u]\)；这不要求整个自同态环交换。将上述等式写成
+\(u(m_i)=\sum_j a_{ij}m_j\)、\(a_{ij}\in I\)。令 \(A=(a_{ij})\in\operatorname{Mat}_n(R)\)。在自同态环 \(\operatorname{End}_R(M)\) 中，\(R\) 的标量作用像与 \(u\) 生成一个交换子环，简记为 \(R[u]\)。这里使用的是映射 \(R\to\operatorname{End}_R(M)\) 的像，不要求它单射，也不要求整个自同态环交换。将每个 \(a_{ij}\) 理解为对应的标量自同态，上述等式写成
 \[
-(uI_n-A)\begin{pmatrix}m_1\\ \vdots\\m_n\end{pmatrix}=0,
-\qquad A=(a_{ij}).
+(uI_n-A)\begin{pmatrix}m_1\\ \vdots\\m_n\end{pmatrix}=0.
 \]
-在交换环 \(R[u]\) 上左乘伴随矩阵，得到
+这是 \(M^n\) 中的等式，列中的 \(m_i\) 是 \(M\) 的元素，并不是相对于一组自由基的坐标。矩阵的每个自同态作用在相应分量上，因此可以继续左乘矩阵。对 \(B=uI_n-A\)，在交换环 \(R[u]\) 上使用 \(\operatorname{adj}(B)B=\det(B)I_n\)，得到
 \[
 \det(uI_n-A)m_i=0\qquad(1\le i\le n).
 \]
 令 \(P(T)=\det(TI_n-A)\in R[T]\)。行列式的展开中，\(T^{n-i}\) 的系数每项都含 \(i\) 个 \(A\) 的元素，故 \(c_i\in I^i\)。由于 \(P(u)\) 零化全部生成元，它零化整个 \(M\)。
 \end{proof}
 
-这称为\term[hanglieshi-jiqiao]{行列式技巧}[determinant trick]。其要点是使用生成元而不要求基：矩阵 \(A\) 未必唯一，所产生的首一多项式也不必唯一，但它确实零化给定自同态。若 \(M\) 自由且所取生成元是一组基，便得到熟悉的 Cayley–Hamilton 恒等式\footnote{凯莱（Arthur Cayley，1821-1895），英国数学家，研究矩阵、不变量和代数几何。哈密顿（William Rowan Hamilton，1805-1865），爱尔兰数学家及物理学家，创立四元数理论。}。上述一般版本可对照 Matsumura 的《Commutative Ring Theory》\cite[Theorem 2.1, pp. 7--8]{Matsumura1989CommutativeRingTheory}。
+这称为\term[hanglieshi-jiqiao]{行列式技巧}[determinant trick]。矩阵 \(A\) 未必唯一，所产生的首一多项式也不必唯一，但它确实零化给定自同态。若 \(M\) 自由且所取生成元是一组基，便得到熟悉的 Cayley–Hamilton 恒等式\footnote{凯莱（Arthur Cayley，1821-1895），英国数学家，研究矩阵、不变量和代数几何。哈密顿（William Rowan Hamilton，1805-1865），爱尔兰数学家及物理学家，创立四元数理论。}。上述一般版本可对照 Matsumura 的《Commutative Ring Theory》\cite[Theorem 2.1, pp. 7--8]{Matsumura1989CommutativeRingTheory}。
 
 \ProseParagraphBreak
 若 \(M=IM\)，对 \(u=\operatorname{id}_M\) 使用该定理，得到
 \[
 (1+c_1+\cdots+c_n)M=0.
 \]
-也就是说，存在 \(a\in I\) 使 \((1-a)M=0\)。有限生成将逐个生成元的关系合成了一个统一的零化元。
+由于 \(c_i\in I^i\subseteq I\) 对 \(i\ge1\) 成立，令 \(a\coloneqq-(c_1+\cdots+c_n)\)，便有 \(a\in I\) 且 \((1-a)M=0\)。有限生成将逐个生成元的关系合成了一个统一的零化元。
 
 \subsection{Jacobson 根版本与局部环版本}
 \label{b3:subsec:0302:02}
@@ -58,7 +63,12 @@ J(R)=\bigcap_{\mathfrak m\text{ 极大}}\mathfrak m.
 \end{definition}
 \symidx{\(J(R)\)：交换环的 Jacobson 根}
 
-若 \(a\in J(R)\)，则 \(1-a\) 不属于任何极大理想，因此是单位。更一般地，每个 \(1-ra\)、\(r\in R\)，都是单位。反过来，若这对所有 \(r\) 成立而 \(a\notin\mathfrak m\)，可在域 \(R/\mathfrak m\) 中取 \(\bar a\) 的逆并提升为 \(r\)，则 \(1-ra\in\mathfrak m\)，矛盾。这给出 Jacobson 根的单位判据；在局部环上，\(J(R)\) 就是唯一的极大理想。
+若 \(a\in J(R)\)，则对每个 \(r\in R\) 都有 \(ra\in J(R)\)，所以 \(1-ra\) 不属于任何极大理想，因而是单位。反过来，若 \(a\notin J(R)\)，由交的定义可取极大理想 \(\mathfrak m\) 使 \(a\notin\mathfrak m\)。于是 \(\bar a\) 在域 \(R/\mathfrak m\) 中非零，取其逆并提升为某个 \(r\in R\)，便有 \(1-ra\in\mathfrak m\)，所以 \(1-ra\) 不是单位。因此 Jacobson 根的单位判据为
+\[
+a\in J(R)\quad\Longleftrightarrow\quad
+1-ra\in R^\times\text{ 对每个 }r\in R\text{ 成立}.
+\]
+在局部环上，\(J(R)\) 就是唯一的极大理想。
 
 \begin{theorem}[Nakayama 引理]\label{b3:thm:nakayama}
 设 \(R\) 为交换含幺环，\(M\) 为有限生成 \(R\) 模，\(I\) 为 \(R\) 中满足 \(I\subseteq J(R)\) 的理想，\(N\subseteq M\) 为子模。
@@ -76,19 +86,24 @@ J(R)=\bigcap_{\mathfrak m\text{ 极大}}\mathfrak m.
 \term[Nakayama-yinli]{Nakayama 引理}[Nakayama's lemma]的这一交换环证明，也可见\cite[Theorem 2.2 and Corollary, p. 8]{Matsumura1989CommutativeRingTheory}。第二卷定理14.2.1则用 Jacobson 根的单位判据直接处理非交换模，没有把交换行列式用于非交换系数。
 
 \ProseParagraphBreak
+第二项中的 \(M=N+IM\) 恰好表示自然映射 \(N\to M/IM\) 满射。因此，当 \(M\) 有限生成且 \(I\subseteq J(R)\) 时，在 \(M/IM\) 中选出一组生成元，再任取它们到 \(M\) 的提升，这些提升便生成 \(M\)。在局部环上取 \(I=\mathfrak m\)，只需在剩余向量空间中选择生成元，就能得到原模的生成元。
+
+\ProseParagraphBreak
 两项假设都有明确作用。取素数 \(p\)，对局部环 \(R=\mathbb Z_{(p)}\) 的模 \(M=\mathbb Q\)，有 \(pM=M\ne0\)，因为 \(M\) 不有限生成：有限个有理数只能给出有统一上界的负 \(p\) 指数。若省去 \(I\subseteq J(R)\)，则 \(R=\mathbb Z\)、\(I=(2)\)、\(M=\mathbb Z/3\mathbb Z\) 满足 \(IM=M\ne0\)。有限生成与 Jacobson 根条件不能相互替代。
 
 \begin{corollary}\label{b3:cor:finite-surjective-endomorphism}
 设 \(R\) 为交换含幺环，\(M\) 为有限生成 \(R\) 模。则 \(M\) 的每个满 \(R\) 线性自同态都是同构。
 \end{corollary}
 \begin{proof}
-设 \(u:M\rightarrow M\) 满。赋予 \(M\) 一个 \(R[T]\) 模结构，令 \(T\) 作用为 \(u\)；原来的有限个 \(R\) 生成元也生成此 \(R[T]\) 模。于是 \(TM=M\)。用行列式技巧所得的一般结论，而不是要求 \((T)\subseteq J\bigl(R[T]\bigr)\) 的版本，得到
+设 \(u:M\rightarrow M\) 满。满射性是 \(u(M)=M\)；把 \(u\) 编码成一个标量的作用，就能将它改写成前面使用的 \(IM=M\)。为此赋予 \(M\) 一个 \(R[T]\) 模结构，令 \(T\) 作用为 \(u\)；原来的有限个 \(R\) 生成元也生成此 \(R[T]\) 模，并且 \((T)M=u(M)=M\)。对交换环 \(R[T]\) 及其理想 \((T)\) 使用上面的统一零化元结论，得到
 \(\bigl(1-T\cdot g(T)\bigr)M=0\)，其中 \(g(T)\in R[T]\)。所以
 \(u\,g(u)=g(u)\,u=\operatorname{id}_M\)，给出了双侧逆。
 \end{proof}
 
 \subsection{极小生成元与剩余向量空间}
 \label{b3:subsec:0302:03}
+
+一个生成组不可再删去元素，只说明其中每个元素对这组生成元都不可缺少；元素个数最少则需要与所有生成组比较。生成组是否为自由基，还要检查是否存在系数不全为零的线性关系。在局部环上的有限生成模中，前两个条件由剩余向量空间联系起来。
 
 \begin{corollary}\label{b3:cor:local-generators}
 设 \((R,\mathfrak m,\kappa)\) 为交换局部环，其中 \(\kappa=R/\mathfrak m\)，\(M\) 为有限生成 \(R\) 模，\(m_1,\ldots,m_r\in M\)。这些元素生成 \(M\)，当且仅当其剩余类生成
@@ -102,10 +117,13 @@ J(R)=\bigcap_{\mathfrak m\text{ 极大}}\mathfrak m.
 \end{proof}
 \symidx{\(\mu_R(M)\)：局部环上有限生成模的最少生成元个数}
 
+任意生成组的剩余类都必须生成 \(M/\mathfrak mM\)，所以其元素个数至少是 \(\mu_R(M)\)。而提升一组剩余向量空间的基就能达到这个数目。因此在局部环上，不可删去元素的极小生成组也具有最小可能的元素个数；非局部环则可能有不可删去、但个数并非最少的生成组。
+
+\ProseParagraphBreak
 例如，设 \(k\) 为域。在 \(R=k[x,y]_{(x,y)}\) 中，\(\mathfrak m=(x,y)R\) 满足
 \(\mathfrak m/\mathfrak m^2\cong k^2\)，基为 \(x,y\) 的类。确实一次项给出这两个独立坐标，极大理想平方恰好没有一次项；局部化的分母常数项非零，只会把一次项乘以一个非零标量。因此 \(\mathfrak m\) 需要两个生成元，不是主理想。同样，
 \((x,y)^r/(x,y)^{r+1}\) 的基由全次数恰为 \(r\) 的 \(r+1\) 个单项式给出，故 \(\mu_R(\mathfrak m^r)=r+1\)。
 
 \ProseParagraphBreak
-极小生成组不是自由基。例如 \(R=k[\epsilon]/(\epsilon^2)\) 上的模
+极小生成组不一定是自由基。例如 \(R=k[\epsilon]/(\epsilon^2)\) 上的模
 \(M=R/(\epsilon)\) 只需一个生成元，但该生成元被非零的 \(\epsilon\) 零化。剩余向量空间的维数测量生成元数，并没有排除原模的关系。上述极小生成组的结论也可对照\cite[Theorem 2.3, pp. 8--9]{Matsumura1989CommutativeRingTheory}。

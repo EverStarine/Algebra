@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 7.3 纤维与基域扩张
-% 纲要位置：工作记录/计划纲要.md，第 2020 行。
+% 纲要位置：工作记录/计划纲要.md，第 2121 行。
 % 纲要细目（写作范围）：
-% * 纤维的方程
-% * 张量积和坐标环
-% * 非代数闭域上的点与几何点
+% * 纤维的方程；集合纤维与保留幂零元的纤维代数
+% * 张量积和坐标环；直积坐标环的求值证明及一般有限型代数的变基
+% * 非代数闭域上的点与几何点；底层素点、剩余域嵌入及不可分变基中的幂零元
 
 \section{纤维与基域扩张}
 \label{b3:sec:0703}
@@ -54,7 +54,7 @@ A\otimes_B\kappa(b)\cong A/J,
 \subsection{张量积与坐标环}
 \label{b3:subsec:0703:02}
 
-经典仿射代数集的坐标环把在整个点集上为零的多项式看作零，因此总是约化的。纤维代数则要保留代入后的全部关系，已经可以出现 \(k[t]/(t^2)\) 这样的非约化环。为了保留这些幂零信息及其扩域后的变化，研究对象便从普通点集转为有限型代数，相应的点空间是代数的素谱。设 \(k\) 为任意域，\(A\) 为交换含幺有限型 \(k\) 代数，不要求约化。对域扩张 \(K/k\)，记 \(A_K=K\otimes_kA\)，称为将标量扩张到 \(K\) 的代数。
+经典仿射代数集的坐标环把在整个点集上为零的多项式看作零，因此总是约化的。纤维代数则要保留代入后的全部关系，已经可以出现 \(k[t]/(t^2)\) 这样的非约化环。为了保留这些幂零信息及其扩域后的变化，从这里起研究对象不再限于经典代数集，而允许一般有限型代数。查看它的点时使用 \(\operatorname{Spec}A\)，但仍须保留代数 \(A\) 本身，因为素谱的点集也不能记录幂零元。设 \(k\) 为任意域，\(A\) 为交换含幺有限型 \(k\) 代数，不要求约化。对域扩张 \(K/k\)，记 \(A_K=K\otimes_kA\)，称为将标量扩张到 \(K\) 的代数。
 
 \begin{proposition}\label{b3:prop:base-change-presentation}
 设 \(k\) 为域，\(K/k\) 为域扩张，\(I\) 为 \(k[x_1,\ldots,x_n]\) 的理想，\(A=k[x_1,\ldots,x_n]/I\)，其中 \(n\ge0\)。则
@@ -74,31 +74,44 @@ a_i\otimes1&\longleftrightarrow x_i+(IR+JR),\\
 1\otimes b_j&\longleftrightarrow y_j+(IR+JR).
 \end{aligned}
 \]
+当 \(k\) 代数闭，\(X\subseteq k^n\)、\(Y\subseteq k^m\) 为仿射代数集，且 \(I=I(X)\)、\(J=I(Y)\) 时，直积 \(X\times Y\subseteq k^{n+m}\) 也是仿射代数集，并有自然同构
+\[
+k[X]\otimes_k k[Y]\cong k[X\times Y].
+\]
+此同构把 \(a\otimes b\) 送到函数 \((x,y)\mapsto a(x)b(y)\)。特别地，\(I(X\times Y)=I(X)R+I(Y)R\)。
 \end{proposition}
 \begin{proof}
 第一式中，将 \(c\otimes\bar f\) 送到 \(cf\) 的商类，得到良定义的代数同态。反向将 \(K\) 中的标量送到 \(c\otimes1\)，变量送到 \(1\otimes\bar x_i\)；原关系都为零，所以该赋值可下降到商。两复合固定所有标量和代数生成元，因此互逆。
 
 第二项把 \(x_i\) 送到 \(a_i\otimes1\)，把 \(y_j\) 送到 \(1\otimes b_j\)。两组像元彼此交换，各自满足 \(I\) 与 \(J\) 中的关系，故得到 \(R/(IR+JR)\to A\otimes_kB\)。反向将 \((f+I)\otimes(g+J)\) 送到 \(fg+(IR+JR)\)，其中 \(f\in k[x_1,\ldots,x_n]\)、\(g\in k[y_1,\ldots,y_m]\)。这个公式对 \(k\) 平衡，改变两个代表元产生的差分别属于 \(IR\) 与 \(JR\)，因而良定义。两个复合固定两组生成元及 \(k\) 中的标量，得到所述同构。
+
+对第三项，两组方程同时成立恰好定义 \(X\times Y\)，即 \(X\times Y=Z_k(IR+JR)\subseteq k^{n+m}\)，所以这是仿射代数集。由函数乘积得到 \(k\) 代数同态 \(k[X]\otimes_k k[Y]\to k[X\times Y]\)。它的像包含两组坐标函数，而这些坐标函数生成直积的坐标环，故该同态满射。若 \(X\) 或 \(Y\) 为空，则相应的坐标环为零环，两侧均为零环，同构成立。否则，对核中的元素，可把有限个第二因子张成的向量空间选一组基，将它写成 \(\sum_{i=1}^r a_i\otimes b_i\)，其中 \(b_1,\ldots,b_r\) 在 \(k[Y]\) 中线性无关。对每个固定的 \(x\in X\)，核的条件给出
+\[
+\sum_{i=1}^r a_i(x)b_i(y)=0\qquad\text{对所有 }y\in Y.
+\]
+这表示 \(\sum_i a_i(x)b_i=0\) 作为 \(Y\) 上的多项式函数成立。线性无关性迫使所有 \(a_i(x)=0\)。再让 \(x\) 遍历 \(X\)，得到每个 \(a_i\) 在 \(k[X]\) 中为零，原张量因而为零，证明了单射。结合第二项，\(R\) 到 \(k[X\times Y]\) 的自然映射的核正是 \(IR+JR\)，由坐标环的定义即得最后的理想等式。
 \end{proof}
 
-这个结论说明张量积怎样保存方程，却不自动保证所得环约化。若把一组方程解释为代数闭域中的普通零点集，强零点定理仍要求取其关系理想的根。在不代数闭的域上，仅看本域中的点还可能损失更多信息。
+直积的结论说明，对代数闭域上的经典仿射代数集，两个坐标环的张量积仍约化。但一般有限型代数的张量积并不自动约化；若把任意一组方程解释为代数闭域中的普通零点集，强零点定理仍要求取所生成理想的根。在不代数闭的域上，仅看本域中的点还可能损失更多信息。
 
 \ProseParagraphBreak
-例如 \(A=\mathbb R[u]/(u^2+1)\cong\mathbb C\) 没有到 \(\mathbb R\) 的实代数同态，但
+例如 \(A=\mathbb R[u]/(u^2+1)\cong\mathbb C\) 是非零环，\(\operatorname{Spec}A=\{(0)\}\) 也非空。方程 \(u^2+1=0\) 没有实数解，所以实零点集 \(Z_{\mathbb R}(u^2+1)\) 为空，亦即不存在 \(A\to\mathbb R\) 的 \(\mathbb R\) 代数同态。扩张到 \(\mathbb C\) 后却得到
 \[
 \mathbb C\otimes_{\mathbb R}A
 \cong\mathbb C[u]/(u^2+1)\cong\mathbb C\times\mathbb C,
 \]
-两个因子对应 \(u=i,-i\)。从环的角度，原对象并不为空；只是它没有实坐标点。不能把实零点集为空与原代数为零环混为一谈。
+两个因子对应 \(u=i,-i\)。
 
 \subsection{非代数闭域上的点与几何点}
 \label{b3:subsec:0703:03}
 
 \begin{definition}\label{b3:def:field-valued-point}
-设 \(k\) 为域，\(A\) 为交换含幺有限型 \(k\) 代数，\(K/k\) 为域扩张。若 \(\varphi:A\to K\) 为 \(k\) 代数同态，则称 \(\varphi\) 为一个 \(K\) 值点。若 \(K=k\)，则称它为 \(k\) 有理点；若 \(K\) 为代数闭域，则称它为以 \(K\) 为值的\term[jihe-dian]{几何点}[geometric point]。
+设 \(k\) 为域，\(A\) 为交换含幺有限型 \(k\) 代数，\(K/k\) 为域扩张。一个 \(k\) 代数同态 \(\varphi:A\to K\) 称为一个 \(K\) 值点。当 \(K=k\) 时，它称为 \(k\) 有理点；当 \(K\) 为代数闭域时，它称为以 \(K\) 为值的\term[jihe-dian]{几何点}[geometric point]。
 \end{definition}
 
-若 \(A=k[x_1,\ldots,x_n]/I\)，一个这样的同态恰由使全部 \(I\) 关系为零的一组 \(K\) 坐标确定。它的核在 \(\operatorname{Spec}A\) 中确定一个点，但未必是极大理想：例如自然包含 \(k[t]\to\overline{k(t)}\)、\(t\mapsto t\) 给出一个几何点，其在 \(\operatorname{Spec}k[t]\) 中的像为 \((0)\)，是全谱的一般点而非闭点。这里 \(t\) 的像是超越元；经典仿射直线的 \(k\) 坐标点 \(a\) 则对应极大理想 \((t-a)\)。如果只取固定代数闭包 \(\bar k\) 中的值，则由有限型性，坐标的像生成有限代数扩域，核为极大理想。
+若 \(A=k[x_1,\ldots,x_n]/I\)，一个这样的同态恰由使全部 \(I\) 关系为零的一组 \(K\) 坐标确定。因为 \(K\) 为域，\(\mathfrak p=\ker\varphi\) 是素理想，确定了 \(\operatorname{Spec}A\) 中的一个点。由 \(\varphi\) 诱导的单射 \(A/\mathfrak p\to K\) 还唯一延拓为剩余域的 \(k\) 嵌入 \(\kappa(\mathfrak p)=\operatorname{Frac}(A/\mathfrak p)\hookrightarrow K\)。反过来，给定 \(\mathfrak p\) 和这样的嵌入，复合 \(A\to A/\mathfrak p\to\kappa(\mathfrak p)\to K\) 就恢复了原来的 \(K\) 值点。因此一个几何点除了底层素点，还包含剩余域嵌入的数据。同一个素点上可以有不同的几何点：上面的实代数 \(A\) 中，\(u\mapsto i\) 和 \(u\mapsto-i\) 给出两个 \(\mathbb C\) 值几何点，核同为 \((0)\)，对应 \(\kappa(0)\cong\mathbb C\) 到 \(\mathbb C\) 的两种 \(\mathbb R\) 嵌入。
+
+几何点的核未必极大。例如自然包含 \(k[t]\to\overline{k(t)}\)、\(t\mapsto t\) 的核为 \((0)\)，所以这个几何点位于全谱的一般点上。值域代数闭并不要求坐标在原基域 \(k\) 上代数；这里 \(t\) 的像仍是超越元。经典仿射直线的 \(k\) 坐标点 \(a\) 则对应极大理想 \((t-a)\)。如果只取固定代数闭包 \(\bar k\) 中的值，则有限个坐标的像都在 \(k\) 上代数，它们生成的 \(k\) 代数已是有限扩域，因而 \(A/\ker\varphi\) 是域，核为极大理想。
 
 \ProseParagraphBreak
 对任意 \(\mathfrak p\in\operatorname{Spec}A\)，点处的剩余域 \(\kappa(\mathfrak p)\) 都可嵌入某个代数闭域，从而给出位于它上面的几何点。这与只枚举 \(k\) 有理点不同。更一般地，给定交换含幺有限型 \(k\) 代数之间的同态 \(B\to A\) 及底点 \(\mathfrak q\in\operatorname{Spec}B\)，纤维代数 \(A\otimes_B\kappa(\mathfrak q)\) 就是在固定这个底点后，继续研究剩余域扩张中坐标的对象。
@@ -108,9 +121,19 @@ a_i\otimes1&\longleftrightarrow x_i+(IR+JR),\\
 \[
 L\otimes_kL\cong L[\varepsilon]/(\varepsilon^p).
 \]
+其中左侧的 \(1\otimes\alpha-\alpha\otimes1\) 对应右侧 \(\varepsilon\) 的商类，是一个非零幂零元。
 \end{example}
 \begin{proof}
-\(s\) 不是 \(k\) 中的 \(p\) 次幂：若 \((f/g)^p=s\)，把 \(f,g\in\mathbb F_p[s]\) 取互素，比较不可约因子 \(s\) 的指数便矛盾。因为 \(\alpha^p=s\)，其首一最小多项式 \(m_\alpha(T)\) 在 \(k[T]\) 中整除 \(T^p-s\)。在代数闭包中，\(T^p-s=(T-\alpha)^p\)，所以 \(m_\alpha\) 的全部根都为 \(\alpha\)，即 \(m_\alpha(T)=(T-\alpha)^r\)，其中 \(1\le r\le p\)。若 \(r<p\)，其 \(T^{r-1}\) 系数 \(-r\alpha\in k\) 会使 \(\alpha\in k\)，与上述结论矛盾。故 \(L\cong k[T]/(T^p-s)\)。应用\cref{b3:prop:base-change-presentation}后，在 \(L\) 中写 \(T^p-s=(T-\alpha)^p\)，令 \(\varepsilon=T-\alpha\) 即得所述同构。
+\(s\) 不是 \(k\) 中的 \(p\) 次幂：若 \((f/g)^p=s\)，把 \(f,g\in\mathbb F_p[s]\) 取互素，比较不可约因子 \(s\) 的指数便矛盾。因为 \(\alpha^p=s\)，其首一最小多项式 \(\mu_\alpha(T)\) 在 \(k[T]\) 中整除 \(T^p-s\)。在代数闭包中，\(T^p-s=(T-\alpha)^p\)，所以 \(\mu_\alpha\) 的全部根都为 \(\alpha\)，即 \(\mu_\alpha(T)=(T-\alpha)^r\)，其中 \(1\le r\le p\)。若 \(r<p\)，其 \(T^{r-1}\) 系数 \(-r\alpha\in k\) 会使 \(\alpha\in k\)，与上述结论矛盾。故 \(L\cong k[T]/(T^p-s)\)。应用\cref{b3:prop:base-change-presentation}得到 \(L\otimes_kL\cong L[T]/(T^p-s)\)，其中 \(\alpha\otimes1\) 对应系数 \(\alpha\)，\(1\otimes\alpha\) 对应 \(T\)。在 \(L[T]\) 中有 \(T^p-s=(T-\alpha)^p\)，所以
+\[
+\varepsilon=1\otimes\alpha-\alpha\otimes1
+\]
+对应 \(T-\alpha\) 的商类，给出所述换元同构。张量积中利用特征 \(p\) 及 \(s\in k\)，直接算得
+\[
+\varepsilon^p=1\otimes\alpha^p-\alpha^p\otimes1
+=1\otimes s-s\otimes1=0.
+\]
+另一方面，\(T-\alpha\) 的次数为 \(1<p\)，不属于 \(L[T]\) 中的理想 \(((T-\alpha)^p)\)，所以 \(\varepsilon\ne0\)。两份 \(\alpha\) 在张量积中并未相等，但它们的差被 \(p\) 次幂消去。
 \end{proof}
 
 因此“约化”与“经过任意扩域仍约化”是不同要求。上例变基后仍只出现一个点，却有 \(p\) 次幂零结构。本章保留这个具体区别；一般几何约化性、可分性和平展性的关系将在后面的微分与平展章节中继续讨论。

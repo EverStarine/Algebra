@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 2.1 模局部化
-% 纲要位置：工作记录/计划纲要.md，第 1844 行。
+% 纲要位置：工作记录/计划纲要.md，第 1943 行。
 % 纲要细目（写作范围）：
-% * 分式模的构造
-% * 与环局部化的张量描述
-% * 局部化的正合性
+% * 分式模的构造与泛性质；允许的分母如何消去元素
+% * 与环局部化的张量描述及平衡关系
+% * 局部化的正合性；与一般张量积右正合性的区别
 
 \section{模局部化}
 \label{b3:sec:0201}
@@ -29,7 +29,7 @@
 \[
 uvt(rm-sp)=uv\bigl(r(tm-sn)+s(rn-tp)\bigr)=0,
 \]
-所以传递性也成立。关系中的额外乘子 \(u\) 不能省去：若某个分母已经零化了 \(m\)，局部化后 \(m\) 就应消失。
+所以传递性也成立。关系中的额外乘子 \(u\) 不能省去。例如，取 \(R=\mathbb Z\)、\(M=\mathbb Z/2\mathbb Z\)、\(S=\{1,2,2^2,\ldots\}\)。我们要使标量 \(2\) 可逆，而 \(2\bar1=0\)，所以局部化后必须有 \(\bar1/1=0\)。上述定义正好允许取 \(u=2\)，将 \((\bar1,1)\) 与 \((0,1)\) 识别；若只要求 \(tm=sn\)，这两个代表元就不能等价。局部化必须消去被某个分母零化的元素。
 
 \begin{proposition}\label{b3:prop:module-fraction-operations}
 设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集，\(M\) 为 \(R\) 模。下列公式使 \(S^{-1}M\) 成为 \(S^{-1}R\) 模：
@@ -62,6 +62,9 @@ M\arrow[r,"\iota_M"]\arrow[dr,"h"']
 若 \(u(tm-sn)=0\)，在 \(N\) 中 \(u,s,t\) 均可逆，施加 \(h\) 再消去这些单位，即得 \(s^{-1}\cdot h(m)=t^{-1}\cdot h(n)\)。这证明延拓良定义；通分验证线性。因 \(m/s=(1/s)(m/1)\)，任何这样的延拓都只能采用所给公式，故唯一。
 \end{proof}
 
+这个泛性质说明，局部化把 \(S\) 中的标量变成可逆作用，同时使任何到 \(S^{-1}R\) 模的 \(R\) 线性映射都唯一地通过 \(\iota_M\) 分解。由零判据，\(\iota_M\) 的核恰由被某个 \(s\in S\) 零化的元素组成；因此局部化还可能丢失原模中的元素，如前面的 \(\mathbb Z/2\mathbb Z\) 就整个变为零模。
+
+\ProseParagraphBreak
 例如 \(R=\mathbb Z\)、\(M=\mathbb Z/12\mathbb Z\)，在 \((2)\) 处局部化时 \(3\) 可逆，原来阶为 \(3\) 的部分消失，得到 \(M_{(2)}\cong\mathbb Z/4\mathbb Z\)。确切的同构由 \(\bar a/s\mapsto \bar a\bar s^{-1}\) 给出，其中 \(s\) 为奇数；其核为零可由 \(4\mid a\Rightarrow12\mid3a\) 核验。
 
 设 \(k\) 为域，把多项式变量 \(x\) 的各次幂用作分母，就得到环 \(k[x,x^{-1}]\)。它的元素是有限和 \(\sum_{j=m}^n a_jx^j\)，其中 \(m,n\in\mathbb Z\)、\(m\le n\)、\(a_j\in k\)；这是因为给多项式除以 \(x^r\)，只会使各项的指数统一减去 \(r\)。这个环称为\term[Laurent-duoxiangshi-huan]{Laurent 多项式环}[Laurent polynomial ring]。\footnote{洛朗（Pierre Alphonse Laurent，1813-1854），法国数学家及工程师，以研究复函数的 Laurent 级数闻名。}
@@ -78,7 +81,16 @@ M\arrow[r,"\iota_M"]\arrow[dr,"h"']
 其逆映射为 \(m/s\mapsto(1/s)\otimes m\)。
 \end{proposition}
 \begin{proof}
-正向公式对两个变量可加，且 \((ar/s)\otimes m\) 与 \((a/s)\otimes rm\) 具有相同的像，故由张量积的泛性质给出线性映射。若 \(u(tm-sn)=0\)，则
+正向公式对两个变量可加，且 \((ar/s)\otimes m\) 与 \((a/s)\otimes rm\) 具有相同的像，故由张量积的泛性质给出线性映射。若 \(u(tm-sn)=0\)，由平衡关系 \((\xi r)\otimes m=\xi\otimes(rm)\)（\(\xi\in S^{-1}R\)、\(r\in R\)），有
+\[
+\begin{aligned}
+\frac1s\otimes m&=\frac{ut}{ust}\otimes m
+=\frac1{ust}\otimes utm,\\
+\frac1t\otimes n&=\frac{us}{ust}\otimes n
+=\frac1{ust}\otimes usn.
+\end{aligned}
+\]
+两式相减得到
 \[
 \frac1s\otimes m-\frac1t\otimes n
 =\frac1{ust}\otimes u(tm-sn)=0.
@@ -94,6 +106,8 @@ S^{-1}(M/IM)\cong(S^{-1}M)/(S^{-1}I)(S^{-1}M).
 
 \subsection{局部化的正合性}
 \label{b3:subsec:0201:03}
+
+张量积一般只保证右正合，未必保持单射。局部化所给出的标量扩张 \(S^{-1}R\otimes_R-\) 却也保持单射，因而保留整个短正合列；这正是 \(S^{-1}R\) 作为 \(R\) 模平坦的含义。
 
 \begin{theorem}\label{b3:thm:localization-exact}
 设 \(R\) 为交换含幺环，\(S\subseteq R\) 为含一的乘法集，\(L,M,N\) 为 \(R\) 模。若 \(f:M\rightarrow N\) 是 \(R\) 模同态，则它诱导映射 \(S^{-1}f(m/s)=f(m)/s\)。这一定义给出正合函子：若

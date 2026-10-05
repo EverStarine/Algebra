@@ -1,9 +1,9 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 3.1 有限性条件
-% 纲要位置：工作记录/计划纲要.md，第 1879 行。
+% 纲要位置：工作记录/计划纲要.md，第 1979 行。
 % 纲要细目（写作范围）：
-% * 有限生成与有限展示
-% * Noether 环上的有限生成模
+% * 有限生成与有限展示；基本关系生成全部关系及有限展示对生成组的独立性
+% * Noether 环上的有限生成模；升链条件与子模有限生成的等价性
 % * Hilbert 基定理的模论后果
 
 \section{有限性条件}
@@ -20,20 +20,30 @@
 \[
 R^a\xrightarrow{A}R^b\longrightarrow M\longrightarrow0,
 \]
-则称 \(M\) 为\term[youxian-zhanshi-mo]{有限展示模}[finitely presented module]。该正合列给出一个有限展示：\(R^b\) 的基给出生成元，矩阵 \(A\) 的列生成它们的全部关系。
+则称 \(M\) 为\term[youxian-zhanshi-mo]{有限展示模}[finitely presented module]。该正合列给出一个有限展示：满射把 \(R^b\) 的标准基送到 \(M\) 的生成元，其核由矩阵 \(A\) 的列生成，称为这组生成元的关系模。
 \end{definition}
 有限展示模也称有限呈示模\termidx[youxian-chengshi-mo]{有限呈示模}；本书以“展示”为主称。“有限生成”限制的是生成元数目，而非底集合的大小：例如 \(\mathbb Z\) 作为整数模由 \(1\) 生成，任意非零有限维实向量空间也有限生成，二者的底集合却都无限。
+
+\ProseParagraphBreak
+若 \(m_1,\ldots,m_b\) 生成 \(M\)，自由模 \(R^b\) 的标准基 \(e_i\) 可以分别送到 \(m_i\)，得到满射 \(p:R^b\to M\)。向量 \(\sum_i r_i e_i\) 属于 \(\ker p\)，恰好表示关系 \(\sum_i r_i m_i=0\)，所以这个核记录全部关系。例如，对 \(f,g\in R\)，有有限展示
+\[
+R^2\xrightarrow{(f\ g)}R\longrightarrow R/(f,g)\longrightarrow0.
+\]
+其第一个映射把 \((a,b)\) 送到 \(af+bg\)，第二个映射为自然商映射。模 \(R/(f,g)\) 由 \(e=1+(f,g)\) 生成，\(fe=0\)、\(ge=0\) 是两条基本关系；任一关系 \(re=0\) 都由 \(r\in(f,g)\) 得到，因而是这两条基本关系的 \(R\) 线性组合。这里的有限性限制基本关系的数目，不要求全部关系只有有限条。
+
+\ProseParagraphBreak
+换一组有限生成元后，需要考虑相应的自由模满射及其核。下面的命题说明，一旦某组有限生成元的关系模有限生成，其他有限生成组也有这一性质；因此有限展示性不依赖生成组的选择。
 
 \begin{proposition}\label{b3:prop:finite-presentation-kernel}
 设 \(R\) 为交换含幺环，\(M\) 为 \(R\) 模。\(M\) 有限展示，当且仅当它有限生成且存在满射 \(R^b\rightarrow M\)，其中 \(b\ge0\)，其核有限生成。此时，对每个非负整数 \(n\)，满射 \(R^n\rightarrow M\) 的核也都有限生成。
 \end{proposition}
 \begin{proof}
-第一句只是把关系矩阵的像写成核；反过来，对核选有限个生成元即可构成有限展示。证明最后一句时，设 \(p:R^b\rightarrow M\) 的核 \(L\) 有限生成，另有满射 \(q:R^n\rightarrow M\)。逐个提升基向量的像，得到 \(u:R^b\rightarrow R^n\)、\(v:R^n\rightarrow R^b\)，满足 \(qu=p\)、\(pv=q\)。若 \(K=\ker q\)，则 \(u(L)\subseteq K\)，且
+第一句只是把关系矩阵的像写成核；反过来，对核选有限个生成元即可构成有限展示。证明最后一句时，设 \(p:R^b\rightarrow M\) 的核 \(L\) 有限生成，另有满射 \(q:R^n\rightarrow M\)。对 \(R^b\) 的每个标准基向量 \(e_i\)，由 \(q\) 满射选取 \(y_i\in R^n\)，使 \(q(y_i)=p(e_i)\)；规定 \(u(e_i)=y_i\)，便得到 \(u:R^b\rightarrow R^n\) 且 \(qu=p\)。反过来，对 \(R^n\) 的标准基向量 \(f_j\)，选取 \(z_j\in R^b\)，使 \(p(z_j)=q(f_j)\)；规定 \(v(f_j)=z_j\)，得到 \(v:R^n\rightarrow R^b\) 且 \(pv=q\)。这两个映射分别把一组生成元用另一组来表达。若 \(K=\ker q\)，则 \(u(L)\subseteq K\)，且
 \(q(1-uv)=q-pv=0\)。对 \(x\in K\)，有 \(vx\in L\)，所以
 \[
 x=u(vx)+(1-uv)x.
 \]
-因此 \(K=u(L)+(1-uv)(R^n)\)，由 \(L\) 的有限生成元的像和有限个 \((1-uv)e_i\) 生成。
+因此 \(K=u(L)+(1-uv)(R^n)\)，由 \(L\) 的有限生成元的像和有限个 \((1-uv)f_j\) 生成。
 \end{proof}
 
 循环模 \(R/I\) 总是有限生成；由这个命题，它有限展示当且仅当理想 \(I\) 有限生成。取
@@ -46,7 +56,7 @@ x=u(vx)+(1-uv)x.
 设 \(R\) 为交换含幺环，\(M\) 为 \(R\) 模。若 \(M\) 的每条子模升链 \(N_1\subseteq N_2\subseteq\cdots\) 最终稳定，则称 \(M\) 为 \term[Noether-mo]{Noether 模}[Noetherian module]。若每条子模降链最终稳定，则称 \(M\) 为 \term[Artin-mo]{Artin 模}[Artinian module]。若 \(R\) 作为自身的模满足相应条件，则分别称 \(R\) 为 \term[Noether-huan]{Noether 环}[Noetherian ring]与 \term[Artin-huan]{Artin 环}[Artinian ring]。
 \end{definition}
 
-一个模是 Noether 模，当且仅当它的每个子模有限生成。若某个子模不有限生成，逐次添入不能由已有元素生成的元素，就得到严格升链。反过来，一条升链的并是子模；其有限个生成元都属于同一个链项，所以以后各项只能等于该项。
+一个模是 Noether 模，当且仅当它的每个子模有限生成。若某个子模不有限生成，逐次添入不能由已有元素生成的元素，就得到严格升链。反过来，若每个子模有限生成，对一条升链 \(N_1\subseteq N_2\subseteq\cdots\)，其并 \(N\) 是子模。若 \(N=0\)，链各项已全为零；否则选有限组生成元 \(m_1,\ldots,m_r\)，分别取 \(i_j\) 使 \(m_j\in N_{i_j}\)。令 \(n=\max\{i_1,\ldots,i_r\}\)，链的嵌套关系保证全部生成元都在 \(N_n\) 中，所以 \(N_n=N\)，以后各项也只能等于 \(N\)。
 
 \begin{proposition}\label{b3:prop:noether-finite-modules}
 设 \(R\) 为交换含幺环，\(0\rightarrow L\rightarrow M\rightarrow N\rightarrow0\) 为 \(R\) 模的短正合列。中间项 \(M\) 为 Noether 模，当且仅当两端 \(L,N\) 均为 Noether 模；Artin 模也满足同样结论。特别地，若 \(R\) 为 Noether 环，则每个有限生成 \(R\) 模及其子模都为 Noether 模，并且都有限展示。
@@ -54,7 +64,7 @@ x=u(vx)+(1-uv)x.
 \begin{proof}
 子模的链也是原模的链，商模的链可以取逆像，所以中间项的链条件传给两端。反向设两端具有升链条件。对 \(M\) 的升链 \((M_i)\)，交链 \(M_i\cap L\) 及其在 \(N\) 中的像链都稳定。若 \(M_i\subseteq M_j\)，且交与像相同，对 \(x\in M_j\) 可取 \(y\in M_i\) 有相同的像，则 \(x-y\in M_j\cap L=M_i\cap L\)，所以 \(x\in M_i\)。因此原链稳定。降链在共同的稳定起点后，对反向包含使用同一个论证，即得 Artin 情形。
 
-若 \(R\) 为 Noether 环，由 \(0\rightarrow R^{n-1}\rightarrow R^n\rightarrow R\rightarrow0\) 归纳得到有限自由模为 Noether 模；其商即任意有限生成模仍为 Noether 模，所有子模也如此。对这些模选有限自由满射，核作为 Noether 模的子模有限生成，再用\cref{b3:prop:finite-presentation-kernel}得到有限展示。
+若 \(R\) 为 Noether 环，对 \(n\ge1\)，在向量末尾补一个零给出 \(R^{n-1}\to R^n\) 的单射，取末坐标则给出 \(R^n\to R\) 的满射，其核恰为前一个映射的像。因此有短正合列 \(0\rightarrow R^{n-1}\rightarrow R^n\rightarrow R\rightarrow0\)，从零模 \(R^0\) 开始归纳得到有限自由模为 Noether 模；其商即任意有限生成模仍为 Noether 模，所有子模也如此。对这些模选有限自由满射，核作为有限自由 Noether 模的子模有限生成，再用\cref{b3:prop:finite-presentation-kernel}得到有限展示。
 \end{proof}
 
 这个命题把第二卷第12.1节的链条件论证落实到交换环上。它还解释了\cref{b3:thm:hom-localization}在 Noether 环上为何只需假设源模有限生成：有限展示此时自动成立。若底环不满足 Noether 条件，就不能省略那项假设。
@@ -89,7 +99,7 @@ x=u(vx)+(1-uv)x.
 条件 & 所要求的有限性 & 与其他条件的关系 \\
 \midrule
 有限生成 & 有有限生成集 & 不一定有限展示或为 Noether 模 \\
-有限展示 & 有有限生成集，且这些生成元的关系模有限生成 & 推出有限生成；不一定为 Noether 模 \\
+有限展示 & 有有限生成集，全部关系均为有限组基本关系的 \(R\) 线性组合 & 推出有限生成；不一定为 Noether 模 \\
 Noether & 每条子模升链最终稳定；等价地，每个子模都有限生成 & 推出有限生成；不一定为 Artin 模 \\
 Artin & 每条子模降链最终稳定 & 不一定有限生成 \\
 有限长度 & 有有限合成列 & 等价于 Noether 且 Artin；因而有限生成 \\
