@@ -1,15 +1,15 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 6.3 Hom–张量伴随
-% 纲要位置：计划纲要.md，第 992 行。
+% 纲要位置：计划纲要.md，第 1256 行。
 
 \section{Hom–张量伴随}
 \label{b2:sec:0603}
 
-一个双变量公式可以先固定第一个变量，也可以先固定第二个变量；这样得到的线性映射并非互不相关。Hom–张量伴随把这两种读法组织成一个自然同构。本节始终写出 Hom 所要求的线性侧别，因为在非交换环上，错误的作用次序会使貌似熟悉的公式失去意义。
+一个双变量规则既可以借助张量积写成一个线性映射，也可以在固定一个变量后，把它读成以线性映射为值的映射。Hom–张量伴随说明这两种表达互相确定，并与各变量上的同态相容。非交换环上还须写清每一种线性条件所使用的标量作用。
 
 % 纲要要点（供目录核对）：
 %
-% * 伴随同构及双模侧别；有限自由模的 Hom–张量同构及坐标逆式
+% * 伴随同构及双模侧别；有限自由模的 Hom–张量同构及坐标逆式；无限自由模中的共同分母限制
 % * 自然性与映射的显式公式
 % * 限制标量、扩张标量及余诱导
 %
@@ -21,11 +21,23 @@
 \begin{equation}\label{b2:eq:hom-left-action}
 (rf)(p)\coloneqq f(pr).
 \end{equation}
-这里标量作用于输入端，不能改成 \(r\cdot f(p)\)，因为 \(N\) 未必有 \(R\) 作用。右端确实仍为 \(S\) 线性：
+令 \(D_r:P\to P\)、\(p\mapsto pr\)，则 \(rf=f\circ D_r\)：标量通过预复合输入端的右乘映射作用于 Hom。\(P\) 的右 \(R\) 作用因而变成 Hom 的左 \(R\) 作用，\(N\) 本身不需要有 \(R\) 作用。右端确实仍为 \(S\) 线性：
 \[
 (rf)(sp)=f\bigl((sp)r\bigr)=f\bigl(s(pr)\bigr)=s\cdot f(pr).
 \]
 又有 \(\bigl(r_1(r_2f)\bigr)(p)=f\bigl((pr_1)r_2\bigr)=\bigl((r_1r_2)f\bigr)(p)\)，其余分配律与单位条件由逐点加法给出。
+
+\ProseParagraphBreak
+现在设 \(M\) 为左 \(R\) 模。考虑规则 \(B:P\times M\to N\)，它对 \(P\) 是左 \(S\) 线性的，对 \(M\) 可加，并满足
+\[
+B(pr,m)=B(p,rm).
+\]
+张量积的泛性质把这个规则写成 \(h(p\otimes m)=B(p,m)\)。另一方面，固定 \(m\) 后，\(p\mapsto B(p,m)\) 属于 \(\operatorname{Hom}_S(P,N)\)，所以同一个规则也给出
+\[
+g:M\longrightarrow\operatorname{Hom}_S(P,N),\qquad
+g(m)(p)=B(p,m).
+\]
+平衡条件正变为 \(g(rm)(p)=g(m)(pr)=(rg(m))(p)\)，即 \(g\) 的左 \(R\) 线性。下面的伴随同构就是在这两种表达之间转换。
 
 \begin{theorem}[Hom–张量伴随]\label{b2:thm:hom-tensor-adjunction}
 设 \(R,S\) 是环，\({}_SP_R\) 为双模，\(M\) 为左 \(R\) 模，\(N\) 为左 \(S\) 模。这些侧别给出
@@ -74,15 +86,19 @@ F(M)=P\otimes_RM,\qquad G(N)=\operatorname{Hom}_S(P,N),
 则\eqref{b2:eq:hom-tensor-adjunction}形如
 \(\operatorname{Hom}_S\bigl(F(M),N\bigr)\cong\operatorname{Hom}_R\bigl(M,G(N)\bigr)\)。一般地，设 \(F:\mathcal C\to\mathcal D\)、\(G:\mathcal D\to\mathcal C\) 是函子。若每对对象 \(M\in\mathcal C\)、\(N\in\mathcal D\) 都有关于两变量自然的双射 \(\operatorname{Hom}_{\mathcal D}(F(M),N)\cong\operatorname{Hom}_{\mathcal C}(M,G(N))\)，就称 \(F,G\) 构成\term[bansui]{伴随}[adjunction]；\(F\) 称为 \(G\) 的\term[zuobansui]{左伴随}[left adjoint]，\(G\) 称为 \(F\) 的\term[youbansui]{右伴随}[right adjoint]，记作 \(F\dashv G\)。
 \symidx{\(F\dashv G\)：函子 \(F\) 左伴随于 \(G\)}
+自然性要求：改变 \(M\) 或 \(N\) 时，先复合同态再作上述转换，与先转换再复合得到同一映射。因此伴随的数据包含所有这些双射之间的相容性，逐对象任意选取 Hom 集的双射还不够。
 
 \ProseParagraphBreak
-在右模记法中，同一结论为
+\cref{b2:prop:tensor-direct-sums}中的直和公式也与这一对应相连。直和是模范畴的余积，从 \(\bigoplus_iM_i\) 出发的同态由各 \(M_i\) 上的同态任意指定；伴随将它们分别转成从 \(P\otimes_RM_i\) 出发的同态，故 \(P\otimes_R(\bigoplus_iM_i)\) 仍具有这些张量积的余积性质。
+
+\ProseParagraphBreak
+对反环应用同一定理，再交换张量因子的次序，就得到右模记法；双变量规则与固定变量的方法没有改变。同一结论写为
 \[
 \operatorname{Hom}_{S^{\mathrm{op}}}(M\otimes_RP,N)
 \cong\operatorname{Hom}_{R^{\mathrm{op}}}
 \bigl(M,\operatorname{Hom}_{S^{\mathrm{op}}}(P,N)\bigr),
 \]
-这里 \(M_R,{}_RP_S,N_S\)，内层 Hom 的右 \(R\) 作用是 \((fr)(p)=f(rp)\)。下标 \(S^{\mathrm{op}}\) 表示右 \(S\) 线性，避免把两种 Hom 混为一谈。这一版本也可将已证定理应用于反环并交换张量因子得到。
+这里 \(M_R,{}_RP_S,N_S\)，内层 Hom 的右 \(R\) 作用是 \((fr)(p)=f(rp)\)。下标 \(S^{\mathrm{op}}\) 表示右 \(S\) 线性，避免把两种 Hom 混为一谈。
 
 \ProseParagraphBreak
 伴随把两种 Hom 联系起来，并不直接把 Hom 写成张量积。在有限自由的情形，坐标泛函还给出下面的同构。
@@ -113,15 +129,38 @@ F(M)=P\otimes_RM,\qquad G(N)=\operatorname{Hom}_S(P,N),
 \]
 纯张量生成定义域，故两映射互逆。\(\Theta\) 与 \(M\) 上的后复合、\(P\) 上的前复合相容，因而是自然同构；它的逆虽用基写出，却由 \(\Theta\) 唯一确定。
 \end{proof}
-这里的有限基使逆公式确为有限张量和；无限基时，张量中的有限和未必能覆盖所有同态。
+这里的有限基使逆公式确为有限张量和。有限自由只是保证这个求值映射可逆的一种充分条件；\cref{b2:prop:finite-projective-hom-tensor}将用有限对偶基把结论推广到有限生成投射模。对于无限自由模，张量中的有限和则可能无法给出所有同态，下面的例子准确说明了缺少哪些映射。
+
+\begin{proposition}\label{b2:prop:infinite-free-hom-tensor}
+令 \(P=\bigoplus_{n\geq1}\mathbb Ze_n\) 为自由交换群。自然的 \(\mathbb Q\) 线性映射
+\[
+\Theta:\operatorname{Hom}_{\mathbb Z}(P,\mathbb Z)
+\otimes_{\mathbb Z}\mathbb Q
+\longrightarrow\operatorname{Hom}_{\mathbb Z}(P,\mathbb Q),
+\qquad
+\Theta(f\otimes q)(p)=qf(p)
+\]
+的像恰由满足下述条件的同态 \(h\) 组成：存在一个正整数 \(d\)，使对每个 \(n\geq1\) 都有 \(dh(e_n)\in\mathbb Z\)。特别地，\(h(e_n)=2^{-n}\) 定义的同态不在此像中，所以 \(\Theta\) 不满射。
+\end{proposition}
+\begin{proof}
+赋值 \((f,q)\mapsto[p\mapsto qf(p)]\) 双可加且对整数标量平衡，故确实诱导所写的映射。任一张量可写成有限和 \(\sum_{i=1}^s f_i\otimes q_i\)。选取这有限个有理数 \(q_i\) 的一个共同正整数分母 \(d\)，则 \(dq_i\in\mathbb Z\)，因而其像 \(h\) 满足
+\[
+dh(e_n)=\sum_{i=1}^s(dq_i)f_i(e_n)\in\mathbb Z
+\]
+对所有 \(n\) 同时成立。零张量可以取 \(d=1\)。
+
+反过来，若 \(h\) 满足这个共同分母条件，指定 \(f(e_n)=dh(e_n)\) 就给出唯一同态 \(f:P\to\mathbb Z\)。这是因为 \(P\) 中每个元素仅有有限多个非零坐标；整数值可按基展开逐项延拓。此时 \(\Theta(f\otimes d^{-1})=h\)，证明了像的描述。
+
+自由模的同一延拓性质允许任意指定有理数值，故 \(h(e_n)=2^{-n}\) 确实定义同态。对于任一正整数 \(d\)，选取 \(n\) 使 \(2^n>d\)，便有 \(0<dh(e_n)<1\)，不能是整数。因此这个 \(h\) 没有共同整数分母。
+\end{proof}
 
 \subsection{自然性与映射的显式公式}
 \label{b2:subsec:0603:02}
 
-\secref{b2:sec:0502}中的自然性要求映射变动时同构仍然相容。下面的检查说明，本节的同构不依赖于基或展示。
+\secref{b2:sec:0502}中的自然性要求映射变动时同构仍然相容。下面核对伴随同构对三个变量的这种相容性。伴随公式没有使用基；有限自由情形的 \(\Theta\) 也由求值直接定义，其坐标逆式不依赖所选基则是因为一个同构的逆唯一。
 
 \ProseParagraphBreak
-若 \(a:M'\to M\) 左 \(R\) 线性，\(b:N\to N'\) 左 \(S\) 线性，则自然性公式是
+在 \(M\) 变量中，同态 \(a:M'\to M\) 通过前复合产生反向映射；在 \(N\) 变量中，同态 \(b:N\to N'\) 通过后复合产生同向映射。若 \(a\) 左 \(R\) 线性、\(b\) 左 \(S\) 线性，将这两个变化合在一起，自然性公式是
 \begin{equation}\label{b2:eq:tensor-adjunction-naturality}
 \Phi\bigl(b\circ h\circ(\operatorname{id}_P\otimes a)\bigr)
 =\operatorname{Hom}_S(P,b)\circ\Phi(h)\circ a.
@@ -137,7 +176,7 @@ F(M)=P\otimes_RM,\qquad G(N)=\operatorname{Hom}_S(P,N),
 \end{tikzcd}
 \]
 
-若 \(c:P'\to P\) 是 \((S,R)\) 双模同态，则
+\(P\) 变量也通过前复合反变。若 \(c:P'\to P\) 是 \((S,R)\) 双模同态，则
 \[
 \Phi\bigl(h\circ(c\otimes\operatorname{id}_M)\bigr)
 =\operatorname{Hom}_S(c,N)\circ\Phi(h),
@@ -145,17 +184,17 @@ F(M)=P\otimes_RM,\qquad G(N)=\operatorname{Hom}_S(P,N),
 因为在 \(m,p'\) 处两边都是 \(h\bigl(c(p')\otimes m\bigr)\)。这里 \(\operatorname{Hom}_S(c,N)\) 为前复合，它左 \(R\) 线性恰由 \(c(p'r)=c(p')r\) 保证。这完成了\cref{b2:thm:hom-tensor-adjunction}中全部自然性断言的证明。
 
 \ProseParagraphBreak
-有两个映射特别值得记住。将 \(F(M)\) 的恒等映射代入 \(\Phi\)，得到
+伴随双射还将两侧的恒等态射变成一对结构映射。在 \(\operatorname{Hom}_S(F(M),F(M))\cong\operatorname{Hom}_R(M,GF(M))\) 中，恒等态射 \(\operatorname{id}_{F(M)}\) 在右侧对应
 \[
 \eta_M:M\longrightarrow\operatorname{Hom}_S(P,P\otimes_RM),
 \qquad \eta_M(m)(p)=p\otimes m.
 \]
-将 \(G(N)\) 的恒等映射代入 \(\Psi\)，得到求值映射
+同样，在 \(\operatorname{Hom}_R(G(N),G(N))\) 中取 \(\operatorname{id}_{G(N)}\)，经 \(\Psi\) 转到另一侧，得到求值映射
 \[
 \varepsilon_N:P\otimes_R\operatorname{Hom}_S(P,N)\longrightarrow N,
 \qquad p\otimes f\longmapsto f(p).
 \]
-它们分别称为这一伴随的\term[bansui-danwei]{单位}[unit]与\term[bansui-yudanwei]{余单位}[counit]。泛性质已经保证其良定义和线性。两个\term[sanjiao-hengdengshi]{三角恒等式}[triangle identities]在这里可以直接计算：
+它们分别称为这一伴随的\term[bansui-danwei]{单位}[unit]与\term[bansui-yudanwei]{余单位}[counit]。前面的伴随同构已保证其良定义和线性。将这两个态射转回原来的一侧，互逆性应恢复相应的恒等态射；自然性把这一往返转换写成下面两个复合。这就是\term[sanjiao-hengdengshi]{三角恒等式}[triangle identities]：
 \[
 \varepsilon_{F(M)}\circ(\operatorname{id}_P\otimes\eta_M)
 =\operatorname{id}_{F(M)},\qquad
@@ -179,10 +218,13 @@ G(N)\arrow[r,"\eta_{G(N)}"]\arrow[dr,"\operatorname{id}"']&GFG(N)\arrow[d,"G(\va
 \subsection{限制标量、扩张标量及余诱导}
 \label{b2:subsec:0603:03}
 
-设 \(\varphi:R\to S\) 为保持单位元的环同态，不假定单射。对左 \(S\) 模 \(N\)，令 \(r\cdot n=\varphi(r)n\)，就得到左 \(R\) 模；这个函子称为\term[xianzhi-biaoliang]{限制标量}[restriction of scalars]，记为 \(\operatorname{Res}_{\varphi}\)。它保留底交换群与映射，只改变允许使用的标量。
+设 \(\varphi:R\to S\) 为保持单位元的环同态，不假定单射。限制标量只让 \(R\) 中的元素通过 \(\varphi\) 作用；反方向则有两种构造：张量积在保留原有 \(R\) 关系的同时加入 \(S\) 标量，Hom 则把从 \(S\) 出发的全部 \(R\) 线性映射组成一个 \(S\) 模。前一种构造将给出限制标量的左伴随，后一种给出右伴随。
 
 \ProseParagraphBreak
-令 \(S\) 通过左乘及 \(s\cdot r=s\cdot\varphi(r)\) 成为 \((S,R)\) 双模。对左 \(R\) 模 \(M\)，左 \(S\) 模
+对左 \(S\) 模 \(N\)，令 \(r\cdot n=\varphi(r)n\)，就得到左 \(R\) 模；这个函子称为\term[xianzhi-biaoliang]{限制标量}[restriction of scalars]，记为 \(\operatorname{Res}_{\varphi}\)。它保留底交换群与映射，只改变允许使用的标量。
+
+\ProseParagraphBreak
+令 \(S\) 通过左乘及 \(t\cdot r=t\varphi(r)\)（\(t\in S,r\in R\)）成为 \((S,R)\) 双模。对左 \(R\) 模 \(M\)，左 \(S\) 模
 \[
 S\otimes_RM
 \]
@@ -232,7 +274,7 @@ s\otimes m\longmapsto s\cdot u(m).
 \]
 它平衡，因为 \(s\cdot\varphi(r)u(m)=s\cdot u(rm)\)，而且左 \(S\) 线性。两个公式互逆：一边使用 \(1u(m)=u(m)\)，另一边使用 \(h(s\otimes m)=s\cdot h(1\otimes m)\)。这也是\cref{b2:thm:hom-tensor-adjunction}取 \(P=S\) 的特例，其中 \(\operatorname{Hom}_S(S,N)\to N\) 的识别为在 \(1\) 处取值。
 
-先核对右伴随的作用：若 \(f\) 左 \(R\) 线性，则
+右伴随的标量作用同样来自预复合：令 \(R_s:S\to S\)、\(t\mapsto ts\)，则 \(sf=f\circ R_s\)。右乘 \(s\) 与左 \(R\) 作用可交换；具体地，若 \(f\) 左 \(R\) 线性，则
 \[
 (sf)\bigl(\varphi(r)t\bigr)=f\bigl(\varphi(r)ts\bigr)=r\cdot f(ts),
 \]

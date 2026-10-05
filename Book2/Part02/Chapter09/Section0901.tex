@@ -9,9 +9,10 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 交替性与反对称性的区别
-% * 特征二与二挠现象
-% * 外幂的泛性质
+% * 交替性与反对称性的区别；双线性矩阵的对角线条件
+% * 特征二与目标模中的二挠现象
+% * 外幂的泛性质；先用张量积表达多线性，再按重复输入取商
+% * 外幂不保持一般单射的理想反例，完整证明放在正文
 %
 
 \subsection{交替性与反对称性}
@@ -65,10 +66,10 @@ b(y,x)=b(x,y)=-b(x,y),
 所以反对称，却有 \(b(1,1)=1\)，因而不交替。在特征二中，“交换变号”变成“交换不变”，完全没有强迫对角线取值为零。
 
 \ProseParagraphBreak
-这一区别不只由环的特征决定。取 \(R=\mathbb Z\)、\(M=\mathbb Z\)、\(L=\mathbb Z/2\mathbb Z\)，公式 \(b(a,c)=\overline{ac}\) 同样反对称而不交替。环本身特征零，目标模却有二挠。\cref{b2:prop:alternating-implies-skew}把实际需要的消去条件放在目标模上，正是为了包含这种情形。
+这一区别不只由环的特征决定。取 \(R=\mathbb Z\)、\(M=\mathbb Z\)、\(L=\mathbb Z/2\mathbb Z\)，公式 \(b(a,c)=\overline{ac}\) 同样反对称而不交替。环本身特征零，目标模却有二挠。因此，使用\cref{b2:prop:alternating-implies-skew}从反对称性推出交替性时，要检查的是实际取值所在的目标模能否消去 \(2\)，而非仅仅检查底环的特征。
 
 \ProseParagraphBreak
-对于基为 \(e_1,\ldots,e_n\) 的自由模，一个双线性形式由矩阵 \(A=(a_{ij})\)、\(a_{ij}=b(e_i,e_j)\) 确定。它交替当且仅当
+对于交换环 \(R\) 上基为 \(e_1,\ldots,e_n\) 的有限自由模 \(M\)，一个双线性形式 \(b:M\times M\rightarrow R\) 由矩阵 \(A=(a_{ij})\)、\(a_{ij}=b(e_i,e_j)\) 确定。反对称性等价于 \(A^{\mathsf t}=-A\)，而交替性还要求对角线为零，即
 \[
 a_{ii}=0,\qquad a_{ij}=-a_{ji}.
 \]
@@ -82,6 +83,8 @@ b(x,x)=\sum_i a_{ii}x_i^2+
 \subsection{外幂的泛性质}
 \label{b2:subsec:0901:03}
 
+前面的区别决定了外幂应当施加哪些关系。如果在二重张量积中只把 \(x\otimes y+y\otimes x\) 置为零，特征二时这只强制交换不变，并不强制 \(x\otimes x=0\)。例如 \(M=\mathbb F_2 e\) 时，所有这样的反对称关系本来就是零，非零的 \(e\otimes e\) 会被保留下来。因此，要表达交替性，必须直接把重复输入所对应的张量置为零。
+
 \begin{definition}\label{b2:def:exterior-power}
 设 \(R\) 为交换环，\(M\) 为 \(R\) 模。对 \(p\ge2\)，在 \(p\) 重张量积 \(M^{\otimes p}\) 中，令 \(J_p\) 为所有具有两个相同因子的纯张量生成的子模。将商模
 \[
@@ -92,7 +95,7 @@ b(x,x)=\sum_i a_{ii}x_i^2+
 \symidx{\(\bigwedge^p M\)：模的第 \(p\) 次外幂}
 \symidx{\(m_1\wedge\cdots\wedge m_p\)：外幂中的纯楔积}
 
-张量积的商构造使 \((m_1,\ldots,m_p)\mapsto m_1\wedge\cdots\wedge m_p\) 多线性且交替，所有这些纯楔积生成外幂。因此，外幂保留输入之间的多线性关系，并把重复因子造成的退化直接规定为零。
+多重张量积已经把 \(p\) 个输入的多线性关系转化为模中的线性关系；再模掉 \(J_p\)，就是在这个模中加入“重复输入为零”的关系。这与第三章按关系取模的商、以及第八章通过张量商施加代数关系的构造相同。所得映射 \((m_1,\ldots,m_p)\mapsto m_1\wedge\cdots\wedge m_p\) 多线性且交替，所有这些纯楔积生成外幂。
 
 \begin{proposition}[外幂的泛性质]\label{b2:prop:exterior-alternating-universal}
 设 \(R\) 为交换环，\(M,L\) 为 \(R\) 模，\(p\ge1\)。对任意交替 \(p\) 线性映射 \(b:M^p\to L\)，存在唯一 \(R\) 线性映射
@@ -103,11 +106,14 @@ b(x,x)=\sum_i a_{ii}x_i^2+
 反过来，每个这样的线性映射都给出交替 \(p\) 线性映射。具有这一性质的对象连同其指定映射，在唯一的相容同构意义下确定。
 \end{proposition}
 \begin{proof}
-\(p=1\) 时，\(\bigwedge^1M=M\)，结论就是线性映射本身。以下设 \(p\ge2\)。先逐次使用\cref{b2:thm:tensor-universal}及\cref{b2:thm:tensor-associativity-unit}，把多线性映射 \(b\) 唯一延伸为 \(M^{\otimes p}\to L\)。交替性恰好说明 \(J_p\) 的每个生成元都被送到零，所以它唯一地通过商模分解。反过来，商映射本身交替，与线性映射复合仍然交替。唯一性来自纯楔积的生成性。
+\(p=1\) 时，\(\bigwedge^1M=M\)，结论就是线性映射本身。以下设 \(p\ge2\)。由\cref{b2:thm:multiple-tensor-universal}，多线性映射 \(b\) 唯一延伸为 \(M^{\otimes p}\to L\)。交替性恰好说明 \(J_p\) 的每个生成元都被送到零，所以它唯一地通过商模分解。反过来，商映射本身交替，与线性映射复合仍然交替。唯一性来自纯楔积的生成性。
 
 若另一个对象也具有同样的性质，两次应用泛性质得到双向线性映射；它们的复合在每个指定纯楔积上为恒等，故处处为恒等，证明唯一同构。\(p=0\) 时把零变量的值看成指定的 \(\ell\in L\)，它唯一对应 \(R\to L\)、\(r\mapsto r\ell\)。
 \end{proof}
 
+因此，要定义一个从 \(\bigwedge^pM\) 到 \(L\) 的线性映射，可以先给出 \(M^p\) 上的公式，检查它对各变量线性且在重复输入时为零，再由泛性质取得唯一的线性映射。后面读取外幂坐标、定义楔积及收缩算子时，使用的都是这一方法。
+
+\ProseParagraphBreak
 设 \(f:M\to N\) 线性。交替公式
 \[
 (m_1,\ldots,m_p)\longmapsto
@@ -119,3 +125,29 @@ f(m_1)\wedge\cdots\wedge f(m_p)
 \qquad \bigwedge^p\operatorname{id}_M=\operatorname{id}_{\bigwedge^pM}.
 \end{equation}
 于是每个外幂都是一个函子；\(p=0\) 时规定所有 \(\bigwedge^0 f\) 都为 \(\operatorname{id}_R\)。与张量积相似，纯楔积的表达也不唯一，外幂的一般元素是有限和，未必能写成一个纯楔积。
+
+\ProseParagraphBreak
+函子化保证每个线性映射都诱导外幂上的映射，却不保证它保留单射。由张量积取商得到外幂，并没有消除第七章讨论过的这种障碍。
+
+\begin{proposition}\label{b2:prop:exterior-injection-failure}
+设 \(k\) 为域，\(R=k[x,y]\)，\(I=(x,y)\) 为 \(R\) 的理想，并把 \(I\) 视为 \(R\) 模。包含映射 \(i:I\hookrightarrow R\) 是单射，但诱导映射
+\[
+\bigwedge^2i:\bigwedge^2_R I\longrightarrow\bigwedge^2_R R
+\]
+不是单射：\(x\wedge y\ne0\) 于 \(\bigwedge^2_R I\)，而其像为零。
+\end{proposition}
+\begin{proof}
+为了检测 \(x\wedge y\)，只需构造一个在 \((x,y)\) 处不为零的交替双线性映射。把 \(k\) 视为经 \(R\rightarrow R/I\cong k\)、\(r\mapsto r(0,0)\) 取得标量作用的 \(R\) 模。任意 \(f,g\in I\) 唯一地写成
+\[
+f=ax+by+f_{\ge2},\qquad g=cx+dy+g_{\ge2},
+\qquad a,b,c,d\in k,
+\]
+其中余下的项全次数至少为二。定义 \(\beta(f,g)=ad-bc\)。读取一次项系数是可加的，所以 \(\beta\) 对两个变量均可加。对任意 \(r\in R\)，\(rf\) 的一次项恰为 \(r(0,0)(ax+by)\)，因此
+\[
+\beta(rf,g)=r(0,0)\beta(f,g),
+\qquad \beta(f,rg)=r(0,0)\beta(f,g).
+\]
+这就是以 \(k\cong R/I\) 为目标的 \(R\) 双线性。又 \(\beta(f,f)=ab-ba=0\)，所以 \(\beta\) 交替。由\cref{b2:prop:exterior-alternating-universal}，它诱导线性映射 \(\widetilde\beta:\bigwedge^2_RI\rightarrow k\)，满足 \(\widetilde\beta(x\wedge y)=\beta(x,y)=1\)。于是 \(x\wedge y\ne0\)。
+
+另一方面，\(R\) 作为自身的模由 \(1\) 生成；任意纯楔积 \(r\wedge s=rs(1\wedge1)=0\)。纯楔积生成二次外幂，所以 \(\bigwedge^2_R R=0\)。故 \(\bigwedge^2i\) 将上述非零元素送到零，不是单射。
+\end{proof}

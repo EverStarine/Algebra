@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 14.4 Jacobson 稠密性定理
-% 纲要位置：计划纲要.md，第 1229 行。
+% 纲要位置：计划纲要.md，第 1511 行。
 
 \section{Jacobson 稠密性定理}
 \label{b2:sec:1404}
@@ -9,26 +9,44 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 简单模上的作用与自同态除环
-% * 稠密性定理的代数形式
-% * 有限维情形的矩阵代数结论
+% * 简单模上的作用与自同态右除环；反环复合及全部右线性关系的相容性
+% * 稠密性定理的代数形式；修正理想、有限直和 Hom 与保持关系的插值判据
+% * 有限维情形的矩阵代数结论；有限拓扑的精确一致及稠密与全体的区别
 %
 
 \subsection{简单模的作用与自同态除环}
 \label{b2:subsec:1404:01}
 
-设 \(S\) 为简单左 \(R\) 模。由\cref{b2:lem:schur}，\(\Delta=\operatorname{End}_R(S)\) 是除环。为了把自同态看作右标量，规定
+设 \(R\) 为含幺环、\(S\) 为幺性简单左 \(R\) 模。由\cref{b2:lem:schur}，\(\Delta=\operatorname{End}_R(S)\) 是除环。为了把自同态看作右标量，规定
 \[
 D=\Delta^{\mathrm{op}},\qquad v\cdot d=f_d(v),
 \]
-其中 \(f_d\) 是 \(d\) 对应的 \(R\) 模自同态。因为 \(f_{d_1d_2}=f_{d_2}f_{d_1}\)，这给出右 \(D\) 向量空间结构。左 \(R\) 作用与它交换，所以作用同态的目标可缩为
+其中 \(f_d\) 是 \(d\) 对应的 \(R\) 模自同态。反环的乘法使 \(f_{d_1d_2}=f_{d_2}f_{d_1}\)，所以
+\[
+(v\cdot d_1)\cdot d_2
+=f_{d_2}\bigl(f_{d_1}(v)\bigr)
+=f_{d_1d_2}(v)
+=v\cdot(d_1d_2).
+\]
+加法与单位条件也由自同态的加法和恒等自同态得到，故这给出右 \(D\) 向量空间结构。又因每个 \(f_d\) 都左 \(R\) 线性，
+\[
+r(v\cdot d)=r f_d(v)=f_d(rv)=(rv)\cdot d.
+\]
+因此每个 \(r\) 的作用都是右 \(D\) 线性的，作用同态的目标可缩为
 \[
 \rho:R\longrightarrow\operatorname{End}_D(S_D).
 \]
 这里 \(\operatorname{End}_D\) 表示右 \(D\) 线性自同态。
 \symidx{\(D=\operatorname{End}_R(S)^{\mathrm{op}}\)：简单左模的右标量除环}
 
-一个有限向量组 \(v_1,\ldots,v_n\) 右 \(D\) 线性无关，意指 \(\sum_i v_i d_i=0\) 只可能在全部 \(d_i=0\) 时成立。若它们原本有关系，任何 \(r\in R\) 都必保留该关系，故不能任意指定它们的像。
+\ProseParagraphBreak
+一个有限向量组 \(v_1,\ldots,v_n\) 右 \(D\) 线性无关，意指 \(\sum_i v_i d_i=0\) 只可能在全部 \(d_i=0\) 时成立。任何 \(r\in R\) 都保留这些关系，因为
+\[
+\sum_i v_i d_i=0
+\quad\Longrightarrow\quad
+\sum_i(rv_i)d_i=r\left(\sum_i v_i d_i\right)=0.
+\]
+因此要使 \(rv_i=w_i\)，至少必须保证原向量组的每个右 \(D\) 关系也在 \(w_i\) 之间成立。线性无关恰好消除了对目标向量的这些兼容条件。
 
 \ProseParagraphBreak
 例如，令 \(R=\mathbb C\) 在 \(S=\mathbb C\) 上左乘，并同时把 \(S\) 看成二维实空间。向量 \(1,i\) 对实数线性无关，却满足右复关系 \(1\cdot i-i\cdot1=0\)。不可能有同一个左乘把 \(1\) 送到零而把 \(i\) 送到一。这就是必须使用正确标量除环的原因。
@@ -36,17 +54,19 @@ D=\Delta^{\mathrm{op}},\qquad v\cdot d=f_d(v),
 \subsection{稠密性定理的代数形式}
 \label{b2:subsec:1404:02}
 
+要记录有限组上的同时插值，可以把在指定向量上取值完全相同的算子放在一个邻域中。有限拓扑正是由这些精确一致的条件定义的。
+
 \begin{definition}\label{b2:def:finite-topology}
-设 \(D\) 为除环、\(S\) 为右 \(D\) 向量空间。对 \(T\in\operatorname{End}_D(S_D)\) 和有限组 \(v_1,\ldots,v_m\in S\)，令
+设 \(D\) 为除环、\(S\) 为右 \(D\) 向量空间。对 \(T\in\operatorname{End}_D(S_D)\)、非负整数 \(m\) 及向量组 \(v_1,\ldots,v_m\in S\)，令
 \[
 U(T;v_1,\ldots,v_m)
 =\bigl\{\,F\in\operatorname{End}_D(S_D):F(v_i)=T(v_i)\text{ 对所有 }i\,\bigr\}.
 \]
-以这些集合为各 \(T\) 的基本邻域，所得拓扑称为\term[youxian-tuopu]{有限拓扑}[finite topology]。有限个这样的条件可以合并成一组向量条件，因此确实给出邻域基。
+以这些集合为各 \(T\) 的基本邻域，所得拓扑称为\term[youxian-tuopu]{有限拓扑}[finite topology]。每个这样的集合都含 \(T\)；若 \(F\in U(T;v_1,\ldots,v_m)\)，则 \(U(F;v_1,\ldots,v_m)=U(T;v_1,\ldots,v_m)\)。再把有限个向量组的条件合并，就得到基本邻域的有限交，因而这些集合确实给出邻域基。\(m=0\) 时没有取值条件，该集合为整个自同态环。
 \end{definition}
 
 \begin{theorem}[Jacobson 稠密性]\label{b2:thm:jacobson-density}
-设 \(R\) 为含幺环、\(S\) 为简单左 \(R\) 模，\(D=\operatorname{End}_R(S)^{\mathrm{op}}\) 按 \(s\cdot f^{\mathrm{op}}=f(s)\) 作用于 \(S\) 的右侧。对任意右 \(D\) 线性无关的有限组 \(v_1,\ldots,v_n\)，以及任意 \(w_1,\ldots,w_n\in S\)，存在 \(r\in R\) 使
+设 \(R\) 为含幺环、\(S\) 为幺性简单左 \(R\) 模，\(D=\operatorname{End}_R(S)^{\mathrm{op}}\) 按 \(s\cdot f^{\mathrm{op}}=f(s)\) 作用于 \(S\) 的右侧。对任意整数 \(n\ge1\)、右 \(D\) 线性无关的向量组 \(v_1,\ldots,v_n\)，以及任意 \(w_1,\ldots,w_n\in S\)，存在 \(r\in R\) 使
 \[
 rv_i=w_i\qquad(1\le i\le n).
 \]
@@ -55,27 +75,37 @@ rv_i=w_i\qquad(1\le i\le n).
 这称为\term[Jacobson-choumixing-dingli]{Jacobson 稠密性定理}[Jacobson density theorem]。存在的 \(r\) 通常不唯一；定理只在给定的有限组向量上指定其作用。
 
 \begin{proof}
-对 \(n\) 归纳。\(n=1\) 时，\(v_1\ne0\)，简单性给出 \(Rv_1=S\)，结论成立。设已对 \(n-1\) 成立。考虑左理想
+对 \(n\) 归纳。\(n=1\) 时，\(v_1\ne0\)，简单性给出 \(Rv_1=S\)，结论成立。设已对 \(n-1\) 成立，这允许我们先指定前 \(n-1\) 个值。为了随后修正最后一个值而不改变前面的值，考虑左理想
 \[
 L=\{\,a\in R:av_1=\cdots=av_{n-1}=0\,\}.
 \]
-\(Lv_n\) 是 \(S\) 的子模，因此或为零，或为 \(S\)。先排除第一种情况。
+\(Lv_n\) 是 \(S\) 的子模，因为 \(L\) 对加法和左乘稳定，因此它或为零，或为 \(S\)。若为 \(S\)，就可以用 \(L\) 中的元素修正最后一个值的任意误差，所以只需排除零的情形。
 
-若 \(Lv_n=0\)，归纳假设说明映射 \(a\mapsto(av_1,\ldots,av_{n-1})\) 从 \(R\) 满射到 \(S^{n-1}\)，因而可以定义
+若 \(Lv_n=0\)，两个环元素 \(a,b\) 在前 \(n-1\) 个向量上取值相同，就有 \(a-b\in L\)，进而 \(av_n=bv_n\)。这说明最后一个值完全由前面的值决定。另一方面，归纳假设使 \(a\mapsto(av_1,\ldots,av_{n-1})\) 从 \(R\) 满射到 \(S^{n-1}\)，于是这种依赖给出良定义的映射
 \[
 F:S^{n-1}\longrightarrow S,
 \qquad F(av_1,\ldots,av_{n-1})=av_n.
 \]
-若两个 \(a\) 给出相同输入，它们之差属于 \(L\)，所以输出之差也为零。这证明良定义。使用代表元的加法及左乘，得到 \(F\) 左 \(R\) 线性。令 \(f_i:S\to S\) 是 \(F\) 在第 \(i\) 个直和分量上的限制，则 \(f_i\in\Delta\)，且
+输入相加可用代表元相加来表示，输入左乘 \(r\) 可用代表元 \(ra\) 来表示；输出相应成为 \((a+b)v_n\) 与 \(rav_n\)，所以 \(F\) 左 \(R\) 线性。由\cref{b2:thm:module-sum-universal}的直和泛性质，令 \(\iota_i:S\to S^{n-1}\) 为第 \(i\) 个嵌入，\(f_i=F\iota_i\)，便有
+\[
+F(s_1,\ldots,s_{n-1})=\sum_{i<n}f_i(s_i),
+\qquad f_i\in\operatorname{End}_R(S).
+\]
+取代表元 \(a=1\)，得到
 \[
 v_n=F(v_1,\ldots,v_{n-1})=\sum_{i<n}f_i(v_i)=\sum_{i<n}v_i d_i
 \]
-对某些 \(d_i\in D\) 成立，与给定向量组右线性无关矛盾。因此 \(Lv_n=S\)。
+其中 \(d_i=f_i^{\mathrm{op}}\in D\)。这与给定向量组右线性无关矛盾，因此 \(Lv_n=S\)。
 
-现在先用归纳假设找 \(r_0\) 使 \(r_0v_i=w_i\)、\(i<n\)。再取 \(\ell\in L\) 使 \(\ell v_n=w_n-r_0v_n\)。令 \(r=r_0+\ell\)，则前 \(n-1\) 个值因 \(\ell\in L\) 保持不变，最后一个值也达到要求，归纳完成。
+现在用归纳假设找 \(r_0\) 使 \(r_0v_i=w_i\)、\(i<n\)。最后一个值仍可能有误差 \(e=w_n-r_0v_n\)。由 \(Lv_n=S\)，可取 \(\ell\in L\) 使 \(\ell v_n=e\)，同时 \(\ell v_i=0\)、\(i<n\)。令 \(r=r_0+\ell\)，便有
+\[
+rv_i=w_i\quad(i<n),
+\qquad rv_n=r_0v_n+e=w_n.
+\]
+误差已被修正，而已经指定的值保持不变，归纳完成。
 \end{proof}
 
-更一般地，给定任意右 \(D\) 线性算子 \(T\) 及有限组向量，先在它们的右线性生成空间中选基，再对这组基应用定理，即可找到 \(r\) 在原来的全部向量上与 \(T\) 一致。因此每个基本邻域 \(U(T;v_1,\ldots,v_m)\) 都与 \(\rho(R)\) 相交，即
+给定任意右 \(D\) 线性算子 \(T\) 及有限组向量，若它们的生成空间非零，选这个空间的有限右 \(D\) 基并对基应用定理，再由右线性得到 \(r\) 在原来的全部向量上与 \(T\) 一致；若生成空间为零，取 \(r=0\) 即可。因此每个基本邻域 \(U(T;v_1,\ldots,v_m)\) 都与 \(\rho(R)\) 相交，即
 \[
 \overline{\rho(R)}^{\,\mathrm{fin}}=\operatorname{End}_D(S_D).
 \]
@@ -85,16 +115,42 @@ v_n=F(v_1,\ldots,v_{n-1})=\sum_{i<n}f_i(v_i)=\sum_{i<n}v_i d_i
 \label{b2:subsec:1404:03}
 
 \begin{corollary}\label{b2:cor:density-finite-dimensional}
-设 \(R\) 为含幺环、\(S\) 为简单左 \(R\) 模，并令 \(D=\operatorname{End}_R(S)^{\mathrm{op}}\) 按 \(s\cdot f^{\mathrm{op}}=f(s)\) 作用于 \(S\) 的右侧。若 \(\dim_D S=n<\infty\)，则
+设 \(R\) 为含幺环、\(S\) 为幺性简单左 \(R\) 模，并令 \(D=\operatorname{End}_R(S)^{\mathrm{op}}\) 按 \(s\cdot f^{\mathrm{op}}=f(s)\) 作用于 \(S\) 的右侧。若 \(\dim_D S=n<\infty\)，则 \(n\ge1\)，且
 \[
 R/\operatorname{Ann}_R(S)\cong\operatorname{End}_D(S_D)\cong M_n(D).
 \]
 特别地，本原环若有一个对其自同态右除环有限维的忠实简单模，则它是单 Artin 环。
 \end{corollary}
 \begin{proof}
-取右 \(D\) 基 \(v_1,\ldots,v_n\)。对任意 \(T\in\operatorname{End}_D(S)\)，在\cref{b2:thm:jacobson-density}中指定 \(w_i=T(v_i)\)，便找到 \(r\) 在全部基向量上与 \(T\) 相同。两者右线性，所以处处相同，作用同态满射。它的核为 \(\operatorname{Ann}_R(S)\)，由环同构定理得到第一个同构。
+取右 \(D\) 基 \(v_1,\ldots,v_n\)。对任意 \(T\in\operatorname{End}_D(S_D)\)，在\cref{b2:thm:jacobson-density}中指定 \(w_i=T(v_i)\)，便找到 \(r\) 在全部基向量上与 \(T\) 相同。一个有限基已经能测试整个右线性算子，所以两者处处相同，作用同态满射；这里由有限组插值得到整个算子的等式。它的核为 \(\operatorname{Ann}_R(S)\)，由环同构定理得到第一个同构。
 
-把向量写成右坐标列 \(\sum_i v_i d_i\)，若 \(T(v_j)=\sum_i v_i a_{ij}\)，则新坐标为 \((\sum_j a_{ij}d_j)_i\)。矩阵从左作用于右坐标列，复合对应通常的矩阵乘法，因此得到 \(M_n(D)\)，不再取反环。矩阵环的单性和 Artin 性由\cref{b2:prop:simple-artinian}及其矩阵块说明得到。
+把向量写成右坐标列 \(\sum_i v_i d_i\)，若 \(T(v_j)=\sum_i v_i a_{ij}\)，则
+\[
+T\left(\sum_jv_jd_j\right)
+=\sum_iv_i\left(\sum_ja_{ij}d_j\right).
+\]
+因此新坐标列是 \(A(d_j)_j\)，其中 \(A=(a_{ij})\) 从左乘右坐标列。复合对应通常的矩阵乘法，所以得到 \(M_n(D)\)，不再取反环。若 \(S\) 忠实，则 \(\operatorname{Ann}_R(S)=0\)，从而 \(R\cong M_n(D)\)，其单性和 Artin 性由\cref{b2:prop:simple-artinian}得到。
 \end{proof}
 
-这并没有证明每个本原环都为矩阵环；有限维条件是将有限组插值变成整个算子的等式所必需的。在前一节的无限维例子中，没有一个有限向量组能充当整个空间的基。
+有限 \(D\) 维的忠实简单模使本原环成为单 Artin 环，而前一节的无限维例子说明本原环可以更广。该例中的 \(\operatorname{End}_k(V)\) 不是左 Artin 环，所以其忠实简单模 \(V\) 对相应的自同态右除环也不可能有限维，否则本推论会给出矛盾。在无限 \(D\) 维空间中，没有一个有限向量组能充当整个空间的基；稠密性仍只保证每次指定的有限组上可以同时插值。
+
+\begin{corollary}\label{b2:cor:density-compatible-relations}
+设 \(R\) 为含幺环、\(S\) 为幺性简单左 \(R\) 模，\(D=\operatorname{End}_R(S)^{\mathrm{op}}\) 按 \(s\cdot f^{\mathrm{op}}=f(s)\) 作用于 \(S\) 的右侧。给定整数 \(n\ge1\) 以及 \(v_1,\ldots,v_n,w_1,\ldots,w_n\in S\)，存在 \(r\in R\) 满足 \(rv_i=w_i\)、\(1\le i\le n\)，当且仅当对每个 \((d_1,\ldots,d_n)\in D^n\)，都有
+\[
+\sum_{i=1}^n v_i d_i=0
+\quad\Longrightarrow\quad
+\sum_{i=1}^n w_i d_i=0.
+\]
+\end{corollary}
+\begin{proof}
+必要性来自每个 \(r\) 的作用都是右 \(D\) 线性的：把原关系左乘 \(r\)，便得到目标向量之间的关系。
+
+反过来，假设所有这些关系都被保持。在有限维右 \(D\) 子空间 \(W=\sum_{i=1}^n v_iD\) 上定义
+\[
+T:W\longrightarrow S,\qquad
+T\left(\sum_{i=1}^n v_i d_i\right)=\sum_{i=1}^n w_i d_i.
+\]
+同一个向量的两种表示相减，得到原向量组之间的关系；由假设，两个右端也相等，所以 \(T\) 良定义。系数逐项相加或从右侧同乘一个标量，分别给出 \(T\) 的加法性与右 \(D\) 线性，并且 \(T(v_i)=w_i\)。
+
+若 \(W=0\)，则所有 \(v_i=0\)。对每个 \(i\)，在假设中令 \(d_i=1\)、其余系数为零，得到 \(w_i=0\)，故 \(r=0\) 满足要求。若 \(W\ne0\)，取其有限右 \(D\) 基 \(u_1,\ldots,u_m\)。由\cref{b2:thm:jacobson-density}，存在 \(r\in R\) 使 \(ru_j=T(u_j)\) 对所有 \(j\) 成立。两者右线性，所以在 \(W\) 上一致，特别有 \(rv_i=T(v_i)=w_i\)。
+\end{proof}

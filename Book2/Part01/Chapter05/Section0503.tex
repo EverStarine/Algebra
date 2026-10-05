@@ -10,8 +10,10 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 初始对象、终对象、积与余积
+% * 无限直积与指定嵌入不满足余积唯一性
 % * 模的拉回与推出
 % * 由 Hom 映射性质辨认对象
+% * 正则模作为同构的测试对象
 %
 
 \subsection{初始对象、终对象、积与余积}
@@ -32,6 +34,9 @@
 若对象 \(Q\) 及态射 \(j_i:X_i\rightarrow Q\) 满足：对任意对象 \(T\) 及态射族 \(b_i:X_i\rightarrow T\)，存在唯一态射 \(b:Q\rightarrow T\) 使全部 \(bj_i=b_i\)，就称它们为该对象族的\term[yuji]{余积}[coproduct]。
 \end{definition}
 
+这里的积是 \((P,(p_i)_{i\in I})\)，余积是 \((Q,(j_i)_{i\in I})\)：泛性质刻画的是对象及其指定的结构映射。例如，把 \(k^2\) 作为两个 \(k\) 的积时，两个坐标投影也是数据的一部分；只给出 \(k^2\) 的同构类型，还没有指定这项积构造。
+
+\ProseParagraphBreak
 积与余积的分解方向相反。下面两个三角形分别对每个 \(i\in I\) 成立；虚线是同时满足全族相容条件的唯一态射。
 \[
 \begin{tikzcd}[column sep=3em,row sep=2.5em]
@@ -53,6 +58,17 @@ b\bigl((m_i)_i\bigr)=\sum_i b_i(m_i).
 \ProseParagraphBreak
 有限个模的积与余积可以由同一个模承载，但其指定映射和泛性质方向不同。无限时不能混用：例如对域 \(k\)，直和 \(k^{(\mathbb N)}\) 中每个元素只有有限个非零坐标，而积 \(k^{\mathbb N}\) 还包含 \((1,1,\ldots)\)。恒等映射族 \(k\rightarrow k\) 合成的映射 \(k\rightarrow k^{\mathbb N}\)、\(a\mapsto(a,a,\ldots)\) 就不能落入直和。空积为终对象，空余积为初始对象，均可直接从定义读出。
 
+\begin{proposition}\label{b2:prop:infinite-product-not-coproduct}
+设 \(k\) 是域，\(P=k^{\mathbb N}\)，并令 \(j_n:k\to P\) 将一个标量送到仅第 \(n\) 个坐标取该值的向量。则 \(\bigl(P,(j_n)_{n\in\mathbb N}\bigr)\) 不是 \(k\) 向量空间范畴中这族 \(k\) 的余积。
+\end{proposition}
+\begin{proof}
+令 \(S=k^{(\mathbb N)}\subseteq P\)，取 \(w=(1,1,\ldots)\notin S\)。在子空间 \(S+kw\) 中，表达 \(s+aw\) 唯一：若 \(aw\in S\) 且 \(a\ne0\)，则 \(aw\) 有无限多个非零坐标，矛盾。因此
+\[
+\ell_0(s+aw)=a
+\]
+定义线性泛函。由\cref{b2:lem:functional-extension}，它可以延拓为 \(P\) 上的线性泛函 \(\ell\)，满足 \(\ell(w)=1\) 且 \(\ell|_S=0\)。每个 \(j_n(k)\) 都在 \(S\) 中，故 \(\ell j_n=0\) 对全部 \(n\) 成立。然而零映射与 \(\ell\) 是两个不同的映射 \(P\to k\)，却在所有 \(j_n\) 上给出同一族零映射，违反余积的唯一性。
+\end{proof}
+
 \begin{proposition}\label{b2:prop:universal-object-uniqueness}
 设 \((X_i)_{i\in I}\) 是范畴 \(\mathcal C\) 中由集合 \(I\) 编号的对象族。同一对象族的任意两个积之间，存在唯一保持全部投影的同构；两个余积之间，存在唯一保持全部指定嵌入的同构。
 \end{proposition}
@@ -66,6 +82,8 @@ b\bigl((m_i)_i\bigr)=\sum_i b_i(m_i).
 
 \subsection{模的拉回与推出}
 \label{b2:subsec:0503:02}
+
+若两个模 \(M,N\) 都映到同一个模 \(P\)，就可以寻找像相等的成对元素：哪些 \((m,n)\) 满足 \(f(m)=g(n)\)？同样，从任意测试对象出发的两条映射也应在 \(P\) 中具有相同复合。拉回把这些相容的映射对合成一条映射。反过来，若两条映射 \(u:P\to M\)、\(v:P\to N\) 有公共来源，推出要给出一个共同目标，使来自同一 \(p\in P\) 的 \(u(p)\) 与 \(v(p)\) 在那里相等。这两种要求在一般范畴中分别表述如下。
 
 \begin{definition}\label{b2:def:pullback-pushout}
 设 \(\mathcal C\) 是范畴。给定态射 \(f:M\rightarrow P\)、\(g:N\rightarrow P\)。若对象 \(L\) 及态射 \(p:L\rightarrow M\)、\(q:L\rightarrow N\) 满足 \(fp=gq\)，并且对每对满足 \(fa=gb\) 的态射 \(a:T\rightarrow M\)、\(b:T\rightarrow N\)，存在唯一 \(h:T\rightarrow L\) 满足 \(ph=a\)、\(qh=b\)，就称它们为 \(f,g\) 的\term[lahui]{拉回}[pullback]。
@@ -90,6 +108,14 @@ b\bigl((m_i)_i\bigr)=\sum_i b_i(m_i).
 \end{table}
 积与拉回接收从测试对象出发的箭头；余积与推出则把指向测试对象的箭头合成一条。拉回和推出还要求这两条箭头在公共对象处相容。
 
+\ProseParagraphBreak
+在模范畴中，拉回可以在 \(M\oplus N\) 内选择满足 \(f(m)=g(n)\) 的元素。推出则从同一份直和开始，把公共来源的两个像识别起来：直和内的 \((u(p),0)\) 与 \((0,v(p))\) 之差为 \((u(p),-v(p))\)，所以应将这些差值视为零。映射
+\[
+d:P\longrightarrow M\oplus N,\qquad
+p\longmapsto\bigl(u(p),-v(p)\bigr)
+\]
+是模同态，它的像已是子模。因此拉回由满足约束的子模给出，推出由加入这些关系的商模给出。
+
 \begin{proposition}\label{b2:prop:module-pullback-pushout}
 设 \(R\) 是环，\(f:M\to P\)、\(g:N\to P\) 及 \(u:P\to M\)、\(v:P\to N\) 是左 \(R\) 模同态。在左 \(R\) 模范畴中，这两对同态的拉回和推出分别可取为
 \begin{align}
@@ -105,7 +131,7 @@ f(m+m')=g(n+n'),\qquad f(rm)=g(rn),
 \]
 所以式\eqref{b2:eq:module-pullback}定义子模，两个投影为模同态并满足相容条件。给定 \(a,b\) 且 \(fa=gb\)，令 \(h(t)=\bigl(a(t),b(t)\bigr)\)。相容条件保证其像在拉回中，坐标公式保证线性；两个投影的值又决定元素的两个坐标，所以 \(h\) 唯一。
 
-式\eqref{b2:eq:module-pushout}的分母是同态 \(d:P\rightarrow M\oplus N\)、\(p\mapsto\bigl(u(p),-v(p)\bigr)\) 的像，因而已是子模，不必再添加未说明的关系。商模存在，且
+式\eqref{b2:eq:module-pushout}的分母是同态 \(d:P\rightarrow M\oplus N\)、\(p\mapsto\bigl(u(p),-v(p)\bigr)\) 的像，因而是子模。商模存在，且
 \[
 iu(p)-jv(p)=\Bigl[\bigl(u(p),-v(p)\bigr)\Bigr]=0.
 \]
@@ -141,18 +167,40 @@ M\arrow[r,"i"']\arrow[drr,bend right=14,"a"']&M\amalg_PN\arrow[dr,dashed,"\exist
 该映射满射，因为 \(3-2=1\)；其核由 \(3m=-2n\) 确定为 \(\mathbb Z(2,-3)\)，故\cref{b2:thm:module-first-isomorphism}给出同构。此时两个结构映射仍分别是乘三、乘二。同构类型相同并不消除它们所记录的原映射。
 
 \ProseParagraphBreak
-取 \(N=0\)，拉回 \(M\times_P0\) 就是 \(\ker f\)，而推出 \(M\amalg_P0\) 就是 \(M/u(P)\)。这说明核与余核是拉回、推出的特殊情形，但不会改变它们在\cref{b2:def:module-kernel-image-cokernel}中的具体定义。
+取零模到 \(P\) 的零映射，拉回可由 \(\ker f\) 及核嵌入 \(\iota\) 给出；取 \(P\) 到零模的零映射，推出可由 \(\operatorname{coker}u=M/u(P)\) 及商映射 \(q\) 给出。相应的交换图为
+\[
+\begin{tikzcd}[column sep=3em,row sep=2.2em]
+\ker f\arrow[r,"\iota"]\arrow[d]&M\arrow[d,"f"]\\
+0\arrow[r]&P
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=3em,row sep=2.2em]
+P\arrow[r,"u"]\arrow[d]&M\arrow[d,"q"]\\
+0\arrow[r]&\operatorname{coker}u.
+\end{tikzcd}
+\]
+左图把 \(f(m)=0\) 作为子模条件，右图把 \(u(P)\) 中的元素作为要模掉的关系。核与余核因此是拉回、推出的特殊情形，也与\cref{b2:def:module-kernel-image-cokernel}中的具体定义一致。
 
 \subsection{由 Hom 映射性质辨认对象}
 \label{b2:subsec:0503:03}
 
 前面通过泛性质证明了积、余积等构造在保持指定映射的同构意义下唯一。把它们的映射条件写成 Hom 集合之间的自然对应，还可以从映射性质辨认对象。以积 \((P,p_i)\) 为例，其泛性质给出双射
 \[
-\operatorname{Hom}_{\mathcal C}(T,P)\longrightarrow
+\Phi_T:\operatorname{Hom}_{\mathcal C}(T,P)\longrightarrow
 \prod_i\operatorname{Hom}_{\mathcal C}(T,X_i),\qquad
 h\longmapsto(p_ih)_i.
 \]
-对 \(a:T'\rightarrow T\)，两侧都通过预复合 \(a\) 改变输入，因此这一双射关于 \(T\) 自然。拉回则把右端换成满足 \(fa=gb\) 的映射对；推出的对应从 \(\operatorname{Hom}_{\mathcal C}(Q,T)\) 出发，关于 \(T\) 协变。它们不只数出了映射有多少，而是给出了与复合相容的具体对应。
+对 \(a:T'\rightarrow T\)，两侧都通过预复合 \(a\) 改变输入，得到交换方块
+\[
+\begin{tikzcd}[column sep=4em,row sep=2.5em]
+\operatorname{Hom}_{\mathcal C}(T,P)
+\arrow[r,"\Phi_T"]\arrow[d,"-\circ a"']&
+\prod_i\operatorname{Hom}_{\mathcal C}(T,X_i)\arrow[d,"-\circ a"]\\
+\operatorname{Hom}_{\mathcal C}(T',P)\arrow[r,"\Phi_{T'}"']&
+\prod_i\operatorname{Hom}_{\mathcal C}(T',X_i).
+\end{tikzcd}
+\]
+右侧的预复合逐坐标进行，两条路径都把 \(h\) 送到 \((p_iha)_i\)，所以这些双射关于 \(T\) 自然。拉回则把右端换成满足 \(fa=gb\) 的映射对；推出的对应从 \(\operatorname{Hom}_{\mathcal C}(Q,T)\) 出发，关于 \(T\) 协变。它们不只数出了映射有多少，而是给出了与复合相容的具体对应。
 
 \begin{proposition}[由映射检测同构]\label{b2:prop:hom-detects-isomorphism}
 设 \(\mathcal C\) 是范畴，\(u:P\rightarrow Q\) 为 \(\mathcal C\) 中的态射。若对每个对象 \(T\)，后复合映射
@@ -160,20 +208,35 @@ h\longmapsto(p_ih)_i.
 u_*:\operatorname{Hom}_{\mathcal C}(T,P)\longrightarrow
 \operatorname{Hom}_{\mathcal C}(T,Q),\qquad h\longmapsto uh
 \]
-都是双射，则 \(u\) 为同构。更一般地，任何自然同构
+都是双射，则 \(u\) 为同构。更一般地，任何自然变换
 \(\alpha:\operatorname{Hom}_{\mathcal C}(-,P)\Rightarrow
 \operatorname{Hom}_{\mathcal C}(-,Q)\)
-都唯一地由某个同构 \(u:P\rightarrow Q\) 的后复合给出。
+都唯一地由某个态射 \(u:P\rightarrow Q\) 的后复合给出；这个自然变换为自然同构，当且仅当 \(u\) 为同构。
 \end{proposition}
 \begin{proof}
 先取 \(T=Q\)。满射性给出 \(v:Q\rightarrow P\)，使 \(uv=\operatorname{id}_Q\)。再取 \(T=P\)，有 \(u(vu)=u=u\operatorname{id}_P\)；这次的单射性给出 \(vu=\operatorname{id}_P\)，所以 \(u\) 可逆。
 
-对自然同构 \(\alpha\)，令 \(u=\alpha_P(\operatorname{id}_P)\)。给定 \(h:T\rightarrow P\)，用 \(h\) 的预复合及 \(\alpha\) 的自然性，得到
+对自然变换 \(\alpha\)，若它由某个 \(u:P\to Q\) 后复合给出，在 \(T=P\)、\(h=\operatorname{id}_P\) 处就必有 \(\alpha_P(\operatorname{id}_P)=u\operatorname{id}_P=u\)。因此应当用恒等态射的像恢复候选态射，令 \(u=\alpha_P(\operatorname{id}_P)\)。给定 \(h:T\rightarrow P\)，用 \(h\) 的预复合及 \(\alpha\) 的自然性，得到
 \[
 \alpha_T(h)=\alpha_T(\operatorname{id}_P h)
 =\alpha_P(\operatorname{id}_P)h=uh.
 \]
-所以 \(\alpha\) 的全部分量都由 \(u\) 后复合给出。分量为双射，第一部分说明 \(u\) 是同构；在 \(T=P\) 的恒等态射处取值又说明 \(u\) 唯一。
+所以 \(\alpha\) 的全部分量都由 \(u\) 后复合给出，在 \(T=P\) 的恒等态射处取值又说明 \(u\) 唯一。若 \(\alpha\) 是自然同构，其分量都为双射，第一部分说明 \(u\) 是同构。反过来，若 \(u\) 是同构，后复合 \(u^{-1}\) 就给出每个分量的逆，所以 \(\alpha\) 是自然同构。
 \end{proof}
 
-这个论证是通过 Hom 函子研究对象的一个基本情形，完整的 Yoneda 引理将在第四卷展开。对所有测试对象自然的映射对应，可以辨认对象及其比较映射；只比较某个固定 \(T\) 所得到的集合大小通常不足够。即使各个 Hom 集合大小恰好相同，也没有自动得到这些双射的自然相容性。
+\begin{corollary}[正则模检测同构]\label{b2:cor:regular-module-detects}
+设 \(R\) 是环，\(f:M\to N\) 是左 \(R\) 模同态。后复合映射
+\[
+\operatorname{Hom}_R(R,f):\operatorname{Hom}_R(R,M)
+\longrightarrow\operatorname{Hom}_R(R,N)
+\]
+为双射，当且仅当 \(f\) 是模同构。
+\end{corollary}
+\begin{proof}
+由\cref{b2:prop:regular-hom-endomorphism}，求值 \(\varphi\mapsto\varphi(1_R)\) 分别将两个 Hom 群识别为 \(M,N\)。而 \((f\varphi)(1_R)=f(\varphi(1_R))\)，所以后复合映射在这些求值对应下就是 \(f\) 本身。若它双射，\(f\) 是双射模同态，因而是\cref{b2:def:module-homomorphism}所定义的模同构；逆映射保持模运算。反过来，后复合 \(f^{-1}\) 给出 \(\operatorname{Hom}_R(R,f)\) 的逆。
+\end{proof}
+
+一般固定测试对象并没有正则模的这种能力。例如，包含同态 \(\mathbb Z\to\mathbb Q\) 不是同构，但它在 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,-)\) 下成为两个零群之间的双射：从 \(\mathbb Z/2\mathbb Z\) 出发的同态，其生成元像必须被 \(2\) 零化，而 \(\mathbb Z,\mathbb Q\) 中满足这一条件的都只有零。因此“对每个 \(T\)”不能无条件换成任意一个固定 \(T\)。
+
+\ProseParagraphBreak
+第四卷的 Yoneda 引理将把上述第二个 Hom 函子换成一般集合值反变函子，以同样的恒等态射求值思想描述自然变换。这里要求的是与所有复合相容的具体对应；即使各个 Hom 集合大小恰好相同，也没有自动得到双射的自然相容性。

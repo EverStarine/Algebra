@@ -1,5 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 16.1 模范畴与生成元
+% 纲要位置：计划纲要.md，第 1564 行。
 
 \section{模范畴与生成元}
 \label{b2:sec:1601}
@@ -8,22 +9,27 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 投射生成元
-% * 有限生成投射生成元
-% * 矩阵环与原环的模范畴
+% * 投射生成元；区分模忠实、非零对象检测与同态检测，正式证明迹理想判据及对象检测反例
+% * 有限生成投射生成元；用两组有限直和因子分别控制有限投射与生成，正式给出三条件各自缺失的反例
+% * 矩阵环与原环的模范畴；矩阵单位读取与恢复分量，正则模未必与正则模对应
 %
 
 \subsection{投射生成元}
 \label{b2:subsec:1601:01}
 
+正则模通过自由模的满射产生所有模。若想用一个模 \(P\) 替代它，最直接的要求就是每个模都能由若干份 \(P\) 的直和取商得到。“生成元”的名称表达了这个要求；下面用 Hom 函子的忠实性定义它，并证明这两种说法等价。
+
 \begin{definition}\label{b2:def:module-generator}
-设 \(R\) 为环，\(P\) 为左 \(R\) 模。若函子 \(\operatorname{Hom}_R(P,-)\) 忠实，即对任意左 \(R\) 模 \(M,N\) 及不同的 \(R\) 线性映射 \(f,g:M\rightarrow N\)，都存在 \(R\) 线性映射 \(h:P\rightarrow M\) 使 \(fh\ne gh\)，则称 \(P\) 为左 \(R\) 模范畴的\term[mo-fanchou-shengchengyuan]{生成元}[generator]。若 \(P\) 还是投射模，则称它为\term[toushe-shengchengyuan]{投射生成元}[projective generator]。
+设 \(R\) 为含幺环，\(P\) 为幺左 \(R\) 模。若函子 \(\operatorname{Hom}_R(P,-)\) 忠实，即对任意幺左 \(R\) 模 \(M,N\) 及不同的 \(R\) 线性映射 \(f,g:M\rightarrow N\)，都存在 \(R\) 线性映射 \(h:P\rightarrow M\) 使 \(fh\ne gh\)，则称 \(P\) 为左 \(R\) 模范畴的\term[mo-fanchou-shengchengyuan]{生成元}[generator]。若 \(P\) 还是投射模，则称它为\term[toushe-shengchengyuan]{投射生成元}[projective generator]。
 \end{definition}
 
-这里的“生成元”是一个模对象，不是某个模内部的一个元素。忠实性比较的是同态，不能仅要求每个非零模中都有 \(P\) 的非零像。正则模 \(R\) 是生成元：若 \(f(m)\ne g(m)\)，取 \(h(r)=rm\)，在一处求值便可检测两同态不同。
+这里的“生成元”是一个模对象，不是某个模内部的一个元素。条件 \(M\ne0\Rightarrow\operatorname{Hom}_R(P,M)\ne0\) 只检测非零对象，定义中的忠实性则比较不同同态；二者的差别见\cref{b2:prop:object-detection-not-generator}的双数例子。正则模 \(R\) 是生成元：若 \(f(m)\ne g(m)\)，取 \(h(r)=rm\)，在一处求值便可检测两同态不同。
+
+\ProseParagraphBreak
+每个模 \(M\) 本来就有自由满射 \(R^{(I)}\to M\)，所以只要 \(P\) 的直和能满射到 \(R\)，便能对自由模的各个分量作同样构造，再满射到 \(M\)。而 \(R\) 由一生成，一的原像又会把这个构造缩到有限份 \(P\)；这就是下面第三个条件的来源。
 
 \begin{theorem}[生成元的等价刻画]\label{b2:thm:generator-characterizations}
-设 \(R\) 为环，\(P\) 为左 \(R\) 模。以下条件等价：
+设 \(R\) 为含幺环，\(P\) 为幺左 \(R\) 模，所论模均为幺左 \(R\) 模。以下条件等价：
 \begin{equivalences}
 \item\label{b2:item:generator-faithful} \(\operatorname{Hom}_R(P,-)\) 忠实。
 \item\label{b2:item:generator-quotients} 对每个左 \(R\) 模 \(M\)，都存在指标集 \(I\) 及满同态 \(P^{(I)}\rightarrow M\)。
@@ -39,28 +45,31 @@ q:\bigoplus_{h\in\operatorname{Hom}_R(P,M)}P\longrightarrow M,
 \]
 若像 \(T\) 不等于 \(M\)，商映射 \(\pi:M\rightarrow M/T\) 非零，却满足 \(\pi h=0\) 对每个 \(h\) 成立。于是 \(\operatorname{Hom}_R(P,\pi)\) 与零同态诱导的映射相同，违反忠实性。因此 \(q\) 满射，得到第二项。
 
-将第二项用于 \(M=R\)。一的某个原像只有有限个非零坐标，故限制到相应的 \(P^n\) 后，映射 \(q_0:P^n\rightarrow R\) 仍满射。取 \(v\in P^n\) 使 \(q_0(v)=1\)，则 \(s(r)=rv\) 为左线性截面，\(q_0s=\operatorname{id}_R\)。所以 \(R\) 是 \(P^n\) 的直和因子。
+将第二项用于 \(M=R\)。一的某个原像只有有限个非零坐标，故限制到相应的 \(P^n\) 后，映射 \(q_0:P^n\rightarrow R\) 的像仍包含一，因而包含每个 \(r=r1\)，所以仍满射。这里有限的 \(n\) 来自直和元素的有限支集，不要求 \(P\) 有限生成。取 \(v\in P^n\) 使 \(q_0(v)=1\)，则 \(s(r)=rv\) 为左线性截面，\(q_0s=\operatorname{id}_R\)。所以 \(R\) 是 \(P^n\) 的直和因子。
 
 若第三项成立，任意模 \(M\) 的自由满射 \(R^{(I)}\rightarrow M\) 可以与各分量上的分裂满射 \(P^n\rightarrow R\) 复合，得到某个 \(P\) 直和到 \(M\) 的满射，所以第二项成立。最后，若 \(f\ne g:M\rightarrow N\)，而每个 \(h:P\rightarrow M\) 都满足 \(fh=gh\)，则对第二项给出的满射 \(P^{(I)}\rightarrow M\)，两复合在每个直和分量上相同，因而整体相同。满射性迫使 \(f=g\)，矛盾。故 Hom 函子忠实。
 \end{proof}
 
-生成元必为忠实模：若 \(rP=0\)，第三项使 \(r\) 也零化直和因子 \(R\)，故 \(r=r1=0\)。逆命题不成立。例如 \(\mathbb Q\) 作为 \(\mathbb Z\) 模忠实，但 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Q,\mathbb Z)=0\)：任意同态的每个值都被所有正整数整除，只能为零。因此任何 \(\mathbb Q\) 的直和都不能满射到 \(\mathbb Z\)，它不是生成元。
+生成元必为忠实模，即 \(\operatorname{Ann}_R(P)=0\)：若 \(rP=0\)，第三项使 \(r\) 也零化直和因子 \(R\)，故 \(r=r1=0\)。但模的零化子为零，弱于 Hom 函子忠实。例如 \(\mathbb Q\) 作为 \(\mathbb Z\) 模忠实，但 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Q,\mathbb Z)=0\)：任意同态的每个值都被所有正整数整除，只能为零。因此任何 \(\mathbb Q\) 的直和都不能满射到 \(\mathbb Z\)，它不是生成元。
 
 \subsection{有限生成投射生成元}
 \label{b2:subsec:1601:02}
 
 \begin{definition}\label{b2:def:progenerator}
-设 \(R\) 为环，\(P\) 为左 \(R\) 模。若 \(P\) 有限生成、投射，且是左 \(R\) 模范畴的生成元，则称 \(P\) 为\term[youxian-toushe-shengchengyuan]{有限生成投射生成元}[progenerator]。投射性指沿任意满同态的提升性质，生成元性质采用\cref{b2:thm:generator-characterizations}的任一等价条件。
+设 \(R\) 为含幺环，\(P\) 为幺左 \(R\) 模。若 \(P\) 有限生成、投射，且是左 \(R\) 模范畴的生成元，则称 \(P\) 为\term[youxian-toushe-shengchengyuan]{有限生成投射生成元}[progenerator]。投射性指沿任意满同态的提升性质，生成元性质采用\cref{b2:thm:generator-characterizations}的任一等价条件。
 \end{definition}
 
 \cref{b2:prop:finite-projective-summand}与生成元判据合在一起说明，这等价于同时存在有限整数 \(m,n\) 及模 \(Q,Q'\)，使
 \[
 P\oplus Q\cong R^m,\qquad R\oplus Q'\cong P^n.
 \]
-第一个分解控制 \(P\) 的有限生成与投射性，第二个分解保证它能够产生全部模；两者不能互相替代。例如 \(k\times0\) 是 \(k\times k\) 上的有限生成投射模，却不能产生第二个坐标上的简单模。
+第一个分解把 \(P\) 放在有限自由模中作为直和因子，控制其有限生成与投射性；第二个分解把正则模放在有限份 \(P\) 中，保证它能够产生全部模。这两类分解不能互相替代，\cref{b2:prop:progenerator-hypothesis-counterexamples}将分别检验三个条件缺失时的情形。
+
+\ProseParagraphBreak
+有限生成性用一组元素来表述，但范畴等价并不指定两个对象底集合的元素如何对应。要在等价下追踪投射模的有限生成性，需要把它改写成能由 Hom 和直和识别的条件：从这个模到任意直和的同态，是否总能只用有限个目标分量表达？
 
 \begin{definition}\label{b2:def:compact-module-object}
-设 \(R\) 为环，\(P\) 为左 \(R\) 模。对任意指标集 \(I\) 及左 \(R\) 模族 \((M_i)_{i\in I}\)，若自然映射
+设 \(R\) 为含幺环，\(P\) 为幺左 \(R\) 模。对任意指标集 \(I\) 及幺左 \(R\) 模族 \((M_i)_{i\in I}\)，若由各分量包含映射诱导的自然映射
 \[
 \bigoplus_{i\in I}\operatorname{Hom}_R(P,M_i)
 \longrightarrow\operatorname{Hom}_R\left(P,\bigoplus_{i\in I}M_i\right)
@@ -69,21 +78,21 @@ P\oplus Q\cong R^m,\qquad R\oplus Q'\cong P^n.
 \end{definition}
 
 \begin{proposition}\label{b2:prop:compact-projective-finite}
-设 \(R\) 为环。每个有限生成左 \(R\) 模都是左 \(R\) 模范畴中的紧对象。若左 \(R\) 模 \(P\) 还投射，则 \(P\) 有限生成，当且仅当 \(P\) 是紧对象。
+设 \(R\) 为含幺环，所论模均为幺左 \(R\) 模。每个有限生成左 \(R\) 模都是左 \(R\) 模范畴中的紧对象。若左 \(R\) 模 \(P\) 还投射，则 \(P\) 有限生成，当且仅当 \(P\) 是紧对象。
 \end{proposition}
 \begin{proof}
-自然映射始终单射，因为对每个目标分量再作投影，就恢复原同态。若 \(P\) 有有限生成组，任意 \(f:P\rightarrow\bigoplus_iM_i\) 在这些生成元上的像共同只有有限支集，故全像落在一个有限子直和中。于是 \(f\) 是有限多个分量同态之和，证明满射。
+自然映射始终单射：若有限支集族 \((f_i)_i\) 合成到直和中的同态为零，再接上第 \(j\) 个坐标投影，便得到 \(f_j=0\)，对每个 \(j\) 都成立。若 \(P\) 有有限生成组，任意 \(f:P\rightarrow\bigoplus_iM_i\) 在这些生成元上的像共同只有有限支集，故全像落在一个有限子直和中。于是 \(f\) 是有限多个分量同态之和，证明满射。
 
 反过来，设 \(P\) 投射且紧。由\cref{b2:thm:projective-characterizations}，可取分裂自由满射 \(q:R^{(I)}\rightarrow P\) 及截面 \(s:P\rightarrow R^{(I)}\)。紧性使 \(s\) 的像落在某个有限子直和 \(R^J\) 中。限制 \(q\) 到 \(R^J\) 后仍满足 \(qs=\operatorname{id}_P\)，所以 \(P\) 为有限自由模的直和因子，因而有限生成。
 \end{proof}
 
-这个判据将用于等价定理的反方向：范畴等价保留直和与 Hom 的关系，所以能保留投射对象的这种有限性。对投射对象，它把有限生成性转成了由函子与直和描述的条件。
+对投射对象，这个判据把有限生成性转成了由 Hom 与直和描述的条件，后面的等价定理将使用这一形式。
 
 \subsection{矩阵环与原环的模范畴}
 \label{b2:subsec:1601:03}
 
 \begin{proposition}\label{b2:prop:matrix-morita-equivalence}
-对任意环 \(R\) 和 \(n\ge1\)，令 \(A=M_n(R)\)、\(e=E_{11}\)，将 \(eAe\) 按 \(r\mapsto rE_{11}\) 识别为 \(R\)。以下函子互为拟逆：
+设 \(R\) 为含幺环、\(n\ge1\) 为整数，所论模均为幺性左模。令 \(A=M_n(R)\)、\(e=E_{11}\)，将 \(eAe\) 按 \(r\mapsto rE_{11}\) 识别为 \(R\)。以下函子互为拟逆：
 \[
 \mathcal L:R\text{-}\mathbf{Mod}\longrightarrow A\text{-}\mathbf{Mod},
 \quad N\longmapsto N^n,
@@ -94,7 +103,7 @@ P\oplus Q\cong R^m,\qquad R\oplus Q'\cong P^n.
 \(\mathcal L\) 使用矩阵乘列的左作用，\(\mathcal K\) 使用角环作用；在同态上分别逐坐标作用和限制到 \(eM\)。
 \end{proposition}
 \begin{proof}
-\(eN^n\) 恰为只有第一坐标可能非零的列，取该坐标自然同构到 \(N\)。另一方向定义
+\(eN^n\) 恰为只有第一坐标可能非零的列，取该坐标自然同构到 \(N\)。另一方向用 \(E_{1j}\) 将第 \(j\) 个位置的数据读到第一角，再用 \(E_{i1}\) 写回第 \(i\) 个位置。相应地，定义
 \[
 \Theta_M:(eM)^n\longrightarrow M,\qquad
 (m_1,\ldots,m_n)\longmapsto\sum_iE_{i1}m_i,
@@ -111,4 +120,54 @@ P\oplus Q\cong R^m,\qquad R\oplus Q'\cong P^n.
 \begin{pmatrix}c&d\\0&0\end{pmatrix}
 \right).
 \]
-逆映射把第一个首行留在第一行，再由 \(E_{21}\) 把第二个首行移到第二行，便恢复 \(m\)。矩阵的全部条目因此可以从首行模的两份副本恢复，而 \(eA\) 本身是秩二的 \(R\) 模。等价保留对象和同态之间的关系，正则模在两边的具体形式可以不同。
+逆映射把第一个首行留在第一行，再由 \(E_{21}\) 把第二个首行移到第二行，便恢复 \(m\)。矩阵的全部条目因此可以从首行模的两份副本恢复，而 \(eA\) 本身是秩二的 \(R\) 模。这里正则模 \({}_AA\) 的对应对象是 \({}_RR^n\)，等价不要求两边指定的正则模互相对应。取出 \(eM\)，再由矩阵单位恢复整个 \(M\)，给出了后面用双模张量积重构模的具体模型。
+
+\begin{proposition}\label{b2:prop:trace-generator-criterion}
+设 \(R\) 为含幺环、\(P\) 为幺左 \(R\) 模。子集
+\[
+\operatorname{tr}_R(P)=\sum_{f\in\operatorname{Hom}_R(P,R)}f(P)
+\]
+是 \(R\) 的双边理想，称为 \(P\) 的\term[ji-lixiang]{迹理想}[trace ideal]。以下条件等价：\(P\) 是全部幺左 \(R\) 模范畴的生成元；\(\operatorname{tr}_R(P)=R\)；存在非负整数 \(n\)、元素 \(p_1,\ldots,p_n\in P\) 和左 \(R\) 线性映射 \(f_1,\ldots,f_n:P\to R\)，使
+\[
+\sum_{i=1}^n f_i(p_i)=1_R.
+\]
+这里 \(n=0\) 时按空和为零理解，不要求 \(P\) 有限生成或投射。
+\end{proposition}
+\begin{proof}
+每个 \(f(P)\) 都是正则左模的子模，所以它们的和是左理想。对任意 \(r\in R\)，映射 \(f_r:P\to R\)、\(f_r(p)=f(p)r\) 仍左线性，因为 \(f_r(ap)=af(p)r=af_r(p)\)。故迹理想也对右乘封闭，是双边理想。
+
+迹理想为全环，当且仅当其中含有一；而这个和中的每个元素都由有限多个像相加得到，所以这又等价于所述有限和等式。若等式成立，定义
+\[
+q:P^n\longrightarrow R,\qquad (x_i)_i\longmapsto\sum_i f_i(x_i),
+\qquad
+s:R\longrightarrow P^n,\qquad r\longmapsto(rp_i)_i.
+\]
+两映射都左线性，且 \(q(s(r))=r\sum_i f_i(p_i)=r\)，故 \(R\) 是 \(P^n\) 的直和因子，由\cref{b2:thm:generator-characterizations}，\(P\) 为生成元。反过来，生成元判据给出有限份 \(P\) 到 \(R\) 的分裂满射。取一的原像 \((p_i)_i\)，并将满射限制到第 \(i\) 个分量得到 \(f_i\)，就有 \(\sum_i f_i(p_i)=1_R\)。
+\end{proof}
+
+迹判据中的有限和控制的是 \(1_R\)。相比之下，\cref{b2:prop:finite-dual-basis}中的有限对偶基控制的是每个 \(p\in P\) 的重构式，因而控制 \(\operatorname{id}_P\)。这两种有限数据分别检验生成元性质与有限生成投射性。
+
+\begin{proposition}\label{b2:prop:object-detection-not-generator}
+设 \(k\) 为域、\(R=k[\varepsilon]/(\varepsilon^2)\)，\(\varepsilon\) 的剩余类仍记为 \(\varepsilon\)，并令 \(P=R/(\varepsilon)\) 为幺左 \(R\) 模。对每个非零幺左 \(R\) 模 \(M\)，都有 \(\operatorname{Hom}_R(P,M)\ne0\)；但 \(\operatorname{Hom}_R(P,-)\) 不忠实，\(P\) 不是生成元。
+\end{proposition}
+\begin{proof}
+在 \(M\) 中取 \(m\ne0\)。若 \(\varepsilon m=0\)，令 \(v=m\)；否则令 \(v=\varepsilon m\)，由 \(\varepsilon^2=0\) 仍有 \(v\ne0\) 且 \(\varepsilon v=0\)。于是 \(r+(\varepsilon)\mapsto rv\) 良定义，给出 \(P\to M\) 的非零左模同态。
+
+考虑非零左线性映射 \(u:R\to R\)、\(u(r)=r\varepsilon\)。每个 \(h:P\to R\) 的像都被 \(\varepsilon\) 零化；写 \(r=a+b\varepsilon\) 可知 \(\varepsilon r=a\varepsilon=0\) 当且仅当 \(r\in k\varepsilon\)，故 \(h(P)\subseteq k\varepsilon\)，从而 \(uh=0\)。于是 \(u\ne0\) 和零同态经 Hom 函子后成为同一个映射，忠实性失败，\(P\) 不是生成元。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:progenerator-hypothesis-counterexamples}
+设 \(k\) 为域，所论模均为幺性左模。有限生成投射生成元定义中的三个条件，均不能由另外两个推出：
+\begin{enumerate}
+\item 在 \(R=k\times k\) 上，\(P=k\times0\) 有限生成且投射，但不是生成元。
+\item 在 \(R=\mathbb Z\) 上，\(P=\mathbb Z\oplus\mathbb Z/2\mathbb Z\) 有限生成且为生成元，但不投射；\(\operatorname{Hom}_{\mathbb Z}(P,-)\) 不保持所有满同态。
+\item 在 \(R=k\) 上，\(P=\bigoplus_{i\ge1}ku_i\) 投射且为生成元，但不有限生成，也不是紧对象；\(\operatorname{Hom}_k(P,-)\) 不保持任意直和。
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+在第一例中，令 \(e=(1,0)\)。\(P=Re\) 是 \(R=Re\oplus R(1-e)\) 的直和因子，又由 \(e\) 生成，所以有限生成且投射。非零模 \(Q=0\times k\) 满足 \(eQ=0\)。若 \(h:P\to Q\)，则 \(h(e)=h(e^2)=eh(e)=0\)，所以 \(h=0\)。故 \(Q\) 上的恒等映射与零同态无法由 \(P\) 检测，\(P\) 不是生成元。
+
+第二例的两个直和分量各由一个元素生成，而 \(\mathbb Z\) 是 \(P\) 的直和因子，所以由生成元判据，\(P\) 是有限生成的生成元。取自然满射 \(q:\mathbb Z\to\mathbb Z/2\mathbb Z\) 及投影 \(f:P\to\mathbb Z/2\mathbb Z\)。若有 \(h:P\to\mathbb Z\) 满足 \(qh=f\)，则 \(h\) 在 \(\mathbb Z/2\mathbb Z\) 分量上的限制应是从二阶元素到整数的同态，只能为零；但 \(f\) 在此分量上为恒等，矛盾。因此 \(P\) 不投射，\(\operatorname{Hom}_{\mathbb Z}(P,q)\) 也不满射。
+
+第三例中，\(P\) 自由，因而投射；它含 \(ku_1\cong k\) 为直和因子，故是生成元。有限个向量的支集之并仍有限，所以不能生成全部 \(u_i\)，\(P\) 不有限生成。将恒等映射看成 \(P\to\bigoplus_{i\ge1}ku_i\)。如果它来自 \(\bigoplus_i\operatorname{Hom}_k(P,ku_i)\)，其像就会落在有限个坐标的直和中，不能包含所有 \(u_i\)，矛盾。所以 \(P\) 不是紧对象，Hom 函子不能保持这个直和。
+\end{proof}

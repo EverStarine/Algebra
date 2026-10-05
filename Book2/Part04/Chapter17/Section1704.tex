@@ -1,8 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 17.4 四元数代数、范数与分裂判据
-% 本轮补充的纲要细目：
-% * 以四元数左右乘构造范数相似变换，证明乘子及对角标量核；不由核的计算断言满射
-% 纲要位置：计划纲要.md，第 1325 行。
+% 纲要位置：计划纲要.md，第 1615 行。
 
 \section{四元数代数、范数与分裂判据}
 \label{b2:sec:1704}
@@ -11,10 +9,10 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 四元数代数
-% * 矩阵代数及非分裂例子
-% * 与二次型及范数方程的联系
-%
+% * 四元数代数；二维 Clifford 关系、矩阵基验证及中心单性下降，共轭作为到反代数的同构
+% * 矩阵代数及非分裂例子；内在范数与分裂行列式，次数二的除代数或矩阵代数两种可能
+% * 与二次型及范数方程的联系；区分二次域和平方参数，解释扭曲共轭算子的构造及齐次方程；正式证明张量平方、参数变换及实四元数正规化子的无群截面
+% * 以四元数左右乘构造范数相似变换，证明乘子及对角标量核；不由核的计算断言满射
 % ---
 %
 
@@ -30,7 +28,14 @@ i^2=a,\qquad j^2=b,\qquad ji=-ij
 \end{definition}
 \symidx{\((a,b)_k\)：参数为 \(a,b\) 的四元数代数}
 
-关系使每个字都能先把 \(i\) 移到 \(j\) 左边，再将两个指数降到零或一，所以 \(1,i,j,ij\) 生成这个代数。它们还线性无关，这一点不能仅由关系写法直接断言。
+这个构造也与第十章的 Clifford 代数一致。令 \(V=ke\oplus kf\)，二次型为 \(q(xe+yf)=ax^2+by^2\)。按\cref{b2:def:clifford-algebra,b2:thm:clifford-universal}中 \(\iota(v)^2=q(v)1\) 的约定，\(e,f\) 的像满足平方分别为 \(a,b\)，且反交换。反过来，四元数关系也使 \((xi+yj)^2=ax^2+by^2\)，两组生成元相互对应，因而
+\[
+(a,b)_k\cong\operatorname{Cl}(V,q).
+\]
+这里说的是二维二次型的 Clifford 代数，其代数维数还须验证。
+
+\ProseParagraphBreak
+关系使每个字都能先把 \(i\) 移到 \(j\) 左边，再将两个指数降到零或一，所以 \(1,i,j,ij\) 张成这个代数。关系给出张成性，下面的矩阵模型将检验线性无关性，并在扩域后实现分裂。
 
 \begin{proposition}\label{b2:prop:quaternion-basis-splitting}
 设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，则 \(Q\) 以 \(1,i,j,ij\) 为 \(k\) 基，并且是次数二的中心单 \(k\) 代数。若域扩张 \(K/k\) 含有 \(\alpha\) 满足 \(\alpha^2=a\)，则有分裂同构
@@ -41,16 +46,16 @@ i\longmapsto I=\begin{pmatrix}\alpha&0\\0&-\alpha\end{pmatrix},
 \]
 \end{proposition}
 \begin{proof}
-这两个矩阵满足 \(I^2=aI_2\)、\(J^2=bI_2\)、\(JI=-IJ\)，所以给出由商代数到矩阵代数的同态。在对角位置，\(I_2,I\) 线性无关，因为 \(2\alpha\ne0\)；在非对角位置，\(J,IJ\) 线性无关，因为其两个坐标组成的行列式为 \(-2\alpha b\ne0\)。故四个矩阵为 \(M_2(K)\) 的基。原四个生成元若有 \(k\) 线性关系，映射后也有同一关系，因此系数全零。这证明 \(\dim_kQ=4\)，扩张后同态便是基之间的同构。
+先取一个含有 \(a\) 的平方根 \(\alpha\) 的扩域 \(K\)，例如在代数闭包中添入这个根。所给矩阵满足 \(I^2=aI_2\)、\(J^2=bI_2\)、\(JI=-IJ\)，所以给出含幺 \(k\) 代数同态 \(Q\to M_2(K)\)，并延伸为 \(Q_K\to M_2(K)\)。在对角位置，\(I_2,I\) 线性无关，因为 \(2\alpha\ne0\)；在非对角位置，\(J,IJ\) 线性无关，因为其两个坐标组成的行列式为 \(-2\alpha b\ne0\)。故四个矩阵为 \(M_2(K)\) 的基。原四个张成元素若有 \(k\) 线性关系，映射后也有同一关系，因此系数全零。这证明 \(\dim_kQ=4\)，扩张后的同态便是基之间的同构。这个计算对任意含有 \(\alpha\) 的扩域都成立。
 
-现在验证 \(Q\) 本身中心单。若 \(U\) 为非零双边理想，则 \(K\otimes_kU\) 是 \(Q_K\cong M_2(K)\) 的非零理想，因矩阵环单而等于整个 \(Q_K\)。维数比较得 \(\dim_kU=4\)，所以 \(U=Q\)。若 \(z\in Z(Q)\)，其像在 \(M_2(K)\) 中为标量。以 \(I_2,I,J,IJ\) 为基比较系数，得到 \(z\) 只能是原 \(1\) 的 \(k\) 倍数，故中心为 \(k\)。维数为四使次数为二。
+矩阵代数 \(M_2(K)\) 中心单，而 \(Q\) 已证非零有限维，故\cref{b2:prop:csa-descent-from-extension}使 \(Q\) 中心单。维数为四使其次数为二。
 \end{proof}
 
 对 \(q=x_0+x_1i+x_2j+x_3ij\)，定义它的\term[siyuanshu-gonge]{四元数共轭}[quaternion conjugation]为
 \[
 \bar q=x_0-x_1i-x_2j-x_3ij.
 \]
-生成元的像 \(i\mapsto-i,j\mapsto-j\) 在反代数中仍满足原关系，所以该映射反转乘法；它在上述基上作用两次为恒等，因此
+共轭所需的乘法顺序是反向的，所以将它看成 \(Q\to Q^{\mathrm{op}}\) 的代数同态来检验。生成元的像 \(i\mapsto(-i)^{\mathrm{op}},j\mapsto(-j)^{\mathrm{op}}\) 在反代数中仍满足原关系，因而给出这样的同态；\(ij\) 的像在原代数中是 \((-j)(-i)=-ij\)，与上述坐标公式相同。共轭在基上作用两次为恒等，故它实际给出 \(Q\cong Q^{\mathrm{op}}\)，并有
 \begin{equation}\label{b2:eq:quaternion-conjugation}
 \overline{qr}=\bar r\bar q,\qquad\overline{\bar q}=q.
 \end{equation}
@@ -65,7 +70,7 @@ q\bar q=\bar q q
 \[
 q\bar q=\bar q q=x_0^2-a x_1^2-b x_2^2+ab x_3^2\in k,
 \]
-可将这个标量记为 \(N(q)\)，称为\term[siyuanshu-fanshu]{四元数范数}[quaternion norm]。对任意 \(q,r\in Q\)，有
+可将内在定义的标量 \(N(q)=q\bar q\) 称为\term[siyuanshu-fanshu]{四元数范数}[quaternion norm]；所列四元二次式是它在基 \(1,i,j,ij\) 下的坐标表达。对任意 \(q,r\in Q\)，有
 \[
 N(qr)=N(q)N(r),\qquad
 q\in Q^\times\Longleftrightarrow N(q)\ne0.
@@ -90,17 +95,17 @@ x_2-\alpha x_3&x_0-\alpha x_1
 \end{proof}
 \symidx{\(N(q)=q\bar q\)：四元数范数}
 
-这里的 \(N\) 是中心单代数约化范数在次数二情形的具体形式；\secref{b2:sec:1803}将从一般分裂矩阵模型重新得到这一识别。
+这个范数的乘法性在代数内部由 \(q\bar q\) 得到，而分裂后它就是行列式。\secref{b2:sec:1803}将从一般分裂矩阵模型定义约化范数，并得到这里次数二的具体形式。
 
 \begin{proposition}\label{b2:prop:quaternion-norm-similitudes}
 设 \(k\) 为特征不为二的域，\(Q=(a,b)_k\)、\(a,b\in k^\times\)，\(N(x)=x\bar x\) 为四元数范数。对 \(u,v\in Q^\times\)，定义 \(k\) 线性映射
 \[
 L_{u,v}:Q\longrightarrow Q,\qquad x\longmapsto uxv^{-1}.
 \]
-它是范数二次型的相似变换，乘子为 \(N(u)/N(v)\)。映射 \((u,v)\mapsto L_{u,v}\) 是从 \(Q^\times\times Q^\times\) 到该相似变换群的群同态，其核为 \(\{(c,c)\mid c\in k^\times\}\)。特别地，内自同构 \(x\mapsto uxu^{-1}\) 保持 \(N\)。
+它是范数二次型的相似变换，乘子 \(\mu(L_{u,v})\) 由对所有 \(x\in Q\) 成立的等式 \(N(L_{u,v}(x))=\mu(L_{u,v})N(x)\) 确定，且等于 \(N(u)/N(v)\)。映射 \((u,v)\mapsto L_{u,v}\) 是从 \(Q^\times\times Q^\times\) 到该相似变换群的群同态，其核为 \(\{(c,c)\mid c\in k^\times\}\)。特别地，内自同构 \(x\mapsto uxu^{-1}\) 保持 \(N\)。
 \end{proposition}
 \begin{proof}
-范数的对角系数为 \(1,-a,-b,ab\)，均非零，所以二次型非退化。\cref{b2:prop:quaternion-norm}的乘法性给出
+范数的对角系数为 \(1,-a,-b,ab\)，均非零，所以二次型非退化。采用右乘 \(v^{-1}\)，可以使两个参数都按通常的次序相乘，并使 \(u=v\) 时成为内共轭。\cref{b2:prop:quaternion-norm}的乘法性给出
 \[
 N(uxv^{-1})=\frac{N(u)}{N(v)}N(x).
 \]
@@ -109,10 +114,15 @@ N(uxv^{-1})=\frac{N(u)}{N(v)}N(x).
 L_{u,v}L_{u',v'}(x)=uu'xv'^{-1}v^{-1}
 =L_{uu',vv'}(x),
 \]
-故是群同态。若 \(L_{u,v}\) 为恒等，在 \(x=1\) 处即得 \(u=v\)；再对全部 \(x\) 使用等式，得到 \(u\) 属于 \(Q\) 的中心，也就是 \(k^\times\)。反过来，对角标量显然作用为恒等。这证明核的描述，而取 \(u=v\) 就得到等距结论。
+取 \(u'=u^{-1},v'=v^{-1}\)，可知 \(L_{u,v}\) 的逆为 \(L_{u^{-1},v^{-1}}\)，故上述对应确为群同态。若 \(L_{u,v}\) 为恒等，在 \(x=1\) 处即得 \(u=v\)；再对全部 \(x\) 使用等式，得到 \(u\) 属于 \(Q\) 的中心，也就是 \(k^\times\)。反过来，对角标量显然作用为恒等。这证明核的描述，而取 \(u=v\) 就得到等距结论。
 \end{proof}
 
-这给出一族由代数乘法产生的几何变换。仅从核的计算不能断言它们穷尽全部相似变换；这里只使用上述明确构造，也不预先调用正交群的进一步分类。
+若记范数二次型的相似变换群为 \(\operatorname{GSim}(N)\)，上述同态和核的计算给出单射
+\[
+(Q^\times\times Q^\times)/\{(c,c):c\in k^\times\}
+\hookrightarrow\operatorname{GSim}(N).
+\]
+商群被识别为这个同态的像；核的计算没有证明该像是整个目标群。
 
 \subsection{矩阵代数与非分裂例子}
 \label{b2:subsec:1704:02}
@@ -121,9 +131,9 @@ L_{u,v}L_{u',v'}(x)=uu'xv'^{-1}v^{-1}
 设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，\(N:Q\rightarrow k\) 为其四元数范数，则 \(Q\) 或者是除代数，或者同构于 \(M_2(k)\)。它分裂，当且仅当二次型 \(N\) 有非平凡零点，即存在 \(q\in Q\setminus\{0\}\) 使 \(N(q)=0\)。
 \end{proposition}
 \begin{proof}
-由\cref{b2:prop:csa-division-description}，\(Q\cong M_r(D)\)，其中 \(D\) 是除代数，且 \(4=r^2\dim_kD\)。若 \(r=1\)，\(Q\) 是除代数；否则只能 \(r=2,\dim_kD=1\)，即 \(D=k\)，所以 \(Q\cong M_2(k)\)。
+由\cref{b2:prop:csa-division-description}，\(Q\cong M_r(D)\)，其中 \(D\) 是中心除 \(k\) 代数。次数关系为 \(2=r\deg D\)，所以只有 \(r=1,\deg D=2\) 或 \(r=2,\deg D=1\) 两种可能。前者使 \(Q\) 为除代数；后者使 \(\dim_kD=1\)，即 \(D=k\)，所以 \(Q\cong M_2(k)\)。
 
-由\cref{b2:prop:quaternion-norm}，每个非零元素可逆当且仅当每个非零元素的范数都非零。因此有非平凡零点恰好等价于不是除代数，按前一分类又等价于分裂。
+由\cref{b2:prop:quaternion-norm}，非零元素 \(q\) 满足 \(N(q)=0\)，恰好意味着 \(q\) 不可逆。因此范数有非平凡零点等价于 \(Q\) 不是除代数，再由次数二的上述两种可能等价于 \(Q\cong M_2(k)\)。
 \end{proof}
 
 若 \(a=\alpha^2\in k^{\times2}\)，\cref{b2:prop:quaternion-basis-splitting}的两个矩阵已经定义在 \(k\) 中，因此 \((a,b)_k\) 直接分裂。同样，交换生成元 \(i,j\) 给出 \((a,b)_k\cong(b,a)_k\)，所以 \(b\) 为平方时也分裂。
@@ -140,6 +150,8 @@ L_{u,v}L_{u',v'}(x)=uu'xv'^{-1}v^{-1}
 
 \subsection{二次型与范数方程}
 \label{b2:subsec:1704:03}
+
+若 \(a\) 非平方，生成元 \(i\) 产生二次域 \(L=k[i]\)，基 \(1,i,j,ij\) 把 \(Q\) 写成 \(L\oplus Lj\)。其中 \(j\) 跨过 \(L\) 时施加非平凡域自同构：\(ju=\bar u j\)。这样，四元数范数的零点可以转成两个二次域范数的比较，再成为参数 \(b\) 能否写成一个域范数的问题。
 
 \begin{theorem}[四元数分裂的等价条件]\label{b2:thm:quaternion-splitting}
 设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，其四元数范数为 \(N(q)=q\bar q\)。则
@@ -160,24 +172,32 @@ b=x^2-a y^2\text{ 对某些 }x,y\in k.
 \begin{proof}
 \cref{b2:prop:quaternion-division-or-split}已经给出前三个条件的等价。以下处理 \(a\) 非平方时的域范数条件。
 
-\(a\) 非平方时，\(L=k[i]\subseteq Q\) 是二次域，且 \(Q=L\oplus Lj\)。记 \(L\) 的非平凡自同构为 \(u\mapsto\bar u\)，则 \(ju=\bar u j\)。由前述范数公式，对 \(u,v\in L\) 有
+\(a\) 非平方时，\(L=k[i]\subseteq Q\) 是二次域，与定理中的 \(k(\alpha)\) 按 \(i\mapsto\alpha\) 识别，且 \(Q=L\oplus Lj\)。记 \(L\) 的非平凡自同构为 \(u\mapsto\bar u\)，则 \(ju=\bar u j\)。由前述范数公式，对 \(u,v\in L\) 有
 \[
 N(u+vj)=N_{L/k}(u)-b\cdot N_{L/k}(v).
 \]
 这里 \(N_{L/k}(x+y\alpha)=(x+y\alpha)(x-y\alpha)=x^2-a y^2\)，可由二次扩张的乘法矩阵或两个共轭直接计算。
 
-若 \(Q\) 分裂，\cref{b2:prop:quaternion-division-or-split}给出非零 \(u+vj\) 的范数为零。不能有 \(v=0\)，否则域范数零使 \(u=0\)，矛盾。因此 \(v\ne0\)，得到
-\(b=N_{L/k}(u)/N_{L/k}(v)=N_{L/k}(u/v)\)。反过来，若 \(b=N_{L/k}(z)\)，则 \(z+j\ne0\) 且其范数为零，所以代数分裂。域范数的显式公式又给出最后一个等价。
+若 \(Q\) 分裂，\cref{b2:prop:quaternion-division-or-split}给出非零 \(u+vj\) 的范数为零。若 \(v=0\)，便有 \(u\bar u=0\)；因为 \(L\) 是域，非零 \(u\) 与 \(\bar u\) 的乘积不可能为零，故 \(u=0\)，与 \(u+vj\ne0\) 矛盾。因此 \(v\ne0\)，其域范数非零，可以除得
+\[
+b=\frac{N_{L/k}(u)}{N_{L/k}(v)}=N_{L/k}(u/v).
+\]
+反过来，若 \(b=N_{L/k}(z)\)，则 \(z+j\ne0\)，因为其 \(Lj\) 分量为 \(j\)；而 \(N(z+j)=N_{L/k}(z)-b=0\)，所以代数分裂。域范数的显式公式又给出最后一个等价。
 
-若 \(a=\alpha^2\) 且 \(\alpha\in k^\times\)，分裂性已证明，而
+若 \(a=\alpha^2\) 且 \(\alpha\in k^\times\)，则 \(k(\alpha)=k\) 不再是二次扩张，不能使用上面的二次域范数解释。分裂性已证明，而
 \[
 x=\frac{b+1}{2},\qquad y=\frac{b-1}{2\alpha}
 \]
 满足 \(x^2-a y^2=b\)，故方程仍可解。
 \end{proof}
 
-已知范数方程的一个解，还可以直接构造分裂同构。若 \(a\) 非平方，取 \(z=x+y\alpha\in L\) 满足 \(N_{L/k}(z)=b\)。在二维 \(k\) 空间 \(L\) 上，让 \(i\) 作用为乘 \(\alpha\)，让 \(j\) 作用为 \(v\mapsto z\bar v\)。两者满足平方关系，且
-\(z\overline{\alpha v}=-\alpha z\bar v\)，所以反交换，给出 \(Q\to\operatorname{End}_k(L)\)。它保持单位元，由单性为单射，两端维数同为四，故同构。在基 \(1,\alpha\) 下，具体矩阵为
+已知范数方程的一个解，还可以直接构造分裂同构。若 \(a\) 非平方，取 \(z=x+y\alpha\in L\) 满足 \(N_{L/k}(z)=b\)。在二维 \(k\) 空间 \(L\) 上，让 \(i\) 作用为乘 \(\alpha\)，其平方自然为乘 \(a\)。要使 \(j\) 与它反交换，可以先使用把 \(\alpha\) 变成 \(-\alpha\) 的共轭，再乘 \(z\)，即取 \(j(v)=z\bar v\)。这个选择还有
+\[
+j^2(v)=z\overline{z\bar v}=z\bar z\,v=bv,
+\qquad
+z\overline{\alpha v}=-\alpha z\bar v.
+\]
+所以两者满足全部四元数关系，给出 \(Q\to\operatorname{End}_k(L)\)。它保持单位元，由单性为单射，两端维数同为四，故同构。在基 \(1,\alpha\) 下，具体矩阵为
 \[
 i\longmapsto\begin{pmatrix}0&a\\1&0\end{pmatrix},\qquad
 j\longmapsto\begin{pmatrix}x&-ay\\y&-x\end{pmatrix}.
@@ -185,10 +205,104 @@ j\longmapsto\begin{pmatrix}x&-ay\\y&-x\end{pmatrix}.
 后者的平方为 \((x^2-a y^2)I_2=bI_2\)，可作为公式的直接核验。
 
 \ProseParagraphBreak
-范数判据也等价于齐次方程
+将范数方程 \(b=x^2-ay^2\) 齐次化，得到
 \[
 X^2-aY^2-bZ^2=0
 \]
-有一个非零解。若 \(Z\ne0\)，除以 \(Z^2\) 就得到 \(b=(X/Z)^2-a(Y/Z)^2\)；若 \(Z=0\)，非零解必有 \(Y\ne0\)，于是 \(a=(X/Y)^2\)，同样推出分裂。反过来，范数方程解 \(b=x^2-a y^2\) 给出点 \((x,y,1)\)，平方参数时也可直接取 \((\alpha,1,0)\)。这样，四元数代数是否为矩阵代数，已经化为一个具体二次方程的可解性问题。
+四元数代数分裂，当且仅当这个齐次二次方程有一个非零 \(k\) 解。若 \(Z\ne0\)，除以 \(Z^2\) 就得到 \(b=(X/Z)^2-a(Y/Z)^2\)；若 \(Z=0\)，非零解必有 \(Y\ne0\)，于是 \(a=(X/Y)^2\)，同样推出分裂。反过来，范数方程解 \(b=x^2-a y^2\) 给出点 \((x,y,1)\)，平方参数时也可直接取 \((\alpha,1,0)\)。这样，四元数代数是否为矩阵代数，已经化为一个具体二次方程的可解性问题。
+
+\ProseParagraphBreak
+共轭把四元数代数同它的反代数识别，所以这里还可以把与反代数的张量分裂式改写为两个四元数代数自身的张量积。
+
+\begin{proposition}\label{b2:prop:quaternion-tensor-square}
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)，\(Q=(a,b)_k\)，共轭记为 \(r\mapsto\bar r\)。则映射
+\[
+\Phi:Q\otimes_kQ\longrightarrow\operatorname{End}_k(Q),
+\qquad
+q\otimes r\longmapsto\bigl(x\longmapsto qx\bar r\bigr)
+\]
+是含幺 \(k\) 代数同构。用基 \(1,i,j,ij\) 将目标识别为 \(M_4(k)\)，便得 \(Q\otimes_kQ\cong M_4(k)\)，无论 \(Q\) 本身是否分裂。
+\end{proposition}
+\begin{proof}
+由\eqref{b2:eq:quaternion-conjugation}，映射
+\[
+\gamma:Q\longrightarrow Q^{\mathrm{op}},\qquad
+r\longmapsto(\bar r)^{\mathrm{op}}
+\]
+保持乘法与单位，且因共轭作用两次为恒等而双射。于是 \(\operatorname{id}_Q\otimes\gamma\) 给出 \(Q\otimes_kQ\cong Q\otimes_kQ^{\mathrm{op}}\)。\cref{b2:prop:quaternion-basis-splitting}使 \(Q\) 为中心单代数，再用\cref{b2:thm:csa-enveloping-isomorphism}，左右乘作用给出
+\[
+Q\otimes_kQ^{\mathrm{op}}\cong\operatorname{End}_k(Q).
+\]
+这两个同构的复合正是 \(\Phi\)。具体地，先作用 \(q'\otimes r'\)，再作用 \(q\otimes r\)，所得为
+\[
+qq'x\bar r'\bar r=qq'x\overline{rr'},
+\]
+对应张量积的乘法 \((q\otimes r)(q'\otimes r')=qq'\otimes rr'\)；单位 \(1\otimes1\) 作用为恒等。最后，\(Q\) 的 \(k\) 维数为四，所列基使其线性自同态代数同构于 \(M_4(k)\)。
+\end{proof}
+
+下一章定义 Brauer 群后，这个张量平方的分裂性将说明，四元数代数所代表的类的阶至多为二。参数本身则依赖于生成元的选择，并不由代数的同构类型唯一决定。
+
+\begin{proposition}\label{b2:prop:quaternion-parameter-changes}
+设 \(k\) 为特征不等于 \(2\) 的域，\(a,b\in k^\times\)。则有含幺 \(k\) 代数同构
+\[
+(a,b)_k\cong(b,a)_k,\qquad
+(a,b)_k\cong(a,-ab)_k.
+\]
+若 \(a\) 不是 \(k\) 中的平方，令 \(L=k(\alpha)\)、\(\alpha^2=a\)，则对任意 \(u\in L^\times\)，还有
+\[
+(a,b)_k\cong\bigl(a,bN_{L/k}(u)\bigr)_k.
+\]
+\end{proposition}
+\begin{proof}
+令 \(Q=(a,b)_k\)，生成元为 \(i,j\)。改以 \(j,i\) 为生成元，它们的平方分别为 \(b,a\)，且仍反交换，因而给出满同态 \((b,a)_k\to Q\)。
+
+改以 \(i,ij\) 为生成元，则
+\[
+(ij)^2=-ab,\qquad
+(ij)i=-i(ij).
+\]
+它们满足参数 \(a,-ab\) 的关系，且由 \(j=a^{-1}i(ij)\) 恢复原生成元，故给出满同态 \((a,-ab)_k\to Q\)。
+
+对于最后一式，将 \(L\) 按 \(\alpha\mapsto i\) 识别为 \(k[i]\subseteq Q\)，非平凡域自同构记为 \(u\mapsto\bar u\)。关系 \(ju=\bar u j\) 给出
+\[
+(uj)^2=u\bar u\,b=bN_{L/k}(u).
+\]
+同时 \(uj\) 与 \(i\) 反交换，故 \(i,uj\) 给出满同态
+\(\bigl(a,bN_{L/k}(u)\bigr)_k\to Q\)：其像包含 \(L\)，也包含 \(u^{-1}\)，因而能由 \(j=u^{-1}(uj)\) 恢复 \(j\)。域范数 \(N_{L/k}(u)\ne0\)，所以这也是合法的非零参数。三个满同态的两端都由\cref{b2:prop:quaternion-basis-splitting}知为四维 \(k\) 代数，因此均为同构。
+\end{proof}
+
+四元数代数还给出一个正规化子满射不能按群乘法相容地选择提升元的例子。
+
+\begin{proposition}\label{b2:prop:quaternion-normalizer-nonsplit}
+设 \(\mathbb H=(-1,-1)_{\mathbb R}\)，生成元为 \(i,j\)，将复数域 \(\mathbb C\) 识别为子域 \(\mathbb R+\mathbb R i\)。它在 \(\mathbb H^\times\) 中的正规化子为
+\[
+N_{\mathbb H^\times}(\mathbb C)
+=\{q\in\mathbb H^\times:q\mathbb Cq^{-1}=\mathbb C\}
+=\mathbb C^\times\cup\mathbb C^\times j.
+\]
+共轭作用给出的正合列
+\[
+1\longrightarrow\mathbb C^\times
+\longrightarrow N_{\mathbb H^\times}(\mathbb C)
+\longrightarrow\operatorname{Gal}(\mathbb C/\mathbb R)
+\longrightarrow1
+\]
+没有群同态截面。
+\end{proposition}
+\begin{proof}
+每个四元数唯一写成 \(q=z+w j\)，其中 \(z,w\in\mathbb C\)。由于 \(ji=-ij\)，有
+\[
+qi=zi-wij,\qquad iq=zi+wij.
+\]
+因此 \(q\) 与 \(i\) 交换，当且仅当 \(w=0\)；而 \(qi=-iq\)，当且仅当 \(z=0\)。这两点也可直接比较基 \(1,i,j,ij\) 的实坐标。
+
+正规化子中的 \(q\) 通过共轭给出 \(\mathbb C\) 的实代数自同构，只能将 \(i\) 送到 \(i\) 或 \(-i\)。前一种情形使 \(q\in\mathbb C^\times\)，后一种情形使 \(q=w j\)、\(w\in\mathbb C^\times\)。反过来，非零复数通过共轭固定 \(\mathbb C\)，而 \(j\) 通过 \(ji=-ij\) 实现复共轭，故所列两族都属于正规化子。这证明其描述，共轭同态的核也恰为 \(\mathbb C^\times\)，且因 \(j\) 实现非平凡自同构而满射。
+
+若这个满射有群同态截面，二阶群 \(\operatorname{Gal}(\mathbb C/\mathbb R)\) 的非平凡元就应提升为一个平方等于一的元素。任何这种提升都形如 \(zj\)、\(z\in\mathbb C^\times\)，但
+\[
+(zj)^2=z\bar z\,j^2=-|z|^2<0,
+\]
+不可能等于一。因此不存在群同态截面，虽然两个域自同构各自都能通过共轭实现。
+\end{proof}
 
 这里的范数既是二次型，也是除代数或矩阵代数的判别工具。若要比较它与 Clifford 代数、Witt 环中的不变量以及矩阵代数上的伴随对合，可接着读\secref{b2:sec:B02}和\secref{b2:sec:B03}；后者需要本章的中心单代数与 Skolem--Noether 定理。

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 13.4 有限维代数、群代数与有限环
-% 纲要位置：计划纲要.md，第 1200 行。
+% 纲要位置：计划纲要.md，第 1482 行。
 
 \section{有限维代数、群代数与有限环}
 \label{b2:sec:1304}
@@ -11,7 +11,7 @@
 %
 % * 有限维半单代数
 % * 群代数的半单性例子与 Maschke 定理的陈述
-% * 有限除环的交换性与 Wedderburn 小定理
+% * 有限除环的交换性与 Wedderburn 小定理；循环模的无重因子判据
 %
 % ---
 %
@@ -20,7 +20,7 @@
 \label{b2:subsec:1304:01}
 
 \begin{proposition}\label{b2:prop:finite-dimensional-semisimple-algebra}
-设 \(k\) 为域、\(A\) 为有限维半单 \(k\) 代数。存在有限维除 \(k\) 代数 \(D_i\) 及正整数 \(n_i\)，使
+设 \(k\) 为域、\(A\) 为有限维结合含幺半单 \(k\) 代数。存在非负整数 \(t\)、有限维除 \(k\) 代数 \(D_1,\ldots,D_t\) 及正整数 \(n_1,\ldots,n_t\)，使
 \[
 A\cong\prod_{i=1}^tM_{n_i}(D_i)
 \]
@@ -29,10 +29,10 @@ A\cong\prod_{i=1}^tM_{n_i}(D_i)
 \dim_kA=\sum_i n_i^2\dim_kD_i,
 \qquad \dim_kS_i=n_i\dim_kD_i.
 \]
-若 \(k\) 代数闭，则所有 \(D_i=k\)，于是 \(A\cong\prod_iM_{n_i}(k)\)，且 \(\dim_kA=\sum_i(\dim_kS_i)^2\)。
+若 \(k\) 代数闭，则所有 \(D_i=k\)，于是 \(A\cong\prod_iM_{n_i}(k)\)，且 \(\dim_kA=\sum_i(\dim_kS_i)^2\)。零代数对应 \(t=0\) 的空乘积，此时简单模列表为空，维数公式中的空和为零。
 \end{proposition}
 \begin{proof}
-每个简单模 \(S_i\) 都是 \(A\) 的商，因此有限维。\(\operatorname{End}_A(S_i)\) 是 \(\operatorname{End}_k(S_i)\) 的 \(k\) 子空间，故有限维；其反环 \(D_i\) 也是有限维除 \(k\) 代数。\cref{b2:thm:artin-wedderburn}的构造保持 \(k\) 标量：标量在正则模上作为乘 \(\lambda\) 作用，在各简单分量上仍是同一个标量自同态，取反环不会改变中心标量。因此得到 \(k\) 代数同构。矩阵有 \(n_i^2\) 个任意 \(D_i\) 条目，列模有 \(n_i\) 个条目，直接得到两条维数公式。若 \(k\) 代数闭，\cref{b2:cor:schur-algebraically-closed}使各自同态除环等于 \(k\)，反环仍为 \(k\)，从而得到平方和公式。
+零代数的结论由空乘积约定成立。设 \(A\ne0\)。对任意简单左 \(A\) 模 \(S_i\)，取 \(0\ne s_i\in S_i\)，则 \(As_i=S_i\)，因为这是非零子模。因此 \(a\mapsto as_i\) 给出 \(k\) 线性满射 \(A\to S_i\)，从而 \(\dim_kS_i\le\dim_kA<\infty\)。\(\operatorname{End}_A(S_i)\) 是 \(\operatorname{End}_k(S_i)\) 的 \(k\) 子空间，故有限维；Schur 引理使它为除环，其反环 \(D_i\) 也是有限维除 \(k\) 代数。\cref{b2:thm:artin-wedderburn}的构造保持 \(k\) 标量：标量在正则模上作为乘 \(\lambda\) 作用，在各简单分量上仍是同一个标量自同态，取反环不会改变中心标量。因此得到 \(k\) 代数同构。矩阵有 \(n_i^2\) 个任意 \(D_i\) 条目，列模有 \(n_i\) 个条目，直接得到两条维数公式。若 \(k\) 代数闭，刚证明的简单模有限维性允许应用\cref{b2:cor:schur-algebraically-closed}，使各自同态除环等于 \(k\)，反环仍为 \(k\)，从而得到平方和公式。
 \end{proof}
 
 例如，代数闭域上的一个四维半单代数只能同构于 \(k^4\) 或 \(M_2(k)\)：其维数是正整数平方之和，只有 \(4=1+1+1+1\) 与 \(4=2^2\) 两种可能。前者有四种一维简单模，后者只有一种二维简单模。两个代数的总维数相同，模结构却不同。
@@ -46,11 +46,18 @@ A\cong\prod_{i=1}^tM_{n_i}(D_i)
 设 \(k\) 为域、\(G\) 为有限群。群代数 \(k[G]\) 以各 \(g\in G\) 为 \(k\) 基，乘法按群乘法线性延拓。第五卷第1.3节将通过对群作用平均投影，证明 Maschke 定理\footnote{马施克（Heinrich Maschke，1853--1908），德国数学家，研究有限群的线性表示和微分几何。}：\(k[G]\) 半单，当且仅当 \(|G|\cdot1_k\ne0\)，也就是 \(|G|\cdot1_k\) 在 \(k\) 中可逆。
 
 \ProseParagraphBreak
+平均要修正的是普通线性投影与群作用不相容的问题。若 \(\rho:G\to\operatorname{GL}_k(V)\) 是表示，\(U\subseteq V\) 在群作用下稳定，先选一个线性投影 \(p:V\to U\)，并通过包含把它看作 \(V\) 的自同态。在 \(|G|\cdot1_k\ne0\) 时，平均得到
+\[
+P=\frac1{|G|}\sum_{g\in G}\rho(g)p\rho(g)^{-1}.
+\]
+群作用会排列这些共轭项，使平均后的算子与群作用相容。每个共轭项在 \(U\) 上都是恒等，所以未经归一化的和在 \(U\) 上是 \(|G|\) 倍的恒等；只有能除以 \(|G|\)，才恢复所需的投影。这解释了特征零或 \(\operatorname{char}k=p>0\) 且 \(p\mathrel{\vcenter{\hbox{\scalebox{1.25}{\(\nmid\)}}}}|G|\) 的条件。
+
+\ProseParagraphBreak
 最小例子可以在当前知识范围内直接算出。设 \(G=C_2=\langle g\mid g^2=1\rangle\)，且 \(\operatorname{char}k\ne2\)。令
 \[
 e_+=\frac{1+g}{2},\qquad e_-=\frac{1-g}{2}.
 \]
-由 \(g^2=1\) 得 \(e_+^2=e_+\)、\(e_-^2=e_-\)、\(e_+e_-=0\)、\(e_++e_-=1\)，因此
+由 \(g^2=1\) 得 \(e_+^2=e_+\)、\(e_-^2=e_-\)、\(e_+e_-=0\)、\(e_++e_-=1\)，并且 \(ge_+=e_+\)、\(ge_-=-e_-\)。因此 \(k[C_2]=ke_+\oplus ke_-\)，左乘 \(e_+\) 与 \(e_-\) 分别是正则作用中 \(g\) 的 \(1\) 与 \(-1\) 特征子空间上的投影。这就是\cref{b2:prop:coprime-operator-decomposition}中用互素多项式构造投影的情形：\(t-1\) 与 \(t+1\) 互素，\((1+t)/2\) 与 \((1-t)/2\) 分别选出两个分量。具体地，
 \[
 k[C_2]\longrightarrow k\times k,
 \quad a+bg\longmapsto(a+b,a-b)
@@ -62,33 +69,42 @@ k[C_2]\longrightarrow k\times k,
 \[
 k[C_2]\cong k[\varepsilon]/(\varepsilon^2).
 \]
-该环不半单。事实上，若左理想 \((\varepsilon)\) 有补模，便有模投影 \(p:R\to(\varepsilon)\) 且 \(p(\varepsilon)=\varepsilon\)。但 \(p(1)\in(\varepsilon)\)，左线性给出 \(p(\varepsilon)=\varepsilon p(1)=0\)，矛盾。相同的群在不同特征下给出了不同的模分裂行为。
+这里 \(\varepsilon\ne0\)，因为 \(1,g\) 仍是群代数的两个基向量。两个特征值 \(1,-1\) 在特征二时合并，留下非零的幂零元 \(\varepsilon\)。子模 \(k\varepsilon\) 与相应的商模都为一维，\(g\) 均作用为恒等，但这个子模没有直和补模；\cref{b2:prop:semisimple-cyclic-polynomial}将通过重复因子的一般判据证明这种不分裂，也给出该环不半单的结论。相同的群在不同特征下给出了不同的模分裂行为。
 
 \ProseParagraphBreak
-对 \(G=C_m\)，还有直接的代数描述 \(k[C_m]\cong k[t]/(t^m-1)\)：把 \(t\) 送到生成元 \(g\)，由于 \(g^m=1\)，映射经过该商；商中 \(1,t,\ldots,t^{m-1}\) 的陪集分别映到群代数的基 \(1,g,\ldots,g^{m-1}\)，所以是同构。若多项式 \(t^m-1\) 分成两两不同的不可约因子，这些因子两两互素，第一卷定理10.4.3的中国剩余定理把商代数写成相应域的有限乘积，故由\cref{b2:thm:artin-wedderburn}半单。这一循环群的计算展示了无重因子分解与半单性之间的联系；一般有限群则需要第五卷建立的作用与平均方法。
+对 \(G=C_m\)、\(m\ge1\)，\cref{b2:prop:semisimple-cyclic-polynomial}的证明将给出同构 \(k[C_m]\cong k[t]/(t^m-1)\)，其中 \(t\) 的陪集对应循环群生成元 \(g\)。因而一个 \(C_m\) 表示就是一个满足 \(T^m=\operatorname{id}\) 的算子，群代数的模也正是由这个关系限制的 \(k[t]\) 模。这把问题接回第四章的算子模与主分量：不同不可约因子将分量分开，重复因子则可能留下不能分裂的幂零层。循环群的半单性也将在该命题中判定；一般有限群仍由第五卷的平均方法处理。
 
 \subsection{Wedderburn 小定理}
 \label{b2:subsec:1304:03}
 
 \begin{theorem}[Wedderburn 小定理]\label{b2:thm:wedderburn-little}
-每个有限除环都是交换域。
+每个只有有限多个元素的除环都是交换域。
 \end{theorem}
 \begin{proof}
 设 \(D\) 为有限除环。中心 \(Z\) 是域：非零中心元 \(z\) 的逆仍与每个元素交换，因为由 \(zx=xz\) 左右乘以 \(z^{-1}\) 就得到 \(xz^{-1}=z^{-1}x\)。记 \(|Z|=q\ge2\)，把 \(D\) 视为有限维 \(Z\) 向量空间，令 \(n=\dim_ZD\)，则 \(|D|=q^n\)。若 \(n=1\)，每个元素都是中心中 \(1\) 的倍数，结论成立。下面假设 \(n>1\)，推出矛盾。
 
-乘法群 \(D^\times\) 的中心为 \(Z^\times\)，含 \(q-1\) 个元素。对非中心元 \(x\)，其环中心化子
+乘法群 \(D^\times\) 的中心为 \(Z^\times\)，含 \(q-1\) 个元素。为了计算非中心共轭类的大小，先考察代表元的中心化子。对 \(x\in D\setminus Z\)，其环中心化子
 \[
 C_D(x)=\{\,a\in D\mid ax=xa\,\}
 \]
-是包含 \(Z\) 的除子环：加、乘封闭，若 \(a\ne0\) 与 \(x\) 交换，则其逆也交换。设 \(m_x=\dim_Z C_D(x)\)，则 \(|C_D(x)|=q^{m_x}\)。取 \(D\) 在除环 \(C_D(x)\) 上的一组左基，再把各基系数按 \(Z\) 基展开，得到 \(n=m_x d_x\)，其中 \(d_x\) 为该左基的有限大小。故 \(m_x\mid n\)；又因 \(x\) 非中心，\(C_D(x)\ne D\)，所以 \(m_x<n\)。
+是包含 \(Z\) 的除子环：加、乘封闭，若 \(a\ne0\) 与 \(x\) 交换，则其逆也交换。设 \(m_x=\dim_Z C_D(x)\)，则 \(|C_D(x)|=q^{m_x}\)。虽然 \(C_D(x)\) 未必交换，\(D\) 仍是它的左向量空间，而 \(Z\) 位于 \(C_D(x)\) 的中心。若 \(c_1,\ldots,c_{m_x}\) 是 \(C_D(x)\) 的 \(Z\) 基，\(v_1,\ldots,v_{d_x}\) 是 \(D\) 的左 \(C_D(x)\) 基，则 \(c_i v_j\) 是 \(D\) 的 \(Z\) 基：先按 \(v_j\) 展开，再把左侧的系数按 \(c_i\) 展开，且两次展开都唯一。因此维数塔公式给出
+\[
+\dim_ZD=\dim_{C_D(x)}D\cdot\dim_ZC_D(x),
+\qquad n=d_xm_x.
+\]
+这里的乘法次序始终是左系数乘基向量，证明不需要 \(C_D(x)\) 交换。故 \(m_x\mid n\)；又因 \(x\) 非中心，\(C_D(x)\) 是 \(D\) 的真 \(Z\) 子空间，所以 \(m_x<n\)。
 
-在群中，\(C_{D^\times}(x)=C_D(x)^\times\)，阶为 \(q^{m_x}-1\)。第一卷命题4.2.2及式(4.1)的类方程应用于 \(D^\times\)，取各非中心共轭类代表 \(x_1,\ldots,x_s\)，给出
+群中心化子只取其中的可逆元：
+\[
+C_{D^\times}(x)=\{a\in D^\times\mid ax=xa\}=C_D(x)^\times,
+\]
+所以它的阶为 \(q^{m_x}-1\)。有限群的类方程把中心的单元素共轭类与其余共轭类分开，写成 \(|G|=|Z(G)|+\sum_j[G:C_G(x_j)]\)，其中 \(x_j\) 取遍非中心共轭类的代表。把第一卷命题4.2.2及式(4.1)的这一公式应用于 \(D^\times\)，取代表 \(x_1,\ldots,x_s\)，便得
 \begin{equation}\label{b2:eq:wedderburn-class-equation}
 q^n-1=(q-1)+\sum_{j=1}^s\frac{q^n-1}{q^{m_{x_j}}-1}.
 \end{equation}
-每个分数是该代表的共轭类大小；这里既写出了所用类方程，也确定了中心化子阶数。
+每个分数都是该代表的共轭类大小，而各分母的指数 \(m_{x_j}\) 都是 \(n\) 的真因子。
 
-现在使用第一卷定义21.1.1中的分圆多项式。该卷式(21.1)及其后的整数系数归纳证明给出
+要从这个整数等式中得到约束，可以寻找一个同时整除左端与所有非中心共轭类大小的整数。分母的指数都是 \(n\) 的真因子，使第一卷定义21.1.1中的分圆因子 \(\Phi_n\) 正好具有这一性质。该卷式(21.1)及其后的整数系数归纳证明给出
 \[
 t^n-1=\prod_{d\mid n}\Phi_d(t),\qquad \Phi_d(t)\in\mathbb Z[t].
 \]
@@ -96,27 +112,65 @@ t^n-1=\prod_{d\mid n}\Phi_d(t),\qquad \Phi_d(t)\in\mathbb Z[t].
 \[
 \frac{t^n-1}{t^m-1}=\prod_{\substack{d\mid n\\d\nmid m}}\Phi_d(t).
 \]
-右端包含 \(\Phi_n(t)\)，所以整数 \(\Phi_n(q)\) 整除 \(q^n-1\)，也整除式\eqref{b2:eq:wedderburn-class-equation}中的每个分数。于是它必须整除 \(q-1\)。
+因为 \(m<n\)，\(n\) 不整除 \(m\)，右端包含 \(\Phi_n(t)\)。代入 \(t=q\)，便知整数 \(\Phi_n(q)\) 整除 \(q^n-1\)，也整除式\eqref{b2:eq:wedderburn-class-equation}中的每个分数。从左端减去这些均被它整除的共轭类大小，剩下的正是 \(q-1\)，所以
+\[
+\Phi_n(q)\mid q-1.
+\]
 
-但 \(\Phi_n(q)>q-1\)。为验证这一不等式，在复数域中按其定义写
+但 \(\Phi_n(q)>q-1\)。此时 \(\Phi_n(q)\) 已是一个整数；把同一个多项式放到复数域中分解，只是为了估计这个整数的大小。按其定义写
 \[
 \Phi_n(q)=\prod_{\zeta\text{ 为本原 }n\text{ 次单位根}}(q-\zeta).
 \]
-因 \(n>1\)，每个这样的 \(\zeta\ne1\)，而
+因 \(n>1\)，每个这样的 \(\zeta\ne1\)。单位圆上除 \(1\) 外的点都比 \(1\) 离正实数 \(q>1\) 更远，具体地，
 \[
 |q-\zeta|^2=(q-1)^2+2q(1-\operatorname{Re}\zeta)>(q-1)^2.
 \]
-非实根成共轭对，每对贡献正数；若有实本原根，则只能是 \(n=2\) 时的 \(-1\)，因子也为正。因此 \(\Phi_n(q)>0\)，且它等于上述所有因子绝对值的乘积，严格大于 \((q-1)^{\varphi(n)}\ge q-1\)。这与正整数 \(\Phi_n(q)\) 整除 \(q-1\) 矛盾。故 \(n=1\)，\(D=Z\) 交换。
+非实根成共轭对，每对贡献 \((q-\zeta)(q-\overline\zeta)=|q-\zeta|^2>0\)；若有实本原根，则只能是 \(n=2\) 时的 \(-1\)，因子 \(q+1\) 也为正。因此 \(\Phi_n(q)>0\)，且它等于上述所有因子绝对值的乘积，严格大于 \((q-1)^{\varphi(n)}\ge q-1\)。这里 \(\varphi(n)\ge1\)，而 \(q-1\ge1\)；即使 \(q=2\)，每个因子绝对值也严格大于 \(1\)，严格不等式仍成立。这与正整数 \(\Phi_n(q)\) 整除 \(q-1\) 矛盾。故 \(n=1\)，\(D=Z\) 交换。
 \end{proof}
 
-上述结论称为\term[Wedderburn-xiaodingli]{Wedderburn 小定理}[Wedderburn's little theorem]。分圆多项式的整数性及因式分解给出关键的整除关系；有限性一方面使环中心化子具有整数维数，另一方面使乘法群的类方程成为有限整数等式，两处都不可省略。
+上述结论称为\term[Wedderburn-xiaodingli]{Wedderburn 小定理}[Wedderburn's little theorem]。分圆多项式的整数性及因式分解给出关键的整除关系；有限性使中心和各中心化子的元素个数分别写成 \(q\) 的整数次幂，也使乘法群的类方程成为有限整数等式。本定理要求除环只有有限多个元素；例如四元数除代数 \(\mathbb H\) 虽在 \(\mathbb R\) 上四维，却有无限多个元素，并不交换。
 
 \begin{corollary}\label{b2:cor:finite-semisimple-rings}
-有限半单含幺环 \(R\) 恰为有限域上的全矩阵环的有限乘积：
+设 \(R\) 为含幺环。\(R\) 有限且半单，当且仅当存在非负整数 \(t\)、正整数 \(n_1,\ldots,n_t\) 及素数幂 \(q_1,\ldots,q_t\)，使
 \[
-R\cong\prod_i M_{n_i}(\mathbb F_{q_i}).
+R\cong\prod_{i=1}^t M_{n_i}(\mathbb F_{q_i}).
 \]
+\(t=0\) 时把空乘积解释为零环。
 \end{corollary}
 \begin{proof}
 由\cref{b2:thm:artin-wedderburn}分解后，每个矩阵因子仍有限，其系数除环作为单个矩阵条目的取值集也有限。\cref{b2:thm:wedderburn-little}使每个除环都是有限域。反过来，有限个有限域上的有限阶矩阵环显然只有有限多个元素，且由结构定理半单。
+\end{proof}
+
+回到循环群代数，交换性使半单分解中的矩阵因子只能是一阶的域。对多项式商环，这种分解可以直接从不可约因子读出；若因子重复，问题则是相应的子模能否真正分裂，而不只是有几个简单的合成因子。
+
+\begin{proposition}\label{b2:prop:semisimple-cyclic-polynomial}
+设 \(k\) 为域，\(f\in k[t]\) 为非零非常数多项式。以下条件等价：\(k[t]/(f)\) 作为幺左 \(k[t]\) 模半单；它作为含幺环半单；\(f\) 的每个不可约因子在 \(k[t]\) 中只出现一次。
+
+若 \(m\ge1\) 为整数、\(C_m\) 为 \(m\) 阶循环群，则群代数 \(k[C_m]\) 半单，当且仅当 \(\operatorname{char}k=0\)，或 \(\operatorname{char}k=p>0\) 且 \(p\) 不整除 \(m\)。
+\end{proposition}
+\begin{proof}
+令 \(A=k[t]/(f)\)。因为 \(k[t]\to A\) 满射，\(A\) 的左 \(k[t]\) 子模与左 \(A\) 子模相同，简单性和直和分解也相同。因此 \(A\) 作为 \(k[t]\) 模半单，等价于左正则模 \({}_AA\) 半单，也就是环 \(A\) 半单。
+
+若 \(f=c\,p_1\cdots p_r\)，其中 \(c\in k^\times\)，\(p_i\) 是两两不同的首一不可约多项式，则这些因子两两互素。第一卷定理10.4.3的中国剩余定理给出
+\[
+A\cong\prod_{i=1}^r k[t]/(p_i).
+\]
+每个因子都是域，也是简单 \(k[t]\) 模；有限乘积作为模就是有限直和，故 \(A\) 半单。
+
+若某个不可约多项式 \(p\) 满足 \(p^2\mid f\)，则 \(A\) 有商模 \(Q=k[t]/(p^2)\)。设 \(A\) 半单，\cref{b2:prop:semisimple-subquotients}便使 \(Q\) 半单，故非零子模 \(pQ\) 应有直和补模，相应地存在 \(k[t]\) 线性投影 \(u:Q\to pQ\)，在 \(pQ\) 上为恒等。记 \(1,p\) 在 \(Q\) 中的陪集为 \(\overline1,\overline p\)。因 \(p^2Q=0\)，\(p\) 消去 \(pQ\)，而 \(u(\overline1)\in pQ\)，于是
+\[
+u(\overline p)=u(p\overline1)=p\,u(\overline1)=0.
+\]
+但 \(\overline p\ne0\)，且 \(\overline p\in pQ\)，所以投影又要求 \(u(\overline p)=\overline p\)，矛盾。故 \(A\) 不半单。
+
+取 \(C_m=\langle g\rangle\)，映射 \(t\mapsto g\) 给出代数同构 \(k[t]/(t^m-1)\cong k[C_m]\)，因为它把前者的基 \(\overline1,\overline t,\ldots,\overline{t^{m-1}}\) 映到后者的基 \(1,g,\ldots,g^{m-1}\)。若 \(\operatorname{char}k=0\)，或特征 \(p\) 不整除 \(m\)，则 \(m\cdot1_k\ne0\)，而
+\[
+(t^m-1)'=mt^{m-1},
+\qquad \gcd(t^m-1,mt^{m-1})=1.
+\]
+任何重复的不可约因子都会同时整除多项式及其导数，因此 \(t^m-1\) 没有重复不可约因子，群代数半单。若 \(\operatorname{char}k=p>0\) 且 \(p\mid m\)，则
+\[
+t^m-1=(t^{m/p}-1)^p.
+\]
+括号内仍为非常数多项式，至少有一个不可约因子，而它在右端的重数至少为 \(p\ge2\)，所以群代数不半单。
 \end{proof}

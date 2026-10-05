@@ -1,9 +1,9 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### C.4 向量丛、自同态代数与 Morita 等价
-% 纲要位置：工作记录/计划纲要.md，第 1828 行。
+% 纲要位置：工作记录/计划纲要.md，第 1850 行。
 
 % 纲要要点（供目录核对）：
-% * 有限投射模的局部坐标、自同态代数的粘合与 Morita 等价
+% * 给定有限投射模的局部坐标、秩变化与共轭换基；非主秩一模、线丛张量不变性及明确侧别的 Morita 函子，中心与幂零厚度所保留的信息
 % #### C.4.1 向量丛与自同态代数
 % #### C.4.2 模范畴与几何信息
 % ---
@@ -16,37 +16,55 @@
 \subsection{向量丛与自同态代数}
 \label{b2:subsec:C04:01}
 
-设 \(R\) 为非零交换含幺环、\(P\) 为有限生成投射 \(R\) 模。对 \(f\in R\)，主开集 \(D(f)=\{\mathfrak p\in\operatorname{Spec}R\mid f\notin\mathfrak p\}\) 上的模由 \(P_f=R[1/f]\otimes_RP\) 描述。\cref{b2:prop:projective-basic-open-basis}给出有限主开覆盖 \(D(f_i)\)，使每个 \(P_{f_i}\) 都自由。若局部秩均为 \(n\)，在这组覆盖中分别选基；交叠区域上的坐标由换基矩阵
+设 \(R\) 为非零交换含幺环、\(P\) 为有限生成投射 \(R\) 模。对 \(f\in R\)，主开集 \(D(f)=\{\mathfrak p\in\operatorname{Spec}R\mid f\notin\mathfrak p\}\) 上的模由 \(P_f=R[1/f]\otimes_RP\) 描述。\cref{b2:prop:projective-basic-open-basis}给出有限主开覆盖 \(D(f_i)\)，使每个 \(P_{f_i}\) 都自由。一个点 \(\mathfrak p\) 处的秩是纤维 \(\kappa(\mathfrak p)\otimes_RP\) 的维数；它在每个选有自由基的主开集上为常数，所以局部常值，但不必在全谱上取同一个值。以下先讨论秩处处为 \(n\) 的情形，在各 \(P_{f_i}\) 中分别选基。约定交叠上的坐标满足 \([p]_i=g_{ij}[p]_j\)，则换基矩阵为
 \[
 g_{ij}\in\operatorname{GL}_n(R_{f_if_j})
 \]
-变换，并在三重交叠上满足 \(g_{ij}g_{jk}=g_{ik}\)。这里约定 \([p]_i=g_{ij}[p]_j\)，两边均取到 \(R_{f_if_j}\) 上。这些主开集上的自由模及其相容换基矩阵，给出\term[xiangliang-cong]{向量丛}[vector bundle]的局部描述；本节只使用从已经给定的 \(P\) 导出的这一模型。不同连通部分可以有不同的局部秩。
+并满足
+\[
+g_{ii}=I_n,\qquad g_{ji}=g_{ij}^{-1},\qquad
+g_{ij}g_{jk}=g_{ik}.
+\]
+前两式在相应的主开集和两两交叠上读取；最后一式的矩阵都限制到 \(R_{f_if_jf_k}\)，表示连续两次换坐标等于直接换坐标。这些主开集上的自由模及其相容换基矩阵，给出\term[xiangliang-cong]{向量丛}[vector bundle]的局部描述。本节只从已经给定的 \(P\) 提取这些数据，不建立从任意粘合数据反向构造模的一般对应。
 
 \ProseParagraphBreak
-对 \(E=\operatorname{End}_R(P)\)，同一组局部基给出 \(E_{f_i}\cong M_n(R_{f_i})\)。若 \(T\in E\) 的局部矩阵为 \(T_i\)，由坐标变换公式可得
+对 \(E=\operatorname{End}_R(P)\)，\cref{b2:lem:azumaya-projective-base-change}和同一组局部基给出 \(E_{f_i}\cong\operatorname{End}_{R_{f_i}}(P_{f_i})\cong M_n(R_{f_i})\)。若 \(T\in E\) 的局部矩阵为 \(T_i\)，对交叠上的任意 \(p\in P_{f_if_j}\)，一方面有 \([Tp]_i=T_i[p]_i=T_ig_{ij}[p]_j\)，另一方面有 \([Tp]_i=g_{ij}[Tp]_j=g_{ij}T_j[p]_j\)。局部坐标列取遍全部列向量，故 \(T_ig_{ij}=g_{ij}T_j\)，即
 \begin{equation}\label{b2:eq:endomorphism-bundle-transition}
 T_i=g_{ij}T_jg_{ij}^{-1}.
 \end{equation}
 所以自同态代数使用共轭来粘合矩阵代数。这些公式保留加法、乘法与单位矩阵；因此局部矩阵的描述与全局代数结构相容。若 \(P\) 忠实，它给出\cref{b2:cor:azumaya-endomorphism}中的分裂 Azumaya 代数。
 
 \ProseParagraphBreak
-局部秩为一时，\(g_{ij}\) 是标量单位，局部自同态 \(T_j\) 也是标量，交换性使 \(g_{ij}T_jg_{ij}^{-1}=T_j\)。因此模本身的换基可能仍然非平凡，自同态代数的共轭换基却已经消失。是否存在全局模基，与自同态代数是否为矩阵环，是两个不同的问题。
+局部秩为一时，\(g_{ij}\) 是标量单位，局部自同态 \(T_j\) 也是标量，交换性使 \(g_{ij}T_jg_{ij}^{-1}=T_j\)。因此模本身的换基可能仍然非平凡，自同态代数的共轭换基却已经消失。节末的\cref{b2:prop:C-line-twist-invariance}将证明，每个处处秩一的有限投射模 \(L\) 都有 \(\operatorname{End}_R(L)\cong R\)，而与 \(L\) 作张量积也不改变有限投射模的自同态代数。所以自同态代数不能单独恢复原来的模或判断它是否有全局基。
 
 \ProseParagraphBreak
-\cref{b2:ex:krull-schmidt-nonunique}中的 \(R=\mathbb Z[s]\)、\(s^2=-5\)、\(I=(2,1+s)\) 给出同一局部秩下的例子。该处已证 \(I\) 非主且 \(I^2=2R\)。对 \(t\in I\)，映射 \(t\mapsto2t\) 及 \(t\mapsto(s-1)t/2\) 都取值于 \(R\)，后者使用 \(s-1\in I\) 和 \(I^2=2R\)。并有
+\cref{b2:ex:krull-schmidt-nonunique}中的 \(R=\mathbb Z[s]\)、\(s^2=-5\)、\(I=(2,1+s)\) 将展示一个处处秩一而没有全局基的投射模，它的自同态代数却仍为 \(R\)。该处已证 \(I\) 非主且 \(I^2=2R\)。取
 \[
-t=2(2t)+(1+s)\frac{(s-1)t}{2}.
+p_1=2,\quad p_2=1+s,\qquad
+\lambda_1(t)=2t,\quad\lambda_2(t)=\frac{(s-1)t}{2}
+\quad(t\in I).
 \]
-由\cref{b2:prop:finite-dual-basis}，\(I\) 是有限生成投射模。在 \(D(2)\) 上，\(I_2=R_2\)；在 \(D(3)\) 上，由 \(2=(1+s)(1-s)/3\)，有 \(I_3=(1+s)R_3\)。这两个主开集覆盖 \(\operatorname{Spec}R\)，所以局部秩处处为一；若有全局基，\(I\) 就应由一个元素生成，与非主性矛盾。
+这里 \(p_1,p_2\in I\)，两映射都是 \(R\) 线性的；\(\lambda_2\) 取值于 \(R\)，是因为 \(s-1=(s+1)-2\in I\) 和 \(I^2=2R\)。由 \((s+1)(s-1)=-6\)，有
+\[
+t=p_1\lambda_1(t)+p_2\lambda_2(t)
+=2(2t)+(1+s)\frac{(s-1)t}{2}.
+\]
+由\cref{b2:prop:finite-dual-basis}，\(I\) 是有限生成投射模。在 \(D(2)\) 上，\(I_2=R_2\)；在 \(D(3)\) 上，由 \(2=(1+s)(1-s)/3\)，有 \(I_3=(1+s)R_3\)。因 \(R\) 是整环，乘以非零元素 \(1+s\) 给出 \(R_3\cong I_3\)，所以这两处均为秩一自由模。又 \(3-2=1\) 说明 \((2,3)=R\)，没有素理想能同时包含二和三，故这两个主开集覆盖全谱。若有全局基，局部化后它也为秩一的基，因而原基只能有一个元素，这将使 \(I\) 为主理想，矛盾。
 
 \ProseParagraphBreak
-尽管 \(I\) 不自由，却有自然的代数同构 \(\operatorname{End}_R(I)\cong R\)。确实，取 \(0\ne t_0\in I\)，任一自同态 \(T\) 满足 \(t_0T(t)=tT(t_0)\)，所以它在分式域中是乘以某个 \(c\) 的映射。由 \(cI\subseteq I\)，有 \(cI^2\subseteq I^2=2R\)，消去 \(2\) 得 \(cR\subseteq R\)，故 \(c\in R\)。反之每个 \(c\in R\) 都给出这样的自同态，乘法和复合相容。这具体展示了秩一换基的共轭作用为何消失。
+尽管 \(I\) 不自由，却有自然的代数同构 \(\operatorname{End}_R(I)\cong R\)。确实，取 \(0\ne t_0\in I\)，对任一自同态 \(T\) 和 \(t\in I\)，交换性与 \(R\) 线性给出
+\[
+t_0T(t)=T(t_0t)=T(tt_0)=tT(t_0).
+\]
+因此在分式域中令 \(c=T(t_0)/t_0\)，就有 \(T(t)=ct\)。由 \(cI\subseteq I\)，得到 \(cI^2\subseteq I^2=2R\)，即 \(2cR\subseteq2R\)。在分式域中消去非零的二，得到 \(cR\subseteq R\)，故 \(c\in R\)。反之每个 \(c\in R\) 都给出这样的自同态，标量乘法与映射复合相容。这具体展示了非自由的秩一模仍可以有与自由秩一模相同的自同态代数。
 
 \ProseParagraphBreak
-例如 \(R=k\times k\)，取 \(P=k\times k^2\)，由两个坐标分别作标量作用。这个模是 \(R^2\) 的直和因子且忠实，两个点上的秩分别为一、二，故不可能是某个固定秩的自由 \(R\) 模。其自同态代数为 \(k\times M_2(k)\)，是分裂 Azumaya \(R\) 代数，却不同构于任何 \(M_n(R)\)：在两个坐标上比较维数将同时要求 \(n^2=1\) 与 \(n^2=4\)。这正是环上的“分裂”比“一个固定大小的矩阵环”更自然的原因。
+再取域 \(k\) 及 \(R=k\times k\)，令 \(P=k\times k^2\)，由两个坐标分别作标量作用。这个模是 \(R^2\) 的直和因子且忠实，两个点上的秩分别为一、二，故不可能是某个固定秩的自由 \(R\) 模。其自同态代数为 \(k\times M_2(k)\)，是分裂 Azumaya \(R\) 代数，却不与任何 \(M_n(R)\) 同构为 \(R\) 代数：同构必须保持基环的两个中心幂等元，在对应坐标上比较 \(k\) 维数，将同时要求 \(n^2=1\) 与 \(n^2=4\)。因此环上的分裂 Azumaya 代数必须容许局部秩变化的 \(\operatorname{End}_R(P)\)，不能只用固定大小的矩阵环表示。
 
 \subsection{模范畴与几何信息}
 \label{b2:subsec:C04:02}
+
+忠实有限生成投射模由\cref{b2:lem:azumaya-projective-base-change}还是生成元。因此它的自同态代数与基环之间的范畴等价来自\cref{b2:thm:morita-equivalence}；下面把双模侧别写出，以便直接使用这一等价。该定理对左模使用自同态反环，所以此处将它应用于对偶模 \(P^*\)，以得到目标环 \(E\)。
 
 \begin{proposition}\label{b2:prop:split-azumaya-morita}
 设 \(R\) 为非零交换含幺环、\(P\) 为忠实有限生成投射 \(R\) 模，令 \(E=\operatorname{End}_R(P)\)、\(P^*=\operatorname{Hom}_R(P,R)\)。赋予 \(P\) 双模结构 \({}_EP_R\)，赋予 \(P^*\) 双模结构 \({}_RP^*_E\)，其中
@@ -70,7 +88,7 @@ G:E\text{-}\mathbf{Mod}&\longrightarrow R\text{-}\mathbf{Mod},
 \[
 \operatorname{End}_R(P^*)\cong E^{\mathrm{op}}.
 \]
-对偶模有限投射，而且在每个局部环上的秩与 \(P\) 相同，均为正。若 \(rP^*=0\)，在每个极大理想处用正秩自由模得 \(r/1=0\)，再由局部消失判据应用于 \(Rr\) 得 \(r=0\)。故 \(P^*\) 忠实，由\cref{b2:lem:azumaya-projective-base-change}还是生成元。
+对偶模仍有限投射。若 \(rP^*=0\)，则对任意 \(p\in P\)、\(\lambda\in P^*\) 都有 \(\lambda(rp)=r\lambda(p)=0\)。双对偶同构说明 \(rp=0\) 对每个 \(p\) 成立；由 \(P\) 忠实，得到 \(r=0\)。故 \(P^*\) 也忠实，由\cref{b2:lem:azumaya-projective-base-change}还是生成元。
 
 将\cref{b2:thm:morita-equivalence}用于左 \(R\) 模 \(P^*\)。该定理的自同态反环现在为 \(E\)，给出等价函子 \(\operatorname{Hom}_R(P^*,-)\) 及拟逆 \(P^*\otimes_E-\)。由\cref{b2:prop:finite-projective-hom-tensor}和双对偶同构，前一个函子自然同构于 \(P\otimes_R-\)，其中左 \(E\) 作用恰为求值作用。
 
@@ -82,10 +100,54 @@ G:E\text{-}\mathbf{Mod}&\longrightarrow R\text{-}\mathbf{Mod},
 对任意左 \(E\) 模 \(M\)，已有自然同构 \(M\cong P\otimes_R(P^*\otimes_EM)\)。在上式取 \(N=P^*\otimes_EM\)，得到 \(\operatorname{Hom}_E(P,M)\cong P^*\otimes_EM\)，因此这个 Hom 函子也给出拟逆。
 \end{proof}
 
-以 \(R=k[t]\)、\(P=R^n\)、\(n\ge1\) 为例，取 \(a\in k\)、\(r\ge1\)。矩阵环的模范畴仍记录多项式变量 \(t\) 的作用。模 \(R/(t-a)\) 经上述等价成为 \(k^n\)，其中 \(t\) 作标量 \(a\)；模 \(R/(t-a)^r\) 则成为 \(\bigl(R/(t-a)^r\bigr)^n\)，保留 \((t-a)\) 的幂零层数。矩阵大小改变了底向量空间维数，却没有丢掉这些局部信息。
+逆函子既可写为与双模 \({}_RP^*_E\) 的张量积，也可写为 \(\operatorname{Hom}_E(P,-)\)：前者用双模作用恢复原模，后者用 \(P\) 到该模的同态恢复同一对象。
 
 \ProseParagraphBreak
-这与\cref{b2:prop:morita-center}相呼应：模范畴恒等函子的自然自变换环是原环的中心，因而 Morita 等价保持中心。对 Azumaya \(R\) 代数，中心由\cref{b2:prop:azumaya-center}确定为 \(R\)，所以模范畴仍保留这个交换基环。另一方面，中心相同不保证 Morita 等价；\(\mathbb R\) 与 \(\mathbb H\) 的中心相同，它们的唯一简单模的自同态除环分别为 \(\mathbb R\) 与 \(\mathbb H^{\mathrm{op}}\)，不可能由范畴等价相互对应。非零 Brauer 类正体现了这种中心之外的代数差别。
+以域 \(k\) 上的 \(R=k[t]\)、\(P=R^n\)、\(n\ge1\) 为例，取 \(a\in k\)、\(r\ge1\)。矩阵环的模范畴仍记录多项式变量 \(t\) 的作用。模 \(R/(t-a)\) 经上述等价成为 \(k^n\)，其中 \(t\) 作标量 \(a\)；模 \(R/(t-a)^r\) 则成为 \(\bigl(R/(t-a)^r\bigr)^n\)。在原模与其像上，\((t-a)^r\) 的作用都为零，而 \((t-a)^{r-1}\) 的作用都非零，故幂零指数恰为 \(r\)。当 \(r>1\) 时，这个参数记录的正是点 \(t=a\) 附近保留的幂零厚度。矩阵大小将底层 \(k\) 维数从 \(r\) 改成 \(nr\)，却没有丢掉这种局部信息。
 
 \ProseParagraphBreak
+这与\cref{b2:prop:morita-center}相呼应：模范畴恒等函子的自然自变换环是原环的中心，因而 Morita 等价保持中心。对 Azumaya \(R\) 代数，中心由\cref{b2:prop:azumaya-center}确定为 \(R\)，所以模范畴仍保留这个交换基环。另一方面，中心相同不保证 Morita 等价。全忠实的范畴等价保持每个对象的自同态环，也保持简单对象；因此简单模的自同态除环给出另一个检验等价的条件。\(\mathbb R\) 与 \(\mathbb H\) 的中心相同，它们的唯一简单模的自同态除环却分别为 \(\mathbb R\) 与 \(\mathbb H^{\mathrm{op}}\)，前者交换而后者不交换，故不可能由范畴等价相互对应。非零 Brauer 类正体现了这种中心之外的代数差别。
+
+\ProseParagraphBreak
+前面的秩一例子还可以推广到任意有限投射模：给它张量一个处处秩一的模，局部换基会多出标量因子，但自同态的共轭换基不受这些因子的影响。
+
+\begin{proposition}\label{b2:prop:C-line-twist-invariance}
+设 \(R\) 为非零交换含幺环，\(L\) 为有限生成投射 \(R\) 模，且对每个 \(\mathfrak p\in\operatorname{Spec}R\) 有 \(L_{\mathfrak p}\cong R_{\mathfrak p}\)。则标量映射
+\[
+\eta_L:R\longrightarrow\operatorname{End}_R(L),
+\qquad r\longmapsto(\ell\mapsto r\ell)
+\]
+是自然的 \(R\) 代数同构。对任意有限生成投射 \(R\) 模 \(P\)，包括 \(P=0\)，映射
+\[
+\Theta_{P,L}:\operatorname{End}_R(P)
+\longrightarrow\operatorname{End}_R(P\otimes_RL),
+\qquad T\longmapsto T\otimes\operatorname{id}_L
+\]
+也是自然的 \(R\) 代数同构。
+\end{proposition}
+\begin{proof}
+标量映射保持加法、乘法与单位。由\cref{b2:lem:azumaya-projective-base-change}，\(\operatorname{End}_R(L)\) 是有限生成投射模，且其剩余域纤维为相应纤维空间的自同态代数。对每个极大理想 \(\mathfrak m\)，\(L(\mathfrak m)=\kappa(\mathfrak m)\otimes_RL\) 是一维空间，所以 \(\eta_L\) 的纤维映射
+\[
+\kappa(\mathfrak m)\longrightarrow
+\operatorname{End}_{\kappa(\mathfrak m)}\bigl(L(\mathfrak m)\bigr)
+\]
+为同构。\cref{b2:lem:azumaya-local-toolkit}的同构判据于是说明 \(\eta_L\) 在 \(R\) 上已是同构。
+
+式\eqref{b2:eq:azumaya-end-tensor}给出代数同构
+\[
+\operatorname{End}_R(P)\otimes_R\operatorname{End}_R(L)
+\longrightarrow\operatorname{End}_R(P\otimes_RL),
+\qquad T\otimes U\longmapsto T\otimes U.
+\]
+将它与 \(\operatorname{End}_R(P)\cong\operatorname{End}_R(P)\otimes_RR\) 及 \(\operatorname{id}\otimes\eta_L\) 复合，得到的正是 \(\Theta_{P,L}\)，因而为同构。这里只使用 \(P\) 的有限生成投射性，不要求它忠实；若 \(P=0\)，两端都是零环，同一公式仍成立。
+
+两个映射均不依赖局部基的选择。对 \(P\) 的同构 \(u:P\to P'\)，有
+\[
+\Theta_{P',L}(uTu^{-1})
+=(u\otimes\operatorname{id}_L)\Theta_{P,L}(T)
+(u^{-1}\otimes\operatorname{id}_L).
+\]
+对 \(L\) 的同构也有相同的张量相容性，且标量映射与该同构交换。这验证了所述自然性。
+\end{proof}
+
 本节使用的几何语言都有具体的模论内容：主开集对应局部化，局部基对应向量丛的坐标，矩阵共轭对应自同态代数的粘合，模范畴等价对应 Morita 理论。一般非交换代数的几何还会研究分次模、商范畴及导出范畴等对象。进一步学习这些方向时，需要另行建立相应的几何或同调基础；不能仅凭一个非交换环的中心，就断言它具有某个完整的交换几何模型。

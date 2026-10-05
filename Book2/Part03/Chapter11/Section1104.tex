@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 11.4 中心化子
-% 纲要位置：计划纲要.md，第 1144 行。
+% 纲要位置：计划纲要.md，第 1426 行。
 
 \section{中心化子}
 \label{b2:sec:1104}
@@ -9,9 +9,9 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 交换作用与中心化子
-% * 双中心化子的基本例子
-% * Schur–Weyl 对偶的环论动机
+% * 模自同态与中心化子，双中心化子的包含与幂等性
+% * 正则左右作用及有限维张量因子的中心化子
+% * 三角反例与 Schur–Weyl 对偶的动机及证明归属
 %
 % ---
 %
@@ -19,7 +19,7 @@
 \subsection{交换作用与中心化子}
 \label{b2:subsec:1104:01}
 
-设 \(V\) 为 \(k\) 向量空间，\(\mathcal A\subseteq\operatorname{End}_k(V)\) 为含恒等算子的子代数。沿用\subsecref{b2:subsec:0804:03}的中心化子定义，记
+设 \(k\) 为域、\(V\) 为 \(k\) 向量空间，\(\mathcal A\subseteq\operatorname{End}_k(V)\) 为含恒等算子的子代数。沿用\subsecref{b2:subsec:0804:03}的中心化子定义，记
 \[
 \mathcal A'=\bigl\{\,T\in\operatorname{End}_k(V):Ta=aT\text{ 对所有 }a\in\mathcal A\,\bigr\}.
 \]
@@ -27,33 +27,55 @@
 \symidx{\(\mathcal A'\)、\(\mathcal A''\)：给定作用的中心化子及双中心化子}
 
 \begin{proposition}\label{b2:prop:commutant-endomorphism}
-设 \(k\) 为域、\(A\) 为含幺 \(k\) 代数、\(V\) 为 \(k\) 向量空间，\(\rho:A\to\operatorname{End}_k(V)\) 为含幺表示。对 \(\mathcal C\subseteq\operatorname{End}_k(V)\)，用 \(\mathcal C'\) 表示其中与 \(\mathcal C\) 全部元素交换的算子所成的中心化子，则
+设 \(k\) 为域、\(A\) 为结合含幺 \(k\) 代数、\(V\) 为 \(k\) 向量空间，\(\rho:A\to\operatorname{End}_k(V)\) 为含幺表示。对 \(\mathcal C\subseteq\operatorname{End}_k(V)\)，用 \(\mathcal C'\) 表示 \(\operatorname{End}_k(V)\) 中与 \(\mathcal C\) 全部元素交换的算子所成的中心化子，则
 \[
 \rho(A)'=\operatorname{End}_A(V),\qquad \rho(A)\subseteq\rho(A)''.
 \]
-若 \(\mathcal A\subseteq\mathcal B\subseteq\operatorname{End}_k(V)\)，则 \(\mathcal B'\subseteq\mathcal A'\)，且 \(\mathcal A'''=\mathcal A'\)。
+若 \(\mathcal A\subseteq\mathcal B\subseteq\operatorname{End}_k(V)\)，则
+\[
+\mathcal B'\subseteq\mathcal A',\qquad
+\mathcal A''\subseteq\mathcal B''.
+\]
+对任意算子族 \(\mathcal C\subseteq\operatorname{End}_k(V)\)，还有
+\[
+\mathcal C\subseteq\mathcal C'',\qquad
+\mathcal C'''=\mathcal C',\qquad
+\mathcal C''''=\mathcal C''.
+\]
 \end{proposition}
 \begin{proof}
-\(T\rho(a)=\rho(a)T\) 在向量 \(v\) 上就是 \(T(av)=a\cdot T(v)\)，故第一个等式成立。任何原作用算子与它的全部中心化算子交换，给出第二个包含。与较多算子交换是较强条件，故中心化反转包含。由 \(\mathcal A\subseteq\mathcal A''\) 得 \(\mathcal A'''\subseteq\mathcal A'\)；再把同一包含性质用于 \(\mathcal A'\)，得到反向包含。
+\cref{b2:prop:algebra-modules-representations}中模同态的相容公式在定义域、陪域均为 \(V\) 时，就是 \(T\rho(a)=\rho(a)T\)。在向量 \(v\) 上，这个等式写成 \(T(av)=a\cdot T(v)\)，故第一个等式成立。任意 \(c\in\mathcal C\) 都与 \(\mathcal C'\) 的全部元素交换，所以 \(\mathcal C\subseteq\mathcal C''\)，这也给出 \(\rho(A)\subseteq\rho(A)''\)。
+
+若一个算子与 \(\mathcal B\) 的全部元素交换，它当然与子集 \(\mathcal A\) 的全部元素交换，故 \(\mathcal B'\subseteq\mathcal A'\)。再取一次中心化子并反转包含，得到 \(\mathcal A''\subseteq\mathcal B''\)。由 \(\mathcal C\subseteq\mathcal C''\) 得 \(\mathcal C'''\subseteq\mathcal C'\)；把扩大性质用于 \(\mathcal C'\)，又得 \(\mathcal C'\subseteq\mathcal C'''\)。于是 \(\mathcal C'''=\mathcal C'\)，两侧再取中心化子即得 \(\mathcal C''''=\mathcal C''\)。
 \end{proof}
 
+与更多算子交换会施加更多限制，所以中心化子反转包含；连续取两次后又保持包含。上述等式还说明，双中心化子扩大原算子族，并且再取双中心化子不会继续增大。这是它作为一种闭包运算的意义。
+
+\ProseParagraphBreak
 若两个代数在同一空间上的作用彼此交换，其中一个便落在另一个的中心化子中。只有证明反向包含，才能称它们互为中心化子。维数有限时可以把交换条件写成线性方程组；这通常比直接猜测所有相容映射更可靠。
 
 \subsection{双中心化子的基本例子}
 \label{b2:subsec:1104:02}
 
 \begin{theorem}[正则作用的双中心化子]\label{b2:thm:regular-double-centralizer}
-设 \(k\) 为域、\(A\) 为结合含幺 \(k\) 代数。在 \(\operatorname{End}_k(A)\) 中，左乘代数 \(L(A)=\{L_a:x\mapsto ax\mid a\in A\}\) 与右乘代数 \(R(A)=\{R_a:x\mapsto xa\mid a\in A\}\) 互为中心化子。因此 \(L(A)''=L(A)\)，不要求 \(A\) 有限维。
+设 \(k\) 为域、\(A\) 为结合含幺 \(k\) 代数。在 \(\operatorname{End}_k(A)\) 中，令
+\[
+L(A)=\{L_a:x\mapsto ax\mid a\in A\},\qquad
+R(A)=\{R_a:x\mapsto xa\mid a\in A\}.
+\]
+映射 \(a\mapsto L_a\) 与 \(a^{\mathrm{op}}\mapsto R_a\) 分别给出 \(k\) 代数同构 \(A\cong L(A)\) 与 \(A^{\mathrm{op}}\cong R(A)\)。两个作用代数互为中心化子，因此 \(L(A)''=L(A)\)，不要求 \(A\) 有限维。
 \end{theorem}
 \begin{proof}
-\(T\) 与全部左乘交换，当且仅当它左 \(A\) 线性。\cref{b2:prop:regular-bimodule-endomorphism}说明这样的 \(T\) 恰为右乘，故 \(L(A)'=R(A)\)。若 \(T\) 与全部右乘交换，则对任意 \(a\)，
+复合满足 \(L_aL_b=L_{ab}\)、\(R_aR_b=R_{ba}\)，所以右乘的复合顺序对应反代数乘法。两种映射都线性、保单位元，并且算子在 \(1\) 处的值恢复 \(a\)，故它们单射；由像的定义，它们满射到相应作用代数。
+
+\(T\) 与全部左乘交换，当且仅当它左 \(A\) 线性。正则左模由 \(1\) 生成；\cref{b2:prop:regular-bimodule-endomorphism}给出这样的 \(T\) 由 \(b=T(1)\) 唯一确定，且 \(T(x)=xb\)，故 \(L(A)'=R(A)\)。若 \(T\) 与全部右乘交换，则对任意 \(a\)，
 \[
 T(a)=T\bigl(R_a(1)\bigr)=R_a\bigl(T(1)\bigr)=T(1)a.
 \]
-所以 \(T\) 是左乘 \(T(1)\)，反向左乘与右乘显然交换，得到 \(R(A)'=L(A)\)。
+整个算子仍由 \(T(1)\) 决定，这次它是左乘 \(T(1)\)。反向左乘与右乘由结合律交换，得到 \(R(A)'=L(A)\)。
 \end{proof}
 
-另一个重要例子来自两个向量空间的张量。令 \(U,W\) 为非零有限维空间。代数 \(\operatorname{End}_k(U)\) 作用于第一因子，\(\operatorname{End}_k(W)\) 作用于第二因子，两种作用交换。
+另一个重要例子来自两个向量空间的张量。令 \(U,W\) 为非零有限维空间。代数 \(\operatorname{End}_k(U)\) 作用于第一因子，\(\operatorname{End}_k(W)\) 作用于第二因子，两种作用交换。选定 \(U\) 的一组 \(m\) 元基后，\(U\otimes_kW\) 是 \(W\) 的 \(m\) 个副本的直和；第一因子的矩阵作用调配这些副本。与所有这些调配交换的算子，必须在每个副本上作同一个变换。
 
 \begin{proposition}\label{b2:prop:tensor-factor-centralizers}
 设 \(k\) 为域，\(U,W\) 为非零有限维 \(k\) 向量空间。在 \(\operatorname{End}_k(U\otimes_kW)\) 中，
@@ -61,11 +83,16 @@ T(a)=T\bigl(R_a(1)\bigr)=R_a\bigl(T(1)\bigr)=T(1)a.
 \operatorname{End}_k(U)\otimes k\operatorname{id}_W,
 \qquad k\operatorname{id}_U\otimes\operatorname{End}_k(W)
 \]
-互为中心化子。此外，通常的张量作用给出代数同构
+互为中心化子。此外，映射
 \[
-\operatorname{End}_k(U)\otimes_k\operatorname{End}_k(W)
-\cong\operatorname{End}_k(U\otimes_kW).
+\begin{aligned}
+&\operatorname{End}_k(U)\otimes_k\operatorname{End}_k(W)
+\longrightarrow\operatorname{End}_k(U\otimes_kW),\\
+&F\otimes G\longmapsto
+\bigl(u\otimes w\mapsto F(u)\otimes G(w)\bigr)
+\end{aligned}
 \]
+是 \(k\) 代数同构。
 \end{proposition}
 \begin{proof}
 选 \(U\) 的基 \(u_1,\ldots,u_m\)。任意线性算子 \(T\) 可唯一写成
@@ -73,12 +100,30 @@ T(a)=T\bigl(R_a(1)\bigr)=R_a\bigl(T(1)\bigr)=T(1)a.
 T(u_j\otimes w)=\sum_i u_i\otimes T_{ij}(w),
 \qquad T_{ij}\in\operatorname{End}_k(W).
 \]
-若 \(T\) 与各 \(E_{aa}\otimes\operatorname{id}\) 交换，则它保留每个 \(ku_a\otimes W\)，故 \(T_{ij}=0\) 当 \(i\ne j\)。再与 \(E_{ab}\otimes\operatorname{id}\) 交换，在 \(u_b\otimes w\) 上比较，得到 \(T_{aa}(w)=T_{bb}(w)\)。因此 \(T=\operatorname{id}_U\otimes S\)，其中 \(S\) 为公共对角块。反向这样的算子确实交换，得到第一个中心化子。交换两因子的角色，得到另一个。
+\(E_{aa}\otimes\operatorname{id}_W\) 是到第 \(a\) 个副本 \(ku_a\otimes W\) 的投影。若 \(T\) 与这些投影交换，它就保留各个副本，故 \(T_{ij}=0\) 当 \(i\ne j\)。而 \(E_{ab}\otimes\operatorname{id}_W\) 把第 \(b\) 个副本移到第 \(a\) 个副本，在其中保留 \(w\) 不变。与这个算子交换，便要求两个副本上的变换相同：在 \(u_b\otimes w\) 上比较，得到 \(T_{aa}(w)=T_{bb}(w)\)。因此 \(T=\operatorname{id}_U\otimes S\)，其中 \(S\) 为公共对角块。反向这样的算子确实交换，得到第一个中心化子。交换两因子的角色，得到另一个。
 
-再选 \(W\) 的基。张量 \(E_{ij}\otimes E_{ab}\) 将基向量 \(u_j\otimes w_b\) 送到 \(u_i\otimes w_a\)，将其余基向量送到零，所以这些张量恰对应全部矩阵单位。它们在两边均为基，故作用映射是线性同构；逐因子复合保证它保持乘法与单位。
+再选 \(W\) 的基 \(w_1,\ldots,w_\ell\)。张量 \(E_{ij}\otimes E_{ab}\) 将基向量 \(u_j\otimes w_b\) 送到 \(u_i\otimes w_a\)，将其余基向量送到零，所以这些张量恰对应全部矩阵单位。它们在两边均为基，故作用映射是线性同构；逐因子复合保证它保持乘法与单位。
 \end{proof}
 
-双中心化子等式不能推广到每个子代数。取 \(\mathcal A=T_2(k)\subseteq M_2(k)\)。与 \(E_{11}\) 交换迫使矩阵为对角矩阵，再与 \(E_{12}\) 交换迫使两个对角元相等。因此 \(\mathcal A'=kI_2\)，而 \(\mathcal A''=M_2(k)\supsetneq\mathcal A\)。原代数保留直线 \(ke_1\)，所以其作用有一个非零真稳定子空间；中心化子仅含标量并不能排除这个现象。
+例如 \(k^n\oplus k^n\cong k^n\otimes_k k^2\)（\(n\ge1\)）时，\(\operatorname{diag}(B,B)\)、\(B\in M_n(k)\)，作用于第一因子。其中心化子为 \(\operatorname{id}_{k^n}\otimes\operatorname{End}_k(k^2)\)，允许在两个相同的 \(k^n\) 副本之间任意混合，而在各副本内部保留原来的矩阵作用。\cref{b2:ex:11-repeated-matrix-blocks}将这个结论写成具体的分块矩阵。
+
+\ProseParagraphBreak
+这里自同态代数的张量同构不能无条件推广到无限维空间。取 \(U,W\) 分别以 \(u_1,u_2,\ldots\) 与 \(w_1,w_2,\ldots\) 为基，定义
+\[
+Q(u_i\otimes w_j)=
+\begin{cases}
+u_i\otimes w_i,&i=j,\\
+0,&i\ne j.
+\end{cases}
+\]
+这在张量积的一组基上规定了像，故给出线性算子。若 \(Q=\sum_{r=1}^s A_r\otimes B_r\)，记 \(\alpha_i:U\to k\) 为第 \(i\) 个坐标泛函，对输入 \(u_i\otimes w\) 的输出取第 \(i\) 个 \(U\) 坐标，就得到
+\[
+P_i(w)=\sum_{r=1}^s\alpha_i(A_ru_i)B_r(w),
+\]
+其中 \(P_i\in\operatorname{End}_k(W)\) 保留 \(w_i\) 坐标，并把其余坐标归零。因此所有 \(P_i\) 都在有限维空间 \(\operatorname{span}_k\{B_1,\ldots,B_s\}\) 中。但这些投影线性无关：任意有限线性关系分别作用于对应的 \(w_i\)，就迫使每个系数为零。矛盾。所以这个 \(Q\) 不在张量作用映射的像中。
+
+\ProseParagraphBreak
+双中心化子等式不能推广到每个子代数。取 \(\mathcal A=T_2(k)\subseteq M_2(k)\)。与 \(E_{11}\) 交换迫使矩阵为对角矩阵，再与 \(E_{12}\) 交换迫使两个对角元相等。因此 \(\mathcal A'=kI_2\)，而 \(\mathcal A''=M_2(k)\supsetneq\mathcal A\)。原代数保留非零真子空间 \(ke_1\)，故作用不是不可约的。这就给出了从中心化子仅含标量反推不可约性的反例。
 
 \subsection{Schur–Weyl 对偶的环论背景}
 \label{b2:subsec:1104:03}
@@ -86,7 +131,10 @@ T(u_j\otimes w)=\sum_i u_i\otimes T_{ij}(w),
 \chapref{b2:ch:08}已在 \(V^{\otimes d}\) 上构造一般线性群的对角作用与 \(S_d\) 的置换作用，并在\cref{b2:prop:commuting-tensor-actions}中证明它们交换。因而两种作用的线性生成代数互相包含于对方的中心化子。对于有限维复空间，\cref{b2:claim:schur-weyl-preview}给出它们互为中心化子的等式；证明见第五卷第7.3节。
 
 \ProseParagraphBreak
-这里的情形与\cref{b2:prop:tensor-factor-centralizers}不同。后者允许在两个不同因子上独立选取任意线性算子；Schur--Weyl 情形则让同一个 \(g\) 同时作用在所有因子上，另一个作用改变因子的排列。两种构造不能因为都出现张量符号就互相替代。
+这里的情形与\cref{b2:prop:tensor-factor-centralizers}不同。后者允许独立选取 \(F\in\operatorname{End}_k(U)\) 与 \(G\in\operatorname{End}_k(W)\)，作用为 \(u\otimes w\mapsto F(u)\otimes G(w)\)；Schur--Weyl 情形则让同一个 \(g\) 同时作用在所有因子上，得到 \(v_1\otimes\cdots\otimes v_d\mapsto gv_1\otimes\cdots\otimes gv_d\)，另一个作用改变因子的排列。独立因子上的中心化子计算没有计算出同一个 \(g\) 的对角作用的全部中心化子，因而不能代替 Schur--Weyl 对偶中反向包含的证明。
+
+\ProseParagraphBreak
+若只考察交换两个因子的算子 \(\tau\)，在特征不为二的域上，第八章的两个投影 \((\operatorname{id}\pm\tau)/2\) 把张量积分成对称与交替两部分。与 \(\tau\) 交换的算子恰好分别保持这两部分，因而可以在每一部分内部独立作用。\cref{b2:ex:11-tensor-flip-centralizer}在 \(V=k^2\) 上计算这一中心化子及其双中心化子。
 
 \ProseParagraphBreak
 \chapref{b2:ch:14}将研究不可约作用的中心化子及稠密性；有限维且底域代数闭时，不可约性会迫使作用代数等于整个自同态代数。上三角例子则表明，只知中心化子由标量组成还不足以作这个推断。双中心化子问题的答案取决于整个作用，而不只取决于原代数的抽象乘法表。

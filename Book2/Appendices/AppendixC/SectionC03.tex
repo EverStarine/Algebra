@@ -1,16 +1,16 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### C.3 环的 Brauer 群
-% 纲要位置：工作记录/计划纲要.md，第 1820 行。
+% 纲要位置：工作记录/计划纲要.md，第 1842 行。
 
 % 纲要要点（供目录核对）：
-% * 环的 Brauer 群及其与域情形的区别
+% * 自同态因子的稳定等价、张量逆元、中心化子与零类分裂的完整证明；指定基环结构、变基方向及非零纤维类的障碍
 % #### C.3.1 等价关系与群运算
 % #### C.3.2 分裂类、底环变换与域情形
 
 \section{环的 Brauer 群}
 \label{b2:sec:C03}
 
-域的 Brauer 群把增加矩阵大小视为无关变化。一般交换环上的有限投射模可能没有统一的自由基，所以相应的可忽略因子应从矩阵代数扩展为 \(\operatorname{End}_R(P)\)，其中 \(P\) 忠实、有限生成且投射。上一节已经证明，这些因子确实属于 Azumaya 代数。
+域的 Brauer 群把增加矩阵大小视为无关变化。若 \(P=R^n\)，它的自同态代数就是 \(M_n(R)\)；但一般交换环上的有限投射模可能没有全局自由基，秩还可能在不同连通分量上取不同的值。在主开集上选定局部基，\(\operatorname{End}_R(P)\) 才成为相应大小的矩阵代数。因此环上的可忽略因子要用 \(\operatorname{End}_R(P)\)，其中 \(P\) 忠实、有限生成且投射。上一节已经证明，这些因子属于 Azumaya 代数。
 
 \subsection{等价关系与群运算}
 \label{b2:subsec:C03:01}
@@ -31,7 +31,7 @@ A\otimes_R\operatorname{End}_R(P)
 则称 \(A,B\) 在 \(R\) 上 Brauer 等价。
 \end{definition}
 
-此处同构必须保持指定的 \(R\) 标量，不能只要求抽象环同构。\chapref{b2:ch:18}已经定义域上的 Brauer 等价；这里使用同一名称，并将在下一个小节说明两种定义在域上重合。
+此处同构必须保持指定的 \(R\) 标量，不能只要求抽象环同构。\cref{b2:prop:C-base-algebra-structure}给出两个抽象环同构、却不能在指定底环上同构的零类 Azumaya 代数。\chapref{b2:ch:18}已经定义域上的 Brauer 等价；这里使用同一名称，并将在下一个小节说明两种定义在域上重合。
 
 \begin{theorem}\label{b2:thm:ring-brauer-group}
 设 \(R\) 为非零交换含幺环。在 Azumaya \(R\) 代数上，\cref{b2:def:ring-brauer-equivalence}所定义的 Brauer 等价是等价关系。记 \([A]\) 为代数 \(A\) 的等价类。这些等价类在运算
@@ -48,7 +48,13 @@ A\otimes_R\operatorname{End}_R(P)\cong B\otimes_R\operatorname{End}_R(Q),
 \qquad
 B\otimes_R\operatorname{End}_R(U)\cong C\otimes_R\operatorname{End}_R(V).
 \]
-将第一式张量 \(\operatorname{End}_R(U)\)，第二式张量 \(\operatorname{End}_R(Q)\)，再交换中间因子，由式\eqref{b2:eq:azumaya-end-tensor}得到
+要消去中间的 \(B\)，给第一式附加 \(\operatorname{End}_R(U)\)，给第二式附加 \(\operatorname{End}_R(Q)\)。这样两式在 \(B\) 一端分别出现
+\[
+B\otimes_R\operatorname{End}_R(Q)\otimes_R\operatorname{End}_R(U),
+\qquad
+B\otimes_R\operatorname{End}_R(U)\otimes_R\operatorname{End}_R(Q),
+\]
+交换后两个因子便将它们对应起来。于是 \(A\) 一端的附加模合为 \(P\otimes_RU\)，\(C\) 一端的附加模合为 \(V\otimes_RQ\)；由式\eqref{b2:eq:azumaya-end-tensor}得到
 \[
 A\otimes_R\operatorname{End}_R(P\otimes_RU)
 \cong C\otimes_R\operatorname{End}_R(V\otimes_RQ).
@@ -57,19 +63,22 @@ A\otimes_R\operatorname{End}_R(P\otimes_RU)
 
 若 \(A\) 与 \(A'\)、\(B\) 与 \(B'\) 分别通过式\eqref{b2:eq:ring-brauer-equivalence}等价，将两式张量并交换因子，再用同一个自同态张量公式，就得到 \(A\otimes_RB\) 与 \(A'\otimes_RB'\) 等价。因此运算不依赖代表。结合性、交换性和单位元分别由张量积的结合、交换和单位同构给出。
 
-最后，\(A\) 自身是忠实有限生成投射模，定义中的同构给出
+Azumaya 定义中的左右乘同构直接给出逆元：
 \[
 A\otimes_RA^{\mathrm{op}}\cong\operatorname{End}_R(A).
 \]
-而 \(\operatorname{End}_R(A)\) 与 \(R\) 等价：在等价关系中分别选 \(R\) 和 \(A\) 作为附加模即可。所以 \([A]+[A^{\mathrm{op}}]=[R]\)，每个元素都有逆元。所有代数均以某个有限自由模的直和因子为底模，它们的同构类型构成集合，因而所述等价类确实构成一个群。
+这里 \(A\) 自身是忠实有限生成投射 \(R\) 模。在比较 \(\operatorname{End}_R(A)\) 与 \(R\) 的等价关系中，分别选 \(P=R\)、\(Q=A\) 作为附加模，两端都同构于 \(\operatorname{End}_R(A)\)。所以 \(\bigl[\operatorname{End}_R(A)\bigr]=[R]\)，进而 \([A]+[A^{\mathrm{op}}]=[R]\)。所有代数均以某个有限自由模的直和因子为底模，它们的同构类型构成集合，因而所述等价类确实构成一个群。
 \end{proof}
 
-特别地，\(\bigl[\operatorname{End}_R(P)\bigr]=0\)。这一步说明为何必须消去自同态代数，而不只消去固定大小的矩阵环。在不连通的基环上，\(P\) 的秩甚至可能在不同部分取不同的值。
+本节的 \(\operatorname{Br}(R)\) 以 Azumaya 代数及上述稳定等价关系定义，通常称为 Azumaya Brauer 群。特别地，每个忠实有限生成投射模 \(P\) 都满足 \(\bigl[\operatorname{End}_R(P)\bigr]=0\)。
 
 \subsection{分裂类、底环变换与域情形}
 \label{b2:subsec:C03:02}
 
-设 \(R\) 为非零交换含幺环、\(A\) 为 Azumaya \(R\) 代数。若存在忠实有限生成投射 \(R\) 模 \(P\)，使 \(A\cong\operatorname{End}_R(P)\) 为 \(R\) 代数同构，则称 \(A\) 在 \(R\) 上分裂。\cref{b2:thm:ring-brauer-group}已经说明分裂代数代表零类。要证明反向，需从等价关系给出的附加自同态因子中恢复 \(A\)；下面的中心化子计算提供了这个恢复方法。
+设 \(R\) 为非零交换含幺环、\(A\) 为 Azumaya \(R\) 代数。若存在忠实有限生成投射 \(R\) 模 \(P\)，使 \(A\cong\operatorname{End}_R(P)\) 为 \(R\) 代数同构，则称 \(A\) 在 \(R\) 上分裂。\cref{b2:thm:ring-brauer-group}已经说明分裂代数代表零类。要证明反向，需从等价关系给出的附加自同态因子中恢复 \(A\)，所用的操作是取中心化子。
+
+\ProseParagraphBreak
+在自由模型 \(P=R^n\)、\(n\ge1\) 中，\(E=\operatorname{End}_R(P)=M_n(R)\)，而 \(A\otimes_RE\cong M_n(A)\)。因子 \(1\otimes E\) 是条目取自 \(R\) 的矩阵子代数，与它交换的矩阵正是 \(aI_n\)、\(a\in A\)，从而恢复一份 \(A\)。一般 \(P\) 局部自由，中心化子的计算也可以在这些局部矩阵模型中完成；还需利用局部化的正合性把计算还原到原环上。
 
 \begin{lemma}[自同态因子的中心化子]\label{b2:lem:azumaya-end-centralizer}
 设 \(R\) 为非零交换含幺环、\(A\) 为结合含幺 \(R\) 代数，其结构同态的像位于中心。设 \(P\) 为忠实有限生成投射 \(R\) 模，令 \(E=\operatorname{End}_R(P)\)。在 \(A\otimes_RE\) 中记
@@ -79,7 +88,7 @@ C=\{\,x\in A\otimes_RE\mid x(1\otimes e)=(1\otimes e)x\text{ 对全部 }e\in E\t
 则 \(a\mapsto a\otimes\operatorname{id}_P\) 给出 \(R\) 代数同构 \(A\cong C\)。
 \end{lemma}
 \begin{proof}
-上述映射的像包含在 \(C\) 中。由\cref{b2:lem:azumaya-projective-base-change}，\(E\) 有限生成。选其有限个 \(R\) 模生成元 \(e_1,\ldots,e_v\)，则 \(C\) 是映射
+上述映射的像包含在 \(C\) 中。为了把中心化子的计算局部化，需把“与全部 \(e\in E\) 交换”写成有限个线性方程。由\cref{b2:lem:azumaya-projective-base-change}，\(E\) 有限生成；选其有限个 \(R\) 模生成元 \(e_1,\ldots,e_v\)，则 \(C\) 是映射
 \[
 A\otimes_RE\longrightarrow (A\otimes_RE)^v,
 \qquad x\longmapsto\bigl(x(1\otimes e_i)-(1\otimes e_i)x\bigr)_{i=1}^v
@@ -97,33 +106,51 @@ A\otimes_RE\longrightarrow (A\otimes_RE)^v,
 设 \(R\) 为非零交换含幺环、\(A\) 为 Azumaya \(R\) 代数。\(A\) 代表 \(\operatorname{Br}(R)\) 中的零类，当且仅当存在忠实有限生成投射 \(R\) 模 \(T\)，使 \(A\cong\operatorname{End}_R(T)\) 为 \(R\) 代数同构。
 \end{proposition}
 \begin{proof}
-若 \(A\cong\operatorname{End}_R(T)\)，\cref{b2:thm:ring-brauer-group}给出 \([A]=0\)。反过来，设 \([A]=0\)，按等价关系选忠实有限生成投射 \(R\) 模 \(P,Q\)，使
+若 \(A\cong\operatorname{End}_R(T)\)，\cref{b2:thm:ring-brauer-group}给出 \([A]=0\)。反过来，设 \([A]=0\)，按等价关系选忠实有限生成投射 \(R\) 模 \(P,Q\)，得到 \(R\) 代数同构
 \[
-A\otimes_RE\cong\operatorname{End}_R(Q),
+\varphi:A\otimes_RE\longrightarrow\operatorname{End}_R(Q),
 \qquad E=\operatorname{End}_R(P).
 \]
-经这个同构，\(Q\) 成为左 \(E\) 模，且 \(E\) 中的 \(R\) 标量仍按原来的 \(R\) 模结构作用于 \(Q\)。
+令 \(e\cdot q=\varphi(1\otimes e)(q)\)，便使 \(Q\) 成为左 \(E\) 模。因为 \(\varphi\) 保持 \(R\) 标量，\(E\) 中的 \(r\operatorname{id}_P\) 仍按 \(q\mapsto rq\) 作用。由\cref{b2:lem:azumaya-end-centralizer}，\(\varphi\) 把 \(A\otimes1\) 对应到这个 \(E\) 作用的中心化子，即 \(\operatorname{End}_E(Q)\)。因此要恢复一个分裂模，需要把 \(Q\) 的 \(E\) 模结构换成 \(R\) 模结构，同时保留这些自同态。
 
-令 \(P^*=\operatorname{Hom}_R(P,R)\)，赋予 \(P\) 双模结构 \({}_EP_R\)，其作用为 \(ep=e(p)\)、\(pr=rp\)；赋予 \(P^*\) 双模结构 \({}_RP^*_E\)，其作用为 \((r\lambda)(p)=r\lambda(p)\)、\((\lambda e)(p)=\lambda(e(p))\)。对偶保留有限自由模的直和因子，所以 \(P^*\) 有限生成且投射，双对偶求值映射 \(P\rightarrow P^{**}\) 为同构。取式\eqref{b2:eq:azumaya-trace-unit}中的 \(p_i,\lambda_i\)；若 \(rP^*=0\)，则 \(r=\sum_i(r\lambda_i)(p_i)=0\)。因此 \(P^*\) 忠实，由\cref{b2:lem:azumaya-projective-base-change}还是生成元。取对偶给出 \(\operatorname{End}_R(P^*)\cong E^{\mathrm{op}}\)，将\cref{b2:cor:morita-inverse-bimodules}用于左 \(R\) 模 \(P^*\)，再用双对偶同构，得到双模同构
+为此使用 \(P\) 的 Morita 逆双模 \(P^*=\operatorname{Hom}_R(P,R)\)。赋予 \(P\) 双模结构 \({}_EP_R\)，其作用为 \(ep=e(p)\)、\(pr=rp\)；赋予 \(P^*\) 双模结构 \({}_RP^*_E\)，其作用为 \((r\lambda)(p)=r\lambda(p)\)、\((\lambda e)(p)=\lambda(e(p))\)。对偶保留有限自由模的直和因子，所以 \(P^*\) 有限生成且投射，双对偶求值映射 \(P\rightarrow P^{**}\) 为同构。取式\eqref{b2:eq:azumaya-trace-unit}中的 \(p_i,\lambda_i\)；若 \(rP^*=0\)，则 \(r=\sum_i(r\lambda_i)(p_i)=0\)。因此 \(P^*\) 忠实，由\cref{b2:lem:azumaya-projective-base-change}也是生成元。
+
+对偶映射 \(e\mapsto(\lambda\mapsto\lambda e)\) 反转自同态复合次序；双对偶同构使它给出 \(\operatorname{End}_R(P^*)\cong E^{\mathrm{op}}\)。将\cref{b2:cor:morita-inverse-bimodules}用于左 \(R\) 模 \(P^*\)，并用 \(P^{**}\cong P\)，得到双模同构
 \[
 {}_RP^*\otimes_EP_R\cong{}_RR_R,
 \qquad
 {}_EP\otimes_RP^*_E\cong{}_EE_E.
 \]
-因此 \(P\otimes_R-\) 与 \(P^*\otimes_E-\) 分别从左 \(R\) 模到左 \(E\) 模、从左 \(E\) 模到左 \(R\) 模，且由张量结合律互为拟逆。令 \(T=P^*\otimes_EQ\)，便有 \(Q\cong P\otimes_RT\)，以及由等价的全忠实性得到的 \(R\) 代数同构
+第一式是求值 \(\lambda\otimes p\mapsto\lambda(p)\)，第二式把 \(p\otimes\lambda\) 送到算子 \(\theta_{p,\lambda}:x\mapsto\lambda(x)p\)。所以 \(P\otimes_R-\) 与 \(P^*\otimes_E-\) 分别从左 \(R\) 模到左 \(E\) 模、从左 \(E\) 模到左 \(R\) 模，且互为拟逆。
+
+取 \(T=P^*\otimes_EQ\)，这个张量积用逆双模消去了 \(Q\) 上的 \(E\) 因子。再张量 \(P\)，由上述双模同构及结合律得到左 \(E\) 模同构
+\[
+P\otimes_RT
+\cong (P\otimes_RP^*)\otimes_EQ
+\cong E\otimes_EQ
+\cong Q.
+\]
+等价的全忠实性给出
 \[
 \operatorname{End}_E(Q)\cong\operatorname{End}_R(T).
 \]
-由\cref{b2:lem:azumaya-end-centralizer}，\(A\otimes_RE\) 中 \(1\otimes E\) 的中心化子为 \(A\)；在所给同构下，它恰好对应 \(\operatorname{End}_E(Q)\)。所以 \(A\cong\operatorname{End}_R(T)\)。
+这里自同态 \(f\) 被送到 \(\operatorname{id}_{P^*}\otimes f\)，映射保留复合、恒等映射及 \(R\) 标量，因此是 \(R\) 代数同构。与先前的中心化子识别合在一起，得到 \(A\cong\operatorname{End}_R(T)\)。
 
-还须核对 \(T\) 的模性质。对 \(p\in P\)、\(\lambda\in P^*\)，记 \(\theta_{p,\lambda}\in E\) 为算子 \(x\mapsto\lambda(x)p\)。式\eqref{b2:eq:azumaya-trace-unit}给出右 \(E\) 模同态
+要使这个同构满足分裂的定义，还须证明 \(T\) 忠实、有限生成且投射。式\eqref{b2:eq:azumaya-trace-unit}给出右 \(E\) 模同态
 \[
-E^t\longrightarrow P^*,\qquad (e_i)\longmapsto\sum_i\lambda_i e_i,
+\pi:E^t\longrightarrow P^*,\qquad (e_i)\longmapsto\sum_i\lambda_i e_i.
 \]
-其截面为 \(\lambda\mapsto(\theta_{p_i,\lambda})_i\)，因为 \(\sum_i\lambda_i\theta_{p_i,\lambda}=\lambda\)。这些映射也保持 \(R\) 作用，取 \(-\otimes_EQ\) 后使 \(T\) 成为 \(Q^t\) 的 \(R\) 模直和因子。因此 \(T\) 有限生成且投射。若 \(rT=0\)，由 \(Q\cong P\otimes_RT\) 得 \(rQ=0\)，而 \(Q\) 忠实，故 \(r=0\)。这证明 \(T\) 忠实。
+映射 \(s:P^*\rightarrow E^t\)、\(s(\lambda)=(\theta_{p_i,\lambda})_i\) 也右 \(E\) 线性，因为 \(\theta_{p_i,\lambda e}=\theta_{p_i,\lambda}e\)。对每个 \(x\in P\)，
+\[
+(\pi s(\lambda))(x)
+=\sum_i\lambda_i\bigl(\lambda(x)p_i\bigr)
+=\lambda(x)\sum_i\lambda_i(p_i)
+=\lambda(x).
+\]
+所以 \(\pi s=\operatorname{id}_{P^*}\)。这些映射还保持 \(R\) 作用，取 \(-\otimes_EQ\) 后仍满足同样的截面等式，使 \(T\) 成为 \(E^t\otimes_EQ\cong Q^t\) 的 \(R\) 模直和因子。\(Q\) 有限生成且投射，因此 \(T\) 也如此。若 \(rT=0\)，则对任意 \(p\in P\)、\(v\in T\) 都有 \(r(p\otimes v)=p\otimes rv=0\)，由 \(Q\cong P\otimes_RT\) 得 \(rQ=0\)；\(Q\) 忠实遂使 \(r=0\)，故 \(T\) 忠实。
 \end{proof}
 
-零类因而恰好由分裂代数代表。不过，这些代数之间仍可能不同构；Brauer 等价消去了自同态因子，不能据此恢复原代数的大小。改变底环则会进一步改变哪些类能够分裂。
+零类因而恰好由分裂代数代表。不过，这些代数之间仍可能不同构；Brauer 等价消去了自同态因子，不能据此恢复原代数的大小。改变底环则会进一步改变哪些类能够分裂。环同态 \(f:R\rightarrow S\) 把 \(R\) 代数变成 \(S\) 代数，Brauer 类也沿 \(R\rightarrow S\) 的方向变换。在素理想谱上，同一个 \(f\) 诱导的映射则为 \(\operatorname{Spec}S\rightarrow\operatorname{Spec}R\)、\(\mathfrak q\mapsto f^{-1}(\mathfrak q)\)，所以底环变换的记号 \(f^*\) 对应这个空间映射的拉回。
 
 \begin{proposition}\label{b2:prop:ring-brauer-base-change}
 设 \(R,S\) 为非零交换含幺环。环同态 \(f:R\rightarrow S\) 诱导群同态
@@ -131,7 +158,12 @@ E^t\longrightarrow P^*,\qquad (e_i)\longmapsto\sum_i\lambda_i e_i,
 f^*:\operatorname{Br}(R)\longrightarrow\operatorname{Br}(S),
 \qquad [A]\longmapsto[S\otimes_RA].
 \]
-这些同态保持恒等映射，并按底环变换次序保持复合。若 \(R=k\) 为域，则 \(\operatorname{Br}(k)\) 与\cref{b2:thm:brauer-group}构造的群相同。
+这些同态保持恒等映射，并按底环变换次序保持复合。对 Azumaya \(R\) 代数 \(A\) 和每个素理想 \(\mathfrak p\)，记
+\[
+\kappa(\mathfrak p)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p},
+\qquad A(\mathfrak p)=\kappa(\mathfrak p)\otimes_RA.
+\]
+若 \([A]=0\)，则 \([A(\mathfrak p)]=0\) 于 \(\operatorname{Br}(\kappa(\mathfrak p))\) 对全部 \(\mathfrak p\) 成立；因此一个纤维的 Brauer 类非零，就足以排除 \([A]=0\)。若 \(R=k\) 为域，则 \(\operatorname{Br}(k)\) 与\cref{b2:thm:brauer-group}构造的群相同。
 \end{proposition}
 \begin{proof}
 \cref{b2:thm:azumaya-fiber-criterion}保证底环变换后的代数仍为 Azumaya 代数。对式\eqref{b2:eq:ring-brauer-equivalence}取 \(S\otimes_R-\)，式\eqref{b2:eq:azumaya-hom-base-change}把附加因子化为
@@ -141,10 +173,47 @@ S\otimes_R\operatorname{End}_R(P)
 \]
 且 \(S\otimes_RP\) 仍忠实有限生成且投射。故等价关系保持。底环变换与张量积相容，并把 \(R\) 送到 \(S\)，所以所得映射为群同态；两次底环变换的结合识别给出复合相容性。
 
+取底环同态 \(R\rightarrow\kappa(\mathfrak p)\)，所构造的群同态把 \([A]\) 送到 \([A(\mathfrak p)]\)，故零类的每个纤维类均为零。若某个纤维类非零，便不可能有 \([A]=0\)。
+
 在域上，忠实有限生成投射模恰为非零有限维向量空间，其自同态代数恰为 \(M_n(k)\)、\(n\ge1\)。又由\cref{b2:prop:azumaya-field-matrix}，代数对象恰为中心单代数。因此等价关系变为 \(M_n(A)\cong M_m(B)\)，群运算也同为张量积，两个构造完全一致。
 \end{proof}
 
-例如，取 \(R=\mathbb R[t]\)，由 \(\mathbb R\rightarrow R\) 扩张得到 \(A=R\otimes_{\mathbb R}\mathbb H\)。这是 Azumaya \(R\) 代数，却不代表零类。若 \([A]=0\)，再按 \(t\mapsto0\) 底环变换到 \(\mathbb R\)，便有 \([\mathbb H]=0\)。\cref{b2:prop:brauer-division-representative}说明域上每个 Brauer 类有唯一的中心除代数代表，\(\mathbb H\ne\mathbb R\)，所以这不可能。另一方面，扩张到 \(\mathbb C[t]\) 后 \(A\) 变成 \(M_2\bigl(\mathbb C[t]\bigr)\)，其类随之变为零。
+由全部纤维类为零推出全局类为零的逆向结论，不包含在这个命题中。
+
+\ProseParagraphBreak
+取 \(R=\mathbb R[t]\)，由 \(\mathbb R\rightarrow R\) 扩张得到 \(A=R\otimes_{\mathbb R}\mathbb H\)。这是 Azumaya \(R\) 代数，所以每个剩余纤维都中心单；但在 \(\mathfrak p=(t)\) 处，\(\kappa(\mathfrak p)=\mathbb R\)，且 \(A(\mathfrak p)\cong\mathbb H\) 的 Brauer 类非零。\cref{b2:prop:brauer-division-representative}说明域上每个 Brauer 类有唯一的中心除代数代表，\(\mathbb H\) 与 \(\mathbb R\) 的实维数不同，故 \([\mathbb H]\ne0\)。这一个纤维已经足以证明 \([A]\ne0\)，并说明纤维中心单与纤维分裂有不同的要求。
+
+\ProseParagraphBreak
+另一方面，扩张到 \(\mathbb C[t]\) 后，\(A\) 变成 \(M_2\bigl(\mathbb C[t]\bigr)\)，其类随之变为零。所以 \([A]\) 是底环变换同态 \(\operatorname{Br}(\mathbb R[t])\rightarrow\operatorname{Br}(\mathbb C[t])\) 的核中的非零元，这与域上的相对 Brauer 群记录“被指定扩张分裂的类”是同一机制。
 
 \ProseParagraphBreak
 一般交换环上的 Brauer 群仍以代数及其模为对象，但域上“每类选一个除代数”的描述已不适用。例如 \(R=k\times k\) 的任何忠实代数都包含非零的中心幂等元 \((1,0)\)、\((0,1)\)，二者乘积为零，因而不可能是除环。环上的分类问题还须顾及各处的纤维如何在同一个有限投射模上相容。以自同态代数为零类、以张量积为加法的表述，也可参阅 Weibel 的《The K-book: An Introduction to Algebraic K-theory》\cite[Chapter II, Example 5.4.3]{Weibel2013KBook}；该处从对称幺半范畴的群化解释这组关系。
+
+\begin{proposition}\label{b2:prop:C-base-algebra-structure}
+设 \(k\) 为域，\(R=k\times k\)。令 \(P=k\times k^2\)、\(Q=k^2\times k\)，其中 \((a,b)\in R\) 在两个分量上分别按 \(a,b\) 作标量乘法。则 \(P,Q\) 都是忠实有限生成投射 \(R\) 模，且
+\[
+A=\operatorname{End}_R(P)\cong k\times M_2(k),
+\qquad
+B=\operatorname{End}_R(Q)\cong M_2(k)\times k.
+\]
+两个自同态代数都是 Brauer 零类的 Azumaya \(R\) 代数，且作为抽象环同构，但不存在保持上述指定 \(R\) 结构的 \(R\) 代数同构 \(A\cong B\)。
+\end{proposition}
+\begin{proof}
+令 \(e_1=(1,0)\)、\(e_2=(0,1)\)，则 \(R=Re_1\oplus Re_2\)，而
+\[
+P\cong Re_1\oplus (Re_2)^2,
+\qquad
+Q\cong (Re_1)^2\oplus Re_2.
+\]
+因此 \(P,Q\) 均为有限自由 \(R\) 模的直和因子，有限生成且投射。若 \((a,b)\) 零化 \(P\) 或 \(Q\)，在两个非零分量中分别取一个标准基向量，便得 \(a=b=0\)，故两模都忠实。
+
+每个 \(R\) 线性自同态都保持 \(e_1,e_2\) 的像，因而分解为两个分量上的 \(k\) 线性自同态。这给出所述自同态代数同构；在这些坐标中，\(R\) 的结构同态分别为
+\[
+(a,b)\longmapsto(a,bI_2)\quad\text{于 }A,
+\qquad
+(a,b)\longmapsto(aI_2,b)\quad\text{于 }B.
+\]
+\cref{b2:cor:azumaya-endomorphism,b2:thm:ring-brauer-group}说明两代数都是 Azumaya 代数并代表零类。交换因子的映射 \(k\times M_2(k)\rightarrow M_2(k)\times k\)、\((c,X)\mapsto(X,c)\) 是抽象环同构。
+
+若存在 \(R\) 代数同构 \(A\rightarrow B\)，它必须把 \(R\) 中的中央幂等元 \(e_1\) 在 \(A\) 中的像送到它在 \(B\) 中的像。因此它限制为 \(e_1A\cong e_1B\)，并保持对角嵌入的 \(k\) 标量。前者是 \(k\)，后者是 \(M_2(k)\)，其 \(k\) 维数分别为一与四，不可能 \(k\) 线性同构。故这种 \(R\) 代数同构不存在。
+\end{proof}

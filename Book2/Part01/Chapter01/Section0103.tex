@@ -9,9 +9,9 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 特征子空间、广义特征子空间
+% * 特征子空间、广义特征子空间及互素核分解
 % * 最小多项式与循环向量
-% * 将线性算子看成多项式环的作用
+% * 将线性算子看成多项式环的作用；限制与商算子的两层零化关系
 %
 
 \subsection{特征子空间与广义特征子空间}
@@ -37,12 +37,22 @@ G_\lambda(T)=\bigcup_{r\ge1}\ker\bigl((T-\lambda I_V)^r\bigr).
 这些核依次包含，故其并是子空间。每个核都被 \(T\) 保持：\(T\) 与 \((T-\lambda I_V)^r\) 交换。一般地，设 \(T\) 是 \(k\) 向量空间 \(V\) 上的算子。若子空间 \(U\le V\) 满足 \(T(U)\subseteq U\)，就称 \(U\) 为 \(T\) 的\term[bubian-zi-kongjian]{不变子空间}[invariant subspace]。
 
 \begin{proposition}\label{b2:prop:kernel-power-stability}
-设 \(V\) 是域 \(k\) 上的 \(n\) 维向量空间，\(N,T\in\operatorname{End}_k(V)\)，\(\lambda\in k\)，则核链 \(\ker(N^r)\) 至迟在 \(r=n\) 时稳定。因此 \(G_\lambda(T)=\ker\bigl((T-\lambda I_V)^n\bigr)\)。
+设 \(V\) 是域 \(k\) 上的 \(n\) 维向量空间，\(N\in\operatorname{End}_k(V)\)，则核链 \(\ker(N^r)\) 至迟在 \(r=n\) 时稳定，即 \(\ker(N^n)=\ker(N^{n+1})=\cdots\)。
 \end{proposition}
 \begin{proof}
 令 \(K_r=\ker(N^r)\)，其中 \(K_0=0\)。若 \(K_r=K_{r+1}\)，对 \(v\in K_{r+2}\) 有 \(Nv\in K_{r+1}=K_r\)，所以 \(v\in K_{r+1}\)。因此一旦相邻两项相等，以后各项都相等。每一次严格包含至少使维数增加一；从维数零开始至多增加 \(n\) 次，故 \(K_n=K_{n+1}=\cdots\)。
 \end{proof}
 
+将命题中的 \(N\) 取为 \(T-\lambda I_V\)，就得到
+\[
+\begin{gathered}
+\ker(T-\lambda I_V)\subseteq\ker\bigl((T-\lambda I_V)^2\bigr)\subseteq\cdots,\\
+G_\lambda(T)=\ker\bigl((T-\lambda I_V)^n\bigr).
+\end{gathered}
+\]
+因此在有限维空间中，不必取无穷多个核的并，只需计算核链稳定后的一项。
+
+\ProseParagraphBreak
 例如在 \(k^2\) 的基 \(e_1,e_2\) 下取
 \[
 Te_1=\lambda e_1,\qquad Te_2=e_1+\lambda e_2.
@@ -67,60 +77,73 @@ p(T)=\sum_{i=0}^da_iT^i.
 \[
 (p+q)(T)=p(T)+q(T),\qquad (pq)(T)=p(T)q(T),\qquad 1(T)=I_V.
 \]
-虽有 \(\operatorname{End}_k(V)\) 中不同算子不交换的可能，所有 \(T\) 的多项式彼此交换。
+这些公式说明求值映射
+\[
+\Phi_T:k[t]\longrightarrow\operatorname{End}_k(V),\qquad p\longmapsto p(T)
+\]
+保持加法、乘法和单位。记它的像为
+\[
+k[T]\coloneqq\operatorname{im}\Phi_T=\{\,p(T)\mid p\in k[t]\,\}.
+\]
+这里 \(k[t]\) 中的元素是形式多项式，\(k[T]\) 中的元素则是实际作用于 \(V\) 的算子；不同多项式可能给出同一个算子，例如 \(T^2=0\) 时 \(t^2\) 与零多项式的像相同。虽然 \(\operatorname{End}_k(V)\) 通常不交换，\(k[T]\) 中的算子却彼此交换。
 
 \begin{definition}\label{b2:def:minimal-polynomial}
-设 \(V\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)，\(p\in k[t]\)。若 \(p(T)=0\)，就称 \(p\) \term[linghua]{零化}[annihilate]算子 \(T\)。如果存在非零零化多项式，就把其中次数最小的首一多项式称为 \(T\) 的\term[zuixiao-duoxiangshi]{最小多项式}[minimal polynomial]，记作 \(m_T(t)\)。
+设 \(V\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)，\(p\in k[t]\)。若 \(p(T)=0\)，就称 \(p\) \term[linghua]{零化}[annihilate]算子 \(T\)。如果存在非零零化多项式，就把其中次数最小的首一多项式称为 \(T\) 的\term[zuixiao-duoxiangshi]{最小多项式}[minimal polynomial]，记作 \(\mu_T(t)\)。
 \end{definition}
-\symidx{\(m_T\)：线性算子的最小多项式}
+\symidx{\(\mu_T\)：线性算子的最小多项式}
 
-零向量空间上的恒等算子也是零算子，因此这时 \(m_T=1\)。
+零向量空间上的恒等算子也是零算子，因此这时 \(\mu_T=1\)。
 
 \begin{proposition}\label{b2:prop:minimal-polynomial-divisibility}
-设 \(V\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，则 \(T\) 有唯一的最小多项式 \(m_T\)，且对任意 \(p\in k[t]\) 有
+设 \(V\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，则 \(T\) 有唯一的最小多项式 \(\mu_T\)，且对任意 \(p\in k[t]\) 有
 \[
-p(T)=0\quad\Longleftrightarrow\quad m_T\mid p.
+p(T)=0\quad\Longleftrightarrow\quad \mu_T\mid p.
 \]
 \end{proposition}
 \begin{proof}
-若 \(V=0\)，任意 \(p(T)\) 都是零算子，而 \(m_T=1\)，结论立即成立。以下设 \(V\ne0\)，令 \(n=\dim_kV\)。在一组基上指定像，便以 \(n^2\) 个标量确定一个自同态，所以 \(\operatorname{End}_k(V)\) 维数为 \(n^2\)。因此 \(I_V,T,\ldots,T^{n^2}\) 线性相关，存在非零零化多项式。选次数最小者，再除以其首项系数，得到首一的 \(m_T\)。它的次数至少为一，因为非零常数算子不是零算子。
+若 \(V=0\)，任意 \(p(T)\) 都是零算子，而 \(\mu_T=1\)，结论立即成立。以下设 \(V\ne0\)，令 \(n=\dim_kV\)。在一组基上指定像，便以 \(n^2\) 个标量确定一个自同态，所以 \(\operatorname{End}_k(V)\) 维数为 \(n^2\)。因此 \(I_V,T,\ldots,T^{n^2}\) 线性相关，存在非零零化多项式。选次数最小者，再除以其首项系数，得到首一的 \(\mu_T\)。它的次数至少为一，因为非零常数算子不是零算子。
 
-对任意 \(p\) 作带余除法 \(p=qm_T+r\)，其中 \(r=0\) 或 \(\deg r<\deg m_T\)。若 \(p(T)=0\)，则 \(r(T)=0\)；最小性迫使 \(r=0\)。反向蕴含由乘法公式立即得到。另一同次数的首一最小零化多项式必须为 \(m_T\) 的常数倍，首一条件又使这个倍数为一。
+对任意 \(p\) 作带余除法 \(p=qm_T+r\)，其中 \(r=0\) 或 \(\deg r<\deg \mu_T\)。若 \(p(T)=0\)，则 \(r(T)=0\)；最小性迫使 \(r=0\)。反向蕴含由乘法公式立即得到。另一同次数的首一最小零化多项式必须为 \(\mu_T\) 的常数倍，首一条件又使这个倍数为一。
 \end{proof}
 
+上述证明中的 \(n^2\) 只给出存在非零零化多项式的粗界。
+\cref{b2:prop:operator-characteristic-minimal}将在第四章证明 \(\mu_T\mid\chi_T\)，从而得到更强的 \(\deg \mu_T\le n\)。这里也已确定求值映射的核：\(\ker\Phi_T=(\mu_T)\)，即 \(p(T)=q(T)\) 当且仅当 \(\mu_T\mid(p-q)\)。
+
 \begin{corollary}\label{b2:cor:eigenvalue-minimal-root}
-设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(\lambda\in k\)。则 \(\lambda\) 是 \(T\) 的特征值，当且仅当 \(m_T(\lambda)=0\)。
+设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(\lambda\in k\)。则 \(\lambda\) 是 \(T\) 的特征值，当且仅当 \(\mu_T(\lambda)=0\)。
 \end{corollary}
 \begin{proof}
-若 \(0\ne v\in V\) 满足 \(Tv=\lambda v\)，则 \(0=m_T(T)v=m_T(\lambda)v\)，故 \(m_T(\lambda)=0\)。反过来，若 \(m_T=(t-\lambda)q\) 而 \(T-\lambda I_V\) 单射，由 \((T-\lambda I_V)q(T)=0\) 可得 \(q(T)=0\)，与 \(m_T\) 的最小性矛盾。因此 \(T-\lambda I_V\) 有非零核。
+若 \(0\ne v\in V\) 满足 \(Tv=\lambda v\)，则 \(0=\mu_T(T)v=\mu_T(\lambda)v\)，故 \(\mu_T(\lambda)=0\)。反过来，若 \(\mu_T=(t-\lambda)q\) 而 \(T-\lambda I_V\) 单射，由 \((T-\lambda I_V)q(T)=0\) 可得 \(q(T)=0\)，与 \(\mu_T\) 的最小性矛盾。因此 \(T-\lambda I_V\) 有非零核。
 \end{proof}
 
 \begin{definition}\label{b2:def:vector-minimal-polynomial}
-设 \(V\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)，\(v\in V\)。若存在非零多项式 \(p\in k[t]\) 使 \(p(T)v=0\)，则在这样的多项式中取次数最小的首一者，称为 \(v\) 相对于 \(T\) 的最小多项式，记作 \(m_{T,v}\)。特别地，\(m_{T,0}=1\)。
+设 \(V\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)，\(v\in V\)。若存在非零多项式 \(p\in k[t]\) 使 \(p(T)v=0\)，则在这样的多项式中取次数最小的首一者，称为 \(v\) 相对于 \(T\) 的最小多项式，记作 \(\mu_{T,v}\)。特别地，\(\mu_{T,0}=1\)。
 \end{definition}
-\symidx{\(m_{T,v}\)：向量相对于算子的最小多项式}
+\symidx{\(\mu_{T,v}\)：向量相对于算子的最小多项式}
 
-带余除法表明 \(m_{T,v}\) 唯一，且 \(p(T)v=0\) 当且仅当 \(m_{T,v}\mid p\)。若 \(V\) 有限维，对非零 \(v\) 可利用 \(v,Tv,\ldots,T^{\dim_kV}v\) 的线性相关性得到非零零化多项式，因此每个向量都有 \(m_{T,v}\)。只要 \(m_T\) 存在，\(m_T(T)v=0\) 还给出 \(m_{T,v}\mid m_T\)。
+带余除法表明 \(\mu_{T,v}\) 唯一，且 \(p(T)v=0\) 当且仅当 \(\mu_{T,v}\mid p\)。若 \(V\) 有限维，对非零 \(v\) 可利用 \(v,Tv,\ldots,T^{\dim_kV}v\) 的线性相关性得到非零零化多项式，因此每个向量都有 \(\mu_{T,v}\)。只要 \(\mu_T\) 存在，\(\mu_T(T)v=0\) 还给出 \(\mu_{T,v}\mid \mu_T\)。
 
 \begin{definition}\label{b2:def:cyclic-vector}
 设 \(V\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)，\(v\in V\)。由 \(v\) 产生的\term[xunhuan-zi-kongjian]{循环子空间}[cyclic subspace]是
 \[
 k[T]v=\{p(T)v\mid p\in k[t]\}.
 \]
-若 \(k[T]v=V\)，就称 \(v\) 为 \(T\) 的\term[xunhuan-xiangliang]{循环向量}[cyclic vector]。
+它是所有 \(T^jv\ (j\ge0)\) 的线性生成空间，也是 \(k[T]\) 中的算子作用于 \(v\) 所得到的全部向量组成的空间。若 \(k[T]v=V\)，就称 \(v\) 为 \(T\) 的\term[xunhuan-xiangliang]{循环向量}[cyclic vector]。
 \end{definition}
 
+映射 \(k[t]\to k[T]v\)、\(p\mapsto p(T)v\) 的核记录了 \(v\) 满足的全部多项式关系。有非零关系时，这个核是 \((\mu_{T,v})\)；没有非零关系时，核为零。与 \(\Phi_T\) 的核不同，这里只要求零化 \(v\)，不要求零化整个空间。
+
 \begin{proposition}\label{b2:prop:cyclic-basis}
-设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(0\ne v\in V\)。令 \(m_{T,v}\) 为零化 \(v\) 的首一最小多项式，\(d=\deg m_{T,v}\)。此时 \(v,Tv,\ldots,T^{d-1}v\) 是 \(k[T]v\) 的基。若 \(v\) 是循环向量，则 \(m_T=m_{T,v}\)，从而 \(\deg m_T=\dim_k V\)。
+设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(0\ne v\in V\)。令 \(\mu_{T,v}\) 为零化 \(v\) 的首一最小多项式，\(d=\deg \mu_{T,v}\)。此时 \(v,Tv,\ldots,T^{d-1}v\) 是 \(k[T]v\) 的基。若 \(v\) 是循环向量，则 \(\mu_T=\mu_{T,v}\)，从而 \(\deg \mu_T=\dim_k V\)。
 \end{proposition}
 \begin{proof}
-这些向量若相关，就有一个次数小于 \(d\) 的非零多项式零化 \(v\)，矛盾。对任意 \(p\)，用 \(m_{T,v}\) 除去高次项，得到 \(p(T)v=r(T)v\)、\(\deg r<d\)，所以它们生成循环子空间。
+这些向量若相关，就有一个次数小于 \(d\) 的非零多项式零化 \(v\)，矛盾。对任意 \(p\)，用 \(\mu_{T,v}\) 除去高次项，得到 \(p(T)v=r(T)v\)、\(\deg r<d\)，所以它们生成循环子空间。
 
 若这个空间为 \(V\)，则每个向量写成 \(p(T)v\)。算子多项式彼此交换给出
 \[
-m_{T,v}(T)p(T)v=p(T)m_{T,v}(T)v=0,
+\mu_{T,v}(T)p(T)v=p(T)\mu_{T,v}(T)v=0,
 \]
-故 \(m_{T,v}\) 零化整个算子，上一命题给出 \(m_T\mid m_{T,v}\)。另一方面，\(m_T(T)v=0\) 给出 \(m_{T,v}\mid m_T\)。两者均首一，故相等。
+故 \(\mu_{T,v}\) 零化整个算子，上一命题给出 \(\mu_T\mid \mu_{T,v}\)。另一方面，\(\mu_T(T)v=0\) 给出 \(\mu_{T,v}\mid \mu_T\)。两者均首一，故相等。
 \end{proof}
 
 循环向量不总存在。\(n>1\) 时，标量算子 \(T=\lambda I_V\) 的每个非零循环子空间都只有一维。相反，前面的二维例子以 \(e_2\) 为循环向量，因为 \(e_2,Te_2\) 生成 \(e_1,e_2\)；其最小多项式为 \((t-\lambda)^2\)。
@@ -139,7 +162,32 @@ v=r(T)a(T)v+s(T)b(T)v.
 第一项被 \(b(T)\) 零化，第二项被 \(a(T)\) 零化，故两核之和为全空间。若 \(v\) 同时在两核中，同一等式给出 \(v=0\)，所以和是直和。核由算子多项式定义，也都是 \(T\) 不变子空间。
 \end{proof}
 
-例如 \((T-\lambda I_V)(T-\mu I_V)=0\) 且 \(\lambda\ne\mu\) 时，每个向量唯一分成两个特征子空间中的分量。重复因子对应的广义特征子空间内部还可能有不同的结构；本节的分解结论尚未将这些结构分类。
+例如 \((T-\lambda I_V)(T-\mu I_V)=0\) 且 \(\lambda\ne\mu\) 时，每个向量唯一分成两个特征子空间中的分量。最小多项式中出现重复的一次因子时，同一互素分解把普通特征子空间换成广义特征子空间。
+
+\begin{corollary}\label{b2:cor:generalized-eigenspace-decomposition}
+设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)。若
+\[
+\mu_T(t)=\prod_{i=1}^s(t-\lambda_i)^{a_i},
+\qquad \lambda_i\in k\text{ 两两不同},\quad a_i\ge1,
+\]
+则
+\[
+V=\bigoplus_{i=1}^sG_{\lambda_i}(T),\qquad
+G_{\lambda_i}(T)=\ker\bigl((T-\lambda_iI_V)^{a_i}\bigr).
+\]
+各个直和分量都是 \(T\) 不变子空间。
+\end{corollary}
+\begin{proof}
+令 \(q_i=(t-\lambda_i)^{a_i}\)。这些多项式两两互素，且 \(\prod_iq_i(T)=\mu_T(T)=0\)。先证明一般的直和公式：只要 \(q_1,\ldots,q_s\) 两两互素且乘积零化算子，就有 \(V=\bigoplus_i\ker q_i(T)\)。对因子个数 \(s\) 归纳：\(s=1\) 时 \(q_1(T)=0\)；\(s>1\) 时先将 \(q_1\) 与 \(q_2\cdots q_s\) 代入\cref{b2:prop:coprime-operator-decomposition}，得到
+\[
+V=\ker q_1(T)\oplus\ker\bigl(q_2(T)\cdots q_s(T)\bigr).
+\]
+第二个分量被 \(T\) 保持，在其上应用归纳假设便得到其余各核的直和。这里每个 \(\ker q_i(T)\ (i\ge2)\) 已包含在第二个分量中，所以所得分解为 \(V=\bigoplus_i\ker q_i(T)\)。
+
+记 \(V_i=\ker q_i(T)\)，则定义直接给出 \(V_i\subseteq G_{\lambda_i}(T)\)。反过来，取 \(v\in G_{\lambda_i}(T)\)，有某个 \(r\ge1\) 使 \((T-\lambda_iI_V)^rv=0\)。沿上述直和写 \(v=\sum_jv_j\)，其中 \(v_j\in V_j\)。各分量被 \(T\) 保持，故直和的唯一性给出 \((T-\lambda_iI_V)^rv_j=0\)。当 \(j\ne i\) 时，\(q_j\) 与 \((t-\lambda_i)^r\) 互素，Bézout 等式表明一个向量若同时被这两个多项式零化，就只能为零。因此 \(v_j=0\ (j\ne i)\)，于是 \(v\in V_i\)。
+\end{proof}
+
+这个分解先将不同特征值的部分分开；在每个 \(G_{\lambda_i}(T)\) 内，\(T-\lambda_iI_V\) 是幂零算子。幂零部分还能怎样分成循环子空间，是 Jordan 块需要进一步描述的问题。
 
 \subsection{线性算子的多项式环作用}
 \label{b2:subsec:0103:03}
@@ -168,4 +216,31 @@ F(p(T)v)=p(S)F(v)\quad\text{对所有 }p\in k[t],v\in V.
 若 \(T(U)\subseteq U\)，反复施加 \(T\) 后仍在 \(U\)，再取有限线性组合就得到 \(p(T)(U)\subseteq U\)；反向取 \(p=t\)。若 \(FT=SF\)，归纳给出 \(FT^j=S^jF\)，包括 \(j=0\)，再由线性性对各项相加即可。反向同样取 \(p=t\)。
 \end{proof}
 
-因此，研究算子的不变子空间，就是研究对全部多项式作用封闭的子空间；比较两个算子，则要找保持这种作用的映射。例如 \(k[T]v\) 不仅是一个线性子空间，它的每个元素还都由同一个 \(v\) 经过多项式作用得到。当 \(v\) 有非零零化多项式时，关系 \(p(T)v=0\) 恰好由 \(m_{T,v}\mid p\) 描述；有限维情形总满足这个条件。若不存在非零零化多项式，则映射 \(k[t]\to k[T]v\)、\(p\mapsto p(T)v\) 的核为零。两种情形都说明，多项式作用可以把向量间的关系转化为多项式的关系。
+因此，\(T\) 不变子空间恰好是对全部 \(k[t]\) 作用封闭的子空间，下一章称它为子模；关系 \(FT=SF\) 恰好表示 \(F\) 保持 \(k[t]\) 作用，因而是 \(k[t]\) 线性映射。循环子空间 \(k[T]v\) 由一个向量经这种作用生成，称为循环模，而 \(p(T)v=0\) 是这个生成元的关系。这就把不变子空间、算子之间的映射和循环部分的关系放在同一种标量作用下研究。
+
+\ProseParagraphBreak
+这种作用也能限制到不变子空间，并下降到商空间。若一个多项式已经零化商算子，它在原空间上的像就落入所取的子空间；再用零化限制算子的多项式，便能零化整个空间。
+
+\begin{proposition}\label{b2:prop:restriction-quotient-polynomials}
+设 \(V\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(U\le V\) 满足 \(T(U)\subseteq U\)。则限制 \(T_U=T|_U\) 是 \(U\) 上的算子，且
+\[
+\bar T:V/U\longrightarrow V/U,\qquad v+U\longmapsto Tv+U
+\]
+定义了商空间上的算子。商映射 \(q:V\to V/U\) 满足 \(qT=\bar Tq\)，并且
+\[
+\operatorname{lcm}(\mu_{T_U},\mu_{\bar T})\mid \mu_T
+\quad\text{且}\quad \mu_T\mid \mu_{T_U}\mu_{\bar T},
+\]
+其中最小公倍式取首一者，零空间上的最小多项式约定为 \(1\)。
+\end{proposition}
+\begin{proof}
+若 \(v+U=w+U\)，则 \(v-w\in U\)，不变性给出 \(Tv-Tw\in U\)，所以 \(\bar T\) 与代表元无关。商空间的运算又给出其线性性，且 \(\bar Tq(v)=Tv+U=qT(v)\)。由\cref{b2:prop:polynomial-action-subspace}，对每个 \(p\in k[t]\) 都有
+\[
+q\,p(T)=p(\bar T)\,q.
+\]
+若 \(p(T)=0\)，则限制到 \(U\) 后有 \(p(T_U)=0\)，又由上式及 \(q\) 的满射性得到 \(p(\bar T)=0\)。取 \(p=\mu_T\)，\cref{b2:prop:minimal-polynomial-divisibility}给出 \(\mu_{T_U}\mid \mu_T\) 与 \(\mu_{\bar T}\mid \mu_T\)，从而它们的首一最小公倍式也整除 \(\mu_T\)。
+
+令 \(a=\mu_{T_U}\)、\(b=\mu_{\bar T}\)。由于 \(b(\bar T)=0\)，有 \(q\,b(T)=0\)，即 \(b(T)V\subseteq U\)。而 \(a(T)\) 在 \(U\) 上等于 \(a(T_U)=0\)，所以 \(a(T)b(T)=0\)，即 \((ab)(T)=0\)。再用\cref{b2:prop:minimal-polynomial-divisibility}便得 \(\mu_T\mid ab\)。
+\end{proof}
+
+乘积一般不能换成最小公倍式。例如在 \(k^2\) 上令 \(Te_1=0\)、\(Te_2=e_1\)，并取 \(U=ke_1\)。限制与商算子都为零，其最小多项式都是 \(t\)；但 \(T\ne0\)、\(T^2=0\)，故 \(\mu_T=t^2\)。子空间和商空间分别只需作用一次就变为零，原空间却可能先从商空间落入子空间，再作用一次才变为零。

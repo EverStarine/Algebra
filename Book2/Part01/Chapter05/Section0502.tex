@@ -5,13 +5,15 @@
 \section{自然性}
 \label{b2:sec:0502}
 
-“不依赖基”说明一个公式不需要先选坐标，却还没有完整说明不同对象之间的关系。自然性要求：先把对象上的向量或态射送到另一个对象，再使用构造，与先使用构造、再施加诱导映射，结果相同。第一章的双对偶求值映射已经满足这种条件；现在把它作为一族映射来讨论。
+章首用自由模和商模的映射性质刻画对象；当输入对象改变时，这些映射对应也要与复合相容。上一节的自由--忘却双射已经显示了这种要求。“不依赖基”说明一个公式不需要先选坐标，却还没有完整说明不同对象之间的关系。自然性要求：先把对象上的向量或态射送到另一个对象，再使用构造，与先使用构造、再施加诱导映射，结果相同。第一章的双对偶求值映射也满足这种条件；现在把它作为一族映射来讨论。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 自然变换与自然同构
+% * 恒等函子的自然自变换与环中心
 % * 与选基依赖的同构比较
 % * 模同构和函子同构的不同层次
+% * 挠商的逐对象分裂与自然分裂
 %
 
 \subsection{自然变换与自然同构}
@@ -32,7 +34,17 @@ F(X)\arrow[r,"\eta_X"]\arrow[d,"F(f)"']&G(X)\arrow[d,"G(f)"]\\
 F(Y)\arrow[r,"\eta_Y"']&G(Y).
 \end{tikzcd}
 \]
-定义中必须给出两个函子以及它们对态射的作用。同一个对象公式若配上不同的态射作用，自然性条件就可能不同。两个反变函子之间的自然变换，按它们从 \(\mathcal C^{\mathrm{op}}\) 出发来理解；原态射 \(f:X\rightarrow Y\) 此时给出 \(G(f)\eta_Y=\eta_XF(f)\)。
+从 \(F(X)\) 出发，先用 \(\eta_X\) 再用 \(G(f)\)，与先用 \(F(f)\) 再用 \(\eta_Y\)，必须得到相同的态射。因而不同对象处的分量不能任意选择：每个 \(f\) 都把 \(\eta_X\) 与 \(\eta_Y\) 联系起来。定义中必须给出两个函子以及它们对态射的作用；同一个对象公式若配上不同的态射作用，自然性条件就可能不同。
+
+\ProseParagraphBreak
+两个反变函子之间的自然变换，按它们从 \(\mathcal C^{\mathrm{op}}\) 出发来理解。原态射 \(f:X\rightarrow Y\) 在反范畴中指向相反方向，因此对应的方块为
+\[
+\begin{tikzcd}
+F(Y)\arrow[r,"\eta_Y"]\arrow[d,"F(f)"']&G(Y)\arrow[d,"G(f)"]\\
+F(X)\arrow[r,"\eta_X"']&G(X).
+\end{tikzcd}
+\]
+所以相容式是 \(G(f)\eta_Y=\eta_XF(f)\)，两个水平分量的下标也随箭头方向一起交换。
 
 \begin{proposition}\label{b2:prop:natural-isomorphism-components}
 设 \(\mathcal C,\mathcal D\) 是范畴，\(F,G,H:\mathcal C\to\mathcal D\) 是函子。自然变换 \(\eta:F\Rightarrow G\) 是自然同构，当且仅当每个 \(\eta_X\) 都是 \(\mathcal D\) 中的同构。自然变换可以按分量复合；若 \(\theta:G\Rightarrow H\)，其与 \(\eta\) 的复合分量为 \((\theta\eta)_X=\theta_X\eta_X\)。
@@ -52,6 +64,26 @@ H(f)\theta_X\eta_X=\theta_YG(f)\eta_X=\theta_Y\eta_YF(f),
 \end{proof}
 
 例如在交换群范畴上，固定整数 \(n\)，映射 \(\eta_A:A\rightarrow A\)、\(a\mapsto na\) 构成恒等函子到自身的自然变换，因为每个群同态 \(f:A\rightarrow B\) 都满足 \(f(na)=n\cdot f(a)\)。\(n=1,-1\) 时为自然同构，\(n=2\) 时在 \(\mathbb Z\) 上不满，在 \(\mathbb Z/2\mathbb Z\) 上也不单，因此不是自然同构。自然性要求分量与所有同态相容，分量本身可以不可逆。
+
+\ProseParagraphBreak
+任意环上的左模也可以问同一个问题：哪些操作能在所有模上同时定义，并与每个模同态相容？单个模有许多自同态，但这种同时相容的要求只留下同一个中心元素的作用。
+
+\begin{proposition}\label{b2:prop:natural-center}
+设 \(R\) 是含幺环，\(\mathcal C=R\text{-}\mathbf{Mod}\) 是幺性左 \(R\) 模及模同态的范畴，\(Z(R)=\{c\in R:cr=rc\text{ 对所有 }r\in R\}\)。恒等函子的自然自变换恰为
+\[
+\eta^c_M(m)=cm\qquad(M\in\mathcal C,\ m\in M,\ c\in Z(R)).
+\]
+逐分量相加和复合使这些自然自变换组成一个环，映射 \(c\mapsto\eta^c\) 是 \(Z(R)\) 到这个环的同构。自然自同构恰对应 \(Z(R)\) 的单位。
+\end{proposition}
+\begin{proof}
+设 \(\eta\) 是自然自变换，令 \(c=\eta_R(1)\)。分量 \(\eta_R\) 左 \(R\) 线性，故 \(\eta_R(r)=rc\)。对任意左模 \(M\) 和 \(m\in M\)，同态 \(f_m:R\to M\)、\(r\mapsto rm\) 把 \(1\) 送到 \(m\)。将自然性等式 \(\eta_M f_m=f_m\eta_R\) 作用于 \(1\)，得到
+\[
+\eta_M(m)=f_m(c)=cm.
+\]
+尤其令 \(M=R,m=r\)，得到 \(\eta_R(r)=cr\)。与先前的 \(rc\) 比较，可知 \(c\in Z(R)\)。因此所有分量都由这一个元素确定。
+
+反过来，若 \(c\in Z(R)\)，映射 \(m\mapsto cm\) 保持加法，且 \(c(rm)=r(cm)\)，故左 \(R\) 线性。每个模同态 \(f:M\to N\) 满足 \(f(cm)=cf(m)\)，所以这族映射自然。相加与复合分别对应 \(c+d\)、\(cd\)，恒等变换对应 \(1\)，而在正则模的 \(1\) 处取值恢复 \(c\)，从而得到环同构。若 \(\eta^c\) 可逆，其自然逆由某个 \(d\in Z(R)\) 给出，且 \(cd=dc=1\)；反向也成立。
+\end{proof}
 
 \subsection{自然同构与选基同构}
 \label{b2:subsec:0502:02}
@@ -98,14 +130,14 @@ j_V:V\longrightarrow V^{**},\qquad j_V(v)(\lambda)=\lambda(v)
 \[
 b_{e'}(e)=\dfrac12b_{e'}(e')=\dfrac14e^*,
 \]
-与 \(b_e(e)=e^*\) 不同。两者都是同构，但并非同一个映射。还须留意，普通对偶函子是反变的，不能直接把 \(\operatorname{Id}\) 与它当作同一对范畴之间的两个协变函子来写自然同构。
+与 \(b_e(e)=e^*\) 不同。两者都是同构，但并非同一个映射。这只说明选基构造给出的同构不典范，还没有排除另一种构造可能给出自然同构；要证明不存在自然同构，须检验所有态射对分量施加的限制。还须留意，普通对偶函子是反变的，不能直接把 \(\operatorname{Id}\) 与它当作同一对范畴之间的两个协变函子来写自然同构。
 
 \ProseParagraphBreak
 现在只取有限维实向量空间为对象、线性同构为态射，得到一个群胚，即所有态射都可逆的范畴。在这个群胚上，\(V\mapsto V^*\)、\(f\mapsto(f^{-1})^*\) 构成协变函子；每个 \(V\) 都与 \(V^*\) 同构，但无法选出与所有线性同构相容的一族同构 \(b_V:V\rightarrow V^*\)。若有这样一族映射，则对任意线性同构 \(f:V\to W\)，自然性要求
 \[
  (f^{-1})^*\circ b_V=b_W\circ f.
 \]
-取非零空间 \(V\) 并令 \(f=2\operatorname{id}_V\)，便得到
+同构 \(b_V:V\to V^*\) 等价于非退化双线性型 \(B_V(v,w)=b_V(v)(w)\)。上面的自然性等价于 \(B_W(fv,fw)=B_V(v,w)\)，即要求每个线性同构都保持这些型。对一个固定的非零空间，伸缩 \(2I\) 就应保持这个型；但双线性给出 \(B_V(2v,2w)=4B_V(v,w)\)，已经与非退化性冲突。将这一伸缩代回自然性公式，便得到
 \[
 \dfrac12 b_V=2b_V,
 \]
@@ -114,7 +146,7 @@ b_{e'}(e)=\dfrac12b_{e'}(e')=\dfrac14e^*,
 \subsection{模同构与函子同构}
 \label{b2:subsec:0502:03}
 
-设 \(F,G:\mathcal C\rightarrow R\text{-}\mathbf{Mod}\)。逐个证明 \(F(X)\cong G(X)\) 只比较对象；证明 \(F\cong G\) 则要找一族同构 \(\eta_X\)，对每个态射都满足式\eqref{b2:eq:naturality-square}。任意选择的对象同构未必相容，甚至可能根本不存在相容的选择。
+设 \(F,G:\mathcal C\rightarrow R\text{-}\mathbf{Mod}\)。逐个证明 \(F(X)\cong G(X)\)，只说明每个对象处存在某个同构；为每个 \(X\) 选定同构 \(\eta_X\)，才得到一族具体分量；这族分量还须对每个态射满足式\eqref{b2:eq:naturality-square}，才能组成自然同构。任意选定的分量未必相容，甚至可能根本不存在相容的选择。
 
 \begin{example}[逐对象同构而非自然同构]\label{b2:ex:conjugation-not-natural}
 对复向量空间 \(V\)，令 \(\overline V\) 与 \(V\) 有相同的加法群，元素记为 \(\bar v\)，标量作用改为
@@ -141,11 +173,31 @@ b(ie)=i\cdot b(e)=i\cdot\bar e=\overline{-ie}.
 \]
 两映射在 \(e\) 上相同，却在 \(ie\) 上不同：\(J\) 是共轭线性的，而 \(b\) 是复线性的。一般地，若 \(e_1,\ldots,e_n\) 是 \(V\) 的基，指定 \(e_j\mapsto\bar e_j\) 并作复线性延拓就给出 \(V\cong\overline V\)。这个延拓将 \(\sum_j a_je_j\) 送到 \(\overline{\sum_j\bar a_je_j}\)，并非直接取同名元素。
 
-若有自然变换 \(\eta:\operatorname{Id}\Rightarrow C\)，对 \(f=i\operatorname{id}_V\) 使用自然性。\(C(f)\) 在 \(\overline V\) 上是乘 \(-i\)，因为 \(\overline{iv}=(-i)\bar v\)。所以
+要检测两函子对态射作用的差异，可取 \(f=i\operatorname{id}_V\)：恒等函子保留乘 \(i\) 的作用，共轭函子却将它变为乘 \(-i\)，因为 \(\overline{iv}=(-i)\bar v\)。若有自然变换 \(\eta:\operatorname{Id}\Rightarrow C\)，自然性就要求
 \[
 -i\eta_V=C(f)\eta_V=\eta_Vf=i\eta_V.
 \]
 复数域中特征为零，故 \(\eta_V=0\)。非零空间上的分量不可能可逆，因此不存在自然同构。
 \end{proof}
 
-本例把两个层次的差异落实到一个可检验的态射 \(i\operatorname{id}\)。实际验证自然性时，也应把任意输入态射代入相容式；仅说明“公式没有选基”还不足以替代这一检查。另一方面，选择本身并不必然破坏自然性：若选择后同时恰当地定义函子对态射的作用，也可能得到自然同构，\secref{b2:sec:0504}的矩阵范畴将给出这种例子。
+本例中，每个对象处都有同构，选基也能给出一族具体同构，但乘 \(i\) 的态射排除了任何自然的选择。另一方面，选择本身并不必然破坏自然性：若选择后同时恰当地定义函子对态射的作用，也可能得到自然同构，\secref{b2:sec:0504}的矩阵范畴将给出这种例子。
+
+\ProseParagraphBreak
+前三章讨论过短正合列的分裂，第四章也证明有限生成交换群的挠商是自由群，因此每个挠商同态都有截面。但逐个选得截面，与让这些截面对所有群同态相容，仍是两个不同的问题。
+
+\begin{proposition}\label{b2:prop:no-natural-torsion-splitting}
+设 \(\mathbf{Ab}_{\mathrm{fg}}\) 是有限生成交换群及群同态的范畴，对对象 \(A\) 记挠子群为 \(T(A)\)，商群为 \(Q(A)=A/T(A)\)。每个同态 \(f:A\to B\) 诱导
+\[
+Q(f):Q(A)\to Q(B),\qquad a+T(A)\longmapsto f(a)+T(B),
+\]
+这些映射使 \(Q\) 成为函子，商同态 \(q_A:A\to Q(A)\) 组成自然变换 \(q:\operatorname{Id}\Rightarrow Q\)。每个 \(q_A\) 都有群同态截面，但不存在满足 \(q_As_A=\operatorname{id}_{Q(A)}\) 的自然变换 \(s:Q\Rightarrow\operatorname{Id}\)。
+\end{proposition}
+\begin{proof}
+若 \(na=0\)，则 \(nf(a)=0\)，所以 \(f\) 将 \(T(A)\) 映入 \(T(B)\)。商映射的公式因而良定义，并逐陪集保持恒等和复合。等式 \(Q(f)q_A=q_Bf\) 给出 \(q\) 的自然性。\cref{b2:thm:pid-module-structure}应用于有限生成 \(\mathbb Z\) 模 \(A\)，说明 \(Q(A)\) 是有限秩自由交换群；由\cref{b2:cor:free-quotient-splits}，每个 \(q_A\) 有截面。
+
+假设存在这样的自然截面族，考虑非零商同态 \(f:\mathbb Z\to\mathbb Z/2\mathbb Z\)。在标准识别下，\(Q(\mathbb Z)=\mathbb Z\)、\(q_{\mathbb Z}=\operatorname{id}\)，故截面只能是 \(s_{\mathbb Z}=\operatorname{id}\)。另一方面，\(Q(\mathbb Z/2\mathbb Z)=0\)，所以 \(s_{\mathbb Z/2\mathbb Z}Q(f)=0\)。自然性却要求
+\[
+fs_{\mathbb Z}=s_{\mathbb Z/2\mathbb Z}Q(f),
+\]
+左边是 \(f\ne0\)，矛盾。因此逐对象的分裂不能提升为自然分裂。
+\end{proof}

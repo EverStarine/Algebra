@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 13.3 Artin–Wedderburn 定理
-% 纲要位置：计划纲要.md，第 1194 行。
+% 纲要位置：计划纲要.md，第 1476 行。
 
 \section{Artin–Wedderburn 定理}
 \label{b2:sec:1303}
@@ -11,14 +11,14 @@
 %
 % * 半单环的矩阵块分解
 % * 单 Artin 环与除环
-% * 分解的唯一性及左右约定
+% * 分解的唯一性、中心幂等元及左右约定
 %
 
 \subsection{半单环的矩阵块分解}
 \label{b2:subsec:1303:01}
 
 \begin{theorem}[Artin–Wedderburn]\label{b2:thm:artin-wedderburn}
-含单位元的环 \(R\) 半单，当且仅当存在有限多个除环 \(D_1,\ldots,D_t\) 与正整数 \(n_1,\ldots,n_t\)，使
+设 \(R\) 为含幺环。\(R\) 半单，当且仅当存在有限多个除环 \(D_1,\ldots,D_t\) 与正整数 \(n_1,\ldots,n_t\)，使
 \begin{equation}\label{b2:eq:artin-wedderburn}
 R\cong\prod_{i=1}^tM_{n_i}(D_i).
 \end{equation}
@@ -29,60 +29,77 @@ R\cong\prod_{i=1}^tM_{n_i}(D_i).
 \[
 {}_RR\cong\bigoplus_{i=1}^t S_i^{n_i},
 \]
-其中 \(S_i\) 两两非同构，\(n_i>0\)。令 \(E_i=\operatorname{End}_R(S_i)\)，由\cref{b2:lem:schur}它是除环。Schur 引理还说明不同类型间的 Hom 为零，因此每个自同态保持每个 \(S_i^{n_i}\)，得到
+其中 \(S_i\) 两两非同构，\(n_i>0\)。令 \(E_i=\operatorname{End}_R(S_i)\)，由\cref{b2:lem:schur}它是除环。不同类型间的 Hom 为零：从 \(S_j^{n_j}\) 到 \(S_i^{n_i}\) 的映射在各副本间的坐标映射都为零。因此每个自同态保持每个 \(S_i^{n_i}\)，不同类型之间没有非对角块，而各块内的映射可以独立选取，得到
 \[
 \operatorname{End}_R({}_RR)
 \cong\prod_i\operatorname{End}_R(S_i^{n_i})
 \cong\prod_iM_{n_i}(E_i).
 \]
-第二个同构的矩阵条目为“从第 \(j\) 个副本到第 \(i\) 个副本”的映射。若两个自同态的条目分别为 \(f_{ij},g_{ij}\)，复合的条目为 \(\sum_jf_{ij}\circ g_{j\ell}\)，恰好是以复合作为 \(E_i\) 乘法的通常矩阵乘法。
+第二个同构是在固定各副本与 \(S_i\) 的识别后，把自同态写成矩阵，条目表示“从第 \(j\) 个副本到第 \(i\) 个副本”的映射。若两个自同态的条目分别为 \(f_{ij},g_{ij}\)，先施加 \(g\)、再施加 \(f\)，从第 \(\ell\) 个副本到第 \(i\) 个副本的条目为 \(\sum_jf_{ij}\circ g_{j\ell}\)。这恰好是以复合作为 \(E_i\) 乘法的通常矩阵乘法，也解释了为何同一简单类型的副本形成一个矩阵块。
 
-由\cref{b2:prop:regular-hom-endomorphism}，\(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)，具体地每个左线性自同态是右乘 \(r\mapsto ra\)，两个这样的映射复合反转 \(a\) 的乘法次序。再利用
+由\cref{b2:prop:regular-hom-endomorphism}，每个左线性自同态是某个右乘映射 \(r\mapsto ra\)；先右乘 \(b\)、再右乘 \(a\)，结果为右乘 \(ba\)。因此
 \[
-M_n(E)^{\mathrm{op}}\longrightarrow M_n(E^{\mathrm{op}}),
-\qquad A\longmapsto A^{\mathsf t},
+R^{\mathrm{op}}\cong\operatorname{End}_R({}_RR)
+\cong\prod_iM_{n_i}(E_i).
 \]
-得到原环的分解，取 \(D_i=E_i^{\mathrm{op}}\)。为核对转置保持乘法，设 \(A=(a_{ij})\)、\(B=(b_{ij})\) 属于 \(M_n(E)\)。来源中的乘积为 \(BA\)；目标中的乘积逐条目满足
+要回到原环 \(R\)，先对整个式子取反环，得到
 \[
-\bigl(A^{\mathsf t}\cdot_{E^{\mathrm{op}}}B^{\mathsf t}\bigr)_{i\ell}
+R\cong\prod_iM_{n_i}(E_i)^{\mathrm{op}}.
+\]
+这里得到的仍是矩阵环的反环。对任意除环 \(E\) 和 \(n\ge1\)，用转置把它写回通常的矩阵形式：
+\[
+\Phi:M_n(E)^{\mathrm{op}}\longrightarrow M_n(E^{\mathrm{op}}),
+\qquad A^{\mathrm{op}}\longmapsto A^{\mathsf T}.
+\]
+来源反转整个矩阵的乘法，目标则反转每个条目的乘法；转置同时交换行列，才能把求和中的索引对应起来。确实，设 \(A=(a_{ij})\)、\(B=(b_{ij})\) 属于 \(M_n(E)\)，来源中 \(A^{\mathrm{op}}B^{\mathrm{op}}=(BA)^{\mathrm{op}}\)，目标中的乘积逐条目满足
+\[
+\bigl(A^{\mathsf T}\cdot_{E^{\mathrm{op}}}B^{\mathsf T}\bigr)_{i\ell}
 =\sum_j a_{ji}\cdot_{\mathrm{op}}b_{\ell j}
 =\sum_j b_{\ell j}a_{ji}
 =(BA)_{\ell i}.
 \]
-这正是 \((BA)^{\mathsf t}\) 的第 \((i,\ell)\) 项，因此该映射是环同构。
+这正是 \((BA)^{\mathsf T}\) 的第 \((i,\ell)\) 项。转置还保持加法与单位，并且再转置就恢复原矩阵，所以 \(\Phi\) 为含幺环同构。取 \(D_i=E_i^{\mathrm{op}}\)，便得到题述的原环分解。
 
-反过来，设 \(A=M_n(D)\)。对矩阵单位 \(e_j=E_{jj}\)，有左模直和
+反过来，设 \(D\) 为除环、\(n\ge1\)、\(A=M_n(D)\)。右乘矩阵单位 \(E_{jj}\) 保留第 \(j\) 列而清去其余列，因此按列得到左模直和
 \[
 {}_AA=AE_{11}\oplus\cdots\oplus AE_{nn}.
 \]
-每个左理想由只有指定一列可能非零的矩阵组成，作为左模同构于列向量模 \(D^n\)。这个模简单：若 \(v\ne0\)，选 \(v_j\ne0\)；对任意列向量 \(w\)，取只有第 \(j\) 列可能非零的矩阵，其 \((i,j)\) 项为 \(w_i v_j^{-1}\)，便有 \(Bv=w\)。因此任何非零向量都生成全模。故每个矩阵环左半单。有限乘积的正则模再按各因子分解，仍为有限个简单左模的直和。
+每个左理想 \(AE_{jj}\) 由只有第 \(j\) 列可能非零的矩阵组成，提取该列便给出它与列模 \(D^n\) 的左 \(A\) 模同构。以标准列为基，\(D^n\) 是系数写在右侧的右 \(D\) 向量空间，而 \(A\) 通过矩阵乘法从左作用。这个左 \(A\) 模简单：若 \(v\ne0\)，选 \(v_j\ne0\)；要把 \(v\) 送到任意列向量 \(w\)，可读取第 \(j\) 坐标，用其逆消去 \(v_j\)，再把各 \(w_i\) 写入目标坐标。具体取只有第 \(j\) 列可能非零的矩阵 \(B\)，令 \(b_{ij}=w_i v_j^{-1}\)，则
+\[
+(Bv)_i=(w_i v_j^{-1})v_j=w_i.
+\]
+因此任何非零向量都生成全模。乘法次序不能改成 \(v_j^{-1}w_i\)，因为除环不必交换。故每个矩阵环左半单；有限乘积的正则模按各因子分解，仍为有限个简单左模的直和，其余因子在该分量上作用为零。
 
-同样按行分解可证明矩阵环的右正则模半单：对非零行向量，使用一个非零坐标及其逆构造右乘矩阵，把它送到任意行向量。有限乘积保持这一性质。因此左右均半单；两侧正则模都只有有限个简单分量，故同时具有两侧的升链与降链条件。零环的情形各项结论直接成立。
+矩阵环的右正则模则按行分解为 \(E_{11}A\oplus\cdots\oplus E_{nn}A\)。对非零行向量 \(v\)，取 \(v_j\ne0\)；给定目标行 \(w\)，令 \(B\) 只有第 \(j\) 行可能非零，且 \(b_{j\ell}=v_j^{-1}w_\ell\)，便有 \((vB)_\ell=v_j(v_j^{-1}w_\ell)=w_\ell\)。所以各行理想是简单右模，有限乘积也右半单。两侧正则模都只有有限个简单分量，因而具有有限长度；分别把它们看作左 \(R\) 模与左 \(R^{\mathrm{op}}\) 模，\cref{b2:thm:finite-length-chain-conditions}给出两侧的升链与降链条件。零环的情形各项结论直接成立。
 \end{proof}
 
-这一定理称为\term[Artin-Wedderburn-dingli]{Artin–Wedderburn 定理}[Artin--Wedderburn theorem]。它把所有半单环归结为除环及其有限矩阵环。这些除环可以非交换；有限维的实代数就可能含有四元数除环这一类型。
+这一定理称为\term[Artin-Wedderburn-dingli]{Artin–Wedderburn 定理}[Artin--Wedderburn theorem]。它把所有半单环归结为除环及其有限矩阵环。这些除环可以非交换；有限维的实代数就可能含有四元数除环这一类型。此前半单环只按左正则模定义，右半单性是在得到矩阵结构后由行分解证明的结论。
 
 \subsection{单 Artin 环与除环}
 \label{b2:subsec:1303:02}
 
 \begin{definition}\label{b2:def:simple-ring}
-非零含单位元的环 \(R\) 若只有 \(0,R\) 两个双边理想，就称为\term[jiandan-huan]{单环}[simple ring]。它与正则模简单是不同条件：后者要求没有非零真左理想，因而更强。
+设 \(R\) 为非零含幺环。若 \(R\) 只有 \(0,R\) 两个双边理想，就称为\term[jiandan-huan]{单环}[simple ring]。它与左正则模 \({}_RR\) 简单是不同条件：后者要求只有 \(0,R\) 两个左理想，因而更强。
 \end{definition}
 
 \begin{proposition}\label{b2:prop:simple-artinian}
 非零含幺环 \(R\) 是单环且左 Artin，当且仅当 \(R\) 同构于某个 \(M_n(D)\)，其中 \(D\) 为除环、\(n\ge1\)。这些环也右 Artin。特别地，单半单环恰为单个除环上的全矩阵环。
 \end{proposition}
 \begin{proof}
-先设 \(A=M_n(D)\)。上一定理已证明 Artin 性。若双边理想 \(I\) 含非零矩阵 \(B\)，取 \(b_{ij}\ne0\)，则
+先设 \(A=M_n(D)\)。上一定理已证明 Artin 性。若双边理想 \(I\) 含非零矩阵 \(B\)，取 \(b_{ij}\ne0\)。左右乘矩阵单位可以把这个非零条目搬到任意位置 \((k,\ell)\)：
 \[
 E_{ki}BE_{j\ell}=b_{ij}E_{k\ell}\in I.
 \]
-再左乘对角矩阵 \(b_{ij}^{-1}I_n\)，得到 \(E_{k\ell}\in I\)。任意矩阵是这些矩阵单位的左系数组合，所以 \(I=A\)，证明单性。
+再左乘对角矩阵 \(b_{ij}^{-1}I_n\)，把该条目化成一，得到 \(E_{k\ell}\in I\)。对每个 \(a\in D\)，继续左乘 \(aI_n\)，还得到 \(aE_{k\ell}\in I\)。任意矩阵是这些矩阵的有限和，所以 \(I=A\)，证明单性。
 
-反过来，设 \(R\) 单且左 Artin。非零左理想的降链条件保证存在极小非零左理想，它作为左模简单。令 \(U\) 为全部极小左理想之和，则 \(U\ne0\)，且 \(U\) 还是右理想：对简单左理想 \(L\) 和 \(r\in R\)，右乘映射 \(L\to R\) 左线性，其像 \(Lr\) 是零或简单左理想，因而包含于 \(U\)。于是 \(U\) 为非零双边理想，由单性 \(U=R\)。\cref{b2:thm:semisimple-module-characterizations}说明 \({}_RR\) 半单，再由\cref{b2:thm:artin-wedderburn}得到有限矩阵环乘积。若乘积有两个以上非零因子，其中一个因子便给出非零真双边理想，与单性矛盾。因此只剩一个因子。
+反过来，设 \(R\) 单且左 Artin。非零左理想的降链条件保证存在极小非零左理想，它作为左模简单。要利用单性，我们还需要由这些简单左理想构造一个非零双边理想，所以令 \(U\) 为全部极小左理想之和。它首先是非零左理想。对简单左理想 \(L\) 和 \(r\in R\)，右乘映射
+\[
+\rho_r:L\longrightarrow R,\qquad x\longmapsto xr
+\]
+为左 \(R\) 线性，因为 \((ax)r=a(xr)\)。它的核是 \(L\) 的子模，简单性使核为零或全体 \(L\)；因此像 \(Lr\) 或者为零，或者由第一同构定理同构于 \(L\)，仍是简单左理想。故 \(Lr\subseteq U\)，对 \(U\) 中的有限和也有 \(Ur\subseteq U\)。于是 \(U\) 为非零双边理想，由单性 \(U=R\)。\cref{b2:thm:semisimple-module-characterizations}说明 \({}_RR\) 半单，再由\cref{b2:thm:artin-wedderburn}得到有限矩阵环乘积。若乘积有两个以上非零因子，其中一个因子便给出非零真双边理想，与单性矛盾。因此只剩一个因子。
 \end{proof}
 
-例如 \(M_n(D)\) 在 \(n>1\) 时是单环，却不是除环：\(E_{11}\) 非零而不可逆，且 \(AE_{11}\) 是非零真左理想。相反，若左正则模本身简单，对任意 \(0\ne a\in R\) 有 \(Ra=R\)，于是存在 \(b\) 使 \(ba=1\)。再对 \(b\ne0\) 取 \(c\) 使 \(cb=1\)，则 \(c=cba=a\)，所以 \(ab=1\)。因此每个非零元都有双侧逆，环才是除环。
+例如 \(M_n(D)\) 在 \(n>1\) 时是单环，却不是除环：\(E_{11}\) 非零而不可逆，且 \(AE_{11}\) 是非零真左理想。相反，若非零含幺环 \(R\) 的左正则模本身简单，对任意 \(0\ne a\in R\) 有 \(Ra=R\)，于是存在 \(b\) 使 \(ba=1\)。再对 \(b\ne0\) 取 \(c\) 使 \(cb=1\)，则 \(c=cba=a\)，所以 \(ab=1\)。因此每个非零元都有双侧逆，\(R\) 是除环。反过来，除环的每个非零左理想都含有单位，因而为全环，所以其左正则模简单。
 
 \ProseParagraphBreak
 上述证明还说明：在单环中，只要存在一个极小非零左理想，就已经可以推出矩阵环结构；左 Artin 条件提供了保证其存在的充分条件。随后用单性把全部极小左理想的和扩大为全环，环的双边理想结构与左模结构分别承担了不同步骤。
@@ -90,39 +107,85 @@ E_{ki}BE_{j\ell}=b_{ij}E_{k\ell}\in I.
 \subsection{分解的唯一性及左右约定}
 \label{b2:subsec:1303:03}
 
+一个半单分解可以改变简单分量的具体位置，却不应改变每种简单类型的副本数。固定简单模 \(S\)，从 \(S\) 到其他简单类型的同态为零，而到一个 \(S\) 副本的同态给出一个自同态除环。因此 \(\operatorname{Hom}_R(S,M)\) 可以检测这种类型的副本数。其标量来自来源 \(S\) 的自同态，作用方式是先改变输入，再施加同态，即预复合。
+
 \begin{proposition}[半单分解中的重数]\label{b2:prop:semisimple-multiplicity}
-设 \(R\) 为含幺环、\(M\) 为有限生成半单左 \(R\) 模、\(S\) 为简单左 \(R\) 模，\(E=\operatorname{End}_R(S)\)，则 \(\operatorname{Hom}_R(S,M)\) 通过以下运算成为右 \(E\) 向量空间（\(h\in\operatorname{Hom}_R(S,M),\ e\in E\)）：
+设 \(R\) 为含幺环、\(M\) 为有限生成半单幺左 \(R\) 模、\(S\) 为简单幺左 \(R\) 模，\(E=\operatorname{End}_R(S)\)，其乘法为映射复合。则 \(\operatorname{Hom}_R(S,M)\) 通过以下运算成为右 \(E\) 向量空间（\(h\in\operatorname{Hom}_R(S,M),\ e\in E\)）：
 \[
 h\cdot e=h\circ e.
 \]
-任一简单直和分解中，\(S\) 的同构副本出现次数等于
+任一简单直和分解中，\(S\) 的同构副本出现次数等于以下右维数：
 \[
 \dim_E\operatorname{Hom}_R(S,M).
 \]
 特别地，简单类型及各自重数不依赖所选分解。
 \end{proposition}
 \begin{proof}
-由复合的结合律，\((h\cdot e)\cdot e'=h\cdot(ee')\)，所以确为右作用。对一个有限简单分解 \(M=\bigoplus_jT_j\)，取各坐标投影给出右 \(E\) 线性同构
+由复合的结合律，
 \[
-\operatorname{Hom}_R(S,M)\cong\bigoplus_j\operatorname{Hom}_R(S,T_j).
+(h\cdot e)\cdot e'=h\circ e\circ e'=h\cdot(ee'),
 \]
-若 \(T_j\not\cong S\)，该项由 Schur 引理为零。若 \(u_j:S\to T_j\) 是同构，则每个同态唯一写为 \(u_j e\)，所以该项是一维右 \(E\) 空间。维数恰为副本数。反过来，\(S\) 出现当且仅当这个 Hom 非零，因此出现的简单类型也由 \(M\) 本身决定。
+而恒等映射给出单位作用，复合对加法分配，所以确为右作用。取简单分解 \(M=\bigoplus_{j\in J}T_j\)。由于 \(S\) 简单，任意 \(0\ne s\in S\) 都生成 \(S\)。给定 \(h:S\to M\)，\(h(s)\) 只含有限多个非零坐标，左标量作用不会增加这些坐标；由 \(h(rs)=rh(s)\)，整个 \(h(S)\) 都在同一个有限子直和中。因此各坐标映射组成有限支集的族，取坐标投影给出右 \(E\) 线性同构
+\[
+\operatorname{Hom}_R(S,M)\cong\bigoplus_{j\in J}\operatorname{Hom}_R(S,T_j).
+\]
+反向把有限多个坐标映射通过包含求和即可。这里即使 \(J\) 无限，得到的也是直和，而不是直积，原因在于来源 \(S\) 有限生成。又由于 \(M\) 有限生成，由\secref{b2:sec:1301}的有限支集论证知 \(J\) 有限。若 \(T_j\not\cong S\)，该项由 Schur 引理为零；若 \(u_j:S\to T_j\) 是同构，则每个同态唯一写为 \(u_j\circ e\)，所以该项是一维右 \(E\) 空间。维数恰为副本数。反过来，\(S\) 出现当且仅当这个 Hom 非零，因此出现的简单类型也由 \(M\) 本身决定。
 \end{proof}
 
 这里除环上的有限维数仍然唯一。基交换论证只需要非零系数可逆：若右线性展开含 \(v_j a\)、\(a\ne0\)，就在右侧乘 \(a^{-1}\) 解出 \(v_j\)，然后逐个替换生成元。一组无关向量不能多于一组有限生成元，交换两组基便得大小相同；不需要交换两个标量的次序。
 
 \ProseParagraphBreak
-每个简单左 \(R\) 模都是正则模的商；当 \(R\) 半单时，该商映射分裂，所以每个简单类型都在 \({}_RR\) 中出现。因此上一命题应用于 \({}_RR\)，就给出 Artin–Wedderburn 分解的唯一性：类型 \(S_i\) 决定除环
+将上一命题用于半单环的正则模，\(\operatorname{Hom}_R(S,R)\) 的右维数便恢复类型 \(S\) 的重数，而该类型还决定系数除环
 \[
-D_i=\operatorname{End}_R(S_i)^{\mathrm{op}},
+D_S=\operatorname{End}_R(S)^{\mathrm{op}}.
 \]
-其在正则模中的重数决定 \(n_i\)。下面核对，在一个已给定的矩阵乘积中，这正好恢复原来的参数。
+这两种数据取自 \(R\) 的模与同态，不依赖矩阵坐标。不同矩阵因子则可以由环内部的中心幂等元区分。
 
-\ProseParagraphBreak
-对 \(A=M_n(D)\)，正则模是 \(n\) 个列模 \(D^n\) 的直和，它们两两同构。若 \(T\) 简单，满射 \(A\to T\) 在某个列理想上的限制非零，因此 Schur 引理使 \(T\cong D^n\)。而 \(\operatorname{End}_A(D^n)\cong D^{\mathrm{op}}\)：令 \(e_i\) 为标准列，若 \(f\) 与全部矩阵作用交换，由 \(E_{11}\cdot f(e_1)=f(e_1)\) 知 \(f(e_1)=e_1d\)，再由 \(e_i=E_{i1}e_1\) 得 \(f(e_i)=e_id\)。对一般向量使用单列矩阵作用，便得 \(f(v)=vd\)。反过来，每个右乘 \(d\) 都与左矩阵作用交换，复合则反转 \(d\) 的乘法。
+\begin{proposition}\label{b2:prop:matrix-centers-central-idempotents}
+设 \(D\) 为除环、\(n\ge1\)，则
+\[
+Z\bigl(M_n(D)\bigr)=Z(D)I_n.
+\]
+更一般地，设 \(t\ge0\)、\(D_1,\ldots,D_t\) 为除环、\(n_1,\ldots,n_t\ge1\)，并令 \(R=\prod_{i=1}^tM_{n_i}(D_i)\)，则
+\[
+Z(R)=\prod_{i=1}^t Z(D_i)I_{n_i}.
+\]
+对 \(1\le i\le t\)，令 \(c_i\in R\) 的第 \(i\) 坐标为 \(I_{n_i}\)，其余坐标为零。\(R\) 的中心幂等元恰为 \(\sum_{i\in F}c_i\)，其中 \(F\subseteq\{1,\ldots,t\}\)，总数为 \(2^t\)。按 \(e\le f\iff ef=e\) 比较中心幂等元时，极小非零者恰为 \(c_1,\ldots,c_t\)。\(t=0\) 时 \(R\) 为零环，只有幂等元零，没有非零中心幂等元。
+\end{proposition}
+\begin{proof}
+设 \(C=(c_{ij})\in Z(M_n(D))\)。与各 \(E_{jj}\) 交换，迫使第 \(j\) 行、第 \(j\) 列的非对角元都为零，因此 \(C\) 为对角矩阵。再与每个 \(E_{ij}\) 交换，得到各对角元相同，故 \(C=dI_n\)。对任意 \(a\in D\)，与 \(aE_{11}\) 交换又给出 \(da=ad\)，所以 \(d\in Z(D)\)。反过来，\(d\in Z(D)\) 时，\(dI_n\) 与每个矩阵逐条目交换，证明第一个等式。这些论证在 \(n=1\) 时同样成立。
 
-\ProseParagraphBreak
-若 \(R=\prod_iA_i\)，令 \(c_i\) 为第 \(i\) 个因子的单位元在乘积中的像。它们是中心幂等元，满足 \(c_ic_j=0\)（\(i\ne j\)）及 \(\sum_i c_i=1\)。每个模分解为 \(M=\bigoplus_i c_iM\)；简单模因而只能有一个非零分量，其余因子作用为零。综上，任意两种式\eqref{b2:eq:artin-wedderburn}的分解，其因子数相同，重排后各 \(n_i\) 相同、各 \(D_i\) 作为环同构。
+乘积环中的元素与全部元素交换，当且仅当每个坐标在相应因子的中心，得到第二个等式。\(Z(D_i)\) 是域：非零中心元的逆仍与每个元素交换。故其中的幂等元只能为零或一，中心幂等元便是在各坐标上分别选择零或单位矩阵，恰对应子集 \(F\)，共有 \(2^t\) 个。两个这样的幂等元相乘对应子集的交，所以 \(e\le f\) 对应子集包含；极小非空子集是单点集，给出各 \(c_i\)。空乘积时仅有空子集，对应零环中的唯一元素零，仍有 \(2^0=1\) 个幂等元。
+\end{proof}
 
-\ProseParagraphBreak
+\begin{corollary}\label{b2:cor:artin-wedderburn-uniqueness}
+设 \(R\) 为含幺环，且有两个含幺环分解
+\[
+R\cong\prod_{i=1}^tM_{n_i}(D_i)
+\cong\prod_{j=1}^sM_{m_j}(F_j),
+\]
+其中 \(t,s\ge0\)，\(D_i,F_j\) 为除环，\(n_i,m_j\ge1\)。则 \(t=s\)，并可重排下标，使每个 \(i\) 都满足 \(n_i=m_i\) 及 \(D_i\cong F_i\)（含幺环同构）。零环的两个分解均为空乘积。
+\end{corollary}
+\begin{proof}
+若 \(R=0\)，任何除环上的正阶矩阵环都非零，所以只能有 \(t=s=0\)。以下设 \(R\ne0\)。把两种乘积的各坐标单位通过同构送到 \(R\)，分别得到 \(c_1,\ldots,c_t\) 与 \(d_1,\ldots,d_s\)。由\cref{b2:prop:matrix-centers-central-idempotents}，它们分别列出了 \(R\) 的全部极小非零中心幂等元。因此 \(t=s\)，且重排后 \(c_i=d_i\)；各因子正是这些幂等元切出的环 \(c_iR\)，其单位为 \(c_i\)。
+
+对任意幺左 \(R\) 模 \(T\)，各 \(c_iT\) 是子模，因为 \(c_i\) 位于中心。由 \(\sum_i c_i=1\) 及 \(c_ic_j=0\ (i\ne j)\)，有
+\[
+T=\bigoplus_{i=1}^t c_iT.
+\]
+若 \(T\) 简单，就只能有一个非零分量，该分量等于 \(T\)，其余因子在 \(T\) 上作用为零。因此不同矩阵因子的简单类型不会混合。对 \(A=M_n(D)\)，前面的按列分解给出 \({}_AA\cong(D^n)^n\)。每个简单左 \(A\) 模 \(T\) 都由任意非零元生成，因而是 \(A\) 的商；相应满射 \(A\to T\) 在某个列理想上的限制非零，Schur 引理使 \(T\cong D^n\)。故一个矩阵因子恰提供一种简单类型。
+
+还要从这个类型恢复 \(D\)。令 \(e_i\) 为 \(D^n\) 的标准列，\(f\in\operatorname{End}_A(D^n)\)。由 \(E_{11}f(e_1)=f(E_{11}e_1)=f(e_1)\)，有 \(f(e_1)=e_1a\)，其中 \(a\in D\)。对任意列 \(v\)，取第一列为 \(v\)、其余列为零的矩阵 \(B\)，则 \(Be_1=v\)，左 \(A\) 线性给出
+\[
+f(v)=f(Be_1)=Bf(e_1)=B(e_1a)=va.
+\]
+反过来，每个右乘映射 \(r_a(v)=va\) 都左 \(A\) 线性，因为 \(B(va)=(Bv)a\)。又 \(r_a\circ r_b=r_{ba}\)，故
+\[
+\operatorname{End}_A(D^n)\cong D^{\mathrm{op}}.
+\]
+于是该简单类型的自同态除环再取反环，恰好恢复原来的 \(D\)。
+
+对因子 \(c_iR\)，两种分解给出同一个简单左 \(R\) 模类型 \(S_i\)；因其余因子作用为零，左 \(R\) 线性与左 \(c_iR\) 线性在 \(S_i\) 上是同一条件。因此其自同态环在第一种描述下同构于 \(D_i^{\mathrm{op}}\)，在第二种描述下同构于 \(F_i^{\mathrm{op}}\)，取反环得到 \(D_i\cong F_i\)。按列分解又说明 \(S_i\) 在正则模中的重数分别为 \(n_i\) 与 \(m_i\)。\({}_RR\) 有限生成且半单，\cref{b2:prop:semisimple-multiplicity}使这两个重数都等于 \(\operatorname{Hom}_R(S_i,R)\) 的右 \(\operatorname{End}_R(S_i)\) 维数，因此 \(n_i=m_i\)。
+\end{proof}
+
 这里所谓唯一性是参数及因子的同构类型唯一，不是矩阵单位或具体同构映射唯一。改变同一简单类型的副本识别，会改变矩阵坐标。采用左模约定时，自同态除环必须再取反环才得到原环的矩阵系数；若采用右模约定，相应次序随之改变，不能在公式中无说明地省去 \(\mathrm{op}\)。

@@ -9,9 +9,11 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 余子式、伴随矩阵与 Cayley–Hamilton
-% * Plücker 坐标的初步例子
-% * Koszul 复形的外代数背景
+% * 余子式、伴随矩阵与 Cayley–Hamilton；系数递推和相邻项抵消
+% * Plücker 坐标的初步例子；非零纯楔积恢复子空间、四维二次关系与特征二
+% * Koszul 复形的外代数背景；收缩由分次乘法规则产生，反交换关系完整证明
+% * 三变量自然关系与关系之间的相容性；复合为零不等于正合，自由消解的含义
+% * 含单位序列的 Koszul 复形正合，构造及证明放在正文；正则序列理论归第三卷
 %
 % ---
 %
@@ -46,12 +48,12 @@ A\operatorname{adj}(A)=\operatorname{adj}(A)A=(\det A)I_n.
 \begin{proof}
 在\eqref{b2:eq:determinant-leibniz}中，按某一固定行所使用的列位置分组。含 \(a_{ik}\) 的项，其余因子的排列恰好遍历删去该行、该列后的置换。把第 \(i\) 行和第 \(k\) 列分别移到首位，共产生 \(i-1+k-1\) 个换位，故这一组的符号因子为 \((-1)^{i+k}\)。组内求和于是等于 \(a_{ik}C_{ik}\)，得到行展开。对转置矩阵使用行展开，再用\eqref{b2:eq:determinant-transpose}，得到列展开。
 
-乘积 \(A\operatorname{adj}(A)\) 的 \((i,j)\) 项为 \(\sum_k a_{ik}C_{jk}\)。当 \(i=j\) 时是 \(\det A\)。当 \(i\ne j\) 时，把 \(A\) 的第 \(j\) 行替换为第 \(i\) 行；沿第 \(j\) 行展开，其代数余子式仍为 \(C_{jk}\)，所以行列式正是上述和，但矩阵有两行相同，故为零。这证明第一个乘积公式。第二个乘积公式通过替换第 \(i\) 列为第 \(j\) 列并作列展开得到。
+乘积 \(A\operatorname{adj}(A)\) 的 \((i,j)\) 项为 \(\sum_k a_{ik}C_{jk}\)。当 \(i=j\) 时是 \(\det A\)。当 \(i\ne j\) 时，我们仍要把这个和解释成一次行列式展开：把 \(A\) 的第 \(j\) 行替换为第 \(i\) 行，沿第 \(j\) 行展开时，代数余子式仍为 \(C_{jk}\)，行中的系数则变为 \(a_{ik}\)。所得行列式正是上述和，但矩阵有两行相同，故为零。这证明第一个乘积公式。第二个乘积公式通过替换第 \(i\) 列为第 \(j\) 列并作列展开得到。
 
 若行列式为单位，式\eqref{b2:eq:adjugate-identity}给出双侧逆。若 \(A\) 可逆，则\cref{b2:thm:determinant-multiplicativity}给出 \(\det A\det A^{-1}=1\)，所以行列式为单位。
 \end{proof}
 
-下面通过比较多项式的系数重新证明 Cayley–Hamilton 定理\termidx[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}。\cref{b2:prop:operator-characteristic-minimal}已在域上证明特征多项式是最小多项式的倍数，因而零化算子；这里给出另一证明，并把系数推广到任意交换环。
+下面通过比较多项式的系数重新证明 Cayley–Hamilton 定理\termidx[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}。\cref{b2:prop:operator-characteristic-minimal}利用域上的多项式环模分类，证明特征多项式是最小多项式的倍数，因而零化算子；这里直接使用行列式与伴随矩阵恒等式，把系数推广到任意交换环。
 
 \begin{theorem}[Cayley–Hamilton]\label{b2:thm:exterior-cayley-hamilton}
 若 \(R\) 为交换环、\(A\in M_n(R)\)、\(n\ge1\)，令
@@ -65,7 +67,9 @@ A\operatorname{adj}(A)=\operatorname{adj}(A)A=(\det A)I_n.
 \[
 (tI_n-A)\operatorname{adj}(tI_n-A)=\chi_A(t)I_n.
 \]
-伴随矩阵的每个条目是 \(n-1\) 阶子式，所以次数至多 \(n-1\)。写
+对标量多项式 \(\chi_A(t)\)，\(\chi_A(A)\) 当然有意义。但若要在左端按普通多项式代入的规则令 \(t=A\)，还须先核对矩阵系数与 \(A\) 交换：在矩阵系数多项式中，\(t\) 与所有系数交换，换成 \(A\) 后却不能未经证明地保留这一性质。因此这里保留每个矩阵因子的次序，改由系数关系消去伴随矩阵中的未知系数。
+
+伴随矩阵的每个条目是 \(n-1\) 阶子式，所以次数至多 \(n-1\)。将它按 \(t\) 展开为
 \[
 \operatorname{adj}(tI_n-A)=B_0+B_1t+\cdots+B_{n-1}t^{n-1},
 \qquad B_j\in M_n(R).
@@ -75,7 +79,7 @@ A\operatorname{adj}(A)=\operatorname{adj}(A)A=(\det A)I_n.
 -AB_0=c_0I_n,\qquad
 B_{j-1}-AB_j=c_jI_n\ (1\le j<n),\qquad B_{n-1}=I_n.
 \]
-将中间第 \(j\) 个等式在左侧乘以 \(A^j\)，最后一式在左侧乘以 \(A^n\)，再连同首式求和，则右端为 \(\chi_A(A)\)，左端为
+这些关系把 \(c_jI_n\) 写成相邻两个 \(B_j\) 的组合，不必逐个求出 \(B_j\)。将中间第 \(j\) 个等式在左侧乘以 \(A^j\)，最后一式在左侧乘以 \(A^n\)，再连同首式求和，相邻的 \(B_j\) 项便有相同的左侧幂次而符号相反。右端为 \(\chi_A(A)\)，左端为
 \[
 -AB_0+\sum_{j=1}^{n-1}(A^jB_{j-1}-A^{j+1}B_j)
 +A^nB_{n-1}=0.
@@ -97,14 +101,17 @@ B_{j-1}-AB_j=c_jI_n\ (1\le j<n),\qquad B_{n-1}=I_n.
 \[
 w_1\wedge\cdots\wedge w_r=\sum_{|I|=r}p_Ie_I.
 \]
-这些 \(p_I\) 是以 \(w_j\) 为列的矩阵的 \(r\) 阶子式。若换一组基，整个楔积乘以换基矩阵的非零行列式。因此，把所有 \(p_I\) 同时乘以同一个非零标量视为同一组坐标，就得到只依赖 \(W\) 的\term[Plucker-zuobiao]{Plücker 坐标}[Plücker coordinates]。
+这些 \(p_I\) 是以 \(w_j\) 为列的矩阵的 \(r\) 阶子式。若换一组基，整个楔积乘以换基矩阵的非零行列式。因此，把所有 \(p_I\) 同时乘以同一个非零标量视为同一组坐标，就得到只依赖 \(W\) 的\term[Plucker-zuobiao]{Plücker 坐标}[Plücker coordinates]。这种只确定到共同非零倍数的坐标称为齐次坐标；子空间 \(W\) 确定的是 \(\bigwedge^rV\) 中的一条直线 \(k(w_1\wedge\cdots\wedge w_r)\)，而不是这条直线上的某个指定非零向量。
 
 \ProseParagraphBreak
 这些坐标确实能够辨认子空间。对非零纯楔积 \(\omega=w_1\wedge\cdots\wedge w_r\)，有
 \begin{equation}\label{b2:eq:plucker-recovers-plane}
 W=\{\,v\in V\mid v\wedge\omega=0\,\}.
 \end{equation}
-若 \(v\in W\)，按 \(w_j\) 展开即得楔积为零。若 \(v\notin W\)，则 \(v,w_1,\ldots,w_r\) 线性无关，把它们扩充为一组基，\cref{b2:thm:exterior-power-basis}说明对应楔积非零。因此两个非零纯楔积只相差标量时，恢复出的子空间相同。
+若 \(v\in W\)，按 \(w_j\) 展开即得楔积为零。若 \(v\notin W\)，则 \(v,w_1,\ldots,w_r\) 线性无关，\cref{b2:prop:wedge-linear-independence}说明它们的楔积非零。因此两个非零纯楔积只相差标量时，恢复出的子空间相同。这里的非零与纯楔积条件都不可省略；对一般外张量，右端不能无条件解释为一个 \(r\) 维子空间。\cref{b2:ex:09-plucker-plane-recovery}给出了由具体坐标恢复平面的计算。
+
+\ProseParagraphBreak
+还需判定哪些坐标真的来自一个子空间。例如，若一个 \(4\times2\) 矩阵的两列为 \(u,v\)，它的六个二阶子式同时来自这两列，因而必须满足彼此的相容关系。下面的二次式正是这种约束。
 
 \begin{proposition}[四维空间中二重楔积的判据]\label{b2:prop:plucker-four-dimensional}
 设 \(k\) 为任意域，\(e_1,\ldots,e_4\) 为 \(k^4\) 的标准基，并设
@@ -142,7 +149,7 @@ u_4&v_4
 v_3=p_{13},\qquad v_4=p_{14},\qquad
 -a u_3=p_{23},\qquad -a u_4=p_{24}.
 \]
-由于 \(a\ne0\)，这些等式依次确定四个未知系数，即
+前两行使这四个子式成为关于未知系数的线性方程。由于 \(a\ne0\)，它们唯一确定 \(u_3,u_4,v_3,v_4\)，即
 \[
 u=e_1-\frac{p_{23}}a e_3-\frac{p_{24}}a e_4,
 \qquad v=a e_2+p_{13}e_3+p_{14}e_4.
@@ -151,13 +158,13 @@ u=e_1-\frac{p_{23}}a e_3-\frac{p_{24}}a e_4,
 \[
 \frac{p_{13}p_{24}-p_{14}p_{23}}a=p_{34},
 \]
-最后一步恰用\eqref{b2:eq:plucker-quadric}。故 \(u\wedge v=\omega\)。若 \(u,v\) 相关，其楔积为零，所以非零情形下它们独立。
+最后一步恰用\eqref{b2:eq:plucker-quadric}：五个坐标已由所选两列实现，二次关系保证剩下的第六个坐标也匹配。故 \(u\wedge v=\omega\)。若 \(u,v\) 相关，其楔积为零，所以非零情形下它们独立。
 \end{proof}
 
-外幂中能写成一个纯楔积的元素称为\term[kefenjie-zhangliang]{可分解外张量}[decomposable exterior tensor]，也简称可分解张量。这里的“可分解”专指能写成一个楔积，区别于张量积中能写成一个纯张量。上面的关系表明，在 \(\bigwedge^2k^4\) 中，可分解外张量的坐标并不是任意六个标量。例如 \(e_1\wedge e_2+e_3\wedge e_4\) 的关系左端为 \(1\)，所以在任意域上都不可分解。
+外幂中能写成一个纯楔积的元素称为\term[kefenjie-zhangliang]{可分解外张量}[decomposable exterior tensor]，也简称可分解张量。这里的“可分解”专指能写成一个楔积，区别于张量积中能写成一个纯张量。上面的关系表明，在 \(\bigwedge^2k^4\) 中，可分解外张量的坐标并不是任意六个标量。例如 \(e_1\wedge e_2+e_3\wedge e_4\) 的关系左端为 \(1\)，所以在任意域上都不可分解。一般 \(r\) 维子空间的 Plücker 坐标也满足一族二次关系；这里的 \(r=2,n=4\) 是只需一个非平凡二次方程的最小例子。
 
 \ProseParagraphBreak
-另一方面，直接计算得到
+另一方面，简记 \(e_{ij}=e_i\wedge e_j\)、\(e_{1234}=e_1\wedge e_2\wedge e_3\wedge e_4\)。展开 \(\omega\wedge\omega\) 时，只有指标互不重复的交叉项可能非零。两个次数二的因子交换时产生的符号为 \((-1)^{2\cdot2}=1\)，所以 \(e_{12}\wedge e_{34}\) 与 \(e_{34}\wedge e_{12}\) 同号，都等于 \(e_{1234}\)。每一对这样的交叉项因而贡献两倍，得到
 \[
 \omega\wedge\omega
 =2(p_{12}p_{34}-p_{13}p_{24}+p_{14}p_{23})
@@ -175,45 +182,71 @@ e_1\wedge e_2\wedge e_3\wedge e_4.
 的核记录：\(\sum_i r_ie_i\) 在核中，恰好表示 \(\sum_i r_i a_i=0\)。交换性立即给出关系 \(a_ie_j-a_je_i\)，因为它的像是 \(a_i a_j-a_j a_i=0\)。二次外幂中的 \(e_i\wedge e_j\) 正好记录这一对指标，更高外幂则用来组织这些关系之间的相容性。
 
 \ProseParagraphBreak
-这提示我们对任意线性映射 \(\lambda:M\to R\)，在一个楔积中依次把各因子送入 \(\lambda\)，再删去相应因子并加上位置符号。对于两个因子，所得 \(\lambda(m_1)m_2-\lambda(m_2)m_1\) 就具有上述关系的形式。本小节将所有负次外幂约定为零，使零次上的微分也有明确的目标。
+对任意 \(R\) 模 \(M\)，为了把线性映射 \(\lambda:M\to R\) 延伸到整个外代数，我们要求它在一次分量上等于 \(\lambda\)，在标量上为零，并遵循分次 Leibniz 规则：作用于一个楔积时，可以作用于前一因子，也可以越过前一因子后作用于后一因子；越过次数 \(p\) 的因子时带上符号 \((-1)^p\)。次数为 \(-1\) 表示把 \(\bigwedge^pM\) 映到 \(\bigwedge^{p-1}M\)。若这样的算子连续作用两次总为零，即平方为零，就称为微分。本小节将所有负次外幂约定为零，使零次上的微分也有明确的目标。
 
 \begin{proposition}[收缩微分]\label{b2:prop:exterior-contraction}
-设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(\lambda:M\to R\) 为 \(R\) 线性映射，并约定 \(\bigwedge^pM=0\) 对 \(p<0\) 成立。存在唯一次数为 \(-1\) 的 \(R\) 线性算子
+设 \(R\) 为交换含幺环，\(M\) 为幺性 \(R\) 模，\(\lambda:M\to R\) 为 \(R\) 线性映射，并约定 \(\bigwedge^pM=0\) 对 \(p<0\) 成立。存在唯一次数为 \(-1\) 的 \(R\) 线性分次导子
 \[
 \iota_\lambda:\bigwedge^pM\longrightarrow\bigwedge^{p-1}M,
 \]
-在 \(R=\bigwedge^0M\) 上取零，并满足
+在 \(R=\bigwedge^0M\) 上取零，在 \(M=\bigwedge^1M\) 上等于 \(\lambda\)，且对 \(\xi\in\bigwedge^pM\)、\(\eta\in\bigwedge^qM\) 满足分次 Leibniz 规则
+\[
+\iota_\lambda(\xi\wedge\eta)
+=\iota_\lambda(\xi)\wedge\eta+(-1)^p\xi\wedge\iota_\lambda(\eta).
+\]
+它在纯楔积上的公式为
 \begin{equation}\label{b2:eq:contraction-formula}
 \iota_\lambda(m_1\wedge\cdots\wedge m_p)
 =\sum_{j=1}^p(-1)^{j-1}\lambda(m_j)
 m_1\wedge\cdots\wedge\widehat{m_j}\wedge\cdots\wedge m_p.
 \end{equation}
-帽号表示省去该因子。这个算子称为由 \(\lambda\) 确定的\term[shousuo]{收缩}[contraction]，且对 \(\xi\in\bigwedge^pM\)、\(\eta\in\bigwedge^qM\) 满足
-\[
-\iota_\lambda(\xi\wedge\eta)
-=\iota_\lambda(\xi)\wedge\eta+(-1)^p\xi\wedge\iota_\lambda(\eta),
-\qquad \iota_\lambda^2=0.
-\]
+这里 \(p\ge1\)，帽号表示省去该因子。这个算子称为由 \(\lambda\) 确定的\term[shousuo]{收缩}[contraction]，并满足 \(\iota_\lambda^2=0\)。
 \end{proposition}
 \begin{proof}
-式\eqref{b2:eq:contraction-formula}的右端对输入多线性。若 \(m_r=m_s\)、\(r<s\)，除删除第 \(r\) 或第 \(s\) 个因子的项以外，其余项仍有重复因子，均为零。删去第 \(r\) 个因子后，把原第 \(s\) 个因子移回第 \(r\) 个位置，共交换 \(s-r-1\) 次，所以该项的总符号是 \((-1)^{r-1+s-r-1}=(-1)^{s-2}\)，与删去第 \(s\) 个因子的项符号相反。二者系数中的 \(\lambda(m_r),\lambda(m_s)\) 相同，故抵消。这证明右端交替，外幂泛性质给出唯一线性算子。
+若 \(D\) 是满足陈述中条件的分次导子，先把第一个因子分出，Leibniz 规则给出
+\[
+D(m_1\wedge\cdots\wedge m_p)
+=\lambda(m_1)m_2\wedge\cdots\wedge m_p
+-m_1\wedge D(m_2\wedge\cdots\wedge m_p).
+\]
+从 \(p=1\) 开始归纳，便强迫得到\eqref{b2:eq:contraction-formula}。纯楔积生成各次外幂，而零次上的作用已经指定，所以至多存在一个这样的算子。
 
-对两个纯楔积的乘积，删除位置或者在前 \(p\) 项，或者在后 \(q\) 项。前者给出第一项，后者相对从 \(\eta\) 开始计数多出 \(p\)，产生 \((-1)^p\)，得到所示乘法公式。由双线性推广到所有齐次元素。
+反过来，式\eqref{b2:eq:contraction-formula}的右端对输入多线性。若 \(m_r=m_s\)、\(r<s\)，除删除第 \(r\) 或第 \(s\) 个因子的项以外，其余项仍有重复因子，均为零。删去第 \(r\) 个因子后，把原第 \(s\) 个因子移回第 \(r\) 个位置，共交换 \(s-r-1\) 次，所以该项的总符号是 \((-1)^{r-1+s-r-1}=(-1)^{s-2}\)，与删去第 \(s\) 个因子的项符号相反。二者系数中的 \(\lambda(m_r),\lambda(m_s)\) 相同，故抵消。这证明右端交替，外幂泛性质给出各次上的线性算子。把零次上的作用取为零，就得到次数为 \(-1\) 的 \(\iota_\lambda\)，其在一次分量上的作用是 \(\lambda\)。
 
-最后，两次收缩后，每个结果都删去一对不同位置。固定 \(i<j\)，先删 \(i\) 再删 \(j\) 的符号为 \((-1)^{i+j-3}\)，先删 \(j\) 再删 \(i\) 的符号为 \((-1)^{i+j-2}\)。两项的剩余因子次序相同，标量系数分别为 \(\lambda(m_i)\lambda(m_j)\) 及其反序，由交换性相等，故相互抵消。所有项成对消去，得到 \(\iota_\lambda^2=0\)。
+当 \(p\) 或 \(q\) 为零时，所示乘法公式由 \(R\) 线性与标量上的零作用直接得到。对两个正次纯楔积的乘积，删除位置或者在前 \(p\) 项，或者在后 \(q\) 项。前者给出第一项，后者相对从 \(\eta\) 开始计数多出 \(p\)，产生 \((-1)^p\)，得到分次 Leibniz 规则。由双线性推广到所有齐次元素。
+
+最后，两次收缩就是选两个不同位置，各施加一次 \(\lambda\) 并删去相应因子。每对位置有两种删除顺序，它们留下相同的楔积与相同的标量，只在符号上相反。具体说，固定 \(i<j\)，先删 \(i\) 再删原第 \(j\) 个因子的符号为 \((-1)^{i+j-3}\)，先删 \(j\) 再删 \(i\) 的符号为 \((-1)^{i+j-2}\)。两项的剩余因子次序相同，标量系数分别为 \(\lambda(m_i)\lambda(m_j)\) 及其反序，由交换性相等，故相互抵消。所有项成对消去，得到 \(\iota_\lambda^2=0\)。
 \end{proof}
 \symidx{\(\iota_\lambda\)：外代数上的收缩算子}
+
+\begin{corollary}\label{b2:cor:contractions-anticommute}
+设 \(R\) 为交换含幺环，\(M\) 为幺性 \(R\) 模，\(\lambda,\mu:M\rightarrow R\) 为 \(R\) 线性映射。由它们确定的外代数收缩算子满足
+\[
+\iota_\lambda\iota_\mu+\iota_\mu\iota_\lambda=0.
+\]
+这个反交换关系对任意特征成立。
+\end{corollary}
+\begin{proof}
+由\eqref{b2:eq:contraction-formula}，\(\iota_{\lambda+\mu}\) 与 \(\iota_\lambda+\iota_\mu\) 在每个纯楔积上相同，在零次部分上也都为零，所以
+\(\iota_{\lambda+\mu}=\iota_\lambda+\iota_\mu\)。对 \(\lambda+\mu\) 应用\cref{b2:prop:exterior-contraction}，得到
+\[
+0=\iota_{\lambda+\mu}^2
+=\iota_\lambda^2+\iota_\lambda\iota_\mu
++\iota_\mu\iota_\lambda+\iota_\mu^2.
+\]
+两个平方项已为零，剩下的就是所求关系。这里只展开算子乘积并消去已知零项，没有除以二，因此特征二时也成立。
+\end{proof}
 
 令 \(n\ge1\)、\(M=R^n\)，选基 \(e_1,\ldots,e_n\)，并指定 \(\lambda(e_i)=a_i\in R\)。取 \(K_p=\bigwedge^pR^n\)、\(\mathrm{d}_p=\iota_\lambda\)，得到
 \[
 0\longrightarrow K_n\xrightarrow{\mathrm{d}_n}K_{n-1}\longrightarrow\cdots
 \longrightarrow K_1\xrightarrow{\mathrm{d}_1}K_0\longrightarrow0.
 \]
-一列 \(R\) 模与 \(R\) 线性箭头若满足每两个相邻箭头的复合为零，就称为一个\term[lianfuxing]{链复形}[chain complex]；此处的条件 \(\mathrm{d}_{p-1}\mathrm{d}_p=0\) 已由上一命题证明。上面由 \(a_1,\ldots,a_n\in R\) 构造的链复形称为序列 \(a_1,\ldots,a_n\) 的\term[Koszul-fuxing]{Koszul 复形}[Koszul complex]，记为 \(K_\bullet(a_1,\ldots,a_n;R)\)。\symidx{\(K_\bullet(a_1,\ldots,a_n;R)\)：Koszul 复形}它在低次上的公式是
+一列 \(R\) 模与 \(R\) 线性箭头若满足每两个相邻箭头的复合为零，就称为一个\term[lianfuxing]{链复形}[chain complex]；此处的条件 \(\mathrm{d}_{p-1}\mathrm{d}_p=0\) 已由\cref{b2:prop:exterior-contraction}证明。上面由 \(a_1,\ldots,a_n\in R\) 构造的链复形称为序列 \(a_1,\ldots,a_n\) 的\term[Koszul-fuxing]{Koszul 复形}[Koszul complex]，记为 \(K_\bullet(a_1,\ldots,a_n;R)\)。\symidx{\(K_\bullet(a_1,\ldots,a_n;R)\)：Koszul 复形}它在低次上的公式是
 \[
 \mathrm{d}_1(e_i)=a_i,\qquad \mathrm{d}_2(e_i\wedge e_j)=a_ie_j-a_je_i.
 \]
-因此 \(\operatorname{im}\mathrm{d}_1=(a_1,\ldots,a_n)\)，末端余核为 \(R/(a_1,\ldots,a_n)\)。把商映射接到右端，得到增广复形
+\(K_1=R^n\) 记录这组理想生成元，\(K_2\) 记录由交换性自动产生的两两关系。因此 \(\operatorname{im}\mathrm{d}_1=(a_1,\ldots,a_n)\)，它的余核就是 \(R/(a_1,\ldots,a_n)\)；把这个商接到末端，是由 \(\mathrm{d}_1\) 的像决定的。得到增广复形
 \[
 0\longrightarrow K_n\longrightarrow\cdots\longrightarrow K_1
 \xrightarrow{\mathrm{d}_1}R\longrightarrow R/(a_1,\ldots,a_n)\longrightarrow0.
@@ -226,6 +259,21 @@ m_1\wedge\cdots\wedge\widehat{m_j}\wedge\cdots\wedge m_p.
 相邻矩阵的乘积为 \(-a_1a_2+a_2a_1=0\)，\(\mathrm{d}_2\) 记录了最直接的两两关系。
 
 \ProseParagraphBreak
+当 \(n=3\)，写 \(a_1=a,a_2=b,a_3=c\)，并简记 \(e_{ij}=e_i\wedge e_j\)、\(e_{123}=e_1\wedge e_2\wedge e_3\)。三条两两关系为 \(ae_2-be_1\)、\(ae_3-ce_1\)、\(be_3-ce_2\)，而三次外幂给出
+\[
+\mathrm{d}_3(e_{123})=a e_{23}-b e_{13}+c e_{12}.
+\]
+它说明这三条关系本身也有相容关系，因为
+\[
+\begin{aligned}
+\mathrm{d}_2\mathrm{d}_3(e_{123})
+&=a(be_3-ce_2)-b(ae_3-ce_1)+c(ae_2-be_1)\\
+&=0.
+\end{aligned}
+\]
+于是三次外幂记录的是二次外幂所给关系之间的关系，更高次外幂继续以相同方式组织这些自然关系的相容性。
+
+\ProseParagraphBreak
 这些自然关系未必生成全部关系。取任意域 \(k\)，令 \(R=k[x]\)、\(a_1=a_2=x\)。此时 \(\mathrm{d}_1(u,v)=x(u+v)\)，\(\mathrm{d}_2(t)=(-xt,xt)\)。因为 \(R\) 是整环且 \(x\ne0\)，有
 \[
 \ker\mathrm{d}_1=R(-1,1),\qquad
@@ -234,4 +282,35 @@ m_1\wedge\cdots\wedge\widehat{m_j}\wedge\cdots\wedge m_p.
 严格包含来自 \(1\notin xR\)：关系 \((-1,1)\) 在核中，却不是 \(\mathrm{d}_2\) 的像。因此序列 \(x,x\) 的 Koszul 复形在 \(R^2\) 处不正合。
 
 \ProseParagraphBreak
-复合为零给出 \(\operatorname{im}\mathrm{d}_p\subseteq\ker\mathrm{d}_{p-1}\)；在相应位置正合则要求二者相等。增广复形在 \(R\) 及商模处正合，但在其他位置未必正合。最短的例子是 \(n=1\)，复形就是 \(0\to R\xrightarrow{\times a_1}R\to0\)。若 \(R=k[\varepsilon]/(\varepsilon^2)\)、\(a_1=\varepsilon\)，则左侧映射的核为非零理想 \((\varepsilon)\)，所以增广后也不是自由消解。哪些序列使增广后的 Koszul 复形成为 \(R/(a_1,\ldots,a_n)\) 的自由消解，将在第三卷第15.2—15.3节结合正则序列系统讨论。
+复合为零给出 \(\operatorname{im}\mathrm{d}_p\subseteq\ker\mathrm{d}_{p-1}\)；在相应位置正合则要求二者相等。增广复形在 \(R\) 及商模处正合，但在其他位置未必正合。一条增广链复形若在每个位置正合，且末端模之前的各项均为自由模，就称为这个末端模的\term[ziyou-xiaojie]{自由消解}[free resolution]。这里各 \(K_p=\bigwedge^pR^n\) 都是自由模，因此是否给出自由消解，关键在于尚待检验的正合性。
+
+\ProseParagraphBreak
+最短的例子是 \(n=1\)，复形就是 \(0\to R\xrightarrow{\times a_1}R\to0\)。若 \(k\) 为域，\(R=k[\varepsilon]/(\varepsilon^2)\)、\(a_1=\varepsilon\)，则左侧映射的核为非零理想 \((\varepsilon)\)，所以增广后也不是自由消解。哪些序列使增广后的 Koszul 复形成为 \(R/(a_1,\ldots,a_n)\) 的自由消解，将在第三卷第15.2—15.3节结合正则序列系统讨论。若一个生成元已经是单位，这里就能直接构造每个核元素的原像。
+
+\begin{proposition}\label{b2:prop:koszul-unit-contractible}
+设 \(R\) 为交换含幺环，\(n\ge1\)，\(a_1,\ldots,a_n\in R\)，且 \(a_1\) 是单位。令 \(e_1,\ldots,e_n\) 为 \(R^n\) 的标准基，\(K_\bullet=K_\bullet(a_1,\ldots,a_n;R)\) 为 Koszul 复形，其微分由 \(R\) 线性映射 \(\lambda:R^n\rightarrow R\)、\(\lambda(e_i)=a_i\) 的收缩给出。把 \(K_p=\bigwedge^pR^n\) 在 \(p<0\) 或 \(p>n\) 时取为零。定义次数为 \(+1\) 的 \(R\) 线性映射
+\[
+h_p:K_p\longrightarrow K_{p+1},
+\qquad h_p(\xi)=a_1^{-1}e_1\wedge\xi.
+\]
+则在每个 \(0\le p\le n\) 上有
+\[
+\mathrm{d}_{p+1}h_p+h_{p-1}\mathrm{d}_p=\operatorname{id}_{K_p},
+\]
+其中边界处的映射取零。因此 \(K_\bullet\) 正合。
+\end{proposition}
+\begin{proof}
+由\cref{b2:prop:exterior-contraction}的分次 Leibniz 规则及 \(\mathrm{d}_1(e_1)=a_1\)，对 \(\xi\in K_p\) 有
+\[
+\begin{aligned}
+\mathrm{d}_{p+1}h_p(\xi)
+&=a_1^{-1}\mathrm{d}_{p+1}(e_1\wedge\xi)\\
+&=a_1^{-1}\bigl(a_1\xi-e_1\wedge\mathrm{d}_p(\xi)\bigr)\\
+&=\xi-h_{p-1}\mathrm{d}_p(\xi).
+\end{aligned}
+\]
+当 \(p=0\) 时，\(\mathrm{d}_0=0\)；当 \(p=n\) 时，\(e_1\wedge\xi\in\bigwedge^{n+1}R^n=0\)，上述等式在两个端点仍成立。这就证明所述恒等式，通常简写为 \(\mathrm{d}h+h\mathrm{d}=\operatorname{id}\)。
+
+若 \(\mathrm{d}_p(\xi)=0\)，恒等式给出
+\(\xi=\mathrm{d}_{p+1}(h_p(\xi))\)。这为每个闭元素（微分为零的元素）明确给出了成为边界（下一次微分的像）的原像。故 \(\ker\mathrm{d}_p\subseteq\operatorname{im}\mathrm{d}_{p+1}\)，反向包含由微分平方为零成立，复形在每处正合。
+\end{proof}

@@ -1,19 +1,18 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 16.4 Morita 不变量
-% 本轮补充的纲要细目：
-% * 在同一实向量空间上比较正定与不定型及其不同伴随运算，说明普通 Morita 数据没有指定型
+% 纲要位置：计划纲要.md，第 1583 行。
 
 \section{Morita 不变量}
 \label{b2:sec:1604}
 
-等价保留的是能够由对象、同态与它们的组合表达的性质，并不把一个模的底集合或坐标照搬过去。本节先考察中心和子模结构，再区分有限长度与基域维数。尤其应注意：相应模的合成长度数值确实保持，而它们作为同一个底域上的向量空间，维数可以改变。
+模范畴的等价保留对象、同态及其相互关系，却不把一个模的底集合或坐标照搬过去。若一种性质还使用了指定的正则模、到向量空间的忘却函子或额外的型，就须另行检查这些数据是否相容。例如，相应模的合成长度数值确实保持，而它们作为同一个底域上的向量空间，维数可以改变；两个正则模也未必彼此对应。中心和子模结构则可以从模范畴本身恢复。
 
 % 纲要要点（供目录核对）：
 %
-% * 中心、简单模、投射模和内射模
-% * 半单性、不可分解性与有限长度
+% * 中心、简单模、投射模和内射模；中心作为恒等函子自然自变换环，子模作为单射子对象及其因子关系
+% * 半单性、不可分解性与有限长度；正式证明有限展示与环的左 Noether、左 Artin 性保持，以及与除环等价的单 Artin 判据
 % * 维数、生成元数及附加型不是 Morita 不变量
-%
+% * 在同一实向量空间上比较正定与不定型及其不同伴随运算，说明普通 Morita 数据没有指定型
 % ---
 %
 
@@ -21,27 +20,37 @@
 \label{b2:subsec:1604:01}
 
 \begin{proposition}\label{b2:prop:morita-center}
-设环 \(R,S\) Morita 等价，则其中心 \(Z(R)\) 与 \(Z(S)\) 作为环同构。
+设 \(R,S\) 为含幺环，幺性左模范畴 \(\mathcal C_R=R\text{-}\mathbf{Mod}\) 与 \(\mathcal C_S=S\text{-}\mathbf{Mod}\) 等价。对 \(T=R,S\)，恒等函子的自然自变换以逐分量加法、复合作为乘法、恒等自然变换作为单位，组成环
+\(\operatorname{Nat}(\operatorname{Id}_{\mathcal C_T},\operatorname{Id}_{\mathcal C_T})\)。映射
+\[
+Z(T)\longrightarrow
+\operatorname{Nat}(\operatorname{Id}_{\mathcal C_T},\operatorname{Id}_{\mathcal C_T}),
+\qquad
+c\longmapsto\bigl(\theta^c_M:m\longmapsto cm\bigr)_{M\in\mathcal C_T}
+\]
+是含幺环同构。因此 \(Z(R)\cong Z(S)\)。
 \end{proposition}
 \begin{proof}
-先说明一个环 \(R\) 的中心可以从其模范畴恢复。给定恒等函子的自然自变换 \(\theta\)，令 \(c=\theta_R(1)\)。由于 \(\theta_R\) 左线性，有 \(\theta_R(r)=rc\)。对 \(m\in M\)，将自然性用于 \(f_m:R\rightarrow M\)、\(r\mapsto rm\)，在一处求值，得到
-\[
-\theta_M(m)=f_m(c)=cm.
-\]
-特别取 \(M=R,m=r\)，又得 \(\theta_R(r)=cr\)，所以 \(rc=cr\) 对所有 \(r\) 成立。反过来，\(c\in Z(R)\) 使每个 \(m\mapsto cm\) 左线性，并与所有模同态交换，故给出自然自变换。逐分量相加、复合分别对应中心元素的加法、乘法，恒等变换对应一。因此自然自变换环与 \(Z(R)\) 同构。
+中心与自然自变换环的同构已由\cref{b2:prop:natural-center}证明。其逆映射是在正则模的一处求值：\(c=\theta_T(1)\)。任意模元素 \(m\in M\) 都给出同态 \(f_m:T\to M\)、\(r\mapsto rm\)，自然性强迫 \(\theta_M(m)=cm\)，因此这一求值决定所有分量；加法、复合与单位分别对应 \(c+d\)、\(cd\) 与 \(1\)。
 
-设 \(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为等价，固定拟逆 \(K\) 及自然同构 \(\beta:HK\Rightarrow\operatorname{Id}_{S\text{-}\mathbf{Mod}}\)。给定 \(\theta\in\operatorname{Nat}(\operatorname{Id},\operatorname{Id})\)，对每个左 \(S\) 模 \(Y\) 令
+接下来将一个范畴中对所有对象自然定义的自同态，传到另一个范畴。设 \(H:\mathcal C_R\rightarrow\mathcal C_S\) 为等价，固定拟逆 \(K\) 及自然同构 \(\beta:HK\Rightarrow\operatorname{Id}_{\mathcal C_S}\)。给定 \(\theta\in\operatorname{Nat}(\operatorname{Id}_{\mathcal C_R},\operatorname{Id}_{\mathcal C_R})\)，对每个幺性左 \(S\) 模 \(Y\) 令
 \[
 \theta'_Y=\beta_Y\,H(\theta_{K(Y)})\,\beta_Y^{-1}.
 \]
-\(\beta\) 与 \(\theta\) 的自然性保证这些分量构成自然自变换；逐分量加法与复合也被保持。对 \(H(X)\)，全忠实性使 \(\beta_{H(X)}\) 成为某个 \(H(b_X)\)，而 \(\theta\) 对 \(b_X\) 的自然性给出 \(\theta'_{H(X)}=H(\theta_X)\)。反过来，任一目标范畴上的自然自变换在各 \(H(X)\) 上的分量可由全忠实性唯一提升为 \(\theta_X\)；忠实性保证它们自然，\(\beta_Y\) 又把每个 \(Y\) 与 \(H(K(Y))\) 相连，故这些分量唯一决定原变换。于是两个自然自变换环同构，进而 \(Z(R)\cong Z(S)\)。
+\(\beta\) 与 \(\theta\) 的自然性保证这些分量构成自然自变换。由\cref{b2:lem:module-equivalence-structure}，\(H\) 加性，故此对应保持逐分量加法；共轭保持复合与单位。对 \(H(X)\)，全忠实性使 \(\beta_{H(X)}=H(b_X)\)，其中 \(b_X:KH(X)\to X\) 为同构。\(\theta\) 对 \(b_X\) 的自然性给出
+\[
+\theta'_{H(X)}
+=H\bigl(b_X\theta_{KH(X)}b_X^{-1}\bigr)
+=H(\theta_X).
+\]
+因此这个对应单射。反过来，目标范畴上的任一自然自变换 \(\tau\) 在各 \(H(X)\) 上的分量可由全忠实性唯一提升为 \(\theta_X\)。\(\tau\) 对 \(H(f)\) 的自然性与 \(H\) 的忠实性保证 \(\theta\) 自然。它的像与 \(\tau\) 在所有 \(H(X)\) 上相同，再用同构 \(\beta_Y:HK(Y)\to Y\) 的自然性，就知在每个 \(Y\) 上也相同。因此两个自然自变换环同构，进而 \(Z(R)\cong Z(S)\)。
 \end{proof}
 
 \begin{proposition}\label{b2:prop:morita-submodule-lattices}
-设 \(R,S\) 为环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为左模范畴的等价，\(M\) 为左 \(R\) 模，则给定的 \(H\) 诱导 \(M\) 与 \(H(M)\) 的子对象格之间的序同构。把子对象视为子模时，\(N\subseteq M\) 对应于 \(H(N\hookrightarrow M)\) 的像；这一序同构保留零子模、全模、交与子模之和。
+设 \(R,S\) 为含幺环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为幺性左模范畴的等价，\(M\) 为幺性左 \(R\) 模，则给定的 \(H\) 诱导 \(M\) 与 \(H(M)\) 的子对象格之间的序同构。把子对象视为子模时，\(N\subseteq M\) 对应于 \(H(N\hookrightarrow M)\) 的像；这一序同构保留零子模、全模、任意子模族的交与和。
 \end{proposition}
 \begin{proof}
-等价保持单射，所以所述像同构于 \(H(N)\)。反过来，给定 \(L\subseteq H(M)\)，选同构 \(u:H(X)\rightarrow L\)，把复合 \(H(X)\rightarrow L\hookrightarrow H(M)\) 唯一提升为 \(a:X\rightarrow M\)。等价反映单射，故 \(a\) 单射，令 \(N=a(X)\)，便得到所需原子模。若两个原子模给出相同像，像之间保持嵌入的同构提升后仍与原嵌入相容，因而两者在 \(M\) 中的像相同，故子模相等。
+子对象由单射 \(i:N\to M\) 表示，两个单射在定义域之间存在与它们相容的同构时，表示同一子对象。在模范畴中，取 \(i(N)\subseteq M\) 就给出它的子模代表。\cref{b2:lem:module-equivalence-structure}保证 \(H(i)\) 仍单射，所以其像同构于 \(H(N)\)；这里对应的是嵌入的像，而不是对底集合逐元素应用 \(H\)。反过来，给定 \(L\subseteq H(M)\)，选同构 \(u:H(X)\rightarrow L\)，把复合 \(H(X)\rightarrow L\hookrightarrow H(M)\) 唯一提升为 \(a:X\rightarrow M\)。等价反映单射，故 \(a\) 单射，令 \(N=a(X)\)，便得到所需原子模。若两个原子模给出相同像，像之间保持嵌入的同构提升后仍与原嵌入相容，因而两者在 \(M\) 中的像相同，故子模相等。
 
 子模包含等价于两个嵌入之间存在相容的因子映射。全忠实性双向保持这一条件，所以所得双射保持并反映包含关系。零与全模是最小、最大元；交为最大下界，子模之和为最小上界，因此它们也由这个序同构保留。
 \end{proof}
@@ -52,18 +61,35 @@
 \label{b2:subsec:1604:02}
 
 \begin{proposition}\label{b2:prop:morita-invariants}
-设 \(R,S\) 为环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为左模范畴的等价，则 \(H\) 保持并反映模的简单性、投射性、内射性、不可分解性、半单性、有限生成性、Noether 性、Artin 性和有限长度。若左 \(R\) 模 \(M\) 有限长度，则
+设 \(R,S\) 为含幺环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为幺性左模范畴的等价，则 \(H\) 保持并反映模的简单性、投射性、内射性、不可分解性、半单性、有限生成性、有限展示性、Noether 性、Artin 性和有限长度。若幺性左 \(R\) 模 \(M\) 有限长度，则
 \[
 \ell_R(M)=\ell_S\bigl(H(M)\bigr).
 \]
-相应简单因子的合成重数也保持。特别地，两个 Morita 等价的环同时为半单环或同时不是半单环。
+相应简单因子的合成重数也保持。此外，\(R\) 为左 Noether 环，当且仅当 \(S\) 为左 Noether 环；左 Artin 性也满足同样的等价。两个环还同时为半单环或同时不是半单环。
 \end{proposition}
 \begin{proof}
-简单性和投射性已经证明，内射性由\cref{b2:lem:module-equivalence-structure}得到。等价双向保持非零对象与有限直和分解，故保持并反映不可分解性。半单模是简单模的某个直和；等价保持简单模与任意直和，所以保持半单性，对拟逆使用同样结论得到反映性。
+简单性和投射性已经证明，内射性由\cref{b2:lem:module-equivalence-structure}得到。一个模分解为两个非零模的直和，等价于存在相应的嵌入、投影及直和恒等式；这也是\cref{b2:prop:idempotent-direct-sum}中非平凡幂等自同态的投影刻画。等价双向保持这些映射关系和非零对象，故保持并反映不可分解性。半单模是简单模的某个直和；等价保持简单模与任意直和，所以保持半单性，对拟逆使用同样结论得到反映性。
 
 由\cref{b2:prop:morita-submodule-lattices}，子模链的包含、严格性和稳定性双向保持，因此 Noether 性与 Artin 性保持。对一条合成列，等价的正合性使相邻商对应原简单因子的像；每个像仍简单，故得到相同层数的合成列。\cref{b2:thm:module-jordan-holder}使这个层数正是两边的长度，不同简单类型也由全忠实性一一对应，所以重数相同。对拟逆应用同样论证，有限长度也被反映。
 
-有限生成性可以从子模序直接判定：一个模有限生成，当且仅当每个向上有向、并为全模的子模族中都有一个成员等于全模。正向是把有限生成元放入一个共同成员；反向取所有有限生成子模，它们向上有向且并为全模，故其中有一个等于全模。子模序同构保持有向性和最小上界，即这里的并，因此保持这个判据。
+有限生成性不能通过比较两边的生成元个数来证明，但可以从子模序直接判定：一个模 \(M\) 有限生成，当且仅当每个非空、向上有向且并为 \(M\) 的子模族中，都有一个成员等于 \(M\)。向上有向是指任意两个成员都包含在某个共同成员中。正向时，每个有限生成元属于族中某个成员，反复使用有向性便找到包含全部生成元的共同成员，它只能等于 \(M\)；若 \(M=0\)，任取一个成员即可。反向取 \(M\) 的所有有限生成子模，它们向上有向，因为两组有限生成元合在一起仍有限，且并为 \(M\)，因为每个元素都属于自己的循环子模。于是其中一个成员等于 \(M\)。子模序同构保持有向性和最小上界；对有向子模族，这个最小上界正是它们的并，因此保持这一判据。
+
+有限展示还须检查全部关系能否有限生成。令 \(P=H({}_RR)\)，已证的有限生成性与投射性的保持使 \(P\) 为有限生成投射左 \(S\) 模。若 \(M\) 有有限自由展示 \(R^a\xrightarrow{d}R^b\twoheadrightarrow M\to0\)，其中 \(a,b\ge0\) 为整数，正合性与有限直和的保持给出
+\[
+P^a\xrightarrow{H(d)}P^b\twoheadrightarrow H(M)\longrightarrow0.
+\]
+由\cref{b2:prop:finite-projective-summand}，可取有限生成投射左 \(S\) 模 \(Q\)，使 \(P^b\oplus Q\cong S^t\)，其中 \(t\ge0\) 为整数。把 \(P^b\) 上的满射与 \(Q\) 上的零映射合起来，得到有限自由满射 \(S^t\to H(M)\)，其核在这个分解下为
+\[
+\operatorname{im}H(d)\oplus Q.
+\]
+第一项是有限生成模 \(P^a\) 的像，第二项也有限生成，故这个核有限生成。为核取一个有限自由满射，就得到 \(H(M)\) 的有限自由展示。对拟逆应用同样论证，有限展示性也被反映。
+
+环的链条件还需要从 \(P\) 传到正则模 \({}_SS\)，因为两者未必同构。由\cref{b2:lem:module-equivalence-structure}，\(P\) 也是生成元，因而\cref{b2:prop:finite-projective-summand,b2:thm:generator-characterizations}分别给出有限直和分解
+\[
+P\oplus Q_1\cong S^u,\qquad
+S\oplus Q_2\cong P^v,
+\]
+其中 \(u,v\ge0\) 为整数，\(Q_1,Q_2\) 为左 \(S\) 模。\cref{b2:thm:chain-conditions-exact}保证 Noether 性和 Artin 性对有限直和及子模传递。第一个分解使 \({}_SS\) 的链条件传到 \(P\)，第二个分解使 \(P\) 的链条件传到 \({}_SS\)。而子模格对应已说明 \(P=H(R)\) 与 \({}_RR\) 的链条件相同，所以两环同时为左 Noether 环，也同时为左 Artin 环。
 
 最后，\cref{b2:thm:semisimple-ring-characterizations}说明环半单当且仅当它的每个左模半单。每个目标对象都同构于等价像中的对象，而半单性又被双向保持，所以两环的这一性质同时成立。这里不能只比较正则模的像，因为等价未必把一个正则模送到另一个正则模。
 \end{proof}
@@ -76,7 +102,7 @@
 \subsection{维数、生成元数与附加型}
 \label{b2:subsec:1604:03}
 
-取 \(R=k\)、\(S=M_n(k)\)，\(n>1\)。它们 Morita 等价，但作为 \(k\) 代数的维数分别为一和 \(n^2\)，前者交换，后者不交换。标准等价把 \(k\) 模 \(V\) 送到列模 \(V^n\)。若 \(\dim_kV=m<\infty\)，则
+设 \(k\) 为域、\(n>1\) 为整数，取 \(R=k\)、\(S=M_n(k)\)。它们 Morita 等价，但作为 \(k\) 代数的维数分别为一和 \(n^2\)，前者交换，后者不交换。标准等价把 \(k\) 模 \(V\) 送到列模 \(V^n\)，在同态上逐坐标作用，是 \(k\) 线性的。即使如此，若 \(\dim_kV=m<\infty\)，仍有
 \[
 \dim_kV=m,\qquad \dim_k(V^n)=nm.
 \]
@@ -87,7 +113,11 @@
 \[
 \mu_{M_n(k)}(V^n)=\left\lceil\frac mn\right\rceil.
 \]
-因此等价保持“有限生成”这个性质，却不保持相对于正则模计算的最少生成元数。矩阵环的一个正则模已经包含 \(n\) 个简单列模，这正是右式出现除以 \(n\) 的原因。
+因此等价保持“有限生成”这个性质，却不保持相对于正则模计算的最少生成元数。事实上，
+\[
+{}_{M_n(k)}M_n(k)\cong(k^n)^{\oplus n},
+\]
+所以一个正则模包含 \(n\) 个简单列模。一个生成元给出的正则模像至多覆盖 \(n\) 份简单列模；要覆盖 \(V^n\) 中的 \(m\) 份，最少需要 \(\lceil m/n\rceil\) 个生成元。
 
 \ProseParagraphBreak
 若 \(k\) 为 \(q\) 元域，则两个环的元素数分别为 \(q\) 和 \(q^{n^2}\)。模的元素从向量换成向量列，环元素从标量换成矩阵，都允许底集合发生变化。使用 Morita 等价时，应说明所比较的是环同构、模范畴结构、模长度还是指定底域上的维数；这些问题不能仅凭“等价”二字互相替换。
@@ -106,3 +136,17 @@ H_+=I_2,\qquad H_-=\operatorname{diag}(1,-1)
 \sigma_-(X)=H_-^{-1}X^{\mathsf T}H_-.
 \]
 它们对 \(E_{12}\) 的取值分别为 \(E_{21}\) 与 \(-E_{21}\)，故是不同运算。Morita 等价中的对象和态射没有包括 \(H_+\)、\(H_-\) 或这些伴随运算，因而不能仅凭模范畴等价，就声称还给出了带型对象之间的等价。若要比较后者，必须额外指定如何传送型、对偶及等距映射；普通 Morita 定理并未给出这些附加数据。
+
+\ProseParagraphBreak
+回到半单环，Artin–Wedderburn 分解中的矩阵大小可以在模范畴等价下改变，而简单模的同构类型仍一一对应。这给出了与除环等价的准确范围。
+
+\begin{corollary}\label{b2:cor:morita-division-ring}
+设 \(R\) 为非零含幺环。\(R\) Morita 等价于某个除环，当且仅当 \(R\) 是单 Artin 环，即 \(R\) 是单环且为左 Artin 环。
+\end{corollary}
+\begin{proof}
+若 \(R\) 为单 Artin 环，\cref{b2:prop:simple-artinian}给出 \(R\cong M_n(D)\)，其中 \(D\) 为除环、\(n\ge1\)。由\cref{b2:prop:matrix-morita-equivalence}，这个矩阵环与 \(D\) Morita 等价。
+
+反过来，设 \(R\text{-}\mathbf{Mod}\simeq D\text{-}\mathbf{Mod}\)，其中 \(D\) 为除环。每个幺性左 \(D\) 模都有基，因而是简单模 \({}_DD\) 的直和，且非零简单左 \(D\) 模只有这一种同构类型。\cref{b2:prop:morita-invariants}使每个幺性左 \(R\) 模也半单，并使简单左 \(R\) 模只有一种同构类型。由\cref{b2:thm:semisimple-ring-characterizations}，\(R\) 为半单环。再用\cref{b2:thm:artin-wedderburn}，将 \(R\) 写成有限个除环上矩阵环的乘积。不同矩阵因子的简单列模不同构，因为相应的中心幂等元在一个上作用为恒等，在另一个上作用为零，所以这里只有一个因子。由于 \(R\ne0\)，这个因子存在，由\cref{b2:prop:simple-artinian}即得 \(R\) 为单 Artin 环。
+\end{proof}
+
+只有一种简单模类型并不足够。设 \(k\) 为域，\(A=k[\varepsilon]/(\varepsilon^2)\)。对任意简单左 \(A\) 模 \(U\)，\(\varepsilon U\) 是子模；若它等于 \(U\)，则 \(U=\varepsilon U=\varepsilon^2U=0\)，矛盾，故 \(\varepsilon U=0\)。于是 \(U\) 是 \(k\) 上的简单模，同构于 \(k\)。但正则模 \(A\) 并不半单：商映射 \(A\to A/(\varepsilon)\) 若有模截面，一的像应为某个 \(1+c\varepsilon\)，并被 \(\varepsilon\) 零化；实际上 \(\varepsilon(1+c\varepsilon)=\varepsilon\ne0\)。所以这个商映射不能分裂，\(A\) 不与除环 Morita 等价。

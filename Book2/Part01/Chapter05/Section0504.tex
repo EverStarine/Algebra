@@ -11,6 +11,7 @@
 %
 % * 全、忠实与本质满
 % * 范畴等价、同构与泛性质
+% * 坐标选择所得拟逆之间的自然同构
 % * 为第16章 Morita 理论准备最低限度语言
 %
 % ---
@@ -43,18 +44,25 @@ F_{X,Y}:\operatorname{Hom}_{\mathcal C}(X,Y)\longrightarrow
 \end{tabularx}
 \end{table}
 
-“忠实”只比较一对固定起点、终点之间的态射，不要求不同对象有不同的像。模到集合的忘却函子忠实：两个模同态若为同一个函数，就确实相等。当 \(R\ne0\) 时它不全，因为正则模底集合上的 \(r\mapsto r+1_R\) 不保持零元；零环的模均为单元素模，此时忘却函子反而全忠实。交换群到群的包含函子全忠实，因为交换群之间的群同态正是交换群同态；它不本质满，因为非交换群不能同构于交换群。
+“忠实”不合并固定起点、终点之间的不同态射，但不要求不同对象有不同的像；“全”要求目标中像对象之间的态射没有遗漏；“本质满”则要求目标对象在同构意义下没有遗漏。模到集合的忘却函子忠实：两个模同态若为同一个函数，就确实相等。当 \(R\ne0\) 时它不全，因为正则模底集合上的 \(r\mapsto r+1_R\) 不保持零元；零环的模均为单元素模，此时忘却函子反而全忠实。交换群到群的包含函子全忠实，因为交换群之间的群同态正是交换群同态；它不本质满，因为非交换群不能同构于交换群。
 
 \ProseParagraphBreak
 对偏序集之间的函子 \(F:P\rightarrow Q\)，函子性恰好是保序性。它总忠实，因为起点、终点固定后至多一个态射；它全当且仅当 \(F(x)\le F(y)\) 蕴含 \(x\le y\)。所以“保序”不等于“全”：把两元素反链送到两元素链的对应位置，是忠实而不全的函子。
 
 \begin{proposition}\label{b2:prop:fully-faithful-reflects-isomorphism}
-设 \(F:\mathcal C\to\mathcal D\) 是范畴间的函子。\(F\) 把 \(\mathcal C\) 中的同构送到 \(\mathcal D\) 中的同构。若 \(F\) 全忠实，则对 \(\mathcal C\) 中的态射 \(f\)，\(F(f)\) 可逆蕴含 \(f\) 可逆；对对象 \(X,Y\)，\(F(X)\cong F(Y)\) 蕴含 \(X\cong Y\)。
+设 \(F:\mathcal C\to\mathcal D\) 是范畴间的函子。\(F\) 把 \(\mathcal C\) 中的同构送到 \(\mathcal D\) 中的同构。若 \(F\) 全忠实，则对 \(\mathcal C\) 中的态射 \(f:X\to Y\)，\(F(f)\) 可逆蕴含 \(f\) 可逆；对对象 \(X,Y\)，\(F(X)\cong F(Y)\) 蕴含 \(X\cong Y\)。
 \end{proposition}
 \begin{proof}
 若 \(g=f^{-1}\)，函子公理给出 \(F(g)F(f)=F(gf)=\operatorname{id}\) 及反序的同样等式，故 \(F(g)\) 为逆。
 
-现设 \(F\) 全忠实。若 \(F(f)\) 的逆为 \(v:F(Y)\rightarrow F(X)\)，全性给出 \(g:Y\rightarrow X\) 使 \(F(g)=v\)。于是 \(F(gf)=\operatorname{id}_{F(X)}=F(\operatorname{id}_X)\)，忠实性给出 \(gf=\operatorname{id}_X\)；另一侧相同，故 \(g=f^{-1}\)。若只给定 \(a:F(X)\rightarrow F(Y)\) 为同构，先用全性把 \(a\) 提升为 \(f\)，再用刚证明的结论即可。
+现设 \(F\) 全忠实。若 \(F(f)\) 的逆为 \(v:F(Y)\rightarrow F(X)\)，要证明 \(f\) 可逆，须先把 \(v\) 提升为候选逆，再把两条逆关系从像中反映回来。全性给出 \(g:Y\rightarrow X\) 使 \(F(g)=v\)，于是
+\[
+\begin{aligned}
+F(gf)&=vF(f)=\operatorname{id}_{F(X)}=F(\operatorname{id}_X),\\
+F(fg)&=F(f)v=\operatorname{id}_{F(Y)}=F(\operatorname{id}_Y).
+\end{aligned}
+\]
+忠实性分别给出 \(gf=\operatorname{id}_X\)、\(fg=\operatorname{id}_Y\)，故 \(g=f^{-1}\)。若只给定 \(a:F(X)\rightarrow F(Y)\) 为同构，先用全性把 \(a\) 提升为 \(f\)，再用刚证明的结论即可。
 \end{proof}
 
 \subsection{范畴等价、同构与泛性质}
@@ -69,7 +77,10 @@ F_{X,Y}:\operatorname{Hom}_{\mathcal C}(X,Y)\longrightarrow
 则称 \(F\) 为\term[fanchou-dengjia]{范畴等价}[equivalence of categories]，\(G\) 为其\term[zhunni]{拟逆}[quasi-inverse]，写作 \(\mathcal C\simeq\mathcal D\)。若可要求 \(GF=\operatorname{Id}_{\mathcal C}\)、\(FG=\operatorname{Id}_{\mathcal D}\) 作为函子严格相等，则称 \(F\) 为\term[fanchou-tonggou]{范畴同构}[isomorphism of categories]。
 \end{definition}
 
-范畴同构在对象上给出真正的双射；等价允许多个互相同构的对象合并到一个代表。比如范畴 \(\mathcal E\) 有两个对象 \(a,b\)，每对对象之间恰有一个态射，复合由唯一性确定。把它们都送到仅有一个对象及恒等态射的范畴 \(\mathbf 1\)，并反向选取 \(a\)，便给出等价：每个对象到 \(a\) 的唯一态射组成所需自然同构。但这两个范畴对象数不同，故不可能同构。
+定义中的 \(\eta,\varepsilon\) 都是自然同构，因而也可以取它们的逆，用相反方向表达同一个比较。重要的是 \(GF\) 与 \(\operatorname{Id}_{\mathcal C}\)、\(FG\) 与 \(\operatorname{Id}_{\mathcal D}\) 分别自然同构。范畴同构在对象上给出真正的双射；等价则允许多个互相同构的对象合并到一个代表。比如范畴 \(\mathcal E\) 有两个对象 \(a,b\)，每对对象之间恰有一个态射，复合由唯一性确定。把它们都送到仅有一个对象及恒等态射的范畴 \(\mathbf 1\)，并反向选取 \(a\)，便给出等价：每个对象到 \(a\) 的唯一态射组成所需自然同构。但这两个范畴对象数不同，故不可能同构。
+
+\ProseParagraphBreak
+构造拟逆时，本质满使目标对象能找到同构的像对象；选定这些代表后，就要把目标中的态射经同构搬到两个像对象之间。全性保证搬来的态射有原像，忠实性保证原像唯一，并将恒等和复合的等式反映回原范畴。下面把这些要求分别落实到对象和态射的构造中。
 
 \begin{theorem}[范畴等价的判据]\label{b2:thm:equivalence-criterion}
 设 \(\mathcal C,\mathcal D\) 是范畴，\(F:\mathcal C\rightarrow\mathcal D\) 是函子。
@@ -83,15 +94,28 @@ F_{X,Y}:\operatorname{Hom}_{\mathcal C}(X,Y)\longrightarrow
 \[
 \eta_{X'}f=GF(f)\eta_X=GF(g)\eta_X=\eta_{X'}g.
 \]
-消去同构 \(\eta_{X'}\)，得 \(f=g\)，所以 \(F\) 忠实。同样，若 \(G(u)=G(v)\)，\(\varepsilon\) 的自然性给出 \(u\varepsilon_Y=v\varepsilon_Y\)，故 \(u=v\)，所以 \(G\) 也忠实。
+消去同构 \(\eta_{X'}\)，得 \(f=g\)，所以 \(F\) 忠实。为了随后验证提升来的态射确实具有所需的 \(F\) 像，还要用到 \(G\) 的忠实性。若 \(u,v:Y\rightarrow Y'\) 且 \(G(u)=G(v)\)，\(\varepsilon\) 的自然性给出
+\[
+u\varepsilon_Y=\varepsilon_{Y'}FG(u)
+=\varepsilon_{Y'}FG(v)=v\varepsilon_Y.
+\]
+消去 \(\varepsilon_Y\) 得 \(u=v\)，所以 \(G\) 也忠实。
 
-给定 \(a:F(X)\rightarrow F(X')\)，令
+给定 \(a:F(X)\rightarrow F(X')\)，先用 \(G\) 得到 \(G(a):GF(X)\rightarrow GF(X')\)，再经 \(\eta_X\) 与 \(\eta_{X'}^{-1}\) 搬回 \(X,X'\) 之间，得到候选态射
 \[
 f=\eta_{X'}^{-1}G(a)\eta_X:X\longrightarrow X'.
 \]
 由 \(\eta\) 对 \(f\) 的自然性，\(GF(f)\eta_X=\eta_{X'}f=G(a)\eta_X\)。消去 \(\eta_X\)，得 \(G\bigl(F(f)\bigr)=G(a)\)；再由 \(G\) 忠实得 \(F(f)=a\)。故 \(F\) 全。
 
-反过来，设 \(F\) 全忠实，并已同时指定所述 \(G(Y)\) 与 \(\varepsilon_Y\)。对 \(a:Y\rightarrow Y'\)，由全忠实性，存在唯一 \(G(a):G(Y)\rightarrow G(Y')\) 满足
+反过来，设 \(F\) 全忠实，并已同时指定所述 \(G(Y)\) 与 \(\varepsilon_Y\)。对 \(a:Y\rightarrow Y'\)，要定义 \(G(a)\)，应先要求它在 \(F\) 下的像与这些代表同构相容，即下图交换：
+\[
+\begin{tikzcd}[column sep=3em,row sep=2em]
+F(G(Y))\arrow[r,dashed,"F(G(a))"]\arrow[d,"\varepsilon_Y"']&
+F(G(Y'))\arrow[d,"\varepsilon_{Y'}"]\\
+Y\arrow[r,"a"']&Y'.
+\end{tikzcd}
+\]
+因而中间态射必须先经 \(\varepsilon_Y\) 到 \(Y\)，再施加 \(a\)，最后经 \(\varepsilon_{Y'}^{-1}\) 回到 \(F(G(Y'))\)。全性使这条搬来的态射有原像，忠实性使原像唯一，所以存在唯一 \(G(a):G(Y)\rightarrow G(Y')\) 满足
 \begin{equation}\label{b2:eq:quasi-inverse-on-arrows}
 F\bigl(G(a)\bigr)=\varepsilon_{Y'}^{-1}a\varepsilon_Y.
 \end{equation}
@@ -105,7 +129,7 @@ F\bigl(G(b)G(a)\bigr)
 \]
 忠实性给出 \(G(b)G(a)=G(ba)\)，故 \(G\) 是函子。式\eqref{b2:eq:quasi-inverse-on-arrows}恰好说 \(\varepsilon\) 是自然同构。
 
-再对每个 \(X\in\mathcal C\)，用全忠实性唯一地选取 \(\eta_X:X\rightarrow GF(X)\)，使
+还需把 \(X\) 与 \(GF(X)\) 比较。将 \(Y=F(X)\) 代入已选的代表同构，得到 \(\varepsilon_{F(X)}:F(GF(X))\rightarrow F(X)\)。它的逆方向恰好是 \(F(X)\rightarrow F(GF(X))\)，因此用全忠实性唯一地提升这个逆，得到 \(\eta_X:X\rightarrow GF(X)\)，满足
 \[
 F(\eta_X)=\varepsilon_{F(X)}^{-1}.
 \]
@@ -119,21 +143,52 @@ F\bigl(GF(f)\eta_X\bigr)
 
 \end{proof}
 
-若 \(\mathcal C,\mathcal D\) 都是小范畴，本质满使每个 \(Y\in\mathcal D\) 都有非空的候选集合 \(\{(X,a):a:F(X)\xrightarrow{\sim}Y\}\)。这些集合由 \(\operatorname{Ob}(\mathcal D)\) 编号，选择公理可同时选出定理第二项所需的对象和同构。因此，对小范畴，等价恰好等于全忠实且本质满。对于对象不组成集合的大范畴，仅靠通常的选择公理不能作出同样的统一选取；可明确给定这些对象和同构，或在包含两范畴的较大集合论宇宙中作出相应选择。
+若 \(\mathcal C,\mathcal D\) 都是小范畴，本质满给出的候选对 \((X,a)\)、\(a:F(X)\xrightarrow{\sim}Y\) 组成非空集合，并由集合 \(\operatorname{Ob}(\mathcal D)\) 编号；选择公理因此能同时选出定理第二项所需的代表。故对小范畴，等价恰好等于全忠实且本质满。对任意大范畴，逐个对象的存在性还不自动给出这种统一选择，因此定理将已指定的同构代表作为数据。若按\secref{b2:sec:0501}的大小约定，两个范畴在某个更大宇宙中成为小范畴，则可在该宇宙中作出选择。这项判据及拟逆构造可对照 Riehl\cite[Theorem 1.5.9, pp. 33--34]{Riehl2016CategoryTheory}。
 
 \ProseParagraphBreak
-这项判据及所用的拟逆构造可对照 Riehl\cite[Theorem 1.5.9, pp. 33--34]{Riehl2016CategoryTheory}。证明中全性提供态射，忠实性把像中的等式送回原范畴，本质满则提供拟逆的对象；三个条件承担不同的任务。
-
-\ProseParagraphBreak
-定义矩阵范畴 \(\mathbf{Mat}_k\)：对象为非负整数，\(n\) 到 \(m\) 的态射是 \(m\times n\) 矩阵，复合为矩阵乘法，恒等态射为单位矩阵；零尺寸按唯一的空矩阵处理。函子
+设 \(k\) 是域，定义矩阵范畴 \(\mathbf{Mat}_k\)：对象为非负整数，\(n\) 到 \(m\) 的态射是 \(m\times n\) 矩阵，复合为矩阵乘法，恒等态射为单位矩阵；零尺寸按唯一的空矩阵处理。函子
 \[
-K:\mathbf{Mat}_k\longrightarrow\mathbf{Vect}_k^{\mathrm{fd}},\qquad
+J:\mathbf{Mat}_k\longrightarrow\mathbf{Vect}_k^{\mathrm{fd}},\qquad
 n\longmapsto k^n,\quad A\longmapsto(v\mapsto Av)
 \]
 全忠实，因为标准基下每个线性映射恰由一个矩阵表示；它本质满，因为有限维空间有基，因而同构于 \(k^n\)。这里固定一个包含 \(k\) 的宇宙，只考虑其中的有限维向量空间；在更大的宇宙中，两范畴都小，因而可用上述判据得到等价。
 
 \ProseParagraphBreak
-具体选定每个有限维 \(V\) 的坐标同构 \(c_V:k^{\dim V}\rightarrow V\)，拟逆把 \(f:V\rightarrow W\) 送到 \(c_W^{-1}fc_V\) 的矩阵。这样定义态射作用之后，等式 \(fc_V=c_W(c_W^{-1}fc_V)\) 正好保证 \((c_V)\) 自然。拟逆函子及相应的自然同构依赖于这组坐标选择；原来的 \(K\) 只使用标准基，不依赖这些选择。等价还必须记录同态的矩阵，维数只描述对象，不能描述态射与复合。
+具体选定每个有限维 \(V\) 的坐标同构 \(c_V:k^{\dim_k V}\rightarrow V\)，定义拟逆
+\[
+H:\mathbf{Vect}_k^{\mathrm{fd}}\longrightarrow\mathbf{Mat}_k,
+\qquad V\longmapsto\dim_kV,
+\]
+并把 \(f:V\rightarrow W\) 送到 \(c_W^{-1}fc_V\) 的矩阵。复合时中间的坐标同构相消，给出 \(H(gf)=H(g)H(f)\)，且 \(H(\operatorname{id}_V)=I_{\dim_kV}\)，所以 \(H\) 是函子。这里 \(c_V\) 的源为 \(JH(V)\)，目标为 \(V\)，所以它们组成的比较是 \(c:JH\Rightarrow\operatorname{Id}_{\mathbf{Vect}_k^{\mathrm{fd}}}\)。等式 \(fc_V=c_WJH(f)\) 给出自然性方块：
+\[
+\begin{tikzcd}[column sep=3em,row sep=2em]
+JH(V)\arrow[r,"c_V"]\arrow[d,"JH(f)"']&V\arrow[d,"f"]\\
+JH(W)\arrow[r,"c_W"']&W.
+\end{tikzcd}
+\]
+每个 \(c_V\) 都可逆，故\cref{b2:prop:natural-isomorphism-components}使 \(c\) 成为自然同构。在矩阵一侧，\(HJ(n)=n\)，而标准基下 \(c_{k^n}^{-1}\) 的矩阵 \(\eta_n:n\to HJ(n)\) 满足
+\[
+\begin{aligned}
+HJ(A)\eta_n&=c_{k^m}^{-1}Ac_{k^n}c_{k^n}^{-1}\\
+&=c_{k^m}^{-1}A=\eta_mA
+\qquad(A:n\to m).
+\end{aligned}
+\]
+因此 \((\eta_n)\) 给出自然同构 \(\operatorname{Id}_{\mathbf{Mat}_k}\Rightarrow HJ\)。拟逆 \(H\) 及这些比较依赖于坐标选择，\(J\) 则只使用标准基。维数只描述对象；\(H\) 还必须记录同态的矩阵，才能保持态射与复合。
+
+\begin{proposition}\label{b2:prop:coordinate-choice-natural}
+设 \(k\) 是域，在有限维 \(k\) 向量空间范畴 \(\mathbf{Vect}_k^{\mathrm{fd}}\) 中，为每个对象 \(V\) 指定两族坐标同构 \(c_V,d_V:k^{\dim_kV}\to V\)。令 \(H_c,H_d:\mathbf{Vect}_k^{\mathrm{fd}}\to\mathbf{Mat}_k\) 在对象上均取 \(V\mapsto\dim_kV\)，在态射 \(f:V\to W\) 上分别取 \(c_W^{-1}fc_V\)、\(d_W^{-1}fd_V\) 的矩阵。则标准基下 \(d_V^{-1}c_V\) 的矩阵 \(P_V\) 组成自然同构 \(P:H_c\Rightarrow H_d\)。
+\end{proposition}
+\begin{proof}
+对每个 \(f:V\to W\)，矩阵乘法给出
+\[
+H_d(f)P_V=d_W^{-1}fd_Vd_V^{-1}c_V
+=d_W^{-1}fc_V=P_WH_c(f).
+\]
+这就是 \(P\) 的自然性。每个 \(P_V\) 都可逆，其逆为 \(c_V^{-1}d_V\) 的矩阵；由\cref{b2:prop:natural-isomorphism-components}，\(P\) 是自然同构。因而不同坐标选择虽然可能产生不同的拟逆，它们由这些换基矩阵自然地联系起来。
+\end{proof}
+
+泛性质只规定相容态射的存在与唯一性。等价的全忠实性保留每个 Hom 集合及复合，本质满使任意目标测试对象都能换成同构的像对象，因此这些存在与唯一性要求可以在两个范畴之间传递。
 
 \begin{proposition}\label{b2:prop:equivalence-preserves-universal-objects}
 设 \(F:\mathcal C\to\mathcal D\) 是范畴等价。\(F\) 把 \(\mathcal C\) 的初始对象、终对象分别送到 \(\mathcal D\) 的初始对象、终对象。对任意由集合 \(I\) 索引的对象族 \((X_i)_{i\in I}\)，若其积或余积存在，\(F\) 还把该积或余积连同指定映射送到 \((F(X_i))_{i\in I}\) 的积或余积。
@@ -151,6 +206,8 @@ n\longmapsto k^n,\quad A\longmapsto(v\mapsto Av)
 对余积 \((Q,j_i)\)，给定 \(b_i:F(X_i)\rightarrow Y\)，把 \(a^{-1}b_i\) 唯一提升为 \(c_i:X_i\rightarrow T\)，由余积得到 \(c:Q\rightarrow T\)，再令 \(b=aF(c)\)。若 \(b'F(j_i)=b_i\)，把 \(a^{-1}b'\) 提升后，用余积的唯一性得到同一个 \(c\)。故余积也被保留。
 \end{proof}
 
+这里保留积的结论，是 \(F(P)\) 连同 \(F(p_i)\) 满足目标范畴的积泛性质，因而与任何另一个积存在唯一相容同构；不要求 \(F(P)\) 与某个底集合的坐标直积严格相等。余积也必须连同指定嵌入一起比较，只有对象的抽象同构类型不足以检验这种相容性。
+
 \subsection{Morita 理论的范畴语言}
 \label{b2:subsec:0504:03}
 
@@ -164,4 +221,4 @@ s\cdot m=\varphi^{-1}(s)m.
 如果只要求模范畴等价，是否仍能恢复环同构？\chapref{b2:ch:16}将研究这一问题，并给出比环同构更宽的 \term[Morita-dengjia]{Morita 等价}[Morita equivalence]：它指 \(R\text{-}\mathbf{Mod}\) 与 \(S\text{-}\mathbf{Mod}\) 的范畴等价。那里还将证明矩阵环与原环的具体等价。
 
 \ProseParagraphBreak
-由\cref{b2:prop:equivalence-preserves-universal-objects}，模范畴等价保留零模、直和及直积所表达的映射性质。它不要求保持底集合，也不要求把正则模 \({}_RR\) 送成 \({}_SS\)。若想从一个模的自同态环恢复原环，还须识别该模究竟是谁：\cref{b2:prop:regular-hom-endomorphism}给出的是 \(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)，其中反环正来自右乘与复合次序。后续 Morita 理论的双模与标量侧别，不能从范畴等价的记号中省去。
+由\cref{b2:prop:equivalence-preserves-universal-objects}，模范畴等价保留零模、直和及直积所表达的映射性质，但正则模不是这个等价自动识别的指定对象。若等价把 \({}_RR\) 送到某个 \(S\) 模 \(P\)，它所对应的是 \(P\) 的自同态及其复合，并不保证 \(P\cong{}_SS\)。\cref{b2:prop:regular-hom-endomorphism}给出 \(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)，其中反环来自右乘与复合次序；要在另一边用同一公式识别 \(S^{\mathrm{op}}\)，还须知道所取对象确实是正则模。因此，模范畴等价本身不允许直接把两个正则模的自同态环等同起来。\chapref{b2:ch:16}将研究哪些模能够代替正则模来描述整个模范畴。

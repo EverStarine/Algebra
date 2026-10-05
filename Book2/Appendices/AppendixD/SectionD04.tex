@@ -1,10 +1,11 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### D.4 von Neumann 代数与双交换子
+% 纲要位置：工作记录/计划纲要.md，第 1882 行。
 
 % 纲要要点（供目录核对）：
-% * 弱算子拓扑、强算子拓扑与范数拓扑；含恒等算子的 *-子代数的闭包
-% * 双交换子定理的含幺自伴版本：\(A''=\overline A^{\mathrm{SOT}}=\overline A^{\mathrm{WOT}}\)
-% * 中心、因子、投影与迹；以投影等价、有限性及极小性介绍 I、II、III 型因子及 II_1、II_∞ 的区别，计算 \(B(H)\) 的投影模型；不展开完整分类与 Tomita–Takesaki 模理论
+% * 用有限向量与矩阵系数描述强、弱算子邻域；证明伴随不保强收敛、非自伴上三角代数的双交换子反例
+% * 双交换子定理的含幺自伴版本：\(A''=\overline A^{\mathrm{SOT}}=\overline A^{\mathrm{WOT}}\)；展开循环子空间及有限次放大，使同一个算子同时逼近有限多个向量
+% * 中心、因子、投影与迹；正式证明幂等与正交投影的差别及无限维 B(H) 无迹态，说明投影有限性依赖环境；区分 I、II、III 型与有限维，不展开完整分类或模理论
 % #### D.4.1 弱算子、强算子与范数拓扑
 % #### D.4.2 双交换子定理
 % #### D.4.3 中心、因子、投影与迹
@@ -24,12 +25,25 @@
 \symidx{SOT：强算子拓扑}
 \symidx{WOT：弱算子拓扑}
 
-这里的网是以有向集为指标的族，极限要求从某个指标起均满足给定邻域条件；不能一般只用序列描述闭包。SOT 的基本邻域同时限制有限多个 \(\bigl\lVert(S-T)\xi_j\bigr\rVert\)，WOT 则同时限制有限多个矩阵系数。直接由定义和 Cauchy--Schwarz 不等式可得
+对 \(T\in B(H)\)、正整数 \(m\)、\(\varepsilon>0\) 及 \(\xi_j,\eta_j\in H\)，这两种拓扑的基本邻域分别为
+\[
+U_{\mathrm{SOT}}(T;\xi_1,\ldots,\xi_m,\varepsilon)
+=\bigl\{\,S\in B(H):\|(S-T)\xi_j\|<\varepsilon\text{ 对所有 }j\,\bigr\},
+\]
+\[
+U_{\mathrm{WOT}}(T;\xi_1,\eta_1,\ldots,\xi_m,\eta_m,\varepsilon)
+=\bigl\{\,S\in B(H):|\langle(S-T)\xi_j,\eta_j\rangle|<\varepsilon
+\text{ 对所有 }j\,\bigr\}.
+\]
+这里的网是以有向集为指标的族，极限要求从某个指标起均满足给定邻域条件；不能一般只用序列描述闭包。有限组向量或矩阵系数决定了每次逼近需要同时满足哪些条件。直接由定义和 Cauchy--Schwarz 不等式可得
 \[
 \text{范数收敛}\ \Longrightarrow\ \text{SOT 收敛}\ \Longrightarrow\ \text{WOT 收敛}.
 \]
 
 在 \(\ell^2(\mathbb N)\) 中，令 \(P_n\) 投影到前 \(n\) 个标准基向量。对 \(\xi=(\xi_j)\)，尾和 \(\bigl\lVert(I-P_n)\xi\bigr\rVert^2=\sum_{j>n}|\xi_j|^2\to0\)，故 \(P_n\to I\) 强收敛；但 \(\|I-P_n\|=1\)，并不范数收敛。再令 \(S e_j=e_{j+1}\)。对有限支集向量 \(\xi,\eta\)，\(\langle S^n\xi,\eta\rangle\) 最终为零；利用有限支集向量的稠密性和 \(\|S^n\|=1\)，可推广到任意 \(\xi,\eta\)。因此 \(S^n\to0\) 弱收敛，但 \(\|S^n e_1\|=1\)，不强收敛。
+
+\ProseParagraphBreak
+取伴随也不保持一般的强算子收敛；\cref{b2:prop:D-operator-topology-boundaries}将给出一个范数为一的反例。因此，要证明含幺 \(*\)-子代数的强闭包仍对伴随封闭，不能直接假定伴随运算在 SOT 下连续。
 
 \subsection{双交换子定理}
 \label{b2:subsec:D04:02}
@@ -59,11 +73,18 @@
 \]
 只需证明 \(T\in\mathcal A''\) 可以在任意有限组向量上同时由 \(\mathcal A\) 逼近。
 
-给定 \(\xi_1,\ldots,\xi_m\)，在 \(H^m\) 中令
+先固定一个向量 \(\xi\in H\)，令 \(M=\overline{\mathcal A\xi}\)，闭包使用 Hilbert 范数。这个闭线性子空间对 \(\mathcal A\) 不变；由于 \(a^*\in\mathcal A\)，\(M^\perp\) 也对每个 \(a\in\mathcal A\) 不变。因此到 \(M\) 的正交投影 \(P_M\) 与 \(\mathcal A\) 交换，属于 \(\mathcal A'\)。单位元保证 \(\xi\in M\)，而 \(T\) 与 \(P_M\) 交换，所以 \(T\xi=TP_M\xi=P_MT\xi\in M\)。这就允许用 \(a\xi\)、\(a\in\mathcal A\)，逼近 \(T\xi\)。
+
+但分别处理几个向量，得到的 \(a\) 可能各不相同；一个 SOT 邻域要求同一个 \(a\) 满足有限多个条件。为此，给定正整数 \(m\) 及 \(\xi_1,\ldots,\xi_m\)，在 \(H^m\) 中令
 \[
 \mathcal M=\overline{\bigl\{\,(a\xi_1,\ldots,a\xi_m):a\in\mathcal A\,\bigr\}},
 \]
-闭包使用 Hilbert 范数。这是闭线性子空间，对每个对角作用 \(a^{(m)}\) 不变；由于 \(a^*\in\mathcal A\)，它的正交补也不变。故正交投影 \(P\) 与每个 \(a^{(m)}\) 交换。把 \(P\) 按 \(H^m\) 的分量写成算子矩阵 \((P_{ij})\)，交换关系逐条目给出 \(P_{ij}a=aP_{ij}\)，即 \(P_{ij}\in\mathcal A'\)。
+闭包使用 Hilbert 范数。这是闭线性子空间，对每个对角作用 \(a^{(m)}\) 不变；由于 \(a^*\in\mathcal A\)，它的正交补也不变。故正交投影 \(P\) 与每个 \(a^{(m)}\) 交换。记 \(\iota_j:H\to H^m\) 为第 \(j\) 个坐标嵌入，\(\pi_i:H^m\to H\) 为第 \(i\) 个坐标投影，则
+\[
+P_{ij}=\pi_iP\iota_j\in B(H),\qquad
+\|P_{ij}\|\le\|P\|.
+\]
+这些条目构成 \(P\) 的算子矩阵。将 \(Pa^{(m)}=a^{(m)}P\) 的两边与 \(\pi_i,\iota_j\) 复合，便得 \(P_{ij}a=aP_{ij}\)，即 \(P_{ij}\in\mathcal A'\)。
 
 因为 \(T\in\mathcal A''\)，它与每个 \(P_{ij}\) 交换，从而 \(T^{(m)}P=PT^{(m)}\)。单位元使 \(\xi=(\xi_1,\ldots,\xi_m)\in\mathcal M\)，所以
 \(T^{(m)}\xi=T^{(m)}P\xi=PT^{(m)}\xi\in\mathcal M\)。依照 \(\mathcal M\) 的定义，对任意 \(\varepsilon>0\)，存在同一个 \(a\in\mathcal A\) 使
@@ -79,10 +100,15 @@
 设 \(H\) 为复 Hilbert 空间。若 \(\mathcal M\subseteq B(H)\) 是含恒等算子 \(I_H\) 且在弱算子拓扑下闭的 \(*\)-子代数，则称 \(\mathcal M\) 为\term[von-Neumann-daishu]{von Neumann 代数}[von Neumann algebra]。这里 \(\mathcal M'\) 是 \(\mathcal M\) 在 \(B(H)\) 中的交换子代数，\(\mathcal M''=(\mathcal M')'\)。由\cref{b2:thm:operator-bicommutant}，这等价于 \(\mathcal M=\mathcal M''\)，也等价于含幺 \(*\)-子代数在强算子拓扑下闭。
 \end{definition}
 
+上述闭性与双交换子相等的等价关系使用了含幺和对伴随封闭两个条件。\cref{b2:prop:D-operator-topology-boundaries}中的上三角矩阵代数虽含幺且 WOT 闭，却不等于它的双交换子，正是因为它没有对伴随封闭。
+
 \subsection{中心、因子、投影与迹}
 \label{b2:subsec:D04:03}
 
-设 \(H\) 为复 Hilbert 空间，\(\mathcal M\subseteq B(H)\) 为 von Neumann 代数。其中心为 \(Z(\mathcal M)=\mathcal M\cap\mathcal M'\)。如果 \(Z(\mathcal M)=\mathbb C I_H\)，则称 \(\mathcal M\) 为\term[yinzi-suanzi]{因子}[factor]。若 \(p\in\mathcal M\) 满足 \(p=p^*=p^2\)，则称 \(p\) 为正交投影；它对应 \(H\) 的一个闭子空间，但并非 \(H\) 的每个闭子空间的投影都属于 \(\mathcal M\)。设 \(\tau\) 是 \(\mathcal M\) 上的态。若对任意 \(a,b\in\mathcal M\) 都有 \(\tau(ab)=\tau(ba)\)，则称 \(\tau\) 为\term[jiantai]{迹态}[tracial state]；若对每个非零 \(a\in\mathcal M\) 还有 \(\tau(a^*a)>0\)，则称它为忠实迹态。
+设 \(H\) 为复 Hilbert 空间，\(\mathcal M\subseteq B(H)\) 为 von Neumann 代数。其中心为 \(Z(\mathcal M)=\mathcal M\cap\mathcal M'\)。如果 \(Z(\mathcal M)=\mathbb C I_H\)，则称 \(\mathcal M\) 为\term[yinzi-suanzi]{因子}[factor]。若 \(p\in\mathcal M\) 满足 \(p=p^*=p^2\)，则称 \(p\) 为正交投影；它对应 \(H\) 的一个闭子空间，但并非 \(H\) 的每个闭子空间的投影都属于 \(\mathcal M\)。仅有代数幂等关系 \(p^2=p\) 并不保证正交性，\cref{b2:prop:D-projection-idempotent}将直接计算自伴条件的作用。
+
+\ProseParagraphBreak
+态是满足 \(\tau(1)=1\) 的正线性泛函。若对每个非零 \(a\in\mathcal M\) 都有 \(\tau(a^*a)>0\)，则这个态忠实；若对任意 \(a,b\in\mathcal M\) 都有 \(\tau(ab)=\tau(ba)\)，则称它为\term[jiantai]{迹态}[tracial state]。同时满足这两个条件的态才是忠实迹态。正性、忠实性与迹性质分别限制取值的符号、是否检测到每个非零平方、以及交换乘积后取值是否改变；忠实表示则要求表示同态的核为零，是对另一个映射提出的条件。
 
 \ProseParagraphBreak
 \(B(H)\) 是因子。若 \(T\) 与全部秩一正交投影交换，它保持每条直线，故 \(T\xi=\lambda_\xi\xi\)。对两个线性无关向量再考虑它们的和，得到相同的标量，于是 \(T=\lambda I\)。有限维时 \(M_n(\mathbb C)\) 的归一化迹为忠实迹态；而 \(\bigoplus_{j=1}^rM_{n_j}(\mathbb C)\) 的中心为 \(\mathbb C^r\)，\(r>1\) 时不是因子，其迹态包括
@@ -138,6 +164,7 @@ v^*v=p,\qquad vv^*=q,
 \end{tabularx}
 \end{center}
 对于 \(\mathrm{II}\) 型因子，若单位投影有限，则称为 \(\mathrm{II}_1\) 型；若单位投影无限，则称为 \(\mathrm{II}_\infty\) 型。
+若一个 \(\mathrm I\) 型因子与 \(B(K)\) 同构，\(K\ne0\) 为复 Hilbert 空间，则按 \(K\) 的 Hilbert 维数记其类型为 \(\mathrm I_{\dim K}\)。\(\dim K=n<\infty\) 时写作 \(\mathrm I_n\)；\(K\) 为可分无限维空间时写作 \(\mathrm I_\infty\)。
 \end{definition}
 
 三种条件互相排斥并穷尽所有因子。它们区分的是投影结构，并未给出同一类型内部的同构分类。这里采用因子的投影判据；一般 von Neumann 代数的类型通过中心投影分解定义，各个非零中心分量可以属于不同类型。投影等价、有限性和一般的中心分解见 Blackadar\cite[\nopp III.1.1.2; Definition III.1.3.1; III.1.4.5--III.1.4.7]{Blackadar2017OperatorAlgebrasCorrected}。
@@ -146,4 +173,45 @@ v^*v=p,\qquad vv^*=q,
 由\cref{b2:prop:finite-projection-models}，\(B(H)\) 总是 \(\mathrm I\) 型因子。\(M_n(\mathbb C)\) 属于 \(\mathrm I_n\) 型，而 \(B(\ell^2(\mathbb N))\) 属于 \(\mathrm I_\infty\) 型；前者的单位投影有限，后者的单位投影无限。一般 \(\mathrm I\) 型因子也与某个 \(B(K)\) 同构，其结构证明是把等价的极小投影组织成矩阵单位，见\cite[\nopp III.1.5.2--III.1.5.3; III.1.5.12]{Blackadar2017OperatorAlgebrasCorrected}。当 \(K\) 不可分时，还可用其 Hilbert 维数作为 \(\mathrm I\) 型的下标。
 
 \ProseParagraphBreak
-\(\mathrm{II}_1\) 型也有有限单位投影，却没有矩阵代数中的极小投影；有限投影可以继续分解，不能把它理解成有限秩投影。\(\mathrm{II}_\infty\) 型的单位投影无限，但代数内部仍有非零有限投影；\(\mathrm{III}\) 型连这样的有限部分也不存在。尤其不能仅由“没有迹态”断定一个因子为 \(\mathrm{III}\) 型：\(B(\ell^2(\mathbb N))\) 就没有迹态。若它有迹态 \(\tau\)，取 \(v_1e_j=e_{2j}\)、\(v_2e_j=e_{2j-1}\)，则 \(v_i^*v_i=I\)，两个终投影之和为 \(I\)，因而 \(1=\tau(I)=\tau(v_1v_1^*)+\tau(v_2v_2^*)=2\)，矛盾。\(\mathrm{II}\) 与 \(\mathrm{III}\) 型的具体构造、非有界迹以及 \(\mathrm{III}\) 型的进一步细分见\cite[\nopp III.2.5; III.3; III.4.6]{Blackadar2017OperatorAlgebrasCorrected}。
+\(\mathrm{II}_1\) 型的“有限”指单位投影在当前代数中不能等价于自己的真子投影，并不指代数有限维或单位投影有限秩。这类因子没有非零极小投影，仍可为无限维算子代数；下一节的自由群因子便是一个模型。\(\mathrm{II}_\infty\) 型的单位投影无限，但代数内部仍有非零有限投影；\(\mathrm{III}\) 型连这样的有限部分也不存在。尤其不能仅由“没有迹态”断定一个因子为 \(\mathrm{III}\) 型：\(B(\ell^2(\mathbb N))\) 属于 \(\mathrm I_\infty\) 型，却由\cref{b2:prop:D-no-tracial-state}知没有迹态。\(\mathrm{II}\) 与 \(\mathrm{III}\) 型的具体构造、非有界迹以及 \(\mathrm{III}\) 型的进一步细分见\cite[\nopp III.2.5; III.3; III.4.6]{Blackadar2017OperatorAlgebrasCorrected}。
+
+\begin{proposition}\label{b2:prop:D-operator-topology-boundaries}
+设 \(H=\ell^2(\mathbb N)\) 为复 Hilbert 空间，\((e_j)_{j\ge1}\) 为标准正交基，定义 \(T_n\xi=\langle e_n,\xi\rangle e_1\)。则 \(T_n\to0\) 强收敛，但 \(T_n^*\) 不强收敛到零，所以伴随映射对 SOT 不连续。另一方面，\(\mathcal T=T_2(\mathbb C)\subseteq B(\mathbb C^2)\) 为二阶上三角矩阵代数，则 \(\mathcal T\) 含恒等矩阵且 WOT 闭，却有
+\[
+\mathcal T'=\mathbb CI_2,\qquad \mathcal T''=M_2(\mathbb C)\ne\mathcal T.
+\]
+\end{proposition}
+\begin{proof}
+对 \(\xi=(\xi_j)\in\ell^2(\mathbb N)\)，平方可和性使 \(\xi_n\to0\)，故 \(\|T_n\xi\|=|\xi_n|\to0\)。但 \(T_n^*e_1=e_n\)，其范数恒为一，排除了伴随序列强趋零。每个 \(T_n\) 的范数也是一，因此反例甚至发生在一个范数有界的序列上。
+
+若矩阵 \(X\) 与 \(E_{11}\) 交换，它的两个非对角条目为零；再与 \(E_{12}\) 交换，使两个对角条目相等。因此 \(\mathcal T'\) 恰为标量矩阵，其交换子为全部 \(M_2(\mathbb C)\)。矩阵条目是 WOT 连续的矩阵系数，条件 \(X_{21}=0\) 为闭条件，所以 \(\mathcal T\) 为 WOT 闭集。它包含 \(I_2\)，却不包含 \(E_{12}^*=E_{21}\)，因而不满足双交换子定理的 \(*\)-封闭假设。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:D-projection-idempotent}
+设 \(H\ne0\) 为复 Hilbert 空间，\(p\in B(H)\) 满足 \(p=p^*=p^2\)。若 \(p\ne0\)，则 \(\|p\|=1\)；零投影的范数为零。对实数 \(c\)，矩阵
+\[
+P_c=\begin{pmatrix}1&c\\0&0\end{pmatrix}\in B(\mathbb C^2)
+\]
+满足 \(P_c^2=P_c\)，但它自伴当且仅当 \(c=0\)，而且 \(\|P_c\|=\sqrt{1+c^2}\)。
+\end{proposition}
+\begin{proof}
+自伴幂等关系使 \(p\xi\) 与 \((I-p)\xi\) 正交。因此 \(\|p\xi\|^2\le\|p\xi\|^2+\|(I-p)\xi\|^2=\|\xi\|^2\)，给出 \(\|p\|\le1\)。当 \(p\ne0\) 时，在 \(pH\) 中取单位向量 \(\xi\)，便有 \(p\xi=\xi\)，所以范数达到一。
+
+直接相乘得 \(P_c^2=P_c\)，比较共轭转置可知 \(P_c=P_c^*\) 当且仅当 \(c=0\)。又 \(P_c(x,y)=(x+cy,0)\)，Cauchy--Schwarz 不等式给出
+\[
+|x+cy|\le\sqrt{1+c^2}\sqrt{|x|^2+|y|^2}.
+\]
+在单位向量 \((1,c)/\sqrt{1+c^2}\) 处等号成立，故 \(\|P_c\|=\sqrt{1+c^2}\)。\(c\ne0\) 时，这个幂等算子不是正交投影，范数也严格大于一。
+\end{proof}
+
+\begin{proposition}\label{b2:prop:D-no-tracial-state}
+设 \(H=\ell^2(\mathbb N)\) 为复 Hilbert 空间，\((e_j)_{j\ge1}\) 为标准正交基。\(B(H)\) 不存在迹态，即不存在正线性泛函 \(\tau:B(H)\to\mathbb C\)，同时满足 \(\tau(I_H)=1\) 及 \(\tau(ST)=\tau(TS)\) 对所有 \(S,T\in B(H)\) 成立。
+\end{proposition}
+\begin{proof}
+定义 \(V_1e_j=e_{2j-1}\)、\(V_2e_j=e_{2j}\)。在有限支集向量上，这两个映射保持内积，因而连续延伸为 \(H\) 上的等距算子。它们的像分别为奇数、偶数坐标子空间，这两个闭子空间正交且直和为 \(H\)。所以
+\[
+V_i^*V_i=I_H\quad(i=1,2),\qquad
+V_1V_1^*+V_2V_2^*=I_H.
+\]
+若 \(\tau\) 为迹态，交换乘积的条件给出 \(\tau(V_iV_i^*)=\tau(V_i^*V_i)=1\)。由线性性，两个等式相加又应为 \(\tau(I_H)=1\)，得到矛盾。这只使用了归一化与迹性质，无须假定态忠实。
+\end{proof}

@@ -1,5 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 12.4 Krull–Schmidt 定理
+% 纲要位置：工作记录/计划纲要.md:L1454
 
 \section{Krull–Schmidt 定理}
 \label{b2:sec:1204}
@@ -8,9 +9,9 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 有限长度情形的分解存在性
-% * 不可分解因子的唯一性
-% * 缺少适当假设时的失效现象
+% * 有限长度情形的不可分解分解存在性
+% * 局部自同态环、补模交换与不可分解因子的唯一性
+% * 无限乘积的存在性失效及 Noether 模的非唯一分解
 %
 % ---
 %
@@ -19,17 +20,17 @@
 \label{b2:subsec:1204:01}
 
 \begin{proposition}\label{b2:prop:finite-length-decomposition}
-每个非零有限长度左 \(R\) 模都是有限多个非零不可分解左 \(R\) 模的直和，分量个数不超过它的长度。零模对应空直和。
+设 \(R\) 为含幺环，\(M\) 为有限长度幺性左 \(R\) 模。若 \(M\ne0\)，则 \(M\) 是有限多个非零不可分解左 \(R\) 模的直和，分量个数不超过 \(\ell(M)\)。零模对应空直和。
 \end{proposition}
 \begin{proof}
-对 \(\ell(M)\) 归纳。长度一时 \(M\) 简单，因而不可分解。一般地，若 \(M\) 不可分解，取它本身为唯一分量。否则可写成 \(M=A\oplus B\)，其中两项非零。由\cref{b2:prop:length-additive}，\(\ell(M)=\ell(A)+\ell(B)\)，所以两项长度都严格小于 \(\ell(M)\)，可以分别使用归纳假设，再将两个有限分解合并。每个非零分量长度至少一，长度可加性还给出分量个数的上界。
+零模取空直和。对非零模的长度 \(\ell(M)\) 归纳。长度一时 \(M\) 简单，因而不可分解。一般地，若 \(M\) 不可分解，取它本身为唯一分量。否则可写成 \(M=A\oplus B\)，其中两项非零。由\cref{b2:prop:length-additive}，\(\ell(M)=\ell(A)+\ell(B)\)，所以两项长度都是严格小于 \(\ell(M)\) 的正整数，可以分别使用归纳假设，再将两个有限分解合并。沿每次继续分解的分量，长度都严格下降，因而分解过程不能无限继续。每个非零分量长度至少一，长度可加性还给出分量个数的上界。
 \end{proof}
 
-例如 \(k[t]/\bigl(t^2(t-1)^3\bigr)\) 通过互素多项式的中国剩余同构分成
+例如，若 \(k\) 为域，则 \(t^2\) 与 \((t-1)^3\) 互素，\(k[t]\) 模 \(k[t]/\bigl(t^2(t-1)^3\bigr)\) 通过中国剩余同构分成
 \[
 k[t]/(t^2)\oplus k[t]/\bigl((t-1)^3\bigr).
 \]
-每个循环商的非零子模都含有其最小非零子模，所以两个分量均不可分解，长度分别为二和三。它们各自仍有非平凡合成列：不可分解性不等于没有真子模。
+这正是\cref{b2:thm:pid-elementary-divisors}中的两个循环主分量，分别对应不可约多项式 \(t\) 与 \(t-1\)。每个循环商的非零子模都含有其最小非零子模，分别为 \((t)/(t^2)\) 与 \(\bigl((t-1)^2\bigr)/\bigl((t-1)^3\bigr)\)，所以两个分量均不可分解，长度分别为二和三。它们各自仍有非平凡合成列：不可分解性不等于没有真子模。
 
 \ProseParagraphBreak
 分解存在性也可以表述为投影的逐步细分。若一个分量还能分解，就把对应幂等元拆成两个非零正交幂等元。\cref{b2:prop:orthogonal-idempotent-decomposition}说明这与模的操作一致；长度每次被分到两个正整数中，所以不可能无限继续。这个证明保证存在有限分解，却尚未比较不同选择得到的分量。
@@ -38,7 +39,7 @@ k[t]/(t^2)\oplus k[t]/\bigl((t-1)^3\bigr).
 \label{b2:subsec:1204:02}
 
 \begin{theorem}[Krull–Schmidt]\label{b2:thm:krull-schmidt}
-若有限长度左 \(R\) 模 \(M\) 有两个分解
+设 \(R\) 为含幺环，\(M\) 为有限长度幺性左 \(R\) 模。若 \(M\) 有两个分解
 \[
 M=A_1\oplus\cdots\oplus A_r
 =B_1\oplus\cdots\oplus B_s,
@@ -51,57 +52,65 @@ M=A_1\oplus\cdots\oplus A_r
 a_i:A_i\rightarrow M,\quad p_i:M\rightarrow A_i,\qquad
 b_j:B_j\rightarrow M,\quad q_j:M\rightarrow B_j
 \]
-为两组包含和投影。由 \(\sum_jb_jq_j=\operatorname{id}_M\)，在 \(\operatorname{End}_R(A_1)\) 中有
+为两组包含和投影。复合 \(p_1b_jq_ja_1\) 先把 \(A_1\) 中的元素包含到 \(M\)，取出它的第 \(j\) 个 \(B\) 分量，将这个分量送回 \(M\)，最后取出其中的 \(A_1\) 分量。所有这些往返映射相加，应当恢复原元素：由 \(\sum_jb_jq_j=\operatorname{id}_M\) 和 \(p_1a_1=\operatorname{id}_{A_1}\)，在 \(\operatorname{End}_R(A_1)\) 中有
 \begin{equation}\label{b2:eq:krull-schmidt-unit-sum}
 \operatorname{id}_{A_1}=\sum_{j=1}^s p_1b_jq_ja_1.
 \end{equation}
-这个自同态环由\cref{b2:thm:indecomposable-local-end}为局部环。若右边每一项都非可逆，非单位理想的加法封闭性将使其和也非可逆，与左边为恒等矛盾。因此某一项可逆，重排后设 \(p_1b_1q_1a_1\) 可逆。
+\(A_1\) 是非零不可分解有限长度模，故这个自同态环由\cref{b2:thm:indecomposable-local-end}为局部环。右侧只有有限项，左侧恒等自同态是单位；\cref{b2:prop:local-ring-criterion}中的有限和性质保证至少一项可逆。重排后设 \(p_1b_1q_1a_1\) 可逆。
 
-记 \(u=q_1a_1:A_1\rightarrow B_1\)、\(v=p_1b_1:B_1\rightarrow A_1\)，于是 \(vu\) 可逆。令 \(w=(vu)^{-1}v\)，则 \(wu=\operatorname{id}_{A_1}\)。幂等元 \(uw\) 在 \(B_1\) 上的像为 \(u(A_1)\)、核为 \(\ker w\)，由\cref{b2:prop:idempotent-module-decomposition}，
+记 \(u=q_1a_1:A_1\rightarrow B_1\)、\(v=p_1b_1:B_1\rightarrow A_1\)，于是 \(vu\) 可逆。要把 \(u(A_1)\) 分裂成 \(B_1\) 的直和因子，需要给 \(u\) 构造一个左逆。原映射 \(v\) 与 \(u\) 的复合为可逆自同态 \(vu\)，因此先用 \((vu)^{-1}\) 修正它，令
+\[
+w=(vu)^{-1}v:B_1\longrightarrow A_1.
+\]
+便有 \(wu=\operatorname{id}_{A_1}\)，所以 \(u\) 单射。幂等元 \(uw\) 在 \(B_1\) 上的像为 \(u(A_1)\)、核为 \(\ker w\)，由\cref{b2:prop:idempotent-module-decomposition}，
 \[
 B_1=u(A_1)\oplus\ker w.
 \]
-\(u\) 单射且 \(A_1\ne0\)，第一项非零；\(B_1\) 不可分解，故 \(\ker w=0\)。于是 \(u\) 满且单，得到 \(A_1\cong B_1\)。
+由于 \(A_1\ne0\)，第一项非零；\(B_1\) 不可分解，故 \(\ker w=0\)，上式只剩 \(B_1=u(A_1)\)。因此 \(u\) 满且单，得到 \(A_1\cong B_1\)。这里起作用的是：非零模分裂嵌入不可分解模后，其像必须占据整个目标模。
 
-接下来不能未经证明就从直和两边约去同构项。令 \(B'=\bigoplus_{j>1}B_j\)，证明实际有 \(M=A_1\oplus B'\)。对任意 \(m\in M\)，因为 \(q_1|_{A_1}=u\) 为同构，可取唯一 \(a\in A_1\) 使 \(q_1(a)=q_1(m)\)。于是 \(m-a\in\ker q_1=B'\)，所以两者生成 \(M\)；若 \(a\in A_1\cap B'\)，则 \(u(a)=0\)，所以 \(a=0\)，得所需直和。
+虽然 \(A_1\cong B_1\)，它们在 \(M\) 中的位置仍可能不同，尚不能据此约去两边的同构项。令 \(B'=\bigoplus_{j>1}B_j\)，要把实际子模 \(A_1\) 换入第二个分解，同时保留同一个补模 \(B'\)。因为 \(q_1|_{A_1}=u\) 为同构，对任意 \(m\in M\)，它的 \(B_1\) 坐标 \(q_1(m)\) 都对应唯一的 \(a\in A_1\)。于是 \(q_1(a)=q_1(m)\)，从而 \(m-a\in\ker q_1=B'\)，所以 \(A_1+B'=M\)。若 \(a\in A_1\cap B'\)，则 \(u(a)=0\)，所以 \(a=0\)。这就得到实际的直和分解 \(M=A_1\oplus B'\)。
 
-令 \(A'=\bigoplus_{i>1}A_i\)。两个实际分解 \(M=A_1\oplus A'=A_1\oplus B'\) 都将其补模同构到商 \(M/A_1\)：限制商映射的核为零，且每个陪集都有补模中的代表。因此 \(A'\cong B'\)。将 \(B'\) 的分解沿此同构转移到 \(A'\)，就得到长度严格小于 \(\ell(M)\) 的模上的两个不可分解分解。归纳假设给出剩余项一一同构，加上 \(A_1\cong B_1\)，完成证明。
+令 \(A'=\bigoplus_{i>1}A_i\)。两个实际分解 \(M=A_1\oplus A'=A_1\oplus B'\) 都将其补模同构到商 \(M/A_1\)：限制商映射的核为零，且每个陪集都有补模中的代表。因此
+\[
+A'\cong M/A_1\cong B'.
+\]
+将 \(B'\) 的分解沿此同构转移到 \(A'\)，就得到同一个模上的两个不可分解分解。由长度可加性，\(\ell(A')=\ell(M)-\ell(A_1)<\ell(M)\)，故可用归纳假设，得到剩余项一一同构。加上 \(A_1\cong B_1\)，完成证明。
 \end{proof}
 
 这一\term[Krull-Schmidt-dingli]{Krull–Schmidt 定理}[Krull–Schmidt theorem]的唯一性在同构和排列意义下成立。分量作为子模的具体位置可以不同，例如 \(k^2=ke_1\oplus ke_2=ke_1\oplus k(e_1+e_2)\)，第二个分量改变了；两种分解的不可分解因子都为两个一维空间。
 
 \begin{corollary}[有限长度模的消去]\label{b2:cor:finite-length-cancellation}
-设 \(A,B,C\) 为有限长度左 \(R\) 模。若 \(A\oplus C\cong B\oplus C\)，则 \(A\cong B\)。
+设 \(R\) 为含幺环，\(A,B,C\) 为有限长度幺性左 \(R\) 模。若 \(A\oplus C\cong B\oplus C\)，则 \(A\cong B\)。
 \end{corollary}
 \begin{proof}
 将 \(A,B,C\) 分别分成有限个不可分解模。由\cref{b2:thm:krull-schmidt}，左右两侧每一种不可分解同构类型的出现次数相等。两侧减去来自 \(C\) 的相同有限重数，得到 \(A,B\) 的分量类型及重数相同，逐项同构的直和便给出 \(A\cong B\)。
 \end{proof}
 
-Jordan–Hölder 定理比较的是合成因子，Krull–Schmidt 定理比较的是不可分解直和因子；它们解决不同的问题。前者不能将扩张信息恢复出来，后者则把尚不能分裂的扩张保留在一个分量内。对有限维代数的表示，二者的有限维版本可参阅 Etingof 等人\cite[Theorem 3.7.1, pp. 50--51; Theorem 3.8.1, pp. 51--52; Remark 3.8.6, p. 53]{EtingofEtAl2011RepresentationTheory}；本章用链条件与 Fitting 引理处理一般有限长度模。
+Jordan–Hölder 定理比较的是子模链中的简单商层，Krull–Schmidt 定理比较的是原模内部的不可分解直和因子。回看\subsecref{b2:subsec:1202:01}中比较过的 \(\mathbb Z/p^2\mathbb Z\) 与 \((\mathbb Z/p\mathbb Z)^2\)，其中 \(p\) 为素数：二者的合成因子都是两个 \(\mathbb Z/p\mathbb Z\)，但前者的任意非零子模都包含 \(p\mathbb Z/p^2\mathbb Z\)，所以自身不可分解；后者则已经分成两个简单直和因子。相同的简单商层不能说明它们怎样拼合，而不可分解分解会区分这两种拼合。对有限维代数的表示，二者的有限维版本可参阅 Etingof 等人\cite[Theorem 3.7.1, pp. 50--51; Theorem 3.8.1, pp. 51--52; Remark 3.8.6, p. 53]{EtingofEtAl2011RepresentationTheory}；本章用链条件与 Fitting 引理处理一般有限长度模。
 
 \subsection{分解定理的条件与反例}
 \label{b2:subsec:1204:03}
 
-有限长度在证明中有两个作用：保证分解过程终止，并保证不可分解模的自同态环局部。去掉它以后，这两步都可能失败，甚至有限生成或 Noether 条件也不足以替代它。
+有限长度在证明中有两个作用。分解存在性用到的是非平凡分量的正整数长度严格下降，迫使分解过程终止；唯一性则用到核、像的两种链同时稳定，由 Fitting 引理得到不可分解模的自同态环局部，再从恒等映射的有限和中找到可逆项。去掉有限长度以后，这两步都可能失败，甚至有限生成或 Noether 条件也不足以替代它。
 
 \ProseParagraphBreak
-先看自同态的失效。整数模 \(\mathbb Z\) 不可分解，因为两个非零子群总有非零交；其自同态环却是非局部环 \(\mathbb Z\)。乘二的映射单射而不满，任意 \(n\ge1\) 都有 \(\ker(2^n)=0\)、\(\operatorname{im}(2^n)=2^n\mathbb Z\ne\mathbb Z\)，所以 Fitting 分解也不成立。缺少降链条件使像永远不能稳定。
+先看自同态的失效。整数模 \(\mathbb Z\) 不可分解，因为两个非零子群总有非零交；其自同态环却是非局部环 \(\mathbb Z\)。乘二的映射单射而不满，任意 \(n\ge1\) 都有 \(\ker(2^n)=0\)、\(\operatorname{im}(2^n)=2^n\mathbb Z\ne\mathbb Z\)，所以 Fitting 分解也不成立。缺少降链条件使像永远不能稳定。这个模已有以自身为唯一分量的不可分解分解；此处失去的是从不可分解性推出自同态环局部的机制。
 
 \begin{example}[没有不可分解直和分解的循环模]\label{b2:ex:no-indecomposable-decomposition}
-设 \(k\) 为域，令 \(R=\prod_{n\ge1}k\)，按坐标运算。左正则模 \(R\) 虽由一生成，却不能写成任何一族非零不可分解子模的内部直和。
+设 \(k\) 为域，令含幺环 \(R=\prod_{n\ge1}k\)，按坐标运算，单位元为 \((1,1,\ldots)\)。幺性左正则模 \(R\) 虽由一生成，却不能写成任何一族非零不可分解子模的内部直和。
 \end{example}
 \begin{proof}
 任意直和因子的投影 \(p:R\rightarrow R\) 由 \(e=p(1)\) 决定，\(p(r)=re\)。投影条件给出 \(e^2=e\)，每个坐标因 \(k\) 为域只能是零或一。因此直和因子为 \(eR\)，对应一个坐标子集 \(S\)。
 
 若 \(S\) 至少有两个元素，可分成两个非空不交子集，相应指示幂等元把 \(eR\) 分成两个非零直和因子。若 \(S\) 只有一个元素，\(eR\cong k\) 没有非零真子模，故不可分解。因此每个非零不可分解直和因子只能占据一个坐标。
 
-若 \(R\) 是这些因子的内部直和，单位元 \((1,1,\ldots)\) 必须是有限多个分量元素之和。这种和只能有有限个非零坐标，不可能等于单位元，矛盾。
+若 \(R\) 是这些因子的内部直和，即使因子族无限，\cref{b2:prop:internal-direct-sum}也要求每个元素只有有限多个非零分量。因此单位元 \((1,1,\ldots)\) 必须是有限多个分量元素之和。这种和只能有有限个非零坐标，不可能等于单位元，矛盾。
 \end{proof}
 
 唯一性也可能真正失败，而不只是上述证明失去效力。以下例子给出两个不同的有限不可分解分解。
 
 \begin{example}[Noether 模的非唯一分解]\label{b2:ex:krull-schmidt-nonunique}
-令 \(s=\sqrt{-5}\)、\(R=\mathbb Z[s]\subseteq\mathbb C\)，\(I=(2,1+s)\)。此时 \(R\) 与 \(I\) 是不同构的不可分解 Noether \(R\) 模，但
+令 \(s=\sqrt{-5}\)、\(R=\mathbb Z[s]\subseteq\mathbb C\)，\(I=(2,1+s)\)。以通常乘法为作用，将 \(R\) 与 \(I\) 视为幺性左 \(R\) 模。它们是不同构的不可分解 Noether 模，但
 \[
 R\oplus R\cong I\oplus I.
 \]
@@ -111,11 +120,11 @@ R\oplus R\cong I\oplus I.
 
 对 \(a+bs\in R\)，令 \(N(a+bs)=a^2+5b^2\)，这是乘共轭所得的非负整数，满足 \(N(uv)=N(u)N(v)\)。若 \(I=(u)\)，则 \(u\) 同时整除 \(2\) 和 \(1+s\)，故正整数 \(N(u)\) 同时整除四和六，只能为一或二。若为一，共轭元素就是 \(u\) 的逆，\(I=R\)，矛盾；若为二，方程 \(a^2+5b^2=2\) 无整数解。因此 \(I\) 非主，不能与 \(R\) 同构：一个同构会把一送到 \(I\) 的单个生成元。
 
-计算 \(I^2\) 时，生成元 \(4,2(1+s),(1+s)^2=-4+2s\) 都在 \(2R\) 中。另一方面，\(s-1=(1+s)-2\in I\)，并且
+为构造 \(R^2\) 与 \(I\oplus I\) 之间的同构，需要控制 \(I\) 中元素的乘积。这里 \(I^2\) 表示理想乘积，即由所有 \(xy\)、\(x,y\in I\) 生成的理想；\(I\oplus I\) 则以有序对为元素。计算理想 \(I^2\) 时，生成元 \(4,2(1+s),(1+s)^2=-4+2s\) 都在 \(2R\) 中。另一方面，\(s-1=(1+s)-2\in I\)，并且
 \[
 2=2(2\cdot2)+(1+s)(s-1),
 \]
-所以 \(2\in I^2\)，得到 \(I^2=2R\)。这个等式也给出构造同构矩阵的方法：若一个 \(2\times2\) 矩阵 \(B\) 的条目都在 \(I\) 中，且 \(\det B=2\)，则 \(B\) 把 \(R^2\) 送入 \(I\oplus I\)。二维伴随矩阵的条目仍在 \(I\) 中，而在分式域内有 \(B^{-1}=\tfrac12\operatorname{adj}(B)\)。它乘上 \(I\oplus I\) 中的向量后，分子各坐标都是 \(I\) 中元素的乘积之和，属于 \(I^2=2R\)，所以除以二以后仍在 \(R\) 中。
+所以 \(2\in I^2\)，得到 \(I^2=2R\)。现在选一个条目都在 \(I\) 中的 \(2\times2\) 矩阵 \(B\)，它就把 \(R^2\) 送入 \(I\oplus I\)。二维伴随矩阵的条目仍在 \(I\) 中，故 \(\operatorname{adj}(B)\) 乘上 \(I\oplus I\) 中的向量后，分子各坐标都是两个 \(I\) 中元素的乘积之和，属于理想 \(I^2=2R\)。为了让逆矩阵 \((\det B)^{-1}\operatorname{adj}(B)\) 把这些向量送回 \(R^2\)，可以选择 \(\det B=2\)：这样分子中的二恰好抵消分母，所得坐标仍在 \(R\) 中。
 
 为找到这样的 \(B\)，把刚才的 \(2=8+(s-1)(s+1)\) 组织成一个行列式：
 \[
@@ -127,11 +136,12 @@ B=\begin{pmatrix}2&-(s-1)\\1+s&4\end{pmatrix},\qquad
 B^{-1}=\frac12\operatorname{adj}(B)
 =\frac12\begin{pmatrix}4&s-1\\-(1+s)&2\end{pmatrix}.
 \]
-于是对 \(x,y\in I\)，得到以下公式，两个坐标都在 \(R\) 中：
+于是对 \(x,y\in I\)，得到以下公式：
 \[
 \Phi(x,y)=
 \left(2x+\frac{s-1}{2}y,\ -\frac{1+s}{2}x+y\right).
 \]
+这里的分式系数位于分式域中；但 \((s-1)y\) 与 \((1+s)x\) 都在 \(I^2=2R\) 中，所以两个除以二的表达确实属于 \(R\)，\(\Phi\) 取值于 \(R^2\)。
 反向公式为
 \[
 \Psi(r,z)=\bigl(2r-(s-1)z,\ (1+s)r+4z\bigr).
@@ -142,9 +152,9 @@ B^{-1}=\frac12\operatorname{adj}(B)
 \begin{pmatrix}2&-(s-1)\\1+s&4\end{pmatrix}
 =\begin{pmatrix}1&0\\0&1\end{pmatrix};
 \]
-反序相乘也为单位矩阵，使用的恒等式为 \((s-1)(s+1)=-6\)。因正反公式已核对实际值域，它们给出 \(I\oplus I\cong R^2\) 的 \(R\) 模同构。
+反序相乘也为单位矩阵，使用的恒等式为 \((s-1)(s+1)=-6\)。两映射都是分式域线性映射在相应子模上的限制，故为 \(R\) 线性；正反公式又已核对实际值域，因而给出 \(I\oplus I\cong R^2\) 的 \(R\) 模同构。
 
-任意两个非零 \(R\) 子模 \(A,B\) 若都在 \(R\) 或 \(I\) 内，取非零 \(a\in A,b\in B\)，则 \(ab\in A\cap B\)，且 \(R\) 为整环使 \(ab\ne0\)。因此 \(R,I\) 均不可分解。最后，\(R\) 作为整数模自由，基为 \(1,s\)。任意 \(R\) 子模都是 \(\mathbb Z^2\) 的子模，由\cref{b2:thm:pid-free-submodule}有限生成；一组整数生成元同时也是 \(R\) 生成元。所以 \(R\) 为 Noether 模，\(I\) 作为其子模也为 Noether 模。得到的两个分解均有限，却没有逐项同构的可能。
+任意两个非零 \(R\) 子模 \(A,B\) 若都在 \(R\) 或 \(I\) 内，取非零 \(a\in A,b\in B\)。由于 \(a,b\) 同时属于标量环 \(R\)，有 \(ab=b\cdot a\in A\)、\(ab=a\cdot b\in B\)，且 \(R\) 为整环使 \(ab\ne0\)。因此这两个子模总有非零交，\(R,I\) 均不可分解。最后，\(R\) 作为整数模自由，基为 \(1,s\)。任意 \(R\) 子模都是 \(\mathbb Z^2\) 的子模，由\cref{b2:thm:pid-free-submodule}有限生成；一组整数生成元同时也是 \(R\) 生成元。所以 \(R\) 为 Noether 模，\(I\) 作为其子模也为 Noether 模。得到的两个分解均有限，却没有逐项同构的可能。
 \end{proof}
 
 这里的 \(R\) 与 \(I\) 都不满足 Artin 条件：\(R\supsetneq2R\supsetneq4R\supsetneq\cdots\) 严格下降；又因 \(2\in I\) 而 \(2\notin2I\)（否则 \(1\in I\)），\(I\supsetneq2I\supsetneq4I\supsetneq\cdots\) 也严格下降。因此这个反例不与有限长度情形的定理矛盾。

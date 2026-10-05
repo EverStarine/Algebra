@@ -11,7 +11,8 @@
 %
 % * 换基与相似
 % * 循环向量的商模型与友矩阵
-% * 有理标准形和 Jordan 标准形的目标
+% * 有理标准形和 Jordan 标准形的目标；循环商的移位幂基与幂核层数
+% * 秩、特征多项式和最小多项式同时不足以分类的反例
 % * 结构定理的证明归于第4章，避免重复证明
 %
 % ---
@@ -57,7 +58,7 @@ A=I_2,\qquad B=\begin{pmatrix}1&0\\0&2\end{pmatrix}.
 A=\begin{pmatrix}0&0\\0&0\end{pmatrix},\qquad
 B=\begin{pmatrix}0&1\\0&0\end{pmatrix}
 \]
-都有特征多项式 \(t^2\)，而 \(m_A=t,m_B=t^2\)，故不相似。即使连秩也相同，仍可能需要更多不变量来区分相似类；下面定义 Jordan 块后再给出四维的例子。
+都有特征多项式 \(t^2\)，而 \(\mu_A=t,\mu_B=t^2\)，故不相似。下面定义 Jordan 块后，将在\cref{b2:prop:insufficient-similarity-invariants}中看到：即使秩、特征多项式和最小多项式同时相同，也仍不足以确定相似类。
 
 \subsection{循环子空间、商模型与友矩阵}
 \label{b2:subsec:0104:02}
@@ -65,7 +66,7 @@ B=\begin{pmatrix}0&1\\0&0\end{pmatrix}
 先考察单个循环子空间。上一节的向量最小多项式给出了多项式之间的关系，取商便能把这些关系直接写进空间本身。
 
 \begin{proposition}\label{b2:prop:cyclic-polynomial-quotient}
-设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(0\ne v\in V\)，且 \(p=m_{T,v}\) 是零化 \(v\) 的首一最小多项式。映射
+设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，\(0\ne v\in V\)，且 \(p=\mu_{T,v}\) 是零化 \(v\) 的首一最小多项式。映射
 \[
 k[t]/(p)\longrightarrow k[T]v,\qquad f+(p)\longmapsto f(T)v
 \]
@@ -96,14 +97,16 @@ C(p)=
 逐列说，\(C(p)e_j=e_{j+1}\ (j<d)\)，而 \(C(p)e_d=-\sum_{i=0}^{d-1}a_ie_{i+1}\)；这也包含 \(d=1\) 时的矩阵 \((-a_0)\)。友矩阵与由代数余子式矩阵转置得到的\term[ban-sui-juzhen]{伴随矩阵}[adjugate matrix]是不同对象；本书分别使用这两个名称。
 
 \ProseParagraphBreak
-对于命题中的 \(p=m_{T,v}\)，前 \(d-1\) 个基向量各被 \(T\) 送到后一个，而
+对于命题中的 \(p=\mu_{T,v}\)，前 \(d-1\) 个基向量各被 \(T\) 送到后一个，而
 \[
 T^dv=-a_0v-a_1Tv-\cdots-a_{d-1}T^{d-1}v,
 \]
-所以 \(T|_{k[T]v}\) 在这组基下的矩阵就是 \(C(p)\)。若 \(v\) 还是整个 \(V\) 的循环向量，则\cref{b2:prop:cyclic-basis}给出 \(p=m_T\)，从而 \(T\) 的矩阵就是 \(C(m_T)\)。这已解释单个循环子空间的矩阵形式。一般算子怎样分成循环部分，以及不同分法为什么给出相同的分类数据，仍需要证明。
+所以 \(T|_{k[T]v}\) 在这组基下的矩阵就是 \(C(p)\)。若 \(v\) 还是整个 \(V\) 的循环向量，则\cref{b2:prop:cyclic-basis}给出 \(p=\mu_T\)，从而 \(T\) 的矩阵就是 \(C(\mu_T)\)。这已解释单个循环子空间的矩阵形式。一般算子怎样分成循环部分，以及不同分法为什么给出相同的分类数据，仍需要证明。
 
 \subsection{有理标准形与 Jordan 标准形}
 \label{b2:subsec:0104:03}
+
+任意分成循环子空间，还不能得到唯一的分类数据。例如在 \(k^2\) 上令 \(Te_1=0\)、\(Te_2=e_2\)，则 \(ke_1\) 与 \(ke_2\) 是两个循环部分，关系多项式分别为 \(t\) 与 \(t-1\)。但 \(v=e_1+e_2\) 也是整个空间的循环向量，因为 \(v,Tv=e_2\) 是一组基；这时整个空间是一个关系多项式为 \(t(t-1)\) 的循环部分。因此，分类还需要规定怎样组织这些关系多项式。有理标准形要求它们依次整除，以此选出唯一的一组数据。
 
 \begin{claim}[有理标准形]\label{b2:claim:rational-canonical-goal}
 设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)。在适当的有序基下，\(T\) 的矩阵为
@@ -111,13 +114,13 @@ T^dv=-a_0v-a_1Tv-\cdots-a_{d-1}T^{d-1}v,
 \operatorname{diag}\bigl(C(d_1),\ldots,C(d_r)\bigr),
 \qquad d_1\mid d_2\mid\cdots\mid d_r,
 \]
-其中 \(d_i\in k[t]\) 首一且次数为正，\(\sum_i\deg d_i=\dim_k V\)。这些多项式唯一，且 \(m_T=d_r\)、\(\chi_T=\prod_i d_i\)。
+其中 \(d_i\in k[t]\) 首一且次数为正，\(\sum_i\deg d_i=\dim_k V\)。这些多项式唯一，且 \(\mu_T=d_r\)、\(\chi_T=\prod_i d_i\)。
 \end{claim}
 
-这一形式称为\term[youli-biaozhunxing]{有理标准形}[rational canonical form]。“有理”不要求 \(k=\mathbb Q\)，而是说所有构造都在原基域上进行，不要求先把多项式分解成一次因子。存在性与唯一性将在\cref{b2:thm:rational-canonical-form}证明，最小多项式与特征多项式公式见\cref{b2:prop:operator-characteristic-minimal}。
+这一形式称为\term[youli-biaozhunxing]{有理标准形}[rational canonical form]。“有理”不要求 \(k=\mathbb Q\)，而是说所有构造都在原基域上进行，不要求先把多项式分解成一次因子。一个多项式零化这个直和，当且仅当它零化每个循环部分，也就是被每个 \(d_i\) 整除，所以最小多项式是 \(\operatorname{lcm}(d_1,\ldots,d_r)\)；整除链使它恰好等于末项 \(d_r\)。存在性与唯一性将在\cref{b2:thm:rational-canonical-form}证明，特征多项式的乘积公式见\cref{b2:prop:operator-characteristic-minimal}。
 
 \ProseParagraphBreak
-若多项式在 \(k\) 上分裂，还可使用更细的块。定义
+若 \(T\) 的特征多项式 \(\chi_T\) 在 \(k\) 上分裂为一次因子的乘积，还可使用更细的块。定义
 \[
 J_d(\lambda)=
 \begin{pmatrix}
@@ -132,6 +135,33 @@ J_d(\lambda)=
 \dim_k\ker\bigl((J_d(\lambda)-\lambda I_d)^r\bigr)=\min(r,d).
 \]
 
+这种块也来自循环商模型。在 \(k[t]/((t-\lambda)^d)\) 中记 \(z=t-\lambda\)，则 \(1,z,\ldots,z^{d-1}\) 的陪集是一组基：变量平移把次数小于 \(d\) 的多项式空间映到自身，并可逆。将这组基倒序写为
+\[
+z^{d-1},z^{d-2},\ldots,z,1,
+\]
+乘以 \(t=\lambda+z\) 时，第一个基向量只乘上 \(\lambda\)，以后每个基向量都被送到它的 \(\lambda\) 倍加前一个基向量。因此矩阵正是 \(J_d(\lambda)\)。友矩阵 \(C((t-\lambda)^d)\) 与 Jordan 块描述同一个循环商上的算子，只是使用的基不同。
+
+\begin{proposition}\label{b2:prop:insufficient-similarity-invariants}
+设 \(k\) 是任意域。在 \(M_8(k)\) 中，矩阵
+\[
+A=J_4(0)\oplus J_3(0)\oplus J_1(0),\qquad
+B=J_4(0)\oplus J_2(0)\oplus J_2(0)
+\]
+具有相同的秩 \(5\)、特征多项式 \(t^8\) 和最小多项式 \(t^4\)，但不相似。
+\end{proposition}
+\begin{proof}
+每个 \(J_d(0)\) 的秩为 \(d-1\)，故两个矩阵的秩都为 \(5\)。它们都是对角线为零的上三角矩阵，所以特征多项式都是 \(t^8\)。又有 \(A^4=B^4=0\)。若 \(p\) 零化其中任一矩阵，它也零化那个 \(J_4(0)\) 块。将 \(p\) 除以 \(t^4\)，余式写为 \(r=a_0+a_1t+a_2t^2+a_3t^3\)，便有
+\[
+0=r(J_4(0))e_4=a_0e_4+a_1e_3+a_2e_2+a_3e_1.
+\]
+基的无关性使余式为零，故 \(t^4\mid p\)，证明最小多项式均为 \(t^4\)。然而
+\[
+\dim_k\ker A^2=2+2+1=5,\qquad
+\dim_k\ker B^2=2+2+2=6.
+\]
+由\cref{b2:prop:similarity-invariants}，它们不相似。
+\end{proof}
+
 \begin{claim}[Jordan 标准形]\label{b2:claim:jordan-canonical-goal}
 设 \(V\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)。若 \(T\) 的特征多项式在 \(k\) 上分裂为一次因子的乘积，则在适当的有序基下，\(T\) 的矩阵是若干 Jordan 块 \(J_d(\lambda)\)（\(d\ge1,\lambda\in k\)）的直和。这些块除排列次序外唯一。
 \end{claim}
@@ -145,21 +175,33 @@ b_\lambda(r)=\dim_k\ker\bigl((T-\lambda I_V)^r\bigr),\qquad b_\lambda(0)=0.
 b_\lambda(r)-b_\lambda(r-1)
 =\#\{\,\text{属于 }\lambda\text{、大小至少为 }r\text{ 的块}\,\}.
 \]
-这是从已给定块分解计算分类数据，不能据此推断每个算子都有这样的分解。
+可以把每个大小为 \(d\) 的块画成一列 \(d\) 个格子，从下往上数层。\(b_\lambda(r)\) 计数前 \(r\) 层的全部格子，因此 \(b_\lambda(r)-b_\lambda(r-1)\) 恰好是第 \(r\) 层的格子数，也就是高度至少为 \(r\) 的列数。再减去第 \(r+1\) 层的格子数，就数出大小恰为 \(r\) 的块。\cref{b2:fig:jordan-kernel-layers}画出上面两个反例的块：相邻幂核维数之差的第一项都为 \(3\)，第二项却分别为 \(2\) 和 \(3\)。
 
-例如取四维零特征值的两个块矩阵
-\[
-A=J_2(0)\oplus J_2(0),\qquad B=J_3(0)\oplus J_1(0).
-\]
-二者秩均为 \(2\)、特征多项式均为 \(t^4\)，但其幂核维数为
-\[
-\begin{array}{c|cccc}
-r&0&1&2&3\\ \hline
-\dim_k\ker A^r&0&2&4&4\\
-\dim_k\ker B^r&0&2&3&4
-\end{array}
-\]
-故它们不相似；最小多项式也分别为 \(t^2\) 与 \(t^3\)。这里的数值只来自已写出的矩阵，不承担 Jordan 标准形存在性的证明。
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.9cm,y=0.48cm]
+  \foreach \sizes/\offset/\panel in {{4,3,1}/0/A,{4,2,2}/4.5/B}{
+    \begin{scope}[xshift=\offset cm]
+      \foreach \height [count=\column from 0] in \sizes {
+        \foreach \level in {1,...,\height}{
+          \ifnum\level<3
+            \fill[AlgebraBlue!20] (\column+0.1,\level-1) rectangle ++(0.7,0.85);
+          \else
+            \fill[AlgebraGray!12] (\column+0.1,\level-1) rectangle ++(0.7,0.85);
+          \fi
+          \draw[AlgebraGray] (\column+0.1,\level-1) rectangle ++(0.7,0.85);
+        }
+        \node[below,font=\small] at (\column+0.45,-0.12) {$\height$};
+      }
+      \draw[dashed,AlgebraBlue] (-0.15,1.93) -- (3,1.93);
+      \node[right,font=\small,text=AlgebraBlue] at (3,1.93) {$r=2$};
+      \node[above] at (1.45,4.1) {$\panel$};
+    \end{scope}
+  }
+\end{tikzpicture}
+\caption{Jordan 块的层数与幂核维数。每列高度是块大小，着色的两层分别有 \(5\) 与 \(6\) 个格子，对应 \(\dim\ker A^2\) 与 \(\dim\ker B^2\)。}
+\label{b2:fig:jordan-kernel-layers}
+\end{figure}
 
 \ProseParagraphBreak
 后续的模结构定理将说明怎样把一般有限维算子分解为循环商，并识别每一部分的关系多项式。上面的商模型只处理单个循环部分。

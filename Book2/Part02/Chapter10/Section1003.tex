@@ -1,17 +1,17 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 10.3 Witt 理论初步
-% 纲要位置：计划纲要.md，第 1108 行。
+% 纲要位置：计划纲要.md，第 1386 行。
 
 \section{Witt 理论初步}
 \label{b2:sec:1003}
 
 从本节起固定 \(\operatorname{char}k\ne2\)，所讨论的二次空间均有限维，且以 \(b=\beta_q/2\) 为相应对称型。实数域上的正负号分类不能直接搬到一般域上，但非零零点仍能帮助我们分离出一种固定的两维型。Witt 理论先取出这些两维部分，再研究剩下没有非零零点的部分。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
-% * 双曲平面、各向同性与各向异性
-% * Witt 分解与消去定理
-% * Witt 群的概念
+% * 双曲平面、各向同性与各向异性；各向同性不等于属于根空间
+% * Witt 分解与消去定理；反射用于对齐共同非退化分量
+% * Witt 群的概念；忽略双曲部分后由相反型给出加法逆元
 %
 
 \subsection{双曲平面、各向同性与各向异性}
@@ -21,7 +21,7 @@
 设 \(k\) 为特征不为二的域，\((V,q)\) 为 \(k\) 上的二次空间。若 \(v\in V\) 满足 \(v\ne0\) 且 \(q(v)=0\)，就称 \(v\) 为\term[gexiang-tongxing-xiangliang]{各向同性向量}[isotropic vector]。若不存在这样的向量，就称 \((V,q)\)\term[gexiang-yixing]{各向异性}[anisotropic]；零空间按此定义也是各向异性的。若子空间 \(T\subseteq V\) 满足 \(q|_T=0\)，就称 \(T\) 为\term[quan-gexiang-tongxing]{全各向同性子空间}[totally isotropic subspace]。
 \end{definition}
 
-由极化公式，全各向同性等价于 \(b|_{T\times T}=0\)，比仅指定若干基向量各自取值为零更强。非退化空间也可以包含这种子空间，例如上一节的 \(x^2-y^2\)。
+各向同性只要求一个非零向量的自身取值 \(q(v)=b(v,v)\) 为零；属于根空间则要求 \(b(v,w)=0\) 对所有 \(w\in V\) 成立。因此根空间中的非零向量必各向同性，反过来却不成立。全各向同性要求子空间中每个向量的二次取值为零，由极化公式，这等价于 \(b|_{T\times T}=0\)，比仅指定若干基向量各自取值为零更强。非退化空间的根空间为零，但仍可以有非零全各向同性子空间，例如上一节的 \(x^2-y^2\)。
 
 \begin{definition}\label{b2:def:hyperbolic-plane}
 设 \(k\) 为特征不为二的域，\((V,q)\) 为二维 \(k\) 二次空间，\(b=\beta_q/2\)。如果 \(V\) 有基 \(e,f\)，满足 \(q(e)=q(f)=0\)、\(b(e,f)=1\)，就称 \((V,q)\) 为\term[shuangqu-pingmian]{双曲平面}[hyperbolic plane]，记为 \(H\)。它的表达式及矩阵为
@@ -32,7 +32,10 @@ q(xe+yf)=2xy,\qquad B_H=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
 \end{definition}
 \symidx{\(H\)、\(H^{\perp r}\)：双曲平面及其正交直和}
 
-所有这样给出的平面都等距，因为把指定的 \(e,f\) 相互对应便保持矩阵。\(\det B_H=-1\ne0\)，所以它非退化。基 \(e+f/2,e-f/2\) 相互正交，二次取值为一和负一，因而
+表达式中的因子二来自本书的约定 \(q(v)=b(v,v)\)：两个混合项分别为 \(xyb(e,f)\) 与 \(xyb(f,e)\)，各等于 \(xy\)。若把未归一化的极化型 \(\beta_q\) 在基向量间的值取为一，才会得到 \(xy\) 的表达式。
+
+\ProseParagraphBreak
+所有这样给出的平面都等距，因为把指定的 \(e,f\) 相互对应便保持矩阵。\(\det B_H=-1\ne0\)，所以它非退化，却包含全各向同性直线 \(ke\) 与 \(kf\)。这两条直线的和不是全各向同性子空间，因为 \(q(e+f)=2\ne0\)；各向同性向量 \(e\) 也不属于根空间，因为 \(b(e,f)=1\)。基 \(e+f/2,e-f/2\) 相互正交，二次取值为一和负一，因而
 \[
 H\cong\langle1,-1\rangle.
 \]
@@ -60,11 +63,11 @@ f=f_0-\frac{q(f_0)}2e.
 设 \(k\) 为特征不为二的域，\((V,q)\) 为有限维非退化 \(k\) 二次空间。若 \(T\subseteq V\) 为 \(d\) 维全各向同性子空间，则 \(T\) 包含于某个等距于 \(H^{\perp d}\) 的非退化子空间。
 \end{proposition}
 \begin{proof}
-对 \(d\) 归纳，\(d=0\) 时取零空间。\(d>0\) 时，取 \(0\ne e\in T\)，由\cref{b2:lem:hyperbolic-plane-split}补上 \(f\)，令 \(H=ke+kf\)。对 \(t\in T\)，置
+对 \(d\) 归纳，\(d=0\) 时取零空间。\(d>0\) 时，取 \(0\ne e\in T\)，由\cref{b2:lem:hyperbolic-plane-split}补上 \(f\)，令 \(H=ke+kf\)。因为 \(T\) 全各向同性，其中每个 \(t\) 已与 \(e\) 正交；要让它落入 \(H^\perp\)，还须消去它与 \(f\) 的配对。利用 \(b(e,f)=1\)，沿 \(e\) 调整，置
 \[
 t'=t-b(t,f)e.
 \]
-因为 \(b(t,e)=b(e,e)=0\)、\(b(e,f)=1\)，\(t'\) 同时与 \(e,f\) 正交。又 \(t'\in T\)，于是
+此时 \(b(t',e)=0\)，且 \(b(t',f)=b(t,f)-b(t,f)b(e,f)=0\)。又 \(t'\in T\)，所以每个 \(t\) 都有表示 \(t=b(t,f)e+t'\)。由于 \(e\notin H^\perp\)，这个表示给出直和
 \[
 T=ke\oplus\bigl(T\cap H^\perp\bigr).
 \]
@@ -74,17 +77,22 @@ T=ke\oplus\bigl(T\cap H^\perp\bigr).
 \subsection{Witt 分解与消去定理}
 \label{b2:subsec:1003:02}
 
-不断分离双曲平面，每次维数减少二，便能得到分解的存在性。要说明所得各向异性部分不依赖选择，需要先证明正交直和可以消去共同的非退化部分。
+不断分离双曲平面，每次维数减少二，便能得到分解的存在性。要说明所得各向异性部分不依赖选择，需要先证明正交直和可以消去共同的非退化部分。这里的困难是，\(U\perp V\) 到 \(U\perp W\) 的等距同构未必把指定的 \(U\) 分量送到另一边的 \(U\) 分量。将 \(U\) 对角化后，只需逐条对齐共同的非退化直线，再把映射限制到正交补；下面的反射正是用来调整这些直线的像。
 
 \begin{lemma}[反射与等长向量]\label{b2:lem:orthogonal-reflection}
-设 \(k\) 为特征不为二的域，\((V,q)\) 为有限维 \(k\) 二次空间，\(b=\beta_q/2\)。若 \(z\in V\) 满足 \(q(z)\ne0\)，映射
+设 \(k\) 为特征不为二的域，\((V,q)\) 为有限维 \(k\) 二次空间，\(b=\beta_q/2\)。若 \(z\in V\) 满足 \(q(z)\ne0\)，则 \(V=kz\perp(kz)^\perp\)。在 \(kz\) 上取负恒等、在 \((kz)^\perp\) 上取恒等所定义的映射 \(\tau_z\) 是等距自同构，称为沿 \(z\) 的\term[zhengjiao-fanshe]{反射}[reflection]。它的公式是
 \[
-\tau_z(v)=v-\frac{2b(v,z)}{q(z)}z
+\tau_z(v)=v-\frac{2b(v,z)}{q(z)}z.
 \]
-是等距自同构，称为沿 \(z\) 的\term[zhengjiao-fanshe]{反射}[reflection]。若 \(u,v\in V\) 满足 \(q(u)=q(v)=a\ne0\)，则存在至多两个这样的反射的复合，将 \(u\) 送到 \(v\)。
+若 \(u,v\in V\) 满足 \(q(u)=q(v)=a\ne0\)，则存在至多两个这样的反射的复合，将 \(u\) 送到 \(v\)。
 \end{lemma}
 \begin{proof}
-由\cref{b2:thm:orthogonal-complement}，\(V=kz\perp(kz)^\perp\)。给定公式在第一项上为负恒等，在第二项上为恒等，所以保持型且平方为恒等。
+因为 \(q(z)\ne0\)，直线 \(kz\) 的限制型非退化，\cref{b2:thm:orthogonal-complement}给出 \(V=kz\perp(kz)^\perp\)，这里不要求整个 \(V\) 非退化。对任意 \(v\in V\)，这一分解具体写成
+\[
+v=\frac{b(v,z)}{q(z)}z+v_\perp,
+\qquad v_\perp\in(kz)^\perp.
+\]
+只把第一项取负，得到 \(-\dfrac{b(v,z)}{q(z)}z+v_\perp=v-\dfrac{2b(v,z)}{q(z)}z\)，这就导出了所给公式。两个正交分量上的作用均保持二次取值，且平方为恒等，所以 \(\tau_z\) 是等距自同构。
 
 对等长向量，计算得
 \[
@@ -123,7 +131,7 @@ U=\langle a_1\rangle\perp\cdots\perp\langle a_d\rangle,
 依次对两边共同的一维部分应用已证情形。每次余下的空间仍是非退化正交直和，故下一次消去仍满足假设。经过 \(d\) 次即得 \(V\cong W\)；\(d=0\) 时本来就是该结论。
 \end{proof}
 
-上述结果称为\term[Witt-xiaoqu-dingli]{Witt 消去定理}[Witt cancellation theorem]。证明不是从“相同维数相减”得到同构，而是先调整整个等距映射，让它尊重要消去的直线，再把映射限制到正交补。
+上述结果称为\term[Witt-xiaoqu-dingli]{Witt 消去定理}[Witt cancellation theorem]。
 
 \begin{theorem}[Witt 分解]\label{b2:thm:witt-decomposition}
 设 \(k\) 为特征不为二的域，\((V,q)\) 为有限维非退化 \(k\) 二次空间，则 \(V\) 有分解
@@ -137,18 +145,31 @@ V\cong H^{\perp r}\perp A,
 
 设还有 \(V\cong H^{\perp s}\perp B\)，其中 \(B\) 各向异性。不妨 \(r\ge s\)。由\cref{b2:thm:witt-cancellation}消去 \(s\) 个双曲平面，得到 \(H^{\perp(r-s)}\perp A\cong B\)。若 \(r>s\)，左侧含非零各向同性向量，右侧却没有，矛盾。因此 \(r=s\)，继续用所得等距即得 \(A\cong B\)。
 
-所列双曲平面中的全部 \(e_i\) 生成一个 \(r\) 维全各向同性子空间。反过来，任意 \(d\) 维全各向同性子空间由\cref{b2:prop:isotropic-subspace-hyperbolic}包含在某个 \(H^{\perp d}\) 中。将其非退化正交补再作已经证明存在的 Witt 分解，得到整个 \(V\) 的一个分解，其中双曲平面的数目至少为 \(d\)。由唯一性，它恰为 \(r\)，故 \(d\le r\)。
+所列双曲平面中的全部 \(e_i\) 线性无关，且 \(q(e_i)=0\)、不同平面的向量之间配对为零，所以它们生成一个 \(r\) 维全各向同性子空间。反过来，任意 \(d\) 维全各向同性子空间由\cref{b2:prop:isotropic-subspace-hyperbolic}包含在某个 \(H^{\perp d}\) 中。将其非退化正交补再作已经证明存在的 Witt 分解，得到整个 \(V\) 的一个分解，其中双曲平面的数目至少为 \(d\)。由唯一性，它恰为 \(r\)，故 \(d\le r\)。
 \end{proof}
 
-这一分解称为\term[Witt-fenjie]{Witt 分解}[Witt decomposition]。若 \(q\) 退化，可先取 \(\operatorname{rad}b\) 的一个普通线性补空间 \(V_0\)。它的限制型非退化：与 \(V_0\) 全部正交的 \(v\in V_0\)，也与根空间正交，故属于根空间，只能为零。于是
+这一分解称为\term[Witt-fenjie]{Witt 分解}[Witt decomposition]。若 \(q\) 退化，记 \(R=\operatorname{rad}b\)。对 \(z\in R\)，有 \(q(z)=b(z,z)=0\) 及 \(b(v,z)=0\)，所以 \(q(v+z)=q(v)\)。因此商空间上有良定义的二次型
 \[
-V=\operatorname{rad}b\perp V_0
-\cong\operatorname{rad}b\perp H^{\perp r}\perp A.
+\bar q(v+R)=q(v).
 \]
-第一项是零型，由根空间确定。对 \(r\in\operatorname{rad}b\) 有 \(q(v+r)=q(v)\)，所以 \(q\) 在 \(V/\operatorname{rad}b\) 上诱导非退化二次型。补空间 \(V_0\) 在 \(V\) 中的选取一般不唯一，但自然映射 \(V_0\to V/\operatorname{rad}b\) 是等距同构；商空间的 Witt 指数与各向异性部分的等距类型因而由原二次型确定。
+它非退化：若 \(v+R\) 与全部商向量正交，就有 \(b(v,w)=0\) 对所有 \(w\in V\) 成立，从而 \(v\in R\)、\(v+R=0\)。根空间 \(R\)、商空间 \(V/R\) 及这个商型都由原型直接确定，不需要选取补空间。
+
+\ProseParagraphBreak
+要在 \(V\) 内写出直和分解，可取 \(R\) 的一个普通线性补空间 \(V_0\)。自然映射 \(V_0\to V/R\) 是线性同构，且保持二次取值，所以 \(V_0\) 的限制型非退化。对它应用 Witt 分解，得到
+\[
+V=R\perp V_0
+\cong R\perp H^{\perp r}\perp A.
+\]
+第一项是零型。与第一章的商空间和补空间之别相同，\(V_0\) 在 \(V\) 中的具体位置一般不唯一，但每个这样的补空间都等距于同一个商型；商空间的 Witt 指数与各向异性部分的等距类型因而由原二次型确定。
 
 \subsection{Witt 群的概念}
 \label{b2:subsec:1003:03}
+
+正交直和给出的等距类可以相加，但对非零 \(V\)，\((V,q)\perp(V,-q)\) 的底层空间是 \(V\oplus V\)，维数仍为 \(2\dim V\)，不能等距于零空间。一维情形已经揭示了应忽略什么：对 \(a\in k^\times\)，在 \(\langle a,-a\rangle\) 中取
+\[
+e=(1,1),\qquad f=\left(\frac1{2a},-\frac1{2a}\right).
+\]
+直接计算得 \(q(e)=q(f)=0\)、\(b(e,f)=1\)。这两个向量线性无关，因为把 \(ce+df=0\) 分别与 \(e,f\) 配对便得 \(d=c=0\)。所以 \(\langle a,-a\rangle\cong H\)。若允许增删双曲平面而不改变类，这对互为负号的一维型之和便为零；对角化后同样的配对将使 \((V,-q)\) 成为 \((V,q)\) 的加法逆元。
 
 \begin{definition}\label{b2:def:witt-equivalence}
 设 \(k\) 为特征不为二的域，\(V,W\) 为有限维非退化 \(k\) 二次空间。如果存在整数 \(r,s\ge0\)，使
@@ -168,7 +189,7 @@ V\perp H^{\perp(r+u)}\cong X\perp H^{\perp(v+s)}.
 \]
 故关系传递。对两个等距分别取正交直和，便证明加法与代表选择无关。直和的结合、交换及零空间的单位性质给出相应的群公理。
 
-还须构造负元。将 \(q\) 对角化为 \(\langle a_1,\ldots,a_n\rangle\)，其中 \(a_i\ne0\)。\(q\perp(-q)\) 重排分量后为若干个 \(\langle a_i,-a_i\rangle\)。每个两维型非退化，且 \((1,1)\) 各向同性，由\cref{b2:lem:hyperbolic-plane-split}它就是双曲平面。因此 \((V,q)\perp(V,-q)\cong H^{\perp n}\)，其类为零，给出负元。
+还须构造负元。将 \(q\) 对角化为 \(\langle a_1,\ldots,a_n\rangle\)，其中 \(a_i\ne0\)。\(q\perp(-q)\) 重排分量后为若干个 \(\langle a_i,-a_i\rangle\)，由定义前的一维计算，每个分量都等距于 \(H\)。因此 \((V,q)\perp(V,-q)\cong H^{\perp n}\)，其类为零，给出负元。
 
 \cref{b2:thm:witt-decomposition}说明每个类都由各向异性部分表示。若各向异性 \(A,B\) Witt 等价，则 \(A\perp H^{\perp r}\cong B\perp H^{\perp s}\) 的两边已是 Witt 分解，唯一性迫使 \(r=s\) 且 \(A\cong B\)。
 \end{proof}
@@ -180,7 +201,7 @@ V\perp H^{\perp(r+u)}\cong X\perp H^{\perp(v+s)}.
 对有限维非退化实二次空间，正惯性指数与负惯性指数之差给出群同构 \(W(\mathbb R)\cong\mathbb Z\)。对有限维非退化复二次空间，维数的奇偶性给出群同构 \(W(\mathbb C)\cong\mathbb Z/2\mathbb Z\)。
 \end{proposition}
 \begin{proof}
-实型由\cref{b2:thm:sylvester-inertia}分为 \(p_+\) 个 \(\langle1\rangle\) 与 \(p_-\) 个 \(\langle-1\rangle\)。一正一负合成双曲平面，所以其 Witt 类只由符号差 \(p_+-p_-\) 决定。符号差在正交直和下相加，加双曲平面不改变它；差为零时全部分量都能配成双曲平面，故这个满同态也单射。
+实型由\cref{b2:thm:sylvester-inertia}分为 \(p_+\) 个 \(\langle1\rangle\) 与 \(p_-\) 个 \(\langle-1\rangle\)。一正一负合成双曲平面；配对后剩余系数全为一或全为负一，是各向异性型。它的维数与符号由差 \(p_+-p_-\) 决定，所以其 Witt 类只由这个差决定。符号差在正交直和下相加，加双曲平面不改变它；差为零时全部分量都能配成双曲平面，而任意整数都能由全正或全负型实现，故所得同态既单射又满射。
 
 复数域上，先由\cref{b2:thm:quadratic-diagonalization}对角化，再利用每个非零复数都有平方根，把全部非零系数缩放为一。因此非退化型只有维数这一分类数据。\(\langle1,1\rangle\cong\langle1,-1\rangle\cong H\)，第一个等距通过一个坐标乘以 \(i\) 得到。因此偶数维型的类为零，奇数维型的类为 \(\bigl[\langle1\rangle\bigr]\)。加双曲平面不改变维数奇偶，故这个非零类不可能等于零，得到所述二阶群。
 \end{proof}

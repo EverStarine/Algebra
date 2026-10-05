@@ -1,31 +1,42 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 19.3 多项式恒等式
+% 纲要位置：计划纲要.md，第 1682 行。
 
 \section{多项式恒等式}
 \label{b2:sec:1903}
 
-矩阵乘法一般不交换，但固定阶数的矩阵仍满足某些共同的非交换多项式关系。多项式恒等式研究的正是这种“对任意代入都成立”的限制。这里先在自由代数中写出待检验的多项式，避免把一次偶然代入为零与整个代数的恒等式混淆；随后用外代数和 Cayley–Hamilton 定理证明矩阵的标准恒等式。
+上一节通过右理想和正则元寻找可以使用的分母，本节考察所有代入共同满足的乘法关系。矩阵乘法一般不交换，但固定阶数的矩阵仍满足某些共同的非交换多项式关系。多项式恒等式研究的正是这种“对任意代入都成立”的限制。把待检验的多项式写在自由代数中，就能区分一次偶然代入为零与整个代数的恒等式；外代数和 Cayley–Hamilton 定理将给出矩阵的标准恒等式。
 
 % 纲要要点（供目录核对）：
 %
-% * PI 代数与标准多项式
-% * 矩阵代数的 Amitsur–Levitzki 定理
-% * 有限维性与 PI 条件的区别
+% * PI 代数与标准多项式；求值同态核的交表达所有代入的共同关系，任意特征下的交替性联系外幂消失
+% * 矩阵代数的 Amitsur–Levitzki 定理；Newton 生成函数明确整数可逆条件，正特征反例并入原引理；偶次外代数恢复普通行列式，整数泛型恒等式再特化至任意系数环
+% * 有限维性与 PI 条件的区别；分别排除 PI 蕴含有限维或交换的误解，自由代数通过可唯一解码的字代入证明非 PI
 %
 
 \subsection{PI 代数与标准多项式}
 \label{b2:subsec:1903:01}
 
 \begin{definition}\label{b2:def:pi-algebra}
-设 \(k\) 为域，\(A\) 为结合 \(k\) 代数，\(m\geq1\)。若非零多项式
+设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，\(m\geq1\)。对每组 \(\mathbf a=(a_1,\ldots,a_m)\in A^m\)，令
+\[
+\operatorname{ev}_{\mathbf a}:k\langle X_1,\ldots,X_m\rangle\longrightarrow A,
+\qquad X_i\longmapsto a_i
+\]
+为固定 \(k\) 标量的求值同态。若非零多项式
 \[
 f\in k\langle X_1,\ldots,X_m\rangle
 \]
-对任意 \(a_1,\ldots,a_m\in A\) 都满足 \(f(a_1,\ldots,a_m)=0\)，则称 \(f\) 为 \(A\) 的一个\term[duoxiangshi-hengdengshi]{多项式恒等式}[polynomial identity]。若对某个 \(m\geq1\) 存在这样的非零 \(f\)，则称 \(A\) 为\term[PI-daishu]{PI 代数}[polynomial identity algebra]。
+对任意 \(\mathbf a\in A^m\) 都满足 \(\operatorname{ev}_{\mathbf a}(f)=f(a_1,\ldots,a_m)=0\)，即
+\[
+f\in\bigcap_{\mathbf a\in A^m}\ker\operatorname{ev}_{\mathbf a},
+\]
+则称 \(f\) 为 \(A\) 的一个\term[duoxiangshi-hengdengshi]{多项式恒等式}[polynomial identity]。若对某个 \(m\geq1\) 存在这样的非零 \(f\)，则称 \(A\) 为\term[PI-daishu]{PI 代数}[polynomial identity algebra]。
 \end{definition}
 
 这里讨论的是自由结合代数中的普通多项式恒等式，不把迹、约化迹等运算加入多项式。Cayley–Hamilton 等式中的系数随代入的矩阵而变，也不是上述意义下的一个固定多项式恒等式。
 
+\ProseParagraphBreak
 例如交换代数满足 \(X_1X_2-X_2X_1=0\)，而这个多项式在自由代数中非零。相反，“某个元素 \(a\) 满足 \(a^2=0\)”只涉及一次代入，不说明 \(X^2\) 是整个代数的恒等式。非零单位代数甚至不可能让 \(X^2\) 在所有元素上为零，因为可取 \(X=1\)。
 
 \begin{definition}\label{b2:def:standard-polynomial}
@@ -42,10 +53,10 @@ X_{\sigma(1)}\cdots X_{\sigma(d)}.
 各个排列给出不同的基字，所以 \(s_d\) 在任意域上都是非零多项式。它对每个变量线性，而且交替：若两个输入相同，将每个排列与交换这两个标签后的排列配对，两个乘积相同、符号相反，因而相消。这一论证在特征二也成立，不通过除以二来判断交替性。
 
 \begin{proposition}\label{b2:prop:finite-dimensional-pi}
-设 \(k\) 为域，\(A\) 为非零结合 \(k\) 代数。若 \(\dim_kA=d<\infty\)，则 \(A\) 满足标准恒等式 \(s_{d+1}=0\)。
+设 \(k\) 为域，\(A\) 为非零结合含幺 \(k\) 代数。若 \(\dim_kA=d<\infty\)，则 \(A\) 满足标准恒等式 \(s_{d+1}=0\)。
 \end{proposition}
 \begin{proof}
-任意 \(d+1\) 个元素线性相关。若其中某个元素为零，多线性直接给出值为零；否则可把一个元素写成其余元素的线性组合。逐项展开 \(s_{d+1}\) 后，每项都有重复输入，由交替性为零。因此该多项式对所有代入为零，而它本身非零，故为恒等式。
+把 \(s_{d+1}\) 的求值看成底向量空间上的交替 \((d+1)\) 线性映射 \(A^{d+1}\to A\)。由\cref{b2:prop:exterior-alternating-universal}，它通过 \(\bigwedge^{d+1}_kA\) 分解，而\cref{b2:thm:exterior-power-basis}给出 \(\bigwedge^{d+1}_kA=0\)，所以全部求值为零。交替性使重复输入的项消失；高于维数的外幂为零，正把这一计算推广到任意输入。标准多项式本身非零，故它是一个恒等式。
 \end{proof}
 
 这个维数界不是矩阵代数的最佳界。\(M_n(k)\) 的向量空间维数为 \(n^2\)，下一小节将把标准恒等式的次数从 \(n^2+1\) 降到 \(2n\)。
@@ -53,7 +64,7 @@ X_{\sigma(1)}\cdots X_{\sigma(d)}.
 \subsection{Amitsur–Levitzki 定理}
 \label{b2:subsec:1903:02}
 
-标准多项式把所有排列的矩阵乘积按排列符号相加。外代数恰能把这些符号编码进乘法：在交换 \(\mathbb Q\) 代数 \(B\) 上取矩阵 \(A_1,A_2\in M_n(B)\)，并在自由 \(B\) 模的外代数中取基元 \(e_1,e_2\)，就有
+标准多项式把所有排列的矩阵乘积按排列符号相加。外代数恰能把这些符号编码进乘法：在交换含幺 \(\mathbb Q\) 代数 \(B\) 上取矩阵 \(A_1,A_2\in M_n(B)\)，并在自由 \(B\) 模的外代数中取基元 \(e_1,e_2\)。矩阵 \(A_i\) 的条目属于零次部分 \(B\)，与外代数的基元交换，因而
 \[
 (e_1A_1+e_2A_2)^2
 =e_1e_2(A_1A_2-A_2A_1).
@@ -61,10 +72,13 @@ X_{\sigma(1)}\cdots X_{\sigma(d)}.
 因为 \(e_i^2=0\)，重复输入的项消失；因为 \(e_2e_1=-e_1e_2\)，交换输入次序自动产生负号。对 \(2n\) 个输入组成 \(X=\sum_i e_iA_i\) 时，同样的展开使 \(X^{2n}\) 中 \(e_1\cdots e_{2n}\) 的系数恰为 \(s_{2n}(A_1,\ldots,A_{2n})\)。因此证明将先建立 \(X^{2n}=0\)，再读取这个最高外积系数。
 
 \ProseParagraphBreak
-下面的证明先在含有有理数的系数环上进行，最后用整数系数的泛型矩阵去除特征限制。外代数的偶次部分交换，正是能够使用普通行列式与 Cayley–Hamilton 定理的地方。将外代数与 Cayley–Hamilton 定理结合来证明这一恒等式的方法，见 Rosset 的《A new proof of the Amitsur-Levitski identity》\cite[pp.~187--188]{Rosset1976AmitsurLevitski}。
+要使 \(X^{2n}\) 为零，需要把外代数中的分次符号转为普通矩阵的特征多项式信息。矩阵 \(X^2\) 的条目属于交换的偶次部分，因而可以对它使用行列式与 Cayley–Hamilton 定理；它的各次幂迹将使特征多项式只剩最高次项。下面先在含有有理数的系数环上完成这一计算，最后用整数系数的泛型矩阵去除特征限制。这一证明方法见 Rosset 的《A new proof of the Amitsur-Levitski identity》\cite[pp.~187--188]{Rosset1976AmitsurLevitski}。
+
+\ProseParagraphBreak
+幂迹与特征多项式系数之间的关系由 Newton 恒等式表达。这里所需的只是幂迹全部为零的情形，可以用行列式生成函数 \(d(t)=\det(I-tY)\) 直接证明：它的系数给出特征多项式，而它的导数由各次幂迹决定。
 
 \begin{lemma}\label{b2:lem:trace-zero-nilpotence}
-设 \(C\) 为交换 \(\mathbb Q\) 代数，\(n\geq1\)，\(Y\in M_n(C)\)。若 \(\operatorname{tr}(Y^r)=0\) 对每个整数 \(r\geq1\) 成立，则 \(\det(TI_n-Y)=T^n\)，从而 \(Y^n=0\)。
+设 \(C\) 为交换含幺 \(\mathbb Q\) 代数，\(n\geq1\) 为整数，\(Y\in M_n(C)\)。若 \(\operatorname{tr}(Y^r)=0\) 对每个整数 \(r\geq1\) 成立，则 \(\det(TI_n-Y)=T^n\)，从而 \(Y^n=0\)。另一方面，若 \(k\) 为特征 \(p>0\) 的域，则 \(I_p\in M_p(k)\) 满足全部正次幂的迹为零，却不幂零。
 \end{lemma}
 \begin{proof}
 在 \(C[\![t]\!]\) 中，\(A(t)=I-tY\) 的逆为 \(\sum_{j\ge0}t^jY^j\)。令 \(d(t)=\det A(t)\)。对行列式的置换展开逐项求导，每次恰好微分一个条目，整理该条目的余子式，得到
@@ -79,18 +93,32 @@ d'(t)=\operatorname{tr}\Bigl(\operatorname{adj}\bigl(A(t)\bigr)A'(t)\Bigr).
 \[
 d'(t)=-d(t)\sum_{j\ge0}t^j\operatorname{tr}(Y^{j+1})=0.
 \]
-上式是 Newton 恒等式的生成函数形式。这里用到 \(C\) 是 \(\mathbb Q\) 代数：每个正整数都可逆，故多项式 \(d(t)\) 的全部正次系数为零；常数项为一，所以 \(d(t)=1\)。将 \(\det(TI-Y)\) 的系数与 \(T^n\cdot d(T^{-1})\) 比较，得到特征多项式为 \(T^n\)。对交换环 \(C\) 上的矩阵应用\cref{b2:thm:exterior-cayley-hamilton}，得 \(Y^n=0\)。
+写
+\[
+d(t)=1+c_1t+\cdots+c_nt^n,
+\qquad
+d'(t)=c_1+2c_2t+\cdots+nc_nt^{n-1}.
+\]
+因此 \(d'(t)=0\) 给出 \(i c_i=0\)、\(1\le i\le n\)。这里用到 \(C\) 是 \(\mathbb Q\) 代数：每个 \(i\cdot1_C\) 可逆，所以 \(c_i=0\)，得到 \(d(t)=1\)。将 \(\det(TI-Y)\) 的系数与 \(T^n\cdot d(T^{-1})\) 比较，得到特征多项式为 \(T^n\)。对交换环 \(C\) 上的矩阵应用\cref{b2:thm:exterior-cayley-hamilton}，得 \(Y^n=0\)。
+
+在特征 \(p>0\) 的域 \(k\) 上，取 \(Y=I_p\)，则对全部 \(r\ge1\) 都有 \(Y^r=I_p\)、\(\operatorname{tr}(Y^r)=p\cdot1_k=0\)，而 \(Y^r\ne0\)，所以它不幂零。此时
+\[
+d(t)=\det(I_p-tI_p)=(1-t)^p=1-t^p
+\]
+不是常数，导数却为零。失败的正是从 \(p c_p=0\) 消去 \(p\) 的一步。
 \end{proof}
 
+上述系数比较实际只需要 \(1,\ldots,n\) 在交换系数环中可逆；\(\mathbb Q\) 代数的假设保证了这一条件。
+
 \begin{theorem}[Amitsur–Levitzki]\label{b2:thm:amitsur-levitzki}
-设 \(R\) 为交换环，\(n\geq1\) 为整数，则对任意 \(A_1,\ldots,A_{2n}\in M_n(R)\)，有
+设 \(R\) 为交换含幺环，\(n\geq1\) 为整数，则对任意 \(A_1,\ldots,A_{2n}\in M_n(R)\)，有
 \[
 s_{2n}(A_1,\ldots,A_{2n})=0.
 \]
 特别地，任意域上的 \(n\) 阶矩阵代数都是 PI 代数。
 \end{theorem}
 \begin{proof}
-先令 \(B\) 为交换 \(\mathbb Q\) 代数，取 \(A_1,\ldots,A_{2n}\in M_n(B)\)。在自由 \(B\) 模的外代数 \(\Lambda_B(e_1,\ldots,e_{2n})\) 上组成矩阵
+先令 \(B\) 为交换含幺 \(\mathbb Q\) 代数，取 \(A_1,\ldots,A_{2n}\in M_n(B)\)。在自由 \(B\) 模的外代数 \(\Lambda_B(e_1,\ldots,e_{2n})\) 上组成矩阵
 \[
 X=\sum_{i=1}^{2n}e_iA_i.
 \]
@@ -104,14 +132,23 @@ X=\sum_{i=1}^{2n}e_iA_i.
 取 \(U=X\)、\(V=X^{2r-1}\)，两者次数均为奇数，得到
 \(\operatorname{tr}(X^{2r})=-\operatorname{tr}(X^{2r})\)。因为二可逆，全部这些迹为零。
 
-记 \(C=\Lambda_B^{\mathrm{even}}(e_1,\ldots,e_{2n})\)。整个外代数一般不交换，但 \(C\) 是交换 \(\mathbb Q\) 代数，且 \(Y=X^2\in M_n(C)\)。又因 \(\operatorname{tr}(Y^r)=0\) 对每个 \(r\ge1\) 成立，故可在 \(M_n(C)\) 中应用\cref{b2:lem:trace-zero-nilpotence}，得到 \(Y^n=0\)，即 \(X^{2n}=0\)。展开 \(X^{2n}\) 后，重复的 \(e_i\) 使相应项为零，其余项按排列整理；\(e_1\cdots e_{2n}\) 的矩阵系数恰为
+记 \(C=\Lambda_B^{\mathrm{even}}(e_1,\ldots,e_{2n})\)，即全部偶次分量的直和。偶数次数相加仍为偶数，零次单位也属于 \(C\)；两项偶次齐次元素交换时的符号为一，所以 \(C\) 是交换含幺 \(\mathbb Q\) 代数。\(X\) 的条目是一次元素，故 \(Y=X^2\) 的条目是二次元素，\(Y\in M_n(C)\)。这使普通行列式、特征多项式及 Cayley–Hamilton 定理可以用于 \(Y\)，而不是直接用于条目位于整个外代数中的 \(X\)。又因 \(\operatorname{tr}(Y^r)=0\) 对每个 \(r\ge1\) 成立，故可在 \(M_n(C)\) 中应用\cref{b2:lem:trace-zero-nilpotence}，得到 \(Y^n=0\)，即 \(X^{2n}=0\)。展开 \(X^{2n}\) 后，重复的 \(e_i\) 使相应项为零，其余项按排列整理；\(e_1\cdots e_{2n}\) 的矩阵系数恰为
 \[
 \sum_{\sigma\in S_{2n}}\operatorname{sgn}(\sigma)
 A_{\sigma(1)}\cdots A_{\sigma(2n)}.
 \]
 外幂基定理\cref{b2:thm:exterior-power-basis}保证这个基系数必须为零。因此结论对任意交换 \(\mathbb Q\) 代数成立。
 
-最后取 \(2n\) 个泛型整数矩阵，各条目为独立不定元，系数环记为 \(\mathbb Z[\mathbf z]\)。所得 \(s_{2n}\) 的每个矩阵条目都是整数系数多项式。把系数环嵌入 \(\mathbb Q[\mathbf z]\)，上一部分使这些多项式为零；由于该嵌入单射，原整数多项式已经为零。将各不定元任意特化为交换环 \(R\) 中给定矩阵的条目，即得到任意特征、任意交换环上的结论。证明中除以二和正整数的步骤只发生在这个整数多项式核验的中间环上，没有对最终的 \(R\) 作这种假设。
+最后取 \(2n\) 个泛型整数矩阵 \(\mathcal A_i=(z_{i,rs})_{r,s=1}^n\)，其中全部条目为独立不定元，系数环记为 \(\mathbb Z[\mathbf z]\)。所得 \(s_{2n}(\mathcal A_1,\ldots,\mathcal A_{2n})\) 的每个矩阵条目都是整数系数多项式 \(F_{rs}(\mathbf z)\)。在单射
+\[
+\mathbb Z[\mathbf z]\hookrightarrow\mathbb Q[\mathbf z]
+\]
+下，上一部分证明每个 \(F_{rs}\) 的像是零多项式，因而它原来的全部整数系数就已经为零。此时对给定 \(A_i\in M_n(R)\)，使用环同态
+\[
+\mathbb Z[\mathbf z]\longrightarrow R,\qquad
+z_{i,rs}\longmapsto (A_i)_{rs}
+\]
+进行特化，零整数多项式仍送到零，便得到任意特征、任意交换环上的结论。证明中除以二和正整数的步骤只发生在核验整数多项式为零的中间环 \(\mathbb Q[\mathbf z]\) 上；最终特化使用的是整数系数环到 \(R\) 的映射。
 \end{proof}
 
 这称为\term[Amitsur-Levitzki-dingli]{Amitsur–Levitzki 定理}[Amitsur–Levitzki theorem]。例如二阶矩阵满足四次标准恒等式，即二十四个有序乘积按符号求和为零；它们通常不满足二次交换恒等式。本节不讨论标准恒等式次数的最小性，只使用已经证明的 \(2n\) 次恒等式。
@@ -122,17 +159,17 @@ A_{\sigma(1)}\cdots A_{\sigma(2n)}.
 PI 性对取子代数和取商代数都保持：相同恒等式在子代数的代入只是原代入的一部分；在商代数中，先提升各输入到原代数再取商即可。因此 \(M_n(k)\) 的任意子代数、以及这些子代数的任意商，都继承至少一个非零多项式恒等式。
 
 \ProseParagraphBreak
-有限维蕴含 PI，反向不成立：多项式代数 \(k[t]\) 无限维，却满足 \(X_1X_2-X_2X_1=0\)。甚至对任意 \(d\)，\(k[t_1,\ldots,t_d]\) 都满足同一个交换恒等式，而它们的增长可以不同。PI 条件限制乘法关系，不把底向量空间强制变成有限维。
+有限维蕴含 PI，反向不成立：多项式代数 \(k[t]\) 无限维，却满足 \(X_1X_2-X_2X_1=0\)。甚至对任意 \(d\)，\(k[t_1,\ldots,t_d]\) 都满足同一个交换恒等式，而它们的增长可以不同。PI 也不蕴含交换性：当 \(n\ge2\) 时，\(M_n(k)\) 满足刚证的标准恒等式，却有 \(E_{12}E_{21}=E_{11}\ne E_{22}=E_{21}E_{12}\)。PI 条件限制共同的乘法关系，既不强制底向量空间有限维，也不强制任意两个元素交换。
 
 \begin{proposition}\label{b2:prop:free-algebra-not-pi}
 设 \(k\) 为域，则自由结合 \(k\) 代数 \(k\langle x,y\rangle\) 不满足任何非零多项式恒等式。
 \end{proposition}
 \begin{proof}
-给定任意非零 \(f\in k\langle X_1,\ldots,X_m\rangle\)，代入
+为了在两个生成元中保存任意候选恒等式的全部字，需要把有限个字母 \(X_i\) 编码成 \(x,y\) 字，并使连接后的字仍能唯一解码。给定任意非零 \(f\in k\langle X_1,\ldots,X_m\rangle\)，取代入
 \[
 X_i\longmapsto xy^ix,\qquad 1\le i\le m.
 \]
-不同的 \(X_i\) 字被送到不同的 \(x,y\) 字。因为每个块 \(xy^ix\) 内部只有两个端点为 \(x\)，相邻块之间出现的 \(xx\) 正好标记分界；\(i\ge1\) 保证块内没有这种分界。从连接后的字可以唯一读出每个块中的 \(y\) 个数，再恢复原下标串。空字也只映到空字。
+每个块 \(xy^ix\) 内部只有两个端点为 \(x\)，相邻块之间出现的 \(xx\) 正好标记分界；\(i\ge1\) 保证块内没有这种分界。因此可在每个 \(xx\) 的两个 \(x\) 之间切开，读出各块中的 \(y\) 个数，恢复原下标串。不同的 \(X_i\) 字因而被送到不同的 \(x,y\) 字，空字也只映到空字。
 
 所以原多项式中不同基字不会在代入后合并，更不会互相抵消；至少一个非零系数仍保留，故 \(f(xyx,xy^2x,\ldots,xy^mx)\ne0\)。这为每个非零候选恒等式给出一次不为零的代入，证明结论。
 \end{proof}

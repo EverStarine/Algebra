@@ -1,5 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第12章　链条件、长度与直和分解
+% 纲要位置：工作记录/计划纲要.md:L1434
 
 \chapter{链条件、长度与直和分解}
 \label{b2:ch:12}
@@ -14,7 +15,7 @@
 \item 区分有限生成、升链条件、降链条件与有限长度，能通过子模、商模及短正合列判断这些性质。
 \item 证明模的 Jordan–Hölder 定理，计算长度和简单因子的重数，并区别长度与基域维数。
 \item 证明 Fitting 分解，使用局部环判据辨认不可分解模，说明幂等元和投影细分的关系。
-\item 完成 Krull–Schmidt 唯一性中的单位和、分量比较与补模交换，理解结论的适用条件及失效例子。
+\item 在 Krull–Schmidt 唯一性证明中从恒等映射的有限和中找到可逆项，比较分量并交换补模，理解结论的适用条件及失效例子。
 \end{itemize}
 \end{learninggoals}
 
@@ -26,7 +27,7 @@
 
 \ProseParagraphBreak
 
-当升降过程都能停止时，一个模可以被逐层剖开，记录简单的商层；但仅知道这些层是什么，并不能自动把它们重新拼成直和。相同的有限性还限制自同态反复作用后的核与像，从而解释某些不可分解模的自同态环为何具有局部性质。链条件的真正用途就在这些停止论证中。
+当升降过程都能停止时，一个模可以被逐层剖开，记录简单的商层；但仅知道这些层是什么，并不能自动把它们重新拼成直和。Jordan–Hölder 定理确定这些商层的同构类型和重数，Krull–Schmidt 定理确定实际的不可分解直和分量，两者回答不同的问题。为证明后一种唯一性，还需要用链条件控制自同态反复作用后的核与像，由 Fitting 分解得到不可分解模的局部自同态环。
 
 \ProseParagraphBreak
 
@@ -53,28 +54,28 @@ Noether 条件等价于每个子模有限生成，Artin 条件则限制降链；
 \BookExercises
 
 \begin{exercise}\label{b2:ex:12-vector-chain-conditions}
-证明一个 \(k\) 向量空间作为 \(k\) 模满足升链条件、满足降链条件、有限维三者等价。说明仅将“向量空间”替换成“一般环上的模”后，哪些蕴含不再成立。
+设 \(k\) 为域，\(V\) 为 \(k\) 向量空间。证明 \(V\) 作为 \(k\) 模满足升链条件、满足降链条件、有限维三者等价。说明仅将“向量空间”替换成“一般环上的模”后，哪些蕴含不再成立。
 \end{exercise}
 \begin{solution}
-有限维时，严格包含使维数至少改变一，所以升链和降链都稳定。若维数无限，逐次取线性无关向量 \(e_1,e_2,\ldots\)，其前 \(n\) 项的线性生成空间严格上升，其尾部 \(\operatorname{span}_k\{e_i:i\ge n\}\) 严格下降，所以两种链条件都失败。一般模上，\(\mathbb Z\) 是 Noether 而非 Artin 模，\(C_{p^\infty}\) 是 Artin 而非 Noether 模，故两种链条件不能互推。“有限维”也没有对任意环都适用的同一含义，合适的共同条件是\cref{b2:thm:finite-length-chain-conditions}中的有限长度。
+有限维时，严格包含使维数至少改变一，所以升链和降链都稳定。若维数无限，沿用本书的选择公理约定，逐次选择不在此前向量生成空间内的向量，得到线性无关序列 \(e_1,e_2,\ldots\)，其前 \(n\) 项的线性生成空间严格上升，其尾部 \(\operatorname{span}_k\{e_i:i\ge n\}\) 严格下降，所以两种链条件都失败。一般模上，\(\mathbb Z\) 是 Noether 而非 Artin 模，\(C_{p^\infty}\) 是 Artin 而非 Noether 模，故两种链条件不能互推。“有限维”也没有对任意环都适用的同一含义，合适的共同条件是\cref{b2:thm:finite-length-chain-conditions}中的有限长度。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-directed-cover}
-称子模族 \((N_i)_{i\in I}\) 向上有向，若任意两个成员都包含于某个共同的成员。证明 \(M\) 有限生成，当且仅当每个满足 \(M=\bigcup_iN_i\) 的向上有向子模族都含有等于 \(M\) 的一个成员。这个条件为何不足以直接说明 \(M\) 是 Noether 模？
+设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\) 模。非空子模族 \((N_i)_{i\in I}\) 中若任意两个成员都包含于某个共同的成员，就称该族向上有向。证明 \(M\) 有限生成，当且仅当每个满足 \(M=\bigcup_iN_i\) 的向上有向子模族都含有等于 \(M\) 的一个成员。这个条件为何不足以直接说明 \(M\) 是 Noether 模？
 \end{exercise}
 \begin{solution}
 若 \(M\) 由有限个 \(x_1,\ldots,x_r\) 生成，各元素分别落在族中某项；反复使用有向性，可找到同时包含它们的 \(N_j\)，故 \(N_j=M\)。反过来，取 \(M\) 的全部有限生成子模，它们的并为 \(M\)，任意两个的和仍有限生成，所以是向上有向族。假设迫使某个有限生成子模就是 \(M\)。这个条件只针对 \(M\) 自身的生成性；Noether 条件还要求每个子模有限生成，二者的区别由\cref{b2:prop:noetherian-submodules-fg}明确给出。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-generator-extension}
-在短正合列 \(0\rightarrow A\xrightarrow{i}B\xrightarrow{q}C\rightarrow0\) 中，若 \(A\) 可由 \(r\) 个元素生成，\(C\) 可由 \(s\) 个元素生成，证明 \(B\) 可由至多 \(r+s\) 个元素生成，并说明在哪里使用了正合性。
+设 \(R\) 为含幺环，\(0\rightarrow A\xrightarrow{i}B\xrightarrow{q}C\rightarrow0\) 为幺性左 \(R\) 模的短正合列。若 \(A\) 可由 \(r\) 个元素生成，\(C\) 可由 \(s\) 个元素生成，证明 \(B\) 可由至多 \(r+s\) 个元素生成，并说明在哪里使用了正合性。
 \end{exercise}
 \begin{solution}
 取 \(A\) 的生成元 \(a_1,\ldots,a_r\)，\(C\) 的生成元 \(c_1,\ldots,c_s\)。由 \(q\) 满射，取 \(b_j\in B\) 使 \(q(b_j)=c_j\)。给定 \(b\in B\)，写 \(q(b)=\sum_j t_jc_j\)，则 \(b-\sum_jt_jb_j\in\ker q=\operatorname{im}i\)，所以又可写成 \(\sum_\nu u_\nu i(a_\nu)\)。于是 \(i(a_\nu),b_j\) 共同生成 \(B\)。满射性用于选取商生成元的原像，\(\ker q=\operatorname{im}i\) 用于把差送回 \(A\)；只知道两个映射可复合，并不足以得到这个结论。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-one-sided-endomorphism}
-证明 Noether 模的每个满自同态可逆，Artin 模的每个单自同态可逆。分别给出不能互换“满”与“单”的例子。
+设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\) 模。证明 \(M\) 为 Noether 模时每个满射自同态可逆，\(M\) 为 Artin 模时每个单射自同态可逆。分别给出不能互换“满射”与“单射”的例子。
 \end{exercise}
 \begin{solution}
 设 \(M\) Noether、\(f\) 满。取 \(n\) 使 \(\ker f^n=\ker f^{n+1}\)。若 \(x\in\ker f\)，由 \(f^n\) 满可取 \(y\) 使 \(f^n(y)=x\)。于是 \(y\in\ker f^{n+1}=\ker f^n\)，故 \(x=0\)，\(f\) 单且满。
@@ -83,16 +84,19 @@ Noether 条件等价于每个子模有限生成，Artin 条件则限制降链；
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-left-right-length}
-设域扩张 \(k\subseteq K\) 的次数为有限整数 \(d\)，取
+设域扩张 \(k\subseteq K\) 的次数为有限整数 \(d\)，\(r\ge1\) 为整数。取由三元组 \((a,\mathbf u,b)\in K\times K^r\times k\) 组成的环 \(R\)，加法逐项进行，乘法为
 \[
-R=\left\{\begin{pmatrix}a&u\\0&b\end{pmatrix}:a,u\in K,\ b\in k\right\}.
+(a,\mathbf u,b)(a',\mathbf u',b')
+=(aa',a\mathbf u'+\mathbf u b',bb').
 \]
-分别计算左正则模与右正则模的长度。特别比较 \(k=\mathbb R,K=\mathbb C\) 的情形。
+单位元为 \((1,\mathbf0,1)\)。分别计算左右正则模的长度，并比较 \(k=\mathbb R,K=\mathbb C,r=2\) 的情形。
 \end{exercise}
 \begin{solution}
-左侧分解为 \(Re_{11}\oplus Re_{22}\)。\(Re_{11}\cong K\) 简单；\(Re_{22}\) 的上右子模 \(J\cong K\) 简单，商为右下的 \(k\)，也简单，所以左长度为 \(1+2=3\)。
+这个乘法来自 \(K^r\) 的左 \(K\)、右 \(k\) 标量作用；两侧作用相容，展开三元组乘法即可验证结合律。令 \(e_1=(1,\mathbf0,0)\)、\(e_2=(0,\mathbf0,1)\)，则它们正交且和为一。由此左右正则模分别分解为 \(Re_1\oplus Re_2\) 与 \(e_1R\oplus e_2R\)。
 
-右侧分解为 \(e_{11}R\oplus e_{22}R\)。\(e_{22}R\cong k\) 简单；\(e_{11}R\) 中的 \(J\) 只受右下 \(k\) 标量作用，因而其 \(R\) 子模恰为 \(K\) 的 \(k\) 子空间，长度为 \(d\)。商 \(e_{11}R/J\cong K\) 受右乘矩阵的左上角 \(K\) 作用，简单。因此右长度为 \(d+1+1=d+2\)。实复扩张次数二，左右长度分别为三和四，说明两侧均有限长度时，长度数值也未必相同。
+记 \(J=\{\,(0,\mathbf u,0):\mathbf u\in K^r\,\}\)。左乘在 \(J\) 上只作用为 \(\mathbf u\mapsto a\mathbf u\)，所以其子模恰为 \(K^r\) 的 \(K\) 子空间，\(\ell({}_RJ)=r\)。\(Re_1\) 是由左上角作用的简单模 \(K\)，\(Re_2/J\) 是由右下角作用的简单模 \(k\)。长度可加性给出左正则长度 \(1+r+1=r+2\)。
+
+右乘在 \(J\) 上只作用为 \(\mathbf u\mapsto\mathbf u b\)，其子模恰为 \(K^r\) 的 \(k\) 子空间，故 \(\ell(J_R)=rd\)。\(e_2R\) 是简单右模 \(k\)，\(e_1R/J\) 是简单右模 \(K\)，于是右正则长度为 \(rd+2\)。取实复扩张及 \(r=2\)，得到左右长度分别为四和六。相比\cref{b2:prop:triangular-left-right-length}，扩大中间的双模后，这一部分贡献的左侧简单层数为 \(r\)，右侧为 \(rd\)。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-cyclic-length}
@@ -103,7 +107,7 @@ R=\left\{\begin{pmatrix}a&u\\0&b\end{pmatrix}:a,u\in K,\ b\in k\right\}.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-truncated-polynomial-length}
-设 \(A=k[x,y]/(x,y)^3\)，把 \(A\) 看成自身的左模。写出一条合成列，求其长度与合成因子。计算乘 \(x\) 的核和像，并核验长度可加性。
+设 \(k\) 为域，\(A=k[x,y]/(x,y)^3\)，把 \(A\) 看成自身的幺性左模。写出一条合成列，求其长度与合成因子。计算乘 \(x\) 的核和像，并核验长度可加性。
 \end{exercise}
 \begin{solution}
 以 \(1,x,y,x^2,xy,y^2\) 的像为基，记 \(\mathfrak m=(x,y)\)。一条合成列是
@@ -117,23 +121,29 @@ R=\left\{\begin{pmatrix}a&u\\0&b\end{pmatrix}:a,u\in K,\ b\in k\right\}.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-matrix-module-length}
-令 \(A=M_n(k)\)，以左矩阵乘法作用在 \(M_{n\times r}(k)\) 上。求该模的长度与一条合成列，说明长度与 \(k\) 维数的关系。
+设 \(k\) 为域，\(n\ge1,r\ge0\) 为整数。令 \(A=M_n(k)\)，以左矩阵乘法作用在 \(M_{n\times r}(k)\) 上。求该模的长度与一条合成列，说明长度与 \(k\) 维数的关系。
 \end{exercise}
 \begin{solution}
 按列分解为 \(r\) 个 \(k^n\) 的直和，每个列空间都是简单左 \(A\) 模：从非零列向量的一个非零坐标出发，矩阵单位及标量可得到全部标准列向量。逐次加入前一、前二、直到全部 \(r\) 列，得到一条有 \(r\) 个简单商层的合成列。因此长度为 \(r\)，而 \(k\) 维数为 \(nr\)。只在 \(n=1\) 或零模情形，两者数值相同。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-fitting-integers}
-在 \(M=\mathbb Z/72\mathbb Z\) 上令 \(f\) 为乘二。求最小的正整数 \(n\)，使 \(M=\ker f^n\oplus\operatorname{im}f^n\)。写出这两个分量的投影，并求 \(f\) 在可逆分量上的逆。
+在整数模 \(M=\mathbb Z/600\mathbb Z\) 上令 \(f\) 为乘六。求最小的正整数 \(n\)，使 \(M=\ker f^n\oplus\operatorname{im}f^n\)。写出两个分量的投影，求 \(f\) 在可逆分量上的逆，并计算两分量的长度。
 \end{exercise}
 \begin{solution}
-因 \(72=8\cdot9\)，当 \(n=3\) 时，核由 \(\bar9\) 生成，阶为八；像由 \(\bar8\) 生成，阶为九。它们交于零且 \(9-8=1\) 保证共同生成 \(M\)，故为直和。乘九的映射为核分量投影，乘负八即乘六十四为像分量投影：它们和为恒等，且 \(9^2\equiv9\)、\(64^2\equiv64\)、\(9\cdot64\equiv0\pmod{72}\)。
+分解 \(600=24\cdot25=2^3\cdot3\cdot5^2\)。乘六在二、三主分量上幂零，在五主分量上可逆。因 \(\gcd(6^3,600)=24\)，有
+\[
+\ker f^3=\langle\bar{25}\rangle\cong\mathbb Z/24\mathbb Z,
+\qquad
+\operatorname{im}f^3=\langle\bar{24}\rangle\cong\mathbb Z/25\mathbb Z.
+\]
+它们交为零，且 \(25-24=1\) 保证其和为 \(M\)。当 \(n=1,2\) 时，非零元 \(\bar{300}\) 都在 \(\ker f^n\) 中；它又是六与十二的倍数，而这两数分别是 \(\gcd(6,600)\)、\(\gcd(6^2,600)\)，所以也在相应的像中。因此最小正整数为三。
 
-在阶九的像分量上，乘五是乘二的逆，因为 \(2\cdot5\equiv1\pmod9\)。若 \(n=1\)，核由 \(\bar{36}\) 生成，它仍在像 \(2M\) 中；若 \(n=2\)，核由 \(\bar{18}\) 生成，其中非零元素 \(\bar{36}\) 又在像 \(4M\) 中。所以前两步都不是直和，最小 \(n=3\)。
+乘二十五在阶二十四的分量上为恒等，在阶二十五的分量上为零，故为核分量投影；其余投影为乘 \(1-25\)，即乘五百七十六。它们是和为恒等的正交幂等元。可逆分量上乘二十一是 \(f\) 的逆，因为 \(6\cdot21\equiv1\pmod{25}\)。两分量的长度分别为 \(3+1=4\) 与二，合为 \(\ell(M)=6\)。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-fitting-polynomial}
-设 \(p,q\in k[t]\) 为互不相伴的首一不可约多项式，\(a,b\ge1\)。在
+设 \(k\) 为域，\(p,q\in k[t]\) 为互不相伴的首一不可约多项式，\(a,b\ge1\) 为整数。在
 \[
 M=k[t]/(p^a)\oplus k[t]/(q^b)
 \]
@@ -146,38 +156,41 @@ M=k[t]/(p^a)\oplus k[t]/(q^b)
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-local-not-finite-length}
-固定素数 \(p\)，令
-\[
-R=\bigl\{\,a/b\in\mathbb Q\,\bigm|\,a,b\in\mathbb Z,\ p\nmid b\,\bigr\}.
-\]
-证明 \(R\) 为局部环，但左正则模 \(R\) 不有限长度。其非单位是否都幂零？
+设 \(k\) 为域，\(R=k[\![t]\!]\) 为形式幂级数环。证明 \(a(t)=\sum_{n\ge0}a_nt^n\) 是单位当且仅当 \(a_0\ne0\)，并在单位情形递推求出逆级数的系数。证明 \(R\) 局部，其左正则模有限生成且不可分解，却不有限长度；给出不幂零的非单位。
 \end{exercise}
 \begin{solution}
-把分数约分后，若 \(p\nmid a\)，其逆 \(b/a\) 仍在 \(R\)；若 \(p\mid a\)，则不可能有 \(R\) 中的逆，因为分母不能提供 \(p\) 因子。因此非单位恰为理想 \(pR\)，它为真理想，所以 \(R\) 局部。降链 \(R\supsetneq pR\supsetneq p^2R\supsetneq\cdots\) 严格，因为 \(p^n\notin p^{n+1}R\)，否则 \(1/p\in R\)。所以正则模不满足降链条件，不有限长度。非单位 \(p\) 在整环中不幂零，说明“非可逆自同态都幂零”还使用了有限长度条件，不能由一般局部性推出。
+若 \(a(t)b(t)=1\)，常数项满足 \(a_0b_0=1\)，所以 \(a_0\ne0\)。反之，令
+\[
+b_0=a_0^{-1},\qquad
+b_n=-a_0^{-1}\sum_{i=1}^n a_i b_{n-i}\quad(n\ge1).
+\]
+每一项只使用已确定的有限个系数，使乘积的常数项为一、其他系数为零，故得到形式幂级数逆。这里不涉及级数的解析收敛。
+
+非单位恰为常数项为零的级数，即真理想 \(tR\)，所以 \(R\) 局部。左正则模由一生成；其自同态环由右乘法识别为 \(R^{\mathrm{op}}=R\)，因而局部，由\cref{b2:prop:local-ring-criterion}中幂等元判据及\cref{b2:prop:idempotent-direct-sum}得不可分解。另一方面，\(R\supsetneq tR\supsetneq t^2R\supsetneq\cdots\) 严格：\(t^n\) 的 \(n\) 次系数非零，而 \(t^{n+1}R\) 中该系数全为零。因此它不 Artin，也不有限长度。非单位 \(t\) 的每次幂都非零，故不幂零。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-jordan-centralizer}
-设 \(J=J_n(0)\) 为单个上次对角线为一的幂零 Jordan 块。证明与 \(J\) 交换的全部矩阵恰为
+设 \(k\) 为域，\(n\ge1\)，\(J=J_n(0)\in M_n(k)\) 为单个上次对角线为一的幂零 Jordan 块。证明与 \(J\) 交换的全部矩阵恰为
 \[
 a_0I+a_1J+\cdots+a_{n-1}J^{n-1}.
 \]
 证明这个环局部，并确定其中的幂等元。
 \end{exercise}
 \begin{solution}
-向量 \(e_n\) 在 \(J\) 下循环，因为 \(e_n,Je_n,\ldots,J^{n-1}e_n\) 是逆序标准基。若 \(C\) 与 \(J\) 交换，\(C(e_n)\) 唯一写成 \(\sum_i a_iJ^ie_n\)，于是 \(C(J^je_n)=J^jC(e_n)\) 与多项式 \(\sum_i a_iJ^i\) 在整组基上的值相同，故 \(C\) 等于该多项式。反向多项式当然与 \(J\) 交换，且系数唯一。
+向量 \(e_n\) 在 \(J\) 下循环，因为 \(e_n,Je_n,\ldots,J^{n-1}e_n\) 是逆序标准基。代入映射 \(P(t)\mapsto P(J)e_n\) 因而给出 \(k[t]/(t^n)\cong k^n\)：\(J^n=0\)，而上述基保证次数小于 \(n\) 的非零多项式不在核中。特别地，\(\mu_J(t)=t^n\)，\(k^n\) 在作用代数 \(k[J]\) 下同构于其正则模。由\cref{b2:thm:regular-double-centralizer}，正则左作用的交换子来自右乘；\(k[J]\) 交换，右乘就是左乘，所以 \(\operatorname{Cent}(J)=k[J]\)。上述基也保证 \(I,J,\ldots,J^{n-1}\) 的线性组合表示唯一。
 
 常数项 \(a_0\ne0\) 时，提出 \(a_0\) 后用幂零矩阵的有限几何和求逆；常数项为零时，矩阵为 \(J\) 的倍数，因而幂零、非可逆。非单位构成理想 \((J)\)，所以环局部。由\cref{b2:prop:local-ring-criterion}，幂等元只有零和单位矩阵。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-nilpotent-sum}
-在 \(M_2(k)\) 中给出两个幂零矩阵，其和可逆。说明为什么这不违背有限长度不可分解模的局部自同态环结论。
+设 \(k\) 为域。在 \(M_2(k)\) 中给出两个幂零矩阵，其和可逆。说明为什么这不违背有限长度不可分解模的局部自同态环结论。
 \end{exercise}
 \begin{solution}
 取 \(U=E_{12}\)、\(V=E_{21}\)，有 \(U^2=V^2=0\)，但 \((U+V)^2=I\)，故其和可逆，任意特征下都成立。它们是 \(k^2\) 的自同态，而这个模可分解为两个一维子空间。定理要求有限长度与不可分解同时成立；在满足这两个条件的同一个模上，非可逆自同态才组成理想，幂零元素之和才由该理想性继续非可逆并因 Fitting 判据而幂零。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-graph-projection}
-设 \(M=A\oplus B\)，\(u:A\rightarrow B\) 为模同态。证明 \(u\) 的图
+设 \(R\) 为含幺环，\(M=A\oplus B\) 为幺性左 \(R\) 模的直和，\(u:A\rightarrow B\) 为 \(R\) 模同态。证明 \(u\) 的图
 \(\Gamma_u=\Bigl\{\,\bigl(a,u(a)\bigr)\mid a\in A\,\Bigr\}\)
 是以 \(B\) 为补模的直和因子，求对应投影，并证明它与投影到 \(A\) 的幂等元在 \(\operatorname{End}_R(M)\) 中共轭。
 \end{exercise}
@@ -194,14 +207,14 @@ g\begin{pmatrix}1&0\\0&0\end{pmatrix}g^{-1}=e_u.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-power-cancellation}
-设 \(M,N\) 为有限长度模，\(r\ge1\)。证明 \(M^{\oplus r}\cong N^{\oplus r}\) 蕴含 \(M\cong N\)。这里不能未经说明就逐次消去，因为两侧并未给定相同的直和因子。
+设 \(R\) 为含幺环，\(M,N\) 为有限长度幺性左 \(R\) 模，\(r\ge1\) 为整数。证明 \(M^{\oplus r}\cong N^{\oplus r}\) 蕴含 \(M\cong N\)。这里不能未经说明就逐次消去，因为两侧并未给定相同的直和因子。
 \end{exercise}
 \begin{solution}
 先把 \(M,N\) 分解为有限个不可分解模。对每一种出现的同构类型，设其重数分别为 \(a,b\)。两边的 \(r\) 次直和中相应重数为 \(ra,rb\)，由\cref{b2:thm:krull-schmidt}必相等。正整数 \(r\) 可在整数等式中约去，所以 \(a=b\)。全部类型的重数都相同，逐项同构的直和便给出 \(M\cong N\)。这里约去的是整数重数，不是预先假定的模消去律。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-finite-extension-descent}
-设 \(L/k\) 为有限域扩张，\(A\) 为 \(k\) 代数，\(M,N\) 为有限维左 \(A\) 模。若 \(L\otimes_kM\cong L\otimes_kN\) 作为 \(L\otimes_kA\) 模，证明 \(M\cong N\) 作为 \(A\) 模。可对照有限扩张情形的证明方法\cite[Problem 3.8.4(i), pp. 52--53]{EtingofEtAl2011RepresentationTheory}。
+设 \(L/k\) 为有限域扩张，\(A\) 为结合含幺 \(k\) 代数，\(M,N\) 为有限维幺性左 \(A\) 模。若 \(L\otimes_kM\cong L\otimes_kN\) 作为 \(L\otimes_kA\) 模，证明 \(M\cong N\) 作为 \(A\) 模。可对照有限扩张情形的证明方法\cite[Problem 3.8.4(i), pp. 52--53]{EtingofEtAl2011RepresentationTheory}。
 \end{exercise}
 \begin{solution}
 令 \(d=[L:k]\)，选择 \(L\) 的 \(k\) 基 \(\lambda_1,\ldots,\lambda_d\)。限制为 \(A\) 模后，映射
@@ -213,7 +226,7 @@ M^{\oplus d}\longrightarrow L\otimes_kM,\qquad
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-infinite-cancellation}
-设 \(V\) 有可数无限基 \(e_0,e_1,\ldots\)。构造 \(k\oplus V\cong V\)，据此说明去掉有限长度以后，\(A\oplus C\cong B\oplus C\) 不再保证 \(A\cong B\)。
+设 \(k\) 为域，\(k\) 向量空间 \(V\) 有可数无限基 \(e_0,e_1,\ldots\)。构造 \(k\oplus V\cong V\)，据此说明去掉有限长度以后，\(A\oplus C\cong B\oplus C\) 不再保证 \(A\cong B\)。
 \end{exercise}
 \begin{solution}
 把左侧 \(k\) 的标准基向量送到 \(e_0\)，把 \(V\) 中的 \(e_i\) 送到 \(e_{i+1}\)，得到两组基之间的双射，线性延拓即为同构，逆映射将 \(e_0\) 送回首个分量，将其余基向量依次前移。取 \(A=k,B=0,C=V\)，则 \(A\oplus C\cong B\oplus C\)，但 \(k\not\cong0\)。无限公共分量能够吸收新增的一维空间，整数重数的有限消去论证不再适用。
@@ -223,11 +236,11 @@ M^{\oplus d}\longrightarrow L\otimes_kM,\qquad
 对\cref{b2:ex:krull-schmidt-nonunique}中的 \(R=\mathbb Z[\sqrt{-5}]\)、\(I=(2,1+\sqrt{-5})\)，证明 \(I\) 是有限生成投射模，却不是自由模。
 \end{exercise}
 \begin{solution}
-\(I\) 由题述两个元素生成。正文给出的显式同构 \(I\oplus I\cong R^2\) 说明 \(I\) 是自由模的直和因子，由\cref{b2:thm:projective-characterizations}，它投射。若 \(I\) 自由，因为非零，其基非空。任意两个非零元素 \(a,b\in I\) 都满足关系 \(ba-ab=0\)，两个系数 \(b,-a\) 均非零，所以基至多有一个元素。单元素基却意味着 \(I\) 为主理想，与正文已经证明的非主性矛盾。因此它不自由。
+\(I\) 由题述两个元素生成。正文给出的显式同构 \(I\oplus I\cong R^2\) 说明 \(I\) 是自由模的直和因子，由\cref{b2:thm:projective-characterizations}，它投射。若 \(I\) 自由，因为非零，其基非空。任意两个非零元素 \(a,b\in I\) 都满足 \(R\) 线性关系 \(b\cdot a+(-a)\cdot b=0\)。这里 \(a,b\) 首先是模元素，又因 \(I\subseteq R\) 而能作标量；系数 \(b,-a\) 均非零，所以二者不能同时属于一组基。基因而至多有一个元素。单元素基却意味着 \(I\) 为主理想，与正文已经证明的非主性矛盾。因此它不自由。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-dual-numbers-decomposition}
-设 \(A=k[\varepsilon]/(\varepsilon^2)\)，\(M\) 为五维左 \(A\) 模，乘 \(\varepsilon\) 的线性算子秩为二。确定 \(M\) 的不可分解直和分解及长度。
+设 \(k\) 为域，\(A=k[\varepsilon]/(\varepsilon^2)\)，\(M\) 为五维幺性左 \(A\) 模，乘 \(\varepsilon\) 的线性算子秩为二。确定 \(M\) 的不可分解直和分解及长度。
 \end{exercise}
 \begin{solution}
 记算子为 \(T\)，则 \(T^2=0\)。由\cref{b2:thm:jordan-canonical-form}，其 Jordan 块只能为大小一或二的零特征值块，因为大小至少三的块平方不为零。每个二阶块贡献秩一，每个一阶块贡献秩零，所以恰有两个二阶块和一个一阶块。二阶块作为 \(A\) 模同构于正则模 \(A\)，一阶块同构于 \(A/(\varepsilon)\cong k\)，故
@@ -238,12 +251,14 @@ M\cong A\oplus A\oplus k.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:12-orthogonal-family-bound}
-设 \(M\) 有限长度，\((e_i)_{i\in I}\) 是其自同态环中两两正交的非零幂等元族，不假设它们的和有定义或等于一。证明 \(I\) 必为有限集，且 \(|I|\le\ell(M)\)。
+设 \(R\) 为含幺环，\(M\) 为长度 \(d>0\) 的幺性左 \(R\) 模。若 \(\operatorname{End}_R(M)\) 中有 \(d\) 个两两正交的非零幂等元 \(e_1,\ldots,e_d\)，证明它们的和自动为恒等，每个 \(e_iM\) 都简单。反之，若 \(M\) 是简单模的有限直和，证明正交非零幂等元的个数可以达到 \(d\)。比较整数模 \(\mathbb Z/p^2\mathbb Z\) 与 \((\mathbb Z/p\mathbb Z)^2\) 能达到的最大个数，其中 \(p\) 为素数。
 \end{exercise}
 \begin{solution}
-取任意有限子族 \(e_{i_1},\ldots,e_{i_r}\)。其和 \(e\) 为幂等元，因为交叉乘积均为零；其像为 \(\bigoplus_{j=1}^r e_{i_j}M\)，直和性可对关系应用各个 \(e_{i_j}\) 检验。每项非零，所以长度至少一。像是 \(M\) 的子模，故
+令 \(e=\sum_i e_i\)。由正交性，\(e^2=e\)，且 \(eM=\bigoplus_i e_iM\)。长度可加性给出
 \[
-r\le\sum_j\ell(e_{i_j}M)=\ell(eM)\le\ell(M).
+d\le\sum_{i=1}^d\ell(e_iM)=\ell(eM)\le\ell(M)=d.
 \]
-若 \(I\) 有超过 \(\ell(M)\) 个元素，就能选出相应有限子族违反此不等式。因此 \(I\) 有限并满足同一界；论证从未使用无穷个自同态的求和。
+所以每项长度为一，因而简单；\(\ell(M/eM)=0\) 则迫使 \(eM=M\)。幂等元在自身像上为恒等，故 \(e=1_M\)。
+
+若 \(M\) 为 \(s\) 个简单模的直和，其长度为 \(s=d\)，各分量投影便给出 \(d\) 个正交非零幂等元。对 \(\mathbb Z/p^2\mathbb Z\)，任何非零子模都包含其唯一的阶 \(p\) 子模；两非零直和因子不可能交于零，故它不可分解，自同态环只有零和恒等两个幂等元，最大个数为一。\((\mathbb Z/p\mathbb Z)^2\) 的两个坐标投影达到二，且\cref{b2:prop:orthogonal-idempotent-decomposition}的长度界禁止更多。这两个模的简单商层相同，但实际可分离的投影数不同。
 \end{solution}

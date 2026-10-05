@@ -1,11 +1,14 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### B.1 Clifford 代数的基、分次与低维结构
+% 纲要位置：计划纲要.md，第 1780 行。
 
 % 纲要要点（供目录核对）：
-% * Clifford 代数的泛性质、有序基、伴随分次及低维偶代数
+%
+% * Clifford 代数的泛性质、有序基、伴随分次及低维偶代数；分次张量积回用 Koszul 符号，以外乘和收缩构造表示、最高外次数检测独立，区别原代数与伴随分次；正式证明非退化情形的体积元平方及整个代数的中心
 % #### B.1.1 泛性质与正交直和
 % #### B.1.2 有序单项式与维数
 % #### B.1.3 一至三维的计算
+%
 
 \section{Clifford 代数的基、分次与低维结构}
 \label{b2:sec:B01}
@@ -22,7 +25,7 @@
 \symidx{\(\operatorname{Cl}^0(V,q)\)：偶 Clifford 代数}
 
 \ProseParagraphBreak
-正交分量的向量在 Clifford 代数中反交换，普通张量积却会使不同因子交换。为保存这个符号，设 \(k\) 为域，\(A,B\) 为按 \(\mathbb Z/2\mathbb Z\) 分次的 \(k\) 代数，在向量空间 \(A\otimes_kB\) 上规定
+若 \(u\perp w\)，极化关系给出 \(uw+wu=2b(u,w)=0\)，所以正交分量的向量在 Clifford 代数中反交换。普通张量积中的 \(u\otimes1\) 与 \(1\otimes w\) 却彼此交换，因而需要调整乘法的符号。设 \(k\) 为域，\(A,B\) 为按 \(\mathbb Z/2\mathbb Z\) 分次的 \(k\) 代数。将 \((a\otimes b)(a'\otimes b')\) 的两侧因子分别相乘，要把中间的 \(b\) 搬过 \(a'\)；两个奇元素相遇时产生负号，其他情形不改变符号。这与\eqref{b2:eq:graded-wedge-sign}以及\cref{b2:prop:exterior-direct-sum}证明中使用的 Koszul 符号相同。于是，在向量空间 \(A\otimes_kB\) 上规定
 \[
 (a\otimes b)(a'\otimes b')=(-1)^{|b|\cdot|a'|}aa'\otimes bb'
 \]
@@ -65,13 +68,21 @@ e_i^2=q(e_i),\qquad e_je_i=-e_ie_j+2b(e_i,e_j)\quad(j>i).
  w_1\wedge\cdots\wedge\widehat w_j\wedge\cdots\wedge w_r,
 \qquad\iota_v(1)=0.
 \]
-右侧对 \(w_1,\ldots,w_r\) 交替且多线性，因而由\cref{b2:prop:exterior-alternating-universal}定义了外幂上的线性算子。两次删去不同位置的项成对抵消，故 \(\iota_v^2=0\)；外乘也满足 \(\varepsilon_v^2=0\)。直接将首个因子 \(v\) 与其余因子分开，有
+外乘 \(\varepsilon_v\) 添入一个 \(v\)，而 \(\iota_v\) 用 \(b(v,w_j)\) 取值后删去第 \(j\) 个因子，分别使外次数增加一和减少一。右侧对 \(w_1,\ldots,w_r\) 交替且多线性，因而由\cref{b2:prop:exterior-alternating-universal}定义了外幂上的线性算子。两次删去不同位置的项成对抵消，故 \(\iota_v^2=0\)；外乘也满足 \(\varepsilon_v^2=0\)。直接将首个因子 \(v\) 与其余因子分开，有
 \[
 \iota_v\varepsilon_v+\varepsilon_v\iota_v=b(v,v)\operatorname{id}=q(v)\operatorname{id}.
 \]
-所以 \(T_v=\varepsilon_v+\iota_v\) 满足 \(T_v^2=q(v)\operatorname{id}\)，且对 \(v\) 线性。泛性质给出 \(C\to\operatorname{End}_k(\Lambda V)\)。
+所以 \(T_v=\varepsilon_v+\iota_v\) 满足 \(T_v^2=q(v)\operatorname{id}\)，且对 \(v\) 线性。由 \(T_{v+w}=T_v+T_w\) 还得到
+\[
+\begin{aligned}
+T_vT_w+T_wT_v&=T_{v+w}^2-T_v^2-T_w^2\\
+&=\bigl(q(v+w)-q(v)-q(w)\bigr)\operatorname{id}
+=2b(v,w)\operatorname{id}.
+\end{aligned}
+\]
+这正是完整的 Clifford 极化关系；平方条件已足以由泛性质给出 \(C\to\operatorname{End}_k(\Lambda V)\)。
 
-这个表示已经实现 Clifford 关系；接下来用它检测独立性。选择 \(1\in\Lambda^0V\) 作为作用对象，是因为长度为 \(r\) 的乘积只有每次选择外乘，才能把次数从零升到 \(r\)；任何一次收缩都会使最终次数降低。把假设存在的非零线性关系写成 \(\sum_Ic_Ie_I=0\)，其中 \(I=\{i_1<\cdots<i_s\}\)、\(e_I=e_{i_1}\cdots e_{i_s}\)，并约定 \(e_\varnothing=1\)。取 \(c_I\ne0\) 的项中最大长度 \(r\)，让相应算子作用于 \(1\)，再投影到 \(\Lambda^rV\)。较短的项也不能贡献这个次数，因此投影后得到
+选择 \(1\in\Lambda^0V\) 作为作用对象，是因为长度为 \(r\) 的乘积只有每次选择外乘，才能把次数从零升到 \(r\)。展开这 \(r\) 个算子的乘积时，若其中选了 \(s\ge1\) 次收缩，其余 \(r-s\) 次选外乘，则该项非零时的外次数为 \(r-2s\le r-2\)。因此最高外次数只记录全取外乘的那一项。把假设存在的非零线性关系写成 \(\sum_Ic_Ie_I=0\)，其中 \(I=\{i_1<\cdots<i_s\}\)、\(e_I=e_{i_1}\cdots e_{i_s}\)，并约定 \(e_\varnothing=1\)。取 \(c_I\ne0\) 的项中最大长度 \(r\)，让相应算子作用于 \(1\)，再投影到 \(\Lambda^rV\)。较短的项也不能贡献这个次数，因此投影后得到
 \[
 \sum_{|I|=r}c_I\,e_{i_1}\wedge\cdots\wedge e_{i_r}=0.
 \]
@@ -89,7 +100,7 @@ v_1\cdots v_r+F_{r-1}C.
 \begin{equation}\label{b2:eq:B-clifford-associated-graded}
 \operatorname{gr}\operatorname{Cl}(V,q)\cong\Lambda V.
 \end{equation}
-这是一项自然的分次代数同构，并不意味着 \(C\) 本身与 \(\Lambda V\) 同构；例如非零的 \(q(v)\) 使 \(v^2\ne0\)。
+这是一种 PBW 型现象：关系中的低次项在伴随分次中消失，而有序基保证最高次关系之外没有额外的关系。\cref{b2:prop:pbw-filtered-criterion}中由有序单项式基识别伴随分次的做法与此相同；那里得到多项式代数，这里得到外代数。\eqref{b2:eq:B-clifford-associated-graded}是自然的分次代数同构，并不意味着 \(C\) 本身与 \(\Lambda V\) 同构；例如非零的 \(q(v)\) 使 \(v^2\ne0\)。
 
 \subsection{一至三维的计算}
 \label{b2:subsec:B01:03}
@@ -120,3 +131,33 @@ v_1\cdots v_r+F_{r-1}C.
 
 \ProseParagraphBreak
 Clifford 代数及其与二次型的联系，可进一步参阅\cite[Chapter ``Clifford algebras'']{Lam2005QuadraticForms}。
+
+\begin{proposition}\label{b2:prop:B-clifford-center}
+设 \(k\) 为特征不为二的域，\((V,q)\) 为 \(n\ge1\) 维非退化 \(k\) 二次空间，\(e_1,\ldots,e_n\) 为正交基，\(a_i=q(e_i)\in k^\times\)。记 \(C=\operatorname{Cl}(V,q)=C^0\oplus C^1\)，并令 \(\omega=e_1\cdots e_n\)。则
+\[
+\omega^2=(-1)^{n(n-1)/2}\prod_{i=1}^n a_i\cdot1,
+\]
+\[
+Z(C)=
+\begin{cases}
+k\cdot1,&n\text{ 为偶数},\\
+k\cdot1\oplus k\cdot\omega,&n\text{ 为奇数}.
+\end{cases}
+\]
+这里后一式为中心的向量空间直和分解。两种情形都满足 \(Z(C)\cap C^0=k\cdot1\)。
+\end{proposition}
+\begin{proof}
+正交关系给出 \(e_i^2=a_i\) 及 \(e_ie_j=-e_je_i\)（\(i\ne j\)）。在 \((e_1\cdots e_n)^2\) 中把第二组基向量依次移到相同指标旁，共产生 \(n(n-1)/2\) 个负号，再将每个 \(e_i^2\) 换成 \(a_i\)，便得到平方公式。
+
+由\cref{b2:thm:B-clifford-basis}，每个元素唯一写成 \(c=\sum_I c_Ie_I\)，其中 \(I\subseteq\{1,\ldots,n\}\)，\(e_I\) 为相应的递增乘积，\(e_\varnothing=1\)。设 \(|I|=r\)。把 \(e_j\) 移过其中的基向量，得到
+\[
+e_je_I=
+\begin{cases}
+(-1)^r e_Ie_j,&j\notin I,\\
+(-1)^{r-1}e_Ie_j,&j\in I.
+\end{cases}
+\]
+对固定的 \(j\)，\(e_Ie_j\) 是 \(e_{I\triangle\{j\}}\) 的非零标量倍：若 \(j\notin I\)，只需整理次序；若 \(j\in I\)，还要乘以非零的 \(a_j\)。映射 \(I\mapsto I\triangle\{j\}\) 是所有指标子集上的双射，所以在 \(e_jc-ce_j\) 中不同 \(I\) 的系数不能相互抵消。由于特征不为二，\(c_I\ne0\) 的项与 \(e_j\) 交换，当且仅当相应的符号为 \(1\)。
+
+若 \(I\) 非空而且不等于全部指标，可分别取 \(j\in I\) 和 \(j\notin I\)，交换条件将同时要求 \(r-1\) 与 \(r\) 为偶数，这是不可能的。空集始终满足交换条件。全部指标只要求 \(n-1\) 为偶数，恰在 \(n\) 为奇数时成立。\(C\) 由所有 \(e_j\) 生成，因此与它们逐一交换就等价于属于中心，得到所述中心分解。奇数维时 \(\omega\in C^1\)，并与 \(1\) 线性无关；偶数维时中心已是标量。因此中心与偶部分的交在两种情形下都是 \(k\cdot1\)。
+\end{proof}

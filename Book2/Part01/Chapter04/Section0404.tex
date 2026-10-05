@@ -19,10 +19,14 @@
 设 \(V,W\) 是域 \(k\) 上的有限维向量空间，\(T:V\to V\)、\(S:W\to W\) 是线性算子；\(V_T,W_S\) 表示分别由 \(t\cdot v=Tv\)、\(t\cdot w=Sw\) 得到的 \(k[t]\) 模。映射 \(u:V_T\to W_S\) 是 \(k[t]\) 模同态，当且仅当 \(u\) 是 \(k\) 线性映射并满足 \(uT=Su\)。因此两个同维算子的矩阵相似，当且仅当对应 \(k[t]\) 模同构。
 \end{proposition}
 \begin{proof}
-模同态保持常数标量，故 \(k\) 线性；保持 \(t\) 的作用就是 \(uT=Su\)。反过来，由这一等式归纳得 \(uT^j=S^ju\)，对多项式有限求和就得 \(uf(T)=f(S)u\)，所以 \(u\) 保持全部 \(k[t]\) 作用。若 \(u\) 双射，分别取 \(V,W\) 的基，以 \(A,B\) 表示 \(T,S\)，以 \(P\) 表示同构 \(u\) 的矩阵，则 \(P\) 可逆，等式化为 \(PA=BP\)，即 \(B=PAP^{-1}\)。令 \(Q=P^{-1}\)，便有 \(B=Q^{-1}AQ\)，与第一章的相似约定相同；反过来，相似矩阵所给的可逆映射也定义模同构。
+同态的判据已由\cref{b2:prop:operator-module-intertwiners}证明：保持常数标量给出 \(k\) 线性，保持 \(t\) 的作用给出 \(uT=Su\)，而这个等式又保证保持所有多项式的作用。若 \(u\) 双射，分别取 \(V,W\) 的基，以 \(A,B\) 表示 \(T,S\)，以 \(P\) 表示同构 \(u\) 的矩阵，则 \(P\) 可逆，等式化为 \(PA=BP\)，即 \(B=PAP^{-1}\)。令 \(Q=P^{-1}\)，便有 \(B=Q^{-1}AQ\)，与第一章的相似约定相同；反过来，相似矩阵所给的可逆映射也定义模同构。
 \end{proof}
 
-算子模具有一个尤其方便的展示。它把原来 \(k\) 上的矩阵转化为 \(k[t]\) 上的关系矩阵，但两种环上的换基问题应当分清：对 \(A\) 的分类是相似，对 \(tI-A\) 的分类是左右独立的幺模等价。
+取 \(k^n\) 的标准基 \(e_1,\ldots,e_n\)，在算子模中有
+\[
+te_j=Ae_j=\sum_i a_{ij}e_i.
+\]
+若先以这些符号生成自由模 \(k[t]^n\)，再加入关系 \(te_j-\sum_i a_{ij}e_i=0\)，这 \(n\) 条关系按列排成的矩阵正是 \(tI_n-A\)。要得到 \(V_A\) 的展示，还须证明它们生成全部关系。下面的求值映射将完成这一步。这里对 \(A\) 的分类是 \(k\) 上的相似，对 \(tI-A\) 的化简则是 \(k[t]\) 上左右独立的幺模等价。
 
 \begin{proposition}\label{b2:prop:operator-polynomial-matrix}
 设 \(k\) 是域，\(A\in M_n(k)\)，并把 \(k^n\) 配上 \(t\cdot v=Av\) 的 \(k[t]\) 模结构，记为 \(V_A\)，则有 \(k[t]\) 模同构
@@ -44,12 +48,12 @@ V_A\cong\operatorname{coker}(tI_n-A).
 \]
 所述关系子模包含在核中。
 
-反过来，矩阵恒等式
+反过来，模掉这些关系后，\(tv\equiv Av\)，反复替换便有 \(t^jv\equiv A^jv\)。因此每个多项式向量 \(F=\sum_jt^jv_j\) 都应与常数向量 \(\varepsilon(F)\) 同余。这个替换过程由矩阵恒等式
 \[
 t^jI_n-A^j=(tI_n-A)\sum_{h=0}^{j-1}t^{j-1-h}A^h
 \qquad(j\ge1)
 \]
-可以相乘后逐项消去中间项验证。因此，若 \(F=\sum_jt^jv_j\)，则
+严格给出；右边展开后中间项逐项抵消，只剩左边。于是
 \[
 F-\varepsilon(F)
 =\sum_{j\ge1}(t^jI_n-A^j)v_j
@@ -57,8 +61,6 @@ F-\varepsilon(F)
 \]
 这里把 \(\varepsilon(F)\) 看成常数向量多项式。若 \(\varepsilon(F)=0\)，便得 \(F\) 属于所述关系子模，证明核的反向包含。最后应用\cref{b2:thm:module-first-isomorphism}得到同构。
 \end{proof}
-
-关系矩阵的第 \(j\) 列记录 \(te_j=\sum_i a_{ij}e_i\)。上面的有限求和恒等式证明，这些一次关系不仅成立，而且生成全部关系；不必再把这个关键断言交给矩阵记号去暗示。
 
 \subsection{循环分解与有理标准形}
 \label{b2:subsec:0404:02}
@@ -103,11 +105,20 @@ t^{d_i}=-a_0-a_1t-\cdots-a_{d_i-1}t^{d_i-1}\pmod{f_i},
 P(t)(tI_n-A)Q(t)=\operatorname{diag}(g_1,\ldots,g_n),
 \qquad P(t),Q(t)\in\operatorname{GL}_n(k[t]),
 \]
-其中 \(g_j\) 首一且成整除链。对每个非常数因子 \(g_j\)，由\cref{b2:prop:smith-cokernel}，其循环商生成元在原多项式余核中的代表是 \(P(t)^{-1}e_j\)。再用\cref{b2:prop:operator-polynomial-matrix}的求值映射得到
+其中 \(g_j\) 首一且成整除链。对每个非常数因子 \(g_j\)，Smith 余核的第 \(j\) 个标准向量 \(e_j\) 生成循环商 \(k[t]/(g_j)\)。由\cref{b2:prop:smith-cokernel}，\(P(t)^{-1}\) 把它送回原展示的目标坐标，得到代表 \(P(t)^{-1}e_j\)。这个代表仍是形式多项式向量；要得到原空间 \(k^n\) 中的向量，还须由\cref{b2:prop:operator-polynomial-matrix}中的 \(\varepsilon\) 把多项式作用解释成 \(A\) 的迭代。因此
 \[
 v_j=\varepsilon\bigl(P(t)^{-1}e_j\bigr)\in k^n.
 \]
-这里若 \(P(t)^{-1}e_j=\sum_\ell t^\ell w_\ell\)，则 \(v_j=\sum_\ell A^\ell w_\ell\)。令 \(d_j=\deg g_j\)，按因子次序将各组列向量
+整个对应可写为
+\[
+\begin{aligned}
+\operatorname{coker}\operatorname{diag}(g_1,\ldots,g_n)
+&\xrightarrow{\ P(t)^{-1}\ }\operatorname{coker}(tI_n-A)
+\xrightarrow{\ \overline\varepsilon\ }V_A,\\
+[e_j]&\longmapsto[P(t)^{-1}e_j]\longmapsto v_j.
+\end{aligned}
+\]
+这里 \(\overline\varepsilon\) 是 \(\varepsilon\) 在余核上诱导的同构。若 \(P(t)^{-1}e_j=\sum_\ell t^\ell w_\ell\)，则 \(v_j=\sum_\ell A^\ell w_\ell\)。令 \(d_j=\deg g_j\)，按因子次序将各组列向量
 \(v_j,Av_j,\ldots,A^{d_j-1}v_j\) 合成矩阵 \(S\)。上述商模同构说明这些向量组成 \(k^n\) 的基，故 \(S\) 可逆，且
 \[
 S^{-1}AS=\bigoplus_{\deg g_j>0}C(g_j).
@@ -124,7 +135,7 @@ C(p)=\begin{pmatrix}0&0&1\\1&0&1\\0&1&0\end{pmatrix}
 \subsection{最小多项式与特征多项式}
 \label{b2:subsec:0404:03}
 
-记 \(\chi_T(t)=\det(tI-A)\) 为特征多项式，\(m_T\) 为首一最小多项式。相似矩阵给出相同的特征多项式；最小多项式记录全部向量共同满足的最低次数首一关系。它们在循环分解中分别体现为乘积与最大的关系因子。
+记 \(\chi_T(t)=\det(tI-A)\) 为特征多项式，\(\mu_T\) 为首一最小多项式。相似矩阵给出相同的特征多项式；最小多项式记录全部向量共同满足的最低次数首一关系。它们在循环分解中分别体现为乘积与最大的关系因子。下面直接计算友矩阵的行列式，因为本节随后要由循环分解证明 Cayley--Hamilton 定理，不能预先用它认定这个行列式。
 
 \begin{lemma}\label{b2:lem:companion-characteristic}
 设 \(k\) 是域，\(f=t^d+a_{d-1}t^{d-1}+\cdots+a_0\in k[t]\) 是首一多项式，\(d\ge1\)，则其友矩阵 \(C(f)\in M_d(k)\) 满足
@@ -142,10 +153,10 @@ a_0+a_1t+\cdots+a_{d-2}t^{d-2}+(t+a_{d-1})t^{d-1}=f(t).
 \begin{proposition}\label{b2:prop:operator-characteristic-minimal}
 设 \(V\ne0\) 是域 \(k\) 上的有限维向量空间，\(T\in\operatorname{End}_k(V)\)，且 \(V_T\) 的不变因子为 \(f_1\mid\cdots\mid f_s\)，则
 \[
-\chi_T=\prod_{i=1}^s f_i,\qquad m_T=f_s,
+\chi_T=\prod_{i=1}^s f_i,\qquad \mu_T=f_s,
 \qquad \dim_kV=\sum_{i=1}^s\deg f_i.
 \]
-特别地，\(m_T\mid\chi_T\) 且 \(\chi_T(T)=0\)。零空间上约定 \(\chi_T=m_T=1\)，维数为零。
+特别地，\(\mu_T\mid\chi_T\) 且 \(\chi_T(T)=0\)。零空间上约定 \(\chi_T=\mu_T=1\)，维数为零。
 \end{proposition}
 \begin{proof}
 在有理标准形的基中，特征矩阵分块对角。行列式为各块行列式的乘积，由\cref{b2:lem:companion-characteristic}得到 \(\chi_T=\prod_i f_i\)。各块具有 \(\deg f_i\) 个基向量，也给出维数公式。
@@ -153,7 +164,7 @@ a_0+a_1t+\cdots+a_{d-2}t^{d-2}+(t+a_{d-1})t^{d-1}=f(t).
 在 \(k[t]/(f_i)\) 中，一个多项式 \(g\) 零化全模，当且仅当它零化 \(1+(f_i)\)，即 \(f_i\mid g\)。因此 \(g(T)=0\) 等价于每个 \(f_i\mid g\)，由整除链又等价于 \(f_s\mid g\)。首一最小关系因而为 \(f_s\)，并且整除乘积 \(\chi_T\)，从而 \(\chi_T(T)=0\)。
 \end{proof}
 
-这里也给出了\term[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}[Cayley--Hamilton theorem]的证明：每个方阵满足自己的特征多项式。\footnote{凯莱（Arthur Cayley，1821-1895），英国数学家，发展矩阵理论与不变量理论。哈密顿（William Rowan Hamilton，1805-1865），爱尔兰数学家及物理学家，创立四元数。}证明先由有限维性得到挠性，再用主理想整环的模分类，没有把 Cayley--Hamilton 定理预先放进分类的论证。
+这里也给出了\term[Cayley-Hamilton-dingli]{Cayley--Hamilton 定理}[Cayley--Hamilton theorem]的证明：每个方阵满足自己的特征多项式。\footnote{凯莱（Arthur Cayley，1821-1895），英国数学家，发展矩阵理论与不变量理论。哈密顿（William Rowan Hamilton，1805-1865），爱尔兰数学家及物理学家，创立四元数。}第一章的\cref{b2:prop:minimal-polynomial-divisibility}曾利用 \(I,T,\ldots,T^{n^2}\) 的线性相关性给出最小多项式存在的粗界。现在 \(\mu_T\mid\chi_T\) 且 \(\deg\chi_T=n\)，便将它改进为 \(\deg \mu_T\le n\)。证明所需的挠性来自有限维性，分类过程无须预设 Cayley--Hamilton 定理。
 
 \ProseParagraphBreak
 结合\cref{b2:prop:operator-polynomial-matrix}，\(tI-A\) 的非单位 Smith 因子恰为 \(f_1,\ldots,f_s\)。由于 \(\det(tI-A)\) 为次数 \(n\) 的首一多项式，它不为零，所以 Smith 形没有零对角元；其余 \(n-s\) 项是单位，归一化后为 \(1\)。于是
@@ -163,8 +174,8 @@ P(t)(tI-A)Q(t)=\operatorname{diag}(1,\ldots,1,f_1,\ldots,f_s)
 把特征多项式、最小多项式与原矩阵的子式理想连接起来。这个矩阵恒等式也是下一节讨论基域扩张时保留分类数据的依据。
 
 \ProseParagraphBreak
-特征多项式给出全部不变因子的乘积，最小多项式只给出最后一项，所以二者通常还不足以决定相似类型。例如六维空间中的两列不变因子
+特征多项式给出全部不变因子的乘积，最小多项式只给出最后一项，即使再给定秩，也通常不足以决定相似类型。\cref{b2:prop:insufficient-similarity-invariants}中的八维算子现在可以写成两列不变因子
 \[
-(t^3,t^3),\qquad (t,t^2,t^3)
+(t,t^3,t^4),\qquad (t^2,t^2,t^4).
 \]
-都有特征多项式 \(t^6\)、最小多项式 \(t^3\)，却是不同的整除链，对应算子不相似。第一个算子的核为二维，第二个为三维；核维数已经能把它们区分。
+两列的乘积都是 \(t^8\)，最后一项都是 \(t^4\)。每个 \(k[t]/(t^d)\) 中乘 \(t\) 的核均为一维，所以两个算子的核维数都为三、秩都为五。但两列整除链不同，故算子不相似；平方算子的核维数分别为五与六，能检测到乘积、末项和秩共同遗漏的信息。

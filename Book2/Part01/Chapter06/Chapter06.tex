@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第6章　张量积、双模与标量变换
-% 纲要位置：计划纲要.md，第 978 行。
+% 纲要位置：计划纲要.md，第 1242 行。
 
 \chapter{张量积、双模与标量变换}
 \label{b2:ch:06}
@@ -19,11 +19,11 @@
 \end{itemize}
 \end{learninggoals}
 
-在整数模中，\(\mathbb Z/2\mathbb Z\) 和 \(\mathbb Z/3\mathbb Z\) 都非零，但它们的张量积为零。若以 \(\bar1\otimes\bar1\) 为生成元，第一因子给出 \(2(\bar1\otimes\bar1)=0\)，第二因子给出 \(3(\bar1\otimes\bar1)=0\)；由 \(3-2=1\)，这个生成元只能是零。张量积的元素因此不能被看成一对元素的简单记录。它受两侧标量作用共同约束，而这种约束在改变标量、处理商模时尤其重要。
+设想一种由整数模 \(M,N\) 中的元素对产生的运算，暂记为 \(m\otimes n\)：它对两个变量分别可加，并允许整数在两因子之间移动，即 \((am)\otimes n=m\otimes(an)\)。如果所得交换群由这些符号生成，那么在 \(M=\mathbb Z/2\mathbb Z\)、\(N=\mathbb Z/3\mathbb Z\) 时，每个符号都是 \(\bar1\otimes\bar1\) 的整数倍。第一因子的关系迫使 \(2(\bar1\otimes\bar1)=0\)，第二因子的关系迫使 \(3(\bar1\otimes\bar1)=0\)；由 \(3-2=1\)，这个生成元只能是零。因而两个非零模所产生的群竟为零。本章将用生成元与关系构造这样的群，称为张量积，并证明它确实满足上述规则。
 
 \ProseParagraphBreak
 
-这个计算同时提醒我们，张量积不是把两种数据并排保存，而是强制标量在两因子之间移动。若想从 \((m,n)\) 定义一个目标交换群中的值，必须先检验这一移动是否不改变结果；检验通过，才有希望把双变量规则延伸为群同态。这样建立的泛性质比纯张量的写法更稳定，也将帮助我们判断张量遇到商、直和与复合映射时发生什么。
+这类运算同时保留两因子的加法关系和标量关系。若想从 \((m,n)\) 定义一个目标交换群中的值，必须检验这些关系是否使结果保持不变；检验通过，双变量规则才能延伸为群同态。张量积的泛性质将准确说明这一对应，并帮助我们判断张量遇到商、直和与复合映射时发生什么。
 
 \ProseParagraphBreak
 
@@ -98,6 +98,8 @@ u_j\otimes v_\ell=u_iE_{ij}\otimes v_\ell
 因此所有非对角纯基张量为零，所有对角纯基张量相等。其共同像为 \(1\)，故 \(c\mapsto c u_1\otimes v_1\) 与乘法映射互逆。
 
 第二个映射将 \(v_i\otimes u_j\) 送到矩阵单位 \(E_{ij}\)。由\cref{b2:prop:tensor-free-coordinate}，这些纯基张量是 \(k\) 基，矩阵单位也是 \(R\) 的 \(k\) 基，所以映射为同构。等式 \((Av)u=A(vu)\)、\(v(uB)=(vu)B\) 表明它保留两侧的 \(R\) 作用。
+
+两个同构保留的作用不同：\(U\otimes_RV\) 是 \(k\) 上的对象，\(V\otimes_kU\) 则仍有两侧的矩阵作用。第16章的 Morita 理论将用这种成对的双模及其张量同构比较模范畴。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-unit-naturality}
@@ -124,24 +126,19 @@ u_j\otimes v_\ell=u_iE_{ij}\otimes v_\ell
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-hom-tensor-finite-free}
-令 \(P=\bigoplus_{n\geq0}\mathbb Z e_n\)。确定自然映射
+设 \(k\) 为域，\(P=\bigoplus_{n\ge0}k e_n\)，\(P^*=\operatorname{Hom}_k(P,k)\)。证明自然映射
 \[
-\Theta:\operatorname{Hom}_{\mathbb Z}(P,\mathbb Z)\otimes_{\mathbb Z}\mathbb Q
-\longrightarrow\operatorname{Hom}_{\mathbb Z}(P,\mathbb Q),
-\qquad \lambda\otimes q\longmapsto\bigl(p\mapsto q\lambda(p)\bigr)
+\Theta:P^*\otimes_kP\longrightarrow\operatorname{End}_k(P),
+\qquad \lambda\otimes v\longmapsto\bigl(p\mapsto\lambda(p)v\bigr)
 \]
-的全部像，证明它恰由满足下述条件的同态 \(h\) 组成：存在一个整数 \(d\geq1\)，使 \(dh(e_n)\in\mathbb Z\) 对所有 \(n\geq0\) 成立。据此判断由 \(h(e_n)=2^{-n}\) 定义的同态是否在像中，并解释为什么各个取值分别为有理数还不够。
+单射，且其像恰为像空间有限维的自同态。由此说明恒等自同态不在像中，并与\cref{b2:prop:infinite-free-hom-tensor}中的共同分母限制比较：这里没有分母，有限张量和仍带来了什么限制？
 \end{exercise}
 \begin{solution}
-任意张量都是有限和 \(\sum_{j=1}^r\lambda_j\otimes q_j\)。选一个正整数 \(d\)，使全部 \(dq_j\) 都为整数，则其像 \(h\) 满足
-\[
-dh(e_n)=\sum_{j=1}^r(dq_j)\lambda_j(e_n)\in\mathbb Z
-\]
-对所有 \(n\) 成立。因此有限张量和只能产生有一个共同分母的取值序列。
+有限和 \(\sum_{j=1}^r\lambda_j\otimes v_j\) 所定义的映射，其像包含于有限维空间 \(\operatorname{span}_k(v_1,\ldots,v_r)\)。反过来，若 \(h(P)\) 有有限基 \(v_1,\ldots,v_r\)，将 \(h(p)\) 在此基中的坐标记为 \(\lambda_j(p)\)。坐标泛函与 \(h\) 的复合均为线性泛函，且 \(h(p)=\sum_j\lambda_j(p)v_j\)，故 \(h=\Theta(\sum_j\lambda_j\otimes v_j)\)。
 
-反过来，若同态 \(h\) 满足题中条件，用 \(\lambda(e_n)=dh(e_n)\) 在基上定义 \(\lambda:P\to\mathbb Z\)。每个 \(P\) 中的元素只有有限支集，这些整数值因而唯一延伸为整数模同态。于是 \(\Theta\bigl(\lambda\otimes(1/d)\bigr)=h\)，得到全部像的刻画。
+任一张量均可通过重组选取有限维的第二因子空间的一组基，写成 \(\sum_{j=1}^r\lambda_j\otimes v_j\)，其中 \(v_j\) 线性无关。若其像为零，则对每个 \(p\) 有 \(\sum_j\lambda_j(p)v_j=0\)，从而所有 \(\lambda_j(p)=0\)，即所有 \(\lambda_j=0\)。因此 \(\Theta\) 单射。
 
-任意一列有理数都能作为 \(P\to\mathbb Q\) 的基向量取值，故 \(h(e_n)=2^{-n}\) 确实定义同态。若它在像中，便有 \(d/2^n\in\mathbb Z\) 对所有 \(n\) 成立，即每个 \(2^n\) 都整除同一个正整数 \(d\)，不可能。因此它不在像中。每个取值有自己的分母，不等于所有取值有一个共同分母；张量积的有限和要求的是后者。
+恒等映射的像是无限维的 \(P\)，故不在像中。共同分母反例限制的是所有取值能否由同一批分母表示；这里限制的是所有像能否落在同一个有限维子空间中。两者都来自一个张量只能使用有限项。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-coinduction-quotient}
@@ -159,13 +156,14 @@ dh(e_n)=\sum_{j=1}^r(dq_j)\lambda_j(e_n)\in\mathbb Z
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-tensor-presentation}
-设 \(R\) 交换，\(M\) 的有限展示为
-\(R^m\xrightarrow{A}R^n\to M\to0\)，\(N\) 为任意 \(R\) 模。证明
-\(M\otimes_RN\cong N^n/A N^m\)。用此计算整数矩阵
-\(A=\begin{pmatrix}2&0\\1&3\end{pmatrix}\) 的余核与 \(\mathbb Z/3\mathbb Z\) 的张量积。
+令 \(M\) 为整数矩阵 \(A=\begin{pmatrix}2&0\\1&3\end{pmatrix}\) 的余核。对 \(N=\mathbb Z/3\mathbb Z,\mathbb Z/4\mathbb Z,\mathbb Q\)，分别计算 \(M\otimes_{\mathbb Z}N\)，并在 \(N^2\) 上给出明确的商映射。若 \(x,y\) 是 \(M\) 中两个标准基向量的像，写出 \(x\otimes\bar1\)、\(y\otimes\bar1\) 在前两个计算结果中的坐标，解释两条原关系如何保留。
 \end{exercise}
 \begin{solution}
-由\cref{b2:thm:tensor-right-exact}，张量后的末端仍正合；由\cref{b2:prop:tensor-free-coordinate}，前两项分别为 \(N^m,N^n\)。标准基上的公式说明诱导映射仍由 \(A\) 给出，所以余核为所述商模。例中模 \(3\) 后矩阵变为 \(\begin{pmatrix}2&0\\1&0\end{pmatrix}\)，其像为一维子空间 \(\langle(2,1)\rangle\)。因此余核为一维 \(\mathbb F_3\) 空间，也即 \(\mathbb Z/3\mathbb Z\)。具体商映射可取 \((a,b)\mapsto a+b\)，其核正是这一维子空间。
+由\cref{b2:cor:tensor-finite-presentation}，结果是 \(N^2/A_NN^2\)。当 \(N=\mathbb Z/3\mathbb Z\) 时，矩阵为 \(\begin{pmatrix}2&0\\1&0\end{pmatrix}\)，像为 \(\langle(2,1)\rangle\)。商映射 \((a,b)\mapsto a+b\) 到 \(\mathbb Z/3\mathbb Z\) 的核恰为此像，故张量积为 \(\mathbb Z/3\mathbb Z\)，两个指定张量都对应 \(\bar1\)。
+
+当 \(N=\mathbb Z/4\mathbb Z\) 时，第二列 \((0,3)\) 生成整个第二坐标，第一列再使第一坐标模去 \(2N\)。因此像为 \(2N\times N\)，商映射可取 \((a,b)\mapsto a\bmod2\)，结果为 \(\mathbb Z/2\mathbb Z\)。此时 \(x\otimes\bar1\) 对应 \(\bar1\)，\(y\otimes\bar1\) 对应零。
+
+在 \(\mathbb Q\) 上，矩阵行列式为 \(6\ne0\)，故可逆，余核为零，商映射为零映射。在三个情形中，原关系 \(2x+y=0\)、\(3y=0\) 都成立；改变系数模使这些关系与新标量条件共同作用，并未删除原关系。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-dual-number-kernel}
@@ -190,10 +188,16 @@ dh(e_n)=\sum_{j=1}^r(dq_j)\lambda_j(e_n)\in\mathbb Z
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-localization-injective}
-设 \(R\) 交换，\(\Sigma\) 为乘法闭集，\(f:N\to N'\) 单射。利用分式的零元判据证明 \(\Sigma^{-1}f\) 仍单射。结合本章结果，证明局部化保持短正合列。
+设 \(R\) 为交换环，\(\Sigma\) 为乘法闭集，\(K_1,K_2\) 为 \(R\) 模 \(N\) 的子模。将它们的局部化按\cref{b2:prop:localization-exact}视为 \(\Sigma^{-1}N\) 的子模，证明
+\(\Sigma^{-1}(K_1\cap K_2)=\Sigma^{-1}K_1\cap\Sigma^{-1}K_2\)。
+再取 \(N=\mathbb Z\)、\(\Sigma=\{2^j:j\ge0\}\)、\(K_i=2^i\mathbb Z\)（\(i\ge1\)），说明局部化不一定保持无限交。解释有限交的证明在哪一步不能直接用于无限交。
 \end{exercise}
 \begin{solution}
-若 \(f(n)/s=0\)，则存在 \(u\in\Sigma\) 使 \(u\cdot f(n)=f(un)=0\)。原映射单射，故 \(un=0\)，于是 \(n/s=0\)。这证明局部化后的单射性。由\cref{b2:prop:localization-tensor}，局部化自然同构于 \((\Sigma^{-1}R)\otimes_R-\)，所以\cref{b2:thm:tensor-right-exact}保证中项和末项的正合性。两者合在一起即得短正合列保持正合。
+先说明 \(n/s\in\Sigma^{-1}K\) 当且仅当存在 \(u\in\Sigma\) 使 \(un\in K\)。若 \(n/s=k/t\)、\(k\in K\)，则某个 \(v\in\Sigma\) 满足 \(v(tn-sk)=0\)，故 \((vt)n=vsk\in K\)。反过来，若 \(un\in K\)，则 \(n/s=(un)/(us)\) 属于 \(\Sigma^{-1}K\)。
+
+交中的元素 \(n/s\) 分别给出 \(u_1n\in K_1\)、\(u_2n\in K_2\)。于是 \(u_1u_2n\in K_1\cap K_2\)，由上述判据属于左端。另一包含直接成立。
+
+例中 \(\bigcap_{i\ge1}2^i\mathbb Z=0\)，其局部化为零；可是 \(2^i\) 在 \(\mathbb Z[1/2]\) 中可逆，每个 \(\Sigma^{-1}K_i=\mathbb Z[1/2]\)，故这些局部化的交为 \(\mathbb Z[1/2]\)。有限交只需将有限多个 \(u_i\) 相乘，无限交则未必存在一个共同的 \(u\)。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:06-field-extension-matrix}

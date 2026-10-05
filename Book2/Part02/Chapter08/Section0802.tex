@@ -11,6 +11,7 @@
 % * 分次张量代数
 % * 自由结合代数的泛性质
 % * 商代数与按关系定义代数
+% * 增广理想的一次商与底模恢复
 %
 
 \subsection{分次张量代数}
@@ -26,6 +27,9 @@ A=\bigoplus_{d\ge0}A_d,\qquad 1_A\in A_0,\qquad A_iA_j\subseteq A_{i+j},
 则称 \(A\) 为非负整数\term[fenci-daishu]{分次代数}[graded algebra]；\(A_d\) 中的元素称为次数 \(d\) 的\term[qici-yuansu]{齐次元素}[homogeneous element]。保持各次数分量的代数同态称为分次同态。
 \end{definition}
 
+结构同态给出标量的作用，并不表示 \(A\) 必须含有一个与 \(R\) 相同的子环。例如对 \(n>1\)，商映射 \(\mathbb Z\rightarrow\mathbb Z/n\mathbb Z\) 使后者成为 \(\mathbb Z\) 代数，而有限环 \(\mathbb Z/n\mathbb Z\) 不可能含有 \(\mathbb Z\) 子环。
+
+\ProseParagraphBreak
 直和要求一个元素只有有限多个非零齐次分量，因此不包含任意无穷和。分次也没有规定 \(ab=(-1)^{ij}ba\)；这种带符号的交换条件是另一个额外性质。普通交换的多项式代数以全次数分次，张量代数则一般不交换。
 
 \begin{definition}\label{b2:def:tensor-algebra}
@@ -38,12 +42,12 @@ T_R(M)=\bigoplus_{d\ge0}M^{\otimes d}.
 (m_1\otimes\cdots\otimes m_i)(n_1\otimes\cdots\otimes n_j)
 =m_1\otimes\cdots\otimes m_i\otimes n_1\otimes\cdots\otimes n_j,
 \]
-对零次部分 \(R\) 用标量乘法，再按双线性扩张。所得分次 \(R\) 代数称为 \(M\) 的\term[zhangliang-daishu]{张量代数}[tensor algebra]。
+对 \(r\in R=M^{\otimes0}\) 与 \(x\in M^{\otimes d}\)（\(d\ge0\)），规定 \(rx=xr=r\cdot x\)，再按双线性扩张到整个直和。所得分次 \(R\) 代数称为 \(M\) 的\term[zhangliang-daishu]{张量代数}[tensor algebra]。
 \end{definition}
 \symidx{\(M^{\otimes d}\)：模的 \(d\) 次张量幂}
 \symidx{\(T_R(M)\)：模的张量代数}
 
-乘法的存在需要先检查良定义。对每对 \(i,j>0\)，\cref{b2:thm:multiple-tensor-universal}与结合同构给出线性映射
+各个 \(M^{\otimes d}\) 原本只是不同次数的模；上述连接把两个张量串变成一个更长的串，才给这些次数之间定义了乘法。其良定义由张量积的泛性质保证。对每对 \(i,j>0\)，\cref{b2:thm:multiple-tensor-universal}与结合同构给出线性映射
 \[
 M^{\otimes i}\otimes_RM^{\otimes j}\longrightarrow M^{\otimes(i+j)}
 \]
@@ -71,7 +75,28 @@ M^{\otimes i}\otimes_RM^{\otimes j}\longrightarrow M^{\otimes(i+j)}
 任何所求同态都必须在一次分量上等于 \(f\)，在纯张量上等于这些像的有序乘积，在 \(R\) 上等于结构同态。因此它在生成全代数的元素上已被确定，唯一性成立。
 \end{proof}
 
-该泛性质的目标不要求交换。它也不要求 \(f\) 单射：将一次元素送到零，就得到\term[zengguang-tongtai]{增广同态}[augmentation] \(\varepsilon:T_R(M)\rightarrow R\)，其核为全部正次分量 \(\bigoplus_{d\ge1}M^{\otimes d}\)。把 \(f:M\rightarrow N\) 后接 \(N\) 到其张量代数的包含，得到分次同态 \(T_R(f)\)，它在 \(d\) 次分量上就是 \(f^{\otimes d}\)。恒等及复合在一次生成元上核对，便知 \(T_R\) 是函子。
+该泛性质的目标不要求交换，也不要求 \(f\) 单射。张量代数的“自由”是说：\(M\) 中原有的线性关系仍然保留，但不再对它的元素另加乘法关系。因此任意到结合 \(R\) 代数的线性映射都能唯一延拓，而不需要额外检查这些像之间满足何种乘法关系。
+
+\ProseParagraphBreak
+将一次元素全部送到零，就得到\term[zengguang-tongtai]{增广同态}[augmentation] \(\varepsilon:T_R(M)\rightarrow R\)。它是取零次分量的投影：若 \(x_d\in M^{\otimes d}\)，则
+\[
+\varepsilon(r+x_1+\cdots+x_n)=r.
+\]
+其核为正次部分 \(I=T_R(M)_+=\bigoplus_{d\ge1}M^{\otimes d}\)，称为增广理想。\cref{b2:prop:tensor-augmentation-indecomposables}将说明，模掉其中至少含两个一次因子的乘积后，\(I/I^2\) 恰好恢复一次分量 \(M\)。
+
+\ProseParagraphBreak
+把 \(R\) 线性映射 \(f:M\rightarrow N\) 后接 \(N\) 到其张量代数的包含，得到分次同态 \(T_R(f):T_R(M)\rightarrow T_R(N)\)，它在 \(d\) 次分量上就是 \(f^{\otimes d}\)，在零次分量上为 \(R\) 的恒等映射。恒等及复合在一次生成元上核对，便知 \(T_R\) 是函子。
+
+\ProseParagraphBreak
+这个函子却不一定保持单射。第七章用来检验平坦性的双数环（\cref{b2:prop:dual-number-flat}）给出一个具体例子：设 \(k\) 为域，\(R=k[\delta]/(\delta^2)\)，取 \(M=(\delta)\) 及包含 \(i:M\hookrightarrow R\)。映射 \(R\rightarrow M\)、\(a\mapsto a\delta\) 的核为 \((\delta)\)，故 \(M\cong R/(\delta)\)。由\cref{b2:prop:tensor-quotient}，
+\[
+M\otimes_RM\cong R/(\delta),
+\]
+其中 \(\delta\otimes\delta\) 对应 \(\bar1\)，所以非零。它经 \(i\otimes i\) 映到 \(R\otimes_RR\) 后却变成
+\[
+\delta\otimes\delta=1\otimes\delta^2=0.
+\]
+因此 \(T_R(i)\) 已在二次分量中有非零核。泛性质保证线性映射可以延拓成代数同态，不能保证单射也延拓成单射。
 
 \begin{proposition}\label{b2:prop:free-associative-algebra}
 设 \(R\) 为交换环，\(M\) 为以 \((x_i)_{i\in I}\) 为基的自由 \(R\) 模，则 \(T_R(M)\) 以所有有限字
@@ -81,16 +106,16 @@ M^{\otimes i}\otimes_RM^{\otimes j}\longrightarrow M^{\otimes(i+j)}
 为 \(R\) 模的一组基，乘法为连接字。给定任意 \(R\) 代数 \(A\) 中的一族元素 \((a_i)_{i\in I}\)，存在唯一 \(R\) 代数同态将每个 \(x_i\) 送到 \(a_i\)。因此称 \(T_R(M)\) 为生成元 \((x_i)_{i\in I}\) 上的\term[ziyou-jiehe-daishu]{自由结合代数}[free associative algebra]，记为 \(R\langle x_i\mid i\in I\rangle\)。
 \end{proposition}
 \begin{proof}
-\cref{b2:prop:multiple-tensor-basis}的坐标证明也适用于任意基：每个向量只有有限多个非零坐标，一次纯张量的展开仍为有限和，坐标泛函仍能逐项检测线性关系。因此每个 \(M^{\otimes d}\) 以长度为 \(d\) 的字为基；不同次数直和后，全部有限字构成基。任意指定 \(x_i\mapsto a_i\) 由自由模的泛性质唯一延拓为 \(M\rightarrow A\)，再由\cref{b2:thm:tensor-algebra-universal}唯一延拓为代数同态。
+由适用于任意自由基的\cref{b2:prop:multiple-tensor-basis}，每个正次 \(M^{\otimes d}\) 以长度为 \(d\) 的字为基，零次部分 \(R\) 则以空字 \(1\) 为基。不同次数直和后，全部有限字构成基。任意指定 \(x_i\mapsto a_i\) 由自由模的泛性质唯一延拓为 \(M\rightarrow A\)，再由\cref{b2:thm:tensor-algebra-universal}唯一延拓为代数同态。
 \end{proof}
 \symidx{\(R\langle x_i\mid i\in I\rangle\)：非交换生成元上的自由结合代数}
 
-当 \(R\ne0\) 且有两个不同基向量 \(x,y\) 时，\(xy\)、\(yx\) 是不同的基字，所以 \(xy-yx\ne0\)。只有一个生成元时，每个字由长度决定，\(R\langle x\rangle\cong R[x]\)。对非自由模，则不能把 \(T_R(M)\) 当成没有线性关系的字代数：\(M\) 中已有的线性关系在一次分量中仍然成立。
+当 \(R\ne0\) 且有两个不同基向量 \(x,y\) 时，\(xy\)、\(yx\) 是不同的基字，所以 \(xy-yx\ne0\)。只有一个生成元时，每个字由长度决定，\(R\langle x\rangle\cong R[x]\)。一般的 \(T_R(M)\) 自由地接受来自模 \(M\) 的线性映射；只有 \(M\) 是以 \((x_i)\) 为基的自由模时，才可以把它进一步看成符号集合 \(\{x_i\}\) 上不带线性关系的字代数。非自由 \(M\) 中已有的线性关系，在张量代数的一次分量中仍然成立。
 
 \subsection{商代数与按关系定义代数}
 \label{b2:subsec:0802:03}
 
-设 \(A\) 是 \(R\) 代数，\(J\) 是双边理想。因为结构标量在中心，\(J\) 自动为 \(R\) 子模，商环 \(A/J\) 继承 \(R\) 代数结构。若给定自由代数中的关系族 \((r_\alpha)\)，记 \((r_\alpha)\) 为其生成的双边理想；它由有限和 \(\sum_\nu a_\nu r_{\alpha_\nu}b_\nu\) 组成。商代数
+设 \(A\) 是 \(R\) 代数，\(J\) 是双边理想。因为结构标量在中心，\(J\) 自动为 \(R\) 子模，商环 \(A/J\) 继承 \(R\) 代数结构。第三章的模展示只需把关系的线性组合置为零；代数展示还必须让关系在左右乘法下继续成立：若 \(r_\alpha=0\)，则对任意 \(a,b\in A\)，也必须有 \(ar_\alpha b=0\)。所以给定自由代数中的关系族 \((r_\alpha)\) 后，必须取其生成的双边理想 \((r_\alpha)\)，它由有限和 \(\sum_\nu a_\nu r_{\alpha_\nu}b_\nu\) 组成。商代数
 \[
 R\langle x_i\mid i\in I\rangle/(r_\alpha)
 \]
@@ -100,13 +125,15 @@ R\langle x_i\mid i\in I\rangle/(r_\alpha)
 设 \(R\) 为交换环，\(I\) 为指标集，\((r_\alpha)\) 是自由结合 \(R\) 代数 \(R\langle x_i\mid i\in I\rangle\) 中的一族元素，并以 \((r_\alpha)\) 记其生成的双边理想。对任意 \(R\) 代数 \(B\)，从 \(R\langle x_i\mid i\in I\rangle/(r_\alpha)\) 到 \(B\) 的 \(R\) 代数同态，与满足全部关系 \(r_\alpha(b_i)=0\) 的元素族 \((b_i)_{i\in I}\subseteq B\) 一一对应。
 \end{proposition}
 \begin{proof}
-由\cref{b2:prop:free-associative-algebra}，给定像族恰好确定自由代数上的同态 \(h\)。若全部 \(h(r_\alpha)=0\)，则
+记 \(J=(r_\alpha)\) 为陈述中的双边理想。由\cref{b2:prop:free-associative-algebra}，给定像族恰好确定自由代数上的同态 \(h\)。若全部 \(h(r_\alpha)=0\)，则
 \[
 h\left(\sum_\nu a_\nu r_{\alpha_\nu}b_\nu\right)
 =\sum_\nu h(a_\nu)h(r_{\alpha_\nu})h(b_\nu)=0,
 \]
 故它将关系理想送到零。公式 \(\bar h(a+J)=h(a)\) 因而不依赖代表元，给出唯一商代数同态。反向把商同态与商映射复合，其像族必满足全部关系。两个过程互逆。
 \end{proof}
+
+因此，从展示代数定义同态时，给定生成元的像就确定了唯一性，检查这些像满足全部关系则保证存在性。若还希望商代数保留分次，就必须保证关系理想包含其每个元素的全部齐次分量；否则一条混合不同次数的关系可能把原本应当分开的分量联系起来。由齐次关系生成理想可以保证这一点。
 
 \begin{proposition}\label{b2:prop:homogeneous-ideal-quotient}
 设 \(R\) 为交换环，\(A=\bigoplus_{d\ge0}A_d\) 为非负整数分次 \(R\) 代数。由 \(A\) 中齐次元素族生成的双边理想 \(J\) 满足
@@ -121,8 +148,37 @@ J=\bigoplus_{d\ge0}(J\cap A_d).
 把各 \(A_d\) 的商映到 \(A/J\) 后，每个商元素都有有限齐次表达。若这样的和为零，则其原像之和在 \(J\)，刚证的分量性质使每个原像分量都在 \(J\cap A_d\)，故各商分量为零。乘法仍按次数相加，由此得到所述分次。
 \end{proof}
 
-这样的理想称为\term[qici-lixiang]{齐次理想}[homogeneous ideal]。例如关系 \(xy-yx\) 齐次，次数为二。关系 \(yx-xy-1\) 却混合次数二与零，商后一般不能继续把 \(x,y\) 都放在次数一。确实，在任意域 \(k\) 上，令 \(X:k[t]\rightarrow k[t]\) 为乘 \(t\)，\(D\) 为形式求导，则对多项式 \(f\)，
+这样的理想称为\term[qici-lixiang]{齐次理想}[homogeneous ideal]。例如关系 \(xy-yx\) 齐次，次数为二。关系 \(yx-xy-1\) 却混合次数二与零，商后不能继续把 \(x,y\) 都放在次数一，除非单位元也变成了零。为排除这种零环坍缩，下面只需构造一个满足关系且单位元非零的代数。在任意域 \(k\) 上，令 \(X:k[t]\rightarrow k[t]\) 为乘 \(t\)，\(D\) 为形式求导，则对多项式 \(f\)，
 \[
 (DX-XD)(f)=(tf)'-tf'=f.
 \]
-所以 \(k\langle x,y\rangle/(yx-xy-1)\) 有一个将单位元映成恒等算子的表示，它的单位元非零。若这个商继承了原次数分次，等式 \(yx-xy=1\) 将使一个非零元素同时属于次数二和零，与分次直和矛盾。这说明是否保留分次必须检查关系，不能从商的记号直接判断。
+所以由\cref{b2:prop:algebra-relations-universal}，赋值 \(x\mapsto X\)、\(y\mapsto D\) 给出 \(k\langle x,y\rangle/(yx-xy-1)\) 到 \(\operatorname{End}_k(k[t])\) 的代数同态，将单位元映成非零恒等算子。于是商中的单位元确实非零；若这个商继承了原次数分次，等式 \(yx-xy=1\) 将使一个非零元素同时属于次数二和零，与分次直和矛盾。微分算子在这里的作用就是证明商非零，从而确认不同次数相混合的障碍实际存在。
+
+\ProseParagraphBreak
+在张量代数中，增广理想记录所有正次部分，而它的平方只保留至少含两个一次因子的部分。因此取一次商可以在 \(R\) 模同构的意义下，从带有增广同态的代数恢复原来的模。
+
+\begin{proposition}\label{b2:prop:tensor-augmentation-indecomposables}
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(T_R(M)=\bigoplus_{d\ge0}M^{\otimes d}\) 为张量代数，\(\iota:M\hookrightarrow T_R(M)\) 为一次分量包含。由零映射 \(M\rightarrow R\) 诱导的增广同态 \(\varepsilon:T_R(M)\rightarrow R\) 是零次分量的投影。其核 \(I\) 满足
+\[
+I=\bigoplus_{d\ge1}M^{\otimes d},
+\qquad I^2=\bigoplus_{d\ge2}M^{\otimes d},
+\]
+且映射
+\[
+M\longrightarrow I/I^2,
+\qquad m\longmapsto\iota(m)+I^2
+\]
+是 \(R\) 模同构，且对 \(M\) 的 \(R\) 线性映射自然。
+\end{proposition}
+\begin{proof}
+取零次分量的投影 \(p:T_R(M)\rightarrow R\) 保持单位元及标量。两个元素相乘时，由非负次数相加，乘积的零次分量恰为两者零次分量之积，所以 \(p\) 是 \(R\) 代数同态。它在一次分量上为零，故由\cref{b2:thm:tensor-algebra-universal}的唯一性等于 \(\varepsilon\)，并给出所述核 \(I\)。
+
+任意两个 \(I\) 元素相乘，所有分量的次数至少为二，所以 \(I^2\subseteq\bigoplus_{d\ge2}M^{\otimes d}\)。反过来，对 \(d\ge2\)，每个纯张量都能写成
+\[
+m_1\otimes\cdots\otimes m_d
+=\iota(m_1)(m_2\otimes\cdots\otimes m_d),
+\]
+右端两个因子均属于 \(I\)。由纯张量生成性，整个 \(M^{\otimes d}\) 都在 \(I^2\) 中，故得反向包含。于是 \(I=\iota(M)\oplus I^2\) 作为 \(R\) 模成立，取商即得所述同构。这个证明不要求 \(M\) 自由。
+
+给定 \(R\) 线性映射 \(f:M\rightarrow N\)，记 \(I'\) 为 \(T_R(N)\) 的增广理想，\(\iota_N\) 为其一次分量包含。分次同态 \(T_R(f)\) 将 \(I\) 映入 \(I'\)，并将 \(I^2\) 映入 \((I')^2\)；它在一次商上把 \(\iota(m)+I^2\) 送到 \(\iota_N(f(m))+(I')^2\)。这与先作用 \(f\) 再取上述同构相同，故同构自然。
+\end{proof}

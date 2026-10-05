@@ -1,5 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 16.3 Morita 等价定理
+% 纲要位置：计划纲要.md，第 1576 行。
 
 \section{Morita 等价定理}
 \label{b2:sec:1603}
@@ -8,24 +9,24 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 从范畴等价恢复投射生成元
-% * 由投射生成元构造等价
+% * 从范畴等价恢复投射生成元；由双积恢复加法，先保持紧性和投射性，再恢复有限生成性
+% * 由投射生成元构造等价；将单位与余单位从生成对象经任意直和、展示及余核推广到全部模
 % * 互逆双模及右模版本
-% * 满幂等元与角环的 Morita 等价
+% * 满幂等元与角环的 Morita 等价；正式纳入非零对象检测判据和求值逆，并证明双边理想及商环对应
 %
 
 \subsection{从范畴等价恢复投射生成元}
 \label{b2:subsec:1603:01}
 
 \begin{lemma}\label{b2:lem:module-equivalence-structure}
-设 \(R,S\) 为环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为左模范畴之间的等价，则 \(H\) 为加性函子，保持并反映核、余核、正合列、投射性与内射性，也保持任意直和，并将生成元送到生成元。
+设 \(R,S\) 为含幺环，\(H:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为幺左模范畴之间的等价，则 \(H\) 为加性函子，保持并反映核、余核、正合列、投射性与内射性，也保持任意直和，并将生成元送到生成元。
 \end{lemma}
 \begin{proof}
-由\cref{b2:prop:equivalence-preserves-universal-objects}，等价保持零对象及任意积、余积，特别保持任意直和。零同态是经过零对象的复合，因此也被保持。模同态的加法可写成
+核、余核及直和由泛性质刻画，投射性、内射性与生成元也可用同态的提升、延拓和商对象刻画，因此这些性质都能随等价转移。需要先说明的是，同态的加法本身也能由范畴结构恢复。由\cref{b2:prop:equivalence-preserves-universal-objects}，等价保持零对象及任意积、余积，特别保持任意直和。零同态是经过零对象的复合，因此也被保持。对同态 \(f,g:M\rightarrow N\)，加法可写成
 \[
 f+g=\nabla_N(f\oplus g)\Delta_M,
 \]
-其中 \(\Delta_M:M\rightarrow M\oplus M\) 的两个投影均为恒等，\(\nabla_N:N\oplus N\rightarrow N\) 的两个限制均为恒等。等价保持这两个泛性质，在相应的自然直和识别下保持此式，所以保持加法。
+其中 \(\Delta_M:M\rightarrow M\oplus M\) 的两个投影均为恒等，\(\nabla_N:N\oplus N\rightarrow N\) 的两个限制均为恒等。直和同时是积与余积，故等价在相应的自然直和识别下保持这两个映射及此式，所以保持加法。无需在模范畴的等价之外另加一个加性要求。
 
 等价保持并反映单态射和满态射的消去性质；模范畴中的单态射就是单射，因为非零核元素可以通过从 \(R\) 出发的同态检测。满态射就是满射，因为若像不为全体，非零商映射与零映射在其像上相同，会破坏右消去性。因此单射与满射也被保持并反映。
 
@@ -36,54 +37,66 @@ f+g=\nabla_N(f\oplus g)\Delta_M,
 投射性由沿满射提升的性质刻画。将一个提升问题经拟逆送回，满射仍满，再作提升并经等价送出，就保持投射性；反向相同。对偶地，内射性由沿单射延拓的性质刻画；等价及拟逆都保持单射，故也保持并反映内射性。若 \(P\) 是生成元，每个源范畴对象都为 \(P\) 某个直和的商。等价保持直和与满射，且每个目标对象都同构于某个 \(H(X)\)，故每个目标对象都为 \(H(P)\) 某个直和的商。因此 \(H(P)\) 也是生成元。
 \end{proof}
 
+目标范畴的正则模 \({}_SS\) 是投射生成元，而且 \(\operatorname{Hom}_S(S,Y)\) 在 \(1\) 处求值就恢复 \(Y\)。因此把它经拟逆送回得到 \(P=\Psi(S)\)，应当能用 \(\operatorname{Hom}_R(P,-)\) 恢复原等价。投射性与生成元性质已有范畴刻画；有限生成性则不能直接用元素和生成元的个数转移，需要先把正则模的紧性转移给 \(P\)，再利用 \(P\) 的投射性。
+
 \begin{theorem}[由范畴等价恢复投射生成元]\label{b2:thm:morita-converse}
-设 \(R,S\) 为环，\(\Phi:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为左模范畴的等价，取其拟逆 \(\Psi\)，令 \(P=\Psi({}_SS)\)，则左 \(R\) 模 \(P\) 为有限生成投射生成元，并有环同构
+设 \(R,S\) 为含幺环，\(\Phi:R\text{-}\mathbf{Mod}\rightarrow S\text{-}\mathbf{Mod}\) 为幺左模范畴的等价，取其拟逆 \(\Psi\)，令 \(P=\Psi({}_SS)\)，则幺左 \(R\) 模 \(P\) 为有限生成投射生成元，并有环同构
 \[
 S\cong\operatorname{End}_R(P)^{\mathrm{op}}.
 \]
 通过这个同构赋予 Hom 左 \(S\) 作用后，\(\Phi\) 自然同构于 \(\operatorname{Hom}_R(P,-)\)。
 \end{theorem}
 \begin{proof}
-正则模 \(S\) 投射且为生成元，\cref{b2:lem:module-equivalence-structure}使 \(P=\Psi(S)\) 也投射且为生成元。为证明有限生成，先证明 \(P\) 紧。对任意左 \(R\) 模族 \((M_i)\)，全忠实性、等价保持直和及正则模 \(S\) 的有限生成性给出自然双射
+正则模 \(S\) 投射且为生成元，\cref{b2:lem:module-equivalence-structure}使 \(P=\Psi(S)\) 也投射且为生成元。固定拟逆提供的自然同构 \(\nu:\operatorname{Id}_{S\text{-}\mathbf{Mod}}\rightarrow\Phi\Psi\)。为证明有限生成，先证明 \(P\) 紧。对任意幺左 \(R\) 模族 \((M_i)\)，有自然同构
 \[
 \begin{aligned}
 \operatorname{Hom}_R\left(P,\bigoplus_iM_i\right)
+&\cong\operatorname{Hom}_S\left(S,\Phi\left(\bigoplus_iM_i\right)\right)\\
 &\cong\operatorname{Hom}_S\left(S,\bigoplus_i\Phi(M_i)\right)\\
-&\cong\bigoplus_i\operatorname{Hom}_S\bigl(S,\Phi(M_i)\bigr)
-\cong\bigoplus_i\operatorname{Hom}_R(P,M_i).
+&\cong\bigoplus_i\operatorname{Hom}_S\bigl(S,\Phi(M_i)\bigr)\\
+&\cong\bigoplus_i\operatorname{Hom}_R(P,M_i).
 \end{aligned}
 \]
-这些双射与各直和嵌入相容，所以正是紧性中的自然映射之逆。\cref{b2:prop:compact-projective-finite}于是说明投射模 \(P\) 有限生成。
+第一项同构来自 \(\Phi\) 的全忠实性及 \(\nu_S:S\cong\Phi(P)\)，第二项来自等价保持直和。第三项使用正则模 \(S\) 由 \(1\) 生成：从 \(S\) 到直和的同态由 \(1\) 的像决定，而这个像只有有限支集。最后一项再用全忠实性及 \(\nu_S\)。这些同构与各直和嵌入相容，所以其复合正是紧性中的自然映射之逆。\cref{b2:prop:compact-projective-finite}于是说明投射模 \(P\) 有限生成。
 
-等价加性且全忠实，故在自同态环上给出环同构
+等价加性且全忠实，故 \(\Psi\) 在自同态环上给出环同构
 \[
-\operatorname{End}_R(P)\cong\operatorname{End}_S({}_SS)\cong S^{\mathrm{op}},
+\operatorname{End}_S({}_SS)\cong\operatorname{End}_R(P).
 \]
-第二个同构由正则左模的右乘公式\cref{b2:prop:regular-hom-endomorphism}给出。取反环便得到题述同构。
+由\cref{b2:prop:regular-hom-endomorphism}，正则左模的自同态是右乘映射 \(r_s:x\mapsto xs\)，并有 \(r_s\circ r_t=r_{ts}\)。因此 \(s\mapsto\Psi(r_s)\) 给出 \(S\cong\operatorname{End}_R(P)^{\mathrm{op}}\)，相应的右作用为 \(ps=\Psi(r_s)(p)\)。
 
-最后，取拟逆提供的自然同构 \(\nu:\operatorname{Id}_{S\text{-}\mathbf{Mod}}\rightarrow\Phi\Psi\)。对 \(h:P\rightarrow M\)，对应的 \(S\) 线性映射为 \(\Phi(h)\nu_S:S\rightarrow\Phi(M)\)，再在一处求值得到 \(\Phi(M)\) 的元素。这是自然双射。它还保持左 \(S\) 作用：令 \(r_s:S\rightarrow S\) 为右乘 \(s\)，则 \(ps=\Psi(r_s)(p)\)；\(\nu\) 的自然性说明，预复合 \(\Psi(r_s)\) 对应于预复合 \(r_s\)。对一个左 \(S\) 线性映射 \(a:S\rightarrow\Phi(M)\)，\(a\bigl(r_s(1)\bigr)=a(s)=s\cdot a(1)\)，所以该双射正好为左 \(S\) 模同构。
+对每个 \(M\)，再用正则模的求值对应
+\[
+\operatorname{Hom}_R(P,M)
+\cong\operatorname{Hom}_S(S,\Phi(M))
+\cong\Phi(M).
+\]
+具体地，\(h:P\rightarrow M\) 先对应 \(a=\Phi(h)\nu_S:S\rightarrow\Phi(M)\)，再对应 \(a(1)\)。后复合 \(M\rightarrow M'\) 的同态与这两步相容，故所得同构对 \(M\) 自然。它也保持左 \(S\) 作用：Hom 中的 \(s\cdot h\) 为 \(h\circ\Psi(r_s)\)，而 \(\nu\) 的自然性给出
+\[
+\Phi\bigl(h\circ\Psi(r_s)\bigr)\nu_S
+=\Phi(h)\nu_S r_s=a r_s.
+\]
+在 \(1\) 处求值，右边为 \(a(s)=s\cdot a(1)\)，所以该自然同构为左 \(S\) 模同构。
 \end{proof}
-
-正则模的紧性、投射性的保持及有限自由直和因子判据，共同给出 \(P\) 的有限生成性。任意给定的等价因此都来自这种生成元；下面证明每个这样的生成元确实给出等价。
 
 \subsection{投射生成元与等价构造}
 \label{b2:subsec:1603:02}
 
 \begin{theorem}[Morita 等价]\label{b2:thm:morita-equivalence}
-设 \(R\) 为环，\(P\) 为左 \(R\) 模范畴的有限生成投射生成元，令 \(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，并使 \(s\in S\) 在 \(P\) 上的右作用为 \(ps=\alpha_s(p)\)，其中 \(\alpha_s\) 是 \(s\) 对应的左 \(R\) 线性自同态，则
+设 \(R\) 为含幺环，\(P\) 为幺左 \(R\) 模范畴的有限生成投射生成元，令 \(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，并使 \(s\in S\) 在 \(P\) 上的右作用为 \(ps=\alpha_s(p)\)，其中 \(\alpha_s\) 是 \(s\) 对应的左 \(R\) 线性自同态，则
 \[
 F=\operatorname{Hom}_R(P,-),\qquad G=P\otimes_S-
 \]
-分别为从左 \(R\) 模到左 \(S\) 模、从左 \(S\) 模到左 \(R\) 模的互逆等价，而且式\eqref{b2:eq:morita-unit}与式\eqref{b2:eq:morita-counit}的单位、余单位在每个模上都是同构。结合\cref{b2:thm:morita-converse}，任意两个环 \(R,S\) Morita 等价当且仅当存在左 \(R\) 模的有限生成投射生成元 \(P\) 使 \(S\cong\operatorname{End}_R(P)^{\mathrm{op}}\)。
+分别为从幺左 \(R\) 模到幺左 \(S\) 模、从幺左 \(S\) 模到幺左 \(R\) 模的互逆等价，而且式\eqref{b2:eq:morita-unit}与式\eqref{b2:eq:morita-counit}的单位、余单位在每个模上都是同构。结合\cref{b2:thm:morita-converse}，任意两个含幺环 \(R,S\) Morita 等价当且仅当存在幺左 \(R\) 模的有限生成投射生成元 \(P\) 使 \(S\cong\operatorname{End}_R(P)^{\mathrm{op}}\)。
 \end{theorem}
 \begin{proof}
-有限生成性与\cref{b2:prop:compact-projective-finite}说明 \(F\) 保持任意直和；投射性与\cref{b2:cor:projective-hom-exact}说明 \(F\) 正合。\cref{b2:prop:tensor-direct-sums}与\cref{b2:thm:tensor-right-exact}说明 \(G\) 保持直和且右正合。因此 \(FG,GF\) 都保持直和与正合尾段。
+上一节已知 \(\varepsilon_P\) 与 \(\eta_S\) 为同构。要把它们扩展到所有对象，可以先扩展到 \(P\) 或 \(S\) 的任意直和，再把任意模写成这些直和之间某个映射的余核。这里有限生成性与\cref{b2:prop:compact-projective-finite}保证 \(F\) 保持任意直和；投射性与\cref{b2:cor:projective-hom-exact}保证 \(F\) 正合。\cref{b2:prop:tensor-direct-sums}与\cref{b2:thm:tensor-right-exact}说明 \(G\) 保持直和且右正合。因此 \(FG,GF\) 都保持直和与正合尾段。
 
-先处理余单位。由\cref{b2:prop:morita-adjunction-maps}，\(\varepsilon_P\) 为同构；因两边函子都保持直和，且求值公式与各嵌入相容，每个 \(\varepsilon_{P^{(I)}}\) 也是同构。对任意左 \(R\) 模 \(M\)，生成元性质给出满射 \(P^{(J)}\rightarrow M\)，再给其核取一个 \(P\) 直和的满射，得到正合列
+由\cref{b2:prop:morita-adjunction-maps}，\(\varepsilon_P\) 为同构；因两边函子都保持直和，且求值公式与各嵌入相容，每个 \(\varepsilon_{P^{(I)}}\) 也是同构。对任意幺左 \(R\) 模 \(M\)，生成元性质给出满射 \(q:P^{(J)}\rightarrow M\)。记其核为 \(K\)，再对 \(K\) 使用生成元性质，得到满射 \(P^{(I)}\rightarrow K\)。将它与核的嵌入复合，得到 \(d:P^{(I)}\rightarrow P^{(J)}\) 及正合列
 \[
 P^{(I)}\longrightarrow P^{(J)}\longrightarrow M\longrightarrow0.
 \]
-把展示中的前两个映射记为 \(d:P^{(I)}\to P^{(J)}\)、\(q:P^{(J)}\to M\)。应用右正合函子 \(GF\)，再用余单位的自然性，得到交换的正合尾段
+生成元性质的这两次使用，分别保证 \(M\) 有由 \(P\) 给出的生成元和关系。应用右正合函子 \(GF\)，再用余单位的自然性，得到交换的正合尾段
 \[
 \begin{tikzcd}[column sep=2.6em,row sep=2.5em]
 GF(P^{(I)}) \arrow[r,"GF(d)"] \arrow[d,"\varepsilon_{P^{(I)}}"'] &
@@ -94,13 +107,13 @@ P^{(J)} \arrow[r,"q"'] &
 M \arrow[r] & 0
 \end{tikzcd}
 \]
-前两列的竖直映射为同构，并把第一映射的像对应到原第一映射的像；第三列由余核泛性质诱导，正是 \(\varepsilon_M\)，因而也是同构。
+前两列的竖直映射为同构，并把 \(\operatorname{im}GF(d)\) 对应到 \(\operatorname{im}d\)，因而在对这两个像取商后诱导同构。两行的最后一个对象都是相应第一映射的余核，故由余核泛性质，这个同构正是 \(\varepsilon_M\)。
 
-再处理单位。已知 \(\eta_S\) 为同构，两边保持直和，使每个 \(\eta_{S^{(I)}}\) 也为同构。任意左 \(S\) 模 \(N\) 都有自由展示
+已知 \(\eta_S\) 为同构，两边保持直和，使每个 \(\eta_{S^{(I)}}\) 也为同构。任意幺左 \(S\) 模 \(N\) 本来就有自由展示
 \[
 S^{(I)}\longrightarrow S^{(J)}\longrightarrow N\longrightarrow0,
 \]
-这里指标集允许无限。把前两个映射记为 \(d':S^{(I)}\to S^{(J)}\)、\(q':S^{(J)}\to N\)。应用右正合函子 \(FG\)，由单位的自然性得到
+这里指标集允许无限；这一侧用的是正则模 \(S\) 的生成元性质，不再需要 \(P\) 生成 \(R\) 模。把前两个映射记为 \(d':S^{(I)}\to S^{(J)}\)、\(q':S^{(J)}\to N\)。应用右正合函子 \(FG\)，由单位的自然性得到
 \[
 \begin{tikzcd}[column sep=2.6em,row sep=2.5em]
 S^{(I)} \arrow[r,"d'"] \arrow[d,"\eta_{S^{(I)}}"'] &
@@ -116,7 +129,7 @@ FG(N) \arrow[r] & 0
 所以 \(\eta:\operatorname{Id}\rightarrow FG\)、\(\varepsilon:GF\rightarrow\operatorname{Id}\) 都是自然同构，正好给出两函子互为拟逆。任意等价的反方向已经由\cref{b2:thm:morita-converse}证明，得到最后的充要条件。
 \end{proof}
 
-这就是\term[Morita-dengjia-dingli]{Morita 等价定理}[Morita equivalence theorem]。证明分别用了 \(P\) 的三个条件：有限生成保证 Hom 保持直和，投射保证正合性，生成元保证每个 \(R\) 模都有由 \(P\) 构成的展示。仅在正则模或有限自由模上检验单位、余单位，不足以替代这些扩展步骤。
+这就是\term[Morita-dengjia-dingli]{Morita 等价定理}[Morita equivalence theorem]。仅在正则模或有限自由模上检验单位、余单位，不足以替代证明中通过任意直和和余核所作的扩展。
 
 \ProseParagraphBreak
 同态也可显式恢复。若 \(a:F(M)\rightarrow F(M')\) 左 \(S\) 线性，则它唯一来自
@@ -126,7 +139,7 @@ FG(N) \arrow[r] & 0
 确实，式\eqref{b2:eq:morita-triangles}给出 \(F(\varepsilon_M)=\eta_{F(M)}^{-1}\)，单位的自然性便说明将上式施加 \(F\) 后得到 \(a\)。唯一性来自等价的忠实性。这使对象对应与同态对应同时可计算。
 
 \begin{corollary}[互逆双模]\label{b2:cor:morita-inverse-bimodules}
-设 \(R\) 为环，\({}_RP\) 为有限生成投射生成元，\(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，并令 \(ps=\alpha_s(p)\)，其中 \(\alpha_s\in\operatorname{End}_R(P)\) 对应 \(s\in S\)。令 \(Q=P^*=\operatorname{Hom}_R(P,R)\)，其 \((S,R)\) 双模作用为 \((s\lambda)(p)=\lambda(ps)\)、\((\lambda r)(p)=\lambda(p)r\)。则有双模同构
+设 \(R\) 为含幺环，\({}_RP\) 为幺左模范畴的有限生成投射生成元，\(S=\operatorname{End}_R(P)^{\mathrm{op}}\)，并令 \(ps=\alpha_s(p)\)，其中 \(\alpha_s\in\operatorname{End}_R(P)\) 对应 \(s\in S\)。令 \(Q=P^*=\operatorname{Hom}_R(P,R)\)，其幺 \((S,R)\) 双模作用为 \((s\lambda)(p)=\lambda(ps)\)、\((\lambda r)(p)=\lambda(p)r\)。则有双模同构
 \[
 {}_RP\otimes_S Q_R\cong {}_RR_R,\qquad
 {}_SQ\otimes_RP_S\cong {}_SS_S.
@@ -136,11 +149,30 @@ FG(N) \arrow[r] & 0
 \begin{proof}
 第一式是\eqref{b2:eq:morita-counit}在 \(M=R\) 时的余单位，由\cref{b2:thm:morita-equivalence}为左 \(R\) 模同构。它也保持右 \(R\) 作用，因为 \((\lambda r)(p)=\lambda(p)r\)。
 
-由\cref{b2:prop:finite-projective-hom-tensor}取 \(M=P\)，第二式给出左 \(S\) 模同构 \(Q\otimes_RP\cong\operatorname{End}_R(P)\cong S\)。若把 \(p\) 改为 \(ps\)，对应的自同态 \(x\mapsto\lambda(x)(ps)\) 是原自同态后接 \(\alpha_s\)；在反环 \(S\) 中这正是右乘 \(s\)。故第二式也保持右 \(S\) 作用。
+由\cref{b2:prop:finite-projective-hom-tensor}取 \(M=P\)，映射
+\[
+Q\otimes_RP\longrightarrow\operatorname{End}_R(P),\qquad
+\lambda\otimes p\longmapsto T_{\lambda,p},\quad
+T_{\lambda,p}(x)=\lambda(x)p
+\]
+为同构。有限对偶基解释了为什么这些自同态足以构成所有自同态。由\cref{b2:prop:finite-dual-basis}取 \((p_i,\lambda_i)\)，则 \(x=\sum_i\lambda_i(x)p_i\)，因而每个 \(R\) 线性自同态 \(T\) 都满足
+\[
+T(x)=\sum_i\lambda_i(x)T(p_i).
+\]
+所以任意自同态都是上述形式的有限和，且已证同构的逆将 \(T\) 送到 \(\sum_i\lambda_i\otimes T(p_i)\)。
+
+将自同态 \(T\) 看作反环 \(S\) 的元素时，左、右 \(S\) 作用分别对应于两种复合次序：
+\[
+T_{s\lambda,p}=T_{\lambda,p}\circ\alpha_s,\qquad
+T_{\lambda,ps}=\alpha_s\circ T_{\lambda,p}.
+\]
+由于 \(S\) 的乘法与自同态复合反向，这两式分别是 \(S\) 中的左乘 \(s\) 与右乘 \(s\)。故第二式是 \((S,S)\) 双模同构；这里 \(\operatorname{End}_R(P)\) 与 \(S\) 的识别用的是其加性群及这两个作用，而不是把两者的环乘法认作相同。
 \end{proof}
 
+这两个同构说明 \({}_RP_S\) 与 \({}_SQ_R\) 在双模张量意义下互为逆：它们的两种复合分别恢复正则双模 \({}_RR_R\) 与 \({}_SS_S\)。同一对双模因此也能从右模一侧构造等价。
+
 \begin{corollary}\label{b2:cor:morita-left-right}
-对任意环 \(R,S\)，全部左模范畴等价当且仅当全部右模范畴等价：
+对任意含幺环 \(R,S\)，全部幺左模范畴等价当且仅当全部幺右模范畴等价：
 \[
 R\text{-}\mathbf{Mod}\simeq S\text{-}\mathbf{Mod}
 \quad\Longleftrightarrow\quad
@@ -148,49 +180,85 @@ R\text{-}\mathbf{Mod}\simeq S\text{-}\mathbf{Mod}
 \]
 \end{corollary}
 \begin{proof}
-若左模范畴等价，由\cref{b2:thm:morita-converse,b2:cor:morita-inverse-bimodules}取互逆双模 \({}_RP_S\) 与 \({}_SQ_R\)。对右模，函子 \(-\otimes_RP\) 与 \(-\otimes_SQ\) 的两次复合经张量结合律分别同构于 \(-\otimes_R(P\otimes_SQ)\cong-\otimes_RR\) 和 \(-\otimes_S(Q\otimes_RP)\cong-\otimes_SS\)，故互为拟逆。反过来，把右 \(R,S\) 模分别视为左 \(R^{\mathrm{op}},S^{\mathrm{op}}\) 模，对刚证的方向再用一次，便得到左模范畴的等价。
+若左模范畴等价，由\cref{b2:thm:morita-converse,b2:cor:morita-inverse-bimodules}取互逆双模 \({}_RP_S\) 与 \({}_SQ_R\)。函子 \(-\otimes_RP\) 把幺右 \(R\) 模送到幺右 \(S\) 模，\(-\otimes_SQ\) 把幺右 \(S\) 模送到幺右 \(R\) 模。两次复合经张量结合律分别同构于 \(-\otimes_R(P\otimes_SQ)\cong-\otimes_RR\) 和 \(-\otimes_S(Q\otimes_RP)\cong-\otimes_SS\)，故互为拟逆。反过来，把右 \(R,S\) 模分别视为左 \(R^{\mathrm{op}},S^{\mathrm{op}}\) 模，对刚证的方向再用一次，便得到左模范畴的等价。
 \end{proof}
 
 \subsection{满幂等元与角环的 Morita 等价}
 \label{b2:subsec:1603:03}
 
 \begin{proposition}[满幂等角环]\label{b2:prop:full-idempotent-morita}
-设 \(R\) 为环，\(e\in R\) 满足 \(e^2=e\)。左 \(R\) 模 \(Re\) 为生成元，当且仅当 \(ReR=R\)。在此条件下，令 \(S=eRe\)，则
+设 \(R\) 为含幺环，\(e\in R\) 满足 \(e^2=e\)，令 \(S=eRe\)，其单位元为 \(e\)。条件 \(ReR=R\)、幺左 \(R\) 模 \(Re\) 为生成元，以及对每个幺左 \(R\) 模 \(M\) 都有 \(eM=0\Longrightarrow M=0\)，三者等价。在这些条件下，\(Re\) 为有限生成投射生成元，且
 \[
 R\text{-}\mathbf{Mod}\simeq S\text{-}\mathbf{Mod}
 \]
-由 \(M\mapsto eM\) 与 \(N\mapsto Re\otimes_SN\) 实现。
+由 \(M\mapsto eM\) 与 \(N\mapsto Re\otimes_SN\) 实现，其中 \(eM\) 取自然的幺左 \(S\) 模结构。对每个幺左 \(R\) 模 \(M\)，求值映射
+\[
+\varepsilon_M:Re\otimes_SeM\longrightarrow M,\qquad
+re\otimes m\longmapsto rm
+\]
+为自然的左 \(R\) 模同构。
 \end{proposition}
 \begin{proof}
-\(Re\) 是正则左模的直和因子，故有限生成且投射。任意左模同态 \(Re\rightarrow R\) 由 \(e\) 的像 \(b\in eR\) 决定，公式为 \(re\mapsto rb\)。因此若 \(Re\) 为生成元，从某个 \((Re)^n\) 到 \(R\) 的满射在一处取原像，便得到 \(1=\sum_i a_i e b_i\)，所以 \(ReR=R\)。
+由 \(R=Re\oplus R(1-e)\)，\(Re\) 是正则左模的直和因子，故有限生成且投射。任意左模同态 \(Re\rightarrow R\) 由 \(e\) 的像 \(b\in eR\) 决定，公式为 \(re\mapsto rb\)。因此若 \(Re\) 为生成元，就有某个满射 \((Re)^{(L)}\rightarrow R\)。给 \(1\) 取一个原像，这个原像仅有有限支集；结合各分量上的同态公式便得到 \(1=\sum_{i=1}^n a_i e b_i\)，所以 \(ReR=R\)。此处和式有限来自这个原像的有限支集。
 
 反过来，若 \(1=\sum_{i=1}^n a_i e b_i\)，映射 \((Re)^n\rightarrow R\)、\((p_i)\mapsto\sum_i p_i b_i\) 的像包含一，因而满射。其截面可取 \(r\mapsto(ra_i e)_i\)，所以 \(R\) 是 \((Re)^n\) 的直和因子。\cref{b2:thm:generator-characterizations}使 \(Re\) 为生成元。
 
-由\cref{b2:prop:corner-endomorphism}，\(\operatorname{End}_R(Re)^{\mathrm{op}}\cong eRe\)。在这一识别下，Hom 同构为
+若 \(ReR=R\) 且 \(eM=0\)，对每个 \(m\in M\) 有 \(m=\sum_i a_i e b_i m=0\)，所以 \(M=0\)。若 \(ReR\ne R\)，则 \(M=R/ReR\) 为非零幺左模，而 \(eM=0\)。这就证明第三个条件与满性等价，也说明非满的取角会把某个非零模送到零。
+
+由\cref{b2:prop:corner-endomorphism}，\(\operatorname{End}_R(Re)^{\mathrm{op}}\cong S\)。与该命题中的同态识别一样，一个 \(f:Re\rightarrow M\) 完全由 \(f(e)\) 决定，因为 \(f(re)=rf(e)\)，且 \(f(e)=ef(e)\in eM\)。因此有自然同构
 \[
 \operatorname{Hom}_R(Re,M)\longrightarrow eM,\qquad f\longmapsto f(e),
 \]
-逆为 \(m\mapsto(re\mapsto rm)\)。若 \(re=r'e\)，因 \(m=em\) 有 \(rm=r'm\)，故逆公式良定义；它保留左 \(eRe\) 作用。此时 \(Re\) 已是有限生成投射生成元，\cref{b2:thm:morita-equivalence}给出题述等价。
-\end{proof}
+逆为 \(m\mapsto(re\mapsto rm)\)。若 \(re=r'e\)，因 \(m=em\) 有 \(rm=r'm\)，故逆公式良定义。对 \(s\in S\)，右乘 \(s\) 是 \(Re\) 的自同态，而 Hom 中的左作用满足 \((s\cdot f)(e)=f(es)=sf(e)\)，所以此同构保留左 \(S\) 作用。这里 \(eM\) 一般不是 \(M\) 的左 \(R\) 子模，所用的标量环是 \(S\)。当 \(e\) 满时，\(Re\) 已是有限生成投射生成元，\cref{b2:thm:morita-equivalence}给出题述等价。
 
-满性还给出求值映射的显式逆。固定一次表达 \(1=\sum_i a_i e b_i\)，则
-\[
-\varepsilon_M:Re\otimes_{eRe}eM\longrightarrow M,\qquad
-re\otimes m\longmapsto rm
-\]
-的逆为
+求值映射 \(\varepsilon_M\) 也有直接的逆公式。固定一次表达 \(1=\sum_i a_i e b_i\)，则 \(m=\sum_i a_i e b_i m\)；要使求值恢复 \(m\)，就把每一项拆成 \(a_i e\otimes e b_i m\)。由此得到加性映射
 \begin{equation}\label{b2:eq:full-idempotent-evaluation-inverse}
-m\longmapsto\sum_i a_i e\otimes e b_i m.
+\delta_M(m)=\sum_i a_i e\otimes e b_i m.
 \end{equation}
-正向复合使用 \(\sum_i a_i e b_i=1\)。反向复合在 \(re\otimes m\)、\(m=em\) 上得到
+于是 \(\varepsilon_M\delta_M(m)=\sum_i a_i e b_i m=m\)。反向复合在 \(re\otimes m\)、\(m=em\) 上得到
 \[
 \sum_i a_i e\otimes e b_i r e m
 =\sum_i a_i e b_i r e\otimes m=re\otimes m,
 \]
-其中中间一步在角环 \(eRe\) 上移动了平衡标量。另一方面，\(e(Re\otimes_{eRe}N)\) 自然识别为 \(eRe\otimes_{eRe}N\cong N\)：右模分裂投影 \(Re\rightarrow eRe\)、\(p\mapsto ep\) 保证这个像的识别，最后用单位张量同构。
+其中中间一步移动的平衡标量是 \(e b_i r e\in S\)。故 \(\delta_M\) 与左 \(R\) 线性映射 \(\varepsilon_M\) 互为逆，\(\delta_M\) 也左 \(R\) 线性。求值与模同态相容，因而此同构自然。另一方面，\(e(Re\otimes_SN)\) 自然识别为 \(S\otimes_SN\cong N\)：右 \(S\) 模分裂投影 \(Re\rightarrow S\)、\(p\mapsto ep\) 与其包含映射张量后仍互为投影与截面，故它的像正是 \(e(Re\otimes_SN)\)，最后使用单位张量同构。
+\end{proof}
+
+对含幺环 \(B\) 及 \(n\ge1\)，在矩阵环 \(R=M_n(B)\) 中，\(e=E_{11}\) 满，因为 \(1=\sum_iE_{i1}eE_{1i}\)。上述公式正好恢复\cref{b2:prop:matrix-morita-equivalence}。当 \(B=k\) 为域且 \(n>1\) 时，令 \(A=M_n(k)\)，则幺左 \(A\) 模 \(Ae\) 是有限生成投射生成元，却不是自由模：\(\dim_kAe=n\)，而任意非零自由左 \(A\) 模都包含一个正则模 \(A\) 的直和分量，故其 \(k\) 维数至少为 \(n^2>n\)，无论自由基有限还是无限都不可能同构于 \(Ae\)。
 
 \ProseParagraphBreak
-在矩阵环 \(R=M_n(B)\) 中，\(e=E_{11}\) 满，因为 \(1=\sum_iE_{i1}eE_{1i}\)。上述公式正好恢复\cref{b2:prop:matrix-morita-equivalence}。若 \(R=B\times C\)、\(e=(1,0)\)，且 \(C\ne0\)，则 \(ReR=B\times0\ne R\)，取角只保留第一个坐标；第二个坐标上的非零模被送到零，所以不能给出等价。
+若 \(R=B\times C\)、\(e=(1,0)\)，且 \(C\ne0\)，则 \(ReR=B\times0\ne R\)，取角只保留第一个坐标；第二个坐标上的非零模被送到零，所以不能给出等价。
 
 \ProseParagraphBreak
-对有限维代数 \(A\)，\cref{b2:prop:basic-corner}已经构造了满足 \(AeA=A\) 的幂等元，并证明 \(eAe\) 为基本代数。\cref{b2:prop:full-idempotent-morita}进一步说明 \(A\) 与这个基本代数 Morita 等价。因此可先在基本代数上研究模，再经上述张量函子返回原代数。
+对有限维代数 \(A\)，\cref{b2:prop:basic-corner}从每种有限生成不可分解投射模的同构类型中选取一份，构造了满足 \(AeA=A\) 的幂等元，并证明 \(eAe\) 为基本代数。\cref{b2:prop:full-idempotent-morita}进一步说明 \(A\) 与这个基本代数的全部幺左模范畴等价。因此可先在基本代数上研究模，再经上述张量函子返回原代数。
+
+\begin{proposition}[满角环的双边理想对应]\label{b2:prop:full-corner-ideal-correspondence}
+设 \(R\) 为含幺环，\(e\in R\) 为满幂等元，即 \(e^2=e\) 且 \(ReR=R\)，令 \(S=eRe\)。对双边理想 \(I\subseteq R\) 与 \(K\subseteq S\)，映射
+\[
+I\longmapsto eIe,\qquad K\longmapsto RKR
+\]
+给出 \(R\) 与 \(S\) 的双边理想格之间互逆且保持包含关系的对应，其中 \(RKR\) 表示元素 \(rkt\)、\(r,t\in R\)、\(k\in K\) 的有限和组成的双边理想。对 \(R\) 的每个双边理想 \(I\)，记 \(\bar e=e+I\)，则 \(\bar e\) 是 \(R/I\) 的满幂等元，并有环同构
+\[
+\bar e(R/I)\bar e\cong S/eIe.
+\]
+因此 \(R/I\) 与 \(S/eIe\) 的全部幺左模范畴等价。
+\end{proposition}
+\begin{proof}
+若 \(I\) 为 \(R\) 的双边理想，则 \(eIe\) 为 \(S\) 的双边理想；若 \(K\) 为 \(S\) 的双边理想，则上述有限和组成的 \(RKR\) 为 \(R\) 的双边理想。固定 \(1=\sum_{i=1}^n a_i e b_i\)。对 \(x\in I\)，两次使用这个等式得到
+\[
+x=\sum_{i,j}a_i e(b_i x a_j)e b_j\in R(eIe)R.
+\]
+反向包含 \(R(eIe)R\subseteq I\) 来自 \(I\) 的双边理想性质，故 \(R(eIe)R=I\)。
+
+对 \(k\in K\) 有 \(k=eke\)，所以 \(K\subseteq e(RKR)e\)。反向包含可逐项检查：若 \(r,t\in R\)、\(k\in K\)，则
+\[
+e(rkt)e=(ere)k(ete)\in K.
+\]
+故 \(e(RKR)e=K\)。两种映射显然都保持包含关系，因此给出互逆的理想格对应。
+
+商映射限制到 \(S\) 给出满环同态
+\[
+S\longrightarrow\bar e(R/I)\bar e,\qquad
+ere\longmapsto\bar e(r+I)\bar e.
+\]
+其核为 \(S\cap I=eIe\)，因为 \(s\in S\cap I\) 时 \(s=ese\)。商环同构定理便给出所述角环同构。\(1=\sum_i a_i e b_i\) 在 \(R/I\) 中仍成立，故 \(\bar e\) 满；由\cref{b2:prop:full-idempotent-morita}应用于 \(R/I\) 即得模范畴等价。此论证也包含 \(I=R\) 的情形，此时两个商环均为零环。
+\end{proof}

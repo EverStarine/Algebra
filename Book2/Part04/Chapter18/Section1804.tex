@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 18.4 交叉积与相对 Brauer 群
-% 纲要位置：计划纲要.md，第 1353 行。
+% 纲要位置：计划纲要.md，第 1652 行。
 
 \section{交叉积与相对 Brauer 群}
 \label{b2:sec:1804}
@@ -9,18 +9,25 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 交叉积与2-余圈
-% * 有限 Galois 扩张的相对 Brauer 群及循环情形的范数商
-% * 与第四卷群上同调的衔接
+% * 交叉积与2-余圈；结合律产生余圈方程，重选基元产生余边；正式证明因子集不依赖标量提升及矩阵模型
+% * 有限 Galois 扩张的相对 Brauer 群及循环情形的范数商；对角幂等元对齐两份子域作用，取角证明群运算，同类同次数及 Skolem–Noether 证明单射，明确下降因子集的逆类约定
+% * 与第四卷群上同调的衔接；循环余圈化为进位形式，正文证明交叉积约化迹只由单位指标分量贡献
 % * Brauer 群不能与第五卷 Brauer 诱导定理混同
-%
-% ---
 %
 
 \subsection{\texorpdfstring{交叉积与 \(2\)-余圈}{交叉积与 2-余圈}}
 \label{b2:subsec:1804:01}
 
-固定有限 Galois 扩张 \(K/k\)，记 \(G=\operatorname{Gal}(K/k)\)、\(n=|G|=[K:k]\)。
+固定有限 Galois 扩张 \(K/k\)，记 \(G=\operatorname{Gal}(K/k)\)、\(n=|G|=[K:k]\)。希望为每个 \(g\in G\) 配一个基元 \(u_g\)，使它对标量的作用由 \(g\) 给出，而两个基元相乘只与 \(u_{gh}\) 相差一个非零标量，即
+\[
+u_g a=g(a)u_g,\qquad u_g u_h=c(g,h)u_{gh}.
+\]
+这两个规则把结合律转成一个可计算的条件：
+\[
+(u_g u_h)u_t=c(g,h)c(gh,t)u_{ght},\qquad
+u_g(u_h u_t)=g\bigl(c(h,t)\bigr)c(g,ht)u_{ght}.
+\]
+若再要求 \(u_1=1\)，就得到下面的余圈方程及归一化条件。
 
 \begin{definition}\label{b2:def:normalized-two-cocycle}
 设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(G\) 按域自同构作用于 \(K^\times\)。若函数 \(c:G\times G\to K^\times\) 对任意 \(g,h,t\in G\) 满足
@@ -37,6 +44,15 @@ c(1,g)=c(g,1)=1,
 
 直接将 \(\delta b\) 代入\eqref{b2:eq:two-cocycle}，两边都化为 \(b_g\cdot g(b_h)gh(b_t)b_{ght}^{-1}\)，所以余边确为余圈。
 
+\ProseParagraphBreak
+余边记录的是同一组基元的缩放。若将 \(u_g\) 换成 \(u'_g=b_g u_g\)，其中 \(b_1=1\)，则
+\[
+u'_g u'_h
+=b_g g(b_h)c(g,h)b_{gh}^{-1}u'_{gh}
+=\bigl(c\delta b\bigr)(g,h)u'_{gh}.
+\]
+因此改变这些基元会改变乘法系数，但只使余圈乘上一个余边。
+
 \begin{definition}\label{b2:def:galois-crossed-product}
 设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(c:G\times G\rightarrow K^\times\) 为归一化 \(2\)-余圈。在左 \(K\) 空间 \(B_c=\bigoplus_{g\in G}Ku_g\) 上规定
 \begin{equation}\label{b2:eq:crossed-product-multiplication}
@@ -45,6 +61,8 @@ c(1,g)=c(g,1)=1,
 按双可加性延拓后，所得含幺 \(k\) 代数称为由 \(K/k\) 和 \(c\) 确定的\term[jiaocha-ji-daishu]{交叉积代数}[crossed product algebra]。
 \end{definition}
 \symidx{\(B_c=(K/k,G,c)\)：Galois 扩张的交叉积代数}
+
+其中 \(K\) 通过 \(a\mapsto au_1\) 嵌入；乘法公式同时规定了 \(u_g b=g(b)u_g\) 与 \(u_g u_h=c(g,h)u_{gh}\)。前一条控制基元经过标量时发生的自同构，后一条控制基元之间的乘法误差。前述换基计算也给出一个同构 \(B_{c\delta b}\to B_c\)：把新代数中指标 \(g\) 的基元送到 \(b_g u_g\) 即可。
 
 \begin{proposition}\label{b2:prop:crossed-product-central-simple}
 设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(n=[K:k]\)，\(c:G\times G\rightarrow K^\times\) 为归一化 \(2\)-余圈，则相应交叉积 \(B_c=\bigoplus_{g\in G}Ku_g\) 是次数 \(n\) 的中心单 \(k\) 代数，单位为 \(u_1\)。子域 \(K\) 分裂它；每个 \(u_g\) 都可逆。
@@ -56,20 +74,25 @@ u_g^{-1}=c(g^{-1},g)^{-1}u_{g^{-1}}.
 \]
 左右相乘均为一。
 
-若 \(x=\sum_g a_g u_g\) 与全部 \(b\in K\) 交换，则比较系数得 \(a_g\bigl(g(b)-b\bigr)=0\)。对 \(g\ne1\) 可选使差非零的 \(b\)，所以只有单位指标的系数可能非零。再与各 \(u_g\) 交换，就使该系数被全部 \(G\) 固定，因而属于 \(k\)。故中心是 \(k\)。
+中心的计算与循环代数同样，先检查与 \(K\) 交换的条件，再检查与全部基元交换的条件。若 \(x=\sum_g a_g u_g\) 与全部 \(b\in K\) 交换，则比较系数得 \(a_g\bigl(g(b)-b\bigr)=0\)。对 \(g\ne1\) 可选使差非零的 \(b\)，所以只有单位指标的系数可能非零。再与各 \(u_g\) 交换，就使该系数被全部 \(G\) 固定，因而属于 \(k\)。故中心是 \(k\)。
 
-对一个非零双边理想，选非零项数最少的元素。乘以一个 \(u_g^{-1}\) 并缩放系数，使单位指标项为一。它与任意 \(b\in K\) 的交换子在单位指标处为零，若非零就违反最少性。于是该元素与 \(K\) 交换，只能为一，理想即为全代数。这证明单性。最后 \([K:k]=n=\deg B_c\)，由\cref{b2:prop:maximal-field-splits-csa}，\(K\) 分裂 \(B_c\)。
+单性的证明沿用循环代数中减少非零项数的方法。对一个非零双边理想，选非零项数最少的元素，并取其中一个非零项的指标 \(g\)。右乘 \(u_g^{-1}\) 使每个指标 \(h\) 变为 \(hg^{-1}\)，各系数只乘上非零标量，所以非零项数不变，而单位指标的系数变为非零。再左乘一个 \(K^\times\) 中的标量，使该系数为一。所得元素与任意 \(b\in K\) 的交换子在单位指标处为零，其他非零项只可能来自原有的指标；若交换子非零，就有更少的非零项，违反最少性。于是该元素与 \(K\) 交换，由刚才的系数比较只能为一，理想即为全代数。这证明单性。最后 \([K:k]=n=\deg B_c\)，由\cref{b2:prop:maximal-field-splits-csa}，\(K\) 分裂 \(B_c\)。
 \end{proof}
 
-若改用基元 \(u'_g=b_g u_g\)，新乘法系数为 \(c'=c\delta b\)。所以相差余边的余圈给出同构代数；这是一项实际的基变换，不只是符号上的等价。
+若交叉积分裂为 \(n\) 阶矩阵代数，它在一个 \(n\) 维 \(k\) 空间上的作用限制到 \(K\)，就成为一维 \(K\) 空间上的作用。在这个空间上，每个 \(u_g\) 的作用满足 \(T_g(az)=g(a)T_g(z)\)；选择一个 \(K\) 基以后，它只能是域自同构 \(g\) 再乘上一个非零标量。这些标量正是余边公式中的 \(b_g\)。
 
 \begin{proposition}\label{b2:prop:crossed-product-split-coboundary}
-设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(c:G\times G\rightarrow K^\times\) 为归一化 \(2\)-余圈，\(B_c\) 为相应交叉积代数，则 \(B_c\) 分裂，当且仅当 \(c\) 是\(2\)-余边。
+设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(c:G\times G\rightarrow K^\times\) 为归一化 \(2\)-余圈，\(B_c\) 为相应交叉积代数，则 \(B_c\) 分裂，当且仅当 \(c\) 是 \(2\)-余边。
 \end{proposition}
 \begin{proof}
-若 \(c(g,h)=b_g\cdot g(b_h)b_{gh}^{-1}\)，在 \(k\) 空间 \(K\) 上让 \(K\) 左乘，让 \(u_g\) 按 \(T_g(z)=b_g\cdot g(z)\) 作用。这些算子满足 \(T_gT_h=c(g,h)T_{gh}\)，与 \(K\) 的相容关系也正是\eqref{b2:eq:crossed-product-multiplication}，故定义同态 \(B_c\to\operatorname{End}_k(K)\)。由单性及两端同维，它是同构。
+若 \(c(g,h)=b_g\cdot g(b_h)b_{gh}^{-1}\)，其中 \(b_1=1\)，在 \(k\) 空间 \(K\) 上让 \(K\) 左乘，让 \(u_g\) 按 \(T_g(z)=b_g\cdot g(z)\) 作用。计算得到
+\[
+T_gT_h(z)=b_g g(b_h)gh(z)=c(g,h)T_{gh}(z),\qquad
+T_g(az)=g(a)T_g(z).
+\]
+因此这些算子满足交叉积的两个乘法规则，且 \(T_1=\operatorname{id}_K\)，给出含幺同态 \(B_c\to\operatorname{End}_k(K)\)。由单性及两端同为 \(n^2\) 维，它是同构，其中 \(n=[K:k]\)。
 
-若 \(B_c\cong\operatorname{End}_k(W)\)，其中 \(\dim_k W=n\)，限制到 \(K\) 后有 \(\dim_KW=1\)。选基识别 \(W=K\)，\(u_g\) 的作用必须形如 \(T_g(z)=b_g\cdot g(z)\)，其中 \(b_g=T_g(1)\ne0\)。代入 \(u_g u_h=c(g,h)u_{gh}\)，得 \(b_g\cdot g(b_h)=c(g,h)b_{gh}\)，正是余边条件。
+若 \(B_c\cong\operatorname{End}_k(W)\)，由 \(\deg B_c=n\) 有 \(\dim_k W=n\)。限制到 \(K\) 后，维数公式给出 \(\dim_KW=1\)。选一个 \(K\) 基，将 \(W\) 识别为 \(K\)。由于 \(u_g z=g(z)u_g\)，其作用满足 \(T_g(z)=g(z)T_g(1)=b_g g(z)\)，其中 \(b_g=T_g(1)\ne0\)，且 \(b_1=1\)。代入 \(u_g u_h=c(g,h)u_{gh}\)，得 \(b_g\cdot g(b_h)=c(g,h)b_{gh}\)，正是余边条件。此时把 \(u_g\) 换成 \(b_g^{-1}u_g\)，它们在 \(K\) 上就按 \(g\) 作用，乘法误差也同时消失。
 \end{proof}
 
 \subsection{Brauer 群与群上同调}
@@ -79,27 +102,63 @@ u_g^{-1}=c(g^{-1},g)^{-1}u_{g^{-1}}.
 \[
 H^2(G,K^\times)=\{\text{归一化 }2\text{-余圈}\}/\{2\text{-余边}\}.
 \]
-这个商群是当前 \(G\) 作用下二阶\term[qun-shangtongdiao]{群上同调}[group cohomology]的显式模型。第四卷第 12.1--12.2 节将从一般上链复形解释这一记号；下面只用余圈和余边的方程。
+这个商群是当前 \(G\) 作用下二阶\term[qun-shangtongdiao]{群上同调}[group cohomology]的显式模型。第四卷第 12.1 节从 bar 消解建立余链复形，第 12.2 节再用低阶余圈解释群扩张；这里把交换群 \(K^\times\) 的运算写成乘法，得到同一套二阶方程，下面的论证只用这些显式方程。
 \symidx{\(H^2(G,K^\times)\)：乘法系数的二阶群上同调}
 
 \ProseParagraphBreak
 对于 \(g\in G\)，可加映射 \(T_g\) 若满足 \(T_g(av)=g(a)T_g(v)\)，称其为 \(g\)-\term[banxianxing-yingshe]{半线性映射}[semilinear map]。在矩阵代数上，逐条目施加 \(g\) 就给出这种映射。下面把一个已分裂代数的下降数据写成具体矩阵。
 
 \begin{proposition}\label{b2:prop:split-algebra-factor-set}
-设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(A\) 为由 \(K\) 分裂的中心单 \(k\) 代数，取同构 \(\rho:A_K=A\otimes_kK\rightarrow M_m(K)\)。令 \(\alpha_g=\rho(\operatorname{id}_A\otimes g)\rho^{-1}\) 为 \(A_K\) 的自然 Galois 作用在矩阵代数上的表示，\(g(X)\) 表示对矩阵 \(X\) 逐条目施加 \(g\)，则存在 \(C_g\in\operatorname{GL}_m(K)\)、\(C_1=I_m\)，使 \(\alpha_g(X)=C_g\cdot g(X)C_g^{-1}\)。由
+设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(A\) 为由 \(K\) 分裂的中心单 \(k\) 代数，\(m=\deg A\)，取 \(K\) 代数同构 \(\rho:A_K=A\otimes_kK\rightarrow M_m(K)\)。令 \(\alpha_g=\rho(\operatorname{id}_A\otimes g)\rho^{-1}\) 为 \(A_K\) 的自然 Galois 作用在矩阵代数上的表示，\(g(X)\) 表示对矩阵 \(X\) 逐条目施加 \(g\)，则存在 \(C_g\in\operatorname{GL}_m(K)\)、\(C_1=I_m\)，使 \(\alpha_g(X)=C_g\cdot g(X)C_g^{-1}\)。由
 \[
 C_g\cdot g(C_h)=c(g,h)C_{gh}
 \]
-定义的标量 \(c(g,h)\in K^\times\) 构成归一化 \(2\)-余圈，而且 \([A]=-[B_c]\)，其中 \(B_c\) 是相应交叉积代数。
+定义的标量 \(c(g,h)\in K^\times\) 构成归一化 \(2\)-余圈，而且 \([A]=-[B_c]\)，其中 \(B_c\) 是相应交叉积代数。若将 \(C_g\) 换为 \(b_gC_g\)，其中 \(b_g\in K^\times\)、\(b_1=1\)，则余圈换为 \(c\delta b\)。若将分裂模型换为 \(\rho'=\operatorname{Ad}(P)\rho\)，其中 \(P\in\operatorname{GL}_m(K)\)、\(\operatorname{Ad}(P)(X)=PXP^{-1}\)，并取
+\[
+C'_g=PC_g g(P)^{-1},
+\]
+则得到原余圈 \(c\)。特别地，所得类 \([c]\in H^2(G,K^\times)\) 与 \(C_g\) 及分裂同构 \(\rho\) 的选择无关。
 \end{proposition}
 \begin{proof}
-设 \(A_K\cong M_m(K)\)，将 \(A_K\) 上的自然 Galois 作用传到矩阵代数，记为 \(\alpha_g\)。它在标量上作用为 \(g\)，即为 \(g\)-半线性代数自同构。把逐条目作用 \(g\) 的逆与它复合，就得到一个 \(K\) 代数自同构；由 Skolem--Noether，存在 \(C_g\in\operatorname{GL}_m(K)\)，使
+\(\alpha_g\) 在标量上作用为 \(g\)，即为 \(g\)-半线性代数自同构。将它与逐条目作用 \(g^{-1}\) 依次复合，所得 \(\alpha_g\circ g^{-1}\) 是一个 \(K\) 代数自同构；由\cref{b2:thm:skolem-noether}，存在 \(C_g\in\operatorname{GL}_m(K)\)，使
 \begin{equation}\label{b2:eq:brauer-semilinear-matrices}
 \alpha_g(X)=C_g\cdot g(X)C_g^{-1},\qquad C_1=I_m.
 \end{equation}
-\(\alpha_g\alpha_h=\alpha_{gh}\) 说明 \(C_g\cdot g(C_h)C_{gh}^{-1}\) 与所有矩阵交换，所以为唯一的标量 \(c(g,h)\in K^\times\)。比较三次乘积，得到\eqref{b2:eq:two-cocycle}，故 \(c\) 为归一化余圈。
+\(\alpha_g\alpha_h=\alpha_{gh}\) 说明 \(C_g\cdot g(C_h)C_{gh}^{-1}\) 与所有矩阵交换，所以为唯一的标量 \(c(g,h)\in K^\times\)。比较同一个矩阵积的两种结合方式，得到
+\[
+\begin{aligned}
+\bigl(C_g g(C_h)\bigr)gh(C_t)
+&=c(g,h)c(gh,t)C_{ght},\\
+C_g g\bigl(C_h h(C_t)\bigr)
+&=g\bigl(c(h,t)\bigr)c(g,ht)C_{ght}.
+\end{aligned}
+\]
+消去可逆矩阵 \(C_{ght}\)，即为\eqref{b2:eq:two-cocycle}；\(C_1=I_m\) 又给出归一化条件。
 
-在 \(k\) 空间 \(V=K^m\) 上，让 \(K\) 按标量乘法作用，让 \(u_g\) 按 \(v\mapsto C_g\cdot g(v)\) 作用，得到 \(B_c\) 的表示。它含幺且 \(B_c\) 单，因而忠实。它在 \(\operatorname{End}_k(V)\) 中的中心化子，先因与 \(K\) 交换而是 \(K\) 线性，再因与所有 \(u_g\) 交换而满足 \(X=\alpha_g(X)\)。这些不动矩阵恰为 \(A\) 的像：在 \(A_K\) 中按 \(A\) 的 \(k\) 基展开，不动性恰好使全部系数属于 \(K^G=k\)。由\cref{b2:cor:csa-centralizer-factorization}的中心为 \(k\) 的情形，
+对同一个 \(\alpha_g\)，两个实现矩阵只相差非零标量，因为它们的商与全部矩阵交换。因此任意另一组归一化的实现矩阵都形如 \(b_gC_g\)、\(b_1=1\)，而
+\[
+(b_gC_g)g(b_hC_h)
+=b_g g(b_h)c(g,h)C_{gh}
+=\bigl(c\delta b\bigr)(g,h)(b_{gh}C_{gh}).
+\]
+再改变分裂模型。由 \(\rho'=\operatorname{Ad}(P)\rho\) 得
+\[
+\alpha'_g(X)
+=P C_g g(P)^{-1}g(X)g(P)C_g^{-1}P^{-1}.
+\]
+所述 \(C'_g\) 因而实现 \(\alpha'_g\)，且 \(C'_1=I_m\)。它们满足
+\[
+C'_g g(C'_h)
+=PC_g g(C_h)gh(P)^{-1}
+=c(g,h)C'_{gh},
+\]
+所以余圈不变。任意两个 \(K\) 代数分裂同构之差都是 \(M_m(K)\) 的 \(K\) 自同构，由 Skolem--Noether 为这种内自同构；这就涵盖了全部分裂模型的选择。
+
+在 \(k\) 空间 \(V=K^m\) 上，让 \(K\) 按标量乘法作用，让 \(u_g\) 按 \(v\mapsto C_g\cdot g(v)\) 作用，得到 \(B_c\) 的表示。它含幺且 \(B_c\) 单，因而忠实。与 \(K\) 作用交换的算子恰好是 \(K\) 线性算子，可写为 \(X\in M_m(K)\)；这样的 \(X\) 与所有 \(u_g\) 作用交换，当且仅当
+\[
+XC_g=C_g g(X),\qquad\text{即 }X=\alpha_g(X)\quad(g\in G).
+\]
+这些不动矩阵恰为 \(\rho(A\otimes1)\)：在 \(A_K\) 中按 \(A\) 的一组 \(k\) 基展开，自然 Galois 作用的不动性恰好使全部系数属于 \(K^G=k\)。因此 \(B_c\) 在 \(\operatorname{End}_k(V)\) 中的中心化子同构于 \(A\)。由\cref{b2:cor:csa-centralizer-factorization}的中心为 \(k\) 的情形，
 \[
 B_c\otimes_k A\cong\operatorname{End}_k(V).
 \]
@@ -123,28 +182,50 @@ K\otimes_kK\longrightarrow\prod_{g\in G}K,
 \end{equation}
 具体地，第一卷定理16.4.2给出本原元素 \(K=k(\theta)\)；其可分最小多项式在 \(K\) 中分成互异因子 \(T-g(\theta)\)。对 \(K[T]/(f)\) 应用第一卷定理10.4.3的中国剩余定理，便得到上述同构。
 
-选择单位指标，是因为该坐标把 \(a\otimes b\) 送到 \(ab\)：两份 \(K\) 在这一分量上的作用被对齐。记 \(e\in K\otimes K\) 为对应单位指标坐标的一、其他坐标零的幂等元，就有 \(e(a\otimes1)e=e(1\otimes a)e\)。因此希望取角以后只保留对两份 \(K\) 同步施加同一自同构的项。在 \(B_c\otimes B_d\) 中，用 \(u_g,v_h\) 表示两侧的基元。共轭 \(u_g\otimes v_h\) 对 \(K\otimes K\) 作用为 \(g\otimes h\)。在\eqref{b2:eq:galois-tensor-diagonal}下，它将 \(e\) 移到指标 \(gh^{-1}\) 的幂等元；这是因为第 \(t\) 坐标的值为 \(g\) 作用于原第 \(g^{-1}th\) 坐标的值。因此
+选择单位指标，是因为该坐标把 \(a\otimes b\) 送到 \(ab\)：两份 \(K\) 在这一分量上的作用被对齐。记 \(e_t\in K\otimes_kK\) 为在指标 \(t\) 处坐标为一、其他坐标为零的幂等元，并取 \(e=e_1\)，就有 \(e(a\otimes1)e=e(1\otimes a)e\)。因此希望取角以后只保留对两份 \(K\) 同步施加同一自同构的项。在 \(E=B_c\otimes_kB_d\) 中，用 \(u_g,v_h\) 表示两侧的基元，记 \(z_{g,h}=u_g\otimes v_h\)。共轭 \(z_{g,h}\) 对 \(K\otimes_kK\) 作用为 \(g\otimes h\)。若 \(\lambda_t(a\otimes b)=a\,t(b)\)，则
 \[
-e(u_g\otimes v_h)e=0\quad\text{若 }g\ne h.
+\lambda_t\bigl((g\otimes h)(a\otimes b)\bigr)
+=g(a)\,th(b)
+=g\bigl(\lambda_{g^{-1}th}(a\otimes b)\bigr).
 \]
-当 \(g=h\) 时，令 \(w_g=e(u_g\otimes v_g)e\)。取角后，系数环 \(e(K\otimes K)e\) 通过 \(a\otimes b\mapsto ab\) 识别为 \(K\)，而 \((w_g)_{g\in G}\) 为这个角代数的左 \(K\) 基：原代数在 \(K\otimes K\) 上以全部 \(u_g\otimes v_h\) 为基，取角恰好保留这些对角项。直接计算得到
+按可加性，这个等式对 \(K\otimes_kK\) 的全部元素成立。将它用于 \(e\)，可知 \(z_{g,h}e z_{g,h}^{-1}=e_{gh^{-1}}\)。不同坐标幂等元的乘积为零，因而
 \[
-w_g b=g(b)w_g,\qquad w_g w_h=c(g,h)d(g,h)w_{gh}.
+e z_{g,h}e=e e_{gh^{-1}}z_{g,h}=0\quad\text{若 }g\ne h.
 \]
-所以 \(e(B_c\otimes B_d)e\cong B_{cd}\)。非零幂等元取角不改变中心单代数的 Brauer 类：写代数为 \(M_r(D)\)，将该幂等算子的像、核选成右 \(D\) 基，角代数便为某个 \(M_s(D)\)、\(s>0\)，两者有同一除代数代表。因此 \([B_c]+[B_d]=[B_{cd}]\)，映射保持群运算。\(c=1\) 时的交叉积由\cref{b2:prop:crossed-product-split-coboundary}分裂，确实对应零元。
+当 \(g=h\) 时，\(z_{g,g}\) 与 \(e\) 交换，令 \(w_g=e z_{g,g}e=e z_{g,g}\)。取角后，系数环 \(e(K\otimes_kK)e\) 经 \(\lambda_1\) 识别为 \(K\)。原代数是自由左 \(K\otimes_kK\) 模，以全部 \(z_{g,h}\) 为基；取角消去了 \(g\ne h\) 的项，留下
+\[
+eEe=\bigoplus_{g\in G}e(K\otimes_kK)w_g
+\cong\bigoplus_{g\in G}K w_g
+\]
+的左 \(K\) 模分解。这里各项仍然独立，因为它们在原自由模中有不同的指标；而 \(w_g\ne0\)，否则右乘 \(z_{g,g}^{-1}\) 就会使 \(e=0\)。计算乘法时，\(g\otimes g\) 在单位坐标上正是 \(g\)，并且
+\[
+w_g w_h=e\bigl(c(g,h)\otimes d(g,h)\bigr)z_{gh,gh}
+=c(g,h)d(g,h)w_{gh}.
+\]
+同样，若用 \(e(b\otimes1)e\) 表示角代数中的标量 \(b\in K\)，便有
+\[
+w_g b=e(g(b)\otimes1)z_{g,g}=g(b)w_g.
+\]
+于是把 \(B_{cd}\) 的基元送到 \(w_g\)，把标量送到 \(e(K\otimes_kK)e\) 中的对应元素，得到含幺 \(k\) 代数同构 \(B_{cd}\to eEe\)，角代数的单位是 \(e=w_1\)。由\cref{b2:prop:brauer-division-representative}，中心单代数的非零幂等角与原代数有同一 Brauer 类。因此 \([B_c]+[B_d]=[B_{cd}]\)，映射保持群运算。\(c=1\) 时的交叉积由\cref{b2:prop:crossed-product-split-coboundary}分裂，确实对应零元。
 
-若 \([B_c]=[B_d]\)，两代数的次数同为 \(n\)。由\cref{b2:prop:brauer-division-representative}，同一个除代数上的矩阵大小也相同，故 \(B_c\cong B_d\)。选一个这样的同构，利用\cref{b2:thm:skolem-noether}比较它在 \(K\) 上的限制与标准嵌入，复合适当的内自同构后，可使它在 \(K\) 上为恒等。与 \(K\) 的交换关系随后迫使 \(u_g\) 的像为 \(b_g v_g\)、\(b_g\in K^\times\)：展开后，只有指标 \(g\) 的项能满足对每个 \(a\in K\) 都有 \(xa=g(a)x\)。比较两侧乘法给出
+若 \([B_c]=[B_d]\)，由\cref{b2:prop:brauer-division-representative}，可写 \(B_c\cong M_r(D)\)、\(B_d\cong M_s(D)\)，其中 \(D\) 为同一个中心除代数。两代数的次数同为 \(n\)，所以 \(r\deg D=s\deg D=n\)，从而 \(r=s\)，可取 \(k\) 代数同构 \(\phi:B_c\to B_d\)。记 \(\iota_c,\iota_d\) 为两代数中 \(K\) 的标准嵌入。由\cref{b2:thm:skolem-noether}，有 \(z\in B_d^\times\)，使
+\[
+\iota_d(a)=z\phi\bigl(\iota_c(a)\bigr)z^{-1}\qquad(a\in K).
+\]
+于是 \(\psi=\operatorname{Ad}(z)\phi\) 在两份标准 \(K\) 之间为恒等。将 \(x=\psi(u_g)\) 展开为 \(\sum_h b_{g,h}v_h\)，由 \(xa=g(a)x\) 得
+\[
+b_{g,h}h(a)=g(a)b_{g,h}\qquad(a\in K).
+\]
+若 \(b_{g,h}\ne0\)，可消去这个 \(K\) 中的系数，得到 \(h(a)=g(a)\) 对全部 \(a\in K\) 成立，故 \(h=g\)。因此 \(\psi(u_g)=b_gv_g\)，且因 \(u_g\) 可逆，有 \(b_g\in K^\times\)；单位条件给出 \(b_1=1\)。比较 \(\psi(u_g u_h)\) 与 \(\psi(u_g)\psi(u_h)\) 的系数，得到
 \[
 c(g,h)b_{gh}=b_g\cdot g(b_h)d(g,h).
 \]
 因此 \(c/d\) 为余边，证明单射性。
 
-最后，对任意 \([A]\in\operatorname{Br}(K/k)\)，\cref{b2:prop:split-algebra-factor-set}给出一个余圈 \(c\)，使 \([A]=-[B_c]\)。由已经证明的乘法相容性，它就是 \([c^{-1}]\) 的像。因此映射满射，所需群同构成立。
+最后，对任意 \([A]\in\operatorname{Br}(K/k)\)，\(A_K\) 的 Brauer 类为零，由\cref{b2:prop:brauer-division-representative}在底域 \(K\) 上的结论，它同构于一个 \(K\) 上的全矩阵代数。因此可应用\cref{b2:prop:split-algebra-factor-set}，得到余圈 \(c\)，使 \([A]=-[B_c]\)。由已经证明的乘法相容性，\([B_{c^{-1}}]=-[B_c]\)，所以原类是 \([c^{-1}]\) 的像。这证明满射性，所需群同构成立。
 \end{proof}
 
-半线性映射作为 \(k\) 线性算子参与交叉积的表示，却同时改变 \(K\) 标量。乘法公式中的 \(g\bigl(c(h,t)\bigr)\) 正记录了这种改变。
-
-上述两种方向可以集中记为
+半线性映射作为 \(k\) 线性算子参与交叉积的表示，却同时改变 \(K\) 标量。乘法公式中的 \(g\bigl(c(h,t)\bigr)\) 正记录了这种改变。从余圈构造交叉积，与从分裂代数的半线性作用提取因子集，这两种构造的关系为
 \[
 [c]\longmapsto[B_c],\qquad
 A\longmapsto c_A,\qquad
@@ -161,7 +242,57 @@ H^2(G,K^\times)\cong\operatorname{Br}(K/k)
 具体地，映射 \(a\operatorname{N}_{K/k}(K^\times)\mapsto[(K/k,\sigma,a)]\) 给出范数商到相对 Brauer 群的同构。
 \end{corollary}
 \begin{proof}
-由\cref{b2:thm:relative-brauer-cocycles}，每个相对 Brauer 类都由某个交叉积 \(B_c\) 表示。在其中取 \(u=u_\sigma\)。它的 \(n\) 次幂是某个 \(a\in K^\times\)，又因与 \(u\) 交换而被 \(\sigma\) 固定，故 \(a\in k^\times\)。各 \(u^i\)、\(0\le i<n\)，分别是基元 \(u_{\sigma^i}\) 的非零 \(K\) 倍数，所以 \(B_c\cong(K/k,\sigma,a)\)。这说明参数给出从 \(k^\times\) 到 \(\operatorname{Br}(K/k)\) 的满射。由\eqref{b2:eq:cyclic-algebra-product}，参数 \(a\) 的进位余圈为 \(c_a(\sigma^i,\sigma^j)=a^{\lfloor(i+j)/n\rfloor}\)，所以 \(c_a c_b=c_{ab}\)，该映射为群同态；由\cref{b2:thm:cyclic-algebra-norm-splitting}，其核恰为 \(\operatorname{N}_{K/k}(K^\times)\)。
+由\cref{b2:thm:relative-brauer-cocycles}，每个相对 Brauer 类都由某个交叉积 \(B_c\) 表示。在其中取 \(u=u_\sigma\)。反复使用乘法规则，可知 \(u^i\) 是 \(u_{\sigma^i}\) 的非零 \(K\) 倍数，特别地 \(u^n=a\in K^\times\)。因为 \(u\) 与其幂 \(a\) 交换，而 \(ua=\sigma(a)u\)，可消去 \(u\) 得 \(\sigma(a)=a\)，所以 \(a\in k^\times\)。将原基换成 \(1,u,\ldots,u^{n-1}\)，就是一次前述缩放基元的操作；它不改变余圈的上同调类，却将乘法误差化为
+\[
+u^i u^j=
+\begin{cases}
+u^{i+j},&i+j<n,\\
+a\,u^{i+j-n},&i+j\ge n,
+\end{cases}
+\qquad(0\le i,j<n).
+\]
+因此相应余圈为
+\[
+c_a(\sigma^i,\sigma^j)=a^{\lfloor(i+j)/n\rfloor},
+\]
+且 \(B_c\cong(K/k,\sigma,a)\)。这证明参数给出从 \(k^\times\) 到 \(\operatorname{Br}(K/k)\) 的满射。进位余圈满足 \(c_a c_b=c_{ab}\)，由\cref{b2:thm:relative-brauer-cocycles}，该参数映射是群同态。
+
+若再用 \(u'=bu\)、\(b\in K^\times\)，则
+\[
+(bu)^n=b\,\sigma(b)\cdots\sigma^{n-1}(b)\,u^n
+=\operatorname{N}_{K/k}(b)a.
+\]
+因而乘以一个范数正对应再次改变这组基元。由\cref{b2:thm:cyclic-algebra-norm-splitting}，参数映射的核恰为 \(\operatorname{N}_{K/k}(K^\times)\)。商群同构定理遂给出所述范数商，连同\cref{b2:thm:relative-brauer-cocycles}便得到全部同构。
 \end{proof}
 
-第四卷第 12.1--12.2 节将从上链复形讨论一般群上同调；这里所需的二阶对应已由余圈方程得到。第五卷第 5.3 节的 Brauer 诱导定理研究有限群特征标，与本章按张量积运算的 Brauer 群是不同对象。
+交叉积的基元除了记录乘法，也使约化迹可以直接计算。左乘 \(u_h\) 将指标 \(g\) 移到 \(hg\)，因此只有单位指标的项会贡献矩阵的对角元；计算时仍须把左 \(K\) 系数转换成右 \(K\) 坐标。
+
+\begin{proposition}\label{b2:prop:crossed-product-reduced-trace}
+设 \(K/k\) 为有限 Galois 扩张，\(G=\operatorname{Gal}(K/k)\)，\(c:G\times G\to K^\times\) 为归一化 \(2\)-余圈，\(B_c=\bigoplus_{g\in G}Ku_g\) 为相应交叉积代数。对任意 \(x=\sum_{g\in G}a_g u_g\)、\(a_g\in K\)，有
+\[
+\operatorname{Trd}_{B_c/k}(x)=\operatorname{Tr}_{K/k}(a_1)
+=\sum_{g\in G}g(a_1).
+\]
+\end{proposition}
+\begin{proof}
+记 \(n=[K:k]\)，将 \(B_c\) 的右 \(K\) 空间记为 \(W\)。由 \(a u_g=u_g g^{-1}(a)\)，\((u_g)_{g\in G}\) 也是 \(W\) 的一组基。根据\cref{b2:prop:maximal-field-splits-csa}中的分裂同构，
+\[
+B_c\otimes_k K\longrightarrow
+\operatorname{End}_K(W),\qquad
+x\otimes b\longmapsto(y\mapsto xyb),
+\]
+其中目标作用在原代数的右 \(K\) 空间上，而来源是标量扩张代数。由于 \(\dim_KW=n\)，右端是 \(M_n(K)\) 的一个模型。在这个模型中，\(x\otimes1\) 是左乘 \(x\) 的算子。对 \(h,g\in G\)，
+\[
+(a_hu_h)u_g
+=a_h c(h,g)u_{hg}
+=u_{hg}(hg)^{-1}\bigl(a_h c(h,g)\bigr).
+\]
+因此在列 \(g\) 中，这一项的矩阵系数只出现在行 \(hg\)。若 \(h\ne1\)，行指标不等于列指标，故它不贡献对角元；若 \(h=1\)，由 \(c(1,g)=1\)，对角元恰为 \(g^{-1}(a_1)\)。左乘 \(x\) 的矩阵迹于是为
+\[
+\sum_{g\in G}g^{-1}(a_1)=\sum_{g\in G}g(a_1)
+=\operatorname{Tr}_{K/k}(a_1).
+\]
+有限 Galois 扩张的域迹等于全部共轭之和，而\cref{b2:def:reduced-trace-norm}中的约化迹就是任意分裂模型里的矩阵迹，故得所述公式。
+\end{proof}
+
+第五卷第 5.3 节的 Brauer 诱导定理研究有限群特征标，与本章按张量积运算的 Brauer 群是不同对象。

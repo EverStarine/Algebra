@@ -8,7 +8,7 @@
 
 % 纲要要点（供目录核对）：
 % * 子模、商模及其泛性质
-% * 核、像、余核与同态群
+% * 核、像、余核与同态群；算子交织与自同态环
 % * 模的同构定理
 
 \subsection{子模、商模及其泛性质}
@@ -24,6 +24,15 @@ f(m+m')=f(m)+f(m'),\qquad f(rm)=r\cdot f(m).
 
 同态自动把零元送到零元、把负元送到负元。若 \(f\) 双射，对 \(n=f(m)\)、\(n'=f(m')\)，有 \(f^{-1}(n+n')=m+m'\) 与 \(f^{-1}(rn)=rm\)，故逆映射也是模同态。\(\mathbb Z\) 模同态正是交换群同态，因为可加性迫使它保持全部整数倍。
 
+\begin{proposition}\label{b2:prop:operator-module-intertwiners}
+设 \(V,W\) 是域 \(k\) 上的向量空间，\(T\in\operatorname{End}_k(V)\)、\(S\in\operatorname{End}_k(W)\)，相应的算子模为 \(V_T,W_S\)。映射 \(F:V\to W\) 是 \(k[t]\) 模同态，当且仅当它 \(k\) 线性且满足 \(FT=SF\)。因此 \(V_T\cong W_S\) 当且仅当存在满足此等式的 \(k\) 线性同构；在同一个有限维空间上，这等价于两个算子的矩阵相似。
+\end{proposition}
+\begin{proof}
+模同态保持常数多项式的作用，故 \(k\) 线性；保持 \(t\) 的作用恰好给出 \(FT=SF\)。反过来，\cref{b2:prop:polynomial-action-subspace}说明 \(k\) 线性映射满足 \(FT=SF\) 时，对每个 \(p\in k[t]\) 都有 \(Fp(T)=p(S)F\)，所以它保持全部标量作用，是模同态。可逆时等式改写为 \(S=FTF^{-1}\)，得到相似关系。
+\end{proof}
+
+由此，第一章的算子相似问题就成为算子模的同构问题；所比较的既是向量空间，也是指定的多项式作用。
+
 \begin{definition}\label{b2:def:submodule}
 设 \(R\) 是环，\(M\) 是左 \(R\) 模。若子集 \(L\subseteq M\) 包含 \(0\)，且对任意 \(x,y\in L\)、\(r\in R\) 都有 \(x+y\in L\)、\(-x\in L\) 与 \(rx\in L\)，就称 \(L\) 为 \(M\) 的\term[zimo]{子模}[submodule]。它在限制的运算下本身是左 \(R\) 模，记为 \(L\le M\)。
 \end{definition}
@@ -36,6 +45,13 @@ f(m+m')=f(m)+f(m'),\qquad f(rm)=r\cdot f(m).
 (m+L)+(m'+L)=(m+m')+L,\qquad r(m+L)=rm+L.
 \]
 这给出左 \(R\) 模，称为\term[shangmo]{商模}[quotient module]。商映射 \(q:M\to M/L\)、\(q(m)=m+L\) 是满同态。对任意左 \(R\) 模 \(P\) 及同态 \(g:M\to P\)，存在同态 \(\bar g:M/L\to P\) 满足 \(g=\bar gq\)，当且仅当 \(g(L)=0\)；存在时 \(\bar g\) 唯一。
+当 \(g(L)=0\) 时，所要求的分解由交换图表示为
+\[
+\begin{tikzcd}[column sep=3.5em,row sep=2.2em]
+M\arrow[r,"g"]\arrow[d,"q"']&P\\
+M/L\arrow[ur,dashed,"\bar g"']&
+\end{tikzcd}
+\]
 \end{proposition}
 \begin{proof}
 陪集相等 \(m+L=m'+L\) 等价于 \(m-m'\in L\)。如果另取代表元 \(m+\ell\)、\(m'+\ell'\)，两者之和与 \(m+m'\) 的差为 \(\ell+\ell'\in L\)，而 \(r(m+\ell)-rm=r\ell\in L\)。所以两项运算均不依赖代表元。加法的结合律与交换律由 \(M\) 中对应等式下降，零元是 \(L\)，\(m+L\) 的负元是 \(-m+L\)。例如标量乘法的相容性为
@@ -66,10 +82,22 @@ f(m+m')=f(m)+f(m'),\qquad f(rm)=r\cdot f(m).
 这里子模的断言可直接检查：若 \(f(x)=f(y)=0\)，则 \(f(x-y)=0\) 与 \(f(rx)=0\)；若两个元素为 \(f(x),f(y)\)，则其差为 \(f(x-y)\)，\(r\cdot f(x)=f(rx)\)。一个同态是单射，当且仅当核为零，因为 \(f(x)=f(y)\) 等价于 \(x-y\in\ker f\)。它是满射，当且仅当余核为零，因为这恰好表示 \(N=\operatorname{im}f\)。余核把整个像压成零来度量满射性的缺失，并不是从陪域中选出一个与像互补的子模。
 
 \ProseParagraphBreak
-余核的商映射满足 \(q_ff=0\)。若同态 \(h:N\to P\) 满足 \(hf=0\)，这正是说 \(h\) 在 \(\operatorname{im}f\) 上为零；由\cref{b2:prop:quotient-module}，它唯一地分解为 \(h=\bar hq_f\)。核也有对应的性质：若 \(u:P\to M\) 满足 \(fu=0\)，则 \(u(P)\subseteq\ker f\)，从而 \(u\) 唯一地经核的包含映射分解。这两种性质都指定了映射，不只是指定一个模的同构类型。
+记核的包含映射为 \(i_f:\ker f\to M\)。若同态 \(u:P\to M\) 满足 \(fu=0\)，则 \(u(P)\subseteq\ker f\)，故 \(u\) 唯一地分解为 \(u=i_f\bar u\)。余核的商映射满足 \(q_ff=0\)。若同态 \(h:N\to P\) 满足 \(hf=0\)，这正是说 \(h\) 在 \(\operatorname{im}f\) 上为零；由\cref{b2:prop:quotient-module}，它唯一地分解为 \(h=\bar hq_f\)。这两个分解分别由下图的虚线箭头给出：
+\[
+\begin{tikzcd}[column sep=1.7em,row sep=2em]
+P\arrow[r,"u"]\arrow[dr,dashed,"\bar u"']&M\arrow[r,"f"]&N\\
+&\ker f\arrow[u,"i_f"']&
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=1.7em,row sep=2em]
+M\arrow[r,"f"]&N\arrow[r,"h"]\arrow[d,"q_f"']&P\\
+&\operatorname{coker}f\arrow[ur,dashed,"\bar h"']&
+\end{tikzcd}
+\]
+核与余核在这里都带有指定的映射，分解要求与这些映射相容，而不只是给出一个模的同构类型。
 
 \ProseParagraphBreak
-例如同态 \(\mathbb Z\to\mathbb Z\)、\(a\mapsto6a\) 的核为零、像为 \(6\mathbb Z\)、余核为 \(\mathbb Z/6\mathbb Z\)。它是单射，却不是满射。虽然定义域和陪域都等于 \(\mathbb Z\)，却不能像处理一维向量空间中的非零标量倍乘那样消去 \(6\)：整数环上的 \(6\) 没有乘法逆元。
+例如同态 \(\mathbb Z\to\mathbb Z\)、\(a\mapsto6a\) 的核为零、像为 \(6\mathbb Z\)、余核为 \(\mathbb Z/6\mathbb Z\)。它是单射，却不是满射。这里 \(6\mathbb Z\) 没有直和补模：任意非零子模 \(L\le\mathbb Z\) 都含有某个非零整数 \(\ell\)，因而 \(6\ell\) 是 \(L\cap6\mathbb Z\) 的非零元素，不能满足直和所要求的交为零。零子模又不能与 \(6\mathbb Z\) 相加得到整个 \(\mathbb Z\)。余核仍然存在，它将全部 \(6\mathbb Z\) 视为零，并不要求从陪域中选出一个补模。
 
 记所有模同态 \(M\to N\) 的集合为 \(\operatorname{Hom}_R(M,N)\)。逐点定义
 \[
@@ -77,6 +105,14 @@ f(m+m')=f(m)+f(m'),\qquad f(rm)=r\cdot f(m).
 \]
 例如 \((f+g)(rm)=r\cdot f(m)+r\cdot g(m)=r(f+g)(m)\)，所以和仍为模同态；关于加法的其余条件来自 \(N\) 的交换群结构。于是 \(\operatorname{Hom}_R(M,N)\) 总是一个交换群，零元为零映射。
 \symidx{\(\operatorname{Hom}_R(M,N)\)：左 \(R\) 模同态组成的交换群}
+
+当定义域与陪域相同，同态还可以复合。记
+\[
+\operatorname{End}_R(M)\coloneqq\operatorname{Hom}_R(M,M),
+\]
+以逐点加法和复合乘法 \(fg=f\circ g\) 构成\term[mo-zitongtai-huan]{模自同态环}[endomorphism ring of a module]，单位是恒等映射。复合仍保持加法与 \(R\) 作用，其余环公理与\secref{b2:sec:0201}中的加法自同态环一样逐点核验。
+
+若还要在同态群上定义标量作用，必须检查作用后的映射仍为 \(R\) 线性。新作用可以施加在陪域的值上，也可以先施加在定义域的元素上再取其像；两者都需要与原来的 \(R\) 作用相容。
 
 \begin{proposition}\label{b2:prop:hom-central-action}
 设 \(R\) 是环，\(M,N\) 是左 \(R\) 模。环 \(R\) 的中心
@@ -111,7 +147,7 @@ Z(R)=\{\,z\in R\mid zr=rz\text{ 对每个 }r\in R\,\}
 \[
 \bigl(s(tf)\bigr)(m)=(tf)(ms)=f\bigl((ms)t\bigr)=f\bigl(m(st)\bigr)=((st)f)(m).
 \]
-其余模公理也来自 \(M\) 上的右作用。可见同态群上的标量结构取决于作用落在陪域还是定义域，以及相应的交换条件，不能仅凭记号 \(\operatorname{Hom}_R\) 猜出。
+其余模公理也来自 \(M\) 上的右作用。这里把定义域的右作用变成了同态群上的左作用，次序由 \((ms)t=m(st)\) 保证；它与直接在陪域取值上作用是两种不同的构造。
 
 \begin{proposition}\label{b2:prop:regular-hom-endomorphism}
 设 \(R\) 是环，\(M\) 是左 \(R\) 模。取值映射
@@ -126,7 +162,7 @@ Z(R)=\{\,z\in R\mid zr=rz\text{ 对每个 }r\in R\,\}
 \begin{proof}
 线性条件迫使 \(f(r)=f(r1_R)=r\cdot f(1_R)\)；任意 \(m\) 所给的映射 \(r\mapsto rm\) 确实线性。这两个对应逐点互逆，且保持加法。
 
-当 \(M=R\) 时，\(f\) 因而是某个右乘映射 \(u_a(r)=ra\)。所有模自同态在加法与复合下组成环，论证与加法自同态环相同。复合次序给出
+当 \(M=R\) 时，\(f\) 因而是某个右乘映射 \(u_a(r)=ra\)。左 \(R\) 线性要求 \(f(sr)=sf(r)\)，参数 \(a=f(1_R)\) 出现在 \(r\) 的右侧；左乘 \(r\mapsto ar\) 则要求 \(asr=sar\)，对一般的 \(a,s\) 并不成立。右乘自同态的复合次序给出
 \[
 (u_a\circ u_b)(r)=(rb)a=r(ba)=u_{ba}(r).
 \]
@@ -177,7 +213,7 @@ u+(U\cap V)\longmapsto u+V.
 和中的两个元素相减后仍为来自 \(U,V\) 的元素之和，标量乘法也保持这种形式；交中的元素同时满足两个子模的封闭条件。因此它们都是子模。考虑同态 \(U\to(U+V)/V\)、\(u\mapsto u+V\)。每个陪集 \((u+v)+V=u+V\)，故它满射；零像的条件为 \(u\in V\)，故核为 \(U\cap V\)。再用\cref{b2:thm:module-first-isomorphism}即可。
 \end{proof}
 
-后两个结果分别包含\term[mo-disan-tonggou-dingli]{模的第三同构定理}[third isomorphism theorem for modules]与\term[mo-dier-tonggou-dingli]{模的第二同构定理}[second isomorphism theorem for modules]。它们都由具体同态的核与像得到，不另依赖基或矩阵。作为一个算例，取 \(M=\mathbb Z\)、\(U=4\mathbb Z\)、\(V=6\mathbb Z\)。此时 \(U+V=2\mathbb Z\)、\(U\cap V=12\mathbb Z\)，得到
+后两个结果分别包含\term[mo-disan-tonggou-dingli]{模的第三同构定理}[third isomorphism theorem for modules]与\term[mo-dier-tonggou-dingli]{模的第二同构定理}[second isomorphism theorem for modules]。两者都先构造一个自然满同态，再计算它的核，最后应用第一同构定理：第二同构使用 \(U\to(U+V)/V\)，第三同构使用 \(M/L\to M/U\)。商模公式记录的是这两个具体映射的结果。作为一个算例，取 \(M=\mathbb Z\)、\(U=4\mathbb Z\)、\(V=6\mathbb Z\)。此时 \(U+V=2\mathbb Z\)、\(U\cap V=12\mathbb Z\)，得到
 \[
 4\mathbb Z/12\mathbb Z\cong2\mathbb Z/6\mathbb Z.
 \]

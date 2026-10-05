@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 7.4 限制条件与反例
-% 纲要位置：计划纲要.md，第 1028 行。
+% 纲要位置：计划纲要.md，第 1295 行。
 
 \section{限制条件与反例}
 \label{b2:sec:0704}
@@ -10,7 +10,7 @@
 % 纲要要点（供目录核对）：
 %
 % * 一般整环上无挠不等于平坦
-% * 有限展示平坦模的投射性
+% * 有限展示平坦模的投射性与左 Noether 环上的有限生成推论
 % * Ext、Tor 对投射、内射、平坦模的刻画；构造与证明在第四卷第8、9章
 %
 % ---
@@ -19,10 +19,10 @@
 \subsection{无挠与平坦的区别}
 \label{b2:subsec:0704:01}
 
-取 \(R=k[x,y]\)、\(I=(x,y)\)。由于 \(I\subseteq R\)，它无挠，且由两个元素生成。不过它不平坦。下面具体找出被张量积消去的一个非零元素，而不只以“不是主理想”作为理由。
+取域 \(k\) 上的多项式环 \(R=k[x,y]\)、\(I=(x,y)\)。由于 \(I\subseteq R\)，它无挠，且由两个元素生成。无挠性排除的是一元关系 \(am=0\)（\(a\ne0\)）中的非零 \(m\)；这里两个生成元却有关系 \((-y)x+xy=0\)。下面将看到，这条二元关系留下的非零张量会被包含 \(I\hookrightarrow R\) 消去。
 
 \begin{example}\label{b2:exm:torsionfree-not-flat}
-多项式环 \(R=k[x,y]\) 的理想 \(I=(x,y)\) 是有限展示无挠模，却不是平坦模。
+设 \(k\) 为域，\(R=k[x,y]\)。理想 \(I=(x,y)\) 是有限展示无挠 \(R\) 模，却不是平坦模。
 \end{example}
 \begin{proof}
 满射 \(q:R^2\to I\)、\((a,b)\mapsto ax+by\) 的核由 \((-y,x)\) 生成。事实上，若 \(ax+by=0\)，在 \(R/(x)=k[y]\) 中得到 \(\bar b y=0\)，所以 \(b=xc\)；再由整环中可消去 \(x\)，得到 \(a=-yc\)。反向包含直接成立。因此
@@ -31,7 +31,7 @@ R\xrightarrow{c\mapsto(-yc,xc)}R^2\xrightarrow{q}I\longrightarrow0
 \]
 是一个有限展示。
 
-与 \(I\) 张量，利用右正合性及有限直和、单位同构，得到
+与 \(I\) 张量，利用\cref{b2:cor:tensor-finite-presentation}对关系矩阵 \(\binom{-y}{x}\) 的计算，得到
 \[
 I\otimes_R I\cong (I\oplus I)/\bigl\{\,(-yc,xc):c\in I\,\bigr\}.
 \]
@@ -40,10 +40,12 @@ I\otimes_R I\cong (I\oplus I)/\bigl\{\,(-yc,xc):c\in I\,\bigr\}.
 然而包含 \(I\hookrightarrow R\) 张量 \(I\) 后，把它送到 \(R\otimes_R I\cong I\) 中的 \(xy-yx=0\)。这给出未被保持的单射，故 \(I\) 不平坦。
 \end{proof}
 
-\(I\) 的非平坦性不是因为它有挠，也不是因为关系无限多。障碍来自两个生成元共同满足的关系；只检查单个非零标量的乘法映射，无法发现这一障碍。
+张量 \(x\otimes y-y\otimes x\) 在乘法下成为零，却未由张量积本身的关系化为零。这个障碍涉及两个系数共同作用。无挠性只控制一个非零标量的零化关系，平坦性则要控制任意有限关系。
 
 \subsection{有限展示平坦模的投射性}
 \label{b2:subsec:0704:02}
+
+若要将模的生成元送入自由模，必须保证这些像满足原模的全部关系。平坦性的有限关系判据能够同时处理一个有限关系系统；有限展示恰好保证全部关系由这样的系统生成，因而能够构造一个定义在整个商模上的同态。
 
 \begin{theorem}\label{b2:thm:fp-flat-projective}
 设 \(R\) 是含幺环，\(M\) 是左 \(R\) 模。\(M\) 有限展示且平坦，当且仅当它有限生成且投射。
@@ -58,33 +60,41 @@ I\otimes_R I\cong (I\oplus I)/\bigl\{\,(-yc,xc):c\in I\,\bigr\}.
 x_i=\sum_jb_{ij}y_j,\qquad
 \sum_i a_{\ell i}b_{ij}=0\quad\text{对所有 }\ell,j.
 \]
-在左自由模 \(R^t\) 中记标准基为 \(e_j\)。赋值 \(x_i\mapsto\sum_j b_{ij}e_j\) 把每个给定关系送到零，也就把它们生成的全部关系送到零，因而诱导左模同态 \(h:M\to R^t\)。再令 \(g:R^t\to M\)、\(e_j\mapsto y_j\)。在每个生成元上有 \(gh(x_i)=x_i\)，所以 \(gh=\operatorname{id}_M\)。由\cref{b2:prop:finite-projective-summand}，\(M\) 有限生成且投射。
+记 \(A=(a_{\ell i})\)、\(B=(b_{ij})\)、\(X=(x_i)^{\mathsf T}\)、\(Y=(y_j)^{\mathsf T}\)。上述等式就是 \(X=BY\)、\(AB=0\)，其中乘积始终按原次序计算。在左自由模 \(R^t\) 中记标准基为 \(e_j\)。以 \(B\) 的第 \(i\) 行规定 \(x_i\mapsto\sum_j b_{ij}e_j\)，则第 \(\ell\) 条关系的像为 \(\sum_j(\sum_i a_{\ell i}b_{ij})e_j=0\)。因此这个赋值杀掉所有展示关系及其左线性组合，诱导左模同态 \(h:M\to R^t\)。再用 \(Y\) 定义 \(g:R^t\to M\)、\(e_j\mapsto y_j\)。等式 \(X=BY\) 给出 \(gh(x_i)=x_i\)，所以 \(gh=\operatorname{id}_M\)。由\cref{b2:prop:finite-projective-summand}，\(M\) 有限生成且投射。
 
 反过来，有限生成投射模 \(M\) 是某个 \(R^n\) 的直和因子，写 \(R^n=M\oplus K\)。\(K\) 也是 \(R^n\) 的同态像，因此有限生成。选有限自由满射 \(R^s\to K\)，再复合包含 \(K\to R^n\)，得到有限展示 \(R^s\to R^n\to M\to0\)。投射模平坦则是\cref{b2:thm:projective-flat}。
 \end{proof}
 
-证明需要一次处理全部关系，所以用的是有限展示，而非仅有限生成。若 \(R\) 是左 Noether 环，即每个左理想都有限生成，每个有限生成模便都有有限展示：有限自由模的子模有限生成，取满射的核即可。这里用到的有限自由模子模性质也可由理想情形归纳得到：对子模 \(K\subseteq R^n\)，投影到最后一个坐标的像是有限生成左理想，核是 \(R^{n-1}\) 的子模；将像的有限生成元提升，再加上核的生成元，就生成 \(K\)。因此在左 Noether 环上，有限生成平坦模一定投射。
+若环的左理想都有限生成，即环是左 Noether 环，有限生成模的关系也能由有限多个关系生成。于是得到下面的推论。
 
-\ProseParagraphBreak
-以下例子说明，一般环上不能删去“有限展示”这一假设。
+\begin{corollary}\label{b2:cor:noetherian-fg-flat-projective}
+设 \(R\) 为左 Noether 环。每个有限生成平坦左 \(R\) 模都是投射模。
+\end{corollary}
+\begin{proof}
+先对 \(n\) 归纳证明 \(R^n\) 的每个左子模有限生成。\(n=1\) 时这就是左理想的假设。对于 \(K\subseteq R^n\)，最后坐标投影的像是有限生成左理想，核可视为 \(R^{n-1}\) 的子模，由归纳假设有限生成。把像的有限生成元提升到 \(K\)，再添上核的有限生成元，就生成 \(K\)。
+
+对有限生成左模 \(M\) 取满射 \(R^n\to M\)，其核因上述结论而有限生成。因此 \(M\) 有限展示；若它又平坦，\cref{b2:thm:fp-flat-projective}便给出投射性。
+\end{proof}
+
+以下例子说明，一般环上有限生成并不足以保证有限展示。
 
 \begin{example}[有限生成平坦但非投射的循环模]\label{b2:exm:fg-flat-nonprojective}
 设 \(k\) 是域，\(R=\prod_{n\ge1}k\)，\(I=\bigoplus_{n\ge1}k\) 是有限支集序列组成的理想。循环模 \(M=R/I\) 平坦，却不投射；它也不有限展示。
 \end{example}
 \begin{proof}
-给定有限关系 \(\sum_{i=1}^r a_i\bar b_i=0\)，选取 \(b_i\in R\) 作代表，令 \(c=\sum_i a_i b_i\in I\)。取有限坐标集 \(F\) 包含 \(c\) 的支集，并令 \(e_F\) 是这些坐标为一、其余为零的幂等元。因为 \(e_Fb_i\in I\)，有 \(\bar b_i=(1-e_F)b_i\bar1\)，而
+给定有限关系 \(\sum_{i=1}^r a_i\bar b_i=0\)，选取 \(b_i\in R\) 作代表，令 \(c=\sum_i a_i b_i\in I\)。这条关系在商模中成立，在环中却可能有误差 \(c\)。误差有有限支集，故可取有限坐标集 \(F\) 包含它的支集，并令 \(e_F\) 是这些坐标为一、其余为零的幂等元。它满足 \(e_Fc=c\)，相当于只对这项误差起单位作用；乘 \(1-e_F\) 就消去了误差。因为 \(e_Fb_i\in I\)，这一修正不改变 \(\bar b_i\)，于是有 \(\bar b_i=(1-e_F)b_i\bar1\)，而
 \[
 \sum_i a_i(1-e_F)b_i=(1-e_F)c=0.
 \]
-由\cref{b2:thm:flat-finite-relations}，\(M\) 平坦。
+所有 \(\bar b_i\) 由共同的元素 \(\bar1\) 重构，且其系数 \((1-e_F)b_i\) 在环中满足真正的零关系。由\cref{b2:thm:flat-finite-relations}，\(M\) 平坦。
 
-若 \(M\) 投射，自然满射 \(R\to M\) 分裂，因而 \(I\) 是正则模的直和因子。相应投影 \(p:R\to I\) 由 \(e=p(1)\in I\) 决定，其像为 \(Re\)，所以 \(I=Re\)。但 \(e\) 只有有限支集，\(Re\) 无法包含支集在其外的单坐标向量，矛盾。相同的支集论证说明 \(I\) 不是有限生成理想，由\cref{b2:prop:finite-presentation-kernel}，\(R/I\) 不有限展示。因而它正好展示了定理中不能省去的条件。
+若 \(M\) 投射，自然满射 \(R\to M\) 分裂，因而 \(I\) 是正则模的直和因子。相应投影 \(p:R\to I\) 由 \(e=p(1)\in I\) 决定，其像为 \(Re\)，所以 \(I=Re\)。但 \(e\) 只有有限支集，\(Re\) 无法包含支集在其外的单坐标向量，矛盾。相同的支集论证说明 \(I\) 不是有限生成理想，由\cref{b2:prop:finite-presentation-kernel}，\(R/I\) 不有限展示。它只有一个生成元 \(\bar1\)，但这个生成元的全部关系组成的理想 \(I\) 不能由有限多条关系生成。
 \end{proof}
 
 \subsection{Ext、Tor 刻画}
 \label{b2:subsec:0704:03}
 
-本编始终通过提升、延拓和张量正合性来定义三类模。第四卷将构造导出函子 \(\operatorname{Ext}\) 与 \(\operatorname{Tor}\)，并证明下列刻画：
+提升、延拓和张量正合性还可以用记录其失败的交换群来研究。设 \(R\) 为含幺环，\(P,E,M\) 为幺性左 \(R\) 模。第四卷将构造导出函子 \(\operatorname{Ext}\) 与 \(\operatorname{Tor}\)，并证明下列刻画；这里先说明公式与本章定义的联系：
 \[
 \begin{aligned}
 P\text{ 投射}&\quad\Longleftrightarrow\quad
@@ -95,10 +105,10 @@ M\text{ 平坦}&\quad\Longleftrightarrow\quad
 \operatorname{Tor}_1^R(N,M)=0\ \text{对每个右模 }N.
 \end{aligned}
 \]
-消解及 Ext、Tor 的构造见第四卷第8、9章，具体定义在第9.2—9.3节。尤其第三行须让右模 \(N\) 位于张量积的左侧，与本章平坦左模的约定一致。
+消解及 Ext、Tor 的构造见第四卷第8、9章，具体定义在第9.2—9.3节，上述刻画的证明在第9.4节。尤其第三行须让右模 \(N\) 位于张量积的左侧，与本章平坦左模的约定一致。
 
 \ProseParagraphBreak
-可以先从已经学过的正合列理解这些条件。投射性使以 \(P\) 为商模的扩张分裂，内射性使以 \(E\) 为子模的扩张分裂；平坦性使张量以后不丢失左端的单射。这三种失败都能通过新构造的模来记录。如何构造它们、证明与所选消解无关，并建立长正合列，是后续同调代数的内容。
+第一行说，以 \(P\) 为商模的短正合列都能分裂，相应的 \(\operatorname{Ext}^1\) 不留下扩张障碍；第二行说，以 \(E\) 为子模的短正合列都能分裂。第三行则说，任意右模与 \(M\) 配对时，\(\operatorname{Tor}_1\) 不留下张量正合性的障碍。本章已经用提升、延拓和单射保持完整刻画了这些性质；上述符号的定义、计算、消解选择无关性和长正合列将在第四卷建立。
 
 \ProseParagraphBreak
 \cref{b2:tab:projective-injective-flat-exactness}将本章的三个定义并列。前两行的 \(A,B,C\) 属于左 \(R\) 模短正合列，最后一行属于右 \(R\) 模短正合列；\(P,E,M\) 均为左 \(R\) 模。各性质所补足的正是相应函子原先未必保持的那个箭头。

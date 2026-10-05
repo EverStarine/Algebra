@@ -1,20 +1,19 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 10.4 经典群及复数结构
-% 本轮补充的纲要细目：
-% * 完整证明非退化型的伴随算子存在唯一性及反乘法性质；定义型的相似变换和乘子，计算等距核与矩阵例子
-% * 区别型的相似变换、矩阵共轭与一般线性群；正交、辛、Hermitian 条件分别写清
-% 纲要位置：计划纲要.md，第 1114 行。
+% 纲要位置：计划纲要.md，第 1392 行。
 
 \section{经典群及复数结构}
 \label{b2:sec:1004}
 
 一个型给空间增加了结构，保持这种结构的可逆线性变换便组成一个群。不同的型给出不同的经典群；复数域上还须区别双线性配对与带共轭的配对。本节最后的 Clifford 代数说明二次型也能直接参与一个结合代数的定义。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
 % * 正交群、辛群及酉群
-% * Hermitian 型、伴随与型的相似变换
-% * Clifford 代数的构造作为选读延伸
+% * Hermitian 型与复数结构；用实部和乘以i恢复完整配对
+% * 完整证明非退化型的伴随算子存在唯一性、反乘法性质及像与核关系；型的相似变换与乘子的实际像
+% * 区别型的相似变换、矩阵共轭与一般线性群；正交、辛、Hermitian 条件分别写清
+% * Clifford 代数的构造作为选读延伸；零型回到外代数，证明双曲平面及一维模型
 % #### 10.4.3* Clifford 代数的构造
 %
 % ---
@@ -41,7 +40,7 @@
 这些集合确为群：恒等变换保持型；保持型的两个映射的复合也保持型；在保持型的等式中代入逆映射的像，就得到逆映射也保持型。改变基只改变群在一般线性群中的矩阵实现，不改变其抽象含义。
 
 \ProseParagraphBreak
-对 \(G^{\mathsf T}BG=B\) 取行列式，因 \(\det B\ne0\)，得到 \((\det G)^2=1\)。因此特征不为二时，\(\det G\in\{1,-1\}\)。行列式为一的子群称为\term[teshu-zhengjiao-qun]{特殊正交群}[special orthogonal group]，记为 \(\operatorname{SO}(V,q)\)。当 \(V\ne0\) 时，\cref{b2:thm:quadratic-diagonalization}给出非零长度向量，沿它的反射在该直线上为负恒等、在正交补上为恒等，所以行列式为负一。故此时特殊正交群在正交群中指数为二。
+对 \(G^{\mathsf T}BG=B\) 取行列式，因 \(\det B\ne0\)，得到 \((\det G)^2=1\)。于是 \((\det G-1)(\det G+1)=0\)；域中没有零因子，故 \(\det G\in\{1,-1\}\)，而特征不为二保证这两个值不同。行列式为一的子群称为\term[teshu-zhengjiao-qun]{特殊正交群}[special orthogonal group]，记为 \(\operatorname{SO}(V,q)\)。当 \(V\ne0\) 时，\cref{b2:thm:quadratic-diagonalization}给出非零长度向量，沿它的反射在该直线上为负恒等、在正交补上为恒等，所以行列式为负一。故此时特殊正交群在正交群中指数为二。
 
 \ProseParagraphBreak
 复向量空间 \(\mathbb C^n\) 上的配对
@@ -53,9 +52,15 @@ h_0(z,w)=\overline z^{\mathsf T}w=\sum_i\overline{z_i}w_i
 \operatorname U(n)=\{\,G\in\operatorname{GL}_n(\mathbb C)\mid G^*G=I_n\,\},
 \qquad G^*=\overline G^{\mathsf T}.
 \]
-于是 \(|\det G|^2=1\)。它与复正交群不同：\(iI_n\) 保持 \(h_0\)，但当 \(n>0\) 时使双线性型 \(z^{\mathsf T}w\) 变号，故不属于 \(\operatorname O(I_n)\)。
+于是 \(|\det G|^2=1\)。复正交型 \(z^{\mathsf T}w\) 对两个变量都线性，\(h_0\) 却在第一变量带有共轭。这个差别已经在乘 \(i\) 时显现：
+\[
+(iz)^{\mathsf T}(iw)=-z^{\mathsf T}w,\qquad
+\overline{iz}^{\mathsf T}(iw)=\overline z^{\mathsf T}w.
+\]
+所以 \(iI_n\) 保持 \(h_0\)，但当 \(n>0\) 时不属于 \(\operatorname O(I_n)\)。
 \symidx{\(\operatorname U(n)\)、\(G^*=\overline G^{\mathsf T}\)：标准酉群与共轭转置}
 
+\ProseParagraphBreak
 二维辛群还有一个直接可算的描述。若 \(G=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}\)，相乘得到
 \[
 G^{\mathsf T}\begin{pmatrix}0&1\\-1&0\end{pmatrix}G
@@ -81,7 +86,10 @@ h(au,bv)=\overline a\,b\cdot h(u,v)
 h(u,v)=\overline x^{\mathsf T}Hy,\quad H^*=H,
 \qquad H'=P^*HP.
 \]
-最后一个公式由 \(x=Px',y=Py'\) 直接代入得到。对角元都属于固定域 \(K^\sigma=\{\,a\in K\mid\sigma(a)=a\,\}\)，而保持型的矩阵满足 \(G^*HG=H\)。
+最后一个公式由 \(x=Px',y=Py'\) 直接代入得到。对角元都属于固定域 \(K^\sigma=\{\,a\in K\mid\sigma(a)=a\,\}\)：恒等对合的固定域为 \(K\)，复共轭的固定域则为 \(\mathbb R\)。保持型的矩阵满足 \(G^*HG=H\)。
+
+\ProseParagraphBreak
+分离一维正交分量需要先找到 \(h(v,v)\ne0\) 的向量。若对合恒等且特征为二，非零型却可能是交替型；例如 \(K^2\) 上的 \(h(u,v)=u_1v_2+u_2v_1\) 非零，但每个 \(h(v,v)\) 都为零。这样的型须使用辛型的二维块，不能从非零长度的直线开始分离。这正是下面假设所排除的情形。
 
 \begin{proposition}\label{b2:prop:hermitian-diagonalization}
 设 \(K\) 为配有对合 \(\sigma\) 的域，\(K^\sigma=\{a\in K\mid\sigma(a)=a\}\)，\(V\) 为有限维 \(K\) 向量空间，\(h:V\times V\to K\) 为 Hermitian 型。若 \(\sigma\ne\operatorname{id}\)，或 \(\operatorname{char}K\ne2\)，则 \(h\) 有正交基，且对角系数属于 \(K^\sigma\)。在 \(K=\mathbb C\)、\(\sigma\) 为复共轭的情形，对角系数可以归一化为一、负一与零，其个数唯一。
@@ -93,20 +101,21 @@ ac+\overline a\,\overline c=(a-\overline a)c=0.
 \]
 若对合非恒等，选择 \(a\ne\overline a\) 便得 \(c=0\)。若对合恒等而特征不为二，第一式就是 \(2c=0\)，也得 \(c=0\)。任意 \(u,v\) 的配对均为零，与型非零矛盾。
 
-取 \(e\) 使 \(d=h(e,e)\ne0\)。对每个 \(v\)，向量 \(v-e\cdot h(e,v)/d\) 与 \(e\) 正交，且 \(Ke\) 与其正交补的交为零。因此分离出这个非退化一维分量，再按维数归纳。对角元被 \(\sigma\) 固定，已经由 Hermitian 对称性保证。
+若型为零，任意基均正交。否则取 \(e\) 使 \(d=h(e,e)\ne0\)。对每个 \(v\)，向量 \(v-\dfrac{h(e,v)}d\,e\) 与 \(e\) 正交，因为第二变量线性给出 \(h(e,v)-h(e,v)d/d=0\)；由 Hermitian 对称性，两种次序的配对都为零。又 \(Ke\) 与其正交补的交为零，故分离出这个非退化一维分量，再按维数归纳。对角元被 \(\sigma\) 固定，已经由 Hermitian 对称性保证。
 
 在复数情形，这些系数均为实数，缩放基向量可把非零系数改为正负一。若正项空间维数为 \(p_+\)，任意正定复子空间投影到它都单射，因为投影为零的向量的二次取值非正。故 \(p_+\) 是正定子空间最大复维数。负项的个数对 \(-h\) 作同样论证确定，零项数由总维数减去二者得到。这与\cref{b2:thm:sylvester-inertia}中的论证相同，只把实坐标平方换成复坐标模平方。
 \end{proof}
 
-非退化复 Hermitian 型的惯性为 \((p_+,p_-,0)\) 时，对应群常记为 \(\operatorname U(p_+,p_-)\)，其标准矩阵为 \(\operatorname{diag}(I_{p_+},-I_{p_-})\)。标准酉群是 \(p_-=0\) 的情形。这里的“酉”只表示保持指定 Hermitian 型，不自动表示该型正定。
+非退化复 Hermitian 型的惯性为 \((p_+,p_-,0)\) 时，对应群常记为 \(\operatorname U(p_+,p_-)\)，其标准矩阵为 \(\operatorname{diag}(I_{p_+},-I_{p_-})\)。标准酉群是 \(p_-=0\) 的情形。这里的“酉”只表示保持指定 Hermitian 型，不自动表示该型正定。标准酉群还可以完全用实线性变换描述：忘去 \(\mathbb C^n\) 的复标量后，保留实配对 \(\operatorname{Re}h_0\) 与乘 \(i\) 的实线性算子，就能恢复原来的复结构和配对。
 
 \begin{proposition}\label{b2:prop:unitary-real-complex-structure}
 设 \(n\ge0\)，\(h_0(z,w)=\sum_{j=1}^n\overline{z_j}w_j\) 为 \(\mathbb C^n\) 上的标准 Hermitian 型。将 \(\mathbb C^n\) 看成实空间，记 \(Jz=iz\)、\(g(z,w)=\operatorname{Re}h_0(z,w)\)，则 \(J^2=-I\)，而保持 \(h_0\) 的复线性自同构群 \(\operatorname U(n)\) 恰为保持 \(g\) 并与 \(J\) 交换的实线性自同构组成的群。
 \end{proposition}
 \begin{proof}
-实线性映射与 \(J\) 交换，当且仅当它还保持乘 \(i\)，也就当且仅当它复线性。又由第一变量的共轭线性，
+实线性映射与 \(J\) 交换，当且仅当它还保持乘 \(i\)，也就当且仅当它复线性。又由第一变量的共轭线性，\(h_0(Jz,w)=-i h_0(z,w)\)，所以
 \[
-g(Jz,w)=\operatorname{Im}h_0(z,w).
+g(Jz,w)=\operatorname{Im}h_0(z,w),\qquad
+h_0(z,w)=g(z,w)+i\,g(Jz,w).
 \]
 若映射保持 \(h_0\)，它显然保持实部，且作为复线性映射与 \(J\) 交换。反过来，若 \(A\) 保持 \(g\) 并与 \(J\) 交换，则
 \[
@@ -115,52 +124,82 @@ g(JAz,Aw)=g(AJz,Aw)=g(Jz,w),
 所以它也保持 \(h_0\) 的虚部，连同实部便保持 \(h_0\)。
 \end{proof}
 
-若实向量空间 \(W\) 上的实线性算子 \(J:W\to W\) 满足 \(J^2=-I_W\)，就称 \(J\) 为 \(W\) 上的一个\term[fushu-jiegou]{复数结构}[complex structure]：规定 \((a+bi)v=av+bJv\)，就使原实空间成为复向量空间。结合律由 \(J^2=-I_W\) 验证。上面的命题因而把酉群同时解释为一种实正交群的子群和一种复线性群。
+若实向量空间 \(W\) 上的实线性算子 \(J:W\to W\) 满足 \(J^2=-I_W\)，就称 \(J\) 为 \(W\) 上的一个\term[fushu-jiegou]{复数结构}[complex structure]：规定 \((a+bi)v=av+bJv\)，就使原实空间成为复向量空间。结合律由 \(J^2=-I_W\) 验证。若 \(W\) 的实维数有限，复维数也有限；一组复基 \(w_1,\ldots,w_r\) 对应实基 \(w_1,Jw_1,\ldots,w_r,Jw_r\)，所以 \(\dim_{\mathbb R}W=2\dim_{\mathbb C}W\) 必为偶数。上面的命题因而把酉群同时解释为一种实正交群的子群和一种复线性群。
 
 \ProseParagraphBreak
 型还可以用来给线性算子定义伴随。下面把对称型、交替型和 Hermitian 型一并处理；符号中的共轭在前两种情形取恒等，在第三种情形取指定的域对合。
 
 \begin{proposition}\label{b2:prop:form-adjoint-operator}
-设 \(K\) 为配有对合 \(a\mapsto\bar a\) 的域，\(V=K^n\)、\(n\ge1\)，且
+设 \(K\) 为配有对合 \(\sigma:a\mapsto\bar a\) 的域，\(V\) 为有限维 \(K\) 向量空间，\(\varepsilon\in\{1,-1\}\)。设 \(b:V\times V\to K\) 为非退化的 \(\varepsilon\)-Hermitian 型，即 \(b\) 双可加，第一变量共轭线性、第二变量线性，并满足
 \[
-b(u,v)=\overline u^{\mathsf T}Hv,\qquad
-H\in\operatorname{GL}_n(K),\qquad H^*=\varepsilon H,
+b(au,cv)=\bar a\,c\cdot b(u,v),\qquad
+b(v,u)=\varepsilon\overline{b(u,v)}
 \]
-其中 \(X^*=\overline X^{\mathsf T}\)、\(\varepsilon\in\{1,-1\}\)。对每个 \(K\) 线性算子 \(T\)，存在唯一的 \(K\) 线性算子 \(T^\dagger\) 满足
+对所有 \(a,c\in K\)、\(u,v\in V\) 成立，且 \(b(u,v)=0\) 对所有 \(v\) 成立只能有 \(u=0\)。对每个 \(K\) 线性算子 \(T:V\rightarrow V\)，存在唯一的 \(K\) 线性算子 \(T^\dagger:V\rightarrow V\) 满足
 \[
 b(Tu,v)=b(u,T^\dagger v)\qquad(u,v\in V).
 \]
-称 \(T^\dagger\) 为 \(T\) 关于 \(b\) 的\term[bansui-suanzi]{伴随算子}[adjoint operator]。在上述坐标下，
+称 \(T^\dagger\) 为 \(T\) 关于 \(b\) 的\term[bansui-suanzi]{伴随算子}[adjoint operator]。选定基，令 \(H=(b(e_i,e_j))\)，并以相同字母表示算子的矩阵，则 \(H\) 可逆、\(H^*=\varepsilon H\)，其中 \(X^*=\overline X^{\mathsf T}\)。对任意另一 \(K\) 线性算子 \(S:V\rightarrow V\)，有
 \[
 T^\dagger=H^{-1}T^*H,\qquad
 (ST)^\dagger=T^\dagger S^\dagger,\qquad
 (T^\dagger)^\dagger=T.
 \]
-伴随运算可加，并满足 \((aT)^\dagger=\bar aT^\dagger\)。
+伴随运算可加，并满足 \((aT)^\dagger=\bar aT^\dagger\)。对任意子空间 \(W\le V\)，记 \(W^\perp=\{\,v\in V\mid b(w,v)=0\text{ 对所有 }w\in W\,\}\)，则
+\[
+(\operatorname{im}T)^\perp=\ker T^\dagger,\qquad
+\operatorname{rank}T^\dagger=\operatorname{rank}T.
+\]
 \end{proposition}
 \begin{proof}
-要求的配对等式在坐标中成为
+固定第二变量时，\(u\mapsto b(u,v)\) 是共轭线性泛函，不能在非恒等对合下把它当作普通 \(V^*\) 中的元素。令
+\[
+C_\sigma(V,K)=
+\{\,\ell:V\to K\mid \ell\text{ 可加，且 }\ell(au)=\bar a\,\ell(u)
+\ (a\in K,\ u\in V)\,\}
+\]
+按逐点加法与标量乘法组成 \(K\) 向量空间。选任意一组 \(V\) 的基，共轭线性泛函由它在基上的值唯一确定，这些值又可任意指定，所以 \(\dim_K C_\sigma(V,K)=\dim_KV\)。映射
+\[
+\Psi:V\longrightarrow C_\sigma(V,K),\qquad
+w\longmapsto \bigl(u\longmapsto b(u,w)\bigr)
+\]
+由第二变量线性而 \(K\) 线性。若 \(\Psi(w)=0\)，则 \(b(u,w)=0\) 对所有 \(u\) 成立，由 \(\varepsilon\)-Hermitian 对称性也有 \(b(w,u)=0\)，非退化性给出 \(w=0\)。有限维且等维使 \(\Psi\) 成为同构。
+
+对每个 \(v\in V\)，\(\ell_v(u)=b(Tu,v)\) 属于 \(C_\sigma(V,K)\)，故存在唯一 \(w\) 使 \(\Psi(w)=\ell_v\)。定义 \(T^\dagger v=w\)，便得到要求的配对等式。又 \(v\mapsto\ell_v\) 是 \(K\) 线性，后接 \(\Psi^{-1}\) 说明 \(T^\dagger\) 线性；每个 \(v\) 所对应的 \(w\) 唯一也给出算子唯一性。这与\cref{b2:prop:finite-perfect-pairing}的有限维表示机制相同，只是第一变量的泛函改为共轭线性泛函。
+
+选定基以后，要求的配对等式成为
 \[
 \overline u^{\mathsf T}T^*Hv
 =\overline u^{\mathsf T}HT^\dagger v.
 \]
-对全部基向量 \(u,v\) 成立，当且仅当 \(T^*H=HT^\dagger\)。因 \(H\) 可逆，这给出存在性、唯一性及矩阵公式。共轭转置反转乘法，所以
+对全部基向量 \(u,v\) 成立，当且仅当 \(T^*H=HT^\dagger\)。非退化性使 \(H\) 可逆，故得到矩阵公式。复合反序也可直接从配对看出：
 \[
-H^{-1}(ST)^*H
-=(H^{-1}T^*H)(H^{-1}S^*H).
+b(STu,v)=b(Tu,S^\dagger v)
+=b(u,T^\dagger S^\dagger v).
 \]
-再由 \(H^*=\varepsilon H\) 以及 \(\varepsilon^2=1\)，有
+由唯一性，\((ST)^\dagger=T^\dagger S^\dagger\)。矩阵中的共轭转置也反转乘法，与这个内在公式一致。再由 \(H^*=\varepsilon H\) 以及 \(\varepsilon^2=1\)，有
 \[
 (T^\dagger)^\dagger
 =H^{-1}H^*T(H^*)^{-1}H=T.
 \]
 可加性和标量公式同样直接来自共轭转置。
+
+向量 \(v\) 属于 \((\operatorname{im}T)^\perp\)，当且仅当 \(b(Tu,v)=0\) 对所有 \(u\) 成立；伴随等式把这个条件改写为 \(b(u,T^\dagger v)=0\) 对所有 \(u\) 成立。由第二变量的非退化性，这恰好等价于 \(T^\dagger v=0\)，证明正交补与核的等式。
+
+对任意 \(W\le V\)，限制映射 \(C_\sigma(V,K)\to C_\sigma(W,K)\) 满射：把 \(W\) 的一组基扩充为 \(V\) 的基，并在新增基向量上任意指定值，即可延伸共轭线性泛函。因此 \(\Psi\) 后接限制的映射 \(V\to C_\sigma(W,K)\) 满射，核为 \(W^\perp\)，故
+\(\dim W^\perp=\dim V-\dim W\)。取 \(W=\operatorname{im}T\)，并对 \(T^\dagger\) 使用秩与核的维数公式，得到
+\[
+\operatorname{rank}T^\dagger
+=\dim V-\dim\ker T^\dagger
+=\dim\operatorname{im}T=\operatorname{rank}T.
+\]
 \end{proof}
 \symidx{\(T^\dagger\)：相对于指定非退化型的伴随算子}
 
 例如，实标准内积给出 \(T^\dagger=T^{\mathsf T}\)，复标准 Hermitian 型给出 \(T^\dagger=T^*\)。对辛矩阵 \(J_m\)，则有 \(T^\dagger=J_m^{-1}T^{\mathsf T}J_m\)。这都是整个线性算子的伴随，不是由代数余子式组成的伴随矩阵。这个反转乘法的运算将在\secref{b2:sec:B03}作为代数上的对合进一步讨论。
 
-算子的矩阵相似用共轭 \(A\mapsto P^{-1}AP\) 表示；以下讨论的变换则把一个型的全部配对值同时乘以同一个非零标量。
+\ProseParagraphBreak
+算子换基用矩阵相似 \(A\mapsto P^{-1}AP\)，型的换基则用合同 \(H\mapsto P^*HP\)；二者都是重新描述同一个对象。型的换基不要求 \(P\) 保持原矩阵 \(H\)。若把可逆矩阵 \(g\) 看作固定空间上的变换，等距条件才是 \(g^*Hg=H\)；以下的型相似变换则只要求 \(g^*Hg=cH\)，即把全部配对值同时乘以一个非零标量。它与算子的矩阵相似是不同概念。
 
 \begin{definition}\label{b2:def:form-similitude}
 设 \(K\) 为带域对合 \(a\mapsto\bar a\) 的域，固定域为 \(F=\{\,a\in K\mid\bar a=a\,\}\)，\(V=K^n\)、\(n\ge1\)。取可逆矩阵 \(H\) 满足 \(H^*=\varepsilon H\)，其中 \(X^*=\overline X^{\mathsf T}\)、\(\varepsilon\in\{1,-1\}\)，并令 \(b(u,v)=\overline u^{\mathsf T}Hv\)。若 \(g\in\operatorname{GL}_K(V)\) 满足
@@ -170,7 +209,19 @@ b(gu,gv)=c\cdot b(u,v)\qquad(u,v\in V)
 对某个 \(c\in F^\times\) 成立，就称 \(g\) 为一个\term[xing-xiangsi-bianhuan]{型的相似变换}[similitude]，称 \(c\) 为其\term[xiangsi-chengzi]{乘子}[multiplier]，记为 \(\mu(g)\)。全部这类变换组成相似变换群。共轭为恒等且特征不为二时，对称型的相似变换群记为 \(\operatorname{GO}(b)\)；共轭为恒等时，交替型的相似变换群记为 \(\operatorname{GSp}(b)\)；对给定非平凡域对合，Hermitian 型的相似变换群记为 \(\operatorname{GU}(b)\)。特征二中的二次型相似条件须直接用二次型定义，不能只由其极化型判断。
 \end{definition}
 
-型非退化且 \(n\ge1\)，保证至少一个配对值非零，所以乘子唯一。即使先只要求 \(c\in K^\times\)，交换 \(u,v\) 并利用 \(b(v,u)=\varepsilon\overline{b(u,v)}\)，也会得到 \(c=\bar c\)。
+型非退化且 \(n\ge1\)，保证可以取 \(u,v\) 使 \(z=b(u,v)\ne0\)。若 \(c,c'\) 都满足相似条件，则 \(cz=c'z\)，在域中消去非零的 \(z\)，得到 \(c=c'\)，所以乘子唯一。
+
+\ProseParagraphBreak
+即使先只要求 \(c\in K^\times\)，交换这两个变量也会迫使它属于固定域。一方面，
+\[
+b(gv,gu)=c\,b(v,u)=c\varepsilon\bar z;
+\]
+另一方面，由型的对称性，
+\[
+b(gv,gu)=\varepsilon\overline{b(gu,gv)}
+=\varepsilon\bar c\,\bar z.
+\]
+因 \(\varepsilon\bar z\ne0\)，这两个等式给出 \(c=\bar c\)。
 
 \begin{proposition}\label{b2:prop:similitude-multiplier}
 设 \(K\) 为带域对合 \(a\mapsto\bar a\) 的域，\(F\) 为其固定域，\(V=K^n\)、\(n\ge1\)，且 \(b(u,v)=\overline u^{\mathsf T}Hv\)，其中 \(H\) 可逆、\(H^*=\varepsilon H\)、\(\varepsilon\in\{1,-1\}\)，星号表示共轭转置。型 \(b\) 的相似变换组成群，乘子为到 \(F^\times\) 的群同态，其核恰为保持 \(b\) 的等距群。记 \(g^\dagger=H^{-1}g^*H\)，则对 \(g\in\operatorname{GL}_n(K)\)、\(c\in F^\times\)，有
@@ -186,7 +237,7 @@ g^\dagger g=cI_n.
 两个相似变换依次作用时，配对值乘以两个乘子的积；恒等变换的乘子为一。把 \(u,v\) 换成 \(g^{-1}u,g^{-1}v\)，可知逆变换的乘子为 \(\mu(g)^{-1}\)。这证明群结构及同态性。乘子为一恰好是等距条件。把配对写成矩阵，再使用 \(g^\dagger=H^{-1}g^*H\)，便得两个等价式。
 \end{proof}
 
-乘子的像未必是整个 \(F^\times\)。在正定实型 \(b(u,v)=u^{\mathsf T}v\) 上，非零 \(v\) 给出 \(\mu(g)=b(gv,gv)/b(v,v)>0\)，而 \(\sqrt c I_n\) 实现每个 \(c>0\)，故像恰为 \(\mathbb R_{>0}\)。复正定 Hermitian 型也有相同的乘子像。另一方面，对标准辛型取
+乘子的核已经确定，接下来还需计算它的实际像，而这个像受型的性质限制。在非零空间上的正定实型 \(b(u,v)=u^{\mathsf T}v\) 上，非零 \(v\) 给出 \(\mu(g)=b(gv,gv)/b(v,v)>0\)，而 \(\sqrt c I_n\) 实现每个 \(c>0\)，故像恰为 \(\mathbb R_{>0}\)。非零空间上的复正定 Hermitian 型也有相同的乘子像。另一方面，对标准辛型取
 \[
 g_t=\operatorname{diag}(tI_m,I_m),\qquad t\in K^\times.
 \]
@@ -194,7 +245,7 @@ g_t=\operatorname{diag}(tI_m,I_m),\qquad t\in K^\times.
 
 \OptionalSubsection{Clifford 代数的构造}{b2:subsec:1004:03}
 
-下面恢复任意域 \(k\)，并令 \(q\) 按\cref{b2:def:quadratic-form}定义。构造允许型退化，也允许特征二；此时仍使用未经除以二的 \(\beta_q\)。
+下面恢复任意域 \(k\)，并令 \(q\) 按\cref{b2:def:quadratic-form}定义。张量代数保留向量空间的线性关系而不另加乘法关系；现在要求向量 \(v\) 的像满足平方等式 \(v^2=q(v)1\)，就是把二次型的取值直接写进乘法。将这些等式的差生成双边理想，便使它们在左右乘法下始终成立。构造允许型退化，也允许特征二；此时仍使用未经除以二的 \(\beta_q\)。
 
 \begin{definition}\label{b2:def:clifford-algebra}
 设 \(k\) 为任意域，\(V\) 为 \(k\) 向量空间，\(q:V\to k\) 为二次型。取张量代数 \(T_k(V)\)，令 \(I_q\) 为全部 \(v\otimes v-q(v)1\)、\(v\in V\) 生成的双边理想。商代数
@@ -204,6 +255,12 @@ g_t=\operatorname{diag}(tI_m,I_m),\qquad t\in K^\times.
 称为 \(q\) 的\term[Clifford-daishu]{Clifford 代数}[Clifford algebra]。从 \(V\) 到这个商代数的自然线性映射记为 \(\iota\)。
 \end{definition}
 \symidx{\(\operatorname{Cl}(V,q)\)：二次型的 Clifford 代数}
+
+若 \(q=0\)，关系理想恰由所有 \(v\otimes v\) 生成。由\cref{b2:prop:exterior-algebra-universal}的张量商描述，得到自然代数同构
+\[
+\operatorname{Cl}(V,0)\cong\bigwedge_k V.
+\]
+因此外代数就是所有一次元素平方为零的 Clifford 代数；一般二次型把这些平方从零改为相应的标量。
 
 \begin{theorem}[Clifford 代数的泛性质]\label{b2:thm:clifford-universal}
 设 \(k\) 为任意域，\(V\) 为 \(k\) 向量空间，\(q:V\to k\) 为二次型，\(\iota:V\to\operatorname{Cl}(V,q)\) 为自然映射。对任意结合含幺 \(k\) 代数 \(A\)，若 \(k\) 线性映射 \(f:V\to A\) 满足 \(f(v)^2=q(v)1_A\) 对每个 \(v\in V\) 成立，则存在唯一含幺 \(k\) 代数同态
@@ -222,10 +279,13 @@ g_t=\operatorname{diag}(tI_m,I_m),\qquad t\in K^\times.
 将 \(\iota(u+v)^2=q(u+v)1\) 展开，减去 \(\iota(u)^2=q(u)1\) 与 \(\iota(v)^2=q(v)1\)，便得到\eqref{b2:eq:clifford-polar-relation}。特征不为二时，右侧为 \(2b_q(u,v)1\)。
 \end{proof}
 
-上述商构造给出了自然映射 \(\iota\) 及泛性质。\(\iota\) 的单射性和代数的维数还需由基的结构证明；在特征不为二的有限维情形，\cref{b2:thm:B-clifford-basis}将证明维数为 \(2^{\dim V}\)。下面先计算一个低维模型。
+关系 \(\iota(v)^2=q(v)1\) 记录向量的二次取值；特征不为二时，\eqref{b2:eq:clifford-polar-relation}还说明，若 \(b_q(u,v)=0\)，则 \(\iota(u)\iota(v)=-\iota(v)\iota(u)\)。乘法同时记录了二次取值与正交条件。
+
+\ProseParagraphBreak
+上述商构造给出了自然线性映射 \(\iota\) 及泛性质。\(\iota\) 的单射性和代数的维数还需由基的结构证明；在特征不为二的有限维情形，\cref{b2:thm:B-clifford-basis}给出其单射性及维数 \(2^{\dim V}\)。下面直接计算一个低维模型。
 
 \begin{example}\label{b2:exm:clifford-hyperbolic-plane}
-在特征不为二的域上，\(\operatorname{Cl}(H)\cong M_2(k)\)。
+设 \(k\) 为特征不为二的域，\(H=ke\oplus kf\) 上的二次型为 \(q(xe+yf)=2xy\)，则 \(\operatorname{Cl}(H,q)\cong M_2(k)\)。
 \end{example}
 \begin{proof}
 以双曲基 \(e,f\) 的像仍记为 \(e,f\)，关系为
@@ -238,7 +298,7 @@ efe=e(2-ef)=2e,\qquad fef=(2-ef)f=2f.
 \]
 递减字长后只剩长度至多二的字，再用 \(fe=2-ef\) 即得四个所列元素。
 
-令
+为找到满足这些关系的矩阵，先取矩阵单位 \(E_{12},E_{21}\)。它们的平方均为零，且 \(E_{12}E_{21}+E_{21}E_{12}=I_2\)；把第一个矩阵乘二，就能实现右端的 \(2I_2\)。因此取
 \[
 E=\begin{pmatrix}0&2\\0&0\end{pmatrix},\qquad
 F=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
@@ -246,6 +306,52 @@ F=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
 它们满足 \(E^2=F^2=0\)、\(EF+FE=2I_2\)，因此线性映射 \(xe+yf\mapsto xE+yF\) 的平方为 \(2xyI_2\)。由\cref{b2:thm:clifford-universal}得到代数同态到 \(M_2(k)\)。\(I_2,E,F,EF\) 线性无关：两个非对角位置先确定 \(E,F\) 的系数为零，两个对角位置再确定余下系数为零，所用的二可逆。它们构成四维矩阵空间的基。来源已由四个元素生成，故同态既单射又满射。
 \end{proof}
 
-在这个例子里，二次关系产生了一个非交换矩阵代数。关系 \(v\otimes v-q(v)1\) 混合张量次数二与零，所以商代数一般不继承张量次数的自然数分次；不过关系的两项同属偶次数，因而仍保留奇偶分次。一般基定理由\appref{b2:app:B}的\cref{b2:thm:B-clifford-basis}给出；\cref{b2:prop:B-spin-action}再用偶部分的可逆元构造自旋群到特殊正交群的作用，并算出其核。
+在这个例子里，二次关系产生了一个非交换矩阵代数。关系 \(v\otimes v-q(v)1\) 混合张量次数二与零，所以商代数一般不继承张量次数的自然数分次；将次数模二以后，两项却同属偶次。因而 \(I_q\) 对奇偶分次仍是齐次理想，商代数继承直和分解
+\[
+\operatorname{Cl}(V,q)=\operatorname{Cl}^0(V,q)\oplus
+\operatorname{Cl}^1(V,q),
+\qquad
+\operatorname{Cl}^i\operatorname{Cl}^j\subseteq
+\operatorname{Cl}^{\,i+j\ (\mathrm{mod}\ 2)}.
+\]
+在特征不为二的非零有限维非退化二次空间上，\cref{b2:prop:B-spin-action}再用偶部分的可逆元构造自旋群到特殊正交群的作用，并算出其核。
+
+\begin{proposition}\label{b2:prop:clifford-line-models}
+设 \(k\) 为任意域，\(V=ke\) 为一维 \(k\) 向量空间，\(a\in k\)，二次型为 \(q(xe)=ax^2\)。则存在含幺 \(k\) 代数同构
+\[
+\operatorname{Cl}(V,q)\cong k[t]/(t^2-a),
+\]
+将 \(\iota(e)\) 送到 \(t\) 的剩余类。特别地，在 \(k=\mathbb R\) 时，
+\[
+\operatorname{Cl}(\mathbb R e,q)\cong
+\begin{cases}
+\mathbb R\times\mathbb R,&a>0,\\
+\mathbb C,&a<0,\\
+\mathbb R[\varepsilon]/(\varepsilon^2),&a=0.
+\end{cases}
+\]
+\end{proposition}
+\begin{proof}
+令 \(A=k[t]/(t^2-a)\)，\(\tau=t+(t^2-a)\)。线性映射 \(f:V\to A\)、\(xe\mapsto x\tau\) 满足
+\[
+f(xe)^2=x^2\tau^2=ax^2\,1_A=q(xe)1_A.
+\]
+由\cref{b2:thm:clifford-universal}，得到含幺代数同态
+\(\alpha:\operatorname{Cl}(V,q)\to A\)，使 \(\alpha(\iota(e))=\tau\)。
+
+反过来，一生成元的自由结合代数是 \(k[t]\)，故赋值 \(t\mapsto\iota(e)\) 给出含幺代数同态 \(k[t]\to\operatorname{Cl}(V,q)\)。关系 \(\iota(e)^2=a1\) 使 \(t^2-a\) 映到零，因而同态通过商，得到
+\(\beta:A\to\operatorname{Cl}(V,q)\)。复合 \(\alpha\beta\) 固定 \(\tau\) 与标量，故在由它们生成的 \(A\) 上为恒等；复合 \(\beta\alpha\) 固定 \(\iota(e)\) 与标量，而它们生成整个 Clifford 代数，故这个复合也为恒等。这证明所述同构，对特征二同样适用。
+
+首一二次多项式的带余除法说明，\(A\) 中每个元素唯一写成 \(x+y\tau\)。若 \(a>0\)，令 \(r=\sqrt a\)，赋值 \(\tau\mapsto(r,-r)\) 给出 \(\mathbb R\) 代数同态
+\[
+A\longrightarrow\mathbb R\times\mathbb R,\qquad
+x+y\tau\longmapsto(x+yr,x-yr).
+\]
+它的逆将 \((u,v)\) 送到 \(\dfrac{u+v}2+\dfrac{u-v}{2r}\tau\)，所以是同构。若 \(a<0\)，令 \(r=\sqrt{-a}\)，赋值 \(\tau\mapsto ir\) 给出
+\[
+A\longrightarrow\mathbb C,\qquad x+y\tau\longmapsto x+iyr.
+\]
+因 \(r\ne0\)，每个复数唯一有这种表达，故也是同构。若 \(a=0\)，只需把 \(\tau\) 政名为 \(\varepsilon\)，关系就是 \(\varepsilon^2=0\)，得到双数代数。
+\end{proof}
 
 本章的 Witt 群若要连同张量积一起计算，可在读完\secref{b2:sec:1003}后转到\secref{b2:sec:B02}；型的伴随算子同代数对合的联系则见\secref{b2:sec:B03}，那一节还需要\chapref{b2:ch:17}的中心单代数与四元数。

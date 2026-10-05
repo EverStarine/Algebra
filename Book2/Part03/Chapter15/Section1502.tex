@@ -1,52 +1,60 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 15.2 模的根、基座与 Loewy 列
-% 纲要位置：计划纲要.md，第 1252 行。
+% 纲要位置：计划纲要.md，第 1534 行。
 
 \section{模的根、基座与 Loewy 列}
 \label{b2:sec:1502}
 
-现在把代数的根用于单个模。一个方向是不断取最大半单商，另一个方向是不断取出全部简单子模；它们给出从上到下和从下到上的两列。本节的 \(M\) 均为有限维左 \(A\) 模，\(J=J(A)\)。
+现在把代数的根用于单个模。一个方向是不断取最大半单商，另一个方向是不断取出全部简单子模；它们给出从上到下和从下到上的两列。始终令 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数；本节所计算的 \(M\) 均为有限维幺左 \(A\) 模，\(J=J(A)\)。
 
 % 纲要要点（供目录核对）：
 %
 % * 模的根与基座（socle；所有简单子模之和）
 % * Loewy 列及半单层
 % * 具体三角矩阵代数的计算
+% * 最大半单商与最大半单子模的不同性质；正文证明子模、商模的根与基座公式及反例，比较 Loewy 长度与合成长度
 %
 
 \subsection{模的根与基座}
 \label{b2:subsec:1502:01}
 
 \begin{definition}\label{b2:def:module-radical-socle}
-设 \(M\) 为左 \(R\) 模。将 \(M\) 的全部极大真子模取交，所得子模称为 \(M\) 的\term[mo-de-gen]{根}[radical of a module]，记为 \(\operatorname{rad}M\)；若不存在极大真子模，该交按约定取 \(M\)。将全部简单子模求和，所得子模称为 \(M\) 的\term[jizuo]{基座}[socle]，记为 \(\operatorname{Soc}M\)；若没有简单子模，该和为零。对零模约定 \(\operatorname{rad}0=\operatorname{Soc}0=0\)。
+设 \(R\) 为含幺环、\(M\) 为幺左 \(R\) 模。将 \(M\) 的全部极大真子模取交，所得子模称为 \(M\) 的\term[mo-de-gen]{根}[radical of a module]，记为 \(\operatorname{rad}M\)；若不存在极大真子模，该交按约定取 \(M\)。将全部简单子模求和，所得子模称为 \(M\) 的\term[jizuo]{基座}[socle]，记为 \(\operatorname{Soc}M\)；若没有简单子模，该和为零。对零模约定 \(\operatorname{rad}0=\operatorname{Soc}0=0\)。
 \end{definition}
 \symidx{\(\operatorname{rad}M\)、\(\operatorname{Soc}M\)：模的根与基座}
 
-非零有限维模总有极大真子模及简单子模：分别取维数最大的真子模和维数最小的非零子模即可。基座是半单模，因为它是简单子模之和，适用\cref{b2:thm:semisimple-module-characterizations}。
+非零有限维模具有有限长度，合成列的第一个非零项给出简单子模，倒数第二项给出极大真子模。基座是半单模，因为它是简单子模之和，适用\cref{b2:thm:semisimple-module-characterizations}。
 
 \begin{theorem}\label{b2:thm:module-radical-jm}
-设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维左 \(A\) 模，则
+设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维幺左 \(A\) 模，则
 \[
 \operatorname{rad}M=JM.
 \]
-商 \(M/JM\) 半单，而且对每个半单左 \(A\) 模 \(T\)，每个 \(A\) 模同态 \(M\to T\) 都唯一通过这个商分解。
+商 \(M/JM\) 是 \(M\) 的最大半单商：每个半单商的商映射都唯一通过 \(q:M\to M/JM\) 分解。更一般地，对每个半单幺左 \(A\) 模 \(T\)，预合成给出双射
+\[
+q^*:\operatorname{Hom}_A(M/JM,T)\longrightarrow\operatorname{Hom}_A(M,T),
+\qquad h\longmapsto hq.
+\]
 \end{theorem}
 \begin{proof}
-对极大子模 \(L\)，商 \(M/L\) 简单，故被 \(J\) 零化。这说明 \(JM\subseteq L\)，对全部 \(L\) 取交得 \(JM\subseteq\operatorname{rad}M\)。
+对极大子模 \(L\)，商 \(M/L\) 简单，由\cref{b2:prop:radical-simple-annihilators}被 \(J\) 零化。这说明 \(JM\subseteq L\)，对全部 \(L\) 取交得 \(JM\subseteq\operatorname{rad}M\)。
 
-另一方面，\(M/JM\) 是有限维 \(A/J\) 模，由\cref{b2:prop:finite-algebra-semisimple-quotient}半单。若 \(m\notin JM\)，把它的非零商类投影到某个非零的简单直和分量，得到一个不将 \(m\) 送到零的满同态 \(M\to S\)。其核为不含 \(m\) 的极大子模，所以 \(m\notin\operatorname{rad}M\)。这给出反向包含。
+另一方面，\(M/JM\) 是有限维 \(A/J\) 模，由\cref{b2:prop:finite-algebra-semisimple-quotient}半单。若 \(m\notin JM\)，它的商类在某个简单直和分量上的投影非零，投影后便得到一个不将 \(m\) 送到零的满同态 \(M\to S\)。其核为不含 \(m\) 的极大子模，所以 \(m\notin\operatorname{rad}M\)。这给出反向包含。
 
-最后，半单模是简单模的直和，所以 \(J\) 在其上作用为零。任意同态 \(f:M\to T\) 因而满足 \(f(JM)=J\cdot f(M)=0\)。由商模泛性质，它唯一通过 \(M/JM\) 分解。
+最后，半单模是简单模的直和，所以 \(J\) 在其上作用为零。任意同态 \(f:M\to T\) 因而满足 \(f(JM)=J\cdot f(M)=0\)。由商模泛性质，存在唯一 \(h:M/JM\to T\) 使 \(f=hq\)，这正是 \(q^*\) 的双射性。若 \(f\) 本身为半单商映射，则 \(h\) 也满射，说明任何半单商都是 \(M/JM\) 的商，这就是上述最大性的含义。
 \end{proof}
 
 \begin{proposition}\label{b2:prop:module-socle-annihilator}
-设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维左 \(A\) 模，则其基座为
+设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维幺左 \(A\) 模，则其基座为
 \[
 \operatorname{Soc}M=\{\,m\in M\mid Jm=0\,\}.
 \]
+它是 \(M\) 中最大的半单子模。对任意半单幺左 \(A\) 模 \(T\)，每个同态 \(T\to M\) 都唯一通过包含映射 \(\operatorname{Soc}M\hookrightarrow M\) 分解。
 \end{proposition}
 \begin{proof}
 每个简单子模均被 \(J\) 零化，所以基座包含于右侧。右侧是子模：若 \(Jm=0\)，则对 \(a\in A,j\in J\)，有 \(j(am)=(ja)m=0\)，因为 \(ja\in J\)。这个子模被 \(J\) 零化，由\cref{b2:prop:finite-algebra-semisimple-quotient}半单，故是若干简单子模之和，包含于基座。
+
+任一半单子模都是 \(M\) 的简单子模之和，所以包含于 \(\operatorname{Soc}M\)，得到最大性。若 \(f:T\to M\) 的定义域半单，\(\operatorname{im}f\) 是半单模的商，由\cref{b2:prop:semisimple-subquotients}仍半单，因而包含于基座。将 \(f\) 的陪域限制到基座便得到所需分解；包含映射的单射性保证唯一性。
 \end{proof}
 
 在 \(M=A=k[t]/(t^m)\)、\(m>1\) 中，\(\operatorname{rad}M=(\bar t)\)，而 \(\operatorname{Soc}M=k\bar t^{m-1}\)。前者收集不能通过简单商检测到的元素，后者收集已经构成简单子模的部分；它们通常不是同一个子空间。
@@ -55,26 +63,36 @@
 \label{b2:subsec:1502:02}
 
 \begin{definition}\label{b2:def:loewy-filtrations}
-设 \(M\) 为左 \(R\) 模。令 \(\operatorname{rad}^0M=M\)、\(\operatorname{rad}^{r+1}M=\operatorname{rad}(\operatorname{rad}^rM)\)（\(r\ge0\)），所得降列称为\term[gen-Loewy-lie]{根 Loewy 列}[radical Loewy series]。另令 \(\operatorname{Soc}^0M=0\)，并令 \(\operatorname{Soc}^{r+1}M\) 是 \(M/\operatorname{Soc}^rM\) 的基座在 \(M\) 中的原像，得到\term[jizuo-Loewy-lie]{基座 Loewy 列}[socle Loewy series]。
+设 \(R\) 为含幺环、\(M\) 为幺左 \(R\) 模。令 \(\operatorname{rad}^0M=M\)、\(\operatorname{rad}^{r+1}M=\operatorname{rad}(\operatorname{rad}^rM)\)（\(r\ge0\)），所得降列称为\term[gen-Loewy-lie]{根 Loewy 列}[radical Loewy series]。另令 \(\operatorname{Soc}^0M=0\)，并令 \(\operatorname{Soc}^{r+1}M\) 是 \(M/\operatorname{Soc}^rM\) 的基座在 \(M\) 中的原像，得到\term[jizuo-Loewy-lie]{基座 Loewy 列}[socle Loewy series]。
 \end{definition}
 
-以上两列对任意环上的模都有定义；下面用根的幂及其零化子写出的公式，适用于有限维代数上的有限维模。
+这两个定义分别给出降列 \(M\supseteq\operatorname{rad}M\supseteq\operatorname{rad}^2M\supseteq\cdots\) 和升列 \(0\subseteq\operatorname{Soc}M\subseteq\operatorname{Soc}^2M\subseteq\cdots\)，对任意含幺环上的幺左模都有意义。下面用根的幂及其零化子写出的公式，适用于有限维代数上的有限维模。
+
+\ProseParagraphBreak
+设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数、\(M\) 为有限维幺左 \(A\) 模，记 \(J=J(A)\)。根幂零，故使 \(J^rM=0\) 的最小非负整数存在，称为 \(M\) 的\term[Loewy-changdu]{Loewy 长度}[Loewy length]，记为 \(\operatorname{LL}(M)\)。零模的 Loewy 长度为零，非零半单模的 Loewy 长度为一。
 
 \begin{proposition}\label{b2:prop:loewy-series}
-设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维左 \(A\) 模。对所有 \(r\ge0\)，有
+设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(J=J(A)\)，\(M\) 为有限维幺左 \(A\) 模。对所有 \(r\ge0\)，有
 \[
 \operatorname{rad}^rM=J^rM,\qquad
 \operatorname{Soc}^rM=\{\,m\in M\mid J^rm=0\,\}.
 \]
 两列的相邻层均半单。若 \(J^N=0\)，根列至多在第 \(N\) 步到达零，基座列至多在第 \(N\) 步到达 \(M\)。
+其 Loewy 长度满足 \(\operatorname{LL}(M)\le\ell(M)\)，其中 \(\ell(M)\) 是合成列长度；等号成立当且仅当每个非零根 Loewy 层 \(J^rM/J^{r+1}M\) 都是简单模。
 \end{proposition}
 \begin{proof}
 第一式由\cref{b2:thm:module-radical-jm}逐次用于有限维子模得到。第二式对 \(r\) 归纳；\(r=0\) 时 \(J^0=A\)，被 \(A\) 零化的元素只有零，符合定义。假设第 \(r\) 步成立，由\cref{b2:prop:module-socle-annihilator}，\(m\) 属于下一步当且仅当 \(Jm\subseteq\operatorname{Soc}^rM\)，即 \(J^rJm=0\)，也就是 \(J^{r+1}m=0\)。
 
 根列的层 \(J^rM/J^{r+1}M\) 被 \(J\) 零化，故半单；基座列的层按定义是一个商模的基座，也半单。最后由\cref{b2:thm:finite-algebra-radical-nilpotent}取 \(J^N=0\)，代入两个公式便得到终止性。
+
+零模的两种长度都为零，等号条件按空族理解。若 \(M\ne0\)，令 \(L=\operatorname{LL}(M)\)。对 \(0\le r<L\)，若 \(J^rM=J^{r+1}M\)，对有限生成模 \(J^rM\) 使用\cref{b2:thm:noncommutative-nakayama}便得到 \(J^rM=0\)，与 \(r<L\) 矛盾。因此前 \(L\) 个根层均非零，各自的合成列长度至少为一。由\cref{b2:prop:length-additive}逐层相加，有
+\[
+\ell(M)=\sum_{r=0}^{L-1}\ell\bigl(J^rM/J^{r+1}M\bigr)\ge L.
+\]
+等号恰在每层长度都为一时成立，也就是每层都简单。
 \end{proof}
 
-对有限维 \(k\) 代数 \(A\) 的有限维左模 \(M\)，记 \(J=J(A)\)。使 \(J^\ell M=0\) 的最小非负整数 \(\ell\) 称为 \(M\) 的\term[Loewy-changdu]{Loewy 长度}[Loewy length]。由命题，它也等于使 \(\operatorname{Soc}^\ell M=M\) 的最小整数。零模长度为零；非零半单模长度为一。
+公式 \(\operatorname{Soc}^rM=\{\,m\in M\mid J^rm=0\,\}\) 中，\(J^rm=0\) 要求 \(J\) 中任意 \(r\) 个元素依次作用于 \(m\) 都得到零，因而也要求这些乘积的所有有限和零化 \(m\)。它不是只检验某个固定 \(j\in J\) 的 \(j^rm\)。由两个公式，\(\operatorname{Soc}^rM=M\) 恰好等价于 \(J^rM=0\)，所以两列的长度相同；这并不要求两列的半单层逐项相同或反向对应。
 
 \ProseParagraphBreak
 Loewy 层记录半单的商，不保证能在原模中为每一层同时选出子模代表。对双数代数 \(k[\varepsilon]/(\varepsilon^2)\) 的正则模，两层均为简单模 \(k\)，但层间扩张不分裂，因为若正则模为 \(k\oplus k\)，则 \(\varepsilon\) 应作用为零。这类层间关系正是稍后投射覆盖与箭图表示需要保存的信息。
@@ -82,14 +100,14 @@ Loewy 层记录半单的商，不保证能在原模中为每一层同时选出�
 \subsection{三角矩阵代数的计算}
 \label{b2:subsec:1502:03}
 
-令 \(A=T_3(k)\) 为上三角矩阵代数，矩阵单位记为 \(E_{ij}\)、\(1\le i\le j\le3\)。严格上三角矩阵组成理想 \(N\)，有 \(N^3=0\)，而 \(A/N\cong k^3\) 半单。由\cref{b2:prop:nilpotent-ideal-in-radical}与\cref{b2:prop:radical-quotient}，得到
+令 \(A=T_3(k)\) 为上三角矩阵代数，矩阵单位记为 \(E_{ij}\)、\(1\le i\le j\le3\)。由\cref{b2:prop:triangular-radical}，其根是严格上三角矩阵组成的理想 \(N\)，商 \(A/N\cong k^3\)。矩阵单位的乘积进一步给出
 \[
 J=N=kE_{12}+kE_{13}+kE_{23},\qquad J^2=kE_{13},\qquad J^3=0.
 \]
 简单模 \(S_i\) 是一维空间，矩阵 \(a\) 通过对角元 \(a_{ii}\) 作用。它们给出全部简单模，因为简单模被 \(J\) 零化，因而来自 \(k^3\) 的一个坐标因子。
 
 \ProseParagraphBreak
-取 \(e_j=E_{jj}\)、\(P_j=Ae_j\)。它是第 \(j\) 列可能非零的矩阵组成的左理想，基为 \(E_{1j},\ldots,E_{jj}\)。矩阵单位乘法
+取 \(e_j=E_{jj}\)、\(P_j=Ae_j\)。它是第 \(j\) 列可能非零的矩阵组成的左理想，基为 \(E_{1j},\ldots,E_{jj}\)，作为 \(A\) 模由 \(e_j\) 一个元素生成。又因为 \(e_j^2=e_j\)，有 \(A=Ae_j\oplus A(1-e_j)\)，所以由\cref{b2:prop:finite-projective-summand}，\(P_j\) 是有限生成投射模。读取第 \(j\) 列，就把它同构到自然列向量模中前 \(j\) 个坐标组成的子模：标准列向量记为 \(v_1,v_2,v_3\)，此对应为 \(E_{ij}\mapsto v_i\)，且 \(E_{ij}v_j=v_i\) 直接说明它由 \(v_j\) 生成。矩阵单位乘法
 \[
 E_{ab}E_{ij}=\delta_{bi}E_{aj}
 \]
@@ -98,7 +116,13 @@ E_{ab}E_{ij}=\delta_{bi}E_{aj}
 J^rP_j=\operatorname{span}_k\{\,E_{ij}\mid1\le i\le j-r\,\},
 \qquad 0\le r\le j,
 \end{equation}
-空指标集表示零。每个非零层由 \(E_{j-r,j}\) 的陪集生成；左乘矩阵 \(a\) 后，较低行号的项属于下一层，只剩系数 \(a_{j-r,j-r}\)，所以这个层同构于 \(S_{j-r}\)。
+空指标集表示零。例如 \(P_3\) 的根列就是
+\[
+P_3=kE_{13}+kE_{23}+kE_{33}
+\supsetneq JP_3=kE_{13}+kE_{23}
+\supsetneq J^2P_3=kE_{13}\supsetneq0.
+\]
+每个非零层由 \(E_{j-r,j}\) 的陪集生成；左乘矩阵 \(a\) 后，行号更小、在矩阵中更靠上的项属于下一层，只剩系数 \(a_{j-r,j-r}\)，所以这个层同构于 \(S_{j-r}\)。
 
 \ProseParagraphBreak
 因此，从顶层向下读，\(P_1,P_2,P_3\) 的简单层依次为
@@ -110,7 +134,7 @@ P_3:\ S_3,\ S_2,\ S_1.
 \[
 \operatorname{Soc}P_j=kE_{1j}\cong S_1,
 \qquad
-\operatorname{Soc}^rP_j=\operatorname{span}_k\{\,E_{ij}\mid i\le\min(r,j)\,\}.
+\operatorname{Soc}^rP_j=\operatorname{span}_k\{\,E_{ij}\mid1\le i\le\min(r,j)\,\},\qquad r\ge0.
 \]
 这些公式可直接从\cref{b2:prop:loewy-series}及矩阵乘法核验。
 
@@ -120,4 +144,31 @@ P_3:\ S_3,\ S_2,\ S_1.
 A/JA\cong S_1\oplus S_2\oplus S_3,
 \qquad \operatorname{Soc}A\cong S_1^{\oplus3}.
 \]
-最大半单商与最大半单子模甚至可以含有完全不同的重数。自然列向量模 \(k^3\) 则与 \(P_3\) 同构，映射为 \(E_{i3}\mapsto e_i\)；其根列是熟悉的坐标旗标，只是排列方向与从零开始的升旗标相反。
+最大半单商与最大半单子模可以含有不同的简单模重数：这里顶层有 \(S_2,S_3\)，基座却只有 \(S_1\)。因此同样长的两条 Loewy 列，不能一般地把各层反向配对。自然列向量模 \(k^3\) 与 \(P_3\) 同构，映射为 \(E_{i3}\mapsto v_i\)；其根列是熟悉的坐标旗标，只是排列方向与从零开始的升旗标相反。
+
+\ProseParagraphBreak
+这个 \(P_3\) 还有一个说明 Schur 引理逆命题的性质：\(\operatorname{End}_A(P_3)=k\)，但 \(P_3\) 不是简单模。为计算自同态，使用上述列向量对应。每个 \(A\) 模自同态 \(f\) 都是 \(k\) 线性的；它与 \(E_{ii}\) 交换，所以 \(f(v_i)=c_iv_i\)。再与 \(E_{12},E_{23}\) 交换，分别得到 \(c_1=c_2\)、\(c_2=c_3\)。反过来，标量乘法都与 \(A\) 的作用交换，故全部自同态恰为标量。可是 \(kE_{13}\) 是 \(P_3\) 的非零真子模，足以说明它不简单。
+
+\begin{proposition}\label{b2:prop:radical-socle-subquotients}
+设 \(k\) 为域、\(A\) 为有限维结合含幺 \(k\) 代数，\(M\) 为有限维幺左 \(A\) 模、\(N\) 为其子模。则
+\[
+\operatorname{rad}(M/N)=(\operatorname{rad}M+N)/N,
+\qquad
+\operatorname{Soc}N=N\cap\operatorname{Soc}M,
+\]
+而对于子模的根，一般只有
+\[
+\operatorname{rad}N\subseteq N\cap\operatorname{rad}M,
+\]
+此包含可以严格。
+\end{proposition}
+\begin{proof}
+记 \(J=J(A)\)。\(N\) 与 \(M/N\) 也有限维，由\cref{b2:thm:module-radical-jm}，
+\[
+\operatorname{rad}(M/N)=J(M/N)=(JM+N)/N
+=(\operatorname{rad}M+N)/N.
+\]
+由\cref{b2:prop:module-socle-annihilator}，\(n\in N\) 属于 \(\operatorname{Soc}N\) 当且仅当 \(Jn=0\)，这又恰好意味着 \(n\in N\cap\operatorname{Soc}M\)，得到第二式。对子模的根，根公式给出 \(\operatorname{rad}N=JN\)；由于 \(JN\subseteq N\) 且 \(JN\subseteq JM\)，得到所述包含。
+
+取 \(A=k[\varepsilon]/(\varepsilon^2)\)、\(M=A\)、\(N=k\bar\varepsilon\)，其中 \(\bar\varepsilon\) 为 \(\varepsilon\) 的剩余类。\(N\) 是双边理想，\(N^2=0\) 且 \(A/N\cong k\) 的根为零，由\cref{b2:prop:nilpotent-ideal-in-radical,b2:prop:radical-quotient}得到 \(J(A)=N\)。故 \(\operatorname{rad}M=JM=N\)。另一方面，\(JN=0\)，所以 \(\operatorname{rad}N=0\)，而 \(N\cap\operatorname{rad}M=N\ne0\)。这证明最后的包含未必是等号。
+\end{proof}

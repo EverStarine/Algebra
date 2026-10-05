@@ -37,7 +37,7 @@
 设 \(R\) 为主理想整环，\(N\le R^n\)，其中 \(n\) 有限，则 \(N\) 是自由模，并有一组至多含 \(n\) 个元素的基。
 \end{theorem}
 \begin{proof}
-对 \(n\) 归纳。\(n=0\) 时 \(N=0\)，空集为基。设 \(n>0\)，令 \(\pi:R^n\to R\) 为第一坐标投影。像 \(\pi(N)\) 是 \(R\) 的理想，故写为 \((a)\)。若 \(a=0\)，\(N\) 包含在后 \(n-1\) 个坐标组成的自由模中，应用归纳假设即可。
+对 \(n\) 归纳。\(n=0\) 时 \(N=0\)，空集为基。设 \(n>0\)。为了把问题降到 \(n-1\) 个坐标，考察第一坐标为零的部分，再判断第一坐标是否需要增加一个新的基元。令 \(\pi:R^n\to R\) 为第一坐标投影。像 \(\pi(N)\) 是 \(R\) 的理想，故写为 \((a)\)。若 \(a=0\)，\(N\) 包含在后 \(n-1\) 个坐标组成的自由模中，应用归纳假设即可。
 
 若 \(a\ne0\)，选 \(v\in N\) 满足 \(\pi(v)=a\)。令 \(N_0=N\cap\ker\pi\)。归纳假设给出 \(N_0\) 的基 \(v_2,\ldots,v_r\)，其中 \(r-1\le n-1\)。任意 \(x\in N\) 的第一坐标为 \(ba\)，故 \(x-bv\in N_0\)，说明 \(v,v_2,\ldots,v_r\) 生成 \(N\)。若
 \[
@@ -46,7 +46,12 @@ cv+c_2v_2+\cdots+c_rv_r=0,
 投影得到 \(ca=0\)。由于 \(a\ne0\) 且 \(R\) 为整环，\(c=0\)，再用 \(N_0\) 中的基独立性得到其余系数全零。因此所列元素是一组基，大小至多为 \(n\)。
 \end{proof}
 
-主理想条件在这里把投影像变成一个生成元，整环条件则使该生成元可以消去。
+记 \(N_0=N\cap\ker\pi\)，证明中的投影也给出短正合列
+\[
+0\longrightarrow N_0\longrightarrow N
+\xrightarrow{\pi}(a)\longrightarrow0.
+\]
+当 \(a\ne0\) 时，\(R\to(a)\)、\(r\mapsto ra\) 是同构，因为整环条件使 \(a\) 可以消去。因此商模 \((a)\) 自由，由\cref{b2:cor:free-quotient-splits}，这条短正合列分裂。所选的 \(v\) 给出的截面是 \(ba\mapsto bv\)，上面的元素论证正是在构造 \(N=N_0\oplus Rv\)，并对 \(N_0\le R^{n-1}\) 归纳。
 
 \begin{theorem}[有限生成模的不变因子分解]\label{b2:thm:pid-module-structure}
 设 \(M\) 是主理想整环 \(R\) 上的有限生成模，则存在整数 \(f,s\ge0\) 与非零非单位元素 \(d_1,\ldots,d_s\)，满足 \(d_1\mid\cdots\mid d_s\)，使
@@ -56,15 +61,28 @@ M\cong R^f\oplus R/(d_1)\oplus\cdots\oplus R/(d_s).
 其中挠子模为循环商分量的直和，而 \(M/t_R(M)\cong R^f\)。
 \end{theorem}
 \begin{proof}
-选一组有限生成元，由\cref{b2:prop:module-presentation}得到满同态 \(q:R^n\to M\)。其核 \(N\) 由\cref{b2:thm:pid-free-submodule}具有有限基，设基数为 \(r\)。把这些基向量写成 \(R^n\) 的列向量，得到矩阵 \(A:R^r\to R^n\)，像恰为 \(N\)。因此 \(M\cong\operatorname{coker}A\)。
+选一组有限生成元，由\cref{b2:prop:module-presentation}得到满同态 \(q:R^n\to M\)。其核 \(N\le R^n\) 由\cref{b2:thm:pid-free-submodule}具有有限基，设基数为 \(r\le n\)。把这些基向量写成 \(R^n\) 的列向量，得到矩阵 \(A:R^r\to R^n\)，像恰为 \(N\)，且基的独立性保证 \(A\) 单射。于是得到
+\[
+0\longrightarrow R^r\xrightarrow{A}R^n
+\xrightarrow{q}M\longrightarrow0.
+\]
+这是一组有限展示，因此主理想整环上每个有限生成模都有限展示；一般环上可能不有限生成的关系模，在这里由子模定理得到有限基。现在 \(M\cong\operatorname{coker}A\)，便可以应用矩阵标准形。
 
 对 \(A\) 用\cref{b2:thm:smith-normal-form}与\cref{b2:prop:smith-cokernel}，得到自由坐标与非零对角因子对应的循环商。删去单位因子对应的零分量，便得到题中形式；余下的整除关系仍成立。循环商被非零标量零化，而自由模无挠，所以一个元素是挠元，当且仅当其全部自由坐标为零。这给出挠子模及无挠商的描述。
 \end{proof}
 
-这个定理立即说明，主理想整环上的有限生成无挠模是自由模。有限生成的条件不可省略：\(\mathbb Q\) 作为 \(\mathbb Z\) 模无挠，但不自由。若它有非空基，任取基元 \(b\)，\(b/2\) 的有限整数展开乘二后应等于 \(b\)，与基坐标中一个奇数系数等于全体偶数系数冲突；空基只能生成零模。
+分解的类型与补模的选择需要区别。挠子模 \(t_R(M)\) 及无挠商 \(M/t_R(M)\) 由 \(M\) 本身确定，具体嵌入 \(M\) 的自由补模通常不唯一。在 \(\mathbb Z\oplus\mathbb Z/2\mathbb Z\) 中，\((1,\bar0)\) 与 \((1,\bar1)\) 各自生成一个与挠子模互补的自由子模，两者不同。下面证明自由秩与循环因子的唯一性，这不会使具体补模也变成唯一。
 
 \ProseParagraphBreak
-还须区别分解的类型与补模的选择。挠子模由定义确定，自由补模通常不唯一。在 \(\mathbb Z\oplus\mathbb Z/2\mathbb Z\) 中，\((1,\bar0)\) 与 \((1,\bar1)\) 各自生成一个与挠子模互补的自由子模，两者不同。下面证明自由秩与循环因子的唯一性，这不会使具体补模也变成唯一。
+这个定理立即说明，主理想整环上的有限生成无挠模是自由模。有限生成的条件不可省略：\(\mathbb Q\) 作为 \(\mathbb Z\) 模无挠，但不自由。假设 \(B\) 是它的一组 \(\mathbb Z\) 基。由于 \(\mathbb Q\ne0\)，\(B\) 非空；取 \(b\in B\)，则 \(b/2\) 有有限的基展开
+\[
+\frac b2=\sum_{i=1}^r n_i b_i,\qquad n_i\in\mathbb Z,\quad b_i\in B.
+\]
+乘以 \(2\) 得到
+\[
+b=\sum_{i=1}^r 2n_i b_i.
+\]
+左侧的 \(b\) 坐标为 \(1\)，右侧的每个基坐标都是偶数；这违反基展开的唯一性。
 
 \subsection{不变因子分解与初等因子分解}
 \label{b2:subsec:0403:02}
@@ -76,7 +94,11 @@ M\cong R^f\oplus R/(d_1)\oplus\cdots\oplus R/(d_s).
 \[
 R/(ab)\longrightarrow R/(a)\oplus R/(b)
 \]
-是同构。事实上，取 \(ua+vb=1\)，\(xvb+yua\) 分别同余于 \(x\pmod a\)、\(y\pmod b\)，故映射满射；同时属于 \((a)\) 与 \((b)\) 的元素写成 \(az\)，互素条件使 \(b\mid z\)，因而核正是 \((ab)\)。这给出所需的中国剩余分解。反复使用它，每个循环商可以拆成素元幂对应的循环商。
+是同构。事实上，取 \(ua+vb=1\)，\(xvb+yua\) 分别同余于 \(x\pmod a\)、\(y\pmod b\)，故映射满射。若 \(w\in(a)\cap(b)\)，写 \(w=az\)，则 Bézout 等式给出
+\[
+z=uaz+vbz.
+\]
+由于 \(az=w\in(b)\)，右侧两项都属于 \((b)\)，故 \(b\mid z\)，进而 \(w\in(ab)\)。反向包含显然，因此 \((a)\cap(b)=(ab)\)，上面商模同态的核为零。这给出所需的中国剩余分解。反复使用它，每个循环商可以拆成素元幂对应的循环商。
 
 \begin{definition}\label{b2:def:pid-primary-module}
 设 \(R\) 是主理想整环，\(M\) 是左 \(R\) 模，\(p\in R\) 是不可约元。模 \(M\) 的 \(p\) \term[mo-zhufenliang]{主分量}[primary component of a module]定义为
@@ -85,6 +107,41 @@ M_p=\{\,m\in M\mid p^jm=0\text{ 对某个整数 }j\ge1\,\}.
 \]
 它是子模：两个元素分别被 \(p^a,p^b\) 零化时，其和与差被 \(p^{\max(a,b)}\) 零化；若 \(p^jm=0\) 且 \(r\in R\)，则交换性给出 \(p^j(rm)=r(p^jm)=0\)。循环商 \(R/(p^e)\) 中的 \(p^e\) 称为一个\term[chudeng-yinzi]{初等因子}[elementary divisor]，其中 \(e\ge1\)。
 \end{definition}
+
+例如，在 \(M=\mathbb Z/12\mathbb Z\) 中，
+\[
+M_2=\{\bar0,\bar3,\bar6,\bar9\}=\langle\bar3\rangle,\qquad
+M_3=\{\bar0,\bar4,\bar8\}=\langle\bar4\rangle.
+\]
+它们分别由 \(4\) 和 \(3\) 零化，生成元的阶分别为 \(4\) 和 \(3\)，所以 \(M_2\cong\mathbb Z/4\mathbb Z\)、\(M_3\cong\mathbb Z/3\mathbb Z\)。两者的交为零，且任意元素满足 \(\bar x=9\bar x+4\bar x\)，右侧分别属于这两个主分量。因此 \(M=M_2\oplus M_3\)：分解是在同一个模中按零化标量的素因子划分元素。
+
+\ProseParagraphBreak
+一个循环主分量 \(R/(p^e)\) 连续乘 \(p\) 后依次变成 \(pR/(p^e),p^2R/(p^e),\ldots\)，第 \(e\) 次后为零。把它画成一列高度为 \(e\) 的格子，第 \(j\) 层便表示乘到 \(p^{j-1}\) 后仍留下的一层；高度不足 \(j\) 的列已经消失。\cref{b2:fig:pid-primary-layers}的列高为 \(4,3,1\)，各层格子数为 \(3,2,2,1\)，再上一层为零。第 \(j\) 层与第 \(j+1\) 层的格子数之差，正好数出高度恰为 \(j\) 的列。下面将把这些层数写成由模本身确定的向量空间维数。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.85cm,y=0.43cm]
+  \foreach \height [count=\column from 0] in {4,3,1}{
+    \foreach \level in {1,...,\height}{
+      \ifnum\level=3
+        \fill[AlgebraBlue!22] (\column+0.1,\level-1) rectangle ++(0.7,0.86);
+      \else
+        \fill[AlgebraGray!12] (\column+0.1,\level-1) rectangle ++(0.7,0.86);
+      \fi
+      \draw[AlgebraGray] (\column+0.1,\level-1) rectangle ++(0.7,0.86);
+    }
+    \node[below,font=\small] at (\column+0.45,-0.1) {\(\height\)};
+  }
+  \foreach \level/\cellcount in {1/3,2/2,3/2,4/1}{
+    \node[left,font=\small] at (-0.05,\level-0.57) {\(j=\level\)};
+    \node[right,font=\small] at (3.05,\level-0.57) {\(\cellcount\)};
+  }
+  \node[above,font=\small] at (1.45,4.12) {指数};
+  \node[above,font=\small] at (3.25,4.12) {层商维数};
+\end{tikzpicture}
+\caption[主分量层商与初等因子]{主分量层商与初等因子。列高为 \(4,3,1\)，着色的第三层有两个格子，第四层有一个格子，二者之差说明指数恰为 \(3\) 的循环分量有一个。}
+\label{b2:fig:pid-primary-layers}
+\end{figure}
 
 \begin{theorem}[初等因子及分类唯一性]\label{b2:thm:pid-elementary-divisors}
 设 \(R\) 是主理想整环，\(M\) 是有限生成 \(R\) 模。选取 \(R\) 中不可约元的相伴类代表 \(p\) 后，\(M\) 具有分解
@@ -100,7 +157,11 @@ M_p\cong\bigoplus_{h=1}^{s_p}R/(p^{e_{p,h}}),
 
 模同构保持挠子模，故也诱导无挠商同构。若两个分解中的自由秩为 \(f,f'\)，得到 \(R^f\cong R^{f'}\)，由\cref{b2:thm:free-rank-invariance}，因为 \(R\ne0\) 且交换，必有 \(f=f'\)。
 
-固定 \(p\)。\(R/(p)\) 是域：任何不属于 \((p)\) 的元素与 \(p\) 互素，Bézout 等式给出其逆元。对 \(j\ge1\)，商模
+固定 \(p\)。\(R/(p)\) 是域：任何不属于 \((p)\) 的元素与 \(p\) 互素，Bézout 等式给出其逆元。要恢复各个循环分量的指数，可以连续乘 \(p\)，比较
+\[
+M_p\supseteq pM_p\supseteq p^2M_p\supseteq\cdots.
+\]
+在 \(R/(p^e)\) 中，第 \(j\) 次相邻商只在 \(j\le e\) 时非零；它正好对应上图的第 \(j\) 层。对 \(j\ge1\)，商模
 \[
 p^{j-1}M_p/p^jM_p
 \]
@@ -110,7 +171,9 @@ c_{p,j}=\#\{\,h\mid e_{p,h}\ge j\,\}.
 \]
 因此指数恰等于 \(j\) 的分量数为 \(c_{p,j}-c_{p,j+1}\)。这些维数只用到 \(M_p\) 及标量作用，所以由模本身确定，恢复全部指数多重集。
 
-最后，将每个 \(p\) 的正指数按非降顺序排列，令 \(s=\max_p s_p\)，把较短列表在左端补零至长 \(s\)。按列相乘 \(d_i=\prod_p p^{e_{p,i}}\)，得到 \(d_1\mid\cdots\mid d_s\)，且每项非单位；中国剩余同构把这些循环商重新组装成相同的主分量。反过来，任何整除链中的每个素元指数都非降，去掉零指数后正是已确定的正指数列表，所以只能用上述左端补零的方式恢复。故不变因子也在相伴意义下唯一。若没有任何非零主分量，取 \(s=0\)，只剩已确定的自由部分。
+若没有任何非零主分量，取 \(s=0\)，只剩已确定的自由部分。否则，要恢复 \(d_1\mid\cdots\mid d_s\)，就必须使每个素元在这些因子中的指数都非降。将每个 \(p\) 的正指数按非降顺序排列，令 \(s=\max_p s_p\)，把较短列表补零至长 \(s\)。缺失项的指数是 \(0\)，只能放在较小指数的一端，也就是左端；放在右端一般会破坏整除链。例如，对两个不相伴的不可约元 \(p,q\)，若 \(p\) 的正指数为 \((1,3)\)，\(q\) 的正指数为 \((2)\)，就应把后者补为 \((0,2)\)，得到 \(d_1=p\)、\(d_2=p^3q^2\)。
+
+一般地，按列相乘 \(d_i=\prod_p p^{e_{p,i}}\)，得到 \(d_1\mid\cdots\mid d_s\)，且每项非单位；中国剩余同构把这些循环商重新组装成相同的主分量。反过来，任何整除链中的每个素元指数都非降，去掉零指数后正是已确定的正指数列表，所以只能用上述左端补零的方式恢复。故不变因子也在相伴意义下唯一。
 \end{proof}
 \begin{corollary}[最少生成元数]\label{b2:cor:pid-minimal-generators}
 设 \(R\) 是主理想整环，\(M\) 是有限生成 \(R\) 模，其不变因子分解为
@@ -121,18 +184,22 @@ M\cong R^f\oplus\bigoplus_{i=1}^sR/(d_i),
 其中 \(f,s\ge0\) 为整数，各 \(d_i\) 非零且非单位，\(s=0\) 时循环商直和为空。记 \(\mu_R(M)\) 为 \(M\) 的最少生成元数，则 \(\mu_R(M)=f+s\)。特别地，零模需要零个生成元；若 \(R\) 为域，则 \(s=0\)，此数等于向量空间维数 \(f\)。
 \end{corollary}
 \begin{proof}
-从每个自由分量和循环商各取一个标准生成元，可得 \(f+s\) 个生成元。若 \(s>0\)，取 \(d_1\) 的一个不可约因子 \(p\)，则 \(p\mid d_i\) 对所有 \(i\) 成立。\(R/(p)\) 是域，且
+从每个自由分量和循环商各取一个标准生成元，可得 \(f+s\) 个生成元。要给出下界，可以把生成元的像放到商向量空间中比较。若 \(p\in R\) 是不可约元，则任意一组含 \(r\) 个元素的生成元在 \(M/pM\) 中的像仍生成这个商。商中的 \(p\) 作用为零，标量因而通过域 \(R/(p)\) 作用，所以
+\[
+r\ge\dim_{R/(p)}M/pM.
+\]
+若 \(s>0\)，为了让每个循环商在这个维数中都有贡献，取 \(d_1\) 的一个不可约因子 \(p\)。整除链保证 \(p\mid d_i\) 对所有 \(i\) 成立；每个自由分量模 \(p\) 后成为 \(R/(p)\)，每个 \(R/(d_i)\) 模 \(p\) 后也成为 \(R/(p)\)，因为 \((d_i)\subseteq(p)\)。因此
 \[
 M/pM\cong (R/(p))^{f+s}.
 \]
-任意生成集在这个商向量空间中的像仍生成它，故至少有 \(f+s\) 个元素。若 \(s=0\)，当 \(R\) 为域时由向量空间维数给出下界 \(f\)；否则取 \(R\) 中任一不可约元 \(p\)，对 \(R^f/pR^f\cong(R/(p))^f\) 使用同一论证即可。两种论证也包括 \(f=0\) 的情形。
+上述下界即为 \(f+s\)。若 \(s=0\)，当 \(R\) 为域时由向量空间维数给出下界 \(f\)；否则取 \(R\) 中任一不可约元 \(p\)，对 \(R^f/pR^f\cong(R/(p))^f\) 使用同一论证即可。两种论证也包括 \(f=0\) 的情形。
 \end{proof}
 \symidx{\(M_p\)：模的 \(p\) 主分量}
 
 这项证明比较的是模自身的无挠商和主分量层商，所以适用于不同生成元数、不同关系数的展示。Smith 对角形中的单位项可以随冗余展示增减，但它们所给的零模不参与这里的非单位因子列表。
 
 \ProseParagraphBreak
-例如，若某个主分量的连续层商维数依次为 \(3,2,2,1,0\)，则指数至少为一、二、三、四的分量分别有三、二、二、一个。相邻相减得到指数恰为一、二、三、四的分量数为 \(1,0,1,1\)，故
+反过来，若某个主分量的连续层商维数依次为 \(3,2,2,1,0\)，相邻相减得到指数恰为一、二、三、四的分量数为 \(1,0,1,1\)，便恢复了\cref{b2:fig:pid-primary-layers}中的三列，即
 \[
 M_p\cong R/(p)\oplus R/(p^3)\oplus R/(p^4).
 \]

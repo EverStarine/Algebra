@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：## 第15章　有限维代数、根滤过与投射覆盖
-% 纲要位置：计划纲要.md，第 1243 行。
+% 纲要位置：计划纲要.md，第 1525 行。
 
 \chapter{有限维代数、根滤过与投射覆盖}
 \label{b2:ch:15}
@@ -20,7 +20,7 @@
 \end{itemize}
 \end{learninggoals}
 
-令 \(A\) 为域 \(k\) 上的二阶上三角矩阵代数。严格上三角矩阵组成理想 \(J\)，且 \(J^2=0\)；商 \(A/J\) 只看见两个对角位置，因而同构于 \(k\times k\)。同一个代数一面有容易描述的半单商，一面又有不被商看见的非零乘法。若研究一个 \(A\) 模，先模掉 \(J\) 能读出顶层，却无法独自恢复各层如何接合。
+令 \(A\) 为域 \(k\) 上的二阶上三角矩阵代数。严格上三角矩阵组成理想 \(J\)，且 \(J^2=0\)；商 \(A/J\) 只看见两个对角位置，因而同构于 \(k\times k\)。商映射保留两个对角位置，却把非零的矩阵单位 \(E_{12}\) 送到零，也丢去了对角元与它相乘的作用。若研究一个 \(A\) 模，先模掉 \(J\) 能读出顶层，却无法独自恢复各层如何接合。
 
 \ProseParagraphBreak
 
@@ -74,17 +74,26 @@
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-radical-socle-subquotient}
-对有限维模 \(N\le M\)，证明
+设 \(k\) 为域。令 \(A=T_3(k)\)、\(P_i=AE_{ii}\)、\(M=P_2\oplus P_3\)，并取子模
 \[
-\operatorname{rad}(M/N)=(\operatorname{rad}M+N)/N,
-\qquad\operatorname{Soc}N=N\cap\operatorname{Soc}M.
+N=kE_{12}\oplus kE_{13}=\operatorname{Soc}M.
 \]
-是否总有 \(\operatorname{rad}N=N\cap\operatorname{rad}M\)？
+计算 \(\operatorname{rad}N\)、\(\operatorname{rad}(M/N)\) 与 \(\operatorname{Soc}(M/N)\)。比较 \(N\cap\operatorname{rad}M\) 与 \(\operatorname{rad}N\)，以及商映射 \(M\to M/N\) 所诱导的 \(\operatorname{Soc}M\to\operatorname{Soc}(M/N)\) 是否满射。
 \end{exercise}
 \begin{solution}
-第一式由\cref{b2:thm:module-radical-jm}及 \(J(M/N)=(JM+N)/N\) 得到。第二式由\cref{b2:prop:module-socle-annihilator}得到：\(N\) 中被 \(J\) 零化的元素，恰好是 \(M\) 中满足同一条件而又属于 \(N\) 的元素。
-
-最后的等式不总成立。取 \(A=k[\varepsilon]/(\varepsilon^2)\)、\(M=A\)、\(N=k\varepsilon\)。此时 \(JN=0\)，所以 \(\operatorname{rad}N=0\)，而 \(N=\operatorname{rad}M\ne0\)，故右侧为 \(N\)。一般只有 \(\operatorname{rad}N=JN\subseteq N\cap JM\)。
+记 \(J=J(A)\)。由三角列模的计算，
+\[
+JM=kE_{12}\oplus(kE_{13}+kE_{23}),\qquad JN=0.
+\]
+所以 \(\operatorname{rad}N=0\)，而 \(N\cap\operatorname{rad}M=N\ne0\)。由\cref{b2:prop:radical-socle-subquotients}，商模的根为
+\[
+\operatorname{rad}(M/N)=(JM+N)/N=k(E_{23}+N).
+\]
+这里第一分量 \(P_2/kE_{12}\) 是简单模 \(S_2\)；第二分量 \(P_3/kE_{13}\) 的根为 \(k(E_{23}+N)\)，顶层为 \(S_3\)。具体地，商模中 \(E_{22}+N\) 和 \(E_{23}+N\) 都被 \(J\) 零化，而 \(E_{23}(E_{33}+N)=E_{23}+N\ne0\)。因此
+\[
+\operatorname{Soc}(M/N)=k(E_{22}+N)\oplus k(E_{23}+N)\cong S_2^{\oplus2}.
+\]
+原基座就是 \(N\)，在商中像为零，故基座上的诱导映射不满射。取商会产生原模中并非简单子模的新的基座部分；对子模有交公式，并不意味着对商也能直接取原基座的像。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-dual-numbers-loewy}
@@ -130,10 +139,18 @@
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-idempotent-nonnilpotent-counterexample}
-证明 \(3+6\mathbb Z\) 是 \(\mathbb Z/6\mathbb Z\) 的幂等元，却不能提升为 \(\mathbb Z\) 的幂等元。指出这为什么不违背\cref{b2:thm:idempotent-lifting}。
+设整数 \(n\ge2\) 有分解 \(n=\prod_{i=1}^r p_i^{a_i}\)，其中 \(p_i\) 为不同素数、\(a_i\ge1\)。分类 \(\mathbb Z/n\mathbb Z\) 的全部幂等元，求其个数，并判断哪些能提升为 \(\mathbb Z\) 的幂等元。以 \(n=12\) 具体核验，再说明“全部商幂等元可提升”是否迫使理想 \(n\mathbb Z\) 幂零。
 \end{exercise}
 \begin{solution}
-\(3^2-3=6\)，所以其商类幂等。整数幂等元满足 \(e(e-1)=0\)，只能是零或一，二者都不模六等于三。因此不能提升。理想 \(6\mathbb Z\) 的每个正幂都非零，缺少提升定理的幂零假设。
+由第一卷定理10.4.3的中国剩余定理，
+\[
+\mathbb Z/n\mathbb Z\cong\prod_{i=1}^r\mathbb Z/p_i^{a_i}\mathbb Z.
+\]
+在模 \(p^a\) 的商中，幂等条件是 \(p^a\mid e(e-1)\)。相邻整数互素，故 \(p\) 不会同时整除 \(e\) 与 \(e-1\)，整个素数幂必须整除其中一个。因此每个坐标的幂等元只有零或一。各坐标可独立选取，全部幂等元由 \(\{0,1\}^r\) 参数化，共有 \(2^r\) 个。
+
+整数环只有零、一两个幂等元，所以可提升的商幂等元恰为各坐标全零或全一者。于是全部可提升当且仅当 \(r=1\)，也就是 \(n\) 为素数幂。模十二时，四个幂等元为 \(0,1,4,9\)：后两者分别满足 \(4^2-4=12\)、\(9^2-9=72\)，并分别在模四、模三的坐标上取 \((0,1)\)、\((1,0)\)，不能提升。
+
+另一方面，无论 \(n\ge2\) 取何值，都有 \((n\mathbb Z)^m=n^m\mathbb Z\ne0\) 对每个正整数 \(m\) 成立。当 \(n\) 为素数幂时全部幂等元可提升，但这个理想仍不幂零。因此幂零性是正文提升定理的充分假设，不能由某个具体商中的全部幂等元可提升反推出它。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-square-zero-matrix-lift}
@@ -152,10 +169,18 @@ e=E_{11}+\varepsilon\begin{pmatrix}0&v\\w&0\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-compatible-idempotent-lifts}
-在上一题的环中，比较 \(e=E_{11}+\varepsilon E_{12}\) 与 \(f=E_{22}\)。证明它们分别提升两个正交幂等元，却不相互正交；为 \(f\) 换一个提升，使两者正交且和为一。
+设 \(k\) 为域，\(R=M_2(k[\varepsilon]/(\varepsilon^2))\)、\(I=\varepsilon M_2(k)\)。求 \(E_{11},E_{22}\in R/I\) 的全部幂等元提升，并确定哪些有序提升对 \((e,f)\) 正交且满足 \(e+f=1\)。若 \(k=\mathbb F_q\)，求这样的完整正交提升组有多少个。
 \end{exercise}
 \begin{solution}
-\(e^2=e\)、\(f^2=f\)，而模 \(I\) 后分别为 \(E_{11},E_{22}\)。但是 \(ef=\varepsilon E_{12}\ne0\)，故原来的提升不正交。取 \(f'=1-e=E_{22}-\varepsilon E_{12}\)，便有 \((f')^2=f'\)、\(ef'=f'e=0\)、\(e+f'=1\)。这说明单个提升的存在性不能替代整组相容性的证明。
+写 \(e=E_{11}+\varepsilon\begin{psmallmatrix}u&v\\w&z\end{psmallmatrix}\)。直接计算得
+\[
+e^2-e=\varepsilon\begin{pmatrix}u&0\\0&-z\end{pmatrix}.
+\]
+所以所有幂等提升恰为 \(e=E_{11}+\varepsilon(vE_{12}+wE_{21})\)。同样，\(E_{22}\) 的全部幂等提升为 \(f=E_{22}+\varepsilon(cE_{12}+dE_{21})\)。两方向的乘积分别为
+\[
+ef=\varepsilon(v+c)E_{12},\qquad fe=\varepsilon(w+d)E_{21}.
+\]
+于是正交恰好要求 \(c=-v,d=-w\)，此时 \(f=1-e\)，总和也为一。反过来，总和为一也给出这两个条件。因此完整正交组由任意 \((v,w)\in k^2\) 唯一确定；有限域情形共有 \(q^2\) 组。这里不仅检查单个幂等方程，还须同时满足两方向的零乘积条件。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-superfluous-ambient}
@@ -189,12 +214,16 @@ e=E_{11}+\varepsilon\begin{pmatrix}0&v\\w&0\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-lifting-between-covers}
-设 \(M,N\) 有限维，\(p:P\to M\)、\(q:Q\to N\) 为投射覆盖，\(h:M\to N\) 为同态。证明存在 \(H:P\to Q\) 使 \(qH=hp\)，描述所有这样的 \(H\)；若 \(h\) 是同构，证明每个这样的提升都为同构。
+设 \(k\) 为域、\(A=k[t]/(t^4)\)，对 \(1\le i\le4\) 令 \(M_i=A/(\bar t^i)\)，自然投射覆盖记为 \(p_i:A\to M_i\)。固定 \(1\le r,s\le4\)，描述所有同态 \(h:M_s\to M_r\)，并求使 \(p_rH=hp_s\) 的全部 \(H:A\to A\)；判断这些提升何时可逆。分别考察 \(M_1\to M_2\)、\(1\mapsto\bar t\)，以及自然商映射 \(M_2\to M_1\)，说明目标间的映射不是同构时，提升可能具有怎样不同的行为。
 \end{exercise}
 \begin{solution}
-存在性由 \(P\) 投射及 \(q\) 满射得到。若固定一个提升 \(H_0\)，任意另一个提升与它的差都唯一地通过 \(\ker q\) 分解；反过来，加上任意 \(P\to\ker q\) 的同态仍为提升。所以选定 \(H_0\) 后，全部提升由 \(\operatorname{Hom}_A(P,\ker q)\) 参数化。
+同态 \(h\) 由 \(z=h(1)\in M_r\) 决定。关系 \(\bar t^s\cdot1=0\) 要求 \(\bar t^sz=0\)，即
+\[
+z\in\bar t^{\max(r-s,0)}M_r.
+\]
+比较截断多项式的系数即可得到这一条件。每个来源上的自同态形如 \(H(x)=xa\)，其中 \(a=H(1)\in A\)。提升条件恰为 \(a+(\bar t^r)=z\)；固定一个代表元 \(a_0\) 后，全部提升由 \(a\in a_0+(\bar t^r)\) 给出。这样的 \(H\) 可逆，当且仅当 \(a\) 的常数项非零：常数项为零时它在模根后为零，不能可逆；常数项非零时可用有限几何和求逆。因为 \(r\ge1\)，所有提升的常数项相同，所以对给定 \(h\)，全部提升同时可逆或同时不可逆。
 
-若 \(h\) 可逆，\(hp:P\to N\) 也是投射覆盖，由\cref{b2:thm:projective-cover-uniqueness}，\(P\) 与 \(Q\) 同构，特别地等维。对任一提升，\(qH\) 满射，故 \(H(P)+\ker q=Q\)。核多余使 \(H(P)=Q\)，再由等维得到 \(H\) 单射。因此所有提升都可逆，但可以互不相同。
+对 \(M_1\to M_2\)、\(1\mapsto\bar t\)，此映射单射，所有提升都有 \(a\equiv\bar t\pmod{\bar t^2}\)，常数项为零，故都不可逆。对自然满射 \(M_2\to M_1\)，所有提升满足 \(a\equiv1\pmod{\bar t}\)，故都可逆。这两个目标映射均非同构；正文的同构提升定理给出充分条件，不能把它倒过来作为必要条件。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-triangular-idempotents}
@@ -211,12 +240,24 @@ e=E_{11}+\varepsilon\begin{pmatrix}0&v\\w&0\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-corner-filtration}
-在 \(A=T_3(k)\) 中取 \(e=E_{11}+E_{33}\)。求角代数及其根，比较 \((eJe)^2\) 与 \(eJ^2e\)，并判断 \(e\) 是否为满幂等元。
+设 \(k\) 为域、\(n\ge1\)。令 \(A=T_n(k)\)，选取 \(1\le q_1<\cdots<q_s\le n\)，并令 \(e=\sum_{a=1}^sE_{q_aq_a}\)。识别 \(B=eAe\)，对所有 \(r\ge0\) 分别计算 \(J(B)^r\) 与 \(eJ(A)^re\)，并判断 \(e\) 何时为满幂等元。再取 \(n=4\)、\((q_1,q_2,q_3)=(1,3,4)\)，比较二次和三次根幂。
 \end{exercise}
 \begin{solution}
-角代数以 \(E_{11},E_{13},E_{33}\) 为基，按这两条坐标识别后就是 \(T_2(k)\)，单位为 \(e\)。其根为 \(kE_{13}=eJe\)，所以 \((eJe)^2=0\)。但 \(J^2=kE_{13}\)，故 \(eJ^2e=kE_{13}\ne0\)。因此角环中的根幂不一定等于原根幂取角。
+角代数的基为 \(E_{q_aq_b}\)、\(a\le b\)，乘法保持矩阵单位规则，故按所选指标的次序同构于 \(T_s(k)\)。在 \(T_n(k)\) 中，\(J(A)^r\) 由距主对角线至少 \(r\) 的矩阵单位组成；一条长度为 \(r\) 的非零乘积，恰需选择 \(r\) 个严格增加的指标间隔。因此
+\[
+\begin{aligned}
+J(B)^r&=\operatorname{span}_k\{E_{q_aq_b}\mid b-a\ge r\},\\
+eJ(A)^re&=\operatorname{span}_k\{E_{q_aq_b}\mid q_b-q_a\ge r\}.
+\end{aligned}
+\]
+对 \(r=0\)，两式均包含对角项，给出 \(B\)；空指标集按约定给零。前式在所选指标中数可连接的步数，后式允许在原代数中经过未选的中间指标。
 
-任意 \(aeb\) 的第二对角元为零，所以 \(AeA\) 不含 \(E_{22}\)，不是全部 \(A\)，\(e\) 不满。求幂时插入 \(e\) 会删去经由第二顶点的乘积，这也解释了上面两个根幂的差别；对满幂等元则有\cref{b2:prop:full-corner-radical-powers}的等式。
+若漏选某个 \(i\)，任何 \(aeb\) 的第 \(i\) 个对角元都为零，所以 \(AeA\) 不含 \(E_{ii}\)。故 \(e\) 满，当且仅当所有指标均被选中，即 \(e=1\)。在指定的四阶例子中，
+\[
+J(B)^2=kE_{14},\quad eJ(A)^2e=kE_{13}+kE_{14},\qquad
+J(B)^3=0,\quad eJ(A)^3e=kE_{14}.
+\]
+虽然一次根取角的公式仍成立，较高根幂可以在不同次数都出现差异。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-basic-corner-example}
@@ -240,12 +281,25 @@ e+(E_{21},0)e(E_{12},0)=(I_2,1),
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-quiver-with-zero-composition}
-令 \(B=T_3(k)/(kE_{13})\)，矩阵单位的商类仍用原符号表示。求 \(J(B)\)、三个简单模的投射覆盖及其 Loewy 层。记录 \(J/J^2\) 的箭头，并指出两条相接箭头的复合满足什么关系。
+设 \(k\) 为域、\(B=T_4(k)/(kE_{14})\)，矩阵单位的商类沿用原符号。求 \(J(B)\) 的各次幂和箭图，写出由 \(P_4=BE_{44}\) 给出的 \(S_4\) 的投射覆盖，并计算 \(P_4\) 的 Loewy 层。比较相邻箭头的二步复合与从第四顶点到第一顶点的三步复合，说明关系会在哪一层改变列模。
 \end{exercise}
 \begin{solution}
-\(J(B)=kE_{12}+kE_{23}\)，其平方为零；商为 \(k^3\)。投射覆盖为 \(P_i=BE_{ii}\to S_i\)。\(P_1\) 只有一层 \(S_1\)；\(P_2\) 有顶层 \(S_2\) 和根层 \(S_1\)；\(P_3\) 有顶层 \(S_3\) 和根层 \(S_2\)，因为原来的 \(E_{13}\) 已为零。这些覆盖的核分别为零、\(kE_{12}\)、\(kE_{23}\)，均包含于来源的根。
+矩阵单位的乘法说明 \(kE_{14}\) 是双边理想。严格上三角理想的像为
+\[
+J(B)=kE_{12}+kE_{13}+kE_{23}+kE_{24}+kE_{34},\qquad
+J(B)^2=kE_{13}+kE_{24},\quad J(B)^3=0.
+\]
+这是幂零理想，商为 \(k^4\)，所以它确为 Jacobson 根。\(J(B)/J(B)^2\) 的基是 \(E_{12},E_{23},E_{34}\) 的商类，箭图为 \(4\to3\to2\to1\)。两个相邻箭头的复合分别给出非零的 \(E_{24}\) 与 \(E_{13}\)，但
+\[
+E_{12}E_{23}E_{34}=E_{14}=0.
+\]
+因此该关系不消掉二步路径，而只使这条三步路径为零。
 
-箭头仍是 \(2\to1\) 与 \(3\to2\)，但 \(E_{12}E_{23}=0\)，所以从三到一的两步复合为零。原来的 \(T_3(k)\) 中同一复合非零；两者箭图相同而乘法关系不同，说明仅列箭头不足以恢复代数。
+列模 \(P_4\) 的基为 \(E_{44},E_{34},E_{24}\)，根链为
+\[
+P_4\supset kE_{34}+kE_{24}\supset kE_{24}\supset0.
+\]
+自然满射 \(P_4\to S_4\) 的核是 \(J(B)P_4\)，故为投射覆盖；非零 Loewy 层依次是 \(S_4,S_3,S_2\)。原 \(T_4(k)\) 的第四列还有最底层 \(S_1\)，商掉 \(E_{14}\) 正是移除了这一层，箭头数和二步乘积均未改变。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:15-projective-hom-composition-factors}

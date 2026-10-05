@@ -1,8 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 18.3 约化迹与约化范数
-% 本轮补充的纲要细目：
-% * 证明第一类对合保持约化特征多项式，并由分裂模型建立非退化对称迹型；比较实矩阵与四元数例子
-% 纲要位置：计划纲要.md，第 1347 行。
+% 纲要位置：计划纲要.md，第 1643 行。
 
 \section{约化迹与约化范数}
 \label{b2:sec:1803}
@@ -11,9 +9,10 @@
 
 % 纲要要点（供目录核对）：
 %
-% * 在分裂域中的定义
-% * 与域迹、域范数的比较
-% * 定义对分裂域选择的独立性与标量扩张相容性；约化迹的可加性及约化范数的乘法性
+% * 在分裂域中的定义；解释抵消半线性、Galois 降系数及任意分裂域比较，Cayley–Hamilton 的系数在中心
+% * 与域迹、域范数的比较；同一左乘算子的两种坐标计算及首一因子重数比较，区别四元数标量的最小多项式与约化特征多项式
+% * 定义对分裂域选择的独立性与标量扩张相容性；泛型坐标处理扩域后的新元素，约化迹可加、约化范数乘法而不加法，正则迹不能在坏特征除以次数
+% * 正式证明一般约化迹配对对称非退化及迹映射满射；纯不可分子域的限制配对可以全退化；对合与转置复合证明保持约化特征多项式和非退化对称迹型
 %
 
 \subsection{约化迹与约化范数的定义}
@@ -33,7 +32,7 @@ p_a(T)=\det\bigl(TI_n-\rho(a\otimes1)\bigr).
 则 \(p_a(T)\) 的系数属于 \(k\)，并且与分裂域 \(K\) 及同构 \(\rho\) 的选择无关。
 \end{theorem}
 \begin{proof}
-对 \(g\in\operatorname{Gal}(K_0/k)\)，记 \(g_M\) 为对矩阵条目逐项施加 \(g\) 的映射。定义
+对 \(g\in\operatorname{Gal}(K_0/k)\)，记 \(g_M\) 为对矩阵条目逐项施加 \(g\) 的映射。直接复合 \(g_M\circ\rho\) 得到的是 \(g\)-半线性映射，不能与 \(\rho\) 作为 \(K_0\) 代数同构比较。为抵消这一半线性，定义
 \[
 \rho_g=g_M\circ\rho\circ(\operatorname{id}_A\otimes g^{-1}):
 A\otimes_kK_0\longrightarrow M_n(K_0).
@@ -43,9 +42,16 @@ A\otimes_kK_0\longrightarrow M_n(K_0).
 \rho_g\left(\sum_i a_i\otimes\lambda_i\right)
 =\sum_i\lambda_i\,g_M\bigl(\rho(a_i\otimes1)\bigr).
 \]
-于是 \(\rho_g\rho^{-1}\) 是全矩阵代数的 \(K_0\) 自同构，由\cref{b2:thm:skolem-noether}为内自同构。将它用于 \(\rho(a\otimes1)\)，得到 \(g_M\bigl(\rho(a\otimes1)\bigr)\) 与 \(\rho(a\otimes1)\) 共轭，故特征多项式相同。这说明 \(g(p_a)=p_a\)，全部系数属于不动域 \(K_0^{\operatorname{Gal}(K_0/k)}=k\)。
+于是 \(\rho_g\rho^{-1}\) 是全矩阵代数的 \(K_0\) 自同构，由\cref{b2:thm:skolem-noether}为内自同构。记 \(B=\rho(a\otimes1)\)，则存在 \(U_g\in\operatorname{GL}_n(K_0)\) 使 \(g_M(B)=U_gBU_g^{-1}\)。令 \(g\) 固定不定元 \(T\)，便有
+\[
+g\bigl(p_a(T)\bigr)
+=\det\bigl(TI_n-g_M(B)\bigr)
+=\det\bigl(TI_n-U_gBU_g^{-1}\bigr)
+=p_a(T).
+\]
+因此全部系数属于不动域 \(K_0^{\operatorname{Gal}(K_0/k)}=k\)。
 
-固定 \(K_0\) 而改变 \(\rho\)，同样由内自同构的结论，矩阵只差共轭，故多项式不变。再给定任意分裂域 \(L/k\) 及其分裂同构。将 \(K_0\) 经一个 \(k\) 嵌入送入 \(L\) 的代数闭包 \(\Omega=\overline L\)，就得到同时容纳 \(K_0\) 与 \(L\) 的域。将两个分裂模型都扩张到 \(\Omega\)，它们成为 \(A_\Omega\) 到 \(M_n(\Omega)\) 的两个同构，所以仍只差内自同构。因此两个特征多项式在 \(\Omega[T]\) 中相同。第一模型的系数已属于 \(k\)，于是第二模型也给出同一多项式。
+固定 \(K_0\) 而改变 \(\rho\)，同样由内自同构的结论，矩阵只差共轭，故多项式不变。再给定任意分裂域 \(L/k\) 及其分裂同构。取 \(L\) 的代数闭包 \(\Omega=\overline L\)。由于 \(K_0/k\) 是有限代数扩张，可逐次为其生成元在 \(\Omega\) 中选择最小多项式的根，将 \(k\hookrightarrow\Omega\) 延拓为 \(K_0\hookrightarrow\Omega\)。这样就得到同时容纳 \(K_0\) 与 \(L\) 的域。将两个分裂模型都扩张到 \(\Omega\)，它们成为 \(A_\Omega\) 到 \(M_n(\Omega)\) 的两个同构，所以仍只差内自同构。因此两个特征多项式在 \(\Omega[T]\) 中相同。第一模型的系数已属于 \(k\)，于是第二模型也给出同一多项式。
 \end{proof}
 
 \begin{definition}\label{b2:def:reduced-trace-norm}
@@ -63,7 +69,7 @@ A\otimes_kK_0\longrightarrow M_n(K_0).
 \symidx{\(\operatorname{Trd}_{A/k}\)：约化迹}
 \symidx{\(\operatorname{Nrd}_{A/k}\)：约化范数}
 
-分裂情形 \(A=M_n(k)\) 中，这就是通常的特征多项式、矩阵迹与行列式。\cref{b2:thm:exterior-cayley-hamilton}在分裂模型中还给出 \(\chi^{\mathrm{red}}_{A,a}(a)=0\)：其像为零，而 \(A\to A_K\) 单射，故原代数中的值也为零。
+分裂情形 \(A=M_n(k)\) 中，这就是通常的特征多项式、矩阵迹与行列式。约化特征多项式的系数属于中心 \(k\)，所以可以在非交换代数 \(A\) 中将 \(T\) 代为 \(a\)，不必为系数与 \(a\) 的乘法另作次序选择。\cref{b2:thm:exterior-cayley-hamilton}在分裂模型中给出 \(\chi^{\mathrm{red}}_{A,a}(a)=0\)：其像为零，而 \(A\to A_K\) 单射，故原代数中的值也为零。
 
 \subsection{与域迹、域范数的比较}
 \label{b2:subsec:1803:02}
@@ -78,7 +84,7 @@ A\otimes_kK_0\longrightarrow M_n(K_0).
 因此 \(\operatorname{tr}_k\lambda_a=n\operatorname{Trd}_{A/k}(a)\)，且 \(\det_k\lambda_a=\operatorname{Nrd}_{A/k}(a)^n\)。
 \end{proposition}
 \begin{proof}
-扩张到分裂域后，左乘矩阵 \(B=\rho(a\otimes1)\) 逐列作用在 \(M_n(K)\) 上。这个线性作用是 \(n\) 份 \(B\) 的直和，所以特征多项式为 \(\det(TI-B)^n\)。标量扩张不改变一个原系数矩阵的特征多项式，因而等式在 \(k[T]\) 中成立。比较次高次系数和常数项，就得到两个公式。
+扩张到分裂域后，左乘矩阵 \(B=\rho(a\otimes1)\) 逐列作用在 \(M_n(K)\) 上：每一列都是一份 \(K^n\)，都受到同一个 \(B\) 的作用，列与列之间互不混合。因此这个 \(n^2\) 维线性作用是 \(n\) 份 \(B\) 的直和，特征多项式为 \(\det(TI-B)^n\)。标量扩张不改变一个原系数矩阵的特征多项式，因而等式在 \(k[T]\) 中成立。比较次高次系数和常数项，就得到两个公式。
 \end{proof}
 
 若底域特征整除 \(n\)，不能把正则迹除以 \(n\) 来定义约化迹。例如在 \(M_p(k)\)、\(\operatorname{char}k=p\) 中，\(E_{11}\) 的约化迹为一，而它的左乘算子迹为零。定义约化运算所需的下降论证正好避开了这种除法。
@@ -96,21 +102,24 @@ A\otimes_kK_0\longrightarrow M_n(K_0).
 此处 \(E/k\) 不必可分。特别地，次数为 \(n\) 的子域上的约化迹、范数恰为域迹、范数。
 \end{theorem}
 \begin{proof}
-由\cref{b2:thm:csa-centralizer}，\(C_A(E)\) 是中心为 \(E\) 的单代数，且 \(\dim_k A=e\dim_k C_A(E)\)。若其作为中心单 \(E\) 代数的次数为 \(d\)，则 \(n^2=e^2d^2\)，所以 \(n=ed\)，证明整除性。
+\cref{b2:prop:csa-self-centralizing-field}已证明任意含 \(k\) 的子域 \(E\subseteq A\) 的次数 \(e\) 整除 \(n\)，这里不要求 \(E/k\) 可分。
 
-\(A\) 作为左 \(E\) 空间的维数为 \(n^2/e\)。选一组左 \(E\) 基，左乘 \(a\in E\) 在各个系数上都是 \(E\) 上乘 \(a\) 的作用。因此其底层 \(k\) 特征多项式为 \(\chi_{m_a:E\to E}^{n^2/e}\)。与\cref{b2:prop:regular-reduced-characteristic}比较，得到
+\(A\) 作为左 \(E\) 空间的维数为 \(n^2/e\)。选一组左 \(E\) 基 \(v_1,\ldots,v_{n^2/e}\)，则左乘 \(a\in E\) 把 \(\sum_j c_jv_j\) 送到 \(\sum_j (ac_j)v_j\)。每个系数空间都是一份 \(E\)，其底层 \(k\) 作用为 \(m_a\)，故同一个算子 \(\lambda_a\) 的特征多项式为 \(\chi_{m_a:E\to E}^{n^2/e}\)。另一方面，\cref{b2:prop:regular-reduced-characteristic}通过分裂矩阵的列坐标给出它的特征多项式为 \((\chi^{\mathrm{red}}_{A,a})^n\)。比较这两种坐标计算，得到
 \[
 \left(\chi^{\mathrm{red}}_{A,a}\right)^n
 =\left(\chi_{m_a:E\to E}^{n/e}\right)^n.
 \]
-两个括号中的多项式都首一，\(k[T]\) 中的唯一分解保证它们相等；这个推理不要求 \(n\) 在 \(k\) 中可逆。域迹和域范数按乘法算子的迹与行列式定义，见第一卷定义18.2.1，故比较系数得到所述公式。
+两个括号中的多项式都首一。在 \(k[T]\) 的唯一分解中，每个首一不可约因子在两边的指数分别为 \(n u\) 和 \(n v\)，所以 \(u=v\)，从而两个括号相等。这是在整数中比较因子指数，并未在 \(k\) 中除以 \(n\)。域迹和域范数按乘法算子的迹与行列式定义，见第一卷定义18.2.1，故比较系数得到所述公式。
 \end{proof}
 
-在四元数代数中，\(\operatorname{char}k\ne2\) 时，约化迹与范数分别为 \(x+\bar x\) 与 \(x\bar x\)。因为每个 \(x\) 满足
+非可分子域上的限制可能丢失迹配对的信息。例如取 \(k=\mathbb F_p(t)\) 和 \(E=k(\alpha)\)，其中 \(p\) 为素数，\(\alpha^p=t\)。多项式 \(T^p-t\in\mathbb F_p[t][T]\) 对素元 \(t\) 满足第一卷定理12.3.1的 Eisenstein 判据，所以它在 \(k[T]\) 中不可约，\([E:k]=p\)，且 \(1,\alpha,\ldots,\alpha^{p-1}\) 为一组基。在这组基下，正则作用 \(a\mapsto m_a\) 将 \(E\) 嵌入 \(A=\operatorname{End}_k(E)\cong M_p(k)\)。对 \(1\le i<p\)，乘 \(\alpha^i\) 将每个基向量送到另一个基向量的标量倍数，没有对角项；乘标量 \(c\) 的迹则为 \(pc=0\)。由迹的线性，\(\operatorname{Tr}_{E/k}(a)=0\) 对所有 \(a\in E\) 成立。比较定理中的 \(e=n=p\)，所以 \(\operatorname{Trd}_{A/k}\) 在 \(E\) 上恒为零。由于 \(xy\in E\) 对 \(x,y\in E\) 成立，配对 \((x,y)\mapsto\operatorname{Trd}_{A/k}(xy)\) 在 \(E\times E\) 上也恒为零；\cref{b2:prop:involution-reduced-trace-form}将证明它在全代数 \(A\) 上非退化。
+
+\ProseParagraphBreak
+在特征不为二的域 \(k\) 上，取 \(a,b\in k^\times\) 及四元数代数 \(Q=(a,b)_k\)。\cref{b2:prop:quaternion-norm}中的共轭与范数给出每个 \(x\in Q\) 的关系
 \[
 x^2-(x+\bar x)x+x\bar x=0.
 \]
-若 \(x\) 非标量，这个首一二次多项式就是其最小多项式，也就等于二次约化特征多项式；若 \(x=c\in k\)，两者都为 \((T-c)^2\)。这同时说明四元数范数公式与矩阵行列式的关系。
+其中 \(x+\bar x\) 与 \(x\bar x\) 都属于 \(k\)。若 \(x\) 非标量，它不能满足非零的一次 \(k\) 系数关系，否则就属于 \(k\)；所以最小多项式 \(\mu_x(T)\) 恰为这个首一二次多项式。约化 Cayley--Hamilton 等式又使 \(\mu_x\) 整除首一二次多项式 \(\chi^{\mathrm{red}}_{Q,x}\)，故两者相等。若 \(x=c\in k\)，则 \(\mu_c(T)=T-c\)，而分裂矩阵为 \(cI_2\)，所以 \(\chi^{\mathrm{red}}_{Q,c}(T)=(T-c)^2\)。由这两种情形比较系数，约化迹与范数分别为 \(x+\bar x\) 与 \(x\bar x\)，标量情形即为 \(2c\) 与 \(c^2\)。
 
 \subsection{定义的良定性与基本运算性质}
 \label{b2:subsec:1803:03}
@@ -126,29 +135,57 @@ x^2-(x+\bar x)x+x\bar x=0.
 \begin{proof}
 在一个分裂域中计算，迹的线性、行列式的乘法性与标量矩阵公式给出前面各项；值已由\cref{b2:thm:reduced-characteristic-descent}属于 \(k\)，故等式就在底域中成立。
 
-若 \(a\) 可逆，乘法性给出 \(\operatorname{Nrd}(a)\operatorname{Nrd}(a^{-1})=1\)。反过来，范数非零使分裂矩阵可逆，故 \(\lambda_a\) 扩域后可逆，其原来的 \(k\) 矩阵也可逆。于是存在 \(b\in A\) 使 \(ab=1\)；再由 \(a(ba-1)=0\) 及 \(\lambda_a\) 单射得 \(ba=1\)。因此 \(a\) 是单位。
+若 \(a\) 可逆，乘法性给出 \(\operatorname{Nrd}(a)\operatorname{Nrd}(a^{-1})=1\)。反过来，范数非零使分裂矩阵可逆，故逐列作用的 \(\lambda_a\) 扩域后可逆。它的原 \(k\) 矩阵的行列式在扩域中非零，因而在 \(k\) 中也非零，这就把矩阵的可逆性降回了底域。于是存在 \(b\in A\) 使 \(ab=1\)；再由 \(a(ba-1)=0\) 及 \(\lambda_a\) 单射得 \(ba=1\)。因此 \(a\) 是单位。
 \end{proof}
+
+约化范数的乘法性不包含可加性。取 \(A=M_2(k)\)，则 \(E_{11}\) 与 \(E_{22}\) 的行列式均为零，而 \(E_{11}+E_{22}=I_2\) 的行列式为一，所以 \(\operatorname{Nrd}(E_{11}+E_{22})\ne\operatorname{Nrd}(E_{11})+\operatorname{Nrd}(E_{22})\)。
+
+\ProseParagraphBreak
+对原元素 \(a\otimes1\)，扩域后的约化系数可以在共同的分裂模型中比较。但 \(A_F\) 还包含坐标不属于 \(k\) 的新元素 \(\sum_i a_i\otimes x_i\)。要同时处理这些元素，需要证明约化系数本身是坐标的 \(k\) 系数多项式，而不是只比较原元素的取值。
 
 \begin{proposition}\label{b2:prop:reduced-base-change}
 设 \(k\) 为域，\(A\) 为次数 \(n\) 的中心单 \(k\) 代数，\(F/k\) 为域扩张，则约化特征多项式及其各系数与标量扩张 \(A_F=A\otimes_kF\) 相容。更具体地，取 \(A\) 的 \(k\) 基 \(a_1,\ldots,a_{n^2}\)，则元素 \(\sum_i x_i a_i\in A\) 的约化特征多项式的每个系数都是坐标 \(x_1,\ldots,x_{n^2}\) 的 \(k\) 系数多项式；对 \(A_F\) 中的 \(\sum_i a_i\otimes x_i\)、\(x_i\in F\)，仍由同一个多项式计算。
 \end{proposition}
 \begin{proof}
-选有限 Galois 分裂域 \(K/k\)，计算泛型矩阵 \(\sum_i X_i\cdot\rho(a_i)\) 的特征多项式。其系数属于 \(K[X_1,\ldots,X_{n^2}]\)。在\cref{b2:thm:reduced-characteristic-descent}的证明中，每个 Galois 自同构通过同一个共轭同时比较全部 \(\rho(a_i)\)；令它固定不定元 \(X_i\)，便知这里每个系数多项式都被固定。因此其所有标量系数属于 \(k\)。
+选有限 Galois 分裂域 \(K/k\) 及分裂同构 \(\rho\)，令
+\[
+H(\mathbf X)=\sum_i X_i\rho(a_i\otimes1).
+\]
+其特征多项式的系数属于 \(K[X_1,\ldots,X_{n^2}]\)。在\cref{b2:thm:reduced-characteristic-descent}的证明中，\(\rho_g\rho^{-1}\) 是整个矩阵代数的一个内自同构，所以比较矩阵 \(U_g\) 与输入元素无关。令 \(g\) 固定所有不定元 \(X_i\)，便有
+\[
+g\bigl(H(\mathbf X)\bigr)=U_gH(\mathbf X)U_g^{-1}.
+\]
+因此每个特征系数作为多项式都被 \(\operatorname{Gal}(K/k)\) 固定。逐项比较单项式的标量系数，得到这些系数属于 \(k\)，即特征系数多项式属于 \(k[X_1,\ldots,X_{n^2}]\)。
 
-给定 \(F/k\)，在一个同时容纳 \(F,K\) 的域中使用上述分裂模型，再将 \(X_i\) 代为给定的 \(x_i\in F\)。所得值也是 \(A_F\) 的分裂模型中特征多项式的系数。分裂模型选择无关性保证它就是 \(A_F\) 的约化系数，从而得到相容性。
+给定 \(F/k\)，如下降定理的证明那样，将有限代数扩张 \(K/k\) 嵌入 \(F\) 的代数闭包 \(\Omega\)。上述分裂同构扩张后，也是 \((A_F)_\Omega\cong A_\Omega\) 的分裂模型。在此模型中将 \(X_i\) 代为任意 \(x_i\in F\)，就得到 \(\sum_i a_i\otimes x_i\) 的特征多项式。所有系数都由刚得到的 \(k\) 系数多项式取值，故属于 \(F\)；分裂模型选择无关性保证它们就是 \(A_F\) 的约化系数。
 \end{proof}
 
-特别地，对原来的 \(a\in A\)，在任何扩张中都有 \(\operatorname{Trd}_{A_F/F}(a\otimes1)=\operatorname{Trd}_{A/k}(a)\)，范数同样如此。约化范数是一个次数为 \(n\) 的齐次多项式，通常不是线性映射；不要把其乘法性误读成可加性。
+特别地，对原来的 \(a\in A\)，在任何扩张中都有
+\[
+\operatorname{Trd}_{A_F/F}(a\otimes1)=\operatorname{Trd}_{A/k}(a),\qquad
+\operatorname{Nrd}_{A_F/F}(a\otimes1)=\operatorname{Nrd}_{A/k}(a).
+\]
+泛型矩阵的行列式每一项都恰含 \(n\) 个矩阵条目，所以约化范数的坐标多项式是 \(n\) 次齐次多项式。
 
 \begin{proposition}\label{b2:prop:involution-reduced-trace-form}
-设 \(k\) 为域，\(A\) 为有限维中心单 \(k\) 代数，\(\sigma:A\to A\) 为一个 \(k\) 线性映射，满足 \(\sigma(1)=1\)、\(\sigma(xy)=\sigma(y)\sigma(x)\) 及 \(\sigma^2=\operatorname{id}\)。则 \(\sigma(x)\) 与 \(x\) 有相同的约化特征多项式，因而约化迹与约化范数均相同。并且
+设 \(k\) 为域，\(A\) 为次数 \(n\) 的中心单 \(k\) 代数。则
+\[
+\beta(x,y)\coloneqq\operatorname{Trd}_{A/k}(xy)
+\]
+是 \(A\) 上非退化的对称 \(k\) 双线性型，且 \(\operatorname{Trd}_{A/k}:A\to k\) 是满射。
+
+若 \(\sigma:A\to A\) 为一个 \(k\) 线性映射，满足 \(\sigma(1)=1\)、\(\sigma^2=\operatorname{id}\)，且对所有 \(x,y\in A\) 有 \(\sigma(xy)=\sigma(y)\sigma(x)\)，则 \(\sigma(x)\) 与 \(x\) 有相同的约化特征多项式，因而约化迹与约化范数均相同。并且
 \[
 t_\sigma(x,y)\coloneqq\operatorname{Trd}_{A/k}\bigl(\sigma(x)y\bigr)
 \]
-是 \(A\) 上非退化的对称双线性型，称为 \(\sigma\) 的\term[duihe-ji-xing]{迹型}[trace form of an involution]。
+是 \(A\) 上非退化的对称 \(k\) 双线性型，称为 \(\sigma\) 的\term[duihe-ji-xing]{迹型}[trace form of an involution]。
 \end{proposition}
 \begin{proof}
-选分裂域 \(K/k\)，将 \(\sigma\otimes\operatorname{id}_K\) 转为 \(M_n(K)\) 上的反自同构。它与转置的复合是 \(K\) 代数自同构，由\cref{b2:thm:skolem-noether}为内自同构。因此 \(\sigma(x)\) 的分裂矩阵与 \(x\) 的分裂矩阵之转置相似，特征多项式不变。\cref{b2:thm:reduced-characteristic-descent}把这个等式降回 \(k\)，比较系数就得到约化迹和约化范数不变。
+约化迹的线性给出 \(\beta\) 的双线性。选分裂域 \(K/k\) 及分裂同构 \(\rho\)，则 \(\beta\) 在分裂模型中由 \((X,Y)\mapsto\operatorname{tr}(XY)\) 给出。矩阵迹满足 \(\operatorname{tr}(XY)=\operatorname{tr}(YX)\)，故 \(\beta(x,y)=\beta(y,x)\)。这个矩阵配对还非退化：若 \(X_{ij}\ne0\)，取 \(Y=E_{ji}\)，便有 \(\operatorname{tr}(XY)=X_{ij}\ne0\)。
+
+取 \(A\) 的一组 \(k\) 基 \(a_1,\ldots,a_{n^2}\)，其像 \(\rho(a_i\otimes1)\) 为 \(M_n(K)\) 的 \(K\) 基。原配对的 Gram 矩阵为 \(G=(\operatorname{Trd}(a_i a_j))_{i,j}\in M_{n^2}(k)\)，它在 \(K\) 中就是上述矩阵配对的 Gram 矩阵，因此 \(\det G\ne0\)。这个行列式原属 \(k\)，故 \(\beta\) 在 \(k\) 上也非退化。由于 \(1_A\ne0\)，存在 \(y\in A\) 使 \(\beta(1_A,y)=\operatorname{Trd}(y)\ne0\)。约化迹是到一维空间 \(k\) 的非零线性映射，因而满射。这里不需要 \(\operatorname{Trd}(1_A)=n\) 非零。
+
+若存在所述 \(\sigma\)，将 \(\sigma\otimes\operatorname{id}_K\) 通过 \(\rho\) 转为 \(M_n(K)\) 上的反自同构 \(\tau\)。转置 \(t:X\mapsto X^{\mathsf T}\) 也反转乘法次序，所以 \(\tau\circ t\) 是 \(K\) 代数自同构。由\cref{b2:thm:skolem-noether}，存在 \(P\in\operatorname{GL}_n(K)\) 使 \(\tau(X)=PX^{\mathsf T}P^{-1}\)。因此 \(\sigma(x)\) 的分裂矩阵与 \(x\) 的分裂矩阵之转置相似，特征多项式不变。\cref{b2:thm:reduced-characteristic-descent}把这个等式降回 \(k\)，比较系数就得到约化迹和约化范数不变。
 
 迹型的双线性来自 \(\sigma\) 和约化迹的线性。再把刚证的迹不变性用于 \(\sigma(x)y\)，得到
 \[
@@ -156,7 +193,7 @@ t_\sigma(x,y)\coloneqq\operatorname{Trd}_{A/k}\bigl(\sigma(x)y\bigr)
 =\operatorname{Trd}\Bigl(\sigma\bigl(\sigma(x)y\bigr)\Bigr)
 =\operatorname{Trd}\bigl(\sigma(y)x\bigr),
 \]
-所以它对称。最后，分裂矩阵上的配对 \((X,Y)\mapsto\operatorname{tr}(XY)\) 非退化：若 \(X_{ij}\ne0\)，取 \(Y=E_{ji}\)，就有 \(\operatorname{tr}(XY)=X_{ij}\ne0\)。原配对 \((x,y)\mapsto\operatorname{Trd}(xy)\) 的 Gram 矩阵扩域后非奇异，故在 \(k\) 上也非奇异。将第一变量再与可逆线性映射 \(\sigma\) 复合，仍然非退化。
+所以它对称。又因为 \(t_\sigma(x,y)=\beta(\sigma(x),y)\)，而 \(\sigma^2=\operatorname{id}\) 保证 \(\sigma\) 是可逆线性映射，将 \(\beta\) 的第一变量与它复合仍然非退化。
 \end{proof}
 
 对实矩阵代数的转置对合，\(t_\sigma(X,X)=\operatorname{tr}(X^{\mathsf T}X)\) 为所有矩阵条目的平方和；对四元数的标准共轭 \(\gamma\)，次数为二的标量迹公式则给出

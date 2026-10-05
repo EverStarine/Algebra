@@ -1,17 +1,17 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 10.2 二次型
-% 纲要位置：计划纲要.md，第 1102 行。
+% 纲要位置：计划纲要.md，第 1380 行。
 
 \section{二次型}
 \label{b2:sec:1002}
 
 双线性型在两个位置取同一个向量，便得到二次表达式。这个过程能否逆转，取决于系数域的特征。本节始终令 \(V\) 有限维，并先在任意域上定义二次型；讨论对角化和惯性时，再明确加入特征与次序条件。
 
-% 纲要内容（仅作写作计划，尚非教材正文）：
+% 纲要要点（供目录核对）：
 %
-% * 特征不为2时的对角化
-% * 实数域上的惯性定律
-% * 特征2时二次型与极化型的区别
+% * 特征不为2时的对角化及一维型的平方类判据
+% * 实数域上的惯性定律；正负指数由定号子空间的最大维数确定
+% * 特征2时二次型与极化型的区别；相同非退化极化型不足以判定等距
 %
 
 \subsection{特征不为二时的对角化}
@@ -25,11 +25,20 @@
 是 \(k\) 双线性的，就称 \(q\) 为 \(V\) 上的\term[erci-xing]{二次型}[quadratic form]，称 \(\beta_q\) 为它的\term[jihua-xing]{极化型}[polar form]。带有指定二次型 \(q\) 的向量空间 \((V,q)\) 称为\term[erci-kongjian]{二次空间}[quadratic space]；这一名称允许 \(q\) 退化。
 \end{definition}
 
+第一个条件说明沿同一方向伸缩时，取值按标量的平方变化；极化型的双线性则控制不同方向之间的混合项。若 \(e_1,\ldots,e_n\) 是一组基，反复展开 \(q(u+v)=q(u)+q(v)+\beta_q(u,v)\)，再用缩放条件，就得到任意特征下都成立的坐标公式
+\[
+q\left(\sum_i x_ie_i\right)
+=\sum_i x_i^2\cdot q(e_i)
++\sum_{i<j}x_ix_j\cdot\beta_q(e_i,e_j).
+\]
+因此这两个公理恰好使坐标表达式由平方项与两个不同坐标的乘积组成。
+
+\ProseParagraphBreak
 极化型总对称。当 \(\operatorname{char}k\ne2\) 时，本章采用归一化记号
 \begin{equation}\label{b2:eq:normalized-polar}
 b_q(u,v)=\frac12\beta_q(u,v),\qquad q(v)=b_q(v,v).
 \end{equation}
-第二个等式来自 \(\beta_q(v,v)=q(2v)-2q(v)=2q(v)\)。反过来，对任意对称双线性型 \(b\)，令 \(q(v)=b(v,v)\)，则 \(\beta_q=2b\)。所以在特征不为二时，两类对象一一对应。本章以下未加下标的 \(b\) 表示 \(b_q\)，不会在证明中改用没有除以二的极化型。
+第二个等式来自 \(\beta_q(v,v)=q(2v)-2q(v)=2q(v)\)：除以二正是为了使两个变量取同一向量时恢复 \(q\) 的值。反过来，对任意对称双线性型 \(b\)，令 \(q(v)=b(v,v)\)，则 \(\beta_q=2b\)。所以在特征不为二时，两类对象一一对应。以下在这一特征假设下，未加下标的 \(b\) 表示 \(b_q\)，未归一化的极化型仍记为 \(\beta_q\)。
 \symidx{\(\beta_q\)、\(b_q=\beta_q/2\)：极化型及特征不为二时的归一化型}
 
 在这项特征假设下，称 \(q\) 非退化，是指 \(b_q\) 非退化；两个二次型等距，是指线性双射保持其二次取值。由极化公式，这等价于保持 \(b_q\)。
@@ -40,21 +49,31 @@ b_q(u,v)=\frac12\beta_q(u,v),\qquad q(v)=b_q(v,v).
 q(x_1e_1+\cdots+x_ne_n)=a_1x_1^2+\cdots+a_rx_r^2,
 \qquad a_i\ne0.
 \]
-最后 \(n-r\) 个基向量组成 \(\operatorname{rad}b_q\) 的基。特别地，每个对称矩阵都合同于对角矩阵。
+最后 \(n-r\) 个基向量组成 \(\operatorname{rad}b_q\) 的基。特别地，每个对称矩阵都合同于对角矩阵。记 \(\langle a\rangle\) 为一维二次型 \(t\mapsto at^2\)。对任意 \(a,b\in k^\times\)，在上述 \(\operatorname{char}k\ne2\) 假设下，有
+\[
+\langle a\rangle\cong\langle b\rangle
+\quad\Longleftrightarrow\quad
+a/b\in(k^\times)^2,
+\]
+其中同构指保持二次取值的线性同构。
 \end{theorem}
 \begin{proof}
 若 \(q\) 为零，极化公式使 \(b_q=0\)，任意基都合适。否则取 \(e\) 使 \(a=q(e)\ne0\)。直线 \(ke\) 上的限制型非退化，\cref{b2:thm:orthogonal-complement}给出
 \[
 V=ke\perp(ke)^\perp.
 \]
-这个分解也可直接计算：任意 \(v\) 分解为
+为消去 \(e\) 方向与其余方向之间的混合项，要从 \(v\) 中减去一个 \(e\) 的倍数，使剩余向量与 \(e\) 正交。由 \(b(e,e)=a\)，这一倍数只能是 \(b(e,v)/a\)，因而任意 \(v\) 分解为
 \[
 v=\frac{b(e,v)}a e+\left(v-\frac{b(e,v)}a e\right),
 \]
 第二项与 \(e\) 正交。在较小维的正交补上归纳，得到全部非零一维分量及最后的零型分量。不同分量之间的混合项为零，所以二次表达式具有所述形式；从 \(b_q\) 的对角矩阵可见，最后这些基向量恰好生成 \(\operatorname{rad}b_q\)。
+
+一维线性双射必为 \(t\mapsto ct\)，其中 \(c\in k^\times\)。
+从 \(\langle a\rangle\) 到 \(\langle b\rangle\) 的这个映射保持二次取值，当且仅当 \(a=bc^2\)。
+故两型等距当且仅当 \(a/b\) 是非零平方。
 \end{proof}
 
-常将非退化对角型写为 \(\langle a_1,\ldots,a_r\rangle\)。把 \(e_i\) 改为 \(c_ie_i\) 会将系数改为 \(c_i^2a_i\)；所以对角化并不表示这列系数已经唯一。例如 \(\langle1\rangle\) 与 \(\langle4\rangle\) 在 \(\mathbb Q\) 上等距，但与 \(\langle2\rangle\) 不等距。
+常将非退化对角型写为 \(\langle a_1,\ldots,a_r\rangle\)。对角化并不表示这列系数已经唯一：由一维型的平方类判据，\(\langle1\rangle\) 与 \(\langle4\rangle\) 在 \(\mathbb Q\) 上等距，但与 \(\langle2\rangle\) 不等距。
 \symidx{\(\langle a_1,\ldots,a_r\rangle\)：对角二次型}
 
 \ProseParagraphBreak
@@ -67,6 +86,8 @@ v=\frac{b(e,v)}a e+\left(v-\frac{b(e,v)}a e\right),
 由\cref{b2:thm:quadratic-diagonalization}对角化。每个非零 \(a_i\) 都有平方根，缩放相应基向量后将它改为一，得到 \(\operatorname{diag}(I_r,0)\)。反过来合同保持秩，故不同的 \(r\) 不等距。
 \end{proof}
 
+在代数闭域上，所有非零系数属于同一个平方类，所以对角化之后只剩秩；在 \(\mathbb Q\) 上，非零平方类已经有很多种，例如一与二不能彼此缩放得到。实数域上的非零系数则可缩为正一或负一，但这两个平方类不能合并。
+
 \subsection{实数域上的惯性定律}
 \label{b2:subsec:1002:02}
 
@@ -78,7 +99,14 @@ v=\frac{b(e,v)}a e+\left(v-\frac{b(e,v)}a e\right),
 q(x)=x_1^2+\cdots+x_{p_+}^2-x_{p_++1}^2-\cdots-x_{p_++p_-}^2,
 \qquad p_++p_-+r=\dim V.
 \]
-三元组 \((p_+,p_-,r)\) 唯一；两个实二次型等距，当且仅当这三个数相同。
+三元组 \((p_+,p_-,r)\) 唯一，且
+\[
+\begin{aligned}
+p_+&=\max\{\,\dim W\mid W\le V,\ q|_W\text{ 正定}\,\},\\
+p_-&=\max\{\,\dim W\mid W\le V,\ -q|_W\text{ 正定}\,\}.
+\end{aligned}
+\]
+两个实二次型等距，当且仅当这三个数相同。
 \end{theorem}
 \begin{proof}
 存在性由\cref{b2:thm:quadratic-diagonalization}及基向量乘 \(1/\sqrt{|a_i|}\) 得到。为证唯一性，记正项、负项及零项的坐标子空间为 \(V_+,V_-,V_0\)。\(V_+\) 上的型正定，维数为 \(p_+\)。若 \(W\) 是任意一个正定子空间，投影 \(W\to V_+\) 必单射：投影为零的 \(w\) 属于 \(V_-\oplus V_0\)，因而 \(q(w)\le0\)，正定性使 \(w=0\)。所以 \(\dim W\le p_+\)。这说明 \(p_+\) 是正定子空间的最大维数，与所选标准基无关。
@@ -86,10 +114,10 @@ q(x)=x_1^2+\cdots+x_{p_+}^2-x_{p_++1}^2-\cdots-x_{p_++p_-}^2,
 对 \(-q\) 作同样论证，负项数 \(p_-\) 也由型确定。\(r=\dim V-p_+-p_-\) 因而确定；它也等于根空间的维数。相同三元组的型把各类标准基逐一对应，便得到等距同构，证明分类断言。
 \end{proof}
 
-这一结果称为\term[Sylvester-guanxing-dinglv]{Sylvester 惯性定律}[Sylvester's law of inertia]。\footnote{西尔维斯特（James Joseph Sylvester，1814-1897），英国数学家，研究矩阵、行列式与不变量理论。}正项数、负项数分别称\term[zheng-guanxing-zhishu]{正惯性指数}[positive index of inertia]、\term[fu-guanxing-zhishu]{负惯性指数}[negative index of inertia]，差 \(p_+-p_-\) 称为\term[fuhaocha]{符号差}[signature]。正定比非退化强；型 \(x^2-y^2\) 非退化，却在 \((1,1)\) 上为零。
+这一结果称为\term[Sylvester-guanxing-dinglv]{Sylvester 惯性定律}[Sylvester's law of inertia]。\footnote{西尔维斯特（James Joseph Sylvester，1814-1897），英国数学家，研究矩阵、行列式与不变量理论。}正项数、负项数分别称\term[zheng-guanxing-zhishu]{正惯性指数}[positive index of inertia]、\term[fu-guanxing-zhishu]{负惯性指数}[negative index of inertia]，差 \(p_+-p_-\) 称为\term[fuhaocha]{符号差}[signature]。正定比非退化强。\(q(v)=0\) 只要求一个二次取值为零，而 \(v\in\operatorname{rad}b_q\) 要求 \(b_q(v,w)=0\) 对所有 \(w\) 成立；在特征不为二时，后者取 \(w=v\) 就推出前者，反向却不成立。例如实型 \(q(x,y)=x^2-y^2\) 非退化，\(v=(1,1)\) 满足 \(q(v)=0\)，但 \(b_q(v,(1,0))=1\)，所以不在根空间中。
 
 \ProseParagraphBreak
-例如 \(q(x,y,z)=2xy+z^2\)。令 \(u=(x+y)/\sqrt2,v=(x-y)/\sqrt2\)，得到 \(q=u^2-v^2+z^2\)，惯性为 \((2,1,0)\)。这说明出现非零零点并不表示根空间非零：零点由二次取值决定，根空间要求与所有向量的双线性配对都为零。
+例如 \(q(x,y,z)=2xy+z^2\)。令 \(u=(x+y)/\sqrt2,v=(x-y)/\sqrt2\)，得到 \(q=u^2-v^2+z^2\)，惯性为 \((2,1,0)\)。
 
 \subsection{特征二的二次型与极化型}
 \label{b2:subsec:1002:03}
@@ -97,22 +125,44 @@ q(x)=x_1^2+\cdots+x_{p_+}^2-x_{p_++1}^2-\cdots-x_{p_++p_-}^2,
 现在假设 \(\operatorname{char}k=2\)。仍用\eqref{b2:eq:quadratic-polar}定义 \(\beta_q\)，但不能定义 \(\beta_q/2\)。又因 \(q(0)=0\)，有 \(\beta_q(v,v)=0\)，所以极化型必为交替型。
 
 \begin{proposition}\label{b2:prop:quadratic-char-two-coordinates}
-设 \(k\) 为特征二的域，\(V\) 为以 \(e_1,\ldots,e_n\) 为基的有限维 \(k\) 向量空间，\(q:V\to k\) 为二次型，\(\beta_q\) 为其极化型，则
-\[
-q\left(\sum_i x_ie_i\right)
-=\sum_i x_i^2\cdot q(e_i)+\sum_{i<j}x_ix_j\cdot\beta_q(e_i,e_j).
-\]
-因此极化型只记录混合项，不能恢复各平方项。
+设 \(k\) 为特征二的域，\(V\) 为以 \(e_1,\ldots,e_n\) 为基的有限维 \(k\) 向量空间，\(q:V\to k\) 为二次型，\(\beta_q\) 为其极化型。在这组基的二次表达式中，混合项 \(x_ix_j\) 的系数为 \(\beta_q(e_i,e_j)\)（\(i<j\)）；各平方项 \(x_i^2\) 的系数 \(q(e_i)\) 可以任意改变而不改变极化型。因此，当 \(n\ge1\) 时，单凭 \(\beta_q\) 不能恢复 \(q\)。
 \end{proposition}
 \begin{proof}
-反复使用 \(q(u+v)=q(u)+q(v)+\beta_q(u,v)\)，再用极化型双线性和 \(q(x_ie_i)=x_i^2\cdot q(e_i)\)，得到公式。每个平方项的极化为零，因为 \((x+y)^2=x^2+y^2\)，故这些系数不出现在 \(\beta_q\) 中。
+坐标公式已由二次型的两个公理展开得到，混合项系数正是 \(\beta_q(e_i,e_j)\)。在特征二中，每个平方项的极化为零，因为 \((x+y)^2=x^2+y^2\)；改变它的系数仍得到二次型，且不改变极化型。若 \(n\ge1\)，改变一个平方项系数就改变相应 \(e_i\) 处的取值，所以极化型不能确定 \(q\)。
 \end{proof}
 
 例如一维上的零型与 \(q(x)=x^2\) 具有相同的零极化型，但不是同一个二次型。在 \(\mathbb F_2^2\) 上，\(q(x,y)=xy\) 的极化型为
 \[
 \beta_q\bigl((x,y),(u,v)\bigr)=xv+yu,
 \]
-其矩阵 \(\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\) 可逆。然而任何仅含平方项的表达式 \(\sum a_ix_i^2\) 都有零极化型，所以这个 \(q\) 不可能通过换基变成仅含平方项的对角式。
+其矩阵 \(\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\) 可逆。特征二中，线性组合的平方仍是各平方项的线性组合，例如 \((ax+by)^2=a^2x^2+b^2y^2\)，所以换基也不能让平方项产生所需的混合项。任何仅含平方项的表达式 \(\sum a_ix_i^2\) 在任意基下都有零极化型，与这个 \(q\) 的非退化极化型矛盾。因此对称双线性型的矩阵分类不能替代特征二二次型的分类。
 
 \ProseParagraphBreak
-特征二时，极化型不决定二次型，前述通过对称型对角化的办法不能直接用于分类。“极化型非退化”“二次型有非零零点”与“根空间非零”需要分别说明；尤其不能由极化型为零就断言二次型为零。下一节讨论的 Witt 分解重新假设特征不为二。
+特征二时，映射 \(q\mapsto\beta_q\) 已经丢失平方项的信息；而特征不为二时，\(q(v)=\dfrac12\beta_q(v,v)\) 能恢复全部取值。“极化型非退化”“二次型有非零零点”与“根空间非零”需要分别说明，尤其不能由极化型为零就断言二次型为零。即使极化型非退化，也可能有两个不等距的二次型与它对应。
+
+\begin{proposition}\label{b2:prop:quadratic-char-two-polar-failure}
+设 \(V=\mathbb F_2^2\)，定义二次型
+\[
+q_0(x,y)=xy,\qquad q_1(x,y)=x^2+xy+y^2.
+\]
+两者有相同的非退化极化型
+\[
+\beta_{q_0}\bigl((x,y),(u,v)\bigr)
+=\beta_{q_1}\bigl((x,y),(u,v)\bigr)=xv+yu,
+\]
+但二次空间 \((V,q_0)\) 与 \((V,q_1)\) 不等距。
+\end{proposition}
+\begin{proof}
+两个表达式均按标量的平方缩放；直接展开极化公式，平方项在特征二中消去，两者都得到 \(xv+yu\)，所以它们确为二次型。这个极化型的矩阵为 \(\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\)，可逆，因而非退化。
+
+空间恰有三个非零向量 \((1,0),(0,1),(1,1)\)。逐个计算得
+\[
+\begin{aligned}
+q_0(1,0)&=0,&q_0(0,1)&=0,&q_0(1,1)&=1,\\
+q_1(1,0)&=1,&q_1(0,1)&=1,&q_1(1,1)&=1.
+\end{aligned}
+\]
+因此 \(q_0\) 有两个非零零点，\(q_1\) 没有非零零点。线性双射会置换这三个非零向量，而等距同构还必须保持二次取值，所以它不可能把 \(q_0\) 变成 \(q_1\)。
+\end{proof}
+
+下一节讨论的 Witt 分解重新假设特征不为二。

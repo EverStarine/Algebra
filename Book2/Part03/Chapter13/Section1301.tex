@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 13.1 简单模与半单模
-% 纲要位置：计划纲要.md，第 1182 行。
+% 纲要位置：计划纲要.md，第 1464 行。
 
 \section{简单模与半单模}
 \label{b2:sec:1301}
@@ -11,32 +11,40 @@
 %
 % * 简单对象和简单模的直和
 % * 半单模的子模与商模
-% * Schur 引理及除环
+% * Schur 引理及除环；逆命题与有限维假设的反例
 %
 
 \subsection{简单对象和简单模的直和}
 \label{b2:subsec:1301:01}
 
 \begin{definition}\label{b2:def:simple-module}
-设 \(R\) 为含幺环。回顾简单模的定义：若非零左 \(R\) 模 \(S\) 只有 \(0,S\) 两个子模，就称 \(S\) 为简单模\termidx[jiandan-mo]{简单模}。若左 \(R\) 模 \(M\) 可写为一族简单子模的内部直和
+设 \(R\) 为含幺环，所论左 \(R\) 模均为幺性模。非零左 \(R\) 模 \(S\) 只有 \(0,S\) 两个子模时，称 \(S\) 为简单模\termidx[jiandan-mo]{简单模}。左 \(R\) 模 \(M\) 可写为一族简单子模的内部直和
 \[
 M=\bigoplus_{i\in I}S_i,
 \]
-就称 \(M\) 为\term[bandan-mo]{半单模}[semisimple module]。
+时，称 \(M\) 为\term[bandan-mo]{半单模}[semisimple module]。
 \label{b2:def:semisimple-module}
 允许 \(I=\varnothing\)，因此零模半单，但不是简单模。
 \end{definition}
 
-例如，域 \(k\) 上的简单模是一维向量空间，每个向量空间选基后都是一维空间的直和，所以半单。整数模 \(\mathbb Z/p\mathbb Z\) 在 \(p\) 为素数时简单；\(\mathbb Z/p^2\mathbb Z\) 则不是半单，尽管它的合成因子都简单：唯一的非零真子模 \(p\mathbb Z/p^2\mathbb Z\) 没有补模。
+例如，域 \(k\) 上的简单模是一维向量空间，每个向量空间选基后都是一维空间的直和，所以半单。对素数 \(p\)，整数模 \(\mathbb Z/p\mathbb Z\) 简单，而短正合列
+\[
+0\longrightarrow\mathbb Z/p\mathbb Z\xrightarrow{\bar a\mapsto\overline{pa}}
+\mathbb Z/p^2\mathbb Z\longrightarrow\mathbb Z/p\mathbb Z\longrightarrow0
+\]
+不分裂。右端被 \(p\) 零化，所以从右端到中项的任何同态，其像都落在中项被 \(p\) 零化的子模 \(p\mathbb Z/p^2\mathbb Z\) 中；商映射在这个子模上为零，故该同态不可能是截面。这个唯一的非零真子模没有补模；它也是中项唯一的简单子模，所以中项不能写成简单子模的直和，\(\mathbb Z/p^2\mathbb Z\) 不是半单模。它的两个简单合成因子是在商层中出现的，并非模内已经存在的两个简单直和分量。
 
 \ProseParagraphBreak
 模范畴中的简单对象就是上述简单模。给定 \(0\ne s\in S\)，子模 \(Rs\) 非零，故 \(Rs=S\)。因此每个简单模都循环，且形如 \(R/L\)，其中 \(L\) 是极大左理想：满射 \(R\to S\)、\(r\mapsto rs\) 的核为 \(L\)，中间子模对应迫使 \(L\) 极大。反过来，极大左理想的商模只有零子模和全模，因而简单。这里 \(L\) 只要求左理想，不必是双边理想，商对象通常只是模。
 
 \ProseParagraphBreak
+例如，令 \(k\) 为域、\(R=M_2(k)\)，并取第一列为零的矩阵组成的集合 \(L\)。左乘任意矩阵仍使第一列为零，所以 \(L\) 是左理想。映射 \(R\to k^2\) 取矩阵的第一列，是满射左 \(R\) 模同态，核恰为 \(L\)。列模 \(k^2\) 简单：给定非零列向量 \(v\) 与任意 \(w\)，选 \(v_j\ne0\)，令矩阵的第 \(j\) 列为 \(w/v_j\)、另一列为零，就有 \(Av=w\)。因此 \(R/L\cong k^2\) 简单，\(L\) 是极大左理想。但是，若 \(E_{ij}\) 表示第 \((i,j)\) 个位置为 \(1\)、其余位置为零的矩阵，则 \(E_{12}\in L\)，而 \(E_{12}E_{21}=E_{11}\notin L\)；故 \(L\) 不是双边理想，\(R/L\) 不能以代表元乘法成为商环。
+
+\ProseParagraphBreak
 “简单子模之和”暂时不要求和为直和。以下定理说明，只要简单子模的和已经覆盖整个模，总可以从中抽出一个直和分解；同时，它给出不依赖所选简单分解的半单性判据。
 
 \begin{theorem}[半单模的等价刻画]\label{b2:thm:semisimple-module-characterizations}
-设 \(R\) 为含幺环。对左 \(R\) 模 \(M\)，下列条件等价：
+设 \(R\) 为含幺环，\(M\) 为幺性左 \(R\) 模。下列条件等价：
 \begin{equivalences}
 \item \(M\) 是简单子模的直和。
 \item \(M\) 是其简单子模之和。
@@ -44,11 +52,11 @@ M=\bigoplus_{i\in I}S_i,
 \end{equivalences}
 \end{theorem}
 \begin{proof}
-第一条立即蕴含第二条。设 \(M=\sum_{i\in I}S_i\)，其中每个 \(S_i\) 简单，固定 \(N\subseteq M\)。考察所有子集 \(J\subseteq I\)，使 \(\sum_{j\in J}S_j\) 是直和且与 \(N\) 交为零，按包含排序。空集满足条件。链的并仍满足条件：任何非平凡有限关系或落入 \(N\) 的非零有限和，都只涉及有限多个指标，因而已经出现在链中的某一项。由 Zorn 引理，取极大的 \(J\)，令 \(K=\bigoplus_{j\in J}S_j\)。
+第一条立即蕴含第二条。设 \(M=\sum_{i\in I}S_i\)，其中每个 \(S_i\) 简单，固定 \(N\subseteq M\)。为了给 \(N\) 找补模，考察所有子集 \(J\subseteq I\)，使 \(\sum_{j\in J}S_j\) 是直和且与 \(N\) 交为零，按包含排序。空集满足条件。链的并仍满足这两个条件。确实，任何有限个指标都同属链中的某一项，所以这些分量之间若有和为零的关系，直和性使每个分量为零；这些分量之和若落入 \(N\)，这一项与 \(N\) 零交又使该和为零。由 Zorn 引理，取极大的 \(J\)，令 \(K=\bigoplus_{j\in J}S_j\)。
 
-若 \(N+K\ne M\)，某个 \(S_i\) 不包含于 \(N+K\)。简单性使 \(S_i\cap(N+K)=0\)，所以可将 \(i\) 加入 \(J\)，保持直和及与 \(N\) 零交，矛盾。因此 \(M=N\oplus K\)，得到第三条。特别地，取 \(N=0\) 便已经得到第一条。
+若 \(N+K\ne M\)，某个 \(S_i\) 不包含于 \(N+K\)。交 \(S_i\cap(N+K)\) 是简单模 \(S_i\) 的子模，只能为零或整个 \(S_i\)；后一情形已被排除，故此交为零。于是 \(K+S_i\) 仍为直和；若 \(k+s\in N\)，其中 \(k\in K,s\in S_i\)，则 \(s\in S_i\cap(N+K)=0\)，继而 \(k\in K\cap N=0\)。所以可将 \(i\) 加入 \(J\)，保持两个条件，与极大性矛盾。因此 \(M=N\oplus K\)，得到第三条。特别地，取 \(N=0\) 便已经得到第一条。
 
-最后假设第三条。先注意该条件传给每个子模 \(U\)：若 \(L\subseteq U\) 且 \(M=L\oplus C\)，则 \(U=L\oplus(U\cap C)\)。因此每个非零子模 \(U\) 都含有简单子模。证明如下：取 \(0\ne x\in U\)，循环模 \(Rx\) 的真子模按包含排序；任一链的并仍不含生成元 \(x\)，故仍为真子模。Zorn 引理给出极大真子模 \(L\)，于是 \(Rx/L\) 简单。由补模条件，\(Rx=L\oplus S\)，所以 \(S\cong Rx/L\) 是 \(U\) 的非零简单子模。
+最后假设第三条。要把简单商层变成模内的简单子模，先注意补模条件传给每个子模 \(U\)：若 \(L\subseteq U\) 且 \(M=L\oplus C\)，将 \(u\in U\) 写成 \(u=l+c\) 后，由 \(l\in L\subseteq U\) 得 \(c\in U\cap C\)，所以 \(U=L\oplus(U\cap C)\)。取非零子模 \(U\) 中的 \(0\ne x\)。循环模 \(Rx\) 的真子模按包含排序；任一链的并仍不含生成元 \(x\)，故仍为真子模。Zorn 引理给出极大真子模 \(L\)，于是 \(Rx/L\) 简单。由传给 \(Rx\) 的补模条件，\(Rx=L\oplus S\)，商映射限制为同构 \(S\to Rx/L\)。这样，原先只在商模中出现的简单模被实现为 \(U\) 内的非零简单子模 \(S\)。
 
 令 \(N\) 为 \(M\) 的全部简单子模之和。如果 \(N\ne M\)，取非零补模 \(K\)。刚才的结论给出 \(K\) 的简单子模 \(S\)，但 \(S\subseteq N\) 又使 \(S\subseteq N\cap K=0\)，矛盾。因此 \(N=M\)，得到第二条，完成等价性证明。
 \end{proof}
@@ -57,33 +65,27 @@ M=\bigoplus_{i\in I}S_i,
 \label{b2:subsec:1301:02}
 
 \begin{proposition}\label{b2:prop:semisimple-subquotients}
-设 \(R\) 为含幺环。半单左 \(R\) 模的每个子模与商模都半单。任意一族半单左 \(R\) 模的直和也半单。对半单左 \(R\) 模 \(M\) 的子模 \(N\)，短正合列
+设 \(R\) 为含幺环，所论左 \(R\) 模均为幺性模。半单左 \(R\) 模的每个子模与商模都半单，任意一族半单左 \(R\) 模的直和也半单。半单左 \(R\) 模有限生成，当且仅当它是有限多个简单子模的直和。对半单左 \(R\) 模 \(M\) 的子模 \(N\)，短正合列
 \[
 0\longrightarrow N\longrightarrow M\longrightarrow M/N\longrightarrow0
 \]
 分裂。
 \end{proposition}
 \begin{proof}
-由\cref{b2:thm:semisimple-module-characterizations}，写 \(M=N\oplus K\)。投影 \(p:M\to N\) 将每个简单子模 \(S_i\) 映为零或简单模：核为 \(0\) 或 \(S_i\)，非零像因此同构于 \(S_i\)。又 \(N=p(M)=\sum_i p(S_i)\)，由等价刻画得 \(N\) 半单。同理投影到 \(K\) 说明 \(K\) 半单，而商映射限制为同构 \(K\to M/N\)，故商模半单，其逆后接 \(K\hookrightarrow M\) 就给出商映射的截面。
+由\cref{b2:thm:semisimple-module-characterizations}，写 \(M=N\oplus K\)。取一个简单分解 \(M=\bigoplus_iS_i\)，投影 \(p:M\to N\) 将每个 \(S_i\) 映为零或简单模：限制映射的核为 \(0\) 或 \(S_i\)，非零像因此同构于 \(S_i\)。又 \(N=p(M)=\sum_i p(S_i)\)，由等价刻画得 \(N\) 半单。这里得到的是投影后的简单子模，不必是原来 \(S_i\) 中某些分量的和。同理投影到 \(K\) 说明 \(K\) 半单，而商映射限制为同构 \(K\to M/N\)，故商模半单，其逆后接 \(K\hookrightarrow M\) 就给出商映射的截面。
 
 若各 \(M_a\) 都已分解为简单模直和，把全部指标并在一起，仍是直接和：任一元素只有有限多个非零外层分量，每个分量又只有有限多个非零内层分量。因此所有简单分量合成所需直和分解。
+
+若 \(m_1,\ldots,m_t\) 生成半单模 \(M=\bigoplus_{i\in I}S_i\)，它们的支集之并是有限集 \(F\subseteq I\)。每个 \(S_i\) 是子模，故对生成元作标量乘法及求和不会产生 \(F\) 之外的直和坐标。因此 \(M=\bigoplus_{i\in F}S_i\)，只含有限多个简单分量。反过来，每个简单模由任一非零元素循环生成，有限个简单模的直和便由这些元素有限生成；零模对应空直和。
 \end{proof}
 
-两端半单不保证中项半单。例如
-\[
-0\longrightarrow\mathbb Z/p\mathbb Z\xrightarrow{\bar a\mapsto\overline{pa}}
-\mathbb Z/p^2\mathbb Z\longrightarrow\mathbb Z/p\mathbb Z\longrightarrow0
-\]
-不分裂：中项被 \(p\) 零化的元素全在核中，任何从右端来的同态像都落入该核，不可能成为商映射的截面。这个例子说明，半单性并非只由合成因子的名单决定，还要求这些因子之间的扩张能够拆开。
-
-\ProseParagraphBreak
-有限生成半单模只需有限多个简单分量。若 \(m_1,\ldots,m_t\) 生成 \(\bigoplus_{i\in I}S_i\)，这些生成元共同只涉及有限多个指标，因标量作用不会增添新的非零直和坐标，全部模便只包含这些分量。反过来，每个简单模循环，所以有限直和必有限生成。这一有限性将把半单环的分解限制为有限乘积。
+两端半单不保证中项半单：前面的 \(\mathbb Z/p^2\mathbb Z\) 正是两个简单模之间不分裂的扩张。合成因子的名单没有记录这类扩张是否拆开。另一方面，命题中的有限生成判据将把半单环的简单分解限制为有限直和。
 
 \subsection{Schur 引理及除环}
 \label{b2:subsec:1301:03}
 
 \begin{lemma}[Schur]\label{b2:lem:schur}
-设 \(R\) 为含幺环，\(S,T\) 为简单左 \(R\) 模。任何非零同态 \(f:S\to T\) 都是同构。因此若 \(S\not\cong T\)，则 \(\operatorname{Hom}_R(S,T)=0\)；而
+设 \(R\) 为含幺环，\(S,T\) 为幺性简单左 \(R\) 模。任何非零同态 \(f:S\to T\) 都是同构。因此若 \(S\not\cong T\)，则 \(\operatorname{Hom}_R(S,T)=0\)；而
 \[
 D=\operatorname{End}_R(S)
 \]
@@ -93,14 +95,37 @@ D=\operatorname{End}_R(S)
 \(\ker f\) 是 \(S\) 的子模；因 \(f\ne0\)，它不能为 \(S\)，所以为零。\(\operatorname{im}f\) 是 \(T\) 的非零子模，所以为 \(T\)。故 \(f\) 双射；模同态的逆仍是模同态。取 \(S=T\)，每个非零自同态都可逆，恒等映射因 \(S\ne0\) 而非零，所以自同态环是除环。
 \end{proof}
 
-这一结果称为\term[Schur-yinli]{Schur 引理}[Schur's lemma]。结论是除环，不能在一般环上把它直接写成标量域。例如除环 \(D\) 的左正则模简单，而\cref{b2:prop:bimodule-opposite-action}给出其自同态环为 \(D^{\mathrm{op}}\)。即使只讨论域上的代数，\(\mathbb C\) 作为实代数作用在自身上，也是简单模，其自同态环为 \(\mathbb C\)，大于原标量域 \(\mathbb R\)。
+这一结果称为\term[Schur-yinli]{Schur 引理}[Schur's lemma]。结论是除环，不能在一般环上把它直接写成标量域。例如除环 \(D\) 的左正则模简单，而\cref{b2:prop:regular-hom-endomorphism}给出其自同态环为 \(D^{\mathrm{op}}\)。对含幺 \(k\) 代数 \(A\) 的非零幺性模 \(S\)，标量映射给出 \(k\) 到 \(\operatorname{End}_A(S)\) 中心的嵌入，但这个嵌入未必满射。例如 \(\mathbb C\) 作为实代数作用在自身上，也是简单模，其自同态环为 \(\mathbb C\)，大于原标量域 \(\mathbb R\)。
 
 \begin{corollary}\label{b2:cor:schur-algebraically-closed}
-设 \(k\) 为代数闭域、\(A\) 为结合含幺 \(k\) 代数，\(S\) 为非零有限维简单左 \(A\) 模，则
+设 \(k\) 为代数闭域、\(A\) 为结合含幺 \(k\) 代数，\(S\) 为非零、有限 \(k\) 维的幺性简单左 \(A\) 模，则
 \(\operatorname{End}_A(S)=k\operatorname{id}_S\)。
 \end{corollary}
 \begin{proof}
 取 \(f\in\operatorname{End}_A(S)\)。由于 \(S\) 有限维且 \(k\) 代数闭，\(f\) 的特征多项式有根 \(\lambda\in k\)，所以 \(f-\lambda\operatorname{id}_S\) 有非零核。该映射仍 \(A\) 线性，因为 \(k\) 的作用在中心。由\cref{b2:lem:schur}，它不可能是非零同态，故 \(f=\lambda\operatorname{id}_S\)。反过来，每个这样的标量映射当然与 \(A\) 作用相容。
 \end{proof}
 
-例如，若 \(S,T\) 非同构且简单，则 \(\operatorname{End}_R(S\oplus T)\cong\operatorname{End}_R(S)\times\operatorname{End}_R(T)\)，因为两个不同分量间的 Hom 都为零。如果改为 \(S\oplus S\)，分量之间则允许非零映射，自同态环成为 \(2\times2\) 矩阵环。这一区别正是 Artin–Wedderburn 分解中“不同块”与“同一块内的矩阵”各自出现的原因。
+例如，若 \(S,T\) 非同构且简单，自同态 \(f:S\oplus T\to S\oplus T\) 的四个分块分别是两个对角自同态及 \(S\to T\)、\(T\to S\) 的映射。后两者由 Schur 引理为零，所以分块形式为
+\[
+\begin{pmatrix}a&0\\0&b\end{pmatrix},\qquad
+a\in\operatorname{End}_R(S),\quad b\in\operatorname{End}_R(T),
+\]
+自同态环因此是 \(\operatorname{End}_R(S)\times\operatorname{End}_R(T)\)。如果改为 \(S\oplus S\)，四个分块都属于 \(D=\operatorname{End}_R(S)\)，映射可以写为
+\[
+f(s_1,s_2)=\bigl(a_{11}(s_1)+a_{12}(s_2),\,
+a_{21}(s_1)+a_{22}(s_2)\bigr),\qquad a_{ij}\in D.
+\]
+复合时先施加后一映射，再施加前一映射，四个条目按矩阵乘法组合，故 \(\operatorname{End}_R(S\oplus S)\cong M_2(D)\)。这一区别正是 Artin–Wedderburn 分解中“不同块”与“同一块内的矩阵”各自出现的原因。
+
+\begin{proposition}\label{b2:prop:schur-hypothesis-counterexamples}
+幺性整数模 \(\mathbb Q\) 不是简单模，但 \(\operatorname{End}_{\mathbb Z}(\mathbb Q)\cong\mathbb Q\) 是除环。另设 \(k\) 为代数闭域、\(t\) 为 \(k\) 上的不定元，\(A=k(t)\)。左正则模 \(S={}_AA\) 是幺性简单左 \(A\) 模，具有无限 \(k\) 维数，且
+\[
+\operatorname{End}_A(S)\cong k(t)\supsetneq k.
+\]
+因此自同态环为除环不蕴含模简单，而代数闭基域上的简单模若没有有限维假设，其自同态也未必全是基域标量。
+\end{proposition}
+\begin{proof}
+若 \(f:\mathbb Q\to\mathbb Q\) 为 \(\mathbb Z\) 线性，令 \(q=f(1)\)。对 \(m\in\mathbb Z\) 和正整数 \(n\)，有 \(nf(m/n)=f(m)=mq\)，故 \(f(m/n)=mq/n\)。因此 \(f\) 恰为乘以 \(q\) 的映射。反过来，乘以任意 \(q\in\mathbb Q\) 的映射都 \(\mathbb Z\) 线性，加法与复合分别对应有理数的加法与乘法，于是得到环同构 \(\operatorname{End}_{\mathbb Z}(\mathbb Q)\cong\mathbb Q\)。但 \(\mathbb Z\) 是 \(\mathbb Q\) 的非零真子模，所以 \(\mathbb Q\) 不简单。
+
+因为 \(A=k(t)\) 是域，任意非零左理想含有一个可逆元，从而为全环，故其左正则模简单。向量 \(1,t,t^2,\ldots\) 在 \(k\) 上线性无关，所以 \(S\) 无限维。任意 \(A\) 线性自同态满足 \(f(a)=af(1)\)，而任意乘以 \(c\in A\) 的映射都 \(A\) 线性；由于 \(A\) 交换，这给出 \(\operatorname{End}_A(S)\cong A\)。其中乘以 \(t\) 的映射不是 \(k\) 标量映射：若它等于 \(\lambda\operatorname{id}_S\)，在 \(1\) 上求值就会得到 \(t=\lambda\in k\)，矛盾。事实上该映射没有 \(k\) 中的特征值，因为 \((t-\lambda)a=0\) 对每个 \(\lambda\in k\) 都迫使 \(a=0\)。这正说明前一推论中有限维假设保证特征值存在的作用。
+\end{proof}

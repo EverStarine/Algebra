@@ -1,6 +1,6 @@
 % !TeX root = ../../Book2.tex
 % 纲要标题：### 6.4 正合性、局部化与标量扩张
-% 纲要位置：计划纲要.md，第 998 行。
+% 纲要位置：计划纲要.md，第 1262 行。
 
 \section{正合性、局部化与标量扩张}
 \label{b2:sec:0604}
@@ -10,8 +10,10 @@
 % 纲要要点（供目录核对）：
 %
 % * 张量积的右正合性
+% * 有限展示张量后的矩阵计算
 % * 张量积不保持单射的实例
 % * 局部化、商模与基域扩张中的计算
+% * 局部化保持短正合列
 %
 % ---
 %
@@ -20,7 +22,12 @@
 \label{b2:subsec:0604:01}
 
 \begin{lemma}\label{b2:lem:tensor-cokernel}
-设 \(R\) 是环，\(M\) 为右 \(R\) 模，\(N\) 为左 \(R\) 模，\(K\le N\)。令 \(H\subseteq M\otimes_RN\) 为所有 \(m\otimes k\)（\(m\in M,k\in K\)）生成的子群，则自然映射诱导同构
+设 \(R\) 是含幺环，\(M\) 为幺性右 \(R\) 模，\(N\) 为幺性左 \(R\) 模，\(K\) 为 \(N\) 的子模，\(\iota:K\to N\) 为包含映射。令
+\[
+H=\operatorname{im}(\operatorname{id}_M\otimes\iota)
+\subseteq M\otimes_RN,
+\]
+即所有 \(m\otimes k\)（\(m\in M,k\in K\)）生成的子群，则自然映射诱导同构
 \[
 (M\otimes_RN)/H\longrightarrow M\otimes_R(N/K),
 \quad m\otimes n+H\longmapsto m\otimes(n+K).
@@ -65,7 +72,7 @@ Q''\otimes_RL\longrightarrow0
 \]
 也正合。因此 \(M\otimes_R-:R\text{-}\mathbf{Mod}\to\mathbf{Ab}\) 和 \(-\otimes_RL:\mathbf{Mod}\text{-}R\to\mathbf{Ab}\) 都是右正合函子。
 
-若 \(M\) 还是 \((S,R)\)-双模，第一个张量序列在左 \(S\) 模范畴中正合；若 \(N',N,N''\) 是 \((R,T)\)-双模且 \(f,g\) 保留右 \(T\) 作用，它在右 \(T\) 模范畴中正合。两种条件同时成立时，它在 \((S,T)\)-双模范畴中正合。对第二个张量序列，若 \(L\) 是 \((R,T)\)-双模，则它在右 \(T\) 模范畴中正合；若 \(Q',Q,Q''\) 是 \((S,R)\)-双模且 \(u,v\) 保留左 \(S\) 作用，则它在左 \(S\) 模范畴中正合；两种条件同时成立时，它在 \((S,T)\)-双模范畴中正合。
+若 \(S,T\) 是含幺环，\(M\) 为 \((S,R)\) 双模，\(N',N,N''\) 为 \((R,T)\) 双模且 \(f,g\) 为双模同态，则第一个序列在 \((S,T)\) 双模范畴中正合。若 \(Q',Q,Q''\) 为 \((S,R)\) 双模且 \(u,v\) 为双模同态，\(L\) 为 \((R,T)\) 双模，则第二个序列也在 \((S,T)\) 双模范畴中正合。
 \end{theorem}
 \begin{proof}
 令 \(K=\operatorname{im}f=\ker g\)。由于 \(g\) 满射，\cref{b2:thm:module-first-isomorphism}给出 \(N/K\cong N''\)。\cref{b2:lem:tensor-cokernel}说明 \(\operatorname{id}\otimes g\) 的核恰为所有 \(m\otimes k\)、\(k\in K\) 生成的子群。对每个这样的 \(k\)，存在 \(n'\in N'\) 使 \(f(n')=k\)，故
@@ -74,13 +81,21 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 \]
 反过来，\(\operatorname{id}\otimes f\) 的每个纯张量像均为这种形式，于是其像恰为上述核。又因 \(g\) 满射，每个 \(m\otimes n''\) 都有原像 \(m\otimes n\)，纯张量生成目标，所以 \(\operatorname{id}\otimes g\) 满射。
 
-第一变量的结论可将已证结论用于 \(R^{\mathrm{op}}\)，再用已证明的交换因子同构 \eqref{b2:eq:tensor-opposite-swap}转换回来：它将 \(Q'\otimes_RL\to Q\otimes_RL\) 对应于 \(L\otimes_{R^{\mathrm{op}}}Q'\to L\otimes_{R^{\mathrm{op}}}Q\)，因此第二变量的结论给出原来第一变量的正合性。\cref{b2:prop:tensor-maps}已说明这两个张量函子保持同态的加法。外侧作用分别由 \(s(q\otimes n)=(sq)\otimes n\) 与 \((q\otimes n)t=q\otimes(nt)\) 给出；相应线性条件保证张量后的箭头保留作用。模的核与像在底交换群上计算，故上述序列在所述模范畴中正合。
+第一变量的结论可将已证结论用于 \(R^{\mathrm{op}}\)，再用已证明的交换因子同构 \eqref{b2:eq:tensor-opposite-swap}转换回来：它将 \(Q'\otimes_RL\to Q\otimes_RL\) 对应于 \(L\otimes_{R^{\mathrm{op}}}Q'\to L\otimes_{R^{\mathrm{op}}}Q\)，因此第二变量的结论给出原来第一变量的正合性。\cref{b2:prop:tensor-maps}已说明这两个张量函子保持同态的加法。外侧作用分别由 \(s(x\otimes y)=(sx)\otimes y\) 与 \((x\otimes y)t=x\otimes(yt)\) 给出；相应线性条件保证张量后的箭头保留作用。模的核与像在底交换群上计算，故上述序列在所述双模范畴中正合。
 \end{proof}
 
-“右正合”中的“右”指序列末端以零结束，不指右模。定理没有断言 \(\operatorname{id}\otimes f\) 单射，即使原来的 \(f\) 已经单射。
+“右正合”中的“右”指序列末端以零结束，不指右模。在定理的记号下，\(\operatorname{coker}f=N/\operatorname{im}f\)，因而上述结论也写成
+\[
+M\otimes_R\operatorname{coker}f
+\cong\operatorname{coker}(\operatorname{id}_M\otimes f).
+\]
+张量积保留的是由关系生成的商；它没有断言 \(\operatorname{id}\otimes f\) 单射，即使原来的 \(f\) 已经单射。只有左侧或右侧外侧作用时，可分别在定理中取 \(T=\mathbb Z\) 或 \(S=\mathbb Z\)，利用每个交换群的自然整数作用，得到左模或右模范畴中的相应结论。
+
+\ProseParagraphBreak
+对环 \(R\) 的双边理想 \(I\)，若要让左 \(R\) 模 \(N\) 的作用经过商环 \(R/I\)，就必须让 \(I\) 的每个元素作用为零。在张量积中，平衡关系给出 \(\bar1\otimes in=\bar i\otimes n=0\)，因此 \(IN\) 中的有限和都被消去。下面的同构说明，无须再加其他关系；右模的情形相同。
 
 \begin{proposition}[商环上的张量计算]\label{b2:prop:tensor-quotient}
-设 \(R\) 是环，\(I\) 为 \(R\) 的双边理想，\(N\) 为左 \(R\) 模，\(M\) 为右 \(R\) 模。存在自然同构
+设 \(R\) 是含幺环，\(I\) 为 \(R\) 的双边理想，\(N\) 为幺性左 \(R\) 模，\(M\) 为幺性右 \(R\) 模。存在自然同构
 \[
 (R/I)\otimes_RN\cong N/IN,
 \qquad M\otimes_R(R/I)\cong M/MI,
@@ -106,6 +121,7 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 \cong\mathbb Z/\gcd(m,n)\mathbb Z,
 \]
 因为整数理想之和 \(m\mathbb Z+n\mathbb Z=\gcd(m,n)\mathbb Z\)。
+取 \(m=2,n=3\)，便得到本章开头的零张量积，这是互素整数理想之和为整个 \(\mathbb Z\) 的结果。
 
 \subsection{张量积不保持单射的例子}
 \label{b2:subsec:0604:02}
@@ -120,7 +136,7 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 \mathbb Z/n\mathbb Z\xrightarrow{0}\mathbb Z/n\mathbb Z
 \xrightarrow{\operatorname{id}}\mathbb Z/n\mathbb Z\longrightarrow0.
 \]
-第一个映射为零，因为 \(n a\otimes\bar b=a\otimes n\bar b=0\)；其来源非零，所以不再单射。第二个映射在上述识别下为恒等，故序列末端仍正合，完全符合右正合定理。
+第一个映射为零，因为 \(n a\otimes\bar b=a\otimes n\bar b=0\)；原先的“乘 \(n\)”在张量后仍是乘同一个整数，但此时 \(n\) 已经作用为零。它的来源非零，所以不再单射。第二个映射在上述识别下为恒等，故序列末端仍正合，完全符合右正合定理。
 
 \ProseParagraphBreak
 即使张量后单射仍然成立，也不能只凭原映射是包含就不加检查。一个足够条件是原包含有缩回。若 \(i:N'\to N\)、\(r:N\to N'\) 满足 \(ri=\operatorname{id}\)，则
@@ -139,8 +155,10 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 商模公式通过让理想中的元素作用为零来改变标量。局部化则让指定的标量成为可逆元；以下只讨论交换环，此时无须区分标量从左还是从右作用。
 
 \ProseParagraphBreak
+把分母变成单位，也会使被分母零化的元素变成零。例如，对 \(R=\mathbb Z\)、\(\Sigma=\{1,2,2^2,\ldots\}\)、\(N=\mathbb Z/2\mathbb Z\)，局部化后 \(2\) 可逆，而 \(2\bar1=0\)，所以 \(\bar1\) 的像必须为零。若只按交叉相乘相等识别分式，\((\bar1,1)\) 与 \((0,1)\) 却不能等价，因为原模中 \(\bar1\ne0\)。因此必须允许交叉乘积之差再被某个分母零化。
+
 \begin{definition}\label{b2:def:localized-module}
-设 \(R\) 是交换环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是 \(R\) 模。在 \(N\times\Sigma\) 上规定关系
+设 \(R\) 是交换含幺环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是幺性 \(R\) 模。在 \(N\times\Sigma\) 上规定关系
 \[
 (n,s)\sim(n',s')\quad\Longleftrightarrow\quad
 \text{存在 }u\in\Sigma\text{ 使 }u(s'n-sn')=0.
@@ -157,7 +175,8 @@ m\otimes k=(\operatorname{id}\otimes f)(m\otimes n').
 先验证关系确实是等价关系。反身性与对称性直接成立。若 \(u(tn-sn')=0\)、\(v(wn'-tn'')=0\)，则把第一式乘 \(vw\)，第二式乘 \(us\) 后相加，得到
 \(uvt(wn-sn'')=0\)。因 \(uvt\in\Sigma\)，传递性成立。
 
-这些运算不依赖代表元。例如，若 \(u(s'n-sn_1)=0\)、\(v(t'n'-tn_1')=0\)，则两种加法结果的交叉相乘之差为
+\ProseParagraphBreak
+关系中的额外因子也使运算能容许被分母零化的误差。若 \(u(s'n-sn_1)=0\)、\(v(t'n'-tn_1')=0\)，则两种加法结果的交叉相乘之差为
 \[
 t t'(s'n-sn_1)+s s'(t'n'-tn_1'),
 \]
@@ -165,14 +184,24 @@ t t'(s'n-sn_1)+s s'(t'n'-tn_1'),
 \[
 v'a(s'n-sn_1)+s(v'a-va')n_1,
 \]
-它被 \(uw\) 零化。故两项运算都良定义。再把有限个分式通分到分母的乘积，结合律、分配律及单位条件化为 \(N\) 与 \(R\) 中的相应等式；零元是 \(0/1\)，负元是 \((-n)/s\)。特别有直接来自等价关系的判据
+它被 \(uw\) 零化，故两项运算都不依赖代表元。三个模分式通分到分母的乘积后，两种相加次序有同一分子，因而加法结合律成立；零元是 \(0/1\)，负元是 \((-n)/s\)。标量作用的结合律则由
+\[
+\frac av\left(\frac bw\frac ns\right)
+=\frac{abn}{vws}
+=\left(\frac av\frac bw\right)\frac ns
+\]
+给出，单位作用及两条分配律同样在通分后化为 \(R\) 与 \(N\) 的对应公理。这就得到所述局部化模。
+
+\ProseParagraphBreak
+一个分式何时为零，只需在等价关系中与 \((0,1)\) 比较：
 \begin{equation}\label{b2:eq:localization-zero}
 \frac ns=0\quad\Longleftrightarrow\quad
 \text{存在 }u\in\Sigma\text{ 使 }un=0.
 \end{equation}
+因此典范映射 \(N\to\Sigma^{-1}N\)、\(n\mapsto n/1\) 的核，恰为被某个分母零化的元素；局部化没有再消去其他元素。
 
 \begin{proposition}[局部化的张量描述]\label{b2:prop:localization-tensor}
-设 \(R\) 是交换环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是 \(R\) 模，则存在自然的 \(\Sigma^{-1}R\) 模同构
+设 \(R\) 是交换含幺环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，\(N\) 是幺性 \(R\) 模，则存在自然的 \(\Sigma^{-1}R\) 模同构
 \[
 (\Sigma^{-1}R)\otimes_RN\longrightarrow\Sigma^{-1}N,
 \qquad \frac as\otimes n\longmapsto\frac{an}s.
@@ -195,7 +224,32 @@ v'a(s'n-sn_1)+s(v'a-va')n_1,
 核对。两复合分别恢复 \(n/s\) 与 \((a/s)\otimes n\)，所以互逆。对模同态 \(f:N\to N'\)，两种构造中对应的映射分别为 \((a/s)\otimes n\mapsto(a/s)\otimes f(n)\) 与 \(n/s\mapsto f(n)/s\)，故同构自然。
 \end{proof}
 
-例如，\(\Sigma=\{1,p,p^2,\ldots\}\subseteq\mathbb Z\) 时，\(\Sigma^{-1}\mathbb Z=\mathbb Z[1/p]\)。若 \(N=\mathbb Z/p^a\mathbb Z\)，每个元素被 \(p^a\) 零化，由\eqref{b2:eq:localization-zero}可知局部化为零。若 \(\gcd(p,n)=1\)，乘以 \(p\) 已经是 \(\mathbb Z/n\mathbb Z\) 的自同构，分式 \(\bar a/p^j\) 对应 \(p^{-j}\bar a\)，所以此时局部化仍为 \(\mathbb Z/n\mathbb Z\)。取所有非零整数作分母，则得到 \(\mathbb Q\otimes_{\mathbb Z}N\)；它会消去 \(N\) 中的挠元素。
+\begin{proposition}\label{b2:prop:localization-exact}
+设 \(R\) 是交换含幺环，\(\Sigma\subseteq R\) 是含 \(1\) 的乘法封闭集，幺性 \(R\) 模的短正合列为
+\[
+0\longrightarrow N'\xrightarrow{f}N\xrightarrow{g}N''\longrightarrow0.
+\]
+则 \(\Sigma^{-1}R\) 模序列
+\[
+0\longrightarrow\Sigma^{-1}N'
+\xrightarrow{\Sigma^{-1}f}\Sigma^{-1}N
+\xrightarrow{\Sigma^{-1}g}\Sigma^{-1}N''\longrightarrow0
+\]
+仍正合，其中局部化同态的公式为 \((\Sigma^{-1}f)(n'/s)=f(n')/s\)、\((\Sigma^{-1}g)(n/s)=g(n)/s\)。
+\end{proposition}
+\begin{proof}
+对任意 \(R\) 模同态 \(h\)，若 \(u(tn-sn_1)=0\)，则 \(u(th(n)-sh(n_1))=h(u(tn-sn_1))=0\)，所以 \(n/s\mapsto h(n)/s\) 良定义；分式运算说明它保留加法与 \(\Sigma^{-1}R\) 作用。由\cref{b2:prop:localization-tensor}的自然性，序列中这两个同态对应于 \(\operatorname{id}_{\Sigma^{-1}R}\otimes f\)、\(\operatorname{id}_{\Sigma^{-1}R}\otimes g\)。\cref{b2:thm:tensor-right-exact}因此保证末端正合。
+
+还须证明 \(\Sigma^{-1}f\) 单射。若 \(f(n')/s=0\)，由\eqref{b2:eq:localization-zero}，存在 \(u\in\Sigma\) 使 \(uf(n')=f(un')=0\)。原映射 \(f\) 单射，故 \(un'=0\)，再由同一零元判据得 \(n'/s=0\)。于是整个局部化序列短正合。
+\end{proof}
+
+局部化不仅保留由关系得到的商，还保留单射；下一章将把这项性质表述为 \(\Sigma^{-1}R\) 的平坦性。
+
+\ProseParagraphBreak
+例如，\(\Sigma=\{1,p,p^2,\ldots\}\subseteq\mathbb Z\) 时，\(\Sigma^{-1}\mathbb Z=\mathbb Z[1/p]\)。若 \(N=\mathbb Z/p^a\mathbb Z\)，每个元素被 \(p^a\) 零化，由\eqref{b2:eq:localization-zero}可知局部化为零。若 \(\gcd(p,n)=1\)，乘以 \(p\) 已经是 \(\mathbb Z/n\mathbb Z\) 的自同构，分式 \(\bar a/p^j\) 对应 \(p^{-j}\bar a\)，所以此时局部化仍为 \(\mathbb Z/n\mathbb Z\)。
+
+\ProseParagraphBreak
+取所有非零整数作分母，得到 \(\mathbb Q\otimes_{\mathbb Z}N\)。由零元判据，典范映射 \(N\to\mathbb Q\otimes_{\mathbb Z}N\)、\(n\mapsto1\otimes n\) 的核恰为挠子模；但有理化并不只是商去挠子模，还允许剩余元素带任意非零整数分母，形成一个 \(\mathbb Q\) 向量空间。例如 \(N=\mathbb Z\) 本来无挠，而 \(\mathbb Q\otimes_{\mathbb Z}\mathbb Z\cong\mathbb Q\)，并不等于 \(\mathbb Z\)。
 
 \ProseParagraphBreak
 局部化把环 \(R\) 换成 \(\Sigma^{-1}R\)。另一种标量变换是把域 \(k\) 扩张到更大的域 \(K\)。取域扩张 \(k\subseteq K\) 与 \(k\) 向量空间 \(V\)，则 \(K\otimes_kV\) 是 \(K\) 向量空间，称为 \(V\) 的\term[jiyukuozhang]{基域扩张}[extension of the ground field]。若 \((v_i)_{i\in I}\) 是 \(V\) 的基，则
@@ -211,3 +265,47 @@ v'a(s'n-sn_1)+s(v'a-va')n_1,
 T=\begin{pmatrix}0&-1\\1&0\end{pmatrix}
 \]
 没有实特征值；在 \(\mathbb C\otimes_{\mathbb R}\mathbb R^2\cong\mathbb C^2\) 上，同一个矩阵有特征向量 \((1,-i)\)、\((1,i)\)，特征值分别为 \(i,-i\)。两个向量组成的矩阵行列式为 \(2i\ne0\)，故形成复基，使扩张算子对角化。基域扩张保留线性映射的公式，却可以改变多项式的分解情况，进而改变可用的标准形。
+
+\ProseParagraphBreak
+基域扩张保留自由模的基；对于有限展示模，则可以直接把关系矩阵的系数作用于新的系数模。这也给出了不要求新系数模平坦的张量计算。
+
+\begin{corollary}\label{b2:cor:tensor-finite-presentation}
+设 \(R\) 是交换含幺环，\(M,N\) 是幺性 \(R\) 模，且 \(M\) 有有限展示
+\[
+R^m\xrightarrow{A}R^n\xrightarrow{\pi}M\longrightarrow0,
+\qquad A=(a_{ij})\in M_{n\times m}(R),
+\]
+其中 \(m,n\) 为非负整数，向量均按列书写。定义 \(R\) 模同态
+\[
+A_N:N^m\longrightarrow N^n,\qquad
+(z_j)_{j=1}^m\longmapsto
+\left(\sum_{j=1}^m a_{ij}z_j\right)_{i=1}^n.
+\]
+若 \(e_1,\ldots,e_n\) 为 \(R^n\) 的标准基，则序列
+\[
+N^m\xrightarrow{A_N}N^n\longrightarrow M\otimes_RN\longrightarrow0,
+\qquad (z_i)\longmapsto\sum_{i=1}^n\pi(e_i)\otimes z_i,
+\]
+正合，并给出自然的 \(R\) 模同构
+\[
+N^n/\operatorname{im}A_N\longrightarrow M\otimes_RN,
+\qquad (z_i)+\operatorname{im}A_N\longmapsto
+\sum_{i=1}^n\pi(e_i)\otimes z_i.
+\]
+零次直和为零模，空和按零理解。
+\end{corollary}
+\begin{proof}
+对展示在第一变量中张量 \(N\)，由\cref{b2:thm:tensor-right-exact}得到
+\[
+R^m\otimes_RN\xrightarrow{A\otimes\operatorname{id}_N}
+R^n\otimes_RN\xrightarrow{\pi\otimes\operatorname{id}_N}
+M\otimes_RN\longrightarrow0.
+\]
+\cref{b2:prop:tensor-free-coordinate}把前两项分别识别为 \(N^m,N^n\)，其逆公式为 \((z_i)\mapsto\sum_i e_i\otimes z_i\)；交换性保证这些坐标同构保留 \(R\) 作用。若 \(\widetilde e_j\) 为 \(R^m\) 的第 \(j\) 个标准基向量，则
+\[
+(A\otimes\operatorname{id}_N)(\widetilde e_j\otimes z)
+=\sum_{i=1}^n e_i a_{ij}\otimes z
+=\sum_{i=1}^n e_i\otimes a_{ij}z.
+\]
+故第一个映射在坐标下恰为 \(A_N\)，第二个映射恰为所述有限求和。正合性说明后者满射且核为 \(\operatorname{im}A_N\)，再由\cref{b2:thm:module-first-isomorphism}得到商模同构。对任意 \(R\) 模同态 \(h:N\to N'\)，逐坐标施加 \(h\) 与 \(A_N,A_{N'}\) 相容，并把上述有限和送到 \(\sum_i\pi(e_i)\otimes h(z_i)\)，这证明自然性。
+\end{proof}
