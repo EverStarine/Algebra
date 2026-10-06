@@ -1,12 +1,12 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.4 局部环中的增长
-% 纲要位置：工作记录/计划纲要.md，第 2269 行。
+% 纲要位置：工作记录/计划纲要.md，第 2291 行。
 % 纲要细目（写作范围）：
 % * 伴随分次环
 % * Hilbert–Samuel 函数及多项式
 % * 参数理想和重数的第一批例子；切锥的局部标准基计算见附录 F，不用于本章基础结论的证明
 % * 固定单层长度 \(\ell(\mathfrak m^nM/\mathfrak m^{n+1}M)\) 与累计长度 \(\ell(M/\mathfrak m^{n+1}M)\) 的记号，分别说明多项式次数和重数的归一化；处理零维例外
-% * 定义局部滤过的初始形式和初始理想，证明商环的伴随分次公式
+% * 定义局部滤过的初始形式和初始理想，证明商环的伴随分次公式；在正文证明给定生成元的最低次项可能遗漏初始关系，并保留切锥坐标环的非约化信息
 % * 有限点集上的求值码、次数滤过与维数计数；低次数 Reed–Muller 实例
 % #### 11.4.1 伴随分次环
 % #### 11.4.2 Hilbert–Samuel 函数与多项式
@@ -33,12 +33,16 @@
 \symidx{\(\operatorname{gr}_I(R)\)、\(\operatorname{gr}_I(M)\)：理想进伴随分次环与模}
 \end{definition}
 
+这里的次数来自 \(I\)-进滤过：\(a\in I^n\setminus I^{n+1}\) 的初始类位于次数 \(n\)，未必与原环中的多项式次数相同。例如，对域 \(k\)，在 \(R=k[x,y]_{(x,y)}\)、\(I=(x^2,y^3)R\) 中，\(x^2+I^2\) 与 \(y^3+I^2\) 都是次数一的非零类。
+
 若 \(I=(a_1,\ldots,a_r)\)，则有标准分次满同态
 \[
 (R/I)[X_1,\ldots,X_r]\twoheadrightarrow\operatorname{gr}_I(R),
 \qquad X_i\longmapsto a_i+I^2.
 \]
-这是因为 \(I^n\) 由这些生成元的 \(n\) 次乘积生成。若 \(M\) 有限生成，\(\operatorname{gr}_I(M)\) 由 \(M/IM\) 中的有限组生成元在次数零生成。以下取 \((R,\mathfrak m,k)\) 为非零 Noether 局部环、\(I\) 为 \(\mathfrak m\) 准素理想、\(M\ne0\) 为有限生成模。此时 \(R/I\) 是 Artin 环，因而可以对上述分次模使用 Hilbert 理论。
+每个 \(X_i\) 的次数都规定为一，代表第一层 \(I/I^2\) 中的类 \(a_i+I^2\)。这些类生成整个伴随分次环，因为 \(I^n\) 由生成元的 \(n\) 次乘积生成。取 \(I=\mathfrak m\) 时，第一层正是第九章定义嵌入维数所用的 \(\mathfrak m/\mathfrak m^2\)。若 \(M\) 有限生成，\(\operatorname{gr}_I(M)\) 由 \(M/IM\) 中的有限组生成元在次数零生成。以下取 \((R,\mathfrak m,k)\) 为非零 Noether 局部环、\(I\) 为 \(\mathfrak m\) 准素理想、\(M\ne0\) 为有限生成模。此时 \(R/I\) 是 Artin 环；又由 \(I\subseteq\mathfrak m=J(R)\) 和\cref{b3:thm:nakayama}，有 \(M/IM\ne0\)，故 \(\operatorname{gr}_I(M)\ne0\)，可以对它使用前面的 Hilbert 理论。
+
+对子模 \(N\subseteq M\)，它自身的 \(I\)-进滤过为 \(I^nN\)，从 \(M\) 继承的滤过则为 \(I^nM\cap N\)。前者总包含于后者，但两者未必相等。下面的估计说明，后者相对于前者的偏移可以由一个与 \(n\) 无关的整数控制，随后便能用它比较商模的长度增长。
 
 \begin{lemma}[诱导滤过的控制]\label{b3:lem:induced-filtration-bound}
 设 \(R\) 为交换 Noether 环、\(I\subseteq R\) 为理想、\(M\) 为有限生成 \(R\) 模、\(N\subseteq M\) 为子模。则存在 \(c\ge0\)，使对每个 \(n\ge c\) 有
@@ -47,7 +51,7 @@ I^nN\subseteq I^nM\cap N\subseteq I^{n-c}N.
 \]
 \end{lemma}
 \begin{proof}
-引入一个形式变量 \(t\)，考虑正分次代数及分次模
+把各个 \(I^n\) 及 \(I^nM\) 放入同一个分次对象，便可同时控制全部次数。为此引入一个形式变量 \(t\)，用 \(t^n\) 记录滤过次数，考虑正分次代数及分次模
 \[
 \mathcal R=\bigoplus_{n\ge0}I^nt^n\subseteq R[t],\qquad
 \mathcal M=\bigoplus_{n\ge0}I^nMt^n.
@@ -56,7 +60,7 @@ I^nN\subseteq I^nM\cap N\subseteq I^{n-c}N.
 \[
 \mathcal N=\bigoplus_{n\ge0}(I^nM\cap N)t^n
 \]
-有限生成。选齐次生成元 \(z_jt^{d_j}\)，并取 \(c\ge\max_jd_j\)。比较次数 \(n\ge c\) 的部分，得到
+有限生成。选齐次生成元 \(z_jt^{d_j}\)，并取 \(c\ge\max_jd_j\)；有限个生成元的次数有共同上界，这就给出控制所有层的同一个 \(c\)。比较次数 \(n\ge c\) 的部分，得到
 \[
 I^nM\cap N=\sum_j I^{n-d_j}z_j\subseteq I^{n-c}N.
 \]
@@ -78,7 +82,7 @@ h_{I,M}(n)=\ell_R(I^nM/I^{n+1}M),\qquad
 \symidx{\(h_{I,M}(n)\)、\(\chi_{I,M}(n)\)：单层长度与累计 Hilbert--Samuel 函数}
 \end{definition}
 
-长度均有限，因为 \(\sqrt I=\mathfrak m\) 使每个 \(R/I^n\) 是 Artin 局部环。逐层取商得到
+长度均有限，因为 \(\sqrt I=\mathfrak m\) 使每个 \(R/I^n\)（\(n\ge1\)）是 Artin 局部环。这一条件把相应商模的支集限制在闭点。若在 \(R=k[x,y]_{(x,y)}\) 中取 \(I=(x)\)，则 \(R/I\cong k[y]_{(y)}\)，其中 \((y)\supsetneq(y^2)\supsetneq\cdots\) 严格下降，所以已经在第一次取商时就没有有限长度。对于定义中的准素理想，逐层取商得到
 \begin{equation}\label{b3:eq:samuel-cumulative}
 \chi_{I,M}(n)=\sum_{j=0}^n h_{I,M}(j).
 \end{equation}
@@ -101,7 +105,7 @@ h_{I,M}(n)=\ell_R(I^nM/I^{n+1}M),\qquad
 \chi_{\mathfrak m,M}(n)\le\chi_{I,M}(n)
 \le\chi_{\mathfrak m,M}\bigl(a(n+1)-1\bigr).
 \]
-两个界都是首项为正的多项式增长，故 \(\delta_I(M)=\delta_{\mathfrak m}(M)\)。以下只研究 \(I=\mathfrak m\)，并简记 \(\delta(M)\)。
+这里 \(\mathfrak m^{a(n+1)}M\subseteq I^{n+1}M\subseteq\mathfrak m^{n+1}M\)，较小的子模给出较大的商，因而得到所示长度不等式。两个界都是首项为正的多项式增长，故 \(\delta_I(M)=\delta_{\mathfrak m}(M)\)。以下只研究 \(I=\mathfrak m\)，并简记 \(\delta(M)\)。
 
 先取 \(M=R\)。对所有 Noether 局部环中的严格素理想链，按链长 \(r\) 归纳，证明 \(r\le\delta(R)\)。\(r=0\) 时直接成立。若链为 \(\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_r\)、\(r\ge1\)，令 \(B=R/\mathfrak p_0\)、\(\mathfrak m_B=\mathfrak m/\mathfrak p_0\)。它是局部整环，其累计长度不超过 \(R\) 的对应长度，所以 \(\delta(B)\le\delta(R)\)。选 \(0\ne f\in\mathfrak p_1/\mathfrak p_0\)，令 \(C=B/fB\)、\(\mathfrak m_C=\mathfrak m_B/fB\)。这些理想的像在 \(C\) 中给出长度 \(r-1\) 的素链。
 
@@ -115,14 +119,14 @@ fB\cap\mathfrak m_B^{n+1}\subseteq\mathfrak m_B^{n+1-c}fB.
 \twoheadrightarrow\dfrac{fB}{\mathfrak m_B^{n+1-c}fB}
 \cong\dfrac{B}{\mathfrak m_B^{n+1-c}}.
 \]
-最后的同构由乘以 \(f\) 给出，使用了 \(B\) 为整环及 \(f\ne0\)。再取商映射的短正合列
+分母 \(fB\cap\mathfrak m_B^{n+1}\) 较小，所以它对应的商满射到右侧较大的分母所对应的商，左侧长度至少是右侧长度。最后的同构由乘以 \(f\) 给出，使用了 \(B\) 为整环及 \(f\ne0\)。再取商映射的短正合列
 \[
 0\longrightarrow\dfrac{fB}{fB\cap\mathfrak m_B^{n+1}}
 \longrightarrow\dfrac{B}{\mathfrak m_B^{n+1}}
 \longrightarrow\dfrac{C}{\mathfrak m_C^{n+1}}
 \longrightarrow0.
 \]
-其中各模长度有限，\(C\) 模的 \(B\) 长度与 \(C\) 长度相同。长度相减给出
+其中各模长度有限，\(C\) 模的 \(B\) 长度与 \(C\) 长度相同。从 \(\chi_{\mathfrak m_B,B}(n)\) 中扣去的左端长度至少为 \(\chi_{\mathfrak m_B,B}(n-c)\)，故长度相减给出
 \[
 \chi_{\mathfrak m_C,C}(n)
 \le\chi_{\mathfrak m_B,B}(n)-\chi_{\mathfrak m_B,B}(n-c).
@@ -134,18 +138,18 @@ P_B(n)-P_B(n-c)=ace\,n^{e-1}+\text{低次项}.
 它的次数恰为 \(e-1\)。归纳假设给出
 \(r-1\le\delta(C)\le\delta(B)-1\)，所以 \(r\le\delta(R)\)。对全部链取上确界，得到所需下界。
 
-反向令 \(d=\dim R\)。\cref{b3:thm:system-of-parameters}给出由 \(d\) 个元素生成的 \(\mathfrak m\) 准素理想 \(\mathfrak q\)。\(\operatorname{gr}_{\mathfrak q}(R)\) 是 \((R/\mathfrak q)[X_1,\ldots,X_d]\) 的商，因此单项式计数给出
+反向令 \(d=\dim R\)。\cref{b3:thm:system-of-parameters}给出由 \(d\) 个元素生成的 \(\mathfrak m\) 准素理想 \(\mathfrak q\)。\(\operatorname{gr}_{\mathfrak q}(R)\) 是 \((R/\mathfrak q)[X_1,\ldots,X_d]\) 的商。\(d\) 个变量中总次数不超过 \(n\) 的单项式共有 \(\binom{n+d}{d}\) 个，每个单项式对应一份 \(R/\mathfrak q\)，所以前 \(n+1\) 层的累计长度不超过它们的长度之和。由 \(\mathfrak q\subseteq\mathfrak m\)，便得到
 \[
 \chi_{\mathfrak m,R}(n)\le\chi_{\mathfrak q,R}(n)
 \le\ell_R(R/\mathfrak q)\binom{n+d}{d}.
 \]
 所以 \(\delta(R)\le d\)。\(d=0\) 时参数理想为零，\(R\) 已为 Artin 环，同一界为常数，论证仍成立。
 
-一般有限生成模 \(M\) 令 \(B=R/\operatorname{Ann}_R(M)\)、\(\mathfrak m_B=\mathfrak m/\operatorname{Ann}_R(M)\)，并取生成元 \(m_1,\ldots,m_s\)。作为 \(B\) 模，\(M\) 的零化子为零。有满射 \(B^s\twoheadrightarrow M\)，也有单射
+一般有限生成模 \(M\) 令 \(B=R/\operatorname{Ann}_R(M)\)、\(\mathfrak m_B=\mathfrak m/\operatorname{Ann}_R(M)\)，并取生成元 \(m_1,\ldots,m_s\)。满射 \(B^s\twoheadrightarrow M\) 给出 \(M\) 增长的上界；为了得到反向比较，要把 \(B\) 嵌入若干份 \(M\)。作为 \(B\) 模，\(M\) 的零化子为零，故可取单射
 \[
 \beta:B\longrightarrow M^s,\qquad b\longmapsto(bm_1,\ldots,bm_s).
 \]
-前者取商给出 \(\chi_{\mathfrak m_B,M}(n)\le s\cdot\chi_{\mathfrak m_B,B}(n)\)。令 \(N=\beta(B)\subseteq M^s\)，由\cref{b3:lem:induced-filtration-bound}可取整数 \(c\ge0\)，使充分大的 \(n\) 满足
+若 \(\beta(b)=0\)，则 \(b\) 零化每个生成元，因而零化整个 \(M\)，只能有 \(b=0\)，这证明单射性。前述满射取商给出 \(\chi_{\mathfrak m_B,M}(n)\le s\cdot\chi_{\mathfrak m_B,B}(n)\)。令 \(N=\beta(B)\subseteq M^s\)，由\cref{b3:lem:induced-filtration-bound}可取整数 \(c\ge0\)，使充分大的 \(n\) 满足
 \[
 N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 \]
@@ -165,7 +169,12 @@ N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 \]
 各长度在 \(R\) 与 \(B\) 上相同，且 \(\mathfrak m_B^nM=\mathfrak m^nM\)，所以 \(\delta(M)=\delta(B)=\dim B=d\)。
 
-最后，\(\operatorname{gr}_I(M)\) 的累计函数就是 \(\chi_{I,M}\)。由\cref{b3:thm:hilbert-polynomial-dimension}和\cref{b3:prop:hilbert-eventual-polynomial}，其维数为 \(d\)，累计首项为 \(Q(1)\cdot n^d/d!\)，其中约分后的整系数分子在一处取正整数值。令 \(e_I(M)=Q(1)\) 即得结论；零维情形取全部层长度之和。
+最后，\(\operatorname{gr}_I(M)\) 的累计函数就是 \(\chi_{I,M}\)。由\cref{b3:thm:hilbert-polynomial-dimension}和\cref{b3:prop:hilbert-eventual-polynomial}，其维数为 \(d\)，将它的 Hilbert 级数约分后可写为
+\[
+H_{\operatorname{gr}_I(M)}(t)=\frac{Q(t)}{(1-t)^d},
+\qquad Q(t)\in\mathbb Z[t],\quad Q(1)>0.
+\]
+累计首项为 \(Q(1)\cdot n^d/d!\)，故令 \(e_I(M)=Q(1)\) 即得结论；零维情形中，\(Q(t)\) 就是有限层的长度计数多项式，\(Q(1)\) 为全部层长度之和。
 \end{proof}
 
 素理想链给出增长次数的下界，参数理想给出上界；这一比较把维数转化为可由有限商 \(M/I^{n+1}M\) 读出的数据。局部增长与维数的经典比较可对照 \cite[\S13, Theorems 13.3--13.4, pp. 98--100]{Matsumura1989CommutativeRingTheory}。
@@ -207,7 +216,8 @@ N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 \qquad
 \operatorname{in}_{\mathfrak m_0}(f)=\dfrac{g_a(X_1,\ldots,X_r)}{u(0)}.
 \]
-这里 \(X_i\) 对应 \(x_i+\mathfrak m_0^2\)。若另有 \(f=g'/u'\)，则 \(gu'=g'u\)；比较最低非零齐次部分，先得两种表示的最低次数相同，再得 \(u'(0)g_a=u(0)g'_a\)，所以初始形式与表示无关。各个齐次多项式都提供相应次数的类，也只有零齐次多项式给出零类，因而所示映射确为同构。这一初始形式保留最低次数的全部项，与第八章按单项式序选取首项所得到的初始理想不同。
+这里 \(X_i\) 对应 \(x_i+\mathfrak m_0^2\)。若另有 \(f=g'/u'\)，则 \(gu'=g'u\)；比较最低非零齐次部分，先得两种表示的最低次数相同，再得 \(u'(0)g_a=u(0)g'_a\)，所以初始形式与表示无关。各个齐次多项式都提供相应次数的类，也只有零齐次多项式给出零类，因而所示映射确为同构。
+这一初始形式保留最低次数的全部项，与第八章按单项式序选取的首项不同。例如，\(f=x^2+xy+y^3\) 的局部初始形式是 \(X^2+XY\)，而在字典序 \(x>y\) 下，其 Gröbner 首项是单个单项式 \(x^2\)。前者记录局部滤过中的齐次关系，后者由选定的单项式序决定。
 
 \begin{proposition}\label{b3:prop:quotient-local-initial-ideal}
 设 \(k\) 为域，\(r\ge1\) 为整数，\(R_0=k[x_1,\ldots,x_r]_{(x_1,\ldots,x_r)}\)，\(\mathfrak m_0=(x_1,\ldots,x_r)R_0\)，\(J\subseteq\mathfrak m_0\) 为理想。令 \(R=R_0/J\)、\(\mathfrak m=\mathfrak m_0/J\)。则商映射诱导分次环同构
@@ -216,6 +226,12 @@ N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 \cong\dfrac{\operatorname{gr}_{\mathfrak m_0}(R_0)}
 {\operatorname{in}_{\mathfrak m_0}(J)}.
 \]
+一般不能只用 \(J\) 的给定生成元的初始形式生成 \(\operatorname{in}_{\mathfrak m_0}(J)\)。具体地，在 \(R_0=k[x,y]_{(x,y)}\) 中取 \(J=(x^2+y^3,xy)R_0\)，则有
+\[
+\operatorname{in}_{\mathfrak m_0}(J)=(X^2,XY,Y^4),\qquad
+\operatorname{gr}_{\mathfrak m}(R)\cong k[X,Y]/(X^2,XY,Y^4).
+\]
+它的 Hilbert 级数为 \(1+2t+t^2+t^3\)，且 \(\ell_R(R)=5\)；只取两个原生成元的初始形式 \(X^2,XY\) 会漏掉 \(Y^4\)。
 \end{proposition}
 \begin{proof}
 因 \(\mathfrak m^n=(\mathfrak m_0^n+J)/J\)，商映射在每个次数都诱导满射
@@ -228,7 +244,29 @@ N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 \dfrac{\mathfrak m_0^n\cap(J+\mathfrak m_0^{n+1})}{\mathfrak m_0^{n+1}}
 =\dfrac{(J\cap\mathfrak m_0^n)+\mathfrak m_0^{n+1}}{\mathfrak m_0^{n+1}}.
 \]
-核中的非零类由某个 \(g\in J\cap\mathfrak m_0^n\) 代表，且 \(g\notin\mathfrak m_0^{n+1}\)，所以恰为 \(\operatorname{in}_{\mathfrak m_0}(g)\)。反过来，每个 \(J\) 中非零元素的初始形式都属于这个分次映射的核。核本身是齐次理想，故正好等于 \(\operatorname{in}_{\mathfrak m_0}(J)\)，得到结论。
+核中的非零类由某个 \(g\in J\cap\mathfrak m_0^n\) 代表，且 \(g\notin\mathfrak m_0^{n+1}\)，所以恰为 \(\operatorname{in}_{\mathfrak m_0}(g)\)。反过来，每个 \(J\) 中非零元素的初始形式都属于这个分次映射的核。核本身是齐次理想，故正好等于 \(\operatorname{in}_{\mathfrak m_0}(J)\)，得到一般公式。
+
+在具体例子中，记 \(f_1=x^2+y^3\)、\(f_2=xy\)，则
+\[
+f_3\coloneqq yf_1-xf_2=y^4\in J,
+\]
+所以 \(X^2,XY,Y^4\) 都属于局部初始理想。为确定这些关系是否已经足够，先在多项式环 \(k[x,y]\) 中使用字典序 \(x>y\)。\(f_1,f_2,f_3\) 的首单项式分别是 \(x^2,xy,y^4\)，三个 \(S\) 多项式为
+\[
+S(f_1,f_2)=f_3,\qquad
+S(f_1,f_3)=y^3f_3,\qquad
+S(f_2,f_3)=0.
+\]
+它们的余式均为零，故\cref{b3:thm:buchberger-criterion}说明这是一组 Gröbner 基。因而多项式商 \(A=k[x,y]/(f_1,f_2)\) 有五个标准单项式组成的基
+\[
+1,\ \bar x,\ \bar y,\ \bar y^2,\ \bar y^3.
+\]
+其中 \(\bar x^2=-\bar y^3\)、\(\bar x\bar y=0\)、\(\bar y^4=0\)。故 \((\bar x,\bar y)\) 幂零，每个常数项非零的类都可用有限几何级数取逆，\(A\) 已是剩余域为 \(k\) 的局部环。原点处局部化不再改变它，因而 \(R\cong A\)。
+
+由这些乘法关系，\(\mathfrak m\) 的 \(k\) 基为 \(\bar x,\bar y,\bar y^2,\bar y^3\)，\(\mathfrak m^2\) 的基为 \(\bar y^2,\bar y^3\)，\(\mathfrak m^3\) 的基为 \(\bar y^3\)，且 \(\mathfrak m^4=0\)。所以各层的维数依次为 \(1,2,1,1\)。已得初始关系给出分次满射
+\[
+k[X,Y]/(X^2,XY,Y^4)\twoheadrightarrow\operatorname{gr}_{\mathfrak m}(R).
+\]
+左侧的标准单项式也为 \(1,X,Y,Y^2,Y^3\)，总维数为五，与右侧各层之和相等，故满射为同构。这证明初始理想的等式、Hilbert 级数及长度；若仅保留 \((X^2,XY)\)，所有 \(Y\) 的幂都会留下，错误地得到无限维的分次商。
 \end{proof}
 
 \begin{proposition}\label{b3:prop:hypersurface-tangent-cone}
@@ -248,24 +286,26 @@ N\cap\mathfrak m_B^{n+1}M^s\subseteq\mathfrak m_B^{n+1-c}N.
 所以 \((f)\) 中每个非零元素的初始形式都是 \(f_a\) 的倍数；而 \(f\) 本身又给出生成元 \(f_a\)。于是 \(\operatorname{in}_{\mathfrak m_0}((f))=(f_a)\)，由\cref{b3:prop:quotient-local-initial-ideal}即得公式。
 \end{proof}
 
-伴随分次环的素谱称为此点的\term[qiezhui]{切锥}[tangent cone]。最低次数可以由缩放看出：在尖点方程中代入 \(x=tX,y=tY\)，先对 \(t\ne0\) 除去共同的 \(t^2\)，得到
+此点的\term[qiezhui]{切锥}[tangent cone]以伴随分次环 \(\operatorname{gr}_{\mathfrak m}(R)\) 为坐标环。它的素谱给出点及其拓扑，但非约化信息仍需由伴随分次环本身保存。最低次数可以由缩放看出：引入缩放参数 \(\lambda\)，在尖点方程 \(y^2-x^3=0\) 中代入 \(x=\lambda X,y=\lambda Y\)，先对 \(\lambda\ne0\) 除去共同的 \(\lambda^2\)，得到
 \[
-Y^2-tX^3=0.
+Y^2-\lambda X^3=0.
 \]
-把这一族延伸到 \(t=0\)，便得到 \(Y^2=0\)；在实数的图像解释中，越小的非零 \(t\) 把越靠近原点的坐标放大到固定的 \((X,Y)\) 尺度，而所写的方程在任意域上都成立。节点同样变为 \(Y^2-X^2-tX^3=0\)，在 \(t=0\) 留下 \(Y^2-X^2=0\)。所以取最低齐次部分是在保留缩放后的极限方程，包括重数。尖点切锥中的平方不能删去：\(Y^2=0\) 是加厚直线，而 \(Y=0\) 只是它的约化支集。在特征不为二时，节点切锥则是两条不同直线。
+把这一族延伸到 \(\lambda=0\)，便得到 \(Y^2=0\)；在实数的图像解释中，越小的非零 \(\lambda\) 把越靠近原点的坐标放大到固定的 \((X,Y)\) 尺度，而所写的方程在任意域上都成立。对方程 \(y^2-x^2-x^3=0\)，同样得到 \(Y^2-X^2-\lambda X^3=0\)，在 \(\lambda=0\) 留下 \(Y^2-X^2=0\)。所以取最低齐次部分是在保留缩放后的极限方程，包括重数。尖点切锥中的平方不能删去：\(Y^2=0\) 是加厚直线，而 \(Y=0\) 只是它的约化支集。在特征不为二时，节点切锥则是两条不同直线。
+
+尖点方程没有一次项，所以 \(\mathfrak m/\mathfrak m^2\) 中 \(\bar x,\bar y\) 的像独立，其对偶所给出的 Zariski 切空间是二维的整个平面。切锥却保留了最低非零齐次关系 \(Y^2\)，其约化支集只有一条直线。两者记录的信息不同：切空间取一次线性化，切锥还保留更高次的初始齐次关系。
 
 \ProseParagraphBreak
-两者的 Hilbert 级数都是 \((1+t)/(1-t)\)，因此
+尖点和节点的伴随分次环的 Hilbert 级数都是 \((1+t)/(1-t)\)，因此
 \[
 h_{\mathfrak m,R}(0)=1,\quad h_{\mathfrak m,R}(n)=2\ (n\ge1),
 \qquad \chi_{\mathfrak m,R}(n)=2n+1,
 \]
-重数都为二；但前者切锥非约化，后者切锥有两条不同直线。相同重数不意味着相同切锥。多方程的切锥计算需要控制全部初始关系，不能只把原生成元各取最低项；本卷附录 F 将讨论相应的局部标准基。
+重数都为二；在特征不为二时，前者切锥非约化，后者切锥有两条不同直线。相同重数不意味着相同切锥。本卷附录 F 将进一步讨论计算多方程全部初始关系所用的局部标准基。
 
 \subsection{单层长度、累计长度与零维例外}
 \label{b3:subsec:1104:04}
 
-累计长度由各层相加得到，单层长度则是累计长度的差分。维数 \(d>0\) 时，差分把首项中的 \(n^d/d!\) 变成 \(n^{d-1}/(d-1)!\)，而重数保持相同。\cref{b3:tab:graded-local-hilbert-growth}将分次与局部两种情形并列。
+累计长度由各层相加得到，单层长度则是累计长度的差分。维数 \(d>0\) 时，差分把首项中的 \(n^d/d!\) 变成 \(n^{d-1}/(d-1)!\)，所以累计多项式次数为 \(d\)，单层多项式次数为 \(d-1\)，而重数保持相同。零维时，累计长度最终为总长度，单层长度最终为零。\cref{b3:tab:graded-local-hilbert-growth}将分次与局部两种情形并列。
 
 \begin{center}
 \begin{minipage}{\textwidth}
@@ -291,14 +331,14 @@ h_{\mathfrak m,R}(0)=1,\quad h_{\mathfrak m,R}(n)=2\ (n\ge1),
 在局部情形，若 \(d=0\)，\(M\) 有限长度，某个 \(\mathfrak m^NM\) 为零；因 \(I\subseteq\mathfrak m\)，也有 \(I^NM=0\)，所以各层最终为零，累计长度最终为 \(\ell_R(M)\)。分次情形则只有有限多个非零分次片，其累计值是这些片的 \(A_0\) 长度之和。零维时单层多项式为零，并没有次数为 \(-1\) 的非零多项式。
 
 \ProseParagraphBreak
-例如对域 \(k\)，在 \(R=k[x,y]_{(x,y)}\)、\(I=(x,y)R\) 时，单层函数为 \(n+1\)，累计函数为 \(\binom{n+2}{2}\)。在 \(R=k[t]/(t^a)\)、\(I=(t)\) 时，\(a\ge1\) 为整数，单层长度在 \(0\le n<a\) 时为一，以后为零，累计长度为 \(\min(n+1,a)\)。前一个例子显示维数二的两种次数，后一个例子显示零维的最终值。
+例如对域 \(k\)，在 \(R=k[x,y]_{(x,y)}\)、\(I=(x,y)R\) 时，单层函数为 \(n+1\)，累计函数为 \(\binom{n+2}{2}\)。在 \(R=k[t]/(t^a)\)、\(I=(t)\) 时，\(a\ge1\) 为整数，单层长度在 \(0\le n<a\) 时为一，以后为零，累计长度为 \(\min(n+1,a)\)。前一个例子显示维数二的两种次数；后一个例子的单层多项式为零，重数却为总长度 \(a\)，不能从零多项式取一个首项系数来定义零维重数。
 
 \subsection{有限点集上的求值码}
 \label{b3:subsec:evaluation-codes}
 % 保留迁移前的小节标签作为兼容引用。
 \label{b3:subsec:1102:05}
 
-对多项式的次数滤过，累计维数还可以衡量一个编码空间的大小。在 \(k=\mathbb F_q\) 上，把全次数不超过 \(d\) 的多项式在有限点集上的值排成向量，就得到码字；若这些向量张成的空间维数为 \(h\)，便有 \(q^h\) 个不同码字。第一卷附录B.3用一元多项式建立 Reed--Solomon 码\footnote{里德（Irving Stoy Reed，1923-2012），美国数学家及工程师，研究纠错码。所罗门（Gustave Solomon，1930-1996），美国数学家及工程师，与 Reed 合作提出代数纠错码。}；现在允许多个变量。仿射点的消失理想通常不齐次，全次数滤过把次数上界保留下来。
+对多项式的次数滤过，累计维数还可以衡量一个编码空间的大小。在 \(k=\mathbb F_q\) 上，把全次数不超过 \(d\) 的多项式在有限点集上的值排成向量，就得到码字；若这些向量张成的空间维数为 \(h\)，便有 \(q^h\) 个不同码字。第一卷附录B.3用一元多项式建立 Reed--Solomon 码\footnote{里德（Irving Stoy Reed，1923-2012），美国数学家及工程师，研究纠错码。所罗门（Gustave Solomon，1930-1996），美国数学家及工程师，与 Reed 合作提出代数纠错码。}；现在允许多个变量。仿射点的消失理想通常不齐次，例如 \(x_i^q-x_i\) 把不同全次数的项联系起来，所以商代数通常不能直接按原来的全次数分次。这里保留的是次数上界为 \(d\) 的整个滤过子空间，而不是标准分次意义下的单个次数 \(d\) 分量。
 
 \begin{definition}\label{b3:def:evaluation-code-finite-set}
 设 \(q\) 为素数幂，\(k=\mathbb F_q\)，\(X=\{P_1,\ldots,P_N\}\subseteq k^n\) 为非空有限点集，其中各 \(P_i\) 两两不同，\(N=|X|\)，\(d\ge0\) 为整数。记 \(S_{\le d}\subset k[x_1,\ldots,x_n]\) 为全次数不超过 \(d\) 的多项式空间。线性映射
@@ -313,7 +353,7 @@ h_{\mathfrak m,R}(0)=1,\quad h_{\mathfrak m,R}(n)=2\ (n\ge1),
 设 \(q\) 为素数幂，\(k=\mathbb F_q\)，\(S=k[x_1,\ldots,x_n]\)，\(X\subseteq k^n\) 是非空有限点集，\(I(X)\subseteq S\) 为其消失理想，\(d\ge0\) 为整数，\(C_X(d)\) 为全次数不超过 \(d\) 的多项式在 \(X\) 上的求值码。固定先比较全次数的全局单项式序，则 \(\dim_k C_X(d)\) 等于相对于 \(I(X)\) 的全次数不超过 \(d\) 的标准单项式数。该数也是商代数 \(S/I(X)\) 的全次数滤过第 \(d\) 项的维数。
 \end{proposition}
 \begin{proof}
-求值映射的核正是 \(I(X)\cap S_{\le d}\)，所以像同构于 \(S_{\le d}/(I(X)\cap S_{\le d})\)。因所用次序先比较全次数，每次 Gröbner 除法都不会增大多项式的全次数。故该商由次数不超过 \(d\) 的标准单项式生成；它们的独立性仍由首项判据给出。最后一个等式就是商滤过的定义。
+求值映射的核正是 \(I(X)\cap S_{\le d}\)，所以像同构于 \(S_{\le d}/(I(X)\cap S_{\le d})\)。因所用次序先比较全次数，每次 Gröbner 除法都不会增大多项式的全次数。故该商由次数不超过 \(d\) 的标准单项式生成；它们的独立性仍由首项判据给出。这个商也同构于 \(S/I(X)\) 中的滤过子空间 \(F_d(S/I(X))=(S_{\le d}+I(X))/I(X)\)，得到最后的断言。
 \end{proof}
 
 对整个点集 \(X=\mathbb F_q^n\)，其消失理想为
@@ -324,7 +364,12 @@ I(X)=(x_1^q-x_1,\ldots,x_n^q-x_n).
 \[
 \#\{\,(a_1,\ldots,a_n)\mid 0\le a_i<q,\ a_1+\cdots+a_n\le d\,\}.
 \]
-这里的计数级数可写为 \((1+t+\cdots+t^{q-1})^n/(1-t)\)；分母的额外因子表示按次数累计，而不是把仿射坐标代数误作标准分次环。这类码称为\term[Reed-Muller-ma]{Reed--Muller 码}[Reed--Muller code]；\footnote{穆勒（David Eugene Muller，1924-2008），美国数学家及计算机科学家，研究编码与自动机。}这里采用整个仿射空间和全次数上界的约定。
+多项式 \((1+t+\cdots+t^{q-1})^n\) 中 \(t^d\) 的系数统计 \(0\le a_i<q\)、\(\sum_i a_i=d\) 的单项式数。乘以 \(1/(1-t)=1+t+t^2+\cdots\) 后，每个系数就把次数不超过 \(d\) 的数目相加，因此
+\[
+\sum_{d\ge0}\dim_k C_X(d)\,t^d
+=\frac{(1+t+\cdots+t^{q-1})^n}{1-t}.
+\]
+分子按恰好次数计数，分母使计数累计到次数上界；这是滤过的累计维数级数。这类码称为\term[Reed-Muller-ma]{Reed--Muller 码}[Reed--Muller code]；\footnote{穆勒（David Eugene Muller，1924-2008），美国数学家及计算机科学家，研究编码与自动机。}这里采用整个仿射空间和全次数上界的约定。
 
 \ProseParagraphBreak
 取 \(q=2,n=2,d=1\)，按 \((0,0),(1,0),(0,1),(1,1)\) 排列求值点。基 \(1,x,y\) 给出生成矩阵

@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.3 切空间与 Jacobian 矩阵
-% 纲要位置：工作记录/计划纲要.md，第 2393 行。
+% 纲要位置：工作记录/计划纲要.md，第 2417 行。
 % 纲要细目（写作范围）：
 % * 极大理想模平方与余切空间
 % * 仿射方程的切空间计算
-% * 非完美基域下的额外注意事项
+% * 一般素点的剩余域微分方向；不可分闭点与基变换后的幂零结构
 
 \section{切空间与 Jacobian 矩阵}
 \label{b3:sec:1403}
@@ -51,12 +51,14 @@ D:B\longrightarrow\mathfrak m/\mathfrak m^2,
 \(\mathfrak mB_{\mathfrak m}/(\mathfrak mB_{\mathfrak m})^2\)。导子的分式延拓公式也给出相同的切空间。
 \end{proof}
 
+例如，在 \(k[x_1,\ldots,x_n]_{(x_1,\ldots,x_n)}\) 的原点，记极大理想为 \(\mathfrak m\)。消失于原点的函数模 \(\mathfrak m^2\) 后，只留下 \(\sum_i c_ix_i\) 这样的一次部分；\(\mathfrak m/\mathfrak m^2\) 保存的是函数的一阶线性信息。切向量 \(v=(v_i)\) 则是作用在这些一次部分上的线性泛函，将 \(\sum_i c_ix_i\) 送到 \(\sum_i c_iv_i\)。这就是切空间与余切空间互为对偶的具体含义。
+
 上述导子还有直接的点的解释。给定 \(D\in T_a(B)\)，映射
 \[
 B\longrightarrow k[\varepsilon]/(\varepsilon^2),\qquad
 b\longmapsto a(b)+D(b)\cdot\varepsilon
 \]
-是一个模 \(\varepsilon\) 后等于 \(a\) 的 \(k\) 代数同态；乘法相容性恰是导子的公式。反过来，每个这样的同态都唯一给出一个 \(D\)。因此切向量记录的是点向双数环中的一阶延伸。
+是一个模 \(\varepsilon\) 后等于 \(a\) 的 \(k\) 代数同态；乘法相容性恰是导子的公式。反过来，每个这样的同态都唯一给出一个 \(D\)。因此，同一个切向量既可视为导子，也可视为余切空间上的线性泛函，或点向双数环中的一阶延伸。
 
 \subsection{仿射方程的切空间计算}
 \label{b3:subsec:1403:02}
@@ -75,24 +77,28 @@ T_a(B)=\ker\bigl(J_f(a):k^n\to k^s\bigr),
 这个矩阵称为所给方程组的\term[jacobian-juzhen]{Jacobian 矩阵}[Jacobian matrix]，亦称雅可比矩阵\termidx[yakebi-juzhen]{雅可比矩阵}。\footnote{“雅可比矩阵”见菲赫金哥尔茨《微积分学教程》第一卷\cite[第六章“函数矩阵(雅可比矩阵)的乘法”]{Fichtenholz2005CalculusChineseI}。}
 \end{theorem}
 \begin{proof}
-\cref{b3:cor:differential-presentation}给出 \(B^s\to B^n\to\Omega_{B/k}\to0\)。张量到 \(k\) 后仍右正合，再取 \(k\) 线性对偶，得到
+由双数值点的描述，一个方向 \(v=(v_j)\) 对应 \(X_j\mapsto a_j+v_j\varepsilon\)。它能从多项式环下降到 \(B\)，当且仅当每个 \(f_i\) 的像为零。因为 \(\varepsilon^2=0\)，二次以上的改变量全部消失，故
+\[
+f_i(a_1+v_1\varepsilon,\ldots,a_n+v_n\varepsilon)
+=f_i(a)+\varepsilon\sum_j
+\dfrac{\partial f_i}{\partial X_j}(a)v_j.
+\]
+由 \(f_i(a)=0\)，这一条件恰为 \(J_f(a)v=0\)，得到核的描述及维数公式。
+
+\cref{b3:cor:differential-presentation}还将这一计算与环本身的微分模联系起来：展示 \(B^s\to B^n\to\Omega_{B/k}\to0\) 的关系矩阵为 \(J_f^{\mathsf t}\)。张量到 \(k\) 后仍右正合，再取 \(k\) 线性对偶，得到
 \[
 0\longrightarrow\operatorname{Hom}_k(k\otimes_B\Omega_{B/k},k)
 \longrightarrow k^n\xrightarrow{J_f(a)}k^s.
 \]
-前一命题把左端识别为切空间，因而得到核的描述及维数公式。具体说，一个方向 \(v=(v_j)\) 满足
-\[
-f_i(a_1+v_1\varepsilon,\ldots,a_n+v_n\varepsilon)
-=f_i(a)+\varepsilon\sum_j
-\dfrac{\partial f_i}{\partial X_j}(a)v_j=0;
-\]
-二次以上的改变量因 \(\varepsilon^2=0\) 全部消失。这也直接解释了每一行约束的含义。
+前一命题把左端自然识别为切空间。因此坐标与方程展示虽会改变矩阵，所得导子空间始终由 \(B\) 及这个有理点决定。
 \end{proof}
 
 例如设 \(k\) 为域，在 \(B=k[x,y]/(xy-1)\) 中，每个有理点 \((a,b)\) 都有 \(ab=1\)，Jacobian 行为 \((b,a)\)，秩为一，所以切空间由 \(bv_x+av_y=0\) 给出，是一维的。在尖点曲线 \(y^2=x^3\) 的原点，Jacobian 行 \((-3x^2,2y)\) 为零，故切空间是整个 \(k^2\)，任意特征都如此。曲线 \(xy=0\) 的原点也有二维切空间，虽然它有两条分支，而尖点只有一条。这说明切空间维数能发现某些异常，却不能单独数出分支。
 
 \ProseParagraphBreak
-竖直方向就能显示一阶切向量与实际切线的差别。映射 \(x\mapsto0,y\mapsto\varepsilon\) 在 \(k[\varepsilon]/(\varepsilon^2)\) 中满足尖点方程，因此给出一个切向量。若提升到 \(k[\varepsilon]/(\varepsilon^3)\)，保持这一阶值就必须写成 \(x=a\varepsilon^2\)、\(y=\varepsilon+b\varepsilon^2\)。此时 \(x^3=0\)，而 \(y^2=\varepsilon^2\ne0\)，所以没有这样的提升。Zariski 切空间只检查一次关系；切锥 \(Y^2=0\) 则已保留最低二次关系，其约化支集只有水平直线。因而一阶允许的方向未必能延续成更高阶曲线。
+尖点的参数化 \(t\mapsto(t^2,t^3)\) 把源直线原点的一阶点 \(t=v\varepsilon\) 送到 \(\bigl((v\varepsilon)^2,(v\varepsilon)^3\bigr)=(0,0)\)。因此它在原点诱导的切映射为零，源点的一阶变化在像中全部消失。
+
+竖直方向则显示 Zariski 一阶切方向与切锥约化方向之间的差别。映射 \(x\mapsto0,y\mapsto\varepsilon\) 在 \(k[\varepsilon]/(\varepsilon^2)\) 中满足尖点方程，因此给出一个切向量。若提升到 \(k[\varepsilon]/(\varepsilon^3)\)，保持这一阶值就必须写成 \(x=a\varepsilon^2\)、\(y=\varepsilon+b\varepsilon^2\)。此时 \(x^3=0\)，而 \(y^2=\varepsilon^2\ne0\)，所以没有这样的提升。Zariski 切空间只检查一次关系；切锥 \(Y^2=0\) 则已保留最低二次关系，其约化支集只有水平直线。因而一阶允许的方向未必能延续成更高阶曲线。
 
 \ProseParagraphBreak
 还须保留方程中的幂零结构。\(k[t]/(t^2)\) 只有一个域值点，但该点切空间为一维；约化后的坐标环 \(k\) 则有零切空间。两者的点集相同，一阶延伸却不同。若已经把理想替换成根理想再计算，便无法恢复丢掉的方向。
@@ -106,12 +112,16 @@ F_t(x,y)=y^2-x^3-t=0.
 \[
 (y^2-x^3-t,-3x^2,2y)=(y,x^2,t).
 \]
-右边的包含关系可直接由 \(t=y^2-x^3-F_t\) 核验，反向也由各生成元的表达式得到。因此异常点只能出现在参数 \(t=0\) 的原点；其余参数的每个几何点都有一维切空间。若只求异常点集，取根理想得到 \((x,y,t)\)；保留原理想则还能看见 \(x^2=0\) 的加厚信息。这个计算把消去参数、求根理想和求切空间区分为三个实际任务。
+右边的包含关系可直接由 \(t=y^2-x^3-F_t\) 核验，反向也由各生成元的表达式得到。这个 Jacobian 理想记录异常位置的代数结构，其商中还保留 \(x^2=0\) 的加厚信息；若只求底层异常点集，则取根理想得到 \((x,y,t)\)，只剩原点。要判断哪些参数会产生异常，还须消去 \(x,y\)，收缩到参数环得到
+\[
+(y,x^2,t)\cap k[t]=(t).
+\]
+这是因为 \(t\) 已属于该理想，而属于它的参数多项式必在原点取值为零。于是异常只在 \(t=0\) 出现；其余参数的每个几何点都有一维切空间。
 
 \subsection{非完美基域上的切空间}
 \label{b3:subsec:1403:03}
 
-设 \(k\) 为域，\(B\) 为交换 \(k\) 代数，\(\mathfrak p\in\operatorname{Spec}B\)，记 \(\kappa=\kappa(\mathfrak p)\)。剩余域 \(\kappa\) 未必等于 \(k\)。局部环自身的余切空间
+这里先比较一般素点处的两个一阶对象，差别并不限于不完美基域。设 \(k\) 为域，\(B\) 为交换 \(k\) 代数，\(\mathfrak p\in\operatorname{Spec}B\)，记 \(\kappa=\kappa(\mathfrak p)\)。剩余域 \(\kappa\) 未必等于 \(k\)。局部环自身的余切空间
 \(\mathfrak pB_{\mathfrak p}/(\mathfrak pB_{\mathfrak p})^2\)
 与相对微分的纤维 \(\kappa\otimes_B\Omega_{B/k}\) 出自不同构造。对 \(B_{\mathfrak p}\to\kappa\) 应用余法正合列及微分局部化，得到下列 \(\kappa\) 向量空间的右正合列：
 \begin{equation}\label{b3:eq:cotangent-residue-sequence}
@@ -126,7 +136,9 @@ F_t(x,y)=y^2-x^3-t=0.
 &{\begin{gathered}\text{剩余域扩张}\\\text{的一阶结构}\end{gathered}}&
 \end{tikzcd}
 \end{equation}
-在 \(k\) 有理点处，\cref{b3:prop:tangent-cotangent-rational}证明左箭头为同构。一般点处的左箭头不必单射，右端也可能非零；它记录了剩余域扩张本身贡献的微分。
+在 \(k\) 有理点处，\cref{b3:prop:tangent-cotangent-rational}证明左箭头为同构。一般点处的左箭头不必单射，右端也可能非零；它记录了剩余域扩张本身贡献的微分。记左箭头的像为 \(W\)，则中间空间包含子空间 \(W\)，商空间为 \(\Omega_{\kappa/k}\)。向量空间的短正合列可以选基分裂，所以中间空间可非典范地写成 \(W\oplus\Omega_{\kappa/k}\)；但没有自然指定的补空间，而且 \(W\) 只是左端的一个商，不能直接把整个局部余切空间与 \(\Omega_{\kappa/k}\) 作直和。
+
+即使 \(k\) 完美，在 \(B=k[t]\) 的一般点 \(\mathfrak p=(0)\) 处也有 \(\kappa=k(t)\)；由多项式微分与局部化公式，\(\Omega_{\kappa/k}=k(t)\,\mathrm{d}t\ne0\)。此时局部环是域，局部余切空间为零，相对微分纤维却仍有一维。非完美基域上的额外现象是：连闭点的有限剩余域扩张也可能贡献这样的非零微分。
 
 \begin{example}\label{b3:exm:inseparable-tangent}
 设 \(p\) 为素数、\(k=\mathbb F_p(s)\)，其中 \(s\) 为超越元。令
@@ -137,11 +149,11 @@ L=k[u]/(u^p-s).
 \[
 \Omega_{L/k}=L\,\mathrm{d}u,
 \]
-因为 \(\mathrm{d}(u^p-s)=0\)。这里相对微分纤维非零，完全来自剩余域扩张的不可分性。若扩域到 \(K=k(s^{1/p})\)，则
+因为 \(s\) 是基域中的常数，且 \(k\) 的特征为 \(p\)，故 \(\mathrm{d}(u^p-s)=0\)。该点的剩余域就是 \(L\)，所以相对微分纤维 \(L\otimes_L\Omega_{L/k}=\Omega_{L/k}\) 非零，完全来自剩余域扩张的不可分性，并非来自局部极大理想。若扩域到 \(K=k(s^{1/p})\)，则
 \[
 K\otimes_kL\cong K[v]/(v^p),\qquad v=u-s^{1/p},
 \]
-其唯一 \(K\) 有理点由 \(v\mapsto0\) 给出，该点的切空间为一维，且代数中 \(v\) 的像是非零幂零元。
+其唯一 \(K\) 有理点由 \(v\mapsto0\) 给出，局部余切空间 \((v)/(v^2)\) 以 \(v\) 的类为基，故该点的切空间为一维。这里 \(v\) 的像是非零幂零元：原来的环 \(L\) 是域，改变基域后却出现了这个加厚点。
 \end{example}
 
 不可约性的一个直接检验如下。在代数闭包中，\(T^p-s=(T-\alpha)^p\)。若 \(\alpha\) 的最小多项式次数 \(r<p\)，它只能为 \((T-\alpha)^r\)，其 \(T^{r-1}\) 系数使 \(r\alpha\in k\)，从而 \(\alpha\in k\)，与 \(s\) 非 \(p\) 次幂矛盾。最后一事实可由有理函数在 \(s=0\) 处的零点阶数核验：\(p\) 次幂的阶数是 \(p\) 的倍数，\(s\) 的阶数则为一。

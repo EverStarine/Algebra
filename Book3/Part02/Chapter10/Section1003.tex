@@ -1,11 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 10.3 Dedekind 整环
-% 纲要位置：工作记录/计划纲要.md，第 2120 行。
+% 纲要位置：工作记录/计划纲要.md，第 2243 行。
 % 纲要细目（写作范围）：
 % * 定义及局部刻画
 % * 非零理想的素理想分解
 % * 分式理想与可逆性
-
 
 \section{Dedekind 整环}
 \label{b3:sec:1003}
@@ -21,6 +20,8 @@
 本书允许域作为零维情形；非域的 Dedekind 整环恰为一维 Noether 正规整环。
 \end{definition}
 
+在非域整环中，\((0)\) 是素理想，每个极大理想都非零。若非零素理想都极大，素理想链只能是 \((0)\subsetneq\mathfrak m\)，所以维数为一；反过来，维数一也排除了 \((0)\subsetneq\mathfrak p\subsetneq\mathfrak m\) 这样的链。这说明定义中的素理想条件正是在限制维数。
+
 \begin{theorem}\label{b3:thm:dedekind-local-characterization}
 设 \(R\) 为非域 Noether 整环。则 \(R\) 是 Dedekind 整环，当且仅当每个极大理想
 \(\mathfrak m\) 处的 \(R_{\mathfrak m}\) 都是 DVR。
@@ -31,19 +32,17 @@
 
 反向，任意非零素理想 \(\mathfrak p\) 包含于某个 \(\mathfrak m\)。其局部化是
 DVR 中的非零素理想，只能等于 \(\mathfrak mR_{\mathfrak m}\)；收缩回去得
-\(\mathfrak p=\mathfrak m\)。再证整闭性。首先在分式域 \(K\) 中有
+\(\mathfrak p=\mathfrak m\)。再证整闭性。第二章将\cref{b3:cor:submodule-local-detection}应用于 \(R\subseteq K=\operatorname{Frac}(R)\)，已经得到
 \[
 R=\bigcap_{\mathfrak m\text{ 极大}}R_{\mathfrak m}.
 \]
-事实上，若 \(x\notin R\)，则 \(J=\{r\in R:rx\in R\}\) 是真理想。
-取 \(\mathfrak m\supseteq J\)，若 \(x=a/s\in R_{\mathfrak m}\)，则
-\(s\notin\mathfrak m\) 却满足 \(sx=a\in R\)，矛盾。若 \(x\in K\) 在 \(R\) 上整，
+若 \(x\in K\) 在 \(R\) 上整，
 它在每个 \(R_{\mathfrak m}\) 上也整，因各 DVR 整闭而属于上述交集，故属于 \(R\)。
 \end{proof}
 
 各极大理想处的局部环都是 DVR，并不必然使整个整环成为 Noether 环。例如，令
 \(K=\mathbb Q(\zeta_p:p\text{ 为素数})\)，其中 \(\zeta_p\) 是本原 \(p\) 次单位根。
-\(K\) 中所有代数整数构成的整环，在每个极大理想处局部化都是 DVR，却不是 Noether 环\cite[Section 2, p. 280]{loper2006almostDedekind}。
+\(K\) 中所有代数整数构成的整环，在每个极大理想处局部化都是 DVR，却不是 Noether 环。这个数论构造的出处与上述性质见所引文献\cite[Section 2, p. 280]{loper2006almostDedekind}。
 在已知 Dedekind 的环中，局部化仍为 Dedekind 整环或域：Noether 性、整闭性均保持，而素链只会减少。
 
 \subsection{非零理想的素理想分解}
@@ -55,6 +54,13 @@ R=\bigcap_{\mathfrak m\text{ 极大}}R_{\mathfrak m}.
 \(IR_{\mathfrak p}=(\mathfrak pR_{\mathfrak p})^{v_{\mathfrak p}(I)}\) 的整数。
 \symidx{\(v_{\mathfrak p}(I)\)：理想在素理想处的阶数}
 
+例如，在 \(\mathbb Z\) 中取 \(I=(60)\)。局部化到 \(\mathbb Z_{(2)}\) 后，\(15\) 成为单位，所以 \(I\mathbb Z_{(2)}=2^2\mathbb Z_{(2)}\)；在 \(\mathbb Z_{(3)}\) 与 \(\mathbb Z_{(5)}\) 中，\(20\) 与 \(12\) 分别成为单位，故相应理想由 \(3\) 与 \(5\) 生成。对其余素数 \(p\)，\(60\) 本身就是 \(\mathbb Z_{(p)}\) 的单位。因此
+\[
+v_{(2)}(I)=2,\qquad v_{(3)}(I)=v_{(5)}(I)=1,
+\qquad v_{(p)}(I)=0\quad(p\ne2,3,5),
+\]
+这些局部指数恰好给出通常的理想分解 \((60)=(2)^2(3)(5)\)。下面的定理说明，在 Dedekind 整环中也能从局部指数恢复整个理想。
+
 \begin{theorem}\label{b3:thm:dedekind-factorization}
 设 \(R\) 为 Dedekind 整环，\(I\subseteq R\) 为非零理想；对非零素理想 \(\mathfrak p\)，令 \(v_{\mathfrak p}(I)\) 表示 \(IR_{\mathfrak p}\) 在 DVR \(R_{\mathfrak p}\) 中的幂指数。则有唯一分解
 \[
@@ -63,15 +69,12 @@ I=\prod_{\mathfrak p\ne0}\mathfrak p^{v_{\mathfrak p}(I)},
 其中只有有限多个指数非零。单位理想对应空乘积。
 \end{theorem}
 \begin{proof}
-若 \(I=R\)，空乘积就是所求分解；以下设 \(I\subsetneq R\)，此时 \(R\) 不是域。取 \(0\ne a\in I\)。含 \((a)\) 的素理想全是极大理想，所以
-\(R/(a)\) 是零维 Noether 环，因而是 Artin 环，只有有限多个素理想。
-若 \(v_{\mathfrak p}(I)>0\)，则 \(I\subseteq\mathfrak p\)，故
-\(a\in\mathfrak p\)。因此非零指数只有有限多个。
+若 \(I=R\)，空乘积就是所求分解；以下设 \(I\subsetneq R\)，此时 \(R\) 不是域。取 \(0\ne a\in I\)。若 \(v_{\mathfrak p}(I)>0\)，则 \(I\subseteq\mathfrak p\)，故 \(a\in\mathfrak p\)。所以，只需证明含 \(a\) 的素理想只有有限多个。它们全是非零极大理想，因而 \(R/(a)\) 是零维 Noether 环，由\cref{b3:thm:noether-dimension-zero}为 Artin 环，只有有限多个素理想。这就得到局部指数的有限支撑。
 
 令右端有限乘积为 \(J\)。在任一非零极大理想 \(\mathfrak q\) 处局部化，所有
 \(\mathfrak p\ne\mathfrak q\) 都含有一个不属于 \(\mathfrak q\) 的元素，因而其局部化为单位理想。
 只有 \(\mathfrak q\) 因子保留，于是 \(JR_{\mathfrak q}=IR_{\mathfrak q}\)。
-由\cref{b3:cor:submodule-local-detection}得到 \(I=J\)。
+由\cref{b3:cor:submodule-local-detection}得到 \(I=J\)：拼出的乘积具有与 \(I\) 相同的全部局部指数，而这些局部理想已经足以检测全局相等。
 
 任一有限素理想乘积在 \(\mathfrak p\) 处局部化时，只保留对应素理想的幂；DVR 中幂指数唯一，所以分解中每个指数都被原理想确定。
 \end{proof}
@@ -91,9 +94,13 @@ I^{-1}\coloneqq\{x\in K:xI\subseteq R\}.
 \end{definition}
 \symidx{\(I^{-1}\)：分式理想的逆理想}
 
-在 Noether 整环上，分式理想都是有限生成模，因为乘以 \(d\) 将它同构到一个通常理想。
+定义中的 \(J=dI\) 是非零通常理想，并且 \(I=d^{-1}J\)，所以分式理想就是将一个通常理想整体除以同一个非零元素。\(I^{-1}\) 则由能把整个 \(I\) 乘回 \(R\) 的分式组成，并非把 \(I\) 的非零元素逐个取倒数所得的集合。例如，对 \(0\ne a\in K\)，有 \((aR)^{-1}=a^{-1}R\)。
+
+在 Noether 整环上，分式理想都是有限生成模，因为乘以 \(d\) 将它同构到通常理想 \(J\)。
 \(I^{-1}\) 也是分式理想：它包含非零的 \(dR\)；取 \(0\ne a\in I\)，则
 \(aI^{-1}\subseteq R\)，再清除 \(a\) 自身的分母即可得到定义中所需的 \(R\) 元素。
+
+全局上，一个分式理想可能需要若干生成元；在每个局部环中只需一个生成元，则可望构造它的局部逆，再由局部检测证明全局可逆。反过来，等式 \(II^{-1}=R\) 会给出有限个乘积之和为 \(1\)，由这一等式在各局部环中选出生成元。
 
 \begin{proposition}\label{b3:prop:invertible-local-principal}
 设 \(R\) 为整环，\(K\) 为其分式域。若分式理想 \(I\subseteq K\) 为有限生成的 \(R\) 模，则它可逆，当且仅当每个极大理想 \(\mathfrak m\subseteq R\) 处的
@@ -104,13 +111,13 @@ I^{-1}\coloneqq\{x\in K:xI\subseteq R\}.
 每个 \(x\in I\) 都可写成 \(x=\sum_i (xb_i)a_i\)，说明 \(a_i\) 生成 \(I\)。
 映射 \(R^r\rightarrow I\)、\((c_i)\mapsto\sum_i c_ia_i\) 有截面
 \(x\mapsto(xb_i)_i\)，故 \(I\) 是有限自由模的直和因子，因而投射。
-在 \(R_{\mathfrak m}\) 中，和为 \(1\) 使某个 \(a_ib_i\) 成为单位。
+在 \(R_{\mathfrak m}\) 中，若所有 \(a_ib_i\) 都在极大理想 \(\mathfrak mR_{\mathfrak m}\) 中，它们的和也在其中，不可能等于 \(1\)。所以至少一个 \(a_ib_i\) 不在该极大理想中，因而是单位。
 对任意 \(x\in I\)，有 \(x/a_i=(xb_i)/(a_ib_i)\in R_{\mathfrak m}\)，于是 \(I_{\mathfrak m}=a_iR_{\mathfrak m}\)。
 
-反向需要说明逆理想与局部化相容。若 \(I=(a_1,\ldots,a_r)\)，且
+反向需要说明逆理想与局部化相容。包含 \((I^{-1})_{\mathfrak m}\subseteq(I_{\mathfrak m})^{-1}\) 直接来自定义。为证明反向包含，设 \(I=(a_1,\ldots,a_r)\)、\(x\in K\)，且
 \(xI_{\mathfrak m}\subseteq R_{\mathfrak m}\)，为每个 \(xa_i\) 选一个分母
 \(s_i\notin\mathfrak m\) 使 \(s_ix a_i\in R\)。令 \(s=\prod_i s_i\)，便有
-\(sx\in I^{-1}\)。因此 \((I^{-1})_{\mathfrak m}=(I_{\mathfrak m})^{-1}\)。
+\(sx\in I^{-1}\)，因而 \(x=(sx)/s\in(I^{-1})_{\mathfrak m}\)。这里正是有限生成性使全部 \(xa_i\) 能用一个共同分母乘回 \(R\)。因此 \((I^{-1})_{\mathfrak m}=(I_{\mathfrak m})^{-1}\)。
 若 \(I_{\mathfrak m}\) 主生成且非零，它与自己的逆相乘为 \(R_{\mathfrak m}\)，故
 \((II^{-1})_{\mathfrak m}=R_{\mathfrak m}\)。若 \(II^{-1}\) 为真理想，将其包含在某个极大理想中会与这个等式矛盾。于是 \(II^{-1}=R\)。
 \end{proof}
@@ -133,6 +140,7 @@ I=\prod_{\mathfrak p\ne0}\mathfrak p^{n_{\mathfrak p}},
 若 \(\pi\) 是 DVR \(R_{\mathfrak p}\) 的统一化元，则
 \(IR_{\mathfrak p}=\pi^{v_{\mathfrak p}(I)}R_{\mathfrak p}\)；
 负指数表示统一化元的逆元的正整数次幂。
+指数的大小与理想的包含方向相反。例如，\(\mathbb Z\) 中 \((12)\subsetneq(4)\)，但在 \((2)\) 处两者的指数同为 \(2\)，在 \((3)\) 处的指数分别为 \(1\) 与 \(0\)，其他素数处同为 \(0\)。所以较小理想的每个局部指数都不小于较大理想的相应指数。
 整数指数的相加、取负、取最小值与取最大值，分别对应\cref{b3:tab:dedekind-ideal-exponents}中的理想运算。
 
 \begin{table}[htbp]

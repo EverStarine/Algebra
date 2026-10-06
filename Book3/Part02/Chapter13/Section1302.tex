@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 13.2 Artin–Rees 引理
-% 纲要位置：工作记录/计划纲要.md，第 2344 行。
+% 纲要位置：工作记录/计划纲要.md，第 2366 行。
 % 纲要细目（写作范围）：
 % * 子模滤过与诱导滤过
 % * Artin–Rees 引理及证明
@@ -19,7 +19,11 @@
 \[
 I^nN=x^{n+r}R,\qquad N\cap I^nM=x^{\max(r,n)}R.
 \]
-后一滤过到第 \(r\) 阶仍等于整个 \(N\)，前一滤过已经缩小。因此子模的自身理想进滤过和由环境诱导的滤过需要分别处理。
+后一滤过到第 \(r\) 阶仍等于整个 \(N\)，前一滤过已经缩小。不过从这一阶起，对 \(s\ge0\) 有
+\[
+N\cap I^{r+s}M=x^{r+s}R=I^s(N\cap I^rM).
+\]
+也就是说，诱导滤过比自身滤过延迟了 \(r\) 阶，此后同样由逐次乘 \(I\) 产生。因此两种滤过需要分别处理，却仍可能定义相同的拓扑。
 
 \ProseParagraphBreak
 令 \(F^nN=N\cap I^nM\)。它满足 \(F^0N=N\) 及 \(IF^nN\subseteq F^{n+1}N\)，且其 Rees 模是 \(\mathcal R_I(M)\) 的齐次子模。这个观察把滤过比较转化为一个有限生成问题。
@@ -37,13 +41,13 @@ N\cap I^nM=I^{n-c}(N\cap I^cM).
 特别地，\(N\) 自身的 \(I\) 进拓扑等于 \(M\) 在 \(N\) 上诱导的拓扑。
 \end{theorem}
 \begin{proof}
-因为 \(R\) 为 Noether 环、\(M\) 有限生成，子模 \(N\) 也是有限生成 \(R\) 模。由\cref{b3:prop:rees-finiteness}，\(\mathcal R_I(R)\) 为 Noether 环，\(\mathcal R_I(M)\) 为有限生成模，所以齐次子模
+若 \(N=0\)，取 \(c=0\) 即可。以下设 \(N\ne0\)。由\cref{b3:prop:rees-finiteness}，\(\mathcal R_I(R)\) 为 Noether 环；把 \(M\) 的有限组生成元放在次数零，就生成 \(\mathcal R_I(M)\)，所以后者是 Noether 模。各阶交集组成齐次子模
 \[
 \mathcal N=\bigoplus_{n\ge0}(N\cap I^nM)t^n
 \]
-有限生成。由于 \(N\) 有限生成，可再次应用该命题，得到滤过 \(N\cap I^nM\) 从某个次数 \(c\) 起稳定，逐次使用等式便得到所述公式。
+。由 Noether 性，它有有限个生成元，同时生成全部次数。这里所需的是 \(\mathcal N\) 在 Rees 环上有限生成，而不只是 \(N\) 在 \(R\) 上有限生成。
 
-具体看齐次生成元，可取 \(\mathcal N\) 的有限组生成元 \(z_jt^{d_j}\) 并增大 \(c\)，使 \(d_j\le c\)。对 \(n\ge c\)，齐次生成性给出
+将这组生成元分解成齐次部分，仍得到有限组生成元 \(z_jt^{d_j}\)。取 \(c=\max_jd_j\)，就把产生所有阶交集所需的次数限制在 \(c\) 以内。对 \(n\ge c\)，齐次生成性给出
 \[
 N\cap I^nM=\sum_jI^{n-d_j}z_j.
 \]
@@ -61,7 +65,7 @@ I^nN\subseteq N\cap I^nM\subseteq I^{n-c}N\qquad(n\ge c).
 两个邻域系相互包含任意给定的足够小邻域，故拓扑相同。
 \end{proof}
 
-\cref{b3:lem:induced-filtration-bound}只需要上述两个包含关系。现在得到的等式还说明诱导滤过何时开始逐次由乘 \(I\) 生成。这里的 \(c\) 可以依赖 \(N\subseteq M\) 和 \(I\)，不能解释为对所有子模统一的常数；前面 \(N=x^rR\) 的例子中，最小的 \(c\) 就是 \(r\)。
+\cref{b3:lem:induced-filtration-bound}只需要上述两个包含关系。现在得到的等式还说明诱导滤过何时开始逐次由乘 \(I\) 生成。这里的 \(c\) 可以依赖 \(N\subseteq M\) 和 \(I\)，不能解释为对所有子模统一的常数；前面 \(N=x^rR\) 的例子中，最小的 \(c\) 就是 \(r\)，而 \(r\) 可以任意增大，尽管 \(R,I,M\) 都保持不变。
 
 \subsection{Krull 交定理与子模闭性}
 \label{b3:subsec:1302:03}
@@ -76,14 +80,16 @@ I^nN\subseteq N\cap I^nM\subseteq I^{n-c}N\qquad(n\ge c).
 此时 \(M\) 的每个子模都闭。特别地，对 Noether 局部环 \((R,\mathfrak m)\)，每个有限生成模在极大理想进拓扑下分离。
 \end{theorem}
 \begin{proof}
-令 \(N=\bigcap_nI^nM\)。它作为 Noether 模的子模有限生成。对 \(N\subseteq M\) 使用\cref{b3:thm:artin-rees}，在 \(n=c+1\) 时得到
+令 \(N=\bigcap_nI^nM\)，其中的元素在每个商 \(M/I^nM\) 中都变成零。它作为 Noether 模的子模有限生成。由于 \(N\) 已经包含在每个 \(I^nM\) 内，对 \(N\subseteq M\) 使用\cref{b3:thm:artin-rees}，在 \(n=c+1\) 时得到
 \[
 N=N\cap I^{c+1}M=I(N\cap I^cM)=IN.
 \]
 由\cref{b3:thm:nakayama}及 \(I\subseteq J(R)\) 得 \(N=0\)。对任意子模 \(L\)，商模 \(M/L\) 也有限生成，因而分离；\cref{b3:prop:adic-closure}说明 \(L\) 闭。
 \end{proof}
 
-有限性不能删去。设 \(p\) 为素数，取 \(R=\mathbb Z_{(p)}\)、\(M=\mathbb Q\)，则 \(p^nM=M\) 对所有 \(n\) 成立，交并不为零。Jacobson 根条件也不能对一般环省略：若 \(k\) 为域，\(k\times k\) 的幂等理想 \(k\times0\) 的各次幂都相同。
+有限性不能删去。设 \(p\) 为素数，取 \(R=\mathbb Z_{(p)}\)、\(M=\mathbb Q\)，则 \(p^nM=M\) 对所有 \(n\) 成立，交并不为零。前一节 \(k\times k\) 的幂等理想 \(k\times0\) 已给出有限生成模上的非零交，说明结论也不能对任意理想直接成立。
+
+不过，\(I\subseteq J(R)\) 是保证上述结论的充分条件，不是分离性的必要条件。前一节的 \(k[x]\) 在 \((x)\) 进拓扑下分离，但 \(x\) 不属于极大理想 \((x-1)\)，所以 \((x)\) 并不包含在 \(J(k[x])\) 中。
 
 \ProseParagraphBreak
 本节还给出一种实用判断：设 \((R,\mathfrak m)\) 为 Noether 局部环，\(M\) 为有限生成 \(R\) 模，\(N\subseteq M\) 为子模，\(x\in M\)。若对每个 \(n\ge0\) 都存在 \(y_n\in N\)，使 \(x\equiv y_n\pmod{\mathfrak m^nM}\)，那么 \(x\in N\)，因为 \(N\) 闭。

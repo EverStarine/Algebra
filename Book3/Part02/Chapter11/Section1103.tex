@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 11.3 Hilbert 多项式
-% 纲要位置：工作记录/计划纲要.md，第 2263 行。
+% 纲要位置：工作记录/计划纲要.md，第 2285 行。
 % 纲要细目（写作范围）：
 % * 多项式性的证明
 % * 多项式次数与维数的关系
@@ -9,7 +9,7 @@
 \section{Hilbert 多项式}
 \label{b3:sec:1103}
 
-级数的有理性给出最终的多项式公式，但还没有解释为什么公式次数是一个几何维数。本节先从系数提取证明多项式性，再用齐次素理想滤过把问题化到整环上，最后用代数独立参数比较增长。这里始终要求标准分次，底环 \(A_0\) 为 Artin 环，\(M\ne0\) 为有限生成分次模。
+标准分次时，Hilbert 级数的分母只含 \(1-t\)，提取系数便能得到最终的多项式公式。还需解释的是：这个公式的次数为何能测量模支集的维数，而不只反映某种级数写法。证明中选出的齐次参数同时提供可计数的单项式和维数的坐标，两种数量由此联系起来。这里始终要求标准分次，底环 \(A_0\) 为 Artin 环，\(M\ne0\) 为有限生成分次模。
 
 \subsection{Hilbert 函数的多项式性}
 \label{b3:subsec:1103:01}
@@ -29,13 +29,22 @@
 \[
 h_M(n)=\sum_a q_a\binom{n-a+d-1}{d-1}.
 \]
-右边是多项式，其 \(n^{d-1}\) 系数为 \(\sum_aq_a/(d-1)!=Q(1)/(d-1)!\)，不为零。因左边非负，非零首项系数必须为正。累计级数为 \(H_M(t)/(1-t)\)，同一计算给出次数 \(d\) 及首项系数 \(Q(1)/d!\)。若 \(d=0\)，只有有限片非零，累计函数最终为正整数 \(\sum_j h_M(j)\)。
+右边是有限个二项式多项式之和，因而是次数至多为 \(d-1\) 的多项式。其 \(n^{d-1}\) 系数为 \(\sum_aq_a/(d-1)!=Q(1)/(d-1)!\ne0\)，所以次数恰为 \(d-1\)。因左边非负，非零首项系数必须为正。
+
+累计函数应计入所有 \(j\le n\) 的分量，包括可能出现的负次分量。有限生成保证这些次数有共同下界，故与几何级数相乘给出
+\[
+\sum_{n\in\mathbb Z}\left(\sum_{j\le n}h_M(j)\right)t^n
+=H_M(t)(1+t+t^2+\cdots)=\frac{H_M(t)}{1-t}.
+\]
+其 \(t^n\) 系数正好把各个 \(t^j\) 项累计到次数 \(n\)，同一系数计算因此给出次数 \(d\) 及首项系数 \(Q(1)/d!\)。若 \(d=0\)，只有有限片非零，累计函数最终为正整数 \(\sum_j h_M(j)\)。
 \end{proof}
 
-这一定理给出的是“大次数以后”的等式。前面的例 \(A/(x^2,xy)\) 的 Hilbert 多项式为一，但第一个次数的额外项不能由这一个多项式恢复。
+这个命题给出的是“大次数以后”的等式。前面的例 \(A/(x^2,xy)\) 的 Hilbert 多项式为一，但第一个次数的额外项不能由这一个多项式恢复。
 
 \subsection{多项式次数与维数}
 \label{b3:subsec:1103:02}
+
+\cref{b3:thm:associated-finite}已经把 Noether 环上的有限生成模逐层拆成素商模 \(A/\mathfrak p\)。为了逐次计算 Hilbert 函数，这里的子模还须保持分次；因此要从齐次元素中选择每层生成元，并证明它的零化子是齐次素理想。
 
 \begin{lemma}\label{b3:lem:homogeneous-prime-filtration}
 设 \(A\) 为交换 Noether 正分次环，\(M\) 为有限生成分次 \(A\) 模。则 \(M\) 有有限齐次子模滤过，其因子均形如 \((A/\mathfrak p)(-a)\)，其中 \(\mathfrak p\) 为 \(A\) 的齐次素理想、\(a\in\mathbb Z\)。
@@ -43,7 +52,7 @@ h_M(n)=\sum_a q_a\binom{n-a+d-1}{d-1}.
 \begin{proof}
 若 \(M=0\)，取空滤过即可。以下设 \(M\ne0\)。在非零齐次元素的零化子中选极大元 \(\mathfrak p=\operatorname{Ann}_A(m)\)。因为 \(m\ne0\)，\(\mathfrak p\) 是真理想。若 \(a=\sum_i a_i\in\mathfrak p\)，其中 \(a_i\in A_i\)，则各 \(a_i m\) 的次数 \(i+\deg m\) 互不相同，由 \(am=0\) 及分次的直和性可知每个 \(a_i m=0\)。所以 \(\mathfrak p\) 是齐次理想。
 
-若齐次 \(u,v\) 满足 \(uv\in\mathfrak p\)、\(v\notin\mathfrak p\)，则 \(vm\) 是非零齐次元素，其零化子包含 \(\mathfrak p\)，极大性迫使二者相等，故 \(u\in\mathfrak p\)。于是 \(A/\mathfrak p\) 中两个非零齐次元素的乘积不为零。再取 \(A/\mathfrak p\) 中任意非零元素 \(a,b\)，令其最高非零齐次项分别为 \(a_r,b_s\)。乘积 \(ab\) 的次数 \(r+s\) 的分量恰为 \(a_rb_s\ne0\)，其余各项次数都较低，不能将它抵消。因此 \(ab\ne0\)，\(\mathfrak p\) 是素理想，并有 \(Am\cong(A/\mathfrak p)(-\deg m)\)。
+若齐次 \(u,v\) 满足 \(uv\in\mathfrak p\)、\(v\notin\mathfrak p\)，则 \(vm\) 是非零齐次元素，其零化子包含 \(\mathfrak p\)，极大性迫使二者相等，故 \(u\in\mathfrak p\)。于是 \(A/\mathfrak p\) 中两个非零齐次元素的乘积不为零。要把这一性质推广到任意元素，只需观察乘积的最高次数分量。取 \(A/\mathfrak p\) 中任意非零元素 \(a,b\)，令其最高非零齐次项分别为 \(a_r,b_s\)。乘积 \(ab\) 的次数 \(r+s\) 的分量恰为 \(a_rb_s\ne0\)，其余各项次数都较低，不能将它抵消。因此 \(ab\ne0\)，\(\mathfrak p\) 是素理想，并有 \(Am\cong(A/\mathfrak p)(-\deg m)\)。
 
 若此子模不等于 \(M\)，在齐次商模中重复选择，再取原像。每步使齐次子模严格增加，Noether 性保证有限步终止。
 \end{proof}
@@ -54,13 +63,20 @@ h_M(n)=\sum_a q_a\binom{n-a+d-1}{d-1}.
 则 \(H_M(t)\) 在 \(t=1\) 处的极点阶数恰为 \(\dim_A M\)。若此维数为 \(d>0\)，记 \(P_M\) 为满足 \(h_M(n)=P_M(n)\)（对充分大的 \(n\)）的 Hilbert 多项式，则 \(\deg P_M=d-1\)；维数为零时，\(M\) 只有有限多个非零分次片。
 \end{theorem}
 \begin{proof}
-由\cref{b3:lem:homogeneous-prime-filtration}，\(H_M\) 是各 \(H_{A/\mathfrak p}\) 的次数平移之和。每个非零因子的累计函数有正首项，故和的增长次数是各次数的最大值，不会抵消。同时，短正合列的支集取并，见\cref{b3:prop:support-exact}，所以 \(\operatorname{Supp}M=\bigcup V(\mathfrak p)\)，支集维数也是各 \(\dim A/\mathfrak p\) 的最大值。只须对标准分次整环 \(B=A/\mathfrak p\) 证明结论。
+标准分次和 \(A_0\) 的 Artin 性保证 \(A\) 为 Noether 环。由\cref{b3:lem:homogeneous-prime-filtration}，\(H_M\) 是各 \(H_{A/\mathfrak p}\) 的次数平移之和。每个非零因子的累计函数有正首项，次数平移又不改变增长次数，故和的增长次数是各次数的最大值，不会抵消。同时，由\cref{b3:thm:support-finite}及\cref{b3:prop:support-exact}，\(V(\operatorname{Ann}_A M)=\operatorname{Supp}M=\bigcup V(\mathfrak p)\)，支集维数也是各 \(\dim A/\mathfrak p\) 的最大值。只须对标准分次整环 \(B=A/\mathfrak p\) 证明结论。
 
-\(B_0=A_0/(\mathfrak p\cap A_0)\) 是域，因为 Artin 环的素理想都极大；记这个域为 \(k\)。每个 \(B_n\) 的 \(A_0\) 长度等于其 \(k\) 维数。先设 \(k\) 无限。写 \(B=k[z_1,\ldots,z_r]\)、\(\deg z_i=1\)。若这些元素有代数关系，其关系理想齐次，故可选一个非零齐次关系 \(f\)。正如\cref{b3:thm:noether-normalization}的无限域证明，选 \(c_i\in k\) 使 \(f(c_1,\ldots,c_{r-1},1)\ne0\)，以 \(z_i-c_i z_r\) 替换前 \(r-1\) 个生成元。这样 \(z_r\) 满足一个首一齐次关系，故 \(B\) 有限于由前 \(r-1\) 个一次齐次元生成的子环。归纳得到一次代数独立元 \(y_1,\ldots,y_d\)，使 \(B\) 有限于 \(P=k[y_1,\ldots,y_d]\)。这次代换始终保持次数。
+\(B_0=A_0/(\mathfrak p\cap A_0)\) 是域，因为 Artin 环的素理想都极大；记这个域为 \(k\)。每个 \(B_n\) 的 \(A_0\) 长度等于其 \(k\) 维数。这里选取一次齐次参数，使多项式子环仍取标准分次，便可直接使用前面的计数。\cref{b3:thm:noether-normalization}的一般加权代换未必保持原来的次数，不能直接给出所需的分次比较。
 
-取有限组齐次 \(P\) 模生成元，次数为 \(a_i\)。于是有分次单射 \(P\hookrightarrow B\) 和分次满射 \(\bigoplus_iP(-a_i)\twoheadrightarrow B\)。累计维数被 \(P\) 的累计函数与有限个其平移之和夹住；二者都以 \(n^d\) 的正倍数增长，所以累计函数的多项式次数为 \(d\)。另一方面，\cref{b3:thm:integral-dimension}和\cref{b3:thm:polynomial-dimension}给出 \(\dim B=\dim P=d\)。
+先设 \(k\) 无限。写 \(B=k[z_1,\ldots,z_r]\)、\(\deg z_i=1\)。若这些元素有代数关系，其关系理想齐次，故可选一个非零齐次关系 \(f\)。使用第五章无限域证明中的线性代换，选 \(c_i\in k\) 使 \(f(c_1,\ldots,c_{r-1},1)\ne0\)，以 \(z_i-c_i z_r\) 替换前 \(r-1\) 个生成元。新生成元仍为一次齐次元，而变换后的关系对 \(z_r\) 的最高幂具有非零常数系数；除以这个系数，就得到首一关系。因此 \(B\) 是前 \(r-1\) 个新生成元所生成子环上的有限模。对生成元个数归纳，得到一次代数独立元 \(y_1,\ldots,y_d\)，使 \(B\) 有限于 \(P=k[y_1,\ldots,y_d]\)。
 
-若 \(k\) 有限，改用无限域 \(k(u)\)，其中 \(u\) 超越。\(B\otimes_k k(u)\) 是 \(B[u]\) 的一个局部化，仍为整环，且逐次维数不变。其分式域是 \(\operatorname{Frac}(B)(u)\)，在 \(k(u)\) 上的超越次数等于 \(\operatorname{Frac}(B)\) 在 \(k\) 上的超越次数。由\cref{b3:thm:affine-dimension-trdeg}，这次变基也不改变维数。应用刚证明的无限域情形即得结论。
+把一组有限 \(P\) 模生成元分成齐次部分，便得到有限组齐次生成元，设其次数为 \(a_i\)。于是有分次单射 \(P\hookrightarrow B\) 和分次满射 \(\bigoplus_iP(-a_i)\twoheadrightarrow B\)。累计维数被 \(P\) 的累计函数与有限个其平移之和夹住；二者都以 \(n^d\) 的正倍数增长，所以累计函数的多项式次数为 \(d\)。另一方面，\cref{b3:thm:integral-dimension}和\cref{b3:thm:polynomial-dimension}给出 \(\dim B=\dim P=d\)。
+
+若 \(k\) 有限，为使用上述线性选择，改用无限域 \(k(u)\)，其中 \(u\) 为不定元。\(B'=B\otimes_k k(u)\) 是 \(B[u]\) 对 \(k[u]\setminus\{0\}\) 的局部化，仍为整环。各分次片满足
+\[
+B'_n=B_n\otimes_k k(u),\qquad
+\dim_{k(u)}B'_n=\dim_k B_n,
+\]
+所以它们给出同一个 Hilbert 函数。其分式域是 \(\operatorname{Frac}(B)(u)\)。取 \(\operatorname{Frac}(B)/k\) 的超越基 \(T\)，在以 \(u\) 为不定元的多项式中比较系数，可知 \(T\) 在 \(k(u)\) 上仍代数独立；原有的代数方程也仍成立，故它仍是 \(\operatorname{Frac}(B)(u)/k(u)\) 的超越基。由\cref{b3:thm:affine-dimension-trdeg}，\(\dim B'=\dim B\)。这次变基保持了需要比较的增长和维数，应用无限域情形即得结论。
 \end{proof}
 
 \subsection{重数与首项系数的归一化}
@@ -71,10 +87,12 @@ h_M(n)=\sum_a q_a\binom{n-a+d-1}{d-1}.
 \[
 P_M(n)=\dfrac{e(M)}{(d-1)!}n^{d-1}+\text{低次项},
 \]
-称 \(e(M)\) 为这个分次模的\term[zhongshu]{重数}[multiplicity]。若 \(d=0\)，约定 \(e(M)=\sum_n\ell_{A_0}(M_n)\)。
+称 \(e(M)\) 为这个分次模的\term[zhongshu]{重数}[multiplicity]。若 \(d=0\)，约定 \(e(M)=\sum_n\ell_{A_0}(M_n)\)。对零模另约定 \(e(0)=0\)。
 \end{definition}
 
-由前两项定理，约去 \(1-t\) 公因子后的分子满足 \(e(M)=Q(1)\)，所以重数是正整数。对保持次数的短正合列，若中间项维数为 \(d>0\)，则 \(n^{d-1}\) 的系数可加；只将维数为 \(d\) 的非零项计入，就得到重数可加，低维项不改变这一系数。若中间项维数为零，则各项都只有有限个非零分次片，逐次利用长度可加再求和，同样得到重数可加。
+这里的 \(e(M)\) 按选定的分次计算；只给出底层模而不说明分次，还不能直接使用这一定义。由前两项结果，约去 \(1-t\) 公因子后的分子满足 \(e(M)=Q(1)\)，所以重数是正整数。
+
+对保持次数的短正合列 \(0\to L\to M\to N\to0\)，若中间项维数为 \(d>0\)，则 \(n^{d-1}\) 的系数可加。只将维数为 \(d\) 的非零项计入，就得到重数可加。例如若 \(L\ne0\) 且 \(\dim L<d\)，则 \(P_L\) 为零或次数至多为 \(d-2\)，不贡献 \(n^{d-1}\) 项；此时 \(\dim N=d\)，且 \(e(M)=e(N)\)。若中间项维数为零，则各项都只有有限个非零分次片，逐次利用长度可加再求和，同样得到重数可加。
 
 \ProseParagraphBreak
 例如 \(S=k[x_1,\ldots,x_r]\)，若 \(0\ne f\in S\) 齐次且 \(\deg f=a>0\)，则

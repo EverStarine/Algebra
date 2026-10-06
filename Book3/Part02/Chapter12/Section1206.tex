@@ -1,10 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 12.6* 模的忠实平坦下降
-% 纲要位置：工作记录/计划纲要.md，第 2327 行。
+% 纲要位置：工作记录/计划纲要.md，第 2349 行。
 % 纲要细目（写作范围）：
 % * 双重基变换及余循环条件
 % * 忠实平坦下降的模论形式
-% * 严格区分带下降数据与只有基变换后对象
+% * 以 \(k\to k\times k\)、\(N=k\times0\) 无下降数据的反例，区别带下降数据与只有变基后对象；习题显式计算 \(k^r\times k^r\) 的相容数据和等化子，区别数据相等与同构
 % ---
 
 \OptionalSection{模的忠实平坦下降}{b3:sec:1206}
@@ -15,14 +15,30 @@
 \subsection{双重基变换与余循环条件}
 \label{b3:subsec:1206:01}
 
-固定忠实平坦环同态 \(R\to S\)，令 \(T=S\otimes_RS\)。同一个 \(S\) 模 \(N\) 有两种变基：
+在上一节的有限主开覆盖中，\(S=\prod_iR_{f_i}\)，而
+\[
+S\otimes_RS\cong\prod_{i,j}R_{f_if_j}.
+\]
+这里用到有限直积作为模也是有限直和，张量积保持有限直和，且\cref{b3:prop:localization-tensor}给出 \(R_{f_i}\otimes_RR_{f_j}\cong(R_{f_j})_{f_i}\cong R_{f_if_j}\)。右边的第 \((i,j)\) 个因子就是两个开集的重叠。一个 \(S\) 模相当于各块上的模 \(N_i\)；把第 \(i\) 块限制到这个重叠，或把第 \(j\) 块限制到同一个重叠，所得的两个模必须有指定的识别。一般忠实平坦同态中的两次变基也承担这两种限制的作用。
+
+固定忠实平坦环同态 \(R\to S\)，令 \(T=S\otimes_RS\)。两个标准映射
+\[
+p_1:S\to T,\quad s\mapsto s\otimes1,
+\qquad p_2:S\to T,\quad s\mapsto1\otimes s
+\]
+给同一个 \(S\) 模 \(N\) 两种标量扩张 \(T\otimes_{S,p_1}N\) 和 \(T\otimes_{S,p_2}N\)，它们分别自然识别为
 \[
 N_1=N\otimes_RS,\qquad N_2=S\otimes_RN.
 \]
-在前者上，\((a\otimes b)(n\otimes s)=an\otimes bs\)；在后者上，\((a\otimes b)(s\otimes n)=as\otimes bn\)。这两种 \(T\) 模结构一般不能忽略下标而混写。
+第一个 \(S\) 因子在 \(N_1\) 上作用于 \(N\)，第二个则在 \(N_2\) 上作用于 \(N\)；区分它们正是为了记录两个限制来自哪一块。
 
 \begin{definition}\label{b3:def:module-descent-datum}
-设 \(R\to S\) 为忠实平坦交换环同态，\(N\) 为 \(S\) 模，\(T=S\otimes_RS\)。赋予 \(N_1=N\otimes_RS\) 及 \(N_2=S\otimes_RN\) 自然的 \(T\) 模结构，即两个 \(S\) 因子分别作用在相应位置。若 \(T\) 线性同构
+设 \(R\to S\) 为忠实平坦交换环同态，\(N\) 为 \(S\) 模，\(T=S\otimes_RS\)。赋予 \(N_1=N\otimes_RS\) 及 \(N_2=S\otimes_RN\) 下列 \(T\) 模结构：
+\[
+(a\otimes b)(n\otimes s)=an\otimes bs,
+\qquad (a\otimes b)(s\otimes n)=as\otimes bn.
+\]
+若 \(T\) 线性同构
 \(\theta:N_1\to N_2\) 满足下面的\term[yuxunhuan-tiaojian]{余循环条件}[cocycle condition]，就称它为 \(N\) 上的\term[xiajiang-shuju]{下降数据}[descent datum]。具体地，把数据沿三个嵌入
 \[
 T\longrightarrow S\otimes_RS\otimes_RS,
@@ -33,7 +49,7 @@ a\otimes b\otimes1,\ a\otimes1\otimes b,\ 1\otimes a\otimes b
 \[
 \theta_{23}\theta_{12}=\theta_{13}.
 \]
-把三重张量积中第 \(i\) 个 \(S\) 因子换成 \(N\) 所得的模记为 \(N^{(i)}\)，其中 \(i=1,2,3\)。余循环条件就是下面三个变基同构构成的图交换：
+把三重张量积中第 \(i\) 个 \(S\) 因子换成 \(N\) 所得的模记为 \(N^{(i)}\)，其中 \(i=1,2,3\)。余循环条件要求从第一个位置经第二个位置移到第三个位置的识别，与直接移到第三个位置的识别相同，也就是下面的图交换：
 \[
 \begin{tikzcd}[column sep=large,row sep=large]
 N^{(1)}\arrow[r,"\theta_{12}"]\arrow[dr,"\theta_{13}"']
@@ -52,12 +68,17 @@ N^{(1)}\arrow[r,"\theta_{12}"]\arrow[dr,"\theta_{13}"']
 它的逆把右边送回左边。在三重张量积上，两种复合都把位于第一个 \(S\) 因子旁的 \(m\) 移到第三个因子旁，系数次序不变，所以满足余循环条件。
 
 \ProseParagraphBreak
-为把一般条件用于计算，令
+要判断 \(N\) 中哪些元素能够来自原环，需比较同一个元素在两个位置上的像。令
 \[
 \rho:N\longrightarrow S\otimes_RN,\qquad
 \rho(n)=\theta(n\otimes1),\qquad
 \mu(s\otimes n)=sn.
 \]
+在标准情形 \(N=S\otimes_RM\) 中，上面的公式给出
+\[
+\rho(s\otimes m)=s\otimes(1\otimes m).
+\]
+特别地，对来自原模的 \(n=1\otimes m\)，有 \(\rho(n)=1\otimes n\)。一般情形中，我们也将用这个等式选出待恢复的 \(R\) 模；为证明这些元素确实足以重建 \(N\)，还要用下降数据的相容性。
 \(\rho\) 是 \(R\) 线性映射，满足
 \begin{equation}\label{b3:eq:descent-coaction}
 \begin{split}
@@ -66,7 +87,7 @@ N^{(1)}\arrow[r,"\theta_{12}"]\arrow[dr,"\theta_{13}"']
 \quad\text{若 }\rho(n)=\sum_i s_i\otimes n_i.
 \end{split}
 \end{equation}
-第一式是 \(T\) 线性。第三式就是把余循环条件用于 \(n\otimes1\otimes1\)：先移动到第二个位置，再移动到第三个，得到左边；直接移到第三个得到右边。第二式来自对角变基：沿 \(S\otimes_RS\to S\)、\(s\otimes t\mapsto st\) 拉回 \(\theta\)，得到 \(N\) 的自同构 \(u=\mu\rho\)。再沿全对角映射
+第一式来自 \(\theta\) 的 \(T\) 线性，其中 \(s\otimes1\) 作用在目标的第一个 \(S\) 因子上。第三式就是把余循环条件用于 \(n\otimes1\otimes1\)：先移动到第二个位置，再移动到第三个，得到左边；直接移到第三个得到右边。至于第二式，把两个副本沿对角重新识别后，下降同构应变成原模上的恒等识别；余循环条件使这一点成为结论。具体地，沿 \(S\otimes_RS\to S\)、\(s\otimes t\mapsto st\) 拉回 \(\theta\)，得到 \(N\) 的自同构 \(u=\mu\rho\)。再沿全对角映射
 \[
 S\otimes_RS\otimes_RS\longrightarrow S,
 \qquad s_1\otimes s_2\otimes s_3\longmapsto s_1s_2s_3
@@ -76,7 +97,7 @@ S\otimes_RS\otimes_RS\longrightarrow S,
 \subsection{忠实平坦下降的模论形式}
 \label{b3:subsec:1206:02}
 
-先解释忠实平坦性为何能够恢复本来就在 \(R\) 上的模。
+对于本来就在 \(R\) 上的模，忠实平坦性应能从变基模中恢复全部原元素。下面的等化子引理给出精确的条件：变基元素在两次限制下的像相同，当且仅当它来自原模。这与\cref{b3:lem:localization-sheaf-gluing}中的重叠相容性是同一种要求。
 
 \begin{lemma}\label{b3:lem:faithful-flat-equalizer}
 设 \(R\to S\) 为忠实平坦交换环同态，\(M\) 为任意 \(R\) 模。则下列序列正合：
@@ -108,14 +129,16 @@ M=\bigl\{n\in N:\rho(n)=1\otimes n\bigr\}.
 \varphi:S\otimes_RM\longrightarrow N,\qquad s\otimes m\longmapsto sm
 \]
 为保下降数据的同构。这个构造与基变换建立 \(R\) 模范畴和带下降数据的 \(S\) 模范畴之间的等价。若 \(N\) 有限展示，则所得 \(M\) 有限展示。
+
+忠实平坦性本身并不使每个 \(S\) 模都能下降：对任意域 \(k\)，对角同态 \(k\to k\times k\) 忠实平坦，但 \(N=k\times0\) 作为 \(k\times k\) 模不具下降数据，也不存在 \(k\) 模 \(M_0\) 使 \(N\cong(k\times k)\otimes_kM_0\)。
 \end{theorem}
 \begin{proof}
-记 \(\eta:N\to S\otimes_RN\)、\(\eta(n)=1\otimes n\)。\(\rho\) 与 \(\eta\) 都是 \(R\) 线性映射，且 \(M=\ker(\rho-\eta)\)，所以有左端正合列
+要证明这些相容元素足以重建 \(N\)，先在变基后辨认它们所生成的子模。记 \(\eta:N\to S\otimes_RN\)、\(\eta(n)=1\otimes n\)。\(\rho\) 与 \(\eta\) 都是 \(R\) 线性映射，且 \(M=\ker(\rho-\eta)\)，所以有左端正合列
 \[
 0\longrightarrow M\longrightarrow N
 \xrightarrow{\ \rho-\eta\ }S\otimes_RN.
 \]
-与 \(S\) 张量后，由平坦性仍有左端正合列
+平坦性保证与 \(S\) 张量后保持这个核，故仍有左端正合列
 \[
 0\longrightarrow S\otimes_RM\longrightarrow S\otimes_RN
 \xrightarrow{\ 1\otimes(\rho-\eta)\ }S\otimes_RS\otimes_RN.
@@ -125,7 +148,7 @@ M=\bigl\{n\in N:\rho(n)=1\otimes n\bigr\}.
 s\otimes n\longmapsto s\otimes\rho(n),\qquad
 s\otimes n\longmapsto s\otimes1\otimes n.
 \]
-\eqref{b3:eq:descent-coaction}的第三式说明 \(\rho(n)\) 落在这个等化子中，故 \(\rho\) 给出 \(N\to S\otimes_RM\) 的映射。第二式说明 \(\varphi\rho=1_N\)。
+\eqref{b3:eq:descent-coaction}的第三式说明 \(\rho(n)\) 落在这个等化子中，故 \(\rho\) 给出 \(N\to S\otimes_RM\) 的映射；第一式说明它对第一个 \(S\) 因子的作用线性。这就是乘法映射 \(\varphi\) 的候选逆映射，第二式已经给出 \(\varphi\rho=\operatorname{id}_N\)。
 
 反过来，若 \(z=\sum_i s_i\otimes n_i\) 属于上述等化子，则
 \(\sum_i s_i\otimes\rho(n_i)=\sum_i s_i\otimes1\otimes n_i\)。乘合前两个因子，并用第一式，得到
@@ -134,7 +157,13 @@ s\otimes n\longmapsto s\otimes1\otimes n.
 \]
 所以 \(\rho\varphi\) 也是恒等映射，\(\varphi\) 为同构。对 \(m\in M\)，\(\rho(sm)=s\otimes m\)，这正是标准数据在 \(s\otimes m\) 上的公式，故同构与原 \(\theta\) 相容。
 
-若 \(u:N\to N'\) 与数据相容，则 \(u\) 将 \(\rho(n)=1\otimes n\) 的元素送入对应的 \(M'\)，因而限制为 \(R\) 线性映射 \(M\to M'\)。它在 \(S\) 上的扩张通过 \(\varphi\) 恢复原 \(u\)。若从 \(R\) 模 \(M_0\) 出发，\cref{b3:lem:faithful-flat-equalizer}恰说明标准数据的等化子是 \(M_0\) 的自然像，故往返构造为自然同构。这证明范畴等价的对象与态射两部分。最后，\(N\cong S\otimes_RM\)，有限展示由\cref{b3:prop:faithfully-flat-detection}第四项下降。
+若 \(u:N\to N'\) 与数据相容，则 \(u\) 将 \(\rho(n)=1\otimes n\) 的元素送入对应的 \(M'\)，因而限制为 \(R\) 线性映射 \(M\to M'\)。它在 \(S\) 上的扩张通过 \(\varphi\) 恢复原 \(u\)。若从 \(R\) 模 \(M_0\) 出发，\cref{b3:lem:faithful-flat-equalizer}恰说明标准数据的等化子是 \(M_0\) 的自然像，故往返构造为自然同构；该引理借忠实性把变基后的正合性反映回原环，保证恢复的是全部 \(M_0\)。这证明范畴等价的对象与态射两部分。最后，\(N\cong S\otimes_RM\)，有限展示由\cref{b3:prop:faithfully-flat-detection}第四项下降。
+
+对于陈述末尾的反例，\(S=k\times k\) 是秩二自由 \(k\) 模，且 \(S\otimes_kV\cong V\oplus V\) 对任意 \(k\) 模 \(V\) 成立，故对角同态忠实平坦。记 \(e_1=(1,0)\)、\(e_2=(0,1)\)。在
+\[
+T=S\otimes_kS\cong k^4
+\]
+中，四个分量由 \(e_i\otimes e_j\) 给出，按 \((1,1),(1,2),(2,1),(2,2)\) 排列。\(N_1=N\otimes_kS\) 的四个分量的 \(k\) 维数依次为 \((1,1,0,0)\)，\(N_2=S\otimes_kN\) 的则为 \((1,0,1,0)\)。任一 \(T\) 线性同构都须保持这些幂等元分量，故二者之间不存在 \(T\) 线性同构，更不可能有下降数据。此外，\(S\otimes_kM_0\) 的两个 \(S\) 分量都是 \(M_0\)；若它同构于 \(k\times0\)，第二个分量迫使 \(M_0=0\)，第一个分量便不可能为 \(k\)。
 \end{proof}
 
 等化子用相容性选出能够来自原环的元素，平坦性使这个核的构造与基变换相容；忠实性则保证从原环出发的对象与态射能完整恢复。
@@ -162,12 +191,24 @@ s\otimes n\longmapsto s\otimes1\otimes n.
 S=\prod_{i=1}^qR_{f_i},\qquad
 N=\prod_{i=1}^qN_i\cong S^r.
 \]
-上一节已证明 \(R\to S\) 忠实平坦，且 \(S\otimes_RS\cong\prod_{i,j}R_{f_if_j}\)。在重叠处指定矩阵
+上一节已证明 \(R\to S\) 忠实平坦，本节开头又把 \(S\otimes_RS\) 的各因子识别为重叠环 \(R_{f_if_j}\)。在重叠处指定矩阵
 \[
 g_{ij}\in\operatorname{GL}_r(R_{f_if_j}),
 \qquad g_{jk}g_{ij}=g_{ik}\quad\text{于 }R_{f_if_jf_k}.
 \]
-这些 \(r\) 阶可逆矩阵给出相容同构 \(\theta_{ij}\)，从而给出 \(N\) 的下降数据。所得等化子 \(M\) 由重叠处相符的局部元素组组成，下降同构在第 \(i\) 个分量上给出 \(M_{f_i}\cong N_i=R_{f_i}^r\)。因此 \(M\) 在主开覆盖上有限局部自由，由\cref{b3:thm:finite-presentation-flat-projective}为有限生成投射模。这些矩阵未必能由各个开集上的换基同时消去，所以不一定得到全局自由模。
+这里 \(g_{ij}\) 把第 \(i\) 块的坐标列 \(v_i\) 送到第 \(j\) 块的坐标列 \(v_j=g_{ij}v_i\)。取重复指标，余循环条件给出 \(g_{ii}^2=g_{ii}\) 和 \(g_{ji}g_{ij}=g_{ii}\)，再由可逆性得到
+\[
+g_{ii}=I_r,\qquad g_{ji}=g_{ij}^{-1}.
+\]
+因此在同一块上的识别是恒等，反向识别是正向识别的逆。这些矩阵给出相容同构 \(\theta_{ij}\)，从而给出 \(N\) 的下降数据。所得等化子可写为
+\[
+M=\left\{(v_i)\in\prod_iR_{f_i}^r:
+v_j=g_{ij}v_i\text{ 于每个 }R_{f_if_j}\right\}.
+\]
+下降同构在第 \(i\) 个分量上给出 \(M_{f_i}\cong N_i=R_{f_i}^r\)。因此 \(M\) 在主开覆盖上有限局部自由，由\cref{b3:thm:finite-presentation-flat-projective}为有限生成投射模。
 
-\ProseParagraphBreak
-余循环条件保证局部识别相容，等化子将它们还原成原环上的模；有限展示性也随之下降，使有限组生成元与关系的描述得以保留。
+若在第 \(i\) 块上用 \(P_i\in\operatorname{GL}_r(R_{f_i})\) 改换基，旧坐标与新坐标的关系为 \(v_i=P_iv_i'\)。于是新坐标满足
+\[
+v_j'=P_j^{-1}g_{ij}P_iv_i'.
+\]
+若能选取各 \(P_i\) 使所有 \(P_j^{-1}g_{ij}P_i=I_r\)，新基就在重叠处相同，由\cref{b3:lem:localization-sheaf-gluing}逐个黏合为全局元素；它们给出的 \(R^r\to M\) 在覆盖上为同构，再由\cref{b3:thm:local-morphism-detection}得到全局同构。反过来，一个全局基在各块上的坐标矩阵正提供这样的 \(P_i\)。余循环条件只保证识别相容，并不保证能同时这样改换各块的基，所以所得模不一定全局自由。

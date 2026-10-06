@@ -1,8 +1,9 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 14.2 微分模的正合列与基变换
-% 纲要位置：工作记录/计划纲要.md，第 2387 行。
+% 纲要位置：工作记录/计划纲要.md，第 2410 行。
 % 纲要细目（写作范围）：
 % * 商环的余法正合列
+% * 方程微分给出的展示；尖点微分模的非零挠元及其零化理想
 % * 复合环映射的微分序列
 % * 局部化及基变换
 
@@ -15,6 +16,8 @@
 \subsection{商环的余法正合列}
 \label{b3:subsec:1402:01}
 
+商映射 \(B\to B/J\) 把 \(f\in J\) 宣布为零，因而微分中也必须添加 \(\mathrm{d}f=0\) 的关系。两条方程乘积的微分仍含方程因子，转到 \(B/J\) 后就为零，所以 \(J^2\) 中的元素不会提供新的这一阶关系；记录这些方程类的是 \(J/J^2\)。
+
 \begin{theorem}[余法正合列]\label{b3:thm:conormal-sequence}
 设 \(A\) 为交换环，\(B\) 为交换 \(A\) 代数、\(J\subseteq B\) 为理想、\(C=B/J\)。有 \(C\) 模正合列
 \[
@@ -22,7 +25,7 @@ J/J^2\xrightarrow{\delta}C\otimes_B\Omega_{B/A}
 \longrightarrow\Omega_{C/A}\longrightarrow0,
 \qquad \delta(f+J^2)=1\otimes \mathrm{d}f.
 \]
-模 \(J/J^2\) 称为相应商映射的\term[yufa-mo]{余法模}[conormal module]。不在列的左端添加未经证明的零。
+模 \(J/J^2\) 称为相应商映射的\term[yufa-mo]{余法模}[conormal module]。映射 \(\delta\) 一般不单射。
 \end{theorem}
 \begin{proof}
 若 \(f\in J^2\)，将它写成有限和 \(\sum_i u_iv_i\)、\(u_i,v_i\in J\)，则 \(\mathrm{d}f=\sum_i(u_i\,\mathrm{d}v_i+v_i\,\mathrm{d}u_i)\) 在张量到 \(C\) 后为零，故 \(\delta\) 良定义。又 \(\mathrm{d}(bf)=b\,\mathrm{d}f+f\,\mathrm{d}b\)，第二项在 \(C\) 上为零，所以 \(\delta\) 是 \(C\) 线性的。
@@ -37,15 +40,37 @@ B^s\xrightarrow{J_f^{\mathsf t}} B^n\longrightarrow\Omega_{B/A}\longrightarrow0,
 \qquad (J_f)_{ij}=\dfrac{\partial f_i}{\partial X_j}(x).
 \]
 因此有限展示交换代数的微分模为有限展示模。
+特别地，若 \(k\) 为特征不等于 \(2,3\) 的域，取 \(B=k[x,y]/(y^2-x^3)\)，并以 \(x,y\) 兼记变量在商中的像，则
+\[
+\omega=2x\,\mathrm{d}y-3y\,\mathrm{d}x
+\]
+是 \(\Omega_{B/k}\) 中的非零挠元，且 \(y\omega=x^2\omega=0\)。
 \end{corollary}
 \begin{proof}
-对 \(P=A[X]\) 的商应用余法正合列，\(\Omega_{P/A}\) 为以 \(\mathrm{d}X_i\) 为基的自由模。若 \(f=\sum_i g_if_i\)，在 \(B\) 上有 \(\mathrm{d}f=\sum_i g_i\,\mathrm{d}f_i\)，因为含 \(f_i\,\mathrm{d}g_i\) 的项消失。因此全部微分关系由各 \(\mathrm{d}f_i\) 生成，给出所列有限矩阵。
+对 \(P=A[X]\) 的商应用余法正合列，\(\Omega_{P/A}\) 为以 \(\mathrm{d}X_i\) 为基的自由模。若 \(f=\sum_i g_if_i\)，在 \(\Omega_{P/A}\) 张量到 \(B\) 后有 \(\mathrm{d}f=\sum_i g_i\,\mathrm{d}f_i\)，因为含 \(f_i\,\mathrm{d}g_i\) 的项消失。因此全部微分关系由各 \(\mathrm{d}f_i\) 生成。映射 \(B^s\to B^n\) 把第 \(i\) 个标准基向量送到 \(\mathrm{d}f_i\) 的坐标列 \(\bigl(\frac{\partial f_i}{\partial X_1}(x),\ldots,\frac{\partial f_i}{\partial X_n}(x)\bigr)^{\mathsf t}\)。通常 Jacobian 矩阵将第 \(i\) 个方程的偏导放在第 \(i\) 行，这里将它们放在第 \(i\) 列，所以所需矩阵是其转置。
+
+在尖点的情形中，上述展示给出
+\[
+\Omega_{B/k}=(B\,\mathrm{d}x\oplus B\,\mathrm{d}y)/B(2y\,\mathrm{d}y-3x^2\,\mathrm{d}x).
+\]
+由 \(y^2=x^3\)，有
+\[
+y\omega=x(2y\,\mathrm{d}y-3x^2\,\mathrm{d}x)=0,
+\qquad x^2\omega=y(2y\,\mathrm{d}y-3x^2\,\mathrm{d}x)=0.
+\]
+为证 \(\omega\ne0\)，由\cref{b3:prop:cusp-normalization}将 \(B\) 识别为 \(k[t^2,t^3]\subseteq k[t]\)，其中 \(x=t^2\)、\(y=t^3\)。若 \(\omega=0\)，它在自由模中的代表必须是关系生成元的一个 \(B\) 倍数，因此存在 \(h\in B\) 满足
+\[
+-3y=-3hx^2,\qquad 2x=2hy.
+\]
+由于 \(2\) 在 \(k\) 中可逆，后一等式在分式域 \(k(t)\) 中迫使 \(h=t^{-1}\)，但 \(B\subseteq k[t]\) 不含此元素，矛盾。因此 \(\omega\) 非零，而 \(y\ne0\) 是整环 \(B\) 的非零元素，所以上面的零化等式也证明它是挠元。
 \end{proof}
 
-左端不一定单射。例如在特征 \(p\) 的域上取 \(B=k[t]\)、\(J=(t^p)\)。模 \(J/J^2\) 是非零的循环 \(B/J\) 模，而 \(\delta(t^p)=p t^{p-1}\mathrm{d}t=0\)，所以整个余法映射为零。
+余法映射不单射，表示非零的方程类也可能没有留下非零的微分关系。例如在特征 \(p\) 的域上取 \(B=k[t]\)、\(J=(t^p)\)。由于 \(t^p\notin(t^{2p})\)，它在 \(J/J^2\) 中的类非零，却满足 \(\delta(t^p)=p t^{p-1}\mathrm{d}t=0\)。这一类生成整个余法模，所以此例的余法映射甚至为零。
 
 \subsection{复合环映射的微分序列}
 \label{b3:subsec:1402:02}
+
+对 \(A\to B\to C\)，从相对于 \(A\) 求导改为相对于 \(B\) 求导，意味着将 \(B\) 的像也视为常数。因此要在 \(\Omega_{C/A}\) 中进一步模掉这些元素的微分，末端微分模就成为中间微分模的商。
 
 \begin{theorem}\label{b3:thm:differential-transitivity}
 设 \(A\rightarrow B\xrightarrow{g}C\) 为交换环同态，则有 \(C\) 模正合列
@@ -59,10 +84,12 @@ C\otimes_B\Omega_{B/A}\xrightarrow{\alpha}\Omega_{C/A}
 复合 \(B\rightarrow C\xrightarrow{\mathrm{d}_{C/A}}\Omega_{C/A}\) 是 \(A\) 导子，故给出 \(\alpha\)。在 \(\Omega_{C/A}\) 中模掉各 \(\mathrm{d}\bigl(g(b)\bigr)\) 生成的子模后，普遍导子就零化 \(B\) 的像，因此成为 \(B\) 导子。任意 \(B\) 导子首先是 \(A\) 导子，并零化这些指定元素，所以唯一经过此商。该商即 \(\Omega_{C/B}\)，证明正合性。
 \end{proof}
 
-改变基环意味着将更多元素视为常数，所以末端微分模是中间微分模的商。首箭头则可能不单射。例如 \(A=k\)、\(B=k[t^p]\subseteq C=k[t]\)、\(\operatorname{char}k=p\) 时，\(B\) 作为多项式环有非零微分 \(\mathrm{d}(t^p)\)，但其在 \(\Omega_{C/k}\) 中的像为零。
+首箭头可能不单射。例如 \(A=k\)、\(B=k[t^p]\subseteq C=k[t]\)、\(\operatorname{char}k=p\) 时，\(t^p\) 是 \(B\) 的一个多项式生成元，所以 \(\mathrm{d}_{B/k}(t^p)\ne0\)；但它映到 \(\Omega_{C/k}\) 中时变成 \(\mathrm{d}_{C/k}(t^p)=0\)。
 
 \subsection{微分模的局部化与基变换}
 \label{b3:subsec:1402:03}
+
+只在上环 \(B\) 中倒置乘法集 \(S\) 时，基环仍为 \(A\)。分母 \(s\in S\) 的微分一般不为零，所以分式的微分需要包含 \(\mathrm{d}s\) 项。若分母来自基环中的乘法集 \(T\)，它们本来就必须被零化；同步倒置基环与上环后，这些分母的逆也成为常数，此时相对基环是 \(T^{-1}A\)。
 
 \begin{proposition}\label{b3:prop:differential-localization}
 设 \(\varphi:A\to B\) 为交换环同态，\(S\subseteq B\) 为乘法集。则有 \(S^{-1}B\) 模自然同构
@@ -100,11 +127,18 @@ s'Db+bDs'-sDb'-b'Ds=0.
 不需要 \(A'\) 在 \(A\) 上平坦。
 \end{proposition}
 \begin{proof}
-从右侧到左侧的映射由 \(1\otimes \mathrm{d}b\mapsto \mathrm{d}(1\otimes b)\) 定义。反向先在纯张量上定义
+任取 \(B'\) 模 \(M\)，沿环同态 \(B\to B'\)、\(b\mapsto1\otimes b\) 将它看作 \(B\) 模。将 \(A'\) 导子 \(\Delta:B'\to M\) 与这个环同态复合，便给出 \(A\) 导子 \(D:B\to M\)。反过来，给定这样的 \(D\)，在纯张量上定义
 \[
-D(a'\otimes b)=(a'\otimes1)\otimes \mathrm{d}b.
+\Delta(a'\otimes b)=(a'\otimes1)\cdot D(b).
 \]
-由于 \(\mathrm{d}(ab)=a\,\mathrm{d}b\) 对 \(a\in A\) 成立，此公式保持张量平衡关系，因此对任意有限和良定义。它零化 \(A'\)，并由 \(\mathrm{d}(bc)=b\,\mathrm{d}c+c\,\mathrm{d}b\) 满足乘法法则，所以对应 \(\Omega_{B'/A'}\) 到右侧的映射。两复合固定所有 \(\mathrm{d}(1\otimes b)\) 或 \(1\otimes \mathrm{d}b\)，而这些元素分别生成两侧，故互为逆。
+由 \(D\) 的 \(A\) 线性及张量积中 \(A\) 的两个像相等，此公式保持平衡关系，因而对有限和良定义。它零化 \(A'\) 的像；对纯张量的乘积使用 \(D\) 的 Leibniz 法则，再由加法展开，就得到 \(\Delta\) 的 Leibniz 法则。复合与延拓互逆，因为任何 \(A'\) 导子都满足所列纯张量公式。因此两种导子自然一一对应。
+
+又由普遍导子的泛性质，\(D\) 唯一写成 \(h\circ\mathrm{d}_{B/A}\)，其中 \(h:\Omega_{B/A}\to M\) 为 \(B\) 线性映射。这样的 \(h\) 又唯一延拓为 \(B'\) 线性映射
+\[
+B'\otimes_B\Omega_{B/A}\longrightarrow M,
+\qquad b'\otimes\eta\longmapsto b'\cdot h(\eta).
+\]
+所以右侧张量积和 \(\Omega_{B'/A'}\) 对每个目标模都表示同一个导子函子，普遍对象的唯一性给出所需同构。这个同构将 \(1\otimes\mathrm{d}b\) 送到 \(\mathrm{d}(1\otimes b)\)。
 \end{proof}
 
 这两个公式允许先在多项式商上写出 Jacobian 展示，再局部化到指定点，或改变基域后重新考察方程。代数作为环的约化性和正则性可能在基变换后改变；光滑性则是相对于基环的性质，并在任意基变换下保持，具体论证见\secref{b3:sec:1405}。
