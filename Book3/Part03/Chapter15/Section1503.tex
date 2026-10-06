@@ -1,6 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 15.3 Koszul 正合性
-% 纲要位置：计划纲要.md，第 2436 行。
+% 纲要位置：工作记录/计划纲要.md，第 2462 行。
+% 纲要细目（写作范围）：
+% * 正则序列给出的自由消解
+% * Noether 局部环上有限生成模的反向判据
+% * Koszul 同调测量非正则性；零生成元、重复方程与冗余关系的正式算例
+% * 逐元加入的短正合列、同调长正合列及一般与局部假设的对照
 
 \section{Koszul 正合性}
 \label{b3:sec:1503}
@@ -19,12 +24,12 @@
 \subsection{正则序列给出的自由消解}
 \label{b3:subsec:1503:01}
 
-先解释加进最后一个元素如何改变同调。设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(r\ge1\)，\(x_1,\ldots,x_{r-1},y\in R\)，记 \(C_\bullet=K_\bullet(x_1,\ldots,x_{r-1};M)\)。把新增的基向量放在外积左端，则每个次数有
+设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(r\ge1\)，\(x_1,\ldots,x_{r-1},y\in R\)，记 \(C_\bullet=K_\bullet(x_1,\ldots,x_{r-1};M)\)。增加 \(y\) 后，不含新增基向量的外积仍构成 \(C_i\)；含有它的外积则写成 \(e_y\wedge b\)，其中 \(b\in C_{i-1}\)。所以新复形包含一份原复形和一份平移后的原复形。把新增的基向量放在外积左端，得到
 \[
 K_i(x_1,\ldots,x_{r-1},y;M)\cong C_i\oplus C_{i-1},
 \qquad \mathrm{d}(a,b)=(\mathrm{d}a+yb,-\mathrm{d}b).
 \]
-这里的链移位满足 \(C[1]_i=C_{i-1}\)、\(\mathrm{d}_{C[1]}=-\mathrm{d}_C\)。第一项的包含和第二项的投影都是链映射；它们如何把新旧同调联系起来，集中写在下面的正合列中。
+删去新增因子时产生 \(yb\)，而保留它时，旧微分前多一个负号；乘法 \(y\) 就这样连接两份复形。这里的链移位满足 \(C[1]_i=C_{i-1}\)、\(\mathrm{d}_{C[1]}=-\mathrm{d}_C\)。第一项的包含和第二项的投影都是链映射。
 
 \begin{lemma}\label{b3:lem:koszul-adjoin-exact}
 设 \(R\) 为交换环，\(M\) 为 \(R\) 模，\(r\ge1\)，\(x_1,\ldots,x_{r-1},y\in R\)，记 \(C_\bullet=K_\bullet(x_1,\ldots,x_{r-1};M)\)、\(K_\bullet=K_\bullet(x_1,\ldots,x_{r-1},y;M)\)。把新增基向量放在外积左端，识别 \(K_i=C_i\oplus C_{i-1}\)，并取 \(C[1]_i=C_{i-1}\)、\(\mathrm{d}_{C[1]}=-\mathrm{d}_C\)。以 \(\iota(a)=(a,0)\)、\(\pi(a,b)=b\) 为映射，有短正合列及其诱导的同调长正合列：
@@ -42,27 +47,34 @@ K_i(x_1,\ldots,x_{r-1},y;M)\cong C_i\oplus C_{i-1},
 \]
 \end{lemma}
 \begin{proof}
-对第二项投影得到的圈 \(b\in C_{i-1}\)，提升为 \((0,b)\)，其微分是 \((yb,0)\)。所以连接映射就是乘法 \(y\)。其余正合性也可从这一个公式核对：若圈 \((a,b)\) 投影为边界 \(b=\mathrm{d}c\)，则加上边界 \(\mathrm{d}(0,c)=(yc,-\mathrm{d}c)\) 后得到 \((a+yc,0)\)，来自 \(C\)；若 \(C\) 中圈 \(a\) 在 \(K\) 中是边界，则 \(a=\mathrm{d}u+yv\)、\(\mathrm{d}v=0\)，故其同调类来自乘法 \(y\)；最后，若 \(yb=-\mathrm{d}a\)，则 \((a,b)\) 是把 \([b]\) 提升到 \(K\) 的圈。这验证了长列中循环出现的三类位置。
+对第二项投影得到的圈 \(b\in C_{i-1}\)，提升为 \((0,b)\)，其微分是 \((yb,0)\)。因此连接映射将 \([b]\) 送到 \([yb]\)，恰好是乘法 \(y\)。其余正合性也可从这一个公式核对：若圈 \((a,b)\) 投影为边界 \(b=\mathrm{d}c\)，则加上边界 \(\mathrm{d}(0,c)=(yc,-\mathrm{d}c)\) 后得到 \((a+yc,0)\)，来自 \(C\)；若 \(C\) 中圈 \(a\) 在 \(K\) 中是边界，则 \(a=\mathrm{d}u+yv\)、\(\mathrm{d}v=0\)，故其同调类来自乘法 \(y\)；最后，若 \(yb=-\mathrm{d}a\)，则 \((a,b)\) 是把 \([b]\) 提升到 \(K\) 的圈。这验证了长列中循环出现的三类位置。
 \end{proof}
 
+这条长列说明，同次旧同调模掉 \(y\) 的像后成为新同调的子模，而相邻低一次旧同调被 \(y\) 零化的部分成为其商。因此加入一元既可能消去旧同调，也可能从低一次同调的乘法核中产生新的同调。
+
 \begin{theorem}\label{b3:thm:koszul-regular-resolution}
-设 \(R\) 为交换环，\(M\ne0\) 为 \(R\) 模，\(x=(x_1,\ldots,x_r)\) 为 \(M\) 正则序列，\(I=(x_1,\ldots,x_r)\)。则
+设 \(R\) 为交换环，\(M\ne0\) 为 \(R\) 模，\(r\ge0\) 为整数，\(x=(x_1,\ldots,x_r)\) 为 \(M\) 正则序列，\(I=(x_1,\ldots,x_r)\)。则
 \[
 H_i(x;M)=0\quad(i>0),\qquad H_0(x;M)=M/IM.
 \]
-若序列在 \(R\) 上正则，则增广复形 \(K_\bullet(x;R)\rightarrow R/I\rightarrow0\) 为由有限秩自由模组成的自由消解。
+增广复形 \(K_\bullet(x;M)\rightarrow M/IM\rightarrow0\) 正合，其次数 \(i\) 项为 \(M^{\binom ri}\)，一般不必自由。当 \(M=R\) 时，这是一条由有限秩自由模组成的 \(R/I\) 的自由消解。
 \end{theorem}
 \begin{proof}
-当 \(r=0\) 时，复形只有次数零的 \(M\)，结论直接成立。一元情形已由乘法核算出。对长度归纳，令 \(C\) 如上。归纳假设给出 \(H_i(C)=0\) 对 \(i>0\)，而 \(H_0(C)=M/(x_1,\ldots,x_{r-1})M\)。上述正合列使新复形在 \(i\ge2\) 的同调为零，在次数一的同调为 \(y:H_0(C)\rightarrow H_0(C)\) 的核，它由正则性为零；次数零的余核恰为 \(M/IM\)。在 \(M=R\) 时，各项为外幂 \(\bigwedge^iR^r\)，因而自由，增广映射为自然取商。
+当 \(r=0\) 时，复形只有次数零的 \(M\)，结论直接成立。一元情形已由乘法核算出。对长度归纳，令 \(C\) 如上。归纳假设给出 \(H_i(C)=0\) 对 \(i>0\)，而 \(H_0(C)=M/(x_1,\ldots,x_{r-1})M\)。上述正合列使新复形在 \(i\ge2\) 的同调为零，剩下的低次部分是
+\[
+0\longrightarrow H_1(K)\longrightarrow H_0(C)\xrightarrow{y}H_0(C)
+\longrightarrow H_0(K)\longrightarrow0.
+\]
+归纳把剩余问题归结为 \(y\) 在这个逐次商上的乘法核。正则性使该核为零，次数零的余核则为 \(M/IM\)。增广映射是自然取商；Koszul 的次数 \(i\) 项为 \(\bigwedge^iR^r\otimes_RM\cong M^{\binom ri}\)，在 \(M=R\) 时各项自由。
 \end{proof}
 
-“自由消解”指一条正合的增广链复形，其各项为自由模。对一般 \(M\)，上述各项是 \(M\) 的有限直和，不一定自由；正则序列保证它的正合性，不能因此把它称为自由消解。
+自由消解是由自由模组成的链复形，增广到被消解模以后正合。未增广的 Koszul 复形在次数零仍保留 \(H_0=M/IM\)，这里说它正合是指正次数同调消失；接上这个商与自然增广以后，才在所有位置正合。
 
 \subsection{Noether 局部环上有限生成模的反向判据}
 \label{b3:subsec:1503:02}
 
 \begin{theorem}[Koszul 正合性判据]\label{b3:thm:koszul-acyclic}
-设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(x=(x_1,\ldots,x_r)\) 为 \(\mathfrak m\) 中的元素序列。以下条件等价：
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(r\ge0\) 为整数，\(x=(x_1,\ldots,x_r)\) 为 \(\mathfrak m\) 中的元素序列。以下条件等价：
 \begin{equivalences}
 \item \(x_1,\ldots,x_r\) 为 \(M\) 正则序列；
 \item \(H_i(x;M)=0\) 对所有 \(i>0\) 成立；
@@ -70,12 +82,12 @@ H_i(x;M)=0\quad(i>0),\qquad H_0(x;M)=M/IM.
 \end{equivalences}
 \end{theorem}
 \begin{proof}
-第一条件蕴含第二条件由\cref{b3:thm:koszul-regular-resolution}得到，第二条件显然蕴含第三条件。由第三条件对 \(r\) 归纳；\(r=0\) 或 \(1\) 的结论直接来自定义和 Nakayama 引理。设 \(r>1\)，记 \(C=K_\bullet(x_1,\ldots,x_{r-1};M)\)、\(y=x_r\)。\cref{b3:lem:koszul-adjoin-exact}给出
+第一条件蕴含第二条件由\cref{b3:thm:koszul-regular-resolution}得到，第二条件显然蕴含第三条件。由第三条件对 \(r\) 归纳。\(r=0\) 时，空序列在非零模上正则；\(r=1\) 时，\(H_1(x_1;M)=0\) 就是乘法单射，而 \(x_1\in\mathfrak m\) 及 Nakayama 引理保证 \(M/x_1M\ne0\)。设 \(r>1\)，记 \(C=K_\bullet(x_1,\ldots,x_{r-1};M)\)、\(y=x_r\)。\cref{b3:lem:koszul-adjoin-exact}给出
 \[
 H_1(C)\xrightarrow{y}H_1(C)\longrightarrow0
 \longrightarrow H_0(C)\xrightarrow{y}H_0(C).
 \]
-因 \(R\) Noether 且 \(M\) 有限生成，\(H_1(C)\) 是有限生成模。第一箭头满射且 \(y\in\mathfrak m\)，Nakayama 引理给出 \(H_1(C)=0\)。归纳得前 \(r-1\) 项正则，而最后一个箭头单射说明 \(y\) 在相应商上为非零因子。末端商由 Nakayama 引理非零，得到全部序列正则。
+这同时给出 \(yH_1(C)=H_1(C)\) 及 \(y:H_0(C)\to H_0(C)\) 单射。每个 \(C_i\) 都是 \(M\) 的有限直和，因而是有限生成的 Noether 模；圈作为 \(C_1\) 的子模有限生成，边界作为 \(C_2\) 的同态像也有限生成，所以它们的商 \(H_1(C)\) 有限生成。对局部环 \(R\)、理想 \((y)\subseteq\mathfrak m=J(R)\) 及这个同调模使用\cref{b3:thm:nakayama}，得到 \(H_1(C)=0\)。归纳使前 \(r-1\) 项正则，而同时得到的单射正是 \(y\) 在相应逐次商上的非零因子条件。又 \(I=(x_1,\ldots,x_r)\subseteq\mathfrak m\)；若末端商 \(M/IM\) 为零，对有限生成模 \(M\) 再用 Nakayama 就会得到 \(M=0\)，矛盾。因此全部序列正则。
 \end{proof}
 
 这个证明只需次数一的消失；它通过有限性迫使较短序列的次数一同调也消失。若元素成为单位，乘法满射不能再由 Nakayama 推出模为零，这正是局部条件不能省略之处。
@@ -99,7 +111,7 @@ H_1(C)\xrightarrow{y}H_1(C)\longrightarrow0
 正则推出 \(H_{i>0}=0\) & 成立 & 成立\\
 \(H_{i>0}=0\) 推出正则 & 一般不成立 & 成立\\
 \(H_1=0\) 推出正则 & 一般不成立 & 成立\\
-任意重排保持正则 & 一般不成立 & 成立\\
+任意重排保持正则 & 一般不成立 & 成立：同调不变性加本节的局部反向判据\\
 在素理想 \(\mathfrak p\) 处局部化 & 保持逐次单射；还须 \((M/IM)_{\mathfrak p}\ne0\) & 在 \(\mathfrak p\in\operatorname{Supp}M\cap V(I)\) 处保持正则\\
 \bottomrule
 \end{tabularx}
@@ -109,21 +121,40 @@ H_1(C)\xrightarrow{y}H_1(C)\longrightarrow0
 \subsection{Koszul 同调与非正则性}
 \label{b3:subsec:1503:03}
 
-设 \(k\) 为域，在 \(R=k[X,Y]\) 中取序列 \(X^2,XY\)。若 \((a,b)\in R^2\) 是一次圈，则
+乘法出现新的零化关系，或新方程重复已有方程，都可能产生一次同调。下面几组计算分别说明这些同调类从何而来。
+
+\begin{proposition}\label{b3:prop:koszul-obstruction-examples}
+设 \(k\) 为域，\(R=k[X,Y]\)。对序列 \(X^2,XY\)，有
+\[
+\begin{gathered}
+H_0(X^2,XY;R)\cong R/(X^2,XY),\\
+H_1(X^2,XY;R)\cong R/(X),\qquad H_2(X^2,XY;R)=0.
+\end{gathered}
+\]
+对序列 \(X,Y,0\) 及 \(X,Y,X+Y\)，零次和一次同调均同构于 \(k\)，二次以上同调为零。
+
+若 \(R\) 为任意整环，\(z\in R\) 为非零非单位，则
+\[
+H_0(z,z;R)\cong R/(z),\qquad
+H_1(z,z;R)\cong R/(z),\qquad H_2(z,z;R)=0.
+\]
+\end{proposition}
+\begin{proof}
+在 \(R=k[X,Y]\) 中，若 \((a,b)\in R^2\) 是 \(X^2,XY\) 的一次圈，则
 \[
 X^2a+XYb=0\quad\Longleftrightarrow\quad Xa+Yb=0.
 \]
-因 \(X,Y\) 互素，存在唯一 \(c\in R\)，使 \(a=-Yc,b=Xc\)。边界由 \((-XY,X^2)c=X(-Y,X)c\) 给出，故
-\[
-H_1(X^2,XY;R)\cong R/(X),\qquad H_2(X^2,XY;R)=0.
-\]
-最后一个等式来自 \(R\) 为整环。第一次商 \(R/(X^2)\) 中非零的 \(\bar X\) 被 \(XY\) 零化；同调把这一失败记录为整个 \(R/(X)\)，而不只是报告“序列不正则”。
+因 \(X\) 为素元且不整除 \(Y\)，等式迫使 \(b=Xc\)，再由整环中的消去得到 \(a=-Yc\)，且 \(c\) 唯一。因此圈模为 \(R(-Y,X)\)，边界模为 \(R(-XY,X^2)=XR(-Y,X)\)，得到所列一次同调。顶端微分 \(c\mapsto(-XYc,X^2c)\) 单射，故二次同调为零；一次微分的像为 \((X^2,XY)\)，给出零次同调。
 
-\ProseParagraphBreak
-另取域 \(k\) 上的 \(R=k[X,Y]\)、序列 \(X,Y,0\)。前两个元素给出 \(k\) 的自由消解，最后一个零元素给出的两项复形微分为零。因此新复形是原复形与其移位的直和，有 \(H_0\cong k\)、\(H_1\cong k\)，其余为零。重复一个已经由前面生成的方程会产生相应的冗余关系。例如
+在首次商 \(R/(X^2)\) 中，\(\bar X\ne0\) 而 \(XY\cdot\bar X=0\)。同样由 \(X,Y\) 互素，乘法 \(XY\) 的核恰为 \((X)/(X^2)\)；相邻两项的投影将圈 \(c(-Y,X)\) 的同调类送到 \(c\bar X\)，正把一次同调识别为这个乘法核。其支集为 \(V(X)\)，此处也恰好等于 \(V(X^2,XY)\)：在这条线的每个素点局部化后仍有非零一次同调，障碍并非只在原点。
+
+序列 \(X,Y\) 在 \(R\) 上正则，商为 \(k\)，所以前一定理给出 \(C_\bullet=K_\bullet(X,Y;R)\) 的 \(H_0\cong k\) 及正次数同调消失。加入零元素后，微分公式中连接两份复形的乘法为零，故 \(K_\bullet(X,Y,0;R)=C_\bullet\oplus C[1]_\bullet\)。其同调为 \(H_i(C)\oplus H_{i-1}(C)\)，得到零次和一次各一个 \(k\)，其余为零。而
 \[
 \begin{pmatrix}1&0&0\\0&1&0\\-1&-1&1\end{pmatrix}
 \begin{pmatrix}X\\Y\\X+Y\end{pmatrix}
 =\begin{pmatrix}X\\Y\\0\end{pmatrix}.
 \]
 左侧矩阵行列式为 \(1\)，由\cref{b3:prop:koszul-generator-change}，序列 \(X,Y,X+Y\) 与 \(X,Y,0\) 具有同构的 Koszul 复形和相同的同调。
+
+在任意整环 \(R\) 中，对非零 \(z\)，一次圈的条件 \(z(a+b)=0\) 等价于 \(a=-b\)，所以圈模为 \(R(-1,1)\)。边界模为 \(R(-z,z)=zR(-1,1)\)，其商是 \(R/(z)\)。顶端微分 \(c\mapsto(-zc,zc)\) 单射，一次微分的像为 \((z)\)，得到其余两项同调。\(z\) 非单位保证 \(R/(z)\ne0\)；第二次加入同一个方程不改变零次商，却留下 \((-1,1)\) 所生成的非零一次同调。
+\end{proof}

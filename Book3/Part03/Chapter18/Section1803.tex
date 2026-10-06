@@ -1,6 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 18.3 局部化与完备化
-% 纲要位置：计划纲要.md，第 2533 行。
+% 纲要位置：工作记录/计划纲要.md，第 2565 行。
+% 纲要细目（写作范围）：
+% * 正则性在局部化下的行为
+% * 正则性与完备化
+% * 由分离滤过与初始形式乘积证明正则局部环为整环
+% * 正文命题证明正则超曲面商当且仅当方程有非零一次类；证明域乘积正则但非整环，并计算其整体维数
 
 \section{局部化与完备化}
 \label{b3:sec:1803}
@@ -21,15 +26,19 @@
 设 \(R\) 为交换 Noether 正则局部环，\(\mathfrak p\in\operatorname{Spec}R\)。则 \(R_{\mathfrak p}\) 仍是正则局部环。
 \end{theorem}
 \begin{proof}
-有限生成的 \(R\) 模 \(R/\mathfrak p\) 由\cref{b3:thm:regular-local-homological-criterion}具有有限投射维数，故其极小自由消解长度有限，各项秩也有限。局部化正合，故该消解在 \(\mathfrak p\) 处给出
-\((R/\mathfrak p)_{\mathfrak p}=\kappa(\mathfrak p)\) 的有限长度自由 \(R_{\mathfrak p}\) 消解。后者是 Noether 局部环的剩余域，再用同一定理的反向便得正则性。
+原极大理想的极小生成组局部化后可能有元素成为单位，因而不能直接用它计算 \(R_{\mathfrak p}\) 的嵌入维数。有限自由消解则可以直接局部化。有限生成的 \(R\) 模 \(R/\mathfrak p\) 由\cref{b3:thm:regular-local-homological-criterion}具有有限投射维数，故其极小自由消解长度有限，各项秩也有限。局部化正合，故该消解在 \(\mathfrak p\) 处给出
+\((R/\mathfrak p)_{\mathfrak p}=\kappa(\mathfrak p)\) 的有限长度自由 \(R_{\mathfrak p}\) 消解。局部化后消解未必仍极小，但有限自由消解的存在已经保证 \(\operatorname{pd}_{R_{\mathfrak p}}\kappa(\mathfrak p)<\infty\)。\(R_{\mathfrak p}\) 为 Noether 局部环，\(\kappa(\mathfrak p)\) 是它的剩余域，再用同一定理的反向便得正则性。
 \end{proof}
 
 \begin{definition}\label{b3:def:regular-ring}
 设 \(R\) 为交换 Noether 环。若每个素理想 \(\mathfrak p\) 的局部环 \(R_{\mathfrak p}\) 都正则，则称 \(R\) 为\term[zhengzehuan]{正则环}[regular ring]。
 \end{definition}
 
-只检验极大理想已足够：每个素理想包含在某个极大理想中，再使用前一定理。正则环未必局部，也未必整环，例如两个域的直积。关于正则局部环的断言若去掉“局部”，需要重新检查结论。
+只检验极大理想已足够：给定素理想 \(\mathfrak p\)，取包含它的极大理想 \(\mathfrak m\)，则
+\[
+R_{\mathfrak p}\cong(R_{\mathfrak m})_{\mathfrak pR_{\mathfrak m}}.
+\]
+若所有 \(R_{\mathfrak m}\) 正则，前一定理便使所有 \(R_{\mathfrak p}\) 正则。正则环未必局部，也未必整环，例如两个域的直积；本节末尾将验证这一例子。
 
 \subsection{正则性与完备化}
 \label{b3:subsec:1803:02}
@@ -38,7 +47,7 @@
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，\(\widehat R\) 为其 \(\mathfrak m\) 进完备化。则 \(R\) 正则当且仅当 \(\widehat R\) 正则。
 \end{theorem}
 \begin{proof}
-由\cref{b3:thm:completion-noetherian}，\(\widehat R\) 是 Noether 局部环，极大理想为 \(\mathfrak m\widehat R\)，剩余域仍为 \(k\)。\cref{b3:prop:completion-quotients}在二次幂处给出
+完备化的逐阶商保留了余切空间，Hilbert–Samuel 长度则保留了维数，所以这里可以直接比较定义中的两个数。由\cref{b3:prop:completed-local-ring}，\(\widehat R\) 是 Noether 局部环，极大理想为 \(\mathfrak m\widehat R\)，剩余域仍为 \(k\)。\cref{b3:prop:completion-quotients}在二次幂处给出
 \[
 \mathfrak m/\mathfrak m^2
 \cong\mathfrak m\widehat R/(\mathfrak m\widehat R)^2,
@@ -55,13 +64,43 @@
 交换 Noether 正则局部环是整环。
 \end{proposition}
 \begin{proof}
-设极大理想为 \(\mathfrak m\)。若 \(a,b\ne0\)，Krull 交定理使它们具有有限阶数 \(r,s\)，故在伴随分次环中给出非零初始式。\cref{b3:thm:regular-local-characterizations}说明该分次环是域上的多项式环，因而两初始式的乘积非零。这一乘积正是 \(ab\) 在 \(\mathfrak m^{r+s}/\mathfrak m^{r+s+1}\) 中的像，所以 \(ab\ne0\)。
+设极大理想为 \(\mathfrak m\)。若 \(a,b\ne0\)，\cref{b3:thm:krull-intersection}给 \(\bigcap_{n\ge0}\mathfrak m^n=0\)，所以它们具有有限阶数 \(r,s\)，在伴随分次环中给出非零初始式。\cref{b3:thm:regular-local-characterizations}说明该分次环是域上的多项式环，因而两初始式的乘积非零。这一乘积正是 \(ab\) 在 \(\mathfrak m^{r+s}/\mathfrak m^{r+s+1}\) 中的像，所以 \(ab\ne0\)。
 \end{proof}
 
-这个证明也说明分离性和分次结构各自的作用：前者保证非零元素有初始式，后者保证相乘时最低项不会消失。一般环的伴随分次环不一定是整环，即使原环是整环；尖点的切锥便给出反例。
+这里用到的事实不限于正则环：若非零交换环 \(A\) 的理想 \(I\) 满足 \(\bigcap_{n\ge0}I^n=0\)，且 \(\operatorname{gr}_IA\) 为整环，同一个初始式论证便证明 \(A\) 为整环。分离性保证非零元素能被某一层检测到，分次环的整性则保证相乘时最低项不会消失。反向却不成立。例如尖点局部环
+\[
+A=k[x,y]_{(x,y)}/(y^2-x^3)
+\cong k[t^2,t^3]_{(t^2,t^3)}
+\]
+由\cref{b3:prop:cusp-normalization}的参数化同构知为整环，但由\cref{b3:prop:hypersurface-tangent-cone}，其伴随分次环为 \(k[X,Y]/(Y^2)\)。\(Y\) 在这个商中非零而平方为零，所以伴随分次环甚至不约化。这在任意特征下都成立。
 
 \ProseParagraphBreak
 一维正则局部环的极大理想由一个元素生成，再结合刚得到的整性，它由\cref{b3:thm:dvr-characterizations}为 DVR。下一节将把唯一分解推广到任意有限维数；这需要比“一维局部化是 DVR”更多的信息。
+
+\begin{proposition}\label{b3:prop:regular-hypersurface-criterion}
+设 \((R,\mathfrak m)\) 为维数 \(d>0\) 的交换 Noether 正则局部环，\(k=R/\mathfrak m\)，\(0\ne f\in\mathfrak m\)。令 \(B=R/(f)\)、\(\mathfrak n=\mathfrak m/(f)\)。则 \(\dim B=d-1\)，并且
+\[
+B\text{ 正则}\quad\Longleftrightarrow\quad f\notin\mathfrak m^2.
+\]
+若 \(f\notin\mathfrak m^2\)，则 \(\operatorname{edim}B=d-1\)；若 \(f\in\mathfrak m^2\)，则 \(\operatorname{edim}B=d\)。
+\end{proposition}
+\begin{proof}
+由\cref{b3:prop:regular-local-domain}，\(R\) 是整环，故 \(f\ne0\) 为非零因子。\cref{b3:prop:regular-quotient-dimension}给 \(\dim B=d-1\)，而 \(f\in\mathfrak m\) 保证这个商环非零。它的一次分量为
+\[
+\mathfrak n/\mathfrak n^2
+\cong\mathfrak m/(\mathfrak m^2+(f)).
+\]
+对 \(a\in R\)，\(af\) 模 \(\mathfrak m^2\) 的像仅取决于 \(a\) 在 \(k\) 中的像。因此 \((f)\) 在 \(\mathfrak m/\mathfrak m^2\) 中贡献的子空间是 \(k(f+\mathfrak m^2)\)。若 \(f\notin\mathfrak m^2\)，这是一个一维子空间，商掉它使嵌入维数从 \(d\) 降到 \(d-1\)；若 \(f\in\mathfrak m^2\)，这个子空间为零，嵌入维数仍为 \(d\)。与 \(\dim B=d-1\) 比较，即得正则性的充要条件。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:regular-product-rings}
+设 \(k_1,k_2\) 为域，\(A=k_1\times k_2\)。则 \(A\) 是正则环且 \(\operatorname{gldim}A=0\)，但 \(A\) 不是整环。
+\end{proposition}
+\begin{proof}
+令 \(e_1=(1,0)\)、\(e_2=(0,1)\)。它们满足 \(e_1+e_2=1\)、\(e_1e_2=0\)。每个理想 \(J\) 都分解为 \(e_1J\oplus e_2J\)，而这两个分量分别是域 \(k_1,k_2\) 的理想。因此 \(A\) 只有四个理想，特别地为 Noether 环。若 \(\mathfrak p\) 为素理想，由 \(e_1e_2=0\) 知它必须包含其中一个幂等元，且不能同时包含两者，故素理想恰为 \(k_1\times0\) 与 \(0\times k_2\)。它们处的局部环分别为 \(k_2\) 与 \(k_1\)，都是零维正则局部环，所以 \(A\) 正则。
+
+对任意 \(A\) 模 \(M\)，同样有 \(M=e_1M\oplus e_2M\)，其中 \(e_iM\) 为 \(k_i\) 向量空间。选择各分量的基，便把 \(M\) 写成若干份 \(Ae_1\) 和 \(Ae_2\) 的直和。\(Ae_i\) 是 \(A\) 的直和因子，因而投射；任意多个投射模的直和仍投射，因为对满射逐个提升各直和分量的映射，再合并这些提升即可。因此每个 \(A\) 模都投射，\(\operatorname{gldim}A=0\)。最后，\(e_1,e_2\) 均非零而乘积为零，所以 \(A\) 不是整环。
+\end{proof}
 
 \ProseParagraphBreak
 到此为止，正则性已有三种用法：极小生成元给出正则序列，剩余域的有限长度消解检测正则性，局部化与完备化把它带到新的局部环。唯一分解性还要解决另一个问题：高度一素理想在各点附近可由一元生成，是否存在同一个全局生成元。下一节用行列式线回答这一问题；局部化保持正则性本身尚不能回答它。

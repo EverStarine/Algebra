@@ -1,6 +1,12 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 17.4 投射维数的计算与有限性条件
-% 纲要位置：计划纲要.md，第 2511 行。
+% 纲要位置：工作记录/计划纲要.md，第 2541 行。
+% 纲要细目（写作范围）：
+% * 商环、理想及合冲模的计算
+% * 不能对无限投射维数直接套公式
+% * 节点上的周期合冲模与深度；局部化后的重新极小化及投射维数下降
+% * 为正则局部环的同调刻画准备工具
+% ---
 
 \section{投射维数的计算与有限性条件}
 \label{b3:sec:1704}
@@ -19,10 +25,14 @@
 \subsection{商环、理想与合冲模的计算}
 \label{b3:subsec:1704:01}
 
-若 \(x_1,\ldots,x_c\in\mathfrak m\) 是交换 Noether 局部环 \(R\) 上的正则序列，则\cref{b3:thm:koszul-acyclic}给出商模的长度为 \(c\)、各项有限秩自由的 Koszul 消解。因为各 \(x_i\in\mathfrak m\)，它极小，末项为 \(R\)，所以
+若 \(x_1,\ldots,x_c\in\mathfrak m\) 是交换 Noether 局部环 \(R\) 上的正则序列，则\cref{b3:thm:koszul-regular-resolution}给出商模的长度为 \(c\)、各项有限秩自由的 Koszul 消解。因为各 \(x_i\in\mathfrak m\)，它极小，末项为 \(R\)，所以
 \[
 \operatorname{pd}_R R/(x_1,\ldots,x_c)=c,\qquad
 \beta_i^R\bigl(R/(x_1,\ldots,x_c)\bigr)=\binom ci.
+\]
+第 \(i\) 项是 \(R^c\) 的第 \(i\) 个外幂，其基对应从 \(c\) 个方程中选出的 \(i\) 元子集，故这些 Betti 数满足
+\[
+\sum_{i=0}^c\beta_i^R\bigl(R/(x_1,\ldots,x_c)\bigr)T^i=(1+T)^c.
 \]
 Auslander–Buchsbaum 公式给出商模深度下降 \(c\)，与逐次除去非零因子的深度计算一致。
 
@@ -31,7 +41,7 @@ Auslander–Buchsbaum 公式给出商模深度下降 \(c\)，与逐次除去非�
 \[
 0\longrightarrow R\xrightarrow{\binom{-y}{x}}R^2\longrightarrow I\longrightarrow0.
 \]
-因此 \(\operatorname{pd}_RI=1\)、\(\operatorname{depth}_RI=1\)。理想 \(I\) 是整环中的无挠模，却不是自由模；无挠只能排除单个非零元素的零化，不能保证深度与环一样大。
+因此 \(\operatorname{pd}_RI=1\)、\(\operatorname{depth}_RI=1\)。理想 \(I\) 是整环中的无挠模，却不是自由模。无挠性保证每个非零环元素在 \(I\) 上的乘法单射，但正则序列的第二步要在商模上检查。例如 \(x\) 在 \(I\) 上正则，而 \(x+xI\) 是 \(I/xI\) 的非零元素：若 \(x\in xI\)，在整环中约去 \(x\) 就会得到 \(1\in I\)。这个元素被 \(x,y\) 同时消去，因为 \(x^2,xy\in xI\)。所以 \(I/xI\) 的深度为零，第一步的无挠性没有阻止商中出现零化关系。
 
 \begin{corollary}\label{b3:cor:syzygy-depth-finite-pd}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模且 \(r=\operatorname{pd}_RM<\infty\)。令 \(\Omega^0M=M\)，\(\Omega^jM\) 为 \(M\) 的极小自由消解中的第 \(j\) 个合冲模。对每个整数 \(0\le j\le r\)，\(\Omega^jM\ne0\)，并满足
@@ -47,25 +57,76 @@ Auslander–Buchsbaum 公式给出商模深度下降 \(c\)，与逐次除去非�
 \subsection{有限投射维数假设的必要性}
 \label{b3:subsec:1704:02}
 
-设 \(k\) 为域。在 \(R=k[\epsilon]/(\epsilon^2)\) 上，\(\operatorname{depth}R=0\)，剩余域 \(k\) 的深度也为零。然而\secref{b3:sec:1701}已算出 \(k\) 的每个 Betti 数都为一，故 \(\operatorname{pd}_Rk=\infty\)。不能把两个深度之差为零解释为 \(k\) 投射。
-
-\ProseParagraphBreak
-更有几何意味的例子是 \(R=k[x,y]_{(x,y)}/(xy)\) 与 \(M=R/(x)\)。\(R\) 中有
-\(\operatorname{Ann}(x)=(y)\)、\(\operatorname{Ann}(y)=(x)\)：在多项式整环中约去 \(x\) 或 \(y\) 即得，局部化保持这些核。因此
-\[
-\cdots\xrightarrow{x}R\xrightarrow{y}R\xrightarrow{x}R
-\longrightarrow M\longrightarrow0
-\]
-为极小自由消解，\(M\) 的投射维数无限。另一方面 \(M\cong k[y]_{(y)}\)，故 \(\operatorname{depth}_RM=1\)。\(R\) 的维数为一，而 \(x+y\) 不属于两个关联素理想 \((x),(y)\)，是非零因子，故 \(\operatorname{depth}R=1\)。深度相等仍不表示自由。
+不能把深度之差直接当作投射维数。在双数环 \(S=k[\epsilon]/(\epsilon^2)\) 和节点环 \(R=k[x,y]_{(x,y)}/(xy)\) 中，剩余域和分支模 \(R/(x)\) 分别给出零深度与正深度的反例；节点上的极小合冲模还会在两个分支之间一直交替。下面的推论同时给出自由性结论和这些计算，说明深度达到环的深度，仍不能代替有限投射维数条件。
 
 \subsection{正则局部环的同调刻画初步}
 \label{b3:subsec:1704:03}
 
 \begin{corollary}\label{b3:cor:finite-pd-maximal-depth-free}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。若 \(M\) 投射维数有限且 \(\operatorname{depth}_RM=\operatorname{depth}R\)，则 \(M\) 自由。特别地，深度为零的这种局部环上，每个具有有限投射维数的有限生成模都自由。
+
+有限投射维数条件不能删除。对任意域 \(k\)，在 \(S=k[\epsilon]/(\epsilon^2)\) 上，剩余域 \(k\) 满足
+\[
+\operatorname{depth}_Sk=\operatorname{depth}S=0,\qquad
+\operatorname{pd}_Sk=\infty.
+\]
+在 \(R=k[x,y]_{(x,y)}/(xy)\) 上，令 \(M=R/(x)\)，则对每个整数 \(j\ge0\)，
+\[
+\Omega^jM\cong
+\begin{cases}
+R/(x),&j\text{ 为偶数},\\
+R/(y),&j\text{ 为奇数},
+\end{cases}
+\qquad
+\operatorname{depth}_R\Omega^jM=\operatorname{depth}R=1,
+\]
+而 \(\beta_j^R(M)=1\)、\(\operatorname{pd}_RM=\infty\)。这里的合冲模取自极小自由消解。
 \end{corollary}
 \begin{proof}
 \cref{b3:thm:auslander-buchsbaum}使投射维数为零，因而模投射；局部有限投射模由\cref{b3:thm:finite-presentation-flat-projective}和\cref{b3:lem:finite-flat-local-free}自由。深度为零时，公式右边为零而左边两个整数均非负，故仍然如此。
+
+双数环的结论由\secref{b3:sec:1701}中的极小周期消解得到；\(\epsilon\) 是被极大理想零化的非零元素，故环的深度为零，剩余域的深度也为零。
+
+对节点环，记 \(A=k[x,y]_{(x,y)}\)。若 \(ax\in(xy)A\)，在整环 \(A\) 中约去 \(x\) 得 \(a\in(y)A\)，故 \(R\) 中 \(\operatorname{Ann}(x)=(y)\)；同理 \(\operatorname{Ann}(y)=(x)\)。所以
+\[
+\cdots\xrightarrow{x}R\xrightarrow{y}R\xrightarrow{x}R
+\longrightarrow M\longrightarrow0
+\]
+正合，具体地，
+\[
+\ker(x:R\to R)=(y)=\operatorname{im}(y),\qquad
+\ker(y:R\to R)=(x)=\operatorname{im}(x).
+\]
+所有微分系数均在极大理想中，所以它极小，各阶 Betti 数均为一。第一合冲模为 \((x)\)，乘 \(x\) 给出 \(R/(y)\cong(x)\)；下一层同理得到 \(R/(x)\cong(y)\)，此后交替。
+
+作为 \(R\) 模，两个商分别是 \(k[y]_{(y)}\)、\(k[x]_{(x)}\)，其中 \(y\)、\(x\) 分别正则。再模掉这个元素便得到剩余域，由正则元的深度下降公式，它们的深度都是一。环 \(R\) 的维数是一：包含 \(xy\) 的素理想必含 \(x\) 或 \(y\)，而两个分支商都是一维局部整环。又 \(x+y\) 在 \(R\) 上正则。事实上，若 \((x+y)a=0\)，模 \((x)\) 和模 \((y)\) 分别得到 \(a\in(x)\) 和 \(a\in(y)\)；在 \(R\) 中 \((x)\cap(y)=0\)，故 \(a=0\)。因此 \(1\le\operatorname{depth}R\le\dim R=1\)。这些非零合冲模的投射维数均无限，故没有一层是自由模。
 \end{proof}
 
-对交换 Noether 局部环 \((R,\mathfrak m)\)，剩余域 \(k=R/\mathfrak m\) 尤其敏感。若 \(\operatorname{pd}_Rk\) 有限，本章已经说明所有有限生成的 \(R\) 模的投射维数都有统一上界，且 \(\operatorname{pd}_Rk=\operatorname{depth}R\)。下一章将结合极大理想的生成元，证明这个同调条件还迫使 \(\dim R=\operatorname{edim}R\)。
+极小性还依赖所选局部环的极大理想。完备化保持极大理想中的微分系数，但在较小素理想处局部化时，原来属于 \(\mathfrak m\setminus\mathfrak p\) 的系数会变成单位，因而可能需要重新消去。
+
+\begin{proposition}\label{b3:prop:localization-pd-drop}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(\mathfrak p\in\operatorname{Spec}R\)。则
+\[
+\operatorname{pd}_{R_{\mathfrak p}}M_{\mathfrak p}\le\operatorname{pd}_RM,
+\]
+其中零模的投射维数约定为 \(-\infty\)。极小自由消解局部化后未必仍极小，且此不等式可以严格成立。具体地，对任意域 \(k\)，取 \(R=k[x,y]_{(x,y)}\)、\(I=(x,y)\)、\(\mathfrak p=(x)\)，有
+\[
+\operatorname{pd}_RI=1,\qquad
+\operatorname{pd}_{R_{\mathfrak p}}I_{\mathfrak p}=0.
+\]
+\end{proposition}
+\begin{proof}
+若 \(M=0\) 或 \(\operatorname{pd}_RM=\infty\)，不等式直接成立。若 \(r=\operatorname{pd}_RM<\infty\)，将长度为 \(r\) 的极小自由消解局部化。局部化保持正合性，且有限自由模仍为有限自由模，故所得消解给出所需上界；若 \(M_{\mathfrak p}=0\)，使用零模约定即可。
+
+算例中 \(I\) 的极小消解已在本节给出，最后非零项在次数一，故 \(\operatorname{pd}_RI=1\)。在 \((x)\) 处 \(y\) 是单位，所以 \(I_{\mathfrak p}=R_{\mathfrak p}\)。原微分 \(\binom{-y}{x}\) 此时含单位系数，已不满足极小性条件。按\cref{b3:prop:unit-cancellation}拆出一对 \(R_{\mathfrak p}\xrightarrow{1}R_{\mathfrak p}\) 后，只剩一个零次自由项，得到投射维数零。
+\end{proof}
+
+对交换 Noether 局部环 \((R,\mathfrak m)\)，剩余域 \(k=R/\mathfrak m\) 的极小消解能够检测所有有限生成模的投射维数。若 \(\operatorname{pd}_Rk<\infty\)，由 \(\operatorname{depth}_Rk=0\) 及 Auslander–Buchsbaum 公式，
+\[
+\operatorname{pd}_Rk=\operatorname{depth}R.
+\]
+再由\cref{b3:cor:residue-pd-bound}，每个有限生成的 \(R\) 模 \(M\) 都满足
+\[
+\operatorname{pd}_RM\le\operatorname{pd}_Rk=\operatorname{depth}R.
+\]
+所以剩余域具有有限消解，就为全部有限生成模提供了统一的有限长度上界，而且剩余域本身达到这一上界。下一章将结合极大理想的生成元，证明这个条件等价于 \(\dim R=\operatorname{edim}R\)，即 \(R\) 为正则局部环。

@@ -1,6 +1,12 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 18.5 正则点、切空间与光滑性
-% 纲要位置：计划纲要.md，第 2547 行。
+% 纲要位置：工作记录/计划纲要.md，第 2580 行。
+% 纲要细目（写作范围）：
+% * 正则点以局部环余切空间检验，与相对微分纤维通过剩余域余切序列比较；在有理超曲面点写出维数与嵌入维数
+% * 对照环论正则性、基域上的光滑性与几何正则性；有限型代数的光滑与几何正则比较引用 Stacks Project Lemma 33.12.6
+% * 以纯不可分域扩张说明正则不必几何正则；第23章证明完美基域上正则与光滑的逐点比较
+% * 正文命题计算不可分闭点的余切序列，说明局部余切空间与微分纤维同维仍不保证自然映射单射
+% ---
 
 \section{正则点、切空间与光滑性}
 \label{b3:sec:1805}
@@ -25,17 +31,34 @@
 \dim_{\kappa(\mathfrak p)}
 \mathfrak pA_{\mathfrak p}/(\mathfrak pA_{\mathfrak p})^2.
 \]
-在 \(k\) 有理闭点，第二个数也是 Zariski 切空间的维数，见\cref{b3:prop:tangent-cotangent-rational}。
+这个商空间是局部环的余切空间，其对偶为该点的 Zariski 切空间。它与相对于 \(k\) 的微分模纤维不是同一个定义。在 \(k\) 有理闭点，剩余域就是 \(k\)，\cref{b3:prop:tangent-cotangent-rational}给出两者的自然同构；一般点则有余切序列
+\[
+\mathfrak pA_{\mathfrak p}/(\mathfrak pA_{\mathfrak p})^2
+\longrightarrow
+\kappa(\mathfrak p)\otimes_A\Omega_{A/k}
+\longrightarrow
+\Omega_{\kappa(\mathfrak p)/k}\longrightarrow0.
+\]
+末项可能非零，第一箭头也未必单射。因此不能只计算中项的维数，就把它当成局部环的嵌入维数。
 
 \begin{proposition}\label{b3:prop:regular-hypersurface-rational-point}
 设 \(k\) 为域，\(n\ge1\) 为整数，\(0\ne f\in k[X_1,\ldots,X_n]\)，且 \(a\in k^n\) 满足 \(f(a)=0\)。则超曲面 \(f=0\) 在 \(a\) 处的局部环正则，当且仅当至少一个 \(\partial f/\partial X_i(a)\ne0\)。
 \end{proposition}
 \begin{proof}
 令 \(S=k[X_1,\ldots,X_n]_{(X_1-a_1,\ldots,X_n-a_n)}\)，其极大理想记为 \(\mathfrak n\)。\(S\) 正则且为整环，\(f\) 是非零因子，因此 \(S/(f)\) 的维数为 \(n-1\)。其极大理想模平方为
-\(\mathfrak n/(\mathfrak n^2+(f))\)。\(f\) 在 \(\mathfrak n/\mathfrak n^2\) 中的像由一次 Taylor 项给出，系数恰为各偏导数在 \(a\) 处的值。若至少一项非零，商向量空间维数为 \(n-1\)；若全零，则为 \(n\)。和 Krull 维数比较即得结论。
+\(\mathfrak n/(\mathfrak n^2+(f))\)。\(f\) 在 \(\mathfrak n/\mathfrak n^2\) 中的像由一次 Taylor 项给出，系数恰为各偏导数在 \(a\) 处的值。因此
+\[
+\dim S/(f)=n-1,\qquad
+\operatorname{edim}S/(f)=
+\begin{cases}
+n-1,&\text{至少一个偏导数在 }a\text{ 处非零},\\
+n,&\text{所有偏导数在 }a\text{ 处为零}.
+\end{cases}
+\]
+两者相等恰好给出所述条件。
 \end{proof}
 
-例如 \(y^2-x^3=0\) 在原点的偏导数全部为零，在任何特征都不正则。\(y-x^2=0\) 对 \(y\) 的偏导数为一，所以每个有理点正则。这一判断检测局部结构，并不依赖图形看起来是否有“尖角”。
+例如 \(y^2-x^3=0\) 的偏导数为 \(-3x^2,2y\)，在原点总是全零，包括特征二、三的情形；等价地，方程没有一次项。因此原点的局部环维数为一、嵌入维数为二，在任何特征都不正则。\(y-x^2=0\) 对 \(y\) 的偏导数为一，所以每个有理点正则。这一判断检测局部结构，并不依赖图形看起来是否有“尖角”。
 
 \subsection{正则性与基域上的光滑性}
 \label{b3:subsec:1805:02}
@@ -75,7 +98,7 @@
 \begin{claim}[光滑性与几何正则性]\label{b3:claim:smooth-geometrically-regular}
 设 \(k\) 为域，\(A\) 为有限型交换 \(k\) 代数。则 \(A\) 在 \(k\) 上光滑，当且仅当它在 \(k\) 上几何正则。
 \end{claim}
-这一比较的标准证明见 Stacks Project, Lemma 33.12.6（\url{https://stacks.math.columbia.edu/tag/038X}）。在完美基域上，有限型代数的正则性本身就足以判定光滑性；\cref{b3:thm:perfect-field-regular-smooth}将逐点证明这一结论。下面的例子说明，不完美基域上不能省去基变换的检验。
+这里把一般基域上的比较作为外部结论引用，其完整证明见 Stacks Project, Lemma 33.12.6（\url{https://stacks.math.columbia.edu/tag/038X}），涉及一般光滑性理论和基变换。第23章的\cref{b3:thm:perfect-field-regular-smooth}将证明完美基域上有限型代数的逐点比较：局部环正则当且仅当该点附近对基域光滑。这个后续证明不代替上述任意基域上的一般结论。下面的例子说明，不完美基域上不能省去基变换的检验。
 
 \ProseParagraphBreak
 已经得到的有理点判据不能直接照搬到剩余域不可分的点。\eqref{b3:eq:cotangent-residue-sequence}中的剩余域微分项此时可能非零，\(\Omega_{A/k}\) 的纤维不再只记录极大理想的一次部分。下面把这一差别转化为基域扩张后的局部环计算。
@@ -83,7 +106,7 @@
 \subsection{非完美域上的区分例子}
 \label{b3:subsec:1805:03}
 
-设 \(p\) 为素数，\(s\) 为不定元，取 \(k=\mathbb F_p(s)\)、\(K=k[u]/(u^p-s)\)。\cref{b3:exm:inseparable-tangent}已经说明，\(K\) 是域，\(\Omega_{K/k}\cong K\,\mathrm{d}u\ne0\)；\secref{b3:sec:1405}又以 \(k[T]/((T^p-s)^2)\) 中的平方零理想给出了不能提升的恒等映射。因此 \(K\) 是零维正则局部环，却不是光滑 \(k\) 代数。
+设 \(p\) 为素数，\(s\) 为不定元，取 \(k=\mathbb F_p(s)\)、\(K=k[u]/(u^p-s)\)。\cref{b3:exm:inseparable-tangent}已经说明 \(K\) 是域，所以作为局部环，它的极大理想为零，维数和嵌入维数都为零，因而正则。但它对 \(k\) 不光滑：\secref{b3:sec:1405}的平方零提升计算使用 \(C=k[T]/((T^p-s)^2)\)，其平方零理想由 \(T^p-s\) 的像生成。关系的导数为零，使坐标的任何平方零修正都不能消去非零误差 \(T^p-s\)；因此 \(K\to C/(T^p-s)C\) 的恒等映射不能提升。
 
 \ProseParagraphBreak
 现在把基域扩张到 \(K\)。有显式同构
@@ -94,4 +117,32 @@ K\otimes_kK\cong K[T]/(T^p-s)
 最后一个环的唯一素理想为 \((v)\)，所以维数为零；而 \((v)/(v^2)\) 在 \(K\) 上维数为一，所以它不正则。因此 \(K\) 在 \(k\) 上也不几何正则。这里环 \(K\) 自身完全没有零因子，基变换却产生幂零元。这说明“正则局部环”不包含相对于任意给定基域的可分性信息。
 
 \ProseParagraphBreak
-相反，\(k[x_1,\ldots,x_d]\) 扩张任何基域后仍是多项式环，坐标原点的局部环仍正则；它的平方零提升只需提升各坐标像。把这两类例子并列，可以看出环论正则性与相对光滑性在常见坐标例子中一致，却需要附加条件才可一般地等同。
+相反，多项式代数 \(k[x_1,\ldots,x_d]\) 的平方零提升只需任意提升各坐标像，因而对 \(k\) 光滑；扩张任何基域后仍是多项式代数，故由上述比较几何正则。这并不要求它的每个闭点剩余域都可分于 \(k\)。下面的不可分闭点就位于光滑的仿射直线上，其微分纤维却不能用有理点的公式解释。
+
+\begin{proposition}\label{b3:prop:inseparable-cotangent-fiber}
+设 \(p\) 为素数，\(s\) 为 \(\mathbb F_p\) 上的不定元，令
+\[
+k=\mathbb F_p(s),\qquad A=k[T],\qquad
+f=T^p-s,\qquad\mathfrak p=(f),\qquad K=A/\mathfrak p.
+\]
+则 \(A_{\mathfrak p}\) 是一维正则局部环。在余切序列
+\[
+\mathfrak pA_{\mathfrak p}/(\mathfrak pA_{\mathfrak p})^2
+\longrightarrow \Omega_{A/k}\otimes_AK
+\longrightarrow\Omega_{K/k}\longrightarrow0
+\]
+中，三项分别为以 \(f,\mathrm{d}T,\mathrm{d}\bar T\) 的像为基的一维 \(K\) 向量空间，第一箭头为零，第二箭头为同构。
+\end{proposition}
+\begin{proof}
+\cref{b3:exm:inseparable-tangent}证明了 \(f\) 不可约，所以 \(\mathfrak p\) 是非零极大理想。主理想整环 \(k[T]\) 在 \(\mathfrak p\) 处的局部化是 DVR，其极大理想由 \(f\) 生成，维数和嵌入维数均为一。乘 \(f\) 给出
+\[
+A_{\mathfrak p}/fA_{\mathfrak p}
+\xrightarrow{\sim}
+fA_{\mathfrak p}/f^2A_{\mathfrak p};
+\]
+它单射是因为 \(A_{\mathfrak p}\) 为整环，故左项就是以 \(f\) 的像为基的 \(K\) 向量空间。
+
+多项式微分模为 \(A\,\mathrm{d}T\)，而商代数的微分展示为
+\(\Omega_{K/k}=K\,\mathrm{d}\bar T/(f'(\bar T)\,\mathrm{d}\bar T)\)。
+特征 \(p\) 下 \(f'=0\)，所以末项也是一维。余切映射把 \(f\) 的像送到 \(\mathrm{d}f=0\)，其后把 \(\mathrm{d}T\) 送到 \(\mathrm{d}\bar T\)，得到所述映射。这里局部余切空间和相对微分纤维虽恰好同维，自然映射却为零；维数相同不足以恢复有理点处的同构。
+\end{proof}

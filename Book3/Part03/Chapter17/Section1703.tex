@@ -1,6 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 17.3 Auslander–Buchsbaum 公式
-% 纲要位置：计划纲要.md，第 2504 行。
+% 纲要位置：工作记录/计划纲要.md，第 2534 行。
+% 纲要细目（写作范围）：
+% * Noether 局部环及非零有限生成模的假设
+% * 有限投射维数条件
+% * 合并定理与证明思路；投射维数为一时用极小矩阵的 Ext 零作用，高次归纳调用深度引理
+% * 公式 pd(M)+depth(M)=depth(R) 及有限投射维数下的合冲递推
 
 \section{Auslander–Buchsbaum 公式}
 \label{b3:sec:1703}
@@ -17,6 +22,7 @@
 
 \subsection{定理与证明思路}
 \label{b3:subsec:1703:01}
+% 兼容别名：纲要已合并原 17.3.1 与 17.3.2 的内容，两个旧标签同指本小节。
 \label{b3:subsec:1703:02}
 
 深度问“能连续除去多少个非零因子”，投射维数问“自由消解需要多少步”。这两种计数一般没有相加公式；只有消解确实终止，末端自由项才能把两者联系起来。
@@ -36,10 +42,10 @@
 \[
 0\longrightarrow F_1\xrightarrow{u}F_0\longrightarrow M\longrightarrow0.
 \]
-关键不只是两端自由，而是 \(u\) 的矩阵元素都在 \(\mathfrak m\) 中。它们在 \(\operatorname{Ext}_R^i(k,R)\) 上作用为零，这正使深度下降一。
+这时两个非零自由项都具有深度 \(t=\operatorname{depth}R\)。\cref{b3:thm:depth-lemma}只给出 \(\operatorname{depth}M\ge t-1\)；用于求商模深度的第二条附加等式要求 \(\operatorname{depth}F_1<\operatorname{depth}F_0\)，这里并不满足。
 
 \ProseParagraphBreak
-这一零化作用正是\cref{b3:lem:ext-basic-properties}的第二项在第一变量为 \(k\) 时的应用：\(\mathfrak m\) 零化 \(k\)，故也零化全部 \(\operatorname{Ext}_R^i(k,R)\)。
+有限投射维数至少为二时，核的投射维数低一阶，归纳将给出核的深度严格小于自由中项的深度，便能使用深度引理的附加等式。因此归纳的边界正是投射维数为一的情形，必须使用极小消解提供的额外信息：\(u\) 的矩阵元素都在 \(\mathfrak m\) 中。由\cref{b3:lem:ext-basic-properties}的第二项，\(\mathfrak m\) 零化第一变量 \(k\)，也就零化全部 \(\operatorname{Ext}_R^i(k,R)\)；因此这个矩阵在 Ext 上诱导零映射，使首次非零次数下降一。
 
 \subsection{Auslander–Buchsbaum 公式的证明}
 \label{b3:subsec:1703:03}
@@ -47,21 +53,29 @@
 \begin{proof}[\cref{b3:thm:auslander-buchsbaum}的证明]
 记 \(r=\operatorname{pd}_RM\)、\(t=\operatorname{depth}R\)，对 \(r\) 归纳。\(r=0\) 时，\(M\) 为非零有限生成投射模，因而平坦；由\cref{b3:lem:finite-flat-local-free}，它在局部环上自由，故与 \(R\) 具有同样深度。
 
-设 \(r=1\)，取上一小节的极小消解，其中 \(F_1\ne0\)。应用 \(\operatorname{Hom}_R(k,-)\) 的长正合列。由\cref{b3:lem:ext-basic-properties}，映射
+设 \(r=1\)，取上一小节的极小消解，其中 \(F_1\ne0\)。选自由基，写成 \(F_1\cong R^a\)、\(F_0\cong R^b\)，其中 \(a,b\ge1\)，并记 \(u\) 的矩阵为 \((u_{\ell j})\)，所有系数都在 \(\mathfrak m\) 中。对每个 \(i\ge0\)，记 \(E_i=\operatorname{Ext}_R^i(k,R)\)。Hom 复形保持有限直和，故
 \[
-\operatorname{Ext}_R^i(k,F_1)\longrightarrow\operatorname{Ext}_R^i(k,F_0)
+\operatorname{Ext}_R^i(k,F_1)\cong E_i^a,
+\qquad\operatorname{Ext}_R^i(k,F_0)\cong E_i^b.
 \]
-为零：它是 \(u\) 的同一矩阵作用于若干个 \(\operatorname{Ext}_R^i(k,R)\)。若 \(t=0\)，则 \(\operatorname{Hom}_R(k,F_1)\ne0\)，但单射 \(F_1\to F_0\) 使它必须单射地映入 \(\operatorname{Hom}_R(k,F_0)\)，与该映射为零矛盾。故 \(t\ge1\)。
+后复合 \(u\) 在 Hom 复形的坐标上把 \((f_j)\) 送到 \((\sum_j u_{\ell j}f_j)_\ell\)，所以上同调映射仍把 \((\xi_j)\in E_i^a\) 送到 \((\sum_j u_{\ell j}\xi_j)_\ell\in E_i^b\)。\cref{b3:lem:ext-basic-properties}给出 \(\mathfrak mE_i=0\)，因此每个坐标和都为零，\(u\) 在所有这些 Ext 上诱导的映射均为零。
 
-对 \(i<t-1\)，长正合列两侧的自由项 Ext 均为零，故 \(\operatorname{Ext}_R^i(k,M)=0\)。在次数 \(t-1\)，得到
+若 \(t=0\)，由\cref{b3:cor:depth-zero-socle}，\(R\) 的基座非零，故 \(F_1\) 的基座 \((\operatorname{Soc}_RR)^a\) 也非零。单射 \(u:F_1\to F_0\) 在基座上仍必须单射；但这两个基座分别识别为 \(\operatorname{Hom}_R(k,F_1)\) 与 \(\operatorname{Hom}_R(k,F_0)\)，刚才次数零的计算又使这个映射为零，矛盾。故 \(t\ge1\)。
+
+应用第二变量的 Ext 长正合列。对 \(0\le i<t-1\)，与 \(\operatorname{Ext}_R^i(k,M)\) 相邻的 \(\operatorname{Ext}_R^i(k,F_0)\) 和 \(\operatorname{Ext}_R^{i+1}(k,F_1)\) 都为零，故 \(\operatorname{Ext}_R^i(k,M)=0\)。在次数 \(t-1\)，长列的相关片段是
+\[
+0=E_{t-1}^{\,b}\longrightarrow\operatorname{Ext}_R^{t-1}(k,M)
+\longrightarrow E_t^{\,a}\xrightarrow{0}E_t^{\,b}.
+\]
+因此中间的连接映射给出
 \[
 \operatorname{Ext}_R^{t-1}(k,M)
 \cong\operatorname{Ext}_R^t(k,F_1)\ne0.
 \]
-\cref{b3:thm:depth-ext}给出 \(\operatorname{depth}M=t-1\)。
+右端非零是因为 \(E_t\ne0\) 且 \(a\ge1\)。\cref{b3:thm:depth-ext}给出 \(\operatorname{depth}M=t-1\)。
 
 若 \(r\ge2\)，取极小满射的核 \(0\to K\to F_0\to M\to0\)。由\cref{b3:prop:pd-minimal-length}，\(K\ne0\) 且投射维数为 \(r-1\)。归纳得
-\(s\coloneqq\operatorname{depth}K=t-r+1<t=\operatorname{depth}F_0\)。若 \(s=0\)，则 \(K\to F_0\) 的单射在 \(\operatorname{Hom}_R(k,-)\) 下给出非零模到零模的单射，矛盾。因此 \(s\ge1\)。现在对该短正合列应用\cref{b3:thm:depth-lemma}的第二条附加等式，得到
+\(s\coloneqq\operatorname{depth}K=t-r+1<t=\operatorname{depth}F_0\)。这里再考察基座上的单射。若 \(s=0\)，则 \(K\) 的基座非零，而 \(F_0\) 的深度 \(t>s\) 为正，基座为零；单射 \(K\to F_0\) 不可能把前者单射地送入后者。因此 \(s\ge1\)。现在 \(K\ne0\) 且 \(\operatorname{depth}K<\operatorname{depth}F_0\)，对该短正合列应用\cref{b3:thm:depth-lemma}的第二条附加等式，得到
 \[
 \operatorname{depth}M=\operatorname{depth}K-1=s-1=t-r.
 \]
@@ -83,4 +97,6 @@
 \qquad \operatorname{depth}_R\Omega^rM=t.
 \end{gathered}
 \]
-第一行中的范围也适用于第二行：在到达非零有限自由模之前，投射维数每次减少一，深度每次增加一；末端的深度等于 \(t\)，因而起点深度为 \(t-r\)。这也给出非零有限生成模在投射维数有限时的上界 \(\operatorname{pd}_RM\le\operatorname{depth}R\)。
+第一行中的范围也适用于第二行。对 \(0\le j\le r\)，每个 \(\Omega^jM\) 都非零且具有有限投射维数 \(r-j\)，对它应用刚证的公式，便得到深度的递推等式。在到达非零有限自由模之前，投射维数每次减少一，深度每次增加一；末端的深度等于 \(t\)，因而起点深度为 \(t-r\)。这也给出非零有限生成模在投射维数有限时的上界 \(\operatorname{pd}_RM\le\operatorname{depth}R\)。
+
+若极小消解不终止，投射维数就是无穷，没有上述自由终点，也不能无限重复深度每次增加一的等式。\cref{b3:cor:syzygy-depth}在一般消解中只给出 \(\operatorname{depth}_R\Omega^jM\ge\min\{t,\operatorname{depth}_RM+j\}\)；当右端达到 \(t\) 后，这个下界不再增长，也没有断言合冲模自由。因此，深度之差 \(\operatorname{depth}R-\operatorname{depth}_RM\) 只有在预先知道投射维数有限时，才由本定理等于 \(\operatorname{pd}_RM\)。

@@ -1,6 +1,10 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 16.1 深度
-% 纲要位置：计划纲要.md，第 2460 行。
+% 纲要位置：工作记录/计划纲要.md，第 2487 行。
+% 纲要细目（写作范围）：
+% * 极大正则序列长度
+% * 深度的有限性与存在性、基座及深度零与有限长度子模的判据
+% * 深度不超过维数；非约化环的正深度
 
 \section{深度}
 \label{b3:sec:1601}
@@ -22,8 +26,10 @@
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。若 \(x_1,\ldots,x_t\in\mathfrak m\) 为 \(M\) 正则序列，而且不能再添上任何 \(y\in\mathfrak m\) 得到更长的正则序列，则称它为 \(\mathfrak m\) 中的一个\term[jida-zhengze-xulie]{极大正则序列}[maximal regular sequence]。这里“极大”指不能延长，尚未预先断言其长度最大。
 \end{definition}
 
+不能延长只说明当前选择已到尽头，一般并不能保证不同选择具有相同长度。下面用同一组极大理想生成元的 Koszul 同调比较这些选择，证明正则序列在这里确实有一个共同的最大长度。
+
 \begin{theorem}\label{b3:thm:maximal-regular-length}
-设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。每个由 \(\mathfrak m\) 中元素构成的 \(M\) 正则序列都能延长为极大正则序列，且所有极大正则序列长度相同。若 \(\mathfrak m=(y_1,\ldots,y_e)\)，其共同长度为
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。每个由 \(\mathfrak m\) 中元素构成的 \(M\) 正则序列都能延长为极大正则序列，且所有极大正则序列长度相同。若取 \(\mathfrak m=(y_1,\ldots,y_e)\) 的任意有限生成组，不必为极小生成组，其共同长度为
 \[
 e-\max\{\,i\mid H_i(y_1,\ldots,y_e;M)\ne0\,\}.
 \]
@@ -31,7 +37,7 @@ e-\max\{\,i\mid H_i(y_1,\ldots,y_e;M)\ne0\,\}.
 \begin{proof}
 每添加一个正则元素，已选元素生成的理想严格增大：若新元素在原理想中，它在非零的逐次商上作用为零，不可能单射。Noether 环的理想升链条件保证这个过程在有限步停止。
 
-先看非零有限生成模 \(N\) 上的空序列何时已经极大。此时 \(\mathfrak m\) 中每个元素都是 \(N\) 的零因子。由\cref{b3:thm:associated-zero-divisors}，
+先看非零有限生成模 \(N\) 上的空序列何时已经极大。对 \(x\in\mathfrak m\)，Nakayama 引理保证 \(N/xN\ne0\)，所以能否添加 \(x\) 只取决于乘 \(x\) 是否单射。空序列极大便意味着 \(\mathfrak m\) 中每个元素都是 \(N\) 的零因子。由\cref{b3:thm:associated-zero-divisors}，
 \[
 \mathfrak m\subseteq\bigcup_{\mathfrak p\in\operatorname{Ass}_RN}\mathfrak p.
 \]
@@ -39,9 +45,11 @@ e-\max\{\,i\mid H_i(y_1,\ldots,y_e;M)\ne0\,\}.
 \[
 H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 \]
-非零，且没有次数超过 \(e\) 的项。反过来，这样的 \(n\) 也使 \(\mathfrak m\) 中任何元素都不可能正则。
+非零，且没有次数超过 \(e\) 的项。反过来，这样的 \(n\) 也使 \(\mathfrak m\) 中任何元素都不可能正则。因此找不到第一个正则元素时，已有同一个非零元素被整个极大理想零化，而不是只有不同元素各自被某些零因子零化。
 
-对任意非零有限生成模 \(N\)，令 \(q(N)=\max\{i\mid H_i(y;N)\ne0\}\)。这个最大值存在，因为 \(H_0=N/\mathfrak mN\ne0\)。若 \(x\in\mathfrak m\) 在 \(N\) 上正则，把 \(0\rightarrow N\xrightarrow{x}N\rightarrow N/xN\rightarrow0\) 张量 Koszul 复形得到逐项短正合列。圈的提升与取微分给出同调长正合列；其两个乘法 \(x\) 都为零，因为\cref{b3:prop:koszul-signs-homotopy}说明 \(\mathfrak m\) 零化 Koszul 同调。因此
+对任意非零有限生成模 \(N\)，令 \(q(N)=\max\{i\mid H_i(y;N)\ne0\}\)。这个最大值存在：由\cref{b3:thm:nakayama}，\(H_0=N/\mathfrak mN\ne0\)，而复形只有次数零到 \(e\) 的项。要比较取正则商前后的最高非零次数，关键是 \(x\in\mathfrak m=(y_1,\ldots,y_e)\)，所以\cref{b3:prop:koszul-signs-homotopy}给出 \(xH_i(y;N)=0\)。
+
+若 \(x\in\mathfrak m\) 在 \(N\) 上正则，将短正合列 \(0\rightarrow N\xrightarrow{x}N\rightarrow N/xN\rightarrow0\) 张量 \(K_\bullet(y;R)\)。该复形的每一项都是有限秩自由模，故得到逐项短正合列。按\cref{b3:lem:tor-basic-properties}证明中的圈提升构造，它诱导同调长正合列。在 \(H_i(y;N/xN)\) 的两侧，长列的乘法 \(x\) 都为零，因此长列分成短正合列
 \[
 0\longrightarrow H_i(y;N)\longrightarrow H_i(y;N/xN)
 \longrightarrow H_{i-1}(y;N)\longrightarrow0
@@ -50,8 +58,15 @@ H_e(y;N)=\{\,n\in N\mid\mathfrak mn=0\,\}
 \[
 H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
 \]
-当 \(i>q+1\) 时，短正合列的两端均为零，中间项也为零。因此新的最高非零同调次数恰为 \(q+1\)，即 \(q(N/xN)=q(N)+1\)。若极大正则序列长为 \(t\)，连续应用这个等式，在末端商处得到 \(e=q(M)+t\)。右端除 \(t\) 外不依赖所选序列，故所有长度相同。
+当 \(i>q+1\) 时，短正合列的两端均为零，中间项也为零。因此每除去一个正则元素，最高非零 Koszul 同调次数恰好上移一位，即 \(q(N/xN)=q(N)+1\)。若极大正则序列长为 \(t\)，它的非零末端商已找不到正则元素，前面的空序列判据说明该商的最高非零同调次数为 \(e\)。连续应用这个等式便得到 \(e=q(M)+t\)。右端除 \(t\) 外不依赖所选序列，故所有长度相同。
 \end{proof}
+
+这里的 \(e\) 是所选生成组的长度，不一定等于嵌入维数。例如，对域 \(k\)，在 \(R=k[X,Y]_{(X,Y)}\) 中，\(X,Y\) 是正则序列，所以 \(H_0(X,Y;R)=k\)，正次数同调为零，最高非零次数为 \(0\)。也可以用 \(X,Y,X\) 生成极大理想。把第三个元素减去第一个元素，由\cref{b3:prop:koszul-generator-change}将其复形换成 \(K_\bullet(X,Y,0;R)\)。张量分解中的 \(K_\bullet(0;R)\) 在次数零、一各有一个 \(R\)，微分为零，故
+\[
+H_i(X,Y,X;R)
+\cong H_i(X,Y;R)\oplus H_{i-1}(X,Y;R).
+\]
+于是这一冗余生成组的零次和一次同调都是 \(k\)，更高同调为零；公式中的差由 \(2-0\) 变成 \(3-1\)，共同长度仍为 \(2\)。
 
 \subsection{深度的存在性与有限性}
 \label{b3:subsec:1601:02}
@@ -68,14 +83,17 @@ H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
 \begin{equivalences}
 \item \(\operatorname{depth}_RM=0\)；
 \item \(\mathfrak m\in\operatorname{Ass}_RM\)；
-\item \(\operatorname{Hom}_R(k,M)\ne0\)。
+\item \(\operatorname{Hom}_R(k,M)\ne0\)；
+\item \(M\) 含有非零有限长度子模。
 \end{equivalences}
 \end{corollary}
 \begin{proof}
-前两个条件的等价已在\cref{b3:thm:maximal-regular-length}的证明中得到。一个同态 \(k\rightarrow M\) 由 \(1\) 的像决定，该像恰为被 \(\mathfrak m\) 零化的元素；非零时其零化子等于 \(\mathfrak m\)，故后两个条件等价。
+前两个条件的等价已在\cref{b3:thm:maximal-regular-length}的证明中得到。一个同态 \(k\rightarrow M\) 由 \(1+\mathfrak m\) 的像决定，该像恰为被 \(\mathfrak m\) 零化的元素；非零时其零化子等于 \(\mathfrak m\)，故第二、第三个条件等价。这样的非零同态从简单模 \(k\) 出发，必为单射，其像是长度一的子模，因而得到第四个条件。
+
+反过来，设 \(0\ne L\subseteq M\) 具有有限合成列 \(0=L_0\subsetneq L_1\subsetneq\cdots\subsetneq L_\ell=L\)。局部环上的每个简单商 \(L_j/L_{j-1}\) 都同构于 \(k\)，所以 \(\mathfrak mL_j\subseteq L_{j-1}\)。沿合成列逐步相乘得到 \(\mathfrak m^\ell L=0\)。取使 \(\mathfrak m^aL=0\) 的最小正整数 \(a\)，则 \(\mathfrak m^{a-1}L\ne0\)，其中的非零元素被 \(\mathfrak m\) 零化，于是给出非零同态 \(k\to M\)。这证明第四个条件蕴含第三个条件。
 \end{proof}
 
-深度零判据中的非零同态 \(k\to M\) 在 \(M\) 中给出一个简单子模。把模中的所有简单子模合在一起，就得到下面的子模。
+这样的简单子模可能不唯一；把模中的所有简单子模合在一起，就得到下面的子模。
 
 \begin{definition}\label{b3:def:socle}
 设 \((R,\mathfrak m)\) 为交换局部环，\(k=R/\mathfrak m\) 为其剩余域，\(M\) 为 \(R\) 模。\(M\) 中全部简单子模之和称为 \(M\) 的\term[jizuo]{基座}[socle]，记为 \(\operatorname{Soc}_RM\)。在此局部环情形，有
@@ -96,6 +114,8 @@ H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
 \operatorname{depth}_RM=0\quad\Longleftrightarrow\quad
 \operatorname{Soc}_RM\ne0.
 \]
+
+例如，对域 \(k\)，章首的环 \(A=k[X,Y]_{(X,Y)}/(X^2,XY)\) 中，非零的 \(\bar X\) 被 \((\bar X,\bar Y)\) 零化，所以 \(\bar X\in\operatorname{Soc}_AA\)。它生成一个同构于剩余域 \(k\) 的长度一子模。这正是该环虽有一维支集，却找不到第一个正则元素的原因。
 
 \begin{corollary}\label{b3:cor:regular-quotient-depth}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(x\in\mathfrak m\) 在 \(M\) 上为非零因子。则
@@ -126,9 +146,9 @@ H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
 \operatorname{Supp}(M/xM)=\operatorname{Supp}M\cap V(x),\qquad
 \dim(M/xM)=\dim A/(x).
 \]
-由\cref{b3:prop:minimal-primes-associated}，\(\operatorname{Supp}M\) 的极小素理想都是关联素理想。\(x\) 为非零因子，故避开这些素理想。每条包含 \(x\) 的支集素链都可以在底部再补上一个极小素理想，所以 \(\dim A/(x)\le\dim A-1\)。
+要证明维数恰好下降一，须分别排除下降不足一维和超过一维。由\cref{b3:prop:minimal-primes-associated}，\(\operatorname{Supp}M\) 的极小素理想都是关联素理想。\(x\) 为非零因子，故避开这些素理想：方程 \(x=0\) 不会保留支集的任何一个完整不可约分量。每条包含 \(x\) 的支集素链都可以在底部再补上一个不含 \(x\) 的极小素理想，这个包含严格，所以 \(\dim A/(x)\le\dim A-1\)。这保证确实至少下降一维。
 
-反向不等式用参数系。设 \(d'=\dim A/(x)\)，由\cref{b3:thm:system-of-parameters}在该局部商环选 \(d'\) 个元素，其生成理想的根为极大理想。提升到 \(A\)，再加上 \(x\)，得到由 \(d'+1\) 个元素生成的 \(\mathfrak m\) 准素理想。\cref{b3:thm:height-theorem}给出 \(\dim A\le d'+1\)，两式合并得等式。
+还须证明一个方程至多使维数下降一。设 \(d'=\dim A/(x)\)，由\cref{b3:thm:system-of-parameters}在这个非零 Noether 局部商环选 \(d'\) 个元素，其生成理想的根为极大理想。提升到 \(A\)，再加上 \(x\)，得到由 \(d'+1\) 个元素生成的 \(\mathfrak m\) 准素理想。\(\mathfrak m\) 是该理想上唯一的素理想，故由\cref{b3:thm:height-theorem}有 \(\dim A=\operatorname{ht}\mathfrak m\le d'+1\)。这给出反向不等式 \(\dim A/(x)\ge\dim A-1\)，两式合并得等式。
 \end{proof}
 
 \begin{corollary}\label{b3:cor:depth-dimension-bound}
@@ -141,4 +161,21 @@ H_{q+1}(y;N/xN)\xrightarrow{\sim}H_q(y;N)\ne0.
 沿一个长度为 \(t\) 的极大正则序列逐次取商，维数每次下降一，末端模仍非零，其维数至少为零。因此 \(t\le\dim_RM\)。最后一式来自支集是素谱的子集。
 \end{proof}
 
-深度可能严格小于维数。例如 \(A=k[X,Y]_{(X,Y)}/(X^2,XY)\) 的维数为一，但非零元 \(\bar X\) 被极大理想零化，故深度为零。维数仍看见 \(Y\) 方向的素理想链，正则性却已被闭点处的附加部分阻止。
+深度可能严格小于维数。前面含有基座元素 \(\bar X\) 的环 \(A\) 维数为一、深度为零；维数仍看见 \(Y\) 方向的素理想链，正则性却已被基座中的非零元素阻止。一般地，沿极大正则序列每次取商，维数和深度都下降一，所以末端商的维数是 \(\dim_RM-\operatorname{depth}_RM\)。这个数表示正则元素已经无法再选取时，支集中还剩多少维。
+
+上述上界是 \(\dim_RM\)，不能换成 \(\operatorname{depth}R\)。例如 \(A\) 自身深度为零，但模 \(N=A/(\bar X)\cong k[Y]_{(Y)}\) 中乘 \(\bar Y\) 单射，最终商为 \(k\)，所以 \(\operatorname{depth}_AN\ge1\)；又 \(\dim_AN=1\)，故其深度恰为一，大于环 \(A\) 的深度。
+
+\begin{proposition}\label{b3:prop:nonreduced-positive-depth}
+设 \(k\) 为域，\(a\ge2\) 为整数，令
+\[
+A=k[X,Y]_{(X,Y)}/(X^a),
+\]
+并以 \(\bar X,\bar Y\) 表示 \(X,Y\) 在 \(A\) 中的像。则 \(\bar Y\) 是 \(A\) 的正则元素，\(\dim A=\operatorname{depth}A=1\)，但 \(\bar X\ne0\) 且 \(\bar X^a=0\)，所以 \(A\) 不约化。
+\end{proposition}
+\begin{proof}
+环 \(k[X,Y]/(X^a)\) 作为 \(k[Y]\) 模自由，基为 \(1,\bar X,\ldots,\bar X^{a-1}\)，所以乘 \(Y\) 单射。局部化保持单射，故乘 \(\bar Y\) 在 \(A\) 上仍单射。其商为
+\[
+A/(\bar Y)\cong k[X]/(X^a)\ne0,
+\]
+右边已是局部环，因为 \(X\) 幂零，唯一极大理想是 \((\bar X)\)。因此 \(\bar Y\) 正则，深度至少为一。上述商中 \(\bar X\) 非零，因为 \(a\ge2\)；于是它在 \(A\) 中也非零，而 \(\bar X^a=0\)。又 \((\bar X)\) 是幂零理想，且 \(A/(\bar X)\cong k[Y]_{(Y)}\) 约化，故 \(\sqrt{(0)}=(\bar X)\)。由\cref{b3:prop:dimension-basic-comparison}，\(\dim A=\dim k[Y]_{(Y)}=1\)。深度与维数的不等式再给出 \(\operatorname{depth}A=1\)。
+\end{proof}

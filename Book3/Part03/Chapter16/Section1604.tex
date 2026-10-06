@@ -1,6 +1,12 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 16.4 Serre 条件
-% 纲要位置：计划纲要.md，第 2480 行。
+% 纲要位置：工作记录/计划纲要.md，第 2507 行。
+% 纲要细目（写作范围）：
+% * 模的 S_k 条件
+% * 局部化后的深度要求
+% * S_0、S_1、S_2 的层级与嵌入分量的联系
+% * 一般 S_k 正则截面的下降；极大点数值不足与非约化反例
+% ---
 
 \section{Serre 条件}
 \label{b3:sec:1604}
@@ -29,7 +35,9 @@
 则称 \(M\) 满足\term[serre-tiaojian]{Serre 条件}[Serre's condition] \((S_k)\)。对 \(M=R\) 采用同一定义，称环 \(R\) 满足 \((S_k)\)。零模的条件为空。
 \end{definition}
 
-这里采用局部模的维数，不能把它统一换成 \(\dim R_{\mathfrak p}\)：模的支集可能只有环境的一部分。例如，设 \(k\) 为域，\(R=k[X,Y]_{(X,Y)}\) 上的 \(M=R/(X)\) 在闭点的深度与模维数都为一，按本定义在各点满足全部 \((S_k)\)，而它并非深度为二的 \(R\) 模。
+深度不超过局部模的维数，所以在 \(\dim M_{\mathfrak p}\le k\) 的点，\((S_k)\) 要求深度恰等于该维数；在局部维数至少为 \(k\) 的点，则只要求深度至少为 \(k\)。维数为零的点没有额外要求。
+
+这里采用局部模的维数，不能把它统一换成 \(\dim R_{\mathfrak p}\)：模的支集可能只有环境的一部分。例如，设 \(k\) 为域，\(R=k[X,Y]_{(X,Y)}\) 上的 \(M=R/(X)\) 只支撑在直线 \(X=0\) 上。在闭点，\(M\cong k[Y]_{(Y)}\) 的深度与模维数都为一；在这条线的一般点，局部模为 \(k(Y)\)，深度与维数都为零。因此它满足全部 Serre 条件，而不必具有深度二。
 
 \subsection{局部化后的深度要求}
 \label{b3:subsec:1604:02}
@@ -59,10 +67,12 @@
 即其关联素理想全是支集的极小素理想。
 \end{theorem}
 \begin{proof}
-若 \(M\) 满足 \((S_1)\)，取 \(\mathfrak p\in\operatorname{Ass}_RM\)。由\cref{b3:prop:associated-localization}，\(\mathfrak pR_{\mathfrak p}\) 是 \(M_{\mathfrak p}\) 的关联素理想，故局部深度为零。\((S_1)\) 迫使 \(\dim M_{\mathfrak p}=0\)，这表示支集中没有严格小于 \(\mathfrak p\) 的素理想。
+对每个 \(\mathfrak p\in\operatorname{Supp}M\)，\(M_{\mathfrak p}\) 是非零有限生成的 \(R_{\mathfrak p}\) 模。由\cref{b3:cor:depth-zero-socle}，其深度为零当且仅当局部极大理想 \(\mathfrak pR_{\mathfrak p}\) 是关联素理想；再用\cref{b3:prop:associated-localization}及素理想的收缩对应，这又等价于 \(\mathfrak p\in\operatorname{Ass}_RM\)。另一方面，\(\dim M_{\mathfrak p}=0\) 当且仅当支集中没有严格小于 \(\mathfrak p\) 的素理想，即 \(\mathfrak p\) 是支集的极小元。
 
-反之，假设关联素理想都极小。若 \(\mathfrak p\in\operatorname{Supp}M\) 且 \(\dim M_{\mathfrak p}>0\)，则 \(\mathfrak p\) 不是支集极小元，故不属于 \(\operatorname{Ass}M\)。关联素理想的局部化公式给出 \(\mathfrak pR_{\mathfrak p}\notin\operatorname{Ass}M_{\mathfrak p}\)，由\cref{b3:cor:depth-zero-socle}局部深度至少为一。维数为零的各点自动满足条件。最后，支集的极小素理想总是关联素理想，故“全都极小”也给出了集合等号。
+\((S_1)\) 只要求局部维数为正的各点深度不为零。因此它恰好排除非极小的关联素理想。由\cref{b3:prop:minimal-primes-associated}，支集的极小素理想总是关联素理想，所以排除这些嵌入关联素理想就得到所列集合等号。
 \end{proof}
+
+对域 \(k\)，第四章的两轴环 \(k[x,y]/(xy)\) 只有由 \((x)\)、\((y)\) 给出的两个极小关联素理想，所以满足 \((S_1)\)。而 \(k[x,y]/(x^2,xy)\) 中非零的 \(\bar x\) 被 \((x,y)\) 零化，其零化子恰为这个极大理想；它严格包含极小素理想 \((x)\)，所以该环不满足 \((S_1)\)。在这个闭点，局部维数仍为一，深度却已经降为零。
 
 因此，对交换 Noether 环 \(R\) 上的有限生成模 \(M\)，这三层条件可以写成
 \[
@@ -77,13 +87,48 @@
 
 \ProseParagraphBreak
 
-\((S_1)\) 与 \((S_2)\) 的差别可以在一个简单的理想上看见。设 \(k\) 为域，取 \(R=k[X,Y]_{(X,Y)}\)、\(M=(X,Y)\)。\(M\) 为整环中的非零理想，所有非零元的零化子都是零，所以 \(\operatorname{Ass}M=\{0\}\)，满足 \((S_1)\)；但前节算出其深度为一，模维数为二，故不满足 \((S_2)\)。
+\((S_1)\) 与 \((S_2)\) 的差别可以在一个简单的理想上看见。设 \(k\) 为域，取 \(R=k[X,Y]_{(X,Y)}\)、\(M=(X,Y)\)。\(M\) 为整环中的非零理想，所有非零元的零化子都是零，所以它无挠，\(\operatorname{Ass}M=\{0\}\)，且支集为整个 \(\operatorname{Spec}R\)。它满足 \((S_1)\)；但前节算出其深度为一，模维数为二，故不满足 \((S_2)\)。排除嵌入关联素理想只保证正维局部点有第一层非零因子，并不保证二维及更高维处还能继续正则取商。
 
 \begin{proposition}\label{b3:prop:s2-regular-section-s1}
-设 \(R\) 为交换 Noether 环，\(M\) 为满足 \((S_2)\) 的有限生成的 \(R\) 模，\(x\in R\) 在 \(M\) 上为非零因子。则 \(M/xM\) 满足 \((S_1)\)。
+设 \(R\) 为交换 Noether 环，\(s\ge1\) 为整数，\(M\) 为满足 \((S_s)\) 的有限生成的 \(R\) 模，\(x\in R\) 在 \(M\) 上为非零因子。则 \(M/xM\) 满足 \((S_{s-1})\)。特别地，满足 \((S_2)\) 的模沿非零因子取商后满足 \((S_1)\)。
 \end{proposition}
 \begin{proof}
-取 \(\mathfrak p\in\operatorname{Supp}(M/xM)\)。此时 \(x\in\mathfrak p\)，且在非零有限生成模 \(M_{\mathfrak p}\) 上正则。\cref{b3:prop:regular-quotient-dimension}和\cref{b3:cor:regular-quotient-depth}都适用。若 \(\dim(M/xM)_{\mathfrak p}>0\)，则 \(\dim M_{\mathfrak p}\ge2\)，所以 \(\operatorname{depth}M_{\mathfrak p}\ge2\)，商的深度至少为一。若商的局部维数为零，\((S_1)\) 条件自动满足。
+局部化保持 \(x\) 的乘法单射。若 \(M_{\mathfrak p}\ne0\) 且 \(x\in\mathfrak p\)，Nakayama 引理保证 \(M_{\mathfrak p}/xM_{\mathfrak p}\ne0\)；若 \(x\notin\mathfrak p\)，则 \(x\) 成为单位，商模的局部化为零。因此
+\[
+\operatorname{Supp}(M/xM)=\operatorname{Supp}M\cap V(x).
+\]
+取这个支集中的 \(\mathfrak p\)，\(x/1\) 就是非零有限生成的 \(R_{\mathfrak p}\) 模 \(M_{\mathfrak p}\) 上的正则元素。记 \(d=\dim M_{\mathfrak p}\)、\(t=\operatorname{depth}M_{\mathfrak p}\)，由\cref{b3:prop:regular-quotient-dimension,b3:cor:regular-quotient-depth}，商的局部维数为 \(d-1\)，深度为 \(t-1\)。其中 \(d\ge1\)，而 \((S_s)\) 给出 \(t\ge\min\{s,d\}\)，故
+\[
+t-1\ge\min\{s,d\}-1=\min\{s-1,d-1\}.
+\]
+这正是商模在 \(\mathfrak p\) 处所需的 \((S_{s-1})\) 不等式。若商模为零，条件为空，结论也成立。
 \end{proof}
 
-因此 \((S_2)\) 不只排除当前模的嵌入部分，也控制正则截面不会新生这种部分。它仍不是正规性的完整条件；\chapref{b3:ch:20}将另外加入余维一处的正则性，并证明两种要求如何共同刻画正规环。
+因此 \((S_2)\) 不只排除当前模的嵌入部分，也控制正则截面不会新生这种部分。它仍不是正规性的完整条件；\chapref{b3:ch:20}将另外加入高度不超过一的各素点处的正则性，并证明两种要求如何共同刻画正规环。
+
+\begin{proposition}\label{b3:prop:serre-condition-counterexamples}
+非零交换 Artin 环满足所有 Serre 条件 \((S_s)\)，其中 \(s\ge0\) 为整数，但不必约化。例如，对任意域 \(k\)，环 \(k[\varepsilon]/(\varepsilon^2)\) 满足全部这些条件而不约化。
+
+另设 \(k\) 为域，\(R=k[X,Y,Z]_{(X,Y,Z)}\)、\(\mathfrak m=(X,Y,Z)R\)、\(M=R\oplus R/(X,Y)\)。则 \(\operatorname{depth}_RM=1\)，但在素理想 \(\mathfrak p=(X,Y)R\) 处，有
+\[
+\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}=0,
+\qquad \dim_{R_{\mathfrak p}}M_{\mathfrak p}=2.
+\]
+因此 \(M\) 满足闭点自身的 \((S_1)\) 深度下界，却不满足 \((S_1)\)。
+\end{proposition}
+\begin{proof}
+交换 Artin 环由\cref{b3:thm:artin-finite-length}是 Noether 环，且由\cref{b3:lem:artin-primes-radical}，每个素理想都极大。因此在每个素点，局部环的维数为零，Serre 条件只要求深度非负，自动成立。在 \(k[\varepsilon]/(\varepsilon^2)\) 中，\(\varepsilon\ne0\) 而 \(\varepsilon^2=0\)，所以约化性不能由这些深度条件推出。
+
+在所列 \(R\) 与 \(M\) 中，\(R/(X,Y)\cong k[Z]_{(Z)}\)，所以 \(Z\) 在两个直和分量上都为非零因子，也就在 \(M\) 上为非零因子。商模
+\[
+M/ZM\cong R/(Z)\oplus k
+\]
+含有非零元素 \((0,1)\)，其零化子为 \(\mathfrak m\)。由\cref{b3:cor:depth-zero-socle}，该商模深度为零；再由\cref{b3:cor:regular-quotient-depth}，\(\operatorname{depth}_RM=1\)。
+
+在 \(\mathfrak p=(X,Y)R\) 处，局部化得到
+\[
+R_{\mathfrak p}\cong k(Z)[X,Y]_{(X,Y)},\qquad
+M_{\mathfrak p}\cong R_{\mathfrak p}\oplus k(Z).
+\]
+第二个分量成为局部环的剩余域，故同样有非零元素被整个局部极大理想零化，给出深度零。第一个分量是环本身，所以局部模的支集为整个局部谱。这个局部环有素链 \((0)\subsetneq(X)\subsetneq(X,Y)\)，而极大理想由两个元素生成，高度定理给出其维数恰为二。因此在这个支集点，\((S_1)\) 要求深度至少为一，实际却为零。
+\end{proof}

@@ -1,6 +1,11 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 18.1 正则性的等价观点
-% 纲要位置：计划纲要.md，第 2521 行。
+% 纲要位置：工作记录/计划纲要.md，第 2552 行。
+% 纲要细目（写作范围）：
+% * 维数与极大理想最小生成元数
+% * 以规范映射 \(\operatorname{Sym}_k(\mathfrak m/\mathfrak m^2)\to\operatorname{gr}_{\mathfrak m}R\) 的同构性独立刻画正则性；反向比较 Hilbert–Samuel 增长次数
+% * 逐层说明正则参数商的伴随分次同构；证明任意参数系正则时写出商环中的根等式
+% * 正文命题完整计算图形环、二次锥及 \(\mathbb Z[x]_{(p,x)}\) 的正则性、伴随分次环和混合特征剩余域消解
 
 \section{正则性的等价观点}
 \label{b3:sec:1801}
@@ -17,7 +22,7 @@
 \subsection{维数与极大理想的最小生成元数}
 \label{b3:subsec:1801:01}
 
-\cref{b3:def:regular-local-ring}以 \(\dim R=\operatorname{edim}R\) 定义正则局部环。这个等式说：极大理想所需的生成元恰好达到高度定理允许的最少数目。本章要从这一个数字等式推出多项式式的初始结构、有限自由消解以及唯一分解。
+\cref{b3:def:regular-local-ring}以 \(\dim R=\operatorname{edim}R\) 定义正则局部环。这个等式说：极大理想所需的生成元恰好达到高度定理允许的最少数目。本章要从这一个数字等式推出伴随分次环的多项式结构、有限自由消解以及唯一分解。
 
 \ProseParagraphBreak
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)，取 \(\mathfrak m\) 的极小生成组 \(x_1,\ldots,x_e\)。它们在 \(\mathfrak m/\mathfrak m^2\) 中的像为基，从而给出分次满射
@@ -25,7 +30,7 @@
 k[X_1,\ldots,X_e]\longrightarrow\operatorname{gr}_{\mathfrak m}R,
 \qquad X_i\longmapsto x_i+\mathfrak m^2.
 \end{equation}
-满射性来自 \(\mathfrak m^n\) 由所有 \(n\) 次生成元乘积生成。一般局部环可能存在初始关系；正则性将使这个核恰好为零。
+因为 \(\mathfrak m=(x_1,\ldots,x_e)\)，\(\mathfrak m^n\) 中的元素都是 \(n\) 个生成元之积的 \(R\) 线性组合；模掉 \(\mathfrak m^{n+1}\) 后，系数只需保留它们在 \(k\) 中的像。因此每一层都由 \(x_i+\mathfrak m^2\) 的乘积生成，得到上述满射。满射性并不依赖正则性。不选基时，对称代数的泛性质仍把一次分量的恒等映射延拓为规范同态 \(\operatorname{Sym}_k(\mathfrak m/\mathfrak m^2)\to\operatorname{gr}_{\mathfrak m}R\)，选基以后才写成\eqref{b3:eq:regular-graded-presentation}。一般局部环可能存在初始关系；正则性将使这个核恰好为零。
 
 \begin{theorem}\label{b3:thm:regular-local-characterizations}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\)、\(d=\dim R\)，并记 \(\operatorname{gr}_{\mathfrak m}R=\bigoplus_{q\ge0}\mathfrak m^q/\mathfrak m^{q+1}\)。下列条件等价：
@@ -42,17 +47,17 @@ k[X_1,\ldots,X_e]\longrightarrow\operatorname{gr}_{\mathfrak m}R,
 这些条件成立时，任意极小生成组都是长度 \(d\) 的正则序列，\(\operatorname{depth}R=d\)；任意参数系也是正则序列。
 \end{theorem}
 
-先证明分次环和极小生成组的断言，再处理一般参数系。参数系只要求生成极大理想准素的理想，未必生成极大理想本身；这两个条件不可混同。
+参数系只要求生成极大理想准素的理想，未必生成极大理想本身。极小生成组与一般参数系的正则性因而需要分别证明。
 
 \subsection{伴随分次环的结构}
 \label{b3:subsec:1801:02}
 
 \begin{proof}[\cref{b3:thm:regular-local-characterizations}的证明]
-假设 \(R\) 正则，在\eqref{b3:eq:regular-graded-presentation}中取 \(e=d\)。若核含非零齐次多项式 \(f\)，记其次数为 \(a>0\)。多项式环中的乘 \(f\) 单射，故其模 \(f\) 商环的前 \(n\) 层累计维数为
+假设 \(R\) 正则，在\eqref{b3:eq:regular-graded-presentation}中取 \(e=d\)。\(d=0\) 时 Nakayama 引理给 \(\mathfrak m=0\)，满射本来就是域的恒等。以下设 \(d\ge1\)。满射是否单射，可以从各层的增长判断：\(d\) 个变量的多项式环具有 \(d\) 次累计增长，而一个非零初始关系就会使这个次数降低。若核含非零齐次多项式 \(f\)，记其次数为 \(a>0\)；次数零的映射是 \(k\) 的恒等，故非零关系不可能在次数零。多项式环中的乘 \(f\) 单射，把次数至多 \(n-a\) 的部分送到次数至多 \(n\) 的部分，故其模 \(f\) 商环的前 \(n\) 层累计维数为
 \[
 \binom{n+d}{d}-\binom{n-a+d}{d}\qquad(n\ge a),
 \]
-这是次数至多 \(d-1\) 的多项式。伴随分次环是该商环的商，其累计维数不超过这个数。但累计维数等于 \(\ell_R(R/\mathfrak m^{n+1})\)，由\cref{b3:thm:hilbert-samuel}恰有 \(d\) 次正首项，矛盾。\(d=0\) 时 Nakayama 引理给 \(\mathfrak m=0\)，满射本来就是域的恒等。因此满射总为同构。选定这组基后，对称代数识别为 \(k[X_1,\ldots,X_d]\)，上述满射就是条件中的规范同态。
+这两个二项式多项式的最高项都是 \(n^d/d!\)，相减后抵消，故结果的次数至多为 \(d-1\)。伴随分次环是该商环的商，其累计维数不超过这个数。但累计维数等于 \(\ell_R(R/\mathfrak m^{n+1})\)，由\cref{b3:thm:hilbert-samuel}恰有 \(d\) 次正首项，不可能在充分大的 \(n\) 处被一个至多 \(d-1\) 次的多项式控制，矛盾。因此满射总为同构。选定这组基后，对称代数识别为 \(k[X_1,\ldots,X_d]\)，上述满射就是条件中的规范同态。
 
 反向，设该规范同态为同构，并记 \(e=\dim_k\mathfrak m/\mathfrak m^2\)。选取一次分量的一组基，就把伴随分次环识别为 \(k[X_1,\ldots,X_e]\)，因而对每个 \(n\ge0\)，
 \[
@@ -62,34 +67,34 @@ k[X_1,\ldots,X_e]\longrightarrow\operatorname{gr}_{\mathfrak m}R,
 \]
 右端是 \(e\) 次多项式；Hilbert–Samuel 定理给出的次数为 \(d\)，所以 \(e=d\)，即 \(R\) 正则。
 
-现在假设规范分次同态为同构。已知 \(e=d\)，取任意极小生成组 \(x_1,\ldots,x_d\)，其对应的分次同构使 \(x_i\) 的初始式为 \(X_i\)。\(d=0\) 时 \(\mathfrak m=0\)，由空正则序列生成；以下设 \(d\ge1\)。由\cref{b3:thm:krull-intersection}，每个非零 \(a\in R\) 有有限的 \(\mathfrak m\) 进阶数 \(\nu(a)\)，其初始式非零。\(x_1a\) 在 \(\mathfrak m^{\nu(a)+1}/\mathfrak m^{\nu(a)+2}\) 中的像为 \(X_1\operatorname{in}(a)\)，在多项式环中非零，故 \(x_1\) 是非零因子且
-\(\nu(x_1a)=1+\nu(a)\)。特别地，
+现在假设规范分次同态为同构。已知 \(e=d\)，取任意极小生成组 \(x_1,\ldots,x_d\)，其对应的分次同构使 \(x_i\) 的初始式为 \(X_i\)。\(d=0\) 时 \(\mathfrak m=0\)，由空正则序列生成；以下设 \(d\ge1\)。要把分次环中的非零因子转回 \(R\)，须保证每个非零元素都能被某一层检测到。由\cref{b3:thm:krull-intersection}，每个非零 \(a\in R\) 都有最大的整数 \(\nu(a)\ge0\) 使 \(a\in\mathfrak m^{\nu(a)}\)，其初始式非零。\(x_1a\) 在 \(\mathfrak m^{\nu(a)+1}/\mathfrak m^{\nu(a)+2}\) 中的像为 \(X_1\operatorname{in}(a)\)，在多项式环中非零；所以乘积的最低项不会消失，\(x_1a\ne0\)，且
+\(\nu(x_1a)=1+\nu(a)\)。这证明 \(x_1\) 是非零因子，也给出
 \[
 (x_1)\cap\mathfrak m^n=x_1\mathfrak m^{n-1}\quad(n\ge1).
 \]
-因此，对 \(n\ge1\)，商环伴随分次的第 \(n\) 层为
+一边的包含来自 \(x_1\in\mathfrak m\)；反向，若 \(x_1a\in\mathfrak m^n\) 且 \(a\ne0\)，阶数公式给 \(\nu(a)\ge n-1\)，故 \(a\in\mathfrak m^{n-1}\)。这个交式还保证商掉 \(x_1\) 不会产生额外的初始关系。对 \(n\ge1\)，商环伴随分次的第 \(n\) 层为
 \[
 \dfrac{\mathfrak m^n+(x_1)}{\mathfrak m^{n+1}+(x_1)}
 \cong
 \dfrac{\mathfrak m^n}{\mathfrak m^{n+1}+x_1\mathfrak m^{n-1}}.
 \]
-其中分母由交公式得到。右端恰是 \(k[X_1,\ldots,X_d]/(X_1)\) 的第 \(n\) 次部分；第零层另为 \(R/\mathfrak m=k\)。这些同构与乘法相容，故
+因为 \(\mathfrak m^{n+1}\subseteq\mathfrak m^n\)，分母为 \(\mathfrak m^{n+1}+((x_1)\cap\mathfrak m^n)\)，恰由上述交式得到。右端是 \(k[X_1,\ldots,X_d]/(X_1)\) 的第 \(n\) 次部分；第零层另为 \(R/\mathfrak m=k\)。各层同构都由自然商映射诱导，因而与乘法相容，故
 \[
 \operatorname{gr}_{\mathfrak m/(x_1)}(R/(x_1))
 \cong k[X_1,\ldots,X_d]/(X_1)
 \cong k[X_2,\ldots,X_d].
 \]
-在商环内重复，得到 \(x_1,\ldots,x_d\) 正则。这也证明任意极小生成组正则，因为上述分次同构适用于任意一组极小生成元。
+当 \(d\ge2\) 时，在 \(R/(x_1)\) 中，\(x_2\) 的初始式成为剩余多项式环中的变量 \(X_2\)，所以同一论证证明它为非零因子，并把商环的伴随分次环变成 \(k[X_3,\ldots,X_d]\)。逐次重复，每个 \(x_i\) 都在前面的商环上为非零因子，末端商为 \(R/\mathfrak m=k\ne0\)，故整组正则。这个论证适用于任意一组极小生成元。
 
 若反过来 \(\mathfrak m\) 由长度 \(r\) 的正则序列生成，那么
-\(r\le\operatorname{depth}R\le\dim R\le\operatorname{edim}R\le r\)。其中深度不超过维数已在\cref{b3:cor:associated-depth-bound}建立，高度不等式见\eqref{b3:eq:dimension-embedding-bound}。所以这些数均相等，环正则，且深度等于 \(d\)。
+\(r\le\operatorname{depth}R\le\dim R\le\operatorname{edim}R\le r\)。其中深度不超过维数见\cref{b3:cor:depth-dimension-bound}，高度不等式见\eqref{b3:eq:dimension-embedding-bound}。所以这些数均相等，环正则，且深度等于 \(d\)。
 
-最后取任意参数系 \(a_1,\ldots,a_d\)；\(d=0\) 时仍为空正则序列。设 \(d\ge1\)。对 \(\mathfrak p\in\operatorname{Ass}_RR\)，\cref{b3:cor:associated-depth-bound}给 \(\dim R/\mathfrak p\ge d\)，故恰等于 \(d\)。若 \(a_1\in\mathfrak p\)，由 \(\sqrt{(a_1,\ldots,a_d)}=\mathfrak m\) 得
+任意参数系的断言只需刚得到的 \(\operatorname{depth}R=\dim R=d\)。事实上，以下论证适用于所有满足这个等式的 Noether 局部环，可对 \(d\) 归纳。取参数系 \(a_1,\ldots,a_d\)；\(d=0\) 时为空正则序列。设 \(d\ge1\)。对 \(\mathfrak p\in\operatorname{Ass}_RR\)，\cref{b3:cor:associated-depth-bound}给 \(d\le\dim R/\mathfrak p\le\dim R=d\)，故这些关联素理想的商环维数都恰为 \(d\)。若 \(a_1\in\mathfrak p\)，由 \(\sqrt{(a_1,\ldots,a_d)}=\mathfrak m\) 得
 \[
 \sqrt{(a_2,\ldots,a_d)(R/\mathfrak p)}
 =\mathfrak m/\mathfrak p.
 \]
-故这 \(d-1\) 个元素在局部环 \(R/\mathfrak p\) 中生成极大理想准素的理想，高度定理使该环维数至多 \(d-1\)，矛盾。因此 \(a_1\) 避开全部关联素理想，是非零因子。\cref{b3:cor:regular-quotient-depth}及\cref{b3:prop:regular-quotient-dimension}使商环深度和维数均降至 \(d-1\)。余下元素仍为参数系，重复这个论证，得到整组正则。这里反复使用的是深度等于维数及关联素理想维数界，不要求中间商环仍然正则。
+故这 \(d-1\) 个元素在局部环 \(R/\mathfrak p\) 中生成极大理想准素的理想，高度定理使该环维数至多 \(d-1\)，矛盾。因此 \(a_1\) 避开全部关联素理想，是非零因子。\cref{b3:cor:regular-quotient-depth,b3:prop:regular-quotient-dimension}使 \(R/(a_1)\) 的深度和维数均为 \(d-1\)，而根等式在这个商环中仍给出 \(\sqrt{(\bar a_2,\ldots,\bar a_d)}=\mathfrak m/(a_1)\)。余下元素于是构成商环的参数系，归纳得到整组正则。归纳保留的是深度等于维数，不要求中间商环仍然正则。
 \end{proof}
 
 \subsection{参数系与正则序列}
@@ -105,4 +110,56 @@ k[X_1,\ldots,X_e]\longrightarrow\operatorname{gr}_{\mathfrak m}R,
 前一定理证明中的逐层交式给出了所述分次同构；Hilbert–Samuel 定理使该商环维数为 \(d-r\)，其极大理想模平方的维数也为 \(d-r\)，故正则。
 \end{proof}
 
-若只知道 \(x\) 是非零因子，商环未必正则。例如对任意域 \(k\)，\(k[x,y]_{(x,y)}/(x^2)\) 的维数为一，而极大理想仍需两个生成元。条件 \(x\notin\mathfrak m^2\) 在上一推论中不能删除。
+若只知道所商掉的元素 \(f\) 是非零因子，商环未必正则。例如在 \(k[x,y]_{(x,y)}\) 中，\(f=x^2\) 是非零因子，但商环的维数为一，极大理想仍需两个生成元。这里 \(f\in\mathfrak m^2\)，已经失去极小生成元的非零一次类。
+
+\begin{proposition}\label{b3:prop:regular-local-basic-examples}
+设 \(k\) 为任意域，\(p\) 为素数，记下列环的极大理想分别为 \(\mathfrak m_1,\mathfrak m_2,\mathfrak m_3\)：
+\[
+R_1=k[x,y,z]_{(x,y,z)}/(z-xy),\qquad
+R_2=k[x,y,z]_{(x,y,z)}/(z^2-xy),\qquad
+R_3=\mathbb Z[x]_{(p,x)}.
+\]
+环 \(R_1\) 的维数与嵌入维数均为二，因而正则，且
+\[
+\operatorname{gr}_{\mathfrak m_1}R_1\cong k[X,Y].
+\]
+环 \(R_2\) 的维数为二、嵌入维数为三，因而不正则，且
+\[
+\operatorname{gr}_{\mathfrak m_2}R_2\cong k[X,Y,Z]/(Z^2-XY).
+\]
+环 \(R_3\) 的维数与嵌入维数均为二，因而正则；其剩余域为 \(\mathbb F_p\)，并有
+\[
+\operatorname{gr}_{\mathfrak m_3}R_3\cong\mathbb F_p[P,X],
+\qquad
+\beta_i^{R_3}(\mathbb F_p)=
+\begin{cases}
+1,&i=0,2,\\
+2,&i=1,\\
+0,&i>2.
+\end{cases}
+\]
+上述分次同构中的变量均为一次类，\(P\) 对应 \(p+\mathfrak m_3^2\)。
+\end{proposition}
+\begin{proof}
+关系 \(z=xy\) 使 \(k[x,y,z]/(z-xy)\cong k[x,y]\)。极大理想 \((x,y,z)\) 对应 \((x,y)\)，局部化后得到 \(R_1\cong k[x,y]_{(x,y)}\)。因此其维数与嵌入维数都为二，由\cref{b3:thm:regular-local-characterizations}得到所述伴随分次环。这个一次关系消去了 \(z\) 的生成方向。
+
+令 \(A=k[x,y,z]_{(x,y,z)}\)、\(\mathfrak n=(x,y,z)A\)。这是三维局部整环，\(z^2-xy\ne0\)，所以该元素为非零因子；\cref{b3:prop:regular-quotient-dimension}给 \(\dim R_2=2\)。因为 \(z^2-xy\in\mathfrak n^2\)，它在 \(\mathfrak n/\mathfrak n^2\) 中没有给出一次关系，故
+\[
+\mathfrak m_2/\mathfrak m_2^2
+\cong\mathfrak n/(\mathfrak n^2+(z^2-xy))
+=\mathfrak n/\mathfrak n^2
+\]
+仍为三维。这个方程本身齐次，由\cref{b3:prop:hypersurface-tangent-cone}，它的初始关系恰为 \(Z^2-XY\)，得到所述分次商环。这些论证不要求 \(k\) 的特征避开任何素数。
+
+\(\mathbb Z[x]\) 为 Noether 整环，故 \(R_3\) 也是 Noether 局部整环。在其中有严格素理想链
+\[
+(0)\subsetneq pR_3\subsetneq(p,x)R_3=\mathfrak m_3.
+\]
+其中 \(R_3/pR_3\cong\mathbb F_p[x]_{(x)}\)，所以前两项为素理想，且 \(x\notin pR_3\)。链给出维数下界二；\(\mathfrak m_3\) 由 \(p,x\) 生成，高度定理给出上界二。因此
+\[
+2=\dim R_3\le\operatorname{edim}R_3\le2,
+\]
+环正则，\(p,x\) 的一次类为余切空间的一组基，规范分次同构便给出 \(\mathbb F_p[P,X]\)。乘 \(p\) 在 \(R_3\) 上为单射，商掉 \(p\) 后乘 \(x\) 在 \(\mathbb F_p[x]_{(x)}\) 上也为单射，末端商为 \(\mathbb F_p\ne0\)。故 \(p,x\) 为正则序列，\cref{b3:thm:koszul-regular-resolution}给出秩分别为 \(1,2,1\) 的剩余域自由消解。各微分的系数都属于 \(\mathfrak m_3\)，所以它极小，与 \(\mathbb F_p\) 张量后微分为零，得到所述 Betti 数。
+\end{proof}
+
+环 \(\mathbb Z[x]_{(p,x)}\) 本身的特征为零，剩余域的特征却为 \(p\)；它不能含有剩余域作为子域。正则性要求伴随分次环是剩余域上的多项式环，并不要求原环本身是域上的多项式局部环。

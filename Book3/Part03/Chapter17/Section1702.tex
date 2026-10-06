@@ -1,6 +1,12 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### 17.2 投射维数
-% 纲要位置：计划纲要.md，第 2497 行。
+% 纲要位置：工作记录/计划纲要.md，第 2526 行。
+% 纲要细目（写作范围）：
+% * 有限生成模的投射维数
+% * Ext、Tor 与投射维数判据
+% * 维数平移及一般投射模的 Ext 判据在此证明；第四卷第9.5节与第11章作系统整理
+% * 剩余域上界、正则元换环及极小消解的同调对照表
+% * 测试模选择的 Tor、Ext 反例及完备化保持 Betti 数、投射维数
 
 \section{投射维数}
 \label{b3:sec:1702}
@@ -27,7 +33,7 @@
 且各 \(P_i\) 投射，则使这种列存在的最小非负整数 \(n\) 称为 \(M\) 的\term[toushe-weishu]{投射维数}[projective dimension]，记 \(\operatorname{pd}_RM\)。若不存在，记为 \(\infty\)；约定 \(\operatorname{pd}_R0=-\infty\)。
 \end{definition}
 
-投射维数衡量消解必须延伸多少步，而非某个任意消解碰巧写了多少项。对局部环上的有限生成模，极小消解使这个整数可以直接读取；任意消解却可以插入 \(R\xrightarrow{1}R\)，人为增加长度。
+定义中的 \(P_i\) 只要求投射，并不预设自由或有限生成。对 Noether 局部环上的有限生成模，极小自由消解的各项虽都有限自由，却已经实现这类投射消解的最短长度。投射维数衡量消解必须延伸多少步；任意消解却可以插入 \(R\xrightarrow{1}R\)，人为增加长度。
 
 \begin{proposition}\label{b3:prop:pd-minimal-length}
 设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。若 \(F_\bullet\rightarrow M\) 是极小自由消解，则
@@ -37,14 +43,16 @@
 \]
 \end{proposition}
 \begin{proof}
-投射模的提升性质使自由消解的比较映射论证同样适用于投射消解。因此有限投射消解在高于其长度的次数计算出零 Tor，故极小消解的这些项由\cref{b3:prop:minimal-resolution-betti}为零。反向，若极小消解在次数 \(n\) 后为零，它本身就是长度 \(n\) 的投射消解。两种比较也说明：极小消解若永不终止，就不可能另有有限投射消解。
+投射模的提升性质使自由消解的比较映射论证同样适用于投射消解。因此有限投射消解在高于其长度的次数计算出零 Tor，故极小消解的这些项由\cref{b3:prop:minimal-resolution-betti}为零。反向，若极小消解在次数 \(r\) 的项非零，而 \(F_{r+1}=0\)，则全部后续项也为零，它本身就是长度 \(r\) 的投射消解；前一方向又排除了任何更短的投射消解，故两个上确界都为 \(r\)。若每个 \(F_i\) 都非零，则 Tor 在任意高次数均非零，不可能另有有限投射消解，两个上确界及投射维数都为 \(\infty\)。
 \end{proof}
 
 \subsection{Ext、Tor 与投射维数判据}
 \label{b3:subsec:1702:02}
 
+极小消解的微分在剩余域 \(k\) 上全为零，所以 \(\operatorname{Tor}_i^R(M,k)\) 和 \(\operatorname{Ext}_R^i(M,k)\) 直接记录 \(F_i\) 的秩。任一项同调为零就迫使该自由项为零，\cref{b3:cor:betti-gap-termination}再使所有后续项为零。因此在这里，仅测试剩余域便能判断消解是否终止，无须逐个测试所有模。
+
 \begin{theorem}\label{b3:thm:local-pd-vanishing}
-设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(n\ge0\)。下列条件等价：
+设 \((R,\mathfrak m,k)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模，\(n\ge0\) 为整数。下列条件等价：
 \begin{equivalences}
 \item \(\operatorname{pd}_RM\le n\)；
 \item \(\operatorname{Tor}_{n+1}^R(M,k)=0\)；
@@ -56,31 +64,33 @@
 \begin{proof}
 \(M=0\) 时所有条件直接成立。设 \(M\ne0\)，前面三项分别等价于极小消解的 \(F_{n+1}=0\)，由\cref{b3:cor:betti-gap-termination}得到同一终止条件。第一项使 Hom 复形在次数 \(n+1\) 后为零，推出第四项；第四项取 \(N=k\) 推出第三项。
 
-若最后非零项为 \(F_r\)，则
+若最后非零项为 \(F_r\)，约定 \(r=0\) 时下面的像为零，便可统一写成
 \[
 \operatorname{Ext}_R^r(M,N)
 =\operatorname{Hom}_R(F_r,N)/\operatorname{im}(\mathrm{d}_r^*).
 \]
-极小性给 \(\operatorname{im}(\mathrm{d}_r^*)\subseteq\mathfrak m\operatorname{Hom}_R(F_r,N)\)。后者 Hom 是非零有限个 \(N\) 的直和，由 Nakayama 引理不能等于自己的 \(\mathfrak m\) 倍，所以这个商非零。\(r=0\) 时像为零，同样成立。
+极小性给 \(\operatorname{im}(\mathrm{d}_r^*)\subseteq\mathfrak m\operatorname{Hom}_R(F_r,N)\)。记 \(T=\operatorname{Hom}_R(F_r,N)\)，它是非零有限个 \(N\) 的直和，所以非零且有限生成。对局部环 \(R\) 上的 \(T\) 用 Nakayama 引理，得到 \(T/\mathfrak mT\ne0\)。所列 Ext 商仍满射到 \(T/\mathfrak mT\)，故非零；这里必须保留 \(N\) 非零且有限生成的条件。\(r=0\) 时像为零，同样成立。
 \end{proof}
 
-极小消解中的微分在剩余域上全为零，因而一个 Tor 或 Ext 的消失就是相应自由项为零。\cref{b3:cor:betti-gap-termination}再使全部后续项为零，得到投射维数上界。
+任意其他测试模未必能看见这些自由项；\cref{b3:prop:pd-test-module-counterexamples}将给出 Tor 的测试模换成一个非零商、Ext 的测试模换成环本身后判据失效的计算。
 
 \ProseParagraphBreak
-对非零有限生成局部模，深度取 \(\operatorname{Ext}_R^i(k,M)\) 的首次非零次数，投射维数则取 \(\operatorname{Ext}_R^i(M,k)\) 的非零次数上确界；后者可能为无穷。两个变量和两个端点都不同。在 \(R=k[X,Y]_{(X,Y)}\) 上，把 \(M=R\) 代入便有
+对非零有限生成局部模，深度取 \(\operatorname{Ext}_R^i(k,M)\) 的首次非零次数，投射维数则取 \(\operatorname{Ext}_R^i(M,k)\) 的非零次数上确界；后者可能为无穷。两个变量和两个端点都不同。在 \(R=k[X,Y]_{(X,Y)}\) 上，即使两边都取同一个模 \(M=k\)，所得数值仍不同。用 \(X,Y\) 的 Koszul 消解映入 \(k\)，微分全为零，零、一、二次 Ext 的 \(k\) 维数分别为 \(1,2,1\)，其余为零。因此
 \[
 \begin{array}{c|c|c}
 \text{检测目标}&\text{Ext 计算}&\text{所得数值}\\\hline
-\operatorname{depth}R&\operatorname{Ext}_R^2(k,R)=k,
-\ \operatorname{Ext}_R^{i<2}(k,R)=0&2\\
-\operatorname{pd}_RR&\operatorname{Ext}_R^0(R,k)=k,
-\ \operatorname{Ext}_R^{i>0}(R,k)=0&0
+\operatorname{depth}_Rk&\operatorname{Ext}_R^0(k,k)=k,
+\ \text{首次非零次数为 }0&0\\
+\operatorname{pd}_Rk&\operatorname{Ext}_R^2(k,k)=k,
+\ \operatorname{Ext}_R^{i>2}(k,k)=0&2
 \end{array}
 \]
-第一行来自\secref{b3:sec:1602}的 Koszul 对偶计算，第二行来自 \(R\) 已自由。这使两种检测各自的对象直接可见。
+同一组 Ext 的首次非零和最后非零分别给出深度与投射维数；把两个端点混为一谈，也会在这个例子中产生错误。
 
 \subsection{维数平移}
 \label{b3:subsec:1702:03}
+
+这里的“维数平移”指同调次数的平移：从一个模换到它的关系模，Ext 和 Tor 的次数相应改变一，与 Krull 维数 \(\dim R\) 无关。
 
 \begin{proposition}\label{b3:prop:dimension-shifting-local}
 设 \(R\) 为交换环，\(0\rightarrow K\rightarrow P\rightarrow M\rightarrow0\) 正合且 \(P\) 投射。对任意 \(R\) 模 \(N\) 和 \(i\ge1\)，有自然同构
@@ -104,15 +114,15 @@
 \begin{proof}
 若 \(P\) 投射，则 \(P\) 是某个自由模 \(F\) 的直和项。Ext 在第一变量保持有限直和，而自由模的正次 Ext 为零，因此 \(\operatorname{Ext}_R^1(P,N)=0\) 对每个 \(N\) 成立。
 
-反过来，取自由模满射 \(q:F\rightarrow P\)，令 \(K=\ker q\)。对短正合列 \(0\rightarrow K\rightarrow F\xrightarrow{q}P\rightarrow0\) 应用第二变量的 Ext 长正合列，得到
+反过来，取自由模满射 \(q:F\rightarrow P\)，令 \(K=\ker q\)。要把 \(P\) 实现为自由模的直和项，只需找到截面 \(s:P\to F\)，使 \(qs=\operatorname{id}_P\)；这就是把恒等映射沿 \(q\) 提升。对短正合列 \(0\rightarrow K\rightarrow F\xrightarrow{q}P\rightarrow0\) 应用第二变量的 Ext 长正合列，得到
 \[
 \operatorname{Hom}_R(P,F)\xrightarrow{q\circ-}\operatorname{Hom}_R(P,P)
 \longrightarrow\operatorname{Ext}_R^1(P,K)=0.
 \]
-因此可将 \(\operatorname{id}_P\) 提升为 \(s:P\rightarrow F\)，使 \(qs=\operatorname{id}_P\)。这使原短正合列分裂，\(P\) 是自由模 \(F\) 的直和项，故投射。
+因此所需的 \(s\) 存在。每个 \(u\in F\) 都可写成 \(sq(u)+(u-sq(u))\)，第二项属于 \(K\)，而 \(s(P)\cap K=0\)，所以 \(F=s(P)\oplus K\)。原短正合列分裂，\(P\) 是自由模 \(F\) 的直和项，故投射。
 \end{proof}
 
-设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模。令 \(\Omega^0M=M\)，并令 \(\Omega^{j+1}M\) 为极小满射 \(F_j\rightarrow\Omega^jM\) 的核；这些是\cref{b3:def:syzygy-local}中合冲模在极小消解上的选择。维数平移的同构可以迭代。例如，对 \(n\ge0\) 与任意 \(R\) 模 \(N\)，有
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\) 为有限生成的 \(R\) 模。令 \(\Omega^0M=M\)，并令 \(\Omega^{j+1}M\) 为极小满射 \(F_j\rightarrow\Omega^jM\) 的核；这些是\cref{b3:def:syzygy-local}中合冲模在极小消解上的选择。沿消解换到下一层合冲模，每次便将相应 Ext 的次数降低一。迭代 \(n\) 次后，对 \(n\ge0\) 与任意 \(R\) 模 \(N\)，有
 \[
 \operatorname{Ext}_R^1(\Omega^nM,N)\cong\operatorname{Ext}_R^{n+1}(M,N).
 \]
@@ -131,6 +141,11 @@
 若 \(k\) 有长度 \(n\) 的投射消解，用它计算第二变量便得
 \(\operatorname{Tor}_{n+1}^R(M,k)=0\)，由\cref{b3:thm:local-pd-vanishing}得到结论。若 \(\operatorname{pd}_Rk=\infty\)，不等式没有额外内容。对直和因子，张量复形及其同调保留有限直和；原模的该阶 Tor 为零时，各因子也为零，再应用同一判据。
 \end{proof}
+
+因此，只要剩余域的投射维数有限，它就给出本环所有有限生成模的投射维数的统一上界。
+
+\ProseParagraphBreak
+对消解逐项模掉 \(x\)，就是张量 \(R/(x)\)，而张量一般不能保留左端正合性。下面要求 \(x\) 同时在环和系数模上为非零因子，正是为了保证取商后的增广消解仍正合。
 
 \begin{lemma}\label{b3:lem:regular-element-resolution-basechange}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(x\in\mathfrak m\) 在 \(R\) 和 \(M\) 上均为非零因子。令 \(B=R/(x)\)。把 \(M\) 的极小自由消解模掉 \(x\)，得到 \(M/xM\) 的极小 \(B\) 自由消解。因此
@@ -157,6 +172,9 @@ H_i(F\otimes_RB)=\operatorname{Tor}_i^R(M,B)=0\quad(i>0),
 所以模掉 \(x\) 后的增广复形仍正合。各项是有限秩自由 \(B\) 模，微分矩阵的元素仍落在 \(B\) 的极大理想 \(\mathfrak m/(x)\) 中，故消解仍极小。Nakayama 引理给出 \(M/xM\ne0\)，而 \(F_i/xF_i\ne0\) 当且仅当 \(F_i\ne0\)。由\cref{b3:prop:pd-minimal-length}，两个极小消解的长度相同，包括无穷情形，得到所述等式。
 \end{proof}
 
+仍设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(x\in\mathfrak m\) 在 \(R\) 上为非零因子，若改取 \(M=B=R/(x)\)，则 \(xM=0\)。长度一的 \(R\) 自由消解的微分为 \(x\)，故它极小，给出 \(\operatorname{pd}_RB=1\)；而 \(B\) 在自身上自由，\(\operatorname{pd}_BB=0\)。此时 \(\operatorname{Tor}_1^R(B,B)=B\ne0\)，所以模掉 \(x\) 后的消解不再正合。共同非零因子的条件在这里不能删去。
+
+\ProseParagraphBreak
 自由项的秩、剩余域上的同调与消解的终止性，现在都可以在极小消解中读取。\cref{b3:prop:minimal-resolution-betti,b3:cor:betti-gap-termination,b3:prop:pd-minimal-length}给出的对应集中列于\cref{b3:tab:minimal-resolution-dictionary}。
 
 \begin{center}
@@ -176,10 +194,55 @@ H_i(F\otimes_RB)=\operatorname{Tor}_i^R(M,B)=0\quad(i>0),
 \(\operatorname{Hom}_R(F_i,k)\) & \(\operatorname{Ext}_R^i(M,k)\)\\
 \(F_0\) 的秩 & \(M\) 的最少生成元数\\
 \(F_1\) 的秩 & 关系模的最少生成元数\\
-第一个零项 \(F_j\)，\(j\ge1\) & \(F_i=0\) 对所有 \(i\ge j\) 成立\\
+某一阶 \(\beta_i^R(M)=0\) & 等价于 \(F_i=0\)、\(\operatorname{Tor}_i^R(M,k)=0\) 或 \(\operatorname{Ext}_R^i(M,k)=0\)，并迫使 \(F_j=0\) 对所有 \(j\ge i\) 成立\\
 最后非零项为 \(F_r\) & \(\operatorname{pd}_RM=r\)\\
 每个 \(F_i\) 都非零 & \(\operatorname{pd}_RM=\infty\)，没有最后非零项\\
 \bottomrule
 \end{tabularx}
 \end{minipage}
 \end{center}
+
+\begin{proposition}\label{b3:prop:pd-test-module-counterexamples}
+设 \(k\) 为域，\(R=k[x,y]_{(x,y)}\)、\(M=R/(x)\)。则
+\[
+\operatorname{Tor}_1^R(M,R/(y))=0,\qquad
+\operatorname{Tor}_1^R(M,k)\cong k,\qquad \operatorname{pd}_RM=1.
+\]
+另令 \(S=k[\epsilon]/(\epsilon^2)\)，把 \(k=S/(\epsilon)\) 视为 \(S\) 模。则
+\[
+\begin{gathered}
+\operatorname{Ext}_S^i(k,S)=0\quad(i>0),\qquad
+\operatorname{Ext}_S^i(k,k)\cong k\quad(i\ge0),\\
+\operatorname{pd}_Sk=\infty.
+\end{gathered}
+\]
+因此投射维数的局部判据中，不能将剩余域任意换成别的测试模。
+\end{proposition}
+\begin{proof}
+\(x\) 在 \(R\) 上为非零因子，故
+\[
+0\longrightarrow R\xrightarrow{x}R\longrightarrow M\longrightarrow0
+\]
+是自由消解。\(x\in(x,y)R\) 使它极小，最后非零自由项在次数一，所以 \(\operatorname{pd}_RM=1\)。张量 \(R/(y)\cong k[x]_{(x)}\) 后，乘法 \(x\) 仍单射，一次 Tor 为零；张量剩余域 \(k\) 后，微分却为零，一次 Tor 等于 \(k\)。非零的测试模 \(R/(y)\) 没有检测出这一项。
+
+在 \(S\) 中，使用\secref{b3:sec:1701}给出的周期消解：每一项为 \(S\)，全部正次微分为乘 \(\epsilon\)。它们的核与像都为 \((\epsilon)\)，所以消解正合；各项秩为一，微分又属于极大理想，故它极小。由\cref{b3:prop:pd-minimal-length}，\(\operatorname{pd}_Sk=\infty\)。映入 \(S\) 后，上链复形的微分仍为乘 \(\epsilon\)，其正次的核与像相等，故正次 Ext 为零。映入 \(k\) 后，微分全部为零，每个次数的 Ext 都为 \(k\)。因此即使第二变量取环本身，也可能看不见无限消解中的全部正次项。
+\end{proof}
+
+\begin{corollary}\label{b3:cor:completion-betti-pd}
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(k=R/\mathfrak m\) 为剩余域，\(M\) 为有限生成的 \(R\) 模。令 \(\widehat R\) 为 \(R\) 的 \(\mathfrak m\) 进完备化，\(\widehat M=\widehat R\otimes_RM\)。则对所有整数 \(i\ge0\)，有
+\[
+\beta_i^{\widehat R}(\widehat M)=\beta_i^R(M),
+\qquad \operatorname{pd}_{\widehat R}\widehat M=\operatorname{pd}_RM.
+\]
+投射维数的等式包括 \(\infty\) 的情形；\(M=0\) 时两边均按约定为 \(-\infty\)，全部 Betti 数为零。
+\end{corollary}
+\begin{proof}
+\(M=0\) 时直接成立，以下设 \(M\ne0\)。由\cref{b3:thm:completion-tensor}，所定义的 \(\widehat M\) 也是 \(M\) 的 \(\mathfrak m\) 进完备化。\cref{b3:thm:completion-flat}给出 \(R\to\widehat R\) 忠实平坦，所以 \(\widehat M\ne0\)；它又是有限生成的 \(\widehat R\) 模。由\cref{b3:prop:completed-local-ring}，\(\widehat R\) 是 Noether 局部环，其极大理想为 \(\mathfrak m\widehat R\)，剩余域自然等于 \(k\)。
+
+取 \(M\) 的极小自由消解 \(F_\bullet\)。平坦性使 \(F_\bullet\otimes_R\widehat R\to\widehat M\to0\) 仍正合，各项是同秩的有限自由模。原微分的矩阵系数在 \(\mathfrak m\) 中，变基后仍在 \(\mathfrak m\widehat R\) 中，所以这也是极小自由消解。再张量共同的剩余域，得到
+\[
+(F_i\otimes_R\widehat R)\otimes_{\widehat R}k
+\cong F_i\otimes_Rk.
+\]
+由\cref{b3:prop:minimal-resolution-betti}，两边的 \(k\) 维数就是各自的 Betti 数，故逐次相等。这两个极小消解的非零项出现在完全相同的次数；再用\cref{b3:prop:pd-minimal-length}，得到有限或无限的投射维数相等。
+\end{proof}
