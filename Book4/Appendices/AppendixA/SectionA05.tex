@@ -1,5 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### A.5 Kleisli 范畴与代数理论
+% 纲要位置：工作记录/计划纲要.md，第 3852 行。
 % 纲要细目（写作范围）：
 % ---
 % #### A.5.1 Kleisli 态射与替换的复合
@@ -27,6 +28,7 @@ g\star f=\mu_Z\circ T(g)\circ f,
 \]
 所得范畴称为 \(T\) 的\term[kleisli-fanchou]{Kleisli 范畴}[Kleisli category]。
 \end{definition}
+\symidx{\(\mathcal C_T\)：单子的 Kleisli 范畴}
 
 同一个 \(f\) 在 \(\mathcal C_T\) 中的目标是 \(Y\)，在 \(\mathcal C\) 中的目标却是 \(TY\)。复合的中间步骤为
 \[
@@ -105,7 +107,12 @@ V_T(g)V_T(f)
 \]
 就是恒等映射。它对 \(X\) 自然：在 Kleisli 一侧预复合 \(J_T(u)\)，经单位自然性及单位律化为普通的预复合 \(u\)。它对 \(Y\) 也自然：后复合 Kleisli 态射 \(g\)，恰是后复合普通态射 \(V_T(g)=\mu T(g)\)。因此双射给出伴随。
 
-单位在 \(X\) 处为 \(\eta_X\)。余单位在 Kleisli 对象 \(Y\) 处是 \(J_TV_TY\to Y\) 的态射，它在 \(\mathcal C\) 中由 \(1_{TY}:TY\to TY\) 表示。于是 \(V_TJ_T=T\)，而伴随的乘法 \(V_T(\varepsilon_{J_TX})\) 为 \(\mu_XT(1_{TX})=\mu_X\)，恢复原单子。
+单位在 \(X\) 处为 \(\eta_X\)。余单位在 Kleisli 对象 \(Y\) 处是 \(J_TV_TY\rightarrow Y\) 的态射。由于 \(J_TV_TY=TY\)，它属于
+\[
+\operatorname{Hom}_{\mathcal C_T}(TY,Y)
+=\operatorname{Hom}_{\mathcal C}(TY,TY),
+\]
+并由 \(\mathcal C\) 中的 \(1_{TY}:TY\rightarrow TY\) 表示。这不是 Kleisli 对象 \(TY\) 的恒等态射：后者在 \(\mathcal C\) 中由 \(\eta_{TY}:TY\rightarrow T^2Y\) 表示，属于另一个 Hom 集。于是 \(V_TJ_T=T\)，而伴随的乘法 \(V_T(\varepsilon_{J_TX})\) 为 \(\mu_XT(1_{TX})=\mu_X\)，恢复原单子。
 \end{proof}
 
 \begin{proposition}\label{b4:prop:A-kleisli-free-algebras}
@@ -139,8 +146,12 @@ H:\mathcal C_T\longrightarrow\mathcal C^T,
 \]
 其中 \(0\) 为终对象，\(\pi_1^1=1_1\)，则称这组数据为单类型的\term[lawvere-daishu-lilun]{Lawvere 代数理论}[Lawvere algebraic theory]。这里“单类型”表示每个模型只有一种底集合。一个保持有限积的函子 \(M:\mathcal L\to\mathbf{Set}\) 称为该理论的模型。模型以自然变换为态射，组成范畴 \(\operatorname{Mod}(\mathcal L)\)。
 \end{definition}
+\symidx{\(\operatorname{Mod}(\mathcal L)\)：Lawvere 理论的模型范畴}
 
 各 \(n\) 都是 \(1\) 的有限次积，故 \(n+m\) 以分块投影成为 \(n,m\) 的积，\(\mathcal L\) 确有全部有限积。一个态射 \(a:n\to1\) 表示一个有 \(n\) 个变量的运算项；\(0\to1\) 表示常数项。任意 \(f:n\to m\) 由其分量 \(\pi_j^mf:n\to1\) 唯一决定，因而是一组 \(m\) 个运算项。若 \(g:m\to r\)，则 \(gf\) 的分量是把 \(f\) 的各项代入 \(g\) 的各项。两个项在 \(\mathcal L\) 中相等，就要求它们在每个模型中取相同值；关系由态射的等式表达。
+
+\ProseParagraphBreak
+终对象 \(0\) 与常数项 \(0\rightarrow1\) 的作用不同。若模型的底集合为 \(S=M(1)\)，保持终对象给出 \(M(0)\cong S^0=\{*\}\)，并不单独要求 \(S\) 非空；但每张常数态射 \(c:0\rightarrow1\) 都要给出函数 \(M(c):\{*\}\rightarrow S\)，从而指定一个 \(S\) 中的元素。群理论有单位元这一常数项，所以空集合不能成为群模型。没有常数项的理论则可以允许空底集合：例如非空有限表只规定结合乘法，不要求单位元；在空集合上，所有正元运算都有唯一的取值函数，仍满足相应恒等式。
 
 \begin{proposition}\label{b4:prop:A-lawvere-model-operations}
 设 \(\mathcal L\) 为单类型 Lawvere 理论，\(M\) 为其集合模型，并令 \(S=M(1)\)。积投影给出典范双射 \(M(n)\cong S^n\)，其中 \(S^0\) 为单元素集合。因此 \(M\) 的数据等价于为每个 \(a:n\to1\) 指定函数 \(a_S:S^n\to S\)，使投影成为坐标投影，并使项的复合成为函数的代入。模型的自然变换恰好对应保持全部这些运算的函数。
@@ -172,7 +183,15 @@ M(f)(x)=\bigl((\pi_j^mf)_S(x)\bigr)_{j=1}^m.
 \operatorname{Hom}_{\mathcal L_{\mathrm{Grp}}}(n,m)
 =\operatorname{Hom}_{\mathbf{Grp}}(F_m,F_n).
 \]
-一个这样的同态由 \(m\) 个 \(n\) 变量群词决定。自由群的泛性质给出 \(F_{n+m}=F_n*F_m\)，所以在相反范畴中 \(n+m\) 是积；\(F_0\) 是始对象，所以 \(0\) 是终对象。这是一项 Lawvere 理论。
+一个这样的同态由 \(m\) 个 \(n\) 变量群词决定。特别地，词 \(x_1x_2\) 指定的群同态是
+\[
+\widehat a:F_1\longrightarrow F_2,
+\qquad z\longmapsto x_1x_2;
+\]
+它在相反范畴中才成为二元运算项 \(a:2\rightarrow1\)。若把 \(x_1\) 替换为 \(y_1y_2\)，把 \(x_2\) 替换为 \(y_3^{-1}\)，自由群的泛性质便给出同态 \(\widehat f:F_2\rightarrow F_3\)，对应理论中的 \(f:3\rightarrow2\)。复合 \(a\circ f:3\rightarrow1\) 对应 \(\widehat f\circ\widehat a\)，其词为 \((y_1y_2)y_3^{-1}\)。相反范畴把向自由群中指定生成元像的同态，转成接受变量并输出运算值的态射，复合则正是词的代入。
+
+\ProseParagraphBreak
+自由群的泛性质还给出 \(F_{n+m}\cong F_n*F_m\)，所以在相反范畴中 \(n+m\) 是积；\(F_0\) 是始对象，所以 \(0\) 是终对象。这是一项 Lawvere 理论。
 
 \ProseParagraphBreak
 在其模型的底集合 \(S\) 上，词 \(x_1x_2:2\to1\)、\(x_1^{-1}:1\to1\) 与空词 \(0\to1\) 分别定义乘法、逆元与单位。自由群中的词等式给出结合律及单位、逆元等式，故 \(S\) 是群。反过来，任意群 \(G\) 都能按各群词的求值定义模型 \(M_G(n)=G^n\)，代入与求值相容。一般模型中的每个词也由这三个基本运算计算，因而与从所得群构造的模型通过 \(\kappa_n\) 自然同构。保持这三个运算的函数恰为群同态，遂得到
@@ -185,12 +204,20 @@ M(f)(x)=\bigl((\pi_j^mf)_S(x)\bigr)_{j=1}^m.
 \operatorname{Hom}_{\mathcal L_R}(n,m)
 =\operatorname{Hom}_R(R^m,R^n).
 \]
-有限直和在模范畴中是余积，所以相反范畴中的 \(n+m\) 是积。态射 \(n\to1\) 由 \(1\) 的像 \(\sum_i r_ie_i\in R^n\) 决定，表示形式线性项 \(\sum_i r_ix_i\)。代入时，外层系数在左侧乘内层系数：
+有限直和在模范畴中是余积，所以相反范畴中的 \(n+m\) 是积。态射 \(n\rightarrow1\) 由 \(1\) 的像 \(\sum_i r_ie_i\in R^n\) 决定，表示形式线性项 \(\sum_i r_ix_i\)。一般地，\(f:n\rightarrow m\) 对应的自由模同态 \(\widehat f:R^m\rightarrow R^n\) 由
+\[
+\widehat f(e_j)=\sum_{i=1}^n r_{ji}e_i
+\qquad(1\le j\le m)
+\]
+决定，按各基向量的像逐行记录，得到 \(m\times n\) 矩阵 \(C=(r_{ji})\)。若 \(g:m\rightarrow\ell\) 同样由 \(\ell\times m\) 矩阵 \(D=(s_{qj})\) 记录，则 \(g\circ f\) 的矩阵为 \(DC\)。确实，代入时外层系数在左侧乘内层系数：
 \[
 \sum_j s_j\left(\sum_i r_{ji}x_i\right)
 =\sum_i\left(\sum_j s_jr_{ji}\right)x_i.
 \]
 这一次序来自自由左模同态的复合，不能在非交换环上交换系数。
+
+\ProseParagraphBreak
+这与自由左 \(R\)-模单子的 Kleisli 矩阵方向不同。Kleisli 态射 \(n\rightarrow m\) 直接延伸为 \(R^n\rightarrow R^m\) 的左模同态；若第 \(i\) 个基向量映为 \(\sum_j a_{ij}e_j\)，它的行矩阵 \(A=(a_{ij})\) 大小为 \(n\times m\)。一个元素的左系数写成行向量 \(\mathbf r\)，其像的系数就是 \(\mathbf rA\)。再接一个矩阵为 \(B\) 的同态，得到 \((\mathbf rA)B=\mathbf r(AB)\)，所以 Kleisli 复合按 \(AB\) 记录。Lawvere 理论反转了这些自由模映射，矩阵尺寸与复合次序随之反转，才使自由模的有限余积成为有限积，并使 \(n\rightarrow1\) 表示 \(n\) 元运算。
 
 \ProseParagraphBreak
 模型由零项、加法项、负元项及各 \(rx_1\) 定义底集合上的左 \(R\)-模结构。形式线性项的等式给出交换群公理、分配律与 \(r(sx)=(rs)x\)、\(1x=x\)。反向，一个左 \(R\)-模按有限线性组合求值，便给出模型；保持所有项的函数恰为左模同态。因此

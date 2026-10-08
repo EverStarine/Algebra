@@ -9,25 +9,31 @@
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 齐次素理想、齐次局部化及次数零部分的素理想对应
-% * 标准开集与射影空间；闭子概形及有限生成标准分次下的饱和化
-% * 分次模与扭曲层；射影直线两图的坐标、过渡函数与全局截面
-% * Spec 与 Proj 的局部化、理想和全局截面区别
+%
+% * 无关理想与标准图；先计算次数一例，再证明一般齐次素理想的零次对应
+% * 射影厚点保留幂零结构；饱和化是各标准图理想的收缩交，无关挠子例正式计算
+% * 扭曲层的移位符号与射影直线过渡；加权反例说明标准分次条件不能省略
+% * Spec 与 Proj 的信息区别；后者还取局部零次部分，不能只说丢掉无关挠子
+%
+% ---
+%
 
 \subsection{齐次素理想}
 \label{b3:subsec:2403:01}
 
-若方程齐次，缩放坐标不会改变其零点条件。直接保留所有仿射点会把同一方向重复记录，并留下不适合表示方向的原点。射影构造因此选取齐次素理想，同时排除包含全部正次数元素的那些素理想。
+若方程齐次，缩放坐标不会改变其零点条件。对域 \(k\) 上的标准分次环 \(k[x_0,\ldots,x_r]\)，正次数理想 \((x_0,\ldots,x_r)\) 对应仿射锥的原点，却不表示一个非零向量的方向。射影构造因此选取齐次素理想，并排除包含全部正次数元素的那些素理想。对一般正分次环 \(S\)，将其正次数理想记为 \(S_+\)；若 \(S_+\subseteq\mathfrak p\)，每个正次数齐次元都落在 \(\mathfrak p\) 中，这个点就不会出现在任何射影标准图上。
 
 \begin{definition}\label{b3:def:proj}
 设 \(S=\bigoplus_{n\ge0}S_n\) 为交换正分次环，\(S_+=\bigoplus_{n>0}S_n\)。定义
 \[
 \operatorname{Proj}S
-=\{\,\mathfrak p\subset S:\mathfrak p\text{ 为齐次素理想且 }
+=\{\,\mathfrak p\subset S:\mathfrak p\;\text{为齐次素理想且}\;
 S_+\not\subseteq\mathfrak p\,\}.
 \]
 对齐次理想 \(I\)，令 \(V_+(I)=\{\mathfrak p:I\subseteq\mathfrak p\}\)，以这些集合为闭集。对正次数齐次元 \(f\)，记 \(D_+(f)=\operatorname{Proj}S\setminus V_+((f))\)。
 \end{definition}
+\symidx{\(\operatorname{Proj}S\)：分次环 \(S\) 的射影谱}
+\symidx{\(V_+(I)\)、\(D_+(f)\)：射影谱中的闭集与基本开集}
 
 零理想与单位理想分别给全空间和空集；理想和及乘积分别对应闭集的任意交和有限并，证明与素谱相同。各 \(D_+(f)\) 构成开集基，且 \(D_+(f)\cap D_+(g)=D_+(fg)\)。排除 \(S_+\) 的条件恰好保证每个点至少属于其中一个基本开集。
 
@@ -42,7 +48,11 @@ x_i\longmapsto a_it\bigr).
 \subsection{标准开集与射影空间}
 \label{b3:subsec:2403:02}
 
-在倒置正次数齐次元之后，任一齐次元的适当幂都能乘以被倒置元素的整数次幂而成为零次元。这使零次部分足以确定齐次素理想，也解释了仿射图为何使用零次局部化。
+先看次数一的模型。设 \(k\) 为域，在 \(S=k[x_0,x_1]\) 中倒置 \(x_0\) 后，令 \(t=x_1/x_0\)，则
+\[
+S_{x_0}=k[t][x_0,x_0^{-1}],\qquad (S_{x_0})_0=k[t].
+\]
+齐次方向在这张图上由坐标比 \(t\) 表示，零次环给出的就是一条仿射直线。更一般地，倒置次数一的齐次元 \(f\) 后，每个次数 \(e\) 的分量都等于 \(f^e(S_f)_0\)，齐次素理想因此由其零次部分确定。对于 \(\deg f=d>1\)，不一定能直接将每个齐次元变成零次元，但先取 \(d\) 次幂就能做到；下面的证明据此将齐次元分成单位与幂零元两种情形。
 
 \begin{lemma}[齐次素理想的零次对应]\label{b3:lem:proj-homogeneous-prime-correspondence}
 设 \(S=\bigoplus_{n\ge0}S_n\) 为交换含幺正分次环，\(f\in S_d\)、\(d>0\) 为齐次元。记 \(F=S_f\)、\(B=F_0\)。则
@@ -67,12 +77,19 @@ J=\sqrt{(0)},
 \(J\) 是齐次理想，且 \(J\cap C_0=0\)，所以 \(C/J\ne0\)。在 \(C/J\) 中，每个非零齐次元都是单位：这样的分量可取齐次代表，而不在 \(J\) 中的齐次元不能幂零，故可逆。于是两个非零元素的最高非零齐次分量之积非零，商环是整环。因而 \(J\) 是素理想。任何齐次素理想都包含幂零根，又不能包含齐次单位；上述二择性遂迫使它等于 \(J\)。将 \(J\) 沿剩余域映射和局部化收缩，就得到唯一的、在 \(B\) 中收缩为 \(\mathfrak q\) 的齐次素理想。
 \end{proof}
 
-\begin{theorem}\label{b3:thm:proj-affine-charts}
+\begin{theorem}\label{b3:thm:proj-affine-charts}\label{b3:thm:fat-projective-point}
 设 \(S\) 为交换正分次环，\(f\in S_d\)、\(d>0\) 为齐次元，记 \(S_{(f)}=(S_f)_0\)。则
 \[
 D_+(f)\cong\operatorname{Spec}S_{(f)}.
 \]
 这些仿射结构在交集上相容，因而唯一确定 \(\operatorname{Proj}S\) 的概形结构。这里 \(S_{(f)}\) 由分式 \(a/f^m\)、\(a\in S_{md}\) 组成，分子与分母的次数相同。
+
+具体地，若 \(k\) 为域，\(R=k[x,y]/(x^2)\) 取标准分次，则
+\[
+\operatorname{Proj}R\cong\operatorname{Spec}\bigl(k[t]/(t^2)\bigr),
+\qquad t=x/y.
+\]
+其底空间只有一个点，全局截面为 \(k[t]/(t^2)\)，这个局部 Artin 环的长度为二。
 \end{theorem}
 \begin{proof}
 由\cref{b3:lem:proj-homogeneous-prime-correspondence}，映射
@@ -86,9 +103,11 @@ D_+(f)\cong\operatorname{Spec}S_{(f)}.
 (S_{(f)})_{g^d/f^e}\cong(S_{fg})_0.
 \]
 确实，在 \(S_f\) 中把 \(g^d/f^e\) 变成单位等价于把 \(g\) 变成单位；被倒置的元素次数为零，取零次部分与这次局部化交换。同样从 \(g\) 一侧得到相同环。三重交集上的映射都是分式的限制，故满足黏合条件。上一节的概形黏合构造给出结构层，而它在这些仿射块上的指定限制决定其唯一性。
+
+在所给的 \(R\) 中，\(x\) 幂零，所以每个素理想都包含 \(x\)。避开正次数理想 \((x,y)\) 就意味着不含 \(y\)，故 \(D_+(y)\) 是整个 Proj。局部化后 \(R_y=k[y,y^{-1}][x]/(x^2)\)，其零次部分以 \(1,x/y\) 为 \(k\) 基，乘法关系为 \((x/y)^2=0\)。因此这一张图便给出所列的概形与全局截面。其唯一素理想为 \((t)\)，而链 \(0\subset(t)\subset k[t]/(t^2)\) 的两个因子均为剩余域 \(k\)，所以长度为二。一个射影点的底空间仍可承载非零幂零结构。
 \end{proof}
 
-Proj 的一般构造可对照\cite[Chapter II, Proposition 2.5, pp. 76--77]{Hartshorne1977}。
+Proj 的图上函数取自 \((S_f)_0\)：相同次数的分子、分母之比保留方向信息，而整个 \(S_f\) 还保留非零次数的齐次坐标。上例也表明，射影谱的概形结构包含点集计数看不见的厚度。一般构造可对照\cite[Chapter II, Proposition 2.5, pp. 76--77]{Hartshorne1977}。
 
 \begin{definition}\label{b3:def:projective-space}
 设 \(A\) 为交换环，\(r\ge0\) 为整数，多项式环 \(A[x_0,\ldots,x_r]\) 中各变量次数为一。概形
@@ -97,6 +116,7 @@ Proj 的一般构造可对照\cite[Chapter II, Proposition 2.5, pp. 76--77]{Hart
 \]
 称为 \(A\) 上的 \(r\) 维\term[sheying-kongjian]{射影空间}[projective space]。
 \end{definition}
+\symidx{\(\mathbb P_A^r\)：环 \(A\) 上的 \(r\) 维射影空间}
 
 它由 \(r+1\) 个仿射开集覆盖：
 \[
@@ -110,25 +130,33 @@ A[x_0/x_i,\ldots,\widehat{x_i/x_i},\ldots,x_r/x_i]
 若 \(I\subseteq S\) 为齐次理想，则 \(\operatorname{Proj}(S/I)\) 在每张图上由
 \((S_f)_0\rightarrow((S/I)_f)_0\) 给出商环，因此是 \(\operatorname{Proj}S\) 的闭子概形。齐次方程由此不仅规定闭点的零集，也规定其上的商结构。与仿射闭子概形不同，同一个射影闭子概形可能由不同的齐次理想给出：被无关理想 \(S_+\) 的某个幂零化的分次部分，在每张 \(D_+(f)\) 上都会消失。在有限生成的标准分次下，这个差异可由饱和化精确描述。
 
-\begin{proposition}[射影闭子概形与饱和化]\label{b3:prop:proj-saturation-standard}
+\ProseParagraphBreak
+例如，对域 \(k\)，标准分次环 \(k[x,y]\) 的两个理想 \((x^2,xy)\) 与 \((x)\) 不同，但倒置 \(x\) 后都变成单位理想，倒置 \(y\) 后又都由 \(x\) 生成。两张射影图看到相同的局部理想；饱和化将这些局部条件收缩回原环，下面的命题算出其共同结果为 \((x)\)。
+
+\begin{proposition}[射影闭子概形与饱和化]\label{b3:prop:proj-saturation-standard}\label{b3:prop:proj-saturation-example}
 设 \(S\) 为交换含幺正分次环，由有限个次数一元素 \(x_0,\ldots,x_r\) 作为 \(S_0\) 代数生成，并记 \(S_+=(x_0,\ldots,x_r)\)。对齐次理想 \(I\subseteq S\)，定义其 \(S_+\)-饱和化为
 \[
 I^{\mathrm{sat}}=I:S_+^\infty
 =\bigcup_{N\ge0}\{\,a\in S:S_+^Na\subseteq I\,\}.
 \]
 则 \(I\) 与 \(I^{\mathrm{sat}}\) 给出 \(\operatorname{Proj}S\) 内同一个闭子概形。两个齐次理想 \(I,J\) 给出其中同一个闭子概形，当且仅当 \(I^{\mathrm{sat}}=J^{\mathrm{sat}}\)。
+
+例如，对域 \(k\) 上的标准分次环 \(S=k[x,y]\)，取 \(I=(x^2,xy)\)、\(J=(x)\)。则 \(I\ne J\)，而 \(I^{\mathrm{sat}}=J\)，两者给出同一个射影闭子概形。差模 \(J/I\) 由 \(x\) 的类生成，且被 \(S_+=(x,y)\) 零化，故其射影伴随层为零。
 \end{proposition}
+\symidx{\(I^{\mathrm{sat}}\)：齐次理想关于无关理想的饱和化}
 \begin{proof}
 先对任意齐次理想 \(I\) 说明
 \[
 I^{\mathrm{sat}}
 =\bigcap_{i=0}^r(I:x_i^\infty).
 \]
-左侧的元素显然属于右侧。若 \(a\) 属于右侧，分别取正整数 \(N_i\)，使 \(x_i^{N_i}a\in I\)。取 \(N>\sum_i(N_i-1)\)，则每个由 \(x_0,\ldots,x_r\) 组成的 \(N\) 次乘积都含某个 \(x_i^{N_i}\)，所以 \(S_+^Na\subseteq I\)。这证明反向包含，也说明饱和化恰由各 \(I_{x_i}\) 的收缩确定。
+这里 \(I:x_i^\infty\) 正是局部理想 \(I_{x_i}\) 收缩回 \(S\) 的结果，所以这条公式将每张标准图看到的理想条件重新求交。左侧的元素显然属于右侧。若 \(a\) 属于右侧，分别取正整数 \(N_i\)，使 \(x_i^{N_i}a\in I\)。取 \(N>\sum_i(N_i-1)\)，则每个由 \(x_0,\ldots,x_r\) 组成的 \(N\) 次乘积都含某个 \(x_i^{N_i}\)，所以 \(S_+^Na\subseteq I\)。这证明反向包含；有限个标准坐标正用于把逐图的零化指数合成一个共同指数。
 
 若 \(a\in I^{\mathrm{sat}}\)，则在每个 \(S_{x_i}\) 中有 \(a\in I_{x_i}\)，因而 \((I^{\mathrm{sat}})_{x_i}=I_{x_i}\)。取零次部分后，两理想在每张图上给出相同的商环，故给出同一个闭子概形。
 
 若 \(I,J\) 给出同一个闭子概形，则每张图中的局部理想 \((I_{x_i})_0\) 与 \((J_{x_i})_0\) 相同。对齐次元 \(a\in I_e\)，次数一条件使 \(a/x_i^e\) 属于 \((I_{x_i})_0\)，于是 \(a\in J_{x_i}\)。对所有齐次分量应用此论证，得到 \(I_{x_i}\subseteq J_{x_i}\)；交换两理想可得相等。由刚才的收缩公式，\(I^{\mathrm{sat}}=J^{\mathrm{sat}}\)。反向由二者均与自己的饱和化给出相同闭子概形立即得到。
+
+对最后的例子，\(x\notin(x^2,xy)\)，故 \(I\ne J\)，但 \(S_+x\subseteq I\)，于是 \(J\subseteq I^{\mathrm{sat}}\)。另一方面，\(J\) 已饱和：若 \(S_+^Na\subseteq J\)，模掉 \(x\) 后有 \(y^N\bar a=0\) 于整环 \(k[y]\)，故 \(a\in J\)。由 \(I\subseteq J\)，得到 \(I^{\mathrm{sat}}\subseteq J^{\mathrm{sat}}=J\)，所以 \(I^{\mathrm{sat}}=J\)。逐图看，倒置 \(x\) 后二者都变成单位理想，倒置 \(y\) 后二者都由 \(x\) 生成。差模 \(J/I\) 中 \(x\) 的类同时被 \(x,y\) 零化，在两张图上都局部化为零，因此其伴随层消失。
 \end{proof}
 
 \subsection{分次模与射影几何}
@@ -143,18 +171,29 @@ I^{\mathrm{sat}}
 \]
 \(\mathcal O_X(1)\) 称为 Serre 的\term[niuqu-ceng]{扭曲层}[twisting sheaf]；对 \(X\) 上的 \(\mathcal O_X\) 模层 \(\mathcal F\)，记 \(\mathcal F(n)=\mathcal F\otimes_{\mathcal O_X}\mathcal O_X(n)\)。
 \end{definition}
+\symidx{\(\mathcal O_X(n)\)、\(\mathcal F(n)\)：扭层与模层的扭转}
 
-\begin{proposition}\label{b3:prop:standard-twists-invertible}
+本书的平移 \(S(n)_j=S_{n+j}\) 使 \((S(n)_f)_0=(S_f)_n\)。在次数一元素 \(f\) 的图上，\(\mathcal O(-1)\) 因而以 \(f^{-1}\) 为基，\(\mathcal O(1)\) 则以 \(f\) 为基。下面的标准分次条件使这些图覆盖整个 Proj，并保证两层互为对偶。
+
+\begin{proposition}\label{b3:prop:standard-twists-invertible}\label{b3:prop:weighted-twist-counterexample}
 设 \(S\) 为交换正分次环，且由 \(S_1\) 作为 \(S_0\) 代数生成，\(X=\operatorname{Proj}S\)。则对任意整数 \(n,a,b\) 及分次 \(S\) 模 \(M\)，\(\mathcal O_X(n)\) 为可逆层，且有
 \[
 \widetilde{M(n)}\cong\widetilde M(n),\qquad
 \mathcal O_X(a)\otimes\mathcal O_X(b)\cong\mathcal O_X(a+b).
+\]
+特别地，\(\mathcal O_X(-1)^\vee\cong\mathcal O_X(1)\)。次数一生成条件不能省略：若 \(k\) 为域，\(S'=k[x]\) 取 \(\deg x=2\)，\(X'=\operatorname{Proj}S'\)，则
+\[
+X'\cong\operatorname{Spec}k,\qquad
+\mathcal O_{X'}(1)=0,\qquad
+\mathcal O_{X'}(2)\cong\mathcal O_{X'}.
 \]
 \end{proposition}
 \begin{proof}
 次数一元素的 \(D_+(f)\) 覆盖 \(X\)。在这种图上，\(S(n)_{(f)}=(S_f)_n\)，乘以可逆元 \(f^n\) 给出 \(S_{(f)}\cong(S_f)_n\)，故局部秩为一。相同映射给
 \((M_f)_0\otimes_{S_{(f)}}(S_f)_n\cong(M_f)_n\)。
 这些同构在交集上都由乘法给出，所以黏合。取 \(M=S(a)\) 得最后一式。
+
+对 \(S'\) 的例子，只有齐次素理想 \((0)\) 避开 \(S'_+=(x)\)，所以 \(D_+(x)=X'\)。有 \(S'_x=k[x,x^{-1}]\)，其零次部分为 \(k\)，奇数次部分全部为零，次数二部分则为 \(kx\)。应用扭曲层定义，得到 \(X'\)、\(\mathcal O_{X'}(1)\)、\(\mathcal O_{X'}(2)\) 的三项结论。零层在这个非空概形上不可能可逆；而 \(\mathcal O(1)\otimes\mathcal O(1)=0\) 也不能同构于 \(\mathcal O(2)\)。
 \end{proof}
 
 设 \(k\) 为域，\(n\in\mathbb Z\)。在 \(\mathbb P_k^1\) 上，令 \(t=x_1/x_0\)、\(u=x_0/x_1\)。\cref{b3:tab:projective-line-twist-charts}列出 \(\mathcal O(n)\) 在两张仿射图中的局部基，及它们在交集上的关系。
@@ -188,10 +227,10 @@ I^{\mathrm{sat}}
 (a,b)&\longmapsto a-t^n b.
 \end{aligned}
 \end{equation}
-当 \(n\ge0\) 时，\(a\) 正是次数不超过 \(n\) 的多项式，截面空间的维数为 \(n+1\)；当 \(n<0\) 时只有零截面。特别地，\(\mathcal O(-1)\) 在每点局部自由，却没有非零全局截面，故不可能同构于结构层。两张仿射图已经显示局部平凡与全局平凡的区别；层上同调还将解释同一映射 \(\delta_n\) 的余核。
+当 \(n\ge0\) 时，\(a\) 正是次数不超过 \(n\) 的多项式，截面空间的维数为 \(n+1\)；当 \(n<0\) 时只有零截面。特别地，\(\mathcal O(-1)\) 在每点局部自由，却没有非零全局截面，而结构层至少有非零截面 \(1\)，故两者不可能同构。这是在概形上看到的局部秩一自由与全局平凡性的区别；\cref{b3:cor:vector-bundle-projective-module}将仿射可逆层对应到秩一投射模，在 Noether 正规整环情形便是\cref{b3:prop:picard-class-group}中的 Picard 群对象。层上同调还将解释同一映射 \(\delta_n\) 的余核。
 
 \ProseParagraphBreak
-与仿射情形不同，\(M\mapsto\widetilde M\) 在 Proj 上不能由不带次数的全局截面反演。例如 \(S/S_+\) 在每个 \(D_+(f)\) 上局部化为零，故其伴随层为零；当 \(S_0\ne0\) 时，这个分次模本身却不为零。\cref{b3:tab:spec-proj-sheaf-comparison}把这种信息损失与局部零次运算、闭子概形的饱和化放在一起比较；仿射列中的 \(M\) 是 \(A\) 模，射影列中的 \(M\) 是分次 \(S\) 模。扭曲层的局部计算见\cite[Chapter II, Propositions 5.11--5.12, pp. 116--117]{Hartshorne1977}。
+与仿射情形不同，\(M\mapsto\widetilde M\) 在 Proj 上不能由不带次数的全局截面反演。这一步先局部化，零化那些在标准图上消失的部分，再只取局部模的零次分量。例如 \(S/S_+\) 在每个 \(D_+(f)\) 上局部化为零，故其伴随层为零；当 \(S_0\ne0\) 时，这个分次模本身却不为零。零次筛选也会丢失信息：在加权例子的 \(S'\) 中，\(S'(1)\) 没有被 \((x)\) 的幂零化的非零元素，但 \(\widetilde{S'(1)}=0\)。因此一般分次下不能把全部信息损失归结为无关理想挠子。\Cref{b3:tab:spec-proj-sheaf-comparison}把这些运算与闭子概形的饱和化放在一起比较；仿射列中的 \(M\) 是 \(A\) 模，射影列中的 \(M\) 是分次 \(S\) 模。扭曲层的局部计算见\cite[Chapter II, Propositions 5.11--5.12, pp. 116--117]{Hartshorne1977}。
 
 \begin{table}[htbp]
 \centering

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### C.3 层上同调、Čech 上同调与比较
-% 纲要位置：工作记录/计划纲要.md，第 3621 行。
+% 纲要位置：工作记录/计划纲要.md，第 3918 行。
 % 纲要细目（写作范围）：
 % #### C.3.1 层与截面函子的右导出
 % #### C.3.2 Čech 复形与覆盖计算
@@ -18,25 +18,34 @@
 \begin{definition}\label{b4:def:C-sheaf}
 设 \(X\) 为拓扑空间。给每个开集 \(U\) 一个交换群 \(\mathcal F(U)\)，给每个包含 \(V\subseteq U\) 一个限制同态 \(s\mapsto s|_V\)，并要求恒等限制与复合限制相容，便得到交换群预层。若对任意开覆盖 \(U=\bigcup_i U_i\)，在各 \(U_i\) 上给定的截面只要在全部交集上相同，就能唯一拼成 \(U\) 上的截面，则称这个预层为交换群\term[ceng]{层}[sheaf]。记全局截面为 \(\Gamma(X,\mathcal F)=\mathcal F(X)\)。
 \end{definition}
+\symidx{\(\Gamma(X,\mathcal F)\)：层的全局截面群}
 
 层的态射是与所有限制同态相容的一族群同态。一个截面在点 \(x\) 附近的局部信息由其\term[jing]{茎}[stalk]
 \[
  \mathcal F_x=\varinjlim_{x\in U}\mathcal F(U)
 \]
 记录；两截面给出同一元素，当且仅当它们在某个共同的更小邻域上相同。核逐开集计算，余核则需将逐开集的商作层化，即补入那些能局部表示且能相容拼接的截面。由此得到交换范畴 \(\mathbf{Sh}(X)\)。一列层正合，当且仅当它在每个茎上正合；特别地，层态射满射只要求截面局部能够提升，而不要求每个 \(\mathcal F(U)\rightarrow\mathcal G(U)\) 都满射。
+\symidx{\(\mathcal F_x\)：层在一点的茎}
+\symidx{\(\mathbf{Sh}(X)\)：拓扑空间上的交换群层范畴}
+
+例如，在 \(\mathbb R\) 上把局部常值整数函数取在 \(0,1\) 两点的值，得到满层态射 \(\underline{\mathbb Z}_{\mathbb R}\to i_{0*}\mathbb Z\oplus i_{1*}\mathbb Z\)。但全局截面映射是 \(n\mapsto(n,n)\)，不能取得 \((1,0)\)：两个点附近可以分别取常数 \(1\) 与 \(0\)，而连通空间上的一个局部常值函数必须处处为同一常数。\cref{b4:prop:C-sheaf-global-lift-obstruction}核验这个反例。层的满射性保留局部提升的存在，却不能保证这些提升在全空间上相容；截面函子的右导出正是要记录这一障碍。
 
 \begin{proposition}\label{b4:prop:C-sheaf-injectives}
 对任意拓扑空间 \(X\)，交换群层范畴 \(\mathbf{Sh}(X)\) 有足够多内射对象。函子 \(\Gamma(X,-)\) 左正合。
 \end{proposition}
 \begin{proof}
-截面函子保持核，因为一个截面映为零恰好表示它属于逐开集的核层，故左正合。对每个 \(x\in X\)，把交换群 \(\mathcal F_x\) 嵌入内射交换群 \(I_x\)。令 \(i_{x*}I_x\) 在包含 \(x\) 的开集上取 \(I_x\)，在其余开集上取零。它是层，且有自然同构
+截面函子保持核，因为一个截面映为零恰好表示它属于逐开集的核层，故左正合。要把一个层嵌入内射层，可以先用全部茎记录它的局部截面，再把每个茎嵌入内射交换群。对每个 \(x\in X\)，选单射 \(\iota_x:\mathcal F_x\hookrightarrow I_x\)，其中 \(I_x\) 为内射交换群。令 \(i_{x*}I_x\) 在包含 \(x\) 的开集上取 \(I_x\)，在其余开集上取零。它是层，且有自然同构
 \[
  \operatorname{Hom}_{\mathbf{Sh}(X)}(\mathcal A,i_{x*}I_x)
  \cong\operatorname{Hom}_{\mathbb Z}(\mathcal A_x,I_x).
 \]
 给左侧态射在各邻域上的分量取余极限得到右侧；反过来，在包含 \(x\) 的开集上先取茎再施行给定同态，其余分量取零，构成逆映射。
 
-茎函子正合，因为其滤过余极限保留局部核、像与商。因此 \(i_{x*}I_x\) 内射；这些对象的积也内射，因为到积的同态逐分量提升。自然态射 \(\mathcal F\rightarrow\prod_x i_{x*}I_x\) 为单射：若截面被它送到零，则每个茎均为零；在各点附近截面为零，层的唯一性使截面本身为零。故得到所需内射嵌入。
+茎函子正合，因为其滤过余极限保留局部核、像与商。因此 \(i_{x*}I_x\) 内射；这些对象的积也内射，因为到积的同态逐分量延拓。积层在开集上逐分量取积，所以自然态射 \(\mathcal F\rightarrow\prod_x i_{x*}I_x\) 在开集 \(U\) 上就是
+\[
+s\longmapsto\bigl(\iota_x(s_x)\bigr)_{x\in U},
+\]
+其中不属于 \(U\) 的点对应零群。若像为零，每个 \(s_x\) 均为零；这表示每个点附近都有一个开邻域使截面限制为零。层的唯一拼接条件便给出 \(s=0\)。因此该态射单射，得到所需内射嵌入。
 \end{proof}
 
 \begin{definition}\label{b4:def:C-sheaf-cohomology}
@@ -46,6 +55,7 @@
 \]
 具体地，取内射消解 \(\mathcal F\rightarrow\mathcal I^\bullet\)，对截面复形 \(\Gamma(X,\mathcal I^\bullet)\) 取上同调。这称为 \(\mathcal F\) 的\term[cengshangtongdiao]{层上同调}[sheaf cohomology]。
 \end{definition}
+\symidx{\(H^n(X,\mathcal F)\)：层上同调}
 
 上述内射构造与导出定义可对照 Weibel\cite[Example 2.3.12, p. 42; Application 2.5.4, p. 51]{Weibel1994HomologicalAlgebra}。层上同调按定义具有短正合列的长正合列，这与固定覆盖的 Čech 上同调有一个重要差别：后者的余链群由截面组成，层的满射未必使这些余链群满射。
 
@@ -66,11 +76,13 @@
 \]
 这个复形称为该覆盖的\term[Cechfuxing]{Čech 复形}[Čech complex]，其上同调记为 \(\check H^r(\mathcal U,\mathcal F)\)。
 \end{definition}
+\symidx{\(\check C^r(\mathcal U,\mathcal F)\)：开覆盖上的 Čech 余链群}
+\symidx{\(\check H^r(\mathcal U,\mathcal F)\)：给定开覆盖的 Čech 上同调}
 
 连续删除两个指标时，两种删除次序的符号相反，故 \(\delta^2=0\)。零次余圈就是在两两交集上相同的一族局部截面，所以层公理给出 \(\check H^0(\mathcal U,\mathcal F)=\Gamma(X,\mathcal F)\)。这是零次的无条件识别，高次还须检查交集上的上同调。
 
 \begin{example}\label{b4:exm:C-projective-line-cech}
-设 \(k\) 为域，把 \(X=\mathbb P^1_k\) 写成两个仿射直线的并：\(U=\operatorname{Spec}k[t]\)、\(V=\operatorname{Spec}k[s]\)，交集上 \(s=t^{-1}\)。考虑在两开集上各为秩一自由层的 \(\mathcal L\)，选生成元 \(e_U,e_V\)，粘合关系为 \(e_V=t^{-2}e_U\)。这就是线丛层 \(\mathcal O_{\mathbb P^1}(-2)\)。其 Čech 复形为
+设 \(k\) 为域，把 \(X=\mathbb P^1_k\) 写成两个仿射直线的并：\(U=\operatorname{Spec}k[t]\)、\(V=\operatorname{Spec}k[s]\)，交集上 \(s=t^{-1}\)。考虑在两开集上各为秩一自由层的 \(\mathcal L\)，选生成元 \(e_U,e_V\)，在交集上以 \(e_V=t^{-2}e_U\) 识别两个局部平凡化。这就是线丛层 \(\mathcal O_{\mathbb P^1}(-2)\)。两个局部截面分别写成 \(a(t)e_U\) 和 \(b(t^{-1})e_V\)。把后一项改用 \(e_U\) 表示，就成为 \(t^{-2}b(t^{-1})e_U\)，所以它们能拼接恰好要求 \(a(t)=t^{-2}b(t^{-1})\)。Čech 微分是交集上第二个限制减去第一个限制，因而复形为
 \[
  k[t]\oplus k[t^{-1}]\longrightarrow k[t,t^{-1}],
  \qquad(a,b)\longmapsto t^{-2}b-a,
@@ -89,11 +101,15 @@
 \xrightarrow{\sim}H^1(X,\mathcal F).
 \]
 这条一般结论只涉及一次，不能据此把全部覆盖的 Čech 余极限在所有高次上都等同于导出层上同调。下面证明一个适用于各次的有限零调覆盖比较。
+\symidx{\(\check H^n(X,\mathcal F)\)：关于开覆盖取余极限的 Čech 上同调群}
 
 \subsection{零调覆盖与比较定理}
 \label{b4:subsec:C03:03}
 
 若一个层 \(\mathcal I\) 对任意开集包含 \(V\subseteq U\) 都使限制 \(\mathcal I(U)\rightarrow\mathcal I(V)\) 满射，则称它为\term[songchiceng]{松弛层}[flasque sheaf]。我们先说明内射层具有这一性质，以及它在 Čech 复形中的作用。
+
+\ProseParagraphBreak
+在双开集覆盖 \(X=U\cup V\) 中，给定交集上的截面 \(c\in\mathcal I(U\cap V)\)，松弛性使它延拓为 \(b\in\mathcal I(V)\)。于是 \(c=\delta(0,b)\)，所以一次 Čech 上同调为零。相容性中的误差能够延到一个覆盖开集，再通过修改该开集上的截面消去；一般有限覆盖的证明将重复这个操作。
 
 \begin{lemma}\label{b4:lem:C-flasque-cech}
 设 \(X\) 为拓扑空间。\(X\) 上的内射交换群层都是松弛层，限制到任何开子集后仍内射。若 \(\mathcal I\) 为 \(X\) 上的松弛交换群层，\(\mathcal U\) 为 \(X\) 的任意有限开覆盖，则增广 Čech 复形
@@ -103,6 +119,7 @@
  \longrightarrow\check C^1(\mathcal U,\mathcal I)\longrightarrow\cdots
 \]
 正合。
+此外，每个松弛交换群层 \(\mathcal I\) 都满足 \(H^q(X,\mathcal I)=0\)（\(q>0\)）。
 \end{lemma}
 \begin{proof}
 对开包含 \(j:U\hookrightarrow X\)，延零函子 \(j_!\) 把 \(U\) 上的层延到 \(X\)。具体地，对开集 \(V\subseteq X\)，\((j_!\mathcal A)(V)\) 由满足如下条件的截面 \(s\in\mathcal A(V\cap U)\) 组成：每个 \(z\in V\setminus U\) 都有 \(V\) 内的开邻域 \(W\)，使 \(s|_{W\cap U}=0\)。等价地，\(s\) 的非零茎所在的支集在 \(V\) 中闭；闭性是相对于当前开集 \(V\) 而言。例如 \(U=(0,1)\subset\mathbb R\)，非零常整数截面不属于 \((j_!\underline{\mathbb Z}_U)(\mathbb R)\)，因为它在 \(0,1\) 附近都不为零；同一截面却属于 \((j_!\underline{\mathbb Z}_U)(U)\)，此时没有需要检查的外部点。于是茎在 \(U\) 内保持原值，在外部为零。这个构造满足
@@ -119,6 +136,8 @@ Y=\bigcup_{i<m}U_i,
 \(\mathcal I|_Y\) 和 \(\mathcal I|_{Y\cap U_m}\) 都仍松弛，因为其中开集之间的限制就是 \(\mathcal I\) 原有的满射限制。取正次 \(r\) 的余圈 \(c\)。\((U_i)_{i<m}\) 是 \(Y\) 的覆盖，对 \(\mathcal I|_Y\) 使用归纳，再将所得余链放回原覆盖，便可减去一个余边，使所有不含指标 \(m\) 的分量为零。剩下的分量 \(c_{i_0\cdots i_{r-1}m}\) 在 \(Y\cap U_m\) 的覆盖 \((U_i\cap U_m)_{i<m}\) 上成为 \(r-1\) 次余圈。
 
 若 \(r>1\)，对 \(\mathcal I|_{Y\cap U_m}\) 和这个有 \(m-1\) 个开集的覆盖再次用归纳，把这些分量写成余边，再将相应低一次余链放回含 \(m\) 的分量，即消去剩余部分。若 \(r=1\)，这些截面在交集上相同，故拼成 \(Y\cap U_m\) 上一个截面。松弛性使它延到 \(U_m\)；把此延拓作为零次余链的第 \(m\) 分量，其余分量为零，余边便是剩余部分。零次正合性和增广单射来自层公理，完成归纳。
+
+最后证明松弛层对截面函子零调。给松弛层 \(\mathcal G\) 取内射嵌入，记商层为 \(\mathcal Q\)，得到 \(0\to\mathcal G\to\mathcal J\to\mathcal Q\to0\)。给定 \(\mathcal Q(U)\) 中的截面，它在一个开覆盖上能提升到 \(\mathcal J\)。若已在部分开集之并 \(W\) 上选好提升，要再加入开集 \(V\)，在 \(W\cap V\) 上，用 \(V\) 上的提升减去 \(W\) 上的提升，所得的差属于 \(\mathcal G(W\cap V)\)。将这个差延到 \(V\)，再从 \(V\) 上的提升中减去，两个提升就能拼接。把覆盖良序化并逐次作此修正，在极限阶段用层公理拼接，便得 \(\mathcal J(U)\to\mathcal Q(U)\) 满射。对开集包含 \(V\subseteq U\)，先把 \(\mathcal Q(V)\) 中的截面提升到 \(\mathcal J(V)\)，再利用内射层的松弛性延到 \(\mathcal J(U)\)，可知 \(\mathcal Q\) 也松弛。截面列的满射性和 \(\mathcal J\) 的内射性给出 \(H^1(X,\mathcal G)=0\)，且对 \(q\ge2\)，长正合列给出 \(H^q(X,\mathcal G)\cong H^{q-1}(X,\mathcal Q)\)。反复对松弛商层应用这一过程，全部正次上同调均为零。
 \end{proof}
 
 给定拓扑空间 \(X\) 上的交换群层 \(\mathcal F\)。若有限开覆盖 \(\mathcal U\) 中的每个非空有限交集 \(U\) 都满足 \(H^q(U,\mathcal F|_U)=0\)（\(q>0\)），就称 \(\mathcal U\) 为相对于 \(\mathcal F\) 的\term[lingtiao-fugai]{零调覆盖}[acyclic cover]。这个条件依赖所给的层，不是覆盖自身的绝对性质。
@@ -142,20 +161,25 @@ Y=\bigcup_{i<m}U_i,
 \]
 横向为 Čech 微分，纵向为内射消解微分，并在总微分中给后者乘 \((-1)^r\)。每条对角线有限，故可以使用\cref{b4:cor:double-complex-comparison}。
 
-先沿横向取上同调。由\cref{b4:lem:C-flasque-cech}，每个内射层的增广 Čech 行正合，因此从 \(\Gamma(X,\mathcal I^\bullet)\) 到总复形的增广比较为拟同构，其上同调就是 \(H^n(X,\mathcal F)\)。再沿纵向考察：内射层限制到每个交集后仍内射，所以该列计算交集上的层上同调。假设使正次全部为零，零次恰为 \(\mathcal F(U_{i_0\cdots i_r})\)。因此从 \(\check C^\bullet(\mathcal U,\mathcal F)\) 到同一个总复形的增广比较也是拟同构。两次比较给出所求同构；消解比较的同伦唯一性保证它与层态射相容，并不依赖消解选择。
+先沿横向取上同调。由\cref{b4:lem:C-flasque-cech}，每个内射层的增广 Čech 行正合，因此从 \(\Gamma(X,\mathcal I^\bullet)\) 到总复形的增广比较为拟同构，其上同调就是 \(H^n(X,\mathcal F)\)。这一步只用消解层的松弛性，并不要求原层 \(\mathcal F\) 在覆盖交集上零调。
+
+再沿纵向考察：内射层限制到每个交集后仍内射，所以该列计算交集上的层上同调。现在才使用零调覆盖假设，使正次全部为零，零次恰为 \(\mathcal F(U_{i_0\cdots i_r})\)。因此从 \(\check C^\bullet(\mathcal U,\mathcal F)\) 到同一个总复形的增广比较也是拟同构。内射消解给出共同的总复形，而原层在交集上的高次消失才使原层的 Čech 复形能够直接替代它。两次比较给出所求同构；消解比较的同伦唯一性保证它与层态射相容，并不依赖消解选择。
 \end{proof}
 
 现在回到\cref{b4:exm:C-projective-line-cech}。所需仿射消失定理是：若 \(A\) 为 Noether 交换环，\(\mathcal F\) 为 \(X=\operatorname{Spec}A\) 上的\term[zhunningjuceng]{准凝聚层}[quasi-coherent sheaf]，即局部由模及其局部化给出的层，则 \(H^q(X,\mathcal F)=0\) 对 \(q>0\) 成立。下面给出其证明概要，具体模论细节可对照 Hartshorne\cite[Chapter III, Lemmas 3.2--3.3, Proposition 3.4 and Theorem 3.5, pp. 213--215]{Hartshorne1977}。
 \begin{proofsketch}
-写 \(\mathcal F=\widetilde M\)，并在 \(A\)-模范畴中取内射消解 \(M\to I^\bullet\)。局部化正合，使 \(\widetilde M\to\widetilde I^\bullet\) 为层消解；又有 \(\Gamma(X,\widetilde I^q)=I^q\)。因此只须说明每个 \(\widetilde I^q\) 对截面函子零调，不能仅凭 \(I^q\) 在模范畴中内射就作此断言。
+这里使用仿射概形上准凝聚层与模的识别 \(\mathcal F=\widetilde M\)，以及 \(\widetilde M(D(f))=M_f\) 和 \(M\mapsto\widetilde M\) 的正合性。这些层论构造与识别见 Hartshorne\cite[Chapter II, Propositions 5.1--5.2 and 5.4, Corollary 5.5, pp. 110--113]{Hartshorne1977}；下文展开的是从内射模到松弛层的步骤。
+
+写 \(\mathcal F=\widetilde M\)，并在 \(A\)-模范畴中取内射消解 \(M\to I^\bullet\)。局部化正合，使 \(\widetilde M\to\widetilde I^\bullet\) 为层消解；又有 \(\Gamma(X,\widetilde I^q)=I^q\)。若这些层对截面函子零调，取截面就重新得到原来的模消解，从而使正次上同调消失。因此要把模范畴中的内射性转成层的零调性；这里证明更强的结论：内射模 \(I\) 的伴随层 \(\widetilde I\) 松弛，再用\cref{b4:lem:C-flasque-cech}。其延拓过程是在基本开集 \(D(f)\) 上先处理截面，然后把剩余问题缩到 \(V(f)\)；下面两项模论事实分别保证这两步可以实行。
 
 先固定内射模 \(I\)。对理想 \(\mathfrak a\)，令
 \[
- J=\{u\in I:\mathfrak a^Nu=0\text{ 对某个 }N\ge1\}.
+ J=\{u\in I:\mathfrak a^Nu=0\;\text{对某个}\;N\ge1\}.
 \]
-它仍内射。事实上，对理想 \(\mathfrak b\) 到 \(J\) 的同态 \(\varphi\)，有限生成性给出统一的 \(N\)，使 \(\varphi(\mathfrak a^N\mathfrak b)=0\)。Artin--Rees 引理给出 \(r\)，使 \(\mathfrak b\cap\mathfrak a^r\subseteq\mathfrak a^N\mathfrak b\)。于是 \(\varphi\) 通过 \(\mathfrak b/(\mathfrak b\cap\mathfrak a^r)\) 分解。把它视为 \(A/\mathfrak a^r\) 的子模，利用 \(I\) 的内射性延拓到 \(A/\mathfrak a^r\)；延拓像被 \(\mathfrak a^r\) 零化，仍在 \(J\) 中。Baer 判据证明所述内射性。
+% 跨卷引用目标：b3:thm:artin-rees（定理13.2.1）、b2:thm:baer-criterion（定理7.2.3）。
+它仍内射，这将使支于闭集 \(V(f)\) 的剩余截面继续满足归纳所需的内射模条件。事实上，对理想 \(\mathfrak b\) 到 \(J\) 的同态 \(\varphi\)，Noether 性使 \(\mathfrak b\) 有限生成，因而可取统一的 \(N\)，使 \(\varphi(\mathfrak a^N\mathfrak b)=0\)。第三卷定理13.2.1的 Artin--Rees 引理应用于有限生成模 \(A\)、子模 \(\mathfrak b\) 与理想 \(\mathfrak a\)，给出足够大的 \(r\)，使 \(\mathfrak b\cap\mathfrak a^r\subseteq\mathfrak a^N\mathfrak b\)。于是 \(\varphi\) 通过 \(\mathfrak b/(\mathfrak b\cap\mathfrak a^r)\) 分解。把它视为 \(A/\mathfrak a^r\) 的子模，利用 \(I\) 的内射性延拓到 \(A/\mathfrak a^r\)；延拓像被 \(\mathfrak a^r\) 零化，仍在 \(J\) 中。第二卷定理7.2.3的 Baer 判据证明所述内射性。
 
-其次，\(I\to I_f\) 总满射。理想链 \(\operatorname{ann}(f^r)\) 稳定后，对 \(u/f^n\) 定义
+其次，\(I\to I_f\) 总满射，所以基本开集 \(D(f)\) 上的截面都能来自一个全局截面。Noether 性使理想链 \(\operatorname{ann}(f^r)\) 稳定，取稳定后的 \(r\)，对 \(u/f^n\) 定义
 \[
  (f^{n+r})\longrightarrow I,\qquad af^{n+r}\longmapsto af^ru.
 \]
@@ -173,11 +197,9 @@ s_i=\frac{g_i^{m_i}u_i}{g_i^{r_i+m_i}}\in J_{g_i}.
 \]
 这里分子被 \(f^N\) 零化，因而属于 \(J\)。这些局部截面在交集上相同，便拼成 \(\widetilde J(U)\) 的截面。反过来，\(J_f=0\)，所以 \(\widetilde J\) 的截面在 \(D(f)\) 上都为零。这证明了支于 \(V(f)\) 的截面子层正是 \(\widetilde J\)。
 
-现在对闭集 \(Y=\overline{\operatorname{Supp}\widetilde I}\) 作 Noether 归纳。给定开集 \(U\) 上的截面，若 \(Y\cap U=\varnothing\)，它已为零。否则选取 \(D(f)\subseteq U\) 与 \(Y\) 相交。由刚证的满射，可用全局截面消去它在 \(D(f)\) 上的限制。余下截面支于 \(V(f)\)，由上一段正好属于 \(\widetilde J(U)\)。\(J\) 内射，且 \(\widetilde J\) 的支集闭包位于严格较小的 \(Y\cap V(f)\)；归纳使该截面也能延到全空间。因此 \(\widetilde I\) 松弛。
+现在利用 \(X\) 的 Noether 性，对闭集 \(Y=\overline{\operatorname{Supp}\widetilde I}\) 作归纳：假定支集闭包包含于 \(Y\) 的真闭子集的所有内射模，其伴随层均已证明松弛。给定开集 \(U\) 上的截面，若 \(Y\cap U=\varnothing\)，它已为零。否则选取 \(D(f)\subseteq U\) 与 \(Y\) 相交。由刚证的满射，可用全局截面消去它在 \(D(f)\) 上的限制。余下截面支于 \(V(f)\)，由上一段正好属于 \(\widetilde J(U)\)。\(J\) 内射，且 \(\widetilde J\) 的支集闭包位于严格较小的 \(Y\cap V(f)\)；归纳使该截面也能延到全空间。因此每个开集上的截面都能全局延拓，\(\widetilde I\) 松弛。这里分别用了理想有限生成、零化子链稳定、Artin--Rees 以及闭集上的 Noether 归纳，这套论证的范围是 Noether 环。
 
-最后说明松弛层确实零调。若 \(0\to\mathcal G\to\mathcal I\to\mathcal Q\to0\)，其中 \(\mathcal G\) 松弛、\(\mathcal I\) 内射，则 \(\mathcal Q\) 的局部截面能够提升到 \(\mathcal I\)。在两个提升的交集上，差属于 \(\mathcal G\)；松弛性允许延拓这个差并修正提升，从而拼接。把覆盖良序化，逐次修正，在极限阶段用层公理拼接，就得到任意开集上的满射 \(\mathcal I(U)\to\mathcal Q(U)\)。这还说明 \(\mathcal Q\) 松弛：先在较小开集提升，再用 \(\mathcal I\) 的松弛性延拓。由长正合列及反复维数平移，\(H^q(X,\mathcal G)=0\) 对所有 \(q>0\) 成立。
-
-因此 \(\widetilde I^\bullet\) 是零调消解，可以计算 \(\widetilde M\) 的层上同调。取全局截面后重新得到原来的正合模消解 \(I^\bullet\)，其正次上同调为零，证明结论。
+因此 \(\widetilde I^\bullet\) 是截面函子的零调消解，由\cref{b4:thm:acyclic-resolution}可以计算 \(\widetilde M\) 的层上同调。取全局截面后重新得到原来的正合模消解 \(I^\bullet\)，其正次上同调为零，证明结论。
 \end{proofsketch}
 
 例中的 \(U,V,U\cap V\) 分别对应 Noether 环 \(k[t],k[t^{-1}],k[t,t^{-1}]\)，且 \(\mathcal L\) 在各处均为秩一自由层，满足该定理。因此\cref{b4:thm:C-cech-comparison}使已算得的结果成为
@@ -187,3 +209,16 @@ s_i=\frac{g_i^{m_i}u_i}{g_i^{r_i+m_i}}\in J_{g_i}.
  \quad H^n\bigl(\mathbb P^1_k,\mathcal O(-2)\bigr)=0\ (n\ge2).
 \]
 若却使用单开集覆盖 \(\{X\}\)，其 Čech 复形没有正次项，便会得到 \(\check H^1\bigl(\{X\},\mathcal L\bigr)=0\)。这说明固定覆盖必须满足比较条件；覆盖取得过粗，可能完全漏掉要计算的障碍。
+
+\begin{proposition}\label{b4:prop:C-sheaf-global-lift-obstruction}
+设 \(X=\mathbb R\) 取通常拓扑，\(\underline{\mathbb Z}_X\) 为局部常值整数函数层，\(i_0,i_1\) 分别为点 \(0,1\) 到 \(X\) 的包含。逐开集取这两点处的值，给出满层态射
+\[
+\underline{\mathbb Z}_X\longrightarrow i_{0*}\mathbb Z\oplus i_{1*}\mathbb Z,
+\]
+但其全局截面映射 \(\mathbb Z\to\mathbb Z\oplus\mathbb Z\) 不满射。因此全局截面函子一般不右正合。
+\end{proposition}
+\begin{proof}
+取值与限制相容，因而得到层态射。在点 \(0\) 附近选避开 \(1\) 的小区间，目标层的茎为第一份 \(\mathbb Z\)，求值映射在该茎上为恒等。同理，点 \(1\) 的茎映射也是恒等。在其余点可选避开两点的邻域，目标层的茎为零，所以那里的茎映射也满射。层态射的满射性按茎检验，故所构造的态射满射。
+
+\(X\) 连通，每个全局局部常值整数函数都是常数，所以源的全局截面群为 \(\mathbb Z\)。目标的全局截面群为 \(\mathbb Z\oplus\mathbb Z\)，诱导映射是 \(n\mapsto(n,n)\)，不能取得 \((1,0)\)。对该满层态射及其核取截面，短正合列的最后一个映射不满射，故截面函子不右正合。
+\end{proof}

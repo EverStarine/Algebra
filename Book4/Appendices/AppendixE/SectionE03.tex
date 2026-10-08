@@ -9,7 +9,7 @@
 \section{空间、群作用与 Grothendieck topos}
 \label{b4:sec:E03}
 
-预层范畴已经把函数和子对象都组织成了对象。加入层公理以后，局部相容性会改变其中的公式，却保留同样的泛性质。先在拓扑空间上把这件事算清楚，再比较群作用及一般位点。
+预层范畴已经把函数和子对象都组织成了对象。加入层公理以后，局部相容性会改变其中的公式，却保留同样的泛性质。先在拓扑空间上把这件事算清楚，再比较群作用及一般景。
 
 \subsection{空间上的指数层与开集分类子}
 \label{b4:subsec:E03:01}
@@ -19,10 +19,11 @@
 \[
  (G^F)(U)=\operatorname{Hom}_{\operatorname{Sh}_{\mathbf{Set}}(U)}(F|_U,G|_U),
  \qquad
- \Omega(U)=\{\,V\subseteq U\mid V\text{ 开}\,\}.
+ \Omega(U)=\{\,V\subseteq U\mid V\;\text{开}\,\}.
 \]
 \(\Omega\) 的限制为 \(V\mapsto V\cap W\)，\(\mathrm{true}_U(*)=U\)。
 \end{proposition}
+\symidx{\(\operatorname{Sh}_{\mathbf{Set}}(X)\)：拓扑空间上的集合值层范畴}
 \begin{proof}
 终层、二元积和等化子逐开集构造后仍满足唯一拼接，故有限极限存在。对覆盖 \(U=\bigcup_iU_i\)，相容的局部层态射 \(F|_{U_i}\to G|_{U_i}\) 可逐截面拼接：对 \(s\in F(W)\)，先在 \(W\cap U_i\) 上求像，再用 \(G\) 的层公理拼成 \(W\) 上的截面。这些像与限制相容，且唯一。因此所给 \(G^F\) 是层。
 
@@ -35,27 +36,50 @@
 
 相容的局部开集由并集唯一拼接，故 \(\Omega\) 也是层。对子层 \(A\subseteq F\)，令
 \[
- \chi_U(s)=\bigcup\{\,V\subseteq U\mid V\text{ 开且 }s|_V\in A(V)\,\}.
+ \chi_U(s)=\bigcup\{\,V\subseteq U\mid V\;\text{开且}\;s|_V\in A(V)\,\}.
 \]
 这些局部截面都是 \(s\) 的限制，因而相容；\(A\) 的层公理使 \(s\) 在这整个并上属于 \(A\)。所以 \(\chi_U(s)\) 是使该限制属于 \(A\) 的最大开集。它与交 \(W\) 的限制相容，且等于 \(U\) 当且仅当 \(s\in A(U)\)，给出分类方块。若另一特征映射 \(\psi\) 也分类 \(A\)，则
 \(W\subseteq\psi_U(s)\) 当且仅当 \(s|_W\in A(W)\)，故它必等于上述并集。这同时证明唯一性。
 \end{proof}
 
-\(\Omega(X)\) 是 \(X\) 的所有开集，不只是 \(\varnothing,X\)。在这个范畴中，“一个截面属于子层”可以在某个开区域成立。开集的补集未必开，因而这种子对象结构不总与普通集合的布尔代数相同。这里不需要另设逻辑公理，就能从局部限制看见差别。
+指数层的截面允许定义域随开集变化，并不只收集全局层态射的限制。例如，取 \(X=\mathbb R\)，令 \(F=1\) 为终层，\(G\) 为连续实值函数层，则
+\[
+ (G^1)(U)=\operatorname{Hom}_{\operatorname{Sh}_{\mathbf{Set}}(U)}(1,G|_U)
+ \cong G(U).
+\]
+这里层态射由终层的唯一截面之像确定。在 \(U=(0,\infty)\) 上，函数 \(x\mapsto\dfrac1x\) 给出这样的局部层态射；它在 \(0\) 附近无界，不能延拓为 \(\mathbb R\) 上的连续函数。因此它不是任何全局层态射 \(1\to G\) 的限制。
+
+\ProseParagraphBreak
+\(\Omega(X)\) 是 \(X\) 的所有开集，不只是 \(\varnothing,X\)。在这个范畴中，“一个截面属于子层”可以在某个开区域成立。取 \(U=(0,1)\)、\(W=(0,\dfrac12)\)，普通补集 \(U\setminus W=[\dfrac12,1)\) 在 \(U\) 中不是开集。与 \(W\) 不相交的最大开集是
+\[
+ \operatorname{int}_U(U\setminus W)=(\dfrac12,1).
+\]
+它与 \(W\) 的并遗漏 \(\dfrac12\)，所以两者不能并成 \(U\)。开集分类子中可以取这种最大的互不相交开集作为否定，却不总有布尔补元。
 
 \subsection{群作用与 Grothendieck topos}
 \label{b4:subsec:E03:02}
 
 \begin{example}\label{b4:exm:group-set-topos}
-设 \(G\) 为群。左 \(G\)-集范畴的积为对角作用，指数对象的底集合为全部函数 \(X\to Y\)，作用为
+设 \(G\) 为群，\(X,Y\) 为左 \(G\)-集。积取对角作用，指数对象的底集合取全部函数 \(X\to Y\)。求值映射的等变性要求
+\[
+ \operatorname{ev}(g\cdot f,g\cdot x)=g\cdot\operatorname{ev}(f,x),
+ \qquad (g\cdot f)(g\cdot x)=g\cdot f(x).
+\]
+将输入换为 \(g^{-1}\cdot x\)，便得到指数上的作用必须为
 \[
  (g\cdot f)(x)=g\cdot f(g^{-1}\cdot x).
 \]
-求值 \(Y^X\times X\to Y\) 等变；普通柯里化将等变映射 \(Z\times X\to Y\) 对应为等变映射 \(Z\to Y^X\)，直接核验上述公式即可。子对象是稳定子集，其特征函数到平凡作用的 \(\{0,1\}\) 等变，且唯一。因此该范畴为初等 topos。与预层的描述相比，群中每个箭头可逆，所以一个筛只有空或最大两种，恰好得到这两个真假值。
+恒等和复合的作用律直接由公式得到，求值也因此等变。若 \(b:Z\times X\to Y\) 等变，则其柯里化 \(\widetilde b(z)(x)=b(z,x)\) 满足
+\[
+ \widetilde b(g\cdot z)(x)
+ =b(g\cdot z,x)=g\cdot b(z,g^{-1}\cdot x)
+ =(g\cdot\widetilde b(z))(x).
+\]
+反过来，等变的 \(Z\to Y^X\) 与求值复合便给出等变的 \(Z\times X\to Y\)，两种构造互逆。子对象是稳定子集，其特征函数到平凡作用的 \(\{0,1\}\) 等变，且唯一。因此该范畴为初等 topos。与预层的描述相比，群中每个箭头可逆，所以一个筛只有空或最大两种，恰好得到这两个真假值。
 \end{example}
 
 \begin{definition}\label{b4:def:grothendieck-topos}
-设 \(\mathcal E\) 为局部小范畴。若存在小位点 \((\mathcal C,J)\)，使
+设 \(\mathcal E\) 为局部小范畴。若存在小景 \((\mathcal C,J)\)，使
 \[
  \mathcal E\simeq\operatorname{Sh}_{\mathbf{Set}}(\mathcal C,J),
 \]
@@ -63,16 +87,21 @@
 \end{definition}
 
 \begin{theorem}\label{b4:thm:site-topos}
-设 \((\mathcal C,J)\) 为小位点。其集合值层范畴是初等 topos；因而每个 Grothendieck topos 都是初等 topos。
+设 \((\mathcal C,J)\) 为小景。其集合值层范畴是初等 topos；因而每个 Grothendieck topos 都是初等 topos。
 \end{theorem}
 \begin{proofsketch}
-记 \(\mathcal S=\operatorname{Sh}_{\mathbf{Set}}(\mathcal C,J)\)，\(i:\mathcal S\to\widehat{\mathcal C}\) 为包含函子。一般位点的层化函子 \(a:\widehat{\mathcal C}\to\mathcal S\) 满足 \(a\dashv i\)，并保持有限极限。其构造先以覆盖筛上的相容族定义 \(F^+\)，两族在共同覆盖细化上相同便视为等价，再作一次得到层 \(F^{++}\)。极限中的有限个相容条件可以在同一覆盖细化上核验，从而得到有限极限保持性。两次加号构造及这一步的细节见\cite[Chapter III, Section 5]{MacLaneMoerdijk1992Sheaves}。层的有限极限也可直接逐对象计算。
+记 \(\mathcal S=\operatorname{Sh}_{\mathbf{Set}}(\mathcal C,J)\)，\(i:\mathcal S\to\widehat{\mathcal C}\) 为包含函子。一般景的层化函子 \(a:\widehat{\mathcal C}\to\mathcal S\) 满足 \(a\dashv i\)，并保持有限极限。其构造先以覆盖筛上的相容族定义 \(F^+\)，两族在共同覆盖细化上相同便视为等价。称预层 \(F\) 分离，是指对每个覆盖筛 \(R\in J(U)\)，映射 \(F(U)\to\operatorname{Nat}(R,F)\) 单射，即局部限制唯一决定截面。\(F^+\) 总是分离预层；若 \(F\) 已经分离，则 \(F^+\) 是层。第一次构造识别局部相同的数据，并补入由 \(F\) 的相容族表示的截面；但这些新截面组成的相容族还未必能拼接。再对已经分离的 \(F^+\) 作同一构造，便得到层 \(F^{++}\)。极限中的有限个相容条件可以在同一覆盖细化上核验，从而得到有限极限保持性。两次加号构造及这一步的细节见\cite[Chapter III, Section 5]{MacLaneMoerdijk1992Sheaves}。层的有限极限也可直接逐对象计算。
 
 对层 \(F,G\)，先按\cref{b4:prop:presheaf-exponential}定义预层
 \[
  E(U)\coloneqq\operatorname{Nat}(h_U\times iF,iG),
 \]
-限制沿 \(r:V\to U\) 由前复合 \(h_r\times1_{iF}\) 给出。一般位点上的 \(h_U\) 未必是层。由层化伴随、\(a\) 保持积及 \(a(iF)\cong F\)，有
+限制沿 \(r:V\to U\) 由前复合 \(h_r\times1_{iF}\) 给出。一般景上的可表预层未必是层。例如，取只有两个对象 \(A,B\) 和一支非恒等箭头 \(r:B\to A\) 的范畴。规定 \(B\) 上仅最大筛覆盖，\(A\) 上的覆盖筛为 \(R=\{r\}\) 和最大筛。\(r^*R=h_B\)，故拉回保持覆盖；对 \(A\) 上的筛 \(T\)，传递公理中 \(r^*T\) 覆盖就要求 \(r\in T\)，此时 \(T\) 正是所规定的两种覆盖筛之一。最大筛的情形直接使用恒等箭头，因此这确实给出 Grothendieck 拓扑。但是
+\[
+ h_B(A)=\varnothing,\qquad h_B(B)=\{1_B\},\qquad
+ \operatorname{Nat}(R,h_B)=\{*\}.
+\]
+\(h_B(A)\to\operatorname{Nat}(R,h_B)\) 不是双射，所以 \(h_B\) 不是层。这也是在层范畴中需要使用 \(a(h_U)\) 的原因。由层化伴随、\(a\) 保持积及 \(a(iF)\cong F\)，有
 \[
  E(U)\cong\operatorname{Hom}_{\mathcal S}(a(h_U)\times F,G).
 \]
@@ -86,7 +115,7 @@
 \(\theta_{f\circ k}=\theta_f\circ(h_k\times1_{iF})\)。对任意 \(g:V\to U\) 和 \(x\in F(V)\)，在覆盖筛 \(g^*R\) 上定义
 \[
  y_k=(\theta_{g\circ k})_W(1_W,F(k)x)
- \quad(k:W\to V\text{ 属于 }g^*R).
+ \quad(k:W\to V\;\text{属于}\;g^*R).
 \]
 对 \(\ell:Z\to W\)，\(\theta_{g\circ k}\) 的自然性与上述相容性给出 \(G(\ell)y_k=y_{k\circ\ell}\)。因此 \(G\) 的层公理将这些截面唯一拼成 \(y\in G(V)\)，令 \(\theta_V(g,x)=y\)。沿 \(r:V'\to V\) 限制时，所用覆盖为 \(r^*(g^*R)=(g\circ r)^*R\)，局部值与同一公式相同；拼接的唯一性便给出 \(\theta\) 的自然性。当 \(g\in R\) 时，\(1_V\in g^*R\)，故
 \(\theta_V(g,x)=(\theta_g)_V(1_V,x)\)；结合族的相容性，得到 \(E(f)\theta=\theta_f\)。任何另一拼接在每个 \(g^*R\) 上都具有相同的 \(y_k\)，由 \(G\) 的局部唯一性必等于 \(\theta\)。所以 \(E\) 是层。
@@ -99,13 +128,20 @@
 \]
 这些双射关于 \(H\) 自然，求值由预层求值限制而来，故 \(E\) 是层范畴中的指数对象。
 
-分类子取 \(\Omega(U)\) 为 \(U\) 上所有 \(J\)-闭筛组成的集合：筛 \(S\) 满足，对每个 \(f:V\to U\)，若 \(f^*S\in J(V)\)，则 \(f\in S\)。这个条件说，若某个限制在覆盖上处处满足所记录的性质，那么它本身也满足该性质。拓扑空间的开集位点给出具体图景：令 \(W\) 为筛 \(S\) 中所有开集的并。若 \(S\) 为闭筛，每个 \(V\subseteq W\) 都由 \(S\) 中开集与 \(V\) 的交覆盖，故 \(V\in S\)；因此 \(S\) 正是所有 \(V\subseteq W\) 组成的筛。反过来，一个开集 \(W\subseteq U\) 给出的这种筛显然闭。这就把闭筛公式还原为前面 \(\Omega(U)\) 是 \(U\) 中开集的公式。拉回保持闭性，因为 \(h^*(f^*S)\) 覆盖时，\(S\) 的闭性给出 \(f\circ h\in S\)，即 \(h\in f^*S\)。因而筛的拉回定义预层 \(\Omega\)。
+分类子取 \(\Omega(U)\) 为 \(U\) 上所有 \(J\)-闭筛组成的集合：筛 \(S\) 满足，对每个 \(f:V\to U\)，若 \(f^*S\in J(V)\)，则 \(f\in S\)。这个条件说，若某个限制在覆盖上处处满足所记录的性质，那么它本身也满足该性质。对任意筛 \(T\)，其 \(J\)-闭包为
+\[
+ \overline T=\{\,g:V\to U\mid g^*T\in J(V)\,\}.
+\]
+若 \(g\in T\)，则 \(g^*T\) 为最大筛，故 \(T\subseteq\overline T\)；拉回稳定性使 \(\overline T\) 对前复合封闭。若 \(q^*\overline T\) 覆盖，对其中每个 \(k\) 都有 \(k^*(q^*T)=(q\circ k)^*T\) 覆盖，传递公理便推出 \(q^*T\) 覆盖，即 \(q\in\overline T\)。所以 \(\overline T\) 是闭筛。若另一闭筛包含 \(T\)，覆盖筛向上封闭及该筛的闭性又使它包含 \(\overline T\)，故 \(\overline T\) 是包含 \(T\) 的最小闭筛。特别地，\(T\) 闭当且仅当 \(T=\overline T\)；闭包是从任意筛得到闭筛的操作，不能把一个普通覆盖筛直接当作闭筛。
+
+例如，在开集景中取 \(U=(0,1)\)、\(U_1=(0,\dfrac23)\)、\(U_2=(\dfrac13,1)\)。由两张包含生成的筛 \(T\) 只含位于某个 \(U_i\) 中的开集，因而不含 \(1_U\)，不是最大筛；但 \(U_1\cup U_2=U\)，所以它覆盖。任意开集包含的拉回仍是覆盖，故 \(\overline T=h_U\)。预层分类子区分 \(T\) 与 \(h_U\)，层的分类子则用闭筛记录局部成立的性质，其闭包成为最大真值。
+
+拓扑空间的开集景还给出全部闭筛的具体图景：令 \(W\) 为筛 \(S\) 中所有开集的并。若 \(S\) 为闭筛，每个 \(V\subseteq W\) 都由 \(S\) 中开集与 \(V\) 的交覆盖，故 \(V\in S\)；因此 \(S\) 正是所有 \(V\subseteq W\) 组成的筛。反过来，一个开集 \(W\subseteq U\) 给出的这种筛显然闭。这就把闭筛公式还原为前面 \(\Omega(U)\) 是 \(U\) 中开集的公式。拉回保持闭性，因为 \(h^*(f^*S)\) 覆盖时，\(S\) 的闭性给出 \(f\circ h\in S\)，即 \(h\in f^*S\)。因而筛的拉回定义预层 \(\Omega\)。
 
 取 \(R\in J(U)\) 及相容族 \(S_f\in\Omega(V)\)，其中 \(f:V\to U\) 属于 \(R\)，相容性为 \(h^*S_f=S_{f\circ h}\)（\(h:W\to V\)）。先令
 \[
  T=\{\,f:V\to U\mid f\in R,\ 1_V\in S_f\,\},
- \qquad
- S=\{\,g:V\to U\mid g^*T\in J(V)\,\}.
+ \qquad S=\overline T.
 \]
 若 \(f\in T\)，则 \(S_f\) 含恒等态射，因而是最大筛；于是 \(1_W\in h^*S_f=S_{f\circ h}\)，故 \(f\circ h\in T\)。这证明 \(T\) 对前复合封闭。对 \(f\in R\)，由相容性逐项得到
 \[
@@ -114,7 +150,7 @@
  \ \Longleftrightarrow\ k\in S_f
  \quad(k:W\to V),
 \]
-所以 \(f^*T=S_f\)。覆盖的拉回稳定性使 \(S\) 也对前复合封闭。若 \(q:V\to U\) 满足 \(q^*S\) 覆盖，则对其中每个 \(k\)，\(k^*(q^*T)=(q\circ k)^*T\) 都覆盖；拓扑的传递公理推出 \(q^*T\) 覆盖，故 \(q\in S\)。因此 \(S\) 是 \(J\)-闭筛。再对 \(f\in R\) 及 \(k:W\to V\)，有
+所以 \(f^*T=S_f\)。由刚才的闭包构造，\(S\) 是 \(J\)-闭筛。再对 \(f\in R\) 及 \(k:W\to V\)，有
 \[
  k\in f^*S
  \ \Longleftrightarrow\ k^*(f^*T)=k^*S_f\in J(W)
@@ -143,11 +179,29 @@
 \end{theorem}
 这就是\subsecref{b4:subsec:grothendieck-category}中 Grothendieck 范畴的内射存在性定理。原始论证见\cite[Théorème 1.10.1, pp. 135--137]{Grothendieck1957TohokuI}。
 \begin{proofsketch}
-生成元首先把子对象控制为集合。对任意对象 \(B\)，不同子对象 \(N\subseteq B\) 对应不同的子集 \(\operatorname{Hom}(U,N)\subseteq\operatorname{Hom}(U,B)\)，因为来自 \(U\) 的映射的像生成 \(N\)。因此 \(\operatorname{Sub}(B)\) 是集合；若 \(N\subseteq U\)，其子对象也都是 \(U\) 的子对象，故
+生成元首先把子对象控制为集合。对任意对象 \(B\)，不同子对象 \(N\subseteq B\) 对应不同的子集 \(\operatorname{Hom}(U,N)\subseteq\operatorname{Hom}(U,B)\)：由\cref{b4:prop:generator-epimorphism}，来自 \(U\) 的全部映射的像生成 \(N\)。因此 \(\operatorname{Sub}(B)\) 是集合；若 \(N\subseteq U\)，其子对象也都是 \(U\) 的子对象，故
 \[
  |\operatorname{Sub}(N)|\le |\operatorname{Sub}(U)|.
 \]
-对每个 \(N\subseteq U\) 及态射 \(N\to M\)，取一份包含 \(N\to U\)。这些数据组成集合，可以将其直和沿所有 \(N\to M\) 给出的映射推出。直和包含是有限子直和的滤过余极限，因而由 AB5 仍为单态射。推出得到单态射 \(M\to M_1\)，使原有的每个 \(N\to M\) 都延到 \(U\to M_1\)。
+先为 \(U\) 的每个子对象选定一个单态射代表，再把这些代表 \(i_\beta:N_\beta\hookrightarrow U\) 上的所有态射 \(f_\beta:N_\beta\to M\) 编为一个集合 \(\mathcal D\)，每个 \(\beta\) 对应一份 \(U\)。令
+\[
+ L=\bigoplus_{\beta\in\mathcal D}N_\beta,\qquad
+ P=\bigoplus_{\beta\in\mathcal D}U,\qquad
+ i=\bigoplus_\beta i_\beta:L\longrightarrow P,
+ \quad f:L\longrightarrow M,
+\]
+其中 \(f\) 的各分量是 \(f_\beta\)。有限子直和上的 \(i\) 均为单态射；整个直和是这些有限子直和的滤过余极限，故 AB5 使 \(i\) 仍单。在一般交换范畴中，所需的同时推出可由余核构造为
+\[
+ M_1=\operatorname{coker}\bigl((f,-i):L\longrightarrow M\oplus P\bigr).
+\]
+记余核映射为 \(q:M\oplus P\to M_1\)，并令 \(j=q|_M\)。因为 \(i\) 单，\((f,-i)\) 也单，因而是 \(q\) 的核。若 \(r:T\to M\) 满足 \(jr=0\)，则 \((r,0)\) 经此核唯一写成 \((f,-i)s\)；比较 \(P\) 分量得 \(is=0\)，所以 \(s=0\)、\(r=0\)。这证明 \(j:M\to M_1\) 单。对任意到对象 \(B\) 的映射 \(d:M\to B\)、\(e:P\to B\)，等式 \(df=ei\) 恰好表示 \((d,e)\) 杀掉 \((f,-i)\)，于是它唯一经过 \(q\)。这就是沿 \(f\) 推出 \(i\) 的泛性质。
+
+设 \(\jmath_\beta:U\to P\) 为第 \(\beta\) 份的包含，则
+\[
+ u_\beta=q|_P\,\jmath_\beta:U\longrightarrow M_1,
+ \qquad u_\beta i_\beta=jf_\beta.
+\]
+所以一次推出将当前所有 \(f_\beta\) 同时延拓；新对象中还可能出现新的延拓问题，须继续重复这个构造。
 
 选一个极限序数 \(\lambda\)，其共尾数满足
 \[

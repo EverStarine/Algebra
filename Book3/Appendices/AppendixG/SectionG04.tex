@@ -7,15 +7,13 @@
 约束集合上的正性可以通过约束多项式参与的平方和恒等式来验证。是否允许约束间的乘积、是否具有紧性或 Archimedean 条件\footnote{阿基米德（\OriginalName{Ἀρχιμήδης}，约前287-前212），古希腊数学家与力学家，以穷竭法研究面积和体积，并建立浮力原理。}，会决定证书的形式与存在范围。
 
 % 纲要细目（与计划纲要同步）：
-%
-% * 预序、二次模及多项式不等式系统；以恒等式作为不可行性或正性的证书
-% * Krivine–Stengle 型 Positivstellensatz 的一个明确版本；等式约束、严格不等式和非严格不等式分别处理
-% * 给出 Schmüdgen／Putinar 严格正性构造的概要，以表格比较证书形式；说明紧性、Archimedean 球约束及严格正性的作用，分别处理空集与非空紧集
-%
+% * 预序与二次模不同；正式证明 xy 属于两生成元预序而不属于相应二次模，原题改为冗余约束改变二次模
+% * Krivine–Stengle 的等式、严格及非严格不等式不可行性证书完整证明；有限生成归约不改变证书类型
+% * Schmüdgen／Putinar 严格正性构造给出准确概要，保留 Pólya 或分离技术输入；紧集本身不保证给定二次模 Archimedean
+% * 完整证明 Archimedean 二次模中非负边界多项式仍可无证书；原题改为严格正性扰动证书的导数界
 % #### G.4.1 预序、二次模与多项式不等式证书
 % #### G.4.2 Krivine–Stengle 型 Positivstellensatz
 % #### G.4.3 Schmüdgen 与 Putinar 型结果的假设比较
-%
 
 \subsection{预序、二次模与多项式不等式证书}
 \label{b3:subsec:G04:01}
@@ -23,16 +21,25 @@
 设约束集合为 \(K=\{x\in\mathbb R^n:g_1(x)\ge0,\ldots,g_s(x)\ge0\}\)。若能写出 \(f=\sigma_0+\sum_i\sigma_i g_i\)，各 \(\sigma_i\) 都为平方和，就已经证明 \(f\) 在 \(K\) 上非负。再允许约束之间的乘积，会得到更广的一类证书。
 
 \begin{definition}\label{b3:def:preordering-quadratic-module}
-设 \(R\) 为实闭域，\(A=R[x_1,\ldots,x_n]\)，记 \(\Sigma A^2\) 为有限平方和的集合。给定 \(g_1,\ldots,g_s\in A\)，集合
+设 \(R\) 为实闭域，\(n,s\ge0\)，\(A=R[x_1,\ldots,x_n]\)，记 \(\Sigma A^2\) 为有限平方和的集合，空和为零。给定 \(g_1,\ldots,g_s\in A\)，集合
 \[
 M(g)=\Sigma A^2+\sum_{i=1}^s\Sigma A^2g_i,
 \qquad
 T(g)=\sum_{\varepsilon\in\{0,1\}^s}\Sigma A^2g_1^{\varepsilon_1}\cdots g_s^{\varepsilon_s}
 \]
-分别称为它们生成的\term{二次模}[quadratic module]与\term{预序}[preordering]。
+分别称为它们生成的\term{二次模}[quadratic module]与\term{预序}[preordering]。空乘积取 \(1\)，因此没有生成约束时两者都等于 \(\Sigma A^2\)。
 \end{definition}
+\symidx{\(\Sigma A^2\)：环 \(A\) 中的平方和集合}
+\symidx{\(M(g)\)、\(T(g)\)：由 \(g\) 生成的二次模与预序}
 
-这里的二次模是含 \(1\)、对加法与乘平方封闭的子集，不是通常意义的 \(A\) 模。预序还对乘法封闭：把乘积中 \(g_i\) 的偶次幂吸收到平方和系数即可。二者中每个元素都在 \(K\) 上非负。比如在 \([-1,1]\) 上，\(1-x=(1-x)^2/2+(1-x^2)/2\) 是由约束 \(1-x^2\ge0\) 给出的精确证书。
+由定义直接有
+\[
+M(g)\subseteq T(g).
+\]
+只有一个生成约束时，\(T(g)=\Sigma A^2+g\Sigma A^2=M(g)\)。有多个约束时，这个包含可以严格：\cref{b3:prop:G-module-preordering-difference}将证明 \(xy\in T(x,y)\) 而 \(xy\notin M(x,y)\)。
+
+\ProseParagraphBreak
+二次模含 \(1\)，对加法与乘平方封闭，即 \(m\in M(g)\)、\(q\in A\) 蕴含 \(q^2m\in M(g)\)。名称中的“二次”对应这个平方乘法条件；它一般不对任意 \(a\in A\) 的乘法封闭，也不要求对取负封闭，因此不是通常意义的 \(A\) 模。预序还对乘法封闭：把乘积中 \(g_i\) 的偶次幂吸收到平方和系数即可。二者中每个元素都在 \(K\) 上非负。比如在 \([-1,1]\) 上，\(1-x=(1-x)^2/2+(1-x^2)/2\) 是由约束 \(1-x^2\ge0\) 给出的精确证书。
 
 \subsection{Krivine–Stengle 型 Positivstellensatz}
 \label{b3:subsec:G04:02}
@@ -40,12 +47,14 @@ T(g)=\sum_{\varepsilon\in\{0,1\}^s}\Sigma A^2g_1^{\varepsilon_1}\cdots g_s^{\var
 Krivine 的正性定理\footnote{克里维纳（Jean-Louis Krivine，1939-），法国数学家，研究数理逻辑、集合论和实代数几何中的正性问题。}与 Stengle 的正性定理\footnote{斯滕格勒（Gilbert Allan Stengle，1933-2010），加拿大裔美国数学家，研究半代数集合上的正性证书。}可把无解性写成代数恒等式。下面取其中不含严格不等式的形式。
 
 \begin{theorem}[Krivine--Stengle 型不可行性证书]\label{b3:thm:real-infeasibility-certificate}
-设 \(R\) 为实闭域，\(f_1,\ldots,f_r,g_1,\ldots,g_s\in R[x_1,\ldots,x_n]\)，并令 \(I=(f_1,\ldots,f_r)\)、\(T(g)\) 为 \(g_1,\ldots,g_s\) 生成的预序。则
+设 \(R\) 为实闭域，\(n,r,s\ge0\)，\(A=R[x_1,\ldots,x_n]\)，\(f_1,\ldots,f_r,g_1,\ldots,g_s\in A\)，并令 \(I=(f_1,\ldots,f_r)\)、\(T(g)\) 为 \(g_1,\ldots,g_s\) 生成的预序。则
 \[
 \{x\in R^n:f_i(x)=0\ (1\le i\le r),\ g_j(x)\ge0\ (1\le j\le s)\}=\varnothing
 \quad\Longleftrightarrow\quad -1\in I+T(g).
 \]
 \end{theorem}
+
+证书推出无解只需代入检验。反向则证明它的逆否命题：若 \(-1\notin I+T(g)\)，先在商环 \(B=A/I\) 中把约束生成的预序扩为不含 \(-1\) 的极大预序，再证明其支集 \(\mathfrak q=P\cap(-P)\) 为素理想。这样 \(B/\mathfrak q\) 的分式域便有一个使各约束非负的序；取实闭包，得到原系统在实闭扩域中的解，最后用量词消去把存在解的结论传回 \(R\)。极大预序和素支集的计算负责构造这样的解，而量词消去负责回到原来的基域。
 
 \begin{proof}
 若 \(-1\in I+T(g)\)，在任何假定的解上求值，理想部分为零、预序部分非负，不可能得到 \(-1\)。证明反向的逆否命题。设 \(-1\notin I+T(g)\)，在 \(B=R[x]/I\) 中取由 \(g_j\) 的像生成的预序，利用 Zorn 引理把它扩为不含 \(-1\) 的极大预序 \(P\)。预序包含全部平方、对加法与乘法封闭；链的并仍有这些性质且不含 \(-1\)。
@@ -63,7 +72,12 @@ Krivine 的正性定理\footnote{克里维纳（Jean-Louis Krivine，1939-），
 实闭包的构造见第一卷附录 E。所证版本在 \(R=\mathbb R\) 时是\cite[Section 7.4, Theorem 7.5]{Sturmfels2002PolynomialEquations}没有严格不等式的情形。
 
 \ProseParagraphBreak
-严格不等式和不等条件也可以转换后使用该定理。例如 \(h(x)\ne0\) 等价于存在 \(z\) 使 \(z\cdot h(x)-1=0\)；\(h(x)>0\) 等价于存在 \(z\) 使 \(h(x)\cdot z^2-1=0\)。后一等价使用正实数有平方根。转换增加变量，却保留了精确可行性。
+严格不等式和不等条件也可以转换后使用该定理。例如在实闭域 \(R\) 上，\(h(x)\ne0\) 等价于存在 \(z\in R\) 使 \(z\cdot h(x)-1=0\)；而
+\[
+h(x)>0\quad\Longleftrightarrow\quad
+\exists z\in R:\ h(x)z^2=1.
+\]
+右边推出左边只需有序域的性质：等式使 \(z\ne0\)，故 \(z^2>0\)，从而 \(h(x)=1/z^2>0\)。左边推出右边则要对正元 \(1/h(x)\) 开平方，这一步使用实闭性。转换增加变量，却保留了精确可行性。
 
 \begin{example}\label{b3:exm:inconsistent-inequalities}
 条件 \(x\ge0\)、\(-x-1\ge0\) 不可能同时成立，恒等式 \(-1=x+(-x-1)\) 就是预序证书。若另有等式 \(y-x^2=0\) 并要求 \(y<0\)，直接利用 \(y=x^2\) 已知矛盾；上述变量替换还给出等式证书：加入 \((-y)z^2-1=0\) 后，
@@ -79,12 +93,17 @@ Krivine 的正性定理\footnote{克里维纳（Jean-Louis Krivine，1939-），
 Schmüdgen 的预序表示\footnote{施密德根（Konrad Schmüdgen，1947-），德国数学家，研究算子代数与实代数几何，证明紧半代数集上的严格正性表示定理。}与 Putinar 的二次模表示\footnote{普蒂纳（Mihai Putinar），罗马尼亚数学家，研究算子理论、矩问题和多项式正性证书。}给出了两种严格正性的证书，它们所需的紧性条件并不相同。
 
 \begin{theorem}[紧集上的严格正性]\label{b3:thm:compact-positivity-certificates}
-设 \(n\ge1\)，\(g_1,\ldots,g_s,f\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x\in\mathbb R^n:g_i(x)\ge0\text{ 对每个 }i\}\)，并记 \(T(g)\)、\(M(g)\) 分别为 \(g_1,\ldots,g_s\) 生成的预序与二次模。
+设 \(n\ge1\)，\(g_1,\ldots,g_s,f\in\mathbb R[x_1,\ldots,x_n]\)，\(K=\{x\in\mathbb R^n:g_i(x)\ge0\;\text{对每个}\;i\}\)，并记 \(T(g)\)、\(M(g)\) 分别为 \(g_1,\ldots,g_s\) 生成的预序与二次模。
 \begin{enumerate}
 \item 若 \(K\) 紧且 \(f>0\) 于 \(K\)，则 \(f\in T(g)\)；这是 Schmüdgen 型结论。
 \item 若存在 \(N>0\) 使 \(N-\sum_i x_i^2\in M(g)\)，且 \(f>0\) 于 \(K\)，则 \(f\in M(g)\)；这是 Putinar 型结论。
 \end{enumerate}
 \end{theorem}
+
+两个结论的构造有不同的起点。Putinar 型构造先使用二次模中的 Archimedean 球约束，选一个包含 \(K\) 的有界单纯形像；减去约束的适当平方倍数后，把 \(f\) 改成在这个较大集合上仍严格正的多项式。将它提升为单纯形上的正齐次式，再用 P\'olya 的系数引理得到非负系数表示，代回后便给出 \(M(g)\) 证书。Schmüdgen 型构造从 \(K\) 的紧性出发，先用不可行性证书在 \(T(g)\) 内制造球约束，再将这个预序看成由约束乘积生成的二次模，应用前一种构造。
+
+\ProseParagraphBreak
+严格正性是上述两项结论的共同假设。\cref{b3:prop:G-strict-positivity-warning}给出一个已有球约束的二次模，其中 \(f\ge0\) 仍不足以推出 \(f\in M(g)\)，即使每个 \(f+\varepsilon\)（\(\varepsilon>0\)）都有这种表示。下面保留构造细节的概要；其中 P\'olya 系数引理所需的一致系数估计另有明确出处。
 
 \begin{proofsketch}
 先证第二项，采用\cite[Section 2, Theorem 6, Lemma 8 and proof of Theorem 3]{Schweighofer2005Optimization}的构造。以下置 \(A=\mathbb R[x_1,\ldots,x_n]\)。记 \(b=N-\sum_i x_i^2\in M(g)\)。二次模中的每个元素在 \(K\) 上非负，故 \(\sum_i x_i^2\le N\) 于 \(K\)，所以 \(K\) 有界；它又是有限个闭集 \(\{g_i\ge0\}\) 的交，因此紧。令 \(a=N+1/4\)，并取
@@ -95,7 +114,7 @@ Schmüdgen 的预序表示\footnote{施密德根（Konrad Schmüdgen，1947-）�
 \]
 这是紧的单纯形及其线性像。由于 \(a\ge\sqrt N\)，对 \(x\in K\) 取 \(y_i=a+x_i\)、\(y_{n+i}=a-x_i\)，便有 \(y\in\Delta\) 和 \(\ell(y)=x\)，所以 \(K\subseteq C\)。把各 \(g_i\) 乘以适当正常数，使它们在 \(C\) 上都不超过一；这不改变 \(K\) 或 \(M(g)\)。若 \(K\ne\varnothing\)，取 \(0<\varepsilon<\min_Kf\)；若 \(K=\varnothing\)，任取 \(\varepsilon>0\)。两种情形下，紧集 \(E=\{x\in C:f(x)\le\varepsilon\}\) 都与 \(K\) 不交。可以选择 \(c\ge0\) 及充分大的整数 \(k\)，使
 \[
-q=f-c\sum_i(1-g_i)^{2k}g_i>0\quad\text{于 }C.
+q=f-c\sum_i(1-g_i)^{2k}g_i>0\quad\text{于}\;C.
 \]
 若 \(E\) 为空，取 \(c=0\) 即可。否则每个 \(x\in E\) 都有一个 \(g_i(x)<0\)，紧性给出统一的 \(\delta>0\)，使某个 \(g_i(x)\le-\delta\)。令 \(m_f=\min_Cf\)，先取 \(c>0\) 使 \(m_f+c\delta>1\)。在 \(E\) 上，扣除这个负约束项至少使 \(f\) 增大 \(c\delta(1+\delta)^{2k}\ge c\delta\)。另一方面，\(0\le t\le1\) 时有 \(t(1-t)^{2k}\le1/(2k+1)\)，所以所有非负约束项造成的损失至多为 \(cs/(2k+1)\)。再取 \(k\) 使这个量小于 \(\min\{1,\varepsilon\}/2\)，便得到 \(q>0\) 于 \(E\)；在 \(C\setminus E\) 上则由 \(f>\varepsilon\) 得到 \(q>\varepsilon/2\)。
 
@@ -114,21 +133,35 @@ a\pm x_i=b+\sum_{j\ne i}x_j^2+(x_i\pm1/2)^2
 h\bigl(1+(h-2)^2t_1\bigr)
 =1+(h-3/2)^2+3/4+(h-2)^2t_0
 \]
-得到 \(h(1+v)=1+u\)，其中 \(u,v\in T(g)\)。令 \(T(h)=\Sigma A^2+h\Sigma A^2\)。对任意多项式 \(p\)，均存在常数 \(t\ge0\) 使 \(t\pm p\in T(h)\)：具有此性质的多项式对加法、乘法封闭，乘法用
+得到 \(h(1+v)=1+u\)，其中 \(u,v\in T(g)\)。令 \(T(h)=\Sigma A^2+h\Sigma A^2\)。任意非负实常数都是平方，因此对常数 \(c\) 取 \(t=|c|\)，便有 \(t\pm c\in\Sigma A^2\subseteq T(h)\)。对任意多项式 \(p\)，均存在常数 \(t\ge0\) 使 \(t\pm p\in T(h)\)：具有此性质的多项式对加法、乘法封闭，乘法用
 \[
 tu\pm pq=\tfrac12\bigl((t+p)(u\pm q)+(t-p)(u\mp q)\bigr)
 \]
-验证；而 \(s+1/4\pm x_i=h+\sum_{j\ne i}x_j^2+(x_i\pm1/2)^2\) 说明它包含各变量。
+验证；而
+\[
+\rho+1/4\pm x_i
+=h+\sum_{j\ne i}x_j^2+(x_i\pm1/2)^2\in T(h)
+\]
+说明它包含各变量。
 
-因此可取 \(t\ge0\) 使 \(t-\rho v\in T(h)\)。由于 \(1+v\in T(g)\) 且 \(h(1+v)\in T(g)\)，有
-\((1+v)(t-\rho v)\in T(g)\)。另外 \(h+\rho v=h(1+v)+v\Sigma\in T(g)\)。将这两式与平方 \(\rho(t/(2\rho)-v)^2\) 相加，得到
+因此可取 \(t\ge0\) 使 \(t-\rho v\in T(h)\)，并写成
+\[
+t-\rho v=\sigma_0+h\sigma_1,
+\qquad \sigma_0,\sigma_1\in\Sigma A^2.
+\]
+由于 \(1+v\in T(g)\) 且 \(h(1+v)\in T(g)\)，有
+\[
+(1+v)(t-\rho v)
+=\sigma_0(1+v)+\sigma_1h(1+v)\in T(g).
+\]
+这一步只用右边两个已知的预序成员及其平方和系数，并未要求 \(T(h)\subseteq T(g)\)。另外 \(h+\rho v=h(1+v)+v\Sigma\in T(g)\)。将这两式与平方 \(\rho(t/(2\rho)-v)^2\) 相加，得到
 \[
 \bigl(\rho+t+t^2/(4\rho)\bigr)-\Sigma\in T(g).
 \]
 把 \(T(g)\) 看成由有限列 \(g_1^{\varepsilon_1}\cdots g_s^{\varepsilon_s}\)（\(\varepsilon\in\{0,1\}^s\)）生成的二次模；这些约束的共同非负集仍是 \(K\)。于是把已证第二项用于它，即得 \(f\in T(g)\)。此球约束构造也说明为什么这一步依赖预序的乘法封闭性。两项正性表示结论及其关系可对照\cite[Section 1, Theorems 1 and 3]{Schweighofer2005Optimization}。
 \end{proofsketch}
 
-第二个条件称为二次模的 Archimedean 条件的一种等价形式，它显式给出球约束，因而蕴含 \(K\) 紧；仅知 \(K\) 紧不能直接删去这个条件。两个结论的证书格式也不同：预序允许 \(g_ig_j\)，二次模只允许单个生成约束。
+第二个条件称为二次模的 Archimedean 条件的一种等价形式，它显式给出球约束，因而蕴含 \(K\) 紧。反过来，\(K\) 紧并不自动使原二次模 \(M(g)\) 满足 Archimedean 条件；上面的 Schmüdgen 构造取得的是 \(T(g)\) 中的球约束。两个结论的证书格式也不同：预序允许 \(g_ig_j\)，二次模只允许单个生成约束。
 
 \begin{table}[htbp]
 \centering
@@ -137,4 +170,49 @@ tu\pm pq=\tfrac12\bigl((t+p)(u\pm q)+(t-p)(u\mp q)\bigr)
 \input{Tables/AppendixGPositivityCertificates}
 \end{table}
 
-严格正性不能任意换成非负性。例如令 \(g=(1-x^2)^3\)，则 \(K=[-1,1]\)，\(M(g)\) 满足上述条件：由定理第一条及只有一个生成元时 \(T(g)=M(g)\)，可知 \(2-x^2\in M(g)\)。然而 \(1-x^2\notin M(g)\)。若有 \(1-x^2=\sigma_0+\sigma_1(1-x^2)^3\)，在 \(x=1\) 得 \(\sigma_0(1)=0\)，于是组成 \(\sigma_0\) 的每个平方的底数在 \(1\) 为零，故 \(\sigma_0'(1)=0\)。右边导数在 \(1\) 为零，左边却为 \(-2\)。这个简单的消失阶数检验解释了为何定理要保留 \(f>0\)。
+\begin{proposition}\label{b3:prop:G-module-preordering-difference}
+设 \(R\) 为实闭域，\(A=R[x,y]\)，\(\Sigma A^2\) 为有限个多项式平方之和的集合。对约束 \(g_1=x\)、\(g_2=y\)，有
+\[
+\begin{aligned}
+M(x,y)&=\Sigma A^2+x\Sigma A^2+y\Sigma A^2,\\
+T(x,y)&=\Sigma A^2+x\Sigma A^2+y\Sigma A^2+xy\Sigma A^2.
+\end{aligned}
+\]
+并且 \(xy\in T(x,y)\setminus M(x,y)\)，故 \(M(x,y)\subsetneq T(x,y)\)。
+\end{proposition}
+\begin{proof}
+两种一般形式直接来自定义。取 \(xy\) 的平方和系数为 \(1=1^2\)，其他系数为零，得到 \(xy\in T(x,y)\)。
+
+若 \(xy\in M(x,y)\)，可写成
+\[
+xy=\sum_jp_j^2+x\sum_jq_j^2+y\sum_jr_j^2,
+\qquad p_j,q_j,r_j\in R[x,y].
+\]
+代入原点得到 \(\sum_jp_j(0,0)^2=0\)，故各 \(p_j\) 的常数项为零。于是第一组平方没有一次项；比较等式中 \(x,y\) 的一次项，其系数分别为 \(\sum_jq_j(0,0)^2\)、\(\sum_jr_j(0,0)^2\)，也都必须为零。因此各 \(q_j,r_j\) 的常数项也为零，后两组项不含总次数小于三的单项式。
+
+记 \(p_j\) 的一次齐次部分为 \(a_jx+b_jy\)。比较二次齐次部分便有
+\[
+xy=\sum_j(a_jx+b_jy)^2.
+\]
+右边 \(x^2,y^2\) 的系数为 \(\sum_ja_j^2,\sum_jb_j^2\)，左边这两个系数都为零，故所有 \(a_j,b_j\) 为零；此时右边 \(xy\) 的系数也为零，与左边的系数 \(1\) 矛盾。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:G-strict-positivity-warning}
+设 \(A=\mathbb R[x]\)，\(g=(1-x^2)^3\)，\(f=1-x^2\)，记 \(\Sigma A^2\) 为有限个多项式平方之和的集合，并记
+\[
+M(g)=\Sigma A^2+g\Sigma A^2,
+\qquad K=\{a\in\mathbb R:g(a)\ge0\}=[-1,1].
+\]
+则 \(2-x^2\in M(g)\)，所以该二次模满足 Archimedean 球约束；但是 \(f\) 在 \(K\) 上非负而 \(f\notin M(g)\)。对每个 \(\varepsilon>0\)，却都有 \(f+\varepsilon\in M(g)\)。
+\end{proposition}
+\begin{proof}
+球约束可由下面的显式恒等式核验：
+\[
+2-x^2=\bigl(x(x^2-2)\bigr)^2+(x^2-1)^2+(1-x^2)^3.
+\]
+前两项为平方，最后一项是 \(g\) 乘以平方 \(1\)，故 \(2-x^2\in M(g)\)。又因三次幂不改变符号，\(g\ge0\) 等价于 \(1-x^2\ge0\)，从而 \(K=[-1,1]\)，且 \(f\ge0\) 于 \(K\)。对 \(\varepsilon>0\)，\(f+\varepsilon\) 在 \(K\) 上严格正。将\cref{b3:thm:compact-positivity-certificates}的 Putinar 型结论用于已有球约束 \(2-x^2\)，得到 \(f+\varepsilon\in M(g)\)。
+
+若 \(f\in M(g)\)，写 \(1-x^2=\sigma_0+\sigma_1(1-x^2)^3\)，其中 \(\sigma_0,\sigma_1\) 为多项式平方和。在 \(x=1\) 得 \(\sigma_0(1)=0\)，所以组成 \(\sigma_0\) 的每个平方的底数都在 \(1\) 为零，进而 \(\sigma_0'(1)=0\)。因 \(g(1)=g'(1)=0\)，还有 \((\sigma_1g)'(1)=0\)。于是右边导数在 \(1\) 为零，左边却为 \(-2\)，矛盾。
+\end{proof}
+
+Putinar 型结论保证严格正多项式的表示；非负多项式即使是 \(f+\varepsilon\) 的极限，也未必属于原二次模。上面的恒等式给出球约束，而端点处的消失阶数阻止 \(f\) 具有同样形式的证书，两种检验应当区分。

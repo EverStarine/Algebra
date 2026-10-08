@@ -27,7 +27,16 @@
 \Phi_{X,Y}:\operatorname{Hom}_{\mathcal D}(FX,Y)
 \xrightarrow{\sim}\operatorname{Hom}_{\mathcal C}(X,GY),
 \]
-则称 \((F,G,\Phi)\) 为一个\term[bansui]{伴随}[adjunction]，称 \(F\) 为 \(G\) 的\term[zuobansui]{左伴随}[left adjoint]，\(G\) 为 \(F\) 的\term[youbansui]{右伴随}[right adjoint]，记 \(F\dashv G\)。这里两变量自然性明确要求：对 \(a:X'\rightarrow X\)、\(b:Y\rightarrow Y'\) 及 \(h:FX\rightarrow Y\)，有
+则称 \((F,G,\Phi)\) 为一个\term[bansui]{伴随}[adjunction]，称 \(F\) 为 \(G\) 的\term[zuobansui]{左伴随}[left adjoint]，\(G\) 为 \(F\) 的\term[youbansui]{右伴随}[right adjoint]，记 \(F\dashv G\)。这里两边的 Hom 都在源变量 \(X\) 上反变，在目标变量 \(Y\) 上协变：对 \(a:X'\rightarrow X\)、\(b:Y\rightarrow Y'\) 及 \(h:FX\rightarrow Y\)，分别要求
+\[
+\begin{aligned}
+\Phi_{X',Y}\bigl(h\circ F(a)\bigr)
+&=\Phi_{X,Y}(h)\circ a,\\
+\Phi_{X,Y'}\bigl(b\circ h\bigr)
+&=G(b)\circ\Phi_{X,Y}(h).
+\end{aligned}
+\]
+第一式比较沿 \(a\) 的预合成，第二式比较沿 \(b\) 的后合成。两式合并，等价于要求
 \begin{equation}\label{b4:eq:adjunction-naturality}
 \Phi_{X',Y'}\bigl(b\circ h\circ F(a)\bigr)
 =G(b)\circ\Phi_{X,Y}(h)\circ a.
@@ -48,16 +57,17 @@
 \end{tikzcd}
 \]
 
-固定 \(X\) 后，\(FX\) 表示函子 \(Y\mapsto\operatorname{Hom}_{\mathcal C}(X,GY)\)；固定 \(Y\) 后，\(GY\) 表示反变函子 \(X\mapsto\operatorname{Hom}_{\mathcal D}(FX,Y)\)。一个伴随把这些表示按另一个变量自然地组织起来，不能只对每对对象随意选取集合双射。
+固定 \(X\) 后，\(FX\) 表示协变函子 \(Y\mapsto\operatorname{Hom}_{\mathcal C}(X,GY)\)；固定 \(Y\) 后，\(GY\) 表示反变函子 \(X\mapsto\operatorname{Hom}_{\mathcal D}(FX,Y)\)。这分别是\secref{b4:sec:0301}中的协变表示与反变表示。与只找一个表示对象相比，伴随还要求这些表示在另一个变量变化时自然相容；函子 \(F,G\) 不仅给出表示对象，也把表示对象之间的态射组织起来。因此不能只对每对对象随意选取集合双射。
 
 \ProseParagraphBreak
-两个恒等态射给出特别重要的映射：
+泛元素判据说明，表示对象上的恒等态射所对应的元素决定全部表示双射。把这个思想用于上述两族表示，两个恒等态射便给出映射：
 \begin{equation}\label{b4:eq:adjunction-unit-counit-def}
 \eta_X\coloneqq\Phi_{X,FX}(1_{FX}):X\longrightarrow GFX,
 \qquad
 \varepsilon_Y\coloneqq\Phi^{-1}_{GY,Y}(1_{GY}):FGY\longrightarrow Y.
 \end{equation}
-它们分别称为伴随的\term[bansui-danwei]{单位}[unit]与\term[bansui-yudanwei]{余单位}[counit]。单位将一个对象送入“先作 \(F\) 再作 \(G\)”得到的对象；余单位则从“先作 \(G\) 再作 \(F\)”的对象回到原对象。
+它们分别称为伴随的\term[bansui-danwei]{单位}[unit]与\term[bansui-yudanwei]{余单位}[counit]。\(\eta_X\) 正是固定 \(X\) 后由 \(FX\) 给出的协变表示的泛元素，\(\varepsilon_Y\) 则是固定 \(Y\) 后由 \(GY\) 给出的反变表示的泛元素。单位将一个对象送入“先作 \(F\) 再作 \(G\)”得到的对象；余单位则从“先作 \(G\) 再作 \(F\)”的对象回到原对象。
+\symidx{\(\eta,\ \varepsilon\)：伴随的单位与余单位}
 
 \begin{proposition}\label{b4:prop:adjunction-transpose-formulas}
 设 \(\mathcal C,\mathcal D\) 为局部小范畴，\(F:\mathcal C\rightarrow\mathcal D\)、\(G:\mathcal D\rightarrow\mathcal C\) 为伴随函子 \(F\dashv G\)，其自然双射为 \(\Phi_{X,Y}:\operatorname{Hom}_{\mathcal D}(FX,Y)\xrightarrow{\sim}\operatorname{Hom}_{\mathcal C}(X,GY)\)。定义 \(\eta_X=\Phi_{X,FX}(1_{FX})\)、\(\varepsilon_Y=\Phi^{-1}_{GY,Y}(1_{GY})\)。这些映射组成自然变换 \(\eta:1_{\mathcal C}\Rightarrow GF\) 与 \(\varepsilon:FG\Rightarrow1_{\mathcal D}\)，且
@@ -69,7 +79,7 @@
 对所有 \(h:FX\rightarrow Y\)、\(k:X\rightarrow GY\) 成立。
 \end{proposition}
 \begin{proof}
-对 \(a:X\rightarrow X'\)，把 \(F(a):FX\rightarrow FX'\) 分别看作 \(F(a)\circ1_{FX}\) 与 \(1_{FX'}\circ F(a)\)，双射的自然性给出
+对 \(a:X\rightarrow X'\)，要证明单位的自然性，就要比较 \(GF(a)\circ\eta_X\) 与 \(\eta_{X'}\circ a\)。前者来自双射在第二变量上的自然性，后者来自第一变量上的自然性。为使两种自然性作用于同一个态射，把 \(F(a):FX\rightarrow FX'\) 分别写作 \(F(a)\circ1_{FX}\) 与 \(1_{FX'}\circ F(a)\)，得到
 \[
 GF(a)\circ\eta_X
 =\Phi_{X,FX'}\bigl(F(a)\bigr)
@@ -80,7 +90,7 @@ GF(a)\circ\eta_X
 \Phi^{-1}_{X',Y'}\bigl(G(b)\circ k\circ a\bigr)
 =b\circ\Phi^{-1}_{X,Y}(k)\circ F(a).
 \]
-于是对 \(b:Y\rightarrow Y'\)，在逆双射下分别把 \(G(b)\) 写成 \(G(b)\circ1_{GY}\) 与 \(1_{GY'}\circ G(b)\)，得到
+对 \(b:Y\rightarrow Y'\)，余单位的自然性要求比较 \(b\circ\varepsilon_Y\) 与 \(\varepsilon_{Y'}\circ FG(b)\)。同样，在逆双射下分别把 \(G(b)\) 写成 \(G(b)\circ1_{GY}\) 与 \(1_{GY'}\circ G(b)\)，让第二变量与第一变量的自然性分别作用，得到
 \[
 b\circ\varepsilon_Y
 =\Phi^{-1}_{GY,Y'}\bigl(G(b)\bigr)
@@ -89,7 +99,7 @@ b\circ\varepsilon_Y
 这证明 \(\varepsilon\) 自然。最后，把 \(h\) 写成 \(h\circ1_{FX}\)，在第二变量使用自然性，得到第一条转置公式；把 \(k\) 写成 \(1_{GY}\circ k\)，对逆双射在第一变量使用自然性，得到第二条公式。
 \end{proof}
 
-因此，对每个 \(\mathcal C\) 中的态射 \(k:X\rightarrow GY\)，存在唯一的 \(\mathcal D\) 中态射 \(h:FX\rightarrow Y\)，使 \(k=G(h)\eta_X\)；对每个 \(\mathcal D\) 中的态射 \(h:FX\rightarrow Y\)，存在唯一的 \(\mathcal C\) 中态射 \(k:X\rightarrow GY\)，使 \(h=\varepsilon_YF(k)\)。这分别是单位与余单位的泛性质：
+因此，对每个 \(\mathcal C\) 中的态射 \(k:X\rightarrow GY\)，存在唯一的 \(\mathcal D\) 中态射 \(h:FX\rightarrow Y\)，使 \(k=G(h)\eta_X\)。单位 \(\eta_X\) 因而为 \(X\) 到所有 \(GY\) 的映射提供一个统一的分解：先到 \(GFX\)，再用某个唯一确定的 \(h\) 所诱导的 \(G(h)\)。对偶地，每个 \(\mathcal D\) 中的态射 \(h:FX\rightarrow Y\) 唯一写成 \(h=\varepsilon_YF(k)\)，其中 \(k:X\rightarrow GY\)；来自所有 \(FX\) 的映射都经 \(FGY\) 后用同一个 \(\varepsilon_Y\) 到达 \(Y\)。这分别是单位与余单位本身的泛性质：
 
 \[
 \begin{tikzcd}[column sep=large,row sep=large]
@@ -99,7 +109,7 @@ X\arrow[r,"\eta_X"]\arrow[dr,"k"']&GFX\arrow[d,dashed,"G(h)"]\\
 \qquad
 \begin{gathered}
 h\in\operatorname{Hom}_{\mathcal D}(FX,Y),\\
-\text{满足左图交换的 }h\text{ 唯一。}
+\text{满足左图交换的}\;h\;\text{唯一。}
 \end{gathered}
 \]
 \[
@@ -110,7 +120,7 @@ FX\arrow[r,dashed,"F(k)"]\arrow[dr,"h"']&FGY\arrow[d,"\varepsilon_Y"]\\
 \qquad
 \begin{gathered}
 k\in\operatorname{Hom}_{\mathcal C}(X,GY),\\
-\text{满足左图交换的 }k\text{ 唯一。}
+\text{满足左图交换的}\;k\;\text{唯一。}
 \end{gathered}
 \]
 
@@ -125,7 +135,7 @@ k\in\operatorname{Hom}_{\mathcal C}(X,GY),\\
 \qquad
 G(\varepsilon_Y)\circ\eta_{GY}=1_{GY}.
 \end{equation}
-每条都是从一个对象出发，经三重函子复合再回到原对象的复合等式。
+第一式保证从 \(h:FX\rightarrow Y\) 出发，转置为 \(X\rightarrow GY\) 再逆转置时回到 \(h\)；第二式保证从 \(k:X\rightarrow GY\) 出发，逆转置为 \(FX\rightarrow Y\) 再转置时回到 \(k\)。它们分别把 \(FX\) 或 \(GY\) 经三重函子复合再返回原对象的复合消为恒等态射。
 
 \[
 \begin{tikzcd}[column sep=large,row sep=large]
@@ -169,13 +179,13 @@ G(\varepsilon_Y)\eta_{GY}=1_{GY}\quad(Y\in\mathcal D)
 \[
 \Phi(h)=G(h)\eta_X,\qquad \Psi(k)=\varepsilon_YF(k).
 \]
-对于 \(k:X\rightarrow GY\)，由 \(\eta\) 关于 \(k\) 的自然性以及第二条三角恒等式，有
+对于 \(k:X\rightarrow GY\)，\(\eta\) 关于 \(k\) 的自然性给出 \(GF(k)\eta_X=\eta_{GY}k\)，把 \(k\) 移到复合的右端；此后中间的 \(G(\varepsilon_Y)\eta_{GY}\) 正好可由第二条三角恒等式消去：
 \[
 \Phi\Psi(k)
 =G(\varepsilon_Y)GF(k)\eta_X
 =G(\varepsilon_Y)\eta_{GY}k=k.
 \]
-对于 \(h:FX\rightarrow Y\)，由 \(\varepsilon\) 关于 \(h\) 的自然性以及第一条三角恒等式，有
+对于 \(h:FX\rightarrow Y\)，\(\varepsilon\) 关于 \(h\) 的自然性给出 \(\varepsilon_YFG(h)=h\varepsilon_{FX}\)，把 \(h\) 移到复合的左端；此后 \(\varepsilon_{FX}F(\eta_X)\) 由第一条三角恒等式消去：
 \[
 \Psi\Phi(h)
 =\varepsilon_YFG(h)F(\eta_X)
@@ -193,7 +203,7 @@ G(\varepsilon_Y)\eta_{GY}=1_{GY}\quad(Y\in\mathcal D)
 证明双射在两变量上自然。由新双射在恒等态射上的取值，重新得到的单位与余单位仍为 \(\eta,\varepsilon\)。另一方向则由已证转置公式恢复原双射，故两种构造互逆。
 \end{proof}
 
-可对照 Weibel 的伴随定义及单位、余单位定理\cite[A.6.1; Theorem A.6.2 and Exercise A.6.2]{Weibel1994HomologicalAlgebra}。上面的两个方向在正文均已证明；其中自然性用于移动 \(\eta\) 与 \(\varepsilon\)，三角恒等式再消去中间的复合，两者各有职责。
+可对照 Weibel 的伴随定义及单位、余单位定理\cite[A.6.1; Theorem A.6.2 and Exercise A.6.2]{Weibel1994HomologicalAlgebra}。
 
 \ProseParagraphBreak
 三角恒等式不意味着 \(\eta_X\) 与 \(\varepsilon_Y\) 互逆：它们通常连定义域、陪域都不同。例如自由交换群伴随中，一个集合被送到它的形式整数线性组合；回到具体群时，余单位把这些形式和求值。这个过程通常带来许多关系，远非对象不变的同构。
@@ -210,7 +220,11 @@ F_R\dashv U.
 \varepsilon_M:R^{(U(M))}\longrightarrow M,
 \qquad\sum_mr_me_m\longmapsto\sum_mr_mm.
 \]
-这里 \(e_m\) 是形式符号；它不是直接把 \(m\) 当作自由模中的元素。第一条三角恒等式把 \(e_x\) 先送到 \(e_{e_x}\)，再送回 \(e_x\)；第二条将 \(m\) 先送到 \(e_m\)，再求值为 \(m\)。因此两式也可直接在生成元上看出。
+这里 \(e_m\) 是以 \(m\in M\) 为标签的自由模基向量，并非把 \(m\) 本身当作自由模中的元素。对于 \(x\in X\)，\(e_x\) 属于 \(F_RX\)，而 \(e_{e_x}\) 属于 \(F_RU(F_RX)\)：后者是以自由模元素 \(e_x\) 为标签的新基向量。第一条三角恒等式在生成元上的作用为
+\[
+e_x\longmapsto e_{e_x}\longmapsto e_x.
+\]
+第二条在 \(U(M)\) 上的作用为 \(m\mapsto e_m\mapsto m\)。两式分别是在适当的一层插入形式基向量后再求值。
 
 \ProseParagraphBreak
 另一组伴随来自固定双模。它是第二卷第6.3节 Hom–张量伴随定理的原有左模版本；本卷把它放入已建立的一般定义，不重新构造张量积。
@@ -236,7 +250,17 @@ h:P\otimes_RM\rightarrow N
 \quad\longleftrightarrow\quad
 \bigl(m\mapsto(p\mapsto h(p\otimes m))\bigr).
 \]
-那里已用平衡关系证明良定义、左线性及两变量自然性；所用环和双模假设与本命题完全相同，故满足\cref{b4:def:adjunction}。将两个恒等映射代入便得到所列公式。这里再明确作用次序：
+反向地，一个左 \(R\) 模同态 \(k:M\rightarrow\operatorname{Hom}_S(P,N)\) 对应
+\[
+\widetilde k:P\otimes_RM\longrightarrow N,
+\qquad p\otimes m\longmapsto k(m)(p).
+\]
+这个公式的平衡性由
+\(k(rm)(p)=(rk(m))(p)=k(m)(pr)\) 保证，左 \(S\) 线性由 \(k(m)\in\operatorname{Hom}_S(P,N)\) 保证。两次转置在 \(m,p\) 上恢复原来的值，故互逆。第二卷还证明了两变量自然性，且所用环和双模假设与本命题完全相同，故满足\cref{b4:def:adjunction}。将两个恒等映射代入便得到所列单位与余单位。固定 \(m\) 时，\(p\mapsto p\otimes m\) 为加性映射，且
+\[
+\eta_M(m)(sp)=sp\otimes m=s\cdot(p\otimes m),
+\]
+所以 \(\eta_M(m)\) 确实属于 \(\operatorname{Hom}_S(P,P\otimes_RM)\)。再把 \(m\) 当作变量，张量积的加性给出 \(\eta_M\) 的加性，而左 \(R\) 作用满足
 \[
 \eta_M(rm)(p)=p\otimes rm=pr\otimes m
 =\bigl(r\eta_M(m)\bigr)(p),
@@ -244,7 +268,7 @@ h:P\otimes_RM\rightarrow N
 所以单位左 \(R\) 线性；余单位的平衡性为 \(f(pr)=(rf)(p)\)，其左 \(S\) 线性为 \(f(sp)=s\cdot f(p)\)。第一条三角恒等式在纯张量上将 \(p\otimes m\) 送到 \(\eta_M(m)(p)=p\otimes m\)；第二条将 \(f\) 送到函数 \(p\mapsto\varepsilon_N(p\otimes f)=f(p)\)。因此这两个具体映射也直接满足一般定理的条件。
 \end{proof}
 
-在非交换情形中，\(N\) 不一定有左 \(R\) 作用，不能把 \((rf)(p)\) 改写为 \(rf(p)\)。\(P\) 的右 \(R\) 作用经输入端传到 Hom 上，正是该伴随能够成立的原因。
+本命题只规定 \(N\) 是左 \(S\) 模，没有赋予它左 \(R\) 作用，因此 \(r\cdot f(p)\) 通常根本没有定义。\((rf)(p)=f(pr)\) 使用的是 \(P\) 的右 \(R\) 作用；这个作用经输入端传到 Hom 上，才使其成为伴随所需的左 \(R\) 模。
 
 \begin{example}[交换化与包含函子]\label{b4:exm:abelianization-adjunction}
 对群 \(H\)，记 \(H^{\mathrm{ab}}=H/[H,H]\)，其中 \([H,H]\) 是由交换子生成的正规子群。每个到交换群 \(A\) 的群同态都消去交换子，因而唯一通过商群分解，给出
@@ -252,5 +276,11 @@ h:P\otimes_RM\rightarrow N
 \operatorname{Hom}_{\mathbf{Ab}}(H^{\mathrm{ab}},A)
 \cong\operatorname{Hom}_{\mathbf{Grp}}(H,A).
 \]
-前复合群同态或后复合交换群同态都与商映射分解相容，故交换化是包含函子 \(\mathbf{Ab}\rightarrow\mathbf{Grp}\) 的左伴随。单位为商映射 \(H\rightarrow H^{\mathrm{ab}}\)，余单位为 \(A^{\mathrm{ab}}\xrightarrow{\sim}A\)。非交换群的单位不是单射，而余单位总是同构。这也说明伴随不要求单位与余单位具有相同的可逆性。
+前复合群同态或后复合交换群同态都与商映射分解相容，因而得到伴随
+\[
+(-)^{\mathrm{ab}}:\mathbf{Grp}\longrightarrow\mathbf{Ab}
+\quad\dashv\quad
+I:\mathbf{Ab}\hookrightarrow\mathbf{Grp},
+\]
+其中 \(I\) 是包含函子。单位为商映射 \(H\rightarrow H^{\mathrm{ab}}\)；因 \(A\) 已经交换，\([A,A]=\{1\}\)，余单位 \(A^{\mathrm{ab}}\xrightarrow{\sim}A\) 是同构。非交换群的单位不是单射，而余单位总是同构。这也说明伴随不要求单位与余单位具有相同的可逆性。
 \end{example}

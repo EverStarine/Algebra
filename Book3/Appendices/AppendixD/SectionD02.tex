@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.2 Cohen 结构定理
-% 纲要位置：工作记录/计划纲要.md:2912
+% 纲要位置：工作记录/计划纲要.md:2957
 
 \section{Cohen 结构定理}
 \label{b3:sec:D02}
@@ -8,14 +8,18 @@
 极大理想的生成元能够表示各阶误差，但要把剩余类当作级数系数，还须选择保持加法与乘法的代表。等特征环需要系数域，混合特征环则由 Cohen 环承担系数的作用。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * Noether 完备局部环与系数环；等特征系数域采用可分域扩张的形式光滑性，不假定任意正特征域有分离超越基
-% * 等特征情形表示为系数域上有限变量形式幂级数环的商
-% * Cohen DVR扩域与逐阶提升；等特征、混合特征及正素数幂特征的系数对象比较
-% * 完备正则局部环、完全交和嵌入维数的具体模型；长证明给出构造概要及出处
+%
+% * 系数域与 Cohen 系数环的存在性保留深层输入，突出逐阶截面及完备极限
+% * 选定系数对象后证明幂级数满射与极小核；含线性关系的三变量展示正式消去；调用第19章展示比较定理，在当前正则局部环境中以核的极小生成组及最小生成元数等于高度判定完全交
+% * 混合特征中系数环单射的特征零条件，p 在线性参数方向与 p 属于极大理想平方的区别
+% * 系数域非唯一的正式构造；不同特征的系数对象与表示对照
 % #### D.2.1 完备局部环、系数环与系数域
 % #### D.2.2 等特征情形的形式幂级数商表示
 % #### D.2.3 混合特征情形与 Cohen 环
 % #### D.2.4 完备正则局部环、完全交与嵌入维数模型
+%
+% ---
+%
 
 
 \subsection{完备局部环、系数环与系数域}
@@ -38,11 +42,7 @@
 \begin{proofsketch}
 所需域论输入是：任意可分域扩张 \(L/F\) 都形式光滑。具体说，对任意 \(F\)-代数 \(B\)、满足 \(J^2=0\) 的理想 \(J\subseteq B\) 以及 \(F\)-代数同态 \(L\to B/J\)，存在提升 \(L\to B\)。提升一般不唯一。该结果及系数域的应用见松村英之\cite[Theorem 26.9, pp. 204--205; Theorem 28.3, pp. 215--216]{Matsumura1989CommutativeRingTheory}。
 
-特征零时，形式光滑性可由超越基与可分代数扩张的单根提升得到。正特征时，证明需要 \(p\)-基理论：对于特征 \(p\) 的域扩张 \(L/F\)，若集合 \(T\subseteq L\) 的有限乘积
-\[
-\prod_{t\in T}t^{a_t},\qquad 0\le a_t<p,
-\]
-其中只有有限个 \(a_t\) 非零，构成 \(L\) 在复合子域 \(F L^p\) 上的向量空间基，则 \(T\) 是 \(L/F\) 的 \(p\)-基。借助 Zorn 引理可选择这样的集合；可分条件保证它在 \(F\) 上代数独立，并使 \(L/F(T)\) 形式平展，即上述平方零商的提升存在且唯一。与 \(F(T)/F\) 的形式光滑性合成，得到所需输入。这些 \(p\)-基判据的证明见\cite[Theorems 26.7--26.9, pp. 203--205]{Matsumura1989CommutativeRingTheory}。这里使用其结论，省略 \(p\)-单项式的线性无关性与提升相容性的论证。须注意，\(L/F(T)\) 形式平展并不保证它是代数扩张，因而不能把 \(T\) 一概当作分离超越基。例如取不定元 \(t\)，则 \(L=\bigcup_{n\ge0}\mathbb F_p(t^{1/p^n})\) 为完美域，\(L/\mathbb F_p\) 的 \(p\)-基为空，但 \(t\) 仍在 \(\mathbb F_p\) 上超越。
+特征零时，这项输入可由超越基与可分代数扩张的单根提升得到。正特征时，一般域扩张未必有分离超越基，证明改用 \(p\)-基控制不可分关系，再建立平方零商的提升性质；所省略的域论证明见\cite[Theorems 26.7--26.9, pp. 203--205]{Matsumura1989CommutativeRingTheory}。本证明采用上述形式光滑结论，下面逐阶构造的步骤则全部写出。
 
 现把这一输入用于 \(k/k_0\)。令 \(\sigma_1:k\to A/\mathfrak m=k\) 为恒等映射。若已经构造 \(k_0\)-代数同态 \(\sigma_r:k\to A/\mathfrak m^r\)，则商映射
 \[
@@ -55,10 +55,12 @@ A/\mathfrak m^{r+1}\longrightarrow A/\mathfrak m^r
 剩余映射与 \(\sigma\) 的复合为恒等，故 \(\sigma\) 单射，其像为包含 \(k_0\) 的系数域。若没有指定 \(k_0\)，取 \(A\) 的素子域；它是完美域，\(k\) 在它上可分，因而同一构造适用。
 \end{proofsketch}
 
-若有一个预先指定的底域，不能省去可分条件而擅自要求所选系数域包含它。后文的幂级数商表示在选好系数域以后给出直接证明。
+若有一个预先指定的底域，不能省去可分条件而擅自要求所选系数域包含它。提升的存在也不表示提升唯一；\cref{b3:exm:coefficient-field-nonunique}在 \(\mathbb Q(t)[\![x]\!]\) 中构造两个不同的系数域，它们给出同一个剩余域的两个截面。后文的幂级数商表示在选好系数域以后给出直接证明。
 
 \subsection{等特征情形的形式幂级数商表示}
 \label{b3:subsec:D02:02}
+
+系数域决定各阶展开的系数从哪里取，\(\mathfrak m/\mathfrak m^2\) 决定所需的极小变量数，完备性则使无限逐阶修正有极限。以下证明分别落实满射与变量数的极小性；正则时，维数相等还会迫使所有关系消失。
 
 \begin{theorem}\label{b3:thm:equicharacteristic-power-series-cover}
 设 \((A,\mathfrak m)\) 为等特征完备 Noether 局部环，\(k=A/\mathfrak m\)，\(K\subseteq A\) 为一个系数域。取
@@ -69,6 +71,8 @@ K[\![X_1,\ldots,X_e]\!]\longrightarrow A,
 \]
 其核包含于 \((X_1,\ldots,X_e)^2\)。若 \(A\) 还正则，则该映射是同构。
 \end{theorem}
+核包含于变量理想的平方，表示这些变量的一次部分没有关系，因而已经没有可以通过线性关系消去的变量。
+
 \begin{proof}
 有限生成模上的 Nakayama 引理给出 \(\mathfrak m=(x_1,\ldots,x_e)\)。把一个形式级数按总次数分组，每组是有限和；第 \(r\) 次齐次部分代入后属于 \(\mathfrak m^r\)，完备分离性使这个和有唯一极限。逐阶比较有限截断说明代入与加法、乘法相容，故得到连续同态。
 
@@ -76,13 +80,38 @@ K[\![X_1,\ldots,X_e]\!]\longrightarrow A,
 
 核中元素的常数项为零，因为 \(K\to k\) 单射；其一次项也为零，因为 \(x_i\) 的像在 \(\mathfrak m/\mathfrak m^2\) 中线性无关。因此核 \(I\subseteq(X)^2\)。
 
-若 \(A\) 正则，则 \(\dim A=e\)。环境环 \(S=K[\![X_1,\ldots,X_e]\!]\) 是维数 \(e\) 的正则局部整环。若 \(I\ne0\)，取 \(0\ne f\in I\)，它是非零因子，正则商维数公式给出 \(\dim S/(f)=e-1\)，从而 \(\dim A\le e-1\)，矛盾。所以 \(I=0\)。
+若 \(A\) 正则，则 \(\dim A=e\)。环境环 \(S=K[\![X_1,\ldots,X_e]\!]\) 是维数 \(e\) 的正则局部整环。若 \(I\ne0\)，取 \(0\ne f\in I\)，它是非零因子，\cref{b3:prop:regular-quotient-dimension}给出 \(\dim S/(f)=e-1\)，从而 \(\dim A\le e-1\)，矛盾。所以 \(I=0\)。
 \end{proof}
 
-这个证明把两个不同的任务分清：系数域存在性负责选取相容的系数，完备性负责使逐阶近似得到真实元素。核落在变量理想的平方中，表示已经去掉所有可以用线性关系消去的变量；因此变量数恰好是嵌入维数。
+上述逐阶过程给出每个元素的展开，但有关系时展开未必唯一。核落在变量理想的平方中，只断言变量数恰好是嵌入维数，并未断言这个核为零。
 
-\begin{example}\label{b3:exm:cohen-cusp-presentation}
-设 \(k\) 为域，\(A=k[\![u,v]\!]/(v^2-u^3)\)。环 \(A\) 的嵌入维数为 \(2\)，因为唯一关系没有一次项；维数为 \(1\)，因为它是在二维正则局部整环中商去一个非零非单位。因此 \(A\) 不正则。结构定理并未把它变成一变量幂级数环；它把这个一维奇点准确地保留为两变量环中的一个方程。
+\begin{example}\label{b3:exm:cohen-cusp-presentation}\label{b3:exm:minimal-cohen-elimination}
+设 \(k\) 为域，令
+\[
+A=k[\![u,v,w]\!]/(w-u^2,\,v^2-u^3).
+\]
+把三个变量的像分别记为 \(\bar u,\bar v,\bar w\)，极大理想为 \(\mathfrak m=(\bar u,\bar v,\bar w)\)。原表示有关系 \(w-u^2\)，其一次部分为 \(w\)，所以 \(\bar w\in\mathfrak m^2\)，第三个变量并没有增加 \(\mathfrak m/\mathfrak m^2\) 的维数。
+
+\ProseParagraphBreak
+消去 \(w\) 的同构可以直接核验。连续代入
+\[
+k[\![u,v,w]\!]\longrightarrow k[\![u,v]\!],
+\qquad w\longmapsto u^2
+\]
+为满射，核恰为 \((w-u^2)\)：形式换元 \(w'=w-u^2\) 的逆为 \(w=w'+u^2\)，于是该映射就是在新坐标下令 \(w'=0\)。剩下的关系映为 \(v^2-u^3\)，故
+\[
+A\simeq k[\![u,v]\!]/(v^2-u^3).
+\]
+这一同构与 \(u\mapsto\bar u\)、\(v\mapsto\bar v\) 相容；反向映射将 \(\bar w\) 送到 \(u^2\) 的类，两个复合都为恒等。因此两变量覆盖的核准确地是 \((v^2-u^3)\subseteq(u,v)^2\)。
+
+\ProseParagraphBreak
+记 \(S=k[\![u,v]\!]\)、\(\mathfrak n=(u,v)S\)。极大理想模平方为
+\[
+\mathfrak m/\mathfrak m^2
+\simeq\mathfrak n/\bigl(\mathfrak n^2+(v^2-u^3)\bigr)
+=\mathfrak n/\mathfrak n^2,
+\]
+故以 \(\bar u,\bar v\) 的类为基，嵌入维数为 \(2\)。\(S\) 是二维正则局部整环，非零非单位 \(v^2-u^3\) 是非零因子，商的维数为 \(1\)。于是 \(A\) 不正则，三变量表示不是极小表示，而两变量表示正好保留这个一维奇点所需的两个方向和一个关系。
 \end{example}
 
 \subsection{混合特征情形与 Cohen 环}
@@ -91,88 +120,13 @@ K[\![X_1,\ldots,X_e]\!]\longrightarrow A,
 混合特征环不可能含有与剩余域同构的子域。例如 \(\mathbb Z_p\) 的特征为零，剩余域 \(\mathbb F_p\) 的特征为 \(p\)；一个保单位的嵌入会同时要求 \(p\cdot1\) 非零又等于零。此时系数对象必须保留整数 \(p\) 本身。
 
 \begin{definition}\label{b3:def:cohen-ring}
-设 \(k\) 为特征 \(p>0\) 的域。一个特征零的完备 DVR \(C\)，若其极大理想为 \(pC\)，且指定了 \(C/pC\simeq k\)，则称为这里所用的\term[cohenring]{Cohen 环}[Cohen ring]。
+设 \(k\) 为特征 \(p>0\) 的域。一个特征零的完备离散赋值环 \(C\)，若其极大理想为 \(pC\)，且指定了 \(C/pC\simeq k\)，则称为这里所用的\term[cohenring]{Cohen 环}[Cohen ring]。
 \end{definition}
 
-\begin{theorem}[混合特征的系数环]\label{b3:thm:mixed-characteristic-coefficient-ring}
-设 \((A,\mathfrak m)\) 为混合特征完备 Noether 局部环，\(k=A/\mathfrak m\)。存在剩余域为 \(k\) 的 Cohen 环 \(C\) 及局部单射 \(C\to A\)，使剩余域映射是指定的同构。因而 \(A\) 是某个有限变量幂级数环 \(C[\![X_1,\ldots,X_s]\!]\) 的商。
-\end{theorem}
-
-\begin{proofsketch}
-首先构造剩余域为 \(k\) 的 DVR。取 \(k/\mathbb F_p\) 的超越基 \(T\)，从
-\(D_0=\mathbb Z_{(p)}[T]_{(p)}\) 开始，这里方括号中的元素是与 \(T\) 对应的不定元。任一非零元都写成 \(p^r\) 乘单位，每个非零理想中这样的阶数有最小值，故理想均由一个 \(p\) 的幂生成。因此它是统一化元为 \(p\)、剩余域为 \(\mathbb F_p(T)\) 的 DVR。
-
-设已经得到 DVR \(D\)，其统一化元为 \(p\)，剩余域通过指定嵌入成为 \(k\) 的子域 \(\ell\)。取代数元 \(\alpha\in k\setminus\ell\)，设 \(\bar f\in\ell[Y]\) 为其首一最小多项式，次数为 \(n\)，取首一提升 \(f\in D[Y]\)。若 \(f\) 在 \(\operatorname{Frac}(D)[Y]\) 中可约，Gauss 引理给出 \(D[Y]\) 中两个正次数的首一因子；模 \(p\) 约化后仍为同次数的首一因子，与 \(\bar f\) 不可约矛盾。故
-\[
-D'=D[Y]/(f)
-\]
-是整环，而且作为 \(D\)-模以 \(1,\bar Y,\ldots,\bar Y^{n-1}\) 为基；特别地，\(p\) 在 \(D'\) 中是非零因子。又有
-\[
-D'/pD'\simeq\ell[Y]/(\bar f)\simeq\ell(\alpha).
-\]
-整性使 \(D'\) 的每个极大理想都收缩为 \(D\) 的极大理想，因而都包含 \(p\)；上述商为域，所以 \(D'\) 的极大理想唯一，恰为 \(pD'\)。它是 Noether 局部整环，非零极大理想主生成；高度定理与素理想链 \((0)\subsetneq pD'\) 给出 \(\dim D'=1\)。于是 \(D'\) 是一维正则局部环，仍为 DVR。
-
-在 \(D_0\) 分式域的一个固定代数闭包中，考虑附有上述剩余域嵌入的 DVR 扩张，按包含及嵌入的延拓排序。链的并仍是局部整环：每个非零元都在某一环中写成 \(p^r\) 乘单位，且在并中 \(p\) 仍非单位。这也使并中的每个非零理想由最小阶数的元素生成，故并仍为 DVR。Zorn 引理给出极大扩张；若其剩余域还不是 \(k\)，上述加根构造能继续，产生矛盾。把所得 DVR 作 \(p\)-进完备化，得到 Cohen 环 \(C\)。这一构造见\cite[Theorem 29.1, pp. 223--224]{Matsumura1989CommutativeRingTheory}。
-
-下一步把 \(C\) 映到 \(A\)。整数映射延拓为 \(\mathbb Z_{(p)}\to A\)。\(C\) 对 \(\mathbb Z_{(p)}\) 无挠，故平坦，且剩余域 \(k\) 对 \(\mathbb F_p\) 形式光滑。平坦代数的形式光滑提升定理给出：对每个 \(r\ge1\)，
-\[
-\mathbb Z/p^r\mathbb Z\longrightarrow C/p^rC
-\]
-形式光滑；这是把剩余纤维的提升性质沿底环的幂零理想提升，平坦性是其中的必要假设。所用结论及证明见\cite[Theorem 28.10, pp. 222--223; Theorem 29.2, pp. 224--225]{Matsumura1989CommutativeRingTheory}。
-
-从指定的 \(\phi_1:C/pC\to A/\mathfrak m\) 开始。已得 \(\phi_r:C/p^rC\to A/\mathfrak m^r\) 时，将它与 \(C/p^{r+1}C\to C/p^rC\) 复合。由于 \(p\in\mathfrak m\)，目标环 \(A/\mathfrak m^{r+1}\) 是 \(\mathbb Z/p^{r+1}\mathbb Z\)-代数，而 \(\mathfrak m^r/\mathfrak m^{r+1}\) 平方为零；形式光滑性给出相容提升 \(\phi_{r+1}\)。取逆极限，得到局部同态 \(\phi:C\to A\)。它单射：DVR 的任一非零理想都包含 \(p\) 的某个幂，而 \(\operatorname{char}A=0\) 排除了这样的核。最后取 \(\mathfrak m=(p,x_1,\ldots,x_s)\)，逐阶提升系数便得到所需的幂级数满射；以下给出这个展开的具体形式。
-\end{proofsketch}
-
-取有限多个 \(x_i\in\mathfrak m\) 使 \(\mathfrak m=(p,x_1,\ldots,x_s)\)，在模 \(\mathfrak m^r\) 的每一步用 \(C\) 提升剩余系数。和上一小节相同，逐次减去关于 \(p,x_i\) 的齐次式，并把 \(p\) 的幂合并进系数，就得到满射 \(C[\![X]\!]\to A\)。收敛使用的是 \((p,X)\)-进拓扑；对固定的 \(X\)-单项式，其系数形成 \(p\)-进 Cauchy 列，极限存在于 \(C\)。
-
-\begin{example}\label{b3:exm:ramified-cohen-model}
-令 \(C=\mathbb Z_p\)，考虑
-\[
-A=C[\![T]\!]/(T^2-p).
-\]
-这个环的极大理想由 \(\bar T\) 生成，因为 \(p=\bar T^2\)。环境环维数为 \(2\)，非零方程是非零因子，故商的维数为 \(1\)，于是 \(A\) 是正则局部环，也就是 DVR。其极大理想非零，故 \(\bar T\ne0\)；整环性质使 \(p=\bar T^2\) 的任意正整数次幂都非零，而与 \(p\) 互素的整数在 \(A\) 中为单位。因此 \(\operatorname{char}A=0\)。又因 \(C\) 的任一非零理想都包含 \(p\) 的某个幂，\(C\to A\) 的核只能为零。
+Cohen 环中保留了非零元素 \(p\)，\(C/pC\simeq k\) 表示的是剩余域的识别，并不提供 \(k\) 到 \(C\) 或到 \(A\) 的嵌入。等特征的系数域直接给出剩余域截面，混合特征则用 \(C\) 中的代表及其 \(p\)-进极限来提供系数。\cref{b3:tab:D-cohen-characteristic-cases}并列列出这些系数对象，也包括特征为 \(p\) 的正整数次幂的情形。
 
 \ProseParagraphBreak
-这里 \(p\in\mathfrak m^2\)，称为分歧的情形。它不能写成 \(\mathbb F_p[\![X_1,\ldots,X_r]\!]\) 的商，因为后一环的任意非零保单位商都具有特征 \(p\)。同样，不能把 \(p\) 当作极大理想的一个极小生成元。
-\end{example}
-
-若 \((A,\mathfrak m)\) 为完备 Noether 局部环，\(\operatorname{char}A=p^r\)，其中 \(r>1\)，且剩余域为 \(k\)，则上述构造与逐阶提升仍给出剩余域为 \(k\) 的 Cohen 环 \(C\) 及局部同态 \(\phi:C\to A\)。此时 \(\ker\phi=p^rC\)：核是 \(C\) 的一个理想，只能为 \(p^nC\)；由 \(p^r\cdot1_A=0\) 而 \(p^{r-1}\cdot1_A\ne0\)，必有 \(n=r\)。因此 \(C/p^rC\) 确实嵌入 \(A\)，成为系数子环，且
-\[
-(C/p^rC)[\![X_1,\ldots,X_s]\!]\longrightarrow A
-\]
-仍是满射。等价地，用 \(C[\![X_1,\ldots,X_s]\!]\) 作覆盖时，核包含 \(p^r\)。这里的系数子环是 Artin 局部环，其极大理想为 \(p(C/p^rC)\)，不再是 DVR；这一情形见\cite[Theorem 29.3 and the preceding discussion, p. 225]{Matsumura1989CommutativeRingTheory}。
-
-\subsection{完备正则局部环、完全交与嵌入维数模型}
-\label{b3:subsec:D02:04}
-
-等特征完备正则局部环已经由\cref{b3:thm:equicharacteristic-power-series-cover}识别为系数域上的幂级数环。混合特征还要检查 \(p\) 在极大理想中的阶数。
-
-\begin{proposition}\label{b3:prop:unramified-regular-cohen-model}
-设 \((A,\mathfrak m)\) 为维数 \(d\) 的混合特征完备正则局部环，\(k=A/\mathfrak m\)，\(\operatorname{char}k=p>0\)，且 \(p\notin\mathfrak m^2\)。选一个系数 Cohen 环 \(C\subseteq A\)，再选 \(x_2,\ldots,x_d\)，使
-\(p,x_2,\ldots,x_d\) 在 \(\mathfrak m/\mathfrak m^2\) 中给出一组基。则代入映射
-\[
-C[\![X_2,\ldots,X_d]\!]\longrightarrow A
-\]
-是同构。
-\end{proposition}
-\begin{proof}
-上一小节的逐阶展开给出满射。左端是维数 \(d\) 的正则局部整环：其极大理想由 \(p,X_2,\ldots,X_d\) 生成，逐次商去这些元素构成长度 \(d\) 的素理想链，而高度定理给出相反维数上界。若核非零，商去其中任一非零元使维数降为 \(d-1\)，与 \(\dim A=d\) 矛盾。故核为零。
-\end{proof}
-
-对一般完备 Noether 局部环，Cohen 结构定理给出正则局部覆盖；它没有保证覆盖的核由正则序列生成。第19章的完全交条件正是对这个核提出的额外要求。例如
-\[
-k[\![u,v]\!]/(v^2-u^3),\qquad k[\![u,v]\!]/(u^2,v^3)
-\]
-均为完全交，前者由一个非零因子给出，后者中的 \(u^2,v^3\) 是正则序列。第二个商以 \(u^iv^j\)，\(0\le i<2,\ 0\le j<3\)，为基，长度为 \(6\)，基座由 \(uv^2\) 张成。
-
-\ProseParagraphBreak
-相反，\(B=k[\![u,v]\!]/(u,v)^2\) 的基座为 \((\bar u,\bar v)\)，维数为 \(2\)。由\cref{b3:lem:artinian-ci-socle}，零维完全交的基座必须是一维，所以 \(B\) 不是完全交。这里排除的是所有可能的完全交表示，而不仅是指出目前三个方程看起来较多。
-
-\ProseParagraphBreak
-这些模型也解释了结构定理与消解理论的分工。结构定理先把环表示成正则环的商；核的生成元、它们之间的合冲及随后各阶合冲，仍然需要分别计算。只有在正则序列情形，Koszul 复形才立即给出完整的有限自由消解。
-
-\ProseParagraphBreak
-\cref{b3:tab:D-cohen-characteristic-cases}汇总了三种特征情形。表中 \((A,\mathfrak m)\) 均为完备 Noether 局部环，\(k=A/\mathfrak m\)，\(X\) 表示有限个变量。等特征时可取 \(e=\dim_k\mathfrak m/\mathfrak m^2\) 个变量；后两种情形可取满足 \(\mathfrak m=(p,x_1,\ldots,x_s)\) 的 \(s\) 个变量。
+表中 \((A,\mathfrak m)\) 均为完备 Noether 局部环，\(k=A/\mathfrak m\)，\(X\) 表示有限个变量。等特征时可取 \(e=\dim_k\mathfrak m/\mathfrak m^2\) 个变量；后两种情形可取满足 \(\mathfrak m=(p,x_1,\ldots,x_s)\) 的 \(s\) 个变量。
 
 \begin{table}[htbp]
 \centering
@@ -188,3 +142,88 @@ k[\![u,v]\!]/(v^2-u^3),\qquad k[\![u,v]\!]/(u^2,v^3)
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{theorem}[混合特征的系数环]\label{b3:thm:mixed-characteristic-coefficient-ring}
+设 \((A,\mathfrak m)\) 为混合特征完备 Noether 局部环，\(k=A/\mathfrak m\)。存在剩余域为 \(k\) 的 Cohen 环 \(C\) 及局部单射 \(C\to A\)，使剩余域映射是指定的同构。因而 \(A\) 是某个有限变量幂级数环 \(C[\![X_1,\ldots,X_s]\!]\) 的商。
+\end{theorem}
+
+\begin{proofsketch}
+这里采用两项深层输入，再说明它们如何给出系数同态。第一项是 Cohen 环的存在：每个特征 \(p\) 的域 \(k\)，都能成为一个以 \(p\) 为统一化元的特征零完备 DVR 的剩余域。这项存在定理及构造见\cite[Theorem 29.1, pp. 223--224]{Matsumura1989CommutativeRingTheory}。构造从 \(\mathbb Z_{(p)}[T]_{(p)}\) 开始，其中 \(T\) 对应于 \(k/\mathbb F_p\) 的超越基；逐个提升剩余域代数元的首一最小多项式，在保持统一化元为 \(p\) 的条件下扩张 DVR。随后对这些扩张取链的并、用 Zorn 引理使剩余域达到 \(k\)，最后作 \(p\)-进完备化。这里省略链的并仍为 DVR 及各扩张相容性的证明。
+
+第二项是形式光滑的提升性质。\(C\) 对 \(\mathbb Z_{(p)}\) 无挠，故平坦；\(k/\mathbb F_p\) 可分，因而有前面采用的平方零提升性质。平坦代数的形式光滑提升定理据此给出：对每个 \(r\ge1\)，
+\[
+\mathbb Z/p^r\mathbb Z\longrightarrow C/p^rC
+\]
+形式光滑。其作用是把剩余纤维上的提升性质延及底环的幂零加厚；平坦性是必要假设。这部分的证明见\cite[Theorem 28.10, pp. 222--223; Theorem 29.2, pp. 224--225]{Matsumura1989CommutativeRingTheory}，本附录使用其结论。
+
+现在从指定的剩余域同构 \(\phi_1:C/pC\to A/\mathfrak m\) 开始。已得 \(\phi_r:C/p^rC\to A/\mathfrak m^r\) 时，将它与 \(C/p^{r+1}C\to C/p^rC\) 复合。由于 \(p\in\mathfrak m\)，目标环 \(A/\mathfrak m^{r+1}\) 是 \(\mathbb Z/p^{r+1}\mathbb Z\)-代数，而商映射到 \(A/\mathfrak m^r\) 的核 \(\mathfrak m^r/\mathfrak m^{r+1}\) 平方为零。第二项输入给出相容提升 \(\phi_{r+1}\)，于是得到
+\[
+\phi:C=\varprojlim_r C/p^rC
+\longrightarrow\varprojlim_r A/\mathfrak m^r=A.
+\]
+这个同态是局部的，因为它在剩余域上为同构。它还是单射：Cohen DVR 的任一非零理想为某个 \(p^rC\)，若该理想为核，就有 \(p^r\cdot1_A=0\)，与 \(\operatorname{char}A=0\) 矛盾。这里不要求 \(A\) 中所有元素都无 \(p\)-挠；单射所用的是单位元不会被 \(p\) 的幂零化。最后取 \(\mathfrak m=(p,x_1,\ldots,x_s)\)，逐阶展开便得到幂级数满射，具体过程如下。
+\end{proofsketch}
+
+取有限多个 \(x_i\in\mathfrak m\) 使 \(\mathfrak m=(p,x_1,\ldots,x_s)\)，在模 \(\mathfrak m^r\) 的每一步用 \(C\) 提升剩余系数。和上一小节相同，逐次减去关于 \(p,x_i\) 的齐次式，并把 \(p\) 的幂合并进系数，就得到满射 \(C[\![X]\!]\to A\)。收敛使用的是 \((p,X)\)-进拓扑；对固定的 \(X\)-单项式，其系数形成 \(p\)-进 Cauchy 列，极限存在于 \(C\)。
+
+\begin{example}\label{b3:exm:ramified-cohen-model}
+令 \(C=\mathbb Z_p\)，考虑
+\[
+A=C[\![T]\!]/(T^2-p).
+\]
+记 \(\bar T\) 为 \(T\) 的像。这个环的极大理想 \(\mathfrak m\) 由 \(\bar T\) 生成，因为 \(p=\bar T^2\)。环境环维数为 \(2\)，非零方程是非零因子，故商的维数为 \(1\)，于是 \(A\) 是正则局部环，也就是 DVR。其极大理想非零，故 \(\bar T\ne0\)；整环性质使 \(p=\bar T^2\) 的任意正整数次幂都非零，而与 \(p\) 互素的整数在 \(A\) 中为单位。因此 \(\operatorname{char}A=0\)。又因 \(C\) 的任一非零理想都包含 \(p\) 的某个幂，\(C\to A\) 的核只能为零。
+
+\ProseParagraphBreak
+这里 \(A\) 正则而 \(p\in\mathfrak m^2\)，称为分歧的情形。在 \(\mathfrak m/\mathfrak m^2\) 中，\(p=\bar T^2\) 的类为零，唯一的线性方向由 \(\bar T\) 给出；所以正则性并不保证 \(p\) 能列入一组正则参数。它也不能写成 \(\mathbb F_p[\![X_1,\ldots,X_r]\!]\) 的商，因为后一环的任意非零保单位商都具有特征 \(p\)。
+\end{example}
+
+若 \((A,\mathfrak m)\) 为完备 Noether 局部环，\(\operatorname{char}A=p^r\)，其中 \(r>1\)，且剩余域为 \(k\)，则上述构造与逐阶提升仍给出剩余域为 \(k\) 的 Cohen 环 \(C\) 及局部同态 \(\phi:C\to A\)。此时 \(\ker\phi=p^rC\)：核是 \(C\) 的一个理想，只能为 \(p^nC\)；由 \(p^r\cdot1_A=0\) 而 \(p^{r-1}\cdot1_A\ne0\)，必有 \(n=r\)。因此 \(C/p^rC\) 确实嵌入 \(A\)，成为系数子环，且
+\[
+(C/p^rC)[\![X_1,\ldots,X_s]\!]\longrightarrow A
+\]
+仍是满射。等价地，用 \(C[\![X_1,\ldots,X_s]\!]\) 作覆盖时，核包含 \(p^r\)。这里的系数子环是 Artin 局部环，其极大理想为 \(p(C/p^rC)\)，不再是 DVR；这一情形见\cite[Theorem 29.3 and the preceding discussion, p. 225]{Matsumura1989CommutativeRingTheory}。
+
+\subsection{完备正则局部环、完全交与嵌入维数模型}
+\label{b3:subsec:D02:04}
+
+等特征完备正则局部环已经由\cref{b3:thm:equicharacteristic-power-series-cover}识别为系数域上的幂级数环。混合特征还要检查 \(p\) 在极大理想中的阶数：若 \(p\notin\mathfrak m^2\)，它提供一个非零线性方向，可以补成 \(\mathfrak m/\mathfrak m^2\) 的基，称为不分歧的情形；若 \(p\in\mathfrak m^2\)，则没有这个方向，\cref{b3:exm:ramified-cohen-model}的 \(p=\bar T^2\) 给出最简单的分歧正则模型。
+
+\begin{proposition}\label{b3:prop:unramified-regular-cohen-model}
+设 \((A,\mathfrak m)\) 为维数 \(d\) 的混合特征完备正则局部环，\(k=A/\mathfrak m\)，\(\operatorname{char}k=p>0\)，且 \(p\notin\mathfrak m^2\)。选一个系数 Cohen 环 \(C\subseteq A\)，再选 \(x_2,\ldots,x_d\)，使
+\(p,x_2,\ldots,x_d\) 在 \(\mathfrak m/\mathfrak m^2\) 中给出一组基。则代入映射
+\[
+C[\![X_2,\ldots,X_d]\!]\longrightarrow A
+\]
+是同构。
+\end{proposition}
+\begin{proof}
+上一小节的逐阶展开给出满射。左端是维数 \(d\) 的正则局部整环：其极大理想由 \(p,X_2,\ldots,X_d\) 生成，逐次商去这些元素构成长度 \(d\) 的素理想链，而高度定理给出相反维数上界。若核非零，商去其中任一非零元使维数降为 \(d-1\)，与 \(\dim A=d\) 矛盾。故核为零。
+\end{proof}
+
+对一般完备 Noether 局部环 \(A\)，Cohen 结构定理给出正则局部满射 \(S\twoheadrightarrow A\)，但不保证其核 \(I\) 由正则序列生成。完全交的定义只要求存在某个合适的展示；\cref{b3:thm:ci-presentation-independence}才使这个条件能够用于当前覆盖：\(A\) 完全交，当且仅当 \(I\) 的任意极小生成组正则，等价地，\(\mu_S(I)=\operatorname{ht}_SI\)。因此判定时要计算核所需的最少方程数，不能数一组可能冗余的方程。例如
+\[
+k[\![u,v]\!]/(v^2-u^3),\qquad k[\![u,v]\!]/(u^2,v^3)
+\]
+均为完全交，前者由一个非零因子给出，后者中的 \(u^2,v^3\) 是正则序列。第二个商以 \(u^iv^j\)，\(0\le i<2,\ 0\le j<3\)，为基，长度为 \(6\)，基座由 \(uv^2\) 张成。
+
+\ProseParagraphBreak
+相反，\(B=k[\![u,v]\!]/(u,v)^2\) 的基座为 \((\bar u,\bar v)\)，维数为 \(2\)。由\cref{b3:lem:artinian-ci-socle}，零维完全交的基座必须是一维，所以 \(B\) 不是完全交。这里排除的是所有可能的完全交表示，而不仅是指出目前三个方程看起来较多。
+
+\ProseParagraphBreak
+这些模型也解释了结构定理与消解理论的分工。结构定理先把环表示成正则环的商；核的生成元、它们之间的合冲及随后各阶合冲，仍然需要分别计算。只有在正则序列情形，Koszul 复形才立即给出完整的有限自由消解。
+
+\begin{example}\label{b3:exm:coefficient-field-nonunique}
+令 \(K=\mathbb Q(t)\)，其中 \(t\) 为不定元，取 \(A=K[\![x]\!]\)，其剩余域按常数项识别为 \(K\)。常数子域 \(K\subseteq A\) 是一个系数域；把 \(t\) 改为 \(t+x\) 可以得到另一个。
+
+\ProseParagraphBreak
+对每个非零 \(q(T)\in\mathbb Q[T]\)，\(q(t+x)\) 的常数项 \(q(t)\) 非零，故 \(q(t+x)\) 是 \(A\) 的单位。因此，对于 \(a,b\in\mathbb Q[T]\)、\(b\ne0\)，代入
+\[
+\sigma:K\longrightarrow A,
+\qquad \frac{a(t)}{b(t)}\longmapsto
+\frac{a(t+x)}{b(t+x)}
+\]
+是良定义的域同态：多项式分式之间的交叉相乘恒等式经代入仍成立，所有分母也都可逆。其复合 \(K\xrightarrow{\sigma}A\to A/(x)=K\) 为恒等，因而 \(\sigma\) 单射，像 \(K'=\mathbb Q(t+x)\) 是系数域。
+
+\ProseParagraphBreak
+子域 \(K'\) 与常数子域 \(K\) 不同，因为 \(t+x\in K'\) 不是常数级数。常数嵌入与 \(\sigma\) 却都是同一剩余映射的截面，分别将剩余类 \(t\) 提升为 \(t\) 和 \(t+x\)。这说明剩余域截面的存在不使系数域成为一个自然唯一的子域；选择系数域以后得到的幂级数坐标也会相应改变。
+\end{example}

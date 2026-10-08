@@ -16,12 +16,13 @@
 \begin{itemize}
 \item 区分实投影、消去理想所给的 Zariski 闭包，以及它们各自保留的信息。
 \item 用平方和关系计算简单实根理想，并检查正性证书的适用范围。
+\item 区分预序与二次模，核对紧性、Archimedean 条件及严格正性的作用。
 \item 从有理系数多项式产生可核验的实根数与隔离区间。
 \item 把平方和问题写成 Gram 矩阵条件，区别数值候选与精确证明。
 \end{itemize}
 \end{learninggoals}
 
-在 \(\mathbb R[x,y]\) 中，方程 \(x^2+y^2=0\) 只有实零点 \((0,0)\)。然而多项式 \(x\) 虽在全部这些实零点上消失，却不属于普通根理想 \(\sqrt{(x^2+y^2)}=(x^2+y^2)\)。原因在于“没有实零点”与“某个幂属于理想”是两种不同的检测。实根理想必须把平方和所表达的非负性也计入证书。
+在 \(\mathbb R[x,y]\) 中，方程 \(x^2+y^2=0\) 只有实零点 \((0,0)\)。然而多项式 \(x\) 虽在全部这些实零点上消失，却不属于普通根理想 \(\sqrt{(x^2+y^2)}=(x^2+y^2)\)。实域上平方和为零迫使各项同时为零，而普通根理想只记录某个幂属于原理想；前一种符号信息没有自动进入普通理想运算。实根理想必须把平方和所表达的非负性也计入证书。
 
 \ProseParagraphBreak
 
@@ -41,7 +42,8 @@
 \ProseParagraphBreak
 紧集正性的概要另用一致估计与 P\'olya 的系数引理；从正性证书得到矩表示，还需 Stone--Weierstrass 的一致逼近定理\footnote{斯通（Marshall Harvey Stone，1903-1989），美国数学家，研究泛函分析与布尔代数，推广了 Weierstrass 的一致逼近定理。}与 Riesz 的正泛函表示定理\footnote{里斯（Riesz Frigyes，1880-1956），匈牙利数学家，泛函分析的奠基者之一，研究连续线性泛函的表示。}。Sturmfels《Solving Systems of Polynomial Equations》的 Section 1.3 与 Chapter 7 分别讨论实根计算和平方和方法\cite[Section 1.3; Chapter 7]{Sturmfels2002PolynomialEquations}。
 
-% 本附录深结果的证明状态分别在正文标明。
+\ProseParagraphBreak
+投影定理、实零点定理、Artin 的有理平方和结论及不可行性证书在这里给出具体证明。紧集上的严格正性采用 P\'olya 系数引理作构造概要，矩表示再采用 Stone--Weierstrass 与 Riesz 两个分析定理。Sturm 与 Gram 矩阵给出可核验计算；CAD、Nash 和 o-minimal 理论只说明其研究对象及进一步准备。
 
 \input{Appendices/AppendixG/SectionG01}
 \input{Appendices/AppendixG/SectionG02}
@@ -131,19 +133,26 @@ H_1=\begin{pmatrix}3&0&2b\\0&2b&0\\2b&0&2b^2\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-module-preordering-product}
-在 \(\mathbb R[x,y]\) 中取约束 \(g_1=x\)、\(g_2=y\)。分别写出二次模 \(M(g_1,g_2)\) 与预序 \(T(g_1,g_2)\) 的一般元素，证明 \(xy\in T(g_1,g_2)\)，但 \(xy\notin M(g_1,g_2)\)。
+在 \(A=\mathbb R[x,y]\) 中比较约束组 \(g=(x,y)\) 与 \(\widetilde g=(x,y,xy)\)。证明二者定义同一可行集，却有 \(M(g)\subsetneq M(\widetilde g)=T(g)=T(\widetilde g)\)。说明平方和证书的可用形式为何依赖约束的表示。
 \end{exercise}
 \begin{solution}
-二次模中的元素形如 \(\sigma_0+x\sigma_1+y\sigma_2\)，预序中的元素形如 \(\sigma_0+x\sigma_1+y\sigma_2+xy\sigma_{12}\)，各 \(\sigma\) 都是多项式平方和。取 \(\sigma_{12}=1\)、其余为零，便得 \(xy\in T(g_1,g_2)\)。
-
-若 \(xy=\sum_jp_j^2+x\sum_jq_j^2+y\sum_jr_j^2\)，代入原点得到每个 \(p_j\) 的常数项为零。再比较一次项：\(x\)、\(y\) 的系数分别为 \(\sum_jq_j(0,0)^2\)、\(\sum_jr_j(0,0)^2\)，都必须为零，故各 \(q_j,r_j\) 的常数项也为零。因此后两组项的次数至少为三。二次齐次部分只能是 \(\sum_j(a_jx+b_jy)^2\)。它的 \(x^2\)、\(y^2\) 系数都为零，迫使全部 \(a_j,b_j\) 为零，却又需要 \(xy\) 系数为一，矛盾。
+二者的可行集都是第一闭象限，第三个约束在几何上多余。预序 \(T(x,y)\) 的四类项为 \(\sigma_0+\sigma_1x+\sigma_2y+\sigma_3xy\)，这正是 \(M(x,y,xy)\)。新约束本来已属于旧预序，所以生成的预序也不变。由\cref{b3:prop:G-module-preordering-difference}，\(xy\notin M(x,y)\)，但它属于新二次模，得到严格包含。相同可行集可以附带不同的二次模，冗余约束能增加允许的有限证书。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-strict-positivity-warning}
-解释为何对任意 \(\varepsilon>0\)，\(1-x^2+\varepsilon\) 属于 \(M((1-x^2)^3)\)，而 \(1-x^2\) 不属于。
+设 \(g=(1-x^2)^3\in\mathbb R[x]\)、\(\varepsilon\in\mathbb R_{>0}\)。对有限组实多项式 \(q_j,r_k\in\mathbb R[x]\)，考虑任一表示
+\[
+1-x^2+\varepsilon=\sum_jq_j(x)^2+g(x)\sum_kr_k(x)^2.
+\]
+证明 \(\sum_jq_j'(1)^2\ge1/\varepsilon\)，据此说明为何严格正性证书在 \(\varepsilon\to0\) 时可能退化。
 \end{exercise}
 \begin{solution}
-正文已证明该二次模满足 Archimedean 条件，其可行集为 \([-1,1]\)。加 \(\varepsilon\) 后严格正，由 Putinar 定理属于二次模；不加时，用正文在 \(x=1\) 比较一阶导数的论证得到矛盾。这说明一列存在的正性证书不必在极限处保持同样的表示。
+在 \(x=1\) 处求值，得到 \(\sum_jq_j(1)^2=\varepsilon\)。因 \(g(1)=g'(1)=0\)，求导又给出 \(\sum_jq_j(1)q_j'(1)=-1\)。Cauchy--Schwarz 不等式于是给出
+\[
+1\le\Bigl(\sum_jq_j(1)^2\Bigr)\Bigl(\sum_jq_j'(1)^2\Bigr)
+=\varepsilon\sum_jq_j'(1)^2.
+\]
+这种表示对每个 \(\varepsilon>0\) 都存在，但其一阶导数向量的平方范数必发散，不能从一族统一有界的这类数据直接取得极限证书。\cref{b3:prop:G-strict-positivity-warning}还以导数直接证明极限多项式不在原二次模中。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-sturm-cubic}
@@ -161,10 +170,10 @@ H_1=\begin{pmatrix}3&0&2b\\0&2b&0\\2b&0&2b^2\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-eliminate-and-isolate}
-精确求解实方程组 \(y=x^2,\ y^2-5y+4=0\)，说明消去与 Sturm 隔离各完成什么工作。
+对实方程组 \(P=xy-1=0\)、\(Q=y-x=0\)，核验 \(h=x^3-x=x(P-xQ)\) 属于消去理想。用 Sturm 序列隔离 \(h\) 的全部实根，再回代求原系统的解，指出候选根为何可能不能提升。
 \end{exercise}
 \begin{solution}
-代入第一式得到 \(x^4-5x^2+4=0\)，正文的四个隔离区间各含一根。进一步分解得 \(x=\pm1,\pm2\)，回代得解 \((\pm1,1),(\pm2,4)\)。消去得到候选一元方程，隔离保证实根的个数与位置；最后回代验证原方程。一般消去所得候选未必全可提升，不能省略最后一步。
+矩阵等式展开即得 \(x(P-xQ)=x(x^2-1)=h\)。可取符号等价的 Sturm 序列 \(h,3x^2-1,x,1\)，在 \(-3/2,-1/2,1/2,3/2\) 处的变号数依次为 \(3,2,1,0\)，所以三个相邻区间各含一根；根为 \(-1,0,1\)。回代 \(y=x\) 后，第一式要求 \(x^2=1\)，因此只有 \((-1,-1)\)、\((1,1)\)；候选零根被排除。\(h\) 只是消去理想中的一个元素，单独一条必要方程不等于整个投影的描述。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-gram-exact}
@@ -201,26 +210,17 @@ Q=\begin{pmatrix}1&0&0&0\\0&1&0&1\\0&0&0&0\\0&1&0&1\end{pmatrix}.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:G-localizing-matrix}
-给定实数 \(a,b\)，在次数不超过四的实多项式空间上定义线性泛函 \(L\)，使
-\[
-L(1)=1,\quad L(x)=L(x^3)=0,\quad L(x^2)=a,\quad L(x^4)=b.
-\]
-求由 \(L(q^2)\ge0\)（\(\deg q\le2\)）和 \(L((1-x^2)q^2)\ge0\)（\(\deg q\le1\)）得到的矩阵条件。哪些 \(a,b\) 可由支于 \([-1,1]\) 的概率测度实现这些矩？
+给定实数 \(a,b\)，满足 \(0<a<1\)、\(a^2\le b\le a\)，求支于 \([0,1]\)、一阶矩为 \(a\)、二阶矩为 \(b\) 的概率测度所能具有的三阶矩 \(c\) 的全部范围。给出达到范围内任一值的有限点测度。
 \end{exercise}
 \begin{solution}
-两个矩阵分别为
+对 \(xq(x)^2\) 与 \((1-x)q(x)^2\)（\(\deg q\le1\)）的积分非负，分别得到
 \[
-M_2=\begin{pmatrix}1&0&a\\0&a&0\\a&0&b\end{pmatrix},\qquad
-M_{1-x^2}=\begin{pmatrix}1-a&0\\0&a-b\end{pmatrix}.
+\begin{pmatrix}a&b\\b&c\end{pmatrix}\succeq0,\qquad
+\begin{pmatrix}1-a&a-b\\a-b&b-c\end{pmatrix}\succeq0.
 \]
-第一个矩阵半正定当且仅当 \(a\ge0\)、\(b\ge a^2\)；第二个半正定当且仅当 \(a\le1\)、\(b\le a\)。任何所求测度都满足这两种积分正性，所以必要条件是
+所以必要且将被实现的范围为
 \[
-0\le a\le1,\qquad a^2\le b\le a.
+\dfrac{b^2}{a}\le c\le b-\dfrac{(a-b)^2}{1-a}.
 \]
-这些条件在本题中也充分。若 \(a=0\)，则 \(b=0\)，取 \(\mu=\delta_0\)。若 \(a>0\)，则 \(b>0\)，令
-\[
-t=\sqrt{\dfrac ba},\qquad w=\dfrac{a^2}{b},\qquad
-\mu=(1-w)\delta_0+\dfrac w2\delta_{-t}+\dfrac w2\delta_t.
-\]
-由参数界，\(0<t\le1\)、\(0<w\le1\)，故这是支于 \([-1,1]\) 的概率测度。对称性使奇数次矩为零，而 \(wt^2=a\)、\(wt^4=b\)，正好给出所需的二次和四次矩。
+下端由 \(\mu_-=(1-a^2/b)\delta_0+(a^2/b)\delta_{b/a}\) 实现。上端对变量 \(1-x\) 用同样构造：令 \(a'=1-a\)、\(b'=1-2a+b\)，取 \(\mu_+=(1-(a')^2/b')\delta_1+((a')^2/b')\delta_{1-b'/a'}\)。条件保证两测度的权非负、支点在 \([0,1]\)，并且一、二阶矩都是 \(a,b\)。直接展开其三阶矩给出所列两端。两端之差为 \((b-a^2)(a-b)/(a(1-a))\ge0\)；按适当权重混合 \(\mu_-\)、\(\mu_+\) 即实现任一中间值。若两端相等，取其中一个测度即可。这是具体低阶一维构造，不调用一般截断矩表示定理。
 \end{solution}

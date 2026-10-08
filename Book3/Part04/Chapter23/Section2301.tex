@@ -8,10 +8,14 @@
 模去极大理想后的根或因式分解，只有满足可逆的线性修正条件才可逐阶提升。完备性保证这些修正有极限，Hensel 化则只加入使相应代数提升成立所需的元素。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 单根提升、互素因式提升与多变量 Jacobian 隐函数形式；有限精度 Hensel 算法
-% * 完备分离局部环的 Hensel 性
-% * Hensel 化的泛性质；采用 Nagata 的构造与有限单根邻域描述，直接展开有限阶商、忠实平坦性及 Noether 性
+%
+% * 单根修正中的可逆性、完备性及分离性；Newton 精度倍增与互素因式逐阶修正的区别
+% * 因子乘法的线性化及完备分离局部环的 Hensel 性；多变量存在性引用 Artin 的隐函数判据，唯一性就地证明
+% * Hensel 化的泛性质；采用 Nagata 的构造与指定单根邻域，展开局部性、剩余域、忠实平坦、有限阶商及 Noether 性
 % * Hensel 化与完备化的区别
+%
+% ---
+%
 
 \subsection{单根提升与因式分解提升}
 \label{b3:subsec:2301:01}
@@ -45,6 +49,9 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 其中 \(c\in R\)。括号内的元素模 \(\mathfrak m\) 等于 \(\bar f'(\bar a)\)，所以是单位，因而 \(a=b\)。这个唯一性论证本身不需要完备性。
 \end{proof}
 
+这个证明中三项条件分别承担不同作用：导数可逆使每次线性修正可以唯一求出，完备性使相容的 Cauchy 修正有极限，分离性则把 \(f(a)\in\bigcap_n\mathfrak m^n\) 变成 \(f(a)=0\)。最后的唯一性只用剩余类内差商的可逆性，不需要完备性。
+
+\ProseParagraphBreak
 定理的递推式也能计算指定精度的根。为明确每一步都可在有限时间内完成，以下取整数系数和 \(p\) 进精度；输出是模 \(p^N\) 的剩余类，而不是在有限步内写出整个 \(p\) 进整数。
 
 \begin{algorithm}[htbp]
@@ -69,14 +76,18 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 \begin{definition}\label{b3:def:henselian-local-ring}
 设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若对每个首一 \(f\in R[T]\) 及每个分解
 \[
-\bar f=\bar g\bar h\quad\text{于 }k[T],
+\bar f=\bar g\bar h\quad\text{于}\;k[T],
 \]
 其中 \(\bar g,\bar h\) 首一且互素，都存在首一 \(g,h\in R[T]\)，满足
 \(f=gh\)、\(g\bmod\mathfrak m=\bar g\)、\(h\bmod\mathfrak m=\bar h\)，并且次数分别等于 \(\deg\bar g,\deg\bar h\)，则称 \(R\) 为 \term[Hensel-huan]{Hensel 环}[Henselian local ring]，也称 \(R\) 具有 Hensel 性。
 \end{definition}
 
-在这个定义中取 \(\bar g=T-\bar a\)，便得到首一多项式的单根提升：另一个因子与它互素，恰好表示 \(\bar f'(\bar a)\ne0\)。因式提升还可以保留一整组根，而不要求它们分别属于剩余域。下面直接证明完备性足以保证这种较一般的提升。
+本书以互素首一因式提升定义 Hensel 性。在这个定义中取 \(\bar g=T-\bar a\)，便得到首一多项式的单根提升：另一个因子与它互素，恰好表示 \(\bar f'(\bar a)\ne0\)，提升后的一次因子就给出所求根。反方向的等价，以及多变量隐函数形式，属于 Hensel 性的等价判据；下面的隐函数引理将明确采用这一判据。因式提升还可以保留一整组根，而不要求它们分别属于剩余域。
 
+\ProseParagraphBreak
+前面的单根定理本身尚未检验定义要求的全部因式分解；完备局部环的 Hensel 性将由\cref{b3:thm:hensel-factor-lifting}直接证明。两种提升都以可逆的线性化消去误差，采用的递推却不同：单根的 Newton 修正使 \(\mathfrak m^n\) 级误差提高到 \(\mathfrak m^{2n}\)，下面的因式修正每次只要求从 \(\mathfrak m^n\) 提高到 \(\mathfrak m^{n+1}\)。
+
+\ProseParagraphBreak
 单变量的导数条件推广到方程组时，应要求 Jacobian 方阵可逆。下面的 Hensel 隐函数形式还保留相对于给定理想的精度。
 
 \begin{lemma}[Hensel 隐函数形式]\label{b3:lem:henselian-jacobian-lifting}
@@ -88,8 +99,8 @@ F(b)\in IA^h,
 \]
 则唯一存在 \(a\in A^h\)，使 \(F(a)=0\) 且 \(a-b\in IA^h\)。
 \end{lemma}
-\begin{proof}
-存在性采用 Hensel 性的多变量隐函数判据：约化的零点处 Jacobian 可逆时，该零点能够提升；此判据与因式提升定义等价，而且极大理想可换成任意真理想，见 Artin\cite[(1.9), pp. 25--26]{Artin1969AlgebraicApproximation}。应用于约化点 \(b\bmod I\)，便得到所需零点。
+\begin{proofsketch}
+存在性采用 Hensel 性的多变量隐函数判据，未在这里从互素因式提升定义推导。Artin 在原刊 (1.9) 陈述了这一判据：方程数与变量数相同，约化零点处的 Jacobian 行列式可逆，则零点可提升；随后明确说明，极大理想可以换成任意真理想\cite[(1.9), pp. 25--26]{Artin1969AlgebraicApproximation}。这里 \(I\subseteq\mathfrak m\) 为真理想，\(F(b)\in IA^h\)，且 Jacobian 行列式在 \(A\) 中为单位，故应用于 \(b\bmod I\) 得到存在性。
 
 若 \(a,a'\) 都满足条件，多项式差商给出一个 \(h\times h\) 矩阵 \(C(a,a')\)，使
 \[
@@ -98,7 +109,8 @@ F(a)-F(a')=C(a,a')(a-a'),
 C(a,a')\equiv J_F(b)\pmod{\mathfrak m}.
 \]
 第二式使用 \(a\equiv a'\equiv b\pmod{\mathfrak m}\)。故 \(\det C(a,a')\) 为单位，矩阵可逆，而左边为零，因而 \(a=a'\)。
-\end{proof}
+这项唯一性只用局部环中的可逆矩阵及给定剩余类；Hensel 判据承担的是前面的存在性。
+\end{proofsketch}
 
 \subsection{完备局部环的 Hensel 性}
 \label{b3:subsec:2301:02}
@@ -108,7 +120,11 @@ C(a,a')\equiv J_F(b)\pmod{\mathfrak m}.
 \(\bar f=\bar g\bar h\)，其中 \(\bar g,\bar h\in k[T]\) 首一互素，次数分别为 \(r,s\)。则存在唯一的首一分解 \(f=gh\)，其中 \(g,h\) 具有上述次数和约化像。特别地，每个完备分离局部环都是 Hensel 环。
 \end{theorem}
 \begin{proof}
-可假设 \(r,s>0\)，因为零次的首一因子只能是 \(1\)。先在 \(k\) 上考虑线性映射
+可假设 \(r,s>0\)，因为零次的首一因子只能是 \(1\)。给因子分别加上修正 \(u,v\) 时，乘积的变化为
+\[
+(g+u)(h+v)-gh=hu+gv+uv.
+\]
+在一阶精度中略去交叉项 \(uv\)，得到因子乘法的线性化 \((u,v)\mapsto hu+gv\)。它在这里承担单根提升中 \(f'(a)\) 的作用。先在 \(k\) 上考虑相应的线性映射
 \[
 L:k[T]_{<r}\oplus k[T]_{<s}\longrightarrow k[T]_{<r+s},
 \qquad (u,v)\longmapsto\bar h u+\bar g v.
@@ -163,6 +179,7 @@ R \arrow[r,"\iota"] \arrow[dr,"u"'] & R^{\mathrm h} \arrow[d,dashed,"v"] \\
 \end{tikzcd}
 \]
 \end{definition}
+\symidx{\(R^{\mathrm h}\)：局部环 \(R\) 的 Hensel 化}
 
 这一定义立即给出唯一性：两个具有该性质的对象之间各有唯一的相容局部同态，复合由唯一性等于恒等映射。存在性则不是形式推论。永田在《Local Rings》中构造 Hensel 化，并证明其 Hensel 性、泛性质及有限邻域描述：任意有限组元素可放进一个带有指定剩余根的单根邻域\cite[\S43, (43.3), (43.5), (43.9), pp. 180--183]{Nagata1975LocalRings}。下面的概要采用这些构造结果，把有限邻域写成单根方程，并展开各阶商、平坦性和 Noether 性的推导。
 
@@ -175,11 +192,15 @@ R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}
 为同构。因此二者的相应完备化自然同构。
 \end{theorem}
 
+在 Noether 情形中，各阶商同构表示原环与 Hensel 化保留了同样的有限阶近似。这些商组成的逆极限给出共同的完备化，却不要求原环或 Hensel 化本身等于该逆极限。
+
 \begin{proofsketch}
-把上述构造所得的有限单根邻域写成方程，它具有形式
+这里采用永田的构造、Hensel 性及有限单根邻域描述，邻域系统的细化构造不在本概要中重建。由这些输入，下面从单根方程直接求出局部环与剩余域，再证明忠实平坦性、比较各阶商；Noether 情形则借共同的完备化控制理想升链，得到 Noether 性及完备化同构。泛性质也将由指定根的唯一性核对。
+
+单根邻域是在原剩余点处加入一个指定的单根解，再局部化以保留这个剩余根所选的局部分支。把构造给出的邻域写成方程，具有形式
 \[
 C=\bigl(R[T]/(f)\bigr)_{(\mathfrak m,\bar T)},
-\qquad f\text{ 首一},\quad f(0)\in\mathfrak m,
+\qquad f\;\text{首一},\quad f(0)\in\mathfrak m,
 \quad f'(0)\notin\mathfrak m,
 \]
 其中 \(\bar T\) 是 \(T\) 在商环中的像，指定的剩余根为零。任意指定单根都可经平移写成这个形式。模 \(\mathfrak m\) 后，\(\bar f=T\bar g\)，且 \(\bar g(0)\ne0\)；在 \((T)\) 处局部化时 \(\bar g\) 可逆，所以
@@ -187,7 +208,7 @@ C=\bigl(R[T]/(f)\bigr)_{(\mathfrak m,\bar T)},
 C/\mathfrak mC\cong
 \bigl(k[T]/(T\bar g)\bigr)_{(T)}\cong k.
 \]
-因而 \(C\) 的极大理想为 \(\mathfrak mC\)。这些有限邻域及保持指定剩余点的局部映射组成滤过系统，其余极限为 \(R^{\mathrm h}\)。于是 \(R^{\mathrm h}\) 为局部环，极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域仍为 \(k\)。由于 \(R[T]/(f)\) 是有限秩自由 \(R\)-模，局部化 \(C\) 在 \(R\) 上平坦，滤过余极限也平坦；这又是局部映射，故 \(R\to R^{\mathrm h}\) 忠实平坦。
+因而 \(C\) 的极大理想为 \(\mathfrak mC\)。构造定理把这些邻域及保持指定剩余点的局部映射组织为滤过系统，其余极限为 \(R^{\mathrm h}\)；这一步使用前面说明的邻域构造输入。于是 \(R^{\mathrm h}\) 为局部环，极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域仍为 \(k\)。由于 \(R[T]/(f)\) 是有限秩自由 \(R\)-模，局部化 \(C\) 在 \(R\) 上平坦，滤过余极限也平坦；又有 \(R^{\mathrm h}/\mathfrak mR^{\mathrm h}\cong k\ne0\)，由\cref{b3:thm:faithfully-flat-criterion}，\(R\to R^{\mathrm h}\) 忠实平坦。
 
 构造定理保证这个余极限具有 Hensel 性。其泛性质可以从邻域的方程读出：若 \(u:R\to S\) 为到 Hensel 局部环 \(S\) 的局部同态，则 \(u(f)\) 模 \(S\) 的极大理想有单根零，故存在唯一的根 \(a\)，其剩余类为零。令 \(\bar T\mapsto a\)，便得到唯一的相容局部同态 \(C\to S\)。原局部化的每个分母模指定剩余点非零，因而在 \(S\) 中映为单位。这些同态由唯一性相容，取余极限便得到唯一的局部同态 \(R^{\mathrm h}\to S\)。
 
@@ -210,20 +231,20 @@ a_{r+1}=\tilde a_r-
 R/\mathfrak m^n\xrightarrow{\sim}C/\mathfrak m^nC.
 \]
 反向同态的唯一性使这些同构与邻域间的映射相容。对邻域取余极限，便得到
-\(R/\mathfrak m^n\cong R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}\)。这个商环计算本身不需要 \(R\) Noether。
+\(R/\mathfrak m^n\cong R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}\)。这个商环计算本身不需要 \(R\) 是 Noether 环。
 
-现在设 \(R\) Noether。由永田的有限邻域描述，\(R^{\mathrm h}\) 中任意有限组元素均包含在一个子环 \(C=R[a]_{(\mathfrak m,a)}\) 中，其中 \(a\) 满足首一单根方程，且 \(R^{\mathrm h}\) 也是 \(C\) 的 Hensel 化\cite[(43.9), pp. 182--183]{Nagata1975LocalRings}。这里 \(C\) 是有限 \(R\) 代数 \(R[a]\) 的局部化，故 Noether；其极大理想为 \(\mathfrak mC\)。将已经得到的 Hensel 化忠实平坦性用于底环 \(C\)，可得 \(C\to R^{\mathrm h}\) 忠实平坦。若 \(b\in\bigcap_n\mathfrak m^nR^{\mathrm h}\)，取容纳它的 \(C\)，忠实平坦收缩给出
+现在设 \(R\) 是 Noether 环。关键是把每份有限数据放回一个 Noether 邻域，再利用共同完备化的忠实平坦性检测理想，而不是仅凭滤过余极限的形式推出 Noether 性。由永田的有限邻域描述，\(R^{\mathrm h}\) 中任意有限组元素均包含在一个子环 \(C=R[a]_{(\mathfrak m,a)}\) 中，其中 \(a\) 满足首一单根方程，且 \(R^{\mathrm h}\) 也是 \(C\) 的 Hensel 化\cite[(43.9), pp. 182--183]{Nagata1975LocalRings}。这里 \(C\) 是有限 \(R\) 代数 \(R[a]\) 的局部化，故 Noether；其极大理想为 \(\mathfrak mC\)。将已经得到的 Hensel 化忠实平坦性用于底环 \(C\)，可得 \(C\to R^{\mathrm h}\) 忠实平坦。若 \(b\in\bigcap_n\mathfrak m^nR^{\mathrm h}\)，取容纳它的 \(C\)，忠实平坦收缩给出
 \[
 b\in\bigcap_n\mathfrak m^nC=0,
 \]
 最后一步是 \(C\) 中的 Krull 交定理。因此 \(R^{\mathrm h}\) 分离。由各阶商同构，\(R^{\mathrm h}\) 的完备化及每个 \(C\) 的完备化都自然等于 \(\widehat R\)。
 
-设 \(J=(b_1,\ldots,b_s)R^{\mathrm h}\)，且 \(c\in J\widehat R\cap R^{\mathrm h}\)。在共同邻域 \(C\) 中容纳 \(c,b_1,\ldots,b_s\)。由于 \(C\) Noether，它到完备化 \(\widehat R\) 的映射忠实平坦，故
+设 \(J=(b_1,\ldots,b_s)R^{\mathrm h}\)，且 \(c\in J\widehat R\cap R^{\mathrm h}\)。在共同邻域 \(C\) 中容纳 \(c,b_1,\ldots,b_s\)。由于 \(C\) 是 Noether 环，它到完备化 \(\widehat R\) 的映射忠实平坦，故
 \[
 c\in(b_1,\ldots,b_s)\widehat R\cap C
 =(b_1,\ldots,b_s)C\subseteq J.
 \]
-因此每个有限生成理想都等于其完备化扩张的收缩。任一有限生成理想升链在 Noether 环 \(\widehat R\) 中扩张后稳定，收缩后原升链也稳定；有限生成理想满足升链条件，便说明所有理想都有限生成，即 \(R^{\mathrm h}\) Noether。这一理想收缩论证正是永田书中 (43.10) 的证明机制\cite[p. 183]{Nagata1975LocalRings}。
+因此每个有限生成理想都等于其完备化扩张的收缩。任一有限生成理想升链在 Noether 环 \(\widehat R\) 中扩张后稳定，收缩后原升链也稳定。若某个理想不有限生成，就能逐次选择不在已有生成元所成理想中的元素，构造一条严格上升的有限生成理想链，矛盾。因此所有理想都有限生成，\(R^{\mathrm h}\) 是 Noether 环。这一理想收缩论证正是永田书中 (43.10) 的证明机制\cite[p. 183]{Nagata1975LocalRings}。
 \end{proofsketch}
 
 对 Noether 局部环，由 \(\widehat R\) 的 Hensel 性及泛性质，得到相容的局部同态
@@ -240,7 +261,11 @@ R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
 \[
 -t+t^2-2t^3+5t^4+\cdots
 \]
-开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)，所以 \(R^{\mathrm h}\) 是可数集；\(\mathbb Q[\![t]\!]\) 却不可数，因为它包含所有系数只取 \(0,1\) 的无穷序列。因此
+开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)。这个有理函数域可数，其上的多项式也只有可数多个，每个非零多项式只有有限多个根，所以它的代数闭包可数，\(R^{\mathrm h}\) 也可数。另一方面，\(\mathbb Q[\![t]\!]\) 包含全部级数
+\[
+\sum_{n\ge0}\epsilon_nt^n,\qquad \epsilon_n\in\{0,1\},
+\]
+不同的无穷二元序列给出不同的级数，因此它至少有 \(2^{\aleph_0}\) 个元素，不可数。于是
 \[
 R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
 \]

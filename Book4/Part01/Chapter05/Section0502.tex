@@ -15,15 +15,21 @@
 \label{b4:subsec:closed-evaluation}
 
 \begin{definition}\label{b4:def:closed-monoidal-category}
-设 \((\mathcal C,\otimes,I)\) 为局部小幺半范畴。若对每个对象 \(X\)，函子 \(-\otimes X:\mathcal C\to\mathcal C\) 有右伴随，则称 \(\mathcal C\) 在这一侧为\term[bi-yaoban-fanchou]{闭幺半范畴}[closed monoidal category]。其右伴随在 \(Y\) 处的值称为从 \(X\) 到 \(Y\) 的\term[neibu-Hom]{内部 Hom}[internal Hom]，记为 \(\underline{\operatorname{Hom}}(X,Y)\)，本节也简记为 \([X,Y]\)。具体地，有关于 \(A,Y\) 自然的双射
+设 \((\mathcal C,\otimes,I)\) 为局部小幺半范畴。若对每个对象 \(X\)，函子 \(-\otimes X:\mathcal C\to\mathcal C\) 有右伴随，则称 \(\mathcal C\) 在这一侧为\term[bi-yaoban-fanchou]{闭幺半范畴}[closed monoidal category]。固定所用的各右伴随后，其在 \(Y\) 处的值称为从 \(X\) 到 \(Y\) 的\term[neibu-Hom]{内部 Hom}[internal Hom]，记为 \(\underline{\operatorname{Hom}}(X,Y)\)，本节也简记为 \([X,Y]\)。具体地，有关于 \(A,Y\) 自然的双射
 \begin{equation}\label{b4:eq:closed-adjunction}
 \operatorname{Hom}_{\mathcal C}(A\otimes X,Y)
 \cong\operatorname{Hom}_{\mathcal C}(A,[X,Y]).
 \end{equation}
-在对称幺半范畴中，交换两个因子的同构将左右两侧的闭结构相互转换，此时简称闭幺半范畴。
+这里固定的是张量右侧的 \(X\)。另一侧则要求 \(X\otimes-\) 有右伴随，其值可另记为 \(\{X,Y\}\)，相应双射为
+\[
+\operatorname{Hom}_{\mathcal C}(X\otimes A,Y)
+\cong\operatorname{Hom}_{\mathcal C}(A,\{X,Y\}).
+\]
+在非对称情形中，这两种要求不能混同；在对称幺半范畴中，交换两个因子的同构将左右两侧的闭结构相互转换，此时简称闭幺半范畴。
 \end{definition}
+\symidx{\(\underline{\operatorname{Hom}}(X,Y),\ [X,Y]\)：闭幺半范畴中的内部 Hom}
 
-这里 \([X,Y]\) 是 \(\mathcal C\) 中的对象，等式两侧的 Hom 才是集合。定义并不要求 \([X,Y]\) 的底集合恰好是全体态射；一般范畴甚至没有预先指定的底集合函子。
+对固定的 \(X,Y\)，\([X,Y]\) 表示反变函子 \(A\mapsto\operatorname{Hom}_{\mathcal C}(A\otimes X,Y)\)：参数 \(A\) 到 \([X,Y]\) 的态射，恰好记录以 \(A\) 为参数的 \(X\to Y\) 映射。这正是第三章中以一族相容的表示对象构造右伴随的机制。这里 \([X,Y]\) 是 \(\mathcal C\) 中的对象，等式两侧的 Hom 才是集合。定义并不要求 \([X,Y]\) 的底集合恰好是全体态射；一般范畴甚至没有预先指定的底集合函子。
 
 \begin{proposition}\label{b4:prop:closed-evaluation-transpose}
 设 \(\mathcal C\) 为局部小闭幺半范畴。将 \(1_{[X,Y]}\) 经\eqref{b4:eq:closed-adjunction}的逆送回，得到\term[qiuzhi-yingshe]{求值映射}[evaluation map]
@@ -44,14 +50,15 @@ f=\operatorname{ev}_{X,Y}\circ(\widehat f\otimes1_X).
 =v\circ\operatorname{ev}_{X,Y}\circ(1_{[X,Y]}\otimes u).
 \end{equation}
 \end{proposition}
+\symidx{\(\operatorname{ev}_{X,Y}\)：内部 Hom 的求值映射}
 \begin{proof}
-记伴随双射为 \(\Phi\)。因 \(\Phi(\operatorname{ev}_{X,Y})=1_{[X,Y]}\)，关于 \(A\) 的自然性给出
+表示对象的恒等态射对应于其泛元素；这里泛元素属于集合 \(\operatorname{Hom}_{\mathcal C}([X,Y]\otimes X,Y)\)，正是求值映射。作为 \(-\otimes X\dashv[X,-]\) 的伴随，它也是余单位在 \(Y\) 处的分量。记伴随双射为 \(\Phi\)。因 \(\Phi(\operatorname{ev}_{X,Y})=1_{[X,Y]}\)，关于 \(A\) 的自然性给出
 \[
 \Phi\bigl(\operatorname{ev}_{X,Y}\circ(a\otimes1_X)\bigr)=a
 \]
 对每个 \(a:A\to[X,Y]\) 成立。因此取 \(a=\Phi(f)\) 得到所需等式，而双射性给出唯一性。
 
-对 \(u,v\)，将\eqref{b4:eq:closed-hom-functor}右边作为从 \([X,Y]\otimes X'\) 到 \(Y'\) 的态射，取其转置，就得到 \([u,v]\)。若 \(u,v\) 都是恒等态射，求值等式由 \(1_{[X,Y]}\) 满足，故 \([1_X,1_Y]=1_{[X,Y]}\)。再给 \(u':X''\to X'\)、\(v':Y'\to Y''\)，连续应用两次求值等式，得到
+对 \(u,v\)，将\eqref{b4:eq:closed-hom-functor}右边作为从 \([X,Y]\otimes X'\) 到 \(Y'\) 的态射，取其转置，就得到 \([u,v]\)。第一变量沿 \(u:X'\to X\) 反向变化，第二变量沿 \(v:Y\to Y'\) 同向变化。在集合与交换环上的模中，这就是 \(h\mapsto v\circ h\circ u\)：前复合改变输入，后复合改变输出。若 \(u,v\) 都是恒等态射，求值等式由 \(1_{[X,Y]}\) 满足，故 \([1_X,1_Y]=1_{[X,Y]}\)。再给 \(u':X''\to X'\)、\(v':Y'\to Y''\)，连续应用两次求值等式，得到
 \[
 \begin{aligned}
 \operatorname{ev}_{X'',Y''}\circ\bigl(([u',v']\circ[u,v])\otimes1_{X''}\bigr)
@@ -67,23 +74,26 @@ f=\operatorname{ev}_{X,Y}\circ(\widehat f\otimes1_X).
 \subsection{集合的指数对象与模的内部 Hom}
 \label{b4:subsec:closed-sets-modules}
 
-有限积本身具有典范的结合与单位约束。结合约束保持三个投影，单位约束删除终对象的分量；五边形中的两条路径保持同样四个投影，故由积的泛性质相等，三角形也如此。因此有有限积的范畴自然带有以积为张量的幺半结构。
+先固定一套二元积及终对象的选择。对 \(f:X\to X'\)、\(g:Y\to Y'\)，积的泛性质唯一确定 \(f\times g:X\times Y\to X'\times Y'\)，其两个投影分别为 \(f p_X\)、\(g p_Y\)；比较投影即得恒等与复合的保持。结合约束保持三个投影，单位约束删除终对象的分量，交换约束交换两个投影。五边形中的两条路径保持同样四个投影，故由积的泛性质相等；三角形、交换约束的六边形及两次交换为恒等，也都由投影检验。因此，这些已选的积给出以积为张量的对称幺半结构；不同选择之间，由泛性质得到唯一的保持投影的同构，并与这些约束相容。
 
 \begin{definition}\label{b4:def:cartesian-closed}
 设 \(\mathcal C\) 为局部小范畴，具有有限积。若以积 \(\times\) 及终对象为单位的幺半结构是闭的，即每个 \(-\times X\) 有右伴随，则称 \(\mathcal C\) 为\term[dikaer-bi-fanchou]{笛卡尔闭范畴}[cartesian closed category]。其内部 Hom 通常记为 \(Y^X\)，称为指数对象。
 \end{definition}
+\symidx{\(Y^X\)：笛卡尔闭范畴中的指数对象}
 
 \begin{example}\label{b4:exm:sets-cartesian-closed}
 集合范畴中，令 \(Y^X\) 为全部函数 \(X\to Y\) 的集合，求值为
 \[
 Y^X\times X\longrightarrow Y,\qquad(h,x)\longmapsto h(x).
 \]
-给定函数 \(f:A\times X\to Y\)，令 \(\widehat f(a)\) 为函数 \(x\mapsto f(a,x)\)。它满足求值等式；反过来，该等式强制 \(\widehat f(a)(x)=f(a,x)\)，所以唯一。对参数映射 \(a':A'\to A\)、\(u:X'\to X\)、\(v:Y\to Y'\)，对应公式变为
+给定函数 \(f:A\times X\to Y\)，令 \(\widehat f(a)\) 为函数 \(x\mapsto f(a,x)\)。它满足求值等式；反过来，该等式强制 \(\widehat f(a)(x)=f(a,x)\)，所以唯一。对参数映射 \(a':A'\to A\)、\(u:X'\to X\)、\(v:Y\to Y'\)，改变参数后的转置把 \(a_0\in A'\) 送到
 \[
-a\longmapsto\bigl(x'\longmapsto v(f(a'(a),u(x')))\bigr),
+a_0\longmapsto\bigl(x'\longmapsto v(f(a'(a_0),u(x')))\bigr).
 \]
 无论先改变参数再柯里化，还是先柯里化再前后复合，都得到这同一个函数。因此伴随自然，集合范畴笛卡尔闭。
 \end{example}
+
+\Cref{b4:prop:hom-tensor-adjunction}已经给出模范畴之间的 Hom--张量伴随。对交换含幺环 \(R\)，取该命题中的 \(S=R\)、\(P=X\)，\(\operatorname{Hom}_R(X,Y)\) 的值仍是同一个模范畴中的对象，张量交换同构又将 \(X\otimes_R-\) 转换为 \(-\otimes_RX\)。于是这个伴随给出闭幺半结构；下面把 Hom 对象的标量作用与求值具体写出。
 
 \begin{theorem}[模的 Hom--张量闭结构]\label{b4:thm:closed-module-hom-tensor}
 设 \(R\) 为交换含幺环，\(X,Y\) 为左 \(R\) 模。赋予 \(\operatorname{Hom}_R(X,Y)\) 点态的加法与数乘，则它是 \(R\) 模，并且与求值
@@ -101,25 +111,34 @@ f\longmapsto\bigl(a\longmapsto(x\longmapsto f(a\otimes x))\bigr).
 \end{equation}
 \end{theorem}
 \begin{proof}
-若 \(h\) 为 \(R\) 线性映射，则 \((rh)(sx)=rsh(x)=s(rh)(x)\)，这里用了 \(R\) 交换，故点态数乘仍给出线性映射。求值对两个变量双线性，并满足
+要使同态集合成为内部对象，点态数乘须仍给出同态。若 \(h\) 为 \(R\) 线性映射，则 \((rh)(sx)=rsh(x)=s(rh)(x)\)，这里用了 \(R\) 交换；加法及其余模公理逐点成立，故 \(\operatorname{Hom}_R(X,Y)\) 成为 \(R\) 模。
+
+在这个 Hom 模上，求值对两个变量双线性，并满足
 \((rh)(x)=r h(x)=h(rx)\)，所以经张量积得到 \(R\) 线性求值态射。
 
-给定 \(f:A\otimes_RX\to Y\)，对固定 \(a\)，映射 \(x\mapsto f(a\otimes x)\) 线性；而 \(a\mapsto\widehat f(a)\) 也线性，因为
+给定 \(f:A\otimes_RX\to Y\)，柯里化还须核验输入 \(x\) 与参数 \(a\) 的线性。对固定 \(a\)，映射 \(\widehat f(a):x\mapsto f(a\otimes x)\) 加性，且
+\[
+\widehat f(a)(rx)=f(a\otimes rx)=r f(a\otimes x).
+\]
+因此 \(\widehat f(a)\) 属于 Hom 模。再把 \(a\) 当作变量，所得映射仍加性，并满足
 \[
 \widehat f(ra)(x)=f(ra\otimes x)=r f(a\otimes x)=\bigl(r\widehat f(a)\bigr)(x).
 \]
 反过来，给定线性 \(g:A\to\operatorname{Hom}_R(X,Y)\)，映射 \((a,x)\mapsto g(a)(x)\) 双线性，且
 \(g(ra)(x)=r g(a)(x)=g(a)(rx)\)。它保持平衡关系，故唯一诱导 \(f_g:A\otimes_RX\to Y\)。两种构造的复合在每个 \(a,x\) 上恢复原值；纯张量生成张量积，所以它们互逆。
 
-对 \(a':A'\to A\)、\(u:X'\to X\)、\(v:Y\to Y'\)，同样直接得到
+对 \(a':A'\to A\)、\(u:X'\to X\)、\(v:Y\to Y'\)，在 \(a_0\in A'\)、\(x'\in X'\) 处直接得到
 \[
-\widehat{\,v\circ f\circ(a'\otimes u)\,}(a)(x')
-=v\bigl(\widehat f(a'(a))(u(x'))\bigr).
+\widehat{\,v\circ f\circ(a'\otimes u)\,}(a_0)(x')
+=v\bigl(\widehat f(a'(a_0))(u(x'))\bigr).
 \]
 这验证三变量的相容性，特别给出伴随所需的两变量自然性。
 \end{proof}
 
-该定理不要求 \(X\) 有限生成、投射或 \(Y\) 内射。存在内部 Hom 与 Hom 函子正合是不同的问题。它也不把模范畴变成笛卡尔闭范畴：这里参与伴随的是 \(\otimes_R\)，而模的有限积是直接和。一般非交换环上的 Hom--张量伴随仍可在适当的双模之间成立，但不能因此说全部左模组成其自身的张量闭范畴。
+对交换含幺环 \(R\)，内部 Hom \(\operatorname{Hom}_R(P,Y)\) 对任意模 \(P,Y\) 都存在，不要求 \(P\) 有限生成或投射，也不要求 \(Y\) 内射。若进一步要求函子 \(\operatorname{Hom}_R(P,-)\) 正合，则第四章所述判据要求 \(P\) 投射。若希望把内部 Hom 自然地写成 \(Y\otimes_RP^\vee\)，其中 \(P^\vee=\operatorname{Hom}_R(P,R)\)，有限生成投射性便提供这样的张量表达；\cref{b4:thm:dualizable-projective-modules,b4:prop:monoidal-dual-adjunction}将在下一节解释它与可对偶性的联系。内部 Hom 的存在、Hom 函子的正合性及这个张量表达，各自承担不同的要求。
+
+\ProseParagraphBreak
+此处参与伴随的是 \(\otimes_R\)。笛卡尔闭性则要求模的有限积参与伴随，而有限积由有限直和给出，因而是另一项要求。一般非交换环上的 Hom--张量伴随仍可在适当的双模之间成立，但不能因此说全部左模组成其自身的张量闭范畴。
 
 \subsection{态射集合与内部对象}
 \label{b4:subsec:closed-external-internal}
@@ -135,13 +154,21 @@ f\longmapsto\bigl(a\longmapsto(x\longmapsto f(a\otimes x))\bigr).
 \]
 \end{proposition}
 \begin{proof}
-第一式由伴随取 \(A=I\)，再用 \(\lambda_X:I\otimes X\cong X\) 得到。第二式对任意 \(A\) 给出自然双射
+第一式由伴随取 \(A=I\)，再用 \(\lambda_X:I\otimes X\cong X\) 得到：\(f:X\to Y\) 对应 \(f\lambda_X:I\otimes X\to Y\) 的转置。第二式对任意 \(A\) 给出自然双射
 \[
 \operatorname{Hom}_{\mathcal C}(A,[I,Y])
 \cong\operatorname{Hom}_{\mathcal C}(A\otimes I,Y)
 \cong\operatorname{Hom}_{\mathcal C}(A,Y).
 \]
-最后一个双射由 \(\rho_A\) 给出且关于 \(A,Y\) 自然。可表对象的唯一性因而给出 \([I,Y]\cong Y\)，并由目标变量的自然性得到该同构关于 \(Y\) 自然。
+最后一个双射由 \(\rho_A\) 给出且关于 \(A,Y\) 自然。可表对象的唯一性因而给出 \([I,Y]\cong Y\)。这个同构及其逆可以具体写为
+\[
+\begin{gathered}
+p_Y=\operatorname{ev}_{I,Y}\circ\rho_{[I,Y]}^{-1}:[I,Y]\longrightarrow Y,\\
+q_Y=\widehat{\rho_Y}:Y\longrightarrow[I,Y].
+\end{gathered}
+\]
+确实，上面的双射将 \(g:A\to[I,Y]\) 送到
+\(\operatorname{ev}_{I,Y}(g\otimes1_I)\rho_A^{-1}=p_Yg\)，等号来自右单位约束的自然性，故同构正是 \(p_Y\)。而 \(q_Y\) 的逆转置为 \(\rho_Y\)，继续复合 \(\rho_Y^{-1}\) 得到 \(1_Y\)，所以 \(q_Y=p_Y^{-1}\)。目标变量的自然性又使这一对同构关于 \(Y\) 自然。
 \end{proof}
 
 在集合中，从单点集到 \(Y^X\) 的映射就是选择一个函数。在模中，从 \(R\) 到 \(\operatorname{Hom}_R(X,Y)\) 的同态由 \(1\) 的像决定，仍对应一个 \(X\to Y\) 的模同态。单位对象使这个解释成立，而不是把内部 Hom 与态射集合当成同一种对象。

@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.1 局部环与幂级数环的比较
-% 纲要位置：工作记录/计划纲要.md:2900
+% 纲要位置：工作记录/计划纲要.md:2946
 
 \section{局部环与幂级数环的比较}
 \label{b3:sec:D01}
@@ -8,14 +8,17 @@
 相同的有限阶展开可以来自不同的环，允许的无限过程也随之不同。比较局部方程时，应先确定所用环及其间的同态，再问形式解、代数解或收敛解能否互相转换。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 代数局部环、Hensel 局部环、完备局部环与复收敛幂级数环
-% * Hensel 化和完备化的泛性质不同；Hensel 性不意味着完备
-% * 代数幂级数与 Hensel 化的识别；解析环基本性质及代数级数收敛的证明在D.3除法之后给出
-% * 用实际环同态而不是只凭“函数芽”的直觉说明包含与比较关系
+%
+% * Hensel 泛性质与连续完成泛性质；相同有限阶商不意味着环相同
+% * 复有理函数、代数、收敛及形式级数的元素条件对照；代数级数与 Hensel 化识别的深层方向
+% * 收敛和形式商的比较条件；实际例子区分代数提升与全部形式极限
 % #### D.1.1 代数、Hensel、完备与解析局部环
 % #### D.1.2 Hensel 化与完备化的泛性质
 % #### D.1.3 代数、形式与收敛幂级数
 % #### D.1.4 局部对象间的环同态与比较关系
+%
+% ---
+%
 
 
 \subsection{代数、Hensel、完备与解析局部环}
@@ -31,10 +34,11 @@ A=(k[x_1,\ldots,x_n]/I)_{\mathfrak p}
 \mathbb C\{x_1,\ldots,x_n\}
 =\left\{\sum_\alpha c_\alpha x^\alpha:
 c_\alpha\in\mathbb C,\quad
-\text{存在 }r>0\text{ 使 }\sum_\alpha|c_\alpha|r^{|\alpha|}<\infty\right\}.
+\text{存在}\;r>0\;\text{使}\;\sum_\alpha|c_\alpha|r^{|\alpha|}<\infty\right\}.
 \]
 称它为\term[convergentpowerseriesring]{收敛幂级数环}[convergent power series ring]；它的有限生成真理想的商称为这里所讨论的解析局部环。
 \end{definition}
+\symidx{\(\mathbb C\{x_1,\ldots,x_n\}\)：收敛幂级数环}
 
 收敛级数的和、积仍在一个较小的多圆盘上绝对收敛，因此上述集合是环。常数项非零的级数在原点附近不为零，其倒数仍有收敛展开；常数项为零者不能可逆。故 \(\mathbb C\{x\}\) 是局部环，极大理想为 \((x_1,\ldots,x_n)\)，剩余域为 \(\mathbb C\)。它描述的是原点处的全纯函数芽，而不是在一个预先固定的大区域上都收敛的函数。
 
@@ -63,17 +67,26 @@ c_\alpha\in\mathbb C,\quad
 \(A/\mathfrak m^r\to B/\mathfrak n^r\)。取逆极限，并利用 \(B\simeq\varprojlim B/\mathfrak n^r\)，得到延拓。其连续性由相同的商映射可知。若有两个连续延拓，对任意 \(\widehat a\in\widehat A\) 取来自 \(A\) 的相容近似；两个像是同一列像的极限，分离性使它们相等。
 \end{proof}
 
-这个命题中的“连续”与“完备分离”是结论的一部分条件。Hensel 化的泛性质则针对 Hensel 局部目标，不需要目标完备。对 Noether 局部环，二者给出相容映射
+局部性使原同态 \(u\) 对两边的极大理想进拓扑连续；延拓的唯一性则是在连续同态中断言的。完备化的泛性质因而属于带有进拓扑的环，而 Hensel 化的泛性质针对 Hensel 局部环及局部同态，不要求目标完备。二者分别补足相容有限阶数据的极限和单根、互素因式的代数提升。
+
+\ProseParagraphBreak
+设 \((A,\mathfrak m)\) 为 Noether 局部环。由于 \(\widehat A\) 是 Hensel 局部环，Hensel 化的泛性质给出相容的自然局部同态
 \[
 A\longrightarrow A^{\mathrm h}\longrightarrow\widehat A,
 \qquad
 \widehat{A^{\mathrm h}}\simeq\widehat A;
 \]
-后一个同构来自各阶商的相同，见\cref{b3:thm:henselization-existence}。
+对每个 \(r\ge1\)，相应的有限阶商满足
+\[
+A^{\mathrm h}/\mathfrak m^rA^{\mathrm h}
+\simeq A/\mathfrak m^r
+\simeq\widehat A/\mathfrak m^r\widehat A.
+\]
+Hensel 化的这项性质见\cref{b3:thm:henselization-existence}；取逆极限便得到上面的完备化同构。它们保留了所有相同的有限阶数据，却不保证 \(A^{\mathrm h}=\widehat A\)：一个环中的每阶截断都能在另一个环中实现，不等于同一串截断的极限已属于那个环。
 
 \begin{example}\label{b3:exm:hensel-finite-jets}
 取 \(A=\mathbb Q[x]_{(x)}\)。方程 \(Y^2-Y-x=0\) 的剩余单根 \(0\) 在 \(A^{\mathrm h}\) 中给出一个根
-\(-x+x^2-2x^3+5x^4-\cdots\)。它不属于 \(\mathbb Q(x)\)，因为否则判别式 \(1+4x\) 是有理函数的平方，而它在 \(x=-1/4\) 处的零点阶数为一。另一方面，\(A^{\mathrm h}\) 的元素在 \(\mathbb Q(x)\) 上代数，故这个环可数；\(\mathbb Q[\![x]\!]\) 不可数。因此 Hensel 化仍严格小于完备化。相同的有限阶商并没有确定这些环中实际存在多少无限级数。
+\(-x+x^2-2x^3+5x^4-\cdots\)。它不属于 \(\mathbb Q(x)\)，因为否则判别式 \(1+4x\) 是有理函数的平方，而它在 \(x=-1/4\) 处的零点阶数为一。另一方面，\(A^{\mathrm h}\) 的元素在 \(\mathbb Q(x)\) 上代数，理由见下文\cref{b3:prop:algebraic-series-henselization}的证明概要。因此这个环可数，而 \(\mathbb Q[\![x]\!]\) 不可数，Hensel 化仍严格小于完备化。相同的有限阶商并没有确定这些环中实际存在多少无限级数。
 \end{example}
 
 \subsection{代数、形式与收敛幂级数}
@@ -82,6 +95,7 @@ A\longrightarrow A^{\mathrm h}\longrightarrow\widehat A,
 \begin{definition}\label{b3:def:algebraic-power-series}
 设 \(k\) 为域，\(n\ge1\)。若 \(f\in k[\![x_1,\ldots,x_n]\!]\) 在有理函数域 \(k(x_1,\ldots,x_n)\) 上代数，则称 \(f\) 为\term[algebraicpowerseries]{代数幂级数}[algebraic power series]。所有这样的级数组成的环记为 \(k\langle x_1,\ldots,x_n\rangle\)。
 \end{definition}
+\symidx{\(k\langle x_1,\ldots,x_n\rangle\)：代数幂级数环}
 
 这确实是环：有限多个代数元素生成有限域扩张，它们的和、积仍代数。定义要求一个多项式关系，而不是要求系数只取代数数。例如 \(c+x\)，\(c\in\mathbb C\)，在 \(\mathbb C(x)\) 上当然代数，不论 \(c\) 是否在 \(\mathbb Q\) 上代数。
 
@@ -96,9 +110,9 @@ A^{\mathrm h}\longrightarrow\widehat A=k[\![x_1,\ldots,x_n]\!]
 下，\(A^{\mathrm h}\) 的像恰为 \(k\langle x_1,\ldots,x_n\rangle\)。因此这两个环在 \(k[\![x_1,\ldots,x_n]\!]\) 中自然识别。
 \end{proposition}
 \begin{proofsketch}
-由\cref{b3:thm:henselization-existence}，\(A^{\mathrm h}\) 是 Noether 局部环，且 \(\widehat{A^{\mathrm h}}\simeq\widehat A\)；Krull 交定理给出所列单射。Hensel 化的有限元表示定理说明，任意 \(a\in A^{\mathrm h}\) 都属于某个 \(A[b]\) 的局部化，其中 \(b\) 满足 \(A[T]\) 中的首一多项式，见永田雅宜\cite[(43.9), p. 182]{Nagata1975LocalRings}。故 \(a\) 在 \(k(x_1,\ldots,x_n)\) 上代数，所列像包含于代数幂级数环。
+先说明较直接的包含。由\cref{b3:thm:henselization-existence}，\(A^{\mathrm h}\) 是 Noether 局部环，且 \(\widehat{A^{\mathrm h}}\simeq\widehat A\)；Krull 交定理给出所列单射。Hensel 化由平展局部邻域的滤过余极限构成，每个元素都来自一个代数邻域。更具体地，其有限元表示定理说明，任意 \(a\in A^{\mathrm h}\) 都属于某个 \(A[b]\) 的局部化，其中 \(b\) 满足 \(A[T]\) 中的首一多项式，见永田雅宜\cite[(43.9), p. 182]{Nagata1975LocalRings}。因此 \(a\) 在 \(k(x_1,\ldots,x_n)\) 上代数，所列像包含于代数幂级数环。
 
-反向使用如下整闭包与完备化结论：域上有限型正规局部整环的 Hensel 化，在其完备化中代数闭；也就是说，完备化中每个在该 Hensel 化的分式域上代数的元素，都已属于 Hensel 化。所需有限整闭包条件与完备化的正规性，见\cite[(36.5), pp. 132--133; (37.5), pp. 138--139]{Nagata1975LocalRings}，代数闭结论为\cite[(44.3), p. 189]{Nagata1975LocalRings}；这里省略该解析正规性定理的技术证明。\(A\) 是多项式环在原点处的局部化，因而满足这些条件。每个 \(f\in k\langle x_1,\ldots,x_n\rangle\) 在 \(k(x_1,\ldots,x_n)\) 上代数，也就在 \(\operatorname{Frac}(A^{\mathrm h})\) 上代数；应用上述结论得 \(f\in A^{\mathrm h}\)。
+反向是代数幂级数理论的深层结论，不能仅凭单根提升推出。这里调用：域上有限型正规局部整环的 Hensel 化，在其完备化中代数闭；即完备化中每个在该 Hensel 化的分式域上代数的元素，都已属于 Hensel 化。所需有限整闭包条件与完备化的正规性见\cite[(36.5), pp. 132--133; (37.5), pp. 138--139]{Nagata1975LocalRings}，代数闭结论见\cite[(44.3), p. 189]{Nagata1975LocalRings}。这部分依赖解析正规性与有限整闭包的技术证明，本附录不展开。当前 \(A\) 是域上多项式环在原点处的局部化，尤其是正规局部整环，满足这些条件。每个 \(f\in k\langle x_1,\ldots,x_n\rangle\) 在 \(k(x_1,\ldots,x_n)\) 上代数，也就在 \(\operatorname{Frac}(A^{\mathrm h})\) 上代数；应用所引结论即得 \(f\in A^{\mathrm h}\)。
 \end{proofsketch}
 
 \begin{example}\label{b3:exm:three-power-series}
@@ -133,7 +147,20 @@ u=1+\frac12x-\frac18x^2+\cdots.
 \longrightarrow\mathbb C\{x\}
 \longrightarrow\mathbb C[\![x]\!].
 \]
-第一箭头把分母常数项非零的有理函数展开成 Taylor 级数，第二箭头使用\cref{b3:prop:algebraic-series-converge}，第三箭头忘掉收敛条件。上一小节的三个例子依次说明这些包含在一变量情形均可严格。
+第一箭头把分母常数项非零的有理函数展开成 Taylor 级数，第二箭头使用\cref{b3:prop:algebraic-series-converge}，第三箭头忘掉收敛条件。一变量时，四个环的元素条件及代表如下；后三行各给出一个属于该环而不属于前一行环的元素，理由已在\cref{b3:exm:three-power-series}中说明。
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.27\linewidth}@{}}
+\toprule
+环 & 元素条件 & 代表元素 \\
+\midrule
+\(\mathbb C[x]_{(x)}\) & 有理函数，分母在原点不为零 & \((1-x)^{-1}\) \\
+\(\mathbb C\langle x\rangle\) & 形式级数在 \(\mathbb C(x)\) 上代数 & \(\sqrt{1+x}\)，常数项为 \(1\) \\
+\(\mathbb C\{x\}\) & 级数在某个原点邻域内收敛 & \(e^x=\sum_{r\ge0}x^r/r!\) \\
+\(\mathbb C[\![x]\!]\) & 系数任意，只按次数作形式运算 & \(\sum_{r\ge0}r!x^r\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \ProseParagraphBreak
 \cref{b3:prop:algebraic-series-henselization}识别了上图中的第二个环，同一列同态也可写为

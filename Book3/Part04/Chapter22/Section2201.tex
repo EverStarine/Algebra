@@ -5,13 +5,17 @@
 \section{局部上同调}
 \label{b3:sec:2201}
 
-指定闭支集附近的截面可能在局部化后消失，也可能在不同局部化之间不能相容。支集挠子函子的导出把这些现象按次数区分，有限 Čech 复形则给出可直接计算的表示。
+模中的元素可能在局部化后消失，几份局部化中的元素也可能无法同时由原模中的元素给出。支集挠子函子的导出把这些现象按次数区分，有限 Čech 复形则给出可直接计算的表示。
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
+%
 % * 支集挠子函子（即本章的 $I$-挠子函子 $\Gamma_I$，英文 torsion functor；不是 torsor）
-% * Čech 复形和导出函子的比较
-% * 深度的首次非零次数与维数以上的消失
+% * 内射消解负责导出定义，有限 Čech 复形负责计算；双复形两种计算、二元算例与平坦基变换
+% * 逐元素幂挠与统一幂零化的区别；正则元商的深度归纳与参数个数给出的高次消失
+%
+% ---
+%
 
 \subsection{支集挠子函子}
 \label{b3:subsec:2201:01}
@@ -21,16 +25,19 @@
 \begin{definition}\label{b3:def:support-torsion-functor}
 设 \(R\) 为交换 Noether 环，\(I\subseteq R\) 为理想，\(M\) 为 \(R\) 模。令
 \[
-\Gamma_I(M)\coloneqq\{m\in M:\text{存在 }n\ge1\text{ 使 }I^nm=0\}.
+\Gamma_I(M)\coloneqq\{m\in M:\text{存在}\;n\ge1\;\text{使}\;I^nm=0\}.
 \]
 把 \(M\) 送到这个子模、把模同态送到其限制，得到的函子称为\term[zhijinaozihanzi]{支集挠子函子}[torsion functor]，也称 \(I\)-挠子函子。
 \end{definition}
 \symidx{\(\Gamma_I(M)\)：支集挠子模}
 
-这里的“支集”有直接含义：\(m\in\Gamma_I(M)\) 等价于循环模 \(Rm\) 的支集包含于 \(V(I)\)。事实上，循环模的支集为 \(V(\operatorname{Ann}_R(m))\)，包含关系等价于 \(I\subseteq\sqrt{\operatorname{Ann}_R(m)}\)；有限组生成元各有一个幂落入零化子，取足够大的总次数就得到 \(I^nm=0\)。指数可以随 \(m\) 改变，不要求整个模由同一个幂零化。
+这里的“支集”有直接含义：\(m\in\Gamma_I(M)\) 等价于循环模 \(Rm\) 的支集包含于 \(V(I)\)。事实上，循环模的支集为 \(V(\operatorname{Ann}_R(m))\)，包含关系等价于 \(I\subseteq\sqrt{\operatorname{Ann}_R(m)}\)；有限组生成元各有一个幂落入零化子，取足够大的总次数就得到 \(I^nm=0\)。定义中的量词是“对每个元素存在一个指数”，这个指数可以随元素改变；即使 \(\Gamma_I(M)=M\)，也未必存在一个统一的 \(N\) 使 \(I^NM=0\)。
 
 \ProseParagraphBreak
-若 \(0\to M'\to M\to M''\) 正合，则 \(0\to\Gamma_I(M')\to\Gamma_I(M)\to\Gamma_I(M'')\) 正合：前两处只是在原模中检验相同的零化条件。因此它是左正合函子；但右端未必满射。例如在 \(R=k[x]\)、\(I=(x)\) 下，满射 \(R\to R/(x)\) 的两端挠子模分别为零与 \(k\)。为记录这一失败，需要把原函子延伸到正次数。
+若 \(0\to M'\to M\to M''\) 正合，则 \(0\to\Gamma_I(M')\to\Gamma_I(M)\to\Gamma_I(M'')\) 正合：前两处只是在原模中检验相同的零化条件。因此它是左正合函子；但右端未必满射。例如对域 \(k\)，在 \(R=k[x]\)、\(I=(x)\) 下，满射 \(R\to R/(x)\) 的两端挠子模分别为零与 \(k\)。为记录这一失败，需要把原函子延伸到正次数。
+
+\ProseParagraphBreak
+内射消解使这一延伸成为 \(\Gamma_I\) 的右导出函子，并由比较映射和短正合列的消解得到函子性与长正合列。随后要证明的 Čech 比较定理承担另一项任务：把这个由内射消解定义的对象写成有限的局部化复形，供具体计算使用。
 
 \begin{definition}\label{b3:def:local-cohomology}
 设 \(R\) 为交换 Noether 环，\(I\subseteq R\) 为理想，\(M\) 为 \(R\) 模。选一个内射消解
@@ -46,7 +53,10 @@ H_I^i(M)\coloneqq H^i(\Gamma_I(E^\bullet))\quad(i\ge0),
 \end{definition}
 \symidx{\(H_I^i(M)\)：局部上同调模}
 
-第二卷第7.2节的足够多内射模定理已保证这种消解存在：先嵌入 \(E^0\)，再把余核嵌入 \(E^1\)，逐次进行。映射 \(M\to N\) 向两份内射消解的延拓也可逐次构造：每次先在前一微分的像上规定映射，再用目标的内射性延拓。两种延拓之差按同样办法逐次写成 \(\mathrm{d}h+h\mathrm{d}\)，所以在上同调上相同。这证明上述模与所选消解无关，并确定其函子性。
+第二卷第7.2节的足够多内射模定理已保证这种消解存在：先嵌入 \(E^0\)，再把余核嵌入 \(E^1\)，逐次进行。消解之间的比较也由目标项的内射性构造。给定 \(M\to N\)，先将它延拓到次数零；在下一次数，先在前一微分的像上规定映射，再延拓到整个项。链映射关系保证这个规定与核相容，因而可逐次完成。
+
+\ProseParagraphBreak
+若两条比较链映射提升同一个 \(M\to N\)，它们的差在次数零的 \(M\) 上为零，故先经过 \(E^0/M\cong\operatorname{im}(E^0\to E^1)\) 分解，再利用目标次数零项的内射性将该映射延拓到 \(E^1\)，得到第一项同伦。逐次减去已构造的同伦项，在下一次数重复，得到差为 \(\mathrm{d}h+h\mathrm{d}\)。加性函子 \(\Gamma_I\) 将这个同伦限制到挠子子模，所以两条链映射诱导相同的上同调映射。将此用于恒等映射的两次延拓，便得到不同消解之间互逆的同构；用于一般模同态，则得到所述函子性。
 
 \begin{proposition}\label{b3:prop:local-cohomology-basic}
 设 \(R\) 为交换 Noether 环，\(I,J\subseteq R\) 为理想，\(M\) 为 \(R\) 模。则 \(H_I^0(M)=\Gamma_I(M)\)。短正合的 \(R\) 模列给出各阶 \(H_I^i\) 的长正合列；若 \(\sqrt I=\sqrt J\)，则 \(H_I^i(M)\cong H_J^i(M)\) 自然成立。
@@ -70,13 +80,14 @@ C^\bullet(f_1,\ldots,f_r;M)
 \]
 张量微分在越过次数 \(q\) 的因子时带符号 \((-1)^q\)。这个复形称为所给元素组关于 \(M\) 的\term[Cechfuxing]{Čech 复形}[Čech complex]。
 \end{definition}
+\symidx{\(C^\bullet(f_1,\ldots,f_r;M)\)：Čech 复形}
 
 具体地，第 \(p\) 项为所有 \(M_{f_{i_1}\cdots f_{i_p}}\) 的有限直和；次数零为 \(M\)。微分是带交错符号的局部化映射。两元情形为
 \[
 0\longrightarrow M\xrightarrow{m\mapsto(m,m)}M_f\oplus M_g
 \xrightarrow{(a,b)\mapsto b-a}M_{fg}\longrightarrow0.
 \]
-若以空元素组生成零理想，则复形只有次数零的 \(M\)。有限复形并不意味着其上同调有限生成：\(k[x,x^{-1}]/k[x]\) 已经是一个反例。
+这里零次上同调是那些在两份局部化中都消失的原元素。一次上同调由在 \(M_{fg}\) 中相等的元素对组成，再商去来自 \(M\) 的对角像，因而测量相容的局部数据能否由同一个原元素给出。二次上同调则是 \(M_{fg}/(\operatorname{im}M_f+\operatorname{im}M_g)\)，测量交叠处的元素能否写成两份局部数据之差。若以空元素组生成零理想，则复形只有次数零的 \(M\)。有限复形并不意味着其上同调有限生成：\(k[x,x^{-1}]/k[x]\) 已经是一个反例。
 
 \ProseParagraphBreak
 同一组局部化还会在\secref{b3:sec:2405}的开覆盖计算中出现，但起始次数不同。对 \(I=(f,g)\)，两种排列为
@@ -87,7 +98,7 @@ C^\bullet(f_1,\ldots,f_r;M)
 \text{开覆盖复形}&M_f\oplus M_g&\longrightarrow&M_{fg}&\longrightarrow&0
 \end{array}
 \]
-各行的箭头都是上面的局部化映射。第二行对应 \(\operatorname{Spec}R\setminus V(I)=D(f)\cup D(g)\)：删去第一行的 \(M\)，再将其余项左移一位。因此两行的高次上同调相差一次；零次与一次还要比较 \(M\) 到开集上截面的限制映射。\secref{b3:sec:2405}将把这一步写成正合列。
+各行的箭头都是上面的局部化映射。第二行删去第一行的 \(M\)，再将其余项左移一位，因此正次数的上同调与第一行相差一次。这里的两行都只是局部化模构成的复形；第二行作为 \(D(f)\cup D(g)\) 开覆盖模型的解释，以及它的零次项与一般开集截面的关系，将在\secref{b3:sec:2405}定义相关几何对象后写成正合列。
 
 \begin{lemma}\label{b3:lem:injective-cech-acyclic}
 设 \(R\) 为交换 Noether 环，\(I\subseteq R\) 为理想，\(E\) 为内射 \(R\) 模。则 \(\Gamma_I(E)\) 仍内射。对任意 \(f\in R\)，映射 \(E\to E_f\) 满射。因此，任意生成组 \(I=(f_1,\ldots,f_r)\) 满足
@@ -97,8 +108,10 @@ H^i(C^\bullet(f_1,\ldots,f_r;E))=0\quad(i>0).
 \]
 \end{lemma}
 \begin{proof}
+先证明挠子部分仍然内射，再证明局部化映射满射。这使一元 Čech 复形在内射模上只留下零次上同调；由于挠子部分仍内射，多元情形便能逐个加入其余平坦的局部化因子。
+
 用第二卷第7.2节已经证明的 Baer 判据检验第一项。给理想 \(\mathfrak a\subseteq R\) 和同态 \(u:\mathfrak a\to\Gamma_I(E)\)。因 \(\mathfrak a\) 有限生成，某个 \(I^n\) 零化全部像。对有限生成的子模 \(\mathfrak a\subseteq R\) 应用\cref{b3:thm:artin-rees}，给出足够大的 \(N\)，使
-\(\mathfrak a\cap I^N\subseteq I^n\mathfrak a\)。于是 \(u\) 在该交上为零，可延拓为
+\(\mathfrak a\cap I^N\subseteq I^n\mathfrak a\)。Artin–Rees 在这里把“像被 \(I^n\) 零化”转成一个统一的交理想条件，使延拓能够在 \(I^N\) 上取零。于是 \(u\) 在该交上为零，可延拓为
 \(\mathfrak a+I^N\to E\)、\(a+b\mapsto u(a)\)。再用 \(E\) 的内射性延拓到 \(R\)。设一的像为 \(e\)，则 \(I^Ne=0\)，所以这个延拓实际取值于 \(\Gamma_I(E)\)。
 
 为了证明满射性，给 \(e/f^n\in E_f\)。环的升链条件使 \(0:_Rf^k=0:_Rf^{k+n}\) 对充分大的 \(k\) 成立。因而
@@ -107,8 +120,12 @@ f^{n+k}R\longrightarrow E,\qquad f^{n+k}a\longmapsto f^kae
 \]
 良定义。延拓到 \(R\to E\)，设一的像为 \(z\)，则 \(f^{n+k}z=f^ke\)，即 \(z/1=e/f^n\)。当 \(f\) 幂零时局部化为零，也包含在此证明中。
 
-现在对 \(r\) 归纳。一元复形的上同调只有次数零的 \(\Gamma_{(f_1)}(E)\)。将它与余下的各个平坦局部化因子张量，原短正合列仍正合，故总复形的上同调等于
-\(C^\bullet(f_2,\ldots,f_r;\Gamma_{(f_1)}(E))\) 的上同调。这里的归约可以从最后一个非零列开始消去正合列中的圈，有限列数保证终止；所用微分符号正是张量符号。第一项已经证明中间模内射，归纳假设可用。最后，先被 \(f_1\) 的某幂零化、再被其余生成元各自的某幂零化，等价于被 \(I\) 的某幂零化，所以零次为 \(\Gamma_I(E)\)。
+现在对 \(r\) 归纳。已证的一元情形给出短正合列
+\[
+0\longrightarrow\Gamma_{(f_1)}(E)\longrightarrow E\longrightarrow E_{f_1}\longrightarrow0.
+\]
+因而次数零的 \(\Gamma_{(f_1)}(E)\) 嵌入两项复形 \([E\to E_{f_1}]\)，商复形正合。将这一复形短正合列与余下 Čech 复形的每个平坦项张量，得到逐项短正合列，且商双复形的各行仍正合，故总复形的上同调等于
+\(C^\bullet(f_2,\ldots,f_r;\Gamma_{(f_1)}(E))\) 的上同调。这里利用这些正合行逐次消去圈的分量，有限项数保证终止；所用微分符号正是张量符号。第一项已经证明中间模内射，归纳假设可用。最后，先被 \(f_1\) 的某幂零化、再被其余生成元各自的某幂零化，等价于被 \(I\) 的某幂零化，所以零次为 \(\Gamma_I(E)\)。
 \end{proof}
 
 \begin{theorem}\label{b3:thm:cech-local-cohomology}
@@ -117,14 +134,45 @@ f^{n+k}R\longrightarrow E,\qquad f^{n+k}a\longmapsto f^kae
 H_I^i(M)\cong H^i(C^\bullet(f_1,\ldots,f_r;M))\qquad(i\ge0).
 \]
 特别地，右侧不依赖所选生成组，每个 \(H_I^i(M)\) 都是 \(I\)-挠子模。
+若 \(R\to B\) 为交换 Noether 环之间的平坦同态，则对所有 \(i\ge0\) 有自然同构
+\[
+H_I^i(M)\otimes_RB\cong H_{IB}^i(M\otimes_RB).
+\]
+具体地，对域 \(k\)、\(R=k[x,y]\) 和 \(I=(x,y)\)，有
+\[
+H_I^0(R)=H_I^1(R)=0,\qquad
+H_I^2(R)=\bigoplus_{a,b\ge1}k x^{-a}y^{-b},
+\]
+且其余次数为零。这里单项式表示它在 \(R_{xy}/(R_x+R_y)\) 中的商类，所列直和给出 \(k\) 向量空间的基，\(R\) 作用由这个余核继承。
 \end{theorem}
 \begin{proof}
-选内射消解 \(M\to E^\bullet\)，考虑双复形
-\(C^p(f_1,\ldots,f_r;R)\otimes_R E^q\)，总次数为 \(p+q\)。先沿 \(q\) 方向取上同调：每个 Čech 项平坦，所以只剩零行的 \(C^\bullet(f_1,\ldots,f_r;M)\)。先沿 \(p\) 方向取上同调：上一个引理使每行只剩零列的 \(\Gamma_I(E^q)\)，从而得到定义中的复形。
+双复形要把两种计算放在同一个总复形中：先计算内射消解方向，得到 \(M\) 的 Čech 复形；先计算 Čech 方向，则只剩定义中的挠子复形。
 
-这两次计算不需要预设谱序列理论。一般地，第一象限双复形若沿一个方向的上同调集中在边上的一行或一列，就可用圈的有限次提升和扣除边界，识别总复形与该边复形的上同调：在给定总次数中，从最外侧非零分量开始，正合性使它成为相邻微分的像，扣去这个像后移向内侧；至多经过有限个分量。边界的识别用同一消去过程。因此以上两种计算给出同一个总上同调。所有映射来自局部化及消解比较，所以同构自然。
+选内射消解 \(M\to E^\bullet\)，令
+\[
+\mathcal B^{p,q}=C^p(f_1,\ldots,f_r;R)\otimes_R E^q,
+\qquad 0\le p\le r,\quad q\ge0.
+\]
+总次数为 \(p+q\)，在 \((p,q)\) 项上总微分为 \(\mathrm{d}_C+(-1)^p\mathrm{d}_E\)。先沿 \(q\) 方向取上同调：每个 Čech 项平坦，所以只剩 \(q=0\) 行的 \(C^\bullet(f_1,\ldots,f_r;M)\)。先沿 \(p\) 方向取上同调：上一个引理使每行只剩 \(p=0\) 列的 \(\Gamma_I(E^q)\)，从而得到定义中的复形。
+
+两条边缘增广分别给出复形单射
+\[
+C^\bullet(f;M)\longrightarrow\operatorname{Tot}(\mathcal B),\qquad
+\Gamma_I(E^\bullet)\longrightarrow\operatorname{Tot}(\mathcal B).
+\]
+对第一条取商后，每列底项换成 \(\mathcal B^{p,0}/(C^p(f;R)\otimes_RM)\)，其余项不变，各列正合。对第二条取商后，每行左端换成 \(\mathcal B^{0,q}/\Gamma_I(E^q)\)，其余项不变，各行正合。两个商总复形都正合，这可以直接作有限消元：列正合时，对次数 \(n\) 的圈选最小的非零横指标 \(p\)，则该分量 \(z_{p,q}\) 满足 \(\mathrm d_Ez_{p,q}=0\)。若 \(q=0\)，列底端正合已使它为零；否则选 \(w\) 使 \((-1)^p\mathrm d_Ew=z_{p,q}\)，减去总边界 \(\mathrm dw\) 便消去该分量，新增修正只在 \((p+1,q-1)\)。横指标最多到 \(n\)，所以有限步结束。行正合时交换两个指标作相同消元。由这两个正合商复形，边缘增广都诱导上同调同构，以上两种计算因而给出同一个总上同调。所有映射来自局部化及消解比较，所以同构自然。不同生成组的 Čech 复形可以有不同项数和微分；这里的生成组无关性指它们的上同调自然同构。
 
 把 Čech 复形局部化于任一 \(f_j\)，其中的两项因子变成恒等映射 \(R_{f_j}\to R_{f_j}\)，可缩，故所有上同调局部化后为零。对于上同调中的一个元素，每个 \(f_j\) 的某个幂都将它零化。有限组生成元的任意足够高次乘积必含这样的幂，故 \(I\) 的某幂零化该元素。
+
+对基变换公式，任意环同态 \(R\to B\) 都给出与局部化微分相容的逐项同构
+\[
+M_{f_{j_1}\cdots f_{j_p}}\otimes_RB
+\cong(M\otimes_RB)_{f_{j_1}\cdots f_{j_p}}.
+\]
+因此 \(C^\bullet(f;M)\otimes_RB\cong C^\bullet(f;M\otimes_RB)\)，右边在 \(B\) 上计算。平坦性在下一步使用：张量保持微分的核、像及其商，所以
+\(H^i(C^\bullet)\otimes_RB\cong H^i(C^\bullet\otimes_RB)\)。在两环上应用已证的 Čech 比较，就得到所述公式。
+
+最后计算二元例子。将 \(R_x,R_y\) 看作 \(R_{xy}=k[x,x^{-1},y,y^{-1}]\) 的子环。零次核为零；在 \(R_x\) 中 \(y\) 的指数非负，在 \(R_y\) 中 \(x\) 的指数非负，故 \(R_x\cap R_y=R\)。一次复形的核因而恰为 \(R\) 的对角像，\(H_I^1(R)=0\)。二次余核 \(R_{xy}/(R_x+R_y)\) 商去了至少有一个指数非负的全部 Laurent 单项式；剩下的 \(x^{-a}y^{-b}\)、\(a,b\ge1\)，线性独立并张成该余核，所以构成所列基。复形长度为二，其余次数消失。
 \end{proof}
 
 例如 \(R=k[x]\)、\(I=(x)\) 时，\(H_I^0(R)=0\)，而
@@ -160,6 +208,8 @@ H_I^1(R)=k[x,x^{-1}]/k[x]
 \]
 \end{theorem}
 \begin{proof}
+商去一个正则元素使深度降一。长正合列将利用低次局部上同调上的乘法单射，结合逐元素的幂零化，使低次消失；再把商模的首次非零项送入原模高一次的上同调。
+
 对 \(t=\operatorname{depth}_R M\) 归纳。若 \(t=0\)，\cref{b3:cor:depth-zero-socle}给出非零的 \(\operatorname{Soc}(M)\)，其每个元素被 \(\mathfrak m\) 零化，故 \(H_{\mathfrak m}^0(M)\ne0\)。
 
 若 \(t>0\)，取 \(M\) 正则元素 \(x\in\mathfrak m\)。商 \(\bar M=M/xM\) 非零，且由\cref{b3:cor:regular-quotient-depth}有深度 \(t-1\)。原短正合列的局部上同调长正合列中含有
@@ -179,14 +229,16 @@ H_{\mathfrak m}^i(M)=0\quad(i>d).
 因此，\(M\) 为 Cohen--Macaulay 模当且仅当其局部上同调仅在次数 \(d\) 非零。
 \end{theorem}
 \begin{proof}
+维数 \(d\) 允许选取 \(d\) 个参数，把支集切到闭点；这些参数给出的长度 \(d\) 的 Čech 复形就足以计算极大理想支集上的上同调，因此更高次数没有复形项。
+
 取 \(M\) 的参数系 \(x_1,\ldots,x_d\)，其存在性由\cref{b3:thm:system-of-parameters}应用于 \(A=R/\operatorname{Ann}_RM\) 保证。在 \(A\) 中，所生成理想的根就是极大理想。Čech 复形的项只涉及 \(M\) 的局部化，所以不论把 \(M\) 看作 \(R\) 模还是 \(A\) 模，其复形相同。先在 \(A\) 上应用理想根无关性，再使用 Čech 比较定理，便可用 \(x_1,\ldots,x_d\) 的长度 \(d\) 复形计算 \(H_{\mathfrak m}^i(M)\)。更高次数没有项，因而消失。
 
 若 \(M\) 为 CM 模，深度为 \(d\)，前一定理使低于 \(d\) 的次数消失并使第 \(d\) 次非零；反向同样由首次非零次数得到深度 \(d\)。
 \end{proof}
 
-以 \(R=k[\![x,y]\!]/(x^2,xy)\) 为例，\((y)\) 的根为极大理想 \(\mathfrak m=(x,y)\)。每个元素唯一写成 \(a(y)+bx\)，其中 \(a(y)\in k[\![y]\!]\)、\(b\in k\)。由 \(yx=0\)，映射 \(R\to R_y=k((y))\) 的核是 \(kx\)，像是 \(k[\![y]\!]\)。因此
+对域 \(k\)，以 \(R=k[\![x,y]\!]/(x^2,xy)\) 为例，\((y)\) 的根为极大理想 \(\mathfrak m=(x,y)\)。每个元素唯一写成 \(a(y)+bx\)，其中 \(a(y)\in k[\![y]\!]\)、\(b\in k\)。由 \(yx=0\)，映射 \(R\to R_y=k(\!(y)\!)\) 的核是 \(kx\)，像是 \(k[\![y]\!]\)。因此
 \[
 H_{\mathfrak m}^0(R)=kx,\qquad
-H_{\mathfrak m}^1(R)=k((y))/k[\![y]\!].
+H_{\mathfrak m}^1(R)=k(\!(y)\!)/k[\![y]\!].
 \]
-环维数为一，深度却为零。被嵌入的零维部分 \(kx\) 并没有被维数看见，却在零次局部上同调中保留下来。
+环维数为一，深度却为零。被嵌入的零维部分 \(kx\) 在零次局部上同调中保留下来，一维主分量则在一次留下负幂的类，两部分信息出现在不同次数。CM 条件所要求的是全部局部上同调集中在模维数这一次数；下一节的对偶将说明，这种集中性为什么能用一个有限生成模表达。

@@ -9,10 +9,10 @@
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
-% * 在 Noether 正规整环上定义有限生成模的双对偶与反射性，说明秩一反射模与高度一局部数据的联系
+% * 在 Noether 正规整环上定义双对偶及反射性；先直接计算 (x,y) 的双对偶，再证明共同分式向量空间内的高度一交公式、无挠模反射性与 S_2 的等价以及分式理想的理想商表达
 % * 证明双对偶张量积及对偶的有限生成、秩一与反射性；以反射分式理想解释除子类群运算
 % * 保留理想正号约定，并说明与几何中 O(D) 约定的负号差；比较可逆模的 Picard 群与 Weil 除子类群
-% * 用第18.4节的唯一分解性解释正则局部情形的类群消失；讨论正规但非阶乘的低维模型
+% * 用第18.4节的唯一分解性解释正则局部情形的类群消失；计算二次锥的阶二非零类及普通平方与反射平方的区别
 % * 区分局部阶乘、全局主理想性和唯一分解；保持仿射环论范围，完整层论表述留给第24章之后的几何教材
 %
 % ---
@@ -30,26 +30,67 @@ M\longrightarrow M^{**},\qquad m\longmapsto\bigl(\varphi\mapsto\varphi(m)\bigr)
 为同构，则称 \(M\) 为\term[fanshemo]{反射模}[reflexive module]。若再有
 \(\dim_K(M\otimes_RK)=1\)，其中 \(K=\operatorname{Frac}(R)\)，则称其秩为一。
 \end{definition}
+\symidx{\(M^*\)、\(M^{**}\)：模的对偶与双对偶}
 
-有限生成投射模是反射模，因为有限秩自由模的求值映射为同构，这一性质可取直和项。有限生成无挠模的求值映射则至少为单射：把它嵌入 \(M\otimes_RK\)，选取域上线性坐标并清掉有限组生成元的分母，便得到足以分离非零元的 \(R\) 线性函数。但单射未必满射；若 \(k\) 为域，理想 \((x,y)\subset k[x,y]\) 的双对偶将变为整个环。
+有限生成投射模是反射模，因为有限秩自由模的求值映射为同构，这一性质可取直和项。有限生成无挠模的求值映射则至少为单射。事实上，将 \(M\) 嵌入 \(V=M\otimes_RK\) 后，对任意 \(0\ne m\in M\)，选取 \(K\) 线性函数 \(\lambda:V\to K\) 使 \(\lambda(m)\ne0\)。设 \(m_1,\ldots,m_s\) 生成 \(M\)，清掉有限个 \(\lambda(m_i)\) 的分母，得到 \(0\ne a\in R\) 使 \(\varphi=a\lambda\) 在 \(M\) 上取值于 \(R\)。于是 \(\varphi\in M^*\)，且 \(\varphi(m)\ne0\)，所以 \(m\) 的求值像不为零。有限生成性正用于选取这个共同分母。
 
-\begin{theorem}\label{b3:thm:reflexive-height-one}
+\ProseParagraphBreak
+单射未必满射。设 \(k\) 为域，\(R=k[x,y]\)、\(I=(x,y)\)。对任意 \(\varphi:I\to R\)，记 \(a=\varphi(x)\)、\(b=\varphi(y)\)。生成元的关系给出 \(ya=xb\)。模掉 \(x\) 后，\(k[y]\) 中的 \(y\) 为非零因子，故 \(a=xc\) 对某个 \(c\in R\) 成立；在整环中约去 \(x\)，再得 \(b=yc\)。因此每个 \(\varphi\) 都是乘以唯一的 \(c\)，即 \(I^*\cong R\)，以包含映射 \(I\hookrightarrow R\) 为基。再次对偶得到 \(I^{**}\cong R\)，而求值映射把 \(f\in I\) 送到 \(f\in R\)，故恰为严格包含 \(I\subsetneq R\)。商 \(R/I\cong k\) 只支撑在原点 \((x,y)\)。这一处的缺失不能由高度一局部化检测：高度一素理想不可能同时包含 \(x,y\)，所以每个 \(I_{\mathfrak p}\) 都等于 \(R_{\mathfrak p}\)。
+
+\ProseParagraphBreak
+对一般有限生成无挠模，局部化的映射都为单射，可以把
+\[
+M\subseteq M_{\mathfrak p}\subseteq V=M\otimes_RK
+\]
+放在同一个 \(K\) 向量空间中。下面的交集就是 \(V\) 内这些子模的普通交集。证明将把“所有线性函数取值在 \(R\) 中”逐点化，再用高度一 DVR 上无挠模自由的性质识别双对偶。
+
+\begin{theorem}\label{b3:thm:reflexive-height-one}\label{b3:thm:rank-one-dual-colon}\label{b3:thm:reflexive-serre-s2}
 设 \(R\) 为交换 Noether 正规整环，\(K=\operatorname{Frac}(R)\)，\(M\) 为有限生成的无挠 \(R\) 模，\(V=M\otimes_RK\)，\(M^{**}=\operatorname{Hom}_R(\operatorname{Hom}_R(M,R),R)\)。在 \(V\) 中自然识别后，有
 \[
 M^{**}=\bigcap_{\operatorname{ht}\mathfrak p=1}M_{\mathfrak p}.
 \]
-这里交集遍历 \(R\) 的所有高度一素理想 \(\mathfrak p\)。
-特别地，\(M\) 反射当且仅当它等于右侧交集；\(M^{**}\) 总是反射模。
+这里交集遍历 \(R\) 的所有高度一素理想 \(\mathfrak p\)；若 \(R\) 为域，空交集按 \(V\) 解释。
+特别地，对这个无挠模 \(M\)，反射性、等于右侧交集及满足 Serre 条件 \((S_2)\) 三个条件等价；\(M^{**}\) 总是反射模。这里 \((S_2)\) 指对每个 \(\mathfrak p\in\operatorname{Supp}_R M\)，有
+\[
+\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}
+\ge\min\{2,\dim_{R_{\mathfrak p}}M_{\mathfrak p}\}.
+\]
+
+对非零分式理想 \(I\subset K\)，把到 \(R\) 的同态识别为 \(K\) 中的标量乘法后，还有
+\[
+I^*=(R:I)=\{a\in K:aI\subseteq R\},\qquad
+I^{**}=(R:(R:I)).
+\]
+若 \(k\) 为域、\(R=k[x,y]\)、\(I=(x,y)^2\)，则 \(I^{**}=R\)，求值映射为严格包含 \(I\subsetneq R\)。
 \end{theorem}
 \begin{proof}
-有限展示保证 Hom 与局部化交换，故 \(M^*\otimes_RK\cong V^*\)，再对偶得到 \(M^{**}\otimes_RK\cong V\)。求值意义下，\(v\in V\) 属于 \(M^{**}\)，当且仅当对所有 \(\varphi\in M^*\)，都有 \(\varphi(v)\in R\)。利用\cref{b3:thm:normal-height-one-intersection}，这等价于对每个高度一 \(\mathfrak p\)，所有这些值均属于 \(R_{\mathfrak p}\)。
+取 \(M\) 的一组有限生成元，按各生成元上的取值把 \(M^*\) 嵌入某个有限秩自由模。Noether 性使 \(M^*\) 有限生成；再次对偶，同样得到 \(M^{**}\) 有限生成。它们也都是无挠模，且有限生成模在 Noether 环上有限展示，所以\cref{b3:thm:hom-localization}给出 \(M^*\otimes_RK\cong V^*\)，再对偶得到 \(M^{**}\otimes_RK\cong V\)。求值意义下，\(v\in V\) 属于 \(M^{**}\)，当且仅当对所有 \(\varphi\in M^*\)，都有 \(\varphi(v)\in R\)。利用\cref{b3:thm:normal-height-one-intersection}，这等价于对每个高度一 \(\mathfrak p\)，所有这些值均属于 \(R_{\mathfrak p}\)。
 
 又由\cref{b3:thm:hom-localization}，\((M^*)_{\mathfrak p}\cong(M_{\mathfrak p})^*\)，所以这个条件等价于 \(v\in(M_{\mathfrak p})^{**}\)。\(R_{\mathfrak p}\) 是 DVR，\cref{b3:prop:dvr-order-ideals}说明它为主理想整环；第二卷定理4.3.2“有限生成模的不变因子分解”使有限生成无挠模 \(M_{\mathfrak p}\) 自由。因此 \((M_{\mathfrak p})^{**}=M_{\mathfrak p}\)，得到交集公式。
 
 最后，\(M^{**}\) 有限生成且无挠，且其高度一局部化仍为 \(M_{\mathfrak p}\)。把已证交集公式用于 \(M^{**}\)，即得 \((M^{**})^{**}=M^{**}\)。
+
+为联系 \((S_2)\)，零模的情形显然，以下设 \(M\ne0\)。先证明 \(M^{**}\) 满足这一深度条件。对有限生成模 \(M^*\) 取有限展示 \(R^b\to R^a\to M^*\to0\)，对偶后得到
+\[
+0\longrightarrow M^{**}\longrightarrow R^a\longrightarrow R^b.
+\]
+记最后一条箭头的像为 \(C\)，则 \(C\) 是有限生成无挠模。\(M^{**}\) 也无挠，所以在高度一素点处，任一非零的局部极大理想元素都在它上面单射，深度至少为一。在高度至少二的 \(\mathfrak p\) 处，\cref{b3:thm:serre-normality}使 \(\operatorname{depth}R_{\mathfrak p}\ge2\)，而 \(C_{\mathfrak p}\) 无挠使其深度至少为一；若该模为零，采用深度为无穷大的约定。对局部化后的短正合列 \(0\to M^{**}\to R^a\to C\to0\) 应用\cref{b3:thm:depth-lemma}，得到 \(\operatorname{depth}M^{**}_{\mathfrak p}\ge2\)。非零无挠模的支集是整个素谱，因而局部模维数等于 \(\dim R_{\mathfrak p}\)；高度零处无额外要求。于是 \(M^{**}\) 满足 \((S_2)\)，反射的 \(M\) 也满足它。
+
+反过来，设无挠模 \(M\) 满足 \((S_2)\)，并令 \(Q=M^{**}/M\)。交集公式及分式域上的识别说明，\(Q\) 在高度零和一的点都为零。若 \(Q\ne0\)，在其支集中取极小素理想 \(\mathfrak p\)，则 \(\operatorname{ht}\mathfrak p\ge2\)，且 \(Q_{\mathfrak p}\) 是非零有限长度模，深度为零。但局部化后的短正合列给出
+\[
+\operatorname{depth}_{R_{\mathfrak p}}Q_{\mathfrak p}
+\ge\min\{\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}-1,
+          \operatorname{depth}_{R_{\mathfrak p}}M^{**}_{\mathfrak p}\}
+\ge1,
+\]
+矛盾。因此 \(Q=0\)，求值映射为同构。
+
+对分式理想 \(I\)，有 \(I\otimes_RK\cong K\)。任意 \(R\) 线性同态 \(I\to R\) 张量到 \(K\) 后，成为 \(K\to K\) 的线性函数，故为乘以某个 \(a\in K\)。它在 \(I\) 上取值于 \(R\)，恰好要求 \(aI\subseteq R\)；反之，每个满足此条件的标量都给出同态。因此 \(I^*=(R:I)\)。再对这个秩一无挠模应用同一识别，就得到 \(I^{**}=(R:(R:I))\)，且求值映射对应 \(I\subseteq I^{**}\) 的自然包含。
+
+在 \(R=k[x,y]\) 中，高度一素理想不能同时包含 \(x,y\)，故 \(((x,y)^2)_{\mathfrak p}=R_{\mathfrak p}\) 对每个高度一 \(\mathfrak p\) 成立。交集公式遂给出 \(((x,y)^2)^{**}=R\)。又因 \(1\notin(x,y)^2\)，求值映射不满。\(R/(x,y)^2\) 只支撑在高度二的原点，并且保留常数项和一次项；双对偶同样把这种只在高余维处的缺失补成整个环。
 \end{proof}
 
-任意有限生成模的挠子模会被所有到 \(R\) 的同态零化，因此双对偶实际等于其无挠商的双对偶。上一定理中的无挠假设用于把原模放在同一个向量空间内，不能在有挠时省略。
+任意有限生成模的挠子模会被所有到 \(R\) 的同态零化，因此双对偶实际等于其无挠商的双对偶。又因为双对偶无挠，反射模必然无挠。所以上一定理对 Noether 正规整环上的任意有限生成模给出：反射性等价于无挠且满足 \((S_2)\)。无挠使原模能嵌入共同的分式向量空间，\((S_2)\) 则排除高度一局部化无法检测的商 \(M^{**}/M\)。例如前面的 \((x,y)\subset k[x,y]\) 在原点的深度只有一，正是它不反射的原因。
 
 \subsection{分式理想的反射包络、Picard 群与除子类群}
 \label{b3:subsec:2005:02}
@@ -65,21 +106,45 @@ v_{\mathfrak p}(I)=\min\{v_{\mathfrak p}(f):0\ne f\in I\}.
 \(D=\sum n_{\mathfrak p}[\mathfrak p]\)，令
 \[
 I_D=\{0\}\cup\{f\in K^*:v_{\mathfrak p}(f)\ge n_{\mathfrak p}
-\text{ 对所有高度一 }\mathfrak p\}.
+\;\text{对所有高度一}\;\mathfrak p\}.
 \]
 则 \(I_D\) 是非零有限生成分式理想，且
 \((I_D)_{\mathfrak p}=\pi_{\mathfrak p}^{n_{\mathfrak p}}R_{\mathfrak p}\)，其中 \(\pi_{\mathfrak p}\) 为任一局部统一化元。因此 \(I_D\) 反射。
 \end{lemma}
 \begin{proof}
+给定各高度一素点的阶数下界后，先要找出一个满足全部下界的非零元素，并用共同分母把整个模放回 \(R\)。随后还须在每个指定素点实现精确阶数，才能证明局部化等式，最后由交集公式得到反射性。
+
 先验证 \(I_D\) 是 \(R\) 子模。对非零的 \(f,g\in I_D\)，若 \(f+g\ne0\)，赋值不等式给出
 \[
 v_{\mathfrak p}(f+g)\ge
 \min\{v_{\mathfrak p}(f),v_{\mathfrak p}(g)\}\ge n_{\mathfrak p}.
 \]
-每个 \(r\in R\setminus\{0\}\) 都满足 \(v_{\mathfrak p}(r)\ge0\)，所以 \(rf\in I_D\)；含零的情形也成立。对系数为正的有限多个素理想分别取一个非零元素并提升适当幂次，相乘得到 \(I_D\) 的非零元。对系数为负的素理想作同样处理，得到 \(0\ne a\in R\)，使 \(aI_D\) 的每个高度一赋值都非负。由\cref{b3:thm:normal-height-one-intersection}，\(aI_D\subseteq R\)。它是 \(R\) 的理想，Noether 性使其有限生成，故 \(I_D\) 是有限生成分式理想。
+每个 \(r\in R\setminus\{0\}\) 都满足 \(v_{\mathfrak p}(r)\ge0\)，所以 \(rf\in I_D\)；含零的情形也成立。对有限多个满足 \(n_{\mathfrak p}>0\) 的素理想，分别选 \(0\ne b_{\mathfrak p}\in\mathfrak p\)。由于 \(v_{\mathfrak p}(b_{\mathfrak p})\ge1\)，乘积
+\[
+h=\prod_{n_{\mathfrak p}>0}b_{\mathfrak p}^{n_{\mathfrak p}}
+\]
+在每个正系数素点处都有足够大的阶数，在其余素点处阶数非负，所以 \(0\ne h\in I_D\)。一个因子可能同时提高别的素点的阶数，但所有要求都是下界，额外提高不会破坏任何条件；若无正系数，取空乘积 \(h=1\)。
 
-固定高度一素理想 \(\mathfrak p\)。先取 \(f\in K^*\) 满足 \(v_{\mathfrak p}(f)=n_{\mathfrak p}\)，例如取局部统一化元的相应整数次幂。只有有限多个其他素理想 \(\mathfrak q\) 不满足 \(v_{\mathfrak q}(f)\ge n_{\mathfrak q}\)。对每个这样的 \(\mathfrak q\)，选 \(a_{\mathfrak q}\in\mathfrak q\setminus\mathfrak p\)；两素理想同为高度一且不同，所以这样的元素存在。将 \(f\) 乘以足够大的各 \(a_{\mathfrak q}\) 幂次，能修补所有不足的赋值，且不改变 \(\mathfrak p\) 处的值，也不会降低其他地方的值。所得 \(g\in I_D\) 在 \(\mathfrak p\) 处恰为所需阶数，因此局部化等式成立。交集公式随即给出 \(I_D^{**}=I_D\)。
+对有限多个满足 \(n_{\mathfrak p}<0\) 的素理想作同样选择，令
+\[
+a=\prod_{n_{\mathfrak p}<0}b_{\mathfrak p}^{-n_{\mathfrak p}}\ne0.
+\]
+则对每个 \(f\in I_D\setminus\{0\}\)，\(af\) 的所有高度一赋值均非负。由\cref{b3:thm:normal-height-one-intersection}，\(aI_D\subseteq R\)。它是 \(R\) 的非零理想，Noether 性使其有限生成；乘以 \(a\) 为模同构，所以 \(I_D\) 也是有限生成分式理想。
+
+固定高度一素理想 \(\mathfrak p\)。先取 \(f\in K^*\) 满足 \(v_{\mathfrak p}(f)=n_{\mathfrak p}\)，例如取局部统一化元的相应整数次幂。\(D\) 与 \(\operatorname{div}(f)\) 均有有限支撑，故只有有限多个其他素理想 \(\mathfrak q\) 不满足 \(v_{\mathfrak q}(f)\ge n_{\mathfrak q}\)。对每个这样的 \(\mathfrak q\)，选 \(b_{\mathfrak q}\in\mathfrak q\setminus\mathfrak p\)；不同的高度一素理想不能相互包含，所以这样的元素存在。此时
+\[
+v_{\mathfrak q}(b_{\mathfrak q})>0,
+\qquad v_{\mathfrak p}(b_{\mathfrak q})=0.
+\]
+取足够大的整数 \(e_{\mathfrak q}\ge0\)，使 \(g=f\prod b_{\mathfrak q}^{e_{\mathfrak q}}\) 修补所有不足的阶数。每个修补因子在 \(\mathfrak p\) 处为单位，因而仍有 \(v_{\mathfrak p}(g)=n_{\mathfrak p}\)；在其他素点处它的阶数非负，故不会制造新的不足。于是 \(g\in I_D\)。所有 \(I_D\) 中元素在 \(\mathfrak p\) 处的阶数均不小于 \(n_{\mathfrak p}\)，而 \(g\) 恰好达到该下界，所以
+\[
+(I_D)_{\mathfrak p}=gR_{\mathfrak p}
+=\pi_{\mathfrak p}^{n_{\mathfrak p}}R_{\mathfrak p}.
+\]
+这些局部化在 \(K\) 中的交集，按赋值不等式正是 \(I_D\)。因此\cref{b3:thm:reflexive-height-one}给出 \(I_D^{**}=I_D\)。
 \end{proof}
+
+相加除子要求各局部阶数相加，对模的对应运算因而从张量积开始。不过，两个秩一反射模的普通张量积可能带有挠，也可能在高余维处不反射。先去挠再取双对偶，才得到由高度一阶数唯一确定的模。后面的\cref{b3:exm:quadric-nonfactorial-class}将给出具体计算：普通理想平方 \(\mathfrak p^2=\bar x\mathfrak m\) 严格小于 \((\bar x)\)，而反射化后两者相同。
 
 \begin{theorem}\label{b3:thm:class-group-reflexive}
 设 \(R\) 为交换 Noether 正规整环，\(K=\operatorname{Frac}(R)\)。对 \(R\) 模 \(X\) 记 \(X^*=\operatorname{Hom}_R(X,R)\)、\(X^{**}=\operatorname{Hom}_R(X^*,R)\)。对高度一素理想 \(\mathfrak p\) 记 \(v_{\mathfrak p}\) 为 \(R_{\mathfrak p}\) 的归一化离散赋值；对非零分式理想 \(I\subset K\)，记 \(v_{\mathfrak p}(I)=\min\{v_{\mathfrak p}(f):0\ne f\in I\}\)。秩一有限生成反射 \(R\) 模的同构类在
@@ -94,39 +159,53 @@ v_{\mathfrak p}(I)[\mathfrak p]\right]
 给出该群到 \(\operatorname{Cl}(R)\) 的同构。
 \end{theorem}
 \begin{proof}
-先检查乘积仍属于所讨论的模类。令 \(T\) 为 \(M\otimes_RN\) 的挠子模，则无挠商 \(L=(M\otimes_RN)/T\) 有限生成，且
+要使用高度一交公式，先须把张量积中的挠去掉。令 \(T\) 为 \(M\otimes_RN\) 的挠子模，则无挠商 \(L=(M\otimes_RN)/T\) 有限生成，且
 \[
 L\otimes_RK\cong
 (M\otimes_RK)\otimes_K(N\otimes_RK)\cong K.
 \]
-所有到 \(R\) 的同态均零化 \(T\)，因而 \((M\otimes_RN)^{**}\cong L^{**}\)。\Cref{b3:thm:reflexive-height-one}保证 \(L^{**}\) 有限生成、反射且仍为秩一。
+若 \(t\in T\)，取 \(0\ne a\in R\) 使 \(at=0\)，则对任意 \(\varphi:M\otimes_RN\to R\)，有 \(a\varphi(t)=0\)。\(R\) 为整环，故 \(\varphi(t)=0\)，所以每个这样的同态都唯一经过 \(L\) 分解。因而 \((M\otimes_RN)^{**}\cong L^{**}\)。\Cref{b3:thm:reflexive-height-one}现在适用于 \(L\)，保证 \(L^{**}\) 有限生成、反射且仍为秩一，这就验证了乘积的闭性。
 
-再验证 \(M^*\) 的反射性。取 \(V=M\otimes_RK\)，将 \(M^*\) 视为 \(V^*\) 的子模。由有限组生成元的取值，\(M^*\) 嵌入某个有限秩自由模，Noether 性使它有限生成；局部化到 \(K\) 后有 \(M^*\otimes_RK\cong V^*\)，所以秩为一。对 \(\varphi\in V^*\)，\cref{b3:thm:hom-localization}与高度一交定理给出
+对偶将给出逆元，因此还要验证 \(M^*\) 属于同一类模。取 \(V=M\otimes_RK\)，将 \(M^*\) 视为 \(V^*\) 的子模。由有限组生成元的取值，\(M^*\) 嵌入某个有限秩自由模，Noether 性使它有限生成；局部化到 \(K\) 后有 \(M^*\otimes_RK\cong V^*\)，所以秩为一。对 \(\varphi\in V^*\)，\cref{b3:thm:hom-localization}与高度一交定理给出
 \[
 \begin{aligned}
 \varphi\in\bigcap_{\operatorname{ht}\mathfrak p=1}(M^*)_{\mathfrak p}
 &\Longleftrightarrow
 \varphi(M)\subseteq R_{\mathfrak p}
-\quad\text{对每个高度一 }\mathfrak p\\
+\quad\text{对每个高度一}\;\mathfrak p\\
 &\Longleftrightarrow \varphi(M)\subseteq R
 \Longleftrightarrow \varphi\in M^*.
 \end{aligned}
 \]
 因此 \(M^*\) 等于自身的高度一局部化之交，由\cref{b3:thm:reflexive-height-one}可知它反射。
 
-选定分式理想表示 \(I,J\subset K\) 后，乘法映射 \(I\otimes_RJ\rightarrow IJ\) 在张量到 \(K\) 后为同构，其核恰为挠子模，故双对偶乘积可写成 \((IJ)^{**}\)。把 \(K\) 上的线性函数识别为标量乘法，还得到 \(I^*=\{a\in K:aI\subseteq R\}\)。在每个高度一 DVR 中，两个秩一模都是自由模，所以
+群运算可以通过局部阶数核验。选定分式理想表示 \(I,J\subset K\) 后，乘法映射 \(I\otimes_RJ\rightarrow IJ\) 为满射，且张量到 \(K\) 后为同构。因此其核的每个元素都被某个非零标量零化；反之，目标 \(IJ\subset K\) 无挠，所有挠元素都落在核中，故该核恰为挠子模。于是双对偶乘积可写成 \((IJ)^{**}\)。\Cref{b3:thm:rank-one-dual-colon}也把 \(I^*\) 识别为 \((R:I)\)。在高度一离散赋值环 \(R_{\mathfrak p}\) 中，写
+\[
+I_{\mathfrak p}=\pi_{\mathfrak p}^{a}R_{\mathfrak p},
+\qquad J_{\mathfrak p}=\pi_{\mathfrak p}^{b}R_{\mathfrak p}.
+\]
+普通乘积局部化为 \(\pi_{\mathfrak p}^{a+b}R_{\mathfrak p}\)，其双对偶不改变这个自由模；对偶局部化则为 \(\pi_{\mathfrak p}^{-a}R_{\mathfrak p}\)。所以
 \[
 v_{\mathfrak p}((IJ)^{**})
 =v_{\mathfrak p}(I)+v_{\mathfrak p}(J),
 \qquad
 v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \]
-反射分式理想由这些局部化唯一确定；两种结合次序都有相同的局部阶数，因而给出同一个反射分式理想。交换律、单位 \(R\) 及 \((II^*)^{**}=R\) 同样得到验证。
+反射分式理想由这些局部化唯一确定。三个理想的两种结合次序在每个高度一素点处都具有三个阶数之和，因而给出同一个反射分式理想。交换律来自阶数相加的交换性，\(R\) 的全部阶数为零使它成为单位，而 \(I\) 与 \(I^*\) 的阶数之和均为零，故 \((II^*)^{**}=R\)。
 
-换一个 \(I\otimes_RK\cong K\) 的识别，相当于把 \(I\) 乘以 \(f\in K^*\)，其除子增加 \(\operatorname{div}(f)\)，所以映射良定义。反之，两个分式理想之间的模同构张量到 \(K\) 后必为乘以一个非零标量；若它们的除子相差 \(\operatorname{div}(f)\)，则交集公式直接给出 \(J=fI\)，证明单射。上引理为每个除子构造 \(I_D\)，证明满射。
+现在验证到除子类群的映射。换一个 \(I\otimes_RK\cong K\) 的识别，相当于把 \(I\) 乘以 \(f\in K^*\)，其除子增加 \(\operatorname{div}(f)\)，所以除子类不变。更一般地，分式理想之间的模同构张量到 \(K\) 后必为乘以一个非零标量，因此同构的模得到相同的除子类。这证明映射在模同构类上良定义；已证的阶数加法公式也说明它是群同态。
+
+若 \(I,J\) 的除子类相同，则存在 \(f\in K^*\)，使
+\[
+v_{\mathfrak p}(J)=v_{\mathfrak p}(I)+v_{\mathfrak p}(f)
+=v_{\mathfrak p}(fI)
+\]
+对每个高度一 \(\mathfrak p\) 成立。DVR 中的分式理想由阶数唯一确定，故 \(J_{\mathfrak p}=(fI)_{\mathfrak p}\)。两边都是反射分式理想，交集公式给出 \(J=fI\)，从而 \(I\cong J\)，证明单射。
+
+最后，对任意除子 \(D\)，\cref{b3:lem:divisor-fractional-module}给出的 \(I_D\) 是秩一反射分式理想，且在每个高度一素点处具有 \(D\) 所指定的精确阶数。因此其模类映到 \([D]\)，证明满射。
 \end{proof}
 
-这里采用理想类群的正号约定：\(I_{[\mathfrak p]}=\mathfrak p\)，所以高度一素理想 \(\mathfrak p\) 的模类送到 \([\mathfrak p]\)。几何文献通常以 \(\operatorname{div}(f)+D\ge0\) 为 \(\mathcal O(D)\) 的非零有理函数截面条件；若 \(D=\sum n_{\mathfrak p}[\mathfrak p]\)，这要求 \(v_{\mathfrak p}(f)\ge-n_{\mathfrak p}\)。因此在仿射情形，\(I_D\) 对应 \(\mathcal O(-D)\) 的全局截面；本节的模类到除子类映射，与几何中按 \(L\simeq\mathcal O(D)\) 取除子类的约定相差一个负号\cite[Chapter II, \S6, pp. 144--145]{Hartshorne1977}。
+这里采用理想类群的正号约定。对高度一素理想 \(\mathfrak p\)，\(I_{[\mathfrak p]}\) 中元素在所有高度一素点的阶数都非负，故它们属于 \(R\)；再要求 \(v_{\mathfrak p}(f)\ge1\)，就等价于 \(f\in\mathfrak pR_{\mathfrak p}\cap R=\mathfrak p\)。因此 \(I_{[\mathfrak p]}=\mathfrak p\)，它是反射理想，其模类送到除子类 \([\mathfrak p]\)。几何文献通常以 \(\operatorname{div}(f)+D\ge0\) 为 \(\mathcal O(D)\) 的非零有理函数截面条件；若 \(D=\sum n_{\mathfrak p}[\mathfrak p]\)，这要求 \(v_{\mathfrak p}(f)\ge-n_{\mathfrak p}\)。因此在仿射情形，\(I_D\) 对应 \(\mathcal O(-D)\) 的全局截面；本节的模类到除子类映射，与几何中按 \(L\simeq\mathcal O(D)\) 取除子类的约定相差一个负号\cite[Chapter II, \S6, pp. 144--145]{Hartshorne1977}。
 
 \begin{proposition}\label{b3:prop:picard-class-group}
 设 \(R\) 为交换 Noether 正规整环。按照\cref{b3:thm:class-group-reflexive}的理想类群符号约定，把秩一有限生成投射模视为秩一反射模，得到规范单射
@@ -136,6 +215,8 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 有限生成投射模反射，两个这样的模的张量积仍投射，故上述群运算与 Picard 群运算一致。如果其类在 \(\operatorname{Cl}(R)\) 中为零，上一定理使该模同构于 \(R\)，证明单射。由于 \(R\) 为 Noether 环，此处有限生成模都是有限展示模，\cref{b3:thm:flatness-local}、\cref{b3:thm:finite-presentation-flat-projective}和\cref{b3:lem:finite-flat-local-free}使逐点自由秩一等价于秩一有限生成投射性。
 \end{proof}
 
+这个单射比较的是两种局部要求：秩一反射模能由全部高度一局部化恢复，但不必在高余维素点处自由；秩一投射模则要求在所有素点处都自由秩一。前者给出除子类群，后者才给出 Picard 群。
+
 \subsection{正则局部环的类群消失与非阶乘模型}
 \label{b3:subsec:2005:03}
 
@@ -144,25 +225,44 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \begin{example}\label{b3:exm:quadric-nonfactorial-class}
 设 \(k\) 为域，取\cref{b3:exm:normal-quadric-cone}中的环
 \(A=k[x,y,z]_{(x,y,z)}/(xy-z^2)\)，令 \(\mathfrak m=(\bar x,\bar y,\bar z)\)、\(\mathfrak p=(\bar x,\bar z)\)。则 \(\mathfrak p\) 高度一，类 \([\mathfrak p]\in\operatorname{Cl}(A)\) 非零，且其阶为二。
+其最少生成元个数为 \(\mu_A(\mathfrak p)=2\)，而普通平方与反射平方分别满足
+\[
+\mathfrak p^2=\bar x\mathfrak m\subsetneq\bar xA,
+\qquad(\mathfrak p^2)^{**}=\bar xA.
+\]
 \end{example}
 \begin{proof}
-商 \(A/\mathfrak p\cong k[y]_{(y)}\) 为整环，所以 \(\mathfrak p\) 为素理想。它是 \((\bar x)\) 的唯一极小素理想，主理想定理使其高度一。在 \(A_{\mathfrak p}\) 中，\(\bar y\) 为单位，\(\bar x=\bar z^2/\bar y\)，故 \(\bar z\) 生成极大理想，
-\(v_{\mathfrak p}(\bar x)=2\)。其他高度一素理想不含 \(\bar x\)，从而
-\(\operatorname{div}(\bar x)=2[\mathfrak p]\)。
+商 \(A/\mathfrak p\cong k[y]_{(y)}\) 为整环，所以 \(\mathfrak p\) 为素理想。又有
+\[
+A/(\bar x)\cong k[y,z]_{(y,z)}/(z^2),
+\]
+右边的唯一极小素理想为 \((\bar z)\)，对应到 \(A\) 正是 \(\mathfrak p\)。主理想定理遂给出 \(\operatorname{ht}\mathfrak p=1\)。在 \(A_{\mathfrak p}\) 中，\(\bar y\) 为单位，\(\bar x=\bar z^2/\bar y\)，故 \(\bar z\) 生成极大理想，\(v_{\mathfrak p}(\bar x)=2\)。其他高度一素理想不含 \(\bar x\)，所以
+\[
+\operatorname{div}(\bar x)=2[\mathfrak p],
+\qquad 2[\mathfrak p]=0\quad\text{在}\;\operatorname{Cl}(A)\;\text{中}.
+\]
+这先说明该类的阶整除二，还须排除它为零。
 
-若 \([\mathfrak p]=0\)，则\cref{b3:thm:class-zero-ufd}证明中针对单个高度一素理想的论证会使 \(\mathfrak p\) 为主理想。但 \(\mathfrak p/\mathfrak m\mathfrak p\) 的 \(k\) 维数为二：\(\bar x,\bar z\) 生成它，若某个非平凡常系数线性组合属于 \(\mathfrak m\mathfrak p\subseteq\mathfrak m^2\)，就与 \(\mathfrak m/\mathfrak m^2\) 中三个坐标线性独立矛盾。Nakayama 引理说明 \(\mathfrak p\) 至少需要两个生成元，故其类非零。与两倍为零结合，阶恰为二。
-\end{proof}
+由前面 \(I_{[\mathfrak p]}=\mathfrak p\) 的识别，\(\mathfrak p\) 为秩一反射模。若 \([\mathfrak p]=0\)，\cref{b3:thm:class-group-reflexive}使 \(\mathfrak p\cong A\)，于是它应由 \(1\) 的像主生成。但 \(\bar x,\bar z\) 在 \(\mathfrak p/\mathfrak m\mathfrak p\) 中线性独立：若非平凡常系数线性组合落在 \(\mathfrak m\mathfrak p\subseteq\mathfrak m^2\)，就与\cref{b3:exm:normal-quadric-cone}中 \(\mathfrak m/\mathfrak m^2\) 的三个坐标线性独立矛盾。再由\cref{b3:cor:local-generators}，
+\[
+\mu_A(\mathfrak p)=\dim_k\mathfrak p/\mathfrak m\mathfrak p=2.
+\]
+因此 \(\mathfrak p\) 非主，\([\mathfrak p]\ne0\)。非零与两倍为零合在一起，才说明其阶恰为二。
 
-这里 \(\operatorname{Pic}(A)=0\)，因为局部环上的有限生成投射模自由；但 \(\operatorname{Cl}(A)\ne0\)。所以 Picard 群到类群的单射一般不是满射。
-
-\ProseParagraphBreak
-同一个理想还显示双对偶在乘法中的必要性。由 \(\bar z^2=\bar x\bar y\)，有
+这个理想的普通平方还保留一个只在闭点处的缺失。由 \(\bar z^2=\bar x\bar y\)，有
 \[
 \mathfrak p^2=(\bar x^2,\bar x\bar z,\bar z^2)
 =\bar x\mathfrak m\subsetneq(\bar x),
 \qquad (\mathfrak p^2)^{**}=(\bar x).
 \]
-严格包含是因为若 \(\bar x\in\bar x\mathfrak m\)，整环中约去非零的 \(\bar x\) 就会得到 \(1\in\mathfrak m\)。另一方面，在每个高度一素理想 \(\mathfrak q\) 处，都有 \(\mathfrak mA_{\mathfrak q}=A_{\mathfrak q}\)：\(\mathfrak q\ne\mathfrak m\)，故 \(\mathfrak m\) 中有元素在那里成为单位。于是 \((\bar x\mathfrak m)_{\mathfrak q}=\bar xA_{\mathfrak q}\)，高度一交公式将其双对偶补成主理想 \((\bar x)\)。乘法满射 \(\mathfrak p\otimes_A\mathfrak p\to\mathfrak p^2\) 在分式域上是同构，核为挠模；挠模被到 \(A\) 的同态零化，所以两者的双对偶相同。因此类群中的 \(2[\mathfrak p]=0\) 对应反射化后的平方为主，并不表示普通理想平方已是主理想。普通平方在闭点缺少的部分，正是双对偶补回的高余维数据。
+严格包含是因为若 \(\bar x\in\bar x\mathfrak m\)，整环中约去非零的 \(\bar x\) 就会得到 \(1\in\mathfrak m\)。另一方面，在每个高度一素理想 \(\mathfrak q\) 处，都有 \(\mathfrak mA_{\mathfrak q}=A_{\mathfrak q}\)：\(\mathfrak q\ne\mathfrak m\)，故 \(\mathfrak m\) 中有元素在那里成为单位。于是 \((\bar x\mathfrak m)_{\mathfrak q}=\bar xA_{\mathfrak q}\)，高度一交公式将其双对偶补成主理想 \((\bar x)\)。
+\end{proof}
+
+这里 \(\operatorname{Pic}(A)=0\)，因为局部环上的有限生成投射模自由；但 \(\operatorname{Cl}(A)\ne0\)。所以 Picard 群到类群的单射一般不是满射：\(\mathfrak p\) 能由高度一数据恢复，却在闭点需要两个生成元，不能在该点自由秩一。
+
+\ProseParagraphBreak
+乘法满射 \(\mathfrak p\otimes_A\mathfrak p\to\mathfrak p^2\) 在分式域上是同构，核恰为挠子模；去挠后得到 \(\mathfrak p^2\)，再取双对偶补成 \((\bar x)\)。因此\cref{b3:thm:class-group-reflexive}中的 \(2[\mathfrak p]=0\) 对应反射化后的平方为主，并不表示普通理想平方已是主理想。普通平方在闭点缺少的部分由
+\(\bar xA/\bar x\mathfrak m\cong A/\mathfrak m\) 给出，正是双对偶补回的余维二差别。
 
 \subsection{局部阶乘性、全局主理想性与唯一分解}
 \label{b3:subsec:2005:04}
@@ -170,6 +270,8 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \begin{definition}\label{b3:def:locally-factorial-domain}
 设 \(R\) 为交换 Noether 整环。若每个素理想 \(\mathfrak q\) 处的局部环 \(R_{\mathfrak q}\) 都为唯一分解整环，则称 \(R\) 为\term[jubujiechengzhenghuan]{局部阶乘整环}[locally factorial domain]。
 \end{definition}
+
+局部阶乘性要使每个高度一素理想在任意素点附近都能由一个元素生成。用前面的模描述，这等价于每个除子类都能由一个逐点自由秩一的模表示，正是 Picard 群到除子类群的单射满射。
 
 \begin{proposition}\label{b3:prop:locally-factorial-pic-cl}
 设 \(R\) 为交换 Noether 正规整环。则 \(R\) 局部阶乘，当且仅当
@@ -183,10 +285,18 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \mathfrak p=\{0\}\cup\{f\in R\setminus\{0\}:v_{\mathfrak p}(f)\ge1\}
 =I_{[\mathfrak p]}.
 \]
-所以 \(\mathfrak p\) 是反射理想。它的类有一个可逆代表，\cref{b3:thm:class-group-reflexive}使 \(\mathfrak p\) 与该代表同构，故 \(\mathfrak p\) 也是可逆模。固定 \(\mathfrak q\)，\(R_{\mathfrak q}\) 的每个高度一素理想都来自某个高度一 \(\mathfrak p\subseteq\mathfrak q\)：位于 \(\mathfrak p\) 以下的素链在局部化后全部保留，故高度不变。由于 \(\mathfrak p\) 逐点自由秩一，其局部化 \(\mathfrak pR_{\mathfrak q}\) 主生成。Noether 整环中由高度一素理想主性推出 UFD 的论证已在\cref{b3:thm:class-zero-ufd}证明，遂知每个 \(R_{\mathfrak q}\) 均为 UFD。
+所以 \(\mathfrak p\) 是反射理想。它的类有一个可逆代表，\cref{b3:thm:class-group-reflexive}使 \(\mathfrak p\) 与该代表同构，故 \(\mathfrak p\) 也是可逆模。固定 \(\mathfrak q\)，\(R_{\mathfrak q}\) 的每个素理想都唯一来自某个 \(\mathfrak p\subseteq\mathfrak q\)。位于 \(\mathfrak p\) 以下的每个素理想也包含于 \(\mathfrak q\)，因而都避开乘法集 \(R\setminus\mathfrak q\)；局部化的素理想对应完整保留了以 \(\mathfrak p\) 为终点的全部素链。于是
+\[
+\operatorname{ht}_{R_{\mathfrak q}}(\mathfrak pR_{\mathfrak q})
+=\operatorname{ht}_R\mathfrak p.
+\]
+特别地，高度一素理想恰好来自高度一的 \(\mathfrak p\subseteq\mathfrak q\)。由于 \(\mathfrak p\) 逐点自由秩一，其局部化 \(\mathfrak pR_{\mathfrak q}\) 主生成。Noether 整环中由高度一素理想主性推出 UFD 的论证已在\cref{b3:thm:class-zero-ufd}证明，遂知每个 \(R_{\mathfrak q}\) 均为 UFD。
 \end{proof}
 
-局部阶乘性允许不同开邻域采用不同生成元；全局 UFD 则要求每个高度一素理想在整个环中主生成。Dedekind 整环总是局部阶乘，但可以有非零理想类群，例如\secref{b3:sec:1004}中的 \(\mathbb Z[\sqrt{-5}]\)。即使环已经是 UFD，也不必所有理想都主生成；对任意域 \(k\)，\(k[x,y]\) 中的 \((x,y)\) 就不是主理想。这三种性质因而不能互换。
+局部阶乘性允许不同开邻域采用不同生成元；全局 UFD 则要求每个高度一素理想在整个环中主生成；主理想整环更要求每个理想都主生成。Dedekind 整环总是局部阶乘，但可以有非零理想类群，例如\secref{b3:sec:1004}中的 \(\mathbb Z[\sqrt{-5}]\)。这个环因而不是 UFD。反过来，对任意域 \(k\)，\(k[x,y]\) 为 UFD，其中的 \((x,y)\) 却不是主理想，所以它不是主理想整环。逐点主生成高度一素理想、全局主生成高度一素理想、全局主生成所有理想，是三个不同的要求。
+
+\ProseParagraphBreak
+下面的图先保留具体除子和反射分式理想在 \(K\) 中的位置，随后再取等价类。第一行的对应是 \(D\mapsto I_D\)，逆向从具体理想取各高度一阶数；将理想乘以 \(f\in K^*\) 时，其除子增加 \(\operatorname{div}(f)\)。取主除子和非零标量倍乘的商以后，才得到与嵌入无关的模同构类。
 
 \begin{center}
 \begin{minipage}{\textwidth}
@@ -196,11 +306,11 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \centering
 \[
 \begin{tikzcd}[column sep=large, row sep=large]
-\{\text{Weil 除子 }D\}
+\{\text{Weil 除子}\;D\}
  \arrow[r, leftrightarrow, "D\mapsto I_D"]
  \arrow[d, two heads, "\text{模主除子}"'] &
-\{\text{反射分式理想 }I\subset K\}
- \arrow[d, two heads, "\text{模 }K^*\text{ 倍乘}"] \\
+\{\text{反射分式理想}\;I\subset K\}
+ \arrow[d, two heads, "\text{模}\;K^*\;\text{倍乘}"] \\
 \operatorname{Cl}(R) \arrow[r, "\sim"] &
 \{\text{秩一反射模同构类}\} \\
 \operatorname{Pic}(R) \arrow[u, hook] \arrow[r, "\sim"] &
@@ -211,9 +321,9 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \[
 \begin{aligned}
 \operatorname{Cl}(R)=0
-&\quad\Longleftrightarrow\quad R\text{ 为 UFD},\\
-\text{本节单射 }\operatorname{Pic}(R)\hookrightarrow\operatorname{Cl}(R)\text{ 为同构}
-&\quad\Longleftrightarrow\quad R\text{ 局部阶乘}.
+&\quad\Longleftrightarrow\quad R\;\text{为 UFD},\\
+\text{本节单射}\;\operatorname{Pic}(R)\hookrightarrow\operatorname{Cl}(R)\;\text{为同构}
+&\quad\Longleftrightarrow\quad R\;\text{局部阶乘}.
 \end{aligned}
 \]
 \caption[除子、反射模与 Picard 群]{除子、反射模与 Picard 群。\(R\) 为交换 Noether 正规整环，\(K\) 为其分式域，图中的模均有限生成，分式理想均非零。箭头采用本节的理想正号约定。}
@@ -221,4 +331,4 @@ v_{\mathfrak p}(I^*)=-v_{\mathfrak p}(I).
 \end{minipage}
 \end{center}
 
-图的上行保留具体除子和分式理想在 \(K\) 中的嵌入；沿两条向下的满射分别对主除子和非零标量倍乘取商，才得到模同构类。Picard 群进一步要求这些模在所有素点处局部自由，而反射性只由高度一数据控制。
+图中的两条向下满射分别对主除子和非零标量倍乘取商，因此中间一行是除子类与模同构类的对应。最后一行只收取逐点自由秩一的模类；它们嵌入所有秩一反射模类中，局部阶乘性恰好使这两个集合相等。

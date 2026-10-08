@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 9.1 导出函子
 % 纲要标签：b4:sec:0801
-% 纲要位置：计划纲要.md，第 2650 行。
+% 纲要位置：计划纲要.md，第 3402 行。
 
 \section{导出函子}
 \label{b4:sec:0801}
@@ -19,15 +19,21 @@
 \subsection{左、右导出及次数约定}
 \label{b4:subsec:0801:01}
 
-一个左正合函子已经正确保留了核，却可能把满态射变成非满态射。内射消解把这种失败放入一个复形，正次数上同调便记录原函子没有保留的信息。投射消解对于右正合函子起相反方向的作用。
+一个左正合函子已经正确保留了核，却可能把满态射变成非满态射。取向右延伸的内射消解 \(0\to A\to I^0\to I^1\to\cdots\)，再施加函子，正次数上同调便记录继续向右时失去的正合性，这就是右导出的方向。对右正合函子，则取向左延伸的投射消解 \(\cdots\to P_1\to P_0\to A\to0\)，施加函子后用正次数链同调记录左端的失败，得到左导出。
 
 \ProseParagraphBreak
-例如，固定整数 \(n\ge2\)，对交换群取左正合函子 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n,-)\)。\cref{b4:exm:integer-injective-resolution}已经给出内射消解
+例如，固定整数 \(n\ge2\)，对交换群取左正合函子 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n\mathbb Z,-)\)。\cref{b4:exm:integer-injective-resolution}已经给出内射消解
 \[
  0\longrightarrow\mathbb Z\longrightarrow\mathbb Q
  \longrightarrow\mathbb Q/\mathbb Z\longrightarrow0.
 \]
-施加 \(F\) 后，\(F(\mathbb Q)=0\)，而 \(F(\mathbb Q/\mathbb Z)\) 是 \(\mathbb Q/\mathbb Z\) 中被 \(n\) 零化的子群，即 \((\tfrac1n\mathbb Z)/\mathbb Z\cong\mathbb Z/n\)。所得复形为 \(0\to\mathbb Z/n\)，位于零次和一次。因此原函子在 \(\mathbb Z\) 上取值为零，消解却在一次留下 \(\mathbb Z/n\)。这正是 \(\mathbb Q\to\mathbb Q/\mathbb Z\) 经过 \(F\) 后失去满射性的部分；下面将这种计算定义为导出函子。
+施加 \(F\) 后，\(F(\mathbb Q)=0\)，而 \(F(\mathbb Q/\mathbb Z)\) 是 \(\mathbb Q/\mathbb Z\) 中被 \(n\) 零化的子群，即 \((\dfrac1n\mathbb Z)/\mathbb Z\cong\mathbb Z/n\mathbb Z\)。所得复形明确为
+\[
+F(I^\bullet):\quad\cdots\longrightarrow
+\underbrace{0}_{\text{零次}}\longrightarrow
+\underbrace{\mathbb Z/n\mathbb Z}_{\text{一次}}\longrightarrow0\longrightarrow\cdots.
+\]
+因此原函子在 \(\mathbb Z\) 上取值为零，消解却在一次留下 \(\mathbb Z/n\mathbb Z\)。这正是 \(\mathbb Q\to\mathbb Q/\mathbb Z\) 经过 \(F\) 后失去满射性的部分；下面将这种计算定义为导出函子。
 
 \begin{definition}\label{b4:def:derived-functors}
 设 \(\mathcal A,\mathcal B\) 是交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子。若 \(\mathcal A\) 有足够多内射对象，对每个对象 \(A\in\mathcal A\) 选内射消解 \(A\to I_A^\bullet\)，定义
@@ -40,8 +46,28 @@ L_nF(A)\coloneqq H_n(F(P^A_\bullet)),\qquad n\ge0,
 \]
 称为第 \(n\) 个\term[zuodaochuhanzi]{左导出函子}[left derived functor]。对态射 \(f:A\to A'\)，选择延拓或提升 \(f\) 的消解比较映射，逐次应用 \(F\) 后取相应次数的同调，所得态射分别定义 \(R^nF(f)\) 或 \(L_nF(f)\)。
 \end{definition}
+\symidx{\(R^nF,\ L_nF\)：第 \(n\) 个右导出函子与左导出函子}
 
-由\cref{b4:prop:comparison-homotopy-unique,b4:cor:resolutions-homotopy-equivalent}，提升同一个态射的比较映射同伦，因而诱导相同的同调态射；恒等和复合也由比较映射的恒等和复合诱导。于是上述定义给出函子，更换消解只引起满足传递律的自然同构。它们还是加性函子：若 \(f,g:A\to A'\) 分别由比较映射 \(\widetilde f,\widetilde g\) 提升，则 \(\widetilde f+\widetilde g\) 提升 \(f+g\)。由于 \(F\) 加性，取同调后有
+定义这里只要求 \(F\) 加性；左、右正合性将在零次把导出函子接回原函子。
+
+\ProseParagraphBreak
+给定 \(f:A\to A'\)，\cref{b4:thm:resolution-comparison}先给出所选消解之间延拓或提升 \(f\) 的比较映射 \(\widetilde f\)。由\cref{b4:prop:comparison-homotopy-unique}，另一选择 \(\widetilde f'\) 与它链同伦。加性函子保持同伦等式中的加法与复合，所以
+\[
+\widetilde f\simeq\widetilde f'
+\quad\Longrightarrow\quad F(\widetilde f)\simeq F(\widetilde f').
+\]
+再由\cref{b4:prop:homotopy-cohomology}，它们诱导相同的同调态射，因而定义中的态射不依赖比较映射的选择。
+
+\ProseParagraphBreak
+为各个态射分别选定的比较映射不必严格保持复合。但若 \(f:A\to A'\)、\(g:A'\to A''\)，则 \(\widetilde g\widetilde f\) 也是 \(gf\) 的比较映射，故
+\[
+\widetilde{gf}\simeq\widetilde g\widetilde f,
+\qquad \widetilde{1_A}\simeq1.
+\]
+施加 \(F\) 再取同调，才得到严格的复合律和恒等律。因此上述构造给出函子。更换对象的消解时，\cref{b4:cor:resolutions-homotopy-equivalent}给出同伦等价；对任何态射，两条比较路径提升同一对象态射，因而同伦。这保证更换消解所得同构自然，并满足经过第三个消解的传递律。
+
+\ProseParagraphBreak
+它们还是加性函子：若 \(f,g:A\to A'\) 分别由比较映射 \(\widetilde f,\widetilde g\) 提升，则 \(\widetilde f+\widetilde g\) 提升 \(f+g\)。由于 \(F\) 加性，取同调后有
 \[
 R^nF(f+g)=R^nF(f)+R^nF(g),\qquad
 L_nF(f+g)=L_nF(f)+L_nF(g).
@@ -49,13 +75,30 @@ L_nF(f+g)=L_nF(f)+L_nF(g).
 若把投射消解写成 \(P^{-n}=P_n\)，则 \(L_nF(A)=H^{-n}(F(P^\bullet))\)。下标 \(n\) 是非负同调次数，不是把右导出函子也改放到负次数。
 
 \begin{proposition}\label{b4:prop:derived-degree-zero}
-设 \(\mathcal A,\mathcal B\) 是交换范畴。若 \(\mathcal A\) 有足够多内射对象且 \(F:\mathcal A\to\mathcal B\) 加性、左正合，则有自然同构 \(R^0F\cong F\)，且内射对象 \(I\) 满足 \(R^nF(I)=0\) 对 \(n>0\)。若有足够多投射对象且 \(F\) 加性、右正合，则 \(L_0F\cong F\)，且投射对象的正次数左导出函子消失。
+设 \(\mathcal A,\mathcal B\) 是交换范畴，\(F:\mathcal A\to\mathcal B\) 是加性函子。若 \(\mathcal A\) 有足够多内射对象，则每个内射对象 \(I\) 满足 \(R^nF(I)=0\)（\(n>0\)）；若 \(F\) 还左正合，则有自然同构 \(R^0F\cong F\)。若 \(\mathcal A\) 有足够多投射对象，则每个投射对象 \(P\) 满足 \(L_nF(P)=0\)（\(n>0\)）；若 \(F\) 还右正合，则有自然同构 \(L_0F\cong F\)。
 \end{proposition}
 \begin{proof}
-由 \(0\to A\to I^0\to I^1\) 正合及左正合性，\(F(A)\) 就是 \(F(I^0)\to F(I^1)\) 的核，即零次上同调；构造与态射相容。内射对象可取自身集中于零次的内射消解，故正次消失。投射情形用 \(P_1\to P_0\to A\to0\) 的余核及零次链消解。
+内射对象 \(I\) 可取自身集中于零次的内射消解；施加加性函子后仍只在零次有非零项，故正次数上同调为零。投射对象取自身集中于零次的投射消解，得到同样的消失结论。
+
+若 \(F\) 左正合，对内射消解的起始部分施加 \(F\)，得到正合列
+\[
+0\longrightarrow F(A)\longrightarrow F(I_A^0)
+\xrightarrow{F(\mathrm{d}^0)}F(I_A^1).
+\]
+由于 \(F(I_A^\bullet)\) 的负一次项为零，增广诱导
+\[
+F(A)\xrightarrow{\sim}\ker F(\mathrm{d}^0)
+=H^0(F(I_A^\bullet))=R^0F(A).
+\]
+比较映射与增广交换，所以该同构对 \(A\) 自然。若 \(F\) 右正合，则
+\[
+F(P_1^A)\xrightarrow{F(\mathrm{d}_1)}F(P_0^A)
+\longrightarrow F(A)\longrightarrow0
+\]
+正合。零次链微分的目标为零，故 \(L_0F(A)=\operatorname{coker}F(\mathrm{d}_1)\cong F(A)\)；增广同样保证自然性。
 \end{proof}
 
-\cref{b4:tab:derived-conventions}集中列出两种导出的消解与次数约定，其中左、右正合性保证零次导出与原函子相同。表中的连接态射对应短正合列 \(0\to A\to B\to C\to0\)：右导出的连接升一次，适用于 \(n\ge0\)；左导出的连接降一次，适用于 \(n\ge1\)。模范畴中的 Ext 属于右导出，Tor 属于左导出；Ext 的第一变量反变，还需在相应长正合列中反转对象的顺序。
+\cref{b4:tab:derived-conventions}集中列出两种导出的消解与次数约定，其中左、右正合性保证零次导出与原函子相同。表中的连接态射对应短正合列 \(0\to A\to B\to C\to0\)：右导出的连接升一次，适用于 \(n\ge0\)；左导出的连接降一次，适用于 \(n\ge1\)。模范畴中的 Ext 属于右导出，Tor 属于左导出。一般定义中的 \(F\) 是协变函子，而固定左 \(R\) 模 \(N\) 后，\(\operatorname{Hom}_R(-,N)\) 应看作协变函子 \((R\text{-}\mathbf{Mod})^{\mathrm{op}}\to\mathbf{Ab}\)。所以第一变量的 Ext 是在反范畴上取右导出，回到通常的左模箭头时，长正合列的对象顺序也反转。
 
 \input{Tables/DerivedFunctorConventions}
 
@@ -63,6 +106,8 @@ L_nF(f+g)=L_nF(f)+L_nF(g).
 
 \subsection{\texorpdfstring{\(\delta\)-函子与泛性质}{\AlgebraPdfDelta-函子与泛性质}}
 \label{b4:subsec:0801:02}
+
+从每个短正合列得到一条长正合列，还要能比较这些长正合列：原短正合列之间的态射应诱导长正合列之间的交换图。\(\delta\)-函子把这一整套构造作为数据，不只记录各次同调对象。
 
 \begin{definition}\label{b4:def:delta-functor}
 设 \(\mathcal A,\mathcal B\) 是交换范畴。一族加性函子 \(T^n:\mathcal A\to\mathcal B\)，\(n\ge0\)，若对每个短正合列 \(0\to A\to B\to C\to0\) 配有态射 \(\delta^n:T^n(C)\to T^{n+1}(A)\)，使
@@ -80,13 +125,22 @@ T^n(C)\arrow[r,"\delta_T^n"]\arrow[d,"a_C^n"']&T^{n+1}(A)\arrow[d,"a_A^{n+1}"]\\
 U^n(C)\arrow[r,"\delta_U^n"']&U^{n+1}(A)
 \end{tikzcd}
 \]
-同调版本由 \(T_n\) 和连接态射 \(T_n(C)\to T_{n-1}(A)\) 组成，长正合列在右端以 \(T_0(C)\to0\) 结束。右导出函子组成上同调 \(\delta\)-函子，左导出函子组成同调 \(\delta\)-函子。
+同调版本由一族加性函子 \(T_n:\mathcal A\to\mathcal B\)（\(n\ge0\)）及连接态射 \(\delta_n:T_n(C)\to T_{n-1}(A)\)（\(n\ge1\)）组成，要求对每个短正合列得到自然的长正合列
+\[
+\begin{aligned}
+\cdots&\longrightarrow T_2(C)\xrightarrow{\delta_2}T_1(A)
+\longrightarrow T_1(B)\longrightarrow T_1(C)\\
+&\xrightarrow{\delta_1}T_0(A)\longrightarrow T_0(B)
+\longrightarrow T_0(C)\longrightarrow0.
+\end{aligned}
+\]
+由\cref{b4:prop:horseshoe-functor-sequence}，右导出函子组成上同调 \(\delta\)-函子，左导出函子组成同调 \(\delta\)-函子。
 
 \begin{definition}\label{b4:def:universal-delta-functor}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若对任意上同调 \(\delta\)-函子 \(U^\bullet:\mathcal A\to\mathcal B\)，每个自然变换 \(T^0\to U^0\) 都唯一延拓为 \(\delta\)-函子态射 \(T^\bullet\to U^\bullet\)，则称 \(T^\bullet\) 为\term[fan-delta-hanzi]{泛上同调 \(\delta\)-函子}[universal cohomological delta functor]。对同调 \(\delta\)-函子 \(T_\bullet:\mathcal A\to\mathcal B\)，若对任意同调 \(\delta\)-函子 \(U_\bullet:\mathcal A\to\mathcal B\)，每个 \(U_0\to T_0\) 都唯一延拓为 \(\delta\)-函子态射 \(U_\bullet\to T_\bullet\)，则称 \(T_\bullet\) 具有同调泛性。
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若对任意上同调 \(\delta\)-函子 \(U^\bullet:\mathcal A\to\mathcal B\)，每个自然变换 \(T^0\to U^0\) 都唯一延拓为 \(\delta\)-函子态射 \(T^\bullet\to U^\bullet\)，则称 \(T^\bullet\) 为\term[fan-delta-hanzi]{泛上同调 \(\delta\)-函子}[universal cohomological delta functor]。对同调 \(\delta\)-函子 \(T_\bullet:\mathcal A\to\mathcal B\)，若对任意同调 \(\delta\)-函子 \(U_\bullet:\mathcal A\to\mathcal B\)，每个自然变换 \(U_0\to T_0\) 都唯一延拓为 \(\delta\)-函子态射 \(U_\bullet\to T_\bullet\)，则称 \(T_\bullet\) 具有同调泛性。
 \end{definition}
 
-这里方向不能省略。右导出函子从自身的零次项出发控制到其他理论的映射；左导出函子接收其他理论到自身零次项的映射。它们分别由余核式和核式的归纳构造产生。相同零次函子的两个泛 \(\delta\)-函子必自然同构：双向延拓零次恒等，再用唯一性证明两个复合都是恒等。
+这里方向不能省略。右导出函子从自身的零次项出发控制到其他理论的映射；左导出函子接收其他理论到自身零次项的映射。这个方向差别可以从下面\cref{b4:thm:derived-universal}的第一次构造看出：上同调情形会得到满态射 \(T^0(Q)\twoheadrightarrow T^1(A)\)，所以由已知 \(T^0\to U^0\) 下降构造 \(T^1(A)\to U^1(A)\)；同调情形会得到单态射 \(T_1(A)\hookrightarrow T_0(K)\)，所以由已知 \(U_0\to T_0\) 分解构造 \(U_1(A)\to T_1(A)\)。它们分别使用商对象的下降和子对象的分解。相同零次函子的两个泛 \(\delta\)-函子必自然同构：双向延拓零次恒等，再用唯一性证明两个复合都是恒等。
 
 \subsection{\texorpdfstring{消去性与泛 \(\delta\)-函子}{消去性与泛 \AlgebraPdfDelta-函子}}
 \label{b4:subsec:0801:03}
@@ -95,25 +149,39 @@ U^n(C)\arrow[r,"\delta_U^n"']&U^{n+1}(A)
 设 \(T:\mathcal A\to\mathcal B\) 是交换范畴间的加性函子。若每个对象 \(A\) 都有单态射 \(j:A\to E\) 使 \(T(j)=0\)，则称 \(T\) \term[xiaoqvxing]{可消去}[effaceable]。若每个对象 \(A\) 都有满态射 \(P\to A\) 使其在 \(T\) 下为零，则称 \(T\) 可对偶消去。
 \end{definition}
 
-消去的是一个诱导态射，不一定要求 \(T(E)=0\)。导出函子的消去性更强：嵌入内射对象便使其正次取值本身为零。
+消去的是一个诱导态射，不一定要求 \(T(E)=0\)。导出函子的消去性更强：若 \(j:A\hookrightarrow I\) 且 \(I\) 内射，则对 \(n>0\)，
+\[
+R^nF(j):R^nF(A)\longrightarrow R^nF(I)=0.
+\]
+目标对象为零当然使该态射为零；左导出用投射满态射 \(P\twoheadrightarrow A\) 得到从 \(L_nF(P)=0\) 出发的零态射。由\cref{b4:prop:derived-degree-zero}，这只需要 \(F\) 加性，不需要它单侧正合。
 
 \begin{theorem}[消去性与泛性]\label{b4:thm:derived-universal}
-设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若每个 \(T^n\)、\(n>0\)，均可消去，则它是泛上同调 \(\delta\)-函子。对偶地，正次均可对偶消去的同调 \(\delta\)-函子具有同调泛性。特别地，对加性函子 \(F:\mathcal A\to\mathcal B\)，若 \(\mathcal A\) 有足够多内射对象且 \(F\) 左正合，则 \(R^\bullet F\) 具有上同调泛性；若 \(\mathcal A\) 有足够多投射对象且 \(F\) 右正合，则 \(L_\bullet F\) 具有同调泛性。
+设 \(\mathcal A,\mathcal B\) 为交换范畴，\(T^\bullet:\mathcal A\to\mathcal B\) 为上同调 \(\delta\)-函子。若每个 \(T^n\)、\(n>0\)，均可消去，则它是泛上同调 \(\delta\)-函子。对偶地，正次均可对偶消去的同调 \(\delta\)-函子具有同调泛性。特别地，对加性函子 \(F:\mathcal A\to\mathcal B\)，若 \(\mathcal A\) 有足够多内射对象，则 \(R^\bullet F\) 具有上同调泛性；若 \(\mathcal A\) 有足够多投射对象，则 \(L_\bullet F\) 具有同调泛性。
 \end{theorem}
 \begin{proof}
-给定 \(a^0:T^0\to U^0\)。归纳假定次数小于 \(n\) 的自然变换已定义，并与已有连接态射相容。对 \(A\) 取单态射 \(j:A\to E\)，使 \(T^n(j)=0\)，记 \(Q=E/A\)。正合性给出满态射
+任取上同调 \(\delta\)-函子 \(U^\bullet\) 及自然变换 \(a^0:T^0\to U^0\)。对 \(n\ge1\)，归纳假定次数小于 \(n\) 的自然变换已定义，并与已有连接态射相容。对 \(A\) 取单态射 \(j:A\to E\)，使 \(T^n(j)=0\)，记 \(q:E\twoheadrightarrow Q=\operatorname{coker}j\)。所对应的长正合列含有
 \[
-\delta_T:T^{n-1}(Q)\longrightarrow T^n(A),
+T^{n-1}(E)\xrightarrow{T^{n-1}(q)}T^{n-1}(Q)
+\xrightarrow{\delta_T}T^n(A)\xrightarrow{T^n(j)}T^n(E).
+\]
+因为特意选择了 \(T^n(j)=0\)，正合性给出 \(\operatorname{im}\delta_T=\ker T^n(j)=T^n(A)\)。因此 \(\delta_T\) 是满态射，且
+\[
+\delta_T:T^{n-1}(Q)\twoheadrightarrow T^n(A),
 \qquad \ker\delta_T=\operatorname{im}\bigl(T^{n-1}(E)\to T^{n-1}(Q)\bigr).
 \]
-复合 \(\delta_Ua_Q^{n-1}\) 在这个核上为零：由低次自然性，其在 \(T^{n-1}(E)\) 上的值等于先用 \(a_E^{n-1}\)，再沿 \(U\) 的相邻两个态射复合，而后者为零。因此它唯一下降为
+复合 \(\delta_Ua_Q^{n-1}\) 在这个核上为零，具体等式是
+\[
+\delta_Ua_Q^{n-1}T^{n-1}(q)
+=\delta_UU^{n-1}(q)a_E^{n-1}=0.
+\]
+第一个等号来自低次自然性，第二个来自 \(U\) 的长正合列中相邻两个态射的复合为零。在交换范畴中，满态射 \(\delta_T\) 是其核的余核；因此零化该核的复合唯一经过它下降，得到
 \[
 a_A^n:T^n(A)\longrightarrow U^n(A),
 \qquad a_A^n\delta_T=\delta_Ua_Q^{n-1}.
 \]
 这里 \(\delta_T\) 是满态射，所以等式唯一决定 \(a_A^n\)；任何与连接态射相容的延拓都必须取此值。
 
-检验选择独立性。若另选 \(j':A\to E'\)，则 \(j''=(j,j'):A\to E\oplus E'\) 仍单，且被 \(T^n\) 零化。记 \(Q''=\operatorname{coker}j''\)。向 \(E\) 的投影 \(\pi_E\) 诱导下图，其中两行短正合：
+两个消去嵌入未必能直接互相比较，可以先构造一个同时映向它们的嵌入，再利用连接态射的自然性。若另选 \(j':A\to E'\)，则 \(j''=(j,j'):A\to E\oplus E'\) 仍单，因为它复合到 \(E\) 的投影就是单态射 \(j\)；\(T^n\) 加性又使 \(T^n(j'')\) 的两个分量为 \(T^n(j)=T^n(j')=0\)，故它也被零化。记 \(Q''=\operatorname{coker}j''\)。向 \(E\) 的投影 \(\pi_E\) 诱导下图，其中两行短正合：
 \[
 \begin{tikzcd}[column sep=small,row sep=large]
 0\arrow[r]&A\arrow[r,"j''"]\arrow[d,"1_A"']
@@ -122,14 +190,14 @@ a_A^n:T^n(A)\longrightarrow U^n(A),
 0\arrow[r]&A\arrow[r,"j"']&E\arrow[r]&Q\arrow[r]&0.
 \end{tikzcd}
 \]
-向 \(E'\) 的投影给出同样的比较图。用下标 \(j,j''\) 区分两种选择所得的候选态射。低次自然性及连接态射的自然性给出
+这样，上行构造同时通过两个投影与原来的两种构造比较。向 \(E'\) 的投影给出同样的比较图。用下标 \(j,j''\) 区分两种选择所得的候选态射。低次自然性及连接态射的自然性给出
 \[
 a_{A,j}^n\delta_T''=\delta_U''a_{Q''}^{n-1}
 =a_{A,j''}^n\delta_T''.
 \]
 上行的 \(\delta_T''\) 为满态射，故 \(a_{A,j}^n=a_{A,j''}^n\)。对另一投影重复此论证，得到 \(a_{A,j'}^n=a_{A,j''}^n\)，从而构造不依赖选择。
 
-检验对任意 \(f:A\to B\) 的自然性。选分别消去 \(T^n(A),T^n(B)\) 的 \(j_A:A\to E_A\)、\(j_B:B\to E_B\)。用 \(j_f=(j_A,j_B\circ f):A\to E_A\oplus E_B\) 作为 \(A\) 的选择，记 \(Q_f=\operatorname{coker}j_f\)、\(Q_B=\operatorname{coker}j_B\)。向 \(E_B\) 的投影诱导
+为了对任意 \(f:A\to B\) 比较 \(a_A^n,a_B^n\)，需要把 \(f\) 纳入一张消去短正合列之间的比较图。选单态射 \(j_A:A\to E_A\)、\(j_B:B\to E_B\)，分别使 \(T^n(j_A)=0\)、\(T^n(j_B)=0\)。用 \(j_f=(j_A,j_B\circ f):A\to E_A\oplus E_B\) 作为 \(A\) 的选择，记 \(Q_f=\operatorname{coker}j_f\)、\(Q_B=\operatorname{coker}j_B\)。第一分量 \(j_A\) 保证 \(j_f\) 单，而 \(T^n(j_A)=0\) 及 \(T^n(j_Bf)=T^n(j_B)T^n(f)=0\) 保证它仍是消去选择。向 \(E_B\) 的投影诱导
 \[
 \begin{tikzcd}[column sep=small,row sep=large]
 0\arrow[r]&A\arrow[r,"j_f"]\arrow[d,"f"']
@@ -144,11 +212,33 @@ a_{A,j}^n\delta_T''=\delta_U''a_{Q''}^{n-1}
 =\delta_{U,B}a_{Q_B}^{n-1}T^{n-1}(\bar f)
 =\bigl(a_B^nT^n(f)\bigr)\delta_{T,f}.
 \]
-消去满态射 \(\delta_{T,f}\)，即得 \(U^n(f)a_A^n=a_B^nT^n(f)\)。
+由于 \(\delta_{T,f}\) 是满态射，即得 \(U^n(f)a_A^n=a_B^nT^n(f)\)。
 
-最后检验与任意 \(0\to A\xrightarrow{i}B\to C\to0\) 的连接态射相容。选择 \(j:B\to E\) 消去 \(T^n(B)\)，则 \(ji:A\to E\) 消去 \(T^n(A)\)。原短正合列映入 \(0\to A\to E\to E/A\to0\)，其中左端为恒等。定义式已保证后一列的相容；把它与 \(C\to E/A\) 的低次自然性复合，就得到原列的相容。归纳完成存在、自然性及唯一性。
+还需检验与任意短正合列 \(0\to A\xrightarrow{i}B\xrightarrow{p}C\to0\) 的连接态射相容。取 \(j:B\hookrightarrow E\) 使 \(T^n(j)=0\)，则 \(T^n(ji)=0\)，可用 \(ji:A\hookrightarrow E\) 定义 \(a_A^n\)。令 \(q:E\twoheadrightarrow Q=\operatorname{coker}(ji)\)。由于 \(qji=0\)，余核 \(p\) 的泛性质给出 \(v:C\to Q\)，使 \(vp=qj\)。这就把原列通过左端恒等、中间的 \(j\) 和右端的 \(v\) 映到 \(0\to A\xrightarrow{ji}E\xrightarrow{q}Q\to0\)。用下标 \(p,q\) 区分这两列的连接态射，其自然性及低次自然性给出
+\[
+\begin{aligned}
+a_A^n\delta_{T,p}
+&=a_A^n\delta_{T,q}T^{n-1}(v)\\
+&=\delta_{U,q}a_Q^{n-1}T^{n-1}(v)\\
+&=\delta_{U,q}U^{n-1}(v)a_C^{n-1}
+=\delta_{U,p}a_C^{n-1}.
+\end{aligned}
+\]
+第二个等号是用消去列定义 \(a_A^n\) 时得到的等式，最后一个来自连接态射对两列比较的自然性。故构造与每条短正合列的连接态射相容，归纳得到所需 \(\delta\)-函子态射；每一步由满态射唯一决定，故延拓唯一。
 
-把论证同时用于 \(\mathcal A^{\mathrm{op}}\) 与 \(\mathcal B^{\mathrm{op}}\)，单态射变满态射，余核下降变核分解，自然变换的方向也反转，遂得同调版本。最后，\cref{b4:prop:derived-degree-zero}使内射嵌入、投射满射消去所有正次导出函子，故可应用已证判据。
+同调版本的第一步可直接写出。任取同调 \(\delta\)-函子 \(U_\bullet\) 及自然变换 \(a_0:U_0\to T_0\)。对 \(n\ge1\)，归纳假设低于 \(n\) 的分量已经构造。对 \(A\) 选满态射 \(e:P\twoheadrightarrow A\)，使 \(T_n(e)=0\)，并记 \(k:K\hookrightarrow P\) 为其核。长正合列中的片段为
+\[
+T_n(P)\xrightarrow{T_n(e)}T_n(A)
+\xrightarrow{\delta_T}T_{n-1}(K)\xrightarrow{T_{n-1}(k)}T_{n-1}(P).
+\]
+因为 \(T_n(e)=0\)，\(\delta_T\) 单，并把 \(T_n(A)\) 识别为 \(T_{n-1}(k)\) 的核。低次自然性又给出
+\[
+T_{n-1}(k)a_{K,n-1}\delta_U
+=a_{P,n-1}U_{n-1}(k)\delta_U=0.
+\]
+所以 \(a_{K,n-1}\delta_U:U_n(A)\to T_{n-1}(K)\) 唯一经过这个核分解为 \(a_{A,n}:U_n(A)\to T_n(A)\)。这说明同调泛性为何接收 \(U_0\to T_0\) 的延拓。其余选择独立性、自然性与连接相容性，把上面的论证同时用于 \(\mathcal A^{\mathrm{op}}\) 与 \(\mathcal B^{\mathrm{op}}\) 即得：单态射变满态射，余核下降变核分解，自然变换的方向也反转。
+
+最后，\cref{b4:prop:derived-degree-zero}使内射嵌入、投射满射消去所有正次导出函子，故可应用已证判据。左、右正合性只在该命题的零次同构中使用。
 \end{proof}
 
 这一泛性质确定的不仅是各个同调对象，也包括所有态射和连接态射。以后从另一种消解或另一种构造得到同一理论时，可以用零次的自然同构来识别整套长正合列。

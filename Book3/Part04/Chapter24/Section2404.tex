@@ -9,50 +9,110 @@
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 概形纤维积的泛性质、存在性及仿射张量积模型
+%
+% * 纤维积的泛性质图、仿射目标由全局函数控制、存在性与张量积模型
+% * 概形纤维的底空间与点逆像相同，结构层还保留厚度和剩余域；平方映射的分歧纤维
 % * 仿射局部定义的平展态射及其换基、复合稳定性；开浸入与实数到复数的例子
-% * 对角闭嵌入、有限型与固有性的定义；双原点直线不分离
-% * 任意基底上射影空间闭子概形的固有性：齐次分量的有限性、普遍闭性及全部标准乘积图上的对角商环计算
+% * 闭浸入、分离、有限型及固有性分别说明；普遍闭性不能由映射自身闭代替
+% * 任意基底的射影固有性：空纤维、高次齐次分量在邻域消失、无关理想幂零，以及乘积图中的对角商环
 % * Hartshorne 赋值判据与射影固有性引文的 Noether 范围
+%
+% ---
+%
 
 \subsection{纤维积与分离性}
 \label{b3:subsec:2404:01}
 
 前面构造了概形和具体黏合。进一步研究态射时，需要同时比较一个空间与所有可能的基变换。为此先说明纤维积；它在仿射环上就是已经熟悉的张量积。
 
-\begin{definition}\label{b3:def:scheme-fiber-product}
-设 \(X,Y,T\) 为概形，并给定态射 \(X\to T\)、\(Y\to T\)。若概形 \(P\) 带有到 \(X,Y\) 的投影，且它们与到 \(T\) 的态射复合后相同，并且对任意概形 \(Z\) 及态射 \(Z\to X\)、\(Z\to Y\)，只要这两个态射到 \(T\) 的复合相同，就存在唯一态射 \(Z\to P\) 使它与两投影复合后得到给定的态射，则称 \(P\) 为\term[xianwei-ji]{纤维积}[fiber product]，记为 \(X\times_TY\)。投影 \(X\times_TY\rightarrow Y\) 称为 \(X\rightarrow T\) 沿 \(Y\rightarrow T\) 的基变换。
-\end{definition}
+\begin{definition}\label{b3:def:scheme-fiber-product}\label{b3:def:scheme-theoretic-fiber}
+设 \(X,Y,T\) 为概形，并给定态射 \(f:X\to T\)、\(g:Y\to T\)。若概形 \(P\) 带有投影 \(p_X:P\to X\)、\(p_Y:P\to Y\)，满足 \(fp_X=gp_Y\)，并且对任意概形 \(Z\) 及态射 \(a:Z\to X\)、\(b:Z\to Y\)，只要 \(fa=gb\)，就存在唯一态射 \(h:Z\to P\) 满足 \(p_Xh=a\)、\(p_Yh=b\)，则称 \(P\) 为\term[xianwei-ji]{纤维积}[fiber product]，记为 \(X\times_TY\)。其泛性质由下图表示：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+Z \arrow[drr,bend left=18,"a"]
+  \arrow[ddr,bend right=18,"b"']
+  \arrow[dr,dashed,"{\exists!\,h}"] & & \\
+& P \arrow[r,"p_X"] \arrow[d,"p_Y"']
+  \arrow[dr,phantom,"\lrcorner",very near start]
+& X \arrow[d,"f"] \\
+& Y \arrow[r,"g"'] & T
+\end{tikzcd}
+\]
+等价地，若 \(\operatorname{Hom}\) 表示概形态射集合，对每个 \(Z\) 都有自然双射
+\[
+\operatorname{Hom}(Z,P)
+\cong\operatorname{Hom}(Z,X)
+\times_{\operatorname{Hom}(Z,T)}\operatorname{Hom}(Z,Y).
+\]
+投影 \(X\times_TY\rightarrow Y\) 称为 \(X\rightarrow T\) 沿 \(Y\rightarrow T\) 的基变换。
 
-\begin{proposition}\label{b3:prop:scheme-fiber-products-exist}
+对概形态射 \(u:X\to Y\) 及点 \(y\in Y\)，由剩余域给出的自然态射 \(\operatorname{Spec}\kappa(y)\to Y\) 作基变换，所得 \(\kappa(y)\) 上概形
+\[
+X_y=X\times_Y\operatorname{Spec}\kappa(y)
+\]
+称为 \(u\) 在 \(y\) 处的\term[gaixing-xianwei]{概形纤维}[scheme-theoretic fiber]。
+\end{definition}
+\symidx{\(X\times_TY\)：概形在 \(T\) 上的纤维积}
+\symidx{\(X_y\)：态射在点 \(y\) 处的概形纤维}
+
+\begin{proposition}\label{b3:prop:scheme-fiber-products-exist}\label{b3:prop:scheme-hom-affine-target}\label{b3:prop:scheme-ramified-fibers}
+对任意概形 \(Z\) 与交换环 \(A\)，取全局截面给出自然双射
+\[
+\operatorname{Hom}_{\mathrm{Sch}}(Z,\operatorname{Spec}A)
+\cong\operatorname{Hom}_{\mathrm{Ring}}(A,\Gamma(Z,\mathcal O_Z)).
+\]
 概形的纤维积存在，并在保留投影的意义下唯一。对交换环同态 \(A\rightarrow B\)、\(A\rightarrow C\)，有
 \[
 \operatorname{Spec}B\times_{\operatorname{Spec}A}\operatorname{Spec}C
 \cong\operatorname{Spec}(B\otimes_AC).
 \]
+具体地，设 \(k\) 为代数闭域，\(\operatorname{char}k\ne2\)，令 \(u:\operatorname{Spec}k[t]\to\operatorname{Spec}k[x]\) 对应于 \(x\mapsto t^2\)。对任意 \(a\in k\)，闭点 \((x-a)\) 上的概形纤维为 \(\operatorname{Spec}\bigl(k[t]/(t^2-a)\bigr)\)。\(a=0\) 时它为一个长度二的非约化点，\(a\ne0\) 时它为两个约化点；各闭纤维的总长度均为二。
 \end{proposition}
 \begin{proof}
-先把\cref{b3:thm:affine-scheme-hom}稍作扩展：对任意概形 \(Z\)，态射 \(Z\rightarrow\operatorname{Spec}A\) 与环同态 \(A\rightarrow\Gamma(Z,\mathcal O_Z)\) 对应。给定环同态后，在 \(Z\) 的各仿射开集上使用该定理；限制到重叠的更小仿射开集时，两者由相同的截面限制决定，所以能唯一黏合。这也证明此扩展的唯一性。张量积的泛性质现在直接给出上式，包括以任意 \(Z\) 检验的纤维积性质。
+先证明到仿射目标的态射公式。任一 \(v:Z\to\operatorname{Spec}A\) 的层同态在全局截面上给出 \(A\to\Gamma(Z,\mathcal O_Z)\)。反之，给定 \(\alpha:A\to\Gamma(Z,\mathcal O_Z)\)，选 \(Z\) 的仿射开覆盖 \(U_i=\operatorname{Spec}R_i\)。将 \(\alpha\) 与截面限制复合，得到 \(A\to R_i\)，再用\cref{b3:thm:affine-scheme-hom}得到 \(v_i:U_i\to\operatorname{Spec}A\)。在 \(U_i\cap U_j\) 的任一更小仿射开集上，两份环同态都来自 \(\alpha\) 的同一个限制，故 \(v_i,v_j\) 相同。它们于是唯一黏合为 \(v\)。在每张仿射图上使用原来的双射，可见这两种构造互逆；限制与复合相容，也证明关于 \(Z,A\) 的自然性。
+
+现在取 \(T=\operatorname{Spec}A\)、\(X=\operatorname{Spec}B\)、\(Y=\operatorname{Spec}C\)。对任意概形 \(Z\)，两份到 \(X,Y\) 的态射若在 \(T\) 上相同，便对应于两份到 \(\Gamma(Z,\mathcal O_Z)\) 的环同态在 \(A\) 上相同。张量积的泛性质将它们唯一合成为 \(B\otimes_AC\to\Gamma(Z,\mathcal O_Z)\)。刚证的公式再将它转成唯一的 \(Z\to\operatorname{Spec}(B\otimes_AC)\)，证明仿射纤维积公式，包括任意 \(Z\) 的检验。
 
 若 \(X\times_TY\) 已存在，则 \(X\) 的开子概形 \(U\) 在第一投影下的原像具有 \(U\times_TY\) 的泛性质。假设 \(X\) 有开覆盖 \(X_i\)，且各 \(X_i\times_TY\) 存在；在重叠处，这些空间的开子概形都表示同一个纤维积，故由泛性质唯一同构。唯一性还保证三重交集的余圈条件。黏合它们并黏合投影，所得空间对任意 \(Z\) 可在 \(Z\rightarrow X\) 的开原像上检验泛性质，因此是 \(X\times_TY\)。
 
 从仿射环公式出发，先在 \(T,Y\) 仿射时对 \(X\) 使用这一黏合步骤，再交换 \(X,Y\)，处理 \(T\) 仿射的一般情形。最后把 \(T\) 作仿射开覆盖，同时限制 \(X,Y\) 后再次黏合。存在性成立；任意两个实现由泛性质给出互逆同构。
+
+对平方映射，用仿射公式得到闭纤维环
+\[
+k[t]\otimes_{k[x]}k\cong k[t]/(t^2-a),
+\]
+其中 \(k[x]\to k\) 取 \(x\mapsto a\)。\(a=0\) 时商环为 \(k[t]/(t^2)\)，唯一素理想为 \((t)\)，长度为二。\(a\ne0\) 时，代数闭性给出 \(b\in k^*\) 使 \(b^2=a\)，而特征不为二使 \(b,-b\) 互异。中国剩余定理给出 \(k[t]/(t^2-a)\cong k\times k\)，两个局部因子各长一，总长度仍为二。原扩张以 \(1,t\) 为自由 \(k[x]\) 基，所以是秩二的有限平坦扩张；这里变化的是纤维的底点数与约化性，纤维代数的 \(k\) 维数始终为二。
 \end{proof}
 
-这也解释为何纤维积的点集通常不是点集纤维积。例如
+对概形态射 \(u:X\to Y\) 与 \(y\in Y\)，概形纤维的底空间可与集合 \(u^{-1}(y)\) 自然同胚，但它还带有该集合本身没有规定的结构层和剩余域。仿射地，若 \(Y=\operatorname{Spec}A\)、\(y\) 对应 \(\mathfrak p\)，而 \(U=\operatorname{Spec}B\subseteq X\) 映入 \(Y\)，则
+\[
+U_y=\operatorname{Spec}(B\otimes_A\kappa(\mathfrak p))
+=\operatorname{Spec}(B_{A\setminus\mathfrak p}/\mathfrak pB_{A\setminus\mathfrak p}).
+\]
+局部化与商环的素理想对应，把这些点恰好识别为 \(B\) 中收缩到 \(\mathfrak p\) 的素理想；基本开集的对应还给出子空间拓扑。逐仿射图黏合，便得到上述同胚。平方映射的原点纤维只有一个底点，却保留平方零元素，差别发生在概形结构中。
+
+\ProseParagraphBreak
+一般的纤维积则不只由一对底层点决定。例如
 \(\operatorname{Spec}\mathbb C\times_{\operatorname{Spec}\mathbb R}\operatorname{Spec}\mathbb C\)
-由 \(\mathbb C\otimes_{\mathbb R}\mathbb C\cong\mathbb C\times\mathbb C\) 给出两个点，而两个因子的底空间各只有一个点。
+的环同构为
+\[
+\mathbb C\otimes_{\mathbb R}\mathbb C\longrightarrow\mathbb C\times\mathbb C,
+\qquad z\otimes w\longmapsto(zw,z\bar w).
+\]
+这由 \(\mathbb C[T]/(T^2+1)\cong\mathbb C\times\mathbb C\) 的两个根 \(i,-i\) 给出，故纤维积有两个点，而两个因子的底空间各只有一个点。两份乘法分别采用恒等与复共轭这两种 \(\mathbb R\) 嵌入；相同的底点对仍可产生不同的纤维积点。
 
 \begin{definition}\label{b3:def:etale-scheme-morphism}
 设 \(f:X\rightarrow Y\) 为概形态射。若对每个 \(x\in X\)，都存在仿射开邻域 \(U=\operatorname{Spec}B\subseteq X\)、\(V=\operatorname{Spec}A\subseteq Y\)，使 \(x\in U\)、\(f(U)\subseteq V\)，且所对应的环同态 \(A\rightarrow B\) 为有限展示，则称 \(f\) 为\term[jubu-youxian-zhanshi]{局部有限展示}[locally of finite presentation]的态射。若这些邻域还可取到使每个 \(A\rightarrow B\) 平展，即 \(B\) 为有限展示 \(A\) 代数、在 \(A\) 上平坦且 \(\Omega_{B/A}=0\)，则称 \(f\) 为平展态射。
 \end{definition}
 
-由\cref{b3:thm:etale-equivalent-characterizations}，定义中的环条件也可写成有限展示且形式平展，或在源的每一点附近具有\cref{b3:def:standard-smooth-model}中的标准平展模型。因此概形的平展性由这些仿射邻域中的有限组方程及其可逆 Jacobian 行列式描述；有限展示是在这些邻域上要求的。
+由\cref{b3:thm:etale-equivalent-characterizations}，定义中的环条件也可写成有限展示且形式平展，或在源的每一点附近具有\cref{b3:def:standard-smooth-model}中的标准平展模型。因此概形的平展性由这些仿射邻域中的有限组方程及其可逆 Jacobian 行列式描述。这里同时选择源的 \(U\) 和目标的 \(V\)，有限展示是在这两个邻域的坐标环之间要求的；茎同态本身的有限性不能替代这份邻域上的有限数据。
 
 \begin{proposition}\label{b3:prop:etale-scheme-stability}
 设 \(f:X\rightarrow Y\) 为平展概形态射。对任意概形态射 \(Y'\rightarrow Y\)，基变换 \(X\times_YY'\rightarrow Y'\) 平展。若 \(g:Y\rightarrow Z\) 也是平展概形态射，则复合 \(g\circ f:X\rightarrow Z\) 平展。
 \end{proposition}
 \begin{proof}
+先核对环论中的有限展示、形式平展及局部化稳定性，再把所选的源、目标仿射图缩到相容的位置。后一项保证环论计算确实描述给定点附近的概形态射。
+
 先说明所需的环运算。有限展示在基变换下保持，因为有限组生成元及关系的系数只需映到新底环。它也在复合下保持：若 \(B=A[T_1,\ldots,T_r]/(p_1,\ldots,p_s)\)、\(C=B[S_1,\ldots,S_v]/(q_1,\ldots,q_w)\)，把 \(q_j\) 的有限个 \(B\) 系数提升到 \(A[T_1,\ldots,T_r]\)，则 \(p_i\) 与这些提升后的 \(q_j\) 一起给出 \(C\) 在 \(A\) 上的有限展示。再由 \(B_b=B[T]/(bT-1)\)，目标上的单元素局部化也保持有限展示。\cref{b3:prop:formal-properties-stability}保证形式平展性在复合、基变换及目标局部化下保持；与\cref{b3:thm:etale-equivalent-characterizations}合用，便知平展环同态也保持于这些运算。
 
 还需把仿射图取到相容的位置。两张含同一点的仿射开集 \(V_0,V_1\) 有共同的基本开邻域：先在 \(V_0\) 内取含该点的 \(D(a)\subseteq V_0\cap V_1\)，再在 \(V_1\) 内取含该点的 \(D(c)\subseteq D(a)\)。由\cref{b3:thm:affine-sheaf-sections}，\(c\) 在 \(D(a)\) 上可写为 \(d/a^N\)，故 \(D(c)\) 在 \(V_0\) 中就是 \(D(ad)\)。这样，改变这两张图只需比较单元素局部化。
@@ -72,9 +132,20 @@ U\times_VV'=\operatorname{Spec}(B\otimes_AC).
 
 例如 \(\mathbb C=\mathbb R[T]/(T^2+1)\)，而 \(2T\) 在 \(\mathbb C\) 中可逆，故 \(\operatorname{Spec}\mathbb C\rightarrow\operatorname{Spec}\mathbb R\) 由标准平展模型给出。若一个概形态射将源同构地识别为目标的开子概形，就称它为\term[kai-jinru]{开浸入}[open immersion]。开浸入也平展：每个源点在目标的某张仿射图 \(\operatorname{Spec}A\) 中都有包含于这个开子概形的基本开邻域 \(D(a)\)，该处的环同态为 \(A\rightarrow A_a\)，它有限展示且形式平展。
 
-\begin{definition}\label{b3:def:separated-finite-type-proper}
-设 \(f:X\rightarrow Y\) 为概形态射。若它把 \(X\) 同胚地识别为 \(Y\) 的闭子空间，且层同态 \(\mathcal O_Y\rightarrow f_*\mathcal O_X\) 满射，则称它为闭嵌入。若对角态射 \(\Delta_f:X\rightarrow X\times_YX\) 是闭嵌入，则称 \(f\) 具有\term[fenli-xing]{分离性}[separatedness]。若对每个仿射开集 \(V=\operatorname{Spec}A\subseteq Y\)，其原像可被有限个仿射开集 \(\operatorname{Spec}B_i\) 覆盖，且各 \(B_i\) 为有限型 \(A\) 代数，则称 \(f\) 为有限型态射。若 \(f\) 分离、有限型，且沿任意 \(Y'\rightarrow Y\) 基变换后的映射都把闭集送到闭集，则称 \(f\) 具有\term[guyou-xing]{固有性}[properness]，或称为固有态射。若结构态射 \(X\to\operatorname{Spec}\mathbb Z\) 分离，则称概形 \(X\) 分离；讨论某个基概形 \(Y\) 上的相对分离性时，则是指所给态射 \(X\to Y\) 的分离性。
+拓扑空间的 Hausdorff 性可以用对角在普通乘积中闭来刻画。概形则要求相对纤维积中的对角成为闭嵌入，同时控制底空间与结构层。这里使用的相对纤维积也不同于点集的普通乘积，因此概形分离性不要求其 Zariski 底空间为 Hausdorff 空间。
+
+\begin{definition}\label{b3:def:separated-finite-type-proper}\label{b3:def:closed-immersion}\label{b3:def:separated-morphism}\label{b3:def:finite-type-morphism}\label{b3:def:proper-morphism}
+设 \(f:X\rightarrow Y\) 为概形态射。若它把 \(X\) 同胚地识别为 \(Y\) 的闭子空间，且层同态 \(\mathcal O_Y\rightarrow f_*\mathcal O_X\) 满射，则称它为闭嵌入。
+
+若对角态射 \(\Delta_f:X\rightarrow X\times_YX\) 是闭嵌入，则称 \(f\) 具有\term[fenli-xing]{分离性}[separatedness]。
+
+若对每个仿射开集 \(V=\operatorname{Spec}A\subseteq Y\)，其原像可被有限个仿射开集 \(\operatorname{Spec}B_i\) 覆盖，且各 \(B_i\) 为有限型 \(A\) 代数，则称 \(f\) 为有限型态射。
+
+若 \(f\) 分离、有限型，且沿任意 \(Y'\rightarrow Y\) 基变换后的映射都把闭集送到闭集，则称 \(f\) 具有\term[guyou-xing]{固有性}[properness]，或称为固有态射。因此固有性同时要求有限型、相对对角的闭嵌入及普遍闭性。
+
+若结构态射 \(X\to\operatorname{Spec}\mathbb Z\) 分离，则称概形 \(X\) 分离；讨论某个基概形 \(Y\) 上的相对分离性时，则是指所给态射 \(X\to Y\) 的分离性。
 \end{definition}
+\symidx{\(\Delta_f\)：概形态射 \(f\) 的对角态射}
 
 闭嵌入还有如下局部描述：若 \(i:X\hookrightarrow Y\) 为闭嵌入，则对每个仿射开集 \(V=\operatorname{Spec}A\subseteq Y\)，有 \(i^{-1}(V)\cong\operatorname{Spec}(A/I)\)，且限制态射由商映射 \(A\to A/I\) 给出；反过来，这些局部商映射也确定闭嵌入。这一描述见\cite[Chapter II, Corollary 5.10, p. 116]{Hartshorne1977}。它还说明闭嵌入经任意基变换仍为闭嵌入：在仿射图上，任意 \(A\) 代数 \(B\) 都满足
 \[
@@ -82,22 +153,22 @@ U\times_VV'=\operatorname{Spec}(B\otimes_AC).
 \]
 而这些局部商映射相容，能够黏合。
 
-在仿射情形中，对角对应乘法满射 \(B\otimes_AB\rightarrow B\)，所以两个仿射概形之间的态射分离。双原点直线却不分离：在来自两张不同仿射图的乘积 \(\operatorname{Spec}k[s,t]\) 中，对角的交是直线 \(s=t\) 去掉原点，缺少的原点对应两个不同原点组成的一对点。这一集合不闭。
+在仿射情形中，对角对应乘法满射 \(B\otimes_AB\rightarrow B\)，所以两个仿射概形之间的态射分离。对域 \(k\)，\(\operatorname{Spec}k[t]\) 因而分离，但其泛点不闭，底空间不是 Hausdorff。双原点直线却不分离：在来自两张不同仿射图的乘积 \(\operatorname{Spec}k[s,t]\) 中，对角的交是直线 \(s=t\) 去掉原点，缺少的原点对应两个不同原点组成的一对点。这一集合不闭。
 
 \ProseParagraphBreak
-有限环映射给出固有态射。它有限型，且源与目标均仿射，故分离；有限性经任意张量基变换保持。对有限环扩张中的闭集 \(V(J)\)，商环仍整于底环除以收缩理想，由\cref{b3:thm:lying-over}其像恰为 \(V(J\cap A)\)。任意概形基变换后，在基底的仿射开覆盖上应用此计算，便知所得映射仍闭。另一方面，\(\mathbb A_k^1\rightarrow\operatorname{Spec}k\) 虽分离且有限型，却不固有：沿 \(\mathbb A_k^1\) 基变换后，闭集 \(xy=1\) 的投影为 \(D(x)\)，它不是闭集。
+有限环映射给出固有态射。它有限型，且源与目标均仿射，故分离；有限性经任意张量基变换保持。对有限环扩张中的闭集 \(V(J)\)，商环仍整于底环除以收缩理想，由\cref{b3:thm:lying-over}其像恰为 \(V(J\cap A)\)。任意概形基变换后，在基底的仿射开覆盖上应用此计算，便知所得映射仍闭。另一方面，对域 \(k\)，\(\mathbb A_k^1\rightarrow\operatorname{Spec}k\) 本身当然把闭集送到闭集，因为目标只有一个点；它也分离且有限型。但沿 \(\mathbb A_k^1\) 基变换后，闭集 \(xy=1\) 的投影为 \(D(x)\)，不再是闭集。因此这个态射不普遍闭，也就不固有，失败只有在改变基底后才显现。
 
 \subsection{射影空间的固有性}
 \label{b3:subsec:2404:projective-properness}
 
 射影空间能补足仿射直线投影不闭的缺陷。仍看 \(xy=1\)，把第二个因子写成 \(\mathbb P_k^1\) 上的齐次坐标 \([Y:Z]\)，原仿射图为 \(Z\ne0\)、\(y=Y/Z\)。曲线的闭包为
 \[
-xY=Z\quad\text{于 }\mathbb A_k^1\times_k\mathbb P_k^1.
+xY=Z\quad\text{于}\;\mathbb A_k^1\times_k\mathbb P_k^1.
 \]
 在 \(Y\ne0\) 的图上令 \(z=Z/Y\)，方程成为 \(z=x\)，所以整个闭包就是 \(x\mapsto(x,[1:x])\) 的图像。原来 \(x\ne0\) 的部分在其中稠密；当 \(x=0\) 时，新增的纤维是无穷远点 \([1:0]\)。射影化把原投影遗漏的底点补回，所得像为整条仿射直线。
 
 \ProseParagraphBreak
-一般地，闭纤维中没有射影点，意味着每个齐次坐标都幂零；有限个坐标使这种消失可由同一个齐次次数检测，再用 Nakayama 引理把它扩大到基底的邻域。下面用这一计算直接证明普遍闭性。Hartshorne 的赋值判据要求态射有限型且源概形 Noether；该书随后在 Noether 概形之间证明射影态射固有\cite[Chapter II, Theorems 4.7 and 4.9, pp. 101--104]{Hartshorne1977}。固有性的定义见同书\cite[Chapter II, p. 100]{Hartshorne1977}。
+证明固有性有三项任务：标准图直接给出有限型性，全部乘积图上的对角计算给出分离性，普遍闭性则需要追踪一个射影纤维为何为空。空纤维使每个齐次坐标幂零，有限个坐标将其合成高次齐次分量的共同消失；这些分量有限生成，再用 Nakayama 引理把消失扩大到基底邻域，便证明像的补集开。这里检查任意基点，不限于闭点。Hartshorne 的赋值判据要求态射有限型且源概形 Noether；该书随后在 Noether 概形之间证明射影态射固有\cite[Chapter II, Theorems 4.7 and 4.9, pp. 101--104]{Hartshorne1977}。固有性的定义见同书\cite[Chapter II, p. 100]{Hartshorne1977}。
 
 \begin{theorem}[射影空间闭子概形的固有性]\label{b3:thm:closed-projective-proper}
 设 \(Y\) 为概形，\(r\ge0\) 为整数，并令
@@ -105,13 +176,13 @@ xY=Z\quad\text{于 }\mathbb A_k^1\times_k\mathbb P_k^1.
 若 \(X\hookrightarrow\mathbb P_Y^r\) 为闭嵌入，则复合态射 \(X\hookrightarrow\mathbb P_Y^r\rightarrow Y\) 固有。
 \end{theorem}
 \begin{proof}
-先证明投影普遍闭。令 \(A\) 为任意交换环，\(Z\subseteq\mathbb P_A^r\) 为闭集，用齐次理想 \(J\subseteq A[X_0,\ldots,X_r]\) 表示为 \(V_+(J)\)，并记 \(C=A[X_0,\ldots,X_r]/J\)。若 \(\mathfrak p\) 不在 \(Z\) 的像中，则 \(\operatorname{Proj}(C\otimes_A\kappa(\mathfrak p))\) 为空。每张 \(D_+(X_i)\) 图都为空，意味着在相应零次局部化环中 \(1=0\)，故对每个 \(i\) 都有整数 \(N_i\ge1\)，使 \(X_i^{N_i}=0\) 于纤维环。取
+先证明投影普遍闭。令 \(A\) 为任意交换环，\(Z\subseteq\mathbb P_A^r\) 为闭集，用齐次理想 \(J\subseteq A[X_0,\ldots,X_r]\) 表示为 \(V_+(J)\)，并记 \(C=A[X_0,\ldots,X_r]/J\)。标准图的局部化与取零次部分都与底环上的张量积相容，所以 \(\operatorname{Proj}(C\otimes_A\kappa(\mathfrak p))\) 是 \(\operatorname{Proj}C\) 在 \(\mathfrak p\) 处的概形纤维。其底空间与 \(Z\) 在该点的集合纤维相同，因此若 \(\mathfrak p\) 不在 \(Z\) 的像中，这个射影纤维便为空。每张 \(D_+(X_i)\) 图都为空，意味着在相应零次局部化环中 \(1=0\)，故对每个 \(i\) 都有整数 \(N_i\ge1\)，使 \(X_i^{N_i}=0\) 于纤维环。取
 \[
 N>\sum_{i=0}^r(N_i-1).
 \]
 任一次数 \(N\) 的单项式，至少有一个 \(X_i\) 的指数达到 \(N_i\)，否则总次数至多为右端。因此所有这些单项式在纤维环中为零，即 \(C_N\otimes_A\kappa(\mathfrak p)=0\)；更高次数的部分也为零。
 
-\(C_N\) 由有限个次数 \(N\) 的单项式生成，故是有限生成 \(A\) 模；\(C_N\otimes_A\kappa(\mathfrak p)=0\) 由 Nakayama 引理推出 \((C_N)_{\mathfrak p}=0\)。取有限组生成元的共同零化分母，得 \(a\notin\mathfrak p\) 使 \((C_N)_a=0\)。环 \(C\) 由次数一元素生成，所以 \((C_n)_a=0\) 对所有 \(n\ge N\) 成立。于是 \(Z\) 在 \(D(a)\) 上的原像为空。像的补集因此开，证明投影闭。
+\(C_N\) 由有限个次数 \(N\) 的单项式生成，故是有限生成 \(A\) 模；\(C_N\otimes_A\kappa(\mathfrak p)=0\) 由 Nakayama 引理推出 \((C_N)_{\mathfrak p}=0\)。取有限组生成元的共同零化分母，得 \(a\notin\mathfrak p\) 使 \((C_N)_a=0\)。环 \(C\) 由次数一元素生成，所以 \((C_n)_a=0\) 对所有 \(n\ge N\) 成立。于是 \((C_a)_+^N=0\)，每个齐次素理想都包含这个幂零的正次数理想，故 \(\operatorname{Proj}C_a=\varnothing\)。这正是 \(Z\) 在 \(D(a)\) 上的原像为空。像的补集因此开，证明投影闭；所用有限性来自有限个坐标，而不需要假设 \(A\) 是 Noether 环。
 
 射影空间的标准仿射图及其过渡同态在任意张量基变换后仍给出同样的射影空间，所以上述计算对任何仿射基变换成立。对一般概形基变换，在基底的仿射开集上检验闭集像，便得普遍闭性。
 
@@ -121,7 +192,7 @@ N>\sum_{i=0}^r(N_i-1).
 \[
 R_{ij}=A[x_\nu\ (\nu\ne i),y_\nu\ (\nu\ne j)].
 \]
-\(i=j\) 时，对角的环同态把 \(y_\nu\) 送到 \(x_\nu\)，其核由 \(y_\nu-x_\nu\) 生成，故是闭嵌入。\(i\ne j\) 时，\(U_i\cap U_j\) 的坐标环为 \(A[x_\nu\ (\nu\ne i)]_{x_j}\)，而对角对应
+\(i=j\) 时，对角的环同态把 \(y_\nu\) 送到 \(x_\nu\)，其核由 \(y_\nu-x_\nu\) 生成，故是闭嵌入。\(i\ne j\) 时，两组坐标要表示同一方向，就必须有 \(x_jy_\nu=x_\nu\)。特别是 \(\nu=i\) 时 \(x_i=1\)，关系成为 \(x_jy_i=1\)，恰好要求两张图交叠处的 \(x_j\) 可逆。因此 \(U_i\cap U_j\) 的坐标环为 \(A[x_\nu\ (\nu\ne i)]_{x_j}\)，而对角对应
 \[
 \theta_{ij}:R_{ij}\longrightarrow A[x_\nu\ (\nu\ne i)]_{x_j},
 \qquad x_\nu\longmapsto x_\nu,

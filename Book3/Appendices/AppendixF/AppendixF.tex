@@ -33,7 +33,7 @@
 本附录需要\chapref{b3:ch:02}的局部化、\chapref{b3:ch:08}的全局 Gröbner 基、\chapref{b3:ch:11}的滤过与 Hilbert--Samuel 理论，以及\chapref{b3:ch:13}的完备化。最后讨论自由消解时调用\chapref{b3:ch:21}。前三节的具体计算以完备化为止。
 
 \ProseParagraphBreak
-记 \(x=(x_1,\ldots,x_n)\)，\(k\) 为域。\cref{b3:tab:F-computational-settings}比较三种工作环中计算的完成方式；其中成员证书对应余式为零的情形。多项式系数的有限表示、局部单位的倒置与形式级数的逐阶极限提供了不同的核验依据。
+记 \(x=(x_1,\ldots,x_n)\)，\(k\) 为域。\cref{b3:tab:F-computational-settings}比较三种工作环中的单位和计算完成方式。全局与局部两行给出有限多项式等式，形式行中的商系数一般仍是无限对象，须按各阶系数检查相容性，或另给这些系数的有限表示。
 
 \begin{table}[htbp]
 \centering
@@ -41,11 +41,11 @@
 \label{b3:tab:F-computational-settings}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.17\textwidth}>{\raggedright\arraybackslash}p{.20\textwidth}>{\raggedright\arraybackslash}p{.25\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
-工作环 & 方法 & 完成方式 & 成员证书 \\
+工作环 & 方法与单位 & 完成方式 & 成员关系的依据 \\
 \midrule
-\(k[x]\) & 全局 Gröbner 基与约化 & 有限步停止 & \(f=\sum_i a_i g_i\)，\(a_i\in k[x]\) \\
-\(k[x]_{(x)}\) & 局部标准基与 Mora 约化 & 带单位乘子的有限等式 & \(uf=\sum_i a_i g_i\)，\(u(0)\ne0\)，\(u,a_i\in k[x]\) \\
-\(k[\![x]\!]\) & 局部次数序的形式除法 & 各有限阶系数最终稳定 & \(f=\sum_i q_i g_i\)，\(q_i\in k[\![x]\!]\) \\
+\(k[x]\) & 全局 Gröbner；单位为 \(k^\times\) & 良序支持有限步停止 & 有限等式 \(f=\sum_i a_i g_i\)，\(a_i\in k[x]\) \\
+\(k[x]_{(x)}\) & 局部 Mora；单位分子的常数项非零 & 带单位乘子的有限等式 & \(uf=\sum_i a_i g_i\)，\(u(0)\ne0\)，\(u,a_i\in k[x]\) \\
+\(k[\![x]\!]\) & 局部次数序除法；单位级数常数项非零 & 各阶系数稳定后取完备极限 & 形式恒等式 \(f=\sum_i q_i g_i\)；\(q_i\) 通常仍是无限级数 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -66,17 +66,22 @@
 以下各题中 \(k\) 为域；使用局部次数序时，先将低总次数放在前面，同次按指定字典序比较。
 
 \begin{exercise}\label{b3:ex:F-mixed-order}
-在 \(k[x,y]\) 中，先按 \(x\) 次数从高到低比较，同次再按 \(y\) 次数从低到高比较。证明相应局部化是 \(k[y]_{(y)}[x]\)，并判断 \(1-y\) 与 \(1-x\) 是否可逆。
+设 \(k\) 为域，\(R=k[y]_{(y)}[x]\) 为指定混合序的工作环。对 \(I=(xy-1)\subset R\)，求 \(R/I\)，并同原点局部环 \(B=k[x,y]_{(x,y)}\) 中的扩张理想 \(IB\) 比较。解释为何不能把这个混合环直接当成原点局部环。
 \end{exercise}
 \begin{solution}
-任何含 \(x\) 的单项式都大于 \(1\)，所以首单项式为 \(1\) 的多项式只能属于 \(k[y]\)，且其常数项非零；反过来每个这样的多项式首单项式确为 \(1\)。故乘性集是 \(k[y]\setminus(y)\)，局部化为 \(k[y]_{(y)}[x]\)。\(1-y\) 被倒置；\(1-x\) 是系数整环上的一次多项式，不能成为多项式环的单位，故不可逆。
+商关系使 \(y\) 可逆且 \(x=y^{-1}\)，因此 \(R/I\cong k[y]_{(y)}[1/y]=k(y)\)。任何非零多项式都等于 \(y\) 的幂乘原点非零的多项式，证明最后等式。故 \(I\) 是真极大理想。另一方面，\(xy-1\) 在原点的常数项为 \(-1\)，在 \(B\) 中为单位，所以 \(IB=B\)、\(B/IB=0\)。混合序保留全局的 \(x\) 方向，并未倒置所有原点非零多项式。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-leading-versus-initial}
-取 \(f=x^2+xy+y^3\)，同次按 \(x>y\) 的字典序比较。分别求其全局次数序首项、局部次数序首项及 \((x,y)\)-初始齐次形式。
+设 \(k\) 为域，\(R=k[\![x,y]\!]\)、\(f=(x+y)^2+x^3+y^4\)、\(I=(f)\)。求 \(f\) 的全局次数首单项式，并分别用同次 \(x>y\) 与 \(y>x\) 的局部次数序求 \(L_>(I)\)。计算 \(\operatorname{gr}_{\mathfrak m}(R/I)\) 的 Hilbert 级数与 Hilbert--Samuel 累计长度，说明哪一数据不依赖同次项的选择。
 \end{exercise}
 \begin{solution}
-全局次数序把总次数最高的 \(y^3\) 放在前面，所以首项是 \(y^3\)。局部次数序先比较次数二的 \(x^2,xy\)，其中 \(x^2\) 更大，故首项是 \(x^2\)。初始齐次形式保留全部最低次项，为 \(X^2+XY\)，不依赖这两个同次单项式谁排在前面。
+全局次数序的首单项式为 \(y^4\)。在两种局部序中，首单项式分别为 \(x^2,y^2\)。乘法的首项公式使单元素 \(\{f\}\) 成为主理想的标准基，故两首项理想为 \((x^2)\)、\((y^2)\)。最低齐次形式却总为 \((X+Y)^2\)，所以
+\[
+\operatorname{gr}_{\mathfrak m}(R/I)\cong k[X,Y]/((X+Y)^2),\qquad
+H(t)=\dfrac{1-t^2}{(1-t)^2}=\dfrac{1+t}{1-t}.
+\]
+分次片零次维数为一，其后各次为二；因此 \(\ell((R/I)/\mathfrak m^{N+1}(R/I))=1+2N\)（\(N\ge0\)），重数为二。初始齐次理想保留整条二重切线，与选哪一个首单项式不同。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-weak-certificate}
@@ -127,10 +132,14 @@ y^j-x^{2j}=(y-x^2)\sum_{r=0}^{j-1}y^{j-1-r}x^{2r}
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-truncation-insufficient}
-比较 \(k[\![x]\!]/(x^N)\) 与 \(k[\![x]\!]/(x^{N+1})\) 在模 \((x)^N\) 时的数据。说明为什么一个有限截断表本身不能决定完整长度。
+令 \(R=k[\![x_1,\ldots,x_n]\!]\)、\(\mathfrak m=(x_1,\ldots,x_n)\)、\(I\subseteq\mathfrak m\)、\(A=R/I\)、\(\mathfrak n=\mathfrak mA\)，其中 \(k\) 为域、\(n,N\ge1\)。若两个准确截断维数满足
+\[
+\dim_k A/\mathfrak n^N=\dim_k A/\mathfrak n^{N+1},
+\]
+证明这已给出停止证书 \(\mathfrak m^N\subseteq I\)，并求完整长度。指出有限生成性用在哪里。
 \end{exercise}
 \begin{solution}
-再模 \((x)^N\) 后，两者都成为 \(k[x]/(x^N)\)，基都是 \(1,x,\ldots,x^{N-1}\)。但原商的长度分别为 \(N\) 与 \(N+1\)，后者还存在非零类 \(x^N\)。故截断无法排除更高阶贡献，必须另外证明指定理想幂已经包含于原理想。
+短正合列的维数相加表明 \(\mathfrak n^N/\mathfrak n^{N+1}=0\)，即 \(\mathfrak n^N=\mathfrak n\mathfrak n^N\)。环 \(A\) 是 Noether 环，所以 \(\mathfrak n^N\) 是有限生成模；Nakayama 引理迫使它为零。因此 \(\mathfrak m^N\subseteq I\)，\(A=A/\mathfrak n^N\)，完整长度就是已计算的 \(\dim_k A/\mathfrak n^N\)，因为剩余域为 \(k\)。这里用的是两个连续且准确的截断维数相同，配合有限生成模的 Nakayama 条件；单独一份截断没有这个结论。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-jacobian}
@@ -141,10 +150,19 @@ y^j-x^{2j}=(y-x^2)\sum_{r=0}^{j-1}y^{j-1-r}x^{2r}
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-module-unit}
-在 \(R=k[x]_{(x)}\) 中，矩阵 \(F=(1-x\ \ x)\) 给出满射 \(R^2\to R\)。求其核，写出一个显式的右逆。说明在 \(k[x]\) 中是否也满射。
+设 \(k\) 为域、\(S=k[x]\)、\(R=S_{(x)}\)，矩阵
+\[
+A=\begin{pmatrix}1-x&x\\0&x\end{pmatrix}
+\]
+分别表示 \(S^2\to S^2\) 和 \(R^2\to R^2\)。给出显式基变换求核与余核，并解释局部单位消去后留下的极小自由消解，以及全局商中被局部化舍去的部分。
 \end{exercise}
 \begin{solution}
-局部右逆可取 \(r\mapsto((1-x)^{-1}r,0)\)。若 \((1-x)a+xb=0\)，则 \(a=-(1-x)^{-1}xb\)，所以核由 \((-x,1-x)^{\mathsf T}\) 生成。在多项式环中也满射，因为 \((1-x)+x=1\)，可取右逆 \(r\mapsto(r,r)\)。这个例子说明“某个单独矩阵项不可逆”不等于整行不能生成单位理想；局部化只是给出另一种方便的主元选择。
+记 \(u=1-x\)，取
+\[
+P=\begin{pmatrix}1&-x\\1&u\end{pmatrix},\quad
+Q_0=\begin{pmatrix}1&0\\-x&1\end{pmatrix}.
+\]
+二者行列式均为一，且 \(Q_0AP=\operatorname{diag}(1,xu)\)。故全局核为零、余核为 \(S/(x(1-x))\cong k\times k\)。在 \(R\) 中，再将第二行乘 \(u^{-1}\)，得到 \(\operatorname{diag}(1,x)\)。核仍为零，余核为 \(R/(x)=k\)，单位项对应的可缩自由对可消去，留下极小消解 \(0\to R\xrightarrow{x}R\to k\to0\)。局部化删去了点 \(x=1\) 的分量。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:F-infinite-resolution}

@@ -7,10 +7,9 @@
 形式级数的计算要说明每个固定次数的系数为何最终稳定，才能从有限步骤得到一个无限恒等式。最低次齐次关系进一步决定切锥，但只保留一个首单项式会丢失同次数中的其他项。
 
 % 纲要细目（与计划纲要同步）：
-% * 局部次数序下的形式除法：有限步骤恒等式、系数稳定与极大理想进极限；由有限首单项式生成元推出理想生成
-% * \(\operatorname{gr}_{\mathfrak m}(R/I)\cong\operatorname{gr}_{\mathfrak m}R/\operatorname{in}_{\mathfrak m}(I)\) 与切锥；证明局部次数标准基生成初始齐次理想，区别初始形式和首单项式
-% * 以尖点 \(y^2-x^3=0\) 和零维加厚点展示切锥与重数；初始理想不能只靠任意生成元的最低次项得到
-%
+% * 形式除法完整证明有限步骤恒等式、余式及各乘子逐系数稳定与完备极限；有限首单项式生成推出理想生成和 Noether 性
+% * 完整证明局部次数标准基生成初始齐次理想；局部多项式代表先清单位分母，区别首单项式、初始形式和整个初始理想
+% * 用同一多项式及两方程理想比较三层生成元、局部标准基、切锥、阶梯与重数；全局商长度和局部成员结论分开；计算长度五商与切锥的基座，区分完全交及 Gorenstein 性
 % #### F.3.1 Hironaka 型标准基、形式除法与 \texorpdfstring{\(\mathfrak m\)}{m}-进收敛
 % #### F.3.2 伴随分次环、初始齐次理想与切锥
 % #### F.3.3 尖点、加厚点与重数计算
@@ -19,6 +18,9 @@
 \label{b3:subsec:F03:01}
 
 设 \(k\) 为域，\(n\ge1\)，\(A=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)\)。本小节固定局部次数序：总次数较低的单项式较大，同次用固定的乘法相容次序比较。非零级数虽有无限项，但有最低非零次数，且该次只有有限个单项式，因此仍有首项。记非零 \(h\in A\) 的最低非零次数为 \(\operatorname{ord}(h)\)，并约定 \(\operatorname{ord}(0)=\infty\)。
+
+\ProseParagraphBreak
+形式除法的证明分为三个环节：每个有限阶段保持精确恒等式，随后证明商与余项在每个固定次数上的系数最终稳定，最后在完备环中取极限。待处理尾项的阶趋于无穷，使有限阶段的恒等式能够给出完整级数的表示。
 
 \begin{theorem}[形式除法]\label{b3:thm:F-formal-division}
 设 \(k\) 为域，\(n,s\ge1\)，\(A=k[\![x_1,\ldots,x_n]\!]\)，固定先把低总次数放在前面、同次再以乘法相容次序比较的局部次数序，并给定非零级数 \(g_1,\ldots,g_s\)。每个 \(f\in A\) 都有表示
@@ -39,18 +41,18 @@ f=\sum_{i=1}^s q_i^{(N)}g_i+r^{(N)}+h^{(N)}.
 \]
 若 \(h^{(N)}=0\)，以后保持所有部分和不变。
 
-每次操作都消去当前首项；乘法相容性保证 \(a g_i\) 的其余项严格小于该首项。因此，只要待处理项非零，其首单项式就严格下降：次数升高，或在同次中变小。对任意整数 \(d\ge0\)，次数不超过 \(d\) 的单项式只有有限个，故有限步以后不再处理这些单项式。这说明
+每次操作都消去当前首项；乘法相容性保证 \(a g_i\) 的其余项严格小于该首项。因此，只要待处理项非零，其首单项式就严格下降：次数升高，或在同次中变小。局部序不是良序，严格下降并不保证过程有限步停止。这里使用的是：对任意整数 \(d\ge0\)，次数不超过 \(d\) 的单项式只有有限个；它们按当前次序又都大于次数超过 \(d\) 的单项式。因此严格下降的首单项式序列在有限步以后离开这个有限集合，此后不再返回。这说明
 \[
 \operatorname{ord}(h^{(N)})\longrightarrow\infty,
 \qquad h^{(N)}\longrightarrow0
-\quad\text{于 }\mathfrak m\text{-进拓扑中}.
+\quad\text{于}\;\mathfrak m\text{-进拓扑中}.
 \]
 
 移入余项的单项式次数等于当前待处理首项的次数。加入 \(q_i^{(N)}\) 的单项式次数则为
 \[
 \operatorname{ord}(h^{(N)})-\operatorname{ord}(g_i).
 \]
-所以，对于任意给定的 \(d\)，\(r^{(N)}\) 和每个 \(q_i^{(N)}\) 中次数不超过 \(d\) 的系数都最终稳定。它们是 \(\mathfrak m\)-进 Cauchy 列；由 \(A\) 的完备性，存在 \(q_i,r\in A\)，使
+所以，对于任意给定的 \(d\)，当待处理尾项的阶超过 \(d+\max_i\operatorname{ord}(g_i)\) 后，商与余项都不再增加次数不超过 \(d\) 的项。于是 \(r^{(N)}\) 和每个 \(q_i^{(N)}\) 中这些次数的系数都最终稳定。它们是 \(\mathfrak m\)-进 Cauchy 列；由 \(A\) 的完备性，存在 \(q_i,r\in A\)，使
 \[
 q_i^{(N)}\longrightarrow q_i,\qquad
 r^{(N)}\longrightarrow r.
@@ -60,7 +62,7 @@ r^{(N)}\longrightarrow r.
 \(q_i^{(N)}-q_i\in\mathfrak m^d\)。由于除式只有有限个，对每一步的恒等式取极限，便得 \(f=\sum_iq_i g_i+r\)。移入 \(r^{(N)}\) 的项都不被任何 \(\operatorname{LM}(g_i)\) 整除，系数稳定后，\(r\) 也满足这一条件。
 \end{proof}
 
-这种表示由约化策略和除式的排列共同决定，更换它们可能同时改变商与余项。例如，在 \(k[\![x,y]\!]\) 中采用同次时 \(x>y\) 的局部次数序，令 \(g_1=x-y\)、\(g_2=x-y^2\)。对 \(f=x\)，先使用 \(g_1\) 或先使用 \(g_2\)，分别得到
+定理构造的是满足指定支撑条件的一种除法表示；它没有赋予余项不依赖选择的正规形意义。约化策略和除式排列一旦改变，商与余项都可能改变。例如，在 \(k[\![x,y]\!]\) 中采用同次时 \(x>y\) 的局部次数序，令 \(g_1=x-y\)、\(g_2=x-y^2\)。对 \(f=x\)，先使用 \(g_1\) 或先使用 \(g_2\)，分别得到
 \[
 x=g_1+y,\qquad x=g_2+y^2.
 \]
@@ -88,6 +90,10 @@ L(J)=(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)),
 若 \(J\ne0\)，Dickson 引理保证 \(L(J)\) 可由有限个 \(J\) 中元素的首单项式生成。对相应元素应用以上结论，就得到有限标准基。零理想则以空列为标准基。
 \end{proof}
 
+这也给出 \(k[\![x_1,\ldots,x_n]\!]\) 为 Noether 环的另一种证明：Dickson 引理使首单项式理想有限生成，形式除法再把首单项式的有限控制提升为原理想的有限生成。关键的第二步使用级数商的存在及完备性，不能只由单项式理想的有限性直接推出。
+
+\ProseParagraphBreak
+
 这种标准基和形式除法属于 Hironaka 型方法在形式幂级数环与局部次数序下的情形。形式除法的一般代数形式见\cite[Section 2, Theorem 2.1]{Aschenbrenner2005ReductionStandardBases}；完整的支撑分区条件还能控制商与余项的唯一性，见同文献 Proposition 2.13。这里的 \(\mathfrak m\)-进收敛表示每个固定次数以下的系数最终稳定；商与余项在复数邻域中的解析收敛还需相应的估计和除法定理。形式级数、代数级数及收敛级数的比较见\appref{b3:app:D}。
 
 \subsection{伴随分次环、初始齐次理想与切锥}
@@ -114,23 +120,45 @@ L(J)=(\operatorname{LM}(g_1),\ldots,\operatorname{LM}(g_s)),
 它满射。若 \(f\in\mathfrak m^d\) 的像为零，写 \(f=h+a\)，其中 \(h\in\mathfrak m^{d+1}\)、\(a\in I\)。于是 \(a\in I\cap\mathfrak m^d\)，且 \(f,a\) 代表同一分次类。该类若非零，就是 \(a\) 的次数 \(d\) 初始形式；反之，每个这样的初始形式显然落在核中。各次核之和正是由 \(I\) 的全部初始形式组成的齐次理想，遂得同构。
 \end{proof}
 
-在 \(R=k[x]_{(x)}\) 或 \(k[\![x]\!]\) 中，\(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\)。由上述商分次环定义的仿射概形称为原局部对象的切锥；它保留最低阶关系，也保留其中的幂零结构。例如 \(f=x^2+y^2+x^3\) 的初始形式为 \(X^2+Y^2\)，而其首单项式还取决于同次如何排序。
+在 \(R=k[x]_{(x)}\) 或 \(k[\![x]\!]\) 中，\(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\)。由上述商分次环定义的仿射概形称为原局部对象的切锥；它保留最低阶关系，也保留其中的幂零结构。全局次数序的首单项式、局部次数序的首单项式和初始齐次形式按不同规则提取数据，\cref{b3:tab:F-leading-initial-comparison}以同一个多项式作比较。
 
-\ProseParagraphBreak
-计算可以用局部次数序找标准基，再对所得基取初始齐次形式。次数优先的约定保证，这些形式能够给出全部切锥关系。
+\begin{table}[htbp]
+\centering
+\caption{同一多项式的三种首项数据}
+\label{b3:tab:F-leading-initial-comparison}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.25\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{.23\textwidth}@{}}
+\toprule
+数据 & 对 \(f=x^2+xy+y^3\) 的取法 & 结果 \\
+\midrule
+全局次数序首单项式 & 高总次数在前，同次按 \(x>y\) 的字典序 & \(y^3\) \\
+局部次数序首单项式 & 低总次数在前，同次按 \(x>y\) 的字典序 & \(x^2\) \\
+\(\mathfrak m\)-初始齐次形式 & 保留全部最低次项，\(\mathfrak m=(x,y)\) & \(X^2+XY\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\begin{proposition}\label{b3:prop:F-standard-basis-initial-ideal}
-设 \(k\) 为域，\(n\ge1\)，\(R=k[x_1,\ldots,x_n]_{(x_1,\ldots,x_n)}\) 或 \(R=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)R\)。固定先比较低总次数的局部次数序，并设 \(G=(g_1,\ldots,g_s)\) 是真理想 \(I\subset R\) 的标准基，其中 \(g_i\ne0\)。在 \(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\) 中，有
+计算可以用局部次数序找标准基，再对所得基取初始齐次形式。次数优先的约定保证，这些形式能够给出全部切锥关系。在局部多项式环中，可以按\cref{b3:prop:F-standard-existence}清分母，选用多项式标准基：若 \(g=p/u\)、\(u(0)\ne0\)，则 \(p=ug\) 与 \(g\) 的首单项式相同，而且
+\[
+\operatorname{in}_{\mathfrak m}(p)
+=u(0)\operatorname{in}_{\mathfrak m}(g).
+\]
+单位 \(u\) 的最低次部分只是非零常数，故清分母不改变这些初始形式所生成的齐次理想。
+
+\begin{proposition}\label{b3:prop:F-standard-basis-initial-ideal}\label{b3:prop:F-leading-versus-initial}
+设 \(k\) 为域，\(n\ge1\)，\(R=k[x_1,\ldots,x_n]_{(x_1,\ldots,x_n)}\) 或 \(R=k[\![x_1,\ldots,x_n]\!]\)，\(\mathfrak m=(x_1,\ldots,x_n)R\)。固定先比较低总次数的局部次数序，并设 \(G=(g_1,\ldots,g_s)\) 是真理想 \(I\subset R\) 的标准基，其中 \(g_i\ne0\)；在局部多项式环情形，取 \(g_i\in k[x_1,\ldots,x_n]\) 的多项式代表。在 \(\operatorname{gr}_{\mathfrak m}R\cong k[X_1,\ldots,X_n]\) 中，有
 \[
 \operatorname{in}_{\mathfrak m}(I)
 =(\operatorname{in}_{\mathfrak m}(g_1),\ldots,
 \operatorname{in}_{\mathfrak m}(g_s)).
 \]
+特别地，对 \(f=x^2+xy+y^3\)，若全局次数序和局部次数序在同次时都按 \(x>y\) 的字典序比较，则全局首单项式为 \(y^3\)，局部首单项式为 \(x^2\)，而 \((x,y)\)-初始齐次形式为 \(X^2+XY\)。
 \end{proposition}
 \begin{proof}
-由于 \(g_i\in I\)，右边包含于左边。为证另一包含，取 \(0\ne f\in I\)，令 \(d=\operatorname{ord}(f)\)。只要当前剩余元素 \(h\in I\) 仍为 \(d\) 阶，其首单项式就被某个 \(\operatorname{LM}(g_i)\) 整除。取带系数单项式 \(a\)，使 \(\operatorname{LT}(a g_i)=\operatorname{LT}(h)\)，并以 \(h-a g_i\) 替代 \(h\)。此时 \(\deg a+\operatorname{ord}(g_i)=d\)，所以不会产生次数低于 \(d\) 的项；次数 \(d\) 中的首单项式则严格变小。
+由于 \(g_i\in I\)，右边包含于左边。为证另一包含，在局部多项式环情形先将 \(0\ne f\in I\) 写成 \(p/u\)，其中 \(u(0)\ne0\)。此时 \(p=uf\in I\cap k[x]\)，且 \(\operatorname{in}_{\mathfrak m}(f)=u(0)^{-1}\operatorname{in}_{\mathfrak m}(p)\)，故只需处理多项式 \(p\)。以下以 \(f\) 表示这个多项式；形式幂级数情形则直接取 \(f\in I\)。
 
-次数 \(d\) 的单项式只有有限个，故有限次操作以后剩余元素属于 \(\mathfrak m^{d+1}\)。将各次使用的单项式系数按除式归并为 \(a_i\)，便得到
+令 \(d=\operatorname{ord}(f)\)。只要当前剩余元素 \(h\in I\) 仍为 \(d\) 阶，其首单项式就被某个 \(\operatorname{LM}(g_i)\) 整除。取带系数单项式 \(a\)，使 \(\operatorname{LT}(a g_i)=\operatorname{LT}(h)\)，并以 \(h-a g_i\) 替代 \(h\)。此时 \(\deg a+\operatorname{ord}(g_i)=d\)，所以不会产生次数低于 \(d\) 的项；次数 \(d\) 中的首单项式则严格变小。
+
+这里只消去次数 \(d\) 这一层，不必完成整个级数的除法。次数 \(d\) 的单项式只有有限个，故有限次操作以后剩余元素属于 \(\mathfrak m^{d+1}\)。将各次使用的单项式系数按除式归并为 \(a_i\)，便得到
 \[
 f-\sum_i a_i g_i\in\mathfrak m^{d+1},
 \qquad
@@ -139,6 +167,8 @@ f-\sum_i a_i g_i\in\mathfrak m^{d+1},
        \operatorname{in}_{\mathfrak m}(g_i).
 \]
 这里每个非零 \(a_i\) 都是次数 \(d-\operatorname{ord}(g_i)\) 的齐次多项式。因此 \(I\) 的任意初始形式都属于右边的齐次理想，得到等式。
+
+对陈述中的 \(f=x^2+xy+y^3\)，最高次项只有 \(y^3\)，故全局次数序首单项式为 \(y^3\)。最低次项为 \(x^2,xy\)，同次字典序选取 \(x^2\)，而初始齐次形式保留这两个项，得到 \(X^2+XY\)。
 \end{proof}
 
 任意生成组未必满足标准基的首单项式条件；消去最低次项时可能产生新的最低次关系，因此不能直接把原生成元的初始形式当作切锥理想的生成组。
@@ -172,7 +202,7 @@ yf_1-xf_2=(x-1)y^4.
 \[
 I=(x^2-y^3,xy,y^4)R.
 \]
-在多项式环中，\(G=(x^2-y^3,xy,y^4)\) 关于 \(x>y\) 的字典序是 Gröbner 基：前两个元素的 \(S\)-多项式为 \(-y^4\)，第一、第三个的 \(S\)-多项式为 \(-y^7\)，其余为零，都约化为零。因而多项式商的基为
+在多项式环中，\(G=(x^2-y^3,xy,y^4)\) 关于全局字典序 \(x>y\) 是 Gröbner 基：前两个元素的 \(S\)-多项式为 \(-y^4\)，第一、第三个的 \(S\)-多项式为 \(-y^7\)，其余为零，都约化为零。这里先用全局 Gröbner 基计算多项式商，因而多项式商的基为
 \[
 1,\ x,\ y,\ y^2,\ y^3.
 \]
@@ -199,7 +229,37 @@ I=(x^2-y^3,xy,y^4)R.
 \[
 L_{>}(I)=(x^2,xy,y^4).
 \]
-结合 \(G\) 已生成 \(I\)，可知它也是局部次数序的标准基。局部长度为 \(5\)，切锥理想包含由消去得到的额外关系 \(Y^4\)。
+结合 \(G\) 已生成 \(I\)，可知它也是局部次数序的标准基。局部长度为 \(5\)，切锥理想包含由消去得到的额外关系 \(Y^4\)。因此本例先以全局字典序求出有限商及长度，再确定初始齐次理想，最后从它核验局部首单项式理想；局部标准基的结论并未用作前面的长度依据。
+
+\ProseParagraphBreak
+同一个计算还能比较原局部环与切锥的完全交性。令 \(A=R/I\)。\(R\) 是二维正则局部环，\(A\) 为零维，故 \(\operatorname{ht}_R I=2\)。原来的两个生成元 \(f_1,f_2\) 因而满足\cref{b3:prop:given-complete-intersection}的高度判据，\(A\) 是完全交局部环。在 \(A\) 中，关系为 \(x^2=y^3\)、\(xy=0\)、\(y^4=0\)。对
+\[
+a=a_0+a_1x+a_2y+a_3y^2+a_4y^3\qquad(a_i\in k),
+\]
+有 \(xa=a_0x+a_1y^3\)、\(ya=a_0y+a_2y^2+a_3y^3\)。利用已经得到的基，同时满足 \(xa=ya=0\) 恰好要求 \(a_0=a_1=a_2=a_3=0\)，因此
+\[
+\operatorname{Soc}(A)=ky^3.
+\]
+相比之下，记切锥的坐标环为 \(B=k[X,Y]/(X^2,XY,Y^4)\)。它同样是剩余域为 \(k\) 的 Artin 局部环，但乘 \(X\) 与乘 \(Y\) 的共同零化子为
+\[
+\operatorname{Soc}(B)=kX\oplus kY^3.
+\]
+由\cref{b3:prop:artinian-gorenstein-socle}，\(A\) 为 Gorenstein 环，\(B\) 却不是；\cref{b3:lem:artinian-ci-socle}也排除了 \(B\) 的完全交性。两环的长度与分次层维数相同，完全交性和 Gorenstein 性仍可不同。特别地，原局部环的 \(\mathfrak m\)-进 Hilbert 函数 \((1,2,1,1)\) 虽不对称，也不能据此否定 \(A\) 的 Gorenstein 性；原局部环的基座与切锥坐标环的基座须分别计算。
 \end{example}
 
-这次计算中，“原方程的生成组”“足以控制全部首项的标准基”“分次商的标准单项式”都有明确的用途。先验证理想等式，再计算有限基及滤过，避免了用未经检查的最低次项去猜维数。
+\begin{table}[htbp]
+\centering
+\caption{两方程例的三种生成数据}
+\label{b3:tab:F-two-equations-generators}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.22\textwidth}>{\raggedright\arraybackslash}p{.35\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+所在层次 & 生成元 & 已核验的用途 \\
+\midrule
+原方程 & \(x^2-y^3,\ xy-y^4\) & 在局部环中生成 \(I\) \\
+局部标准基 & \(x^2-y^3,\ xy,\ y^4\) & 生成 \(I\)，并给出全部局部首单项式 \\
+初始齐次理想 & \(X^2,\ XY,\ Y^4\) & 在 \(k[X,Y]\) 中给出全部切锥关系 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\cref{b3:tab:F-two-equations-generators}并列了原方程、局部标准基与切锥关系；商的五个标准单项式则用来计数长度。各组数据的生成关系和用途都须分别核验。

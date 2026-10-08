@@ -1,6 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### A.1 单子与余单子
-% 纲要位置：工作记录/计划纲要.md，第 3531 行。
+% 纲要位置：工作记录/计划纲要.md，第 3820 行。
 % 纲要细目（写作范围）：
 % #### A.1.1 单子的单位与乘法
 % #### A.1.2 余单子与伴随所给的构造
@@ -28,13 +28,27 @@
 在集合范畴上，令 \(TX\) 为由 \(X\) 中元素组成的全部有限有序表，包括空表。单位把 \(x\) 送到单元素表 \([x]\)，乘法把一个“表的表”按顺序连接。把三层表连接为一层时，先连接内层或先连接外层结果相同；加入单元素表不改变内容。这逐项验证了\eqref{b4:eq:A-monad-laws}。这里的表保留次序，不能把它擅自换成无序的有限集合。
 
 \begin{example}\label{b4:exm:A-extension-scalars-monad}
-设 \(R\to S\) 为含幺环同态，在左 \(R\)-模范畴上令
+设 \(\varphi:R\rightarrow S\) 为含幺环同态，在左 \(R\)-模范畴上令
 \[
 T(M)=S\otimes_RM,\qquad
 \eta_M(m)=1\otimes m,\qquad
 \mu_M(s\otimes t\otimes m)=st\otimes m.
 \]
-其中 \(S\otimes_RM\) 通过 \(R\to S\) 保留左 \(R\)-作用，\(S\) 的右 \(R\)-作用也由该同态给出。张量积的平衡关系使 \(\mu_M\) 良定义，环乘法的结合律给出单子结合律，\(S\) 的单位元给出两条单位律。因此这是一个单子，不要求 \(R,S\) 交换或 \(S\) 在 \(R\) 上平坦。
+构造张量积时使用 \(S\) 的右 \(R\)-作用，而所得对象的左 \(R\)-作用来自 \(S\) 的左乘法：
+\[
+s\cdot r=s\varphi(r),\qquad
+s\varphi(r)\otimes m=s\otimes rm,\qquad
+r\cdot(s\otimes m)=\varphi(r)s\otimes m.
+\]
+在非交换情形，\(\varphi(r)s\otimes m\) 与 \(s\varphi(r)\otimes m\) 一般不同；构造依靠的是 \(S\) 的左 \(S\)-作用与右 \(R\)-作用相容，并未交换标量的次序。两层张量积的平衡关系分别把
+\(s\varphi(r)\otimes t\otimes m\) 与 \(s\otimes\varphi(r)t\otimes m\) 识别，以及把
+\(s\otimes t\varphi(r)\otimes m\) 与 \(s\otimes t\otimes rm\) 识别。它们在 \(\mu_M\) 下分别有相同的像，所以 \(\mu_M\) 良定义。其左 \(R\)-线性由
+\[
+\mu_M\bigl(\varphi(r)s\otimes t\otimes m\bigr)
+=\varphi(r)st\otimes m
+=r\cdot\mu_M(s\otimes t\otimes m)
+\]
+给出。环乘法的结合律给出单子结合律，\(S\) 的单位元给出两条单位律。因此这是一个单子，不要求 \(R,S\) 交换或 \(S\) 在 \(R\) 上平坦。
 \end{example}
 
 \subsection{余单子与伴随所给的构造}
@@ -65,6 +79,7 @@ Q=FU,\quad \delta_Y=F(\eta_{UY}).
 \]
 则称 \((Y,c)\) 为 \(Q\) 上的\term[yudanzi-shang-yudaishu]{余代数}[coalgebra for a comonad]。对两个余代数 \((Y,c)\)、\((Y',c')\)，若 \(\mathcal D\) 中的态射 \(f:Y\to Y'\) 满足 \(Q(f)c=c'f\)，则称 \(f\) 为它们之间的余代数同态。这些对象与同态组成的范畴记为 \(\mathcal D_Q\)。
 \end{definition}
+\symidx{\(\mathcal D_Q\)：余单子上的余代数范畴}
 
 例如，固定集合 \(A\)，对余单子 \(QX=A\times X\)，余单位为第二投影，余乘法为 \((a,x)\mapsto\bigl(a,(a,x)\bigr)\)。其余代数恰好是一个带映射 \(r:X\to A\) 的集合：条件迫使 \(c(x)=\bigl(r(x),x\bigr)\)，而第二条公理随后自动成立。同态就是保持到 \(A\) 的映射的函数，所以 \(\mathbf{Set}_Q\) 是切片范畴 \(\mathbf{Set}/A\)。
 
@@ -95,5 +110,13 @@ Q=FU,\quad \delta_Y=F(\eta_{UY}).
 \]
 从而 \(h=\overline f\)。逆公式由函子及自然变换的复合组成，故对 \(X,Y\) 自然。
 \end{proof}
+
+这里可逆的是 \(\mu_X\) 和 \(\eta_{TX}\)，不能据此断定第一次施加 \(T\) 时的 \(\eta_X\) 也可逆。例如在交换群范畴上取有理化单子
+\[
+T(A)=\mathbb Q\otimes_{\mathbb Z}A.
+\]
+乘法 \(\mathbb Q\otimes_{\mathbb Z}\mathbb Q\longrightarrow\mathbb Q\) 是同构，其逆为 \(q\mapsto q\otimes1\)，所以 \(T^2\cong T\)。但在 \(A=\mathbb Z\) 处，单位是通常的包含映射 \(\mathbb Z\hookrightarrow\mathbb Q\)，并非同构。幂等性说明再次有理化不再改变对象；满足 \(\eta_Y\) 可逆的固定对象只组成原范畴的一个全子范畴。
+
+\ProseParagraphBreak
 
 全子范畴的包含函子若有左伴随，该子范畴称为\term[fanshe-zifanchou]{反射子范畴}[reflective subcategory]。例如交换化 \(G\mapsto G/[G,G]\) 再作用一次不再改变对象；\cref{b4:exm:abelianization-adjunction}的伴随因而给出幂等单子，其固定对象正是交换群。一般单子却不幂等：自由幺半群中的一个表，通常有许多不同的分段方式，它们在乘法下都连接成同一个表。

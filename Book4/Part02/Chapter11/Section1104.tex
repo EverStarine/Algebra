@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 11.4 复合函子的导出
 % 纲要标签：b4:sec:1004
-% 纲要位置：计划纲要.md，第 2731 行。
+% 纲要位置：计划纲要.md，第 3484 行。
 
 \section{复合函子的导出}
 \label{b4:sec:1004}
@@ -26,11 +26,28 @@
 设 \(\mathcal A,\mathcal B\) 为交换范畴，\(U:\mathcal A\to\mathcal B\) 是加性函子，具有正合左伴随 \(V:\mathcal B\to\mathcal A\)。则 \(U\) 把内射对象送到内射对象。
 \end{proposition}
 \begin{proof}
-设 \(I\) 为 \(\mathcal A\) 的内射对象，给定 \(\mathcal B\) 中单态射 \(X\to Y\)。正合性使 \(V(X)\to V(Y)\) 单射，所以每个 \(V(X)\to I\) 延拓至 \(V(Y)\)。利用伴随同构
-\(\operatorname{Hom}_{\mathcal B}(-,U(I))\simeq\operatorname{Hom}_{\mathcal A}(V(-),I)\)，这恰好表示每个 \(X\to U(I)\) 都可延拓到 \(Y\)，故 \(U(I)\) 内射。
+设 \(I\) 为 \(\mathcal A\) 的内射对象。给定 \(\mathcal B\) 中单态射 \(j:X\hookrightarrow Y\) 及 \(f:X\to U(I)\)，先用伴随双射
+\[
+ \alpha_X:\operatorname{Hom}_{\mathcal B}(X,U(I))
+ \xrightarrow{\sim}\operatorname{Hom}_{\mathcal A}(V(X),I)
+\]
+把 \(f\) 转置为 \(\widetilde f:V(X)\to I\)。因为 \(V\) 正合，\(V(j):V(X)\hookrightarrow V(Y)\) 仍单；由 \(I\) 内射，可延拓为 \(\widetilde h:V(Y)\to I\)，使 \(\widetilde hV(j)=\widetilde f\)。再令 \(h=\alpha_Y^{-1}(\widetilde h):Y\to U(I)\)。伴随双射对源对象的自然性给出
+\[
+ \alpha_X(hj)=\alpha_Y(h)V(j)
+ =\widetilde hV(j)=\widetilde f=\alpha_X(f).
+\]
+因 \(\alpha_X\) 为双射，\(hj=f\)，所以所求延拓确实存在，\(U(I)\) 内射。
 \end{proof}
 
-例如，对环同态 \(R\to S\)，限制标量 \(S\text{-}\mathbf{Mod}\to R\text{-}\mathbf{Mod}\) 的左伴随是 \(S\otimes_R-\)。若 \(S\) 作为右 \(R\)-模平坦，限制标量就保持内射对象。没有平坦性时这个结论可能失败：\(\mathbb Z/2\) 作为 \(\mathbb F_2\)-模内射，作为整数模却不内射。
+例如，设 \(R,S\) 为含幺环，\(\varphi:R\to S\) 为保单位元的环同态，以下模均为幺性左模。限制标量 \(\operatorname{Res}_{\varphi}:S\text{-}\mathbf{Mod}\to R\text{-}\mathbf{Mod}\) 同时出现在两种伴随中：
+\[
+ S\otimes_R-\;\dashv\;\operatorname{Res}_{\varphi}
+ \;\dashv\;\operatorname{Hom}_R({}_RS,-).
+\]
+张量中的 \(S\) 以 \(t\cdot r=t\varphi(r)\) 接受右 \(R\) 作用；余诱导中的 \({}_RS\) 则以 \(r\cdot t=\varphi(r)t\) 接受左 \(R\) 作用，并在 \(\operatorname{Hom}_R({}_RS,J)\) 上规定左 \(S\) 作用 \((s\cdot h)(t)=h(ts)\)。这些伴随双射已在第二卷命题6.3.4中证明；当前两种保持内射性的判断使用不同的左伴随。
+
+\ProseParagraphBreak
+若 \(S\) 作为右 \(R\) 模平坦，则 \(S\otimes_R-\) 正合，所以作为它的右伴随，限制标量保持内射对象。没有平坦性时这可能失败：\(\mathbb Z/2\mathbb Z\) 作为 \(\mathbb F_2\) 模内射，作为整数模却不内射。另一方面，限制标量本身始终正合，因为它保留底交换群和映射；因此它的右伴随，即余诱导 \(\operatorname{Hom}_R({}_RS,-)\)，总把内射左 \(R\) 模送到内射左 \(S\) 模，无需平坦性。
 
 \begin{theorem}\label{b4:thm:derived-composite-exact-first}
 设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A,\mathcal B\) 有足够多内射对象。设 \(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 为加性函子，\(F\) 正合，\(G\) 左正合，且每个内射对象 \(I\in\mathcal A\) 的像 \(F(I)\) 都对 \(G\) 零调。则对每个对象 \(M\in\mathcal A\) 及整数 \(n\ge0\)，有自然同构
@@ -39,10 +56,29 @@
 \]
 \end{theorem}
 \begin{proof}
-取 \(M\to I^\bullet\) 的内射消解。\(F\) 正合使 \(F(M)\to F(I^\bullet)\) 仍为正合消解，像的条件使它成为 \(G\)-零调消解。由\cref{b4:thm:acyclic-resolution}，其经 \(G\) 后的同调是 \(R^nG(F(M))\)；同一复形 \(GF(I^\bullet)\) 按定义又计算 \(R^n(GF)(M)\)。消解比较映射给出对 \(M\) 的自然性。
+取 \(M\to I^\bullet\) 的内射消解。同一个复形 \(GF(I^\bullet)\) 将用于两种计算。因为 \(I^\bullet\) 是 \(M\) 的内射消解，定义直接给出
+\[
+ R^n(GF)(M)=H^n(GF(I^\bullet)).
+\]
+另一方面，\(F\) 正合保证 \(F(M)\to F(I^\bullet)\) 仍为正合消解；内射像对 \(G\) 零调则保证这条消解能够计算 \(G\) 的导出。由\cref{b4:thm:acyclic-resolution}，
+\[
+ H^n(GF(I^\bullet))\cong R^nG(F(M)).
+\]
+两条识别复合就是所需同构。前一识别来自导出函子定义，后一识别来自零调消解定理；两者都与消解比较映射相容，所以对 \(M\) 自然。
 \end{proof}
 
-这里的内射像条件不能由 \(F\) 的正合性替代；\cref{b4:ex:10-composite-image-condition}给出 \(F\) 正合而该条件失效、复合公式也随之失效的反例。
+这里的内射像条件不能由 \(F\) 的正合性替代。取素数 \(p\)，令 \(F:\mathbb F_p\text{-}\mathbf{Mod}\to\mathbf{Ab}\) 为忘却函子，\(G=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/p\mathbb Z,-)\)。\(F\) 正合，且 \(\mathbb F_p\) 在源向量空间范畴中内射，但
+\[
+ R^1G(F(\mathbb F_p))
+ =\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p\mathbb Z,\mathbb Z/p\mathbb Z)
+ \cong\mathbb Z/p\mathbb Z\ne0,
+\]
+所以这个内射对象的像不是 \(G\)-零调对象。同时，在 \(\bar1\) 处取值把 \(GF(V)\) 自然识别为向量空间 \(V\) 的底交换群，故 \(GF\) 也正合，从而
+\[
+ R^1(GF)(\mathbb F_p)=0
+ \quad\text{而}\quad R^1G(F(\mathbb F_p))\cong\mathbb Z/p\mathbb Z.
+\]
+复合公式在这里确实失败，不能只由前函子正合来保证。
 
 \subsection{复合导出的障碍}
 \label{b4:subsec:1004:02}
@@ -55,10 +91,16 @@
  F:\mathbf{Ab}\longrightarrow\mathbb F_p\text{-}\mathbf{Mod},\quad F(A)=A[p],
  \qquad G:\mathbb F_p\text{-}\mathbf{Mod}\longrightarrow\mathbf{Ab}
 \]
-分别为 \(p\)-挠子群函子及忘却函子。\(F\) 左正合，\(G\) 正合。因为中间范畴是向量空间范畴，所有 \(F(I)\) 都对 \(G\) 零调。然而取 \(M=\mathbb Z\)，有
+分别为 \(p\)-挠子群函子及忘却函子。\(F\) 左正合，\(G\) 正合，所以每个 \(F(I)\) 都对 \(G\) 零调。可是取 \(M=\mathbb Z\) 的内射消解 \(0\to\mathbb Z\to\mathbb Q\to\mathbb Q/\mathbb Z\to0\)，施加 \(F\) 后，非增广复形为
 \[
- R^1(GF)(\mathbb Z)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p,\mathbb Z)
- =\mathbb Z/p,\qquad R^1G(F(\mathbb Z))=0.
+ F(\mathbb Q)\longrightarrow F(\mathbb Q/\mathbb Z):
+ \qquad 0\longrightarrow\mathbb F_p
+ \qquad\text{（次数 }0,1\text{）}.
+\]
+它在一次有非零上同调，因此不是 \(F(\mathbb Z)=0\) 的正合消解。再作用 \(G\) 不会消去这份上同调，故
+\[
+ R^1(GF)(\mathbb Z)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/p\mathbb Z,\mathbb Z)
+ =\mathbb Z/p\mathbb Z,\qquad R^1G(F(\mathbb Z))=0.
 \]
 非零项来自先作用 \(F\) 时产生的一次导出，而不是来自 \(G\) 的导出。
 \end{example}
@@ -71,8 +113,22 @@
 自然成立。
 \end{proposition}
 \begin{proof}
-取 \(M\to I^\bullet\)。正合函子保持核、像及商对象，故
-\(H^n(GF(I^\bullet))\simeq G(H^n(F(I^\bullet)))\)。两端按导出函子定义就是所写对象；识别使用核与余核的自然态射，故自然。
+这里使用的是 \(G\) 与取同调交换，不需要把 \(F(I^\bullet)\) 看成正合消解。对于任意上链复形 \(C^\bullet\)，正合性使
+\[
+ Z^n(G(C^\bullet))\cong G(Z^n(C^\bullet)),\qquad
+ B^n(G(C^\bullet))\cong G(B^n(C^\bullet)),
+\]
+因为余圈是微分的核，余边是前一微分的像。再由 \(G\) 保持余核及
+\(H^n(C^\bullet)=\operatorname{coker}(B^n(C^\bullet)\hookrightarrow Z^n(C^\bullet))\)，得到
+\[
+ H^n(G(C^\bullet))\cong G(H^n(C^\bullet)).
+\]
+取 \(M\to I^\bullet\) 的内射消解，令 \(C^\bullet=F(I^\bullet)\)，便有
+\[
+ R^n(GF)(M)=H^n(GF(I^\bullet))
+ \cong G(H^n(F(I^\bullet)))=G(R^nF(M)).
+\]
+这些识别来自核、像及余核的自然态射，故与消解比较相容，给出对 \(M\) 的自然性。
 \end{proof}
 
 这两个结果处理的是不同的简化情形：前函子正合且把内射对象送到后函子的零调对象时，只剩后函子的导出；后函子正合时，它直接作用于前函子的导出，无需对内射像另加条件。两者都只有左正合性时，两类高次信息必须同时保留。
@@ -82,17 +138,30 @@
 
 设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，前两者有足够内射对象，\(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 均为左正合加性函子。关键附加条件是
 \[
- R^pG(F(I))=0\qquad(p>0,\ I\text{ 为 }\mathcal A\text{ 的内射对象}).
+ R^pG(F(I))=0\qquad(p>0,\ I\;\text{为}\;\mathcal A\;\text{的内射对象}).
 \]
 在这些条件下，\secref{b4:sec:1503}中的\cref{b4:thm:grothendieck-spectral-sequence}将用双复形建立 Grothendieck 谱序列，其第二页和目标分别为
 \[
  E_2^{p,q}=R^pG(R^qF(M))
  \quad\Longrightarrow\quad R^{p+q}(GF)(M),\qquad p,q\ge0.
 \]
-这个箭头表示目标带有有限滤过，极限页描述其相邻商；它不直接给出各个 \(E_2\) 项的直和分解。谱序列的微分、收敛及滤过将在\chapref{b4:ch:14}建立。上述假设与公式可对照 Weibel\cite[Cohomological Setup 5.8.1, Grothendieck Spectral Sequence Theorem 5.8.3]{Weibel1994HomologicalAlgebra}；该书先作用 \(G\) 再作用 \(F\)，与这里的函子字母次序相反。
+指标 \(q\) 记录先作用 \(F\) 时产生的导出次数，\(p\) 记录再对 \(R^qF(M)\) 作用 \(G\) 时的导出次数，最终目标的次数是 \(p+q\)。箭头表示每个目标 \(R^n(GF)(M)\) 带有有限递减滤过
+\[
+\begin{aligned}
+ 0&=\mathcal F^{n+1}R^n(GF)(M)\subseteq\mathcal F^nR^n(GF)(M)\subseteq\cdots\\
+ &\subseteq\mathcal F^0R^n(GF)(M)=R^n(GF)(M),
+\end{aligned}
+\]
+而极限页描述相邻商：
+\[
+ E_\infty^{p,n-p}\cong
+ \mathcal F^pR^n(GF)(M)/\mathcal F^{p+1}R^n(GF)(M)
+ \qquad(0\le p\le n).
+\]
+因此第二页的各项不能直接读成目标的直和因子；还须经过后续各页，最终得到的也只是滤过的相邻商。谱序列的微分、收敛及滤过将在\chapref{b4:ch:14}建立。上述假设与公式可对照 Weibel\cite[Cohomological Setup 5.8.1, Grothendieck Spectral Sequence Theorem 5.8.3]{Weibel1994HomologicalAlgebra}；该书先作用 \(G\) 再作用 \(F\)，与这里的函子字母次序相反。
 
 \ProseParagraphBreak
-在内射像条件成立的前提下，若 \(F\) 正合，只有 \(q=0\) 行可能非零；若 \(G\) 正合，内射像条件自动成立，且只有 \(p=0\) 列可能非零。这与前两小节的公式相符。一般情形中，先对 \(F(I^\bullet)\) 作进一步消解，再比较两个取同调次序；内射像的零调条件保证其中一个次序计算 \(R^*(GF)\)。低阶正合列的证明见\cref{b4:prop:spectral-five-term}。
+在内射像条件成立的前提下，若 \(F\) 正合，则 \(R^qF(M)=0\) 对 \(q>0\) 成立，只剩 \(q=0\) 行；总次数 \(n\) 只可能有 \(E_2^{n,0}=R^nG(F(M))\) 非零。若 \(G\) 正合，内射像条件自动成立，且 \(R^pG(-)=0\) 对 \(p>0\) 成立，只剩 \(p=0\) 列；总次数 \(n\) 只可能有 \(E_2^{0,n}=G(R^nF(M))\) 非零。这两种情形都没有可能的非零后续微分，每个目标滤过也只剩一个相邻商，所以分别恢复前两小节的自然同构。一般情形中，先对 \(F(I^\bullet)\) 作进一步消解，再比较两个取同调次序；内射像的零调条件保证其中一个次序计算 \(R^*(GF)\)。低阶正合列的证明见\cref{b4:prop:spectral-five-term}。
 
 \ProseParagraphBreak
 \Cref{b4:tab:derived-composite-conditions}比较这三种情形。表中设 \(\mathcal A,\mathcal B,\mathcal C\) 为交换范畴，\(\mathcal A,\mathcal B\) 有足够多内射对象，\(F:\mathcal A\to\mathcal B\)、\(G:\mathcal B\to\mathcal C\) 为加性左正合函子，\(M\in\mathcal A\)，且 \(n,p,q\ge0\)。

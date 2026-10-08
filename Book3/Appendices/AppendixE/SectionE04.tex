@@ -7,9 +7,10 @@
 线性微分方程把求导写成有限维空间上的加法算子，但该算子对标量满足带导子的乘法法则。解矩阵与常数域因此共同决定对称群；加入参数后，还要记录额外导子之间的相容关系。
 
 % 纲要细目（与计划纲要同步）：
-% * 线性系统、微分模与Picard–Vessiot扩张；代数闭常数域下的存在唯一性回指第五卷附录E.2，用形式指数计算乘法群算例
-% * 微分闭域的existentially closed条件、参数化导子、微分代数群及差分代数的基本对象
-% * 完整微分代数几何、Kolchin 维数多项式、算法复杂度及微分模型论不纳入本套书的共同证明链
+% * 线性系统、微分模与 Picard–Vessiot 扩张的三项条件；形式指数的超越性、无新常数与乘法群表示完整证明
+% * PV 存在唯一性、代数群闭性及 Galois 对应分别定位第五卷附录 E.2；本卷常数矩阵表示不冒充一般闭性证明
+% * 微分闭域、参数化导子、微分代数群与差分结构；自同态与自同构分开，差分运算与 Leibniz 导子分开
+% * 完整模型论、Kolchin 维数多项式和算法复杂度留给专题；有限阶代数相容性不保证全部微分方程相容
 % #### E.4.1 线性系统、微分模与 Picard–Vessiot 扩张
 % #### E.4.2 微分闭域、参数化理论、微分代数群与差分代数
 % #### E.4.3 微分代数几何、维数多项式与模型论导读
@@ -18,28 +19,68 @@
 \label{b3:subsec:E04:01}
 
 \begin{definition}\label{b3:def:differential-module}
-设 \((K,\delta)\) 为特征零微分域，\(M\) 为有限维 \(K\) 向量空间。若加法映射 \(\nabla:M\to M\) 满足 \(\nabla(am)=\delta(a)\cdot m+a\cdot\nabla(m)\)，则 \((M,\nabla)\) 称为\term{微分模}[differential module]。满足 \(\nabla(m)=0\) 的向量称为水平向量。
+设 \((K,\delta)\) 为特征零微分域，\(M\) 为有限维 \(K\) 向量空间。若加法映射 \(\nabla:M\to M\) 对所有 \(a\in K\)、\(m\in M\) 满足 \(\nabla(am)=\delta(a)\cdot m+a\cdot\nabla(m)\)，则 \((M,\nabla)\) 称为\term{微分模}[differential module]。满足 \(\nabla(m)=0\) 的向量 \(m\in M\) 称为水平向量。
 \end{definition}
+\symidx{\(\nabla\)：微分模上的联络}
 
-选定基后可写 \(\nabla(v)=\delta(v)-Av\)，于是水平向量满足线性系统 \(Y'=AY\)。若令 \(Y=PZ\)，\(P\in\operatorname{GL}_n(K)\)，则新系统为 \(Z'=(P^{-1}AP-P^{-1}P')Z\)。额外的 \(P'\) 项来自基随导子变化，故不能照普通矩阵相似变换处理。
+把一组基写成行 \(e=(e_1,\ldots,e_n)\)，本书约定 \(\nabla(e_j)=-\sum_i A_{ij}e_i\)。对坐标列 \(v\in K^n\)，Leibniz 法则给出
+\[
+\nabla(ev)=e\bigl(\delta(v)-Av\bigr).
+\]
+这里采用坐标算子 \(\nabla=\delta-A\) 的符号约定，导子作用于坐标列的每一项。因此水平向量的坐标满足 \(v'=Av\)，相应的解矩阵满足 \(Y'=AY\)；采用 \(\delta+A\) 约定的文献会把水平坐标方程写成 \(v'=-Av\)。若令 \(Y=PZ\)，\(P\in\operatorname{GL}_n(K)\)，则新系统为 \(Z'=(P^{-1}AP-P^{-1}P')Z\)。额外的 \(P'\) 项来自基随导子变化，故不能照普通矩阵相似变换处理。
 
 \begin{definition}\label{b3:def:picard-vessiot-extension}
-设 \((K,\delta)\) 为特征零微分域，\(C=\ker\delta\) 为常数域，\(n\ge1\)，\(A\in M_n(K)\)。设 \(L/K\) 为微分域扩张，延拓的导子仍记为 \(\delta\)，\(C_L=\ker(\delta:L\to L)\)。若 \(L\) 含有矩阵 \(Y\in\operatorname{GL}_n(L)\)，满足 \(Y'=AY\)，且 \(L\) 由 \(Y\) 的各项与 \(\det(Y)^{-1}\) 在 \(K\) 上生成为域，并有 \(C_L=C\)，则称 \(L/K\) 为该系统的\term{Picard--Vessiot 扩张}[Picard--Vessiot extension]。\footnote{韦西奥（Ernest Vessiot，1865-1952），法国数学家，研究微分方程的可积性，发展线性微分方程的 Galois 理论。}与导子交换且固定 \(K\) 的 \(L\) 的域自同构组成其微分 Galois 群。
+设 \((K,\delta)\) 为特征零微分域，\(C=\ker\delta\) 为常数域，\(n\ge1\)，\(A\in M_n(K)\)。设 \(L/K\) 为微分域扩张，延拓的导子仍记为 \(\delta\)，\(C_L=\ker(\delta:L\to L)\)。若存在 \(Y\in\operatorname{GL}_n(L)\)，使下列三个条件成立：
+\begin{enumerate}
+\item \(Y'=AY\)，即 \(Y\) 是系统的可逆解矩阵；
+\item \(L=K(Y_{ij},\det(Y)^{-1}:1\le i,j\le n)\)，即该矩阵的各项与行列式的逆在 \(K\) 上生成为整个域；
+\item \(C_L=C\)，即扩张不增加常数；
+\end{enumerate}
+则 \(L/K\) 称为该系统的\term{Picard--Vessiot 扩张}[Picard--Vessiot extension]。\footnote{韦西奥（Ernest Vessiot，1865-1952），法国数学家，研究微分方程的可积性，发展线性微分方程的 Galois 理论。}与导子交换且固定 \(K\) 的 \(L\) 的域自同构组成其微分 Galois 群，记为 \(\operatorname{Gal}_\delta(L/K)\)。
 \end{definition}
 
-设 \((K,\delta)\) 为特征零微分域，且常数域 \(C=\ker\delta\) 代数闭。对于任意 \(n\ge1\) 和 \(A\in M_n(K)\)，系统 \(Y'=AY\) 都有 Picard--Vessiot 扩张，且在固定 \(K\) 并与导子交换的同构意义下唯一。存在唯一性定理见\cite[Propositions 1.20, 1.22]{VanDerPutSinger2003GaloisTheory}；第五卷附录 E.2 将给出这一构造及证明。
+无新常数条件约束的是整个解域：加入解矩阵之后，任何被导子零化的域元素都须已在 \(C\) 中。\cref{b3:prop:E-formal-exponential-pv}的形式指数算例将直接检查上述三个条件；其中的级数只作为形式 Laurent 级数域的元素使用，构造与证明不需要解析指数函数的性质。
 
-\begin{proposition}\label{b3:prop:pv-constant-matrices}
+\ProseParagraphBreak
+% 跨卷引用目标：b5:thm:E-pv-existence（E.2.3）。
+设 \((K,\delta)\) 为特征零微分域，且常数域 \(C=\ker\delta\) 代数闭。对于任意 \(n\ge1\) 和 \(A\in M_n(K)\)，系统 \(Y'=AY\) 都有 Picard--Vessiot 扩张，且在固定 \(K\) 并与导子交换的同构意义下唯一。存在唯一性定理见\cite[Propositions 1.20, 1.22]{VanDerPutSinger2003GaloisTheory}；第五卷附录 E.2 的定理 E.2.3 给出这一构造及证明。
+
+\begin{proposition}\label{b3:prop:pv-constant-matrices}\label{b3:prop:E-formal-exponential-pv}
 设 \((K,\delta)\) 为特征零微分域，\(C=\ker\delta\)，\(n\ge1\)，\(A\in M_n(K)\)，\(L/K\) 为方程 \(Y'=AY\) 的 Picard--Vessiot 扩张，且选定使 \(L=K(Y_{ij},\det(Y)^{-1})\) 的解矩阵 \(Y\in\operatorname{GL}_n(L)\)。每个与导子交换且固定 \(K\) 的自同构 \(\sigma:L\to L\) 唯一确定 \(C_\sigma\in\operatorname{GL}_n(C)\)，使 \(\sigma(Y)=YC_\sigma\)。映射 \(\sigma\mapsto C_\sigma\) 是单射群同态。
+
+特别地，在带逐项导子 \(\delta=\mathrm{d}/\mathrm{d}t\) 的形式 Laurent 级数域 \(\mathbb C(\!(t)\!)\) 中，按 \(t=0\) 处的形式 Laurent 展开嵌入 \(K=\mathbb C(t)\)，并令
+\[
+u=\sum_{j\ge0}\frac{t^j}{j!},\qquad L=K(u).
+\]
+则 \(u\) 在 \(K\) 上超越，\(L/K\) 是 \(y'=y\) 的 Picard--Vessiot 扩张，且 \(\operatorname{Gal}_\delta(L/K)\cong\mathbb C^\times\)；对应于 \(c\in\mathbb C^\times\) 的自同构固定 \(K\)，并把 \(u\) 送到 \(cu\)。
 \end{proposition}
 \begin{proof}
 \(\sigma(Y)'=A\cdot\sigma(Y)\)，而 \((Y^{-1})'=-Y^{-1}A\)，故 \((Y^{-1}\cdot\sigma(Y))'=0\)。无新常数条件使矩阵各项属于 \(C\)。它可逆并唯一。复合时常数矩阵被自同构固定，于是 \(C_{\sigma\tau}=C_\sigma C_\tau\)。若 \(C_\sigma=I\)，则 \(\sigma\) 固定域生成元，故为恒等。
+
+在所述形式级数域中，逐项求导给出 \(u'=u\)，常数项为 \(1\) 说明 \(u\ne0\)。若 \(u\) 在 \(K\) 上代数，取它的首一最小多项式
+\[
+f(X)=X^r+\sum_{i<r}a_i(t)X^i,\qquad a_i(t)\in\mathbb C(t),\quad r\ge1.
+\]
+由于 \(u\ne0\) 且 \(f\) 不可约，有 \(a_0\ne0\)。对 \(f(u)=0\) 求导，再减去该等式的 \(r\) 倍，得到
+\[
+\sum_{i<r}\bigl(a_i'+(i-r)a_i\bigr)u^i=0.
+\]
+这是次数小于 \(r\) 的代数关系，最小性迫使其各系数为零，特别有 \(a_0'=ra_0\)。写 \(a_0=p/q\)，其中 \(p,q\in\mathbb C[t]\) 均非零，便有
+\[
+p'q-pq'=rpq.
+\]
+左边为零或次数小于 \(\deg p+\deg q\)，右边非零且次数恰为 \(\deg p+\deg q\)，矛盾。因此 \(u\) 超越。
+
+逐项导子保持 \(\mathbb C(\!(t)\!)\)，并限制为 \(K\) 上满足 \(\delta t=1\)、\(\delta|_{\mathbb C}=0\) 的导子。若 Laurent 级数 \(\sum_{j\ge N}b_jt^j\) 的导数为零，则 \(jb_j=0\) 对每个整数 \(j\) 成立。特征零使 \(b_j=0\) 对所有 \(j\ne0\) 成立，故 \(\mathbb C(\!(t)\!)\) 的常数域恰为 \(\mathbb C\)。由 \(u'=u\) 及分式求导法则，\(L=K(u)\) 对导子稳定，且其常数域也恰为 \(\mathbb C\)。现在 \(Y=(u)\) 可逆，满足 \(Y'=Y\)，并有 \(L=K(u,u^{-1})\)，所以三个 Picard--Vessiot 条件均成立。
+
+应用命题的常数矩阵结论，每个 \(\sigma\in\operatorname{Gal}_\delta(L/K)\) 都满足 \(\sigma(u)=cu\)，其中 \(c\in\mathbb C^\times\)。反过来，对任意 \(c\in\mathbb C^\times\)，\(u\) 的超越性保证代换 \(u\mapsto cu\) 定义 \(K(u)\) 上的 \(K\) 自同构，其逆由 \(u\mapsto c^{-1}u\) 给出。它在 \(K\) 与 \(u\) 上都与导子交换，乘法和分式求导法则使这一性质扩展到整个 \(L\)。故上述单射的像为全部 \(\mathbb C^\times\)。
 \end{proof}
 
-矩阵表示把微分自同构转化为解空间上的常数线性变换，但哪些常数矩阵真正保持域中的全部代数关系，还须由具体系统决定。第一卷附录 D 给出了基本解及微分自同构的算例；第五卷附录 E 将继续讨论群的代数结构、Galois 对应及其与微分模的关系。
+% 跨卷引用目标：b5:cor:E-group-closed（E.2.6）；b5:thm:E-galois-correspondence（E.2.7）。
+上述一般结论只把微分 Galois 群识别为 \(\operatorname{GL}_n(C)\) 中的一个常数矩阵子群，尚未证明该子群 Zariski 闭，也未建立它的线性代数群结构或中间微分域的 Galois 对应。常数域代数闭时的群闭性及微分 Galois 对应，分别见第五卷附录 E.2 的推论 E.2.6 与定理 E.2.7；该理论与微分模的联系也在那里继续讨论。第一卷附录 D 给出了基本解及微分自同构的其他算例。
 
 \ProseParagraphBreak
-例如在 \(K=\mathbb C(t)\)、\(t'=1\) 上考虑 \(y'=y/(2t)\)。取 \(z\) 满足 \(z^2=t\)，则求导给出 \(z'=z/(2t)\)，所以 \(Y=(z)\) 是基本解矩阵。扩域 \(L=\mathbb C(z)\) 的导子为 \((2z)^{-1}\mathrm{d}/\mathrm{d}z\)，其常数恰为 \(\mathbb C\)：有理函数的导数为零当且仅当它是常数。因此这是一个 Picard--Vessiot 扩张。任意微分自同构都使 \(\sigma(z)=cz\)、\(c\in\mathbb C^\times\)，但保持 \(z^2=t\) 又要求
+允许的常数倍还须保持解域中的代数关系。例如在 \(K=\mathbb C(t)\)、\(t'=1\) 上考虑 \(y'=y/(2t)\)。取 \(z\) 满足 \(z^2=t\)，则求导给出 \(z'=z/(2t)\)，所以 \(Y=(z)\) 是基本解矩阵。扩域 \(L=\mathbb C(z)\) 的导子为 \((2z)^{-1}\mathrm{d}/\mathrm{d}z\)，其常数恰为 \(\mathbb C\)：有理函数的导数为零当且仅当它是常数。因此这是一个 Picard--Vessiot 扩张。任意微分自同构都使 \(\sigma(z)=cz\)、\(c\in\mathbb C^\times\)，但保持 \(z^2=t\) 又要求
 \[
 c^2z^2=t=z^2,\qquad c^2=1.
 \]
@@ -48,25 +89,29 @@ c^2z^2=t=z^2,\qquad c^2=1.
 \subsection{微分闭域、参数化理论、微分代数群与差分代数}
 \label{b3:subsec:E04:02}
 
-微分方程未必在给定微分域中有解，这促使人们扩大“代数闭”的观念。设 \((K,\delta)\) 为只指定一个导子的特征零微分域。若任意以 \(K\) 为系数、在某个微分扩域可解的有限微分多项式方程与不等式系统，在 \(K\) 中已有解，则称 \((K,\delta)\) 为\term{微分闭域}[differentially closed field]。这里不等式指 \(g\ne0\)，并非序关系。按模型论的说法，\(K\) 在特征零单导子微分域的类中满足 existentially closed 条件：以 \(K\) 中元素为参数的存在性条件，一旦能在某个微分扩域中满足，就已经能在 \(K\) 中满足。条件不仅涉及底层域的多项式，还涉及各阶导数。
+以下只介绍微分闭域、参数化理论、微分代数群和差分代数的研究对象与基本术语；相应的存在性定理、模型完备性与参数化 Galois 对应在这里不作证明。微分方程未必在给定微分域中有解，这促使人们扩大“代数闭”的观念。设 \((K,\delta)\) 为只指定一个导子的特征零微分域。若任意以 \(K\) 为系数、在某个微分扩域可解的有限微分多项式方程与不等式系统，在 \(K\) 中已有解，则 \((K,\delta)\) 称为\term{微分闭域}[differentially closed field]。这里不等式指 \(g\ne0\)，并非序关系。按模型论的说法，\(K\) 在特征零单导子微分域的类中满足 existentially closed 条件：以 \(K\) 中元素为参数的存在性条件，一旦能在某个微分扩域中满足，就已经能在 \(K\) 中满足。条件不仅涉及底层域的多项式，还涉及各阶导数。
 
 \ProseParagraphBreak
-若方程还依赖参数，可以同时指定主变量导子 \(\delta\) 和参数导子 \(\partial\)，要求二者交换。\(\delta\) 的常数域对 \(\partial\) 稳定，因为 \(\delta a=0\) 蕴含 \(\delta(\partial a)=\partial(\delta a)=0\)；它自身因而带有参数导子。研究与二者同时交换的自同构时，常数矩阵的系数还会受到 \(\partial\) 方程约束，这就是参数化微分 Galois 理论出现微分代数群的缘由。所谓\term{微分代数群}[differential algebraic group]，在矩阵情形可理解为由微分多项式方程定义、且对乘法和取逆封闭的矩阵集合。例如常数非零元组成 \(\{a:a\ne0,\delta a=0\}\)，它是乘法群的微分代数子群。
+若方程还依赖参数，可以在基域与解域上同时指定主变量导子 \(\delta\) 和参数导子 \(\partial\)，要求二者交换。\(\delta\) 的常数域对 \(\partial\) 稳定，因为 \(\delta a=0\) 蕴含 \(\delta(\partial a)=\partial(\delta a)=0\)；它自身因而带有参数导子。研究与二者同时交换的自同构时，常数矩阵的系数还可能受到 \(\partial\) 方程约束，描述这些约束是参数化微分 Galois 理论的一个问题。在带导子 \(\partial\) 的域 \(F\) 上，\(\operatorname{GL}_n(F)\) 中由 \(F\) 上微分多项式方程定义的子群，是矩阵形式的\term{微分代数群}[differential algebraic group]。例如 \(\{a\in F^\times:\partial a=0\}\) 对乘法和取逆封闭，因而给出乘法群的微分代数子群。
 
 \ProseParagraphBreak
-\term{差分代数}[difference algebra]则指定环自同态 \(\sigma\)，如 \(f(t)\mapsto f(t+1)\)；它研究 \(y(t+1)\) 与 \(y(t)\) 的关系。导子的 Leibniz 法则与自同态的乘法法则不同，因而差分多项式与微分多项式的理想条件并不相同。
+\term{差分代数}[difference algebra]研究配有指定环自同态（endomorphism）\(\sigma:R\to R\) 的交换环 \(R\)，一般不要求 \(\sigma\) 可逆；inversive 情形要求 \(\sigma\) 为自同构。例如 \(\mathbb C(t)\) 上的平移 \(\sigma(f(t))=f(t+1)\) 是自同构，逆为 \(f(t)\mapsto f(t-1)\)。差分代数研究 \(y,\sigma(y),\sigma^2(y),\ldots\) 之间的代数关系，在这个例子中即涉及 \(y(t),y(t+1),y(t+2),\ldots\)。导子的 Leibniz 法则与自同态的乘法法则不同，因而差分多项式与微分多项式的理想条件并不相同。
 
 \subsection{微分代数几何、维数多项式与模型论导读}
 \label{b3:subsec:E04:03}
 
-微分代数几何用有限阶截断，把无穷多个导数暂时收集在有限生成的代数中。设 \(L=K\langle a_1,\ldots,a_n\rangle\)，定义
+本小节说明有限阶截断、维数多项式与模型论所研究的问题；一般维数多项式存在性和微分闭域的模型完备性不在这里建立。设 \((K,\delta)\) 为特征零单导子微分域，\(L/K\) 为由 \(a=(a_1,\ldots,a_n)\) 微分生成的微分域扩张，即 \(L=K\langle a_1,\ldots,a_n\rangle\)。有限阶截断只收集有限多个导数；对每个整数 \(s\ge0\)，定义
 \[
 h_a(s)=\operatorname{trdeg}_K K(a_i,\delta a_i,\ldots,\delta^sa_i:1\le i\le n).
 \]
-它统计到第 \(s\) 阶为止还保留多少个普通代数自由参数。若 \(a\) 是一个微分超越元，则 \(h_a(s)=s+1\)；若 \(a'=a\) 且 \(a\) 在 \(K\) 上普通超越，则所有高阶导数等于 \(a\)，故 \(h_a(s)=1\)。两种情形都不能只用“方程有几个未知函数”判断。
+它统计到第 \(s\) 阶为止还保留多少个普通代数自由参数。若 \(a\) 是一个微分超越元，则 \(h_a(s)=s+1\)；若 \(a'=a\) 且 \(a\) 在 \(K\) 上普通超越，则所有高阶导数等于 \(a\)，故 \(h_a(s)=1\)。两种情形都不能只用“方程有几个未知函数”判断。这个函数依赖所选生成元组：当 \(a\) 微分超越时，\(a\) 与 \((a,\delta a)\) 生成同一微分域，但后者到第 \(s\) 阶还包括 \(\delta^{s+1}a\)，所以 \(h_{(a,\delta a)}(s)=s+2\)。
+\symidx{\(h_a(s)\)：生成元组到第 \(s\) 阶导数的超越次数}
 
 \ProseParagraphBreak
-若一个数值多项式在充分大的整数 \(s\) 上等于 \(h_a(s)\)，就称它为这一生成元组的\term{微分维数多项式}[differential dimension polynomial]。上面两个例子分别得到 \(s+1\) 与 \(1\)；多个交换导子时则按总微分阶截断。一般存在性定理及其与排序、特征集的关系属于本附录未建立的维数理论。有效计算所涉及的问题可读\cite[Section 1]{Hubert2003DifferentialSystems}。截断过程记录的是给定生成元的导数关系，不能把任意有限阶的解都认作可延拓为全部阶的解。
+若一个有理系数多项式 \(\omega_a(T)\) 在充分大的整数 \(s\) 上满足 \(\omega_a(s)=h_a(s)\)，它就在这些整数上取整数值，称为这一生成元组的\term{微分维数多项式}[differential dimension polynomial]。上述例子得到 \(T+1\)、\(1\) 和 \(T+2\)；同一扩张采用不同生成元组时，多项式的系数可以改变。一般存在性定理、从中提取不变量的方法及其与排序、特征集的关系属于本附录未建立的维数理论；若指定多个交换导子，截断还须按总微分阶收集导数。有效计算所涉及的问题可读\cite[Section 1]{Hubert2003DifferentialSystems}。
+
+\ProseParagraphBreak
+截断到第 \(s\) 阶时，只检查有限多个导数变量与已经取得的方程；继续到第 \(s+1\) 阶，求导还可能带来新的相容关系。因此有限阶的解未必能延拓为全部阶的解。尤其在多个交换导子下，不同次序的混合求导必须给出相同结果，这也是\cref{b3:def:regular-differential-system}中相容性条件所要控制的问题。
 
 \ProseParagraphBreak
 模型论把这些问题写成微分域上的公式：方程表达等式，不等条件表达可逆性，量词表达存在新的解或参数。微分闭域提供研究解集的一种环境，但它不自动指定解析函数，也没有给出收敛区域。前文已经从方程构造微分理想，在消去中保留非零条件，并由线性系统得到常数矩阵作用；更一般的几何与模型论需要另作系统学习。

@@ -22,7 +22,7 @@
 \[
 0\longrightarrow A\xrightarrow{i}B\xrightarrow{p}C\longrightarrow0.
 \]
-若 \(c\in C^n\) 是余圈，将它提升到 \(b\in B^n\) 后，\(b\) 未必仍是余圈。然而 \(p(\mathrm{d}b)=\mathrm{d}c=0\)，故 \(\mathrm{d}b\) 来自 \(A^{n+1}\)。连接同态记录的正是这个提升失败的程度。
+计算连接像时，从 \([c]\) 选余圈代表 \(c\in C^n\)，再沿 \(p\) 取提升 \(b\in B^n\)。这个提升未必仍是余圈，但 \(p(\mathrm{d}b)=\mathrm{d}c=0\)，正合性保证 \(\mathrm{d}b=i(a)\) 有解，\(i^{n+1}\) 单射又保证 \(a\) 唯一。下面将证明 \(a\) 是余圈，最后取 \([a]\in H^{n+1}(A)\) 就得到 \([c]\) 的连接像。连接同态记录的正是提升未能保持余圈的程度。
 \[
 \begin{tikzcd}[column sep=large,row sep=large]
 A^n\arrow[r,hook,"i^n"]\arrow[d,"\mathrm{d}_A^n"']&B^n\arrow[r,two heads,"p^n"]\arrow[d,"\mathrm{d}_B^n"]&C^n\arrow[d,"\mathrm{d}_C^n"]\\
@@ -45,34 +45,54 @@ a\arrow[r,mapsto,"i^{n+1}"']&\mathrm{d}_Bb\arrow[r,mapsto,"p^{n+1}"']&0
 \]
 \end{proposition}
 \begin{proof}
-固定整数 \(n\)。在此证明中将中间复形暂记为 \(E\)，把短正合列写成 \(0\to A\xrightarrow{i}E\xrightarrow{p}C\to0\)。要运用蛇引理构造连接态射，需要一张竖直箭头的核为 \(H^n\)、余核为 \(H^{n+1}\) 的图。为此，对每个上链复形 \(X\) 定义
+固定整数 \(n\)，先检验模情形中的规则不依赖选择。由 \(i(\mathrm{d}_Aa)=\mathrm{d}_B^2b=0\) 和 \(i\) 单得到 \(\mathrm{d}_Aa=0\)。同一余圈的另一个提升必形如 \(b+i(a_0)\)，此时 \(a\) 变为 \(a+\mathrm{d}_Aa_0\)，其上同调类不变。若把余圈代表改为 \(c+\mathrm{d}_Cc_0\)，取 \(b_0\) 使 \(p(b_0)=c_0\)，则 \(b+\mathrm{d}_Bb_0\) 是新代表的提升，而二次微分为零使所得 \(a\) 不变。对余圈相加或数乘时，可以相应地相加或数乘所选提升与原像，故所得映射为模同态。
+
+在一般交换范畴中，不能预先把上同调看成元素的商集，需要用蛇引理产生这条态射。为免中间复形 \(B\) 与余边记号 \(B^n(X)\) 混淆，将前者暂记为 \(E\)，把短正合列写成 \(0\to A\xrightarrow{i}E\xrightarrow{p}C\to0\)。蛇引理给出竖直箭头的核到另一条竖直箭头的余核的连接，所以要把相邻的 \(H^n,H^{n+1}\) 同时写成核、余核。模情形提示我们：先从微分的定义域模去余边，再把陪域限制在余圈，即取
+\[
+Q^n(X)=X^n/B^n(X),\qquad
+\bar{\mathrm{d}}_X([x])=\mathrm{d}_X^nx\in Z^{n+1}(X).
+\]
+于是其核为 \(Z^n(X)/B^n(X)=H^n(X)\)，像为 \(B^{n+1}(X)\)，余核为 \(H^{n+1}(X)\)。一般交换范畴中，这个设计由以下余核和诱导态射实现。对每个上链复形 \(X\) 定义
 \[
 Q^n(X)\coloneqq\operatorname{coker}\bigl(B^n(X)\hookrightarrow X^n\bigr),
 \qquad q_X:X^n\twoheadrightarrow Q^n(X).
 \]
-在模范畴中，\(Q^n(X)\) 就是 \(X^n/B^n(X)\)。记余圈嵌入为 \(z_X^r:Z^r(X)\hookrightarrow X^r\)。微分的像包含在 \(Z^{n+1}(X)\) 中，并在 \(B^n(X)\) 上为零，因而唯一诱导
+记余圈嵌入为 \(z_X^r:Z^r(X)\hookrightarrow X^r\)。微分的像包含在 \(Z^{n+1}(X)\) 中，并在 \(B^n(X)\) 上为零，因而唯一诱导
 \[
 \bar{\mathrm{d}}_X:Q^n(X)\longrightarrow Z^{n+1}(X),
 \qquad
 \mathrm{d}_X^n=z_X^{n+1}\bar{\mathrm{d}}_Xq_X.
 \]
 
-先识别这条态射的核。令 \(k_X:K_X\hookrightarrow Q^n(X)\) 为 \(\bar{\mathrm{d}}_X\) 的核。因为 \(\bar{\mathrm{d}}_Xq_Xz_X^n=0\)，存在唯一 \(u_X:Z^n(X)\to K_X\) 使 \(k_Xu_X=q_Xz_X^n\)。由 \(z_X^{n+1}\) 单，对任意 \(x:T\to X^n\)，条件 \(\bar{\mathrm{d}}_Xq_Xx=0\) 等价于 \(\mathrm{d}_X^nx=0\)，也就是 \(x\) 唯一通过 \(z_X^n\) 分解。若还给定 \(y:T\to K_X\) 满足 \(q_Xx=k_Xy\)，则该分解通过 \(u_X\) 所得的态射与 \(y\) 相等，因为 \(k_X\) 单。这说明 \(Z^n(X)\) 是 \(q_X\) 沿 \(k_X\) 的拉回，故由\cref{b4:lem:epi-pullback}，\(u_X\) 满。又因 \(k_X\) 单，\(u_Xv=0\) 等价于 \(q_Xz_X^nv=0\)，后者恰表示 \(z_X^nv\) 通过 \(B^n(X)\hookrightarrow X^n\) 分解。消去 \(z_X^n\) 可知，\(u_X\) 的核就是 \(B^n(X)\hookrightarrow Z^n(X)\)。由\cref{b4:prop:abelian-normal-factorization}，满态射 \(u_X\) 是其核的余核，故由上同调的定义得到典范识别
+先识别这条态射的核。令 \(k_X:K_X\hookrightarrow Q^n(X)\) 为 \(\bar{\mathrm{d}}_X\) 的核。因为 \(\bar{\mathrm{d}}_Xq_Xz_X^n=0\)，存在唯一 \(u_X:Z^n(X)\to K_X\) 使
+\[
+k_Xu_X=q_Xz_X^n.
+\]
+要证明 \(u_X\) 满，可以检验这两个分解构成 \(q_X\) 沿 \(k_X\) 的拉回。给定同源态射 \(x:T\to X^n\)、\(y:T\to K_X\)，满足 \(q_Xx=k_Xy\)。于是
+\(\bar{\mathrm{d}}_Xq_Xx=\bar{\mathrm{d}}_Xk_Xy=0\)，从微分的分解得到 \(\mathrm{d}_X^nx=0\)。核的泛性质给出唯一 \(v:T\to Z^n(X)\)，使 \(z_X^nv=x\)。再由
+\(k_Xu_Xv=q_Xx=k_Xy\) 及 \(k_X\) 单得到 \(u_Xv=y\)。这正是拉回的存在、唯一分解条件。由于 \(q_X\) 为余核态射，故满；\cref{b4:lem:epi-pullback}所说的“满态射沿拉回仍满”遂给出 \(u_X\) 满。
+
+记余边嵌入为 \(\beta_X:B^n(X)\hookrightarrow X^n\)，其经过余圈的分解为 \(\iota_X:B^n(X)\hookrightarrow Z^n(X)\)，即 \(\beta_X=z_X^n\iota_X\)。按定义 \(q_X=\operatorname{coker}\beta_X\)，所以由\cref{b4:prop:abelian-normal-factorization}，单态射 \(\beta_X\) 又是 \(q_X\) 的核。对任意 \(v:T\to Z^n(X)\)，\(k_X\) 单说明
+\(u_Xv=0\) 当且仅当 \(q_Xz_X^nv=0\)。后一个条件使 \(z_X^nv\) 唯一写成 \(\beta_Xw=z_X^n\iota_Xw\)；消去 \(z_X^n\) 得 \(v=\iota_Xw\)，故 \(\ker u_X=\iota_X\)。已经证明 \(u_X\) 满，再次用\cref{b4:prop:abelian-normal-factorization}得知它是其核的余核。因此 \(K_X\) 与上同调的定义采用同一个余核，得到典范识别
 \[
 \ker\bar{\mathrm{d}}_X\cong H^n(X).
 \]
-另一方面，\(q_X\) 满，故 \(\bar{\mathrm{d}}_X\) 的像与微分在 \(Z^{n+1}(X)\) 中的像相同，即 \(B^{n+1}(X)\)。因此
+另一方面，取 \(\bar{\mathrm{d}}_X\) 的像分解 \(\bar{\mathrm{d}}_X=\ell_Xr_X\)，其中 \(r_X\) 满，\(\ell_X\) 单。微分的分解成为
+\[
+\mathrm{d}_X^n=(z_X^{n+1}\ell_X)(r_Xq_X).
+\]
+右边仍是满态射后接单态射，故它本身就是 \(\mathrm{d}_X^n\) 的像分解。因而 \(z_X^{n+1}\ell_X\) 表示余边 \(B^{n+1}(X)\) 在 \(X^{n+1}\) 中的嵌入，\(\ell_X\) 则表示它在 \(Z^{n+1}(X)\) 中的嵌入。模去这一像便得到
 \[
 \operatorname{coker}\bar{\mathrm{d}}_X
 \cong\operatorname{coker}\bigl(B^{n+1}(X)\hookrightarrow Z^{n+1}(X)\bigr)
 =H^{n+1}(X).
 \]
 
-短正合列中的复形映射保持余圈与余边，因而诱导交换图
+短正合列中的复形映射保持余圈与余边，因而诱导下面的交换图。为应用\cref{b4:thm:snake-lemma}，须证明上排末端满、下排首端单，且两排均在中项正合。届时蛇引理产生的箭头从 \(\ker\bar{\mathrm{d}}_C\) 到 \(\operatorname{coker}\bar{\mathrm{d}}_A\)，按刚才的识别恰是所求的 \(H^n(C)\to H^{n+1}(A)\)。
 \[
-\begin{tikzcd}[column sep=large]
-Q^n(A)\arrow[r,"Q^n(i)"]\arrow[d,"\bar{\mathrm{d}}_A"']&Q^n(E)\arrow[r,"Q^n(p)"]\arrow[d,"\bar{\mathrm{d}}_E"]&Q^n(C)\arrow[r]\arrow[d,"\bar{\mathrm{d}}_C"]&0\\
-Z^{n+1}(A)\arrow[r,"Z^{n+1}(i)"']&Z^{n+1}(E)\arrow[r,"Z^{n+1}(p)"']&Z^{n+1}(C)&
+\begin{tikzcd}[column sep=2.3em]
+&Q^n(A)\arrow[r,"Q^n(i)"]\arrow[d,"\bar{\mathrm{d}}_A"']&Q^n(E)\arrow[r,"Q^n(p)"]\arrow[d,"\bar{\mathrm{d}}_E"]&Q^n(C)\arrow[r]\arrow[d,"\bar{\mathrm{d}}_C"]&0\\
+0\arrow[r]&Z^{n+1}(A)\arrow[r,"Z^{n+1}(i)"']&Z^{n+1}(E)\arrow[r,"Z^{n+1}(p)"']&Z^{n+1}(C)&
 \end{tikzcd}
 \]
 下排左端单，因为 \(i^{n+1}\) 与余圈嵌入均单。为验证中项正合，设 \(e:T\to Z^{n+1}(E)\) 满足 \(Z^{n+1}(p)e=0\)。由 \(i^{n+1}=\ker p^{n+1}\)，存在唯一 \(a:T\to A^{n+1}\) 使 \(i^{n+1}a=z_E^{n+1}e\)。复形映射的相容性给出
@@ -88,20 +108,32 @@ q_Cp^n=Q^n(p)q_E.
 \]
 原复合满，推出 \(Q^n(p)\) 满。
 
-上排中项的正合性用\cref{b4:lem:generalized-element-calculus}检验。以下每次提升都继续预合成所得满态射，并保留原符号；同一等式中的广义元素具有共同定义域。设 \(\xi:T\to Q^n(E)\) 满足 \(Q^n(p)\xi=0\)。由 \(q_E\) 满，在满态射后取 \(e:T'\to E^n\)，使 \(q_Ee=\xi\)。此时 \(q_Cp^ne=0\)，而 \(\ker q_C=B^n(C)=\operatorname{im}\mathrm{d}_C^{n-1}\)，故经进一步的满态射预合成后可取 \(c':T''\to C^{n-1}\)，使 \(p^ne=\mathrm{d}_C^{n-1}c'\)。再由 \(p^{n-1}\) 满，继续预合成并取 \(e'\) 使 \(p^{n-1}e'=c'\)。于是
+上排中项的正合性用\cref{b4:lem:generalized-element-calculus}检验。设 \(\xi:T\to Q^n(E)\) 满足 \(Q^n(p)\xi=0\)。由 \(q_E\) 满，取满态射 \(s_1:T_1\to T\) 与 \(e_1:T_1\to E^n\)，使 \(q_Ee_1=\xi s_1\)。此时 \(q_Cp^ne_1=0\)，所以 \(p^ne_1\) 通过 \(\ker q_C=B^n(C)\) 分解。微分到其像 \(B^n(C)\) 的态射满，故可再取满态射 \(s_2:T_2\to T_1\) 与 \(c_2:T_2\to C^{n-1}\)，使
 \[
-p^n\bigl(e-\mathrm{d}_E^{n-1}e'\bigr)=0.
+p^ne_1s_2=\mathrm{d}_C^{n-1}c_2.
 \]
-由于 \(i^n=\ker p^n\)，存在唯一 \(a\) 使 \(e-\mathrm{d}_E^{n-1}e'=i^na\)。\(q_E\) 消去余边，所以
+由 \(p^{n-1}\) 满，继续取满态射 \(s_3:T_3\to T_2\) 与 \(e_2:T_3\to E^{n-1}\)，使 \(p^{n-1}e_2=c_2s_3\)。三次提升的定义域依次为
 \[
-\xi=q_Ee=q_Ei^na=Q^n(i)q_Aa.
+T_3\xrightarrow[\text{满}]{s_3}T_2
+\xrightarrow[\text{满}]{s_2}T_1
+\xrightarrow[\text{满}]{s_1}T.
 \]
-这给出了 \(\xi\) 在共同满态射后的原像；反向仍由 \(pi=0\) 给出，故上排在中项正合。两排满足蛇引理的假设，已识别的竖直核与余核因此给出所需 \(\delta^n\)。
-
-在模中，蛇引理的提升规则正是陈述中的公式。由 \(i(\mathrm{d}a)=\mathrm{d}_E^2e=0\) 和 \(i\) 单得到 \(\mathrm{d}a=0\)。改变提升 \(e\) 为 \(e+i(a_0)\)，\(a\) 改变为 \(a+\mathrm{d}a_0\)，故其上同调类不变。改变余圈代表 \(c\) 为 \(c+\mathrm{d}c_0\) 时，提升 \(c_0\) 为 \(e_0\)，改取 \(e+\mathrm{d}e_0\) 即可，二次微分为零使 \(a\) 不变。加法也与各步相容，得到所声称的同态公式。
+现在把原来的 \(e_1\)、\(\xi\) 都预合成到 \(T_3\)，令 \(e=e_1s_2s_3:T_3\to E^n\)、\(e'=e_2:T_3\to E^{n-1}\)。这时 \(e\) 与 \(\mathrm{d}_E^{n-1}e'\) 才是同源、同目标的态射，可以相减。由复形映射条件得到
+\[
+\begin{aligned}
+p^n\bigl(e-\mathrm{d}_E^{n-1}e'\bigr)
+&=p^ne_1s_2s_3-\mathrm{d}_C^{n-1}p^{n-1}e_2\\
+&=\mathrm{d}_C^{n-1}c_2s_3-\mathrm{d}_C^{n-1}c_2s_3=0.
+\end{aligned}
+\]
+由于 \(i^n=\ker p^n\)，存在唯一 \(a:T_3\to A^n\) 使 \(e-\mathrm{d}_E^{n-1}e'=i^na\)。\(q_E\) 消去余边，所以
+\[
+\xi s_1s_2s_3=q_Ee=q_Ei^na=Q^n(i)q_Aa.
+\]
+满态射的复合 \(s_1s_2s_3\) 使 \(\xi\) 取得上排左侧的原像；反向由 \(pi=0\) 给出，故上排在中项正合。两排满足蛇引理的全部假设，竖直核与余核给出所需的 \(\delta^n\)。在模中，蛇引理的提升规则正是证明开头已经检验的公式。
 \end{proof}
 
-在一般交换范畴中，最后一段仍可作为广义元素的计算方法，只须在需要提升时先预合成满态射。蛇引理已经保证连接态射存在且与选择无关，这种计算说明了它如何作用于代表元。
+在一般交换范畴中，模情形的计算仍可按广义元素来理解，只须在需要提升时先预合成满态射，并把参加同一运算的态射放到共同定义域上。蛇引理保证连接态射存在且与选择无关，广义元素的追踪说明它如何作用于余圈的参数化代表。
 
 \subsection{长正合列及其自然性}
 \label{b4:subsec:0503:02}
@@ -131,18 +163,33 @@ H^n(A')\arrow[r]&H^n(B')\arrow[r]&H^n(C')\arrow[r,"\delta'^n"']&H^{n+1}(A')
 H^n(A)\to H^n(B)\to H^n(C)\to
 H^{n+1}(A)\to H^{n+1}(B)\to H^{n+1}(C)
 \]
-在四个内项处正合。这六项中的箭头与原复形所诱导的箭头相同，因为核、像和余核上的态射都是由原来的 \(i,p\) 唯一诱导的。让 \(n\) 遍历整数，相邻六项列的重叠部分相同，因而拼成所述长列，每项都落在某个六项列的内项位置。
+在四个内项处正合。这六项中的箭头与原复形所诱导的箭头相同，因为核、像和余核上的态射都是由原来的 \(i,p\) 唯一诱导的。将 \(n\) 换为 \(n+1\)，下一列从
+\[
+H^{n+1}(A)\to H^{n+1}(B)\to H^{n+1}(C)
+\xrightarrow{\delta^{n+1}}H^{n+2}(A)\to\cdots
+\]
+开始，其中前三项及两个箭头正是上一列的末三项及相应箭头。让 \(n\) 遍历整数，这些重叠部分使六项列拼成所述长列，每项都落在某个六项列的内项位置。
 
-短正合列的态射诱导 \(Q^n\) 与 \(Z^{n+1}\) 两排之间的交换图。\cref{b4:prop:snake-naturality}立即给出连接箭头的交换；其余箭头交换由上同调的函子性得到。这也说明连接同态与次数的排列没有额外选择。
+短正合列的态射诱导 \(Q^n\) 与 \(Z^{n+1}\) 两排之间的六个比较态射。它们还须与竖直的 \(\bar{\mathrm{d}}\) 相容：对任一复形映射 \(f:X\to X'\)，由 \(f^{n+1}\mathrm{d}_X^n=\mathrm{d}_{X'}^nf^n\)，消去余圈嵌入与商满态射后得到
+\[
+Z^{n+1}(f)\bar{\mathrm{d}}_X
+=\bar{\mathrm{d}}_{X'}Q^n(f).
+\]
+因此这些比较态射满足\cref{b4:prop:snake-naturality}的全部交换条件。其在 \(\ker\bar{\mathrm{d}}_C\)、\(\operatorname{coker}\bar{\mathrm{d}}_A\) 上诱导的态射分别是 \(H^n(c)\)、\(H^{n+1}(a)\)，故该命题给出连接箭头的交换；其余箭头交换由上同调的函子性得到。这也说明连接同态与次数的排列没有额外选择。
 \end{proof}
 
-链指标下，同一定理得到\term[tongdiao-chang-zhenghelie]{同调长正合列}[long exact homology sequence]，连接同态为 \(H_n(C)\to H_{n-1}(A)\)。升次与降次的区别只来自 \(H^n=H_{-n}\)，不表示有两种不同的构造。
+链指标下，同一定理得到\term[tongdiao-chang-zhenghelie]{同调长正合列}[long exact homology sequence]。把链复形改记为上链复形，有 \(H_n(C)=H^{-n}(C)\)，所以连接态射写成
+\[
+H_n(C)=H^{-n}(C)\longrightarrow
+H^{-n+1}(A)=H_{n-1}(A).
+\]
+升次与降次的区别只来自指标换算，不表示有两种不同的构造。
 
 \begin{corollary}\label{b4:cor:acyclic-two-of-three}
 在交换范畴中，复形短正合列 \(0\to A\to B\to C\to0\) 的三个复形若有两个零调，则第三个也零调。若 \(A\) 零调，则 \(H^n(B)\to H^n(C)\) 对每个 \(n\) 均为同构；若 \(C\) 零调，则 \(H^n(A)\to H^n(B)\) 均为同构。
 \end{corollary}
 \begin{proof}
-把相应零项代入长正合列即可。例如 \(H^n(A)=H^{n+1}(A)=0\) 时，相关三项成为 \(0\to H^n(B)\to H^n(C)\to0\)，所以中间箭头既单又满；其他情形使用同一列在相应次数的正合性。
+把相应零项代入长正合列即可。例如 \(H^n(A)=H^{n+1}(A)=0\) 时，相关三项成为 \(0\to H^n(B)\to H^n(C)\to0\)，所以中间箭头既单又满。在交换范畴中，\cref{b4:prop:abelian-normal-factorization}保证这样的态射为同构。其他情形使用同一列在相应次数的正合性。
 \end{proof}
 
 \subsection{连接同态的显式计算}
@@ -153,7 +200,14 @@ H^{n+1}(A)\to H^{n+1}(B)\to H^{n+1}(C)
 \[
 H^0(C)=k\xrightarrow{\delta^0}H^1(A)=k
 \]
-是恒等映射：把 \(c\) 提升为 \(B^0\) 中同一个数，其微分仍为 \(c\)。如果复形短正合列有复形截面，便能把余圈提升为余圈，从而 \(\delta^0=0\)，矛盾。逐次分裂因此弱于复形分裂。
+是恒等映射：把 \(c\) 提升为 \(B^0\) 中同一个数，其微分仍为 \(c\)。也可直接检查复形截面为何不存在：若 \(s:C\to B\) 满足 \(ps=1_C\)，则次数 \(0\) 的 \(p^0\) 为恒等，迫使 \(s^0=1_k\)；而 \(C^1=0\)，所以 \(s^1=0\)。复形映射条件却要求
+\[
+\mathrm{d}_B^0s^0=s^1\mathrm{d}_C^0,
+\qquad\text{即}\qquad 1_k=0,
+\]
+矛盾。逐次分裂的截面未必与微分相容，因此逐次分裂弱于复形分裂。
+
+一般地，若复形短正合列有复形截面，它就能把余圈提升为余圈，所以所有连接态射都为零。反向不成立：把 \(0\to\mathbb Z\xrightarrow{\times2}\mathbb Z\to\mathbb Z/2\mathbb Z\to0\) 集中在次数 \(0\)，所有连接态射均为零，却没有复形截面，因为每个群同态 \(\mathbb Z/2\mathbb Z\to\mathbb Z\) 都为零。
 \end{example}
 
 \begin{example}\label{b4:exm:connecting-divisibility}
@@ -161,12 +215,12 @@ H^0(C)=k\xrightarrow{\delta^0}H^1(A)=k
 \[
 0\longrightarrow D\xrightarrow{\times m}D\longrightarrow D/mD\longrightarrow0.
 \]
-模 \(m\) 后微分为零，故 \(H^0(D/mD)=H^1(D/mD)=\mathbb Z/m\)；原复形则有 \(H^0(D)=0\)、\(H^1(D)=\mathbb Z/m\)。将 \(\bar a\in H^0(D/mD)\) 提升为整数 \(a\)，其微分为 \(ma\)，通过左端嵌入乘 \(m\) 取原像得到 \(a\)。因此 \(\delta^0(\bar a)=\bar a\)，长列的非零部分为
+模 \(m\) 后微分为零，故 \(H^0(D/mD)=H^1(D/mD)=\mathbb Z/m\mathbb Z\)；原复形则有 \(H^0(D)=0\)、\(H^1(D)=\mathbb Z/m\mathbb Z\)。将 \(\bar a\in H^0(D/mD)\) 提升为整数 \(a\)，其微分为 \(ma\)，通过左端嵌入乘 \(m\) 取原像得到 \(a\)。这里是在原来的左端整数群中沿单射 \(\times m\) 唯一取原像，并非在 \(\mathbb Z/m\mathbb Z\) 中作除法。因此 \(\delta^0(\bar a)=\bar a\)，长列的非零部分为
 \[
-0\longrightarrow\mathbb Z/m\xrightarrow{1}\mathbb Z/m
-\xrightarrow{0}\mathbb Z/m\xrightarrow{1}\mathbb Z/m\longrightarrow0.
+0\longrightarrow\mathbb Z/m\mathbb Z\xrightarrow{1}\mathbb Z/m\mathbb Z
+\xrightarrow{0}\mathbb Z/m\mathbb Z\xrightarrow{1}\mathbb Z/m\mathbb Z\longrightarrow0.
 \]
 中间的零映射来自乘 \(m\)，并不破坏正合性，因为它的前一个箭头满、后一个箭头单。
 \end{example}
 
-更一般地，只要逐次乘 \(m\) 在模复形 \(D\) 上单射，同一短正合列就成立。连接同态要求先取 \(\mathrm{d}b\)，再用已知的整除关系 \(\mathrm{d}b=ma\) 求 \(a\)，最后取其上同调类；直接把 \(\mathrm{d}b\) 模 \(m\) 约化只会得到零，丢掉了需要记录的信息。
+更一般地，只要逐次乘 \(m\) 在模复形 \(D\) 上单射，同一短正合列就成立。在次数 \(n\) 取余圈 \(c\in Z^n(D/mD)\) 的提升 \(b\in D^n\) 后，先取 \(\mathrm{d}b\)，再沿左端单射用已知的关系 \(\mathrm{d}b=ma\) 唯一求出 \(a\)，最后取 \([a]\in H^{n+1}(D)\)。因为 \(m\cdot\mathrm{d}a=\mathrm{d}^2b=0\)，逐次乘 \(m\) 的单射性也保证 \(a\) 是余圈。直接把 \(\mathrm{d}b\) 模 \(m\) 约化只会得到零，丢掉了需要记录的信息。

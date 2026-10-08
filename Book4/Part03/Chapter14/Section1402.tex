@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 14.2 逆极限的左正合性
 % 纲要标签：b4:sec:1302
-% 纲要位置：计划纲要.md，第 2805 行。
+% 纲要位置：计划纲要.md，第 3566 行。
 
 \section{逆极限的左正合性}
 \label{b4:sec:1302}
@@ -24,21 +24,26 @@ M_0\xleftarrow{u_0}M_1\xleftarrow{u_1}M_2\xleftarrow{}\cdots.
 \]
 塔态射与所有过渡映射交换，短正合列逐层判断；这是\cref{b4:prop:module-functor-abelian}给出的交换范畴。逆极限为相容元组组成的子模
 \[
-\varprojlim M_n=\{\,(x_n)\in\prod_{n\ge0}M_n:x_n=u_nx_{n+1}\text{ 对所有 }n\,\}.
+\varprojlim M_n=\{\,(x_n)\in\prod_{n\ge0}M_n:x_n=u_nx_{n+1}\;\text{对所有}\;n\,\}.
 \]
-\cref{b4:thm:finite-limits-exactness}或直接逐坐标检验说明逆极限左正合。
+也就是说，若令
+\[
+\Delta_M:\prod_{n\ge0}M_n\longrightarrow\prod_{n\ge0}M_n,
+\qquad (x_n)\longmapsto(x_n-u_nx_{n+1}),
+\]
+则逆极限就是 \(\ker\Delta_M\)：一条核条件同时记录所有相邻层的相容性等式。\cref{b4:prop:inverse-limits-left-exact}已证明其左正合性；其中中间位置的正合性来自每个核中元素的原像唯一，这种唯一性迫使逐层原像自动相容。
 
 \ProseParagraphBreak
 \cref{b4:exm:inverse-limit-not-exact}已用整数的相容剩余类说明逆极限不保持满射。这里将它写成可用于导出计算的形式。固定素数 \(p\)，取
 \[
-0\to p^{n+1}\mathbb Z\to\mathbb Z\to\mathbb Z/p^{n+1}\to0.
+0\to p^{n+1}\mathbb Z\to\mathbb Z\to\mathbb Z/p^{n+1}\mathbb Z\to0.
 \]
 三座塔的过渡映射分别是包含、恒等和约化。极限为
 \[
 0\longrightarrow0\longrightarrow\mathbb Z\longrightarrow\mathbb Z_p,
-\qquad \mathbb Z_p=\varprojlim_n\mathbb Z/p^{n+1}.
+\qquad \mathbb Z_p=\varprojlim_n\mathbb Z/p^{n+1}\mathbb Z.
 \]
-取 \(1-p^2\) 在每个商环中的逆元，得到相容元组；若它来自整数 \(a\)，则 \((1-p^2)a-1\) 被所有 \(p^{n+1}\) 整除，只能为零，但 \((1-p^2)a=1\) 在整数中无解。故末箭头不是满射。下一节将把其余核 \(\mathbb Z_p/\mathbb Z\) 识别为一个一次导出极限。
+取 \(1-p^2\) 在每个商环中的逆元，得到相容元组。各层的余类当然都能选取整数代表元，但常值整数塔的过渡映射为恒等，要求相容提升在所有层都等于同一个整数 \(a\)。若这样的 \(a\) 存在，则 \((1-p^2)a-1\) 被所有 \(p^{n+1}\) 整除，只能为零，但 \((1-p^2)a=1\) 在整数中无解。故末箭头不是满射。下一节将把其余核 \(\mathbb Z_p/\mathbb Z\) 识别为一个一次导出极限。
 
 \subsection{相容条件的障碍}
 \label{b4:subsec:1302:02}
@@ -47,7 +52,11 @@ M_0\xleftarrow{u_0}M_1\xleftarrow{u_1}M_2\xleftarrow{}\cdots.
 \[
 i_n(a_n)=b_n-u_n^Bb_{n+1}.
 \]
-若把提升改成 \(b_n+i_n(x_n)\)，则 \(a_n\) 改成 \(a_n+x_n-u_n^Ax_{n+1}\)。因此真正的障碍不是某个单独的 \(a_n\)，而是整族 \((a_n)\) 在“相容性差值”模中的余类。
+要修正这些提升，就要找到 \(x_n\in A_n\)，使
+\[
+x_n-u_n^Ax_{n+1}=a_n\qquad\text{对所有 }n\text{ 成立}.
+\]
+此时 \(b_n-i_n(x_n)\) 仍提升 \(c_n\)，而相邻层之差已经为零。左侧正是乘积差映射 \(\Delta_A(x)\)，故问题是 \(a\) 是否属于它的像。若任意更换提升为 \(b_n+i_n(x_n)\)，误差又变为 \(a_n+x_n-u_n^Ax_{n+1}\)。所以与选择无关的障碍是整族 \((a_n)\) 在 \(\operatorname{coker}\Delta_A\) 中的余类。
 
 \begin{proposition}\label{b4:prop:compatible-lift-obstruction}
 设 \(R\) 为环，\(0\to A\xrightarrow{i}B\xrightarrow{v}C\to0\) 是左 \(R\)-模可数逆向塔的短正合列，三座塔的过渡映射分别记为 \(u_n^A,u_n^B,u_n^C\)。定义
@@ -75,18 +84,22 @@ i_n(a_n)=b_n-u_n^Bb_{n+1}.
 \begin{proof}
 由于 \(\mathcal I\) 小，其对象及全体态射都组成集合。因此下面的坐标积及对象指标积都是集合指标；选择内射嵌入和各坐标延拓时，使用\subsecref{b4:subsec:0101:03}的集合选择约定。
 
-固定 \(j\in\mathcal I\)。求值函子 \(X\mapsto X_j\) 正合，其右伴随把模 \(E\) 送到图表
+固定 \(j\in\mathcal I\)。若给定 \(f:X_j\to E\)，那么每支 \(\alpha:i\to j\) 都提供复合 \(fX(\alpha):X_i\to E\)。要把 \(f\) 延成整张图表上的态射，可以把这些复合收集为坐标。由此构造求值函子 \(X\mapsto X_j\) 的右伴随，它把模 \(E\) 送到图表
 \[
 (J_jE)_i=\prod_{\alpha:i\to j}E.
 \]
 箭头 \(\beta:i\to i'\) 把坐标族送到以 \(\alpha':i'\to j\) 为指标的族，其值取原族的 \(\alpha'\beta\) 坐标。这个公式保持恒等与复合。伴随同构是
 \[
-\operatorname{Hom}(X,J_jE)\simeq\operatorname{Hom}_R(X_j,E).
+\operatorname{Hom}_{\operatorname{Fun}(\mathcal I,R\text{-}\mathbf{Mod})}(X,J_jE)
+\simeq\operatorname{Hom}_R(X_j,E).
 \]
 正向映射在 \(j\) 处取 \(1_j\) 坐标；反向把 \(f:X_j\to E\) 送到坐标 \(fX(\alpha)\)。自然性证明二者互逆。求值正合，所以\cref{b4:prop:right-adjoint-injectives}使 \(J_jE\) 在 \(E\) 内射时内射。
 
-为每个 \(j\) 选内射嵌入 \(X_j\to E_j\)。伴随给出
-\(X\to\prod_jJ_jE_j\)，它在对象 \(i\) 的 \(j=i,\alpha=1_i\) 坐标是原嵌入，所以逐对象单射。在当前模值函子范畴中，集合指标的内射对象之积仍内射：给定单态射 \(U\to V\) 及态射 \(U\to\prod_jK_j\)，其中每个 \(K_j\) 内射，逐坐标利用内射性选择延拓 \(V\to K_j\)，再由积的泛性质合并成 \(V\to\prod_jK_j\)。这证明足够多内射对象的存在。
+由\subsecref{b4:subsec:0701:02}所说明的模内射嵌入，为每个 \(j\) 选 \(\iota_j:X_j\hookrightarrow E_j\)，其中 \(E_j\) 内射。伴随给出图表态射 \(\eta:X\to\prod_jJ_jE_j\)，其分量为
+\[
+\eta_i(x)=\bigl(\iota_jX(\alpha)(x)\bigr)_{j,\alpha:i\to j}.
+\]
+箭头 \(\beta:i\to i'\) 的自然性等式正是 \(X(\alpha'\beta)=X(\alpha')X(\beta)\)。在 \(j=i,\alpha=1_i\) 坐标取值便得到 \(\iota_i(x)\)，所以 \(\eta\) 逐对象单射。在当前模值函子范畴中，集合指标的内射对象之积仍内射：给定单态射 \(U\to V\) 及态射 \(U\to\prod_jK_j\)，其中每个 \(K_j\) 内射，逐坐标利用内射性选择延拓 \(V\to K_j\)，再由积的泛性质合并成 \(V\to\prod_jK_j\)。这证明足够多内射对象的存在。
 
 对于塔，从 \(n\) 到 \(j\) 的箭头在 \(n\ge j\) 时恰有一支，在 \(n<j\) 时没有。因此 \((J_jE)_n\) 在 \(n\ge j\) 时是 \(E\)，在 \(n<j\) 时为空积，即零模；前一范围内的过渡映射为恒等。例如 \(j=2\) 时得到
 \[
@@ -100,5 +113,11 @@ E_0\xleftarrow{\operatorname{pr}}
 E_0\times E_1\xleftarrow{\operatorname{pr}}
 E_0\times E_1\times E_2\xleftarrow{\operatorname{pr}}\cdots.
 \]
-每个过渡映射删除最后一个坐标，是满射；给定前 \(n+1\) 个坐标，只需在新增坐标取零就得到原像。
+记 \(u_{j,n}:X_n\to X_j\) 为复合过渡映射，\(u_{n,n}=1\)。嵌入在第 \(n\) 层具体为
+\[
+x\longmapsto\bigl(\iota_j u_{j,n}(x)\bigr)_{0\le j\le n}.
+\]
+从第 \(n+1\) 层删除最后一个坐标后，\(u_{j,n+1}=u_{j,n}u_n\) 保证得到 \(u_n(x)\) 的嵌入，因而确实与过渡映射交换。每个过渡映射都是满射；给定前 \(n+1\) 个坐标，只需在新增坐标取零就得到原像。
 \end{proof}
+
+积保持内射性与积函子保持满射使用的是两种不同的原像构造：前者逐坐标延拓从同一个子对象发出的态射，后者逐坐标提升目标中的元素。模范畴中二者都可进行；前一种证明只使用积的泛性质和内射延拓，不要求积函子正合。

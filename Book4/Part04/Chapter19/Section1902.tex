@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 19.2 导出张量积
 % 纲要标签：b4:sec:1802
-% 纲要位置：计划纲要.md，第 2958 行。
+% 纲要位置：计划纲要.md，第 3719 行。
 
 \section{导出张量积}
 \label{b4:sec:1802}
@@ -18,17 +18,39 @@
 \subsection{平坦替换与投射替换}
 \label{b4:subsec:1802:01}
 
-普通张量积不能保持所有拟同构。例如整数模复形 \(\mathbb Z\xrightarrow{2}\mathbb Z\)（次数 \(-1,0\)）拟同构于 \(\mathbb Z/2\)，但与 \(\mathbb Z/2\) 张量后前者多出一次负次数同调。为了让张量积在导出范畴中有意义，需要能保存拟同构的替换。
+普通张量积不能保持所有拟同构。例如整数模复形 \(\mathbb Z\xrightarrow{2}\mathbb Z\)（次数 \(-1,0\)）拟同构于 \(\mathbb Z/2\mathbb Z\)，但与 \(\mathbb Z/2\mathbb Z\) 张量后前者多出一次负次数同调。为了让张量积在导出范畴中有意义，需要能保存拟同构的替换。
 
 \begin{lemma}\label{b4:lem:bounded-flat-tensor-preserves}
 设 \(R\) 为环，\(P\) 为逐项平坦且有上界的右 \(R\)-模复形，\(A\) 为任意正合的左 \(R\)-模复形。采用直和总化时，\(P\otimes_RA\) 正合。因此 \(P\otimes_R-\) 保持任意复形之间的拟同构。交换左右侧别后也成立。
 \end{lemma}
 \begin{proof}
-若 \(P\) 只有一项，平坦性说明张量保留 \(A\) 的各个核像短列，所以结果正合。若 \(P\) 有有限个非零项，按最高非零项逐次剥去，所得复形短列逐次分裂；张量后仍是短正合列，用同调长正合列归纳，得到正合性。
+若 \(P\) 只有一项，平坦性说明张量保留 \(A\) 的各个核像短列，所以结果正合。若 \(P\) 有有限个非零项，按最高非零项逐次剥去，所得复形短列在分次模意义下分裂；张量后仍是短正合列，用同调长正合列归纳，得到正合性。
 
-一般情形取粗截断 \(P_{\ge m}\)，即低于 \(m\) 的项换成零。它是 \(P\) 的子复形，且因有上界而只有有限个非零项。随着 \(m\) 向负方向移动，\(P\) 是这些子复形的滤过余极限。张量与直和总化都与此余极限交换，而模范畴的滤过余极限正合并与同调交换，见\cref{b4:prop:filtered-colimits-cohomology}。因此 \(P\otimes_RA\) 正合。
+一般情形取粗截断 \(P_{\ge m}\)，即低于 \(m\) 的项换成零。它是 \(P\) 的子复形，且因有上界而只有有限个非零项。截口可能改变同调，故这些粗截断一般不拟同构于 \(P\)；这里使用的是随着 \(m\) 向负方向移动，\(P\) 为它们的逐项滤过余极限。张量与直和总化都与此余极限交换，而模范畴的滤过余极限正合并与同调交换，见\cref{b4:prop:filtered-colimits-cohomology}。因此
+\[
+ H^n(P\otimes_RA)
+ \cong\varinjlim_{m\to-\infty}H^n(P_{\ge m}\otimes_RA)=0.
+\]
 
-若 \(u:A\to B\) 是拟同构，其锥正合。张量锥与张量映射的锥自然同构：在 \(P^p\otimes A[1]\) 分量乘 \((-1)^p\)，恰好把张量微分改成锥的微分。于是张量后的锥正合，得到后一结论。
+若 \(u:A\to B\) 是拟同构，其锥正合。张量锥与张量映射的锥由下面的分量识别自然同构：
+\[
+ \begin{gathered}
+ \theta:P\otimes_R\operatorname{Cone}(u)
+ \longrightarrow\operatorname{Cone}(1_P\otimes u),\\
+ x\otimes(b,a)\longmapsto
+ \bigl(x\otimes b,(-1)^p x\otimes a\bigr),
+ \end{gathered}
+\]
+其中 \(x\in P^p\)、\(b\in B^q\)、\(a\in A^{q+1}=A[1]^q\)。第二分量的符号区别了先移位右因子与先张量再移位。具体地，在 \(x\otimes(0,a)\) 上，两边的微分计算均给出
+\[
+ \begin{aligned}
+ \theta\mathrm{d}\bigl(x\otimes(0,a)\bigr)
+ &=\mathrm{d}\theta\bigl(x\otimes(0,a)\bigr)\\
+ &=\Bigl((-1)^p x\otimes u(a),\;
+ (-1)^{p+1}\cdot\mathrm{d}_Px\otimes a-x\otimes\mathrm{d}_Aa\Bigr).
+ \end{aligned}
+\]
+在 \(x\otimes(b,0)\) 上，\(\theta\) 不改变分量，微分相容性直接由张量微分得到。\(\theta\) 的逆使用同一符号。于是张量后的锥正合，得到后一结论。
 \end{proof}
 
 \begin{theorem}\label{b4:thm:derived-tensor}
@@ -44,12 +66,14 @@ D^-(\operatorname{Mod}\text{-}R)\times D^-(R\text{-}\operatorname{Mod})
 \]
 它称为\term[daochu-zhangliangji]{导出张量积}[derived tensor product]。也可以只替换一个变量，使用 \(P\otimes_RY\) 或 \(X\otimes_RQ\)。若 \(P'\to X\) 或 \(Q'\to Y\) 是有上界的逐项平坦替换，则 \(P'\otimes_RY\) 或 \(X\otimes_RQ'\) 分别典范同构于这个双函子的值；同时使用两侧的平坦替换也得到同一导出对象。
 \end{theorem}
+\symidx{\(\operatorname{Mod}\text{-}R\)：幺性右模范畴}
 \begin{proof}
 上一引理分别应用于 \(P\) 和 \(Q\)，说明自然映射
 \[
-P\otimes_RY\longleftarrow P\otimes_RQ\longrightarrow X\otimes_RQ
+P\otimes_RY\xleftarrow{\,1_P\otimes q\,}P\otimes_RQ
+\xrightarrow{\,p\otimes1_Q\,}X\otimes_RQ
 \]
-都是拟同构。投射模型中的态射由同伦类表示，张量积保持同伦，所以先在两个投射同伦范畴上得到双函子，再由两侧的投射模型等价下降到所写导出范畴。
+都是拟同构。左箭头使用 \(P\) 有上界且逐项投射，从而与 \(P\) 张量保持 \(q\) 的拟同构；右箭头使用 \(Q\) 的对应性质，从而与 \(Q\) 张量保持 \(p\) 的拟同构。因此固定一侧的适当模型，另一侧就可以保留原复形。投射模型中的态射由同伦类表示，由\cref{b4:prop:tensor-hom-preserve-homotopy}，张量积在两个变量都保持同伦，所以先在两个投射同伦范畴上得到双函子，再由两侧的投射模型等价下降到所写导出范畴。
 
 若 \(p':P'\to X\) 是有上界逐项平坦替换，由\cref{b4:thm:bounded-projective-model}证明中的比较结论，存在唯一的同伦类 \(t:P\to P'\)，使 \(p't=p\) 于同伦范畴中。由于 \(p,p'\) 都是拟同构，\(t\) 也是拟同构。于是
 \[
@@ -61,7 +85,7 @@ P\otimes_RQ
 \end{proof}
 \symidx{\(X\otimes_R^{\mathbf L}Y\)：导出张量积}
 
-对于非交换环，上式一般只给交换群复形；不能在结果上无说明添一个左 \(R\)-模结构。若 \(X\) 还带与右 \(R\)-作用交换的左 \(S\)-作用，可以固定 \(X\)，仅用左 \(R\)-模投射复形 \(Q\) 替换 \(Y\)，使 \(X\otimes_RQ\) 保留左 \(S\)-作用；若改为替换 \(X\)，就应说明替换如何保留该作用。只在底层右模上任取消解，不能保证附加作用仍逐项存在。模的有上界导出张量积可对照 Weibel\cite[Definition 10.6.1, Lemma 10.6.2, Theorem 10.6.3]{Weibel1994HomologicalAlgebra}。
+对于非交换环，上式一般只给交换群复形；不能在结果上无说明添一个左 \(R\)-模结构。若 \(X\) 还带与右 \(R\)-作用交换的左 \(S\)-作用，则张量复形上的作用为 \(s\cdot(x\otimes y)=(sx)\otimes y\)。可以固定 \(X\)，仅用左 \(R\)-模投射复形 \(Q\) 替换 \(Y\)，使 \(X\otimes_RQ\) 按这个公式保留左 \(S\)-作用，且微分仍为 \(S\)-线性的。若仅将 \(X\) 看作右 \(R\)-模而任取替换 \(P\to X\)，\(P\) 未必带有与微分相容的左 \(S\)-作用，此时 \(P\otimes_RY\) 也不能按上述公式成为左 \(S\)-模复形。若要替换 \(X\)，就应说明替换如何保留所需双模结构。模的有上界导出张量积可对照 Weibel\cite[Definition 10.6.1, Lemma 10.6.2, Theorem 10.6.3]{Weibel1994HomologicalAlgebra}。
 
 \subsection{结合律与单位同构}
 \label{b4:subsec:1802:02}

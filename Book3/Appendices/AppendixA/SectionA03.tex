@@ -1,22 +1,26 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### A.3 素数处的局部化与完备化
-% 纲要位置：工作记录/计划纲要.md:2797
+% 纲要位置：工作记录/计划纲要.md:2839
 
 \section{素数处的局部化与完备化}
 \label{b3:sec:A03}
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 统一化元值为一的归一化赋值；局部化与完备化的区别
-% * 中国剩余定理、共尾理想幂及完备化张量表示给出的全部局部因子
+%
+% * 统一化元值为一的归一化赋值；局部化、逆极限完备化与赋值度量完备域的识别
+% * 张量表示、中国剩余定理和共尾理想幂给出全部局部因子；模 p 商的滤过证明各因子的秩
 % * 分解指数、剩余次数、理想范数、完备域次数及判别式的全局与局部联系
-% * 二次数域 Q(√5) 在 2、5、11 处的惰性、分歧、完全分裂与完备因子对照
+% * 二次数域 Q(√5) 的模素数因子、e/f、范数、判别式和完备因子对照；模121数位与具体嵌入
 % <!-- 短节：不设小节 -->
+%
+% ---
+%
 
 
 固定数域整数环 \(R=\mathcal O_K\) 中的非零素理想 \(\mathfrak p\)。局部化 \(R_{\mathfrak p}\) 允许把所有不属于 \(\mathfrak p\) 的元素放到分母中。因此它保留的是在这个素理想处的整除次数；一个元素在别的素理想处是否有分母，不再妨碍它属于 \(R_{\mathfrak p}\)。
 
 \begin{definition}\label{b3:def:number-field-prime-completion}
-设 \(K\) 为数域，\(\mathcal O_K\) 为其代数整数环，\(\mathfrak p\subset\mathcal O_K\) 为非零素理想。记 \(v_{\mathfrak p}:K^\times\to\mathbb Z\) 为 DVR \((\mathcal O_K)_{\mathfrak p}\) 的归一化离散赋值，即对任一统一化元 \(\pi_{\mathfrak p}\) 有 \(v_{\mathfrak p}(\pi_{\mathfrak p})=1\)。记
+设 \(K\) 为数域，\(\mathcal O_K\) 为其代数整数环，\(\mathfrak p\subset\mathcal O_K\) 为非零素理想。记 \(v_{\mathfrak p}:K^\times\to\mathbb Z\) 为离散赋值环 \((\mathcal O_K)_{\mathfrak p}\) 的归一化离散赋值，即对任一统一化元 \(\pi_{\mathfrak p}\) 有 \(v_{\mathfrak p}(\pi_{\mathfrak p})=1\)。记
 \[
 \widehat{\mathcal O}_{K,\mathfrak p}
 =\varprojlim_r(\mathcal O_K)_{\mathfrak p}/
@@ -26,11 +30,18 @@ K_{\mathfrak p}=\operatorname{Frac}(\widehat{\mathcal O}_{K,\mathfrak p}).
 \]
 分别称它们为相应的完备整数环与 \(K\) 在 \(\mathfrak p\) 处的完备化。
 \end{definition}
+\symidx{\(\widehat{\mathcal O}_{K,\mathfrak p}\)、\(K_{\mathfrak p}\)：代数整数环的局部完备化及其分式域}
 
-由 DVR 的刻画和正则局部环的完备化定理，\(\widehat{\mathcal O}_{K,\mathfrak p}\) 仍为 DVR，原来的统一化元仍为统一化元，剩余域不变。原环嵌入完备化是 Krull 交定理的结果。赋值也因而延拓到 \(K_{\mathfrak p}\)。
+由\cref{b3:thm:dvr-characterizations,b3:thm:regular-local-completion}，\(\widehat{\mathcal O}_{K,\mathfrak p}\) 仍为 DVR。完备化保留极大理想的生成元与剩余域，所以原来的统一化元仍为统一化元。原环嵌入完备化由\cref{b3:thm:krull-intersection}保证。赋值也因而延拓到 \(K_{\mathfrak p}\)。
+
+这个代数定义也给出通常的赋值度量完备化。令 \(V=R_{\mathfrak p}\)，取统一化元 \(\pi\)，并约定 \(v_{\mathfrak p}(0)=\infty\)。度量 \(d(x,y)=2^{-v_{\mathfrak p}(x-y)}\) 的 Cauchy 条件，就是对每个 \(r\)，充分靠后的差都属于 \(\pi^rV\)。对 \(V\) 中的序列，这等价于每个模 \(\pi^r\) 余类最终稳定；相容的稳定余类恰为 \(\widehat V\) 的元素。反过来，逐阶选取这些余类的代表便得到 Cauchy 序列。因此 \(\widehat V\) 是 \(V\) 在此度量下的完备化。
+
+在 \(K\) 中，Cauchy 序列的赋值最终有统一下界：固定一个足够靠后的项，再用差的赋值非负即可。乘以某个固定的 \(\pi^N\) 后，整个尾部便落在 \(V\) 中，故极限落在 \(\pi^{-N}\widehat V\)。另一方面，完备 DVR 的每个分式都属于某个 \(\pi^{-N}\widehat V\)，并能由 \(K\) 中的序列逼近。由此 \(\operatorname{Frac}(\widehat V)\) 正是 \(K\) 的赋值度量完备化，这个识别固定原来的 \(K\)。
 
 \ProseParagraphBreak
 局部化和完备化不是同一操作。例如 \(\mathbb Z_{(p)}\) 只由分母不被 \(p\) 整除的有理数组成，是可数集；\(\mathbb Z_p\) 则包含任意相容的 \(p\) 进数位串，是不可数集。二者有相同的模 \(p^r\) 商，却并不相等。这正是完备化补入相容极限的含义。
+
+整体的 \(p\)-进完备化同时保留 \(p\) 上方的全部素理想。下面将有限自由模的张量积表示、中国剩余分解和共尾理想幂依次结合，得到各局部完备因子的乘积。
 
 \begin{theorem}\label{b3:thm:number-field-completion-product}
 设 \(K\) 为数域，\(R=\mathcal O_K\) 为其代数整数环，\(p\) 为有理素数，且
@@ -52,15 +63,20 @@ K\otimes_{\mathbb Q}\mathbb Q_p
 R/p^aR\simeq\prod_i R/\mathfrak p_i^{ae_i}.
 \]
 环 \(R/\mathfrak p_i^b\) 只有一个极大理想；不在 \(\mathfrak p_i\) 中的元素在这个商中已经可逆。因此它与
-\(R_{\mathfrak p_i}/\mathfrak p_i^bR_{\mathfrak p_i}\) 相同。指数 \(ae_i\) 在所有正整数中共尾，取逆极限即得第一式。
+\(R_{\mathfrak p_i}/\mathfrak p_i^bR_{\mathfrak p_i}\) 相同。对任意 \(b\ge1\)，取 \(a\ge\lceil b/e_i\rceil\) 就有 \(ae_i\ge b\)。因此这些指数在所有正整数中共尾，两套理想幂定义同一拓扑和完备化。这是\secref{b3:sec:1301}中共尾滤过给出同一相容余类模的同一理由；取有限乘积的逆极限即得第一式。
 
 在每个因子中 \(p\) 等于单位乘以统一化元的 \(e_i\) 次幂，故把 \(p\) 变成可逆元就得到该 DVR 的分式域。对第一式把 \(p\) 变成可逆元，便得第二式。
 
-每个完备整数环是有限自由 \(\mathbb Z_p\)-模：它是有限自由模 \(R\otimes\mathbb Z_p\) 的直和因子，因而有限且无挠，在 PID \(\mathbb Z_p\) 上自由。其秩等于模 \(p\) 商的 \(\mathbb F_p\)-维数；该商是
-\(R/\mathfrak p_i^{e_i}\)，维数为 \(e_if_i\)。再取分式域，得到最后的次数公式。
+每个完备整数环是有限自由 \(\mathbb Z_p\)-模：它是有限自由模 \(R\otimes\mathbb Z_p\) 的直和因子，因而有限且无挠，在主理想整环 \(\mathbb Z_p\) 上自由。因为 \(p\) 是单位乘以 \(\pi_i^{e_i}\)，完备化保持有限阶商，故
+\[
+\widehat{\mathcal O}_{K,\mathfrak p_i}/p\widehat{\mathcal O}_{K,\mathfrak p_i}
+\cong R_{\mathfrak p_i}/pR_{\mathfrak p_i}
+\cong R/\mathfrak p_i^{e_i}.
+\]
+最后的商按极大理想幂有 \(e_i\) 层，每层的 \(\mathbb F_p\)-维数为 \(f_i\)，故其维数为 \(e_if_i\)。这也是该自由 \(\mathbb Z_p\)-模的秩。把 \(p\) 倒置后得到其分式域，所以 \([K_{\mathfrak p_i}:\mathbb Q_p]=e_if_i\)。
 \end{proof}
 
-此定理解释了为什么在一个有理素数处研究数域时，可能同时出现几个局部域。张量积保留 \(p\) 上方的全部素理想；选定 \(\mathfrak p_i\)，才是选定一个因子。
+此定理解释了为什么在一个有理素数处研究数域时，可能同时出现几个局部域。张量积保留 \(p\) 上方的全部素理想；选定 \(\mathfrak p_i\)，才是选定一个因子。因此 \(K\otimes_{\mathbb Q}\mathbb Q_p\) 一般不是域，虽然每个 \(K_{\mathfrak p_i}\) 都是域。
 
 \begin{table}[htbp]
 \centering
@@ -70,6 +86,8 @@ R/p^aR\simeq\prod_i R/\mathfrak p_i^{ae_i}.
 \toprule
 算术数据 & 全局与局部的联系 \\
 \midrule
+局部整数环 & \(R_{\mathfrak p}\) 倒置 \(\mathfrak p\) 外的元素，是剩余域为 \(R/\mathfrak p\) 的 DVR，通常尚未完备。 \\
+完备整数环 & \(\widehat{\mathcal O}_{K,\mathfrak p}\) 加入各阶相容余类的极限，仍为 DVR，剩余域不变。 \\
 素理想分解 & \(pR=\prod_{\mathfrak p\mid p}\mathfrak p^{e_{\mathfrak p}}\)，且 \(v_{\mathfrak p}(p)=e_{\mathfrak p}\)。 \\
 剩余次数 & \(f_{\mathfrak p}=[\kappa(\mathfrak p):\mathbb F_p]\)；完备化的剩余域仍为 \(\kappa(\mathfrak p)=R/\mathfrak p\)。 \\
 素理想范数 & \(N(\mathfrak p)=p^{f_{\mathfrak p}}\)。 \\
@@ -82,8 +100,16 @@ R/p^aR\simeq\prod_i R/\mathfrak p_i^{ae_i}.
 
 \cref{b3:tab:number-field-global-local-dictionary}中的赋值均按统一化元的值为一归一化。理想分解给出每个局部因子中的整除次数，剩余次数记录剩余域的大小，两者的乘积才是完备因子的扩张次数。
 
-\begin{example}\label{b3:exm:quadratic-five-completions}
-继续取 \(K=\mathbb Q(\sqrt5)\)、\(\omega=(1+\sqrt5)/2\)，其最小多项式为 \(T^2-T-1\)。模 \(11\) 的根 \(4,8\) 都是单根，在 \(\mathbb Z_{11}\) 中各自唯一提升，得到两个一次完备因子。模 \(2\) 不可约，所得因子是二次未分歧扩张；模 \(5\) 则只有一个素理想，所得因子为二次分歧扩张。在后者中
+\begin{example}\label{b3:exm:quadratic-five-completions}\label{b3:exm:eleven-adic-lifts}
+取 \(K=\mathbb Q(\sqrt5)\)、\(\omega=(1+\sqrt5)/2\)，其最小多项式为 \(f(T)=T^2-T-1\)。模 \(11\) 的根 \(4,8\) 给出两个素理想，其 \(e=f=1\)，所以上一定理先给出 \(K\otimes\mathbb Q_{11}\cong\mathbb Q_{11}\times\mathbb Q_{11}\)。Hensel 提升再把这两个因子的投影写成具体嵌入。
+
+因 \(f'(4)=7\)、\(f'(8)=15\) 模 \(11\) 均非零，两根在 \(\mathbb Z_{11}\) 中各自唯一提升。为计算下一位，写为 \(4+11c\)、\(8+11d\)。模 \(121\) 分别得到
+\[
+11+77c\equiv0,\qquad55+165d\equiv0\pmod{121}.
+\]
+除以 \(11\) 后在 \(\mathbb F_{11}\) 中解得 \(c=3\)、\(d=7\)，即两根分别为 \(37,85\pmod{121}\)。若其完整提升为 \(a_1,a_2\)，令 \(\omega\mapsto a_i\) 就给出两个 \(K\longrightarrow\mathbb Q_{11}\) 的嵌入；\(\sqrt5=2\omega-1\) 的像互为相反数。
+
+模 \(2\) 不可约，所得因子是二次未分歧扩张；模 \(5\) 则只有一个素理想，所得因子为二次分歧扩张。在后者中
 \[
 2v_{\mathfrak p}(\sqrt5)=v_{\mathfrak p}(5)=2,
 \]
@@ -92,15 +118,15 @@ R/p^aR\simeq\prod_i R/\mathfrak p_i^{ae_i}.
 
 \begin{table}[htbp]
 \centering
-\caption{\(\mathbb Q(\sqrt5)\) 在三个有理素数处的局部数据}
+\caption[\(\mathbb Q(\sqrt5)\) 在三个有理素数处的局部数据]{\(\mathbb Q(\sqrt5)\) 在三个有理素数处的局部数据。取 \(f(T)=T^2-T-1\)，域判别式 \(d_K=5\)；\((e,f)\) 与范数按各素理想分别列出。}
 \label{b3:tab:quadratic-five-local-data}
-\begin{tabularx}{\linewidth}{@{}clccX@{}}
+\begin{tabularx}{\linewidth}{@{}c>{\raggedright\arraybackslash}p{0.23\linewidth}cc>{\raggedright\arraybackslash}X@{}}
 \toprule
-\(p\) & 分解类型 & \(e\) & \(f\) & \(K\otimes_{\mathbb Q}\mathbb Q_p\) \\
+\(p\) & \(\overline f\) & \((e,f)\) & \(N(\mathfrak p)\) & 分解类型与 \(K\otimes_{\mathbb Q}\mathbb Q_p\) \\
 \midrule
-\(2\) & 惰性 & \(1\) & \(2\) & 二次未分歧域 \(\mathbb Q_2(\sqrt5)\) \\
-\(5\) & 分歧 & \(2\) & \(1\) & 二次分歧域 \(\mathbb Q_5(\sqrt5)\) \\
-\(11\) & 完全分裂 & \(1,1\) & \(1,1\) & \(\mathbb Q_{11}\times\mathbb Q_{11}\) \\
+\(2\) & \(T^2+T+1\)，不可约 & \((1,2)\) & \(4\) & 惰性，二次未分歧域 \(\mathbb Q_2(\sqrt5)\) \\
+\(5\) & \((T-3)^2\) & \((2,1)\) & \(5\) & 分歧，二次分歧域 \(\mathbb Q_5(\sqrt5)\) \\
+\(11\) & \((T-4)(T-8)\) & 各 \((1,1)\) & 各 \(11\) & 完全分裂，\(\mathbb Q_{11}\times\mathbb Q_{11}\) \\
 \bottomrule
 \end{tabularx}
 \end{table}

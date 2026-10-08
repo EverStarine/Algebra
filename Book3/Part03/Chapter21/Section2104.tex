@@ -7,11 +7,16 @@
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
+%
 % * 模项序、Gröbner 基与标准余式的唯一性；商系数不要求唯一
 % * 在本节就地建立全局模项序及 Schreyer 构造；局部标准基仅作附录 F 的延伸，不是本章证明前提
 % * Schreyer 同首项的索引约定、有界标准表示与关系首项
+% * 换生成组的核由 UT 与 1-UV 两部分生成；区分首项相消与修正后真正的核元素
 % * 具体理想的计算证书及核验；矩阵核算法输出全部核的生成组，不保证极小或独立
 % * 多项式线性方程组的求解，不要求齐次：像成员判定、特解和全部核参数
+%
+% ---
+%
 
 第8章把理想成员关系化为除法，合冲模则要求一次求出全部关系。为此，把单项式加上自由模的基向量作为位置标记，再记录 Gröbner 基计算中首项抵消的方式。全局模项序使约化沿良序下降，从而保证每次除法都在有限步内结束。
 
@@ -22,17 +27,24 @@
 设 \(k\) 为域，\(n,r\ge1\) 为整数，\(S=k[x_1,\ldots,x_n]\)，\(F=\bigoplus_{i=1}^rSe_i\) 为带指定基的自由 \(S\) 模。对 \(\alpha\in\mathbb Z_{\ge0}^n\) 记 \(x^\alpha=x_1^{\alpha_1}\cdots x_n^{\alpha_n}\)，形如 \(x^\alpha e_i\) 的元素称为模单项式。给定模单项式集合上的全序，若它是良序，并且乘同一 \(x^\gamma\)（\(\gamma\in\mathbb Z_{\ge0}^n\)）保持严格不等式，则称其为全局模项序。非零 \(f\in F\) 的最大模单项式、系数及相应项分别记为 \(\operatorname{LM}(f)\)、\(\operatorname{LC}(f)\)、\(\operatorname{LT}(f)\)。规定 \(x^\alpha e_i\mid x^\beta e_j\) 当且仅当 \(i=j\) 且 \(\alpha\le\beta\) 逐坐标成立。
 \end{definition}
 
-例如先比较位置 \(i\)，位置相同时按一个全局单项式序比较，便得到全局模项序；也可先比较单项式，相同时比较位置。给每个基向量加一个次数时，可先按总次数比较，再用上述次序打破平局。重要的是始终保持乘法相容与良序，不能只凭“按最大项消去”的直觉操作。
+位置必须相同才能整除。例如 \(xe_1\) 不能整除 \(xy^2e_2\)，虽然 \(x\mid xy^2\)，两个项却在不同的自由直和分量中，不能彼此消去。
+
+\ProseParagraphBreak
+先比较位置，位置相同时按一个全局单项式序比较，便得到全局模项序；也可先比较单项式，相同时比较位置。例如在 \(k[x,y]^2\) 中规定 \(e_1\succ e_2\)，标量取字典序 \(x\succ y\)。先比较位置时，\(ye_1\succ x^{100}e_2\)；先比较单项式时，结论相反。给每个基向量加一个次数时，可先按全次数比较，再用上述次序打破平局。不同次序会改变首项、约化步骤和输出的基，所生成的子模却不改变；始终需要核对乘法相容与良序。
 
 \begin{proposition}\label{b3:prop:module-groebner-algorithm}
 设 \(k\) 为域，\(n,r\ge1\) 为整数，\(S=k[x_1,\ldots,x_n]\)，\(F=S^r\) 带指定基及全局模项序，\(N\subseteq F\) 为子模。则 \(N\) 有有限 Gröbner 基，即有限组 \(G\subset N\setminus\{0\}\)，使每个 \(0\ne f\in N\) 的首单项式都被某个 \(\operatorname{LM}(g)\) 整除。对于任意 \(f\in F\)，关于 \(G\) 的向量除法给出唯一的标准余式 \(\rho\)：它满足 \(f-\rho\in N\)，且其每个非零项的模单项式均不被任何 \(\operatorname{LM}(g)\) 整除。若已给 \(N\) 的有限生成组，且系数运算、零判定及序比较有效，则 Buchberger 算法仍可执行并终止，只需处理首项位于同一基向量位置的多项式对。
 \end{proposition}
 \begin{proof}
-除法步骤与标量情形相同，只有首项位置相同才允许相减；首项不能约化时，将它移入余式。每步待处理向量的首模单项式严格下降，所以除法终止，并保留所有乘积首项的上界。每个位置上的首单项式指数构成向上封闭的子集，分别用\cref{b3:lem:dickson}取有限极小生成元，再为它们选取原像，便得有限 Gröbner 基。除法所得余式 \(\rho\) 的所有非零项均不能被基首项整除，且减去的向量属于 \(N\)，故 \(f-\rho\in N\)。若另有满足这些条件的余式 \(\rho'\)，则 \(\rho-\rho'\in N\)，而其所有非零项仍不能被基首项整除。若 \(\rho-\rho'\ne0\)，其首单项式又必须被某个基首项整除，矛盾。因此 \(\rho=\rho'\)。这保证余式唯一，但表示 \(f-\rho=\sum_g q_gg\) 中的商系数 \(q_g\) 不一定唯一。
+先看一次除法。步骤与标量情形相同，只有首项位置相同才允许相减；首项不能约化时，将它移入余式。每步待处理向量的首模单项式严格下降，所以全局模项序的良序性使除法终止，并保留所有乘积首项的上界。
+
+再证明有限 Gröbner 基存在。每个位置上的首单项式指数构成向上封闭的子集，分别用\cref{b3:lem:dickson}取有限极小生成元，再为它们选取原像，便得有限 Gröbner 基。从全部首项中挑选原像给出的是存在性，还不是从有限输入生成组求基的算法。
+
+对已得的 Gröbner 基，余式 \(\rho\) 满足 \(f-\rho\in N\)，且其非零项都不能被基首项整除。若另有这样的 \(\rho'\)，则 \(\rho-\rho'\in N\)，非零项仍不能被基首项整除；但若这个差非零，其首项又必须能被整除，矛盾。因此 \(\rho=\rho'\)。这保证标准余式唯一，表示 \(f-\rho=\sum_gq_gg\) 的商系数则不一定唯一。
 
 对位于同一位置的两个首项，取其标量单项式的最小公倍式，归一化后相减定义 \(S\)-向量。Buchberger 判据的有界表示证明也适用：在某个 \(f\in N\) 的生成元表示中，把达到最大模单项式的项收集起来；这些项必有相同位置，且若抵消，其系数和为零，便可固定其中一项，把全部抵消写成两两差。每个差是相应 \(S\)-向量的单项式倍数。有界表示将其替换成更小首项的组合，与最大首项最小的选取矛盾。不同位置的项无法相互抵消，故不需跨位置的 \(S\)-向量。
 
-算法每次加入非零余式，都使首单项式子模严格增大。升链的并在各位置分别有限生成，故升链必稳定。于是只添加有限个新向量，也只有有限个待处理对，算法终止；留下的各 \(S\)-向量有界表示保证正确性。
+最后，算法从已有有限生成组开始，每次加入非零余式都使首单项式子模严格增大。升链的并在各位置分别有限生成，故升链必稳定。于是只添加有限个新向量，也只有有限个待处理对；留下的各 \(S\)-向量有界表示保证正确性。算法终止靠首单项式子模的升链条件，单次除法终止则靠模项序的良序性。
 \end{proof}
 
 \subsection{全局模项序与 Schreyer 构造}
@@ -44,10 +56,16 @@ x^\alpha\epsilon_i\prec_G x^\beta\epsilon_j
 \quad\Longleftrightarrow\quad
 \begin{cases}
 \operatorname{LM}(x^\alpha g_i)\prec\operatorname{LM}(x^\beta g_j),\quad\text{或}\\
-\operatorname{LM}(x^\alpha g_i)=\operatorname{LM}(x^\beta g_j)\text{ 且 }i<j.
+\operatorname{LM}(x^\alpha g_i)=\operatorname{LM}(x^\beta g_j)\;\text{且}\;i<j.
 \end{cases}
 \]
-这称为\term[Schreyer-xu]{Schreyer 序}[Schreyer order]。它与乘法相容；若有无限下降序列，其像首项不能无限严格下降，最终须在固定首项的有限个原像位置中无限下降，也不可能。因此它仍是全局模项序。
+这称为\term[Schreyer-xu]{Schreyer 序}[Schreyer order]。它先按像的首项给关系模排序，再用下标确定产生同一首项的两个源项谁较大。因此 \(i<j\) 的配对关系会以 \(\epsilon_j\) 方向为首项。
+
+\ProseParagraphBreak
+这个序与乘法相容。若有无限下降序列，像首项最终须固定为某个模单项式 \(T\)，否则违反原模项序的良序性。对每个固定的 \(i\)，等式 \(\operatorname{LM}(x^\alpha g_i)=T\) 至多确定一个 \(x^\alpha\)，即相同位置上两者标量单项式的商。下标只有有限多个，所以固定像首项的原像也是有限集，不能在其中无限下降。故 Schreyer 序仍为全局模项序。
+
+\ProseParagraphBreak
+两个源项的像首项相消，还未必给出核中的向量。其像只是一个首项下降的 \(S\)-向量，可能非零；继续用 \(G\) 除它，并从源向量中减去所得表示，才会得到真正的合冲。下面的修正项正承担这个职责。
 
 \begin{theorem}[Schreyer]\label{b3:thm:schreyer-syzygies}
 设 \(k\) 为域，\(n,r\ge1\) 为整数，\(S=k[x_1,\ldots,x_n]\)，\(F=\bigoplus_{\nu=1}^rSe_\nu\) 带全局模项序 \(\prec\)，\(G=(g_1,\ldots,g_s)\) 是 \(F\) 中某子模的有限 Gröbner 基，各 \(g_i\ne0\)。令 \(\epsilon_1,\ldots,\epsilon_s\) 为 \(S^s\) 的标准基，并令 \(\phi:S^s\rightarrow F\) 将 \(\epsilon_i\) 送到 \(g_i\)。在 \(S^s\) 上取 Schreyer 序 \(\prec_G\)：先按 \(\prec\) 比较 \(\operatorname{LM}(x^\alpha g_i)\) 与 \(\operatorname{LM}(x^\beta g_j)\)；二者相同时，规定 \(i<j\) 蕴含 \(x^\alpha\epsilon_i\prec_G x^\beta\epsilon_j\)。
@@ -80,7 +98,7 @@ s_{ij}=\frac{L_{ij}}{c_im_i}\epsilon_i
 \begin{proof}
 定义立即给出 \(\phi(s_{ij})=0\)。除法的首项界使右端每个非零 \(h_{ij\ell}g_\ell\) 的首项严格小于 \(L_{ij}e_{\nu_i}\)。因此 \(s_{ij}\) 的首单项式位于 \(\epsilon_j\)，恰为 \((L_{ij}/m_j)\epsilon_j\)。
 
-任取 \(0\ne u=\sum a_i\epsilon_i\in\ker\phi\)。设其最大 Schreyer 单项式来自 \(a_j\epsilon_j\)，并记 \(T=\operatorname{LM}(a_jg_j)\)。等式 \(\sum a_ig_i=0\) 要求 \(T\) 处至少另有一个相同首项，否则最高项不可能抵消；这些首项中的下标均不大于 \(j\)，故存在 \(i<j\) 使 \(\operatorname{LM}(a_ig_i)=T\)。于是 \(L_{ij}\) 整除 \(T\) 的标量部分，\(\operatorname{LM}(s_{ij})\) 整除 \(\operatorname{LM}(u)\)。这正是核的 Gröbner 基条件。再用向量除法可把每个核元素写成这些 \(s_{ij}\) 的组合。
+任取 \(0\ne u=\sum a_i\epsilon_i\in\ker\phi\)。等式 \(\sum a_ig_i=0\) 中，最大的像单项式不能只出现一次，因为首项更小的各个像及其余项都无法抵消它。设最大 Schreyer 单项式来自 \(a_j\epsilon_j\)，并记 \(T=\operatorname{LM}(a_jg_j)\)。于是另有一个相同位置的像首项也等于 \(T\)；按平局时的下标约定，存在 \(i<j\) 使 \(\operatorname{LM}(a_ig_i)=T\)。所以 \(L_{ij}\) 整除 \(T\) 的标量部分，\(\operatorname{LM}(s_{ij})\) 整除 \(\operatorname{LM}(u)\)。每个合冲的首项都因此受某个两两抵消得到的修正关系控制。这正是核的 Gröbner 基条件，再用向量除法即可表示全部核元素。
 \end{proof}
 
 修正项在非单项式例子中可以直接算出。在 \(S=k[x,y]\) 中取字典序 \(x\succ y\)，令 \(g_1=x-y^2,g_2=y^3-1\)。这是 Gröbner 基，其非零 \(S\)-多项式的除法为
@@ -95,7 +113,18 @@ s_{12}=y^3\epsilon_1-x\epsilon_2-\epsilon_1+y^2\epsilon_2
 只写最初两个抵消首项的项，会留下 \(x-y^5\)，并不是关系；除法中的修正项正是把它补成核元素。
 
 \ProseParagraphBreak
-若起初给的生成组尚非 Gröbner 基，把它们排成矩阵 \(F\in\operatorname{Mat}_{r\times s}(S)\)，计算像模的 Gröbner 基矩阵 \(G\in\operatorname{Mat}_{r\times t}(S)\)，同时保存 \(U\in\operatorname{Mat}_{s\times t}(S)\)、\(V\in\operatorname{Mat}_{t\times s}(S)\)，使 \(G=FU\)、\(F=GV\)。设矩阵 \(T\) 的列生成 \(\ker G\)，则 \(\ker F\) 由矩阵 \(UT\) 和 \(1_s-UV\) 的列生成。确实，这些列都被 \(F\) 送到零；若 \(Fa=0\)，则 \(GVa=0\)，写 \(Va=Tb\)，有 \(a=UTb+(1_s-UV)a\)。这一步使算法返回原生成元的关系，而不只是改换生成元以后的关系。
+若原生成组不是 Gröbner 基，还须把算出的关系返回原生成组。这里有两类关系：新 Gröbner 基内部的关系，通过表示矩阵拉回；改换生成组时已经出现的冗余关系，则须另外保留。
+
+\begin{proposition}\label{b3:prop:kernel-generator-change}
+设 \(k\) 为域，\(n,r,s,t,q\) 为非负整数，\(S=k[x_1,\ldots,x_n]\)，\(F\in\operatorname{Mat}_{r\times s}(S)\)、\(G\in\operatorname{Mat}_{r\times t}(S)\)，并给定 \(U\in\operatorname{Mat}_{s\times t}(S)\)、\(V\in\operatorname{Mat}_{t\times s}(S)\)，满足 \(G=FU\)、\(F=GV\)。若 \(T\in\operatorname{Mat}_{t\times q}(S)\) 的列生成 \(\ker G\)，则 \(K=(UT\quad 1_s-UV)\) 的列生成 \(\ker F\)。其中 \(UT\) 表示新生成组内部的关系，\(1_s-UV\) 表示改换生成组产生的关系；前一部分单独未必生成全部核。允许空的生成组或空的关系矩阵。
+\end{proposition}
+\begin{proof}
+由 \(GT=0\) 及 \(FUV=GV=F\)，得 \(FUT=0\)、\(F(1_s-UV)=0\)，所以所列向量均在核中。若 \(Fa=0\)，则 \(GVa=0\)，可写 \(Va=Tb\)。于是
+\[
+a=UTb+(1_s-UV)a,
+\]
+给出反向包含。即使 \(G\) 没有关系，第二部分仍可能非零：取 \(S=k[x]\)、\(F=(x\ x)\)、\(G=(x)\)、\(U=(1,0)^{\mathsf T}\)、\(V=(1\ 1)\)，有 \(\ker G=0\)，但 \(1_2-UV\) 的第二列为 \((-1,1)^{\mathsf T}\)，它生成 \(\ker F\)。
+\end{proof}
 
 \ProseParagraphBreak
 例如仍取 \(x\succ y\)，令
@@ -125,7 +154,7 @@ UT=\begin{pmatrix}y-x\\-x\\0\end{pmatrix},\qquad
 \end{algorithmsteps}
 \end{algorithm}
 
-模 Buchberger 算法终止，后两步仅处理有限列与有限对，故\cref{b3:alg:polynomial-matrix-kernel}是有限算法。上节的双向表示计算证明其输出恰好生成全部核。若输入为零矩阵，取 \(G\) 为空矩阵，输出便为 \(1_s\)，仍符合要求。
+模 Buchberger 算法终止，后两步仅处理有限列与有限对，故\cref{b3:alg:polynomial-matrix-kernel}是有限算法。\Cref{b3:prop:kernel-generator-change}证明其输出恰好生成全部核。输出是生成组，未必是自由基：\(K\) 自己还可以有非零核，所以不能直接把列数作为 Betti 数。若输入为零矩阵，取 \(G\) 为空矩阵，输出便为 \(1_s\)，仍符合要求。
 
 \ProseParagraphBreak
 设 \(k\) 为域，在 \(S=k[x,y]\) 中取 \(I=(x^2,xy,y^2)\)，三个单项式本身构成 Gröbner 基。全部 \(S\)-多项式已经为零，Schreyer 构造给出
@@ -133,7 +162,7 @@ UT=\begin{pmatrix}y-x\\-x\\0\end{pmatrix},\qquad
 s_{12}=(y,-x,0),\quad s_{13}=(y^2,0,-x^2),\quad
 s_{23}=(0,y,-x).
 \]
-由于 \(s_{13}=ys_{12}+xs_{23}\)，只须保留第一、第三个关系。它们线性无关：若 \(as_{12}+bs_{23}=0\)，第一坐标使 \(ay=0\)，第三坐标使 \(bx=0\)，整环性给出 \(a=b=0\)。于是得到极小消解
+由于 \(s_{13}=ys_{12}+xs_{23}\)，Schreyer 输出的 Gröbner 生成组在这里仍有冗余，只须保留第一、第三个关系。它们线性无关：若 \(as_{12}+bs_{23}=0\)，第一坐标使 \(ay=0\)，第三坐标使 \(bx=0\)，整环性给出 \(a=b=0\)。于是得到极小消解
 \begin{equation}\label{b3:eq:square-maximal-resolution}
 0\longrightarrow S(-3)^2
 \xrightarrow{\left(\begin{smallmatrix}y&0\\-x&y\\0&-x\end{smallmatrix}\right)}
@@ -164,7 +193,7 @@ S(-2)^3\xrightarrow{(x^2\ xy\ y^2)}S
 \cref{b3:prop:module-groebner-algorithm}保证前两步终止且余式为零恰好检测 \(b\in\operatorname{im}F\)。此时 \(Fu_0=FUq=Gq=b\)。任一解与 \(u_0\) 之差属于 \(\ker F\)，而每个核元素都由 \(K\) 的列生成，故所列确为全部解。参数 \(w\) 未必唯一，其冗余由 \(K\) 本身的合冲模描述。
 
 \ProseParagraphBreak
-例如在 \(S=k[x,y]\) 中求
+选定系数环是求解的一部分。在 \(S\) 上求像成员关系得到多项式解，在分式域 \(K=k(x_1,\ldots,x_n)\) 上消元得到有理函数解，在 \(S_f\) 上则允许 \(f\) 的幂作分母。这三种解集一般不同。例如在 \(S=k[x,y]\) 中求
 \[
 xu+yv=x^2+y.
 \]

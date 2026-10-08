@@ -48,7 +48,24 @@ a_{k,h,g*f}\cdot a_{k*h,g,f}
 则称这些数据为一个\term[shuang-fanchou]{双范畴}[bicategory]。\(a\) 称为结合约束，\(\ell,r\) 称为单位约束。
 \end{definition}
 
-五边形的两边都是从 \(((k*h)*g)*f\) 到 \(k*(h*(g*f))\) 的 2态射。三角等式比较删除中间单位的两种方法：
+五边形等式的左边对应两次改括号：
+\[
+\begin{aligned}
+((k*h)*g)*f
+&\xrightarrow{a_{k*h,g,f}}(k*h)*(g*f)\\
+&\xrightarrow{a_{k,h,g*f}}k*(h*(g*f)).
+\end{aligned}
+\]
+右边则经过另外两个中间对象：
+\[
+\begin{aligned}
+((k*h)*g)*f
+&\xrightarrow{a_{k,h,g}*1_f}(k*(h*g))*f\\
+&\xrightarrow{a_{k,h*g,f}}k*((h*g)*f)\\
+&\xrightarrow{1_k*a_{h,g,f}}k*(h*(g*f)).
+\end{aligned}
+\]
+两条路径的起点与终点相同，五边形等式要求沿它们复合指定的结合约束，得到同一个 2态射。三角等式比较删除中间单位的两种方法：
 \[
 \begin{tikzcd}[column sep=large]
 (g*1_Y)*f\ar[rr,"a_{g,1_Y,f}"]\ar[dr,"r_g*1_f"']
@@ -66,7 +83,7 @@ a_{h',g',f'}\cdot((\gamma*\beta)*\alpha)
 \subsection{环、双模与幺半范畴}
 \label{b4:subsec:F02:02}
 
-第二卷第6.1--6.2节构造了平衡张量积及其剩余作用。这里把不同环之间的双模放在同一个结构中。规定从 \(A\) 到 \(B\) 的 1态射为左 \(B\)、右 \(A\) 双模，这使它作用于左 \(A\) 模时得到左 \(B\) 模：\(M\otimes_A-\) 的方向与 \(M:A\rightarrow B\) 一致。
+第二卷第6.1--6.2节构造了平衡张量积及其剩余作用。先看含幺环同态 \(\varphi:A\rightarrow B\)。令 \(B\) 保留自身的左乘作用，右 \(A\) 作用取为 \(b\cdot a=b\varphi(a)\)，便得到双模 \({}_BB_A\)。它把左 \(A\) 模 \(X\) 送到左 \(B\) 模 \(B\otimes_A X\)，正是沿 \(\varphi\) 的扩张标量。因此规定从 \(A\) 到 \(B\) 的 1态射为左 \(B\)、右 \(A\) 双模：一般的 \({}_BM_A\) 也给出同方向的函子 \(M\otimes_A-\)。复合环同态所对应的双模怎样由张量积得到，将在\cref{b4:prop:F-ring-map-composition}中证明。
 
 \begin{proposition}\label{b4:prop:F-bimodule-bicategory}
 以含幺环为对象，以幺性 \((B,A)\) 双模为 \(\operatorname{Hom}_{\mathbf{Bimod}}(A,B)\) 的对象，以保持左右作用的群同态为其态射。对 \({}_BM_A:A\rightarrow B\)、\({}_CN_B:B\rightarrow C\)，令
@@ -92,6 +109,7 @@ r_M&:M\otimes_A A\longrightarrow M,
 \]
 给出。这些数据组成双范畴 \(\mathbf{Bimod}\)。
 \end{proposition}
+\symidx{\(\mathbf{Bimod}\)：环、双模与双模同态构成的双范畴}
 \begin{proof}
 双模作用彼此相容，所以外侧的 \(C,A\) 作用保留平衡关系 \(nb\otimes m=n\otimes bm\)，得到所列 \((C,A)\) 双模结构。对同态，平衡关系的两边分别送到
 \[
@@ -121,6 +139,10 @@ p\otimes(nb\otimes m)&=p\otimes(n\otimes bm)
 三角形的两条路径在 \((n\otimes b)\otimes m\) 上分别给出 \(nb\otimes m\) 与 \(n\otimes bm\)，由 \(B\) 平衡关系相等。多重纯张量生成相应双模，因而这两项相容条件都是同态等式。
 \end{proof}
 
+在双范畴中，若存在 1态射 \(f:X\rightarrow Y\)、\(g:Y\rightarrow X\)，以及可逆 2态射 \(g*f\Rightarrow1_X\)、\(f*g\Rightarrow1_Y\)，便称对象 \(X,Y\) 等价。对于环与双模，这要求两个复合张量积分别同构于相应的单位双模。\cref{b4:prop:F-matrix-bimodule-equivalence}将证明矩阵环 \(M_n(k)\) 与 \(k\) 按此意义等价，并得到它们的左模范畴等价；当 \(n>1\) 时，这两个环本身并不同构。
+
+\ProseParagraphBreak
+
 在通常的张量积构造中，结合约束是上述双模同构，而非恒等映射；单位约束也需要删去张量中的环因子。因此这组具体数据给出双范畴。固定一个环 \(A\) 后，\(A\)-\(A\) 双模在 \(\otimes_A\) 下的幺半结构正是其中单对象的情形。
 
 \begin{proposition}\label{b4:prop:F-one-object-bicategory}
@@ -128,4 +150,112 @@ p\otimes(nb\otimes m)&=p\otimes(n\otimes bm)
 \end{proposition}
 \begin{proof}
 单对象时，所有 1态射均可复合，因而复合函子就是同一范畴上的双函子。五边形与三角等式分别变成\eqref{b4:eq:monoidal-pentagon}与\eqref{b4:eq:monoidal-triangle}，约束的自然性也不变。反向把幺半范畴的对象看成 1态射、态射看成 2态射，便得到完全相同的数据与公理。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:F-ring-map-composition}
+设 \(A,B,C\) 为含幺环，\(\varphi:A\rightarrow B\)、\(\psi:B\rightarrow C\) 为保持单位的环同态。令 \(B,C\) 保留各自的左乘作用，分别取右作用 \(b\cdot a=b\varphi(a)\)、\(c\cdot b=c\psi(b)\)，得到 \((B,A)\) 双模 \(B\) 与 \((C,B)\) 双模 \(C\)，则
+\[
+\vartheta:C\otimes_B B\longrightarrow C,
+\qquad c\otimes b\longmapsto c\psi(b)
+\]
+为 \((C,A)\) 双模同构，其中右端的右 \(A\) 作用为 \(c\cdot a=c\psi(\varphi(a))\)。对每个幺性左 \(A\) 模 \(X\)，还有关于 \(X\) 自然的左 \(C\) 模同构
+\[
+\eta_X:C\otimes_B(B\otimes_A X)\longrightarrow C\otimes_A X,
+\qquad c\otimes(b\otimes x)\longmapsto c\psi(b)\otimes x.
+\]
+因此依次沿 \(\varphi\)、\(\psi\) 扩张标量，与沿 \(\psi\circ\varphi\) 扩张标量所得的函子自然同构。
+\end{proposition}
+\begin{proof}
+对 \(b'\in B\)，张量积的平衡关系 \(c\psi(b')\otimes b=c\otimes b'b\) 的两边都由 \(\vartheta\) 送到 \(c\psi(b'b)\)，故此公式良定义。它保持左 \(C\) 作用；对右 \(A\) 作用，有
+\[
+\vartheta(c\otimes b\varphi(a))
+=c\psi(b)\psi(\varphi(a))
+=\vartheta(c\otimes b)\cdot a.
+\]
+逆映射为 \(c\mapsto c\otimes1_B\)，因为
+\[
+c\psi(b)\otimes1_B=c\otimes b,
+\qquad \vartheta(c\otimes1_B)=c.
+\]
+它也保持左右作用，故 \(\vartheta\) 是双模同构。
+
+对 \(\eta_X\)，先用张量积的结合同构把源写成 \((C\otimes_B B)\otimes_A X\)，再施行 \(\vartheta\otimes_A1_X\)，便得到所列公式。其逆为
+\[
+c\otimes x\longmapsto c\otimes(1_B\otimes x).
+\]
+右端保留 \(A\) 平衡关系，因为
+\[
+\begin{aligned}
+c\psi(\varphi(a))\otimes(1_B\otimes x)
+&=c\otimes(\varphi(a)\otimes x)\\
+&=c\otimes(1_B\otimes ax).
+\end{aligned}
+\]
+上述结合同构与 \(\vartheta\) 都保留左 \(C\) 作用。对左 \(A\) 模同态 \(u:X\rightarrow X'\)，先施行 \(u\) 再施行 \(\eta_{X'}\)，或先施行 \(\eta_X\) 再施行 \(1_C\otimes_Au\)，都把 \(c\otimes(b\otimes x)\) 送到 \(c\psi(b)\otimes u(x)\)。纯张量生成源模，故得到自然性。
+\end{proof}
+
+\begin{proposition}\label{b4:prop:F-matrix-bimodule-equivalence}
+设 \(k\) 为域，\(n\geq1\)，\(A=M_n(k)\)。取行向量双模 \({}_kP_A=k^{1\times n}\) 与列向量双模 \({}_AQ_k=k^{n\times1}\)，各侧作用由矩阵或标量乘法给出。行列配对与外积分别给出双模同构
+\[
+\begin{aligned}
+\varepsilon:P\otimes_A Q&\longrightarrow k,
+&p\otimes q&\longmapsto pq,\\
+\theta:Q\otimes_k P&\longrightarrow A,
+&q\otimes p&\longmapsto qp.
+\end{aligned}
+\]
+第一项为 \((k,k)\) 双模同构，第二项为 \((A,A)\) 双模同构。因此 \(P:A\rightarrow k\)、\(Q:k\rightarrow A\) 给出 \(\mathbf{Bimod}\) 中对象 \(A,k\) 的等价，函子
+\[
+\begin{aligned}
+P\otimes_A- &: A\text{-}\mathrm{Mod}\longrightarrow k\text{-}\mathrm{Mod},\\
+Q\otimes_k- &: k\text{-}\mathrm{Mod}\longrightarrow A\text{-}\mathrm{Mod}
+\end{aligned}
+\]
+互为准逆。若 \(n>1\)，则 \(A\) 与 \(k\) 不同构为环。
+\end{proposition}
+\begin{proof}
+记 \(p_i\) 为第 \(i\) 个标准行向量，\(q_i\) 为第 \(i\) 个标准列向量，\(E_{ij}\) 为矩阵单位。矩阵乘法给出
+\[
+p_iE_{ab}=\delta_{ia}p_b,
+\qquad E_{ab}q_j=\delta_{bj}q_a.
+\]
+行列配对满足 \((pa)q=p(aq)\)，因而通过 \(A\) 平衡关系，并保持两侧的 \(k\) 作用。在 \(P\otimes_A Q\) 中，
+\[
+\begin{aligned}
+p_i\otimes q_j
+&=p_iE_{ii}\otimes q_j
+=p_i\otimes E_{ii}q_j
+=\delta_{ij}(p_i\otimes q_i),\\
+p_i\otimes q_i
+&=p_i\otimes E_{i1}q_1
+=p_iE_{i1}\otimes q_1
+=p_1\otimes q_1.
+\end{aligned}
+\]
+标量也可通过 \(\lambda I_n\in A\) 在张量两侧移动。展开任意行、列向量可见，\(P\otimes_A Q\) 由 \(p_1\otimes q_1\) 作为 \(k\) 向量空间生成。又有 \(\varepsilon(p_1\otimes q_1)=1\)，故 \(\varepsilon\) 为同构，其逆为 \(\lambda\mapsto\lambda p_1\otimes q_1\)。
+
+外积满足 \((q\lambda)p=q(\lambda p)\)，所以给出 \(\theta\)。它把 \(Q\otimes_k P\) 的基 \(q_i\otimes p_j\) 送到 \(A\) 的基 \(E_{ij}\)，故为 \(k\) 线性同构。对 \(a,b\in A\)，有 \((aq)(pb)=a(qp)b\)，所以它还保持左、右 \(A\) 作用。两项同构正把复合 1态射 \(P*Q\)、\(Q*P\) 分别识别为单位双模 \(k\)、\(A\)。
+
+对左 \(A\) 模 \(X\)，结合与单位同构给出
+\[
+Q\otimes_k(P\otimes_A X)
+\cong(Q\otimes_k P)\otimes_A X
+\cong A\otimes_A X
+\cong X.
+\]
+对左 \(k\) 模 \(V\)，同样得到
+\[
+P\otimes_A(Q\otimes_k V)
+\cong(P\otimes_A Q)\otimes_k V
+\cong k\otimes_k V
+\cong V.
+\]
+这两个复合的具体公式分别为
+\[
+q\otimes(p\otimes x)\longmapsto(qp)x,
+\qquad p\otimes(q\otimes v)\longmapsto(pq)v.
+\]
+对 \(X\) 或 \(V\) 施行模同态，先后两种次序在纯张量上给出相同结果，因此同构自然，两个张量函子互为准逆。
+
+当 \(n>1\) 时，\(E_{11}E_{12}=E_{12}\)，而 \(E_{12}E_{11}=0\)，故 \(A\) 非交换；域 \(k\) 交换，所以二者不能同构为环。
 \end{proof}

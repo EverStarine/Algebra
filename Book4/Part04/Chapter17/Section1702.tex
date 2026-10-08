@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 17.2 三角范畴公理
 % 纲要标签：b4:sec:1602
-% 纲要位置：计划纲要.md，第 2900 行。
+% 纲要位置：计划纲要.md，第 3661 行。
 
 \section{三角范畴公理}
 \label{b4:sec:1602}
@@ -19,6 +19,12 @@
 
 \subsection{好三角与旋转}
 \label{b4:subsec:1602:01}
+
+对可复合的 \(X\xrightarrow{u}Y\xrightarrow{v}Z\)，锥 \(C_u\) 记录第一步的差别，\(C_v\) 记录第二步的差别，而 \(C_{vu}\) 记录整个复合的差别。八面体公理把三者联系为一条好三角
+\[
+ C_u\longrightarrow C_{vu}\longrightarrow C_v\longrightarrow C_u[1].
+\]
+三角范畴将这种联系与锥的补全、旋转及态射补全一并作为公理，因此不必要求对象本身仍是复形。
 
 \begin{definition}\label{b4:def:triangulated-category}
 设 \(\mathcal T\) 为加性范畴，给定自等价 \([1]\) 及其逆，并固定它们的迭代。再指定一类称为好三角的图式 \(X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]\)。若这些数据满足下面四条公理，则称 \(\mathcal T\) 连同这些数据为\term[sanjiao-fanchou]{三角范畴}[triangulated category]。
@@ -68,7 +74,7 @@
 &&X\arrow[dl,"u"']\arrow[dr,"vu"]&&\\
 &Y\arrow[rr,"v"]\arrow[dl,"i_u"']&&Z\arrow[dl,"i_{vu}"']\arrow[dr,"i_v"]&\\
 C_u\arrow[rr,"\alpha"]\arrow[d,"p_u"']&&C_{vu}\arrow[rr,"\beta"]\arrow[dll,"p_{vu}"]&&C_v\arrow[d,"p_v"]\arrow[dll,"\gamma"]\\
-X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
+X[1]\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1]\arrow[ll,"{i_u[1]}"] .
 \end{tikzcd}
 \]
 这里 \(\gamma=i_u[1]p_v\)。顶部的两条路径比较 \(v\circ u\)；中间两条新箭头把 \(u,vu,v\) 的三个锥连成第四个三角。底端平移对象上的箭头记录各三角的连接态射，图中的交换关系正是前面四个等式。后面的锥矩阵计算逐一验证这些路径，以及第四个三角为何仍为好三角。
@@ -88,7 +94,7 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 \begin{proof}
 从恒等三角到给定三角应用 (TR3)，前两个分量取 \(1_X,u\)，第三个分量由零对象出发，得到 \(vu=0\)。旋转后同理得到其余零复合。
 
-若 \(a:W\to Y\) 满足 \(va=0\)，对上方好三角
+若 \(a:W\to Y\) 满足 \(va=0\)，要证明的是存在 \(b_0:W\to X\)，使 \(ub_0=a\)。(TR3) 从前两项的交换方块补出第三项的态射；因此取第二项为零的好三角，使方块的交换条件恰好是 \(va=0\)，并让补出的态射经逆平移成为所需的 \(b_0\)。具体地，对上方好三角
 \(W\to0\to W[1]\xrightarrow{-1}W[1]\)
 和下方旋转三角
 \(Y\xrightarrow{v}Z\xrightarrow{w}X[1]\xrightarrow{-u[1]}Y[1]\)
@@ -96,7 +102,15 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 
 若 \(a:Y\to W\) 满足 \(au=0\)，恒等三角的逆旋转给出好三角 \(0\to W\xrightarrow{1}W\to0\)。从给定三角到这个三角应用 (TR3)，前两个分量取 \(0:X\to0\) 和 \(a:Y\to W\)；前方块由 \(au=0\) 交换，补出的第三个分量 \(b:Z\to W\) 满足 \(bv=a\)。结合 \(vu=0\)，这就证明了反变 Hom 序列在中间正合。
 
-把两类正合列旋转延长。若一个三角态射的前两个分量同构，对每个 \(W\) 用五引理得第三个分量在 \(\operatorname{Hom}(W,-)\) 上诱导同构；先取 \(W\) 为其目标得到右逆，再取 \(W\) 为其源得到左逆，故它本身同构。其他两种情形由旋转归约。
+把两类正合列旋转延长。若一个三角态射的前两个分量 \(a:X\to X'\)、\(b:Y\to Y'\) 同构，对每个 \(W\) 比较两个三角产生的连续五项
+\[
+\begin{gathered}
+ \operatorname{Hom}(W,X)\longrightarrow\operatorname{Hom}(W,Y)
+ \longrightarrow\operatorname{Hom}(W,Z)\longrightarrow{}\\
+ \operatorname{Hom}(W,X[1])\longrightarrow\operatorname{Hom}(W,Y[1]).
+\end{gathered}
+\]
+它们在中间三项正合，五个比较映射依次由 \(a,b,c,a[1],b[1]\) 诱导。除中央由 \(c:Z\to Z'\) 诱导的映射外，其余四个都是同构，所以\cref{b4:thm:five-lemma}给出 \(\operatorname{Hom}(W,c)\) 为同构。取 \(W=Z'\)，由满射性得到 \(s:Z'\to Z\) 满足 \(cs=1_{Z'}\)；再取 \(W=Z\)，由单射性和 \(csc=c\) 得 \(sc=1_Z\)。故 \(c\) 本身同构。其他两种情形由旋转归约。
 \end{proof}
 
 因此，同一态射的两个好三角可以用 (TR3) 补出同构；但补出的同构是否唯一，是另一回事。
@@ -117,6 +131,8 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 \]
 最后的映射为零，故 \(1_X\) 提升为 \(r:Y\to X\)，即 \(ru=1_X\)。满态射的论证对偶。
 \end{proof}
+
+在交换群范畴中，单态射 \(\mathbb Z\xrightarrow{2}\mathbb Z\) 没有左逆。三角范畴却能将每个态射补成好三角，旋转和 Hom 正合性因而对单态射施加了额外的分裂约束。后面将用同一个乘二映射说明：逐次单射的复形映射，在 \(K(\mathbf{Ab})\) 中未必是单态射。
 
 \subsection{显式锥构造与八面体的符号}
 \label{b4:subsec:1602:04}
@@ -150,34 +166,57 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 由此正向和逆向旋转都保持好三角，(TR2) 的两向均成立。
 
 为核对 (TR3)，先取两个标准锥三角，设前两个分量为 \(a:A\to A'\)、\(b:B\to B'\)。同伦交换表示可以选择 \(H\) 使
-\(bf-f'a=\mathrm{d}H+H\mathrm{d}\)。定义
+\(bf-f'a=\mathrm{d}_{B'}H+H\mathrm{d}_A\)。要与包含、投影相容，第三个分量可取上三角形式
+\[
+ c=\begin{pmatrix}b&T\\0&a[1]\end{pmatrix}:C_f\longrightarrow C_{f'},
+ \qquad T^n:A^{n+1}\longrightarrow B'^n.
+\]
+将它代入复形映射条件 \(\mathrm{d}_{C_{f'}}c=c\mathrm{d}_{C_f}\)，非对角块的等式为
+\[
+ \mathrm{d}_{B'}T+T\mathrm{d}_A=bf-f'a.
+\]
+因此取 \(T^n=H^{n+1}\) 就能用所给同伦修正原方块的误差，即定义
 \[
  c:C_f\longrightarrow C_{f'},\qquad c(y,x)=(by+Hx,ax).
 \]
-计算第一分量的微分相容性，恰好得到上述同伦等式；第二分量由 \(a\) 为复形映射得到。它与包含和投影严格相容，所以补成三角态射。任意好三角先用同构换成标准锥即可。至此前三条公理成立，因而可用\cref{b4:lem:pretriangle-hom}：对固定首箭头，不同的好三角之间存在保持前两项的同构。
+第二分量的微分相容性由 \(a\) 为复形映射得到。它与包含和投影严格相容，所以补成三角态射。任意好三角先用同构换成标准锥即可。至此前三条公理成立，因而可用\cref{b4:lem:pretriangle-hom}：对固定首箭头，不同的好三角之间存在保持前两项的同构。
 
-现在核对 (TR4)。设复形映射 \(f:A\to B\)、\(g:B\to C\)。在三个标准锥上取
+现在核对 (TR4)。设复形映射 \(f:A\to B\)、\(g:B\to C\)。从 \(f\) 到 \(gf\) 的前两项比较是 \((1_A,g)\)，从 \(gf\) 到 \(g\) 的比较是 \((f,1_C)\)；两个方块都严格交换，所以在刚才的公式中取 \(H=0\)，便得到前两张锥映射。第三张先由 \(p_g\) 投影到 \(B[1]\)，再由 \(i_f[1]\) 包含到 \(C_f[1]\)。于是三张映射为
 \[
  \alpha(b,a)=(gb,a),\qquad
  \beta(c,a)=(c,fa),\qquad
  \gamma(c,b)=(b,0).
 \]
-最后一个目标为 \(C_f[1]\)。它们都是复形映射，且满足公理中四个相容等式和 \(\gamma=i_f[1]p_g\)。复合 \(\beta\alpha\) 的零伦为 \((b,a)\mapsto(0,b)\)；这一步说明为什么中间还需要一个锥。
+最后一个目标为 \(C_f[1]\)。它们都是复形映射，且满足公理中四个相容等式和 \(\gamma=i_f[1]p_g\)。复合 \(\beta\alpha\) 的零伦为 \((b,a)\mapsto(0,b)\)；要将这三个箭头识别为好三角，还须把 \(\operatorname{Cone}(\alpha)\) 与 \(C_g\) 比较。
 
 把 \(\operatorname{Cone}(\alpha)^n\) 按顺序写作
 \(C^n\oplus A^{n+1}\oplus B^{n+1}\oplus A^{n+2}\)，则
 \[
  \mathrm{d}(c,a,b,a')=(\mathrm{d}c+gf a+gb,\,-\mathrm{d}a+a',\,-\mathrm{d}b-fa',\,\mathrm{d}a').
 \]
-定义
+其中 \(a,a'\) 两个分量仍含有 \(A\) 的重复信息。令 \(t=b+fa\)，则 \(t\) 的微分分量为
+\[
+ -\mathrm{d}_Bb-fa'+f(-\mathrm{d}_Aa+a')
+ =-\mathrm{d}_B(b+fa)=-\mathrm{d}_Bt.
+\]
+因此可逆坐标变换
+\[
+ (c,a,b,a')\longmapsto\bigl((c,b+fa),(a,a')\bigr)
+\]
+将微分变为两组互不混合的微分
+\[
+ (c,t)\longmapsto(\mathrm{d}_Cc+gt,-\mathrm{d}_Bt),\qquad
+ (a,a')\longmapsto(-\mathrm{d}_Aa+a',\mathrm{d}_Aa').
+\]
+这正是严格的复形同构
+\[
+ \operatorname{Cone}(\alpha)\cong C_g\oplus\operatorname{Cone}(1_{A[1]}).
+\]
+第二个直和因子由\cref{b4:prop:cone-sign-compatibility}可缩，在同伦范畴中为零。取上述分解中第一因子的投影及包含，写回原坐标就是
 \[
  r(c,a,b,a')=(c,b+fa),\qquad s(c,b)=(c,0,b,0).
 \]
-它们是到 \(C_g\) 及从 \(C_g\) 出发的复形映射，\(rs=1\)。取 \(h(c,a,b,a')=(0,0,0,a)\)，直接得到
-\[
- (\mathrm{d}h+h\mathrm{d})(c,a,b,a')=(0,a,-fa,a')=(1-sr)(c,a,b,a').
-\]
-故 \(r,s\) 是同伦逆。若 \(j:C_{gf}\to\operatorname{Cone}(\alpha)\) 是包含，\(q:\operatorname{Cone}(\alpha)\to C_f[1]\) 是最后投影，则 \(rj=\beta\)、\(qs=\gamma\) 严格成立，并且在 \(K(\mathcal A)\) 中
+于是 \(rs=1\)、\(sr\simeq1\)，故 \(r,s\) 是同伦逆。若 \(j:C_{gf}\to\operatorname{Cone}(\alpha)\) 是包含，\(q:\operatorname{Cone}(\alpha)\to C_f[1]\) 是最后投影，则 \(rj=\beta\)、\(qs=\gamma\) 严格成立，并且在 \(K(\mathcal A)\) 中
 \[
  \gamma r=qsr=q,
 \]
@@ -187,9 +226,6 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 所有构造只使用有限双积、平移和锥。它们保持两端有界、有上界或有下界，因此三个有界方向的满子范畴同样满足全部公理。
 \end{proof}
 
-八面体在这里表达一个具体事实：依次作 \(f\) 与 \(g\) 时，\(f\)、\(gf\)、\(g\) 各自造成的差别并非互不相关，三个锥还受一个锥三角约束。证明中的 \(b+fa\) 正是把复合过程中的重复项消去；这个公式比只记图形更便于核对符号。
-
-\ProseParagraphBreak
 由\cref{b4:thm:homotopy-triangulated}，\(K(\mathbf{Ab})\) 是三角范畴，却不是交换范畴。若它是交换范畴，把任意态射 \(f:X\to Y\) 分解为满态射 \(e:X\to I\) 和单态射 \(m:I\to Y\)，则由\cref{b4:prop:triangle-mono-splits}可取 \(s:I\to X\)、\(r:Y\to I\)，满足 \(es=1_I\)、\(rm=1_I\)。于是 \(t=sr:Y\to X\) 满足 \(ftf=f\)。对 \(\mathbb Z[0]\) 的乘二态射，这要求某个整数 \(t\) 满足 \(4t=2\)，矛盾：次数零复形的自同态同伦类就是整数，非零的链同伦无处取值。
 
 \ProseParagraphBreak
@@ -204,4 +240,4 @@ X[1]\arrow[rr,"{i_u[1]}"']\arrow[rrrr,bend right=25,"{u[1]}"']&&C_u[1]&&Y[1].
 则称 \((F,\phi)\) 为\term[sanjiao-hanzi]{三角函子}[triangle functor]，也称三角范畴间的正合函子。具有三角准逆的此类函子称为三角等价。
 \end{definition}
 
-比较同构 \(\phi\) 是数据的一部分。例如平移函子 \([1]\) 配上 \(X[2]\) 上的负恒等比较，才把一个好三角送到箭头为 \(u[1],v[1],-w[1]\) 的好三角。下章的局部化函子则采用与复形平移严格相容的比较。对于复形范畴上的逐项加性函子，有限双积及锥矩阵的保持直接给出三角函子。
+比较同构 \(\phi\) 要把 \(F(w)\) 的目标 \(F(X[1])\) 识别为 \(F(X)[1]\)，因此它也决定最后一条连接箭头及其符号。例如对平移函子 \(F=[1]\)，两者虽都等于 \(X[2]\)，好三角平移后的箭头却是 \(u[1],v[1],-w[1]\)。取 \(\phi_X=-1_{X[2]}\) 正好给出最后的 \(-w[1]\)；若取恒等比较，得到的将是 \(w[1]\)，这个三角未必仍是好三角。下章的局部化函子则采用与复形平移严格相容的比较。对于复形范畴上的逐项加性函子，有限双积及锥矩阵的保持直接给出三角函子。

@@ -1,18 +1,21 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### C.4 局部交数、乘数理想与对偶复形
-% 纲要位置：工作记录/计划纲要.md:2887
+% 纲要位置：工作记录/计划纲要.md:2934
 
 \section{局部交数、乘数理想与对偶复形}
 \label{b3:sec:C04}
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 平面曲线有限长度交数与Tor算例；区分不满足有限长度的自交
-% * 对数消解存在性采用主理想化定理；乘数理想的解析—代数比较与选择独立性采用准确引用
-% * 正规交叉模型中展开消失阶与局部可积性的对应，不以一行完备化说明代替比较定理
-% * 复用第22章局部对偶，区分CM的单一次数与非CM商环的多次数Ext
+%
+% * 有限长度的平面交数及 Tor 交替和模型；同一曲线的正维支集不满足定义
+% * 乘数理想的消解与比较定理明确引用；除子赋值条件、SNC 与原点吹起两图的计算
+% * 非 CM 环 S/(x²,xy) 的两次局部上同调及 Ext，典范模只保存一个次数，整个对偶复形还含微分
 % #### C.4.1 局部交数与 Tor
 % #### C.4.2 对数消解与乘数理想
 % #### C.4.3 非 Cohen--Macaulay 环的多次数对偶
+%
+% ---
+%
 
 
 % 正文以具体模型说明专题；长证明给出概要并指明技术细节的出处。
@@ -22,11 +25,18 @@
 \subsection{局部交数与 Tor}
 \label{b3:subsec:C04:01}
 
-两条平面曲线在一点相遇时，仅记录这个点不够：横截与相切应有不同的交数。局部商环的长度提供最直接的模型。\cref{b3:def:plane-local-intersection-number}给出复平面曲线的定义；这里同样设 \(k\) 为域，\(S=k[\![x,y]\!]\)，曲线由 \(f,g\) 定义，并假定 \(S/(f,g)\) 为有限长度模；在这个平面模型中，把
+两条平面曲线在一点相遇时，仅记录这个点不够：横截与相切应有不同的交数。局部商环的长度提供最直接的模型。设 \(k\) 为域，\(S=k[\![x,y]\!]\)，\(f,g\in(x,y)S\) 为非零元素，并假定 \(S/(f,g)\) 为有限长度模；在这个平面模型中，把
 \[
 i_0(f,g)=\ell_S(S/(f,g))
 \]
-称为原点处的\term{局部交数}[local intersection multiplicity]。
+称为两个方程在原点处的\term{局部交数}[local intersection multiplicity]。复数域上的同一定义见\appref{b3:app:D}的\cref{b3:def:plane-local-intersection-number}，这里的长度定义对任意域都适用。
+
+\ProseParagraphBreak
+Tor 计算说明这个长度与更一般的交数表达式怎样相连。在正则局部环 \(S\) 上，对有限生成模 \(M,N\)，若 \(M\otimes_SN\) 具有有限长度，则各个 \(\operatorname{Tor}_q^S(M,N)\) 也有有限长度，且由有限自由消解知高次 Tor 为零；于是可以形成有限的交替和
+\[
+\chi_S(M,N)=\sum_{q\ge0}(-1)^q\ell_S\bigl(\operatorname{Tor}_q^S(M,N)\bigr).
+\]
+有限长度来自支集条件：Tor 的支集包含于 \(\operatorname{Supp}M\cap\operatorname{Supp}N=\operatorname{Supp}(M\otimes_SN)\)。下面两条一维曲线在二维平面中只在闭点相交，满足这一有限长度条件；计算一次 Tor 的目的，是确认上述交替和在本例退化为零次张量积的长度。
 
 \begin{example}\label{b3:exm:plane-contact-multiplicity}
 设 \(k\) 为域，\(S=k[\![x,y]\!]\)。对 \(f=y\)、\(g=y-x^m\)，其中 \(m\ge1\)，有
@@ -37,20 +47,30 @@ S/(f,g)\cong k[\![x]\!]/(x^m),\qquad i_0(f,g)=m.
 \[
 \operatorname{Tor}_1^S(S/(y),S/(y-x^m))=0,
 \]
-而零次张量积的长度为 \(m\)。这把交数与本卷的自由消解计算联系起来。
+而二次以上 Tor 因该自由消解只有一层而全为零，零次张量积的长度为 \(m\)。因此
+\(\chi_S(S/(y),S/(y-x^m))=i_0(y,y-x^m)=m\)，把长度交数与自由消解计算联系起来。
 \end{example}
 
-若改为两次同一条曲线 \(y=0\)，零次张量积与一次 Tor 都同构于 \(k[\![x]\!]\)，不再具有有限长度。此时不能写下两个无限长度的形式差来定义交数。一般交理论使用循环、等价关系及更系统的 Tor 交替和，需要额外的有限性和维数假设；本节只证明以上有限长度模型。
+若改为两次同一条曲线 \(y=0\)，零次张量积与一次 Tor 都同构于 \(k[\![x]\!]\)。张量积的支集仍为整条一维曲线，有限长度条件已经失败，交集也未成为零维；所以本节的 \(i_0(y,y)\) 根本没有定义，不能写下两个无限长度的形式差来补出一个交数。一般交理论中的自交需要循环、等价关系及相应的交积构造，不能套用这里的有限长度公式。
 
 \subsection{对数消解与乘数理想}
 \label{b3:subsec:C04:02}
 
-另一类信息来自函数沿除子的消失阶。为说明乘数理想，先固定光滑不可约复代数簇 \(X\)、非零凝聚理想层 \(\mathfrak a\) 和有理数 \(c>0\)。选取一个\term{对数消解}[log resolution] \(\mu:Y\to X\)：它是光滑簇之间的固有双有理态射，使 \(\mathfrak a\mathcal O_Y=\mathcal O_Y(-F)\)，且有效除子 \(F\) 与例外除子的支集具有简单正规交叉，即局部由若干坐标超平面的并给出。\(\mathcal O_Y(D)\) 表示局部允许的有理函数层，沿每个素除子的极点阶不超过 \(D\) 的相应系数。相对典范除子 \(K_{Y/X}\) 由 Jacobian 行列式记录顶次微分形式的变化。于是定义\term{乘数理想}[multiplier ideal]
+另一类信息来自函数沿除子的消失阶。本小节借助对数消解介绍乘数理想的定义与坐标计算，不从头建立一般吹起、相对典范除子及消解理论；存在性和选择独立性采用下面明确引用的深定理。原点吹起的两张仿射图则会直接写出，用来核验定义中的每一项。
+
+\ProseParagraphBreak
+固定光滑不可约复代数簇 \(X\)、非零凝聚理想层 \(\mathfrak a\) 和有理数 \(c>0\)。选取一个\term{对数消解}[log resolution] \(\mu:Y\to X\)：它是光滑簇之间的固有双有理态射，使 \(\mathfrak a\mathcal O_Y=\mathcal O_Y(-F)\)，且有效除子 \(F\) 与例外除子的支集具有简单正规交叉，即局部由若干坐标超平面的并给出。\(\mathcal O_Y(D)\) 表示局部允许的有理函数层，沿每个素除子的极点阶不超过 \(D\) 的相应系数。相对典范除子 \(K_{Y/X}\) 由 Jacobian 行列式记录顶次微分形式的变化。于是定义\term{乘数理想}[multiplier ideal]
 \[
 \mathcal J(\mathfrak a^c)
 =\mu_*\mathcal O_Y\bigl(K_{Y/X}-\lfloor cF\rfloor\bigr),
 \]
-其中下取整逐除子系数进行。它首先是在 \(Y\) 上规定函数应消失多少阶，再把这些条件收回 \(X\)。定义见\cite[Lecture 1, Definition 1.3]{Lazarsfeld2010ShortCourse}；所用对数消解的存在性来自特征零主理想化定理，其选择独立性则由双有理变换公式保证。
+其中下取整逐除子系数进行。具体地，写 \(F=\sum_i a_iE_i\)、\(K_{Y/X}=\sum_i b_iE_i\)，对所有素除子补上未出现的零系数，则一个有理函数 \(u\) 属于所写推前层的局部条件为
+\[
+\operatorname{ord}_{E_i}(u\circ\mu)+b_i-\lfloor ca_i\rfloor\ge0,
+\quad\text{即}\quad
+\operatorname{ord}_{E_i}(u\circ\mu)\ge\lfloor ca_i\rfloor-b_i.
+\]
+它首先是在 \(Y\) 上规定函数应消失多少阶，再把这些条件收回 \(X\)。定义见\cite[Lecture 1, Definition 1.3]{Lazarsfeld2010ShortCourse}；所用对数消解的存在性来自特征零主理想化定理，其选择独立性则由双有理变换公式保证。
 
 \begin{theorem}\label{b3:thm:log-resolution-multiplier-independence}
 设 \(X\) 为光滑不可约复代数簇，\(\mathfrak a\subseteq\mathcal O_X\) 为非零凝聚理想层，\(c>0\) 为有理数。\(\mathfrak a\) 有对数消解，且
@@ -59,41 +79,50 @@ S/(f,g)\cong k[\![x]\!]/(x^m),\qquad i_0(f,g)=m.
 \begin{proofsketch}
 存在性采用特征零的主理想化定理：经过有限次沿光滑中心的吹起，理想的总变换成为简单正规交叉除子的可逆理想，且与例外除子的支集同时具有正规交叉。该结果及理想层版本见\cite[Theorem 1.10, Remark 1.18]{BierstoneMilman1997CanonicalResolution}。构造根据局部不变量选择与已有例外除子正规交叉的光滑中心，吹起后用变换后的不变量继续选择中心，直至理想成为所需的单项式形状。中心选择的相容性与有限终止所用的不变量性质，是\cite[Theorem 1.14, Remark 1.18]{BierstoneMilman1997CanonicalResolution}所建立的深层结论。
 
-先说明所定义的推前层确实为 \(\mathcal O_X\) 的子层。设 \(u\) 为它的一个有理截面。在 \(X\) 任一素除子的泛点附近，固有双有理态射 \(\mu\) 为同构，相对典范除子的系数为零；相应截面条件给出
-\(\operatorname{ord}_D(u)\ge\lfloor c\operatorname{ord}_D(\mathfrak a)\rfloor\ge0\)。所以 \(u\) 在 \(X\) 的所有余维一处无极点。光滑 \(X\) 正规，其正则函数环为这些高度一赋值环的交，故 \(u\) 是正则函数。
+先说明所定义的推前层确实为 \(\mathcal O_X\) 的子层。这里使用双有理几何的一个标准事实：对 Noether 正规目标与约化源，固有双有理态射在目标每个余维一泛点的某个邻域上为同构。当前 \(X,Y\) 光滑，满足这些条件。设 \(u\) 为推前层的一个有理截面。在 \(X\) 任一素除子的泛点附近，\(\mu\) 因而为同构，相对典范除子的系数为零；相应截面条件给出
+\(\operatorname{ord}_D(u)\ge\lfloor c\operatorname{ord}_D(\mathfrak a)\rfloor\ge0\)。所以 \(u\) 在 \(X\) 的所有余维一处无极点。光滑 \(X\) 正规，在任一仿射开集上应用\cref{b3:thm:normal-height-one-intersection}，其正则函数环为这些高度一赋值环的交，故 \(u\) 是正则函数。
 
-独立性是\cite[Lecture 1, Proposition 1.6]{Lazarsfeld2010ShortCourse}的结论。用解析方法解释时，要同时采用该文 Proposition 1.8 的解析—代数比较定理：按局部可积性定义的解析乘数理想，是上述代数乘数理想的解析化；其除子形式的双有理变换公式见 Lemma 1.9。下面的坐标计算说明可积条件怎样给出定义中的除子系数。
+代数乘数理想的选择独立性采用\cite[Lecture 1, Proposition 1.6]{Lazarsfeld2010ShortCourse}。用解析方法理解这项结论时，还要采用该文 Proposition 1.8 的解析—代数比较定理：按局部可积性定义的解析乘数理想，是上述代数乘数理想的解析化；其除子形式的双有理变换公式见 Lemma 1.9。下面的一变量积分计算解释除子不等式的来源；它本身不代替这些比较与变换定理的证明。
 
 设 \(f_1,\ldots,f_r\) 为 \(\mathfrak a\) 的局部生成元。对于一个正则函数 \(u\)，考虑
 \[
 \frac{|u|^2}{(|f_1|^2+\cdots+|f_r|^2)^c}
 \]
-是否在各点附近可积。更换有限生成集只把分母乘上局部上下有正界的因子，故该条件不变。在任一对数消解的坐标图中，\(f_j\circ\mu\) 的共同因子是 \(z_1^{a_1}\cdots z_l^{a_l}\)，剩余因子共同生成单位理想；Jacobian 的消失阶 \(b_i\) 正是 \(K_{Y/X}\) 的系数。换元后，被积式相当于
+是否在各点附近可积。更换有限生成集只把分母乘上局部上下有正界的因子，故该条件不变。在任一对数消解的坐标图中，\(f_j\circ\mu\) 的共同因子是 \(z_1^{a_1}\cdots z_l^{a_l}\)，剩余因子共同生成单位理想；Jacobian 的消失阶 \(b_i\) 正是 \(K_{Y/X}\) 的系数。复变量换元的体积因子是 Jacobian 绝对值的平方，贡献 \(\prod_i|z_i|^{2b_i}\)；分母的共同因子则贡献 \(\prod_i|z_i|^{-2ca_i}\)。因此换元后的被积式相当于
 \( |u\circ\mu|^2\cdot\prod_i|z_i|^{2(b_i-ca_i)}\)。
 
 一变量积分 \(\int_0^\varepsilon r^{2t+1}\,\mathrm{d}r\) 有限当且仅当 \(t>-1\)。逐变量应用，得到可积性恰好要求
 \[
 \operatorname{ord}_{z_i=0}(u\circ\mu)
-\ge\lfloor ca_i\rfloor-b_i\qquad\text{对所有 }i.
+\ge\lfloor ca_i\rfloor-b_i\qquad\text{对所有}\;i.
 \]
-这正是 \(u\) 属于所写推前理想的条件。可积性是在 \(X\) 的解析邻域上定义的，不依赖消解选择；借助上述解析—代数比较与双有理变换定理，便得到代数乘数理想的选择独立性。
+这正是 \(u\) 属于所写推前理想的条件。可积性原本在 \(X\) 的解析邻域上定义，不依赖消解选择，所以坐标计算说明了独立性的解析含义；把它与代数推前层识别，仍须上述解析—代数比较与双有理变换定理。
 \end{proofsketch}
 
 \begin{example}\label{b3:exm:snc-multiplier-ideal}
-设 \(c>0\) 为有理数，\(1\le r\le n\)。在 \(X=\mathbb A_{\mathbb C}^n\) 上，设 \(\mathfrak a=(x_1^{a_1}\cdots x_r^{a_r})\)，\(a_i\ge1\)。坐标超平面已为简单正规交叉，恒等映射就是对数消解，且相对典范除子为零，故
+设 \(c>0\) 为有理数，\(1\le r\le n\)。在 \(X=\mathbb A_{\mathbb C}^n\) 上，设 \(\mathfrak a=(x_1^{a_1}\cdots x_r^{a_r})\)，\(a_i\ge1\)。坐标超平面已为简单正规交叉，恒等映射就是对数消解。恒等映射的 Jacobian 为一，所以 \(K_{X/X}=0\)；令 \(F=\sum_i a_i(x_i=0)\)，便有 \(\mathcal J(\mathfrak a^c)=\mathcal O_X(-\lfloor cF\rfloor)\)，即
 \[
 \mathcal J(\mathfrak a^c)
 =\bigl(x_1^{\lfloor ca_1\rfloor}\cdots x_r^{\lfloor ca_r\rfloor}\bigr).
 \]
-例如 \(\mathfrak a=(x^2y^3)\)、\(c=1/2\) 时得到 \((xy)\)。这个公式针对一个单项式生成的主理想，不能直接把一个多生成元单项式理想中的各指数分别取整；后者需要考虑整体指数集合。
+例如 \(\mathfrak a=(x^2y^3)\)、\(c=1/2\) 时得到 \((xy)\)。当 \(0<c<1/3\) 时两个指数都为零，理想为全环；在 \(c=1/3\) 时它变为 \((y)\)，这是第一次变化。这类使乘数理想发生变化的参数，在完整理论中称为\term{跳跃数}[jumping number]。这个公式针对一个单项式生成的主理想，不能直接把一个多生成元单项式理想中的各指数分别取整；后者需要考虑整体指数集合。
 \end{example}
 
-要让相对典范除子实际参与计算，可取 \(X=\mathbb A_{\mathbb C}^2\)、\(\mathfrak a=(x,y)\)，并吹起原点。第一张图为 \(x=u,y=uv\)，于是
+要让相对典范除子实际参与计算，可取 \(X=\mathbb A_{\mathbb C}^2\)、\(\mathfrak a=(x,y)\)。原点的吹起可写成
+\[
+Y=\{((x,y),[s:t])\in\mathbb A^2\times\mathbb P^1:xt=ys\},
+\]
+\(\mu\) 是向 \(\mathbb A^2\) 的投影。它在原点外由 \([s:t]=[x:y]\) 给出逆，故双有理；它是 \(\mathbb A^2\times\mathbb P^1\) 的闭子概形，投影的固有性由\cref{b3:thm:closed-projective-proper}得到。两张仿射图覆盖 \(Y=U_x\cup U_y\)：在 \(s\ne0\) 的 \(U_x\) 上取 \(v=t/s,u=x\)，在 \(t\ne0\) 的 \(U_y\) 上取 \(r=s/t,w=y\)，于是
+\[
+U_x:\quad x=u,\ y=uv;\qquad
+U_y:\quad x=rw,\ y=w.
+\]
+交叠处 \(v,r\ne0\)，黏合公式为 \(r=v^{-1}\)、\(w=uv\)，或反过来 \(v=r^{-1}\)、\(u=rw\)。两张图都是仿射平面，所以 \(Y\) 光滑；例外纤维 \(E\) 为 \(\mathbb P^1\)，在两图分别由 \(u=0\)、\(w=0\) 定义。第一张图上有
 \[
 (x,y)\mathcal O_Y=(u),\qquad
-\mathrm{d}x\wedge\mathrm{d}y=\mathrm{d}u\wedge(v\,\mathrm{d}u+u\,\mathrm{d}v)=u\,\mathrm{d}u\wedge\mathrm{d}v.
+\mathrm{d}x\wedge\mathrm{d}y=\mathrm{d}u\wedge(v\cdot\mathrm{d}u+u\cdot\mathrm{d}v)=u\cdot\mathrm{d}u\wedge\mathrm{d}v.
 \]
-第二张图 \(x=rw,y=w\) 给出同样的消失阶。例外除子 \(E\) 在第一张图由 \(u=0\) 定义，故理想的总变换为 \(\mathcal O_Y(-E)\)，而 Jacobian 说明 \(K_{Y/X}=E\)。这是一个对数消解，因而
+第二张图有 \((x,y)\mathcal O_Y=(w)\) 及 \(\mathrm{d}x\wedge\mathrm{d}y=w\cdot\mathrm{d}r\wedge\mathrm{d}w\)，给出同样的消失阶。因此理想的总变换为 \(\mathcal O_Y(-E)\)，即 \(F=E\)，而 Jacobian 说明 \(K_{Y/X}=E\)。光滑除子 \(E\) 已是简单正规交叉，这是一个对数消解，因而
 \[
 \mathcal J((x,y)^c)
 =\mu_*\mathcal O_Y\bigl((1-\lfloor c\rfloor)E\bigr)
@@ -104,9 +133,45 @@ S/(f,g)\cong k[\![x]\!]/(x^m),\qquad i_0(f,g)=m.
 \subsection{非 Cohen--Macaulay 环的多次数对偶}
 \label{b3:subsec:C04:03}
 
-\chapref{b3:ch:22}的局部对偶给出另一种信息。给定 \(n\) 维完备正则局部环 \(S\) 与非零商 \(R=S/I\)，\cref{b3:thm:regular-local-duality}已经给出
+\chapref{b3:ch:22}的局部对偶给出另一种信息。设 \((S,\mathfrak n,k)\) 为 \(n\) 维交换完备 Noether 正则局部环，\(R=S/I\ne0\)，\(\mathfrak m=\mathfrak nR\)，并记 \(D_S(-)=\operatorname{Hom}_S(-,E_S(k))\)。\cref{b3:thm:regular-local-duality}已经给出
 \[
 D_S\bigl(H_{\mathfrak m}^i(R)\bigr)
 \cong\operatorname{Ext}_S^{n-i}(R,S).
 \]
-若 \(R\) 为维数 \(d\) 的 CM 环，右侧仅在 \(n-d\) 次非零，典范模便足以承载信息。非 CM 时可能有多个非零次数；\cref{b3:def:regular-cover-dual-complex}用整个对偶复形把它们保存下来。低次局部上同调需要相应次数的 Ext 与之对偶，整个复形还保留这些次数之间的联系。这里的模型以给定正则局部覆盖为基础；一般环上对偶复形的存在性属于更进一步的对偶理论。
+若 \(R\) 为维数 \(d\) 的 CM 环，右侧仅在 \(n-d\) 次非零，典范模便足以承载信息。非 CM 时可能有多个非零次数；\cref{b3:def:regular-cover-dual-complex}用整个对偶复形把它们保存下来。
+
+\ProseParagraphBreak
+取任意域 \(k\)，令 \(S=k[\![x,y]\!]\)、\(R=S/(x^2,xy)\)、\(\mathfrak m=(x,y)R\)。这是\subsecref{b3:subsec:2201:03}与\secref{b3:sec:2204}已计算的模型。每个元素唯一写成 \(h(y)+ax\)，其中 \(h(y)\in k[\![y]\!]\)、\(a\in k\)；\(x\) 被 \(\mathfrak m\) 零化，倒置 \(y\) 后消失，而倒置幂零元 \(x\) 得到零环。因此关于 \(x,y\) 的 Čech 复形只剩 \(R\to R_y=k(\!(y)\!)\)，映射把 \(h(y)+ax\) 送到 \(h(y)\)。于是
+\[
+\begin{aligned}
+H^0_{\mathfrak m}(R)&=kx\cong k,\\
+H^1_{\mathfrak m}(R)&=k(\!(y)\!)/k[\![y]\!],\\
+H^i_{\mathfrak m}(R)&=0\quad(i\ge2).
+\end{aligned}
+\]
+环 \(R\) 的维数为一，且每个极大理想元素都零化非零的 \(x\)，所以深度为零，它确实不是 CM 环。
+
+\ProseParagraphBreak
+第22章的自由消解为
+\[
+0\longrightarrow S\xrightarrow{\binom{-y}{x}}S^2
+\xrightarrow{(x^2\ \ xy)}S\longrightarrow R\longrightarrow0.
+\]
+取 \(S\) 对偶，得到次数 \(0,1,2\) 上的复形
+\[
+C^\bullet:\quad
+S\xrightarrow{\mathrm{d}_1^{\mathsf T}=\binom{x^2}{xy}}S^2
+\xrightarrow{\mathrm{d}_2^{\mathsf T}=(-y\ \ x)}S.
+\]
+第一映射为单射。若 \(-ya+xb=0\)，在 \(S\) 中模 \(x\) 得 \(a\in xS\)，再消去 \(x\) 得 \((a,b)=c(x,y)\)。所以一次核为 \(S(x,y)\)，前一像为 \(xS(x,y)\)；二次余核为 \(S/(x,y)\)。这给出
+\[
+\begin{aligned}
+H^0(C^\bullet)&=0,\\
+H^1(C^\bullet)&=\operatorname{Ext}_S^1(R,S)\cong S/(x),\\
+H^2(C^\bullet)&=\operatorname{Ext}_S^2(R,S)\cong k.
+\end{aligned}
+\]
+局部对偶因此将 \(H^1_{\mathfrak m}(R)\) 与 \(\operatorname{Ext}_S^1(R,S)\) 配对，将 \(H^0_{\mathfrak m}(R)\) 与 \(\operatorname{Ext}_S^2(R,S)\) 配对。典范模 \(\omega_R=\operatorname{Ext}_S^1(R,S)\cong S/(x)\) 只记录其中一次，漏掉嵌入于闭点的有限长度部分 \(kx\) 的对偶。
+
+\ProseParagraphBreak
+归一化对偶模型是 \(C^\bullet[2]\)，上述两个非零上同调分别位于次数 \(-1\) 与零。各次 Ext 是这个复形的上同调模，知道它们各自同构于哪些模，还没有给出代表复形的微分，也不能一般据此确定整个复形的拟同构类型；不同次数之间的扩张资料仍须在复形中保存。这里已显式给出两个微分，因而比单列 \(S/(x)\) 与 \(k\) 保留了更多结构。这个模型以给定正则局部覆盖为基础；一般环上对偶复形的存在性属于更进一步的对偶理论。

@@ -11,7 +11,8 @@
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 商去正则序列同时降低深度与模维数；商环与原环下的支集自然对应
-% * 用支集中素链拼接证明 CM 性局部化；用平坦张量与上同调交换证明极大理想进完备化保持深度
+% * 用支集中素链拼接和深度不等式证明 CM 性局部化及支集维数等式；区分所有极大理想处检验与稠密开集检验
+% * 用各项有限秩自由消解、Hom 基变换及平坦张量与上同调交换证明极大理想进完备化保持深度，忠实性反映零性
 % * 正则局部环为 CM 环；非局部 CM 性只须检验所有极大理想
 %
 
@@ -21,21 +22,26 @@
 \begin{theorem}\label{b3:thm:cm-regular-quotient}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模，\(r\ge0\) 为整数，\(x_1,\ldots,x_r\in\mathfrak m\) 为 \(M\) 正则序列。令 \(I=(x_1,\ldots,x_r)\)、\(\overline M=M/IM\)。则
 \[
-M\text{ 为 CM 模}\quad\Longleftrightarrow\quad
-\overline M\text{ 为 CM 模},
+M\;\text{为 CM 模}\quad\Longleftrightarrow\quad
+\overline M\;\text{为 CM 模},
 \qquad \dim\overline M=\dim M-r.
 \]
-右边既可把 \(\overline M\) 看成 \(R\) 模，也可看成 \(R/(x_1,\ldots,x_r)\) 模。
+右边既可把 \(\overline M\) 看成 \(R\) 模，也可看成 \(R/(x_1,\ldots,x_r)\) 模。更一般地，对任意非零有限生成的 \(R\) 模 \(L\) 及理想 \(J\subseteq\operatorname{Ann}_RL\)，\(L\) 作为 \(R\) 模与作为 \(R/J\) 模的深度、维数及 CM 性均相同。
 \end{theorem}
 \begin{proof}
-各个逐次商非零，因为它们有限生成，且所有元素属于极大理想，Nakayama 引理适用。对每一步，\cref{b3:cor:regular-quotient-depth}使深度恰减一，\cref{b3:prop:regular-quotient-dimension}使维数恰减一，故差 \(\dim M-\operatorname{depth}M\) 不变。
-
-\(I\overline M=0\)，所以 \(R\) 的作用通过 \(R/I\) 分解，两种作用给出相同的子模。素理想对应
+逐次商去一个正则元素时，深度与维数同步下降，所以只需比较它们的差，并确认每一步的商仍非零。设当前逐次商为 \(N\ne0\)，下一元素为 \(x\in\mathfrak m\)。若 \(N/xN=0\)，则 \(N=xN\)，Nakayama 引理给出 \(N=0\)，矛盾。因此各个逐次商非零。对每一步，\cref{b3:cor:regular-quotient-depth}使深度恰减一，\cref{b3:prop:regular-quotient-dimension}使维数恰减一，故
 \[
-\operatorname{Spec}(R/I)\xrightarrow{\sim}V(I)\subseteq\operatorname{Spec}R,
-\qquad \mathfrak p/I\longmapsto\mathfrak p
+\dim\overline M-\operatorname{depth}_R\overline M
+=\dim M-\operatorname{depth}_RM.
 \]
-是保持包含关系的自然同胚，并把 \(\overline M\) 在两种底环下的支集对应起来，所以模维数相同。来自 \(\mathfrak m\) 的元素和它在 \(\mathfrak m/I\) 中的像作用为同一个乘法算子；逐次商也不改变。因此正则序列在取像和提升时保持正则性，两种底环下的深度也相同。
+这个差为零恰好表示 CM 性，因而商去正则序列既不会消除原有的差，也不会产生新的差。
+
+最后比较零化理想取商前后的底环。对 \(J\subseteq\operatorname{Ann}_RL\)，\(R\) 的作用通过 \(R/J\) 分解，两种作用给出相同的子模。素理想对应
+\[
+\operatorname{Spec}(R/J)\xrightarrow{\sim}V(J)\subseteq\operatorname{Spec}R,
+\qquad \mathfrak p/J\longmapsto\mathfrak p
+\]
+是保持包含关系的自然同胚，并把 \(L\) 在两种底环下的支集对应起来，所以模维数相同。来自 \(\mathfrak m\) 的元素和它在 \(\mathfrak m/J\) 中的像作用为同一个乘法算子；逐次商也不改变。因此正则序列在取像和提升时保持正则性，两种底环下的深度也相同。取 \(L=\overline M\)、\(J=I\)，就得到正则商在两种底环下的相同结论。
 \end{proof}
 
 非零因子假设不能删除。设 \(k\) 为域，取 \(R=k[x,y]_{(x,y)}/(x^2,xy)\)，则商去 \(x\) 后得到正则的一维局部环 \(k[y]_{(y)}\)，而原环的非零元 \(x\) 被整个极大理想零化，深度为零。这时商环的 CM 性不能反映原环的 CM 性。
@@ -44,9 +50,15 @@ M\text{ 为 CM 模}\quad\Longleftrightarrow\quad
 \label{b3:subsec:1902:02}
 
 \begin{theorem}\label{b3:thm:cm-localization}
-设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模且为 CM 模。对每个 \(\mathfrak p\in\operatorname{Supp}_RM\)，\(M_{\mathfrak p}\) 都是 \(R_{\mathfrak p}\) 上的 CM 模。更一般地，设 \(A\) 为交换 Noether 环，\(N\) 为有限生成的 \(A\) 模，\(S\subseteq A\) 为乘法集；若 \(N_{\mathfrak n}\) 对每个极大理想 \(\mathfrak n\subseteq A\) 都是 CM 模，则 \(N\) 为 CM 模，且 \(S^{-1}N\) 在 \(S^{-1}A\) 上仍为 CM 模。
+设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模且为 CM 模。对每个 \(\mathfrak p\in\operatorname{Supp}_RM\)，\(M_{\mathfrak p}\) 都是 \(R_{\mathfrak p}\) 上的 CM 模，并且
+\[
+\dim_RM=\dim_{R_{\mathfrak p}}M_{\mathfrak p}+\dim(R/\mathfrak p).
+\]
+更一般地，设 \(A\) 为交换 Noether 环，\(N\) 为有限生成的 \(A\) 模，\(S\subseteq A\) 为乘法集；若 \(N_{\mathfrak n}\) 对每个极大理想 \(\mathfrak n\subseteq A\) 都是 CM 模，则 \(N\) 为 CM 模，且 \(S^{-1}N\) 在 \(S^{-1}A\) 上仍为 CM 模。
 \end{theorem}
 \begin{proof}
+素链拼接给出局部维数与 \(\dim R/\mathfrak p\) 之和的上界，深度局部化不等式给出相应的下界；CM 假设使两边相遇，于是同时得到局部化后的 CM 性和维数等式。
+
 有限生成性给出 \(\operatorname{Supp}_RM=V(\operatorname{Ann}_RM)\)，因此每个包含 \(\mathfrak p\) 的素理想仍在支集中。在 \(\operatorname{Supp}_{R_{\mathfrak p}}M_{\mathfrak p}\) 中取一条长度为 \(\dim M_{\mathfrak p}\)、以 \(\mathfrak pR_{\mathfrak p}\) 为末项的链，收缩到 \(R\) 后得到支集中止于 \(\mathfrak p\) 的链。又因 \(R/\mathfrak p\) 是局部整环，可取一条长度为 \(\dim R/\mathfrak p\)、从零理想到 \(\mathfrak m/\mathfrak p\) 的链；提升后得到从 \(\mathfrak p\) 到 \(\mathfrak m\) 的链，其各项也在支集中。把这两条链在 \(\mathfrak p\) 处拼接，便得
 \[
 \dim M_{\mathfrak p}+\dim R/\mathfrak p\le\dim M.
@@ -58,25 +70,35 @@ M\text{ 为 CM 模}\quad\Longleftrightarrow\quad
 \le\dim M_{\mathfrak p}+\dim R/\mathfrak p
 \le\dim M.
 \]
-所以所有不等式都是等式，尤其局部化后的深度等于维数。一般情形中，对 \(\mathfrak p\in\operatorname{Supp}_AN\)，选极大理想 \(\mathfrak n\supseteq\mathfrak p\)，则 \(N_{\mathfrak n}\ne0\) 为 CM 模。在 \(A_{\mathfrak n}\) 中进一步局部化到 \(\mathfrak pA_{\mathfrak n}\)，所得环和模分别为 \(A_{\mathfrak p}\) 和 \(N_{\mathfrak p}\)，已证结论因而适用。局部化环的素点又与原环中避开乘法集的素点对应，故 \(S^{-1}N\) 在其支集各点也为 CM 模。
+所以所有不等式都是等式，尤其局部化后的深度等于维数，并且所述维数公式成立。一般情形中，对 \(\mathfrak p\in\operatorname{Supp}_AN\)，选极大理想 \(\mathfrak n\supseteq\mathfrak p\)，则 \(N_{\mathfrak n}\ne0\) 为 CM 模。在 \(A_{\mathfrak n}\) 中进一步局部化到 \(\mathfrak pA_{\mathfrak n}\)，所得环和模分别为 \(A_{\mathfrak p}\) 和 \(N_{\mathfrak p}\)，已证结论因而适用。局部化环的素点又与原环中避开乘法集的素点对应，故 \(S^{-1}N\) 在其支集各点也为 CM 模。
 \end{proof}
+
+检验所有极大理想处的局部化足够，检验一个稠密开集却可能遗漏 CM 性失败的点。\cref{b3:prop:cm-associated-dimensions}中的 \(R_0=k[x,y]_{(x,y)}\)、\(\mathfrak m_0=(x,y)R_0\) 已给出这样的反例：\(\mathfrak m_0\) 的深度为一、维数为二，但每个非极大素点处的局部化都是 CM 模。开集
+\[
+\operatorname{Spec}R_0\setminus\{\mathfrak m_0\}=D(x)\cup D(y)
+\]
+包含整环 \(R_0\) 的一般点，因而稠密；\(\mathfrak m_0\) 在这里处处为 CM 模，失败仍留在被删去的闭点。
 
 \begin{theorem}\label{b3:thm:cm-completion}
 设 \((R,\mathfrak m)\) 为交换 Noether 局部环，\(M\ne0\) 为有限生成的 \(R\) 模。记 \(\widehat R\) 和 \(\widehat M\) 为极大理想进完备化，则
 \[
 \operatorname{depth}_{\widehat R}\widehat M=\operatorname{depth}_RM,
-\qquad M\text{ 为 CM 模}\Longleftrightarrow\widehat M\text{ 为 CM 模}.
+\qquad M\;\text{为 CM 模}\Longleftrightarrow\widehat M\;\text{为 CM 模}.
 \]
 \end{theorem}
 \begin{proof}
+由深度的 Ext 刻画，目标是比较完备化前后 Ext 的首次非零次数。为此，将剩余域的自由消解张量到完备环，利用有限秩逐项比较 Hom，再用平坦性比较上同调，最后用忠实性检测非零项。
+
 令 \(k=R/\mathfrak m\)。由\cref{b3:thm:completion-flat,b3:prop:completed-local-ring}，\(\widehat R\) 是 Noether 局部环，极大理想为 \(\mathfrak m\widehat R\)，且 \(R\to\widehat R\) 忠实平坦，剩余域仍为 \(k\)。\cref{b3:thm:completion-tensor}给出 \(\widehat M\cong M\otimes_R\widehat R\)，故 \(\widehat M\) 是非零有限生成的 \(\widehat R\) 模。
 
-取 \(k\) 的自由消解 \(F_\bullet\to k\)，其中各项均为有限秩自由模；这样的消解可能无限延伸，但逐次取核时的 Noether 性保证每项秩有限。\(\widehat R\) 的平坦性使张量后的复形仍消解 \(k\otimes_R\widehat R\cong k\)。有限秩保证逐项有
+取 \(k\) 的自由消解 \(F_\bullet\to k\)，其中各项均为有限秩自由模。构造时先用有限秩自由模满射到有限生成的 \(k\)，其核由 Noether 性仍有限生成，再重复这一过程。消解可能无限延伸，但每项秩有限。\(\widehat R\) 的平坦性使张量后的复形仍消解 \(k\otimes_R\widehat R\cong k\)。有限秩保证逐项有与微分相容的自然同构
 \[
 \operatorname{Hom}_R(F_i,M)\otimes_R\widehat R
 \cong\operatorname{Hom}_{\widehat R}(F_i\otimes_R\widehat R,\widehat M).
 \]
-令 \(C^\bullet=\operatorname{Hom}_R(F_\bullet,M)\)。因为 \(-\otimes_R\widehat R\) 是正合函子，它保持核、像及其商，从而对每个 \(i\ge0\) 有自然同构
+具体地，若 \(F_i\cong R^{a_i}\)，两边均为 \(\widehat M^{a_i}\)，这里只需张量积与有限直和交换。若换成无限秩自由模，Hom 会产生无限乘积，而张量积一般不与无限乘积交换；Noether 性在这里保证了所需的有限性。
+
+令 \(C^\bullet=\operatorname{Hom}_R(F_\bullet,M)\)。平坦性还说明 \(-\otimes_R\widehat R\) 是正合函子，它保持核、像及其商，从而对每个 \(i\ge0\) 有自然同构
 \[
 H^i(C^\bullet)\otimes_R\widehat R
 \cong H^i(C^\bullet\otimes_R\widehat R).
@@ -86,7 +108,11 @@ H^i(C^\bullet)\otimes_R\widehat R
 \operatorname{Ext}_R^i(k,M)\otimes_R\widehat R
 \cong\operatorname{Ext}_{\widehat R}^i(k,\widehat M).
 \]
-忠实平坦性检测左侧是否为零。由\cref{b3:thm:depth-ext}，两边首次非零的次数相同，所以深度相同。\cref{b3:thm:completion-dimension}已证明有限生成模的维数也相同，遂得 CM 性的等价。
+前面传递消解的正合性和比较上同调只使用平坦性。忠实性则保证，对任意 \(R\) 模 \(E\)，
+\[
+E\otimes_R\widehat R=0\quad\Longleftrightarrow\quad E=0.
+\]
+将其用于各个 \(\operatorname{Ext}_R^i(k,M)\)，可知两环下 Ext 的零项和非零项出现于相同次数。由\cref{b3:thm:depth-ext}，首次非零次数相同便给出深度相同。\cref{b3:thm:completion-dimension}已证明有限生成模的维数也相同，遂得 CM 性的等价。
 \end{proof}
 
 这里使用的完备化是 Noether 局部环的极大理想进完备化。若在任意非局部环中选一个理想完备化，映射未必忠实；它可能完全丢掉某些素点，因而不能不加条件地用完备环检测原环的全部 CM 性。

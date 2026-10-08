@@ -31,21 +31,46 @@ f_{ii}=1,\qquad f_{jk}f_{ij}=f_{ik}\quad(i\le j\le k)
 \]
 则称这些对象与态射组成一个\term[zhengxiangxitong]{正向系统}[direct system]。其余极限也称为\term[zhengxiangjixian]{正向极限}[direct limit]，记为 \(\varinjlim_i M_i\)。
 \end{definition}
+\symidx{\(\varinjlim_i M_i\)：正向系统的余极限}
 
-偏序范畴中两个给定对象之间至多有一条态射，所以滤过定义中的第二个条件自动成立。对于一般范畴，这个条件不能省略：它用来协调同一数据被两种不同路径送到同一对象时产生的差别。
+偏序范畴中两个给定对象之间至多有一条态射，所以滤过定义中的第二个条件自动成立。对于一般范畴，这个条件不能省略：它用来协调同一数据被两种不同路径送到同一对象时产生的差别。例如，由两个对象与两条不同的非恒等态射组成的范畴
+\[
+\begin{tikzcd}[column sep=large]
+0\arrow[r,shift left=0.6ex,"u"]\arrow[r,shift right=0.6ex,"v"']&1
+\end{tikzcd}
+\]
+满足共同目标条件，因为两个对象都能映到 \(1\)。但从 \(1\) 出发只有恒等态射，因而无法通过后复合使 \(u,v\) 相等；它不满足第二条条件，并不是滤过范畴。
 
 \begin{lemma}[有限数据的共同比较]\label{b4:lem:filtered-finite-data}
 设 \(J\) 为滤过范畴。从 \(J\) 中指定有限个对象以及它们之间有限条态射后，存在一个对象 \(k\) 及从这些对象到 \(k\) 的态射，使每条指定态射对应的三角形交换。
 \end{lemma}
 \begin{proof}
-先反复使用共同上界条件，把所有指定对象映到一个对象 \(k_0\)。对一条指定态射 \(\alpha:i\rightarrow j\)，从 \(i\) 到 \(k_0\) 有两条需要相等的态射：已选的 \(i\rightarrow k_0\) 与经过 \(j\) 的复合。滤过的第二条件给出 \(k_0\rightarrow k_1\)，使二者相等。把所有已选映射后复合到 \(k_1\)，先前已成立的等式仍然成立。对剩余的有限条态射重复此步即可。没有指定对象时，使用 \(J\) 非空即可。
+先反复使用共同目标条件，把所有指定对象映到一个对象 \(k_0\)，记已选的映射为 \(a_i:i\rightarrow k_0\)。对一条指定态射 \(\alpha:i\rightarrow j\)，要协调的是从 \(i\) 到 \(k_0\) 的两条态射 \(a_i\) 与 \(a_j\alpha\)：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+i\arrow[r,"\alpha"]\arrow[dr,"a_i"']&j\arrow[d,"a_j"]&\\
+&k_0\arrow[r,"w"]&k_1.
+\end{tikzcd}
+\]
+其中三角形起初未必交换。滤过的第二条件给出 \(w:k_0\rightarrow k_1\)，使 \(wa_i=wa_j\alpha\)。把所有已选映射都后复合 \(w\)，这一条件便成立，先前已成立的等式也仍然成立。对剩余的有限条态射重复此步即可。没有指定对象时，使用 \(J\) 非空即可。
 \end{proof}
 
 \begin{proposition}[滤过余极限的元素判据]\label{b4:prop:filtered-colimit-elements}
 设 \(J\) 为滤过小范畴，\(D:J\rightarrow\mathbf{Set}\) 为图表。余极限的每个元素可由某个 \(x\in D(i)\) 表示。两个代表 \(x\in D(i)\)、\(y\in D(j)\) 给出同一元素，当且仅当存在 \(u:i\rightarrow k\)、\(v:j\rightarrow k\)，使 \(D(u)x=D(v)y\)。特别地，若 \(x,y\in D(i)\)，则它们在余极限中相等，当且仅当存在一个态射 \(w:i\rightarrow k\)，使 \(D(w)x=D(w)y\)。
 \end{proposition}
 \begin{proof}
-在不交并上，把有这样一个共同目标的两个代表记为 \(x\sim y\)。反身性与对称性直接成立。为证传递性，设 \(x,y\) 在对象 \(k\) 中相等，\(y,z\) 在对象 \(l\) 中相等。先把 \(k,l\) 映到共同对象 \(t\)。此时从 \(y\) 所在对象到 \(t\) 有两条态射；再后复合某个 \(t\rightarrow t'\) 使它们相等，就得到 \(x,z\) 在 \(t'\) 中相等。因此 \(\sim\) 是等价关系。
+在不交并上，把有这样一个共同目标的两个代表记为 \(x\sim y\)。反身性与对称性直接成立。为证传递性，设 \(x\in D(i)\)、\(y\in D(j)\)、\(z\in D(r)\)，并有
+\[
+\begin{gathered}
+u:i\rightarrow k,\quad v:j\rightarrow k,\qquad D(u)x=D(v)y,\\
+u':j\rightarrow l,\quad v':r\rightarrow l,\qquad D(u')y=D(v')z.
+\end{gathered}
+\]
+先用第一个滤过条件选取 \(a:k\rightarrow t\)、\(b:l\rightarrow t\)。从 \(j\) 到 \(t\) 的两条路径 \(av\) 与 \(bu'\) 未必相等，故再用第二个条件选取 \(w:t\rightarrow t'\)，使 \(wav=wbu'\)。于是
+\[
+D(wau)x=D(wav)y=D(wbu')y=D(wbv')z.
+\]
+态射 \(wau:i\rightarrow t'\) 与 \(wbv':r\rightarrow t'\) 给出 \(x\sim z\) 的见证，因此 \(\sim\) 是等价关系。
 
 这个关系包含每个图表关系 \(x\sim D(\alpha)x\)。反过来，若两个代表在共同目标中相等，则它们都由图表关系与那个共同像等价，所以 \(\sim\) 恰好是一般余极限公式中的生成等价关系。最后，当两个代表同属 \(D(i)\) 时，共同目标判据可能先给出两条不同的态射 \(u,v:i\rightarrow k\)。将它们后复合为同一条态射，即得到最后一个结论。
 \end{proof}
@@ -56,12 +81,22 @@ f_{ii}=1,\qquad f_{jk}f_{ij}=f_{ik}\quad(i\le j\le k)
 若 \(M_i\) 是同一模 \(M\) 的有向递增子模族，则其正向极限为 \(\bigcup_iM_i\)：相容同态族在这个并上逐元定义，交叠处的一致性由共同上界保证。
 
 \ProseParagraphBreak
-整数模的系统
+对素数 \(p\)，整数模的系统
 \[
 \mathbb Z\xrightarrow{\times p}\mathbb Z
 \xrightarrow{\times p}\mathbb Z\xrightarrow{\times p}\cdots
 \]
-以 \(n=0,1,\ldots\) 编号，其正向极限为 \(\mathbb Z[1/p]\)。第 \(n\) 项的 \(a\) 对应 \(a/p^n\)，该对应与过渡映射相容；两个分数相等，当且仅当它们在某个更大指标处的整数代表相等。这也直接验证了其泛性质。
+以 \(n=0,1,\ldots\) 编号，其正向极限为 \(\mathbb Z[1/p]\)。第 \(n\) 项的 \(a\) 对应 \(a/p^n\)，该对应与过渡映射相容；两个分数相等，当且仅当它们在某个更大指标处的整数代表相等。为验证余极限的泛性质，给定交换群 \(M\) 及同态族 \(\phi_n:\mathbb Z\rightarrow M\)，满足 \(\phi_{n+1}(pa)=\phi_n(a)\)，定义
+\[
+\Phi:\mathbb Z[1/p]\longrightarrow M,\qquad
+\Phi(a/p^n)=\phi_n(a).
+\]
+若 \(a/p^n=b/p^m\)，取 \(\ell\ge n,m\)，则 \(p^{\ell-n}a=p^{\ell-m}b\)。由同态族的相容性，
+\[
+\phi_n(a)=\phi_\ell(p^{\ell-n}a)
+=\phi_\ell(p^{\ell-m}b)=\phi_m(b),
+\]
+故 \(\Phi\) 良定义。把两个分数写到同一分母后，由 \(\phi_\ell\) 的加法性可知 \(\Phi\) 为同态。每个分数都有上述形式，所以与全部结构映射相容的同态只能是 \(\Phi\)，唯一性也成立。
 \end{example}
 
 \subsection{逆极限及其元素描述}
@@ -73,12 +108,13 @@ f_{ii}=1,\qquad f_{jk}f_{ij}=f_{ik}\quad(i\le j\le k)
 设 \(I\) 为非空有向偏序集，\(\mathcal C\) 为范畴。对象 \(M_i\) 及态射 \(\rho_{ij}:M_j\rightarrow M_i\)（\(i\le j\)）若满足
 \(\rho_{ii}=1\)、\(\rho_{ij}\rho_{jk}=\rho_{ik}\)，则称为一个\term[nixiangxitong]{逆向系统}[inverse system]，即图表 \(I^{\mathrm{op}}\rightarrow\mathcal C\)。该图表的极限称为\term[nijixian]{逆极限}[inverse limit]，记为 \(\varprojlim_i M_i\)。
 \end{definition}
+\symidx{\(\varprojlim_i M_i\)：逆向系统的极限}
 
 在集合、群、交换环或模中，逆极限均可写为相容元组：
 \[
 \varprojlim_iM_i=
 \{\,(m_i)\in\prod_iM_i\mid
-\rho_{ij}(m_j)=m_i\text{ 对所有 }i\le j\,\}.
+\rho_{ij}(m_j)=m_i\;\text{对所有}\;i\le j\,\}.
 \]
 代数运算逐分量进行。投影映射给出一个锥，而任何其他锥只能把元素送到其全部分量组成的元组，因而上述公式满足泛性质。
 
@@ -98,6 +134,7 @@ a_n\equiv c_0+c_1p+\cdots+c_{n-1}p^{n-1}\pmod{p^n}.
 \]
 先由 \(a_1\) 决定 \(c_0\)，再由相容性逐项决定下一位即可。这里的无穷数字首先表达相容剩余类，不涉及实数意义下的无穷级数。
 \end{example}
+\symidx{\(\mathbb Z_p\)：\(p\)-进整数环}
 
 \begin{example}[逆极限不保持满射]\label{b4:exm:inverse-limit-not-exact}
 对 \(n\ge1\)，考虑短正合列
@@ -110,7 +147,7 @@ a_n\equiv c_0+c_1p+\cdots+c_{n-1}p^{n-1}\pmod{p^n}.
 0\longrightarrow0\longrightarrow\mathbb Z
 \longrightarrow\mathbb Z_2.
 \]
-最后的映射不是满射。事实上，令 \(b_n\) 为 \(3\) 在
+给定 \((b_n)\in\mathbb Z_2\)，每个 \(b_n\) 单独都能选择整数代表 \(c_n\)。但中间系统的过渡映射是恒等映射，相容提升必须满足 \(c_1=c_2=\cdots\)，也就是由同一个整数代表全部 \(b_n\)。这样的整数未必存在，所以最后的映射不是满射。事实上，令 \(b_n\) 为 \(3\) 在
 \(\mathbb Z/2^n\mathbb Z\) 中的逆元。逆元的唯一性说明 \((b_n)\) 相容。若它来自整数 \(b\)，则 \(3b-1\) 被所有 \(2^n\) 整除，故 \(3b=1\)，矛盾。
 \end{example}
 
@@ -133,7 +170,7 @@ a_n\equiv c_0+c_1p+\cdots+c_{n-1}p^{n-1}\pmod{p^n}.
 \begin{proof}
 诱导同态逐分量施加 \(u_i\) 与 \(v_i\)。若相容族 \((a_i)\) 满足 \(u_i(a_i)=0\) 对所有 \(i\) 成立，则各 \(u_i\) 的单射性给出 \(a_i=0\)，所以 \(\overline u\) 为单射。由 \(v_iu_i=0\)，还有 \(\operatorname{im}\overline u\subseteq\ker\overline v\)。
 
-反过来，若相容族 \((b_i)\in\varprojlim_iB_i\) 属于 \(\ker\overline v\)，则 \(v_i(b_i)=0\)。各阶段的正合性给出唯一的 \(a_i\in A_i\)，使 \(u_i(a_i)=b_i\)。对 \(i\le j\)，过渡同态的相容性给出
+反过来，若相容族 \((b_i)\in\varprojlim_iB_i\) 属于 \(\ker\overline v\)，则 \(v_i(b_i)=0\)。由 \(\operatorname{im}u_i=\ker v_i\)，存在 \(a_i\in A_i\) 使 \(u_i(a_i)=b_i\)；再由 \(u_i\) 单射，这个原像唯一。对 \(i\le j\)，过渡同态的相容性给出
 \[
 u_i\bigl(\rho^A_{ij}(a_j)\bigr)
 =\rho^B_{ij}\bigl(u_j(a_j)\bigr)
@@ -146,7 +183,7 @@ u_i\bigl(\rho^A_{ij}(a_j)\bigr)
 \subsection{模范畴中的显式公式}
 \label{b4:subsec:0203:03}
 
-模的极限通过方程截取直积，余极限则通过关系商去直和。这两种公式都适用于任意小指标范畴，不要求指标有向。
+模的极限通过方程截取直积，余极限则通过关系商去直和。这正是\cref{b4:thm:limits-products-equalizers}的加性形式：两个同态 \(s,t\) 的等化子是 \(\ker(s-t)\)，余等化子是 \(\operatorname{coker}(s-t)\)。下面的 \(\delta\) 是极限构造中两个直积同态之差，\(d\) 则是余极限构造中两个直和同态之差，把应当相等的两项之差置为零。这两种公式都适用于任意小指标范畴，不要求指标有向。
 
 \begin{proposition}[模的极限与余极限公式]\label{b4:prop:module-limit-formulas}
 设 \(R\) 为含幺环，\(J\) 为小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模图表，记 \(M_j=M(j)\)。以下 \(\iota_j\) 与 \(\iota_\alpha\) 分别表示以对象和态射为指标的直和的结构包含。定义
@@ -170,7 +207,7 @@ d(\iota_\alpha(m))&=\iota_k(M(\alpha)m)-\iota_j(m).
 \]
 其中关系子模为
 \[
-S=\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\mid \alpha:j\rightarrow k\text{ 在 }J\text{ 中},\ m\in M_j\,\bigr\rangle_R.
+S=\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\mid \alpha:j\rightarrow k\;\text{在}\;J\;\text{中},\ m\in M_j\,\bigr\rangle_R.
 \]
 \end{proposition}
 \begin{proof}
@@ -181,7 +218,29 @@ S=\bigl\langle\,\iota_k(M(\alpha)m)-\iota_j(m)\mid \alpha:j\rightarrow k\text{ �
 设 \(R\) 为含幺环，\(J\) 为滤过小范畴，\(M:J\rightarrow R\text{-}\mathbf{Mod}\) 为幺性左 \(R\) 模图表，记 \(M_i=M(i)\)。其模余极限的每个元素均可表示为某个 \(m\in M_i\) 的像。两个代表 \(m\in M_i\)、\(n\in M_j\) 给出同一元素，当且仅当存在 \(u:i\rightarrow k\)、\(v:j\rightarrow k\)，使 \(M(u)m=M(v)n\)。特别地，\(m\in M_i\) 的像为零，当且仅当某个 \(u:i\rightarrow j\) 满足 \(M(u)m=0\)。
 \end{proposition}
 \begin{proof}
-先在底集合的滤过余极限上定义运算。对 \(m\in M_i,n\in M_j\)，取共同目标 \(k\)，把和定义为两个像在 \(M_k\) 中之和的类；标量乘法由 \([m]\mapsto[rm]\) 定义。若改变代表或共同目标，有限数据共同比较引理能把两次计算映到同一对象，并使所需等式同时成立。因此运算与选择无关。全部模公理也只涉及有限多个元素，可送到一个共同对象后由该模中的公理验证。
+先在底集合的滤过余极限上定义运算。对 \(m\in M_i,n\in M_j\)，选 \(u:i\rightarrow k\)、\(v:j\rightarrow k\)，定义
+\[
+[m]+[n]=[M(u)m+M(v)n].
+\]
+若另选 \(u':i\rightarrow l\)、\(v':j\rightarrow l\)，则\cref{b4:lem:filtered-finite-data}给出 \(a:k\rightarrow t\)、\(b:l\rightarrow t\)，使 \(au=bu'\)、\(av=bv'\)。同态的线性性给出
+\[
+M(a)\bigl(M(u)m+M(v)n\bigr)
+=M(b)\bigl(M(u')m+M(v')n\bigr),
+\]
+所以两个共同目标算出的和表示同一个类。
+
+若更换代表为 \(m'\in M_{i'}\)、\(n'\in M_{j'}\)，且 \([m]=[m']\)、\([n]=[n']\)，元素判据分别给出
+\[
+\begin{gathered}
+p:i\rightarrow k_0,\quad p':i'\rightarrow k_0,\qquad M(p)m=M(p')m',\\
+q:j\rightarrow k_1,\quad q':j'\rightarrow k_1,\qquad M(q)n=M(q')n'.
+\end{gathered}
+\]
+选取 \(a:k_0\rightarrow t\)、\(b:k_1\rightarrow t\)，就有
+\[
+M(ap)m+M(bq)n=M(ap')m'+M(bq')n'.
+\]
+由已证明的共同目标无关性，可用 \(t\) 计算两组代表的和，因此更换代表也不改变结果。标量乘法定义为 \(r[m]=[rm]\)；代表在共同目标中的相等，经线性映射仍保持乘以 \(r\) 后的相等，故它也良定义。全部模公理只涉及有限多个元素，可送到一个共同对象后由该模中的公理验证。
 
 所得模接收各 \(M_i\) 的相容线性映射；任意模值余锥在底集合层面诱导的唯一映射保持加法与标量乘法，所以也是模同态。因此这个模就是模范畴的余极限，底集合的元素判据随之成立。零元可在任意对象中取零代表，对同阶段的两个元素使用单个后续态射的判据，即得最后一句。
 \end{proof}

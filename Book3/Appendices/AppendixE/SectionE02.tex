@@ -7,9 +7,10 @@
 微分多项式环含有无限多个导数变量，普通 Noether 性因而失效。特征零下，根微分理想仍有有限性与分解定理；这些结论约束的是保持求导的理想，不能直接套用到任意普通理想。
 
 % 纲要细目（与计划纲要同步）：
-% * 普通 Noether 性与单导子 Ritt–Raudenbush 基定理的区别；极小素理想微分性及根微分分支恒等式；基定理证明概要放在E.3特征集之后，多交换导子形式注明Kolchin的一般结论
-% * 微分代数集、Kolchin 拓扑与微分超越次数；明确工作微分域和所取扩域
-% * 用一组低阶方程说明代数关系、微分关系与常数域变化；代数相容性不替代解析存在、收敛和初值唯一性
+% * 根微分理想、极小素理想微分性及根微分分支恒等式完整证明；正特征给出反例，有限根微分基不等于普通有限生成
+% * 单导子 Ritt–Raudenbush 证明概要归 E.3；多交换导子形式注明 Kolchin 的一般结论及技术输入
+% * 微分代数集与 Kolchin 拓扑注明工作微分域及扩域；用导数族的超越次数增长直接核验两种超越次数的差别
+% * 低阶方程注明系数导子与常数域；代数相容性不替代解析存在、收敛和初值唯一性
 % #### E.2.1 Noether 性与 Ritt–Raudenbush 升链条件
 % #### E.2.2 微分代数集、Kolchin 拓扑与微分超越次数
 % #### E.2.3 低阶微分方程、常数域与解析解
@@ -22,27 +23,36 @@
 (y)\subsetneq(y,y')\subsetneq(y,y',y'')\subsetneq\cdots.
 \]
 它们一般不是微分理想。例如 \(y'\notin(y)\)。由一个集合 \(F\) 生成的最小微分理想记为 \([F]\)，具体就是所有 \(\delta^jf\)（\(f\in F,j\ge0\)）生成的普通理想。
+\symidx{\([F]\)：由集合 \(F\) 生成的微分理想}
 
-\begin{lemma}\label{b3:lem:differential-radical}
+\begin{lemma}\label{b3:lem:differential-radical}\label{b3:lem:E-characteristic-p-warning}
 设 \(A\) 为含 \(\mathbb Q\) 的微分环，\(I\) 为微分理想。则普通根理想 \(\sqrt I\) 也是微分理想。
+
+正特征不能直接采用这个结论。若 \(p\) 为素数，在 \(\mathbb F_p[t]\) 上取 \(\delta t=1\)，则 \((t^p)\) 是微分理想，根理想 \((t)\) 却不是。相应分式域 \(\mathbb F_p(t)\) 的常数域至少包含 \(\mathbb F_p(t^p)\)，严格大于 \(\mathbb F_p\)。
 \end{lemma}
 \begin{proof}
-导子下降到 \(A/I\)，故只须证明导子保持幂零元。若 \(a^n=0\)，反复用 Leibniz 法则展开 \(\delta^n(a^n)=0\)。其中对每个因子恰求导一次的项为 \(n!(\delta a)^n\)，其他项至少有一个因子未经求导，因此属于 \((a)\)。因 \(n!\) 可逆，得 \((\delta a)^n\in(a)\)，再取 \(n\) 次幂得到 \((\delta a)^{n^2}=0\)。
+导子下降到 \(A/I\)，故只须证明导子保持幂零元。若 \(a^n=0\)，选择求导 \(n\) 次，是为了在 \(n\) 个因子中恰好各求导一次。反复用 Leibniz 法则展开 \(\delta^n(a^n)=0\)，这类项合为 \(n!(\delta a)^n\)；其他项中至少有一个因子尚未求导，所以属于 \((a)\)。因 \(n!\) 可逆，得 \((\delta a)^n\in(a)\)，再取 \(n\) 次幂得到 \((\delta a)^{n^2}=0\)。
+
+在正特征例中，\(\delta(t^p)=0\)，所以 \(\delta(t^pg)=t^p\delta(g)\)，理想 \((t^p)\) 稳定。但它的根为 \((t)\)，而 \(\delta t=1\notin(t)\)。分式域中的 \(t^p\) 及其全部有理函数也都被导子零化；\(t^p\) 不是普通常数，得到所述严格包含。这同时说明阶乘可逆及有理函数常数域结论的特征条件不可省略。
 \end{proof}
 
 \begin{lemma}\label{b3:lem:differential-minimal-primes}
 设 \((A,\delta)\) 为交换微分环，\(I\) 为根微分理想。则 \(I\) 的每个极小素理想 \(\mathfrak p\) 都是微分理想，即 \(\delta(\mathfrak p)\subseteq\mathfrak p\)。
 \end{lemma}
 \begin{proof}
-导子下降到约化环 \(B=A/I\)。局部环 \(B_{\mathfrak p/I}\) 只有一个素理想，因为 \(\mathfrak p/I\) 是极小素理想；它又约化，所以唯一素理想为零，因而是域。若 \(a\in\mathfrak p/I\)，则 \(a/1=0\)，故存在 \(s\notin\mathfrak p/I\) 使 \(sa=0\)。在 \(B\) 中求导得 \(s\delta(a)+\delta(s)a=0\)。由于 \(a\in\mathfrak p/I\)，有 \(s\delta(a)\in\mathfrak p/I\)；素性于是给出 \(\delta(a)\in\mathfrak p/I\)。提升回 \(A\) 即得结论。
+导子下降到约化环 \(B=A/I\)。局部化后的素理想对应包含于 \(\mathfrak p/I\) 的素理想；极小性使 \(B_{\mathfrak p/I}\) 只有一个素理想。局部化保持约化性，故这个唯一素理想就是零理想，同时也是极大理想，于是局部环是域。
+
+若 \(a\in\mathfrak p/I\)，则 \(a/1=0\)，故存在 \(s\notin\mathfrak p/I\) 使 \(sa=0\)。在 \(B\) 中求导得 \(s\delta(a)+\delta(s)a=0\)。由于 \(a\in\mathfrak p/I\)，有 \(s\delta(a)\in\mathfrak p/I\)；素性于是给出 \(\delta(a)\in\mathfrak p/I\)。提升回 \(A\) 即得结论。
 \end{proof}
+
+饱和 \(J:H^\infty\) 仍是\chapref{b3:ch:08}中倒置 \(H\) 后收缩的理想。微分计算还须保证求导稳定，并将各个 \(h_j=0\) 的条件连同其导数加入退化分支。下面的恒等式把非零分支与全部退化分支重新合在一起。
 
 \begin{proposition}\label{b3:prop:differential-branch-splitting}
 设 \((A,\delta)\) 为含 \(\mathbb Q\) 的交换微分环，\(J\) 为根微分理想，\(h_1,\ldots,h_t\in A\)，\(t\ge1\)，\(H=\prod_{j=1}^th_j\)。记 \([J,h_j]\) 为包含 \(J\) 与 \(h_j\) 的最小微分理想，则
 \[
 J=(J:H^\infty)\cap\bigcap_{j=1}^t\sqrt{[J,h_j]},
 \qquad
-J:H^\infty=\{f\in A:H^Nf\in J\text{ 对某个 }N\ge0\}.
+J:H^\infty=\{f\in A:H^Nf\in J\;\text{对某个}\;N\ge0\}.
 \]
 各相交项都是根微分理想。
 \end{proposition}
@@ -60,6 +70,19 @@ Ritt 的微分消去理论\footnote{里特（Joseph Fels Ritt，1893-1951），�
 
 证明概要放在\subsecref{b3:subsec:E03:01}的特征集与伪约化之后。有限多个两两交换导子的微分多项式环也满足同一根微分理想升链条件；Kolchin 给出的一般形式见\cite[Section 2.2, Theorem 2.4]{Hubert2003DifferentialSystems}，其证明需使用多重导数的排序与相容性。\footnote{科尔钦（Ellis Robert Kolchin，1916-1991），美国数学家，发展微分代数、微分 Galois 理论和线性代数群理论。}
 
+这里的有限基是有限个微分生成元再取根理想，不能改写为普通理想 \((f_1,\ldots,f_r)\)。即使只有一个微分生成元，\([f]\) 也包括全部 \(\delta^jf\)。普通 Hilbert 基定理已经不适用；证明需要先给特征集定义良基的秩，再把退化分支归入更低秩情形。
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth}X@{}}
+\toprule
+理想的种类 & 本节的有限性结论 \\
+\midrule
+普通理想 & 无限导数变量的上述严格升链表明 ACC 失败 \\
+微分理想 & 包含全部求导后果；根微分基定理没有对这一整类断言 ACC \\
+根微分理想 & 特征零、有限个微分不定元和单导子下满足 ACC，有有限根微分基 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
 结论只针对根微分理想，不能改写成整个微分多项式环是 Noether 环；特征零还用于分离子非零及根理想受导子保持。
 
 \subsection{微分代数集、Kolchin 拓扑与微分超越次数}
@@ -67,18 +90,34 @@ Ritt 的微分消去理论\footnote{里特（Joseph Fels Ritt，1893-1951），�
 
 设 \((K,\delta)\) 为特征零微分域，\(L/K\) 为保持导子的微分域扩张。对 \(F\subseteq K\{y_1,\ldots,y_n\}\) 定义
 \[
-V_L(F)=\{a\in L^n:P(a)=0\text{ 对所有 }P\in F\}.
+V_L(F)=\{a\in L^n:P(a)=0\;\text{对所有}\;P\in F\}.
 \]
 这些集合称为\term{微分代数集}[differential algebraic set]。任意交由合并方程定义，有限并由两组方程的所有两两乘积定义，因为 \(L\) 是域；故它们构成某个拓扑的闭集，这就是\term{Kolchin 拓扑}[Kolchin topology]。
 
 \ProseParagraphBreak
 \(V_L(F)=V_L(\sqrt{[F]})\)，因为微分求值保持导子，而域无非零幂零元。逆向恢复理想时，需要充分多的解；任意给定的 \(L\) 未必有这种性质。例如在 \(K=\mathbb C\) 上指定零导子，方程 \(y'=1\) 在 \(K\) 内无解，却在 \(\mathbb C(t)\) 中有解 \(t\)。不能把“在当前底域没有解”误当成微分理想为全环。
 
+固定 \(L\) 的零点算子一般不能反演根微分理想；微分零点定理需要适当的微分闭扩域，相关对象在\subsecref{b3:subsec:E04:02}介绍。相对于同一系数域 \(K\)，普通多项式也是微分多项式，所以 Kolchin 闭集包括由 \(K\) 系数多项式定义的 Zariski 闭集，所得拓扑比该 Zariski 拓扑更细。
+
 \begin{definition}\label{b3:def:differential-transcendence}
 设 \((L,\delta)/(K,\delta)\) 为带同一导子的微分域扩张，\((a_i)_{i\in I}\) 为 \(L\) 中的元素族。若全部 \(\delta^ja_i\)（\(i\in I,j\ge0\)）在 \(K\) 上代数独立，则称该族\term{微分代数独立}[differentially algebraically independent]。\(L/K\) 的\term{微分超越次数}[differential transcendence degree]定义为这类元素族的基数的上确界。
 \end{definition}
 
 这与普通超越次数不同。在带 \(\delta t=1\) 的 \(K(t)\) 中，\(t\) 满足 \(t'-1=0\)，故微分超越次数为零，普通超越次数却为一。另一方面，若 \(y\) 为 \(K\) 上的微分不定元，则 \(K\langle y\rangle=\operatorname{Frac}K\{y\}\) 中各 \(y^{(j)}\) 都代数独立；它有一个微分超越生成元，但普通超越次数无限。基的交换性质与一般维数理论需要进一步论证；本附录的算例均直接从生成元的关系判断。
+
+这两个数值也可直接核验。\(K(t)\) 中任何元素的全部导数仍属于普通超越次数一的域，故不可能形成无限的代数独立族。对 \(K\langle y\rangle\)，假如两个元素 \(a,b\) 微分代数独立，取 \(c\) 使它们只用到 \(y\) 的前 \(c\) 阶导数；其前 \(s\) 阶导数便都属于 \(K(y,\ldots,\delta^{s+c}y)\)，普通超越次数至多为 \(s+c+1\)，却按独立性须至少为 \(2(s+1)\)，对充分大的 \(s\) 矛盾。\(y\) 本身给出一个独立元，因此微分超越次数恰为一。
+
+本附录使用上述数值定义。标准微分代数理论还要证明基的交换性质及极大独立集的基数相同；这些结果没有仅由“取上确界”这一句得到。两个模型的区别可以并列为：
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+扩张 & 普通超越次数 & 微分超越次数 \\
+\midrule
+\(K(t),\ \delta t=1\)，\(t\) 普通超越 & \(1\) & \(0\) \\
+\(K\langle y\rangle\)，\(y\) 微分不定元 & 可数无限 & \(1\) \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \subsection{低阶微分方程、常数域与解析解}
 \label{b3:subsec:E02:03}
@@ -90,7 +129,7 @@ V_L(F)=\{a\in L^n:P(a)=0\text{ 对所有 }P\in F\}.
 所以它们相差一个非零常数倍。这个结论纯属域中的运算，无须先定义指数函数。
 
 \begin{example}\label{b3:exm:formal-riccati}
-令 \(K\) 为特征零域，\(K[\![t]\!]\) 上取逐项导子。对给定 \(a\in K\)，方程 \(y'=y^2,y(0)=a\) 有唯一形式幂级数解
+令 \(K\) 为特征零域，在 \(K[\![t]\!]\) 上指定逐项导子 \(\delta|_K=0\)、\(\delta t=1\)。对给定 \(a\in K\)，方程 \(y'=y^2,y(0)=a\) 有唯一形式幂级数解
 \[
 y=\frac{a}{1-at}=\sum_{n\ge0}a^{n+1}t^n.
 \]

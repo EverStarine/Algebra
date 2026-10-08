@@ -1,29 +1,59 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### C.2 Frobenius 方法与正特征奇点
-% 纲要位置：工作记录/计划纲要.md:2873
+% 纲要位置：工作记录/计划纲要.md:2918
 
 \section{Frobenius 方法与正特征奇点}
 \label{b3:sec:C02}
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * Frobenius 模结构、完美域多项式环的自由基及节点的不平坦算例
-% * 迭代分裂映射证明所有理想Frobenius闭；引用Kunz定理说明正则性与Frobenius平坦性的联系
+%
+% * 绝对 Frobenius 与固定系数的坐标取幂比较；限制标量模和线性映射的区别；完美域上多项式自由基
+% * Kunz 判据准确引用并说明未证明的长度比较；交叉直线节点模型的形式局部比较及特征边界，分裂、不正则及不平坦的完整证据
+% * Frobenius 幂与通常理想幂的区别；迭代分裂恢复理想成员，尖点不分裂正式证明
 % <!-- 短节：不设小节 -->
+%
+% ---
+%
 
 
 % 正文以具体模型说明专题；长证明给出概要并指明技术细节的出处。
 
 设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环。二项式系数的消失使 \(F:R\to R,r\mapsto r^p\) 成为环同态，称为\term{Frobenius 同态}[Frobenius homomorphism]。它把所有元素的幂次同时放大，却保留加法。这让正特征中的奇点研究可以把“取幂”转成模论问题。
 
+\ProseParagraphBreak
+这个同态也称绝对 Frobenius，它对系数同样取幂。与\cref{b3:exm:frobenius-homeomorphism-not-etale}中固定系数的坐标取幂映射比较，把两边变量统一记为 \(t\)，则在特征 \(p\) 的域 \(k\) 上有
+\[
+\varphi\left(\sum_i c_it^i\right)=\sum_i c_it^{pi},
+\qquad
+F\left(\sum_i c_it^i\right)=\sum_i c_i^pt^{pi}.
+\]
+前者固定 \(k\)，在素谱上把闭点 \((t-a)\) 送到 \((t-a^p)\)；后者则满足 \(F^{-1}(\mathfrak p)=\mathfrak p\)，因为素理想中 \(r^p\in\mathfrak p\) 当且仅当 \(r\in\mathfrak p\)。因此绝对 Frobenius 在素谱上逐点恒等，两个环同态却一般不同。即使 \(k\) 完美，系数映射 \(c\mapsto c^p\) 是自同构，也未必是恒等；绝对 Frobenius 只有在每个系数都满足 \(c^p=c\) 时才是给定的 \(k\) 代数同态。
+
 \begin{definition}\label{b3:def:frobenius-pushforward}
 设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环，\(e\ge1\) 为整数，\(q=p^e\)。记 \(F_*^eR\) 为加法群仍等于 \(R\)、标量作用改为
 \[
 a\cdot F_*^e r=F_*^e(a^q r)
 \]
-的 \(R\) 模，并记 \(F_*R=F_*^1R\)。若 \(F_*R\) 为有限生成的 \(R\) 模，则称 \(R\) 为 \term[finiteF]{F-有限环}[F-finite ring]。若 \(R\) 线性映射 \(R\to F_*R,a\mapsto F_*a^p\) 有 \(R\) 线性左逆，则称 \(R\) 为\term{Frobenius 分裂}[Frobenius split]环。
+的 \(R\) 模，并记 \(F_*R=F_*^1R\)。记 \(\iota_F:R\to F_*R\) 为 \(R\) 线性映射 \(a\mapsto F_*a^p\)。若 \(F_*R\) 为有限生成的 \(R\) 模，则称 \(R\) 为 \term[finiteF]{F-有限环}[F-finite ring]。若 \(\iota_F\) 有 \(R\) 线性左逆，则称 \(R\) 为\term{Frobenius 分裂}[Frobenius split]环。
 \end{definition}
+\symidx{\(F_*^eR\)：沿第 \(e\) 次 Frobenius 映射限制标量所得的模}
 
-标量作用的改变是必要的：普通映射 \(r\mapsto r^p\) 一般不是通常 \(R\) 模之间的线性映射。现在它成为线性的，才可以问平坦、有限或分裂。
+这里有三个不同的对象：\(F:R\to R\) 是环同态；\(F_*R\) 是沿 \(F\) 限制标量所得的模，其底层加法群仍为 \(R\)；\(\iota_F:R\to F_*R\) 则是 \(R\) 线性映射。例如
+\[
+\iota_F(ab)=F_*(a^pb^p)=a\cdot F_*b^p=a\cdot\iota_F(b).
+\]
+普通 \(R\) 模结构下的映射 \(r\mapsto r^p\) 一般并不线性。Frobenius 同态的有限性、平坦性分别指 \(F_*R\) 作为 \(R\) 模有限生成、平坦；分裂性质则指 \(\iota_F\) 有线性左逆。
+
+\ProseParagraphBreak
+先看特征三的完美域 \(k\) 上的一变量环 \(R=k[x]\)。每个指数唯一写为 \(3m+a\)，其中 \(0\le a<3\)，而每个系数都有唯一的三次根。因此每个 \(f\in k[x]\) 唯一写为
+\[
+f=f_0(x)^3+x f_1(x)^3+x^2f_2(x)^3,
+\]
+从而
+\[
+F_*R=R\cdot F_*1\oplus R\cdot F_*x\oplus R\cdot F_*x^2.
+\]
+这里 \(x^{3m+a}=(x^m)^3x^a\)，故在扭曲模中相应标量是 \(x^m\)。多个变量以及 \(q=p^e\) 时，逐个坐标作同样的除法便得到下面的基。
 
 \begin{proposition}\label{b3:prop:polynomial-frobenius-free}
 设 \(k\) 为特征 \(p>0\) 的完美域，\(R=k[x_1,\ldots,x_n]\)，\(e\ge1\) 为整数，\(q=p^e\)。则 \(F_*^eR\) 为秩 \(q^n\) 的自由 \(R\) 模，一组基为
@@ -46,22 +76,49 @@ F:R\longrightarrow R,\qquad r\longmapsto r^p
 平坦，亦即 \(F_*R\) 是平坦 \(R\) 模。
 \end{claim}
 
-这一判据的证明可先归约到局部环，再把 Frobenius 平坦性给出的长度等式与 Hilbert--Samuel 函数的增长次数比较，从而得到极大理想的最少生成元数等于环的维数。
+\begin{proofsketch}
+这是本节引用的深层判据，以下只说明其中的机制。Frobenius 在素谱上诱导恒等映射，正则性和平坦性又都能逐局部环检查，故证明先归约到 Noether 局部环。正则方向利用一组参数及其 \(p\) 次幂仍为正则序列，再应用局部平坦性判据。
+
+反方向从极大理想 \(\mathfrak m\) 的一个最小生成系出发。若生成元数为 \(r\)，关键技术引理从 Frobenius 平坦性推出 \(\ell_R(R/\mathfrak m^{[p]})=p^r\)，其中 \(\mathfrak m^{[p]}\) 由生成元的 \(p\) 次幂生成。再把 Frobenius 作用于极大理想的各次幂，所得理想夹在两个普通幂之间。平坦性给出的长度关系与 Hilbert--Samuel 多项式的首项比较，最终迫使 \(r=\dim R\)。所需的幂次独立性与长度引理、以及正则方向的局部平坦性论证均不在本节证明；完整论证须查阅 Kunz 判据的证明文献\cite{Kunz1969RegularLocalRings}。
+\end{proofsketch}
+
+这里直接研究交叉直线的环 \(k[x,y]/(xy)\)。它在原点也是节点的标准形式局部模型：当 \(\operatorname{char}k\ne2\) 时，\cref{b3:prop:node-completion-branches}给出前面不可约节点曲线 \(y^2-x^2(1+x)=0\) 的完备局部环与 \(k[\![U,V]\!]/(UV)\) 的同构。原不可约曲线的局部环仍是整环，交叉直线的局部环却有零因子，所以它们并非同构的原局部环，更不能作为整体曲线互换。将一个模型的性质移到另一个模型时，须另行核对局部化、完备化及该性质的保持条件。在特征二时，原方程经 \(Y=y-x\) 换元成为 \(Y^2-x^3\)，是尖点型方程；下面的 \(xy=0\) 算例仍然适用，但不能再用该方程与它作节点比较。
 
 \begin{example}[分裂不等于正则]\label{b3:exm:node-frobenius-split}
-设 \(k\) 为特征 \(p>0\) 的完美域，\(R=k[x,y]/(xy)\)。每个元素唯一写为一个常数加只含正次 \(x\) 的多项式与只含正次 \(y\) 的多项式。定义 \(\varphi:F_*R\to R\)：指数可被 \(p\) 整除的单项式保留并把指数除以 \(p\)、系数取 \(p\) 次根，其余单项式送到零。按上述唯一表示检查 \(\varphi(a\cdot F_*r)=a\cdot\varphi(F_*r)\)，只需检查标量为系数、\(x\)、\(y\) 的情形；交叉乘积因 \(xy=0\) 同时为零。且 \(\varphi(F_*a^p)=a\)，故该环 Frobenius 分裂。但原点局部环维数一，而 \(\mathfrak m/\mathfrak m^2\) 维数二，所以不正则。
+设 \(k\) 为特征 \(p>0\) 的完美域，\(R=k[x,y]/(xy)\)，\(\mathfrak m=(x,y)R\)。则 \(R\) 为 Frobenius 分裂环，而原点局部环 \(R_{\mathfrak m}\) 不正则，且 \(F_*R\) 不是平坦 \(R\) 模。
 \end{example}
+\begin{proof}
+每个元素唯一写为一个常数加只含正次 \(x\) 的多项式与只含正次 \(y\) 的多项式。定义加法映射 \(\varphi:F_*R\to R\)：指数可被 \(p\) 整除的单项式保留并把指数除以 \(p\)、系数取 \(p\) 次根，其余单项式送到零。完美域中的取 \(p\) 次根保持加法，故此定义确为加法映射。对 \(c\in k\)，它满足 \(\varphi(F_*(c^pr))=c\varphi(F_*r)\)。对 \(m\ge0\)，有
+\[
+\varphi(F_*x^{m+p})=x\varphi(F_*x^m),
+\]
+而对 \(m\ge1\)，交叉乘积给出
+\[
+\varphi(F_*x^py^m)=0=x\varphi(F_*y^m).
+\]
+这验证了标量 \(x\) 的线性性；交换 \(x,y\) 即验证标量 \(y\) 的线性性。由于 \(R\) 由 \(k,x,y\) 生成，\(\varphi\) 为 \(R\) 线性映射。其定义又给出 \(\varphi(F_*r^p)=r\)，故 \(R\) 是 Frobenius 分裂环。原点的两条分支分别对应 \((x)\)、\((y)\)，其局部商环均为一维；故 \(\dim R_{\mathfrak m}=1\)，而极大理想模其平方有 \(k\) 基 \(x,y\)，维数为二，所以原点不正则。
 
-这一例子还可直接检测 Frobenius 不平坦。若 \(N=F_*R\) 平坦，对映射 \(R\xrightarrow{x}R\) 张量，应有
+为直接检测不平坦性，注意乘 \(x\) 的映射 \(R\xrightarrow{x}R\) 的核恰为 \((y)\)：在上述唯一表示中，只有正次 \(y\) 项被 \(x\) 零化。若 \(N=F_*R\) 平坦，对正合列 \((y)\to R\xrightarrow{x}R\) 张量后仍在中项正合，因而必须有
 \[
 \ker(x:N\to N)=(0:_Rx)N=yN.
 \]
-而 \(F_*y\) 被 \(x\) 零化，因为 \(x\cdot F_*y=F_*(x^py)=0\)；它却不在 \(yN=F_*(y^pR)\) 中。于是 Frobenius 虽分裂却不平坦。两种性质不能混为一种正则性判断。
+而 \(F_*y\) 被 \(x\) 零化，因为 \(x\cdot F_*y=F_*(x^py)=0\)。另一方面，扭曲的标量作用给出
+\[
+yN=\{F_*(y^pr):r\in R\}.
+\]
+若 \(F_*y\in yN\)，就有 \(y=y^pr\)。把这条等式沿 \(R\to k[y]\)、\(x\mapsto0\) 投影，左边的 \(y\) 次项系数为一，右边因 \(p\ge2\) 不含 \(y\) 次项，矛盾。故上述核等式不成立，\(N\) 不平坦。
+\end{proof}
+
+分裂的线性映射 \(\iota_F\) 在与任意模张量后仍有左逆，因而仍单射；平坦性则要求张量函子保持所有正合列。这个节点模型说明前一种性质可以容许奇点；在 Noether 环中，后一种性质由 Kunz 判据恰好刻画正则性。
 
 \ProseParagraphBreak
-对理想 \(I\subseteq R\)，记 \(I^{[q]}=(a^q:a\in I)\)，并定义\term{Frobenius 闭包}[Frobenius closure]
+对特征 \(p>0\) 的交换环 \(R\)、理想 \(I\subseteq R\) 及 \(q=p^e\)，其中 \(e\ge0\)，记 \(I^{[q]}=(a^q:a\in I)\)。这是 Frobenius 幂，一般不同于普通理想幂 \(I^q\)。例如在 \(\mathbb F_p[x,y]\) 中，\(I=(x,y)\) 满足
 \[
-I^F=\{r\in R:r^{p^e}\in I^{[p^e]}\text{ 对某个 }e\ge0\}.
+I^{[p]}=(x^p,y^p)\subsetneq I^p,
+\]
+因为 \(x^{p-1}y\in I^p\)，却不属于 \((x^p,y^p)\)。据此定义\term{Frobenius 闭包}[Frobenius closure]
+\[
+I^F=\{r\in R:r^{p^e}\in I^{[p^e]}\;\text{对某个}\;e\ge0\}.
 \]
 它是包含 \(I\) 的理想：对两个见证取足够大的共同 \(e\)，用 Frobenius 保持加法与乘法验证。分裂映射则能够把这些取幂后的理想关系还原到原环。
 
@@ -69,6 +126,8 @@ I^F=\{r\in R:r^{p^e}\in I^{[p^e]}\text{ 对某个 }e\ge0\}.
 设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换环。如果 \(R\) 为 Frobenius 分裂环，则每个理想 \(I\subseteq R\) 都满足 \(I^F=I\)。
 \end{proposition}
 \begin{proof}
+目标是把 \(r^{p^e}\in I^{[p^e]}\) 中的 \(e\) 层取幂逐层还原，得到 \(r\in I\)。为此，把一次 Frobenius 的分裂递归成第 \(e\) 次 Frobenius 的分裂。
+
 取 \(R\) 线性分裂映射 \(\varphi:F_*R\to R\)，即
 \[
 \varphi(F_*r^p)=r\qquad(r\in R).
@@ -103,6 +162,21 @@ r=\varphi_e(F_*^e r^q)
 \]
 因此 \(I^F\subseteq I\)，与反向包含合起来即得结论。
 \end{proof}
+
+\begin{proposition}\label{b3:prop:C-cusp-not-frobenius-split}
+设 \(k\) 为特征 \(p>0\) 的域，\(R=k[t^2,t^3]\subseteq k[t]\)，\(I=(t^2)R\)。则 \(t^3\in I^F\setminus I\)，因而 \(R\) 不是 Frobenius 分裂环。
+\end{proposition}
+\begin{proof}
+\(R\) 中单项式的次数属于 \(\{0,2,3,4,\ldots\}\)，因此 \(t\notin R\)。若 \(t^3=t^2a\)，其中 \(a\in R\)，在整环 \(k[t]\) 中消去 \(t^2\) 得 \(a=t\)，矛盾。故 \(t^3\notin I\)。
+
+取 \(q=p\ge2\)。每个偶数 \(q\ge2\) 为二的倍数，每个奇数 \(q\ge3\) 则写为 \(3+2a\)，其中 \(a\ge0\)，故 \(t^q\in R\)。由 \(I^{[q]}=(t^{2q})R\)，得到
+\[
+(t^3)^q=t^{2q}t^q\in I^{[q]}.
+\]
+所以 \(t^3\in I^F\)。\cref{b3:prop:C-split-frobenius-closure}说明 Frobenius 分裂环的所有理想都 Frobenius 闭，而这里 \(I^F\ne I\)，故 \(R\) 不分裂。
+\end{proof}
+
+\cref{b3:exm:node-frobenius-split,b3:prop:C-cusp-not-frobenius-split}给出两种不同的正特征奇点：节点虽不正则却 Frobenius 分裂，尖点则连分裂性质也不满足。
 
 \ProseParagraphBreak
 更精细的正特征奇点理论还研究所有模上的纯性、局部上同调上的 Frobenius 作用及紧闭包。它们分别施加不同的有限性与非零条件。

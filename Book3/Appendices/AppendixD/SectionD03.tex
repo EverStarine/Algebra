@@ -1,6 +1,6 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### D.3 Weierstrass 方法与局部计算
-% 纲要位置：工作记录/计划纲要.md:2924
+% 纲要位置：工作记录/计划纲要.md:2969
 
 \section{Weierstrass 方法与局部计算}
 \label{b3:sec:D03}
@@ -8,14 +8,19 @@
 级数除法的目标是把无限项压到一个次数有界的余式中，而不是逐项计算到某个截断阶数便停止。形式情形靠理想进完备性，收敛情形还要控制系数的范数；两种停止依据须分别证明。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 形式及收敛情形的 Weierstrass 除法和预备定理，分别写出系数环与T-正规性假设；比较两种完备性与误差修正
-% * 与附录 F 的 Hironaka 型标准基、初始指数和局部有限映射的联系
-% * 低维曲线分支、切锥和交数计算简介；Newton 滤过作为进一步方法
-% * 形式解、收敛解和代数解的区分；不能把形式除法中的级数自动视为收敛
+%
+% * 形式及收敛 Weierstrass 完整证明；同一不动点方程分别由理想阶和范数收缩控制
+% * Noether 性对齐逐系数与理想进滤过；T-正规条件失败的非有限商正式反例
+% * 代数形式级数收敛概要保留解析正规化有限性及解析不可约性；多方程局部标准基归附录 F
+% * 分支、约化切线、切锥与交数对照；非二特征节点的形式坐标同构，原局部整环与完成的两个分支分别判断
+% * Newton 权只给初始数据；具体形式解、收敛解与指定嵌入的代数模型分别判断
 % #### D.3.1 形式与收敛情形的 Weierstrass 除法和预备定理
 % #### D.3.2 Weierstrass 有限映射与 Hironaka 型标准基的联系
 % #### D.3.3 曲线分支、切锥、交数与 Newton 滤过
 % #### D.3.4 形式解、收敛解与代数解
+%
+% ---
+%
 
 
 \subsection{形式与收敛情形的 Weierstrass 除法和预备定理}
@@ -36,7 +41,7 @@ W=T^d+a_{d-1}T^{d-1}+\cdots+a_0,\qquad a_i\in\mathfrak m,
 \(k[\![x_1,\ldots,x_{n-1}]\!][\![T]\!]\)，其中 \(T=x_n\)，条件就是
 \(f(0,\ldots,0,T)\) 的首个非零项为次数 \(d\)。
 
-\begin{theorem}[形式 Weierstrass 除法与预备定理]\label{b3:thm:formal-weierstrass}
+\begin{theorem}[形式 Weierstrass 除法与预备定理]\label{b3:thm:formal-weierstrass}\label{b3:thm:weierstrass-hypothesis-necessary}
 设 \((A,\mathfrak m)\) 为完备 Noether 局部环，\(k=A/\mathfrak m\)，\(f\in A[\![T]\!]\) 关于 \(T\) 为 \(d\) 阶正规级数。则有：
 \begin{enumerate}
 \item 每个 \(h\in A[\![T]\!]\) 唯一写成
@@ -46,9 +51,10 @@ h=qf+r,\qquad q\in A[\![T]\!],\quad r\in A[T],\quad\deg r<d.
 其中 \(d=0\) 时余式为零。
 \item 唯一存在单位 \(u\in A[\![T]\!]^\times\) 及 \(d\) 次Weierstrass 多项式 \(W\)，使 \(f=uW\)。
 \end{enumerate}
+正规性不可省略：对任意域 \(k\)，在 \(A_0=k[\![x]\!]\) 中取 \(f_0=x\in A_0[\![T]\!]\)，则 \(f_0\) 模 \((x)\) 为零，商 \(A_0[\![T]\!]/(f_0)=k[\![T]\!]\) 甚至不是有限生成的 \(A_0\) 模。
 \end{theorem}
 \begin{proof}
-先说明所用的完备性。由于 \(\mathfrak m^a\) 有限生成，一个级数的所有系数属于 \(\mathfrak m^a\)，当且仅当它属于 \(\mathfrak m^aA[\![T]\!]\)。因此
+先说明所用的完备性。Noether 假设使每个 \(\mathfrak m^a\) 有限生成；将逐个系数按同一有限组生成元展开，就能把整个级数写成这些生成元与级数的有限线性组合。因此一个级数的所有系数属于 \(\mathfrak m^a\)，当且仅当它属于 \(\mathfrak m^aA[\![T]\!]\)。因此
 \[
 A[\![T]\!]/\mathfrak m^aA[\![T]\!]
 \simeq(A/\mathfrak m^a)[\![T]\!],
@@ -63,7 +69,7 @@ f=T^d\cdot u_0(T)+\sum_{i<d}a_iT^i,
 \(u_0\) 可逆，故 \(F=u_0^{-1}f=T^d+b\)，其中 \(b\in\mathfrak m A[\![T]\!]\)。对任意级数 \(g\)，定义 \(R_0(g)\) 为次数小于 \(d\) 的截断，\(Q_0(g)\) 由
 \(g=T^d\cdot Q_0(g)+R_0(g)\) 确定。它们都是保持每个 \(\mathfrak m^a\) 的 \(A\)-线性映射。
 
-欲写 \(h=qF+r\)，比较次数至少 \(d\) 的部分，必须满足
+项 \(b\) 可以有无穷多个 \(T\) 次数，通常多项式长除法不能直接处理它；但其全部系数属于 \(\mathfrak m\)，每次代回都会提高系数的理想阶数。欲写 \(h=qF+r\)，比较次数至少 \(d\) 的部分，必须满足
 \[
 q=Q_0(h)-Q_0(bq).
 \]
@@ -78,9 +84,12 @@ q=\sum_{j\ge0}E^jQ_0(h)
 于是 \(W=T^d-r\) 是Weierstrass 多项式，且 \(f=q^{-1}W\)。
 
 若又有 \(f=u'W'\)，则 \(W'=(u')^{-1}uW\)。把 \(W'\) 除以 \(W\)：一方面级数商为 \((u')^{-1}u\)、余式为零；另一方面，两个首一 \(d\) 次多项式的通常除法给出商 \(1\)、余式 \(W'-W\)。唯一性迫使 \(W'=W\)，进而 \(u'=u\)。
+陈述中的反例有 \(f_0\) 模 \((x)\) 为零，无法开始这项修正。它的商为 \(k[\![T]\!]\)，\(A_0\) 的作用经过 \(A_0/(x)=k\)；若这个商是有限生成的 \(A_0\) 模，就应为有限维 \(k\)-空间，而 \(1,T,T^2,\ldots\) 线性无关，矛盾。
 \end{proof}
 
 这个证明是逐次修正，不是把通常多项式长除法无限重复后直接宣布结束。误差算子每次增加的是系数中的 \(\mathfrak m\)-阶；正是这一点使无穷和有意义。
+
+收敛情形仍要求解同一个方程 \(q=Q_0(h)+E(q)\)。区别在于，形式情形由 \(E\) 提高理想阶数保证 \(\sum E^j\) 有意义，解析情形则须在一个完备赋范空间中证明 \(\|E\|<1\)。
 
 \begin{theorem}[收敛 Weierstrass 除法与预备定理]\label{b3:thm:analytic-weierstrass}
 设 \(n\ge1\)，\(x'=(x_1,\ldots,x_{n-1})\)，\(f\in\mathbb C\{x',T\}\)，且 \(f(0,T)\) 的阶数恰为非负整数 \(d\)。对每个 \(h\in\mathbb C\{x',T\}\)，唯一存在
@@ -126,7 +135,7 @@ q_0=\sum_{j\ge0}E^jQ_0(h),\qquad r=R_0(h-bq_0)
 理想链 \((0)\subsetneq(x_1)\subsetneq\cdots\subsetneq(x_1,\ldots,x_n)\) 中各项为素理想，因为相应商是少变量的收敛级数整环；故 \(\dim R_n\ge n\)。极大理想由 \(n\) 元生成，Krull 高度定理给出反向不等式。一次项的比较又给出 \(\dim_{\mathbb C}\mathfrak m/\mathfrak m^2=n\)，所以 \(R_n\) 正则。
 
 为验证 Hensel 性，设一个首一 \(R_n[T]\) 多项式在剩余域中分成互素首一因子 \(g_0h_0\)。把两个待提升因子的低次系数作为未知量，令其乘积的系数等于原多项式的系数。线性化是映射
-\((a,b)\mapsto ah_0+g_0b\)，其中 \(\deg a<\deg g_0\)、\(\deg b<\deg h_0\)。互素性使它单射，两边维数相同，故为同构。复解析隐函数定理于是给出原点附近的收敛系数，准确解出因式分解方程。这验证了 Hensel 因子提升条件。
+\((a,b)\mapsto ah_0+g_0b\)，其中 \(\deg a<\deg g_0\)、\(\deg b<\deg h_0\)。互素性使它单射，两边维数相同，故为同构。这正是第23章互素因子提升所用的乘积线性化；这里用复解析隐函数定理控制提升的收敛性，于是给出原点附近的收敛系数，准确解出因式分解方程。这验证了 Hensel 因子提升条件。
 
 最后，模 \(\mathfrak m^r\) 时任意级数等于其有限截断。次数至少 \(r\) 的收敛级数可按有限多个 \(r\) 次单项式分组，每一组除去对应单项式后仍收敛。因此
 \(R_n/\mathfrak m^r\simeq\mathbb C[x]/(x)^r\)，取逆极限便得到 \(\widehat R_n=\mathbb C[\![x]\!]\)。
@@ -135,20 +144,11 @@ q_0=\sum_{j\ge0}E^jQ_0(h),\qquad r=R_0(h-bq_0)
 这些性质亦见永田雅宜\cite[(45.5), pp. 193--194]{Nagata1975LocalRings}；其中 Hensel 性使用复解析隐函数定理。下面给出\cref{b3:prop:algebraic-series-converge}的证明概要。
 
 \begin{proofsketch}
-设 \(n\ge1\)，\(f\in\mathbb C[\![x_1,\ldots,x_n]\!]\) 在 \(\mathbb C(x_1,\ldots,x_n)\) 上代数。
-置 \(R=\mathbb C\{x_1,\ldots,x_n\}\)、\(\mathfrak m=(x_1,\ldots,x_n)R\)、\(\widehat R=\mathbb C[\![x_1,\ldots,x_n]\!]\) 及 \(K=\operatorname{Frac}R\)。由\cref{b3:cor:analytic-series-local-properties}，\(R\) 是 Noether 正则 Hensel 局部环，且所列 \(\widehat R\) 是其 \(\mathfrak m\)-进完备化。还需要两个解析结论：\(R\) 在任意有限分式域扩张中的整闭包是有限 \(R\)-模；每个有限 \(R\)-代数若是整环，则其局部环完备化仍为整环。这分别是解析正规化的有限性与解析不可约性。永田雅宜\cite[(45.6), p. 194; (45.1) and the definition of Weierstrass rings, p. 190]{Nagata1975LocalRings}给出这些结论：复数域是完美域，故有限于 \(R\) 的环是其所定义的 Weierstrass 环，正规化有限性包含在该定义的整闭包有限性条件中，而 (45.1) 给出整环商的解析不可约性。这些技术结论的证明在这里省略。
+设 \(n\ge1\)，\(f\in\mathbb C[\![x_1,\ldots,x_n]\!]\) 在 \(\mathbb C(x_1,\ldots,x_n)\) 上代数，令 \(R=\mathbb C\{x_1,\ldots,x_n\}\)、\(K=\operatorname{Frac}R\)、\(\widehat R=\mathbb C[\![x_1,\ldots,x_n]\!]\)。上一推论已经证明 \(R\) 是 Noether 正则 Hensel 局部环。这里另采用两个深层解析结论：有限分式域扩张中的正规化有限，以及有限解析整环的局部完备化仍为整环。它们见永田雅宜\cite[(45.6), p. 194; (45.1) and the definition of Weierstrass rings, p. 190]{Nagata1975LocalRings}；下面只说明这两个输入如何迫使形式代数元素回到收敛环。
 
-由于 \(f\) 在 \(K\) 上代数，可以取 \(0\ne c\in R\)，使 \(cf\) 在 \(R\) 上整。令 \(L=K(f)\)，令 \(B\) 为 \(R\) 在域 \(L\) 中的整闭包。它是有限 \(R\)-模，并且是整环。\(R\) 的 Hensel 性使有限 \(R\)-代数分解为有限个局部环的直积\cite[(43.15), p. 185]{Nagata1975LocalRings}；\(B\) 没有非平凡幂等元，所以只有一个局部因子。记其唯一极大理想为 \(\mathfrak n\)。\(\widehat R\) 是正则局部环，因而正规；于是嵌入 \(L\subseteq\operatorname{Frac}\widehat R\) 把 \(B\) 映入 \(\widehat R\)。
+令 \(L=K(f)\)，取 \(R\) 在 \(L\) 中的整闭包 \(B\)。它有限于 \(R\)，并由 Hensel 有限代数分解\cite[(43.15), p. 185]{Nagata1975LocalRings}成为一个局部整环。因为 \(L\subseteq\operatorname{Frac}\widehat R\)，而 \(\widehat R\) 正规，\(B\) 中的整元素都属于 \(\widehat R\)。有限性保证其局部完备化为 \(B\otimes_R\widehat R\)，上述解析不可约性保证这个环仍为整环。乘法给出满射 \(B\otimes_R\widehat R\longrightarrow\widehat R\)。令 \(F=\operatorname{Frac}\widehat R\)。倒置 \(\widehat R\) 的非零元后，源成为有限维 \(F\) 整环，因而为域，目标为 \(F\)；保幺域同态必单射，所以二者相等。又因 \(B\otimes_RK=L\)，比较 \(F\) 维数得 \([L:K]=1\)，即 \(f\in K\)。
 
-因为 \(B\) 是有限 \(R\)-模，有限模完备化定理给出
-\[
-\varprojlim_r B/\mathfrak m^rB\simeq B\otimes_R\widehat R.
-\]
-又因 \(B/\mathfrak mB\) 是有限维局部 \(\mathbb C\)-代数，其极大理想 \(\mathfrak n/\mathfrak mB\) 幂零，故存在 \(s\ge1\) 使 \(\mathfrak n^s\subseteq\mathfrak mB\subseteq\mathfrak n\)。两种理想进拓扑相同，所以这个逆极限也是 \(B\) 的 \(\mathfrak n\)-进完备化 \(\widehat B\)。上述解析不可约性结论于是保证 \(\widehat B=B\otimes_R\widehat R\) 是整环。
-
-乘法给出满射 \(\varphi:\widehat B\to\widehat R\)，\(b\otimes a\mapsto ba\)，并在子环 \(\widehat R\) 上为恒等。这里 \(\widehat R\to\widehat B\) 单射，是因为 \(R\to B\) 单射且 \(\widehat R\) 在 \(R\) 上平坦。令 \(F=\operatorname{Frac}\widehat R\)。对 \(\widehat R\) 的非零元局部化后，\(\widehat B\otimes_{\widehat R}F\) 是有限维 \(F\)-整环，因而是域；\(\varphi\) 所诱导的映射到 \(F\) 为保幺同态，故其核为零。\(\widehat B\) 本身是整环，局部化单射，所以原来的 \(\varphi\) 也单射。于是 \(\widehat B\simeq\widehat R\)。由于 \(B\otimes_R K=L\)，比较 \(F\)-维数得 \([L:K]=1\)，从而 \(f\in K\)。
-
-最后 \(K\cap\widehat R=R\)：若 \(f=a/b\in\widehat R\)，其中 \(a,b\in R\)、\(b\ne0\)，完备化的忠实平坦性给出 \(b\widehat R\cap R=bR\)，从而 \(a\in bR\)。因此 \(f\in R\)。
+最后，完备化忠实平坦给出 \(K\cap\widehat R=R\)：若 \(f=a/b\in\widehat R\)，则 \(a\in b\widehat R\cap R=bR\)。因此 \(f\in R\)，确实收敛。解析正规化有限性及解析不可约性没有在这个概要中证明，不能只凭形式 Weierstrass 除法推出它们。
 \end{proofsketch}
 
 解析环与形式环的商比较，即\cref{b3:prop:analytic-formal-quotient-comparison}，现在也可由完备化定理证明。
@@ -217,13 +217,13 @@ A[\![T]\!]/(f)
 因而一个适当选取坐标的超曲面，可以通过忘掉最后一个变量，有限地映到较低维的坐标空间。比如尖点的坐标环作为 \(k[\![x]\!]\)-模秩为二：给定 \(x\) 后，方程对 \(y\) 是二次的。这里的模秩包括分支合并时的重数，并不保证每个点上都有两个互不相同的几何点。
 
 \ProseParagraphBreak
-只有一个Weierstrass 多项式时，余式范围由 \(1,T,\ldots,T^{d-1}\) 控制；多个方程时，需要同时记录所有可能首项。Hironaka 型方法\footnote{\OriginalHanName{広中平祐}（假名：ひろなか へいすけ，罗马音：Heisuke Hironaka，1931-2026），日本数学家，证明特征零域上代数簇的奇点解消定理。}的一项基本做法是先按总次数从低到高、同次再按固定次序，取非零级数的第一个非零单项式。这样的次序在每个次数范围内只有有限多个项，因此首项有意义。若首项的指数为 \(\alpha\)，则称 \(\alpha\) 为该级数的初始指数。
+只有一个Weierstrass 多项式时，余式范围由 \(1,T,\ldots,T^{d-1}\) 控制；多个方程时，需要同时记录所有可能首项。Hironaka 型方法\footnote{\OriginalHanName{広中平祐}（假名：ひろなか へいすけ，罗马音：Heisuke Hironaka，1931-2026），日本数学家，证明特征零域上代数簇的奇点解消定理。}的一项基本做法是先按总次数从低到高、同次再按固定次序，取非零级数的第一个非零单项式。这样的次序在每个次数范围内只有有限多个项，因此首项有意义。这里取最低阶项，使用局部形式计算的初始指数约定，不能直接换成第8章全局项序下最大的首单项式。若首项的指数为 \(\alpha\)，则称 \(\alpha\) 为该级数的初始指数。
 
 \ProseParagraphBreak
 对理想 \(I\subset k[\![x_1,\ldots,x_n]\!]\)，所有初始指数及其向正方向的平移组成集合
 \[
 \Delta(I)=\{\alpha+\beta:
-\alpha\text{ 是某个 }0\ne f\in I\text{ 的初始指数},
+\alpha\;\text{是某个}\;0\ne f\in I\;\text{的初始指数},
 \ \beta\in\mathbb N^n\}.
 \]
 其对应单项式理想由有限多个单项式生成；选择具有这些首项的元素，便得到有限个候选约化式。真正的形式除法还必须说明无穷约化在什么拓扑中收敛，并证明余式范围和唯一性；这不是有限生成性本身的推论。
@@ -236,6 +236,21 @@ A[\![T]\!]/(f)
 
 以下在 \(\mathbb C[\![x,y]\!]\) 中计算。一个约化平面曲线方程的不同不可约因子表示它的形式分支。分支数、切线数和重数不必相同；最低次项和完整因式分解回答的是不同问题。
 
+下表分别比较分支、约化切线、切锥与商长度；局部交数的定义及计算随后给出。表中的节点取 \(g=y^2-x^2(1+x)\)。
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}XX@{}}
+\toprule
+所测量 & 尖点 \(y^2-x^3\) & 节点 \(g\) \\
+\midrule
+形式分支数 & \(1\) & \(2\) \\
+约化切线方向数 & \(1\) & \(2\) \\
+切锥方程 & \(y^2\)，同一方向有重数 \(2\) & \((y-x)(y+x)\)，两方向各重数 \(1\) \\
+与 \(x=0\) 相交的长度 & \(2\) & \(2\) \\
+与 \(y=0\) 相交的长度 & \(3\) & \(2\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
 \begin{proposition}\label{b3:prop:formal-cusp-normalization}
 设 \(t\) 为不定元。代入 \(x=t^2,y=t^3\) 给出同构
 \[
@@ -243,13 +258,13 @@ A[\![T]\!]/(f)
 \simeq \mathbb C[\![t^2,t^3]\!]
 =\mathbb C+t^2\mathbb C[\![t]\!].
 \]
-其分式域为 \(\mathbb C((t))\)，整闭包为 \(\mathbb C[\![t]\!]\)，并且这个整闭包是原环上的有限生成模。
+其分式域为 \(\mathbb C(\!(t)\!)\)，整闭包为 \(\mathbb C[\![t]\!]\)，并且这个整闭包是原环上的有限生成模。
 \end{proposition}
 \begin{proof}
 形式除法把商中元素唯一写成 \(a(x)+y\cdot b(x)\)。代入后为
 \(a(t^2)+t^3\cdot b(t^2)\)；前者只有偶数次项，后者只有从三次起的奇数次项，故两部分相消只能同时为零。这证明单射，也说明像恰为没有一次项的级数。
 
-在分式域中 \(t=y/x\)，而且任何 Laurent 级数乘一个足够大的 \(t\) 的偶数次幂，都落入原环，所以分式域为 \(\mathbb C((t))\)。\(t\) 满足首一关系 \(t^2-x=0\)，且
+在分式域中 \(t=y/x\)，而且任何 Laurent 级数乘一个足够大的 \(t\) 的偶数次幂，都落入原环，所以分式域为 \(\mathbb C(\!(t)\!)\)。\(t\) 满足首一关系 \(t^2-x=0\)，且
 \(\mathbb C[\![t]\!]=A+At\)，其中 \(A=\mathbb C+t^2\mathbb C[\![t]\!]\)，故扩张有限且整。环 \(\mathbb C[\![t]\!]\) 是 DVR，整闭；反过来，若分式域中的元素在 \(A\) 上整，它在 \(\mathbb C[\![t]\!]\) 上也整，必已属于后者。因此后者恰为整闭包。
 \end{proof}
 
@@ -258,7 +273,7 @@ A[\![T]\!]/(f)
 g=y^2-x^2(1+x).
 \]
 收敛的单位 \(u=\sqrt{1+x}\)、\(u(0)=1\)，给出
-\(g=(y-xu)(y+xu)\)。两个因子各自把 \(y\) 表为 \(x\) 的收敛级数，商都同构于 \(\mathbb C[\![x]\!]\)，故它们是两个不同的光滑分支，切线分别为 \(y=x\)、\(y=-x\)。
+\(g=(y-xu)(y+xu)\)。两个因子各自把 \(y\) 表为 \(x\) 的收敛级数，商都同构于 \(\mathbb C[\![x]\!]\)，所以各分支正则。再由 \(u(0)=1\)，它们的一次项分别为 \(y-x\)、\(y+x\)，故切线方向也不同。本节末的\cref{b3:prop:node-completion-branches}还将比较这个完备环与原代数局部整环。
 
 \begin{definition}\label{b3:def:plane-local-intersection-number}
 设 \(f,g\in(x,y)\mathbb C[\![x,y]\!]\)，且
@@ -268,6 +283,7 @@ i_0(f,g)=\dim_{\mathbb C}\mathbb C[\![x,y]\!]/(f,g)
 \]
 为这两个方程在原点的局部交数。若商无限维，本附录不把它记成一个有限交数。
 \end{definition}
+\symidx{\(i_0(f,g)\)：平面曲线在原点的局部交数}
 
 对尖点 \(f=y^2-x^3\)，有
 \[
@@ -281,7 +297,7 @@ i_0(f,y-\lambda x)=2\quad(\lambda\ne0).
 设 \(w_1,w_2\) 为正整数，并在 \(\mathbb C[\![x,y]\!]\) 中计算。单项式 \(x^ay^b\) 的权为 \(w_1a+w_2b\)，非零形式级数的权阶为其非零项权的最小值。对整数 \(r\ge0\)，权阶至少 \(r\) 的级数组成理想 \(F_r\)，称 \((F_r)_{r\ge0}\) 为相应的权滤过。一个非零级数的 Newton 多边形，是其非零项指数集合加上 \(\mathbb R_{\ge0}^2\) 后所得集合的凸包。
 \end{definition}
 
-权均为正，故每个权以下只有有限多个单项式，初始部分仍是多项式，并有 \(F_rF_s\subseteq F_{r+s}\)。尖点 \(y^2-x^3\) 的两个指数点是 \((0,2)\)、\((3,0)\)，连接边的方向为 \((3,-2)\)。要求这条边上各项同权，就是求正整数 \(w_1,w_2\) 满足 \(3w_1=2w_2\)；最小的一组为 \((2,3)\)，它是该边的正法向量。
+这个定义只提供加权初始数据，完整的分支展开还需要 Newton--Puiseux 等进一步理论。权均为正，故每个权以下只有有限多个单项式，初始部分仍是多项式，并有 \(F_rF_s\subseteq F_{r+s}\)。尖点 \(y^2-x^3\) 的两个指数点是 \((0,2)\)、\((3,0)\)，连接边的方向为 \((3,-2)\)。要求这条边上各项同权，就是求正整数 \(w_1,w_2\) 满足 \(3w_1=2w_2\)；最小的一组为 \((2,3)\)，它是该边的正法向量。
 \[
 \begin{tikzpicture}[x=1.05cm,y=1.05cm]
 \draw[->] (0,0)--(3.9,0) node[right]{\(a\)};
@@ -314,3 +330,27 @@ i_0(f,y-\lambda x)=2\quad(\lambda\ne0).
 \end{example}
 
 在实际计算中，常只能确定解模 \((x)^N\) 的值。所有高于此阶的项都被舍去，因此一个有限截断既不能证明整个级数收敛，也不能排除高阶才出现的新关系。下一节的逼近定理保证某些方程的形式解可以在任意指定有限阶上由真正代数解替代；这个结论需要明确的环与方程假设。
+
+
+\begin{proposition}\label{b3:prop:node-completion-branches}
+设 \(k\) 为特征不等于二的域，\(g=y^2-x^2(1+x)\in k[x,y]\)，令 \(R=(k[x,y]/(g))_{(x,y)}\)。则 \(R\) 是局部整环，而
+\[
+\widehat R\cong k[\![x,y]\!]/(g)
+\cong k[\![U,V]\!]/(UV)
+\]
+不是整环。第二个同构由形式坐标 \(U=y-xu(x)\)、\(V=y+xu(x)\) 给出，其中 \(u\in k[\![x]\!]\)、\(u^2=1+x\)、\(u(0)=1\)。其两个极小素理想由 \(y-xu\)、\(y+xu\) 给出，两个分支的商均同构于 \(k[\![x]\!]\)。
+\end{proposition}
+\begin{proof}
+把 \(g\) 看成 \(k(x)[y]\) 中的二次式。若它可约，\(1+x\) 就是 \(k(x)\) 中的平方；但这个有理函数在 \(x=-1\) 处的零点阶数为一，而平方的零点阶数必为偶数。故 \(g\) 不可约，Gauss 引理\footnote{高斯（Carl Friedrich Gauß，1777-1855），德国数学家，著有《算术研究》，对数论、代数和几何均有奠基性贡献。}给出多项式环中的不可约性，于是 \(R\) 为整环。Noether 局部环商的完备化公式给出陈述中的 \(\widehat R\)。
+
+因为 \(2\) 可逆，形式单根提升得到 \(u^2=1+x\)、\(u(0)=1\)，因而 \(g=(y-xu)(y+xu)\)。令 \(U=y-xu(x)\)、\(V=y+xu(x)\)，则 \(UV=g\)。这确实是可逆形式换元：级数 \(h(x)=xu(x)\) 的一次项为 \(x\)，可逐次比较系数，唯一构造复合逆级数 \(v(z)\in zk[\![z]\!]\)。于是逆换元为
+\[
+x=v\left(\frac{V-U}{2}\right),\qquad
+y=\frac{U+V}{2}.
+\]
+这给出两个形式级数环的同构，并将方程 \(g\) 对应于 \(UV\)，从而得到陈述中的商环同构。
+
+两个因子都有一次项，不能属于最低阶为二的主理想 \((g)\)，所以它们在商中的像均非零，而乘积为零。分别代入 \(y=xu\)、\(y=-xu\)，商均为 \(k[\![x]\!]\)，故两个因子各生成素理想，且互不包含。任何包含乘积的素理想必包含其中一个因子，这也证明它们恰为极小素理想。这不违背完备化的忠实平坦性：后者保证理想与模的检测，不能单独保证整环性。
+\end{proof}
+
+因此，原不可约节点与交叉直线在完备化之后有同一个形式局部模型，原局部环却不能同构：前者是整环，后者的原点局部环仍有非零的 \(x,y\) 且 \(xy=0\)。这里形式坐标涉及级数，并非原代数局部环中的坐标变换。特征二时上述结论不适用；换元 \(Y=y-x\) 将 \(g\) 写成 \(Y^2-x^3\)，得到的是尖点型模型。

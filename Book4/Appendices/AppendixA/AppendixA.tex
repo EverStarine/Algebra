@@ -1,6 +1,6 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：## 附录 A　单子、下降与可表性
-% 纲要位置：工作记录/计划纲要.md，第 3527 行。
+% 纲要位置：工作记录/计划纲要.md，第 3816 行。
 % 纲要细目（写作范围）：
 % > 完整构造单子代数、自由伴随及比较函子；证明分裂余等化版本的 Barr–Beck 判据、忠实平坦模下降及带解集条件的一般伴随函子定理。
 
@@ -207,30 +207,34 @@ f(a)=0,\quad g(a)=1,\qquad f(b)=1,\quad g(b)=2.
 考虑 \(\mathbb Z\to\mathbb Z/2\mathbb Z\)。说明限制标量具有单子性，而扩张标量不保持单射。求对应单子的固定对象。
 \end{exercise}
 \begin{solution}
-限制标量的单子性由\cref{b4:prop:A-restriction-scalars-monadic}得到，不需要平坦性。扩张标量把单射 \(\mathbb Z\xrightarrow{\times2}\mathbb Z\) 变成 \(\mathbb Z/2\xrightarrow0\mathbb Z/2\)，所以不保持单射。
+限制标量的单子性由\cref{b4:prop:A-restriction-scalars-monadic}得到，不需要平坦性。扩张标量把单射 \(\mathbb Z\xrightarrow{\times2}\mathbb Z\) 变成 \(\mathbb Z/2\mathbb Z\xrightarrow0\mathbb Z/2\mathbb Z\)，所以不保持单射。
 
 单子为 \(T(A)=A/2A\)，再作用一次不变，故幂等。固定对象满足 \(2A=0\)，正是 \(\mathbb F_2\)-向量空间的底层交换群。其标量作用由加法唯一确定，这与幂等单子的代数结构唯一相符。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:A-product-descent}
-设 \(R\) 为交换环，\(S=R\times R\)，底环映射为对角嵌入。写 \(S\)-模 \(M=M_1\oplus M_2\)。证明一个模下降数据等价于一个 \(R\)-模同构 \(f:M_1\to M_2\)，并具体求恢复模。
+设 \(R\) 为交换环，\(S=R\times R\times R\)，底环映射为对角映射。写 \(S\)-模 \(M=M_1\oplus M_2\oplus M_3\)。仿照\cref{b4:prop:A-product-descent-model}，证明模下降数据等价于一族 \(R\)-模同构
+\[
+f_{ij}:M_j\longrightarrow M_i\qquad(1\le i,j\le3),
+\]
+满足 \(f_{ii}=1_{M_i}\) 及 \(f_{ij}f_{jk}=f_{ik}\)。具体求出恢复模，并举例说明仅要求 \(f_{ij}\)、\(f_{ji}\) 互逆，还不足以保证下降相容性。
 \end{exercise}
 \begin{solution}
-把 \(S\otimes_RM\) 识别为 \(M\oplus M\)。\(S\)-线性及余单位条件迫使
+令 \(e_i\in S\) 为第 \(i\) 个标准幂等元。在 \(S\otimes_RM\cong M^{\oplus3}\) 中，外层的第 \(i\) 个分量对应 \(e_i\)。\(S\)-线性迫使 \(\gamma\) 在 \(M_i\) 上的像落在这个分量，因而可唯一写成
 \[
-\gamma(m_1,m_2)
-=\Bigl(\bigl(m_1,f(m_1)\bigr),\bigl(g(m_2),m_2\bigr)\Bigr)
+\gamma(m_1,m_2,m_3)
+=\sum_{i=1}^3 e_i\otimes
+\bigl(f_{1i}(m_i),f_{2i}(m_i),f_{3i}(m_i)\bigr).
 \]
-具有这个形式，其中 \(f:M_1\to M_2\)、\(g:M_2\to M_1\) 为 \(R\)-线性映射。将余结合律写在
-\(S\otimes_RS\otimes_RM\) 的四个分量上：第 \((1,2)\) 个分量分别为
-\(\bigl(gf(m_1),f(m_1)\bigr)\) 与 \(\bigl(m_1,f(m_1)\bigr)\)，第 \((2,1)\) 个分量分别为
-\(\bigl(g(m_2),fg(m_2)\bigr)\) 与 \(\bigl(g(m_2),m_2\bigr)\)。另两分量自动相等。因此余结合律恰好等价于 \(gf=1_{M_1}\)、\(fg=1_{M_2}\)。
+这里各 \(f_{ji}\) 为 \(R\)-线性映射。余单位从第 \(i\) 个外层分量取出其 \(M_i\) 部分，所以余单位律恰好给出 \(f_{ii}=1_{M_i}\)。在余结合律两边，取 \(S\otimes_RS\otimes_RM\) 的第 \((i,k)\) 个外层分量，再取其中的 \(M_j\) 分量，分别得到 \(f_{ji}(m_i)\) 和 \(f_{jk}f_{ki}(m_i)\)。因此余结合律恰好要求 \(f_{jk}f_{ki}=f_{ji}\)，即题中的相容等式。取 \(j=i\) 得 \(f_{ik}f_{ki}=1_{M_i}\)；交换 \(i,k\) 又得另一侧逆式，所以这些映射自动为同构。反过来，满足所列条件的映射族按上述公式定义下降数据。
 
-恢复模为
+等化条件 \(\gamma(m)=1\otimes m\) 要求 \(m_j=f_{ji}(m_i)\) 对所有 \(i,j\) 成立。由相容等式，只需指定 \(m_1\)，就唯一确定其余两分量。因此恢复模为
 \[
-V=\bigl\{(m_1,m_2):m_2=f(m_1)\bigr\},
+V=\bigl\{\bigl(m,f_{21}(m),f_{31}(m)\bigr):m\in M_1\bigr\},
 \]
-即 \(f\) 的图，同构于 \(M_1\)，也同构于 \(M_2\)。下降数据不仅给出两份模，还指定把两份识别起来的同构。
+投影到第一分量给出 \(V\cong M_1\)。
+
+取 \(R=\mathbb Q\)、\(M_i=\mathbb Q\)，令 \(f_{21}=f_{12}=f_{32}=f_{23}=1\)，\(f_{31}\) 为乘二，\(f_{13}\) 为乘 \(1/2\)，且 \(f_{ii}=1\)。每对反向映射都互逆，却有 \(f_{32}f_{21}\ne f_{31}\)。所以三份模两两能够识别，还要检查这些识别在三份之间相容，才能得到下降数据。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:A-rational-descent-loss}
@@ -264,7 +268,9 @@ r\varepsilon_Y=\varepsilon_ZF(Ur)
 \begin{solution}
 若 \(N\) 由 \((B,u)\) 表示，则泛元素 \(u\in N(B)\) 满足某个 \(u^n=0\)。任何经环同态得到的像也都满足 \(n\) 次幂为零。但在 \(\mathbb Z[t]/(t^{n+1})\) 中，\(\bar t\) 幂零且 \(\bar t^n\neq0\)，不可能由 \(u\) 得到，与泛元素条件矛盾。所以 \(N\) 不可表。
 
-固定 \(n\) 时，\(\mathbb Z[t]/(t^n)\) 连同 \(\bar t\) 表示 \(N_n\)。可表性在这里要求一个统一的运算关系；把所有可能的幂零阶混在一起，不能继续沿用同一个表示对象。
+固定 \(n\) 时，\(\mathbb Z[t]/(t^n)\) 连同 \(\bar t\) 表示 \(N_n\)。此处泛元素必须有一个确定的幂零指数，其所有像也就有同一个指数上界，因而不能产生指数任意大的幂零元。
+
+\Cref{b4:ex:03-units-nilpotents}曾从保持积证明同一结论：在 \(A_r=k[t]/(t^r)\) 中，各 \(\bar t_r\) 都幂零，但元组 \((\bar t_r)_r\) 没有共同的幂零指数，所以不属于积环的幂零元集合。两种证明所发现的是同一个障碍：逐个存在幂零指数，不能保证有一个统一指数；前者把这个要求施加于泛元素，后者施加于积环的一个元素。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:A-general-linear-representability}
@@ -332,21 +338,21 @@ Kleisli 自同构等价于自由幺半群 \(X^*\) 的自同构 \(\alpha\)，设�
 \end{solution}
 
 \begin{exercise}\label{b4:ex:A-kleisli-module-matrices}
-设 \(R\) 为含幺环，\(T\) 为集合上的自由左 \(R\)-模单子。限制其 Kleisli 范畴到有限集合 \(\{1,\ldots,n\}\)。若 \(f:n\to Tm\) 写为
-\[
-f(i)=\sum_{j=1}^m a_{ij}e_j,
-\]
-把它记为 \(n\times m\) 矩阵 \(A=(a_{ij})\)。求 Kleisli 复合的矩阵，并解释这一有限对象子范畴与有限秩自由左 \(R\)-模范畴的关系。
+设 \(R\) 为含幺环，\(T\) 为集合上的自由左 \(R\)-模单子。在其 Kleisli 范畴中，令 \(X\) 为单元素集合，并以 \(e\) 记 \(TX\) 的自由生成元。对 \(a\in R\)，令 \(f_a:X\to TX\) 将唯一元素送到 \(ae\)。计算 \(f_b\star f_a\)，识别 \(X\) 的自同态幺半群及自同构群，并与 \(\operatorname{End}_R({}_RR)\) 比较。最后取域 \(k\) 上的矩阵环 \(R=M_2(k)\)，用矩阵单位 \(a=E_{12}\)、\(b=E_{21}\) 说明复合次序不能忽略。
 \end{exercise}
 \begin{solution}
-对 \(g:m\to T\ell\)，写 \(g(j)=\sum_qb_{jq}e_q\)，矩阵为 \(B\)。单子乘法展开形式线性组合，故
+代入 \(f_b\) 后，外层系数 \(a\) 保留在左边，得到
 \[
-(g\star f)(i)
-=\sum_{j,q}a_{ij}b_{jq}e_q.
+f_b\star f_a=f_{ab},\qquad 1_X^{\mathrm{Kl}}=f_1.
 \]
-所以复合的矩阵为 \(AB\)，而恒等的矩阵为 \(I_n\)。系数次序为 \(a_{ij}b_{jq}\)，在非交换环上也不能交换。
+因此按通常的“后复合乘在左边”约定，\(a\mapsto f_a\) 把自同态幺半群识别为 \(R\) 的乘法幺半群的相反幺半群。\(f_a\) 可逆，当且仅当存在 \(b\in R\) 满足 \(ab=ba=1\)，所以自同构群同构于 \((R^\times)^{\mathrm{op}}\)，也经 \(a\mapsto a^{-1}\) 同构于 \(R^\times\)。
 
-把 \(n\) 送到自由左模 \(R^n\)，把 \(f\) 延伸为左线性映射 \(\overline f:R^n\to R^m\)。若按行写系数 \((r_1,\ldots,r_n)\)，则输出系数为 \((r_1,\ldots,r_n)A\)；这与左线性完全相容。每个自由模同态由各基向量的像唯一决定，恰给出一个 Kleisli 态射，故得到全忠实函子，其对象为所有标准有限自由模。这就是\cref{b4:prop:A-kleisli-free-algebras}在自由模单子中的具体形式。
+\(f_a\) 延伸到自由左模 \(R\) 上的同态为右乘映射 \(\rho_a:r\mapsto ra\)，因为左线性迫使 \(\rho_a(r)=r\rho_a(1)\)。所有左模自同态都以此方式得到，且 \(\rho_b\circ\rho_a=\rho_{ab}\)，于是恢复 \(\operatorname{End}_R({}_RR)\cong R^{\mathrm{op}}\)。取所给矩阵单位，则
+\[
+f_b\star f_a=f_{E_{11}},\qquad
+f_a\star f_b=f_{E_{22}}.
+\]
+这两映射不同，正好检验了正文矩阵计算中外层系数乘在内层系数左边的次序。
 \end{solution}
 
 \begin{exercise}\label{b4:ex:A-lawvere-commutative-monoids}

@@ -9,10 +9,21 @@
 \section{求值、余求值与可对偶对象}
 \label{b4:sec:monoidal-duals}
 
-有限维向量空间的恒等映射可以写成 \(v\mapsto\sum_i e_i^*(v)e_i\)。这个公式同时用了向量与泛函：先把有限个配对 \(e_i\otimes e_i^*\) 放在一起，再对输入向量求值，就恢复原向量。求值映射本身对无限维空间也存在；真正依赖有限性的，是能否用一个张量记录足够多的配对并恢复恒等映射。
+有限维向量空间 \(V\) 的恒等映射可以写成 \(v\mapsto\sum_i e_i^*(v)e_i\)。这个公式同时用了向量与泛函：先把有限个配对 \(e_i\otimes e_i^*\) 放在一起，再对输入向量求值，就恢复原向量。虽然公式借助基写出，张量 \(\sum_i e_i\otimes e_i^*\) 却不依赖基：它在 \(V\otimes V^*\cong\operatorname{End}(V)\) 下对应恒等映射，这一同构将在\cref{b4:prop:projective-dual-internal-hom}中具体给出。求值映射本身对无限维空间也存在；真正依赖有限性的，是能否用一个张量记录这些配对并恢复恒等映射。
 
 \subsection{左右对偶与蛇形恒等式}
 \label{b4:subsec:monoidal-left-right-duals}
+
+给定求值 \(e:D\otimes X\to I\) 与余求值 \(b:I\to X\otimes D\)，我们希望新产生的一对因子经求值后能恢复原输入。先暂略结合与单位约束，这两种复合写成
+\[
+\begin{aligned}
+X&\xrightarrow{\ b\otimes1_X\ }X\otimes D\otimes X
+\xrightarrow{\ 1_X\otimes e\ }X,\\
+D&\xrightarrow{\ 1_D\otimes b\ }D\otimes X\otimes D
+\xrightarrow{\ e\otimes1_D\ }D.
+\end{aligned}
+\]
+精确定义需要把单位的插入、括号的改变与单位的删去一并写出。
 
 \begin{definition}\label{b4:def:monoidal-dual}
 设 \(\mathcal C\) 为幺半范畴，单位为 \(I\)，\(X,D\) 为其对象。给定态射
@@ -42,17 +53,9 @@ e:D\otimes X\longrightarrow I,
 \]
 分别为 \(1_X,1_E\)，则称 \((E,e',b')\) 为 \(X\) 的\term[you-duiou]{右对偶}[right dual]。若 \(X\) 同时有左对偶和右对偶，就称 \(X\) 为可对偶对象；若每个对象都可对偶，就称 \(\mathcal C\) 为\term[gangxing-fanchou]{刚性幺半范畴}[rigid monoidal category]。
 \end{definition}
+\symidx{\(X^*\)：幺半范畴中对象的左对偶}
 
-先暂略结合与单位约束，左对偶的两条蛇形复合分别是
-\[
-\begin{aligned}
-X&\xrightarrow{\ b\otimes1_X\ }X\otimes D\otimes X
-\xrightarrow{\ 1_X\otimes e\ }X,\\
-D&\xrightarrow{\ 1_D\otimes b\ }D\otimes X\otimes D
-\xrightarrow{\ e\otimes1_D\ }D.
-\end{aligned}
-\]
-第一行的原输入在最右边，\(b\) 新产生左边的 \(X,D\)；\(e\) 消去中间的 \(D\) 与原输入，留下新产生的 \(X\)。第二行的原输入在最左边，\(b\) 新产生右边的 \(X,D\)；\(e\) 消去原输入与中间的 \(X\)，留下新产生的 \(D\)。要求这两种配对都恢复原输入，才得到恒等态射。在有限维向量空间中，这两行逐步成为
+前面的略写式中，第一行的原输入在最右边，\(b\) 新产生左边的 \(X,D\)；\(e\) 消去中间的 \(D\) 与原输入，留下新产生的 \(X\)。第二行的原输入在最左边，\(b\) 新产生右边的 \(X,D\)；\(e\) 消去原输入与中间的 \(X\)，留下新产生的 \(D\)。要求第一行恢复 \(X\) 的输入，并不能自动保证第二行恢复 \(D\) 的输入；两条条件分别保证下面的转置与逆转置在两个方向互为逆。在有限维向量空间中，这两行逐步成为
 \[
 \begin{aligned}
 x&\longmapsto\sum_i e_i\otimes e_i^*\otimes x
@@ -74,7 +77,7 @@ X\longrightarrow X\otimes E\otimes X\longrightarrow X,
 
 \ProseParagraphBreak
 
-两个方向不能在一般幺半范畴中混用。左对偶的求值把 \(D\) 放在 \(X\) 左边，余求值却把它放在右边。\(D\) 是 \(X\) 的左对偶时，同一组态射使 \(X\) 成为 \(D\) 的右对偶；这还没有说明 \(X\) 自己有右对偶。在对称幺半范畴中，交换因子可以把两种方向互换。本节的侧别约定与\cite[Definitions 2.10.1--2.10.2, p. 40]{EtingofEtAl2015TensorCategories}一致。
+两个方向不能在一般幺半范畴中混用。左对偶的求值把 \(D\) 放在 \(X\) 左边，余求值却把它放在右边。\(D\) 是 \(X\) 的左对偶时，把右对偶定义中的 \(X,E\) 分别换成 \(D,X\)，所需的求值 \(D\otimes X\to I\) 与余求值 \(I\to X\otimes D\) 恰好就是同一组 \(e,b\)，两条蛇形恒等式也只是交换排列。因此 \(X\) 成为 \(D\) 的右对偶；这还没有说明 \(X\) 自己有右对偶。在对称幺半范畴中，交换因子可以把两种方向互换。本节的侧别约定与\cite[Definitions 2.10.1--2.10.2, p. 40]{EtingofEtAl2015TensorCategories}一致。
 
 \subsection{对偶产生的伴随}
 \label{b4:subsec:monoidal-dual-adjunction}
@@ -99,15 +102,37 @@ X\longrightarrow X\otimes E\otimes X\longrightarrow X,
 \circ(g\otimes1_X).
 \end{aligned}
 \]
-这两式的定义域和陪域分别为 \(A\to B\otimes D\)、\(A\otimes X\to B\)。记\eqref{b4:eq:monoidal-left-snakes}的两条复合为 \(s_X,s_D\)。将 \(\Phi(f)\) 代入 \(\Psi\)，先用结合约束的自然性把 \(f\) 移到求值之后，再用五边形把四个因子的括号统一，三角等式删去单位约束，得到
+这两式的定义域和陪域分别为 \(A\to B\otimes D\)、\(A\otimes X\to B\)。为辨认两次复合中产生和消去的因子，先暂略结合与单位约束。双函子性允许把作用于不同因子的态射交换施行，因而
 \[
-\Psi\Phi(f)=f\circ(1_A\otimes s_X)=f.
+\begin{aligned}
+\Psi\Phi(f)
+&=(1_B\otimes e)\circ(f\otimes1_D\otimes1_X)
+  \circ(1_A\otimes b\otimes1_X)\\
+&=f\circ\bigl(1_A\otimes
+  [(1_X\otimes e)\circ(b\otimes1_X)]\bigr)=f.
+\end{aligned}
 \]
-这里剩下的三个因子按次序为 \(X,D,X\)，插入的是 \(b\)，消去的是 \(e\)，所以所用的是第一条蛇形恒等式。另一个复合按同样的自然性与五边形整理，剩下 \(D,X,D\)，因而
+这里 \(f\) 对前两个因子施行，求值对后两个因子施行；把 \(f\) 移到最后以后，留在其前面的正是恢复 \(X\) 的第一条蛇形。反方向则为
 \[
+\begin{aligned}
+\Phi\Psi(g)
+&=(1_B\otimes e\otimes1_D)\circ(g\otimes1_X\otimes1_D)
+  \circ(1_A\otimes b)\\
+&=(1_B\otimes e\otimes1_D)\circ(1_B\otimes1_D\otimes b)
+  \circ g\\
+&=\bigl(1_B\otimes
+  [(e\otimes1_D)\circ(1_D\otimes b)]\bigr)\circ g=g,
+\end{aligned}
+\]
+其中恢复的是 \(g\) 所产生的 \(D\)，用到第二条蛇形。
+
+记\eqref{b4:eq:monoidal-left-snakes}的两条复合为 \(s_X:X\to X\)、\(s_D:D\to D\)。在原来的非严格幺半范畴中，结合约束的自然性使上述移动与重括号相容；五边形把四个因子的重括号复合统一，三角等式使插入、删去单位的复合相容。这样约束被整理成共同的括号与单位位置，所余的复合分别恰是 \(s_X,s_D\)。恢复全部约束后，两式为
+\[
+\Psi\Phi(f)=f\circ(1_A\otimes s_X)=f,
+\qquad
 \Phi\Psi(g)=(1_B\otimes s_D)\circ g=g.
 \]
-两式均只用了定义中的相容等式，证明互逆。
+故 \(\Phi,\Psi\) 互逆。
 
 对 \(a:A'\to A\)、\(v:B\to B'\)，双函子性及约束自然性直接给出
 \[
@@ -131,10 +156,24 @@ e'\circ(t\otimes1_X)=e,
 \operatorname{Hom}_{\mathcal C}(A,D)
 \cong\operatorname{Hom}_{\mathcal C}(A\otimes X,I).
 \]
-所以 \(D,D'\) 连同求值表示同一个函子，存在保持求值的唯一同构 \(t\)。把 \((1_X\otimes t)\circ b\) 代入 \(D'\) 所给的伴随逆，其像由第一条蛇形恒等式为 \(\lambda_X:I\otimes X\to X\)，与 \(b'\) 的像相同。伴随双射的单射性给出第二个等式。右对偶的证明使用相反的张量次序，完全得到同样的可表性和唯一性。
+所以 \(D,D'\) 连同求值表示同一个函子，存在保持求值的唯一同构 \(t\)。还需检验它保持余求值。取伴随双射中的 \(A=I,B=X\)，使用 \(D'\) 得到逆转置
+\[
+\Psi':\operatorname{Hom}_{\mathcal C}(I,X\otimes D')
+\longrightarrow\operatorname{Hom}_{\mathcal C}(I\otimes X,X).
+\]
+求值相容性 \(e'\circ(t\otimes1_X)=e\) 及 \(\alpha\) 的自然性给出
+\[
+\begin{aligned}
+\Psi'((1_X\otimes t)\circ b)
+&=\rho_X\circ(1_X\otimes e)\circ\alpha_{X,D,X}
+  \circ(b\otimes1_X)\\
+&=\lambda_X=\Psi'(b').
+\end{aligned}
+\]
+最后一个等式分别使用 \(D,D'\) 的第一条蛇形恒等式。两条从 \(I\) 到 \(X\otimes D'\) 的态射具有同一个逆转置，故由双射的单射性得到余求值相容性。右对偶的证明使用相反的张量次序，得到相应的可表性和唯一性。
 \end{proof}
 
-这也说明，在闭范畴中存在 \([X,I]\) 还不够保证 \(X\) 可对偶。可对偶要求更强的事实：所有 \([X,B]\) 都由同一个对偶对象张量 \(B\) 得到。
+这也说明，在闭范畴中存在 \([X,I]\) 还不够保证 \(X\) 可对偶。闭结构总给出求值 \([X,I]\otimes X\to I\)，却未给出满足两条蛇形恒等式的余求值 \(I\to X\otimes[X,I]\)。若 \(X\) 有左对偶，则还满足更强的事实：所有 \([X,B]\) 都由同一个对偶对象张量 \(B\) 得到。
 
 \subsection{可对偶模与有限生成投射性}
 \label{b4:subsec:monoidal-projective-duals}
@@ -154,14 +193,20 @@ p=\sum_{i=1}^r\varphi_i(p)p_i\qquad(p\in P),
 则余求值由 \(b(1)=\sum_i p_i\otimes\varphi_i\) 给出。右对偶的求值与余求值交换相应因子的次序。
 \end{theorem}
 \begin{proof}
-先设左对偶为 \((D,e,b)\)。将 \(b(1)\in P\otimes_RD\) 写成有限和 \(\sum_i p_i\otimes d_i\)，令 \(\varphi_i(p)=e(d_i\otimes p)\)。求值线性说明 \(\varphi_i\in P^\vee\)。第一条蛇形恒等式逐元素成为\eqref{b4:eq:monoidal-finite-dual-basis}，因此 \(p_i\) 生成 \(P\)。定义
+先设左对偶为 \((D,e,b)\)。代数张量积中的每个元素按定义都是有限个纯张量的和，故可写
+\(b(1)=\sum_{i=1}^r p_i\otimes d_i\)；这里 \(r\) 自动有限，尚未对 \(P\) 作有限生成假设。令 \(\varphi_i(p)=e(d_i\otimes p)\)，求值线性说明 \(\varphi_i\in P^\vee\)。第一条蛇形恒等式作用于 \(p\) 时为
+\[
+p\longmapsto\sum_i p_i\otimes d_i\otimes p
+\longmapsto\sum_i e(d_i\otimes p)p_i=p.
+\]
+这就是\eqref{b4:eq:monoidal-finite-dual-basis}，因此 \(p_i\) 生成 \(P\)。定义
 \[
 q:R^r\longrightarrow P,\quad(a_i)\longmapsto\sum_i a_ip_i,
 \qquad j:P\longrightarrow R^r,\quad p\longmapsto(\varphi_i(p))_i.
 \]
-有 \(qj=1_P\)。于是 \(P\) 是有限秩自由模的直和因子，故投射。这里也可直接验证提升性质：给满射 \(M\to N\) 及 \(P\to N\)，先与 \(q\) 复合并提升 \(R^r\) 的各基向量，再与 \(j\) 复合，就得到原映射的提升。
+有 \(qj=1_P\)，所以 \(j\) 为分裂单射、\(q\) 为分裂满射，且 \(R^r=j(P)\oplus\ker q\)。于是 \(P\) 是有限秩自由模的直和因子，故投射。这里也可直接验证提升性质：给满射 \(M\to N\) 及 \(P\to N\)，先与 \(q\) 复合并提升 \(R^r\) 的各基向量，再与 \(j\) 复合，就得到原映射的提升。
 
-第二条蛇形恒等式还给出 \(d=\sum_i e(d\otimes p_i)d_i\)。所以映射
+第一条蛇形已经给出有限生成投射性；第二条要进一步识别 \(D\) 是否恰好是全部线性泛函构成的模。它给出 \(d=\sum_i e(d\otimes p_i)d_i\)，所以映射
 \[
 \begin{aligned}
 D&\longrightarrow P^\vee,&d&\longmapsto(p\longmapsto e(d\otimes p)),\\
@@ -174,8 +219,10 @@ P^\vee&\longrightarrow D,&\varphi&\longmapsto\sum_i\varphi(p_i)d_i
 \[
 \sum_i\varphi(p_i)\varphi_i=\varphi,
 \]
-因为两边在任意 \(p\) 上取值都等于 \(\varphi(p)\)。故得到左对偶。将求值、余求值中的两个因子互换，右对偶的两条蛇形恒等式也分别成为这两个已证公式，所以 \(P\) 可对偶。
+因为两边在任意 \(p\) 上取值都等于 \(\varphi(p)\)。故得到左对偶。由于此处的模范畴对称，可以交换因子，取右对偶的求值 \(e'(p\otimes\varphi)=\varphi(p)\)、余求值 \(b'(1)=\sum_i\varphi_i\otimes p_i\)。右对偶的两条蛇形恒等式也分别成为这两个已证公式，所以 \(P\) 可对偶。
 \end{proof}
+
+取 \(X=P,D=P^\vee\)，\cref{b4:prop:monoidal-dual-adjunction}的同构 \([X,B]\cong B\otimes D\) 在模范畴中便成为下面的同构：可对偶性使内部 Hom 能用张量积表示。
 
 \begin{proposition}\label{b4:prop:projective-dual-internal-hom}
 设 \(R\) 为交换含幺环，\(P\) 为有限生成投射 \(R\) 模，\(Y\) 为任意 \(R\) 模。自然映射
@@ -196,7 +243,7 @@ P^\vee&\longrightarrow D,&\varphi&\longmapsto\sum_i\varphi(p_i)d_i
 \end{proof}
 
 \begin{example}\label{b4:exm:dualizable-vector-spaces}
-设 \(k\) 为域。向量空间可对偶，当且仅当有限维。对基 \(e_1,\ldots,e_r\) 及对偶基 \(e_1^*,\ldots,e_r^*\)，余求值为 \(1\mapsto\sum_i e_i\otimes e_i^*\)。无限维空间虽有代数对偶与求值，却没有满足蛇形恒等式的余求值：任何候选张量只涉及有限多个向量，第一条蛇形等式便迫使这些向量生成整个空间。因而全部向量空间的张量范畴闭但不刚性，有限维向量空间的张量范畴则刚性。
+设 \(k\) 为域。向量空间可对偶，当且仅当有限维。对基 \(e_1,\ldots,e_r\) 及对偶基 \(e_1^*,\ldots,e_r^*\)，余求值为 \(1\mapsto\sum_i e_i\otimes e_i^*\)。对任意维数的 \(V,W\)，内部 Hom \([V,W]=\operatorname{Hom}_k(V,W)\) 都存在，求值 \(V^*\otimes V\to k\) 也总存在。无限维时失败的是满足蛇形恒等式的余求值 \(k\to V\otimes V^*\)：其在 \(1\) 上的值只涉及有限多个向量，第一条蛇形等式便会迫使这些向量生成整个空间。因而全部向量空间的张量范畴闭但不刚性，有限维向量空间的张量范畴则刚性。
 \end{example}
 
 \begin{example}\label{b4:exm:torsion-no-dual}

@@ -17,13 +17,13 @@
 固定小范畴 \(\mathcal C,\mathcal D\)，从 \(\mathcal C\) 到 \(\mathcal D\) 的函子与它们之间的自然变换组成函子范畴 \(\operatorname{Fun}(\mathcal C,\mathcal D)\)。它的对象是函子，态射集合是 \(\operatorname{Nat}(F,G)\)。因此，用一个范畴代替普通的 Hom 集，就能记录这两层箭头。这种结构可对照\cite[Section 1.7, Lemma 1.7.7 and Definition 1.7.8]{Riehl2016CategoryTheory}。
 
 \begin{definition}\label{b4:def:F-strict-two-category}
-给定对象类 \(\operatorname{Ob}\mathcal K\)，每对对象 \(X,Y\) 对应一个局部小范畴 \(\operatorname{Hom}_{\mathcal K}(X,Y)\)。给定复合函子
+给定对象类 \(\operatorname{Ob}\mathcal K\)，每对对象 \(X,Y\) 对应一个局部小范畴 \(\operatorname{Hom}_{\mathcal K}(X,Y)\)。其中 Hom 范畴的对象称为\term[yi-taishe]{1态射}[1-morphism]，记为 \(f:X\rightarrow Y\)；Hom 范畴的态射称为\term[er-taishe]{2态射}[2-morphism]，记为 \(\alpha:f\Rightarrow g\)。\(f\) 在 Hom 范畴中的恒等态射记为 \(1_f:f\Rightarrow f\)。给定复合函子
 \[
 m_{X,Y,Z}:\operatorname{Hom}_{\mathcal K}(Y,Z)
 \times\operatorname{Hom}_{\mathcal K}(X,Y)
 \longrightarrow\operatorname{Hom}_{\mathcal K}(X,Z),
 \]
-以及每个 \(\operatorname{Hom}_{\mathcal K}(X,X)\) 中的对象 \(1_X\)。把三重积按分量识别后，要求两种复合严格相等为函子：
+以及每个 \(\operatorname{Hom}_{\mathcal K}(X,X)\) 中的对象 \(1_X\)。这里 \(1_X:X\rightarrow X\) 是1态射，它自身的恒等2态射为 \(1_{1_X}:1_X\Rightarrow1_X\)。把三重积按分量识别后，要求两种复合严格相等为函子：
 \[
 m_{W,X,Z}\circ(m_{X,Y,Z}\times1)
 =m_{W,Y,Z}\circ(1\times m_{W,X,Y}).
@@ -32,10 +32,17 @@ m_{W,X,Z}\circ(m_{X,Y,Z}\times1)
 \[
 m_{X,Y,Y}(1_Y,-),\qquad m_{X,X,Y}(-,1_X)
 \]
-都严格等于 \(\operatorname{Hom}_{\mathcal K}(X,Y)\) 上的恒等函子。这里插入对象时也插入该对象的恒等态射。满足这些条件的数据组成一个\term[yange-er-fanchou]{严格2范畴}[strict 2-category]。其中 Hom 范畴的对象称为\term[yi-taishe]{1态射}[1-morphism]，记为 \(f:X\rightarrow Y\)；Hom 范畴的态射称为\term[er-taishe]{2态射}[2-morphism]，记为 \(\alpha:f\Rightarrow g\)。对象类为集合且每个 Hom 范畴都小时，称其为小严格2范畴。
+都严格等于 \(\operatorname{Hom}_{\mathcal K}(X,Y)\) 上的恒等函子。插入对象 \(1_Y\)、\(1_X\) 时，在态射上分别插入 \(1_{1_Y}\)、\(1_{1_X}\)，所以对每个2态射 \(\alpha:f\Rightarrow g\)，单位律还要求
+\[
+m_{X,Y,Y}(1_{1_Y},\alpha)=\alpha
+=m_{X,X,Y}(\alpha,1_{1_X}).
+\]
+满足这些条件的数据组成一个\term[yange-er-fanchou]{严格2范畴}[strict 2-category]。对象类为集合且每个 Hom 范畴都小时，称其为小严格2范畴。
 \end{definition}
+\symidx{\(\operatorname{Hom}_{\mathcal K}(X,Y)\)：严格2范畴中的 Hom 范畴}
 
-这里的 \(\operatorname{Hom}_{\mathcal K}(X,Y)\) 是范畴，它自身的态射集合为 \(\operatorname{Hom}_{\operatorname{Hom}_{\mathcal K}(X,Y)}(f,g)\)。两个1态射只有源和目标都相同，才能有它们之间的2态射。Hom 范畴中的复合记为 \(\beta\cdot\alpha\)，称为垂直复合；\(f\) 的恒等2态射记为 \(1_f\)。
+这里的 \(\operatorname{Hom}_{\mathcal K}(X,Y)\) 是范畴，它自身的态射集合为 \(\operatorname{Hom}_{\operatorname{Hom}_{\mathcal K}(X,Y)}(f,g)\)。两个1态射只有源和目标都相同，才能有它们之间的2态射。Hom 范畴中的复合记为 \(\beta\cdot\alpha\)，称为垂直复合。
+\symidx{\(\beta\cdot\alpha\)：2 态射的垂直复合}
 
 \ProseParagraphBreak
 
@@ -50,6 +57,7 @@ m_{X,Y,Y}(1_Y,-),\qquad m_{X,X,Y}(-,1_X)
 g*f\Longrightarrow g'*f'.
 \]
 这就是2态射的水平复合。只改变一个因子时，分别得到 \(1_g*\alpha\)、\(\beta*1_f\)。
+\symidx{\(\beta*\alpha\)：2 态射的水平复合}
 
 \ProseParagraphBreak
 把两组可垂直复合的2态射并排放置，便能同时看到两种拼接方向：
@@ -107,13 +115,20 @@ X\arrow[r,bend left=65,"f_0" near start,""{name=Fzero}]
 \]
 以函子复合为1态射的水平复合，以自然变换的水平复合及垂直复合为2态射的两种复合，则得到严格2范畴 \(\mathbf{Cat}\)。其单位1态射为恒等函子。
 \end{proposition}
+\symidx{\(\mathbf{Cat}\)：小范畴、函子与自然变换构成的严格2范畴}
 \begin{proof}
-对小范畴 \(\mathcal C,\mathcal D\)，\cref{b4:prop:functor-category-locally-small}保证 \(\operatorname{Fun}(\mathcal C,\mathcal D)\) 小，其复合与恒等由\cref{b4:prop:vertical-composition}给出。这里 \(\theta\cdot\eta\) 就是前文记作 \(\theta\eta\) 的自然变换，\(H*F=HF\) 就是函子复合。由\cref{b4:prop:horizontal-composition}，水平复合的分量为
+小范畴 \(\mathcal C,\mathcal D\) 的对象与态射都组成集合。每个函子 \(\mathcal C\rightarrow\mathcal D\) 由对象映射与态射映射指定，所以全部函子构成集合
 \[
-(\alpha*\eta)_X=\alpha_{F_1X}H_0(\eta_X),
-\qquad \eta:F_0\Rightarrow F_1,\quad\alpha:H_0\Rightarrow H_1.
+(\operatorname{Ob}\mathcal D)^{\operatorname{Ob}\mathcal C}
+\times(\operatorname{Mor}\mathcal D)^{\operatorname{Mor}\mathcal C}
 \]
-此式先给出复合在2态射上的作用，而且
+的一个子集。由\cref{b4:prop:functor-category-locally-small}，固定函子 \(F,G\) 后，\(\operatorname{Nat}(F,G)\) 是分量集合的乘积中满足自然性条件的子集，也是集合。所有函子对组成集合，再把这些自然变换集合按函子对取不交并，得到的全部态射仍是集合。因此 \(\operatorname{Fun}(\mathcal C,\mathcal D)\) 小，其复合与恒等由\cref{b4:prop:vertical-composition}给出。这里 \(\theta\cdot\eta\) 就是前文记作 \(\theta\eta\) 的自然变换，\(H*F=HF\) 就是函子复合。对 \(\eta:F_0\Rightarrow F_1\)、\(\alpha:H_0\Rightarrow H_1\)，\cref{b4:prop:horizontal-composition}给出水平复合的两种分量表达：
+\[
+(\alpha*\eta)_X
+=\alpha_{F_1X}\circ H_0(\eta_X)
+=H_1(\eta_X)\circ\alpha_{F_0X}.
+\]
+第二个等号就是 \(\alpha\) 对态射 \(\eta_X:F_0X\rightarrow F_1X\) 的自然性。它使先改变内侧函子与先改变外侧函子的两种复合相等，对应于交换律命题中的两个分解。此式给出复合在2态射上的作用，而且
 \[
 (1_H*1_F)_X=1_{H(FX)}
 \]
@@ -141,4 +156,4 @@ X\arrow[r,bend left=65,"f_0" near start,""{name=Fzero}]
 最后，左右插入恒等函子的恒等变换，水平复合的分量仍是 \(\eta_X\)。故结合与单位要求都作为函子等式成立。
 \end{proof}
 
-在 \(\mathbf{Cat}\) 中，1态射的恒等与2态射的恒等属于不同层次：\(\operatorname{Id}_{\mathcal C}\) 是函子，\(1_F\) 是自然变换。自然同构是可逆的2态射，因而能比较两个不同的函子；它不要求这两个1态射相等。
+在 \(\mathbf{Cat}\) 中，单位1态射 \(1_{\mathcal C}=\operatorname{Id}_{\mathcal C}\) 是恒等函子，而 \(1_{1_{\mathcal C}}=1_{\operatorname{Id}_{\mathcal C}}\) 是它的恒等自然变换，后者在对象 \(X\) 处的分量为 \(1_X\)。自然同构是可逆的2态射，因而能比较两个不同的函子；它不要求这两个1态射相等。

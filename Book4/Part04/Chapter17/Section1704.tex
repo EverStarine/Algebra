@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 17.4 映射锥的函子性与选择
 % 纲要标签：b4:sec:1604
-% 纲要位置：计划纲要.md，第 2913 行。
+% 纲要位置：计划纲要.md，第 3674 行。
 
 \section{映射锥的函子性与选择}
 \label{b4:sec:1604}
@@ -24,7 +24,20 @@
 在复形层面，选定 \(f\) 后，\(\operatorname{Cone}(f)=B\oplus A[1]\) 有明确公式。若方块 \(bf=f'a\) 严格交换，则 \((y,x)\mapsto(by,ax)\) 给出两个锥之间的映射，而且保持复合。因此严格交换方块构成的箭头范畴上确实有锥函子。
 
 \ProseParagraphBreak
-转到同伦范畴，方块只要求 \(bf-f'a=\mathrm{d}h+h\mathrm{d}\)。构造锥之间的映射便需要选 \(h\)，得到 \((y,x)\mapsto(by+hx,ax)\)。换一个同伦，结果未必同伦。这正是 (TR3) 只要求存在补全的原因：先忘掉同伦本身，再仅凭四条边，通常无法恢复原先的锥映射。
+转到同伦范畴，方块只要求 \(bf-f'a=\mathrm{d}H+H\mathrm{d}\)。构造锥之间的映射便需要选 \(H\)，得到 \(c_H(y,x)=(by+Hx,ax)\)。换一个同伦，结果未必同伦。这正是 (TR3) 只要求存在补全的原因：先忘掉同伦本身，再仅凭四条边，通常无法恢复原先的锥映射。
+
+\ProseParagraphBreak
+选择还须与复合相容。设后一方块的分量为 \(a':A'\to A''\)、\(b':B'\to B''\)，并选 \(K\) 满足 \(b'f'-f''a'=\mathrm{d}K+K\mathrm{d}\)。两个锥映射的复合为
+\[
+ c_Kc_H(y,x)=\bigl(b'b y+(b'H+Ka)x,\,a'a x\bigr).
+\]
+其中 \(b'H+Ka\) 恰是复合方块所需的同伦，因为
+\[
+ b'b f-f''a'a
+ =b'(bf-f'a)+(b'f'-f''a')a
+ =\mathrm{d}(b'H+Ka)+(b'H+Ka)\mathrm{d}.
+\]
+恒等方块取零同伦，复合方块取 \(b'H+Ka\)，便使上述锥映射保持恒等与复合。普通同伦范畴中的交换方块没有指定这些同伦，因此还不能仅凭四条边确定这样的相容选择。
 
 \subsection{同构与典范选择}
 \label{b4:subsec:1604:02}
@@ -33,11 +46,11 @@
 \[
  X\xrightarrow{0}Y\longrightarrow Y\oplus X[1]\longrightarrow X[1].
 \]
-对每个 \(\lambda\in k\)，矩阵
+这里 \(X^1=k\)、\(Y^0=k\)，其余分量为零。固定 \(a=1_X,b=1_Y\) 后，同伦条件为 \(\mathrm{d}H+H\mathrm{d}=0\)；由于微分全为零，次数负一的 \(H^1:X^1\to Y^0\) 可以任取乘 \(\lambda\)。代入锥映射公式，便得到矩阵
 \[
  c_\lambda=\begin{pmatrix}1&\lambda\\0&1\end{pmatrix}
 \]
-都与包含和投影相容，因此 \((1_X,1_Y,c_\lambda)\) 是三角自同构。不同 \(\lambda\) 在同伦范畴中仍不同，因为次数零复形之间没有能改变映射的非零链同伦。
+它与包含和投影相容，逆为 \(c_{-\lambda}\)，因此 \((1_X,1_Y,c_\lambda)\) 是三角自同构。不同 \(\lambda\) 在同伦范畴中仍不同，因为次数零复形之间没有能改变映射的非零链同伦。
 
 \ProseParagraphBreak
 这个例子中，固定前两个分量仍得到不同的第三分量，因而相容同构没有唯一性。若要让锥映射随方块函子性地变化，还须指定相容的选择，并检验这些选择保持恒等态射与复合。
@@ -45,7 +58,36 @@
 \subsection{DG 增强的动机}
 \label{b4:subsec:1604:03}
 
-要保留上面的 \(h\)，可以不把 Hom 立即压缩成同伦类，而保存整个 Hom 复形。零次余圈是复形映射，次数负一的元素是候选同伦，等式 \(\mathrm{d}h=f-g\) 记录两映射为何同伦。进一步的负次数还记录同伦之间的相容关系。
+要保留上面的 \(H\)，可以不把 Hom 立即压缩成同伦类，而保存整个 Hom 复形。零次余圈是复形映射，次数负一的元素是候选同伦，等式 \(\mathrm{d}_{\operatorname{Hom}}H=f-g\) 记录两映射为何同伦。次数负二的元素则能说明两个同伦为何诱导同伦的锥映射。
+
+\begin{proposition}\label{b4:prop:cone-higher-homotopy}
+设 \(\mathcal A\) 为局部小加性范畴，\(f:A\to B\)、\(f':A'\to B'\)、\(a:A\to A'\)、\(b:B\to B'\) 为其中的复形映射。设次数负一的映射族 \(H,H':A\to B'\) 满足
+\[
+ bf-f'a=\mathrm{d}_{B'}H+H\mathrm{d}_A
+       =\mathrm{d}_{B'}H'+H'\mathrm{d}_A.
+\]
+若存在次数负二的映射族 \(J:A\to B'\)，使
+\[
+ H-H'=\mathrm{d}_{B'}J-J\mathrm{d}_A,
+\]
+则 \(c_H,c_{H'}:C_f\to C_{f'}\) 链同伦。
+\end{proposition}
+\begin{proof}
+两个锥映射之差为 \((y,x)\mapsto((H-H')x,0)\)。取次数负一的映射族
+\[
+ L^n:C_f^n\longrightarrow C_{f'}^{n-1},\qquad
+ L^n(y,x)=(J^{n+1}x,0).
+\]
+锥微分的第二分量为 \(-\mathrm{d}_A\)，因此
+\[
+ (\mathrm{d}_{C_{f'}}L+L\mathrm{d}_{C_f})(y,x)
+ =\bigl((\mathrm{d}_{B'}J-J\mathrm{d}_A)x,0\bigr)
+ =(c_H-c_{H'})(y,x).
+\]
+这就是所需链同伦。
+\end{proof}
+
+两个同伦之差 \(H-H'\) 自动是 Hom 复形中的负一次余圈；命题中的条件进一步要求它是余边。前面的 \(c_\lambda\) 例子表明，仅有余圈条件并不足以使锥映射同伦：那里微分为零，非零的 \(H-H'\) 不可能是余边。
 
 \ProseParagraphBreak
 这给出\term[DG-zengqiang]{DG 增强}[DG enhancement]的动机：一个普通范畴之外，还保留态射复形及与微分相容的复合。取这些复形的零次上同调后，才回到同伦范畴。\chapref{b4:ch:20}将给出正式定义和实例。

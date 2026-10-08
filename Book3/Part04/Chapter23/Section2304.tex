@@ -5,18 +5,23 @@
 \section{尖点正规化、正则性与仿射覆盖}
 \label{b3:sec:2304}
 
-比较环同态的局部性质时，必须同时写清底环、所考察的素点与纤维。尖点正规化把微分模非零、特殊纤维长度改变和原点外同构分成三个可以分别核验的计算。
+比较环同态的局部性质时，必须同时写清底环、所考察的素点与纤维。尖点正规化中，微分模检测非分歧性，有限平坦模在局部环上的自由性约束纤维长度，倒置参数后的环等式则检验原点外的同构。三个结论须分别计算。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
+%
 % * 连续计算特征零尖点 (A=k[t^2,t^3]subseteq B=k[t])：相对微分模 (B/(t),mathrm{d}t)、长度二的特殊纤维及原点外同构
-% * 用有限生成平坦模在局部环上自由及一般秩一证明原点处不平坦；以对照表区分参数环正则性与不同底环下的同态性质
+% * 用有限生成平坦模的局部自由性比较泛纤维秩与闭纤维维数，证明原点处不平坦；非约化纤维本身不排除平坦性
 % * 可分超越基与余切空间单射的完整引理；完美基域上有限型代数正则与光滑的逐点比较
-% * 非完美基域的不可分反例；光滑性不要求每个闭点的剩余域均可分
-% * 仿射 Zariski 基本开覆盖、étale 覆盖及 fppf 覆盖；联合满射在基变换和复合下保持，与交叠及忠实平坦下降的联系
+% * 非完美基域上的正则非光滑域及光滑多项式代数的不可分闭点；完美性在比较证明中的具体用途
+% * 仿射覆盖族的共同忠实性、基变换及复合；平方覆盖的自交叠与第12章下降数据相联系
+%
 % ---
+%
 
 \subsection{尖点正规化的局部计算}
 \label{b3:subsec:2304:01}
+\label{b3:subsec:cusp-normalization-setup}
+% 当前显示小节：23.4.1；数字键沿用原标签，语义键与之同指。
 
 以下尖点计算中固定特征零域 \(k\)，考察平面尖点及其参数化
 \[
@@ -44,6 +49,8 @@ A\cong k[x,y]/(y^2-x^3),\qquad B=A+At,
 
 \subsection{尖点正规化的微分模与非分歧性}
 \label{b3:subsec:2304:04}
+\label{b3:subsec:cusp-normalization-differentials}
+% 当前显示小节：23.4.2；数字键沿用原标签，语义键与之同指。
 
 \begin{proposition}\label{b3:prop:cusp-relative-differentials}
 设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)。则作为 \(B\) 模，
@@ -59,13 +66,15 @@ B\otimes_A\Omega_{A/k}\longrightarrow\Omega_{B/k}
 \longrightarrow\Omega_{B/A}\longrightarrow0.
 \]
 \(\Omega_{B/k}=B\,\mathrm{d}t\)，而 \(A\) 由 \(t^2,t^3\) 在 \(k\) 上生成，所以第一箭头的像由
-\(\mathrm{d}(t^2)=2t\,\mathrm{d}t\)、\(\mathrm{d}(t^3)=3t^2\,\mathrm{d}t\) 生成。特征零使 \(2\) 可逆，故像为 \((t)\,\mathrm{d}t\)，得到所述商模。在 \((t)\) 处局部化后，这个模仍同构于 \(k\,\mathrm{d}t\)，不为零，所以该点不满足形式非分歧判据，也不满足非分歧条件。
+\(\mathrm{d}(t^2)=2t\cdot\mathrm{d}t\)、\(\mathrm{d}(t^3)=3t^2\cdot\mathrm{d}t\) 生成。特征零使 \(2\) 可逆，故像为 \((t)\,\mathrm{d}t\)，得到所述商模。在 \((t)\) 处局部化后，这个模仍同构于 \(k\,\mathrm{d}t\)，不为零，所以该点不满足形式非分歧判据，也不满足非分歧条件。
 \end{proof}
 
 这一计算说明参数化在尖点处有一个不能被底环中的函数检测的一阶方向：对平方零参数 \(\varepsilon\)，代入 \(t=\varepsilon\) 后，\(t^2,t^3\) 都变成零，但 \(t\) 本身未必为零。因此底环只看到同一个点，上方却存在不同的无穷小变化。
 
 \subsection{尖点纤维的长度与非平坦性}
 \label{b3:subsec:2304:05}
+\label{b3:subsec:cusp-normalization-fiber}
+% 当前显示小节：23.4.3；数字键沿用原标签，语义键与之同指。
 
 \begin{proposition}\label{b3:prop:cusp-fiber-nonflat}
 设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)，\(\mathfrak m=(t^2,t^3)\)、\(\mathfrak n=(t)\)。则特殊纤维为
@@ -74,20 +83,22 @@ B\otimes_A A/\mathfrak m
 \cong B/(t^2,t^3)B
 \cong k[t]/(t^2),
 \]
-其长度为二；而一般纤维为 \(k(t)\)，维数为一。因此局部映射 \(A_{\mathfrak m}\to B_{\mathfrak n}\) 不平坦。
+其长度为二。令 \(K=\operatorname{Frac}(A)=k(t)\)，零素理想处的泛纤维为 \(B\otimes_AK=K\)，作为 \(K\) 向量空间的维数为一。因此局部映射 \(A_{\mathfrak m}\to B_{\mathfrak n}\) 不平坦。
 \end{proposition}
 \begin{proof}
-特殊纤维的同构直接由商与张量积相容得到；\(1,t\) 构成其 \(k\) 基，且唯一极大理想 \((t)\) 的平方为零，所以长度为二。令 \(K=\operatorname{Frac}(A)=k(t)\)。由于 \(t=t^3/t^2\)，有 \(B\otimes_AK=K\)，故一般秩为一。
+特殊纤维的同构直接由商与张量积相容得到；\(1,t\) 构成其 \(k\) 基，且唯一极大理想 \((t)\) 的平方为零，所以长度为二。令 \(K=\operatorname{Frac}(A)=k(t)\)。由于 \(t=t^3/t^2\)，有 \(B\otimes_AK=K\)，故泛点秩为一。
 
 注意 \(B\otimes_AA_{\mathfrak m}\) 是有限 \(A_{\mathfrak m}\) 代数，其极大理想只能位于 \(\mathfrak m\) 上方，而那里唯一的素理想是 \(\mathfrak n\)。因此这个有限代数是局部环，并等于 \(B_{\mathfrak n}\)：\(B\) 中 \(\mathfrak n\) 外元素在它里面全为单位。
 
 若 \(B_{\mathfrak n}\) 在 \(A_{\mathfrak m}\) 上平坦，则它作为有限生成平坦模，由\cref{b3:lem:finite-flat-local-free}必须自由，设秩为 \(r\)。与 \(K\) 张量给出 \(r=1\)。再与剩余域 \(k\) 张量，便应得到一维 \(k\) 空间，却与刚算出的二维纤维矛盾。因此局部映射不平坦。
 \end{proof}
 
-这里比较纤维长度时，有限生成平坦模在局部环上自由是必不可少的论证。单说“纤维大小发生变化”不足以证明一般映射不平坦；必须把这种变化与平坦性在当前有限条件下的具体后果联系起来。
+这里使用的是有限生成平坦模在局部环上自由，所以泛纤维与闭纤维必须给出同一个自由秩。这项有限性把长度二与秩一的差别转成了不平坦的证明。非约化纤维本身却可以出现在平坦映射中：\cref{b3:exm:frobenius-homeomorphism-not-etale}中的映射 \(k[s]\to k[t]\)、\(s\mapsto t^p\) 自由秩为 \(p\)，在 \(s=0\) 处的纤维为 \(k[t]/(t^p)\)，长度也为 \(p\)。它含幂零元，与平坦性要求的秩并不冲突。
 
 \subsection{尖点外的同构与局部性质的比较}
 \label{b3:subsec:2304:06}
+\label{b3:subsec:cusp-normalization-off-origin}
+% 当前显示小节：23.4.4；数字键沿用原标签，语义键与之同指。
 
 \begin{proposition}\label{b3:prop:cusp-isomorphism-off-origin}
 设 \(k\) 为特征零域，\(A=k[t^2,t^3]\subseteq B=k[t]\)。则
@@ -100,7 +111,7 @@ A_{t^2}=B_{t^2}=k[t,t^{-1}].
 在 \(A_{t^2}\) 中，\(t=t^3/t^2\)，而 \(t\) 的逆元为 \(t/t^2\)，故 \(k[t,t^{-1}]\subseteq A_{t^2}\)。反向包含显然，\(B_{t^2}\) 也等于这个环。又若 \(A\) 的素理想包含 \(t^2\)，则由 \((t^3)^2=(t^2)^3\) 也包含 \(t^3\)，从而等于极大理想 \(\mathfrak m\)。所以 \(D(t^2)\) 正是尖点的补集。环同构保持全部平方零提升且作为模自由秩一，故局部映射平展和光滑。
 \end{proof}
 
-现在可以分别读出三个结论。在原点，\(\Omega_{B/A}\) 不为零，所以非分歧性失败；特殊纤维长度二而一般秩一，所以平坦性失败；在原点外，显式公式 \(t=t^3/t^2\) 给出同构。这些结论来自三个不同的计算，不能以“正规化去掉了奇点”一句话相互替代。
+现在可以分别读出三个结论。在原点，\(\Omega_{B/A}\) 不为零，所以非分歧性失败；特殊纤维长度二而泛点秩一，违背有限平坦局部模应有的自由性，所以平坦性失败；在原点外，显式公式 \(t=t^3/t^2\) 给出同构。这些结论分别由微分、模的秩及环的逆映射得到。
 
 \ProseParagraphBreak
 另一方面，\(B_{(t)}\) 本身正则，\(k\to B\) 也光滑，但 \(A_{\mathfrak m}\to B_{(t)}\) 不光滑，因为光滑必平坦。这个例子再次说明：讨论光滑时必须写清底环；讨论非分歧时必须保留无穷小信息；讨论平坦时则必须考察模的关系是否在张量之后仍被正确保留。
@@ -116,7 +127,7 @@ A_{t^2}=B_{t^2}=k[t,t^{-1}].
 局部环 \(B_{\mathfrak n}\) 正则 & 是：它是一维离散赋值环 \\
 底域同态 \(k\rightarrow B\) 光滑 & 是：\(B\) 为多项式代数 \\
 \(A_{\mathfrak m}\rightarrow B_{\mathfrak n}\) 非分歧 & 否：相对微分模为 \(k\,\mathrm dt\ne0\) \\
-\(A_{\mathfrak m}\rightarrow B_{\mathfrak n}\) 平坦 & 否：特殊纤维长度为二，一般秩为一 \\
+\(A_{\mathfrak m}\rightarrow B_{\mathfrak n}\) 平坦 & 否：特殊纤维长度为二，泛点秩为一 \\
 \(A_{\mathfrak m}\rightarrow B_{\mathfrak n}\) 光滑或平展 & 否：这两种性质均要求平坦 \\
 \(A_{t^2}\rightarrow B_{t^2}\) 为同构 & 是：两环均为 \(k[t,t^{-1}]\) \\
 \bottomrule
@@ -127,10 +138,12 @@ A_{t^2}=B_{t^2}=k[t,t^{-1}].
 
 \subsection{光滑性、正则性与可分性}
 \label{b3:subsec:2304:02}
+\label{b3:subsec:regular-smooth-separability}
+% 当前显示小节：23.4.5；数字键沿用原标签，语义键与之同指。
 
 正则性属于局部环本身：比较 \(\dim R\) 与 \(\dim_{R/\mathfrak m}\mathfrak m/\mathfrak m^2\) 就可作出判断。光滑性属于一个带有底环的同态。同一个域看作自身上的代数总是光滑，换成一个较小而不完美的基域以后却可能不光滑。
 
-把正则性与光滑性联系起来，需要保证剩余域扩张的微分没有额外的不可分方向。下面先从域扩张和余切空间分别说明这一条件。
+要由正则性反推基域上的光滑性，需要使局部环的余切方向在求微分后仍可辨认。完美性在这里保证有限生成剩余域扩张具有可分超越基；这组坐标随后允许在平方零邻域中提升剩余域，得到余切空间到微分纤维的单射。
 
 \begin{lemma}[可分超越基]\label{b3:lem:perfect-field-separating-basis}
 设 \(k\) 为完美域，\(L/k\) 为有限生成的域扩张，\(s=\operatorname{trdeg}_kL\)。则存在代数独立的元素 \(t_1,\ldots,t_s\in L\)，使 \(L/k(t_1,\ldots,t_s)\) 为有限可分扩张。这样的超越基称为可分超越基。
@@ -165,7 +178,9 @@ F(T)=\sum_{0\le\alpha_i<p}T^\alpha G_\alpha(T)^p,
 单射。
 \end{lemma}
 \begin{proof}
-记 \(A=R/\mathfrak m^2\)、\(V=\mathfrak m/\mathfrak m^2\)，于是 \(V\subseteq A\) 为平方零理想，\(A/V=\kappa\)。先为商映射 \(A\rightarrow\kappa\) 构造一个 \(k\) 代数截面。任意提升 \(t_i\) 到 \(A\) 后，每个非零 \(k\) 多项式在这些提升处的值模 \(V\) 非零，因而是 \(A\) 中的单位；所以这些提升定义了 \(E=k(t_1,\ldots,t_s)\rightarrow A\)。
+证明先在平方零邻域 \(A=R/\mathfrak m^2\) 中构造剩余域的截面，再把该邻域分成剩余域与余切空间，最后用第二分量的投影构造导子。这个导子将给出待证映射的左逆。
+
+记 \(V=\mathfrak m/\mathfrak m^2\)，于是 \(V\subseteq A\) 为平方零理想，\(A/V=\kappa\)。先为商映射 \(A\rightarrow\kappa\) 构造一个 \(k\) 代数截面。任意提升 \(t_i\) 到 \(A\) 后，每个非零 \(k\) 多项式在这些提升处的值模 \(V\) 非零，因而是 \(A\) 中的单位；所以这些提升定义了 \(E=k(t_1,\ldots,t_s)\rightarrow A\)。
 
 由本原元素定理，写 \(\kappa=E[z]\)，令 \(F(Z)\in E[Z]\) 为 \(z\) 的最小多项式。它可分，故 \(F'(z)\ne0\)。对 \(z\) 的任意提升 \(z_0\in A\)，把 \(F\) 的系数经上述 \(E\rightarrow A\) 映射到 \(A\)，便有 \(F(z_0)\in V\)、\(F'(z_0)\in A^\times\)。一次平方零 Newton 修正
 \[
@@ -182,26 +197,38 @@ z_1=z_0-F'(z_0)^{-1}F(z_0)
 设 \(k\) 为完美域，\(B\) 为有限型交换 \(k\) 代数，\(\mathfrak q\in\operatorname{Spec}B\)。则 \(B_{\mathfrak q}\) 为正则局部环，当且仅当存在 \(b\notin\mathfrak q\)，使 \(k\rightarrow B_b\) 光滑。
 \end{theorem}
 \begin{proof}
-写 \(B=k[X_1,\ldots,X_n]/I\)，令 \(Q\) 为 \(\mathfrak q\) 在多项式环中的逆像，\(P=k[X_1,\ldots,X_n]_Q\)、\(\mathfrak a=QP\)、\(\kappa=\kappa(\mathfrak q)\)。\cref{b3:prop:polynomial-global-bound}给出 \(\kappa\) 作为多项式环上模的有限投射维数，局部化后再用\cref{b3:thm:regular-local-global-dimension}，得 \(P\) 正则。设 \(h=\dim P\)，则 \(\dim_\kappa\mathfrak a/\mathfrak a^2=h\)。\(\kappa/k\) 有限生成，\cref{b3:lem:perfect-field-separating-basis,b3:lem:separating-residue-cotangent-injection}说明
+从正则性推出光滑性，要把局部商环的方程补成正则参数，并借余切空间单射保留它们的微分独立性，从而取得可逆 Jacobian 子式。从光滑性推出正则性，则从标准模型的独立微分出发，将其方程识别为正则参数的一部分。
+
+写 \(B=k[X_1,\ldots,X_n]/I\)，令 \(Q\) 为 \(\mathfrak q\) 在多项式环中的逆像，\(P=k[X_1,\ldots,X_n]_Q\)、\(\mathfrak a=QP\)、\(\kappa=\kappa(\mathfrak q)\)。\cref{b3:thm:hilbert-syzygy}给出多项式环的整体维数为 \(n\)，包含了对全部模的投射维数上界，故 \(\kappa\) 有有限长度的投射消解。局部化保持正合性和投射性，得到 \(\operatorname{pd}_P\kappa<\infty\)；\cref{b3:thm:regular-local-homological-criterion}于是使 \(P\) 正则。设 \(h=\dim P\)，则 \(\dim_\kappa\mathfrak a/\mathfrak a^2=h\)。\(B\) 有限型使 \(\kappa/k\) 有限生成，完美性与\cref{b3:lem:perfect-field-separating-basis,b3:lem:separating-residue-cotangent-injection}给出
 \[
 \mathfrak a/\mathfrak a^2\longrightarrow
 \Omega_{P/k}\otimes_P\kappa=\kappa^n
 \]
 单射。
 
-若 \(R=B_{\mathfrak q}=P/IP\) 正则，令 \(e=\dim R\)、\(c=h-e\)。公式
+先设 \(R=B_{\mathfrak q}=P/IP\) 正则，令 \(e=\dim R\)、\(c=h-e\)。公式
 \(\mathfrak m_R/\mathfrak m_R^2\cong\mathfrak a/(\mathfrak a^2+IP)\)
-使 \(IP\) 在 \(\mathfrak a/\mathfrak a^2\) 中的像有维数 \(c\)。选 \(f_1,\ldots,f_c\in I\) 使其像为基；在正则局部环 \(P\) 中，这些元素可补成极大理想的一组极小生成元。\cref{b3:thm:regular-local-characterizations}说明这是一组正则参数，故 \(P/(f_1,\ldots,f_c)P\) 正则，维数为 \(e\)，并满射到同维数的 \(R\)。这个满射的核为零：源与目标由\cref{b3:prop:regular-local-domain}都是整环，核为素理想；若核非零，在任何提升的商环素链下方再添 \((0)\)，都会使链长至少增加一，与两环维数相同矛盾。故 \(IP=(f_1,\ldots,f_c)P\)。
+使 \(IP\) 在 \(\mathfrak a/\mathfrak a^2\) 中的像有维数 \(c\)。选 \(f_1,\ldots,f_c\in I\) 使其像为基；将它们的像扩充成 \(\mathfrak a/\mathfrak a^2\) 的一组基，再由 Nakayama 引理，在正则局部环 \(P\) 中，这些元素可补成极大理想的一组极小生成元。\cref{b3:thm:regular-local-characterizations}说明这是一组正则参数，逐次使用\cref{b3:prop:regular-hypersurface-criterion}，得到 \(P/(f_1,\ldots,f_c)P\) 正则，维数为 \(e\)，并满射到同维数的 \(R\)。这个满射的核为零：源与目标由\cref{b3:prop:regular-local-domain}都是整环，核为素理想；若核非零，在提升的最长商环素链下方再添 \((0)\)，就使链长至少增加一，与两环维数相同矛盾。故 \(IP=(f_1,\ldots,f_c)P\)。
 
-刚证的单射又使 \(\mathrm{d}f_i\) 在 \(\Omega_{P/k}\otimes_P\kappa=\kappa^n\) 中独立，故其 Jacobian 有一个 \(c\) 阶子式 \(\Delta\notin Q\)。理想 \(I/(f_1,\ldots,f_c)\) 有限生成，且在 \(Q\) 处为零；可选择 \(g\notin Q\) 使它在倒置 \(g\) 后为零。于是 \(B_{\bar g\bar\Delta}\) 是标准光滑模型，由\cref{b3:prop:standard-smooth-lifting}光滑。
+刚证的余切空间单射使 \(\mathrm{d}f_i\) 在 \(\Omega_{P/k}\otimes_P\kappa=\kappa^n\) 中独立，故其 Jacobian 有一个 \(c\) 阶子式 \(\Delta\notin Q\)；\(c=0\) 时取空子式 \(\Delta=1\)。多项式环为 Noether 环，故模 \(I/(f_1,\ldots,f_c)\) 有限生成；它在 \(Q\) 处为零，取有限组生成元的共同零化分母，就得到 \(g\notin Q\)，使局部理想等式在倒置 \(g\) 后成立。因此 \(B_{\bar g\bar\Delta}\) 是标准光滑模型，由\cref{b3:prop:standard-smooth-lifting}光滑。
 
-反过来，\cref{b3:thm:smooth-local-standard-form}使光滑代数在给定点附近有标准模型。改用这一模型的多项式展示，并沿用 \(P,\mathfrak a,\kappa\) 表示相应的局部多项式环、极大理想和剩余域。其方程的微分在 \(\kappa^n\) 中线性独立，所以这些方程在 \(\mathfrak a/\mathfrak a^2\) 中也独立：该空间中的任何线性关系经求微分都会成为前一空间中的关系。于是方程构成正则参数的一部分，商去后仍为正则局部环，得到 \(B_{\mathfrak q}\) 正则。
+反过来，设某个 \(B_b\)、\(b\notin\mathfrak q\)，在 \(k\) 上光滑。\cref{b3:thm:smooth-local-standard-form}使它在给定点附近有标准模型。改用这一模型的多项式展示，并沿用 \(P,\mathfrak a,\kappa\) 表示相应的局部多项式环、极大理想和剩余域；前述投射维数论证同样使 \(P\) 正则。可逆 Jacobian 子式使模型方程的微分在 \(\kappa^n\) 中线性独立，所以这些方程在 \(\mathfrak a/\mathfrak a^2\) 中也独立：该空间中的任何线性关系经求微分都会成为前一空间中的关系。这一方向只需保留线性关系，无须另证余切映射单射。于是方程构成正则参数的一部分，逐次使用\cref{b3:prop:regular-hypersurface-criterion}，得到 \(B_{\mathfrak q}\) 正则。
 \end{proof}
 
 完美基域上的比较及几何正则性的进一步性质，可参阅松村英之\cite[Theorem 28.7, pp. 219--220; Theorem 30.3 and Remark 2, pp. 233--235]{Matsumura1989CommutativeRingTheory}。
 
-\begin{example}\label{b3:exm:regular-not-smooth-imperfect}
-设 \(p\) 为素数，\(s\) 为 \(\mathbb F_p\) 上的超越元，\(k=\mathbb F_p(s)\)、\(L=k[u]/(u^p-s)\)。在 \(\mathbb F_p[s]\) 的素元 \(s\) 处应用 Eisenstein 判据，得多项式 \(T^p-s\) 在 \(k\) 上不可约。故 \(L\) 是域，自身作为零维局部环正则。但是 \(L\) 在 \(k\) 上不光滑。为直接看到提升失败，令
+\ProseParagraphBreak
+有限型性在证明中保证剩余域扩张有限生成，也使局部理想等式能扩大到一个主开邻域。完美性则用于可分超越基与余切空间单射，从正则性推得光滑性；反向从标准光滑模型推出正则性并不另需完美性。下面把不完美域上的环正则性、代数光滑性和闭点剩余域分别计算。
+
+\begin{example}\label{b3:exm:regular-not-smooth-imperfect}\label{b3:exm:smooth-inseparable-closed-point}
+设 \(p\) 为素数，\(s\) 为 \(\mathbb F_p\) 上的超越元，\(k=\mathbb F_p(s)\)、\(L=k[u]/(u^p-s)\)。则 \(L\) 是零维正则局部环，\(L/k\) 为次数 \(p\) 的纯不可分扩张，\(\Omega_{L/k}\cong L\,\mathrm du\ne0\)，且 \(k\to L\) 不光滑。
+
+与此同时，令 \(B=k[T]\)、\(\mathfrak q=(T^p-s)\)。则 \(k\to B\) 光滑，\(\mathfrak q\) 为极大理想，\(B_{\mathfrak q}\) 为 DVR，因而正则；它的剩余域 \(\kappa(\mathfrak q)\cong L\) 却不可分于 \(k\)。
+\end{example}
+\begin{proof}
+在 \(\mathbb F_p[s]\) 的素元 \(s\) 处应用 Eisenstein 判据，得多项式 \(T^p-s\) 在 \(k\) 上不可约。因此 \(L\) 是域，自身作为零维局部环正则；\(u^p=s\) 使该扩张纯不可分且次数为 \(p\)。微分关系为 \(p u^{p-1}\mathrm du=0\)，未给 \(\mathrm du\) 添加约束，所以 \(\Omega_{L/k}\cong L\,\mathrm du\ne0\)。
+
+为直接看到 \(k\to L\) 的提升失败，令
 \[
 C=k[T]/\bigl((T^p-s)^2\bigr),\qquad
 J=(T^p-s)C.
@@ -209,18 +236,21 @@ J=(T^p-s)C.
 则 \(J^2=0\)、\(C/J\cong L\)。若恒等映射 \(L\to C/J\) 可以提升，\(u\) 的像必为 \(T+h\)、\(h\in J\)。然而特征 \(p\) 下
 \((T+h)^p-s=T^p-s+h^p=T^p-s\ne0\)，因为 \(h^p=0\)。关系不成立，矛盾。
 
-\ProseParagraphBreak
-这个例子已在第14章出现；这里的新比较是 \(L\) 的正则性与 \(k\to L\) 的不光滑性可以同时成立。基变换后
+基变换后
 \(L\otimes_kL\cong L[\varepsilon]/(\varepsilon^p)\)
-也解释了差别：正则的原环在不可分基变换后产生幂零元。
-\end{example}
+也解释了差别：第二份 \(u\) 减去第一份 \(u\) 给出 \(\varepsilon\)，正则的原环在不可分基变换后产生幂零元。
 
-上述完美性条件不能简单改写成“光滑点的剩余域必须可分于基域”。例如在 \(k=\mathbb F_p(s)\) 上，多项式代数 \(k[T]\) 光滑，但闭点 \((T^p-s)\) 的剩余域正是这个不可分扩张。光滑性研究整个代数映射的无穷小行为，并不要求每个闭点本身都是一个平展的 \(k\) 点。
+对多项式代数 \(B=k[T]\)，变量像可任意提升，它又有限展示，所以在 \(k\) 上光滑。\(T^p-s\) 不可约，故 \(\mathfrak q\) 为非零极大理想。\(k[T]\) 是主理想整环，\(B_{\mathfrak q}\) 是一维 Noether 局部整环，极大理想由 \(T^p-s\) 生成；\cref{b3:thm:dvr-characterizations}使它为 DVR，因而正则。剩余域为 \(B/\mathfrak q\cong L\)，其不可分性已经算出。在这个 DVR 的余切空间中，统一化元 \(T^p-s\) 的类非零，它的 \(k\) 微分却为零。所以\cref{b3:lem:separating-residue-cotangent-injection}中的单射在此并不成立，可分性假设确有作用；这也与光滑性推出正则性时不需要该单射相吻合。
+\end{proof}
+
+这个例子区分的是两个映射：\(k\to B\) 有一个可自由提升的坐标，\(k\to L=B/\mathfrak q\) 却还须满足不可分方程。光滑性属于前一个代数映射，并不要求它的每个闭点剩余域都可分于基域；商掉一个闭点理想以后，得到的是另一个需要重新判断的映射。
 
 \subsection{仿射 Zariski、étale 与 fppf 覆盖}
 \label{b3:subsec:2304:03}
+\label{b3:subsec:affine-zariski-etale-fppf-covers}
+% 当前显示小节：23.4.6；数字键沿用原标签，语义键与之同指。
 
-Zariski 邻域只使用环的局部化；平展映射则容许加入在给定点附近唯一可提升的代数解。环扩张也可以承担“覆盖”的作用：只要每个底环素点都能在某一扩张环中找到上方的素点，就能在这些环上逐处研究对象。基变换描述这种覆盖的交叠，复合则把两层局部研究合成一层。
+Zariski 邻域只使用环的局部化；平展映射则容许加入在给定点附近唯一可提升的代数解。环扩张也可以承担“覆盖”的作用：只要每个底环素点都能在某一扩张环中找到上方的素点，就能在这些环上逐处研究对象。基变换描述这种覆盖的交叠，复合则把两层局部研究合成一层。这里先规定环与仿射素谱上的覆盖族；完整的 Grothendieck 拓扑还要在指定范畴中规定覆盖筛及其公理，层则须满足相应的黏合条件。
 
 \begin{definition}\label{b3:def:affine-etale-fppf-covers}
 设 \(A\) 为交换含幺环，\((A\to B_i)_{i\in I}\) 为一族交换 \(A\) 代数。若每个 \(\mathfrak p\in\operatorname{Spec}A\) 都是某个 \(B_i\) 中素理想的收缩，就称这一族在素谱上联合满射。
@@ -231,7 +261,10 @@ Zariski 邻域只使用环的局部化；平展映射则容许加入在给定点
 \end{enumerate}
 \end{definition}
 
-字母 fppf 来自法语 \emph{fidèlement plat et de présentation finie}。对单个映射，平坦并在素谱上满射等价于忠实平坦，所以这个名称与第12章的代数条件相符。基本开覆盖是平展覆盖，平展覆盖也是 fppf 覆盖；但这些覆盖的每一项不必是原素谱的一个开子集。
+字母 fppf 来自法语 \emph{fidèlement plat et de présentation finie}。对单个映射，平坦并在素谱上满射由\cref{b3:thm:faithfully-flat-criterion}等价于忠实平坦。对覆盖族，每一项只须平坦且有限展示，忠实性由整族共同提供，每一项不必分别忠实平坦。基本开覆盖是平展覆盖，平展覆盖也是 fppf 覆盖；但这些覆盖的每一项不必是原素谱的一个开子集。
+
+\ProseParagraphBreak
+共同的忠实性可以直接用模检验：若 \(N\) 是非零 \(A\) 模，取 \(0\ne n\in N\)，并选素理想 \(\mathfrak p\supseteq J=\operatorname{Ann}_A(n)\)。联合满射给出某个 \(B_i\) 的素理想 \(\mathfrak q\) 收缩为 \(\mathfrak p\)。于是 \(JB_i\subseteq\mathfrak q\)，所以 \(B_i\otimes_AAn\cong B_i/JB_i\ne0\)。该项的平坦性又保持 \(An\hookrightarrow N\) 的单射，故 \(B_i\otimes_AN\ne0\)。因此只有当全部 \(B_i\otimes_AN\) 都为零时，原模 \(N\) 才为零。
 
 \ProseParagraphBreak
 例如 \(s\mapsto t^2\) 给出平方映射 \(\mathbb C[s,s^{-1}]\rightarrow\mathbb C[t,t^{-1}]\)，这是单个平展覆盖，因为它有限自由且素谱满射，却不是基本开嵌入。若 \(k\) 为特征 \(p>0\) 的域，映射 \(k[s]\rightarrow k[t]\)、\(s\mapsto t^p\) 则是 fppf 覆盖，而不是平展覆盖。因此在这些覆盖中说“局部存在解”，可能需要先扩张环；它不等同于在原来的 Zariski 开集中寻找解。
@@ -243,7 +276,7 @@ B\otimes_AB\cong B[u,u^{-1}]/(u^2-t^2)
 \xrightarrow{\sim}B\times B,
 \qquad h(t,u)\longmapsto\bigl(h(t,t),h(t,-t)\bigr).
 \]
-因为 \(u-t\) 与 \(u+t\) 的差为单位 \(2t\)，中国剩余定理给出该同构。两个分量分别记录两份参数相同与互为相反数；在第二个分量上，两条映射 \(B\rightrightarrows B\otimes_AB\) 分别把参数送到 \(t\) 与 \(-t\)。因此即使只有一个覆盖映射，下降也要比较这两个拉回，而不只是检查同一个开集上的恒等相容性。
+因为 \(u-t\) 与 \(u+t\) 的差为单位 \(2t\)，中国剩余定理给出该同构。两个分量分别记录两份参数相同与互为相反数；两条映射 \(B\rightrightarrows B\otimes_AB\) 把 \(t\) 分别送到 \((t,t)\) 与 \((t,-t)\)。所以在覆盖环中选出的平方根 \(t\)，在第二个交叠分量上变成另一份平方根 \(-t\)。由\cref{b3:lem:faithful-flat-equalizer}，两次拉回不相等，正说明这个元素没有下降成 \(A\) 的元素。对于覆盖上给出的模，\cref{b3:def:module-descent-datum}则要求在这个张量积环上识别两份拉回，并在三重交叠上满足余循环条件。这使第12章的 \(S\otimes_RS\) 在这里成为一个可显式计算的覆盖自交叠。
 
 \ProseParagraphBreak
 这三类覆盖都保持于基变换和覆盖的复合。给定 \(A\rightarrow A'\)，基变换后的族是
@@ -252,7 +285,7 @@ A'\longrightarrow A'\otimes_AB_i.
 \]
 局部化、平展以及平坦有限展示这些条件都保持于基变换。对任意 \(\mathfrak p'\in\operatorname{Spec}A'\)，设其收缩为 \(\mathfrak p\)，从原覆盖中取 \(\mathfrak q\in\operatorname{Spec}B_i\) 位于 \(\mathfrak p\) 上方。域扩张的张量积
 \(\kappa(\mathfrak p')\otimes_{\kappa(\mathfrak p)}\kappa(\mathfrak q)\)
-非零，其素理想给出基变换后位于 \(\mathfrak p'\) 上方的点，故仍联合满射。若每个 \(B_i\) 又被一族 \(B_i\rightarrow C_{ij}\) 覆盖，则复合族 \(A\rightarrow C_{ij}\) 的同态条件保持，而逐次选取上方素点也证明它联合满射。
+非零：选 \(\kappa(\mathfrak q)\) 的一个包含 \(1\) 的 \(\kappa(\mathfrak p)\) 基，扩张标量后仍是 \(\kappa(\mathfrak p')\) 向量空间的一组基，特别地 \(1\otimes1\ne0\)。这个非零交换环有素理想，经自然映射收缩到 \(A'\otimes_AB_i\)，再收缩到 \(A'\) 恰为 \(\mathfrak p'\)：非零域 \(\kappa(\mathfrak p')\) 在该素商中仍单射。故基变换后的族仍联合满射。若每个 \(B_i\) 又被一族 \(B_i\rightarrow C_{ij}\) 覆盖，则复合族 \(A\rightarrow C_{ij}\) 的同态条件保持，而逐次选取上方素点也证明它联合满射。
 
 \ProseParagraphBreak
-这样的覆盖及其稳定性构成仿射 Grothendieck 覆盖的基本资料。两个覆盖环的交叠由 \(B_i\otimes_AB_j\) 描述；第12章的忠实平坦下降说明，扩张环以后得到的模及同构，只有满足交叠上的相容条件才来自原环。
+这样的覆盖及其稳定性给出仿射覆盖的基本资料，两个覆盖环的交叠由 \(B_i\otimes_AB_j\) 描述。对于单个忠实平坦覆盖，\cref{b3:thm:faithfully-flat-module-descent}已证明：覆盖环上的模带有满足余循环条件的下降数据时，能够恢复原环上的模及相容同态。联合满射负责保留所有素点，交叠上的这些识别则负责使各份数据能来自同一个对象。

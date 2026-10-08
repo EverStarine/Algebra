@@ -19,7 +19,16 @@
 \end{itemize}
 \end{learninggoals}
 
-设 \(k\) 为域，\(S=k[x,y]\)。把 \(k=S/(x,y)\) 看作 \(S\) 模，自然满射 \(S\rightarrow k\) 的核由 \(x,y\) 生成，于是映射 \(S^2\rightarrow S\) 将两个基向量分别送往 \(x,y\)。这两个生成元又有关系 \(-y\cdot x+x\cdot y=0\)，可用 \(S\rightarrow S^2\)、\(1\mapsto(-y,x)\) 记录。生成元和全部关系由此组成一条有限自由消解。
+设 \(k\) 为域，\(S=k[x,y]\)，令 \(I=(x,y)\)。两个理想生成元有关系 \(y\cdot x-x\cdot y=0\)，全部关系都由系数组 \((y,-x)\) 生成。因此，理想本身与商模 \(S/I=k\) 分别有分次自由消解
+\[
+\begin{aligned}
+0&\longrightarrow S(-2)\longrightarrow S(-1)^2
+\longrightarrow I\longrightarrow0,\\
+0&\longrightarrow S(-2)\longrightarrow S(-1)^2
+\longrightarrow S\longrightarrow k\longrightarrow0.
+\end{aligned}
+\]
+左边的映射都由列向量 \((y,-x)\) 给出，随后用行向量 \((x,y)\) 记录两个理想生成元；在第二条消解中，还接上自然满射 \(S\to k\)。次数平移 \(S(-a)\) 将自由基放在内次数 \(a\)。理想的消解长一，商模的消解长二；把两种末项分清，才不会把关系的层数错移一位。
 
 \ProseParagraphBreak
 
@@ -62,10 +71,10 @@
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-nakayama-bound}
-设 \(k\) 为域，取 \(S=k[x]\)、\(M=k[x,x^{-1}]\)，以通常次数分次。证明 \(M=xM\ne0\)，并说明它为何不反驳分次 Nakayama 引理。
+设 \(k\) 为域，取 \(S=k[x]\)、\(M=k[x,x^{-1}]/k[x]\)，以通常次数分次。写出 \(M\) 的齐次 \(k\) 基，证明 \(M=xM\ne0\) 而 \(M_x=0\)，并说明分次 Nakayama 引理为何不适用。
 \end{exercise}
 \begin{solution}
-任意 Laurent 多项式 \(f\) 都等于 \(x(x^{-1}f)\)，故 \(M=xM\)。但 \(x^{-r}\ne0\) 对所有 \(r\ge0\) 成立，非零次数没有下界；任何有限齐次生成组都有最低次数，其 \(S\) 线性组合无法达到更低次数，所以此模也非有限生成。引理依赖的最低非零次数在这里不存在。
+齐次基为 \(\overline{x^{-r}}\ (r\ge1)\)，基向量的次数为 \(-r\)，故 \(M\ne0\) 且非零次数没有下界。又 \(\overline{x^{-r}}=x\overline{x^{-(r+1)}}\)，所以 \(M=xM\)。每个元素只涉及有限个负指数，乘足够大的 \(x\) 次幂后就落入 \(k[x]\)，在商中为零；因此局部化 \(M_x\) 为零。有限组生成元有共同最低次数，乘非负次数多项式不能生成更低次数，故 \(M\) 也非有限生成。\Cref{b3:lem:graded-nakayama}所需的次数下界在这里缺失。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-direct-sum-shifts}
@@ -88,10 +97,18 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-projective-graded-free}
-设 \(k\) 为域，\(P\) 为 \(S=k[x_1,\ldots,x_n]\) 上有限生成分次模，其底层模投射。证明 \(P\) 是有限分次自由模。
+设 \(k\) 为域，\(S=k[x,y]\)，\(F=S(-2)\oplus S\)，记两个齐次基向量为 \(e_1,e_2\)，其内次数分别为二、零。考虑矩阵
+\[
+E=\begin{pmatrix}1&0\\xy&0\end{pmatrix}.
+\]
+验证它定义一个保持次数的幂等自同态，求 \(P=\operatorname{im}E\)、\(Q=\ker E\) 的齐次自由基和次数平移，并写出 \(F=P\oplus Q\) 的分次分解。
 \end{exercise}
 \begin{solution}
-取齐次极小满射 \(F\rightarrow P\)，核为 \(K\subseteq\mathfrak mF\)。由于 \(P\) 投射，短正合列在底层模范畴分裂，故张量 \(k\) 后仍正合。另一方面 \(F/\mathfrak mF\rightarrow P/\mathfrak mP\) 为同构，于是 \(K/\mathfrak mK=0\)。核有限生成且分次，由分次 Nakayama 引理为零，故原分次满射是同构。此证明利用了既有分次，并未证明一般无分次的投射模都自由。
+有 \(E(e_1)=e_1+xy e_2\)、\(E(e_2)=0\)，两者分别为次数二的齐次向量和零向量，所以 \(E\) 保持次数；直接计算得 \(E^2=E\)。其像以 \(e_1+xy e_2\) 为齐次自由基，次数二，故 \(P\cong S(-2)\)；核以 \(e_2\) 为齐次自由基，次数零，故 \(Q\cong S\)。分解由
+\[
+a e_1+b e_2=a(e_1+xy e_2)+(b-a xy)e_2
+\]
+给出，两个分量的交为零。对齐次向量，右边两项仍具有相同的总内次数，所以这是分次直和分解。它具体实现了\cref{b3:prop:graded-projective-free}中的齐次自由性，不能仅按矩阵系数的次数忽略目标基的次数平移。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-polynomial-sequence-point}
@@ -119,18 +136,34 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-cancel-hilbert-not-exact}
-设 \(k\) 为域，\(S=k[x]\) 取标准分次。构造一个有限分次自由 \(S\) 模复形，使 Hilbert 级数的交错和为零、微分平方为零，但至少两个同调模非零。
+设 \(k\) 为域，\(S=k[x]\) 取标准分次，\(M=S/(x)\)。考虑保持次数的增广列
+\[
+0\longrightarrow S(-1)\oplus S\xrightarrow{\mathrm{d}}S^2
+\xrightarrow{\varepsilon}M\longrightarrow0,
+\]
+其中 \(\mathrm{d}(a,b)=(xa,0)\)、\(\varepsilon(c,d)=c\bmod x\)。验证 \(\varepsilon\mathrm{d}=0\)，比较自由项的 Hilbert 交错和与 \(H_M(t)\)，并计算 \(\ker\mathrm{d}\) 及 \(\ker\varepsilon/\operatorname{im}\mathrm{d}\)，判断它是否为 \(M\) 的自由消解。
 \end{exercise}
 \begin{solution}
-取仅有 \(F_1=S,F_0=S\) 两项且微分为零的复形。其交错和 \(H_S-H_S=0\)，但 \(H_1=H_0=S\ne0\)。这说明交错和是正合性的必要后果，单独满足它却不是充分条件。
+由 \(xa\bmod x=0\)，有 \(\varepsilon\mathrm{d}=0\)，且 \(\varepsilon\) 满射。自由项的交错和为
+\[
+\frac{2}{1-t}-\frac{t+1}{1-t}=1=H_M(t).
+\]
+然而，整环性给出 \(\ker\mathrm{d}=0\oplus S\cong S\)。又
+\(\ker\varepsilon=xS\oplus S\)、\(\operatorname{im}\mathrm{d}=xS\oplus0\)，所以 \(\ker\varepsilon/\operatorname{im}\mathrm{d}\cong S\)。两处都不正合，故这不是消解。两个多出的非零模具有相同 Hilbert 级数，恰好在交错和中抵消；与\cref{b3:exm:hilbert-euler-not-exact}一样，Euler 计数不能代替核与像的检验。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-rank-euler}
-设 \(k\) 为域，\(M\) 是多项式环 \(S=k[x_1,\ldots,x_n]\) 上的有限生成分次模，\(K=\operatorname{Frac}(S)\)。证明
-\(\dim_K(M\otimes_SK)=\sum_i(-1)^i\beta_i(M)\)。据此给出挠模的 Betti 数必须满足的一项等式。
+设 \(k\) 为域，\(n\ge1\)，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(M\ne0\) 为有限生成分次挠 \(S\) 模。记 \(B(M)=\sum_{i=0}^n\beta_i(M)\)。证明 \(B(M)\ge2\)，且等号成立当且仅当存在整数 \(a\) 和非零的正次数齐次多项式 \(f\in S\)，使 \(M\cong(S/(f))(-a)\)。
 \end{exercise}
 \begin{solution}
-将有限极小消解张量 \(K\)，局部化正合性给出有限维 \(K\) 空间的正合列，逐项取维数的交错和即得公式。若 \(M\) 为挠模，则每个有限组生成元都被某非零元素零化，取乘积后张量 \(K\) 全为零，故 \(\sum_i(-1)^i\beta_i=0\)。这是总秩条件，不决定各内次数的分布。
+置 \(\mathfrak m=(x_1,\ldots,x_n)\)。Hilbert 合冲定理使极小消解在第 \(n\) 层以后为零，所以 \(B(M)\) 是全部 Betti 数的有限总和。\(M\ne0\) 给出 \(\beta_0\ge1\)。若 \(\beta_1=0\)，则 \(F_1=0\)，正合性使 \(F_0\cong M\)，与非零自由模不能为挠模矛盾；因此 \(\beta_1\ge1\)，遂有 \(B(M)\ge2\)。
+
+若等号成立，则 \(\beta_0=\beta_1=1\)，其余 Betti 数全为零。极小消解因此为
+\[
+0\longrightarrow S(-b)\xrightarrow{f}S(-a)
+\longrightarrow M\longrightarrow0.
+\]
+左映射单射使 \(f\ne0\)，保持次数使 \(f\) 齐次且次数为 \(b-a\)，极小性又使 \(f\in\mathfrak m\)，故 \(b-a>0\)。余核就是 \((S/(f))(-a)\)。反之，对这样的 \(f\)，乘 \(f\) 在整环上单射，所给两项消解极小，所以总 Betti 数为二。这个结论也符合\cref{b3:prop:betti-rank-euler}中的 \(\beta_0-\beta_1=0\)。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-mixed-shifts}
@@ -155,12 +188,27 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-redundant-original-generators}
-设 \(k\) 为域，在 \(S=k[x,y]\) 中，求有序组 \((x^2,xy,y^2,x^2+y^2)\) 的全部关系，说明怎样从它恢复 \((x,y)^2\) 的极小消解。
+设 \(k\) 为域，\(S=k[x,y,z]\)，令 \(F=(x\ y\ z\ x+y+z)\)、\(G=(x\ y\ z)\)。取
+\[
+U=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\\0&0&0\end{pmatrix},
+\qquad
+V=\begin{pmatrix}1&0&0&1\\0&1&0&1\\0&0&1&1\end{pmatrix}.
+\]
+先求一个列生成 \(\ker G\) 的矩阵 \(T\)，再利用 \(UT\) 与 \(I_4-UV\) 构造 \(\ker F\) 的全部生成元，写出这些生成元之间的关系，并指出常数关系怎样使消解极小化为变量 \(x,y,z\) 的 Koszul 消解。
 \end{exercise}
 \begin{solution}
-全部关系由
-\((y,-x,0,0)\)、\((0,y,-x,0)\)、\((-1,0,-1,1)\)
-生成。因为给定关系 \((a,b,c,d)\)，减去 \(d\) 倍最后一个向量后第四分量为零，前三分量成为 \((a+d,b,c+d)\)，由式\eqref{b3:eq:square-maximal-resolution}的核计算可表示为前两个关系的组合。最后的常数关系消去冗余生成元 \(x^2+y^2\)，留下正文的三生成元极小消解。
+有 \(G=FU\)、\(F=GV\)。变量 \(x,y,z\) 构成正则序列，所以 \(G\) 的核由三列 Koszul 关系生成，记其矩阵为 \(T\)。\Cref{b3:prop:kernel-generator-change}给出 \(\ker F\) 的生成元
+\[
+\begin{gathered}
+s_{12}=(-y,x,0,0),\qquad s_{13}=(-z,0,x,0),\\
+s_{23}=(0,-z,y,0),\qquad c=(-1,-1,-1,1).
+\end{gathered}
+\]
+前三列来自 \(UT\)，最后一列是 \(I_4-UV\) 的唯一非零列。若它们的线性组合为零，第四坐标先使 \(c\) 的系数为零；剩下前三列的全部关系由 Koszul 复形的下一层给出，即
+\[
+z s_{12}-y s_{13}+x s_{23}=0.
+\]
+关系 \(c\) 表示第四生成元等于前三个之和，其非零常数系数消去一个同为次数一的源、目标基向量。留下的理想生成组为 \((x,y,z)\)，再接上 \(S\to S/(x,y,z)\)，便得到长度三的极小 Koszul 消解。若以理想 \((x,y,z)\) 为末项，则相应消解长二。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-divisibility-relations}
@@ -196,10 +244,17 @@ S\oplus S(-1)\rightarrow M\rightarrow0.
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-kernel-certificate}
-设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\)，\(F,G,U,V,T\) 为尺寸相容的 \(S\) 系数矩阵，满足 \(G=FU\)、\(F=GV\)，且 \(T\) 的列生成 \(\ker G\)。说明为什么只给出 \(UT\) 的列未必生成 \(\ker F\)，并给出一个具体例子。
+设 \(k\) 为域，\(S=k[x,y,z]\)、\(F=(x^2\ xy\ xz)\)。有人以
+\[
+K=\begin{pmatrix}-y&-z\\x&0\\0&x\end{pmatrix}
+\]
+作为 \(\ker F\) 的生成矩阵。验证 \(FK=0\)，证明它遗漏了关系 \((0,-z,y)\)，补全核的生成组，并写出这些生成元的全部关系。
 \end{exercise}
 \begin{solution}
-遗漏了改换生成组本身产生的关系 \(1-UV\)。例如取 \(F=(x\ x)\)、\(G=(x)\)，\(U=\binom10\)、\(V=(1\ 1)\)。因 \(S=k[x]\) 为整环，\(\ker G=0\)，故 \(UT\) 没有列。但 \(\ker F\) 由 \((-1,1)\) 生成，恰来自 \(1-UV=\left(\begin{smallmatrix}0&-1\\0&1\end{smallmatrix}\right)\) 的第二列。只验证两个像相同，不能忽略生成组之间的额外核。
+直接相乘得 \(FK=0\)，且 \(s_{23}=(0,-z,y)\) 也被 \(F\) 零化。但 \(K\) 的像中每个向量的第二、第三坐标都可被 \(x\) 整除；\(s_{23}\) 的这两坐标不能如此，故它不属于 \(\operatorname{im}K\)。等价地，模掉 \(x\) 后，\(K\) 的像只可能有第一坐标，而 \(s_{23}\) 的后两坐标非零。
+
+在整环中约去 \(F=x(x\ y\ z)\) 的公共因子 \(x\)，得到 \(\ker F=\ker(x\ y\ z)\)。变量 Koszul 复形遂给出全部核生成元
+\(s_{12}=(-y,x,0)\)、\(s_{13}=(-z,0,x)\)、\(s_{23}=(0,-z,y)\)，而它们的关系模由 \((z,-y,x)\) 生成，即 \(z s_{12}-y s_{13}+x s_{23}=0\)。所以微分相乘为零只证明给出的列是关系，不能证明全部关系已经找齐。
 \end{solution}
 
 \begin{exercise}\label{b3:ex:21-top-degree-bound}

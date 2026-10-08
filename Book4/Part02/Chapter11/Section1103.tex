@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 11.3 零调对象
 % 纲要标签：b4:sec:1003
-% 纲要位置：计划纲要.md，第 2725 行。
+% 纲要位置：计划纲要.md，第 3478 行。
 
 \section{零调对象}
 \label{b4:sec:1003}
@@ -28,10 +28,18 @@
 若此序列正合，且每个 \(A^j\)（\(j\ge0\)）都为 \(F\)-零调对象，则称为 \(M\) 的 \(F\)-\term[lingtiao-xiaojie]{零调消解}[acyclic resolution]。
 \end{definition}
 
-这里的零调性依赖 \(F\)，只要求正次数的导出函子消失，不要求 \(F(Q)=0\)。\cref{b4:def:acyclic-complex}中的零调复形则要求所有次数的同调对象为零。零调消解要求各项对 \(F\) 零调，去掉增广项后的复形仍满足 \(H^0(A^\bullet)\cong M\)。
+这里的零调性描述一个对象相对于指定函子 \(F\) 的高次导出行为，只要求正次数的导出函子消失，不要求 \(F(Q)=0\)。\cref{b4:def:acyclic-complex}中的零调复形则描述整条复形内部的同调，要求所有次数的同调对象为零。零调消解要求各项对 \(F\) 零调；去掉增广项后的复形有 \(H^0(A^\bullet)\cong M\)，而施加 \(F\) 后的正次数上同调也可能非零。
 
 \ProseParagraphBreak
-内射对象对每个左正合加性函子都是零调对象；对于固定的函子，零调对象却未必内射。例如 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 时，\(\mathbb Z/3\) 是 \(F\)-零调对象，因为一次 Ext 等于 \((\mathbb Z/3)/2(\mathbb Z/3)=0\)，更高次因整数整体维数为一而消失；但 \(\mathbb Z/3\) 不是可除群，因而不是内射交换群。
+内射对象对每个左正合加性函子都是零调对象；对于固定的函子，零调对象却未必内射。例如取 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,-)\)。对任意交换群 \(Q\)，长度一自由消解 \(0\to\mathbb Z\xrightarrow{\times2}\mathbb Z\to\mathbb Z/2\mathbb Z\to0\) 给出
+\[
+ R^1F(Q)\cong Q/2Q,\qquad R^iF(Q)=0\quad(i>1).
+\]
+因此 \(\mathbb Z/3\mathbb Z\) 对 \(F\) 零调，却因不可除而不是内射交换群；不过此时 \(F(\mathbb Z/3\mathbb Z)=0\)。若改取
+\[
+ Q=(\mathbb Q/\mathbb Z)\oplus\mathbb Z/3\mathbb Z,
+\]
+则 \(2Q=Q\)，但 \(3Q\ne Q\)，所以它仍对 \(F\) 零调而非内射。同时 \(F(Q)\cong Q[2]\cong\mathbb Z/2\mathbb Z\ne0\)，明确说明原函子的取值不必消失。
 
 \begin{proposition}\label{b4:prop:acyclic-closure}
 设 \(\mathcal A,\mathcal B\) 为交换范畴，\(\mathcal A\) 有足够内射对象，\(F:\mathcal A\to\mathcal B\) 为左正合加性函子，且 \(0\to A\to B\to C\to0\) 为 \(\mathcal A\) 中的短正合列。若 \(A,C\) 都 \(F\)-零调，则 \(B\) 也如此；若 \(A,B\) 都 \(F\)-零调，则 \(C\) 也如此。若 \(B,C\) 都 \(F\)-零调，则 \(A\) 零调当且仅当 \(F(B)\to F(C)\) 为满态射。
@@ -39,7 +47,12 @@
 \begin{proof}
 前两项分别由长正合列中的
 \(R^iF(A)\to R^iF(B)\to R^iF(C)\) 及
-\(R^iF(B)\to R^iF(C)\to R^{i+1}F(A)\) 得到。最后一种情形有 \(R^iF(A)=0\) 对 \(i\ge2\)，而列首给出 \(R^1F(A)=\operatorname{coker}(F(B)\to F(C))\)，于是得到所需充要条件。
+\(R^iF(B)\to R^iF(C)\to R^{i+1}F(A)\) 得到，其中 \(i\ge1\)。当 \(B,C\) 都零调时，片段 \(R^{i-1}F(C)\to R^iF(A)\to R^iF(B)\) 已使 \(R^iF(A)=0\) 对 \(i\ge2\) 成立，但低次部分仍为
+\[
+ 0\longrightarrow F(A)\longrightarrow F(B)\longrightarrow F(C)
+ \longrightarrow R^1F(A)\longrightarrow0.
+\]
+所以唯一可能剩下的正次导出是 \(R^1F(A)\cong\operatorname{coker}(F(B)\to F(C))\)。它消失恰好要求 \(F(B)\to F(C)\) 满，这就是第三种情形多出的条件。
 \end{proof}
 
 \subsection{零调消解与导出函子的计算}
@@ -53,12 +66,25 @@
 此同构对增广消解之间的态射自然。
 \end{theorem}
 \begin{proof}
-令 \(K^0=M\)，把正合消解拆成
+令 \(K^0=M\)，从增广嵌入 \(\iota^0:M\hookrightarrow A^0\) 起，逐次取 \(K^{j+1}=\operatorname{coker}\iota^j\)。消解正合性把这个商对象识别为 \(\operatorname{im}(\mathrm{d}_A^j)\)，并给出下一项中的嵌入 \(\iota^{j+1}:K^{j+1}\hookrightarrow A^{j+1}\)。这样前两步是
+\[
+\begin{gathered}
+ 0\longrightarrow M\longrightarrow A^0\longrightarrow K^1\longrightarrow0,\\
+ 0\longrightarrow K^1\longrightarrow A^1\longrightarrow K^2\longrightarrow0,
+\end{gathered}
+\]
+一般的一步写成
 \[
  0\longrightarrow K^j\xrightarrow{\iota^j} A^j\xrightarrow{p^j} K^{j+1}\longrightarrow0
  \qquad(j\ge0).
 \]
-长正合列和 \(A^j\) 的零调性给出
+先看一次上同调。微分 \(\mathrm{d}_A^1=\iota^2p^1\)，左正合性使 \(F(\iota^2)\) 单，并把 \(\ker F(p^1)\) 识别为 \(F(K^1)\)。因而施加 \(F\) 后的一次余圈对象是 \(F(K^1)\)，一次余边来自 \(F(A^0)\to F(K^1)\)。第一条短正合列的长正合列又因 \(A^0\) 零调而给出 \(F(A^0)\to F(K^1)\to R^1F(M)\to0\)，所以
+\[
+ H^1(F(A^\bullet))
+ \cong\operatorname{coker}\bigl(F(A^0)\to F(K^1)\bigr)
+ \cong R^1F(M).
+\]
+一般次数的计算把同一机制用于后面的短正合列。长正合列和 \(A^j\) 的零调性给出
 \[
 \begin{gathered}
  0\to F(K^j)\to F(A^j)\to F(K^{j+1})\to R^1F(K^j)\to0,\\
@@ -70,7 +96,7 @@
  \mathrm{d}_A^n:\quad A^n\xrightarrow{p^n}K^{n+1}
  \xrightarrow{\iota^{n+1}}A^{n+1}.
 \]
-由于 \(F\) 左正合，\(F(\iota^{n+1})\) 仍为单态射，且 \(F(\iota^n)\) 把 \(F(K^n)\) 识别为 \(F(p^n)\) 的核。因此
+对第 \(n+1\) 步的短正合列用左正合性，得到 \(F(\iota^{n+1})\) 仍为单态射，所以复合它不改变 \(F(p^n)\) 的核。再对第 \(n\) 步用左正合性，\(F(\iota^n)\) 把 \(F(K^n)\) 识别为这个核。因此
 \[
 \begin{aligned}
  \ker\bigl(F(\mathrm{d}_A^n)\bigr)
@@ -78,14 +104,14 @@
  &=F(K^n),
 \end{aligned}
 \]
-即 \(F(A^\bullet)\) 在次数 \(n\) 的圈对象为 \(F(K^n)\)。当 \(n\ge1\) 时，同调就是
+即 \(F(A^\bullet)\) 在次数 \(n\) 的余圈对象为 \(F(K^n)\)。当 \(n\ge1\) 时，同调就是
 \[
  \operatorname{coker}\bigl(F(A^{n-1})\to F(K^n)\bigr)
  \simeq R^1F(K^{n-1})\simeq R^nF(M).
 \]
 次数零则由左正合性直接等于 \(F(M)\)。这些同构只使用给定的正合列和连接同态，未选分裂，因而对消解态射自然。
 
-为说明这里的“典范”也与最初采用内射消解的定义一致，取 \(M\to I^\bullet\)。内射性把 \(M\to I^0\) 延拓到 \(A^0\)，随后在每一步先经 \(K^{j+1}\) 分解，再延拓到 \(A^{j+1}\)，得到增广链映射 \(f^\bullet:A^\bullet\to I^\bullet\)：
+为说明这里的“典范”也与最初采用内射消解的定义一致，取 \(M\to I^\bullet\)。下面只使用目标 \(I^j\) 的内射性，源 \(A^j\) 不必内射：先把 \(M\to I^0\) 沿 \(M\hookrightarrow A^0\) 延拓为 \(f^0:A^0\to I^0\)。若已构造到 \(f^j\)，则 \(\mathrm{d}_I^jf^j\) 在 \(K^j\) 上为零；在零次这是与增广相容，在正次这是已有链映射等式及 \(\mathrm{d}_I^j\mathrm{d}_I^{j-1}=0\) 的结果。于是该复合经余核 \(p^j\) 分解为 \(K^{j+1}\to I^{j+1}\)，再由 \(I^{j+1}\) 内射沿 \(\iota^{j+1}\) 延拓为 \(f^{j+1}\)。逐次得到增广上链映射 \(f^\bullet:A^\bullet\to I^\bullet\)：
 \[
 \begin{tikzcd}[column sep=2.2em,row sep=large]
 0\arrow[r]&M\arrow[r]\arrow[d,equal]&A^0\arrow[r]\arrow[d,"f^0"]&A^1\arrow[r]\arrow[d,"f^1"]&\cdots\\
@@ -94,7 +120,7 @@
 \]
 这里的比较映射通过延拓选取，其同伦唯一性由\cref{b4:prop:comparison-homotopy-unique}的内射版本保证。具体地，设 \(f^\bullet,g^\bullet:A^\bullet\to I^\bullet\) 都延拓 \(1_M\)，约定 \(I^{-1}=0\)、\(h^0=0\)。由于 \(f^0-g^0\) 在 \(M\) 上为零，它经 \(p^0:A^0\twoheadrightarrow K^1\) 分解为 \(K^1\to I^0\)。利用 \(I^0\) 的内射性，把后者沿 \(\iota^1:K^1\hookrightarrow A^1\) 延拓为 \(h^1:A^1\to I^0\)，于是 \(f^0-g^0=h^1\mathrm{d}_A^0\)。
 
-假定已构造到 \(h^j\)（\(j\ge1\)），且低于 \(j\) 次的同伦等式成立。令
+假定已构造到 \(h^j\)（\(j\ge1\)），且低于 \(j\) 次的同伦等式成立。已选的 \(h^j\) 解释了由前一次数传来的差别，在次数 \(j\) 尚未消去的误差是
 \[
  e^j=f^j-g^j-\mathrm{d}_I^{j-1}h^j.
 \]
@@ -107,7 +133,7 @@
  &=\mathrm{d}_I^{j-1}\mathrm{d}_I^{j-2}h^{j-1}=0.
 \end{aligned}
 \]
-由于 \(\mathrm{d}_A^{j-1}=\iota^jp^{j-1}\) 且 \(p^{j-1}\) 为满态射，\(e^j\iota^j=0\)，故 \(e^j\) 经 \(p^j\) 分解为 \(\bar e^j:K^{j+1}\to I^j\)。再由 \(I^j\) 内射，把 \(\bar e^j\) 沿 \(\iota^{j+1}\) 延拓为 \(h^{j+1}:A^{j+1}\to I^j\)。这样逐次得到
+这个等式说明误差在前一微分的像上为零。由于 \(\mathrm{d}_A^{j-1}=\iota^jp^{j-1}\) 且 \(p^{j-1}\) 为满态射，\(e^j\iota^j=0\)，故 \(e^j\) 经余核 \(p^j\) 下降为 \(\bar e^j:K^{j+1}\to I^j\)。再由 \(I^j\) 内射，把 \(\bar e^j\) 沿 \(\iota^{j+1}\) 延拓为 \(h^{j+1}:A^{j+1}\to I^j\)。这样逐次得到
 \[
  f^j-g^j=\mathrm{d}_I^{j-1}h^j+h^{j+1}\mathrm{d}_A^j
  \qquad(j\ge0),
@@ -115,37 +141,56 @@
 即 \(f-g=\mathrm{d}_Ih+h\mathrm{d}_A\)。施加加性函子后，这个等式仍成立，所以两种比较映射诱导同一个同调映射。上面的短正合列在比较映射下构成交换图，连接同态自然性说明其诱导映射正是已经构造的同构。因此不同零调消解都通过给定的 \(R^nF(M)\) 典范比较，而不要求它们之间任意方向都有链映射。
 \end{proof}
 
-对有足够投射对象的交换范畴及右正合加性函子，取相反范畴就得到左导出版本：若 \(Q_\bullet\to M\) 正合，且 \(L_iF(Q_j)=0\) 对所有 \(i>0,j\ge0\) 成立，则 \(L_nF(M)\simeq H_n(F(Q_\bullet))\)。次数反转把刚才每个核改成余核，每个内射延拓改成投射提升，正合列和同构全部反向，因而证明不需要新增假设。特别地，平坦消解能够计算张量积的左导出函子 Tor；它不必逐项投射。
+逐项零调并不使 \(F(A^\bullet)\) 成为零调复形。它只使各 \(A^j\) 的正次导出消失，却未要求 \(F(A^{j-1})\to F(K^j)\) 满。上面计算的余核正是这份满射性失败；沿短正合列平移后，它记录的是 \(R^jF(M)\)。
+
+\ProseParagraphBreak
+对有足够投射对象的交换范畴及右正合加性函子，对定义域和值域同时取相反范畴，就得到左导出版本：若 \(Q_\bullet\to M\) 正合，且 \(L_iF(Q_j)=0\) 对所有 \(i>0,j\ge0\) 成立，则 \(L_nF(M)\simeq H_n(F(Q_\bullet))\)。在相反范畴中，核与余核互换，内射延拓成为投射提升；再把上链次数改记为链次数，便得到这些正合列与同构，而不需额外假设。具体地，设 \(R\) 为含幺环，\(N\) 为幺性左 \(R\) 模。在幺性右 \(R\) 模范畴中取 \(F=-\otimes_RN\)，平坦右模 \(Q\) 满足 \(L_iF(Q)=\operatorname{Tor}_i^R(Q,N)=0\)（\(i>0\)）。因此任一平坦消解 \(\cdots\to Q_1\to Q_0\to M\to0\) 都给出
+\[
+ \operatorname{Tor}_n^R(M,N)\cong H_n(Q_\bullet\otimes_RN)
+ \qquad(n\ge0),
+\]
+而不必要求各 \(Q_j\) 投射。
 
 \subsection{正合复形作为消解的条件}
 \label{b4:subsec:1003:03}
 
-应用定理时要分别检查三件事：增广列确实正合，各项对指定函子零调，以及消解从次数零沿一个方向展开。前两项负责连接同态的平移，最后一项使每个固定次数只需有限次平移。一个无界正合复形没有这种起点，不能直接套用定理。
+应用定理时，要检查增广列正合、各项对指定函子零调，并且消解从次数零沿一个方向展开。前两项给出连接同态的平移，最后一项保证每个固定的 \(n\ge2\) 经过有限次就回到 \(M\)：
+\[
+ R^1F(K^{n-1})\cong R^2F(K^{n-2})\cong\cdots\cong R^nF(K^0)
+ =R^nF(M).
+\]
+一条向两端无限延伸的正合复形若没有这样的增广起点，即使局部短正合列允许平移，也不能据此完成与指定对象导出的比较。
 
 \begin{example}\label{b4:exm:arbitrary-resolution-fails}
-取 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 和 \(M=\mathbb Z/2\)。正合列
+取 \(F=\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,-)\) 和 \(M=\mathbb Z/2\mathbb Z\)。正合列
 \[
  0\longrightarrow M\longrightarrow M\oplus\mathbb Z
  \longrightarrow\mathbb Z\longrightarrow0
 \]
-用自然包含和投影，确实是一个长度一的右消解。但施加 \(F\) 后，非增广上链复形为 \(\mathbb Z/2\to0\)，一次上同调为零，而 \(R^1F(M)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2,\mathbb Z/2)=\mathbb Z/2\)。失败是因为 \(M\oplus\mathbb Z\) 不是 \(F\)-零调对象；原列正合不足以保证导出计算正确。
+用自然包含和投影，确实是一个长度一的右消解。但施加 \(F\) 后，非增广上链复形为 \(\mathbb Z/2\mathbb Z\to0\)，一次上同调为零，而 \(R^1F(M)=\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/2\mathbb Z,\mathbb Z/2\mathbb Z)=\mathbb Z/2\mathbb Z\)。第零项的零调条件已经失败，因为
+\[
+ R^1F(M\oplus\mathbb Z)
+ \cong (M\oplus\mathbb Z)/2(M\oplus\mathbb Z)
+ \cong (\mathbb Z/2\mathbb Z)^{\oplus2}\ne0.
+\]
+末项 \(\mathbb Z\) 也有 \(R^1F(\mathbb Z)\cong\mathbb Z/2\mathbb Z\ne0\)。原列虽正合，却不是 \(F\)-零调消解，不能用它计算导出函子。
 \end{example}
 
-对同一个 \(M=\mathbb Z/2\)，取
+对同一个 \(M=\mathbb Z/2\mathbb Z\)，取
 \[
- 0\longrightarrow\mathbb Z/2\xrightarrow{\eta}\mathbb Q/\mathbb Z
+ 0\longrightarrow\mathbb Z/2\mathbb Z\xrightarrow{\eta}\mathbb Q/\mathbb Z
  \xrightarrow{\times2}\mathbb Q/\mathbb Z\longrightarrow0,
  \qquad \eta(\bar1)=\dfrac12+\mathbb Z.
 \]
-乘二映射为满态射，其核恰为 \(\eta(\mathbb Z/2)\)，而 \(\mathbb Q/\mathbb Z\) 是可除群，因而此列为内射消解。\(F(\mathbb Q/\mathbb Z)\) 由 \(\mathbb Q/\mathbb Z\) 中被 \(2\) 零化的元素确定，同构于 \(\mathbb Z/2\)；乘二在这些元素上为零，所以施加同一 \(F\) 后，非增广上链复形为
+乘二映射为满态射，其核恰为 \(\eta(\mathbb Z/2\mathbb Z)\)，而 \(\mathbb Q/\mathbb Z\) 是可除群，因而此列为内射消解。\(F(\mathbb Q/\mathbb Z)\) 由 \(\mathbb Q/\mathbb Z\) 中被 \(2\) 零化的元素确定，同构于 \(\mathbb Z/2\mathbb Z\)；乘二在这些元素上为零，所以施加同一 \(F\) 后，非增广上链复形为
 \[
- \mathbb Z/2\xrightarrow{0}\mathbb Z/2
+ \mathbb Z/2\mathbb Z\xrightarrow{0}\mathbb Z/2\mathbb Z
  \qquad\text{（次数 }0,1\text{）}.
 \]
 于是
 \[
- R^0F(\mathbb Z/2)\simeq\mathbb Z/2,
- \qquad R^1F(\mathbb Z/2)\simeq\mathbb Z/2.
+ R^0F(\mathbb Z/2\mathbb Z)\simeq\mathbb Z/2\mathbb Z,
+ \qquad R^1F(\mathbb Z/2\mathbb Z)\simeq\mathbb Z/2\mathbb Z.
 \]
 这两个正合消解针对同一个对象；前一个含有非零调项，后一个逐项内射，因此后者能够计算该对象的导出函子。
 

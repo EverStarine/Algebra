@@ -7,9 +7,13 @@
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 关系之间的关系；区分合冲指标、同调次数和内次数
-% * 分次极小自由消解的构造与唯一性，比较映射的齐次分裂
+%
+% * 理想与商模的消解相差一层；指定展示的合冲模与内在 Betti 数据的区别
+% * 分次 Nakayama 的次数下界与齐次生成组；极小自由消解的构造及同伦模掉正次数理想后的唯一性
 % * 分次 Betti 数及次数平移的记号对照
+%
+% ---
+%
 
 设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次，\(\mathfrak m=(x_1,\ldots,x_n)\)。一个齐次方程组的生成元可能有关系，这些关系还可能有关系。逐层保存它们得到自由消解。本章要说明何时存在有限长消解，以及矩阵及其次数怎样记录不可省去的生成元。次数平移沿用\cref{b3:def:grading-shift}：\(S(-a)\) 的基向量位于次数 \(a\)。
 
@@ -32,7 +36,7 @@
 且每个 \(F_i\) 是若干 \(S(-a)\) 的直和，则称其为 \(M\) 的分次自由消解。置 \(\Omega^0M=M\)、\(\Omega^1M=\ker\varepsilon\)，并对 \(i\ge1\) 置 \(\Omega^{i+1}M=\ker \mathrm{d}_i\)，这些核称为此消解中的\term[hechong-mo]{合冲模}[syzygy module]。这里上标记录关系的层数，不表示对偶或幂运算。
 \end{definition}
 
-对有限生成的分次模 \(M\)，Noether 性保证每一层的核仍有限生成；逐层选择有限组齐次生成元，就能构造各项均为有限秩自由模的消解，但目前还不能保证层数有限。合冲模也依赖所选生成组：给 \(M\) 增加一个冗余生成元，会增加一个可以消去的自由关系。所谓极小消解，就是在每一层都排除这类冗余。
+对有限生成的分次模 \(M\)，Noether 性保证每一层的核仍有限生成；逐层选择有限组齐次生成元，就能构造各项均为有限秩自由模的消解，但目前还不能保证层数有限。这里的 \(\Omega^iM\) 属于一个指定消解，并非只由 \(M\) 决定。例如，若 \(\varepsilon:F_0\to M\) 为分次满射，给它增加一个冗余非零齐次生成元 \(m\)，选取同次数的齐次 \(u\in F_0\) 使 \(m=\varepsilon(u)\)，就得到 \(F_0\oplus S(-\deg m)\to M\)。换元 \((v,a)\mapsto(v+au,a)\) 把这个新映射化为只在 \(F_0\) 上取 \(\varepsilon\)，所以新核同构于原核与 \(S(-\deg m)\) 的直和。极小消解逐层排除这类冗余，才使各层自由秩和次数平移成为模本身的 Betti 数据。
 
 \ProseParagraphBreak
 例如在 \(S=k[x,y]\) 中，理想 \((x,y)\) 的关系满足 \(ax+by=0\)。因为 \(x\mid by\) 且 \(x,y\) 互素，必有 \(b=-cx\)，再得 \(a=cy\)。于是
@@ -40,20 +44,28 @@
 0\longrightarrow S(-2)\xrightarrow{\binom{y}{-x}}S(-1)^2
 \xrightarrow{(x\ y)}(x,y)\longrightarrow0
 \]
-正合，首映射也因 \(S\) 为整环而单射。若末项改成 \(S/(x,y)\)，则须在右端增加 \(S\rightarrow S/(x,y)\)，消解长度随之增加一。
+正合，首映射也因 \(S\) 为整环而单射。商模的消解则为
+\[
+0\longrightarrow S(-2)\xrightarrow{\binom{y}{-x}}S(-1)^2
+\xrightarrow{(x\ y)}S\longrightarrow S/(x,y)\longrightarrow0.
+\]
+在后一条指定消解中，\(\Omega^1(S/(x,y))=(x,y)\)，而前一条消解中的 \(\Omega^1((x,y))\) 已是两个理想生成元的关系模，同构于 \(S(-2)\)。把理想作为末项和把商作为末项，会使合冲层数及消解长度相差一。
 
 \subsection{分次极小自由消解}
 \label{b3:subsec:2101:02}
 
-局部极小生成元由模掉极大理想后的向量空间决定。在这里 \(S\) 虽非局部环，分次的下界仍给出类似结论。
+局部极小生成元由模掉极大理想后的向量空间决定。在这里 \(S\) 虽非局部环，分次的下界仍给出类似结论。作用机制是最低非零次数：正次数多项式只能提高次数，不能用更低次数的元素生成这一最低层。因此，下面使用的是次数下界，而不是假定 \(\mathfrak m\) 包含于 \(S\) 的 Jacobson 根。
 
 \begin{lemma}\label{b3:lem:graded-nakayama}
 设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 为标准分次多项式环，\(\mathfrak m=(x_1,\ldots,x_n)\)，\(M\) 为次数有下界的分次 \(S\) 模。若 \(M=\mathfrak mM\)，则 \(M=0\)。若有限组齐次元素的像生成 \(M/\mathfrak mM\)，则它们生成 \(M\)；这些元素构成不可删减的齐次生成组，当且仅当其像构成 \(M/\mathfrak mM\) 的 \(k\) 基。
+次数下界不能省略：以通常次数分次的 \(k[x]\) 模 \(k[x,x^{-1}]\) 非零，却满足 \(k[x,x^{-1}]=xk[x,x^{-1}]\)。
 \end{lemma}
 \begin{proof}
 若 \(M\ne0\)，选最低非零次数 \(q\)。等式 \(M=\mathfrak mM\) 将 \(M_q\) 的元素表示成正次数元素乘低于 \(q\) 次的元素，矛盾。对由指定元素生成的齐次子模 \(N\)，条件给出 \(M/N=\mathfrak m(M/N)\)，故 \(M=N\)。
 
-若像线性相关，按次数取一个非平凡关系，并解出其中一个基向量的像，剩下的像仍生成商空间，故该生成元可删。反之，若原生成元可删，在商空间取像便使相应向量成为其他向量的线性组合。因此不可删减等价于像为基。
+若这些像线性相关，因为生成元齐次，可按次数取出同次数生成元的一个非平凡 \(k\) 线性关系。解出其中一个生成元的像，剩下的像仍生成商空间，再应用已证的生成结论，该生成元便可删。反之，若原生成元可删，在商空间取像便使相应向量成为其他向量的线性组合。因此这里的不可删减性始终针对齐次生成组。
+
+对反例 \(M=k[x,x^{-1}]\)，任意 Laurent 多项式 \(f\) 都可写成 \(x(x^{-1}f)\)，所以 \(M=xM\)。但 \(x^{-r}\ne0\) 对每个 \(r\ge0\) 成立，非零次数没有下界。它也不可能在 \(k[x]\) 上有限生成：有限组生成元有共同的最低次数，用非负次数多项式作系数无法产生更低次数的元素。于是最低非零层的论证确实不能用于这个模。
 \end{proof}
 
 \begin{definition}\label{b3:def:graded-minimal-resolution}
@@ -62,16 +74,21 @@
 \mathrm{d}_i(F_i)\subseteq\mathfrak mF_{i-1}\quad(i\ge1),
 \]
 则称它为\term[fenci-jixiao-ziyou-xiaojie]{分次极小自由消解}[minimal graded free resolution]。
+选定各自由项的齐次基后，这等价于所有非零微分矩阵项都具有正次数，也等价于所有 \(\mathrm{d}_i\otimes_Sk\) 为零，其中 \(k=S/\mathfrak m\)。零矩阵项不受正次数条件限制。
 \end{definition}
 
 \begin{proposition}\label{b3:prop:graded-minimal-existence}
 设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 取标准分次。每个有限生成分次 \(S\) 模 \(M\) 都有分次极小自由消解，暂允许该消解有无限多个非零项。
 \end{proposition}
 \begin{proof}
-选 \(M/\mathfrak mM\) 的齐次 \(k\) 基并提升为 \(M\) 的生成元，得到 \(F_0\rightarrow M\)。模掉 \(\mathfrak m\) 后这映射是同构，故其核 \(K_1\) 包含于 \(\mathfrak mF_0\)。核齐次且有限生成。再选 \(K_1/\mathfrak mK_1\) 的基提升，取 \(F_1\rightarrow K_1\)；其核包含于 \(\mathfrak mF_1\)。逐层重复，既保证正合，也保证每个微分的像包含于前项的 \(\mathfrak m\) 倍。
+选 \(M/\mathfrak mM\) 的齐次 \(k\) 基并提升为 \(M\) 的生成元，得到 \(F_0\rightarrow M\)。由所选的基，诱导映射
+\[
+F_0/\mathfrak mF_0\longrightarrow M/\mathfrak mM
+\]
+为同构。若 \(v\in K_1=\ker(F_0\to M)\)，其在 \(F_0/\mathfrak mF_0\) 中的像落在上式的核中，故为零。因此 \(K_1\subseteq\mathfrak mF_0\)。核齐次且有限生成。再选 \(K_1/\mathfrak mK_1\) 的齐次基提升，取 \(F_1\rightarrow K_1\)，同样使该映射的核包含于 \(\mathfrak mF_1\)。逐层重复，既保证正合，也保证每个微分的像包含于前项的 \(\mathfrak m\) 倍。
 \end{proof}
 
-例如若一个分次展示的关系矩阵含非零常数项，该关系就能解出一个自由生成元；这样的展示还没有极小化。反之，全部矩阵项在 \(\mathfrak m\) 中时，模掉 \(\mathfrak m\) 后所有微分都为零。这个特征使极小消解能由同调辨认。
+例如若一个分次展示的关系矩阵含非零常数项，该项就是单位，所在源基与目标基的内次数相同，可以用这条关系解出一个自由生成元；这样的展示还没有极小化。相反，全部矩阵项在 \(\mathfrak m\) 中时，模掉 \(\mathfrak m\) 后所有微分都为零。这既使消解不能再通过非零常数消去一对基向量，也使自由项能由同调辨认；相容换基和可缩直和项的具体处理见\cref{b3:prop:graded-cancellation}。
 
 \subsection{分次 Betti 数}
 \label{b3:subsec:2101:03}
@@ -86,9 +103,18 @@ F_i=\bigoplus_{j\in\mathbb Z}S(-j)^{\beta_{i,j}}.
 \qquad\beta_{i,j}=\dim_k\operatorname{Tor}_i^S(M,k)_j.
 \end{equation}
 因此这些数与选择无关，称为 \(M\) 的\term[fenci-Betti-shu]{分次 Betti 数}[graded Betti numbers]；\(\beta_i=\sum_j\beta_{i,j}\) 是第 \(i\) 层的总秩。下标 \(i\) 记录同调次数，\(j\) 记录元素的内次数，二者不能混用。
+\symidx{\(\beta_{i,j}\)：分次模的 Betti 数}
 
 \ProseParagraphBreak
-这里用到的消解比较原理可以直接看出：两个自由消解间覆盖恒等映射的链映射可逐层提升，因为各微分满射到下一层的核；两个提升之差逐层落入这些核，因而可再逐层提升为链同伦。保持次数的自由生成元允许每一步都选择同次数的原像。于是两个方向的比较映射在张量 \(k\) 后互逆，因为同伦公式中的微分全为零。
+极小性在此处把求同调化为数自由基：\(F_\bullet\otimes_Sk\) 的微分全为零，所以其同调就是各项本身。非极小消解张量 \(k\) 后仍可能有非零微分，不能把自由项的秩直接当成 Betti 数。例如，若 \(F_2\) 中有一个 \(S(-3)\) 直和项，它贡献的是 \(\beta_{2,3}\)：基向量位于同调第 \(2\) 层，内次数却为 \(3\)。
+
+\ProseParagraphBreak
+这里用到的消解比较原理可以直接看出：两个自由消解间覆盖恒等映射的链映射可逐层提升，因为各微分满射到下一层的核；两个提升之差逐层落入这些核，因而可再逐层提升为链同伦。保持次数的自由生成元允许每一步都选择同次数的原像。若两个方向的比较映射为 \(f,g\)，则有
+\[
+gf-\operatorname{id}=\mathrm{d}h+h\mathrm{d},
+\qquad fg-\operatorname{id}=\mathrm{d}h'+h'\mathrm{d}.
+\]
+两条极小消解张量 \(k\) 后的微分都为零，同伦公式右边因此消失，得到 \(\bar g\bar f=\operatorname{id}\)、\(\bar f\bar g=\operatorname{id}\)。这才把一般消解的链同伦比较转成每一层剩余向量空间的同构。
 
 \ProseParagraphBreak
 这还说明两个极小消解在分次链复形意义下同构。记第 \(i\) 层比较映射为 \(f_i:F_i\rightarrow F_i'\)。它模 \(\mathfrak m\) 为同构，故余核模 \(\mathfrak m\) 为零；由\cref{b3:lem:graded-nakayama}，\(f_i\) 满射。为 \(F_i'\) 的每个齐次基向量选取同次数的原像，就得到分次截面，因而

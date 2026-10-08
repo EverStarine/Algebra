@@ -28,26 +28,46 @@
 \[
 F(X)\longrightarrow F(Y)\longrightarrow F(Z)\longrightarrow0
 \]
-正合，就称为\term[youzhenghe]{右正合}[right exact]；两者都满足时称为\term[zhenghe-hanzi]{正合函子}[exact functor]。对反变函子，按协变函子 \(\mathcal A^{\mathrm{op}}\to\mathcal B\) 使用相同定义，因此应用后须把箭头次序反转。
+正合，就称为\term[youzhenghe]{右正合}[right exact]；两者都满足时称为\term[zhenghe-hanzi]{正合函子}[exact functor]。对交换范畴之间的加性反变函子 \(F:\mathcal A^{\mathrm{op}}\to\mathcal B\)，按这个协变函子使用相同定义。因此，\(\mathcal A\) 中的短正合列 \(0\to X\xrightarrow iY\xrightarrow pZ\to0\) 经反变左正合函子后要求
+\[
+0\longrightarrow F(Z)\xrightarrow{F(p)}F(Y)\xrightarrow{F(i)}F(X)
+\]
+正合；反变右正合则要求 \(F(Z)\to F(Y)\to F(X)\to0\) 正合。
 \end{definition}
 
-加性函子保持零对象和有限双积。事实上，\(F(1_0)=F(0)=0\)，所以 \(F(0)\) 的恒等态射为零，任何到它或从它出发的态射都唯一。双积的五个公式则经 \(F\) 后仍成立。因此，“保持核”与“保持余核”是加性函子额外需要满足的两项要求。
+加性函子保持零对象和有限双积。记 \(0_{\mathcal A}\) 为源范畴的零对象，\(0_{X,Y}\) 为从 \(X\) 到 \(Y\) 的零态射。由于 \(1_{0_{\mathcal A}}=0_{0_{\mathcal A},0_{\mathcal A}}\)，函子性与加性分别给出
+\[
+1_{F(0_{\mathcal A})}
+=F(1_{0_{\mathcal A}})
+=F(0_{0_{\mathcal A},0_{\mathcal A}})
+=0_{F(0_{\mathcal A}),F(0_{\mathcal A})}.
+\]
+所以任何到 \(F(0_{\mathcal A})\) 或从它出发的态射都是零态射，\(F(0_{\mathcal A})\) 因而是零对象。双积的五个公式则经 \(F\) 后仍成立。因此，“保持核”与“保持余核”是加性函子额外需要满足的两项要求。
 
 \begin{theorem}\label{b4:thm:exact-functor-kernels}
 设 \(F:\mathcal A\to\mathcal B\) 是交换范畴之间的加性函子。它左正合当且仅当保持所有核；右正合当且仅当保持所有余核。正合函子保持像以及任意正合序列的正合性。
 \end{theorem}
 \begin{proof}
-若保持核，则对短正合列，\(F(X)\to F(Y)\) 是 \(F(Y)\to F(Z)\) 的核，故左正合。反过来，设 \(F\) 左正合，\(k:K\to X\) 是 \(f:X\to Y\) 的核，分解 \(f\) 为 \(X\xrightarrow eI\xrightarrow iY\)，其中 \(I=\operatorname{im}f\)。短正合列
+若保持核，则对短正合列，\(F(X)\to F(Y)\) 是 \(F(Y)\to F(Z)\) 的核，故左正合。反过来，设 \(F\) 左正合，\(k:K\to X\) 是 \(f:X\to Y\) 的核，记 \(I=\operatorname{im}f\)。\Cref{b4:prop:abelian-normal-factorization}给出像分解：余核态射 \(p:X\to\operatorname{coim}f\) 满，比较态射 \(\bar f:\operatorname{coim}f\xrightarrow{\sim}I\) 可逆，所以 \(e=\bar f p:X\to I\) 满；像嵌入 \(i:I\to Y\) 是余核态射的核，因而单。于是 \(f=ie\)，且由 \(i\) 的单性，\(k\) 也是 \(e\) 的核。由此得到两条短正合列
 \[
 0\to K\xrightarrow k X\xrightarrow e I\to0,\qquad
 0\to I\xrightarrow iY\to\operatorname{coker}f\to0
 \]
 表明 \(F(k)\) 是 \(F(e)\) 的核，且 \(F(i)\) 单。对任意态射 \(u:W\to F(X)\)，由 \(F(i)\) 的单性，\(F(f)u=F(i)F(e)u=0\) 当且仅当 \(F(e)u=0\)；后一条件恰使 \(u\) 唯一地通过 \(F(k)\) 分解。因此 \(F(k)\) 也是 \(F(f)\) 的核。余核结论在反范畴中按同一论证得到。
 
-若 \(F\) 正合，\(\operatorname{im}f=\ker(\operatorname{coker}f)\) 的构造被保持，故 \(F(\operatorname{im}f)\cong\operatorname{im}F(f)\)，同构与像嵌入相容。对序列中每个相邻对 \(f,g\)，\(\operatorname{im}f=\ker g\) 因而仍成立。
+若 \(F\) 正合，先由右正合性把 \(q:Y\to\operatorname{coker}f\) 送到 \(F(f)\) 的余核，再由左正合性把其核态射 \(i:\operatorname{im}f\to Y\) 送到 \(F(q)\) 的核。因此
+\[
+F(\operatorname{im}f)\cong\ker F(q)\cong\operatorname{im}F(f),
+\]
+且同构与像嵌入相容。这个构造同时使用了核端与余核端的保持，不能只凭一端的正合性作出相同推断。对序列中每个相邻对 \(f,g\)，\(\operatorname{im}f=\ker g\) 因而仍成立。
 \end{proof}
 
-一个只有 \(X\to Y\to Z\) 三项的正合序列，并不自带两端的单满性质；定义中的两个零对象各有作用。例如 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2,-)\) 保持核，却把 \(\mathbb Z\to\mathbb Z/2\) 送成 \(0\to\mathbb Z/2\)。下面说明这种失去满射的现象来自何处。
+一个只有 \(X\to Y\to Z\) 三项的正合序列，并不自带两端的单满性质；定义中的两个零对象各有作用。例如 \(\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,-)\) 保持核，却不保持满同态 \(\mathbb Z\to\mathbb Z/2\mathbb Z\)，因为
+\[
+\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,\mathbb Z)=0,\qquad
+\operatorname{Hom}_{\mathbb Z}(\mathbb Z/2\mathbb Z,\mathbb Z/2\mathbb Z)\cong\mathbb Z/2\mathbb Z.
+\]
+前一个群为零，是因为 \(\mathbb Z\) 中没有非零的二阶元；后一个同态群由 \(\bar1\) 的任意像决定。所以所得映射 \(0\to\mathbb Z/2\mathbb Z\) 不满。下面说明这种失去满射的现象来自何处。
 
 \subsection{Hom 与张量积的正合性}
 \label{b4:subsec:0403:02}
@@ -63,7 +83,7 @@ F(X)\longrightarrow F(Y)\longrightarrow F(Z)\longrightarrow0
 \]
 中，\(k_*\) 单；一个 \(u:T\to X\) 满足 \(fu=0\) 当且仅当它唯一地通过 \(k\)。因而 \(k_*\) 恰是 \(f_*\) 的核，\cref{b4:thm:exact-functor-kernels}适用。
 
-对反变 Hom，取 \(\mathcal A\) 中的短正合列 \(0\to X\xrightarrow iY\xrightarrow pZ\to0\)，应用函子后得到
+对反变 Hom，使用的是对偶的余核泛性质。取 \(\mathcal A\) 中的短正合列 \(0\to X\xrightarrow iY\xrightarrow pZ\to0\)，应用函子后得到
 \[
 0\longrightarrow\operatorname{Hom}_{\mathcal A}(Z,T)
 \xrightarrow{p^*}\operatorname{Hom}_{\mathcal A}(Y,T)
@@ -72,7 +92,7 @@ F(X)\longrightarrow F(Y)\longrightarrow F(Z)\longrightarrow0
 其中 \(p^*(v)=vp\)、\(i^*(u)=ui\)。由 \(p\) 满，\(p^*\) 单；又因 \(p\) 是 \(i\) 的余核，任意 \(u:Y\to T\) 满足 \(ui=0\) 当且仅当存在唯一 \(v:Z\to T\) 使 \(u=vp\)。因此这列在 \(\operatorname{Hom}_{\mathcal A}(Y,T)\) 处正合，反变 Hom 也左正合。
 \end{proof}
 
-对于左 \(R\)-模，\(\operatorname{Hom}_R(P,-)\) 总能检验“映到零”，但把一个映到商模的同态提升到原模，需要 \(P\) 的投射性。第二卷推论7.1.5已证明：左 \(R\)-模 \(P\) 投射当且仅当该 Hom 函子正合；第二卷命题7.2.2说明 \(\operatorname{Hom}_R(-,E)\) 正合刻画内射模。这些 Hom 集首先是交换群；若 \(R\) 不交换，不可不加说明地把它们当作左 \(R\)-模。
+对于左 \(R\)-模，\(\operatorname{Hom}_R(P,-)\) 总保持核：给定 \(f:X\to Y\)，一个 \(u:P\to X\) 被 \(f\) 消去，恰好等价于它唯一地通过 \(\ker f\) 分解。而若要求对每个满同态 \(Y\twoheadrightarrow Z\)，每个 \(P\to Z\) 都能提升为 \(P\to Y\)，就需要 \(P\) 的投射性。第二卷推论7.1.5已证明：左 \(R\)-模 \(P\) 投射当且仅当该 Hom 函子正合；第二卷命题7.2.2说明 \(\operatorname{Hom}_R(-,E)\) 正合刻画内射模。这些 Hom 集首先是交换群；若 \(R\) 不交换，不可不加说明地把它们当作左 \(R\)-模。
 
 \begin{proposition}\label{b4:prop:tensor-right-exact}
 设 \(R,S\) 为含幺环，\({}_SP_R\) 为幺性左 \(S\) 右 \(R\) 双模，以下模范畴的对象均为幺性左模。函子
@@ -85,10 +105,15 @@ P\otimes_R-:R\text{-}\mathbf{Mod}\longrightarrow S\text{-}\mathbf{Mod}
 \cref{b4:prop:hom-tensor-adjunction}把此函子作为 \(\operatorname{Hom}_S(P,-)\) 的左伴随，后者的左 \(R\)-作用为 \((r\varphi)(x)=\varphi(xr)\)。由\cref{b4:thm:adjoints-preserve-colimits}，它保持余核。它还加性，因为 \(1_P\otimes(f+g)\) 与 \((1_P\otimes f)+(1_P\otimes g)\) 在每个纯张量上相同；纯张量生成张量积，所以二者相等。应用\cref{b4:thm:exact-functor-kernels}即可。取 \(S=\mathbb Z\) 得最后的断言。
 \end{proof}
 
-对短正合列 \(0\to\mathbb Z\xrightarrow{\times2}\mathbb Z\to\mathbb Z/2\to0\) 张量 \(\mathbb Z/2\)，左侧乘 \(2\) 变成零映射，故张量函子未必左正合。第二卷命题7.3.2已把平坦性表述为固定一侧后的张量函子保持全部短正合列。后续构造导出函子时，将为这些失去的正合性给出可以计算的对象；此处只需要看清它们可能失去在哪一端。
+右端的满射还可以在纯张量上直接检验。若 \(q:M\twoheadrightarrow N\) 是满同态，每个 \(p\otimes n\) 都可选 \(m\in M\) 使 \(q(m)=n\)，于是 \(1_P\otimes q\) 将 \(p\otimes m\) 送到 \(p\otimes n\)。纯张量生成 \(P\otimes_RN\)，其中每个有限和因而也能提升。这印证了张量函子保留短正合列满射端的结论；保持整个余核则由刚才的伴随泛性质给出。
+
+\ProseParagraphBreak
+对短正合列 \(0\to\mathbb Z\xrightarrow{\times2}\mathbb Z\to\mathbb Z/2\mathbb Z\to0\) 张量 \(\mathbb Z/2\mathbb Z\)，左侧乘 \(2\) 变成零映射，故张量函子未必左正合。第二卷命题7.3.2已把平坦性表述为固定一侧后的张量函子保持全部短正合列。后续构造导出函子时，将为这些失去的正合性给出可以计算的对象；此处只需要看清它们可能失去在哪一端。
 
 \subsection{有限极限、有限余极限与正合性}
 \label{b4:subsec:0403:03}
+
+\Cref{b4:prop:exact-preserves-finite}已经在模范畴中说明左正合、右正合与有限构造保持性的关系。对一般交换范畴，加性仍保证零对象和有限双积被保持，等化子又由核给出，所以有限极限的保持问题归结为核的保持；有限余极限则对偶地归结为余核的保持。
 
 \begin{theorem}\label{b4:thm:finite-limits-exactness}
 每个交换范畴都有所有有限极限与有限余极限。交换范畴之间的加性函子左正合当且仅当保持有限极限；右正合当且仅当保持有限余极限。因此，加性的右伴随左正合，加性的左伴随右正合。
@@ -99,11 +124,11 @@ P\otimes_R-:R\text{-}\mathbf{Mod}\longrightarrow S\text{-}\mathbf{Mod}
 加性函子已保持零对象和有限双积。若它保持核，便保持 \(\ker(f-g)\)，继而保持上述构造出的有限极限；反向因为核是有限极限而立即成立。结合\cref{b4:thm:exact-functor-kernels}即得左正合的刻画。余极限论证对偶。最后应用\cref{b4:thm:adjoints-preserve-limits,b4:thm:adjoints-preserve-colimits}。
 \end{proof}
 
-“有限”不能删去，交换范畴公理也不保证任意积与余积存在。例如，设 \(k\) 为域，\(I\) 为无限集。若有限维 \(k\)-向量空间范畴中存在 \(I\) 个 \(k\) 的积 \(P\)，记投影为 \(p_j:P\to k\)（\(j\in I\)）。对每个 \(i\in I\)，由积的泛性质，存在唯一 \(s_i:k\to P\) 满足
+“有限”不能删去，交换范畴公理也不保证任意积与余积存在。例如，设 \(k\) 为域，\(I\) 为无限集。若有限维 \(k\)-向量空间范畴中存在 \(I\) 个 \(k\) 的积 \(P\)，记投影为 \(p_j:P\to k\)（\(j\in I\)）。对每个 \(i\in I\)，取从 \(k\) 出发的坐标映射族：第 \(i\) 个坐标为 \(1_k\)，其余坐标为零映射。由积的泛性质，这个族唯一确定 \(s_i:k\to P\)，满足
 \[
 p_js_i=\delta_{ij}1_k\qquad(j\in I).
 \]
-若一个有限线性组合 \(\sum_{i\in J}a_is_i=0\)，其中 \(J\subseteq I\) 有限、\(a_i\in k\)，后复合任意 \(p_j\)（\(j\in J\)）便得 \(a_j1_k=0\)，所以所有系数均为零。于是 \((s_i)_{i\in I}\) 在 \(\operatorname{Hom}_k(k,P)\cong P\) 中线性无关，与 \(P\) 有限维矛盾。
+也就是说，\(s_i(1)\) 应是第 \(i\) 个投影取值为 \(1\)、其余投影取值为 \(0\) 的坐标向量。若一个有限线性组合 \(\sum_{i\in J}a_is_i=0\)，其中 \(J\subseteq I\) 有限、\(a_i\in k\)，后复合任意 \(p_j\)（\(j\in J\)）便得 \(a_j1_k=0\)，所以所有系数均为零。于是 \((s_i)_{i\in I}\) 在 \(\operatorname{Hom}_k(k,P)\cong P\) 中线性无关，与 \(P\) 有限维矛盾。
 
 \ProseParagraphBreak
 即便无限构造存在，正合也不能保证保持它们。\cref{b4:exm:exact-not-products}中的有理化函子不保持可数积，\cref{b4:exm:exact-not-coproducts}中的可数直积函子不保持可数余积；两者却都正合。现在可以准确说明它们与本节定理的关系：核、余核及有限双积受正合性控制，而无限族还要求额外的保持性质。

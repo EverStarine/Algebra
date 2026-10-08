@@ -1,37 +1,49 @@
 % !TeX root = ../../Book3.tex
 % 纲要标题：### B.4 模与自由消解的计算
-% 纲要位置：工作记录/计划纲要.md:2853
+% 纲要位置：工作记录/计划纲要.md:2896
 
 \section{模与自由消解的计算}
 \label{b3:sec:B04}
 
-关系矩阵随生成元的更换而改变，计算记录必须保存这些更换的双向表示。尤其在消解中，相邻矩阵乘积为零只给出像包含于核，核的生成证书才证明正合性。
+\subsecref{b3:subsec:B02:04}用双向表示和临界对约化核验一个理想生成组是否给出了正确的 Gröbner 基。本节把这些记录用于模：更换生成元后，既要拉回新生成组内部的关系，也要补上更换本身产生的关系。逐层求核得到的矩阵是否构成复形、是否正合、是否极小，又是三个不同的核验问题；Betti 数可由极小消解中各自由项的秩和次数直接读取。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 调用第21章的 Schreyer 构造与分次极小化，以证书对照表区分全部核、复形、正合性与 Betti 数
+%
+% * 调用第21章的 Schreyer 构造与分次极小化；内部关系拉回与换生成组关系，全部核、复形、正合及 Betti 证书的分工
 % * 局部标准基方法归附录 F；本节证明局部成员与原环中乘性集倍数证书的等价性
-% * SINGULAR 等精确代数系统可作实验载体；工作环、项序与局部化信息必须记录
-% * 多项式与局部环中的同一输入可能有不同的理想成员答案，应提供对照实例
+% * SINGULAR 等系统可作实验载体；工作环、项序、矩阵约定、分次及精度的可复算记录
+% * 多项式、局部环与完备环用自然映射比较；相邻微分乘积为零但不正合的正式反例
 % #### B.4.1 Schreyer 构造、自由消解与 Betti 表
 % #### B.4.2 局部计算中的项序与结果验证
 % #### B.4.3 计算机代数系统中的环与局部化
 % #### B.4.4 多项式环与局部环中理想成员判定的比较
+%
+% ---
+%
 
 
 \subsection{Schreyer 构造、自由消解与 Betti 表}
 \label{b3:subsec:B04:01}
 
-设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\)，输入矩阵 \(F\in S^{r\times s}\) 的列生成子模 \(N\subset S^r\)。计算模 Gröbner 基矩阵 \(G\in S^{r\times t}\) 时，保存双向表示
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\)，输入矩阵 \(F\in S^{r\times s}\) 的列生成子模 \(N\subset S^r\)。在固定的全局模项序下计算不含零列的模 Gröbner 基矩阵 \(G\in S^{r\times t}\) 时，保存双向表示
 \[
 G=FU,\qquad F=GV,
 \quad U\in S^{s\times t},\quad V\in S^{t\times s}.
 \]
-由\cref{b3:thm:schreyer-syzygies}求出生成 \(\ker G\) 的矩阵 \(T\) 后，\cref{b3:alg:polynomial-matrix-kernel}将原核还原为
+因为 \(F=GV=FUV\)，所以
+\[
+F(I_s-UV)=0.
+\]
+因此 \(I_s-UV\) 的每一列都是原生成组 \(F\) 的关系，它们来自先用 \(G\) 表示 \(F\)、再用 \(F\) 表示 \(G\) 时留下的表示冗余。由\cref{b3:thm:schreyer-syzygies}求出生成 \(\ker G\) 的矩阵 \(T\) 后，\(FUT=GT=0\)，故 \(UT\) 把 \(G\) 内部的全部关系拉回 \(F\)。\Cref{b3:alg:polynomial-matrix-kernel}将原核还原为
 \[
 \ker F=\operatorname{im}K,\qquad
 K=\bigl[\,UT\ \ I_s-UV\,\bigr].
 \]
-第二块记录原生成组与新生成组之间多余的表示；它可能含有第一块没有给出的关系。
+两块各有用途：\(UT\) 保存新生成组内部的关系，\(I_s-UV\) 保存更换生成组产生的关系。它们合在一起生成全部核：若 \(c\in S^s\) 且 \(Fc=0\)，则 \(GVc=0\)，可写 \(Vc=Tb\)，于是
+\[
+c=UVc+(I_s-UV)c=UTb+(I_s-UV)c.
+\]
+第二块可能含有第一块没有给出的关系，不能仅因已经算出 \(\ker G\) 就将它略去。
 
 \begin{example}\label{b3:exm:B-generator-change}
 设 \(k\) 为域，在 \(S=k[x,y]\) 中取 \(F=(x,y,x+y)\)，改用 \(G=(x,y)\)。可取
@@ -41,7 +53,11 @@ U=\begin{pmatrix}1&0\\0&1\\0&0\end{pmatrix},
 V=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},
 \quad T=\binom{y}{-x}.
 \]
-因此原关系由
+此时
+\[
+I_3-UV=\begin{pmatrix}0&0&-1\\0&0&-1\\0&0&1\end{pmatrix}.
+\]
+前两列为零，删去零列后只剩 \((-1,-1,1)^{\mathsf T}\)。因此原关系由
 \[
 (y,-x,0)^{\mathsf T},\qquad(-1,-1,1)^{\mathsf T}
 \]
@@ -60,34 +76,44 @@ V=\begin{pmatrix}1&0&1\\0&1&1\end{pmatrix},
 \midrule
 生成子模相等 & \(G=FU\) 与 \(F=GV\) 的精确矩阵等式 \\
 全部核已求出 & 已验证的模 Gröbner 基 \(G\)、Schreyer 合冲矩阵 \(T\) 及两向变换 \(U,V\)；由还原公式得到全部核生成矩阵 \(K\)，不只检查 \(FK=0\) \\
-序列为复形 & 各层 \(d_i d_{i+1}=0\)，且 \(\varepsilon d_1=0\) \\
-复形为消解 & \(\varepsilon\) 满射、\(\ker\varepsilon=\operatorname{im}d_1\)，以及每一层的全部核与下一层像相等；有限左端还须核验最左侧微分单射 \\
-分次消解极小 & 已验证正合的消解，其微分项全在 \(\mathfrak m=(x_1,\ldots,x_n)\) 中；消去单位项时须同时更新相邻矩阵 \\
-Betti 数 & 记录极小消解中 \(S(-j)\) 在 \(C_i\) 中的重数 \(\beta_{i,j}\)，它等于 \(\dim_k\operatorname{Tor}^S_i(M,k)_j\) \\
+序列为复形 & 各层 \(d_i d_{i+1}=0\)，且 \(\varepsilon d_1=0\)；这只证明 \(\operatorname{im}d_{i+1}\subseteq\ker d_i\) 及 \(\operatorname{im}d_1\subseteq\ker\varepsilon\) \\
+\midrule
+复形为消解 & \(\varepsilon\) 满射、\(\ker\varepsilon=\operatorname{im}d_1\)，以及每一层 \(\ker d_i=\operatorname{im}d_{i+1}\)；有限左端还须核验最左侧微分单射 \\
+\addlinespace
+分次消解极小 & 已验证正合的消解，其微分项全在 \(\mathfrak m=(x_1,\ldots,x_n)\) 中；这排除了单位项对应的可缩直和项。消去单位项时须同时更新相邻矩阵 \\
+\addlinespace
+Betti 数 & 记录极小消解中 \(S(-j)\) 在 \(C_i\) 中的重数 \(\beta_{i,j}=\dim_k\operatorname{Tor}^S_i(M,k)_j\)；一般非极小消解的自由秩不能直接用作 Betti 数 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
+复形证书保证下一层给出的列确实都是关系；正合性证书还要证明全部关系均由这些列生成。即使一个位置已经正合，也不能代替其他位置的核验，节末\cref{b3:prop:B-complex-not-resolution}给出最左端失败而中间位置正合的完整算例。极小性证书则在正合性成立以后排除可消去的自由直和项，随后才能数出内在的 Betti 数据。
+
+\ProseParagraphBreak
 \cref{b3:thm:hilbert-syzygy}给出有限生成分次模具有有限长度自由消解的依据，\cref{b3:prop:graded-cancellation}给出单位项消去的具体步骤；极小消解与 Tor 的关系见\eqref{b3:eq:graded-betti-tor}。这些结论使求核与极小化各有明确的核验目标。
 
 \subsection{局部计算中的项序与结果验证}
 \label{b3:subsec:B04:02}
 
-全局模项序的首项约化以良序为终止依据。局部序允许 \(1>x>x^2>\cdots\)，会改变可逆元素，也会改变约化方法。因此从多项式环改为局部计算时，不能仅把排序参数换掉，再沿用原来的除法终止证明。
+全局模项序的首项约化以良序为终止依据。局部序允许 \(1>x>x^2>\cdots\)，因此不是良序；首项不断下降也可能无限继续，全局除法的终止证明在这一步失效。局部序所对应的工作环还会倒置某些多项式，约化时需要把这些单位纳入表示，使用弱正规形或 Mora 型方法。因此从多项式环改为局部计算时，不能仅把排序参数换掉，再沿用原来的除法终止证明。
 
 \ProseParagraphBreak
-\appref{b3:app:F}将定义局部标准基和弱正规形。局部成员关系可以完全写成原环中的有限等式。
+\appref{b3:app:F}将定义局部标准基和弱正规形。局部成员关系可以完全写成原环中的有限等式：\(f/1\) 属于局部化后的子模，恰好意味着某个允许变成单位的 \(u\) 能把 \(f\) 乘回原子模，即 \(uf=Fa\)。这把\cref{b3:def:module-localization}中的分式相等判据写成了可直接核验的生成元证书。
 
 \begin{proposition}[局部成员证书]\label{b3:prop:B-local-membership-certificate}
-设 \(S\) 为交换环，\(U\subset S\) 为不含零的乘性集，\(R=U^{-1}S\)。给定 \(F\in S^{r\times s}\) 与 \(f\in S^r\)，则
+设 \(S\) 为交换含幺环，\(U\subset S\) 为含 \(1\) 且不含零的乘性集，\(R=U^{-1}S\)。给定 \(F\in S^{r\times s}\) 与 \(f\in S^r\)，则
 \[
 \dfrac{f}{1}\in\operatorname{im}(U^{-1}F:R^s\longrightarrow R^r)
 \quad\Longleftrightarrow\quad
-\text{存在 }u\in U,\ a\in S^s\text{，使 }uf=Fa.
+\text{存在}\;u\in U,\ a\in S^s\text{，使}\;uf=Fa.
 \]
 \end{proposition}
 \begin{proof}
-若 \(uf=Fa\)，在 \(R\) 中除以 \(u\) 即得成员表示。反过来，若 \(f/1\) 属于像，将表示中有限多个分母通分，可写成 \(f/1=Fb/v\)，其中 \(v\in U\)、\(b\in S^s\)。局部化中的相等意味着存在 \(w\in U\) 使 \(w(vf-Fb)=0\)。取 \(u=wv\)、\(a=wb\)，便有 \(uf=Fa\)。此处乘上 \(w\) 的步骤也涵盖 \(S\) 有零因子的情形。
+若 \(uf=Fa\)，在 \(R\) 中除以 \(u\) 即得成员表示。反过来，若 \(f/1\) 属于像，将表示中有限多个分母通分，可写成 \(f/1=Fb/v\)，其中 \(v\in U\)、\(b\in S^s\)。由\cref{b3:def:module-localization}，局部化中的相等意味着存在 \(w\in U\) 使
+\[
+w(vf-Fb)=0.
+\]
+取 \(u=wv\)、\(a=wb\)，便有 \(uf=Fa\)。若 \(S\) 为整环，\(w\ne0\) 可约去，因而原通分分母 \(v\) 已足够。一般环中的 \(w\) 可能是零因子，不能由上式推出 \(vf=Fb\)；额外乘上 \(w\) 正是处理局部化中被分母零化的误差所需的修正。
 \end{proof}
 
 因此验证成员证书时，先检查原环中的矩阵等式，再核验 \(u\) 属于指定乘性集。在 \(S=k[x_1,\ldots,x_n]\)、\(U=S\setminus(x_1,\ldots,x_n)\) 的原点局部化中，后一个条件就是 \(u(0)\ne0\)。
@@ -98,16 +124,51 @@ Betti 数 & 记录极小消解中 \(S(-j)\) 在 \(C_i\) 中的重数 \(\beta_{i,
 \subsection{计算机代数系统中的环与局部化}
 \label{b3:subsec:B04:03}
 
-一份可复算的环描述至少包括系数域、变量、变量次序、项序、商关系以及被倒置的元素。若系数是代数扩张，还要写出其定义多项式；若对象带分次或滤过，还要记录各变量和基向量的次数。只保存一张系数表无法恢复这些信息。
+一份可复算的计算记录必须说明所用的环和输入如何编码。\cref{b3:tab:B-reproducible-record}列出应随计算保存的数据；不涉及扩张、局部化、分次或截断时，也应明确注明。只保存一张系数表无法恢复这些信息。
 
-\ProseParagraphBreak
-例如以下三个工作环有同名变量，却表达不同的问题：
+\begin{table}[htbp]
+\centering
+\caption{可复算计算记录清单}
+\label{b3:tab:B-reproducible-record}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+记录项目 & 应写明的数据 \\
+\midrule
+系数域 & 特征、系数域的具体表示，以及精确四则运算和判零方法 \\
+代数扩张 & 定义多项式、所选根或商表示，以及用于表示系数的基 \\
+变量 & 变量名称及排列次序 \\
+单项式序与模序 & 全局、局部或混合次序的具体比较规则，以及模基分量的比较规则 \\
+商环 & 商关系的生成组及其所在的环境环 \\
+局部化 & 指定乘性集或被倒置的元素，并给出分母合法性的判据 \\
+分次与滤过 & 变量权重、自由模基向量的次数及所用滤过 \\
+截断精度 & 截断理想或次数上界，以及该精度足以支持所声称结论的依据 \\
+输入与矩阵 & 输入生成组、行列顺序、基向量顺序及矩阵的作用约定；本节采用列向量并左乘矩阵 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+同名变量并不确定工作环。例如 \(1-x\) 在\cref{b3:tab:B-inverse-models}的三个环中有不同的地位；即使都存在逆，逆的输入表示也可能不同。
+
+\begin{table}[htbp]
+\centering
+\caption{三个工作环中 \(1-x\) 的逆及其表示}
+\label{b3:tab:B-inverse-models}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+工作环 & \(1-x\) 的逆 & 元素的输入表示 \\
+\midrule
+\(\mathbb Q[x,y]\) & 不存在 & 有限项多项式 \\
+\(\mathbb Q[x,y]_{(x,y)}\) & \(1/(1-x)\) & 有理分式，分母在原点不为零 \\
+\(\mathbb Q[\![x,y]\!]\) & \(\sum_{j\ge0}x^j\) & 形式级数；有限输入若为截断，须注明精度 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+在局部环中，分式 \(1/(1-x)\) 已是精确的有限表示；在形式幂级数环中，逆等于 \(1+x+x^2+\cdots\)。若只保存模 \((x,y)^N\)、\(N\ge1\) 的截断，则保存的是 \(\sum_{j=0}^{N-1}x^j\)，并有
 \[
-\mathbb Q[x,y],\qquad
-\mathbb Q[x,y]_{(x,y)},\qquad
-\mathbb Q[\![x,y]\!].
+(1-x)\sum_{j=0}^{N-1}x^j=1-x^N\equiv1\pmod{(x,y)^N}.
 \]
-第一环中的多项式 \(1-x\) 不可逆，后两个环中则可逆。第二环的元素是满足分母条件的有理函数；第三环还允许一般形式级数，所以它们并非相同的环。使用有限截断计算第三环时，还必须附上精度及为何该精度足够的说明。
+这一有限等式只验证指定精度下的逆；完整级数恒等式还利用了各次系数的相容性。对于一般形式输入，也必须说明截断是否足以决定所求的成员关系或不变量。
 
 \ProseParagraphBreak
 SINGULAR 等精确计算系统可以承载这些实验，但报告不应以某个命令名称代替数学定义。应把“输入理想、输出标准基、表示矩阵、余项或 Hilbert 数据”分别保存。软件内部使用何种临界对策略可以更换；公开的结果仍应由明确的环、项序和有限等式决定。\subsecref{b3:subsec:F04:01}将给出截断何时成为完整长度证书的具体条件。
@@ -123,7 +184,48 @@ x=(1-x)^{-1}(x-x^2),
 故 \(IS_{(x)}=(x)\)。在点 \(x=1\) 的局部环中，反而是 \(x\) 可逆，于是 \(IS_{(x-1)}=(1-x)\)。
 \end{example}
 
-从商环看，这个差别同样清楚。多项式商 \(k[x]/(x-x^2)\) 有两个点，并由中国剩余定理同构于 \(k\times k\)；在原点局部化只保留一个分量。局部成员关系的改变对应实际删去远离所选点的部分，不是排序技巧造成的近似。
+\begin{table}[htbp]
+\centering
+\caption{理想 \((x(1-x))\) 在不同工作环中的扩张}
+\label{b3:tab:B-local-ideal-comparison}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+工作环 & 两因子中的可逆者 & 扩张后的理想 \\
+\midrule
+\(k[x]\) & \(x\)、\(1-x\) 均不可逆 & \((x(1-x))\) \\
+\(k[x]_{(x)}\) & \(1-x\) 可逆 & \((x)\) \\
+\(k[x]_{(x-1)}\) & \(x\) 可逆 & \((1-x)\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\cref{b3:tab:B-local-ideal-comparison}把这两次局部化并列起来。从商环看，多项式商 \(k[x]/(x-x^2)\) 有两个点，并由中国剩余定理同构于 \(k\times k\)；在原点局部化只保留一个分量。局部成员关系的改变对应实际删去远离所选点的部分，不是排序技巧造成的近似。
 
 \ProseParagraphBreak
-因此，计算前首先应决定研究的是整个代数集、指定点附近的局部环，还是完备局部环。全局求解可以先计算零维商代数，再按局部分量分析；局部标准基也可以直接计算指定点的结构。两种方法能够在适当比较映射下核对，但它们首先必须确实描述同一个局部对象。
+因此，计算前首先应决定研究的是整个代数集、指定点附近的局部环，还是完备局部环。对 Noether 环 \(S\) 及其极大理想 \(\mathfrak m\)，这三种工作环通过自然映射联系：
+\[
+S\longrightarrow S_{\mathfrak m}\longrightarrow\widehat{S_{\mathfrak m}},
+\qquad
+\widehat{S_{\mathfrak m}}
+=\varprojlim_N S_{\mathfrak m}/(\mathfrak mS_{\mathfrak m})^N.
+\]
+全局环保留原对象的全部素点，局部环保留满足 \(\mathfrak p\subseteq\mathfrak m\) 的素点，完备化进一步加入与所有有限阶截断相容的形式极限。全局求解可以先计算零维商代数，再按局部分量分析；局部标准基也可以直接计算指定点的结构。比较不同工作环中的算法输出时，须先沿自然映射把输入、理想或模以及证书送到同一工作环，再核验那里的结论。原环中的非成员关系可能在局部化后变成成员关系，正如上例，因而不能仅凭答案不同就判定某个算法出错。
+
+\ProseParagraphBreak
+前面反复要求逐层核验正合性，即使所有输入和等式都在同一工作环中，这项要求也不能省去。
+
+\begin{proposition}[复形条件与正合性]\label{b3:prop:B-complex-not-resolution}
+设 \(k\) 为域，\(S=k[x]\)。序列
+\[
+0\longrightarrow C_2=S\xrightarrow{\,d_2=0\,}
+C_1=S\xrightarrow{\,d_1=x\,}C_0=S
+\]
+构成自由模复形，其中 \(d_1\) 表示乘以 \(x\)。它在 \(C_1\) 处正合，在 \(C_2\) 处不正合；即使在右端补上自然商映射 \(\pi:S\to S/(x)\) 及 \(S/(x)\to0\)，所得增广复形仍不是 \(S/(x)\) 的自由消解。
+\end{proposition}
+\begin{proof}
+相邻微分满足 \(d_1d_2=x\cdot0=0\)。在最左侧 \(C_2\) 处，\(\ker d_2=S\)，而 \(\operatorname{im}(0\to C_2)=0\)，所以不正合。在中间 \(C_1\) 处，\(S\) 为整环且 \(x\ne0\)，故
+\[
+\ker d_1=0=\operatorname{im}d_2.
+\]
+补上 \(\pi\) 后还有 \(\pi d_1=0\)、\(\ker\pi=xS=\operatorname{im}d_1\)，且 \(\pi\) 满射，所以右端的正合性也成立。但这些等式没有改变 \(C_2\) 处的失败，整个增广复形仍不正合。
+\end{proof}

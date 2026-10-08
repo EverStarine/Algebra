@@ -1,7 +1,7 @@
 % !TeX root = ../../Book4.tex
 % 纲要标题：### 12.4 杯积、群扩张与连续上同调
 % 纲要标签：b4:sec:1104
-% 纲要位置：计划纲要.md，第 2761 行。
+% 纲要位置：计划纲要.md，第 3521 行。
 
 \section{杯积、群扩张与连续上同调}
 \label{b4:sec:1104}
@@ -31,6 +31,14 @@
 \]
 空乘积取 \(1\)。这称为余链的\term[beiji]{杯积}[cup product]。若 \(P\) 也是左 \(kG\) 模，并给定 \(G\) 等变的 \(k\) 线性配对 \(M\otimes_kN\to P\)，便可将右侧再映到 \(P\)。
 \end{definition}
+\symidx{\(f\smile h\)：群余链及群上同调类的杯积}
+
+第二个因子前的群元素来自齐次余链的等变性。对应于 \(f\) 的齐次余链是
+\[
+F(g_0,\ldots,g_p)
+=g_0f(g_0^{-1}g_1,\ldots,g_{p-1}^{-1}g_p).
+\]
+在元组 \((1,g_1,g_1g_2,\ldots,g_1\cdots g_{p+q})\) 上，把前后两段分别交给 \(F,H\)，后段的起点是 \(g_1\cdots g_p\)，所以它的值必须带这个作用。例如 \(p=1,q=0\) 时，\(h\in N\)，公式就是 \((f\smile h)(g)=f(g)\otimes gh\)。
 
 \begin{proposition}\label{b4:prop:group-cup-leibniz}
 设 \(k\) 为交换环，\(G\) 为群，\(M,N\) 为左 \(kG\) 模，\(p,q\ge0\)，\(f\in C^p(G,M)\)、\(h\in C^q(G,N)\)。对\cref{b4:def:group-cup-product}的杯积，有
@@ -44,12 +52,22 @@ H^p(G,M)\otimes_kH^q(G,N)
 \]
 \end{proposition}
 \begin{proof}
-把非齐次公式改写成齐次公式，乘积就是
+沿用上述齐次表示，乘积就是
 \[
 (F\smile H)(g_0,\ldots,g_{p+q})
 =F(g_0,\ldots,g_p)\otimes H(g_p,\ldots,g_{p+q}).
 \]
-展开其微分。在 \(\delta F\smile H\) 中，删除位置 \(0,\ldots,p\) 的项与总微分对应；在 \((-1)^pF\smile\delta H\) 中，删除后半段位置 \(1,\ldots,q+1\) 的项与总微分对应。余下两项都是
+先看 \(p=q=1\)。用 \(F_{ij}=F(g_i,g_j)\)、\(H_{ij}=H(g_i,g_j)\) 简记，有
+\[
+\begin{aligned}
+((\delta F)\smile H-F\smile\delta H)(g_0,g_1,g_2,g_3)
+&=(F_{12}-F_{02}+F_{01})\otimes H_{23}\\
+&\quad-F_{01}\otimes(H_{23}-H_{13}+H_{12})\\
+&=F_{12}\otimes H_{23}-F_{02}\otimes H_{23}\\
+&\quad+F_{01}\otimes H_{13}-F_{01}\otimes H_{12}.
+\end{aligned}
+\]
+中间两项 \(F_{01}\otimes H_{23}\) 抵消后，恰是 \(\delta(F\smile H)\) 的四个删除顶点项。一般次数也按同一方式计算：在 \(\delta F\smile H\) 中，删除位置 \(0,\ldots,p\) 的项与总微分对应；在 \((-1)^pF\smile\delta H\) 中，删除后半段位置 \(1,\ldots,q+1\) 的项与总微分对应。余下两项都是
 \(F(g_0,\ldots,g_p)\otimes H(g_{p+1},\ldots,g_{p+q+1})\)，
 系数分别为 \((-1)^{p+1}\) 与 \((-1)^p\)，恰好抵消。故恒等式成立，包括 \(p=0\) 或 \(q=0\) 的情形。
 
@@ -65,7 +83,7 @@ x\smile y=(-1)^{pq}y\smile x.
 \]
 \end{theorem}
 \begin{proof}
-余链公式中，三因子相乘按同样次序分割群元素串，\(k\) 的乘法结合，故杯积结合。零次常值 \(1\) 是单位元。分次交换性在余链上未必直接成立，需要用一次消解比较。
+余链公式中，三因子相乘按同样次序分割群元素串，\(k\) 的乘法结合，故杯积结合。零次常值 \(1\) 是单位元。接下来把这个乘积识别为 Ext 的 Yoneda 乘积，再用消解比较证明分次交换性；后者在余链上未必直接成立。
 
 取齐次 bar 消解 \(B_\bullet=B_\bullet(k,G)\)。在总张量复形上使用微分
 \(\mathrm{d}(b\otimes c)=\mathrm{d}b\otimes c+(-1)^{\deg b}b\otimes \mathrm{d}c\)。
@@ -74,7 +92,16 @@ x\smile y=(-1)^{pq}y\smile x.
 \Delta(g_0,\ldots,g_n)
 =\sum_{i=0}^n(g_0,\ldots,g_i)\otimes(g_i,\ldots,g_n)
 \]
-与微分交换：删除分割点左侧或右侧的项分别对应 \(\mathrm{d}\Delta\) 中两个微分，分割点两侧剩余的相邻项符号相反而抵消。这与上一命题的 Leibniz 计算相同。\(\Delta\) 提升了平凡模上的恒等映射 \(k\to k\otimes_k k\cong k\)。
+把元组在每个顶点处分割，并保留这个共同顶点。例如
+\[
+\begin{aligned}
+\Delta(g_0,g_1,g_2)
+&=(g_0)\otimes(g_0,g_1,g_2)\\
+&\quad+(g_0,g_1)\otimes(g_1,g_2)\\
+&\quad+(g_0,g_1,g_2)\otimes(g_2).
+\end{aligned}
+\]
+它与微分交换：删除分割点左侧或右侧的项分别对应 \(\mathrm{d}\Delta\) 中两个微分，分割点两侧剩余的相邻项符号相反而抵消。这与上一命题的 Leibniz 计算相同。\(\Delta\) 提升了平凡模上的恒等映射 \(k\to k\otimes_k k\cong k\)。
 
 这也把杯积与 Yoneda 乘积接起来。在 \(H^*(G,k)=\operatorname{Ext}_{kG}^*(k,k)\) 的描述下，取齐次余圈 \(f:B_p\to k\)、\(h:B_q\to k\)。对角映射的 \((i,q)\) 分量经第二因子上的 \(h\) 求值，给出
 \[
@@ -84,7 +111,7 @@ t_i(g_0,\ldots,g_{q+i})
 =h(g_i,\ldots,g_{i+q})\cdot(g_0,\ldots,g_i).
 \end{gathered}
 \]
-这些映射为 \(kG\) 线性，因为 \(h\) 的系数作用平凡。增广满足 \(\varepsilon t_0=h\)，且 \(\mathrm{d}t_i=t_{i-1}\mathrm{d}\)：展开删除顶点的公式，前半段与 \(\mathrm{d}t_i\) 对应，交界后剩下的项由 \(\delta h=0\) 抵消。因此 \(t_i\) 正是\cref{b4:prop:yoneda-resolution-product}所需的逐次提升，而
+\(h\) 对最后 \(q+1\) 个顶点求值，留下前 \(i+1\) 个顶点组成的 \(i\) 次元组，因此 \(t_i\) 把次数降低 \(q\)。这些映射为 \(kG\) 线性，因为 \(h\) 的系数作用平凡。增广满足 \(\varepsilon t_0=h\)，且 \(\mathrm{d}t_i=t_{i-1}\mathrm{d}\)：展开删除顶点的公式，前半段与 \(\mathrm{d}t_i\) 对应，交界后剩下的项由 \(\delta h=0\) 抵消。因此 \(t_i\) 正是\cref{b4:prop:yoneda-resolution-product}所需的逐次提升，而
 \[
 \begin{aligned}
 (ft_p)(g_0,\ldots,g_{p+q})
@@ -94,14 +121,18 @@ t_i(g_0,\ldots,g_{q+i})
 \]
 所以按前章的乘积次序，杯积对应 Yoneda 乘积 \([f][h]\)。
 
-对角作用下，每项 \(B_i\otimes_kB_j\) 都是自由 \(kG\) 模，因为同时左乘在两组元组上自由作用。底层 \(k\) 复形 \(B_\bullet\) 通过 bar 收缩与 \(k[0]\) 同伦等价，张量保持这个同伦，所以总张量复形也增广到 \(k\)，且是自由消解。带符号的翻转
+对角作用下，两组元组的每个轨道恰有一个代表，其第一组的首坐标为 \(1\)：把全部坐标同时左乘 \(g_0^{-1}\) 即得到它。因此这些代表给出 \(B_i\otimes_kB_j\) 的一组 \(kG\) 基，总次数 \(n\) 的有限直和也自由。另一方面，底层 \(k\) 复形 \(B_\bullet\) 通过 bar 收缩与 \(k[0]\) 同伦等价；先在一个因子、再在另一个因子使用这个同伦，得到总张量复形与 \(k[0]\otimes_k k[0]\cong k[0]\) 的 \(k\) 线性同伦等价。这里仅用底层同伦证明正合性，不要求收缩保持 \(G\) 作用。总张量复形的增广和微分本身都是 \(kG\) 线性的，所以它确实是平凡模 \(k\) 的自由消解。带符号的翻转
 \[
 \tau(b\otimes c)=(-1)^{ij}c\otimes b
 \quad(b\in B_i,\ c\in B_j)
 \]
 与微分交换，并在增广处是恒等。因此 \(\Delta\) 与 \(\tau\Delta\) 是提升同一映射的消解比较映射，由\cref{b4:prop:comparison-homotopy-unique}链同伦。
 
-取代表 \(x,y\) 的余圈并在对应的两个张量次数上求值，\(\Delta\) 给出 \(x\smile y\)，\(\tau\Delta\) 给出 \((-1)^{pq}y\smile x\)。链同伦经余圈求值后成为余边，故两者的上同调类相等。
+当 \(p+q>0\) 时，设 \(f,h\) 分别代表 \(x,y\)，在总次数 \(p+q\) 上令 \(E\) 在 \(B_p\otimes_kB_q\) 分量取 \(f\otimes h\) 后接 \(k\) 的乘法，在其他分量取零。由 \(f,h\) 为余圈，有 \(E\mathrm{d}=0\)。若比较同伦为 \(\Delta-\tau\Delta=\mathrm{d}S+S\mathrm{d}\)，则
+\[
+E\Delta-E\tau\Delta=(ES)\mathrm{d}=\delta(ES).
+\]
+左边两项分别是 \(x\smile y\) 与 \((-1)^{pq}y\smile x\) 的余圈代表，所以它们只相差一个余边。\(p=q=0\) 时结论直接来自 \(k\) 的交换性。
 \end{proof}
 
 一般模的自扩张代数并不自动具有上述对角映射，以及它与带符号翻转之间的同伦比较。这里的分次交换性来自这两项额外构造，加上平凡系数环 \(k\) 的交换乘法；它与前章一般 Ext 代数不必分次交换的例子并不冲突。特别地，奇数次元素 \(x\) 满足 \(2x^2=0\)，但在特征二时不能据此断言 \(x^2=0\)。这一区别会在循环群的模二上同调中实际出现。群上同调环的另一种组织方式可见 Weibel\cite[Section 6.7.1, Theorem 6.7.11, Lemma 6.7.12]{Weibel1994HomologicalAlgebra}。
@@ -116,7 +147,7 @@ t_i(g_0,\ldots,g_{q+i})
 \[
 (M^N)^Q=M^G.
 \]
-函子 \(F:M\mapsto M^N\) 从 \(G\) 模到 \(Q\) 模，是正合的沿 \(G\to Q\) 限制标量函子的右伴随，因而保持内射对象。一个 \(G\) 内射模限制到 \(N\) 后也内射，所以
+函子 \(F:M\mapsto M^N\) 从 \(G\) 模到 \(Q\) 模，是膨胀函子 \(\operatorname{Inf}:Q\text{-Mod}\to G\text{-Mod}\) 的右伴随；膨胀把 \(Q\) 模沿商映射 \(G\to Q\) 看成 \(G\) 模，它是正合的，故 \(F\) 保持内射对象。一个 \(G\) 内射模限制到 \(N\) 后也内射，所以
 \[
 R^qF(M)\cong H^q(N,M)
 \]
@@ -130,7 +161,7 @@ R^qF(M)\cong H^q(N,M)
 \operatorname{Hom}_G(\operatorname{Inf}A,M)
 \cong\operatorname{Hom}_Q(A,M^N).
 \]
-由于 \(\operatorname{Inf}\) 不改变底层交换群而正合，\cref{b4:prop:right-adjoint-injectives}说明 \(F\) 保持内射。另一方面，诱导 \(\mathbb ZG\otimes_{\mathbb ZN}-\) 正合，因为 \(\mathbb ZG\) 作为右 \(\mathbb ZN\) 模自由；它的右伴随是限制。因此同一命题说明 \(G\) 内射模限制到 \(N\) 后仍内射。
+由于 \(\operatorname{Inf}\) 不改变底层交换群而正合，\cref{b4:prop:right-adjoint-injectives}说明 \(F\) 保持内射。这里膨胀的出发范畴是 \(Q\) 模范畴；另一个需要检查的函子则是把 \(G\) 作用限制到子群 \(N\)。诱导 \(\mathbb ZG\otimes_{\mathbb ZN}-\) 是这个限制函子的左伴随，并且正合，因为 \(\mathbb ZG\) 作为右 \(\mathbb ZN\) 模自由。因此同一命题说明 \(G\) 内射模限制到 \(N\) 后仍内射。
 
 取 \(G\) 内射消解 \(M\to I^\bullet\)，于是 \((I^\bullet)^N\) 在每项都是 \(Q\) 模，其上同调既计算 \(R^qF(M)\)，又计算通常的 \(H^q(N,M)\)。另一方面，在齐次余链复形上先定义一个 \(G\) 作用；取上同调以后，这个作用才通过 \(Q\) 分解。具体地，对齐次余链 \(\varphi\) 写
 \[
@@ -144,7 +175,7 @@ R^qF(M)\cong H^q(N,M)
 K^{i,j}=\operatorname{Hom}_{\mathbb ZN}(B_i(N),I^j)
 \qquad(i,j\ge0).
 \]
-原横微分由预合成 bar 微分给出，原纵微分由后合成内射消解的微分给出；在第 \(i\) 列的纵微分前乘 \((-1)^i\)，便得到反交换的横纵微分。每个 \(I^j\) 限制到 \(N\) 后内射，每个 \(B_i(N)\) 是自由 \(\mathbb ZN\) 模，因此沿这两个方向分别有
+这里 \(i\) 记录 bar 次数，\(j\) 记录内射消解次数。原横微分由预合成 bar 微分给出，原纵微分由后合成内射消解的微分给出；在第 \(i\) 列的纵微分前乘 \((-1)^i\)，便得到反交换的横纵微分。每个 \(I^j\) 限制到 \(N\) 后内射，每个 \(B_i(N)\) 是自由 \(\mathbb ZN\) 模，因此沿这两个方向分别有
 \[
 H_{\mathrm{bar}}^i(K^{\bullet,j})=
 \begin{cases}
@@ -183,7 +214,7 @@ E_2^{p,q}=H^p\bigl(Q,H^q(N,M)\bigr)
 \begin{definition}\label{b4:def:continuous-group-cochains}
 设 \(G\) 是投射有限群。一个交换群 \(M\) 配有 \(G\) 作用，并且把 \(M\) 赋予离散拓扑后作用映射 \(G\times M\to M\) 连续，就称 \(M\) 为离散连续 \(G\) 模。等价地，每个元素 \(m\) 的稳定子群在 \(G\) 中是开的。令
 \[
-C_{\mathrm{cts}}^n(G,M)=\{\,f:G^n\to M\mid f\text{ 连续}\,\},
+C_{\mathrm{cts}}^n(G,M)=\{\,f:G^n\to M\mid f\;\text{连续}\,\},
 \qquad C_{\mathrm{cts}}^0(G,M)=M.
 \]
 采用\eqref{b4:eq:group-cochain-differential}的微分，定义
@@ -192,11 +223,16 @@ H_{\mathrm{cts}}^n(G,M)=H^n\bigl(C_{\mathrm{cts}}^\bullet(G,M)\bigr),
 \]
 称为\term[lianxu-qunshangtongdiao]{连续群上同调}[continuous group cohomology]。
 \end{definition}
+\symidx{\(C_{\mathrm{cts}}^n(G,M)\)：连续群余链群}
+\symidx{\(H_{\mathrm{cts}}^n(G,M)\)：连续群上同调}
 
 这一连续余链定义与离散连续 \(G\) 模范畴中不变量函子的右导出定义一致；\cref{b4:thm:C-continuous-derived}给出内射对象的构造及两者的自然同构。Weibel 先以不变量函子的右导出定义连续群上同调，再证明连续余链及有限商公式计算它\cite[Profinite Cohomology 6.11.11, Theorem 6.11.13]{Weibel1994HomologicalAlgebra}。
 
 \ProseParagraphBreak
 定义中的等价性来自离散点的原像：连续作用使轨道映射的纤维为开集；反之，开稳定子群保证每个点附近的作用值固定。各项群运算与作用连续，所以微分仍给连续函数，且 \(\delta^2=0\) 从同一代数恒等式得到。
+
+\ProseParagraphBreak
+每个 \(m\in M\) 的轨道都是有限的：它与 \(G/\operatorname{Stab}(m)\) 对应，而开子群的陪集构成紧空间 \(G\) 的开覆盖，有限子覆盖说明指数有限。离散连续模因而是其有限生成 \(G\) 子模的并，但其底层交换群不必有限。
 
 \begin{proposition}\label{b4:prop:continuous-finite-quotients}
 设 \(G\) 是投射有限群，\(M\) 是离散连续 \(G\) 模。让 \(U\) 遍历开正规子群，并以反向包含排序，则
@@ -220,12 +256,19 @@ f(g_1u_1,\ldots,g_nu_n)=f(g_1,\ldots,g_n).
 \]
 于是 \(f\) 通过 \((G/U_0)^n\) 因子化。
 
-再让 \(U_1\) 同时固定有限像中的全部元素。每个稳定子群都是开子群，在紧群中有有限指数；其有限多个共轭的交是开正规子群，故这样的 \(U_1\) 存在。取 \(U=U_0\cap U_1\)，则 \(f\) 来自 \(C^n(G/U,M^U)\)。反向，有限商上的任意此类函数拉回后连续。次数零时每个 \(m\) 同样被某个开正规子群固定。公式与微分相容，所以得到复形的滤过余极限。由\cref{b4:prop:filtered-colimits-exact}，交换群的滤过余极限与核、像及商相容，取上同调即可。
+这只使输入通过有限商分解，还须让函数值成为这个商群的系数。再让 \(U_1\) 同时固定有限像中的全部元素。每个稳定子群都是开子群，在紧群中有有限指数；其有限多个共轭的交是开正规子群，故这样的 \(U_1\) 存在。取 \(U=U_0\cap U_1\)，既保留 \(U_0\) 对输入的控制，又使全部值落在 \(M^U\)，于是 \(f\) 来自 \(C^n(G/U,M^U)\)。反向，有限商上的任意此类函数拉回后连续。次数零时每个 \(m\) 同样被某个开正规子群固定。公式与微分相容，所以得到复形的滤过余极限。由\cref{b4:prop:filtered-colimits-exact}，交换群的滤过余极限与核、像及商相容，取上同调即可。
 \end{proof}
 
-例如 \(G=\mathbb Z_p=\varprojlim_r\mathbb Z/p^r\)，系数 \(\mathbb F_p\) 取平凡作用。一次连续余圈就是连续加法同态。每个这样的同态都零化 \(p\mathbb Z_p\)，所以由模 \(p\) 商唯一决定，得到
+例如 \(G=\mathbb Z_p=\varprojlim_r\mathbb Z/p^r\mathbb Z\)，系数 \(\mathbb F_p\) 取平凡作用。一次连续余圈就是连续加法同态。每个这样的同态都零化 \(p\mathbb Z_p\)，所以由模 \(p\) 商唯一决定，得到
 \(H_{\mathrm{cts}}^1(\mathbb Z_p,\mathbb F_p)=\mathbb F_p\)。
-这项计算是在连续映射中进行的，不能据此把任意抽象群余链都视为连续余链。
+这里的任意抽象加法同态也零化 \(p\mathbb Z_p\)，故都通过有限商 \(\mathbb Z_p/p\mathbb Z_p\) 分解而连续；这个例子的一次抽象上同调与连续上同调恰好相同。
+
+\ProseParagraphBreak
+两种理论仍可不同。取 \(G=\prod_{j\ge1}C_p\)，系数 \(\mathbb F_p\) 平凡。连续一次余圈是连续同态，其开核包含某个基本邻域，所以只使用有限多个坐标，给出
+\[
+H^1_{\mathrm{cts}}(G,\mathbb F_p)\cong\bigoplus_{j\ge1}\mathbb F_p.
+\]
+作为抽象 \(\mathbb F_p\) 向量空间，\(G\) 的有限支集子空间 \(S=\bigoplus_{j\ge1}C_p\) 不含 \(v=(1,1,\ldots)\)。在 \(S+\mathbb F_pv\) 上定义线性函数，其在 \(S\) 上为零、在 \(v\) 上为 \(1\)，再用基的扩充把它延拓到整个 \(G\)。所得抽象同态不连续：\(S\) 在乘积拓扑中稠密，任何连续的 \(\mathbb F_p\) 值函数若在 \(S\) 上为零，就应处处为零。因此连续一次上同调是抽象一次上同调的真子群。
 
 \ProseParagraphBreak
 上述导出识别在离散连续 \(G\) 模范畴内进行。这个范畴与全部抽象 \(\mathbb ZG\) 模的范畴不同；若用 Ext 表示，必须标明所在范畴。更具体的投射循环群计算见\cref{b4:prop:C-procyclic-h1}和\cref{b4:prop:C-procyclic-h2}，其中保留了有限系数和膨胀映射的条件。系数若带有非离散拓扑，例如 \(p\)-进系数模，还需要另行规定连续上同调的范畴与极限条件，不能直接套用本节结论。

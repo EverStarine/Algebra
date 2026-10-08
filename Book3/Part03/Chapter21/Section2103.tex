@@ -7,27 +7,38 @@
 
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
-% * 交错和公式
+%
+% * Hilbert 级数及分式域秩的交错和公式
 % * 从 Betti 数据恢复 Hilbert 级数
-% * 不能由 Hilbert 级数唯一恢复全部消解
+% * 相同 Hilbert 级数未必有相同 Betti 数据；相邻两层同次数贡献可能抵消
+%
+% ---
+%
 
-自由消解含有矩阵及其次数两类信息。Hilbert 级数只看每个次数的向量空间维数，因而能从消解的次数数据求出，却未必能恢复微分和每层生成元。下面先给出精确的交错和公式，再用两个小例子说明它保留和丢失了什么。
+自由消解含有矩阵及其次数两类信息。Hilbert 级数只看每个次数的向量空间维数，由消解得到的是各层的交错和，也就是按内次数逐项计算的 Euler 特征。因此，相邻两层中同一个 \(S(-j)\) 的正负贡献会抵消，即使它们在消解中承担不同的任务。下面给出精确公式，再用两个小例子说明相同级数可以对应不同的方程和合冲关系。
 
 \subsection{消解的交错和公式}
 \label{b3:subsec:2103:01}
 
-\begin{proposition}\label{b3:prop:resolution-hilbert-series}
-设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 为标准分次多项式环，\(M\) 为有限生成分次 \(S\) 模，\(H_M(t)=\sum_{q\in\mathbb Z}(\dim_kM_q)t^q\) 为其 Hilbert 级数。若 \(M\) 的一个有限分次自由消解 \(F_\bullet\to M\) 的第 \(i\) 项为 \(F_i=\bigoplus_jS(-j)^{b_{i,j}}\)，则
+\begin{proposition}\label{b3:prop:resolution-hilbert-series}\label{b3:prop:betti-rank-euler}
+设 \(k\) 为域，\(S=k[x_1,\ldots,x_n]\) 为标准分次多项式环，\(K=\operatorname{Frac}(S)\)，\(M\) 为有限生成分次 \(S\) 模，\(H_M(t)=\sum_{q\in\mathbb Z}(\dim_kM_q)t^q\) 为其 Hilbert 级数。若 \(M\) 的一个长度有限、各项均为有限秩的分次自由消解 \(F_\bullet\to M\) 的第 \(i\) 项为 \(F_i=\bigoplus_jS(-j)^{b_{i,j}}\)，则
 \begin{equation}\label{b3:eq:betti-hilbert-numerator}
 H_M(t)=\frac{\sum_{i,j}(-1)^ib_{i,j}t^j}{(1-t)^n}.
 \end{equation}
 若消解极小，则 \(b_{i,j}=\beta_{i,j}\)，其中 \(\beta_{i,j}=\dim_k\operatorname{Tor}_i^S(M,k)_j\)。
+此外，置 \(b_i=\sum_j b_{i,j}\)，有
+\[
+\dim_K(M\otimes_SK)=\sum_i(-1)^ib_i.
+\]
+特别地，对极小消解，\(\dim_K(M\otimes_SK)=\sum_i(-1)^i\beta_i(M)\)；若 \(M\) 为挠模，则此交错和为零。
 \end{proposition}
 \begin{proof}
-对每个整数 \(q\)，消解的次数 \(q\) 部分是有限维 \(k\) 空间的有限正合列，故其维数的交错和为零，得到 \(\dim_kM_q=\sum_i(-1)^i\dim_k(F_i)_q\)。乘 \(t^q\) 后求和，使用 \(H_{S(-j)}(t)=t^j/(1-t)^n\)，即得公式。所有模的次数有共同下界，各次维数有限，故此运算在形式 Laurent 级数中合法。
+对每个整数 \(q\)，消解的次数 \(q\) 部分是有限维 \(k\) 空间的有限正合列，故其维数的交错和为零，得到 \(\dim_kM_q=\sum_i(-1)^i\dim_k(F_i)_q\)。乘 \(t^q\) 后求和，使用 \(H_{S(-j)}(t)=t^j/(1-t)^n\)，即得公式。这条有限自由消解中出现的各个分次模具有一个共同的次数下界，各次维数有限，故此运算在形式 Laurent 级数中合法。
+
+将同一消解张量分式域 \(K\)，局部化保持正合性，得到有限维 \(K\) 向量空间的有限正合列。每个 \(F_i\otimes_SK\) 的维数为 \(b_i\)，再次取维数的交错和，即得所列的总秩公式。若 \(M\) 为有限生成挠模，有限组生成元各自被某个非零元素零化，取这些元素的乘积便零化全部 \(M\)，所以 \(M\otimes_SK=0\)，交错和为零。
 \end{proof}
 
-非极小消解也给出同一个公式。在相邻两层同时出现的同次数可缩直和项，贡献恰为 \(t^j-t^j=0\)。所以级数天然忽略了一部分消解信息。
+非极小消解也给出同一个公式。在相邻两层同时出现的同次数可缩直和项，贡献恰为 \(t^j-t^j=0\)。更一般地，级数只保留每个内次数的交错总数，不能辨认该总数来自哪几层。总秩的交错和还可检验一个候选消解是否具有正确的泛点秩，但它与 Hilbert 交错和都只是正合性的必要后果；\cref{b3:exm:hilbert-euler-not-exact}给出交错和正确而同调非零的例子。
 
 \subsection{由 Betti 数据恢复 Hilbert 级数}
 \label{b3:subsec:2103:02}
@@ -37,6 +48,9 @@ H_M(t)=\frac{\sum_{i,j}(-1)^ib_{i,j}t^j}{(1-t)^n}.
 H_{S/(f_1,\ldots,f_r)}(t)
 =\frac{\prod_{i=1}^r(1-t^{d_i})}{(1-t)^n}.
 \]
+分子正是 Koszul 各外幂项的交错计数：每个次数为 \(d_i\) 的正则方程贡献一个因子 \(1-t^{d_i}\)，选取哪些方程形成外幂基就对应展开这个乘积。这也把完全交的 Betti 次数与 Hilbert 级数联系起来。
+
+\ProseParagraphBreak
 例如 \(k[x,y]/(x^2,y^3)\) 的级数为
 \[
 \frac{1-t^2-t^3+t^5}{(1-t)^2}
@@ -55,7 +69,7 @@ H_M(t)=\frac{1-2t^2+t^3}{(1-t)^2}
 \subsection{Hilbert 级数对消解的决定范围}
 \label{b3:subsec:2103:03}
 
-设 \(S=k[x,y]\)。两个理想
+设 \(k\) 为域，\(S=k[x,y]\)。两个理想
 \[
 I=(x^2,y^2),\qquad J=(x^2,xy,y^3)
 \]
@@ -79,4 +93,4 @@ S\longrightarrow S/J\longrightarrow0.
 1-2t^2+t^4,
 \qquad1-(2t^2+t^3)+(t^3+t^4),
 \]
-确实相等，但第二者多一个三次生成元及一个三次关系。相邻层的贡献可以在交错和中抵消，即使各自的消解已经极小。因此 Hilbert 级数不能唯一决定 Betti 表，更不能确定全部微分矩阵。
+确实相等，但第二个商在 \(F_1\) 中多一个三次理想生成元，在 \(F_2\) 中又多一个三次生成关系。这两个 \(S(-3)\) 的平移相同，但连接它们的矩阵项为零，并不是可用于消去的非零常数；两条消解都已经极小。级数中的 \(-t^3+t^3\) 仍会抵消。因此，相同 Hilbert 函数不能决定最少方程数、生成关系数及其内次数，也就不能唯一决定 Betti 表和微分矩阵。
