@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.1 Engel 定理
-% 纲要位置：工作记录/计划纲要.md，第 4115 行。
+% 纲要位置：工作记录/计划纲要.md，第 4452 行。
 
 \section{Engel 定理}
 \label{b5:sec:1201}
@@ -10,6 +10,7 @@
 % * 幂零算子构成的 Lie 代数
 % * 公共零向量
 % * Engel 定理及幂零性
+% * 通过严格上三角算例说明正规化子与两次归纳的作用，并从统一旗标推出混合伴随乘积为零
 %
 
 一个矩阵幂零，只约束它自身的幂；一族矩阵能够在同一组基下写成严格上三角形，则同时约束它们的所有混合乘积。Engel 定理说明：若这族矩阵是一个 Lie 子代数，并且其中每个元素都幂零，前一个条件便足以推出后一个条件。Lie 括号封闭性在这里不可省略。
@@ -46,13 +47,15 @@
 因此 \(L\) 中全部算子可同时严格上三角化。
 \end{theorem}
 \begin{proof}
-先对 \(\dim L\) 归纳证明公共零向量的存在。零代数没有限制；以下设 \(L\ne0\)，并假定维数较小的算子 Lie 代数已经满足结论。取 \(L\) 的极大真子代数 \(M\)。对 \(m\in M\)，\cref{b5:lem:ad-of-nilpotent-matrix}说明 \(\operatorname{ad}m\) 是 \(\operatorname{End}_k(V)\) 上的幂零算子。由于 \(m\in M\subseteq L\)，且 \(L\)、\(M\) 都是 Lie 子代数，有 \([m,L]\subseteq L\) 和 \([m,M]\subseteq M\)。因此 \(\operatorname{ad}m\) 保持这两个子空间，在非零商空间 \(L/M\) 上诱导幂零算子。\(M\) 在 \(L/M\) 上作用的像是由幂零算子组成的 Lie 子代数，其维数至多为 \(\dim M<\dim L\)，故归纳假设给出非零陪集 \(x+M\)，满足 \([M,x]\subseteq M\)。于是正规化子
+先对 \(\dim L\) 归纳证明公共零向量的存在。零代数没有限制；以下设 \(L\ne0\)，并假定维数较小的算子 Lie 代数已经满足结论。我们希望找到一个余维一理想 \(M\)：这样，\(M\) 的公共零空间能被 \(L\) 保持，剩下的零化条件只涉及 \(L=M+kx\) 中的一个算子。为构造这个理想，先在有限维 \(L\) 的真子代数中取维数最大的 \(M\)，再研究它的正规化子。
+
+此时 \(L/M\) 只是非零向量空间商，尚不预设 \(M\) 为理想。对 \(m\in M\)，\cref{b5:lem:ad-of-nilpotent-matrix}说明 \(\operatorname{ad}m\) 是 \(\operatorname{End}_k(V)\) 上的幂零算子。由于 \(m\in M\subseteq L\)，且 \(L\)、\(M\) 都是 Lie 子代数，有 \([m,L]\subseteq L\) 和 \([m,M]\subseteq M\)。因此 \(\operatorname{ad}m\) 保持这两个子空间，在 \(L/M\) 上诱导幂零算子。\(M\) 在该商空间上作用的像是由幂零算子组成的 Lie 子代数，其维数至多为 \(\dim M<\dim L\)。第一次使用归纳假设，是在这个伴随作用的像上；它给出非零陪集 \(x+M\)，满足 \([M,x]\subseteq M\)。于是正规化子
 \[
 N_L(M)=\bigl\{\,x\in L\mid[x,M]\subseteq M\,\bigr\}
 \]
-严格包含 \(M\)。Jacobi 恒等式保证这个正规化子是子代数；由极大性它等于 \(L\)，所以 \(M\) 是理想。
+包含 \(M\) 和 \(x\notin M\)，故严格包含 \(M\)。对 Lie 代数 \(L\) 及其子代数 \(M\)，\cref{b5:prop:lie-centralizer-normalizer}保证 \(N_L(M)\) 是子代数，且 \(M\) 是其中的理想。由 \(M\) 的极大性，\(N_L(M)=L\)，这就把 \(M\) 变成了 \(L\) 的理想。
 
-商 \(L/M\) 不含非零真子代数，而任意一维子空间都是 Lie 子代数，故 \(\dim L/M=1\)。取 \(x\notin M\)，有 \(L=M+kx\)。归纳假设又给出
+现在 \(L/M\) 是 Lie 商代数。它不含非零真子代数，否则该子代数的逆像将严格介于 \(M\) 与 \(L\) 之间；而任意一维子空间都是 Lie 子代数，故 \(\dim L/M=1\)。取 \(x\notin M\)，有 \(L=M+kx\)。第二次使用同一个维数归纳假设，才回到原来的 \(V\)：\(M\subseteq\mathfrak{gl}(V)\) 维数较小，每个元素仍幂零，故它的公共零空间满足
 \[
 W=\{\,v\in V\mid Mv=0\,\}\ne0.
 \]
@@ -62,30 +65,62 @@ m(xw)=x(mw)+[m,x]w=0,
 \]
 故 \(xW\subseteq W\)。幂零算子 \(x|_W\) 在非零空间 \(W\) 上必有非零核；核中的任意非零向量都被 \(M\) 与 \(x\) 同时零化，因而被 \(L\) 零化。
 
-取这样的 \(v_1\)，令 \(V_1=kv_1\)。\(L\) 在 \(V/V_1\) 上的每个诱导算子仍幂零。重复已经证明的公共零向量结论，逐次提升商空间中的一维子空间，便得所需旗标。选取与旗标相适应的基，矩阵即为严格上三角形。
+公共零向量的存在至此已对任意非零有限维表示空间证明。再对 \(\dim V\) 归纳构造旗标：取这样的 \(v_1\)，令 \(V_1=kv_1\)，则 \(LV_1=0\)。\(L\) 在 \(V/V_1\) 上的每个诱导算子仍幂零。应用已证的公共零向量结论，并逐次提升商空间中的一维子空间，便得所需旗标。选取与旗标相适应的基，矩阵即为严格上三角形。
 \end{proof}
 
-证明中的两个归纳作用不同：对 \(\dim L\) 的归纳解决“同时”的问题；随后对商空间的重复使用把一条公共零直线扩充为完全旗标。后一过程没有要求新的代数闭性条件。
+上述步骤可以在任意域 \(k\) 上的三维严格上三角代数中直接看见。令
+\[
+L=\operatorname{span}_k\{E_{12},E_{23},E_{13}\}
+\subseteq\mathfrak{gl}_3(k),\qquad
+M=\operatorname{span}_k\{E_{23},E_{13}\}.
+\]
+每个 \(L\) 中的矩阵都满足三次幂为零。\(M\) 是余维一的子代数，因而是极大真子代数。在以 \(E_{12}+M\) 为基的 \(L/M\) 上，\(M\) 的伴随作用全为零，因为
+\[
+[E_{23},E_{12}]=-E_{13}\in M,\qquad
+[E_{13},E_{12}]=0.
+\]
+这个公共零陪集给出 \(x=E_{12}\notin M\)，并有 \(N_L(M)=L\)，所以 \(M\) 是理想。这一步得到的是代数中的元素 \(E_{12}\)，而不是原表示空间中的公共零向量。
+
+\ProseParagraphBreak
+
+回到自然表示 \(V=k^3\)，取标准基 \(e_1,e_2,e_3\)。因 \(E_{23}\) 与 \(E_{13}\) 分别把 \(e_3\) 送到 \(e_2\)、\(e_1\)，且都零化前两个基向量，得到
+\[
+W=\ker E_{23}\cap\ker E_{13}
+=\operatorname{span}_k\{e_1,e_2\}.
+\]
+\(M\) 零化整个 \(W\)，但 \(E_{12}e_2=e_1\ne0\)，所以 \(W\) 还不是 \(L\) 的公共零空间。最后一个算子满足 \(E_{12}W\subseteq W\)，且
+\[
+\ker(E_{12}|_W)=ke_1.
+\]
+于是 \(e_1\) 是所需公共零向量，随后得到旗标
+\(0\subset ke_1\subset\operatorname{span}_k\{e_1,e_2\}\subset k^3\)。正规化子、理想的公共零空间和最后一个算子的核，在此分别对应了证明中的三个具体对象。
 
 \subsection{Engel 定理及幂零性}
 \label{b5:subsec:1201:03}
 
-Engel 定理的抽象形式把算子条件转回 Lie 代数自身。
+Engel 定理的抽象形式把算子条件转回 Lie 代数自身。在 \(n\) 维空间上，一个幂零算子本来就满足 \(A^n=0\)，但这只控制同一个算子的重复作用。下降中心列涉及不同元素组成的嵌套括号，因此所需的是不同伴随算子的混合乘积共同为零。
 
 \begin{theorem}[Engel 定理]\label{b5:thm:engel}
 设 \(\mathfrak g\) 是域 \(k\) 上的有限维 Lie 代数。则 \(\mathfrak g\) 幂零，当且仅当对每个 \(x\in\mathfrak g\)，\(\operatorname{ad}_{\mathfrak g}x\) 都是幂零算子。
 \end{theorem}
 \begin{proof}
-若下降中心列 \(\gamma_1\mathfrak g=\mathfrak g\)、
-\(\gamma_{i+1}\mathfrak g=[\mathfrak g,\gamma_i\mathfrak g]\)
-在 \(\gamma_{c+1}\mathfrak g\) 处为零，则
-\((\operatorname{ad}x)^c(\mathfrak g)\subseteq\gamma_{c+1}\mathfrak g=0\)。
+若 \(\mathfrak g\) 幂零，取整数 \(c\ge1\) 使 \(\gamma_{c+1}(\mathfrak g)=0\)。\cref{b5:cor:nilpotent-adjoint-operators}对这些下降中心项给出 \((\operatorname{ad}x)^c=0\)，所以每个伴随算子都幂零。
 
-反之，零代数已幂零，以下设 \(n=\dim\mathfrak g>0\)。对伴随像 \(L=\operatorname{ad}\mathfrak g\subseteq\mathfrak{gl}(\mathfrak g)\) 应用\cref{b5:thm:engel-common-zero}，任意 \(n\) 个伴随算子的乘积都沿该定理的旗标降到零。因此所有形如
+反之，零代数已幂零，以下设 \(n=\dim\mathfrak g>0\)。由\cref{b5:prop:adjoint-representation}，伴随像 \(L=\operatorname{ad}\mathfrak g\subseteq\mathfrak{gl}(\mathfrak g)\) 是 Lie 子代数，假设又使其中每个元素都是幂零算子。\cref{b5:thm:engel-common-zero}因而给出一条共同的完全旗标
+\[
+0=F_0\subset F_1\subset\cdots\subset F_n=\mathfrak g,
+\qquad (\operatorname{ad}x)F_j\subseteq F_{j-1}
+\quad(x\in\mathfrak g).
+\]
+任取 \(x_1,\ldots,x_n\in\mathfrak g\)，从右到左施行相应算子，每次都沿这条同一旗标下降一项，所以
+\[
+\operatorname{ad}x_1\cdots\operatorname{ad}x_n=0.
+\]
+这些 \(x_j\) 可以彼此不同；结论并非只说某个 \(\operatorname{ad}x\) 的 \(n\) 次幂为零。因此所有形如
 \[
 \Bigl[x_1,\bigl[x_2,\ldots,[x_n,y]\ldots\bigr]\Bigr]
 \]
-的括号都为零；这类右嵌套括号线性张成 \(\gamma_{n+1}\mathfrak g\)，故 \(\mathfrak g\) 幂零。
+的括号都为零。由 \(\gamma_{j+1}\mathfrak g=[\mathfrak g,\gamma_j\mathfrak g]\) 逐次展开，\(\gamma_{n+1}\mathfrak g\) 正由这类右嵌套括号线性张成，故该项为零，\(\mathfrak g\) 幂零。
 \end{proof}
 
 \begin{corollary}\label{b5:cor:nilpotent-center}

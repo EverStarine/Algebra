@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.2 Lie 定理
-% 纲要位置：工作记录/计划纲要.md，第 4121 行。
+% 纲要位置：工作记录/计划纲要.md，第 4459 行。
 
 \section{Lie 定理}
 \label{b5:sec:1202}
@@ -10,6 +10,7 @@
 % * 可解复 Lie 代数的共同特征向量
 % * 表示的同时上三角化
 % * 特征零与代数闭假设的作用
+% * 用仿射自然模落实余维一理想的归纳，展开循环空间取迹，并证明正特征 Heisenberg 表示不可约
 %
 
 严格上三角矩阵的对角线全为零，而一般上三角矩阵允许非零特征值。相应地，可解 Lie 代数的表示通常没有公共零向量，却在复数域上总有公共特征向量。证明需要先说明一个理想的特征空间何时被整个 Lie 代数保持。
@@ -27,15 +28,30 @@ V_\lambda=\bigl\{\,v\in V\mid \rho(a)v=\lambda(a)v
 \end{lemma}
 \begin{proof}
 省略作用符号 \(\rho\)。固定 \(x\in\mathfrak g\) 与非零 \(v\in V_\lambda\)。
-一开始不能断定 \(xv\) 仍在 \(V_\lambda\)：对 \(a\in\mathfrak a\)，直接计算只给出
+对 \(a\in\mathfrak a\)，先把前两层的作用写出：
 \[
-(a-\lambda(a)I)xv=[a,x]v=\lambda([a,x])v,
+\begin{aligned}
+av&=\lambda(a)v,\\
+a(xv)&=x(av)+[a,x]v
+=\lambda(a)xv+\lambda([a,x])v.
+\end{aligned}
 \]
-而右端是否为零正是待证之事。为避免提前假定特征空间不变，我们把 \(v,xv,x^2v,\ldots\) 放入同一个有限维循环空间，使这些误差始终落在较低次幂生成的部分，再用迹证明误差系数为零。设
+若 \(v,xv\) 线性无关，\(a\) 在它们张成的空间上具有矩阵
 \[
-W=\operatorname{span}_{\mathbb C}\{v,xv,\ldots,x^{m-1}v\},
+\begin{pmatrix}
+\lambda(a)&\lambda([a,x])\\
+0&\lambda(a)
+\end{pmatrix}.
 \]
-其中 \(m\) 是首次出现线性相关时所取的维数，所以 \(W\) 被 \(x\) 保持。对 \(j\) 归纳，由
+但这个空间未必被 \(x\) 保持，因而还不能在其中把 \([a,x]\) 当作两个限制算子的交换子取迹。若 \(v,xv\) 线性相关，则 \(\mathbb Cv\) 已被 \(x\) 保持，所需循环空间只有一维。统一处理这两种情况，令 \(m\ge1\) 是满足
+\[
+x^mv\in\operatorname{span}_{\mathbb C}\{v,xv,\ldots,x^{m-1}v\}
+\]
+的最小整数；有限维性保证这样的 \(m\) 存在。于是 \(v,xv,\ldots,x^{m-1}v\) 线性无关，构成循环空间
+\[
+W=\operatorname{span}_{\mathbb C}\{v,xv,\ldots,x^{m-1}v\}
+\]
+的一组基，并且 \(xW\subseteq W\)。对 \(j\ge1\) 归纳，由
 \[
 a x^jv=x a x^{j-1}v+[a,x]x^{j-1}v,\qquad[a,x]\in\mathfrak a,
 \]
@@ -44,9 +60,10 @@ a x^jv=x a x^{j-1}v+[a,x]x^{j-1}v,\qquad[a,x]\in\mathfrak a,
 a x^jv-\lambda(a)x^jv
 \in\operatorname{span}_{\mathbb C}\{v,\ldots,x^{j-1}v\}.
 \]
-归纳时第二项对 \([a,x]\) 使用同一归纳断言，恰落在上述低次空间。因此 \(\mathfrak a\) 保持 \(W\)，每个 \(a\in\mathfrak a\) 在这组基下的对角元都是 \(\lambda(a)\)。特别地，
+归纳时第二项对 \([a,x]\in\mathfrak a\) 使用同一归纳断言；第一项中较低次幂经 \(x\) 后至多升到 \(x^{j-1}v\)。因此 \(\mathfrak a\) 保持 \(W\)，每个 \(a\in\mathfrak a\) 在这组基下都上三角，对角元全为 \(\lambda(a)\)，所以 \(\operatorname{tr}_W a=m\lambda(a)\)。这也适用于 \([a,x]\in\mathfrak a\)。此时 \(a,x\) 都保持 \(W\)，记 \(A=a|_W\)、\(X=x|_W\)，就有
 \[
-m\cdot\lambda\bigl([a,x]\bigr)=\operatorname{tr}_W[a,x]=0.
+m\lambda([a,x])=\operatorname{tr}_W[a,x]
+=\operatorname{tr}(AX-XA)=0.
 \]
 复数域上 \(m\ne0\)，故 \(\lambda\bigl([a,x]\bigr)=0\)。最后，对任意 \(w\in V_\lambda\) 有
 \[
@@ -71,6 +88,16 @@ a(xw)=x(aw)+[a,x]w=\lambda(a)xw,
 由 \(v\in V_\mu\) 可得 \((a+tx)v=(\mu(a)+tc)v=\lambda(a+tx)v\)，故 \(v\) 是 \(\mathfrak g\) 的公共特征向量。
 \end{proof}
 
+在\secref{b5:sec:1103}的仿射自然模中，上述归纳可以直接算出。取复 Lie 代数
+\[
+\mathfrak g=\mathbb Ch\oplus\mathbb Ce,\qquad[h,e]=e,
+\]
+在 \(V=\mathbb C^2\) 上令 \(\rho(h)=E_{11}\)、\(\rho(e)=E_{12}\)，标准基记为 \(e_1,e_2\)。因为 \([\mathfrak g,\mathfrak g]=\mathbb Ce\)，可以选余维一理想 \(\mathfrak a=\mathbb Ce\)。它的公共特征空间为
+\[
+V_\mu=\ker\rho(e)=\mathbb Ce_1,\qquad\mu(e)=0.
+\]
+剩下的一个算子是 \(\rho(h)\)；它保持这条直线，且 \(\rho(h)e_1=e_1\)。因此 \(e_1\) 是整个 \(\mathfrak g\) 的公共特征向量，其特征泛函满足 \(\lambda(h)=1\)、\(\lambda(e)=0\)。这里先处理理想，再在其特征空间上处理最后一个算子，正是证明中归纳的两步。相反，\(\mathbb Ch\) 虽也是余维一子代数，却不是理想；它的零特征空间 \(\mathbb Ce_2\) 不被 \(\rho(e)\) 保持，因为 \(\rho(e)e_2=e_1\)。理想条件保证的正是继续这一步所需的不变性。
+
 \subsection{表示的同时上三角化}
 \label{b5:subsec:1202:02}
 
@@ -80,7 +107,7 @@ a(xw)=x(aw)+[a,x]w=\lambda(a)xw,
 有限维可解复 Lie 代数 \(\mathfrak g\) 的任意有限维复表示 \(\rho:\mathfrak g\rightarrow\mathfrak{gl}(V)\) 都可同时上三角化。等价地，\(V\) 有一条每个相邻商都为一维的 \(\mathfrak g\)-子模旗标。
 \end{theorem}
 \begin{proof}
-\cref{b5:thm:lie-common-eigenvector}给出一维子模 \(V_1\)。在 \(V/V_1\) 上再用同一定理，并提升所得旗标。对 \(\dim V\) 归纳即得完全旗标。选取与之适应的基后，全部作用矩阵均上三角。
+\(V=0\) 时结论直接成立。否则，\cref{b5:thm:lie-common-eigenvector}给出一维子模 \(V_1\)。在 \(V/V_1\) 上再用同一定理，并提升所得旗标。对 \(\dim V\) 归纳即得完全旗标。选取与之适应的基后，全部作用矩阵均上三角。
 \end{proof}
 
 \begin{proposition}\label{b5:prop:solvable-derived-nilpotent}
@@ -94,6 +121,15 @@ a(xw)=x(aw)+[a,x]w=\lambda(a)xw,
 \begin{proof}
 在\cref{b5:thm:lie-triangularization}给出的基下，上三角矩阵的交换子对角元全为零，所以 \(\rho(y)\) 严格上三角，\(\rho(x)\rho(y)\) 也严格上三角。前两个结论随之成立。取 \(\rho=\operatorname{ad}_{\mathfrak g}\)，再限制到不变子空间 \([\mathfrak g,\mathfrak g]\)，由\cref{b5:thm:engel}得到导出代数幂零。最后，不可约表示中的一维不变子空间只能是整个空间。
 \end{proof}
+
+这条命题不能把原代数的可解性加强为幂零性。仍取刚才的仿射代数 \(\mathfrak g=\mathbb Ch\oplus\mathbb Ce\)、\([h,e]=e\)，导出代数 \(\mathbb Ce\) 内部的括号全为零，因而它幂零；但原代数在这个理想上的作用满足
+\[
+[\mathbb Ce,\mathbb Ce]=0,\qquad
+[\mathfrak g,\mathbb Ce]=\mathbb Ce.
+\]
+在下降中心列中，后一个等式会反复出现，因而 \(\mathfrak g\) 不幂零。导出代数自身的内部括号终止，与原代数反复作用于导出代数，是两个不同的条件。
+
+\ProseParagraphBreak
 
 三角化不等于对角化。令一维交换 Lie 代数的生成元作用为非零 Jordan 幂零块，就得到不可分解而非不可约的表示；它的完全旗标存在，但通常没有不变直和补。
 
@@ -109,12 +145,53 @@ a(xw)=x(aw)+[a,x]w=\lambda(a)xw,
 \end{example}
 
 \begin{example}\label{b5:exm:lie-positive-characteristic}
-设 \(k\) 的特征为素数 \(p\)，\(V=k[t]/(t^p)\)。乘以 \(t\) 的算子记为 \(T\)，形式求导记为 \(D\)；因 \(D(t^p)=0\)，求导在商空间上良定义，且
+设 \(k\) 是特征为素数 \(p\) 的域，\(V=k[t]/(t^p)\)。乘以 \(t\) 的算子记为 \(T\)，形式求导记为 \(D\)；对任意 \(f\in k[t]\)，有 \(D(t^pf)=t^pD(f)\)，所以求导在商空间上良定义，且
 \[
 [D,T]=I,\qquad[D,I]=[T,I]=0.
 \]
-故 \(L=\operatorname{span}_k\{D,T,I\}\) 是可解 Lie 代数，甚至其导出代数 \(kI\) 位于中心。然而 \(D,T\) 不可能有公共特征向量：若 \(Dv=av\)、\(Tv=bv\)，则
+三个算子线性无关：若 \(aD+bT+cI=0\)，先作用于 \(1\) 得 \(b=c=0\)，再作用于 \(t\) 得 \(a=0\)。故 \(L=\operatorname{span}_k\{D,T,I\}\) 是三维 Lie 代数，其导出代数为 \(kI\)，且 \([L,kI]=0\)，所以它是二步幂零的。然而 \(D,T\) 不可能有公共特征向量：若 \(v\ne0\)、\(Dv=av\)、\(Tv=bv\)，则
 \([D,T]v=(ab-ba)v=0\)，与 \([D,T]v=v\ne0\) 矛盾。
+在 \(p=2\) 时，基 \(1,t\) 下的矩阵为
+\[
+\begin{aligned}
+D&=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+T=\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\\
+DT-TD&=\begin{pmatrix}1&0\\0&-1\end{pmatrix}=I.
+\end{aligned}
+\]
+虽然 \(D^2=T^2=0\)，交换子却是单位算子。此时 \(\operatorname{tr}I=2=0\) 于 \(k\)，所以 \([D,T]=I\) 与交换子的迹为零相容。在任意特征零的非零有限维空间中，同一关系则会迫使 \(0=\operatorname{tr}I=\dim V\)，不可能成立。
 \end{example}
 
-第二个例子还说明：幂零 Lie 代数的表示在正特征下也未必可三角化。这里的 \(I\) 不是幂零算子，因此不满足 Engel 定理的假设。Lie 定理的证明利用\cref{b5:lem:ideal-weight-stable}中的 \(m\cdot\lambda\bigl([a,x]\bigr)=0\Rightarrow\lambda\bigl([a,x]\bigr)=0\) 排除这种现象，而这一步需要特征零。
+\begin{proposition}[正特征 Heisenberg 表示的不可约性]\label{b5:prop:positive-heisenberg-irreducible}
+设 \(k\) 是特征为素数 \(p\) 的域，\(\mathfrak h=ku\oplus kv\oplus kz\) 是由
+\[
+[u,v]=z,\qquad[u,z]=[v,z]=0
+\]
+确定的三维 Heisenberg Lie 代数。令 \(V=k[t]/(t^p)\)，并令 \(D\)、\(T\)、\(I\) 分别为形式求导、乘以 \(t\) 与恒等算子。则
+\[
+\rho(u)=D,\qquad\rho(v)=T,\qquad\rho(z)=I
+\]
+定义了 \(\mathfrak h\) 的一个 \(p\) 维不可约表示。
+\end{proposition}
+\begin{proof}
+\cref{b5:exm:lie-positive-characteristic}的计算说明 \(D,T\) 在商空间上良定义，并满足表示所需的三个括号关系。设 \(0\ne U\subseteq V\) 是子模。取非零元素的唯一代表
+\[
+f=a_0+a_1t+\cdots+a_rt^r,\qquad 0\le r<p,\quad a_r\ne0.
+\]
+由于 \(U\) 被 \(D\) 保持，\(D^rf=r!a_r\in U\)。这里 \(r<p\)，所以 \(r!\ne0\) 于 \(k\)，从而 \(1\in U\)。再利用 \(T\) 的稳定性，得到
+\[
+T^j1=t^j\in U\qquad(0\le j<p).
+\]
+这些向量构成 \(V\) 的一组基，故 \(U=V\)，证明了不可约性。
+\end{proof}
+
+因此，正特征下的幂零 Lie 代数确实可以有维数大于一的不可约表示。这里 \(I\) 不是幂零算子，所以不满足 Engel 定理算子形式的假设；幂零的是抽象 Lie 代数的括号结构。
+
+\ProseParagraphBreak
+
+另一方面，\cref{b5:lem:ideal-weight-stable}中消去 \(m\) 的步骤要求它于基域中非零。在本例中，取理想 \(\mathfrak a=kD\oplus kI\) 与向量 \(1\in V\)，其特征泛函满足 \(\lambda(D)=0\)、\(\lambda(I)=1\)。以 \(x=T\) 生成的循环空间就是整个 \(V\)，维数 \(m=p\)，因而取迹只给出
+\[
+m\lambda([D,T])=p\lambda(I)=p\cdot1=0.
+\]
+它无法迫使 \(\lambda(I)\) 为零；实际 \(T1=t\) 已不在原特征空间中，因为 \(Dt=1\ne0\)。正特征在这里使理想特征空间的不变性失效。

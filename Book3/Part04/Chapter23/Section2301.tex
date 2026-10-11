@@ -13,6 +13,7 @@
 % * 因子乘法的线性化及完备分离局部环的 Hensel 性；多变量存在性引用 Artin 的隐函数判据，唯一性就地证明
 % * Hensel 化的泛性质；采用 Nagata 的构造与指定单根邻域，展开局部性、剩余域、忠实平坦、有限阶商及 Noether 性
 % * Hensel 化与完备化的区别
+% * 严格 Hensel 性；固定剩余域可分闭包后的平展邻域构造与相容泛性质
 %
 % ---
 %
@@ -83,6 +84,15 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 \end{definition}
 
 本书以互素首一因式提升定义 Hensel 性。在这个定义中取 \(\bar g=T-\bar a\)，便得到首一多项式的单根提升：另一个因子与它互素，恰好表示 \(\bar f'(\bar a)\ne0\)，提升后的一次因子就给出所求根。反方向的等价，以及多变量隐函数形式，属于 Hensel 性的等价判据；下面的隐函数引理将明确采用这一判据。因式提升还可以保留一整组根，而不要求它们分别属于剩余域。
+
+\ProseParagraphBreak
+Hensel 性保证已有的互素分解可以提升，却不保证多项式在剩余域中已经有足够多的根。若还要排除剩余域的非平凡有限可分扩张，就需要加上另一个条件。
+
+\begin{definition}\label{b3:def:strictly-henselian-local-ring}
+设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若 \(R\) 为 Hensel 环，且 \(k\) 可分闭，即 \(k\) 没有非平凡有限可分扩张，则称 \(R\) 为 \term[yange-Hensel-huan]{严格 Hensel 环}[strictly Henselian local ring]。
+\end{definition}
+
+这里要求剩余域可分闭，而不要求它代数闭；正特征下仍可能存在纯不可分扩张。Hensel 性与这个剩余域条件共同保证有限平展代数完全分裂，具体结论及证明见\cref{b3:prop:strict-henselian-finite-etale-split}。
 
 \ProseParagraphBreak
 前面的单根定理本身尚未检验定义要求的全部因式分解；完备局部环的 Hensel 性将由\cref{b3:thm:hensel-factor-lifting}直接证明。两种提升都以可逆的线性化消去误差，采用的递推却不同：单根的 Newton 修正使 \(\mathfrak m^n\) 级误差提高到 \(\mathfrak m^{2n}\)，下面的因式修正每次只要求从 \(\mathfrak m^n\) 提高到 \(\mathfrak m^{n+1}\)。
@@ -271,3 +281,48 @@ R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
 \]
 这个例子同时区分了局部化、Hensel 化与完备化，而不是仅仅赋予同一环三个名称。
 \end{example}
+
+普通 Hensel 化保持剩余域 \(k\)。若还希望剩余域可分闭，就须先固定一个可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)，并允许邻域中的剩余域取遍其中的有限可分扩张。这个选择也必须保留在泛性质中。
+
+\begin{definition}\label{b3:def:strict-henselization}
+设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。设 \(\iota:R\to A\) 为局部同态，其中 \(A\) 为严格 Hensel 环，且给定相容的剩余域识别 \(A/\mathfrak m_A\cong k^{\mathrm{sep}}\)。若对任意严格 Hensel 局部环 \((S,\mathfrak n)\)、局部同态 \(u:R\to S\) 及延拓其剩余域映射的嵌入 \(\alpha:k^{\mathrm{sep}}\to\ell=S/\mathfrak n\)，都存在唯一的局部同态 \(v:A\to S\)，满足 \(v\iota=u\)，且在剩余域上诱导 \(\alpha\)，则称 \(A\) 为相对于这个可分闭包的 \term[yange-Hensel-hua]{严格 Hensel 化}[strict Henselization]，记为 \(R^{\mathrm{sh}}\)。相容关系为
+\[
+\begin{tikzcd}
+R \arrow[r,"\iota"] \arrow[d] &
+R^{\mathrm{sh}} \arrow[r,dashed,"v"] \arrow[d] &
+S \arrow[d] \\
+k \arrow[r,hook] & k^{\mathrm{sep}} \arrow[r,hook,"\alpha"] & \ell .
+\end{tikzcd}
+\]
+\end{definition}
+\symidx{\(R^{\mathrm{sh}}\)：固定剩余域可分闭包后的严格 Hensel 化}
+
+指定 \(\alpha\) 是唯一性条件的一部分。仅仅要求延拓 \(u\)，并不能确定可分闭包中每个元素的像。对同一个选定的可分闭包，两个满足定义的对象之间有唯一的相容同构；改变可分闭包时，则须先指定两个可分闭包之间的 \(k\) 同构。
+
+\begin{proposition}\label{b3:prop:strict-henselization-existence}
+设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。则严格 Hensel 化 \(R^{\mathrm{sh}}\) 存在，可由带有相容剩余域嵌入的平展邻域之局部环取滤过余极限构造。它在 \(R\) 上忠实平坦，极大理想为 \(\mathfrak mR^{\mathrm{sh}}\)，并有相容的局部同态及剩余域映射
+\[
+\begin{tikzcd}
+R \arrow[r] \arrow[d] &
+R^{\mathrm h} \arrow[r] \arrow[d] &
+R^{\mathrm{sh}} \arrow[d] \\
+k \arrow[r,equal] & k \arrow[r,hook] & k^{\mathrm{sep}} .
+\end{tikzcd}
+\]
+\end{proposition}
+\begin{proofsketch}
+平展邻域的细化及所得余极限的 Hensel 性采用 EGA IV 第四部分的构造；这里解释所用数据、剩余域和泛性质，细化引理及 Hensel 性的证明见原文\cite[(18.8.4)--(18.8.8), pp. 145--147]{Grothendieck1967EGAIV4}。
+
+一个邻域由三项数据 \((B,\mathfrak q,j)\) 给出：\(B\) 是平展 \(R\) 代数，\(\mathfrak q\subseteq B\) 位于 \(\mathfrak m\) 上方，\(j:\kappa(\mathfrak q)\hookrightarrow k^{\mathrm{sep}}\) 是 \(k\) 嵌入。取其局部环 \(B_{\mathfrak q}\)。邻域之间的映射要求在 \(R\) 上相容，并保持指定的剩余域嵌入；原文的细化引理保证任意两份邻域数据可以放到一个共同邻域中，而且保持指定剩余点的同态若存在便唯一，因而给出滤过系统。定义
+\[
+R^{\mathrm{sh}}=\varinjlim_{(B,\mathfrak q,j)}B_{\mathfrak q}.
+\]
+这些局部环的极大理想都是 \(\mathfrak mB_{\mathfrak q}\)，转移映射为局部同态，所以余极限仍为局部环，极大理想是 \(\mathfrak mR^{\mathrm{sh}}\)。各剩余域是 \(k\) 的有限可分扩张；构造使每个 \(k^{\mathrm{sep}}\) 中的有限组元素都落在某个邻域的剩余域内，因此其余极限就是指定的 \(k^{\mathrm{sep}}\)。构造定理还保证余极限具有 Hensel 性，于是它严格 Hensel。每个邻域局部环在 \(R\) 上平坦，滤过余极限也平坦；结构同态为局部同态，故忠实平坦。
+
+给定定义中的 \(u:R\to S\) 和 \(\alpha:k^{\mathrm{sep}}\to\ell\)，复合 \(\alpha j\) 指定每个邻域在 \(S\) 的剩余域中的像。原文的本质平展局部代数提升引理（18.8.4）保证，这个剩余点唯一提升为局部 \(R\) 同态 \(B_{\mathfrak q}\to S\)。指定分母的剩余像非零，故它们在 \(S\) 中可逆。唯一性使这些映射与系统中的转移映射相容，取余极限便得到所求 \(v:R^{\mathrm{sh}}\to S\)，其在剩余域上诱导 \(\alpha\)；反过来，任何这样的 \(v\) 在每个邻域上的限制都已经唯一确定。最后，对 Hensel 局部环 \(R^{\mathrm{sh}}\) 使用普通 Hensel 化的泛性质，得到 \(R^{\mathrm h}\to R^{\mathrm{sh}}\)。
+\end{proofsketch}
+
+若 \(R=k\) 本身是域，它已经具有 Hensel 性，因而 \(R^{\mathrm h}=k\)，而上述构造给出 \(R^{\mathrm{sh}}=k^{\mathrm{sep}}\)。例如 \(\mathbb R^{\mathrm h}=\mathbb R\)，选定通常的可分闭包后 \(\mathbb R^{\mathrm{sh}}=\mathbb C\)。这说明严格 Hensel 化一般会改变剩余域，不能沿用普通 Hensel 化的各阶商与完备化比较。一般局部环也未必包含剩余域的一份副本，因此不能直接把严格 Hensel 化写成 \(R\otimes_k k^{\mathrm{sep}}\)。
+
+\ProseParagraphBreak
+\(\mathbb Z_p\) 是完备 Hensel 局部环，却不是严格 Hensel 环，因为其剩余域 \(\mathbb F_p\) 有非平凡有限可分扩张。相反，\(\mathbb C[\![t]\!]\) 完备且剩余域为 \(\mathbb C\)，所以严格 Hensel。即使剩余域已经代数闭，有限平坦代数仍可能不分裂；\cref{b3:exm:strict-henselian-flat-not-split}将用平方根方程展示这个区别。

@@ -11,6 +11,7 @@
 % * p-正则元素
 % * 普通特征标与 Brauer 特征标的区别
 % * 分解映射与分解数
+% * 单位根提升所需的含根假设、分圆域嵌入的选择及不同整格约化；Brauer 基定理与普通正交关系的区别
 %
 
 正特征中的矩阵迹会把整数重数约化模 \(p\)，所以丢掉一部分信息。Brauer 特征标改为先提升适当的单位根，再在特征零中相加。为了让这种提升与普通表示的约化对应，必须同时说明基域、赋值环和整数格；只说“把矩阵模 \(p\)”并不足以定义分解数。
@@ -48,8 +49,16 @@
 设 \(G\) 为有限群，\((K,\mathcal O,k)\) 为 \(p\)-模系统，且 \(K\) 含有全部 \(|G|\) 次单位根。若正整数 \(m\,\bigm\vert\,|G|\) 且 \(p\nmid m\)，则约化映射给出 \(K\) 中 \(m\) 次单位根与 \(k\) 中 \(m\) 次单位根的群同构。记相应唯一提升为 \(\lambda\mapsto\widehat\lambda\)。
 \end{lemma}
 \begin{proof}
-单位根的赋值为零，所以都在 \(\mathcal O^\times\) 中。多项式 \(X^m-1\) 在 \(K\) 中分成 \(m\) 个一次因子，模 \(\pi\) 后仍是这些因子的乘积；而在特征 \(p\) 中它仍可分，所以这些根的约化两两不同，并给出全部根。约化保持乘法，故得到群同构。
+若 \(\zeta^m=1\)，则 \(m\,v(\zeta)=v(1)=0\)，所以 \(\zeta\) 的赋值为零，属于 \(\mathcal O^\times\)。由 \(m\,\bigm\vert\,|G|\) 及 \(K\) 含全部 \(|G|\) 次单位根的假设，\(X^m-1\) 在 \(K\) 中已经分成 \(m\) 个一次因子。这些因子的系数都在 \(\mathcal O\) 中，约化后仍给出 \(X^m-1\) 的分解。又因 \(p\nmid m\)，它在 \(k\) 中与导数 \(mX^{m-1}\) 互素，所以 \(m\) 个根的约化两两不同，并穷尽 \(k\) 中的全部根。约化保持乘法，故得到群同构。
 \end{proof}
+这里的根在 \(K\) 中已经存在，证明只需说明约化不会把它们合并；没有使用 \(\mathcal O\) 为 Hensel 环的假设。若删去 \(K\) 中存在全部所需单位根的条件，结论会失败。例如
+\[
+K=\mathbb Q,\qquad \mathcal O=\mathbb Z_{(7)},\qquad k=\mathbb F_7
+\]
+是一个 \(7\)-模系统。在 \(\mathbb F_7\) 中，\(2^3=4^3=1\)，所以 \(2,4\) 是非平凡三次单位根；但 \(\mathbb Q\) 中的三次单位根只有 \(1\)，因为 \(X^2+X+1\) 在 \(\mathbb Q\) 中没有根。因此它们不能提升成 \(\mathbb Z_{(7)}\) 中的三次单位根。离散赋值环的条件本身不足以保证这种提升。
+
+\ProseParagraphBreak
+
 记 \(E=\mathbb Q(\mu_{|G|})\subseteq K\) 为这些单位根生成的分圆域，固定一个域嵌入 \(\iota:E\to\mathbb C\)。单位根的提升 \(\widehat\lambda\) 属于 \(\mathcal O\cap E\)，相应的复单位根则是 \(\iota(\widehat\lambda)\)；所有表示和张量运算都使用同一个提升及嵌入。
 \begin{definition}\label{b5:def:brauer-character}
 设 \(G\) 为有限群，\(p\) 为素数，\((K,\mathcal O,k)\) 为分裂 \(p\)-模系统，\(K\) 含有全部 \(|G|\) 次单位根。令 \(E=\mathbb Q(\mu_{|G|})\subseteq K\)，并固定域嵌入 \(\iota:E\to\mathbb C\)。记 \(G_{p'}\) 为 \(p\)-正则元素集合，\(\lambda\mapsto\widehat\lambda\) 为约化映射 \(\mathcal O\to k\) 所确定的阶整除 \(|G|\) 且与 \(p\) 互素的单位根的唯一提升。对有限维左 \(kG\)-模 \(M\)，令 \(d=\dim_kM\)。对 \(g\in G_{p'}\)，将 \(g\) 在 \(M\) 上的特征值按重数写为 \(\lambda_1,\ldots,\lambda_d\)，并记提升后的和为
@@ -102,6 +111,19 @@ k=\mathbb F_4,\qquad \pi=2,
 固定的分圆域嵌入取为当前 \(K\subseteq\mathbb C\) 的包含映射，于是 Brauer 特征标在 \(r\) 处取复数值 \(-1\)。剩余域中的等式 \(\alpha+\alpha^2=1\) 不能先把右边提升成复数 \(1\)：定义提升的是两个特征值，再在特征零中相加。
 
 \ProseParagraphBreak
+同一个 \(2\)-模系统也适用于 \(C_3=\langle r\rangle\)：\(T^3-1\) 分别在 \(K\) 与 \(k\) 中分成三个不同的一次因子，所以两侧群代数都分裂。取一维 \(kC_3\)-模 \(M\)，使 \(r\) 按 \(\alpha\) 作用，则其唯一特征值的提升为 \(\widehat\alpha=\zeta_3\)。若分别采用嵌入
+\[
+\iota_1(\zeta_3)=\exp(2\pi\mathrm i/3),\qquad
+\iota_2(\zeta_3)=\exp(4\pi\mathrm i/3),
+\]
+同一个模在 \(r\) 处的复值 Brauer 特征标分别为
+\[
+\varphi_M^{(1)}(r)=\exp(2\pi\mathrm i/3),\qquad
+\varphi_M^{(2)}(r)=\exp(4\pi\mathrm i/3).
+\]
+第二组数值是第一组的 Galois 共轭。因此，从剩余域矩阵得到具体复数值时，嵌入的选择不能省略。这里的三个一维 \(KC_3\)-模 \(r\mapsto\zeta_3^j\)，其中 \(j=0,1,2\)，各有稳定格 \(\mathcal O\)，并分别约化为 \(r\mapsto\alpha^j\) 的简单模。每个约化模中，对应简单模的重数为一，其他重数为零；改变嵌入只改变这些特征标的复数值，不改变约化模或简单合成因子的重数。比较普通特征标与 Brauer 特征标时，两者必须采用同一个嵌入。
+
+\ProseParagraphBreak
 这些定义和性质可对照\cite[Section 10.1, Lemma 10.1.1; Proposition 10.1.3]{Webb2016FiniteGroupRepresentations}。Webb 在该章还统一要求两个域对 \(G\) 及其所有子群均为分裂域；本节则在 \(G\) 的分裂 \(p\)-模系统之外，显式要求 \(K\) 含全部 \(|G|\) 次单位根，再由\cref{b5:lem:prime-to-p-root-lift}取得定义所需的 \(k\) 中单位根及其提升。
 
 \subsection{分解映射与分解数}
@@ -144,9 +166,30 @@ x+L_1\longmapsto\pi x+\pi L_1
 \]
 识别。此映射良定义且满射；若 \(\pi x\in\pi L_1\)，存在 \(y\in L_1\) 使 \(\pi(x-y)=0\)，格的无挠性给出 \(x=y\)，故它也单射。沿两条正合列把合成因子相加，两约化的多重集相同；沿插入的有限链传递即得一般结论。
 \end{proof}
-这条格无关性称为 Brauer--Nesbitt 定理\footnote{内斯比特（Cecil James Nesbitt，1912-2001），美国数学家，与布劳尔合作研究模表示论；布劳尔已见本卷前注。}的格约化形式，见\cite[Theorem 9.4.8]{Webb2016FiniteGroupRepresentations}。必须保留“合成因子”这一表述：取 \(G=C_2\)、\(\mathcal O=\mathbb Z_{(2)}\)、\(V=\mathbb QG\)，格
-\(\mathcal O\{1,s\}\) 的约化是不可分解的正则模，格
-\(\mathcal O(1+s)\oplus\mathcal O(1-s)\) 的约化却是两个平凡模的直和。
+这条格无关性称为 Brauer--Nesbitt 定理\footnote{内斯比特（Cecil James Nesbitt，1912-2001），美国数学家，与布劳尔合作研究模表示论；布劳尔已见本卷前注。}的格约化形式，见\cite[Theorem 9.4.8]{Webb2016FiniteGroupRepresentations}。必须保留“合成因子”这一表述。取
+\[
+G=C_2=\langle s\rangle,\qquad K=\mathbb Q,\qquad
+\mathcal O=\mathbb Z_{(2)},\qquad k=\mathbb F_2,\qquad V=KG.
+\]
+正则格 \(L_0=\mathcal O1\oplus\mathcal Os\) 在基 \(1,s\) 下的作用矩阵为
+\[
+\rho_{L_0}(s)=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+约化后，\((\rho_{L_0}(s)-I)^2=0\)，但 \(\rho_{L_0}(s)-I\ne0\)，所以它有一条长度二的幂零链。由\cref{b5:thm:cyclic-p-modules}，\(L_0/2L_0\cong k[t]/(t^2)=M_2\) 是不可分解模。
+
+\ProseParagraphBreak
+再取 \(u=1+s\)、\(v=1-s\)，令 \(L_1=\mathcal Ou\oplus\mathcal Ov\)。基变换矩阵
+\[
+P=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad \det P=-2
+\]
+在 \(K\) 上可逆，故 \(L_1\) 也是满格。由于 \(su=u\)、\(sv=-v\)，它是稳定格，并且在基 \(u,v\) 下有
+\[
+\rho_{L_1}(s)=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+约化后这个矩阵变成 \(I\)，所以 \(L_1/2L_1\cong k\oplus k\)。两种约化都有两个平凡简单合成因子，但一个不可分解，另一个是实际直和。
+
+\ProseParagraphBreak
+虽然 \(L_1\subsetneq L_0\)，包含映射诱导的 \(L_1/2L_1\to L_0/2L_0\) 并不单射：源中的基向量 \(u+2L_1\)、\(v+2L_1\) 线性无关，而它们的像都等于 \(1+s+2L_0\)。该映射的矩阵是约化后的 \(P\)，秩只有一。把特征零作用对角化需要在 \(P^{-1}\) 中除以 \(2\)，这个基变换不能在 \(\mathcal O\) 上进行，也不能带到约化模上。这说明格包含不能直接给出约化模包含；定理证明中须模掉共同的 \(\pi L_2\)，才能得到所用的第一条短正合列。
 \begin{definition}\label{b5:def:decomposition-map}
 设 \(G\) 为有限群，\(p\) 为素数，\((K,\mathcal O,k)\) 为分裂 \(p\)-模系统，\((\pi)\) 为 \(\mathcal O\) 的极大理想。令 \(G_0(kG)\) 为以有限维左 \(kG\)-模的同构类生成、并对每个短正合列 \(0\to L\to M\to N\to0\) 加入 \([M]=[L]+[N]\) 的交换群。Jordan--Hölder 定理\footnote{若尔当（Camille Jordan，1838-1922），法国数学家，研究群论与代数方程；赫尔德（Otto Ludwig Hölder，1859-1937），德国数学家，研究群论与分析。}使它是以全部简单左 \(kG\)-模的不同构代表类 \([S_i]\) 为基的自由交换群。令 \(R_K(G)\) 为有限维左 \(KG\)-模的表示群。对每个这样的模 \(V\)，选择其中的满的 \(G\)-稳定格 \(L\)，则对应
 \[
@@ -162,7 +205,7 @@ d_{\alpha i}=[L_\alpha/\pi L_\alpha:S_i].
 \symidx{\(R_K(G),G_0(kG)\)：特征零表示群与模表示的 Grothendieck 群}
 \symidx{\(d:R_K(G)\to G_0(kG)\)：分解映射}
 \symidx{\(d_{\alpha i},D\)：分解数与分解矩阵}
-前一定理保证它与格的选择无关。直和格给出加法性。两侧分别以 \(K\) 上和 \(k\) 上的张量积为乘法；域上张量积在每个变量正合，所以这些乘法与短正合列的关系相容。若 \(L,L'\) 分别为 \(V,V'\) 中的稳定满格，则 \(L\otimes_{\mathcal O}L'\) 是 \(V\otimes_KV'\) 中的稳定满格，且
+前一定理保证它与格的选择无关。分解数只取决于约化模的简单合成因子，不依赖分圆域到复数域的嵌入；上面 \(C_3\) 算例中按对应的一维模排列的分解矩阵就是 \(I_3\)，两种复嵌入都给出这些相同的整数。直和格给出加法性。两侧分别以 \(K\) 上和 \(k\) 上的张量积为乘法；域上张量积在每个变量正合，所以这些乘法与短正合列的关系相容。若 \(L,L'\) 分别为 \(V,V'\) 中的稳定满格，则 \(L\otimes_{\mathcal O}L'\) 是 \(V\otimes_KV'\) 中的稳定满格，且
 \[
 (L\otimes_{\mathcal O}L')/\pi(L\otimes_{\mathcal O}L')
 \cong (L/\pi L)\otimes_k(L'/\pi L')
@@ -178,11 +221,47 @@ d_{\alpha i}=[L_\alpha/\pi L_\alpha:S_i].
 \begin{proof}
 设 \(g\in G_{p'}\) 的阶为 \(m\)。它在 \(L\) 上有系数位于 \(\mathcal O\) 的特征多项式，约化后就是在 \(L/\pi L\) 上的特征多项式。其根均为 \(m\) 次单位根，且这些单位根的约化互异；因而每个根及其重数在约化后对应到唯一的根及相同重数。把根再提升回来，其和恢复 \(\operatorname{tr}_K(g|V)\)；再经固定的分圆域嵌入，就得到 \(\varphi_{L/\pi L}(g)=\chi_V(g)\)。第二式由 Brauer 特征标对合成因子的加法性得到。
 \end{proof}
+例如在上面的 \(S_3\) 分裂 \(2\)-模系统中，取普通符号表示及其一维稳定格 \(L=\mathcal O\)。换位 \(s\) 在特征零上按 \(-1\) 作用，故 \(\chi_{\mathrm{sgn}}(s)=-1\)；约化到特征二后，\(-1=1\)，符号模与平凡模相同。若把约化矩阵在 \(s\) 上的唯一特征值 \(1\) 提升回去，所得却是 \(1\)，不能恢复原来的普通特征标值 \(-1\)。换位是 \(2\)-奇异元素，正好不在比较公式的定义域中；三循环则是 \(2\)-正则元素，符号表示在它上面原本就按 \(1\) 作用，约化与提升都保留这个值。
+
+\ProseParagraphBreak
+一般地，在\cref{b5:lem:modular-trace-regular-part}的证明中，\(g_p\) 在 \(g_{p'}\) 的每个特征空间上都是幂幺算子。因此 \(g=g_pg_{p'}\) 与 \(g_{p'}\) 在特征 \(p\) 下有相同的特征值多重集。若继续在 \(p\)-奇异元素上逐个提升这些特征值，只会得到其 \(p\)-正则部分已经给出的数值，无法补回约化所丢失的 \(p\) 部分。限制到 \(G_{p'}\) 才能保证与普通特征标的值对应。
+
+\begin{example}\label{b5:exm:brauer-s3-characteristic-three}
+取 \(G=S_3=\langle r,s\mid r^3=s^2=1,\ srs=r^{-1}\rangle\)，其中 \(r=(123)\)、\(s=(12)\)，并取满足本节单位根条件的分裂 \(3\)-模系统 \((K,\mathcal O,k)\)。先确定 \(kS_3\) 的简单模。对任意非零简单模 \(S\)，算子 \(r-I\) 满足 \((r-I)^3=0\)，故其核 \(S^{\langle r\rangle}\) 非零。因为 \(\langle r\rangle\) 正规，这个不动空间被 \(S_3\) 保持：对 \(x\in S^{\langle r\rangle}\)、\(g\in S_3\) 及 \(h\in\langle r\rangle\)，有
+\[
+h(gx)=g(g^{-1}hg)x=gx.
+\]
+简单性使这个不动空间等于 \(S\)，所以 \(S\) 通过 \(S_3/\langle r\rangle\cong C_2\) 作用。特征三下 \(T^2-1=(T-1)(T+1)\) 的两个根不同，\(kC_2\cong k\times k\)，故恰有两个一维简单模 \(S_+,S_-\)：\(r\) 都平凡作用，\(s\) 分别按 \(1,-1\) 作用。
+
+两类 \(3\)-正则元素由 \(1,s\) 代表，两个不可约 Brauer 特征标按此顺序为 \(\varphi_+=(1,1)\)、\(\varphi_-=(1,-1)\)。若仿照普通特征标内积，定义
+\[
+(f,h)_0=\frac1{6}\sum_{g\in(S_3)_{3'}}\overline{f(g)}h(g),
+\]
+则因 \((S_3)_{3'}\) 包含单位元及三个换位，有
+\[
+(\varphi_+,\varphi_+)_0=(\varphi_-,\varphi_-)_0=\frac{1+3}{6}=\frac23,
+\qquad
+(\varphi_+,\varphi_-)_0=\frac{1-3}{6}=-\frac13.
+\]
+所以这两个函数既没有归一化，也不正交。它们仍线性无关，因为值矩阵的行列式为
+\[
+\det\begin{pmatrix}1&1\\1&-1\end{pmatrix}=-2,
+\]
+它在特征三的域中非零，提升到特征零后也非零。生成性可以从普通特征标的限制看到：平凡、符号和标准二维表示在这两类上的值依次为
+\[
+\chi_{\mathrm{triv}}|_{G_{3'}}=\varphi_+,\qquad
+\chi_{\mathrm{sgn}}|_{G_{3'}}=\varphi_-,\qquad
+\chi_{\mathrm{std}}|_{G_{3'}}=(2,0)=\varphi_++\varphi_-.
+\]
+前两式来自一维作用；标准表示是三点置换表示去掉常数直线，单位元上维数为二，换位的迹为不动字母数 \(1\) 减去常数直线上的迹 \(1\)，故为零。
+\end{example}
+
+一般情形中，线性无关性与生成性也各需一个依据。在特征 \(p\) 下，\(|G|\) 在 \(k\) 中可能为零，不能用除以群阶的平均投影来照搬普通正交证明；但半单商中的不同矩阵块仍可区分简单模的迹。生成性则可从特征零普通特征标的基出发，再限制到 \(p\)-正则共轭类。
 \begin{theorem}\label{b5:thm:brauer-character-basis}
 设 \(G\) 为有限群，\(p\) 为素数，\((K,\mathcal O,k)\) 为分裂 \(p\)-模系统，\(K\) 含有全部 \(|G|\) 次单位根，并固定这些根到复数的对应，\(G_{p'}\) 为 \(p\)-正则元素集合。不可约 Brauer 特征标构成 \(G_{p'}\) 上复类函数空间的一组基。因此简单左 \(kG\)-模的同构类型数等于 \(p\)-正则共轭类数；两个有限维左 \(kG\)-模有相同 Brauer 特征标，当且仅当它们有相同的简单合成因子及重数。
 \end{theorem}
 \begin{proof}
-先证线性无关。简单模 \(S_i\) 的 \(k\) 值迹作为 \(kG\) 上的线性函数两两独立：在
+先证线性无关。简单模 \(S_i\) 的 \(k\) 值迹作为 \(kG\) 上的线性函数线性无关：在
 \(kG/J\cong\prod_i\operatorname{End}_k(S_i)\)
 中，取第 \(i\) 块的一个对角矩阵单位，其各个简单迹为 \(\delta_{ij}\)，再提升到群代数即可检验独立性。群元素是 \(kG\) 的基，因此这些迹限制到 \(G\) 上仍独立。由\cref{b5:lem:modular-trace-regular-part}，所有值由 \(p\)-正则元素上的值确定，故相应矩阵在 \(k\) 中有一个非零的满行秩子式。
 设简单模有 \(r\) 个同构类型，选取使该子式非零的 \(p\)-正则元素 \(g_1,\ldots,g_r\)。由\cref{b5:def:brauer-character}，相应提升的行列式
@@ -195,9 +274,9 @@ d_{\alpha i}=[L_\alpha/\pi L_\alpha:S_i].
 \det\bigl(\varphi_{S_i}(g_j)\bigr)_{1\le i,j\le r}
 =\iota(\Delta)\ne0.
 \]
-于是复值 Brauer 特征标线性无关。
+于是复值 Brauer 特征标线性无关。这给出它们的数目不超过 \(p\)-正则共轭类数，但还没有说明它们生成全部类函数。
 
-再证生成性。先在分裂的特征零群代数 \(KG\) 上对 \(\operatorname{Hom}_K(V_\alpha,V_\beta)\) 的共轭作用取平均。平均算子的像是交织空间，分裂假设与 Schur 引理使其维数为 \(\delta_{\alpha\beta}\)，故取迹得到
+为证生成性，转到特征零，在这里群阶可逆，普通平均投影可以使用。先在分裂的特征零群代数 \(KG\) 上对 \(\operatorname{Hom}_K(V_\alpha,V_\beta)\) 的共轭作用取平均。平均算子的像是交织空间，分裂假设与 Schur 引理使其维数为 \(\delta_{\alpha\beta}\)，故取迹得到
 \[
 \frac1{|G|}\sum_{g\in G}\chi_\alpha(g^{-1})\chi_\beta(g)
 =\delta_{\alpha\beta}.

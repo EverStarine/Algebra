@@ -4,7 +4,7 @@
 % * 钩长公式的应用
 % * 限制、诱导与迭代分支
 % * 标准表与具体维数计算
-% * 应用第6.5节已经证明的钩长公式与分支规则，系统计算低阶、钩形和两行分拆的表示维数，并核验分支两侧的维数恒等式
+% * 应用第6.5节已经证明的钩长公式与分支规则，系统计算低阶、钩形和两行分拆的表示维数，并核验分支两侧的维数恒等式；正式证明特征零下共轭分拆对应符号扭曲，以删格路径解释多步限制的重数
 % ---
 \section{钩长公式与分支规则的应用}
 \label{b5:sec:0606}
@@ -28,7 +28,55 @@
 \ProseParagraphBreak
 
 转置图形保持所有钩长的多重集合，所以
-\(f^\lambda=f^{\lambda'}\)。例如 \((4,1,1)\) 与 \((3,1,1,1)\) 的维数都为 \(10\)。这一维数相等可以直接从公式读出；它本身尚未说明两种表示之间存在何种张量关系。
+\(f^\lambda=f^{\lambda'}\)。例如 \((4,1,1)\) 与 \((3,1,1,1)\) 的维数都为 \(10\)。在特征零下，转置图形还对应一个更强的表示论关系：符号扭曲把行求和与列交错求和互换。
+
+\begin{proposition}\label{b5:prop:specht-conjugate-sign}
+设 \(k\) 为特征零域，\(n\) 为非负整数，\(\lambda\vdash n\)，\(\lambda'\) 为其共轭分拆，\(\operatorname{sgn}\) 为 \(S_n\) 的一维符号表示。在张量积上取对角左 \(S_n\) 作用，则有左 \(k[S_n]\)-模同构
+\[
+S_k^{\lambda'}\cong S_k^\lambda\otimes_k\operatorname{sgn}.
+\]
+\end{proposition}
+\begin{proof}
+令 \(A=k[S_n]\)。定义 \(k\)-线性映射 \(\alpha:A\to A\)，使
+\(\alpha(g)=\operatorname{sgn}(g)g\) 对每个 \(g\in S_n\) 成立。符号的乘法性给出 \(\alpha(gh)=\alpha(g)\alpha(h)\)，而 \(\alpha^2=1\)，故 \(\alpha\) 是代数自同构。
+
+取形状 \(\lambda\) 的表 \(t\)，将它转置为形状 \(\lambda'\) 的表 \(t'\)。行群与列群互换，即 \(R_{t'}=C_t\)、\(C_{t'}=R_t\)，所以
+\[
+\alpha(a_t)=b_{t'},\qquad
+\alpha(b_t)=a_{t'},\qquad
+\alpha(c_t)=a_{t'}b_{t'},
+\]
+其中仍取 \(c_t=b_ta_t\)。由\cref{b5:prop:young-ideal-model}，\(S_k^\lambda\cong Ac_t\)。选符号表示的基向量 \(\eta\)，则
+\[
+Ac_t\otimes_k\operatorname{sgn}\longrightarrow Aa_{t'}b_{t'},
+\qquad u\otimes\eta\longmapsto\alpha(u)
+\]
+是线性同构，因为 \(\alpha(Ac_t)=A\alpha(c_t)\)。它还满足
+\[
+\alpha\bigl(\operatorname{sgn}(g)gu\bigr)
+=g\alpha(u),
+\]
+所以与左 \(S_n\) 作用相容。
+
+还需把 \(Aa_{t'}b_{t'}\) 与 Specht 模所用的相反乘法次序联系起来。记 \(a'=a_{t'}\)、\(b'=b_{t'}\)，右乘 \(a'\) 给出左 \(A\)-模同态
+\[
+Aa'b'\longrightarrow Ab'a',\qquad u\longmapsto ua',
+\]
+因为 \((za'b')a'=(za')b'a'\) 属于目标左理想。此映射非零：由\cref{b5:prop:young-quasi-idempotent}，若 \(q=n!/f^\lambda\)，则
+\[
+(a'b')^2=\alpha(c_t^2)=q\,a'b'.
+\]
+这里 \(q\ne0\)，而 \(a'b'=\alpha(c_t)\ne0\)，后者也可由 \(c_t\) 的单位元系数为 \(1\) 看出。若 \(a'b'a'=0\)，则 \((a'b')^2=a'b'a'b'=0\)，与上式矛盾。因此右乘 \(a'\) 在生成元 \(a'b'\) 上的值非零。
+
+由\cref{b5:prop:specht-char-zero-simple}，\(Ac_t\) 与 \(Ab'a'\cong S_k^{\lambda'}\) 都是简单模；对第一个模作符号扭曲只把每个群元素的作用乘以非零标量，不改变其不变子空间，所以 \(Aa'b'\) 也简单。两个简单模之间的非零同态，核为零、像为整个目标，故上述右乘映射是同构。合成这两个同构即得结论。
+\end{proof}
+
+例如取特征零域 \(k\)，用 \(v_i\) 表示形状 \((3,1)\) 中第二行只有 \(i\) 的行表类。若一个表的第一列上、下两格分别为 \(a,b\)，它的列交错元就是 \(v_b-v_a\)。这些坐标差生成四点置换模的增广核
+\[
+W=\left\{\sum_{i=1}^4 a_i v_i:\sum_{i=1}^4a_i=0\right\},
+\]
+故 \(S_k^{(3,1)}\cong W\)。这正是\subsecref{b5:subsec:0204:02}中的三维标准表示；命题于是给出
+\(S_k^{(2,1,1)}\cong W\otimes_k\operatorname{sgn}\)。两个模的维数同为 \(3\)，它们之间的关系由符号扭曲具体实现。
 
 \subsection{限制、诱导与迭代分支}
 \label{b5:subsec:0606:02}
@@ -56,6 +104,26 @@
 \end{proof}
 
 差图称为\term[xie-Young-tu]{斜 Young 图}[skew Young diagram]。这里仅用标准填数计算迭代分支重数，并未预先使用下一章的斜 Schur 函数理论。
+
+\begin{example}\label{b5:exm:iterated-branch-321}
+设 \(k\) 为特征零域，把 \(S_k^{(3,2,1)}\) 从 \(S_6\) 限制到固定数字 \(5,6\) 的子群 \(S_4\)。第一步得到形状 \((2,2,1),(3,1,1),(3,2)\)。第二步中，\((2,2,1)\) 删格得到 \((2,1,1)\) 与 \((2,2)\)，\((3,1,1)\) 得到 \((2,1,1)\) 与 \((3,1)\)，\((3,2)\) 得到 \((2,2)\) 与 \((3,1)\)。因此
+\[
+\operatorname{Res}_{S_4}^{S_6}S_k^{(3,2,1)}
+\cong \bigl(S_k^{(3,1)}\bigr)^{\oplus2}
+\oplus\bigl(S_k^{(2,2)}\bigr)^{\oplus2}
+\oplus\bigl(S_k^{(2,1,1)}\bigr)^{\oplus2}.
+\]
+维数为 \(2\cdot3+2\cdot2+2\cdot3=16\)。
+
+以最终形状 \(\mu=(3,1)\) 为例，两条删格路径是
+\[
+\begin{aligned}
+(3,2,1)&\longrightarrow(3,2)\longrightarrow(3,1),\\
+(3,2,1)&\longrightarrow(3,1,1)\longrightarrow(3,1).
+\end{aligned}
+\]
+差图 \((3,2,1)/(3,1)\) 的两个格子位于 \((2,2)\) 与 \((3,1)\)，它们既不同行也不同列，故没有行列递增所要求的先后限制。第一条路径先删 \((3,1)\)、再删 \((2,2)\)，因而在反向添格时分别在 \((2,2)\) 填 \(5\)、\((3,1)\) 填 \(6\)；第二条路径则在 \((3,1)\) 填 \(5\)、\((2,2)\) 填 \(6\)。这就是该斜图的两种标准填法，恰好对应 \(S_k^{(3,1)}\) 的重数 \(2\)。一次分支的每个成分只出现一次，但不同的连续分支路径可以在最后到达同一形状，使其重数累加。
+\end{example}
 
 \subsection{标准表与具体维数计算}
 \label{b5:subsec:0606:03}
@@ -86,22 +154,44 @@ s_2u=v,\quad s_2v=u.
 
 \ProseParagraphBreak
 
-再看特征零下的 \(S^{(2,2)}\)。它有两个标准表
+再看特征零域 \(k\) 上的 \(S_k^{(2,2)}\)。它有两个标准表
 \[
 t_1=\begin{array}{cc}1&2\\3&4\end{array},
 \qquad
 t_2=\begin{array}{cc}1&3\\2&4\end{array}.
 \]
 令 \(x,y,z\) 分别表示无序配对
-\(12|34,13|24,14|23\)，得到一个三点置换模。把 \((2,2)\)-行表类的两行视为无序的两对，给出等变映射
-\(M^{(2,2)}\rightarrow kx\oplus ky\oplus kz\)。直接展开四项列反对称和可得
+\(12|34,13|24,14|23\)，得到三维置换模 \(P=kx\oplus ky\oplus kz\)。这里两对数字没有编号；但行表类中的第一行与第二行有编号，因而
+\(\{12|34\}\ne\{34|12\}\)，且 \(M_k^{(2,2)}\) 有 \(\binom42=6\) 个基向量。忘掉行号的等变满射
 \[
-e_{t_1}\longmapsto2(x-z),\qquad
-e_{t_2}\longmapsto2(y-z).
+\pi:M_k^{(2,2)}\longrightarrow P
+\]
+把两行互换的两个表类送到同一配对，例如
+\[
+\pi(\{12|34\})=\pi(\{34|12\})=x.
+\]
+它的核恰由三个向量
+\[
+\{12|34\}-\{34|12\},\quad
+\{13|24\}-\{24|13\},\quad
+\{14|23\}-\{23|14\}
+\]
+生成：在每对互换的表类中，属于核的系数之和必须为零，故其贡献恰是这两个表类之差的倍数。因此 \(P\cong M_k^{(2,2)}/\ker\pi\)，这是从六维模到三维模的进一步商映射。
+
+\ProseParagraphBreak
+
+展开 \(t_1\) 的列反对称和，得到
+\[
+e_{t_1}=\{12|34\}-\{23|14\}-\{14|23\}+\{34|12\}.
+\]
+第一项与第四项都映到 \(x\)，中间两项都映到 \(z\)；对 \(t_2\) 作同样计算，便有
+\[
+\pi(e_{t_1})=2(x-z),\qquad
+\pi(e_{t_2})=2(y-z).
 \]
 因 \(2\) 可逆，这两个像构成坐标和为零平面的基，因此上述映射限制为同构
 \[
-S^{(2,2)}\cong W,
+S_k^{(2,2)}\cong W,
 \qquad W=\{ax+by+cz:a+b+c=0\}.
 \]
 在当前特征零假设下，\(3\) 也可逆，故三点置换模分解为
@@ -109,6 +199,10 @@ S^{(2,2)}\cong W,
 kx\oplus ky\oplus kz=k(x+y+z)\oplus W.
 \]
 其中 \(k(x+y+z)\) 是平凡子模，\(W\) 是它的不变补空间。这个模型还表明 Klein 四元子群在 \(W\) 上平凡作用。
+
+\ProseParagraphBreak
+
+同一个忘行号映射 \(\pi\) 可以在任意域上定义。若 \(\operatorname{char}k=2\)，上面的两个像都为零，因此 \(\pi|_{S_k^{(2,2)}}=0\)。失效的是这个特定映射对 Specht 模的识别；标准基定理仍给出 \(\dim_kS_k^{(2,2)}=2\)，而\cref{b5:prop:specht-22-char-two}已经证明它在特征二下仍绝对不可约。不能由 \(\pi\) 的限制变成零映射，推断原 Specht 模消失或变得可约。
 
 \subsection{低阶分拆与分支维数恒等式}
 \label{b5:subsec:0606:04}

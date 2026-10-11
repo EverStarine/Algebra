@@ -4,7 +4,7 @@
 % 纲要细目（写作范围）：
 % * 不可约表示的自同态环
 % * 代数闭域和一般域的区别
-% * 等型分解、重数与正则表示；一般域上的自同态除代数与代数闭域情形的区别
+% * 等型分解、重数与正则表示；一般域上的自同态除代数、重数空间的右模结构与平衡求值同构
 % ---
 
 
@@ -41,11 +41,21 @@
 对 \(T\in\operatorname{End}_G(V)\)，代数闭性保证存在特征值 \(\lambda\in k\)。\(T-\lambda I\) 不可逆，由 Schur 引理只能为零。若群交换，每个 \(\rho(g)\) 都是交织算子，因而都是标量，于是每条直线不变。不可约性迫使维数为一。
 \end{proof}
 
-底域条件不能省去。例如实空间 \(\mathbb R^2\) 上，令 \(C_3\) 的生成元作用为旋转 \(120^\circ\) 的矩阵。它没有实特征向量，所以没有不变实直线，表示不可约。与旋转交换的实矩阵却为
+底域条件不能省去。例如实空间 \(\mathbb R^2\) 上，令 \(C_3\) 的生成元作用为旋转 \(120^\circ\) 的矩阵 \(R\)。它没有实特征向量，所以没有不变实直线，表示不可约。令
 \[
-\begin{pmatrix}a&-b\\b&a\end{pmatrix},\qquad a,b\in\mathbb R,
+J=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+R=-\dfrac12I+\dfrac{\sqrt3}{2}J.
 \]
-构成与 \(\mathbb C\) 同构的实除代数，而非只有实标量。复化后旋转出现两个不同特征值，表示分裂成两个一维复表示。
+因 \(\sqrt3/2\ne0\)，实矩阵 \(X\) 与 \(R\) 交换，当且仅当它与 \(J\) 交换。写 \(X=\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix}\)，则
+\[
+XJ=\begin{pmatrix}\beta&-\alpha\\\delta&-\gamma\end{pmatrix},\qquad
+JX=\begin{pmatrix}-\gamma&-\delta\\\alpha&\beta\end{pmatrix}.
+\]
+比较条目得到 \(\gamma=-\beta\)、\(\delta=\alpha\)，故全部交织算子为 \(aI+bJ\)。由于 \(J^2=-I\)，映射 \(aI+bJ\mapsto a+b\mathrm i\) 保持加法与乘法，给出
+\[
+\operatorname{End}_{C_3}(\mathbb R^2)\simeq\mathbb C.
+\]
+这个实除代数比实标量域大。复化后旋转出现两个不同特征值，表示分裂成两个一维复表示。
 
 \ProseParagraphBreak
 即使底域代数闭，结论“自同态只有标量”也不能无条件反推不可约。取 \(k=\overline{\mathbb F}_3\)，令 \(r=(123)\)、\(s=(12)\) 在 \(k^2\) 上分别作用为
@@ -62,6 +72,14 @@ SRS=I-N=R^{-1}.
 \[
 \operatorname{End}_{S_3}(k^2)=kI.
 \]
+但真子表示 \(ke_1\) 并不产生一个表示同态投影：若它有不变补空间，\cref{b5:prop:invariant-complement-projection}会给出沿该补空间的投影。这个投影在 \(ke_1\) 上为恒等，又在一个非零补空间上为零，不可能是标量，与上式矛盾。因此
+\[
+0\longrightarrow k_{\mathrm{sgn}}\longrightarrow V
+\longrightarrow k_{\mathrm{triv}}\longrightarrow0
+\]
+不分裂；这里子表示上 \(r\) 作用为 \(1\)、\(s\) 作用为 \(-1\)，是符号表示，商表示上二者都作用为 \(1\)。还须同时检查两个生成元：\(N=R-I\) 虽与 \(R\) 交换，却满足 \(SNS^{-1}=-N\ne N\)，所以它不是整个 \(S_3\) 表示的自同态。
+
+\ProseParagraphBreak
 若一个非零的完全可约表示能分成两个非零子表示，相应投影就是一个非标量自同态。因此，非零的完全可约表示若只有标量自同态，就必不可约。
 
 \subsection{等型分解、重数与正则表示}
@@ -77,9 +95,9 @@ V\simeq\bigoplus_{i=1}^r S_i^{\oplus m_i}
 D_i=\operatorname{End}_G(S_i),\qquad
 M_i=\operatorname{Hom}_G(S_i,V).
 \]
-称 \(M_i\) 为类型 \(S_i\) 的\term[chongshu-kongjian]{重数空间}[multiplicity space]，并给它平凡 \(G\) 作用。则
+称 \(M_i\) 为类型 \(S_i\) 的\term[chongshu-kongjian]{重数空间}[multiplicity space]。以复合作为 \(D_i\) 的乘法，赋予 \(M_i\) 右 \(D_i\) 作用 \(f\cdot d=f\circ d\)，赋予 \(S_i\) 左 \(D_i\) 作用 \(d\cdot v=d(v)\)，并给 \(M_i\) 平凡 \(G\) 作用。则
 \[
-\dim_k M_i=m_i\dim_k D_i.
+\dim_{D_i}M_i=m_i,\qquad \dim_k M_i=m_i\dim_k D_i.
 \]
 若 \(V\ne0\)，则
 \[
@@ -87,25 +105,44 @@ M_i=\operatorname{Hom}_G(S_i,V).
 \]
 即乘积中略去零重数项。若 \(V=0\)，则各 \(m_i=0\)，且 \(\operatorname{End}_G(V)\) 只有零映射。
 相应的\term[dengxing-fenliang]{等型分量}[isotypic component] \(V_i\)，即 \(V\) 中所有同构于 \(S_i\) 的简单子表示之和，是内在确定的；其内部拆成 \(m_i\) 个简单直和项通常不唯一。
-若 \(k\) 代数闭，则 \(D_i=k\,1_{S_i}\)，所以 \(m_i=\dim_kM_i\)。此时求值映射给出等变同构
+求值映射给出等变同构
 \[
-\varepsilon_i:S_i\otimes_kM_i\longrightarrow V_i,
-\qquad v\otimes f\longmapsto f(v),
+\varepsilon_i:M_i\otimes_{D_i}S_i\longrightarrow V_i,
+\qquad f\otimes v\longmapsto f(v),
 \]
-其中 \(g(v\otimes f)=gv\otimes f\)。
+其中 \(g(f\otimes v)=f\otimes gv\)。若 \(k\) 代数闭，则 \(D_i=k\,1_{S_i}\)，所以 \(m_i=\dim_kM_i\)；此时张量积是在 \(k\) 上取的，交换两个因子也可写成 \(S_i\otimes_kM_i\simeq V_i\)。
 \end{proposition}
 \symidx{\(V_i,M_i\)：完全可约表示的等型分量与重数空间}
+\symidx{\(D_i=\operatorname{End}_G(S_i)\)：不可约表示的自同态除代数}
 \begin{proof}
-把同态分别投到各个直和坐标，Schur 引理使不同类型间的块为零，相同类型间的块为 \(D_i\) 中的元素。因此 \(M_i\) 与 \(D_i^{\oplus m_i}\) 作为 \(k\) 向量空间同构，得到维数公式。自同态在所选分解下由同型块内的矩阵给出；两个自同态复合时，其第 \((a,b)\) 项是 \(\sum_c d_{ac}\circ d'_{cb}\)。按自同态复合定义 \(D_i\) 的乘法，这就是 \(M_{m_i}(D_i)\) 的通常矩阵乘法，故得到自同态代数的乘积公式。若 \(V=0\)，所有结论直接成立。
+选定各个直和坐标与 \(S_i\) 的同构，记第 \(a\) 份的嵌入为 \(j_{ia}:S_i\to V\)，坐标投影为 \(q_{ia}:V\to S_i\)。把同态 \(f:S_i\to V\) 分别投到这些坐标，Schur 引理使不同类型间的块为零，相同类型间的块为 \(D_i\) 中的元素。因此
+\[
+f=\sum_{a=1}^{m_i}j_{ia}\circ d_a,\qquad d_a=q_{ia}\circ f\in D_i,
+\]
+且这些 \(d_a\) 唯一确定。这说明 \(M_i\) 是以 \(j_{i1},\ldots,j_{im_i}\) 为基的右 \(D_i\) 模，所以 \(\dim_{D_i}M_i=m_i\)。再取 \(D_i\) 的一组 \(k\)-基 \(d_1,\ldots,d_s\)，则全部 \(j_{ia}\circ d_b\) 构成 \(M_i\) 的 \(k\)-基，故 \(\dim_kM_i=m_i\dim_kD_i\)。自同态的矩阵行列由同型简单表示的份数编号，第 \((a,b)\) 项表示从第 \(b\) 份到第 \(a\) 份的交织映射，而不是 \(S_i\) 的向量坐标。两个自同态复合时，该项是 \(\sum_c d_{ac}\circ d'_{cb}\)。按自同态复合定义 \(D_i\) 的乘法，这就是 \(M_{m_i}(D_i)\) 的通常矩阵乘法，故得到自同态代数的乘积公式。若 \(V=0\)，所有结论直接成立。
 
 任意同构于 \(S_i\) 的子表示向其他类型的坐标投影都为零，所以它全在所选分解的 \(S_i^{\oplus m_i}\) 中；反过来，这些坐标子表示已生成整个块。故所有同型简单子表示之和恰为该块，不依赖所选分解；当 \(m_i=0\) 时这个和为零。
 
-若 \(k\) 代数闭，Schur 引理给出 \(D_i=k\,1_{S_i}\)。求值公式对 \(v,f\) 双线性，且像包含于 \(V_i\)，所以诱导所述张量映射。由 \(f(gv)=gf(v)\)，它是等变的。在所选分解下，\(M_i\) 的一组基由到各个 \(S_i\) 坐标的嵌入组成，求值映射就是 \(m_i\) 份 \(S_i\) 的恒等识别，故为同构。
+对于 \(d\in D_i\)，有
+\[
+(f\cdot d)(v)=f(d\cdot v).
+\]
+所以求值是 \(D_i\)-平衡的，并诱导所述张量映射；它的像在 \(V_i\) 中。又因 \(d(gv)=g\,d(v)\)，张量积上的群作用与平衡关系相容，而 \(f(gv)=gf(v)\) 给出求值映射的等变性。其逆可直接写为
+\[
+v\longmapsto\sum_{a=1}^{m_i}j_{ia}\otimes q_{ia}(v)\qquad(v\in V_i).
+\]
+将这个和代入求值映射，在 \(V_i\) 上得到 \(\sum_a j_{ia}q_{ia}(v)=v\)；反向复合在纯张量上满足
+\[
+\sum_a j_{ia}\otimes(q_{ia}\circ f)(v)
+=\sum_a\bigl(j_{ia}\circ q_{ia}\circ f\bigr)\otimes v
+=f\otimes v,
+\]
+其中第一步正是张量积的平衡关系，故两映射互逆。代数闭时再由 Schur 引理得到 \(D_i=k\,1_{S_i}\)，从而化为普通 \(k\) 张量积。
 \end{proof}
 
 在代数闭域上，选择重数空间 \(M_i\) 的一组基 \(f_1,\ldots,f_{m_i}\)，就由求值同构得到
 \[
-V_i=\bigoplus_{j=1}^{m_i}\varepsilon_i\bigl(S_i\otimes_k kf_j\bigr).
+V_i=\bigoplus_{j=1}^{m_i}\varepsilon_i\bigl(kf_j\otimes_k S_i\bigr).
 \]
 不同的基可能给出不同的简单直和项；但把基向量分别乘以非零标量，或只改变它们的排列，并不改变这些子空间组成的无序集合。当 \(m_i=1\) 时，唯一的简单直和项就是 \(V_i\) 本身。
 
@@ -122,7 +159,15 @@ S\oplus S=U_1\oplus U_2=U_1\oplus\Delta.
 后一分解可由 \((v,w)=(v-w,0)+(w,w)\) 直接验证，且 \(U_1\cap\Delta=0\)。两种分解中的具体子空间不同，但等型分量都是整个 \(S\oplus S\)，重数都是 \(2\)。在重数空间中，这对应于将基 \(f_1(v)=(v,0)\)、\(f_2(v)=(0,v)\) 改为 \(f_1,f_1+f_2\)。
 
 \ProseParagraphBreak
-一般域上的重数空间则还有右 \(D_i\) 作用 \(f\cdot d=f\circ d\)，其右 \(D_i\) 维数为 \(m_i\)；它的 \(k\) 维数还要乘以 \(\dim_kD_i\)，不能直接当作重数。这里出现的矩阵块和除代数，也正是半单代数理论中的基本结构。
+一般域上，平衡所用的除代数不能省去。在前面的实 \(C_3\) 不可约表示 \(S=\mathbb R^2\) 中，取 \(V=S\)，则 \(D=\operatorname{End}_{C_3}(S)\simeq\mathbb C\)，且 \(M=\operatorname{Hom}_{C_3}(S,S)=D\)。若直接在实数域上取张量积，\(M\otimes_{\mathbb R}S\) 的实维数为 \(4\)，不能同构于实维数为 \(2\) 的 \(S\)；在 \(D\) 上平衡后，\(M\otimes_D S\simeq S\)，因为 \(M\) 是一维右 \(D\) 模。重数因此由 \(D\) 上的维数计量。
+
+\ProseParagraphBreak
+矩阵块的阶数也由重数决定。例如在代数闭域 \(k\) 上，设 \(S\) 为 \(d\) 维不可约表示。在 \(S\oplus S\) 的两个坐标间，Schur 引理使每个交织映射都是标量，故全部自同态具有形式
+\[
+T=\begin{pmatrix}\alpha I_S&\beta I_S\\\gamma I_S&\delta I_S\end{pmatrix},
+\qquad \alpha,\beta,\gamma,\delta\in k.
+\]
+所以 \(\operatorname{End}_G(S\oplus S)\simeq M_2(k)\)。这个矩阵代数的阶数是 \(2\)，无论 \(d\) 多大；普通线性自同态 \(\operatorname{End}_k(S\oplus S)\) 则对应 \(2d\) 阶矩阵。与群作用交换的要求删去了每个块中独立改变 \(S\) 内部坐标的自由度。
 
 \begin{lemma}\label{b5:lem:irreducibles-in-regular}
 设 \(G\) 为有限群，\(k\) 为域，\(|G|\ne0\) 于 \(k\)。每个不可约有限维 \(k\) 表示都同构于正则表示的某个直和项，因此不可约表示只有有限多个同构类型。

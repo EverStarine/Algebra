@@ -1,9 +1,12 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### B.1 量子群与 Hopf 代数
-% 纲要位置：工作记录/计划纲要.md，第 4577 行。
+% 纲要位置：工作记录/计划纲要.md，第 4955 行。
+% 纲要细目（保留原定写作范围）：
+%
 % #### B.1.1 生成关系与余乘法
 % #### B.1.2 权模与量子整数
 % #### B.1.3 张量次序与非余交换性
+%
 \section{量子群与 Hopf 代数}
 \label{b5:sec:B01}
 
@@ -82,6 +85,24 @@ S(K)&=K^{-1},&S(E)&=-EK^{-1},&S(F)&=-KF.
 右等式按相反次序先消去 \(b\) 的两项，得到同一结论。由乘积归纳及线性性，全部对极等式成立。
 \end{proof}
 这些公式及其版本可对照\cite[Definition 5.6.1; Theorem 5.6.2]{EtingofEtAl2015TensorCategories}。同一量子代数有不同但等价的余乘法惯例，计算张量表示时必须选定一套，不能混合来自两套惯例的公式。
+\ProseParagraphBreak
+余乘法也发生了变形，因为它规定同一个元素怎样作用于两个表示的张量积。在上面的形式模型中，
+\[
+\begin{aligned}
+\Delta_\hbar(E)&=E\otimes1+1\otimes E+\hbar E\otimes H+O(\hbar^2),\\
+\Delta_\hbar(F)&=F\otimes1+1\otimes F-\hbar H\otimes F+O(\hbar^2).
+\end{aligned}
+\]
+常数项恢复经典包络代数的余乘法 \(\Delta_0(X)=X\otimes1+1\otimes X\)。记 \(\tau(a\otimes b)=b\otimes a\) 为普通张量翻转。若以 \(\Delta_\hbar^{\mathrm{op}}=\tau\Delta_\hbar\) 表示翻转两个张量因子后的余乘法，则
+\[
+\begin{aligned}
+\Delta_\hbar(E)-\Delta_\hbar^{\mathrm{op}}(E)
+ &=\hbar(E\otimes H-H\otimes E)+O(\hbar^2),\\
+\Delta_\hbar(F)-\Delta_\hbar^{\mathrm{op}}(F)
+ &=\hbar(F\otimes H-H\otimes F)+O(\hbar^2).
+\end{aligned}
+\]
+因此经典极限虽然余交换，一次项已经区分两个张量因子的次序。量子关系与量子余乘法分别改变单个表示中的升降作用和两个表示之间的张量作用；下一小节的模型可以把这些区别实际算出。
 
 \subsection{权模与量子整数}
 \label{b5:subsec:B01:02}
@@ -105,9 +126,17 @@ Ev_i=[i]_q[m-i+1]_qv_{i-1},
 \[
 [i+1]_q[m-i]_q-[i]_q[m-i+1]_q=[m-2i]_q,
 \]
-把各量按定义展开就能核验。所以这些矩阵确实构成一个 \(U_q(\mathfrak{sl}_2)\) 模。
+确实，通分后的分子为
+\[
+\begin{aligned}
+ &(q^{i+1}-q^{-i-1})(q^{m-i}-q^{-m+i})\\
+ &\quad-(q^i-q^{-i})(q^{m-i+1}-q^{-m+i-1})\\
+ &=(q-q^{-1})(q^{m-2i}-q^{-m+2i}).
+\end{aligned}
+\]
+除以 \((q-q^{-1})^2\)，便得到右端的 \([m-2i]_q\)。所以这些矩阵确实构成一个 \(U_q(\mathfrak{sl}_2)\) 模。
 \ProseParagraphBreak
-若 \(q\) 不是单位根，则这些 \(K\)-特征值互异，所有内部升算子系数非零。对不变子空间先用 \(K\) 作多项式投影得到某个基向量，再升到 \(v_0\)、降到所有向量，证明该模不可约。上述结论针对这组最高权模型；一般量子群模的分类还须规定相应的表示类别。
+若 \(q\) 不是单位根，则这些 \(K\)-特征值互异，所有内部升算子系数非零。记 \(\lambda_i=q^{m-2i}\)，插值多项式 \(p_i(T)=\prod_{j\ne i}(T-\lambda_j)/(\lambda_i-\lambda_j)\) 使 \(p_i(K)\) 成为投到 \(kv_i\) 的投影。非零不变子空间对这些多项式仍稳定，故含某个 \(v_i\)。又 \(E^iv_i=(\prod_{j=1}^i[j]_q[m-j+1]_q)v_0\ne0\)，所以含 \(v_0\)；再由 \(F^jv_0=v_j\) 得到整组基，证明该模不可约。上述结论针对这组最高权模型；一般量子群模的分类还须规定相应的表示类别。
 
 \subsection{张量次序与非余交换性}
 \label{b5:subsec:B01:03}
@@ -118,5 +147,45 @@ E(v_1\otimes v_0)=q\,v_0\otimes v_0,\qquad
 E(v_0\otimes v_1)=v_0\otimes v_0.
 \]
 当 \(q\ne1\) 时，普通翻转 \(\tau(v\otimes w)=w\otimes v\) 不与 \(E\) 的作用交换，因而不是 \(U_q(\mathfrak{sl}_2)\)-模同态。
+
+\begin{proposition}\label{b5:prop:B-quantum-hecke-operator}
+设 \(k\) 为特征零域，\(q\in k^\times\)、\(q^2\ne1\)。令 \(V\) 为 \(U_q(\mathfrak{sl}_2)\) 的二维模，满足
+\(Kv_0=qv_0\)、\(Kv_1=q^{-1}v_1\)、\(Ev_1=v_0\)、\(Fv_0=v_1\)，其余升降作用为零；张量作用采用 \(\Delta(E)=E\otimes K+1\otimes E\)、\(\Delta(F)=F\otimes1+K^{-1}\otimes F\)。依次按基 \(v_0\otimes v_0,v_0\otimes v_1,v_1\otimes v_0,v_1\otimes v_1\)，定义
+\[
+\check R=\begin{pmatrix}
+q&0&0&0\\
+0&0&1&0\\
+0&1&q-q^{-1}&0\\
+0&0&0&q
+\end{pmatrix}.
+\]
+则 \(\check R\) 是可逆的 \(U_q(\mathfrak{sl}_2)\)-模同态，且满足
+\[
+(\check R-qI)(\check R+q^{-1}I)=0,
+\qquad
+\check R_{12}\check R_{23}\check R_{12}
+=\check R_{23}\check R_{12}\check R_{23}
+\]
+于 \(V^{\otimes3}\)，其中 \(\check R_{12}=\check R\otimes I\)、\(\check R_{23}=I\otimes\check R\)。
+\end{proposition}
+\symidx{\(\check R\)：二维量子模的 Hecke 翻转算子}
+\begin{proof}
+记 \(a=q-q^{-1}\)。在所列基上，\(E,F\) 的张量作用矩阵为
+\[
+\Delta(E)=\begin{pmatrix}0&1&q&0\\0&0&0&q^{-1}\\0&0&0&1\\0&0&0&0\end{pmatrix},
+\qquad
+\Delta(F)=\begin{pmatrix}0&0&0&0\\q^{-1}&0&0&0\\1&0&0&0\\0&1&q&0\end{pmatrix}.
+\]
+将它们与 \(\check R\) 相乘，两种次序分别相同；所用恒等式是 \(1+qa=q^2\) 与 \(q^{-1}+a=q\)。而 \(\Delta(K)=\operatorname{diag}(q^2,1,1,q^{-2})\)，\(\check R\) 只混合中间两个特征值同为一的方向，故也与 \(K^{\pm1}\) 交换。生成元的相容性给出模同态。中间二阶块 \(\begin{psmallmatrix}0&1\\1&a\end{psmallmatrix}\) 的平方为 \(I+a\begin{psmallmatrix}0&1\\1&a\end{psmallmatrix}\)，两端也有 \(q^2=1+aq\)，所以 \(\check R^2=I+a\check R\)。这既给出二次关系，也给出 \(\check R^{-1}=\check R-aI\)。
+
+核验辫关系时，写 \(e_{ijk}=v_i\otimes v_j\otimes v_k\)。两种三重复合在 \(e_{000},e_{111}\) 上都乘以 \(q^3\)；在有序基
+\((e_{001},e_{010},e_{100})\) 上，以及在 \((e_{011},e_{101},e_{110})\) 上，两者都给出矩阵
+\[
+\begin{pmatrix}0&0&q\\0&q&qa\\q&qa&q^2a\end{pmatrix}.
+\]
+例如 \(e_{100}\) 的像为 \(qe_{001}+qae_{010}+q^2ae_{100}\)，计算中用 \(a+qa^2=q^2a\)。这覆盖了八个基向量，故两种复合相等。
+\end{proof}
+
+把附录 A 的 Hecke 参数 \(v\) 取为这里的 \(q\)，这正是其二次关系与辫关系。在 \(V^{\otimes n}\) 的相邻两因子上放置 \(\check R\)，相距超过一的算子也交换，因此得到相应的 Hecke 代数作用。\(\check R\) 的矩阵本身在 \(q=1\) 可代入，并成为普通翻转；这不等于在量子代数原有的分式关系中直接代入一。在 \(k=\mathbb C,q=i\) 时，二次关系变成 \((\check R-iI)^2=0\)，而中间块使 \(\check R-iI\ne0\)。于是出现非平凡 Jordan 块，与\cref{b5:prop:hecke-rank-one-specialization}的双数代数相呼应。
 \ProseParagraphBreak
-一般 Hopf 代数的模范畴具有幺半结构，但未必具有辫结构。若所选表示类别上有满足相应相容恒等式的 \(R\) 矩阵作用，就可以将该作用与翻转复合，构造辫结构并研究辫群作用。拟三角 Hopf 代数的一般理论见\cite[Section 8.3, Definition 8.3.1, pp. 198--199]{EtingofEtAl2015TensorCategories}。
+这个算例给出了所选二维模及其张量幂上的算子。要为整个表示范畴构造辫结构，还须在不同对象之间给出自然的交换同构，并核验它们与张量结合的相容性。一般 Hopf 代数的模范畴具有幺半结构，但未必具有辫结构；若所选表示类别上有满足相应相容恒等式的 \(R\) 矩阵作用，可以将它与翻转复合，构造辫结构。拟三角 Hopf 代数的一般理论见\cite[Section 8.3, Definition 8.3.1, pp. 198--199]{EtingofEtAl2015TensorCategories}。

@@ -12,6 +12,7 @@
 % * 标准光滑模型的自由变量、真实关系与 Jacobian 子式；Nakayama 排除未列出的关系
 % * 采用 Noether 局部环的极大理想进形式光滑判据，核对离散提升到连续提升；以有限系数子环推广平坦性
 % * 对角幂等元的模分裂及平坦性转移；有限展示下平展的等价刻画，平坦性消去额外商理想
+% * 严格 Hensel 局部环上的有限平展代数完全分裂；有限自由平方根代数无截面的反例
 % * 平方覆盖的函数域次数阻止 Zariski 开同构；固定系数坐标取幂的自由秩与代数闭域纤维长度，比较绝对 Frobenius 并区别点集和无穷小性质
 %
 % ---
@@ -39,7 +40,7 @@ B=\bigl(A[X_1,\ldots,X_n]/(f_1,\ldots,f_r)\bigr)_g.
 \sum_{j=1}^r\frac{\partial f_i}{\partial X_j}(c)h_j=-f_i(c),
 \qquad 1\le i\le r.
 \]
-系数矩阵可逆，故有唯一这样的修正。平方零 Taylor 公式使全部方程精确成立，局部化所需的单位也仍是单位，故得到提升。
+记系数矩阵为 \(M\)，则唯一解为 \(h=-M^{-1}f(c)\)。原方程模 \(J\) 已成立，故 \(f(c)\in J^r\)；\(M^{-1}\) 的系数在 \(C\) 中，而 \(J\) 是理想，所以解确实属于 \(J^r\)。平方零 Taylor 公式使全部方程精确成立，局部化所需的单位也仍是单位，故得到提升。
 
 微分模的关系矩阵恰为这个 Jacobian 矩阵。当 \(0<r<n\) 时，将它写为 \((J_0\mid J_1)\)，其中 \(J_0\) 是可逆的前 \(r\) 列。将关系左乘 \(J_0^{-1}\)，得到
 \[
@@ -201,6 +202,65 @@ C=\bigl(P/(f_1,\ldots,f_n)\bigr)_\Delta,
 \end{table}
 
 平展一行也可以用有限展示、平坦及 \(\Omega_{B/A}=0\) 表示。这里的有限展示与有限型都是指 \(B\) 作为 \(A\) 代数的有限性条件。
+
+\ProseParagraphBreak
+现在可以说明严格 Hensel 性如何作用于有限平展代数。剩余域可分闭先使闭纤维分成若干个剩余点，平展性排除各点处的幂零厚度，再由 Hensel 因式提升把这些因子分开。
+
+\begin{proposition}\label{b3:prop:strict-henselian-finite-etale-split}
+设 \((R,\mathfrak m)\) 为交换含幺严格 Hensel 局部环，\(B\ne0\) 为有限平展交换 \(R\) 代数。则存在整数 \(n\ge1\)，使 \(B\cong R^n\) 为 \(R\) 代数同构，其中 \(R^n\) 表示 \(n\) 份 \(R\) 的直积。
+\end{proposition}
+\begin{proof}
+令 \(k=R/\mathfrak m\)、\(C=B/\mathfrak mB\)。有限性使 \(C\) 为有限维 \(k\) 代数；\(B\ne0\) 且有限生成，Nakayama 引理保证 \(C\ne0\)。平展性给出 \(B\) 平坦及 \(\Omega_{B/R}=0\)，由微分模的基变换公式\cref{b3:prop:differential-base-change}得到 \(\Omega_{C/k}=0\)。
+
+有限维代数 \(C\) 是 Artin 环，由\cref{b3:thm:artin-decomposition}写成非零局部 Artin 环的直积 \(C=\prod_{i=1}^n C_i\)。各 \(C_i\) 是 \(C\) 的局部化，故\cref{b3:prop:differential-localization}给出 \(\Omega_{C_i/k}=0\)。记其极大理想为 \(\mathfrak n_i\)，剩余域为 \(L_i=C_i/\mathfrak n_i\)。对 \(k\to C_i\to L_i\) 使用微分传递正合列\cref{b3:thm:differential-transitivity}，并注意商映射使 \(\Omega_{L_i/C_i}=0\)，便得 \(\Omega_{L_i/k}=0\)。\(L_i/k\) 有限，由\cref{b3:thm:finite-field-differentials-separable}可分；\(k\) 可分闭，故 \(L_i=k\)。
+
+此时商映射 \(C_i\to k\) 是一个 \(k\) 有理点。\cref{b3:prop:tangent-cotangent-rational}给出
+\[
+\mathfrak n_i/\mathfrak n_i^2
+\cong k\otimes_{C_i}\Omega_{C_i/k}=0.
+\]
+\(\mathfrak n_i\) 为有限生成 \(C_i\) 模，且 \(\mathfrak n_i=\mathfrak n_i^2\)。对局部环 \(C_i\) 上的模 \(\mathfrak n_i\) 应用 Nakayama 引理，得到 \(\mathfrak n_i=0\)，所以 \(C_i=k\)。于是 \(C\cong k^n\)。
+
+为了把这份分解提升回 \(B\)，先在闭纤维中选一个能区分各因子的元素。可分闭域 \(k\) 必无限：若它有 \(q\) 个元素，则 \(T^q-T-1\) 没有 \(k\) 中的根，且导数为 \(-1\)，其不可约因子会给出非平凡有限可分扩张，矛盾。因此可选两两不同的 \(c_1,\ldots,c_n\in k\)，并把 \((c_1,\ldots,c_n)\in C\) 提升为 \(b\in B\)。Vandermonde 行列式
+\[
+\det(c_i^{\,j-1})_{1\le i,j\le n}
+=\prod_{1\le i<j\le n}(c_j-c_i)\ne0
+\]
+说明 \(1,\bar b,\ldots,\bar b^{n-1}\) 是 \(C\) 的 \(k\) 基。Nakayama 生成元判据使 \(1,b,\ldots,b^{n-1}\) 生成 \(B\)，而 \(B\) 平坦，\cref{b3:lem:finite-flat-local-free}又保证它们在 \(R\) 上线性无关，因而是一组自由基。
+
+用这组基写 \(b^n=\sum_{j=0}^{n-1}a_jb^j\)，并令 \(f(T)=T^n-\sum_{j=0}^{n-1}a_jT^j\)。代入 \(T\mapsto b\) 给出同构
+\[
+R[T]/(f)\xrightarrow{\sim}B:
+\]
+首一带余除法使左侧也以 \(1,T,\ldots,T^{n-1}\) 为 \(R\) 基，这些基元素恰好映到上述基。约化后 \(\bar f(c_i)=0\) 对每个 \(i\) 成立；\(\bar f\) 首一且次数为 \(n\)，故
+\[
+\bar f(T)=\prod_{i=1}^n(T-c_i).
+\]
+这些一次因子两两互素。逐次应用 \(R\) 的 Hensel 因式提升，得到
+\(f(T)=\prod_{i=1}^n(T-r_i)\)，其中 \(r_i\bmod\mathfrak m=c_i\)。对 \(i\ne j\)，\(r_i-r_j\) 为单位，所以理想 \((T-r_i)\)、\((T-r_j)\) 互素。中国剩余定理最后给出
+\[
+B\cong R[T]/(f)
+\cong\prod_{i=1}^n R[T]/(T-r_i)
+\cong R^n.
+\]
+\end{proof}
+
+这个命题中的“有限平展”不能换成“有限平坦”。即使剩余域代数闭，重根方程也可能没有所需的提升。
+
+\begin{example}\label{b3:exm:strict-henselian-flat-not-split}
+令 \(A=\mathbb C[\![t]\!]\)、\(B=A[u]/(u^2-t)\)。\(A\) 完备且剩余域为代数闭域 \(\mathbb C\)，由\cref{b3:thm:hensel-factor-lifting}及严格 Hensel 环的定义，\(A\) 严格 Hensel。首一带余除法说明 \(B\) 以 \(1,u\) 为 \(A\) 自由基，因而忠实平坦：对任意 \(A\) 模 \(M\)，\(M\otimes_AB\cong M\oplus M\)，既保持单射，又能检测 \(M=0\)。
+
+然而不存在把结构同态 \(A\to B\) 左逆掉的 \(A\) 代数同态 \(B\to A\)。这样的同态必须把 \(u\) 送到满足 \(a^2=t\) 的 \(a\in A\)。若 \(a\ne0\)，其最低非零幂的指数 \(\operatorname{ord}_t(a)\) 是非负整数，而方程要求
+\[
+2\operatorname{ord}_t(a)=\operatorname{ord}_t(t)=1,
+\]
+不可能成立。\(a=0\) 也不满足方程。因此对应的有限平坦谱映射没有截面。微分展示进一步给出
+\[
+\Omega_{B/A}\cong B\,\mathrm{d}u/(2u\cdot\mathrm{d}u)
+\cong\mathbb C\,\mathrm{d}u\ne0,
+\]
+故它并不平展。其闭纤维 \(\mathbb C[u]/(u^2)\) 虽然只有一个剩余点，却含有幂零厚度；严格 Hensel 性不把这种重根方程变成可解方程。
+\end{example}
 
 \subsection{局部同胚直觉与平展的代数条件}
 \label{b3:subsec:2303:03}

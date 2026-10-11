@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 11.1 定义与例子
-% 纲要位置：工作记录/计划纲要.md，第 4087 行。
+% 纲要位置：工作记录/计划纲要.md，第 4420 行。
 
 \section{定义与例子}
 \label{b5:sec:1101}
@@ -11,6 +11,7 @@
 % * 反对称括号与 Jacobi 恒等式
 % * 矩阵交换子及经典 Lie 代数
 % * 结合代数到 Lie 代数的构造
+% * 用 Jacobi 反例、经典矩阵分块和幺性模反例说明各项条件的作用
 %
 
 矩阵乘法一般不交换。若只取两种乘法次序的差，就得到一个双线性运算；它不再满足结合律，却满足另一条控制三重运算的恒等式。Lie 代数把这种括号运算本身作为研究对象。定义不需要 Lie 群或微分流形，本编的主要结构定理则固定在有限维复数情形。
@@ -37,6 +38,18 @@
 给定一组基 \(x_1,\ldots,x_n\)，括号由
 \([x_i,x_j]=\sum_\ell c_{ij}^{\ell}x_\ell\)
 决定。这些结构常数必须满足交替条件与 Jacobi 的二次关系。给定基向量之间的括号后，还须检查三重括号的 Jacobi 恒等式。
+
+\ProseParagraphBreak
+
+交替性并不能代替 Jacobi 恒等式。例如在域 \(k\) 上取基 \(x,y,z\)，规定
+\[
+[x,y]=y,\qquad [y,z]=z,\qquad [z,x]=x,
+\]
+并交替双线性延拓。这是交替双线性运算，但三个 Jacobi 项依次为
+\[
+[x,[y,z]]=-x,\qquad [y,[z,x]]=-y,\qquad [z,[x,y]]=-z.
+\]
+其和 \(-x-y-z\) 不为零，所以它不是 Lie 代数。即使在特征二中，三个非零基向量的和仍不为零。
 \begin{example}\label{b5:exm:abelian-heisenberg-lie}
 在任意向量空间上令全部括号为零，就得到交换 Lie 代数。另取基 \(x,y,z\)，规定 \([x,y]=z\)、\([x,z]=[y,z]=0\)，并按交替双线性延拓。每个括号都在 \(kz\)，而 \(z\) 与全部元素括号为零，所以所有三重括号均为零，Jacobi 恒等式成立。这是三维\term[Heisenberg-lie-daishu]{Heisenberg Lie 代数}[Heisenberg Lie algebra]。\footnote{海森堡（Werner Karl Heisenberg，1901-1976），德国物理学家，建立矩阵力学，并提出量子力学的不确定性关系。}
 \end{example}
@@ -44,7 +57,12 @@ Jacobi 恒等式也可写成
 \[
 \bigl[x,[y,z]\bigr]=\bigl[[x,y],z\bigr]+\bigl[y,[x,z]\bigr].
 \]
-它说明固定 \(x\) 后，“与 \(x\) 取括号”像求导一样作用于另一个括号。这个形式将在理想、导子和表示中反复出现。
+它说明固定 \(x\) 后，“与 \(x\) 取括号”像求导一样作用于另一个括号。若将这个线性算子暂记为 \(A_x\)，即 \(A_x(y)=[x,y]\)，上式还给出
+\[
+(A_xA_y-A_yA_x)(z)=[[x,y],z],\qquad
+[A_x,A_y]=A_{[x,y]}.
+\]
+因而这些算子的交换子准确对应原来的括号。对任意交替双线性运算，最后这个等式也反过来给出 Jacobi 恒等式；这正是它能产生伴随表示的条件。\secref{b5:sec:1102}将用 \(\operatorname{ad}x\) 表示这一算子，并研究它的核与像。
 
 \subsection{矩阵交换子及经典 Lie 代数}
 \label{b5:subsec:1101:02}
@@ -81,7 +99,7 @@ Jacobi 恒等式也可写成
 \mathfrak{sp}_{2n}(k)&=\{\,X\mid X^{\mathsf T}J+JX=0\,\}.
 \end{aligned}
 \]
-第一式讨论正交情形时，本编假设 \(\operatorname{char}k\ne2\)。这些条件的含义是：矩阵 \(X\) 满足
+第一式讨论正交情形时，本编假设 \(\operatorname{char}k\ne2\)。这使对称型与交替型的通常区别及正交维数计算适用：例如 \(B=I\) 时，\(X^{\mathsf T}=-X\) 迫使每个对角元满足 \(2X_{ii}=0\)，从而为零；在特征二中这一步失效。这些条件的含义是：矩阵 \(X\) 满足
 \(b(Xu,v)+b(u,Xv)=0\)，其中 \(b\) 为相应双线性型。
 这些矩阵条件也可直接从保持型的条件得到。引入满足 \(\varepsilon^2=0\) 的形式元，在 \(k[\varepsilon]/(\varepsilon^2)\) 上计算
 \[
@@ -95,6 +113,25 @@ b(XYu,v)=b(u,YXv),\qquad b(YXu,v)=b(u,XYv),
 \]
 相减便证明 \([X,Y]\) 仍满足条件。因此它们分别是相应一般线性 Lie 代数的 Lie 子代数。
 \symidx{\(\mathfrak{so}(B),\mathfrak{sp}_{2n}(k)\)：正交与辛 Lie 代数}
+这些条件也能把矩阵的具体形状写出来。对标准对称型 \(B=I_n\)，正交条件是 \(X^{\mathsf T}=-X\)。在特征不为二时，对角元必须为零，每对非对角元只需选择一个，所以这一空间的维数为 \(n(n-1)/2\)。辛情形则在任意域 \(k\) 上将 \(X\) 按 \(n\) 阶块写成
+\[
+X=\begin{pmatrix}A&B_0\\ C&D\end{pmatrix},\qquad
+X^{\mathsf T}J+JX
+=\begin{pmatrix}
+C-C^{\mathsf T}&D+A^{\mathsf T}\\
+-A-D^{\mathsf T}&B_0^{\mathsf T}-B_0
+\end{pmatrix}.
+\]
+因此
+\[
+\mathfrak{sp}_{2n}(k)
+=\left\{\,\begin{pmatrix}A&B_0\\ C&-A^{\mathsf T}\end{pmatrix}
+\;\middle|\; B_0=B_0^{\mathsf T},\ C=C^{\mathsf T}\,\right\}.
+\]
+\(A\) 任意，两个对称块各有 \(n(n+1)/2\) 个自由条目，故维数为 \(n^2+n(n+1)=2n^2+n\)。特别地，\(n=1\) 时条件仅是二阶矩阵的迹为零，得到 \(\mathfrak{sp}_2(k)=\mathfrak{sl}_2(k)\)。这给出了最小辛 Lie 代数与后面 \(\mathfrak{sl}_2\) 理论的直接联系。
+
+\ProseParagraphBreak
+
 本编还会研究上三角矩阵 Lie 代数 \(\mathfrak b_n\) 与严格上三角矩阵 Lie 代数 \(\mathfrak n_n\)。它们都是矩阵乘法下的子代数，因而也对交换子封闭。矩阵群中要求可逆，矩阵 Lie 代数中则没有这个要求；零矩阵就在所有这些 Lie 代数中。
 
 \subsection{结合代数到 Lie 代数的构造}
@@ -111,4 +148,8 @@ f\bigl([x,y]\bigr)=\bigl[f(x),f(y)\bigr].
 \begin{proof}
 计算 \(f(xy-yx)=f(x)f(y)-f(y)f(x)\)。对模的作用同态 \(A\to\operatorname{End}_k(V)\) 应用此等式，就得到括号相容性。反向断言的失败已经可在交换代数中看见：例如 \(\mathbb C\to\mathbb C\)、\(z\mapsto2z\)，保持两个零括号，却不保持单位或乘法。
 \end{proof}
-因此“结合代数的表示”和“相应 Lie 代数的表示”不是同一类数据。\chapref{b5:ch:15}将构造泛包络代数，使一个给定 Lie 代数的全部表示恰好等同于某个结合代数的模；那是对 Lie 括号另作构造，不能简单使用本节原来的 \(A\)。
+在表示中，单位条件的丢失已经可在 \(A=k\) 上看见。其交换子 Lie 代数是一维交换 Lie 代数 \(k1_A\)。在非零空间 \(V=k\) 上令 \(\rho(1_A)=0\)，就满足括号相容性，却不能成为幺性左 \(A\) 模，因为后者必须使 \(1_A\) 作用为 \(I_V\)。更一般地，对任意 \(k\) 向量空间 \(V\)，这一维 Lie 代数的作用可由任意算子 \(T\in\operatorname{End}_k(V)\) 给出：\(\rho(a1_A)=aT\)，这些算子彼此交换；幺性左 \(k\) 模却强制 \(T=I_V\)。
+
+\ProseParagraphBreak
+
+因此“结合代数的表示”和“相应 Lie 代数的表示”不是同一类数据。Lie 表示只保持交换子关系，原结合代数的乘法和单位关系须另行要求。\chapref{b5:ch:15}将构造泛包络代数，使一个给定 Lie 代数的全部表示恰好等同于某个结合代数的模。对上述一维交换 Lie 代数，那里得到的是 \(k[t]\)，它允许 \(t\) 作用为任意算子，而非原来的 \(k\)；这一构造及其模对应将在该章证明。

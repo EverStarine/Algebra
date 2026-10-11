@@ -33,6 +33,9 @@ E_V=\frac1{|G|}\sum_{g\in G}\rho(g).
 \ProseParagraphBreak
 这里的分母是真正的标量逆，不是一个形式记号。若特征整除群阶，同一分子 \(\sum_g\rho(g)\) 仍有意义，但对每个 \(v\in V^G\)，都有 \(\sum_g\rho(g)v=|G|v=0\)。求和算子因而在不动空间上恒为零，一般不能用它构造到不动空间的投影。
 
+\ProseParagraphBreak
+不过，\(E_V\) 只能投影到不动空间，任意子表示未必由不动向量组成。例如在 \(\operatorname{char}k\ne2\) 时，令 \(C_2\) 的非单位元在 \(V=k\oplus k\) 上作用为 \(-I\)，这就是两个符号表示之和 \(\varepsilon\oplus\varepsilon\)。此时 \(V^G=0\)，而第一条坐标直线仍有第二条坐标直线作为不变补空间。因此，寻找任意子表示的补空间，需要把投影本身改成与群作用交换的算子。
+
 \subsection{平均投影与 Maschke 定理}
 \label{b5:subsec:0103:02}
 
@@ -40,9 +43,14 @@ E_V=\frac1{|G|}\sum_{g\in G}\rho(g).
 设 \(G\) 为有限群，\(k\) 为域，且 \(|G|\ne0\) 于 \(k\)。\(G\) 的每个有限维 \(k\) 表示 \(V\) 的任意子表示 \(U\) 都有不变补空间，因而每个这样的表示完全可约。
 \end{theorem}
 \begin{proof}
-取一个普通线性投影 \(p:V\to U\)，使 \(p|_U=1_U\)，并通过包含 \(U\hookrightarrow V\) 把它看作 \(V\) 的自同态。定义
+取一个普通线性投影 \(p:V\to U\)，使 \(p|_U=1_U\)，并通过包含 \(U\hookrightarrow V\) 把它看作 \(V\) 的自同态。由\cref{b5:prop:hom-tensor-invariants}，\(\operatorname{End}_k(V)\) 本身也是表示，作用为
 \[
-\overline p=\frac1{|G|}\sum_{g\in G}\rho(g)p\rho(g^{-1}).
+g\cdot T=\rho(g)T\rho(g^{-1}),
+\]
+其不动空间恰为 \(\operatorname{End}_G(V)\)。对这个表示应用同一个平均算子，得到
+\[
+\overline p=E_{\operatorname{End}_k(V)}(p)
+=\frac1{|G|}\sum_{g\in G}\rho(g)p\rho(g^{-1}).
 \]
 每一项的像都在 \(U\)，因为 \(U\) 不变。对 \(u\in U\)，先有 \(\rho(g^{-1})u\in U\)，再经 \(p\) 不变，所以每一项将 \(u\) 送回 \(u\)，得到 \(\overline p|_U=1_U\)。对任意 \(h\)，将求和指标 \(g\) 改成 \(hg\)，得
 \(\rho(h)\overline p\rho(h^{-1})=\overline p\)。
@@ -83,11 +91,30 @@ p=\begin{pmatrix}1&0\\1&0\end{pmatrix}.
 \[
 \rho(r)=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
 \]
-写为 \(I+N\)，其中 \(N^2=0\)。二项式展开给出 \((I+N)^p=I\)，所以这是表示。直线 \(ke_1\) 不变。任何补直线可由 \(ae_1+e_2\) 生成；若它不变，\(r\) 在这条一维空间上的标量的 \(p\) 次方为一，在特征 \(p\) 下只能是一。但是
+写为 \(I+N\)，其中 \(N^2=0\)。二项式展开给出 \((I+N)^p=I\)，所以这是表示。直线 \(ke_1\) 不变。任何补直线可由 \(ae_1+e_2\) 生成；若它不变，就有某个 \(\lambda\in k\) 使
 \[
-\rho(r)(ae_1+e_2)=(a+1)e_1+e_2\ne ae_1+e_2,
+\rho(r)(ae_1+e_2)=(a+1)e_1+e_2
+=\lambda(ae_1+e_2).
 \]
-故不存在不变补。这个表示可约但不可分解。
+比较 \(e_2\) 的系数得到 \(\lambda=1\)，比较 \(e_1\) 的系数又得到 \(a+1=a\)，矛盾。故不存在不变补。这个表示可约但不可分解。
+
+\ProseParagraphBreak
+在特征二时，这正是章首交换两个坐标的表示。对那里的算子 \(S\)，取基 \(u=e_1+e_2\)、\(v=e_2\)，则 \(Su=u\)、\(Sv=u+v\)，从而
+\[
+[S]_{u,v}=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+\]
+原来重合的两条特征直线，在这组基下表现为一个不能拆开的 Jordan 块。
+
+\ProseParagraphBreak
+从群代数看，特征为 \(p\) 时，\(C_p\) 的生成元满足
+\[
+(r-1)^p=r^p-1=0.
+\]
+由于 \(r\) 与 \(1\) 是不同的群代数基元素，\(r-1\ne0\)，所以群代数中出现了非零幂零元。上面的二维表示可以写成 \(M=k[t]/(t^2)\)：令 \(r\) 作用为乘以 \(1+t\)，则 \((1+t)^p=1\) 于 \(M\)，群关系成立。在基 \(t,1\) 下，\(r(t)=t\)、\(r(1)=t+1\)，作用矩阵就是 \(I+N\)。子表示 \(kt\) 与商表示 \(M/kt\) 都是平凡表示，但
+\[
+0\longrightarrow kt\longrightarrow M\longrightarrow k\longrightarrow0
+\]
+不分裂，因为刚才的系数比较已经排除了 \(kt\) 的不变补空间。两个对角上的平凡作用仍可能被非零的幂零作用连在一起，这正是该表示不能分解的原因。
 
 \begin{proposition}\label{b5:prop:maschke-converse}
 设 \(G\) 为有限群，\(k\) 为域。若 \(\operatorname{char}k\,\bigm\vert\,|G|\)，则正则表示 \(k[G]\) 不完全可约。因此 \(G\) 的全部有限维 \(k\) 表示完全可约，当且仅当群阶在 \(k\) 中可逆。
@@ -107,7 +134,20 @@ k[V]\coloneqq\operatorname{Sym}(V^*)=k[x_1,\ldots,x_n].
 \[
 (g f)(v)=f\bigl(\rho(g^{-1})v\bigr).
 \]
-这里先按线性替换定义形式多项式上的作用；尤其当 \(k\) 有限时，不能把两个多项式在全部 \(k\) 点取值相同当成多项式相等。逆元则保证 \(g(hf)=(gh)f\)。
+这里先按线性替换定义形式多项式上的作用；逆元保证 \(g(hf)=(gh)f\)。例如，令 \(C_3=\langle s\rangle\) 在 \(\mathbb C^2\) 上作用为 \(\rho(s)=\operatorname{diag}(\zeta,\zeta^{-1})\)，其中 \(\zeta\) 为本原三次单位根。若 \(x,y\) 为对偶坐标，则对向量 \((a,b)\) 有
+\[
+(sx)(a,b)=x(\zeta^{-1}a,\zeta b)=\zeta^{-1}a,
+\qquad
+(sy)(a,b)=y(\zeta^{-1}a,\zeta b)=\zeta b.
+\]
+因此 \(sx=\zeta^{-1}x\)、\(sy=\zeta y\)：向量基上的特征值与相应对偶基上的特征值互为逆元。若误用 \(f(\rho(s)v)\)，这两个特征值就会颠倒。
+
+\ProseParagraphBreak
+尤其当 \(k\) 有限时，不能把两个多项式在全部 \(k\) 点取值相同当成多项式相等。取 \(k=\mathbb F_3\)，令 \(C_2=\langle s\rangle\) 在一维空间上作用为取负。形式多项式 \(f(x)=x^3-x\) 非零，但每个 \(a\in\mathbb F_3\) 都满足 \(a^3=a\)，所以它给出的点集函数恒为零，当然被群固定；在多项式环中却有
+\[
+(sf)(x)=f(-x)=-f(x)\ne f(x).
+\]
+所以形式多项式的不变性不能仅凭有限域上的点值判断。
 
 \begin{definition}\label{b5:def:polynomial-invariant-ring}
 设 \(k\) 为域，\(G\) 为群，\(\rho:G\to\operatorname{GL}_k(V)\) 为有限维表示。在 \(k[V]=\operatorname{Sym}(V^*)\) 上，将对偶作用 \(g\ell=\ell\circ\rho(g^{-1})\) 延伸为代数自同构，其中 \(\ell\in V^*\)、\(g\in G\)。满足 \(gf=f\) 对所有 \(g\in G\) 成立的多项式 \(f\in k[V]\)，称为\term[bubian-duoxiangshi]{不变多项式}[invariant polynomial]。它们组成的 \(k\) 子代数
@@ -120,7 +160,7 @@ k[V]^G=\bigl\{\,f\in k[V]\mid gf=f\;\text{对所有}\;g\in G\,\bigr\}
 \]
 称为\term[Reynolds-suanzi]{Reynolds 算子}[Reynolds operator]。\footnote{雷诺（Osborne Reynolds，1842-1912），爱尔兰数学家、物理学家，以流体流动中的雷诺数和湍流研究著称。}
 \end{definition}
-\symidx{\(k[V],k[V]^G\)：多项式函数环及不变环}
+\symidx{\(k[V],k[V]^G\)：形式多项式环及不变环}
 \symidx{\(\mathcal R\)：多项式不变环的 Reynolds 算子}
 
 线性替换保持各个齐次分量，故 \(k[V]_d\) 是有限维表示。把本节开头的平均投影分别用于每个 \(k[V]_d\)，可知 \(\mathcal R(k[V]_d)\subseteq k[V]_d\)，即 \(\mathcal R\) 保持分次；它的像恰为 \(k[V]^G\)，且 \(\mathcal R^2=\mathcal R\)。平均可能消去最高次齐次部分，所以当 \(\mathcal R(f)\ne0\) 时，只能断言 \(\deg\mathcal R(f)\le\deg f\)。对于 \(a\in k[V]^G\)，逐项使用 \(g(af)=a\,g(f)\)，还有

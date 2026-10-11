@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### C.1 Lie 代数表示与 Lie 群表示的积分
-% 纲要位置：工作记录/计划纲要.md，第 4873 行。
+% 纲要位置：工作记录/计划纲要.md，第 4991 行。
 % #### C.1.1 微分表示与积分定理
 % #### C.1.2 下降到商群的条件
 % #### C.1.3 \texorpdfstring{\(SU(2)\) 与 \(SO(3)\) 的表示差别}{SU(2) 与 SO(3) 的表示差别}
@@ -9,8 +9,12 @@
 \section{Lie 代数表示与 Lie 群表示的积分}
 \label{b5:sec:C01}
 
-% 纲要范围：
-% * Lie 代数表示何时积分成 Lie 群表示
+% 纲要细目（保留原定写作范围）：
+%
+% #### C.1.1 微分表示与积分定理
+% #### C.1.2 下降到商群的条件
+% #### C.1.3 \texorpdfstring{\(SU(2)\) 与 \(SO(3)\) 的表示差别}{SU(2) 与 SO(3) 的表示差别}
+%
 
 Lie 代数记录单位元附近的一阶变化。要把这种变化沿整个群延伸，还须检查群的连通性与绕闭路的影响。本节只讨论有限维表示；无限维空间上还要指定算子的定义域和拓扑，不能直接沿用这里的结论。
 
@@ -28,7 +32,26 @@ Lie 代数记录单位元附近的一阶变化。要把这种变化沿整个群�
 \[
 \pi(\exp_G tx)=\exp\bigl(t\cdot\mathrm{d}\pi(x)\bigr).
 \]
-左边是一般线性群中的一参数子群，其单位元处导数为 \(\mathrm{d}\pi(x)\)；常微分方程 \(Y'=\mathrm{d}\pi(x)\cdot Y\)、\(Y(0)=I\) 的唯一解就是右边。微分保持括号可以从群交换子在二阶处的展开得到；同样的展开已经在矩阵 Lie 代数中出现。
+左边是一般线性群中的一参数子群，其单位元处导数为 \(\mathrm{d}\pi(x)\)；常微分方程 \(Y'=\mathrm{d}\pi(x)\cdot Y\)、\(Y(0)=I\) 的唯一解就是右边。微分保持括号可由群交换子的二阶项看出。对矩阵 \(X,Y\)，将四个指数各展开到二次项，得到
+\[
+e^{tX}e^{tY}e^{-tX}e^{-tY}
+=I+t^2(XY-YX)+O(t^3).
+\]
+记 \(\rho=\mathrm d\pi\)。由一参数子群公式，群同态把左边送到 \(e^{t\rho(X)}e^{t\rho(Y)}e^{-t\rho(X)}e^{-t\rho(Y)}=I+t^2[\rho(X),\rho(Y)]+O(t^3)\)。另一方面，在单位元附近对 \(\pi\) 作一阶展开，将右边送到 \(I+t^2\rho([X,Y])+O(t^3)\)。比较两式的二阶项，便得 \(\rho([X,Y])=[\rho(X),\rho(Y)]\)。一般 Lie 群中，同样的计算在单位元处的局部坐标中刻画切空间上的 Lie 括号。
+
+\ProseParagraphBreak
+一般路径不能把不同时刻的无穷小作用先相加再取指数，因为这些矩阵未必交换。在 \(SL_2(\mathbb C)\) 的自然表示中取
+\[
+X=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
+\]
+先沿 \(\exp(tX)\) 从 \(I\) 走到 \(\exp X\)，再沿 \(\exp X\exp(tY)\) 走第二段。两段的左对数导数分别为 \(X,Y\)，相应的矩阵微分方程依次给出
+\[
+\exp X\exp Y=(I+X)(I+Y)=\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\qquad
+\exp(X+Y)=\begin{pmatrix}\cosh1&\sinh1\\\sinh1&\cosh1\end{pmatrix}.
+\]
+两者不同。因此沿一般路径的积分必须保留乘法次序；下面的微分方程保留这个次序，Lie 括号相容性则使所得积分沿端点固定的同伦保持不变。
 
 \begin{theorem}[Lie 代数表示的积分]\label{b5:thm:lie-representation-integration}
 设 \(G\) 为连通且单连通的实 Lie 群，\(\mathfrak g=\operatorname{Lie}(G)\)，\(V\) 为有限维复向量空间。每个实线性 Lie 代数表示 \(\rho:\mathfrak g\to\mathfrak{gl}_{\mathbb C}(V)\) 都唯一积分为光滑群表示 \(\pi:G\to\operatorname{GL}_{\mathbb C}(V)\)。微分给出有限维光滑复 \(G\)-表示与有限维实线性 \(\mathfrak g\)-表示的范畴等价。若 \(G\) 为连通且单连通的复 Lie 群，则每个有限维复线性 Lie 代数表示都唯一积分为全纯群表示，并给出相应的范畴等价。
@@ -52,7 +75,7 @@ b_t=-ab+\gamma^{-1}\gamma_{st}.
 \[
  \partial_s a-\partial_t b=[a,b].
 \]
-若 \(U\) 真由路径端点决定，其沿同伦参数的变化应当满足 \(U_s=U\rho(b)\)。因此令 \(W=U_s-U\rho(b)\) 测量这一等式的误差。由于 \(\rho\) 保持括号，求导得
+若已经有积分后的群表示 \(\pi\)，则 \(U(t,s)=\pi(\gamma(t,s))\) 由链式法则满足 \(U_s=U\rho(\gamma^{-1}\gamma_s)=U\rho(b)\)。这提示我们对尚在构造中的 \(U\) 验证同一公式；在 \(t=1\) 时再用 \(b(1,s)=0\)，才可推出端点值与同伦无关。因此令 \(W=U_s-U\rho(b)\) 测量这一等式的误差。由于 \(\rho\) 保持括号，求导得
 \[
 \begin{aligned}
 W_t&=U_s\rho(a)+U\rho(a_s)-U\rho(a)\rho(b)-U\rho(b_t)\\
@@ -93,8 +116,8 @@ Te^{\rho_V(x)}=e^{\rho_W(x)}T.
 这说明“Lie 代数表示可以积分”必须说明积分到哪个群。连通但非单连通的群可能丢掉一些表示；非连通群还需要补充连通分支群的作用，这些信息根本不在单位元切空间中。
 
 \begin{example}\label{b5:exm:circle-integration}
-对圆群 \(S^1=\mathbb R/2\pi\mathbb Z\)，一个 Lie 代数复表示由算子 \(A\) 给出，在普遍覆盖上的积分为 \(t\mapsto e^{tA}\)。下降条件为 \(e^{2\pi A}=I\)，等价于 \(A\) 可对角化且特征值属于 \(i\mathbb Z\)。确实，Jordan 块的半单部分必须满足 \(e^{2\pi\lambda}=1\)，其幂零部分 \(N\) 满足 \(e^{2\pi N}=I\)。但
-\(e^{2\pi N}-I=N\cdot Q(N)\)，其中 \(Q(0)=2\pi\ne0\)，故 \(Q(N)\) 可逆，迫使 \(N=0\)。反向验证则直接代入。因此 \(A=i\alpha\) 的一维表示仅当 \(\alpha\in\mathbb Z\) 时下降；一个非零幂零 Jordan 块也不能下降。
+对圆群 \(S^1=\mathbb R/2\pi\mathbb Z\)，一个 Lie 代数复表示由算子 \(A\) 给出，在普遍覆盖上的积分为 \(t\mapsto e^{tA}\)。下降条件为 \(e^{2\pi A}=I\)，等价于 \(A\) 可对角化且特征值属于 \(i\mathbb Z\)。确实，对单个 Jordan 块写 \(A=\lambda I+N\)，其中 \(N\) 幂零。两部分交换，故 \(e^{2\pi A}=e^{2\pi\lambda}e^{2\pi N}\)；\(e^{2\pi N}\) 的特征值全为一，比较特征值先得到 \(e^{2\pi\lambda}=1\)，即 \(\lambda\in i\mathbb Z\)，再代回得到 \(e^{2\pi N}=I\)。而
+\(e^{2\pi N}-I=N\cdot Q(N)\)，其中 \(Q(0)=2\pi\ne0\)，故 \(Q(N)\) 可逆，迫使每个块的 \(N=0\)，也就是 \(A\) 可对角化。反向验证则直接代入。因此 \(A=i\alpha\) 的一维表示仅当 \(\alpha\in\mathbb Z\) 时下降；一个非零幂零 Jordan 块也不能下降。
 \end{example}
 
 \subsection{\texorpdfstring{\(SU(2)\) 与 \(SO(3)\) 的表示差别}{SU(2) 与 SO(3) 的表示差别}}
@@ -106,7 +129,7 @@ Te^{\rho_V(x)}=e^{\rho_W(x)}T.
 \begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix}
 \ \middle|\ |a|^2+|b|^2=1\,\right\}.
 \]
-作为流形它是三维球面，故单连通。其 Lie 代数的复化为 \(\mathfrak{sl}_2(\mathbb C)\)，因此前文的每个 \(L_m\) 唯一积分到 \(SU(2)\)。可以直接把它实现为自然二维表示的对称幂 \(\operatorname{Sym}^m\mathbb C^2\)。
+作为流形它是三维球面，故单连通。其 Lie 代数的复化为 \(\mathfrak{sl}_2(\mathbb C)\)。把\cref{b5:prop:sl2-model}中最高权为 \(m\) 的有限维简单模 \(L_m\) 限制到实 Lie 代数 \(\mathfrak{su}_2\)，便由\cref{b5:thm:lie-representation-integration}唯一积分到这个单连通群 \(SU(2)\)。可以直接把它实现为自然二维表示的对称幂 \(\operatorname{Sym}^m\mathbb C^2\)。
 
 \ProseParagraphBreak
 \(SU(2)\) 在实三维空间 \(\mathfrak{su}_2\) 上的共轭作用保持正定内积 \(-\operatorname{tr}(XY)\)，给出 \(SU(2)\to SO(3)\)。它的微分是三维单 Lie 代数的伴随表示，单射且两边等维，故像含单位元邻域；\(SO(3)\) 连通使像为整个群。核由与全部 \(\mathfrak{su}_2\) 交换的矩阵组成，只能为 \(\{I,-I\}\)。因此它是二重覆盖。

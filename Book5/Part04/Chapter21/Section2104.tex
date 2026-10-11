@@ -1,18 +1,17 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 21.4 代数群结构初步
-% 纲要位置：工作记录/计划纲要.md，第 4409 行。
+% 纲要位置：工作记录/计划纲要.md，第 4779 行。
 
 \section{代数群结构初步}
 \label{b5:sec:2104}
 
 
-% 纲要范围：
+% 纲要细目（保留原定写作范围）：
 %
 % * 幺幂群和约化群
 % * 根数据的意义
 % * 正特征行为和群概形方向
-%
-% ---
+% * 计算三阶幺幂群的中心与 Lie 括号，区别一般线性群的根方向、中心方向及其整数格
 %
 
 从矩阵例子进入一般代数群时，需要区分几个不同的结构条件。幺幂性控制元素的 Jordan 形，约化性排除连通正规幺幂部分；根数据又在根系以外保留了整数格。正特征时，坐标环的幂零信息和无穷小子群还会使点集直觉失效。
@@ -27,12 +26,48 @@
 (1+X)(1+Y)\equiv1+X+Y\pmod{J^{r+s}}
 \quad(X\in J^r,\ Y\in J^s),
 \]
-与逆序相乘得到的 \((1+Y)(1+X)\) 相同。因此两个元素在商群中交换，其交换子属于 \(1+J^{r+s}\)，即 \(\bigl[U_n^{(r)},U_n^{(s)}\bigr]\subseteq U_n^{(r+s)}\)。因为 \(J^n=0\)，这个群幂零，特别可解。对 \(U_3\)，三个参数的乘法为
+与逆序相乘得到的 \((1+Y)(1+X)\) 相同。因此两个元素在商群中交换，其交换子属于 \(1+J^{r+s}\)，即 \(\bigl[U_n^{(r)},U_n^{(s)}\bigr]\subseteq U_n^{(r+s)}\)。因为 \(J^n=0\)，这个群幂零，特别可解。
+\begin{proposition}\label{b5:prop:unipotent-three-heisenberg}
+设 \(k\) 为域，\(U_3\) 为 \(k\) 上对角线全为一的三阶上三角矩阵群，记
 \[
-(a,b,c)(a',b',c')
-=(a+a',b+b',c+c'+ab'),
+u(a,b,c)=\begin{pmatrix}1&a&c\\0&1&b\\0&0&1\end{pmatrix},
+\qquad a,b,c\in k.
 \]
-可见中心方向记录了非交换性，不能把全部上三角参数都简单看成独立加法。
+则点群 \(U_3(k)\) 的中心与交换子群相同，均为 \(\{u(0,0,c):c\in k\}\)，且
+\[
+[u(a,b,c),u(a',b',c')]=u(0,0,ab'-a'b).
+\]
+其 Lie 代数为 \(\mathfrak u_3=kE_{12}\oplus kE_{23}\oplus kE_{13}\)，括号由
+\[
+[E_{12},E_{23}]=E_{13},\qquad
+[E_{12},E_{13}]=[E_{23},E_{13}]=0
+\]
+按交替双线性延拓，中心与导出代数都为 \(kE_{13}\)。因此它是三维 Heisenberg Lie 代数，且该点群与 Lie 代数的幂零类都为二。
+\end{proposition}
+\begin{proof}
+相乘及求逆得到
+\[
+\begin{aligned}
+u(a,b,c)u(a',b',c')&=u(a+a',b+b',c+c'+ab'),\\
+u(a,b,c)^{-1}&=u(-a,-b,ab-c).
+\end{aligned}
+\]
+依次代入这两个式子，在约定 \([u,v]=uvu^{-1}v^{-1}\) 下得到
+\[
+[u(a,b,c),u(a',b',c')]=u(0,0,ab'-a'b).
+\]
+若此式对全部 \(a',b'\) 为单位，分别取 \((a',b')=(0,1)\)、\((1,0)\)，便知 \(a=b=0\)。反过来，\(u(0,0,c)\) 与全部元素交换。因此群中心为 \(\{u(0,0,c):c\in k\}\)。每个中心元素也都是交换子，因为
+\([u(1,0,0),u(0,c,0)]=u(0,0,c)\)；故交换子群等于中心，\(U_3(k)\) 的幂零类为二。
+
+单位处的双数值点为 \(I+\epsilon X\)，其中
+\(X=aE_{12}+bE_{23}+cE_{13}\)。由\cref{b5:prop:matrix-group-lie-bracket}中闭矩阵子群的括号计算，\(\mathfrak u_3=\operatorname{Lie}(U_3)\) 的括号为矩阵交换子。于是
+\[
+[aE_{12}+bE_{23}+cE_{13},\,
+a'E_{12}+b'E_{23}+c'E_{13}]
+=(ab'-a'b)E_{13}.
+\]
+特别地，\([E_{12},E_{23}]=E_{13}\)，而 \(E_{13}\) 与全部 \(\mathfrak u_3\) 交换；同样取两个基方向检验，Lie 中心恰为 \(kE_{13}\)。把\cref{b5:exm:abelian-heisenberg-lie}中的 \(x,y,z\) 分别送到 \(E_{12},E_{23},E_{13}\)，就得到三维 Heisenberg Lie 代数的这个矩阵模型。群交换子与 Lie 括号在中心方向上具有相同的双线性表达式；在当前二步幂零模型中，三次矩阵乘积均为零。一般幺幂矩阵群的交换子还可能含有高次项，不能据此把所有群乘法都当作加法。
+\end{proof}
 \begin{definition}\label{b5:def:reductive-group}
 设 \(G\) 为代数闭域上的光滑连通仿射代数群。若 \(G\) 没有非平凡的光滑连通正规幺幂闭子群，就称为\term[yuehua-qun]{约化群}[reductive group]。若此外没有正维数的光滑连通正规可解闭子群，就称为半单代数群。这里的“约化群”不同于“坐标环约化”：后者只要求没有非零幂零元。
 \end{definition}
@@ -53,23 +88,39 @@ s_\alpha^\vee(y)=y-\langle\alpha,y\rangle\alpha^\vee
 \]
 分别保持 \(\Phi\) 和 \(\Phi^\vee\)，并对所有 \(\alpha,\beta\in\Phi\) 满足 \((s_\alpha\beta)^\vee=s_\alpha^\vee(\beta^\vee)\)。还要求约化条件 \(\Phi\cap\mathbb Q\alpha=\{\alpha,-\alpha\}\) 对每个 \(\alpha\in\Phi\) 成立，其中把 \(X\) 嵌入 \(X\otimes_{\mathbb Z}\mathbb Q\)。满足这些条件的资料称为\term[gen-shuju]{根数据}[root datum]；允许 \(\Phi\) 为空，也不要求它生成整个 \(X\otimes\mathbb Q\)，以便包含环面的中心方向。
 \end{definition}
-\symidx{\(X,Y,\Phi,\Phi^\vee\)：根数据中的字符格、余字符格、根与余根集合}
+\symidx{\(X,Y,\Phi,\Phi^\vee\)：根数据中的特征标格、余特征标格、根与余根集合}
 在连通约化群的结构理论中，若 \(T\) 是极大环面，这两个格具体为
 \[
 X=\operatorname{Hom}_{\mathrm{alg.grp}}(T,\mathbb G_m),\qquad
 Y=\operatorname{Hom}_{\mathrm{alg.grp}}(\mathbb G_m,T).
 \]
-这里的同态是代数群态射，\(\chi\in X\) 称为字符，\(\nu\in Y\) 称为一参数子群。它们的复合是 \(\mathbb G_m\) 的群态射，故形如 \(t\mapsto t^n\)，其唯一整数指数就是配对：
+这里的同态是代数群态射，\(\chi\in X\) 称为特征标，\(\nu\in Y\) 称为一参数子群。它们的复合是 \(\mathbb G_m\) 的群态射，故形如 \(t\mapsto t^n\)，其唯一整数指数就是配对：
 \[
 \chi(\nu(t))=t^{\langle\chi,\nu\rangle}.
 \]
-这一整数幂结论也可直接由 Laurent 多项式的 Hopf 等式看出：类群元只能是单项式 \(t^n\)。根系给出实向量空间里的角度与相对长度，根数据还记录哪些整数权给出极大环面上的字符。这些字符不必延拓为整个群的一维表示；例如 \(\operatorname{SL}_2\) 的环面有非平凡字符，而 \(\operatorname{SL}_2\) 自身没有非平凡的一维有理表示。因此同一个复半单 Lie 代数可以对应不同的代数群。
+这一整数幂结论也可直接由 Laurent 多项式的 Hopf 等式看出：类群元只能是单项式 \(t^n\)。根系给出实向量空间里的角度与相对长度，根数据还记录哪些整数权给出极大环面上的特征标。这些特征标不必延拓为整个群的一维表示；例如 \(\operatorname{SL}_2\) 的环面有非平凡特征标，而 \(\operatorname{SL}_2\) 自身没有非平凡的一维有理表示。因此同一个复半单 Lie 代数可以对应不同的代数群。
+\ProseParagraphBreak
+例如在代数闭域 \(k\) 上，对 \(G=\operatorname{GL}_2\) 取标准对角环面 \(T\)。记特征标 \(\varepsilon_i\) 为第 \(i\) 个对角条目，即
+\[
+\varepsilon_i\bigl(\operatorname{diag}(t_1,t_2)\bigr)=t_i,
+\qquad X(T)=\mathbb Z\varepsilon_1\oplus\mathbb Z\varepsilon_2.
+\]
+对角矩阵共轭 \(E_{12}\)、\(E_{21}\) 的系数分别为 \(t_1/t_2\)、\(t_2/t_1\)，对角矩阵本身则被固定。因此非零根只有 \(\pm\alpha\)、\(\alpha=\varepsilon_1-\varepsilon_2\)，只张成一维有理子空间。行列式特征标 \(\delta=\varepsilon_1+\varepsilon_2\) 给出另一个方向：在中心环面 \(Z(G)=\{tI_2\}\) 上，\(\alpha(tI_2)=1\)，而 \(\delta(tI_2)=t^2\)。所以
+\[
+X(T)\otimes_{\mathbb Z}\mathbb Q
+=\mathbb Q\alpha\oplus\mathbb Q\delta,
+\]
+其中行列式方向记录根所看不到的中心环面。
+\ProseParagraphBreak
+这里的直和是在有理数上成立的，\(\alpha,\delta\) 并非特征标格的整数基。因为
+\(\varepsilon_1=\dfrac{\delta+\alpha}{2}\)、\(\varepsilon_2=\dfrac{\delta-\alpha}{2}\)，
+\(\mathbb Z\alpha+\mathbb Z\delta\) 只包含两个坐标同奇偶的特征标，在 \(X(T)\) 中指数为二。完整特征标格仍须保留 \(\varepsilon_1,\varepsilon_2\) 所给的整数资料。若 \(\operatorname{char}k\ne2\)，在 Lie 代数层面也可写 \(\mathfrak{gl}_2(k)=\mathfrak{sl}_2(k)\oplus kI_2\)；这个分解来自把矩阵减去其迹的一半乘单位矩阵，中心方向同样不参与非零根空间。
 \ProseParagraphBreak
 对 \(\operatorname{SL}_2\)，取 \(T=\bigl\{\operatorname{diag}(t,t^{-1})\bigr\}\)。若 \(\lambda(t)=t\)，则
 \(X=\mathbb Z\lambda\)，根为 \(\pm2\lambda\)；一参数子群
 \(\nu(t)=\operatorname{diag}(t,t^{-1})\)
 满足 \(\langle\lambda,\nu\rangle=1\)，正余根就是 \(\nu\)。
-对 \(\operatorname{PGL}_2\) 的对角环面，用对角条目比值 \(r\) 作坐标，字符格由 \(\alpha(r)=r\) 生成，根为 \(\pm\alpha\)。若 \(\eta(t)\) 是 \(\operatorname{diag}(t,1)\) 的射影类，则 \(\langle\alpha,\eta\rangle=1\)。商映射把 \(\operatorname{SL}_2\) 环面的参数送为 \(r=t^2\)，所以字符拉回为 \(\alpha\mapsto2\lambda\)，正余根 \(\nu\) 的像则为 \(2\eta\)。于是 \(\operatorname{PGL}_2\) 的余根是格 \(Y\) 的生成元的二倍，仍满足根余根配对为二。两者的抽象根系都为 \(A_1\)，但整数格中的嵌入不同。
+对 \(\operatorname{PGL}_2\) 的对角环面，用对角条目比值 \(r\) 作坐标，特征标格由 \(\alpha(r)=r\) 生成，根为 \(\pm\alpha\)。若 \(\eta(t)\) 是 \(\operatorname{diag}(t,1)\) 的射影类，则 \(\langle\alpha,\eta\rangle=1\)。商映射把 \(\operatorname{SL}_2\) 环面的参数送为 \(r=t^2\)，所以特征标拉回为 \(\alpha\mapsto2\lambda\)，正余根 \(\nu\) 的像则为 \(2\eta\)。于是 \(\operatorname{PGL}_2\) 的余根是格 \(Y\) 的生成元的二倍，仍满足根余根配对为二。两者的抽象根系都为 \(A_1\)，但整数格中的嵌入不同。
 \ProseParagraphBreak
 这也解释了表示下降的一个必要条件。中心元 \(-I\in\operatorname{SL}_2(\mathbb C)\) 在
 \(L_m=\operatorname{Sym}^m(\mathbb C^2)\)
@@ -87,7 +138,10 @@ F:\mathbb G_a\longrightarrow\mathbb G_a,\qquad t\longmapsto t^p
 \symidx{\(\alpha_p\)：特征 \(p\) 中加法群 Frobenius 态射的核}
 若 \(k\) 代数闭，点集上 \(F\) 为双射，但坐标同态不满，所以它不是代数群同构。其微分为零；核概形的切空间却一维，尽管它的 \(k\) 点只有一个。
 \ProseParagraphBreak
-同样，\(\mu_p=\operatorname{Spec}k[t,t^{-1}]/(t^p-1)\) 的切空间一维；在 \(t=1+\epsilon a\) 代入关系时，
-\((1+\epsilon a)^p=1\)，对任意 \(a\) 都成立。于是 \(\alpha_p,\mu_p\) 与平凡点集之间的区别，必须由坐标环或所有代数上的点保留。
+同样，\(\mu_p=\operatorname{Spec}k[t,t^{-1}]/(t^p-1)\) 的切空间一维。对任意域扩张 \(K/k\)，方程 \(t^p=1\) 等价于 \((t-1)^p=0\)；域中没有非零幂零元，所以 \(\mu_p(K)=\{1\}\)。但在双数环 \(R=k[\epsilon]/(\epsilon^2)\) 中，对每个 \(a\in k\) 都有
+\[
+(1+a\epsilon)^p=1+a^p\epsilon^p=1.
+\]
+其中 \(1+a\epsilon\) 可逆，逆为 \(1-a\epsilon\)，因此确定一个 \(\mu_p(R)\) 点；若 \(a\ne0\)，这个点就不是单位点。只看域值点会遗漏这些无穷小变化；允许含幂零元的代数作为试验环，才能在点函子中保留它们。
 \ProseParagraphBreak
 Frobenius 态射与非约化核说明，光滑性、约化性、可分性以及表示是否能由微分恢复，分别控制不同信息。后续的不变量理论将区分特征零的线性约化性与正特征下更弱的几何约化性；有限群的平均公式只在群阶可逆时适用，一般群概形需要相应的表示论方法。

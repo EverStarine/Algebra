@@ -1,10 +1,11 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 4.4 射影表示初步
-% 纲要位置：工作记录/计划纲要.md，第 3837 行。
+% 纲要位置：工作记录/计划纲要.md，第 4156 行。
 % 纲要细目（写作范围）：
 % * 延拓表示的障碍
 % * 障碍余圈、射影表示的因子集与 2-余圈
 % * 与第四卷群上同调和第二卷交叉积的联系
+% * 交换群的扭曲乘法、中心及矩阵代数算例；障碍类对重数的维数限制
 % ---
 
 
@@ -48,6 +49,13 @@ b(p)b(q)\alpha(p,q)=b(pq)\qquad(p,q\in Q).
 \end{equation}
 \end{theorem}
 \begin{proof}
+先比较截面元素的两种三项乘积。将 \((s(p)s(q))s(r)\) 与 \(s(p)(s(q)s(r))\) 都写成 \(N\) 中元素乘 \(s(pqr)\)，消去末尾的 \(s(pqr)\)，便得到
+\[
+ c(p,q)c(pq,r)
+ =s(p)c(q,r)s(p)^{-1}c(p,qr).
+\]
+所以 \(c\) 满足的是带共轭修正的恒等式：它记录截面不保持乘法的偏差，取值于可能非交换的 \(N\)。下面的 \(\alpha\) 则是在用 \(\rho(c(p,q))\) 修正这一偏差以后，交织算子乘法中剩余的标量；两者不能按同一条标量余圈公式处理。
+
 共轭不变性给出满足\eqref{b5:eq:extension-intertwiner}的可逆交织映射。\(T_pT_q\) 和 \(\rho\bigl(c(p,q)\bigr)T_{pq}\) 都实现由 \(s(p)s(q)\) 所给的共轭，所以二者之比与 \(\rho(N)\) 对易。\cref{b5:cor:schur-algebraically-closed}说明该比值为唯一非零标量，得到\eqref{b5:eq:extension-factor}。
 
 每个 \(g\in I\) 唯一写成 \(ns(q)\)。定义可逆算子
@@ -91,6 +99,9 @@ R(p)R(q)=\alpha(p,q)R(pq),
 
 把矩阵模去非零标量后，射影表示给出群同态
 \(Q\to\operatorname{PGL}(E)\)。反之，这样的群同态选取矩阵代表后就给出因子集；代表不同，因子集也可能不同。
+
+\ProseParagraphBreak
+这里模去标量的作用，比定义中的同构关系更粗。例如 \(Q=C_2=\{1,s\}\) 的两种一维表示 \(R_+(s)=1\)、\(R_-(s)=-1\) 都有平凡因子集，而且 \(\operatorname{PGL}_1(\mathbb C)=\{1\}\)，所以给出相同的射影作用。但若有线性同构 \(a\) 交织它们，就须 \(a=-a\)，与 \(a\ne0\) 矛盾。固定因子集的同构要求逐个矩阵严格交织；在 \(\operatorname{PGL}\) 中相同或共轭的作用则允许逐个改变标量。在这个例子中，\(R_-\) 是用非平凡一维特征标扭曲 \(R_+\) 得到的；扭曲没有改变平凡因子集，却使它们成为不同构的表示。因此因子集相同并不蕴含射影表示同构。
 
 \begin{definition}\label{b5:def:scalar-two-cocycle}
 设 \(Q\) 为有限群，\(\alpha:Q\times Q\to\mathbb C^\times\) 为函数。若对所有 \(p,q,r\in Q\) 有
@@ -163,7 +174,8 @@ s(a,b)s(c,d)=(-1)^{ac+bd+bc}s(a+c,b+d).
 (\delta a)(\delta b)=\delta(ab),\qquad
 (\delta a)^{-1}=\delta(a^{-1}),
 \]
-故全部 \(2\)-余边构成余圈群的子群。将余圈群模去这个子群，就得到记为 \(H^2(Q,\mathbb C^\times)\) 的群。这里 \(\mathbb C^\times\) 上的 \(Q\)-作用是平凡的。它是群上同调的一个具体低阶形式；当前的延拓障碍就是 \([\alpha]\)。
+故全部 \(2\)-余边构成余圈群的子群。将余圈群模去这个子群，就得到记为 \(H^2(Q,\mathbb C^\times)\) 的群。这里 \(\mathbb C^\times\) 上的 \(Q\)-作用是平凡的。它是群上同调的一个具体低阶形式；当前的延拓障碍就是 \([\alpha]\)。第四卷12.1节由群余链复形定义一般的群上同调，12.2.1小节写出次数二的余圈与余边公式；将其中的加法系数改用乘法记号，再取平凡作用，就得到这里的两个公式。
+% 跨卷公式位置：b4:eq:group-two-cocycle、b4:eq:group-two-coboundary（12.2.1，群的二次余圈与余边公式）。
 
 \ProseParagraphBreak
 
@@ -171,8 +183,57 @@ s(a,b)s(c,d)=(-1)^{ac+bd+bc}s(a+c,b+d).
 \[
 u_pu_q=\alpha(p,q)u_{pq}.
 \]
-归一化条件使 \(u_1\) 为单位元，余圈恒等式恰好使乘法结合；各个 \(u_q\) 都可逆。这个代数称为\term[niuqu-qundaisu]{扭曲群代数}[twisted group algebra]，记为 \(\mathbb C^\alpha[Q]\)。它是系数域上作用平凡的交叉积。给出一个非零有限维左 \(\mathbb C^\alpha[Q]\)-模，等价于给出因子集为 \(\alpha\) 的射影表示：令 \(u_q\) 按 \(R(q)\) 作用即可。重标定基 \(u_q\) 与\eqref{b5:eq:factor-coboundary-change}完全对应。
+归一化条件使 \(u_1\) 为单位元，余圈恒等式恰好使乘法结合；各个 \(u_q\) 都可逆。这个代数称为\term[niuqu-qundaisu]{扭曲群代数}[twisted group algebra]，记为 \(\mathbb C^\alpha[Q]\)。它是系数域上作用平凡的交叉积。第二卷18.4.1小节的交叉积乘法还包含 Galois 群对系数域的自同构作用；把该作用改成平凡作用，结合律便成为当前的余圈恒等式。
+% 跨卷公式位置：b2:def:galois-crossed-product、b2:eq:crossed-product-multiplication（18.4.1，带 Galois 系数作用的交叉积乘法）。
+给出一个非零有限维左 \(\mathbb C^\alpha[Q]\)-模，等价于给出因子集为 \(\alpha\) 的射影表示：令 \(u_q\) 按 \(R(q)\) 作用即可。重标定基 \(u_q\) 与\eqref{b5:eq:factor-coboundary-change}完全对应。
 \symidx{\(\mathbb C^\alpha[Q]\)：扭曲群代数}
+
+\ProseParagraphBreak
+普通群代数在群交换时也交换，但扭曲乘法还要比较 \(\alpha(p,q)\) 与 \(\alpha(q,p)\)。这两个标量的比值决定哪些基元素能够对易，也决定中心中可以保留哪些系数。
+
+\begin{proposition}\label{b5:prop:twisted-commutator-center}
+设 \(Q\) 为有限交换群，\(\alpha:Q\times Q\to\mathbb C^\times\) 为归一化 \(2\)-余圈。记
+\[
+ \beta_\alpha(p,q)=\frac{\alpha(p,q)}{\alpha(q,p)}.
+\]
+在扭曲群代数 \(\mathbb C^\alpha[Q]\) 中，有
+\[
+ u_pu_q=\beta_\alpha(p,q)u_qu_p.
+\]
+其中心为
+\[
+ Z(\mathbb C^\alpha[Q])
+ =\operatorname{span}_{\mathbb C}\{\,u_p:\beta_\alpha(p,q)=1\;\text{对所有}\;q\in Q\,\}.
+\]
+将 \(\alpha\) 改变一个 \(2\)-余边，不改变 \(\beta_\alpha\)。特别地，若 \(Q=\mathbb F_2^2\)，且
+\(\alpha((a,b),(c,d))=(-1)^{bc}\)，则
+\[
+ Z(\mathbb C^\alpha[Q])=\mathbb C u_{(0,0)},\qquad
+ \mathbb C^\alpha[Q]\cong M_2(\mathbb C).
+\]
+这一因子集的不可约射影表示只有一个同构类型，维数为 \(2\)。
+\end{proposition}
+\begin{proof}
+因为 \(pq=qp\)，两个乘积的基向量相同，比较系数即得对易公式。写 \(z=\sum_p a_pu_p\)。对固定的 \(q\)，\(p\mapsto pq\) 是双射，因此 \(zu_q=u_qz\) 等价于逐个满足
+\[
+ a_p\bigl(\alpha(p,q)-\alpha(q,p)\bigr)=0.
+\]
+这对所有 \(q\) 成立，恰好给出所述中心。交换群上的余边 \((\delta b)(p,q)=b(p)b(q)/b(pq)\) 关于 \(p,q\) 对称，所以它在比值中抵消，\(\beta_\alpha\) 不变。
+
+在给定的 \(\mathbb F_2^2\) 算例中，
+\[
+ \beta_\alpha((a,b),(c,d))=(-1)^{bc+ad}.
+\]
+分别取 \((c,d)=(1,0),(0,1)\)，要使此值总为 \(1\)，必须 \(b=a=0\)，故中心只有单位元的标量倍数。再令
+\[
+ X=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+ Y=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+由于 \(X^2=Y^2=I_2\)、\(YX=-XY\)，映射 \(u_{(a,b)}\mapsto X^aY^b\) 保持乘法。四个矩阵 \(I_2,X,Y,XY\) 线性无关，张成全部二阶矩阵，所以该映射是代数同构。于是这个交换群的扭曲群代数之所以不交换，正是因为 \(\beta_\alpha\) 并非处处为 \(1\)；它的中心也与矩阵代数的标量中心一致。
+
+最后，设 \(E\) 是非零简单 \(M_2(\mathbb C)\)-模。矩阵单位满足 \(E_{11}+E_{22}=1\)，若 \(E_{11}E\ne0\)，可直接取 \(0\ne v\in E_{11}E\)。否则由 \(E_{11}+E_{22}=1\) 取 \(0\ne w\in E_{22}E\)，令 \(v=E_{12}w\)；因为 \(E_{21}E_{12}w=w\)，有 \(v\ne0\)，而 \(E_{11}v=E_{11}E_{12}w=v\)，故仍得到 \(0\ne v\in E_{11}E\)。又 \(E_{12}E_{21}v=v\)，所以 \(v,E_{21}v\) 分别在两个不同的矩阵单位分量中，且都非零，因而线性无关。它们张成的二维子空间被全部矩阵单位保持，由简单性等于 \(E\)；在这组基下作用就是标准矩阵作用。这证明了简单模的唯一同构类型及其维数，亦即相应射影表示的结论。
+\end{proof}
+\symidx{\(\beta_\alpha(p,q)\)：交换群的扭曲对易标量}
 
 \begin{theorem}[重数空间上的射影表示]\label{b5:thm:clifford-projective-multiplicity}
 设 \(I\) 为有限群，\(N\trianglelefteq I\)，\(\rho:N\to\operatorname{GL}_{\mathbb C}(W)\) 为同构类被 \(I\) 固定的不可约有限维复表示。令 \(Q=I/N\)，取商映射的截面 \(s:Q\to I\)、\(s(1)=1\)，以及算子 \(T_q\in\operatorname{GL}_{\mathbb C}(W)\)，使 \(T_1=1_W\) 且
@@ -196,10 +257,15 @@ ns(q)\longmapsto \rho(n)T_q\otimes S(q)
 \[
 W\otimes E\longrightarrow U,\qquad w\otimes f\longmapsto f(w)
 \]
-由\cref{b5:prop:isotypic-decomposition}是 \(N\)-同构，且 \(\dim E=e\)。定义
+由\cref{b5:prop:isotypic-decomposition}是 \(N\)-同构，且 \(\dim E=e\)。要把 \(s(q)\) 的作用写成 \(T_q\otimes S(q)\)，必须让求值映射保持这一作用，也就是要求
+\[
+ (S(q)f)(T_qw)=\pi(s(q))f(w).
+\]
+由于 \(T_q\) 可逆，把 \(T_qw\) 换成任意向量，就得到
 \[
 S(q)f=\pi\bigl(s(q)\bigr)\,f\,T_q^{-1}.
 \]
+逆算子由求值的等变性所迫使，而非另作的选择。第一个张量因子的乘法产生 \(\alpha(p,q)\)，因此第二个因子必须产生其倒数，才能恢复普通的 \(I\)-作用。下面验证这些算子确实在 \(E\) 上作用，并满足这一乘法关系。
 由\eqref{b5:eq:extension-intertwiner}，对 \(n\in N\) 有
 \[
 \begin{aligned}
@@ -212,7 +278,12 @@ S(q)f=\pi\bigl(s(q)\bigr)\,f\,T_q^{-1}.
 \]
 所以此复合仍是 \(N\)-线性映射，确实属于 \(E\)。求值映射把 \(T_q\otimes S(q)\) 的作用变成 \(\pi\bigl(s(q)\bigr)\)，从而得到\eqref{b5:eq:clifford-projective-tensor}。
 
-将这个等式对 \(p,q\) 相乘。左侧的群作用相乘为 \(\pi\bigl(c(p,q)\bigr)\pi\bigl(s(pq)\bigr)\)，右侧的第一个张量因子满足\eqref{b5:eq:extension-factor}。消去可逆算子 \(\rho\bigl(c(p,q)\bigr)T_{pq}\)，得到
+在求值同构 \(W\otimes E\cong U\) 下，\(\pi(s(q))=T_q\otimes S(q)\)，而 \(\pi(n)=\rho(n)\otimes1_E\)。将 \(p,q\) 处的算子相乘，群内等式 \(s(p)s(q)=c(p,q)s(pq)\) 与\eqref{b5:eq:extension-factor}给出
+\[
+\alpha(p,q)\rho(c(p,q))T_{pq}\otimes S(p)S(q)
+=\rho(c(p,q))T_{pq}\otimes S(pq).
+\]
+左乘 \((\rho(c(p,q))T_{pq})^{-1}\otimes1_E\)，两边就有相同的第一因子 \(1_W\)。由于 \(W\ne0\)，映射 \(B\mapsto1_W\otimes B\) 是单射，故得到
 \[
 S(p)S(q)=\alpha(p,q)^{-1}S(pq).
 \]
@@ -225,7 +296,9 @@ E\xrightarrow{\sim}\operatorname{Hom}_N(W,W\otimes E),
 \]
 把重数空间上的作用恢复为原来的 \(S\)；对于 \(U\)，上述求值同构又把构造出的 \(W\otimes E\) 送回 \(U\)。因此两种构造在同构类上互为逆。
 
-最后，设 \(Z\subseteq W\otimes E\) 为 \(N\)-子模。复表示的完全可约性说明 \(Z\) 是简单模的直和，而它在 \(W^{\oplus e}\) 中的嵌入使每个简单成分都同构于 \(W\)。通过上面的识别，将
+同型副本之间的子模可以斜着嵌入，但这种混合由重数空间记录。例如 \(E=\mathbb C^2\) 时，\(W\otimes E\cong W\oplus W\)，对角子模 \(\{(w,w):w\in W\}\) 就是 \(W\otimes\mathbb C(1,1)\)，而 \(\{(w,2w):w\in W\}\) 对应 \(W\otimes\mathbb C(1,2)\)。这里的直线在 \(E\) 中，\(N\) 仍在每份 \(W\) 上按原表示作用。
+
+一般地，设 \(Z\subseteq W\otimes E\) 为 \(N\)-子模。复表示的完全可约性说明 \(Z\) 是简单模的直和，而它在 \(W^{\oplus e}\) 中的嵌入使每个简单成分都同构于 \(W\)。通过上面的识别，将
 \[
 F=\operatorname{Hom}_N(W,Z)
 \subseteq\operatorname{Hom}_N(W,W\otimes E)\cong E
@@ -239,6 +312,20 @@ F=\operatorname{Hom}_N(W,Z)
 
 结合\cref{b5:thm:clifford-correspondence}，先在惯性群中求这些射影表示，再诱导到 \(G\)，便得到限制中含有 \(W\) 的全部不可约表示。若障碍为零，可以重标定 \(T_q\)，使它们给出 \(W\) 的延拓；此时 \(\alpha=1\)，重数空间上的表示也成为普通的商群表示。
 
+\begin{corollary}\label{b5:cor:projective-dimension-obstruction}
+设 \(Q\) 为有限群，\(R:Q\to\operatorname{GL}_{\mathbb C}(E)\) 为因子集 \(\alpha\) 的射影表示，\(d=\dim_{\mathbb C}E>0\)。则 \(\alpha^d\) 是 \(2\)-余边，因而 \([\alpha]^d=1\)；若 \([\alpha]\) 的阶为 \(m\)，则 \(m\mid d\)。
+\end{corollary}
+\begin{proof}
+对 \(R(p)R(q)=\alpha(p,q)R(pq)\) 取行列式，得到
+\[
+ \alpha(p,q)^d
+ =\frac{\det R(p)\det R(q)}{\det R(pq)}.
+\]
+右边是函数 \(q\mapsto\det R(q)\) 的余边，故 \([\alpha]^d=1\)。因此这个类有有限阶，且其阶整除 \(d\)。
+\end{proof}
+
+将推论用于\cref{b5:thm:clifford-projective-multiplicity}中的重数空间，因子集为 \(\alpha^{-1}\)，维数为 \(e\)，便有 \([\alpha]^e=1\)。所以非平凡延拓障碍会排除重数 \(e=1\)，其阶为 \(m\) 时还要求 \(m\mid e\)。但重数大于 \(1\) 不能反推出障碍非平凡。例如取 \(I=C_2\times S_3\)、\(N=C_2\times\{1\}\)，令 \(W\) 为 \(C_2\) 的非平凡一维表示，\(E\) 为 \(S_3\) 的二维标准表示。\(W\) 可通过让第二因子平凡作用延拓到 \(I\)，所以障碍为零；上述定理仍给出不可约 \(I\)-表示 \(U=W\otimes E\)，而 \(U|_N\cong W^{\oplus2}\)。实际重数还取决于商群上相应射影不可约表示的维数。
+
 \ProseParagraphBreak
 在同一个 \(Q_8\) 例子中，取二维不可约表示 \(U\)，使
 \[
@@ -251,3 +338,4 @@ F=\operatorname{Hom}_N(W,Z)
 S(a,b)=\pi(i)^a\pi(j)^b.
 \]
 其乘积产生的符号正是上面算出的 \(\alpha\)，而 \(\alpha^{-1}=\alpha\)，符合定理中的逆因子集。矩阵 \(\pi(i)\) 的两条特征直线被 \(\pi(j)\) 交换，因此没有一条直线被全部 \(S(a,b)\) 保持，这个射影表示不可约。商群 \(\mathbb F_2^2\) 虽然交换，它的这一射影表示却是二维的；这个维数正是 \(W\) 在 \(U|_N\) 中的重数。
+这里障碍余圈的值为 \(\pm1\)，故 \([\alpha]^2=1\)，而前面已由不对称性证明 \([\alpha]\ne1\)，所以其阶恰为 \(2\)。因此每个限制为 \(W^{\oplus e}\) 的非零 \(Q_8\)-表示都必须有偶数重数，当前的二维表示达到最小可能的 \(e=2\)。

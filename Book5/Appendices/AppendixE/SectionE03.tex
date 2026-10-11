@@ -1,12 +1,15 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### E.3 算例与可解性
-% 纲要位置：工作记录/计划纲要.md，第 4968 行。
+% 纲要位置：工作记录/计划纲要.md，第 5086 行。
+% 纲要细目（保留原定写作范围）：
+%
 % * 在 \(\mathbb C(x)\) 上比较指数型、对数型和根式型例子；非齐次方程需要转为齐次系统
-% * 用解的代数关系核验乘法群、加法群或有限循环群；不只凭函数名称判断
-% * 标准 PV 假设下的 Liouvillian 可解性与群单位连通分支的可解性；Kovacic 算法只作为二阶方程专题出口
+% * 用解的代数关系核验乘法群、加法群或有限循环群；对 \(y'=\lambda y/x\) 完整分类并比较单值闭包，不只凭函数名称判断
+% * 标准 PV 假设下的 Liouvillian 可解性与群单位连通分支的可解性；以三角系统和代数 Riccati 解解释构造，Kovacic 算法只作为二阶方程专题出口
 % #### E.3.1 指数型、对数型与根式型方程
 % #### E.3.2 解的代数关系与 Galois 群
 % #### E.3.3 Liouvillian 可解性与 Kovacic 算法
+%
 \section{算例与可解性}
 \label{b5:sec:E03}
 
@@ -67,6 +70,21 @@
 自同构必须保持 \(t^n=x\)，故 \(\sigma(t)=\zeta t\)。反之，每个 \(n\) 次单位根均给出固定 \(x\) 的自同构，导子公式表明它与求导交换。因此群恰为所述有限循环群。
 \end{proof}
 
+\begin{proposition}\label{b5:prop:E-rank-one-exponent}
+设 \(K=\mathbb C(x)\)、\(\delta=\mathrm d/\mathrm dx\)，\(\lambda\in\mathbb C\)。方程 \(y'=\lambda y/x\) 的 PV 群为：\(\lambda\in\mathbb Z\) 时的平凡群；\(\lambda=p/q\in\mathbb Q\setminus\mathbb Z\)、\(\gcd(p,q)=1,q>1\) 时的 \(\mu_q\)；\(\lambda\notin\mathbb Q\) 时的 \(\mathbb G_m\)。
+\end{proposition}
+\begin{proof}
+若 \(\lambda=p/q\) 已约分，取 \(t^q=x\)，则 \(y=t^p\) 满足方程。由整数 \(a,b\) 满足 \(ap+bq=1\)，有 \(t=y^ax^b\)，所以 \(K(y)=K(t)\)。当 \(q=1\) 时解已在 \(K\) 中；当 \(q>1\) 时，\cref{b5:exm:E-radical}给出次数为 \(q\) 的无新常数扩张。其全部自同构 \(t\mapsto\zeta t\) 在 \(y\) 上按 \(\zeta^p\) 作用，由互素性这些标量恰为全部 \(q\) 次单位根。
+
+若 \(\lambda\notin\mathbb Q\)，取超越元 \(t\)，规定 \(t'=\lambda t/x\)。把 \(K(t)\) 中的常数元在 \(t=0\) 处作形式 Laurent 展开 \(\sum_{j\ge j_0}a_j(x)t^j\)，逐项求导并比较系数得
+\[
+ a_j'+\frac{j\lambda}{x}a_j=0.
+\]
+非零有理函数在 \(x=0\) 可以写成 \(a_j=x^m b\)，其中 \(m\in\mathbb Z\)，\(b\) 在零点正则且非零。故 \(a_j'/a_j=m/x+b'/b\) 的留数为整数。对 \(j\ne0\)，等式要求它等于 \(-j\lambda\notin\mathbb Z\)，不可能；只有 \(a_0\in\mathbb C\) 留下。因此无新常数，\cref{b5:thm:E-pv-existence}给出 PV 扩张。全部非零常数伸缩都与导子相容，所以群为 \(\mathbb G_m\)。
+\end{proof}
+
+在有理指数情形，若错误地保留一个超越解变量 \(y\)，则 \((y^q/x^p)'=0\) 会产生新常数。PV 条件须将它固定为某个 \(c\in\mathbb C^\times\)，于是得到 \(y^q=cx^p\)；因常数域代数闭，伸缩解可将 \(c\) 化为一。解析地，局部解 \(x^\lambda\) 绕零点一周的乘子为 \(e^{2\pi i\lambda}\)。有理指数给出相应有限循环群，非有理指数给出无限阶元素；后者的循环子群在 \(\mathbb G_m\) 中 Zariski 稠密。因此在这个秩一正则奇点算例中，PV 群就是单值群的 Zariski 闭包，这个直接计算不替代一般正则奇点方程的对应定理。
+
 \subsection{解的代数关系与 Galois 群}
 \label{b5:subsec:E03:02}
 
@@ -115,15 +133,24 @@
 \end{theorem}
 
 \begin{proofsketch}
-先设 \(G^\circ\) 可解。由\cref{b5:thm:E-galois-correspondence}，\(F=L^{G^\circ}\) 是 \(K\) 上的 PV 扩张，其群为有限群 \(G/G^\circ\)，故 \(\operatorname{trdeg}_K F=\dim(G/G^\circ)=0\)。PV 域由有限多个元素生成，所以 \(F/K\) 是有限代数扩张，亦见\cite[Proposition 1.34(2)--(3)]{VanDerPutSinger2003GaloisTheory}。Lie--Kolchin 定理说明，\footnote{科尔钦（Ellis Robert Kolchin，1916-1991），美国数学家，研究微分代数与微分域的 Galois 理论。}代数闭域上的连通可解线性代数群在有限维有理表示中保持一条完全旗；将它用于 \(G^\circ\) 在解空间上的表示。这里使用的是群的三角化定理，见\cite[Theorem 1.5.8, p. 44]{Singer2009DifferentialGalois}。
+先设 \(G^\circ\) 可解。由\cref{b5:thm:E-galois-correspondence}，\(F=L^{G^\circ}\) 是 \(K\) 上的 PV 扩张，其群为有限群 \(G/G^\circ\)，这里使用 PV 扩张的超越次数等于其代数群维数的定理，见\cite[Proposition 1.34(3)]{VanDerPutSinger2003GaloisTheory}，所以 \(\operatorname{trdeg}_K F=\dim(G/G^\circ)=0\)。PV 域由有限多个元素生成，所以 \(F/K\) 是有限代数扩张。Lie--Kolchin 定理说明，\footnote{科尔钦（Ellis Robert Kolchin，1916-1991），美国数学家，研究微分代数与微分域的 Galois 理论。}代数闭域上的连通可解线性代数群在有限维有理表示中保持一条完全旗；将它用于 \(G^\circ\) 在解空间上的表示。这里使用的是群的三角化定理，见\cite[Theorem 1.5.8, p. 44]{Singer2009DifferentialGalois}。
 
-在原 PV 域 \(L\) 中选取各列适配这条旗的基本解矩阵 \(Z\)。前 \(j\) 列所张成的 \(L\)-子空间在 \(G^\circ\) 的作用下稳定，将其作行最简化后，唯一的规范矩阵也在 \(G^\circ\) 的作用下不变，系数便落在 \(L^{G^\circ}=F\)。这些子空间因此下降为 \(F\) 上的微分子模旗。选取适配旗的 \(F\) 基，令换基矩阵为 \(B\in\operatorname{GL}_n(F)\)，就使
+在原 PV 域 \(L\) 中选取各列适配这条旗的基本解矩阵 \(Z\)。前 \(j\) 列所张成的 \(L\) 子空间在 \(G^\circ\) 的作用下稳定。将这些列转置后取行最简形矩阵 \(H\)。对 \(\sigma\in G^\circ\)，逐项施加 \(\sigma\) 固定 \(0,1\)，因而 \(\sigma(H)\) 仍为行最简形；子空间的稳定性又使它与 \(H\) 具有相同的行空间。由行最简形的唯一性，\(\sigma(H)=H\)，所以每个系数被 \(G^\circ\) 固定，从而落在 \(L^{G^\circ}=F\)。这些列又是水平向量，对其线性组合施加 \(\nabla=\delta-A\) 时，只对组合系数求导，故各子空间对联络稳定。联络及下降后的基均定义在 \(F\) 上，于是得到 \(F\) 上的微分子模旗。选取适配旗的 \(F\) 基，令换基矩阵为 \(B\in\operatorname{GL}_n(F)\)，就使
 \[
  T=B^{-1}Z,\qquad
  \widetilde A=B^{-1}AB-B^{-1}\cdot\delta(B),\qquad
  \delta(T)=\widetilde A T
 \]
 中的 \(T\) 与 \(\widetilde A\) 都为上三角矩阵。
+
+二阶情形说明上三角结构为何允许逐层求解。若系统矩阵为
+\(\bigl(\begin{smallmatrix}a&b\\0&d\end{smallmatrix}\bigr)\)，先取 \(t_1'=at_1,t_2'=dt_2\)。基本解矩阵可写为
+\[
+ T=\begin{pmatrix}t_1&z\\0&t_2\end{pmatrix},
+ \qquad z'=az+bt_2,
+ \qquad (z/t_1)'=b\,t_2/t_1.
+\]
+所以取得两个对角解后，只需再加入右侧的一个原函数。例如 \(a=1,d=2,b=1/x\) 时，\(z=e^x\int e^x/x\,\mathrm dx\)；最后的原函数不必初等，仍是 Liouvillian 塔允许的步骤。
 
 现在完全在 \(L\) 内构造塔。先加入各个非零对角元 \(t_i=T_{ii}\)，它们满足 \(\delta(t_i)/t_i=\widetilde A_{ii}\in F\)，是定义中允许的指数步骤。随后逐列处理 \(T_{ij}\)，在第 \(j\) 列中按 \(i=j-1,j-2,\ldots,1\) 的次序进行。变常数公式给出
 \[
@@ -134,7 +161,7 @@
 
 反向设 \(L\) 嵌入塔顶 \(E\)。先处理塔可能引入的新常数。令 \(C_1=\ker(\delta:E\to E)\)，在 \(E\) 的代数闭包 \(\overline E\) 中取 \(C_1\) 的代数闭包 \(C_2\)，并唯一延拓导子。若 \(z\in\overline E\) 满足 \(\delta(z)=0\)，将它在 \(E\) 上的首一最小多项式求导，所得多项式次数更低且仍以 \(z\) 为根，故所有系数的导数为零。于是 \(z\) 在 \(C_1\) 上代数，属于 \(C_2\)。反过来，\(C_2\) 中元素的导数均为零，所以 \(\overline E\) 的常数恰为 \(C_2\)。每个复合域 \(K_iC_2\) 因而有同一代数闭常数域 \(C_2\)，原来的生成元仍给出一个有限 Liouvillian 塔。
 
-同一基本解矩阵在 \(KC_2\) 上生成 \(LC_2\)，且后者无新常数，由\cref{b5:thm:E-pv-existence}它是 PV 扩张。这里的群正是 \(G\) 的常数域扩张：若 \(C_2\) 中在 \(C\) 上线性无关的元素在 \(L\) 上有一个最短线性关系，归一化一个系数为一后求导，就得到更短的关系。因此原系数的导数全为零，均在 \(C\) 中，矛盾。故 \(L\) 与 \(C_2\) 在 \(C\) 上线性无交。记原 PV 环为 \(R\)，先扩张常数，再将 \(K\otimes_C C_2\) 的非零元素取逆，得到嵌入 \(LC_2\) 的环
+同一基本解矩阵在 \(KC_2\) 上生成 \(LC_2\)，且后者无新常数，由\cref{b5:thm:E-pv-existence}它是 PV 扩张。这里的群正是 \(G\) 的常数域扩张：若 \(a_1,\ldots,a_r\in C_2\) 在 \(C\) 上线性无关，却有项数最少的非零 \(L\) 线性关系，除以第一个非零系数可写成 \(a_1+\sum_{i=2}^r\ell_i a_i=0\)。求导得 \(\sum_{i=2}^r\delta(\ell_i)a_i=0\)，第一项已经消失；若任一导数非零，就与项数最少矛盾。因此全部 \(\ell_i\) 都在 \(C_L=C\) 中，原关系又与 \(C\) 线性无关矛盾。故 \(L\) 与 \(C_2\) 在 \(C\) 上线性无交。记原 PV 环为 \(R\)，先扩张常数，再将 \(K\otimes_C C_2\) 的非零元素取逆，得到嵌入 \(LC_2\) 的环
 \[
  R_2=(R\otimes_C C_2)\otimes_{K\otimes_C C_2}KC_2
      =KC_2[Z_{ij},(\det Z)^{-1}].
@@ -175,3 +202,12 @@ Galois 对应又给出 \(H=\operatorname{Gal}_\delta(L/E_0)\)。若 \(E_0=K\)，
 \]
 若找到有理 \(v\)，则 \(y=\exp\int v\,dx\) 是 Liouvillian 解，另一解可通过降阶得到。Kovacic 算法还处理适当代数扩域中的候选对数导数，以判定此类二阶方程的 Liouvillian 可解性；实行算法要求常数域中的必要代数运算可以有效进行。其有限分类与次数界见
 \cite[Section 1.5, pp. 49--51]{Singer2009DifferentialGalois}。这里没有给出完整算法，尤其不能因找不到有理 \(v\) 就断言不可解。
+
+\ProseParagraphBreak
+例如 \(r=x+5/(16x^2)\) 时，\(v=\sqrt x-1/(4x)\) 满足
+\[
+ v'=\frac1{2\sqrt x}+\frac1{4x^2},\qquad
+ v^2=x-\frac1{2\sqrt x}+\frac1{16x^2},\qquad
+ v'+v^2=r.
+\]
+它给出 Liouvillian 解 \(y_1=x^{-1/4}\exp(\tfrac23x^{3/2})\)，另一解为 \(y_2=y_1\int y_1^{-2}\,\mathrm dx\)。后者满足方程，且 Wronskian 为 \(y_1^2(y_2/y_1)'=1\)，所以整个系统有 Liouvillian 基本解。可是该 Riccati 方程没有有理解：若 \(v\in\mathbb C(x)\) 的多项式部分次数为 \(d\ge1\)，则 \(v^2\) 的最高次数为 \(2d\)，\(v'\) 的次数至多为 \(d-1\)，不能得到次数为一的 \(r\)；若 \(v\) 在无穷远有界，则 \(v'+v^2\) 也有界，同样不可能。真正的对数导数位于代数扩域中，寻找有理解的失败不足以判定 Liouvillian 不可解。

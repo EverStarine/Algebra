@@ -1,9 +1,10 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 7.2 Frobenius 特征映射
-% 纲要位置：工作记录/计划纲要.md，第 3959 行。
+% 纲要位置：工作记录/计划纲要.md，第 4280 行。
 % * 对称群表示环与对称函数；明确整系数 Schur 函数子环及 Frobenius 分次环同构
 % * 诱导乘积与对称函数乘法
 % * 特征标计算的组合化
+% * 对合交换完全与初等对称函数；对应符号扭曲与共轭分拆，供竖条 Pieri 规则使用
 \section{Frobenius 特征映射}
 \label{b5:sec:0702}
 
@@ -69,7 +70,7 @@
 因而诱导乘积使 \(\mathcal R=\bigoplus_{n\ge0}R_{\mathbb C}(S_n)\) 成为分次交换环，Frobenius 特征映射保持该乘法。
 \end{proposition}
 \begin{proof}
-固定循环型 \(\nu\vdash a+b\) 的置换 \(\sigma\)。陪集空间 \(S_{a+b}/(S_a\times S_b)\) 可以看作全部 \(a\) 元子集。诱导特征标的求和只有在 \(\sigma\) 保持该子集时才有贡献；这样的子集必为若干完整轮换之并。若它及其补集的循环型分别为 \(\alpha,\beta\)，则
+固定循环型 \(\nu\vdash a+b\) 的置换 \(\sigma\)。陪集空间 \(S_{a+b}/(S_a\times S_b)\) 可以看作全部 \(a\) 元子集。诱导表示按这些陪集分为向量空间直和，\(\sigma\) 把每个陪集分量送到相应的另一分量；不固定的分量不贡献矩阵的对角块，因而不贡献迹。所以诱导特征标的求和只有在 \(\sigma\) 保持该子集时才有贡献。若一个数字属于被保持的子集，其所有 \(\sigma\) 迭代像也都属于该子集；因此这样的子集必为若干完整轮换之并。若它及其补集的循环型分别为 \(\alpha,\beta\)，则
 \[
 m_r(\alpha)+m_r(\beta)=m_r(\nu),\qquad
 |\alpha|=a,\quad|\beta|=b,
@@ -86,6 +87,20 @@ m_r(\alpha)+m_r(\beta)=m_r(\nu),\qquad
 \]
 这正是右端幂和乘积中 \(p_\nu\) 的系数，证明了等式。类函数上的特征映射单射，而右端乘法结合、交换且有次数零的单位，因此同样性质在虚表示上成立。
 \end{proof}
+
+例如取 \(a=b=2\)，并令 \(U=W=1_{S_2}\)。诱导表示是 \(S_4\) 在全部二元子集上的置换表示。对 \(\sigma=(12)(34)\)，不变二元子集只能是完整轮换的支集 \(\{1,2\}\)、\(\{3,4\}\)，所以诱导特征标在 \(\sigma\) 处的值为二。这里
+\[
+\nu=(2,2),\qquad \alpha=\beta=(2),\qquad
+z_\nu=2^2\cdot2!=8,\qquad z_\alpha=z_\beta=2,
+\]
+故选择数 \(z_\nu/(z_\alpha z_\beta)=2\) 正是在两个二轮换中选择一个放入第一个子集。另一方面，
+\[
+\operatorname{ch}(1_{S_2})=h_2=\frac{p_1^2+p_2}{2},\qquad
+h_2^2=\frac{p_1^4+2p_1^2p_2+p_2^2}{4}.
+\]
+其中 \(p_{(2,2)}=p_2^2\) 的系数为 \(1/4=2/8\)，恰好是诱导特征标值除以 \(z_{(2,2)}\)。两个不变子集对应两种轮换分配，而特征映射的归一化把这个计数变成幂和乘积的系数。
+
+\ProseParagraphBreak
 
 设 \(\mu=(\mu_1,\ldots,\mu_r)\vdash n\)，Young 置换模为
 \[
@@ -127,7 +142,13 @@ M^\mu=\operatorname{Ind}_{S_{\mu_1}\times\cdots\times S_{\mu_r}}^{S_n}1.
 \sum_{i=1}^k\sigma(i)-\frac{k(k+1)}2
 \ge\sum_{i=1}^k\lambda_i.
 \]
-重排后的前 \(k\) 项和不会减小，故 \(\mu(\sigma)\) 支配 \(\lambda\)。若 \(\sigma\ne1\)，存在一个 \(k\) 使 \(\bigl\{\sigma(1),\ldots,\sigma(k)\bigr\}\ne\{1,\ldots,k\}\)，此时上式严格，故 \(\mu(\sigma)\ne\lambda\)。
+重排后前 \(k\) 项是原列中最大的 \(k\) 项，其和至少等于任取 \(k\) 项的和，尤其有
+\[
+\sum_{i=1}^k\mu_i(\sigma)
+\ge\sum_{i=1}^k\alpha_i(\sigma)
+\ge\sum_{i=1}^k\lambda_i.
+\]
+因此 \(\mu(\sigma)\) 支配 \(\lambda\)。若 \(\sigma\ne1\)，存在一个 \(k\) 使 \(\bigl\{\sigma(1),\ldots,\sigma(k)\bigr\}\ne\{1,\ldots,k\}\)，此时上式严格，故 \(\mu(\sigma)\ne\lambda\)。
 
 现在应用\cref{b5:prop:specht-dominance}：\(M^\mu\) 只含支配 \(\mu\) 的 Specht 类型，并且 \(S^\mu\) 的重数是一。因此
 \[
@@ -144,13 +165,94 @@ M^\mu=\operatorname{Ind}_{S_{\mu_1}\times\cdots\times S_{\mu_r}}^{S_n}1.
 最后一式使用的是已经在\cref{b5:thm:specht-classification}建立的不可约分类与特征标正交性。于是全部 \(c_\eta=0\)，得到 \(\theta_\lambda=\chi_{S^\lambda}\)。不可约表示的类构成各 \(R_{\mathbb C}(S_n)\) 的 \(\mathbb Z\)-基，所以 \(\operatorname{ch}\) 给出 \(\mathcal R\) 到 \(\Lambda_{\mathbb Z}\) 的加法群同构。由\cref{b5:prop:frobenius-induction-product}，它还保持乘法和单位，故 \(\Lambda_{\mathbb Z}\) 对乘法封闭，所述映射为分次环同构。
 \end{proof}
 
+\begin{example}\label{b5:exm:frobenius-cancellation-22}
+在复数域上取 \(\lambda=(2,2)\)。两行 Jacobi--Trudi 行列式为 \(h_2^2-h_1h_3\)，对应的虚特征标是
+\[
+\theta_{(2,2)}=\chi_{M^{(2,2)}}-\chi_{M^{(3,1)}}.
+\]
+用前一章的 Young 子群不动向量计算，可以直接看见被消去的类型。令
+\[
+H_{22}=\langle(12),(34)\rangle,\qquad
+H_{31}=\langle(12),(23)\rangle.
+\]
+由\cref{b5:thm:maschke}及\cref{b5:thm:frobenius-reciprocity}，不可约模 \(S^\eta\) 在 \(\operatorname{Ind}_H^{S_4}1\) 中的重数等于 \(\dim(S^\eta)^H\)：前者给出完全可约性，后者把从诱导模到 \(S^\eta\) 的 Hom 空间识别为从平凡 \(H\)-模到 \(S^\eta\) 的 Hom 空间。\Cref{b5:prop:specht-dominance}又说明，\(M^{(2,2)}\) 只可能含 \((4),(3,1),(2,2)\) 三种类型，\(M^{(3,1)}\) 只可能含前两种。
+
+平凡模的不动空间均为一维。对 \(S^{(3,1)}\)，用 \(v_i\) 表示第二行只有 \(i\) 的 \((3,1)\)-行表类。第一列上下数字为 \(a,b\) 时，列交错元为 \(v_b-v_a\)；这些坐标差生成
+\[
+W=\left\{\sum_{i=1}^4a_i v_i:\sum_{i=1}^4a_i=0\right\}.
+\]
+这就恢复了\subsecref{b5:subsec:0606:01}中的 \(S^{(3,1)}=W\) 模型。\(H_{22}\) 不动向量的坐标为 \((a,a,-a,-a)\)，\(H_{31}\) 不动向量的坐标为 \((a,a,a,-3a)\)，因此两处重数也均为一。对 \(S^{(2,2)}\)，\cref{b5:prop:specht-22-char-two}给出的整数标准基 \(e_1,e_2\) 在复数域上满足
+\[
+\rho((12))=\rho((34))=\begin{pmatrix}1&0\\-1&-1\end{pmatrix},\qquad
+\rho((23))=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+向量 \(xe_1+ye_2\) 被第一个矩阵固定当且仅当 \(x+2y=0\)，所以 \((S^{(2,2)})^{H_{22}}=\mathbb C(2e_1-e_2)\)；再要求第二个矩阵固定，就有 \(x=y\)，因而 \((S^{(2,2)})^{H_{31}}=0\)。完全可约性于是给出
+\[
+\begin{aligned}
+M^{(2,2)}&\cong S^{(4)}\oplus S^{(3,1)}\oplus S^{(2,2)},\\
+M^{(3,1)}&\cong S^{(4)}\oplus S^{(3,1)}.
+\end{aligned}
+\]
+两项特征标相减时，平凡类型与标准类型分别相消，只留下 \(\chi_{S^{(2,2)}}\)。一般分拆的行列式有更多正负项；定理证明中的支配三角性先确定目标类型的重数为一，再由范数为一排除所有剩余的较高类型。
+\end{example}
+
+Young 图转置交换行求和与列交错求和；在特征映射下，它也交换完全对称函数与初等对称函数。
+
+\begin{proposition}\label{b5:prop:omega-sign-conjugation}
+设 \(\Lambda_{\mathbb Q}\) 为有理系数对称函数代数，\(p_r,h_r,e_r\) 分别为幂和、完全与初等对称函数，\(s_\lambda\) 为 Schur 函数。赋值
+\[
+\omega(p_r)=(-1)^{r-1}p_r\qquad(r\ge1)
+\]
+唯一延拓为保次数的 \(\mathbb Q\)-代数自同构 \(\omega:\Lambda_{\mathbb Q}\to\Lambda_{\mathbb Q}\)。它是 Hall 配对的等距对合，且对非负整数 \(r\) 与任意分拆 \(\lambda\)，有
+\[
+\omega(h_r)=e_r,\qquad \omega(e_r)=h_r,\qquad
+\omega(s_\lambda)=s_{\lambda'},
+\]
+其中 \(\lambda'\) 为共轭分拆。将 \(\omega\) 复线性延拓到 \(\Lambda_{\mathbb C}\) 后，对任意非负整数 \(n\) 和有限维复 \(S_n\)-表示 \(U\)，有
+\[
+\operatorname{ch}(U\otimes_{\mathbb C}\operatorname{sgn})
+=\omega\bigl(\operatorname{ch}(U)\bigr),
+\]
+其中张量积取对角左 \(S_n\) 作用，\(\operatorname{sgn}\) 是符号表示。
+\end{proposition}
+\symidx{\(\omega\)：交换完全与初等对称函数的对合}
+\begin{proof}
+由\cref{b5:prop:symmetric-generators}，各 \(p_r\) 自由生成 \(\Lambda_{\mathbb Q}\)，所以给定赋值唯一延拓为代数同态。它不改变生成元的次数，且两次作用于每个 \(p_r\) 都得到 \(p_r\)，故 \(\omega^2=1\)，从而是保次数的自同构。对分拆 \(\mu\)，有
+\[
+\omega(p_\mu)=(-1)^{|\mu|-\ell(\mu)}p_\mu.
+\]
+Hall 配对的幂和基两两正交，而这个符号的平方为一，因此 \(\omega\) 保持 Hall 配对；复化后同样保持第一变量共轭线性的 Hall 内积。
+
+对\eqref{b5:eq:hp-generating}中的 \(H(t)\) 逐项施加 \(\omega\)，由生成函数关系得到
+\[
+\omega(H(t))
+=\exp\left(\sum_{r\ge1}\frac{(-1)^{r-1}p_r}{r}t^r\right)
+=H(-t)^{-1}=E(t).
+\]
+比较 \(t^r\) 的系数得 \(\omega(h_r)=e_r\)，再用 \(\omega^2=1\) 得 \(\omega(e_r)=h_r\)。
+
+循环型 \(\mu\vdash n\) 的符号是 \((-1)^{n-\ell(\mu)}\)，所以 \(U\otimes\operatorname{sgn}\) 的特征标在该循环型上的值为 \((-1)^{n-\ell(\mu)}\chi_U(\mu)\)。逐项代入特征映射定义，恰好是在 \(\operatorname{ch}(U)\) 的每个 \(p_\mu\) 上施加 \(\omega\)，得到符号扭曲公式。最后，把\cref{b5:prop:specht-conjugate-sign}用于 \(k=\mathbb C\)，再用\eqref{b5:eq:specht-schur}，便有
+\[
+\omega(s_\lambda)
+=\omega\bigl(\operatorname{ch}(S^\lambda)\bigr)
+=\operatorname{ch}(S^\lambda\otimes\operatorname{sgn})
+=\operatorname{ch}(S^{\lambda'})=s_{\lambda'}.
+\]
+\end{proof}
+
+例如 \((3,1)'=(2,1,1)\)。对 \(s_{(3,1)}=h_3h_1-h_4\) 施加 \(\omega\)，得到
+\[
+s_{(2,1,1)}=e_3e_1-e_4.
+\]
+它与 \(S^{(3,1)}\otimes\operatorname{sgn}\cong S^{(2,1,1)}\) 表达同一个转置关系。
+
 \subsection{特征标计算的组合化}
 \label{b5:subsec:0702:03}
 
 \begin{corollary}[Frobenius 特征标公式]\label{b5:cor:frobenius-coefficient}
-设 \(n\) 为非负整数，\(\lambda,\mu\vdash n\)，\(S^\lambda\) 为复 Specht 模，\(\chi_{S^\lambda}(\mu)\) 为其特征标在循环型 \(\mu\) 上的值，\(z_\mu\) 为相应中心化子阶。取整数 \(N\ge n\)，把 \(\lambda\) 补零至 \(N\) 项，令 \(x=(x_1,\ldots,x_N)\)、\(\delta_N=(N-1,\ldots,0)\)、\(\Delta_N(x)=\prod_{i<j}(x_i-x_j)\)。对这些变量中的 Schur 多项式和幂和多项式，有
+设 \(n\) 为非负整数，\(\lambda,\mu\vdash n\)，\(S^\lambda\) 为复 Specht 模，\(\chi_{S^\lambda}(\mu)\) 为其特征标在循环型 \(\mu\) 上的值，\(z_\mu\) 为相应中心化子阶。取整数 \(N\ge\ell(\lambda)\)，把 \(\lambda\) 补零至 \(N\) 项，令 \(x=(x_1,\ldots,x_N)\)、\(\delta_N=(N-1,\ldots,0)\)、\(\Delta_N(x)=\prod_{i<j}(x_i-x_j)\)。对这些变量中的 Schur 多项式和幂和多项式，有
 \[
-p_\mu(x)=\sum_{\lambda\vdash n}\chi_{S^\lambda}(\mu)s_\lambda(x),
+p_\mu(x)=\sum_{\eta\vdash n}\chi_{S^\eta}(\mu)s_\eta(x),
 \qquad
 \chi_{S^\lambda}(\mu)
 =[x^{\lambda+\delta_N}]\Delta_N(x)p_\mu(x).
@@ -158,8 +260,17 @@ p_\mu(x)=\sum_{\lambda\vdash n}\chi_{S^\lambda}(\mu)s_\lambda(x),
 等价地，\(s_\lambda\) 中 \(p_\mu\) 的系数乘以 \(z_\mu\)，就是 \(\chi_{S^\lambda}(\mu)\)。
 \end{corollary}
 \begin{proof}
-由\eqref{b5:eq:specht-schur}，\(\langle p_\mu,s_\lambda\rangle=\chi_{S^\lambda}(\mu)\)。这些特征标值为实数：一个置换与其逆具有相同循环型，而有限群特征标满足 \(\chi(g^{-1})=\overline{\chi(g)}\)。所以交换内积的两个参数不会改变该值。在 Schur 标准正交基下展开 \(p_\mu\)，得第一式。乘以 \(\Delta_N\)，不同严格递减指数列的交错式互不混淆，读取 \(x^{\lambda+\delta_N}\) 的系数便得第二式。
+由\eqref{b5:eq:specht-schur}，\(\langle p_\mu,s_\lambda\rangle=\chi_{S^\lambda}(\mu)\)。这些特征标值为实数：一个置换与其逆具有相同循环型，而有限群特征标满足 \(\chi(g^{-1})=\overline{\chi(g)}\)。所以交换内积的两个参数不会改变该值。在对称函数代数中按 Schur 标准正交基展开 \(p_\mu\)，再特化到 \(N\) 个变量，得第一式；长度超过 \(N\) 的分拆对应的 Schur 多项式为零。乘以 \(\Delta_N\) 后，其余各项为不同严格递减指数列的交错式。由于 \(N\ge\ell(\lambda)\)，目标项仍存在，且只有它在 \(x^{\lambda+\delta_N}\) 处贡献一，读取这个系数便得第二式。
 \end{proof}
+
+例如直接计算 \(S^{(2,1)}\) 在三轮换上的特征标。取 \(N=2\)，则 \(\delta_2=(1,0)\)、\((2,1)+\delta_2=(3,1)\)，并有
+\[
+\Delta_2(x,y)p_3(x,y)
+=(x-y)(x^3+y^3)=x^4-x^3y+xy^3-y^4.
+\]
+读取 \(x^3y\) 的系数，得到 \(\chi_{S^{(2,1)}}((123))=-1\)。这里的负值直接来自 Vandermonde 因子中的 \(-y\) 项，无须先计算 \(s_{(2,1)}\) 的幂和展开。
+
+\ProseParagraphBreak
 
 例如
 \[

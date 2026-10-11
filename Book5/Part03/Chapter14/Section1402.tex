@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 14.2 最高权模
-% 纲要位置：工作记录/计划纲要.md，第 4177 行。
+% 纲要位置：工作记录/计划纲要.md，第 4523 行。
 
 \section{最高权模}
 \label{b5:sec:1402}
@@ -11,6 +11,7 @@
 % * 最高权向量
 % * 有限维不可约模的构造
 % * 维数与权链
+% * 对照任意最高权的无限链与整数截断，连接对称幂模型、唯一不变型及其不变张量
 %
 
 从一个被升算子零化的向量开始，反复作用降算子，便得到一条权链。交换关系确定链上所有系数；链必须终止这一有限维条件，又迫使最高权成为非负整数。
@@ -53,6 +54,34 @@ e f^jv=j(\lambda-j+1)f^{j-1}v.
 特征零使 \(m+1\ne0\)，所以 \(\lambda=m\)。升降公式说明该线性生成空间在 \(e,f,h\) 下均不变，故为子模。
 \end{proof}
 
+有限维性限制的是权链能否截断，任意复数本身都可以作为最高权。对 \(\lambda\in\mathbb C\)，取具有基 \(u_0,u_1,\ldots\) 的向量空间
+\[
+M(\lambda)=\bigoplus_{j\ge0}\mathbb Cu_j,
+\]
+并规定
+\[
+hu_j=(\lambda-2j)u_j,\qquad
+fu_j=u_{j+1},\qquad
+eu_j=j(\lambda-j+1)u_{j-1},\qquad u_{-1}=0.
+\]
+每个向量只有有限个非零坐标，所以这三条公式给出良定义的线性算子。前两条交换关系由相邻权之差为二得到，第三条则为
+\[
+\begin{aligned}
+(ef-fe)u_j
+&=\bigl((j+1)(\lambda-j)-j(\lambda-j+1)\bigr)u_j\\
+&=(\lambda-2j)u_j=hu_j.
+\end{aligned}
+\]
+在 \(j=0\) 时也成立。因此 \(M(\lambda)\) 是复 \(\mathfrak{sl}_2\) 左模，\(u_0\) 是最高权为 \(\lambda\) 的向量，且 \(f^ju_0=u_j\ne0\) 对所有 \(j\ge0\) 成立。
+
+\ProseParagraphBreak
+
+若 \(\lambda\notin\mathbb Z_{\ge0}\)，则 \(j(\lambda-j+1)\ne0\) 对每个 \(j\ge1\) 成立。因此尾部空间 \(\operatorname{span}\{u_j,u_{j+1},\ldots\}\) 不被 \(e\) 保持：\(eu_j\) 是非零的 \(u_{j-1}\) 倍数，已经落在该空间之外。此外，\(M(\lambda)\) 没有非零有限维商模：它由 \(u_0\) 生成，故在非零商中 \(u_0\) 的像仍是非零最高权向量，而\cref{b5:prop:sl2-finite-string}将迫使 \(\lambda\) 为非负整数。若 \(\lambda=m\in\mathbb Z_{\ge0}\)，则 \(eu_{m+1}=0\)，于是
+\[
+N_m=\operatorname{span}_{\mathbb C}\{u_{m+1},u_{m+2},\ldots\}
+\]
+被 \(e,f,h\) 同时保持，是子模。商 \(M(m)/N_m\) 具有基 \(\bar u_0,\ldots,\bar u_m\)，且 \(f\bar u_m=0\)。整数最高权的有限截断由这个商实现；\(M(m)\) 自身的下降链仍然无限。
+
 \subsection{有限维不可约模的构造}
 \label{b5:subsec:1402:02}
 
@@ -79,7 +108,8 @@ P_i(h)u=a_iv_i\in U,
 \]
 所以 \(v_i\in U\)。对 \(1\le j\le m\)，\(j\) 与 \(m-j+1\) 都是正整数；复数域的特征为零，故这两个数及系数 \(j(m-j+1)\) 都非零。反复作用 \(e\) 得到 \(v_0\)，再作用 \(f\) 得到全部基向量。因此 \(U=L_m\)。
 \end{proof}
-这个模型也可以写成二元齐次多项式。这里 \(x,y\) 表示自然二维模的一组基向量，对称代数写成 \(\mathbb C[x,y]\)；它们不是对偶空间上的坐标函数。自然作用为
+\symidx{\(L_m\)：最高权为 \(m\) 的不可约 \(\mathfrak{sl}_2\) 模}
+上述 \(\bar u_i\mapsto v_i\) 将 \(M(m)/N_m\) 识别为 \(L_m\)，因为两组基上的三个作用系数完全相同。这个有限模型也可以写成二元齐次多项式。这里 \(x,y\) 表示自然二维模的一组基向量，对称代数写成 \(\mathbb C[x,y]\)；它们不是对偶空间上的坐标函数。自然作用为
 \[
 ex=0,\quad ey=x,\qquad fx=y,\quad fy=0,\qquad hx=x,\quad hy=-y.
 \]
@@ -89,11 +119,48 @@ e=x\frac{\partial}{\partial y},\qquad
 f=y\frac{\partial}{\partial x},\qquad
 h=x\frac{\partial}{\partial x}-y\frac{\partial}{\partial y}.
 \]
-它们保持全次数为 \(m\) 的空间；在基
+若改在自然二维空间的标准坐标函数 \(X,Y\) 上采用\eqref{b5:eq:dual-tensor-action}中的逆变换拉回作用，同一个 \(e=E_{12}\) 却作用为 \(-Y\partial_X\)，因为
+\[
+(\exp(te)\cdot F)(X,Y)=F(X-tY,Y).
+\]
+自然模与其对偶的等变识别来自行列式配对
+\(B(ax+by,cx+dy)=ad-bc\)。映射 \(v\mapsto B(v,-)\) 把
+\(x\) 送到取出 \(y\) 坐标的 \(Y\)，把 \(y\) 送到 \(-X\)。对任何迹为零的矩阵 \(A\)，有
+\(B(Av,w)+B(v,Aw)=\operatorname{tr}(A)B(v,w)=0\)，这正是配对不变、该映射等变的条件。在对称幂上，它给出
+\[
+\Phi:\mathbb C[x,y]_m\longrightarrow\mathbb C[X,Y]_m,
+\qquad \Phi(P)=P(Y,-X).
+\]
+链式法则使 \(\Phi(eP)=-Y\partial_X\Phi(P)\)，同样使 \(f,h\) 对应于 \(-X\partial_Y\)、\(-X\partial_X+Y\partial_Y\)。因此两种模型保持同一个 Lie 代数的作用，但最高向量分别写成 \(x^m\) 与 \(Y^m\)；不能把两边的同名字母当成同一种变量。
+
+\ProseParagraphBreak
+
+自然变量模型的三个算子保持全次数为 \(m\) 的空间；在基
 \[
 v_i=\frac{m!}{(m-i)!}\,x^{m-i}y^i,\qquad 0\le i\le m,
 \]
 上正好给出上述公式。这一归一化使降算子的系数为一。若直接使用单项式基，则升降系数分别是 \(i\) 与 \(m-i\)，描述的表示相同。
+
+\ProseParagraphBreak
+
+因此这个多项式模型就是 \(L_m\cong\operatorname{Sym}^m(L_1)\)。对 \(m\ge1\)，\cref{b5:prop:schur-symmetric-exterior}对当前复向量空间 \(L_1\) 给出
+\[
+L_m\cong\operatorname{Sym}^m(L_1)\cong\mathbb S_{(m)}(L_1).
+\]
+这里一行分拆 \((m)\) 的 Specht 模是平凡模，相应 Schur 函子取 \(L_1^{\otimes m}\) 中的对称张量。张量幂上的 Lie 作用是在各因子作用后相加，与因子置换及对称平均相容；因此上述识别保持 Lie 作用，商上的乘积规则正是多项式模型的导子规则。\(m=0\) 时，对称零次幂及空分拆都给出平凡模 \(L_0=\mathbb C\)。例如 \(L_3\) 以 \(x^3,x^2y,xy^2,y^3\) 为基，权为 \(3,1,-1,-3\)；一行 Schur 多项式的特化
+\[
+s_{(m)}(z,z^{-1})=z^m+z^{m-2}+\cdots+z^{-m}
+\]
+也记录了这个模型中每个权出现一次，其中 \(z\) 是形式变量。
+
+\ProseParagraphBreak
+
+矩阵 \(w\) 的反射在对称幂上同样可见。令 \(T(x)=y\)、\(T(y)=-x\)，按乘法延拓就有
+\[
+T(P(x,y))=P(y,-x),\qquad
+T(x^{m-i}y^i)=(-1)^i x^iy^{m-i}.
+\]
+因此 \(T\) 将权 \(m-2i\) 送到其相反数，且在全次数为 \(m\) 的空间上 \(T^2=(-1)^mI\)。由 \(TeT^{-1}=-f\)、\(TfT^{-1}=-e\)、\(ThT^{-1}=-h\)，最高权向量 \(x^m\) 被送到最低权向量 \(y^m\)。它正是\cref{b5:prop:sl2-weight-reflection}的有限指数算子在此模型上的作用：\(\exp(-e)\) 与 \(\exp(f)\) 的代入分别为 \((x,y)\mapsto(x,y-x)\) 与 \((x,y)\mapsto(x+y,y)\)，三次代入合起来将 \((x,y)\) 变为 \((y,-x)\)。
 
 \subsection{维数与权链}
 \label{b5:subsec:1402:03}
@@ -103,7 +170,9 @@ v_i=\frac{m!}{(m-i)!}\,x^{m-i}y^i,\qquad 0\le i\le m,
 m,m-2,\ldots,-m,
 \]
 每个权空间一维。因此 \(L_0\) 是平凡模，\(L_1\) 是自然二维模，\(L_2\) 同构于伴随模：取最高向量 \(e\)，沿 \(\operatorname{ad}f\) 下降得到 \(e,-h,-2f\)，其作用与模型一致。
+
 \ProseParagraphBreak
+
 每个 \(L_m\) 有最高权和最低权，且两端互为相反数。维数不是最高权本身，而是最高权加一。两个不同的非负整数给出不同构表示，既可由维数看出，也可由最高权看出。
 \begin{proposition}\label{b5:prop:sl2-dual}
 设 \(m\ge0\) 为整数，\(L_m\) 为\cref{b5:prop:sl2-model}给出的 \((m+1)\) 维复 \(\mathfrak{sl}_2(\mathbb C)\) 模，\(v_0,\ldots,v_m\) 为该模型的基。则 \(L_m^*\cong L_m\)。记矩阵单位为 \(E_{ij}\)，取标准基 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\)。若在 \(L_m\) 上定义双线性型
@@ -111,13 +180,67 @@ m,m-2,\ldots,-m,
 B(v_i,v_j)=0\quad(i+j\ne m),\qquad
 B(v_i,v_{m-i})=(-1)^i,
 \]
-则 \(B\) 非退化并对 \(h\) 和 \(f\) 的作用不变；它对 \(e\) 也不变。其对称性为
+则 \(B\) 非退化且不变，即
+\[
+B(av,w)+B(v,aw)=0
+\quad(a\in\mathfrak{sl}_2(\mathbb C),\ v,w\in L_m).
+\]
+\(L_m\) 上每个不变双线性型都是 \(B\) 的标量倍数，且
 \(B(w,v)=(-1)^m\cdot B(v,w)\)。
 \end{proposition}
 \begin{proof}
 矩阵只有反对角线上的非零元，所以非退化。\(h\) 不变性由两项权之和为零得到。对 \(f\)，可能非零的等式
 \(B(fv_i,v_j)+B(v_i,fv_j)=0\)
 只在 \(i+j=m-1\) 时出现，两系数为 \((-1)^{i+1}\) 与 \((-1)^i\)，和为零。对 \(e\)，只需检查 \(i+j=m+1\)；此时两个作用系数
-\(i(m-i+1)\) 与 \(j(m-j+1)\) 相等，相应符号相反，所以和仍为零。交换反对角线的两个位置使符号乘 \((-1)^m\)，得到最后结论。不变性使 \(v\mapsto B(v,-)\) 是到对偶表示的同态，非退化性使它为同构。
+\(i(m-i+1)\) 与 \(j(m-j+1)\) 相等，相应符号相反，所以和仍为零。交换反对角线的两个位置使符号乘 \((-1)^m\)，得到所述对称性。由对偶作用 \((a\varphi)(w)=-\varphi(aw)\)，不变性恰好说明
+\[
+B^\flat:L_m\longrightarrow L_m^*,\qquad
+B^\flat(v)=B(v,-)
+\]
+是模同态，非退化性使它为同构。
+
+设 \(B'\) 是任一不变双线性型。\(h\) 的不变性给出
+\(2(m-i-j)B'(v_i,v_j)=0\)，故除 \(i+j=m\) 外都为零。\(f\) 的不变性又给出
+\[
+B'(v_{i+1},v_{m-i-1})=-B'(v_i,v_{m-i})
+\quad(0\le i<m).
+\]
+令 \(c=B'(v_0,v_m)\)，便有 \(B'(v_i,v_{m-i})=(-1)^ic\)，即 \(B'=cB\)。
 \end{proof}
-所以奇数 \(m\) 的模型带有非退化交替型，偶数 \(m\) 的模型带有非退化对称型。这个性质将把低维 \(\mathfrak{sl}_2\) 表示与辛、正交 Lie 代数联系起来；此处的判断来自显式配对，而非仅凭维数猜测。
+这个唯一性也符合 Schur 引理。\(B'\mapsto(B^\flat)^{-1}(B')^\flat\) 将不变双线性型识别为 \(L_m\) 的模自同态；\cref{b5:prop:sl2-model}已证明它不可约，而复数域上的有限维不可约模只有标量自同态。因此
+\(\dim_{\mathbb C}\operatorname{Hom}_{\mathfrak{sl}_2}(L_m,L_m^*)=1\)。奇数 \(m\) 的每个非零不变型都交替，偶数 \(m\) 的每个非零不变型都对称；这将把相应表示与辛、正交 Lie 代数联系起来。
+
+\begin{proposition}\label{b5:prop:sl2-invariant-tensor}
+设 \(m\ge0\) 为整数，\(L_m\) 为\cref{b5:prop:sl2-model}的复 \(\mathfrak{sl}_2(\mathbb C)\) 左模，\(v_0,\ldots,v_m\) 为其标准基。在张量积的对角作用下，令
+\[
+t_m=\sum_{i=0}^m(-1)^i v_i\otimes v_{m-i},\qquad
+\tau(v\otimes w)=w\otimes v.
+\]
+则
+\[
+(L_m\otimes L_m)^{\mathfrak{sl}_2}=\mathbb Ct_m,
+\qquad \tau(t_m)=(-1)^m t_m.
+\]
+把对称平方与外平方通过对称、反对称平均识别为张量平方的子空间，则 \(m\) 为偶数时，对称平方的不变子空间是一维、外平方的为零；\(m\) 为奇数时，两者互换。
+\end{proposition}
+\begin{proof}
+各项的两权之和为零，故 \(ht_m=0\)。对 \(ft_m\)，合并 \(v_j\otimes v_{m+1-j}\) 的系数得到
+\((-1)^{j-1}+(-1)^j=0\)，其中 \(1\le j\le m\)，端点因 \(fv_m=0\) 消失。对 \(et_m\)，\(v_j\otimes v_{m-1-j}\) 的系数为
+\[
+(-1)^{j+1}(j+1)(m-j)+(-1)^j(m-j)(j+1)=0
+\quad(0\le j<m).
+\]
+因此 \(t_m\) 不变且非零。
+
+由\cref{b5:prop:lie-dual-tensor-hom}中有限维张量与 Hom 的相容同构，映射
+\[
+v\otimes w\longmapsto\bigl(\varphi\mapsto\varphi(w)v\bigr)
+\]
+给出 \(L_m\otimes L_m\cong\operatorname{Hom}_{\mathbb C}(L_m^*,L_m)\)。这里使用有限维双对偶识别，并交换两个张量因子；这两个映射都保持 Lie 作用。若 \(v_i^*\) 是对偶基，\(t_m\) 对应的映射满足
+\[
+v_j^*\longmapsto(-1)^{m-j}v_{m-j}=(B^\flat)^{-1}(v_j^*).
+\]
+所以 \(t_m\) 就是非退化不变型所给同构的逆对应的张量。不变张量对应模同态 \(L_m^*\to L_m\)，复合 \(B^\flat\) 后成为 \(L_m\) 的自同态；不可约性与复数域上的 Schur 引理使这个空间只有一维。最后将求和下标换为 \(m-i\)，得到 \(\tau(t_m)=(-1)^m t_m\)。特征零下，\((I+\tau)/2\)、\((I-\tau)/2\) 分别是对称与反对称投影，故一维不变空间只落在所述奇偶性对应的一侧。
+\end{proof}
+例如 \(t_1=v_0\otimes v_1-v_1\otimes v_0\) 属于外平方，而
+\(t_2=v_0\otimes v_2-v_1\otimes v_1+v_2\otimes v_0\) 属于对称平方。符号由同一个不变配对决定，也确定了相反类型的不变型和不变张量都只能为零。

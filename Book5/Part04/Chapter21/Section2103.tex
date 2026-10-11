@@ -1,16 +1,17 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 21.3 有理表示
-% 纲要位置：工作记录/计划纲要.md，第 4403 行。
+% 纲要位置：工作记录/计划纲要.md，第 4772 行。
 
 \section{有理表示}
 \label{b5:sec:2103}
 
 
-% 纲要范围：
+% 纲要细目（保留原定写作范围）：
 %
 % * 余模与有理表示
 % * 权和代数环面
 % * 与 Lie 代数表示的关系及积分问题
+% * 用矩阵系数恢复加法群坐标环，比较可对角化群与常数群的模特征表示，并计算矩阵 Lie 括号及 Frobenius 拉回
 %
 
 代数群表示不能只要求每个群元素给出一个矩阵，还要让矩阵条目随群元素正则地变化。余模的系数恰好记录这些函数，因此能把“有理表示”的条件写成有限个代数等式。这里的有理表示是正则群态射，不是允许任意带极点的有理映射。
@@ -58,6 +59,17 @@
 \(k\bigl[\operatorname{GL}(W)\bigr]\to A\) 的像包含全部代数生成元，是满射；这就是闭嵌入。
 \end{proof}
 这项证明同时说明有限生成坐标环的用途。余模局部有限性保证任何一个函数都受有限维矩阵系数控制，而有限生成性保证一次选择便能控制整个坐标环。
+\ProseParagraphBreak
+在加法群 \(\mathbb G_a\) 的坐标环 \(A=k[t]\) 中，可以直接取 \(W=\operatorname{span}_k\{1,t\}\)。因为
+\[
+\Delta(1)=1\otimes1,\qquad
+\Delta(t)=t\otimes1+1\otimes t,
+\]
+这个空间是右子余模；在依次排列的基 \(1,t\) 下，矩阵系数为
+\[
+\begin{pmatrix}1&t\\0&1\end{pmatrix}.
+\]
+因此所得表示 \(\rho:\mathbb G_a\to\operatorname{GL}_2\) 的坐标同态把 \(x_{12}\) 送到 \(t\)，把 \(x_{11},x_{22}\) 送到 \(1\)，把 \(x_{21}\) 送到 \(0\)，并把行列式逆送到 \(1\)。像已包含 \(k[t]\) 的代数生成元 \(t\)，故这个同态满射，\(\rho\) 为闭嵌入。这是这个二维余模的又一个用途：矩阵条目不仅给点上的作用，还能恢复整个坐标环。
 
 \subsection{权和代数环面}
 \label{b5:subsec:2103:02}
@@ -76,48 +88,94 @@ V=\bigoplus_{m\in M}V_m,\qquad
 \(\delta(v_m)=v_m\otimes e^m\)；余单位使 \(v=\sum_m v_m\)。
 若一组不同权向量的和为零，对其余作用比较不同 \(e^m\) 系数便知每项为零，所以是直和。表示同态保各权空间，一维子空间在同一权空间内都稳定，故分解为一维表示。唯一性也来自系数唯一性。
 \end{proof}
-对 \(\mathbb G_m^r\)，权是整数元组 \((m_1,\ldots,m_r)\)，作用字符为
+代数群同态 \(\chi:G\to\mathbb G_m\) 称为\term[daishuqun-tezhengbiao]{代数群特征标}[character of an algebraic group]，它给出一维有理表示。这里的特征标是乘法型态射；前面有限群表示的特征标则是表示矩阵的迹。对 \(\mathbb G_m^r\)，权是整数元组 \((m_1,\ldots,m_r)\)，作用特征标为
 \(t_1^{m_1}\cdots t_r^{m_r}\)。这不是任意复指数。比如一维交换 Lie 代数的任意复标量作用都给出 Lie 代数表示，却只有整数标量才能从 \(\mathbb G_m\) 的有理表示微分得到。
 \ProseParagraphBreak
-即使 \(G=\mu_p\) 在特征 \(p\) 中不约化，上述按 \(\mathbb Z/p\mathbb Z\) 分次的结论仍成立。它与常数群 \(C_p\) 的模特征表示完全不同：后者的群代数是局部非半单代数，而这里讨论的是不同的群概形及其坐标余模。
+设 \(\operatorname{char}k=p>0\)。即使 \(G=\mu_p\) 的坐标环 \(k[t]/((t-1)^p)\) 不约化，上述结论仍给出
+\[
+V=\bigoplus_{j\in\mathbb Z/p\mathbb Z}V_j,\qquad
+\delta(v)=v\otimes t^j\quad(v\in V_j).
+\]
+这里 \(1,t,\ldots,t^{p-1}\) 仍是坐标环的一组 \(k\) 基；权分解的证明用的是这组基及其余乘法，不要求底层代数没有幂零元。因此每个有限维有理 \(\mu_p\) 表示完全可约，尽管该群概形非约化且不光滑。\termidx[guanghua]{光滑}
+\ProseParagraphBreak
+与此相对，常数群概形 \(C_p\) 的坐标环 \(k^{C_p}\) 是 \(p\) 个域 \(k\) 的直积；每个概形分量都是 \(\operatorname{Spec}k\)，所以它约化且光滑，但有理表示不一定完全可约。例如生成元可在 \(kv_1\oplus kv_2\) 上作用为
+\[
+J=\begin{pmatrix}1&1\\0&1\end{pmatrix}=I+N.
+\]
+由于 \(N^2=0\)，在特征 \(p\) 中有 \(J^p=I\)，所以这确实给出 \(C_p\) 的表示。直线 \(kv_1\) 稳定；任何补直线可由 \(v_2+av_1\) 生成，而 \(J(v_2+av_1)=v_2+(a+1)v_1\) 不在这条直线上，故没有稳定补空间。
+\ProseParagraphBreak
+坐标环约化、群概形光滑和有理表示完全可约，分别是不同条件。后面定义的约化群还要求光滑连通，并排除非平凡的光滑连通正规幺幂闭子群；\(\mu_p\) 不光滑，\(C_p\) 不连通，不能把这两个群直接列作那一定义中的约化群。
 
 \subsection{与 Lie 代数表示的关系及积分问题}
 \label{b5:subsec:2103:03}
 
-把一个 \(R\) 点在单位附近代入双数环 \(k[\epsilon]/(\epsilon^2)\)，便得到无穷小作用。具体地，对 \(\varepsilon:A\to k\)，线性映射 \(d:A\to k\) 满足
+把一个 \(R\) 点在单位附近代入双数环 \(k[\epsilon]/(\epsilon^2)\)，便得到无穷小作用。这样的点只记录平方为零的一阶变化。
+\begin{definition}\label{b5:def:group-scheme-lie-algebra}
+设 \(k\) 为域，\(G=\operatorname{Spec}A\) 为 \(k\) 上的有限型仿射群概形，\(\varepsilon:A\to k\) 为坐标 Hopf 代数的余单位。满足
 \[
-d(ab)=\varepsilon(a)d(b)+d(a)\varepsilon(b)
+\mathrm{d}(ab)=\varepsilon(a)\cdot\mathrm{d}(b)+\mathrm{d}(a)\cdot\varepsilon(b)
+\qquad(a,b\in A)
 \]
-时，\(\varepsilon+\epsilon d\) 为双数值代数同态。这些 \(d\) 构成 \(\operatorname{Lie}(G)\) 的底向量空间。对两线性映射 \(d_1,d_2:A\to k\)，卷积为
+的 \(k\) 线性映射 \(\mathrm{d}:A\to k\) 称为单位处的导子，它们组成 \(G\) 的 Lie 代数 \(\operatorname{Lie}(G)\) 的底向量空间。映射 \(\varepsilon+\epsilon\cdot\mathrm{d}:A\to k[\epsilon]/(\epsilon^2)\) 是代数同态，其模 \(\epsilon\) 的像为单位点；反过来，每个这样的双数值点唯一给出一个 \(\mathrm{d}\)。
+\end{definition}
+\symidx{\(\operatorname{Lie}(G)\)：仿射群概形单位处导子组成的 Lie 代数}
+对两线性映射 \(\mathrm{d}_1,\mathrm{d}_2:A\to k\)，卷积为
 \[
-(d_1*d_2)(a)=\sum d_1(a_{(1)})d_2(a_{(2)}),
+(\mathrm{d}_1*\mathrm{d}_2)(a)=\sum \mathrm{d}_1(a_{(1)})\cdot\mathrm{d}_2(a_{(2)}),
 \qquad \Delta(a)=\sum a_{(1)}\otimes a_{(2)}.
 \]
-若 \(d_1,d_2\) 都满足上述导子等式，利用 \(\Delta\) 的乘法相容性与余单位等式，展开得到
+若 \(\mathrm{d}_1,\mathrm{d}_2\) 都满足上述导子等式，利用 \(\Delta\) 的乘法相容性与余单位等式，展开得到
 \[
 \begin{aligned}
-(d_1*d_2)(ab)
-&=\varepsilon(a)(d_1*d_2)(b)+(d_1*d_2)(a)\varepsilon(b)\\
-&\quad+d_1(a)d_2(b)+d_2(a)d_1(b).
+(\mathrm{d}_1*\mathrm{d}_2)(ab)
+&=\varepsilon(a)\cdot(\mathrm{d}_1*\mathrm{d}_2)(b)+(\mathrm{d}_1*\mathrm{d}_2)(a)\cdot\varepsilon(b)\\
+&\quad+\mathrm{d}_1(a)\cdot\mathrm{d}_2(b)+\mathrm{d}_2(a)\cdot\mathrm{d}_1(b).
 \end{aligned}
 \]
-交换 \(d_1,d_2\) 后，最后两项不变，因而卷积交换子 \([d_1,d_2]=d_1*d_2-d_2*d_1\) 仍满足导子等式。卷积的结合律使这个括号满足交替性与 Jacobi 恒等式，所以确实定义了 \(\operatorname{Lie}(G)\) 的 Lie 代数结构。
+交换 \(\mathrm{d}_1,\mathrm{d}_2\) 后，最后两项不变，因而卷积交换子 \([\mathrm{d}_1,\mathrm{d}_2]=\mathrm{d}_1*\mathrm{d}_2-\mathrm{d}_2*\mathrm{d}_1\) 仍满足导子等式。卷积的结合律使这个括号满足交替性与 Jacobi 恒等式，所以确实定义了 \(\operatorname{Lie}(G)\) 的 Lie 代数结构。
 
 \ProseParagraphBreak
-有理表示的余作用诱导 \(\rho_*(d)=(1\otimes d)\delta\)。余结合律给出
+有理表示的余作用诱导 \(\rho_*(\mathrm{d})=(1\otimes\mathrm{d})\delta\)。余结合律给出
 \[
 \begin{aligned}
-\rho_*(d_1)\rho_*(d_2)
-&=(1\otimes d_1\otimes d_2)(\delta\otimes1)\delta\\
-&=(1\otimes d_1\otimes d_2)(1\otimes\Delta)\delta\\
-&=(1\otimes(d_1*d_2))\delta.
+\rho_*(\mathrm{d}_1)\rho_*(\mathrm{d}_2)
+&=(1\otimes\mathrm{d}_1\otimes\mathrm{d}_2)(\delta\otimes1)\delta\\
+&=(1\otimes\mathrm{d}_1\otimes\mathrm{d}_2)(1\otimes\Delta)\delta\\
+&=(1\otimes(\mathrm{d}_1*\mathrm{d}_2))\delta.
 \end{aligned}
 \]
-两边交换 \(d_1,d_2\) 后相减，便有
+两边交换 \(\mathrm{d}_1,\mathrm{d}_2\) 后相减，便有
 \[
-[\rho_*(d_1),\rho_*(d_2)]=\rho_*([d_1,d_2]).
+[\rho_*(\mathrm{d}_1),\rho_*(\mathrm{d}_2)]=\rho_*([\mathrm{d}_1,\mathrm{d}_2]).
 \]
-因此这是一个 Lie 代数表示。坐标方程在 \(I+\epsilon X\) 处线性化便恢复熟悉的矩阵条件，例如 \(\operatorname{Lie}(\operatorname{SL}_n)=\mathfrak{sl}_n\)。
+因此这是一个 Lie 代数表示。下面把卷积括号还原为矩阵交换子，并计算行列式方程给切空间施加的条件。
+\begin{proposition}\label{b5:prop:matrix-group-lie-bracket}
+设 \(k\) 为任意特征的域，\(n\ge1\)。单位处导子与双数值矩阵 \(I+\epsilon X\) 的对应给出 Lie 代数同构
+\[
+\operatorname{Lie}(\operatorname{GL}_n)\cong\mathfrak{gl}_n(k),\qquad
+\operatorname{Lie}(\operatorname{SL}_n)\cong\mathfrak{sl}_n(k)
+=\{X\in M_n(k)\mid\operatorname{tr}X=0\},
+\]
+两者的括号都对应 \([X,Y]=XY-YX\)。
+\end{proposition}
+\begin{proof}
+在双数环中，任何模 \(\epsilon\) 为 \(I\) 的矩阵唯一写成 \(I+\epsilon X\)，其逆为 \(I-\epsilon X\)。于是每个 \(X\in M_n(k)\) 都给出 \(\operatorname{GL}_n\) 的单位处导子 \(\mathrm{d}_X\)，满足 \(\mathrm{d}_X(x_{ij})=X_{ij}\)，并且每个单位处导子都如此得到。由矩阵坐标的余乘法，
+\[
+\begin{aligned}
+(\mathrm{d}_X*\mathrm{d}_Y)(x_{ij})
+&=\sum_{\ell=1}^n\mathrm{d}_X(x_{i\ell})\cdot\mathrm{d}_Y(x_{\ell j})\\
+&=\sum_{\ell=1}^n X_{i\ell}Y_{\ell j}=(XY)_{ij}.
+\end{aligned}
+\]
+所以 \([\mathrm{d}_X,\mathrm{d}_Y](x_{ij})=(XY-YX)_{ij}\)。这决定了整个坐标环上的导子：矩阵条目生成多项式部分，行列式逆的值由逆元求导法则确定。因此卷积交换子正对应矩阵交换子。
+
+行列式的置换展开中，模 \(\epsilon^2\) 后，只有恒等置换的各个一次对角项留下，得到
+\[
+\det(I+\epsilon X)=1+\epsilon\operatorname{tr}X.
+\]
+故这个点属于 \(\operatorname{SL}_n\)，当且仅当 \(\operatorname{tr}X=0\)。对闭子群限制坐标函数后，导子的卷积仍使用同一余乘法，所以括号也是矩阵交换子；\(\operatorname{tr}(XY-YX)=0\) 又表明这个子空间对括号封闭。
+\end{proof}
+特别地，在特征 \(p\) 中，标量矩阵 \(I_p\) 的迹为零。\(\mu_p\) 的双数值点 \((1+a\epsilon)I_p\) 给出切方向 \(aI_p\)，所以 \(\operatorname{Lie}(\mu_p)=kI_p\) 非零。中心商 \(q:\operatorname{SL}_p\to\operatorname{PGL}_p\) 将所有这些点送到单位，其微分便零化这个标量切方向。前面标准表示不能下降的例子，正是保留了点集上看不到的这一方向。
 \begin{proposition}\label{b5:prop:additive-rational-representations}
 设 \(k\) 为特征零域，\(V\) 为 \(n\) 维 \(k\) 向量空间。加法群 \(\mathbb G_a\) 在 \(V\) 上的每个有理表示，在选定 \(k\) 基后唯一形如
 \[
@@ -130,4 +188,14 @@ d(ab)=\varepsilon(a)d(b)+d(a)\varepsilon(b)
 \(\rho(t+u)=\rho(t)\rho(u)\)、\(\rho(0)=I\)。
 对 \(u\) 求导并令 \(u=0\)，得到 \(\rho'(t)=\rho(t)N\)，其中 \(N=\rho'(0)\)。逐次比较多项式系数得到 \(A_j=N^j/j!\)。多项式次数有限，所以充分大的 \(N^j=0\)。反过来，幂零 \(N\) 的有限指数满足加法公式，给出有理表示。乘法群的结论由\cref{b5:thm:torus-weight-decomposition}中 \(t^m\) 的导数得到。
 \end{proof}
-因此从 Lie 代数表示到代数群有理表示会多出条件；即使两群的 Lie 代数都一维交换，\(\mathbb G_a\) 要求幂零作用，\(\mathbb G_m\) 要求整数半单作用。复 Lie 群的积分问题还涉及拓扑覆盖，留在附录C说明。在特征 \(p\) 中，群态射 \(t\mapsto t^p\) 的微分为零却不是零态射，微分还会进一步丢掉信息。
+因此从 Lie 代数表示到代数群有理表示会多出条件；在特征零时，即使两群的 Lie 代数都一维交换，\(\mathbb G_a\) 要求幂零作用，\(\mathbb G_m\) 要求整数半单作用。复 Lie 群的积分问题还涉及拓扑覆盖，留在附录C说明。
+\begin{example}\label{b5:exm:frobenius-rational-representation}
+设 \(k\) 为特征 \(p>0\) 的域。在 \(k^2\) 上考虑加法群 \(\mathbb G_a\) 的两个有理表示
+\[
+\rho_0(t)=I_2,\qquad
+\rho_1(t)=\begin{pmatrix}1&t^p\\0&1\end{pmatrix}.
+\]
+恒等式 \((s+t)^p=s^p+t^p\) 对任意交换 \(k\) 代数成立，故 \(\rho_1(s+t)=\rho_1(s)\rho_1(t)\)；矩阵条目为多项式且行列式为一，因而确实定义有理表示。它是前面二维加法群表示与群态射 \(F:t\mapsto t^p\) 的复合。
+
+对双数值参数 \(t=a\epsilon\)，有 \((a\epsilon)^p=0\)，所以 \(\rho_1(a\epsilon)=I_2=\rho_0(a\epsilon)\)。两表示的 Lie 代数作用都为零，却不是同一个有理表示：它们的右上角矩阵系数分别为坐标多项式 \(t^p\) 与 \(0\)。平凡表示的矩阵在任意换基后仍为 \(I_2\)，而 \(\rho_1\) 不是恒等作用，所以这两个有理表示也不同构。一阶微分因而不能恢复这个 Frobenius 拉回所保留的高次项。这里的相同只指单位处的一阶作用；在 \(R=k[u]/(u^{p+1})\) 中取参数 \(t=u\)，便有 \(u^p\ne0\)，两表示在这个含幂零元的试验代数上已经不同。
+\end{example}

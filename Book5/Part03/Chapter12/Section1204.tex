@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 12.4* Levi 分解
-% 纲要位置：工作记录/计划纲要.md，第 4133 行。
+% 纲要位置：工作记录/计划纲要.md，第 4473 行。
 
 \OptionalSection{Levi 分解}{b5:sec:1204}
 
@@ -9,6 +9,7 @@
 % * 半单子代数与可解根的半直积分解
 % * Levi 分解的结论及共轭性范围
 % * 证明方法经第13–19章和 Lie 代数上同调，后续主要内容不依赖这一证明
+% * 用矩阵补空间、仿射作用和交换核算例解释截面缺陷与分裂补的差异
 %
 % ---
 %
@@ -36,6 +37,16 @@
 这一作用一般不为零。这样的分解写成
 \(\mathfrak g=\mathfrak r\rtimes\mathfrak s\)，称为\term[Levi-fenjie]{Levi 分解}[Levi decomposition]。
 
+\begin{example}\label{b5:exm:linear-complement-not-lie}
+向量空间补未必对括号封闭。在 \(\mathfrak{gl}_2(\mathbb C)=\mathbb CI\oplus\mathfrak{sl}_2(\mathbb C)\) 中，记
+\(E=E_{12}\)、\(F=E_{21}\)、\(H=E_{11}-E_{22}\)，取线性泛函 \(f:\mathfrak{sl}_2\rightarrow\mathbb C\)，满足
+\(f(E)=f(F)=0\)、\(f(H)=1\)。则
+\[
+W=\{A+f(A)I\mid A\in\mathfrak{sl}_2\}
+\]
+仍是中央理想 \(\mathbb CI\) 的向量空间补。但 \(E,F\in W\)，而 \([E,F]=H\notin W\)：若 \(H=A+f(A)I\)，取迹得 \(f(A)=0\)，于是 \(A=H\)，与 \(f(H)=1\) 矛盾。后面的\cref{b5:prop:classical-simple}将证明 \(\mathfrak{sl}_2\) 单，进而由半单商得到 \(\operatorname{rad}\mathfrak{gl}_2=\mathbb CI\)。因此这个补也说明，仅给可解根选线性补并不能得到 Levi 子代数。
+\end{example}
+
 \begin{example}\label{b5:exm:affine-levi}
 设 \(n\ge2\)。仿射矩阵 Lie 代数
 \[
@@ -46,6 +57,10 @@
 v\in\mathbb C^n
 \,\right\}
 \]
+把块矩阵记为 \((A,v)\)，直接相乘得到
+\[
+[(A,v),(B,w)]=([A,B],Aw-Bv).
+\]
 令 \(\mathfrak i\) 为其中满足 \(A=tI\) 的矩阵空间，它同构于 \(\mathbb C^n\rtimes\mathbb C I\)。与任意元素取括号时，线性部分为零，故 \(\mathfrak i\) 是理想。其导出代数包含于交换的平移理想 \(\mathbb C^n\)，所以 \(\mathfrak i\) 可解，进而
 \(\mathfrak i\subseteq\operatorname{rad}\mathfrak a_n\)。候选补为 \(v=0\)、\(\operatorname{tr}A=0\) 的子代数 \(\mathfrak{sl}_n\)。商满足
 \[
@@ -54,7 +69,19 @@ v\in\mathbb C^n
 \cong\mathfrak{sl}_n(\mathbb C),
 \]
 最后一个同构由 \(A\mapsto A-\dfrac{\operatorname{tr}A}{n}I\) 诱导。在\cref{b5:prop:classical-simple}证明 \(\mathfrak{sl}_n\) 的单性后，这个商半单。\(\operatorname{rad}\mathfrak a_n\) 在商中的像是可解理想，只能为零，故
-\(\operatorname{rad}\mathfrak a_n\subseteq\mathfrak i\)。两边包含给出 \(\operatorname{rad}\mathfrak a_n=\mathfrak i\)，从而这里确为 Levi 分解。
+\(\operatorname{rad}\mathfrak a_n\subseteq\mathfrak i\)。两边包含给出 \(\operatorname{rad}\mathfrak a_n=\mathfrak i\)，从而这里确为 Levi 分解。补 \(\mathfrak{sl}_n\) 在平移部分上按自然模作用，在标量部分上作用为零，因为
+\[
+[(A,0),(tI,v)]=(0,Av)\qquad(A\in\mathfrak{sl}_n).
+\]
+例如 \(n=2\) 时，取 \(H=\operatorname{diag}(1,-1)\)，则
+\([(H,0),(0,e_1)]=(0,e_1)\ne0\)，所以两个因子之间确有非零作用，这个 Levi 分解不是直积。
+
+有了上述可解根的识别，也能计算幂零根。平移空间 \(V=\{(0,v)\}\) 是交换理想，故包含于幂零根；而任何幂零理想都包含于 \(\mathfrak i\)。对 \((tI,v)\in\mathfrak i\)，伴随作用在 \(V\) 上等于 \(t\operatorname{id}_V\)，若 \(t\ne0\) 就不幂零。因此
+\[
+\operatorname{nilrad}\mathfrak a_n=V
+=[\mathfrak a_n,\operatorname{rad}\mathfrak a_n].
+\]
+最后一个等号还用了 \([(I,0),(0,w)]=(0,w)\)，它说明所有平移都能由这样的交换子得到。
 \end{example}
 
 \subsection{Levi 分解与共轭性范围}
@@ -89,7 +116,7 @@ v\in\mathbb C^n
 x\cdot m=\bigl[s(x),m\bigr],\qquad
 c(x,y)=\bigl[s(x),s(y)\bigr]-s\bigl([x,y]\bigr).
 \]
-则前式给出与截面无关的 \(\mathfrak s\)-模结构，后式取值于 \(M\)，并满足
+则前式给出与截面无关的 \(\mathfrak s\)-模结构，后式是取值于 \(M\) 的交替双线性映射，并满足
 \[
 \begin{aligned}
 0={}&x\cdot c(y,z)-y\cdot c(x,z)+z\cdot c(x,y)\\
@@ -100,30 +127,73 @@ c(x,y)=\bigl[s(x),s(y)\bigr]-s\bigl([x,y]\bigr).
 \[
 c'(x,y)=c(x,y)+x\cdot b(y)-y\cdot b(x)-b\bigl([x,y]\bigr).
 \]
+每个元素都唯一写成 \(m+s(x)\)，由此识别 \(\mathfrak e\) 与 \(M\oplus\mathfrak s\) 后，括号为
+\[
+[(m,x),(n,y)]
+=\bigl(x\cdot n-y\cdot m+c(x,y),[x,y]\bigr).
+\]
+因此扩张分裂，当且仅当存在 \(b\) 使上述 \(c'\) 为零；此时在新截面坐标中，括号就是 \(M\rtimes\mathfrak s\) 的半直积括号。
 \end{proposition}
 \begin{proof}
-两截面的差取值于 \(M\)，而 \(M\) 交换，故作用不随截面改变。Jacobi 恒等式给出
+因 \(\pi\) 是 Lie 同态且 \(\pi s=\operatorname{id}_{\mathfrak s}\)，有
+\(\pi([s(x),s(y)])=[x,y]=\pi s([x,y])\)，故 \(c(x,y)\in\ker\pi=M\)；交替双线性由括号及 \(s\) 的线性得到。两截面的差取值于 \(M\)，而 \(M\) 交换，故作用不随截面改变。Jacobi 恒等式给出
 \[
 x\cdot(y\cdot m)-y\cdot(x\cdot m)
 =\Bigl[\bigl[s(x),s(y)\bigr],m\Bigr]=\Bigl[s\bigl([x,y]\bigr),m\Bigr]=[x,y]\cdot m;
 \]
 差项 \(c(x,y)\in M\) 与 \(m\) 的括号为零。于是确有模结构。
 
-把 \(\bigl[s(x),s(y)\bigr]=s\bigl([x,y]\bigr)+c(x,y)\) 代入三个提升元素的 Jacobi 恒等式。取值在 \(s(\mathfrak s)\) 的三项由 \(\mathfrak s\) 的 Jacobi 恒等式相消；剩余六项按反对称性整理，恰为陈述中的等式。最后直接展开
+任取 \(u\in\mathfrak e\)，令 \(x=\pi(u)\)，则 \(u-s(x)\in M\)，给出所需表示。若 \(m+s(x)=n+s(y)\)，先应用 \(\pi\) 得 \(x=y\)，再得 \(m=n\)，故表示唯一。展开
+\[
+[m+s(x),n+s(y)]
+=x\cdot n-y\cdot m+c(x,y)+s([x,y])
+\]
+就得到坐标括号；其中 \([m,n]=0\)，而 \(c\) 正好记录截面没有保持的括号。
+
+把 \(\bigl[s(x),s(y)\bigr]=s\bigl([x,y]\bigr)+c(x,y)\) 代入三个提升元素的 Jacobi 恒等式。取值在 \(s(\mathfrak s)\) 的三项由 \(\mathfrak s\) 的 Jacobi 恒等式相消；剩余六项按反对称性整理，恰为陈述中的等式。直接展开
 \(\bigl[s(x)+b(x),s(y)+b(y)\bigr]-(s+b)\bigl([x,y]\bigr)\)，并用 \([M,M]=0\)，便得截面变换公式。
+扩张分裂是指 \(\pi\) 有 Lie 同态截面；所有线性截面都形如 \(s+b\)，故其存在性等价于可以使 \(c'=0\)。
 \end{proof}
 
-这个三变量恒等式说 \(c\) 是 Lie 代数上同调的 \(2\)-余圈，改换截面加上的是一个 \(2\)-余边。\cref{b5:thm:whitehead-second}将证明：有限维复半单 \(\mathfrak s\) 与有限维 \(\mathfrak s\)-模 \(M\) 满足
+在 Lie 代数上同调的术语中，满足上述三变量恒等式的交替双线性映射 \(c\) 称为 \(2\)-余圈；由一个线性映射 \(b\) 产生的修正项 \(x\cdot b(y)-y\cdot b(x)-b([x,y])\) 称为 \(2\)-余边。这两个名称在这里分别记录 Jacobi 相容性与截面的改变，一般上链复形见\secref{b5:sec:2003}。\cref{b5:thm:whitehead-second}将证明：有限维复半单 \(\mathfrak s\) 与有限维 \(\mathfrak s\)-模 \(M\) 满足
 \(H^2(\mathfrak s,M)=0\)。取得这一消失结论后，就能选 \(b\) 把 \(c\) 消去，得到交换核扩张的分裂。一般存在性还需沿可解根中的交换理想逐步归纳，完整论证见\cref{b5:thm:levi-malcev}的存在性证明；当前的交换核计算只是其中一步。
 
-\ProseParagraphBreak
+\begin{example}\label{b5:exm:heisenberg-extension-obstruction}
+在三维复 Heisenberg 代数 \([x,y]=z\) 中，取核 \(M=\mathbb Cz\) 和商 \(\mathfrak s=\mathfrak e/M\)，并令 \(s(\bar x)=x\)、\(s(\bar y)=y\)。商是二维交换代数，核是中心，故模作用为零，而
+\(c(\bar x,\bar y)=z\ne0\)。任意截面修正的余边都为零，因为作用与商括号都为零。因此没有截面能消去 \(c\)，这个交换核扩张不分裂。这里的商不是半单代数，所以不能使用 Whitehead 的消失结论；交换核本身并不足以保证分裂。
+\end{example}
 
-共轭性对应另一个低阶问题。已分裂的交换核扩张中，两个补可写成 \(x\mapsto s(x)\) 与 \(x\mapsto s(x)+b(x)\)。后者封闭为子代数的条件是
+共轭性对应已分裂扩张中的另一个问题：两次选择的子代数补有什么差别？
+
+\begin{proposition}\label{b5:prop:abelian-splitting-complements}
+设 \(\mathfrak s\) 是有限维复 Lie 代数，\(M\) 是有限维 \(\mathfrak s\)-模，在 \(\mathfrak e=M\rtimes\mathfrak s\) 中令 \([M,M]=0\)。则 \(M\) 的子代数补恰为线性映射 \(b:\mathfrak s\rightarrow M\) 的图，其中
 \[
 b\bigl([x,y]\bigr)=x\cdot b(y)-y\cdot b(x).
 \]
-\cref{b5:thm:whitehead-first}中的 \(H^1(\mathfrak s,M)=0\) 会给出 \(b(x)=x\cdot m\)。由于 \((\operatorname{ad}m)^2=0\)，有
+若 \(b(x)=x\cdot m\)，则内自同构 \(\exp(-\operatorname{ad}(m,0))\) 把标准补 \(\{(0,x)\}\) 送到这个图。
+\end{proposition}
+\begin{proof}
+任意向量空间补在投影 \(\mathfrak e\rightarrow\mathfrak s\) 下同构于 \(\mathfrak s\)，故唯一写成 \(\{(b(x),x)\}\)。图中两元素的括号为
 \[
-\exp(-\operatorname{ad}m)s(x)=s(x)+x\cdot m.
+[(b(x),x),(b(y),y)]
+=\bigl(x\cdot b(y)-y\cdot b(x),[x,y]\bigr),
 \]
-因此这个特殊情形中的共轭变换可以直接看见。一般可解核的共轭性在\cref{b5:thm:levi-malcev}中沿同一个交换理想归纳证明；那里还说明如何将共轭元选在 \([\mathfrak g,\mathfrak r]\) 内，不能只凭当前的一次修正推出一般结论。
+它属于图恰好等价于陈述中的条件。又 \(\operatorname{ad}(m,0)\) 把全空间送入交换理想 \(M\)，并在 \(M\) 上为零，故其平方为零。因此
+\[
+\exp(-\operatorname{ad}(m,0))(0,x)
+=(0,x)-[(m,0),(0,x)]=(x\cdot m,x).
+\]
+令 \(D=\operatorname{ad}(m,0)\)。对任意 \(u,v\in M\rtimes\mathfrak s\)，\(Du,Dv\) 都属于交换理想 \(M\)，故 \([Du,Dv]=0\)。结合导子法则，得到
+\[
+[(1-D)u,(1-D)v]
+=[u,v]-[Du,v]-[u,Dv]=(1-D)[u,v].
+\]
+所以这个指数保持括号；又因 \(D^2=0\)，它的逆为 \(1+D=\exp(\operatorname{ad}(m,0))\)。
+\end{proof}
+
+图的条件称为 \(1\)-余圈条件，形如 \(b(x)=x\cdot m\) 的映射称为 \(1\)-余边。当 \(\mathfrak s\) 半单时，\cref{b5:thm:whitehead-first}的 \(H^1(\mathfrak s,M)=0\) 将说明每个这样的余圈都是余边，于是两个补可以按上述公式共轭。一般可解核的共轭性在\cref{b5:thm:levi-malcev}中沿交换理想归纳证明；那里还说明如何将共轭元选在 \([\mathfrak g,\mathfrak r]\) 内。
+
+\begin{example}\label{b5:exm:abelian-nonconjugate-complements}
+令 \(\mathfrak e=\mathbb Cm\oplus\mathbb Cx\) 为二维交换代数，取核 \(M=\mathbb Cm\) 和商 \(\mathfrak s=\mathbb C\bar x\)。标准截面的 \(c=0\)，所以扩张已经分裂。然而对每个 \(t\in\mathbb C\)，
+\(S_t=\mathbb C(x+tm)\) 都是子代数补，不同 \(t\) 给出不同补。所有伴随算子都为零，内自同构只有恒等，故这些补不内共轭。此时模作用为零，所有线性映射 \(\mathfrak s\rightarrow M\) 都是 \(1\)-余圈，余边却只有零，因而 \(H^1(\mathfrak s,M)\cong\mathbb C\)。分裂存在性的障碍已经消失，补的共轭性仍可能失败；它们分别对应 \(H^2\) 与 \(H^1\) 两个问题。
+\end{example}

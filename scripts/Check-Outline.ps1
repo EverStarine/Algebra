@@ -155,7 +155,7 @@ foreach ($node in $nodes) {
     # The printed chapter order can change while a previously cited label stays stable.
     # An explicit record binds this outline node to the original semantic identity.
     if ($node.Kind -in @('Chapter', 'Section') -and
-        $text -match '(?m)^% 纲要标签：([^\r\n]+)$') {
+        $text -match '(?m)^% 纲要标签：([^\r\n]+)\r?$') {
         $node.Label = $Matches[1].Trim()
     }
     if (-not $text.Contains('% 纲要标题：' + $node.RawHeading)) {

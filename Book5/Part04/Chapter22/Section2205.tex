@@ -1,14 +1,18 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 22.5 经典不变量与协变式
-% 纲要位置：工作记录/计划纲要.md，第 4487 行。
+% 纲要位置：工作记录/计划纲要.md，第 4862 行。
+% 纲要细目（保留原定写作范围）：
+%
 % * 就地陈述并解释对称多项式基本定理；一般有限反射群定理标明选读及外部证明范围
 % * 从单矩阵特征多项式及特征零下的迹出发；同特征多项式不等于矩阵共轭，多个矩阵的迹字理论另列范围
 % * 完整处理一般线性群的配对不变量基本定理及其实际依赖，选一个正交或辛群的 Gram 型例子
 % * 以低次二元型区分不变量、相对不变量与协变式，明确一般线性群和特殊线性群下判别式的不同变换性质
+% * 用二阶张量把置换算子转成两种配对，并用中心标量作用解释判别式为何只能相对不变
 % #### 22.5.1 对称多项式与反射群的例子
 % #### 22.5.2 矩阵共轭下的特征多项式与迹
 % #### 22.5.3 向量与对偶向量的配对不变量
 % #### 22.5.4 二元型的判别式与协变式
+%
 \section{经典不变量与协变式}
 \label{b5:sec:2205}
 
@@ -75,6 +79,25 @@ rc_r=\sum_{j=1}^r(-1)^{j-1}c_{r-j}p_j
 \subsection{向量与对偶向量的配对不变量}
 \label{b5:subsec:2205:03}
 
+取特征零域上的有限维非零空间 \(V\)，先看两个向量变量 \(v_1,v_2\) 和两个对偶变量 \(\phi_1,\phi_2\)。任意多线性函数唯一写成
+\[
+F_A(v_1,v_2,\phi_1,\phi_2)
+=(\phi_1\otimes\phi_2)\bigl(A(v_1\otimes v_2)\bigr),
+\qquad A\in\operatorname{End}_k(V^{\otimes2}).
+\]
+对偶作用中的逆与向量作用相抵消，所以 \(F_A\) 不变当且仅当 \(A\) 与所有 \(g^{\otimes2}\) 交换。\cref{b5:thm:schur-weyl}说明这样的算子由恒等算子 \(I\) 与交换算子 \(\tau(v\otimes w)=w\otimes v\) 张成；两者分别给出
+\[
+\begin{aligned}
+F_I&=\phi_1(v_1)\phi_2(v_2),\\
+F_\tau&=\phi_1(v_2)\phi_2(v_1).
+\end{aligned}
+\]
+置换张量因子，就是重新安排向量与对偶向量之间的配对。若 \(\dim V=1\)，则 \(\tau=I\)，因而写 \(p_{ji}=\phi_j(v_i)\) 时有关系
+\[
+p_{11}p_{22}-p_{12}p_{21}=0.
+\]
+若 \(\dim V\ge2\)，取线性无关的 \(e_1,e_2\)，则 \(e_1\otimes e_2\) 与 \(e_2\otimes e_1\) 线性无关，所以 \(I,\tau\) 以及相应的两个多线性函数都线性无关。配对产生全部不变量，与这些配对之间是否有关系，已在这个二阶例子中成为两个不同问题。
+
 \begin{theorem}[一般线性群的配对不变量]\label{b5:thm:gl-pairing-fft}
 设 \(k\) 为特征零域，\(V\) 为有限维非零 \(k\) 向量空间，\(r,s\ge0\) 为整数。群 \(\operatorname{GL}(V)\) 在
 \[
@@ -106,37 +129,49 @@ F(v_1,\ldots,v_d,\phi_1,\ldots,\phi_d)
 v_i=\sum_{\nu=1}^{a_i}t_{i\nu}v_{i\nu},\qquad
 \phi_j=\sum_{\mu=1}^{b_j}u_{j\mu}\phi_{j\mu}
 \]
-代入，并取所有参数各一次的系数。所得函数 \(\widetilde f\) 对新增变量多线性，且不变，因为代入和取系数均与群作用交换。让同一组副本相等，得到
+代入，并取所有参数各一次的系数。所得函数 \(\widetilde f\) 对新增变量多线性，且不变，因为代入和取系数均与群作用交换。在这个系数多项式中再作代换 \(v_{i\nu}\mapsto v_i\)、\(\phi_{j\mu}\mapsto\phi_j\)，得到
 \[
 \widetilde f=\left(\prod_i a_i!\right)
 \left(\prod_j b_j!\right)f.
 \]
-这由齐次性及多项展开的多项式系数给出。特征零允许除以这些阶乘；先把 \(\widetilde f\) 写成配对乘积，再合并副本，便把 \(f\) 写成原配对的多项式。
+确实，合并 \(v_i\) 的副本后，该组参数只出现于 \((\sum_\nu t_{i\nu})^{a_i}\)，每个参数恰一次的系数为 \(a_i!/(1!\cdots1!)=a_i!\)；对偶变量同理给出 \(b_j!\)。各组参数独立，故系数相乘。特征零允许除以这些阶乘；先把 \(\widetilde f\) 写成配对乘积，再合并副本，便把 \(f\) 写成原配对的多项式。
 \end{proof}
 
 这个结论只断言生成性。若 \(\dim V=n\)，配对矩阵 \((p_{ji})\) 的秩至多 \(n\)，故其 \((n+1)\) 阶子式都是关系；证明这些子式生成全部关系，是另外的关系定理，不能由生成性直接得到。
 
 \ProseParagraphBreak
-在二维交错空间 \(V=k^2\) 中，标准交错型为
+在带交替型的二维空间 \(V=k^2\) 中，标准交替型为
 \(\omega(v,w)=\det(v,w)\)，保持它的群是 \(\operatorname{SL}_2\)。对两个向量组成的矩阵 \(X=(v,w)\)，有
 \[
 k[V\oplus V]^{\operatorname{SL}_2}=k\bigl[\omega(v,w)\bigr]
 \]
 （这里仍设特征零）。证明也很具体：若 \(\det X=t\ne0\)，矩阵
 \(\operatorname{diag}(1,t)X^{-1}\) 的行列式为一，把 \(X\) 送到 \(\operatorname{diag}(1,t)\)。所以不变量 \(f\) 在可逆矩阵上等于多项式
-\(F(\det X)\)，其中 \(F(t)=f\bigl(\operatorname{diag}(1,t)\bigr)\)；由稠密性，这个等式在全部矩阵上成立。这里的交错 Gram 矩阵只有一个独立条目，其余是零及其负值。
+\(F(\det X)\)，其中 \(F(t)=f\bigl(\operatorname{diag}(1,t)\bigr)\)；由稠密性，这个等式在全部矩阵上成立。这里的交替 Gram 矩阵只有一个独立条目，其余是零及其负值。
 
 \subsection{二元型的判别式与协变式}
 \label{b5:subsec:2205:04}
 
 \begin{definition}\label{b5:def:relative-invariant-covariant}
 设 \(k\) 为域，\(G\) 为 \(k\) 上的仿射代数群，有理作用在有限维 \(k\) 空间 \(U,W\) 上。多项式函数 \(f:U\to k\) 若作为代数态射满足
-\(f(gu)=\chi(g)f(u)\)，其中 \(\chi:G\to\mathbb G_m\) 为代数群同态，则称 \(f\) 为具有特征 \(\chi\) 的\term[xiangdui-bubianliang]{相对不变量}[relative invariant]。若多项式映射 \(F:U\to W\) 作为代数态射满足 \(F(gu)=gF(u)\)，则称 \(F\) 为\term[xiebian-shi]{协变式}[covariant]。相对不变量也可看作取值于一维表示 \(k_\chi\) 的协变式，其中 \(G\) 在 \(k_\chi\) 上按 \(\chi\) 数乘作用。
+\(f(gu)=\chi(g)f(u)\)，其中 \(\chi:G\to\mathbb G_m\) 为代数群同态，则称 \(f\) 为具有代数群特征标 \(\chi\) 的\term[xiangdui-bubianliang]{相对不变量}[relative invariant]。若多项式映射 \(F:U\to W\) 作为代数态射满足 \(F(gu)=gF(u)\)，则称 \(F\) 为\term[xiebian-shi]{协变式}[covariant]。相对不变量也可看作取值于一维表示 \(k_\chi\) 的协变式，其中 \(G\) 在 \(k_\chi\) 上按 \(\chi\) 数乘作用。
 \end{definition}
-\symidx{\(k_\chi\)：代数群字符 \(\chi\) 对应的一维有理表示}
+\symidx{\(k_\chi\)：代数群特征标 \(\chi\) 对应的一维有理表示}
 
 设 \(k\) 的特征零，令 \(\operatorname{GL}_2\) 在二元型上作用为
-\((g\cdot F)(X,Y)=F\bigl(g^{-1}(X,Y)^T\bigr)\)。对二次型
+\((g\cdot F)(X,Y)=F\bigl(g^{-1}(X,Y)^T\bigr)\)。若型的次数为 \(d>0\)，标量矩阵 \(tI_2\) 就把 \(F\) 变为 \(t^{-d}F\)。因此，关于型的系数为 \(q\) 次齐次的多项式函数 \(P\) 满足
+\[
+P(tI_2\cdot F)=t^{-dq}P(F).
+\]
+若 \(q>0\) 且 \(P\) 不变，因 \(k\) 无限，可取 \(t\) 使 \(t^{dq}\ne1\)，于是 \(P=0\)。一般不变量的每个齐次分量仍不变，所以
+\[
+k\bigl[\operatorname{Sym}^d((k^2)^*)\bigr]^{\operatorname{GL}_2}=k
+\qquad(d>0).
+\]
+这里 \(d\) 是关于 \(X,Y\) 的次数，\(q\) 是关于型的系数的次数。一般线性群的中心可以任意缩放型，因而非常数多项式若要保留几何信息，就需要允许数值按特征标变化。
+
+\ProseParagraphBreak
+对二次型
 \[
 F=aX^2+bXY+cY^2,\qquad
 Q=\begin{pmatrix}a&b/2\\b/2&c\end{pmatrix},
@@ -147,6 +182,7 @@ Q=\begin{pmatrix}a&b/2\\b/2&c\end{pmatrix},
 \Delta(g\cdot F)=(\det g)^{-2}\Delta(F).
 \]
 因此它在一般线性群下是相对不变量，在特殊线性群下是不变量。
+对 \(g=tI_2\)，判别式的缩放因子就是 \(t^{-4}\)，与它在系数上为二次的事实一致。相对不变性还保证 \(\Delta(F)=0\) 当且仅当 \(\Delta(g\cdot F)=0\)；所以退化型组成的零点集仍被一般线性群保持，即使判别式的数值并不保持。
 
 \ProseParagraphBreak
 一个实际的协变构造是 Hessian。对次数 \(d\ge2\) 的二元型，置

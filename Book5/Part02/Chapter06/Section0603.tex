@@ -3,7 +3,7 @@
 % 纲要位置：工作记录/计划纲要.md，第 3919 行。
 % * 建立 Garnir 关系和标准化过程，证明标准列交错元的生成性及线性无关性
 % * 固定表的次序和标准化规则，分别说明重写为何终止、标准列交错元为何生成，以及任意交换含幺系数环上的基变换。
-% * 以首项和三角性组织线性无关性证明，区分整系数标准基与基变换后的域上模型；不要仅凭标准表个数推断线性无关。
+% * 以首项和三角性组织线性无关性证明，区分整系数标准基与基变换后的域上模型；由整系数嵌入的线性收缩说明任意系数环下的嵌入，不仅凭标准表个数推断线性无关。
 \section{Garnir 关系与标准基}
 \label{b5:sec:0603}
 
@@ -36,6 +36,14 @@
 |A|!\,|B|!\sum_{\sigma\in D}\operatorname{sgn}(\sigma)e_{\sigma t}=0.
 \]
 自由交换群 \(M_{\mathbb Z}^\lambda\) 无挠，故可消去这个非零整数，得到\eqref{b5:eq:garnir}。这是整数系数向量恒等式，随后可映到任意 \(R\)；这一顺序并未在 \(R\) 中除以阶乘。
+
+陪集代表的选择也不改变各项。若把 \(\sigma\) 换为同一左陪集中的 \(\sigma h\)、\(h\in H\)，由 \(H\subseteq C_t\) 及\cref{b5:prop:specht-column-sign}，有
+\[
+\operatorname{sgn}(\sigma h)e_{\sigma ht}
+=\operatorname{sgn}(\sigma)\operatorname{sgn}(h)^2e_{\sigma t}
+=\operatorname{sgn}(\sigma)e_{\sigma t}.
+\]
+因此 Garnir 和式取决于陪集，而不取决于所选代表元。
 \end{proof}
 
 \begin{theorem}[标准基]\label{b5:thm:specht-standard-basis}
@@ -62,7 +70,7 @@ B&=\bigl\{t(1,j+1),\ldots,t(i,j+1)\bigr\}.
 e_t=-\sum_{\substack{\sigma\in D\\\sigma\ne1}}
 \operatorname{sgn}(\sigma)e_{\sigma t}.
 \end{equation}
-一个非单位陪集满足 \(\sigma A\ne A\)，所以新的第 \(j\) 列从 \(A\) 中移出若干数字，并换入同样多个来自 \(B\) 的较小数字；前 \(j-1\) 列不变。将新表的每列重新排序后，列字严格小于 \(w(t)\)。列排序只改变列交错元的符号。因此重复\eqref{b5:eq:garnir-rewrite}时，每一条重写链的列字都严格下降；有限性保证过程终止。终止项不能还有相邻行逆序，所以全部为标准表，生成性得证。
+在 \(S_{A\cup B}\) 中，集合 \(A\) 的稳定子是 \(H=S_A\times S_B\)；因此 \(\sigma A=\tau A\) 当且仅当 \(\tau^{-1}\sigma\in H\)，陪集 \(\sigma H\) 与集合 \(\sigma A\) 一一对应。一个非单位陪集便满足 \(\sigma A\ne A\)，所以新的第 \(j\) 列从 \(A\) 中移出若干数字，并换入同样多个来自 \(B\) 的较小数字；前 \(j-1\) 列不变。将新表的每列重新排序后，列字严格小于 \(w(t)\)。列排序只改变列交错元的符号。因此重复\eqref{b5:eq:garnir-rewrite}时，每一条重写链的列字都严格下降；有限性保证过程终止。终止项不能还有相邻行逆序，所以全部为标准表，生成性得证。
 
 再证明线性无关。对任意行表类 \(\{u\}\)，令
 \[
@@ -74,15 +82,46 @@ N_{ct}(a,m)\leq N_t(a,m)\qquad\text{对所有}\;a,m.
 \end{equation}
 事实上，第 \(j\) 列中不大于 \(m\) 的数字在 \(t\) 中占据最上面的若干位置，若其个数为 \(q_j\)，则前 \(a\) 行贡献 \(\min(a,q_j)\)；列置换以后的贡献不会更大。对各列相加即得不等式。
 
-在标准表集合上，用所有这些不等式定义偏序。若双向成立，则每一行中小于等于每个 \(m\) 的数字个数都相同，因此各行的数字集合相同；标准表各行递增，故两个表相同。把这个有限偏序延伸为全序。在 \(e_t\) 的表类展开中，若标准表 \(u\) 的表类 \(\{u\}\) 出现，则\eqref{b5:eq:tabloid-triangular}说明 \(u\) 不大于 \(t\)；而 \(\{t\}\) 的系数由\cref{b5:prop:specht-column-sign}知为 \(1\)。于是只取标准表所对应的那些表类坐标，得到一个对角元全为 \(1\) 的三角矩阵。它在任意交换环上可逆，所以这些 \(e_t\) 线性无关。
+在标准表集合上，用所有这些不等式定义偏序。若双向成立，将相邻行的累计计数相减，便得到每一行中不大于 \(m\) 的数字个数相同；再将 \(m\) 与 \(m-1\) 的计数相减，就确定数字 \(m\) 是否在该行，因而各行的数字集合相同。标准表各行递增，故两个表相同。这个偏序的自反性、传递性也由各计数的不等式得到。有限偏序中可反复选取一个极小元并删去，把选出次序排成全序；若 \(u<t\)，则 \(t\) 不会在 \(u\) 以前被选出，所以这个全序保留原偏序。在 \(e_t\) 的表类展开中，若标准表 \(u\) 的表类 \(\{u\}\) 出现，则\eqref{b5:eq:tabloid-triangular}说明 \(u\) 不大于 \(t\)；而 \(\{t\}\) 的系数由\cref{b5:prop:specht-column-sign}知为 \(1\)。于是只取标准表所对应的那些表类坐标，得到一个对角元全为 \(1\) 的三角矩阵。它在任意交换环上可逆，所以这些 \(e_t\) 线性无关。
 
 最后，生成性所用系数全为整数；自然映射把整数标准基变成 \(R\) 上刚证的标准基，故为同构。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:specht-base-change-inclusion}
+设 \(n\) 为非负整数，\(\lambda\vdash n\)。包含映射
+\(\iota:S_{\mathbb Z}^\lambda\hookrightarrow M_{\mathbb Z}^\lambda\)
+有一个 \(\mathbb Z\)-线性左逆。因而对任意交换含幺环 \(R\)，映射
+\[
+R\otimes_{\mathbb Z}S_{\mathbb Z}^\lambda
+\longrightarrow R\otimes_{\mathbb Z}M_{\mathbb Z}^\lambda
+\cong M_R^\lambda
+\]
+仍为单射，其像恰为 \(S_R^\lambda\)。
+\end{corollary}
+\begin{proof}
+令 \(f^\lambda\) 为标准表数，并按标准基定理证明中的全序排列这些表。取标准行表类坐标，得到 \(\mathbb Z\)-线性映射
+\(P:M_{\mathbb Z}^\lambda\rightarrow\mathbb Z^{f^\lambda}\)。
+限制 \(P|_{S_{\mathbb Z}^\lambda}\) 在标准列交错元基下的矩阵是对角元全为 \(1\) 的整数三角矩阵，故其逆仍为整数矩阵。因此
+\[
+r=(P|_{S_{\mathbb Z}^\lambda})^{-1}P:
+M_{\mathbb Z}^\lambda\longrightarrow S_{\mathbb Z}^\lambda
+\]
+满足 \(r\iota=1\)。张量以后仍有
+\((1_R\otimes r)(1_R\otimes\iota)=1\)，所以换系数后的包含映射为单射。它把 \(a\otimes e_t\) 送到 \(ae_t\)，故像恰为由这些向量生成的 \(S_R^\lambda\)。这里的 \(r\) 只要求 \(\mathbb Z\)-线性，并未断言它与群作用相容。
 \end{proof}
 
 \subsection{表的次序、标准化终止与生成性}
 \label{b5:subsec:0603:02}
 
 上述证明给出实际的标准化算法。输入为一个填数表，或若干列交错元的有限 \(R\)-线性组合；输出为标准列交错元的线性组合。每次先排序各列并记下符号，再找到一处相邻行逆序，取证明中规定的两段数字，按\eqref{b5:eq:garnir-rewrite}展开，最后合并相同标准表的系数。这个算法只用加减法，不要求能在 \(R\) 中求逆。
+
+\ProseParagraphBreak
+若有多个相邻行逆序，可以任取一处先处理。不同选择可能产生不同的中间表达式，但每步都是列交错元之间的恒等式，而且任何重写链都因列字严格下降而终止。若两条重写路径最终给出
+\[
+e_t=\sum_{u\;\text{标准}}a_ue_u
+=\sum_{u\;\text{标准}}d_ue_u,
+\]
+标准基的线性无关性便给出每个 \(a_u=d_u\)。终止性保证能到达标准展开，线性无关性保证所得系数唯一；两者在证明中各有作用。
 
 \begin{example}\label{b5:exm:garnir-21}
 对列标准而非标准的表
@@ -141,6 +180,9 @@ e_t=-e_{u_{26}}+e_{u_{24}}+e_{u_{36}}
 \label{b5:subsec:0603:03}
 
 在独立性证明中，起作用的不仅是“存在一个首项”，还包括首项系数是单位 \(1\)。若这个系数只是某个非零整数，约化到正特征后可能消失；这里的三角矩阵在所有系数环上仍可逆。因此标准基不因特征改变而丢失，但由它给出的表示却可能变得可约。
+
+\ProseParagraphBreak
+任意换系数后仍能把 Specht 模看作表类置换模的子模，依靠的也正是这个单位三角矩阵及\cref{b5:cor:specht-base-change-inclusion}中的左逆。自由性本身并不能保证这一点：包含 \(2\mathbb Z\hookrightarrow\mathbb Z\) 的源与目标都是自由交换群，但张量上 \(\mathbb F_2\) 后，\(1\otimes2\) 在源中是一个基向量，在目标中却等于 \(2(1\otimes1)=0\)。Specht 模的包含映射已经在整数上分裂，故换系数后保留左逆，不需要对 \(R\) 另加平坦性条件。
 
 \ProseParagraphBreak
 三角形并不意味着不同标准列交错元的表类坐标互不重叠。对形状 \((3,2)\) 的标准表 \(t=123|45\)，列群由 \((14),(25)\) 生成，故

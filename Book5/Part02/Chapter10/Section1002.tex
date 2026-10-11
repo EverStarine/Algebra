@@ -4,6 +4,7 @@
 % * 汇点和源点反射
 % * 对不可分解表示的作用
 % * 与简单反射的对应
+% * 从反射伴随的单位与余单位说明互逆范围，计算维数修正并区分子表示、商表示的封闭性
 % * 明确汇点反射采用核、源点反射采用余核；给出排除相应简单表示后互为逆的范围，不把反射函子当作整个模范畴上的无条件等价
 \section{反射函子}
 \label{b5:sec:1002}
@@ -65,33 +66,45 @@ f_i\phi_V=\phi_W\left(\bigoplus_a f_{s(a)}\right).
 源点情形取 \(V_i=\ker\psi_V\oplus U\)。所有出箭在第一项上为零，且没有入箭，故只支撑于 \(\ker\psi_V\) 的部分是直和项；剩下的表示在 \(i\) 处取 \(U\)。存在非零 \(S_i\) 直和项也必使 \(\psi_V\) 有核。若 \(V\) 不可分解，分裂出的项只有在 \(V\cong S_i\) 时才可能非零。最后直接代入核或余核定义，\(S_i\) 均被送到零。
 \end{proof}
 
-这与普通线性代数中“把映射的核与像分开”很接近，但源、汇条件不可删去。若一个顶点既有入箭又有出箭，任选的补空间通常不能同时保持两侧的映射。
+源、汇条件保证分出的向量空间也是表示的直和项。在 \(1\to2\to3\) 的内部顶点 \(2\)，这一点已经会失败。区间表示 \(I[2,3]=(0\to k\xrightarrow{1}k)\) 的入箭总映射 \(0\to k\) 不满射，但 \(S_2\) 不是它的直和项：若把顶点 \(2\) 的 \(k\) 单独分出，出箭的恒等映射就不能保留。反过来，\(I[1,2]=(k\xrightarrow{1}k\to0)\) 的出箭总映射 \(k\to0\) 不单射，却也没有 \(S_2\) 直和项；顶点 \(2\) 的核虽给出子表示，非零入箭使它没有表示意义下的补项。这两个表示均不可分解，因为箭上的恒等映射迫使各非零顶点的自同态为同一个标量。
 
 \subsection{反射函子与简单反射}
 \label{b5:subsec:1002:03}
 
 \begin{proposition}\label{b5:prop:reflection-dimension}
-设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(i\) 为汇点或源点，\(V=(V_j,V_a)\) 为有限维 \(k\) 表示。记 \(m_{ij}\) 为顶点 \(i,j\) 间的箭数，定义整数格变换 \((s_i\mathbf x)_i=-x_i+\sum_jm_{ij}x_j\)，其余坐标不变，此处不要求二次型正定。记 \(\phi_V:\bigoplus_{a:j\to i}V_j\to V_i\) 为各入箭映射之和、\(\psi_V:V_i\to\bigoplus_{a:i\to j}V_j\) 为各出箭映射组成的映射，\(\mathbf d\) 为维数向量。若 \(i\) 为汇点且 \(\phi_V\) 满射，则对汇点反射函子有
+设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(i\) 为汇点或源点，\(V=(V_j,V_a)\) 为有限维 \(k\) 表示。记 \(m_{ij}\) 为顶点 \(i,j\) 间的箭数，定义整数格变换 \((s_i\mathbf x)_i=-x_i+\sum_jm_{ij}x_j\)，其余坐标不变，此处不要求二次型正定。记 \(\phi_V:\bigoplus_{a:j\to i}V_j\to V_i\) 为各入箭映射之和、\(\psi_V:V_i\to\bigoplus_{a:i\to j}V_j\) 为各出箭映射组成的映射，\(\mathbf d\) 为维数向量，\(\mathbf e_i\) 为第 \(i\) 个坐标向量。若 \(i\) 为汇点，则
 \[
-\mathbf d(F_i^+V)=s_i\bigl(\mathbf d(V)\bigr).
+\mathbf d(F_i^+V)=s_i\bigl(\mathbf d(V)\bigr)
++\dim\operatorname{coker}\phi_V\,\mathbf e_i.
 \]
-若 \(i\) 为源点且 \(\psi_V\) 单射，则对源点反射函子有
+若 \(i\) 为源点，则
 \[
-\mathbf d(F_i^-V)=s_i\bigl(\mathbf d(V)\bigr).
+\mathbf d(F_i^-V)=s_i\bigl(\mathbf d(V)\bigr)
++\dim\ker\psi_V\,\mathbf e_i.
 \]
+附加项的系数恰为 \(V\) 中可分出的 \(S_i\) 直和项的重数。因此汇点的 \(\phi_V\) 满射或源点的 \(\psi_V\) 单射时，维数向量按 \(s_i\) 变化。
 \end{proposition}
 \begin{proof}
-汇点的短正合列为
+汇点处由秩与零度公式有
 \[
-0\longrightarrow\ker\phi_V\longrightarrow
-\bigoplus_{a:j\to i}V_j\longrightarrow V_i\longrightarrow0.
+\begin{aligned}
+\dim\ker\phi_V
+&=\sum_{a:j\to i}\dim V_j-\operatorname{rank}\phi_V\\
+&=\sum_{a:j\to i}\dim V_j-\dim V_i
++\dim\operatorname{coker}\phi_V.
+\end{aligned}
 \]
-故新顶点维数为 \(\sum_{a:j\to i}\dim V_j-\dim V_i\)，其他维数不变。这正是简单反射的坐标公式。源点则对
-\(0\to V_i\to\bigoplus_{a:i\to j}V_j\to\operatorname{coker}\psi_V\to0\)
-取维数，得到相同公式。
+其他顶点维数不变，便得到第一式。源点处同样有
+\[
+\dim\operatorname{coker}\psi_V
+=\sum_{a:i\to j}\dim V_j-\dim V_i+\dim\ker\psi_V,
+\]
+得到第二式。\cref{b5:lem:reflection-split-simple}的构造在汇点分出
+\(S_i^{\oplus\dim\operatorname{coker}\phi_V}\)，在源点分出
+\(S_i^{\oplus\dim\ker\psi_V}\)，剩下的表示分别满足满射或单射条件。若另写成 \(V\cong S_i^{\oplus r}\oplus U\)，其中 \(U\) 不含 \(S_i\) 直和项，则分块总映射在 \(U\) 上满足相应条件，而在 \(S_i^{\oplus r}\) 上为零；故上述余核或核的维数必为 \(r\)。这也说明所计重数与补空间的选择无关。
 \end{proof}
 
-满射或单射条件决定了公式能否适用。特别是 \(s_i\mathbf e_i=-\mathbf e_i\)，但反射函子把 \(S_i\) 送到零；负向量不是零表示的维数向量，不能把这两种操作混同。
+附加项不能省去。例如 \(1\to2\) 上的零箭表示 \(V=(k\xrightarrow{0}k)=S_1\oplus S_2\)，其汇点反射在顶点 \(2\) 取整个 \(k\)，所以 \(\mathbf d(F_2^+V)=(1,1)\)；而 \(s_2(1,1)=(1,0)\)，两者正好相差 \(\dim\operatorname{coker}(0:k\to k)\,\mathbf e_2=\mathbf e_2\)。特别是 \(s_i\mathbf e_i=-\mathbf e_i\)，反射函子却把 \(S_i\) 送到零；上述附加项补偿了这一差别。
 
 \begin{example}\label{b5:exm:a3-sink-reflection}
 对 \(Q:1\to2\leftarrow3\)，取三个顶点空间均为 \(k\)，两条箭都为恒等映射。汇点 \(2\) 上的总映射是
@@ -104,6 +117,75 @@ k\oplus k\longrightarrow k,\qquad (u,v)\longmapsto u+v.
 \subsection{核、余核与反射函子的互逆范围}
 \label{b5:subsec:1002:04}
 
+\begin{proposition}[反射伴随]\label{b5:prop:reflection-adjunction}
+设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(i\) 为汇点，\(Q'\) 为反转 \(i\) 处各箭所得箭图。对任意有限维表示 \(W\in\operatorname{rep}_k Q'\)、\(V\in\operatorname{rep}_k Q\)，有自然的 \(k\)-线性同构
+\[
+\operatorname{Hom}_Q(F_i^-W,V)
+\cong\operatorname{Hom}_{Q'}(W,F_i^+V).
+\]
+即源点反射 \(F_i^-\) 是汇点反射 \(F_i^+\) 的左伴随，此处不要求排除简单直和项。记
+\[
+\phi_V:E_i(V)\longrightarrow V_i,\qquad
+\psi_W:W_i\longrightarrow E_i(W)
+\]
+为相应入箭之和与出箭组成的映射。单位与余单位为表示态射
+\[
+\eta_W:W\longrightarrow F_i^+F_i^-W,\qquad
+\varepsilon_V:F_i^-F_i^+V\longrightarrow V.
+\]
+两者在 \(i\) 以外的顶点均为恒等映射，在 \(i\) 处分别为
+\[
+\begin{aligned}
+(\eta_W)_i &: W_i\longrightarrow\operatorname{im}\psi_W,
+&w&\longmapsto\psi_W(w),\\
+(\varepsilon_V)_i &: E_i(V)/\ker\phi_V\longrightarrow V_i,
+&[x]&\longmapsto\phi_V(x).
+\end{aligned}
+\]
+其中 \((F_i^+F_i^-W)_i=\operatorname{im}\psi_W\)、\((F_i^-F_i^+V)_i=E_i(V)/\ker\phi_V\)。单位 \(\eta_W\) 总是满态射，且为同构当且仅当 \(\psi_W\) 单射；余单位 \(\varepsilon_V\) 总是单态射，且为同构当且仅当 \(\phi_V\) 满射。
+\end{proposition}
+\begin{proof}
+给定 \(i\) 以外的映射族 \(f_j:W_j\to V_j\)，先要求它与所有不接触 \(i\) 的箭相容。记各箭分量上的直和映射为 \(E(f):E_i(W)\to E_i(V)\)，并记商映射与包含映射为
+\[
+q_W:E_i(W)\longrightarrow E_i(W)/\operatorname{im}\psi_W,
+\qquad
+\kappa_V:\ker\phi_V\hookrightarrow E_i(V).
+\]
+将外部映射族延为 \(\alpha:F_i^-W\to V\)，须在 \(i\) 处找到 \(\alpha_i\)，使所有入箭交换。这些箭的直和包含合起来给出条件
+\[
+\alpha_iq_W=\phi_VE(f).
+\]
+因 \(q_W\) 满射，\(\alpha_i\) 至多有一个；它存在当且仅当
+\[
+\phi_VE(f)\psi_W=0.
+\]
+此时 \(\alpha_i\) 正是 \(\phi_VE(f)\) 在商空间上诱导的映射。另一方面，延为 \(\beta:W\to F_i^+V\) 所需的反向出箭交换条件，合起来是
+\[
+\kappa_V\beta_i=E(f)\psi_W.
+\]
+因 \(\kappa_V\) 单射，\(\beta_i\) 也至多有一个；它存在当且仅当同一个等式 \(\phi_VE(f)\psi_W=0\) 成立，此时由 \(E(f)\psi_W\) 限制值域得到。两边因而由相同的外部映射族描述，给出所述双射，并保持态射的加法与标量乘法。若分别在 \(W\)、\(V\) 两侧复合表示态射，外部直和映射随之复合，诱导的商映射与核映射也随之复合；故该同构对两个变量都自然。
+
+在上述对应中，\(\operatorname{id}_{F_i^-W}\) 对应的态射在 \(i\) 处由 \(\psi_W\) 限制值域到 \(\ker q_W=\operatorname{im}\psi_W\)，这就是 \(\eta_W\)。\(\operatorname{id}_{F_i^+V}\) 对应的态射在 \(i\) 处由 \(\phi_V\) 在 \(E_i(V)/\ker\phi_V\) 上诱导，这就是 \(\varepsilon_V\)。对每条 \(a:j\to i\)，\(\phi_V\) 与第 \(a\) 个包含的复合为 \(V_a\)；对每条 \(a^*:i\to j\)，\(\psi_W\) 与第 \(a\) 个投影的复合为 \(W_{a^*}\)。这具体说明两族顶点映射都与箭相容。
+
+若 \(h:V\to V'\)、\(g:W\to W'\) 为表示态射，则
+\[
+h_i\phi_V=\phi_{V'}E(h),\qquad
+E(g)\psi_W=\psi_{W'}g_i.
+\]
+取商或限制值域分别得到
+\[
+h\varepsilon_V=\varepsilon_{V'}F_i^-F_i^+(h),\qquad
+F_i^+F_i^-(g)\eta_W=\eta_{W'}g,
+\]
+因此余单位与单位都是自然变换。由这些公式直接复合，在顶点 \(i\) 分别得到 \(\ker\phi_V\) 与 \(E_i(W)/\operatorname{im}\psi_W\) 上的恒等映射，其他顶点也为恒等，故
+\[
+F_i^+(\varepsilon_V)\eta_{F_i^+V}=\operatorname{id}_{F_i^+V},
+\qquad
+\varepsilon_{F_i^-W}F_i^-(\eta_W)=\operatorname{id}_{F_i^-W}.
+\]
+这也是单位、余单位的两个三角恒等式。最后，\(\psi_W:W_i\to\operatorname{im}\psi_W\) 满射，且其核为 \(\ker\psi_W\)；\(E_i(V)/\ker\phi_V\to V_i\) 单射，且其像为 \(\operatorname{im}\phi_V\)。其余顶点为恒等映射，所以单、满性及所述同构条件均成立。
+\end{proof}
+
 \begin{theorem}[反射等价]\label{b5:thm:reflection-equivalence}
 设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(i\) 为汇点，\(Q'\) 为反转 \(i\) 处各箭所得箭图。对有限维 \(k\) 表示 \(V\) 属于 \(Q\)、\(W\) 属于 \(Q'\)，分别记 \(\phi_V:\bigoplus_{a:j\to i}V_j\to V_i\) 为入箭映射之和，\(\psi_W:W_i\to\bigoplus_{a^*:i\to j}W_j\) 为出箭映射组成的映射。令 \(\mathcal C\) 为 \(\operatorname{rep}_k Q\) 中 \(\phi_V\) 满射的对象组成的全子范畴，\(\mathcal D\) 为 \(\operatorname{rep}_k Q'\) 中 \(\psi_W\) 单射的对象组成的全子范畴。则汇点反射函子和源点反射函子
 \[
@@ -113,15 +195,7 @@ F_i^-:\mathcal D\longrightarrow\mathcal C
 互为拟逆。两边的对象条件分别等价于不含只在顶点 \(i\) 取 \(k\) 的简单表示 \(S_i\) 的非零直和项。
 \end{theorem}
 \begin{proof}
-对 \(V\in\mathcal C\)，写 \(E=E_i(V)\)、\(K=\ker\phi_V\)。在 \(F_i^+V\) 中，源点总映射就是包含 \(K\hookrightarrow E\)，故它属于 \(\mathcal D\)。再次反射后，顶点 \(i\) 上的空间为 \(E/K\)。映射
-\[
-E/K\longrightarrow V_i,\qquad [v]\longmapsto\phi_V(v)
-\]
-因满射条件而为同构。每条入箭由 \(V_j\hookrightarrow E\to E/K\) 给出，经过该同构正好恢复原来的 \(V_a\)。其他顶点取恒等，因而得到表示同构 \(F_i^-F_i^+V\cong V\)。
-
-对 \(W\in\mathcal D\)，记 \(L=W_i\)、\(E=E_i(W)\)，则 \(L\) 通过 \(\psi_W\) 单射嵌入 \(E\)。\(F_i^-W\) 的汇点总映射为商映射 \(E\to E/\psi_W(L)\)，所以它属于 \(\mathcal C\)。再取核便得到 \(\psi_W(L)\)，通过 \(\psi_W\) 与 \(L\) 同构。各投影限制到 \(\psi_W(L)\) 后恢复原来的出箭，故 \(F_i^+F_i^-W\cong W\)。
-
-对于态射，上述两个同构分别由商空间的诱导映射和原单射 \(\psi_W\) 构成。表示同态与两端的 \(\phi,\psi\) 构成交换方块，故诱导的商映射和核映射也与上述同构构成交换方块，因此所得同构是自然的。两种对象条件的直和解释由\cref{b5:lem:reflection-split-simple}给出。
+对任意 \(V\)，\(F_i^+V\) 的源点总映射是包含 \(\ker\phi_V\hookrightarrow E_i(V)\)，所以它属于 \(\mathcal D\)。对任意 \(W\)，\(F_i^-W\) 的汇点总映射是商映射 \(E_i(W)\to E_i(W)/\operatorname{im}\psi_W\)，所以它属于 \(\mathcal C\)。由\cref{b5:prop:reflection-adjunction}，当 \(V\in\mathcal C\) 时，余单位 \(\varepsilon_V:F_i^-F_i^+V\to V\) 为同构；当 \(W\in\mathcal D\) 时，单位 \(\eta_W:W\to F_i^+F_i^-W\) 为同构。它们已经与各箭相容，并对态射自然，因而在这两个子范畴上给出所需的拟逆同构。两种对象条件的直和解释由\cref{b5:lem:reflection-split-simple}给出。
 \end{proof}
 
 \begin{corollary}\label{b5:cor:reflection-indecomposables}
@@ -131,9 +205,32 @@ E/K\longrightarrow V_i,\qquad [v]\longmapsto\phi_V(v)
 这些不可分解对象都在\cref{b5:thm:reflection-equivalence}的相应全子范畴中。子范畴对直和项封闭：一个分块直和映射满射或单射，恰好当每个分块都如此。等价保持非零对象与直和分解，所以既保持也反映不可分解性；全忠实性给出自同态代数同构。维数变化由\cref{b5:prop:reflection-dimension}成立。
 \end{proof}
 
-反射等价不声称整个表示范畴等价，也不声称反射函子处处正合。例如对 \(1\to2\) 的短正合列
+上述全子范畴对直和项封闭，却不具有原表示范畴的全部子商封闭性。例如 \(1\to2\) 上的 \(P=(k\xrightarrow{1}k)\) 属于汇点 \(2\) 的 \(\mathcal C\)，但它的子表示 \(S_2=(0\to k)\) 不属于 \(\mathcal C\)。这一侧虽对商表示封闭，对任意子表示却不封闭。另一侧的 \(\mathcal D\) 对子表示封闭，因为单射 \(\psi_W\) 的限制仍单射；它对商表示不封闭：在 \(1\leftarrow2\) 上，\(P'=(k\xleftarrow{1}k)\) 属于 \(\mathcal D\)，商表示 \(P'/S_1=S_2\) 的源点总映射 \(k\to0\) 却不是单射。
+
+\ProseParagraphBreak
+
+在整个表示范畴上，汇点反射 \(F_i^+\) 是左正合函子，源点反射 \(F_i^-\) 是右正合函子。事实上，短正合列 \(0\to U\to V\to W\to0\) 在各顶点及各箭指标的直和上都保持正合。汇点总映射组成交换图，其核列
+\[
+0\longrightarrow\ker\phi_U\longrightarrow\ker\phi_V
+\longrightarrow\ker\phi_W
+\]
+正合：若 \(\ker\phi_V\) 中的元素映到零，它在 \(E_i(U)\) 中有唯一原像；由 \(U_i\to V_i\) 单射，此原像仍落在 \(\ker\phi_U\)。源点总映射的余核列
+\[
+\operatorname{coker}\psi_U\longrightarrow\operatorname{coker}\psi_V
+\longrightarrow\operatorname{coker}\psi_W\longrightarrow0
+\]
+正合：末项的每个类可由 \(E_i(V)\) 提升；若一个提升在 \(E_i(W)\) 中落入 \(\operatorname{im}\psi_W\)，先把相应的 \(W_i\) 元素提升到 \(V_i\)，减去其出箭像后便得到来自 \(E_i(U)\) 的代表元。其他顶点空间不变，故得到所述左、右正合性。
+
+\ProseParagraphBreak
+
+这两种函子一般不正合。对 \(1\to2\) 的短正合列
 \[
 0\longrightarrow S_2\longrightarrow
 (k\xrightarrow{1}k)\longrightarrow S_1\longrightarrow0,
 \]
-取 \(F_2^+\) 后，中间项成为反向箭图上的 \(S_1\)，最后一项成为 \(k\xleftarrow{1}k\)；两者之间的映射不是满射。后文只在上述明确的子范畴中使用拟逆。构造及其基本性质可参看\cite[Section 6.6, pp. 164--169]{EtingofEtAl2011RepresentationTheory}。
+取 \(F_2^+\) 后，中间项成为反向箭图上的 \(S_1\)，最后一项成为 \(P'=k\xleftarrow{1}k\)；诱导映射 \(S_1\to P'\) 在顶点 \(1\) 为恒等、顶点 \(2\) 为 \(0\to k\)，因而不是满态射。对反向箭图上的短正合列
+\[
+0\longrightarrow S_1\longrightarrow
+P'=(k\xleftarrow{1}k)\longrightarrow S_2\longrightarrow0,
+\]
+取 \(F_2^-\) 后，前两项分别成为 \(P=(k\xrightarrow{1}k)\)、\(S_1\)，最后一项成为零；诱导映射 \(P\to S_1\) 在顶点 \(1\) 为恒等、顶点 \(2\) 为 \(k\to0\)，因而不是单态射。后文只在上述明确的子范畴中使用拟逆，不能据此对原表示范畴的任意短正合列同时使用左、右正合性。构造及其基本性质可参看\cite[Section 6.6, pp. 164--169]{EtingofEtAl2011RepresentationTheory}。

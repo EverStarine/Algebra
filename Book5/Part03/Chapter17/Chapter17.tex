@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第17章　Weyl 群、Dynkin 图与分类
-% 纲要位置：工作记录/计划纲要.md，第 4256 行。
+% 纲要位置：工作记录/计划纲要.md，第 4613 行。
 
 \chapter{Weyl 群、Dynkin 图与分类}
 \label{b5:ch:17}
@@ -12,7 +12,7 @@
 
 \begin{learninggoals}
 \begin{itemize}
-\item 能计算简单反射、Weyl 群长度及根格和权格，识别支配权。
+\item 能计算简单反射和 Weyl 群长度，用逐次反射求支配代表，并区分根格与权格。
 \item 能在带箭头的 Dynkin 图与 Cartan 矩阵之间转换，并保持行列约定。
 \item 用正定性排除圈、过多分叉与重边，说明根系分类为何穷尽。
 \item 能在经典坐标模型及 \(E_8\) 格模型中直接检查根的性质。
@@ -30,15 +30,15 @@
 \input{Part03/Chapter17/Section1704}
 
 \begin{chaptersummary}
-Weyl 群由简单反射生成，最短表达的长度等于它改变符号的正根数。室的内部具有单纯传递作用，闭室则给每个轨道唯一代表；位于边界上的向量仍可有非平凡稳定子群。权格采用简单余根的对偶基，支配整权因而对应基本权的非负整数系数。
+Weyl 群由简单反射生成，最短表达的长度等于它改变符号的正根数。群在开室的集合上单纯传递，闭室则给每个轨道唯一代表；逐次反射负的简单余根配对可以找到这个代表。位于边界上的向量仍可有非平凡稳定子群。根格记录根方向的整数变化，权格还容纳有限维表示的最高权；支配整权对应基本权的非负整数系数。
 
 \ProseParagraphBreak
 
-Dynkin 图保存 Cartan 矩阵，Cartan 矩阵再通过简单反射恢复全部根。分类的穷尽性来自正定 Gram 矩阵：先排除圈和复杂分叉，再对三臂树与含重边的链逐一计算。坐标模型保证留下的每一种形状都确实存在。
+Dynkin 图保存 Cartan 矩阵，Cartan 矩阵再通过简单反射恢复全部根。边的重数决定两简单反射乘积的阶，箭头则区分根的长短；归一化 Gram 矩阵只保留前一类几何数据。分类的穷尽性来自正定性：先排除圈和复杂分叉，再对三臂树与含重边的链逐一计算。坐标模型保证留下的每一种形状都确实存在。
 
 \ProseParagraphBreak
 
-Serre 构造从 Dynkin 图得到 Lie 代数。允许任意参数的自由字作用证明 Cartan 生成元线性无关；局部幂零的伴随指数把可能的非零次数降到简单根；有限根集合随后给出整个代数的维数。
+Serre 构造从 Dynkin 图得到 Lie 代数。允许任意参数的自由字作用证明 Cartan 生成元线性无关；局部幂零的伴随指数把可能的非零次数降到简单根，有限根集合随后给出整个代数的维数。Killing 配对的非退化性另外保证半单性，满足生成关系的同态与维数比较则识别同构类型。保持简单根基的图自同构可以提升为 Lie 代数自同构；它保持基本室，因此非平凡时不属于 Weyl 群。
 \end{chaptersummary}
 
 \BookExercises
@@ -59,6 +59,7 @@ Serre 构造从 Dynkin 图得到 Lie 代数。允许任意参数的自由字作�
 写出简单反射矩阵，求 \(s_1s_2\) 的阶和 \(W\) 的阶。
 \end{exercise}
 \begin{solution}
+在环境空间的标准基 \(e_1,e_2\) 下，反射矩阵为
 \[
 s_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
 s_2=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
@@ -172,7 +173,7 @@ P=\mathbb Z^2\cup
 构造三臂长为 \(2,2,2\) 的单边树的一个正整数零向量，即使其 Gram 二次型为零的非零向量。若在任一臂上再加一个顶点，为什么仍不可能正定？
 \end{exercise}
 \begin{solution}
-中心赋值 \(3\)，每条臂从中心向外赋值 \(2,1\)。
+正文把臂长记为 \(p-1,q-1,r-1\)，所以本题对应 \(p=q=r=3\)，倒数和为 \(1\)。令中心赋值 \(3\)，每条臂从中心向外赋值 \(2,1\)。
 半个 Gram 二次型等于
 \(9+3(4+1)-3(6+2)=0\)。
 加顶点后让新坐标为零，原向量的二次型仍为零，因此扩大的矩阵仍非正定。
@@ -245,18 +246,33 @@ s_\alpha\beta
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:17-serre-a2}
-在 \(A_2\) 的 Serre 展示中，令 \(z=[e_1,e_2]\)。
-证明正部由 \(e_1,e_2,z\) 张成，并计算
-\([f_1,z]\)、\([f_2,z]\)，由此验证 \(z\ne0\)。
+设 \(A=\left(\begin{smallmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{smallmatrix}\right)\)，在复 Serre 代数 \(\mathfrak g(A)\) 中令
+\[
+u=[e_1,e_2],\qquad v=[e_2,e_3],\qquad z=[u,e_3].
+\]
+用 Jacobi 恒等式证明 \(z=[e_1,v]\)、\([u,v]=0\)，并证明正部 \(\mathfrak n^+\) 有基 \(e_1,e_2,e_3,u,v,z\)。计算 \([f_1,u]\)、\([f_2,v]\)、\([f_1,z]\)，据此说明三个非简单根向量非零；最后写出 \(\mathfrak n^+\) 到四阶严格上三角矩阵 Lie 代数的同构。
 \end{optionalexercise}
 \begin{solution}
-Serre 关系给出 \([e_1,z]=[e_2,z]=0\)，所以三维跨度对括号封闭且含正部的两个生成元，因而就是正部。
-由 Jacobi 恒等式，
+非相邻根的关系给出 \([e_1,e_3]=0\)，故 Jacobi 恒等式直接给出 \(z=[e_1,[e_2,e_3]]=[e_1,v]\)。相邻根的 Serre 关系给出
 \[
-[f_1,z]=[-h_1,e_2]=e_2,\qquad
-[f_2,z]=[e_1,-h_2]=-e_1.
+[e_1,u]=[e_2,u]=[e_2,v]=[e_3,v]=0.
 \]
-\(e_1,e_2\) 非零，故 \(z\ne0\)。三个元素又有不同的根次数，线性无关。
+分别用 \(z=[u,e_3]\) 和 \(z=[e_1,v]\) 计算，得到
+\[
+[e_2,z]=[u,v],\qquad [e_2,z]=-[u,v].
+\]
+复数域上遂有 \([u,v]=[e_2,z]=0\)。其余两简单生成元与 \(z\) 的括号也由上述 Serre 关系及 \([e_1,e_3]=0\) 得到零；再用 Jacobi 恒等式可得 \([u,z]=[v,z]=0\)。所以所列六个向量的线性生成空间对括号封闭，并含全部正部生成元，恰为 \(\mathfrak n^+\)。
+
+由 \([f_i,e_j]=-\delta_{ij}h_i\)，有
+\[
+[f_1,u]=e_2,\qquad [f_2,v]=e_3,\qquad [f_1,z]=v.
+\]
+\cref{b5:lem:serre-triangular-noncollapse}保证 \(h_i\ne0\)，而 \([e_i,f_i]=h_i\) 保证 \(e_i\ne0\)；三式因而依次给出 \(u,v,z\ne0\)。六个向量的根次数各不相同，所以线性无关。以 \(E_{ij}\) 记四阶矩阵单位，所求同构为
+\[
+e_i\longmapsto E_{i,i+1}\ (1\le i\le3),\qquad
+u\longmapsto E_{13},\quad v\longmapsto E_{24},\quad z\longmapsto E_{14}.
+\]
+两边的全部非零基本括号都是 \([e_1,e_2]=u\)、\([e_2,e_3]=v\)、\([e_1,v]=[u,e_3]=z\) 及其反向括号，故这个基之间的双射保持 Lie 括号。
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:17-serre-parameters}
@@ -289,13 +305,20 @@ E_i f_i^m=m(\lambda_i-m+1)f_i^{m-1}.
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:17-diagram-automorphism}
-设 \(\sigma\) 为保持 Cartan 矩阵的顶点置换。证明
-\(e_i\mapsto e_{\sigma(i)},f_i\mapsto f_{\sigma(i)},h_i\mapsto h_{\sigma(i)}\)
-延拓为 \(\mathfrak g(A)\) 的自同构。对 \(D_4\) 指出由图得到的这类自同构群。
+在复 \(D_4\) 型 Serre 代数中，编号 \(2\) 为中心顶点，\(1,3,4\) 为三个叶点。令 \(\sigma=(1\ 3)\)、\(\tau=(1\ 3\ 4)\)，以同样的符号记它们在生成元上的置换所诱导的 Lie 代数自同构。求它们各自在 \(\mathfrak h=\bigoplus_{i=1}^4\mathbb Ch_i\) 上的固定空间，并证明
+\[
+\sigma^2=1,\qquad \tau^3=1,\qquad \sigma\tau\sigma=\tau^{-1}.
+\]
+它们生成的自同构群是什么？它们对根系的非平凡作用能否属于 Weyl 群？
 \end{optionalexercise}
 \begin{solution}
-每一条定义关系在置换后仍是同一矩阵的一条关系，所以由展示泛性质得到同态；
-使用 \(\sigma^{-1}\) 得到其逆，故为自同构。
-\(D_4\) 图有一个中心及三个等长的单顶点臂，三个叶点可任意置换，故得到一个 \(S_3\) 自同构群。
-这里构造了图自同构在 Lie 代数上的作用；它不等于证明全部形式的三重性分类。
+它们都固定 \(h_2\)，并按相应排列置换 \(h_1,h_3,h_4\)。由于四个 \(h_i\) 线性无关，固定空间分别为
+\[
+\begin{aligned}
+\mathfrak h^\sigma&=\mathbb Ch_2\oplus\mathbb Ch_4\oplus\mathbb C(h_1+h_3),\\
+\mathfrak h^\tau&=\mathbb Ch_2\oplus\mathbb C(h_1+h_3+h_4),
+\end{aligned}
+\]
+维数为 \(3\) 和 \(2\)。三条群关系在每个 \(e_i,f_i,h_i\) 上都化为叶点排列的关系，所以在整个生成代数上成立。它们的阶分别恰为 \(2\) 和 \(3\)；所生成群中的每个元素都可写为 \(\tau^j\) 或 \(\sigma\tau^j\)、\(0\le j<3\)，而这六个元素在 \(\mathfrak h\) 上给出不同排列，故生成群为 \(S_3\)。
+两者置换简单根，因而保持基本 Weyl 室。由\cref{b5:thm:weyl-chambers-length}，Weyl 群中保持这个室的元素只有恒等，所以这两个非平凡根系作用均不属于 Weyl 群。
 \end{solution}

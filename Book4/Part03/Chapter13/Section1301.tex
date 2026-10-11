@@ -47,7 +47,7 @@ m\longmapsto cmd\longmapsto a(cmd)b=acm(db).
 \[
 m\cdot(a\otimes b^{\mathrm{op}})=bma.
 \]
-先作用 \(a\otimes b^{\mathrm{op}}\)，再作用 \(c\otimes d^{\mathrm{op}}\)，所得为 \(dbmac\)，与乘积 \(ac\otimes(db)^{\mathrm{op}}\) 的作用一致。上标 \(\mathrm r\) 只提醒这里更换了作用方向，并未更换底层向量空间。计算 Ext 时使用左 \(A^e\) 模，计算 Tor 时两个输入必须一右一左，所以把系数双模改写为 \(M^{\mathrm r}\)。
+先作用 \(a\otimes b^{\mathrm{op}}\)，再作用 \(c\otimes d^{\mathrm{op}}\)，所得为 \(dbmac\)，与乘积 \(ac\otimes(db)^{\mathrm{op}}\) 的作用一致。上标 \(\mathrm r\) 只提醒这里更换了作用方向，并未更换底层向量空间。计算 \(\operatorname{Ext}_{A^e}^n(A,M)\) 时，系数 \(M\) 保持前面的左 \(A^e\) 模结构；计算 \(\operatorname{Tor}^{A^e}_n(M^{\mathrm r},A)\) 时两个输入必须一右一左，才把第一个输入，即系数双模，改写为 \(M^{\mathrm r}\)。
 
 \subsection{Hochschild 同调和上同调}
 \label{b4:subsec:1201:02}
@@ -98,7 +98,7 @@ A^e\otimes_k A^{\otimes n}\longrightarrow B_n(A),\qquad
 (a\otimes b^{\mathrm{op}})\otimes(x_1\otimes\cdots\otimes x_n)
 \longmapsto a\otimes x_1\otimes\cdots\otimes x_n\otimes b.
 \]
-为中间向量空间选一组 \(k\) 基，便得到一组 \(A^e\) 基。
+逆映射把 \(a_0\otimes\cdots\otimes a_{n+1}\) 送到 \((a_0\otimes a_{n+1}^{\mathrm{op}})\otimes(a_1\otimes\cdots\otimes a_n)\)。两次复合都恢复原张量；最外两因子的左右乘法也正对应 \(A^e\) 在第一因子上的左乘，故确为左模同构。为中间向量空间选一组 \(k\) 基，便得到一组 \(A^e\) 基。
 
 在底层向量空间上定义
 \[
@@ -106,14 +106,25 @@ s_{-1}(a)=1\otimes a,\qquad
 s_n(a_0\otimes\cdots\otimes a_{n+1})
 =1\otimes a_0\otimes\cdots\otimes a_{n+1}.
 \]
-\(\mathrm{d}_{n+1}s_n\) 的首项是原张量；其余合并项与 \(s_{n-1}\mathrm{d}_n\) 逐项抵消，所以 \(\mathrm{d}s+s\mathrm{d}=1\)，增广处为 \(\varepsilon s_{-1}=1\)。故底层向量空间复形正合，也即双模复形正合。这里的 \(s_n\) 通常不是双模同态。例如在 \(A=k[x]\) 中，\(s_{-1}(x)=1\otimes x\)，而左乘 \(x\) 后的 \(x s_{-1}(1)=x\otimes1\)，两者不同。收缩只负责证明正合性；各项的 \(A^e\) 自由性则负责保证投射性，两者合起来才说明这是可用于计算 Ext、Tor 的投射消解，并不要求 \(A\) 本身是投射双模。
+记 \(t=a_0\otimes\cdots\otimes a_{n+1}\)，并在 \(n=0\) 时以 \(\mathrm d_0=\varepsilon\) 表示增广。将前面插入的 \(1\) 与 \(a_0\) 相乘给出首项 \(t\)，其余项为
+\[
+\begin{aligned}
+\mathrm d_{n+1}s_n(t)
+&=t+\sum_{i=0}^n(-1)^{i+1}
+ 1\otimes a_0\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_{n+1},\\
+s_{n-1}\mathrm d_n(t)
+&=\sum_{i=0}^n(-1)^i
+ 1\otimes a_0\otimes\cdots\otimes a_i a_{i+1}\otimes\cdots\otimes a_{n+1}.
+\end{aligned}
+\]
+两式逐项相消，所以 \(\mathrm{d}s+s\mathrm{d}=1\)；增广处则有 \(\varepsilon s_{-1}(a)=\varepsilon(1\otimes a)=a\)。故底层向量空间复形正合，也即双模复形正合。这里的 \(s_n\) 通常不是双模同态。例如在 \(A=k[x]\) 中，\(s_{-1}(x)=1\otimes x\)，而左乘 \(x\) 后的 \(x s_{-1}(1)=x\otimes1\)，两者不同。收缩只负责证明正合性；各项的 \(A^e\) 自由性则负责保证投射性，两者合起来才说明这是可用于计算 Ext、Tor 的投射消解，并不要求 \(A\) 本身是投射双模。
 \end{proof}
 
-施加 Hom 得到上链复形
+施加 \(\operatorname{Hom}_{A^e}(-,M)\) 得到上链复形
 \[
 C^n(A,M)=\operatorname{Hom}_k(A^{\otimes n},M),\qquad C^0(A,M)=M,
 \]
-因为双模同态由其在 \(1\otimes a_1\otimes\cdots\otimes a_n\otimes1\) 上的值决定。微分写成
+这里将双模同态限制到 \(1\otimes a_1\otimes\cdots\otimes a_n\otimes1\)；反过来，任一 \(k\) 线性映射 \(\phi:A^{\otimes n}\to M\) 唯一延拓为 \(\widetilde\phi(a_0\otimes\cdots\otimes a_{n+1})=a_0\cdot\phi(a_1,\ldots,a_n)\cdot a_{n+1}\)。这个公式保持两侧作用，两次限制、延拓互逆。微分写成
 \begin{equation}\label{b4:eq:hochschild-coboundary}
 \begin{aligned}
 (\delta f)(a_1,\ldots,a_{n+1})

@@ -1,8 +1,9 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 10.1 Euler 型与维数向量
-% 纲要位置：工作记录/计划纲要.md，第 4050 行。
+% 纲要位置：工作记录/计划纲要.md，第 4380 行。
 % * 箭图的 Euler 双线性型
-% * Hom、Ext 与维数向量
+% * Hom、Ext 与维数向量；在有限无圈路径代数上连接投射覆盖的 Cartan 矩阵与 Euler 矩阵，固定转置方向并比较根系型
+% * 以单箭方向比较和一阶换基解释自扩张，将非正定维数向量同有效换基参数数目联系
 % * 二次型的正定性
 % * 从有限无环箭图定义 \(q_Q(\mathbf d)=\sum_i d_i^2-\sum_{a:i\to j}d_id_j\)，独立处理其正定性与 ADE 图的关系
 % * 在顶点整数格上定义简单反射和正根，证明本章需要的基本性质；与第17章根系的对应在构造后说明，不预设全部半单 Lie 代数理论
@@ -37,7 +38,7 @@ B_Q(\mathbf x,\mathbf y)&=\langle\mathbf x,\mathbf y\rangle_Q+
 c_{ii}=2,\qquad c_{ij}=-m_{ij}\quad(i\neq j),\qquad
 B_Q(\mathbf x,\mathbf x)=2q_Q(\mathbf x).
 \]
-本章不允许环，但允许平行箭；无向圈与有向圈是两种不同条件。
+本章的无有向环条件排除所有正长度有向闭路径，但允许平行箭；无向圈与有向圈是两种不同条件。
 
 \subsection{Hom、Ext 与维数向量}
 \label{b5:subsec:1001:02}
@@ -65,7 +66,79 @@ B_Q(\mathbf x,\mathbf x)=2q_Q(\mathbf x).
 它适用于当前的有限无环箭图和有限维表示。对有限维正合列取维数交错和，两个中间项的维数分别为 \(\sum_i d_i e_i\) 与 \(\sum_{a:i\to j}d_i e_j\)，即得公式。再令 \(W=V\)。
 \end{proof}
 
-例如，对 \(1\to2\)，令 \(V\) 为 \(k\xrightarrow{1}k\)，则自同态为两端相同的标量，故 \(\dim\operatorname{End}_Q(V)=1\)。因为 \(q_Q(1,1)=1\)，公式给出 \(\operatorname{Ext}^1_{kQ}(V,V)=0\)。若把箭映射换成零，同一维数向量上的表示成为 \(S_1\oplus S_2\)，自同态空间维数增为 \(2\)，自扩张空间的维数也增为 \(1\)。因此 \(q_Q(\mathbf d)=1\) 并不表示维数为 \(\mathbf d\) 的每个表示都不可分解。
+前面由投射覆盖定义的代数 Cartan 矩阵，也可在这个 Euler 型中恢复；这解释了它与当前对称矩阵 \(C\) 的关系。
+
+\begin{proposition}\label{b5:prop:path-cartan-euler}
+设 \(k\) 为域，\(Q\) 为非空有限无有向环箭图，顶点编号为 \(1,\ldots,n\)，\(A=kQ\) 为不加其他关系的路径代数。记顶点简单模为 \(S_i\)，它的投射覆盖为 \(P_i=Ae_i\)，按\cref{b5:def:modular-cartan-matrix}令 \(C_A=([P_j:S_i])_{i,j}\)。令 \(E_Q\) 为 Euler 型的矩阵，即 \(\langle\mathbf x,\mathbf y\rangle_Q=\mathbf x^T E_Q\mathbf y\)。则
+\begin{equation}\label{b5:eq:path-cartan-euler}
+C_A^T E_Q=I_n,\qquad
+E_Q=C_A^{-T},\qquad
+C=E_Q+E_Q^T=C_A^{-T}+C_A^{-1},
+\end{equation}
+其中 \(C\) 是 \(B_Q\) 的矩阵，\(C_A^{-T}\) 表示 \((C_A^{-1})^T\)。
+\end{proposition}
+\symidx{\(E_Q\)：箭图 Euler 型在顶点坐标下的矩阵}
+\begin{proof}
+无有向环条件使箭理想 \(\mathfrak a\) 幂零，故可将\cref{b5:prop:bound-quiver-radical}用于关系理想 \(0\)，得到 \(J(A)=\mathfrak a\) 及 \(A/J(A)\cong k^n\)。所以全部简单模正是维数向量为 \(\mathbf e_i\) 的 \(S_i\)。由\cref{b5:prop:vertex-projective}，\(P_i=Ae_i\) 投射，其顶 \(P_i/J(A)P_i\) 为 \(S_i\)；自然商的核为 \(J(A)P_i\)，由\cref{b5:prop:projective-cover-top}是投射覆盖。
+
+顶点空间上的取值保持正合，而简单模 \(S_i\) 只在顶点 \(i\) 贡献一个维数。因此任意有限维模 \(M\) 的合成重数 \([M:S_i]\) 等于 \(\dim_k M_i\)，从而 \(P_j\) 的维数向量正是 \(C_A\) 的第 \(j\) 列。又由\cref{b5:prop:vertex-projective}，\(\operatorname{Hom}_A(P_i,S_j)\cong(S_j)_i\)，维数为 \(\delta_{ij}\)，而 \(P_i\) 投射使 \(\operatorname{Ext}_A^1(P_i,S_j)=0\)。于是\eqref{b5:eq:quiver-euler-hom-ext}给出
+\[
+(C_A^TE_Q)_{ij}
+=\langle C_A\mathbf e_i,\mathbf e_j\rangle_Q=\delta_{ij}.
+\]
+这证明第一式，也证明 \(C_A\) 可逆。取逆和对称化，得到其余两式。
+\end{proof}
+
+当无向基础图为 ADE 图时，\(C\) 正是第十七章由简单根定义的 Cartan 矩阵；它来自 Euler 型的对称化。代数 Cartan 矩阵 \(C_A\) 自身一般不对称，上述联系使用了无有向环且没有额外关系的路径代数条件，不能照搬到任意有限维代数。
+
+对单箭图 \(Q:1\to2\)，两个矩阵具体为
+\[
+C_A=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+E_Q=\begin{pmatrix}1&-1\\0&1\end{pmatrix},\qquad
+C=\begin{pmatrix}2&-1\\-1&2\end{pmatrix}.
+\]
+两个顶点简单表示 \(S_1,S_2\) 之间的 Hom 都为零，但
+\[
+\langle\mathbf e_1,\mathbf e_2\rangle_Q=-1,
+\qquad \langle\mathbf e_2,\mathbf e_1\rangle_Q=0.
+\]
+因此 \(\operatorname{Ext}^1_{kQ}(S_1,S_2)\cong k\)，反方向的 Ext 为零；非零扩张由
+\[
+0\longrightarrow S_2\longrightarrow
+(k\xrightarrow{1}k)\longrightarrow S_1\longrightarrow0
+\]
+表示。将箭反向，这两个 Ext 空间的情形也反转，而二次型始终为 \(q_Q(x_1,x_2)=x_1^2+x_2^2-x_1x_2\)。Euler 型保留两个表示之间有方向的 Hom 与 Ext 信息，二次型则比较一个表示的自同态与自扩张。后面只凭无向图判断有限表示型，并不表示改变箭向后，相应对象之间的态射和扩张也不变。
+
+\ProseParagraphBreak
+
+再令 \(V_\alpha=(k\xrightarrow{\alpha}k)\)。若 \(\alpha\ne0\)，箭交换条件使自同态为两端相同的标量，故 \(\dim\operatorname{End}_Q(V_\alpha)=1\)。因为 \(q_Q(1,1)=1\)，公式给出自扩张空间为零。若 \(\alpha=0\)，表示成为 \(S_1\oplus S_2\)，自同态空间维数增为 \(2\)，自扩张空间的维数也增为 \(1\)。因此 \(q_Q(\mathbf d)=1\) 并不表示维数为 \(\mathbf d\) 的每个表示都不可分解。
+
+\ProseParagraphBreak
+
+自扩张还与箭矩阵的变化直接相连。对有限无环箭图上的有限维表示 \(V\)，在每个顶点固定一组基。令
+\[
+\begin{aligned}
+\delta_V:\bigoplus_i\operatorname{End}_k(V_i)
+&\longrightarrow\bigoplus_{a:i\to j}\operatorname{Hom}_k(V_i,V_j),\\
+(f_i)_i&\longmapsto(V_af_i-f_jV_a)_a.
+\end{aligned}
+\]
+这是\cref{b5:thm:quiver-hom-ext-euler}中取 \(W=V\) 的映射，其核为 \(\operatorname{End}_Q(V)\)，余核为 \(\operatorname{Ext}^1_{kQ}(V,V)\)。在环 \(k[\varepsilon]/(\varepsilon^2)\) 上，矩阵 \(g_i=I+\varepsilon f_i\) 的逆为 \(I-\varepsilon f_i\)，故换基给出
+\[
+g_jV_ag_i^{-1}
+=V_a+\varepsilon(f_jV_a-V_af_i)
+=V_a-\varepsilon\delta_V((f_i))_a.
+\]
+无关系箭图中，任意矩阵组 \((\xi_a)_a\) 都可以作为一阶变化 \(V_a+\varepsilon\xi_a\)。两个这样的变化经模 \(\varepsilon\) 为恒等的换基对应，当且仅当它们的差属于 \(\operatorname{im}\delta_V\)。所以这个余核记录了不能由这种换基消去的一阶变化。若记箭矩阵空间与顶点自同态空间的维数分别为
+\[
+N=\sum_{a:i\to j}d_id_j,\qquad m=\sum_i d_i^2,
+\]
+则 \(q_Q(\mathbf d)=m-N\)，而秩与零度公式给出
+\[
+\dim_k\operatorname{Ext}^1_{kQ}(V,V)
+=N-\bigl(m-\dim_k\operatorname{End}_Q(V)\bigr).
+\]
+\secref{b5:sec:1003}的参数计数也将比较这两个空间的维数，不过那里研究全部换基轨道，不能把当前表示处的自扩张维数直接当成全局同构类的参数个数。例如单箭图上 \(\delta_{V_\alpha}(u,v)=(u-v)\alpha\)：\(\alpha\ne0\) 时它满射，\(\alpha=0\) 时它为零。零箭表示 \(V_0=S_1\oplus S_2\) 处虽有一维自扩张，维数向量 \((1,1)\) 上却只有零箭与非零箭两种同构类型。
 
 \subsection{二次型的正定性}
 \label{b5:subsec:1001:03}
@@ -127,6 +200,12 @@ q_Q(\mathbf x)=\frac12\sum_{\text{三个臂}}\sum_{j=0}^{p-1}
 还须解出严格不等式。若 \(p\geq3\)，三个倒数之和至多为 \(1\)，故 \(p=2\)。若 \(q=2\)，所有 \(r\geq2\) 都可行，给出 \(D_{r+2}\)。若 \(q\geq4\)，则和至多为 \(1/2+1/4+1/4=1\)；剩下 \(q=3\)，而 \(1/r>1/6\) 恰好给出 \(r=3,4,5\)，分别为 \(E_6,E_7,E_8\)。这证明了正定判别，也在所有被排除的情形构造了所需整数向量。
 \end{proof}
 
+图判别中构造 \(q_Q(\mathbf d)\leq0\) 的非零非负整数向量，还有一个表示论上的原因。固定这一维数向量，箭矩阵有 \(N=\sum_{a:i\to j}d_id_j\) 个坐标，顶点换基矩阵有 \(m=\sum_i d_i^2\) 个坐标，而 \(q_Q(\mathbf d)=m-N\)。所有换基矩阵同时乘同一个非零标量，并不改变任何箭矩阵，所以实际换基至少少一个自由度。于是 \(q_Q(\mathbf d)\leq0\) 意味着 \(N\geq m>m-1\)：箭矩阵所含的参数已多于这种换基能够消去的参数。\cref{b5:lem:quiver-parameter-count}将用多项式关系严格证明，在无限域上有限多个轨道不能覆盖整个矩阵空间。
+
+\ProseParagraphBreak
+
+在两顶点维数均为 \(1\) 时，这个临界值尤其清楚。一条箭的二次型值为 \(1\)，所有非零箭经换基只给出一个类型。两条平行箭时值为 \(0\)，换基同时缩放标量对 \((a,b)\)，非零对的类型由比例 \([a:b]\in\mathbb P^1(k)\) 区分；这指非零标量对在共同非零倍数下的等价类。三条平行箭时值为 \(-1\)，第一条箭非零的表示可化为 \((1,\lambda,\mu)\)，余下两个参数都不能再由换基改变。这些计算显示不可消去的参数怎样出现；从固定维数上的无穷多个类型进一步推出不可分解类型也无穷，还须用直和分解及总维数对直和项数的限制，见\cref{b5:thm:gabriel}的必要性证明。
+
 \subsection{整数格上的简单反射与正根}
 \label{b5:subsec:1001:05}
 
@@ -163,7 +242,7 @@ q(\mathbf u-\mathbf v)=q(\mathbf u)+q(\mathbf v)-B(\mathbf u,\mathbf v)\geq2.
 \sum_i\alpha_i\cdot B(\symbfit\alpha,\mathbf e_i)
 =B(\symbfit\alpha,\symbfit\alpha)=2.
 \]
-故某个 \(\alpha_i>0\) 的位置满足 \(B(\symbfit\alpha,\mathbf e_i)>0\)。若根非简单，第二项保证 \(s_i\symbfit\alpha\) 为正根，而其坐标和减少这个正整数。反复进行，正整数的坐标和最终不能再减少，终点只能是简单根。反向使用同一组反射即得最后的断言；负根先由 \(s_i\mathbf e_i=-\mathbf e_i\) 处理。
+故某个 \(\alpha_i>0\) 的位置满足 \(B(\symbfit\alpha,\mathbf e_i)>0\)。若根非简单，第二项保证 \(s_i\symbfit\alpha\) 为正根；由 \(s_i\symbfit\alpha=\symbfit\alpha-B(\symbfit\alpha,\mathbf e_i)\mathbf e_i\)，其坐标和恰减少正整数 \(B(\symbfit\alpha,\mathbf e_i)\)。反复进行，正整数的坐标和不能无限下降，终点只能是简单根。因为每个 \(s_i^2=1\)，按相反次序使用这些反射便逐项恢复原来的正根；这证明每个正根都可由简单根经有限次简单反射得到。若 \(\symbfit\alpha=w\mathbf e_i\)，其中 \(w\) 为这些反射的复合，则 \(-\symbfit\alpha=w(-\mathbf e_i)=ws_i\mathbf e_i\)，也从简单根得到负根。
 \end{proof}
 
 这些根暂时只是整数格中的向量。它们与不可分解表示的对应将在\secref{b5:sec:1003}证明；以后 Lie 代数中也会出现相同的 ADE 图。根与反射的这套构造可对照\cite[Section 6.4, pp. 160--163]{EtingofEtAl2011RepresentationTheory}。

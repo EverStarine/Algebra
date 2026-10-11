@@ -1,10 +1,10 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 附录 A　组合代数与反射群
-% 纲要位置：工作记录/计划纲要.md，第 4792 行。
+% 纲要位置：工作记录/计划纲要.md，第 4910 行。
 % * Coxeter 群及长度和 Bruhat 序
-% * 对称函数、Young 表和组合恒等式
-% * 代数结合组合的计数方法
-% * Hecke 标准基的左右算子模型、Kazhdan–Lusztig 规范基的递推证明及低秩胞腔
+% * 对称函数、Young 表的权计数、插入取逆与格路径恒等式
+% * 分拆双射、Gaussian 面积公式及有限域旗的规范坐标计数
+% * Hecke 标准基的左右算子模型、Kazhdan–Lusztig 规范基递推、低秩胞腔及参数特化
 
 \chapter{组合代数与反射群}
 \label{b5:app:A}
@@ -49,7 +49,7 @@
 \[
 1;\quad s,t;\quad st,ts;\quad sts,tst;\quad stst=tsts.
 \]
-在长度小于四时，约去相邻相同字母后只剩交替词，两个不同交替词在正方形的旋转反射模型中不同。长度四的两词由辫关系相等，其他更长词可利用这个关系并约去相同邻字继续缩短。因而所列长度分别为 \(0,1,2,3,4\)，生成多项式为 \(1+2q+2q^2+2q^3+q^4\)。
+在长度小于四时，约去相邻相同字母后只剩交替词，两个不同交替词在正方形的旋转反射模型中不同。由\subsecref{b5:subsec:A01:01}的秩二模型，所列八个元素确实互异。长度四的等式 \(stst=tsts\) 来自 \((st)^4=1\)，而非长度三的辫关系；其他更长词可利用这个关系并约去相同邻字继续缩短。因而所列长度分别为 \(0,1,2,3,4\)，生成多项式为 \(1+2q+2q^2+2q^3+q^4\)。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-bubble-word}
@@ -64,7 +64,7 @@
 在 \(S_3\) 中给出两个长度相同却不能在 Bruhat 序下比较的不同元素；再给出一对在 Bruhat 序下可比而在右弱序下不可比的元素，并直接核验。
 \end{exercise}
 \begin{solution}
-\(s\) 与 \(t\) 均长度一。Bruhat 的非空链严格增加长度，所以二者不可比。另一例取 \(t\) 与 \(st\)：右乘反射 \(tst\) 有 \(t(tst)=st\)，长度增加，故 \(t\le st\)。若右弱序可比，长度差一迫使 \(st=tr\)、\(r\in\{s,t\}\)，但 \(ts\ne st\)、\(tt=1\)，矛盾。
+取 \(s=(12)\)、\(t=(23)\)，它们均长度一。Bruhat 序中 \(u<v\) 必有 \(\ell(u)<\ell(v)\)，所以这两个不同元素不可比。另一例取 \(t\) 与 \(st\)：右乘反射 \(tst\) 有 \(t(tst)=st\)，长度增加，故 \(t\le st\)。右弱序也严格增加长度，故唯一可能的方向是 \(t\le_R st\)。长度差一迫使 \(st=tr\)、\(r\in\{s,t\}\)；但 \(r=s\) 给出错误的 \(st=ts\)，\(r=t\) 则给出 \(st=1\)，都不成立。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-longest-complement}
@@ -76,26 +76,34 @@
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-semistandard-21}
-求用 \(1,2,3\) 填写的形状 \((2,1)\) 的半标准表数，并按重量说明计数。
+求用 \(1,2,3\) 填写的形状 \((2,2)\) 的半标准表数，按重量写出 \(s_{(2,2)}(x_1,x_2,x_3)\)，并说明对应的权空间维数。
 \end{exercise}
 \begin{solution}
-重量为某两个数字中的一个出现两次、另一个一次时，只要确有两个不同数字，恰有一张半标准表；三个数字中选择重复数字及另一数字，给出六张。重量 \((1,1,1)\) 时，左上角必须是一，二、三可以交换放在右上角和左下角，给出两张。只有一个数字时列严格递增不可能。因此共八张，对应
+每列自上而下只能是 \((1,2),(1,3),(2,3)\) 之一。它们按上下两个分量分别比较，依次递增；行弱递增要求左列不大于右列。因此两列的选择为前三种列中可重复的无序二元组，共六种。两列相同时，重量依次为 \((2,2,0),(2,0,2),(0,2,2)\)；两列不同时，重量为 \((2,1,1),(1,2,1),(1,1,2)\)。每种重量恰有一张表，故
 \[
-s_{(2,1)}(x_1,x_2,x_3)
-=\sum_{i\ne j}x_i^2x_j+2x_1x_2x_3.
+s_{(2,2)}(x_1,x_2,x_3)
+=\sum_{i<j}x_i^2x_j^2+x_1x_2x_3(x_1+x_2+x_3).
 \]
+在特征零的 Schur 模中，这六个重量对应的权空间各为一维，总维数为六。这里没有不同表给出相同重量的情形，可与\cref{b5:prop:A-schur-21-weights}中形状 \((2,1)\) 的二重权空间比较。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-insert-2413}
-对置换 \(2413\) 进行行插入，求 \(P,Q\)，再从所得表对逆向恢复置换。
+对置换 \(35124\) 进行行插入，求 \(P,Q\)，再从所得表对逆向恢复置换。计算逆排列的表对，并核验形状与最长递增、递减子列长度的关系。
 \end{exercise}
 \begin{solution}
-前两步第一行为 \(2,4\)。插入一时弹出二，得到第一行 \(1,4\)、第二行 \(2\)；插入三时弹出四，附到第二行，故
+前两步第一行为 \(3,5\)。插入一时弹出三，得到第一行 \(1,5\)、第二行 \(3\)；插入二时弹出五，得到第一行 \(1,2\)、第二行 \(3,5\)；最后把四附到第一行。因此
 \[
-P=\begin{array}{cc}1&3\\2&4\end{array},
-\qquad Q=\begin{array}{cc}1&2\\3&4\end{array}.
+P=\begin{array}{ccc}1&2&4\\3&5&\end{array},
+\qquad Q=\begin{array}{ccc}1&2&5\\3&4&\end{array}.
 \]
-先删 \(Q\) 的四所在格：取出 \(P\) 的四，向上替换最右边小于四的三，输出三。删三所在格：取出二，向上替换一，输出一。余下第一行 \(2,4\)，依次输出四、二。逆序读取输出即恢复 \(2,4,1,3\)。
+逆插入先删记录数字五所在的第一行末格，输出四；再从第二行取出五，在第一行替换二，输出二；随后从第二行取出三，替换第一行的一，输出一。余下第一行 \(3,5\)，依次输出五、三。逆序读取便恢复 \(3,5,1,2,4\)。
+
+逆排列为 \(34152\)。直接插入得到
+\[
+P'=\begin{array}{ccc}1&2&5\\3&4&\end{array},
+\qquad Q'=\begin{array}{ccc}1&2&4\\3&5&\end{array},
+\]
+确实交换了原表对。子列 \(1,2,4\) 递增；含开头的 \(3\) 时，后面只有 \(5,4\) 比它大，且不能依此顺序同时取二者；含 \(5\) 时更无法接上后面的数，故这样的递增子列至多长二。不含 \(3,5\) 时，只剩递增的 \(1,2,4\)，故最长长三。递减子列 \(5,1\) 长二；开头 \(3,5\) 与末尾 \(1,2,4\) 分别递增，递减子列至多从每组取一个，故长度不能超过二。因此最长递减子列长二，与形状 \((3,2)\) 的第一行和第一列长度一致。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-inverse-pair}
@@ -115,7 +123,7 @@ Q=\begin{array}{ccc}1&2&4\\3&&\end{array},
 列出形状 \((3,3)\) 的全部标准表，只写第一行即可，并与 Catalan 数核验。
 \end{exercise}
 \begin{solution}
-第一行可能是 \(123,124,125,134,135\)，第二行由其余三个数字递增填入。它们的每个读取前缀均满足第一行数字数不少于第二行数字数；其他选择会违反该条件。共有五张，符合 \(\dfrac14\binom63=5\)。
+第一行可能是 \(123,124,125,134,135\)，第二行由其余三个数字递增填入。按 \(1,2,\ldots,6\) 的顺序读取数字，对每个前缀 \(\{1,\ldots,j\}\)，它们都满足其中第一行的数字数不少于第二行的数字数；这等价于第一行第 \(i\) 个数字小于第二行第 \(i\) 个数字，见\subsecref{b5:subsec:A02:03}中的计数论证。其他选择会违反该条件。共有五张，符合 \(\dfrac14\binom63=5\)。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-necklace-three-colors}
@@ -140,10 +148,19 @@ Q=\begin{array}{ccc}1&2&4\\3&&\end{array},
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-partition-six}
-分别列出六的不同部分分拆与全部部分为奇数的分拆，核验二者等数。
+分别列出六的不同部分分拆与全部部分为奇数的分拆，并用正文的二进制双射将它们逐一配对。
 \end{exercise}
 \begin{solution}
-不同部分分拆为 \(6,5+1,4+2,3+2+1\)。奇数部分分拆为 \(5+1,3+3,3+1+1+1,1+1+1+1+1+1\)，各四个。两张清单中的对象并不按写法直接相同，等数来自生成函数恒等式。
+不同部分分拆为 \(6,5+1,4+2,3+2+1\)。把每个部分写成二的幂乘奇数，便依次得到
+\[
+\begin{aligned}
+6&\longleftrightarrow3+3,&
+5+1&\longleftrightarrow5+1,\\
+4+2&\longleftrightarrow1+1+1+1+1+1,&
+3+2+1&\longleftrightarrow3+1+1+1.
+\end{aligned}
+\]
+右边正是六的全部奇数部分分拆。反向将每个奇数的出现次数写成二进制，就恢复左边的不同部分分拆。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-length-four-coefficient}
@@ -158,14 +175,10 @@ Q=\begin{array}{ccc}1&2&4\\3&&\end{array},
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-gaussian-four-two}
-求 \(\mathbb F_2^4\) 的二维子空间数，并求包含一条指定直线的二维子空间数。
+在 \(\mathbb F_2^4\) 中固定两条不同直线 \(L_1,L_2\)。求包含 \(L_1\) 而不包含 \(L_2\) 的二维子空间数，以及两条直线都不包含的二维子空间数。
 \end{exercise}
 \begin{solution}
-总数为
-\[
-{4\brack2}_2=\frac{(16-1)(16-2)}{(4-1)(4-2)}=35.
-\]
-包含指定直线 \(L\) 的二维空间与 \(\mathbb F_2^4/L\) 的直线一一对应，故数目为 \((2^3-1)/(2-1)=7\)。商空间对应的原像维数为二，这说明对应确实双向成立。
+\cref{b5:prop:gaussian-subspace-count}给出的二维子空间总数为 \({4\brack2}_2=35\)。包含 \(L_i\) 的二维空间与 \(\mathbb F_2^4/L_i\) 的直线一一对应，故各有 \((2^3-1)/(2-1)=7\) 个。商空间中每条直线的原像维数为二且包含 \(L_i\)；反过来，每个包含 \(L_i\) 的二维空间取商后是一条直线。取原像与取商互为逆，故确为一一对应。同时包含 \(L_1,L_2\) 的二维空间只有 \(L_1+L_2\) 一个。因此第一问为 \(7-1=6\)；第二问由容斥为 \(35-7-7+1=22\)。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-flag-three}
@@ -201,29 +214,20 @@ H_{st}^{-1}=H_t^{-1}H_s^{-1}
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-kl-simple-square}
-设 \(R=\mathbb Z[v,v^{-1}]\)，秩一 Hecke 代数为
-\[
-\mathcal H_R=R[H]/\bigl((H-v)(H+v^{-1})\bigr).
-\]
-在 \(\mathbb Q(v)\otimes_R\mathcal H_R\) 中构造两个正交本原幂等元。沿 \(R\to\mathbb Q\)、\(v\mapsto1\) 和 \(R\to\mathbb C\)、\(v\mapsto i\)（\(i^2=-1\)）分别特化 \(\mathcal H_R\)，说明前述幂等元在第一种特化下的意义，以及为什么其分式在第二种特化下没有定义。
+设 \(k\) 为域，将秩一 Hecke 代数沿 \(v\mapsto1\) 特化为 \(A_k=k[H]/(H^2-1)\)。比较 \(\operatorname{char}k\ne2\) 与 \(\operatorname{char}k=2\) 时的代数分解，分别求本原幂等元和 Jacobson 根，并解释参数同为一为何仍可能得到不同的半单性结论。
 \end{exercise}
 \begin{solution}
-令 \(b=v+v^{-1}\)，在 \(\mathbb Q(v)\otimes_R\mathcal H_R\) 中取
+若 \(\operatorname{char}k\ne2\)，两个根 \(1,-1\) 不同，中国剩余定理给出 \(A_k\simeq k\times k\)。两个本原幂等元为
 \[
-e_+=\frac{H+v^{-1}}b,\qquad
-e_-=\frac{v-H}b.
+e_+=\frac{1+H}{2},\qquad e_-=\frac{1-H}{2},
 \]
-二者之和为一，乘积由二次关系为零，所以各自平方等于自身。它们对应不同根 \(v,-v^{-1}\) 的两个一维代数分量，因而本原。这两个分式已经定义在 \(R[b^{-1}]\otimes_R\mathcal H_R\) 中。\(v\mapsto1\) 时 \(b\mapsto2\)，所以 \(R\to\mathbb Q\) 可延拓到 \(R[b^{-1}]\)，得到群代数 \(\mathbb Q[C_2]\) 中的 \((1+s)/2\) 与 \((1-s)/2\)，分别投影到平凡和符号部分。
+Jacobson 根为零。
 
-\(v\mapsto i\) 时 \(b\mapsto0\)，故 \(R\to\mathbb C\) 不能延拓到 \(R[b^{-1}]\)，这两个分式无法沿该映射特化。不过 \(\mathcal H_R\) 本身仍可特化，得到
-\[
-\mathbb C\otimes_R\mathcal H_R\cong\mathbb C[H]/\bigl((H-i)^2\bigr).
-\]
-这是局部代数，只有零和一两个幂等元，因此原来的两个本原幂等元不能在这里给出同样的分解。
+若 \(\operatorname{char}k=2\)，令 \(\varepsilon=H+1\)，则 \(\varepsilon^2=0\)，而 \(1,\varepsilon\) 仍为一组基，故 \(A_k\simeq k[\varepsilon]/(\varepsilon^2)\)。元素 \(a+b\varepsilon\) 在 \(a\ne0\) 时有逆 \(a^{-1}-ba^{-2}\varepsilon\)，而 \(a=0\) 时不可逆。因此 \(k\varepsilon\) 是唯一极大理想，也就是 Jacobson 根。幂等条件给出 \(a^2=a\)、\(b=0\)，所以幂等元仅有零与一，其中一为本原。此时 \(C'=H+1=\varepsilon\) 非零但平方为零；规范基仍存在，代数却不半单。失效的是底域中二的可逆性，即\cref{b5:prop:hecke-rank-one-specialization}中幂等元分母 \(v+v^{-1}\) 的可逆性；在 \(v=1\) 时该分母为 \(2\)，在特征二中成为零。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:A-cell-specialization}
-对正文的二维胞腔表示，计算 \(H_s,H_t\) 在 \(R=\mathbb Z[v,v^{-1}]\) 上的矩阵，并验证其中一条二次关系。再求 \(v=1\) 时两个一维胞腔的表示。
+对\subsecref{b5:subsec:A04:03}中胞腔 \(\Gamma=\{s,ts\}\) 的二维表示，沿用基 \(e_s,e_{ts}\)，计算 \(H_s,H_t\) 在 \(R=\mathbb Z[v,v^{-1}]\) 上的矩阵，并验证其中一条二次关系。再求 \(v=1\) 时两个一维胞腔的表示。
 \end{exercise}
 \begin{solution}
 从规范基矩阵减去 \(v^{-1}I\)，得到

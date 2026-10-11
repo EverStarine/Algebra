@@ -1,6 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：## 第15章　泛包络代数与 PBW 定理
-% 纲要位置：工作记录/计划纲要.md，第 4198 行。
+% 纲要位置：工作记录/计划纲要.md，第 4547 行。
 \chapter{泛包络代数与 PBW 定理}
 \label{b5:ch:15}
 \BookChapterNumber{b5:ch:15}
@@ -13,8 +13,8 @@
 \begin{itemize}
 \item 用泛性质构造包络代数同态，区分商代数、商模与左理想关系。
 \item 分别证明 PBW 重排的终止性、重叠相容性与有序单项式的线性无关性。
-\item 运用滤过和主符号计算维数、判断零因子，并进行具体有序单项式计算。
-\item 用右自由性证明诱导的正合性，理解 Verma 模为何非零且通常无限维。
+\item 运用主符号计算维数、判断零因子并恢复 Lie 括号，区分 PBW 滤过与增广理想滤过。
+\item 用右自由性证明诱导的正合性，以最高权向量刻画 Verma 模同态，并判断有限截断的相容性。
 \end{itemize}
 \end{learninggoals}
 
@@ -35,10 +35,10 @@
 包络代数的定义只加入 \(xy-yx=[x,y]\) 所要求的关系。泛性质把 Lie 代数作用唯一延拓为结合代数作用，但不能单独保证原生成元仍然独立。PBW 定理通过重排的终止性、Jacobi 控制的相容性及正规式的独立性，才完成这一点。
 
 \ProseParagraphBreak
-标准滤过使包络代数的最高次乘法成为交换乘法；伴随分次与对称代数同构，而包络代数本身一般仍不交换。主符号可用于增长与零因子判断，对称化则在特征零时给出一个与伴随作用相容的向量空间同构。
+标准滤过使包络代数的最高次乘法成为交换乘法；伴随分次与对称代数同构，交换子下降一次所产生的 Poisson 括号仍记录原 Lie 括号。主符号可用于增长与零因子判断，对称化则在特征零时给出与伴随作用相容的向量空间同构，乘法中的低次修正一般仍然存在。增广的一阶商 \(I/I^2\) 测量 Lie 代数的交换化，与 PBW 的 \(F_1/F_0\) 有不同含义。
 
 \ProseParagraphBreak
-子代数的包络代数嵌入较大的包络代数，PBW 进一步给出自由右模基，所以扩张标量是正合的。诱导模通常无限维，\(\mathfrak{sl}_2\) 的 Verma 模就是由一条无限下降链构成的。加入额外幂关系后可得到有限维简单商；\chapref{b5:ch:18}将把这种构造推广到一般复半单 Lie 代数。
+子代数的包络代数嵌入较大的包络代数，PBW 进一步给出自由右模基，所以扩张标量是正合的。从 \(\mathfrak{sl}_2\) 的 Verma 模出发的同态，恰由目标模中具有给定权且被升算子零化的向量决定。Verma 模由无限下降链构成；只有在非负整数最高权处，才能相容地截断而得到有限维简单商。\chapref{b5:ch:18}将把这种构造推广到一般复半单 Lie 代数。
 
 \ProseParagraphBreak
 群代数 \(kG\) 中的群元素 \(g\) 在张量积两因子上同时作用，包络代数 \(U(\mathfrak g)\) 中的 \(x\in\mathfrak g\) 则按 \(x(v\otimes w)=xv\otimes w+v\otimes xw\) 作用。\chapref{b5:ch:21}将用余乘法 \(\Delta(g)=g\otimes g\) 和 \(\Delta(x)=x\otimes1+1\otimes x\) 同时描述这两条规则。
@@ -59,11 +59,11 @@
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-heisenberg-order}
-设 \([x,y]=z\)、\([x,z]=[y,z]=0\)。在 \(x<y<z\) 的 PBW 次序中求 \(y^2x^2\)。
+设 \(\mathfrak h=kx\oplus ky\oplus kz\) 为域 \(k\) 上满足 \([x,y]=z\)、\([x,z]=[y,z]=0\) 的 Heisenberg Lie 代数。在 \(x<y<z\) 的 PBW 次序中求 \(y^2x^2\)。
 \end{exercise}
 \begin{solution}
 先由 \(yx=xy-z\) 得 \(yx^2=x^2y-2xz\)。
-再左乘 \(y\)，利用 \(z\) 中央：
+再左乘 \(y\)，先写成 \(y^2x^2=(yx^2)y-2(yx)z\)，再分别代入 \(yx^2=x^2y-2xz\) 与 \(yx=xy-z\)，利用 \(z\) 中央：
 \[
 y^2x^2=(x^2y-2xz)y-2(xy-z)z
 =x^2y^2-4xyz+2z^2.
@@ -72,15 +72,19 @@ y^2x^2=(x^2y-2xz)y-2(xy-z)z
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-one-dimensional-characters}
-证明 \(U(\mathfrak g)\to k\) 的含幺代数同态，与零化
-\([\mathfrak g,\mathfrak g]\) 的线性泛函 \(\mathfrak g\to k\) 一一对应。
-对 \(\mathfrak{sl}_2(\mathbb C)\) 写出全部这样的同态。
+设 \(\mathfrak g=ke\oplus kh\) 为域 \(k\) 上满足 \([h,e]=e\) 的 Lie 代数。求它的全部一维表示。
+再在二维空间上规定
+\[
+\rho(e)=\begin{pmatrix}0&b\\0&0\end{pmatrix},\qquad
+\rho(h)=\begin{pmatrix}a&0\\0&c\end{pmatrix}.
+\]
+求 \(a,b,c\in k\) 必须满足的条件，并判断由第一坐标轴给出的短正合列何时分裂。
 \end{exercise}
 \begin{solution}
-目标结合代数交换，所以限制到 \(\mathfrak g\) 后必须将括号送到零；
-反过来，这样的泛函是到交换 Lie 代数 \(k\) 的 Lie 代数同态，由泛性质唯一延拓。
-\(\mathfrak{sl}_2=[\mathfrak{sl}_2,\mathfrak{sl}_2]\)，所以泛函只能为零，
-包络代数同态只有增广映射。
+由 \([\mathfrak g,\mathfrak g]=ke\)，一维表示恰为 \(e\) 作用为零、\(h\) 作用为任意标量 \(a\) 的表示，记为 \(k_a\)。
+矩阵计算给出 \([\rho(h),\rho(e)]=(a-c)\rho(e)\)，所以所需条件为 \((a-c-1)b=0\)。
+第一坐标轴与商分别是 \(k_a\)、\(k_c\)，得到 \(0\to k_a\to V\to k_c\to0\)。若 \(b=0\)，第二坐标轴给出截面。
+若 \(b\ne0\)，则 \(a=c+1\)，且 \(e\) 在 \(V\) 上非零；若列分裂，\(V\) 应是两个一维模的直和，而 \(e\) 在两项上都为零，矛盾。因此列恰在 \(b=0\) 时分裂。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-enveloping-abelianization}
@@ -123,50 +127,51 @@ PBW 又说明 \(e^2\ne0\) 于包络代数。因此两个忠实性问题不同。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-augmentation-cotangent}
-令 \(\epsilon:U(\mathfrak g)\to k\) 为增广，\(I=\ker\epsilon\)。
-证明 \(I/I^2\cong\mathfrak g/[\mathfrak g,\mathfrak g]\)。
+设 \(\mathfrak h=kx\oplus ky\oplus kz\) 为域 \(k\) 上满足 \([x,y]=z\)、\([x,z]=[y,z]=0\) 的 Heisenberg Lie 代数，\(I\) 为 \(U(\mathfrak h)\) 的增广理想。
+令 \(N\subseteq M_3(k)\) 为严格上三角矩阵空间。求全部含幺代数同态
+\(\Phi:U(\mathfrak h)\to kI_3+N\)，要求再模掉 \(N\) 后等于增广映射。
+说明 \(z\in I^2\) 为何仍可能有非零的 \(\Phi(z)\)，并计算将目标进一步模掉 \(N^2\) 后保留的参数。
 \end{exercise}
 \begin{solution}
-\(I\) 由正长度单项式生成，模 \(I^2\) 后只有长度一的生成元可能留下。
-因 \([x,y]=xy-yx\in I^2\)，得到满射
-\(\mathfrak g/[\mathfrak g,\mathfrak g]\to I/I^2\)。
-反向考虑平方零代数 \(k\oplus\mathfrak g/[\mathfrak g,\mathfrak g]\)，
-第二项的任意两个元素乘积为零。
-映射 \(x\mapsto(0,\bar x)\) 保持 Lie 括号，延拓到包络代数后将 \(I^2\) 送到零，
-从而给出所需逆映射。两边都由来自 \(x\) 的类生成，所以确实互逆。
+设 \(E_{ij}\) 为矩阵单位。任意选取六个标量，写成
+\[
+X=aE_{12}+bE_{23}+cE_{13},\qquad
+Y=dE_{12}+sE_{23}+tE_{13}.
+\]
+有 \([X,Y]=(as-bd)E_{13}\)。又因 \(E_{13}N=NE_{13}=0\)，此交换子与 \(X,Y\) 都交换。
+所以 \(x\mapsto X\)、\(y\mapsto Y\)、\(z\mapsto(as-bd)E_{13}\) 保持全部 Lie 括号，由泛性质唯一延拓；反过来，任一所求同态都必须这样给出。
+例如取 \(X=E_{12}\)、\(Y=E_{23}\)，就有 \(\Phi(z)=E_{13}\ne0\)。\(z\in I^2\) 只保证它的像属于 \(N^2=kE_{13}\)，并不保证像为零。
+模掉 \(N^2\) 后，\(c,t\) 及 \(z\) 的像消失，只留下 \(a,b,d,s\) 四个参数。这正是从二维空间 \(I/I^2\cong k\bar x\oplus k\bar y\) 到二维平方零空间 \(N/N^2\) 的线性映射。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-perfect-augmentation}
-若 \(\mathfrak g\ne0\) 且 \([\mathfrak g,\mathfrak g]=\mathfrak g\)，
-证明增广理想 \(I\) 满足 \(I=I^2\ne0\)，并说明 \(I\)-进滤过不分离。
-这是否与 PBW 矛盾？
+设 \(\mathfrak g=\mathfrak{sl}_2(\mathbb C)\oplus\mathbb Ct\)，其中 \(t\) 中央。记 \(I\subseteq U(\mathfrak g)\) 为增广理想，\(K\) 为由 \(\mathfrak{sl}_2\) 生成的双边理想。
+求 \(I/I^2\)、各 \(I^r\)、\(r\ge1\)，以及 \(\bigcap_{r\ge1}I^r\)。据此判断 \(I/I^2\ne0\) 是否保证增广理想滤过分离，并与 PBW 的次数一部分比较。
 \end{exercise}
 \begin{solution}
-每个生成元 \(x\) 是括号的线性组合，而每个括号在 \(U(\mathfrak g)\) 中属于 \(I^2\)，
-所以 \(I\subseteq I^2\)，反向包含显然。PBW 保证某个非零 \(x\) 在 \(I\) 中仍非零。
-因此 \(I^n=I\) 对所有 \(n\ge1\) 成立，交集为 \(I\ne0\)，不分离。
-PBW 使用的是按单项式长度的递增标准滤过，不是这个递减的增广理想滤过，所以没有矛盾。
+\(\mathfrak g/[\mathfrak g,\mathfrak g]\cong\mathbb Ct\)，由\cref{b5:prop:enveloping-augmentation-cotangent}，有 \(I/I^2\cong\mathbb Ct\)。
+由 \(h=[e,f]\)、\(e=\frac12[h,e]\)、\(f=-\frac12[h,f]\)，\(\mathfrak{sl}_2\) 的每个元素都是这一子代数内括号的线性组合。由此归纳证明 \(K\subseteq I^r\)：\(r=1\) 显然；若 \(e,f,h\in I^r\)，则上述括号在 \(I^{2r}\subseteq I^{r+1}\) 中，而 \(I^{r+1}\) 是双边理想，故也包含它们生成的 \(K\)。
+再由\cref{b5:prop:enveloping-quotient}，商代数为 \(U(\mathfrak g/\mathfrak{sl}_2)\cong U(\mathbb Ct)=\mathbb C[t]\)。商映射 \(\pi:U(\mathfrak g)\to U(\mathfrak g)/K\cong\mathbb C[t]\) 把 \(I\) 送到 \((t)\)，所以
+\[
+I^r=\pi^{-1}\bigl((t^r)\bigr)=K+t^rU(\mathfrak g).
+\]
+这里反向包含使用了 \(K\subseteq I^r\) 及 \(t^r\in I^r\)。一个非零多项式不能被任意高次 \(t^r\) 整除，因此 \(\bigcap_rI^r=K\ne0\)，滤过不分离。
+PBW 的 \(F_1/F_0\cong\mathfrak g\) 是四维空间，增广的一阶商则只剩一维；非零的一阶商也不能使已经落入所有 \(I^r\) 的三个 Lie 方向重新显现。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-filtered-poisson}
-设 \(\mathfrak g\) 为域 \(k\) 上的 Lie 代数，\(F_r\) 为 \(U(\mathfrak g)\) 的标准滤过，
-\(\sigma_r:F_r\to F_r/F_{r-1}\) 为主符号映射。
-对 \(u\in F_r\)、\(v\in F_s\)，其中 \(r,s\ge0\)、\(r+s\ge1\)，定义
-\[
-\bigl\{\sigma_r(u),\sigma_s(v)\bigr\}=\sigma_{r+s-1}\bigl([u,v]\bigr).
-\]
-两个次数零的元素之间的括号规定为零，再按双线性延拓。
-证明它在 \(\operatorname{gr}U(\mathfrak g)\) 上良定，满足 \(\{a,a\}=0\)、反对称性、Jacobi 和两变量的 Leibniz 法则，并求它在次数一上的取值。
+在域 \(k\) 上的多项式代数 \(k[x,y,z]\) 中，取 Heisenberg Lie 代数诱导的 Poisson 括号
+\(\{x,y\}=z\)、\(\{x,z\}=\{y,z\}=0\)。计算 \(\{xy,x+y\}\)。
+求 Poisson 中心，即与每个多项式的括号都为零的元素所成子代数；分别讨论特征零和特征 \(p>0\)。
 \end{exercise}
 \begin{solution}
-由 \([F_r,F_s]\subseteq F_{r+s-1}\)，公式的右端有定义。
-次数零的元素都是标量，与一切元素的括号为零，所以只须核对 \(r,s\ge1\) 的情形。
-若改变 \(u\) 的代表元，差在 \(F_{r-1}\)，与 \(v\) 的交换子就在 \(F_{r+s-2}\)，
-故目标主符号不变；另一变量同理。
-结合交换子满足 \([u,u]=0\)、反对称、Jacobi 及 \([u,vw]=[u,v]w+v[u,w]\)，
-逐式取所需最高次数符号便得到对应恒等式。
-次数一的 \(x,y\) 给出 \(\{x,y\}=[x,y]_{\mathfrak g}\)，并按导子规则延拓到对称代数。
-这定义了次数降低一的 Poisson 括号\footnote{泊松（Siméon-Denis Poisson，1781-1840），法国数学家、物理学家，研究分析、概率及力学；力学中的泊松括号以他命名。}，虽伴随分次乘法交换，原 Lie 括号的信息仍保留在此运算中。
+Leibniz 法则给出 \(\{xy,x+y\}=-xz+yz=z(y-x)\)。对任意 \(P\in k[x,y,z]\)，有
+\[
+\{P,x\}=-z\frac{\partial P}{\partial y},\qquad
+\{P,y\}=z\frac{\partial P}{\partial x},\qquad \{P,z\}=0.
+\]
+与三个生成元的括号为零，就由 Leibniz 法则推出与每个多项式的括号为零。多项式环中 \(z\) 不是零因子，所以条件恰是关于 \(x,y\) 的两个偏导数均为零。
+特征零时，逐个单项式求导可知 \(P\) 只能含 \(z\)，中心是 \(k[z]\)。特征 \(p\) 时，关于 \(x\) 的导数为零恰要求每个非零项的 \(x\) 指数被 \(p\) 整除，\(y\) 同理，所以中心是 \(k[x^p,y^p,z]\)。这一结论不要求 \(k\) 完美，因为没有对系数取 \(p\) 次根。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-pbw-hilbert}
@@ -220,6 +225,7 @@ PBW 使用的是按单项式长度的递增标准滤过，不是这个递减的�
 e^2f^3
 &=f^3e^2+3f^2(h-2)e
 +3\bigl(f^2e+2f(h-1)\bigr)(h-2)\\
+&=f^3e^2+3f^2\bigl((h-2)+(h-4)\bigr)e+6f(h-1)(h-2)\\
 &=f^3e^2+6f^2(h-3)e+6f(h-1)(h-2).
 \end{aligned}
 \]
@@ -238,31 +244,54 @@ PBW 将它置于多项式整环 \(\mathbb C[f,h,e]\)，该元素非零。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-enveloping-antiautomorphism}
-证明存在唯一反自同构 \(S:U(\mathfrak g)\to U(\mathfrak g)\)，满足
-\(S(x)=-x\) 对 \(x\in\mathfrak g\) 成立，且 \(S^2=1\)。
+设 \(\mathfrak g\) 为域 \(k\) 上的 Lie 代数，\(V\) 为左 \(U(\mathfrak g)\) 模，\(S\) 为包络代数的反自同构，满足 \(S(x)=-x\) 对每个 \(x\in\mathfrak g\) 成立。证明
+\[
+(u\cdot\varphi)(v)=\varphi\bigl(S(u)v\bigr)
+\quad\bigl(u\in U(\mathfrak g),\ \varphi\in V^*,\ v\in V\bigr)
+\]
+给出 \(V^*\) 上的左模作用，限制到 \(\mathfrak g\) 后正是对偶表示。
+对 \(\mathfrak g=\mathfrak{sl}_2(\mathbb C)\)、\(V=\mathbb C^2\)，用 \(B(v,w)=v_1w_2-v_2w_1\) 构造一个 \(U(\mathfrak g)\) 模同构 \(V\to V^*\)。
 \end{exercise}
 \begin{solution}
-将目标看成反代数。在反代数中，
-\([-x,-y]_{\mathrm{op}}=yx-xy=-[x,y]\)，
-所以 \(x\mapsto-x\) 是 Lie 代数同态，由泛性质延拓为到反代数的代数同态，
-也就是反同态 \(S\)。它满足 \(S(x_1\cdots x_r)=(-1)^r x_r\cdots x_1\)。
-两次作用在生成元及单位上为恒等，故 \(S^2=1\)，因此可逆。
+由 \(S(ua)=S(a)S(u)\)，有
+\[
+\bigl(u\cdot(a\cdot\varphi)\bigr)(v)
+=\varphi\bigl(S(a)S(u)v\bigr)
+=\bigl((ua)\cdot\varphi\bigr)(v).
+\]
+单位作用为恒等，故是左模。\(x\in\mathfrak g\) 时，公式变成 \((x\cdot\varphi)(v)=-\varphi(xv)\)，即对偶表示。
+若 \(x\) 为迹零的二阶矩阵，直接展开得 \(B(xv,w)+B(v,xw)=0\)。于是 \(T(v)=B(v,-)\) 满足
+\(T(xv)(w)=-B(v,xw)=(x\cdot T(v))(w)\)，是 Lie 代数模同态，也就与整个包络代数作用相容。
+\(B\) 的矩阵为 \(\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)\)，可逆，故 \(T\) 为所求模同构。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-enveloping-diagonal}
-证明赋值 \(x\mapsto x\otimes1+1\otimes x\) 唯一延拓为代数同态
-\(\Delta:U(\mathfrak g)\to U(\mathfrak g)\otimes U(\mathfrak g)\)，
-并证明 \((\Delta\otimes1)\Delta=(1\otimes\Delta)\Delta\)。
-说明它怎样产生张量模作用。
+设 \(\mathfrak g=\mathfrak{sl}_2(\mathbb C)\)，\(e,f,h\) 为其标准基，\(C=h^2+2h+4fe\)，\(\Delta\) 为包络代数的余乘法，满足 \(\Delta(x)=x\otimes1+1\otimes x\) 对每个 \(x\in\mathfrak g\) 成立。
+计算 \(\Delta(C)\)。再令 \(V=\mathbb C^2\) 为自然模，\(\tau(v\otimes w)=w\otimes v\)，证明 \(C\) 在 \(V\otimes V\) 上的作用为 \(4(1+\tau)\)，并写出其两个特征空间的投影。
 \end{exercise}
 \begin{solution}
-不同张量因子的元素交换，所以两像的括号为
-\([x,y]\otimes1+1\otimes[x,y]\)，与指定赋值相容。
-泛性质给出唯一延拓。两个到三重张量积的同态都将 \(x\) 送到
-\(x\otimes1\otimes1+1\otimes x\otimes1+1\otimes1\otimes x\)，
-因而在全部生成元上相等，也就在整个代数上相等。
-把两个模的作用张量后与 \(\Delta\) 复合，便得到
-\(x(v\otimes w)=xv\otimes w+v\otimes xw\)。
+利用 \(\Delta\) 保持乘法，展开得
+\[
+\Delta(C)=C\otimes1+1\otimes C
++2h\otimes h+4(f\otimes e+e\otimes f).
+\]
+自然模是 \(L_1\)，由\cref{b5:lem:sl2-casimir-operator}，\(C\) 为标量 \(1(1+2)=3\)。设标准基为 \(u_+,u_-\)，满足
+\(hu_\pm=\pm u_\pm\)、\(eu_-=u_+\)、\(fu_+=u_-\)、\(eu_+=fu_-=0\)。记
+\(A=h\otimes h+2(f\otimes e+e\otimes f)\)，则
+\[
+\begin{aligned}
+A(u_\pm\otimes u_\pm)&=u_\pm\otimes u_\pm,\\
+A(u_+\otimes u_-)&=-u_+\otimes u_-+2u_-\otimes u_+,\\
+A(u_-\otimes u_+)&=-u_-\otimes u_++2u_+\otimes u_-.
+\end{aligned}
+\]
+这四个基向量上的等式给出 \(A=2\tau-1\)。因此 \(\Delta(C)\) 的作用为 \(6\cdot1+2(2\tau-1)=4(1+\tau)\)。
+对称张量与交错张量的特征值分别为 \(8\)、\(0\)，投影是
+\[
+P_8=\frac{1+\tau}{2}=\frac{\rho_{V\otimes V}(C)}8,\qquad
+P_0=\frac{1-\tau}{2}=1-P_8.
+\]
+两个因子上的 Casimir 标量之和只给出 \(6\)；张量作用还包含余乘法产生的交叉项，它们使两个直和项具有不同的特征值。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-strict-induction-infinite}
@@ -345,24 +374,28 @@ Lie 代数作用的核为 \(\mathfrak{sl}_2\) 的理想。
 \end{exercise}
 \begin{solution}
 取 \(\mathfrak b=\mathbb Ch\oplus\mathbb Ce\subseteq\mathfrak{sl}_2\)，
-并取一维平凡 \(\mathfrak b\) 模。诱导得到 \(M(0)\)，它包含非零真子模
+并取一维平凡 \(\mathfrak b\) 模。诱导得到 \(M(0)\)；在\cref{b5:thm:sl2-verma-submodules}中取 \(m=0\)，其由 \(v_1,v_2,\ldots\) 张成的非零真子模同构于
 \(M(-2)\)，故不简单。
 诱导的正合性由 PBW 右自由性保证，与其是否产生新的子模没有矛盾。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-failed-jacobi-presentation}
-在一个结合代数展示中取生成元 \(x,y,z\)，加关系
-\(xy-yx=x,\ yz-zy=y,\ zx-xz=z\)。
-证明所得含幺代数只有 \(k\)，并说明为什么不能对这个关系表引用 PBW。
+设 \(k\) 为域，\(\alpha\in k\)。取含幺结合代数展示
+\[
+A_\alpha=k\langle x,y,z\rangle/
+\bigl(xy-yx-z,\ yz-zy-x,\ zx-xz-y-\alpha z\bigr).
+\]
+判断哪些 \(\alpha\) 使 \(x^ay^bz^c\)、\(a,b,c\ge0\)，构成 \(A_\alpha\) 的基；求其余参数下的商代数。
 \end{exercise}
 \begin{solution}
-结合交换子恒满足 Jacobi。
-代入所给三式，得到
-\(\bigl[x,[y,z]\bigr]+\bigl[y,[z,x]\bigr]+\bigl[z,[x,y]\bigr]=x+y+z=0\)。
-所以 \(z=-x-y\)，再代入 \(yz-zy=y\) 得 \(x=y\)。
-第一式于是给出 \(0=x\)，继而 \(y=z=0\)，所以商代数为 \(k\)。
-原来的三维反对称括号表不满足 Jacobi，根本不是 Lie 代数。
-这个例子展示了三重重叠未经检查时怎样产生额外一次关系。
+在结合代数内，交换子的 Jacobi 恒等式给出
+\[
+[x,[y,z]]+[y,[z,x]]+[z,[x,y]]
+=[x,x]+[y,y+\alpha z]+[z,z]=\alpha x=0.
+\]
+若 \(\alpha\ne0\)，则 \(x=0\)；第一条关系给出 \(z=0\)，第三条再给出 \(y=0\)，故 \(A_\alpha=k\)。将三个生成元都送到零的含幺同态保证单位没有被消去。
+若 \(\alpha=0\)，在形式三维空间上定义交替括号 \([x,y]=z\)、\([y,z]=x\)、\([z,x]=y\)。三个互异基元的 Jacobi 和为零，含重复基元的和由交替性相消；三线性性便给出全部 Jacobi 恒等式。
+于是 \(A_0\) 是这一个 Lie 代数的包络代数，由\cref{b5:thm:pbw}得到所列基。这个判断在特征二也成立，因为使用的是交替括号及其反对称性，而没有除以 \(2\)。
 \end{solution}
 
 \begin{exercise}\label{b5:ex:15-adjoint-nilpotence-degree}
