@@ -6,16 +6,16 @@
 \label{b2:app:A}
 
 \begin{chapterabstract}
-标准形把线性代数的结构问题化为矩阵计算，但一个可靠的输出还应说明工作环、允许的变换以及回到原坐标的方法。本附录补充整数与多项式矩阵的 Smith 算法，给出线性方程与核的坐标公式，讨论一般环的障碍和模素数检验的适用条件，并以有限域、有理数上的精确算例区分矩阵等价与算子相似。
+	标准形把线性代数的结构问题化为矩阵计算，但一个可靠的输出还应说明工作环、允许的变换以及回到原坐标的方法。本附录补充整数与多项式矩阵的 Smith 算法，给出线性方程与核的坐标公式，讨论一般环的障碍和模素数检验的适用条件，并以有限域、有理数上的精确算例区分矩阵等价与算子相似。
 \end{chapterabstract}
 
 \begin{learninggoals}
-\begin{itemize}
-\item 记录行列变换，核验 Smith 标准形，并用换基矩阵恢复原方程的解与核。
-\item 区分结构存在性与算法可执行性，说明复杂度分析还须计入输入长度和系数增长，并辨认非主理想及零因子造成的障碍。
-\item 使用模素数秩界和有界同余给出精确证据，辨别近似数据不能确定的代数性质。
-\item 对多项式矩阵和有理矩阵写出可以逐项相乘检验的标准形证书。
-\end{itemize}
+	\begin{itemize}
+		\item 记录行列变换，核验 Smith 标准形，并用换基矩阵恢复原方程的解与核。
+		\item 区分结构存在性与算法可执行性，说明复杂度分析还须计入输入长度和系数增长，并辨认非主理想及零因子造成的障碍。
+		\item 使用模素数秩界和有界同余给出精确证据，辨别近似数据不能确定的代数性质。
+		\item 对多项式矩阵和有理矩阵写出可以逐项相乘检验的标准形证书。
+	\end{itemize}
 \end{learninggoals}
 
 一个整数矩阵的 Smith 对角形可以很短，但若只报对角元，仍无法知道原方程的未知量怎样变换。在\cref{b2:prop:presentation-matrix}的展示约定中，\(A:R^n\to R^m\) 的目标基对应模的生成元，来源基对应关系生成元。若 \(P\in\operatorname{GL}_m(R)\)、\(Q\in\operatorname{GL}_n(R)\) 且 \(PAQ=D\)，则原目标向量 \(u\) 的标准余核坐标是 \(Pu\)，标准生成元在原坐标中的代表是 \(P^{-1}e_i\)；恢复这两项信息用 \(P\) 即可。\(Q\) 则记录来源坐标的变化：解方程时令 \(x=Qy\)，核中的向量也由 \(Q\) 换回原坐标。因此，同时保存两组矩阵可以核对整个等式，并分别恢复生成元、关系、解与核。
@@ -45,240 +45,229 @@
 \input{Appendices/AppendixA/SectionA04}
 
 \begin{chaptersummary}
-在指定的工作环上，矩阵等式 \(PAQ=D\)、换基矩阵的可逆性以及对角元的整除链和归一化共同构成 Smith 标准形证书。余核中目标向量的坐标由 \(P\) 给出，标准余核生成元由 \(P^{-1}\) 换回；方程右端变成 \(Pb\)，解与核则由 \(Q\) 换回。算法的终止理由来自 Euclid 量的下降或主元理想的升链条件；要真正执行它，还须能够计算整除关系、商和 Bézout 系数。
+	在指定的工作环上，矩阵等式 \(PAQ=D\)、换基矩阵的可逆性以及对角元的整除链和归一化共同构成 Smith 标准形证书。余核中目标向量的坐标由 \(P\) 给出，标准余核生成元由 \(P^{-1}\) 换回；方程右端变成 \(Pb\)，解与核则由 \(Q\) 换回。算法的终止理由来自 Euclid 量的下降或主元理想的升链条件；要真正执行它，还须能够计算整除关系、商和 Bézout 系数。
 
-\ProseParagraphBreak
-一般环上的非主理想可能阻止对角化，零因子则使非零对角元具有非平凡核。模素数计算可以快速提供秩的下界，有了明确的整数上界还可以证明精确等式；没有这些条件时，若干数值或同余观察不足以恢复全部结构。余核分类使用独立的左右换基，算子分类使用相似变换，这一区别应当在动手计算之前明确。
+	\ProseParagraphBreak
+	一般环上的非主理想可能阻止对角化，零因子则使非零对角元具有非平凡核。模素数计算可以快速提供秩的下界，有了明确的整数上界还可以证明精确等式；没有这些条件时，若干数值或同余观察不足以恢复全部结构。余核分类使用独立的左右换基，算子分类使用相似变换，这一区别应当在动手计算之前明确。
 \end{chaptersummary}
 
 \BookExercises
 
 \begin{exercise}\label{b2:ex:A-wrong-diagonal}
-令
-\[
-A=\operatorname{diag}(1,6),\qquad P=\operatorname{diag}(2,1),
-\qquad Q=I_2,\qquad D=\operatorname{diag}(2,6).
-\]
-核验 \(PAQ=D\) 以及 \(D\) 的正数整除链，并证明 \(P\) 模每个奇素数都可逆。这些检查能否给出整数 Smith 标准形证书？比较 \(\operatorname{coker}A\) 与 \(\operatorname{coker}D\)，指出缺少的条件。
+	令
+	\[
+		A=\operatorname{diag}(1,6),\qquad P=\operatorname{diag}(2,1), \qquad Q=I_2,\qquad D=\operatorname{diag}(2,6).
+	\]
+	核验 \(PAQ=D\) 以及 \(D\) 的正数整除链，并证明 \(P\) 模每个奇素数都可逆。这些检查能否给出整数 Smith 标准形证书？比较 \(\operatorname{coker}A\) 与 \(\operatorname{coker}D\)，指出缺少的条件。
 \end{exercise}
 \begin{solution}
-直接相乘得 \(PAQ=D\)，且 \(2\mid6\)。对任意奇素数 \(p\)，\(\det\bar P=\bar2\ne0\)，故 \(\bar P\) 在 \(\mathbb F_p\) 上可逆。但 \(\det P=2\) 不是整数环的单位，\(P\notin\operatorname{GL}_2(\mathbb Z)\)。因此等式和对角条件都已满足，缺少的是整数可逆性。
+	直接相乘得 \(PAQ=D\)，且 \(2\mid6\)。对任意奇素数 \(p\)，\(\det\bar P=\bar2\ne0\)，故 \(\bar P\) 在 \(\mathbb F_p\) 上可逆。但 \(\det P=2\) 不是整数环的单位，\(P\notin\operatorname{GL}_2(\mathbb Z)\)。因此等式和对角条件都已满足，缺少的是整数可逆性。
 
-事实上
-\[
-\operatorname{coker}A\cong\mathbb Z/6\mathbb Z,
-\qquad
-\operatorname{coker}D\cong\mathbb Z/2\mathbb Z\oplus\mathbb Z/6\mathbb Z,
-\]
-两者分别有六和十二个元素，并不同构。即使检查了所有奇素数下的可逆性，也漏掉了行列式中的因子二；模二检验会发现这处障碍。
+	事实上
+	\[
+		\operatorname{coker}A\cong\mathbb Z/6\mathbb Z, \qquad \operatorname{coker}D\cong\mathbb Z/2\mathbb Z\oplus\mathbb Z/6\mathbb Z,
+	\]
+	两者分别有六和十二个元素，并不同构。即使检查了所有奇素数下的可逆性，也漏掉了行列式中的因子二；模二检验会发现这处障碍。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-original-coordinates}
-对\cref{b2:exm:A-integer-certificate}中的矩阵 \(A\)，给出方程 \(Ax=(a,b)^{\mathsf T}\) 存在整数解的充要条件和全部整数解。再在原余核中找出阶分别为二和六的两个生成元，使其给出循环直和分解。
+	对\cref{b2:exm:A-integer-certificate}中的矩阵 \(A\)，给出方程 \(Ax=(a,b)^{\mathsf T}\) 存在整数解的充要条件和全部整数解。再在原余核中找出阶分别为二和六的两个生成元，使其给出循环直和分解。
 \end{exercise}
 \begin{solution}
-\eqref{b2:eq:A-integer-certificate}给出 \(P(a,b)^{\mathsf T}=(b,2b-a)^{\mathsf T}\)。由\cref{b2:prop:A-smith-solving}，充要条件为
-\[
-2\mid b,\qquad6\mid(2b-a).
-\]
-成立时，先取 \(y=\bigl(b/2,(2b-a)/6,z\bigr)^{\mathsf T}\)，再乘 \(Q\)，得到
-\[
-x=\begin{pmatrix}(a-b)/2\\(2b-a)/6\\0\end{pmatrix}
-  +z\begin{pmatrix}1\\-1\\1\end{pmatrix},\qquad z\in\mathbb Z.
-\]
-上述整除条件保证显示的分数都是整数。
+	\eqref{b2:eq:A-integer-certificate}给出 \(P(a,b)^{\mathsf T}=(b,2b-a)^{\mathsf T}\)。由\cref{b2:prop:A-smith-solving}，充要条件为
+	\[
+		2\mid b,\qquad6\mid(2b-a).
+	\]
+	成立时，先取 \(y=\bigl(b/2,(2b-a)/6,z\bigr)^{\mathsf T}\)，再乘 \(Q\)，得到
+	\[
+		x=\begin{pmatrix}(a-b)/2\\(2b-a)/6\\0\end{pmatrix}
+		+z\begin{pmatrix}1\\-1\\1\end{pmatrix},\qquad z\in\mathbb Z.
+	\]
+	上述整除条件保证显示的分数都是整数。
 
-又 \(P^{-1}=\begin{pmatrix}2&-1\\1&0\end{pmatrix}\)，所以 \((2,1)^{\mathsf T}\) 和 \((-1,0)^{\mathsf T}\) 的陪集分别对应对角余核的两个标准生成元。由\cref{b2:prop:smith-cokernel}的具体同构，它们的阶恰为二与六，并且给出 \(\mathbb Z/2\mathbb Z\oplus\mathbb Z/6\mathbb Z\) 的直和。
+	又 \(P^{-1}=\begin{pmatrix}2&-1\\1&0\end{pmatrix}\)，所以 \((2,1)^{\mathsf T}\) 和 \((-1,0)^{\mathsf T}\) 的陪集分别对应对角余核的两个标准生成元。由\cref{b2:prop:smith-cokernel}的具体同构，它们的阶恰为二与六，并且给出 \(\mathbb Z/2\mathbb Z\oplus\mathbb Z/6\mathbb Z\) 的直和。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-diagonal-invariant-factors}
-求 \(\operatorname{diag}(12,18,30)\) 的正整数 Smith 因子，说明为什么不能只把原对角元按大小排序。求其整数余核的元素个数、指数以及最少生成元个数。
+	求 \(\operatorname{diag}(12,18,30)\) 的正整数 Smith 因子，说明为什么不能只把原对角元按大小排序。求其整数余核的元素个数、指数以及最少生成元个数。
 \end{exercise}
 \begin{solution}
-一阶子式的最大公因子为六；非零二阶子式是 \(216,360,540\)，最大公因子为三十六；行列式为 \(6480\)。由\cref{b2:thm:smith-uniqueness}，三个不变因子是
-\[
-6,\qquad36/6=6,\qquad6480/36=180.
-\]
-大小排序不能代替整除链，例如 \(12<18\) 却有 \(12\nmid18\)。
+	一阶子式的最大公因子为六；非零二阶子式是 \(216,360,540\)，最大公因子为三十六；行列式为 \(6480\)。由\cref{b2:thm:smith-uniqueness}，三个不变因子是
+	\[
+		6,\qquad36/6=6,\qquad6480/36=180.
+	\]
+	大小排序不能代替整除链，例如 \(12<18\) 却有 \(12\nmid18\)。
 
-余核为 \(G=\mathbb Z/6\mathbb Z\oplus\mathbb Z/6\mathbb Z\oplus\mathbb Z/180\mathbb Z\)，故元素个数为 \(6480\)，指数为 \(180\)。三个标准生成元足够，而 \(G/2G\) 是三维的 \(\mathbb F_2\) 向量空间，任何生成集的像也必须生成它，所以少于三个不够。
+	余核为 \(G=\mathbb Z/6\mathbb Z\oplus\mathbb Z/6\mathbb Z\oplus\mathbb Z/180\mathbb Z\)，故元素个数为 \(6480\)，指数为 \(180\)。三个标准生成元足够，而 \(G/2G\) 是三维的 \(\mathbb F_2\) 向量空间，任何生成集的像也必须生成它，所以少于三个不够。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-polynomial-bezout}
-令 \(a=t^2+t+1\)、\(b=t^2-t+1\)。在 \(\mathbb F_5[t]\) 中求出 Bézout 系数和行列式为一的矩阵，把 \((a,b)^{\mathsf T}\) 化为 \((1,0)^{\mathsf T}\)。再在 \(\mathbb Z[t]\) 中求条目理想 \((a,b)\)，证明其商环同构于四元域，并说明为什么原整数多项式列向量不能通过可逆行变换化为 \((1,0)^{\mathsf T}\)。
+	令 \(a=t^2+t+1\)、\(b=t^2-t+1\)。在 \(\mathbb F_5[t]\) 中求出 Bézout 系数和行列式为一的矩阵，把 \((a,b)^{\mathsf T}\) 化为 \((1,0)^{\mathsf T}\)。再在 \(\mathbb Z[t]\) 中求条目理想 \((a,b)\)，证明其商环同构于四元域，并说明为什么原整数多项式列向量不能通过可逆行变换化为 \((1,0)^{\mathsf T}\)。
 \end{exercise}
 \begin{solution}
-展开得到 \((1-t)a+(t+1)b=2\)。在 \(\mathbb F_5\) 中二的逆是三，所以令 \(u=3(1-t)\)、\(v=3(t+1)\)，就有 \(ua+vb=1\)，从而
-\[
-E=\begin{pmatrix}u&v\\-b&a\end{pmatrix},\qquad
-E\binom ab=\binom10,
-\qquad\det E=ua+vb=1.
-\]
+	展开得到 \((1-t)a+(t+1)b=2\)。在 \(\mathbb F_5\) 中二的逆是三，所以令 \(u=3(1-t)\)、\(v=3(t+1)\)，就有 \(ua+vb=1\)，从而
+	\[
+		E=\begin{pmatrix}u&v\\-b&a\end{pmatrix},\qquad
+		E\binom ab=\binom10, \qquad\det E=ua+vb=1.
+	\]
 
-在 \(\mathbb Z[t]\) 中，前一恒等式给出 \(2\in(a,b)\)，而 \(b=a-2t\)，所以 \((a,b)=(2,t^2+t+1)\)。于是
-\[
-\mathbb Z[t]/(a,b)\cong\mathbb F_2[t]/(t^2+t+1).
-\]
-右边的二次多项式在 \(\mathbb F_2\) 中没有根，故不可约，商环是四元域。特别地，\((a,b)\) 是真理想；可逆行变换保持条目理想，而 \((1,0)^{\mathsf T}\) 的条目生成整个环，所以不可能有这样的整数多项式换基。上述 \(u,v\) 若原样作为整数多项式使用，行列式是六，不能充当可逆变换。
+	在 \(\mathbb Z[t]\) 中，前一恒等式给出 \(2\in(a,b)\)，而 \(b=a-2t\)，所以 \((a,b)=(2,t^2+t+1)\)。于是
+	\[
+		\mathbb Z[t]/(a,b)\cong\mathbb F_2[t]/(t^2+t+1).
+	\]
+	右边的二次多项式在 \(\mathbb F_2\) 中没有根，故不可约，商环是四元域。特别地，\((a,b)\) 是真理想；可逆行变换保持条目理想，而 \((1,0)^{\mathsf T}\) 的条目生成整个环，所以不可能有这样的整数多项式换基。上述 \(u,v\) 若原样作为整数多项式使用，行列式是六，不能充当可逆变换。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-integral-polynomial-obstruction}
-证明 \(\mathbb Z[t]\) 上的行矩阵 \((2\ t)\) 不能通过幺模变换化成 \((d\ 0)\)。比较它在 \(\mathbb Q[t]\) 上的情形。
+	证明 \(\mathbb Z[t]\) 上的行矩阵 \((2\ t)\) 不能通过幺模变换化成 \((d\ 0)\)。比较它在 \(\mathbb Q[t]\) 上的情形。
 \end{exercise}
 \begin{solution}
-若能化成所述形状，条目理想不变性给出 \((2,t)=(d)\)。由 \(d\mid2\)，次数相加说明 \(d\) 是整数常数；再由 \(d\mid t\)，比较 \(t\) 的系数得 \(d\mid1\)，故 \(d=\pm1\)。但映射 \(\mathbb Z[t]\to\mathbb F_2\)、\(f\mapsto f(0)\bmod2\) 把 \((2,t)\) 送为零，故该理想不含一，矛盾。
+	若能化成所述形状，条目理想不变性给出 \((2,t)=(d)\)。由 \(d\mid2\)，次数相加说明 \(d\) 是整数常数；再由 \(d\mid t\)，比较 \(t\) 的系数得 \(d\mid1\)，故 \(d=\pm1\)。但映射 \(\mathbb Z[t]\to\mathbb F_2\)、\(f\mapsto f(0)\bmod2\) 把 \((2,t)\) 送为零，故该理想不含一，矛盾。
 
-在 \(\mathbb Q[t]\) 中二为单位，取
-\[
-Q=\begin{pmatrix}1/2&-t/2\\0&1\end{pmatrix}
-\]
-即有 \((2\ t)Q=(1\ 0)\)，且 \(\det Q=1/2\) 是该环的单位。改变系数环会改变允许的换基与余核。
+	在 \(\mathbb Q[t]\) 中二为单位，取
+	\[
+		Q=\begin{pmatrix}1/2&-t/2\\0&1\end{pmatrix}
+	\]
+	即有 \((2\ t)Q=(1\ 0)\)，且 \(\det Q=1/2\) 是该环的单位。改变系数环会改变允许的换基与余核。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-zero-divisor-kernel}
-在 \(R=\mathbb Z/12\mathbb Z\) 上令
-\[
-A=\begin{pmatrix}4&0&4\\0&6&6\end{pmatrix},\qquad
-Q=\begin{pmatrix}1&0&-1\\0&1&-1\\0&0&1\end{pmatrix}.
-\]
-核验 \(AQ\) 为矩形对角矩阵，计算 \(A:R^3\to R^2\) 的核、像与余核，并证明核不是自由 \(R\) 模。最后给出 \(Ax=(4,6)^{\mathsf T}\) 的全部解。
+	在 \(R=\mathbb Z/12\mathbb Z\) 上令
+	\[
+		A=\begin{pmatrix}4&0&4\\0&6&6\end{pmatrix},\qquad
+		Q=\begin{pmatrix}1&0&-1\\0&1&-1\\0&0&1\end{pmatrix}.
+	\]
+	核验 \(AQ\) 为矩形对角矩阵，计算 \(A:R^3\to R^2\) 的核、像与余核，并证明核不是自由 \(R\) 模。最后给出 \(Ax=(4,6)^{\mathsf T}\) 的全部解。
 \end{exercise}
 \begin{solution}
-\(\det Q=1\)，直接相乘得 \(AQ=\begin{pmatrix}4&0&0\\0&6&0\end{pmatrix}\)。令 \(x=Qy=(y_1-y_3,y_2-y_3,y_3)^{\mathsf T}\)。\(Ax=0\) 等价于 \(4y_1=0\)、\(6y_2=0\)，所以核中的向量恰为
-\[
-\begin{pmatrix}3a-c\\2b-c\\c\end{pmatrix},
-\qquad 0\le a<4,\quad0\le b<6,\quad0\le c<12,
-\]
-各坐标在 \(R\) 中读取。由第三坐标恢复 \(c\)，再由 \(x_1+c=3a\)、\(x_2+c=2b\) 分别恢复 \(a\bmod4\)、\(b\bmod6\)，所以这些表示互不重复。映射 \(r\mapsto3r\) 的像是 \(\operatorname{Ann}_R(4)\)，核为 \((4)\)；映射 \(r\mapsto2r\) 的像是 \(\operatorname{Ann}_R(6)\)，核为 \((6)\)。由\cref{b2:thm:module-first-isomorphism}，分别得到 \(R/(4)\cong\operatorname{Ann}_R(4)\) 和 \(R/(6)\cong\operatorname{Ann}_R(6)\)，于是
-\[
-\ker A\cong R/(4)\oplus R/(6)\oplus R,
-\qquad
-\operatorname{im}A=(4)\oplus(6),
-\qquad
-\operatorname{coker}A\cong R/(4)\oplus R/(6).
-\]
-因为 \(R/(4)\)、\(R/(6)\) 分别有四、六个元素，而理想 \((4)\)、\((6)\) 分别有三、两个元素，三者的元素数分别为 \(4\cdot6\cdot12=288\)、\(3\cdot2=6\)、\(4\cdot6=24\)。有限秩自由 \(R\) 模的元素个数为 \(12^d\)，而 \(288\) 不是十二的整数次幂；无限秩自由模则有无限多个元素。因此核不是自由模。
+	\(\det Q=1\)，直接相乘得 \(AQ=\begin{pmatrix}4&0&0\\0&6&0\end{pmatrix}\)。令 \(x=Qy=(y_1-y_3,y_2-y_3,y_3)^{\mathsf T}\)。\(Ax=0\) 等价于 \(4y_1=0\)、\(6y_2=0\)，所以核中的向量恰为
+	\[
+		\begin{pmatrix}3a-c\\2b-c\\c\end{pmatrix},
+		\qquad 0\le a<4,\quad0\le b<6,\quad0\le c<12,
+	\]
+	各坐标在 \(R\) 中读取。由第三坐标恢复 \(c\)，再由 \(x_1+c=3a\)、\(x_2+c=2b\) 分别恢复 \(a\bmod4\)、\(b\bmod6\)，所以这些表示互不重复。映射 \(r\mapsto3r\) 的像是 \(\operatorname{Ann}_R(4)\)，核为 \((4)\)；映射 \(r\mapsto2r\) 的像是 \(\operatorname{Ann}_R(6)\)，核为 \((6)\)。由\cref{b2:thm:module-first-isomorphism}，分别得到 \(R/(4)\cong\operatorname{Ann}_R(4)\) 和 \(R/(6)\cong\operatorname{Ann}_R(6)\)，于是
+	\[
+		\ker A\cong R/(4)\oplus R/(6)\oplus R, \qquad \operatorname{im}A=(4)\oplus(6), \qquad \operatorname{coker}A\cong R/(4)\oplus R/(6).
+	\]
+	因为 \(R/(4)\)、\(R/(6)\) 分别有四、六个元素，而理想 \((4)\)、\((6)\) 分别有三、两个元素，三者的元素数分别为 \(4\cdot6\cdot12=288\)、\(3\cdot2=6\)、\(4\cdot6=24\)。有限秩自由 \(R\) 模的元素个数为 \(12^d\)，而 \(288\) 不是十二的整数次幂；无限秩自由模则有无限多个元素。因此核不是自由模。
 
-对指定右端，\(y_1=y_2=1\)、\(y_3=0\) 是一组解。加上全部齐次解，再乘 \(Q\)，得到全部原坐标解
-\[
-x=\begin{pmatrix}1+3a-c\\1+2b-c\\c\end{pmatrix},
-\qquad0\le a<4,\quad0\le b<6,\quad0\le c<12.
-\]
-此处不仅零列给出自由坐标，两个非零对角元也各自给出非唯一坐标。
+	对指定右端，\(y_1=y_2=1\)、\(y_3=0\) 是一组解。加上全部齐次解，再乘 \(Q\)，得到全部原坐标解
+	\[
+		x=\begin{pmatrix}1+3a-c\\1+2b-c\\c\end{pmatrix},
+		\qquad0\le a<4,\quad0\le b<6,\quad0\le c<12.
+	\]
+	此处不仅零列给出自由坐标，两个非零对角元也各自给出非唯一坐标。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-modular-rank-certificate}
-对整数矩阵
-\[
-A=\begin{pmatrix}2&4&6\\4&8&12\\6&12&20\end{pmatrix},
-\]
-给出它在 \(\mathbb Q\) 上秩为二的证书，证书须由一个模五的非零子式及一个 \(3\times2\) 与 \(2\times3\) 矩阵的乘积组成。模二的计算在这里能提供什么信息？
+	对整数矩阵
+	\[
+		A=\begin{pmatrix}2&4&6\\4&8&12\\6&12&20\end{pmatrix},
+	\]
+	给出它在 \(\mathbb Q\) 上秩为二的证书，证书须由一个模五的非零子式及一个 \(3\times2\) 与 \(2\times3\) 矩阵的乘积组成。模二的计算在这里能提供什么信息？
 \end{exercise}
 \begin{solution}
-第一、三行与第一、三列组成的子式为 \(40-36=4\)，模五非零，所以\cref{b2:prop:A-modular-rank}给出有理数秩至少为二。另一方面，直接相乘有
-\[
-A=\begin{pmatrix}1&0\\2&0\\3&1\end{pmatrix}
-  \begin{pmatrix}2&4&6\\0&0&2\end{pmatrix},
-\]
-所以秩至多为二，合并得到等于二。模二后矩阵为零，只给出无信息的下界零，不能据此断定原矩阵的秩为零。
+	第一、三行与第一、三列组成的子式为 \(40-36=4\)，模五非零，所以\cref{b2:prop:A-modular-rank}给出有理数秩至少为二。另一方面，直接相乘有
+	\[
+		A=\begin{pmatrix}1&0\\2&0\\3&1\end{pmatrix}
+		\begin{pmatrix}2&4&6\\0&0&2\end{pmatrix},
+	\]
+	所以秩至多为二，合并得到等于二。模二后矩阵为零，只给出无信息的下界零，不能据此断定原矩阵的秩为零。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-modular-identity-bound}
-设 \(P,C\) 是 \(m\) 阶整数矩阵，\(m\ge1\)，所有条目的绝对值至多为整数 \(H\ge1\)。给出 \(PC-I_m\) 每个条目的统一界。对两两互素整数 \(q_1,\ldots,q_s\ge2\)，已知 \(PC\equiv I_m\pmod{q_i}\)；给出模数乘积的一个充分条件，使这些同余证明 \(P\in\operatorname{GL}_m(\mathbb Z)\) 且 \(C=P^{-1}\)。若只知道 \(P\) 模这些模数可逆，而没有整数候选逆和大小界，结论是否仍成立？
+	设 \(P,C\) 是 \(m\) 阶整数矩阵，\(m\ge1\)，所有条目的绝对值至多为整数 \(H\ge1\)。给出 \(PC-I_m\) 每个条目的统一界。对两两互素整数 \(q_1,\ldots,q_s\ge2\)，已知 \(PC\equiv I_m\pmod{q_i}\)；给出模数乘积的一个充分条件，使这些同余证明 \(P\in\operatorname{GL}_m(\mathbb Z)\) 且 \(C=P^{-1}\)。若只知道 \(P\) 模这些模数可逆，而没有整数候选逆和大小界，结论是否仍成立？
 \end{exercise}
 \begin{solution}
-每个 \((PC)_{ij}\) 是 \(m\) 个绝对值至多 \(H^2\) 的整数之和，因此
-\[
-\bigl|(PC-I_m)_{ij}\bigr|\le mH^2+1.
-\]
-若 \(M=\prod_iq_i>mH^2+1\)，则对每个条目应用\cref{b2:prop:A-bounded-congruence}，得到整数等式 \(PC=I_m\)。取行列式得
-\[
-\det P\det C=1.
-\]
-两因子都是整数，故均为 \(\pm1\)，\(P\) 在整数环上可逆；再左乘其逆得 \(C=P^{-1}\)，也就有 \(CP=I_m\)。这里同余和大小界不只验证了某个 Smith 乘积等式，而是验证了整数候选逆。
+	每个 \((PC)_{ij}\) 是 \(m\) 个绝对值至多 \(H^2\) 的整数之和，因此
+	\[
+		\bigl|(PC-I_m)_{ij}\bigr|\le mH^2+1.
+	\]
+	若 \(M=\prod_iq_i>mH^2+1\)，则对每个条目应用\cref{b2:prop:A-bounded-congruence}，得到整数等式 \(PC=I_m\)。取行列式得
+	\[
+		\det P\det C=1.
+	\]
+	两因子都是整数，故均为 \(\pm1\)，\(P\) 在整数环上可逆；再左乘其逆得 \(C=P^{-1}\)，也就有 \(CP=I_m\)。这里同余和大小界不只验证了某个 Smith 乘积等式，而是验证了整数候选逆。
 
-单有有限多个模数下的可逆性仍不足够。取 \(P=\operatorname{diag}(M+1,1,\ldots,1)\)，则 \(P\equiv I_m\pmod{q_i}\) 对所有 \(i\) 成立，但 \(\det P=M+1>1\)，并非整数环上的换基矩阵。
+	单有有限多个模数下的可逆性仍不足够。取 \(P=\operatorname{diag}(M+1,1,\ldots,1)\)，则 \(P\equiv I_m\pmod{q_i}\) 对所有 \(i\) 成立，但 \(\det P=M+1>1\)，并非整数环上的换基矩阵。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-near-singular-solutions}
-对 \(\varepsilon\ne0\)，精确求解
-\[
-\begin{pmatrix}1&1\\1&1+\varepsilon\end{pmatrix}
-\binom{x}{y}=\binom{2}{2+\delta}.
-\]
-比较 \(\delta=0\) 与 \(\delta=\varepsilon\) 的解，说明当 \(\varepsilon\) 很小时，右端的小变化为什么仍可能改变解一个固定的量。若 \(\varepsilon\) 的输入仅为包含零的小区间，能否直接套用所得除法公式？
+	对 \(\varepsilon\ne0\)，精确求解
+	\[
+		\begin{pmatrix}1&1\\1&1+\varepsilon\end{pmatrix}
+		\binom{x}{y}=\binom{2}{2+\delta}.
+	\]
+	比较 \(\delta=0\) 与 \(\delta=\varepsilon\) 的解，说明当 \(\varepsilon\) 很小时，右端的小变化为什么仍可能改变解一个固定的量。若 \(\varepsilon\) 的输入仅为包含零的小区间，能否直接套用所得除法公式？
 \end{exercise}
 \begin{solution}
-两行相减得到 \(\varepsilon y=\delta\)，因而
-\[
-y=\delta/\varepsilon,\qquad x=2-\delta/\varepsilon.
-\]
-\(\delta=0\) 时解为 \((2,0)\)，\(\delta=\varepsilon\) 时为 \((1,1)\)。右端只相差 \((0,\varepsilon)\)，解却相差 \((-1,1)\)。这是精确等式给出的比较，无须归因于某次浮点舍入。
+	两行相减得到 \(\varepsilon y=\delta\)，因而
+	\[
+		y=\delta/\varepsilon,\qquad x=2-\delta/\varepsilon.
+	\]
+	\(\delta=0\) 时解为 \((2,0)\)，\(\delta=\varepsilon\) 时为 \((1,1)\)。右端只相差 \((0,\varepsilon)\)，解却相差 \((-1,1)\)。这是精确等式给出的比较，无须归因于某次浮点舍入。
 
-如果输入区间包含零，就尚未知道 \(\varepsilon\ne0\)，不能统一除以它。在 \(\varepsilon=0\) 时，\(\delta=0\) 给出无穷多解，而 \(\delta\ne0\) 给出无解，与非零情形的唯一解不同。
+	如果输入区间包含零，就尚未知道 \(\varepsilon\ne0\)，不能统一除以它。在 \(\varepsilon=0\) 时，\(\delta=0\) 给出无穷多解，而 \(\delta\ne0\) 给出无解，与非零情形的唯一解不同。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-polynomial-system}
-对\eqref{b2:eq:A-polynomial-certificate}中的 \(B\in M_2\bigl(\mathbb F_5[t]\bigr)\)，判断方程
-\[
-Bx=\binom{0}{t^2},\qquad
-Bx=\binom{1}{t-t^3+t^4}
-\]
-是否有多项式解；有解时求出全部解。第一式在分式域上是否可解？
+	对\eqref{b2:eq:A-polynomial-certificate}中的 \(B\in M_2\bigl(\mathbb F_5[t]\bigr)\)，判断方程
+	\[
+		Bx=\binom{0}{t^2},\qquad Bx=\binom{1}{t-t^3+t^4}
+	\]
+	是否有多项式解；有解时求出全部解。第一式在分式域上是否可解？
 \end{exercise}
 \begin{solution}
-第一式左乘 \(P\) 后右端仍为 \((0,t^2)^{\mathsf T}\)，而 \(t^4\nmid t^2\)，所以没有多项式解。第二式左乘 \(P\) 后右端为 \((1,t^4)^{\mathsf T}\)，对角方程的解是 \(y=(1,1)^{\mathsf T}\)。所以
-\[
-x=Qy=\binom{1-t}{1+t^2-t}.
-\]
-两个非零对角元在整环中都可消去，故齐次核为零，这也是唯一解。
+	第一式左乘 \(P\) 后右端仍为 \((0,t^2)^{\mathsf T}\)，而 \(t^4\nmid t^2\)，所以没有多项式解。第二式左乘 \(P\) 后右端为 \((1,t^4)^{\mathsf T}\)，对角方程的解是 \(y=(1,1)^{\mathsf T}\)。所以
+	\[
+		x=Qy=\binom{1-t}{1+t^2-t}.
+	\]
+	两个非零对角元在整环中都可消去，故齐次核为零，这也是唯一解。
 
-第一式在 \(\mathbb F_5(t)\) 上可解，先得 \(y=(0,t^{-2})^{\mathsf T}\)，再乘 \(Q\) 得
-\[
-x=\binom{-t^{-1}}{1+t^{-2}}.
-\]
-它含有分母，不能当作原环上的多项式解。
+	第一式在 \(\mathbb F_5(t)\) 上可解，先得 \(y=(0,t^{-2})^{\mathsf T}\)，再乘 \(Q\) 得
+	\[
+		x=\binom{-t^{-1}}{1+t^{-2}}.
+	\]
+	它含有分母，不能当作原环上的多项式解。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-rational-powers}
-对\secref{b2:sec:A04}中的有理矩阵 \(T\)，求 \(T^{-1}\) 的各条目，并把 \(T^5\) 写成 \(I,T,T^2\) 的线性组合。用原矩阵验证 \(T^{-1}e_3=Tv\)。
+	对\secref{b2:sec:A04}中的有理矩阵 \(T\)，求 \(T^{-1}\) 的各条目，并把 \(T^5\) 写成 \(I,T,T^2\) 的线性组合。用原矩阵验证 \(T^{-1}e_3=Tv\)。
 \end{exercise}
 \begin{solution}
-直接乘法得到
-\[
-T^2=\begin{pmatrix}0&3&1\\0&2&2\\1&-\tfrac12&2\end{pmatrix}.
-\]
-由\eqref{b2:eq:A-rational-inverse}，
-\[
-T^{-1}=\begin{pmatrix}-1&\tfrac32&\tfrac12\\0&0&1\\\tfrac12&-\tfrac14&0\end{pmatrix}.
-\]
-又 \(T^3=2T+2I\)，所以 \(T^4=2T^2+2T\)，进而
-\[
-T^5=2T^3+2T^2=2T^2+4T+4I.
-\]
-逆矩阵的第三列为 \((1/2,1,0)^{\mathsf T}=Tv\)。原矩阵乘此列恰为 \(e_3\)，与 \(T^2v=e_3\) 一致。
+	直接乘法得到
+	\[
+		T^2=\begin{pmatrix}0&3&1\\0&2&2\\1&-\tfrac12&2\end{pmatrix}.
+	\]
+	由\eqref{b2:eq:A-rational-inverse}，
+	\[
+		T^{-1}=\begin{pmatrix}-1&\tfrac32&\tfrac12\\0&0&1\\\tfrac12&-\tfrac14&0\end{pmatrix}.
+	\]
+	又 \(T^3=2T+2I\)，所以 \(T^4=2T^2+2T\)，进而
+	\[
+		T^5=2T^3+2T^2=2T^2+4T+4I.
+	\]
+	逆矩阵的第三列为 \((1/2,1,0)^{\mathsf T}=Tv\)。原矩阵乘此列恰为 \(e_3\)，与 \(T^2v=e_3\) 一致。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-equivalence-not-similarity}
-令 \(A=\begin{pmatrix}1&1\\0&1\end{pmatrix}\)、\(B=I_2\)。证明它们在 \(\mathbb Z\) 上幺模等价，并且具有相同特征多项式，但在 \(\mathbb Q\) 上不相似。说明只用 Smith 因子判断有理矩阵的相似类会遗漏什么。
+	令 \(A=\begin{pmatrix}1&1\\0&1\end{pmatrix}\)、\(B=I_2\)。证明它们在 \(\mathbb Z\) 上幺模等价，并且具有相同特征多项式，但在 \(\mathbb Q\) 上不相似。说明只用 Smith 因子判断有理矩阵的相似类会遗漏什么。
 \end{exercise}
 \begin{solution}
-取 \(Q=\begin{pmatrix}1&-1\\0&1\end{pmatrix}\)，则 \(\det Q=1\)、\(AQ=I_2\)，两矩阵整数 Smith 因子都是 \(1,1\)。两者特征多项式也都是 \((t-1)^2\)。但 \(A-I_2\ne0\) 而 \((A-I_2)^2=0\)，故 \(A\) 的最小多项式为 \((t-1)^2\)；\(B\) 的最小多项式为 \(t-1\)。相似变换满足 \(f(S^{-1}AS)=S^{-1}f(A)S\)，保持零化多项式，故二者不相似。
+	取 \(Q=\begin{pmatrix}1&-1\\0&1\end{pmatrix}\)，则 \(\det Q=1\)、\(AQ=I_2\)，两矩阵整数 Smith 因子都是 \(1,1\)。两者特征多项式也都是 \((t-1)^2\)。但 \(A-I_2\ne0\) 而 \((A-I_2)^2=0\)，故 \(A\) 的最小多项式为 \((t-1)^2\)；\(B\) 的最小多项式为 \(t-1\)。相似变换满足 \(f(S^{-1}AS)=S^{-1}f(A)S\)，保持零化多项式，故二者不相似。
 
-矩阵自身的 Smith 因子描述该矩阵所定义映射的余核，不保存算子的反复作用。判断 \(A\) 在 \(\mathbb Q\) 上的相似类，应研究 \(\mathbb Q[t]\) 上的 \(tI-A\) 及相应不变因子，而不是只研究 \(A\) 在 \(\mathbb Q\) 或 \(\mathbb Z\) 上的行列等价。
+	矩阵自身的 Smith 因子描述该矩阵所定义映射的余核，不保存算子的反复作用。判断 \(A\) 在 \(\mathbb Q\) 上的相似类，应研究 \(\mathbb Q[t]\) 上的 \(tI-A\) 及相应不变因子，而不是只研究 \(A\) 在 \(\mathbb Q\) 或 \(\mathbb Z\) 上的行列等价。
 \end{solution}
 
 \begin{exercise}\label{b2:ex:A-specialization-loses-multiplicity}
-令 \(R=\mathbb F_5[t]\)、\(M_r=R/(t^r)\)（\(r\ge1\)），并令 \(S_\ell=R/(t^\ell)\)（\(\ell\ge1\)）。求 \(M_r\otimes_R S_\ell\) 的 \(\mathbb F_5\) 维数。比较 \(M_4\) 与 \(M_8\) 在 \(\ell=1\) 和 \(\ell=5\) 时的结果，说明保留截断参数而不只取 \(t=0\) 后，怎样恢复被逐点秩遗漏的指数 \(r\)。
+	令 \(R=\mathbb F_5[t]\)、\(M_r=R/(t^r)\)（\(r\ge1\)），并令 \(S_\ell=R/(t^\ell)\)（\(\ell\ge1\)）。求 \(M_r\otimes_R S_\ell\) 的 \(\mathbb F_5\) 维数。比较 \(M_4\) 与 \(M_8\) 在 \(\ell=1\) 和 \(\ell=5\) 时的结果，说明保留截断参数而不只取 \(t=0\) 后，怎样恢复被逐点秩遗漏的指数 \(r\)。
 \end{exercise}
 \begin{solution}
-由\cref{b2:prop:tensor-quotient}，先对 \(M_r\) 商去 \(t^\ell M_r\)，得到
-\[
-M_r\otimes_R S_\ell
-\cong R/(t^r,t^\ell)
-\cong R/(t^{\min(r,\ell)}).
-\]
-最后一个商的基为 \(1,t,\ldots,t^{\min(r,\ell)-1}\) 的剩余类，维数为 \(\min(r,\ell)\)。\(\ell=1\) 正是取 \(t=0\) 的纤维，两个模都只给出一维；\(\ell=5\) 时，\(M_4\) 与 \(M_8\) 则分别给出四维和五维，已经可以区分。
+	由\cref{b2:prop:tensor-quotient}，先对 \(M_r\) 商去 \(t^\ell M_r\)，得到
+	\[
+		M_r\otimes_R S_\ell \cong R/(t^r,t^\ell) \cong R/(t^{\min(r,\ell)}).
+	\]
+	最后一个商的基为 \(1,t,\ldots,t^{\min(r,\ell)-1}\) 的剩余类，维数为 \(\min(r,\ell)\)。\(\ell=1\) 正是取 \(t=0\) 的纤维，两个模都只给出一维；\(\ell=5\) 时，\(M_4\) 与 \(M_8\) 则分别给出四维和五维，已经可以区分。
 
-随着 \(\ell\) 增大，这个维数序列依次为 \(1,2,\ldots,r,r,r,\ldots\)。因此其最终稳定值恰为 \(r\)。只取一个点会抹掉 \(t\) 的正次幂；在 \(S_\ell\) 中保留 \(t,t^2,\ldots,t^{\ell-1}\)，便可以逐次看到更高的重数信息。
+	随着 \(\ell\) 增大，这个维数序列依次为 \(1,2,\ldots,r,r,r,\ldots\)。因此其最终稳定值恰为 \(r\)。只取一个点会抹掉 \(t\) 的正次幂；在 \(S_\ell\) 中保留 \(t,t^2,\ldots,t^{\ell-1}\)，便可以逐次看到更高的重数信息。
 \end{solution}

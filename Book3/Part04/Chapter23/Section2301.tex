@@ -24,30 +24,28 @@
 设 \((R,\mathfrak m)\) 是局部环，\(k=R/\mathfrak m\)。把多项式的系数约化到 \(k\)，常会得到一个容易求解的方程。问题是：约化方程的解，能否成为原方程的解的第一项？如果约化根是单根，导数便可以用来修正误差；如果它是重根，误差未必能消去，也可能有不止一种消去方法。
 
 \begin{theorem}[单根的 Hensel 提升]\label{b3:thm:hensel-simple-root}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，且自然映射 \(R\to\varprojlim_n R/\mathfrak m^n\) 是同构。设 \(f\in R[T]\)，\(\bar a\in k=R/\mathfrak m\) 满足
-\[
-\bar f(\bar a)=0,\qquad \bar f'(\bar a)\ne0.
-\]
-则存在唯一的 \(a\in R\)，使 \(f(a)=0\) 且 \(a\bmod\mathfrak m=\bar a\)。这里不要求 \(f\) 首一。
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，且自然映射 \(R\to\varprojlim_n R/\mathfrak m^n\) 是同构。设 \(f\in R[T]\)，\(\bar a\in k=R/\mathfrak m\) 满足
+	\[
+		\bar f(\bar a)=0,\qquad \bar f'(\bar a)\ne0.
+	\]
+	则存在唯一的 \(a\in R\)，使 \(f(a)=0\) 且 \(a\bmod\mathfrak m=\bar a\)。这里不要求 \(f\) 首一。
 \end{theorem}
 \begin{proof}
-任取 \(\bar a\) 的提升 \(a_0\)。因为 \(f'(a_0)\) 模 \(\mathfrak m\) 非零，它是单位。递归令
-\[
-a_{j+1}=a_j-\frac{f(a_j)}{f'(a_j)}.
-\]
-每次修正都在 \(\mathfrak m\) 中，故所有 \(a_j\) 具有相同的剩余类，\(f'(a_j)\) 始终可逆。多项式恒等式
-\(f(u+v)=f(u)+f'(u)\cdot v+v^2\cdot h(u,v)\) 给出：若 \(f(a_j)\in\mathfrak m^{2^j}\)，则
-\[
-a_{j+1}-a_j\in\mathfrak m^{2^j},\qquad
-f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
-\]
-初始误差属于 \(\mathfrak m\)，所以归纳成立。由完备性，\((a_j)\) 收敛到 \(a\in R\)。有限次加法与乘法对 \(\mathfrak m\) 进拓扑连续，故 \(f(a)\in\bigcap_n\mathfrak m^n=0\)，并且 \(a\) 仍提升 \(\bar a\)。
+	任取 \(\bar a\) 的提升 \(a_0\)。因为 \(f'(a_0)\) 模 \(\mathfrak m\) 非零，它是单位。递归令
+	\[
+		a_{j+1}=a_j-\frac{f(a_j)}{f'(a_j)}.
+	\]
+	每次修正都在 \(\mathfrak m\) 中，故所有 \(a_j\) 具有相同的剩余类，\(f'(a_j)\) 始终可逆。多项式恒等式 \(f(u+v)=f(u)+f'(u)\cdot v+v^2\cdot h(u,v)\) 给出：若 \(f(a_j)\in\mathfrak m^{2^j}\)，则
+	\[
+		a_{j+1}-a_j\in\mathfrak m^{2^j},\qquad f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
+	\]
+	初始误差属于 \(\mathfrak m\)，所以归纳成立。由完备性，\((a_j)\) 收敛到 \(a\in R\)。有限次加法与乘法对 \(\mathfrak m\) 进拓扑连续，故 \(f(a)\in\bigcap_n\mathfrak m^n=0\)，并且 \(a\) 仍提升 \(\bar a\)。
 
-若 \(a,b\) 都是这样的根，则
-\[
-0=f(a)-f(b)=(a-b)\bigl(f'(b)+(a-b)c\bigr)
-\]
-其中 \(c\in R\)。括号内的元素模 \(\mathfrak m\) 等于 \(\bar f'(\bar a)\)，所以是单位，因而 \(a=b\)。这个唯一性论证本身不需要完备性。
+	若 \(a,b\) 都是这样的根，则
+	\[
+		0=f(a)-f(b)=(a-b)\bigl(f'(b)+(a-b)c\bigr)
+	\]
+	其中 \(c\in R\)。括号内的元素模 \(\mathfrak m\) 等于 \(\bar f'(\bar a)\)，所以是单位，因而 \(a=b\)。这个唯一性论证本身不需要完备性。
 \end{proof}
 
 这个证明中三项条件分别承担不同作用：导数可逆使每次线性修正可以唯一求出，完备性使相容的 Cauchy 修正有极限，分离性则把 \(f(a)\in\bigcap_n\mathfrak m^n\) 变成 \(f(a)=0\)。最后的唯一性只用剩余类内差商的可逆性，不需要完备性。
@@ -56,31 +54,30 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 定理的递推式也能计算指定精度的根。为明确每一步都可在有限时间内完成，以下取整数系数和 \(p\) 进精度；输出是模 \(p^N\) 的剩余类，而不是在有限步内写出整个 \(p\) 进整数。
 
 \begin{algorithm}[htbp]
-\caption{Hensel 单根有限精度提升}
-\label{b3:alg:hensel-root-finite-precision}
-\begin{algorithmsteps}{素数 \(p\)、\(f\in\mathbb Z[T]\)、正整数 \(N\)，以及 \(a_1\in\{0,\ldots,p-1\}\)，满足 \(f(a_1)\equiv0\pmod p\)、\(f'(a_1)\not\equiv0\pmod p\)。}{唯一的 \(a_N\in\mathbb Z/p^N\mathbb Z\)，满足 \(f(a_N)=0\) 且 \(a_N\equiv a_1\pmod p\)。}
-\State 置 \(a=a_1\)、\(m=1\)。
-\While{\(m<N\)}
-\State 置 \(t=\min\{2m,N\}\)，用扩展 Euclid 算法求 \(u\equiv f'(a)^{-1}\pmod{p^t}\)。
-\State 计算 \(a\equiv a-f(a)u\pmod{p^t}\)，取任一整数代表，并置 \(m=t\)。
-\EndWhile
-\State \Return \(a\bmod p^N\)。
-\end{algorithmsteps}
+	\caption{Hensel 单根有限精度提升}
+	\label{b3:alg:hensel-root-finite-precision}
+	\begin{algorithmsteps}{素数 \(p\)、\(f\in\mathbb Z[T]\)、正整数 \(N\)，以及 \(a_1\in\{0,\ldots,p-1\}\)，满足 \(f(a_1)\equiv0\pmod p\)、\(f'(a_1)\not\equiv0\pmod p\)。}{唯一的 \(a_N\in\mathbb Z/p^N\mathbb Z\)，满足 \(f(a_N)=0\) 且 \(a_N\equiv a_1\pmod p\)。}
+		\State 置 \(a=a_1\)、\(m=1\)。
+		\While{\(m<N\)}
+			\State 置 \(t=\min\{2m,N\}\)，用扩展 Euclid 算法求 \(u\equiv f'(a)^{-1}\pmod{p^t}\)。
+			\State 计算 \(a\equiv a-f(a)u\pmod{p^t}\)，取任一整数代表，并置 \(m=t\)。
+		\EndWhile
+		\State \Return \(a\bmod p^N\)。
+	\end{algorithmsteps}
 \end{algorithm}
 
 \cref{b3:alg:hensel-root-finite-precision}的每轮满足 \(f(a)\equiv0\pmod{p^m}\) 且 \(a\equiv a_1\pmod p\)；导数始终与 \(p\) 互素，所以模 \(p^t\) 的逆元可用整数 Euclid 运算求出。上面证明中的误差平方估计表明更新后 \(f(a)\equiv0\pmod{p^t}\)。精度指数每轮加倍，最后一轮可截在 \(N\)，故至多经过 \(\lceil\log_2N\rceil\) 轮。输出的唯一性由定理的单根结论给出。
 
 \begin{example}\label{b3:exm:hensel-root-five-adic}
-在 \(\mathbb Z_5\) 中，\(T^2+1\) 的约化根 \(2\) 是单根。故恰有一个根同余于 \(2\pmod5\)。写作 \(2+5c\)，模 \(25\) 的方程为 \(5+20c\equiv0\)，得 \(c\equiv1\pmod5\)，所以这个根模 \(25\) 等于 \(7\)。从约化根 \(3\) 得到另一个根，它是前一个的负数。这里是在指定剩余类内唯一，并不是说多项式在环中只能有一个根。
+	在 \(\mathbb Z_5\) 中，\(T^2+1\) 的约化根 \(2\) 是单根。故恰有一个根同余于 \(2\pmod5\)。写作 \(2+5c\)，模 \(25\) 的方程为 \(5+20c\equiv0\)，得 \(c\equiv1\pmod5\)，所以这个根模 \(25\) 等于 \(7\)。从约化根 \(3\) 得到另一个根，它是前一个的负数。这里是在指定剩余类内唯一，并不是说多项式在环中只能有一个根。
 \end{example}
 
 \begin{definition}\label{b3:def:henselian-local-ring}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若对每个首一 \(f\in R[T]\) 及每个分解
-\[
-\bar f=\bar g\bar h\quad\text{于}\;k[T],
-\]
-其中 \(\bar g,\bar h\) 首一且互素，都存在首一 \(g,h\in R[T]\)，满足
-\(f=gh\)、\(g\bmod\mathfrak m=\bar g\)、\(h\bmod\mathfrak m=\bar h\)，并且次数分别等于 \(\deg\bar g,\deg\bar h\)，则称 \(R\) 为 \term[Hensel-huan]{Hensel 环}[Henselian local ring]，也称 \(R\) 具有 Hensel 性。
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若对每个首一 \(f\in R[T]\) 及每个分解
+	\[
+		\bar f=\bar g\bar h\quad\text{于}\;k[T],
+	\]
+	其中 \(\bar g,\bar h\) 首一且互素，都存在首一 \(g,h\in R[T]\)，满足 \(f=gh\)、\(g\bmod\mathfrak m=\bar g\)、\(h\bmod\mathfrak m=\bar h\)，并且次数分别等于 \(\deg\bar g,\deg\bar h\)，则称 \(R\) 为 \term[Hensel-huan]{Hensel 环}[Henselian local ring]，也称 \(R\) 具有 Hensel 性。
 \end{definition}
 
 本书以互素首一因式提升定义 Hensel 性。在这个定义中取 \(\bar g=T-\bar a\)，便得到首一多项式的单根提升：另一个因子与它互素，恰好表示 \(\bar f'(\bar a)\ne0\)，提升后的一次因子就给出所求根。反方向的等价，以及多变量隐函数形式，属于 Hensel 性的等价判据；下面的隐函数引理将明确采用这一判据。因式提升还可以保留一整组根，而不要求它们分别属于剩余域。
@@ -89,7 +86,7 @@ f(a_{j+1})\in\mathfrak m^{2^{j+1}}.
 Hensel 性保证已有的互素分解可以提升，却不保证多项式在剩余域中已经有足够多的根。若还要排除剩余域的非平凡有限可分扩张，就需要加上另一个条件。
 
 \begin{definition}\label{b3:def:strictly-henselian-local-ring}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若 \(R\) 为 Hensel 环，且 \(k\) 可分闭，即 \(k\) 没有非平凡有限可分扩张，则称 \(R\) 为 \term[yange-Hensel-huan]{严格 Hensel 环}[strictly Henselian local ring]。
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。若 \(R\) 为 Hensel 环，且 \(k\) 可分闭，即 \(k\) 没有非平凡有限可分扩张，则称 \(R\) 为 \term[yange-Hensel-huan]{严格 Hensel 环}[strictly Henselian local ring]。
 \end{definition}
 
 这里要求剩余域可分闭，而不要求它代数闭；正特征下仍可能存在纯不可分扩张。Hensel 性与这个剩余域条件共同保证有限平展代数完全分裂，具体结论及证明见\cref{b3:prop:strict-henselian-finite-etale-split}。
@@ -101,73 +98,66 @@ Hensel 性保证已有的互素分解可以提升，却不保证多项式在剩�
 单变量的导数条件推广到方程组时，应要求 Jacobian 方阵可逆。下面的 Hensel 隐函数形式还保留相对于给定理想的精度。
 
 \begin{lemma}[Hensel 隐函数形式]\label{b3:lem:henselian-jacobian-lifting}
-设 \((A,\mathfrak m)\) 为交换 Noether Hensel 局部环，\(I\subseteq\mathfrak m\) 为理想，\(h\ge1\)，\(F_1,\ldots,F_h\in A[U_1,\ldots,U_h]\)。若 \(b\in A^h\) 满足
-\[
-F(b)\in IA^h,
-\qquad
-\det\left(\frac{\partial F_i}{\partial U_j}(b)\right)\in A^\times,
-\]
-则唯一存在 \(a\in A^h\)，使 \(F(a)=0\) 且 \(a-b\in IA^h\)。
+	设 \((A,\mathfrak m)\) 为交换 Noether Hensel 局部环，\(I\subseteq\mathfrak m\) 为理想，\(h\ge1\)，\(F_1,\ldots,F_h\in A[U_1,\ldots,U_h]\)。若 \(b\in A^h\) 满足
+	\[
+		F(b)\in IA^h, \qquad \det\left(\frac{\partial F_i}{\partial U_j}(b)\right)\in A^\times,
+	\]
+	则唯一存在 \(a\in A^h\)，使 \(F(a)=0\) 且 \(a-b\in IA^h\)。
 \end{lemma}
 \begin{proofsketch}
-存在性采用 Hensel 性的多变量隐函数判据，未在这里从互素因式提升定义推导。Artin 在原刊 (1.9) 陈述了这一判据：方程数与变量数相同，约化零点处的 Jacobian 行列式可逆，则零点可提升；随后明确说明，极大理想可以换成任意真理想\cite[(1.9), pp. 25--26]{Artin1969AlgebraicApproximation}。这里 \(I\subseteq\mathfrak m\) 为真理想，\(F(b)\in IA^h\)，且 Jacobian 行列式在 \(A\) 中为单位，故应用于 \(b\bmod I\) 得到存在性。
+	存在性采用 Hensel 性的多变量隐函数判据，未在这里从互素因式提升定义推导。Artin 在原刊 (1.9) 陈述了这一判据：方程数与变量数相同，约化零点处的 Jacobian 行列式可逆，则零点可提升；随后明确说明，极大理想可以换成任意真理想\cite[(1.9), pp. 25--26]{Artin1969AlgebraicApproximation}。这里 \(I\subseteq\mathfrak m\) 为真理想，\(F(b)\in IA^h\)，且 Jacobian 行列式在 \(A\) 中为单位，故应用于 \(b\bmod I\) 得到存在性。
 
-若 \(a,a'\) 都满足条件，多项式差商给出一个 \(h\times h\) 矩阵 \(C(a,a')\)，使
-\[
-F(a)-F(a')=C(a,a')(a-a'),
-\qquad
-C(a,a')\equiv J_F(b)\pmod{\mathfrak m}.
-\]
-第二式使用 \(a\equiv a'\equiv b\pmod{\mathfrak m}\)。故 \(\det C(a,a')\) 为单位，矩阵可逆，而左边为零，因而 \(a=a'\)。
-这项唯一性只用局部环中的可逆矩阵及给定剩余类；Hensel 判据承担的是前面的存在性。
+	若 \(a,a'\) 都满足条件，多项式差商给出一个 \(h\times h\) 矩阵 \(C(a,a')\)，使
+	\[
+		F(a)-F(a')=C(a,a')(a-a'), \qquad C(a,a')\equiv J_F(b)\pmod{\mathfrak m}.
+	\]
+	第二式使用 \(a\equiv a'\equiv b\pmod{\mathfrak m}\)。故 \(\det C(a,a')\) 为单位，矩阵可逆，而左边为零，因而 \(a=a'\)。 这项唯一性只用局部环中的可逆矩阵及给定剩余类；Hensel 判据承担的是前面的存在性。
 \end{proofsketch}
 
 \subsection{完备局部环的 Hensel 性}
 \label{b3:subsec:2301:02}
 
 \begin{theorem}[互素因式的 Hensel 提升]\label{b3:thm:hensel-factor-lifting}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并且 \(R\cong\varprojlim_n R/\mathfrak m^n\)。设 \(f\in R[T]\) 首一，且
-\(\bar f=\bar g\bar h\)，其中 \(\bar g,\bar h\in k[T]\) 首一互素，次数分别为 \(r,s\)。则存在唯一的首一分解 \(f=gh\)，其中 \(g,h\) 具有上述次数和约化像。特别地，每个完备分离局部环都是 Hensel 环。
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并且 \(R\cong\varprojlim_n R/\mathfrak m^n\)。设 \(f\in R[T]\) 首一，且 \(\bar f=\bar g\bar h\)，其中 \(\bar g,\bar h\in k[T]\) 首一互素，次数分别为 \(r,s\)。则存在唯一的首一分解 \(f=gh\)，其中 \(g,h\) 具有上述次数和约化像。特别地，每个完备分离局部环都是 Hensel 环。
 \end{theorem}
 \begin{proof}
-可假设 \(r,s>0\)，因为零次的首一因子只能是 \(1\)。给因子分别加上修正 \(u,v\) 时，乘积的变化为
-\[
-(g+u)(h+v)-gh=hu+gv+uv.
-\]
-在一阶精度中略去交叉项 \(uv\)，得到因子乘法的线性化 \((u,v)\mapsto hu+gv\)。它在这里承担单根提升中 \(f'(a)\) 的作用。先在 \(k\) 上考虑相应的线性映射
-\[
-L:k[T]_{<r}\oplus k[T]_{<s}\longrightarrow k[T]_{<r+s},
-\qquad (u,v)\longmapsto\bar h u+\bar g v.
-\]
-若像为零，由 \(\bar g\mid\bar h u\) 及互素性可得 \(\bar g\mid u\)。次数限制迫使 \(u=0\)，继而 \(v=0\)。两端维数均为 \(r+s\)，故 \(L\) 为同构。这正是每一阶修正都可以且只能有一种方式完成的原因。
+	可假设 \(r,s>0\)，因为零次的首一因子只能是 \(1\)。给因子分别加上修正 \(u,v\) 时，乘积的变化为
+	\[
+		(g+u)(h+v)-gh=hu+gv+uv.
+	\]
+	在一阶精度中略去交叉项 \(uv\)，得到因子乘法的线性化 \((u,v)\mapsto hu+gv\)。它在这里承担单根提升中 \(f'(a)\) 的作用。先在 \(k\) 上考虑相应的线性映射
+	\[
+		L:k[T]_{<r}\oplus k[T]_{<s}\longrightarrow k[T]_{<r+s}, \qquad (u,v)\longmapsto\bar h u+\bar g v.
+	\]
+	若像为零，由 \(\bar g\mid\bar h u\) 及互素性可得 \(\bar g\mid u\)。次数限制迫使 \(u=0\)，继而 \(v=0\)。两端维数均为 \(r+s\)，故 \(L\) 为同构。这正是每一阶修正都可以且只能有一种方式完成的原因。
 
-任取首一提升 \(g_1,h_1\)，次数固定为 \(r,s\)，于是 \(f-g_1h_1\in\mathfrak m R[T]\)。设已构造 \(g_n,h_n\)，使误差属于 \(\mathfrak m^nR[T]\)。在 \(\mathfrak m^n/\mathfrak m^{n+1}\) 上对 \(L\) 作张量积，仍为同构，故存在系数属于 \(\mathfrak m^n\) 的多项式 \(u_n,v_n\)，次数分别小于 \(r,s\)，使
-\[
-f-g_nh_n\equiv h_nu_n+g_nv_n\pmod{\mathfrak m^{n+1}R[T]}.
-\]
-令 \(g_{n+1}=g_n+u_n\)、\(h_{n+1}=h_n+v_n\)。乘积中另外出现的 \(u_nv_n\) 属于 \(\mathfrak m^{2n}R[T]\subseteq\mathfrak m^{n+1}R[T]\)，故新的误差提高一阶。修正不改变首项和次数。
+	任取首一提升 \(g_1,h_1\)，次数固定为 \(r,s\)，于是 \(f-g_1h_1\in\mathfrak m R[T]\)。设已构造 \(g_n,h_n\)，使误差属于 \(\mathfrak m^nR[T]\)。在 \(\mathfrak m^n/\mathfrak m^{n+1}\) 上对 \(L\) 作张量积，仍为同构，故存在系数属于 \(\mathfrak m^n\) 的多项式 \(u_n,v_n\)，次数分别小于 \(r,s\)，使
+	\[
+		f-g_nh_n\equiv h_nu_n+g_nv_n\pmod{\mathfrak m^{n+1}R[T]}.
+	\]
+	令 \(g_{n+1}=g_n+u_n\)、\(h_{n+1}=h_n+v_n\)。乘积中另外出现的 \(u_nv_n\) 属于 \(\mathfrak m^{2n}R[T]\subseteq\mathfrak m^{n+1}R[T]\)，故新的误差提高一阶。修正不改变首项和次数。
 
-固定次数使每个系数各自成为 Cauchy 序列。逐个取极限得到首一 \(g,h\)；分离性使 \(f-gh=0\)。若还有另一个分解 \(g'h'\)，起初 \(g'-g,h'-h\) 的系数在 \(\mathfrak m\) 中。假设已经在 \(\mathfrak m^n\) 中，则模 \(\mathfrak m^{n+1}\) 有
-\[
-\bar h(g'-g)+\bar g(h'-h)=0.
-\]
-由同一个 \(L\) 的单射性，两差的系数都在 \(\mathfrak m^{n+1}\) 中。归纳并使用分离性可得 \(g'=g,h'=h\)。
+	固定次数使每个系数各自成为 Cauchy 序列。逐个取极限得到首一 \(g,h\)；分离性使 \(f-gh=0\)。若还有另一个分解 \(g'h'\)，起初 \(g'-g,h'-h\) 的系数在 \(\mathfrak m\) 中。假设已经在 \(\mathfrak m^n\) 中，则模 \(\mathfrak m^{n+1}\) 有
+	\[
+		\bar h(g'-g)+\bar g(h'-h)=0.
+	\]
+	由同一个 \(L\) 的单射性，两差的系数都在 \(\mathfrak m^{n+1}\) 中。归纳并使用分离性可得 \(g'=g,h'=h\)。
 \end{proof}
 
 上述证明在整数系数、指定 \(p\) 进精度时也给出有限算法。初始的模 \(p\) 互素分解须作为输入；求得高精度因子后，并不能据此省去模 \(p\) 因式分解这一步。
 
 \begin{algorithm}[htbp]
-\caption{Hensel 互素因式有限精度提升}
-\label{b3:alg:hensel-factor-finite-precision}
-\begin{algorithmsteps}{素数 \(p\)、正整数 \(N\)、首一 \(f\in\mathbb Z[T]\)，及首一互素的非常数多项式 \(\bar g,\bar h\in\mathbb F_p[T]\)，满足 \(f\bmod p=\bar g\bar h\)。}{唯一的首一 \(g_N,h_N\in(\mathbb Z/p^N\mathbb Z)[T]\)，其次数及模 \(p\) 约化分别与 \(\bar g,\bar h\) 相同，且 \(f\equiv g_Nh_N\pmod{p^N}\)。}
-\State 记 \(r=\deg\bar g\)、\(s=\deg\bar h\)，任取相应次数的首一整数系数提升 \(g,h\)。
-\For{\(m=1,\ldots,N-1\)}
-\State 按系数计算 \(E=(f-gh)/p^m\bmod p\in\mathbb F_p[T]_{<r+s}\)。
-\State 在 \(\mathbb F_p\) 上解线性方程 \(\bar h u+\bar g v=E\)，其中 \(\deg u<r\)、\(\deg v<s\)。
-\State 任取 \(u,v\) 的整数系数提升 \(\tilde u,\tilde v\)，置 \(g\gets g+p^m\tilde u\)、\(h\gets h+p^m\tilde v\)，再将系数约化模 \(p^{m+1}\)。
-\EndFor
-\State \Return \(g\bmod p^N,\ h\bmod p^N\)。
-\end{algorithmsteps}
+	\caption{Hensel 互素因式有限精度提升}
+	\label{b3:alg:hensel-factor-finite-precision}
+	\begin{algorithmsteps}{素数 \(p\)、正整数 \(N\)、首一 \(f\in\mathbb Z[T]\)，及首一互素的非常数多项式 \(\bar g,\bar h\in\mathbb F_p[T]\)，满足 \(f\bmod p=\bar g\bar h\)。}{唯一的首一 \(g_N,h_N\in(\mathbb Z/p^N\mathbb Z)[T]\)，其次数及模 \(p\) 约化分别与 \(\bar g,\bar h\) 相同，且 \(f\equiv g_Nh_N\pmod{p^N}\)。}
+		\State 记 \(r=\deg\bar g\)、\(s=\deg\bar h\)，任取相应次数的首一整数系数提升 \(g,h\)。
+		\For{\(m=1,\ldots,N-1\)}
+			\State 按系数计算 \(E=(f-gh)/p^m\bmod p\in\mathbb F_p[T]_{<r+s}\)。
+			\State 在 \(\mathbb F_p\) 上解线性方程 \(\bar h u+\bar g v=E\)，其中 \(\deg u<r\)、\(\deg v<s\)。
+			\State 任取 \(u,v\) 的整数系数提升 \(\tilde u,\tilde v\)，置 \(g\gets g+p^m\tilde u\)、\(h\gets h+p^m\tilde v\)，再将系数约化模 \(p^{m+1}\)。
+		\EndFor
+		\State \Return \(g\bmod p^N,\ h\bmod p^N\)。
+	\end{algorithmsteps}
 \end{algorithm}
 
 \cref{b3:alg:hensel-factor-finite-precision}每轮解的是证明中同一个可逆的 \(r+s\) 阶线性方程组；交叉修正项含 \(p^{2m}\)，所以新误差至少提高到模 \(p^{m+1}\) 为零。\(N=1\) 时无需循环，直接返回输入因子的模 \(p\) 约化。同样的因式提升可参阅松村英之的《Commutative Ring Theory》\cite[Theorem 8.3, p. 58]{Matsumura1989CommutativeRingTheory}。单根情形的 Newton 修正每次至少使误差的理想次幂加倍，而这里逐阶求解固定的线性方程组；两者都依靠一次近似处的可逆性。
@@ -181,145 +171,133 @@ f-g_nh_n\equiv h_nu_n+g_nv_n\pmod{\mathfrak m^{n+1}R[T]}.
 完备化同时加入所有相容的 \(\mathfrak m\) 进近似。若只希望使上述互素因式能够提升，就不必加入这么多元素。描述这个较小扩张的合适方式，是规定它到其他 Hensel 局部环的映射。
 
 \begin{definition}\label{b3:def:henselization}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，\(\iota:R\to R^{\mathrm h}\) 为到 Hensel 局部环的局部同态。若对任意 Hensel 局部环 \(S\) 和局部同态 \(u:R\to S\)，存在唯一的局部同态 \(v:R^{\mathrm h}\to S\)，使 \(v\iota=u\)，则称 \(\iota:R\to R^{\mathrm h}\) 为 \(R\) 的 \term[Hensel-hua]{Hensel 化}[Henselization]。相应的唯一分解为
-\[
-\begin{tikzcd}
-R \arrow[r,"\iota"] \arrow[dr,"u"'] & R^{\mathrm h} \arrow[d,dashed,"v"] \\
-& S .
-\end{tikzcd}
-\]
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，\(\iota:R\to R^{\mathrm h}\) 为到 Hensel 局部环的局部同态。若对任意 Hensel 局部环 \(S\) 和局部同态 \(u:R\to S\)，存在唯一的局部同态 \(v:R^{\mathrm h}\to S\)，使 \(v\iota=u\)，则称 \(\iota:R\to R^{\mathrm h}\) 为 \(R\) 的 \term[Hensel-hua]{Hensel 化}[Henselization]。相应的唯一分解为
+	\[
+		\begin{tikzcd}
+			R \arrow[r,"\iota"] \arrow[dr,"u"'] & R^{\mathrm h} \arrow[d,dashed,"v"] \\
+			& S .
+		\end{tikzcd}
+	\]
 \end{definition}
 \symidx{\(R^{\mathrm h}\)：局部环 \(R\) 的 Hensel 化}
 
 这一定义立即给出唯一性：两个具有该性质的对象之间各有唯一的相容局部同态，复合由唯一性等于恒等映射。存在性则不是形式推论。永田在《Local Rings》中构造 Hensel 化，并证明其 Hensel 性、泛性质及有限邻域描述：任意有限组元素可放进一个带有指定剩余根的单根邻域\cite[\S43, (43.3), (43.5), (43.9), pp. 180--183]{Nagata1975LocalRings}。下面的概要采用这些构造结果，把有限邻域写成单根方程，并展开各阶商、平坦性和 Noether 性的推导。
 
 \begin{theorem}[Hensel 化的存在]\label{b3:thm:henselization-existence}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。则 \(R\) 有 Hensel 化 \(R^{\mathrm h}\)。它的极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域为 \(k\)，且 \(R^{\mathrm h}\) 在 \(R\) 上忠实平坦。若 \(R\) 为 Noether 环，则 \(R^{\mathrm h}\) 也为 Noether 环，而且对每个 \(n\ge1\)，自然映射
-\[
-R/\mathfrak m^n\longrightarrow
-R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}
-\]
-为同构。因此二者的相应完备化自然同构。
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)。则 \(R\) 有 Hensel 化 \(R^{\mathrm h}\)。它的极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域为 \(k\)，且 \(R^{\mathrm h}\) 在 \(R\) 上忠实平坦。若 \(R\) 为 Noether 环，则 \(R^{\mathrm h}\) 也为 Noether 环，而且对每个 \(n\ge1\)，自然映射
+	\[
+		R/\mathfrak m^n\longrightarrow R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}
+	\]
+	为同构。因此二者的相应完备化自然同构。
 \end{theorem}
 
 在 Noether 情形中，各阶商同构表示原环与 Hensel 化保留了同样的有限阶近似。这些商组成的逆极限给出共同的完备化，却不要求原环或 Hensel 化本身等于该逆极限。
 
 \begin{proofsketch}
-这里采用永田的构造、Hensel 性及有限单根邻域描述，邻域系统的细化构造不在本概要中重建。由这些输入，下面从单根方程直接求出局部环与剩余域，再证明忠实平坦性、比较各阶商；Noether 情形则借共同的完备化控制理想升链，得到 Noether 性及完备化同构。泛性质也将由指定根的唯一性核对。
+	这里采用永田的构造、Hensel 性及有限单根邻域描述，邻域系统的细化构造不在本概要中重建。由这些输入，下面从单根方程直接求出局部环与剩余域，再证明忠实平坦性、比较各阶商；Noether 情形则借共同的完备化控制理想升链，得到 Noether 性及完备化同构。泛性质也将由指定根的唯一性核对。
 
-单根邻域是在原剩余点处加入一个指定的单根解，再局部化以保留这个剩余根所选的局部分支。把构造给出的邻域写成方程，具有形式
-\[
-C=\bigl(R[T]/(f)\bigr)_{(\mathfrak m,\bar T)},
-\qquad f\;\text{首一},\quad f(0)\in\mathfrak m,
-\quad f'(0)\notin\mathfrak m,
-\]
-其中 \(\bar T\) 是 \(T\) 在商环中的像，指定的剩余根为零。任意指定单根都可经平移写成这个形式。模 \(\mathfrak m\) 后，\(\bar f=T\bar g\)，且 \(\bar g(0)\ne0\)；在 \((T)\) 处局部化时 \(\bar g\) 可逆，所以
-\[
-C/\mathfrak mC\cong
-\bigl(k[T]/(T\bar g)\bigr)_{(T)}\cong k.
-\]
-因而 \(C\) 的极大理想为 \(\mathfrak mC\)。构造定理把这些邻域及保持指定剩余点的局部映射组织为滤过系统，其余极限为 \(R^{\mathrm h}\)；这一步使用前面说明的邻域构造输入。于是 \(R^{\mathrm h}\) 为局部环，极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域仍为 \(k\)。由于 \(R[T]/(f)\) 是有限秩自由 \(R\)-模，局部化 \(C\) 在 \(R\) 上平坦，滤过余极限也平坦；又有 \(R^{\mathrm h}/\mathfrak mR^{\mathrm h}\cong k\ne0\)，由\cref{b3:thm:faithfully-flat-criterion}，\(R\to R^{\mathrm h}\) 忠实平坦。
+	单根邻域是在原剩余点处加入一个指定的单根解，再局部化以保留这个剩余根所选的局部分支。把构造给出的邻域写成方程，具有形式
+	\[
+		C=\bigl(R[T]/(f)\bigr)_{(\mathfrak m,\bar T)}, \qquad f\;\text{首一},\quad f(0)\in\mathfrak m, \quad f'(0)\notin\mathfrak m,
+	\]
+	其中 \(\bar T\) 是 \(T\) 在商环中的像，指定的剩余根为零。任意指定单根都可经平移写成这个形式。模 \(\mathfrak m\) 后，\(\bar f=T\bar g\)，且 \(\bar g(0)\ne0\)；在 \((T)\) 处局部化时 \(\bar g\) 可逆，所以
+	\[
+		C/\mathfrak mC\cong \bigl(k[T]/(T\bar g)\bigr)_{(T)}\cong k.
+	\]
+	因而 \(C\) 的极大理想为 \(\mathfrak mC\)。构造定理把这些邻域及保持指定剩余点的局部映射组织为滤过系统，其余极限为 \(R^{\mathrm h}\)；这一步使用前面说明的邻域构造输入。于是 \(R^{\mathrm h}\) 为局部环，极大理想为 \(\mathfrak mR^{\mathrm h}\)，剩余域仍为 \(k\)。由于 \(R[T]/(f)\) 是有限秩自由 \(R\)-模，局部化 \(C\) 在 \(R\) 上平坦，滤过余极限也平坦；又有 \(R^{\mathrm h}/\mathfrak mR^{\mathrm h}\cong k\ne0\)，由\cref{b3:thm:faithfully-flat-criterion}，\(R\to R^{\mathrm h}\) 忠实平坦。
 
-构造定理保证这个余极限具有 Hensel 性。其泛性质可以从邻域的方程读出：若 \(u:R\to S\) 为到 Hensel 局部环 \(S\) 的局部同态，则 \(u(f)\) 模 \(S\) 的极大理想有单根零，故存在唯一的根 \(a\)，其剩余类为零。令 \(\bar T\mapsto a\)，便得到唯一的相容局部同态 \(C\to S\)。原局部化的每个分母模指定剩余点非零，因而在 \(S\) 中映为单位。这些同态由唯一性相容，取余极限便得到唯一的局部同态 \(R^{\mathrm h}\to S\)。
+	构造定理保证这个余极限具有 Hensel 性。其泛性质可以从邻域的方程读出：若 \(u:R\to S\) 为到 Hensel 局部环 \(S\) 的局部同态，则 \(u(f)\) 模 \(S\) 的极大理想有单根零，故存在唯一的根 \(a\)，其剩余类为零。令 \(\bar T\mapsto a\)，便得到唯一的相容局部同态 \(C\to S\)。原局部化的每个分母模指定剩余点非零，因而在 \(S\) 中映为单位。这些同态由唯一性相容，取余极限便得到唯一的局部同态 \(R^{\mathrm h}\to S\)。
 
-各阶商同构也可直接由单根方程得到。记 \(A_n=R/\mathfrak m^n\)。从 \(a_1=0\in A_1=k\) 出发，假设已在 \(A_r\) 中得到满足 \(f(a_r)=0\) 的根。映射 \(A_{r+1}\to A_r\) 的核
-\[
-K_r=\mathfrak m^r/\mathfrak m^{r+1}
-\]
-满足 \(K_r^2=0\)。任取 \(a_r\) 的提升 \(\tilde a_r\in A_{r+1}\)，则误差 \(f(\tilde a_r)\in K_r\)，而 \(f'(\tilde a_r)\) 是单位。Taylor 恒等式在平方零核上给出唯一的修正
-\[
-a_{r+1}=\tilde a_r-
-\dfrac{f(\tilde a_r)}{f'(\tilde a_r)},
-\qquad f(a_{r+1})=0.
-\]
-两个提升之差属于 \(K_r\)，根方程使该差乘以单位导数为零，所以这个根与初始提升的选择无关。归纳得到相容的根 \(a_n\in A_n\)，并由 \(\bar T\mapsto a_n\) 得到反向同态
-\[
-\beta_n:C/\mathfrak m^nC\longrightarrow A_n.
-\]
-这里分母仍映为单位，因为它们模 \(\mathfrak m\) 的值非零。若 \(\alpha_n:A_n\to C/\mathfrak m^nC\) 是自然同态，则 \(\beta_n\alpha_n=\mathrm{id}_{A_n}\)，因为 \(\beta_n\) 保持底环。另一方面，\(\alpha_n\beta_n\) 与 \(\mathrm{id}\) 都把 \(\bar T\) 映到模极大理想为零的根。在 \(C/\mathfrak m^nC\) 中沿其极大理想的平方零分层使用同一唯一性，二者在每一层一致，因而 \(\alpha_n\beta_n=\mathrm{id}\)。所以
-\[
-R/\mathfrak m^n\xrightarrow{\sim}C/\mathfrak m^nC.
-\]
-反向同态的唯一性使这些同构与邻域间的映射相容。对邻域取余极限，便得到
-\(R/\mathfrak m^n\cong R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}\)。这个商环计算本身不需要 \(R\) 是 Noether 环。
+	各阶商同构也可直接由单根方程得到。记 \(A_n=R/\mathfrak m^n\)。从 \(a_1=0\in A_1=k\) 出发，假设已在 \(A_r\) 中得到满足 \(f(a_r)=0\) 的根。映射 \(A_{r+1}\to A_r\) 的核
+	\[
+		K_r=\mathfrak m^r/\mathfrak m^{r+1}
+	\]
+	满足 \(K_r^2=0\)。任取 \(a_r\) 的提升 \(\tilde a_r\in A_{r+1}\)，则误差 \(f(\tilde a_r)\in K_r\)，而 \(f'(\tilde a_r)\) 是单位。Taylor 恒等式在平方零核上给出唯一的修正
+	\[
+		a_{r+1}=\tilde a_r- \dfrac{f(\tilde a_r)}{f'(\tilde a_r)}, \qquad f(a_{r+1})=0.
+	\]
+	两个提升之差属于 \(K_r\)，根方程使该差乘以单位导数为零，所以这个根与初始提升的选择无关。归纳得到相容的根 \(a_n\in A_n\)，并由 \(\bar T\mapsto a_n\) 得到反向同态
+	\[
+		\beta_n:C/\mathfrak m^nC\longrightarrow A_n.
+	\]
+	这里分母仍映为单位，因为它们模 \(\mathfrak m\) 的值非零。若 \(\alpha_n:A_n\to C/\mathfrak m^nC\) 是自然同态，则 \(\beta_n\alpha_n=\mathrm{id}_{A_n}\)，因为 \(\beta_n\) 保持底环。另一方面，\(\alpha_n\beta_n\) 与 \(\mathrm{id}\) 都把 \(\bar T\) 映到模极大理想为零的根。在 \(C/\mathfrak m^nC\) 中沿其极大理想的平方零分层使用同一唯一性，二者在每一层一致，因而 \(\alpha_n\beta_n=\mathrm{id}\)。所以
+	\[
+		R/\mathfrak m^n\xrightarrow{\sim}C/\mathfrak m^nC.
+	\]
+	反向同态的唯一性使这些同构与邻域间的映射相容。对邻域取余极限，便得到 \(R/\mathfrak m^n\cong R^{\mathrm h}/\mathfrak m^nR^{\mathrm h}\)。这个商环计算本身不需要 \(R\) 是 Noether 环。
 
-现在设 \(R\) 是 Noether 环。关键是把每份有限数据放回一个 Noether 邻域，再利用共同完备化的忠实平坦性检测理想，而不是仅凭滤过余极限的形式推出 Noether 性。由永田的有限邻域描述，\(R^{\mathrm h}\) 中任意有限组元素均包含在一个子环 \(C=R[a]_{(\mathfrak m,a)}\) 中，其中 \(a\) 满足首一单根方程，且 \(R^{\mathrm h}\) 也是 \(C\) 的 Hensel 化\cite[(43.9), pp. 182--183]{Nagata1975LocalRings}。这里 \(C\) 是有限 \(R\) 代数 \(R[a]\) 的局部化，故 Noether；其极大理想为 \(\mathfrak mC\)。将已经得到的 Hensel 化忠实平坦性用于底环 \(C\)，可得 \(C\to R^{\mathrm h}\) 忠实平坦。若 \(b\in\bigcap_n\mathfrak m^nR^{\mathrm h}\)，取容纳它的 \(C\)，忠实平坦收缩给出
-\[
-b\in\bigcap_n\mathfrak m^nC=0,
-\]
-最后一步是 \(C\) 中的 Krull 交定理。因此 \(R^{\mathrm h}\) 分离。由各阶商同构，\(R^{\mathrm h}\) 的完备化及每个 \(C\) 的完备化都自然等于 \(\widehat R\)。
+	现在设 \(R\) 是 Noether 环。关键是把每份有限数据放回一个 Noether 邻域，再利用共同完备化的忠实平坦性检测理想，而不是仅凭滤过余极限的形式推出 Noether 性。由永田的有限邻域描述，\(R^{\mathrm h}\) 中任意有限组元素均包含在一个子环 \(C=R[a]_{(\mathfrak m,a)}\) 中，其中 \(a\) 满足首一单根方程，且 \(R^{\mathrm h}\) 也是 \(C\) 的 Hensel 化\cite[(43.9), pp. 182--183]{Nagata1975LocalRings}。这里 \(C\) 是有限 \(R\) 代数 \(R[a]\) 的局部化，故 Noether；其极大理想为 \(\mathfrak mC\)。将已经得到的 Hensel 化忠实平坦性用于底环 \(C\)，可得 \(C\to R^{\mathrm h}\) 忠实平坦。若 \(b\in\bigcap_n\mathfrak m^nR^{\mathrm h}\)，取容纳它的 \(C\)，忠实平坦收缩给出
+	\[
+		b\in\bigcap_n\mathfrak m^nC=0,
+	\]
+	最后一步是 \(C\) 中的 Krull 交定理。因此 \(R^{\mathrm h}\) 分离。由各阶商同构，\(R^{\mathrm h}\) 的完备化及每个 \(C\) 的完备化都自然等于 \(\widehat R\)。
 
-设 \(J=(b_1,\ldots,b_s)R^{\mathrm h}\)，且 \(c\in J\widehat R\cap R^{\mathrm h}\)。在共同邻域 \(C\) 中容纳 \(c,b_1,\ldots,b_s\)。由于 \(C\) 是 Noether 环，它到完备化 \(\widehat R\) 的映射忠实平坦，故
-\[
-c\in(b_1,\ldots,b_s)\widehat R\cap C
-=(b_1,\ldots,b_s)C\subseteq J.
-\]
-因此每个有限生成理想都等于其完备化扩张的收缩。任一有限生成理想升链在 Noether 环 \(\widehat R\) 中扩张后稳定，收缩后原升链也稳定。若某个理想不有限生成，就能逐次选择不在已有生成元所成理想中的元素，构造一条严格上升的有限生成理想链，矛盾。因此所有理想都有限生成，\(R^{\mathrm h}\) 是 Noether 环。这一理想收缩论证正是永田书中 (43.10) 的证明机制\cite[p. 183]{Nagata1975LocalRings}。
+	设 \(J=(b_1,\ldots,b_s)R^{\mathrm h}\)，且 \(c\in J\widehat R\cap R^{\mathrm h}\)。在共同邻域 \(C\) 中容纳 \(c,b_1,\ldots,b_s\)。由于 \(C\) 是 Noether 环，它到完备化 \(\widehat R\) 的映射忠实平坦，故
+	\[
+		c\in(b_1,\ldots,b_s)\widehat R\cap C =(b_1,\ldots,b_s)C\subseteq J.
+	\]
+	因此每个有限生成理想都等于其完备化扩张的收缩。任一有限生成理想升链在 Noether 环 \(\widehat R\) 中扩张后稳定，收缩后原升链也稳定。若某个理想不有限生成，就能逐次选择不在已有生成元所成理想中的元素，构造一条严格上升的有限生成理想链，矛盾。因此所有理想都有限生成，\(R^{\mathrm h}\) 是 Noether 环。这一理想收缩论证正是永田书中 (43.10) 的证明机制\cite[p. 183]{Nagata1975LocalRings}。
 \end{proofsketch}
 
 对 Noether 局部环，由 \(\widehat R\) 的 Hensel 性及泛性质，得到相容的局部同态
 \[
-R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
+	R\longrightarrow R^{\mathrm h}\longrightarrow\widehat R.
 \]
 前者只需解决 Hensel 提升问题，后者还允许任意阶的相容极限。不能仅凭两环有相同的各阶商，就断言两环相同；还必须检查它们自身是否完备。
 
 \begin{example}\label{b3:exm:henselization-not-completion}
-令 \(R=\mathbb Q[t]_{(t)}\)，则 \(\widehat R=\mathbb Q[\![t]\!]\)。多项式 \(F(X)=X^2-X-t\) 模 \(t\) 有单根 \(0\)，但在 \(\mathbb Q(t)\) 中没有根：若有根，则 \(1+4t\) 是有理函数的平方；然而它在 \(t=-1/4\) 处的零点阶数为一，平方的零点阶数必为偶数。因此 \(R\) 不是 Hensel 环。
+	令 \(R=\mathbb Q[t]_{(t)}\)，则 \(\widehat R=\mathbb Q[\![t]\!]\)。多项式 \(F(X)=X^2-X-t\) 模 \(t\) 有单根 \(0\)，但在 \(\mathbb Q(t)\) 中没有根：若有根，则 \(1+4t\) 是有理函数的平方；然而它在 \(t=-1/4\) 处的零点阶数为一，平方的零点阶数必为偶数。因此 \(R\) 不是 Hensel 环。
 
-\ProseParagraphBreak
-在 Hensel 化中，这个根存在；它在完备化中的展开以
-\[
--t+t^2-2t^3+5t^4+\cdots
-\]
-开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)。这个有理函数域可数，其上的多项式也只有可数多个，每个非零多项式只有有限多个根，所以它的代数闭包可数，\(R^{\mathrm h}\) 也可数。另一方面，\(\mathbb Q[\![t]\!]\) 包含全部级数
-\[
-\sum_{n\ge0}\epsilon_nt^n,\qquad \epsilon_n\in\{0,1\},
-\]
-不同的无穷二元序列给出不同的级数，因此它至少有 \(2^{\aleph_0}\) 个元素，不可数。于是
-\[
-R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
-\]
-这个例子同时区分了局部化、Hensel 化与完备化，而不是仅仅赋予同一环三个名称。
+	\ProseParagraphBreak
+	在 Hensel 化中，这个根存在；它在完备化中的展开以
+	\[
+		-t+t^2-2t^3+5t^4+\cdots
+	\]
+	开始。这里 \(R^{\mathrm h}\) 可以看作 \(\widehat R\) 的子环：前者为 Noether 局部环，它到自身完备化的映射由 Krull 交定理为单射，而这个完备化正是 \(\widehat R\)。进一步，由永田书中 (43.9)，Hensel 化的每个元素都代数于 \(\mathbb Q(t)\)。这个有理函数域可数，其上的多项式也只有可数多个，每个非零多项式只有有限多个根，所以它的代数闭包可数，\(R^{\mathrm h}\) 也可数。另一方面，\(\mathbb Q[\![t]\!]\) 包含全部级数
+	\[
+		\sum_{n\ge0}\epsilon_nt^n,\qquad \epsilon_n\in\{0,1\},
+	\]
+	不同的无穷二元序列给出不同的级数，因此它至少有 \(2^{\aleph_0}\) 个元素，不可数。于是
+	\[
+		R\subsetneq R^{\mathrm h}\subsetneq\widehat R.
+	\]
+	这个例子同时区分了局部化、Hensel 化与完备化，而不是仅仅赋予同一环三个名称。
 \end{example}
 
 普通 Hensel 化保持剩余域 \(k\)。若还希望剩余域可分闭，就须先固定一个可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)，并允许邻域中的剩余域取遍其中的有限可分扩张。这个选择也必须保留在泛性质中。
 
 \begin{definition}\label{b3:def:strict-henselization}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。设 \(\iota:R\to A\) 为局部同态，其中 \(A\) 为严格 Hensel 环，且给定相容的剩余域识别 \(A/\mathfrak m_A\cong k^{\mathrm{sep}}\)。若对任意严格 Hensel 局部环 \((S,\mathfrak n)\)、局部同态 \(u:R\to S\) 及延拓其剩余域映射的嵌入 \(\alpha:k^{\mathrm{sep}}\to\ell=S/\mathfrak n\)，都存在唯一的局部同态 \(v:A\to S\)，满足 \(v\iota=u\)，且在剩余域上诱导 \(\alpha\)，则称 \(A\) 为相对于这个可分闭包的 \term[yange-Hensel-hua]{严格 Hensel 化}[strict Henselization]，记为 \(R^{\mathrm{sh}}\)。相容关系为
-\[
-\begin{tikzcd}
-R \arrow[r,"\iota"] \arrow[d] &
-R^{\mathrm{sh}} \arrow[r,dashed,"v"] \arrow[d] &
-S \arrow[d] \\
-k \arrow[r,hook] & k^{\mathrm{sep}} \arrow[r,hook,"\alpha"] & \ell .
-\end{tikzcd}
-\]
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。设 \(\iota:R\to A\) 为局部同态，其中 \(A\) 为严格 Hensel 环，且给定相容的剩余域识别 \(A/\mathfrak m_A\cong k^{\mathrm{sep}}\)。若对任意严格 Hensel 局部环 \((S,\mathfrak n)\)、局部同态 \(u:R\to S\) 及延拓其剩余域映射的嵌入 \(\alpha:k^{\mathrm{sep}}\to\ell=S/\mathfrak n\)，都存在唯一的局部同态 \(v:A\to S\)，满足 \(v\iota=u\)，且在剩余域上诱导 \(\alpha\)，则称 \(A\) 为相对于这个可分闭包的 \term[yange-Hensel-hua]{严格 Hensel 化}[strict Henselization]，记为 \(R^{\mathrm{sh}}\)。相容关系为
+	\[
+		\begin{tikzcd}
+			R \arrow[r,"\iota"] \arrow[d] & R^{\mathrm{sh}} \arrow[r,dashed,"v"] \arrow[d] & S \arrow[d] \\
+			k \arrow[r,hook] & k^{\mathrm{sep}} \arrow[r,hook,"\alpha"] & \ell .
+		\end{tikzcd}
+	\]
 \end{definition}
 \symidx{\(R^{\mathrm{sh}}\)：固定剩余域可分闭包后的严格 Hensel 化}
 
 指定 \(\alpha\) 是唯一性条件的一部分。仅仅要求延拓 \(u\)，并不能确定可分闭包中每个元素的像。对同一个选定的可分闭包，两个满足定义的对象之间有唯一的相容同构；改变可分闭包时，则须先指定两个可分闭包之间的 \(k\) 同构。
 
 \begin{proposition}\label{b3:prop:strict-henselization-existence}
-设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。则严格 Hensel 化 \(R^{\mathrm{sh}}\) 存在，可由带有相容剩余域嵌入的平展邻域之局部环取滤过余极限构造。它在 \(R\) 上忠实平坦，极大理想为 \(\mathfrak mR^{\mathrm{sh}}\)，并有相容的局部同态及剩余域映射
-\[
-\begin{tikzcd}
-R \arrow[r] \arrow[d] &
-R^{\mathrm h} \arrow[r] \arrow[d] &
-R^{\mathrm{sh}} \arrow[d] \\
-k \arrow[r,equal] & k \arrow[r,hook] & k^{\mathrm{sep}} .
-\end{tikzcd}
-\]
+	设 \((R,\mathfrak m)\) 为交换含幺局部环，记 \(k=R/\mathfrak m\)，并固定可分闭包 \(k\hookrightarrow k^{\mathrm{sep}}\)。则严格 Hensel 化 \(R^{\mathrm{sh}}\) 存在，可由带有相容剩余域嵌入的平展邻域之局部环取滤过余极限构造。它在 \(R\) 上忠实平坦，极大理想为 \(\mathfrak mR^{\mathrm{sh}}\)，并有相容的局部同态及剩余域映射
+	\[
+		\begin{tikzcd}
+			R \arrow[r] \arrow[d] & R^{\mathrm h} \arrow[r] \arrow[d] & R^{\mathrm{sh}} \arrow[d] \\
+			k \arrow[r,equal] & k \arrow[r,hook] & k^{\mathrm{sep}} .
+		\end{tikzcd}
+	\]
 \end{proposition}
 \begin{proofsketch}
-平展邻域的细化及所得余极限的 Hensel 性采用 EGA IV 第四部分的构造；这里解释所用数据、剩余域和泛性质，细化引理及 Hensel 性的证明见原文\cite[(18.8.4)--(18.8.8), pp. 145--147]{Grothendieck1967EGAIV4}。
+	平展邻域的细化及所得余极限的 Hensel 性采用 EGA IV 第四部分的构造；这里解释所用数据、剩余域和泛性质，细化引理及 Hensel 性的证明见原文\cite[(18.8.4)--(18.8.8), pp. 145--147]{Grothendieck1967EGAIV4}。
 
-一个邻域由三项数据 \((B,\mathfrak q,j)\) 给出：\(B\) 是平展 \(R\) 代数，\(\mathfrak q\subseteq B\) 位于 \(\mathfrak m\) 上方，\(j:\kappa(\mathfrak q)\hookrightarrow k^{\mathrm{sep}}\) 是 \(k\) 嵌入。取其局部环 \(B_{\mathfrak q}\)。邻域之间的映射要求在 \(R\) 上相容，并保持指定的剩余域嵌入；原文的细化引理保证任意两份邻域数据可以放到一个共同邻域中，而且保持指定剩余点的同态若存在便唯一，因而给出滤过系统。定义
-\[
-R^{\mathrm{sh}}=\varinjlim_{(B,\mathfrak q,j)}B_{\mathfrak q}.
-\]
-这些局部环的极大理想都是 \(\mathfrak mB_{\mathfrak q}\)，转移映射为局部同态，所以余极限仍为局部环，极大理想是 \(\mathfrak mR^{\mathrm{sh}}\)。各剩余域是 \(k\) 的有限可分扩张；构造使每个 \(k^{\mathrm{sep}}\) 中的有限组元素都落在某个邻域的剩余域内，因此其余极限就是指定的 \(k^{\mathrm{sep}}\)。构造定理还保证余极限具有 Hensel 性，于是它严格 Hensel。每个邻域局部环在 \(R\) 上平坦，滤过余极限也平坦；结构同态为局部同态，故忠实平坦。
+	一个邻域由三项数据 \((B,\mathfrak q,j)\) 给出：\(B\) 是平展 \(R\) 代数，\(\mathfrak q\subseteq B\) 位于 \(\mathfrak m\) 上方，\(j:\kappa(\mathfrak q)\hookrightarrow k^{\mathrm{sep}}\) 是 \(k\) 嵌入。取其局部环 \(B_{\mathfrak q}\)。邻域之间的映射要求在 \(R\) 上相容，并保持指定的剩余域嵌入；原文的细化引理保证任意两份邻域数据可以放到一个共同邻域中，而且保持指定剩余点的同态若存在便唯一，因而给出滤过系统。定义
+	\[
+		R^{\mathrm{sh}}=\varinjlim_{(B,\mathfrak q,j)}B_{\mathfrak q}.
+	\]
+	这些局部环的极大理想都是 \(\mathfrak mB_{\mathfrak q}\)，转移映射为局部同态，所以余极限仍为局部环，极大理想是 \(\mathfrak mR^{\mathrm{sh}}\)。各剩余域是 \(k\) 的有限可分扩张；构造使每个 \(k^{\mathrm{sep}}\) 中的有限组元素都落在某个邻域的剩余域内，因此其余极限就是指定的 \(k^{\mathrm{sep}}\)。构造定理还保证余极限具有 Hensel 性，于是它严格 Hensel。每个邻域局部环在 \(R\) 上平坦，滤过余极限也平坦；结构同态为局部同态，故忠实平坦。
 
-给定定义中的 \(u:R\to S\) 和 \(\alpha:k^{\mathrm{sep}}\to\ell\)，复合 \(\alpha j\) 指定每个邻域在 \(S\) 的剩余域中的像。原文的本质平展局部代数提升引理（18.8.4）保证，这个剩余点唯一提升为局部 \(R\) 同态 \(B_{\mathfrak q}\to S\)。指定分母的剩余像非零，故它们在 \(S\) 中可逆。唯一性使这些映射与系统中的转移映射相容，取余极限便得到所求 \(v:R^{\mathrm{sh}}\to S\)，其在剩余域上诱导 \(\alpha\)；反过来，任何这样的 \(v\) 在每个邻域上的限制都已经唯一确定。最后，对 Hensel 局部环 \(R^{\mathrm{sh}}\) 使用普通 Hensel 化的泛性质，得到 \(R^{\mathrm h}\to R^{\mathrm{sh}}\)。
+	给定定义中的 \(u:R\to S\) 和 \(\alpha:k^{\mathrm{sep}}\to\ell\)，复合 \(\alpha j\) 指定每个邻域在 \(S\) 的剩余域中的像。原文的本质平展局部代数提升引理（18.8.4）保证，这个剩余点唯一提升为局部 \(R\) 同态 \(B_{\mathfrak q}\to S\)。指定分母的剩余像非零，故它们在 \(S\) 中可逆。唯一性使这些映射与系统中的转移映射相容，取余极限便得到所求 \(v:R^{\mathrm{sh}}\to S\)，其在剩余域上诱导 \(\alpha\)；反过来，任何这样的 \(v\) 在每个邻域上的限制都已经唯一确定。最后，对 Hensel 局部环 \(R^{\mathrm{sh}}\) 使用普通 Hensel 化的泛性质，得到 \(R^{\mathrm h}\to R^{\mathrm{sh}}\)。
 \end{proofsketch}
 
 若 \(R=k\) 本身是域，它已经具有 Hensel 性，因而 \(R^{\mathrm h}=k\)，而上述构造给出 \(R^{\mathrm{sh}}=k^{\mathrm{sep}}\)。例如 \(\mathbb R^{\mathrm h}=\mathbb R\)，选定通常的可分闭包后 \(\mathbb R^{\mathrm{sh}}=\mathbb C\)。这说明严格 Hensel 化一般会改变剩余域，不能沿用普通 Hensel 化的各阶商与完备化比较。一般局部环也未必包含剩余域的一份副本，因此不能直接把严格 Hensel 化写成 \(R\otimes_k k^{\mathrm{sep}}\)。

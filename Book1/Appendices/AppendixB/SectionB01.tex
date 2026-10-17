@@ -26,19 +26,18 @@
 \ProseParagraphBreak
 若 \(a(t)\) 是非零的次数小于 \(m\) 的代表，则 \(\gcd(a,h)=1\)：若有非常数公因子，由 \(h\) 不可约，这个公因子必与 \(h\) 相伴，从而 \(h\mid a\)，与 \(0\leq\deg a<m\) 矛盾。\cref{b1:prop:euclidean-algorithm}的回代步骤产生 \(u,v\in\mathbb F_q[t]\)，使
 \begin{equation}\label{b1:eq:B-inverse-certificate}
-u(t)a(t)+v(t)h(t)=1.
+	u(t)a(t)+v(t)h(t)=1.
 \end{equation}
 模 \(h\) 后，\(u(\alpha)\) 就是 \(a(\alpha)\) 的逆元。这个等式也给出了可独立检查的证书：无须重复求逆过程，只须展开左边并核对它等于一。
 
 \ProseParagraphBreak
 例如在 \(\mathbb F_3\) 上，\(h=t^2+1\) 在 \(0,1,2\) 处的值分别为 \(1,2,2\)，所以不可约。令 \(\alpha^2=-1=2\)，则
 \[
-(1+\alpha)^2=2\alpha,\qquad
-(1+\alpha)(2+\alpha)=1.
+	(1+\alpha)^2=2\alpha,\qquad (1+\alpha)(2+\alpha)=1.
 \]
 第二式来自 \((1+t)(2+t)-(t^2+1)=1\)，等式在 \(\mathbb F_3[t]\) 中成立。此外
 \[
-(a+b\alpha)^3=a-b\alpha\qquad(a,b\in\mathbb F_3),
+	(a+b\alpha)^3=a-b\alpha\qquad(a,b\in\mathbb F_3),
 \]
 因为特征为三时中间二项式系数消失，而 \(\alpha^3=-\alpha\)。这是九元域上相对 \(\mathbb F_3\) 的 Frobenius；九次幂映射则固定九元域的每个元素。一般写 \(q=p^s\) 时，\(p\) 次幂固定素域 \(\mathbb F_p\)，而 \(q\) 次幂固定整个系数域 \(\mathbb F_q\)。后面的 Berlekamp 分解使用后者，才能得到 \(\mathbb F_q\) 线性映射。
 
@@ -53,8 +52,8 @@ u(t)a(t)+v(t)h(t)=1.
 \ProseParagraphBreak
 处理任意非零 \(f\in\mathbb F_q[x]\) 时，先提取首项系数，使其余部分首一。以下递归把它拆成若干无重因子多项式，并保留各自的重数；这些多项式可以有共同的不可约因子，待分别分解后再合并同一因子的重数。因此当前得到的是供后续分解使用的一组因子，还不是按重数组织的两两互素分解。
 \begin{enumerate}
-\item 若 \(f=1\)，停止。若 \(f'\ne0\)，计算首一 \(d=\gcd(f,f')\)。当 \(d=1\) 时，\(f\) 已无重因子；当 \(d\ne1\) 时，分别处理 \(d\) 和 \(f/d\)。这两者次数都严格小于 \(\deg f\)，因为 \(\deg d\leq\deg f'<\deg f\)。
-\item 若 \(f'=0\)，设特征为 \(p\)。写 \(f=\sum_i a_ix^i\)，则 \(f'=\sum_{i\geq1}ia_ix^{i-1}\)。不同项的次数不同，所以每个非零 \(a_i\) 都满足 \(ia_i=0\)，即 \(p\mid i\)。有限域上的 Frobenius 是自同构，每个系数都有唯一 \(p\) 次根，因此可写成 \(f=g^p\)。处理次数为 \((\deg f)/p\) 的 \(g\)，并把所得因子的重数乘以 \(p\)。
+	\item 若 \(f=1\)，停止。若 \(f'\ne0\)，计算首一 \(d=\gcd(f,f')\)。当 \(d=1\) 时，\(f\) 已无重因子；当 \(d\ne1\) 时，分别处理 \(d\) 和 \(f/d\)。这两者次数都严格小于 \(\deg f\)，因为 \(\deg d\leq\deg f'<\deg f\)。
+	\item 若 \(f'=0\)，设特征为 \(p\)。写 \(f=\sum_i a_ix^i\)，则 \(f'=\sum_{i\geq1}ia_ix^{i-1}\)。不同项的次数不同，所以每个非零 \(a_i\) 都满足 \(ia_i=0\)，即 \(p\mid i\)。有限域上的 Frobenius 是自同构，每个系数都有唯一 \(p\) 次根，因此可写成 \(f=g^p\)。处理次数为 \((\deg f)/p\) 的 \(g\)，并把所得因子的重数乘以 \(p\)。
 \end{enumerate}
 
 每次递归都降低正次数，因此过程终止；每一步保存精确乘积等式，所以最终不会漏掉因子或重数。例如 \(f=(x-1)^2(x+1)\in\mathbb F_3[x]\) 给出 \(d=x-1\)、\(f/d=(x-1)(x+1)\)，因子 \(x-1\) 就来自两个分支，最后须把它们贡献的重数相加。Shoup 将无重因子分解的输出组织为两两互素的多项式及其重数\cite[Section 20.3]{Shoup2008NumberTheoryAlgebra}；本处的递归分支不要求具有这种输出格式。这是一种便于说明正确性的预处理，并未声称采用了最省运算量的实现。
@@ -62,7 +61,7 @@ u(t)a(t)+v(t)h(t)=1.
 \ProseParagraphBreak
 导数为零的分支同样可以实际计算。系数域上的 \(p\) 次幂映射是单射：\(a^p=b^p\) 给出 \((a-b)^p=0\)，故 \(a=b\)；有限性使它同时成为满射，所以开 \(p\) 次方存在且唯一。写 \(q=p^s\)，\(a\mapsto a^{p^{s-1}}\) 正是其逆映射。于是对 \(f=\sum_j a_jx^{pj}\)，多项式
 \[
-g=\sum_j a_j^{p^{s-1}}x^j
+	g=\sum_j a_j^{p^{s-1}}x^j
 \]
 满足 \(g^p=f\)，因为每个系数都有 \(\bigl(a_j^{p^{s-1}}\bigr)^p=a_j^q=a_j\)。这里开 \(p\) 次方同时把指数 \(pj\) 改为 \(j\)，把系数 \(a_j\) 改为它的 \(p\) 次根；只有在素域 \(\mathbb F_p\) 上，系数才原样保留。
 
@@ -74,7 +73,7 @@ g=\sum_j a_j^{p^{s-1}}x^j
 
 现设 \(f\in\mathbb F_q[x]\) 首一、无重因子，次数为 \(n\geq1\)。在 \(A=\mathbb F_q[x]/(f)\) 上，映射 \(b\mapsto b^q\) 是 \(\mathbb F_q\) 线性的：加法相容来自特征 \(p\) 下的幂公式，标量相容来自 \(c^q=c\)。以下考察其不动子空间
 \[
-B=\{\,b\in A\mid b^q=b\,\}.
+	B=\{\,b\in A\mid b^q=b\,\}.
 \]
 它也对乘法封闭。这一不动代数是\term[Berlekamp-fenjie]{Berlekamp 分解}[Berlekamp factorization]的基础。
 
@@ -82,31 +81,30 @@ B=\{\,b\in A\mid b^q=b\,\}.
 为什么考察 \(b^q=b\)？若已知 \(f\) 的不可约因子，\(A\) 就能由中国剩余定理写成相应商域的乘积；在每个分量上，满足这个方程的元素恰是基域常数。于是一个不动元素在这些分量上给出常数坐标 \((a_1,\ldots,a_r)\)，相当于给每个因子标上一个 \(\mathbb F_q\) 中的数。算法的关键在于：即使这些乘积分量尚未知晓，也可以直接在 \(A\) 中解线性方程，求出不动元素，再用最大公因式按常数值把因子分组。下面的命题把这两步联系起来。
 
 \begin{proposition}\label{b1:prop:B-berlekamp}
-设 \(\mathbb F_q\) 为有限域，\(n\geq1\) 为整数，\(f\in\mathbb F_q[x]\) 为 \(n\) 次首一无重因子多项式，并令
-\[
-A=\mathbb F_q[x]/(f),\qquad
-B=\{\,b\in A\mid b^q=b\,\}.
-\]
-若 \(f=f_1\cdots f_r\) 是互异首一不可约多项式的乘积，则 \(\dim_{\mathbb F_q}B=r\)。若 \(b_1,\ldots,b_r\) 是 \(B\) 的任一组基，依次用全部 \(b_j-a\)（\(a\in\mathbb F_q\)）与当前因子求最大公因式，即可把 \(f\) 分成所有不可约因子。这里 \(b_j\) 用次数小于 \(n\) 的代表参加计算，常数因子一律略去。
+	设 \(\mathbb F_q\) 为有限域，\(n\geq1\) 为整数，\(f\in\mathbb F_q[x]\) 为 \(n\) 次首一无重因子多项式，并令
+	\[
+		A=\mathbb F_q[x]/(f),\qquad B=\{\,b\in A\mid b^q=b\,\}.
+	\]
+	若 \(f=f_1\cdots f_r\) 是互异首一不可约多项式的乘积，则 \(\dim_{\mathbb F_q}B=r\)。若 \(b_1,\ldots,b_r\) 是 \(B\) 的任一组基，依次用全部 \(b_j-a\)（\(a\in\mathbb F_q\)）与当前因子求最大公因式，即可把 \(f\) 分成所有不可约因子。这里 \(b_j\) 用次数小于 \(n\) 的代表参加计算，常数因子一律略去。
 \end{proposition}
 
 \begin{proof}
-各 \(f_i\) 两两互素，故对应主理想两两互素；\cref{b1:thm:crt}给出
-\[
-A\cong\prod_{i=1}^r\mathbb F_q[x]/(f_i).
-\]
-第 \(i\) 个右侧分量是包含 \(\mathbb F_q\) 的有限域，大小为 \(q^{\deg f_i}\)。在其中，方程 \(z^q=z\) 恰有 \(\mathbb F_q\) 的 \(q\) 个元素作为解：这些元素都满足方程，而\cref{b1:prop:factor-root}给出的根数界不容许更多解。因此上述同构限制到 \(B\) 后，才将它识别为 \(\mathbb F_q\) 代数 \(\mathbb F_q^r\)，维数为 \(r\)。整个 \(A\) 的乘积分量仍是这些可能更大的商域。
+	各 \(f_i\) 两两互素，故对应主理想两两互素；\cref{b1:thm:crt}给出
+	\[
+		A\cong\prod_{i=1}^r\mathbb F_q[x]/(f_i).
+	\]
+	第 \(i\) 个右侧分量是包含 \(\mathbb F_q\) 的有限域，大小为 \(q^{\deg f_i}\)。在其中，方程 \(z^q=z\) 恰有 \(\mathbb F_q\) 的 \(q\) 个元素作为解：这些元素都满足方程，而\cref{b1:prop:factor-root}给出的根数界不容许更多解。因此上述同构限制到 \(B\) 后，才将它识别为 \(\mathbb F_q\) 代数 \(\mathbb F_q^r\)，维数为 \(r\)。整个 \(A\) 的乘积分量仍是这些可能更大的商域。
 
-若 \(b\in B\) 对应 \((a_1,\ldots,a_r)\)，并用次数小于 \(n\) 的代表记 \(b\)，则它模 \(f_i\) 的类就是常数 \(a_i\)。因而 \(f_i\mid b-a\) 当且仅当 \(b-a\) 模 \(f_i\) 为零，也就是 \(a_i=a\)。\(f\) 中每个 \(f_i\) 的重数都是一，所以最大公因式恰为这些满足条件的因子的乘积：
-\[
-\gcd(f,b-a)=\prod_{a_i=a}f_i.
-\]
-故一次遍历 \(a\in\mathbb F_q\) 把因子按 \(b\) 的坐标值分组。把基向量 \(b_j\) 的第 \(i\) 个坐标记为 \(b_j(i)\)，则每个因子 \(f_i\) 得到联合标签 \((b_1(i),\ldots,b_r(i))\)。这些标签互异：若两个不同指标 \(i,\ell\) 的标签相同，则任意线性组合 \(\sum_j c_jb_j\) 也在这两个坐标取相同值，与 \(B\cong\mathbb F_q^r\) 中存在分别取零、一的向量矛盾。因此遍历全部基向量后，每组只含一个不可约因子，算法正确。
+	若 \(b\in B\) 对应 \((a_1,\ldots,a_r)\)，并用次数小于 \(n\) 的代表记 \(b\)，则它模 \(f_i\) 的类就是常数 \(a_i\)。因而 \(f_i\mid b-a\) 当且仅当 \(b-a\) 模 \(f_i\) 为零，也就是 \(a_i=a\)。\(f\) 中每个 \(f_i\) 的重数都是一，所以最大公因式恰为这些满足条件的因子的乘积：
+	\[
+		\gcd(f,b-a)=\prod_{a_i=a}f_i.
+	\]
+	故一次遍历 \(a\in\mathbb F_q\) 把因子按 \(b\) 的坐标值分组。把基向量 \(b_j\) 的第 \(i\) 个坐标记为 \(b_j(i)\)，则每个因子 \(f_i\) 得到联合标签 \((b_1(i),\ldots,b_r(i))\)。这些标签互异：若两个不同指标 \(i,\ell\) 的标签相同，则任意线性组合 \(\sum_j c_jb_j\) 也在这两个坐标取相同值，与 \(B\cong\mathbb F_q^r\) 中存在分别取零、一的向量矛盾。因此遍历全部基向量后，每组只含一个不可约因子，算法正确。
 \end{proof}
 
 计算 \(B\) 无须事先知道 \(f_i\)。以 \(1,\bar x,\ldots,\bar x^{n-1}\) 为有序基，采用列向量记坐标。线性变换矩阵的第 \(j+1\) 列是第 \(j+1\) 个基向量的像坐标，所以将 \(x^{qj}\) 模 \(f\) 的余式的系数列放入矩阵 \(Q\) 的第 \(j+1\) 列，其中 \(0\leq j<n\)。若 \(b=\sum_{j=0}^{n-1}v_j\bar x^j\) 的系数列为 \(v\)，则 \(b^q=\sum_{j=0}^{n-1}v_j\bar x^{qj}\) 的系数列为 \(Qv\)，故不动条件等价于 \((Q-I_n)v=0\)。本处的 \(Q\) 表示 Frobenius 本身，减去 \(I_n\) 后才表示 \(b\mapsto b^q-b\)。Shoup 使用行向量，并将这个差映射的矩阵直接记为 \(Q\)\cite[Section 20.5]{Shoup2008NumberTheoryAlgebra}。在相同有序幂基下，该书的矩阵与本处的 \(Q\) 满足
 \[
-Q_{\mathrm{Shoup}}=(Q-I_n)^{\mathsf T}.
+	Q_{\mathrm{Shoup}}=(Q-I_n)^{\mathsf T}.
 \]
 对该书的矩阵 \(Q_{\mathrm{Shoup}}\)，行坐标取左核，列坐标取 \(\ker(Q_{\mathrm{Shoup}}^{\mathsf T})\)，均不再减去 \(I_n\)。这说明算法的输入只有系数域和 \(f\)，矩阵中没有使用未知因子。
 
@@ -117,31 +115,31 @@ Q_{\mathrm{Shoup}}=(Q-I_n)^{\mathsf T}.
 把无重因子预处理与上述分割合并，便得到对任意非零有限域多项式都适用的完整流程。这里假设 \(\mathbb F_q\) 已有可执行的精确表示，因而能作域运算、判零并遍历全部域元素。待处理表中的一对 \((h,e)\) 表示仍需分解的乘积 \(h^e\)；\(h\) 的每个不可约因子的重数，还要乘以 \(e\)。在整个计算中，首项系数 \(c\)、待处理表所代表的乘积与已输出表所代表的乘积相乘，始终等于原多项式 \(f\)。开 \(p\) 次方以 \((g,pe)\) 替换 \((h,e)\)，因为 \(h^e=g^{pe}\)；拆成 \(d\) 与 \(h/d\) 时两边仍带相同的 \(e\)。无重因子分支中的各因子只出现一次，故其输出重数就是 \(e\)。
 
 \begin{algorithm}[htbp]
-\caption{Berlekamp 有限域因式分解}
-\label{b1:alg:B-berlekamp-factorization}
-\begin{algorithmsteps}{素数幂 \(q=p^s\)、具有上述精确表示的 \(\mathbb F_q\)，以及 \(0\ne f\in\mathbb F_q[x]\)。}{\(c\in\mathbb F_q^\times\) 与互异首一不可约多项式及正整数重数的表 \((h_i,e_i)\)，满足 \(f=c\prod_i h_i^{e_i}\)。}
-\State 置 \(c=\operatorname{LC}(f)\)、\(L=\varnothing\)。
-\If{\(\deg f=0\)}
-\State \Return \(c,L\)。
-\EndIf
-\State 将 \((f/c,1)\) 放入待处理表 \(P\)。
-\While{\(P\ne\varnothing\)}
-\State 从 \(P\) 中取出一对 \((h,e)\)。
-\If{\(h'=0\)}
-\State 逐系数取逆 Frobenius，求唯一的首一 \(g\in\mathbb F_q[x]\)，使 \(h=g^p\)；将 \((g,pe)\) 放入 \(P\)。
-\Else
-\State 求首一 \(d=\gcd(h,h')\)。
-\If{\(d\ne1\)}
-\State 将 \((d,e)\) 与 \((h/d,e)\) 放入 \(P\)。
-\Else
-\State 令 \(n=\deg h\)。在幂基 \(1,\bar x,\ldots,\bar x^{n-1}\) 上计算 \(b\mapsto b^q\) 的矩阵 \(Q\)，求 \(\ker(Q-I_n)\) 的一组基 \(b_1,\ldots,b_r\)。
-\State 置因子表 \(C=\{h\}\)。依次对每个 \(b_j\)，把 \(C\) 中的每个 \(d_0\) 换成所有非常数的首一 \(\gcd(d_0,b_j-a)\)，其中 \(a\) 遍历 \(\mathbb F_q\)。
-\State 将 \(C\) 中每个因子 \(d_0\) 连同重数 \(e\) 加入 \(L\)。
-\EndIf
-\EndIf
-\EndWhile
-\State 合并 \(L\) 中相同首一因子的重数；\Return \(c,L\)。
-\end{algorithmsteps}
+	\caption{Berlekamp 有限域因式分解}
+	\label{b1:alg:B-berlekamp-factorization}
+	\begin{algorithmsteps}{素数幂 \(q=p^s\)、具有上述精确表示的 \(\mathbb F_q\)，以及 \(0\ne f\in\mathbb F_q[x]\)。}{\(c\in\mathbb F_q^\times\) 与互异首一不可约多项式及正整数重数的表 \((h_i,e_i)\)，满足 \(f=c\prod_i h_i^{e_i}\)。}
+		\State 置 \(c=\operatorname{LC}(f)\)、\(L=\varnothing\)。
+		\If{\(\deg f=0\)}
+			\State \Return \(c,L\)。
+		\EndIf
+		\State 将 \((f/c,1)\) 放入待处理表 \(P\)。
+		\While{\(P\ne\varnothing\)}
+			\State 从 \(P\) 中取出一对 \((h,e)\)。
+			\If{\(h'=0\)}
+				\State 逐系数取逆 Frobenius，求唯一的首一 \(g\in\mathbb F_q[x]\)，使 \(h=g^p\)；将 \((g,pe)\) 放入 \(P\)。
+			\Else
+				\State 求首一 \(d=\gcd(h,h')\)。
+				\If{\(d\ne1\)}
+					\State 将 \((d,e)\) 与 \((h/d,e)\) 放入 \(P\)。
+				\Else
+					\State 令 \(n=\deg h\)。在幂基 \(1,\bar x,\ldots,\bar x^{n-1}\) 上计算 \(b\mapsto b^q\) 的矩阵 \(Q\)，求 \(\ker(Q-I_n)\) 的一组基 \(b_1,\ldots,b_r\)。
+					\State 置因子表 \(C=\{h\}\)。依次对每个 \(b_j\)，把 \(C\) 中的每个 \(d_0\) 换成所有非常数的首一 \(\gcd(d_0,b_j-a)\)，其中 \(a\) 遍历 \(\mathbb F_q\)。
+					\State 将 \(C\) 中每个因子 \(d_0\) 连同重数 \(e\) 加入 \(L\)。
+				\EndIf
+			\EndIf
+		\EndWhile
+		\State 合并 \(L\) 中相同首一因子的重数；\Return \(c,L\)。
+	\end{algorithmsteps}
 \end{algorithm}
 
 \cref{b1:alg:B-berlekamp-factorization}中，从待处理表取出的 \(h\) 都有正次数。开 \(p\) 次方时次数除以 \(p\)，拆成 \(d\) 与 \(h/d\) 时两者次数都小于 \(\deg h\)，所以递归树的每条分支长度有界，且每步至多产生两个分支。无重因子分支则不靠次数下降，而是只遍历有限个核基向量与域元素；两种有限性共同保证算法终止。每次拆分保存多项式乘积和重数，且由\cref{b1:prop:B-berlekamp}，分割结束时 \(C\) 中的因子全都不可约。不同递归分支可能产生同一个因子，最后一步合并重数不可省略。

@@ -39,6 +39,19 @@ function Invoke-BuildStep {
     }
 }
 
+function Get-BuildFileHash {
+    param([string]$LiteralPath)
+    # Windows PowerShell hosts may not expose Get-FileHash. Keep the SHA-256
+    # index-stability check independent of optional PowerShell module exports.
+    $stream = [System.IO.File]::OpenRead($LiteralPath)
+    try {
+        $algorithm = [System.Security.Cryptography.SHA256]::Create()
+        try {
+            return [System.BitConverter]::ToString($algorithm.ComputeHash($stream)).Replace('-', '')
+        } finally { $algorithm.Dispose() }
+    } finally { $stream.Dispose() }
+}
+
 try {
     foreach ($toolName in @('xelatex', 'biber', 'makeindex')) {
         if (-not (Get-Command $toolName -ErrorAction SilentlyContinue)) {
@@ -87,7 +100,7 @@ try {
             Write-Host "[$bookName] $indexName index is empty."
             continue
         }
-        $indexInputHashes[$indexName] = (Get-FileHash -LiteralPath $idx).Hash
+        $indexInputHashes[$indexName] = Get-BuildFileHash -LiteralPath $idx
         Push-Location -LiteralPath $buildDir
         try {
             Invoke-BuildStep 'makeindex' @('-q', '-s', $indexStyle, "$indexName.idx") "index-$indexName"
@@ -115,7 +128,7 @@ try {
     $indexesStable = $false
     foreach ($indexRound in 1..4) {
         $changedIndexes = @($builtIndexes | Where-Object {
-            (Get-FileHash -LiteralPath (Join-Path $buildDir "$_.idx")).Hash -ne $indexInputHashes[$_]
+            (Get-BuildFileHash -LiteralPath (Join-Path $buildDir "$_.idx")) -ne $indexInputHashes[$_]
         })
         if ($changedIndexes.Count -eq 0) {
             $indexesStable = $true
@@ -124,7 +137,7 @@ try {
         if ($indexRound -eq 4) { break }
         foreach ($indexName in $changedIndexes) {
             $idx = Join-Path $buildDir "$indexName.idx"
-            $indexInputHashes[$indexName] = (Get-FileHash -LiteralPath $idx).Hash
+            $indexInputHashes[$indexName] = Get-BuildFileHash -LiteralPath $idx
             Push-Location -LiteralPath $buildDir
             try {
                 Invoke-BuildStep 'makeindex' @('-q', '-s', $indexStyle, "$indexName.idx") "index-$indexName-sync-$indexRound"

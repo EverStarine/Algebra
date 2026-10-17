@@ -3,7 +3,7 @@
 \newcommand{\BookAuthor}{R. EverStarine}
 
 \usepackage[a4paper,inner=28mm,outer=24mm,top=27mm,bottom=28mm,
-  headheight=16pt,headsep=8mm,footskip=12mm]{geometry}
+	headheight=16pt,headsep=8mm,footskip=12mm]{geometry}
 
 \usepackage{amsmath}
 \usepackage{mathtools}
@@ -14,19 +14,19 @@
 % 运算符（sin、log、operatorname 等）随 mathrm 使用数学正体。
 \unimathsetup{mathrm=sym,mathit=sym,mathbf=sym,mathsf=sym,mathtt=sym}
 \setmainfont{texgyrepagella-regular.otf}[
-  BoldFont=texgyrepagella-bold.otf,
-  ItalicFont=texgyrepagella-italic.otf,
-  BoldItalicFont=texgyrepagella-bolditalic.otf
+	BoldFont=texgyrepagella-bold.otf,
+	ItalicFont=texgyrepagella-italic.otf,
+	BoldItalicFont=texgyrepagella-bolditalic.otf
 ]
 \setsansfont{texgyreheros-regular.otf}[
-  BoldFont=texgyreheros-bold.otf,
-  ItalicFont=texgyreheros-italic.otf,
-  BoldItalicFont=texgyreheros-bolditalic.otf
+	BoldFont=texgyreheros-bold.otf,
+	ItalicFont=texgyreheros-italic.otf,
+	BoldItalicFont=texgyreheros-bolditalic.otf
 ]
 \setmonofont{lmmonolt10-regular.otf}[
-  BoldFont=lmmonolt10-bold.otf,
-  ItalicFont=lmmonolt10-oblique.otf,
-  BoldItalicFont=lmmonolt10-boldoblique.otf
+	BoldFont=lmmonolt10-bold.otf,
+	ItalicFont=lmmonolt10-oblique.otf,
+	BoldItalicFont=lmmonolt10-boldoblique.otf
 ]
 % 人物注释中的古希腊文、斯拉夫文字、日文异体字与希伯来文原名使用有相应字形的字体。
 \newfontfamily\AlgebraOriginalNameFont{Times New Roman}
@@ -45,8 +45,8 @@
 \DeclareSymbolFont{AlgebraAMSb}{U}{msb}{m}{n}
 \DeclareMathSymbol{\AlgebraRoundEmptySet}{\mathord}{AlgebraAMSb}{"3F}
 \AtBeginDocument{%
-  \let\varnothing\AlgebraRoundEmptySet
-  \let\emptyset\AlgebraRoundEmptySet
+	\let\varnothing\AlgebraRoundEmptySet
+	\let\emptyset\AlgebraRoundEmptySet
 }
 
 \usepackage{microtype}
@@ -66,26 +66,26 @@
 \usepackage{tikz-cd}
 \usepackage{csquotes}
 \usepackage[
-  backend=biber,
-  style=numeric-comp,
-  sorting=nyt,
-  giveninits=true,
-  maxbibnames=99,
-  doi=true,
-  url=true,
-  isbn=true
+	backend=biber,
+	style=numeric-comp,
+	sorting=nyt,
+	giveninits=true,
+	maxbibnames=99,
+	doi=true,
+	url=true,
+	isbn=true
 ]{biblatex}
 \addbibresource{../Shared/References.bib}
 % 骨架没有引文时保留书目入口；写入真实条目后由完整构建自动排入书目。
 \newif\ifAlgebraHasBibliography
 \AtDataInput{\global\AlgebraHasBibliographytrue}
 \NewDocumentCommand{\PrintBookBibliography}{}{%
-  \ifAlgebraHasBibliography
-    \printbibliography[heading=bibintoc,title={参考文献}]%
-  \else
-    \chapter*{参考文献}%
-    \addcontentsline{toc}{chapter}{参考文献}%
-  \fi
+	\ifAlgebraHasBibliography
+		\printbibliography[heading=bibintoc,title={参考文献}]%
+	\else
+		\chapter*{参考文献}%
+		\addcontentsline{toc}{chapter}{参考文献}%
+	\fi
 }
 % 访问日期保留在书目库供内部核验，成品参考文献不显示 visited on。
 \renewbibmacro*{url+urldate}{\usebibmacro{url}}
@@ -98,11 +98,11 @@
 % 按条目切换须在每条书目项处理时判定；\DeclareDelimFormat 的可选参数不是
 % 语言选择器（实测无效），故用 \AtEveryBibitem 配合 \iffieldequalstr。
 \AtEveryBibitem{%
-  \iffieldequalstr{langid}{chinese}%
-    {\DeclareDelimFormat{finalnamedelim}{\addcomma\space}%
-     \DeclareDelimFormat{multinamedelim}{\addcomma\space}}%
-    {\DeclareDelimFormat{finalnamedelim}{\addspace\bibstring{and}\space}%
-     \DeclareDelimFormat{multinamedelim}{\addcomma\space}}%
+	\iffieldequalstr{langid}{chinese}%
+		{\DeclareDelimFormat{finalnamedelim}{\addcomma\space}%
+			\DeclareDelimFormat{multinamedelim}{\addcomma\space}}%
+		{\DeclareDelimFormat{finalnamedelim}{\addspace\bibstring{and}\space}%
+			\DeclareDelimFormat{multinamedelim}{\addcomma\space}}%
 }
 \usepackage{etoolbox}
 \usepackage{xparse}
@@ -114,38 +114,38 @@
 \definecolor{AlgebraGrayLight}{HTML}{F4F5F6}
 
 \ctexset{
-  part = {
-    % 编题页分两行：第一行“第X编”，与封面“第一卷”同款（大号无衬线灰色）；
-    % 第二行编名，与封面“代数学”同款（大号无衬线蓝色粗体），字号保持原样。
-    % 第一行与行距由 number／aftername 给出，format 只负责编名的字体，
-    % 以免字号被重置或被重复输出。
-    format = {\centering\fontsize{30}{38}\selectfont\sffamily\bfseries\color{AlgebraBlue}},
-    name = {,},
-    number = {\centering\normalfont\normalsize{\fontsize{24}{30}\selectfont\sffamily\color{AlgebraGray}第\chinese{part}编}},
-    aftername = {\par\vspace{0.7cm}},
-    beforeskip = 0pt,
-    afterskip = 2.5\baselineskip,
-    pagestyle = plain
-  },
-  chapter = {
-    format = \raggedright\Huge\bfseries\color{AlgebraBlue},
-    name = {第,章},
-    number = \chinese{chapter},
-    aftername = \quad,
-    beforeskip = 0pt,
-    afterskip = 30pt,
-    pagestyle = plain
-  },
-  section = {
-    format = \Large\bfseries\color{AlgebraBlue},
-    beforeskip = 2.4ex plus .6ex minus .2ex,
-    afterskip = 1.1ex plus .2ex
-  },
-  subsection = {
-    format = \large\bfseries\color{AlgebraGray},
-    beforeskip = 2ex plus .4ex minus .2ex,
-    afterskip = .8ex plus .2ex
-  }
+	part = {
+		% 编题页分两行：第一行“第X编”，与封面“第一卷”同款（大号无衬线灰色）；
+		% 第二行编名，与封面“代数学”同款（大号无衬线蓝色粗体），字号保持原样。
+		% 第一行与行距由 number／aftername 给出，format 只负责编名的字体，
+		% 以免字号被重置或被重复输出。
+		format = {\centering\fontsize{30}{38}\selectfont\sffamily\bfseries\color{AlgebraBlue}},
+		name = {,},
+		number = {\centering\normalfont\normalsize{\fontsize{24}{30}\selectfont\sffamily\color{AlgebraGray}第\chinese{part}编}},
+		aftername = {\par\vspace{0.7cm}},
+		beforeskip = 0pt,
+		afterskip = 2.5\baselineskip,
+		pagestyle = plain
+	},
+	chapter = {
+		format = \raggedright\Huge\bfseries\color{AlgebraBlue},
+		name = {第,章},
+		number = \chinese{chapter},
+		aftername = \quad,
+		beforeskip = 0pt,
+		afterskip = 30pt,
+		pagestyle = plain
+	},
+	section = {
+		format = \Large\bfseries\color{AlgebraBlue},
+		beforeskip = 2.4ex plus .6ex minus .2ex,
+		afterskip = 1.1ex plus .2ex
+	},
+	subsection = {
+		format = \large\bfseries\color{AlgebraGray},
+		beforeskip = 2ex plus .4ex minus .2ex,
+		afterskip = .8ex plus .2ex
+	}
 }
 
 \setlength{\parindent}{2em}
@@ -155,10 +155,10 @@
 % 段间额外留白统一由这一长度控制，避免改动全局 \parskip 后扰乱各类环境。
 \newlength{\AlgebraProseParagraphGap}
 \AtBeginDocument{%
-  \setlength{\AlgebraProseParagraphGap}{0.40\baselineskip}%
+	\setlength{\AlgebraProseParagraphGap}{0.40\baselineskip}%
 }
 \NewDocumentCommand{\ProseParagraphBreak}{}{%
-  \par\addvspace{\AlgebraProseParagraphGap}%
+	\par\addvspace{\AlgebraProseParagraphGap}%
 }
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
@@ -171,7 +171,7 @@
 % 固定列表内部段距，避免 flushbottom 将默认的弹性 \parsep 拉大到超过正文段距。
 \setlist[itemize]{leftmargin=2.2em,itemsep=.35ex,parsep=0pt,topsep=.6ex}
 \setlist[enumerate]{leftmargin=2.5em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
-  font=\normalfont\upshape}
+	font=\normalfont\upshape}
 \setlist[enumerate,1]{label=\arabic*.,ref=\arabic*}
 \setlist[enumerate,2]{label=\arabic*),ref=\arabic*}
 \setlist[enumerate,3]{label=\alph*),ref=\alph*}
@@ -180,9 +180,9 @@
 % “下列命题等价”专用列表；普通罗列仍使用 enumerate。
 \newlist{equivalences}{enumerate}{2}
 \setlist[equivalences,1]{leftmargin=2.8em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
-  label=\Roman*.,ref=\Roman*,font=\normalfont\upshape}
+	label=\Roman*.,ref=\Roman*,font=\normalfont\upshape}
 \setlist[equivalences,2]{leftmargin=2.8em,itemsep=.35ex,parsep=0pt,topsep=.6ex,
-  label=\roman*),ref=\roman*,font=\normalfont\upshape}
+	label=\roman*),ref=\roman*,font=\normalfont\upshape}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -202,18 +202,18 @@
 % 同时写入目录项。PDF 书签由 hyperref 对 \section*{习题} 自动生成，
 % 不再另行 \pdfbookmark，避免“习题”下再嵌套一个“习题”。
 \newcommand{\BookExercises}{%
-  \section*{习题}%
-  \markright{习题}%
-  \addcontentsline{toc}{section}{习题}%
+	\section*{习题}%
+	\markright{习题}%
+	\addcontentsline{toc}{section}{习题}%
 }
 \fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyfoot[C]{\small\color{AlgebraGray}\thepage}
-  \renewcommand{\headrulewidth}{0pt}
+	\fancyhf{}
+	\fancyfoot[C]{\small\color{AlgebraGray}\thepage}
+	\renewcommand{\headrulewidth}{0pt}
 }
 
 \usepackage[unicode,colorlinks=true,linkcolor=AlgebraBlue,
-  citecolor=AlgebraBlue,urlcolor=AlgebraBlue,pdfborder={0 0 0}]{hyperref}
+	citecolor=AlgebraBlue,urlcolor=AlgebraBlue,pdfborder={0 0 0}]{hyperref}
 \usepackage{bookmark}
 % PDF 书签沿用目录条目中的编号：正文章为“第几章”，附录章为“附录 A”，
 % 节与小节分别保留 x.x、x.x.x；无编号的导读、习题和卷末单元仍不加号。
@@ -258,24 +258,24 @@
 % 注意 \normalfont 只重置西文字族，中文字族仍随默认（宋体），故须显式 \kaishu；
 % 不能退回 \itshape——那会把西文一并变斜。
 \newtheoremstyle{algebraplain}
-  {1.2ex}{1.2ex}{\normalfont\upshape\kaishu}{}
-  {\color{AlgebraBlue}\bfseries}{.}{0.6em}{}
+	{1.2ex}{1.2ex}{\normalfont\upshape\kaishu}{}
+	{\color{AlgebraBlue}\bfseries}{.}{0.6em}{}
 \newtheoremstyle{algebradefinition}
-  {1.2ex}{1.2ex}{\normalfont\kaishu}{}
-  {\color{AlgebraBlue}\bfseries}{.}{0.6em}{}
+	{1.2ex}{1.2ex}{\normalfont\kaishu}{}
+	{\color{AlgebraBlue}\bfseries}{.}{0.6em}{}
 \newtheoremstyle{algebraremark}
-  {1.0ex}{1.0ex}{\normalfont\kaishu}{}
-  {\color{AlgebraGray}\bfseries}{.}{0.6em}{}
+	{1.0ex}{1.0ex}{\normalfont\kaishu}{}
+	{\color{AlgebraGray}\bfseries}{.}{0.6em}{}
 
 \theoremstyle{algebraplain}
 \newtheorem{theorem}{定理}[section]
 % 正文默认按“章.节.流水号”编号；未分节的附录省略中间的 0。
 \renewcommand{\thetheorem}{%
-  \ifnum\value{section}=0
-    \thechapter.\arabic{theorem}%
-  \else
-    \thesection.\arabic{theorem}%
-  \fi
+	\ifnum\value{section}=0
+		\thechapter.\arabic{theorem}%
+	\else
+		\thesection.\arabic{theorem}%
+	\fi
 }
 \newaliascnt{lemma}{theorem}
 \newtheorem{lemma}[lemma]{引理}
@@ -321,15 +321,15 @@
 % 行间公式结束后，TeX 留下空的水平列表；在定理环境结束前辨认这一状态。
 % 证明跟在公式之后时不再减去定理尾距，否则公式下方会比上方更紧。
 \newcommand{\AlgebraRecordStatementTail}{%
-  \ifhmode
-    \ifnum\lastnodetype=-1\relax
-      \global\AlgebraStatementEndsInDisplaytrue
-    \else
-      \global\AlgebraStatementEndsInDisplayfalse
-    \fi
-  \else
-    \global\AlgebraStatementEndsInDisplayfalse
-  \fi
+	\ifhmode
+		\ifnum\lastnodetype=-1\relax
+			\global\AlgebraStatementEndsInDisplaytrue
+		\else
+			\global\AlgebraStatementEndsInDisplayfalse
+		\fi
+	\else
+		\global\AlgebraStatementEndsInDisplayfalse
+	\fi
 }
 \AddToHook{para/begin}{\global\AlgebraDirectProoffalse\global\AlgebraStatementEndsInDisplayfalse}
 \AddToHook{env/theorem/end}{\AlgebraRecordStatementTail}
@@ -348,96 +348,96 @@
 \AddToHook{env/table/before}{\global\AlgebraDirectProoffalse}
 \makeatletter
 \renewenvironment{proof}[1][\proofname]{\par
-  \pushQED{\qed}%
-  \normalfont \topsep6\p@\@plus6\p@\relax
-  \AlgebraCoupledProoffalse
-  \ifAlgebraDirectProof
-    \AlgebraCoupledProoftrue
-    \AlgebraProofTrailingSkip=\topsep
-    \advance\AlgebraProofTrailingSkip by \partopsep
-    \ifAlgebraStatementEndsInDisplay\else
-      \kern-5\p@% 只在陈述以普通文字结尾时抵消部分尾距。
-    \fi
-    \topsep2\p@\partopsep\z@\relax
-  \fi
-  \global\AlgebraDirectProoffalse
-  \global\AlgebraStatementEndsInDisplayfalse
-  \trivlist
-  \item[\hskip\labelsep\upshape\kaishu #1\@addpunct{.}]\ignorespaces
+	\pushQED{\qed}%
+	\normalfont \topsep6\p@\@plus6\p@\relax
+	\AlgebraCoupledProoffalse
+	\ifAlgebraDirectProof
+		\AlgebraCoupledProoftrue
+		\AlgebraProofTrailingSkip=\topsep
+		\advance\AlgebraProofTrailingSkip by \partopsep
+		\ifAlgebraStatementEndsInDisplay\else
+			\kern-5\p@% 只在陈述以普通文字结尾时抵消部分尾距。
+		\fi
+		\topsep2\p@\partopsep\z@\relax
+	\fi
+	\global\AlgebraDirectProoffalse
+	\global\AlgebraStatementEndsInDisplayfalse
+	\trivlist
+	\item[\hskip\labelsep\upshape\kaishu #1\@addpunct{.}]\ignorespaces
 }{%
-  \popQED
-  \ifAlgebraCoupledProof\@topsepadd\AlgebraProofTrailingSkip\fi
-  \endtrivlist\@endpefalse
+	\popQED
+	\ifAlgebraCoupledProof\@topsepadd\AlgebraProofTrailingSkip\fi
+	\endtrivlist\@endpefalse
 }
 \makeatother
 \newenvironment{solution}
-  {\begin{proof}[解]}
-  {\end{proof}}
+	{\begin{proof}[解]}
+	{\end{proof}}
 \newenvironment{proofsketch}
-  {\begin{proof}[证明概要]}
-  {\end{proof}}
+	{\begin{proof}[证明概要]}
+	{\end{proof}}
 
 % 正文选读内容的星号属于编号而不属于标题；第二参数统一接收标签。
 \newcommand{\AlgebraOptionalMark}{\texorpdfstring{\textsuperscript{*}}{*}}
 % 选做习题沿用同一编号星号。可选参数仍只表示习题自身的简短题名，
 % 不得再写“选读”或“选做”；星号由本环境自动附在题号右侧。
 \NewDocumentEnvironment{optionalexercise}{o}{%
-  \begingroup
-  \let\AlgebraSavedTheExercise\theexercise
-  \renewcommand{\theexercise}{\AlgebraSavedTheExercise\AlgebraOptionalMark}%
-  \IfNoValueTF{#1}{\begin{exercise}}{\begin{exercise}[#1]}%
+	\begingroup
+	\let\AlgebraSavedTheExercise\theexercise
+	\renewcommand{\theexercise}{\AlgebraSavedTheExercise\AlgebraOptionalMark}%
+	\IfNoValueTF{#1}{\begin{exercise}}{\begin{exercise}[#1]}%
 }{%
-  \end{exercise}%
-  \endgroup
+	\end{exercise}%
+	\endgroup
 }
 % 可选参数只供目录与 PDF 书签使用；正文题名可借此按语义手动换行，
 % 又不把换行命令写入目录或书签。
 \NewDocumentCommand{\OptionalChapter}{O{}mm}{%
-  \begingroup
-  \let\AlgebraSavedTheChapter\thechapter
-  \renewcommand{\thechapter}{\AlgebraSavedTheChapter\AlgebraOptionalMark}%
-  \ctexset{chapter={name={第,章\AlgebraOptionalMark},
-    number=\chinese{chapter},aftername=\quad}}%
-  \ifstrempty{#1}{\chapter{#2}}{\chapter[#1]{#2}}\label{#3}%
-  \endgroup
+	\begingroup
+	\let\AlgebraSavedTheChapter\thechapter
+	\renewcommand{\thechapter}{\AlgebraSavedTheChapter\AlgebraOptionalMark}%
+	\ctexset{chapter={name={第,章\AlgebraOptionalMark},
+		number=\chinese{chapter},aftername=\quad}}%
+	\ifstrempty{#1}{\chapter{#2}}{\chapter[#1]{#2}}\label{#3}%
+	\endgroup
 }
 \NewDocumentCommand{\OptionalSection}{mm}{%
-  \begingroup
-  \let\AlgebraSavedTheSection\thesection
-  \renewcommand{\thesection}{\AlgebraSavedTheSection\AlgebraOptionalMark}%
-  \ctexset{section={number=\thesection}}%
-  \section{#1}\label{#2}%
-  \endgroup
+	\begingroup
+	\let\AlgebraSavedTheSection\thesection
+	\renewcommand{\thesection}{\AlgebraSavedTheSection\AlgebraOptionalMark}%
+	\ctexset{section={number=\thesection}}%
+	\section{#1}\label{#2}%
+	\endgroup
 }
 \NewDocumentCommand{\OptionalSubsection}{mm}{%
-  \begingroup
-  \let\AlgebraSavedTheSubsection\thesubsection
-  \renewcommand{\thesubsection}{\AlgebraSavedTheSubsection\AlgebraOptionalMark}%
-  \ctexset{subsection={number=\thesubsection}}%
-  \subsection{#1}\label{#2}%
-  \endgroup
+	\begingroup
+	\let\AlgebraSavedTheSubsection\thesubsection
+	\renewcommand{\thesubsection}{\AlgebraSavedTheSubsection\AlgebraOptionalMark}%
+	\ctexset{subsection={number=\thesubsection}}%
+	\subsection{#1}\label{#2}%
+	\endgroup
 }
 
 % 编题页必须从奇数页开始，题页仅在页脚显示页码，其后保留一张空白页。
 \makeatletter
 \NewDocumentCommand{\BookPart}{mm}{%
-  \cleardoublepage
-  \begingroup
-  \def\AlgebraPartLabel{#2}%
-  % \part 会在返回前翻页，故须在 \@endpart 开始处记录题页标签。
-  \pretocmd{\@endpart}{\label{\AlgebraPartLabel}}{}%
-    {\PackageError{algebra}{无法为编题页写入标签}{请检查当前文档类的 \string\@endpart 定义。}}%
-  \part{#1}%
-  \endgroup
-  \thispagestyle{empty}%
-  \null
-  \clearpage
+	\cleardoublepage
+	\begingroup
+	\def\AlgebraPartLabel{#2}%
+	% \part 会在返回前翻页，故须在 \@endpart 开始处记录题页标签。
+	\pretocmd{\@endpart}{\label{\AlgebraPartLabel}}{}%
+		{\PackageError{algebra}{无法为编题页写入标签}{请检查当前文档类的 \string\@endpart 定义。}}%
+	\part{#1}%
+	\endgroup
+	\thispagestyle{empty}%
+	\null
+	\clearpage
 }
 % 各编的“本编导读”是无编号章，在总目录和 PDF 书签中与所属编的各章并列。
 % addcontentsline 同时建立目录项和书签，不再另加同名 pdfbookmark。
 \NewDocumentCommand{\BookPartGuide}{O{本编导读}}{%
-  \chapter*{#1}%
-  \addcontentsline{toc}{chapter}{#1}%
+	\chapter*{#1}%
+	\addcontentsline{toc}{chapter}{#1}%
 }
 
 % “附录”单独排无编号编题页，使用与正文编名相同的字号、字体和颜色。
@@ -447,21 +447,21 @@
 % section*.N。根级“附录”书签连同其子章由 addcontentsline 的 part 行自动
 % 建立，不得再手写 \pdfbookmark（实测会产生重复的“附录”节点）。
 \NewDocumentCommand{\BookAppendixPart}{m}{%
-  \cleardoublepage
-  \begingroup
-  \def\AlgebraPartLabel{#1}%
-  % 在 part* 的题页尚未翻走时建立唯一的目录与书签目标。
-  \pretocmd{\@endpart}{%
-    \bookmarksetup{startatroot}%
-    \phantomsection
-    \addcontentsline{toc}{part}{附录}%
-    \label{\AlgebraPartLabel}%
-  }{}{\PackageError{algebra}{无法为附录编题页写入目录与标签}{请检查当前文档类的 \string\@endpart 定义。}}%
-  \part*{附录}%
-  \endgroup
-  \thispagestyle{empty}%
-  \null
-  \clearpage
+	\cleardoublepage
+	\begingroup
+	\def\AlgebraPartLabel{#1}%
+	% 在 part* 的题页尚未翻走时建立唯一的目录与书签目标。
+	\pretocmd{\@endpart}{%
+		\bookmarksetup{startatroot}%
+		\phantomsection
+		\addcontentsline{toc}{part}{附录}%
+		\label{\AlgebraPartLabel}%
+	}{}{\PackageError{algebra}{无法为附录编题页写入目录与标签}{请检查当前文档类的 \string\@endpart 定义。}}%
+	\part*{附录}%
+	\endgroup
+	\thispagestyle{empty}%
+	\null
+	\clearpage
 }
 \makeatother
 
@@ -482,25 +482,25 @@
 \zref@newprop{algebrachapternum}{}
 % 在 \chapter 之后调用，参数即该章标签；把本章汉字号存为 zref 属性
 \NewDocumentCommand{\BookChapterNumber}{m}{%
-  \zref@setcurrent{algebrachapternum}{\chinese{chapter}}%
-  \zref@labelbyprops{zch@#1}{algebrachapternum}%
+	\zref@setcurrent{algebrachapternum}{\chinese{chapter}}%
+	\zref@labelbyprops{zch@#1}{algebrachapternum}%
 }
 % 取出某章标签对应的汉字号（\zref@extract 可展开，能在 \edef 中安全使用）
 \NewDocumentCommand{\AlgebraChineseChapterOf}{m}{%
-  \zref@extract{zch@#1}{algebrachapternum}}
+	\zref@extract{zch@#1}{algebrachapternum}}
 \makeatother
 % \ref* 的分组会遮住编号末端的西文字符类别；编号前的间距可由 xeCJK
 % 自动产生，编号后的同类间距须在完整链接内部显式补回。
 \NewDocumentCommand{\secref}{m}{%
-  \hyperref[#1]{第\ref*{#1}\CJKecglue 节}}
+	\hyperref[#1]{第\ref*{#1}\CJKecglue 节}}
 \NewDocumentCommand{\subsecref}{m}{%
-  \hyperref[#1]{第\ref*{#1}\CJKecglue 小节}}
+	\hyperref[#1]{第\ref*{#1}\CJKecglue 小节}}
 \NewDocumentCommand{\chapref}{m}{%
-  \begingroup
-  \xeCJKsetup{CJKecglue={}}%
-  \edef\AlgebraChapterDisp{第\AlgebraChineseChapterOf{#1}章}%
-  \hyperref[#1]{\AlgebraChapterDisp}%
-  \endgroup}
+	\begingroup
+	\xeCJKsetup{CJKecglue={}}%
+	\edef\AlgebraChapterDisp{第\AlgebraChineseChapterOf{#1}章}%
+	\hyperref[#1]{\AlgebraChapterDisp}%
+	\endgroup}
 
 % 算法采用带编号的步骤，并明确标出输入与输出。
 \floatname{algorithm}{算法}
@@ -522,50 +522,50 @@
 \renewcommand{\fnum@algorithm}{\thealgorithm}
 \makeatother
 \NewDocumentEnvironment{algorithmsteps}{mm}
-  {\begin{algorithmic}[1]\Require #1\Ensure #2}
-  {\end{algorithmic}}
+	{\begin{algorithmic}[1]\Require #1\Ensure #2}
+	{\end{algorithmic}}
 
 \newtcolorbox{learninggoals}{
-  enhanced,breakable,colback=AlgebraBlueLight,colframe=AlgebraBlue,
-  boxrule=.45pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
-  title=本章目标,fonttitle=\bfseries
+	enhanced,breakable,colback=AlgebraBlueLight,colframe=AlgebraBlue,
+	boxrule=.45pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
+	title=本章目标,fonttitle=\bfseries
 }
 \newtcolorbox{partguide}{
-  enhanced,breakable,colback=AlgebraGrayLight,colframe=AlgebraGray,
-  boxrule=.35pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
-  title=本编导读,fonttitle=\bfseries
+	enhanced,breakable,colback=AlgebraGrayLight,colframe=AlgebraGray,
+	boxrule=.35pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
+	title=本编导读,fonttitle=\bfseries
 }
 \newtcolorbox{chaptersummary}{
-  enhanced,breakable,colback=AlgebraBlueLight,colframe=AlgebraBlue,
-  boxrule=.45pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
-  title=本章小结,fonttitle=\bfseries,
-  % 与阅读提示框一致：仅本框内容为多段散文，须恢复首行缩进。
-  before upper={\parindent=2em\parskip=0pt}
+	enhanced,breakable,colback=AlgebraBlueLight,colframe=AlgebraBlue,
+	boxrule=.45pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
+	title=本章小结,fonttitle=\bfseries,
+	% 与阅读提示框一致：仅本框内容为多段散文，须恢复首行缩进。
+	before upper={\parindent=2em\parskip=0pt}
 }
 % 仅用于尚待高阶数学复核的核心断言；成稿前必须处理或移除。
 \newtcolorbox{coreverification}{
-  enhanced,breakable,colback=yellow!10,colframe=orange!85!black,
-  boxrule=.55pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
-  title=待数学复核,fonttitle=\bfseries
+	enhanced,breakable,colback=yellow!10,colframe=orange!85!black,
+	boxrule=.55pt,arc=1mm,left=1.2mm,right=1.2mm,top=1mm,bottom=1mm,
+	title=待数学复核,fonttitle=\bfseries
 }
 \NewDocumentEnvironment{chapterabstract}{}
-  {\small\list{}{\rightmargin\leftmargin
-    \listparindent=2\ccwd\itemindent=\listparindent}%
-    \item\relax\color{AlgebraGray}}
-  {\endlist}
+	{\small\list{}{\rightmargin\leftmargin
+		\listparindent=2\ccwd\itemindent=\listparindent}%
+		\item\relax\color{AlgebraGray}}
+	{\endlist}
 % 引诗与短引文统一居中，中文使用定理类环境的楷体；章摘要已在上方独立定义，
 % 不继承这里的字形与对齐方式。
 \RenewDocumentEnvironment{quote}{}
-  {\list{}{\rightmargin\leftmargin}\item\relax\centering\kaishu}
-  {\endlist}
+	{\list{}{\rightmargin\leftmargin}\item\relax\centering\kaishu}
+	{\endlist}
 % 引诗环境保留为语义清楚的兼容入口，版式与 quote 完全一致。
 \NewDocumentEnvironment{poemquote}{}
-  {\begin{quote}}
-  {\end{quote}}
+	{\begin{quote}}
+	{\end{quote}}
 % 引诗末尾的作者或出处在引诗区域内右对齐。
 \NewDocumentCommand{\quoteattribution}{m}{%
-  \par\smallskip
-  {\raggedleft #1\par}%
+	\par\smallskip
+	{\raggedleft #1\par}%
 }
 
 \makeindex[name=chinese,title=中文索引,columns=2,intoc,options=-q]
@@ -573,24 +573,24 @@
 \makeindex[name=symbols,title=符号索引,columns=2,intoc,options=-q]
 % 索引采用稍小字号与自然栏底，字母组间仅留少量空白；末页平衡不得越过正文高度。
 \indexsetup{othercode={\small\raggedcolumns\maxbalancingoverflow=0pt
-  \renewcommand{\indexspace}{\par\addvspace{0.2\baselineskip}}}}
+	\renewcommand{\indexspace}{\par\addvspace{0.2\baselineskip}}}}
 
 % 有条目时读入 makeindex 生成的真实索引；尚无条目时仍保留书后结构与目录入口。
 % 一键脚本会在 .idx 为空时删除旧 .ind，故这里不会误排上一次构建的陈旧索引。
 \NewDocumentCommand{\PrintBookIndex}{m m}{%
-  \IfFileExists{#1.ind}{%
-    % 双栏输出可能丢失页眉标记；在索引范围内直接绑定标题并完成分页。
-    \cleardoublepage
-    \begingroup
-      \fancyhead[LE]{\small\color{AlgebraGray}\thepage\quad #2}%
-      \fancyhead[RO]{\small\color{AlgebraGray}#2\quad\thepage}%
-      \printindex[#1]%
-      \clearpage
-    \endgroup
-  }{%
-    \chapter*{#2}%
-    \addcontentsline{toc}{chapter}{#2}%
-  }%
+	\IfFileExists{#1.ind}{%
+		% 双栏输出可能丢失页眉标记；在索引范围内直接绑定标题并完成分页。
+		\cleardoublepage
+		\begingroup
+			\fancyhead[LE]{\small\color{AlgebraGray}\thepage\quad #2}%
+			\fancyhead[RO]{\small\color{AlgebraGray}#2\quad\thepage}%
+			\printindex[#1]%
+			\clearpage
+		\endgroup
+	}{%
+		\chapter*{#2}%
+		\addcontentsline{toc}{chapter}{#2}%
+	}%
 }
 
 % 所有术语在每卷首次正式定义或引入时都显示完整原文，并登记中外文索引。
@@ -598,31 +598,31 @@
 % 定理类正文处于楷体；Fandol 楷体没有粗体字形，直接 \textbf 会退回普通楷体。
 % 术语主称因此局部恢复正文的宋体字族，再使用与普通正文一致的粗体。
 \NewDocumentCommand{\term}{s O{} m o}{%
-  \IfBooleanT{#1}{%
-    \PackageError{algebra}{\string\term* 已取消}{请改用 \string\term，并保留末尾的原文注解。}%
-  }%
-  {\songti\textbf{\textup{#3}}}%
-  \IfNoValueTF{#4}{%
-    \PackageError{algebra}{术语缺少原文注解}{每个术语首次正式定义或引入时都必须写成 \string\term[排序键]{中文主称}[原文]。}%
-  }{%
-    \textnormal{(\textup{#4})}%
-  }%
-  \ifstrempty{#2}{\index[chinese]{#3}}{\index[chinese]{#2@#3}}%
-  \IfNoValueF{#4}{\index[foreign]{#4}}%
+	\IfBooleanT{#1}{%
+		\PackageError{algebra}{\string\term* 已取消}{请改用 \string\term，并保留末尾的原文注解。}%
+	}%
+	{\songti\textbf{\textup{#3}}}%
+	\IfNoValueTF{#4}{%
+		\PackageError{algebra}{术语缺少原文注解}{每个术语首次正式定义或引入时都必须写成 \string\term[排序键]{中文主称}[原文]。}%
+	}{%
+		\textnormal{(\textup{#4})}%
+	}%
+	\ifstrempty{#2}{\index[chinese]{#3}}{\index[chinese]{#2@#3}}%
+	\IfNoValueF{#4}{\index[foreign]{#4}}%
 }
 \NewDocumentCommand{\termidx}{O{}m}{%
-  \ifstrempty{#1}{\index[chinese]{#2}}{\index[chinese]{#1@#2}}%
+	\ifstrempty{#1}{\index[chinese]{#2}}{\index[chinese]{#1@#2}}%
 }
 % 别称与主称一样用 \termidx 登记实际页码，不生成“见某某”的转引条目。
 \NewDocumentCommand{\foreignidx}{O{}m}{%
-  \ifstrempty{#1}{\index[foreign]{#2}}{\index[foreign]{#1@#2}}%
+	\ifstrempty{#1}{\index[foreign]{#2}}{\index[foreign]{#1@#2}}%
 }
 \newcounter{algebraSymbolIndexOrder}
 \NewDocumentCommand{\symidx}{m}{%
-  \stepcounter{algebraSymbolIndexOrder}%
-  \edef\AlgebraSymbolSortKey{%
-    \number\numexpr10000+\value{algebraSymbolIndexOrder}\relax}%
-  \index[symbols]{\AlgebraSymbolSortKey@#1}%
+	\stepcounter{algebraSymbolIndexOrder}%
+	\edef\AlgebraSymbolSortKey{%
+		\number\numexpr10000+\value{algebraSymbolIndexOrder}\relax}%
+	\index[symbols]{\AlgebraSymbolSortKey@#1}%
 }
 
 % 一般强调与术语粗体分离。
@@ -667,105 +667,105 @@
 \NewCommandCopy{\AlgebraOriginalCrefCapital}{\Cref}
 \ExplSyntaxOn
 \cs_new_protected:Npn \algebra_cref_maybe_cjk_glue:
-  { \peek_after:Nw \algebra_cref_maybe_cjk_glue_aux: }
+	{ \peek_after:Nw \algebra_cref_maybe_cjk_glue_aux: }
 \cs_new_protected:Npn \algebra_cref_maybe_cjk_glue_aux:
-  {
-    \token_if_space:NF \l_peek_token
-      {
-        \token_if_cs:NF \l_peek_token
-          {
-            \xeCJK_if_same_class:NNT \l_peek_token 中
-              { \CJKecglue }
-          }
-      }
-  }
+	{
+		\token_if_space:NF \l_peek_token
+			{
+				\token_if_cs:NF \l_peek_token
+					{
+						\xeCJK_if_same_class:NNT \l_peek_token 中
+							{ \CJKecglue }
+					}
+			}
+	}
 \RenewDocumentCommand{\cref}{s m}
-  {
-    \IfBooleanTF{#1}
-      { \AlgebraOriginalCref*{#2} }
-      { \AlgebraOriginalCref{#2} }
-    \algebra_cref_maybe_cjk_glue:
-  }
+	{
+		\IfBooleanTF{#1}
+			{ \AlgebraOriginalCref*{#2} }
+			{ \AlgebraOriginalCref{#2} }
+		\algebra_cref_maybe_cjk_glue:
+	}
 \RenewDocumentCommand{\Cref}{s m}
-  {
-    \IfBooleanTF{#1}
-      { \AlgebraOriginalCrefCapital*{#2} }
-      { \AlgebraOriginalCrefCapital{#2} }
-    \algebra_cref_maybe_cjk_glue:
-  }
+	{
+		\IfBooleanTF{#1}
+			{ \AlgebraOriginalCrefCapital*{#2} }
+			{ \AlgebraOriginalCrefCapital{#2} }
+		\algebra_cref_maybe_cjk_glue:
+	}
 % 附录标签沿用字母编号；名称与编号整体进入同一链接，并与 \cref
 % 采用相同的链接后中西文间距规则。
 \NewDocumentCommand{\appref}{m}
-  {
-    \hyperref[#1]{附录\CJKecglue\ref*{#1}}
-    \algebra_cref_maybe_cjk_glue:
-  }
+	{
+		\hyperref[#1]{附录\CJKecglue\ref*{#1}}
+		\algebra_cref_maybe_cjk_glue:
+	}
 \ExplSyntaxOff
 
 \newcommand{\MakeBookTitle}[1][封面]{%
-  % 书名页在 PDF 侧栏中作为顶级入口；卷级文件可传入更具辨识性的书签名。
-  \bookmarksetup{startatroot}%
-  \pdfbookmark[0]{#1}{AlgebraCover}%
-  \begin{titlepage}
-    \centering
-    \vspace*{2.2cm}
-    {\fontsize{36}{46}\selectfont\sffamily 代数学\par}
-    \vspace{0.7cm}
-    {\Large\sffamily\color{AlgebraGray}\BookVolumeName\par}
-    \vspace{1.0cm}
-    {\fontsize{24}{32}\selectfont\bfseries\color{AlgebraBlue}\BookTitle\par}
-    \vfill
-    {\large \BookAuthor\ 编写\par}
-    \vspace{0.5cm}
-    {\normalsize\BookDraftDate\par}
-    \vspace*{1.8cm}
-  \end{titlepage}
+	% 书名页在 PDF 侧栏中作为顶级入口；卷级文件可传入更具辨识性的书签名。
+	\bookmarksetup{startatroot}%
+	\pdfbookmark[0]{#1}{AlgebraCover}%
+	\begin{titlepage}
+		\centering
+		\vspace*{2.2cm}
+		{\fontsize{36}{46}\selectfont\sffamily 代数学\par}
+		\vspace{0.7cm}
+		{\Large\sffamily\color{AlgebraGray}\BookVolumeName\par}
+		\vspace{1.0cm}
+		{\fontsize{24}{32}\selectfont\bfseries\color{AlgebraBlue}\BookTitle\par}
+		\vfill
+		{\large \BookAuthor\ 编写\par}
+		\vspace{0.5cm}
+		{\normalsize\BookDraftDate\par}
+		\vspace*{1.8cm}
+	\end{titlepage}
 }
 
 % 目录也应有独立的顶级 PDF 书签。使用公共命令避免五卷分别遗漏。
 \newcommand{\MakeBookContents}{%
-  \cleardoublepage
-  \bookmarksetup{startatroot}%
-  \pdfbookmark[0]{目录}{AlgebraContents}%
-  \tableofcontents
+	\cleardoublepage
+	\bookmarksetup{startatroot}%
+	\pdfbookmark[0]{目录}{AlgebraContents}%
+	\tableofcontents
 }
 
 % 图、表、算法目录不进入总目录，也不建立 PDF 书签；各自页面使用原有章级标题。
 % 只另起一页而不补单双页。
 \makeatletter
 \newcommand{\AlgebraListStart}{%
-  \clearpage
+	\clearpage
 }
 % 各列表命令自带 \chapter*，局部消除其中的再次换页，保留原有标题与列表排版。
 \newcommand{\AlgebraListOnCurrentPage}[1]{%
-  \begingroup
-    \let\clearpage\relax
-    \let\cleardoublepage\relax
-    #1%
-  \endgroup
+	\begingroup
+		\let\clearpage\relax
+		\let\cleardoublepage\relax
+		#1%
+	\endgroup
 }
 \newcommand{\MakeBookListOfFigures}{%
-  \AlgebraListStart
-  \AlgebraListOnCurrentPage{\listoffigures}%
+	\AlgebraListStart
+	\AlgebraListOnCurrentPage{\listoffigures}%
 }
 \newcommand{\MakeBookListOfTables}{%
-  \begingroup
-    \renewcommand{\listtablename}{表目录}%
-    \AlgebraListStart
-    \AlgebraListOnCurrentPage{\listoftables}%
-  \endgroup
+	\begingroup
+		\renewcommand{\listtablename}{表目录}%
+		\AlgebraListStart
+		\AlgebraListOnCurrentPage{\listoftables}%
+	\endgroup
 }
 \newcommand{\MakeBookListOfAlgorithms}{%
-  \begingroup
-    \AlgebraListStart
-    % float.sty 在 listof 内重设编号栏；在标题回调中再加宽它。
-    \let\AlgebraOriginalFloatListHead\float@listhead
-    \renewcommand{\float@listhead}[1]{%
-      \renewcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{5em}}%
-      \AlgebraOriginalFloatListHead{##1}%
-    }%
-    \AlgebraListOnCurrentPage{\listofalgorithms}%
-  \endgroup
+	\begingroup
+		\AlgebraListStart
+		% float.sty 在 listof 内重设编号栏；在标题回调中再加宽它。
+		\let\AlgebraOriginalFloatListHead\float@listhead
+		\renewcommand{\float@listhead}[1]{%
+			\renewcommand*\l@algorithm{\@dottedtocline{1}{1.5em}{5em}}%
+			\AlgebraOriginalFloatListHead{##1}%
+		}%
+		\AlgebraListOnCurrentPage{\listofalgorithms}%
+	\endgroup
 }
 \makeatother
 
@@ -774,25 +774,25 @@
 \makeatletter
 \let\Algebra@orig@schapter\@schapter
 \def\@schapter#1{%
-  \markboth{#1}{#1}%
-  \Algebra@orig@schapter{#1}%
+	\markboth{#1}{#1}%
+	\Algebra@orig@schapter{#1}%
 }
 % 目录按层级着色：编为黑色、小节为深灰；章与节保持默认链接蓝。
 \pretocmd{\l@part}{\hypersetup{linkcolor=black}}{}{%
-  \PackageWarning{algebra}{无法为目录编条目着色}}
+	\PackageWarning{algebra}{无法为目录编条目着色}}
 \pretocmd{\l@chapter}{\hypersetup{linkcolor=AlgebraBlue}}{}{%
-  \PackageWarning{algebra}{无法为目录章条目着色}}
+	\PackageWarning{algebra}{无法为目录章条目着色}}
 \pretocmd{\l@section}{\hypersetup{linkcolor=AlgebraBlue}}{}{%
-  \PackageWarning{algebra}{无法为目录节条目着色}}
+	\PackageWarning{algebra}{无法为目录节条目着色}}
 \pretocmd{\l@subsection}{\hypersetup{linkcolor=AlgebraGray}}{}{%
-  \PackageWarning{algebra}{无法为目录小节条目着色}}
+	\PackageWarning{algebra}{无法为目录小节条目着色}}
 % 编的目录条目与 PDF 书签须用纯文本“第X编”。ctex 的 \CTEX@part@tocline
 % 取 \CTEXthepart，而该宏带上编题页的颜色与字体设置，会把格式代码写进目录，
 % 并使书签出现 “=AlgebraGray第一编” 之类乱码。此覆盖须置于 \ctexset 之后，
 % 否则会被 ctex 重新定义；\CTEXifname 是 ctex 的内部开关，此处沿用。
 \def\CTEX@part@tocline#1#2{%
-  \CTEXifname
-    {第\chinese{part}编\hspace{1em}}%
-    {}%
-  #2}
+	\CTEXifname
+		{第\chinese{part}编\hspace{1em}}%
+		{}%
+	#2}
 \makeatother
