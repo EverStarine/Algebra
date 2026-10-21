@@ -1,0 +1,283 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### G.1 Operad 与代数结构
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### G.1.1 对称 operad 与复合
+% #### G.1.2 End operad 与 operad 上的代数
+% #### G.1.3 自由构造与树形复合
+
+\section{Operad 与代数结构}
+\label{b4:sec:G01}
+
+一个双线性乘法 \(\mu:V\otimes V\rightarrow V\) 不仅给出二元运算，还给出 \(\mu(\mu(a,b),c)\)、\(\mu(a,\mu(b,c))\) 等三元运算。结合律要求这两个复合相等；交换律比较同一运算在交换输入后的取值。若把乘法换成 Lie 括号，仍要讨论输入的置换和运算的代入，只是要求满足的关系变成反对称性与 Jacobi 恒等式。Operad 同时记录各种元数的运算、输入的重排和运算之间的代入，使这些代数结构可以用同一种语言描述。
+
+\subsection{对称 operad 与复合}
+\label{b4:subsec:G01:01}
+
+以下在特征为零的域 \(k\) 上讨论普通向量空间。一个 \(n\) 元运算有 \(n\) 个输入和一个输出。这里允许一元恒等运算，只考虑 \(n\geq1\)，不放入零元运算。零元运算用于指定一个元素，例如乘法单位；一元恒等运算则把每个输入原样送出。这两种单位的作用不同。
+
+\ProseParagraphBreak
+用 \(1,\ldots,n\) 给输入编号，可以把它们的重排写成对称群 \(S_n\) 的作用。但在第 \(i\) 个输入处代入一个新运算以后，其余输入的编号会移动。为把等变条件写清楚，先允许输入由任意非空有限集 \(I\) 标记；不同集合之间的双射只改变标记。
+
+\begin{definition}\label{b4:def:symmetric-sequence-operad}
+	设 \(k\) 为域。对每个非空有限集 \(I\) 给定一个 \(k\) 向量空间 \(E(I)\)，对每个双射 \(\alpha:I\rightarrow J\) 给定线性同构
+	\[
+		\alpha^*:E(J)\longrightarrow E(I),
+	\]
+	满足 \(1_I^*=1_{E(I)}\) 以及 \((\beta\alpha)^*=\alpha^*\beta^*\)。这样的数据称为一个\term[duichen-xulie]{对称序列}[symmetric sequence]。记 \([n]=\{1,\ldots,n\}\)、\(E(n)=E([n])\)，并规定
+	\[
+		e\cdot\sigma=\sigma^*e\qquad(e\in E(n),\ \sigma\in S_n).
+	\]
+	置换乘法 \(\sigma\tau\) 表示先施行 \(\tau\)、再施行 \(\sigma\)，因而 \((e\cdot\sigma)\cdot\tau=e\cdot(\sigma\tau)\)，这是右 \(S_n\) 作用。
+\end{definition}
+
+对称序列也可只用一列右 \(k[S_n]\) 模 \(E(n)\) 给出。要恢复 \(E(I)\)，取所有 \(e\in E(n)\) 和编号双射 \(\ell:[n]\rightarrow I\) 的形式记号 \((e,\ell)\)，对 \(e\) 线性化，并加入关系
+\[
+	(e\cdot\sigma,\ell)=(e,\ell\sigma^{-1}).
+\]
+于是改变编号与改变右作用后的装饰表示同一个元素；双射 \(\alpha:I\rightarrow J\) 的拉回把 \((e,\ell)\) 送到 \((e,\alpha^{-1}\ell)\)。任选一个编号即可把这个空间识别为 \(E(n)\)，而上述关系保证识别之间正由规定的右作用转换。
+
+\begin{definition}\label{b4:def:symmetric-operad}
+	设 \(k\) 为域，\(P\) 是一个对称序列。对非空有限集 \(I,J\) 和 \(i\in I\)，给定双线性映射
+	\[
+		\circ_i:P(I)\otimes P(J)\longrightarrow P((I\setminus\{i\})\sqcup J),
+		\qquad p\otimes q\longmapsto p\circ_i q,
+	\]
+	称为\term[charu-fuhe]{插入复合}[partial composition]。不交并中的输入均保留所属集合的标记；连续插入后按这些标记识别共同的输入集。另给定每个单元素输入集上的元素 \(\mathbf1\)，要求它们在重标号下互相对应，并满足以下条件。
+	\begin{enumerate}
+		\item 对 \(p\in P(I)\)、\(q\in P(J)\)、\(r\in P(K)\) 及 \(j\in J\)，有
+		\[
+			(p\circ_i q)\circ_j r=p\circ_i(q\circ_j r).
+		\]
+		若 \(i,i'\in I\) 且 \(i\ne i'\)，则
+		\[
+			(p\circ_i q)\circ_{i'}r=(p\circ_{i'}r)\circ_i q.
+		\]
+		\item 插入一元恒等运算不改变原运算：\(p\circ_i\mathbf1=p\)、\(\mathbf1\circ_1p=p\)，其中更换单元素输入标记后的空间按双射识别。
+		\item 给定双射 \(\alpha:I\rightarrow I'\)、\(\beta:J\rightarrow J'\)，令
+		\[
+			\gamma:(I\setminus\{i\})\sqcup J\longrightarrow (I'\setminus\{\alpha(i)\})\sqcup J'
+		\]
+		在两个部分上分别等于 \(\alpha\)、\(\beta\)。对 \(p\in P(I')\)、\(q\in P(J')\)，要求
+		\[
+			(\alpha^*p)\circ_i(\beta^*q)=\gamma^*(p\circ_{\alpha(i)}q).
+		\]
+	\end{enumerate}
+	这样的数据称为一个\term[operad]{对称 operad}[symmetric operad]，简称 operad。它的态射 \(P\rightarrow Q\) 是与输入重标号、插入复合及 \(\mathbf1\) 相容的一族线性映射 \(P(I)\rightarrow Q(I)\)。
+\end{definition}
+\symidx{\(P(n)\)：operad 的 \(n\) 元运算空间}
+\symidx{\(p\circ_iq\)：operad 中在第 \(i\) 个输入处的插入复合}
+
+第一条结合等式比较嵌套的代入，第二条比较在两个不同输入处的代入；等变条件则说明先重排输入再代入，与先代入再重排最终输入得到同一运算。若使用数字编号，约定 \(q\in P(m)\) 插在 \(p\in P(n)\) 的第 \(i\) 个位置后，它的输入占据 \(i,\ldots,i+m-1\)，原来在其后的输入顺次后移。两条结合等式便写成
+\[
+	\begin{aligned}
+		(p\circ_iq)\circ_{i+j-1}r&=p\circ_i(q\circ_jr) &&(1\leq j\leq m),\\
+		(p\circ_iq)\circ_{j+m-1}r&=(p\circ_jr)\circ_iq &&(1\leq i<j\leq n).
+	\end{aligned}
+\]
+同时代入 \(q_1,\ldots,q_n\) 的结果记为 \(p(q_1,\ldots,q_n)\)：可以从右向左逐个插入，各次代入的输入次序仍按原来的区块排列。不同输入处的结合等式保证结果不依赖代入这些区块的先后次序。
+
+\ProseParagraphBreak
+一元空间 \(P(1)\) 在 \(\circ_1\) 下是含幺结合代数，但不要求它只有一维。若 \(k\rightarrow P(1)\)、\(c\mapsto c\mathbf1\) 为同构，则称 \(P\) 为\term[liantong-operad]{连通 operad}[connected operad]。后面的二元生成例子满足这一条件，所有向量空间的自同态运算则一般不满足。无零元运算的约定也意味着：仅从 \(\mathbf1\in P(1)\) 不能得到某个向量 \(1_V\in V\)。
+
+\subsection{End operad 与 operad 上的代数}
+\label{b4:subsec:G01:02}
+
+要使抽象符号 \(p\in P(n)\) 真正作用在向量空间 \(V\) 上，必须把它送到一个多线性映射，并要求符号的代入变成映射的代入。全部多线性映射本身就组成一个 operad。
+
+\begin{proposition}\label{b4:prop:endomorphism-operad}
+	设 \(k\) 为域，\(V\) 为 \(k\) 向量空间。令
+	\[
+		\operatorname{End}_V(n)=\operatorname{Hom}_k(V^{\otimes n},V)\qquad(n\geq1).
+	\]
+	对 \(f\in\operatorname{End}_V(n)\)、\(g\in\operatorname{End}_V(m)\)，规定
+	\[
+		(f\cdot\sigma)(v_1,\ldots,v_n)=f(v_{\sigma^{-1}(1)},\ldots,v_{\sigma^{-1}(n)}),
+	\]
+	\[
+		\begin{aligned}
+			&(f\circ_i g)(v_1,\ldots,v_{n+m-1})\\
+			&\qquad=f(v_1,\ldots,v_{i-1},g(v_i,\ldots,v_{i+m-1}),v_{i+m},\ldots,v_{n+m-1}).
+		\end{aligned}
+	\]
+	以 \(1_V\) 为一元恒等运算，这些空间组成 \(V\) 的\term[zidongtai-operad]{自同态 operad}[endomorphism operad]，记为 \(\operatorname{End}_V\)。
+\end{proposition}
+\symidx{\(\operatorname{End}_V(n)\)：向量空间 \(V\) 上的 \(n\) 元多线性运算}
+\begin{proof}
+	由张量积的泛性质，多线性映射与 \(V^{\otimes n}\rightarrow V\) 的线性映射一一对应。上式的代入仍对每个输入线性，故给出所需映射。在右作用的复合中，第 \(i\) 个输入最后变为 \(v_{\tau^{-1}\sigma^{-1}(i)}\)，所以
+	\[
+		((f\cdot\sigma)\cdot\tau)(v_1,\ldots,v_n)
+		=f(v_{(\sigma\tau)^{-1}(1)},\ldots,v_{(\sigma\tau)^{-1}(n)}).
+	\]
+	这正是 \(f\cdot(\sigma\tau)\)，而恒等置换不改变映射。
+
+	对有限输入集 \(I\)，也可把 \(\operatorname{End}_V(I)\) 看成以 \(I\) 标记变量的多线性映射空间。双射 \(\alpha:I\rightarrow I'\) 的拉回把输入 \((v_i)_{i\in I}\) 交给原映射的第 \(j\) 个变量 \(v_{\alpha^{-1}(j)}\)。因此两种顺序的重标号与代入，都把相同的向量交给相同的变量，满足等变条件。
+
+	嵌套的结合式两边都先把 \(r\) 的值送入 \(g\) 的指定输入，再把所得值送入 \(f\)；在不同输入处的结合式两边则分别把 \(g\) 和 \(r\) 的值送入 \(f\) 的那两个输入。对每组向量求值所得结果分别相等，故两种结合式都作为多线性映射相等。插入 \(1_V\) 原样返回其输入，给出单位律。
+\end{proof}
+
+特别地，\(\operatorname{End}_V(1)=\operatorname{End}_k(V)\) 包含 \(V\) 的全部线性自同态，而不只是标量倍的恒等映射。这个例子说明一般 operad 的一元运算空间不能预先限制为 \(k\)。
+
+\begin{definition}\label{b4:def:operad-algebra}
+	设 \(k\) 为域，\(P\) 为 \(k\) 上的 operad。一个 \(k\) 向量空间 \(V\) 连同 operad 态射
+	\[
+		\rho:P\longrightarrow\operatorname{End}_V
+	\]
+	称为一个 \(P\) 代数，也称为 \(P\) 上的\term[operad-daishu]{代数}[algebra over an operad]。记 \(p_V=\rho(p)\)。从 \(P\) 代数 \(V\) 到 \(W\) 的同态是线性映射 \(h:V\rightarrow W\)，满足
+	\[
+		h\bigl(p_V(v_1,\ldots,v_n)\bigr)=p_W(h(v_1),\ldots,h(v_n))
+		\qquad(p\in P(n)).
+	\]
+\end{definition}
+
+若 \(P\) 由一个二元运算 \(\mu\) 及关系 \(\mu\circ_1\mu=\mu\circ_2\mu\) 生成，那么 \(P\) 代数中的二元乘法满足结合律。这里的一元元素 \(\mathbf1\) 只要求 \(\rho(\mathbf1)=1_V\)，没有要求这个结合乘法存在单位。下一节将把这些生成元与关系写成具体 operad。
+
+\begin{proposition}\label{b4:prop:free-operad-algebra}
+	设 \(k\) 为域，\(P\) 为只含正元数的 \(k\) 线性 operad，\(V\) 为 \(k\) 向量空间。令 \(S_n\) 在 \(V^{\otimes n}\) 上左作用为
+	\[
+		\sigma\cdot(v_1\otimes\cdots\otimes v_n)
+		=v_{\sigma^{-1}(1)}\otimes\cdots\otimes v_{\sigma^{-1}(n)}.
+	\]
+	则
+	\[
+		P(V)\coloneqq\bigoplus_{n\geq1}P(n)\otimes_{k[S_n]}V^{\otimes n}
+	\]
+	自然成为一个 \(P\) 代数。映射 \(j:V\rightarrow P(V)\)、\(j(v)=[\mathbf1\otimes v]\) 使它成为 \(V\) 上的\term[ziyou-operad-daishu]{自由 \(P\) 代数}[free algebra over an operad]：对任意 \(P\) 代数 \(A\) 和线性映射 \(f:V\rightarrow A\)，存在唯一的 \(P\) 代数同态 \(\widetilde f:P(V)\rightarrow A\) 满足 \(\widetilde f j=f\)。
+\end{proposition}
+\symidx{\(P(V)\)：由向量空间 \(V\) 生成的自由 \(P\) 代数}
+\begin{proof}
+	张量积中的平衡关系为
+	\[
+		[(p\cdot\sigma)\otimes(v_1\otimes\cdots\otimes v_n)]
+		=[p\otimes(v_{\sigma^{-1}(1)}\otimes\cdots\otimes v_{\sigma^{-1}(n)})].
+	\]
+	两边正表示同一运算改变输入编号前后的写法。对 \(p\in P(r)\) 及各个代表元 \([q_j\otimes\mathbf v_j]\)，其中 \(q_j\in P(n_j)\)、\(\mathbf v_j\in V^{\otimes n_j}\)，定义
+	\[
+		p_{P(V)}([q_1\otimes\mathbf v_1],\ldots,[q_r\otimes\mathbf v_r])
+		=[p(q_1,\ldots,q_r)\otimes(\mathbf v_1\otimes\cdots\otimes\mathbf v_r)].
+	\]
+	在某个 \(q_j\) 处使用平衡关系，相当于只重排最终输入的第 \(j\) 个区块。插入复合的等变条件把这一置换移到右侧的张量上，两边仍给出同一商类。对不同的直和分量作多线性延拓，便得到良定义的运算。\(p\) 的输入置换同时重排这些区块；同一个等变条件给出 \(P\) 代数所需的右作用相容性。嵌套运算时，无论分两层还是一次代入，各 \(\mathbf v_j\) 的最终排列相同，运算部分由 operad 的结合律相等；单位条件也由 \(\mathbf1\) 的单位律得到。因此这些运算定义了 \(P\) 代数结构。
+
+	规定
+	\[
+		\widetilde f([p\otimes(v_1\otimes\cdots\otimes v_n)])
+		=p_A(f(v_1),\ldots,f(v_n)).
+	\]
+	\(A\) 的输入等变性保证它满足平衡关系，故这是线性映射；\(A\) 的代入相容性又说明它保持刚刚定义的全部 \(P\) 运算。由于结构映射满足 \(\rho(\mathbf1)=\operatorname{id}_A\)，有 \(\widetilde f j=f\)。相应的唯一分解可写成
+	\[
+		\begin{tikzcd}[column sep=large]
+			V\arrow[r,"j"]\arrow[dr,"f"']&P(V)\arrow[d,dashed,"\exists!\,\widetilde f"]\\
+			&A.
+		\end{tikzcd}
+	\]
+	每个代表元都可写为
+	\[
+		[p\otimes(v_1\otimes\cdots\otimes v_n)]
+		=p_{P(V)}(j(v_1),\ldots,j(v_n)).
+	\]
+	所以一个保持 \(P\) 运算且在 \(j(V)\) 上等于 \(f\) 的映射必须具有上面的公式，唯一性随之成立。
+\end{proof}
+
+\subsection{自由构造与树形复合}
+\label{b4:subsec:G01:03}
+
+自由 \(P\) 代数把已经规定的运算施加在生成向量上。另一种自由构造还没有预先规定运算之间的关系：给定若干基本运算，先把它们所有可能的代入保留下来，再按需要加入结合律或 Jacobi 恒等式。树正好记录一个复合运算由哪些基本运算、按怎样的嵌套次序组成。
+
+\ProseParagraphBreak
+本节的根树有一条输出边，每个顶点的输出朝向树根；进入顶点的边至少一条，没有顶点输出的输入边称为叶边。每条叶边用输入集 \(I\) 的一个元素标记，且全部标记恰好使用一次。也允许只有一条边、没有顶点的树，它有一个输入并将其直接连到输出。若顶点 \(v\) 的输入边集为 \(\operatorname{In}(v)\)，就用 \(E(\operatorname{In}(v))\) 中的一个元素装饰该顶点。这里 \(E\) 只是对称序列，还没有复合。
+
+\begin{definition}\label{b4:def:tree-free-operad}
+	设 \(k\) 为域，\(E\) 为 \(k\) 向量空间中的对称序列。令 \(\mathcal F(E)(I)\) 为上述有限装饰根树张成的空间，对每个顶点的装饰施加线性关系，并把保持根、叶标记及装饰的树同构识别。等价地，每棵树的装饰空间是
+	\[
+		\bigotimes_{v\in\operatorname{Vert}(T)}E(\operatorname{In}(v)),
+	\]
+	再对树的同构作识别；没有顶点的树的装饰空间约定为 \(k\)。这称为由 \(E\) 生成的\term[ziyou-operad]{自由 operad}[free operad]，其复合将一棵树的输出边接到另一棵树的指定叶边，接缝处不增加新顶点。
+\end{definition}
+\symidx{\(\mathcal F(E)\)：由对称序列 \(E\) 生成的自由 operad}
+
+若把每个顶点的输入临时排成一列，则顶点装饰可写为 \(e\in E(m)\)。更换这一排列必须同时按右 \(S_m\) 作用更换装饰，正是前面的关系 \((e\cdot\sigma,\ell)=(e,\ell\sigma^{-1})\)。因此图中的左右位置只帮助读出一次选定的编号；在一般对称 operad 中，它并不是额外固定的平面结构。真正保留无对称二元运算的左右输入时，则可用正则右 \(S_2\) 模作生成元，把左右次序也记录在装饰中。
+
+\begin{theorem}\label{b4:thm:free-operad}
+	设 \(k\) 为域，\(E\) 为 \(k\) 向量空间中的对称序列。上述嫁接使 \(\mathcal F(E)\) 成为 operad。用单顶点树给出映射 \(\iota:E\rightarrow\mathcal F(E)\)。对任意 operad \(Q\) 和对称序列映射 \(\theta:E\rightarrow Q\)，存在唯一 operad 态射 \(\widehat\theta:\mathcal F(E)\rightarrow Q\) 满足 \(\widehat\theta\iota=\theta\)。
+\end{theorem}
+\begin{proof}
+	输入重标号只改变叶标记。嫁接两棵树时，原顶点的输入边与接缝后的输入边有自然双射，故装饰可沿这些双射转移。树同构经过嫁接仍给出树同构，顶点装饰的线性关系也被保留，所以嫁接给出良定义的双线性映射。三棵树嵌套嫁接，无论先接哪条内部边，得到的树及每个顶点装饰相同；在两个不同叶边处嫁接也互不影响。这给出两种结合律。无顶点的树不增加运算，给出单位；叶标记的双射与嫁接相容，给出等变条件。
+
+	现在把每个顶点装饰 \(e_v\) 换成 \(\theta(e_v)\)，并在 \(Q\) 中沿树复合。这个求值可按顶点数递归定义：无顶点的树送到 \(\mathbf1\)；其余树从靠近根的顶点看，是该顶点的一个运算，其每条输入边上接着一棵顶点数较少的树。先递归求出这些子树的值，再同时代入根顶点的运算。改变根顶点输入的编号时，\(\theta\) 的等变性和 \(Q\) 的等变条件同时重排子树的值，故结果不变。对子树递归应用同一论证，表明求值不依赖全部临时编号；它也显然对装饰线性并保持树同构，因而定义了 \(\widehat\theta\)。
+
+	若把一棵树嫁接到另一棵树的叶边，递归求值先遇到该叶时，恰好将前一棵树的值代入。嵌套的结合律把这个代入移到根部求值，故求值保持插入复合；它还保持无顶点树和叶的重标号。因此 \(\widehat\theta\) 是 operad 态射，满足交换图
+	\[
+		\begin{tikzcd}[column sep=large]
+			E\arrow[r,"\iota"]\arrow[dr,"\theta"']&\mathcal F(E)\arrow[d,dashed,"\exists!\,\widehat\theta"]\\
+			&Q.
+		\end{tikzcd}
+	\]
+	图中的斜箭头是对称序列映射，虚线箭头还须保持全部 operad 结构。每棵装饰树都由单顶点树嫁接得到；任一这样的 operad 态射在单顶点树上已由 \(\theta\) 决定，随后在整棵树上也被复合相容性决定，故唯一。
+\end{proof}
+
+\begin{definition}\label{b4:def:operad-ideal}
+	设 \(k\) 为域，\(P\) 为 \(k\) 线性 operad。一族右 \(S_n\) 稳定的线性子空间 \(\mathfrak a(n)\subseteq P(n)\) 若满足：只要一个插入因子在 \(\mathfrak a\) 中，插入结果也在 \(\mathfrak a\) 中，即
+	\[
+		\mathfrak a(n)\circ_i P(m)\subseteq\mathfrak a(n+m-1),
+		\qquad P(n)\circ_i\mathfrak a(m)\subseteq\mathfrak a(n+m-1),
+	\]
+	则称 \(\mathfrak a\) 为一个\term[operad-lixiang]{operad 理想}[operadic ideal]。对一族子空间 \(R(n)\subseteq P(n)\)，含有全部 \(R(n)\) 的 operad 理想之交记为 \((R)\)，称为由这些关系生成的理想。
+\end{definition}
+
+所有 \(P(n)\) 自身组成一个包含 \(R\) 的理想，所以定义中的交有意义。重标号与两种插入封闭性均在交下保持，故 \((R)\) 确为含 \(R\) 的最小理想。要求内外两种插入都保持理想，是因为一条关系既可以作为较大表达式的一个子运算，也可以继续代入别的运算。
+
+\begin{proposition}\label{b4:prop:operad-quotient}
+	设 \(k\) 为域，\(P\) 为 \(k\) 线性 operad，\(\mathfrak a\) 为 operad 理想。各个商空间 \((P/\mathfrak a)(n)=P(n)/\mathfrak a(n)\) 从 \(P\) 继承 operad 结构。对任意 operad 态射 \(f:P\rightarrow Q\)，若 \(f(\mathfrak a)=0\)，则存在唯一 operad 态射 \(\overline f:P/\mathfrak a\rightarrow Q\) 使 \(f=\overline f\pi\)，其中 \(\pi:P\rightarrow P/\mathfrak a\) 为商映射。特别地，从 \(\mathcal F(E)/(R)\) 到 \(Q\) 的态射，等价于对称序列映射 \(E\rightarrow Q\)，且其自由延拓把 \(R\) 中每个关系送到零。
+\end{proposition}
+\begin{proof}
+	因 \(\mathfrak a(n)\) 对右作用稳定，输入置换在各商空间上有定义。若分别把 \(p,q\) 改为 \(p+a,q+b\)，其中 \(a,b\) 在相应的理想分量中，则插入结果的差为
+	\[
+		(p+a)\circ_i(q+b)-p\circ_iq
+		=a\circ_iq+p\circ_ib+a\circ_ib.
+	\]
+	三项均属于理想，所以 \([p]\circ_i[q]=[p\circ_iq]\) 良定义。结合、等变和单位等式由原等式取商得到，单位为 \([\mathbf1]\)。
+
+	若 \(f(\mathfrak a)=0\)，各分量的向量空间商泛性质给出唯一线性映射 \(\overline f([p])=f(p)\)。这一公式及 \(f\) 的结构相容性说明 \(\overline f\) 保持置换、插入和单位，因此有
+	\[
+		\begin{tikzcd}[column sep=large]
+			P\arrow[r,"\pi"]\arrow[dr,"f"']&P/\mathfrak a\arrow[d,dashed,"\exists!\,\overline f"]\\
+			&Q.
+		\end{tikzcd}
+	\]
+	对于最后的断言，先由\cref{b4:thm:free-operad}把 \(E\rightarrow Q\) 唯一延拓为 \(\widehat\theta:\mathcal F(E)\rightarrow Q\)。其核在右作用与两种插入下封闭，因而是 operad 理想。如果 \(\widehat\theta(R)=0\)，则最小性给出 \((R)\subseteq\ker\widehat\theta\)，故可且只能经商分解。反过来，经此商得到的态射必消去 \(R\)。
+\end{proof}
+
+以树的顶点数作为\term[operad-quanzhong]{权重}[weight]，得到分解
+\[
+	\mathcal F(E)=\bigoplus_{w\geq0}\mathcal F^{(w)}(E),
+	\qquad \mathcal F^{(1)}(E)=E.
+\]
+权重零只有一元恒等运算，插入复合把权重相加。若 \(E(n)=0\) 对所有 \(n\ne2\) 成立，则每个顶点都恰有两条输入边。对含 \(w\geq1\) 个顶点、\(n\) 条叶边的树，进入顶点的边一共是 \(2w\) 条；它们由 \(w-1\) 条内部边和 \(n\) 条叶边组成。因此 \(2w=(w-1)+n\)，即 \(n=w+1\)。无顶点的树满足 \(w=0\)、\(n=1\)，也符合这一公式。尤其二元生成时，权重二关系恰好是三元运算之间的关系。
+\symidx{\(\mathcal F^{(w)}(E)\)：自由 operad 中含 \(w\) 个顶点的部分}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=0.9]
+		\node (p) at (0,0) {\(p\)};
+		\node (q) at (-0.8,1) {\(q\)};
+		\node (a) at (-1.4,2) {\(1\)};
+		\node (b) at (-0.2,2) {\(2\)};
+		\node (c) at (0.8,2) {\(3\)};
+		\draw (a)--(q)--(p)--(0,-0.7);
+		\draw (b)--(q);
+		\draw (c)--(p);
+		\node at (0,-1.2) {\(p\circ_1q\)};
+		\node (pp) at (5,0) {\(p\)};
+		\node (qq) at (5.8,1) {\(q\)};
+		\node (aa) at (4.2,2) {\(1\)};
+		\node (bb) at (5.2,2) {\(2\)};
+		\node (cc) at (6.4,2) {\(3\)};
+		\draw (aa)--(pp)--(5,-0.7);
+		\draw (bb)--(qq)--(pp);
+		\draw (cc)--(qq);
+		\node at (5,-1.2) {\(p\circ_2q\)};
+	\end{tikzpicture}
+	\caption{两个二元运算的插入复合}
+	\label{b4:fig:binary-operad-trees}
+\end{figure}
+
+在\cref{b4:fig:binary-operad-trees}中，输入从叶流向根，根顶点装饰 \(p\)，另一个顶点装饰 \(q\)。左图表示 \(p(q(v_1,v_2),v_3)\)，右图表示 \(p(v_1,q(v_2,v_3))\)。自由 operad 只记录这两种复合，没有把它们宣布相等。取 \(p=q=\mu\) 后再加入二者之差为零的关系，才得到结合律；这一区别将用于下一节的具体代数结构及本附录最后一节的二次关系。

@@ -1,0 +1,395 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 3.6* 端、余端与双自然变换
+% 状态：初稿已完成；新增范围尚未正式审核。
+
+\OptionalSection{端、余端与双自然变换}{b4:sec:0306}
+
+自然变换是一族满足相容条件的态射；张量积则由生成元及平衡关系构成。前一种构造从一个积中选出相容族，后一种构造把应当相同的表达识别起来。端与余端把这两种做法用于一反变、一协变的两个变量。它们不仅能重新表达自然变换和张量积，还能把上一节的左 Kan 扩展写成一个带 Hom 集权重的余端。
+
+\subsection{双自然变换与端、余端的定义}
+\label{b4:subsec:0306:01}
+
+对双函子 \(H:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathcal E\)，态射 \(f:c\rightarrow d\) 产生两种不同方向的映射：
+\[
+	H(f,1_c):H(d,c)\longrightarrow H(c,c),\qquad
+	H(1_c,f):H(c,c)\longrightarrow H(c,d).
+\]
+通常不能把 \(c\mapsto H(c,c)\) 当作 \(\mathcal C\) 上的函子。因此，对角上的一族态射需要一种不同于普通自然性的相容条件。
+
+\begin{definition}[双自然变换]\label{b4:def:dinatural-transformation}
+	设 \(\mathcal C,\mathcal E\) 为范畴，\(F,G:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathcal E\) 为双函子。一族态射 \(\alpha_c:F(c,c)\rightarrow G(c,c)\) 若对每个 \(f:c\rightarrow d\) 满足
+	\begin{equation}\label{b4:eq:dinaturality}
+		G(1_c,f)\alpha_cF(f,1_c)
+		=G(f,1_d)\alpha_dF(1_d,f),
+	\end{equation}
+	则称为从 \(F\) 到 \(G\) 的\term[shuangziran-bianhuan]{双自然变换}[dinatural transformation]。等式两边的源都是 \(F(d,c)\)，目标都是 \(G(c,d)\)。
+	\[
+		\begin{tikzcd}[column sep=large,row sep=large]
+			F(d,c)\arrow[r,"{F(f,1_c)}"]\arrow[d,"{F(1_d,f)}"']&F(c,c)\arrow[r,"\alpha_c"]&G(c,c)\arrow[d,"{G(1_c,f)}"]\\
+			F(d,d)\arrow[r,"\alpha_d"']&G(d,d)\arrow[r,"{G(f,1_d)}"']&G(c,d).
+		\end{tikzcd}
+	\]
+\end{definition}
+
+图中的两条三步路径分别先改变第一变量和先改变第二变量。若 \(F\) 或 \(G\) 不依赖其中一个变量，条件便相应简化；下面最常用的是一端为常值双函子的情形。
+
+\begin{example}[双自然变换的复合可能失败]\label{b4:exm:dinatural-noncomposition}
+	令 \(\mathcal C\) 只有两个对象 \(0,1\) 及一条非恒等态射 \(0\rightarrow1\)。取常值双函子 \(F=\{*\}\)、\(H=\{0,1\}\)，并定义集合值双函子 \(G\)：
+	\[
+		G(1,0)=\varnothing,\qquad
+		G(0,0)=G(1,1)=G(0,1)=\{*\}.
+	\]
+	各个结构映射取唯一可能的映射；不存在从上述单点集通向空集的源范畴箭头，所以这确实给出一个双函子。取唯一的对角分量 \(\alpha_i:F(i,i)\rightarrow G(i,i)\)，再令 \(\beta_0:G(0,0)\rightarrow H(0,0)\) 取值 \(0\)，\(\beta_1\) 取值 \(1\)。对非恒等箭头，\(\alpha\) 的相容条件是两张通向单点集的映射相等，\(\beta\) 的相容条件则是两张从空集出发的映射相等，故二者均双自然。但逐分量复合 \(\beta_i\alpha_i\) 的相容条件要求从单点集到 \(\{0,1\}\) 的常值 \(0\)、常值 \(1\) 两映射相等，因而不成立。一般的双自然变换不能任意逐分量复合。
+\end{example}
+
+\begin{definition}[楔形、端与余端]\label{b4:def:end-coend}
+	设 \(\mathcal C\) 为小范畴，\(\mathcal E\) 为范畴，\(H:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathcal E\) 为双函子。对象 \(T\in\mathcal E\) 连同态射族 \(\omega_c:T\rightarrow H(c,c)\)，若对每个 \(f:c\rightarrow d\) 满足
+	\[
+		H(1_c,f)\omega_c=H(f,1_d)\omega_d,
+	\]
+	则称为 \(H\) 的一个\term[xiexing]{楔形}[wedge]。若楔形 \((E,(\varepsilon_c))\) 具有下述性质：每个楔形 \((T,(\omega_c))\) 都唯一给出态射 \(h:T\rightarrow E\)，使 \(\varepsilon_ch=\omega_c\) 对全部 \(c\) 成立，则称它为 \(H\) 的\term[duan]{端}[end]，记为
+	\[
+		E=\int_{c\in\mathcal C}H(c,c).
+	\]
+	对象 \(T\) 连同态射族 \(\lambda_c:H(c,c)\rightarrow T\)，若对每个 \(f:c\rightarrow d\) 满足
+	\[
+		\lambda_cH(f,1_c)=\lambda_dH(1_d,f),
+	\]
+	则称为一个\term[yuxiexing]{余楔形}[cowedge]。若余楔形 \((Q,(\iota_c))\) 使每个余楔形 \((T,(\lambda_c))\) 都唯一分解为 \(\lambda_c=k\iota_c\)，其中 \(k:Q\rightarrow T\)，则称它为 \(H\) 的\term[yuduan]{余端}[coend]，记为
+	\[
+		Q=\int^{c\in\mathcal C}H(c,c).
+	\]
+	两种唯一分解分别由下图表示：
+	\[
+		\begin{tikzcd}[column sep=large,row sep=large]
+			T\arrow[r,"\omega_c"]\arrow[d,dashed,"\exists!\,h"']&H(c,c)\\
+			E\arrow[ur,"\varepsilon_c"']&
+		\end{tikzcd}
+		\qquad
+		\begin{tikzcd}[column sep=large,row sep=large]
+			H(c,c)\arrow[r,"\iota_c"]\arrow[dr,"\lambda_c"']&Q\arrow[d,dashed,"\exists!\,k"]\\
+			&T.
+		\end{tikzcd}
+	\]
+\end{definition}
+\symidx{\(\int_cH(c,c)\)：双函子的端}
+\symidx{\(\int^cH(c,c)\)：双函子的余端}
+
+楔形就是从常值双函子到 \(H\) 的双自然变换，余楔形就是反方向的双自然变换。图中的虚线必须同时适用于全部 \(c\)，而非对每个分量各自选择。若一个端存在，则其结构映射族联合检测通向它的态射是否相等：所有 \(\varepsilon_ch=\varepsilon_ch'\) 蕴含 \(h=h'\)。余端的结构映射同样联合检测从它出发的态射。对两份端的泛性质相互应用，所得两个比较态射的复合保持全部结构映射，故为恒等；余端也如此。因此两种对象都在保持结构映射的唯一同构意义下唯一。
+
+\ProseParagraphBreak
+以后改变双函子时，使用的是定义在全部对象对上的普通自然变换。设 \(\theta:H\Rightarrow H'\) 为这样的变换，并假设相应的两个端存在。则 \((\theta_{c,c}\varepsilon_c)\) 是 \(H'\) 的楔形：关于 \((1_c,f)\)、\((f,1_d)\) 的两个自然性方块把其相容条件化为 \(H\) 的楔形条件。它唯一诱导 \(\int_cH(c,c)\rightarrow\int_cH'(c,c)\)。若相应的两个余端存在，则 \((\iota'_c\theta_{c,c})\) 给出 \(\int^cH(c,c)\rightarrow\int^cH'(c,c)\)。由唯一性，这些诱导映射保持恒等与复合。
+
+\subsection{等化子、余等化子与 Fubini 公式}
+\label{b4:subsec:0306:02}
+
+端的全部条件都要求两个复合相等，因此可以用积收集候选分量，再取等化子；余端则用余积收集生成对象，再由余等化子施加关系。其形式与\cref{b4:thm:limits-products-equalizers}类似，但每条 \(f:c\rightarrow d\) 涉及的是 \(H(c,d)\) 或 \(H(d,c)\)，不能把非对角项省掉。
+
+\begin{theorem}[端与余端的等化子公式]\label{b4:thm:end-coend-equalizer}
+	设 \(\mathcal C\) 为小范畴，\(\mathcal E\) 为范畴，\(H:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathcal E\) 为双函子。若所需的小积与等化子存在，则
+	\[
+		\int_cH(c,c)\cong
+		\operatorname{Eq}\left(
+		\prod_cH(c,c)\rightrightarrows
+		\prod_{f:c\rightarrow d}H(c,d)\right).
+	\]
+	记 \(p_c:\prod_cH(c,c)\rightarrow H(c,c)\) 为投影；右边的两个平行态射 \(s,t\) 在 \(f:c\rightarrow d\) 分量上为
+	\[
+		s_f=H(1_c,f)p_c,\qquad t_f=H(f,1_d)p_d.
+	\]
+	若所需的小余积与余等化子存在，则
+	\[
+		\int^cH(c,c)\cong
+		\operatorname{Coeq}\left(
+		\coprod_{f:c\rightarrow d}H(d,c)\rightrightarrows
+		\coprod_cH(c,c)\right).
+	\]
+	记 \(j_c:H(c,c)\rightarrow\coprod_cH(c,c)\) 为余积结构映射；这两个平行态射在 \(f:c\rightarrow d\) 项上的限制为
+	\[
+		j_cH(f,1_c),\qquad j_dH(1_d,f).
+	\]
+	特别地，完备范畴具有全部小指标的端，余完备范畴具有全部小指标的余端。
+\end{theorem}
+\begin{proof}
+	令 \(e:E\rightarrow\prod_cH(c,c)\) 为 \(s,t\) 的等化子。等式 \(se=te\) 在 \(f\) 坐标上就是
+	\[
+		H(1_c,f)p_ce=H(f,1_d)p_de,
+	\]
+	所以 \((p_ce)\) 构成楔形。给定楔形 \((\omega_c:T\rightarrow H(c,c))\)，积的泛性质唯一给出 \(a:T\rightarrow\prod_cH(c,c)\)，满足 \(p_ca=\omega_c\)。楔形条件说明 \(sa,ta\) 的每个坐标相等，从而 \(sa=ta\)。等化子的泛性质给出唯一 \(h:T\rightarrow E\)，使 \(eh=a\)，于是 \(p_ceh=\omega_c\)。反过来，任何满足这些等式的 \(h\) 先被积投影确定其复合 \(eh\)，再被等化子的唯一性确定，故 \(E\) 是端。
+
+	余端情形中，令 \(q:\coprod_cH(c,c)\rightarrow Q\) 为所列两个态射的余等化子。相等条件给出
+	\[
+		qj_cH(f,1_c)=qj_dH(1_d,f),
+	\]
+	故 \((qj_c)\) 是余楔形。任意余楔形 \((\lambda_c:H(c,c)\rightarrow T)\) 先由余积泛性质唯一合为 \(a:\coprod_cH(c,c)\rightarrow T\)。余楔形条件说明 \(a\) 使两个平行态射相等，故唯一分解为 \(a=kq\)。所得 \(k\) 满足 \(kqj_c=\lambda_c\)，且这些等式先确定 \(kq\)，再由余等化子的唯一性确定 \(k\)。这正是余端泛性质。
+
+	由于 \(\mathcal C\) 的对象及态射都组成集合，上述积、余积及平行箭头均为小构造。完备性、余完备性因而分别保证它们存在。
+\end{proof}
+
+在 \(\mathbf{Set}\) 中，端是所有满足楔形等式的对角元组组成的集合；余端则是 \(\coprod_cH(c,c)\) 的商集。后一商集的关系为
+\begin{equation}\label{b4:eq:set-coend-relation}
+	\bigl(c,H(f,1_c)(x)\bigr)
+	\sim\bigl(d,H(1_d,f)(x)\bigr),
+	\qquad x\in H(d,c),\quad f:c\rightarrow d,
+\end{equation}
+并取这些关系生成的等价关系。非对角元素 \(x\) 规定对角项中的哪些元素必须识别，自己并不是另添的生成元。
+
+将多组变量的相容条件分次施加，得到下面的\term[fubini-gongshi]{Fubini 公式}[Fubini formula]。\footnote{Guido Fubini（富比尼，1879--1943）是意大利数学家，主要从事分析与微分几何研究。生平参见圣安德鲁斯大学 MacTutor：\url{https://mathshistory.st-andrews.ac.uk/Biographies/Fubini/}。}
+
+\begin{theorem}[端与余端的 Fubini 公式]\label{b4:thm:end-coend-fubini}
+	设 \(\mathcal C,\mathcal A\) 为小范畴，\(\mathcal E\) 为范畴，
+	\[
+		H:\mathcal C^{\mathrm{op}}\times\mathcal C
+		\times\mathcal A^{\mathrm{op}}\times\mathcal A
+		\longrightarrow\mathcal E
+	\]
+	为函子。若 \(\mathcal E\) 完备，则有保持各结构映射的典范同构
+	\[
+		\int_c\left(\int_aH(c,c,a,a)\right)
+		\cong\int_{(c,a)}H(c,c,a,a)
+		\cong\int_a\left(\int_cH(c,c,a,a)\right).
+	\]
+	若 \(\mathcal E\) 余完备，则有典范同构
+	\[
+		\int^c\left(\int^aH(c,c,a,a)\right)
+		\cong\int^{(c,a)}H(c,c,a,a)
+		\cong\int^a\left(\int^cH(c,c,a,a)\right).
+	\]
+	这些同构关于 \(H\) 的普通自然变换自然。中间项将 \(H\) 视为 \((\mathcal C\times\mathcal A)^{\mathrm{op}}\times(\mathcal C\times\mathcal A)\) 上的双函子。
+\end{theorem}
+\begin{proof}
+	固定 \(c,c'\)，取内层端 \(V(c,c')=\int_aH(c,c',a,a)\)。改变 \(c,c'\) 时，\(H\) 的结构映射在 \(a,a'\) 上普通自然，因而按端的诱导映射得到双函子 \(V:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathcal E\)。它保持恒等与复合，是因为这些等式在复合到每个内层端投影后成立，而投影族联合检测态射。
+
+	从 \(T\) 到 \(\int_cV(c,c)\) 的态射，等价于一族 \(T\rightarrow V(c,c)\)，在 \(c\) 方向满足楔形条件。再使用内层端的泛性质，这等价于一族
+	\[
+		\omega_{c,a}:T\longrightarrow H(c,c,a,a),
+	\]
+	分别在 \(c\) 与 \(a\) 方向满足楔形条件。外层条件可以逐个复合到内层投影后检验，故没有遗漏条件。分别双自然又等价于在积范畴上双自然：必要性是取 \((f,1_a)\)、\((1_c,g)\)；反过来，对 \(f:c\rightarrow d\)、\(g:a\rightarrow b\)，两个单独条件和不同变量间的交换性给出
+	\[
+		\begin{aligned}
+			H(1_c,f,1_a,g)\omega_{c,a}
+			&=H(f,1_d,1_a,g)\omega_{d,a}\\
+			&=H(f,1_d,g,1_b)\omega_{d,b}.
+		\end{aligned}
+	\]
+	这正是积范畴中的楔形等式。因此第一个迭代端连同这些复合投影具有中间端的泛性质。交换两组变量得另一个同构；同构唯一地由保持全部 \(\omega_{c,a}\) 的要求确定。
+
+	对于余端，先固定 \(c,c'\) 取 \(U(c,c')=\int^aH(c,c',a,a)\)。余端的诱导映射及其唯一性使 \(U\) 成为双函子。从 \(\int^cU(c,c)\) 到任意 \(T\) 的态射，恰好对应分别满足两组余楔形条件的态射族 \(\lambda_{c,a}:H(c,c,a,a)\rightarrow T\)。分方向条件在 \(f:c\rightarrow d\)、\(g:a\rightarrow b\) 上合成
+	\[
+		\begin{aligned}
+			\lambda_{c,a}H(f,1_c,g,1_a)
+			&=\lambda_{d,a}H(1_d,f,g,1_a)\\
+			&=\lambda_{d,b}H(1_d,f,1_b,g),
+		\end{aligned}
+	\]
+	两边均从 \(H(d,c,b,a)\) 出发。这就是积范畴上的余楔形条件；反向取一组态射为恒等又恢复分方向条件。因此迭代余端具有中间余端的泛性质，交换变量即得第二个同构。最后，改变 \(H\) 时各比较态射仍保持对应的全部结构映射，由端、余端的唯一性，相应自然性方块交换。
+\end{proof}
+
+这里的 Fubini 公式交换的是两个端，或两个余端。它没有断言一个端与一个余端可以交换；即使在集合范畴中，对有限离散指标，积与余积也会阻止这种混合交换。
+
+\subsection{自然变换、张量积与集合值加权例子}
+\label{b4:subsec:0306:03}
+
+自然变换的相容方程本身就给出一个端，其中双函子的两个变量分别记录被变换的源函子和目标函子。
+
+\begin{proposition}[自然变换集合的端表达]\label{b4:prop:natural-transformations-end}
+	设 \(\mathcal C\) 为小范畴，\(\mathcal E\) 为局部小范畴，\(F,G:\mathcal C\rightarrow\mathcal E\) 为函子。令
+	\[
+		H(c,d)=\operatorname{Hom}_{\mathcal E}(F(c),G(d)).
+	\]
+	在第一个变量上用 \(F\) 后预复合，在第二个变量上用 \(G\) 后复合，使 \(H\) 成为集合值双函子。则有典范双射
+	\[
+		\operatorname{Nat}(F,G)
+		\cong\int_c\operatorname{Hom}_{\mathcal E}(F(c),G(c)),
+	\]
+	它关于 \(F\) 反变自然、关于 \(G\) 协变自然。
+\end{proposition}
+\begin{proof}
+	由等化子公式，右边由一族 \(\alpha_c:F(c)\rightarrow G(c)\) 组成，条件为
+	\[
+		G(f)\alpha_c=\alpha_dF(f)\qquad(f:c\rightarrow d).
+	\]
+	这恰好是自然变换的定义，所以取各分量给出所求双射。局部小性保证每个 Hom 是集合，\(\mathcal C\) 小保证候选分量的积是集合。若 \(u:F'\Rightarrow F\)、\(v:G\Rightarrow G'\) 自然，两个描述都把 \(\alpha\) 送到分量为 \(v_c\alpha_cu_c\) 的变换，因此所述自然性成立。
+\end{proof}
+
+\begin{example}[集合值加权构造]\label{b4:exm:set-weighted-constructions}
+	设 \(\mathcal C\) 为小范畴，\(W,F:\mathcal C\rightarrow\mathbf{Set}\) 为函子。写 \(Y^X=\operatorname{Hom}_{\mathbf{Set}}(X,Y)\)。对双函子 \((c,d)\mapsto F(d)^{W(c)}\) 应用上一命题，得到
+	\[
+		\int_cF(c)^{W(c)}\cong\operatorname{Nat}(W,F).
+	\]
+	它从各集合的函数族中保留与指标态射相容的部分，称为权 \(W\) 给出的\term[jiaquan-jixian]{加权极限}[weighted limit]。特别地，若 \(\mathcal C\) 是集合 \(I\) 视为的离散范畴，则没有非恒等态射的相容条件，所得集合为 \(\prod_{i\in I}F(i)^{W(i)}\)。
+
+	\ProseParagraphBreak
+	对于余端，权的方向改为 \(W:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\)，仍取 \(F:\mathcal C\rightarrow\mathbf{Set}\)。双函子 \((c,d)\mapsto W(c)\times F(d)\) 给出\term[jiaquan-yujixian]{加权余极限}[weighted colimit]
+	\[
+		W\star F\coloneqq\int^cW(c)\times F(c).
+	\]
+	由\eqref{b4:eq:set-coend-relation}，它是 \(\coprod_cW(c)\times F(c)\) 按下列关系生成的等价关系所取的商：
+	\begin{equation}\label{b4:eq:weighted-coend-relation}
+		(c,W(f)(w),x)\sim(d,w,F(f)(x)),
+		\qquad f:c\rightarrow d,\quad w\in W(d),\quad x\in F(c).
+	\end{equation}
+	给出从此商集到集合 \(T\) 的映射，就是给出各个 \(W(c)\times F(c)\rightarrow T\)，并要求它们在关系两边取相同的值，故这也直接验证了余楔形泛性质。离散指标时，该商就是不交并 \(\coprod_{i\in I}W(i)\times F(i)\)。两个加权构造中权的变性不同，正是因为积一边使用函数集，余积一边使用笛卡儿积。
+\end{example}
+
+取一个群 \(G\)，把它视为单对象范畴 \(\mathcal BG\)。右 \(G\) 集 \(S\) 给出 \((\mathcal BG)^{\mathrm{op}}\rightarrow\mathbf{Set}\)，左 \(G\) 集 \(X\) 给出 \(\mathcal BG\rightarrow\mathbf{Set}\)，其加权余极限为\term[pinghengji]{平衡积}[balanced product]
+\[
+	S\times_GX=(S\times X)/\bigl((sg,x)\sim(s,gx)\bigr).
+\]
+例如，\(G\times_GX\cong X\)，映射为 \([g,x]\mapsto gx\)，逆映射为 \(x\mapsto[1,x]\)：关系给出 \([g,x]=[1,gx]\)，两次复合因而都是恒等。
+
+\begin{example}[模张量积是交换群中的余端]\label{b4:exm:tensor-product-coend}
+	设 \(R\) 为含幺环，\(M_R\) 为幺性右模，\({}_RN\) 为幺性左模。令 \(\mathcal R=\mathcal B(R,\cdot)\) 为以 \(R\) 的乘法幺半群为态射集的单对象范畴。定义交换群值双函子
+	\[
+		T:\mathcal R^{\mathrm{op}}\times\mathcal R\longrightarrow\mathbf{Ab},
+		\qquad T(*,*)=M\otimes_{\mathbb Z}N,
+	\]
+	其两个变量的结构映射为
+	\[
+		T(r,1)(m\otimes n)=mr\otimes n,\qquad
+		T(1,r)(m\otimes n)=m\otimes rn.
+	\]
+	各映射由 \(\mathbb Z\) 上张量积的泛性质良定义。右作用的复合次序与第一变量反变相符，左作用的次序与第二变量协变相符；两类映射在纯张量上交换，故确实给出双函子。
+
+	\ProseParagraphBreak
+	\cref{b4:exm:elementary-limits}已给出交换群中余等化子的公式：商去两映射之差的像。对 \(T\) 应用\cref{b4:thm:end-coend-equalizer}，只有一个对角对象，而每个 \(r\in R\) 给出一组关系，因此
+	\[
+		\int^{*\in\mathcal R}T(*,*)
+		\cong(M\otimes_{\mathbb Z}N)/U,
+	\]
+	其中 \(U\) 为所有 \(mr\otimes n-m\otimes rn\) 生成的子群。这一商交换群典范同构于 \(M\otimes_RN\)。事实上，从商群到任意交换群 \(A\) 的同态，等价于 \(M\otimes_{\mathbb Z}N\rightarrow A\) 中令这些差为零的同态，也就是满足 \(b(mr,n)=b(m,rn)\) 的双可加映射 \(b:M\times N\rightarrow A\)。
+	% 跨卷引用目标：b2:thm:tensor-universal（6.1.3）。
+	第二卷定理6.1.3（张量积的泛性质）已经证明，这组映射由 \(M\otimes_RN\) 表示，故得到保持全部纯张量的唯一同构。
+
+	\ProseParagraphBreak
+	这里的双可加性由 \(M\otimes_{\mathbb Z}N\) 预先加入，余端在 \(\mathbf{Ab}\) 中形成。若只在集合范畴中对 \(M\times N\) 加入 \((mr,n)\sim(m,rn)\)，所得平衡商没有加入可加关系，一般不能得到模张量积的底集合。例如取 \(R=\mathbb Z\)、\(M=N=\mathbb Z^2\)，平衡集合商到 \(\mathbb Z^2\otimes_{\mathbb Z}\mathbb Z^2\) 的自然映射只能命中纯张量。在由 \(e_i\otimes e_j\) 标记的 \(2\times2\) 整数矩阵中，纯张量的矩阵为 \((m_in_j)\)，行列式为零；\(e_1\otimes e_1+e_2\otimes e_2\) 对应单位矩阵，因而不在其像中。群作用的平衡积与模张量积需要在各自范畴中解释。
+\end{example}
+
+\subsection{Kan 扩展的余端公式}
+\label{b4:subsec:0306:04}
+
+在上一节的逐点公式中，\((K\downarrow d)\) 的对象是一个 \(c\) 连同一条 \(Kc\rightarrow d\)。余端把这些选择分别放入各个 Hom 集，再把逗号范畴的箭头变成平衡关系。为使这一步适用于一般目标范畴，需要先用一份对象的多份副本替代集合的笛卡儿积。
+
+\begin{definition}[集合指标的余积]\label{b4:def:copower}
+	设 \(\mathcal E\) 为具有所有小余积的范畴，\(S\) 为集合，\(A\in\mathcal E\)。在所用范围选定这些余积及其结构映射。以 \(S\) 为指标、每项均为 \(A\) 的余积在英文中称为 copower，记为
+	\[
+		S\odot A\coloneqq\coprod_{s\in S}A.
+	\]
+	记第 \(s\) 份的结构映射为 \(j_s:A\rightarrow S\odot A\)。给定集合映射 \(u:S\rightarrow S'\) 及态射 \(a:A\rightarrow A'\)，由
+	\[
+		(u\odot a)j_s=j_{u(s)}a
+	\]
+	唯一确定 \(u\odot a:S\odot A\rightarrow S'\odot A'\)。
+\end{definition}
+\foreignidx{copower}
+\symidx{\(S\odot A\)：每项为 \(A\) 的集合指标余积}
+
+余积泛性质说明，若 \(\mathcal E\) 局部小，则有双射
+\[
+	\operatorname{Hom}_{\mathcal E}(S\odot A,B)
+	\cong\operatorname{Hom}_{\mathbf{Set}}
+	\bigl(S,\operatorname{Hom}_{\mathcal E}(A,B)\bigr),
+	\qquad h\longmapsto(s\mapsto hj_s).
+\]
+逆映射把一族 \(A\rightarrow B\) 唯一合为余积上的态射。上述结构公式还表明，\(\odot\) 保持恒等与复合，且该双射在 \(S,A,B\) 上自然。集合中的 \(S\odot A\) 就是 \(S\times A\)；交换群中则是 \(\bigoplus_{s\in S}A\)。这一 Hom 描述也见 Riehl\cite[Example 3.4.9]{Riehl2016CategoryTheory}。
+
+\ProseParagraphBreak
+这里选定的余积足以在所用对象与态射范围内定义 \(\odot\)。若把它视为大范畴上的整体函子，则与\cref{b4:prop:limit-uniqueness-functoriality}之后的约定一样，应把全部所选余积及结构映射作为数据；不同选择之间的唯一相容同构不代替这份选择。
+
+\begin{theorem}[左 Kan 扩展的余端公式]\label{b4:thm:kan-coend-formula}
+	设 \(\mathcal C,\mathcal D\) 为小范畴，\(\mathcal E\) 为局部小且余完备的范畴，\(K:\mathcal C\rightarrow\mathcal D\)、\(F:\mathcal C\rightarrow\mathcal E\) 为函子。对每个 \(d\in\mathcal D\)，取
+	\begin{equation}\label{b4:eq:kan-coend-formula}
+		L(d)=\int^{c\in\mathcal C}
+		\operatorname{Hom}_{\mathcal D}(Kc,d)\odot F(c).
+	\end{equation}
+	在积分号内的双函子为
+	\[
+		(c,c')\longmapsto
+		\operatorname{Hom}_{\mathcal D}(Kc,d)\odot F(c').
+	\]
+	后复合 \(d\rightarrow d'\) 诱导 \(L(d)\rightarrow L(d')\)，使 \(L:\mathcal D\rightarrow\mathcal E\) 成为函子。以 \(\iota_{c,u}:F(c)\rightarrow L(d)\) 表示余端结构映射在 \(u:Kc\rightarrow d\) 对应副本上的限制，则
+	\[
+		\eta_c=\iota_{c,1_{Kc}}:F(c)\longrightarrow L(Kc)
+	\]
+	组成自然变换 \(\eta:F\Rightarrow LK\)。对任意 \(G:\mathcal D\rightarrow\mathcal E\)，有关于 \(F,G\) 自然的双射
+	\[
+		\operatorname{Nat}(L,G)\xrightarrow{\sim}\operatorname{Nat}(F,GK),
+		\qquad \tau\longmapsto(\tau_{Kc}\eta_c)_c.
+	\]
+	因此 \((L,\eta)\) 是 \(F\) 沿 \(K\) 的左 Kan 扩展。
+\end{theorem}
+\begin{proof}
+	\(\mathcal D\) 小保证各个 Hom 是集合，余完备性保证各个集合指标余积及小指标余端存在。为构造整个 \(L\)，只需为由集合 \(\operatorname{Ob}\mathcal D\) 指标的一族所需余端选定代表。余端条件与余积条件合起来说明：给出 \(L(d)\rightarrow B\)，恰好是给出一族 \(a_{c,u}:F(c)\rightarrow B\)，对每个 \(f:c\rightarrow c'\) 和 \(u:Kc'\rightarrow d\) 满足
+	\begin{equation}\label{b4:eq:kan-coend-balance}
+		a_{c,uK(f)}=a_{c',u}F(f).
+	\end{equation}
+	特别地，\(\iota_{c,uK(f)}=\iota_{c',u}F(f)\)。这些结构映射联合检测从 \(L(d)\) 出发的态射是否相等。
+
+	给定 \(v:d\rightarrow d'\)，用一族 \(\iota_{c,vu}:F(c)\rightarrow L(d')\) 定义 \(L(v)\)。它满足\eqref{b4:eq:kan-coend-balance}，因为 \((vu)K(f)=v(uK(f))\)，故得到唯一态射，且
+	\[
+		L(v)\iota_{c,u}=\iota_{c,vu}.
+	\]
+	在全部结构映射上比较即可得到 \(L(1_d)=1_{L(d)}\) 及 \(L(wv)=L(w)L(v)\)。对于 \(f:c\rightarrow c'\)，有
+	\[
+		L(K(f))\eta_c
+		=\iota_{c,K(f)}
+		=\iota_{c',1_{Kc'}}F(f)
+		=\eta_{c'}F(f),
+	\]
+	所以 \(\eta\) 自然。
+
+	若 \(\tau:L\Rightarrow G\) 自然，则 \(\alpha_c=\tau_{Kc}\eta_c\) 由两份自然性组成 \(F\Rightarrow GK\)。反过来，给定 \(\alpha:F\Rightarrow GK\)，对每个 \(d\) 定义
+	\[
+		a_{c,u}=G(u)\alpha_c:F(c)\longrightarrow G(d).
+	\]
+	\(\alpha\) 的自然性给出
+	\[
+		G(uK(f))\alpha_c
+		=G(u)G(K(f))\alpha_c
+		=G(u)\alpha_{c'}F(f),
+	\]
+	故该族满足\eqref{b4:eq:kan-coend-balance}，唯一诱导 \(\overline\alpha_d:L(d)\rightarrow G(d)\)。它关于 \(d\) 自然：对 \(v:d\rightarrow d'\)，
+	\[
+		G(v)\overline\alpha_d\iota_{c,u}
+		=G(vu)\alpha_c
+		=\overline\alpha_{d'}L(v)\iota_{c,u}.
+	\]
+	由结构映射的联合检测性质，\(G(v)\overline\alpha_d=\overline\alpha_{d'}L(v)\)。
+	\[
+		\begin{tikzcd}[column sep=large,row sep=large]
+			F(c)\arrow[r,"\iota_{c,u}"]\arrow[dr,"G(u)\alpha_c"']&L(d)\arrow[d,dashed,"\overline\alpha_d"]\\
+			&G(d).
+		\end{tikzcd}
+	\]
+	图中的全部三角形同时决定 \(\overline\alpha_d\)；每个 \(\iota_{c,u}\) 也等于 \(L(u)\eta_c\)。
+
+	从 \(\alpha\) 出发，重建后的分量满足 \(\overline\alpha_{Kc}\eta_c=G(1_{Kc})\alpha_c=\alpha_c\)。从 \(\tau\) 出发，则
+	\[
+		\overline{(\tau K)\eta}_d\iota_{c,u}
+		=G(u)\tau_{Kc}\eta_c
+		=\tau_dL(u)\eta_c
+		=\tau_d\iota_{c,u},
+	\]
+	故重建变换就是 \(\tau\)。这证明所给两个构造互逆。
+
+	最后，若 \(\rho:G\Rightarrow G'\)，两个构造均将后复合 \(\rho\) 对应于后复合 \(\rho K\)。若 \(\sigma:F\Rightarrow F'\)，由 \(\iota'_{c,u}\sigma_c\) 唯一诱导 \(L(\sigma):L_F\Rightarrow L_{F'}\)，且 \(L(\sigma)_{Kc}\eta_c=\eta'_c\sigma_c\)。因此，对 \(\tau:L_{F'}\Rightarrow G\)，所给双射把 \(\tau L(\sigma)\) 送到 \(((\tau K)\eta')\sigma\)。这分别验证了两个参数的自然性。由\cref{b4:def:kan-extension}中的泛性质，\((L,\eta)\) 正是所需的左 Kan 扩展。
+\end{proof}
+
+\eqref{b4:eq:kan-coend-balance}还解释了它与\cref{b4:thm:pointwise-kan-extension}的关系。逗号范畴 \((K\downarrow d)\) 中的态射 \((c,uK(f))\rightarrow(c',u)\) 正由 \(f:c\rightarrow c'\) 给出，而式中的等式正是相应余锥的条件。所以余端公式和逐点余极限公式组织的是同一组映射及相容条件。特别地，当 \(\mathcal E=\mathbf{Set}\) 时，可写成带关系的商集
+\[
+	\begin{aligned}
+		(\operatorname{Lan}_KF)(d)
+		&\cong
+		\left(\coprod_c\operatorname{Hom}_{\mathcal D}(Kc,d)\times F(c)\right)\big/\!\sim,\\
+		(uK(f),x)&\sim(u,F(f)(x)).
+	\end{aligned}
+\]
+一般目标范畴中的余端则保留集合指标余积、余等化子及其泛性质，由此得到同一个 Kan 构造。
+
+% 新增结构与纲要同步。
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### 3.6.1 双自然变换与端、余端的定义
+% #### 3.6.2 等化子、余等化子与 Fubini 公式
+% #### 3.6.3 自然变换、张量积与集合值加权例子
+% #### 3.6.4 Kan 扩展的余端公式
+% ---

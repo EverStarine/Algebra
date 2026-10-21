@@ -7,7 +7,7 @@
 \BookChapterNumber{b3:app:C}
 
 \begin{chapterabstract}
-	本附录通过几个可计算模型，介绍交换代数在奇点研究中的进一步用途。形式纤维说明完备化需要比较哪些点；Frobenius 的自由性与分裂使正特征运算转为模论问题；完全交的余切与切复形保留方程及其变化；局部交数、乘数理想和多次数对偶则分别提供相交、消失阶与同调对偶方面的信息。
+	本附录通过几个可计算模型，介绍交换代数在奇点研究中的进一步用途。形式纤维说明完备化需要比较哪些点；Frobenius 的自由性与分裂使正特征运算转为模论问题，紧闭包进一步检测理想成员关系；完全交的余切与切复形保留方程及其变化，带系数的同调则检验这些信息在不同模中的表现。局部交数、乘数理想和多次数对偶分别提供相交、消失阶与同调对偶方面的信息。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -16,6 +16,8 @@
 		\item 分清 Frobenius 的有限、平坦与分裂性质，并检验具体算例。
 		\item 在完全交模型中区别余切复形与切复形，计算超曲面的一阶方程扰动。
 		\item 用商环长度计算局部交数，在正规交叉模型中计算乘数理想，并比较不同次数的 Ext。
+		\item 比较紧闭包与 Frobenius 闭包，说明正则环中紧闭包退化为原理想的原因，并计算奇点处两种闭包的差别。
+		\item 在完全交模型中计算带系数的 André--Quillen 同调与上同调，核对导出张量、导出 Hom 及同调次数的约定。
 	\end{itemize}
 \end{learninggoals}
 
@@ -23,13 +25,13 @@
 
 \ProseParagraphBreak
 
-这四节从不同方面研究奇点，并不构成依次推出彼此的一条定理链。形式纤维比较原环与完备化的点，余切与切复形保留方程及其关系，局部交数衡量分支相遇的程度；正特征和特征零又分别提供 Frobenius 与乘数理想的方法。本附录用可计算模型逐一说明工具解决的问题，并在需要深理论的地方明确指出所用结论的范围。
+这六节从不同方面研究奇点，并不构成依次推出彼此的一条定理链。形式纤维比较原环与完备化的点，余切与切复形保留方程及其关系，局部交数衡量分支相遇的程度；正特征和特征零又分别提供 Frobenius 与乘数理想的方法。后两节继续追问：取幂后的理想成员关系允许乘上一个固定因子，会得到怎样的闭包；余切复形换用不同系数，又能读出哪些同调信息。本附录用可计算模型说明这些问题，并在需要深理论的地方明确指出所用结论的范围。
 
 \ProseParagraphBreak
 
-所需基础为本卷的局部化、完备化、正则序列与自由消解。\secref{b3:sec:C03}还用到第14章的微分模及第23章的平方零提升；\secref{b3:sec:C04}的末段调用第22章已经证明的局部对偶。卓越环的统一定义在附录 D 的\cref{b3:def:excellent-ring}，本附录先回顾其三个条件。余切复形采用显式完全交模型；乘数理想还使用对数消解与相对典范除子，其存在性及选择独立性采用文献定理，计算则落在正规交叉与两个吹起坐标图中。
+所需基础为本卷的局部化、完备化、正则序列与自由消解。\secref{b3:sec:C03}还用到第14章的微分模及第23章的平方零提升；\secref{b3:sec:C04}的末段调用第22章已经证明的局部对偶。紧闭包的正则环定理使用平坦性与 Krull 交定理，带系数的余切同调则使用第四卷第9章的导出张量和导出 Hom。卓越环的统一定义在附录 D 的\cref{b3:def:excellent-ring}，本附录先回顾其三个条件。余切复形的计算采用显式完全交模型；乘数理想还使用对数消解与相对典范除子，其存在性及选择独立性采用文献定理，计算则落在正规交叉与两个吹起坐标图中。
 
-% 本附录按既有四节组织；具体模型给出证明，长证明给出构造概要及出处。
+% 本附录按六节组织；具体模型给出证明，长证明给出构造概要及出处。
 
 \cref{b3:tab:C-tools-and-hypotheses}比较这些工具实际保留的信息与本附录所用的假设。表中的余切与切复形列出完全交模型的范围，局部对偶列出给定正则局部覆盖的范围。
 
@@ -37,14 +39,15 @@
 	\centering
 	\caption{奇点研究工具、所测信息与适用条件}
 	\label{b3:tab:C-tools-and-hypotheses}
-	\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}X@{}}
+	\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}X@{}}
 		\toprule
-		工具 & 所测信息 & 适用条件 & 本附录的证明范围 \\
+		工具 & 所测信息 & 适用条件 & 证明范围 \\
 		\midrule
 		形式纤维 & 完备化在各素点上增加的信息 & Noether 局部环，几何正则性须检查域扩张 & 简单纤维完整计算；卓越性回指附录 D \\
 		Frobenius & 扭曲标量作用后的有限、平坦与分裂性质 & 特征 \(p>0\)；多项式自由基使用完美域 & 自由基与分裂算例证明；Kunz 判据引用 \\
-		余切复形 & 微分、方程及其高阶关系 & 特征零域上的正则序列商 & 完全交模型引用，DG 结构及同调展开 \\
-		切复形 & 导子与坐标变化不能消去的扰动 & 完全交导出对偶；固定超曲面展示 & 方程扰动完整计算；抽象分类引用 \\
+		紧闭包 & 固定乘子下的取幂成员关系 & Noether 环，特征 \(p>0\)；乘子避开极小素理想 & 正则环情形由 Kunz 判据证明；奇点闭包直接计算 \\
+		余切同调 & 微分、方程关系及其带系数同调 & 计算限于特征零域上的正则序列商 & 完全交模型引用；带系数的核、余核完整计算 \\
+		余切上同调 & 导子与坐标变化不能消去的扰动 & 完全交的导出 Hom；固定超曲面展示 & 方程扰动及带系数计算；抽象分类引用 \\
 		局部交数 & 两条平面曲线相交的厚度 & \(k[\![x,y]\!]/(f,g)\) 有限长度 & 有限长度及 Tor 模型完整计算 \\
 		乘数理想 & 除子消失阶与相对典范除子的修正 & 光滑复簇、非零凝聚理想、正有理参数 & 定义及坐标算例；存在性与独立性引用 \\
 		对偶复形 & 非 CM 商环在多个次数的对偶信息 & 完备正则局部环及其非零商环 & 第22章结果调用，显式对偶模型计算 \\
@@ -56,6 +59,8 @@
 \input{Appendices/AppendixC/SectionC02}
 \input{Appendices/AppendixC/SectionC03}
 \input{Appendices/AppendixC/SectionC04}
+\input{Appendices/AppendixC/SectionC05}
+\input{Appendices/AppendixC/SectionC06}
 
 
 \begin{chaptersummary}
@@ -63,6 +68,9 @@
 
 	\ProseParagraphBreak
 	这些构造依赖不同的条件：Frobenius 的自由性计算使用特征与完美性，两项余切模型限于完全交，交数要求有限长度，乘数理想使用光滑复簇及对数消解。主理想化把消失阶数化为正规交叉除子上的系数；代数与解析乘数理想的比较定理把它识别为内在的可积条件，从而解释选择独立性。一般形变与非 Cohen--Macaulay 情形的对偶都需要保留相应的复形信息。
+
+	\ProseParagraphBreak
+	紧闭包允许在所有充分大的 Frobenius 幂前乘上同一个、避开极小素理想的元素。因此 Frobenius 闭包总包含于紧闭包，而两者在奇点处可以不同；正则环中的 Frobenius 平坦性与 Krull 交定理则使紧闭包等于原理想。André--Quillen 同调先对余切复形作导出张量，上同调先作导出 Hom。有限自由的完全交模型让这两种运算化为 Jacobian 矩阵及其转置的核与余核，但更换系数仍会改变答案，不能只对已经算出的同调模作普通张量或对偶。
 \end{chaptersummary}
 
 \BookExercises
@@ -144,4 +152,160 @@
 \end{exercise}
 \begin{solution}
 	对有限生成模，深度由局部上同调的首次非零次数刻画，维数以上的局部上同调则消失；这两个结论给出 \(H_{\mathfrak m}^i(R)=0\) 除非 \(i=d\)，且 \(H_{\mathfrak m}^d(R)\ne0\)。正则局部对偶及 Matlis 对偶的忠实性因此给出 \(\operatorname{Ext}_S^j(R,S)\) 仅在 \(j=n-d\) 非零。若非 CM，则深度小于维数，首次非零上同调出现在较低次数，不能由唯一的顶部典范模替代；第22章的非 CM 算例已明确算出两个非零 Ext 次数。
+\end{solution}
+
+% 第三卷附录 C.5 配套习题；由附录入口统一编排。
+
+\begin{exercise}\label{b3:ex:C-tight-minimal-primes}
+	设 \(k\) 为特征 \(p>0\) 的域，\(R=k[u,v]/(u^2,uv)\)，其中 \(u,v\) 表示商环中的像。求 \(R\) 的极小素理想与零理想的 Frobenius 闭包、紧闭包，并证明 \(v\in R^\circ\)，但 \(v\) 是零因子。
+\end{exercise}
+\begin{solution}
+	每个素理想都含幂零元素 \(u\)，而 \(R/(u)\cong k[v]\) 为整环，所以 \((u)\) 是唯一的极小素理想。于是 \(v\notin(u)\) 给出 \(v\in R^\circ\)。在 \(R\) 中，\(u\ne0\)：原多项式环中的单项式 \(u\) 不属于 \((u^2,uv)\)。又 \(uv=0\)，故 \(v\) 是零因子。这说明避开极小素理想与成为非零因子是两种不同条件。
+
+	由商环 \(R/(u)\) 约化及 \(u^2=0\)，幂零根恰为 \((u)\)。\cref{b3:prop:C-tight-closure-properties}给出 \((0)^F=(0)^*=(u)\)。也可直接验证：\(u^{p^e}=0\) 对 \(e\ge1\) 成立。若 \(z\in(0)^*\)，其见证在唯一分支 \(R/(u)=k[v]\) 中非零，故 \(\bar c\bar z^{p^e}=0\) 强迫 \(\bar z=0\)，即 \(z\in(u)\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-tight-polynomial-monomials}
+	设 \(k\) 为特征 \(p>0\) 的域，\(R=k[x_1,\ldots,x_n]\)，\(I\subseteq R\) 为由有限多个单项式生成的理想。用单项式的坐标指数直接证明 \(I^*=I\)，不调用\cref{b3:thm:C-regular-tight-closure}。再取 \(R=k[x,y]\)、\(I=(x^2,y^3)\)、\(h=xy^2\)，证明 \(h^2\in I^2\)，但 \(h\notin I^*\)。
+\end{exercise}
+\begin{solution}
+	写 \(I=(x^{\alpha_1},\ldots,x^{\alpha_s})\)，其中 \(\alpha_i\in\mathbb N^n\)，坐标逐项比较时，单项式 \(x^\alpha\) 属于 \(I\) 当且仅当某个 \(\alpha_i\le\alpha\)。若 \(f\notin I\)，选 \(f\) 的一个非零项 \(a_\alpha x^\alpha\)，使每个 \(i\) 都有某个坐标 \(j\) 满足 \((\alpha_i)_j>\alpha_j\)。
+
+	任取 \(c\ne0\)，选择 \(q=p^e\) 大于 \(c\) 中全部项的每个坐标指数。乘积 \(cf^q\) 的不同单项式来源不会抵消，因为 \(q\alpha+\beta=q\alpha'+\beta'\) 及 \(0\le\beta_j,\beta'_j<q\) 逐坐标推出 \(\alpha=\alpha'\)、\(\beta=\beta'\)。取 \(c\) 中一个非零项 \(b_\beta x^\beta\)。对每个 \(i\)，上述坐标 \(j\) 满足
+	\[
+		q\alpha_j+\beta_j<q(\alpha_j+1)
+		\le q(\alpha_i)_j.
+	\]
+	所以乘积中的非零项 \(a_\alpha^q b_\beta x^{q\alpha+\beta}\) 不被任何 \(x^{q\alpha_i}\) 整除，故不属于 \(I^{[q]}\)。这对任意固定的 \(c\ne0\) 及全部足够大的 \(q\) 成立，所以 \(f\notin I^*\)。结合 \(I\subseteq I^*\) 得到等式。零理想的情形也由相同的无抵消论证得到；单位理想直接成立。
+
+	在指定算例中，\(h\) 的指数 \((1,2)\) 既不逐坐标大于等于 \((2,0)\)，也不大于等于 \((0,3)\)，故 \(h\notin I=I^*\)。但
+	\[
+		h^2=x^2y^4=y(x^2y^3)\in I^2.
+	\]
+	一个普通幂满足这样的关系，仍不足以提供紧闭包要求的同一乘数与全部大 Frobenius 幂。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-frobenius-closure-localization}
+	设 \(R\) 为特征 \(p>0\) 的交换 Noether 环，\(I\subseteq R\) 为理想，\(S\subseteq R\) 为含一且不含零的乘法集。证明 Frobenius 闭包满足
+	\[
+		S^{-1}(I^F)=(S^{-1}I)^F.
+	\]
+\end{exercise}
+\begin{solution}
+	若 \(z\in I^F\)，则某个 \(q=p^e\) 满足 \(z^q\in I^{[q]}\)。于是对 \(s\in S\)，有 \((z/s)^q\in S^{-1}(I^{[q]})=(S^{-1}I)^{[q]}\)，给出一个包含。
+
+	反过来，设 \(z/s\in(S^{-1}I)^F\)。选 \(q=p^e\)，使 \(z^q/s^q\in S^{-1}(I^{[q]})\)。因为 \(s\) 可逆，这等价于 \(z^q/1\in S^{-1}(I^{[q]})\)，故由理想局部化的成员判据，存在 \(t\in S\) 使 \(tz^q\in I^{[q]}\)。于是
+	\[
+		(tz)^q=t^{q-1}(tz^q)\in I^{[q]},
+	\]
+	所以 \(tz\in I^F\)，从而 \(z/s=(tz)/(ts)\in S^{-1}(I^F)\)。这里把分母放入 \(q\) 次幂只需一次选择 \(t\)；\cref{b3:lem:C-tight-localization}中的紧闭包包含式使用的则是一个对所有大指数固定的见证。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-cusp-full-tight-closure}
+	设 \(k\) 为特征 \(p>0\) 的域，\(R=k[t^2,t^3]\subseteq k[t]\)。对整数 \(n\ge2\)，令 \(I=(t^n)R\)。证明
+	\[
+		I^F=I^*=(t^n,t^{n+1})R
+		=\{f\in R:\operatorname{ord}_t f\ge n\},
+	\]
+	其中约定 \(\operatorname{ord}_t0=+\infty\)。特别地，\(I^*\ne I\)。
+\end{exercise}
+\begin{solution}
+	环 \(R\) 的单项式指数为 \(0\) 及全部不小于二的整数。若 \(f\in R\) 满足 \(\operatorname{ord}_t f\ge n\)，可写 \(f=t^n h\)，其中 \(h\in k[t]\)。对任何 \(q=p^e\ge2\)，多项式 \(h^q\) 的每个正次项指数至少为二，所以 \(h^q\in R\)。因此 \(f^q=t^{nq}h^q\in I^{[q]}\)，得到 \(f\in I^F\subseteq I^*\)。
+
+	若非零 \(f\in I^*\)，由于 \(R\) 是整环，见证 \(c\in R^\circ\) 就是某个非零多项式。由 \(cf^q\in(t^{nq})R\subseteq(t^{nq})k[t]\) 得
+	\[
+		\operatorname{ord}_t c+q\operatorname{ord}_t f\ge nq
+	\]
+	对全部足够大的 \(q=p^e\) 成立。固定的 \(\operatorname{ord}_t c\) 不能补偿随 \(q\) 增长的缺口，所以 \(\operatorname{ord}_t f\ge n\)。零元素也满足所求条件，故得到集合等式。
+
+	最后，次数至少 \(n\) 的单项式中，\(t^n,t^{n+1}\) 是两个所列生成元，而 \(t^{n+r}\) 在 \(r\ge2\) 时已属于 \(t^nR\)。所以该集合就是 \((t^n,t^{n+1})R\)。若 \(t^{n+1}\in(t^n)R\)，在整环 \(k[t]\) 中消去 \(t^n\) 将推出 \(t\in R\)，矛盾，因此包含严格。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-tight-fixed-multiplier}
+	设 \(R\) 为特征 \(p>0\) 的交换 Noether 环，理想 \(I\subseteq R\) 含某个 \(d\in R^\circ\)。
+	\begin{enumerate}
+		\item 如果允许紧闭包定义中的乘数 \(c_e\in R^\circ\) 随 \(e\) 改变，证明每个 \(z\in R\) 都会满足 \(c_ez^{p^e}\in I^{[p^e]}\)。
+		\item 设 \(k\) 为特征 \(p>0\) 的域，在 \(R=k[t]\)、\(I=(t)\) 中具体写出 \(z=1\) 的上述变动乘数，并直接证明不存在紧闭包所要求的固定乘数。因此 \(1\notin I^*\)。
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	1. 对每个 \(q=p^e\)，取 \(c_e=d^q\)。因为 \(R^\circ\) 对乘法封闭，所以 \(c_e\in R^\circ\)。又 \(d\in I\) 给出 \(d^q\in I^{[q]}\)，故
+	\[
+		c_ez^q=d^qz^q=(dz)^q\in I^{[q]}
+	\]
+	对每个 \(z\) 和每个 \(e\) 成立。允许随指数重选乘数，会使这一检验对含有上述 \(d\) 的理想失去区分能力。
+
+	2. 在 \(k[t]\) 中取 \(d=t\)、\(c_e=t^{p^e}\)，即有 \(c_e\cdot1^{p^e}\in(t^{p^e})=I^{[p^e]}\)。若存在固定乘数 \(c\in R^\circ=k[t]\setminus\{0\}\)，使 \(c\cdot1^{p^e}\in(t^{p^e})\) 对全部足够大的 \(e\) 成立，令 \(r\) 为 \(c\) 的最低 \(t\) 次数。取 \(p^e>r\)，则 \(c\) 不被 \(t^{p^e}\) 整除，矛盾。因此没有这样的固定乘数，\(1\notin I^*\)。
+\end{solution}
+
+% C.6 配套习题及完整解答；由附录入口统一编排。
+
+\begin{exercise}\label{b3:ex:C-aq-thick-coefficients}
+	设 \(k\) 为特征零域，\(B=k[x,y,z]/(xz-y^2)\)，\(M=B/(x,z)\)。计算 \(D_1(B/k;M)\)、\(D_0(B/k;M)\)、\(D^0(B/k;M)\)、\(D^1(B/k;M)\) 的 \(B\) 模结构和 \(k\) 维数，并确定更高次的结果。比较本题系数与原点剩余域系数所得的零次同调。
+\end{exercise}
+\begin{solution}
+	模去 \(x,z\) 后，方程变为 \(y^2=0\)，所以 \(M\cong k[y]/(y^2)\)。在这个模上，Jacobian 列给出
+	\[
+		M\longrightarrow M^3,\qquad m\longmapsto(0,-2ym,0).
+	\]
+	写 \(m=a+by\) 后，\(ym=ay\)，故核为 \((y)\subset M\)，像为 \(0\oplus(y)\oplus0\)。于是
+	\[
+		D_1(B/k;M)\cong(y),\qquad D_0(B/k;M)\cong M\oplus k\oplus M.
+	\]
+	转置映射为 \((u,v,w)\mapsto-2yv\)，它的核与余核分别为
+	\[
+		D^0(B/k;M)\cong M\oplus(y)\oplus M,\qquad D^1(B/k;M)\cong k.
+	\]
+	这里各直和因子都通过 \(B\to M\) 取 \(B\) 模结构，\((y)\) 与 \(k=M/(y)\) 也都被 \(x,y,z\) 零化。四个 \(k\) 维数依次为 \(1,5,5,1\)，所有二次及更高次的同调与上同调均为零。原点剩余域系数的零次同调为 \(k^3\)，而本题是五维；系数模保留了 \(y\) 方向的幂零元素，改变了核和余核。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-aq-two-relations}
+	设 \(k\) 为特征零域，\(B=k[x,y,z]/(x^2,yz)\)，\(M=B/(x,y)\cong k[z]\)。证明 \(x^2,yz\) 构成正则序列，计算系数 \(M\) 的全部 André–Quillen 同调和上同调。再将系数改为 \(k=B/(x,y,z)\)，求四个可能非零群的维数。
+\end{exercise}
+\begin{solution}
+	\(x^2\) 在 \(k[x,y,z]\) 中为非零因子；而 \(k[x,y,z]/(x^2)\) 作为 \(k[y,z]\) 模自由，基为 \(1,x\)，所以非零多项式 \(yz\) 的乘法在这个商上仍单射。所给理想是真理想，故得到长度二的正则序列。其 Jacobian 矩阵为
+	\[
+		J_B=\begin{pmatrix}2x&0\\0&z\\0&y\end{pmatrix}.
+	\]
+	在 \(M=k[z]\) 上，\(x,y\) 作用为零，因而 \(J_M(a,b)=(0,zb,0)\)。乘 \(z\) 在 \(k[z]\) 上单射，所以
+	\[
+		D_1(B/k;M)\cong M,\qquad D_0(B/k;M)\cong M\oplus k\oplus M.
+	\]
+	前一个 \(M\) 是关系坐标 \((a,0)\)；后一个中间因子是 \(M/zM\)。转置映射为
+	\[
+		J_M^{\mathsf T}(u,v,w)=(0,zv),
+	\]
+	故
+	\[
+		D^0(B/k;M)\cong M^2,\qquad D^1(B/k;M)\cong M\oplus k.
+	\]
+	这次零次核的两个自由坐标为 \(u,w\)，一次余核的第一个关系坐标保留整个 \(M\)。由完全交两项模型，所有 \(r\ge2\) 的 \(D_r,D^r\) 均为零。改取原点系数 \(k\) 时矩阵全为零，所以 \(D_1,D_0,D^0,D^1\) 的维数依次为 \(2,3,3,2\)。
+\end{solution}
+
+\begin{exercise}\label{b3:ex:C-aq-coefficient-connecting}
+	设 \(k\) 为特征零域，\(B=k[x,y,z]/(xz-y^2)\)，\(\mathfrak m=(x,y,z)B\)，并令 \(\mathbf j=(z,-2y,x)\)。对系数短正合列 \(0\to\mathfrak m\to B\to k\to0\)，显式求连接态射
+	\[
+		D_1(B/k;k)\longrightarrow D_0(B/k;\mathfrak m).
+	\]
+	证明 \(\mathbf j\) 在 \(D_0(B/k;\mathfrak m)\) 中的类非零，但其在 \(D_0(B/k;B)\) 中的像为零，并由此写出到 \(D_0(B/k;k)\) 为止的正合列。
+\end{exercise}
+\begin{solution}
+	二次锥面的模型在系数 \(\mathfrak m\) 上给出
+	\[
+		D_0(B/k;\mathfrak m)=(\mathfrak m\oplus\mathfrak m\oplus\mathfrak m)/\{a\mathbf j:a\in\mathfrak m\}.
+	\]
+	取 \(\lambda\in D_1(B/k;k)=k\)，把它提升为次数 \(-1\) 项 \(B\) 中的 \(a\)，其中 \(a\bmod\mathfrak m=\lambda\)。它的微分为 \(a\mathbf j\in\mathfrak m\oplus\mathfrak m\oplus\mathfrak m\)，故连接态射为
+	\[
+		\lambda\longmapsto[a\mathbf j].
+	\]
+	更换提升只会给 \(a\) 加上 \(\mathfrak m\) 的元素，所得差落在所写分母中，所以此式良定。
+
+	正文已证明 \(B\) 是整环且 \(x\ne0\)，从而 \(a\mapsto a\mathbf j\) 单射。若 \([a\mathbf j]=0\)，则存在 \(b\in\mathfrak m\) 使 \(a\mathbf j=b\mathbf j\)，单射性给出 \(a=b\)，故 \(\lambda=0\)。所以连接态射单射，特别是 \(1\mapsto[\mathbf j]\ne0\)。在系数 \(B\) 上，\(\mathbf j\) 本身就是 \(1\) 的微分，故这个类映为零。
+
+	同一单射性还说明 \(D_1(B/k;\mathfrak m)=D_1(B/k;B)=0\)。系数长正合列遂给出
+	\[
+		0\longrightarrow k\xrightarrow{\lambda\mapsto[\lambda\mathbf j]}
+		D_0(B/k;\mathfrak m)\longrightarrow D_0(B/k;B)\longrightarrow k^3\longrightarrow0.
+	\]
+	其中 \(\lambda\mathbf j\) 使用 \(k\subset B\) 的常数提升。中间的核也可直接检验：来自 \(\mathfrak m\oplus\mathfrak m\oplus\mathfrak m\) 的向量在 \(B^3/B\mathbf j\) 中为零，恰好是 \(a\mathbf j\) 的形式，其系数模去 \(\mathfrak m\) 后给出所列 \(k\)；最后的映射是三个坐标模 \(\mathfrak m\)，因 \(\mathbf j\) 的坐标均在 \(\mathfrak m\) 中而良定且满射。
 \end{solution}

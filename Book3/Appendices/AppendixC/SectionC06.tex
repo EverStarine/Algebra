@@ -1,0 +1,166 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### C.6 André–Quillen 同调与上同调
+% BEGIN APPENDIX OUTLINE SYNC
+% * 状态：初稿已完成；正文、证明与算例已写，新增范围尚未正式审核。
+% * 自由单纯消解的构造与比较概要；带系数定义、同调与上链次数换算及内部 Hom 的微分符号
+% * 零次同调与微分模、零次上同调与导子的识别；系数短正合列的两种连接态射方向
+% * 特征零完全交的任意系数核余核公式；二次锥面、加厚系数与光滑双曲线计算，区分普通和导出运算
+% #### C.6.1 带系数的同调与上同调
+% #### C.6.2 完全交余切模型的同调计算
+% END APPENDIX OUTLINE SYNC
+% 状态：新增正文初稿；配套习题由附录章入口统一收录，尚未正式审核。
+
+\section{André–Quillen 同调与上同调}
+\label{b3:sec:C06}
+
+\secref{b3:sec:C03}把完全交的方程和关系微分放进一个两项自由复形。若把它与一个模 \(M\) 张量，就可以只观察在 \(M\) 中仍能检测到的关系；若对它取到 \(M\) 的 Hom，则得到取值于 \(M\) 的导子及其高阶信息。这两种运算产生 André–Quillen 同调与上同调。\footnote{安德烈（Michel André，1936-2009），瑞士数学家，研究交换环的同调理论；奎伦（Daniel Gray Quillen，1940-2011），美国数学家，发展同伦代数和代数 \(K\) 理论。}例如，系数取 \(B\) 时得到整个代数上的模，取某个点的剩余域时，则观察该点处的线性信息；两种选择的结果可能不同。
+
+\ProseParagraphBreak
+对系数 \(M\) 作张量或 Hom 都可能破坏正合性，因而需要使用能计算导出运算的消解。完全交的有限自由两项模型已经具有这一性质。实际计算沿用\secref{b3:sec:C03}中\emph{特征零域上的正则序列商}，不借此把该节的 DG 构造推广到正特征。所需模论基础是投射消解以及对消解取张量、Hom；第四卷第9章给出了这些运算的比较和 Ext、Tor 的平衡性。
+
+\subsection{带系数的同调与上同调}
+\label{b3:subsec:C06:01}
+
+一般代数的关系之间还可能有关系，所以完整余切复形不能总由一次关系微分截成两项。为准确说明这里的 \(L_{B/k}\)，先给出自由单纯消解的版本。令 \(\Delta\) 为以有限有序集 \([r]=\{0,\ldots,r\}\)（\(r\ge0\)）为对象、以保序映射为态射的范畴。一个\term[dan-chun-daishu]{单纯代数}[simplicial algebra] \(P_\bullet\) 是从 \(\Delta\) 到交换 \(k\) 代数范畴的反变函子。删去第 \(i\) 个元素的单射诱导面映射 \(d_i:P_r\to P_{r-1}\)，把第 \(i,i+1\) 个元素合并的满射诱导退化映射 \(s_i:P_r\to P_{r+1}\)。函子性使这些映射满足单纯恒等式，特别是 \(d_id_j=d_{j-1}d_i\)（\(i<j\)），所以
+\[
+	\partial_r=\sum_{i=0}^r(-1)^i d_i:P_r\longrightarrow P_{r-1}
+\]
+给出底层加法群上的链复形；这里 \(r\ge1\)，零次的微分取零。
+
+\ProseParagraphBreak
+设 \(k\) 为特征零域，\(B\) 为有限生成交换 \(k\) 代数。所用的\term[ziyou-danchun-xiaojie]{自由单纯消解}[free simplicial resolution] 是一个增广 \(P_\bullet\to B\)，其中右端为每个次数都等于 \(B\)、全部结构映射为恒等的常值单纯代数，且满足下列条件：每个 \(P_r=k[X_r]\) 都是多项式代数；退化映射把 \(X_r\) 送进 \(X_{r+1}\)；增广在每个次数满射，并使上述链复形的零次同调为 \(B\)、所有正次同调为零。退化映射保持所选变量这一条件是自由消解结构的一部分，不能只要求每个次数各自为多项式代数。对这样的消解，令
+\[
+	F^{-r}=\Omega_{P_r/k}\otimes_{P_r}B\quad(r\ge0),\qquad F^j=0\quad(j>0).
+\]
+面映射诱导的微分为
+\[
+	\mathrm{d}_F^{-r}=\sum_{i=0}^r(-1)^i\overline{\Omega d_i}:F^{-r}\longrightarrow F^{1-r}\quad(r\ge1).
+\]
+这里 \(\delta\) 表示各多项式代数的普适导子，并且 \(\overline{\Omega d_i}(\delta a\otimes b)=\delta(d_i a)\otimes b\)；增广相容性保证它是 \(B\) 线性的。每个 \(F^{-r}\) 都是以 \(\delta x\)（\(x\in X_r\)）为基的自由 \(B\) 模。这是 \(L_{B/k}\) 的一个模型。
+
+\begin{proofsketch}
+	消解从一个多项式代数到 \(B\) 的满射开始。加入一次单纯变量，使生成关系成为边界；随后对仍有非零同调的次数继续加入变量，使相应的圈成为边界。加入一个单纯变量时，还要加入由它的退化得到的高次变量，才能满足面映射与退化映射的恒等式。这一过程一般不能在有限次数停止。自由消解的提升性质给出两份消解之间的比较，柱对象则把不同提升比较为同伦。对比较取微分并沿增广张量到 \(B\)，得到 \(F\) 的同伦比较，因而模型不依赖消解的选择。
+
+	这里省略的是添元时全部面与退化映射的相容性核验、提升性质及柱对象比较的证明；具体构造和比较见\cite[3.2--3.4, 4.1--4.7, 4.10--4.12, 5.2--5.4]{Iyengar2007AndreQuillen}。\footnote{本节引用 Iyengar 一文时，内部编号采用 2006 年作者稿 arXiv:math/0609151v1；正式书目著录 2007 年文集中的发表版本，未以作者稿页码代替正式书章页码。}所写 \(F\) 使用面映射交错和构成的链复形；采用归一化复形会得到同伦等价模型。有限标准形式 DG 代数的微分模型及其限制到零次上同调的自由表示，另见\cite[Sections 2.2--2.3, Proposition 2.12]{BravBussiJoyce2019Darboux}。后一个命题本身不表示任意有限生成代数都有有限长度的余切模型。
+\end{proofsketch}
+
+把同调次数改成上链次数时，直接令 \(F_r=F^{-r}\)、\(\partial_r=\mathrm{d}_F^{-r}\)，便有 \(H_r(F_\bullet)=H^{-r}(F)\)。微分从链次数 \(r\) 降到 \(r-1\)，同时从上链次数 \(-r\) 升到 \(1-r\)。下面同调用下标，上同调用上标，二者都取非负整数编号。
+
+\begin{definition}\label{b3:def:C-aq-with-coefficients}
+	设 \(k\) 为特征零域，\(B\) 为有限生成交换 \(k\) 代数，\(M\) 为 \(B\) 模并视作零次复形。对整数 \(r\ge0\)，定义带系数 \(M\) 的\term[andre-quillen-tongdiao]{André–Quillen 同调}[André--Quillen homology]和\term[andre-quillen-shangtongdiao]{André–Quillen 上同调}[André--Quillen cohomology]为
+	\[
+		\begin{aligned}
+			D_r(B/k;M)&=H^{-r}\bigl(L_{B/k}\otimes_B^{\mathbf L}M\bigr),\\
+			D^r(B/k;M)&=H^r\bigl(\mathbf R\operatorname{Hom}_B(L_{B/k},M)\bigr).
+		\end{aligned}
+	\]
+	若 \(F\) 为上述自由单纯消解所得的非正次自由模型，则可分别用 \(F\otimes_BM\) 和 \(\operatorname{Hom}_B^\bullet(F,M)\) 计算。
+\end{definition}
+\symidx{\(D_r(B/k;M)\)、\(D^r(B/k;M)\)：带系数的 André–Quillen 同调与上同调}
+
+% 跨卷引用目标：b4:thm:derived-tensor（19.2.2）。
+% 跨卷引用目标：b4:thm:derived-hom（19.3.1）。
+定义与上述自由模型的关系见\cite[5.7--5.8]{Iyengar2007AndreQuillen}。因为 \(F\) 有上界且逐项自由，它已经满足计算导出张量与导出 Hom 的要求。一般复形上的这一计算原则分别在第四卷定理19.2.2和定理19.3.1中证明；前者允许以有上界平坦模型张量，后者允许以有上界投射模型计算第一变量的 Hom。这里 \(F\) 集中于非正次，\(M\) 集中于零次，满足两项定理的次数要求。若任取另一份表示 \(L_{B/k}\) 的复形，却没有相应的平坦性或投射性，就不能仍直接逐项运算。
+
+\ProseParagraphBreak
+具体地，\(\operatorname{Hom}_B^r(F,M)=\operatorname{Hom}_B(F^{-r},M)\)，内部 Hom 的微分为
+\[
+	\mathrm{d}_{\operatorname{Hom}}^r(h)=(-1)^{r+1}h\,\mathrm{d}_F^{-r-1}.
+\]
+所以取 Hom 后次数从 \(-r\) 变为 \(r\)，并未沿用张量复形的负次编号。\secref{b3:sec:C03}的记号 \(T^r(B/k,M)\) 与这里的 \(D^r(B/k;M)\) 表示相同的上同调；特别地，系数取 \(B\) 时，\(D^r(B/k;B)=H^r(T_{B/k})\)。
+
+\begin{proposition}\label{b3:prop:C-aq-degree-zero}
+	设 \(k\) 为特征零域，\(B\) 为有限生成交换 \(k\) 代数，\(M\) 为任意 \(B\) 模。则有对 \(M\) 自然的同构
+	\[
+		D_0(B/k;M)\cong\Omega_{B/k}\otimes_BM,\qquad
+		D^0(B/k;M)\cong\operatorname{Hom}_B(\Omega_{B/k},M)\cong\operatorname{Der}_k(B,M).
+	\]
+\end{proposition}
+\begin{proof}
+	在自由单纯模型中，\(B\) 是 \(P_1\rightrightarrows P_0\) 的余等化子。零次的微分关系来自各 \(d_0a-d_1a\)（\(a\in P_1\)）的微分，故 \(\operatorname{coker}(F^{-1}\to F^0)=\Omega_{B/k}\)。这也可直接用\cref{b3:thm:universal-differentials}检验：从该余核到 \(M\) 的线性映射，恰好对应零化这些关系的 \(k\) 导子，从而唯一下降为 \(B\to M\) 的导子。
+
+	张量积右正合，所以 \(H^0(F\otimes_BM)=\operatorname{coker}(F^{-1}\otimes_BM\to F^0\otimes_BM)=\Omega_{B/k}\otimes_BM\)。另一方面，Hom 复形的负次项为零，零次核是零化 \(\operatorname{im}(F^{-1}\to F^0)\) 的映射，故等于 \(\operatorname{Hom}_B(\Omega_{B/k},M)\)。最后应用微分模的泛性质即得导子。
+\end{proof}
+
+系数模的短正合列 \(0\to M'\to M\to M''\to0\) 还给出同调与上同调长正合列。原因是 \(F\) 逐项自由，所以与它逐项张量、对它逐项取 Hom，都保持这个系数短正合列；再取复形的同调长正合列即可。例如同调连接态射的方向是 \(D_r(B/k;M'')\to D_{r-1}(B/k;M')\)，而上同调连接态射的方向是 \(D^r(B/k;M'')\to D^{r+1}(B/k;M')\)。系数的正合性并不把两种次数约定合成一种。
+
+\subsection{完全交余切模型的同调计算}
+\label{b3:subsec:C06:02}
+
+对完全交，前一小节的无限自由模型可以换成\secref{b3:sec:C03}已经构造的两项模型。关系的数目给出负一次项的秩，变量的数目给出零次项的秩；任意系数计算因而归结为同一 Jacobian 矩阵及其转置的核与余核。
+
+\begin{proposition}\label{b3:prop:C-aq-complete-intersection}
+	设 \(k\) 为特征零域，\(P=k[x_1,\ldots,x_n]\)，\(f_1,\ldots,f_c\) 是 \(P\) 中的正则序列，\(B=P/(f_1,\ldots,f_c)\)，\(M\) 为任意 \(B\) 模。以偏导数在 \(B\) 中的类为系数，定义
+	\[
+		\begin{aligned}
+			J_M:M^c&\longrightarrow M^n,&(m_j)_j&\longmapsto\left(\sum_{j=1}^c\frac{\partial f_j}{\partial x_i}m_j\right)_i,\\
+			J_M^{\mathsf T}:M^n&\longrightarrow M^c,&(v_i)_i&\longmapsto\left(\sum_{i=1}^n\frac{\partial f_j}{\partial x_i}v_i\right)_j.
+		\end{aligned}
+	\]
+	则
+	\[
+		\begin{aligned}
+			D_1(B/k;M)&=\ker J_M,&D_0(B/k;M)&=\operatorname{coker}J_M,\\
+			D^0(B/k;M)&=\ker J_M^{\mathsf T},&D^1(B/k;M)&=\operatorname{coker}J_M^{\mathsf T}.
+		\end{aligned}
+	\]
+	对所有整数 \(r\ge2\)，均有 \(D_r(B/k;M)=D^r(B/k;M)=0\)。这里不要求 \(M\) 平坦、投射或有限生成。
+\end{proposition}
+\begin{proof}
+	正则序列的完全交模型给出 \(L_{B/k}\simeq[B^c\xrightarrow{J_B}B^n]\)，次数为 \(-1,0\)。两项均有限自由，与 \(M\) 普通张量已计算导出张量，所得正是次数 \(-1,0\) 上的 \([M^c\xrightarrow{J_M}M^n]\)。其负一次和零次上同调分别为所列核与余核。
+
+	逐项 Hom 同样计算导出 Hom，所得零次项与一次项分别为
+	\[
+		\operatorname{Hom}_B(B^n,M)=M^n,\qquad
+		\operatorname{Hom}_B(B^c,M)=M^c.
+	\]
+	按内部 Hom 的符号，微分为 \(-J_M^{\mathsf T}\)；把一次项乘以 \(-1\)，就得到与 \([M^n\xrightarrow{J_M^{\mathsf T}}M^c]\) 的复形同构。于是核、余核给出两项上同调。两个模型在其余次数均为零，得到所有高次消失。
+\end{proof}
+
+特别地，若 \(B\) 在一个 \(k\) 有理点的剩余域为 \(k\)，则系数取该剩余域时，\(J_M\) 就是把 Jacobian 矩阵在该点代值。若所有方程在该点都没有一次项，矩阵变为零，所以 \(D_1\) 的维数为关系数 \(c\)，\(D_0\) 的维数为变量数 \(n\)；相应上同调的维数依次为 \(n,c\)。这些维数描述所给完全交在该点的模型，与系数为 \(B\) 时的核和余核不必相同。
+
+\begin{example}[二次锥面与原点系数]\label{b3:exm:C-aq-quadric-cone}
+	设 \(k\) 为特征零域，
+	\[
+		B=k[x,y,z]/(xz-y^2),\qquad\mathfrak m=(x,y,z)B.
+	\]
+	所给多项式在多项式整环中为非零非单位，故为长度一的正则序列。它的 Jacobian 列为 \((z,-2y,x)^{\mathsf T}\)。对任意 \(B\) 模 \(M\)，前一命题给出
+	\[
+		\begin{aligned}
+			D_1(B/k;M)&=\{m\in M:xm=ym=zm=0\},\\
+			D_0(B/k;M)&=M^3/\{(zm,-2ym,xm):m\in M\},\\
+			D^0(B/k;M)&=\{(u,v,w)\in M^3:zu-2yv+xw=0\},\\
+			D^1(B/k;M)&=M/\mathfrak mM.
+		\end{aligned}
+	\]
+	这些公式用到 \(2\) 可逆，且所有二次及更高次的同调、上同调均为零。
+
+	\ProseParagraphBreak
+	先取 \(M=B\)。为检验关系映射的单射性，可把 \(B\) 嵌入 \(k[s,t]\)，令 \(x\mapsto s^2\)、\(y\mapsto st\)、\(z\mapsto t^2\)。每个元素模 \(y^2-xz\) 可唯一写成 \(a(x,z)+yb(x,z)\)；两部分的像分别由两个指数均为偶数、两个指数均为奇数的单项式组成，且各自的单项式像互异，故该映射单射。因此 \(B\) 是整环，且 \(x\ne0\)，关系映射 \(a\mapsto(za,-2ya,xa)\) 的核为零。于是
+	\[
+		D_1(B/k;B)=0,\qquad
+		0\longrightarrow B\xrightarrow{(z,-2y,x)^{\mathsf T}}B^3\longrightarrow\Omega_{B/k}\longrightarrow0
+	\]
+	是自由消解，且 \(L_{B/k}\simeq\Omega_{B/k}[0]\)。另一方面，\(D^1(B/k;B)=B/\mathfrak m\cong k\)。
+
+	\ProseParagraphBreak
+	再取 \(M=B/\mathfrak m=k\)。此时 Jacobian 的全部系数在 \(M\) 上为零，所以
+	\[
+		D_1(B/k;k)=k,\qquad D_0(B/k;k)=k^3,\qquad
+		D^0(B/k;k)=k^3,\qquad D^1(B/k;k)=k.
+	\]
+	% 跨卷引用目标：b4:thm:tor-balanced（9.3.2）。
+	% 跨卷引用目标：b4:thm:ext-balanced（9.2.2）。
+	同一个余切复形对系数 \(B\) 的一次同调为零，对系数 \(k\) 却非零。由于上一段给出 \(\Omega_{B/k}\) 的自由消解，第四卷定理9.3.2和定理9.2.2分别将两项计算识别为
+	\[
+		\operatorname{Tor}_1^B(\Omega_{B/k},k)\cong k,\qquad
+		\operatorname{Ext}_B^1(\Omega_{B/k},k)\cong k.
+	\]
+	普通张量 \(\Omega_{B/k}\otimes_Bk\) 只留下零次的 \(k^3\)；普通 Hom \(\operatorname{Hom}_B(\Omega_{B/k},k)\) 也只留下零次的 \(k^3\)。要保留所列一次信息，就必须先使用这份自由消解。
+\end{example}
+
+作为对照，设 \(k\) 为特征零域、\(C=k[u,v]/(uv-1)\)。其 Jacobian 列为 \((v,u)^{\mathsf T}\)，且 \(u\) 是单位。对任意 \(C\) 模 \(M\)，映射 \(m\mapsto(vm,um)\) 单射，其余核由 \((a,b)\mapsto a-v^2b\) 识别为 \(M\)；转置 \((a,b)\mapsto va+ub\) 满射，核由 \(m\mapsto(um,-vm)\) 识别为 \(M\)。因此
+\[
+	D_0(C/k;M)\cong M,\qquad D^0(C/k;M)\cong M,
+\]
+所有正次同调与上同调均为零。这也与 \(C\cong k[u,u^{-1}]\) 的微分模自由一致。二次锥面的原点与这条光滑曲线的差别，已经由任意系数下 Jacobian 映射能否分裂反映出来。

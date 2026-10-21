@@ -1,10 +1,13 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### C.1 自由积与带合并自由积
-% 纲要位置：计划纲要.md，第 889 行。
+% 纲要位置：计划纲要.md，第 894 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### C.1.1 自由积的约化字
 % #### C.1.2 识别公共子群的构造
 % #### C.1.3 标准形与因子的嵌入
+% * 新增小节状态：初稿已完成；原有内容保留，新增范围尚未正式审核。
+% #### C.1.4 HNN 构造
+% #### C.1.5 Britton 引理与标准形算例
 % END APPENDIX OUTLINE SYNC
 
 \section{自由积与带合并自由积}
@@ -115,3 +118,167 @@
 	L_r(s;t)=(s;r^2,t).
 \]
 若把 \(r\) 与 \(s\) 当作可交换元素，便会误得 \((s;r,t)\)；两个串的代表项不同，按标准形定理表示不同元素。一般而言，把公共子群系数移回左端需要重新作 \(ct\)-分解，代表项可能随之改变，不能将这一步理解为把所有 \(C\) 元素与代表逐一交换。
+
+% 扩充状态：HNN 构造、标准形、Britton 引理及算例已补正文；习题在附录章末汇合。
+\subsection{HNN 构造}
+\label{b1:subsec:C01:04}
+
+带合并自由积把两个因子中的子群直接识别。另一种要求是：在一个给定群 \(G\) 中，两个子群 \(A,B\) 已经同构，但希望新增一个元素，使这个同构成为共轭作用。例如在无限循环群 \(\langle a\rangle\) 中，\(\langle a^2\rangle\) 与 \(\langle a^3\rangle\) 同构；若直接规定 \(a^2=a^3\)，便会迫使 \(a=1\)。改为引入新字母 \(t\)，规定 \(t^{-1}a^2t=a^3\)，则有可能保留原来的无限循环群。下面的标准形将证明，这种共轭识别确实不会压缩基群。
+
+\begin{definition}\label{b1:def:hnn-extension}
+	设 \(G\) 为群，\(A,B\le G\)，\(\varphi:A\rightarrow B\) 为同构，并取一个与 \(G\) 分开的无限循环群 \(\langle t\rangle\)。令
+	\[
+		P=G*\langle t\rangle,\qquad
+		N=\NormalClosure{\{\,t^{-1}at\varphi(a)^{-1}\mid a\in A\,\}}_{P}.
+	\]
+	商群 \(H=P/N\) 称为 \(G\) 沿 \(\varphi\) 的\term[HNN-kuozhang]{HNN 扩张}[HNN extension]，记为 \(G*_{\varphi}\)。原给定的 \(G\) 称为\term[ji-qun]{基群}[base group]，\(A,B\) 称为\term[guanlian-ziqun]{关联子群}[associated subgroups]；自然同态 \(G\rightarrow H\) 记为 \(j\)，而 \(t\) 在 \(H\) 中的像仍记为 \(t\)，称为\term[wending-zimu]{稳定字母}[stable letter]。因而定义中的关系在 \(H\) 中写成
+	\[
+		t^{-1}j(a)t=j\bigl(\varphi(a)\bigr)\qquad(a\in A).
+	\]
+\end{definition}
+\symidx{\(G*_{\varphi}\)：沿子群同构 \(\varphi:A\rightarrow B\) 的 HNN 扩张}
+
+HNN 这一名称取自提出该构造的三位数学家。\footnote{HNN 取自希格曼（Graham Higman，1917-2008，英国）、伯恩哈德·诺伊曼（Bernhard Hermann Neumann，1909-2002，德裔澳大利亚）及汉娜·诺伊曼（Hanna Neumann，1914-1971，德裔澳大利亚）的姓氏首字母；三位数学家共同提出这一组合群论构造。}与合并积一样，取商只说明所要求的关系成立，尚未说明 \(j\) 单射。构造首先具有如下映射性质。
+
+\begin{proposition}\label{b1:prop:hnn-universal}
+	设 \(G,K\) 为群，\(A,B\le G\)，\(\varphi:A\rightarrow B\) 为同构，\(H=G*_{\varphi}\)，\(j:G\rightarrow H\) 为自然同态。给定同态 \(f:G\rightarrow K\) 及元素 \(u\in K\)，若
+	\[
+		u^{-1}f(a)u=f\bigl(\varphi(a)\bigr)\qquad(a\in A),
+	\]
+	则存在唯一同态 \(F:H\rightarrow K\)，满足 \(Fj=f\)、\(F(t)=u\)。
+\end{proposition}
+\begin{proof}
+	映射 \(t^m\mapsto u^m\) 是 \(\langle t\rangle\rightarrow K\) 的同态。它与 \(f\) 由\cref{b1:thm:free-product-universal}唯一延拓为 \(\widetilde F:G*\langle t\rangle\rightarrow K\)。所给条件恰好使每个关系元素 \(t^{-1}at\varphi(a)^{-1}\) 映为单位元；核是正规子群，故包含定义中的 \(N\)。\cref{b1:thm:quotient-universal}于是给出所需的 \(F\)。由于 \(j(G)\) 与 \(t\) 生成 \(H\)，规定二者的像就确定了 \(F\)，所以延拓唯一。
+\end{proof}
+
+若以 \(\kappa:\langle t\rangle\rightarrow H\) 表示另一个因子的自然同态，并令 \(f_u(t^m)=u^m\)，这个泛性质可表示为
+\[
+	\begin{tikzcd}[column sep=3.3em,row sep=2.6em]
+		G\arrow[r,"j"]\arrow[dr,"f"']&H\arrow[d,dashed,"\exists!\,F"]&
+		\langle t\rangle\arrow[l,"\kappa"']\arrow[dl,"f_u"]\\
+		&K&
+	\end{tikzcd}
+\]
+两条已给同态可以同时延拓，条件正是 \(u\) 在它们的像中实现指定的子群同构。特别地，取目标为加法群 \(\mathbb Z\)，令 \(f(g)=0\)、\(u=1\)，得到满同态
+\[
+	\eta:H\longrightarrow\mathbb Z,\qquad \eta(j(g))=0,\quad\eta(t)=1.
+\]
+所以稳定字母具有无限阶；它的指数和为零，却不保证一个字就是单位元。
+
+\ProseParagraphBreak
+前述循环基群的例子取 \(A=\langle a^2\rangle\)、\(B=\langle a^3\rangle\)、\(\varphi(a^{2k})=a^{3k}\)，所得群为
+\[
+	K=\langle a,t\mid t^{-1}a^2t=a^3\rangle.
+\]
+这里一条展示关系已给出全部 \(t^{-1}a^{2k}t=a^{3k}\)，因为共轭保持整数次幂。这个构造既没有令 \(a^2=a^3\)，也没有要求 \(t\) 与 \(a\) 交换。
+
+\ProseParagraphBreak
+两个边界情形有助于看清所加关系。若 \(A=B=1\)，全部关系都是空关系，故 \(G*_{\varphi}=G*\mathbb Z\)。若 \(A=B=G\)、\(\varphi=\operatorname{id}_G\)，则稳定字母与基群的像逐元素交换，此时 \(G*_{\varphi}\cong G\times\mathbb Z\)：一个方向的映射为 \((g,m)\mapsto j(g)t^m\)，交换关系保证它保持乘法；反向由\cref{b1:prop:hnn-universal}把 \(j(g),t\) 分别送到 \((g,0),(1,1)\)。两个复合固定相应的生成元，故互为逆。
+
+\subsection{Britton 引理与标准形算例}
+\label{b1:subsec:C01:05}
+
+在 \(G*_{\varphi}\) 中，可以把 \(t^{-1}at\) 换成 \(\varphi(a)\)，也可以把 \(tbt^{-1}\) 换成 \(\varphi^{-1}(b)\)，其中 \(a\in A,b\in B\)。这两种替换都减少稳定字母数。问题在于：若一个字已经没有这样的片段，商群中是否还可能存在别的关系，把稳定字母全部消去？先选定陪集代表，便能建立唯一的\term[HNN-biaozhunxing]{HNN 标准形}[HNN normal form]来回答；其中基群系数放在最左，陪集代表放在每个稳定字母之后。
+
+\begin{theorem}[HNN 标准形]\label{b1:thm:hnn-normal-form}
+	设 \(G\) 为群，\(A,B\le G\)，\(\varphi:A\rightarrow B\) 为同构，\(H=G*_{\varphi}\)。令 \(C_{1}=B\)、\(C_{-1}=A\)，并为每个 \(\delta\in\{1,-1\}\) 选定 \(C_\delta\) 在 \(G\) 中的右陪集代表集 \(R_\delta\)，以 \(1\) 代表 \(C_\delta\)。则每个 \(H\) 中的元素唯一写为
+	\[
+		g_0t^{\varepsilon_1}r_1\cdots t^{\varepsilon_n}r_n,
+		\qquad g_0\in G,\quad\varepsilon_i\in\{1,-1\},\quad r_i\in R_{\varepsilon_i},
+	\]
+	其中 \(n\ge0\)，且若 \(\varepsilon_{i+1}=-\varepsilon_i\)，就要求 \(r_i\ne1\)。式中的基群元素均经自然同态 \(j:G\rightarrow H\) 取像；当 \(n=0\) 时只有 \(g_0\)。特别地，\(j\) 单射，因而可以把 \(G\) 视为 \(H\) 的子群。
+\end{theorem}
+\begin{proof}
+	右陪集的写法为 \(C_\delta g\)，所以每个 \(g\in G\) 唯一分解为 \(g=cr\)，其中 \(c\in C_\delta,r\in R_\delta\)。定义
+	\[
+		\psi_1=\varphi^{-1}:B\longrightarrow A,\qquad
+		\psi_{-1}=\varphi:A\longrightarrow B.
+	\]
+	它们互为逆，并满足 \(\psi_\delta(C_\delta)=C_{-\delta}\)。令 \(\Omega\) 为所有满足定理所列条件的形式串
+	\[
+		\omega=(g_0;\varepsilon_1,r_1;\ldots;\varepsilon_n,r_n)
+	\]
+	组成的集合。形式串相等仅指各位置的数据相同；此处尚未用商群中的等式识别任何串。取基点 \(\omega_0=(1;)\)。
+
+	对 \(g\in G\)，令 \(L_g\) 只把首系数 \(g_0\) 改成 \(gg_0\)。于是 \(L_gL_h=L_{gh}\)，\(L_1\) 为恒等。再定义对应左乘 \(t^\delta\) 的操作 \(U_\delta\)。把当前首系数分解为 \(g_0=cr\)，其中 \(c\in C_\delta,r\in R_\delta\)。若 \(n>0,r=1,\varepsilon_1=-\delta\)，令
+	\[
+		U_\delta(\omega)
+		=(\psi_\delta(c)r_1;\varepsilon_2,r_2;\ldots;\varepsilon_n,r_n).
+	\]
+	这是消去新添的 \(t^\delta\) 与原首个 \(t^{-\delta}\)。其他情形令
+	\[
+		U_\delta(\omega)
+		=(\psi_\delta(c);\delta,r;\varepsilon_1,r_1;\ldots;\varepsilon_n,r_n).
+	\]
+	后一式中，新接缝或者符号相同，或者 \(r\ne1\)，所以仍满足形式串条件；前一式只改首系数并删去首对数据，余下条件也保持。
+
+	验证 \(U_{-\delta}U_\delta=\operatorname{id}_\Omega\)。若第一次操作没有消去，得到的首系数 \(\psi_\delta(c)\) 属于 \(C_{-\delta}\)，其 \(C_{-\delta}\) 陪集代表为 \(1\)。第二次操作恰消去刚加入的那一对，并把首系数恢复为 \(\psi_{-\delta}(\psi_\delta(c))r=cr=g_0\)。若第一次消去了原首对，则 \(g_0=c\in C_\delta\)，新首系数为 \(\psi_\delta(c)r_1\)。这是相对于 \(C_{-\delta}\) 的既定分解，因为 \(r_1\in R_{-\delta}\)。第二次操作应重新加入 \((-\delta,r_1)\)，不会再与后面的首对消去：若 \(r_1=1\) 且后面还有数据，原串的条件已经排除了 \(\varepsilon_2=\delta\)。因此第二次操作恢复原串。\(\delta\) 可取两个符号，故 \(U_1,U_{-1}\) 互为逆置换。
+
+	还须验证所规定的共轭关系。对任意 \(c_0\in C_\delta\)，若 \(g_0=cr\)，则 \(c_0g_0=(c_0c)r\) 的陪集代表仍为 \(r\)，所以 \(U_\delta\) 是否消去首对的选择不变。两种分支中，新首系数都只多出左因子 \(\psi_\delta(c_0)\)，因为 \(\psi_\delta(c_0c)=\psi_\delta(c_0)\psi_\delta(c)\)。从而
+	\[
+		U_\delta L_{c_0}=L_{\psi_\delta(c_0)}U_\delta.
+	\]
+	取 \(\delta=-1,c_0=a\in A\)，并在右端复合 \(U_1\)，得到
+	\[
+		U_{-1}L_aU_1=L_{\varphi(a)}.
+	\]
+	因此同态 \(G\rightarrow S_\Omega\)、\(g\mapsto L_g\) 和置换 \(U_1\) 满足\cref{b1:prop:hnn-universal}的条件，给出 \(H\) 在 \(\Omega\) 上的左作用，稳定字母 \(t\) 作用为 \(U_1\)。
+
+	在商群中，定义关系及其逆向写法给出
+	\[
+		t^\delta c=\psi_\delta(c)t^\delta\qquad(c\in C_\delta).
+	\]
+	所以刚才每次更新形式串，都保持它在商群中表示的元素：无消去时把 \(t^\delta cr\) 改成 \(\psi_\delta(c)t^\delta r\)，消去时再删去相邻的 \(t^\delta t^{-\delta}\)。任意 \(H\) 中的元素都由有限多个基群元素和 \(t^{\pm1}\) 相乘得到；从右向左依次应用相应的 \(L_g,U_\delta\)，从 \(\omega_0\) 出发便得到它的一种标准形。这证明存在性。
+
+	另一方面，定理所列标准字作用于 \(\omega_0\) 时，先加入最右的 \(r_n\)，再加入 \(t^{\varepsilon_n}\)，依此从右向左进行。因为每个 \(r_i\) 已是相应的陪集代表，而禁止的接缝恰被标准串条件排除，过程中不发生消去。最后左乘 \(g_0\)，得到
+	\[
+		\bigl(g_0t^{\varepsilon_1}r_1\cdots t^{\varepsilon_n}r_n\bigr)\cdot\omega_0
+		=(g_0;\varepsilon_1,r_1;\ldots;\varepsilon_n,r_n).
+	\]
+	同一群元素在基点上的取值相同，故两个表示同一元素的标准串必须逐项相同，证明唯一性。尤其 \(j(g)\) 把基点送到 \((g;)\)，只有 \(g=1\) 时才固定基点，所以 \(j\) 单射。
+\end{proof}
+
+选取陪集代表使用了与合并积标准形相同的选择公理。证明给出的化简过程是否能实际执行，取决于能否在基群中算出所需的陪集分解，以及能否计算 \(\varphi,\varphi^{-1}\)；这些问题不由代表集的集合论存在性自动解决。
+
+\begin{definition}\label{b1:def:hnn-reduced-word}
+	设 \(H=G*_{\varphi}\) 是由子群 \(A,B\le G\) 及同构 \(\varphi:A\rightarrow B\) 构造的 HNN 扩张。对表达式
+	\[
+		w=g_0t^{\varepsilon_1}g_1\cdots t^{\varepsilon_n}g_n,
+		\qquad g_i\in G,\quad\varepsilon_i\in\{1,-1\},
+	\]
+	若每当 \((\varepsilon_i,\varepsilon_{i+1})=(-1,1)\) 时有 \(g_i\notin A\)，每当 \((\varepsilon_i,\varepsilon_{i+1})=(1,-1)\) 时有 \(g_i\notin B\)，就称它为\term[HNN-yuehua-zi]{HNN 约化字}[HNN-reduced word]。允许 \(n=0\)；这里的约化条件不要求各 \(g_i\) 是选定的陪集代表。
+\end{definition}
+
+\term[Britton-yinli]{Britton 引理}[Britton's lemma]说明，不必先把所有系数换成指定代表，只检查相邻稳定字母之间是否允许消去，就足以证明许多字不属于基群。\footnote{布里顿（John Leslie Britton，1927-1994），英国数学家，研究组合群论及群的判定问题，证明了 HNN 扩张中约化字的非平凡性判据。}
+
+\begin{lemma}[Britton]\label{b1:lem:britton}
+	设 \(G\) 为群，\(A,B\le G\)，\(\varphi:A\rightarrow B\) 为同构，\(H=G*_{\varphi}\)。若 \(w=g_0t^{\varepsilon_1}g_1\cdots t^{\varepsilon_n}g_n\) 是 HNN 约化字，且 \(n>0\)，则 \(w\notin G\)，特别地 \(w\ne1\)。等价地，任意由基群元素与 \(t^{\pm1}\) 交错写成的字，若含稳定字母且表示基群元素，就必有片段 \(t^{-1}g_it\)、\(g_i\in A\)，或片段 \(tg_it^{-1}\)、\(g_i\in B\)。
+\end{lemma}
+\begin{proof}
+	使用\cref{b1:thm:hnn-normal-form}中的 \(C_\delta,R_\delta,\psi_\delta\) 及其化简操作，从右向左处理原字。最右段 \(t^{\varepsilon_n}g_n\) 化成 \(h_nt^{\varepsilon_n}r_n\)，其中 \(h_n\in C_{-\varepsilon_n}\)，且保留一个稳定字母。
+
+	归纳设右段 \(t^{\varepsilon_{i+1}}g_{i+1}\cdots t^{\varepsilon_n}g_n\) 已化成标准形，其稳定字母仍为原来的 \(n-i\) 个，首系数 \(h\) 属于 \(C_{-\varepsilon_{i+1}}\)。接上 \(t^{\varepsilon_i}g_i\) 时，要对 \(g_ih\) 作 \(C_{\varepsilon_i}\) 陪集分解。如果 \(\varepsilon_i=\varepsilon_{i+1}\)，两个稳定字母同号，不会消去。如果 \(\varepsilon_{i+1}=-\varepsilon_i\)，则 \(h\in C_{\varepsilon_i}\)，而原字的约化条件给出 \(g_i\notin C_{\varepsilon_i}\)。于是 \(g_ih\notin C_{\varepsilon_i}\)，否则右乘 \(h^{-1}\) 就会推出 \(g_i\in C_{\varepsilon_i}\)。其陪集代表因此不是 \(1\)，也不会触发消去。新首系数仍具有形式 \(\psi_{\varepsilon_i}(c)\in C_{-\varepsilon_i}\)，可以继续归纳。
+
+	最后左乘 \(g_0\) 只改首系数。所得标准形保留全部 \(n>0\) 个稳定字母，而基群元素的标准形没有稳定字母；标准形唯一性给出 \(w\notin G\)。其逆否命题正是最后的片段判据。
+\end{proof}
+
+回到 \(K=\langle a,t\mid t^{-1}a^2t=a^3\rangle\)。基群嵌入定理保证 \(a\) 仍有无限阶。取
+\[
+	R_1=\{1,a,a^2\},\qquad R_{-1}=\{1,a\}.
+\]
+则标准形为 \(a^m t^{\varepsilon_1}a^{q_1}\cdots t^{\varepsilon_n}a^{q_n}\)：在 \(t\) 后取整数 \(0\le q_i<3\)，在 \(t^{-1}\) 后取整数 \(0\le q_i<2\)，异号相邻时中间的 \(q_i\) 不能为零。例如
+\[
+	t^{-1}a^5t=a^6t^{-1}at
+\]
+已是标准形，因 \(a\notin\langle a^2\rangle\)，最后两个稳定字母不能消去。另一个字却有不同的接缝：
+\[
+	\begin{aligned}
+		t^{-1}a^5t a^{-3}t^{-1}a
+		&=t^{-1}a^5a^{-2}a\\
+		&=t^{-1}a^4=a^6t^{-1}.
+	\end{aligned}
+\]
+第一步用了 \(ta^{-3}t^{-1}=a^{-2}\)；随后把 \(a^4\) 穿过 \(t^{-1}\)。首个片段 \(t^{-1}a^5t\) 虽不能直接消去，后面的片段仍可能改变它的系数。
+
+\ProseParagraphBreak
+字 \(v=t^{-1}at a^{-1}\) 的稳定字母指数和为零，但其唯一异号接缝的中间系数为 \(a\notin\langle a^2\rangle\)，所以它是含两个稳定字母的 HNN 约化字。由\cref{b1:lem:britton}，\(v\notin\langle a\rangle\)，特别地不是单位元。相比之下，\(t^{-1}a^2t a^{-3}=1\) 正是定义关系。二者的差别在于中间系数是否属于指定的关联子群，不能仅由稳定字母的正负个数判断。

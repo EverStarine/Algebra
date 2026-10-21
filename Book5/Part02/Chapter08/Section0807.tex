@@ -1,0 +1,169 @@
+% !TeX root = ../../Book5.tex
+% 纲要标题：### 8.7 模表示的计算与核验
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### 8.7.1 Brauer 特征标与分解矩阵的计算数据
+% #### 8.7.2 MeatAxe 的输入与输出
+% #### 8.7.3 GAP 计算与独立核验
+
+\section{模表示的计算与核验}
+\label{b5:sec:0807}
+
+给出群生成元的矩阵以后，可以求不变子空间、分解出简单因子，再计算这些因子的 Brauer 特征标。但这几个任务保留的信息不同：一张特征标表不记录扩张的连接方式，一串因子维数也不能证明原模已经分成直和。要使计算结果可以检查，必须同时保存工作域、生成元次序、换基矩阵及所用的简单模标识。
+
+\subsection{Brauer 特征标与分解矩阵的计算数据}
+\label{b5:subsec:0807:01}
+
+固定\cref{b5:def:p-modular-system}中的分裂 \(p\)-模系统，并满足\cref{b5:def:brauer-character}的单位根及复嵌入条件。记 \(g_1,\ldots,g_\ell\) 为 \(p\)-正则共轭类代表，\(S_1,\ldots,S_\ell\) 为全部不同构简单模；二者数目相同是\cref{b5:thm:brauer-character-basis}的结论。普通不可约特征标记为 \(\chi_1,\ldots,\chi_c\)，不可约 Brauer 特征标记为 \(\varphi_1,\ldots,\varphi_\ell\)。计算中首先要固定这两组行标，以及同一组共轭类列标。
+
+\begin{proposition}\label{b5:prop:decomposition-data-recovery}
+	设 \(G\) 为有限群，\((K,\mathcal O,k)\) 为分裂 \(p\)-模系统，\(K\) 含全部 \(|G|\) 次单位根，并固定定义 Brauer 特征标所用的复嵌入。令 \(g_1,\ldots,g_\ell\) 为全部 \(p\)-正则类代表，\(\chi_1,\ldots,\chi_c\) 为全部普通不可约特征标，\(S_1,\ldots,S_\ell\) 为全部不同构简单 \(kG\)-模，\(\varphi_i\) 为 \(S_i\) 的 Brauer 特征标。令
+	\[
+		F_{\alpha j}=\chi_\alpha(g_j),\qquad
+		\Phi_{ij}=\varphi_i(g_j).
+	\]
+	则 \(\Phi\) 可逆，分解矩阵由
+	\[
+		F=D\Phi,\qquad D=F\Phi^{-1}
+	\]
+	唯一确定。若 \(d_i=\dim_kS_i\)，则第 \(\alpha\) 行还满足
+	\[
+		\chi_\alpha(1)=\sum_iD_{\alpha i}d_i.
+	\]
+\end{proposition}
+\begin{proof}
+	不可约 Brauer 特征标构成全部 \(p\)-正则类函数的一组基，所以其值矩阵 \(\Phi\) 可逆。\cref{b5:prop:ordinary-brauer-restriction}在每个 \(g_j\) 上给出 \(\chi_\alpha(g_j)=\sum_iD_{\alpha i}\varphi_i(g_j)\)，这正是矩阵等式。最后在单位元处求值，普通和 Brauer 特征标的值分别为相应维数，得到维数等式。
+\end{proof}
+
+这里的计算发生在特征零的分圆数域中，可以用精确的代数数运算进行。若把 \(\Phi\) 换成模特征中的迹矩阵，即使矩阵仍可逆，算出的也只是整数重数模 \(p\) 后的信息。反过来，一张候选表通过了整数性、非负性与维数检查，也还需要证明所列模确实简单且没有遗漏；这些前提不能由矩阵乘法补出。
+
+\ProseParagraphBreak
+例如对 \(S_3\) 和 \(p=3\)，按平凡、符号、标准表示排列普通行，按平凡、符号模排列简单模，并按单位元、换位排列列。\cref{b5:exm:brauer-s3-characteristic-three}给出
+\[
+	F=\begin{pmatrix}1&1\\1&-1\\2&0\end{pmatrix},
+	\qquad
+	\Phi=\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+	\qquad
+	D=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix}.
+\]
+两个简单模均为一维，所以 \(D\) 的行和依次为 \(1,1,2\)。\cref{b5:exm:s3-three-block-local}另从投射覆盖的根层算出
+\[
+	C=\begin{pmatrix}2&1\\1&2\end{pmatrix}=D^{\mathsf T}D.
+\]
+两条计算的对象不同：前者要知道投射模的合成因子，后者只使用普通表示约化后的重数；不能先把 \(D^{\mathsf T}D\) 当作任意有限维代数的 Cartan 矩阵定义。
+
+\subsection{MeatAxe 的输入与输出}
+\label{b5:subsec:0807:02}
+
+矩阵输入通常取一个有限域 \(k=\mathbb F_q\)、一个正整数 \(d\)，以及群生成元 \(g_1,\ldots,g_s\) 在 \(k^d\) 上的可逆矩阵 \(A_1,\ldots,A_s\)。还须确认这些矩阵满足群的定义关系；否则它们至多给出自己所生成的矩阵群的表示。此处一律以列向量表示左模，即 \(g_iv=A_iv\)。
+
+\ProseParagraphBreak
+\term[MeatAxe]{MeatAxe}[MeatAxe]是一组有限域上的模计算方法，用于寻找不变子空间、判断不可约性和计算合成因子等。不同程序可用不同的搜索与不可约性判据。一个基本操作是从少量向量出发，反复加上它们在生成矩阵下的像；这个操作本身有可以完全说明的停止条件。
+
+\begin{proposition}\label{b5:prop:module-spin-up}
+	设 \(k\) 为域，有限群 \(G=\langle g_1,\ldots,g_s\rangle\) 在 \(M=k^d\) 上的矩阵为 \(A_i\)，\(W_0\) 为给定子空间。递归令
+	\[
+		W_{j+1}=W_j+A_1W_j+\cdots+A_sW_j.
+	\]
+	若 \(W_{j+1}=W_j\)，则此后不再变化，所得空间是包含 \(W_0\) 的最小 \(kG\)-子模。每次尚未停止时维数严格增加，所以至多经过 \(d-\dim W_0\) 次严格增加就会停止。
+\end{proposition}
+\begin{proof}
+	维数相等的相邻空间因包含关系而相等；此时每个 \(A_i\) 保持该空间。\(A_i\) 可逆，其在有限维子空间上的限制单射，故像等于该子空间，逆矩阵也保持它。于是所有群元素都保持它，得到子模。任意包含 \(W_0\) 的子模由归纳包含每个 \(W_j\)，说明所得子模最小。最后，维数是上界为 \(d\) 的整数，尚未停止时至少增加一。
+\end{proof}
+
+在实际计算中，把当前基和所有 \(A_i\) 作用后的向量排在一起消元，就能取得下一轮的基。发现一个维数严格介于 \(0\) 与 \(d\) 之间的结果，便找到一个非平凡子模；然而某一个非零向量生成了整个模，并不说明模不可约，正则模本身就由单位元生成。在有限域上穷尽非零向量并逐个作此计算，确实能判断不可约性，但向量数为 \(q^d-1\)，通常很快变得不可行。MeatAxe 的作用正在于使用更有效的搜索和判据；随机尝试没有找到子模，也不能单凭这一事实宣布不可约。
+
+\begin{proposition}\label{b5:prop:matrix-submodule-certificate}
+	设 \(k\) 为域，有限群 \(G=\langle g_1,\ldots,g_s\rangle\) 在 \(k^d\) 上的矩阵为 \(A_i\)。若 \(C\in M_{d\times r}(k)\) 列满秩，则其列空间为子模，当且仅当存在 \(B_i\in M_r(k)\) 使
+	\[
+		A_iC=CB_i\qquad(1\le i\le s).
+	\]
+	把 \(C\) 的列补成一组基，所得换基矩阵记为 \(T\)。上述条件等价于每个矩阵均有形式
+	\[
+		T^{-1}A_iT=
+		\begin{pmatrix}B_i&Z_i\\0&D_i\end{pmatrix}.
+	\]
+	其中 \(B_i,D_i\) 分别给出子模和商模的作用。这个子模存在不变补空间，当且仅当有同一个 \(X\in M_{r\times(d-r)}(k)\) 满足
+	\[
+		B_iX+Z_i=XD_i\qquad(1\le i\le s).
+	\]
+\end{proposition}
+\begin{proof}
+	列空间不变恰好表示 \(A_iC\) 的每一列都可用 \(C\) 的列表示；系数矩阵就是 \(B_i\)，且因列独立而唯一。补基以后，下方左块为零正是这一不变性，上方左块给出子模作用，下方右块给出商作用。
+
+	在此分块坐标中，任意与第一个直和因子互补的线性子空间，唯一写成某个线性映射的图像
+	\[
+		\Gamma_X=\{\,(Xv,v)\mid v\in k^{d-r}\,\}.
+	\]
+	生成矩阵把 \((Xv,v)\) 送到 \((B_iXv+Z_iv,D_iv)\)。它仍位于同一图像中，当且仅当 \(B_iX+Z_i=XD_i\)。所有生成元都满足这些等式，才得到群不变补空间。
+\end{proof}
+
+因此，一份子模计算可以附上 \(C,B_i\)，供人直接检查秩和矩阵乘法；一份合成列计算可以附上适应该列的基，以及各个简单商的识别。上三角的分块矩阵保留了 \(Z_i\)；只列出对角块会丢掉扩张信息。要求实际直和分解时，还需解出同一个 \(X\)，或给出另一份能够消去所有 \(Z_i\) 的换基。
+
+\begin{proposition}\label{b5:prop:full-matrix-algebra-certificate}
+	设 \(k\) 为域，有限群 \(G\) 在 \(k^d\) 上的生成矩阵为 \(A_1,\ldots,A_s\)。若这些矩阵生成的含幺 \(k\) 子代数等于 \(M_d(k)\)，则表示在任意扩域后仍不可约。特别地，若能给出 \(d^2\) 个由生成矩阵相乘所得的字，其展平后的列向量线性无关，就得到这一结论。
+\end{proposition}
+\begin{proof}
+	扩域后这组矩阵仍生成全部矩阵代数。若一个不变子空间含有非零向量 \(v\)，任选 \(v\) 的一个非零坐标，利用矩阵单位可将它送到每个坐标方向；于是该子空间包含全部标准基。故任一扩域上的非零子模都是全空间。第二个条件给出 \(M_d(k)\) 中 \(d^2\) 个独立元素，它们已经张成全部空间，因而足够。
+\end{proof}
+
+在 \(k=\mathbb F_2\) 上取
+\[
+	A=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+	\qquad
+	B=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+有 \(A^3=B^2=I\)、\(BAB=A^{-1}\)，故得到 \(S_3\) 的二维表示。将 \(I,A,B,AB\) 按同一顺序展平，所得四阶矩阵的行列式为 \(1\)，所以它们张成 \(M_2(\mathbb F_2)\)。这证明该模绝对不可约，而不只是说明某次子模搜索没有成功。
+
+\subsection{GAP 计算与独立核验}
+\label{b5:subsec:0807:03}
+
+GAP 的 MeatAxe 接口用行向量右乘矩阵；本节的左模使用列向量。因此输入本节的 \(A_i\) 时，应传入 \(A_i^{\mathsf T}\)。对于一个不交换的乘积，转置同时反转矩阵次序；这只是把同一个线性算子作用改写为行坐标，不能把转置后的列表又按原来的列作用约定读回。
+
+\ProseParagraphBreak
+取 \(k=\mathbb F_3\)、\(G=S_3=\langle r,s\mid r^3=s^2=1,\ srs=r^{-1}\rangle\)。三点置换模中令
+\[
+	U=\{\,(x,y,z)\in k^3\mid x+y+z=0\,\},\qquad
+	u=(1,-1,0),\quad v=(0,1,-1).
+\]
+在基 \(u,v\) 下，\(r=(123)\)、\(s=(12)\) 的列作用矩阵为
+\begin{equation}\label{b5:eq:s3-modular-matrix-input}
+	A=\begin{pmatrix}0&2\\1&2\end{pmatrix},
+	\qquad
+	B=\begin{pmatrix}2&1\\0&1\end{pmatrix}.
+\end{equation}
+直接相乘给出 \(A^3=B^2=I\)、\(BAB=A^2\)，所以这些输入满足群关系。相应计算可采用 GAP 4.16.1 的 MeatAxe 接口\footnote{GAP 4.16.1 官方参考手册，第69章，69.1-1、69.5-1及69.7-10：\url{https://docs.gap-system.org/doc/ref/chap69_mj.html}。模由生成矩阵建立，合成因子以模对象列表返回；此处读取各因子的维数。}：
+\begin{verbatim}
+F := GF(3);;
+a := [[0,2],[1,2]] * One(F);;
+b := [[2,1],[0,1]] * One(F);;
+m := GModuleByMats(
+  [TransposedMat(a),TransposedMat(b)], F);;
+MTX.IsIrreducible(m);
+cf := MTX.CompositionFactors(m);;
+List(cf, MTX.Dimension);
+\end{verbatim}
+这里第一个判断应为 \texttt{false}，最后的维数列表应为 \texttt{[ 1, 1 ]}；因子的次序和选取的基不必固定。维数列表只说明有两个一维合成因子，并没有给出它们的名称，也没有给出两个因子在原模中的连接方式。
+
+\ProseParagraphBreak
+下面直接从输入得到可检查的子模和商模。令 \(w=u+2v=(1,1,1)\)，取
+\[
+	T=\begin{pmatrix}1&0\\2&1\end{pmatrix},\qquad
+	T^{-1}AT=\begin{pmatrix}1&2\\0&1\end{pmatrix},\qquad
+	T^{-1}BT=\begin{pmatrix}1&1\\0&2\end{pmatrix}.
+\]
+第一条基向量生成平凡模 \(kw\)，商上的 \(r,s\) 分别作用为 \(1,-1\)，故商是符号模。两者均为一维，已经简单，于是得到合成列 \(0\subset kw\subset U\)。若有不变补直线，\cref{b5:prop:matrix-submodule-certificate}中的未知矩阵 \(X\) 只是一个标量 \(x\)。对 \(r\) 的方程却为 \(x+2=x\)，无解。因此
+\[
+	0\longrightarrow S_+\longrightarrow U\longrightarrow S_-\longrightarrow0
+\]
+不分裂；GAP 的合成因子列表不能改写成 \(U\cong S_+\oplus S_-\)。
+
+\ProseParagraphBreak
+这个例子还区分了自同态计算与不可约性判断。在上述三角基中，和 \(A\) 交换的矩阵具有形式
+\[
+	X=\begin{pmatrix}a&b\\0&a\end{pmatrix}.
+\]
+再要求它与 \(B\) 交换，便得 \(b=0\)。所以 \(\operatorname{End}_{kG}(U)=k\)，但 \(U\) 明明含有子模 \(kw\)。Schur 引理给出的“简单模的自同态环是除环”不能反向使用；检验自同态空间只有一维，也不能代替不可约性证明。
+
+\ProseParagraphBreak
+最后，在 \(3\)-正则元素 \(s\) 处，矩阵 \(B\) 的特征值为 \(1,-1\)，按固定模系统提升后仍为 \(1,-1\)，所以 \(\varphi_U(s)=0\)、\(\varphi_U(1)=2\)。它与 \(S_+\oplus S_-\) 的 Brauer 特征标相同；非分裂性则保存在上三角块和补空间方程中。把特征标、合成列与这些矩阵一起保留，才同时说明了计算得到哪些简单成分，以及它们怎样组成原模。
+% ---

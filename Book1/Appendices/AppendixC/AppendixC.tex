@@ -1,26 +1,31 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：## 附录 C　群论专题简介
-% 纲要位置：计划纲要.md，第 882 行。
+% 纲要位置：计划纲要.md，第 885 行。
 % BEGIN APPENDIX OUTLINE SYNC
-% * 自由积与带合并自由积；右陪集分解、标准串作用与因子嵌入
-% * 自由积的陪集树、有限群不动点及有限子群的共轭包含；字距离的生成集比较
-% * 群展示的有限证书与半判定；可判定性的生成集不变性、有效标准形及固定群的不可判定性
+% * 自由积与带合并自由积；右陪集分解、标准串作用与因子嵌入；HNN 构造、标准形与 Britton 引理
+% * 自由积的陪集树、有限群不动点及有限子群的共轭包含；字距离与群增长的生成集比较，自由群与有限生成交换群的增长计算
+% * 群展示的有限证书与半判定；可判定性的生成集不变性、有效标准形及固定群的不可判定性；稳定子链、Schreier–Sims、Todd–Coxeter 与软件结果的独立核验
 % * 有限单群分类与扩张问题的区别；局部结构工具及射影特殊线性群实例，技术子分类见专题文献
+% * 转移同态的构造与代表元无关性；Burnside 正规 \(p\)-补定理及正规补群算例
+% * 正规 Hall 子群与补群；可解情形的 Schur–Zassenhaus 与 Hall 子群存在、共轭及包含定理，一般 Schur–Zassenhaus 的证明范围明示
 % END APPENDIX OUTLINE SYNC
 
 \chapter{群论专题简介}
 \label{b1:app:C}
+\BookChapterNumber{b1:app:C}
 
 \begin{chapterabstract}
-	给群添加关系可能改变其标准形、子群结构和计算难度。本附录研究带合并自由积与树作用，辨析群展示的字问题及可判定性，并以有限单群分类概览展示群结构的另一种分解方法。
+	给群添加关系可能改变其标准形、子群结构和计算难度。本附录从带合并自由积与 HNN 扩张的标准形出发，研究树作用与群增长，并用稳定子链和陪集表处理可核验的群计算。有限群部分先辨析单群分类与扩张问题，再以转移构造正规补群，证明正规 Hall 子群的补群存在性及可解条件下的共轭性，最后建立可解群的 Hall 子群定理。
 \end{chapterabstract}
 
 \begin{learninggoals}
 	\begin{itemize}
-		\item 用泛性质与标准形分别掌握带合并自由积的构造和元素辨认。
-		\item 根据陪集树计算稳定子群，并用有限树的不动点说明有限子群的限制。
-		\item 分清标准形的存在性与有效计算，理解如何验证一个字表示单位，以及判定算法的停机要求。
+		\item 用泛性质构造带合并自由积与 HNN 扩张，用标准形和 Britton 引理辨认元素。
+		\item 根据陪集树计算稳定子群，说明有限子群的限制，并比较自由群与有限生成交换群的增长。
+		\item 分清标准形的存在性与有效计算；利用稳定子链筛选置换，核验有限陪集表，并说明算法的停机边界。
 		\item 说明有限单群分类回答了什么问题，以及合成因子为何不足以确定原群。
+		\item 构造转移同态，使用正规化子条件判断正规 \(p\)-补群的存在，并计算具体转移核。
+		\item 通过互素交换核的平均化与有限群归纳证明补群定理，确定 Hall 子群的存在、共轭和包含结论所需的条件。
 	\end{itemize}
 
 \end{learninggoals}
@@ -32,29 +37,29 @@
 
 \ProseParagraphBreak
 
-本附录以\chapref{b1:ch:08}的自由群、群展示和自由积为基础；树作用部分还使用\chapref{b1:ch:04}的群作用知识，分类概览使用\chapref{b1:ch:07}的合成列。图论所需的路径和树在使用处说明，不预设代数拓扑。前三节从标准形、树作用走到字问题；末节只借用合成列的基本概念，可独立于计算理论概要阅读。合并积标准形、陪集树与有限群不动点均在本附录证明；字问题不可判定性给出计算编码的证明概要，有限单群分类说明主要化简及技术子分类的作用。
+本附录的前三节以\chapref{b1:ch:08}的自由群、群展示和自由积为基础，从标准形、树作用走到增长和算法。群作用调用\chapref{b1:ch:04}；图论所需的路径和树在使用处说明，不预设代数拓扑。合并积与 HNN 标准形、Britton 引理、有限群树作用的不动点、增长计数以及两种群算法的正确性均在本附录证明。字问题不可判定性仍只给出计算编码的证明概要，不把一般标准形的存在当作有效求解程序。
+
+\ProseParagraphBreak
+后三节可沿有限群的路线阅读：分类概览使用\chapref{b1:ch:07}的合成列，转移与补群则使用群作用、Sylow 定理、\chapref{b1:ch:06}的半直积与因子集，以及可解群的封闭性质。正规补群使扩张问题具体化：在 \(S_3\) 中，三阶正规子群和二阶补群产生非平凡半直积；在互素交换核上，有限求和又能修正截面，使乘法误差消失。这条路线给出转移、Burnside 正规 \(p\)-补定理及有限可解群 Hall 子群定理的完整证明。一般正规 Hall 子群的补群存在性不要求可解性；共轭性先在核或商群可解的条件下证明，去掉该条件时另行说明所用的奇数阶群定理。
 
 \ProseParagraphBreak
 Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter I, Sections 1--3, 11; Chapter IV, Sections 1--2]{LyndonSchupp2001}讨论自由群、带合并自由积与 HNN 扩张；其中关于展示和判定问题的章节可另见\cite[Chapter II, Sections 1--2; Chapter IV, Sections 4--5]{LyndonSchupp2001}。有限群及 Mathieu 群的实例可查 Rotman 的《An Introduction to the Theory of Groups》\cite[Chapter 9]{Rotman1995TheoryGroups}。Aschbacher 的《Sporadic Groups》\cite[Preface, pp. ix--xi]{Aschbacher1994SporadicGroups}的序言概述分类名单，Solomon 的综述\cite[Solvable Signalizer Functor Theorem; Gorenstein--Lyons Trichotomy Theorem]{Solomon2001SimpleGroupsHistory}说明相关局部分析在分类中的作用。
-
-% 纲要内容（仅作写作计划，尚非教材正文）：
-%
-% * 自由积与带合并自由积；右陪集分解、标准串作用与因子嵌入
-% * 自由积的陪集树、有限群不动点及有限子群的共轭包含；字距离的生成集比较
-% * 群展示的有限证书与半判定；可判定性的生成集不变性、有效标准形及固定群的不可判定性
-% * 有限单群分类与扩张问题的区别；局部结构工具及射影特殊线性群实例，技术子分类见专题文献
-%
 
 \input{Appendices/AppendixC/SectionC01}
 \input{Appendices/AppendixC/SectionC02}
 \input{Appendices/AppendixC/SectionC03}
 \input{Appendices/AppendixC/SectionC04}
+\input{Appendices/AppendixC/SectionC05}
+\input{Appendices/AppendixC/SectionC06}
 
 \begin{chaptersummary}
-	群的生成与关系同时带来构造问题和计算问题。带合并自由积用商群识别公共子群，标准形进一步保证两因子仍然嵌入；自由积的陪集树则把交替字的非平凡性转成无回路性质。有限群在无反转树作用下有公共不动顶点，因此自由积的有限子群必落在因子的某个共轭中。
+	群的生成与关系同时带来构造问题和计算问题。带合并自由积识别公共子群，HNN 扩张用稳定字母实现两个子群间的同构；标准串上的作用保证原有因子或基群嵌入，并导出 Britton 引理。自由积的陪集树把交替字的非平凡性转成无回路性质；有限群在无反转树作用下有公共不动顶点，因而自由积的有限子群落在因子的某个共轭中。字距离依赖生成集，增长类型却在有限生成集之间保持不变：秩至少二的自由群指数增长，有限生成交换群的增长次数等于其自由秩。
 
 	\ProseParagraphBreak
-	群展示中成立的单位关系都有有限的正规闭包证书。对本附录讨论的有限展示，这些证书可以有效枚举，因此有肯定答案的半判定程序；判定算法还必须对不表示单位的字给出否定答案并停机。标准形也只有在能够有效求出时才提供这种算法。有限单群分类解决了另一类结构问题：它确定有限群可能出现的简单因子，因子之间的组合仍需扩张理论。
+	群展示中成立的单位关系都有有限的正规闭包证书。对有限展示，这些证书可以有效枚举，因此有肯定答案的半判定程序；判定算法还必须对非单位字给出否定答案并停机。显式置换群可由 Schreier 生成元建立稳定子链，用筛选给出成员证书；公平的 Todd--Coxeter 枚举在子群指数有限时终止。核验陪集表既要检查关系闭合，也要保留真实陪集等式的推导，否则所得表可能只描述一个商作用。
+
+	\ProseParagraphBreak
+	有限单群分类确定可能的简单因子，因子如何结合仍需扩张理论。转移把有限指数子群的陪集信息变成到其交换化的同态；对满足 \(P\leq Z(N_G(P))\) 的 Sylow \(p\)-子群，其核就是正规 \(p\)-补群。互素交换核上的平均化则给出补群的存在与共轭，结合归纳可证明正规 Hall 子群总有补群，并在核或商群可解时证明补群共轭。有限可解群的 Hall \(\pi\)-子群对每个素数集合 \(\pi\) 都存在且彼此共轭，每个 \(\pi\)-子群均包含于其中某个 Hall 子群；\(A_5\) 的反例说明，去掉可解性后不能保留这一整套结论。
 \end{chaptersummary}
 
 \BookExercises
@@ -164,4 +169,291 @@ Lyndon 与 Schupp 的《Combinatorial Group Theory》\cite[Chapter I, Sections 1
 		1<\langle c^2\rangle<C_6,
 	\]
 	在 \(S_3\) 中取 \(1<A_3<S_3\)。第一条列各项都在交换群中正规；第二条列的 \(A_3\) 是符号同态的核，故正规。两列的非平凡因子分别同构于 \(C_3,C_2\)，都是素数阶单群，所以均为合成列。然而 \(C_6\) 交换，\(S_3\) 中 \((12)(23)\ne(23)(12)\)，二者不同构。分类简单因子仍留下怎样扩张这些因子的问题，因此不直接等于全部有限群的同构分类。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-hnn-conjugate-intersections}
+	设 \(H=G*_{\varphi}\) 是由子群 \(A,B\le G\) 和同构 \(\varphi:A\rightarrow B\) 构造的 HNN 扩张，稳定字母满足 \(t^{-1}at=\varphi(a)\)。证明
+	\[
+		t^{-1}Gt\cap G=B,\qquad tGt^{-1}\cap G=A.
+	\]
+	在 \(K=\langle a,t\mid t^{-1}a^2t=a^3\rangle\) 中，求出全部满足 \(t^{-1}a^kt\in\langle a\rangle\) 的整数 \(k\)，并计算相应的像。
+\end{exercise}
+\begin{solution}
+	由\cref{b1:thm:hnn-normal-form}，可以把基群及其子群视为 \(H\) 的子群。若 \(b\in B\)，存在 \(a\in A\) 使 \(b=\varphi(a)=t^{-1}at\)，所以 \(B\subseteq t^{-1}Gt\cap G\)。反过来，若 \(t^{-1}gt\in G\) 而 \(g\notin A\)，则 \(t^{-1}gt\) 是含两个稳定字母的 HNN 约化字，与\cref{b1:lem:britton}矛盾。因此 \(g\in A\)，且 \(t^{-1}gt=\varphi(g)\in B\)，证明第一个等式。
+
+	对于第二个等式，\(a=t\varphi(a)t^{-1}\) 给出 \(A\subseteq tGt^{-1}\cap G\)。若 \(tgt^{-1}\in G\)，同一引理迫使 \(g\in B\)，因为否则 \(tgt^{-1}\) 已是 HNN 约化字。此时其值为 \(\varphi^{-1}(g)\in A\)，得到反向包含。
+
+	在给定的循环基群例子中，\(A=\langle a^2\rangle\)、\(B=\langle a^3\rangle\)，且 \(a\) 具有无限阶。因此 \(a^k\in A\) 当且仅当 \(2\mid k\)。所求整数正是全部偶数；若 \(k=2m\)，则 \(t^{-1}a^kt=a^{3m}\)，这也适用于零及负整数 \(m\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-hnn-surjective-endomorphism}
+	设 \(K=\langle a,t\mid t^{-1}a^2t=a^3\rangle\)。证明指定 \(a\mapsto a^2\)、\(t\mapsto t\) 给出 \(K\) 的一个满而不单的自同态。可考察交换子 \([a,t^{-1}at]\)，采用本书约定 \([x,y]=xyx^{-1}y^{-1}\)。
+\end{exercise}
+\begin{solution}
+	先核验关系。在所指定的像上，
+	\[
+		t^{-1}(a^2)^2t=(t^{-1}a^2t)^2=a^6=(a^2)^3.
+	\]
+	故\cref{b1:prop:presentation-homomorphism}给出自同态 \(f:K\rightarrow K\)。其像包含 \(a^2,t\)，也包含 \(t^{-1}a^2t=a^3\)，因而包含 \(a=a^3(a^2)^{-1}\)。生成元 \(a,t\) 都在像中，所以 \(f\) 满射。
+
+	令
+	\[
+		w=[a,t^{-1}at]=at^{-1}at a^{-1}t^{-1}a^{-1}t.
+	\]
+	三个异号接缝的中间系数依次为 \(a,a^{-1},a^{-1}\)：第一及第三个不属于 \(\langle a^2\rangle\)，第二个不属于 \(\langle a^3\rangle\)。这些成员判断使用了\cref{b1:thm:hnn-normal-form}保证的 \(a\) 的无限阶。因此 \(w\) 是含四个稳定字母的 HNN 约化字，由\cref{b1:lem:britton}知 \(w\ne1\)。另一方面，
+	\[
+		f(w)=[a^2,t^{-1}a^2t]=[a^2,a^3]=1.
+	\]
+	所以 \(f\) 有非平凡核，并非单射。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-growth-integer-generators}
+	在加法群 \(\mathbb Z\) 中取生成集 \(S=\{1\}\)、\(T=\{2,3\}\)。计算 \(\beta_T(n)\) 对全部非负整数 \(n\) 的取值，并求出\cref{b1:prop:growth-generating-set-comparison}中的比较常数 \(M,N\)。比较 \(\beta_S\) 与 \(\beta_T\) 的一次项系数和增长次数。
+\end{exercise}
+\begin{solution}
+	显然 \(B_T(0)=\{0\}\)、\(B_T(1)=\{0,\pm2,\pm3\}\)，对应基数为 \(1,5\)。半径二的球为整数区间 \([-6,6]\cap\mathbb Z\)：非负整数 \(0,1,2,3,4,5,6\) 分别可写为空和、\(3-2\)、\(2\)、\(3\)、\(2+2\)、\(2+3\)、\(3+3\)，负数取相反数；反向包含来自每步绝对值至多三。
+
+	若 \(n\ge2\) 且 \(B_T(n)=[-3n,3n]\cap\mathbb Z\)，则 \(B_T(n+1)\) 包含该区间分别平移 \(-3,0,3\) 所得的三个区间。它们相交，合并得到整个 \([-3(n+1),3(n+1)]\cap\mathbb Z\)。每个长度至多 \(n+1\) 的字又不能超出这个范围，所以归纳得到
+	\[
+		\beta_T(n)=
+		\begin{cases}
+			1,&n=0,\\
+			5,&n=1,\\
+			6n+1,&n\ge2.
+		\end{cases}
+	\]
+
+	因为 \(1=3-2\)，且一个 \(T\) 字母不能表示一，故 \(\ell_T(1)=2\)，所以 \(M=2\)。又 \(\ell_S(2)=2\)、\(\ell_S(3)=3\)，故 \(N=3\)。比较式为 \(\beta_S(n)\le\beta_T(2n)\)、\(\beta_T(n)\le\beta_S(3n)\)。\(\beta_S(n)=2n+1\) 与 \(\beta_T(n)\) 的最终一次项系数分别为二和六，但二者都有一次的上下界，增长次数相同。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-growth-cube-generators}
+	设 \(d\ge1\)，在 \(\mathbb Z^d\) 中取标准生成集 \(S_0=\{e_1,\ldots,e_d\}\) 及生成集
+	\[
+		U=\{\,(u_1,\ldots,u_d)\ne0\mid u_i\in\{-1,0,1\}\;\text{对所有}\;i\,\}.
+	\]
+	证明 \(\ell_U(x)=\max_i|x_i|\)，计算 \(\beta_U(n)\)，并求出 \(\ell_U(x)\) 与 \(\ell_{S_0}(x)\) 的双向比较界。
+\end{exercise}
+\begin{solution}
+	每个 \(U\) 字母在每个坐标上的绝对值至多为一，故走到 \(x=(x_1,\ldots,x_d)\) 至少需要 \(m=\max_i|x_i|\) 步。若 \(m=0\)，空字达到此界。若 \(m>0\)，对 \(k=1,\ldots,m\) 定义向量 \(v_k\)：其第 \(i\) 个坐标在 \(k\le|x_i|\) 时取 \(x_i\) 的符号，否则取零。至少有一个坐标的绝对值为 \(m\)，所以每个 \(v_k\) 非零；其坐标均在 \(\{-1,0,1\}\) 中，故 \(v_k\in U\)。逐坐标相加得到 \(x=v_1+\cdots+v_m\)，证明 \(\ell_U(x)=m\)。
+
+	因此 \(B_U(n)=[-n,n]^d\cap\mathbb Z^d\)，每个坐标各有 \(2n+1\) 个选择，从而 \(\beta_U(n)=(2n+1)^d\)。再由\cref{b1:prop:free-abelian-growth}中的字长公式，
+	\[
+		\ell_U(x)=\max_i|x_i|
+		\le\sum_i|x_i|=\ell_{S_0}(x)
+		\le d\max_i|x_i|=d\ell_U(x).
+	\]
+	前一界在 \(x=(m,0,\ldots,0)\) 达到，后一界在 \(x=(m,\ldots,m)\) 达到。因此这些统一常数不能再缩小；两个生成集的球形状虽不同，增长次数都是 \(d\)。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-hnn-exponential-growth}
+	令 \(L=\langle a,t\mid t^{-1}at=a^2\rangle\)，取生成集 \(S=\{a,t\}\)。
+	\begin{enumerate}
+		\item 证明 \(\langle a\rangle\) 为无限循环群，且对所有 \(k\ge0\)，有 \(\ell_S(a^{2^k})\le2k+1\)。说明不存在常数 \(C>0\)，使 \(\ell_{\{a\}}(x)\le C\ell_S(x)\) 对全部 \(x\in\langle a\rangle\) 成立，其中左侧是在该循环子群内计算的字长。
+		\item 对每个 \(n\ge1\)，在 \(B_S(3n)\) 中构造 \(2^n\) 个不同元素，并据此证明 \(L\) 具有指数增长。可使用整数的二进制展开。
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	1. 取基群 \(G=\langle a\rangle\cong\mathbb Z\)、\(A=G\)、\(B=\langle a^2\rangle\)、\(\varphi(a^m)=a^{2m}\)，就得到所给 HNN 扩张。\cref{b1:thm:hnn-normal-form}保证基群嵌入，所以 \(a\) 具有无限阶。由定义关系归纳得到
+	\[
+		t^{-k}at^k=a^{2^k}.
+	\]
+	右侧因而有一个长度 \(2k+1\) 的 \(S\)-字，而其在 \(\langle a\rangle\) 内的字长为 \(2^k\)。若存在所述常数，必有 \(2^k\le C(2k+1)\) 对全部 \(k\) 成立，矛盾。例如 \(2^k=(1+1)^k\ge\binom k2\) 已使这个比值随 \(k\) 无界。
+
+	2. 给定 \(0\le q<2^n\)，写成 \(q=\varepsilon_0+2\varepsilon_1+\cdots+2^{n-1}\varepsilon_{n-1}\)，其中 \(\varepsilon_i\in\{0,1\}\)。利用第一问的共轭公式并逐项相乘，可得
+	\[
+		a^q=a^{\varepsilon_0}t^{-1}a^{\varepsilon_1}t^{-1}\cdots
+		t^{-1}a^{\varepsilon_{n-1}}t^{n-1}.
+	\]
+	确切地，把右侧写成 \(\prod_{i=0}^{n-1}(t^{-i}a^{\varepsilon_i}t^i)\)，相邻的 \(t^it^{-(i+1)}\) 合并为 \(t^{-1}\)，即得显示的字；各因子又等于 \(a^{2^i\varepsilon_i}\)，其积为 \(a^q\)。这个字至多有 \(n\) 个 \(a\) 字母及 \(2n-2\) 个稳定字母，所以长度至多 \(3n-2\le3n\)。基群嵌入保证这些 \(2^n\) 个不同指数给出不同元素，故 \(\beta_S(3n)\ge2^n\)。
+
+	对任意半径 \(m\ge0\)，取 \(n=\lfloor m/3\rfloor\)。\(n=0\) 时使用单位元，\(n\ge1\) 时使用上述构造，由单调性统一得到
+	\[
+		\beta_S(m)\ge2^{\lfloor m/3\rfloor}
+		\ge\dfrac12\bigl(2^{1/3}\bigr)^m.
+	\]
+	这正是指数下界。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-d8-sifting}
+	在 \(S_4\) 中，令 \(r=(1234)\)、\(s=(24)\)、\(G=\langle r,s\rangle\)。
+	\begin{enumerate}
+		\item 以 \((1,2)\) 为基，取第一层轨道代表元 \(1,r,r^2,r^3\)，计算稳定子链并求 \(|G|\)。
+		\item 对 \((13)\) 作筛选，写出它的 \(r,s\) 生成字。
+		\item 对 \((12)\) 作筛选，说明它通过了两层轨道检查，却仍不属于 \(G\)。
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	1. 直接复合置换给出 \(r^4=s^2=1\) 和 \(srs=r^{-1}\)，因而 \(sr^k=r^{-k}s\)。第一层轨道为 \(\{1,2,3,4\}\)。以 \(r^k\) 为把一送到 \(k+1\) 的代表元，来自 \(r,r^{-1}\) 的 Schreier 元素都是单位。\(s\) 把 \(r^k(1)\) 送到 \(r^{-k}(1)\)，故相应 Schreier 元素为
+	\[
+		(r^{-k})^{-1}sr^k=r^ksr^k=s.
+	\]
+	因此 \(G_1=\langle s\rangle\)。二的 \(G_1\)-轨道为 \(\{2,4\}\)，代表元为 \(1,s\)，其稳定子平凡。故 \((1,2)\) 确为基，\(|G|=4\cdot2=8\)。
+
+	2. \((13)\) 把一送到三，第一步取代表元 \(r^2\)，剩余量为 \(r^{-2}(13)=s\)。第二步取代表元 \(s\)，剩余量为单位，故 \((13)=r^2s\)。
+
+	3. \((12)\) 把一送到二，第一步的代表元是 \(r\)，剩余量为
+	\[
+		r^{-1}(12)=(243).
+	\]
+	它把二送到四，仍在第二层轨道中；取代表元 \(s\) 后，最后剩余量为
+	\[
+		s^{-1}r^{-1}(12)=(34)\ne1.
+	\]
+	所以筛选拒绝 \((12)\)。两次轨道命中只说明剩余量最终固定所选基点；对任意输入置换，这不保证剩余量属于 \(G\) 的末层稳定子。最后的单位检查不能删除。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-coset-table-false-positive}
+	令 \(G=\langle x\mid x^6=1\rangle\)、\(H=\langle x^2\rangle\)。一张只有一行、\(x\) 与 \(x^{-1}\) 列均固定该行的表，满足逆列互逆、关系闭合、子群生成字固定根行和传递性。解释为什么它仍不是 \(H\) 的陪集表，指出缺少的边证书，再给出正确的陪集表与核验。
+\end{exercise}
+
+\begin{solution}
+	缺少的是该唯一 \(x\) 边所要求的 \(x\in H\)。把 \(x\) 送到 \(\mathbb Z/2\mathbb Z\) 的一，关系 \(x^6=1\) 的像为零，故得到一个群同态。\(H\) 的所有元素都映到零，\(x\) 却映到一，所以 \(x\notin H\)，这条边证书不存在。
+
+	真实陪集为 \(H,Hx\)，可取代表字 \(1,x\)。每个 \(x\) 列和 \(x^{-1}\) 列都交换两行：\(Hx^2=H\)，而 \(x^{-1}\) 与 \(x\) 相差一个 \(x^2\) 的幂。因此每条边都是真实陪集等式；两行又由上述同态区分。表中读 \(x^6\) 是交换两行六次，读 \(x^2\) 是交换两次，所以关系与根行条件均满足。\cref{b1:prop:C-coset-certificate}给出 \([G:H]=2\)。原来的单行表只记录了一个平凡商作用。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-nonfaithful-coset-output}
+	令
+	\[
+		P=\langle r,s\mid r^4=s^2=srsr=1\rangle,\qquad H=\langle r\rangle.
+	\]
+	构造 \(H\) 的陪集表，计算相应右作用的核及置换像。若软件对这个作用返回像群阶为二，为什么不能据此断言 \(|P|=2\)？给出 \(|P|\) 的独立核验。
+\end{exercise}
+
+\begin{solution}
+	由 \(srs=r^{-1}\)，\(H\) 正规。每个字都可化为 \(r^i s^\varepsilon\)，其中 \(0\leq i<4\)、\(0\leq\varepsilon<2\)：从空字开始逐字乘入 \(r\) 或 \(s\)，使用 \(sr=r^{-1}s\) 和两个幂关系便能保持这种形式；逆字母先由 \(r^{-1}=r^3,s^{-1}=s\) 替换。因此 \(|P|\leq8\)。
+
+	令 \(r\mapsto(1234)\)、\(s\mapsto(24)\)。这些置换满足所列全部关系。像中的四个 \(r^i\) 互异，而 \(s\) 固定一且非恒等；四个旋转中只有单位固定一，所以 \(s\notin\langle r\rangle\)。于是 \(r^is\) 给出另外四个互异元素，八个标准形的像全都不同。这给出 \(|P|\geq8\)，故 \(|P|=8\)，且 \(|H|=4\)、\([P:H]=2\)。
+
+	以 \(1,s\) 为代表字，\(r\) 与 \(r^{-1}\) 两列固定两行，\(s\) 与 \(s^{-1}\) 两列交换两行。真实边等式由 \(Hr=H\)、\(Hsr=Hr^{-1}s=Hs\) 和 \(Hs^2=H\) 给出；逆列及关系闭合也直接成立。这就是完整陪集表。
+
+	右作用的核是所有固定两行的元素。\(H\) 正规，其全部元素都固定两行；而 \(H\) 外的元素把根行送到另一行，所以核恰为 \(H\)。置换像为 \(C_2\)。因此软件所报的二是商群 \(P/H\) 的阶，原群的阶还需乘以核的阶四；只检查关系得到一个置换像，会丢失这个核的信息。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-transfer-nonabelian-target}
+	令 \(L=S_3\)，\(C_2=\langle c\rangle\)，取 \(G=L\times C_2\)、\(H=L\times\{1\}\)。用右陪集代表 \((1,1),(1,c)\) 计算转移 \(V_{G,H}\)。若不取交换化，而把两个陪集系数直接在 \(H\) 中相乘，所得映射是否为群同态？用具体置换说明。
+\end{exercise}
+
+\begin{solution}
+	对 \(g=(x,c^\varepsilon)\)，其中 \(x\in L\)、\(\varepsilon\in\{0,1\}\)，代表 \((1,c^j)\) 右乘 \(g\) 后有分解
+	\[
+		(1,c^j)(x,c^\varepsilon)
+		=(x,1)(1,c^{j+\varepsilon}),
+	\]
+	指数按模 \(2\) 计算。因此两个系数都为 \((x,1)\)，得到
+	\[
+		V_{G,H}(x,c^\varepsilon)=\overline{(x,1)}^{\,2}.
+	\]
+	\(H\) 的交换化由换位的像生成：三个换位彼此共轭，而交换目标中的共轭像相等；它们的共同像的平方为单位。因此 \(H_{\mathrm{ab}}\) 中每个元素的平方为单位，所求转移是平凡同态。
+
+	若保留 \(H\) 中的原系数，所得公式为 \(F(x,c^\varepsilon)=(x^2,1)\)。令 \(a=(12)\)、\(b=(23)\)，则 \(a^2=b^2=1\)，但 \(ab=(123)\)，故 \((ab)^2=(132)\ne1\)。于是
+	\[
+		F(a,1)F(b,1)=1,
+		\qquad F\bigl((a,1)(b,1)\bigr)=((132),1)\ne1.
+	\]
+	所以 \(F\) 不是同态；删去交换化会破坏转移构造所需的乘法重排。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-transfer-central-direct-factor}
+	设 \(G\) 为有限群，\(H\leq Z(G)\)，且 \(\gcd(|H|,[G:H])=1\)。用转移构造同态 \(r:G\rightarrow H\)，使 \(r|_H=\operatorname{id}_H\)，并证明乘法映射给出 \(G\cong H\times\ker r\)。
+\end{exercise}
+
+\begin{solution}
+	\(H\) 为交换群，故可把转移视为 \(V=V_{G,H}:G\rightarrow H\)。令 \(m=[G:H]\)，取整数 \(b,c\) 使 \(bm+c|H|=1\)。由\eqref{b1:eq:transfer-central-element}，对 \(h\in H\) 有 \(V(h)=h^m\)。定义
+	\[
+		r(g)=V(g)^b.
+	\]
+	目标 \(H\) 交换，所以 \(b\) 次幂为同态，\(r\) 也为同态。又 \(h^{|H|}=1\)，故 \(r(h)=h^{bm}=h\)，从而 \(r|_H\) 为恒等。
+
+	记 \(K=\ker r\)。它正规于 \(G\)，且 \(H\cap K=1\)，因为 \(r\) 在 \(H\) 上为恒等。对任意 \(g\in G\)，置 \(h=r(g)\in H\)，则 \(r(h^{-1}g)=h^{-1}r(g)=1\)，故 \(g=h(h^{-1}g)\in HK\)。所以 \(HK=G\)。子群 \(H\) 中的元素都在 \(G\) 的中心，故 \(H\trianglelefteq G\)。对 \(H,K\) 应用\cref{b1:prop:internal-direct-product}，乘法映射 \(H\times K\rightarrow G\)、\((h,k)\mapsto hk\) 即为所求同构。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-transfer-odd-dihedral}
+	设 \(n\geq3\) 为奇数，\(G=D_{2n}=\langle r,s\mid r^n=s^2=1,\ srs^{-1}=r^{-1}\rangle\)，\(P=\langle s\rangle\)。直接利用右陪集上的轨道计算 \(V_{G,P}(r)\) 与 \(V_{G,P}(s)\)，并求 \(V_{G,P}(r^is^\varepsilon)\) 及其核。此题的轨道计算不以 Burnside 定理代替。
+\end{exercise}
+
+\begin{solution}
+	由\cref{b1:prop:dihedral-normal-form}，\(1,r,\ldots,r^{n-1}\) 是 \(P\) 的右陪集代表：每个元素属于其中一个陪集，且 \(Pr^i=Pr^j\) 意味着 \(r^{i-j}\in P\cap\langle r\rangle=1\)，所以 \(i\equiv j\pmod n\)。右乘 \(r\) 把 \(Pr^j\) 送到 \(Pr^{j+1}\)，形成长度为 \(n\) 的一个轨道。以 \(1\) 为起点代表，\cref{b1:lem:transfer-orbit-formula}给出
+	\[
+		V_{G,P}(r)=r^n=1.
+	\]
+	右乘 \(s\) 时，由 \(r^js=sr^{-j}\) 得 \(Pr^js=Pr^{-j}\)。固定陪集要求 \(2j\equiv0\pmod n\)；因 \(n\) 为奇数，只有 \(j\equiv0\)。该单点轨道以 \(1\) 为代表，贡献 \(s\)。其他轨道长度均为 \(2\)，以 \(r^j\) 为起点时，贡献 \(r^js^2r^{-j}=1\)。故 \(V_{G,P}(s)=s\)。
+
+	转移的同态性于是给出 \(V_{G,P}(r^is^\varepsilon)=s^\varepsilon\)，其中 \(\varepsilon\in\{0,1\}\)。所以 \(\ker V_{G,P}=\langle r\rangle\)，它有奇数阶 \(n\)，是 \(G\) 的正规 \(2\)-补群。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-transfer-symmetric-four-obstruction}
+	取 \(G=S_4\)、\(p=3\)、\(P=\langle(123)\rangle\)。证明转移 \(V_{G,P}:G\rightarrow P\) 为平凡同态，并证明 \(S_4\) 没有正规 \(3\)-补群。再找出 \(N_G(P)\) 中一个不中心化 \(P\) 的元素，说明判据的哪项条件失效。不要使用 \(S_4\) 的全部正规子群分类。
+\end{exercise}
+
+\begin{solution}
+	目标 \(P\) 有阶 \(3\)。任一换位 \(t\) 的像满足 \(V(t)^2=V(t^2)=1\)，又在三阶群中，故 \(V(t)=1\)。由\cref{b1:thm:cycle-decomposition}及其后的换位分解，换位生成 \(S_4\)，所以 \(V\) 是平凡同态。
+
+	若 \(S_4\) 有正规 \(3\)-补群 \(K\)，则 \(|K|=8\)，商群 \(S_4/K\) 有阶 \(3\)。对商映射 \(q:S_4\rightarrow S_4/K\) 作同样的元素阶计算，每个换位的像都必须为单位。换位生成 \(S_4\)，所以 \(q\) 只能是平凡映射，这与它满射到三阶群矛盾。因此这样的 \(K\) 不存在。
+
+	令 \(t=(12)\)、\(c=(123)\)，则 \(tct^{-1}=c^{-1}\)。所以 \(t\in N_G(P)\)，但 \(t\notin C_G(P)\)，从而 \(P\nleq Z(N_G(P))\)。虽然 Sylow \(3\)-子群 \(P\) 循环，正规化子条件仍不成立，与\cref{b1:prop:abelian-sylow-normal-complement}的各项等价完全相符。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-dihedral-complements}
+	在 \(D_{2n}=\langle r,s\mid r^n=s^2=1,\ srs^{-1}=r^{-1}\rangle\) 中，设 \(n\geq3\)。求旋转子群 \(N=\langle r\rangle\) 的全部补群，并按 \(N\) 内共轭分类。分别说明 \(n\) 为奇数、偶数时与 Schur–Zassenhaus 定理的关系。
+\end{exercise}
+
+\begin{solution}
+	补群必须阶为二且不包含于 \(N\)。由\cref{b1:prop:dihedral-normal-form}，核外元素恰为 \(r^ks\)（\(k\) 模 \(n\)），且 \((r^ks)^2=r^kr^{-k}=1\)。所以全部补群为 \(H_k=\langle r^ks\rangle\)，共有 \(n\) 个。直接计算
+	\[
+		r^a(r^ks)r^{-a}=r^{k+2a}s.
+	\]
+	因此 \(H_k,H_\ell\) 由 \(N\) 中元素共轭，当且仅当同余式 \(2a\equiv\ell-k\pmod n\) 有解。\(n\) 为奇数时二可逆，全部补群共轭；这时 \(N\) 是可解的正规 Hall 子群，与\cref{b1:thm:C-schur-zassenhaus-solvable-kernel}一致。\(n\) 为偶数时，恰按 \(k\) 的奇偶性分成两类。此时 \(|N|\) 与指数二不互素，\(N\) 不是 Hall 子群；补群仍然存在，说明互素性是这里的充分条件，不能反向作为分裂的必要条件。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-normal-hall-characteristic}
+	设 \(G\) 为有限群，\(N\) 为正规 Hall \(\pi\)-子群。证明 \(N\) 包含 \(G\) 的每个 \(\pi\)-子群，进而证明 \(N\) 是特征子群。这里是否需要 \(G\) 可解？
+\end{exercise}
+
+\begin{solution}
+	若 \(U\leq G\) 为 \(\pi\)-子群，它在 \(G/N\) 中的像阶整除 \(|U|\)，因而是 \(\pi\)-数；该阶也整除 \(|G/N|\)，因而是 \(\pi'\)-数。所以像只能为平凡群，即 \(U\leq N\)。对任意 \(\alpha\in\operatorname{Aut}(G)\)，\(\alpha(N)\) 是阶为 \(|N|\) 的 \(\pi\)-子群，由刚证的包含及阶数相同得到 \(\alpha(N)=N\)，故 \(N\) 特征。整个论证只用了正规 Hall 子群已经存在，不要求 \(G\) 可解。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-complement-count}
+	设 \(G\) 为有限可解群，\(N\trianglelefteq G\) 为 Hall 子群，\(H\) 为它的一个补群。证明 \(N\) 的补群个数为 \([N:C_N(H)]\)。再证明：补群唯一，当且仅当 \(H\) 正规；这时 \(G\) 为 \(N,H\) 的内直积。
+\end{exercise}
+
+\begin{solution}
+	由\cref{b1:thm:C-schur-zassenhaus-solvable-kernel}，\(N\) 的共轭作用在全部补群上传递。\(H\) 的稳定子群为 \(N\cap N_G(H)\)。若 \(n\) 属于这个交，则对每个 \(h\in H\)，交换子 \(nhn^{-1}h^{-1}\) 一方面在 \(H\) 中，另一方面因 \(N\) 正规而在 \(N\) 中，故等于单位。于是 \(n\in C_N(H)\)；反向包含由定义成立。轨道—稳定子群公式遂给出所求个数。
+
+	补群唯一时，\(G\) 的任意共轭都将它送到自身，所以 \(H\) 正规。反之，若 \(H\) 正规，则 \(N\) 的共轭保持 \(H\)，而所有补群又都在同一个 \(N\)-轨道中，故只有一个。此时 \([N,H]\leq N\cap H=1\)，即两个因子逐元素交换；结合 \(NH=G\) 与交平凡，乘法映射 \(N\times H\rightarrow G\) 是同构。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-affine-complements}
+	在集合 \(\mathbb F_7\times\mathbb Z/3\mathbb Z\) 上取半直积乘法
+	\[
+		(x,i)(y,j)=(x+2^i y,i+j),
+	\]
+	其中第一坐标模七、第二坐标模三。令 \(N=\mathbb F_7\times\{0\}\)。求 \(N\) 的全部补群，并为每个补群写出一个将 \(\langle(0,1)\rangle\) 共轭到它的 \(N\) 中元素。
+\end{exercise}
+
+\begin{solution}
+	由于 \(2^3=1\) 在 \(\mathbb F_7\) 中成立，\(i\mapsto(y\mapsto2^i y)\) 确实定义了商群的作用。\(N\) 是七阶正规子群，指数为三。对每个 \(b\in\mathbb F_7\)，
+	\[
+		(b,1)^2=(3b,2),\qquad (b,1)^3=(7b,0)=(0,0),
+	\]
+	而 \((b,1)\ne(0,0)\)，故 \(H_b=\langle(b,1)\rangle\) 是三阶补群。任一补群同构地映到第二坐标，所以含有唯一一个第二坐标为一的元素；它必为某个 \((b,1)\)，故全部补群恰为这七个互不相同的 \(H_b\)。又
+	\[
+		(x,0)(0,1)(-x,0)=(-x,1),
+	\]
+	因此 \((-b,0)\) 将 \(H_0\) 共轭到 \(H_b\)。这里作用非平凡，补群不像交换群中的情形那样唯一，但共轭元仍可在正规核中明确算出。
+\end{solution}
+
+\begin{exercise}\label{b1:ex:C-hall-normal-section}
+	设 \(G\) 为有限群，\(H\) 为 Hall \(\pi\)-子群，\(M\trianglelefteq G\)。证明 \(H\cap M\) 为 \(M\) 的 Hall \(\pi\)-子群，\(HM/M\) 为 \(G/M\) 的 Hall \(\pi\)-子群；说明这里不需要 \(G\) 可解。
+\end{exercise}
+
+\begin{solution}
+	交 \(H\cap M\) 是 \(\pi\)-群，且
+	\[
+		[M:H\cap M]=[HM:H],\qquad
+		[G:H]=[G:HM]\,[HM:H].
+	\]
+	所以 \([M:H\cap M]\) 整除 \(\pi'\)-数 \([G:H]\)，也为 \(\pi'\)-数。由此得到第一结论。另一方面，\(HM/M\cong H/(H\cap M)\) 是 \(\pi\)-群，而 \([G/M:HM/M]=[G:HM]\) 也整除 \([G:H]\)，故为 \(\pi'\)-数。两项论证都从给定 Hall 子群出发，不需调用可解群中的存在性定理。
 \end{solution}

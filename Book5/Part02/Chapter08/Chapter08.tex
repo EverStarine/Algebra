@@ -5,7 +5,7 @@
 \BookChapterNumber{b5:ch:08}
 
 \begin{chapterabstract}
-	本章研究底域特征整除群阶时的有限群表示，借投射覆盖与块分析不可分解模，再以 Brauer 特征标比较模特征与特征零的表示信息。
+	本章研究底域特征整除群阶时的有限群表示，借投射覆盖与块分析不可分解模，以 Brauer 特征标比较模特征与特征零的表示信息，再用相对投射性、顶点与源联系子群上的模。Brauer 对应比较具有指定缺陷群的块，Green 对应比较具有指定顶点的不可分解模；矩阵计算则检验这些对象在具体例子中的结构。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -15,8 +15,11 @@
 		\item 从中心本原幂等元得到块，并在小群的群代数中验证块分解。
 		\item 能在 \(p\)-正则共轭类上计算 Brauer 特征标，并由格约化确定分解数。
 		\item 能按定义计算 Brauer 映射及具体块的缺陷群，明确特征标记录合成因子的范围。
+		\item 能用相对迹检验相对投射性，确定循环群模的顶点与源，并以稳定同态计算一阶扩张。
+		\item 能区分 Brauer 对应与 Green 对应的对象、假设及结论，在小群中算出对应项。
+		\item 能将模计算的输出还原为可检查的矩阵等式，区分不可约性、绝对不可约性及不可分解性。
 	\end{itemize}
-	预备知识为有限群表示、群代数、合成列及有限维代数的根；投射覆盖的构造使用第二卷的幂等元提升。Brauer 特征标部分另固定一个适当的分裂 \(p\)-模系统，届时会说明特征零域、离散赋值环及剩余域各自的作用。
+	预备知识为有限群表示、群代数、合成列及有限维代数的根；投射覆盖的构造使用第二卷的幂等元提升；顶点与源的论证另调用有限长度模的局部自同态环和 Krull--Schmidt 定理，并在使用处恢复具体条件。Brauer 特征标部分另固定一个适当的分裂 \(p\)-模系统，届时会说明特征零域、离散赋值环及剩余域各自的作用。
 \end{learninggoals}
 
 设 \(G=C_p=\langle g\rangle\)，而域 \(k\) 的特征为素数 \(p\)。在群代数中令 \(u=g-1\)，则 \(u^p=g^p-1=0\)，并有 \(kG\cong k[u]/(u^p)\)。这个代数的逐次商 \(u^j kG/u^{j+1}kG\) 都是一维平凡表示，但乘 \(u\) 的作用把它们接成一个不能直接拆开的模。简单成分因而不再决定整个表示，特征零下用平均投影取得不变补空间的办法也失效。投射覆盖、块与 Brauer 特征标将分别记录这里留下的结构和数值信息。投射覆盖及有限维代数 Cartan 矩阵的基础构造，可对照\cite[Sections 9.1--9.3, pp. 209--212]{EtingofEtAl2011RepresentationTheory}。
@@ -24,10 +27,16 @@
 \ProseParagraphBreak
 引用 Webb 著作时，本章采用作者2016年2月23日公开稿的节号与结果编号。作者说明该稿与正式刊本的数学内容相同；稿件页码与刊本页码另有区别，以下引用使用节号。格约化与 Brauer 特征标见\cite[Sections 9.4, 10.1; Section 12.5]{Webb2016FiniteGroupRepresentations}。
 
+\ProseParagraphBreak
+当不可分解模已经不能由特征标分类时，仍可询问它能从多小的子群诱导出来，以及限制到局部子群后哪些直和项能够辨认。相对迹把这个问题化成恒等映射的分解；顶点与源记录所需的子群及其中的模。对块和不可分解模分别建立对应以后，还要在矩阵中核验实际得到的是子模、商模还是直和项。本章后半的计算保留这些区别，程序输出旁同时给出可以手算的检验。
+
 \input{Part02/Chapter08/Section0801}
 \input{Part02/Chapter08/Section0802}
 \input{Part02/Chapter08/Section0803}
 \input{Part02/Chapter08/Section0804}
+\input{Part02/Chapter08/Section0805}
+\input{Part02/Chapter08/Section0806}
+\input{Part02/Chapter08/Section0807}
 
 \begin{chaptersummary}
 	在模特征下，群代数的根和模的根层保留了非半单部分的信息，但连全部根层也未必确定原模。循环 \(p^r\) 群的群代数是 \(k[t]/(t^{p^r})\)，其不可分解模由幂零链的长度区分；它们虽然只有一种简单合成因子，直和结构仍不相同。投射覆盖按简单顶排列，Cartan 矩阵记录投射模中的简单重数，块则把整个模范畴分成彼此没有同态和扩张的部分。循环 \(p\) 群上的短正合扩张还可由投射覆盖的核到目标模的稳定同态直接计算，其中模掉经过投射模的同态恰好对应改变扩张提升所消去的参数。
@@ -35,6 +44,12 @@
 	\ProseParagraphBreak
 
 	Brauer 特征标只在 \(p\)-正则元素上定义，把剩余域中的特征值提升到特征零后求和。这样避免了 \(k\) 值迹把整数重数约化模 \(p\) 的损失；在本章的分裂条件下，整个 Brauer 特征标函数确定简单合成因子及其整数重数，但不能区分具有相同合成因子的不同扩张。分解数描述普通不可约表示约化后的简单成分；块的缺陷群则借助 Brauer 映射把块与 \(p\) 子群联系起来。
+
+	\ProseParagraphBreak
+	群代数的对称配对使有限维投射模同时内射，因而合冲模在稳定范畴中成为等价，一阶扩张由 \(\underline{\operatorname{Hom}}(\Omega M,N)\) 给出。相对迹的恒等映射判据把诱导直和因子与子群联系起来，顶点只确定到共轭，源还须记录子群上的模。Brauer 对应处理块，Green 对应处理不可分解模，两者均有指定局部子群与顶点或缺陷群的条件，不能由此推出任意两块的模范畴等价。
+
+	\ProseParagraphBreak
+	计算时，特征标表、分解矩阵及合成因子列表首先记录数值；不变子空间和分裂性则需要矩阵证据。等式 \(A_iC=CB_i\) 核验子模，换基后的非对角块记录扩张，补空间存在与否由一组共同的线性方程决定。这样既可以利用软件找到候选结果，也能说明结果为何成立，以及它还没有确定哪些结构。
 \end{chaptersummary}
 
 \BookExercises
@@ -211,39 +226,54 @@
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:08-s3-characteristic-three}
-	在满足本章单位根条件的 \(S_3\) 分裂 \(3\)-模系统中，利用\cref{b5:exm:brauer-s3-characteristic-three}计算分解矩阵，普通不可约表示依次按平凡、符号和标准二维表示排列。令二维增广子模为
+	设 \(k\) 为特征 \(3\) 的域，\(S_3\) 按置换坐标作用于 \(U=\{(x,y,z)\in k^3:x+y+z=0\}\)。记 \(S_+,S_-\) 为平凡模与符号模，\(P_+\) 为 \(S_+\) 的投射覆盖。证明对角作用下有实际模同构
 	\[
-		U=\bigl\{(x,y,z)\in k^3:x+y+z=0\bigr\}
+		U\otimes_kU\cong P_+\oplus S_-.
 	\]
-	并记 \(S_+,S_-\) 为平凡与符号模。分别计算 \(U\)、\(U\otimes_k S_-\) 的顶、基座、不动空间和 Brauer 特征标，说明二者有相同的特征标却不同构。
+	要求区分由 Brauer 特征标得到的合成重数与证明上述直和分解所需的附加信息。
 \end{optionalexercise}
 \begin{solution}
-	正文已经给出 \(\varphi_+=(1,1)\)、\(\varphi_-=(1,-1)\)，以及三个普通特征标的限制 \(\varphi_+,\varphi_-,\varphi_++\varphi_-\)。故分解矩阵为
+	取 \(u=(1,-1,0)\)、\(v=(0,1,-1)\)，令 \(r=(123)\)、\(s=(12)\)。\eqref{b5:eq:s3-modular-matrix-input}给出 \(r,s\) 在这组基上的矩阵。交换两个张量因子的算子与群作用交换，且 \(2\) 在 \(k\) 中可逆，所以其 \(+1,-1\) 特征空间给出实际分解
 	\[
-		D=\begin{pmatrix}1&0\\0&1\\1&1\end{pmatrix}.
+		U\otimes U=\operatorname{Sym}^2U\oplus\Lambda^2U.
 	\]
-	取 \(r=(123)\)。它在 \(U\) 上的固定空间是常向量直线 \(D_0=k(1,1,1)\)，而它不恒等，例如 \((1,-1,0)\) 被送到 \((0,1,-1)\)。所以这个二维限制模是一条长度二的幂零链。任一简单 \(kS_3\)-子模都被 \(r\) 固定，故必等于 \(D_0\)。由\cref{b5:exm:s3-induced-lattice}，\(D_0\cong S_+\)、\(U/D_0\cong S_-\)，于是 \(\operatorname{soc}U=S_+\)、\(U/JU=S_-\)、\(\dim U^{S_3}=1\)。 张量符号模只把换位的矩阵乘以 \(-1\)，子模格不变，却交换了两种简单类型。因此 \(U\otimes S_-\) 的基座为 \(S_-\)，顶为 \(S_+\)，不动空间为零。两者都各有一个 \(S_+\) 和一个 \(S_-\) 合成因子，Brauer 特征标均为 \(\varphi_++\varphi_-=(2,0)\)，但基座或不动空间已经将它们区分。
+	这里将对称幂认作由平均投影得到的子空间。\(r,s\) 在一维外幂上的作用分别为其行列式 \(1,-1\)，故 \(\Lambda^2U\cong S_-\)。在对称部分的基 \(u\otimes u,\ u\otimes v+v\otimes u,\ v\otimes v\) 上，两矩阵为
+	\[
+		C=\begin{pmatrix}0&0&1\\0&2&1\\1&1&1\end{pmatrix},\qquad
+		E=\begin{pmatrix}1&1&1\\0&2&1\\0&0&1\end{pmatrix}.
+	\]
+	计算得 \((C-I)^3=0\)、\((C-I)^2\ne0\)。因此这个三维空间限制到 \(\langle r\rangle=C_3\) 后只有一条长度三的幂零链，是秩一自由 \(kC_3\)-模。由\cref{b5:prop:relative-sylow-projectivity}，\(\operatorname{Sym}^2U\) 是投射 \(kS_3\)-模。
+
+	\(U\) 的 Brauer 特征标在单位元、换位两类上为 \((2,0)\)，故张量积为 \((4,0)=2\varphi_++2\varphi_-\)。扣除外幂的 \(\varphi_-\) 后，对称部分有两个 \(S_+\) 因子和一个 \(S_-\) 因子。\cref{b5:exm:s3-three-block-local}给出两个不可分解投射覆盖 \(P_+,P_-\)，维数均为三，合成重数分别为 \((2,1),(1,2)\)。三维投射模的分解只能取其中一个，重数于是迫使对称部分同构于 \(P_+\)。这就证明所求同构；仅有 \((4,0)\) 不能独自证明投射部分的存在，也不能决定非分裂的连接方式。
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:08-s3-three-cartan}
-	沿用上一题，令 \(t=r-1\)、\(e_\pm=(1\pm s)/2\)。 求 \(kS_3\) 的根以及投射模 \(P_\pm=kS_3e_\pm\) 的根层，进而计算 Cartan 矩阵，并证明此时群代数只有一个块。
+	设 \(p\) 为奇素数，\(k\) 为特征 \(p\) 的域，
+	\[
+		G=\langle r,s\mid r^p=s^2=1,\ srs=r^{-1}\rangle
+	\]
+	为阶 \(2p\) 的二面体群。令 \(t=r-1\)、\(e_\pm=(1\pm s)/2\)。求 \(kG\) 的根、简单模、不可分解投射覆盖及其根层，证明它只有一个块，并计算 Cartan 矩阵及其行列式。再与同一特征下的 \(C_p\times C_2\) 比较，说明群阶与 Sylow 子群同构类型相同并不足以决定块分解。
 \end{optionalexercise}
 \begin{solution}
-	群关系给出 \(t^3=0\) 及
+	关系给出 \(t^p=0\) 及
 	\[
-		sts=r^{-1}-1=(1+t)^2-1=-t+t^2.
+		sts=(1+t)^{-1}-1=-t+t^2-\cdots+t^{p-1}.
 	\]
-	因此由 \(t\) 生成的双边理想以 \(t,t^2,ts,t^2s\) 为基，立方为零，商为半单代数 \(kC_2\)，故它就是 \(J(kS_3)\)。 \(P_\pm\) 的基为 \(e_\pm,te_\pm,t^2e_\pm\)，顶分别为 \(S_\pm\)。在第 \(i\) 个根层上，\(r\) 平凡作用，而
+	所以 \((t)\) 是双边理想，其 \(i\) 次幂由 \(t^j,t^js\)、\(i\le j<p\) 张成，\(p\) 次幂为零。商为 \(kC_2\cong k\times k\)，半单，故 \(J(kG)=(t)\)。简单模只有 \(S_+,S_-\)：\(r\) 平凡作用，\(s\) 分别作用为 \(1,-1\)。
+
+	正则模分解为 \(P_+\oplus P_-\)，其中 \(P_\pm=kGe_\pm\) 的基为 \(e_\pm,te_\pm,\ldots,t^{p-1}e_\pm\)。它们的顶分别为 \(S_\pm\)，因而是这两个简单模的不可分解投射覆盖。在第 \(i\) 个根层，\(r\) 平凡作用，而
 	\[
-		s\,t^ie_\pm\equiv(\pm1)(-1)^i t^ie_\pm \pmod{J^{i+1}P_\pm}.
+		s t^ie_\pm\equiv(\pm1)(-1)^it^ie_\pm
+		\pmod{J^{i+1}P_\pm}.
 	\]
-	所以 \(P_+\) 从顶到底的因子为 \(S_+,S_-,S_+\)，\(P_-\) 的因子为 \(S_-,S_+,S_-\)。两模投射且顶简单，故为相应不可分解覆盖，得到
+	于是 \(P_+\) 的根层从顶到底交替为 \(S_+,S_-,S_+,\ldots,S_+\)，\(P_-\) 的交替次序相反。两种简单模同在一个不可分解投射模的合成列中，故属于同一个块；简单模已经穷尽，所以没有其他块。按简单模作行、投射覆盖作列，
 	\[
-		C=\begin{pmatrix}2&1\\1&2\end{pmatrix}
-		=D^{\mathsf T}D.
+		C_G=\begin{pmatrix}(p+1)/2&(p-1)/2\\(p-1)/2&(p+1)/2\end{pmatrix},
+		\qquad \det C_G=p.
 	\]
-	一个不可分解模只属于一个块；\(P_+\) 的合成因子同时包含两种简单模，所以它们必属于同一块。若有其他非零块，它必有简单模，与简单类型已经穷尽矛盾。因此群代数只有一个块。
+	对于 \(C_p\times C_2\)，两个 \(e_\pm\) 都在中心，每个块为 \(kC_p\)，故有两个块，Cartan 矩阵为 \(\operatorname{diag}(p,p)\)。两群都有阶 \(2p\)，Sylow \(p\) 子群均为循环群，但前者的反射 \(s\) 把 \(r\) 变成 \(r^{-1}\)，使根层的简单类型交替；后者的作用交换，根层类型保持不变。这项作用信息不能从群阶及 Sylow 子群类型中读出。
 \end{solution}
+
 
 \begin{optionalexercise}\label{b5:ex:08-naive-brauer-inner-product}
 	对特征 \(3\) 的 \(S_3\) 的两个不可约 Brauer 特征标 \(\varphi_+,\varphi_-\)，令 \(\Psi_+=2\varphi_++\varphi_-\)、\(\Psi_-=\varphi_++2\varphi_-\)，并定义
@@ -257,7 +287,7 @@
 	\[
 		(\Psi_+,\varphi_+)_0=(\Psi_-,\varphi_-)_0=\frac{3+3}{6}=1, \qquad (\Psi_+,\varphi_-)_0=(\Psi_-,\varphi_+)_0=0.
 	\]
-	所以两组基互为对偶。另一方面，\(\Psi_\pm\) 的平方长度均为 \((9+3)/6=2\)，互相的内积为 \((9-3)/6=1\)，故它们自身的 Gram 矩阵是 \(\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)\)，恰与\cref{b5:ex:08-s3-three-cartan}算出的 Cartan 矩阵相同。这是本例的计算，并不是从普通不可约特征标的正交公式推出的。
+	所以两组基互为对偶。另一方面，\(\Psi_\pm\) 的平方长度均为 \((9+3)/6=2\)，互相的内积为 \((9-3)/6=1\)，故它们自身的 Gram 矩阵是 \(\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)\)，恰与\cref{b5:exm:s3-three-block-local}算出的 Cartan 矩阵相同。这是本例的计算，并不是从普通不可约特征标的正交公式推出的。
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:08-s3-two-tensor}
@@ -300,7 +330,7 @@
 \end{solution}
 
 \begin{optionalexercise}\label{b5:ex:08-defect-change-prime}
-	在特征 \(3\) 中，求\cref{b5:ex:08-c6-blocks}的 \(C_6\) 两个块的缺陷群，以及\cref{b5:ex:08-s3-three-cartan}的 \(S_3\) 唯一块的缺陷群。将后者与正文中特征 \(2\) 的 \(S_3\) 比较。
+	在特征 \(3\) 中，求\cref{b5:ex:08-c6-blocks}的 \(C_6\) 两个块的缺陷群，以及\cref{b5:exm:s3-three-block-local}的 \(S_3\) 唯一块的缺陷群。将后者与正文中特征 \(2\) 的 \(S_3\) 比较。
 \end{optionalexercise}
 \begin{solution}
 	\(C_6\) 交换，所以任一子群的中心化子都是全群，Brauer 截断在群代数上就是恒等。因此两个非零块幂等元对 Sylow \(3\) 子群 \(C_3\) 的 Brauer 像都非零；没有更大的 \(3\) 子群，两个块的缺陷群都是 \(C_3\)。 特征 \(3\) 的 \(S_3\) 只有一个块，幂等元为 \(1\)。对 \(P=\langle r\rangle\) 有 \(\operatorname{Br}_P^G(1)=1\neq0\)，且 \(P\) 是 Sylow \(3\) 子群，所以它是缺陷群。 特征 \(2\) 时，\(S_3\) 则有一个缺陷群为 \(C_2\) 的二维局部块和一个缺陷群平凡的四维矩阵块。改变模特征会同时改变块的数目、块的结构以及相应的缺陷群。
@@ -310,7 +340,7 @@
 	设 \(k\) 为特征 \(3\) 的域，\(G=S_3=\langle r,s\mid r^3=s^2=1,\ srs=r^{-1}\rangle\)，\(H=\langle r\rangle\cong C_3\)、\(t=r-1\)。令 \(M_d=kH/(t^d)\)，其中 \(d=1,2,3\)。求三个诱导模 \(\operatorname{Ind}_H^G M_d\) 的不可分解直和类型及简单合成因子，说明诱导一个不可分解模可能得到可分解模。
 \end{optionalexercise}
 \begin{solution}
-	记 \(S_+,S_-\) 为平凡与符号简单模，\(P_\pm=kGe_\pm\)，其中 \(e_\pm=(1\pm s)/2\)。由\cref{b5:ex:08-s3-three-cartan}，\(J=J(kG)=(t)\)，且 \(P_+\) 的根层从顶到底为 \(S_+,S_-,S_+\)，\(P_-\) 的为 \(S_-,S_+,S_-\)。 \(M_1\) 是 \(H\) 的平凡模，诱导后为两陪集上的置换模；它通过 \(G/H\cong C_2\) 作用，故
+	记 \(S_+,S_-\) 为平凡与符号简单模，\(P_\pm=kGe_\pm\)，其中 \(e_\pm=(1\pm s)/2\)。由\cref{b5:exm:s3-three-block-local}，\(J=J(kG)=(t)\)，且 \(P_+\) 的根层从顶到底为 \(S_+,S_-,S_+\)，\(P_-\) 的为 \(S_-,S_+,S_-\)。 \(M_1\) 是 \(H\) 的平凡模，诱导后为两陪集上的置换模；它通过 \(G/H\cong C_2\) 作用，故
 	\[
 		\operatorname{Ind}_H^G M_1\cong S_+\oplus S_-.
 	\]
@@ -319,4 +349,239 @@
 		0\to\operatorname{Ind}_H^G M_2\to kG\to k[G/H]\to0.
 	\]
 	右端是商代数 \(kG/J\) 的正则模，故中间满射的核就是 \(J\)。于是 \(\operatorname{Ind}_H^G M_2\cong JP_+\oplus JP_-\)。两项均为二维不可分解模：在基 \(te_\pm,t^2e_\pm\) 上，\(t\) 非零而平方为零；若分成两个一维模，正规 \(C_3\) 将在两项上都平凡作用，与此矛盾。 三种诱导模的简单重数依次为 \((1,1),(2,2),(3,3)\)，其中第二个来自两个根模各有一个 \(S_+\) 和一个 \(S_-\)。源端的 \(M_d\) 都不可分解，但这里三个诱导模都分解为两个非零项。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-symmetric-center-dual}
+	设 \(A\) 为有限维对称 \(k\) 代数，\(\lambda:A\to k\) 为定义中的线性泛函，并记 \([A,A]\) 为全部交换子 \(ab-ba\) 张成的 \(k\) 子空间，不把它改成由交换子生成的双边理想。证明配对诱导同构
+	\[
+		Z(A)\cong\operatorname{Hom}_k(A/[A,A],k),
+		\qquad z\longmapsto\bigl(x+[A,A]\mapsto\lambda(zx)\bigr).
+	\]
+	对群代数 \(A=kG\)，取 \(\lambda\) 为单位群元素的系数，证明 \([A,A]\) 正是同一共轭类中群元素之差张成的空间，并说明上述配对如何将共轭类和与商空间的共轭类基配对。
+\end{optionalexercise}
+\begin{solution}
+	令 \([A,A]^\perp=\{z\in A:\lambda(zc)=0\text{ 对所有 }c\in[A,A]\}\)。由 \(\lambda(uv)=\lambda(vu)\)，对任意 \(a,b,z\in A\) 有
+	\[
+		\lambda(z(ab-ba))=\lambda((za-az)b).
+	\]
+	若 \(z\) 在中心，右边为零。反过来，若左边对所有 \(a,b\) 为零，配对非退化使 \(za-az=0\) 对每个 \(a\) 成立。因此 \([A,A]^\perp=Z(A)\)。非退化配对把 \(A\) 同构到其线性对偶，\([A,A]\) 的零化子在该同构下正好对应商空间的对偶，得到所述同构。这一步只对向量空间取商，没有使用 \([A,A]\) 为理想。
+
+	群代数中的交换子由 \(gh-hg\) 张成，而 \(gh\) 与 \(hg\) 共轭。反过来，对 \(x,h\in G\)，有
+	\[
+		xhx^{-1}-h=[x,hx^{-1}],
+	\]
+	所以同一共轭类内的差都属于交换子空间。商空间因此每个共轭类保留一维：不同类的支集不相交，每一类内部模去系数和为零的子空间。若 \(C,D\) 为共轭类，\(c_C=\sum_{g\in C}g\)，取 \(h\in D\)，则
+	\[
+		\lambda(c_Ch)=
+		\begin{cases}1,&D=C^{-1},\\0,&D\ne C^{-1}.
+		\end{cases}
+	\]
+	故共轭类和与逆共轭类的商基互为对偶；此计算在模特征下也成立，没有除以共轭类大小。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-cyclic-vertices-sources}
+	设 \(p\) 为素数，\(k\) 为特征 \(p\) 的域，\(G=C_{p^r}=\langle g\rangle\)、\(r\ge1\)，令 \(t=g-1\)、\(M_d=k[t]/(t^d)\)，其中 \(1\le d\le p^r\)。对 \(0\le s\le r\)，记 \(H_s=\langle g^{p^{r-s}}\rangle\)。证明 \(M_d\) 相对于 \(H_s\) 投射，当且仅当 \(p^{r-s}\mid d\)。据此求出每个 \(M_d\) 的顶点和源，并计算 \(G=C_8\)、\(d=6\) 的例子。
+\end{optionalexercise}
+\begin{solution}
+	写 \(q=p^{r-s}\)，令 \(u=g^q-1\)。特征 \(p\) 中有 \(u=t^q\)，所以 \(kH_s\cong k[u]/(u^{p^s})\)。这个子群的不可分解模恰为 \(U_e=k[u]/(u^e)\)、\(1\le e\le p^s\)，包括 \(s=0\) 时的唯一模 \(U_1=k\)。诱导给出
+	\[
+		kG\otimes_{kH_s}U_e\cong k[t]/(t^{qe})=M_{qe}.
+	\]
+	每个 \(U_e\) 的诱导仍不可分解。若 \(M_d\) 相对投射，则它是某个有限维 \(H_s\)-模诱导所得的直和因子。把该模分解为各 \(U_e\)，诱导后是各 \(M_{qe}\) 的直和；\cref{b5:thm:cyclic-p-modules}的分解唯一性迫使 \(d=qe\) 对某个 \(e\) 成立。反过来，若 \(q\mid d\)，上述同构直接使 \(M_d\) 从 \(H_s\) 诱导得到。
+
+	令 \(d=p^a e\)，其中 \(p\nmid e\)、\(0\le a\le r\)。最小的可用子群为 \(H_{r-a}\)，阶为 \(p^{r-a}\)，故它是顶点。对应的源是 \(k[u]/(u^e)\)，其中 \(u=t^{p^a}\)：诱导它恰好得到 \(M_d\)。也可直接验证限制模为 \(p^a\) 个这样的源的直和，因为
+	\[
+		M_d=\bigoplus_{i=0}^{p^a-1}
+		\operatorname{span}_k\{t^i,t^{i+p^a},\ldots,t^{i+(e-1)p^a}\},
+	\]
+	各项对乘 \(u\) 稳定，都是长度 \(e\) 的链。对 \(C_8\)、\(d=6=2\cdot3\)，顶点是 \(\langle g^2\rangle\cong C_4\)，源为 \(k[u]/(u^3)\)，限制模是该源的两份直和。特别地，源的维数不必为一。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-tensor-vertex-intersection}
+	设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域，\(M,N\) 为非零有限维不可分解左 \(kG\)-模，分别有顶点 \(P,Q\)。张量积取对角群作用。证明 \(M\otimes_kN\) 的每个非零不可分解直和因子都有一个顶点包含于某个 \(P\cap gQg^{-1}\)。据此证明：若 \(P\cap gQg^{-1}=1\) 对所有 \(g\in G\) 成立，则 \(M\otimes_kN\) 投射。用 \(G=C_p\times C_p\) 两个不同直因子的诱导平凡模给出两个非投射模张量后投射的例子。
+\end{optionalexercise}
+\begin{solution}
+	取 \(M\) 的一个 \(P\)-源 \(S\)，使 \(M\) 为 \(\operatorname{Ind}_P^G S\) 的直和因子。张量保持分裂映射，而\cref{b5:thm:tensor-identity}给出
+	\[
+		(\operatorname{Ind}_P^G S)\otimes_kN
+		\cong\operatorname{Ind}_P^G(S\otimes_k\operatorname{Res}_P^GN).
+	\]
+	因此 \(M\otimes_kN\) 相对于 \(P\) 投射。交换两个张量因子后，同理知道它相对于 \(Q\) 投射。每个不可分解直和因子 \(V\) 也具有这两种相对投射性，由\cref{b5:lem:relative-intersection}可知 \(V\) 相对于某个 \(P\cap gQg^{-1}\) 投射；\cref{b5:thm:vertices-sources}使该交集包含 \(V\) 的一个顶点。若这些交集均平凡，所有不可分解项都有平凡顶点，故各项投射，其有限直和也投射。
+
+	具体取 \(G=P\times Q\)、\(P\cong Q\cong C_p\)，令 \(M=k[G/P]\)、\(N=k[G/Q]\)。\(M\) 的作用通过 \(G/P\cong C_p\) 给出正则模，因而不可分解；\(N\) 同样不可分解。两模维数均为 \(p\)，而群代数 \(kG\) 是局部代数，\cref{b5:thm:split-projective-covers}说明其有限维投射模都是自由模，维数为 \(p^2\) 的倍数，所以两模均不投射。张量基由 \((G/P)\times(G/Q)\) 给出，映射
+	\[
+		G\longrightarrow(G/P)\times(G/Q),\qquad x\longmapsto(xP,xQ)
+	\]
+	是 \(G\)-集合双射：核条件为 \(P\cap Q=1\)，两边大小都为 \(p^2\)。因此 \(M\otimes_kN\cong kG\)，是秩一自由模。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-syzygy-tensor}
+	设 \(G\) 为有限群，\(k\) 为域，\(M\) 为有限维左 \(kG\)-模。以对角群作用证明稳定范畴中有同构
+	\[
+		M\otimes_k\Omega k\cong\Omega M.
+	\]
+	这里的 \(k\) 为平凡模；\(\Omega\) 允许从任意有限维投射满射取核。取 \(G=C_p\)，说明这个稳定同构不总是实际模同构。
+\end{optionalexercise}
+\begin{solution}
+	选 \(0\to\Omega k\to P\to k\to0\)，在域上与 \(M\) 张量保持正合，得到
+	\[
+		0\longrightarrow M\otimes_k\Omega k
+		\longrightarrow M\otimes_kP\longrightarrow M\longrightarrow0.
+	\]
+	中间项投射：将 \(P\) 补成有限自由模，张量后的中间项便是若干 \(M\otimes_k kG\) 的直和因子；\cref{b5:thm:tensor-identity}在平凡子群处的同构说明每个 \(M\otimes_k kG\) 都是有限自由模。故这个核是由一个投射满射定义的合冲模，与任意另选的 \(\Omega M\) 通过\eqref{b5:eq:syzygy-schanuel}只相差投射直和项，得到稳定同构。
+
+	取特征 \(p\) 的 \(k\)、\(G=C_p\)、\(M=kG\)，并用恒等映射作为 \(M\) 的投射覆盖，则 \(\Omega M=0\)。而由增广覆盖得到的 \(\Omega k\) 维数为 \(p-1\)，故 \(M\otimes_k\Omega k\) 的维数为 \(p(p-1)>0\)，实际模不为零。它是有限自由模，因而在稳定范畴中同构于零，恰与公式一致。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-finite-projective-resolution}
+	设 \(G\) 为有限群，\(k\) 为域，\(M\) 为有限维左 \(kG\)-模。若存在有限正合列
+	\[
+		0\longrightarrow P_n\longrightarrow P_{n-1}\longrightarrow\cdots
+		\longrightarrow P_0\longrightarrow M\longrightarrow0,
+	\]
+	其中各 \(P_i\) 有限维且投射，证明 \(M\) 投射。由此说明，当 \(\operatorname{char}k=p\) 且 \(p\,\bigm\vert\,|G|\) 时，平凡模 \(k\) 不能有这种有限投射消解。
+\end{optionalexercise}
+\begin{solution}
+	若 \(n=0\)，结论直接成立。若 \(n\ge1\)，\cref{b5:prop:group-algebra-symmetric}说明 \(P_n\) 同时内射，所以单射 \(P_n\to P_{n-1}\) 分裂。它的余核 \(K\) 是 \(P_{n-1}\) 的直和因子，因而投射；原正合列去掉这两个位置后变成
+	\[
+		0\longrightarrow K\longrightarrow P_{n-2}\longrightarrow\cdots
+		\longrightarrow P_0\longrightarrow M\longrightarrow0,
+	\]
+	其中 \(n=1\) 时直接得到 \(M\cong K\)。逐次缩短消解，就归结到 \(n=0\) 的情形。
+
+	若 \(p\,\bigm\vert\,|G|\)，平凡模 \(k\) 不是投射模，因为增广满射 \(kG\to k\) 的任何 \(G\)-不动提升都为 \(c\sum_{g\in G}g\)，其增广为 \(c|G|=0\)，不能提升一。因此它不可能具有上述有限投射消解。有限维模的向量空间维数有限，并不保证消解在有限步后终止。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-product-brauer-correspondence}
+	设 \(k\) 为含有本原三次单位根 \(\zeta\) 的特征二域，\(G=S_3\times\langle z\rangle\)，其中 \(z^3=1\)。沿用 \(S_3\) 中的 \(r=(123)\)、\(s=(12)\)，令 \(e=1+r+r^2\)、\(f=r+r^2\)，并令
+	\[
+		c_j=\frac13\sum_{a=0}^2\zeta^{-ja}z^a\quad(0\le j\le2).
+	\]
+	求 \(kG\) 的全部块及其缺陷群。对 \(P=\langle s\rangle\times1\)，计算全部缺陷为 \(P\) 的 Brauer 对应，并求一维模 \(k\otimes k_{\zeta^j}\) 的 Green 对应；这里 \(z\) 在 \(k_{\zeta^j}\) 上作用为 \(\zeta^j\)。
+\end{optionalexercise}
+\begin{solution}
+	\(c_jc_\ell=\delta_{j\ell}c_j\)、\(\sum_jc_j=1\)，且 \(zc_j=\zeta^jc_j\)，因此 \(kC_3=\prod_{j=0}^2kc_j\)。结合正文已经证明的 \(kS_3\cong kC_2\times M_2(k)\)，得到
+	\[
+		kG\cong\prod_{j=0}^2\bigl(kC_2\times M_2(k)\bigr).
+	\]
+	所以全部块幂等元为 \(ec_j,fc_j\)，各三枚。\(P\) 的正规化子与中心化子均为 \(H=\langle s\rangle\times\langle z\rangle\)。截断只作用于 \(S_3\) 坐标，故
+	\[
+		\operatorname{Br}_P^G(ec_j)=c_j,\qquad
+		\operatorname{Br}_P^G(fc_j)=0.
+	\]
+	\(G\) 的非平凡 \(2\)-子群都是 \(P\) 的共轭，因此 \(ec_j\) 的缺陷群为 \(P\)，\(fc_j\) 的缺陷群为一。\(kHc_j\cong kC_2\) 是缺陷为 \(P\) 的块，Brauer 对应就是 \(ec_j\leftrightarrow c_j\)。
+
+	一维模 \(V_j=k\otimes k_{\zeta^j}\) 限制到 \(H\) 后仍不可分解。它不是投射模，因为限制到 \(P\) 后是一维平凡模，而特征二下的投射 \(kP\)-模维数是二的倍数。它相对 \(P\) 投射，因为 \(P\) 是 Sylow 子群；故其顶点为 \(P\)，Green 对应为 \(f(V_j)=\operatorname{Res}_H^G V_j\)。诱导回去则有
+	\[
+		\operatorname{Ind}_H^G f(V_j)
+		\cong V_j\oplus(S_2\otimes k_{\zeta^j}),
+	\]
+	第二项是矩阵块 \(fc_j\) 中的投射简单模，并不属于与 \(V_j\) 相同的块。这也说明 Green 对应的额外诱导项可以落在别的块中。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-a4-green-correspondence}
+	设 \(k\) 为特征三的域，\(G=A_4=V\rtimes\langle r\rangle\)，其中 \(V=\{1,a,b,c\}\cong C_2\times C_2\)，\(r\) 以三轮换置换 \(a,b,c\)。令 \(P=\langle r\rangle\)。求 \(kG\) 的两个块及其缺陷群，并证明主块同构于 \(kC_3\)。对 \(1\le d\le3\)，将 \(J_d=k[t]/(t^d)\) 视为 \(kP\)-模，其中 \(r\) 作用为 \(1+t\)；令 \(M_d\) 为沿 \(G\to G/V\cong P\) 膨胀所得的模。求 \(M_1,M_2\) 的 Green 对应，并将 \(\operatorname{Ind}_P^GJ_d\) 完整分解。
+\end{optionalexercise}
+\begin{solution}
+	\(V\) 的四个一维特征标都在 \(k\) 中取值。令
+	\[
+		e_0=\frac14(1+a+b+c),\qquad
+		\varepsilon_i=\frac14\sum_{v\in V}\chi_i(v)^{-1}v\quad(i\in\mathbb Z/3\mathbb Z),
+	\]
+	其中 \(\chi_0,\chi_1,\chi_2\) 为三个非平凡特征标，并编号使 \(r\varepsilon_ir^{-1}=\varepsilon_{i+1}\)，下标按模三理解。它们是 \(kV\) 中的正交本原幂等元。\(e_0\) 与 \(f=\varepsilon_0+\varepsilon_1+\varepsilon_2=1-e_0\) 被 \(G\) 共轭固定，故为中心幂等元。\(kGe_0\) 以 \(e_0,re_0,r^2e_0\) 为基，满足 \(r^3e_0=e_0\)，从而同构于 \(kC_3\)。
+
+	在另一项中，九个元素
+	\[
+		E_{ij}=\varepsilon_i r^{i-j}\qquad(i,j\in\mathbb Z/3\mathbb Z)
+	\]
+	满足 \(E_{ij}E_{\ell m}=\delta_{j\ell}E_{im}\)。这是因为 \(r^{i-j}\varepsilon_\ell r^{j-i}=\varepsilon_{\ell+i-j}\)，与 \(\varepsilon_i\) 相乘只有 \(\ell=j\) 时不为零。它们构成九维空间 \(kGf\) 的一组基，所以 \(kGf\cong M_3(k)\)。因此 \(e_0,f\) 恰为两个块幂等元，前者包含平凡模，是主块；记后者的三维简单模为 \(S\)。
+
+	在 \(A_4\) 中 \(N_G(P)=C_G(P)=P\)，而 \(V\cap P=1\)。特征三下 \(4=1\)，故
+	\[
+		\operatorname{Br}_P^G(e_0)=\frac14=1,\qquad
+		\operatorname{Br}_P^G(f)=1-\frac14=0.
+	\]
+	所以主块的缺陷群为 \(P\)，矩阵块的缺陷群为一。\(M_d\) 通过 \(kGe_0\cong kP\) 对应于 \(J_d\)，因而不可分解；\(d=1,2\) 时不是投射模，且唯一可能的非平凡顶点为 \(P\)。限制到 \(P\) 就是 \(J_d\)，故 \(f(M_d)=J_d\)。
+
+	诱导模的主块部分为
+	\[
+		e_0(kG\otimes_{kP}J_d)
+		\cong kGe_0\otimes_{kP}J_d\cong M_d.
+	\]
+	另一块为矩阵块，其中每个模都是 \(S\) 的直和。诱导模维数为 \([G:P]d=4d\)，减去主块部分的 \(d\) 维，余下 \(3d\) 维。因此对三个 \(d\) 都有
+	\[
+		\operatorname{Ind}_P^GJ_d\cong M_d\oplus S^{\oplus d}.
+	\]
+	当 \(d=3\) 时，\(J_3\) 和 \(M_3\) 均投射，顶点是一，故这时的分解不应称为顶点 \(P\) 的 Green 对应。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-generalized-decomposition-s3}
+	在满足\cref{b5:thm:brauer-second-main}假设的分裂 \(p\)-模系统中，对 \(S_3\) 的普通不可约特征标按平凡、符号、二维标准特征标的次序排列。分别取 \(p=2,u=(12)\) 与 \(p=3,u=(123)\)，求相应的全部广义分解数，并用 Brauer 第二主定理解释其中的零。说明这两个例子如何区别广义分解数与普通分解数。
+\end{optionalexercise}
+\begin{solution}
+	两个中心化子分别为 \(C_2\)、\(C_3\)，都是 \(p\)-群，故各只有一个不可约 Brauer 特征标，且其定义域中的 \(p\)-正则元素只有单位元。因此广义分解数就是三个普通特征标在 \(u\) 处的值，分别为
+	\[
+		D^{(12)}=\begin{pmatrix}1\\-1\\0\end{pmatrix},\qquad
+		D^{(123)}=\begin{pmatrix}1\\1\\-1\end{pmatrix}.
+	\]
+	在特征二中，平凡与符号普通特征标属于主块，二维标准特征标属于缺陷零矩阵块。后者的 Brauer 像为零，第二主定理因此要求它的整个局部列为零，恰与标准特征标在换位处的值一致。在特征三中，全群只有一个块，且它在 \(C_3\) 的 Brauer 像为一，故定理不强迫任何条目为零。这里两列都出现负数；普通分解数记录合成因子重数，不能为负，而广义分解数还含 \(u\) 的单位根特征值。第一列的 \(-1\) 就来自符号表示在换位上的作用。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-green-normalizer-condition}
+	设 \(k\) 为特征三的域，\(G=S_3\)、\(Q=H=A_3\)。证明 \(H\) 不满足 Green 对应中 \(N_G(Q)\le H\) 的假设，并计算 \(\operatorname{Ind}_H^Gk\)。证明其两个不可分解直和项都有顶点 \(Q\)，从而说明删除正规化子条件后，“唯一顶点为 \(Q\) 的诱导直和项”会失败。
+\end{optionalexercise}
+\begin{solution}
+	\(Q\) 在 \(G\) 中正规，所以 \(N_G(Q)=G\ne H\)。两个陪集上的置换表示是商群 \(G/H\cong C_2\) 的正则表示。因为二在 \(k\) 中可逆，它分裂为
+	\[
+		\operatorname{Ind}_H^Gk\cong S_+\oplus S_-.
+	\]
+	两个模均一维，因而不可分解；\(Q\) 在它们上面都作用为恒等。对任一子群 \(L\le G\)，在这两个模的自同态环 \(k\) 上共轭作用仍平凡，Higman 判据都是 \(3\nmid[G:L]\)。因此两者的顶点都是 Sylow 三子群 \(Q\)。这里出现两个不同构、顶点相同的直和项，正是正规化子条件缺失造成的失败。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-finite-field-absolute-test}
+	设 \(k=\mathbb F_2\)，群 \(C_3=\langle r\rangle\) 在 \(W=k^2\) 上按矩阵 \(A=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)\) 作用。证明 \(W\) 不可约但不是绝对不可约，求 \(\operatorname{End}_{kC_3}(W)\)，并写出扩张到 \(\mathbb F_4\) 后的简单分解。说明计算程序给出“不可约”时为何仍须保留工作域。
+\end{optionalexercise}
+\begin{solution}
+	直接计算 \(A^2+A+I=0\)，故 \(A^3=I\)。多项式 \(X^2+X+1\) 在 \(\mathbb F_2\) 上没有根，所以 \(A\) 没有该域中的特征向量直线；二维模的非零真子模只能是一维，故 \(W\) 不可约。若矩阵 \(X\) 与 \(A\) 交换，以 \(e_1,Ae_1=e_2\) 为基可知 \(X\) 完全由 \(Xe_1=a e_1+bAe_1\) 决定，并且 \(X=aI+bA\)。因此
+	\[
+		\operatorname{End}_{kC_3}(W)=k[A]
+		\cong\mathbb F_2[X]/(X^2+X+1)=\mathbb F_4.
+	\]
+	在 \(\mathbb F_4\) 中取 \(\alpha^2+\alpha+1=0\)。两个根 \(\alpha,\alpha^2\) 不同，列向量 \((1,\alpha)^{\mathsf T}\)、\((1,\alpha^2)^{\mathsf T}\) 分别为相应特征向量，且线性无关。故扩域后为两个一维表示的直和，\(r\) 分别作用为 \(\alpha,\alpha^2\)。原模因而不是绝对不可约。程序在 \(\mathbb F_2\) 上的不可约性结论与扩域后的可分解性并不冲突；把工作域删去，就会混淆这两个不同问题。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-spin-up-cyclic-vectors}
+	设 \(k=\mathbb F_2\)，\(S_3\) 在 \(W=k^2\) 上的两个生成矩阵为
+	\[
+		A=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+		B=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+	\]
+	在 \(M=W\oplus W\) 上取对角作用。对 \(v=(x,y)\in M\)，证明由 \(v\) 生成的子模维数为 \(2\operatorname{rank}(x\ y)\)。计算十五个非零向量中，分别有多少个生成二维子模、多少个生成整个 \(M\)。解释后者为何不能作为不可约性的证据。
+\end{optionalexercise}
+\begin{solution}
+	正文已通过 \(I,A,B,AB\) 的线性无关性证明它们生成的代数为 \(M_2(k)\)。故由 \((x,y)\) 生成的子模是
+	\[
+		\{\,(Cx,Cy):C\in M_2(k)\,\}.
+	\]
+	若 \(x=y=0\)，维数为零。若两列张成一维，可写 \(x=a z,y=b z\)，其中 \(z\ne0\)、\((a,b)\ne(0,0)\)；矩阵 \(C\) 的像 \(Cz\) 遍历 \(k^2\)，所得子模为 \(\{(aw,bw):w\in k^2\}\)，维数二。若 \((x\ y)\) 可逆，则给定任意 \((u,w)\)，取 \(C=(u\ w)(x\ y)^{-1}\)，便有 \((Cx,Cy)=(u,w)\)，所以生成整个四维模。这证明维数公式。
+
+	秩一矩阵唯一写成 \(z(a,b)\)，其中 \(z\) 是三个非零列之一，\((a,b)\) 是三个非零行之一；由于 \(k^\times=\{1\}\)，不存在额外的标量重复，所以共有九个。可逆矩阵有 \((2^2-1)(2^2-2)=6\) 个。因此九个非零向量生成二维子模，六个生成整个 \(M\)。但 \(W\oplus0\) 明显是非零真子模，\(M\) 仍可约。找到循环生成元只说明整个模可以从这个向量生成，未排除从其他向量生成真子模。
+\end{solution}
+
+\begin{optionalexercise}\label{b5:ex:08-character-data-permutation}
+	采用\cref{b5:prop:decomposition-data-recovery}的记号，令 \(P,Q,R\) 分别为普通不可约特征标、简单模和 \(p\)-正则类次序的置换矩阵。若新数据为 \(F'=PFR\)、\(\Phi'=Q\Phi R\)，求新分解矩阵。再对特征三的 \(S_3\)，只交换 Brauer 表中的两个共轭类列而保留普通限制表不变，算出误配后的矩阵，说明检查非负整数性可以发现什么，却不能保证什么。
+\end{optionalexercise}
+\begin{solution}
+	由 \(F=D\Phi\)，可得
+	\[
+		F'=PD\Phi R=(PDQ^{-1})\Phi',\qquad D'=PDQ^{-1}.
+	\]
+	共同的共轭类重排 \(R\) 消失，因为普通与 Brauer 函数必须在同一个群元素上比较；普通行和简单行的重排则分别重排 \(D\) 的行与列。
+
+	在正文的 \(S_3\) 次序下，错误数据给出
+	\[
+		\Phi'=\begin{pmatrix}1&1\\-1&1\end{pmatrix},\qquad
+		F(\Phi')^{-1}=\begin{pmatrix}1&0\\0&-1\\1&-1\end{pmatrix}.
+	\]
+	负数说明这不能是在所声称次序下的分解矩阵。非负整数性因此是一项有用的错误检测，但通过检查仍不能代替证明输入表完整，也不能代替共轭类与简单模的身份匹配。有些错误重排可能仍产生非负整数矩阵；必须保留列标、行标和相应模的定义，才能解释每个数的含义。
 \end{solution}

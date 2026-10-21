@@ -1,10 +1,13 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### C.2 树作用与几何群论
-% 纲要位置：计划纲要.md，第 897 行。
+% 纲要位置：计划纲要.md，第 908 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### C.2.1 自由积的陪集树
 % #### C.2.2 有限群作用的不动点
 % #### C.2.3 字长与群的几何
+% * 新增小节状态：初稿已完成；原有内容保留，新增范围尚未正式审核。
+% #### C.2.4 群增长与生成集比较
+% #### C.2.5 自由群与交换群增长
 % END APPENDIX OUTLINE SYNC
 
 \section{树作用与几何群论}
@@ -126,10 +129,195 @@
 	M=\max\bigl(1,\max_{s\in S}\ell_T(s)\bigr),\qquad N=\max\bigl(1,\max_{t\in T}\ell_S(t)\bigr).
 \]
 与 \(1\) 取最大保证 \(M,N\geq1\)；即使 \(G\) 为平凡群、所有字长都为零，下面的 \(1/N\) 也仍有定义。把最短 \(S\)-字中的每个字母换成长度至多 \(M\) 的 \(T\)-字，就得到 \(d_T(g,h)\leq M d_S(g,h)\)；逆字母的替换长度也相同。交换 \(S,T\) 给出 \(d_S(g,h)\leq N d_T(g,h)\)，所以对所有 \(g,h\in G\)，
-\[
-	\frac{1}{N}d_S(g,h)\leq d_T(g,h)\leq M d_S(g,h).
-\]
+\begin{equation}\label{b1:eq:word-metric-generators}
+	\dfrac{1}{N}d_S(g,h)\leq d_T(g,h)\leq M d_S(g,h).
+\end{equation}
 两个字距离相互控制在固定倍数以内，但这种比较不要求图的局部结构相同。例如，在自由群 \(F(a,b)\) 中给自由基 \(\{a,b\}\) 增添冗余生成元 \(ab\)，新的 Cayley 图便出现由 \(1,a,ab\) 构成的三角形；新增的边改变了局部路径，却没有破坏上述距离界。
 
 \ProseParagraphBreak
-\term[jihe-qunlun]{几何群论}[geometric group theory]利用这种距离和群作用研究群。例如自由群相对于一组自由基的 Cayley 图是树，而 \(\mathbb Z^2\) 对标准生成集的 Cayley 图是有许多四边形的方格图。路径是否容易约化、球中元素数怎样增长、子群怎样作用于空间，都是把代数问题转成几何问题的方式。本附录只建立树这一模型；曲率、双曲群与更一般的几何方法需要另外的准备。
+\term[jihe-qunlun]{几何群论}[geometric group theory]利用这种距离和群作用研究群。例如自由群相对于一组自由基的 Cayley 图是树，而 \(\mathbb Z^2\) 对标准生成集的 Cayley 图是有许多四边形的方格图。路径是否容易约化、球中元素数怎样增长、子群怎样作用于空间，都是把代数问题转成几何问题的方式。下面继续计算字距离球的大小；曲率、双曲群与更一般的几何方法需要另外的准备。
+
+% 扩充状态：增长比较、自由群及有限生成交换群增长已补正文；习题在附录章末汇合。
+\subsection{群增长与生成集比较}
+\label{b1:subsec:C02:04}
+
+在整数直线上，离单位元不超过 \(n\) 步的点有 \(2n+1\) 个；在自由群的 Cayley 树上，每向外走一步都有新的分支。这种差别可以不借助图的绘制，直接由字长球内的元素数衡量。计数的对象是群元素：不同字若代表同一元素，只能计一次。
+
+\begin{definition}\label{b1:def:group-growth-function}
+	设 \(G\) 为群，\(S\) 为非空有限生成集。对非负整数 \(n\)，令
+	\[
+		B_S(n)\coloneqq\{\,g\in G\mid\ell_S(g)\le n\,\},\qquad
+		\beta_S(n)\coloneqq|B_S(n)|.
+	\]
+	集合 \(B_S(n)\) 是以单位元为中心、半径为 \(n\) 的字距离闭球；函数 \(\beta_S:\mathbb Z_{\ge0}\rightarrow\mathbb Z_{\ge1}\) 称为 \(G\) 关于 \(S\) 的\term[qun-zengzhang-hanshu]{增长函数}[growth function]。
+\end{definition}
+\symidx{\(B_S(n),\beta_S(n)\)：字距离球及其元素数}
+
+每个长度至多 \(n\) 的字都能在末端添加单位元，写成字母表 \(S\cup S^{-1}\cup\{1\}\) 上长度恰为 \(n\) 的字。因而
+\[
+	1\le\beta_S(n)\le(2|S|+1)^n,
+\]
+特别地，球总是有限的。还有 \(B_S(m)B_S(n)=B_S(m+n)\)：一个方向来自字长的次可加性，另一个方向把长度至多 \(m+n\) 的字在至多 \(m\) 个字母后截开。乘积映射未必单射，所以这里只得到 \(\beta_S(m+n)\le\beta_S(m)\beta_S(n)\)，不能把两边的球大小直接相乘。
+
+\begin{proposition}\label{b1:prop:growth-generating-set-comparison}
+	设群 \(G\) 有两个非空有限生成集 \(S,T\)，令
+	\[
+		M=\max\bigl(1,\max_{s\in S}\ell_T(s)\bigr),\qquad
+		N=\max\bigl(1,\max_{t\in T}\ell_S(t)\bigr).
+	\]
+	则对每个非负整数 \(n\)，有
+	\[
+		B_S(n)\subseteq B_T(Mn),\qquad B_T(n)\subseteq B_S(Nn),
+	\]
+	从而 \(\beta_S(n)\le\beta_T(Mn)\)、\(\beta_T(n)\le\beta_S(Nn)\)。
+\end{proposition}
+\begin{proof}
+	在\eqref{b1:eq:word-metric-generators}中取 \(g=1,h=x\)，得到 \(\ell_T(x)\le M\ell_S(x)\)、\(\ell_S(x)\le N\ell_T(x)\)。因此 \(\ell_S(x)\le n\) 蕴含 \(\ell_T(x)\le Mn\)，给出第一个包含；第二个包含交换 \(S,T\) 即得。对有限集合取基数便得到计数不等式。
+\end{proof}
+
+为了把这种比较与具体生成集分开，给非减正值函数 \(f,g:\mathbb Z_{\ge0}\rightarrow\mathbb R_{>0}\) 约定：若存在整数 \(C\ge1\)，使 \(f(n)\le Cg(Cn)\) 对所有 \(n\ge0\) 成立，就记 \(f\preccurlyeq g\)；若两个方向都成立，就称它们\term[zengzhang-dengjia]{增长等价}[growth equivalence]。增长等价是等价关系：自反性和对称性直接成立，而 \(f(n)\le Cg(Cn)\)、\(g(n)\le Dh(Dn)\) 给出 \(f(n)\le CDh(CDn)\)，所以有传递性。增长函数的等价类称为群的\term[zengzhang-leixing]{增长类型}[growth type]。由\cref{b1:prop:growth-generating-set-comparison}，同一个有限生成群的任意两个有限生成集给出同一增长类型。
+
+\begin{definition}\label{b1:def:polynomial-exponential-growth}
+	设群 \(G\) 由非空有限集 \(S\) 生成。若存在整数 \(d\ge0\) 和常数 \(C>0\)，使
+	\[
+		\beta_S(n)\le C(n+1)^d\qquad(n\ge0),
+	\]
+	就称 \(G\) 具有\term[duoxiangshi-zengzhang]{多项式增长}[polynomial growth]。对给定的整数 \(d\ge0\)，若还存在常数 \(c>0\)，使 \(c(n+1)^d\le\beta_S(n)\) 对所有 \(n\ge0\) 成立，就称其多项式增长次数为 \(d\)。若存在 \(c>0\)、\(\lambda>1\)，使
+	\[
+		\beta_S(n)\ge c\lambda^n\qquad(n\ge0),
+	\]
+	就称 \(G\) 具有\term[zhishu-zengzhang]{指数增长}[exponential growth]。
+\end{definition}
+
+所有有限生成群的增长都有前述指数上界；定义指数增长时所要求的额外内容是指数下界。多项式增长次数一旦存在便唯一：两个不同次数的上下界会迫使 \((n+1)\) 的某个正整数次幂对所有 \(n\) 有界，矛盾。
+
+\begin{corollary}\label{b1:cor:growth-rates-independent}
+	设群 \(G\) 有两个非空有限生成集 \(S,T\)。多项式增长、指数增长以及存在时的多项式增长次数，都不依赖选用 \(S\) 还是 \(T\)。
+\end{corollary}
+\begin{proof}
+	沿用\cref{b1:prop:growth-generating-set-comparison}中的正整数 \(M,N\)。若 \(\beta_S(n)\le C(n+1)^d\)，则
+	\[
+		\beta_T(n)\le\beta_S(Nn)\le CN^d(n+1)^d.
+	\]
+	若同时有 \(\beta_S(n)\ge c(n+1)^d\)，对任意 \(m\ge0\) 取 \(n=\lfloor m/M\rfloor\)。由 \(Mn\le m\) 及球的单调性，
+	\[
+		\beta_T(m)\ge\beta_T(Mn)\ge\beta_S(n)
+		\ge c(n+1)^d\ge cM^{-d}(m+1)^d.
+	\]
+	最后一个不等式用了 \(\lfloor m/M\rfloor+1\ge(m+1)/M\)。所以同一个次数的上下界都能传递。
+
+	若 \(\beta_S(n)\ge c\lambda^n\)，取同一个 \(n=\lfloor m/M\rfloor\)，则
+	\[
+		\beta_T(m)\ge c\lambda^{\lfloor m/M\rfloor}
+		\ge c\lambda^{-1}\bigl(\lambda^{1/M}\bigr)^m.
+	\]
+	这里 \(\lambda^{1/M}>1\)，故仍为指数下界。交换 \(S,T\) 就得到各项的反方向。
+\end{proof}
+
+有限群的增长函数最终恒等于群阶，因为有限多个元素的字长有最大值。反过来，若 \(\beta_S(n)\) 有统一常数上界，则递增的有限集合 \(B_S(n)\) 不可能无限次严格增加，且其并为 \(G\)，所以 \(G\) 有限。因此零次多项式增长恰好刻画有限群。
+
+\subsection{自由群与交换群增长}
+\label{b1:subsec:C02:05}
+
+自由群的约化字唯一性，使计算球的大小化为数不立即折返的字；交换群中的换序关系则让大量不同字表示同一坐标点。这给出两类可以直接计算的增长函数。
+
+\begin{proposition}\label{b1:prop:free-group-growth}
+	设 \(F_r\) 为有限秩 \(r\ge1\) 的自由群，\(S\) 为一组自由基。对整数 \(n\ge1\)，恰有
+	\[
+		\bigl|\{\,g\in F_r\mid\ell_S(g)=n\,\}\bigr|
+		=2r(2r-1)^{n-1}
+	\]
+	个字长为 \(n\) 的元素；其球增长为
+	\[
+		\beta_S(n)=
+		\begin{cases}
+			2n+1,&r=1,\\[1ex]
+			1+\dfrac{r}{r-1}\bigl((2r-1)^n-1\bigr),&r\ge2,
+		\end{cases}
+		\qquad(n\ge0).
+	\]
+	因此 \(F_1\) 具有一次多项式增长，\(F_r\) 在 \(r\ge2\) 时具有指数增长。
+\end{proposition}
+\begin{proof}
+	由\cref{b1:lem:unique-reduced-word}，每个元素有唯一约化字。任意代表字约化时长度只会减少，所以约化字长度就是最短字长。长度 \(n\ge1\) 的约化字，首字母有 \(2r\) 个选择；此后每个位置只须排除前一字母的逆，各有 \(2r-1\) 个选择。这证明球面的计数式。
+
+	加上单位元并对长度求和，得到
+	\[
+		\beta_S(n)=1+2r\sum_{k=0}^{n-1}(2r-1)^k,
+	\]
+	其中 \(n=0\) 时的和为空和。\(r=1\) 时每个正长度球面都有两个元素，给出 \(2n+1\)；\(r\ge2\) 时用等比数列求和，得到所列公式。后者也可写成
+	\[
+		\beta_S(n)=\dfrac{r(2r-1)^n-1}{r-1}\ge(2r-1)^n,
+	\]
+	所以有指数下界。一次多项式界和生成集无关性分别由公式及\cref{b1:cor:growth-rates-independent}得到。
+\end{proof}
+
+例如 \(F_2\) 关于自由基 \(\{a,b\}\) 有 \(\beta(n)=2\cdot3^n-1\)，半径 \(0,1,2,3\) 的球分别有 \(1,5,17,53\) 个元素。半径三的计数为 \(1+4+12+36\)，对应从单位顶点出发，第一步有四个方向，此后每步排除回头方向。秩零的自由群是单位群，关于生成集 \(\{1\}\) 的增长恒为一。
+
+\begin{proposition}\label{b1:prop:free-abelian-growth}
+	设 \(d\ge1\) 为整数，加法群 \(\mathbb Z^d\) 取标准生成集 \(S_0=\{e_1,\ldots,e_d\}\)。则
+	\[
+		\ell_{S_0}(x_1,\ldots,x_d)=\sum_{i=1}^d|x_i|,
+	\]
+	且对每个非负整数 \(n\)，有
+	\begin{equation}\label{b1:eq:free-abelian-ball-count}
+		\beta_{S_0}(n)=\sum_{j=0}^{d}2^j\binom{d}{j}\binom{n}{j},
+	\end{equation}
+	其中 \(j>n\) 时约定 \(\binom{n}{j}=0\)。这个计数是关于 \(n\) 的 \(d\) 次多项式，首项系数为 \(2^d/d!\)，并且 \(\mathbb Z^d\) 的多项式增长次数为 \(d\)。
+\end{proposition}
+\begin{proof}
+	每一步只把一个坐标改变 \(1\) 或 \(-1\)，所以至少需要 \(\sum_i|x_i|\) 步。沿各坐标依次走相应步数就能达到此数，证明字长公式。
+
+	按非零坐标的个数 \(j\) 计数。先有 \(\binom dj\) 种选坐标的方法，再有 \(2^j\) 种选符号的方法。其绝对值 \(q_1,\ldots,q_j\) 是正整数，满足 \(q_1+\cdots+q_j\le n\)。当 \(j\ge1\) 时，累加和
+	\[
+		1\le q_1<q_1+q_2<\cdots<q_1+\cdots+q_j\le n
+	\]
+	与 \(\{1,\ldots,n\}\) 的 \(j\) 元子集一一对应；反向以相邻累加和之差恢复各 \(q_i\)。故绝对值的选法有 \(\binom nj\) 种。\(j=0\) 时只计零向量，贡献为一。各类相加得到公式。
+
+	把 \(\binom nj=n(n-1)\cdots(n-j+1)/j!\) 视为多项式，最高次项只来自 \(j=d\)，系数为 \(2^d/d!\)。还可直接给出两侧界：每个坐标绝对值不超过 \(\lfloor n/d\rfloor\) 的立方体包含在字距离球中，球又包含在坐标绝对值不超过 \(n\) 的立方体中，因此
+	\[
+		\bigl(2\lfloor n/d\rfloor+1\bigr)^d
+		\le\beta_{S_0}(n)\le(2n+1)^d.
+	\]
+	由 \(\lfloor n/d\rfloor+1\ge(n+1)/d\)，可进一步得到
+	\[
+		d^{-d}(n+1)^d\le\beta_{S_0}(n)\le2^d(n+1)^d.
+	\]
+	这给出所需的同次数上下界；\cref{b1:cor:growth-rates-independent}再把结论传到任意非空有限生成集。
+\end{proof}
+
+在 \(d=2\) 时，\eqref{b1:eq:free-abelian-ball-count}成为
+\[
+	\beta_{S_0}(n)=1+4n+4\binom n2=2n^2+2n+1.
+\]
+半径 \(0,1,2,3\) 的球分别有 \(1,5,13,25\) 个元素。\(F_2\) 与 \(\mathbb Z^2\) 都可以用两个生成元生成，半径一的球也同有五个元素，但交换关系使后一群中大量不同路径汇合，较大球的计数便明显不同。
+
+\begin{proposition}\label{b1:prop:fg-abelian-growth}
+	设 \(A\) 为有限生成交换群，其自由秩为 \(d\ge0\)。对任意非空有限生成集 \(S\)，存在常数 \(c,C>0\)，使
+	\[
+		c(n+1)^d\le\beta_S(n)\le C(n+1)^d\qquad(n\ge0).
+	\]
+	所以 \(A\) 的多项式增长次数恰为它的自由秩；有限挠子群不改变这个次数。
+\end{proposition}
+\begin{proof}
+	由\cref{b1:thm:fga-structure}，\(A\cong\mathbb Z^d\oplus F\)，其中 \(F\) 是有限交换群。\(d=0\) 时，\(A\) 有限，\(1\le\beta_S(n)\le|A|\)，已经给出零次界。以下设 \(d\ge1\)，在直和中取生成集
+	\[
+		T=\{(e_i,0):1\le i\le d\}\cup\{(0,f):f\in F\setminus\{0\}\}.
+	\]
+	有限性保证这确是有限生成集。记 \(b_d(n)\) 为\eqref{b1:eq:free-abelian-ball-count}中的自由交换群球计数。对 \((x,f)\)，产生自由坐标至少需要 \(\sum_i|x_i|\) 个自由部分字母；若 \(f\ne0\)，还至少需要一个挠子部分字母。反过来，这些步数都能达到，因为任意非零 \(f\) 本身已在 \(T\) 中。因此
+	\[
+		\ell_T(x,f)=\sum_i|x_i|+
+		\begin{cases}0,&f=0,\\1,&f\ne0,\end{cases}
+	\]
+	从而当 \(n\ge1\) 时，
+	\[
+		\beta_T(n)=b_d(n)+(|F|-1)b_d(n-1).
+	\]
+	对包括 \(n=0\) 在内的全部半径，都有
+	\[
+		b_d(n)\le\beta_T(n)\le |F|\,b_d(n).
+	\]
+	由\cref{b1:prop:free-abelian-growth}，这两个界都是 \(d\) 次多项式界。把 \(T\) 经所选同构送回 \(A\)，字长及球计数逐项保持；再用\cref{b1:cor:growth-rates-independent}比较这个生成集与 \(S\)，得到结论。
+\end{proof}
+
+例如 \(\mathbb Z\oplus C_2\) 取生成集 \(\{(1,\bar0),(0,\bar1)\}\)。半径 \(n\ge1\) 的球中，挠子坐标为 \(\bar0\) 时有 \(2n+1\) 个自由坐标，为 \(\bar1\) 时有 \(2n-1\) 个，所以 \(\beta(n)=4n\)。增长次数仍为一，具体计数却不同于 \(\mathbb Z\) 的 \(2n+1\)。群的增长类型保留这种统一倍数与半径伸缩下的比较，具体球计数还记录所选生成集。

@@ -1,0 +1,230 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### G.3 二次 operad 与 Koszul 对偶
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### G.3.1 二次生成元、关系与对偶
+% #### G.3.2 分次、悬移与符号
+% #### G.3.3 Ass、Com 与 Lie 的对偶例子
+% ---
+
+\section{二次 operad 与 Koszul 对偶}
+\label{b4:sec:G03}
+
+结合律连接两次乘法，Jacobi 恒等式连接两次括号，Leibniz 恒等式连接一次乘法和一次括号。它们都含两个运算顶点，因此可以在自由 operad 的同一层中比较。二次对偶把这一层的关系空间换成其正交空间；但这个配对带有符号，直接取普通向量空间对偶会把结合律变成错误的关系。下面先把有限维线性代数构造写清，再解释符号与悬移的联系，最后区分二次对偶和 Koszul 性。
+
+\subsection{二次生成元、关系与对偶}
+\label{b4:subsec:G03:01}
+
+自由 operad 的树形构造有两种不同的计数：叶子数表示输入个数，顶点数表示使用了多少次生成运算。若一个顶点可以有任意多个输入，这两种计数并不相同；若所有生成运算都是二元的，含 \(w\) 个顶点的树恰有 \(w+1\) 个输入。
+
+\begin{definition}\label{b4:def:binary-quadratic-operad}
+	设 \(k\) 为特征零的域，\(E\) 为有限维右 \(k[S_2]\) 模，将它看成只在元数二非零的对称序列。记 \(\mathcal F(E)\) 为自由 operad，沿用以顶点数为权重的分次。若 \(R\subseteq\mathcal F^{(2)}(E)(3)\) 是右 \(S_3\) 不变子空间，则
+	\[
+		\mathcal P=\mathcal F(E)/(R)
+	\]
+	称为\term[eryuan-erci-operad]{二元二次 operad}[binary quadratic operad]；这里 \((R)\) 是\cref{b4:def:operad-ideal}中由 \(R\) 生成的 operad 理想，商结构由\cref{b4:prop:operad-quotient}给出。
+\end{definition}
+
+这一定义中的“二次”指的是运算顶点，不是输入变量的次数。结合律和 Jacobi 恒等式含三个输入，但都是二次关系。关系齐次使商仍按权重分次，并且 \(\mathcal P(1)=k\)、\(\mathcal P(n)=\mathcal P^{(n-1)}(n)\) 对 \(n\ge1\) 成立。若还要给乘法指定零元运算所表示的单位，单位关系会涉及不同权重，不属于这里的二元二次范围。
+
+\ProseParagraphBreak
+为了明确关系所在的空间，把两顶点树中的内子树放在根的第一个输入，并按下列三种次序标号：
+\[
+	(1,2;3),\qquad(2,3;1),\qquad(3,1;2).
+\]
+例如 \((1,2;3)\) 表示 \(e(f(x_1,x_2),x_3)\)，其中根和内顶点分别装饰 \(e,f\in E\)。这给出向量空间同构
+\begin{equation}\label{b4:eq:binary-weight-two}
+	\mathcal F^{(2)}(E)(3)\cong(E\otimes E)_{12;3}\oplus(E\otimes E)_{23;1}\oplus(E\otimes E)_{31;2}.
+\end{equation}
+任意两顶点二叉树的内顶点恰接一对叶子，因此先确定其中一份；若内叶次序相反，就把 \((12)\) 作用于内装饰；若内子树原在根的第二个输入，就把 \((12)\) 作用于根装饰。这样得到唯一的上述代表，说明三份直和中没有遗漏局部输入重排关系。
+
+\begin{definition}\label{b4:def:quadratic-dual-operad}
+	设 \(k\) 为特征零的域，\(\mathcal P=\mathcal F(E)/(R)\) 为二元二次 operad，\(E\) 有限维。令
+	\[
+		E^\vee=E^*\otimes\operatorname{sgn}_2,
+	\]
+	其中 \(\operatorname{sgn}_2\) 是 \(S_2\) 的一维符号表示，\(E^*\) 取对偶右作用 \((\lambda\cdot\sigma)(e)=\lambda(e\cdot\sigma^{-1})\)。固定符号表示的基 \(\varepsilon\)。在\eqref{b4:eq:binary-weight-two}的三份直和中，规定不同份相互正交，同一份的配对为
+	\[
+		\left\langle(\lambda\otimes\varepsilon)\otimes(\eta\otimes\varepsilon),\ e\otimes f\right\rangle
+		=\lambda(e)\eta(f).
+	\]
+	记 \(R^\perp\subseteq\mathcal F^{(2)}(E^\vee)(3)\) 为 \(R\) 的零化空间，定义 \(\mathcal P\) 的\term[erci-operad-duiou]{二次对偶 operad}[quadratic dual operad]为
+	\[
+		\mathcal P^!=\mathcal F(E^\vee)/(R^\perp).
+	\]
+\end{definition}
+\symidx{\(E^\vee=E^*\otimes\operatorname{sgn}_2\)：二元生成空间的带符号对偶}
+\symidx{\(\mathcal P^{"!}\)：二元二次 operad 的二次对偶}
+
+上述配对取值于 \(k\)，却不是通常意义下同时重标号不变的配对；它满足
+\begin{equation}\label{b4:eq:quadratic-pairing-sign}
+	\langle u\cdot\sigma,v\cdot\sigma\rangle=\operatorname{sgn}(\sigma)\langle u,v\rangle
+	\qquad(\sigma\in S_3).
+\end{equation}
+事实上，三循环把三份直和循环交换，不改变内叶方向，因而保持配对；一个换位把内叶方向反转，\(E^\vee\) 中的符号表示恰多给一个负号，\(E^*\) 与 \(E\) 的对偶作用则相消。三循环与换位生成 \(S_3\)，便得到公式。由此 \(R^\perp\) 仍为 \(S_3\) 不变子空间，二次对偶的定义确实给出一个 operad。这个构造与其经典例子见 Ginzburg--Kapranov\cite[Section 2.1]{GinzburgKapranov1994KoszulOperads}。
+
+\begin{proposition}\label{b4:prop:quadratic-operad-bidual}
+	设 \(k\) 为特征零的域，\(\mathcal P=\mathcal F(E)/(R)\) 为二元二次 operad，且 \(E\) 有限维。则存在保持生成空间的自然同构 \((\mathcal P^!)^!\cong\mathcal P\)。
+\end{proposition}
+\begin{proof}
+	有限维求值同构给出 \(E^{**}\cong E\)，两次符号表示的张量积为平凡表示，所以 \((E^\vee)^\vee\cong E\)。\eqref{b4:eq:binary-weight-two}中每份配对都是有限维非退化配对，因此第二次取零化空间恢复 \((R^\perp)^\perp=R\)。自由构造和关系商随这两个同构对应，得到所述同构。
+\end{proof}
+
+有限维性在这里用于把双对偶认回生成空间，并保证正交空间的双重操作恢复原关系。这一命题只谈生成元与关系，尚未断言任何消解是正合的；后面的 Koszul 性需要另行判断。
+
+\subsection{分次、悬移与符号}
+\label{b4:subsec:G03:02}
+
+前面的 operad 集中在次数零。把运算放入分次向量空间时，交换两个齐次因子须使用\cref{b4:exm:graded-braiding}中 \(q=-1\) 的规则：交换次数 \(a,b\) 的两个因子产生 \((-1)^{ab}\)。特别是两个奇次因子的交换会改变符号。
+
+\ProseParagraphBreak
+本小节记 \(sV=V[-1]\)，即 \((sV)^j=V^{j-1}\)，把元素次数升高一。它与\cref{b4:def:complex-shift}一致：本卷的 \([1]\) 降低元素次数，所以这里升次的 \(s\) 对应 \([-1]\)。暂不配微分。对齐次多重线性映射 \(f,g\)，分次 End operad 的插入是
+\begin{equation}\label{b4:eq:graded-operad-insertion}
+	\begin{aligned}
+		&(f\circ_i g)(v_1,\ldots,v_{m+n-1})\\
+		&\quad=(-1)^{|g|(|v_1|+\cdots+|v_{i-1}|)}
+		f(v_1,\ldots,v_{i-1},g(v_i,\ldots,v_{i+n-1}),v_{i+n},\ldots,v_{m+n-1}).
+	\end{aligned}
+\end{equation}
+这个符号来自将映射 \(g\) 跨过它前面的输入，而不是附加一种新的反交换假设。嵌套插入的结合律不变；互不相交的两个插入交换先后次序时，另产生 \((-1)^{|g||h|}\)。两种指数都可按“哪个齐次映射跨过了哪些齐次输入”计算。
+
+\begin{proposition}\label{b4:prop:operadic-suspension-sign}
+	设 \(k\) 为特征零的域，\(sk\) 为由次数一的元素 \(e\) 生成的一维分次向量空间。令
+	\[
+		\mathcal S(n)=\operatorname{Hom}_k((sk)^{\otimes n},sk),\qquad
+		u_n(e^{\otimes n})=e.
+	\]
+	则对每个 \(n\ge1\)，\(\mathcal S(n)\) 集中在次数 \(1-n\)，其右 \(S_n\) 作用为符号表示，且
+	\begin{equation}\label{b4:eq:suspension-operad-composition}
+		u_m\circ_i u_n=(-1)^{(i-1)(n-1)}u_{m+n-1}.
+	\end{equation}
+\end{proposition}
+\symidx{\(\mathcal S(n)=\operatorname{End}_{sk}(n)\)：悬移产生的一维分次 operad}
+\begin{proof}
+	输入 \(e^{\otimes n}\) 的次数为 \(n\)，输出次数为一，因此 \(|u_n|=1-n\)。相邻两个输入都是奇次，交换它们乘 \(-1\)，所以一般置换乘其符号。把 \(u_n\) 插入第 \(i\) 个位置时，它跨过 \(i-1\) 个次数一的输入；\eqref{b4:eq:graded-operad-insertion}给出 \((-1)^{(1-n)(i-1)}\)，与所写符号相同。
+\end{proof}
+
+对分次 operad \(\mathcal P\)，逐元数取 \(\mathcal S(n)\otimes\mathcal P(n)\)，复合时先按上述交换规则重排张量因子，再分别复合，得到其\term[operad-xuanyi]{operad 悬移}[operadic suspension]。其第 \(n\) 元空间是 \(\mathcal P(n)\) 降低 \(n-1\) 次并扭上 \(\operatorname{sgn}_n\)。二元部分尤其会交换对称与反对称的角色。
+
+\ProseParagraphBreak
+在最低的非平凡次数，公式给出
+\[
+	u_2\circ_1u_2=u_3,\qquad u_2\circ_2u_2=-u_3.
+\]
+因此两棵二元树在悬移后不能使用相同的配对符号。这个计算正是二次对偶中位置符号的来源。二次对偶 \(\mathcal P^!\) 本身仍按普通次数零的 operad 记写；它在对偶生成元中保留 \(\operatorname{sgn}_2\)，再用关系配对记下树复合的负号，不能把它与逐元数向量空间对偶或仅作一次次数平移混为一谈。
+
+\begin{example}\label{b4:exm:suspended-associativity}
+	设 \(A\) 是特征零域上的普通结合代数，乘法记为 \(\mu\)，不要求单位。对 \(sA\) 定义次数 \(-1\) 的运算 \(\widetilde\mu(sa,sb)=s(ab)\)。分次插入给出
+	\[
+		\begin{aligned}
+			(\widetilde\mu\circ_1\widetilde\mu)(sa,sb,sc)&=s((ab)c),\\
+			(\widetilde\mu\circ_2\widetilde\mu)(sa,sb,sc)&=-s(a(bc)).
+		\end{aligned}
+	\]
+	故结合律在这一表示中写成 \(\widetilde\mu\circ_1\widetilde\mu+\widetilde\mu\circ_2\widetilde\mu=0\)。若 \(A\) 还交换，则 \(\widetilde\mu\cdot(12)=-\widetilde\mu\)，因为两个悬移后的输入为奇次。这里改变的是运算的次数及其表示，原代数的乘法并没有变成不结合。
+\end{example}
+
+\subsection{Ass、Com 与 Lie 的对偶例子}
+\label{b4:subsec:G03:03}
+
+先在有限维关系空间里计算二次对偶。令 \(\mu\) 是无预设对称性的二元生成元，则 \(E=k[S_2]\)，基为 \(\mu,\mu\cdot(12)\)。选对偶生成元 \(\nu=\mu^*\otimes\varepsilon\)，就有
+\[
+	\nu\cdot(12)=-(\mu\cdot(12))^*\otimes\varepsilon.
+\]
+记 \(L=\mu\circ_1\mu\)、\(R=\mu\circ_2\mu\)，在对偶自由 operad 中同样记 \(L^\vee=\nu\circ_1\nu\)、\(R^\vee=\nu\circ_2\nu\)。三输入自由空间的基为 \(L\cdot\sigma,R\cdot\sigma\)，\(\sigma\in S_3\)。按\eqref{b4:eq:binary-weight-two}把内子树移到根的第一槽后，配对成为
+\begin{equation}\label{b4:eq:ass-dual-pairing}
+	\begin{aligned}
+		\langle L^\vee\cdot\sigma,L\cdot\tau\rangle&=\operatorname{sgn}(\sigma)\delta_{\sigma,\tau},\\
+		\langle R^\vee\cdot\sigma,R\cdot\tau\rangle&=-\operatorname{sgn}(\sigma)\delta_{\sigma,\tau},\\
+		\langle L^\vee\cdot\sigma,R\cdot\tau\rangle&=\langle R^\vee\cdot\sigma,L\cdot\tau\rangle=0.
+	\end{aligned}
+\end{equation}
+第二行的负号来自根装饰的换位；一般叶标号的符号由\eqref{b4:eq:quadratic-pairing-sign}给出。
+
+\begin{proposition}\label{b4:prop:classical-operad-duals}
+	在特征零域 \(k\) 上，有二元二次 operad 的同构
+	\[
+		\operatorname{Ass}^!\cong\operatorname{Ass},\qquad
+		\operatorname{Com}^!\cong\operatorname{Lie},\qquad
+		\operatorname{Lie}^!\cong\operatorname{Com}.
+	\]
+\end{proposition}
+\begin{proof}
+	结合关系由 \((L-R)\cdot\sigma\)、\(\sigma\in S_3\) 张成。对偶元素写成 \(\sum_\sigma(a_\sigma L^\vee\cdot\sigma+b_\sigma R^\vee\cdot\sigma)\)；根据\eqref{b4:eq:ass-dual-pairing}，它与全部结合关系正交，当且仅当 \(a_\sigma+b_\sigma=0\)。因此对偶关系恰由 \((L^\vee-R^\vee)\cdot\sigma\) 张成，仍是结合律。生成空间 \(E^\vee\) 以 \(\nu\) 及其换位为一组基，仍为正则表示，所以得到 \(\operatorname{Ass}^!\cong\operatorname{Ass}\)。
+
+	对 \(\operatorname{Com}\)，二元生成元对称。在三份循环标号的树上记
+	\[
+		c_1=(x_1x_2)x_3,\qquad c_2=(x_2x_3)x_1,\qquad c_3=(x_3x_1)x_2.
+	\]
+	它们在尚未加结合关系的自由 operad 中构成基，关系空间是 \(k(c_1-c_2)+k(c_2-c_3)\)。对偶生成元因符号扭曲而反对称，三份对偶树记为
+	\[
+		\ell_1=[[x_1,x_2],x_3],\quad \ell_2=[[x_2,x_3],x_1],\quad \ell_3=[[x_3,x_1],x_2].
+	\]
+	其配对为 \(\langle\ell_i,c_j\rangle=\delta_{ij}\)。正交于两个差的向量必须使三个系数相等，所以对偶关系空间为 \(k(\ell_1+\ell_2+\ell_3)\)，正好是 Jacobi 关系。这证明 \(\operatorname{Com}^!\cong\operatorname{Lie}\)。再用\cref{b4:prop:quadratic-operad-bidual}，或反向取该一维空间的零化空间，得到最后一个同构。
+\end{proof}
+
+若把\eqref{b4:eq:ass-dual-pairing}中的负号误换成正号，\(L-R\) 的正交空间就由 \(L^\vee+R^\vee\) 张成，得到反结合关系。这说明符号不是可随意调整的装饰；对偶生成元的作用、树的表示和配对必须一起约定。
+
+\ProseParagraphBreak
+二次关系只涉及两顶点树，高输入数下还可能出现“关系之间的关系”。要判断二次资料能否控制这些更高相容条件，需要把所有树组成一个复形。下面给出普通次数零、二元二次情形的 bar 模型。
+
+\begin{definition}\label{b4:def:operadic-bar-complex}
+	设 \(k\) 为特征零的域，\(\mathcal P\) 为集中在次数零的二元二次 operad。对 \(n\ge2\)，令 \(B_r(\mathcal P)(n)\) 由下列资料线性生成：有 \(n\) 个标号输入、\(r\) 个顶点的根树，每个顶点至少有两个输入，\(v\) 处装饰 \(\mathcal P(\operatorname{In}(v))\) 中的元素，并给 \(r-1\) 条内部边选择一个顺序 \(e_1,\ldots,e_{r-1}\)。装饰满足多重线性和输入重标号关系；对内部边换序乘该置换的符号。定义
+	\begin{equation}\label{b4:eq:operadic-bar-boundary}
+		\partial[T;e_1,\ldots,e_{r-1}]
+		=\sum_{j=1}^{r-1}(-1)^{j-1}[T/e_j;e_1,\ldots,\widehat e_j,\ldots,e_{r-1}],
+	\end{equation}
+	其中收缩 \(e_j\) 时，用 operad 的插入复合合并该边两端的装饰。规定 \(B_r(\mathcal P)(n)=0\) 除非 \(1\le r\le n-1\)，并另取 \(B_0(\mathcal P)(1)=k\)，元数一的其他项为零。所得链复形称为此处的\term[operad-bar-fuxing]{operad bar 复形}[operadic bar complex]。
+\end{definition}
+\symidx{\(B_r(\mathcal P)(n)\)：\(n\) 个输入、链次数 \(r\) 的 operad bar 复形}
+
+这里的 \(r\) 是链次数，\(\partial\) 将其降低一；若改用本卷的上链指标，就令 \(B^q=B_{-q}\)。每个非根顶点唯一对应从它通向根的一条输出内部边，故固定根顶点之后，内部边顺序也给出其余顶点的顺序。这解释了为何定向只列 \(r-1\) 条边，链次数却按全部 \(r\) 个顶点计算；它对应通常 bar 构造中每个顶点各贡献一次悬移。树上装饰原本都是次数零运算，不能把这个链次数与上一小节一个分次运算的内在次数混用。
+
+\begin{proposition}\label{b4:prop:operadic-bar-square-zero}
+	对特征零域上集中在次数零的二元二次 operad \(\mathcal P\)，\eqref{b4:eq:operadic-bar-boundary}保持树装饰及边定向关系，且 \(\partial^2=0\)。
+\end{proposition}
+\begin{proof}
+	输入重标号与收缩相容，是 operad 等变公理；装饰的多重线性由复合的双线性保持。边顺序作相邻换位时，未被删除的两边仍贡献一个换位负号；若删去其中一条，则它在交错和中的位置正好相差一，仍改变同一个负号。因此微分在边定向关系下良定义。
+
+	对两条不同内部边 \(e_i,e_j\)、\(i<j\)，先收缩 \(e_i\) 再收缩 \(e_j\) 的符号是 \((-1)^{i-1+j-2}\)，相反次序的符号是 \((-1)^{j-1+i-1}\)，二者相反。两次收缩所得装饰相同：相邻边使用嵌套结合律，不相邻边使用分离输入的结合律。每个二次收缩恰由这两种次序出现，因而逐对相消。
+\end{proof}
+
+这个复形在三输入处尤其具体：
+\[
+	0\longrightarrow\mathcal F^{(2)}(E)(3)
+	\xrightarrow{\ \text{复合}\ }\mathcal P(3)\longrightarrow0,
+\]
+两项分别在链次数二和一。后一项正是前者模掉 \(R\)，所以 \(H_2=R\)、\(H_1=0\)。到四输入时，一棵三顶点树可沿两条内部边作不同收缩；\(\partial^2=0\) 记录了这些关系的相容。更高输入数的正合性不能从三输入计算直接推出。
+
+\begin{definition}\label{b4:def:koszul-operad}
+	设 \(k\) 为特征零的域，\(\mathcal P=\mathcal F(E)/(R)\) 为集中在次数零的二元二次 operad，\(E\) 有限维。若对每个 \(n\ge2\) 有
+	\[
+		H_r(B_\bullet(\mathcal P)(n))=0\qquad(r\ne n-1),
+	\]
+	则称 \(\mathcal P\) 为\term[Koszul-operad]{Koszul operad}[Koszul operad]。
+\end{definition}
+
+这一表述把条件写成 bar 同调只留在最高可能链次数。二元生成保证总权重为 \(n-1\)，故它也是 bar 同调集中在“链次数等于权重”的条件。经典定义及其对偶判据见\cite[Section 4.1]{GinzburgKapranov1994KoszulOperads}。在一般理论中，顶次核带有由切树给出的余复合，二次对偶描述的正是这些资料；Koszul 条件保证可以用这部分较小的资料代替全部 bar 复形。构造二次对偶总是可行，消去其他链次数的同调却是额外结论。
+
+\begin{theorem}\label{b4:thm:classical-koszul-operads}
+	设 \(k\) 为特征零的域。则 \(\operatorname{Ass}\)、\(\operatorname{Com}\) 和 \(\operatorname{Lie}\) 都是 Koszul operad。
+\end{theorem}
+\begin{proofsketch}
+	一般判据把 Koszul 性转化为如下条件：对每个自由 \(\mathcal P\) 代数 \(F\)，由二次对偶 \(\mathcal P^!\) 和 \(F\) 上的运算构造的二次标准复形，在把末项 \(F\) 放于零次后，正次数同调全部消失。这里讨论的是由二次资料写出的具体复形。一般理论还说明，在上述有限维二元二次范围内，\(\mathcal P\) 与 \(\mathcal P^!\) 的 Koszul 性等价。判据、对偶性及这三个例子的证明见\cite[Proposition 4.1.4; Theorem 4.2.5; Corollary 4.2.7]{GinzburgKapranov1994KoszulOperads}。
+
+	这里的同调有明确的模型和重编号。结合代数 \(A\) 取约化 bar 复形 \(C_i(A)=A^{\otimes(i+1)}\)、\(i\ge0\)，微分只合并相邻项，不含 Hochschild 链中的首尾环绕项；Lie 代数 \(\mathfrak g\) 取 \(C_i(\mathfrak g)=\Lambda^{i+1}\mathfrak g\)，即删去零次项的 Chevalley--Eilenberg 复形再重编号，使 \(\mathfrak g\) 位于零次。相应同调分别由 \(\operatorname{Tor}_{i+1}^{k\oplus A}(k,k)\) 和 \(\operatorname{Tor}_{i+1}^{U(\mathfrak g)}(k,k)\) 计算。这里 \(k\oplus A\) 是为 \(A\) 添加单位的增广代数，\(U(\mathfrak g)\) 是张量代数模掉 \(xy-yx-[x,y]\) 这些关系所得的包络代数。
+
+	当 \(A=T^+(V)\) 为自由非幺结合代数时，增广代数为 \(T(V)\)。当 \(\mathfrak g\) 为 \(V\) 上的自由 Lie 代数时，其包络代数也为 \(T(V)\)：从两者到结合代数的同态都由从 \(V\) 出发的线性映射唯一确定。两种计算于是都有短自由消解
+	\[
+		0\longrightarrow T(V)\otimes V\xrightarrow{\ a\otimes v\mapsto av\ }T(V)
+		\xrightarrow{\ \epsilon\ }k\longrightarrow0.
+	\]
+	每个非空张量字都有唯一的末字母，所以左箭头单射、像为增广理想。因此
+	\[
+		\operatorname{Tor}_j^{T(V)}(k,k)=0\qquad(j\ge2),
+	\]
+	重编号后的上述同调在正次消失。一般判据给出结合与 Lie 两例，再由 \(\operatorname{Com}^!\cong\operatorname{Lie}\) 及对偶不变性得到交换例。
+
+	这里省略的是一般自由代数同调判据、Lie 代数标准消解的正合性，以及这些消解与树 bar 模型的比较。这些比较是把自由代数的消失计算提升为全部输入数下结论的实质步骤，不能只凭二次对偶的三个同构代替。
+\end{proofsketch}
+
+本节的“二次”始终按运算顶点计数。它与二次结合代数按代数生成元次数定义的 Koszul 对偶有相似机制，却属于不同的对象范畴；例如 \(\operatorname{Com}^!=\operatorname{Lie}\) 是两类运算关系之间的对偶，并不是断言某个多项式环的通常二次对偶是 Lie 代数。

@@ -1,0 +1,175 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### H.2 Riemann–Roch 定理
+% 状态：正文、证明与算例初稿；配套习题由附录入口统一编排。
+
+\section{Riemann–Roch 定理}
+\label{b3:sec:H02}
+
+在射影直线上，允许有理函数只在无穷远点有至多 \(n\) 阶极点，得到的正是次数不超过 \(n\) 的多项式；当 \(n\ge0\) 时，这个空间有 \(n+1\) 个自由参数。一般曲线上，极点总阶数相同，函数空间的维数却可能不同。亏格描述其中一个固定的修正，而典范除子还记录低次数时未消失的上同调。
+
+\ProseParagraphBreak
+本节仍令 \(k\) 为代数闭域，\(C\) 为光滑射影整曲线，\(g=h^1(C,\mathcal O_C)\)，并沿用\cref{b3:def:H-divisor-sheaf}中的 \(L(D)\) 和 \(\ell(D)=h^0(C,\mathcal O_C(D))\)。先从逐点增加极点的短正合列计算 Euler 特征，再用\cref{b3:thm:H-serre-duality}把一次上同调写成微分的空间，得到 Riemann–Roch 公式。\footnote{罗赫（Gustav Roch，1839-1866），德国数学家，与 Riemann 的工作共同形成曲线上除子与函数空间维数的 Riemann–Roch 定理。}后一个结果的证明概要在\secref{b3:sec:H03}中给出；其构造通过射影空间对偶与局部 Koszul 复形完成。
+
+\subsection{线性系与 Riemann–Roch 公式}
+\label{b3:subsec:H02:01}
+
+\begin{definition}\label{b3:def:H-linear-system}
+	设 \(k\) 为代数闭域，\(C\) 为光滑射影整曲线，\(D\) 为 \(C\) 上的除子。全部与 \(D\) 线性等价的有效除子组成的集合
+	\[
+		|D|=\{\,E\ge0\mid E\sim D\,\}
+	\]
+	称为 \(D\) 的\term[wanquan-xianxingxi]{完全线性系}[complete linear system]。非零子空间 \(V\subseteq L(D)\) 中各非零截面的零除子组成一个\term[xianxingxi]{线性系}[linear system]，记为 \(|V|\)。若一个闭点 \(P\) 出现在其中每个有效除子内，就称 \(P\) 为该线性系的\term[jidian]{基点}[base point]；没有基点时称线性系\term[wu-jidian]{无基点}[base-point-free]。
+\end{definition}
+
+对 \(0\ne f\in L(D)\)，其作为 \(\mathcal O_C(D)\) 截面的零除子是 \(D+\operatorname{div}(f)\)。两个截面给出同一除子，当且仅当其比的除子为零；由\cref{b3:cor:H-principal-degree}，这个比属于 \(k^\times\)。因此 \(|D|\) 是 \(L(D)\) 中一维子空间组成的射影空间，其维数为 \(\ell(D)-1\)。若 \(\ell(D)=0\)，则 \(|D|=\varnothing\)，约定维数为 \(-1\)。同样，\(|V|\) 的维数为 \(\dim_kV-1\)。
+
+\ProseParagraphBreak
+判断基点时须使用线丛的局部基。若 \(D\) 在 \(P\) 处的系数为 \(n\)，统一化元为 \(t\)，则局部基为 \(t^{-n}\)；截面 \(f\) 在 \(P\) 处消失，意思是 \(t^nf\in\mathfrak m_P\)，并不总是指有理函数 \(f\) 的值为零。取 \(V\) 的一组基 \(s_0,\ldots,s_r\)，在没有共同零点的开集 \(U\subseteq C\) 上，局部平凡化给出
+\[
+	\varphi_V:U\longrightarrow\mathbb P_k^r,\qquad
+	P\longmapsto[s_0(P):\cdots:s_r(P)].
+\]
+更换局部基会把所有坐标同时乘以一个单位，所以映射相容；更换 \(V\) 的基则改变目标的射影坐标。若 \(|V|\) 无基点，这些局部映射在整个 \(C\) 上黏合，且 \(\varphi_V^*\mathcal O_{\mathbb P^r}(1)\cong\mathcal O_C(D)\)。在 \(s_i\ne0\) 的开集上，构造的环同态就是把射影图的坐标送到 \(s_j/s_i\)；这些函数在交叠上满足相同的坐标变换。若完全线性系所定义的态射是闭嵌入，就称 \(\mathcal O_C(D)\) 为\term[hen-chongzu-xiancong]{很充足线丛}[very ample line bundle]，也称 \(D\) 很充足。
+
+\ProseParagraphBreak
+维数公式的第一步只需要上同调长正合列。由\cref{b3:prop:H-curve-cohomology-finite}，线丛的零次、一次上同调有限维，更高次为零，因而可以定义
+\[
+	\chi(\mathcal L)\coloneqq h^0(C,\mathcal L)-h^1(C,\mathcal L).
+\]
+这里的 \(\chi\) 称为线丛的\term[oulatezheng]{Euler 特征}[Euler characteristic]。
+
+\begin{proposition}\label{b3:prop:H-euler-characteristic-divisor}
+	设 \(k\) 为代数闭域，\(C\) 为光滑射影整曲线，\(g=h^1(C,\mathcal O_C)\)。对 \(C\) 上的任意除子 \(D\)，有
+	\[
+		\chi(\mathcal O_C(D))=\deg D+1-g.
+	\]
+\end{proposition}
+\begin{proof}
+	先取一个闭点 \(P\)，并记 \(i_P:\{P\}\hookrightarrow C\)。若 \(D\) 在 \(P\) 处的系数为 \(n\)，则包含 \(\mathcal O_C(D)\subseteq\mathcal O_C(D+P)\) 的茎之商为
+	\[
+		t^{-n-1}\mathcal O_{C,P}/t^{-n}\mathcal O_{C,P}.
+	\]
+	它被 \(\mathfrak m_P\) 零化，在 \(k(P)=k\) 上一维；其余闭点处的商为零。因此有短正合列
+	\[
+		0\longrightarrow\mathcal O_C(D)\longrightarrow\mathcal O_C(D+P)
+		\longrightarrow i_{P*}Q_P\longrightarrow0,
+	\]
+	其中 \(Q_P\) 为一维 \(k\) 空间。选择局部基可把它识别为 \(k\)，但这里不需要指定这种识别。点支撑层 \(i_{P*}Q_P\) 的限制映射满射，故为 flasque 层，零次上同调为 \(Q_P\)，正次上同调为零。\cref{b3:def:sheaf-cohomology}后的长正合列于是成为
+	\[
+		\begin{aligned}
+			0&\longrightarrow H^0(\mathcal O_C(D))\longrightarrow H^0(\mathcal O_C(D+P))
+			\longrightarrow Q_P\\
+			&\longrightarrow H^1(\mathcal O_C(D))\longrightarrow H^1(\mathcal O_C(D+P))
+			\longrightarrow0.
+		\end{aligned}
+	\]
+	对这个有限维正合列取维数的交错和，得到
+	\[
+		\chi(\mathcal O_C(D+P))=\chi(\mathcal O_C(D))+1.
+	\]
+	另一方面，\(\deg(D+P)=\deg D+1\)。因而所求等式对 \(D\) 成立，当且仅当对 \(D+P\) 成立。
+
+	在 \(D=0\) 时，\cref{b3:cor:H-principal-degree}给出 \(h^0(\mathcal O_C)=1\)，亏格的定义给出 \(h^1(\mathcal O_C)=g\)，故等式成立。任意除子都可从零除子经过有限次增加或减去闭点得到；上面的等价性同时处理这两种操作，便得全部情形。
+\end{proof}
+
+\begin{theorem}[Riemann–Roch]\label{b3:thm:H-riemann-roch}
+	设 \(k\) 为代数闭域，\(C\) 为亏格 \(g\) 的光滑射影整曲线，\(K_C\) 为一个非零有理微分的除子。对 \(C\) 上的任意除子 \(D\)，有
+	\[
+		\ell(D)-\ell(K_C-D)=\deg D+1-g.
+	\]
+\end{theorem}
+\begin{proof}
+	\cref{b3:thm:H-serre-duality}用于线丛 \(\mathcal O_C(D)\)，给出
+	\[
+		H^1(C,\mathcal O_C(D))^\vee
+		\cong H^0(C,\omega_C\otimes\mathcal O_C(-D)).
+	\]
+	由典范除子的定义，右端同构于 \(H^0(C,\mathcal O_C(K_C-D))\)，故一次上同调的维数为 \(\ell(K_C-D)\)。代入\cref{b3:prop:H-euler-characteristic-divisor}即得。
+\end{proof}
+
+这就是曲线上的\term[Riemann-Roch-dingli]{Riemann–Roch 定理}[Riemann--Roch theorem]。其 Euler 特征推导与对偶输入可对照\cite[Chapter IV, Theorem 1.3, pp. 295--296]{Hartshorne1977}。左端的第二项并非只由 \(\deg D\) 决定；它在低次数时衡量实际的上同调修正。
+
+\begin{corollary}\label{b3:cor:H-canonical-degree}
+	设 \(k\) 为代数闭域，\(C\) 为亏格 \(g\) 的光滑射影整曲线，\(K_C\) 为典范除子。则
+	\[
+		\ell(K_C)=g,\qquad \deg K_C=2g-2.
+	\]
+	若 \(g=1\)，则 \(K_C\sim0\)，即 \(\omega_C\cong\mathcal O_C\)。若 \(\deg D>2g-2\)，则
+	\[
+		h^1(C,\mathcal O_C(D))=0,\qquad \ell(D)=\deg D+1-g.
+	\]
+\end{corollary}
+\begin{proof}
+	在 Riemann–Roch 公式中先取 \(D=0\)，由 \(\ell(0)=1\) 得 \(\ell(K_C)=g\)；再取 \(D=K_C\)，得到 \(g-1=\deg K_C+1-g\)，即次数公式。若 \(g=1\)，\(K_C\) 次数为零而有非零截面，\cref{b3:cor:H-section-degree}给出 \(K_C\sim0\)。最后，\(\deg D>2g-2\) 使 \(K_C-D\) 次数为负，同一推论给出 \(\ell(K_C-D)=0\)；对偶与 Riemann–Roch 公式分别给出所列两式。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:H-high-degree-linear-systems}
+	设 \(k\) 为代数闭域，\(C\) 为亏格 \(g\) 的光滑射影整曲线，\(D\) 为除子。若 \(\deg D\ge2g\)，则 \(|D|\) 无基点；若 \(\deg D\ge2g+1\)，则 \(D\) 很充足。
+\end{proposition}
+\begin{proof}
+	对任一闭点 \(P\)，若 \(\deg D\ge2g\)，则 \(D\) 和 \(D-P\) 的次数都大于 \(2g-2\)。上一推论给出 \(\ell(D)-\ell(D-P)=1\)。而 \(L(D-P)\) 正是 \(L(D)\) 中在 \(P\) 处消失的截面，所以每点都有不消失的截面，得到无基点性。
+
+	若 \(\deg D\ge2g+1\)，对任意两个闭点 \(P,Q\)（允许 \(P=Q\)），同样有
+	\[
+		\ell(D)-\ell(D-P-Q)=2.
+	\]
+	这表示求值到长度二子概形 \(P+Q\) 的映射满射。若 \(P\ne Q\)，可分别指定两个纤维中的值，因而分离两点。若 \(P=Q\)，在 \(P\) 处取局部基后，\(\mathcal O_C/\mathfrak m_P^2\) 由 \(1,t\) 张成；可指定常数项和一次项，因而分离切向。射影概形上由截面定义的态射，在同时分离闭点和切向时为闭嵌入，这里采用\cite[Chapter II, Proposition 7.3, pp. 152--153]{Hartshorne1977}的判据。其局部结论是目标局部环到源局部环的满射：切向分离给出极大理想模平方的满射，固有性及有限纤维给出局部环的有限模条件，再用 Nakayama 引理提升到局部环。当前 \(C\) 射影、\(k\) 代数闭，正好满足该判据的假设。因此 \(\varphi_{L(D)}\) 为闭嵌入。
+\end{proof}
+
+次数界的曲线表述也见\cite[Chapter IV, Proposition 3.1 and Corollary 3.2, pp. 307--308]{Hartshorne1977}。界 \(2g+1\) 是统一的充分条件；小于这个界的线丛仍可能很充足，须检查具体线性系。
+
+\subsection{射影直线与低亏格曲线的计算}
+\label{b3:subsec:H02:02}
+
+先回到 \(C=\mathbb P_k^1\)，在有限图上取坐标 \(t\)，无穷远点记为 \(P_\infty\)。对 \(a\in k\)，有 \(\operatorname{div}(t-a)=P_a-P_\infty\)，因此任意次数 \(n\) 的除子都线性等价于 \(nP_\infty\)。没有有限极点的有理函数是多项式，而无穷远处的极点阶数就是其次数，所以
+\[
+	L(nP_\infty)=
+	\begin{cases}
+		\operatorname{span}_k\{1,t,\ldots,t^n\},&n\ge0,\\
+		0,&n<0.
+	\end{cases}
+\]
+用 \(u=t^{-1}\) 表示另一张图，\(\mathrm{d}t=-u^{-2}\mathrm{d}u\)，故 \(\operatorname{div}(\mathrm{d}t)=-2P_\infty\)。\cref{b3:prop:projective-line-cohomology}已经由两图 Čech 复形给出 \(g=0\)；上述函数和微分计算逐项核验了 Riemann–Roch 公式。
+
+\begin{proposition}\label{b3:prop:H-genus-zero-line}
+	设 \(k\) 为代数闭域，\(C\) 为光滑射影整曲线。则 \(C\) 的亏格为零，当且仅当 \(C\cong\mathbb P_k^1\)。
+\end{proposition}
+\begin{proof}
+	射影直线的亏格已在上面算出。反过来，设 \(g=0\)，取闭点 \(P\)。典范除子的次数为 \(-2\)，故 \(\ell(K_C-P)=0\)，Riemann–Roch 给出 \(\ell(P)=2\)。常数只占一维，所以存在非恒定 \(f\in L(P)\)。它只有 \(P\) 处的一个简单极点；否则它处处正则而为常数。由\cref{b3:prop:H-curve-morphism}，\(f:C\rightarrow\mathbb P_k^1\) 是有限态射，其次数等于无穷远纤维的总重数，因而为一。
+
+	这使两个函数域相同。在目标的任一仿射开集上，有限态射的源环整于目标环，且包含在同一函数域中。目标环正规，故两环相等。逐图黏合得到 \(C\cong\mathbb P_k^1\)。
+\end{proof}
+
+\begin{proposition}\label{b3:prop:H-genus-one-sections}
+	设 \(k\) 为代数闭域，\(C\) 为亏格一的光滑射影整曲线，\(D\) 为除子。则
+	\[
+		\ell(D)=
+		\begin{cases}
+			\deg D,&\deg D>0,\\
+			1,&D\sim0,\\
+			0,&\deg D=0\;\text{且}\;D\not\sim0,\\
+			0,&\deg D<0.
+		\end{cases}
+	\]
+	此外，每个次数一的除子类都恰含一个闭点。
+\end{proposition}
+\begin{proof}
+	由\cref{b3:cor:H-canonical-degree}，\(K_C\sim0\)。若 \(\deg D>0\)，则 \(-D\) 次数为负，Riemann–Roch 给出 \(\ell(D)=\deg D\)。次数为零或负的结论分别来自\cref{b3:cor:H-section-degree}以及 \(H^0(C,\mathcal O_C)=k\)。
+
+	若 \(\deg D=1\)，则 \(\ell(D)=1\)。非零截面的零除子是次数一的有效除子，因 \(k\) 代数闭，它就是一个闭点。所有非零截面彼此只差非零常数，所以该有效除子唯一，得到所述唯一性。
+\end{proof}
+
+固定亏格一曲线上的一个点 \(O\) 后，\(L(O)=k\)，但 \(L(2O)\) 与 \(L(3O)\) 的维数分别为二、三。可以依次选取在 \(O\) 处极点阶数恰为二、三的函数；不存在仅有一个简单极点的非恒定函数。这些维数将在\secref{b3:sec:H04}中形成平面三次方程。另一方面，次数为零的线丛即使局部都秩一，也可能没有任何非零全局截面；它是否平凡不能仅靠次数判断。
+
+\begin{example}[亏格二的典范线性系]\label{b3:exm:H-genus-two-canonical}
+	设 \(k\) 为代数闭域，\(C\) 为亏格二的光滑射影整曲线。则 \(\deg K_C=2\)、\(\ell(K_C)=2\)。对任一闭点 \(P\)，都有 \(\ell(P)=1\)：若有非恒定函数只在 \(P\) 处有至多一个简单极点，便如\cref{b3:prop:H-genus-zero-line}的证明得到 \(C\cong\mathbb P^1\)，与亏格二矛盾。
+
+	\ProseParagraphBreak
+	对 \(D=P\) 用 Riemann–Roch，得到 \(\ell(K_C-P)=\ell(P)=1\)。因此 \(L(K_C-P)\) 在 \(L(K_C)\) 中余维一，典范线性系没有基点，给出态射 \(C\rightarrow\mathbb P^1\)。一个目标点的拉回是典范线性系中的一个除子，次数为二，故这个态射的次数为二。这里没有把它当作闭嵌入：两维截面只给出一维射影目标。
+\end{example}
+
+
+% 新增结构与纲要同步；正文、证明与算例初稿，尚未正式审核。
+% #### H.2.1 线性系与 Riemann–Roch 公式
+% #### H.2.2 射影直线与低亏格曲线的计算
+% * 状态：初稿已完成；新增范围尚未正式审核。

@@ -1,0 +1,256 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### I.2 几何基点与平展基本群
+% 状态：正文、证明概要与算例初稿；配套习题由附录入口统一编排。
+
+\section{几何基点与平展基本群}
+\label{b3:sec:I02}
+
+在有限 Galois 扩张中，一个自同构同时置换各个中间扩张的嵌入，并与这些扩张之间的映射相容。对一般概形，单个函数域不再包含全部有限平展覆盖的信息，但每个覆盖在一个几何点上仍有有限个点。把所有这些纤维及其间的映射一起保留，就可以用相容的置换来定义基本群。
+
+\ProseParagraphBreak
+以下以非空连通 Noether 概形 \(X\) 为底，\(\operatorname{FinEt}(X)\) 沿用\cref{b3:def:I-finite-etale-cover}的约定，包含空对象。\cref{b3:prop:I-finite-etale-galois-category}已建立有限极限、不交并、有限群商以及纤维的正合与保守性质。一般分类将由这些性质给出证明概要；域的素谱则与第四卷已经构造的有限 Galois 对应直接衔接。
+
+\subsection{几何基点与纤维函子}
+\label{b3:subsec:I02:01}
+
+\begin{definition}\label{b3:def:I-geometric-fiber}
+	设 \(X\) 为非空连通 Noether 概形。一个态射 \(\bar x:\operatorname{Spec}\Omega\rightarrow X\)，其中 \(\Omega\) 为代数闭域，称为 \(X\) 的\term[jihe-jidian]{几何基点}[geometric base point]。它在 \(X\) 中的像记为 \(x\)。定义相应的\term[xianwei-hanzi]{纤维函子}[fiber functor]
+	\[
+		\begin{aligned}
+			F_{\bar x}:\operatorname{FinEt}(X)&\longrightarrow\mathbf{FinSet},\\
+			Y&\longmapsto\operatorname{Hom}_X(\operatorname{Spec}\Omega,Y).
+		\end{aligned}
+	\]
+	对 \(X\)-态射 \(f:Y\rightarrow Z\)，令 \(F_{\bar x}(f)(\bar y)=f\circ\bar y\)。这里 \(\mathbf{FinSet}\) 是有限集合范畴。
+\end{definition}
+\symidx{\(F_{\bar x}\)：几何基点 \(\bar x\) 给出的纤维函子}
+
+这个集合正是 \(Y\times_X\operatorname{Spec}\Omega\) 的 \(\Omega\) 值点集。由\cref{b3:prop:I-finite-etale-rank}，若 \(Y\) 在 \(X\) 上的常秩为 \(d\)，则几何纤维为 \(d\) 个 \(\operatorname{Spec}\Omega\) 的不交并，所以 \(|F_{\bar x}(Y)|=d\)。特别地，\(F_{\bar x}(\varnothing)=\varnothing\)，而 \(F_{\bar x}(X)\) 是单点集。态射的后复合保持恒等与复合，故确实给出协变函子。
+
+\ProseParagraphBreak
+单个纤维中的点没有天然的编号。若对每个覆盖 \(Y\) 都选一个置换 \(\alpha_Y\)，还必须对每个 \(f:Y\rightarrow Z\) 满足自然性：
+\[
+	\begin{tikzcd}
+		F_{\bar x}(Y)\arrow[r,"\alpha_Y"]\arrow[d,"F_{\bar x}(f)"']
+		&F_{\bar x}(Y)\arrow[d,"F_{\bar x}(f)"]\\
+		F_{\bar x}(Z)\arrow[r,"\alpha_Z"']&F_{\bar x}(Z).
+	\end{tikzcd}
+\]
+它要求所有纤维上的置换同时保留覆盖之间的关系。
+
+\begin{definition}\label{b3:def:I-etale-fundamental-group}
+	设 \(X\) 为非空连通 Noether 概形，\(\bar x\) 为几何基点。纤维函子的自然自同构群
+	\[
+		\pi_1^{\mathrm{\acute et}}(X,\bar x)
+		\coloneqq\operatorname{Aut}(F_{\bar x})
+	\]
+	称为带基点概形的\term[pingzhan-jibenqun]{平展基本群}[étale fundamental group]。乘法约定为分量的函数复合，即 \((\alpha\beta)_Y=\alpha_Y\circ\beta_Y\)。在一个小骨架上选取全部对象，并把这个群嵌入
+	\[
+		\prod_{Y\in\operatorname{FinEt}(X)}
+		\operatorname{Sym}(F_{\bar x}(Y)).
+	\]
+	给每个有限置换群赋离散拓扑，右侧赋积拓扑，左侧赋子空间拓扑，称为逐点拓扑。
+\end{definition}
+\symidx{\(\pi_1^{\mathrm{\acute et}}(X,\bar x)\)：平展基本群}
+
+单位元的一个基本开邻域由有限多个固定条件组成：选有限多个覆盖及其中的点，要求 \(\alpha\) 固定这些点。要求 \(\alpha\) 固定某个覆盖的全部纤维，给出的核也是开正规子群。任意一组有限个固定条件都包含这类核的有限交，因此这些核的有限交构成单位邻域基。
+
+\begin{proposition}\label{b3:prop:I-fundamental-group-profinite}
+	设 \(X\) 为非空连通 Noether 概形，\(\bar x\) 为几何基点。逐点拓扑使 \(\pi_1^{\mathrm{\acute et}}(X,\bar x)\) 成为投射有限群。它在每个 \(F_{\bar x}(Y)\) 上通过 \(\alpha\cdot\bar y=\alpha_Y(\bar y)\) 连续地左作用，且 \(F_{\bar x}\) 所给的全部映射均等变。
+\end{proposition}
+\begin{proof}
+	简记该群为 \(G\)。对一个态射 \(f:Y\rightarrow Z\) 及 \(\bar y\in F_{\bar x}(Y)\)，自然性等式
+	\[
+		F_{\bar x}(f)(\alpha_Y(\bar y))
+		=\alpha_Z(F_{\bar x}(f)(\bar y))
+	\]
+% 跨卷引用目标：b1:lem:finite-discrete-product-compact（22.2.4）。
+	只涉及两个有限坐标，因此在上述积空间中定义闭条件。对全部 \(f,\bar y\) 求交，得到的正是 \(G\)，所以 \(G\) 是有限离散群直积中的闭子群。有限离散空间任意直积的紧性在第一卷引理22.2.4中证明，故 \(G\) 紧且 Hausdorff。
+
+	对骨架中对象的有限集 \(J\)，令 \(G_J\) 为 \(G\) 在相应有限置换群乘积中的像。投影给出自然同态
+	\[
+		G\longrightarrow\varprojlim_JG_J.
+	\]
+	它单射，因为全部坐标确定一个自然变换。任一相容族在 \(G\) 中的坐标原像都是非空闭集；有限多个条件可合并到指标的并集，故具有有限交性质。紧性使总交非空，所以同态满射。两边的拓扑都由有限坐标给出，因此它及其逆连续。这就把 \(G\) 写成有限离散群的逆极限。
+
+	对每个 \(\bar y\in F_{\bar x}(Y)\)，求值映射 \(G\rightarrow F_{\bar x}(Y)\)、\(\alpha\mapsto\alpha_Y(\bar y)\) 连续。因为纤维有限且离散，这保证作用映射连续；乘法按函数复合的约定又给出左作用。最后，等变性就是自然性等式。
+\end{proof}
+
+\subsection{平展基本群与有限覆盖的分类}
+\label{b3:subsec:I02:02}
+
+对投射有限群 \(G\)，记 \(\mathbf{FinSet}_G\) 为有限离散集合上的连续左 \(G\)-作用范畴，态射为等变映射。有限集上的连续性等价于每个点的稳定子群开；有限多个稳定子群的交就是作用核，所以每个这样的作用都通过一个有限商群。
+
+\begin{theorem}[有限平展覆盖的分类]\label{b3:thm:I-galois-classification}
+	设 \(X\) 为非空连通 Noether 概形，\(\bar x\) 为几何基点，令 \(G=\pi_1^{\mathrm{\acute et}}(X,\bar x)\)。给几何纤维赋予上一命题中的连续左作用，则
+	\[
+		\widetilde F_{\bar x}:\operatorname{FinEt}(X)
+		\longrightarrow\mathbf{FinSet}_G
+	\]
+	是范畴等价，且忘却作用后就是 \(F_{\bar x}\)。空概形对应空集合，非空连通覆盖对应非空传递 \(G\)-集，覆盖的秩等于对应集合的元素个数。
+\end{theorem}
+\begin{proofsketch}
+	\cref{b3:prop:I-finite-etale-galois-category}使 \((\operatorname{FinEt}(X),F_{\bar x})\) 满足 Galois 范畴的公理。这里应用\cite[Exposé V, Théorème 4.1 and proof, pp. 98--104]{SGA12003}的重建。关键是用有限 Galois 覆盖组织一切纤维，而不是把各覆盖的置换独立选取。
+
+	一个指点覆盖是 \((Y,\bar y)\)，其中 \(\bar y\in F_{\bar x}(Y)\)；指点态射须保持该点。对有限多个非空连通指点覆盖，在纤维积中取包含所给纤维点的连通分支，便得到共同加细。由\cref{b3:lem:I-fiber-detection}，连通源上的态射由一个几何纤维点的像确定，故两个保持基点的平行态射相等。\cref{b3:prop:I-galois-dominating-cover}又给出共同加细的 Galois 覆盖。因此可以只用非空连通的指点 Galois 覆盖 \((P,p)\) 构造逆系统；对每个给定 \(Y\)，还可使 \(P\) 分裂 \(Y\)，这时评价给出双射
+	\[
+		\operatorname{Hom}_X(P,Y)\longrightarrow F_{\bar x}(Y),
+		\qquad f\longmapsto F_{\bar x}(f)(p).
+	\]
+
+	令 \(D_P=\operatorname{Aut}_X(P)\)。它通过覆盖变换在 \(F_{\bar x}(P)\) 上单纯传递地左作用。自然自同构 \(\alpha\) 与全部覆盖变换交换；若 \(\alpha_P(p)=d_\alpha(p)\)，则
+	\[
+		d_{\alpha\beta}=d_\beta d_\alpha.
+	\]
+	所以所得到的有限商是反群 \(Q_P=D_P^{\mathrm{op}}\)。对指点加细 \(P'\rightarrow P\)，覆盖变换下降给出满射 \(D_{P'}\rightarrow D_P\)：在 \(p'\) 的像处选定相应覆盖变换后，连通源上的唯一性保证两个复合相等；满射性来自两层纤维上的单纯传递性。各有限层的相容族便给出
+	\[
+		\operatorname{Aut}(F_{\bar x})\cong\varprojlim_{(P,p)}D_P^{\mathrm{op}}.
+	\]
+	反向构造中，在上面的评价双射下，用 \(d\in D_P\) 把 \(f(p)\) 送到 \(f(d(p))\)。加细相容性使定义与所选 \(P\) 无关，并与所有 \(Y\rightarrow Z\) 相容。这说明逆极限恢复的是整个纤维函子的自同构。该拓扑与逐点拓扑相同，因为每个有限批纤维都由某个共同的 \(P\) 控制。
+
+	每个有限连续 \(G\)-集 \(T\) 都通过某个 \(Q_P\) 作用。令 \(D_P\) 在 \(P\times T\)（即以 \(T\) 为指标的 \(P\) 的不交并）上左作用如下：
+	\[
+		d\cdot(p',t)=\bigl(d(p'),(d^{-1})^{\mathrm{op}}\cdot t\bigr).
+	\]
+	乘法在第二个因子中反向，正使此式成为左作用。\cref{b3:prop:I-finite-etale-galois-category}提供有限平展商 \((P\times T)/D_P\)，其几何纤维通过 \(t\mapsto[p,t]\) 与 \(T\) 等变同构。一个 \(Q_P\)-等变映射 \(T\rightarrow T'\) 在乘积上给出相容映射，下降到商；反过来，商之间的态射在纤维上给出等变映射。增大 \(P\) 时，所得对象在纤维上相同，保守性使比较态射为同构。对已经由 \(P\) 分裂的 \(Y\)，上述评价映射还给出 \((P\times F_{\bar x}(Y))/D_P\rightarrow Y\)，它在几何纤维上为双射，因而为同构。这给出本质满射和全忠实的有限层构造。
+
+	概要省略指点覆盖逆系统的统一选取、各层商的比较映射及其自然性验证；所引证明把纤维函子表示为连通覆盖的逆系统，再逐层取有限群商完成构造。有限不交并在对应下成为轨道分解，所以非空连通性等价于非空传递性；相关表述另见\cite[Exposé V, Proposition 5.3 and Corollaire 5.4, pp. 105--106]{SGA12003}。纤维点数与秩的等式已由\cref{b3:prop:I-finite-etale-rank}给出。
+\end{proofsketch}
+
+\begin{corollary}\label{b3:cor:I-connected-subgroups}
+	设 \(X\) 为非空连通 Noether 概形，\(\bar x\) 为几何基点，\(G=\pi_1^{\mathrm{\acute et}}(X,\bar x)\)。非空连通指点有限平展覆盖 \((Y,\bar y)\) 的同构类，与开子群 \(H\le G\) 一一对应，具体为
+	\[
+		H=\operatorname{Stab}_G(\bar y),\qquad
+		G/H\xrightarrow{\sim}F_{\bar x}(Y),\quad gH\longmapsto g\cdot\bar y.
+	\]
+	忘记 \(\bar y\) 后，覆盖同构类对应开子群的共轭类。其秩为 \([G:H]\)，且
+	\[
+		\operatorname{Aut}_X(Y)\cong\bigl(N_G(H)/H\bigr)^{\mathrm{op}}.
+	\]
+	覆盖 \(Y\rightarrow X\) 为 Galois 覆盖，当且仅当 \(H\) 正规；这时覆盖变换群同构于 \((G/H)^{\mathrm{op}}\)。
+\end{corollary}
+\begin{proof}
+	传递有限 \(G\)-集选定一点后，由其开稳定子群得到所写陪集双射。反向，开子群的陪集有限：开陪集覆盖紧群，有限子覆盖保证指数有限；陪集作用又连续。\cref{b3:thm:I-galois-classification}给出相应指点覆盖。把纤维点换为 \(a\cdot\bar y\)，稳定子群变为 \(aHa^{-1}\)，故忘记指点后恰好按共轭分类。
+
+	一个等变自同构由 \(H\) 的像 \(nH\) 决定，良定义要求 \(n^{-1}Hn\subseteq H\)。两子群指数相同且有限，所以包含必为相等，即 \(n\in N_G(H)\)。对应映射为 \(gH\mapsto gnH\)，复合使参数反向相乘，得到所列反群。也可用
+	\[
+		N_G(H)/H\longrightarrow\operatorname{Aut}_G(G/H),
+		\qquad nH\longmapsto\bigl(gH\longmapsto gn^{-1}H\bigr)
+	\]
+	写成真正的群同构。覆盖变换在 \(H\) 的轨道为 \(N_G(H)/H\)，所以它传递当且仅当 \(N_G(H)=G\)，即 \(H\) 正规。这与\cref{b3:def:I-galois-cover}的定义一致。
+\end{proof}
+
+连通性在这里决定是否只需一个稳定子群。一般有限平展对象是有限个连通分支的不交并，对应有限个传递作用的并；它仍由同一个 \(G\) 分类，而空对象对应没有轨道的情形。
+
+\begin{proposition}\label{b3:prop:I-change-basepoint}
+	设 \(X\) 为非空连通 Noether 概形，\(\bar x,\bar z\) 为两个几何基点。存在纤维函子的自然同构 \(\theta:F_{\bar x}\xrightarrow{\sim}F_{\bar z}\)。每个这样的选择诱导拓扑群同构
+	\[
+		\theta_*:\pi_1^{\mathrm{\acute et}}(X,\bar x)
+		\longrightarrow\pi_1^{\mathrm{\acute et}}(X,\bar z),
+		\qquad\alpha\longmapsto\theta\alpha\theta^{-1}.
+	\]
+	若另一个选择为 \(\theta'=b\theta\)，其中 \(b\in\pi_1^{\mathrm{\acute et}}(X,\bar z)\)，则 \(\theta'_* =\operatorname{Int}(b)\circ\theta_*\)，其中 \(\operatorname{Int}(b)(h)=bhb^{-1}\)。
+\end{proposition}
+\begin{proofsketch}
+	两个几何纤维函子都满足 Galois 范畴的纤维公理。此类函子的同构存在性是\cite[Exposé V, Corollaire 5.7, p. 107]{SGA12003}：在指点 Galois 有限层上构造相容的纤维识别，有限层的非空性和紧性给出自然同构；原证明将其归结为表示两个纤维函子的覆盖逆系统同构。这里省略这些有限层识别的选取与逆系统同构的构造，即只引用 \(\theta\) 的存在性；以下验证选定 \(\theta\) 后的群同构、拓扑及共轭关系。
+
+	合成与逆保持自然性，所以 \(\alpha\mapsto\theta\alpha\theta^{-1}\) 为群同构。每个分量只通过有限纤维间的固定双射作共轭，因而同构及其逆在逐点拓扑下连续。任意两个选择都唯一地满足 \(\theta'=b\theta\)，其中 \(b=\theta'\theta^{-1}\)。直接计算得
+	\[
+		\theta'\alpha(\theta')^{-1}
+		=b(\theta\alpha\theta^{-1})b^{-1},
+	\]
+	给出所述方向。
+\end{proofsketch}
+
+这样的自然同构 \(\theta\) 也称为两个几何基点间的\term[pingzhan-lujing]{平展路径}[étale path]。它描述全部有限平展纤维之间相容的识别。基本群的同构类型由连通概形确定；在没有选定这类识别时，换基点所得的同构只确定到内自同构。
+
+\subsection{域的素谱与绝对 Galois 群}
+\label{b3:subsec:I02:03}
+
+取域 \(K\) 的代数闭包 \(\overline K\)，令 \(K^s\) 为其中的可分闭包，并记 \(\bar\eta:\operatorname{Spec}\overline K\rightarrow\operatorname{Spec}K\)。有限平展 \(K\)-代数 \(B\) 是有限个有限可分域扩张的直积，因此
+\[
+	F_{\bar\eta}(\operatorname{Spec}B)
+	=\operatorname{Hom}_{K\text{-}\mathrm{alg}}(B,\overline K)
+	=\operatorname{Hom}_{K\text{-}\mathrm{alg}}(B,K^s).
+\]
+后一个等式只用到各嵌入的像在 \(K\) 上有限可分。令 \(G_K=\operatorname{Gal}(K^s/K)\)，取 Krull 拓扑，其在几何点上的左作用是后复合 \(\sigma\cdot t=\sigma\circ t\)。
+
+\begin{proposition}\label{b3:prop:I-field-fundamental-group}
+	设 \(K\) 为域，\(\overline K\) 为一个代数闭包，\(K^s\subseteq\overline K\) 为相应可分闭包，\(\bar\eta:\operatorname{Spec}\overline K\rightarrow\operatorname{Spec}K\) 为包含映射给出的几何基点。则有拓扑群同构
+	\[
+		G_K\xrightarrow{\sim}\pi_1^{\mathrm{\acute et}}(\operatorname{Spec}K,\bar\eta),
+		\qquad\sigma\longmapsto\bigl(t\longmapsto\sigma\circ t\bigr).
+	\]
+	有限可分子扩张 \(L\subseteq K^s\) 对应的传递左作用为 \(G_K/G_L\)，其中 \(G_L=\operatorname{Gal}(K^s/L)\)，陪集 \(\sigma G_L\) 对应嵌入 \(\sigma|_L\)。
+\end{proposition}
+\begin{proof}
+% 跨卷阅读位置：b4:subsec:C04:02（C.4.2）。
+	第四卷C.4.2的证明概要给出了有限平展代数与有限连续 \(G_K\)-集之间的构造、评价同构及态射验证。这里所需的有限对应具体如下：对有限连续左 \(G_K\)-集 \(T\)，取等变函数代数
+	\[
+		B_T=\{\,h:T\rightarrow K^s\mid h(\sigma\cdot t)=\sigma(h(t))\,\}.
+	\]
+% 跨卷引用目标：b1:thm:infinite-galois-correspondence（22.3.1）。
+% 跨卷引用目标：b1:prop:finite-open-correspondence（22.3.3）。
+	不动域的识别使用第一卷定理22.3.1的闭子群对应，开子群与扩张次数使用第一卷命题22.3.3；这里的稳定子群都是开子群，因而闭。
+	每个轨道 \(G_K/H\) 上的函数由 \(h(H)\in(K^s)^H\) 决定；反向由 \(a\in(K^s)^H\) 定义 \(h(\sigma H)=\sigma(a)\)，稳定子群条件保证此式良定义。开子群 \(H\) 对应有限可分不动域，所以 \(B_T\) 是这些域的有限直积。空集对应空概形。
+
+	现在验证两项评价。将有限平展代数写为 \(B=\prod_{i=1}^rL_i\)，并为每个域因子选择嵌入 \(j_i:L_i\hookrightarrow K^s\)。记 \(T_B=\operatorname{Hom}_{K\text{-}\mathrm{alg}}(B,K^s)\)。域中没有非平凡幂等元，所以每个 \(B\rightarrow K^s\) 恰好经过一个因子，因而
+	\[
+		T_B=\coprod_{i=1}^r\operatorname{Hom}_K(L_i,K^s).
+	\]
+	在包含各 \(j_i(L_i)\) 及其全部共轭的共同有限 Galois 层上，嵌入延拓定理说明 \(G_K\) 在每一项上传递。点 \(j_i\) 的稳定子群为 \(H_i=\operatorname{Gal}(K^s/j_i(L_i))\)，其不动域正是 \(j_i(L_i)\)。考虑评价映射
+	\[
+		B\longrightarrow B_{T_B},\qquad b\longmapsto\bigl(t\longmapsto t(b)\bigr)
+	\]
+	它保持加法、乘法与单位；若一个 \(b=(b_i)\) 的评价为零，在各个 \(j_i\) 处求值即得 \(j_i(b_i)=0\)，所以 \(b=0\)。反向，给定 \(h\in B_{T_B}\)，等变性使 \(a_i=h(j_i)\) 被 \(H_i\) 固定，故唯一写成 \(a_i=j_i(b_i)\)。对每个 \(t=\sigma\circ j_i\)，都有
+	\[
+		h(t)=\sigma(h(j_i))=\sigma(j_i(b_i))=t(b_i).
+	\]
+	于是 \(b=(b_i)\) 的评价就是 \(h\)，证明满射，也就得到代数同构。
+
+	反向，对 \(T\) 的一个轨道选点 \(t_0\)，令 \(H=\operatorname{Stab}_{G_K}(t_0)\)、\(L=(K^s)^H\)。上面的函数描述给出该轨道的函数代数与 \(L\) 的同构。点 \(\sigma\cdot t_0\) 的评价在这个描述下是嵌入 \(a\mapsto\sigma(a)\)。开子群 \(H\) 是闭子群，Galois 对应给出 \(G_L=H\)；所以两条评价相同当且仅当两元素属于同一左陪集 \(\sigma H\)。有限可分扩张 \(L/K\) 恰有 \([L:K]=[G_K:H]\) 条嵌入，且它们都由上述延拓得到。因此评价穷尽全部嵌入，轨道上为双射。逐轨道取不交并便证明
+	\[
+		T\xrightarrow{\sim}T_{B_T},\qquad
+		t\longmapsto\bigl(h\longmapsto h(t)\bigr)
+	\]
+	为等变双射：等变性直接来自 \(h(\sigma\cdot t)=\sigma(h(t))\)。空对象的两项评价也分别是零代数和空集上的恒等。评价与态射的相容性由后面的拉回公式给出。
+
+	态射方向可由公式直接看出。代数同态 \(u:B\rightarrow C\) 给出 \(T_C\rightarrow T_B\)、\(t\mapsto t\circ u\)。反向，等变映射 \(v:T_C\rightarrow T_B\) 给出函数拉回 \(B_{T_B}\rightarrow B_{T_C}\)、\(h\mapsto h\circ v\)。评价同构使两项操作互逆，因而
+	\[
+		\operatorname{Hom}_{K\text{-}\mathrm{alg}}(B,C)
+		\cong\operatorname{Hom}_{G_K}(T_C,T_B).
+	\]
+% 跨卷引用目标：b4:thm:galois-fiber-reconstruction（C.4.2）。
+	代数与集合之间反变，而 \(\operatorname{Spec}\) 也反变，所以概形与几何纤维之间是协变等价，并与忘却作用的函子相容。第四卷定理C.4.2完整证明了投射有限群由有限连续左作用范畴的忘却函子重建；用于 \(G_K\)，便得 \(G_K\cong\operatorname{Aut}(F_{\bar\eta})\)，所给分量恰为后复合 \(\sigma\circ t\)。在有限 Galois 层上固定一个嵌入的条件是固定该层，因此逐点拓扑与 Krull 拓扑相同。最后，\(L\) 的嵌入由 \(G_K\) 传递地置换，包含嵌入的稳定子群正是 \(G_L\)，得到陪集说明。
+\end{proof}
+
+这个群就是 \(K\) 的\term[juedui-galois-qun]{绝对 Galois 群}[absolute Galois group]。一个有限可分域扩张选择嵌入 \(L\hookrightarrow K^s\) 后给出具体开子群；未选嵌入时只得到共轭类。这与一般连通覆盖中选取几何纤维点的作用相同。
+
+\begin{example}[有限域上的覆盖]\label{b3:exm:I-finite-field-covers}
+% 跨卷引用目标：b1:thm:finite-field-absolute-galois（22.4.1）。
+	设 \(q\) 为素数幂，取 \(K=\mathbb F_q\)。第一卷定理22.4.1给出
+	\[
+		\pi_1^{\mathrm{\acute et}}(\operatorname{Spec}\mathbb F_q,\bar\eta)
+		\cong\widehat{\vphantom{Z}\mathbb Z},
+	\]
+	其中整数 \(1\) 对应算术 Frobenius \(F:a\mapsto a^q\)。对覆盖 \(\operatorname{Spec}\mathbb F_{q^r}\)，几何纤维的嵌入为 \(t_i=F^i|_{\mathbb F_{q^r}}\)、\(i\in\mathbb Z/r\mathbb Z\)，且 \(F\cdot t_i=t_{i+1}\)，所以得到长度 \(r\) 的循环。
+
+	\ProseParagraphBreak
+	任意有限集合上的一个置换 \(s\) 都定义连续的 \(\widehat{\vphantom{Z}\mathbb Z}\)-作用：先约化到 \(\mathbb Z/\operatorname{ord}(s)\mathbb Z\)，再用 \(1\) 作用为 \(s\)。整数子群稠密，故连续作用也由 \(1\) 的置换唯一决定；两个作用同构当且仅当该置换的循环长度及其重数相同。因此有限平展 \(\mathbb F_q\)-概形为有限个 \(\operatorname{Spec}\mathbb F_{q^{r_i}}\) 的不交并，连通性对应于置换只有一个循环。这里固定的是算术 Frobenius；其逆称为几何 Frobenius，改用它时每个循环的方向反转。
+\end{example}
+
+\begin{example}[实数域上的覆盖]\label{b3:exm:I-real-field-covers}
+% 跨卷引用目标：b1:prop:real-absolute-galois（22.4.2）。
+	取 \(K=\mathbb R\)、\(\overline K=\mathbb C\)。第一卷命题22.4.2给出 \(G_{\mathbb R}=\{1,\tau\}\cong C_2\)，其中 \(\tau\) 为复共轭。因此
+	\[
+		\pi_1^{\mathrm{\acute et}}(\operatorname{Spec}\mathbb R,\bar\eta)\cong C_2.
+	\]
+	\(C_2\) 的有限作用分为固定点和二元轨道，故每个有限平展实概形都是若干个 \(\operatorname{Spec}\mathbb R\) 与若干个 \(\operatorname{Spec}\mathbb C\) 的不交并。前者贡献一个固定几何点，后者的两条实嵌入 \(1,\tau:\mathbb C\rightarrow\mathbb C\) 被后复合的 \(\tau\) 交换。特别地，\(\operatorname{Spec}(\mathbb R\times\mathbb R)\) 与 \(\operatorname{Spec}\mathbb C\) 的秩都为二，但一个对应两个固定点，另一个对应传递的二元集；纤维的基数之外，还须记录作用。
+\end{example}
+
+
+% 新增结构与纲要同步；正文、证明概要与算例初稿，尚未正式审核。
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### I.2.1 几何基点与纤维函子
+% #### I.2.2 平展基本群与有限覆盖的分类
+% #### I.2.3 域的素谱与绝对 Galois 群

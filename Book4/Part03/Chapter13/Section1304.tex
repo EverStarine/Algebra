@@ -6,13 +6,17 @@
 \section{典型计算、Morita 不变性与 HKR}
 \label{b4:sec:1204}
 
-矩阵代数、光滑交换代数及一个平方零代数展示三种不同的 Hochschild 计算。前两种分别利用模范畴等价和对角的 Koszul 消解，最后一种直接检验形变障碍。
+矩阵代数、光滑交换代数及一个平方零代数展示三种不同的 Hochschild 计算。前两种分别利用模范畴等价和对角的 Koszul 消解，最后一种直接检验形变障碍。交换代数的形变还会产生一个新的问题：乘法最先出现的不交换部分，满足哪些恒等式？Poisson 括号正是从低阶结合律中留下的结构。
 
 % 纲要内容（仅作写作计划，尚非教材正文）：
 %
 % * 矩阵代数与 Morita 不变性
 % * 光滑交换代数的比较方向
 % * 不把一阶可形变误判为一定可延拓至所有阶
+%
+% * 新增小节状态：初稿已完成；原有内容保留。
+%
+% #### 13.4.4 Poisson 括号与形式星积
 %
 % ---
 %
@@ -228,3 +232,171 @@
 \end{example}
 
 此例还说明，障碍不只是一句存在性警告。给出乘法表后，先计算\(2\)-余圈，再在一个特定三元组上计算障碍，最后证明所有余边在该三元组上的值都为零，就足以判定无法延拓。其余未选的二阶系数不能改变这一结论。
+
+\subsection{Poisson 括号与形式星积}
+\label{b4:subsec:1304:04}
+
+设原代数 \(A\) 交换，而形变乘法不再交换。因为零次项相同，两个常数元素的交换子必被形变参数整除。取它的一次系数，便得到原交换代数上的一个双线性运算；这个系数允许为零，不交换性也可能在更高次才出现。结合律对一次系数的限制分成两层：一次结合律产生乘积法则，二次结合律才迫使它满足 Jacobi 恒等式。
+
+\begin{definition}\label{b4:def:poisson-algebra}
+	设 \(k\) 为域，\(A\) 为交换含幺 \(k\) 代数。若 \(k\) 双线性运算 \(\{-,-\}:A\times A\to A\) 满足
+	\[
+		\begin{gathered}
+			\{a,a\}=0,\qquad
+			\{a,\{b,c\}\}+\{b,\{c,a\}\}+\{c,\{a,b\}\}=0,\\
+			\{a,bc\}=\{a,b\}c+b\{a,c\}
+		\end{gathered}
+	\]
+	对任意 \(a,b,c\in A\) 成立，就称它为 \(A\) 上的 \term[Poisson-kuohao]{Poisson 括号}[Poisson bracket]，称带有这个括号的 \(A\) 为 \term[Poisson-daishu]{Poisson 代数}[Poisson algebra]。\footnote{泊松（Siméon-Denis Poisson，1781-1840），法国数学家、物理学家，研究分析、概率及力学；力学中的泊松括号以他命名。}
+\end{definition}
+\symidx{\(\{a,b\}\)：Poisson 括号}
+
+第一式称为交替性；对 \(a+b\) 使用它，得到 \(\{a,b\}=-\{b,a\}\)。因此第三式也给出第一变量的乘积法则，即括号在每个变量上都是导子。在特征二中，反对称性本身不能代替交替性。这里的括号没有分次：\(A\) 是普通交换代数，Jacobi 恒等式也不带移后次数的符号。
+
+\begin{definition}\label{b4:def:formal-star-product}
+	设 \(k\) 为域，\(A\) 为交换含幺 \(k\) 代数，\(\hbar\) 为形式参数。\(A[\![\hbar]\!]\) 上一个连续、保持单位的 \(k[\![\hbar]\!]\) 双线性结合乘法，若模 \(\hbar\) 后等于 \(A\) 的原乘法，就称为 \(A\) 上的\term[xingshi-xingji]{形式星积}[formal star product]。在常数元素上将它写成
+	\[
+		a\star b=ab+\sum_{r\ge1}\hbar^r C_r(a,b),\qquad
+		C_r(1,a)=C_r(a,1)=0.
+	\]
+	这里每个 \(C_r:A\times A\to A\) 都是 \(k\) 双线性映射，连续性相对于 \(\hbar\)-进拓扑。
+\end{definition}
+\symidx{\(a\star b\)：形式星积}
+
+这是\subsecref{b4:subsec:1203:03}中形式形变在交换代数上的情形；本节把参数改记为 \(\hbar\)，它仍是中心的形式参数，不表示一个待取极限的实数。一般级数的乘积仍按每个 \(\hbar^n\) 系数中的有限和定义。这里不附加 \(C_r\) 为微分算子的要求；下面的具体构造会给出由导数组成的系数。若星积的一次交换子满足
+\[
+	C_1(a,b)-C_1(b,a)=\{a,b\},
+\]
+就说它量化了这个 Poisson 括号。该条件规定了不交换性的一次项，并未唯一确定所有高阶系数。
+
+\begin{proposition}\label{b4:prop:star-first-commutator-poisson}
+	设 \(k\) 为任意域，\(A\) 为交换含幺 \(k\) 代数，\(C_1:A\times A\to A\) 为归一化 \(k\) 双线性映射。若
+	\[
+		a\star b=ab+\hbar C_1(a,b)\pmod{\hbar^2}
+	\]
+	经 \(k[\hbar]/(\hbar^2)\) 双线性延拓，给出 \(A\otimes_k k[\hbar]/(\hbar^2)\) 上保持单位的结合乘法，则
+	\[
+		\{a,b\}=C_1(a,b)-C_1(b,a)
+	\]
+	是交替双导子。若这个乘法还可延拓成模 \(\hbar^3\) 的保持单位结合乘法，则它是 Poisson 括号。特别地，每个形式星积都产生 Poisson 括号；在模 \(\hbar\) 为恒等的形变等价下，所得括号不变。
+\end{proposition}
+\begin{proof}
+	双线性和交替性直接来自定义。记 \([u,v]_{\star}=u\star v-v\star u\)。任何结合乘法的交换子满足
+	\[
+		[a,b\star c]_{\star}
+		=[a,b]_{\star}\star c+b\star[a,c]_{\star}.
+	\]
+	因为 \(A\) 的原乘法交换，\([a,b]_{\star}=\hbar\{a,b\}\pmod{\hbar^2}\)。左边输入 \(b\star c=bc+\hbar C_1(b,c)\) 的额外一项不影响一次系数：它与 \(a\) 的零次交换子为零。取上式的 \(\hbar\) 系数，便得
+	\[
+		\{a,bc\}=\{a,b\}c+b\{a,c\}.
+	\]
+	反对称性给出另一变量的乘积法则。
+
+	现在假设存在二阶延拓，并写
+	\[
+		[a,b]_{\star}=\hbar\{a,b\}+\hbar^2 Q(a,b)\pmod{\hbar^3}.
+	\]
+	结合乘法的交换子满足 Jacobi 恒等式：把每个嵌套交换子展开后，六种有序三重乘积各出现两次且符号相反。因此
+	\[
+		[a,[b,c]_{\star}]_{\star}
+		+[b,[c,a]_{\star}]_{\star}
+		+[c,[a,b]_{\star}]_{\star}=0.
+	\]
+	其中 \([a,\hbar^2 Q(b,c)]_{\star}\) 模 \(\hbar^3\) 为零，因为原乘法交换；而
+	\[
+		[a,\hbar\{b,c\}]_{\star}
+		=\hbar^2\{a,\{b,c\}\}\pmod{\hbar^3}.
+	\]
+	取二次系数就得到 Poisson 的 Jacobi 恒等式。若只在模 \(\hbar^2\) 的代数中计算，这些二次项全为零，不能据此推出任何 Jacobi 条件。这正是需要二阶延拓的原因。
+
+	最后，设等价变换的一次项为 \(T=\operatorname{id}+\hbar H\pmod{\hbar^2}\)。由\cref{b4:thm:hh2-deformation-classification}中的比较公式，两种一次系数之差为
+	\[
+		(\delta H)(a,b)=a\cdot H(b)-H(ab)+H(a)\cdot b.
+	\]
+	因 \(A\) 交换，这个表达式关于 \(a,b\) 对称，取反对称部分后为零，故两种星积给出同一个括号。
+\end{proof}
+
+在 Hochschild 余链的语言中，一次结合律就是 \(\delta C_1=0\)，二次结合律则为 \(\delta C_2=C_1\circ C_1\)。命题从这两条方程分别推出乘积法则与 Jacobi 恒等式。这个推论在任意特征下成立，因为括号取的是差 \(C_1(a,b)-C_1(b,a)\)，没有除以 \(2\)。仅当 \(2\) 在 \(k\) 中可逆且选取 \(C_1=\dfrac12\{-,-\}\) 时，才能把一次系数直接写成括号的一半。
+
+\ProseParagraphBreak
+星积要求每一阶的结合律，直接求全部 \(C_r\) 通常比寻找一次括号困难。两两交换的导子给出一个可以完整核验的构造：把对两个因子分别求导的算子作形式指数，其三重乘法由同一组三个算子控制。
+
+\begin{proposition}\label{b4:prop:commuting-derivation-star-product}
+	设 \(k\) 为特征零域，\(A\) 为交换含幺 \(k\) 代数，\(D_1,\ldots,D_s,E_1,\ldots,E_s\) 为两两交换的 \(k\) 导子。记 \(m:A\otimes_kA\to A\) 为原乘法，并令
+	\[
+		P=\sum_{i=1}^s D_i\otimes E_i.
+	\]
+	则下式在 \(A[\![\hbar]\!]\) 上定义形式星积：
+	\[
+		a\star b=m\exp(\hbar P)(a\otimes b)
+		=\sum_{r\ge0}\frac{\hbar^r}{r!}\,mP^r(a\otimes b).
+	\]
+	它产生的 Poisson 括号为
+	\[
+		\{a,b\}=\sum_i\bigl(D_i(a)E_i(b)-D_i(b)E_i(a)\bigr).
+	\]
+\end{proposition}
+\begin{proof}
+	每个系数只使用有限次导子复合，不需要指数级数在分析意义下收敛。特征零保证所有 \(r!\) 可逆。将公式按 \(\hbar\) 次数延拓，便得到连续双线性乘法。导子满足 \(D_i(1)=E_i(1)=0\)，所以含有单位的高阶项全为零，单位仍为 \(1\)。
+
+	在 \(A^{\otimes3}\) 上记
+	\[
+		\begin{aligned}
+			P_{12}&=\sum_i D_i\otimes E_i\otimes\operatorname{id},\\
+			P_{13}&=\sum_i D_i\otimes\operatorname{id}\otimes E_i,\\
+			P_{23}&=\sum_i\operatorname{id}\otimes D_i\otimes E_i.
+		\end{aligned}
+	\]
+	这三个算子两两交换；即使它们作用于同一张量因子，该因子上的导子也由假设相互交换。导子的乘积法则给出
+	\[
+		\begin{aligned}
+			P(m\otimes\operatorname{id})
+			&=(m\otimes\operatorname{id})(P_{13}+P_{23}),\\
+			P(\operatorname{id}\otimes m)
+			&=(\operatorname{id}\otimes m)(P_{12}+P_{13}).
+		\end{aligned}
+	\]
+	例如第一式把 \(D_i(ab)\otimes E_i(c)\) 展开为 \(\bigl(D_i(a)\cdot b\bigr)\otimes E_i(c)+\bigl(a\cdot D_i(b)\bigr)\otimes E_i(c)\)。反复应用相同等式，便可将外层的每个 \(P^r\) 移到三重张量上。
+
+	令 \(m_3(a\otimes b\otimes c)=abc\)。两种加括号的乘积因而分别为
+	\[
+		\begin{aligned}
+			(a\star b)\star c
+			&=m_3\exp\bigl(\hbar(P_{13}+P_{23})\bigr)
+			\exp(\hbar P_{12})(a\otimes b\otimes c),\\
+			a\star(b\star c)
+			&=m_3\exp\bigl(\hbar(P_{12}+P_{13})\bigr)
+			\exp(\hbar P_{23})(a\otimes b\otimes c).
+		\end{aligned}
+	\]
+	交换算子的二项式公式使两式都等于
+	\[
+		m_3\exp\bigl(\hbar(P_{12}+P_{13}+P_{23})\bigr)(a\otimes b\otimes c).
+	\]
+	所以乘法结合。这一验证逐个形式系数成立，故也适用于一般形式级数。一次系数为 \(\sum_iD_i(a)E_i(b)\)，取其反对称部分，再用\cref{b4:prop:star-first-commutator-poisson}，便得到所列 Poisson 括号。
+\end{proof}
+
+取 \(A=k[q_1,\ldots,q_d,p_1,\ldots,p_d]\)，其中 \(\operatorname{char}k=0\)。所有偏导子相互交换，因此可以取
+\[
+	P=\frac12\sum_{i=1}^d
+	\left(\frac{\partial}{\partial q_i}\otimes\frac{\partial}{\partial p_i}
+	-\frac{\partial}{\partial p_i}\otimes\frac{\partial}{\partial q_i}\right).
+\]
+系数 \(\dfrac12\)、\(-\dfrac12\) 可吸收到各导子中，故它符合刚才的构造。所得括号是\term[biaozhun-xin-kuohao]{标准辛括号}[standard symplectic Poisson bracket]：
+\begin{equation}\label{b4:eq:standard-symplectic-poisson}
+	\{f,g\}=\sum_{i=1}^d
+	\left(\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}
+	-\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}\right).
+\end{equation}
+例如 \(\{q_i,p_j\}=\delta_{ij}\)，而两个 \(q\) 或两个 \(p\) 的括号为零。这里 Jacobi 恒等式已由结合星积推出，不必另行排列二阶偏导项。对坐标函数，二阶以上偏导都为零，因而完整的星乘关系就是
+\[
+	q_i\star p_j=q_ip_j+\frac{\hbar}{2}\delta_{ij},\qquad
+	p_j\star q_i=q_ip_j-\frac{\hbar}{2}\delta_{ij},\qquad
+	[q_i,p_j]_{\star}=\hbar\delta_{ij}.
+\]
+一对变量时还可算得
+\[
+	q^2\star p^2=q^2p^2+2\hbar qp+\frac{\hbar^2}{2},\qquad
+	p^2\star q^2=q^2p^2-2\hbar qp+\frac{\hbar^2}{2}.
+\]
+二次项分别来自 \(\dfrac{\hbar^2}{2!}\cdot\dfrac14\cdot2\cdot2\)，所以两项相减后为 \(4\hbar qp\)，与 \(\{q^2,p^2\}=4qp\) 一致。固定两个多项式时这些求导级数实际终止；对任意形式级数，仍只能按 \(\hbar\) 的次数解释它。此构造使用常系数且相互交换的导子，并不证明任意 Poisson 括号都有星积，也不能在正特征下原样使用带 \(r!\) 分母的公式。

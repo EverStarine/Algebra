@@ -1,0 +1,206 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### C.5 紧闭包与 Frobenius 闭包
+% BEGIN APPENDIX OUTLINE SYNC
+% * 状态：初稿已完成；正文、证明与算例已写，新增范围尚未正式审核。
+% * 固定乘数、极小素理想与充分大指数的量词；Frobenius 闭包包含于紧闭包及闭包的基本性质
+% * 局部化下的包含、平坦 Frobenius 的理想商公式与 Krull 交定理；正则环中理想紧闭的完整推导
+% * 任意正特征域上的多项式理想与交叉直线算例；分别计算两种闭包，不把局部化包含提升为一般等式
+% #### C.5.1 紧闭包的定义与 Frobenius 闭包的比较
+% #### C.5.2 正则环中的紧闭包与算例
+% END APPENDIX OUTLINE SYNC
+% 状态：正文、证明与算例初稿；配套习题由附录入口统一编排。
+
+\section{紧闭包与 Frobenius 闭包}
+\label{b3:sec:C05}
+
+设 \(k\) 为特征 \(p>0\) 的域。在交叉直线的环 \(R=k[x,y]/(xy)\) 中，\(x\) 不属于理想 \(I=(x+y)\)，但对每个 \(q=p^e\) 都有
+\[
+	(x+y)x^q=x(x^q+y^q)\in I^{[q]}.
+\]
+取幂后的关系虽然不能直接还原为 \(x\in I\)，却始终只差同一个乘数 \(x+y\)。这个乘数在两条不可约分支上都不为零。紧闭包把这种固定乘数纳入理想成员的检验；本节末尾将算出该理想的整个紧闭包，并与 Frobenius 闭包比较。
+
+\ProseParagraphBreak
+以下使用特征 \(p>0\) 下的交换 Noether 环。沿用\secref{b3:sec:C02}的 Frobenius 幂 \(I^{[q]}\)，其中 \(q=p^e\)；若 \(I=(a_1,\ldots,a_s)\)，则
+\[
+	I^{[q]}=(a_1^q,\ldots,a_s^q),\qquad
+	\bigl(I^{[q]}\bigr)^{[q']}=I^{[qq']}
+	\quad(q'=p^{e'}).
+\]
+第一式来自 \((\sum_i r_i a_i)^q=\sum_i r_i^q a_i^q\)，第二式再对这些生成元取幂。正则环的结论将使用\cref{b3:claim:C-kunz}所引用的 Frobenius 平坦性判据，以及\cref{b3:thm:krull-intersection}；从这些输入到紧闭包平凡性的推导在下面展开。
+
+\subsection{紧闭包的定义与 Frobenius 闭包的比较}
+\label{b3:subsec:C05:01}
+
+固定乘数不能只要求不等于零。在约化环 \(k[x,y]/(xy)\) 中，非零元素 \(x\) 会零化整条另一分支上的元素：\(xy^q=0\)。若允许用 \(x\) 作乘数，就会把 \(y\) 错收入零理想的紧闭包。应当要求乘数避开每个极小素理想。
+
+\begin{definition}\label{b3:def:C-tight-closure}
+	设 \(p\) 为素数，\(R\) 为特征 \(p\) 的交换 Noether 环，\(I\subseteq R\) 为理想。以 \(\operatorname{Min}R\) 表示 \(R\) 的极小素理想集合，记
+	\[
+		R^\circ\coloneqq R\setminus
+		\bigcup_{\mathfrak p\in\operatorname{Min}R}\mathfrak p.
+	\]
+	如果 \(z\in R\)，且存在 \(c\in R^\circ\) 和整数 \(e_0\ge0\)，使对每个整数 \(e\ge e_0\) 都有
+	\[
+		c z^{p^e}\in I^{[p^e]},
+	\]
+	就称 \(z\) 属于 \(I\) 的\term[jinbibao]{紧闭包}[tight closure]。全部这样的元素组成的集合记为 \(I^*\)。
+\end{definition}
+\symidx{\(R^\circ\)：避开环 \(R\) 全部极小素理想的元素集合}
+\symidx{\(I^*\)：理想 \(I\) 的紧闭包}
+
+这里的 \(c\) 可以依赖 \(I,z\)，却须对全部足够大的 \(e\) 保持不变。若 \(R\) 为整环，则 \(R^\circ=R\setminus\{0\}\)；有多个分支时，条件要求 \(c\) 在每个分支的泛点处均不消失。由于素理想的乘法性质，\(1\in R^\circ\)，且 \(R^\circ\) 对乘法封闭。
+
+\ProseParagraphBreak
+Frobenius 闭包要求某一次直接成立的关系
+\[
+	z^{p^{e_0}}\in I^{[p^{e_0}]}.
+\]
+把它再取 \(p\) 次幂，便得到每个更大指数的关系，所以它给出紧闭包中的见证 \(c=1\)。紧闭包允许额外的固定乘数；环的 Noether 性则使有限多个生成元所用的见证能够合并。
+
+\begin{proposition}\label{b3:prop:C-tight-closure-properties}
+	设 \(R\) 为特征 \(p>0\) 的交换 Noether 环，\(I,J\subseteq R\) 为理想。则 \(I^*\) 是 \(R\) 的理想，并具有下列性质：
+	\begin{enumerate}
+		\item \(I\subseteq I^F\subseteq I^*\)。
+		\item 若 \(I\subseteq J\)，则 \(I^*\subseteq J^*\)。
+		\item \((I^*)^*=I^*\)。
+		\item \((0)^F=(0)^*=\sqrt{(0)}\)。
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	前面的取幂论证给出第一项；理想包含在取 Frobenius 幂后仍保持，因而得到第二项。若 \(u,v\in I^*\)，分别取见证 \(c,d\in R^\circ\)。对全部足够大的 \(q=p^e\)，有
+	\[
+		cd(u+v)^q=d(cu^q)+c(dv^q)\in I^{[q]}.
+	\]
+	乘积 \(cd\) 仍属于 \(R^\circ\)，故 \(u+v\in I^*\)。对任意 \(a\in R\)，关系 \(c(au)^q=a^q(cu^q)\in I^{[q]}\) 给出 \(au\in I^*\)。又 \(0\in I\subseteq I^*\)，所以 \(I^*\) 为理想。
+
+	为证第三项，令 \(J_0=I^*\)。若 \(J_0=0\)，则由已证的 \(I\subseteq I^*\) 得 \(I=0\)，从而 \(J_0^*=I^*=0\)。以下设 \(J_0\ne0\)。Noether 性给出有限组生成元 \(J_0=(u_1,\ldots,u_s)\)。对每个 \(u_i\) 选见证 \(c_i\in R^\circ\) 及起始指数。令 \(c=\prod_i c_i\)，把起始指数取为有限多个指数的最大值，就有
+	\[
+		c u_i^q\in I^{[q]}\quad(1\le i\le s),\qquad
+		cJ_0^{[q]}\subseteq I^{[q]}
+	\]
+	对全部足够大的 \(q=p^e\) 成立。若 \(z\in J_0^*\)，再取 \(d\in R^\circ\)，使 \(dz^q\in J_0^{[q]}\) 对全部足够大的 \(q\) 成立。于是 \(cdz^q\in I^{[q]}\)，且 \(cd\in R^\circ\)，故 \(z\in I^*=J_0\)。反向包含来自第一项。
+
+	若 \(z\) 幂零，取足够大的 \(q=p^e\) 即有 \(z^q=0\)，所以 \(z\in(0)^F\)。若 \(z\in(0)^*\)，取一个见证 \(c\)。对任意极小素理想 \(\mathfrak p\)，在整环 \(R/\mathfrak p\) 中有 \(\bar c\bar z^q=0\)，而 \(\bar c\ne0\)，故 \(\bar z=0\)。由\cref{b3:prop:noether-spectrum-components}，每个素理想都包含一个极小素理想；再用\cref{b3:thm:radical-prime-intersection}，这些极小素理想的交是 \(\sqrt{(0)}\)。因此 \(z\in\sqrt{(0)}\)。结合第一项即得第四项。
+\end{proof}
+
+特别地，约化环满足 \((0)^*=0\)，因此前面 \(xy=0\) 的关系不能用 \(c=x\) 将 \(y\) 收入零理想的紧闭包。\(R^\circ\) 的定义排除了这种只在部分分支上有效的乘数。
+
+\begin{lemma}\label{b3:lem:C-tight-localization}
+	设 \(R\) 为特征 \(p>0\) 的交换 Noether 环，\(S\subseteq R\) 为含一且不含零的乘法集，\(A=S^{-1}R\)，\(I\subseteq R\) 为理想。则每个 \(c\in R^\circ\) 的像 \(c/1\) 属于 \(A^\circ\)，特别地 \(c/1\ne0\)，并且
+	\[
+		S^{-1}(I^*)\subseteq(S^{-1}I)^*.
+	\]
+\end{lemma}
+\begin{proof}
+	由\cref{b3:prop:localized-prime-ideals}，\(A\) 的每个素理想来自一个与 \(S\) 不交的素理想 \(\mathfrak p\)。如果该局部化素理想极小，选一个极小素理想 \(\mathfrak q\subseteq\mathfrak p\)；它也与 \(S\) 不交。极小性给出 \(S^{-1}\mathfrak q=S^{-1}\mathfrak p\)，收缩后得 \(\mathfrak q=\mathfrak p\)。所以 \(A\) 的极小素理想都来自 \(R\) 的极小素理想。对这样的 \(\mathfrak p\)，若 \(c/1\in S^{-1}\mathfrak p\)，则存在 \(s\in S\) 使 \(sc\in\mathfrak p\)。因 \(s\notin\mathfrak p\)，素性将推出 \(c\in\mathfrak p\)，与 \(c\in R^\circ\) 矛盾。这证明 \(c/1\in A^\circ\)。非零环 \(A\) 有极小素理想，故 \(0\notin A^\circ\)。
+
+	若 \(z\in I^*\)，取见证 \(c\in R^\circ\)。对任意 \(s\in S\) 及全部足够大的 \(q=p^e\)，有
+	\[
+		\dfrac c1\left(\dfrac zs\right)^q
+		=\dfrac{cz^q}{s^q}\in S^{-1}\bigl(I^{[q]}\bigr)
+		=(S^{-1}I)^{[q]}.
+	\]
+	因此 \(z/s\in(S^{-1}I)^*\)，得到所述包含。
+\end{proof}
+
+\subsection{正则环中的紧闭包与算例}
+\label{b3:subsec:C05:02}
+
+正则性给出的额外条件是 Frobenius 平坦。平坦标量扩张保持关系的核；把这一点用于乘一个元素的映射，就能控制紧闭包定义中的固定乘数。
+
+\begin{lemma}\label{b3:lem:C-flat-frobenius-colon}
+	设 \(R\) 为特征 \(p>0\) 的交换环，\(e\ge0\)，\(q=p^e\)，且环同态 \(F^e:R\rightarrow R\) 平坦。对任意理想 \(I\subseteq R\) 和元素 \(z\in R\)，有
+	\[
+		(I^{[q]}:z^q)=(I:z)^{[q]}.
+	\]
+\end{lemma}
+\begin{proof}
+	令 \(J=(I:z)=\{a\in R:az\in I\}\)。序列
+	\[
+		0\longrightarrow J\longrightarrow R
+		\xrightarrow{\;\mu_z\;}R/I,
+		\qquad \mu_z(a)=az+I,
+	\]
+	在前两个非零项正合。沿 \(F^e\) 作标量扩张，即与作为 \(R\) 代数的目标环 \(R\) 张量；平坦性保持这段正合性，见\cref{b3:def:flat-module}后的等价描述。自然识别为
+	\[
+		R\otimes_{R,F^e}R\cong R,\qquad
+		(R/I)\otimes_{R,F^e}R\cong R/I^{[q]}.
+	\]
+	第一个映射把 \(a\otimes b\) 送到 \(a^q b\)，逆为 \(r\mapsto1\otimes r\)。第二个把 \((a+I)\otimes b\) 送到 \(a^q b+I^{[q]}\)，逆为 \(r+I^{[q]}\mapsto(1+I)\otimes r\)；其良定义来自 \((1+I)\otimes a^q b=(a+I)\otimes b=0\) 对 \(a\in I\) 成立。在这些识别下，\(J\otimes_{R,F^e}R\) 的像为 \(J^{[q]}\)，而 \(\mu_z\otimes1\) 是乘 \(z^q\) 后模去 \(I^{[q]}\)。其核既等于 \(J^{[q]}\)，又按定义等于 \((I^{[q]}:z^q)\)，所求等式成立。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:C-regular-tight-closure}
+	设 \(R\) 为特征 \(p>0\) 的交换 Noether 正则环。则每个理想 \(I\subseteq R\) 都满足
+	\[
+		I^F=I^*=I.
+	\]
+\end{theorem}
+\begin{proof}
+	由\cref{b3:prop:C-tight-closure-properties}，只须证明 \(I^*\subseteq I\)。取 \(z\in I^*\) 及见证 \(c\in R^\circ\)。对任意极大理想 \(\mathfrak m\)，令
+	\[
+		A=R_{\mathfrak m},\qquad
+		\mathfrak n=\mathfrak mA,\qquad K=IA,\qquad
+		u=z/1,\quad d=c/1.
+	\]
+	根据正则环的定义，\(A\) 是 Noether 正则局部环；\cref{b3:lem:C-tight-localization}保证 \(d\ne0\)，且对全部足够大的 \(q=p^e\) 有 \(du^q\in K^{[q]}\)。
+
+	\cref{b3:claim:C-kunz}给出 \(A\) 的 Frobenius 同态平坦。平坦同态的复合仍平坦，具体由\cref{b3:prop:flat-base-change-transitivity}逐次应用得到，所以每个 \(F^e:A\rightarrow A\) 都平坦。若 \(u\notin K\)，则 \(J=(K:u)\) 为真理想，因而包含于局部环的极大理想 \(\mathfrak n\)。\cref{b3:lem:C-flat-frobenius-colon}于是给出
+	\[
+		d\in(K^{[q]}:u^q)=J^{[q]}
+		\subseteq\mathfrak n^{[q]}\subseteq\mathfrak n^q
+	\]
+	对全部足够大的 \(q=p^e\) 成立。\(p^e\) 随 \(e\) 无界，所以对每个整数 \(N\ge1\)，总可选这样的 \(q\ge N\)，得到 \(d\in\mathfrak n^N\)。将\cref{b3:thm:krull-intersection}用于 Noether 局部环 \(A\) 上的有限生成模 \(A\)，便有
+	\[
+		d\in\bigcap_{N\ge1}\mathfrak n^N=0,
+	\]
+	与 \(d\ne0\) 矛盾。因此每个极大理想处都有 \(z/1\in IR_{\mathfrak m}\)。\cref{b3:cor:submodule-local-detection}应用于 \(I\subseteq R\)，得 \(z\in I\)。
+\end{proof}
+
+该证明使用的是 Frobenius 的平坦性及固定乘数的非零性。它适用于任意正特征 Noether 正则环；基域的完美性和 Frobenius 的有限性都没有进入假设。下面的多项式计算直接展示乘数固定不变为何关键。
+
+\begin{example}\label{b3:exm:C-polynomial-tight-ideal}
+	设 \(k\) 为特征 \(p>0\) 的任意域，\(R=k[x,y]\)，\(I=(x^2,y^2)\)。则
+	\[
+		I^{[q]}=(x^{2q},y^{2q}),\qquad I^F=I^*=I.
+	\]
+	这里还可独立于一般定理，直接比较单项式。若 \(f\notin I\)，则 \(f\) 含一个非零项 \(a x^i y^j\)，其中 \(0\le i,j<2\)。任取非零乘数 \(c\in R\)，选 \(q=p^e\) 大于 \(c\) 中全部单项式的两个坐标指数。由于 Frobenius 保持加法，\(f^q\) 的各项指数均为 \(q\) 的倍数。在乘积 \(cf^q\) 中，若两对单项式给出同一指数，就有
+	\[
+		q(i-i')=r'-r,\qquad q(j-j')=s'-s,
+	\]
+	其中 \(0\le r,r',s,s'<q\)。右边的绝对值都小于 \(q\)，故两边只能同时为零；原来两对单项式相同。因此这些乘积项不会互相抵消。所选 \(a x^i y^j\) 与 \(c\) 中任一非零项相乘，都在 \(cf^q\) 中给出一个非零项，其两个指数分别小于 \(2q\)。这个项不属于单项式理想 \((x^{2q},y^{2q})\)，所以 \(cf^q\notin I^{[q]}\)。任意固定的 \(c\ne0\) 最终都会遇到这个障碍，故 \(f\notin I^*\)。
+
+	\ProseParagraphBreak
+	特别地，\(xy\notin I^*\)，虽然 \((xy)^2\in I^2\)，且 \(xy\in\sqrt I=(x,y)\)。只检查一个普通幂或理想的根，不能代替紧闭包的条件。整个计算没有对 \(k\) 中的系数取 \(q\) 次根。
+\end{example}
+
+\begin{example}\label{b3:exm:C-node-tight-versus-frobenius}
+	设 \(k\) 为特征 \(p>0\) 的任意域，\(R=k[x,y]/(xy)\)，\(I=(x+y)R\)，\(\mathfrak m=(x,y)R\)，其中 \(x,y\) 也表示商环中的像。则
+	\[
+		I^F=I\subsetneq I^*=\mathfrak m.
+	\]
+	为证明这些等式，每个 \(z\in R\) 都唯一写成有限和
+	\[
+		z=a_0+\sum_{i\ge1}a_i x^i+\sum_{j\ge1}b_j y^j.
+	\]
+	这个元素属于 \(I\)，当且仅当 \(a_0=0\) 且 \(a_1=b_1\)：乘 \(x+y\) 后两项的一次系数相同；反过来，满足此条件时有
+	\[
+		z=(x+y)\left(a_1+\sum_{i\ge2}a_i x^{i-1}
+		+\sum_{j\ge2}b_j y^{j-1}\right).
+	\]
+	对 \(q=p^e\)，理想 \(I^{[q]}\) 由 \(x^q+y^q\) 生成。比较 \(z^q\) 的常数项以及 \(x^q,y^q\) 两项的系数，关系 \(z^q\in I^{[q]}\) 当且仅当 \(a_0=0\) 且 \(a_1^q=b_1^q\)；其余正次项都可分别用 \(x^q\) 或 \(y^q\) 乘更高次项得到。域上的取 \(q\) 次幂映射单射，所以该条件等价于 \(z\in I\)。这证明 \(I^F=I\)，同时也说明 \(x\notin I\)。
+
+	环 \(R\) 的两个极小素理想为 \((x)\)、\((y)\)，而 \(c=x+y\) 不属于其中任何一个，故 \(c\in R^\circ\)。对每个 \(q=p^e\)，都有
+	\[
+		cx^q=x(x^q+y^q),\qquad
+		cy^q=y(x^q+y^q).
+	\]
+	所以 \(x,y\in I^*\)，由紧闭包为理想得到 \(\mathfrak m\subseteq I^*\)。
+
+	为证反向包含，若 \(z\notin\mathfrak m\)，则上式的 \(a_0\ne0\)。假设 \(z\in I^*\)，取见证 \(d\in R^\circ\)，沿投影 \(R\rightarrow k[x]\)、\(y\mapsto0\) 记其像为 \(d_x,z_x\)。因 \(d\notin(y)\)，有 \(d_x\ne0\)，而 \(z_x\) 的常数项不为零。若 \(r\) 为 \(d_x\) 中最低的 \(x\) 次数，则 \(d_xz_x^q\) 的最低次数始终为 \(r\)。另一方面，见证关系投影后要求
+	\[
+		d_xz_x^q\in(x^q)k[x]
+	\]
+	对全部足够大的 \(q=p^e\) 成立。取 \(q>r\) 即矛盾，故 \(I^*\subseteq\mathfrak m\)，完成计算。
+\end{example}
+
+这个节点理想在 Frobenius 取幂后仍可恢复原来的成员关系，紧闭包却增加了两个分支各自的参数。正则环中的理想商等式会阻止这种增加；在节点中，固定乘数 \(x+y\) 则使它发生。紧闭包由此记录了单独检查 Frobenius 闭包未能区分的理想性质。

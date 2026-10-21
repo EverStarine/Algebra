@@ -1,0 +1,280 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：### C.5 转移同态与正规补群
+% 纲要位置：计划纲要.md，第 942 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% * 状态：初稿已完成；正文、证明与算例已写，新增范围尚未正式审核。
+% #### C.5.1 转移构造与代表元无关性
+% #### C.5.2 Burnside 正规 \texorpdfstring{\(p\)}{p}-补定理
+% #### C.5.3 正规 \texorpdfstring{\(p\)}{p}-补群判据与算例
+% END APPENDIX OUTLINE SYNC
+% 状态：正文、证明与算例初稿；配套习题由附录入口统一编排。
+
+\section{转移同态与正规补群}
+\label{b1:sec:C05}
+
+Sylow 理论找出了群阶中的全部 \(p\)-幂部分，却不保证与它互素的剩余部分也能组成子群。例如 \(S_3\) 有正规的三阶子群，却没有正规的二阶子群；另一方面，它的任一个二阶子群都与正规的三阶子群构成半直积分解。要判断哪一部分可以成为正规因子，除了计数，还需要记录不同 Sylow 子群之间的共轭关系。
+
+\ProseParagraphBreak
+转移把有限个陪集上的移动合并成一个取值于子群交换化的同态。子群本身可以不正规，原群甚至可以无限；有限指数使这个乘积仍然有意义。当子群是交换 Sylow 子群，且其元素之间的共轭受到足够限制时，转移在该子群上的限制成为自同构，其核便给出所求的正规补群。这里使用\cref{b1:thm:sylow-conjugacy}的共轭性、\cref{b1:cor:abelianization-universal}的交换化以及\cref{b1:thm:first-isomorphism}。
+
+\subsection{转移构造与代表元无关性}
+\label{b1:subsec:C05:01}
+
+设 \(H\leq G\) 的指数为有限数 \(m\)。取右陪集集合
+\[
+	H\backslash G=\{Ht\mid t\in G\}.
+\]
+由\cref{b1:prop:coset-equivalence}，它也有 \(m\) 个元素。对 \(g\in G\)，右乘给出置换 \(Ht\mapsto Htg\)：若 \(t=au\)，其中 \(a\in H\)，则 \(Htg=Haug=Hug\)，故此映射与陪集代表无关；其逆是右乘 \(g^{-1}\)。这是右作用，满足
+\[
+	\bigl((Ht)\cdot g_1\bigr)\cdot g_2=(Ht)\cdot(g_1g_2).
+\]
+因此，右乘 \(g_1g_2\) 对应先右乘 \(g_1\)，再右乘 \(g_2\)；下面的系数公式始终采用这一顺序。
+\symidx{\(H\backslash G\)：右陪集集合}
+
+\ProseParagraphBreak
+从每个右陪集选一个代表，组成有限集 \(T\)。对每个 \(t\in T\)、\(g\in G\)，存在唯一的 \(t_g\in T\) 与 \(h(t,g)\in H\)，使
+\begin{equation}\label{b1:eq:transfer-coset-factor}
+	tg=h(t,g)t_g.
+\end{equation}
+这里先由陪集 \(Htg\) 确定 \(t_g\)，再由 \(h(t,g)=tg\,t_g^{-1}\) 确定系数。映射 \(t\mapsto t_g\) 是 \(T\) 的置换。这些系数通常不交换，故直接在 \(H\) 中相乘会保留一个不应依赖的排列次序。令 \(H'=[H,H]\)，将 \(h\in H\) 在交换化 \(H_{\mathrm{ab}}=H/H'\) 中的像记为 \(\bar h\)，便可以消去这个障碍。
+
+\begin{definition}\label{b1:def:transfer}
+	设 \(G\) 为群，\(H\leq G\) 为有限指数子群，\(T\) 为 \(H\) 的右陪集代表集。按\eqref{b1:eq:transfer-coset-factor}确定 \(h(t,g)\in H\)，并定义
+	\begin{equation}\label{b1:eq:transfer-definition}
+		V_{G,H}:G\longrightarrow H_{\mathrm{ab}},\qquad
+		V_{G,H}(g)=\prod_{t\in T}\overline{h(t,g)}.
+	\end{equation}
+	这个映射称为从 \(G\) 到 \(H\) 的\term[zhuanyi-tongtai]{转移同态}[transfer homomorphism]，上下文明确时简记为 \(V\)。乘积在交换群 \(H_{\mathrm{ab}}\) 中计算。
+\end{definition}
+\symidx{\(V_{G,H}\)：有限指数子群的转移同态}
+
+定义中暂时使用了代表集；下面同时证明它与这一选择无关，并核验名称中的同态性质。
+
+\begin{proposition}\label{b1:prop:transfer-well-defined}
+	设 \(G\) 为群，\(H\leq G\) 的指数有限。\eqref{b1:eq:transfer-definition}给出的映射 \(V_{G,H}:G\rightarrow H_{\mathrm{ab}}\) 不依赖右陪集代表集及乘积次序，并且是群同态。
+\end{proposition}
+
+\begin{proof}
+	目标交换，故有限乘积不依赖因子的排列。先固定 \(T\)。任取 \(g_1,g_2\in G\)，两次使用陪集分解，得到
+	\[
+		tg_1g_2=h(t,g_1)\,h(t_{g_1},g_2)\,(t_{g_1})_{g_2}.
+	\]
+	唯一性给出
+	\[
+		t_{g_1g_2}=(t_{g_1})_{g_2},\qquad
+		h(t,g_1g_2)=h(t,g_1)h(t_{g_1},g_2).
+	\]
+	由于 \(t\mapsto t_{g_1}\) 置换 \(T\)，在交换化中可以重排并重新编号，故
+	\[
+		\begin{aligned}
+			V_{G,H}(g_1g_2)
+			&=\left(\prod_{t\in T}\overline{h(t,g_1)}\right)
+			  \left(\prod_{t\in T}\overline{h(t_{g_1},g_2)}\right)\\
+			&=V_{G,H}(g_1)V_{G,H}(g_2).
+		\end{aligned}
+	\]
+	又 \(h(t,1)=1\)，所以 \(V_{G,H}(1)=1\)，得到同态。
+
+	现另取代表集 \(T'\)。逐一按同一右陪集对应，可唯一写成
+	\[
+		T'=\{a_tt\mid t\in T\},\qquad a_t\in H.
+	\]
+	在新代表集中，\(a_tt\) 右乘 \(g\) 后所到达的代表是 \(a_{t_g}t_g\)。由
+	\[
+		(a_tt)g
+		=\bigl(a_t h(t,g)a_{t_g}^{-1}\bigr)(a_{t_g}t_g)
+	\]
+	可知新系数为 \(h'(a_tt,g)=a_t h(t,g)a_{t_g}^{-1}\)。因此
+	\[
+		\begin{aligned}
+			\prod_{t\in T}\overline{h'(a_tt,g)}
+			&=\left(\prod_{t\in T}\bar a_t\right)
+			  \left(\prod_{t\in T}\overline{h(t,g)}\right)
+			  \left(\prod_{t\in T}\bar a_{t_g}^{-1}\right)\\
+			&=\prod_{t\in T}\overline{h(t,g)}.
+		\end{aligned}
+	\]
+	最后一步再次使用 \(t\mapsto t_g\) 的置换性，使两组 \(a_t\) 的像互相抵消。故换代表不改变映射。
+\end{proof}
+
+这里没有要求 \(H\trianglelefteq G\)：\(H\backslash G\) 只作为有限作用集合使用，不赋予商群乘法。交换化的作用则出现在证明的两处重排中；若 \(H\) 不交换，不能把公式中的横线全部删去。反过来，若 \(H\) 本来就交换，便可通过 \(H_{\mathrm{ab}}\cong H\) 把转移看成取值于 \(H\) 的同态。
+
+\ProseParagraphBreak
+一个无限群的例子说明，所需的有限性确实只是指数有限。用加法记号取 \(G=\mathbb Z\)、\(H=n\mathbb Z\)，其中 \(n\geq1\)。以 \(0,1,\ldots,n-1\) 为代表；对 \(k\in\mathbb Z\)，将 \(i+k\) 的代表余数记为 \(r_i\)，系数就是 \(i+k-r_i\in n\mathbb Z\)。各 \(r_i\) 仍遍历全部余数，故
+\[
+	V_{\mathbb Z,n\mathbb Z}(k)
+	=\sum_{i=0}^{n-1}(i+k-r_i)=nk\in n\mathbb Z.
+\]
+
+\ProseParagraphBreak
+逐个计算 \(h(t,g)\) 有时很繁琐。代表元无关性允许对每个待计算的 \(g\) 重新选择代表，沿着右乘 \(g\) 的循环轨道排列它们；这样每个轨道只有最后一步留下非单位系数。
+
+\begin{lemma}[转移的轨道公式]\label{b1:lem:transfer-orbit-formula}
+	设 \(G\) 为群，\(H\leq G\) 的指数为有限数 \(m\)，\(g\in G\)。右乘 \(g\) 在 \(H\backslash G\) 上的循环轨道长度为 \(d_1,\ldots,d_r\)，每个轨道任选一个起点 \(Ht_i\)。则
+	\begin{equation}\label{b1:eq:transfer-orbit-formula}
+		V_{G,H}(g)=\prod_{i=1}^r
+		\overline{t_i g^{d_i}t_i^{-1}},\qquad
+		\sum_{i=1}^r d_i=m,
+	\end{equation}
+	其中 \(t_i g^{d_i}t_i^{-1}\in H\)。
+\end{lemma}
+
+\begin{proof}
+	第 \(i\) 个轨道的陪集依次为
+	\[
+		Ht_i,\ Ht_ig,\ldots,Ht_ig^{d_i-1}.
+	\]
+	轨道长度的定义说明这些陪集两两不同，且 \(Ht_ig^{d_i}=Ht_i\)，因而 \(t_i g^{d_i}t_i^{-1}\in H\)。在这个轨道上选代表 \(t_i,t_ig,\ldots,t_ig^{d_i-1}\)，并对所有轨道作同样选择，便得到整个右陪集代表集。除最后一步外，右乘 \(g\) 直接到达下一个所选代表，系数为 \(1\)；最后一步的分解是
+	\[
+		(t_i g^{d_i-1})g
+		=\bigl(t_i g^{d_i}t_i^{-1}\bigr)t_i.
+	\]
+	每个轨道因而贡献公式中的一个因子。全部轨道划分 \(m\) 个陪集，长度之和为 \(m\)；由\cref{b1:prop:transfer-well-defined}，用这些新代表算得的值就是原转移。
+\end{proof}
+
+若 \(z\in H\cap Z(G)\)，则 \(tz=zt\)，每个右陪集都被右乘 \(z\) 固定，且系数均为 \(z\)。因此
+\begin{equation}\label{b1:eq:transfer-central-element}
+	V_{G,H}(z)=\bar z^{\,[G:H]}
+	\qquad\bigl(z\in H\cap Z(G)\bigr).
+\end{equation}
+对于一般 \(u\in H\)，陪集轨道可能有多个点，返回时的系数又是 \(u\) 的某个幂的共轭。下一小节将给出足以消除这些共轭差别的条件。
+
+\subsection{Burnside 正规 \texorpdfstring{\(p\)}{p}-补定理}
+\label{b1:subsec:C05:02}
+
+所求的正规子群应该保留群阶中与 \(p\) 互素的部分。先把这一要求与第六章的半直积分解联系起来。
+
+\begin{definition}\label{b1:def:normal-p-complement}
+	设 \(G\) 为有限群，\(p\) 为素数。若 \(K\trianglelefteq G\)，\(p\nmid|K|\)，且 \([G:K]\) 是 \(p\) 的幂，则称 \(K\) 为 \(G\) 的\term[zhenggui-p-buqun]{正规 \(p\)-补群}[normal p-complement]。
+\end{definition}
+
+写 \(|G|=p^am\)，其中 \(p\nmid m\)，并取 \(P\in\operatorname{Syl}_p(G)\)。定义中的阶数条件等价于 \(|K|=m\)。这时 \(|K\cap P|\) 同时整除 \(m,p^a\)，故 \(K\cap P=1\)。又 \(K\) 正规，\cref{b1:thm:second-isomorphism}给出子群 \(PK=KP\) 以及同构 \(PK/K\cong P/(P\cap K)\cong P\)，从而 \(|KP|=|K||P|=|G|\)，于是 \(KP=G\)。因此每个 Sylow \(p\)-子群都是 \(K\) 的补群，且由\cref{b1:thm:internal-semidirect}有 \(G\cong K\rtimes P\)。这里并不要求 \(P\) 正规。
+
+\ProseParagraphBreak
+转移的轨道公式含有 \(t u^dt^{-1}\in P\)。即使 \(u\in P\)，实施这个共轭的 \(t\) 也未必正规化 \(P\)，所以不能仅检查 \(N_G(P)\) 的作用就直接删掉 \(t\)。把 \(P\) 内的元素在 \(G\) 中的共轭关系称为\term[ronghe]{融合}[fusion]；下面的引理说明，\(P\) 交换时，这些共轭可以改由正规化子中的元素实现。
+
+\begin{lemma}[交换 Sylow 子群的融合]\label{b1:lem:abelian-sylow-fusion}
+	设 \(G\) 为有限群，\(p\) 为素数，\(P\in\operatorname{Syl}_p(G)\) 为交换群。若 \(A\subseteq P\)，\(g\in G\)，且 \(gAg^{-1}\subseteq P\)，则存在 \(n\in N_G(P)\)，使
+	\[
+		nan^{-1}=gag^{-1}\qquad(a\in A).
+	\]
+	特别地，若 \(P\leq Z\bigl(N_G(P)\bigr)\)，则对任何 \(a\in P\)、\(g\in G\)，只要 \(gag^{-1}\in P\)，就有 \(gag^{-1}=a\)。
+\end{lemma}
+
+\begin{proof}
+	令 \(B=gAg^{-1}\)，并在 \(G\) 中取其中心化子 \(D=C_G(B)\)。因为 \(B\subseteq P\) 且 \(P\) 交换，所以 \(P\leq D\)。群 \(gPg^{-1}\) 也交换且包含 \(B\)，因而 \(gPg^{-1}\leq D\)。这两个子群的阶都等于 \(|P|\)，即 \(|G|\) 中的最大 \(p\)-幂因子。由 \(D\leq G\) 及\cref{b1:thm:lagrange}，\(|D|\) 中的最大 \(p\)-幂因子也只能是 \(|P|\)。故 \(P\) 与 \(gPg^{-1}\) 均为有限群 \(D\) 的 Sylow \(p\)-子群。
+
+	在 \(D\) 内应用\cref{b1:thm:sylow-conjugacy}，存在 \(c\in D\) 使
+	\[
+		c(gPg^{-1})c^{-1}=P.
+	\]
+	置 \(n=cg\)，便有 \(n\in N_G(P)\)。对每个 \(a\in A\)，因 \(gag^{-1}\in B\) 而 \(c\) 中心化 \(B\)，有
+	\[
+		nan^{-1}=c(gag^{-1})c^{-1}=gag^{-1}.
+	\]
+	这证明第一断言。若再有 \(P\leq Z(N_G(P))\)，则 \(n\) 与每个 \(a\in P\) 交换；取 \(A=\{a\}\) 即得最后断言。
+\end{proof}
+
+条件 \(P\leq Z(N_G(P))\) 本身已经蕴含 \(P\) 交换，因为 \(P\leq N_G(P)\)，而这个正规化子的每个元素都须与 \(P\) 中的每个元素交换。于是既能把转移的目标认作 \(P\)，又能用融合引理处理轨道公式中的全部因子。这给出\term[burnside-zhenggui-p-budingli]{Burnside 正规 \(p\)-补定理}[Burnside normal p-complement theorem]。
+
+\begin{theorem}[Burnside 正规 \(p\)-补定理]\label{b1:thm:burnside-normal-p-complement}
+	设 \(G\) 为有限群，\(p\) 为素数，\(P\in\operatorname{Syl}_p(G)\)。若
+	\[
+		P\leq Z\bigl(N_G(P)\bigr),
+	\]
+	则 \(G\) 有正规 \(p\)-补群。更具体地，将交换群 \(P\) 与其交换化自然等同，转移 \(V_{G,P}:G\rightarrow P\) 满足
+	\begin{equation}\label{b1:eq:burnside-transfer-restriction}
+		V_{G,P}(u)=u^m\qquad(u\in P),\qquad m=[G:P],
+	\end{equation}
+	且 \(K=\ker V_{G,P}\) 满足 \(|K|=m\)、\(K\cap P=1\)、\(KP=G\)。
+\end{theorem}
+
+\begin{proof}
+	如前所述，假设蕴含 \(P\) 交换，故由\cref{b1:prop:transfer-well-defined}得到同态 \(V=V_{G,P}:G\rightarrow P\)。固定 \(u\in P\)，让它右乘 \(P\backslash G\)，并按\cref{b1:lem:transfer-orbit-formula}取轨道长度 \(d_i\) 与起点代表 \(t_i\)。每个因子 \(t_iu^{d_i}t_i^{-1}\) 都在 \(P\) 中，而 \(u^{d_i}\in P\)。\cref{b1:lem:abelian-sylow-fusion}的最后断言给出
+	\[
+		t_iu^{d_i}t_i^{-1}=u^{d_i}.
+	\]
+	所以
+	\[
+		V(u)=\prod_i u^{d_i}=u^{\sum_i d_i}=u^m.
+	\]
+
+	Sylow 阶数条件给出 \(\gcd(m,|P|)=1\)。取整数 \(b,c\) 使 \(bm+c|P|=1\)。\cref{b1:cor:finite-order-divides}说明 \(u^{|P|}=1\)，故 \((u^m)^b=u\)。因为 \(P\) 交换，\(u\mapsto u^m\) 与 \(u\mapsto u^b\) 都是同态，且互为逆。因此 \(V|_P\) 是自同构，特别地 \(V:G\rightarrow P\) 满射。
+
+	置 \(K=\ker V\)，则 \(K\trianglelefteq G\)。对这个满同态应用\cref{b1:thm:first-isomorphism}，得到
+	\[
+		G/K\xrightarrow{\sim}P,\qquad gK\longmapsto V(g).
+	\]
+	从而 \([G:K]=|P|\)、\(|K|=|G|/|P|=m\)，所以 \(p\nmid|K|\)。又因 \(V|_P\) 单射，\(K\cap P=1\)。任取 \(g\in G\)，由 \(V|_P\) 满射可取 \(u\in P\) 使 \(V(u)=V(g)\)，于是 \(gu^{-1}\in K\)，即 \(g=(gu^{-1})u\in KP\)。故 \(KP=G\)，各项结论均成立。
+\end{proof}
+
+所得补群是一个明确同态的核。若将 \(P\) 上 \(m\) 次幂自同构的逆与 \(V\) 复合，便得到在 \(P\) 上为恒等的同态 \(r:G\rightarrow P\)，且 \(\ker r=K\)。\cref{b1:thm:internal-semidirect}遂把所得分解写成 \(G\cong K\rtimes P\)，作用是 \(P\) 对 \(K\) 的共轭作用，未必平凡。
+
+\subsection{正规 \texorpdfstring{\(p\)}{p}-补群判据与算例}
+\label{b1:subsec:C05:03}
+
+对于交换 Sylow 子群，正规化子条件、元素融合和转移限制给出同一个判据。把几种表述放在一起，可以区分证明中真正需要的条件与具体算例中方便检验的条件。
+
+\begin{proposition}[交换 Sylow 子群的正规补群判据]\label{b1:prop:abelian-sylow-normal-complement}
+	设 \(G\) 为有限群，\(p\) 为素数，\(P\in\operatorname{Syl}_p(G)\) 为交换群。将转移的目标 \(P_{\mathrm{ab}}\) 自然等同于 \(P\)。以下四项等价：
+	\begin{equivalences}
+		\item \(P\leq Z(N_G(P))\)；
+		\item \(P\) 中两个元素若在 \(G\) 中共轭，则它们相等；
+		\item \(V_{G,P}|_P:P\rightarrow P\) 是自同构；
+		\item \(G\) 有正规 \(p\)-补群。
+	\end{equivalences}
+\end{proposition}
+
+\begin{proof}
+	第一项蕴含第二项，正是\cref{b1:lem:abelian-sylow-fusion}的最后断言。若第二项成立，对 \(u\in P\) 使用轨道公式，则其中的 \(t_i u^{d_i}t_i^{-1}\) 与 \(u^{d_i}\) 均在 \(P\) 内且共轭，所以相等。因此仍有 \(V_{G,P}(u)=u^{[G:P]}\)。指数与 \(|P|\) 互素，上一定理中关于幂映射的论证说明这一限制为自同构，得到第三项。
+
+	若第三项成立，\(V_{G,P}:G\rightarrow P\) 满射，且其核 \(K\) 与 \(P\) 交平凡。\cref{b1:thm:first-isomorphism}给出 \([G:K]=|P|\)，故 \(|K|=[G:P]\) 与 \(p\) 互素；核正规，所以 \(K\) 是正规 \(p\)-补群，得到第四项。
+
+	若第四项成立，取正规 \(p\)-补群 \(K\) 及商映射 \(q:G\rightarrow G/K\)。前面的阶数计算给出 \(KP=G\)、\(K\cap P=1\)，所以 \(q|_P:P\rightarrow G/K\) 是双射同态。因 \(P\) 交换，\(G/K\) 交换。若 \(x,y\in P\) 且 \(y=gxg^{-1}\)，则
+	\[
+		q(y)=q(g)q(x)q(g)^{-1}=q(x).
+	\]
+	限制映射的单射性迫使 \(y=x\)，得到第二项。最后，由第二项，对 \(n\in N_G(P)\)、\(x\in P\) 有 \(nxn^{-1}\in P\)，从而 \(nxn^{-1}=x\)。这就是第一项。
+\end{proof}
+
+交换性不能从这个等价命题中删去。例如取非交换 \(2\)-群 \(G=P=D_8\)，平凡子群 \(1\) 是正规 \(2\)-补群，但 \(N_G(P)=P\)，而 \(P\nleq Z(P)\)。Burnside 定理对一般 Sylow 子群给出充分条件；上述等价判据则限定在交换 Sylow 子群的情形。
+
+\begin{corollary}\label{b1:cor:cyclic-sylow-two-complement}
+	若有限群 \(G\) 的 Sylow \(2\)-子群是循环群，则 \(G\) 有正规 \(2\)-补群，即一个奇数阶正规子群，其指数等于 Sylow \(2\)-子群的阶。
+\end{corollary}
+
+\begin{proof}
+	取循环 Sylow \(2\)-子群 \(P\)。若 \(P=1\)，则 \(|G|\) 为奇数，取补群 \(G\) 即可。现设 \(|P|=2^a\)，其中 \(a\geq1\)。循环群的自同构由生成元的像决定，而生成元恰为固定生成元的奇数次幂，共有 \(2^{a-1}\) 个；每个这样的幂映射都可由逆指数反演。因此 \(|\operatorname{Aut}(P)|=2^{a-1}\)。
+
+	共轭给出同态 \(N_G(P)\rightarrow\operatorname{Aut}(P)\)，其核为 \(C_G(P)\)。由\cref{b1:thm:first-isomorphism,b1:thm:lagrange}，指数 \([N_G(P):C_G(P)]\) 是 \(2\) 的幂。另一方面，\(P\) 交换，所以 \(P\leq C_G(P)\leq N_G(P)\)。指数乘法说明该指数整除 \([N_G(P):P]\)，后者又整除奇数 \([G:P]\)。它只能等于 \(1\)，故 \(N_G(P)=C_G(P)\)，也就是 \(P\leq Z(N_G(P))\)。应用\cref{b1:thm:burnside-normal-p-complement}即得结论。
+\end{proof}
+
+补群在这里还具有一个不依赖转移构造的唯一性：它收集了全群中全部与 \(p\) 互素阶的元素。
+
+\begin{proposition}\label{b1:prop:normal-p-complement-characteristic}
+	设 \(G\) 为有限群，\(p\) 为素数。若 \(K\) 是 \(G\) 的正规 \(p\)-补群，则
+	\[
+		K=\{g\in G\mid \gcd(\operatorname{ord}(g),p)=1\}.
+	\]
+	因此正规 \(p\)-补群若存在便唯一，并且是 \(G\) 的特征子群。
+\end{proposition}
+
+\begin{proof}
+	对 \(k\in K\)，元素阶整除 \(|K|\)，故与 \(p\) 互素。反过来，设 \(g\in G\) 的阶与 \(p\) 互素。商群 \(G/K\) 是有限 \(p\)-群，\(gK\) 的阶既整除 \(\operatorname{ord}(g)\)，也整除 \(|G/K|\)，所以只能是 \(1\)。故 \(g\in K\)，得到集合等式。右边仅由元素阶确定，自同构保持元素阶，因而保持这个集合；所以 \(K\) 是特征子群，也不可能存在另一个正规 \(p\)-补群。
+\end{proof}
+
+先取 \(G=S_3\)、\(p=2\)、\(P=\langle(12)\rangle\)。正规化 \(P\) 必须固定其唯一的非单位元素 \((12)\)，从而固定点 \(3\)，所以 \(N_G(P)=P\)。Burnside 定理适用，且
+\[
+	V_{S_3,P}\bigl((12)\bigr)=(12)^3=(12).
+\]
+每个三轮换的像的阶同时整除 \(3\) 与 \(2\)，故像为单位。通过 \((12)\mapsto-1\) 将 \(P\) 与 \(\{1,-1\}\) 等同，转移就是\cref{b1:thm:sign}的符号同态，其核为 \(A_3\)。此时 \(P\) 不正规，但转移仍构造出正规因子 \(A_3\)，分解为 \(S_3\cong A_3\rtimes P\)。
+
+\ProseParagraphBreak
+再取 \(G=A_4\)、\(p=3\)、\(P=\langle c\rangle\)，其中 \(c=(123)\)。若 \(g\in A_4\) 正规化 \(P\)，它把 \(c\) 送到 \(c\) 或 \(c^{-1}\)；这两置换唯一的固定点都是 \(4\)，所以 \(g(4)=4\)。固定 \(4\) 的偶置换恰为 \(1,c,c^2\)，于是 \(N_G(P)=P\)。此时 \([G:P]=4\)，故 \(V(c)=c^4=c\)。每个双换位的像的阶同时整除 \(2,3\)，所以为单位；转移核的阶为 \(4\)，因而恰为
+\[
+	K=\{1,(12)(34),(13)(24),(14)(23)\}.
+\]
+于是 \(A_4\cong K\rtimes P\)。共轭 \((123)(12)(34)(123)^{-1}=(14)(23)\) 表明 \(P\) 对 \(K\) 的作用非平凡；正规补群的存在并不迫使分解成为直积。
+
+\ProseParagraphBreak
+最后把第一个例子的素数改为 \(p=3\)，取 \(P=A_3\leq S_3\)。虽然 \(P\) 循环且正规，但 \((12)(123)(12)^{-1}=(132)\)，所以 \(P\nleq Z(N_G(P))\)。任意同态 \(S_3\rightarrow P\) 都把每个换位送到单位，因为像的阶必须同时整除 \(2,3\)；换位又生成 \(S_3\)，故转移 \(V_{S_3,P}\) 是平凡同态。三个二阶子群彼此共轭，没有一个正规，所以 \(S_3\) 没有正规 \(3\)-补群。循环 Sylow 子群的推论中，素数 \(2\) 的条件由正规化子在自同构群中的奇数阶像所保证，不能直接换成任意奇素数。

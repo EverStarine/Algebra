@@ -1,0 +1,265 @@
+% !TeX root = ../../Book5.tex
+% 纲要标题：### 8.5 相对投射性与稳定模范畴
+% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增范围）。
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% 写作范围：群代数对称性、相对迹、顶点与源及稳定合冲模；复用8.4的循环群计算。
+% #### 8.5.1 对称群代数与投射内射模
+% #### 8.5.2 相对投射性与相对迹
+% #### 8.5.3 顶点与源
+% #### 8.5.4 稳定同态与合冲模
+
+\section{相对投射性与稳定模范畴}
+\label{b5:sec:0805}
+
+模特征下的增广满射 \(kG\to k\) 未必分裂，因而不能再把所有模都当作投射模。不过，一个模可能在限制到某个子群以后已经具有所需的分裂，而从这个子群诱导回来可以保留哪些信息，仍能通过平均式来判断。这里的平均不除以群阶：它把一个子群同态的共轭相加，追问所得和能否恰为恒等映射。另一方面，\cref{b5:prop:cyclic-stable-hom-extensions}已经显示，经过投射模的同态与扩张中的无效选择有关。本节将这两个观察分别发展为相对投射性与稳定模范畴。
+
+\subsection{对称群代数与投射内射模}
+\label{b5:subsec:0805:01}
+
+投射性允许沿满射提升映射，内射性允许沿单射延拓映射，二者对一般有限维代数并不相同。群代数有一个不要求群阶可逆的配对：从乘积中取出单位群元素的系数。它将正则模与其线性对偶联系起来，而对偶正则模恰好具有延拓性质。
+
+\begin{definition}\label{b5:def:symmetric-algebra}
+	设 \(k\) 为域，\(A\) 为有限维含幺 \(k\) 代数。若存在 \(k\) 线性映射 \(\lambda:A\to k\)，使双线性配对 \((a,b)\mapsto\lambda(ab)\) 非退化，且对所有 \(a,b\in A\) 有 \(\lambda(ab)=\lambda(ba)\)，则称 \(A\) 为\term[duichen-daishu]{对称代数}[symmetric algebra]。这里“对称”描述配对，不要求 \(A\) 的乘法交换；它与由张量代数取交换商所得的对称代数 \(\operatorname{Sym}(V)\) 是不同语境中的用语。
+\end{definition}
+
+\begin{proposition}\label{b5:prop:group-algebra-symmetric}
+	设 \(G\) 为有限群，\(k\) 为任意域，\(A=kG\)。取 \(\lambda(\sum_g a_gg)=a_1\)，则 \(A\) 是对称代数。对有限维左 \(A\)-模，投射性与内射性等价；每个有限维左模既是有限维投射模的商，又能嵌入有限维投射模。
+\end{proposition}
+\begin{proof}
+	若 \(a=\sum_ga_gg\)、\(b=\sum_gb_gg\)，则
+	\[
+		\lambda(ab)=\sum_{g\in G}a_gb_{g^{-1}}=\lambda(ba).
+	\]
+	若 \(a\ne0\)，选 \(g\) 使 \(a_g\ne0\)，便有 \(\lambda(g^{-1}a)=a_g\ne0\)，故配对非退化。它还满足 \(\lambda((ab)c)=\lambda(a(bc))\)，因为代数乘法结合。
+
+	记 \(DA=\operatorname{Hom}_k(A,k)\)，赋予双模作用
+	\[
+		(a\varphi b)(x)=\varphi(bxa).
+	\]
+	映射 \(\Theta:A\to DA\)、\(\Theta(c)(x)=\lambda(xc)\) 是双模同构。非退化性及有限维性使它是向量空间同构，而
+	\[
+		(a\Theta(c)b)(x)=\lambda(bxac)=\lambda(xacb)=\Theta(acb)(x)
+	\]
+	验证了两侧作用。
+
+	对任意左 \(A\)-模 \(M\)，在一处取值给出自然同构
+	\[
+		\operatorname{Hom}_A(M,DA)\longrightarrow\operatorname{Hom}_k(M,k),
+		\qquad F\longmapsto\bigl(m\mapsto F(m)(1)\bigr).
+	\]
+	其逆把线性泛函 \(\ell\) 送到 \(F_\ell(m)(a)=\ell(am)\)：确有 \(F_\ell(bm)(a)=\ell(abm)=(bF_\ell(m))(a)\)。域上的线性泛函可从子空间延拓，所以右侧的反变 Hom 函子正合；因此 \(DA\) 内射。由 \(A\cong DA\)，正则模 \(A\) 内射，有限自由模及其直和因子也内射，故有限维投射模都内射。
+
+	反过来，取有限维 \(M\) 的线性对偶的一组基 \(\ell_1,\ldots,\ell_d\)。映射
+	\[
+		M\longrightarrow(DA)^d,\qquad m\longmapsto(F_{\ell_1}(m),\ldots,F_{\ell_d}(m))
+	\]
+	是 \(A\) 线性单射：若像为零，在 \(a=1\) 处取值便得所有 \(\ell_i(m)=0\)，从而 \(m=0\)。目标同构于 \(A^d\)，为有限自由模。若 \(M\) 内射，这个单射有左逆，\(M\) 就是有限自由模的直和因子，因而投射。最后，任一有限维模的有限生成集给出有限自由模到它的满射，与上述嵌入一起证明末项。
+\end{proof}
+
+这个证明没有使用 \(|G|^{-1}\)。即使 \(p\,\bigm\vert\,|G|\)，投射模仍有内射性，但一般模并不因此投射。例如 \(kC_p\to k\) 仍不能分裂；失效的是平凡模的投射性，不是群代数的对称配对。
+
+\subsection{相对投射性与相对迹}
+\label{b5:subsec:0805:02}
+
+限制一个不分裂的 \(G\)-模短正合列到子群 \(H\) 后，它可能变成分裂列。相对投射性只要求把已经存在的 \(H\)-线性分裂改进为 \(G\)-线性分裂，因而比通常的投射性弱。当 \(H=\{1\}\) 时，域上的短正合列总能线性分裂，便恢复通常的投射性。
+
+\begin{definition}\label{b5:def:relative-projectivity}
+	设 \(G\) 为有限群，\(k\) 为域，\(H\le G\)，\(M\) 为有限维左 \(kG\)-模。若每个有限维左 \(kG\)-模满射 \(q:E\to M\)，只要限制到 \(H\) 后有 \(kH\)-线性截面，就有 \(kG\)-线性截面，则称 \(M\) \term[xiangdui-toushexing]{相对于 \(H\) 投射}[relatively projective]，也简称 \(H\)-投射。
+\end{definition}
+
+给定有限维左 \(kG\)-模 \(M,N\)，群 \(G\) 在 \(\operatorname{Hom}_k(M,N)\) 上按共轭作用：\((g\cdot f)(m)=g f(g^{-1}m)\)。其 \(H\)-不动元恰为 \(H\)-线性同态。取左陪集 \(G/H\) 的代表元集 \(T\)，定义\term[xiangduiji]{相对迹}[relative trace]
+\begin{equation}\label{b5:eq:relative-hom-trace}
+	\operatorname{Tr}_H^G(f)(m)=\sum_{t\in T}t f(t^{-1}m),
+	\qquad f\in\operatorname{Hom}_{kH}(M,N).
+\end{equation}
+\symidx{\(\operatorname{Tr}_H^G\)：子群同态空间上的相对迹}
+若把 \(t\) 换为 \(th\)、\(h\in H\)，相应项不变，因为 \(f\) 是 \(H\) 线性的。任意 \(g\in G\) 置换左陪集，故整个和是 \(G\)-线性的。特别地，它给出 \(\operatorname{End}_{kH}(M)\to\operatorname{End}_{kG}(M)\)，但一般不是环同态。若 \(u,v\) 是可复合的 \(G\)-同态，则
+\[
+	\operatorname{Tr}_H^G(vfu)=v\operatorname{Tr}_H^G(f)u.
+\]
+所以自同态相对迹的像是 \(\operatorname{End}_{kG}(M)\) 的双边理想。这与\subsecref{b5:subsec:0804:02}中在共轭不动空间上求迹是同一种构造，只是这里取的共轭表示为 Hom 空间。
+
+\begin{theorem}[Higman 判据]\label{b5:thm:higman-criterion}
+	设 \(G\) 为有限群，\(k\) 为域，\(H\le G\)，\(M\) 为有限维左 \(kG\)-模。下列条件等价：
+	\begin{equivalences}
+		\item \(M\) 相对于 \(H\) 投射。
+		\item 对某个有限维左 \(kH\)-模 \(U\)，\(M\) 是 \(\operatorname{Ind}_H^G U\) 的直和因子。
+		\item 自然满射
+		\[
+			\varepsilon_M:kG\otimes_{kH}\operatorname{Res}_H^G M\longrightarrow M,
+			\qquad g\otimes m\longmapsto gm
+		\]
+		有 \(kG\)-线性截面。
+		\item 存在 \(\alpha\in\operatorname{End}_{kH}(M)\)，使 \(\operatorname{Tr}_H^G(\alpha)=1_M\)。
+	\end{equivalences}
+\end{theorem}
+\begin{proof}
+	若条件 I 成立，则 \(\varepsilon_M\) 的 \(H\)-线性截面 \(m\mapsto1\otimes m\) 可换成 \(G\)-线性截面，得到 III。条件 III 立即给出 II，取 \(U=\operatorname{Res}_H^G M\) 即可。
+
+	为证 II 推出 I，先观察从诱导模出发的提升。设 \(q:E\to V\) 是有 \(H\)-线性截面 \(s\) 的 \(G\)-满射，\(f:\operatorname{Ind}_H^G U\to V\) 是 \(G\)-同态。定义
+	\[
+		\widetilde f(g\otimes u)=g s(f(1\otimes u)).
+	\]
+	映射 \(u\mapsto s(f(1\otimes u))\) 是 \(H\)-线性的，所以张量平衡关系使此式良定义，它也是 \(G\)-线性的，且 \(q\widetilde f=f\)。现在若有分裂包含 \(i:M\to\operatorname{Ind}_H^G U\) 和投影 \(r\) 满足 \(ri=1_M\)，对 \(q:E\to M\) 把 \(r\) 提升为 \(\widetilde r\)，则 \(\widetilde r i\) 是 \(q\) 的 \(G\)-线性截面。
+
+	最后把截面直接写成相对迹。对任意 \(H\)-自同态 \(\alpha\)，令
+	\[
+		\sigma_\alpha(m)=\sum_{t\in T}t\otimes\alpha(t^{-1}m).
+	\]
+	代表元改变和左乘 \(G\) 的相容性按相对迹的同一计算成立，所以 \(\sigma_\alpha\) 为 \(G\)-同态，且 \(\varepsilon_M\sigma_\alpha=\operatorname{Tr}_H^G(\alpha)\)。因此 IV 推出 III。反过来，令 \(1\in T\)，并以 \(\pi_1\) 表示诱导模投影到 \(1\otimes M\) 后取出 \(M\) 坐标的映射。它是 \(H\)-线性的，因为 \(H\) 左乘保持陪集 \(H\)，也保持其余陪集的并。若 \(\sigma\) 是 \(\varepsilon_M\) 的 \(G\)-线性截面，令 \(\alpha=\pi_1\sigma\)。\(\sigma(m)\) 的 \(t\otimes M\) 坐标等于 \(\pi_1(t^{-1}\sigma(m))=\alpha(t^{-1}m)\)，所以 \(\sigma=\sigma_\alpha\)，继而 \(1_M=\varepsilon_M\sigma=\operatorname{Tr}_H^G(\alpha)\)。
+\end{proof}
+
+这个等价条件中的相对迹判别称为\term[Higman-panju]{Higman 判据}[Higman's criterion]\footnote{希格曼（Donald Gordon Higman，1928-2006），加拿大数学家，长期任教于美国密歇根大学，提出相对投射模及其判据。}；一般的相对提升形式见\cite[Proposition 11.3.4]{Webb2016FiniteGroupRepresentations}。它说明要找到的不是任意平均算子，而是一个平均后成为恒等的子群自同态。
+
+\begin{proposition}\label{b5:prop:relative-sylow-projectivity}
+	设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域，\(H\le G\)，\(M\) 为有限维左 \(kG\)-模。
+	\begin{enumerate}
+		\item 若 \(p\nmid[G:H]\)，则 \(M\) 相对于 \(H\) 投射。
+		\item 若 \(P\) 为 \(G\) 的 Sylow \(p\) 子群，则 \(M\) 投射，当且仅当 \(\operatorname{Res}_P^G M\) 投射。
+		\item 相对投射性对有限直和与直和因子保持。若 \(K\le H\le G\)，一个 \(H\)-模 \(U\) 相对于 \(K\) 投射，则 \(\operatorname{Ind}_H^G U\) 相对于 \(K\) 投射；一个 \(G\)-模相对于 \(K\) 投射，也相对于 \(H\) 投射。
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	第一项由 \(\operatorname{Tr}_H^G(1_M)=[G:H]1_M\) 得到：以 \([G:H]^{-1}1_M\) 作为 Higman 判据中的 \(\alpha\)。第二项的正向利用 \(kG\) 是有限自由左 \(kP\)-模，故投射模的限制仍是自由模的直和因子。反向利用第一项与 \(M\) 是 \(\operatorname{Ind}_P^G\operatorname{Res}_P^G M\) 的直和因子；若限制模投射，诱导后仍是有限自由 \(kG\)-模的直和因子，因而 \(M\) 投射。
+
+	有限直和与直和因子的结论直接来自诱导直和因子的刻画。若 \(U\) 是 \(\operatorname{Ind}_K^H V\) 的直和因子，则由\cref{b5:thm:induction-transitivity}，\(\operatorname{Ind}_H^G U\) 是 \(\operatorname{Ind}_K^G V\) 的直和因子。最后，一个从 \(K\) 诱导到 \(G\) 的模也可先诱导到 \(H\)，再诱导到 \(G\)，得到最后的断言。
+\end{proof}
+
+\subsection{顶点与源}
+\label{b5:subsec:0805:03}
+
+每个模都相对于 Sylow \(p\) 子群投射，但某个不可分解模可能只需更小的子群。选择不能再缩小的子群，再保留其中实际诱导出这个模的不可分解分量，就得到顶点与源。困难在于所选的子群与分量未必唯一；Mackey 分解使两个选择能够在交集子群上比较。
+
+\begin{definition}\label{b5:def:vertex-source}
+	设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域，\(M\) 为非零有限维不可分解左 \(kG\)-模。在使 \(M\) 相对投射的子群中，按包含关系极小的子群称为 \(M\) 的一个\term[dingdian-mo]{顶点}[vertex]。若 \(P\) 是一个顶点，\(S\) 为非零有限维不可分解左 \(kP\)-模，且 \(M\) 是 \(\operatorname{Ind}_P^G S\) 的直和因子，则称 \(S\) 为与 \(P\) 对应的一个\term[yuan-mo]{源}[source]。
+\end{definition}
+
+这里的极小要求不存在真子群仍有相对投射性，而不是先规定一个唯一的子群。子群数目有限，且 \(M\) 总是相对于 \(G\) 投射，所以顶点存在。下述证明中的关键是从一组直和因子中选出一项，这一步在非半单情形依靠局部自同态环。
+
+% 跨卷引用目标：b2:thm:indecomposable-local-end（第二卷定理12.3.6）。
+\begin{lemma}\label{b5:lem:relative-intersection}
+	设 \(G\) 为有限群，\(k\) 为域，\(M\) 为非零有限维不可分解左 \(kG\)-模。若 \(M\) 同时相对于 \(H,K\le G\) 投射，则对某个 \(g\in G\)，\(M\) 相对于 \(K\cap gHg^{-1}\) 投射。
+\end{lemma}
+\begin{proof}
+	先说明如何从有限直和中选一项。设 \(M\) 是 \(\bigoplus_iV_i\) 的直和因子，包含与投影的分量记为 \(a_i:M\to V_i\)、\(b_i:V_i\to M\)。则 \(1_M=\sum_ib_ia_i\)。有限维模具有有限长度，第二卷定理12.3.6由 Fitting 分解说明，\(\operatorname{End}_{kG}(M)\) 是局部环；它的非单位组成理想，所以这个和中至少有一项 \(b_ia_i\) 可逆。将 \(b_i\) 改为 \((b_ia_i)^{-1}b_i\)，便得到 \(M\) 是单项 \(V_i\) 的直和因子。
+
+	由 Higman 判据，\(M\) 是 \(\operatorname{Ind}_K^G\operatorname{Res}_K^G M\) 的直和因子，也有 \(M\) 到 \(\operatorname{Ind}_H^G\operatorname{Res}_H^G M\) 的分裂包含。对后一对分裂映射先限制到 \(K\)，再诱导到 \(G\)，得到 \(M\) 是下式的直和因子：
+	\[
+		\operatorname{Ind}_K^G\operatorname{Res}_K^G
+		\operatorname{Ind}_H^G\operatorname{Res}_H^G M
+		\cong\bigoplus_{g\in K\backslash G/H}\operatorname{Ind}_{K\cap gHg^{-1}}^G W_g,
+	\]
+	其中 \(W_g\) 为 \({}^g(\operatorname{Res}_H^G M)\) 限制到 \(K\cap gHg^{-1}\) 的模。此同构用的是\cref{b5:thm:mackey-decomposition,b5:thm:induction-transitivity}，它们均不要求半单性。从这个有限直和中选出一项，再用 Higman 判据的诱导刻画，即得结论。
+\end{proof}
+
+\begin{theorem}\label{b5:thm:vertices-sources}
+	设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域，\(M\) 为非零有限维不可分解左 \(kG\)-模。
+	\begin{enumerate}
+		\item \(M\) 的顶点都是 \(p\) 子群，并且彼此在 \(G\) 中共轭。若 \(M\) 相对于 \(H\le G\) 投射，则 \(H\) 包含某个顶点。
+		\item 给定顶点 \(P\)，存在与它对应的源 \(S\)。每个这样的源都是 \(\operatorname{Res}_P^G M\) 的直和因子，且作为 \(kP\)-模具有顶点 \(P\)。
+		\item 若 \(S,S'\) 是同一顶点 \(P\) 的两个源，则存在 \(g\in N_G(P)\) 使 \(S\cong{}^gS'\)。
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	固定顶点 \(P\)，若 \(M\) 相对于 \(H\) 投射，对\cref{b5:lem:relative-intersection}取 \(K=P\)，得到 \(M\) 相对于 \(P\cap gHg^{-1}\) 投射。顶点的极小性使该交集等于 \(P\)，所以 \(g^{-1}Pg\le H\)。共轭保留相对投射性：由公式 \(a\otimes u\mapsto ag^{-1}\otimes u\)，从 \(g^{-1}Pg\) 诱导适当共轭模所得的 \(G\)-模与原诱导模同构；极小性也随之保留。因此 \(H\) 包含一个顶点。若 \(H\) 本身是顶点，其极小性使 \(g^{-1}Pg=H\)，得到共轭唯一性。再取 \(H\) 为 Sylow \(p\) 子群，\cref{b5:prop:relative-sylow-projectivity}保证 \(M\) 相对于 \(H\) 投射，故 \(P\) 也是 \(p\) 子群。
+
+	% 跨卷引用目标：b2:thm:krull-schmidt（第二卷定理12.4.2）。
+	把有限维 \(\operatorname{Res}_P^G M\) 分解为有限个不可分解模；存在性可由不断分解并比较维数得到，唯一性由第二卷定理12.4.2的 Krull--Schmidt 定理保证。\(M\) 是这个限制模诱导回去后的直和因子，上一引理证明中的局部环论证使它来自某个不可分解项 \(S\)，这就构造了一个同时为限制直和因子的源。若这个 \(S\) 相对于 \(R<P\) 投射，诱导传递性会使 \(M\) 相对于 \(R\) 投射，与顶点的极小性矛盾。因此 \(S\) 在 \(P\) 中的顶点是 \(P\)。
+
+	现令 \(S'\) 为任意另一个源。由于 \(S\) 是 \(\operatorname{Res}_P^G M\) 的直和因子，而 \(M\) 是 \(\operatorname{Ind}_P^G S'\) 的直和因子，Mackey 分解给出 \(S\) 是
+	\[
+		\operatorname{Res}_P^G\operatorname{Ind}_P^G S'
+		\cong\bigoplus_{g\in P\backslash G/P}
+		\operatorname{Ind}_{P\cap gPg^{-1}}^P
+		\operatorname{Res}_{P\cap gPg^{-1}}^{gPg^{-1}}({}^gS')
+	\]
+	的一项中的直和因子。于是 \(S\) 相对于 \(P\cap gPg^{-1}\) 投射。刚证明的顶点性质迫使 \(P\cap gPg^{-1}=P\)；两群阶相同，故 \(gPg^{-1}=P\)，即 \(g\in N_G(P)\)。对应的 Mackey 项就是 \({}^gS'\)，它不可分解，所以非零直和因子 \(S\) 必与它同构。这证明了第三项。
+
+	最后 \(S'\cong{}^{g^{-1}}S\) 也是 \(\operatorname{Res}_P^G M\) 的直和因子：将 \(S\) 的分裂包含和投影共轭后，其目标为 \({}^{g^{-1}}(\operatorname{Res}_P^G M)\)，而映射 \(m\mapsto g^{-1}m\) 将后者同构到 \(\operatorname{Res}_P^G M\)。同样的诱导传递性又使 \(S'\) 不可能相对于 \(P\) 的真子群投射。于是第二项对每个源都成立。
+\end{proof}
+
+以上结论的有限维域版本不要求 \(k\) 代数闭；可与\cite[Theorem 11.6.1 and Proposition 11.6.2]{Webb2016FiniteGroupRepresentations}中的更一般系数环版本比较。顶点记录诱导所需的最小子群，源还记录这个子群上实际使用的模。只知道顶点通常不能恢复原模。
+
+\begin{example}\label{b5:exm:trivial-module-vertex}
+	设 \(G\) 为有限群，\(k\) 为特征 \(p>0\) 的域。平凡模 \(k\) 的顶点恰为 Sylow \(p\) 子群，在每个顶点上的源都是一维平凡模。非零不可分解 \(kG\)-模具有平凡顶点，当且仅当它投射。
+\end{example}
+\begin{proof}
+	\(\operatorname{End}_{kH}(k)=k\)，而 \(\operatorname{Tr}_H^G\) 在此空间上就是乘以 \([G:H]\)。Higman 判据说明 \(k\) 相对于 \(H\) 投射，当且仅当 \(p\nmid[G:H]\)，也就是 \(H\) 包含一个 Sylow \(p\) 子群。极小的这样的子群正是 Sylow 子群。源是限制模 \(k\) 的非零直和因子，只能是它本身。另一方面，从平凡群诱导的有限维模是有限自由 \(kG\)-模，所以相对于平凡群投射恰是通常的投射性。
+\end{proof}
+
+例如 \(G=C_p\) 时，\(M_1,\ldots,M_{p-1}\) 都有顶点 \(G\)，相应源就是各模本身；唯一的不可分解投射模 \(M_p\) 的顶点为平凡群。这个最小例子已经表明，同一个顶点可以对应许多不同的源。
+
+\subsection{稳定同态与合冲模}
+\label{b5:subsec:0805:04}
+
+\cref{b5:prop:cyclic-stable-hom-extensions}把循环群上的扩张写成 \(\underline{\operatorname{Hom}}(\Omega M,N)\)。一般群上的同一公式，需要先解释为什么“经过投射模”能够对同态取商，以及选择投射满射、选择提升时的歧义为什么在商中消失。
+
+\begin{definition}\label{b5:def:stable-group-module-category}
+	设 \(G\) 为有限群，\(k\) 为域。对有限维左 \(kG\)-模 \(M,N\)，令 \(\mathcal P(M,N)\) 为所有能分解为 \(M\to Q\to N\)、其中 \(Q\) 是有限维投射模的同态所成的子空间。以有限维左模为对象、以
+	\[
+		\underline{\operatorname{Hom}}_{kG}(M,N)
+		=\operatorname{Hom}_{kG}(M,N)/\mathcal P(M,N)
+	\]
+	为态射空间，并以代表映射的复合为复合，得到\term[wending-mo-fanchou]{稳定模范畴}[stable module category]，记为 \(\underline{\operatorname{mod}}(kG)\)。
+\end{definition}
+\symidx{\(\underline{\operatorname{mod}}(kG)\)：有限维群代数模的稳定范畴}
+有限个分解经过投射模的同态之和，可以经过这些投射模的直和来分解，故 \(\mathcal P(M,N)\) 确为子空间；复合任意模同态仍有这种分解，故取商后复合良定义。一个模在稳定范畴中同构于零，当且仅当它投射：若 \(1_M\) 经过投射模分解，\(M\) 就是该投射模的直和因子。特别地，稳定范畴保留的是忽略投射直和项以后的对象与映射信息，而不是把原模中的投射子模逐个删除。
+
+\begin{proposition}\label{b5:prop:stable-syzygy-functor}
+	设 \(G\) 为有限群，\(k\) 为域。对每个有限维左 \(kG\)-模 \(M\) 选择有限维投射满射 \(\pi_M:P_M\to M\)，记其核为 \(\Omega M\)。这给出稳定模范畴上的函子
+	\[
+		\Omega:\underline{\operatorname{mod}}(kG)
+		\longrightarrow\underline{\operatorname{mod}}(kG),
+	\]
+	不同选择得到的函子自然同构。它是一个等价函子，逆函子可由嵌入有限维内射模后的余核构造。
+\end{proposition}
+\begin{proof}
+	给定 \(f:M\to N\)，\(P_M\) 的投射性使 \(f\pi_M\) 提升为 \(\widetilde f:P_M\to P_N\)。限制到核得到下图的左侧映射：
+	\[
+		\begin{tikzcd}[column sep=small]
+			0\arrow[r]&\Omega M\arrow[r,hook]\arrow[d,"\Omega f"]&P_M\arrow[r,"\pi_M"]\arrow[d,"\widetilde f"]&M\arrow[r]\arrow[d,"f"]&0\\
+			0\arrow[r]&\Omega N\arrow[r,hook]&P_N\arrow[r,"\pi_N"]&N\arrow[r]&0.
+		\end{tikzcd}
+	\]
+	两个提升之差的像包含在 \(\Omega N\) 中，所以它们在 \(\Omega M\) 上的限制之差经过 \(P_M\) 分解，在稳定范畴中相等。若 \(f\) 分解为 \(M\xrightarrow{u}Q\xrightarrow{v}N\)，其中 \(Q\) 投射，可将 \(v\) 提升为 \(\widetilde v:Q\to P_N\)，并选 \(\widetilde f=\widetilde v u\pi_M\)。这个提升在 \(\Omega M\) 上为零。因此 \(\Omega f\) 只依赖 \(f\) 的稳定类。提升的复合可以作为复合映射的提升，恒等映射也有恒等提升，故这确实定义函子。
+
+	若另选 \(\pi'_M:P'_M\to M\)，把 \(1_M\) 沿两个满射相互提升，得到两个核之间的稳定映射。其复合与恒等映射都是 \(1_M\) 的提升在核上的限制，故稳定类相同。这给出稳定同构；对任意 \(f\)，两个比较路径也都是同一个映射的提升在核上的限制，因此同构自然。对象层面的差别还可显式写出。拉回
+	\[
+		X=\{\,(u,v)\in P_M\oplus P'_M\mid \pi_M(u)=\pi'_M(v)\,\}
+	\]
+	分别投影到 \(P'_M,P_M\)，核分别为 \(\Omega M,\Omega' M\)。两个目标均投射，所以两条满射均分裂，从而
+	\begin{equation}\label{b5:eq:syzygy-schanuel}
+		\Omega M\oplus P'_M\cong X\cong\Omega'M\oplus P_M.
+	\end{equation}
+	因此不同的核确实只相差投射直和项。
+
+	由\cref{b5:prop:group-algebra-symmetric}，可选单射 \(M\to I_M\)，其中 \(I_M\) 同时投射与内射，令 \(\Sigma M=I_M/M\)。把前面对满射的提升改为沿单射的延拓，便在稳定范畴上得到函子 \(\Sigma\)：对 \(f:M\to N\)，将 \(M\to N\to I_N\) 延拓到 \(I_M\)，再取余核；两个延拓之差在 \(M\) 上为零，因而诱导的余核映射之差经过 \(I_N\) 分解，所以稳定类与延拓选择无关。若 \(f\) 经过投射模 \(Q\) 分解，因 \(Q\) 内射，可将 \(M\to Q\) 延拓到 \(I_M\)，使所选延拓的像包含在 \(N\subseteq I_N\) 中；其余核映射便为零。这也保证 \(\Sigma\) 对稳定类良定义。将 \(0\to M\to I_M\to\Sigma M\to0\) 与所选的 \(P_{\Sigma M}\to\Sigma M\) 比较，\eqref{b5:eq:syzygy-schanuel}给出 \(\Omega\Sigma M\cong M\) 于稳定范畴。对单射作对偶的推出比较，或对 \(0\to\Omega M\to P_M\to M\to0\) 重复余核比较，得到 \(\Sigma\Omega M\cong M\)。前述提升与延拓的唯一性同时保证两种同构自然，故 \(\Sigma\) 是 \(\Omega\) 的逆等价。
+\end{proof}
+
+取投射覆盖时，\(\Omega M\) 就是\subsecref{b5:subsec:0804:03}中使用的第一合冲模；上面的构造也允许任意投射满射，不必先把多余投射分量消去。稳定范畴中的等价 \(\Omega\) 并不是所有实际模的同构类上的置换，因为投射模的覆盖可以取恒等，其合冲模为零。
+
+\begin{proposition}\label{b5:prop:stable-hom-ext}
+	设 \(G\) 为有限群，\(k\) 为域，\(M,N\) 为有限维左 \(kG\)-模。取正合列 \(0\to\Omega M\xrightarrow{i}P\xrightarrow{\pi}M\to0\)，其中 \(P\) 有限维且投射。短正合扩张的 Baer 和给出自然的 \(k\) 向量空间同构
+	\[
+		\operatorname{Ext}_{kG}^1(M,N)
+		\cong\underline{\operatorname{Hom}}_{kG}(\Omega M,N).
+	\]
+\end{proposition}
+\begin{proof}
+	给定扩张 \(0\to N\xrightarrow{j}E\xrightarrow{q}M\to0\)，将 \(\pi:P\to M\) 提升为 \(s:P\to E\)。由于 \(qsi=0\)，存在唯一 \(f:\Omega M\to N\) 满足 \(jf=si\)。改变 \(s\) 所产生的 \(f\) 之差恰为某个同态 \(P\to N\) 在 \(\Omega M\) 上的限制。
+
+	反过来，给定 \(f:\Omega M\to N\)，构造推出
+	\[
+		E_f=(N\oplus P)/\{\,(f(x),-i(x))\mid x\in\Omega M\,\}.
+	\]
+	以 \(n\mapsto[(n,0)]\) 嵌入 \(N\)，以 \([(n,y)]\mapsto\pi(y)\) 映到 \(M\)。前者的核为零，因为 \(i\) 单射；后者满射，且当 \(\pi(y)=0\) 时，写 \(y=i(x)\)，便有 \([(n,y)]=[(n+f(x),0)]\)。所以得到所需短正合列。从扩张及提升 \(s\) 得到的 \(f\)，反构造后由 \([(n,y)]\mapsto j(n)+s(y)\) 恢复原扩张。若 \(f'=f+hi\)，则 \([(n,y)]\mapsto[(n-h(y),y)]\) 给出固定两端的 \(E_f\cong E_{f'}\)。反过来，固定两端的扩张同构把两组提升相差的映射写成 \(jh\)，故对应参数也只相差 \(hi\)。于是扩张类组成的空间识别为
+	\[
+		\operatorname{Hom}_{kG}(\Omega M,N)
+		\big/\operatorname{im}\bigl(\operatorname{Hom}_{kG}(P,N)\to\operatorname{Hom}_{kG}(\Omega M,N)\bigr).
+	\]
+	Baer 和的拉回、推出把两个参数相加，沿标量的推出把参数乘该标量，因而此识别为线性同构；沿两端模同态拉回与推出也分别对应参数的复合，所以它自然。
+
+	最后比较分母。每个限制 \(hi\) 都经过投射模 \(P\)。反过来，若 \(f\) 经过投射模 \(Q\) 分解为 \(\Omega M\xrightarrow{u}Q\xrightarrow{v}N\)，则 \(Q\) 由\cref{b5:prop:group-algebra-symmetric}也是内射模。故 \(u\) 沿 \(i\) 延拓为 \(\widetilde u:P\to Q\)，于是 \(f=(v\widetilde u)i\)。分母正是全部经过投射模的同态，得到稳定 Hom 公式。
+\end{proof}
+
+投射模的内射性在最后一步有明确作用：它保证经过任意投射模的映射，都能延拓到所选的 \(P\)。对一般有限维代数，仅有 \(P\) 投射不能推出这一点，因此不能无条件把上述扩张商写成稳定 Hom。群代数的对称性使这个公式成立，也解释了\cref{b5:prop:cyclic-stable-hom-extensions}中循环群算例背后的共同机制。第四卷附录 D 进一步在有足够多投射与内射且二者相同的正合范畴中构造三角结构；本节已经给出了这里所需的模、稳定映射及合冲模等价。

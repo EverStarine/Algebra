@@ -1,0 +1,294 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 13.5 循环同调与混合复形
+% * 状态：初稿已完成，含完整证明、算例及配套习题解答；尚未正式审核。
+% #### 13.5.1 Connes 算子与混合复形
+% #### 13.5.2 循环复形与 SBI 长正合列
+% #### 13.5.3 基域与简单代数的计算
+% ---
+
+\section{循环同调与混合复形}
+\label{b4:sec:1305}
+
+矩阵迹满足 \(\operatorname{tr}(ab)=\operatorname{tr}(ba)\)。把这个等式反复用于乘积，就得到 \(\operatorname{tr}(a_0\cdots a_n)=\operatorname{tr}(a_n a_0\cdots a_{n-1})\)。Hochschild 链的最后一个边界项也把末因子移到开头再相乘，因此循环换序已经出现在它的公式中。不过，单独旋转一条张量链并不与 Hochschild 边界交换。循环同调以 Hochschild 链复形为基础，再加入一个向上升次的算子，把旋转与边界之间的关系一起记入新的复形。这一构造的混合复形形式见 Weibel\cite[Section 9.8, pp. 344--348]{Weibel1994HomologicalAlgebra}。
+
+\subsection{Connes 算子与混合复形}
+\label{b4:subsec:1305:01}
+
+以下仍设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，所有张量积均在 \(k\) 上进行。只取系数双模 \(A\) 本身，记
+\[
+	C_n(A)=A^{\otimes(n+1)},\qquad C_n(A)=0\quad(n<0).
+\]
+为使循环换序易于辨认，将纯张量 \(a_0\otimes\cdots\otimes a_n\) 简写为 \((a_0,\ldots,a_n)\)；这只是张量记号，并不把 \(C_n(A)\) 改成笛卡尔积。采用\eqref{b4:eq:hochschild-boundary}的边界 \(b_n:C_n(A)\to C_{n-1}(A)\)，并规定 \(b_0=0\)。这里采用未归一化链：不模去那些在 \(a_1,\ldots,a_n\) 的某个位置插入单位所得到的退化链，后面的公式也保留这些项。
+
+\begin{definition}\label{b4:def:cyclic-chain-operators}
+	设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数。在 \(C_n(A)=A^{\otimes_k(n+1)}\) 上定义带符号的循环算子、循环和及插入单位的映射
+	\[
+		\begin{aligned}
+			t_n(a_0,\ldots,a_n)&=(-1)^n(a_n,a_0,\ldots,a_{n-1}),\\
+			N_n&=1+t_n+\cdots+t_n^n,\\
+			s_n(a_0,\ldots,a_n)&=(1,a_0,\ldots,a_n).
+		\end{aligned}
+	\]
+	另令 \(b'_0=0\)，并在 \(n\ge1\) 时定义
+	\[
+		b'_n(a_0,\ldots,a_n)=\sum_{i=0}^{n-1}(-1)^i(a_0,\ldots,a_i a_{i+1},\ldots,a_n).
+	\]
+	与 \(b_n\) 相比，\(b'_n\) 少了首尾相乘的最后一项。
+\end{definition}
+\symidx{\(t_n,N_n\)：Hochschild 链的带符号循环算子与循环和}
+\symidx{\(b'_n\)：去掉首尾相乘项的 Hochschild 边界}
+
+旋转 \(n+1\) 次恢复原张量，累计符号为 \((-1)^{n(n+1)}=1\)，故
+\[
+	t_n^{n+1}=1,\qquad (1-t_n)N_n=N_n(1-t_n)=0.
+\]
+这里的 \(N_n\) 是求和，未除以 \(n+1\)，所以不要求该整数在 \(k\) 中可逆。最低次有 \(t_0=N_0=1\)，而 \(t_1(a_0,a_1)=-(a_1,a_0)\)。带符号的旋转与普通旋转必须分开。
+
+\begin{lemma}\label{b4:lem:cyclic-boundary-identities}
+	设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数。上述算子满足
+	\begin{equation}\label{b4:eq:cyclic-boundary-identities}
+		\begin{aligned}
+			b_n(1-t_n)&=(1-t_{n-1})b'_n, & n&\ge1,\\
+			b'_nN_n&=N_{n-1}b_n, & n&\ge1,\\
+			b'_{n+1}s_n+s_{n-1}b'_n&=1, & n&\ge0,
+		\end{aligned}
+	\end{equation}
+	其中 \(s_{-1}=0\)。
+\end{lemma}
+\begin{proof}
+	记 \(\partial_i\) 为不带符号的第 \(i\) 个面映射：当 \(i<n\) 时相乘第 \(i,i+1\) 个因子，\(\partial_n(a_0,\ldots,a_n)=(a_n a_0,a_1,\ldots,a_{n-1})\)。令 \(\delta_i=(-1)^i \partial_i\)，于是 \(b_n=\sum_{i=0}^n\delta_i\)、\(b'_n=\sum_{i=0}^{n-1}\delta_i\)。先旋转再相乘，可直接读出
+	\[
+		\delta_0t_n=\delta_n,\qquad \delta_i t_n=t_{n-1}\delta_{i-1}\quad(1\le i\le n).
+	\]
+	第一式把旋转后的前两个因子 \(a_n,a_0\) 相乘，正好给出原来的末项；第二式把相邻合并的位置往前移一位，两次定义中的符号也恰好一致。因此 \(b_n t_n=\delta_n+t_{n-1}b'_n\)，从 \(b_n=b'_n+\delta_n\) 减去它，得到第一条恒等式。
+
+	第二条需要把所有旋转相加。迭代刚才的面映射公式，有
+	\[
+		\delta_i t_n^j=
+		\begin{cases}
+			t_{n-1}^j\delta_{i-j},&i\ge j,\\
+			t_{n-1}^{j-1}\delta_{n+1+i-j},&i<j,
+		\end{cases}
+		\qquad 0\le i\le n-1,\quad 0\le j\le n.
+	\]
+	第二种情形表示合并位置在旋转中越过了首尾。现在展开 \(b'_nN_n=\sum_{i,j}\delta_i t_n^j\)。固定 \(0\le p\le n-1\)，含 \(t_{n-1}^p\) 的项有两组：第一行取 \(j=p\)，留下 \(\delta_0,\ldots,\delta_{n-1-p}\)；第二行取 \(j=p+1\)，留下 \(\delta_{n-p},\ldots,\delta_n\)。它们合起来正是 \(t_{n-1}^p b_n\)。再对 \(p\) 求和便得 \(b'_nN_n=N_{n-1}b_n\)。
+
+	最后，\(b'_{n+1}s_n(a_0,\ldots,a_n)\) 的第一项将新插入的 \(1\) 与 \(a_0\) 相乘，得到原张量。其余项分别是先在原张量内相邻相乘、再前插 \(1\) 的结果，符号比 \(s_{n-1}b'_n\) 中对应项多一个负号。因此第三式成立；在 \(n=0\) 时，它就是 \(b'_1(1,a_0)=a_0\)。
+\end{proof}
+
+相邻两次合并的两种次序由结合律给出相同张量，而符号相反，所以 \((b')^2=0\)，与双模 bar 复形中的计算相同。第三条等式说明这个去掉首尾项的复形可被 \(s\) 收缩。将它与循环和、循环差合成，便能把这份收缩用于原来的 Hochschild 复形。
+
+\begin{definition}\label{b4:def:mixed-complex}
+	设 \(k\) 为域，\(C_n\) 为 \(k\) 向量空间，且 \(C_n=0\) 对 \(n<0\) 成立。若线性映射
+	\[
+		b:C_n\longrightarrow C_{n-1},\qquad B:C_n\longrightarrow C_{n+1}
+	\]
+	满足 \(b^2=B^2=bB+Bb=0\)，则称 \((C_\bullet,b,B)\) 为一个\term[hunhe-fuxing]{混合复形}[mixed complex]。对结合含幺 \(k\) 代数 \(A\)，定义 \(C_\bullet(A)\) 上的\term[connes-suanzi]{Connes 算子}[Connes operator]为
+	\begin{equation}\label{b4:eq:connes-operator}
+		B_n=(1-t_{n+1})s_nN_n:C_n(A)\longrightarrow C_{n+1}(A).
+	\end{equation}
+\end{definition}
+\symidx{\(B_n\)：升次的 Connes 算子}
+
+Connes 算子将链的所有循环位置求和，再插入单位并取一次循环差。\footnote{孔涅（Alain Connes，1947-），法国数学家，研究算子代数与非交换几何，并发展循环上同调。}这三个操作的顺序使下列反交换恒等式成立。
+
+\begin{proposition}\label{b4:prop:hochschild-mixed-complex}
+	设 \(k\) 为任意特征的域，\(A\) 为结合含幺 \(k\) 代数。则 Hochschild 边界 \(b\) 与\eqref{b4:eq:connes-operator}的 \(B\) 使 \(C_\bullet(A)\) 成为混合复形。
+\end{proposition}
+\begin{proof}
+	\Cref{b4:prop:algebra-bar-resolution}及其后的张量计算已证明 \(b^2=0\)。由 \(N_{n+1}(1-t_{n+1})=0\)，有
+	\[
+		B_{n+1}B_n=(1-t_{n+2})s_{n+1}N_{n+1}(1-t_{n+1})s_nN_n=0.
+	\]
+	再依次使用\eqref{b4:eq:cyclic-boundary-identities}，得到
+	\[
+		\begin{aligned}
+			b_{n+1}B_n+B_{n-1}b_n
+			&=(1-t_n)\bigl(b'_{n+1}s_n+s_{n-1}b'_n\bigr)N_n\\
+			&=(1-t_n)N_n=0.
+		\end{aligned}
+	\]
+	在 \(n=0\) 时，第二个复合为零，而同一计算以 \(1-t_0=0\) 结束。因此所有次数上都有所需的反交换关系。
+\end{proof}
+
+例如前两个 Connes 算子为
+\[
+	\begin{aligned}
+		B_0(a)&=(1,a)+(a,1),\\
+		B_1(a,c)&=(1,a,c)-(1,c,a)-(c,1,a)+(a,1,c).
+	\end{aligned}
+\]
+第一式的第二项前是正号，因为 \(t_1\) 本身带有负号。又有 \(b_2(a,1,1)=(a,1)\)，故这一项在 Hochschild 同调中为零。若 \(A\) 交换，\cref{b4:prop:hh1-differentials}把 \([(a,c)]\) 送到 \(a\cdot\mathrm{d}c\)，因而 \([B_0(a)]\) 对应 \(\mathrm{d}a\)。这说明升次算子 \(B\) 在最低次恢复了熟悉的微分。
+
+\subsection{循环复形与 SBI 长正合列}
+\label{b4:subsec:1305:02}
+
+要把降次的 \(b\) 与升次的 \(B\) 放进同一个链复形，需要把 Hochschild 链重复放置，并让每一份相隔两个总次数。这样 \(B:C_{n-2}\to C_{n-1}\) 就能与 \(b:C_n\to C_{n-1}\) 一起成为总边界的两个分量。
+
+\begin{definition}\label{b4:def:cyclic-complex}
+	设 \(k\) 为域，\((C_\bullet,b,B)\) 为非负次数的混合复形。定义其\term[xunhuan-fuxing]{循环复形}[cyclic complex]为
+	\[
+		\operatorname{CC}_n(C)=\bigoplus_{j=0}^{\lfloor n/2\rfloor}C_{n-2j}\quad(n\ge0),\qquad \operatorname{CC}_n(C)=0\quad(n<0),
+	\]
+	其微分规定为
+	\begin{equation}\label{b4:eq:cyclic-total-differential}
+		\mathrm{d}(x_0,x_1,\ldots)=(b x_0+B x_1,\ b x_1+B x_2,\ldots),
+	\end{equation}
+	其中 \(x_j\in C_{n-2j}\)，超出指标范围的分量一律为零。对结合含幺 \(k\) 代数 \(A\)，用 \((C_\bullet(A),b,B)\) 得到 \(\operatorname{CC}_\bullet(A)\)，并定义它的\term[xunhuan-tongdiao]{循环同调}[cyclic homology]为
+	\[
+		\operatorname{HC}_n(A)=H_n(\operatorname{CC}_\bullet(A)).
+	\]
+\end{definition}
+\symidx{\(\operatorname{CC}_\bullet(A),\operatorname{HC}_n(A)\)：循环复形与循环同调}
+
+每个总次数只含有限项。对第 \(j\) 个分量，两次微分给出
+\[
+	b^2x_j+(bB+Bb)x_{j+1}+B^2x_{j+2}=0,
+\]
+所以这确为链复形。其开头是
+\[
+	\cdots\longrightarrow C_3\oplus C_1
+	\xrightarrow{\ \left(\begin{smallmatrix}b&B\\0&b\end{smallmatrix}\right)\ }
+	C_2\oplus C_0\xrightarrow{\ (b\ \ B)\ }C_1\xrightarrow{\ b\ }C_0\longrightarrow0.
+\]
+例如二次循环为 \((x_0,x_1)\in C_2\oplus C_0\)，条件是 \(b x_0=-B x_1\)。因此 \(x_0\) 未必单独是 Hochschild 循环；低两次的分量 \(x_1\) 可以通过 \(B\) 补偿它的边界。这正是把两种算子同时保留的意义。代数同态逐因子作用于张量，与 \(b,t,N,s\) 都交换，因而诱导循环复形的链映射以及循环同调上的映射。
+
+\begin{theorem}[SBI 长正合列]\label{b4:thm:cyclic-sbi}
+	设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数。则有关于 \(A\) 自然的长正合列
+	\[
+		\begin{aligned}
+			\cdots&\longrightarrow\operatorname{HC}_{n+1}(A)
+			\xrightarrow{S}\operatorname{HC}_{n-1}(A)
+			\xrightarrow{B}\operatorname{HH}_n(A)\\
+			&\xrightarrow{I}\operatorname{HC}_n(A)
+			\xrightarrow{S}\operatorname{HC}_{n-2}(A)
+			\xrightarrow{B}\operatorname{HH}_{n-1}(A)\longrightarrow\cdots.
+		\end{aligned}
+	\]
+	负次同调群取零。这里 \(I\) 由包含首分量诱导，\(S\) 由删去首分量诱导。若 \((y_0,y_1,\ldots)\) 代表 \(\operatorname{HC}_{n-1}(A)\) 中的类，则连接同态将它送到 \([B y_0]\in\operatorname{HH}_n(A)\)。
+\end{theorem}
+\symidx{\(S,B,I\)：循环同调与 Hochschild 同调间的长正合列映射}
+\begin{proof}
+	定义链映射
+	\[
+		\begin{aligned}
+			I_n:C_n(A)&\longrightarrow\operatorname{CC}_n(A),&
+			x&\longmapsto(x,0,\ldots),\\
+			S_n:\operatorname{CC}_n(A)&\longrightarrow\operatorname{CC}_{n-2}(A),&
+			(x_0,x_1,x_2,\ldots)&\longmapsto(x_1,x_2,\ldots).
+		\end{aligned}
+	\]
+	\eqref{b4:eq:cyclic-total-differential}给出 \(\mathrm{d}I=Ib\) 与 \(S\mathrm{d}=\mathrm{d}S\)。这里把 \(\operatorname{CC}_{\bullet-2}(A)\) 看作第 \(n\) 项为 \(\operatorname{CC}_{n-2}(A)\)、微分仍为 \(\mathrm d\) 的链复形；平移两次不改变微分符号。\(I\) 单射，\(S\) 满射，且 \(\ker S\) 恰为首分量，所以有短正合列
+	\[
+		0\longrightarrow(C_\bullet(A),b)
+		\xrightarrow{I}\operatorname{CC}_\bullet(A)
+		\xrightarrow{S}\operatorname{CC}_{\bullet-2}(A)\longrightarrow0.
+	\]
+	将链指标改写为上链指标 \(C^q=C_{-q}\)，便可应用\cref{b4:thm:cohomology-long-exact}；再换回链指标，得到所述长正合列。
+
+	具体地，\(y=(y_0,y_1,\ldots)\) 是 \(\operatorname{CC}_{n-1}(A)\) 的循环，在短正合列的右端它位于第 \(n+1\) 次。选取提升 \(\widetilde y=(0,y_0,y_1,\ldots)\)，则
+	\[
+		\mathrm d\widetilde y=(B y_0,\ b y_0+B y_1,\ldots)=(B y_0,0,\ldots)=I(B y_0).
+	\]
+	这就是连接同态的公式。由 \(bB=-Bb\) 及 \(b y_0=-B y_1\)，有 \(bB y_0=B^2y_1=0\)，所以它确为 Hochschild 循环。改变循环代表时，若增加 \(\mathrm dz\)，首分量增加 \(b z_0+B z_1\)，其 \(B\) 像增加 \(-bB z_0\)，是 Hochschild 边界。代数同态与提升后取边界的过程相容，故整条长正合列自然。
+\end{proof}
+
+\(S\) 降低两次，但一般并不是同构。SBI 列的低次部分为
+\[
+	\operatorname{HH}_2(A)\longrightarrow\operatorname{HC}_2(A)
+	\xrightarrow{S}\operatorname{HC}_0(A)
+	\xrightarrow{B}\operatorname{HH}_1(A)
+	\xrightarrow{I}\operatorname{HC}_1(A)\longrightarrow0.
+\]
+零次没有新增边界，故 \(\operatorname{HC}_0(A)=\operatorname{HH}_0(A)=A/[A,A]\)，其中 \([A,A]\) 是交换子张成的 \(k\) 子空间。长正合列说明一次循环同调进一步模去了由 \(B\) 产生的类。它也解释了名称中的三个字母：\(S\) 记录相隔两次的重复，\(I\) 把 Hochschild 类送入循环同调，\(B\) 测量一个循环类能否向高两次提升。
+
+\begin{corollary}\label{b4:cor:cyclic-first-differentials}
+	设 \(k\) 为域，\(A\) 为交换含幺 \(k\) 代数。则
+	\[
+		\operatorname{HC}_0(A)=A,\qquad
+		\operatorname{HC}_1(A)\cong\Omega_{A/k}/\mathrm dA
+	\]
+	是自然的 \(k\) 向量空间同构，其中 \(\mathrm dA\) 指导子 \(\mathrm d:A\to\Omega_{A/k}\) 的像。
+\end{corollary}
+\begin{proof}
+	交换性给出 \([A,A]=0\)。由\cref{b4:prop:hh1-differentials}，\(\operatorname{HH}_1(A)\cong\Omega_{A/k}\)。在这个同构下，SBI 列中的 \(B:A\to\operatorname{HH}_1(A)\) 把 \(a\) 送到 \(\mathrm d a\)，因为 \(B_0(a)=(1,a)+(a,1)\) 对应 \(\mathrm d a+a\cdot\mathrm d1=\mathrm d a\)。于是取低次列的余核便得结论。
+\end{proof}
+
+这里的 \(\mathrm dA\) 一般只是 \(k\) 子空间，未必是 \(A\) 子模，故不能把该商自动当作 \(A\) 模。虽然混合复形的构造对任意特征都成立，求导的像却会随特征改变。例如在特征 \(p>0\) 时，\(\mathrm d(x^p)=0\)，这会影响 \(S\) 的核以及一次循环同调的计算。
+
+\subsection{基域与简单代数的计算}
+\label{b4:subsec:1305:03}
+
+SBI 列将一类循环同调计算变成已有 Hochschild 计算的直接后果。若正次 Hochschild 同调全部消失，连接同态两侧便没有剩余障碍，\(S\) 就在非负次数间给出二周期同构。重要的是先验证这一消失条件，而不是仅由代数为简单环就作推断。
+
+\begin{proposition}\label{b4:prop:cyclic-hh-vanishing}
+	设 \(k\) 为域，\(A\) 为结合含幺 \(k\) 代数，并满足 \(\operatorname{HH}_n(A)=0\) 对所有 \(n>0\) 成立。则对每个 \(q\ge0\)，有自然同构
+	\[
+		\operatorname{HC}_{2q}(A)\cong A/[A,A],\qquad
+		\operatorname{HC}_{2q+1}(A)=0.
+	\]
+	偶数次的同构由 \(S^q:\operatorname{HC}_{2q}(A)\to\operatorname{HC}_0(A)\) 给出。
+\end{proposition}
+\begin{proof}
+	\(\operatorname{HC}_0(A)=A/[A,A]\)，且 \(\operatorname{HH}_1(A)\to\operatorname{HC}_1(A)\to0\) 正合，故 \(\operatorname{HC}_1(A)=0\)。对 \(n\ge2\)，SBI 列包含
+	\[
+		0=\operatorname{HH}_n(A)\longrightarrow\operatorname{HC}_n(A)
+		\xrightarrow{S}\operatorname{HC}_{n-2}(A)
+		\longrightarrow\operatorname{HH}_{n-1}(A)=0.
+	\]
+	因而 \(S\) 是同构，逐次降至零次或一次即得结果。
+\end{proof}
+
+对基域 \(A=k\)，包络代数也是 \(k\)，所以 \(\operatorname{HH}_n(k)=\operatorname{Tor}^k_n(k,k)=0\) 对 \(n>0\) 成立，\(\operatorname{HH}_0(k)=k\)。于是
+\[
+	\operatorname{HC}_{2q}(k)=k,\qquad\operatorname{HC}_{2q+1}(k)=0.
+\]
+这在任意特征下都成立。未归一化模型的 \(C_n(k)\) 在每个次数上都是 \(k\)，却不表示其所有正次同调非零：在这些识别下，\(b_n\) 在正偶数次为恒等，在奇数次为零，正次同调确实全部消失。
+
+\begin{definition}\label{b4:def:separable-algebra-bimodule}
+	设 \(k\) 为域，\(A\) 为有限维结合含幺 \(k\) 代数。若乘法满射
+	\[
+		\mu:A\otimes_k A\longrightarrow A,\qquad a\otimes c\longmapsto ac
+	\]
+	作为 \(A\) 双模同态有一个双模截面，则称 \(A\) 为\term[kefen-daishu]{可分代数}[separable algebra]。这里 \(A\otimes_k A\) 的左右作用分别在最外侧因子上。
+\end{definition}
+
+可分性在这里落实为一份可以计算的双模截面。截面 \(\rho\) 完全由 \(e=\rho(1)=\sum_i u_i\otimes v_i\) 决定，条件等价于
+\begin{equation}\label{b4:eq:separability-element}
+	\sum_i u_i v_i=1,\qquad
+	\sum_i a u_i\otimes v_i=\sum_i u_i\otimes v_i a\quad(a\in A).
+\end{equation}
+事实上，截面给出这两个等式；反过来，若 \(e\) 满足它们，则 \(\rho(a)=\sum_i a u_i\otimes v_i\) 同时保持左右作用，并满足 \(\mu\rho=1_A\)。有限维可分性的双模表述见 Weibel\cite[Theorem 9.2.11, pp. 310--311]{Weibel1994HomologicalAlgebra}。下面直接从截面得到同调的消失。
+
+\begin{proposition}\label{b4:prop:separable-cyclic-homology}
+	设 \(k\) 为域，\(A\) 为有限维可分 \(k\) 代数。则 \(\operatorname{HH}_n(A)=0\) 对 \(n>0\) 成立，且
+	\[
+		\operatorname{HC}_{2q}(A)\cong A/[A,A],\qquad
+		\operatorname{HC}_{2q+1}(A)=0\qquad(q\ge0).
+	\]
+\end{proposition}
+\begin{proof}
+	带有外侧作用的 \(A\otimes_k A\) 是秩一自由左 \(A^e\) 模：\(a\otimes c^{\mathrm{op}}\mapsto a\otimes c\) 给出同构。乘法映射的双模截面使 \(A\) 成为这个自由模的直和因子，因此 \(A\) 是投射左 \(A^e\) 模。计算 \(\operatorname{Tor}^{A^e}_n(A^{\mathrm r},A)\) 时可以用只含第零次 \(A\) 的投射消解，故正次 Hochschild 同调为零。再应用\cref{b4:prop:cyclic-hh-vanishing}即可。
+\end{proof}
+
+现在令 \(A=M_r(k)\)，其中 \(r\ge1\)。用矩阵单位写
+\[
+	e=\sum_{i=1}^r E_{i1}\otimes E_{1i}.
+\]
+一方面 \(\mu(e)=\sum_iE_{ii}=1_A\)；另一方面，对每个矩阵单位 \(E_{uv}\)，\eqref{b4:eq:separability-element}两边都等于 \(E_{u1}\otimes E_{1v}\)。由线性，这个等式对每个矩阵成立，故 \(M_r(k)\) 可分。这里没有除以 \(r\)，所以即使 \(\operatorname{char}k\) 整除 \(r\)，论证仍成立。
+
+\ProseParagraphBreak
+还需识别 \(A/[A,A]\)。普通矩阵迹消去交换子，且每个非对角矩阵单位和对角差都满足
+\[
+	E_{ij}=[E_{ii},E_{ij}]\quad(i\ne j),\qquad
+	E_{ii}-E_{jj}=[E_{ij},E_{ji}].
+\]
+这些矩阵张成所有迹为零的矩阵：非对角部分已经包含，而迹为零的对角矩阵可写成 \(\sum_{i<r}a_{ii}(E_{ii}-E_{rr})\)。再由 \(\operatorname{tr}(E_{11})=1\)，得到 \(A/[A,A]\xrightarrow{\sim}k\)。于是
+\[
+	\operatorname{HC}_{2q}(M_r(k))\cong k,\qquad
+	\operatorname{HC}_{2q+1}(M_r(k))=0.
+\]
+零次同构由普通迹给出，所有偶数次同构则再复合 \(S^q\)。当 \(r\cdot1_k=0\) 时，单位矩阵的交换子商类为零，生成这个一维商空间的是 \([E_{11}]\)，不能用除以 \(r\) 的归一化迹代替。这也与\cref{b4:thm:hh-matrix-morita}所得的 Hochschild 消失相符。
+
+\ProseParagraphBreak
+有限维的限制本身仍不足以把简单性变成可分性。例如令 \(k=\mathbb F_p(t)\)、\(L=k(u)\)，其中 \(u^p=t\)。\(U^p-t\) 对 \(\mathbb F_p[t]\) 中的素元 \(t\) 满足 Eisenstein 判据，故在 \(k[U]\) 中不可约，\([L:k]=p\)。\(L\) 是域，因而是简单 \(k\) 代数，但这个扩张纯不可分。由 \(L=k[U]/(U^p-t)\) 计算微分模时，关系的微分为 \(p u^{p-1}\cdot\mathrm d u=0\)，没有消去 \(\mathrm d u\)，所以 \(\Omega_{L/k}=L\,\mathrm d u\ne0\)。也可直接检验非零性：\(k[U]\) 上的形式导数保持理想 \((U^p-t)\)，因而下降为 \(L\) 上的 \(k\) 导子，并将 \(u\) 送到 \(1\)。若 \(\mathrm d u=0\)，微分模的泛性质便迫使这个导子在 \(u\) 上也取零值，矛盾。\Cref{b4:prop:hh1-differentials}给出 \(\operatorname{HH}_1(L)\ne0\)，因此前面的消失命题不适用。循环同调的计算始终依赖所选基域；对同一个域 \(L\)，相对于 \(L\) 自身计算和相对于 \(k\) 计算，所得复形不同。

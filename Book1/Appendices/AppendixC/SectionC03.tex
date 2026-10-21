@@ -1,10 +1,14 @@
 % !TeX root = ../../Book1.tex
 % 纲要标题：### C.3 群展示、字问题与可判定性
-% 纲要位置：计划纲要.md，第 905 行。
+% 纲要位置：计划纲要.md，第 922 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### C.3.1 由关系字推导等式
 % #### C.3.2 标准形怎样给出判定算法
 % #### C.3.3 不可判定性的含义
+% * 新增小节状态：初稿已完成；原有内容保留，新增范围尚未正式审核。
+% #### C.3.4 稳定子链与 Schreier–Sims
+% #### C.3.5 陪集枚举与 Todd–Coxeter
+% #### C.3.6 计算群论的软件核验
 % END APPENDIX OUTLINE SYNC
 
 \section{群展示、字问题与可判定性}
@@ -114,7 +118,7 @@
 			&\Longleftrightarrow W_T(\Sigma_T(w))=1\;\text{于}\;B_T.
 		\end{aligned}
 	\]
-	若 \(B_T\) 的字问题可判定，就能判定 \(T\) 对任意合法输入是否停机，矛盾。这里直接完成的是两项编码结论之后的归约；半群中排除逆向替换所生伪计算，以及在群中借 HNN 标准形\footnote{HNN 取自希格曼（Graham Higman，1917-2008，英国）、伯恩哈德·诺伊曼（Bernhard Hermann Neumann，1909-2002，德裔澳大利亚）及汉娜·诺伊曼（Hanna Neumann，1914-1971，德裔澳大利亚）的姓氏首字母；三位数学家共同提出这一组合群论构造。}与带状关系图排除额外等式，属于外引证明的技术部分\cite[pp. 427--428, 432--447]{Rotman1995TheoryGroups}。HNN 扩张通过新增生成元的共轭关系识别两个给定的同构子群，其标准形用于控制这种构造中的消去；关系图则把关系字画成多边形，沿相同标号的边拼接；沿新增生成元标号的边相接的一串关系多边形形成带状区域，用来追踪共轭关系所允许的消去。HNN 标准形和这种图形方法的技术证明尚未展开，理解上述归约并不要求先掌握它们。
+	若 \(B_T\) 的字问题可判定，就能判定 \(T\) 对任意合法输入是否停机，矛盾。这里直接完成的是两项编码结论之后的归约；半群中排除逆向替换所生伪计算，以及在群中借 HNN 标准形与带状关系图排除额外等式，属于所引编码证明的技术部分\cite[pp. 427--428, 432--447]{Rotman1995TheoryGroups}。HNN 扩张通过新增生成元的共轭关系识别两个给定的同构子群；其基本标准形和消去结论见\cref{b1:thm:hnn-normal-form,b1:lem:britton}。关系图则把关系字画成多边形，沿相同标号的边拼接；沿新增生成元标号的边相接的一串关系多边形形成带状区域，用来追踪共轭关系所允许的消去。本附录不展开的是 Boone 编码中这些带状区域的控制与伪等式排除，基本 HNN 标准形本身不能代替这部分证明。
 \end{proofsketch}
 
 定理给出的是群 \(B_T\) 的一个固定有限展示 \(\mathcal P_T\)：只让输入字 \(w\) 变化，也不存在总会停机并判定 \(w=1\) 的算法。若有同时以有限展示和字为输入、处理所有群的统一算法，固定其展示输入为 \(\mathcal P_T\) 就会得到上述不可能的算法；所以定理还排除了统一算法，但结论已经强到一个固定群自身的字问题不可判定。
@@ -124,3 +128,248 @@
 
 \ProseParagraphBreak
 若还能对所有不表示单位的字设计一个必定确认的搜索过程，两种搜索就能交替各做一步：输入为单位时，肯定搜索最终结束；输入非单位时，否定搜索最终结束。这样就得到一个总会停机的判定算法。因此，对定理中的群，这种否定搜索不可能与肯定证书搜索同时存在。这使“不可判定”与“目前尚未找到一个够快的程序”有了明确区别。
+
+% 扩充状态：以下新增小节已有正文、证明、算法与算例；配套习题见附录章末。
+\subsection{稳定子链与 Schreier–Sims}
+\label{b1:subsec:C03:04}
+
+若一个群已经由有限集合上的置换生成，字问题就能通过置换相乘解决。但把所有生成字逐一算出，仍可能重复访问大量元素。群作用提供了另一种办法：先记录一个点可能被送到哪里，再处理固定这个点的子群。每固定一个点，余下的计算便限制在更小的群中。
+
+\begin{definition}\label{b1:def:C-stabilizer-chain}
+	设 \(\Omega\) 为有限集，\(G\leq S_\Omega\)，\(B=(b_1,\ldots,b_m)\) 是 \(\Omega\) 中互异点的有序列。令
+	\[
+		G_0=G,\qquad G_i=\{\,g\in G_{i-1}\mid g(b_i)=b_i\,\}\quad(1\leq i\leq m).
+	\]
+	称 \(G=G_0\geq G_1\geq\cdots\geq G_m\) 为相应的\term[wendingzi-lian]{稳定子链}[stabilizer chain]。若 \(G_m=1\)，则称 \(B\) 为 \(G\) 的一个\term[zhihuanqun-ji]{基}[base]。若有限集 \(T\subseteq G\) 满足 \(G_i=\langle T\cap G_i\rangle\)（\(0\leq i\leq m\)），则称 \(T\) 为相对于这条链的\term[qiang-shengchengzu]{强生成组}[strong generating set]。
+\end{definition}
+
+取 \(B\) 为 \(\Omega\) 的全部点总能得到一个基，因为固定所有点的置换只有恒等置换。但在计算中，较短的基常已足够。要由 \(G_{i-1}\) 的生成元求出 \(G_i\) 的生成元，需要以下可计算的 Schreier 生成元公式。这里始终采用本书的左作用及从右向左的置换复合；公式与\eqref{b1:eq:schreier-basis}的右陪集路径公式位置不同。
+
+\begin{lemma}[Schreier 生成元]\label{b1:lem:C-schreier-generators}
+	设有限群 \(K\leq S_\Omega\) 由有限逆封闭集 \(S\) 生成，\(b\in\Omega\)。对每个 \(\beta\in Kb\)，选 \(t_\beta\in K\) 使 \(t_\beta(b)=\beta\)，并取 \(t_b=1\)。则稳定子群 \(K_b\) 由下列置换生成：
+	\begin{equation}\label{b1:eq:C-schreier-generators}
+		h_{s,\beta}=t_{s\beta}^{-1}s t_\beta
+		\qquad(s\in S,\ \beta\in Kb).
+	\end{equation}
+\end{lemma}
+
+\begin{proof}
+	每个右端都把 \(b\) 依次送到 \(\beta,s\beta,b\)，所以属于 \(K_b\)。反过来，设 \(g=s_\ell\cdots s_1\in K_b\)，其中 \(s_j\in S\)。令 \(\beta_0=b\)、\(\beta_j=s_j\cdots s_1(b)\)，并记
+	\[
+		h_j=t_{\beta_j}^{-1}s_jt_{\beta_{j-1}}.
+	\]
+	相邻的代表元及其逆消去，给出
+	\[
+		g=t_{\beta_\ell}h_\ell\cdots h_1t_{\beta_0}^{-1}=h_\ell\cdots h_1,
+	\]
+	其中最后一步用了 \(\beta_\ell=\beta_0=b\) 和 \(t_b=1\)。因此这些元素生成整个稳定子群。
+\end{proof}
+
+轨道和代表元也能由生成元直接计算。从 \(b\) 开始，把已发现的点依次放入队列；若 \(\beta\) 已有代表 \(t_\beta\)，则对每个 \(s\in S\) 计算 \(s\beta\)。遇到新点时，记录代表 \(t_{s\beta}=s t_\beta\) 并入队。集合有限，所以队列最终处理完毕；所得集合对所有生成元及其逆封闭，恰为 \(Kb\)。同时记录代表元在原生成元中的字，便能将\eqref{b1:eq:C-schreier-generators}继续展开为原生成字。
+
+\ProseParagraphBreak
+\term[Schreier-Sims-suanfa]{Schreier--Sims 算法}[Schreier--Sims algorithm]利用稳定子链、强生成组和下述逐层筛选来组织置换群计算。\footnote{西姆斯（Charles Coffin Sims，1937-2017），美国数学家，研究有限群与计算群论，发展置换群的稳定子链算法，并参与发现 Higman--Sims 单群。}先给出保留全部 Schreier 生成元的确定性基础构造；它便于证明正确性，但不声称具有实际软件所用的生成组精简效率。
+
+\begin{algorithm}[htbp]
+	\caption{稳定子链的 Schreier 构造}
+	\label{b1:alg:C-stabilizer-chain}
+	\begin{algorithmsteps}{有限有序集 \(\Omega=\{b_1,\ldots,b_n\}\) 与有限组显式置换 \(S\)，各置换以完整像表给出。}{\(G=\langle S\rangle\) 的各层稳定子生成组、轨道代表元及群阶。}
+		\State 令 \(S_0\) 为 \(S\) 加上各逆置换后所得的集合，删除恒等置换与重复项。
+		\For{\(i=1,\ldots,n\)}
+			\State 用队列计算 \(\Delta_i=\langle S_{i-1}\rangle b_i\)，并记录 \(t_{i,\beta}(b_i)=\beta\)、\(t_{i,b_i}=1\)。
+			\State 对每个 \(s\in S_{i-1}\)、\(\beta\in\Delta_i\)，计算 \(t_{i,s\beta}^{-1}s t_{i,\beta}\)。
+			\State 将所得非恒等置换去重并补入各逆，记为 \(S_i\)；保存其原生成字表达式。
+		\EndFor
+		\State \Return 各 \(S_i,\Delta_i,t_{i,\beta}\) 及 \(\prod_{i=1}^n|\Delta_i|\)。
+	\end{algorithmsteps}
+\end{algorithm}
+
+\begin{proposition}\label{b1:prop:C-stabilizer-computation}
+	对有限集 \(\Omega\) 上由有限组显式置换生成的群 \(G\)，\cref{b1:alg:C-stabilizer-chain}在有限步后终止，并正确给出稳定子链。更一般地，若已求出相对于一个基 \(B=(b_1,\ldots,b_m)\) 的各层轨道 \(\Delta_i=G_{i-1}b_i\) 和代表元 \(t_{i,\beta}\)，则
+	\begin{equation}\label{b1:eq:C-stabilizer-order}
+		|G|=\prod_{i=1}^m|\Delta_i|.
+	\end{equation}
+	对任意输入置换 \(g\in S_\Omega\)，从 \(r_0=g\) 开始，依次计算 \(\beta_i=r_{i-1}(b_i)\)。若 \(\beta_i\notin\Delta_i\)，就拒绝；否则令
+	\begin{equation}\label{b1:eq:C-sifting}
+		r_i=t_{i,\beta_i}^{-1}r_{i-1}.
+	\end{equation}
+	这个过程判定 \(g\in G\)，其接受条件是各步均未拒绝且 \(r_m=1\)。接受时还得到生成字证书 \(g=t_{1,\beta_1}\cdots t_{m,\beta_m}\)。
+\end{proposition}
+
+\begin{proof}
+	由\cref{b1:lem:C-schreier-generators}逐层归纳，\(\langle S_i\rangle=G_i\)。每层处理有限个点和有限个生成元，且至多进行 \(|\Omega|\) 层；所有运算都是有限像表的复合、取逆与比较，因此构造终止。末层固定全部点，故为平凡群。各层生成元的并是强生成组，因为它与 \(G_i\) 的交包含 \(S_i\)，且其中所有元素都属于 \(G_i\)。
+
+	\cref{b1:thm:orbit-stabilizer}给出 \([G_{i-1}:G_i]=|\Delta_i|\)。把这些指数相乘，并用 \(G_m=1\)，便得\eqref{b1:eq:C-stabilizer-order}。
+
+	若 \(g\in G\)，则归纳地有 \(r_{i-1}\in G_{i-1}\)，所以 \(\beta_i\in\Delta_i\)，而\eqref{b1:eq:C-sifting}使 \(r_i\) 固定 \(b_i\) 及之前各点，故 \(r_i\in G_i\)。于是没有拒绝步，最后 \(r_m=1\)。反之，各步更新给出
+	\[
+		g=t_{1,\beta_1}\cdots t_{m,\beta_m}r_m.
+	\]
+	若 \(r_m=1\)，右端所有代表元都属于 \(G\)，所以 \(g\in G\)。这些等式同时证明了所给字证书的正确性。
+\end{proof}
+
+上面的成员判断称为\term[shaixuan]{筛选}[sifting]。实际的 Schreier--Sims 程序会用已知的较深层生成元筛选新产生的 Schreier 元素，以避免长期保存大量重复生成元。但只有在剩余量为单位、从而已有生成字表达式时，才能据此删去一个候选生成元；仅仅看到它把若干基点送到已有轨道中，还不足以证明它已属于较深层子群。若使用短基，最后的 \(r_m=1\) 检查尤其不能遗漏。
+
+\begin{example}\label{b1:exm:C-s3-chain}
+	在 \(\Omega=\{1,2,3\}\) 上，取 \(a=(123)\)、\(b=(23)\)，令 \(G=\langle a,b\rangle\)。基点先取一。其轨道为 \(\{1,2,3\}\)，可选
+	\[
+		t_{1,1}=1,\qquad t_{1,2}=a,\qquad t_{1,3}=a^2.
+	\]
+	对 \(S_0=\{a,a^{-1},b\}\)，来自 \(a,a^{-1}\) 的 Schreier 元素均为单位；来自 \(b\) 的三个元素分别为 \(b,aba,a^2ba^2\)，均等于 \(b\)。因此 \(G_1=\langle b\rangle\)。再取基点二，其 \(G_1\)-轨道为 \(\{2,3\}\)，代表元为 \(1,b\)，下一层稳定子平凡。于是 \((1,2)\) 是基，\(|G|=3\cdot2=6\)。
+
+	\ProseParagraphBreak
+	对 \(g=(12)\)，第一步 \(g(1)=2\)，剩余量为 \(a^{-1}g=b\)；第二步 \(b(2)=3\)，剩余量为 \(b^{-1}b=1\)。故筛选接受，并给出 \((12)=ab\)。这里的六阶结论来自各层稳定子已被完整生成，而不只是列出了两个轨道大小。
+\end{example}
+
+\subsection{陪集枚举与 Todd–Coxeter}
+\label{b1:subsec:C03:05}
+
+稳定子链以显式置换为输入；群若只由生成关系给出，首先还要得到一个有限作用。\term[peiji-meiju]{陪集枚举}[coset enumeration]尝试直接构造子群的陪集图。固定有限展示 \(G=\langle S\mid R\rangle\)，并用有限个生成字 \(U\) 指定子群 \(H=\langle U\rangle\leq G\)。沿用\subsecref{b1:subsec:0804:schreier-subgroup-freeness}的右陪集 \(Hg\)，表中一项
+\[
+	i\mathbin{\xrightarrow{s}}j
+	\quad\text{表示}\quad Ht_i s=Ht_j.
+\]
+其中 \(t_i\) 为第 \(i\) 行的代表字，根行的代表字是空字。列由 \(S\sqcup S^{-1}\) 标记，字从左至右读取。这种\term[peiji-biao]{陪集表}[coset table]记录右作用：若 \(T_w\) 表示读字 \(w\) 的行变换，则 \(T_{uv}=T_v\circ T_u\)。要改写为本书通常的左作用同态，应取 \(g\mapsto T_{g^{-1}}\)。
+
+\ProseParagraphBreak
+\term[Todd-Coxeter-suanfa]{Todd--Coxeter 算法}[Todd--Coxeter algorithm]从不完整的陪集表出发，补入新行，再利用关系迫使若干行重合。\footnote{托德（John Arthur Todd，1908-1994），英国数学家，研究代数几何与群论，与 Coxeter 共同提出陪集枚举方法。考克塞特（Harold Scott MacDonald Coxeter，1907-2003），生于英国的加拿大数学家，研究多胞形、反射群与几何。}一个新行号只是暂时的名称，不能解释为已经证明与旧行不同的新陪集。若某个推导迫使两行表示同一陪集，就合并它们，并传播由此产生的所有表项一致性要求。
+
+\ProseParagraphBreak
+补表使用三类约束。逆列要求 \(i\xrightarrow{s}j\) 当且仅当 \(j\xrightarrow{s^{-1}}i\)。每个关系字 \(r\in R\) 从任意行读起都应回到原行；每个子群生成字 \(u\in U\) 从根行读起也应回到根行。为扫描一个应闭合的字，可以从起点沿前段向前读，也从终点沿末段的逆字向后读。若中间只缺一条边，就补上这条边；若全字已经可读却到达另一个终点，即出现零缺口而未闭合的情形，就合并实际终点与指定终点。若已知路径要求同一个表项有两个终点，也合并这两个终点。合并后，原来两行的同列出边必须一致，所需的进一步重合持续传播，直到没有冲突。
+
+\begin{algorithm}[htbp]
+	\caption{公平补边的 Todd--Coxeter 枚举}
+	\label{b1:alg:C-todd-coxeter}
+	\begin{algorithmsteps}{有限展示 \(G=\langle S\mid R\rangle\) 与子群 \(H=\langle U\rangle\) 的有限生成字表 \(U\)。}{若枚举完成，输出 \(H\backslash G\) 的有限陪集表、代表字和各表项的推导。}
+		\State 建立根行一，代表字为空；全部表项起初未定义。
+		\State 扫描每个活行上的每个关系字和根行上的每个子群字：零缺口但未闭合时合并实际终点与指定终点，单缺口时补边；传播逆边及所有重合。有变化就重新扫描，直到本轮不再有推导。
+		\State 若所有活行的各列都已定义，输出当前表及记录的推导，结束。
+		\State 否则取编号最小的活行 \(i\) 的第一个未定义列 \(s\)，定义 \(i\xrightarrow{s}j\) 及其逆边，其中 \(j\) 是新行，代表字取 \(t_j=t_i s\)。新行编号严格递增，不复用已合并的编号。
+		\State 返回第二步。合并行时保留较小编号，并保存每次补边、重合的依据。
+	\end{algorithmsteps}
+\end{algorithm}
+
+每轮只涉及当前有限张表。一次有效推导或者填入空项，或者减少活行数；合并时保留已有边，因此这一轮的传播和扫描会在有限步后稳定。跟踪任一已建行时，其保留编号只会在重合时严格下降，故经过有限次重合后便稳定。对一个稳定行 \(i\)，比 \(i\) 小的编号只有有限个，且不会再有新行取得这些编号；这些行各有有限个空项，已定义的项也不会重新变空。因此按最小编号补边保证：若程序不结束，行 \(i\) 的每个列最终都会定义。从根开始，按字长归纳，并在每一步跟踪已读前缀终点的稳定行，便知任意固定有限字最终都有一条可读路径。这个公平条件是下面停机结论的组成部分。
+
+\begin{proposition}\label{b1:prop:C-coset-certificate}
+	设 \(G=\langle S\mid R\rangle\) 为有限展示群，\(H=\langle U\rangle\)，其中 \(U\) 是有限字表。给定有 \(N\) 行的完整有限表，假设逆列互逆、所有关系字在每行闭合、所有 \(U\) 中的字在根行闭合。另给代表字 \(t_1=1,t_2,\ldots,t_N\)，使 \(t_i\) 从根读到第 \(i\) 行。若对每个表项 \(i\xrightarrow{s}j\) 还给出
+	\begin{equation}\label{b1:eq:C-coset-edge-certificate}
+		t_i s t_j^{-1}\in H
+	\end{equation}
+	的有限推导，则该表恰为 \(H\) 在 \(G\) 中的右陪集表，且 \([G:H]=N\)。其中有限推导可以具体写为一个 \(U\sqcup U^{-1}\) 上的字 \(v\)，以及 \(t_i s t_j^{-1}v^{-1}=1\) 的\eqref{b1:eq:C-word-certificate}形式证书。
+\end{proposition}
+
+\begin{proof}
+	逆列使每个生成字母作用为表上行集合 \(X\) 的置换；关系闭合使这个自由群右作用下降为 \(G\) 的右作用。\(H\) 的每个生成元固定根行，故整个 \(H\) 固定根行。若 \(Hg=Hh\)，则 \(gh^{-1}\in H\)，因而从根读 \(g\) 与读 \(h\) 得到同一行。这给出满映射 \(H\backslash G\to X\)；满性来自各 \(t_i\)。特别地，不同的行代表不同的真实陪集，所以 \([G:H]\geq N\)。
+
+	另一方面，\eqref{b1:eq:C-coset-edge-certificate}说明每条表边都是真实的陪集等式。从 \(H=Ht_1\) 开始，沿任意有限字逐个使用这些等式，便把它的真实陪集写成某个 \(Ht_i\)。所以全部真实陪集均在这 \(N\) 行中，\([G:H]\leq N\)。两边合在一起，所给满映射为双射，且逐边保持右作用。
+
+	证书中 \(v\) 表示 \(H\) 的元素；余下等式用\cref{b1:prop:C-word-certificate}的自由消去即可检查，所以这些数据确实给出可独立核验的有限推导。
+\end{proof}
+
+这说明为什么仅检查关系、逆列、根行与传递性还不够：任意展示都允许把所有字母写成单行上的恒等置换，它只表示一个平凡商作用。要断言该行真是全部陪集，仍须证明每个生成元都在 \(H\) 中。\cref{b1:alg:C-todd-coxeter}通过合法补边与重合保存这部分依据；若只抄录最后的一张置换表，就会丢失它。
+
+\begin{proposition}\label{b1:prop:C-todd-coxeter-termination}
+	设 \(G=\langle S\mid R\rangle\) 是有限展示群，\(H\leq G\) 由有限个给定字生成。不设资源上限地运行\cref{b1:alg:C-todd-coxeter}，则它完成时输出正确的陪集表；并且它在有限步后完成，当且仅当 \([G:H]\) 有限。
+\end{proposition}
+
+\begin{proof}
+	先看推导的正确性。新行 \(j\) 的代表字定义为 \(t_i s\)，所以新边表示真实陪集等式。逆边仍表示同一等式。关系字在 \(G\) 中为单位，子群生成字在 \(H\) 中，因此由它们补出的边与迫使的重合也是真实陪集等式。合并两行后，同列出边的终点也表示同一陪集，故重合传播仍正确。由归纳，每条表边都有从这些关系导出的\eqref{b1:eq:C-coset-edge-certificate}，每行又由根可达。因此若程序完成，\cref{b1:prop:C-coset-certificate}证明输出正确；无限指数时不可能完成。
+
+	为证明有限指数时停机，先说明公平扫描最终会发现任意一个真实的陪集等式。对自由群 \(F(S)\)，令 \(N\) 为 \(R\) 的正规闭包。子群 \(H\) 的原像是 \(\langle U\rangle N\)。故 \(Hw=Hv\) 意味着 \(wv^{-1}\in\langle U\rangle N\)，可用有限次下述操作把字 \(w\) 变为 \(v\)：自由插入或删除互逆字母；在任意位置插入或删除关系字及其逆；在字首插入或删除子群生成字及其逆。确实，把 \(wv^{-1}\) 写成 \(U\) 的字与有限个关系字共轭的乘积，先通过关系操作去掉后者，再在字首去掉前者，即得到这样的有限推导。
+
+	一份固定推导只含有限个有限字。若程序尚未完成，公平补边使其中所有路径最终都能从根读出。自由消去由逆列实现；插入关系字是在某个可达行插入闭路，由该行的关系扫描实现；字首的子群字由根行扫描闭合。关系逆字的闭合由反向路径的关系扫描得到；子群生成字的逆字则沿根行已经闭合路径的逆边闭合。读完相同后缀时，重合传播又把相等的起点送到相等的终点。因此推导中相邻两字的终点最终重合，整份推导也在某个有限阶段被实现。这里不要求预先知道这份推导的长度。
+
+	现在设真实指数为有限数 \(d\)，选真实陪集代表字 \(v_1=1,\ldots,v_d\)。这些字的路径最终全部出现。对有限个 \(i\) 和生成字母 \(s\)，真实等式 \(Hv_i s=Hv_j\) 各有一份上述有限推导；所以到某个有限阶段，它们都已在表中实现。这 \(d\) 个代表行便形成一个包含根行且对所有列封闭的子表。所有现存行都由根可达，而表项是确定的，故传播重合后每个现存行都落入这个子表；不同真实陪集又不可能被合法推导合并。于是此时恰剩 \(d\) 行，全部列已定义，程序结束。
+\end{proof}
+
+有限指数并不限制中间临时行数小于最终指数：同一真实陪集可能先有许多尚未合并的行名。若软件达到时间、内存或行数上限，只能报告本次枚举未完成，不能报告指数无穷。上述有限指数停机证明也没有给出统一的实用运行时间界。
+
+\begin{example}\label{b1:exm:C-s3-cosets}
+	取
+	\[
+		G=\langle a,b\mid a^3=b^2=(ab)^2=1\rangle,\qquad H=\langle b\rangle.
+	\]
+	从根行的 \(b\) 环开始，沿 \(a\) 新建第二、第三行；关系 \(a^3=1\) 把第三行的 \(a\) 边接回根。根行上的 \((ab)^2=1\)，结合末尾的 \(b\) 环，迫使第二行的 \(b\) 边通向第三行。由 \(b^2=1\) 得到反向边，形成\cref{b1:tab:C-s3-cosets}。
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\langle b\rangle\) 在 \(\langle a,b\mid a^3,b^2,(ab)^2\rangle\) 中的右陪集表}
+		\label{b1:tab:C-s3-cosets}
+		\begin{tabular}{ccccc}
+			\toprule
+			行 & 代表字 & \(a\) & \(a^{-1}\) & \(b=b^{-1}\) \\
+			\midrule
+			1 & \(1\) & 2 & 3 & 1 \\
+			2 & \(a\) & 3 & 1 & 3 \\
+			3 & \(a^2\) & 1 & 2 & 2 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	\(a\) 列及其逆列的真实陪集等式由 \(a^3=1\) 给出。对 \(b\) 列，\(Hb=H\)；由 \(abab=1\) 和 \(b^2=1\) 得 \(ab=ba^{-1}\)，故
+	\[
+		Hab=Ha^{-1}=Ha^2,\qquad Ha^2b=Hba^{-2}=Ha.
+	\]
+	这些是全部表项的真实等式证书。另一方面，每列互逆，\(a^3,b^2,(ab)^2\) 在每行闭合，\(b\) 固定根行，代表字也分别读到对应行。因此\cref{b1:prop:C-coset-certificate}给出 \([G:H]=3\)。把 \(a,b\) 送到 \((123),(23)\) 得到一个置换模型，说明 \(b\ne1\)；结合 \(b^2=1\)，可知 \(|H|=2\)，从而 \(|G|=6\)。这里已把表的形式相容性与真实陪集等式分别核验。
+\end{example}
+
+\subsection{计算群论的软件核验}
+\label{b1:subsec:C03:06}
+
+\term[jisuan-qunlun]{计算群论}[computational group theory]软件可以从生成元计算群阶、稳定子、成员关系或陪集表。输入对象的表示方式决定了输出的含义：显式置换生成的群已经是某个对称群的子群；有限展示则只规定一个抽象群，把生成元换成满足关系的置换通常只得到它的一个同态像。核验时应保留输入生成元、作用及乘法约定、所用代表字和关键等式，使结论能脱离原程序检查。
+
+\ProseParagraphBreak
+对稳定子链，群阶证书应包括每层的候选生成元及其原生成字、轨道与代表元，以及\eqref{b1:eq:C-schreier-generators}中每个元素在下一层生成元中的表达式。第零层必须生成输入群；每个候选生成元的原生成字都须复合成所列置换，并逐点检查第 \(i\) 层的候选生成元固定 \(b_1,\ldots,b_i\)。每个 \(t_{i,\beta}\) 还应给出由第 \(i-1\) 层候选生成元及其逆组成的字，并检查它确把 \(b_i\) 送到 \(\beta\)，以核验代表元属于正确的层。
+
+\ProseParagraphBreak
+轨道完整性可用有限闭合检查确认：它含基点，每个该层生成元及其逆都保持该集合，而每个列出点又有上述代表元从基点到达。Schreier 元素在下一层的表达式保证真实稳定子包含于下一层候选群；候选生成元的原生成字与固定基点检查则给出反向包含。逐层归纳得到的才是真实稳定子链，再检查末层平凡，便可由\eqref{b1:eq:C-stabilizer-order}确定群阶。成功的成员筛选则输出原生成字，直接复合一次即可确认。
+
+\ProseParagraphBreak
+小例子还可用另一种计算独立核对。下面的 Python 3 程序以元组 \((p(1),\ldots,p(n))\) 表示置换，\texttt{mul(p,q)} 明确实现 \(p\circ q\)。它用待处理表直接枚举\cref{b1:exm:C-s3-chain}的群元素，作为稳定子链计算的独立核对。
+\begin{verbatim}
+def mul(p, q):
+    return tuple(p[q[i] - 1] for i in range(len(p)))
+
+def generated(gens, n):
+    e = tuple(range(1, n + 1))
+    seen, todo = {e}, [e]
+    while todo:
+        g = todo.pop()
+        for s in gens:
+            h = mul(s, g)
+            if h not in seen:
+                seen.add(h)
+                todo.append(h)
+    return seen
+
+e, a, b = (1, 2, 3), (2, 3, 1), (1, 3, 2)
+K = generated([a, b], 3)
+K1 = {g for g in K if g[0] == 1}
+K2 = {g for g in K1 if g[1] == 2}
+assert K1 == {e, b} and K2 == {e}
+assert mul(a, b) == (2, 1, 3)
+print(len(K), len(K1), len(K2))
+\end{verbatim}
+输出为 \texttt{6 2 1}。循环终止是因为总共只有有限个 \(n\) 点置换；结果包含单位且对各生成元左乘封闭，恰为所生成的群。这里虽然没有显式加入逆，有限阶置换的逆是它的非负次幂，所以不会遗漏群元素。这个直接枚举适合小规模交叉核验，不能据此推断大群上也有可接受的运行时间。
+
+\ProseParagraphBreak
+陪集表可用同样短的程序检查逆列、关系与代表路径。下面直接输入\cref{b1:tab:C-s3-cosets}；大写字母 \texttt{A,B} 分别表示 \(a^{-1},b^{-1}\)，\texttt{walk} 从左至右读字。
+\begin{verbatim}
+table = {"a": (2, 3, 1), "A": (3, 1, 2),
+         "b": (1, 3, 2), "B": (1, 3, 2)}
+def walk(i, word):
+    for c in word:
+        i = table[c][i - 1]
+    return i
+
+for i in (1, 2, 3):
+    for c, d in (("a", "A"), ("b", "B")):
+        assert walk(i, c + d) == i
+    for word in ("aaa", "bb", "abab"):
+        assert walk(i, word) == i
+assert walk(1, "b") == 1
+assert [walk(1, w) for w in ("", "a", "aa")] == [1, 2, 3]
+\end{verbatim}
+这些断言检查了\cref{b1:prop:C-coset-certificate}中的表上作用条件；真实陪集边等式仍由\cref{b1:exm:C-s3-cosets}的关系推导给出。两部分合起来才是指数三的完整核验。若软件只给出了一个三点作用，能够立即得出的是指数至少为三，而非恰为三。
+
+\ProseParagraphBreak
+GAP 等系统可以处理远大于这些算例的群，但复现时仍须先检查其作用约定。GAP 的通常置换记号使用点在右侧的作用，\(i^{pq}=(i^p)^q\)；它的置换乘积在本书的函数复合约定下对应 \(q\circ p\)。因此比较生成字证书时必须同时转换乘法次序，不能只照抄循环记号。若输入是有限展示，程序找到一个满足关系的置换像，也只证明该像具有所报群阶；要把阶数转回原群，仍需陪集证书、标准形上界或其他单射依据。上述六阶例子中，置换像给下界，关系推导的陪集表给上界，恰好说明二者怎样配合。

@@ -1,0 +1,153 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### I.1 有限平展覆盖与 Galois 范畴
+% 状态：正文、证明、算例及配套习题与解答已完成初稿，尚未正式审核。
+
+\section{有限平展覆盖与 Galois 范畴}
+\label{b3:sec:I01}
+
+\chapref{b3:ch:23}用平坦性与微分消失刻画平展代数，\chapref{b3:ch:24}把它们黏合成概形态射。加上有限性后，一个几何纤维只有有限多个点，而且这些点不会在邻近纤维中碰撞。问题在于：局部可以分开的几张覆盖，为什么在整个基底上未必能分别编号？本节用一个同时排列所有纤维点的覆盖把它们分开，并将这种构造整理为有限覆盖范畴的性质。
+
+\subsection{有限平展态射与覆盖}
+\label{b3:subsec:I01:01}
+
+\begin{definition}\label{b3:def:I-finite-etale-cover}
+	设 \(X\) 为概形。态射 \(f:Y\rightarrow X\) 在每个仿射开集 \(U=\operatorname{Spec}A\subseteq X\) 上均满足 \(f^{-1}(U)=\operatorname{Spec}B\)，且 \(B\) 是有限 \(A\) 模时，称 \(f\) 为\term[youxian-taishe]{有限态射}[finite morphism]。若 \(f\) 还平展，则称其为有限平展态射；若它又满射，则称为\term[youxian-pingzhan-fugai]{有限平展覆盖}[finite étale cover]。
+	以有限平展 \(X\) 概形为对象、\(X\) 态射为箭头的范畴记为 \(\operatorname{FinEt}(X)\)。这个范畴包含空概形；当 \(X\ne\varnothing\) 时，空对象不是覆盖。
+\end{definition}
+\symidx{\(\operatorname{FinEt}(X)\)：X 上有限平展概形的范畴}
+
+本附录的一般基底取为连通非空 Noether 概形。这个有限性条件保证有限代数是有限展示模，也保证有限平展对象只有有限个开闭连通分量；稍后的排序构造因而可以取出一个连通覆盖。
+
+\begin{proposition}\label{b3:prop:I-finite-etale-rank}
+	设 \(X\) 为连通非空 Noether 概形，\(f:Y\rightarrow X\) 为有限平展态射。则 \(f_*\mathcal O_Y\) 局部自由，具有一个固定的有限秩 \(d\)。对任意代数闭域 \(\Omega\) 及态射 \(s:\operatorname{Spec}\Omega\rightarrow X\)，有
+	\[
+		Y\times_X\operatorname{Spec}\Omega
+		\cong\coprod_{i=1}^{d}\operatorname{Spec}\Omega.
+	\]
+	若 \(Y\ne\varnothing\)，则 \(d>0\)，且 \(f\) 满射。这个整数称为覆盖的次数。
+\end{proposition}
+\begin{proof}
+	在仿射开集上，\(B\) 是有限平坦 \(A\) 代数。因为 \(A\) 是 Noether 环，有限模 \(B\) 有限展示，故\cref{b3:thm:finite-presentation-flat-projective}给出有限秩局部自由性。秩在重叠处等于剩余域上的纤维维数，因而相容；它在连通的 \(X\) 上为常数 \(d\)。
+
+	平展性经基变换保持。代数闭域 \(\Omega\) 是严格 Hensel 局部环，故\cref{b3:prop:strict-henselian-finite-etale-split}把有限平展代数 \(B\otimes_A\Omega\) 写成若干个 \(\Omega\) 的乘积；比较维数可知因子恰有 \(d\) 个。若 \(Y\) 非空而 \(d=0\)，每张仿射图上的 \(B\) 都为零，矛盾。\(d>0\) 时每个几何纤维非空，所以每个底点都有原像。
+\end{proof}
+
+因此，次数既是局部自由模的秩，也是每个几何纤维中不同点的个数。这里必须取几何纤维：例如 \(\operatorname{Spec}\mathbb C\rightarrow\operatorname{Spec}\mathbb R\) 的源只有一个底层点，但在 \(\mathbb C\) 上变基后分成两个点。
+
+\begin{example}\label{b3:exm:I-power-cover}
+	设 \(k\) 为代数闭域，\(n\ge2\) 且 \(\operatorname{char}k\nmid n\)。记 \(\mathbb G_{m,k}=\operatorname{Spec}k[t,t^{-1}]\)。幂映射
+	\[
+		\mathbb G_{m,k}\longrightarrow\mathbb G_{m,k},\qquad t=u^n
+	\]
+	对应代数 \(B=A[u]/(u^n-t)\)，其中 \(A=k[t,t^{-1}]\)。因为 \(u^n=t\) 为单位，\(u\) 自动可逆；\(1,u,\ldots,u^{n-1}\) 是一组 \(A\) 基。关系的导数 \(nu^{n-1}\) 为单位，故该态射有限平展，次数为 \(n\)。源的坐标环是整环，所以源连通。
+
+	\ProseParagraphBreak
+	这个覆盖没有全局截面。否则 \(u\) 的像给出 \(a(t)\in k[t,t^{-1}]\)，满足 \(a(t)^n=t\)。在函数域 \(k(t)\) 中取 \(t=0\) 处的离散赋值，就得到 \(n\operatorname{ord}_0(a)=1\)，不可能。事实上，这个论证也排除了任何非空 Zariski 开集上的截面。因此，几何纤维处处分成 \(n\) 个点，并不意味着覆盖在 Zariski 开集上就是 \(n\) 份基底。
+\end{example}
+
+若 \(\operatorname{char}k=p>0\)，同一构造中的 \(u\mapsto u^p\) 仍有限自由，但关系的导数为零，且相对微分模由非零的 \(\mathrm du\) 自由生成。它不平展；在代数闭域上的纤维也只剩一个带重数的点。这正是平展条件排除的现象。
+
+\subsection{连通覆盖与 Galois 覆盖}
+\label{b3:subsec:I01:02}
+
+有限平展对象之间的箭头仍保留很强的局部结构。特别地，两个箭头如果在一个几何纤维的某个点相等，这种相等会沿源的整个连通分量延续。
+
+\begin{lemma}\label{b3:lem:I-fiber-detection}
+	设 \(X\) 为连通非空 Noether 概形，并固定 \(s:\operatorname{Spec}\Omega\rightarrow X\)，其中 \(\Omega\) 代数闭。
+	\begin{enumerate}
+		\item 对任意 \(Y,Z\in\operatorname{FinEt}(X)\)，每个 \(X\) 态射 \(Y\rightarrow Z\) 都有限平展；两个这样的态射的等化子在 \(Y\) 中开且闭。
+		\item 若 \(Y\) 连通，两个 \(X\) 态射在 \(Y_s\) 的一个点取值相同，则它们相等。
+		\item 一个 \(X\) 态射是同构，当且仅当它在 \(s\) 上诱导的有限点集映射是双射。取这个几何纤维也忠实地检测态射相等。
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	先看有限平展态射的对角。在仿射图上，乘法映射 \(B\otimes_A B\rightarrow B\) 的核 \(J\) 有限生成，且 \(J/J^2\cong\Omega_{B/A}=0\)。\cref{b3:lem:unramified-diagonal-splitting}中的幂等理想论证给出 \(J=(e)\)、\(e^2=e\)，所以对角为开闭嵌入。这些局部结论在重叠上相容。
+
+	态射 \(h:Y\rightarrow Z\) 的图 \(Y\rightarrow Y\times_X Z\) 是上述对角的拉回，因而开且闭；投影 \(Y\times_X Z\rightarrow Z\) 是有限平展态射的基变换。复合得到 \(h\) 有限平展。两态射的等化子也是 \(Z\) 的对角的拉回，所以开且闭。连通源中的非空开闭子对象只能为整个源，这证明第二项。
+
+	设 \(h_s\) 双射。\(Z\) 的每个连通分量都非空且有限平展于 \(X\)，因此都覆盖 \(X\)。将 \(h\) 限制到这样一个分量，其局部自由秩由 \(h_s\) 决定为一。秩一有限局部自由代数的单位映射是同构：在局部环上，单位在一维剩余代数中非零，Nakayama 引理使它成为模基。故 \(h\) 为同构。最后，若两个态射在整个 \(Y_s\) 上相同，则等化子遇到 \(Y\) 的每个连通分量；第二项逐分量给出它们相等。
+\end{proof}
+
+\begin{definition}\label{b3:def:I-galois-cover}
+	设 \(X\) 为连通非空 Noether 概形，\(Y\rightarrow X\) 为连通有限平展覆盖。若 \(X\) 自同构群 \(\operatorname{Aut}_X(Y)\) 在某个几何纤维上单纯传递，即任意有序两点之间恰有一个自同构将前者送到后者，则称它为 \term[galois-fugai]{Galois 覆盖}[Galois cover]。这些自同构也称为覆盖变换。
+\end{definition}
+
+固定一个几何纤维点的覆盖变换必为恒等，这是\cref{b3:lem:I-fiber-detection}的直接应用。因此，次数为 \(d\) 的连通覆盖是 Galois 覆盖，当且仅当它有 \(d\) 个覆盖变换。若记这个群为 \(D\)，条件又等价于
+\[
+	\coprod_{\sigma\in D}Y\longrightarrow Y\times_XY,
+	\qquad (\sigma,y)\longmapsto(y,\sigma(y))
+\]
+为同构：在一个几何纤维上检验即可。这也证明“某个几何纤维”可以改成“每个几何纤维”。在\cref{b3:exm:I-power-cover}中，\(u\mapsto\zeta u\)、\(\zeta^n=1\) 给出 \(n\) 个不同自同构；所以该覆盖为 Galois 覆盖，群为 \(\mu_n(k)\)。
+
+\begin{proposition}\label{b3:prop:I-etale-local-trivialization}\label{b3:prop:I-galois-dominating-cover}
+	设 \(X\) 为连通非空 Noether 概形，\(Y\rightarrow X\) 为次数 \(d>0\) 的有限平展覆盖。则存在连通 Galois 覆盖 \(P\rightarrow X\)，使
+	\[
+		Y\times_XP\cong\coprod_{i=1}^{d}P.
+	\]
+	若 \(Y\) 连通，还可选取满射的 \(X\) 态射 \(P\rightarrow Y\)。
+\end{proposition}
+\begin{proof}
+	在 \(d\) 重纤维积 \(Y_X^d\) 中，去掉任意两个坐标相等的全部子概形，所得子概形记为 \(T\)。各个对角开且闭，所以 \(T\) 仍有限平展于 \(X\)。它的一个几何纤维是把 \(Y_s\) 的全部 \(d\) 个点排成一列的方式，恰有 \(d!\) 种。因此 \(T\rightarrow X\) 满射。
+
+	\(d\) 个坐标投影给出 \(Y\times_XT\rightarrow T\) 的 \(d\) 个截面；每个几何纤维上，它们互不相交并穷尽全部点。于是由这些截面得到的态射 \(\coprod_iT\rightarrow Y\times_XT\) 在各连通分量的一个几何纤维上是双射，故为同构。
+
+	由于 \(T\) 是 Noether 概形，它的连通分量有限且开闭。选取一个分量 \(P\)，则 \(P\rightarrow X\) 非空且有限平展，因而满射。对称群 \(S_d\) 置换 \(T\) 的坐标，在 \(T_s\) 上单纯传递。记保持 \(P\) 的置换子群为 \(H\)。若 \(p,q\in P_s\)，唯一把 \(p\) 送到 \(q\) 的置换必把 \(P\) 送到包含 \(q\) 的连通分量，也就是 \(P\)。所以 \(H\) 在 \(P_s\) 上单纯传递。
+
+	\(H\) 到 \(\operatorname{Aut}_X(P)\) 的限制映射单射，因为一个排序没有非平凡的稳定置换。而 \(\operatorname{Aut}_X(P)\) 在 \(P_s\) 上自由，故其阶至多为 \(\#P_s\)，已被 \(H\) 达到。因此 \(P\) 是 Galois 覆盖，且限制前面的平凡化即得所需同构。若 \(Y\) 连通，第一个坐标给出非空有限平展态射 \(P\rightarrow Y\)，由\cref{b3:prop:I-finite-etale-rank}它满射。
+\end{proof}
+
+这个构造使“在平展覆盖后可以分开”有了明确含义：基变换到记录全体纤维点排序的空间，每个位置就成为一个截面。它也是有限域扩张取 Galois 闭包的几何对应物。一般 \(Y\) 若不连通，单个连通 \(P\) 不能满射到 \(Y\)，但变基后的全部分量仍同时平凡化。
+
+\subsection{Galois 范畴的基本性质}
+\label{b3:subsec:I01:03}
+
+有限覆盖可以作纤维积、取不交并，也可以把同一有限群轨道中的点合并。几何纤维把这些操作变成有限集合的积、不交并与轨道商。Galois 范畴的公理记录的正是这些相容性，而基本群将由保持全部这些数据的置换恢复。
+
+\begin{definition}\label{b3:def:I-galois-category}
+	设 \(\mathcal C\) 为本质小范畴，\(F:\mathcal C\rightarrow\mathbf{FinSet}\) 为到有限集合范畴的函子。这里本质小指同构类形成一个集合。一个态射 \(q:A\rightarrow B\) 若是它的核对 \(A\times_BA\rightrightarrows A\) 的余等化子，就称为严格满态射。若下列条件成立，则称 \((\mathcal C,F)\) 为 \term[galois-fanchou]{Galois 范畴}[Galois category]，称 \(F\) 为\term[xianwei-hanzi]{纤维函子}[fiber functor]。
+	\begin{enumerate}[label=(G\arabic*)]
+		\item \(\mathcal C\) 有终对象及纤维积。
+		\item \(\mathcal C\) 有有限余积，以及对象在有限自同构群作用下的商；空余积为始对象。
+		\item 每个态射分解为严格满态射，后接一个余积直和项的嵌入。
+		\item \(F\) 保持终对象与纤维积。
+		\item \(F\) 保持有限余积、严格满态射和上述有限群商。
+		\item 若 \(F(u)\) 是双射，则 \(u\) 为同构。
+	\end{enumerate}
+\end{definition}
+
+这里的严格满态射要求一个明确的泛性质：凡在核对上取值相同的态射，都唯一地经 \(q\) 分解。定义采用 \cite[Exposé V, \S4, p. 98]{SGA12003} 的六条公理；在有纤维积的情形，上述核对表述就是所需的严格满态射条件。有限集合中的这种态射恰为满射。
+
+\begin{proposition}\label{b3:prop:I-finite-etale-galois-category}
+	设 \(X\) 为连通非空 Noether 概形，\(s:\operatorname{Spec}\Omega\rightarrow X\)，其中 \(\Omega\) 代数闭。令
+	\[
+		F_s(Y)=\operatorname{Hom}_X(\operatorname{Spec}\Omega,Y).
+	\]
+	则 \((\operatorname{FinEt}(X),F_s)\) 是 Galois 范畴。
+\end{proposition}
+\begin{proof}
+	有限平展对象由有限个仿射图上的有限展示代数及黏合映射描述，所以其同构类形成集合。终对象为 \(X\)，纤维积由平展性与有限性的基变换、复合稳定性得到，有限余积为不交并。几何纤维按定义保持这些操作。
+
+	先说明有限群商。设有限群 \(H\) 作用于 \(Y\)，在仿射底图 \(\operatorname{Spec}A\) 上写 \(Y=\operatorname{Spec}B\)。候选商为 \(\operatorname{Spec}(B^H)\)。因为 \(A\) 是 Noether 环，子模 \(B^H\subseteq B\) 仍有限。若 \(A\rightarrow A'\) 平坦，不变子模作为有限组映射 \(h-1\) 的共同核与这个基变换交换：
+	\[
+		B^H\otimes_A A'\cong(B\otimes_A A')^H.
+	\]
+	在每个连通底块上，用\cref{b3:prop:I-etale-local-trivialization}的排序覆盖在忠实平坦的有限代数 \(A'\) 上使 \(B\otimes_A A'\cong(A')^d\)。必要时再按 \(\operatorname{Spec}A'\) 的连通分量分解，\(H\) 的每个元素就在各块上置换这 \(d\) 个因子。因此不变环是以轨道集为指标的若干份 \(A'\) 的乘积；空对象的商则仍为空。
+
+	由\cref{b3:prop:faithfully-flat-detection}，\(B^H\) 在 \(A\) 上平坦。其相对微分在上述忠实平坦基变换后为零，故原来也为零；有限展示由 Noether 性给出。\cref{b3:thm:etale-equivalent-characterizations}遂表明 \(B^H\) 有限平展。不变环与局部化相容，故这些仿射商黏合为 \(Y/H\)。对有限平展目标的 \(H\) 不变态射，其环映射在每个底图上唯一落入 \(B^H\)，从而给出商的泛性质。几何点可以提升到上述满射的排序覆盖，在分裂模型中读出的商纤维恰是点集的轨道商，故 \(F_s\) 保持群商。这个论证不要求 \(\#H\) 在底环可逆。
+
+	任一态射 \(u:Y\rightarrow Z\) 仍有限平展。它作为 \(Z\) 上局部自由代数的秩，在 \(Z\) 的各连通分量上恒定；秩为正的分量组成开闭子概形 \(Z'\)。于是 \(u\) 分解为满射 \(Y\rightarrow Z'\)，后接直和项嵌入 \(Z'\rightarrow Z\)。前一个箭头是严格满态射：在仿射底图上，其忠实平坦环映射 \(C\rightarrow B\) 满足
+	\[
+		C=\operatorname{Eq}\bigl(B\rightrightarrows B\otimes_C B\bigr),
+	\]
+	这是\cref{b3:lem:faithful-flat-equalizer}。在核对上相等的态射对应的环映射因而唯一落入 \(C\)，各图上的分解由唯一性黏合。反过来，严格满态射必满射：否则像的开闭补集非空，从 \(Z\) 到 \(X\amalg X\) 可以选取两个只在该补集上不同的态射，与满态射的消去性质矛盾。
+
+	因此严格满态射正是这里的满射，它们在几何纤维上仍满射；这验证 (G3) 与 (G5) 中剩余的要求。(G6) 则由\cref{b3:lem:I-fiber-detection}给出。
+\end{proof}
+
+典型的抽象模型是有限连续左 \(G\) 集，其中 \(G\) 为投射有限群，有限集合取离散拓扑；忘却作用就是纤维函子。有限群商在这里指由 \(G\) 等变自同构构成的有限群的商，故 \(G\) 作用能降到轨道集上。下一节将从覆盖的纤维函子构造这样的 \(G\)，并说明为什么它控制全部有限平展覆盖。
+
+% 新增结构与纲要同步。
+% * 状态：初稿已完成；新增范围尚未正式审核。
+% #### I.1.1 有限平展态射与覆盖
+% #### I.1.2 连通覆盖与 Galois 覆盖
+% #### I.1.3 Galois 范畴的基本性质

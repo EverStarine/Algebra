@@ -1,0 +1,407 @@
+% !TeX root = ../../Book3.tex
+% 纲要标题：### A.5 互反律、Frobenius 与素数分解
+% BEGIN APPENDIX OUTLINE SYNC
+% * 状态：初稿已完成；正文、证明与算例已写，新增范围尚未正式审核。
+% * 分解群与惯性群正合列、相对次数公式；算术 Frobenius 的唯一提升、共轭类与限制相容
+% * 分圆 Artin 映射的同余商模型；二次 Gauss 和、二次互反律及补充公式的完整代数证明
+% * Chebotarev 的无条件自然密度陈述与循环扩张约化概要；分圆和二次域中的分解型、分歧例外与密度计算
+% #### A.5.1 互反律与 Frobenius 元素
+% #### A.5.2 Chebotarev 定理与分圆、二次域算例
+% END APPENDIX OUTLINE SYNC
+% 状态：新增正文、主要代数证明与算例已有初稿；Chebotarev 采用注明深层输入的证明概要。
+
+\section{互反律、Frobenius 与素数分解}
+\label{b3:sec:A05}
+
+在 \(\mathbb Q(\sqrt5)\) 中，\(2\) 惰性而 \(11\) 完全分裂；前面的计算分别约化了两个素数处的多项式。若希望同时判断所有素数，就要寻找一种能够比较不同素数的描述。对这个二次域，答案只取决于素数模 \(5\) 的剩余类；在一般 Galois 扩张中，同余类的位置由群中的 Frobenius 共轭类承担。
+
+\ProseParagraphBreak
+Frobenius 元素先把剩余域上的幂映射提升到数域的自同构。互反律再把某些扩张中的这个自同构写成同余条件，Chebotarev 定理则计算各种共轭类出现的频率。下面完整建立提升与共轭类的良定义，证明分圆情形的互反映射，并用二次 Gauss 和推导二次互反律；素理想分布的一般解析论证以具体的约化概要说明。
+
+\subsection{互反律与 Frobenius 元素}
+\label{b3:subsec:A05:01}
+
+设 \(L/K\) 为数域的有限 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)。自同构保持整性，因而作用在 \(\mathcal O_L\) 及其素理想上。对非零素理想 \(\mathfrak p\subset\mathcal O_K\) 和上方的素理想 \(\mathfrak P\subset\mathcal O_L\)，写
+\[
+	\mathfrak p\mathcal O_L=\prod_{i=1}^r\mathfrak P_i^{e_i},\qquad
+	f_i=[\kappa(\mathfrak P_i):\kappa(\mathfrak p)],\qquad
+	\kappa(\mathfrak P)=\mathcal O_L/\mathfrak P.
+\]
+这些是\cref{b3:prop:prime-decomposition-degree}中分歧指数与剩余次数的相对版本；相应的次数公式将在下面证明。
+
+\begin{definition}\label{b3:def:arithmetic-decomposition-inertia}
+	设 \(L/K\) 为数域的有限 Galois 扩张，\(\mathfrak P\) 为 \(\mathcal O_L\) 的非零素理想，\(\mathfrak p=\mathfrak P\cap\mathcal O_K\)。子群
+	\[
+		D_{\mathfrak P}=\{\,\sigma\in\operatorname{Gal}(L/K)\mid\sigma(\mathfrak P)=\mathfrak P\,\}
+	\]
+	称为 \(\mathfrak P\) 的\term[fenjie-qun]{分解群}[decomposition group]。它在剩余域上诱导同态
+	\[
+		\rho_{\mathfrak P}:D_{\mathfrak P}\longrightarrow
+		\operatorname{Gal}(\kappa(\mathfrak P)/\kappa(\mathfrak p)),\qquad
+		\rho_{\mathfrak P}(\sigma)(\bar a)=\overline{\sigma(a)}.
+	\]
+	其核 \(I_{\mathfrak P}=\ker\rho_{\mathfrak P}\) 称为\term[guanxing-qun]{惯性群}[inertia group]。若 \(\mathfrak p\mathcal O_L\) 中各素理想的指数均为一，则称 \(\mathfrak p\) 在 \(L/K\) 中未分歧。
+\end{definition}
+
+\symidx{\(D_{\mathfrak P}\)、\(I_{\mathfrak P}\)：分解群与惯性群}
+
+定义中的同态需要 \(\sigma\) 保持 \(\mathfrak P\)：这使同余的两个代表仍同余；\(\sigma\) 固定 \(K\)，又使所诱导的自同构固定 \(\kappa(\mathfrak p)\)。有限域扩张总是 Galois 扩张，所以目标群确实是一个有限循环群。
+
+\begin{proposition}\label{b3:prop:arithmetic-decomposition-exact}
+	设 \(L/K\) 为数域的有限 Galois 扩张，次数为 \(n\)，\(\mathfrak p\subset\mathcal O_K\) 为非零素理想。则 \(G=\operatorname{Gal}(L/K)\) 传递地作用在 \(\mathfrak p\) 上方的 \(r\) 个素理想上。这些素理想有相同的分歧指数 \(e\) 和剩余次数 \(f\)，并且
+	\[
+		n=ref,\qquad |D_{\mathfrak P}|=ef,\qquad |I_{\mathfrak P}|=e.
+	\]
+	对任一 \(\mathfrak P\mid\mathfrak p\)，约化映射给出正合列
+	\[
+		1\longrightarrow I_{\mathfrak P}\longrightarrow D_{\mathfrak P}
+		\xrightarrow{\rho_{\mathfrak P}}
+		\operatorname{Gal}(\kappa(\mathfrak P)/\kappa(\mathfrak p))
+		\longrightarrow1.
+	\]
+\end{proposition}
+\begin{proof}
+	若 \(\mathfrak p\) 上方的某个 \(\mathfrak Q\) 不在 \(\mathfrak P\) 的轨道中，中国剩余定理允许选取 \(a\in\mathcal O_L\)，使它在 \(\mathfrak Q\) 模下为零，在该轨道的每个素理想模下均为一。乘积 \(b=\prod_{\sigma\in G}\sigma(a)\) 被 \(G\) 固定，又是代数整数，故 \(b\in\mathcal O_K\)。因 \(a\in\mathfrak Q\)，有 \(b\in\mathfrak Q\cap\mathcal O_K=\mathfrak p\)。但每个 \(\sigma(a)\) 模 \(\mathfrak P\) 都为一，故 \(b\equiv1\pmod{\mathfrak P}\)，矛盾。因此作用传递。自同构保持理想分解及剩余域次数，所以各 \(e_i=e\)、\(f_i=f\)。
+
+	这里也须证明相对次数公式。\(\mathcal O_L\) 的有限组整数模生成元同时是 \(\mathcal O_K\)-模生成元。令 \(V=(\mathcal O_K)_{\mathfrak p}\)、\(B=\mathcal O_L\otimes_{\mathcal O_K}V\)。它是 DVR \(V\) 上的有限无挠模，分式域上的秩为 \([L:K]=n\)。
+	% 跨卷引用目标：b2:thm:pid-module-structure（第二卷定理4.3.2）。
+	第二卷定理4.3.2说明 \(B\) 是秩 \(n\) 的自由 \(V\)-模，故 \(B/\mathfrak pB\) 在 \(k=\kappa(\mathfrak p)\) 上的维数为 \(n\)。另一方面，中国剩余分解把它写成各 \(\mathcal O_L/\mathfrak P_i^{e_i}\) 的乘积；不属于 \(\mathfrak p\) 的基环元素在这些商中本来就是单位，所以局部化不改变它们。每个因子按 \(\mathfrak P_i\) 的幂滤过；如\cref{b3:prop:prime-decomposition-degree}的证明，每层是 \(\kappa(\mathfrak P_i)\) 上的一维空间，所以在 \(k\) 上的维数为 \(e_if_i\)。于是 \(n=\sum_i e_if_i=ref\)。轨道与稳定子群公式给出 \(|D_{\mathfrak P}|=n/r=ef\)。
+
+	最后证明 \(\rho_{\mathfrak P}\) 满射，不能仅由幂映射在剩余域上存在就假定它可以提升。记 \(k'=\kappa(\mathfrak P)\)、\(J=\rho_{\mathfrak P}(D_{\mathfrak P})\)，取 \(x\in(k')^J\)。由中国剩余定理，选 \(a\in\mathcal O_L\)，其模 \(\mathfrak P\) 的像为 \(x\)，模其余上方素理想的像为零。多项式
+	\[
+		P(T)=\prod_{\sigma\in G}(T-\sigma(a))
+	\]
+	的系数被 \(G\) 固定且为代数整数，故属于 \(\mathcal O_K\)。设 \(d=|D_{\mathfrak P}|\)，在 \(k'[T]\) 中约化得到
+	\[
+		\overline P(T)=T^{n-d}(T-x)^d.
+	\]
+	设 \(k\) 的特征为 \(p\)，写 \(d=p^vu\)，其中 \(p\nmid u\)。上式中 \(T^{n-p^v}\) 的系数是 \(-u x^{p^v}\)，而全部系数都属于 \(k\)，故 \(x^{p^v}\in k\)。有限域上的 \(p^v\) 次幂映射是双射，所以可取 \(c\in k\) 使 \(c^{p^v}=x^{p^v}\)。在域 \(k'\) 中该映射也单射，故 \(x=c\in k\)。因此 \((k')^J=k\)。
+	% 跨卷引用目标：b1:thm:finite-galois-correspondence（第一卷定理19.2.1）。
+	有限 Galois 对应（第一卷定理19.2.1）给出 \(J=\operatorname{Gal}(k'/k)\)。这个群的阶为 \(f\)，所以满射的核有 \(ef/f=e\) 个元素，得到全部结论。
+\end{proof}
+
+\begin{theorem}\label{b3:thm:arithmetic-frobenius}
+	设 \(L/K\) 为数域的有限 Galois 扩张，\(\mathfrak p\subset\mathcal O_K\) 为在 \(L/K\) 中未分歧的非零素理想，\(q=N_K(\mathfrak p)=|\mathcal O_K/\mathfrak p|\)。对每个 \(\mathfrak P\mid\mathfrak p\)，存在唯一的 \(\operatorname{Frob}_{\mathfrak P}\in D_{\mathfrak P}\)，使
+	\begin{equation}\label{b3:eq:arithmetic-frobenius-congruence}
+		\operatorname{Frob}_{\mathfrak P}(a)\equiv a^q\pmod{\mathfrak P}
+		\qquad(a\in\mathcal O_L).
+	\end{equation}
+	它的阶为剩余次数 \(f\)，并且对每个 \(\sigma\in\operatorname{Gal}(L/K)\)，有
+	\[
+		\operatorname{Frob}_{\sigma\mathfrak P}
+		=\sigma\operatorname{Frob}_{\mathfrak P}\sigma^{-1}.
+	\]
+	因此这些元素组成只依赖 \(\mathfrak p\) 的共轭类。该共轭类为 \(\{1\}\)，当且仅当 \(\mathfrak p\) 在 \(L\) 中完全分裂。
+\end{theorem}
+\begin{proof}
+	未分歧给出 \(e=1\)，所以上一命题中的约化同态是同构。
+	% 跨卷引用目标：b1:thm:finite-field-automorphisms（第一卷定理17.2.2）。
+	第一卷定理17.2.2说明，\(\kappa(\mathfrak P)/\mathbb F_q\) 的自同构群由 \(x\mapsto x^q\) 生成，该元素的阶恰为 \(f\)。取它在同构下的唯一原像，便得所述元素及其阶。
+
+	若 \(\mathfrak Q=\sigma\mathfrak P\)，则 \(\sigma D_{\mathfrak P}\sigma^{-1}=D_{\mathfrak Q}\)。对任意 \(a\in\mathcal O_L\)，先把\eqref{b3:eq:arithmetic-frobenius-congruence}用于 \(\sigma^{-1}(a)\)，再施行 \(\sigma\)，得到
+	\[
+		(\sigma\operatorname{Frob}_{\mathfrak P}\sigma^{-1})(a)
+		\equiv\sigma\bigl(\sigma^{-1}(a)^q\bigr)=a^q\pmod{\mathfrak Q}.
+	\]
+	唯一性即给出共轭公式，素理想作用的传递性使上方全部选择恰产生一个共轭类。最后，元素为单位当且仅当 \(f=1\)；结合 \(e=1\) 和 \(ref=[L:K]\)，这恰好表示有 \([L:K]\) 个剩余次数一的素理想，即完全分裂。
+\end{proof}
+
+上述唯一提升称为 \(\mathfrak P\) 的\term[Frobenius-yuansu]{Frobenius 元素}[Frobenius element]，相应共轭类记为 \(\operatorname{Frob}_{\mathfrak p}(L/K)\)。这里采用\term[suanshu-Frobenius]{算术 Frobenius}[arithmetic Frobenius]约定 \(x\mapsto x^q\)；几何 Frobenius 是它的逆。若有分歧，唯一确定的是商群 \(D_{\mathfrak P}/I_{\mathfrak P}\) 中的元素，不能把它无选择地写成 \(G\) 中的一个元素。若 \(G\) 交换，共轭类只有一个元素，便可直接把 \(\operatorname{Frob}_{\mathfrak p}(L/K)\) 看作群元素。
+\symidx{\(\operatorname{Frob}_{\mathfrak P}\)：算术 Frobenius 元素}
+\symidx{\(\operatorname{Frob}_{\mathfrak p}(L/K)\)：未分歧素理想的 Frobenius 共轭类}
+
+\begin{corollary}\label{b3:cor:frobenius-restriction}
+	设 \(L/K\) 为数域的有限 Galois 扩张，\(E\) 为其中间域，且 \(E/K\) 也为 Galois 扩张。若 \(\mathfrak p\) 在 \(L/K\) 中未分歧，\(\mathfrak P\mid\mathfrak p\)、\(\mathfrak q=\mathfrak P\cap\mathcal O_E\)，则 \(\mathfrak p\) 在 \(E/K\) 中也未分歧，且
+	\[
+		\operatorname{Frob}_{\mathfrak P}(L/K)|_E
+		=\operatorname{Frob}_{\mathfrak q}(E/K).
+	\]
+\end{corollary}
+\begin{proof}
+	先在 \(\mathcal O_E\) 中分解 \(\mathfrak p\)，再把各素理想扩张到 \(\mathcal O_L\) 并分解。理想唯一分解给出分歧指数的乘法公式
+	\[
+		e(\mathfrak P/\mathfrak p)=e(\mathfrak P/\mathfrak q)e(\mathfrak q/\mathfrak p).
+	\]
+	左端为一，所以右端两个正整数都为一。因 \(E/K\) 正规，\(L/K\) 的自同构保持 \(E\)，所以限制有定义。Frobenius 保持 \(\mathfrak P\)，因而其限制保持 \(\mathfrak q\)；对 \(a\in\mathcal O_E\)，原同余式的差属于 \(\mathfrak P\cap\mathcal O_E=\mathfrak q\)。在 \(E/K\) 中用唯一性即得等式。
+\end{proof}
+
+分歧素理想只有有限多个。事实上，若 \(\mathfrak p\) 在 \(L/K\) 中分歧，其下方的有理素数 \(p\) 由分歧指数的乘法公式也在 \(L/\mathbb Q\) 中分歧，故 \(p\mid d_L\)。只有有限多个这样的 \(p\)，而每个 \(p\) 在 \(K\) 中只有有限多个上方素理想。
+
+\ProseParagraphBreak
+当 \(L/K\) 的群交换时，素理想的 Frobenius 可相乘。设有限集合 \(S\) 包含全部分歧素理想，令 \(\mathcal I_K(S)\) 为不含 \(S\) 中素因子的非零分式理想群，则
+\[
+	\operatorname{Art}_{L/K}:\mathcal I_K(S)\longrightarrow G,\qquad
+	\prod_{\mathfrak p\notin S}\mathfrak p^{a_{\mathfrak p}}
+	\longmapsto\prod_{\mathfrak p\notin S}\operatorname{Frob}_{\mathfrak p}^{a_{\mathfrak p}}
+\]
+是同态，称为\term[Artin-yingshe]{Artin 映射}[Artin map]。理想唯一分解保证表达式唯一，交换性保证乘积与排列无关。互反律研究这个同态怎样由理想的同余信息确定。
+\symidx{\(\operatorname{Art}_{L/K}\)：Artin 映射}
+
+\begin{theorem}\label{b3:thm:cyclotomic-frobenius-reciprocity}
+	设 \(m\ge3\)，\(L=\mathbb Q(\zeta_m)\)，其中 \(\zeta_m\) 为本原 \(m\) 次单位根，并按 \(\sigma_a(\zeta_m)=\zeta_m^a\) 识别 \(G=\operatorname{Gal}(L/\mathbb Q)\) 与 \((\mathbb Z/m\mathbb Z)^\times\)。则每个 \(p\nmid m\) 的有理素数在 \(L\) 中未分歧，且
+	\begin{equation}\label{b3:eq:cyclotomic-frobenius}
+		\operatorname{Frob}_p(L/\mathbb Q)=\sigma_{p\bmod m}.
+	\end{equation}
+	令 \(\mathcal I_m\) 为不含 \(m\) 的素因子的非零有理分式理想群，并令
+	\[
+		\mathcal P_{m,1}^{+}=
+		\{\,(b/c):b,c\in\mathbb Z_{>0},\ \gcd(bc,m)=1,\ b\equiv c\pmod m\,\}.
+	\]
+	这里 \((b/c)\) 表示 \(\mathbb Z\) 的分式理想。则 Artin 映射给出同构
+	\[
+		\mathcal I_m/\mathcal P_{m,1}^{+}
+		\simeq(\mathbb Z/m\mathbb Z)^\times,\qquad
+		[(b/c)]\longmapsto\bar b\bar c^{-1}.
+	\]
+\end{theorem}
+\begin{proof}
+	% 跨卷引用目标：b1:thm:cyclotomic-galois-group（第一卷定理21.1.3）。
+	第一卷定理21.1.3已经证明所述 Galois 群同构。为证明未分歧，不必预先知道整个整数环是否由 \(\zeta_m\) 生成。子环 \(A=\mathbb Z[\zeta_m]\) 是满秩整数格，且
+	\[
+		A/pA\cong\mathbb F_p[T]/(\overline\Phi_m(T)).
+	\]
+	因 \(p\nmid m\)，\(T^m-1\) 模 \(p\) 无重根，其首一因子 \(\overline\Phi_m\) 也无重根。上面的商因此是有限可分域之积，迹配对非退化。迹矩阵约化说明 \(p\nmid\operatorname{disc}(A)\)。由\secref{b3:sec:A02}的指数平方公式，
+	\[
+		\operatorname{disc}(A)=[\mathcal O_L:A]^2d_L,
+	\]
+	所以 \(p\nmid d_L\)，由\cref{b3:prop:discriminant-ramification}，\(p\) 未分歧。这个论证同时给出 \(p\nmid[\mathcal O_L:A]\)。
+
+	在任何 \(\mathfrak P\mid p\) 的剩余域中，全部 \(m\) 次单位根的像两两不同：把 \(T^m-1=\prod_{j=0}^{m-1}(T-\zeta_m^j)\) 约化，若两像相同就会出现重根。设 \(\operatorname{Frob}_{\mathfrak P}=\sigma_a\)，则
+	\[
+		\zeta_m^a\equiv\zeta_m^p\pmod{\mathfrak P}.
+	\]
+	这些根的约化不合并，故 \(a\equiv p\pmod m\)，证明\eqref{b3:eq:cyclotomic-frobenius}。
+
+	每个 \(I\in\mathcal I_m\) 有唯一正有理生成元 \(b/c\)，其中 \(b,c\) 可取互素且都与 \(m\) 互素。由素因数分解及刚证的公式，\(\operatorname{Art}_{L/\mathbb Q}(I)=\sigma_{\bar b\bar c^{-1}}\)。该剩余类不因分数表示改变而改变。任意模 \(m\) 的可逆剩余类都有正整数代表 \(b\)，故同态满射；核恰是 \(b\equiv c\pmod m\) 的那些理想，即 \(\mathcal P_{m,1}^{+}\)。同态基本定理给出所述同构。
+\end{proof}
+
+这个同构是 Artin 互反律的分圆模型。正生成元的条件不能悄悄删掉：理想 \((b/c)\) 也可由 \(-b/c\) 生成，而 \(-1\) 在 Galois 群中对应复共轭。一般数域的互反律需要同时处理模数、无穷素点和相应的理想同余商；这里的有理数模型已经展示了同余关系怎样决定 Frobenius。
+
+\begin{definition}\label{b3:def:legendre-symbol}
+	设 \(p\) 为奇素数、\(a\in\mathbb Z\)。若 \(p\mid a\)，令 \(\left(\dfrac ap\right)=0\)；若 \(a\) 模 \(p\) 是非零平方，令其为 \(1\)；否则令其为 \(-1\)。这个数称为\term[Legendre-fuhao]{Legendre 符号}[Legendre symbol]。\footnote{勒让德（Adrien-Marie Legendre，1752-1833），法国数学家，研究数论、椭圆积分与几何，提出用于二次剩余的符号。}
+\end{definition}
+\symidx{\(\left(\dfrac ap\right)\)：Legendre 符号}
+
+% 跨卷引用目标：b1:cor:finite-field-cyclic（第一卷推论17.2.1）。
+由第一卷推论17.2.1，\(\mathbb F_p^\times\) 是循环群。若 \(g\) 为生成元，则 \(g^j\) 为平方当且仅当 \(j\) 为偶数，而 \(g^{(p-1)/2}=-1\)。因此
+\[
+	\left(\dfrac ap\right)\equiv a^{(p-1)/2}\pmod p,
+	\qquad
+	\left(\dfrac{ab}p\right)=\left(\dfrac ap\right)\left(\dfrac bp\right).
+\]
+第一式在 \(p\nmid a\) 时称为\term[Euler-panju]{Euler 判据}[Euler's criterion]；在 \(p\mid a\) 时也成立。
+
+\begin{proposition}\label{b3:prop:quadratic-frobenius-symbol}
+	设 \(d\ne0,1\) 为无平方因子整数，\(K=\mathbb Q(\sqrt d)\)，\(p\nmid2d\) 为有理素数。则 \(p\) 在 \(K\) 中未分歧，并且
+	\[
+		\operatorname{Frob}_p(\sqrt d)=\left(\dfrac dp\right)\sqrt d.
+	\]
+	故 \(p\) 完全分裂当且仅当 \(\left(\dfrac dp\right)=1\)，惰性当且仅当该符号为 \(-1\)。
+\end{proposition}
+\begin{proof}
+	二次整基公式给出 \(d_K\mid4d\)，故 \(p\nmid d_K\)，所以 \(p\) 未分歧。\(\sqrt d\) 整，且它在 \(\mathfrak P\mid p\) 的剩余域中非零，否则 \(p\mid d\)。Frobenius 的同余式给出
+	\[
+		\operatorname{Frob}_{\mathfrak P}(\sqrt d)
+		\equiv(\sqrt d)^p=d^{(p-1)/2}\sqrt d
+		\equiv\left(\dfrac dp\right)\sqrt d\pmod{\mathfrak P}.
+	\]
+	两个可能的共轭 \(\sqrt d,-\sqrt d\) 模 \(\mathfrak P\) 不同，因为 \(p\ne2\)。因此这个同余确定了原域中自同构的符号。群的阶为二，Frobenius 的阶分别为一或二，故相应的 \((e,f,r)\) 分别为 \((1,1,2)\) 或 \((1,2,1)\)，得到分裂判据。
+\end{proof}
+
+下面的\term[erci-Gauss-he]{二次 Gauss 和}[quadratic Gauss sum]把一个二次域放入分圆域，使同一个 Frobenius 的两种计算互相比较。
+
+\begin{lemma}\label{b3:lem:quadratic-gauss-sum}
+	设 \(\ell\) 为奇素数，\(\zeta=\zeta_\ell\)，\(\chi(a)=\left(\dfrac a\ell\right)\)，并令
+	\[
+		\tau=\sum_{a\in\mathbb F_\ell}\chi(a)\zeta^a,\qquad
+		\ell^*=(-1)^{(\ell-1)/2}\ell.
+	\]
+	则 \(\tau^2=\ell^*\)，且对每个 \(c\in\mathbb F_\ell^\times\)，有 \(\sigma_c(\tau)=\chi(c)\tau\)。特别地，\(\mathbb Q(\tau)=\mathbb Q(\sqrt{\ell^*})\) 是 \(\mathbb Q(\zeta_\ell)\) 的二次子域。
+\end{lemma}
+\begin{proof}
+	换元 \(b=ca\)，利用 \(\chi(c^{-1})=\chi(c)\)，得
+	\[
+		\sigma_c(\tau)=\sum_a\chi(a)\zeta^{ca}
+		=\chi(c)\sum_b\chi(b)\zeta^b=\chi(c)\tau.
+	\]
+	取 \(c=-1\) 得 \(\overline\tau=\chi(-1)\tau\)。又因非零平方与非平方各有 \((\ell-1)/2\) 个，\(\sum_{t\ne0}\chi(t)=0\)。将 \(a=tb\) 代入双重和，得到
+	\[
+		\begin{aligned}
+			\tau\overline\tau
+			&=\sum_{a,b\ne0}\chi(a)\chi(b)\zeta^{a-b}\\
+			&=\sum_{t\ne0}\chi(t)\sum_{b\ne0}\zeta^{(t-1)b}\\
+			&=(\ell-1)-\sum_{t\ne0,1}\chi(t)=\ell.
+		\end{aligned}
+	\]
+	内和在 \(t=1\) 时为 \(\ell-1\)，其余情形为 \(-1\)，这是有限几何级数。故 \(\tau^2=\chi(-1)\ell=\ell^*\)。整数 \(\ell^*\) 在 \(\mathbb Q\) 中不是平方，所以 \(\tau\notin\mathbb Q\)，并确实生成所述二次域。
+\end{proof}
+
+由此得到\term[erci-hufanlv]{二次互反律}[law of quadratic reciprocity]及其补充公式。
+
+\begin{theorem}[二次互反律及补充公式]\label{b3:thm:quadratic-reciprocity}
+	设 \(p,\ell\) 为不同的奇素数。则
+	\[
+		\left(\dfrac p\ell\right)\left(\dfrac\ell p\right)
+		=(-1)^{((p-1)/2)((\ell-1)/2)}.
+	\]
+	对任意奇素数 \(p\)，还有
+	\[
+		\left(\dfrac{-1}p\right)=(-1)^{(p-1)/2},\qquad
+		\left(\dfrac2p\right)=(-1)^{(p^2-1)/8}.
+	\]
+\end{theorem}
+\begin{proof}
+	在 \(L=\mathbb Q(\zeta_\ell)\) 中，\(p\) 的 Frobenius 为 \(\sigma_p\)。它在上一引理的二次子域 \(\mathbb Q(\tau)\) 上，一方面满足 \(\sigma_p(\tau)=\left(\dfrac p\ell\right)\tau\)，另一方面由\cref{b3:cor:frobenius-restriction,b3:prop:quadratic-frobenius-symbol}满足
+	\[
+		\sigma_p(\tau)=\left(\dfrac{\ell^*}p\right)\tau.
+	\]
+	因 \(\tau\ne0\)，比较得到 \(\left(\dfrac p\ell\right)=\left(\dfrac{\ell^*}p\right)\)。Euler 判据给出 \(\left(\dfrac{-1}p\right)=(-1)^{(p-1)/2}\)，再利用乘法性展开 \(\ell^*=(-1)^{(\ell-1)/2}\ell\)，便得互反律及第一个补充公式。
+
+	对第二个补充公式，取 \(\zeta=\zeta_8\)、\(t=\zeta+\zeta^{-1}\)。因 \(\zeta^2+\zeta^{-2}=0\)，有 \(t^2=2\)，故 \(\mathbb Q(t)=\mathbb Q(\sqrt2)\)。对任意奇数 \(a\)，直接使用 \(\zeta^4=-1\) 可得
+	\[
+		\sigma_a(t)=
+		\begin{cases}
+			t,&a\equiv1,7\pmod8,\\
+			-t,&a\equiv3,5\pmod8.
+		\end{cases}
+	\]
+	例如 \(\zeta^3=-\zeta^{-1}\)、\(\zeta^{-3}=-\zeta\)，给出 \(a=3\) 的负号；\(a=-1\) 给出正号，其余两类由复共轭得到。把 \(a=p\) 的 Frobenius 限制到 \(\mathbb Q(\sqrt2)\)，上述正负号就是 \(\left(\dfrac2p\right)\)。对 \(p\equiv1,3,5,7\pmod8\)，整数 \((p^2-1)/8\) 的奇偶性依次为偶、奇、奇、偶，恰给出所述公式。
+\end{proof}
+
+这个证明把互反律理解为同一自同构在分圆域与二次子域中的相容性。利用 Gauss 引理和格点计数的另一套完整初等证明，可见\cite[Section 12.1, Theorems 12.1--12.4, pp. 342--346]{Shoup2008NumberTheoryAlgebra}。
+
+\subsection{Chebotarev 定理与分圆、二次域算例}
+\label{b3:subsec:A05:02}
+
+Frobenius 的阶已经决定未分歧素理想的剩余次数；现在要问不同阶或不同共轭类各出现多少次。\term[Chebotarev-midu-dingli]{Chebotarev 密度定理}[Chebotarev density theorem]给出的比例由共轭类的元素数决定。
+
+\begin{definition}\label{b3:def:prime-ideal-natural-density}
+	设 \(K\) 为数域，\(\mathcal S\) 为 \(\mathcal O_K\) 的一组非零素理想。记
+	\[
+		\pi_K(x)=\#\{\,\mathfrak p:N_K(\mathfrak p)\le x\,\},\qquad
+		\pi_{\mathcal S}(x)=\#\{\,\mathfrak p\in\mathcal S:N_K(\mathfrak p)\le x\,\}.
+	\]
+	若极限存在，则称 \(\lim_{x\to\infty}\pi_{\mathcal S}(x)/\pi_K(x)\) 为 \(\mathcal S\) 的\term[sulixiang-ziran-midu]{自然密度}[natural density]。
+\end{definition}
+
+这里按素理想范数排列，分母计算 \(K\) 的所有非零素理想。当 \(K=\mathbb Q\) 时，这就是一组有理素数在全部素数中的比例。删去有限多个素理想不改变密度。
+
+\begin{theorem}[Chebotarev 密度定理]\label{b3:thm:chebotarev-density}
+	设 \(L/K\) 为数域的有限 Galois 扩张，\(G=\operatorname{Gal}(L/K)\)，\(C\subseteq G\) 为共轭不变子集。令
+	\[
+		\mathcal S_C=\{\,\mathfrak p\subset\mathcal O_K:
+		\mathfrak p\ne0\;\text{为未分歧素理想，且}\;
+		\operatorname{Frob}_{\mathfrak p}(L/K)\subseteq C\,\}.
+	\]
+	则 \(\mathcal S_C\) 的自然密度存在，等于 \(|C|/|G|\)。更准确地，
+	\[
+		\pi_{\mathcal S_C}(x)
+		=\dfrac{|C|}{|G|}\dfrac{x}{\log x}
+		+o\!\left(\dfrac{x}{\log x}\right)
+		\qquad(x\to\infty).
+	\]
+\end{theorem}
+
+本节引用此定理；所用的是无条件的自然密度版本，见\cite[Section 2.1, Théorème 1, p. 131]{Serre1981ChebotarevApplications}。它不要求广义 Riemann 假设，也没有在上述陈述中提供统一的有限搜索上限。\footnote{黎曼（Georg Friedrich Bernhard Riemann，1826-1866），德国数学家，研究复分析、几何和素数分布。}
+
+\begin{proofsketch}
+	共轭不变集合是有限个共轭类的不交并，故只须处理一个类 \(C\)。取 \(g\in C\)、循环子群 \(H=\langle g\rangle\)、中间域 \(E=L^H\)，并令 \(Z_G(g)\) 为 \(g\) 的中心化子。对 \(H\) 上的函数 \(h=1_{\{g\}}\)，定义诱导的共轭不变函数
+	\[
+		(\operatorname{Ind}_H^G h)(s)
+		=\dfrac1{|H|}\sum_{\substack{a\in G\\a^{-1}sa\in H}}h(a^{-1}sa).
+	\]
+	若 \(s\notin C\)，此和为零；若 \(s\in C\)，使 \(a^{-1}sa=g\) 的 \(a\) 恰有 \(|Z_G(g)|\) 个。因此得到精确的群论恒等式
+	\[
+		1_C=\dfrac{|H|}{|Z_G(g)|}\operatorname{Ind}_H^G h.
+	\]
+
+	接着把这个恒等式用于素理想计数。对 \(K\) 中未分歧的 \(\mathfrak p\)，其 Frobenius 在陪集集 \(G/H\) 上的轨道对应 \(E\) 中上方素理想，轨道长度是相对剩余次数。长度一的轨道对 \(h\) 的贡献恰给出上述诱导函数；长度至少二的素理想满足 \(N_K(\mathfrak p)\le\sqrt x\)，对固定扩张只产生 \(O_{L/K}(\sqrt x\log x)\) 的误差。由此可将计数转为
+	\[
+		\sum_{N_K(\mathfrak p)\le x}
+		(\operatorname{Ind}_H^G h)(\operatorname{Frob}_{\mathfrak p})
+		=\sum_{N_E(\mathfrak q)\le x}h(\operatorname{Frob}_{\mathfrak q}(L/E))
+		+O_{L/K}(\sqrt x\log x),
+	\]
+	两边均略去在 \(L\) 中分歧的有限组素理想。严格的加权计数及其诱导相容性见\cite[Section 2.6, Proposition 8, pp. 139--140]{Serre1981ChebotarevApplications}。
+
+	剩下的是循环扩张 \(L/E\) 的素理想分布：指定 \(g\in H\) 的计数为
+	\[
+		\dfrac1{|H|}\dfrac{x}{\log x}
+		+o\!\left(\dfrac{x}{\log x}\right).
+	\]
+	这个解析步骤依赖交换扩张的互反理论与相应素数定理，涉及一维特征的解析方法；本节不建立这些深层输入，也不把前面有理数域的分圆模型当作任意 \(E\) 上的证明。代入计数式，主项系数成为
+	\[
+		\dfrac{|H|}{|Z_G(g)|}\dfrac1{|H|}
+		=\dfrac1{|Z_G(g)|}=\dfrac{|C|}{|G|}.
+	\]
+	这说明一般非交换群如何约化到循环扩张，也指出真正留下的解析证明。取 \(L=K\) 的相应素理想定理给出 \(\pi_K(x)\sim x/\log x\)，从而得到所述相对自然密度。
+\end{proofsketch}
+
+特别地，完全分裂素理想的密度为 \(1/[L:K]\)，每个非空共轭类都出现无穷多次。所谓均匀分布是给类 \(C\) 权重 \(|C|/|G|\)，不是给每个共轭类同样的权重。
+
+\begin{corollary}\label{b3:cor:cyclotomic-prime-density}
+	设 \(m\ge3\)、\(a\in\mathbb Z\)，且 \(\gcd(a,m)=1\)。则满足 \(p\equiv a\pmod m\) 的有理素数的自然密度为 \(1/\varphi(m)\)。在任意二次数域中，完全分裂的有理素数与惰性有理素数的自然密度各为 \(1/2\)。
+\end{corollary}
+\begin{proof}
+	分圆扩张的群交换，每个元素是一个单元素共轭类。由\eqref{b3:eq:cyclotomic-frobenius}，类 \(\{\sigma_a\}\) 对应的素数恰为 \(p\equiv a\pmod m\)，故密度为 \(1/\varphi(m)\)。二次扩张的群有两个元素，未分歧素数的 Frobenius 为单位时完全分裂，为非单位时剩余次数为二，因而惰性；两个单元素类各有密度 \(1/2\)。
+\end{proof}
+
+\begin{example}\label{b3:exm:cyclotomic-five-frobenius}
+	取 \(L=\mathbb Q(\zeta_5)\)。对 \(p\ne5\)，令 \(f\) 为 \(p\bmod5\) 在 \((\mathbb Z/5\mathbb Z)^\times\) 中的阶。由 Frobenius 元素的阶与次数公式，\(p\mathcal O_L\) 有 \(4/f\) 个不同素因子，各因子的 \(e=1\)、剩余次数为 \(f\)。结果列于\cref{b3:tab:cyclotomic-five-splitting-density}；密度按每行所列剩余类的并计算。
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\mathbb Q(\zeta_5)\) 中未分歧素数的分解与密度}
+		\label{b3:tab:cyclotomic-five-splitting-density}
+		\begin{tabular}{@{}cccc@{}}
+			\toprule
+			\(p\bmod5\) & 剩余次数 \(f\) & 素因子数 \(r\) & 自然密度 \\
+			\midrule
+			\(1\) & \(1\) & \(4\) & \(1/4\) \\
+			\(4\) & \(2\) & \(2\) & \(1/4\) \\
+			\(2,3\) & \(4\) & \(1\) & \(1/2\) \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	例如 \(\Phi_5(T)=T^4+T^3+T^2+T+1\) 模 \(11\) 的四个根为 \(3,4,5,9\)。前面的判别式论证已保证 \(11\) 不整除 \([\mathcal O_L:\mathbb Z[\zeta_5]]\)，所以 Dedekind--Kummer 定理给出
+	\[
+		11\mathcal O_L=\prod_{a\in\{3,4,5,9\}}(11,\zeta_5-a).
+	\]
+	四个因子的范数均为 \(11\)。模 \(19\) 则有
+	\[
+		\Phi_5(T)=(T^2-4T+1)(T^2+5T+1).
+	\]
+	两因子的判别式模 \(19\) 分别为 \(12,2\)，均不是平方，所以得到两个范数 \(19^2\) 的素理想。这分别核验了表中的 \(p\equiv1,4\pmod5\) 两行；\(p=2\) 时剩余次数为四，故 \(2\mathcal O_L\) 本身为素理想，范数为 \(16\)。
+
+	\ProseParagraphBreak
+	分歧素数 \(5\) 也可完整计算。令 \(\lambda=1-\zeta_5\)，则
+	\[
+		N_{L/\mathbb Q}(\lambda)=\prod_{a=1}^4(1-\zeta_5^a)=\Phi_5(1)=5.
+	\]
+	由\cref{b3:lem:principal-ideal-norm}，\(\mathcal O_L/(\lambda)\) 有五个元素，故 \(\mathfrak P=(\lambda)\) 是范数五的素理想。每个 \((1-\zeta_5^a)/(1-\zeta_5)=1+\cdots+\zeta_5^{a-1}\) 都是代数整数，其域范数为一，因此生成单位理想，是单位。把上面的乘积分解写成理想等式，即得
+	\[
+		5\mathcal O_L=\mathfrak P^4.
+	\]
+	所以 \(5\) 完全分歧，\(e=4\)、\(f=1\)。这一个例外不影响表中的自然密度。
+\end{example}
+
+\begin{example}\label{b3:exm:quadratic-five-reciprocity}
+	再取 \(K=\mathbb Q(\sqrt5)\)、\(\omega=(1+\sqrt5)/2\)。对奇素数 \(p\ne5\)，二次互反律中 \(5\equiv1\pmod4\)，故
+	\[
+		\left(\dfrac5p\right)=\left(\dfrac p5\right)=
+		\begin{cases}
+			1,&p\equiv1,4\pmod5,\\
+			-1,&p\equiv2,3\pmod5.
+		\end{cases}
+	\]
+	所以第一组完全分裂，第二组惰性。素数 \(2\) 由 \(T^2-T-1\) 模二不可约而惰性，\(5\) 则由判别式而分歧；这样便覆盖全部有理素数。
+
+	\ProseParagraphBreak
+	例如 \(p=19\) 时，\(9^2\equiv5\pmod{19}\)，所以 \(\omega\) 的两个余类为 \((1+9)/2=5\)、\((1-9)/2=15\)，并且
+	\[
+		19\mathcal O_K=(19,\omega-5)(19,\omega-15).
+	\]
+	两个因子的范数都为 \(19\)。\(3\equiv3\pmod5\)，所以 \(3\mathcal O_K\) 是范数 \(9\) 的素理想。互反律把这些单个计算统一为同余判据；Chebotarev 定理进一步给出两类各占全部素数的一半。它们在 \(\mathbb Q(\zeta_5)\) 中分别是阶为一或二、阶为四的 Frobenius 的像：取二次子域，正好把群中的四种剩余类合并成两种符号。
+\end{example}
+
+在非交换扩张中，剩余次数相同的 Frobenius 仍可能属于不同共轭类，同余条件也未必能由一个整数模数概括。素理想分解提供局部的次数，Galois 群组织可共轭的选择，互反律与密度定理则分别回答怎样计算某些 Frobenius、这些类别怎样分布。

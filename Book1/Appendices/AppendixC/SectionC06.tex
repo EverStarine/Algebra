@@ -1,0 +1,210 @@
+% !TeX root = ../../Book1.tex
+% 纲要标题：### C.6 Schur–Zassenhaus 定理与 Hall 子群
+% 纲要位置：计划纲要.md，第 952 行。
+% BEGIN APPENDIX OUTLINE SYNC
+% * 状态：初稿已完成；可解情形给出完整证明，一般情形明示证明范围，新增范围尚未正式审核。
+% #### C.6.1 正规 Hall 子群与补群
+% #### C.6.2 可解情形的存在性与共轭性
+% #### C.6.3 Hall 子群的存在、共轭与包含
+% #### C.6.4 一般情形的证明范围
+% ---
+% END APPENDIX OUTLINE SYNC
+
+\section{Schur–Zassenhaus 定理与 Hall 子群}
+\label{b1:sec:C06}
+
+在 \(S_3\) 中，正规子群 \(A_3\) 与任一换位生成的二阶子群组成半直积；三个补群虽不相同，却可用 \(A_3\) 中的元素相互共轭。相对地，\(C_4\) 的二阶子群没有补群。两个例子中，核与商都很简单，区别在于前者的阶为互素的三和二，后者的阶均为二。互素条件能否保证分裂？补群的选择又相差多少？本节把这两个问题与 Sylow 理论联系起来，进而同时处理若干素数所组成的子群。
+
+\subsection{正规 Hall 子群与补群}
+\label{b1:subsec:C06:01}
+
+Sylow \(p\)-子群包含群阶中全部的 \(p\) 因子，而不含其他素因子。若指定一组素数，也可以提出相同要求。
+
+\begin{definition}\label{b1:def:C-hall-subgroup}
+	设 \(G\) 为有限群，\(\pi\) 为素数集合，\(\pi'\) 为全体素数中除去 \(\pi\) 的补集。全部素因子都属于 \(\pi\) 的正整数称为 \(\pi\)-数，整数一也包括在内；阶为 \(\pi\)-数的有限群称为 \(\pi\)-群。如果 \(H\leq G\) 是 \(\pi\)-群，且 \([G:H]\) 为 \(\pi'\)-数，则称 \(H\) 为 \(G\) 的\term[hall-ziqun]{Hall \(\pi\)-子群}[Hall pi-subgroup]。不指定 \(\pi\) 时，阶与指数互素的子群称为 Hall 子群。
+\end{definition}
+
+这里的名称来自 Philip Hall。\footnote{菲利普·霍尔（Philip Hall，1904-1982），英国数学家，研究有限可解群、幂零群及群的子群结构。}若把 \(|G|\) 中所有属于 \(\pi\) 的素数幂相乘，得到的整数记为 \(|G|_\pi\)，则 Hall \(\pi\)-子群的阶恰为 \(|G|_\pi\)。特别地，Hall \(\{p\}\)-子群就是 Sylow \(p\)-子群。不过，Sylow 定理并没有保证任意 \(\pi\) 都有这样的子群。
+
+\ProseParagraphBreak
+对于正规子群 \(N\trianglelefteq G\)，\secref{b1:sec:0602}已把满足 \(G=NH\)、\(N\cap H=1\) 的子群 \(H\) 称为 \(N\) 的补群。由\cref{b1:thm:split-extension-semidirect}，这等价于商映射在 \(H\) 上给出同构 \(H\cong G/N\)，并得到 \(G\cong N\rtimes H\)。若 \(N\) 是正规 Hall \(\pi\)-子群，则任何补群必为 Hall \(\pi'\)-子群。反过来，只要找到了一个 Hall \(\pi'\)-子群 \(H\)，便有
+\[
+	N\cap H=1,\qquad |NH|=\dfrac{|N|\cdot|H|}{|N\cap H|}=|G|,
+\]
+所以它自动成为补群。这里 \(NH\) 是子群，使用了 \(N\) 的正规性。
+
+\ProseParagraphBreak
+在 \(A_4\) 中，双换位子群
+\[
+	V=\{1,(12)(34),(13)(24),(14)(23)\}
+\]
+正规，阶为四，指数为三，因而是正规 Hall \(\{2\}\)-子群。固定一个字母的三阶子群是它的补群：交的阶同时整除四与三，故交平凡，而两群阶的乘积为十二。四个点的稳定子群给出四个不同的补群；由于 \(V\) 在四个字母上传递地作用，这四个补群由 \(V\) 中的元素相互共轭。正规核并不要求补群也正规。
+
+\subsection{可解情形的存在性与共轭性}
+\label{b1:subsec:C06:02}
+
+交换核使因子集的恒等式成为加法等式。若商群的阶在核上可以求逆，对商群求和就能消去因子集；同一种平均还会把两个补群之间的差写成一次共轭。
+
+\begin{lemma}[交换核的互素分裂]\label{b1:lem:C-coprime-abelian-complements}
+	设 \(G\) 为有限群，\(A\trianglelefteq G\) 为交换子群，且 \(\gcd(|A|,[G:A])=1\)。则 \(A\) 在 \(G\) 中有补群，且任意两个补群由 \(A\) 中的某个元素共轭。
+\end{lemma}
+
+\begin{proof}
+	令 \(Q=G/A\)、\(m=|Q|\)，把 \(A\) 的运算写成加法。整数乘法 \(a\mapsto ma\) 是 \(A\) 的自同构：取整数 \(u,v\) 使 \(um+v|A|=1\)，则 \(|A|a=0\) 给出 \(u(ma)=a\)。以下以 \(m^{-1}a\) 表示这一自同构的逆，不是在一般群中作除法。
+
+	取归一化集合截面 \(s:Q\rightarrow G\)。由\cref{b1:cor:abelian-kernel-action}，共轭给出与截面无关的作用 \(x\cdot a=s(x)as(x)^{-1}\)。把\cref{b1:prop:extension-factor-data}的因子集写成 \(c:Q\times Q\rightarrow A\)，其恒等式为
+	\[
+		c(x,y)+c(xy,z)=x\cdot c(y,z)+c(x,yz).
+	\]
+	令 \(S(x)=\sum_{z\in Q}c(x,z)\)。固定 \(x,y\)，对 \(z\) 求和；因 \(z\mapsto yz\) 是 \(Q\) 的置换，得到
+	\[
+		m c(x,y)+S(xy)=x\cdot S(y)+S(x).
+	\]
+	设 \(b(x)=-m^{-1}S(x)\)。归一化给出 \(b(1)=0\)，而 \(m^{-1}\) 与每个群自同构可交换。根据换截面公式\eqref{b1:eq:factor-set-section-change}，截面 \(s'(x)=b(x)s(x)\) 的因子集为
+	\[
+		c'(x,y)=b(x)+x\cdot b(y)+c(x,y)-b(xy)=0.
+	\]
+	这里 \(b(x)s(x)\) 是把 \(A\) 中的元素放回 \(G\) 后作乘法。于是 \(s'\) 是同态截面，其像为补群。
+
+	再固定一个同态截面 \(s_0\)，其像记为 \(H\)。任一其他补群 \(K\) 在商映射下也同构于 \(Q\)，因此有唯一同态截面 \(s_1\) 以 \(K\) 为像。写成
+	\[
+		s_1(x)=d(x)s_0(x),\qquad d(x)\in A,
+	\]
+	由两截面的乘法相容性得到 \(d(xy)=d(x)+x\cdot d(y)\)。令 \(T=\sum_{y\in Q}d(y)\)，对 \(y\) 求和便有
+	\[
+		T=m d(x)+x\cdot T.
+	\]
+	置 \(a=m^{-1}T\)，则 \(d(x)=a-x\cdot a\)。在 \(G\) 中，这正是
+	\[
+		s_1(x)=a s_0(x)a^{-1}.
+	\]
+	所以 \(K=aHa^{-1}\)，且共轭元属于指定的核 \(A\)。
+\end{proof}
+
+例如令 \(G=\langle g\rangle\cong C_{15}\)、\(A=\langle g^3\rangle\cong C_5\)，并在 \(Q=G/A=\langle q\rangle\cong C_3\) 中选 \(s(q^i)=g^i\)（\(0\leq i<3\)）。以 \(a=g^3\) 为 \(A\) 的加法生成元，因子集为
+\[
+	c(q^i,q^j)=\left\lfloor\dfrac{i+j}{3}\right\rfloor a.
+\]
+于是 \(S(q)=a\)、\(S(q^2)=2a\)。模五意义下 \(3^{-1}=2\)，故 \(b(q)=-2a=3a\)，新截面把 \(q\) 送到 \((g^3)^3g=g^{10}\)。这个元素确有三阶，其生成子群就是补群。互素条件正用于把商阶乘法求逆；在 \(C_4\) 的二阶核上，乘以二为零，这一步无法进行。
+
+\ProseParagraphBreak
+非交换可解核可以逐层剥离交换的正规子群。这里需要这些子群在整个 \(G\) 中正规，单有它们在 \(N\) 中正规还不够。
+
+\begin{lemma}\label{b1:lem:C-minimal-normal-solvable}
+	设 \(G\) 为有限群，\(1\ne N\trianglelefteq G\) 且 \(N\) 可解。在包含于 \(N\) 的非平凡 \(G\)-正规子群中，任取一个按包含关系极小的子群 \(A\)。则存在素数 \(p\) 和整数 \(r\geq1\)，使 \(A\cong C_p^r\)。
+\end{lemma}
+
+\begin{proof}
+	有限性保证这样的 \(A\) 存在。\(A'\) 是 \(A\) 的特征子群，因而在 \(G\) 中正规：每个 \(g\in G\) 的共轭限制为 \(A\) 的自同构，故保持 \(A'\)。由极小性，\(A'\) 为 \(1\) 或 \(A\)。\cref{b1:thm:solvable-closure}使 \(A\) 可解，而 \(A'=A\ne1\) 会使导出列永不下降，所以 \(A'=1\)。
+
+	选取整除 \(|A|\) 的素数 \(p\)。因为 \(A\) 交换，集合 \(A[p]=\{a\in A:a^p=1\}\) 是特征子群；\cref{b1:thm:cauchy}保证它非平凡，故极小性使 \(A[p]=A\)。把交换群运算改写为加法，以整数倍定义 \(\mathbb F_p\) 的标量作用，就把 \(A\) 变成一个有限非零 \(\mathbb F_p\) 向量空间。因此 \(A\cong C_p^r\)。
+\end{proof}
+
+这种群称为\term[chudeng-jiaohuan-p-qun]{初等交换 \(p\)-群}[elementary abelian p-group]。极小的正规层未必只有 \(p\) 个元素：例如上述 \(V\trianglelefteq A_4\) 的三个二阶子群被三轮换相互置换，没有一个在 \(A_4\) 中正规，而 \(V\cong C_2^2\) 本身就是极小非平凡正规子群。
+
+\begin{theorem}[Schur–Zassenhaus 的可解核情形]\label{b1:thm:C-schur-zassenhaus-solvable-kernel}
+	设 \(G\) 为有限群，\(N\trianglelefteq G\) 为可解的 Hall 子群。则 \(N\) 有补群，且任意两个补群由 \(N\) 中的某个元素共轭。特别地，这两个结论适用于有限可解群中的每个正规 Hall 子群。
+\end{theorem}
+
+\begin{proof}
+	对 \(|G|\) 归纳。\(N=1\) 时补群只能是 \(G\)，\(N=G\) 时补群只能是 \(1\)，结论成立。设 \(1<N<G\)，并按\cref{b1:lem:C-minimal-normal-solvable}取交换的非平凡正规子群 \(A\leq N\)。若 \(A=N\)，直接应用\cref{b1:lem:C-coprime-abelian-complements}。以下设 \(A<N\)。
+
+	在 \(G/A\) 中，\(N/A\) 正规、可解，且其阶与指数 \([G:N]\) 互素。归纳假设给出 \(N/A\) 的补群 \(\overline H\)。设 \(T\leq G\) 为 \(\overline H\) 的原像，则
+	\[
+		T\cap N=A,\qquad NT=G,\qquad [T:A]=[G:N].
+	\]
+	交换核 \(A\trianglelefteq T\) 满足互素条件，故由平均化引理有补群 \(H\leq T\)。于是 \(H\cap N\leq T\cap N=A\) 且 \(H\cap A=1\)，所以 \(H\cap N=1\)；又 \(NH=NAH=NT=G\)，这就得到 \(N\) 的补群。
+
+	设 \(H,K\) 为 \(N\) 的任意两个补群。它们在 \(G/A\) 中的像 \(AH/A,AK/A\) 都是 \(N/A\) 的补群。归纳假设给出 \(n\in N\)，将 \(H\) 换成 \(nHn^{-1}\) 后可设 \(AH=AK=T\)。这时 \(H,K\) 都是 \(A\) 在 \(T\) 中的补群，平均化引理给出 \(a\in A\) 使 \(K=aHa^{-1}\)。把前次共轭合并，原来的两补群由 \(an\in N\) 共轭。
+\end{proof}
+
+\term[schur-zassenhaus-dingli]{Schur–Zassenhaus 定理}[Schur--Zassenhaus theorem]讨论的正是正规 Hall 子群的分裂与补群共轭问题。\footnote{舒尔（Issai Schur，1875-1941），德国数学家，研究有限群表示、群论及矩阵理论；Zassenhaus 的人物介绍见\secref{b1:sec:0701}。}上面的证明只要求核可解，商群可以不可解。例如 \(C_7\times A_5\) 中的正规核 \(C_7\) 满足条件；可解性在这里用于找出核中的交换正规层，并不要求整个扩张可解。
+
+\subsection{Hall 子群的存在、共轭与包含}
+\label{b1:subsec:C06:03}
+
+把 Sylow 理论中的单个素数换成素数集合后，一般群会出现新的障碍。可解性使每个极小正规层仍由一个素数控制；这一点与补群定理配合，恢复了存在、共轭和包含三项性质，这就是\term[hall-dingli]{Hall 定理}[Hall's theorem]。
+
+\begin{theorem}[Hall]\label{b1:thm:C-hall-solvable}
+	设 \(G\) 为有限可解群，\(\pi\) 为任意素数集合。则 \(G\) 有 Hall \(\pi\)-子群；任意两个 Hall \(\pi\)-子群共轭；每个 \(\pi\)-子群都包含在某个 Hall \(\pi\)-子群中。
+\end{theorem}
+
+\begin{proof}
+	对 \(|G|\) 同时证明三项结论。平凡群的情形成立。设 \(G\ne1\)，取极小非平凡正规子群 \(A\cong C_p^r\)，其存在及结构由\cref{b1:lem:C-minimal-normal-solvable}给出。\(\overline G=G/A\) 仍可解，故可用归纳假设。
+
+	先证存在性。取 \(\overline G\) 的 Hall \(\pi\)-子群 \(\overline H\)，令 \(T\) 为其原像。若 \(p\in\pi\)，则 \(|T|=|A|\cdot|\overline H|\) 只含 \(\pi\) 中的素因子，而 \([G:T]=[\overline G:\overline H]\) 是 \(\pi'\)-数，故 \(T\) 即为所求。若 \(p\notin\pi\)，则 \(A\) 是 \(T\) 中的交换正规 Hall 子群。\cref{b1:lem:C-coprime-abelian-complements}给出补群 \(H\)，其阶为 \(|\overline H|\)，而
+	\[
+		[G:H]=[G:T]\,[T:H]=[\overline G:\overline H]\,|A|
+	\]
+	为 \(\pi'\)-数，故 \(H\) 是 \(G\) 的 Hall \(\pi\)-子群。
+
+	再证共轭性。设 \(H,K\) 为两个 Hall \(\pi\)-子群。若 \(p\in\pi\)，则 \(AH\) 是 \(\pi\)-子群，其阶不能超过 \(|G|_\pi=|H|\)，故 \(A\leq H\)；同理 \(A\leq K\)。若 \(p\notin\pi\)，则 \(A\cap H=A\cap K=1\)。由此在两种情形下，\(AH/A\) 与 \(AK/A\) 的阶都是 \(|\overline G|_\pi\)。归纳假设允许先在 \(G\) 中共轭 \(H\)，使 \(AH=AK=T\)。当 \(p\in\pi\) 时这已给出 \(H=T=K\)；当 \(p\notin\pi\) 时，\(H,K\) 是 \(A\) 在 \(T\) 中的两个补群，由平均化引理共轭。
+
+	最后设 \(U\leq G\) 为 \(\pi\)-子群。其像 \(UA/A\) 由归纳假设包含在某个 Hall \(\pi\)-子群 \(\overline H\) 中。令 \(T\) 为 \(\overline H\) 的原像，则 \(U\leq T\)。若 \(p\in\pi\)，上面的存在性论证已说明 \(T\) 是 Hall \(\pi\)-子群。若 \(p\notin\pi\)，取平均化引理给出的分解 \(T=AH\)，其中 \(H\) 为 \(A\) 的补群，并令 \(H_0=H\cap AU\)。商映射把 \(H\) 同构地映到 \(T/A\)，所以把 \(H_0\) 同构地映到 \(AU/A\)：任何像落在 \(AU/A\) 中的 \(h\in H\) 都属于其原像 \(AU\)。于是 \(AU=AH_0\)、\(A\cap H_0=1\)；又因 \(p\notin\pi\)，有 \(A\cap U=1\)。因此 \(H_0\) 与 \(U\) 都是 \(A\) 在 \(AU\) 中的补群。再用平均化引理，存在 \(a\in A\) 使 \(U=aH_0a^{-1}\)。于是
+	\[
+		U\leq aHa^{-1},
+	\]
+	而 \(H\) 已在存在性论证中确认为 \(G\) 的 Hall \(\pi\)-子群，故其共轭也满足要求。
+\end{proof}
+
+这一定理中的包含结论不只是共轭性的改写：输入的 \(U\) 可以远小于一个 Hall 子群，证明必须把它放入一个具有全部所需素数幂的子群。若某个 \(\pi\)-子群已经按包含关系极大，包含结论才说明它必为 Hall \(\pi\)-子群。
+
+\ProseParagraphBreak
+在 \(S_4\times C_5\) 中，取 \(\pi=\{2,5\}\)。令 \(P\) 为 \(S_4\) 的 Sylow \(2\)-子群，则 \(P\times C_5\) 阶为四十、指数为三，给出 Hall \(\pi\)-子群。例如 \(P=\langle(1234),(13)\rangle\cong D_8\)。这些 Hall 子群相互共轭，而 \(\langle(13)\rangle\times C_5\) 阶为十，具体包含在上述四十阶子群中。这里 \(S_4\) 可解，来自正规列 \(1\trianglelefteq V\trianglelefteq A_4\trianglelefteq S_4\) 的交换因子；再由\cref{b1:thm:solvable-closure}，与 \(C_5\) 的直积也可解。
+
+\begin{example}\label{b1:exm:C-A5-hall-failure}
+	群 \(A_5\) 没有 Hall \(\{2,5\}\)-子群。若有这样的 \(H\)，则 \(|H|=20\)、\([A_5:H]=3\)。左乘三个陪集给出传递作用，从而给出非平凡同态 \(A_5\rightarrow S_3\)。其核正规，而\cref{b1:thm:alternating-simple}说明 \(A_5\) 为单群，所以核只能为单位群。这会把六十阶群嵌入六阶群，与\cref{b1:thm:lagrange}矛盾。另一方面，\(A_5\) 中固定一个字母的 \(A_4\) 阶为十二、指数为五，确实是 Hall \(\{2,3\}\)-子群。因此不可解群可能有某些 Hall 子群，却不能套用上述对每个 \(\pi\) 的存在结论。
+\end{example}
+
+\subsection{一般情形的证明范围}
+\label{b1:subsec:C06:04}
+
+正规 Hall 子群存在补群这一结论实际上不要求可解性。上一小节处理的是可能不正规的 Hall 子群，两者不能混为一谈。一般存在性的关键是利用核的 Sylow 子群，把问题压到一个真正规化子中；若正规化子恰为全群，则反而得到一个非平凡交换正规子群。
+
+\begin{lemma}[正规子群中的 Sylow 子群]\label{b1:lem:C-frattini-argument}
+	设 \(G\) 为有限群，\(N\trianglelefteq G\)，\(p\) 为素数，\(P\) 为 \(N\) 的 Sylow \(p\)-子群。则 \(G=NN_G(P)\)。
+\end{lemma}
+
+\begin{proof}
+	任取 \(g\in G\)。正规性使 \(gPg^{-1}\) 仍为 \(N\) 的 Sylow \(p\)-子群。由\cref{b1:thm:sylow-conjugacy}在群 \(N\) 中应用共轭性，可取 \(n\in N\) 使 \(n^{-1}gPg^{-1}n=P\)。于是 \(n^{-1}g\in N_G(P)\)，即 \(g\in NN_G(P)\)。
+\end{proof}
+
+这个论证通常称为\term[frattini-lunzheng]{Frattini 论证}[Frattini argument]。\footnote{弗拉蒂尼（Giovanni Frattini，1852-1925），意大利数学家，研究有限群及其生成元结构。}它把全群中的共轭调整成核内的共轭，使剩余因子正规化同一个 Sylow 子群。
+
+\begin{theorem}[正规 Hall 子群的补群存在性]\label{b1:thm:C-schur-zassenhaus-existence}
+	设 \(G\) 为有限群，\(N\trianglelefteq G\)，且 \(\gcd(|N|,[G:N])=1\)。则 \(N\) 在 \(G\) 中有补群。
+\end{theorem}
+
+\begin{proof}
+	对 \(|G|\) 归纳，略去 \(N=1\) 或 \(N=G\) 的直接情形。取素数 \(p\) 整除 \(|N|\)，并取 \(N\) 的 Sylow \(p\)-子群 \(P\)，记 \(D=N_G(P)\)。由\cref{b1:lem:C-frattini-argument}，\(G=ND\)。
+
+	若 \(D<G\)，则 \(N\cap D\trianglelefteq D\)，且商映射给出
+	\[
+		D/(N\cap D)\cong G/N.
+	\]
+	因为 \(|N\cap D|\) 整除 \(|N|\)，它与 \([G:N]\) 互素。归纳假设在较小群 \(D\) 中给出 \(N\cap D\) 的补群 \(H\)。于是 \(H\cap N=1\)，且 \(|H|=[G:N]\)，故 \(|NH|=|G|\)，\(H\) 也是 \(N\) 在 \(G\) 中的补群。
+
+	若 \(D=G\)，则 \(P\trianglelefteq G\)。令 \(A=Z(P)\)；\cref{b1:thm:p-group-center}保证 \(A\ne1\)。共轭保持 \(P\) 也保持它的中心，所以 \(A\trianglelefteq G\)，且 \(A\) 交换。若 \(A=N\)，应用\cref{b1:lem:C-coprime-abelian-complements}即可。若 \(A<N\)，在较小群 \(G/A\) 中对正规 Hall 子群 \(N/A\) 用归纳假设。取其补群的原像 \(T\)，便有 \(N\cap T=A\)、\(NT=G\)、\([T:A]=[G:N]\)。再在 \(T\) 中用交换核的平均化引理取 \(A\) 的补群 \(H\)，如前便有 \(H\cap N=1\)、\(NH=G\)。
+\end{proof}
+
+对共轭性，可解条件还可以由核移到商群。
+
+\begin{proposition}\label{b1:prop:C-complements-solvable-quotient}
+	设 \(G\) 为有限群，\(N\trianglelefteq G\) 为 Hall 子群，并且 \(G/N\) 可解。则 \(N\) 的任意两个补群由 \(N\) 中的某个元素共轭。
+\end{proposition}
+
+\begin{proof}
+	对 \(|G|\) 归纳。\(N=1\) 或 \(N=G\) 时成立。设 \(H,K\) 为两个补群。取可解群 \(Q=G/N\) 的极小非平凡正规子群 \(\overline M\cong C_r^d\)，令 \(M\trianglelefteq G\) 为其原像。商映射把 \(H\cap M\)、\(K\cap M\) 都同构地映到 \(\overline M\)。由于 \(r\nmid|N|\)，这两个子群恰为 \(M\) 的 Sylow \(r\)-子群。
+
+	由 Sylow 共轭性可用 \(m\in M\) 将前者共轭到后者。又 \(M=N(H\cap M)\)，写 \(m=nh\)，其中 \(n\in N\)、\(h\in H\cap M\)，则 \(h\) 本身正规化 \(H\cap M\)，所以共轭元可以取为 \(n\)。将整个 \(H\) 以 \(n\) 共轭后，设
+	\[
+		R=H\cap M=K\cap M.
+	\]
+	因为 \(M\) 正规，\(R\) 在 \(H\) 和 \(K\) 中都正规，故 \(H,K\leq D=N_G(R)\)。
+
+	若 \(D<G\)，则 \(D\cap N\) 是 \(D\) 的正规 Hall 子群，而 \(H,K\) 都是它的补群。这里 \(D=(D\cap N)H\)，因为把 \(d\in D\) 写成 \(nh\) 后，\(n=dh^{-1}\in D\cap N\)；同理 \(D=(D\cap N)K\)。两补群与 \(D\cap N\) 的交都平凡。因此 \(D/(D\cap N)\cong H\cong Q\) 可解，可用归纳假设得到 \(D\cap N\) 内的共轭元。
+
+	若 \(D=G\)，则 \(R\trianglelefteq G\)，且 \(R\cap N=1\)。在 \(G/R\) 中，\(NR/R\) 是正规 Hall 子群，其阶为 \(|N|\)，商群为 \(G/NR\cong Q/\overline M\)，仍可解。\(H/R,K/R\) 是它的两个补群。由于 \(R\ne1\)，归纳假设适用于较小的 \(G/R\)，给出 \(NR/R\) 中的共轭元。每个这样的陪集均可由 \(n\in N\) 代表；且 \(H,K\) 已包含 \(R\)，所以商群中的共轭等式提升为 \(nHn^{-1}=K\)。最后合并最初的 \(N\)-共轭即可。
+\end{proof}
+
+因此，正规 Hall 子群总有补群；核或商群只要有一方可解，补群便共轭。这两种可解条件均已在上面证明。若进一步使用奇数阶群定理“每个有限奇数阶群都可解”，则互素的 \(|N|\) 与 \([G:N]\) 至少有一个为奇数，因而得到不附加可解假设的补群共轭结论。奇数阶群定理是\secref{b1:sec:C04}中已说明的深层结果，其证明不包含在这里的平均化与归纳论证中；使用这一结果时，不能把一般共轭性说成只由交换核的平均公式得到。

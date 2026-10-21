@@ -1,0 +1,422 @@
+% !TeX root = ../../Book4.tex
+% 纲要标题：### 3.5* Kan 扩展
+% * 状态：初稿已完成；新增范围尚未正式审核。
+
+\OptionalSection{Kan 扩展}{b4:sec:0305}
+
+给定一个图表 \(F:\mathcal C\rightarrow\mathcal E\) 及一个函子 \(K:\mathcal C\rightarrow\mathcal D\)，希望在 \(\mathcal D\) 上得到与 \(F\) 相联系的图表。即使 \(K\) 是包含，也可能有多种补入新对象的方法；若 \(K\) 还识别了原来的对象或态射，要求严格等式 \(LK=F\) 往往过强。Kan 扩展\footnote{康（Daniel Marinus Kan，1927--2013），荷兰出生、长期任教于美国的数学家，发展了单纯同伦方法与伴随函子理论。}保留一个比较自然变换，再以泛性质确定延拓。本节先给泛性质，再用指向或离开一个对象的全部箭头计算它。
+
+\ProseParagraphBreak
+本节取 \(\mathcal C,\mathcal D\) 为小范畴，目标 \(\mathcal E\) 为局部小范畴。这样两类函子范畴中的自然变换均构成集合。定义、预合成伴随及逗号范畴公式可对照 Riehl 的表述\cite[Definition 6.1.1; Proposition 6.1.5; Theorem 6.2.1]{Riehl2016CategoryTheory}；以下将分别证明左右两种构造。
+
+\subsection{左 Kan 扩展与右 Kan 扩展的泛性质}
+\label{b4:subsec:0305:01}
+
+\begin{definition}[左右 Kan 扩展]\label{b4:def:kan-extension}
+	设 \(\mathcal C,\mathcal D\) 为小范畴，\(\mathcal E\) 为局部小范畴，\(K:\mathcal C\rightarrow\mathcal D\)、\(F:\mathcal C\rightarrow\mathcal E\) 为函子。给定一对数据
+	\[
+		L:\mathcal D\longrightarrow\mathcal E,\qquad \eta:F\Rightarrow LK
+	\]
+	若对每个 \(T:\mathcal D\rightarrow\mathcal E\)，映射
+	\begin{equation}\label{b4:eq:left-kan-universal-property}
+		\operatorname{Nat}(L,T)\longrightarrow\operatorname{Nat}(F,TK),
+		\qquad \alpha\longmapsto(\alpha K)\circ\eta
+	\end{equation}
+	为双射，则称 \((L,\eta)\) 为 \(F\) 沿 \(K\) 的\term[zuo-kan-kuozhan]{左 Kan 扩展}[left Kan extension]。也就是说，每个 \(\theta:F\Rightarrow TK\) 唯一写成 \((\alpha K)\eta\)。
+
+	\ProseParagraphBreak
+	类似地，给定一对数据
+	\[
+		R:\mathcal D\longrightarrow\mathcal E,\qquad \varepsilon:RK\Rightarrow F
+	\]
+	若对每个 \(T:\mathcal D\rightarrow\mathcal E\)，映射
+	\begin{equation}\label{b4:eq:right-kan-universal-property}
+		\operatorname{Nat}(T,R)\longrightarrow\operatorname{Nat}(TK,F),
+		\qquad \beta\longmapsto\varepsilon\circ(\beta K)
+	\end{equation}
+	为双射，则称 \((R,\varepsilon)\) 为 \(F\) 沿 \(K\) 的\term[you-kan-kuozhan]{右 Kan 扩展}[right Kan extension]。通常记 \(L=\operatorname{Lan}_K F\)、\(R=\operatorname{Ran}_K F\)，并称 \(\eta,\varepsilon\) 为相应的单位、余单位。
+\end{definition}
+\symidx{\(\operatorname{Lan}_K F,\ \operatorname{Ran}_K F\)：左右 Kan 扩展}
+
+两个泛性质在每个 \(c\in\mathcal C\) 处分别给出下列交换三角形；其中虚线分量必须共同组成自然变换，唯一性也针对整个自然变换：
+\[
+	\begin{tikzcd}[column sep=large,row sep=large]
+		F(c)\arrow[r,"\eta_c"]\arrow[dr,"\theta_c"']&
+		L(Kc)\arrow[d,dashed,"\alpha_{Kc}"]\\
+		&T(Kc)
+	\end{tikzcd}
+	\qquad
+	\begin{tikzcd}[column sep=large,row sep=large]
+		T(Kc)\arrow[r,dashed,"\beta_{Kc}"]\arrow[dr,"\theta_c"']&
+		R(Kc)\arrow[d,"\varepsilon_c"]\\
+		&F(c).
+	\end{tikzcd}
+\]
+
+这里不要求 \(\eta,\varepsilon\) 是恒等变换，甚至不要求它们为同构。“沿 \(K\) 扩展”包含了比较数据的方向：左式从原图表出发，右式回到原图表。反过来，即使某个 \(T\) 严格满足 \(TK=F\)，也仍须验证相应泛性质，才能断定它是 Kan 扩展。
+
+\begin{proposition}[保持比较数据的唯一性]\label{b4:prop:kan-extension-uniqueness}
+	设 \(\mathcal C,\mathcal D\) 为小范畴，\(\mathcal E\) 为局部小范畴，\(K:\mathcal C\rightarrow\mathcal D\)、\(F:\mathcal C\rightarrow\mathcal E\) 为函子。若 \((L,\eta)\)、\((L',\eta')\) 都是 \(F\) 沿 \(K\) 的左 Kan 扩展，则存在唯一自然同构 \(a:L\Rightarrow L'\)，使 \((aK)\eta=\eta'\)。两个右 Kan 扩展 \((R,\varepsilon)\)、\((R',\varepsilon')\) 之间也存在唯一自然同构 \(b:R\Rightarrow R'\)，使 \(\varepsilon'(bK)=\varepsilon\)。
+\end{proposition}
+\begin{proof}
+	左侧泛性质分别给出 \(a:L\Rightarrow L'\)、\(a':L'\Rightarrow L\)，满足 \((aK)\eta=\eta'\)、\((a'K)\eta'=\eta\)。于是 \(((a'a)K)\eta=\eta\)，而恒等变换也满足此式。左 Kan 扩展的唯一性推出 \(a'a=1_L\)；交换两组数据得到 \(aa'=1_{L'}\)。其中 \(a\) 自身也由泛性质唯一确定。
+
+	右侧先由 \((R',\varepsilon')\) 的泛性质得到唯一的 \(b:R\Rightarrow R'\)，使 \(\varepsilon'(bK)=\varepsilon\)，再得到相反方向的 \(b'\)。复合满足 \(\varepsilon((b'b)K)=\varepsilon\)，故 \(b'b=1_R\)；同样 \(bb'=1_{R'}\)。这也证明右侧的唯一性。
+\end{proof}
+
+\subsection{逗号范畴与逐点公式}
+\label{b4:subsec:0305:02}
+
+为计算新图表在 \(d\in\mathcal D\) 处的值，先确定原图表的哪些部分能通过 \(K\) 到达 \(d\)。沿用\cref{b4:def:comma-category}，逗号范畴 \(K\downarrow d\) 的对象为
+\[
+	(c,u:Kc\longrightarrow d),
+\]
+从 \((c,u)\) 到 \((c',u')\) 的态射为满足 \(u'K(a)=u\) 的 \(a:c\rightarrow c'\)。记投影为 \(p_d:K\downarrow d\rightarrow\mathcal C\)。另一个逗号范畴 \(d\downarrow K\) 的对象为 \((c,v:d\rightarrow Kc)\)，态射 \(a:(c,v)\rightarrow(c',v')\) 满足 \(K(a)v=v'\)，投影记为 \(q_d\)。两种三角形的方向分别是
+\[
+	\begin{tikzcd}[column sep=large,row sep=large]
+		Kc\arrow[r,"K(a)"]\arrow[dr,"u"']&Kc'\arrow[d,"u'"]\\
+		&d
+	\end{tikzcd}
+	\qquad
+	\begin{tikzcd}[column sep=large,row sep=large]
+		d\arrow[r,"v"]\arrow[dr,"v'"']&Kc\arrow[d,"K(a)"]\\
+		&Kc'.
+	\end{tikzcd}
+\]
+因为 \(\mathcal C,\mathcal D\) 小，以上对象、态射各自构成集合，所以两个逗号范畴也小。
+
+\begin{theorem}[逗号范畴上的逐点构造]\label{b4:thm:pointwise-kan-extension}
+	设 \(\mathcal C,\mathcal D\) 为小范畴，\(\mathcal E\) 为局部小范畴，\(K:\mathcal C\rightarrow\mathcal D\)、\(F:\mathcal C\rightarrow\mathcal E\) 为函子。
+	\begin{enumerate}
+		\item 若对每个 \(d\in\mathcal D\) 都存在余极限
+		\[
+			L(d)=\operatorname{colim}_{K\downarrow d}(F p_d),
+			\qquad \iota^d_{c,u}:F(c)\longrightarrow L(d),
+		\]
+		则这些已选的余极限唯一组成函子 \(L:\mathcal D\rightarrow\mathcal E\)，使
+		\begin{equation}\label{b4:eq:pointwise-left-kan-arrows}
+			L(b)\iota^d_{c,u}=\iota^{d'}_{c,bu}
+			\qquad(b:d\longrightarrow d').
+		\end{equation}
+		取 \(\eta_c=\iota^{Kc}_{c,1_{Kc}}\)，便得到左 Kan 扩展 \((L,\eta)\)。
+		\item 若对每个 \(d\in\mathcal D\) 都存在极限
+		\[
+			R(d)=\lim_{d\downarrow K}(F q_d),
+			\qquad \pi^d_{c,v}:R(d)\longrightarrow F(c),
+		\]
+		则这些已选的极限唯一组成函子 \(R:\mathcal D\rightarrow\mathcal E\)，使
+		\begin{equation}\label{b4:eq:pointwise-right-kan-arrows}
+			\pi^{d'}_{c,v}R(b)=\pi^d_{c,vb}
+			\qquad(b:d\longrightarrow d').
+		\end{equation}
+		取 \(\varepsilon_c=\pi^{Kc}_{c,1_{Kc}}\)，便得到右 Kan 扩展 \((R,\varepsilon)\)。
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	先证明左式。给定 \(b:d\rightarrow d'\)，后复合 \(b\) 给出函子 \(K\downarrow d\rightarrow K\downarrow d'\)，把 \((c,u)\) 送到 \((c,bu)\)，把态射 \(a\) 仍送到 \(a\)。因而 \((\iota^{d'}_{c,bu})\) 是 \(F p_d\) 的余锥，余极限泛性质给出唯一的 \(L(b)\)，满足\eqref{b4:eq:pointwise-left-kan-arrows}。对恒等箭头，该等式刻画的是恒等态射；对 \(b:d\rightarrow d'\)、\(b':d'\rightarrow d''\)，有
+	\[
+		L(b')L(b)\iota^d_{c,u}
+		=\iota^{d''}_{c,b'bu}
+		=L(b'b)\iota^d_{c,u}.
+	\]
+	由余极限的唯一性，\(L\) 保持恒等和复合。
+
+	若 \(a:c\rightarrow c'\)，则在 \(K\downarrow Kc'\) 中有态射
+	\((c,K(a))\rightarrow(c',1_{Kc'})\)，故余锥关系给出
+	\[
+		L(K(a))\eta_c
+		=\iota^{Kc'}_{c,K(a)}
+		=\iota^{Kc'}_{c',1_{Kc'}}F(a)
+		=\eta_{c'}F(a).
+	\]
+	所以 \(\eta\) 自然。更一般地，构造公式直接给出
+	\begin{equation}\label{b4:eq:left-kan-structural-cocone}
+		\iota^d_{c,u}=L(u)\eta_c.
+	\end{equation}
+
+	现给定 \(T:\mathcal D\rightarrow\mathcal E\) 和 \(\theta:F\Rightarrow TK\)。对 \(K\downarrow d\) 中的态射 \(a:(c,u)\rightarrow(c',u')\)，有
+	\[
+		T(u')\theta_{c'}F(a)
+		=T(u')T(K(a))\theta_c
+		=T(u)\theta_c.
+	\]
+	因此 \((T(u)\theta_c)\) 是 \(F p_d\) 的余锥，唯一决定态射 \(\alpha_d:L(d)\rightarrow T(d)\)，满足
+	\begin{equation}\label{b4:eq:left-kan-factorization}
+		\alpha_d\iota^d_{c,u}=T(u)\theta_c.
+	\end{equation}
+	对 \(b:d\rightarrow d'\)，两条复合在每个结构映射上满足
+	\[
+		\alpha_{d'}L(b)\iota^d_{c,u}
+		=T(bu)\theta_c
+		=T(b)\alpha_d\iota^d_{c,u}.
+	\]
+	唯一性推出 \(\alpha_{d'}L(b)=T(b)\alpha_d\)，所以 \(\alpha:L\Rightarrow T\) 自然。取 \(d=Kc,u=1_{Kc}\)，得到 \(\alpha_{Kc}\eta_c=\theta_c\)。
+	若另一自然变换 \(\alpha'\) 也满足此式，则由自然性及\eqref{b4:eq:left-kan-structural-cocone}，
+	\[
+		\alpha'_d\iota^d_{c,u}
+		=\alpha'_dL(u)\eta_c
+		=T(u)\alpha'_{Kc}\eta_c=T(u)\theta_c.
+	\]
+	故每个 \(\alpha'_d=\alpha_d\)。这证明左侧泛性质中的存在和唯一。
+
+	再证明右式。给定 \(b:d\rightarrow d'\)，预复合 \(b\) 给出函子 \(d'\downarrow K\rightarrow d\downarrow K\)，把 \((c,v)\) 送到 \((c,vb)\)。因此 \((\pi^d_{c,vb})\) 是 \(Fq_{d'}\) 上以 \(R(d)\) 为顶点的锥，唯一决定\eqref{b4:eq:pointwise-right-kan-arrows}中的 \(R(b)\)。恒等箭头诱导恒等态射；对 \(b':d'\rightarrow d''\)，有
+	\[
+		\pi^{d''}_{c,v}R(b')R(b)
+		=\pi^d_{c,vb'b}
+		=\pi^{d''}_{c,v}R(b'b).
+	\]
+	极限的唯一性给出复合律，故 \(R\) 为函子。
+
+	对 \(a:c\rightarrow c'\)，在 \(Kc\downarrow K\) 中的态射
+	\((c,1_{Kc})\rightarrow(c',K(a))\) 给出
+	\[
+		F(a)\varepsilon_c
+		=\pi^{Kc}_{c',K(a)}
+		=\varepsilon_{c'}R(K(a)).
+	\]
+	所以 \(\varepsilon\) 自然，并且对任意 \(v:d\rightarrow Kc\)，有
+	\begin{equation}\label{b4:eq:right-kan-structural-cone}
+		\pi^d_{c,v}=\varepsilon_cR(v).
+	\end{equation}
+
+	给定 \(\theta:TK\Rightarrow F\)，则对 \(d\downarrow K\) 中的态射 \(a:(c,v)\rightarrow(c',v')\)，
+	\[
+		F(a)\theta_cT(v)
+		=\theta_{c'}T(K(a))T(v)
+		=\theta_{c'}T(v').
+	\]
+	所以 \((\theta_cT(v))\) 是一个锥，唯一决定 \(\beta_d:T(d)\rightarrow R(d)\)，满足
+	\begin{equation}\label{b4:eq:right-kan-factorization}
+		\pi^d_{c,v}\beta_d=\theta_cT(v).
+	\end{equation}
+	对 \(b:d\rightarrow d'\)，复合到每个 \(\pi^{d'}_{c,v}\) 后，
+	\[
+		\pi^{d'}_{c,v}R(b)\beta_d
+		=\theta_cT(vb)
+		=\pi^{d'}_{c,v}\beta_{d'}T(b).
+	\]
+	因此 \(R(b)\beta_d=\beta_{d'}T(b)\)，即 \(\beta:T\Rightarrow R\) 自然。取 \(d=Kc,v=1_{Kc}\)，得到 \(\varepsilon_c\beta_{Kc}=\theta_c\)。若 \(\beta'\) 也满足此式，则
+	\[
+		\pi^d_{c,v}\beta'_d
+		=\varepsilon_cR(v)\beta'_d
+		=\varepsilon_c\beta'_{Kc}T(v)
+		=\theta_cT(v),
+	\]
+	故 \(\beta'_d=\beta_d\)。右侧泛性质也得证。
+\end{proof}
+
+上述构造不仅给出对象之间的同构公式，还指定了余极限余锥 \(L(u)\eta_c\) 或极限锥 \(\varepsilon_cR(v)\)。具有这些逐点泛性质的 Kan 扩展称为\term[zhudian-kan-kuozhan]{逐点 Kan 扩展}[pointwise Kan extension]。定理从相应的余极限或极限推出逐点 Kan 扩展存在；一般定义本身并未假定这些逗号范畴图表的余极限或极限存在。
+
+\begin{corollary}[全忠实函子上的恢复]\label{b4:cor:fully-faithful-pointwise-kan}
+	设 \(K:\mathcal C\rightarrow\mathcal D\) 为小范畴之间的全忠实函子，\(\mathcal E\) 局部小，\(F:\mathcal C\rightarrow\mathcal E\)。若\cref{b4:thm:pointwise-kan-extension}的左侧余极限存在，则所得单位 \(\eta:F\Rightarrow(\operatorname{Lan}_K F)K\) 为自然同构；若右侧极限存在，则所得余单位 \(\varepsilon:(\operatorname{Ran}_K F)K\Rightarrow F\) 为自然同构。
+\end{corollary}
+\begin{proof}
+	固定 \(c\in\mathcal C\)。对象 \((c,1_{Kc})\) 是 \(K\downarrow Kc\) 的终对象：对每个 \((c',u)\)，全忠实性恰好给出唯一的 \(a:c'\rightarrow c\)，使 \(K(a)=u\)。所以一个余锥的全部分量由它在 \((c,1_{Kc})\) 处的分量唯一决定，具体公式为 \(\lambda_{c',u}=\lambda_{c,1_{Kc}}F(a)\)。这证明以 \(F(c)\) 为顶点、以这些 \(F(a)\) 为结构映射的余锥已经是余极限。它在终对象处的结构映射为 \(1_{F(c)}\)，由余极限的唯一性，\(\eta_c=\iota^{Kc}_{c,1_{Kc}}\) 为同构。
+
+	在 \(Kc\downarrow K\) 中，\((c,1_{Kc})\) 是始对象，因为每个 \(v:Kc\rightarrow Kc'\) 唯一写成 \(K(a)\)。一个锥由在该始对象处的分量唯一决定，其余分量为 \(F(a)\lambda_{c,1_{Kc}}\)，所以 \(F(c)\) 连同这些结构映射构成极限。这使 \(\varepsilon_c=\pi^{Kc}_{c,1_{Kc}}\) 为同构。前一定理已经证明 \(\eta,\varepsilon\) 自然；逐个取逆保持自然性，故它们为自然同构。
+\end{proof}
+
+\begin{example}[在有限偏序上补入一个积或余积]\label{b4:exm:kan-finite-poset}
+	把四点偏序 \(0<a<1,\ 0<b<1\) 看作范畴，其中 \(a,b\) 不可比。令 \(\mathcal C\) 为仅含 \(a,b\) 的全子范畴，\(K:\mathcal C\hookrightarrow\mathcal D\) 为包含，取 \(F:\mathcal C\rightarrow\mathbf{Set}\)，记 \(F(a)=X,F(b)=Y\)。逐点公式给出
+	\[
+		\begin{array}{c|cccc}
+			d&0&a&b&1\\ \hline
+			(\operatorname{Lan}_K F)(d)&\varnothing&X&Y&X\amalg Y\\
+			(\operatorname{Ran}_K F)(d)&X\times Y&X&Y&\{*\}
+		\end{array}
+	\]
+	确实，\(K\downarrow0\) 为空，\(K\downarrow1\) 是两对象的离散范畴；\(0\downarrow K\) 是两对象的离散范畴，而 \(1\downarrow K\) 为空。在 \(a,b\) 处，两种逗号范畴都各有一个对象，故恢复 \(X,Y\)。左扩展沿 \(a,b\rightarrow1\) 的箭头是两个余积插入；右扩展沿 \(0\rightarrow a,b\) 的箭头是两个投影。其余箭头由空集的始性质、单元素集合的终性质及复合决定。这同时算出了对象和态射，单位、余单位在 \(a,b\) 处均可取恒等映射。
+
+	\ProseParagraphBreak
+	若改以所有幺性左 \(A\) 模的范畴为目标，其中 \(A\) 为任意含幺环，同一张表中始对象和终对象都改为零模，余积改为直和，积改为直积。空逗号范畴的值由空余极限或空极限决定，不能因没有指标对象就略去该位置。
+\end{example}
+
+\subsection{预合成、伴随与诱导表示}
+\label{b4:subsec:0305:03}
+
+固定 \(K:\mathcal C\rightarrow\mathcal D\)，\term[yuhecheng-hanzi]{预合成函子}[precomposition functor]为
+\[
+	K^*:\operatorname{Fun}(\mathcal D,\mathcal E)
+	\longrightarrow\operatorname{Fun}(\mathcal C,\mathcal E),
+	\qquad T\longmapsto TK,\quad \sigma\longmapsto\sigma K.
+\]
+Kan 扩展的泛性质已经形似伴随双射；还须说明随 \(F\) 的变化如何得到函子，以及双射在 \(F\) 上也自然。
+
+\begin{theorem}[Kan 扩展与预合成的伴随]\label{b4:thm:kan-precomposition-adjunction}
+	设 \(\mathcal C,\mathcal D\) 为小范畴，\(\mathcal E\) 为局部小范畴，\(K:\mathcal C\rightarrow\mathcal D\)。
+	若 \(\mathcal E\) 余完备，且构造所需的小余极限及其结构映射已作为给定数据选定，则逐点左 Kan 扩展组成函子
+	\(\operatorname{Lan}_K:\operatorname{Fun}(\mathcal C,\mathcal E)\rightarrow\operatorname{Fun}(\mathcal D,\mathcal E)\)，满足 \(\operatorname{Lan}_K\dashv K^*\)。
+	若 \(\mathcal E\) 完备，且所需的小极限及其结构映射已作为给定数据选定，则逐点右 Kan 扩展组成函子 \(\operatorname{Ran}_K\)，满足 \(K^*\dashv\operatorname{Ran}_K\)。
+	两组假设均满足时，
+	\[
+		\operatorname{Lan}_K\dashv K^*\dashv\operatorname{Ran}_K.
+	\]
+\end{theorem}
+\begin{proof}
+	为区分不同 \(F\) 的结构映射，加上上标 \(F\)。对自然变换 \(s:F\Rightarrow F'\)，其自然性使 \((\iota^{F',d}_{c,u}s_c)\) 构成 \(Fp_d\) 的余锥。因此唯一存在
+	\[
+		(\operatorname{Lan}_K s)_d:
+		(\operatorname{Lan}_K F)(d)\longrightarrow(\operatorname{Lan}_K F')(d),
+		\qquad
+		(\operatorname{Lan}_K s)_d\iota^{F,d}_{c,u}
+		=\iota^{F',d}_{c,u}s_c.
+	\]
+	对 \(b:d\rightarrow d'\)，检验自然性所比较的两条复合，在预复合每个 \(\iota^{F,d}_{c,u}\) 后均为 \(\iota^{F',d'}_{c,bu}s_c\)，故相等。这说明 \(\operatorname{Lan}_K s\) 是自然变换。恒等变换以及 \(s:F\Rightarrow F'\)、\(s':F'\Rightarrow F''\) 的复合分别在结构映射上给出 \(\iota^{F,d}_{c,u}\) 和 \(\iota^{F'',d}_{c,u}s'_cs_c\)，故唯一性证明函子律。特别地，
+	\[
+		((\operatorname{Lan}_K s)K)\eta^F=\eta^{F'}s.
+	\]
+	记\eqref{b4:eq:left-kan-universal-property}的双射为
+	\(\Phi_{F,T}(\alpha)=(\alpha K)\eta^F\)。
+	对 \(s:F'\Rightarrow F\)、\(t:T\Rightarrow T'\)，由上式直接计算
+	\[
+		\Phi_{F',T'}\bigl(t\alpha(\operatorname{Lan}_K s)\bigr)
+		=(tK)\Phi_{F,T}(\alpha)s.
+	\]
+	这正是两变量自然性，故给出 \(\operatorname{Lan}_K\dashv K^*\)。
+
+	右侧对 \(s:F\Rightarrow F'\) 定义唯一的态射
+	\[
+		(\operatorname{Ran}_K s)_d:
+		(\operatorname{Ran}_K F)(d)\longrightarrow(\operatorname{Ran}_K F')(d),
+		\qquad
+		\pi^{F',d}_{c,v}(\operatorname{Ran}_K s)_d
+		=s_c\pi^{F,d}_{c,v}.
+	\]
+	它存在是因为 \((s_c\pi^{F,d}_{c,v})\) 为 \(F'q_d\) 的锥。对 \(b:d\rightarrow d'\)，自然性中的两条复合经 \(\pi^{F',d'}_{c,v}\) 后均为 \(s_c\pi^{F,d}_{c,vb}\)，故相等。恒等和复合经各投影检验后分别化为恒等和 \(s'_cs_c\)，故得到函子 \(\operatorname{Ran}_K\)。取相应的余单位可得
+	\[
+		\varepsilon^{F'}((\operatorname{Ran}_K s)K)=s\varepsilon^F.
+	\]
+	令 \(\Psi_{T,F}:\operatorname{Nat}(TK,F)\rightarrow
+	\operatorname{Nat}(T,\operatorname{Ran}_K F)\) 为右侧泛性质的逆双射。对 \(s:F\Rightarrow F'\)、\(t:T'\Rightarrow T\)，有
+	\[
+		\Psi_{T',F'}\bigl(s\theta(tK)\bigr)
+		=(\operatorname{Ran}_K s)\Psi_{T,F}(\theta)t.
+	\]
+	事实上，等式两边的第 \(d\) 个分量经 \(\pi^{F',d}_{c,v}\) 后，右边为 \(s_c\theta_cT(v)t_d\)；由 \(t\) 的自然性，这等于 \(s_c\theta_ct_{Kc}T'(v)\)，即左边的相应投影。极限唯一性证明该式，得到 \(K^*\dashv\operatorname{Ran}_K\)。
+\end{proof}
+
+这里有关选择的约定与\secref{b4:sec:0202}相同：\(\mathcal C,\mathcal D\) 小保证每次的指标范畴小，也保证自然变换为集合；若 \(\mathcal E\) 的对象构成真类，对所有 \(F\) 同时固定这些极限或余极限仍须有相应的给定选择数据。取不同选择所得的扩展，由\cref{b4:prop:kan-extension-uniqueness}具有唯一保持比较数据的自然同构。
+
+\begin{example}[常值图表的左右伴随]\label{b4:exm:kan-limits-colimits}
+	令 \(\mathcal C\) 为小范畴，\(K:\mathcal C\rightarrow\mathbf1\) 为到单对象、单态射范畴的唯一函子。两种逗号范畴均与 \(\mathcal C\) 同构，故在所需极限、余极限及其选择均已给定时，
+	\[
+		\operatorname{Lan}_K F=\operatorname{colim}_{\mathcal C}F,
+		\qquad
+		\operatorname{Ran}_K F=\lim_{\mathcal C}F.
+	\]
+	把 \(\operatorname{Fun}(\mathbf1,\mathcal E)\) 与 \(\mathcal E\) 识别，\(K^*\) 就是常值图表函子 \(\Delta\)。于是前一定理成为熟悉的
+	\(\operatorname{colim}_{\mathcal C}\dashv\Delta\dashv\lim_{\mathcal C}\)：余锥和锥的泛性质是 Kan 扩展的特例。
+
+	\ProseParagraphBreak
+	比较映射在一个有限集合算例中就可以不是同构。令 \(\mathcal C\) 为对象 \(c_1,c_2\) 组成的离散范畴，并取 \(F(c_1)=F(c_2)=\{0,1\}\)。左扩展为四元素不交并 \(\{1,2\}\times\{0,1\}\)，其单位分量为 \(\eta_{c_i}(v)=(i,v)\)，均不满射。右扩展为四元素积 \(\{0,1\}^2\)，其余单位分量为 \(\varepsilon_{c_i}(v_1,v_2)=v_i\)，均不单射。故两种比较变换都不是自然同构。
+\end{example}
+
+群表示给出一个同时出现左右 Kan 扩展的代数模型。设 \(G\) 为一个群，沿用\subsecref{b4:subsec:0101:02}的单对象范畴 \(\mathcal BG\)：其唯一对象为 \(*\)，自同态群为 \(G\)，且 \(g_2\circ g_1=g_2g_1\)。给定域 \(k\)，函子 \(\mathcal BG\rightarrow k\text{-}\mathbf{Mod}\) 恰是一个 \(k\) 向量空间上的左 \(G\) 作用：\(g\) 的逆态射保证作用算子可逆，函子复合律保证左作用律。将作用按 \(k\) 线性延拓，等价于一个幺性左 \(k[G]\) 模；反向限制到基元素 \(g\in G\) 恢复群作用。自然变换则恰为 \(k[G]\) 模同态。
+
+\ProseParagraphBreak
+若 \(H\le G\)，包含 \(K:\mathcal BH\rightarrow\mathcal BG\) 的预合成正是限制函子
+\[
+	\operatorname{Res}^G_H:
+	k[G]\text{-}\mathbf{Mod}\longrightarrow k[H]\text{-}\mathbf{Mod}.
+\]
+这里的两个模范畴都包含所有幺性左模，且由\cref{b4:cor:completeness-criterion}完备、余完备。诱导和余诱导作为 Kan 扩展的解释，可对照\cite[Example 6.1.7; Example 6.2.8]{Riehl2016CategoryTheory}；下面直接写出其代数模型并验证泛性质。
+
+\ProseParagraphBreak
+% 跨卷引用目标：b5:def:restriction-induction（第五卷定义3.1.1）。
+第五卷定义3.1.1在有限群情形给出同一个限制与诱导构造。本节允许任意群，并在下面独立验证全部泛性质，因而不以第五卷的有限群假设作为这里的存在条件。
+
+\begin{proposition}[诱导、余诱导的 Kan 扩展模型]\label{b4:prop:kan-induction-coinduction}
+	设 \(k\) 为域，\(H\le G\) 为群的子群，所有模均为幺性左模。对左 \(k[H]\) 模 \(V\)，定义
+	\[
+		\operatorname{Ind}^G_H V=k[G]\otimes_{k[H]}V,
+		\qquad
+		\operatorname{Coind}^G_H V=
+		\operatorname{Hom}_{k[H]}(k[G],V).
+	\]
+	它们分别称为 \(V\) 的\term[youdao-mo]{诱导模}[induced module]和\term[yuyoudao-mo]{余诱导模}[coinduced module]。
+	张量积中 \(k[G]\) 取通常的左 \(k[G]\)、右 \(k[H]\) 双模结构；Hom 中 \(k[G]\) 取左 \(k[H]\) 模结构。左 \(G\) 作用分别为
+	\[
+		g\cdot(x\otimes v)=(gx)\otimes v,
+		\qquad
+		(g\cdot f)(x)=f(xg)
+		\quad(g\in G,\ x\in k[G]).
+	\]
+	这给出伴随
+	\[
+		\operatorname{Ind}^G_H\dashv
+		\operatorname{Res}^G_H\dashv
+		\operatorname{Coind}^G_H,
+	\]
+	并分别表示沿 \(\mathcal BH\rightarrow\mathcal BG\) 的左、右 Kan 扩展。其比较映射为
+	\[
+		\eta_V(v)=1\otimes v,\qquad
+		\varepsilon_V(f)=f(1).
+	\]
+\end{proposition}
+\begin{proof}
+	左乘 \(g\) 与 \(k[G]\) 的右 \(k[H]\) 作用交换，所以诱导模上的作用尊重张量平衡关系。余诱导中，对 \(h\in H\)，
+	\[
+		(g\cdot f)(hx)=f(hxg)=h f(xg),
+	\]
+	故 \(g\cdot f\) 仍为左 \(k[H]\) 线性映射。又
+	\((g_1\cdot(g_2\cdot f))(x)=f(xg_1g_2)\)，且单位元作用为恒等。这些作用按 \(k\) 线性延拓后均给出左 \(k[G]\) 模。对 \(V\rightarrow V'\)，两个函子的态射作用分别为 \(1\otimes s\) 和 \(f\mapsto sf\)，显然保持恒等、复合并与群作用相容。
+
+	先验证诱导的泛性质。对任意左 \(k[G]\) 模 \(W\) 及 \(k[H]\) 线性映射 \(a:V\rightarrow\operatorname{Res}^G_H W\)，定义
+	\[
+		\widetilde a:k[G]\otimes_{k[H]}V\longrightarrow W,
+		\qquad \widetilde a(x\otimes v)=x\,a(v).
+	\]
+	该公式双线性，且对 \(z\in k[H]\)，
+	\((xz)a(v)=x\,a(zv)\)，所以平衡并能通过张量积。它还满足 \(\widetilde a(rx\otimes v)=r\widetilde a(x\otimes v)\)，故为 \(k[G]\) 线性映射。反过来，一个 \(k[G]\) 线性映射 \(A:k[G]\otimes_{k[H]}V\rightarrow W\) 决定
+	\[
+		a_A(v)=A(1\otimes v).
+	\]
+	由 \(1\otimes zv=z\otimes v\)，\(a_A\) 为 \(k[H]\) 线性映射。显然 \(a_{\widetilde a}=a\)；而
+	\(\widetilde{a_A}(x\otimes v)=xA(1\otimes v)=A(x\otimes v)\)，故两种构造互逆。对 \(s:V'\rightarrow V\)、\(t:W\rightarrow W'\)，公式还给出
+	\[
+		\widetilde{\operatorname{Res}^G_H(t)\,a\,s}
+		=t\,\widetilde a\,(1\otimes s).
+	\]
+	因此双射对 \(V,W\) 自然。其单位为 \(v\mapsto1\otimes v\)，它的 \(H\) 线性也可从
+	\(1\otimes hv=h\otimes v=h\cdot(1\otimes v)\) 直接看出。
+
+	再验证余诱导。求值映射 \(\varepsilon_V(f)=f(1)\) 为 \(k[H]\) 线性，因为
+	\[
+		\varepsilon_V(h\cdot f)=f(h)=h f(1).
+	\]
+	给定 \(k[H]\) 线性映射 \(a:\operatorname{Res}^G_H W\rightarrow V\)，定义
+	\[
+		\widehat a:W\longrightarrow\operatorname{Coind}^G_H V,
+		\qquad \widehat a(w)(x)=a(xw).
+	\]
+	对 \(z\in k[H]\)，\(\widehat a(w)(zx)=a(zxw)=z\,a(xw)\)，所以其值确实在上述 Hom 中。该公式在 \(w\) 上 \(k\) 线性，且
+	\[
+		\widehat a(gw)(x)=a(xgw)
+		=(g\cdot\widehat a(w))(x),
+	\]
+	故 \(\widehat a\) 为 \(k[G]\) 线性。若 \(B:W\rightarrow\operatorname{Coind}^G_H V\) 为 \(k[G]\) 线性映射，令 \(a_B(w)=B(w)(1)\)，则 \(a_B=\varepsilon_V\operatorname{Res}^G_H(B)\) 为 \(k[H]\) 线性。现在 \(a_{\widehat a}(w)=a(w)\)，而对 \(g\in G\)，
+	\[
+		\widehat{a_B}(w)(g)
+		=a_B(gw)=B(gw)(1)
+		=(g\cdot B(w))(1)=B(w)(g).
+	\]
+	由 \(k\) 线性，这也对所有 \(x\in k[G]\) 成立，故 \(\widehat{a_B}=B\)。两种构造互逆。对 \(s:V\rightarrow V'\)、\(t:W'\rightarrow W\)，在 \(w'\in W',x\in k[G]\) 处比较取值，有
+	\[
+		\widehat{s\,a\,\operatorname{Res}^G_H(t)}
+		=\operatorname{Coind}^G_H(s)\,\widehat a\,t,
+	\]
+	其中等式来自 \(t(xw')=x\,t(w')\)。所以右侧双射也对两个变量自然。最后，把函子范畴中的自然变换识别为模同态，这两个双射正是左右 Kan 扩展的定义，比较映射也恰为所述单位、余单位。
+\end{proof}
+
+有限性条件只在希望保留有限维时加入。若 \(T\) 为 \(G/H\) 中左陪集 \(gH\) 的代表集，\(S\) 为 \(H\backslash G\) 中右陪集 \(Hg\) 的代表集，则群元素的唯一分解给出
+\[
+	k[G]=\bigoplus_{t\in T}t\,k[H]
+	\quad\text{（右模）},\qquad
+	k[G]=\bigoplus_{s\in S}k[H]s
+	\quad\text{（左模）}.
+\]
+因此诱导的底向量空间为 \(\bigoplus_{t\in T}V\)，余诱导的底向量空间为 \(\prod_{s\in S}V\)：前者的同构把 \((v_t)\) 送到 \(\sum_t t\otimes v_t\)，后者由 \(f\mapsto(f(s))_{s\in S}\) 给出，逆映射按左 \(k[H]\) 线性延拓。若 \([G:H]\) 有限且 \(V\) 有限维，两者都有限维，维数均为 \([G:H]\dim_kV\)。这些结论来自具体模型；逐点存在性及其伴随是在全部左模范畴中建立的。
+
+% #### 3.5.1 左 Kan 扩展与右 Kan 扩展的泛性质
+% #### 3.5.2 逗号范畴与逐点公式
+% #### 3.5.3 预合成、伴随与诱导表示

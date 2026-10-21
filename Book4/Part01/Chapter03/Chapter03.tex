@@ -7,7 +7,7 @@
 \BookChapterNumber{b4:ch:03}
 
 \begin{chapterabstract}
-	本章以可表函子和 Yoneda 引理刻画对象与自然变换，建立伴随的 Hom 双射、单位与余单位两种表述，并证明左伴随保持余极限、右伴随保持极限。自由模与张量积提供具体例子，最后从伴随构造单子和余单子。
+	本章以可表函子和 Yoneda 引理刻画对象与自然变换，建立伴随的 Hom 双射、单位与余单位两种表述，并证明左伴随保持余极限、右伴随保持极限。自由模与张量积提供具体例子，伴随还给出单子和余单子。选读部分研究如何沿函子延拓一个图表：Kan 扩展由相应逗号范畴上的极限或余极限构造，端与余端则把双变量中的相容条件写成可计算的泛性质。
 \end{chapterabstract}
 
 \begin{learninggoals}
@@ -17,6 +17,8 @@
 		\item 从伴随双射构造单位与余单位，也能从三角恒等式恢复双射及其两变量自然性。
 		\item 写出自由—忘却、交换化以及 Hom–张量伴随的具体映射，核对非交换模的侧别。
 		\item 用泛性质证明伴随保持相应的极限，给出不能保持另一类极限的反例，并用形式运算解释单子公理。
+		\item 在选读部分，按逗号范畴计算左右 Kan 扩展，写出与预合成的伴随，并辨认诱导、余诱导的群作用方向。
+		\item 在选读部分，核验双自然条件，用等化子、余等化子计算端和余端，并将自然变换及集合值加权构造写成相应公式。
 	\end{itemize}
 \end{learninggoals}
 
@@ -28,11 +30,17 @@
 \ProseParagraphBreak
 可对照 Weibel《An Introduction to Homological Algebra》中的 Yoneda 嵌入\cite[Example A.3.4]{Weibel1994HomologicalAlgebra}及伴随的表述\cite[A.6.1; Theorem A.6.2]{Weibel1994HomologicalAlgebra}。本章依次证明泛元素判据、Yoneda 引理、伴随的两种刻画及保持定理；自由模的生成元和张量积的纯张量为这些一般公式提供了具体检验。
 
+\ProseParagraphBreak
+若一个图表只给出了部分对象上的值，还需要决定怎样补入新的对象与箭头。例如，为两组已经给定的数据添一个共同的接受对象，会遇到余积；要求一个共同映入它们的对象，则会遇到积。\secref{b4:sec:0305}把这类延拓问题表述为 Kan 扩展，并从逗号范畴给出逐点构造。\secref{b4:sec:0306}进一步把双变量中的相容条件组织成端与余端，联系自然变换、平衡积及 Kan 扩展公式。这两节保持选读性质，使用前四节和第2章的泛性质；群表示的例子采用全部群代数模，有限维表示只在相应有限性条件下取出。
+
 
 \input{Part01/Chapter03/Section0301}
 \input{Part01/Chapter03/Section0302}
 \input{Part01/Chapter03/Section0303}
 \input{Part01/Chapter03/Section0304}
+
+\input{Part01/Chapter03/Section0305}
+\input{Part01/Chapter03/Section0306}
 
 \begin{chaptersummary}
 	可表函子把一个对象的泛性质组织成随目标或源自然变化的双射。表示对象必须连同这个双射或泛元素一起比较；保持这些数据的同构才是唯一确定的。Yoneda 引理把自然变换的全部分量缩减为在恒等态射上的取值，并说明这种恢复在对象和函子两个参数上仍然自然。
@@ -42,6 +50,9 @@
 
 	\ProseParagraphBreak
 	单子保留自函子上的单位与归并运算，余单子反转这些箭头。自由模的嵌套形式和给出了可直接计算的例子。它们在这里解释伴随所附带的结构；怎样从单子恢复一个代数范畴，仍是另一个问题。
+
+	\ProseParagraphBreak
+	选读部分将表示对象的思想用于图表的延拓。左 Kan 扩展收集指向一个目标位置的数据并取余极限，右 Kan 扩展收集从该位置出发的数据并取极限。端把双变量的相容条件放在一个积内，余端则在余积中施加识别关系。它们既描述自然变换的集合，也把逐点 Kan 扩展改写成带有 Hom 集权的公式；每种构造所需的小性、极限及余极限条件都须同时保留。
 \end{chaptersummary}
 
 \BookExercises
@@ -246,4 +257,330 @@
 	逐项应用函数保持表长和次序，因此给出函子。逐项应用函数与插入单元素表、连接各子表相容，所以 \(\eta,\mu\) 自然。对表 \((x_1,\ldots,x_n)\)，先把每项换成单元素表再连接，或先把整个表视为唯一子表再连接，都恢复原表，这给出两条单位律。对三层表，两种归并都按先外层位置、再中层位置、最后内层位置的次序输出同一列元素，故结合律成立；空子表贡献零个元素，不影响论证。
 
 	空表使 \(T\varnothing\) 仍有一个元素，并允许连接中出现零个子表；在将此构造解释为自由幺半群时，它正是单位元。若全部改为非空有限表，也会得到另一个满足单子公理的构造，但它表达的是不要求单位元的半群，已不是本题所定义的全部有限表。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-strict-extension-not-kan}
+	令 \(\mathcal D\) 为箭头范畴 \(0\rightarrow1\)，\(\mathcal C\) 为仅含 \(0\) 的全子范畴，\(K:\mathcal C\hookrightarrow\mathcal D\) 为包含，\(F(0)=\{*\}\)。定义 \(T:\mathcal D\rightarrow\mathbf{Set}\) 为
+	\[
+		T(0)=\{*\},\qquad T(1)=\{a,b\},\qquad T(0\rightarrow1)(*)=a.
+	\]
+	这里严格满足 \(TK=F\)。计算 \(F\) 沿 \(K\) 的左右 Kan 扩展，并直接用泛性质说明：以恒等比较变换配备的 \(T\) 既不是左 Kan 扩展，也不是右 Kan 扩展。
+\end{optionalexercise}
+\begin{solution}
+	\(K\downarrow0\)、\(K\downarrow1\) 都只有一个对象和恒等态射，所以左扩展在两个对象处都是单元素集合，沿 \(0\rightarrow1\) 的箭头为其唯一函数。\(0\downarrow K\) 只有一个对象，\(1\downarrow K\) 为空，因此右扩展在两个对象处也都是单元素集合，箭头仍唯一。
+
+	直接检验 \(T\) 的泛性质：它有两个不同的自然自变换，二者在 \(0\) 处均为恒等，在 \(1\) 处分别为恒等与常值 \(a\) 的函数。它们自然是因为都把 \(a\) 送到 \(a\)，所以与 \(T(0\rightarrow1)\) 交换。若 \(T\) 为左扩展，取目标函子为 \(T\)，这两个自变换在\eqref{b4:eq:left-kan-universal-property}下均映到 \(1_F\)，与单射性矛盾。若 \(T\) 为右扩展，取源函子为 \(T\)，它们在\eqref{b4:eq:right-kan-universal-property}下也均映到 \(1_F\)，同样矛盾。严格延拓本身并不提供唯一分解。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-kan-coequalizer}
+	令 \(\mathcal C\) 由两个对象 \(c_0,c_1\)、两个平行箭头 \(p,q:c_0\rightrightarrows c_1\) 及恒等态射组成。在 \(\mathcal C\) 中添入对象 \(d\)、箭头 \(b:c_1\rightarrow d\) 及 \(a:c_0\rightarrow d\)，规定 \(bp=bq=a\)，得到 \(\mathcal D\)，令 \(K:\mathcal C\hookrightarrow\mathcal D\) 为包含。对集合值图表
+	\[
+		F(c_0)=A,\qquad F(c_1)=B,\qquad F(p)=f,\quad F(q)=g,
+	\]
+	求左右 Kan 扩展在 \(d\) 处的值及沿 \(b\) 的映射。再取 \(A=B=\mathbb Z\)、\(f(n)=n\)、\(g(n)=n+2\)，算出左扩展在 \(d\) 处的集合。
+\end{optionalexercise}
+\begin{solution}
+	\(K\downarrow d\) 的两个对象为 \((c_0,a)\)、\((c_1,b)\)，两条非恒等箭头正是 \(p,q\)。其余极限是 \(f,g\) 的余等化子
+	\[
+		Q=B/{\sim},\qquad
+		\sim\ \text{为由所有}\ f(x)\sim g(x)\ (x\in A)\ \text{生成的等价关系}.
+	\]
+	确实，函数 \(r:B\rightarrow Z\) 与一个从该平行图表到 \(Z\) 的余锥等价，当且仅当 \(rf=rg\)；这又等价于 \(r\) 唯一通过商映射 \(\rho:B\rightarrow Q\)。因此左扩展在 \(d\) 处为 \(Q\)，沿 \(b\) 的映射为 \(\rho\)，沿 \(a\) 的映射为 \(\rho f=\rho g\)。全忠实恢复使扩展在 \(c_0,c_1\) 处仍可取 \(A,B\)。
+
+	\(d\downarrow K\) 为空，所以右扩展在 \(d\) 处为单元素集合，沿 \(b\) 为 \(B\rightarrow\{*\}\) 的唯一函数。对所给整数图表，等价关系由 \(n\sim n+2\) 生成。每个生成关系保持奇偶性；同奇偶的两个整数相差某个 \(2m\)，可用有限次加二或减二连接，所以等价类恰是奇、偶两类。故 \(Q\) 与底集合 \(\mathbb Z/2\mathbb Z\) 自然对应，\(\rho\) 为模二约化。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-composite-kan}
+	设 \(\mathcal C,\mathcal D,\mathcal A\) 为小范畴，\(\mathcal E\) 为局部小范畴，给定
+	\[
+		\mathcal C\xrightarrow{K}\mathcal D\xrightarrow{J}\mathcal A,
+		\qquad F:\mathcal C\rightarrow\mathcal E.
+	\]
+	若 \((L,\eta)\) 是 \(F\) 沿 \(K\) 的左 Kan 扩展，\((M,\lambda)\) 是 \(L\) 沿 \(J\) 的左 Kan 扩展，证明 \((M,(\lambda K)\eta)\) 是 \(F\) 沿 \(JK\) 的左 Kan 扩展。给出右 Kan 扩展的对应结论及比较变换。不额外假定这些扩展逐点。
+\end{optionalexercise}
+\begin{solution}
+	对任意 \(T:\mathcal A\rightarrow\mathcal E\)，依次使用两个泛性质得到双射
+	\[
+		\operatorname{Nat}(M,T)
+		\longrightarrow\operatorname{Nat}(L,TJ)
+		\longrightarrow\operatorname{Nat}(F,TJK).
+	\]
+	第一个映射将 \(\alpha\) 送到 \((\alpha J)\lambda\)，第二个再送到
+	\[
+		((\alpha J)K)(\lambda K)\eta
+		=(\alpha(JK))\bigl((\lambda K)\eta\bigr).
+	\]
+	这正是以 \((\lambda K)\eta\) 为单位的左 Kan 泛性质。若另有 \(\operatorname{Lan}_{JK}F\)，唯一性给出与这些比较数据相容的唯一自然同构
+	\(\operatorname{Lan}_J(\operatorname{Lan}_K F)\cong\operatorname{Lan}_{JK}F\)。
+
+	右侧设 \((R,\varepsilon)\) 是 \(F\) 沿 \(K\) 的右扩展，\((S,\delta)\) 是 \(R\) 沿 \(J\) 的右扩展，其中 \(\varepsilon:RK\Rightarrow F\)、\(\delta:SJ\Rightarrow R\)。则比较变换为
+	\[
+		SJK\xRightarrow{\delta K}RK\xRightarrow{\varepsilon}F.
+	\]
+	两个右泛性质给出双射
+	\[
+		\operatorname{Nat}(T,S)
+		\longrightarrow\operatorname{Nat}(TJ,R)
+		\longrightarrow\operatorname{Nat}(TJK,F),
+	\]
+	把 \(\beta\) 送到
+	\(\varepsilon(\delta K)(\beta(JK))\)。因此 \((S,\varepsilon(\delta K))\) 是沿 \(JK\) 的右扩展，也得到相应的唯一自然同构。论证只使用普通 Kan 扩展的泛性质。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-kan-invariants-coinvariants}
+	设 \(k\) 为域，\(G\) 为群，\(N\trianglelefteq G\)，\(q:G\rightarrow Q=G/N\) 为商同态。对任意左 \(k[G]\) 模 \(V\)，记
+	\[
+		V_N=V/\operatorname{span}_k\{nv-v:n\in N,\ v\in V\},
+		\qquad
+		V^N=\{v\in V:nv=v\ \text{对所有 }n\in N\}.
+	\]
+	说明 \(V_N,V^N\) 上由 \(q(g)[v]=[gv]\)、\(q(g)v=gv\) 给出的 \(Q\) 作用良定义，并证明它们分别是 \(V:\mathcal BG\rightarrow k\text{-}\mathbf{Mod}\) 沿 \(\mathcal Bq:\mathcal BG\rightarrow\mathcal BQ\) 的左右 Kan 扩展。写出单位与余单位。
+\end{optionalexercise}
+\begin{solution}
+	令 \(U=\operatorname{span}_k\{nv-v\}\)。对 \(g\in G\)，
+	\[
+		g(nv-v)=(gng^{-1})(gv)-gv\in U,
+	\]
+	所以 \(U\) 为 \(G\) 稳定子空间，商空间有 \(G\) 作用。每个 \(n\in N\) 在商上作用为恒等，故该作用只依赖 \(q(g)\)，得到 \(Q\) 作用。若 \(v\in V^N\)，则
+	\(n(gv)=g(g^{-1}ng)v=gv\)，所以 \(V^N\) 也为 \(G\) 稳定子空间；\(N\) 在其上作用恒等，故也得到 \(Q\) 作用。群作用律继承自 \(V\)。
+
+	预合成 \(q^*\) 把一个 \(k[Q]\) 模 \(W\) 看成 \(N\) 作用恒等的 \(k[G]\) 模。每个 \(k[G]\) 线性映射 \(a:V\rightarrow q^*W\) 满足 \(a(nv-v)=na(v)-a(v)=0\)，因而唯一通过商映射 \(\eta:V\rightarrow V_N\)。所诱导的 \(\bar a:V_N\rightarrow W\) 为 \(Q\) 线性，因为
+	\(\bar a(q(g)[v])=a(gv)=q(g)a(v)\)。反向将 \(Q\) 线性映射与 \(\eta\) 复合，就得到 \(G\) 线性映射。因此
+	\[
+		\operatorname{Hom}_{k[Q]}(V_N,W)
+		\cong\operatorname{Hom}_{k[G]}(V,q^*W)
+	\]
+	由 \(\bar a\mapsto\bar a\eta\) 给出，恰是左 Kan 泛性质，单位是商映射。
+
+	每个 \(k[G]\) 线性映射 \(b:q^*W\rightarrow V\) 的像均在 \(V^N\)，因为 \(nb(w)=b(nw)=b(w)\)。因此 \(b\) 唯一通过包含 \(\varepsilon:V^N\hookrightarrow V\)，而得到的 \(W\rightarrow V^N\) 为 \(Q\) 线性；反向与包含复合恢复 \(b\)。这给出
+	\[
+		\operatorname{Hom}_{k[Q]}(W,V^N)
+		\cong\operatorname{Hom}_{k[G]}(q^*W,V),
+	\]
+	即右 Kan 泛性质，余单位是包含。两组对应均由唯一的商分解或子空间分解给出，预合成、后合成与分解交换，因而也自然于相应模变量。模同态诱导商映射并限制到不变量子空间，给出 \(V\) 变化时的函子作用。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-finite-index-ind-coind}
+	设 \(k\) 为任意域，\(H\le G\) 且 \([G:H]<\infty\)。令 \(P:k[G]\rightarrow k[H]\) 为保留基元素 \(h\in H\) 的系数、删去其余系数的 \(k\) 线性投影。对任意左 \(k[H]\) 模 \(V\)，证明
+	\[
+		\Phi_V:\operatorname{Ind}^G_H V\longrightarrow\operatorname{Coind}^G_H V,
+		\qquad
+		\Phi_V(x\otimes v)(y)=P(yx)v
+	\]
+	为自然的 \(k[G]\) 模同构。写出一个用左陪集代表集表示的逆，并说明同构 \(\Phi_V\) 本身与代表集无关。不得假定群阶或指数在 \(k\) 中可逆。
+\end{optionalexercise}
+\begin{solution}
+	投影 \(P\) 为 \(k[H]\) 双模映射：
+	\[
+		P(zy)=zP(y),\qquad P(yz)=P(y)z
+		\quad(z\in k[H],\ y\in k[G]).
+	\]
+	只需对基元素检验；左乘或右乘一个 \(h\in H\) 分别把 \(H\) 和 \(G\setminus H\) 各自保持。由第一式，\(y\mapsto P(yx)v\) 为左 \(k[H]\) 线性映射。由第二式，
+	\(P(yxz)v=P(yx)zv\)，所以给定公式在 \(x,v\) 上双线性且平衡，确实通过张量积。对 \(g\in G\)，
+	\[
+		\Phi_V(gx\otimes v)(y)
+		=P(ygx)v
+		=(g\cdot\Phi_V(x\otimes v))(y),
+	\]
+	故 \(\Phi_V\) 为 \(k[G]\) 线性。
+
+	取左陪集 \(G/H\) 的有限代表集 \(T\)，定义
+	\[
+		\Psi_V(f)=\sum_{t\in T}t\otimes f(t^{-1}).
+	\]
+	对任意群元素 \(y\)，唯一存在 \(t_0\in T,h\in H\)，使 \(y=ht_0^{-1}\)，因为 \(T^{-1}\) 是右陪集 \(H\backslash G\) 的代表集。于是 \(yt\in H\) 当且仅当 \(t=t_0\)，因此
+	\[
+		(\Phi_V\Psi_V(f))(y)
+		=\sum_{t\in T}P(yt)f(t^{-1})
+		=h f(t_0^{-1})=f(y).
+	\]
+	两边均为 \(k\) 线性函数，故这对全部 \(y\in k[G]\) 成立。反过来，对基元素 \(x=t_0h\)，
+	\[
+		\Psi_V\Phi_V(x\otimes v)
+		=\sum_{t\in T}t\otimes P(t^{-1}t_0h)v
+		=t_0\otimes hv=x\otimes v.
+	\]
+	按 \(x,v\) 线性延拓，得到 \(\Psi_V\Phi_V=1\)，故两映射互逆。有限指数保证逆公式中的求和有限，全程未作任何除法。
+
+	若 \(s:V\rightarrow V'\) 为 \(k[H]\) 线性映射，则
+	\(s(P(yx)v)=P(yx)s(v)\)，所以
+	\(\operatorname{Coind}^G_H(s)\Phi_V=\Phi_{V'}\operatorname{Ind}^G_H(s)\)，证明自然性。正向公式仅使用由子群 \(H\) 规定的投影 \(P\)，未使用代表元；它的逆又由同构唯一确定，因此所有代表集给出的逆公式实际相同。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-constant-ends-components}
+	设 \(\mathcal C\) 为小范畴，\(S\) 为集合，\(H_S:\mathcal C^{\mathrm{op}}\times\mathcal C\rightarrow\mathbf{Set}\) 为常值 \(S\) 的双函子，所有态射均送到 \(1_S\)。把 \(\mathcal C\) 的对象按可沿任意方向行走的有限态射链连通来分组，记所得组集为 \(\pi_0\mathcal C\)。求 \(\int_cH_S(c,c)\) 与 \(\int^cH_S(c,c)\)，并说明 \(\mathcal C\) 或 \(S\) 为空时的情形。
+\end{optionalexercise}
+\begin{solution}
+	端由满足 \(s_c=s_d\)（每个 \(f:c\rightarrow d\)）的族 \((s_c)\) 组成。同一有限态射链上的分量因而相等；反之，给每个连通组指定一个 \(S\) 中元素，就得到满足全部楔形条件的族。因此
+	\[
+		\int_cH_S(c,c)\cong S^{\pi_0\mathcal C}.
+	\]
+	这里的双射把族送到各组的共同分量，逆映射在同组的每个对象处取该共同值，所以无须为每组选择代表对象。
+
+	余端为 \(\coprod_{c\in\operatorname{Ob}\mathcal C}S\) 的商，生成关系是 \((c,s)\sim(d,s)\)，其中 \(f:c\rightarrow d\)。每一步关系都保持 \(s\)，并保持对象的连通组；同组中的两个对象可用有限链连接，故反过来有同一个 \(s\) 的两个代表等价，当且仅当其对象同组。因此
+	\[
+		\int^cH_S(c,c)\cong(\pi_0\mathcal C)\times S,
+		\qquad [(c,s)]\longmapsto([c],s).
+	\]
+	若 \(\mathcal C\) 为空，则 \(\pi_0\mathcal C=\varnothing\)，端是单点集，余端是空集。若 \(S=\varnothing\) 而 \(\mathcal C\) 非空，则端、余端都为空；两者同时为空指标的情形仍按上一句处理。这与 \(\varnothing^{\varnothing}\) 是单点集一致。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-group-end-conjugacy}
+	设 \(G\) 为群，\(\mathcal BG\) 为相应单对象范畴。定义 \(H:(\mathcal BG)^{\mathrm{op}}\times\mathcal BG\rightarrow\mathbf{Set}\)，使 \(H(*,*)=G\)，且
+	\[
+		H(g,h)(x)=hxg.
+	\]
+	核验这确实是双函子，求其端与余端，并具体算出 \(G=S_3\) 时所得的集合。
+\end{optionalexercise}
+\begin{solution}
+	第一变量的映射是右乘，第二变量的映射是左乘。右乘映射满足 \(R_gR_{g'}=R_{g'g}\)，与第一变量的反变性一致；左乘满足 \(L_hL_{h'}=L_{hh'}\)，与第二变量的协变性一致。左右乘互相交换，且单位元作用为恒等，故构成所需双函子。
+
+	只有一个对角项，端的条件为 \(gx=xg\) 对全部 \(g\in G\) 成立，所以
+	\[
+		\int_{*\in\mathcal BG}H(*,*)=Z(G).
+	\]
+	余端由关系 \(xg\sim gx\) 生成。关系两边互为共轭，因为 \(g(xg)g^{-1}=gx\)，故每个等价类包含于一个共轭类。反过来，对任意 \(x,g\)，在生成关系中将 \(x\) 换成 \(xg^{-1}\)，得到 \(x\sim gxg^{-1}\)。所以余端恰好是共轭类集合。
+
+	在 \(S_3\) 中，共轭类为
+	\[
+		\{1\},\qquad
+		\{(12),(13),(23)\},\qquad
+		\{(123),(132)\}.
+	\]
+	共轭把循环中的字母逐项置换，因而后两个集合各自是一个共轭类；三者又穷尽全部六个置换。中心元素的共轭类必须是单点集，所以端为 \(\{1\}\)，余端是由上述三个类组成的三元集合。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-balanced-double-cosets}
+	设 \(H,K\le G\) 为群 \(G\) 的子群。右 \(G\) 集 \(H\backslash G\) 与左 \(G\) 集 \(G/K\) 给出平衡积。构造典范双射
+	\[
+		(H\backslash G)\times_G(G/K)
+		\xrightarrow{\sim}H\backslash G/K,
+	\]
+	其中右边为双陪集集合，并证明双射及其逆均良定义。
+\end{optionalexercise}
+\begin{solution}
+	定义 \(\Phi([Hg,g'K])=Hgg'K\)。更换 \(Hg\) 的代表 \(g\) 为 \(hg\) 或 \(g'K\) 的代表 \(g'\) 为 \(g'k\)，只是在乘积左端乘 \(H\) 中元素或右端乘 \(K\) 中元素，所以不改变双陪集。对任意 \(a\in G\)，平衡关系两边 \((Hga,g'K)\)、\((Hg,ag'K)\) 都送到 \(Hga g'K\)，故 \(\Phi\) 在平衡商上良定义。
+
+	定义 \(\Psi(HxK)=[H,xK]\)。若 \(x'=hxk\)，其中 \(h\in H,k\in K\)，则
+	\[
+		[H,x'K]=[H,hxK]=[Hh,xK]=[H,xK],
+	\]
+	所以它也良定义。两次复合满足
+	\[
+		\Phi\Psi(HxK)=HxK,\qquad
+		\Psi\Phi([Hg,g'K])=[H,gg'K]=[Hg,g'K],
+	\]
+	最后一个等式使用平衡关系。因此二者互逆。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-presheaf-coend-density}
+	设 \(\mathcal C\) 为小范畴，\(P:\mathcal C^{\mathrm{op}}\rightarrow\mathbf{Set}\) 为预层。对每个 \(d\in\mathcal C\)，令
+	\[
+		Q(d)=\int^{c\in\mathcal C}
+		P(c)\times\operatorname{Hom}_{\mathcal C}(d,c),
+	\]
+	其中积分号内双函子为 \((c,c')\mapsto P(c)\times\operatorname{Hom}_{\mathcal C}(d,c')\)。构造使 \(Q\) 成为预层的态射作用，并给出自然同构 \(Q\cong P\) 的两个方向，核验它还关于 \(P\) 自然。说明这如何把 \(P\) 用各个可表预层 \(h_c=\operatorname{Hom}_{\mathcal C}(-,c)\) 拼合起来。
+\end{optionalexercise}
+\begin{solution}
+	\(Q(d)\) 的生成元记为 \([p,u]\)，其中 \(p\in P(c)\)、\(u:d\rightarrow c\)。生成关系为
+	\[
+		[P(f)(p'),u]=[p',fu],
+		\qquad f:c\rightarrow c',\quad p'\in P(c').
+	\]
+	对 \(v:d'\rightarrow d\)，定义 \(Q(v)[p,u]=[p,uv]\)。关系两边经过此映射后仍由同一条 \(f\) 的关系连接，故良定义；预复合的结合律及单位律给出反变函子公理。
+
+	定义
+	\[
+		\varepsilon_d:Q(d)\longrightarrow P(d),
+		\qquad [p,u]\longmapsto P(u)(p).
+	\]
+	关系左边的像为 \(P(u)P(f)(p')=P(fu)(p')\)，等于右边的像，所以 \(\varepsilon_d\) 良定义。取
+	\[
+		\delta_d:P(d)\longrightarrow Q(d),\qquad
+		y\longmapsto[y,1_d].
+	\]
+	有 \(\varepsilon_d\delta_d(y)=y\)。反向复合满足
+	\[
+		\delta_d\varepsilon_d([p,u])
+		=[P(u)(p),1_d]=[p,u],
+	\]
+	最后一个等式就是用 \(f=u:d\rightarrow c\) 写出的生成关系，所以两个方向互逆。
+
+	对 \(v:d'\rightarrow d\)，
+	\[
+		\varepsilon_{d'}Q(v)[p,u]
+		=P(uv)(p)=P(v)\varepsilon_d[p,u],
+	\]
+	故 \(\varepsilon\) 自然，逆族 \(\delta\) 也自然。若 \(\theta:P\Rightarrow P'\)，则由 \([p,u]\mapsto[\theta_c(p),u]\) 定义 \(Q_P\Rightarrow Q_{P'}\)；\(\theta\) 的自然性既保证此映射保持生成关系，又给出
+	\[
+		P'(u)\theta_c(p)=\theta_dP(u)(p),
+	\]
+	因此上述同构关于 \(P\) 自然。在每个 \(c\) 处有 \(P(c)\) 份可表预层 \(h_c\) 的副本，余端关系按态射 \(f:c\rightarrow c'\) 将这些副本中的对应元素识别；刚证的自然同构表明，所得预层就是 \(P\)。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-matrix-ring-tensor-coend}
+	设 \(k\) 为域，\(n\ge1\)，\(R=M_n(k)\)，取行向量右模 \(M=k^{1\times n}\) 和列向量左模 \(N=k^{n\times1}\)。对 \(\mathcal R=\mathcal B(R,\cdot)\)，按\cref{b4:exm:tensor-product-coend}定义交换群值双函子 \(T(*,*)=M\otimes_{\mathbb Z}N\)。计算余端 \(\int^{*\in\mathcal R}T(*,*)\)，并为计算结果给出明确的互逆群同态。
+\end{optionalexercise}
+\begin{solution}
+	由\cref{b4:exm:tensor-product-coend}，所求余端为 \(M\otimes_RN\)。矩阵乘法 \(b(m,v)=mv\in k\) 双可加，并满足 \((mr)v=m(rv)\)，所以给出群同态
+	\[
+		\Phi:M\otimes_RN\longrightarrow(k,+),
+		\qquad m\otimes v\longmapsto mv.
+	\]
+	以下证明其逆为 \(\Psi(a)=r_1\otimes ac_1\)，其中 \(r_i\)、\(c_i\) 分别为第 \(i\) 个标准行、列向量。此公式对 \(a\) 可加，故 \(\Psi\) 是群同态，且 \(\Phi\Psi(a)=a\)。
+
+	记 \(E_{ij}\) 为矩阵单位。中心标量矩阵 \(aI_n\) 的平衡关系允许把标量从行向量移到列向量：
+	\[
+		(ar_i)\otimes v
+		=(r_i(aI_n))\otimes v
+		=r_i\otimes av.
+	\]
+	若 \(i\ne j\)，则
+	\[
+		r_i\otimes ac_j
+		=(r_iE_{ii})\otimes ac_j
+		=r_i\otimes E_{ii}(ac_j)=0.
+	\]
+	对于对角项，\(r_i=r_1E_{1i}\)、\(E_{1i}c_i=c_1\) 给出
+	\[
+		r_i\otimes ac_i=r_1\otimes ac_1.
+	\]
+	所以任意 \(m=(m_1,\ldots,m_n)\)、\(v=(v_1,\ldots,v_n)^{\mathsf T}\) 满足
+	\[
+		\begin{aligned}
+			m\otimes v
+			&=\sum_{i,j}r_i\otimes(m_iv_j)c_j\\
+			&=r_1\otimes\left(\sum_i m_iv_i\right)c_1
+			=\Psi\Phi(m\otimes v).
+		\end{aligned}
+	\]
+	纯张量生成整个交换群，故 \(\Psi\Phi\) 为恒等。于是所求余端典范同构于 \((k,+)\)，所给两同态互逆。该计算对 \(n=1\) 也适用。
+\end{solution}
+
+\begin{optionalexercise}\label{b4:ex:03-mixed-end-coend-failure}
+	令 \(\mathcal C,\mathcal A\) 均为有两个对象 \(0,1\) 的离散范畴，并令
+	\[
+		H:\mathcal C^{\mathrm{op}}\times\mathcal C
+		\times\mathcal A^{\mathrm{op}}\times\mathcal A
+		\longrightarrow\mathbf{Set}
+	\]
+	为常值单点集双函子。分别计算
+	\[
+		\int^c\left(\int_aH(c,c,a,a)\right),
+		\qquad
+		\int_a\left(\int^cH(c,c,a,a)\right),
+	\]
+	并写出由各结构映射诱导的从左边到右边的比较映射，说明混合端与余端为何不能套用\cref{b4:thm:end-coend-fubini}。
+\end{optionalexercise}
+\begin{solution}
+	离散指标的端就是积，余端就是余积。固定 \(c\) 后，\(\int_aH(c,c,a,a)\) 是两个单点集的积，仍为单点集；再对 \(c\) 取余积，得到二元集合 \(\{0,1\}\)。反过来，固定 \(a\) 后先对 \(c\) 取余积，得到由 \(c\) 标记的二元集合，再对两个 \(a\) 取积，得到
+	\[
+		\{0,1\}^{\{0,1\}}
+		=\{(0,0),(0,1),(1,0),(1,1)\}.
+	\]
+	比较映射将第 \(c\) 个余积项送到每个 \(a\) 分量中的第 \(c\) 个余积项，即
+	\[
+		0\longmapsto(0,0),\qquad1\longmapsto(1,1).
+	\]
+	它遗漏 \((0,1)\)、\((1,0)\)，所以不是满射，两边的基数也不同。Fubini 公式只交换同类的两个泛性质；这个有限离散例子中，混合交换已经失败。
 \end{solution}
