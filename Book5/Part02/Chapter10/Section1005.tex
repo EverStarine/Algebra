@@ -1,31 +1,162 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 10.5 不可约映射与几乎分裂序列
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：Krull–Schmidt 及局部自同态环引用第二卷第12章；承接第10.4节的定义与 A2 算例，不重建已有理论。
+% * 状态：初稿已完成；含态射根、不可约映射、极小几乎分裂态射与唯一性的完整证明。有限维代数上存在定理的完整证明在10.6以AR公式完成；新增范围尚未正式审核。
 % #### 10.5.1 态射根与不可约映射
 % #### 10.5.2 极小几乎分裂态射
 % #### 10.5.3 几乎分裂序列的存在与唯一性
+% 状态：正文、证明与算例已形成初稿，尚未正式审核。
 
 \section{不可约映射与几乎分裂序列}
 \label{b5:sec:1005}
 
-待撰写。
+在\cref{b5:exm:a2-almost-split}中，映到 \(S_1\) 的全部非分裂满射都通过同一个 \(P\to S_1\) 分解。这比列出同态空间多了一层结构：它说明哪些映射可以充当其他映射的最后一步。一般的中间模未必不可分解，因而还要把这个最后一步拆成分量，辨认哪些分量已经不能继续作非平凡分解。
+
+\ProseParagraphBreak
+本节的模均为有限维含幺 \(k\)-代数 \(A\) 上的有限维左模，\(k\) 暂为任意域。有限维性保证这些模有有限长度。
+% 跨卷引用目标：b2:prop:finite-length-decomposition（12.4.1）、b2:thm:krull-schmidt（12.4.2）、b2:thm:indecomposable-local-end（12.3.6）、b2:lem:fitting（12.3.5）。
+第二卷命题12.4.1与定理12.4.2分别保证不可分解直和分解的存在与唯一性，定理12.3.6保证非零不可分解模的自同态环局部；第二卷引理12.3.5还将用于去掉一个态射在其上为零的直和分量。这些结论适用于当前的有限长度模，不要求 \(k\) 代数闭。
 
 \subsection{态射根与不可约映射}
 \label{b5:subsec:1005:01}
 
-待撰写。
+对不可分解模，自同态环中的非单位构成理想。要同时处理不同模之间的映射，需要把这个理想扩展到整个模范畴。
+
+\begin{definition}\label{b5:def:morphism-radical}
+	设 \(A\) 为域 \(k\) 上的有限维代数，\(X,Y\) 为有限维左 \(A\)-模。定义\term[taishe-gen]{态射根}[radical of morphisms]
+	\[
+		\operatorname{rad}_A(X,Y)=\{f:X\to Y:1_X-gf\text{ 对每个 }g:Y\to X\text{ 都可逆}\}.
+	\]
+	定义 \(\operatorname{rad}_A^2(X,Y)\) 为所有有限和 \(\sum_i b_i a_i\) 组成的子空间，其中中间模 \(Z_i\) 有限维，\(a_i\in\operatorname{rad}_A(X,Z_i)\)、\(b_i\in\operatorname{rad}_A(Z_i,Y)\)。记
+	\[
+		\operatorname{Irr}_A(X,Y)=\operatorname{rad}_A(X,Y)/\operatorname{rad}_A^2(X,Y).
+	\]
+\end{definition}
+\symidx{\(\operatorname{rad}_A(X,Y)\)、\(\operatorname{Irr}_A(X,Y)\)：态射根及不可约映射空间}
+
+\begin{lemma}\label{b5:lem:morphism-radical-matrix}
+	设 \(A\) 为域上的有限维代数。对非零不可分解有限维左模 \(X,Y\)，\(\operatorname{rad}_A(X,Y)\) 恰由全部非同构组成。对一般有限维模的不可分解分解 \(X=\bigoplus_iX_i\)、\(Y=\bigoplus_jY_j\)，态射 \(f:X\to Y\) 属于态射根，当且仅当每个矩阵分量 \(f_{ji}:X_i\to Y_j\) 都不是同构。这些子空间对任意态射的前、后复合封闭，组成模范畴的一个双边理想。
+\end{lemma}
+\begin{proof}
+	先对每对不可分解模取非同构的集合。同构类型不同时，它是整个 Hom 空间；类型相同时，固定一个同构后，它识别为局部自同态环的非单位理想，所以仍是线性子空间。若两个不可分解模间的复合可逆，则前一映射为分裂单射、后一映射为分裂满射。中间模也不可分解时，非零分裂直和项只能是整个中间模，故两映射都可逆。因此只要一个因子非同构，复合也非同构。
+
+	对一般直和取这些子空间组成的矩阵空间 \(\mathcal R(X,Y)\)。矩阵乘法是有限和，上一段说明 \(\mathcal R\) 对前、后复合封闭。改变不可分解分解只是在左右乘可逆矩阵，故它也不依赖分解的选择。
+
+	若 \(f\in\mathcal R(X,Y)\)，对任意 \(g:Y\to X\) 令 \(h=1_X-gf\)。假如 \(h\) 不可逆，Fitting 分解给出非零直和项 \(U\subseteq X\)，使 \(h|_U\) 幂零。于是 \((gf)|_U=1_U-h|_U\) 可逆。但这个限制属于 \(\mathcal R(U,U)\)，再乘逆便得 \(1_U\in\mathcal R(U,U)\)，与恒等映射的不可分解对角分量可逆矛盾。因此 \(1_X-gf\) 总可逆。
+
+	反之，若某个 \(f_{ji}\) 可逆，令 \(g:Y\to X\) 仅在 \(Y_j\to X_i\) 的分量上等于 \(f_{ji}^{-1}\)，其余为零。对 \(X_i\) 的包含 \(\iota_i\)，有 \(gf\iota_i=\iota_i\)，故 \(1_X-gf\) 有非零核。这样 \(f\) 不满足定义中的条件，证明 \(\mathcal R=\operatorname{rad}_A\)。
+\end{proof}
+
+\begin{definition}\label{b5:def:irreducible-morphism}
+	设 \(A\) 为域上的有限维代数，\(X,Y\) 为有限维左 \(A\)-模。若 \(f:X\to Y\) 既不是分裂单射，也不是分裂满射，并且每个分解 \(f=ba\)、\(a:X\to Z\)、\(b:Z\to Y\) 都使 \(a\) 为分裂单射或 \(b\) 为分裂满射，则称 \(f\) 为\term[bukeyue-yingshe]{不可约映射}[irreducible morphism]。
+\end{definition}
+
+单射或满射本身不足以保证不可约性。反过来，不可约映射必为单射或满射：把 \(f\) 分解为到其像的满射与像的包含，不可约性要求前者为分裂单射或后者为分裂满射，因而其中一项为同构。不可约性还排除了在两个方向上都不能分裂的其他因子分解。
+
+\begin{proposition}\label{b5:prop:irreducible-radical}
+	设 \(A\) 为域上的有限维代数，\(X,Y\) 为非零不可分解有限维左 \(A\)-模。则 \(f:X\to Y\) 不可约，当且仅当
+	\[
+		f\in\operatorname{rad}_A(X,Y)\setminus\operatorname{rad}_A^2(X,Y).
+	\]
+\end{proposition}
+\begin{proof}
+	在两个非零不可分解模之间，分裂单射或分裂满射必为同构，所以不可约映射首先属于态射根。若 \(f=\sum_i b_i a_i\) 属于根的平方，对中间模取直和，把 \(a_i\) 合为列映射 \(a\)，把 \(b_i\) 合为行映射 \(b\)，就有 \(f=ba\)，且两者均在态射根中。\(a\) 若有左逆，理想性质便使 \(1_X\) 属于态射根，矛盾；\(b\) 同样无右逆。因此不可约映射不在根的平方中。
+
+	反过来，设 \(f\) 在根中而不在根的平方中。若 \(f=ba\) 且 \(a\) 无左逆、\(b\) 无右逆，把 \(Z\) 分成不可分解直和。\(a\) 的任一分量若为同构，就给 \(a\) 一个左逆；\(b\) 的任一分量若为同构，就给 \(b\) 一个右逆。因此全部分量都是非同构，由\cref{b5:lem:morphism-radical-matrix}，\(a,b\) 均在态射根中。这与 \(f\) 不在根的平方中矛盾。
+\end{proof}
+
+\(\operatorname{Irr}_A(X,Y)\) 是商空间，零类包括可以继续分解的映射。不能把某个端点自同态环的根平方误当作 \(\operatorname{rad}_A^2(X,X)\)，因为后者允许经过别的模。下面的双数例子会显示这种差别。
 
 \subsection{极小几乎分裂态射}
 \label{b5:subsec:1005:02}
 
-待撰写。
+右几乎分裂态射可以人为增加一个零分量：若 \(p:E\to X\) 有所需分解性质，\((p,0):E\oplus T\to X\) 仍有同样性质。要使中间项有确定意义，需要去掉这种冗余。
+
+\begin{definition}\label{b5:def:minimal-morphism}
+	设 \(A\) 为域上的有限维代数，\(E,X\) 为有限维左 \(A\)-模。若每个满足 \(ps=p\) 的 \(s\in\operatorname{End}_A(E)\) 都可逆，称 \(p:E\to X\) 为\term[you-jixiao-taishe]{右极小态射}[right minimal morphism]。对偶地，若每个满足 \(su=u\) 的 \(s\in\operatorname{End}_A(E)\) 都可逆，称 \(u:X\to E\) 为\term[zuo-jixiao-taishe]{左极小态射}[left minimal morphism]。
+\end{definition}
+
+若 \(p\) 不右极小，取不可逆的 \(s\) 使 \(ps=p\)。Fitting 分解的幂零部分 \(E_0\) 非零，且 \(p|_{E_0}=ps^n|_{E_0}=0\)。删去 \(E_0\) 后，任何经 \(p\) 的分解仍可投影到剩余直和项。因此右几乎分裂态射可以化为右极小的右几乎分裂态射；维数每次严格下降，过程终止。反过来，若 \(p\) 在非零直和项上为零，投影到其补项便违反右极小性。所以右极小恰好排除了这种零直和分量。
+
+\begin{lemma}\label{b5:lem:almost-split-one-sided}
+	设 \(A\) 为域上的有限维代数，
+	\[
+		0\longrightarrow L\xrightarrow{u}E\xrightarrow{p}X\longrightarrow0
+	\]
+	为有限维左 \(A\)-模的非分裂短正合列。若 \(L\) 非零不可分解且 \(p\) 右几乎分裂，则 \(X\) 不可分解，\(p\) 右极小，\(u\) 左几乎分裂且左极小。因此它是几乎分裂序列。交换左右条件有对偶结论。
+\end{lemma}
+\begin{proof}
+	若 \(X=X_1\oplus X_2\) 且两项非零，两个坐标投影视为 \(X\) 的自同态时都不是分裂满射，故都经 \(p\) 分解。它们之和是 \(1_X\)，这会给 \(p\) 一个右逆，矛盾。所以 \(X\) 不可分解。
+
+	设 \(ps=p\)。正合性给出 \(s-1_E=ut\)，其中 \(t:E\to L\)，于是 \(su=u(1_L+tu)\)。若 \(1_L+tu\) 在局部环 \(\operatorname{End}_A(L)\) 中不可逆，则 \(tu\) 可逆，\((tu)^{-1}t\) 就是 \(u\) 的左逆，与非分裂矛盾。因此 \(1_L+tu\) 可逆。\(s\) 在子模 \(L\) 上及商 \(X\) 上都诱导同构：前者是 \(1_L+tu\)，后者是恒等。先在商中取原像，再用子模修正即可证明 \(s\) 满射；其核也先映入子模而后为零。因此 \(s\) 可逆，\(p\) 右极小。
+
+	给定不是分裂单射的 \(g:L\to N\)，作推出图
+	\[
+		\begin{tikzcd}
+			0\arrow[r]&L\arrow[r,"u"]\arrow[d,"g"']&E\arrow[r,"p"]\arrow[d,"b"]&X\arrow[r]\arrow[d,equal]&0\\
+			0\arrow[r]&N\arrow[r,"u'"']&E'\arrow[r,"p'"']&X\arrow[r]&0.
+		\end{tikzcd}
+	\]
+	若下行不分裂，右几乎分裂性质给 \(p'=ph\)。于是 \(p(hb)=p\)，由右极小性 \(hb\) 可逆。令 \(\widetilde h=(hb)^{-1}h\)，则 \(\widetilde h b=1_E\)、\(p\widetilde h=p'\)。后一个等式使 \(\widetilde h u'=uv\) 对某个 \(v:N\to L\) 成立。再由 \(bu=u'g\) 得 \(uvg=u\)，所以 \(vg=1_L\)，与 \(g\) 无左逆矛盾。故下行分裂。取 \(u'\) 的左逆 \(r:E'\to N\)，便有 \(g=rbu\)，证明 \(u\) 左几乎分裂。对右极小的论证取有限维向量空间对偶，并利用 \(X\) 不可分解，得到 \(u\) 左极小。这个对偶是有限维左模与右模之间的正合反等价，也给出整个引理的对偶版本。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:almost-split-components}
+	设 \(A\) 为域 \(k\) 上的有限维代数，\(p:E\to X\) 为有限维左模之间右极小的右几乎分裂态射，\(X\ne0\)。写 \(E=\bigoplus_iE_i\)，各 \(E_i\) 非零不可分解。则各分量 \(p_i:E_i\to X\) 都不可约，且任一从非零不可分解模 \(Y\) 到 \(X\) 的不可约映射都使 \(Y\) 同构于 \(E\) 的一个直和项。若 \(k\) 代数闭，则 \(Y\) 在 \(E\) 中的重数为 \(\dim_k\operatorname{Irr}_A(Y,X)\)。左极小左几乎分裂态射有对偶结论。
+\end{proposition}
+\begin{proof}
+	与上一引理相同，右几乎分裂性质迫使 \(X\) 不可分解。\(p_i\) 不可能为同构，否则 \(p\) 分裂；也不能为零，否则 \(p\) 不右极小。对分解 \(p_i=ba\)，若 \(b\) 无右逆，则 \(b=pc\)。定义 \(s:E\to E\)，在第 \(i\) 个分量上取 \(ca\)，在其余分量上取原包含。便有 \(ps=p\)，所以 \(s\) 可逆。若 \(\pi_i:E\to E_i\) 为投影，\(\pi_i s^{-1}c\) 是 \(a\) 的左逆，证明 \(p_i\) 不可约。
+
+	给定不可约 \(f:Y\to X\)，写 \(f=ph\)。\(p\) 无右逆，故 \(h\) 必有左逆，\(Y\) 遂是 \(E\) 的直和项。
+
+	现设 \(k\) 代数闭。\(\operatorname{End}_A(Y)\) 除以其根是有限维除代数。它的每个元素都满足在 \(k\) 上分裂的多项式，除环无零因子使该元素等于某个标量，故这个除代数为 \(k\)。把 \(E\) 中与 \(Y\) 同构的 \(m\) 个分量统一识别为 \(Y\)。任一 \(f\in\operatorname{rad}_A(Y,X)\) 都经 \(p\) 分解。分解映射中指向不同构分量的项，以及指向这些 \(Y\) 分量的非单位项，与 \(p_i\) 复合后都在根的平方中。所以这 \(m\) 个分量的类张成 \(\operatorname{Irr}_A(Y,X)\)。
+
+	若它们的某个标量线性组合在根的平方中，写成 \(ph=ba\)，其中 \(a,b\) 在态射根中，\(h\) 仅由这 \(m\) 个标量分量组成。\(b\) 经 \(p\) 分解为 \(pc\)，故 \(p(h-ca)=0\)。任何 \(v:Y\to E\) 若满足 \(pv=0\)，必在态射根中：否则某个不可分解分量可逆，\(v\) 就是分裂单射，其像是 \(p\) 零化的非零直和项，与右极小性矛盾。因此 \(h-ca\) 及 \(ca\) 都在根中，\(h\) 也在根中。它的标量分量只能全部为零，证明线性无关。有限和可通过中间模的直和写为一个 \(ba\)，故此论证覆盖一般的根平方元素。
+\end{proof}
+
+一般域上仍有不可约映射空间，但应分别把它看成端点除代数上的左右向量空间，不能未经说明就用同一个 \(k\) 维数作为箭数。
+
+\begin{example}\label{b5:exm:dual-number-almost-split}
+	设 \(k\) 为任意域，\(A=k[t]/(t^2)\)，\(S=A/(t)\)。则
+	\[
+		0\longrightarrow S\xrightarrow{i}A\xrightarrow{q}S\longrightarrow0,
+		\qquad i(1)=t,\quad q(a+bt)=a
+	\]
+	是几乎分裂序列。\(i,q\) 都不可约，而乘 \(t\) 的自同态 \(A\to A\) 可约。
+\end{example}
+\begin{proof}
+	一个有限维 \(A\)-模就是满足 \(T^2=0\) 的算子。先取 \(\operatorname{im}T\) 的基并选原像，得到若干个二阶幂零块；再将像的基补成核的基，补入的向量给一阶零块。所以每个模都是若干个 \(A\) 和 \(S\) 的直和。
+
+	态射 \(f:Y\to S\) 在每个 \(A\) 分量上是 \(q\) 的标量倍，在每个 \(S\) 分量上是标量。若后者有非零项，\(f\) 就有右逆；否则 \(f\) 经 \(q\) 分解。所以 \(q\) 右几乎分裂。所列序列非分裂，因为乘 \(t\) 在 \(A\) 上非零，在 \(S\oplus S\) 上却为零。由\cref{b5:lem:almost-split-one-sided,b5:prop:almost-split-components}，它是几乎分裂序列且两映射不可约。最后 \(iq\) 正是乘 \(t\)，因而属于 \(\operatorname{rad}_A^2(A,A)\)。与此同时，\(\operatorname{End}_A(A)\cong A\) 的根为 \((t)\)，其环内平方为零，这就区分了两种根平方。
+\end{proof}
 
 \subsection{几乎分裂序列的存在与唯一性}
 \label{b5:subsec:1005:03}
 
-待撰写。
+分解性质首先给出唯一性，完全不必预设存在性。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{proposition}\label{b5:prop:almost-split-uniqueness}
+	设 \(A\) 为域上的有限维代数，\(X\) 为非零有限维左 \(A\)-模。两个以 \(X\) 为目标的右极小右几乎分裂态射 \(p:E\to X\)、\(p':E'\to X\) 之间，存在同构 \(h:E\to E'\) 使 \(p=p'h\)。因此，以给定不可分解模为右端的几乎分裂序列，在固定右端为恒等的序列同构意义下唯一；固定左端也有对偶的唯一性。
+\end{proposition}
+\begin{proof}
+	两者都不是分裂满射，所以有 \(p=p'h\)、\(p'=pg\)。于是 \(p=pgh\)、\(p'=p'hg\)，极小性给出 \(gh,hg\) 都可逆。\((gh)^{-1}g\) 是 \(h\) 的左逆，\(g(hg)^{-1}\) 是右逆；左右逆必相等，故 \(h\) 为同构。对几乎分裂序列，\cref{b5:lem:almost-split-one-sided}保证极小性，\(h\) 又限制为两个核的同构，所以整个短正合列同构。对偶给出固定左端的结论。
+\end{proof}
+
+序列同构的存在不意味着所取同构唯一，也不意味着固定两端后的 Ext 类只有一个。\(\operatorname{Ext}^1\) 记录两端识别保持恒等的扩张，而上面只固定其中一端，另一端可以经过自同构改变。
+
+\begin{theorem}\label{b5:thm:almost-split-existence}
+	设 \(A\) 为任意域 \(k\) 上的有限维代数。每个非投射的非零不可分解有限维左 \(A\)-模 \(X\)，都是一个几乎分裂序列的右端；每个非内射的非零不可分解有限维左 \(A\)-模 \(L\)，都是一个几乎分裂序列的左端。
+\end{theorem}
+
+这个定理的完整证明放在\subsecref{b5:subsec:1006:03}的 AR 公式之后。那里从 \(X\) 的极小投射展示构造具体左端 \(D\operatorname{Tr}X\)，再把局部自同态环上的一个线性泛函变成非分裂扩张。泛函在根上消失，正好保证每个不是分裂满射的态射沿此扩张的拉回都分裂；这将给出本节所需的分解性质。
+
+\ProseParagraphBreak
+投射与内射端点的排除是必要的：右端投射或左端内射的短正合列总会分裂。不过，这些端点仍可有极小几乎分裂态射，只是它不再组成这里的非分裂短正合列。下面给出投射端的具体形式。
+
+\begin{proposition}\label{b5:prop:projective-radical-almost-split}
+	设 \(A\) 为域上的有限维代数，\(P\) 为非零不可分解有限维投射左 \(A\)-模，\(J=J(A)\)。则包含 \(JP\hookrightarrow P\) 是右极小右几乎分裂态射。对偶地，若 \(I\) 为非零不可分解有限维内射左模，则 \(I\to I/\operatorname{soc}I\) 是左极小左几乎分裂态射，其中 \(\operatorname{soc}I\) 为全部简单子模之和。
+\end{proposition}
+\begin{proof}
+	% 跨卷引用目标：b2:thm:indecomposable-projective-simple（15.3.10）。
+	第二卷定理15.3.10说明 \(P/JP\) 简单，故 \(JP\) 是 \(P\) 的唯一极大子模。若 \(f:Y\to P\) 的像不在 \(JP\) 中，则 \(\operatorname{im}f+JP=P\)。对有限维商 \(C=P/\operatorname{im}f\)，这给出 \(JC=C\)。有限维代数的根 \(J\) 幂零，迭代得到 \(C=J^nC=0\)，所以 \(f\) 满射；\(P\) 投射又使它分裂。因此每个不是分裂满射的 \(f\) 都经 \(JP\) 的包含分解。这个包含不是分裂满射，而且单射性直接保证右极小。有限维对偶把不可分解内射模变成反代数上的不可分解投射模，并把根商对偶为 socle 包含，得到对偶陈述。
+\end{proof}
+
+例如 \(Q:1\to2\) 中的 \(P=(k\xrightarrow{1}k)\) 是投射模，\(\operatorname{rad}P=S_2\)。所以 \(S_2\hookrightarrow P\) 是右极小右几乎分裂态射，尽管它不是满射。它与\cref{b5:exm:a2-almost-split}中同一映射作为左几乎分裂态射的性质相容；判断“左”“右”时，固定的是不同的端点和因子分解方向。

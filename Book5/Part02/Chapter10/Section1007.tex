@@ -1,38 +1,256 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 10.7 AR 箭图与表示型
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：计算 An 型及 Kronecker 的预投射、正则和预内射分支；仿射箭图和 Drozd 定理固定适用范围，不重建已有 Tits 型。
+% * 状态：初稿已完成；线性定向箭图与Kronecker模型的几乎分裂列、平移及态射计算已写成。Kronecker标准形的穷尽、一般仿射分类与管结构、Drozd二分给证明概要并说明省略步骤。10.5–10.7合计新增12道选做题及完整解答；新增范围尚未正式审核。
 % #### 10.7.1 线性定向箭图的 AR 箭图
 % #### 10.7.2 Kronecker 箭图的三个分支
 % #### 10.7.3 仿射箭图与表示型
 % #### 10.7.4 驯野二分定理的陈述
+% ---
+% 状态：正文、证明、算例及配套习题与解答已完成初稿，尚未正式审核。
 
 \section{AR 箭图与表示型}
 \label{b5:sec:1007}
 
-待撰写。
+几乎分裂序列把一个不可分解模同若干个邻近的不可分解模联系起来。把这些联系画成箭图，便能同时看见对象、不可约映射和 AR 平移。线性定向的 \(A_n\) 给出有限的三角形图形；两支平行箭的情形则已有两个无限分支，以及由射影直线参数化的一族循环平移分支。这两种计算也说明：图中顶点的多少、参数怎样出现、态射怎样分解，是三个需要分别回答的问题。
 
 \subsection{线性定向箭图的 AR 箭图}
 \label{b5:subsec:1007:01}
 
-待撰写。
+\begin{definition}\label{b5:def:ar-quiver}
+	设 \(k\) 为代数闭域，\(A\) 为有限维含幺 \(k\) 代数。取每个有限维不可分解左 \(A\)-模同构类的一个代表，以这些代表为顶点；从 \(X\) 到 \(Y\) 放置
+	\[
+		\dim_k\operatorname{Irr}_A(X,Y)
+		=\dim_k\bigl(\operatorname{rad}_A(X,Y)/\operatorname{rad}_A^2(X,Y)\bigr)
+	\]
+	支箭，所得箭图记为 \(\Gamma_A\)，称为 \(A\) 的\term[AR-jiantu]{AR 箭图}[Auslander--Reiten quiver]。在非投射顶点上还记录平移 \(X\mapsto\tau X\)。
+\end{definition}
+\symidx{\(\Gamma_A\)：有限维代数 \(A\) 的 AR 箭图}
+
+有限维不可分解模的自同态环是局部环，且在代数闭域上，其半单商为 \(k\)。因此这里的箭数是普通的 \(k\) 维数。一般基域上，顶点还带有除代数，\(\operatorname{Irr}\) 是两端除代数上的双模；仅画这个维数会丢失资料。下面的区间计算本身对任意域都成立，因为各区间的自同态环已是 \(k\)。
+
+\ProseParagraphBreak
+取 \(Q:1\to2\to\cdots\to n\)。\cref{b5:thm:linear-quiver-intervals}已经证明，不可分解表示恰为 \(I[a,b]\)，其中 \(1\le a\le b\le n\)。\cref{b5:prop:interval-hom}又给出
+\[
+	\operatorname{Hom}_Q(I[a,b],I[c,d])\cong
+	\begin{cases}
+		k,&c\le a\le d\le b,\\
+		0,&\text{其他情形}.
+	\end{cases}
+\]
+在非零情形，取重合顶点上的恒等映射为基。因而区间间态射的分解可以逐个比较端点，无须重新消元。
+
+\begin{proposition}\label{b5:prop:an-almost-split}
+	设 \(k\) 为域，\(Q:1\to\cdots\to n\)，\(1\le a\le b<n\)。令越界的 \(I[a+1,b]\) 在 \(a=b\) 时表示零对象。则有几乎分裂序列
+	\begin{equation}\label{b5:eq:an-almost-split}
+		0\longrightarrow I[a+1,b+1]
+		\xrightarrow{(\iota,\pi)}
+		I[a,b+1]\oplus I[a+1,b]
+		\xrightarrow{(\pi,-\iota)}I[a,b]
+		\longrightarrow0.
+	\end{equation}
+	其中 \(\iota\) 为区间末段的自然嵌入，\(\pi\) 为截去最右端后的自然商映射。不可分解投射表示为 \(I[a,n]\)，不可分解内射表示为 \(I[1,b]\)，并且
+	\[
+		\tau I[a,b]=I[a+1,b+1]\qquad(b<n).
+	\]
+\end{proposition}
+\begin{proof}
+	在顶点 \(a\) 上，非零部分为 \(0\to k\xrightarrow{1}k\to0\)；在 \(a+1,\ldots,b\) 上为
+	\[
+		0\longrightarrow k\xrightarrow{z\mapsto(z,z)}k^2
+		\xrightarrow{(x,y)\mapsto x-y}k\longrightarrow0;
+	\]
+	在顶点 \(b+1\) 上又为 \(0\to k\xrightarrow{1}k\to0\)。各箭同这些映射交换，故全列正合。中间项的两个非零区间均不同构于右端；区间分解的唯一性说明右端不可能是中间项的直和项，所以序列不分裂。
+
+	检验右几乎分裂性质，只需考虑从不可分解区间 \(I[c,d]\) 出发且没有右逆的态射。事实上，若一个直和对象出发的态射没有右逆，其每个分量也都没有右逆；逐个分解后求和即可。一个非零态射 \(I[c,d]\to I[a,b]\) 要求 \(a\le c\le b\le d\)。若 \(d>b\)，它经 \(I[a,b+1]\) 分解，两个基态射的复合在 \(c,\ldots,b\) 上仍为恒等。若 \(d=b\) 且 \(c>a\)，它经 \(I[a+1,b]\) 分解。余下 \((c,d)=(a,b)\) 的非零态射为可逆标量，已经有右逆。零态射显然也可分解，因此所有没有右逆的态射都经所列右映射分解。左端不可分解，\cref{b5:lem:almost-split-one-sided}遂给出几乎分裂序列。
+
+	由\cref{b5:prop:vertex-projective}，顶点 \(a\) 的投射表示是 \(I[a,n]\)。对偶地，\(\operatorname{Hom}_Q(V,I[1,b])\cong D(V_b)\)：一个态射由顶点 \(b\) 上的泛函确定，较左顶点的分量由沿路径复合给出。顶点取值及有限维向量空间对偶都正合，故这些表示内射；它们包含全部顶点简单模的内射包络。其余区间分别出现于所列非分裂序列的右端或左端，故不是投射或内射。最后，AR 平移的端点识别给出所述公式。
+\end{proof}
+
+由\cref{b5:prop:almost-split-components}，这些序列的非零分量给出全部不可约箭；投射终点的情形由其根嵌入补上。具体为
+\[
+	I[a,b]\longrightarrow I[a-1,b]\quad(a>1),\qquad
+	I[a,b]\longrightarrow I[a,b-1]\quad(a<b).
+\]
+也可以直接检查没有遗漏：任何非零非同构区间态射，只要左端或右端至少移动两次，或两个端点都移动，就能按上式分成两个非同构态射；只移动一个端点一步的态射无法作这样的分解。对 \(A_3\)，所得图为
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+I[3,3]\arrow[r]&I[2,3]\arrow[r]\arrow[d]&I[1,3]\arrow[d]\\
+&I[2,2]\arrow[r]&I[1,2]\arrow[d]\\
+&&I[1,1].
+\end{tikzcd}
+\]
+图中的方形并非四个彼此无关的映射：从 \(I[2,3]\) 到 \(I[1,2]\) 的两条复合在顶点 \(2\) 上都为恒等。给其中一个分量取负号后，它们的和为零，正是\eqref{b5:eq:an-almost-split}中两映射复合为零的关系。
 
 \subsection{Kronecker 箭图的三个分支}
 \label{b5:subsec:1007:02}
 
-待撰写。
+以下固定代数闭域 \(k\) 及两箭 \(a,b:1\to2\)。为把各次矩阵的嵌入和商映射写在一起，令 \(H_m=k[x,y]_m\) 为二元齐次多项式的 \(m\) 次部分，并令 \(H_{-1}=0\)。对 \(n\ge0\)，定义
+\[
+	P_n=(H_{n-1},H_n;x,y),\qquad
+	I_n=(DH_n,DH_{n-1};x^*,y^*),
+\]
+这里 \(x,y\) 表示乘法映射，对偶表示同时交换两个顶点。于是
+\[
+	\dim P_n=(n,n+1),\qquad \dim I_n=(n+1,n).
+\]
+例如 \(P_0=S_2\)，\(P_1\) 是顶点 \(1\) 的投射表示；\(I_0=S_1\)，\(I_1\) 是顶点 \(2\) 的内射表示。这里下标按多项式次数排列，不是顶点编号。
+
+\ProseParagraphBreak
+再令 \(T_r=k[s]/(s^r)\)，\(r\ge1\)。沿用\cref{b5:prop:kronecker-jordan-family}的记号，取
+\[
+	R_{\lambda,r}=(T_r,T_r;1,\lambda+s)\quad(\lambda\in k),\qquad
+	R_{\infty,r}=(T_r,T_r;s,1).
+\]
+这些模型在幂基下就是前面的 Jordan 块；换取反向幂基可以交换 Jordan 块的上、下对角形式。令 \(R_{\lambda,0}=0\)。
+
+\begin{theorem}[Kronecker 标准形]\label{b5:thm:kronecker-normal-forms}
+	设 \(k\) 为代数闭域，\(Q\) 为两箭均从 \(1\) 指向 \(2\) 的 Kronecker 箭图。有限维不可分解 \(kQ\)-模恰为
+	\[
+		P_n,\ I_n\quad(n\ge0),\qquad
+		R_{\lambda,r}\quad(\lambda\in\mathbb P^1(k),\ r\ge1).
+	\]
+	所列各项两两不同构。任意有限维表示都是这些模型的直和，直和项及其重数除排列外唯一。
+\end{theorem}
+\begin{proofsketch}
+	把一对箭映射写成矩阵束 \(B-tA\)。若它有非零多项式核向量，取次数最小的一个，并比较各次系数，便得到一条首尾受约束的向量链。对转置矩阵束也作同样处理。这两种链分别给出矩形块 \(I_n\) 和 \(P_n\)；每取出一块就降低两个顶点的总维数。这里需要的矩阵束分裂步骤，不只是发现一条链，而是用同时行、列变换消去它与剩余空间间的交叉块；最小次数条件保证相应消元方程可解。
+
+	除去全部矩形块后，剩余矩阵束为正则方阵束。由于 \(k\) 无限，某个线性组合 \(uA+vB\) 可逆。以它识别两端空间后，问题成为一个算子的相似分类；Jordan 分解给出各有限参数块。再换回原来的箭坐标，把第一条箭不可逆的特征方向记作 \(\infty\)，得到所列 \(R_{\infty,r}\)。本概要省略了最小核链的直和分裂及正则、奇异部分分离的完整消元论证。
+
+	各模型的自同态环可直接核对。对 \(P_n\)，箭交换条件迫使所有齐次单项式的像由同一个标量给出；\(I_n\) 由对偶得到同样结论。对 \(R_{\lambda,r}\)，\cref{b5:prop:kronecker-jordan-family}已经给出自同态环 \(T_r\)，它为局部环。故这些模型不可分解；维数向量及正则块的特征参数区分它们。直和分解的唯一性由 Krull--Schmidt 定理保证。
+\end{proofsketch}
+从根分类和正则部分得到上述标准形的另一条路径，见\cite[作者公开稿, Section 3.2, Theorem 3.10 and Example 3.11; Section 3.6, Proposition 3.32, Theorem 3.33 and Example 3.34]{Schiffmann2012HallAlgebras}。该来源的公开稿与刊本分页不同，这里的定位采用公开稿编号。下面直接计算所列模型的态射，序列的几乎分裂性质将逐一核验。
+
+\begin{lemma}\label{b5:lem:kronecker-factorization-data}
+	在上述代数闭域及 Kronecker 箭向约定下，令 \(m,n\ge0\)、\(r,s\ge1\)、\(\lambda,\mu\in\mathbb P^1(k)\)。则
+	\[
+		\operatorname{Hom}_Q(P_m,P_n)\cong H_{n-m},
+	\]
+	其中负次数的 \(H\) 取零，同构把齐次多项式送到两顶点上的乘法映射。另外，
+	\[
+		\operatorname{Hom}_Q(R_{\lambda,r},P_n)=0,
+		\qquad\operatorname{Hom}_Q(I_m,P_n)=0,
+		\qquad\operatorname{Hom}_Q(I_m,R_{\lambda,r})=0.
+	\]
+	对有限 \(\lambda\)，\(\operatorname{Hom}_Q(P_m,R_{\lambda,r})\cong T_r\)，参数 \(u\in T_r\) 对应把单项式 \(x^{d-j}y^j\) 送到 \((\lambda+s)^j u\) 的顶点映射。无穷参数交换 \(x,y\)。不同参数的正则模间没有非零态射；相同参数时
+	\[
+		\operatorname{Hom}_Q(R_{\lambda,r},R_{\lambda,s})
+		\cong\operatorname{Hom}_{k[s]}(T_r,T_s),
+		\qquad \dim_k\operatorname{Hom}_{k[s]}(T_r,T_s)=\min(r,s).
+	\]
+\end{lemma}
+\begin{proof}
+	先考虑 \(P_m\to P_n\)。若 \(m=0\)，态射由 \(1\in H_0\) 的像 \(h\in H_n\) 给出。若 \(m\ge1\)，令源端单项式 \(x^{m-1-j}y^j\) 的像为 \(u_j\in H_{n-1}\)。重合的箭像给出
+	\[
+		yu_j=xu_{j+1}\qquad(0\le j<m-1).
+	\]
+	因为 \(x,y\) 互素，这些等式逐次迫使 \(u_j=x^{m-1-j}y^jh\)，其中 \(h\in H_{n-m}\)。两箭的像张成 \(H_m\)，所以另一顶点的映射也只能乘 \(h\)。若 \(n<m\)，次数迫使全部 \(u_j\) 为零，结论仍成立。到正则模时，同一递推变成 \(u_{j+1}=(\lambda+s)u_j\)，不再有次数障碍，得到所列 \(T_r\) 参数；这一描述同 \(T_r\) 的自然商映射相容。
+
+	对 \(R_{\lambda,r}\to P_n\)，箭条件给出 \(yf=x f(\lambda+s)\)，其中 \(f:T_r\to H_{n-1}\)。由 \(s^r=0\) 反复代入，得到 \((y-\lambda x)^r f=0\)。多项式环为整环，故 \(f=0\)；另一分量随之为零。无穷参数同理。对 \(I_m\to P_n\)，取 \(DH_m\) 中与 \(x^m,x^{m-1}y,\ldots,y^m\) 对偶的基 \(v_0,\ldots,v_m\)。两箭为截去首项或末项的映射，满足 \(av_m=0\)、\(bv_0=0\)、\(av_j=bv_{j+1}\)。若像为 \(w_j\in H_{n-1}\)，则有 \(xw_m=0\)、\(yw_0=0\)、\(xw_j=yw_{j+1}\)，由两端向中间递推得到全部 \(w_j=0\)。两箭共同张成目标顶点，另一分量也为零。把此论证中的 \(x\) 换成正则模的恒等箭，\(y\) 换成 \(\lambda+s\)，从 \(av_m=0\) 反向递推，仍得 \(I_m\to R_{\lambda,r}\) 只能为零；无穷参数从另一端递推。
+
+	正则模的恒等箭把两端态射识别，余下条件是同所给算子交换。有限参数不同时，用互素的 \((t-\lambda)^r,(t-\mu)^s\) 消去态射。有限参数到无穷参数时，设两端映射为 \(f,g\)，条件给出 \(g=Nf\)、\(f=g(\lambda+S)\)，因而 \(f=N^\ell f(\lambda+S)^\ell=0\)（取 \(\ell\ge\max(r,s)\)）；反向同理。同参数时，态射由 \(1\) 的像决定，该像必须被 \(s^r\) 零化，在 \(T_s\) 中恰有 \(\min(r,s)\) 维。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:kronecker-almost-split}
+	设 \(k\) 为代数闭域，\(Q:1\rightrightarrows2\)。上述模型之间有几乎分裂序列
+	\begin{align}
+		0&\longrightarrow P_n\xrightarrow{(-y,x)}P_{n+1}^{\oplus2}
+		\xrightarrow{(x,y)}P_{n+2}\longrightarrow0 &&(n\ge0),\label{b5:eq:kronecker-preprojective-ar}\\
+		0&\longrightarrow I_{n+2}\longrightarrow I_{n+1}^{\oplus2}
+		\longrightarrow I_n\longrightarrow0 &&(n\ge0),\label{b5:eq:kronecker-preinjective-ar}\\
+		0&\longrightarrow R_{\lambda,r}\xrightarrow{(q,i)}
+		R_{\lambda,r-1}\oplus R_{\lambda,r+1}
+		\xrightarrow{(i,-q)}R_{\lambda,r}\longrightarrow0
+		&&(r\ge1).\label{b5:eq:kronecker-regular-ar}
+	\end{align}
+	第二列的映射是第一列映射经向量空间对偶并交换顶点所得的映射。第三列中 \(q:T_j\to T_{j-1}\) 是自然商，\(i:T_j\to T_{j+1}\) 是乘 \(s\)；\(\lambda\) 可为射影直线上的任意点。因此
+	\[
+		\tau P_m=P_{m-2}\ (m\ge2),\qquad
+		\tau I_m=I_{m+2}\ (m\ge0),\qquad
+		\tau R_{\lambda,r}=R_{\lambda,r}.
+	\]
+\end{proposition}
+\begin{proof}
+	第一列在每个顶点化为齐次多项式列
+	\[
+		0\longrightarrow H_{d-1}\xrightarrow{h\mapsto(-yh,xh)}H_d^2
+		\xrightarrow{(f,g)\mapsto xf+yg}H_{d+1}\longrightarrow0,
+	\]
+	其中 \(d=n\) 或 \(n+1\)。右映射满射，因为每个正次数单项式都被 \(x\) 或 \(y\) 整除；若 \(xf=-yg\)，互素性给出 \(f=-yh,g=xh\)。所以序列正合。\cref{b5:lem:kronecker-factorization-data}给出 \(\operatorname{Hom}_Q(P_{n+2},P_{n+1})=0\)，故它不分裂。
+
+	由标准形，只需检验各类不可分解模到 \(P_{n+2}\) 的没有右逆的态射。若源对象为有限直和且态射没有右逆，各个分量也没有右逆，故可在分解各分量后求和。正则模及 \(I_m\) 到 \(P_{n+2}\) 没有非零态射。从 \(P_m\) 出发的态射由 \(h\in H_{n+2-m}\) 给出；若 \(m\le n+1\)，写 \(h=xh_1+yh_2\)，便经右映射分解。\(m=n+2\) 时非零态射可逆，\(m>n+2\) 时 Hom 为零；零态射总可分解。因此右映射右几乎分裂，左端不可分解，由\cref{b5:lem:almost-split-one-sided}完成证明。对偶反转短正合列并交换左右几乎分裂性质，得到第二列。
+
+	第三列的正合性可在 \(T_r\) 中直接检查：\(iq=qi\)，两者都是适当商中的乘 \(s\)。左映射单射，因为第二分量单射；右映射满射，因为第二分量满射。维数相减后，像与核相等。若序列分裂，中间项会同构于 \(T_r\oplus T_r\)，但实际中间项上 \(s\) 的幂零指数为 \(r+1\)，前者的指数为 \(r\)，故不分裂。
+
+	从 \(P_m\) 到右端的任意态射以 \(T_r\) 的一个元素为参数；把它提升到 \(T_{r+1}\) 就能经右映射的第二分量分解。\(I_m\) 及其他参数的正则模到右端的 Hom 为零。还剩 \(T_j\to T_r\) 的模同态。若 \(j<r\)，其像在 \(sT_r\) 中，因而经 \(i:T_{r-1}\to T_r\) 分解；若 \(j>r\)，可把 \(1\) 的像提升到 \(T_{r+1}\)，仍被 \(s^j\) 零化，故经 \(q:T_{r+1}\to T_r\) 分解。若 \(j=r\)，非可逆自同态也是乘 \(s\) 的倍数，仍经 \(i\) 分解。右几乎分裂性质由此成立，再用同一单侧判据。最后各序列的左端识别给出 \(\tau\) 的公式。
+\end{proof}
+
+若不可分解表示经有限次 \(\tau\) 后成为投射表示，就称它为\term[yutoushe-biaoshi]{预投射表示}[preprojective representation]；若经有限次 \(\tau^{-}\) 后成为内射表示，就称它为\term[yuneishe-biaoshi]{预内射表示}[preinjective representation]。在 Kronecker 情形，前者恰为 \(P_n\)，后者恰为 \(I_n\)，余下的 \(R_{\lambda,r}\) 称为\term[zhengze-biaoshi]{正则表示}[regular representation]。
+
+因此预投射部分的箭为 \(P_n\rightrightarrows P_{n+1}\)，预内射部分为 \(I_{n+1}\rightrightarrows I_n\)。每个固定 \(\lambda\) 的正则部分则为
+\[
+	R_{\lambda,1}\ \substack{\longrightarrow\\[-2pt]\longleftarrow}\
+	R_{\lambda,2}\ \substack{\longrightarrow\\[-2pt]\longleftarrow}\
+	R_{\lambda,3}\ \substack{\longrightarrow\\[-2pt]\longleftarrow}\
+	\cdots,
+	\qquad \tau R_{\lambda,r}=R_{\lambda,r}.
+\]
+上行箭可取乘 \(s\)，下行箭可取自然商。这种平移周期为一的分支称为\term[qixing-guan]{齐性管}[homogeneous tube]。各参数给出不同的管。尽管 \(\operatorname{Hom}(P_m,R_{\lambda,r})\) 往往非零，AR 箭图中却没有从预投射部分指向正则部分的箭：上述因子提升使这类态射能经过任意长的链，因而不是不可约映射。
+
+\ProseParagraphBreak
+这里还可以真正核对驯型定义。固定总维数 \(d\)，奇数维只可能出现两个离散模型 \(P_n,I_n\)；若 \(d=2r\)，正则模型由一个参数 \(\lambda\in k\) 给出，外加 \(\infty\) 这一个例外。令两顶点的右 \(k[t]\) 模均为 \(k[t]^r\)，两箭为 \(I_r,J_r(t)\)，得到一个右自由秩为 \(2r\) 的 \(kQ\)-\(k[t]\) 双模，特殊化 \(t=\lambda\) 正好给出 \(R_{\lambda,r}\)。标准形保证没有遗漏；\(r=1\) 又提供无限多个不同构类。所以 Kronecker 路径代数具有驯表示型。
 
 \subsection{仿射箭图与表示型}
 \label{b5:subsec:1007:03}
 
-待撰写。
+Kronecker 箭图的二次型为 \((d_1-d_2)^2\)，它半正定但不正定，零方向由 \(\delta=(1,1)\) 生成。类似的边界情形是扩张 Dynkin 图，亦称 Euclidean 图或仿射 Dynkin 图：\(\widetilde A_n\)、\(\widetilde D_n\)、\(\widetilde E_6,\widetilde E_7,\widetilde E_8\)。这里 \(\widetilde A_1\) 是两点双边图；\(n\ge2\) 时 \(\widetilde A_n\) 是 \(n+1\) 点的圈。给它们取无有向环定向后，路径代数仍有限维。特别地，不能把所有箭同向的有向圈放进这个条件中。
+
+\ProseParagraphBreak
+这些连通图的 Tits 型半正定，零空间是一维，并有各坐标为正、坐标最大公因数为一的整数生成元 \(\delta\)。它称为\term[zuixiao-zheng-xugen]{最小正虚根}[minimal positive imaginary root]。固定箭向后定义维数向量的\term[kuique]{亏缺}[defect]为
+\[
+	\partial(\mathbf d)=\langle\delta,\mathbf d\rangle_Q.
+\]
+例如对 \(1\rightrightarrows2\)，有 \(\partial(d_1,d_2)=d_1-d_2\)，上面的 \(P_n,R_{\lambda,r},I_n\) 分别给出负、零、正三种情形。
+
+\begin{theorem}[仿射箭图的表示型]\label{b5:thm:affine-quiver-type}
+	设 \(k\) 为代数闭域，\(Q\) 为连通有限无有向环箭图，其无向基础图是扩张 Dynkin 图。则 \(kQ\) 为驯表示型。每个有限维不可分解表示恰属下列一类：经过有限次 \(\tau\) 后成为投射表示的预投射表示；经过有限次 \(\tau^{-}\) 后成为内射表示的预内射表示；不属于前两类的正则表示。三类的亏缺分别为负、正、零。
+	正则 AR 分支为管：除有限多个管以外，管的平移周期为一；其余管的周期也是有限的正整数。
+\end{theorem}
+\begin{proofsketch}
+	\secref{b5:sec:1002}的反射函子在去掉相应顶点简单模后给出等价。对负亏缺的不可分解表示，沿一个允许的汇点次序反复反射；在每轮反射同 \(\tau\) 的对应下，它最终到达投射表示。正亏缺用源点反射和对偶处理。这里需要半正定型及 \(\delta\) 控制反射轨道，不能沿用正定型中“全部根只有有限多个”的论证。
+
+	零亏缺的不可分解表示及其有限直和形成正则部分；总亏缺为零的直和若混有预投射与预内射项，则不在其中。其有限长度结构中的简单对象称为正则简单对象；这个“简单”是相对于正则部分，而非相对于全体表示。AR 平移将它们分成有限周期的轨道。同一轨道上的对象沿唯一的逐层扩张组成单列对象，给出一个管；若周期为 \(p\)，管的顶点可记为 \((i,r)\)，其中 \(i\in\mathbb Z/p\mathbb Z\)、\(r\ge1\)，平移为 \((i,r)\mapsto(i-1,r)\)。其箭为 \((i,r)\to(i,r+1)\) 及 \((i,r+1)\to(i+1,r)\)，周期一时正是前面的正则计算。
+
+	还须证明这些构造穷尽正则表示，周期大于一的轨道只有有限多个，剩余轨道由射影直线去掉有限个点参数化，并且固定维数时参数族可取为驯型定义中的右自由双模族。这些步骤涉及正则部分作为交换范畴的性质、有限长度与单列结构，以及参数族的构造，本节不展开其完整证明；只画出若干管或算出 \(q_Q(\delta)=0\) 并不能替代这些步骤。
+\end{proofsketch}
+仿射型的分类依据见\cite[作者公开稿, Section 3.2, Theorem 3.10]{Schiffmann2012HallAlgebras}；正则部分及管的分解见同一文献的\cite[作者公开稿, Section 3.6, Propositions 3.31--3.32 and Theorem 3.33]{Schiffmann2012HallAlgebras}。这些结构定理是本节概要的输入，前面对 Kronecker 三类模型的态射和几乎分裂序列的计算则已完整展开。
+
+\ProseParagraphBreak
+可以看一个不同于双平行箭的参数族。取四个外点都指向中心的四子空间箭图，在中心放 \(k^2\)，在外点各放 \(k\)，四箭的像依次取
+\[
+	ke_1,\quad ke_2,\quad k(e_1+e_2),\quad k(e_1+\lambda e_2),
+	\qquad \lambda\in k\setminus\{0,1\}.
+\]
+其维数向量 \(\delta=(2;1,1,1,1)\) 满足 \(q_Q(\delta)=4+4-8=0\)。保持前三条线的中心自同态只能是标量；其在四个外点的分量也被这些非零箭确定，故自同态环为 \(k\)，表示不可分解。若两个参数对应的表示同构，前三条线又迫使中心同构为标量，第四条线遂给出参数相等。由\cref{b5:prop:quiver-euler-hom-ext}，每个表示的自扩张空间为一维。这展示了一个零亏缺的单参数族，但没有声称四子空间箭图的全部正则管都是齐性管。
+
+\ProseParagraphBreak
+对一般连通有限无环箭图，有限表示型恰为 Dynkin 情形；上述分类中的“驯无限型当且仅当仿射型”，结合下面的二分定理，说明其余情形均为野型。这里的判别依赖“没有附加关系”；给路径代数加入关系以后，不能只凭基础图的形状或未加关系的 Tits 型推断表示型。
 
 \subsection{驯野二分定理的陈述}
 \label{b5:subsec:1007:04}
 
-待撰写。
+前面已对三箭图构造了来自矩阵对分类的表示嵌入；Kronecker 标准形则给出了另一种穷尽方式。Drozd 定理说明，在代数闭域上的有限维代数中，这两种情况之间没有第三种无限表示型。这里沿用\cref{b5:def:tame-wild-type}的约定，把有限表示型单独列出。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
-% ---
+\begin{theorem}[Drozd 驯野二分]\label{b5:thm:drozd-dichotomy}
+	设 \(k\) 为代数闭域，\(A\) 为有限维含幺 \(k\) 代数。则有限表示型、驯表示型和野表示型恰有一种成立。特别地，若 \(A\) 有无限多个有限维不可分解模的同构类，则它或者由每个维数上的有限多个单参数族及有限例外描述，或者存在\cref{b5:def:tame-wild-type}规定的右自由双模，把任意两个方阵的同时相似问题嵌入其模分类问题；这两种情况不能同时成立。
+\end{theorem}
+\begin{proofsketch}
+	首先用\cref{b5:prop:basic-morita-reduction,b5:thm:basic-algebra-bound-quiver}把问题转到基本代数及其带关系箭图。有限维性使根幂零，因此投射表示之间的同态可以分成有限层的矩阵块；换投射表示的基给出允许的行、列变换。一般约化还须同时保留块间关系以及态射的相容条件，故引入带微分的双模资料来记录这个矩阵问题。
+
+	约化的关键是：可逆的块可用消元去掉，单个环上的矩阵用多项式的初等因子处理；需要让某个多项式不为零时，暂时在相应局部化中工作，并另行处理被排除的有限参数。若约化中出现两个可以任意变化、只受同一次换基控制的方阵，就能构造所需的表示嵌入，得到野型。其余情形则要证明，在每个固定维数上，只留下有限多个单参数族及有限例外。
+
+	这里省略的正是一般约化定理：约化对象仍留在可控的矩阵问题类中，所得函子保持不可分解性并反映同构，约化的终止与参数数目在固定维数下受控，以及驯型与野型互斥。有限次普通高斯消元本身不能证明这些结论。这些技术结果合起来才给出二分定理。
+\end{proofsketch}
+矩阵问题的编码及约化见\cite[作者公开稿, Sections 4--6]{Drozd2001Reduction}，二分与互斥性分别见\cite[作者公开稿, Theorem 8.1, Corollary 8.3 and Proposition 5.5]{Drozd2001Reduction}。该文把有限型也计入广义的驯型；本书将有限型单独列出，因而表述为三个互斥情形。这里同样采用作者公开稿的编号，不把其页码当作正式刊本页码。
+
+\ProseParagraphBreak
+定理判别的是分类问题能够包含什么资料，并不为每个野型代数提供某种逐项分类清单，也不声称只看有限多个低维算例就能决定表示型。反过来，找到一条参数曲线也不能证明一个代数驯型：野型代数同样可能含有许多容易描述的单参数子族。驯型中的穷尽条件与野型中的表示嵌入，分别承担这两个方向的证明责任。

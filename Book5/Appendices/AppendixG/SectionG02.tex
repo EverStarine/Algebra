@@ -1,8 +1,6 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### G.2 环 Lie 代数、中心扩张与导子
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以可对称化及仿射型为范围，展开环代数和仿射 sl2 小模型，Weyl–Kac 公式标明证明范围；不展开 VOA 与 Lie 超代数。
 % #### G.2.1 环 Lie 代数
 % #### G.2.2 中心扩张与二次型
 % #### G.2.3 次数导子与根分解
@@ -10,22 +8,279 @@
 \section{环 Lie 代数、中心扩张与导子}
 \label{b5:sec:G02}
 
-待撰写。
+有限维根空间分解中，每个根空间只出现一次。如果给每个向量再附上一个整数次数，根空间就会沿着次数方向不断重复；但仅仅重复这些空间，还没有产生仿射 Lie 代数中新的中心方向。后者来自一个不变双线性型与 Laurent 多项式微分共同决定的修正项，而次数导子则把原先的整数标号变成真正可测量的权。
 
 \subsection{环 Lie 代数}
 \label{b5:subsec:G02:01}
 
-待撰写。
+\begin{definition}\label{b5:def:G-loop-algebra}
+	设 \(\mathfrak g\) 为有限维复 Lie 代数。向量空间
+	\[
+		L\mathfrak g\coloneqq\mathfrak g\otimes_{\mathbb C}\mathbb C[t,t^{-1}]
+		=\bigoplus_{m\in\mathbb Z}\mathfrak g\otimes t^m
+	\]
+	配上括号
+	\[
+		[x\otimes f,y\otimes g]=[x,y]\otimes fg
+	\]
+	所得的 Lie 代数称为 \(\mathfrak g\) 的\term[huan-Lie-daishu]{环 Lie 代数}[loop Lie algebra]。对 \(u\in\mathfrak g\)，简记 \(u_m=u\otimes t^m\)。每个元素都是有限和，\(t\) 是形式变量。
+\end{definition}
+\symidx{\(L\mathfrak g\)：环 Lie 代数}
+\symidx{\(u_m=u\otimes t^m\)：环 Lie 代数的齐次元素}
+
+这个括号的反对称性来自 \(\mathfrak g\) 的括号及系数环的交换性。在三个纯张量上，Jacobi 恒等式的左边等于
+\[
+	\bigl([[x,y],z]+[[y,z],x]+[[z,x],y]\bigr)\otimes fgh=0,
+\]
+再由三线性推广到有限和。因此这里不需要任何关于收敛的条件。“环”对应英文 loop，而不是说这个 Lie 代数另有一个结合乘法。若取 \(\mathfrak g=\mathfrak{sl}_r(\mathbb C)\)，则它具体就是迹零的 \(r\) 阶 Laurent 多项式矩阵，括号仍为矩阵交换子。
+
+\ProseParagraphBreak
+
+次数相加的公式
+\[
+	[u_m,v_n]=[u,v]_{m+n}
+\]
+使 \(L\mathfrak g\) 成为 \(\mathbb Z\)-分次 Lie 代数。常数项 \(\mathfrak g\otimes1\) 是一份原来的 \(\mathfrak g\)，但 \(L\mathfrak g\) 有无穷多份齐次分量。例如 \(\mathfrak{sl}_2\) 的标准矩阵 \(e=E_{12}\)、\(f=E_{21}\)、\(h=E_{11}-E_{22}\) 给出
+\[
+	[h\otimes t^m,e\otimes t^n]=2e\otimes t^{m+n},\qquad
+	[e\otimes t^m,f\otimes t^n]=h\otimes t^{m+n}.
+\]
+当 \(m+n=0\) 时，后一括号仍只回到 \(\mathbb Ch\)，没有新的中心项。我们接下来改变的正是这些相反次数之间的括号。
 
 \subsection{中心扩张与二次型}
 \label{b5:subsec:G02:02}
 
-待撰写。
+固定有限维复单 Lie 代数 \(\mathfrak g\) 上的非退化对称不变双线性型 \((\ ,\ )\)。这里不变性是\cref{b5:def:invariant-bilinear-lie}中的等式 \(([x,y],z)=(x,[y,z])\)。由\cref{b5:cor:simple-killing-forms}，这种型是 Killing 型的非零倍数；以下归一化为它在根空间对偶上诱导的长根平方长度为 \(2\)。对 \(\mathfrak{sl}_2\)，这就是
+\[
+	(x,y)=\operatorname{tr}(xy),\qquad (e,f)=1,\qquad (h,h)=2.
+\]
+它不是正定 Hermitian 型：例如 \((e,e)=0\)，却有 \((e,f)=1\)。在复数上，与它对应的二次型为 \(Q(x)=\tfrac12(x,x)\)，且 \(Q(x+y)-Q(x)-Q(y)=(x,y)\)；下列括号公式实际使用的是双线性型。
+
+\ProseParagraphBreak
+
+若希望在 \(L\mathfrak g\oplus\mathbb Cc\) 上添上一个中心项，可以尝试
+\[
+	[a+\lambda c,b+\mu c]=[a,b]_{L\mathfrak g}+\omega(a,b)c,
+\]
+其中 \(c\) 与所有元素交换。反对称性要求 \(\omega\) 交替，Jacobi 恒等式则要求
+\[
+	\omega([a,b],z)+\omega([b,z],a)+\omega([z,a],b)=0.
+\]
+这样的双线性映射称为系数在平凡模 \(\mathbb C\) 中的 Lie 代数 \(2\)-余圈。这里直接检验所需条件，不必先建立一般上同调理论。
+\termidx[Lie-daishu-er-yuquan]{Lie 代数 \(2\)-余圈}
+\foreignidx{Lie algebra 2-cocycle}
+
+\begin{proposition}\label{b5:prop:G-loop-cocycle}
+	设 \(\mathfrak g\) 为有限维复单 Lie 代数，\((\ ,\ )\) 为其非退化对称不变双线性型。对环 Lie 代数 \(L\mathfrak g\)，由
+	\begin{equation}\label{b5:eq:G-loop-cocycle}
+		\omega(u_m,v_n)=m\delta_{m,-n}(u,v)
+	\end{equation}
+	双线性延拓得到的映射是一个 \(2\)-余圈。因而
+	\[
+		\widetilde{\mathfrak g}=L\mathfrak g\oplus\mathbb Cc,\qquad
+		[u_m,v_n]=[u,v]_{m+n}+m\delta_{m,-n}(u,v)c
+	\]
+	给出一个中心扩张
+	\[
+		0\longrightarrow\mathbb Cc\longrightarrow\widetilde{\mathfrak g}
+		\longrightarrow L\mathfrak g\longrightarrow0.
+	\]
+	该满射没有 Lie 代数同态截面。
+\end{proposition}
+\begin{proof}
+	若 \(m+n\ne0\)，两个次序的余圈值都为零；若 \(m+n=0\)，则由对称性
+	\[
+		\omega(v_n,u_m)=n(v,u)=-m(u,v)=-\omega(u_m,v_n).
+	\]
+	故 \(\omega\) 反对称，在特征零的复数域上也交替。
+
+	检验 Jacobi 只需考察三个齐次元素 \(u_m,v_n,w_\ell\)。如果 \(m+n+\ell\ne0\)，余圈条件中的三项都为零。否则，对称性与不变性给出
+	\[
+		([u,v],w)=([v,w],u)=([w,u],v).
+	\]
+	三项之和遂为
+	\[
+		\bigl((m+n)+(n+\ell)+(\ell+m)\bigr)([u,v],w)
+		=2(m+n+\ell)([u,v],w)=0.
+	\]
+	非中心分量的 Jacobi 恒等式已经由环 Lie 代数保证，所以新括号满足 Lie 代数公理。
+
+	非退化对称型在特征不为二时不可能对所有 \(h\) 都满足 \((h,h)=0\)：否则把 \(h=x+y\) 代入就会推出 \((x,y)=0\) 对所有 \(x,y\) 成立。因此可取 \((h,h)\ne0\)。在 \(L\mathfrak g\) 中，\(h_1\) 与 \(h_{-1}\) 交换；而在 \(\widetilde{\mathfrak g}\) 中，它们的任意两个提升都满足
+	\[
+		[h_1+ac,h_{-1}+bc]=(h,h)c\ne0.
+	\]
+	若存在 Lie 同态截面，就必须把两个交换的元素提升为交换的元素，矛盾。这说明新增中心项不能靠改变提升而消掉。
+\end{proof}
+\symidx{\(\widetilde{\mathfrak g}\)：环 Lie 代数的一维中心扩张}
+\symidx{\(c\)：仿射 Lie 代数的中心元}
+
+系数 \(m\) 可以从形式微分中读出。对 Laurent 多项式微分式，定义 \(\operatorname{Res}_{t=0}f(t)\,\mathrm dt\) 为 \(f\) 的 \(t^{-1}\) 系数，则
+\[
+	\omega(x\otimes f,y\otimes g)
+	=(x,y)\operatorname{Res}_{t=0}f'(t)g(t)\,\mathrm dt.
+\]
+代入 \(f=t^m,g=t^n\)，便得到\eqref{b5:eq:G-loop-cocycle}。导数产生 \(m\)，留数只保留总次数为零的项；这同时解释了公式的两个因子。
 
 \subsection{次数导子与根分解}
 \label{b5:subsec:G02:03}
 
-待撰写。
+为了区分同一个有限根在不同次数上的复制品，需要一个作用能读出次数的元素。令 \(D(u_m)=mu_m\)、\(D(c)=0\)。对环部分，次数可加给出导子恒等式；中心修正项也相容，因为 \((m+n)\delta_{m,-n}=0\)。具体地，
+\[
+	D[u_m,v_n]=(m+n)[u,v]_{m+n}
+	=[D(u_m),v_n]+[u_m,D(v_n)].
+\]
+所以可以用这个导子形成半直积。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:G-affine-loop-algebra}
+	设 \(\mathfrak g\) 为有限维复单 Lie 代数，并固定长根平方长度为 \(2\) 的不变对称型。其\term[weiniu-fangshe-Lie-daishu]{未扭仿射 Lie 代数}[untwisted affine Lie algebra]定义为
+	\[
+		\widehat{\mathfrak g}=L\mathfrak g\oplus\mathbb Cc\oplus\mathbb C\mathrm d,
+	\]
+	括号为
+	\begin{equation}\label{b5:eq:G-affine-bracket}
+		[u_m,v_n]=[u,v]_{m+n}+m\delta_{m,-n}(u,v)c,
+		\qquad[\mathrm d,u_m]=mu_m,
+		\qquad[c,\widehat{\mathfrak g}]=0.
+	\end{equation}
+	这里 \(\mathrm d\) 称为\term[cishu-daozi]{次数导子}[degree derivation]，且 \([\mathrm d,c]=0\)。
+\end{definition}
+\symidx{\(\widehat{\mathfrak g}\)：含次数导子的未扭仿射 Lie 代数}
+\symidx{\(\mathrm d\)：仿射 Lie 代数的次数导子}
+
+\begin{proposition}\label{b5:prop:G-affine-center-derived}
+	对有限维复单 Lie 代数 \(\mathfrak g\) 及上述中心扩张和仿射代数，有
+	\[
+		Z(\widetilde{\mathfrak g})=Z(\widehat{\mathfrak g})=\mathbb Cc,
+		\qquad[\widetilde{\mathfrak g},\widetilde{\mathfrak g}]
+		=[\widehat{\mathfrak g},\widehat{\mathfrak g}]=\widetilde{\mathfrak g}.
+	\]
+	导子 \(D(u_m)=mu_m,D(c)=0\) 不是 \(\widetilde{\mathfrak g}\) 的内导子。
+\end{proposition}
+\begin{proof}
+	设 \(z=\sum_m x_m+ac+b\mathrm d\) 与所有常数元素 \(y_0\) 交换。由于这类括号没有中心修正项，对每个次数分别比较，得到 \([x,y]=0\) 对所有 \(y\in\mathfrak g\) 成立。\cref{b5:cor:semisimple-perfect}给出 \(Z(\mathfrak g)=0\)，故全部 \(x_m=0\)。若 \(z\) 还与某个非零 \(y_1\) 交换，则 \(by_1=0\)，所以 \(b=0\)。这证明两个中心的结论。
+
+	同一推论还给出 \([\mathfrak g,\mathfrak g]=\mathfrak g\)。把 \(x\) 写成有限个括号 \([a,b]\) 的和，再用
+	\[
+		[a_m,b_0]=[a,b]_m,
+	\]
+	说明整个 \(L\mathfrak g\) 都在 \([\widetilde{\mathfrak g},\widetilde{\mathfrak g}]\) 中。上一个证明中的 \([h_1,h_{-1}]=(h,h)c\) 又给出 \(c\)；而任何括号都没有 \(\mathrm d\) 分量，故所列导出代数恰为 \(\widetilde{\mathfrak g}\)。
+
+	若 \(D=\operatorname{ad}z\) 且 \(z\in\widetilde{\mathfrak g}\)，则 \(D(y_0)=0\) 迫使 \(z\) 与全部常数元素交换。前面的逐次比较说明 \(z\in\mathbb Cc\)，从而 \(D=0\)，与 \(D(y_1)=y_1\ne0\) 矛盾。
+\end{proof}
+
+所以 \(\widetilde{\mathfrak g}\) 和 \(\widehat{\mathfrak g}\) 是两个不同的 Lie 代数：前者新增中心方向，后者再新增次数导子。它们的差别也体现在不变型上。
+
+\begin{proposition}\label{b5:prop:G-affine-invariant-form}
+	设 \(\mathfrak g\) 为有限维复单 Lie 代数，\((\ ,\ )\) 为已固定的归一化不变型。\(\widehat{\mathfrak g}\) 上由下列配对双线性延拓得到的对称型非退化且不变：
+	\[
+		(u_m,v_n)=\delta_{m,-n}(u,v),\qquad
+		(c,\mathrm d)=1,\qquad(c,c)=(\mathrm d,\mathrm d)=0,
+	\]
+	并规定 \(L\mathfrak g\) 与 \(\mathbb Cc\oplus\mathbb C\mathrm d\) 正交。其在 \(\widetilde{\mathfrak g}\) 上的限制型的根恰为 \(\mathbb Cc\)。
+\end{proposition}
+\begin{proof}
+	每个 \(\mathfrak g\otimes t^m\) 与 \(\mathfrak g\otimes t^{-m}\) 非退化配对，而 \(c,\mathrm d\) 上的 Gram 矩阵为 \(\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\)，所以整体非退化。删去 \(\mathrm d\) 后，只有 \(c\) 失去配对对象，给出限制型的根。
+
+	验证不变性只需比较三个齐次元素。三者都来自环部分时，中心项与第三个元素正交，等式化为
+	\[
+		\delta_{m+n+\ell,0}([u,v],w)
+		=\delta_{m+n+\ell,0}(u,[v,w]).
+	\]
+	当第三个元素是 \(\mathrm d\) 时，所需等式为
+	\[
+		([u_m,v_n],\mathrm d)=m\delta_{m,-n}(u,v)
+		=(u_m,[v_n,\mathrm d])=-n\delta_{m,-n}(u,v).
+	\]
+	这正由 \(m+n=0\) 时两系数相等得到。由对称性与括号反对称性，\(\mathrm d\) 在另两个位置的等式也随之成立。有两个 \(\mathrm d\) 或任一元素为 \(c\) 时，两边均为零。因此所有情形都满足不变性。
+\end{proof}
+
+固定 \(\mathfrak g\) 的 Cartan 子代数 \(\mathfrak h\) 及有限根系 \(\Phi\)。令
+\[
+	\widehat{\mathfrak h}=\mathfrak h\oplus\mathbb Cc\oplus\mathbb C\mathrm d,
+	\qquad
+	\delta|_{\mathfrak h\oplus\mathbb Cc}=0,\qquad\delta(\mathrm d)=1.
+\]
+把每个 \(\alpha\in\Phi\) 延拓为 \(\widehat{\mathfrak h}^{\,*}\) 上在 \(c,\mathrm d\) 处取零的泛函。\(\widehat{\mathfrak h}\) 的伴随作用可同时对角化；以下直接列出每个共同特征空间。
+\symidx{\(\widehat{\mathfrak h}\)：仿射 Lie 代数的标准 Cartan 子代数}
+\symidx{\(\delta\)：仿射根系的基本虚根}
+
+\begin{theorem}\label{b5:thm:G-affine-root-decomposition}
+	设 \(\mathfrak g\) 为有限维复单 Lie 代数，\(\mathfrak h\) 为其 Cartan 子代数，\(\Phi\) 为有限根系，\(\widehat{\mathfrak g}\) 为上述未扭仿射 Lie 代数。相对于 \(\widehat{\mathfrak h}=\mathfrak h\oplus\mathbb Cc\oplus\mathbb C\mathrm d\)，其非零根、根空间和重数为
+	\[
+		\begin{aligned}
+			\widehat{\mathfrak g}_{\alpha+n\delta}
+			&=\mathfrak g_\alpha\otimes t^n
+			&& (\alpha\in\Phi,\ n\in\mathbb Z),\\
+			\widehat{\mathfrak g}_{n\delta}
+			&=\mathfrak h\otimes t^n
+			&& (n\in\mathbb Z\setminus\{0\}).
+		\end{aligned}
+	\]
+	相应重数分别为 \(1\) 与 \(\dim\mathfrak h\)，零权空间恰为 \(\widehat{\mathfrak h}\)。在该仿射根系中，\(\alpha+n\delta\) 称为\term[shigen]{实根}[real root]，非零的 \(n\delta\) 称为\term[xugen]{虚根}[imaginary root]。扩张不变型在 \(\widehat{\mathfrak h}^{\,*}\) 上诱导的型满足
+	\[
+		(\delta,\delta)=0,\qquad(\alpha,\delta)=0,\qquad
+		(\alpha+n\delta,\alpha+n\delta)=(\alpha,\alpha)>0.
+	\]
+\end{theorem}
+\begin{proof}
+	由\cref{b5:thm:root-decomposition}，有限维代数已经分解为 \(\mathfrak h\oplus\bigoplus_{\alpha\in\Phi}\mathfrak g_\alpha\)。对 \(x\in\mathfrak g_\alpha\)、\(h\in\mathfrak h\)，有
+	\[
+		[h,x\otimes t^n]=\alpha(h)x\otimes t^n,\qquad
+		[\mathrm d,x\otimes t^n]=nx\otimes t^n,
+	\]
+	而 \(c\) 的作用为零。这是权 \(\alpha+n\delta\)。同理，\(\mathfrak h\otimes t^n\) 的权为 \(n\delta\)。这些空间连同 \(\mathbb Cc\oplus\mathbb C\mathrm d\) 已经穷尽整个向量空间；两个所列权相等时，先在 \(\mathrm d\) 上求值得到次数相等，再限制到 \(\mathfrak h\) 得到有限权相等。因此非零根空间恰为上述各项。\cref{b5:thm:root-sl2}给出有限根空间的一维性，所以实根重数为一，虚根重数为 \(\dim\mathfrak h\)。
+
+	由\cref{b5:prop:root-killing-pairing}及不变型是 Killing 型的非零倍数，其在 \(\mathfrak h\) 上的限制非退化；再配上 \(c,\mathrm d\) 的非退化配对，得到 \(\widehat{\mathfrak h}\) 与其对偶的同构。在这个同构下，\(\delta\) 对应 \(c\)，因为 \((c,\mathrm d)=1\) 且 \(c\) 与 \(\mathfrak h\oplus\mathbb Cc\) 正交。有限根 \(\alpha\) 则对应 \(\mathfrak h\) 中的向量，故 \((\delta,\delta)=(\alpha,\delta)=0\)。\cref{b5:thm:root-system}保证有限根实空间上的 Killing 对偶型正定；把长根平方归一化为二只作正标量伸缩，所以有限根平方仍为正，最后一个等式随之成立。
+\end{proof}
+
+这里零范数并不表示零泛函：\(\delta(\mathrm d)=1\)。若只保留 \(\widetilde{\mathfrak g}\) 而去掉 \(\mathrm d\)，\(\alpha+n\delta\) 在 \(\mathfrak h\oplus\mathbb Cc\) 上的限制都变成 \(\alpha\)，不能再区别次数。次数导子的作用正是把这些重复的有限权分开。
+
+\ProseParagraphBreak
+
+选择有限正根系 \(\Phi^+\) 后，标准的仿射正根集合为
+\begin{equation}\label{b5:eq:G-affine-positive-roots}
+	\widehat\Phi^+
+	=\{\,\alpha+n\delta\mid\alpha\in\Phi^+,\ n\ge0\,\}
+	\cup\{\,-\alpha+n\delta\mid\alpha\in\Phi^+,\ n>0\,\}
+	\cup\{\,n\delta\mid n>0\,\}.
+\end{equation}
+换句话说，正次数的根一律取正，零次数才沿用有限正根。每个非零根恰有一个符号为正，且两个正根的和若仍为根，也仍为正。因此正根空间之和 \(\widehat{\mathfrak n}_+\) 与负根空间之和 \(\widehat{\mathfrak n}_-\) 分别是 Lie 子代数，并给出
+\[
+	\widehat{\mathfrak g}
+	=\widehat{\mathfrak n}_-\oplus\widehat{\mathfrak h}\oplus\widehat{\mathfrak n}_+.
+\]
+
+对 \(\mathfrak g=\mathfrak{sl}_2\)，令 \(\alpha(h)=2\)。上述根空间具体是
+\[
+	\mathbb C(e\otimes t^n),\qquad
+	\mathbb C(f\otimes t^n),\qquad
+	\mathbb C(h\otimes t^n),
+\]
+相应的根分别为 \(\alpha+n\delta\)、\(-\alpha+n\delta\)、\(n\delta\)，第三项只在 \(n\ne0\) 时是根空间。所有根的重数在此例中都为一，但实根的平方为 \(2\)，虚根的平方为零。正根可具体排列为
+\[
+	\begin{array}{llll}
+		\alpha,&\alpha+\delta,&\alpha+2\delta,&\ldots,\\
+		\delta-\alpha,&2\delta-\alpha,&3\delta-\alpha,&\ldots,\\
+		\delta,&2\delta,&3\delta,&\ldots.
+	\end{array}
+\]
+前两行分别来自 \(e\) 与 \(f\) 的各次复制，第三行来自 \(h\) 的正次数复制。最常用的括号为
+\begin{equation}\label{b5:eq:G-affine-sl2-brackets}
+	\begin{aligned}
+		[e\otimes t^m,f\otimes t^n]
+		&=h\otimes t^{m+n}+m\delta_{m,-n}c,\\
+		[h\otimes t^m,h\otimes t^n]
+		&=2m\delta_{m,-n}c,\\
+		[h\otimes t^m,e\otimes t^n]&=2e\otimes t^{m+n},\\
+		[h\otimes t^m,f\otimes t^n]&=-2f\otimes t^{m+n}.
+	\end{aligned}
+\end{equation}
+尤其，有限维时彼此交换的 Cartan 方向，移到相反的非零次数后会产生中心项。正、负根子代数在此例中可直接写成
+\[
+	\widehat{\mathfrak n}_+
+	=\mathbb C(e\otimes1)\oplus\mathfrak{sl}_2\otimes t\mathbb C[t],
+	\qquad
+	\widehat{\mathfrak n}_-
+	=\mathbb C(f\otimes1)\oplus\mathfrak{sl}_2\otimes t^{-1}\mathbb C[t^{-1}].
+\]
+两个最小的正根是 \(\alpha\) 与 \(\delta-\alpha\)，其和为虚根 \(\delta\)。下一节用它们的根向量给出仿射 \(\mathfrak{sl}_2\) 的生成元，并在这一三角分解上构造最高权模。

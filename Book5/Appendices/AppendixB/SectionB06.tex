@@ -1,7 +1,7 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### B.6 Hall 代数与箭图
 % 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
+% 写作状态：正文、证明、算例及配套习题与解答已完成初稿；新增内容尚未正式审核。
 % 写作范围：在有限域上展开计数及 A1、A2 算例；准确区分 Hall 代数、合成子代数与量子群正部，不展开典范基及晶体基。
 % #### B.6.1 Hall 数与结合乘法
 % #### B.6.2 Euler 型与扭曲乘法
@@ -11,27 +11,254 @@
 \section{Hall 代数与箭图}
 \label{b5:sec:B06}
 
-待撰写。
+给定两个模，短正合列说明它们可以怎样组成一个较大的模。若底域有限，还能数出某个中项中有多少个指定类型的子模，并把这个数作为乘法系数。三个模依次组成一个模时，两种加括号方式数的是同一批旗，这正是 Hall 乘法的结合律。对箭图再加入 Euler 型给出的系数，简单模之间的乘积便出现量子 Serre 关系。
+
+\ProseParagraphBreak
+本节用 \(q\) 表示有限域的元素个数，固定正实数 \(v=\sqrt q\)，以 \(K=\mathbb Q(v)\) 为计数代数的系数域。因此表示本身定义在 \(\mathbb F_q\) 上，Hall 代数却是特征零域 \(K\) 上的代数。\subsecref{b5:subsec:B01:02}中的量子参数在这里改记为 \(v\)；它是一个固定的数，区别于域的大小 \(q=v^2\)。
 
 \subsection{Hall 数与结合乘法}
 \label{b5:subsec:B06:01}
 
-待撰写。
+先不要求代数来自箭图。设 \(A\) 是有限域上的有限维代数，以下只考虑有限维左 \(A\)-模。子模的个数有限，且每个固定维数上只有有限多个模的同构类：取 \(A\) 的一组有限基，作用由有限域上的有限组矩阵给定，可能的矩阵组本身就只有有限多个。
+
+\begin{definition}\label{b5:def:B-hall-number}
+	设 \(k=\mathbb F_q\)，\(A\) 为有限维含幺 \(k\) 代数，\(M,N,L\) 为有限维左 \(A\)-模。定义\term[Hall-shu]{Hall 数}[Hall number]
+	\[
+		F_{M,N}^{L}
+		=\#\{\,U\subseteq L\mid U\cong N,\ L/U\cong M\,\}.
+	\]
+	它数的是实际的子模 \(U\)，不另选择 \(N\to U\) 或 \(L/U\to M\) 的同构。令 \(v=\sqrt q>0\)、\(K=\mathbb Q(v)\)，以模的同构类为基，定义
+	\[
+		\mathcal H_0(A)=\bigoplus_{[M]}K[M],\qquad
+		[M]\circ[N]=\sum_{[L]}F_{M,N}^{L}[L].
+	\]
+	这里的和按 \(K\) 双线性延拓，所得乘法称为未扭曲的 Hall 乘法。
+\end{definition}
+\symidx{\(F_{M,N}^{L}\)：子模为 \(N\)、商模为 \(M\) 的 Hall 数}
+\symidx{\(\mathcal H_0(A)\)：有限域上有限维代数的未扭曲 Hall 代数}
+同构 \(L\to L'\) 给出相应子模集合的双射，所以这些数只依赖三个模的同构类。若 \(F_{M,N}^{L}\ne0\)，则 \(\dim_kL=\dim_kM+\dim_kN\)；固定这一维数只有有限多个同构类，因此乘积确实仍是有限线性组合。
+
+\begin{proposition}\label{b5:prop:B-hall-associativity}
+	设 \(k=\mathbb F_q\)、\(A\) 为有限维含幺 \(k\) 代数，\(K=\mathbb Q(\sqrt q)\)。\cref{b5:def:B-hall-number}中的乘法使 \(\mathcal H_0(A)\) 成为以 \([0]\) 为单位元的结合 \(K\) 代数。对任意有限维左 \(A\)-模 \(M,N,R,L\)，有
+	\begin{equation}\label{b5:eq:B-hall-flag-identity}
+		\sum_{[X]}F_{M,N}^{X}F_{X,R}^{L}
+		=\sum_{[Y]}F_{N,R}^{Y}F_{M,Y}^{L}.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	固定 \(L\)，数其中满足
+	\[
+		0\subseteq U\subseteq V\subseteq L,
+		\qquad U\cong R,\quad V/U\cong N,\quad L/V\cong M
+	\]
+	的旗。先选 \(U\)，并按 \(L/U\) 的同构类 \([X]\) 分组；每个这样的 \(U\) 有 \(F_{M,N}^{X}\) 个可选的商子模 \(V/U\)。子模对应定理将它们一一提升为包含 \(U\) 的子模 \(V\)，得到左边。先选 \(V\)，按其同构类 \([Y]\) 分组，再在 \(V\) 内选 \(U\)，则得到右边。计数中不选择商模到代表元的同构，因此没有额外的自同构群因子。
+
+	等式两边分别是 \(([M]\circ[N])\circ[R]\) 与 \([M]\circ([N]\circ[R])\) 中 \([L]\) 的系数，故乘法结合。最后，商模为零的子模只能是 \(L\) 本身，子模为零时商只能是 \(L\)，所以 \([0]\circ[M]=[M]=[M]\circ[0]\)。
+\end{proof}
+同一论证给出任意多个因子的含义：\([M_1]\circ\cdots\circ[M_r]\) 中 \([L]\) 的系数，等于旗
+\[
+	0=L_r\subseteq L_{r-1}\subseteq\cdots\subseteq L_0=L,
+	\qquad L_{i-1}/L_i\cong M_i\quad(1\le i\le r)
+\]
+的数目。因此右边的因子处在旗的下层。文献也常先数固定两端和中项的短正合列，再除以 \(|\operatorname{Aut}(M)|\cdot|\operatorname{Aut}(N)|\)，得到同一 Hall 数；这同直接数 \(\operatorname{Ext}^1_A(M,N)\) 的元素有区别。上述约定与旗计数证明可对照\cite[作者公开稿, Section 1.3, Proposition 1.1, Lemma 1.2]{Schiffmann2012HallAlgebras}。
 
 \subsection{Euler 型与扭曲乘法}
 \label{b5:subsec:B06:02}
 
-待撰写。
+现在取 \(A=kQ\)，其中 \(k=\mathbb F_q\)，\(Q\) 为有限无有向环箭图。路径代数有限维，故上一小节适用。令 \(\mathbf d(M)\) 为维数向量；短正合列逐顶点正合，因而乘积按维数向量相加分次。
+
+\ProseParagraphBreak
+\cref{b5:prop:quiver-euler-hom-ext}对任意域上的有限无环箭图给出
+\begin{equation}\label{b5:eq:B-hall-euler}
+	\begin{aligned}
+	\langle\mathbf d,\mathbf e\rangle_Q
+	&=\sum_{i\in Q_0}d_ie_i-\sum_{a:i\to j}d_ie_j,\\
+	\langle\mathbf d(M),\mathbf d(N)\rangle_Q
+	&=\dim_k\operatorname{Hom}_{kQ}(M,N)
+	-\dim_k\operatorname{Ext}^1_{kQ}(M,N).
+	\end{aligned}
+\end{equation}
+这个整数由两条维数向量决定，且对每个变量都是加性的。用它修正 Hall 乘法，不会破坏结合律。
+
+\begin{definition}\label{b5:def:B-twisted-hall}
+	设 \(Q\) 为有限无有向环箭图，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)、\(K=\mathbb Q(v)\)。在 \(\mathcal H_0(kQ)\) 的同一 \(K\) 向量空间上，定义
+	\begin{equation}\label{b5:eq:B-twisted-hall-product}
+		[M]*[N]
+		=v^{\langle\mathbf d(M),\mathbf d(N)\rangle_Q}
+		\sum_{[L]}F_{M,N}^{L}[L].
+	\end{equation}
+	所得代数记为 \(\mathcal H_v(Q)\)，称为 \(Q\) 的\term[niuqu-Hall-daishu]{扭曲 Hall 代数}[twisted Hall algebra]。
+\end{definition}
+\symidx{\(\mathcal H_v(Q),\ *\)：箭图的扭曲 Hall 代数及其乘法}
+
+\begin{proposition}\label{b5:prop:B-hall-twist-associativity}
+	设 \(Q\) 为有限无有向环箭图，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)。乘法\eqref{b5:eq:B-twisted-hall-product}使 \(\mathcal H_v(Q)\) 成为以 \([0]\) 为单位元的 \(\mathbb N^{Q_0}\) 分次结合 \(\mathbb Q(v)\) 代数。
+\end{proposition}
+\begin{proof}
+	记三个因子的维数向量为 \(\mathbf d,\mathbf e,\mathbf f\)。\(([M]*[N])*[R]\) 的每个非零项有相同的附加系数
+	\[
+		v^{\langle\mathbf d,\mathbf e\rangle_Q+
+		\langle\mathbf d+\mathbf e,\mathbf f\rangle_Q}.
+	\]
+	另一种括号给出的指数为 \(\langle\mathbf e,\mathbf f\rangle_Q+\langle\mathbf d,\mathbf e+\mathbf f\rangle_Q\)。双线性使两者都等于
+	\[
+		\langle\mathbf d,\mathbf e\rangle_Q+
+		\langle\mathbf d,\mathbf f\rangle_Q+
+		\langle\mathbf e,\mathbf f\rangle_Q.
+	\]
+	除去这个共同系数后，结合律就是\eqref{b5:eq:B-hall-flag-identity}。零向量与每个向量配对都为零，故单位元不变。每个中项的维数向量是两端之和，这也证明分次相容性。
+\end{proof}
+令 \(\alpha_i\) 为顶点 \(i\) 的标准单位向量，\(S_i\) 为相应简单模，则
+\[
+	\langle\alpha_i,\alpha_j\rangle_Q
+	=\delta_{ij}-\#\{\,a:i\to j\,\}.
+\]
+尤其在本书的左模约定下，箭 \(1\to2\) 使 \(\langle\alpha_1,\alpha_2\rangle_Q=-1\)，反向配对为零。这决定下面两个乘积中的哪一个应带 \(v^{-1}\)。Euler 扭曲采用的是有序的双线性型；若只用其对称部分，将得不到同一套乘法系数。Euler 型及这一扭曲的定义见\cite[作者公开稿, Sections 1.2--1.3]{Schiffmann2012HallAlgebras}。
 
 \subsection{单顶点与双顶点算例}
 \label{b5:subsec:B06:03}
 
-待撰写。
+先取一个顶点且没有箭。一个表示只是有限维 \(k=\mathbb F_q\) 向量空间，令 \(u_r=[k^r]\)、\(u_0=[0]\)。在 \(k^d\) 中选一个 \(r\) 维子空间，先选它的一组有序基，再除以同一子空间的有序基数，得到
+\[
+	\#\operatorname{Gr}(r,k^d)
+	=\frac{\prod_{j=0}^{r-1}(q^d-q^j)}{\prod_{j=0}^{r-1}(q^r-q^j)}
+	=\prod_{j=1}^{r}\frac{q^{d-r+j}-1}{q^j-1}
+	\coloneqq\begin{bmatrix}d\\r\end{bmatrix}_q.
+\]
+这个整数称为\term[Gauss-erxiangshi-xishu]{高斯二项式系数}[Gaussian binomial coefficient]；空积取一。所有短正合列都分裂，但子空间通常不止一个，因此即使中项只有一种，也会出现非平凡的计数系数。
+
+\begin{proposition}\label{b5:prop:B-hall-one-vertex}
+	设 \(Q\) 只有一个顶点且没有箭，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)、\(u_r=[k^r]\)。则对 \(m,n\ge0\)，有
+	\[
+		u_m\circ u_n=\begin{bmatrix}m+n\\n\end{bmatrix}_q u_{m+n},
+		\qquad
+		u_m*u_n=v^{mn}\begin{bmatrix}m+n\\n\end{bmatrix}_q u_{m+n}.
+	\]
+	以 \([j]_v=(v^j-v^{-j})/(v-v^{-1})\)、\([r]_v!=\prod_{j=1}^{r}[j]_v\) 记量子整数及量子阶乘，则
+	\begin{equation}\label{b5:eq:B-hall-divided-power}
+		u_1^{*r}=v^{r(r-1)}[r]_v!\,u_r,
+		\qquad \frac{u_1^{*r}}{[r]_v!}=v^{r(r-1)}u_r.
+	\end{equation}
+	所以 \(\mathcal H_v(Q)\cong K[T]\)，其中 \(K=\mathbb Q(v)\)，同构把 \(T\) 送到 \(u_1\)。
+\end{proposition}
+\begin{proof}
+	Hall 数恰为上述子空间数；Euler 型在两个维数上为 \(mn\)，给出两种乘积。逐次与 \(u_1\) 相乘，得到
+	\[
+		u_1^{*r}=v^{r(r-1)/2}
+		\prod_{j=1}^{r}\frac{q^j-1}{q-1}\,u_r.
+	\]
+	由 \(q=v^2\)，每个因子满足 \((q^j-1)/(q-1)=v^{j-1}[j]_v\)，再把这些幂相乘即得\eqref{b5:eq:B-hall-divided-power}。所有系数均非零，故 \(u_1\) 生成整个代数；不同次幂是不同基元素 \(u_r\) 的非零倍数，因而线性无关。这同时证明满射 \(K[T]\to\mathcal H_v(Q)\) 单射。
+\end{proof}
+这里 \([r]_v\) 是对称的量子整数，而 \((q^r-1)/(q-1)=1+q+\cdots+q^{r-1}\) 是有限域子空间计数中的整数；两者相差 \(v^{r-1}\)。这一个因子解释了除幂同 \([k^r]\) 之间的归一化。上述单顶点计算可对照\cite[作者公开稿, Section 3.3, Example 3.14]{Schiffmann2012HallAlgebras}。
+
+\ProseParagraphBreak
+现在取 \(Q:1\to2\)。记
+\[
+	\begin{gathered}
+		S_1=(k\to0),\qquad S_2=(0\to k),\qquad P=(k\xrightarrow{1}k),\\
+		D=S_1\oplus S_2,\qquad x=[S_1],\quad y=[S_2].
+	\end{gathered}
+\]
+维数向量为 \((1,1)\) 的表示，按唯一箭的秩只分为 \(D\) 与 \(P\) 两类。在每一类中，顶点 \(2\) 的整个空间都给出唯一的子表示 \(S_2\)，商为 \(S_1\)。反过来，子表示若为 \(S_1\)，箭必须为零，所以只有 \(D\) 可以出现。于是
+\begin{equation}\label{b5:eq:B-hall-a2-product}
+	\begin{aligned}
+	 x\circ y&=[D]+[P],& y\circ x&=[D],\\
+	 x*y&=v^{-1}([D]+[P]),& y*x&=[D].
+	\end{aligned}
+\end{equation}
+这同 \(\operatorname{Ext}^1(S_1,S_2)\cong k\)、\(\operatorname{Ext}^1(S_2,S_1)=0\) 一致，但非零扩张类的 \(q-1\) 个参数并没有成为 \([P]\) 的 Hall 系数：这里实际计数的子表示只有一个。这个算例也给出
+\[
+	[P]=v(x*y)-y*x.
+\]
+因此两个简单模的加权交换子已经恢复第三个不可分解表示。
+
+\begin{proposition}\label{b5:prop:B-hall-a2-serre}
+	设 \(Q:1\to2\)，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)。在 \(\mathcal H_v(Q)\) 中，令 \(x=[S_1]\)、\(y=[S_2]\)，并在下式中省略扭曲乘号 \(*\)。则
+	\begin{equation}\label{b5:eq:B-hall-a2-serre}
+		\begin{aligned}
+		x^2y-(v+v^{-1})xyx+yx^2&=0,\\
+		y^2x-(v+v^{-1})yxy+xy^2&=0.
+		\end{aligned}
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	记 \(L_0=S_1^{\oplus2}\oplus S_2\)、\(L_1=S_1\oplus P\)。它们是维数向量 \((2,1)\) 的全部表示类型，分别对应零箭与秩一箭。单顶点计算给出 \(x^2=v(q+1)[S_1^{\oplus2}]\)。先取唯一的终点空间作为 \(S_2\) 子模，再用 Euler 指数 \(\langle2\alpha_1,\alpha_2\rangle_Q=-2\)，得到
+	\[
+		x^2y=v^{-1}(q+1)([L_0]+[L_1]).
+	\]
+	在 \(yx^2\) 中，所要求的子表示在顶点 \(1\) 占满 \(k^2\)、在顶点 \(2\) 为零，迫使箭为零；这时子表示唯一，Euler 指数为零，故
+	\[
+		yx^2=v(q+1)[L_0].
+	\]
+	最后由 \(yx=[D]\)，计算 \(x[D]\)。在 \(L_0\) 中，子表示 \(D\) 的起点可取 \(k^2\) 的任意直线，共 \(q+1\) 条；在 \(L_1\) 中，这条直线必须是秩一箭的核，只有一条。此时 Euler 指数 \(\langle\alpha_1,\alpha_1+\alpha_2\rangle_Q=0\)，所以
+	\[
+		xyx=(q+1)[L_0]+[L_1].
+	\]
+	分别比较 \([L_0]\)、\([L_1]\) 的系数，并用 \(v^{-1}(q+1)=v+v^{-1}\)，得到第一条关系。
+
+	对表示作有限维向量空间对偶，再交换顶点 \(1,2\)，仍得到 \(Q\) 的表示。它反转短正合列，把子模与商模交换；同时反转 Euler 配对的次序。因此它在 Hall 代数上给出反同构，并交换 \(x,y\)。将这个反同构作用于第一条关系，所得为 \(xy^2-(v+v^{-1})yxy+y^2x=0\)，即第二条关系。
+\end{proof}
+若两个顶点之间没有边，则只有分裂扩张，两个方向的子表示都唯一，交叉 Euler 指数也都为零，故两个简单模的类交换。这一交换关系与\eqref{b5:eq:B-hall-a2-serre}正好涵盖单边 Dynkin 图中不同顶点的两种关系。
 
 \subsection{量子群正部与 Ringel 定理}
 \label{b5:subsec:B06:04}
 
-待撰写。
+设 \(Q\) 的无向基础图是连通的 \(A_n,D_n,E_6,E_7,E_8\) 型 Dynkin 图，\(\mathfrak g\) 为相应的复单 Lie 代数。这些图都只有单边，即两个相邻顶点之间恰连一条边。以顶点标记简单根 \(\alpha_i\)，Cartan 矩阵为
+\[
+	c_{ii}=2,\qquad
+	c_{ij}=\begin{cases}-1,&i,j\text{ 相邻},\\0,&i,j\text{ 不相邻}\end{cases}
+	\quad(i\ne j).
+\]
+它也是 Euler 型对称化后在标准基上的矩阵。量子正部的关系只用这个无向图；用于实现这些关系的 Hall 计数则保留了具体箭向。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:B-quantum-positive-part}
+	设 \(q\) 为素数幂，\(v=\sqrt q>0\)、\(K=\mathbb Q(v)\)，\(\mathfrak g\) 为一个连通的单边 Dynkin 图所对应的复单 Lie 代数，以 \(I\) 为该图的顶点集。由生成元 \(E_i\)、\(i\in I\)，及以下关系定义的含幺结合 \(K\) 代数：
+	\[
+		\begin{aligned}
+		E_iE_j&=E_jE_i&&\text{当 \(i,j\) 不相邻},\\
+		E_i^2E_j-(v+v^{-1})E_iE_jE_i+E_jE_i^2&=0&&\text{当 \(i,j\) 相邻},
+		\end{aligned}
+	\]
+	记为 \(U_v^+(\mathfrak g)\)，称为该参数下量子包络代数的\term[liangzi-zhengbu]{正部}[positive part of a quantum group]。第二组对每个有序相邻对 \((i,j)\) 都要求成立，称为\term[liangzi-Serre-guanxi]{量子 Serre 关系}[quantum Serre relations]。令 \(\deg E_i=\alpha_i\)，得到根格的非负部分上的分次。
+\end{definition}
+\symidx{\(U_v^+(\mathfrak g)\)：量子包络代数的正部}
+这里保留了升算子 \(E_i\)；完整的量子包络代数还含降算子与 Cartan 生成元，\(\mathfrak{sl}_2\) 的例子见\cref{b5:def:B-quantum-sl2}。正部作为代数的上述展示不能单独赋予它此前完整量子群的 Hopf 结构，因为完整余乘法会出现 Cartan 生成元。
+
+\begin{definition}\label{b5:def:B-hall-composition-subalgebra}
+	设 \(Q\) 为有限无有向环箭图，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)、\(K=\mathbb Q(v)\)。在扭曲 Hall 代数 \(\mathcal H_v(Q)\) 中，由顶点简单模的类 \([S_i]\) 连同单位元生成的含幺 \(K\) 子代数，称为\term[hecheng-zidaishu]{合成子代数}[composition subalgebra]，记为 \(\mathcal C_v(Q)\)。
+\end{definition}
+\symidx{\(\mathcal C_v(Q)\)：由顶点简单模生成的 Hall 合成子代数}
+每个模虽有合成列，一串简单模的乘积却通常是许多中项的和。仅凭合成列存在，不能把和式中的每个基元素分别取出。因此 \(\mathcal C_v(Q)=\mathcal H_v(Q)\) 是需要证明的结论。
+
+\begin{theorem}[Ringel 定理的 Dynkin 情形]\label{b5:thm:B-ringel-dynkin}
+	设 \(Q\) 为一个连通的单边 Dynkin 图的任意定向，\(k=\mathbb F_q\)、\(v=\sqrt q>0\)、\(K=\mathbb Q(v)\)，\(\mathfrak g\) 为相应的复单 Lie 代数。按照\eqref{b5:eq:B-twisted-hall-product}的扭曲及子模、商模次序，赋值
+	\[
+		\Phi:U_v^+(\mathfrak g)\longrightarrow\mathcal H_v(Q),
+		\qquad E_i\longmapsto[S_i]
+	\]
+	延拓为分次 \(K\) 代数同构。特别地，\(\mathcal C_v(Q)=\mathcal H_v(Q)\)。
+\end{theorem}
+\begin{proofsketch}
+	先证明赋值保持关系。每一条关系只涉及两个顶点；其各项的维数向量在其余顶点上为零，所以参与计数的表示也只支撑在这两个顶点上。不相邻时，上一小节的分裂计数给出交换关系；相邻时，限制后的箭图是 \(1\to2\) 或它的反向，\cref{b5:prop:B-hall-a2-serre}及对偶论证给出两条量子 Serre 关系。因此得到同态 \(\Phi\)，其像按定义就是 \(\mathcal C_v(Q)\)。
+
+	单射性需要比二顶点计算更深的输入。在 Hall 空间上定义对角双线性配对
+	\[
+		([M],[N])_{\mathrm H}
+		=\frac{\delta_{[M],[N]}}{|\operatorname{Aut}_{kQ}(M)|}.
+	\]
+	Green 的配对相容定理把乘法同短正合列计数给出的余乘法联系起来。通常先在 Hall 代数与量子正部两边都加入记录根格的 Cartan 生成元，使同态扩充为 Hopf 代数同态，再比较两边的 Hopf 配对。配对在简单生成元上的值都是 \(\delta_{ij}/(v^2-1)\)；连同 Cartan 生成元上的配对值及乘法、余乘法相容性，配对的唯一性使 Hall 配对的拉回等于量子群的标准配对。限制回正部后，该配对在这里的非单位根参数 \(v>1\) 上非退化。因此，若 \(a\in\ker\Phi\)，则对每个 \(b\in U_v^+(\mathfrak g)\)，都有 \((a,b)=(\Phi(a),\Phi(b))_{\mathrm H}=0\)，从而 \(a=0\)。这一步所用的配对唯一性及非退化性来自量子群的结构理论，不能仅由 Hall 配对的对角公式推出。
+
+	最后按齐次分量比较维数。记 \(\Delta_+\) 为对应 Dynkin 图的正根集合。有限型表示分类在有限域上仍给每个 \(\beta\in\Delta_+\) 唯一的不可分解模；它可由顶点简单模经反射函子构造，所需核与余核均可在 \(\mathbb F_q\) 上进行。再由 Krull--Schmidt 分解，维数向量为 \(\mathbf d\) 的模由各正根的重数唯一确定，所以
+	\[
+		\dim_K\mathcal H_v(Q)_{\mathbf d}
+		=\#\left\{\,(n_\beta)_{\beta\in\Delta_+}\in\mathbb N^{\Delta_+}
+		\mathrel{\Big|}\sum_{\beta\in\Delta_+}n_\beta\beta=\mathbf d\,\right\}.
+	\]
+	量子 PBW 基定理以每个正根的根向量及其有序幂给出 \(U_v^+(\mathfrak g)\) 的基，故其同次齐次分量具有同一维数。已证的分次单射于是逐次满射，得到同构。概要省略的是 Green 配对的相容证明、量子配对的非退化证明及量子 PBW 基的构造；仅核验量子 Serre 关系只能得到同态，不能替代这些步骤。
+\end{proofsketch}
+这一定理及所采用的配对证明见\cite[作者公开稿, Section 3.3, Theorem 3.16, Remarks 3.17(i)--(ii)]{Schiffmann2012HallAlgebras}；配对的定义与相容性见同一公开稿的 Section 1.6, Proposition 1.12, Corollary 1.13，量子配对见 Appendix A.4, Theorem A.18。有限型下进一步把不同有限域上的结构常数统一为 Hall 多项式的结果，见\cite[作者公开稿, Section 3.4, Proposition 3.18]{Schiffmann2012HallAlgebras}。这里的同构已经在固定 \(q\) 和 \(v=\sqrt q\) 的条件下成立，不需要先把参数视作不定元。
+
+\ProseParagraphBreak
+对单顶点，定理就是 \(K[E]\cong K[u_1]\)，而除幂对应\eqref{b5:eq:B-hall-divided-power}中的带权基元素。对 \(1\to2\)，\(vE_1E_2-E_2E_1\) 的像为 \([P]\)，于是简单根与另一个正根分别落在三个不可分解表示上。一般 Dynkin 情形把这一现象扩展到全部正根，并通过计数乘法记录这些表示之间的扩张。
+
+% * 状态：初稿已完成；新增内容尚未正式审核。

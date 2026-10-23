@@ -1,5 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 15.2 滤过与 PBW
+% * 新增小节状态：初稿已完成；任意特征的标准辛括号、Hamilton导子及中心计算均就地展开，新增4道习题及完整解答；新增范围尚未正式审核，原有内容保留。
 % 纲要位置：工作记录/计划纲要.md，第 4556 行。
 
 \section{滤过与 PBW}
@@ -209,8 +210,8 @@
 \]
 使三个生成元都属于 \(I^2\)。与此同时，标准滤过仍有 \(F_1/F_0\cong\mathfrak{sl}_2\)，维数为三；它按乘积长度保留的一次符号，并不是 \(I/I^2\) 所记录的一次信息。
 
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：复用本节已有 PBW Poisson 括号；补独立的 Poisson 代数定义与标准辛括号算例。
+% 写作状态：15.2.5正文、证明、算例及配套习题已完成初稿，尚未正式审核。
+% 写作范围：复用本节已有PBW Poisson括号，补Poisson代数、标准辛括号及其计算。
 % #### 15.2.1 标准滤过
 % #### 15.2.2 Poincaré–Birkhoff–Witt 定理
 % #### 15.2.3 伴随分次与对称代数
@@ -220,7 +221,123 @@
 \subsection{Poisson 代数与标准辛括号}
 \label{b5:subsec:1502:05}
 
-待撰写。
+\cref{b5:prop:pbw-poisson}在对称代数上保留了原来的 Lie 括号。这个构造包含两种相容的运算：多项式照常相乘，而每个元素又通过括号给出一个导子。把这两种运算单独列出，便能讨论不一定来自某个包络代数标准滤过的例子。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 新增小节状态：待撰写；原有内容保留。
+\begin{definition}\label{b5:def:poisson-algebra}
+	设 \(k\) 为域，\(A\) 为交换含幺 \(k\) 代数。若 \(k\) 双线性运算 \(\{-,-\}:A\times A\to A\) 对任意 \(a,b,c\in A\) 满足
+	\[
+		\begin{gathered}
+			\{a,a\}=0,\qquad
+			\{a,\{b,c\}\}+\{b,\{c,a\}\}+\{c,\{a,b\}\}=0,\\
+			\{a,bc\}=\{a,b\}c+b\{a,c\},
+		\end{gathered}
+	\]
+	就称带有这个括号的 \(A\) 为\term[Poisson-daishu]{Poisson 代数}[Poisson algebra]。两个 Poisson 代数之间保持括号的含幺 \(k\) 代数同态称为 Poisson 同态。若理想 \(I\subseteq A\) 还满足 \(\{A,I\}\subseteq I\)，则称它为\term[Poisson-lixiang]{Poisson 理想}[Poisson ideal]。
+\end{definition}
+
+交替性作用于 \(a+b\) 后给出 \(\{a,b\}=-\{b,a\}\)，所以括号在第一变量也满足乘积法则。特征二中反对称性不能推出交替性，定义仍要求 \(\{a,a\}=0\)。由 \(\{a,1\}=\{a,1\cdot1\}=2\{a,1\}\)，相减得 \(\{a,1\}=0\)，双线性再给出所有标量的括号为零。这个论证没有除以 \(2\)。
+
+\ProseParagraphBreak
+Poisson 理想正是能够取括号商的理想。若 \(I\) 满足定义中的条件，则
+\[
+	\{a+I,b+I\}=\{a,b\}+I
+\]
+不依赖代表：改动任一代表所增加的括号都在 \(I\) 中。三条恒等式由 \(A\) 下降到 \(A/I\)。反过来，若自然商同态保持某个商上的括号，\(b\in I\) 时 \(\{a,b\}\) 的像必须为零，所以 \(I\) 必为 Poisson 理想。特别地，与每个元素的括号均为零的元素组成\term[Poisson-zhongxin]{Poisson 中心}[Poisson center]，记为
+\[
+	Z_{\mathrm P}(A)=\{\,c\in A\mid \{c,a\}=0\ \text{对所有 }a\in A\,\}.
+\]
+乘积法则保证它是含幺子代数；若 \(c\in Z_{\mathrm P}(A)\)、\(\lambda\in k\)，则 \((c-\lambda)\) 是 Poisson 理想。
+\symidx{\(Z_{\mathrm P}(A)\)：Poisson 代数的 Poisson 中心}
+
+\begin{proposition}\label{b5:prop:standard-symplectic-poisson}
+	设 \(k\) 为任意域，\(n\ge1\)，\(A=k[q_1,\ldots,q_n,p_1,\ldots,p_n]\)。公式
+	\begin{equation}\label{b5:eq:standard-symplectic-poisson}
+		\{f,g\}=\sum_{i=1}^n
+		\left(\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i}
+		-\frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}\right)
+	\end{equation}
+	使 \(A\) 成为 Poisson 代数。这是满足
+	\[
+		\{q_i,q_j\}=0,\qquad \{p_i,p_j\}=0,\qquad
+		\{q_i,p_j\}=\delta_{ij}
+	\]
+	的唯一 Poisson 括号，称为\term[biaozhun-xin-kuohao]{标准辛括号}[standard symplectic Poisson bracket]。
+\end{proposition}
+\begin{proof}
+	双线性及两变量的乘积法则由多项式求导得到。代入 \(g=f\) 后，每一对乘积之差都为零，故括号交替，包括特征二的情形。
+
+	为核对 Jacobi，记三项和为 \(J(f,g,h)\)。只用两变量的乘积法则展开 \(J(f,g,uv)\)，得到
+	\[
+		J(f,g,uv)=J(f,g,u)v+uJ(f,g,v).
+	\]
+	确实，除右端外多出的项是
+	\[
+		\{g,u\}\bigl(\{f,v\}+\{v,f\}\bigr)
+		+\bigl(\{f,u\}+\{u,f\}\bigr)\{g,v\}=0.
+	\]
+	由 \(J\) 的循环对称性，它在另两个变量上也满足乘积法则。因此只须检查三个变量都是代数生成元的情形：反复拆开单项式，就把一般的 \(J\) 写成这些值乘以多项式的和。生成元的两两括号是 \(0\) 或 \(\pm1\)，与任何元素的括号均为零，故所有这些值为零。于是 Jacobi 恒等式成立。
+
+	若另一个括号具有所列生成元值，反复应用乘积法则，先把第一变量的单项式拆开，再把第二变量拆开，全部结果都由生成元的两两括号决定；双线性给出对全部多项式的唯一性。
+\end{proof}
+
+按 \((q_1,\ldots,q_n,p_1,\ldots,p_n)\) 排列，生成元括号的矩阵为
+\[
+	\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix}.
+\]
+它在任意特征下均可逆，且交替。在通常的全次数分次中，式\eqref{b5:eq:standard-symplectic-poisson}把次数分别为 \(r,s\ge1\) 的齐次多项式的括号送入次数 \(r+s-2\) 的齐次分量，允许结果为零；这与 PBW 括号下降一次不同。比如 \(n=1\) 时，非负整数 \(a,b,c,d\) 满足
+\[
+	\{q^ap^b,q^cp^d\}=(ad-bc)q^{a+c-1}p^{b+d-1}.
+\]
+若某个指数为 \(-1\)，对应系数必为零，该项按零解释。整数系数在 \(k\) 中取其像；例如 \(\{q^2p,qp^2\}=3q^2p^2\)，在特征三时为零。
+
+\ProseParagraphBreak
+固定 \(f\in A\)，记 \(H_f(g)=\{f,g\}\)。这是一个 \(k\) 导子，称为 \(f\) 的\term[Hamilton-daozi]{Hamilton 导子}[Hamiltonian derivation]。\footnote{哈密顿（William Rowan Hamilton，1805-1865），爱尔兰数学家、物理学家，研究四元数、几何光学及力学。}这里固定把 \(f\) 放在括号的第一位置。因此标准辛括号给出
+\[
+	H_f=\sum_i\left(
+	\frac{\partial f}{\partial q_i}\frac{\partial}{\partial p_i}
+	-\frac{\partial f}{\partial p_i}\frac{\partial}{\partial q_i}\right),
+	\qquad H_{q_i}=\frac{\partial}{\partial p_i},\quad
+	H_{p_i}=-\frac{\partial}{\partial q_i}.
+\]
+\symidx{\(H_f=\{f,-\}\)：采用第一变量约定的 Hamilton 导子}
+
+\begin{proposition}\label{b5:prop:hamilton-derivation-commutator}
+	设 \(A\) 为域 \(k\) 上的 Poisson 代数。赋值 \(f\mapsto H_f=\{f,-\}\) 是从 \(A\) 的 Lie 代数到 \(\operatorname{Der}_k(A)\) 的 Lie 同态；其核为 \(Z_{\mathrm P}(A)\)。具体地，对 \(f,g\in A\)，有
+	\[
+		[H_f,H_g]=H_{\{f,g\}}.
+	\]
+\end{proposition}
+\begin{proof}
+	线性及导子性质已由定义给出。对任意 \(a\in A\)，Jacobi 与反对称性给出
+	\[
+		[H_f,H_g](a)
+		=\{f,\{g,a\}\}-\{g,\{f,a\}\}
+		=\{\{f,g\},a\}.
+	\]
+	两端作用于每个元素都相等，即得同态性质；\(H_f=0\) 的定义正是 \(f\) 属于 Poisson 中心。
+\end{proof}
+
+例如在 \(k[q,p]\) 中，\(H_{qp}=p\partial/\partial p-q\partial/\partial q\)，于是
+\[
+	H_{qp}(q^ap^b)=(b-a)q^ap^b.
+\]
+即使某个元素不属于 Poisson 中心，也可能被某个固定的 Hamilton 导子零化。例如 \(qp\) 被 \(H_{qp}\) 零化，但 \(\{qp,q\}=-q\ne0\)。对 \(A=k[q_1,\ldots,q_n,p_1,\ldots,p_n]\) 的标准辛括号，检验与全部生成元的括号为零，就是检验所有偏导数为零，所以
+\[
+	Z_{\mathrm P}(A)=
+	\begin{cases}
+		k,&\operatorname{char}k=0,\\
+		k[q_1^\ell,\ldots,q_n^\ell,p_1^\ell,\ldots,p_n^\ell],&\operatorname{char}k=\ell>0.
+	\end{cases}
+\]
+公式可逐个单项式检查：一个变量的偏导为零，恰好要求每个非零项在该变量上的指数被特征整除；特征零时则要求该指数为零。此处没有对系数取根，所以不要求底域完美。
+
+\ProseParagraphBreak
+还可以直接比较这两种 Poisson 结构。在前面的 Heisenberg 例子中，\(z\) 属于 \(k[x,y,z]\) 的 Poisson 中心。取商 \(z=c\) 后，得到 \(k[x,y]\) 上的括号
+\[
+	\{f,g\}_c=c\left(
+	\frac{\partial f}{\partial x}\frac{\partial g}{\partial y}
+	-\frac{\partial f}{\partial y}\frac{\partial g}{\partial x}\right).
+\]
+取 \(c=0\) 时括号为零；取 \(c=1\) 并令 \(q=x,p=y\)，就是标准辛括号。这是把一个中央坐标赋值所得到的商，不是保持原全次数的分次同构：\(z-1\) 本来就不是齐次多项式。第四卷第13.4.4小节从形式星积的一次交换子得到 Poisson 括号，并在特征零下构造标准辛括号的星积；这里的括号本身和 Jacobi 验证适用于任意特征。
+
+% * 新增小节状态：初稿已完成；原有内容保留。

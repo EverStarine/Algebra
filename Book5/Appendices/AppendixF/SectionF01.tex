@@ -1,8 +1,6 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### F.1 经典群与 Frobenius 映射
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以经典群、旗与小秩计算为范围，不展开一般群概形构造、楼的完整理论及 Deligne–Lusztig 理论。
 % #### F.1.1 有限域上的经典群
 % #### F.1.2 Frobenius 映射与不动点
 % #### F.1.3 根子群与分裂群的例子
@@ -10,22 +8,244 @@
 \section{经典群与 Frobenius 映射}
 \label{b5:sec:F01}
 
-待撰写。
+矩阵条目取自有限域时，保持行列式或双线性型的方程仍有意义，但解集变成有限群。例如，同一个方程 \(g^{\mathsf T}Jg=J\) 在复数上描述辛代数群，在 \(\mathbb F_q\) 上则给出有限辛群。这里需要区分三份资料：矩阵满足什么方程，条目允许取自哪个域，以及是否还要除去标量中心。Frobenius 映射把前两份资料联系起来；初等矩阵又使这些群的若干乘法关系可以直接计算。
 
 \subsection{有限域上的经典群}
 \label{b5:subsec:F01:01}
 
-待撰写。
+设 \(q=p^r\)，其中 \(p\) 为素数、\(r\ge1\)。在 \(n\) 维 \(\mathbb F_q\) 空间上，全部线性自同构组成一般线性群；选定基后，它及行列式为一的特殊线性群分别写为
+\[
+	\begin{aligned}
+		\operatorname{GL}_n(q)&=\operatorname{GL}_n(\mathbb F_q),\\
+		\operatorname{SL}_n(q)&=\{\,g\in\operatorname{GL}_n(q)\mid\det g=1\,\}.
+	\end{aligned}
+\]
+\symidx{\(\operatorname{GL}_n(q),\operatorname{SL}_n(q)\)：有限域上的一般线性群与特殊线性群}
+下标 \(n\) 是向量空间维数，括号中的 \(q\) 是域的阶。行列式映射满射到 \(\mathbb F_q^\times\)，因为 \(\operatorname{diag}(a,1,\ldots,1)\) 的行列式为 \(a\)；所以 \(\operatorname{SL}_n(q)\) 是其正规核。若另外取商，则得到
+\[
+	\begin{aligned}
+		\operatorname{PGL}_n(q)&=\operatorname{GL}_n(q)/\{\,aI_n\mid a\in\mathbb F_q^\times\,\},\\
+		\operatorname{PSL}_n(q)&=\operatorname{SL}_n(q)/\{\,aI_n\mid a\in\mathbb F_q^\times,\ a^n=1\,\}.
+	\end{aligned}
+\]
+\symidx{\(\operatorname{PGL}_n(q),\operatorname{PSL}_n(q)\)：有限域上的射影一般线性群与射影特殊线性群}
+这两个商群分别记录上述矩阵群在一维子空间上的射影作用。对 \(n\ge2\)，若一个可逆变换固定每条直线，则它先在各基向量上为标量；再固定 \(\mathbb F_q(e_i+e_j)\)，便迫使这些标量相等。因此这两个射影作用的核恰为所列标量子群，而非整个行列式核。
+
+\ProseParagraphBreak
+
+在 \(V=\mathbb F_q^{2m}\) 上，按 \(e_1,\ldots,e_m,f_1,\ldots,f_m\) 排列基，取
+\[
+	J_m=\begin{pmatrix}0&I_m\\-I_m&0\end{pmatrix},\qquad
+	b(v,w)=v^{\mathsf T}J_mw.
+\]
+这是非退化交替型：\(b(v,v)=0\) 对每个 \(v\) 成立，且 \(J_m\) 可逆。保持它的有限辛群为
+\[
+	\operatorname{Sp}_{2m}(q)=\{\,g\in\operatorname{GL}_{2m}(q)\mid g^{\mathsf T}J_mg=J_m\,\}.
+\]
+\termidx[xin-qun]{辛群}
+\symidx{\(\operatorname{Sp}_{2m}(q),J_m\)：有限辛群及标准交替型矩阵}
+% 跨卷引用目标：b2:thm:alternating-form-normal（10.1.5）。
+这里允许 \(p=2\)。此时 \(-1=1\)，矩阵 \(J_m\) 同时对称，但仍保留交替条件 \(b(v,v)=0\)。若换成任意非退化交替型，第二卷定理10.1.5的辛基构造把它化到这个矩阵，所以得到的等距群与上述群共轭。该构造逐次选取 \(b(e_i,f_i)=1\) 的二维平面，再在其正交补中继续，不需要除以二。
+
+\begin{definition}\label{b5:def:F-finite-orthogonal-unitary}
+	设 \(q\) 为素数幂，\(V\) 为有限维 \(\mathbb F_q\) 空间，\(Q:V\to\mathbb F_q\) 满足 \(Q(av)=a^2Q(v)\)，且
+	\[
+		b_Q(v,w)=Q(v+w)-Q(v)-Q(w)
+	\]
+	是双线性型。称 \(Q\) 为二次型，其正交群定义为
+	\[
+		\operatorname O(V,Q)=\{\,g\in\operatorname{GL}(V)\mid Q(gv)=Q(v)\;\text{对所有}\;v\in V\,\}.
+	\]
+	在二次扩张 \(\mathbb F_{q^2}/\mathbb F_q\) 上，记 \(\bar a=a^q\)。对 \(n\ge1\)，取 \(\mathbb F_{q^2}^n\) 上的标准 Hermitian 型 \(h(v,w)=\bar v^{\mathsf T}w\)。保持此型的酉群及行列式为一的\term[teshu-you-qun]{特殊酉群}[special unitary group]分别为
+	\[
+		\begin{aligned}
+			\operatorname U_n(q)&=\{\,g\in\operatorname{GL}_n(\mathbb F_{q^2})\mid\bar g^{\mathsf T}g=I_n\,\},\\
+			\operatorname{SU}_n(q)&=\{\,g\in\operatorname U_n(q)\mid\det g=1\,\}.
+		\end{aligned}
+	\]
+\end{definition}
+\termidx[zhengjiao-qun]{正交群}
+\termidx[you-qun]{酉群}
+\symidx{\(\operatorname O(V,Q),\operatorname U_n(q),\operatorname{SU}_n(q)\)：有限域上的正交群、酉群与特殊酉群}
+酉群记号中的 \(q\) 是对合的不动域的阶，而矩阵条目在 \(\mathbb F_{q^2}\) 中。这里的共轭来自有限域自同构，不是复共轭。取行列式可知 \(\det g\) 满足 \((\det g)^{q+1}=1\)；反过来，任一满足 \(a^{q+1}=1\) 的标量 \(a\) 都由 \(\operatorname{diag}(a,1,\ldots,1)\in\operatorname U_n(q)\) 的行列式实现。
+
+\ProseParagraphBreak
+
+正交群的定义必须保存整个 \(Q\)。当 \(p\ne2\) 时，\(Q(v)=\dfrac{1}{2}b_Q(v,v)\)，所以保存 \(Q\) 等价于保存 \(b_Q\)。当 \(p=2\) 时，这个恢复公式失效，且 \(b_Q\) 总是交替型。取 \(Q(x,y)=xy\)，则
+\[
+	b_Q\bigl((x,y),(x',y')\bigr)=xy'+x'y.
+\]
+变换 \(g(x,y)=(x+y,y)\) 保持 \(b_Q\)，却满足 \(Q(g(x,y))=xy+y^2\)，并不保持 \(Q\)。因此即使极化型非退化，正交群也不能直接换成这个极化型的辛群。特征二的相应区别见 Taylor 作者修订稿的 \emph{Quadratic Forms} 与 \emph{Matrices}\cite[Chapter 7, pp.~54--55; Chapter 11, pp.~136--137]{Taylor1992ClassicalGroups}。
+
+\ProseParagraphBreak
+
+一个所有特征都可使用的偶数维模型是
+\[
+	Q_+(x_1,\ldots,x_m,y_1,\ldots,y_m)=\sum_{i=1}^m x_i y_i.
+\]
+它在两个坐标子空间上恒为零，而把对应的 \(e_i,f_i\) 配成双曲平面。相应的群记为 \(\operatorname O^+_{2m}(q)\)。正交群依赖二次型的同构类型，所以这里保留上标 \(+\)；仅给维数及域的阶还没有指定二次型。本附录使用这个模型说明特征的影响，不作各种正交型及其中心商的分类。
+\symidx{\(\operatorname O^+_{2m}(q)\)：双曲二次型的有限正交群}
 
 \subsection{Frobenius 映射与不动点}
 \label{b5:subsec:F01:02}
 
-待撰写。
+把这些有限矩阵群放进代数闭域 \(k=\overline{\mathbb F_p}\) 上的群，可以将“条目属于有限域”改写为一个不动点条件。对 \(q=p^r\)，标量映射 \(a\mapsto a^q\) 保持加法和乘法；它在 \(k\) 上单射，又因每个 \(a\) 都有 \(q\) 次根而满射。在 \(k\) 中，\(X^q-X\) 的导数为 \(-1\)，所以其 \(q\) 个根互不相同，并恰好组成子域 \(\mathbb F_q\)。
+
+\begin{definition}\label{b5:def:F-matrix-frobenius}
+	设 \(k=\overline{\mathbb F_p}\)、\(q=p^r\)。矩阵群 \(\operatorname{GL}_n(k)\) 上的标准 \(q\) 次\term[Frobenius-yingshe]{Frobenius 映射}[Frobenius map]为
+	\[
+		F_q:\operatorname{GL}_n(k)\longrightarrow\operatorname{GL}_n(k),\qquad
+		(a_{ij})\longmapsto(a_{ij}^{q}).
+	\]
+	若一个子群 \(\mathbf G\le\operatorname{GL}_n(k)\) 被群同态 \(F\) 保持，则记
+	\[
+		\mathbf G^F=\{\,g\in\mathbf G\mid F(g)=g\,\}
+	\]
+	为其不动点子群。
+\end{definition}
+\symidx{\(F_q,\mathbf G^F\)：矩阵的 Frobenius 映射与不动点子群}
+\(F_q\) 对每个矩阵条目取 \(q\) 次幂，不是将矩阵相乘 \(q\) 次。它是群同态，因为矩阵乘法的每个条目都是有限个乘积之和，而 \(q\) 次幂保持这些加法和乘法。例如 \(F_q(gh)=F_q(g)F_q(h)\)，而一般矩阵的 \(q\) 次乘幂不满足这个公式。
+
+\begin{proposition}\label{b5:prop:F-split-fixed-points}
+	设 \(k=\overline{\mathbb F_p}\)、\(q=p^r\)、\(n,m\ge1\)。标准 Frobenius 映射保持 \(\operatorname{SL}_n(k)\) 与按矩阵 \(J_m\) 定义的 \(\operatorname{Sp}_{2m}(k)\)，且
+	\[
+		\begin{aligned}
+			\operatorname{GL}_n(k)^{F_q}&=\operatorname{GL}_n(q),\\
+			\operatorname{SL}_n(k)^{F_q}&=\operatorname{SL}_n(q),\\
+			\operatorname{Sp}_{2m}(k)^{F_q}&=\operatorname{Sp}_{2m}(q).
+		\end{aligned}
+	\]
+\end{proposition}
+\begin{proof}
+	行列式的系数在素域中，故 \(\det F_q(g)=(\det g)^q\)；行列式为一的条件由此保持。\(J_m\) 的条目也在素域中，对 \(g^{\mathsf T}J_mg=J_m\) 逐项取 \(q\) 次幂，得到
+	\[
+		F_q(g)^{\mathsf T}J_mF_q(g)=J_m,
+	\]
+	所以辛群被保持。最后，\(F_q(g)=g\) 当且仅当全部条目属于 \(\mathbb F_q\)。把这一条件与各自的矩阵方程同时施加，便分别得到三个所列有限群。
+\end{proof}
+在第21章的代数群语言中，\(F_q\) 是由多项式坐标给出的态射。它在代数闭域的点上是双射，但其逐项开 \(q\) 次根的逆不因此成为代数群态射；仅在点上有逆与坐标环层面的同构是两种条件。此处恢复有限群只用到了它的不动点。
+
+\ProseParagraphBreak
+
+酉群也能放进同样的 \(\operatorname{GL}_n(k)\)，但其不动点条件还包含共轭转置。令
+\[
+	\tau(g)=(g^{\mathsf T})^{-1},\qquad F=\tau\circ F_q.
+\]
+逆和转置各自反转乘法次序，复合后反转两次，因此 \(\tau(gh)=\tau(g)\tau(h)\)。\(F_q\) 与 \(\tau\) 交换，且 \(\tau^2=1\)，故 \(F\) 也是群同态，并满足 \(F^2=F_{q^2}\)。
+
+\begin{proposition}\label{b5:prop:F-unitary-fixed-points}
+	设 \(k=\overline{\mathbb F_p}\)、\(q=p^r\)、\(n\ge1\)，在 \(\operatorname{GL}_n(k)\) 上取 \(F(g)=(F_q(g)^{\mathsf T})^{-1}\)。则
+	\[
+		\operatorname{GL}_n(k)^F=\operatorname U_n(q),\qquad
+		\operatorname{SL}_n(k)^F=\operatorname{SU}_n(q).
+	\]
+\end{proposition}
+\begin{proof}
+	若 \(F(g)=g\)，则 \(F_{q^2}(g)=F^2(g)=g\)，所以条目属于 \(\mathbb F_{q^2}\)。在这个域上 \(F_q(g)=\bar g\)，原条件等价于
+	\[
+		g=(\bar g^{\mathsf T})^{-1}
+		\quad\Longleftrightarrow\quad
+		\bar g^{\mathsf T}g=I_n.
+	\]
+	这正是 \(\operatorname U_n(q)\) 的定义。反过来，任一满足酉方程的 \(\mathbb F_{q^2}\) 矩阵都被 \(F\) 固定。又有 \(\det F(g)=(\det g)^{-q}\)，故 \(F\) 保持特殊线性群；在上述不动点中再要求行列式一，即得 \(\operatorname{SU}_n(q)\)。
+\end{proof}
+这种改变 Frobenius 的方式已经给出一个具体的扭曲例子：环境矩阵群相同，\(F_q\) 与 \(\tau F_q\) 的不动点却分别为一般线性群与酉群。这里的 \(F^2=F_{q^2}\) 也解释了为什么酉矩阵的条目落在二次扩域中。
+
+\ProseParagraphBreak
+
+在一维时，两个不动点条件分别为 \(a^q=a\) 与 \(a^{q+1}=1\)。前者给出 \(\mathbb F_q^\times\)，后者给出范数映射
+\[
+	N:\mathbb F_{q^2}^\times\longrightarrow\mathbb F_q^\times,\qquad a\longmapsto a^{q+1}
+\]
+% 跨卷引用目标：b1:cor:finite-field-cyclic（17.2.1）。
+的核。第一卷推论17.2.1说明 \(\mathbb F_{q^2}^\times\) 是 \(q^2-1\) 阶循环群；在其中取 \(q+1\) 次幂，核恰有 \(q+1\) 个元素，像有 \(q-1\) 个元素，故 \(N\) 满射。于是 \(\operatorname U_1(q)\cong C_{q+1}\)，而 \(\operatorname{GL}_1(q)\cong C_{q-1}\)。同一个代数闭域上的乘法群，因不动点条件不同而给出这两个不同的有限群。
 
 \subsection{根子群与分裂群的例子}
 \label{b5:subsec:F01:03}
 
-待撰写。
+矩阵 \(I_n+aE_{ij}\) 只把第 \(j\) 个坐标的 \(a\) 倍加到第 \(i\) 个坐标；作为左乘矩阵，它执行相应的行变换。让 \(a\) 变化，就得到一个加法参数的子群。它与第16章的根空间 \(\mathbb CE_{ij}\) 形式相近，但现在运算是矩阵乘法，参数可以处于特征 \(p\) 的域中。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:F-root-subgroups}
+	设 \(K\) 为域、\(n\ge2\)、\(i\ne j\)，以 \(E_{ij}\) 表示矩阵单位。记
+	\[
+		x_{ij}(a)=I_n+aE_{ij}\quad(a\in K),\qquad
+		X_{ij}(K)=\{\,x_{ij}(a)\mid a\in K\,\}\le\operatorname{SL}_n(K).
+	\]
+	这称为标准对角环面所对应的一个\term[gen-ziqun]{根子群}[root subgroup]。在有限域上简记 \(X_{ij}=X_{ij}(\mathbb F_q)\)。
+\end{definition}
+\symidx{\(x_{ij}(a),X_{ij}(K)\)：初等矩阵及标准根子群}
+名称中的根可以直接由共轭看出来。对可逆对角矩阵，直接计算得到
+\[
+	tx_{ij}(a)t^{-1}=x_{ij}(t_i t_j^{-1}a),\qquad
+	t=\operatorname{diag}(t_1,\ldots,t_n).
+\]
+因而参数按乘法特征标 \(\alpha_{ij}(t)=t_i t_j^{-1}\) 改变。将坐标特征标记为 \(\varepsilon_i(t)=t_i\)，并以加法记特征标的乘法，就写成 \(\alpha_{ij}=\varepsilon_i-\varepsilon_j\)。这与 \(A_{n-1}\) 型的根记号相同；不过这里的特征标定义在代数环面上，第16章的根则是复 Cartan 子代数上的线性泛函。
+
+\ProseParagraphBreak
+
+标准对角环面在 \(\mathbb F_q\) 上已同构于 \(\mathbb G_m^n\)；在 \(\operatorname{SL}_n\) 中加上 \(t_1\cdots t_n=1\)，便同构于 \(\mathbb G_m^{n-1}\)。这样的环面称为\term[fenlie-huanmian]{分裂环面}[split torus]：它在给定底域上就是若干乘法群的积。\(\operatorname{GL}_n\)、\(\operatorname{SL}_n\) 的这些环面和根子群都由 \(\mathbb F_q\) 上的方程与参数给出；它们是本附录使用的分裂矩阵模型。判断根的区别须看这些代数特征标，而不只看有限对角子群上的函数。例如在 \(\mathbb F_2\) 上，可逆对角矩阵只有单位，但根子群 \(X_{ij}(\mathbb F_2)\) 仍有两个元素。
+
+\begin{proposition}\label{b5:prop:F-elementary-relations}
+	设 \(K\) 为域、\(n\ge2\)，并取 \(i\ne j\)、\(k\ne\ell\) 及 \(a,b\in K\)。在交换子约定 \([x,y]=xyx^{-1}y^{-1}\) 下，有
+	\[
+		x_{ij}(a)x_{ij}(b)=x_{ij}(a+b),\qquad x_{ij}(a)^{-1}=x_{ij}(-a),
+	\]
+	以及
+	\[
+		\begin{aligned}
+			[x_{ij}(a),x_{k\ell}(b)]&=1&&\text{若}\;j\ne k,\ i\ne\ell,\\
+			[x_{ij}(a),x_{j\ell}(b)]&=x_{i\ell}(ab)&&\text{若}\;i,j,\ell\;\text{两两不同},\\
+			[x_{ij}(a),x_{ki}(b)]&=x_{kj}(-ba)&&\text{若}\;i,j,k\;\text{两两不同}.
+		\end{aligned}
+	\]
+	因此 \(a\mapsto x_{ij}(a)\) 给出 \((K,+)\cong X_{ij}(K)\)。当 \(K=\mathbb F_q\)、\(q=p^r\) 时，\(X_{ij}(K)\cong C_p^r\)，每个非单位元素的阶为 \(p\)。
+\end{proposition}
+\begin{proof}
+	矩阵单位满足 \(E_{ij}E_{k\ell}=\delta_{jk}E_{i\ell}\)，且 \(E_{ij}^2=0\)。这先给出加法公式和逆公式；参数可由矩阵的 \((i,j)\) 条目恢复，所以参数映射单射。若 \(j\ne k\)、\(i\ne\ell\)，两个矩阵单位的两个方向乘积都为零，故相应初等矩阵交换。
+
+	若 \(i,j,\ell\) 两两不同，置 \(A=aE_{ij}\)、\(B=bE_{j\ell}\)，则 \(A^2=B^2=BA=0\)，\(AB=abE_{i\ell}\)，而 \(AB\) 与 \(A,B\) 的乘积全为零。因此
+	\[
+		(I+A)(I+B)(I-A)(I-B)=I+AB,
+	\]
+	给出第二条交换子公式。若改取 \(A=aE_{ij}\)、\(B=bE_{ki}\)，则 \(AB=0\)、\(BA=baE_{kj}\)，同一展开变成 \(I-BA\)，给出第三条交换子公式。最后 \((\mathbb F_q,+)\) 是 \(r\) 维 \(\mathbb F_p\) 向量空间的加法群，故同构于 \(C_p^r\)。
+\end{proof}
+当 \(k=j,\ell=i\) 时，两根相反，未包含在上述三种交换子公式中；此时两个方向的矩阵单位乘积都可能非零。也不能把根子群的 \(q\) 个元素误认成一个 \(q\) 阶循环群：只在 \(r=1\) 时，加法群才为循环群。
+
+\ProseParagraphBreak
+
+\cref{b5:prop:unipotent-three-heisenberg}的三阶幺幂群也可以在有限域上计算。令
+\[
+	u(a,b,c)=\begin{pmatrix}1&a&c\\0&1&b\\0&0&1\end{pmatrix}.
+\]
+直接相乘得到
+\[
+	u(a,b,c)u(a',b',c')
+	=u(a+a',b+b',c+c'+ab').
+\]
+前两个参数相加，第三个参数却多出 \(ab'\)。这正对应 \([X_{12},X_{23}]=X_{13}\)：相邻两条根方向的交换子产生第三条方向。另一方面，\(F_q(x_{ij}(a))=x_{ij}(a^q)\)，所以标准根子群的不动点恰为参数 \(a\in\mathbb F_q\) 的那一部分。群的非交换乘法与有限域的不动点条件在这些坐标中都能看见。
+
+\begin{proposition}\label{b5:prop:F-elementary-generation}
+	设 \(K\) 为域，\(n\ge2\)。则 \(\operatorname{SL}_n(K)\) 由全部 \(x_{ij}(a)\)、\(i\ne j\)、\(a\in K\) 生成。特别地，\(\operatorname{SL}_n(q)\) 由它的标准有限根子群生成。
+\end{proposition}
+\begin{proof}
+	左乘 \(x_{ij}(a)\) 给矩阵执行 \(R_i\leftarrow R_i+aR_j\)，且保持行列式。对任意 \(g\in\operatorname{SL}_n(K)\)，若第一列的首项为零，就把第一列中某个非零项所在的行加到首行，使首项非零；随后用首行消去第一列的其余项。在剩余可逆子块上重复，得到可逆上三角矩阵，再从最后一列向前消去主对角线上方的条目。这些操作不交换行也不缩放行，所得矩阵为 \(D=\operatorname{diag}(d_1,\ldots,d_n)\)，其中 \(\prod_i d_i=1\)。
+
+	还要把 \(D\) 写成初等矩阵的积，不能在这里另行调用缩放行。在两个坐标构成的块中，对 \(c\ne0\) 有
+	\[
+		\begin{aligned}
+			w(c)&=x_{12}(c)x_{21}(-c^{-1})x_{12}(c)
+			=\begin{pmatrix}0&c\\-c^{-1}&0\end{pmatrix},\\
+			w(c)w(-1)&=\begin{pmatrix}c&0\\0&c^{-1}\end{pmatrix}.
+		\end{aligned}
+	\]
+	把后一块嵌入第 \(i,i+1\) 个坐标，记为 \(h_i(c)\)。令 \(c_i=d_1\cdots d_i\)，便有
+	\[
+		D=h_1(c_1)h_2(c_2)\cdots h_{n-1}(c_{n-1}).
+	\]
+	例如第 \(i\) 个中间坐标的对角项是 \(c_{i-1}^{-1}c_i=d_i\)，最后一项为 \(c_{n-1}^{-1}=d_n\)。所以 \(D\) 以及消元前的 \(g\) 都属于所生成的子群。
+\end{proof}
+这一证明只使用域上的行运算及二阶矩阵恒等式，因而也适用于特征二。根子群与消元的关系可对照 Taylor 作者修订稿的 \emph{Transvections}、Theorem 4.3 及 \emph{Commutator Relations}\cite[Chapter 4, pp.~20--22; Chapter 5, p.~34]{Taylor1992ClassicalGroups}；上述参数交换子特意保留符号，以适应本书约定。
+
+\ProseParagraphBreak
+
+这些有限群与复半单 Lie 代数共享根的组合数据，但有限域不是复数的子域，不能把这里的矩阵群直接看成复 Lie 群中的同一组矩阵。更不能把复数上含 \(1/j!\) 的指数公式未经检查搬到特征 \(p\)。对 \(E_{ij}^2=0\)，公式 \(I+aE_{ij}\) 本来就在整数系数上有意义；本节的根子群关系由这个公式重新计算，因而没有这样的分母问题。后面将通过这些群对旗的作用，进一步看见同一个 \(A_{n-1}\) 型 Weyl 群怎样控制矩阵的双陪集。

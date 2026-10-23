@@ -1,8 +1,7 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### 10.6 AR 平移与公式
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：固定有限维左模及 DTr 的侧别，区分稳定与余稳定 Hom；不把 AR 平移当作整个模范畴上的自等价。
+% * 状态：初稿已完成；有限维左模的转置、AR平移、稳定与余稳定范畴、AR公式及几乎分裂序列存在性均有完整证明。明确投射、内射端点与基域条件；新增范围尚未正式审核。
+% 写作状态：正文、证明与算例已形成初稿，尚未正式审核。
 % #### 10.6.1 转置模、对偶与 AR 平移
 % #### 10.6.2 稳定与余稳定范畴
 % #### 10.6.3 Auslander–Reiten 公式及其适用条件
@@ -10,22 +9,271 @@
 \section{AR 平移与公式}
 \label{b5:sec:1006}
 
-待撰写。
+几乎分裂序列的左端不能只由维数相减得到。一个终点模的生成元及其关系还包含哪些信息，能够确定这个左端？本节从投射展示出发，将关系映射对偶化，构造 \(\tau=D\operatorname{Tr}\)。构造中的选择会在经过投射或内射模的映射中留下误差；把这些映射视为零后，平移才成为两个商范畴之间的等价。由同一展示得到的对偶配对，则把扩张与稳定同态联系起来，并完成几乎分裂序列的存在证明。
 
 \subsection{转置模、对偶与 AR 平移}
 \label{b5:subsec:1006:01}
 
-待撰写。
+以下 \(A\) 是域 \(k\) 上的有限维含幺结合代数，模均有限维且默认取左模。记 \(D=\operatorname{Hom}_k(-,k)\)。若 \(X\) 是左模，则 \(DX\) 是右模，作用为 \((\lambda a)(x)=\lambda(ax)\)；对右模取 \(D\) 又回到左模。有限维性使自然映射 \(X\to DDX\) 为同构，并使 \(D\) 保持正合性且反转箭头。
+
+\ProseParagraphBreak
+另记 \(X^*=\operatorname{Hom}_A(X,A)\)，其右作用为 \((fa)(x)=f(x)a\)。对右模 \(U\)，相应记 \(U^*=\operatorname{Hom}_{A^{\mathrm{op}}}(U,A)\)，左作用为 \((af)(u)=af(u)\)。这个对偶通常不与 \(D\) 相同，也不在所有模上保持正合性。对于有限生成投射左模 \(P\)，\(P^*\) 是有限生成投射右模，而求值映射
+\[
+	P\longrightarrow P^{**},\qquad p\longmapsto(f\mapsto f(p))
+\]
+是同构：它在 \(P=A\) 上由求值于 \(1\) 得到，在有限直和上成立，再限制到直和因子即可。因此 \((-)^*\) 给出两侧有限生成投射模之间的反等价。
+
+\begin{lemma}\label{b5:lem:ar-nakayama-pairing}
+	设 \(A\) 为域 \(k\) 上的有限维代数。对有限生成投射左 \(A\)-模 \(P\)，令 \(\nu P=D(P^*)\)。则 \(\nu\) 给出有限生成投射左模与有限维内射左模之间的等价。对有限维左模 \(Y\)，有自然同构
+	\begin{equation}\label{b5:eq:ar-nakayama-pairing}
+		\operatorname{Hom}_A(Y,\nu P)
+		\cong D\operatorname{Hom}_A(P,Y).
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	求值映射
+	\[
+		P^*\otimes_A Y\longrightarrow\operatorname{Hom}_A(P,Y),
+		\qquad f\otimes y\longmapsto\bigl(p\mapsto f(p)y\bigr)
+	\]
+	在 \(P=A\) 时为同构，故在有限自由模及其直和因子上也是同构。另一方面，\(g:Y\to D(P^*)\) 对应双线性配对 \((f,y)\mapsto g(y)(f)\)；\(A\) 线性恰好使这个配对在张量积上良定义。因此
+	\[
+		\operatorname{Hom}_A(Y,D(P^*))
+		\cong D(P^*\otimes_A Y)
+		\cong D\operatorname{Hom}_A(P,Y).
+	\]
+	这些映射均由求值构成，故对 \(P,Y\) 的同态自然。右侧对 \(Y\) 是正合反变函子，所以 \(\nu P\) 内射。
+
+	有限维对偶将右投射模变成左内射模，反之亦然：左模单射经 \(D\) 成为右模满射，内射延拓与投射提升由此相互转换。于是 \(D\) 在右投射模与左内射模之间给出反等价；与前面的 \((-)^*\) 复合，便得到所述等价。这里有限维模中的内射性也足够，因为对偶后的有限维投射模是有限自由模的直和因子，而 \(D(A)\) 由同一求值同构对全部左模都是内射模。
+\end{proof}
+通常称 \(\nu=D\operatorname{Hom}_A(-,A)\) 为\term[Nakayama-hanzi]{Nakayama 函子}[Nakayama functor]。此处只需要它在投射模上的取值及上面的配对。
+
+\ProseParagraphBreak
+% 跨卷引用目标：b2:thm:projective-cover-existence（第二卷定理15.3.9）；b2:thm:projective-cover-uniqueness（第二卷定理15.3.11）；b2:prop:projective-cover-minimality（第二卷命题15.3.12）。
+第二卷定理15.3.9、定理15.3.11和命题15.3.12给出有限维 \(A\)-模的投射覆盖及其唯一性、极小性。先取 \(p:P_0\to X\) 的投射覆盖，再取 \(P_1\to\ker p\) 的投射覆盖，接上包含映射，得到
+\begin{equation}\label{b5:eq:ar-minimal-presentation}
+	P_1\xrightarrow{d}P_0\xrightarrow{p}X\longrightarrow0.
+\end{equation}
+称它为 \(X\) 的极小投射展示。这里未要求 \(d\) 单射。两次覆盖的唯一性说明，另一份这样的展示与之有相容的同构。
+
+\begin{definition}\label{b5:def:ar-transpose-translate}
+	设 \(k\) 为域，\(A\) 为有限维 \(k\) 代数，\(X\) 为有限维左 \(A\)-模。给 \(X\) 选定极小投射展示\eqref{b5:eq:ar-minimal-presentation}，定义右 \(A\)-模
+	\[
+		\operatorname{Tr}_A X
+		=\operatorname{coker}(d^*:P_0^*\to P_1^*)
+	\]
+	为 \(X\) 的\term[zhuanzhi-mo]{转置模}[transpose]，并定义左 \(A\)-模
+	\[
+		\tau X=D\operatorname{Tr}_A X,
+		\qquad \tau^-X=\operatorname{Tr}_{A^{\mathrm{op}}}(DX).
+	\]
+	称 \(\tau\) 为\term[AR-pingyi]{AR 平移}[Auslander--Reiten translate]；\(\tau^-\) 使用的是右模 \(DX\) 的极小投射展示。这些定义首先确定模的同构类型。
+\end{definition}
+\symidx{\(\operatorname{Tr}_A X\)：有限维左模 \(X\) 的转置右模}
+\symidx{\(\tau X=D\operatorname{Tr}_A X,\ \tau^-X=\operatorname{Tr}_{A^{\mathrm{op}}}DX\)：AR 平移}
+
+对展示取 \((-)^*\)，再取 \(D\)，得到正合列
+\begin{equation}\label{b5:eq:ar-dual-presentation}
+	0\longrightarrow\tau X\longrightarrow\nu P_1
+	\xrightarrow{\nu d}\nu P_0\longrightarrow D(X^*)\longrightarrow0.
+\end{equation}
+这给出实际计算 \(\tau X\) 的方法：先记录极小关系映射 \(d\)，再求 \(\nu d\) 的核。若 \(X\) 投射，可取 \(P_0=X\)、\(P_1=0\)，所以 \(\tau X=0\)。对偶地，\(X\) 内射时 \(\tau^-X=0\)。
+
+\begin{example}\label{b5:exm:ar-a2-translate}
+	取任意域 \(k\) 及 \(Q:1\to2\)，令 \(A=kQ\)。两顶点投射模为 \(P_1=(k\xrightarrow{1}k)\)、\(P_2=S_2\)，而 \(\nu P_i=D(e_iA)\) 给出 \(\nu P_1=S_1\)、\(\nu P_2=P_1\)。\(S_1\) 的极小展示为
+	\[
+		P_2\longrightarrow P_1\longrightarrow S_1\longrightarrow0.
+	\]
+	其中第一箭是顶点 \(2\) 上的包含。对偶后 \(\nu P_2\to\nu P_1\) 是 \(P_1\to S_1\) 的自然商映射，故
+	\[
+		\tau S_1=S_2,\qquad\tau P_1=\tau P_2=0.
+	\]
+	同样计算右模展示可得 \(\tau^-S_2=S_1\)。这一结果与\cref{b5:exm:a2-almost-split}中几乎分裂序列的两端一致。
+\end{example}
 
 \subsection{稳定与余稳定范畴}
 \label{b5:subsec:1006:02}
 
-待撰写。
+\cref{b5:def:stable-group-module-category}对群代数把经过投射模的同态视为零。对一般有限维代数，投射模未必内射，所以还要分别保留另一个商。
+
+\begin{definition}\label{b5:def:ar-stable-costable}
+	设 \(k\) 为域，\(A\) 为有限维 \(k\) 代数，\(X,Y\) 为有限维左 \(A\)-模。令 \(\mathcal P(X,Y)\) 为经过有限维投射模的同态所成的子空间，\(\mathcal I(X,Y)\) 为经过有限维内射模的同态所成的子空间。定义
+	\[
+		\begin{aligned}
+		\underline{\operatorname{Hom}}_A(X,Y)
+		&=\operatorname{Hom}_A(X,Y)/\mathcal P(X,Y),\\
+		\overline{\operatorname{Hom}}_A(X,Y)
+		&=\operatorname{Hom}_A(X,Y)/\mathcal I(X,Y).
+		\end{aligned}
+	\]
+	以原来的有限维左模为对象，分别以上述空间为态射空间，得到稳定模范畴 \(\underline{\operatorname{mod}}A\) 和\term[yuwending-mo-fanchou]{余稳定模范畴}[costable module category] \(\overline{\operatorname{mod}}A\)。
+\end{definition}
+\symidx{\(\underline{\operatorname{Hom}}_A,\overline{\operatorname{Hom}}_A\)：分别模去经过投射、内射模的同态}
+
+两个经过投射模的映射之和经过两投射模的直和；前后复合仍经过同一投射模，所以这确为可取商的态射理想。内射情形相同。\(X\) 在稳定范畴中为零，当且仅当 \(1_X\) 经过投射模，即 \(X\) 是投射模的直和因子，亦即 \(X\) 投射；余稳定范畴中的零对象同理恰为内射模。例如在\cref{b5:exm:ar-a2-translate}中，\(S_2\) 在稳定范畴中为零但在余稳定范畴中不为零，\(S_1\) 则相反。
+
+\begin{proposition}\label{b5:prop:ar-transpose-equivalence}
+	设 \(A\) 为域 \(k\) 上的有限维代数。转置构造诱导加性反等价
+	\[
+		\operatorname{Tr}_A:\underline{\operatorname{mod}}A
+		\longrightarrow\underline{\operatorname{mod}}A^{\mathrm{op}},
+	\]
+	其反向反等价为 \(\operatorname{Tr}_{A^{\mathrm{op}}}\)。因而有互逆的加性等价
+	\[
+		\tau:\underline{\operatorname{mod}}A
+		\longrightarrow\overline{\operatorname{mod}}A,
+		\qquad
+		\tau^-:\overline{\operatorname{mod}}A
+		\longrightarrow\underline{\operatorname{mod}}A.
+	\]
+\end{proposition}
+\begin{proof}
+	暂时允许任意有限生成投射展示。对 \(f:X\to Y\)，投射性依次给出 \(f_0,f_1\)，使下图交换：
+	\[
+		\begin{tikzcd}[column sep=large]
+			P_1^X\arrow[r,"d_X"]\arrow[d,"f_1"']&P_0^X\arrow[r]\arrow[d,"f_0"']&X\arrow[r]\arrow[d,"f"]&0\\
+			P_1^Y\arrow[r,"d_Y"]&P_0^Y\arrow[r]&Y\arrow[r]&0.
+		\end{tikzcd}
+	\]
+	对偶图的余核映射给出 \(\operatorname{Tr}Y\to\operatorname{Tr}X\)。若换一对提升 \(f'_0,f'_1\)，则 \(f'_0-f_0=d_Yh\) 对某个 \(h:P_0^X\to P_1^Y\) 成立。令 \(t=f'_1-f_1-hd_X\)，有 \(d_Yt=0\)。在对偶图中，\((hd_X)^*=d_X^*h^*\) 的像在取 \(\operatorname{Tr}X\) 时消失；而 \(t^*d_Y^*=0\)，使 \(t^*\) 下降为
+	\[
+		\operatorname{Tr}Y\longrightarrow(P_1^X)^*
+		\longrightarrow\operatorname{Tr}X.
+	\]
+	因此两个余核映射之差经过投射右模 \((P_1^X)^*\)，在稳定范畴中相同。提升的和、复合及恒等分别给出和、反向复合及恒等，所以得到加性反变构造。
+
+	若 \(f\) 经过投射模 \(Q\)，给 \(Q\) 使用 \(0\to Q\xrightarrow{1}Q\to0\) 的展示，则其转置为零；复合的相容性说明 \(\operatorname{Tr}f\) 在稳定范畴中为零。比较同一模的两份展示时，将恒等分别提升到两边。两个比较的复合仍是恒等的提升，刚才的选择无关性使所得稳定映射互逆；所以转置不依赖所用展示。
+
+	最后，\(P_0^*\xrightarrow{d^*}P_1^*\to\operatorname{Tr}X\to0\) 本身就是一份投射展示。用它再转置，得到 \(\operatorname{coker}(P_1^{**}\to P_0^{**})\cong X\)。在提升图上取两次对偶也恢复原图，故这个同构对稳定映射自然。于是两侧转置互为反等价。有限维对偶 \(D\) 把右投射模变成左内射模，故又给出从右稳定范畴到左余稳定范畴的反等价；复合两次反变，就得到所写的 \(\tau\) 及其逆 \(\tau^-\)。
+\end{proof}
+
+\begin{lemma}\label{b5:lem:ar-translate-indecomposable}
+	设 \(A\) 为域 \(k\) 上的有限维代数，转置按极小投射展示计算。对每个有限维左模 \(X\)，\(\tau X\) 没有非零内射直和项，\(\tau^-X\) 没有非零投射直和项。\(\tau\) 与 \(\tau^-\) 给出非投射不可分解左模和非内射不可分解左模的同构类之间的互逆对应。
+\end{lemma}
+\begin{proof}
+	若内射模 \(J\ne0\) 是 \(\tau X\) 的直和项，由\eqref{b5:eq:ar-dual-presentation}，\(J\) 嵌入 \(\nu P_1\)，内射性使这个嵌入分裂。因 \(J\subseteq\ker\nu d\)，\(\nu d\) 在这个直和项上为零。\cref{b5:lem:ar-nakayama-pairing}的等价把它对应为分解 \(P_1=Q\oplus Q'\) 中的非零项 \(Q\)，且 \(d|_Q=0\)。投影到 \(Q'\) 再包含回 \(P_1\)，便是保持覆盖 \(P_1\to\ker p\) 不变的非可逆自同态，违反投射覆盖的极小性。因此 \(\tau X\) 没有这样的项。对右模作同一论证，再取 \(D\)，得到 \(\tau^-X\) 没有投射直和项。
+
+	设 \(X\) 非投射且不可分解。它的自同态环局部；经过投射模的自同态不可能可逆，否则 \(1_X\) 也经过投射模而使 \(X\) 投射。故稳定自同态环是非零局部环的商，仍为非零局部环。由\cref{b5:prop:ar-transpose-equivalence}，\(\tau X\) 的余稳定自同态环也是非零局部环。若 \(\tau X=U\oplus V\)，相应投影在这个局部环中为幂等元，只能为零或一，于是 \(U,V\) 中有一项在余稳定范畴中为零，即为内射模。刚证的无内射直和项性质使这一项为零。因此 \(\tau X\) 非零不可分解且非内射。对偶论证适用于 \(\tau^-\)。
+
+	稳定等价已给出 \(\tau^-\tau X\) 与 \(X\) 的稳定同构。两者都是非投射不可分解模；取代表映射 \(f,g\)，则 \(gf-1\) 及 \(fg-1\) 经过投射模。这些差属于各自局部自同态环的极大理想，故 \(gf,fg\) 都可逆，\(f\) 本身就是同构。余稳定一侧同理，得到同构类上的互逆性。
+\end{proof}
+
+这里的等价发生在两个商范畴之间，\(\tau\) 在原模范畴上还会把所有投射模送到零，因而不是原模范畴的自等价。一个具体的极小展示仍可用于计算实际模及其箭矩阵；取商是为了使构造对任意态射的选择相容。
 
 \subsection{Auslander–Reiten 公式及其适用条件}
 \label{b5:subsec:1006:03}
 
-待撰写。
+由\eqref{b5:eq:ar-dual-presentation}可见，\(\tau X\) 位于两个内射模之前。把同态空间对偶以后，投射展示中恰好有一部分映射需要被商去。下面说明这一部分正是经过投射模的同态。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{theorem}[Auslander--Reiten 公式]\label{b5:thm:auslander-reiten-formula}
+	设 \(k\) 为域，\(A\) 为有限维 \(k\) 代数，\(X,Y\) 为有限维左 \(A\)-模，\(D=\operatorname{Hom}_k(-,k)\)，\(\tau,\tau^-\) 按极小展示定义。存在自然同构
+	\begin{align}
+		\operatorname{Ext}_A^1(Y,\tau X)
+		&\cong D\underline{\operatorname{Hom}}_A(X,Y),
+		\label{b5:eq:ar-stable-duality}\\
+		D\operatorname{Ext}_A^1(X,Y)
+		&\cong\overline{\operatorname{Hom}}_A(Y,\tau X)
+		\cong\underline{\operatorname{Hom}}_A(\tau^-Y,X).
+		\label{b5:eq:ar-formula}
+	\end{align}
+	其中 \(\operatorname{Ext}^1\) 采用短正合扩张的含义；自然性在 \(\tau\) 或 \(\tau^-\) 出现的变量中按相应商范畴理解。
+\end{theorem}
+\begin{proof}
+	给 \(X\) 取极小展示\eqref{b5:eq:ar-minimal-presentation}，令
+	\[
+		H_i=\operatorname{Hom}_A(P_i,Y),\qquad
+		a:H_0\to H_1,\quad h\mapsto hd.
+	\]
+	预合成 \(p\) 把 \(\operatorname{Hom}_A(X,Y)\) 识别为 \(\ker a\)。令 \(N\subseteq H_0\) 为求值映射
+	\[
+		X^*\otimes_A Y\longrightarrow H_0,
+		\qquad f\otimes y\longmapsto\bigl(v\mapsto f(p(v))y\bigr)
+	\]
+	的像。它包含于 \(\ker a\)，并在上述识别下恰等于 \(\mathcal P(X,Y)\)。事实上，每个这样的求值映射都经过 \(A\)，有限个之和经过有限自由模；反过来，若 \(X\to Q\to Y\) 经过有限生成投射模，把 \(Q\) 嵌为 \(A^m\) 的直和因子，取这份自由模的各坐标，就把复合写成有限个 \(x\mapsto f(x)y\) 之和。
+
+	在\eqref{b5:eq:ar-dual-presentation}中令 \(K=\operatorname{im}(\nu d)\)，有短正合列 \(0\to\tau X\to\nu P_1\to K\to0\)。因为 \(\nu P_1\) 内射，拉回给出
+	\[
+		\operatorname{Ext}_A^1(Y,\tau X)
+		\cong\operatorname{coker}\bigl(
+		\operatorname{Hom}_A(Y,\nu P_1)\to\operatorname{Hom}_A(Y,K)\bigr).
+	\]
+	具体地，一个 \(Y\to K\) 拉回该短正合列；反过来，对任一以 \(\tau X\) 为核的扩张，把核到 \(\nu P_1\) 的映射延拓到中项，便得到 \(Y\to K\)，并将原扩张识别为相应拉回。两次延拓之差来自 \(Y\to\nu P_1\)，所以取到的正是这个余核。拉回也说明这一识别对 \(Y\) 自然。
+
+	\cref{b5:lem:ar-nakayama-pairing}将 \(\operatorname{Hom}_A(Y,\nu P_i)\) 识别为 \(DH_i\)。同一张量配对把 \(\operatorname{Hom}_A(Y,D(X^*))\) 识别为 \(D(X^*\otimes_A Y)\)。由 \(K=\ker(\nu P_0\to D(X^*))\)，\(\operatorname{Hom}_A(Y,K)\) 就对应于 \(DH_0\) 中零化 \(N\) 的泛函空间 \(N^\perp\)。从 \(DH_1\) 来的像为 \(\operatorname{im}(Da)=(\ker a)^\perp\)，因此
+	\[
+		\operatorname{Ext}_A^1(Y,\tau X)
+		\cong N^\perp/(\ker a)^\perp
+		\cong D(\ker a/N)
+		=D\underline{\operatorname{Hom}}_A(X,Y).
+	\]
+	中间同构由把泛函限制到 \(\ker a\) 给出；有限维性保证每个零化 \(N\) 的泛函都能延拓到 \(H_0\)。这证明\eqref{b5:eq:ar-stable-duality}。对同态 \(Y\to Y'\)，配对中的映射均由复合与求值给出，所以自然；对 \(X\to X'\) 使用前一命题的提升图，两条路径也交换。提升差经过投射模，其在稳定 Hom 中及对应的扩张中均为零，故自然性不依赖提升选择。
+
+	将已证公式用于 \(A^{\mathrm{op}}\)，再取有限维对偶。右模扩张 \(0\to U\to E\to V\to0\) 变为左模扩张 \(0\to DV\to DE\to DU\to0\)，稳定映射同时变为余稳定映射。因此得到
+	\[
+		\operatorname{Ext}_A^1(\tau^-Y,X)
+		\cong D\overline{\operatorname{Hom}}_A(X,Y).
+	\]
+	把这里的 \(Y\) 换成 \(\tau X\)、\(X\) 换成原来的 \(Y\)，再用 \(\tau^-\tau X\cong X\) 在稳定范畴中的自然同构，得到\eqref{b5:eq:ar-formula}的第一同构。这样替换是合法的，因为经过投射模的映射在 \(\operatorname{Ext}^1(-,Y)\) 上诱导零映射。最后在\eqref{b5:eq:ar-stable-duality}中把 \(X\) 换成 \(\tau^-Y\)、\(Y\) 换成原来的 \(X\)，利用 \(\tau\tau^-Y\cong Y\) 在余稳定范畴中的自然同构，即得第二同构；经过内射模的映射在 \(\operatorname{Ext}^1(X,-)\) 上同样诱导零映射。
+\end{proof}
+
+\begin{example}\label{b5:exm:ar-quotient-needed}
+	设 \(k\) 为任意域，\(A=k[\varepsilon]/(\varepsilon^2)\)、\(S=A/(\varepsilon)\)。\(S\) 的极小展示为 \(A\xrightarrow{\varepsilon}A\to S\to0\)，故 \(\operatorname{Tr}S=S\)，进而 \(\tau S=\tau^-S=S\)。取积中 \(\varepsilon\) 的系数给出非退化结合配对，故 \(A\cong DA\)，于是 \(A\) 既投射又内射。然而
+	\[
+		\operatorname{Hom}_A(A,S)\cong k,
+		\qquad\operatorname{Hom}_A(S,A)=k\varepsilon
+	\]
+	都非零，而 \(\operatorname{Ext}_A^1(S,A)=\operatorname{Ext}_A^1(A,S)=0\)。前一个 Hom 全部经过内射模 \(A\)，后一个全部经过投射模 \(A\)，所以两个相应商都为零。这说明\eqref{b5:eq:ar-formula}中的横线在一般有限维代数上不能去掉。
+\end{example}
+
+\begin{proposition}\label{b5:prop:ar-socle-extension}
+	设 \(A\) 为域 \(k\) 上的有限维代数，\(X\) 为非投射不可分解有限维左模，\(\eta\in\operatorname{Ext}_A^1(X,\tau X)\)。以 \(\eta\) 为类的短正合列是几乎分裂序列，当且仅当 \(\eta\ne0\)，且对每个 \(a\in\operatorname{rad}\operatorname{End}_A(X)\)，沿 \(a\) 的拉回满足 \(a^*\eta=0\)。
+\end{proposition}
+\begin{proof}
+	几乎分裂序列非分裂，而每个非可逆自同态都不是分裂满射，必经其右映射分解，故沿它的拉回分裂。这给出必要性。
+
+	反过来，由\eqref{b5:eq:ar-stable-duality}，\(\eta\) 对应 \(\underline{\operatorname{End}}_A(X)\) 上的非零泛函 \(\ell\)。自然性说明，\(a^*\eta=0\) 蕴含 \(\ell([ag])=0\) 对所有自同态 \(g\) 成立；取 \(g=1_X\)，可知 \(\ell\) 零化根的像。若 \(f:Y\to X\) 不是分裂满射，对每个 \(g:X\to Y\)，\(fg\) 都不可逆；否则 \(g(fg)^{-1}\) 就是 \(f\) 的右逆。局部自同态环中的非单位全属于根，故 \(\ell([fg])=0\)。再次由自然性，\(f^*\eta\) 对应泛函 \([g]\mapsto\ell([fg])\)，所以 \(f^*\eta=0\)。
+
+	取代表 \(0\to\tau X\xrightarrow{u}E\xrightarrow{p}X\to0\)。拉回分裂等价于存在 \(h:Y\to E\) 使 \(ph=f\)：拉回中的截面投影到 \(E\) 给出 \(h\)；反之 \(y\mapsto(h(y),y)\) 给出截面。因此 \(p\) 右几乎分裂。\cref{b5:lem:ar-translate-indecomposable}使核 \(\tau X\) 非零不可分解，\cref{b5:lem:almost-split-one-sided}再给出左几乎分裂性，得到结论。
+\end{proof}
+
+现在可完成\cref{b5:thm:almost-split-existence}的证明，并确定几乎分裂序列的左端。
+
+\begin{proof}[\cref{b5:thm:almost-split-existence}的证明]
+	设 \(X\) 为非投射不可分解有限维左 \(A\)-模。\(\operatorname{End}_A(X)\) 局部，经过投射模的自同态均在其根中，故 \(\underline{\operatorname{End}}_A(X)\) 是非零有限维局部代数。取其上的 \(k\) 线性泛函 \(\ell\)，使 \(\ell(1_X)=1\)，并使 \(\ell\) 零化该局部代数的根。这样的泛函存在，因为单位在模去根的除代数中非零，可从单位张成的一维子空间延拓线性泛函。
+
+	由\eqref{b5:eq:ar-stable-duality}，\(\ell\) 对应一个非零扩张类 \(\eta\in\operatorname{Ext}_A^1(X,\tau X)\)。对 \(a\in\operatorname{rad}\operatorname{End}_A(X)\)，\(ag\) 对每个 \(g\) 都属于根，所以 \(\ell([ag])=0\)。自然性给出 \(a^*\eta=0\)，由\cref{b5:prop:ar-socle-extension}，\(\eta\) 的代表是几乎分裂序列。
+
+	对于非内射不可分解左模 \(L\)，\(DL\) 是非投射不可分解右模；在 \(A^{\mathrm{op}}\) 上重复刚才的构造，再取 \(D\)，得到以 \(L\) 起始、以 \(\tau^-L\) 终结的几乎分裂序列。投射终点或内射起点使任一相应短正合列分裂，所以这些排除条件也必要。唯一性已由\cref{b5:prop:almost-split-uniqueness}证明。
+\end{proof}
+
+这个构造说明，不能随意选取 \(\operatorname{Ext}_A^1(X,\tau X)\) 中的非零类就断言得到几乎分裂序列。所选泛函必须零化局部自同态环的根；正是这一条件使全部非分裂满射的拉回都为零。
+
+\begin{corollary}\label{b5:cor:ar-hereditary-formula}
+	设 \(k\) 为域，\(Q\) 为有限无有向环箭图，\(A=kQ\)，\(X,Y\) 为有限维左 \(A\)-模。则
+	\[
+		D\operatorname{Ext}_A^1(X,Y)
+		\cong\operatorname{Hom}_A(Y,\tau X)
+		\cong\operatorname{Hom}_A(\tau^-Y,X).
+	\]
+	此处为普通 Hom 空间；尤其 \(\tau X\) 的定义也可写成 \(D\operatorname{Ext}_A^1(X,A)\)。
+\end{corollary}
+\begin{proof}
+	\cref{b5:thm:acyclic-quiver-resolution}给出 \(X\) 的长度一投射消解。极小覆盖 \(P_0\to X\) 的核也投射：把它与该消解的投射满射 \(Q_0\to X\) 作拉回，分别按投射的两个商分裂，得到
+	\[
+		(\ker(P_0\to X))\oplus Q_0\cong Q_1\oplus P_0,
+	\]
+	其中 \(Q_1\) 是原消解的投射核。这使 \(\ker(P_0\to X)\) 成为投射模的直和因子。投射模的投射覆盖为同构，所以极小展示中的 \(d:P_1\to P_0\) 单射。
+
+	由\cref{b5:prop:projective-presentation-extensions}，\(\operatorname{Ext}_A^1(X,Y)\) 是 \(\operatorname{Hom}_A(P_0,Y)\to\operatorname{Hom}_A(P_1,Y)\) 的余核。取 \(D\) 并用\eqref{b5:eq:ar-nakayama-pairing}，即得
+	\[
+		\begin{aligned}
+		D\operatorname{Ext}_A^1(X,Y)
+		&\cong\ker\bigl(\operatorname{Hom}_A(Y,\nu P_1)
+		\to\operatorname{Hom}_A(Y,\nu P_0)\bigr)\\
+		&=\operatorname{Hom}_A(Y,\tau X).
+		\end{aligned}
+	\]
+	取 \(Y=A\) 或直接对短投射消解取 \((-)^*\)，得到 \(\operatorname{Tr}_A X=\operatorname{Ext}_A^1(X,A)\)。反向箭图也有限且无有向环，将已证同构用于 \(A^{\mathrm{op}}\) 后取 \(D\)，便得到含 \(\tau^-Y\) 的同构。
+\end{proof}
+
+例如 \(1\to2\) 上 \(\tau S_1=S_2\)，故 \(\operatorname{Ext}^1(S_1,S_2)\cong D\operatorname{End}(S_2)\cong k\)，而 \(\operatorname{Ext}^1(S_1,S_1)=0\)。对带关系的有限维代数，极小展示的第一箭可能有核；此时不能把它当作长度一消解，必须回到\eqref{b5:eq:ar-formula}中的稳定与余稳定空间。

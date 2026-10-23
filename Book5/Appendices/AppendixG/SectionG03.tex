@@ -1,31 +1,218 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### G.3 仿射秩一代数、级与可积最高权
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以可对称化及仿射型为范围，展开环代数和仿射 sl2 小模型，Weyl–Kac 公式标明证明范围；不展开 VOA 与 Lie 超代数。
 % #### G.3.1 仿射秩一代数的生成关系
 % #### G.3.2 级与最高权
 % #### G.3.3 可积条件与秩一算例
+% 写作范围：在未扭仿射 sl2 的环实现中证明生成、最高权构造及可积判据。
 
 \section{仿射秩一代数、级与可积最高权}
 \label{b5:sec:G03}
 
-待撰写。
+有限维 \(\mathfrak{sl}_2\) 表示中的最高权必须是非负整数，这个整数决定了下降链的长度。仿射代数含有两套相互作用的 \(\mathfrak{sl}_2\) 三元组，因此最高权要同时满足两个整数条件。不过，每一条简单根方向的链都有限，并不意味着整个模有限维：两种下降操作可以交替进行，经过无限多个不同的权。下面把这两点放到同一个环代数模型中计算。
 
 \subsection{仿射秩一代数的生成关系}
 \label{b5:subsec:G03:01}
 
-待撰写。
+取 \(\mathfrak{sl}_2(\mathbb C)\) 的标准基 \(e,f,h\)，满足 \([h,e]=2e\)、\([h,f]=-2f\)、\([e,f]=h\)。在上一节用迹型构造的
+\[
+	\widehat{\mathfrak{sl}}_2
+	=\bigl(\mathfrak{sl}_2(\mathbb C)\otimes\mathbb C[t,t^{-1}]\bigr)
+	\oplus\mathbb Cc\oplus\mathbb C\mathrm d
+\]
+中，定义
+\begin{equation}\label{b5:eq:G-affine-chevalley-elements}
+	\begin{aligned}
+		e_1&=e\otimes1,& f_1&=f\otimes1,& h_1&=h,\\
+		e_0&=f\otimes t,& f_0&=e\otimes t^{-1},& h_0&=c-h.
+	\end{aligned}
+\end{equation}
+这里将 \(h\otimes1\) 简写为 \(h\)。下标 \(0,1\) 标记两条简单根，因而 \(e_0\) 并不表示零次模态。第二套三元组把正、负根向量对调，并分别配上 \(t\) 和 \(t^{-1}\)。中心项恰好使它们的括号成为 \(c-h\)。为简洁起见，本节把上一节在 \(\mathfrak{sl}_2\) 情形中的正、负子代数 \(\widehat{\mathfrak n}_\pm\) 简记为 \(\mathfrak n_\pm\)。
+
+\begin{proposition}\label{b5:prop:G-affine-sl2-generators}
+	设 \(\widehat{\mathfrak{sl}}_2\) 为未扭复仿射 Lie 代数，其环实现的中心扩张使用 \((x,y)=\operatorname{tr}(xy)\)，取\eqref{b5:eq:G-affine-chevalley-elements}中的元素。令
+	\[
+		A=(a_{ij})_{i,j=0,1}=\begin{pmatrix}2&-2\\-2&2\end{pmatrix}.
+	\]
+	则 \(e_0,e_1,f_0,f_1,h_0,h_1,\mathrm d\) 生成 \(\widehat{\mathfrak{sl}}_2\)，并满足
+	\[
+		\begin{gathered}
+			[h_i,h_j]=0,\qquad [h_i,e_j]=a_{ij}e_j,\qquad
+			[h_i,f_j]=-a_{ij}f_j,\qquad [e_i,f_j]=\delta_{ij}h_i,\\
+			(\operatorname{ad}e_i)^3e_j=(\operatorname{ad}f_i)^3f_j=0
+			\quad(i\ne j),\\
+			[\mathrm d,h_i]=0,\qquad [\mathrm d,e_i]=\delta_{i0}e_i,
+			\qquad [\mathrm d,f_i]=-\delta_{i0}f_i.
+		\end{gathered}
+	\]
+	此外，正、负子代数
+	\[
+		\begin{aligned}
+			\mathfrak n_+&=\mathbb C(e\otimes1)\oplus
+			\bigl(\mathfrak{sl}_2(\mathbb C)\otimes t\mathbb C[t]\bigr),\\
+			\mathfrak n_-&=\mathbb C(f\otimes1)\oplus
+			\bigl(\mathfrak{sl}_2(\mathbb C)\otimes t^{-1}\mathbb C[t^{-1}]\bigr)
+		\end{aligned}
+	\]
+	分别由 \(e_0,e_1\) 和 \(f_0,f_1\) 生成。
+\end{proposition}
+\begin{proof}
+	由 \(\operatorname{tr}(fe)=1\)，有
+	\[
+		[e_0,f_0]=[f\otimes t,e\otimes t^{-1}]=-h+c=h_0.
+	\]
+	不同下标的 \(e_i,f_j\) 括号为零；\(h_0=c-h\)、\(h_1=h\) 给出矩阵 \(A\) 的四个系数。次数导子的关系直接由模态次数得到。三次关系可以沿括号计算，例如
+	\[
+		[e_1,e_0]=h\otimes t,\qquad
+		[e_1,[e_1,e_0]]=-2e\otimes t,\qquad
+		[e_1,[e_1,[e_1,e_0]]]=0.
+	\]
+	交换 \(0,1\) 后，前两次括号分别为 \(-h\otimes t\)、\(-2f\otimes t^2\)，第三次仍为零。将 \(e,f,t\) 换成 \(f,e,t^{-1}\)，得到两条负生成元的三次关系。
+
+	为说明生成性，先由 \([e_1,e_0]=h\otimes t\) 得到次数一的 Cartan 方向。利用
+	\[
+		[h\otimes t,e\otimes t^r]=2e\otimes t^{r+1},\qquad
+		[h\otimes t,f\otimes t^r]=-2f\otimes t^{r+1},
+	\]
+	从 \(e\otimes1\) 和 \(f\otimes t\) 逐次得到全部 \(e\otimes t^r\)（\(r\ge0\)）和 \(f\otimes t^r\)（\(r\ge1\)）；再用 \([e\otimes1,f\otimes t^r]=h\otimes t^r\) 得到全部正次 Cartan 模态。这证明 \(e_0,e_1\) 生成 \(\mathfrak n_+\)。负方向从 \([f_1,f_0]=-h\otimes t^{-1}\) 出发，同样逐次得到 \(\mathfrak n_-\)。最后 \(h_1=h\)、\(h_0+h_1=c\)，再加入 \(\mathrm d\)，便得到整个代数。
+\end{proof}
+
+这个计算把广义 Cartan 矩阵的关系落实到了具体模态。验证关系并证明这些元素生成，只给出从关系定义的代数到环实现的满同态；要断言两者同构，还须排除关系代数中的额外核。本节的表示构造直接在上述环实现中进行。
 
 \subsection{级与最高权}
 \label{b5:subsec:G03:02}
 
-待撰写。
+记 \(\widehat{\mathfrak h}=\mathbb Ch\oplus\mathbb Cc\oplus\mathbb C\mathrm d\)。上一节的根分解给出简单根 \(\alpha_1\) 与 \(\alpha_0=\delta-\alpha_1\)，其中
+\[
+	\alpha_1(h)=2,\quad \alpha_1(c)=\alpha_1(\mathrm d)=0,
+	\qquad \delta(h)=\delta(c)=0,\quad\delta(\mathrm d)=1.
+\]
+两者作为 \(\widehat{\mathfrak h}^*\) 的元素线性无关。定义 \(\Lambda_0,\Lambda_1\in\widehat{\mathfrak h}^*\) 为
+\[
+	\Lambda_i(h_j)=\delta_{ij},\qquad \Lambda_i(\mathrm d)=0
+	\quad(i,j\in\{0,1\}).
+\]
+它们是当前实现中的\term[fangshe-jiben-quan]{仿射基本权}[affine fundamental weight]。因为 \(h_0,h_1,\mathrm d\) 是 \(\widehat{\mathfrak h}\) 的基，每个权唯一写成
+\[
+	\lambda=m_0\Lambda_0+m_1\Lambda_1+a\delta,
+	\qquad m_i=\lambda(h_i),\quad a=\lambda(\mathrm d).
+\]
+这里 \(m_i\) 暂时可以是任意复数，尚未施加整性条件。
+\symidx{\(\Lambda_0,\Lambda_1\)：仿射 \(\mathfrak{sl}_2\) 的基本权}
+
+\begin{definition}\label{b5:def:G-level-highest}
+	设 \(V\) 为复 Lie 代数 \(\widehat{\mathfrak{sl}}_2\) 的模。如果中心元 \(c\) 在 \(V\) 上按标量 \(\ell\in\mathbb C\) 作用，就称 \(V\) 的\term[ji-level]{级}[level]为 \(\ell\)。给定 \(\lambda\in\widehat{\mathfrak h}^*\)，若存在非零向量 \(v\) 满足
+	\[
+		Hv=\lambda(H)v\quad(H\in\widehat{\mathfrak h}),\qquad
+		e_0v=e_1v=0,\qquad V=U(\widehat{\mathfrak{sl}}_2)v,
+	\]
+	就称 \(V\) 为最高权 \(\lambda\) 的模，\(v\) 为最高权生成元。
+\end{definition}
+\symidx{\(\ell=\lambda(c)\)：仿射最高权模的级}
+由于 \(e_0,e_1\) 生成 \(\mathfrak n_+\)，定义中的两个零化条件等价于 \(\mathfrak n_+v=0\)。又因为 \(c\) 中心化整个代数，它在由 \(v\) 生成的模上恒按 \(\lambda(c)\) 作用。因此最高权模自动有确定的级，而且
+\begin{equation}\label{b5:eq:G-level-sum}
+	\ell=\lambda(c)=\lambda(h_0+h_1)=m_0+m_1.
+\end{equation}
+级与 \(\mathrm d\) 的特征值不同：前者在整个模上固定，后者随着正、负次模态的作用而改变。
+
+\ProseParagraphBreak
+
+有限维半单情形的 Verma 模构造只用到三角分解与 PBW。这里仍有向量空间直和
+\[
+	\widehat{\mathfrak{sl}}_2
+	=\mathfrak n_-\oplus\widehat{\mathfrak h}\oplus\mathfrak n_+,
+	\qquad \mathfrak b=\widehat{\mathfrak h}\oplus\mathfrak n_+.
+\]
+令 \(\mathbb C_\lambda\) 为一维 \(\mathfrak b\) 模，其中 \(\widehat{\mathfrak h}\) 按 \(\lambda\) 作用，\(\mathfrak n_+\) 作用为零；由于 \([\mathfrak b,\mathfrak b]\subseteq\mathfrak n_+\)，这是良定义的作用。相应的仿射 Verma 模是
+\[
+	M(\lambda)=U(\widehat{\mathfrak{sl}}_2)
+	\otimes_{U(\mathfrak b)}\mathbb C_\lambda,
+	\qquad v_\lambda=1\otimes1.
+\]
+\symidx{\(M(\lambda),L(\lambda)\)：仿射 Verma 模及其唯一简单商}
+
+\begin{proposition}\label{b5:prop:G-affine-verma}
+	设 \(\lambda\in\widehat{\mathfrak h}^*\)，相对于复 Lie 代数 \(\widehat{\mathfrak{sl}}_2\) 的上述三角分解构造 \(M(\lambda)\)。则 \(u\mapsto uv_\lambda\) 给出向量空间同构 \(U(\mathfrak n_-)\cong M(\lambda)\)。模 \(M(\lambda)\) 按 \(\widehat{\mathfrak h}\) 的权分解，各权空间有限维；其权都属于
+	\[
+		\lambda-Q_+,\qquad Q_+=\mathbb Z_{\ge0}\alpha_0+\mathbb Z_{\ge0}\alpha_1,
+	\]
+	且最高权空间为 \(\mathbb Cv_\lambda\)。每个最高权为 \(\lambda\) 的模都是 \(M(\lambda)\) 的商。模 \(M(\lambda)\) 有唯一极大真子模，从而有唯一简单商 \(L(\lambda)\)；不同最高权的简单模互不同构。
+\end{proposition}
+\begin{proof}
+	\cref{b5:thm:pbw}允许 Lie 代数具有任意维数，其证明中的每个字与每次括号展开仍然只含有限项。将 \(\mathfrak n_-\) 的基排在 \(\mathfrak b\) 的基之前，便得到右 \(U(\mathfrak b)\) 模同构
+	\[
+		U(\mathfrak n_-)\otimes_{\mathbb C}U(\mathfrak b)
+		\longrightarrow U(\widehat{\mathfrak{sl}}_2).
+	\]
+	张量 \(\mathbb C_\lambda\) 后得到第一个结论，特别地 \(v_\lambda\ne0\)。由于 \(\mathfrak n_-\) 由 \(f_0,f_1\) 生成，\(M(\lambda)\) 由 \(f_{i_1}\cdots f_{i_r}v_\lambda\) 张成；其中每个 \(f_i\) 将权降低 \(\alpha_i\)。权 \(\lambda-r_0\alpha_0-r_1\alpha_1\) 只需考虑含 \(r_0\) 个 \(f_0\) 和 \(r_1\) 个 \(f_1\) 的有限多个字，故该权空间有限维。\(\alpha_0,\alpha_1\) 线性无关，因此只有空字能有权 \(\lambda\)。最高权向量 \(v\) 满足定义诱导模所需的关系，故 \(u\otimes1\mapsto uv\) 给出到它所生成模的唯一满同态。
+
+	任意子模都按权分解。具体地，一个向量只含有限多个不同权分量，可选 \(H\in\widehat{\mathfrak h}\) 区分这些权，再用 \(H\) 的插值多项式逐个提取权分量；子模对这些多项式保持不变。每个真子模的 \(\lambda\) 权空间必为零，否则它含有生成元 \(v_\lambda\)。于是所有真子模之和仍没有 \(\lambda\) 权分量，是唯一极大真子模。取商得到 \(L(\lambda)\)。若 \(L(\lambda)\cong L(\mu)\)，两个最高权生成元在同一简单模中都生成全模，所以 \(\mu\in\lambda-Q_+\) 且 \(\lambda\in\mu-Q_+\)；简单根线性无关使两式只能在 \(\lambda=\mu\) 时同时成立。
+\end{proof}
 
 \subsection{可积条件与秩一算例}
 \label{b5:subsec:G03:03}
 
-待撰写。
+\begin{definition}\label{b5:def:G-integrable-module}
+	设 \(V\) 为复 Lie 代数 \(\widehat{\mathfrak{sl}}_2\) 的模。若 \(V\) 是 \(\widehat{\mathfrak h}\) 权空间的直和，且对每个 \(v\in V\) 及 \(i\in\{0,1\}\)，都存在正整数 \(N\) 使
+	\[
+		e_i^Nv=f_i^Nv=0,
+	\]
+	就称 \(V\) 为\term[keji-mo]{可积模}[integrable module]。这里允许 \(N\) 随 \(v\) 和 \(i\) 改变，这个条件称为相应算子的局部幂零性。
+\end{definition}
+由两个 \(\mathfrak{sl}_2\) 子代数得到的有限根串，是可积条件要求控制的对象；定义没有要求权的总数有限，也没有要求所有向量共享同一个幂零指数。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{theorem}\label{b5:thm:G-affine-integrable}
+	设 \(\lambda\in\widehat{\mathfrak h}^*\)，\(L(\lambda)\) 为复仿射 Lie 代数 \(\widehat{\mathfrak{sl}}_2\) 的简单最高权模，\(v_\lambda\) 为其最高权生成元。则 \(L(\lambda)\) 可积，当且仅当
+	\[
+		m_0=\lambda(h_0)\in\mathbb Z_{\ge0},\qquad
+		m_1=\lambda(h_1)\in\mathbb Z_{\ge0}.
+	\]
+	在此情形中，\(f_i^{m_i+1}v_\lambda=0\)，而 \(v_\lambda,f_iv_\lambda,\ldots,f_i^{m_i}v_\lambda\) 都非零。特别地，可积简单最高权模的级为非负整数 \(m_0+m_1\)。
+\end{theorem}
+\begin{proof}
+	先固定 \(i\)。三元组 \(e_i,f_i,h_i\) 的括号关系给出与\eqref{b5:eq:sl2-verma-actions}相同的恒等式
+	\begin{equation}\label{b5:eq:G-simple-root-string}
+		e_i f_i^r v_\lambda=r(m_i-r+1)f_i^{r-1}v_\lambda.
+	\end{equation}
+	若 \(L(\lambda)\) 可积，取 \(N\ge0\) 使 \(f_i^Nv_\lambda\ne0\)、\(f_i^{N+1}v_\lambda=0\)。在最后一个等式上作用 \(e_i\)，得到 \((N+1)(m_i-N)f_i^Nv_\lambda=0\)，故 \(m_i=N\) 为非负整数。这也给出所述根串长度。
+
+	反过来，设两个 \(m_i\) 都为非负整数。在 \(L(\lambda)\) 中令 \(w_i=f_i^{m_i+1}v_\lambda\)。由\eqref{b5:eq:G-simple-root-string}，\(e_iw_i=0\)；对于 \(j\ne i\)，\([e_j,f_i]=0\) 给出 \(e_jw_i=0\)。若 \(w_i\ne0\)，它是权 \(\lambda-(m_i+1)\alpha_i\) 的最高权向量。由三角分解，它生成的子模所有权都在 \(\lambda-(m_i+1)\alpha_i-Q_+\) 中，不可能含有权 \(\lambda\)，与 \(L(\lambda)\) 的简单性矛盾。因此 \(w_i=0\)。
+
+	还须把生成元上的幂零关系推广到整个模。对固定的 \(i\)，导子 \(\operatorname{ad}f_i\) 在 Lie 代数生成元上局部幂零：在 \(f_j\) 上由三次 Serre 关系保证，在 \(e_i\) 上先得到 \(h_i\)、\(f_i\) 的倍数，再变为零，在 \(e_j\)（\(j\ne i\)）上已为零，在 \(h_j,\mathrm d\) 上至多两步为零。导子法则使它在包络代数的每个有限乘积上也局部幂零。于是对任意 \(u\in U(\widehat{\mathfrak{sl}}_2)\)，可取 \(R\) 使 \((\operatorname{ad}f_i)^ru=0\) 对所有 \(r\ge R\) 成立。重排恒等式
+	\[
+		f_i^Nu v_\lambda
+		=\sum_{r=0}^N\binom Nr
+		(\operatorname{ad}f_i)^r(u)\,f_i^{N-r}v_\lambda
+	\]
+	表明，当 \(N\ge R+m_i+1\) 时，右侧每项都为零。因此 \(f_i\) 在全模上局部幂零。
+
+	对于 \(e_i\)，只需使用权的范围。若 \(v\) 的权为 \(\lambda-r_0\alpha_0-r_1\alpha_1\)，则 \(e_i^Nv\) 的权将相应的 \(r_i\) 改为 \(r_i-N\)。当 \(N>r_i\) 时，这已不属于 \(\lambda-Q_+\)，所以 \(e_i^Nv=0\)。任意向量只有有限多个权分量，对这些分量取共同的上界即可。这证明 \(L(\lambda)\) 可积。
+\end{proof}
+
+支配整性在有限维半单情形保证简单最高权模有限维；在这里，它保证的是可积性。中心项直接说明这两个结论为何分开。
+\begin{proposition}\label{b5:prop:G-positive-level-infinite}
+	设 \(V\ne0\) 为复 Lie 代数 \(\widehat{\mathfrak{sl}}_2\) 的模，中心元 \(c\) 按标量 \(\ell\ne0\) 作用，则 \(V\) 无限维。可积简单最高权模 \(L(\lambda)\) 的级为零，当且仅当 \(\lambda=a\delta\)（\(a\in\mathbb C\)）；此时它是一维模，所有环代数元素及 \(c\) 作用为零，\(\mathrm d\) 按 \(a\) 作用。
+\end{proposition}
+\begin{proof}
+	迹型满足 \(\operatorname{tr}(h^2)=2\)，所以
+	\[
+		[h\otimes t,h\otimes t^{-1}]=2c.
+	\]
+	若 \(V\) 有限维，在这个等式的表示上取迹，左边是两个有限维算子的交换子，迹为零；右边的迹为 \(2\ell\dim V\ne0\)，矛盾。
+
+	在级为零的可积简单最高权模中，两个非负整数 \(m_0,m_1\) 之和为零，故它们都为零。上一条定理给出 \(f_0v_\lambda=f_1v_\lambda=0\)，而正生成元本来就零化 \(v_\lambda\)。由于这些元素生成全部环代数与中心，最高权生成元的张成空间已经是整个模。反过来，对任何 \(a\) 这样规定的一维作用都保持括号，简单且可积，其最高权为 \(a\delta\)。
+\end{proof}
+
+取级一的 \(L(\Lambda_0)\)，并记其最高权向量为 \(v\)。这时 \(m_0=1\)、\(m_1=0\)，所以
+\[
+	f_0^2v=0,\qquad f_1v=0,\qquad f_0v\ne0.
+\]
+最后一个不等式也可由 \(e_0f_0v=h_0v=v\) 直接看出。令 \(w=f_0v\)，则
+\[
+	e_1w=0,\qquad h_1w=2w.
+\]
+因此相对于零次 \(\mathfrak{sl}_2\)，它是一条最高权为 \(2\) 的根串的起点。局部幂零性与\eqref{b5:eq:G-simple-root-string}给出
+\[
+	w,\quad f_1w,\quad f_1^2w\ne0,\qquad f_1^3w=0.
+\]
+三个向量的 \(h_1\) 权分别为 \(2,0,-2\)，故线性无关；它们的 \(\mathrm d\) 特征值都为 \(-1\)。任何 \(\mathrm d\) 特征值为 \(-1\) 的下降字恰含一个 \(f_0\)，而 \(f_1v=0\) 使这个 \(f_0\) 右边不能再有 \(f_1\)。所以这三个向量张成整个 \(-1\) 次空间。\(\mathrm d\) 特征值为零的空间则只有 \(\mathbb Cv\)。若用非负整数 \(r\) 记录特征值 \(-r\)，头两层的维数因而为 \(1,3\)；将 PBW 基中的零次 \(f_1\) 排在最右边后，它在 \(v\) 上的正次幂全部消失；其余负根基元都有负的 \(\mathrm d\) 次数，每个固定总次数只允许有限多个 PBW 单项式。因此后续层也各自有限维，却不会在某一层后全都消失。

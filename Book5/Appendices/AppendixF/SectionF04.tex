@@ -1,8 +1,6 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### F.4 阶、Sylow 子群与 Hecke 代数
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以经典群、旗与小秩计算为范围，不展开一般群概形构造、楼的完整理论及 Deligne–Lusztig 理论。
 % #### F.4.1 经典群的阶与 Sylow 子群
 % #### F.4.2 旗上的相容算子与 Hecke 代数
 % #### F.4.3 小秩计算与证明范围
@@ -10,23 +8,170 @@
 \section{阶、Sylow 子群与 Hecke 代数}
 \label{b5:sec:F04}
 
-待撰写。
+群的阶可以通过数基来求，双陪集的大小可以通过数旗来求。这两种计数还有不同的用途：前者给出 Sylow 子群的阶，后者把旗之间的位置关系变成线性算子的乘法。\appref{b5:app:A}已经用一个形式参数定义 Hecke 代数；这里说明有限域大小为何恰好成为它的参数。
 
 \subsection{经典群的阶与 Sylow 子群}
 \label{b5:subsec:F04:01}
 
-待撰写。
+\begin{proposition}\label{b5:prop:F-classical-orders}
+	设 \(q=p^f\)，其中 \(p\) 为素数、\(f\ge1\)，并设 \(n,m\ge1\)。则
+	\[
+		\begin{aligned}
+			|\operatorname{GL}_n(\mathbb F_q)|
+			&=\prod_{i=0}^{n-1}(q^n-q^i)
+			=q^{n(n-1)/2}\prod_{i=1}^n(q^i-1),\\
+			|\operatorname{SL}_n(\mathbb F_q)|
+			&=q^{n(n-1)/2}\prod_{i=2}^n(q^i-1),\\
+			|\operatorname{Sp}_{2m}(\mathbb F_q)|
+			&=q^{m^2}\prod_{i=1}^m(q^{2i}-1).
+		\end{aligned}
+	\]
+	这里 \(\operatorname{Sp}_{2m}\) 保持标准非退化交替型，辛群公式也适用于 \(p=2\)。
+\end{proposition}
+\begin{proof}
+	可逆矩阵的列恰为有序基。第一列可取任一非零向量，共有 \(q^n-1\) 种；已经选了 \(i\) 个线性无关向量时，它们的线性生成空间恰有 \(q^i\) 个元素，下一列有 \(q^n-q^i\) 种。因此得到第一式。提取各因子中的 \(q^i\)，再反向排列剩余因子，便得第二种写法。行列式映射到 \(\mathbb F_q^\times\) 是满射，因为 \(\operatorname{diag}(a,1,\ldots,1)\) 的行列式为 \(a\)；核为 \(\operatorname{SL}_n\)，所以将一般线性群的阶除以 \(q-1\) 即可。
+
+	辛群的元素与辛基一一对应：把一组固定辛基送到另一组辛基的唯一线性映射恰好保持该型。设空间维数为 \(2m\)。先取 \(e_1\ne0\)，共有 \(q^{2m}-1\) 种。非退化性说明线性泛函 \(v\mapsto\langle e_1,v\rangle\) 非零，故它的每个纤维都有 \(q^{2m-1}\) 个元素；选择 \(f_1\) 使 \(\langle e_1,f_1\rangle=1\)，便有这么多种选择。平面 \(H=\langle e_1,f_1\rangle\) 非退化，且
+	\[
+		V=H\oplus H^\perp.
+	\]
+	确实，每个 \(v\) 减去 \(\langle v,f_1\rangle e_1-\langle v,e_1\rangle f_1\) 后落入 \(H^\perp\)，而 \(H\cap H^\perp=0\)；若 \(H^\perp\) 中的向量与整个 \(H^\perp\) 正交，它也与 \(H\) 正交，因而为零。故 \(H^\perp\) 上的交替型仍非退化，可以继续选辛基。于是
+	\[
+		|\operatorname{Sp}_{2m}(\mathbb F_q)|
+		=(q^{2m}-1)q^{2m-1}|\operatorname{Sp}_{2m-2}(\mathbb F_q)|.
+	\]
+	从零维空间的唯一基出发归纳，并用 \(\sum_{i=1}^m(2i-1)=m^2\)，得到所述乘积。这个论证没有使用除以二。
+\end{proof}
+
+\(q^i-1\) 都不被 \(p\) 整除，所以这些公式同时读出了群阶中最大的 \(p\) 次幂。不过，仅知道这个数还没有给出相应子群；矩阵的三角形状提供了具体构造。
+
+\begin{proposition}\label{b5:prop:F-defining-sylow}
+	设 \(q=p^f\) 为素数幂、\(n,m\ge1\)。\(\operatorname{GL}_n(\mathbb F_q)\) 中的上单位三角群 \(U\) 同时是 \(\operatorname{GL}_n(\mathbb F_q)\) 与 \(\operatorname{SL}_n(\mathbb F_q)\) 的 Sylow \(p\)-子群，其阶为 \(q^{n(n-1)/2}\)。在按 \((e_1,\ldots,e_m,f_1,\ldots,f_m)\) 排列的标准辛基下，令 \(U_m^{\mathrm{ut}}(q)\) 为 \(m\) 阶上单位三角群，则集合
+	\[
+		P=\left\{\,
+			\begin{pmatrix}A&AS\\0&A^{-\mathsf T}\end{pmatrix}
+			\;\middle|\;
+			A\in U_m^{\mathrm{ut}}(q),\ S=S^{\mathsf T}\in M_m(\mathbb F_q)
+		\right\}
+	\]
+	是 \(\operatorname{Sp}_{2m}(\mathbb F_q)\) 的 Sylow \(p\)-子群，阶为 \(q^{m^2}\)。
+\symidx{\(U_m^{\mathrm{ut}}(q)\)：有限域上的上单位三角群}
+\end{proposition}
+\begin{proof}
+	上单位三角矩阵在乘法下封闭；若写成 \(I+N\)，则 \(N^n=0\)，其逆为 \(I-N+\cdots+(-N)^{n-1}\)，仍是上单位三角矩阵。主对角线上方 \(n(n-1)/2\) 个位置可独立取值，故 \(|U|=q^{n(n-1)/2}\)，而其行列式恒为一。由\cref{b5:prop:F-classical-orders}，这已是两个群阶中最大的 \(p\) 次幂，所以 \(U\) 是所需 Sylow 子群。
+
+	对辛群，记
+	\[
+		D_A=\begin{pmatrix}A&0\\0&A^{-\mathsf T}\end{pmatrix},
+		\qquad N_S=\begin{pmatrix}I&S\\0&I\end{pmatrix}.
+	\]
+	把它们代入 \(g^{\mathsf T}Jg=J\)、\(J=\begin{psmallmatrix}0&I\\-I&0\end{psmallmatrix}\)，可得 \(D_A\) 总保持 \(J\)，而 \(N_S\) 保持 \(J\) 当且仅当 \(S=S^{\mathsf T}\)。又有
+	\[
+		N_SN_T=N_{S+T},\qquad D_AN_SD_A^{-1}=N_{ASA^{\mathsf T}}.
+	\]
+	对称矩阵在 \(S\mapsto ASA^{\mathsf T}\) 下封闭，因此这些矩阵组成子群。每个 \(D_AN_S\) 唯一确定 \(A,S\)，给出
+	\[
+		|P|=q^{m(m-1)/2}\cdot q^{m(m+1)/2}=q^{m^2}.
+	\]
+	这也是辛群阶中最大的 \(p\) 次幂，结论成立。
+\end{proof}
+
+这里的 \(p\) 是底域的特征，称为\term[dingyi-tezheng]{定义特征}[defining characteristic]。其他素数的 Sylow 子群未必由单位三角矩阵给出。例如 \(\operatorname{GL}_2(\mathbb F_2)\) 的阶为六，上单位三角群阶为二；阶三元素却可由不可约多项式 \(x^2+x+1\) 的友矩阵得到。其特征值要到 \(\mathbb F_4\) 中才出现。群阶公式确定各个素数部分的大小，却没有单独确定这些子群的结构。
 
 \subsection{旗上的相容算子与 Hecke 代数}
 \label{b5:subsec:F04:02}
 
-待撰写。
+现在取 \(G=\operatorname{GL}_n(\mathbb F_q)\)、\(n\ge2\)，令 \(X=G/B\) 为完全旗集。矩阵作用在有限域上，下面的函数值则取在 \(\mathbb C\) 中；这两个域承担不同任务。在 \(\mathbb C^X\) 上，\(G\) 按 \((g\varphi)(F)=\varphi(g^{-1}F)\) 作用。若 \(\operatorname{pos}(F,F')=w\) 表示两旗的相对位置，定义
+\begin{equation}\label{b5:eq:F-flag-operator}
+	(T_w\varphi)(F)=\sum_{\operatorname{pos}(F,F')=w}\varphi(F'),\qquad w\in S_n.
+\end{equation}
+\symidx{\(T_w\)：有限域完全旗上按相对位置求和的算子}
+\(T_1=I\)，而 \(T_{s_i}\) 对所有与 \(F\) 仅在第 \(i\) 维子空间不同的旗求和。它不改变旗的其他子空间。
+
+\begin{proposition}\label{b5:prop:F-flag-commutant}
+	设 \(q\) 为素数幂、\(n\ge2\)，\(X\) 为 \(\mathbb F_q^n\) 的完全旗集，\(G=\operatorname{GL}_n(\mathbb F_q)\)。则\eqref{b5:eq:F-flag-operator}中的算子 \(T_w\)、\(w\in S_n\)，构成 \(\operatorname{End}_G(\mathbb C^X)\) 的一组基。令 \(B\) 为标准上三角子群，\(n_w e_j=e_{w(j)}\) 为置换矩阵。该代数同构于双边 \(B\)-不变函数的卷积代数，卷积取
+	\[
+		(f*g)(z)=\frac1{|B|}\sum_{y\in G}f(y)g(y^{-1}z).
+	\]
+	在此同构下，双陪集示性函数 \(1_{Bn_wB}\) 对应 \(T_w\)，单位元为 \(1_B\)。
+\end{proposition}
+\begin{proof}
+	一个矩阵 \(a(F,F')\) 所给的算子与 \(G\) 交换，当且仅当 \(a(gF,gF')=a(F,F')\)。Bruhat 分解把 \(X\times X\) 的轨道逐一标为 \(w\in S_n\)，所以这样的矩阵恰好是在各相对位置上取常数的矩阵。轨道的示性矩阵正是 \(T_w\)；轨道非空且互不相交，所以它们线性无关并张成全部相容算子。
+
+	\eqref{b5:eq:finite-hecke-convolution-action}对任意有限群和子群已经给出同构：双边不变函数 \(f\) 作用为
+	\[
+		(A_f\varphi)(xB)=\frac1{|B|}\sum_{y\in G}f(x^{-1}y)\varphi(yB),
+	\]
+	并满足 \(A_fA_g=A_{f*g}\)。在当前对象上，\(x^{-1}y\in Bn_wB\) 恰好表示 \(\operatorname{pos}(xB,yB)=w\)。右侧求和中的每个陪集 \(yB\) 有 \(|B|\) 个代表元，被分母恰好消去，故 \(A_{1_{Bn_wB}}=T_w\)。特别地，\(A_{1_B}=I\)。这里采用函数的求和作用；与第四章把单个陪集基向量送往其他陪集的算子相比，下标要改为逆双陪集。
+\end{proof}
+
+\begin{theorem}\label{b5:thm:F-flag-hecke}
+	设 \(q\) 为素数幂、\(n\ge2\)，并采用\eqref{b5:eq:F-flag-operator}的算子。对 \(w\in S_n\) 与相邻换位 \(s_i\)，有
+	\begin{equation}\label{b5:eq:F-hecke-multiplication}
+		T_wT_{s_i}=
+		\begin{cases}
+			T_{ws_i},&\ell(ws_i)=\ell(w)+1,\\
+			qT_{ws_i}+(q-1)T_w,&\ell(ws_i)=\ell(w)-1.
+		\end{cases}
+	\end{equation}
+	因此 \((T_{s_i}-qI)(T_{s_i}+I)=0\)。将\cref{b5:def:hecke-algebra}的形式参数 \(v\) 特殊化为正实数 \(\sqrt q\)，则 \(H_i=q^{-1/2}T_{s_i}\) 给出同构
+	\[
+		\mathcal H(S_n)\otimes_{\mathbb Z[v,v^{-1}],\,v\mapsto\sqrt q}\mathbb C
+		\ \simeq\ \operatorname{End}_G(\mathbb C^X),
+	\]
+	其中 \(G=\operatorname{GL}_n(\mathbb F_q)\)、\(X\) 为完全旗集；标准基 \(H_w\) 映到 \(q^{-\ell(w)/2}T_w\)。
+\end{theorem}
+\begin{proof}
+	固定起点旗 \(F\) 和终点旗 \(K\)，记 \(z=\operatorname{pos}(F,K)\)。乘积 \(T_wT_{s_i}\) 在 \((F,K)\) 处的矩阵元，是满足
+	\[
+		\operatorname{pos}(F,L)=w,\qquad L\;\text{与}\;K\;\text{在第}\;i\;\text{维处相邻}
+	\]
+	的中间旗 \(L\) 数目。对 \(K\) 应用\cref{b5:prop:F-flag-adjacency}：若 \(\ell(zs_i)>\ell(z)\)，它的 \(q\) 个此类邻旗相对于 \(F\) 的位置全是 \(zs_i\)；若 \(\ell(zs_i)<\ell(z)\)，其中一个位置为 \(zs_i\)，其余 \(q-1\) 个位置为 \(z\)。
+
+	当 \(\ell(ws_i)>\ell(w)\) 时，只有 \(z=ws_i\) 可以产生位置为 \(w\) 的中间旗，且此时 \(z\) 沿 \(s_i\) 降长，恰有一个选择。当 \(\ell(ws_i)<\ell(w)\) 时，\(z=ws_i\) 贡献 \(q\) 个选择，\(z=w\) 贡献 \(q-1\) 个选择，其他位置不贡献。这给出\eqref{b5:eq:F-hecke-multiplication}。特别取 \(w=s_i\)，便得二次关系；计数中的 \(q-1\) 是保持原相对位置的中间旗数，不是另外选定的代数参数。
+
+	若 \(w=s_{i_1}\cdots s_{i_r}\) 是约化词，每个前段长度逐次增加，因而
+	\[
+		T_{s_{i_1}}\cdots T_{s_{i_r}}=T_w.
+	\]
+	\(S_n\) 中的两条辫词都是同一置换的约化词，所以这些算子满足辫关系。除以相应的 \(v=\sqrt q\) 次幂以后，\(H_i\) 满足 \((H_i-vI)(H_i+v^{-1}I)=0\)，得到定理中的代数同态。约化词公式说明它满射，而\cref{b5:thm:hecke-standard-basis}的 \(n!\) 个标准基元恰好映到 \(n!\) 个线性无关的轨道矩阵的非零倍数，故它为同构。
+\end{proof}
+
+群 \(G\) 的阶随 \(q\) 迅速增加，但这个相容算子代数的维数始终为 \(n!\)。它记录的是两旗的相对位置类型以及这些关系的复合计数。把有限域基数换成形式参数得到抽象 Hecke 代数；形式上的 \(q=1\) 特殊化不是在使用一个有一个元素的域。
 
 \subsection{小秩计算与证明范围}
 \label{b5:subsec:F04:03}
 
-待撰写。
+在 \(n=2\) 时，\(X=\mathbb P^1(\mathbb F_q)\) 有 \(q+1\) 个点。\appref{b5:app:A}已算得非平凡位置算子为 \(T=J-I\)，其中 \(J\) 的全部条目为一。现在可以用它读出处于不同特征值空间中的表示：常值函数上 \(T\) 的特征值为 \(q\)，而在
+\[
+	V_0=\left\{\,\varphi\in\mathbb C^X\;\middle|\;\sum_{L\in X}\varphi(L)=0\,\right\}
+\]
+上，\(T\) 的特征值为 \(-1\)。于是 \(\mathbb C^X=\mathbb C\mathbf1\oplus V_0\)，两者的投影分别是
+\[
+	E_+=\frac{T+I}{q+1},\qquad E_-=\frac{qI-T}{q+1}.
+\]
+这里 \(\dim V_0=q\)。它还是不可约的 \(G\)-表示：\(G\) 在 \(X\) 上传递，故常值表示出现一次；\(\operatorname{End}_G(\mathbb C^X)\) 的维数为二，而 Maschke 定理与 Schur 引理使这个维数等于各不可约成分的重数平方和。因此剩余部分只能是一个重数为一的不可约表示。当 \(q=2\) 时，\(G\) 在三个点上忠实作用且 \(|G|=6\)，于是 \(G\simeq S_3\)，\(V_0\) 正是它的二维标准表示。忠实性也可直接看出：固定三条直线的矩阵先在两条坐标线上分别作用为非零标量，而 \(\mathbb F_2^\times=\{1\}\)，所以矩阵为恒等。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\ProseParagraphBreak
+对 \(n=3\)，记 \(s=(12)\)、\(t=(23)\)。相对于固定完全旗，六种位置及其数目为
+\[
+	\begin{array}{c|rrrrrr}
+		w&1&s&t&st&ts&sts\\\hline
+		\#\{F':\operatorname{pos}(F,F')=w\}&1&q&q&q^2&q^2&q^3
+	\end{array}
+\]
+总数为 \((q+1)(q^2+q+1)\)，与先选一条直线、再选包含它的一个平面的计数一致。对应的相容算子代数具有基
+\[
+	I,\ T_s,\ T_t,\ T_{st},\ T_{ts},\ T_{sts},
+\]
+且例如
+\[
+	T_{st}T_t=qT_s+(q-1)T_{st},\qquad
+	T_{st}T_s=T_{sts}=T_{ts}T_t.
+\]
+取 \(q=2\)，群阶为 \(168\)、旗数为 \(21\)、\(|B|=8\)，六个双陪集分别含 \(8,16,16,32,32,64\) 个元素。相应算子是 \(21\times21\) 矩阵，而它们生成的代数只有六维。矩阵大小、群阶和相容算子代数的维数分别衡量不同对象，不能互相替代。
+
+\ProseParagraphBreak
+本附录的 Bruhat 分解、旗楼与 Hecke 计算都以一般线性群为具体模型；辛群部分给出了不依赖奇特征假设的阶与 Sylow 子群构造。对其他经典群，必须改用保持相应型的旗，酉群还涉及非平凡的有限域对合；不能把这里所有子空间组成的旗集原样移过去。一般有限 Lie 型群的构造、全部扭曲类型以及 Deligne--Lusztig 表示需要进一步理论。这里已有的结论说明的是：根子群的矩阵运算、旗的相对位置与相容算子的乘法，如何在同一组有限模型中相互解释。
+
 % ---

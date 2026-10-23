@@ -1,7 +1,7 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### B.5 辫张量结构与融合范畴
 % 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
+% 写作状态：初稿已完成；新增内容尚未正式审核。
 % 写作范围：复用 B.1 的二维 R 算子，刚性回引第四卷第5章；Rep(G) 与 Vec_G 固定有限群及特征零条件，Tannaka 回引附录 E.4。
 % #### B.5.1 拟三角结构与自然辫
 % #### B.5.2 刚性与融合范畴
@@ -11,27 +11,316 @@
 \section{辫张量结构与融合范畴}
 \label{b5:sec:B05}
 
-待撰写。
+在二维量子模中，普通翻转不再等变，而 \(\check R\) 可以交换相邻张量因子。若要在表示之间反复使用这种交换，只有一个对象上的矩阵还不够：交换必须与不同对象之间的态射相容，也必须与张量积的结合相容。这些条件给出辫张量结构。有限群表示和群分次向量空间将说明，刚性、半单性与辫结构是不同要求；最后再考察附加怎样的向量空间函子才能从一个张量范畴恢复群。
 
 \subsection{拟三角结构与自然辫}
 \label{b5:subsec:B05:01}
 
-待撰写。
+设 \(H\) 为域 \(k\) 上的 Hopf 代数。由\cref{b5:prop:hopf-tensor-dual}，有限维左 \(H\) 模的张量作用为
+\[
+	h(v\otimes w)=\sum h_{(1)}v\otimes h_{(2)}w,
+\]
+单位对象为通过余单位作用的 \(k\)。通常的结合映射 \(\alpha_{X,Y,Z}:(X\otimes Y)\otimes Z\to X\otimes(Y\otimes Z)\) 因余结合性而等变。以下讨论这些张量结构上的交换同构。
+
+\begin{definition}\label{b5:def:B-braiding}
+	设 \(\mathcal C\) 为具有结合约束 \(\alpha\) 与单位对象 \(\mathbf1\) 的幺半范畴。一族同构 \(c_{X,Y}:X\otimes Y\to Y\otimes X\)，若对两个变量都自然，并使下列两个六边形交换，则称为 \(\mathcal C\) 上的\term[bian-jiegou]{辫结构}[braiding]：
+	\[
+		\begin{tikzcd}[column sep=4.5em,row sep=large]
+			(X\otimes Y)\otimes Z\arrow[r,"\alpha"]\arrow[d,"c_{X,Y}\otimes1"']
+			&X\otimes(Y\otimes Z)\arrow[r,"c_{X,Y\otimes Z}"]
+			&(Y\otimes Z)\otimes X\arrow[d,"\alpha"]\\
+			(Y\otimes X)\otimes Z\arrow[r,"\alpha"']
+			&Y\otimes(X\otimes Z)\arrow[r,"1\otimes c_{X,Z}"']
+			&Y\otimes(Z\otimes X),
+		\end{tikzcd}
+	\]
+	\[
+		\begin{tikzcd}[column sep=4.5em,row sep=large]
+			X\otimes(Y\otimes Z)\arrow[r,"\alpha^{-1}"]\arrow[d,"1\otimes c_{Y,Z}"']
+			&(X\otimes Y)\otimes Z\arrow[r,"c_{X\otimes Y,Z}"]
+			&Z\otimes(X\otimes Y)\arrow[d,"\alpha^{-1}"]\\
+			X\otimes(Z\otimes Y)\arrow[r,"\alpha^{-1}"']
+			&(X\otimes Z)\otimes Y\arrow[r,"c_{X,Z}\otimes1"']
+			&(Z\otimes X)\otimes Y.
+		\end{tikzcd}
+	\]
+	带辫结构的幺半范畴称为\term[bian-zhangliang-fanchou]{辫张量范畴}[braided monoidal category]，也就是第四卷所称的辫状幺半范畴。若还对任意 \(X,Y\) 有 \(c_{Y,X}c_{X,Y}=1_{X\otimes Y}\)，则该辫结构称为对称结构。
+\end{definition}
+
+\symidx{\(c_{X,Y}\)：辫张量范畴的交换同构}
+第一个六边形说，把 \(X\) 越过 \(Y\otimes Z\)，等于先越过 \(Y\)，再越过 \(Z\)；第二个处理左侧有两个对象的情形。结合约束明确了每步映射的定义域。自然性则要求，对于 \(f:X\to X'\)、\(g:Y\to Y'\)，有交换图
+\[
+	\begin{tikzcd}[column sep=large,row sep=large]
+		X\otimes Y\arrow[r,"c_{X,Y}"]\arrow[d,"f\otimes g"']
+		&Y\otimes X\arrow[d,"g\otimes f"]\\
+		X'\otimes Y'\arrow[r,"c_{X',Y'}"']&Y'\otimes X'.
+	\end{tikzcd}
+\]
+在普通向量空间中，翻转满足这些要求。对 Hopf 模，下面的元素可以修正翻转的等变性；约定与\cite[Definition 8.3.1, pp. 198--199]{EtingofEtAl2015TensorCategories}一致。
+
+\begin{definition}\label{b5:def:B-quasitriangular}
+	设 \(H\) 为域 \(k\) 上的 Hopf 代数，\(\tau(a\otimes b)=b\otimes a\)，\(\Delta^{\mathrm{op}}=\tau\Delta\)。若可逆元 \(R\in H\otimes_kH\) 满足
+	\begin{equation}\label{b5:eq:B-universal-r}
+		\begin{aligned}
+			\Delta^{\mathrm{op}}(h)&=R\Delta(h)R^{-1} &&(h\in H),\\
+			(\Delta\otimes1)(R)&=R_{13}R_{23},&
+			(1\otimes\Delta)(R)&=R_{13}R_{12},
+		\end{aligned}
+	\end{equation}
+	则 \((H,R)\) 称为\term[nisan-jiao-Hopf-daishu]{拟三角 Hopf 代数}[quasitriangular Hopf algebra]，\(R\) 称为通用 \(R\) 矩阵。这里当 \(R=\sum_i a_i\otimes b_i\) 时，
+	\[
+		R_{12}=\sum_i a_i\otimes b_i\otimes1,\quad
+		R_{13}=\sum_i a_i\otimes1\otimes b_i,\quad
+		R_{23}=\sum_i1\otimes a_i\otimes b_i.
+	\]
+	若还满足 \(R_{21}R=1\otimes1\)，其中 \(R_{21}=\tau(R)\)，则称为\term[sanjiao-Hopf-daishu]{三角 Hopf 代数}[triangular Hopf algebra]。
+\end{definition}
+\symidx{\(R,R_{12},R_{13},R_{23}\)：通用 \(R\) 矩阵及其张量位置记号}
+
+\begin{proposition}\label{b5:prop:B-r-braiding}
+	设 \((H,R)\) 为域 \(k\) 上的拟三角 Hopf 代数，\(R=\sum_i a_i\otimes b_i\)。则有限维左 \(H\) 模范畴上的映射
+	\[
+		c_{V,W}(v\otimes w)=\sum_i b_iw\otimes a_iv
+	\]
+	构成辫结构。复合 \(c_{W,V}c_{V,W}\) 是 \(R_{21}R\) 的作用；特别地，三角 Hopf 代数给出对称结构。此外，在 \(H^{\otimes3}\) 中有
+	\begin{equation}\label{b5:eq:B-quantum-yang-baxter}
+		R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	先证明单位归一化。令 \(u=(\varepsilon\otimes1)(R)\)。对 \((\Delta\otimes1)(R)=R_{13}R_{23}\) 施 \(\varepsilon\otimes\varepsilon\otimes1\)，得到 \(u=u^2\)；\(R\) 可逆使 \(u\) 可逆，故 \(u=1\)。同理，对另一恒等式施 \(1\otimes\varepsilon\otimes\varepsilon\)，得到 \((1\otimes\varepsilon)(R)=1\)。因此 \(c\) 在任一变量为单位对象时就是通常的单位交换映射。
+
+	映射 \(c=\tau R\) 可逆，逆为 \(R^{-1}\tau\)。由第一条拟三角公理，
+	\[
+		\tau R\Delta(h)=\tau\Delta^{\mathrm{op}}(h)R=\Delta(h)\tau R,
+	\]
+	所以它是 \(H\) 模同态。若 \(f,g\) 都是模同态，则 \(f(a_iv)=a_if(v)\)、\(g(b_iw)=b_ig(w)\)，代入即给出上面的自然性方块。
+
+	利用通常的结合映射识别三重张量。第一个六边形中，直接交换 \(X\) 与 \(Y\otimes Z\) 给出
+	\[
+		x\otimes y\otimes z\longmapsto
+		\sum_i b_{i(1)}y\otimes b_{i(2)}z\otimes a_ix.
+	\]
+	依次交换的像为 \(\sum_{i,j}b_i y\otimes b_jz\otimes a_ja_ix\)，两者相等正是 \((1\otimes\Delta)(R)=R_{13}R_{12}\)。第二个六边形的两种像分别为
+	\[
+		\sum_i b_i z\otimes a_{i(1)}x\otimes a_{i(2)}y,
+		\qquad
+		\sum_{i,j}b_jb_i z\otimes a_jx\otimes a_i y,
+	\]
+	其相等由 \((\Delta\otimes1)(R)=R_{13}R_{23}\) 保证。这里 \(\Delta(a_i)=\sum a_{i(1)}\otimes a_{i(2)}\)，对 \(b_i\) 采用同样记法。
+
+	交换两次的算子为 \(\tau R\tau R=R_{21}R\)。最后，第一条公理在前两个张量位置给出
+	\[
+		R_{12}(\Delta\otimes1)(R)R_{12}^{-1}
+		=(\Delta^{\mathrm{op}}\otimes1)(R)=R_{23}R_{13}.
+	\]
+	代入 \((\Delta\otimes1)(R)=R_{13}R_{23}\)，再右乘 \(R_{12}\)，便得\eqref{b5:eq:B-quantum-yang-baxter}。
+\end{proof}
+
+把 \(R\) 与翻转复合，\eqref{b5:eq:B-quantum-yang-baxter}便成为相邻交换的辫关系。一般辫结构也由自然性和六边形推出这一关系，见\cite[Proposition 8.1.10, pp. 195--196]{EtingofEtAl2015TensorCategories}。对余交换 Hopf 代数，\(R=1\otimes1\) 就满足全部公理，所得辫是普通翻转。
+
+\ProseParagraphBreak
+\cref{b5:prop:B-quantum-hecke-operator}中的 \(\check R\) 是一个二维模上的 Hecke 归一化算子。该命题核验了它的等变性与辫关系，尚未为所有不同对象构造自然交换同构。量子包络代数的通用 \(R\) 构造还涉及所选表示类别、归一化及适当的完成，不能由这个有限矩阵断言 \(U_q(\mathfrak{sl}_2)\otimes U_q(\mathfrak{sl}_2)\) 中已经有满足上面定义的元素。下面的有限群分次模型则给出完全落在普通张量积内的例子。
 
 \subsection{刚性与融合范畴}
 \label{b5:subsec:B05:02}
 
-待撰写。
+% 跨卷引用目标：b4:def:monoidal-dual（第四卷定义5.3.1）。
+辫结构允许交换对象，刚性则允许用对偶把一个张量因子移到映射的另一侧。两者承担不同的作用。沿用第四卷定义5.3.1：左对偶 \(V^*\) 配有求值 \(V^*\otimes V\to\mathbf1\) 和余求值 \(\mathbf1\to V\otimes V^*\)，右对偶 \({}^*V\) 配有求值 \(V\otimes{}^*V\to\mathbf1\) 和余求值 \(\mathbf1\to{}^*V\otimes V\)，各自满足两条蛇形恒等式。每个对象都有左右对偶时，幺半范畴称为\term[gangxing-fanchou]{刚性幺半范畴}[rigid monoidal category]，也简称刚性范畴。
+
+\begin{proposition}\label{b5:prop:B-hopf-rigid}
+	设 \(H\) 为域 \(k\) 上的 Hopf 代数，且对极 \(S\) 双射。则有限维左 \(H\) 模范畴刚性。对有限维左模 \(V\)，左右对偶的底层空间都是 \(\operatorname{Hom}_k(V,k)\)，作用分别为
+	\[
+		(h\varphi)(v)=\varphi(S(h)v),\qquad
+		(h\psi)(v)=\psi(S^{-1}(h)v).
+	\]
+\end{proposition}
+\begin{proof}
+	左对偶及蛇形恒等式已由\cref{b5:prop:hopf-tensor-dual}在不要求 \(S\) 双射时证明。为构造右对偶，\(S^{-1}\) 的反乘法性首先保证所列公式定义左模。对极恒等式经 \(S^{-1}\) 作用后给出
+	\[
+		\sum S^{-1}(h_{(2)})h_{(1)}=\varepsilon(h)1,
+		\qquad
+		\sum h_{(2)}S^{-1}(h_{(1)})=\varepsilon(h)1.
+	\]
+	因此 \(\operatorname{ev}'(v\otimes\psi)=\psi(v)\) 满足
+	\[
+		\operatorname{ev}'\bigl(h(v\otimes\psi)\bigr)
+		=\sum\psi\bigl(S^{-1}(h_{(2)})h_{(1)}v\bigr)
+		=\varepsilon(h)\psi(v).
+	\]
+	取一组基 \(e_i\) 及对偶基 \(e_i^*\)，规定 \(\operatorname{coev}'(1)=\sum_i e_i^*\otimes e_i\)。在同构 \({}^*V\otimes V\to\operatorname{End}_k(V)\)、\(\psi\otimes v\mapsto(w\mapsto\psi(w)v)\) 下，此元素对应恒等算子，因而不依赖基。其受 \(h\) 作用后的像为
+	\[
+		w\longmapsto\sum_{(h),i}e_i^*\bigl(S^{-1}(h_{(1)})w\bigr)h_{(2)}e_i
+		=\sum_{(h)}h_{(2)}S^{-1}(h_{(1)})w
+		=\varepsilon(h)w.
+	\]
+	这证明余求值等变。两条蛇形复合在底层空间上分别为 \(v\mapsto\sum_i e_i^*(v)e_i=v\) 与 \(\psi\mapsto\sum_i\psi(e_i)e_i^*=\psi\)，所以给出右对偶。
+\end{proof}
+
+这里用 \(S^{-1}\) 统一构造右对偶，因而明确假定对极双射；第21章的 Hopf 定义没有将它列为公理。即使左右对偶的底层向量空间相同，两套作用也可能不同，因而不能只凭向量空间的对偶公式略去侧别。
+
+\begin{definition}\label{b5:def:B-fusion}
+	设 \(k\) 为代数闭的特征零域。一个本质小的 \(k\) 线性交换范畴 \(\mathcal C\)，若带有双线性的刚性幺半结构，且满足下列条件，则称为 \(k\) 上的\term[ronghe-fanchou]{融合范畴}[fusion category]：每个态射空间有限维；每个对象是有限个简单对象的直和；简单对象只有有限多个同构类型；单位对象 \(\mathbf1\) 简单。
+\end{definition}
+
+定义沿用\cite[Definition 4.1.1, p. 65]{EtingofEtAl2015TensorCategories}在上述底域条件下的版本。它没有要求辫结构，也没有要求把对象实现成向量空间的纤维函子。在半单范畴中短正合列分裂，双加性的张量积保持分裂列，因而在两个变量上都正合。由\cref{b5:prop:B-tensor-grothendieck}，若 \(X_0=\mathbf1,X_1,\ldots,X_r\) 代表全部简单对象，就有
+\[
+	G_0(\mathcal C)=\bigoplus_{i=0}^r\mathbb Z[X_i],\qquad
+	[X_i][X_j]=\sum_{\ell=0}^r N_{ij}^{\ell}[X_\ell],\qquad
+	N_{ij}^{\ell}\in\mathbb Z_{\ge0}.
+\]
+这些整数是张量积分解的重数，称为\term[ronghe-xishu]{融合系数}[fusion coefficient]。结合约束保证所得乘法结合；若另有辫结构，\(X_i\otimes X_j\simeq X_j\otimes X_i\) 才进一步给出交换性。刚性本身并不保证交换。
+\symidx{\(N_{ij}^{\ell}\)：简单对象张量积分解的融合系数}
+
+\ProseParagraphBreak
+\(\mathfrak{sl}_2(\mathbb C)\) 的有限维表示虽然半单，但 \(L_m\)、\(m\ge0\) 给出无穷多个简单类型，所以不构成融合范畴。\cref{b5:prop:B-root-of-unity-filtration}中的单位根模型又显示，含有那一非分裂扩张的表示类别不满足半单条件。要从量子群得到融合范畴，需要另行指定对象并处理不能分裂的部分，不能仅凭参数取单位根便得出结论。
 
 \subsection{有限群表示与分次向量空间}
 \label{b5:subsec:B05:03}
 
-待撰写。
+有限群提供两种相近但不同的范畴。\(\operatorname{Rep}_k(G)\) 的对象是在向量空间上的群作用；\(\operatorname{Vec}_G(k)\) 的对象则是以群元素为次数的直和分解。二者分别与第21章的群代数 \(kG\) 和函数代数 \(k^G\) 相联系。
+
+\begin{proposition}\label{b5:prop:B-group-fusion}
+	设 \(G\) 为有限群，\(k\) 为代数闭的特征零域。则有限维表示范畴 \(\operatorname{Rep}_k(G)\) 是对称融合范畴。有限维 \(G\) 分次 \(k\) 向量空间范畴 \(\operatorname{Vec}_G(k)\)，以次数保持映射为态射，并规定
+	\[
+		(V\otimes W)_g=\bigoplus_{ab=g}V_a\otimes_kW_b,
+	\]
+	也是融合范畴；其单位对象集中在单位元 \(e\) 次，结合约束为通常的向量空间结合映射。它的 Grothendieck 环是 \(\mathbb Z[G]\)。若 \(G\) 非交换，则这套幺半结构不可能具有辫结构。
+\end{proposition}
+\symidx{\(\operatorname{Rep}_k(G),\operatorname{Vec}_G(k)\)：有限群表示范畴与群分次向量空间范畴}
+\begin{proof}
+	在表示范畴中，\(|G|\) 在 \(k\) 中可逆，故\cref{b5:thm:maschke}给出半单性；\cref{b5:lem:irreducibles-in-regular}又用有限维正则表示穷尽简单类型。态射空间是有限维线性映射空间的子空间，平凡表示为一维，因而单位简单。群代数的对极 \(g\mapsto g^{-1}\) 双射，\cref{b5:prop:B-hopf-rigid}给出刚性。普通翻转与对角群作用交换，并满足对称性及六边形，故为对称融合范畴。
+
+	在分次范畴中，令 \(k_g\) 为集中在 \(g\) 次的一维对象。每个对象都是 \(k_g\) 的有限直和，且 \(k_g\) 恰好给出全部简单类型。次数公式由群的结合律给出幺半结构，\(k_e\) 为简单单位。对偶取
+	\[
+		(V^*)_g=(V_{g^{-1}})^*.
+	\]
+	求值只配对 \(g^{-1}\) 次与 \(g\) 次，余求值是逐次对偶基之和；因 \(g^{-1}g=gg^{-1}=e\)，两种次序都保持次数，普通向量空间的蛇形恒等式给出左右对偶。因此满足融合定义。又 \(k_g\otimes k_h=k_{gh}\)，故基元对应 \([k_g]\mapsto g\) 给出 \(G_0(\operatorname{Vec}_G(k))\simeq\mathbb Z[G]\)。
+
+	若存在辫，则每对 \(g,h\) 都须有 \(k_{gh}\simeq k_{hg}\)。不同次数的这类对象之间没有非零态射，所以必须有 \(gh=hg\)。这排除了非交换群。
+\end{proof}
+
+由\cref{b5:prop:finite-group-module-comodule}，\(\operatorname{Vec}_G(k)\) 也可看成有限维左 \(k^G\) 模范畴或右 \(kG\) 余模范畴；次数乘法正好来自 \(\Delta(\delta_g)=\sum_{ab=g}\delta_a\otimes\delta_b\)。这个例子还表明，融合范畴的 Grothendieck 环确实可能非交换。
+
+\begin{proposition}\label{b5:prop:B-graded-braiding}
+	设 \(G\) 为有限交换群，\(k\) 为代数闭的特征零域。保持通常结合约束的 \(\operatorname{Vec}_G(k)\) 上，辫结构与\term[shuang-tezheng-biao]{双特征标}[bicharacter] \(\chi:G\times G\to k^\times\) 一一对应；这里双特征标指
+	\[
+		\chi(gh,t)=\chi(g,t)\chi(h,t),\qquad
+		\chi(g,ht)=\chi(g,h)\chi(g,t).
+	\]
+	对应的辫在齐次向量上为
+	\[
+		c_{V,W}(v_g\otimes w_h)=\chi(g,h)w_h\otimes v_g.
+	\]
+	它对称当且仅当对所有 \(g,h\) 都有 \(\chi(g,h)\chi(h,g)=1\)。
+\end{proposition}
+\begin{proof}
+	\(G\) 交换使翻转后的向量仍有原来的次数 \(gh\)。标量非零保证映射可逆，保持次数的线性映射又与这些标量相容，故有自然性。对 \(v_g\otimes w_h\otimes u_t\)，两个六边形分别比较标量 \(\chi(g,ht)\) 与 \(\chi(g,h)\chi(g,t)\)，以及 \(\chi(gh,t)\) 与 \(\chi(g,t)\chi(h,t)\)，正是两条双特征标等式。它们也给出 \(\chi(e,g)=\chi(g,e)=1\)。
+
+	反过来，给定辫时，\(c_{k_g,k_h}\) 是一维空间上的非零标量，记为 \(\chi(g,h)\)。任意齐次向量定义次数保持映射 \(k_g\to V\)、\(1\mapsto v_g\)，对这些映射的自然性迫使一般分量具有所列公式。六边形再迫使两条双乘法性，故对应唯一。最后交换两次的标量为 \(\chi(g,h)\chi(h,g)\)，得到对称性的判别。
+\end{proof}
+
+例如对加法群 \(\mathbb Z/3\mathbb Z\)，取本原三次单位根 \(\zeta\in k\) 及 \(\chi(a,b)=\zeta^{ab}\)。在两个一次齐次向量上，双辫为 \(\zeta^2\)，所以这是非对称的辫。对 \(\mathbb Z/2\mathbb Z\)，取 \(\chi(a,b)=(-1)^{ab}\)，则得到\term[chao-xiangliang-kongjian]{超向量空间}[super vector space]范畴 \(\operatorname{sVec}_k\)：交换两个奇向量时增加负号，交换两次仍为恒等。改取 \(\chi=1\) 就恢复普通翻转；这不改变对象的张量积分解，故同一个 Grothendieck 环 \(\mathbb Z[\mathbb Z/2\mathbb Z]\) 不能分辨这两套对称结构。
+
+\ProseParagraphBreak
+这两种辫都有普通张量积内的通用 \(R\) 矩阵。对 \(H=k^G\)，令 \(\delta_g\) 为 \(g\) 处取一、其余点取零的函数，并取
+\[
+	R_\chi=\sum_{g,h\in G}\chi(g,h)\delta_g\otimes\delta_h.
+\]
+它的逆只需逐系数把 \(\chi(g,h)\) 换成倒数。\(G\) 交换时 \(H\) 余交换，且 \(H\otimes H\) 交换，所以第一条拟三角公理成立。在 \(\delta_g\otimes\delta_h\otimes\delta_t\) 的系数上，另两条公理分别变为 \(\chi(gh,t)=\chi(g,t)\chi(h,t)\) 与 \(\chi(g,ht)=\chi(g,h)\chi(g,t)\)。因此\cref{b5:prop:B-r-braiding}给出的正是刚才的齐次辫。
+
+\ProseParagraphBreak
+特征条件在两类例子中的作用不同。若域的特征整除 \(|G|\)，\cref{b5:prop:maschke-converse}说明 \(\operatorname{Rep}_k(G)\) 不再半单；分次向量空间却仍可逐次选基，仍是各 \(k_g\) 的直和。这一比较只针对半单性；上面的融合定义与双特征标例子始终采用已说明的代数闭特征零底域。
 
 \subsection{中性 Tannaka 重构与微分模}
 \label{b5:subsec:B05:04}
 
-待撰写。
+群表示的张量积不仅给出融合系数，还保留群在每个对象上怎样同时作用。恢复群时，需要一个把这些对象落实为向量空间的函子，并要求该函子保持态射、张量与对称交换。仅有张量积分解的整数表不能替代这些资料。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:B-neutral-fiber}
+	设 \(k\) 为代数闭的特征零域，\(\mathcal C\) 为本质小的 \(k\) 线性交换范畴，带有刚性对称幺半结构，每个对象有限长度、每个态射空间有限维，且 \(\operatorname{End}_{\mathcal C}(\mathbf1)=k\)。一个忠实、正合的 \(k\) 线性强幺半函子
+	\[
+		\omega:\mathcal C\longrightarrow\operatorname{Vect}_{\mathrm{fd}}(k),
+	\]
+	若保持对称结构，则称为\term[zhongxing-xianwei-hanzi]{中性纤维函子}[neutral fiber functor]。这里强幺半结构给出自然同构 \(J_{X,Y}:\omega(X)\otimes\omega(Y)\to\omega(X\otimes Y)\) 及 \(k\simeq\omega(\mathbf1)\)，满足结合与单位相容条件；保持对称结构指
+	\[
+		\omega(c_{X,Y})J_{X,Y}=J_{Y,X}\tau.
+	\]
+	带有这种函子的 \((\mathcal C,\omega)\) 称为\term[zhongxing-Tannaka-fanchou]{中性 Tannaka 范畴}[neutral Tannakian category]。
+\end{definition}
+
+“中性”指纤维函子取值于底域 \(k\) 上的向量空间。这里没有半单性或简单类型有限的要求。对交换 \(k\) 代数 \(S\)，记 \(S\otimes_k\omega\) 为取值于有限自由 \(S\) 模的函子。其张量自同构由一族可逆 \(S\) 线性映射 \(a_X\) 组成，要求对每个态射自然，且在结构同构 \(J\) 下有
+\[
+	a_{X\otimes Y}=a_X\otimes a_Y,\qquad a_{\mathbf1}=1.
+\]
+这些族在逐对象复合下成群，记为 \(\operatorname{Aut}^{\otimes}(S\otimes_k\omega)\)。
+\symidx{\(\operatorname{Aut}^{\otimes}(S\otimes_k\omega)\)：纤维函子扩张标量后的张量自同构群}
+
+\begin{theorem}[中性 Tannaka 重构]\label{b5:thm:B-neutral-tannaka}
+	设 \(k\) 为代数闭的特征零域，\((\mathcal C,\omega)\) 为\cref{b5:def:B-neutral-fiber}所定义的中性 Tannaka 范畴。则函子
+	\[
+		S\longmapsto\operatorname{Aut}^{\otimes}(S\otimes_k\omega)
+	\]
+	由 \(k\) 上一个仿射群概形 \(G\) 表示，且 \(\omega\) 提升为对称张量等价 \(\mathcal C\simeq\operatorname{Rep}_{\mathrm{fd},k}(G)\)，其中右侧为有限维有理表示。如果存在对象 \(M\)，使每个对象都是 \(M,M^*\) 的有限张量积的有限直和之子商，则 \(G\) 有限型，并有闭嵌入 \(G\hookrightarrow\operatorname{GL}(\omega(M))\)。
+\end{theorem}
+\begin{proofsketch}
+	构造坐标环时，同时保留所有对象的矩阵系数。取 \(\mathcal C\) 的一个小骨架，令
+	\[
+		A=\left(\bigoplus_{X\in\mathcal C}\omega(X)^*\otimes_k\omega(X)\right)\big/\mathcal R,
+	\]
+	其中系数类记为 \([X,\varphi,v]\)，关系空间 \(\mathcal R\) 由
+	\begin{equation}\label{b5:eq:B-coend-relation}
+		[Y,\psi,\omega(f)v]=[X,\psi\circ\omega(f),v]
+	\end{equation}
+	生成，\(f:X\to Y\)、\(v\in\omega(X)\)、\(\psi\in\omega(Y)^*\)。这就是纤维函子的系数余端：自然性将不同对象中表示同一系数的符号联系起来。
+
+	在 \(\omega(X)\) 的一组基 \(e_i\) 下，定义
+	\[
+		\begin{aligned}
+			\Delta[X,\varphi,v]&=\sum_i[X,\varphi,e_i]\otimes[X,e_i^*,v],\\
+			\varepsilon[X,\varphi,v]&=\varphi(v),\\
+			\delta_X(v)&=\sum_i e_i\otimes[X,e_i^*,v].
+		\end{aligned}
+	\]
+	基无关性来自 \(\sum_i e_i\otimes e_i^*\) 对应恒等算子。对关系\eqref{b5:eq:B-coend-relation}选取两端的基并展开 \(\omega(f)\) 的矩阵，所得两种余乘法之差仍由相同关系生成；余单位也零化该差。余结合等式的两边都是三重矩阵系数的求和，\(\delta_X\) 则为右余作用。关系式使每个 \(\omega(f)\) 都是余模同态。
+
+	张量结构规定乘法
+	\[
+		[X,\varphi,v]\,[Y,\psi,w]
+		=[X\otimes Y,(\varphi\otimes\psi)J_{X,Y}^{-1},J_{X,Y}(v\otimes w)],
+	\]
+	单位来自 \(\mathbf1\) 的系数。\(J\) 的自然性使乘法保持关系，结合与单位相容性分别给出结合律和单位律。用态射 \(c_{X,Y}\) 代入\eqref{b5:eq:B-coend-relation}，再用 \(\omega(c)J=J\tau\)，便把乘积变成反序乘积，故 \(A\) 交换。求值与余求值给出对偶对象的矩阵系数与原矩阵互为逆的关系，从而定义对极。因此 \(A\) 是交换 Hopf 代数，可令 \(G=\operatorname{Spec}A\)。
+
+	具体地，一个 \(k\) 代数同态 \(a:A\to S\) 在每个对象的标量扩张上定义
+	\[
+		1\otimes v\longmapsto\sum_i a([X,e_i^*,v])\otimes e_i
+	\]
+	并延伸为 \(S\) 线性映射。关系式给出自然性，乘法与单位给出张量和单位相容性，对偶的逆矩阵关系保证可逆。反过来，这样的自然张量族在每个系数上规定唯一的 \(a\)。余乘法公式使 \(G(S)\) 的群乘法对应逐对象复合，因而得到所述群函子的表示。
+
+	还需证明 \(X\mapsto(\omega(X),\delta_X)\) 全忠实，并且每个有限维右 \(A\) 余模都来自某个 \(X\)。这一步是一般交换范畴的重构定理：它利用 \(\omega\) 的忠实正合性恢复子对象与余作用相容映射，并从有限维系数恢复对象。这里调用\cite[Theorem 1.10.1, pp. 14--15; Theorem 5.4.1, p. 98]{EtingofEtAl2015TensorCategories}的余端重构结果，省略该一般范畴论步骤。其输入正是本质小、有限长度、态射有限维的交换范畴及忠实正合纤维函子；张量与对偶给出上述 Hopf 结构。右 \(A\) 余模与 \(G=\operatorname{Spec}A\) 的有理表示相同，故得到等价。
+
+	最后，设 \(M\) 为所述生成对象，\(n=\dim\omega(M)\)。张量积的系数是原系数的乘积，直和的系数是相应块矩阵的系数；子对象的泛函可延伸到大空间，商对象的向量可从大空间提升，故\eqref{b5:eq:B-coend-relation}使子商也不增加代数生成元。于是 \(A\) 由 \(M\) 及 \(M^*\) 的有限个系数生成。对偶系数是原系数矩阵的逆矩阵条目，因此有满射
+	\[
+		k[X_{ij},\det(X)^{-1}]\longrightarrow A.
+	\]
+	它给出所述有限型闭子群。
+\end{proofsketch}
+
+对称结构本身并不保证有这样的纤维函子。例如 \(\operatorname{sVec}_k\) 中的奇直线 \(P\) 满足 \(P\otimes P\simeq\mathbf1\)。若存在取值于普通向量空间的对称强幺半函子，则 \(\dim\omega(P)^2=1\)，所以 \(\omega(P)\) 一维。但是 \(c_{P,P}=-1\) 被 \(k\) 线性函子送成负恒等，普通一维空间的翻转却是正恒等。特征零时两者不同，违反对称相容性。因此中性条件不能从对称性中删去。
+
+\ProseParagraphBreak
+附录 E.4 的微分模给出非半单的中性例子。设 \((K,\delta)\) 为特征零微分域，常数域 \(C\) 代数闭，\(M\) 为有限维微分模，\(L/K\) 为其 PV 域，且没有新常数。对由 \(M\) 经直和、张量积、对偶与子商生成的范畴 \(\langle M\rangle_\otimes\)，令
+\[
+	\omega(N)=\ker\bigl(\nabla:L\otimes_KN\to L\otimes_KN\bigr).
+\]
+\cref{b5:thm:E-tannaka}证明这些对象被同一个 \(L\) 平凡化，\(\omega\) 为忠实正合的 \(C\) 线性张量函子，且自然映射 \(L\otimes_C\omega(N)\to L\otimes_KN\) 是同构。普通翻转与联络相容，故这个函子也保持对称结构。对象的长度由其有限 \(K\) 维数控制，态射经忠实函子嵌入有限维 \(C\) 线性映射空间，而平凡微分模的自同态就是 \(C\)。这些条件使其成为中性 Tannaka 范畴；该定理还在这个具体情形中完整证明了
+\[
+	\operatorname{Gal}_\delta(L/K)(S)
+	\simeq\operatorname{Aut}^{\otimes}(S\otimes_C\omega)
+\]
+对每个交换 \(C\) 代数 \(S\) 成立。
+
+\ProseParagraphBreak
+直接遗忘联络得到的是 \(K\) 向量空间，不能充当这里取值于 \(C\) 的中性纤维函子；只在原域 \(K\) 内取水平截面又未必保持满射。\cref{b5:prop:E-logarithmic-extension}中的 \(\nabla e_1=0\)、\(\nabla e_2=-e_1/x\) 就给出这种失败。扩张到对数型 PV 域后，水平截面函子正合，但得到的加法群表示仍有非分裂扩张。正合性保留短正合列，半单性则要求等变的分裂，因而一般中性 Tannaka 范畴也不必是融合范畴。
+
+% * 状态：初稿已完成；新增内容尚未正式审核。

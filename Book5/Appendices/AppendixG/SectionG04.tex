@@ -1,8 +1,6 @@
 % !TeX root = ../../Book5.tex
 % 纲要标题：### G.4 Weyl–Kac 公式与小秩例子
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以可对称化及仿射型为范围，展开环代数和仿射 sl2 小模型，Weyl–Kac 公式标明证明范围；不展开 VOA 与 Lie 超代数。
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % #### G.4.1 形式特征标与完成
 % #### G.4.2 Weyl–Kac 特征标公式
 % #### G.4.3 仿射秩一与秩二的例子
@@ -10,23 +8,173 @@
 \section{Weyl–Kac 公式与小秩例子}
 \label{b5:sec:G04}
 
-待撰写。
+\(L(\Lambda_0)\) 的前两层已经由具体向量算出，但逐层寻找生成元和关系会迅速变得繁复。特征标把各个权空间的维数集中记录下来；仿射情形仍有 Weyl 型的交错公式，只是正根和 Weyl 群都变成了无限集合。因此，在使用公式之前，必须说明无限和、无限乘积以及取系数的含义。
 
 \subsection{形式特征标与完成}
 \label{b5:subsec:G04:01}
 
-待撰写。
+本节取有限维复单 Lie 代数 \(\mathfrak g\) 及\secref{b5:sec:G02}的未扭仿射代数 \(\widehat{\mathfrak g}\)。设有限根系的单根为 \(\alpha_1,\ldots,\alpha_r\)，最高根为 \(\theta\)，置
+\[
+	\alpha_0=\delta-\theta,\qquad
+	Q_+=\sum_{i=0}^r\mathbb Z_{\ge0}\alpha_i,\qquad
+	\operatorname{ht}\!\left(\sum_i n_i\alpha_i\right)=\sum_i n_i.
+\]
+这里把有限根延拓为在 \(c,\mathrm d\) 上取零的泛函。\(\alpha_0,\ldots,\alpha_r\) 在 \(\widehat{\mathfrak h}^*\) 中线性无关：有限单根独立，而新根 \(\alpha_0\) 在 \(\mathrm d\) 上取值一。正根正是\eqref{b5:eq:G-affine-positive-roots}中的根，均属于 \(Q_+\setminus\{0\}\)。
+
+\begin{definition}\label{b5:def:G-character-completion}
+	以 \(e^\mu\) 记权 \(\mu\in\widehat{\mathfrak h}^*\) 的形式符号，规定 \(e^\mu e^\nu=e^{\mu+\nu}\)。考虑所有整数系数形式和 \(\sum_\mu a_\mu e^\mu\)，要求其支集包含在有限多个集合 \(\lambda_j-Q_+\) 的并中；这样的形式和组成沿负根方向的完成环，记为 \(\mathscr R\)。若权模 \(V=\bigoplus_\mu V_\mu\) 的权空间均有限维，且权集满足上述条件，则定义其\term{形式特征标}[formal character]为
+	\[
+		\operatorname{ch}V=\sum_\mu(\dim_{\mathbb C}V_\mu)e^\mu\in\mathscr R.
+	\]
+\end{definition}
+\symidx{\(\mathscr R\)：沿负根方向的形式特征标完成环}
+\symidx{\(Q_+,\operatorname{ht}\)：正根格半群及其高度}
+
+乘法按系数卷积定义。若两个支集分别位于 \(\lambda-Q_+\) 与 \(\eta-Q_+\)，要得到 \(e^\mu\)，必须把固定的 \(\lambda+\eta-\mu\) 写成 \(\beta+\gamma\)，其中 \(\beta,\gamma\in Q_+\)。每个单根系数只有有限种分配，所以只有有限项参与该系数；有限个平移锥的情形随即成立。这证明了乘法良定义，而没有使用解析意义的收敛。
+
+一般情形中的 Verma 模仍由同一诱导构造定义。取 \(\widehat{\mathfrak b}=\widehat{\mathfrak h}\oplus\widehat{\mathfrak n}_+\)，令 \(\mathbb C_\lambda\) 上的正根子代数作用为零、\(h\in\widehat{\mathfrak h}\) 按 \(\lambda(h)\) 作用，置
+\[
+	M(\lambda)=U(\widehat{\mathfrak g})\otimes_{U(\widehat{\mathfrak b})}\mathbb C_\lambda.
+\]
+PBW 基中的负根单项式给出其权分解与一维最高权空间。与\cref{b5:prop:G-affine-verma}相同，所有真子模都不含最高权线，其和仍是真子模；所以存在唯一简单商，仍记为 \(L(\lambda)\)。
+
+\begin{proposition}\label{b5:prop:G-verma-character}
+	设 \(M(\lambda)\) 是上述未扭仿射代数的 Verma 模，\(\widehat\Phi_+\) 是其正根集，\(\operatorname{mult}\alpha=\dim\widehat{\mathfrak g}_\alpha\)。则其权空间有限维，并在 \(\mathscr R\) 中有
+	\begin{equation}\label{b5:eq:G-verma-character}
+		\operatorname{ch}M(\lambda)=e^\lambda\prod_{\alpha\in\widehat\Phi_+}
+		(1-e^{-\alpha})^{-\operatorname{mult}\alpha}.
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	根空间分解给出三角分解，PBW 定理于是把 \(M(\lambda)\) 的向量空间识别为 \(U(\widehat{\mathfrak n}_-)v_\lambda\)。在每个负根空间中取基并给全部基向量排序。权为 \(-\alpha\) 的每个基向量可以在一个有序单项式中出现任意非负整数次，贡献 \(1+e^{-\alpha}+e^{-2\alpha}+\cdots\)；该根空间的每个基向量各贡献一个因子。
+
+	固定 \(\beta\in Q_+\) 后，只有高度不超过 \(\operatorname{ht}\beta\) 的正根能参与权 \(\lambda-\beta\) 的单项式。\(Q_+\) 中这种高度的元素有限，每个根空间又有限维，每个基向量的指数也受高度限制。因此单项式的数目有限，逐权相乘得到公式。这同时证明权空间有限维和无限乘积良定义。
+\end{proof}
+
+记
+\[
+	\mathcal D=\prod_{\alpha\in\widehat\Phi_+}(1-e^{-\alpha})^{\operatorname{mult}\alpha}.
+\]
+它在负根方向的形式幂级数环中常数项为一，因而可逆；除以 \(\mathcal D\) 就是乘上\eqref{b5:eq:G-verma-character}中的形式逆。Verma 模的商模同样有有限维权空间。不过，\(\mathrm d\) 的一个特征值可能包含无限多个权，例如秩一 Verma 模中的 \(v_\lambda,f_1v_\lambda,f_1^2v_\lambda,\ldots\) 都有相同的 \(\mathrm d\) 特征值。将几个形式变量合并为一个之前，还要检查每个新系数是否有限。
+\symidx{\(\mathcal D\)：计入根重数的仿射 Weyl 分母}
 
 \subsection{Weyl–Kac 特征标公式}
 \label{b5:subsec:G04:02}
 
-待撰写。
+沿用长根长度平方为二的归一化，令 \(h_i=\alpha_i^\vee\)（\(1\le i\le r\)），取 \(h_0=c-\theta^\vee\)，并定义
+\[
+	s_i(\mu)=\mu-\mu(h_i)\alpha_i\qquad(0\le i\le r).
+\]
+它们生成\term{仿射 Weyl 群}[affine Weyl group] \(W_{\mathrm{aff}}\)，保留\cref{b5:prop:G-affine-invariant-form}所给的权空间双线性型。记 \(\varepsilon(w)=\det w\)；每个单反射贡献一个负号，所以也可写成 \((-1)^{\ell(w)}\)，其中 \(\ell(w)\) 是最短反射字长度。以下 \(\rho\) 由
+\[
+	\rho(h_i)=1\quad(0\le i\le r),\qquad \rho(\mathrm d)=0
+\]
+确定。有限根系中可用正根半和描述 \(\rho\)，此处正根无限，不能把那个有限和的定义直接照搬过来。
+\symidx{\(W_{\mathrm{aff}}\)：仿射 Weyl 群}
+\symidx{\(\rho\)：在各仿射简单余根上取值一的权}
+
+可积性也用各简单根的生成元定义。取有限根系的 Chevalley 生成元 \(e_i,f_i\)（\(1\le i\le r\)），再取最高根向量使 \([e_\theta,f_\theta]=\theta^\vee\)。在长根长度平方为二的归一化下，\((e_\theta,f_\theta)=1\)，所以
+\[
+	e_0=f_\theta\otimes t,\qquad f_0=e_\theta\otimes t^{-1},\qquad [e_0,f_0]=c-\theta^\vee=h_0.
+\]
+一般未扭仿射型的可积模，指按 \(\widehat{\mathfrak h}\) 的权直和分解、且每个 \(e_i,f_i\)（\(0\le i\le r\)）都局部幂零的模。这正是上一节定义对全部简单根的推广。
+
+\begin{theorem}[Weyl--Kac 特征标公式]\label{b5:thm:G-weyl-kac}
+	设 \(\mathfrak g\) 是有限维复单 Lie 代数，\(\widehat{\mathfrak g}\) 是上述未扭仿射代数，\(\lambda\in\widehat{\mathfrak h}^*\) 满足 \(\lambda(h_i)\in\mathbb Z_{\ge0}\)（\(0\le i\le r\)）。则简单最高权模 \(L(\lambda)\) 可积，且
+	\begin{equation}\label{b5:eq:G-weyl-kac}
+		\operatorname{ch}L(\lambda)
+		=\frac{\displaystyle\sum_{w\in W_{\mathrm{aff}}}\varepsilon(w)e^{w(\lambda+\rho)-\rho}}{\mathcal D}.
+	\end{equation}
+	交错和逐权只有有限项，等式在 \(\mathscr R\) 中成立。
+\end{theorem}
+\begin{proofsketch}
+	秩一情形的可积性已经在\cref{b5:thm:G-affine-integrable}证明。一般仿射型同样由每个简单根对应的 \(\mathfrak{sl}_2\) 子代数控制：最高权条件为 \(\lambda(h_i)\in\mathbb Z_{\ge0}\)，相应的下降串在 \(\lambda(h_i)+1\) 步终止。一般 Cartan 型代数与环实现的识别、以及这些串的局部幂零性在整个简单模上的推广，属于一般理论的构造部分；这里引用这些结论，再说明特征标证明的关键环节。
+
+	可积性把每个简单根方向上的权及重数配成有限维 \(\mathfrak{sl}_2\) 权串，故特征标在各 \(s_i\) 下不变。单反射把正根中除 \(\alpha_i\) 外的根重新排列，而把 \(\alpha_i\) 变成 \(-\alpha_i\)，从而 \(e^\rho\mathcal D\) 在 \(s_i\) 下变号。因此
+	\[
+		F=e^\rho\mathcal D\operatorname{ch}L(\lambda)
+	\]
+	具有 Weyl 反对称性，且最高项为 \(e^{\lambda+\rho}\)，系数为一。这里的反射作用按权系数理解，并对变号的有限个根因子重新整理；不能假定任意 Weyl 元都保持所选完成环中的每个形式和。
+
+	还缺少决定性的一步：反对称性本身不能排除其他轨道的交错和。一般证明通过 Verma 模上的反变型及其行列式控制简单子商，证明 \(F\) 中非零项只能属于 \(W_{\mathrm{aff}}(\lambda+\rho)\)。这一子商控制是本概要引用的深层结果，不由前面的秩一串计算推出。由于 \(\lambda+\rho\) 在所有简单余根上严格为正，该轨道的稳定子平凡，并在每个给定的负根高度范围内只有有限项。反对称性于是把最高项的系数一确定为各项的 \(\varepsilon(w)\)，得到公式。
+
+	原文把特征标写成相对最高权的根格次数级数；本书加入次数导子后，根格嵌入完整 Cartan 子代数的对偶，乘回最高权因子便得到这里的绝对权写法。环模型的结构识别见该文第300页的 Example (b)，并非由本节对生成关系的验证推出。上述子商论证与公式见 Kac\cite[Section 2, Theorems 2--3, pp. 300--301]{Kac1980HighestWeight}。该文的 Theorem 2 给出反变型行列式与简单子商限制，Theorem 3 由此推出特征标公式。本文没有重证该行列式定理、一般环模型的结构识别和全部轨道有限性论证；形式乘积的定义与下面的小秩计算则逐项核验。
+\end{proofsketch}
+
+取 \(\lambda=0\) 时，简单最高权模是平凡模，公式给出分母恒等式
+\[
+	\mathcal D=\sum_{w\in W_{\mathrm{aff}}}\varepsilon(w)e^{w\rho-\rho}.
+\]
+分母中的虚根因子不可省去。它们的重数正是各个非零模态上 Cartan 子代数的维数，记录了有限根系特征标公式中没有出现的方向。
 
 \subsection{仿射秩一与秩二的例子}
 \label{b5:subsec:G04:03}
 
-待撰写。
+先取 \(\widehat{\mathfrak{sl}}_2\)，并在本小节记 \(x=e^{\alpha_1}\)、\(q=e^{-\delta}\)。这里 \(q\) 是形式变量，不是有限域大小。由实根重数一、虚根重数一，分母为
+\begin{equation}\label{b5:eq:G-sl2-denominator}
+	\mathcal D=(1-x^{-1})\prod_{n\ge1}(1-q^n)(1-xq^n)(1-x^{-1}q^n).
+\end{equation}
+\(1-x^{-1}\) 来自有限正根 \(\alpha_1\)，其余三类因子依次来自 \(n\delta\)、\(-\alpha_1+n\delta\) 与 \(\alpha_1+n\delta\)。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+为了列出交错和，取级为 \(k\) 的权 \(\mu\)，写 \(z=\mu(h)\)、\(a=\mu(\mathrm d)\)。由 \(h_0=c-h\)、\(\alpha_0=\delta-\alpha_1\) 得
+\[
+	s_1:(z,a)\longmapsto(-z,a),\qquad
+	s_0:(z,a)\longmapsto(2k-z,a-k+z).
+\]
+因而 \(\tau=s_0s_1\) 满足
+\begin{equation}\label{b5:eq:G-affine-translation}
+	\tau^j:(z,a)\longmapsto(z+2jk,\ a-jz-kj^2)\qquad(j\in\mathbb Z).
+\end{equation}
+正整数 \(j\) 的情形由归纳验证，负整数情形用逆变换得到。两个反射的字约去相邻的重复反射后必交替出现，所以每个群元可写成 \(\tau^j\) 或 \(\tau^js_1\)。在 \(k\ne0\) 的层上，前者有互异的平移量，后者的 \(z\) 系数为 \(-1\)，故这些表示互不相同；对应符号分别为正、负。
+
+\begin{example}\label{b5:exmp:G-basic-character}
+	求级一最高权模 \(L(\Lambda_0)\) 的前三个次数层。此时 \(\rho=\Lambda_0+\Lambda_1\)，所以 \(\Lambda_0+\rho\) 的级为三，\((z,a)=(1,0)\)。代入\eqref{b5:eq:G-affine-translation}，得到
+	\begin{equation}\label{b5:eq:G-basic-affine-character}
+		e^{-\Lambda_0}\operatorname{ch}L(\Lambda_0)
+		=\frac{\displaystyle\sum_{j\in\mathbb Z}
+		\bigl(q^{3j^2+j}x^{3j}-q^{3j^2-j}x^{3j-1}\bigr)}
+		{\displaystyle(1-x^{-1})\prod_{n\ge1}(1-q^n)(1-xq^n)(1-x^{-1}q^n)}.
+	\end{equation}
+	\(j=0\) 给出 \(1-x^{-1}\)，\(j=\pm1\) 最早在 \(q^2\) 次出现，其余项次数更高。因此分子除去 \(1-x^{-1}\) 后为
+	\[
+		1-(x^2+x+1+x^{-1}+x^{-2})q^2+O(q^3).
+	\]
+	分母余下乘积的逆在 \(q\)、\(q^2\) 次的系数分别为
+	\[
+		x+1+x^{-1},\qquad x^2+2x+3+2x^{-1}+x^{-2}.
+	\]
+	第二个系数由一次模态的两个因子与二次模态的一个因子相加得到。相乘即得
+	\begin{equation}\label{b5:eq:G-basic-first-grades}
+		e^{-\Lambda_0}\operatorname{ch}L(\Lambda_0)
+		=1+(x+1+x^{-1})q+(x+2+x^{-1})q^2+O(q^3).
+	\end{equation}
+	所以 \(\mathrm d\) 特征值为 \(0,-1,-2\) 的三层维数分别为 \(1,3,4\)。中间一层的三个权与上一节的 \(f_0v,f_1f_0v,f_1^2f_0v\) 一致，其 \(h\) 权分别为 \(2,0,-2\)。这里先将各次系数整理为 Laurent 多项式，再令 \(x=1\) 求维数；不能在\eqref{b5:eq:G-basic-affine-character}未约去的分子分母中直接代入。
+\end{example}
+
+再取 \(\mathfrak g=\mathfrak{sl}_3\)。这里的“秩二”指有限根系秩为二；仿射 Cartan 矩阵有三个节点，是 \(A_2^{(1)}\) 型。有限正根为 \(\alpha_1,\alpha_2,\alpha_1+\alpha_2\)，基本虚根为 \(\delta=\alpha_0+\alpha_1+\alpha_2\)。每个虚根 \(n\delta\ne0\) 的重数为二，所以
+\begin{equation}\label{b5:eq:G-sl3-denominator}
+	\mathcal D=\prod_{\alpha\in\Phi_+}(1-e^{-\alpha})
+	\prod_{n\ge1}\left((1-q^n)^2\prod_{\alpha\in\Phi}(1-q^n e^\alpha)\right).
+\end{equation}
+指数二是 Cartan 子代数的维数，不是多写了一个同样的根。
+
+\begin{proposition}\label{b5:prop:G-sl3-first-grade}
+	在上述 \(A_2^{(1)}\) 型中，取 \(\Lambda_0(h_0)=1\)、\(\Lambda_0(h_1)=\Lambda_0(h_2)=\Lambda_0(\mathrm d)=0\)。简单可积最高权模 \(L(\Lambda_0)\) 的零次层为平凡 \(\mathfrak{sl}_3\) 模，\(\mathrm d\) 特征值 \(-1\) 的层为伴随模。因此
+	\[
+		e^{-\Lambda_0}\operatorname{ch}L(\Lambda_0)
+		=1+\left(2+\sum_{\alpha\in\Phi}e^\alpha\right)q+O(q^2).
+	\]
+\end{proposition}
+\begin{proof}
+	设 \(v\) 为最高权向量。由于 \(\Lambda_0(h_1)=\Lambda_0(h_2)=0\)，可积性使 \(f_1v=f_2v=0\)，故整个零模态 \(\mathfrak{sl}_3\otimes1\) 都杀掉 \(v\)。PBW 单项式按模态次数排列，便知零次层只有 \(\mathbb Cv\)，而负一次层由 \(x_{-1}v\)（\(x\in\mathfrak{sl}_3\)）张成：额外的零模态作用可用交换子移过 \(x_{-1}\)，最后作用在 \(v\) 上为零。
+
+	映射 \(x\mapsto x_{-1}v\) 与零模态的伴随作用相容。若 \(x_{-1}v=0\)，对任意 \(y\in\mathfrak{sl}_3\) 施加 \(y_1\)，得到
+	\[
+		0=y_1x_{-1}v=([y,x]_0+(y,x)c)v=(y,x)v.
+	\]
+	这里用了 \(y_1v=0\)、零模态杀掉 \(v\)、以及级为一。非退化性推出 \(x=0\)，故此映射为同构。伴随模有六个非零根权及二维零权空间，给出八维一次层。
+\end{proof}
+
+这两个计算分别把特征标中的实根方向和虚根重数落实为具体权空间。一般公式的证明需要 Verma 模子商理论，而给定低次项的核验仍可以回到括号、PBW 单项式和有限维根空间。
+
 % ---

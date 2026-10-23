@@ -1,8 +1,6 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### G.1 广义 Cartan 矩阵的有限型与仿射型
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以可对称化及仿射型为范围，展开环代数和仿射 sl2 小模型，Weyl–Kac 公式标明证明范围；不展开 VOA 与 Lie 超代数。
 % #### G.1.1 广义 Cartan 矩阵
 % #### G.1.2 有限型与仿射型
 % #### G.1.3 生成关系与可对称化条件
@@ -10,22 +8,207 @@
 \section{广义 Cartan 矩阵的有限型与仿射型}
 \label{b5:sec:G01}
 
-待撰写。
+在有限根系中，Cartan 矩阵把简单根之间的配对压缩成整数。以 \(A_2\) 为例，矩阵的两个非对角元都是 \(-1\)，对应关系 \((\operatorname{ad}e_1)^2e_2=(\operatorname{ad}e_2)^2e_1=0\)。如果将两个 \(-1\) 都改成 \(-2\)，这些关系仍然能定义 Lie 代数，只是原来的正定性不再成立。矩阵仍只有两行两列，却不再把括号生成的方向限制在有限集合中。这里要保留哪些矩阵条件，以及失去正定性之后还须增加什么资料，是本节的两个问题。
 
 \subsection{广义 Cartan 矩阵}
 \label{b5:subsec:G01:01}
 
-待撰写。
+\begin{definition}\label{b5:def:G-generalized-cartan}
+	设 \(r\ge1\)。整数矩阵 \(A=(a_{ij})\in M_r(\mathbb Z)\) 满足
+	\[
+		a_{ii}=2,\qquad a_{ij}\le0\quad(i\ne j),\qquad a_{ij}=0\Longleftrightarrow a_{ji}=0
+	\]
+	时，称为\term{广义 Cartan 矩阵}[generalized Cartan matrix]。以 \(1,\ldots,r\) 为顶点，在 \(a_{ij}\ne0\) 时连接 \(i,j\)，得到它的连接图；此图连通时，称 \(A\) \term{不可分解}[indecomposable]。若存在正实对角矩阵 \(D=\operatorname{diag}(d_1,\ldots,d_r)\)，使 \(DA\) 对称，则称 \(A\) \term{可对称化}[symmetrizable]，称 \(D\) 为一个对称化矩阵。
+\end{definition}
+\symidx{\(A=(a_{ij}),D\)：广义 Cartan 矩阵及其正对角对称化矩阵}
+
+不可分解等价于不能同时置换行、列而把 \(A\) 写成两个非空矩阵的块对角和。这里的“阶数 \(r\)”只数行列数，不表示 \(A\) 的秩；后面记 \(s=\operatorname{rank}A\)，并允许 \(s<r\)。与第十七章一致，我们始终让行指标对应余根，列指标对应简单根，即
+\[
+	a_{ij}=\alpha_j(h_i).
+\]
+这份方向约定也决定后面 Serre 关系的指数为 \(1-a_{ij}\)。
+
+\ProseParagraphBreak
+
+对称化条件可以逐条边读出：
+\[
+	d_i a_{ij}=d_j a_{ji}.
+\]
+若 \(i,j\) 相连，则 \(d_j/d_i=a_{ij}/a_{ji}>0\)。因此，在一个连通分支上选定一个 \(d_i\)，其余数值就沿路径确定；不同路径必须给出相同结果。特别地，不是每个广义 Cartan 矩阵都可对称化。若对称化矩阵 \(D,D'\) 都存在，上式又给出 \(d'_i/d_i=d'_j/d_j\)，所以同一个连通分支上的两个对称化矩阵只相差一个正常数倍。由于边上的比值都是有理数，还可以在各分支上缩放，使所有 \(d_i\) 都是正整数。
+
+\ProseParagraphBreak
+
+有限根系为什么自动满足这一条件？在欧氏空间中，\(a_{ij}=2(\alpha_i,\alpha_j)/(\alpha_i,\alpha_i)\)，所以取 \(d_i=(\alpha_i,\alpha_i)/2\)，便有 \(d_i a_{ij}=(\alpha_i,\alpha_j)\)。一般可对称化矩阵也允许在形式上的实向量空间 \(E=\bigoplus_i\mathbb R\alpha_i\) 上定义对称双线性型
+\[
+	B_A(\alpha_i,\alpha_j)=d_i a_{ij}.
+\]
+它仍满足 \(2B_A(\alpha_i,\alpha_j)/B_A(\alpha_i,\alpha_i)=a_{ij}\)，但不再预设正定。简单根作为 \(E\) 的基始终线性无关；型出现零方向，不等于这些向量之间出现线性关系。
+\symidx{\(B_A\)：矩阵为 \(DA\) 的简单根空间上的对称双线性型}
 
 \subsection{有限型与仿射型}
 \label{b5:subsec:G01:02}
 
-待撰写。
+\begin{definition}\label{b5:def:G-matrix-types}
+	设 \(A\) 是不可分解的可对称化广义 Cartan 矩阵，\(D\) 为正对角对称化矩阵。若实对称矩阵 \(DA\) 正定，则称 \(A\) 为\term{有限型}[finite type]；若 \(DA\) 半正定且核为一维，则称 \(A\) 为\term{仿射型}[affine type]。由于同一连通分支上的 \(D\) 只相差正常数倍，这两种条件不依赖 \(D\) 的选择。
+\end{definition}
+
+当矩阵可分解时，分别判断各连通块的类型。所有块均为有限型时，仍称整个矩阵为有限型；“仿射型”则保留不可分解条件。例如两个仿射型块的直和有二维核，不能作为一个不可分解仿射型来处理。
+
+\begin{proposition}\label{b5:prop:G-rank-two-types}
+	设
+	\[
+		A=\begin{pmatrix}2&-a\\-b&2\end{pmatrix},\qquad a,b\in\mathbb Z_{\ge0},\qquad a=0\Longleftrightarrow b=0.
+	\]
+	若 \(a=b=0\)，则 \(A\) 是两个一阶有限型块的直和。若 \(a,b>0\)，则 \(A\) 可对称化，而且在 \(ab<4\) 时为有限型，在 \(ab=4\) 时为仿射型；在 \(ab>4\) 时，对称化后的型同时取正值和负值。
+\end{proposition}
+\begin{proof}
+	\(a=b=0\) 时 \(A=2I_2\)，结论直接成立。设 \(a,b>0\)，取 \(D=\operatorname{diag}(b,a)\)，则
+	\[
+		DA=\begin{pmatrix}2b&-ab\\-ab&2a\end{pmatrix},\qquad
+		\det(DA)=ab(4-ab).
+	\]
+	更具体地，其二次型为
+	\[
+		2b x^2-2abxy+2ay^2
+		=2b\left(x-\frac a2y\right)^2+\frac{a(4-ab)}2y^2.
+	\]
+	当 \(ab<4\) 时，两个平方项的系数都正，故正定；当 \(ab=4\) 时，只余一个非零平方项，故半正定且核恰为一维；当 \(ab>4\) 时，取 \((x,y)=(1,0)\) 得正值，取 \((x,y)=(a/2,1)\) 得负值。这也说明仅看对角元为正不足以保证有限型。
+\end{proof}
+
+正整数条件使有限型的乘积只能为 \(ab=1,2,3\)，对应第十七章的 \(A_2,B_2,G_2\) 二阶 Cartan 矩阵及其转置。在仿射情形，\((a,b)\) 只能为 \((1,4),(2,2),(4,1)\)。本附录主要使用其中的对称矩阵
+\[
+	A_1^{(1)}=\begin{pmatrix}2&-2\\-2&2\end{pmatrix}.
+\]
+其二次型为 \(2(x_0-x_1)^2\)，核由 \((1,1)\) 张成。上标 \((1)\) 是这类未扭仿射型的通行标记；名称中的 \(1\) 来自底下的有限型 \(A_1\)，并不是矩阵只有一行。这个矩阵有两个简单根指标，以下取为 \(0,1\)。
+\symidx{\(A_1^{(1)}\)：仿射秩一型及其二阶广义 Cartan 矩阵}
+
+\ProseParagraphBreak
+
+再看三个指标 \(0,1,2\) 的矩阵
+\[
+	A_2^{(1)}=\begin{pmatrix}2&-1&-1\\-1&2&-1\\-1&-1&2\end{pmatrix}.
+\]
+它的连接图是一个三角形，且
+\[
+	\begin{pmatrix}x_0&x_1&x_2\end{pmatrix}A_2^{(1)}
+	\begin{pmatrix}x_0\\x_1\\x_2\end{pmatrix}
+	=(x_0-x_1)^2+(x_1-x_2)^2+(x_2-x_0)^2.
+\]
+所以它也为仿射型，核由 \((1,1,1)\) 张成。在形式简单根空间里，\(A_1^{(1)}\) 的 \(\alpha_0+\alpha_1\) 与 \(A_2^{(1)}\) 的 \(\alpha_0+\alpha_1+\alpha_2\) 都是非零的零方向。与有限型相比，新增的现象正是型退化，而不是把这个方向直接商为零。
 
 \subsection{生成关系与可对称化条件}
 \label{b5:subsec:G01:03}
 
-待撰写。
+若只取 \(\mathfrak h=\bigoplus_i\mathbb Ch_i\)，并规定 \(\alpha_j(h_i)=a_{ij}\)，那么 \(A\) 奇异时，这些泛函必然相关。例如 \(A_1^{(1)}\) 会使 \(\alpha_0+\alpha_1\) 在全部 \(h_i\) 上为零。为了同时保留独立的余根与独立的简单根，需要给 \(\mathfrak h\) 添加足够的方向，让这些泛函在新增方向上可以区分。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:G-realization}
+	设 \(A\in M_r(\mathbb Z)\) 为广义 Cartan 矩阵，\(s=\operatorname{rank}A\)。一个\term{实现}[realization]由复向量空间 \(\mathfrak h\)、线性无关的元素 \(h_1,\ldots,h_r\in\mathfrak h\) 及线性无关的泛函 \(\alpha_1,\ldots,\alpha_r\in\mathfrak h^*\) 组成，满足
+	\[
+		\alpha_j(h_i)=a_{ij},\qquad \dim\mathfrak h=2r-s.
+	\]
+	记 \(\mathfrak h'=\bigoplus_i\mathbb Ch_i\)。元素 \(h_i\) 称为简单余根，泛函 \(\alpha_i\) 称为简单根。
+\end{definition}
+\symidx{\(\mathfrak h,\mathfrak h'\)：广义 Cartan 矩阵实现中的空间及简单余根张成的子空间}
+
+\begin{proposition}\label{b5:prop:G-realization-exists}
+	任意 \(r\) 阶广义 Cartan 矩阵 \(A\) 都有复实现。若要求 \(h_i\) 与 \(\alpha_i\) 各自线性无关且 \(\alpha_j(h_i)=a_{ij}\)，则承载它们的空间维数至少为 \(2r-\operatorname{rank}A\)。
+\end{proposition}
+\begin{proof}
+	设 \(s=\operatorname{rank}A\)。先令 \(h_1,\ldots,h_r\) 是 \(\mathfrak h'\) 的一组基。给 \(A\) 增添 \(r-s\) 行，使所得 \((2r-s)\times r\) 矩阵的列线性无关；这只需用新行补足 \(A\) 的行空间。再令
+	\[
+		\mathfrak h=\mathfrak h'\oplus\bigoplus_{k=1}^{r-s}\mathbb Cd_k,
+	\]
+	并让增添的第 \(k\) 行给出各 \(\alpha_j(d_k)\)。原来的行给出 \(\alpha_j(h_i)=a_{ij}\)，全部列独立又保证泛函 \(\alpha_j\) 独立，故得到实现。
+
+	反过来，设这些独立元素与泛函位于某个空间 \(H\) 中。把 \(\operatorname{span}_{\mathbb C}\{\alpha_1,\ldots,\alpha_r\}\) 限制到 \(\mathfrak h'\)，所得线性映射的矩阵为 \(A\)，其核维数为 \(r-s\)。核中的泛函都在 \(\mathfrak h'\) 上为零，故可看作 \((H/\mathfrak h')^*\) 中的独立泛函。于是 \(\dim H-r\ge r-s\)，即 \(\dim H\ge2r-s\)。
+\end{proof}
+
+对 \(A_1^{(1)}\)，可以取
+\[
+	\mathfrak h=\mathbb Ch_0\oplus\mathbb Ch_1\oplus\mathbb C\mathrm d,
+	\qquad
+	\begin{array}{c|rr}
+		&\alpha_0&\alpha_1\\\hline
+		h_0&2&-2\\
+		h_1&-2&2\\
+		\mathrm d&1&0
+	\end{array}.
+\]
+于是 \(\delta=\alpha_0+\alpha_1\) 在 \(h_0,h_1\) 上为零，却满足 \(\delta(\mathrm d)=1\)，所以 \(\delta\ne0\)。另一方面，\(c=h_0+h_1\) 被两个简单根同时零化。\(c\) 是 \(\mathfrak h\) 中的向量，\(\delta\) 是 \(\mathfrak h^*\) 中的泛函；二者由矩阵的左核与右核分别产生，不能视为同一个对象。
+\symidx{\(c,\mathrm d,\delta\)：仿射秩一实现中的中心方向、额外方向及零方向泛函}
+
+\begin{definition}\label{b5:def:G-kac-moody-presentation}
+	设 \(A=(a_{ij})\) 是可对称化广义 Cartan 矩阵，\((\mathfrak h,\{h_i\},\{\alpha_i\})\) 是它的复实现。由向量空间 \(\mathfrak h\) 以及元素 \(e_i,f_i\) 生成，并满足 \(h\in\mathfrak h\) 的线性关系及下列关系的复 Lie 代数，称为相应的\term{Kac--Moody 代数}[Kac--Moody algebra]，记为 \(\mathfrak g(A)\)：
+	\begin{equation}\label{b5:eq:G-chevalley-serre}
+		\begin{aligned}
+			[h,h']&=0, & [h,e_i]&=\alpha_i(h)e_i, & [h,f_i]&=-\alpha_i(h)f_i,\\
+			[e_i,f_j]&=\delta_{ij}h_i,\\
+			(\operatorname{ad}e_i)^{1-a_{ij}}e_j&=0, &
+			(\operatorname{ad}f_i)^{1-a_{ij}}f_j&=0\qquad(i\ne j).
+		\end{aligned}
+	\end{equation}
+	这里 \(h,h'\) 遍历 \(\mathfrak h\)，\(\delta_{ij}\) 为 Kronecker 符号。记 \(\mathfrak n^+\)、\(\mathfrak n^-\) 为由全部 \(e_i\)、全部 \(f_i\) 分别生成的子代数。
+\end{definition}
+\symidx{\(\mathfrak g(A),\mathfrak n^\pm\)：可对称化 Kac--Moody 代数及其正、负子代数}
+
+这里使用的仍是生成元与关系构造：从自由 Lie 代数出发，再模去关系生成的理想。取 \(\mathfrak h\) 的一组基作为生成元，所谓“\(h\) 的线性关系”就是要求 \(h\mapsto\mathfrak g(A)\) 线性。当 \(A\) 可逆时，\(\mathfrak h=\mathfrak h'\)，便恢复第十七章的 Serre 展示；奇异时新增的 \(\mathrm d\) 等方向还通过 \([h,e_i]\)、\([h,f_i]\) 规定作用。可对称化使简单根空间带有前述对称型，后面的一般特征标公式也在这一范围内使用；它并不把矩阵强制成有限型。
+
+\ProseParagraphBreak
+
+给出展示之后，仍须检查 \(\mathfrak h\) 的元素没有在取商时意外变成零。\cref{b5:lem:serre-triangular-noncollapse}的自由字构造可以保留，但参数要从各 \(h_i\) 上的数值扩大为任意 \(\lambda\in\mathfrak h^*\)。这样新增的方向也能被最高向量的权检测到。
+
+\begin{theorem}\label{b5:thm:G-triangular-decomposition}
+	设 \(A\) 为可对称化广义 Cartan 矩阵，\((\mathfrak h,\{h_i\},\{\alpha_i\})\) 为其复实现，\(\mathfrak g(A)\) 由\eqref{b5:eq:G-chevalley-serre}定义。则自然线性映射 \(\mathfrak h\to\mathfrak g(A)\) 单射，而且
+	\[
+		\mathfrak g(A)=\mathfrak n^-\oplus\mathfrak h\oplus\mathfrak n^+.
+	\]
+	令 \(Q=\bigoplus_i\mathbb Z\alpha_i\)、\(Q_+=\sum_i\mathbb Z_{\ge0}\alpha_i\)。按 \(\deg e_i=\alpha_i\)、\(\deg f_i=-\alpha_i\)、\(\deg h=0\) 得到的 \(Q\) 分次中，零次部分恰为 \(\mathfrak h\)，非零次数只可能属于 \(Q_+\cup(-Q_+)\)。在次数 \(\beta\) 的空间上，\(\operatorname{ad}h\) 作用为标量 \(\beta(h)\)。
+\end{theorem}
+\begin{proof}
+	取自由结合代数 \(T=\mathbb C\langle f_1,\ldots,f_r\rangle\)。对任意 \(\lambda\in\mathfrak h^*\)，在负次数为 \(-\beta\) 的字 \(u\) 上定义
+	\[
+		F_i u=f_i u,\qquad H(h)u=(\lambda(h)-\beta(h))u,
+	\]
+	并递归规定
+	\[
+		E_i1=0,\qquad E_i(f_j u)=f_jE_i u+\delta_{ij}H(h_i)u.
+	\]
+	由于 \(\alpha_j(h_i)=a_{ij}\)，\cref{b5:lem:serre-triangular-noncollapse}中按字长验证的交换子计算给出
+	\[
+		[H(h),F_i]=-\alpha_i(h)F_i,\qquad
+		[H(h),E_i]=\alpha_i(h)E_i,\qquad [E_i,F_j]=\delta_{ij}H(h_i).
+	\]
+	其中对一般 \(h\) 的第二式也可直接看出：递归式的每项把次数 \(-\beta\) 变为 \(-\beta+\alpha_i\)，故 \(H(h)\) 的特征值增加 \(\alpha_i(h)\)。各 \(H(h)\) 彼此交换，并随 \(h\) 线性变化。
+
+	令 \(J\) 为由负 Serre 元 \(S_{ij}=(\operatorname{ad}f_i)^{1-a_{ij}}f_j\) 生成的双边理想。它对根格分次齐次，故被各 \(H(h)\) 与左乘 \(F_k\) 保持。为检查 \(E_k\)，记 \(m=1-a_{ij}\)，并以 \(L_{S_{ij}}=(\operatorname{ad}F_i)^mF_j\) 表示左乘 \(S_{ij}\)。同一交换子计算给出
+	\[
+		[E_i,L_{S_{ij}}]
+		=m(-a_{ij}-m+1)(\operatorname{ad}F_i)^{m-1}F_j=0.
+	\]
+	当 \(k\ne i,j\) 时，\([E_k,L_{S_{ij}}]=0\)；当 \(k=j\) 时，它为 \((\operatorname{ad}F_i)^mH(h_j)\)，也为零。后一结论在 \(m\ge2\) 时来自第二次括号为零，在 \(m=1\) 时来自 \(a_{ij}=a_{ji}=0\)。于是 \(E_k(S_{ij}u)=S_{ij}E_ku\)。对左侧因子的字长归纳，递归式中新出现的 \(H(h_k)\) 项仍在 \(J\) 内，因此 \(E_kJ\subseteq J\)。这些算子都能下降到 \(T/J\)。
+
+	负 Serre 关系按构造成立。正 Serre 算子 \(R_{ij}=(\operatorname{ad}E_i)^mE_j\) 与各 \(F_k\) 交换：\(k\ne i,j\) 时直接交换，\(k=j\) 时得到 \((\operatorname{ad}E_i)^mH(h_j)=0\)，而 \(k=i\) 时得到系数 \(m(-a_{ij}-m+1)=0\)。又因 \(R_{ij}1=0\)，把它移过任意串 \(F_{k_1}\cdots F_{k_l}\)，便知 \(R_{ij}\) 在全部字上为零。所以 \(T/J\) 成为 \(\mathfrak g(A)\) 的模。理想 \(J\) 由字长至少二的齐次元生成，故 \(1\notin J\)。若 \(h\in\mathfrak h\) 在 \(\mathfrak g(A)\) 中为零，则在每份这样的模上有 \(H(h)1=\lambda(h)1=0\)。由于 \(\lambda\) 任意，必有 \(h=0\)，证明了单射性。
+
+	所有关系对指定的 \(Q\) 次数齐次，故分次下降到商。由 \([e_i,f_j]=\delta_{ij}h_i\) 和 Jacobi 恒等式，对负括号字长度归纳得 \([e_i,\mathfrak n^-]\subseteq\mathfrak n^-+\mathfrak h\)；对正括号字再归纳，得到 \([\mathfrak n^+,\mathfrak n^-]\subseteq\mathfrak n^-+\mathfrak h+\mathfrak n^+\)。因而该和是包含全部生成元的子代数，等于 \(\mathfrak g(A)\)。三个空间分别只含严格负、零、严格正次数，所以和为直和。最后，\([h,e_i]\) 与 \([h,f_i]\) 给出生成元上的权；由导子法则对括号字归纳，次数 \(\beta\) 的元素便有权 \(\beta\)。
+\end{proof}
+
+\begin{proposition}\label{b5:prop:G-central-directions}
+	设 \(A\) 为 \(r\) 阶可对称化广义 Cartan 矩阵，\(s=\operatorname{rank}A\)，\(\mathfrak g(A)\) 是其复实现定义的 Kac--Moody 代数，\(\mathfrak h'=\bigoplus_i\mathbb Ch_i\)。则
+	\[
+		\begin{aligned}
+			Z(\mathfrak g(A))
+			&=\{\,h\in\mathfrak h\mid \alpha_i(h)=0\;\text{对所有}\;i\,\}\\
+			&=\left\{\,\sum_i c_ih_i\ \middle|\ A^{\mathsf T}(c_1,\ldots,c_r)^{\mathsf T}=0\,\right\},\\
+			[\mathfrak g(A),\mathfrak g(A)]
+			&=\mathfrak n^-\oplus\mathfrak h'\oplus\mathfrak n^+.
+		\end{aligned}
+	\]
+	特别地，中心维数与交换化 \(\mathfrak g(A)/[\mathfrak g(A),\mathfrak g(A)]\) 的维数都等于 \(r-s\)。
+\end{proposition}
+\begin{proof}
+	中心元与全部 \(h\in\mathfrak h\) 交换。简单根 \(\alpha_i\) 线性无关，故每个非零次数 \(\beta\in Q\) 都是 \(\mathfrak h\) 上的非零泛函。由\cref{b5:thm:G-triangular-decomposition}的权分解，中心元只能位于零次部分 \(\mathfrak h\)。又因 \([e_i,f_i]=h_i\ne0\)，各 \(e_i,f_i\) 非零，所以 \(h\in\mathfrak h\) 与全部生成元交换当且仅当每个 \(\alpha_i(h)=0\)。这些独立泛函的共同核维数为 \((2r-s)-r=r-s\)。对 \(h=\sum_i c_ih_i\)，条件等价于 \(\sum_i c_i a_{ij}=0\) 对所有 \(j\) 成立。它在 \(\mathfrak h'\) 中给出一个 \(r-s\) 维子空间，故恰是全部中心。
+
+	由 \([h_i,e_i]=2e_i\)、\([h_i,f_i]=-2f_i\)、\([e_i,f_i]=h_i\)，导出代数包含 \(\mathfrak n^-+\mathfrak h'+\mathfrak n^+\)。反向包含可由映射检验：把 \(e_i,f_i\) 送到零，把 \(h\) 送到 \(h+\mathfrak h'\)，所有展示关系都在交换 Lie 代数 \(\mathfrak h/\mathfrak h'\) 中成立，故得到满同态 \(\mathfrak g(A)\to\mathfrak h/\mathfrak h'\)。三角分解表明它的核恰是上述和；导出代数必在这个核中，于是得到等式及维数结论。
+\end{proof}
+
+对 \(A_1^{(1)}\)，中心恰为 \(\mathbb Cc\)，其中 \(c=h_0+h_1\)；\(\mathrm d\) 则给出交换化的一维代表，而且 \([\mathrm d,e_0]=e_0\)、\([\mathrm d,e_1]=0\)，所以它不是中心元。添加中心方向与添加导子方向具有不同作用。下一节的 Laurent 多项式模型会分别把它们实现为中心扩张中的 \(c\) 和记录幂次的 \(t\,\mathrm d/\mathrm dt\)，也使这个奇异矩阵产生无穷多个根方向的原因变得具体。

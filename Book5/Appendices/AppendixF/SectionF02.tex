@@ -1,8 +1,7 @@
 % !TeX root = ../../Book5.tex
+% * 状态：初稿已完成；正文、证明、算例与配套习题解答已写齐，尚未正式审核。
 % 纲要标题：### F.2 BN 对与 Bruhat 分解
-% 纲要位置：工作记录/计划纲要.md（2026-10-20 新增骨架）。
-% 写作状态：2026-10-20 新增骨架；正文、证明、算例与习题均待撰写。
-% 写作范围：以经典群、旗与小秩计算为范围，不展开一般群概形构造、楼的完整理论及 Deligne–Lusztig 理论。
+% 写作状态：初稿已完成；新增内容尚未正式审核。
 % #### F.2.1 BN 对的定义
 % #### F.2.2 一般线性群的 Bruhat 分解
 % #### F.2.3 抛物子群与双陪集
@@ -10,22 +9,247 @@
 \section{BN 对与 Bruhat 分解}
 \label{b5:sec:F02}
 
-待撰写。
+对矩阵同时作行变换与列变换，通常能把它化成很简单的形式。如果只允许上三角矩阵给出的变换，就不能任意交换坐标；剩下的置换恰好记录两个完全旗的相对位置。Bruhat 分解把这个观察写成双陪集分解，BN 对则保留其中能够推广到其他群的乘法规律。下面用一般线性群完整建立这一模型，再把完全旗换成只保留若干维数的部分旗。
 
 \subsection{BN 对的定义}
 \label{b5:subsec:F02:01}
 
-待撰写。
+一个子群的双陪集通常没有简单的乘法：两个双陪集相乘，可能得到许多个双陪集的并。BN 对要求存在一组特别的双陪集，使它们与任意双陪集相乘时，最多产生两个候选位置。这里的有限选择对应于旗中只改动一个子空间。
+
+\begin{definition}\label{b5:def:F-BN-pair}
+	设 \(G\) 为群，\(B,N\le G\)，令 \(T=B\cap N\)。假设 \(T\triangleleft N\)，商群 \(W=N/T\) 有一个由阶为二的元素组成的生成集 \(S\)。对 \(w\in W\) 任取提升 \(n_w\in N\)。若
+	\begin{enumerate}
+		\item \(G=\langle B,N\rangle\)；
+		\item 对任意 \(w\in W\) 与 \(s\in S\)，有
+		\[
+			n_sBn_w\subseteq Bn_{sw}B\cup Bn_wB;
+		\]
+		\item 对任意 \(s\in S\)，有 \(n_sBn_s^{-1}\not\subseteq B\)，
+	\end{enumerate}
+	则称 \((B,N)\) 连同上述 \(S\) 为 \(G\) 的一个 \term[BN-dui]{BN 对}[BN-pair]。商群 \(W\) 称为该 BN 对的 Weyl 群，\(S\) 中的元素称为简单反射。
+\end{definition}
+\symidx{\((B,N)\)：BN 对}
+\symidx{\(W=N/(B\cap N)\)：BN 对的 Weyl 群}
+
+因为 \(T\subseteq B\) 且 \(T\triangleleft N\)，双陪集 \(Bn_wB\) 不依赖提升的选择。第二项中的 \(n_sBn_w\) 及第三项中的共轭子群也不因更换提升而改变。最后一项排除简单反射只在 \(B\) 内部重新排列的退化情况；第二项则使逐次乘以简单反射的过程可以追踪。这组公理可与\cite[Chapter 5, p. 27]{Taylor1992ClassicalGroups}对照；下面从旗的交维数建立矩阵群的分解。
+
+\ProseParagraphBreak
+以下固定 \(G=\mathrm{GL}_n(\mathbb F_q)\)，\(n\ge2\)，并取
+\[
+	\begin{aligned}
+		B&=\{\text{可逆上三角矩阵}\},\\
+		N&=\{\text{每行、每列恰有一个非零元的矩阵}\},\\
+		T&=\{\operatorname{diag}(t_1,\ldots,t_n):t_i\in\mathbb F_q^\times\}.
+	\end{aligned}
+\]
+\(N\) 中的矩阵称为\term[danxiang-juzhen]{单项矩阵}[monomial matrix]。它置换坐标直线，因而给出满同态 \(N\to S_n\)，核为 \(T\)。上三角单项矩阵必为对角矩阵，故 \(T=B\cap N\)，并且 \(W=N/T\simeq S_n\)。取 \(S=\{s_i=(i,i+1):1\le i<n\}\)，以及满足
+\[
+	n_we_j=e_{w(j)}
+\]
+的置换矩阵 \(n_w\)。这里 \(n_un_w=n_{uw}\)，置换乘法为先作右边的置换。由\subsecref{b5:subsec:A01:01}，\((S_n,S)\) 是 \(A_{n-1}\) 型 Coxeter 系统。BN 对中尚需核验的生成条件与乘法条件，将由旗的相对位置直接给出。
 
 \subsection{一般线性群的 Bruhat 分解}
 \label{b5:subsec:F02:02}
 
-待撰写。
+设 \(V\) 为 \(n\) 维向量空间。一个\term[wanquan-qi]{完全旗}[complete flag]是子空间链
+\[
+	0=F_0\subset F_1\subset\cdots\subset F_n=V,
+	\qquad \dim F_i=i.
+\]
+只保留某些中间维数，得到\term[bufen-qi]{部分旗}[partial flag]。在 \(V=\mathbb F_q^n\) 中，记标准完全旗为 \(E_i=\operatorname{span}(e_1,\ldots,e_i)\)。一个可逆矩阵保持全部 \(E_i\)，当且仅当第 \(j\) 列属于 \(E_j\)，也就是矩阵上三角。因此 \(B\) 恰为标准旗的稳定子群。每个完全旗都有适配基，故
+\[
+	G/B\longrightarrow\{\,V\;\text{中的完全旗}\,\},\qquad gB\longmapsto gE
+\]
+是 \(G\) 等变双射。这里使用左陪集，左乘 \(G\) 对应对旗的自然作用。
+
+两个旗可以共用一组基，但一般必须用不同的顺序排列这组基。下面的构造同时解释这个事实和所需置换的唯一性。
+
+\begin{lemma}\label{b5:lem:F-common-flag-basis}
+	设 \(V\) 为域 \(k\) 上的有限维向量空间，\(0=F_0\subset\cdots\subset F_a=V\) 与 \(0=F'_0\subset\cdots\subset F'_b=V\) 为两个旗。存在子空间 \(C_{ij}\) 使
+	\[
+		F_i\cap F'_j=\bigoplus_{u\le i,\,v\le j}C_{uv}.
+	\]
+	尤其有一组基同时适配两个旗。若两旗均为完全旗且 \(\dim V=n\)，则存在唯一 \(w\in S_n\) 满足
+	\begin{equation}\label{b5:eq:F-relative-position-ranks}
+		r_{ij}\coloneqq\dim(F_i\cap F'_j)=\#\{a\le j:w(a)\le i\}.
+	\end{equation}
+	此时可取基 \(v_1,\ldots,v_n\) 使 \(F_i=\operatorname{span}(v_1,\ldots,v_i)\)，且 \(F'_j=\operatorname{span}(v_{w(1)},\ldots,v_{w(j)})\)。
+\end{lemma}
+\begin{proof}
+	令 \(V_{ij}=F_i\cap F'_j\)。按 \(i+j\) 递增，选取补空间
+	\[
+		V_{ij}=(V_{i-1,j}+V_{i,j-1})\oplus C_{ij}.
+	\]
+	边界 \(V_{0j}=V_{i0}=0\)。由于
+	\[
+		V_{i-1,j}\cap V_{i,j-1}=V_{i-1,j-1},
+	\]
+	若两个前驱空间已经由相应的 \(C_{uv}\) 直和表示，它们的和只把共有的项保留一次，再加入 \(C_{ij}\) 就得到所需直和。由归纳，公式对所有 \(i,j\) 成立。每个 \(C_{ij}\) 选一组基，其并即同时适配两旗。
+
+	在完全旗情形，令
+	\[
+		c_{ij}=\dim C_{ij}
+		=r_{ij}-r_{i-1,j}-r_{i,j-1}+r_{i-1,j-1}.
+	\]
+	这些数非负，而每行的和为 \(\dim F_i-\dim F_{i-1}=1\)，每列的和也为一。因此 \((c_{ij})\) 是一个置换矩阵：第 \(j\) 列唯一的 \(1\) 所在行记为 \(w(j)\)。交维数由它的左上矩形求和给出，故满足\eqref{b5:eq:F-relative-position-ranks}。反过来，上述差分式从交维数唯一恢复 \(c_{ij}\)，从而恢复 \(w\)。在一维空间 \(C_{w(j),j}\) 中选取非零向量并记为 \(v_{w(j)}\)，便得到所述基。
+\end{proof}
+
+上述唯一置换记为 \(\operatorname{pos}(F,F')\)，称为两旗的\term[xiangdui-weizhi]{相对位置}[relative position]。同时作用一个线性同构不改变交维数，因而不改变相对位置。由定义也有 \(\operatorname{pos}(F',F)=\operatorname{pos}(F,F')^{-1}\)。
+\symidx{\(\operatorname{pos}(F,F')\)：两个完全旗的相对位置}
+
+\begin{theorem}[一般线性群的 Bruhat 分解]\label{b5:thm:F-GL-Bruhat}
+	设 \(n\ge1\)，\(G=\mathrm{GL}_n(\mathbb F_q)\)，\(B\) 为可逆上三角子群，\(n_w e_j=e_{w(j)}\)。则
+	\[
+		G=\bigsqcup_{w\in S_n}Bn_wB.
+	\]
+	其中 \(g\in Bn_wB\) 当且仅当 \(\operatorname{pos}(E,gE)=w\)。若 \(\ell(w)\) 为 \(w\) 关于相邻换位的长度，则
+	\begin{equation}\label{b5:eq:F-Bruhat-cell-size}
+		|Bn_wB/B|=q^{\ell(w)},\qquad
+		|Bn_wB|=|B|q^{\ell(w)}.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	对 \(E,gE\) 应用\cref{b5:lem:F-common-flag-basis}。把共同适配基 \(v_1,\ldots,v_n\) 写为矩阵 \(b\) 的列。由于 \(v_i\in E_i\)，且它们线性无关，\(b\in B\)。引理给出 \(gE=bn_wE\)，所以 \((bn_w)^{-1}g\in B\)，即 \(g\in Bn_wB\)。交维数唯一确定 \(w\)，不同 \(w\) 的双陪集因此不相交。
+
+	集合 \(Bn_wB/B\) 是 \(B\) 对旗 \(n_wE\) 的轨道，稳定子群为 \(B\cap n_wBn_w^{-1}\)。一个上三角矩阵 \(a=(a_{ij})\) 属于该交集，恰当 \(n_w^{-1}an_w\) 仍上三角；这要求
+	\[
+		a_{ij}=0\quad\text{只要}\;i<j\;\text{且}\;w^{-1}(i)>w^{-1}(j).
+	\]
+	对角元各有 \(q-1\) 种非零选择，其余未被要求为零的上三角位置各有 \(q\) 种独立选择。由\cref{b5:prop:permutation-length-inversions}，被去掉的位置数为 \(\ell(w^{-1})=\ell(w)\)：逆序 \(a<b,\ w(a)>w(b)\) 对应于 \(i=w(b)<j=w(a)\)。所以
+	\[
+		|B|=(q-1)^nq^{n(n-1)/2},\qquad
+		|B\cap n_wBn_w^{-1}|=(q-1)^nq^{n(n-1)/2-\ell(w)}.
+	\]
+	轨道稳定子群公式给出第一条计数式。每个左陪集都含 \(|B|\) 个元素，再得到第二条。
+\end{proof}
+\termidx[Bruhat-fenjie]{Bruhat 分解}
+\foreignidx{Bruhat decomposition}
+
+因此双陪集下标只记录相对位置，旗本身还保留 \(q^{\ell(w)}\) 种选择。例如 \(n=3\) 时，长度分别为 \(0,1,2,3\) 的置换个数是 \(1,2,2,1\)，完全旗的总数为
+\[
+	1+2q+2q^2+q^3=(q+1)(q^2+q+1).
+\]
+右边也可由先选一条直线、再选包含它的平面得到：直线有 \(q^2+q+1\) 条，每条直线包含在 \(q+1\) 个平面中。
+
+\ProseParagraphBreak
+若两个完全旗仅在维数 \(i\) 的子空间处不同，称它们为 \(i\) 型相邻旗。固定旗 \(F'\) 后，所有这样的替换都发生在二维空间 \(F'_{i+1}/F'_{i-1}\) 中：选择一条不同于原来 \(F'_i/F'_{i-1}\) 的直线即可。二维空间有 \(q+1\) 条直线，因此恰有 \(q\) 个 \(i\) 型相邻旗。下面再判断这些旗相对于另一个固定旗的位置。
+
+\begin{proposition}\label{b5:prop:F-flag-adjacency}
+	设 \(V=\mathbb F_q^n\)，\(F,F'\) 为完全旗，\(\operatorname{pos}(F,F')=w\)，且 \(1\le i<n\)。记 \(s_i=(i,i+1)\)。若 \(\ell(ws_i)=\ell(w)+1\)，则 \(F'\) 的全部 \(q\) 个 \(i\) 型相邻旗相对于 \(F\) 的位置都是 \(ws_i\)。若 \(\ell(ws_i)=\ell(w)-1\)，则恰有一个相邻旗的位置为 \(ws_i\)，其余 \(q-1\) 个的位置仍为 \(w\)。
+\end{proposition}
+\begin{proof}
+	在 \(Q=F'_{i+1}/F'_{i-1}\) 中考虑由 \(F\) 诱导的递增子空间
+	\[
+		Q_j=\bigl((F_j\cap F'_{i+1})+F'_{i-1}\bigr)/F'_{i-1}.
+	\]
+	其维数为 \(r_{j,i+1}-r_{j,i-1}\)，所以只有两个跳跃位置：\(a=\min(w(i),w(i+1))\) 与 \(b=\max(w(i),w(i+1))\)。因此 \(Q_j\) 依次为零、一条固定直线 \(L_0\)、整个 \(Q\)，分界点为 \(a,b\)。若用直线 \(L\le Q\) 替换第 \(i\) 个子空间，商映射就把 \(F_j\cap F''_i\) 映满 \(Q_j\cap L\)，核为 \(F_j\cap F'_{i-1}\)。所以新的交维数在第 \(i\) 列满足
+	\[
+		\dim(F_j\cap F''_i)=r_{j,i-1}+\dim(Q_j\cap L).
+	\]
+	若 \(L=L_0\)，这一列的新跳跃在 \(a\)；若 \(L\ne L_0\)，新跳跃在 \(b\)。所有其他列不变，所以仅有原位置 \(w\) 与交换第 \(i,i+1\) 项所得 \(ws_i\) 两种可能。
+
+	由逆序数判据，\(\ell(ws_i)>\ell(w)\) 恰当 \(w(i)<w(i+1)\)。此时原来的直线就是 \(L_0\)，其余 \(q\) 条直线都把两个跳跃的顺序交换。若 \(w(i)>w(i+1)\)，原直线不是 \(L_0\)，另外 \(q\) 条直线中恰有一条是 \(L_0\)，其余 \(q-1\) 条保持原顺序。这证明了两种计数。
+\end{proof}
+
+\begin{corollary}\label{b5:cor:F-GL-BN}
+	设 \(G=\mathrm{GL}_n(\mathbb F_q)\)，\(B\) 为可逆上三角子群，\(N\) 为单项矩阵子群，\(S\) 为相邻换位。它们构成 BN 对，且对 \(w\in S_n\)、\(s\in S\) 有
+	\[
+		(Bn_wB)(Bn_sB)=
+		\begin{cases}
+			Bn_{ws}B,&\ell(ws)=\ell(w)+1,\\
+			Bn_{ws}B\sqcup Bn_wB,&\ell(ws)=\ell(w)-1.
+		\end{cases}
+	\]
+\end{corollary}
+\begin{proof}
+	\(Bn_{s_i}B/B\) 恰为标准旗的全部 \(i\) 型相邻旗。事实上，\(n_{s_i}E\) 只把 \(E_i/E_{i-1}\) 换成 \(e_{i+1}\) 的直线，上三角矩阵把它送到二维商中所有不同于 \(e_i\) 的直线。对 \(gB\in Bn_wB/B\)，其相邻旗就是 \(gBn_{s_i}B/B\)。故\cref{b5:prop:F-flag-adjacency}给出乘积中可能出现的位置。两种结论中所列的位置都实际出现；乘积又在左右乘 \(B\) 下不变，所以包含一面旗时就包含其整个双陪集，得到所述等式。
+
+	Bruhat 分解给出 \(G=\langle B,N\rangle\)。把上式用于 \(w^{-1},s\) 再取逆，得到 \(Bn_sBn_wB\subseteq Bn_{sw}B\cup Bn_wB\)，尤其满足 BN 对定义的第二项。最后，\(I_n+E_{i,i+1}\in B\)，而
+	\[
+		n_{s_i}(I_n+E_{i,i+1})n_{s_i}^{-1}=I_n+E_{i+1,i}\notin B.
+	\]
+	这里 \(E_{ab}\) 表示矩阵单位。结合已经验证的 \(T\triangleleft N\) 与 \(N/T\simeq S_n\)，全部公理成立。
+\end{proof}
+
+这个乘法规律把群中的双陪集乘法和 \(S_n\) 中的长度联系起来。下降情形中出现的 \(q-1\) 个选择，稍后会成为 Hecke 代数二次关系中的系数；只知道两个可能位置，还不足以恢复该系数。
 
 \subsection{抛物子群与双陪集}
 \label{b5:subsec:F02:03}
 
-待撰写。
+完全旗记录每一个维数。若只保留维数 \(d_1<\cdots<d_r\)，原来只能逐个保持的相邻坐标，现在可以在相应块内相互混合，其稳定子群因而比 \(B\) 更大。
 
-% 新增结构与纲要同步；以下条目均为待撰写计划。
-% * 状态：待撰写；当前仅有结构占位。
+\begin{definition}\label{b5:def:F-standard-parabolic}
+	设群 \(G\) 有 BN 对 \((B,N)\)，简单反射集为 \(S\)。对 \(I\subseteq S\)，令
+	\[
+		W_I=\langle I\rangle\le W,\qquad
+		P_I=\langle B,n_s:s\in I\rangle\le G.
+	\]
+	\(P_I\) 称为相对于该 BN 对的\term[biaozhun-paowu-ziqun]{标准抛物子群}[standard parabolic subgroup]，它的共轭子群称为抛物子群。
+\end{definition}
+\symidx{\(P_I\)：由 \(B\) 及指定简单反射生成的标准抛物子群}
+\symidx{\(W_I\)：简单反射子集生成的标准抛物 Weyl 子群}
+
+在 \(\mathrm{GL}_n(\mathbb F_q)\) 中，令
+\[
+	\{d_1<\cdots<d_r\}=\{i:1\le i<n,\ s_i\notin I\},
+	\qquad d_0=0,\quad d_{r+1}=n.
+\]
+这里 \(s_i\in I\) 表示允许混合第 \(i,i+1\) 个坐标，因此不再保留维数 \(i\) 的旗子空间。记块大小为 \(\alpha_a=d_a-d_{a-1}\)。
+
+\begin{proposition}\label{b5:prop:F-parabolic-flags}
+	设 \(G=\mathrm{GL}_n(\mathbb F_q)\)，\(I\subseteq\{s_1,\ldots,s_{n-1}\}\)。将所有满足 \(s_i\notin I\) 的指标列为 \(d_1<\cdots<d_r\)，令 \(d_0=0\)、\(d_{r+1}=n\)、\(\alpha_a=d_a-d_{a-1}\)，并记 \(E_d=\operatorname{span}(e_1,\ldots,e_d)\)。则 \(P_I\) 恰为部分旗 \(E_{d_1}\subset\cdots\subset E_{d_r}\) 的稳定子群，也就是块大小为 \(\alpha_1,\ldots,\alpha_{r+1}\) 的可逆块上三角矩阵群，而且
+	\[
+		P_I=\bigsqcup_{w\in W_I}Bn_wB.
+	\]
+	因此 \(G/P_I\) 与具有这些维数的全部部分旗组成的 \(G\) 集合同构。
+\end{proposition}
+\begin{proof}
+	一个矩阵保持所有 \(E_{d_a}\)，恰当每个块对角线下方的矩阵块为零。\(B\) 与每个 \(n_s\)、\(s\in I\)，都保持这些子空间，故 \(P_I\) 包含在这个稳定子群中。反过来，每个可逆块上三角矩阵可写成块对角矩阵与对角块为单位矩阵的块上三角矩阵的乘积；后一因子属于 \(B\)。每个可逆对角块由较小维数的 Bruhat 分解写为两个上三角矩阵和一个块内置换矩阵的乘积。上三角因子属于 \(B\)，块内置换由 \(I\) 中相邻换位生成，因此前一因子也属于 \(P_I\)。这证明稳定子群的刻画。
+
+	若 \(g=b_1n_wb_2\)，两侧 \(b_i\) 都保持标准部分旗，所以 \(g\) 保持它当且仅当 \(n_w\) 保持它。后者等价于 \(w\) 保持各初始段 \(\{1,\ldots,d_a\}\)，也就等价于在每个连续块内分别置换，即 \(w\in W_I\)。Bruhat 分解随即给出所述不交并。任意部分旗都可取适配基，故 \(G\) 对这些旗传递作用；稳定子群的刻画给出最后的陪集识别。
+\end{proof}
+
+例如在 \(\mathrm{GL}_4(\mathbb F_q)\) 中，\(I=\{s_1,s_3\}\) 对应块大小 \((2,2)\)，\(P_I\) 只保持一个二维子空间。\(I=\varnothing\) 给出 \(P_I=B\)，而 \(I=S\) 给出 \(P_I=G\)。因此子集 \(I\) 越大，保留的旗子空间越少。
+
+\ProseParagraphBreak
+对两个部分旗，交维数的差分不再是置换矩阵，而是行和、列和已知的非负整数矩阵。这个矩阵完整记录它们的相对位置。
+
+\begin{proposition}\label{b5:prop:F-parabolic-double-cosets}
+	设 \(G=\mathrm{GL}_n(\mathbb F_q)\)，\(I,J\subseteq\{s_1,\ldots,s_{n-1}\}\)，对应连续块大小分别为 \(\alpha=(\alpha_1,\ldots,\alpha_a)\)、\(\beta=(\beta_1,\ldots,\beta_b)\)。置换矩阵的包含诱导双射
+	\[
+		W_I\backslash S_n/W_J\longrightarrow P_I\backslash G/P_J,
+		\qquad W_IwW_J\longmapsto P_In_wP_J.
+	\]
+	这两个集合也都与行和为 \(\alpha\)、列和为 \(\beta\) 的 \(a\times b\) 非负整数矩阵集合一一对应。
+\end{proposition}
+\begin{proof}
+	对块维数为 \(\alpha,\beta\) 的部分旗 \(F,F'\)，令
+	\[
+		\begin{aligned}
+			m_{ij}={}&\dim(F_i\cap F'_j)-\dim(F_{i-1}\cap F'_j)\\
+			&-\dim(F_i\cap F'_{j-1})+\dim(F_{i-1}\cap F'_{j-1}).
+		\end{aligned}
+	\]
+	这里补入端点 \(F_0=F'_0=0\)、\(F_a=F'_b=V\)，并令 \(F_i\) 指第 \(i\) 个保留子空间，其维数为 \(\alpha_1+\cdots+\alpha_i\)。由\cref{b5:lem:F-common-flag-basis}，\(m_{ij}\) 是共同分解中 \(C_{ij}\) 的维数，故非负，行和、列和分别为 \(\alpha_i,\beta_j\)。若两对部分旗给出同一矩阵，逐个把它们的 \(C_{ij}\) 的基对应起来，就得到同时把两个旗送到相应旗的线性同构。反之，线性同构保持所有交维数。因此这些矩阵恰好分类两部分旗的 \(G\) 轨道。
+
+	把第一面旗固定为标准部分旗，其稳定子群为 \(P_I\)，第二面旗由 \(G/P_J\) 参数化，所以上述轨道就是 \(P_I\backslash G/P_J\)。当第二面旗为 \(n_w\) 作用于标准 \(\beta\) 型旗所得的旗时，矩阵为
+	\[
+		m_{ij}=\#\{\,t\;\text{在第}\;j\;\text{个}\;\beta\;\text{块内}\mid w(t)\;\text{在第}\;i\;\text{个}\;\alpha\;\text{块内}\,\}.
+	\]
+	任给满足行和、列和条件的矩阵，可按 \(m_{ij}\) 把每个源块中的位置分配到各目标块，再在每个目标块内双射配对，得到具有该矩阵的置换。因此所有矩阵都出现。
+
+	左乘 \(W_I\) 只重排目标块内部，右乘 \(W_J\) 只重排源块内部，均不改变 \((m_{ij})\)。若 \(w,w'\) 给出同一矩阵，可先在每个源块内取置换 \(v\in W_J\)，使每个 \(w(v(t))\) 与 \(w'(t)\) 落在同一目标块；再取 \(u\in W_I\)，逐个把 \(w(v(t))\) 送到 \(w'(t)\)，便有 \(w'=uwv\)。这就证明同一矩阵恰对应同一 Weyl 双陪集，完成所述双射。
+\end{proof}
+
+特别地，若两面部分旗各只记录一个维数，分别为 \(k,l\)，相对位置完全由 \(r=\dim(U\cap U')\) 决定，且
+\[
+	\max(0,k+l-n)\le r\le\min(k,l).
+\]
+相应矩阵为
+\[
+	\begin{pmatrix}
+		r&k-r\\
+		l-r&n-k-l+r
+	\end{pmatrix}.
+\]
+因而抛物双陪集的分类，在这个情形就是两个子空间按交维数的分类。完全旗需要一个置换，部分旗只保留置换在若干矩形块中的计数；这也说明为什么双陪集两端分别出现 \(W_I\) 与 \(W_J\)。
