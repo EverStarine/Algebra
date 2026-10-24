@@ -1,6 +1,6 @@
 # 代数学
 
-《代数学》是 R. EverStarine 编写的五卷本中文教材。从群、环、域出发，逐步进入模、交换代数、同调代数和表示论。各卷的目录、先修关系与选读范围见[计划纲要](工作记录/计划纲要.md)。
+《代数学》是 R. EverStarine 编写的五卷本中文教材。从群、环、域出发，逐步进入模、交换代数、同调代数和表示论。各卷目录与先修关系见相应 PDF 及编导读。
 
 ## 五卷导览
 
@@ -12,26 +12,41 @@
 | 第四卷：范畴与同调代数 | 范畴、复形与消解、同调方法和导出范畴 | [正文 PDF](Book4.pdf) |
 | 第五卷：表示论：有限群、箭图与 Lie 代数 | 有限群表示、箭图、Lie 代数及相关专题 | [正文 PDF](Book5.pdf) |
 
-五卷原有稿件已形成初稿，仍在修订和审核。本次扩充中，第一卷附录 C、第三卷和第四卷全部新增范围，均已完成正文、配套习题与解答及章级衔接的初稿。第四卷附录 G 包括 Operad、经典代数结构及 Koszul 对偶初步。第五卷8.5–8.7、9.6、10.5–10.7、15.2.5及附录B.5–B.6、附录F–G已完成正文、习题与解答初稿；本次已接受扩充范围的116个新增小节均已写成。新增内容尚未正式审核。具体任务见[扩充单元写作计划](工作记录/2026-10-20-扩充单元写作计划.md)，实际完成度与审核状态见[审核进度](工作记录/审核进度.md)。
-
-核心证明的核读范围见[证明依赖审校表](工作记录/核心定理证明依赖审校表.md)。
+五卷及已接受的扩充内容均已形成初稿，仍在修订和审核。
 
 ## 怎样阅读
 
 具备本科线性代数、集合与映射以及基本证明训练的读者，可以从第一卷开始。读过群、环的基础后，也可以转入第二卷的模论，再按兴趣学习交换代数、同调代数或表示论。不必依卷次通读；各编导读说明了所需基础和可以暂缓的内容。
 
-## 源码与构建
+## 源码与编译
 
-五卷分别以 `BookN/BookN.tex` 为源码入口，共用 `Shared/` 中的样式与书目。写作约定见[写作规范](写作规范/写作规范.md)，编译与资料维护细节见[工作流程说明](写作规范/工作流程说明.md)。在项目根目录构建单卷，例如：
+仓库发布五卷 TeX 源码、配套书目库与索引样式、构建脚本、五册 PDF 及本 README。各卷主文件为 `BookN/BookN.tex`，共用 `Shared/` 中的源文件；图与表均由 TeX 源码生成。
+
+编译使用 XeLaTeX、Biber 和 MakeIndex，需要包含 ctex、unicode-math 等宏包的 TeX Live。当前字体设置另使用系统字体 Times New Roman 和 SimSun；字体设置见 `Shared/Preamble.tex`。
+
+在项目根目录运行构建脚本，例如只编译第一卷：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Book 1
+powershell -NoProfile -ExecutionPolicy Bypass -File ./build.ps1 -Book 1
 ```
 
-将 `1` 改为其他卷号即可构建对应卷；省略 `-Book 1` 则构建五卷。
+省略 `-Book 1` 则编译五卷。脚本在 `tmp/build/BookN/` 生成辅助文件，依次处理书目和三类索引，并在引用与索引页码稳定后更新根目录及卷目录 PDF。各卷的 `.ps1/.bat` 入口供单卷构建及 TeXstudio 快捷编译使用。
 
-结构检查分别使用 `scripts/Check-Outline.ps1` 和 `scripts/Check-TextStructure.ps1`。跨卷文本引用可在相邻源码注释中登记稳定目标，例如 `% 跨卷引用目标：b1:thm:hilbert90-additive（20.2.3）。`；编译目标卷后运行 `scripts/Check-CrossVolumeRefs.py`，核对已登记引用的结果类型及当前编号。此检查只覆盖已登记项，结论是否适用于调用处仍须对照证明核验。已编译 PDF 的书签检查使用 `scripts/Check-PdfBookmarks.py`，需使用安装了 `pypdf` 的 Python。正式源码与工具均不依赖旧的 `tmp/` 内容；该目录中的构建文件由脚本重新生成。
+也可手工编译；以第一卷为例，在项目根目录依次执行：
+
+```text
+cd Book1
+xelatex -interaction=nonstopmode -halt-on-error Book1.tex
+biber Book1
+makeindex -q -s ../Shared/algebra.ist chinese.idx
+makeindex -q -s ../Shared/algebra.ist foreign.idx
+makeindex -q -s ../Shared/algebra.ist symbols.idx
+xelatex -interaction=nonstopmode -halt-on-error Book1.tex
+xelatex -interaction=nonstopmode -halt-on-error Book1.tex
+```
+
+输出为 `Book1/Book1.pdf`。其他卷将 `Book1` 换成相应卷名。若日志仍提示重跑，继续运行 XeLaTeX；正文页码变化后重新生成三类索引，再编译至引用和页码稳定。源码头部的 TeXstudio 快捷命令调用各卷附带的构建入口。
 
 ## 版权声明
 
-© 2026 R. EverStarine。保留所有权利。本项目未授予开放许可证；公开访问、下载或克隆仓库不构成改编、再许可或商业使用授权。第三方材料的权利归各自权利人所有。详见[版权声明](版权声明.md)。
+© 2026 R. EverStarine。保留所有权利。本项目未授予开放许可证；公开访问、下载或克隆仓库不构成改编、再许可或商业使用授权。第三方材料的权利归各自权利人所有。
