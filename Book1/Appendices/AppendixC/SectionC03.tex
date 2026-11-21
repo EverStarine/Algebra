@@ -1,17 +1,17 @@
 % !TeX root = ../../Book1.tex
-% 纲要标题：### C.3 群展示、字问题与可判定性
+% 纲要标题：### C.3 群展示与字问题
 % 纲要位置：计划纲要.md，第 922 行。
 % BEGIN APPENDIX OUTLINE SYNC
 % #### C.3.1 由关系字推导等式
 % #### C.3.2 标准形怎样给出判定算法
 % #### C.3.3 不可判定性的含义
 % * 新增小节状态：初稿已完成；原有内容保留，新增范围尚未正式审核。
-% #### C.3.4 稳定子链与 Schreier–Sims
-% #### C.3.5 陪集枚举与 Todd–Coxeter
+% #### C.3.4 稳定子链与 Schreier–Sims 算法
+% #### C.3.5 Todd–Coxeter 陪集枚举算法
 % #### C.3.6 计算群论的软件核验
 % END APPENDIX OUTLINE SYNC
 
-\section{群展示、字问题与可判定性}
+\section{群展示与字问题}
 \label{b1:sec:C03}
 
 群展示给出对象的定义，但读出一个字是否为单位，是另一个问题。一个定义可以很短，而判断其中的等式是否成立仍然困难。\subsecref{b1:subsec:0804:03}已经给出自由群和二面体群的算法；这里解释这些算法为何有效，以及有限展示本身为什么不保证类似算法存在。
@@ -90,7 +90,7 @@
 \subsection{不可判定性的含义}
 \label{b1:subsec:C03:03}
 
-前面几种算法都利用了各自的特殊结构：自由群有可计算的约化字，有限群有完整乘法表，具体合并积有整数除法给出的陪集分解。是否每个有限展示都至少存在某种字问题算法，即使算法十分缓慢？以下\term[Novikov-Boone-dingli]{Novikov--Boone 定理}[Novikov--Boone theorem]给出否定回答。\footnote{诺维科夫（\OriginalName{Пётр Сергеевич Новиков}，1901-1975），苏联数学家，研究群论的字问题及 Burnside 问题。}\footnote{布恩（William Werner Boone，1920-1983），美国数学家，独立证明有限展示群的字问题可以不可判定。}
+前面几种算法都利用了各自的特殊结构：自由群有可计算的约化字，有限群有完整乘法表，具体合并积有整数除法给出的陪集分解。是否每个有限展示都至少存在某种字问题算法，即使算法十分缓慢？以下\term[Novikov-Boone-dingli]{Novikov--Boone 定理}[Novikov--Boone theorem]\footnote{诺维科夫（\OriginalName{Пётр Сергеевич Новиков}，Petr Sergeevich Novikov，1901-1975），苏联数学家，研究群论的字问题及 Burnside 问题。这里是研究群论判定问题的 Pyotr Sergeevich Novikov，不是几何拓扑及 Novikov 环中的 Sergei Petrovich Novikov。布恩（William Werner Boone，1920-1983），美国数学家，独立证明有限展示群的字问题可以不可判定。}给出否定回答。
 
 \begin{theorem}[Novikov--Boone]\label{b1:thm:C-novikov-boone}
 	存在一个有限展示的群，其字问题不可判定。
@@ -130,7 +130,7 @@
 若还能对所有不表示单位的字设计一个必定确认的搜索过程，两种搜索就能交替各做一步：输入为单位时，肯定搜索最终结束；输入非单位时，否定搜索最终结束。这样就得到一个总会停机的判定算法。因此，对定理中的群，这种否定搜索不可能与肯定证书搜索同时存在。这使“不可判定”与“目前尚未找到一个够快的程序”有了明确区别。
 
 % 扩充状态：以下新增小节已有正文、证明、算法与算例；配套习题见附录章末。
-\subsection{稳定子链与 Schreier–Sims}
+\subsection{稳定子链与 Schreier–Sims 算法}
 \label{b1:subsec:C03:04}
 
 若一个群已经由有限集合上的置换生成，字问题就能通过置换相乘解决。但把所有生成字逐一算出，仍可能重复访问大量元素。群作用提供了另一种办法：先记录一个点可能被送到哪里，再处理固定这个点的子群。每固定一个点，余下的计算便限制在更小的群中。
@@ -168,7 +168,7 @@
 轨道和代表元也能由生成元直接计算。从 \(b\) 开始，把已发现的点依次放入队列；若 \(\beta\) 已有代表 \(t_\beta\)，则对每个 \(s\in S\) 计算 \(s\beta\)。遇到新点时，记录代表 \(t_{s\beta}=s t_\beta\) 并入队。集合有限，所以队列最终处理完毕；所得集合对所有生成元及其逆封闭，恰为 \(Kb\)。同时记录代表元在原生成元中的字，便能将\eqref{b1:eq:C-schreier-generators}继续展开为原生成字。
 
 \ProseParagraphBreak
-\term[Schreier-Sims-suanfa]{Schreier--Sims 算法}[Schreier--Sims algorithm]利用稳定子链、强生成组和下述逐层筛选来组织置换群计算。\footnote{西姆斯（Charles Coffin Sims，1937-2017），美国数学家，研究有限群与计算群论，发展置换群的稳定子链算法，并参与发现 Higman--Sims 单群。}先给出保留全部 Schreier 生成元的确定性基础构造；它便于证明正确性，但不声称具有实际软件所用的生成组精简效率。
+\term[Schreier-Sims-suanfa]{Schreier--Sims 算法}[Schreier--Sims algorithm]\footnote{西姆斯（Charles Coffin Sims，1937-2017），美国数学家，研究有限群与计算群论，发展置换群的稳定子链算法，并参与发现 Higman--Sims 单群。}利用稳定子链、强生成组和下述逐层筛选来组织置换群计算。先给出保留全部 Schreier 生成元的确定性基础构造；它便于证明正确性，但不声称具有实际软件所用的生成组精简效率。
 
 \begin{algorithm}[htbp]
 	\caption{稳定子链的 Schreier 构造}
@@ -221,7 +221,7 @@
 	对 \(g=(12)\)，第一步 \(g(1)=2\)，剩余量为 \(a^{-1}g=b\)；第二步 \(b(2)=3\)，剩余量为 \(b^{-1}b=1\)。故筛选接受，并给出 \((12)=ab\)。这里的六阶结论来自各层稳定子已被完整生成，而不只是列出了两个轨道大小。
 \end{example}
 
-\subsection{陪集枚举与 Todd–Coxeter}
+\subsection{Todd–Coxeter 陪集枚举算法}
 \label{b1:subsec:C03:05}
 
 稳定子链以显式置换为输入；群若只由生成关系给出，首先还要得到一个有限作用。\term[peiji-meiju]{陪集枚举}[coset enumeration]尝试直接构造子群的陪集图。固定有限展示 \(G=\langle S\mid R\rangle\)，并用有限个生成字 \(U\) 指定子群 \(H=\langle U\rangle\leq G\)。沿用\subsecref{b1:subsec:0804:schreier-subgroup-freeness}的右陪集 \(Hg\)，表中一项
@@ -232,7 +232,7 @@
 其中 \(t_i\) 为第 \(i\) 行的代表字，根行的代表字是空字。列由 \(S\sqcup S^{-1}\) 标记，字从左至右读取。这种\term[peiji-biao]{陪集表}[coset table]记录右作用：若 \(T_w\) 表示读字 \(w\) 的行变换，则 \(T_{uv}=T_v\circ T_u\)。要改写为本书通常的左作用同态，应取 \(g\mapsto T_{g^{-1}}\)。
 
 \ProseParagraphBreak
-\term[Todd-Coxeter-suanfa]{Todd--Coxeter 算法}[Todd--Coxeter algorithm]从不完整的陪集表出发，补入新行，再利用关系迫使若干行重合。\footnote{托德（John Arthur Todd，1908-1994），英国数学家，研究代数几何与群论，与 Coxeter 共同提出陪集枚举方法。考克塞特（Harold Scott MacDonald Coxeter，1907-2003），生于英国的加拿大数学家，研究多胞形、反射群与几何。}一个新行号只是暂时的名称，不能解释为已经证明与旧行不同的新陪集。若某个推导迫使两行表示同一陪集，就合并它们，并传播由此产生的所有表项一致性要求。
+\term[Todd-Coxeter-suanfa]{Todd--Coxeter 算法}[Todd--Coxeter algorithm]\footnote{托德（John Arthur Todd，1908-1994），英国数学家，研究代数几何与群论，与 Coxeter 共同提出陪集枚举方法。考克塞特（Harold Scott MacDonald Coxeter，1907-2003），生于英国的加拿大数学家，研究多胞形、反射群与几何。}从不完整的陪集表出发，补入新行，再利用关系迫使若干行重合。一个新行号只是暂时的名称，不能解释为已经证明与旧行不同的新陪集。若某个推导迫使两行表示同一陪集，就合并它们，并传播由此产生的所有表项一致性要求。
 
 \ProseParagraphBreak
 补表使用三类约束。逆列要求 \(i\xrightarrow{s}j\) 当且仅当 \(j\xrightarrow{s^{-1}}i\)。每个关系字 \(r\in R\) 从任意行读起都应回到原行；每个子群生成字 \(u\in U\) 从根行读起也应回到根行。为扫描一个应闭合的字，可以从起点沿前段向前读，也从终点沿末段的逆字向后读。若中间只缺一条边，就补上这条边；若全字已经可读却到达另一个终点，即出现零缺口而未闭合的情形，就合并实际终点与指定终点。若已知路径要求同一个表项有两个终点，也合并这两个终点。合并后，原来两行的同列出边必须一致，所需的进一步重合持续传播，直到没有冲突。
