@@ -238,6 +238,49 @@
 \newcommand{\crefmiddleconjunction}{、}
 \newcommand{\creflastconjunction}{和}
 
+% 双向脚注：正文标记保留 hyperref 的前向链接，页脚编号链接回同一标记。
+% 使用不随章重置的 Hfootnote 标识，避免不同章的同号脚注互相串跳。
+\makeatletter
+\patchcmd{\@footnotemark}{\@makefnmark}{%
+  \Hy@raisedlink{%
+    \hyper@anchorstart{AlgebraFootnoteBack.\Hy@footnote@currentHref}%
+    \hyper@anchorend}%
+  \@makefnmark
+}{}{\PackageError{algebra}{Cannot create footnote return targets}%
+  {Check the hyperref footnote implementation.}}
+% XeTeX 用独立矩形链接，并暂停编号处的范围扫描，避免跨页正文链接覆盖编号。
+% 原编号只排一次；盒寄存器的赋值限于脚注插入组，保留字形与间距。
+\newbox\Algebra@FootnoteMarkBox
+\pretocmd{\@makefntext}{%
+  \let\Algebra@OriginalFootnoteMark\@makefnmark
+  \def\@makefnmark{%
+    \setbox\Algebra@FootnoteMarkBox=\hbox{%
+      \Hy@colorlink\@linkcolor
+      \Algebra@OriginalFootnoteMark
+      \Hy@endcolorlink}%
+    \protected@edef\Algebra@FootnoteReturnTarget{%
+      AlgebraFootnoteBack.\Hy@footnote@currentHref}%
+    \Hy@pstringdef\Algebra@FootnoteReturnTarget{%
+      \expandafter\HyperDestNameFilter\expandafter{%
+        \Algebra@FootnoteReturnTarget}}%
+    \@pdfm@mark{nolink}%
+    \@pdfm@mark{%
+      ann width \the\wd\Algebra@FootnoteMarkBox\space
+      height \the\ht\Algebra@FootnoteMarkBox\space
+      depth \the\dp\Algebra@FootnoteMarkBox\space
+      << /Type/Annot /Subtype/Link
+        \ifHy@pdfa /F 4\fi
+        \Hy@setpdfborder
+        \Hy@setpdfhighlight
+        \ifx\@linkbordercolor\relax\else /C[\@linkbordercolor]\fi
+        /A<< /S/GoTo /D(\Algebra@FootnoteReturnTarget)
+          \Hy@href@nextactionraw >> >>}%
+    \box\Algebra@FootnoteMarkBox
+    \@pdfm@mark{link}}%
+}{}{\PackageError{algebra}{Cannot link footnote numbers back to the text}%
+  {Check the footnote text formatter.}}
+\makeatother
+
 % CTeX 2.5.10 的标题前缀宏带一个参数，而 TeX Live 2025 中 cleveref
 % 仍按普通前缀宏展开它们，会把节号写成含 \endcsname 的损坏元数据。
 % 改为恒等包装后，CTeX 传入的标题编号保持不变，\ref 与 \cref 均可正常工作。
